@@ -74,6 +74,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/SplythoffGrundyRows.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fokkink-rust-2024-splythoff-grundy-rows` (proved) by `D5/S0/Certificates/Games/SplythoffGrundyRows.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fokkink-rust-2024-splythoff-grundy-rows","declaration_gid":"D5/S0/Certificates/Games/SplythoffGrundyRows.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Robbert Fokkink; Dan Rust (2024). *Queen reflections: a modification of Wythoff Nim*. DOI: [10.1007/s00182-022-00824-1](https://doi.org/10.1007/s00182-022-00824-1). URL: <https://arxiv.org/abs/1904.08339>.

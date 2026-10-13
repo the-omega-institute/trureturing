@@ -68,13 +68,17 @@ internal sealed class SplythoffGrundyRowsDocument : IScribeDocumentDefinition
                     + "positions of one row force different Grundy values, supplying "
                     + "uniqueness. Swapping the two pile sizes preserves all legal moves "
                     + "and their Grundy values, so the same conclusion holds for columns. "
-                    + "The separate question about reflected diagonals remains open."))));
+                    + "The separate question about reflected diagonals remains open.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fokkink-rust-2024-splythoff-grundy-rows"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, string prose) =>
+        DescribeRole role, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula NatType => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula PairType => Seq(NatType, Sp, Times, Sp, NatType);
