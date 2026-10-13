@@ -14,6 +14,18 @@ internal sealed class GoldenResource5040PriceIntervalDocument : IScribeDocumentD
         H("Golden Resource 5040 Price Interval"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("golden-prime-local-original-strict-threshold-maximum"),
+                DeclarationHandle.Create(Prefix + "golden_prime_local_objective_unique_maximal_of_strict_threshold"),
+                H("Original generic strict-threshold uniqueness"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The existing generic proof is exposed in place for ActualReservePrimeMask. "
+                    + "For any real price and actual prime, strict upper and lower thresholds make "
+                    + "the chosen exponent maximal, with equality exactly at that exponent. "
+                    + "The lower condition allows exponent zero. The theorem is generic despite "
+                    + "the 5040 filename; its original proof is unchanged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-resource-5040-price-interval"),
                 DeclarationHandle.Create(
                     Prefix + "golden_resource_5040_unique_maximum_of_price_interval"),
