@@ -1459,3 +1459,1228 @@ A>0,\quad (A:\mathbb R)=\alpha(m),\quad
 本卷采用的现有开放参考 [FC：输出分辨仪器闭包的固定修订](https://github.com/the-omega-institute/trureturing/blob/60ebb51c87e6496e0cab67c899c3b687ef8fd001/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)仅用于记录、合法性、测试与有限载体稳定范围的接口说明，不能把它的开放参考身份升级成 Lean 证据。所有“当前／最新”的原句保持叙述者快照归属。尚未提供 AK 核扰动到共同五态 $d$ 的完整实现桥梁，也未提供算术价格的最小坐标重建定理；这两个缺口是关于所引材料的范围结论，不是不可实现性判决。
 
 ## 追加锚（本行以下为增补区）
+## 10. 三体接缝、交互次序与最小预测闭包
+
+本章研究一个明确的数学任务：在有序五态系统中，只允许指定的相邻交换，最后读取单点占据的期望，什么线性记录足以预测所有有限动作词？三点构造表明，完整两体边缘相同的混合态仍可被两次相邻接触区分；一般链的答案则取决于是否另外允许各点独立相位动作。准备域是所声明扇区内的全部归一化正半定密度矩阵。
+
+静态五态坐标、已定义的有序交换以及输出分支拉回的方法分别沿用各自来源。本章证明它们在这个准备域和动作菜单下的具体连接。所有角参数均为无量纲实数；动作菜单与准备域是模型的额外规定，不由 Fibonacci 标签或静态仿射关系自行产生。
+
+### 10.1 五标签、底面张量结构与供应接口
+
+**定义 10.1（五态载体与占据）。** 取正交单位基，次序固定为
+
+$$
+\Sigma=(0,1,2,3,13),\qquad
+\mathcal H=\operatorname{span}_{\mathbb C}\{|s\rangle:s\in\Sigma\},
+$$
+
+$$
+(x_s,y_s,z_s)=
+\begin{cases}
+(0,0,0),&s=0,\\
+(1,0,0),&s=1,\\
+(0,0,1),&s=2,\\
+(0,1,0),&s=3,\\
+(1,1,0),&s=13.
+\end{cases}
+$$
+
+$x,y,z$ 依次指低、高、中占据。$s_0$ 对应单位向量 $|0\rangle$，不是零向量。中态 $s_2$ 不属于四个底角。精确的直和分解为
+
+$$
+\mathcal H=\mathbb C|2\rangle\oplus\mathcal H_{\rm bot},
+\qquad
+\mathcal H_{\rm bot}\simeq\mathbb C_x^2\otimes\mathbb C_y^2,
+$$
+
+$$
+|0\rangle\leftrightarrow|0,0\rangle,\quad
+|1\rangle\leftrightarrow|1,0\rangle,\quad
+|3\rangle\leftrightarrow|0,1\rangle,\quad
+|13\rangle\leftrightarrow|1,1\rangle.
+$$
+
+这是四维底面的张量分解；整个五维空间并非两个二态系统的张量积。定义全空间算子
+
+$$
+N_x=|1\rangle\langle1|+|13\rangle\langle13|,
+\qquad N_y=|3\rangle\langle3|+|13\rangle\langle13|,
+$$
+
+$$
+N_z=|2\rangle\langle2|,
+\qquad R=|1\rangle\langle0|+|13\rangle\langle3|.
+$$
+
+$R,R^\dagger$ 均消去 $|2\rangle$；它们只翻转底面低占据，保留高占据。
+
+数学引文与符号对应。[Circulation §24.1][C10-circulation] 的质量—占据矩阵、核方向和五函数基，在本章直接使用为
+
+$$
+W=\begin{pmatrix}
+1&1&1&1&1\\
+0&1&0&0&1\\
+0&0&0&1&1\\
+0&0&1&0&0
+\end{pmatrix},\qquad
+\ker_{\mathbb R}W=\mathbb R(1,-1,0,-1,1)^{\mathsf T},
+$$
+
+$$
+\mathbb R^\Sigma=\operatorname{span}\{1,x,y,z,xy\}.
+$$
+
+基础公式的标签 $(0,2,3,5,25)$、隐藏关系的标签 $(O,L,T,R,J)$，均依次对应本章 $(0,1,2,3,13)$；旧标签中的字母 $R$ 不指本章升算子。对概率律，令 $X=\mathbb E x,Y=\mathbb E y,Z=\mathbb E z,\kappa=\mathbb E(xy)$，已有反解为
+
+$$
+p=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+$$
+
+[Symplectic §35.8][C10-symplectic] 的目标四角系数恰为
+
+$$
+J_f=f_0-f_1-f_3+f_{13},
+$$
+
+$$
+\mathbb E_p f=f_0+(f_1-f_0)X+(f_3-f_0)Y+(f_2-f_0)Z+J_f\kappa.
+$$
+
+它说明静态目标对隐藏坐标的依赖；正宽度纤维上 $J_f=0$ 是均值充分性的判据。零宽度纤维没有两点分离的必要性。这里消费该坐标公式，不把它再立为一般核定理。
+
+相位背景采用同一来源的负相位约定
+
+$$
+\psi_s=\sqrt{p_s}e^{-i\theta_s},\qquad
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13},
+$$
+
+$$
+\psi_0\psi_{13}\overline{\psi_1}\,\overline{\psi_3}
+=\sqrt{p_0p_1p_3p_{13}}e^{-i\chi}.
+$$
+
+与正相位记法的精确对应为 $\theta_s^{\rm old}=-\theta_s$、$\Phi^{\rm old}=-\chi$。若任一底角概率为零，使用上式多项式乘积，不给零振幅指定相位。该来源的 $\iota_{X_H}\omega=dH$、$\omega_{\rm red}=d\chi\wedge d\kappa$ 给 $\dot\chi=\partial_\kappa H$、$\dot\kappa=-\partial_\chi H$，所以对角目标有 $\dot\chi=J_f$。
+
+[Symplectic §35.9][C10-symplectic] 另给单份五态振幅上的四次实 Hamilton 函数
+
+$$
+H_{\rm int}=2g_0\operatorname{Re}
+(\psi_0\psi_{13}\overline{\psi_1}\,\overline{\psi_3})
+=2g_0\sqrt{p_0p_1p_3p_{13}}\cos\chi.
+$$
+
+这是射影纯态上的非线性动力学背景，不是作用于有序双系统的线性 Hermitian 矩阵。本章下节的 $K$ 精确取自 [Circulation 定理 24.3][C10-circulation] 的 $V$，且 $A_{ab}$ 就是该定理的 $A$。两种载体、两种 Hamilton 对象不得互换。该卷命题 24.7 已给相同独立纯准备时每份能量及初始导数的联系；这种初始联系不使任意链态在每次接触前恢复为相同乘积准备。
+
+### 10.2 完整二十五维上的受控交换
+
+**命题 10.2（既有有序交换的低占据因式分解）。** 在可区分的两个五态因子 $a,b$ 上，使用已定义的
+
+$$
+A_{ab}=|0,13\rangle\langle1,3|+|13,0\rangle\langle3,1|,
+\qquad K_{ab}=A_{ab}+A_{ab}^\dagger.
+$$
+
+下标表示张量位置，并对未写因子张量单位算子。令
+
+$$
+B_{ab}=R_aR_b^\dagger+R_a^\dagger R_b,
+\qquad G_{ab}=N_{y,a}+N_{y,b}-2N_{y,a}N_{y,b}.
+$$
+
+则在整个 $\mathcal H_a\otimes\mathcal H_b$ 上
+
+$$
+K_{ab}=B_{ab}G_{ab}=G_{ab}B_{ab}.
+$$
+
+它满足
+
+$$
+[K_{ab},N_{y,a}]=[K_{ab},N_{y,b}]
+=[K_{ab},N_{z,a}]=[K_{ab},N_{z,b}]=0,
+$$
+
+$$
+[K_{ab},N_{x,a}+N_{x,b}]=0,
+\qquad [K_{ab},N_{x,a}]\ne0.
+$$
+
+证明。$R$ 的每个非零矩阵元连接高占据相同、中占据均零的两个标签，所以 $R,R^\dagger$ 与 $N_y,N_z$ 交换。故 $B_{ab}$ 与 $G_{ab}$ 交换。
+
+先在十六个底面有序基上检查。$G_{ab}$ 的本征值为 $y_a+y_b-2y_ay_b$：高标签相反时是一，相同时是零。$B_{ab}$ 在 $x_a=x_b$ 时消去该基向量，在 $x_a\ne x_b$ 时交换两个低标签而保持高标签。两种高标签相反的情况逐项为
+
+$$
+\begin{array}{c|c|c}
+(y_a,y_b)&\text{非零连接}&\text{系数}\\ \hline
+(0,1)&|0,13\rangle\longleftrightarrow|1,3\rangle&1\\
+(1,0)&|3,1\rangle\longleftrightarrow|13,0\rangle&1
+\end{array}
+$$
+
+这四个矩阵单位正是 $A_{ab}+A_{ab}^\dagger$，其余底面基向量均被乘积消去。
+
+再检查含中态的九个有序基向量。只要某个因子为 $|2\rangle$，$B_{ab}$ 的两项均因该因子的 $R$ 或 $R^\dagger$ 而为零；$K_{ab}$ 的四个矩阵单位也均为零。不能声称 $G_{ab}$ 自身排除了中态，例如
+
+$$
+G_{ab}|2,3\rangle=|2,3\rangle,
+\qquad B_{ab}|2,3\rangle=0.
+$$
+
+因此中态保护由跃迁因子负责，高占据不相等的条件由 $G_{ab}$ 负责。两者合用才给整个二十五维上的公式，而不只是活动块上的公式。
+
+高、中占据的各自交换关系由上述保标签性得出。又有
+
+$$
+[N_x,R]=R,\qquad [N_x,R^\dagger]=-R^\dagger,
+$$
+
+故每个 $R_aR_b^\dagger$ 或 $R_a^\dagger R_b$ 与 $N_{x,a}+N_{x,b}$ 交换；$G_{ab}$ 也与此总量交换。个体不守恒的实际作用为
+
+$$
+[K_{ab},N_{x,a}]|1,3\rangle=|0,13\rangle\ne0.
+$$
+
+证毕。
+
+四角仿射关系只约束总占据相同，没有唯一指定谁携带、谁转移。一个不同的例子是高占据升算子
+
+$$
+R_y=|3\rangle\langle0|+|13\rangle\langle1|,
+$$
+
+以及
+
+$$
+K^{(y)}_{ab}=(R_{y,a}R_{y,b}^\dagger+R_{y,a}^\dagger R_{y,b})
+(N_{x,a}+N_{x,b}-2N_{x,a}N_{x,b}).
+$$
+
+同样逐底角求值得到 $|0,13\rangle\leftrightarrow|3,1\rangle$ 和 $|1,3\rangle\leftrightarrow|13,0\rangle$；含中态仍由跃迁因子消去。它保留个体 $x$，转移 $y$，因而与 $K_{ab}$ 不同。这足以排除“静态关系唯一决定有序生成元”的推断。
+
+既有 $K_{ab}$ 虽与双因子交换算子对易，也只对任意输入保证总占据守恒。Circulation §24.4 的两个单边缘均值分别保持使用了相同准备与交换对称性。链中的任意相关态不满足这一额外准备前提；同一生成元的对称性不允许在每次接触时重新假设输入对称。
+
+### 10.3 三点八维扇区的实际嵌入
+
+**定义 10.3（交替高标签扇区与动作菜单）。** 在一百二十五维 $\mathcal H_A\otimes\mathcal H_B\otimes\mathcal H_C$ 中，固定
+
+$$
+(y_A,y_B,y_C)=(0,1,0),\qquad z_A=z_B=z_C=0.
+$$
+
+定义局部等距映射
+
+$$
+E_A|0\rangle=|0\rangle_A,\quad E_A|1\rangle=|1\rangle_A,
+$$
+
+$$
+E_B|0\rangle=|3\rangle_B,\quad E_B|1\rangle=|13\rangle_B,
+$$
+
+$$
+E_C|0\rangle=|0\rangle_C,\quad E_C|1\rangle=|1\rangle_C,
+\qquad E=E_A\otimes E_B\otimes E_C.
+$$
+
+令 $\mathcal I_3=\operatorname{im}E$。其八个正交基记为 $|abc\rangle$，表示三个低占据，而非原五标签的三个数字。特别地，逻辑 $B=0$ 是物理标签 $3$，逻辑 $B=1$ 是物理标签 $13$。
+
+在逻辑二态空间中重新用
+
+$$
+R=|1\rangle\langle0|,\quad L=R^\dagger=|0\rangle\langle1|,
+\quad n=|1\rangle\langle1|,\quad Z^{\rm sf}=I-2n
+$$
+
+表示限制后的算子。$Z^{\rm sf}$ 是自旋符号算子，不是前节的中占据均值 $Z$，也不是五态的 $N_z$。
+
+**命题 10.4（扇区不变性与交换限制）。** $\mathcal I_3$ 对 $K_{AB},K_{BC}$ 及其任意实参数指数不变，而且
+
+$$
+K_{AB}E=Eh_{AB},\qquad K_{BC}E=Eh_{BC},
+$$
+
+$$
+h_{AB}=R_AL_B+L_AR_B,\qquad
+h_{BC}=R_BL_C+L_BR_C.
+$$
+
+证明。命题 10.2 的逐点 $N_y,N_z$ 交换关系使它们的共同特征空间不变，该共同空间正是 $\mathcal I_3$。其两条边的高标签都相反，故 $G=I$；又因 $E_j^\dagger R_jE_j=|1\rangle\langle0|$，得上述限制。对幂逐次应用交织式，再对收敛的指数级数求和，得到
+
+$$
+e^{-iuK_{AB}}E=Ee^{-iuh_{AB}},\qquad
+e^{-ivK_{BC}}E=Ee^{-ivh_{BC}}.
+$$
+
+这证明了八维计算在完整五态三复制中的嵌入，而不是仅另外假设一个三比特模型。证毕。
+
+本章另行允许两条边的动作 $e^{-iuh_{AB}}$、$e^{-ivh_{BC}}$ 独立选择任意 $u,v\in\mathbb R$，并允许任意有限次顺序组合。不在这一定义中加入中间测量、输出反馈、任意三点门或独立相位动作。准备集合为
+
+$$
+\mathcal D_3=\{\rho\in\operatorname{Herm}(8):\rho\succeq0,
+\ \operatorname{Tr}\rho=1\}.
+$$
+
+实际五态密度矩阵为 $E\rho E^\dagger$，其余正交方向为零。此域没有纯态、乘积态、Gaussian 态或固定总激发数的限制。生成元保持 $n_A+n_B+n_C$，但守恒并不等于这个初值在所有准备之间相同。
+
+### 10.4 双重交换子产生的三体方向
+
+**命题 10.5（三体接缝及其线性独立性）。** 在 $\mathcal I_3$ 上定义
+
+$$
+T=R_AZ^{\rm sf}_BL_C+L_AZ^{\rm sf}_BR_C.
+$$
+
+它是 Hermitian 算子，并且
+
+$$
+[h_{BC},n_C]=R_BL_C-L_BR_C,
+\qquad [h_{AB},[h_{BC},n_C]]=T.
+$$
+
+$T$ 的每个单因子偏迹为零，$\operatorname{Tr}T^2=4$，所以它不在所有至多二体算子的线性张成空间中。
+
+证明。二态矩阵的直接乘法给
+
+$$
+RL=n,\quad LR=I-n,\quad [L,R]=Z^{\rm sf},
+\quad R^2=L^2=0,
+$$
+
+$$
+[R,n]=-R,\qquad[L,n]=L,
+\qquad RZ^{\rm sf}=R,\quad Z^{\rm sf}R=-R,
+$$
+
+$$
+LZ^{\rm sf}=-L,\qquad Z^{\rm sf}L=L.
+$$
+
+异点因子彼此交换。首先只在 $C$ 点使用 $[L,n]=L$、$[R,n]=-R$，得到第一个交换子。再展开第二个交换子，两个含 $R_B^2$ 或 $L_B^2$ 的项为零，其余为
+
+$$
+[R_AL_B,R_BL_C]=R_A[L_B,R_B]L_C=R_AZ^{\rm sf}_BL_C,
+$$
+
+$$
+[L_AR_B,-L_BR_C]=-L_A[R_B,L_B]R_C=L_AZ^{\rm sf}_BR_C.
+$$
+
+两项互为伴随，故和为 $T=T^\dagger$。
+
+由于 $\operatorname{Tr}R=\operatorname{Tr}L=\operatorname{Tr}Z^{\rm sf}=0$，对 $A,B,C$ 中任何一个因子取偏迹，$T$ 的两项都给零。令
+
+$$
+\mathcal S=\{001,011,100,110\}.
+$$
+
+逐基作用为
+
+$$
+T|001\rangle=|100\rangle,\quad T|100\rangle=|001\rangle,
+$$
+
+$$
+T|011\rangle=-|110\rangle,\quad T|110\rangle=-|011\rangle,
+$$
+
+且消去其余四个基向量。因此
+
+$$
+T^2=\sum_{r\in\mathcal S}|r\rangle\langle r|,
+\qquad \operatorname{Tr}T^2=4.
+$$
+
+若 $O$ 只支撑于至多两个因子，选不在其支撑中的点 $j$，有
+
+$$
+\operatorname{Tr}(TO)=\operatorname{Tr}((\operatorname{Tr}_jT)O)=0.
+$$
+
+这里右边的 $O$ 表示删去该单位因子后的算子。同理 $T$ 正交于所有这类算子的和。若 $T$ 自己属于该张成空间，就应有 $\operatorname{Tr}T^2=0$，与四矛盾。这不仅证明 $T\ne0$，还证明它不能由任意二体算子的线性组合代替。证毕。
+
+### 10.5 完整两体边缘相同的混合准备
+
+**命题 10.6（正半定见证及全部两体约化）。** 定义
+
+$$
+\rho_\pm=\frac14\sum_{r\in\mathcal S}|r\rangle\langle r|\ \pm\frac14T.
+$$
+
+它们属于 $\mathcal D_3$，且
+
+$$
+\rho_+-\rho_-=\frac12T,
+$$
+
+$$
+(\rho_\pm)_{AB}=(\rho_\pm)_{BC}=\frac14I_4,
+\qquad
+(\rho_\pm)_{AC}=\frac12(|01\rangle\langle01|+|10\rangle\langle10|).
+$$
+
+证明。在有序基 $(001,100)$ 上，两个密度矩阵的块为
+
+$$
+\frac14\begin{pmatrix}1&\pm1\\\pm1&1\end{pmatrix};
+$$
+
+在有序基 $(011,110)$ 上则为
+
+$$
+\frac14\begin{pmatrix}1&\mp1\\\mp1&1\end{pmatrix}.
+$$
+
+每块分别是向量 $(1,\pm1)$ 或 $(1,\mp1)$ 的外积除以四，故正半定、秩一，非零特征值为 $1/2$。其余四维为零，所以整个谱是两个 $1/2$ 和六个零，迹一。第二块的相反符号来自 $B=1$ 时 $Z_B^{\rm sf}=-1$，不能省略。
+
+对角部分的四个基在 $AB$ 上依次给 $00,01,10,11$，在 $BC$ 上依次给 $01,11,00,10$，权重都是 $1/4$；在 $AC$ 上则两次给 $01$、两次给 $10$。命题 10.5 说明非对角部分 $T$ 的每个单点偏迹均为零，所以以上就是完整约化矩阵，包含所有非对角元的结论，并非只有单点均值相同。
+
+在完整五态物理空间中，任意一对 $j,k$ 的约化恰为
+
+$$
+(E\rho_\pm E^\dagger)_{jk}
+=(E_j\otimes E_k)(\rho_\pm)_{jk}(E_j\otimes E_k)^\dagger.
+$$
+
+这是因为被迹去的局部嵌入满足 $E_\ell^\dagger E_\ell=I_2$。其余二十一维以及与它们的交叉块全为零。因此两个实际二十五维物理边缘也完全相同。证毕。
+
+[Walck–Lyons 的 Main Result][C10-walck] 分类的是在纯态比较类中不能由全部 $(n-1)$ 点边缘确定的纯 $n$ 比特态，得到广义 GHZ 的局部幺正等价类。这里的 $\rho_\pm$ 是秩二混合态；它们的正性、两个活动块和约化式由上述直接证明承担，不是该纯态分类的实例。
+
+### 10.6 两接触读出的精确全实参数公式
+
+定义 Hermitian 流算子
+
+$$
+J_{AB}=-i(R_AL_B-L_AR_B),\qquad
+J_{BC}=-i(R_BL_C-L_BR_C).
+$$
+
+由命题 10.6 的边缘和 $T$ 的块作用得到
+
+$$
+\langle n_A\rangle_\pm=\langle n_B\rangle_\pm
+=\langle n_C\rangle_\pm=\frac12,
+$$
+
+$$
+\langle J_{AB}\rangle_\pm=\langle J_{BC}\rangle_\pm=0,
+\qquad \langle T\rangle_\pm=\pm1.
+$$
+
+前两个流的迹在相应 $I_4/4$ 上为零；最后一个式子使用对角部分与 $T$ 正交及 $\operatorname{Tr}T^2=4$。
+
+**定理 10.7（任意实角的双接触分离）。** 先接触 $AB$，再接触 $BC$，总动作是
+
+$$
+W(u,v)=e^{-ivh_{BC}}e^{-iuh_{AB}}.
+$$
+
+对每个 $u,v\in\mathbb R$，终端 $C$ 点占据满足
+
+$$
+q_C^\pm(u,v)=\operatorname{Tr}(\rho_\pm W^\dagger n_CW)
+=\frac12\mp\frac12\sin u\sin2v.
+$$
+
+特别地，$u=\pi/2,v=\pi/4$ 时 $q_C^+=0,q_C^-=1$。
+
+证明。两点交换 $h=RL+LR$ 仅在 $|01\rangle,|10\rangle$ 上为 $\sigma_x$，在 $|00\rangle,|11\rangle$ 上为零，故在完整两点空间有
+
+$$
+e^{-ith}=I+(\cos t-1)h^2-i\sin t\,h.
+$$
+
+例如在 $BC$ 的有序活动基 $(|01\rangle,|10\rangle)$ 上，$n_C=\operatorname{diag}(1,0)$、$J_{BC}=\begin{pmatrix}0&i\\-i&0\end{pmatrix}$，直接相乘得到
+
+$$
+e^{iv\sigma_x}\begin{pmatrix}1&0\\0&0\end{pmatrix}e^{-iv\sigma_x}
+=\begin{pmatrix}\cos^2v&-i\sin v\cos v\\i\sin v\cos v&\sin^2v\end{pmatrix}.
+$$
+
+在 $|00\rangle,|11\rangle$ 上，两边分别给零和一。将同一计算用于 $AB$ 的右端占据 $n_B$，便得到完整算子式
+
+$$
+e^{ivh_{BC}}n_Ce^{-ivh_{BC}}
+=n_C\cos^2v+n_B\sin^2v-\frac12J_{BC}\sin2v,
+$$
+
+$$
+e^{iuh_{AB}}n_Be^{-iuh_{AB}}
+=n_B\cos^2u+n_A\sin^2u-\frac12J_{AB}\sin2u.
+$$
+
+第二式对于一般准备不可删去；只有在本见证上取期望后，它才化为 $1/2$。
+
+为计算跨边流，令 $X=R_AL_B,Y=R_BL_C,F=R_AZ_B^{\rm sf}L_C$。前节乘法规则给
+
+$$
+[h_{AB},Y-Y^\dagger]=F+F^\dagger=T,
+\qquad [h_{AB},T]=Y-Y^\dagger.
+$$
+
+例如后式的两项可分别写成
+
+$$
+[h_{AB},F]=(I-n_A)R_BL_C+n_AR_BL_C=Y,
+$$
+
+$$
+[h_{AB},F^\dagger]=-Y^\dagger.
+$$
+
+因此 $i[h_{AB},J_{BC}]=T$、$i[h_{AB},T]=-J_{BC}$。设 $F_1(u)=e^{iuh_{AB}}J_{BC}e^{-iuh_{AB}}$、$F_2(u)=e^{iuh_{AB}}Te^{-iuh_{AB}}$，则
+
+$$
+F_1'=F_2,\qquad F_2'=-F_1,
+\qquad(F_1(0),F_2(0))=(J_{BC},T).
+$$
+
+常系数微分方程的唯一解给出所有实数上的恒等式
+
+$$
+e^{iuh_{AB}}J_{BC}e^{-iuh_{AB}}=J_{BC}\cos u+T\sin u.
+$$
+
+又因 $n_C$ 与 $h_{AB}$ 交换，完整拉回为
+
+$$
+\begin{aligned}
+W^\dagger n_CW={}&n_C\cos^2v
++n_B\sin^2v\cos^2u+n_A\sin^2v\sin^2u\\
+&-\frac12J_{AB}\sin^2v\sin2u
+-\frac12J_{BC}\sin2v\cos u
+-\frac12T\sin2v\sin u.
+\end{aligned}
+$$
+
+这是任意 $\rho\in\mathcal D_3$ 都能取期望的算子等式。代入本节六个初始期望，三个占据系数的和是一，流期望为零，得所述 $q_C^\pm$。所用指数和微分方程恒等式对所有实角成立，不依赖小角近似或有限参数抽样。证毕。
+
+### 10.7 单次任意二点幺正仍不能区分
+
+**命题 10.8（本准备与终端任务的接触次数下界）。** 对物理五态三复制，取任意支撑在至多两个点上的幺正 $U_S$，并在最后任一点 $j$ 读取任意一个占据 $N_{x,j},N_{y,j},N_{z,j}$。则该一次动作不能区别 $E\rho_+E^\dagger$ 与 $E\rho_-E^\dagger$，即使 $U_S$ 将态移出 $\mathcal I_3$。允许本章两条相邻交换时，两次接触可以区别，故在“一次至多二点动作加一次单点终端占据读数”的比较类中，所需接触数恰为二。
+
+证明。若 $j\notin S$，则 $U_S^\dagger N_{a,j}U_S=N_{a,j}$；若 $j\in S$，则该拉回算子仍仅支撑在 $S$。这在完整物理空间中成立，不要求扇区不变。命题 10.6 已证明所有物理至多二点边缘相同，故两种准备对该拉回的迹相同。零次动作当然也相同。命题 10.4 保证定理 10.7 的两次接触是实际物理五态空间内的合法嵌入动作，而其 $0,1$ 终端概率给出区别。证毕。
+
+这个下界固定了准备、允许接触的支撑和终端读口；它没有把任意多点联合测量都放入一次动作，也没有允许以中间测量记录作额外输出。三体信息可经二体动作序列进入单点读口，不要求另设三体原始 Hamiltonian。由于区别需要实际的交互序列，也不能据此推断无交互的超距信号。
+
+### 10.8 七维未来观察空间与完整闭合表
+
+**定义 10.9（开环动作词的未来空间）。** 令 $\mathcal W$ 为独立边动作 $e^{-iuh_{AB}},e^{-ivh_{BC}}$ 的所有有限词，包括空词。终端测试为 $n_A,n_B,n_C$，并保留已知的归一化测试 $I$。定义实线性空间
+
+$$
+\mathcal O_3=\operatorname{span}_{\mathbb R}
+\{I,W^\dagger n_jW:j\in\{A,B,C\},\ W\in\mathcal W\}
+\subseteq\operatorname{Herm}(8).
+$$
+
+量子拉回是 [Output-resolved §15][C10-output] 的逐动作拉回方法在此菜单的具体应用：$\mathcal U_W(\rho)=W\rho W^\dagger$，迹的循环性给
+
+$$
+\operatorname{Tr}(\mathcal U_W(\rho)F)
+=\operatorname{Tr}(\rho\,\mathcal U_W^*(F)),
+\qquad\mathcal U_W^*(F)=W^\dagger FW.
+$$
+
+若按时间先 $U_1$ 后 $U_2$，则态动作是 $U_2U_1$，拉回是 $U_1^\dagger U_2^\dagger F U_2U_1$。这是实际矩阵与迹配对的对应，不从经典子核自动取得量子操作许可。
+
+**定理 10.10（恰为七维的闭包）。** 有
+
+$$
+\mathcal O_3=
+\operatorname{span}_{\mathbb R}\{I,n_A,n_B,n_C,J_{AB},J_{BC},T\},
+\qquad \dim_{\mathbb R}\mathcal O_3=7.
+$$
+
+证明。记 $\mathcal L_A(F)=i[h_{AB},F]$、$\mathcal L_B(F)=i[h_{BC},F]$。两生成元作用在全部七个基元素上的表为
+
+| $F$ | $\mathcal L_A(F)$ | $\mathcal L_B(F)$ |
+| --- | --- | --- |
+| $I$ | $0$ | $0$ |
+| $n_A$ | $J_{AB}$ | $0$ |
+| $n_B$ | $-J_{AB}$ | $J_{BC}$ |
+| $n_C$ | $0$ | $-J_{BC}$ |
+| $J_{AB}$ | $2(n_B-n_A)$ | $-T$ |
+| $J_{BC}$ | $T$ | $2(n_C-n_B)$ |
+| $T$ | $-J_{BC}$ | $J_{AB}$ |
+
+现给出表中所有类型的计算依据。单位项和远离支撑的占据项交换为零；占据项使用 $[R,n]=-R,[L,n]=L$。对 $X=R_AL_B$，
+
+$$
+XX^\dagger=n_A(I-n_B),\qquad
+X^\dagger X=(I-n_A)n_B,
+$$
+
+$$
+i[X+X^\dagger,-i(X-X^\dagger)]
+=-2[X,X^\dagger]=2(n_B-n_A).
+$$
+
+以 $Y=R_BL_C$ 代替 $X$ 得另一条同边流公式。混边部分由
+
+$$
+[X,Y]=F,\quad [X,Y^\dagger]=[X^\dagger,Y]=0,
+\quad [X^\dagger,Y^\dagger]=-F^\dagger
+$$
+
+得到 $\mathcal L_AJ_{BC}=T$ 以及 $\mathcal L_BJ_{AB}=-T$。最后，命题 10.7 证明中的 $[h_{AB},T]=Y-Y^\dagger$ 给 $\mathcal L_AT=-J_{BC}$。交换 $A,C$ 将 $h_{AB}$ 换成 $h_{BC}$，将 $Y-Y^\dagger$ 换成 $-(X-X^\dagger)$，而 $T$ 保持不变，故 $\mathcal L_BT=J_{AB}$。因此表没有遗漏的生成元作用。
+
+令右边七元素的张成空间为 $V_7$。表说明 $\mathcal L_A V_7\subseteq V_7$、$\mathcal L_B V_7\subseteq V_7$；有限维空间闭合于这两个线性算子的指数。因此 $e^{u\mathcal L_A},e^{v\mathcal L_B}$ 以及任意有限乘积都保持 $V_7$。初始测试属于 $V_7$，给第一个包含 $\mathcal O_3\subseteq V_7$。
+
+反向，轨道张成空间 $\mathcal O_3$ 在任一允许动作的共轭下仍不变：共轭一个词的拉回等于另一个合法词的拉回。它是有限维实向量空间，故拓扑闭。对于 $F\in\mathcal O_3$，差商
+
+$$
+\frac{e^{it h_{AB}}Fe^{-it h_{AB}}-F}{t}
+$$
+
+都属于 $\mathcal O_3$，其 $t\to0$ 极限 $\mathcal L_AF$ 也属于该空间；另一边同理。从空词的 $n_A,n_C$ 得到 $J_{AB},J_{BC}$，再由 $\mathcal L_AJ_{BC}=T$ 得 $T$。因此 $V_7\subseteq\mathcal O_3$。这个导数论证只用于观察空间的线性闭包；一般链的精确动作可达性将在下文另证。
+
+为证明维数，考虑七元素的一条实线性关系。取 $001\leftrightarrow100$ 的矩阵元，只有 $T$ 非零，故其系数为零；取 $010\leftrightarrow100$，只有 $J_{AB}$ 非零，故其系数为零；取 $001\leftrightarrow010$，只有 $J_{BC}$ 非零，故其系数也为零。剩余对角关系
+
+$$
+a_0I+a_An_A+a_Bn_B+a_Cn_C=0
+$$
+
+在 $000,100,010,001$ 上依次求值，给 $a_0=a_A=a_B=a_C=0$。七个算子线性独立，维数恰为七。证毕。
+
+若依次排列这七个算子为列 $F$，将表中的系数写成 $\mathcal L_jF_a=\sum_b L^{(j)}_{ab}F_b$，则状态记录 $r_a=\operatorname{Tr}(\rho F_a)$ 经一次动作满足
+
+$$
+r'=e^{tL^{(j)}}r.
+$$
+
+因为 $r'_a=\operatorname{Tr}(\rho e^{it h_j}F_ae^{-it h_j})$。按时间顺序乘这些实矩阵即可维护所有未来读数。$r_I=1$ 已知，余下六个数是任务的充分线性记录；该更新式不要求重建密度矩阵。
+
+### 10.9 全正准备基点上的六坐标锐下界
+
+**定理 10.11（全密度域的最小线性期望记录）。** 在 $\mathcal D_3$ 上，预测定义 10.9 的全部未来单点占据期望，至少需要六个独立的非归一化实线性期望坐标。定理 10.10 的六坐标记录达到此界。
+
+证明。任意候选记录可写成 $\operatorname{Tr}(\rho F_1),\ldots,\operatorname{Tr}(\rho F_r)$，其中 $F_i$ 为 Hermitian；加入已知归一化，令
+
+$$
+V=\operatorname{span}_{\mathbb R}\{I,F_1,\ldots,F_r\}.
+$$
+
+即使允许从这些数进行任意非线性后处理，只要两个准备的记录相同，预测也必须相同。若 $\mathcal O_3\not\subseteq V$，其轨道生成集中至少有一个真实未来测试 $F=W^\dagger n_jW$ 不在 $V$，否则整个张成空间已包含于 $V$。
+
+在 Hermitian 实空间上使用 Hilbert–Schmidt 内积 $\langle A,B\rangle=\operatorname{Tr}(AB)$。令 $P_V$ 为正交投影，取
+
+$$
+D=F-P_VF.
+$$
+
+则 $D\ne0,D=D^\dagger,D\perp V$。由于 $I\in V$，有 $\operatorname{Tr}D=0$，并且
+
+$$
+\operatorname{Tr}(DF)=\|D\|_{\rm HS}^2>0.
+$$
+
+选 $0<\varepsilon<1/(8\|D\|_{\rm op})$，令
+
+$$
+\sigma_\pm=I_8/8\pm\varepsilon D.
+$$
+
+任意单位向量 $v$ 满足
+
+$$
+\langle v,\sigma_\pm v\rangle
+\ge1/8-\varepsilon\|D\|_{\rm op}>0,
+$$
+
+故两者正定且迹一，都在完整准备域内。因为 $D\perp V$，它们的所有候选记录相同；但实际未来测试差为
+
+$$
+\operatorname{Tr}((\sigma_+-\sigma_-)F)
+=2\varepsilon\|D\|_{\rm HS}^2>0.
+$$
+
+这与未来充分性矛盾。所以任何充分记录都必须满足 $\mathcal O_3\subseteq V$，从而 $r+1\ge\dim V\ge7$，即 $r\ge6$。反向充分性已由定理 10.10 给出。证毕。
+
+正定基点 $I_8/8$ 是必要的域内工具：若只允许纯态、一个固定激发数扇区或某个特殊准备族，两个微扰未必仍在该族中，不能直接沿用这个下界。例如固定 $n_A+n_B+n_C$ 的值，会使三个占据记录之间多一个已知关系，须重新计算限制后的观察空间及其正性域。
+
+“六个实线性坐标”不是六比特、六个样本、六次仪器操作，也不是一次测量即可精确取得全部数值的承诺。任意实数的集合论编码不在本最小性比较类中。该结论既不主张全态层析，也不提供制备成本或统计精度的资源定理。
+
+### 10.10 接触次序与端点钟读数的不足
+
+**命题 10.12（相同两角、不同次序）。** 两条边的生成元满足
+
+$$
+[h_{AB},h_{BC}]=R_AZ_B^{\rm sf}L_C-L_AZ_B^{\rm sf}R_C\ne0.
+$$
+
+若反过来先接触 $BC$ 再接触 $AB$，令
+
+$$
+\widetilde W(u,v)=e^{-iuh_{AB}}e^{-ivh_{BC}},
+$$
+
+则对所有实参数，$\widetilde q_C^+(u,v)=\widetilde q_C^-(u,v)=1/2$。
+
+证明。利用定理 10.10 中的四个混边乘积，
+
+$$
+[X+X^\dagger,Y+Y^\dagger]=F-F^\dagger.
+$$
+
+它将 $|001\rangle$ 送到 $|100\rangle$，故确实非零。反序中最后的 $AB$ 动作与 $n_C$ 交换，因而
+
+$$
+\widetilde W^\dagger n_C\widetilde W
+=e^{ivh_{BC}}n_Ce^{-ivh_{BC}}.
+$$
+
+输入的 $BC$ 完整边缘是 $I_4/4$，经任意 $BC$ 幺正仍为 $I_4/4$，所以其 $n_C$ 期望为 $1/2$。证毕。
+
+在同一角对 $u=\pi/2,v=\pi/4$，得到
+
+| 接触次序 | $\rho_+$ 的 $C$ 点占据 | $\rho_-$ 的 $C$ 点占据 |
+| --- | ---: | ---: |
+| 先 $AB$ 后 $BC$ | $0$ | $1$ |
+| 先 $BC$ 后 $AB$ | $1/2$ | $1/2$ |
+
+若每条边的单独运行参数由校准速率积分定义，
+
+$$
+u=\int g_{AB}(\tau_{AB})\,d\tau_{AB},\qquad
+v=\int g_{BC}(\tau_{BC})\,d\tau_{BC},
+$$
+
+沿每条边，生成元始终是同一个固定矩阵乘标量，故其单独传播子由积分角决定。但仅给两个积分的最终值没有给出不同边之间的排序；上表证明，相同端点角不决定联合终态，甚至不决定一个终端单点读数。一般交错或同时控制须使用对应时间序列的传播子，不能把两角相加后忘记顺序。
+
+这里未假定任意接触前的两边缘交换对称，也未假定每点 $n_j$ 独自守恒。保持的是总激发数与既定的各点高、中标签。
+
+### 10.11 双参数相容条件与有限事件偏序
+
+**命题 10.13（平坦双参数态势的必要条件）。** 设在原点邻域存在二次连续可微的向量值函数 $\Psi(u,v)$，满足
+
+$$
+\partial_u\Psi=-ih_{AB}\Psi,\qquad
+\partial_v\Psi=-ih_{BC}\Psi.
+$$
+
+则邻域内每一点都必须满足 $[h_{AB},h_{BC}]\Psi(u,v)=0$。若要求这种态势对所有初始向量存在，则必须有算子交换；反之，算子交换时 $e^{-iuh_{AB}-ivh_{BC}}\Psi_0$ 给出这样的势。
+
+证明。交换混合偏导得
+
+$$
+\partial_u\partial_v\Psi=-h_{BC}h_{AB}\Psi,
+\qquad
+\partial_v\partial_u\Psi=-h_{AB}h_{BC}\Psi,
+$$
+
+所以交换子在每个点的向量上为零。若允许任意初值，在原点对全部向量成立就强制交换子为零；交换子为零时，指数可拆分且分别微分给两条方程。
+
+只在初始点检查交换子的核并不充分。例如令 $\Psi_0=|010\rangle$，则 $(F-F^\dagger)\Psi_0=0$。但任何候选解沿 $v=0$ 都由第一条常系数方程唯一确定为
+
+$$
+\Psi(u,0)=\cos u\,|010\rangle-i\sin u\,|100\rangle.
+$$
+
+由于 $(F-F^\dagger)|100\rangle=-|001\rangle$，有
+
+$$
+[h_{AB},h_{BC}]\Psi(u,0)=i\sin u\,|001\rangle,
+$$
+
+在任意原点邻域内都有非零值。因此该初值虽在初始交换子核中，仍没有满足两条方程的邻域态势。需要的是沿实际轨道的相容性，而非一次核检查。证毕。
+
+这给出顺序依赖的数学障碍，适用对象是指定的控制参数空间和传播子。它没有定义物理空间的曲率，也不构造闭合因果回路。
+
+**命题 10.14（相容事件偏序的顺序无关性）。** 给定有限事件偏序 $(\mathcal E,\preceq)$，每个事件 $e$ 附一个实际幺正动作 $U_e$。假设任何两个不可比事件的实际动作都交换：
+
+$$
+e\not\preceq f,\ f\not\preceq e
+\quad\Longrightarrow\quad U_eU_f=U_fU_e.
+$$
+
+那么所有线性扩展按时间顺序组成的总幺正相同。
+
+证明。先证明线性扩展的相邻交换连接性。取两个线性扩展 $e_1,\ldots,e_N$ 与 $f_1,\ldots,f_N$。在第一个列表中找到 $f_1$。所有位于它之前的事件均与它不可比：若某事件必须在 $f_1$ 之前，第二个列表不可能以 $f_1$ 开始；若必须在其之后，第一个列表已违反偏序。因此可把 $f_1$ 通过逐次相邻不可比交换移到首位，每次交换后仍是线性扩展。删去共同首项，在剩余有限偏序上归纳，得到把一个扩展变为另一个的有限相邻不可比交换序列。
+
+实际总作用按后发生者乘在左侧。每次相邻交换只把某两个相邻因子 $U_eU_f$ 换成 $U_fU_e$；由假设二者相等，其余因子不变，所以总幺正不变。归纳完成。证毕。
+
+不交叠支撑的张量局部动作必交换，故可据此设为不可比。对于交叠且在允许参数范围内可能不交换的事件对，若要偏序保证任意参数的排序无关性，合同必须保留它们的顺序，或另证实际参数下的交换。不能只画一张偏序图就让任意非交换事件保持无定向。同一边同一生成元的指数彼此交换，若合同允许，它们即使支撑重叠也可不可比。这个有限事件结论没有认证一个适用于所有物理过程的共同钟。
+
+### 10.12 一般链的扇区、Jordan–Wigner 符号与二次闭合
+
+**定义 10.15（交替五态链）。** 给整数 $m\ge1$，在 $\mathcal H^{\otimes m}$ 固定所有 $z_j=0$，并选定 $y_j\in\{0,1\}$ 使 $y_j\ne y_{j+1}$。每点保留两个低标签，局部嵌入按定义 10.3 的 $y=0$ 或 $y=1$ 情况选取，得
+
+$$
+E_m:(\mathbb C^2)^{\otimes m}\longrightarrow\mathcal H^{\otimes m},
+\qquad \mathcal I_m=\operatorname{im}E_m,\qquad\dim\mathcal I_m=2^m.
+$$
+
+$m=1$ 时无邻接条件。命题 10.2 在每条边适用，所以各 $K_{j,j+1}$ 保持 $\mathcal I_m$，其限制为
+
+$$
+h_j=R_jL_{j+1}+L_jR_{j+1},\qquad 1\le j<m.
+$$
+
+所有 $h_j$ 的实参数动作可独立选择。这里的 $m$ 是有序五态复制的点数，不是单个 no-$11$ 长窗口内的位置数。
+
+在逻辑扇区上，令
+
+$$
+P_j=\prod_{\ell<j}Z_\ell^{\rm sf},\qquad
+c_j=P_jL_j,\qquad c_j^\dagger=P_jR_j.
+$$
+
+以下 CAR 和单位算子都仅指 $\mathcal I_m$。若把这些表达式用五态升降算子写在整个 $5^m$ 维空间上，单点反交换子在中态处为零而不是一，故不能声称全空间 CAR。
+
+Jordan–Wigner 变换及二次费米子方法是经典方法。[Pereira–Mueller §II A，式 (1)–(5)][C10-pereira] 的具体约定对应为
+
+$$
+a_j=c_j,\quad n_j^{\rm paper}=n_j,\quad
+\sigma_j^+=2R_j,\quad \sigma_j^-=2L_j,
+\quad \sigma_j^z=2n_j-I=-Z_j^{\rm sf}.
+$$
+
+该文 $J(\sigma_j^x\sigma_{j+1}^x+\sigma_j^y\sigma_{j+1}^y)=2Jh_j$，本章的边角等于该单边固定耦合的 $2Jt$。其无穷链均匀演化及特定自旋螺旋准备不在本章的有限独立控制假设内。
+
+本章所需的符号与闭合推导如下。$P_j^2=I$ 且与第 $j$ 点的 $L_j,R_j$ 交换，所以
+
+$$
+c_j^2=0,\qquad c_jc_j^\dagger+c_j^\dagger c_j
+=L_jR_j+R_jL_j=I.
+$$
+
+对于 $a<b$，令 $P_{(a,b)}=\prod_{a<\ell<b}Z_\ell^{\rm sf}$。消去重复前缀得
+
+$$
+c_ac_b=L_aZ_a^{\rm sf}P_{(a,b)}L_b
+=-L_aP_{(a,b)}L_b,
+$$
+
+$$
+c_bc_a=Z_a^{\rm sf}L_aP_{(a,b)}L_b
+=L_aP_{(a,b)}L_b.
+$$
+
+故两者之和为零。将 $L_b$ 换成 $R_b$，同一计算给 $c_ac_b^\dagger+c_b^\dagger c_a=0$。取伴随及交换指标即覆盖所有异点组合。因此
+
+$$
+\{c_a,c_b\}=0,\qquad
+\{c_a,c_b^\dagger\}=\delta_{ab}I.
+$$
+
+端点系数也须计算：利用 $R_aZ_a^{\rm sf}=R_a$，
+
+$$
+c_a^\dagger c_b
+=R_aZ_a^{\rm sf}P_{(a,b)}L_b
+=R_a\left(\prod_{a<\ell<b}Z_\ell^{\rm sf}\right)L_b,
+\qquad a<b.
+$$
+
+这里没有额外负号；负号只在用 $L_aZ_a^{\rm sf}=-L_a$ 的组合中出现。邻点之间字符串为空，所以
+
+$$
+h_j=c_j^\dagger c_{j+1}+c_{j+1}^\dagger c_j.
+$$
+
+以外文自旋记号写，一般字符串是
+
+$$
+c_a^\dagger c_b
+=\frac14\sigma_a^+
+\left(\prod_{a<\ell<b}(-\sigma_\ell^z)\right)\sigma_b^-.
+$$
+
+Pereira–Mueller 式 (9) 的印刷自旋表达式没有按式 (2)–(4) 展示此 $1/4$ 和每个中点的负号；其式 (11) 的振幅表达式则使用 $|A_{\downarrow}|^2-|A_{\uparrow}|^2$，对应这里的 $Z^{\rm sf}$。因此本章用 CAR 和局部矩阵乘法确定系数，不将式 (9) 的印刷式直接作本章恒等式。其式 (10) 的乘积因子化还依赖该文的无关联初态；这里不使用该准备假设。
+
+对于任意复矩阵 $M\in\mathbb C^{m\times m}$，定义二次算子
+
+$$
+Q(M)=\sum_{a,b=1}^mM_{ab}c_a^\dagger c_b.
+$$
+
+由 CAR，逐矩阵单位计算
+
+$$
+\begin{aligned}
+[c_a^\dagger c_b,c_c^\dagger c_d]
+={}&\delta_{bc}c_a^\dagger c_d
+-\delta_{da}c_c^\dagger c_b\\
+&-c_a^\dagger c_c^\dagger c_bc_d
++c_c^\dagger c_a^\dagger c_dc_b.
+\end{aligned}
+$$
+
+最后一项先交换两个产生算子，再交换两个湮灭算子，得到正的 $c_a^\dagger c_c^\dagger c_bc_d$，恰好抵消前一四次项。因此
+
+$$
+[c_a^\dagger c_b,c_c^\dagger c_d]
+=\delta_{bc}c_a^\dagger c_d-\delta_{da}c_c^\dagger c_b,
+$$
+
+$$
+[Q(M),Q(N)]=Q(MN-NM)=Q([M,N]).
+$$
+
+这一步对任意 $M,N$ 都成立。$M$ Hermitian 时 $Q(M)$ Hermitian。局部自旋表示中 $c_a^\dagger c_b$ 可支撑整段 $a,\ldots,b$，而在费米子记号中仍是二次项；两种“阶数”不是同一概念。
+
+### 10.13 任意准备的一粒子矩阵与无相位菜单
+
+取任意 $\rho\succeq0,\operatorname{Tr}\rho=1$ 于完整 $\mathcal I_m$，定义
+
+$$
+C_{ab}=\operatorname{Tr}(\rho\,c_b^\dagger c_a).
+$$
+
+这里 $C_{ab}=\overline{C_{ba}}$，故 $C$ Hermitian。Pereira–Mueller 的 $\rho_{lm}^{\rm paper}=\langle a_l^\dagger a_m\rangle$ 对应 $C_{ml}$，即矩阵指标转置。对于本章的 $Q$，直接展开给
+
+$$
+\langle Q(M)\rangle_\rho
+=\sum_{a,b}M_{ab}C_{ba}=\operatorname{Tr}(MC).
+$$
+
+该指标顺序保证下面的共轭方向。无论准备是否 Gaussian，所有这些式子都只是二次算子的期望恒等式。更具体地，对任意向量 $v$，取 $d_v=\sum_a\overline v_a c_a$，则 $v^\dagger Cv=\langle d_v^\dagger d_v\rangle\ge0$，由 CAR 还得 $\|v\|^2-v^\dagger Cv=\langle d_vd_v^\dagger\rangle\ge0$，所以 $0\preceq C\preceq I_m$。这不宣称 $C$ 决定整个多体态。
+
+令 $E_{ab}$ 为一粒子矩阵单位，$H_j=E_{j,j+1}+E_{j+1,j}$。因 $h_j=Q(H_j)$，CAR 也给
+
+$$
+[Q(H_j),c_a]=-\sum_b(H_j)_{ab}c_b.
+$$
+
+于是 Heisenberg 方程的唯一解是
+
+$$
+e^{iuh_j}c_ae^{-iuh_j}=\sum_b(V_j(u))_{ab}c_b,
+\qquad V_j(u)=e^{-iuH_j}.
+$$
+
+对 $\rho'=e^{-iuh_j}\rho e^{iuh_j}$，逐指标代入得到
+
+$$
+\begin{aligned}
+C'_{ab}
+&=\sum_{r,s}\overline{(V_j)_{br}}(V_j)_{as}
+\operatorname{Tr}(\rho c_r^\dagger c_s)\\
+&=\sum_{r,s}(V_j)_{as}C_{sr}\overline{(V_j)_{br}}
+=(V_jCV_j^\dagger)_{ab}.
+\end{aligned}
+$$
+
+因此按时间顺序的有限词在一粒子矩阵上给 $C\mapsto VCV^\dagger$，其中 $V$ 是对应顺序的有限乘积。
+
+**定理 10.16（无局部相位时的精确链闭包）。** 对上述独立相邻交换菜单、全部归一化正半定准备和末端 $n_j$ 期望，令
+
+$$
+D=\operatorname{diag}(1,i,i^2,\ldots,i^{m-1}).
+$$
+
+则未来观察空间是
+
+$$
+\mathcal O_m=
+\mathbb RI\ \oplus\
+\{Q(DSD^\dagger):S\in\operatorname{Sym}_m(\mathbb R)\},
+$$
+
+$$
+\dim\mathcal O_m=1+\frac{m(m+1)}2.
+$$
+
+因而最小非归一化实线性期望坐标数为 $m(m+1)/2$。
+
+证明。先确定实际有限动作群。逐矩阵元求值得
+
+$$
+D^\dagger H_jD=i(E_{j,j+1}-E_{j+1,j}),
+$$
+
+$$
+D^\dagger V_j(u)D
+=O_j(u)=\exp\bigl(u(E_{j,j+1}-E_{j+1,j})\bigr).
+$$
+
+$O_j(u)$ 在相邻二维平面上的块为
+
+$$
+\begin{pmatrix}\cos u&\sin u\\-\sin u&\cos u\end{pmatrix},
+$$
+
+在其余坐标上为单位，故在 $SO(m)$ 中。$D$ 只是一次固定的数学换基；此菜单没有因写下 $D$ 就增加可执行的局部相位动作。
+
+为证明每个 $O\in SO(m)$ 都恰为这些相邻旋转的有限词，使用逐列自下而上的消元。处理列 $k=1,\ldots,m-1$，依次处理相邻行对 $(m-1,m),(m-2,m-1),\ldots,(k,k+1)$。若该列在当前两行的分量为实数 $x,y$，置 $r=\sqrt{x^2+y^2}$。$r>0$ 时，左乘可用旋转
+
+$$
+G(x,y)=\begin{pmatrix}x/r&y/r\\-y/r&x/r\end{pmatrix}
+$$
+
+将 $(x,y)^{\mathsf T}$ 送到 $(r,0)^{\mathsf T}$；$r=0$ 时取单位。它确是某个 $O_{i-1}(u)$，因为两系数平方和一且允许所有实角。
+
+前 $k-1$ 列若已成为 $e_1,\ldots,e_{k-1}$，行号至少为 $k$ 的这些旋转不会破坏它们。第 $k$ 列与它们正交，故前 $k-1$ 个分量为零，剩余范数为一。自下而上消元后，第 $k$ 个分量是正枢轴 $1$，而非不确定的 $\pm1$。即使该列开始已经只有一个负的第 $k$ 分量，最后一次 $(k,k+1)$ 旋转也以 $x/r=-1,y/r=0$ 把它变成正一。
+
+所有前 $m-1$ 列完成后，正交性使最后一列为 $\pm e_m$。各消元旋转及原矩阵的行列式都是一，因此最后符号必须为正。于是有限个相邻旋转的左积把 $O$ 精确化为 $I$；逆序取逆便给出 $O$ 的有限动作词。这里用的是有限消元，不是仅由 Lie 代数维数推断稠密性。$m=1$ 时 $SO(1)=\{1\}$，无边菜单单独符合此结论。
+
+现在写
+
+$$
+\widetilde C=D^\dagger CD=S_\rho+iA_\rho,
+\quad S_\rho=\operatorname{Re}\widetilde C\in\operatorname{Sym}_m(\mathbb R),
+\quad A_\rho\in\mathfrak{so}(m,\mathbb R).
+$$
+
+每个实际词 $V=DOD^\dagger$ 给
+
+$$
+S_\rho\longmapsto OS_\rho O^{\mathsf T},
+\qquad
+\langle n_j\rangle_{W\rho W^\dagger}
+=(OS_\rho O^{\mathsf T})_{jj}.
+$$
+
+实反对称矩阵 $OA_\rho O^{\mathsf T}$ 的对角元为零，所以它在此菜单与此终端读口下不可见。由迹对偶，终端拉回是
+
+$$
+W^\dagger n_jW
+=Q(V^\dagger E_{jj}V)
+=Q(DO^{\mathsf T}E_{jj}OD^\dagger).
+$$
+
+算子等式可直接由 $c_a$ 的共轭式代入验证；因此所有拉回都在所列空间中，给充分包含。
+
+对于 $m\ge2$，$SO(m)$ 在实单位球面上传递。具体地，把任意实单位向量 $v$ 补成正交基；若所得矩阵行列式为负，就翻转一个不承载 $v$ 的基向量。这样得到正定向正交矩阵，且指定行或列为 $v$。已证有限生成性保证这个矩阵来自实际动作词。因此 $O^{\mathsf T}E_{jj}O$ 的轨道包含全部 $vv^{\mathsf T}$。这些投影张成全部实对称矩阵：$v=e_a$ 给 $E_{aa}$，$v=(e_a+e_b)/\sqrt2$ 给
+
+$$
+\frac12(E_{aa}+E_{bb}+E_{ab}+E_{ba}),
+$$
+
+减去已得对角项即得每个对称非对角矩阵单位。故反向包含也成立。$m=1$ 时唯一测试本身给全部一维实对称空间，不需要球面传递性。
+
+还须排除二次表示的核和归一化冗余。定义逻辑真空与单激发向量
+
+$$
+|\Omega\rangle=|0\cdots0\rangle,\qquad
+|a\rangle=c_a^\dagger|\Omega\rangle.
+$$
+
+它们全都属于固定高、中标签的 $\mathcal I_m$；这里的逻辑真空仍在每个 $y_j=1$ 点有物理高占据。由 CAR，
+
+$$
+Q(M)|\Omega\rangle=0,\qquad
+Q(M)|b\rangle=\sum_aM_{ab}|a\rangle.
+$$
+
+所以 $Q$ 在矩阵空间上单射。若 $\alpha I+Q(M)=0$，先作用于真空得 $\alpha=0$，再作用于全部单激发向量得 $M=0$。故所列直和确为直和，维数为 $1+m(m+1)/2$，没有把可变的总激发数误当归一化。
+
+最后，在 $d=2^m$ 维的全部密度域上重复定理 10.11 的有限维 Hilbert–Schmidt 分离：若候选空间 $V$ 含 $I$ 却不含 $\mathcal O_m$，取真实轨道测试 $F\notin V$ 和 $D_0=F-P_VF$，则 $\operatorname{Tr}D_0=0$，$\operatorname{Tr}(D_0F)>0$。选
+
+$$
+0<\varepsilon<\frac1{2^m\|D_0\|_{\rm op}},\qquad
+\rho_\pm^{(0)}=\frac{I_{2^m}}{2^m}\pm\varepsilon D_0.
+$$
+
+两者正定、迹一、记录相同而未来不同。故任何充分线性记录连同常数必须包含全部 $\mathcal O_m$，至少需要 $m(m+1)/2$ 个非归一化坐标；$S_\rho$ 的这些独立实元素达到下界。证毕。
+
+$m=1$ 时显式地 $\mathcal O_1=\operatorname{span}_{\mathbb R}\{I,n_1\}$，最少一个实数。$n_1$ 的期望可在零与一之间变化，所以它不能由归一化推出。
+
+$m=3$ 时 $D=\operatorname{diag}(1,i,-1)$，$S_\rho=\operatorname{Re}(D^\dagger CD)$ 与前面的六坐标精确对应为
+
+$$
+\langle n_A\rangle=S_{11},\quad
+\langle n_B\rangle=S_{22},\quad
+\langle n_C\rangle=S_{33},
+$$
+
+$$
+\langle J_{AB}\rangle=2S_{12},\qquad
+\langle J_{BC}\rangle=2S_{23},\qquad
+\langle T\rangle=-2S_{13}.
+$$
+
+例如 $c_1^\dagger c_3=R_AZ_B^{\rm sf}L_C$，故 $\langle T\rangle=C_{31}+C_{13}=2\operatorname{Re}C_{13}$，而 $S_{13}=-\operatorname{Re}C_{13}$。相邻项由 $\langle J_{AB}\rangle=-i(C_{21}-C_{12})$ 与 $S_{12}=\operatorname{Re}(iC_{12})$ 给出。这样三点七维表与一般链公式具有相同的符号及归一化。
+
+### 10.14 加入实际局部相位后的精确有限可达性
+
+**定义 10.17（扩大后的相位菜单）。** 在每条独立边交换之外，另行允许每一点独立的实际动作
+
+$$
+e^{-i\theta_jn_j},\qquad\theta_j\in\mathbb R.
+$$
+
+这是操作菜单的扩充，不是时钟重命名，也不是上一节数学换基 $D$ 的自动实现。在完整五态空间中，另行声明的 $e^{-i\theta_jN_{x,j}}$ 保持扇区，并满足 $e^{-i\theta_jN_{x,j}}E_m=E_me^{-i\theta_jn_j}$；其一粒子动作是 $e^{-i\theta_jE_{jj}}$。
+
+**定理 10.18（相位菜单的链闭包与锐坐标数）。** 扩大后的菜单在一粒子空间上以有限动作词精确生成 $U(m)$，且
+
+$$
+\mathcal O_m^{\rm phase}
+=\mathbb RI\ \oplus\ \{Q(M):M\in\operatorname{Herm}(m)\},
+$$
+
+$$
+\dim_{\mathbb R}\mathcal O_m^{\rm phase}=1+m^2.
+$$
+
+在完整 $\mathcal I_m$ 的全部归一化正半定准备上，最少需要 $m^2$ 个非归一化实线性期望坐标。
+
+证明。先给精确有限生成的实际菜单桥。对相邻对 $(j,j+1)$，局部相位允许在该二维块实现 $P=\operatorname{diag}(1,i)$ 及其逆，故由真正的三段动作可实现
+
+$$
+P^\dagger e^{-iu\begin{pmatrix}0&1\\1&0\end{pmatrix}}P
+=\begin{pmatrix}\cos u&\sin u\\-\sin u&\cos u\end{pmatrix}.
+$$
+
+这些是实际可执行的相邻实旋转；也可看出相位共轭把实对称耦合变为 $i(E_{j,j+1}-E_{j+1,j})$，提供第二个耦合象限。下面直接用前一个有限分解，不诉诸 Lie 稠密性。
+
+给任意 $U\in U(m)$，仍逐列、从底行向上使用相邻行对消元。若当前待消的一列在两行上是 $x,y\in\mathbb C$，先左乘两点独立对角相位
+
+$$
+P_{x,y}=\operatorname{diag}(e^{-i\arg x},e^{-i\arg y}),
+$$
+
+其中零分量的角任取零。它把两分量变成 $|x|,|y|$。若 $r=\sqrt{|x|^2+|y|^2}>0$，再左乘实际可用的实旋转
+
+$$
+\begin{pmatrix}|x|/r&|y|/r\\-|y|/r&|x|/r\end{pmatrix}
+$$
+
+将它们送到 $(r,0)^{\mathsf T}$；若 $r=0$ 则用单位。所有相位及旋转都只作用在当前相邻两行。
+
+完成前 $k-1$ 列后，这些列为 $e_1,\ldots,e_{k-1}$，而处理第 $k$ 列的行号均至少为 $k$，所以之前的列保持不变。幺正性使当前残余列范数为一；自下而上的消元给第 $k$ 列正枢轴一。完成前 $m-1$ 列后，最后一列必为 $e^{i\phi}e_m$，再用末点相位 $e^{-i\phi E_{mm}}$ 消去。这样有限个独立局部相位和相邻交换的左积把 $U$ 化为单位；逆序取逆仍在菜单中，得到 $U$ 的精确有限词。
+
+$m=1$ 时没有边，独立相位本身已给 $U(1)$。对于所有 $m$，本证明只需要允许任意实角和有限词，不要求单词长度事先有统一预算。它也没有从全多体 $U(2^m)$ 的可控性推出结论：所生成的只是二次数守恒表示的一粒子 $U(m)$ 动作。
+
+由 CAR 共轭公式，任意终端拉回都是 $Q(V^\dagger E_{jj}V)$，故包含于 $Q(\operatorname{Herm}(m))$。反向，$U(m)$ 可把任意单位复向量补入一组标准正交基，所以这些轨道包含所有秩一投影 $vv^\dagger$。它们的实张成是全部 Hermitian 矩阵：除 $v=e_a$ 给出的 $E_{aa}$ 外，取
+
+$$
+v_+=\frac{e_a+e_b}{\sqrt2},\qquad
+v_i=\frac{e_a+i e_b}{\sqrt2}
+$$
+
+分别得到
+
+$$
+2v_+v_+^\dagger-E_{aa}-E_{bb}=E_{ab}+E_{ba},
+$$
+
+$$
+2v_iv_i^\dagger-E_{aa}-E_{bb}=-iE_{ab}+iE_{ba}.
+$$
+
+这些矩阵给 $m$ 个实对角方向及每对指标两个实非对角方向，共 $m+2\binom m2=m^2$。因此两侧包含均成立。上一节已用真空与单激发扇区证明 $Q$ 单射且 $I$ 与其像独立，所以维数为 $1+m^2$。
+
+最小性仍在 $I_{2^m}/2^m$ 周围分离。若 $r$ 个候选期望连同 $I$ 的空间不包含本观察空间，选轨道测试 $F$ 的非零正交残差 $D_0$。取 $0<\varepsilon<1/(2^m\|D_0\|_{\rm op})$，密度矩阵 $I_{2^m}/2^m\pm\varepsilon D_0$ 在全部候选记录上相同而在 $F$ 上不同。故 $r+1\ge1+m^2$。整个 Hermitian 一粒子矩阵 $C$ 的 $m^2$ 个实坐标给充分记录，从而达到下界。证毕。
+
+即使 $m=1$，相位动作不改变 $n_1$，所以两种菜单都只需一个坐标。几个明确的链规模为
+
+| 有序五态复制数 $m$ | 固定高、中标签扇区维数 $2^m$ | 仅交换的最小实坐标 | 另有独立局部相位的最小实坐标 |
+| ---: | ---: | ---: | ---: |
+| $1$ | $2$ | $1$ | $1$ |
+| $3$ | $8$ | $6$ | $9$ |
+| $5$ | $32$ | $15$ | $25$ |
+| $9$ | $512$ | $45$ | $81$ |
+
+这些最小性要求每条边和每一点相位都能独立选择，实角没有精度或总时长预算，并在整扇区上比较全部准备。若只允许均匀耦合、同步角、有限词长、某个固定激发数或受限准备，必须重算轨道空间。即使相位菜单成立，$C$ 仍不确定一般多体态的高阶相关；这里只预测指定的最终占据期望。
+
+### 10.15 单窗静态方向、严格低矩复制下界与仪器边界
+
+九点链的 $\mathcal I_9$ 与单个 no-$11$ 长窗口 $\Gamma_9$ 是不同对象。前者是九个五态复制的交替高标签扇区，全部九个低标签可独立变化，故有 $2^9=512$ 个逻辑基态。后者是一个长度九的二进制词，要求相邻位置不能同时为一；按末位分类，其词数满足 $a_n=a_{n-1}+a_{n-2}$、$a_0=1,a_1=2$，故 $a_9=89$。
+
+在该单窗的经典函数空间中，已有矩基由合法独立子集的占据单项式组成。固定阶数零、一、二的联合矩，所固定的线性方向数为
+
+$$
+1+9+\bigl(\tbinom92-8\bigr)=38,
+$$
+
+故静态隐藏方向数为 $89-38=51$。这里二阶只计不相邻的位置对；相邻对的占据乘积恒为零。该经典矩基与隐藏方向沿用 [Correlation §23.2][C10-correlation] 的完整矩反演。这里的 $51$ 是完整有符号来源空间的线性核维数；若固定报告纤维含处处正的律，它也是该可行纤维的仿射维数。边界支撑受限时，必须用实际可行支撑重算，不能无条件沿用 $51$。$45,81$ 则是九复制量子链上、两种动作菜单的最小未来实线性期望坐标数。它们与 $51$ 没有可相减或可相等的共同空间：载体、准备、动作、终端测试和所计对象都不同。
+
+数学引文与严格复制合同。[Correlation 定理 26.15、§26.7][C10-correlation] 指定单窗位置集合中含 $k$ 个两两不相邻位置的 $T$，外部总占据为零，且只有支撑在 $T$ 的完整模式。令整数直方图为 $\nu_I\ge0$，$I\subseteq T$，总复制数为 $r=\sum_I\nu_I>0$；这里以 $r$ 表示该来源的 $m$，避免与本章的链长混同。归一化经典律为 $p_I=\nu_I/r$。其联合计数为
+
+$$
+M_S(\nu)=\sum_{I\supseteq S}\nu_I,\qquad
+M_\varnothing=r.
+$$
+
+该定理要求每一步净变化都固定每个真子集 $S\subsetneq T$ 的 $M_S$，并且不借助辅助模式。在这个合同下，非零净变化至少移动 $2^{k-1}$ 份完整模式；正规序产生、湮灭单项式的总 Fock 次数至少为 $2^k$。本章直接消费这一定理，不将它改成关于任意二点空间门的下界。
+
+有两个精确例子显示合同为何不同。第一，取该来源允许的 $T=\{a,b,c\}$（例如长窗口位置 $1,3,5$），其余位置全零。原始两组直方图为
+
+$$
+\{\varnothing,ab,ac,bc\},\qquad\{a,b,c,abc\}.
+$$
+
+它们各有四份完整模式，每个单点计数为二，每个二点计数为一，顶端计数从零变一。定理给一次严格保留全部真子集计数的交换至少四份、总 Fock 次数八。若改用两步
+
+$$
+\{\varnothing,ab,ac,bc\}
+\longrightarrow\{\varnothing,a,abc,bc\}
+\longrightarrow\{a,b,c,abc\},
+$$
+
+第一步把 $ab+ac$ 换成 $a+abc$，第二步把 $\varnothing+bc$ 换成 $b+c$。每步保留三个单点计数，但 $M_{bc}$ 依次为 $1,2,1$；归一化二点矩依次为 $1/4,1/2,1/4$。因此每步只动两份的路线恰好违反了每步严格二阶守恒的前提。这个例子及其计数消费自该来源 §26.7。
+
+第二，本章量子链的三点见证在第一次 $AB$ 接触 $u=\pi/2$ 后，四个对角支撑基变成
+
+$$
+\{001,101,010,110\},
+$$
+
+各仍重 $1/4$；相位改变不影响这个对角列表。由命题 10.6，输入与这一中间态的低占据二点期望分别为
+
+$$
+\langle n_An_C\rangle:\ 0\longmapsto1/4,
+\qquad
+\langle n_Bn_C\rangle:\ 1/4\longmapsto0.
+$$
+
+三单点期望在这个特例中仍全为 $1/2$，但完整两点关系已经改变。流拉回还给中间态 $\langle J_{BC}\rangle_\pm=\pm1$，所以它的两点相干性也不再相同。更一般地，单个准备 $|101\rangle$ 经同一接触变成 $-i|011\rangle$：总低占据均为二，而 $n_A$ 从一变零、$n_B$ 从零变一、$n_An_C$ 从一变零、$n_Bn_C$ 从零变一。
+
+本章固定的是各点高、中标签和总低占据的算子守恒；这些明确改变的低阶跨点读数不满足经典严格复制合同。因此用二体门词读出高支撑信息，与 $2^{k-1}$ 复制及 $2^k$ 次数界没有冲突。经典完整模式的复制、链的五态张量因子以及 CAR 模式的激发数是三种不同计数。
+
+最后，若加入中间仪器或反馈，必须重新定义未来观察空间。设仪器分支为完全正、迹不增的映射 $\mathcal M_{a,o}$，同一动作的分支和保迹。其对偶满足
+
+$$
+\operatorname{Tr}(\mathcal M_{a,o}(\rho)F)
+=\operatorname{Tr}(\rho\,\mathcal M_{a,o}^*(F)).
+$$
+
+对于实际分支记录 $\omega=((a_1,o_1),\ldots,(a_k,o_k))$，带末端效果 $F$ 的联合概率是
+
+$$
+\operatorname{Tr}\!\left(
+\rho\,\mathcal M_{a_1,o_1}^*\cdots
+\mathcal M_{a_k,o_k}^*(F)\right).
+$$
+
+因此要从终端测试和 $I$ 出发，对每个分支对偶反复闭合；只对平均通道 $\sum_o\mathcal M_{a,o}$ 闭合会丢掉实际输出。反馈还要求在每个记录前缀上保留公共策略所指定的动作与合法性。条件概率只在分支概率为正时由联合概率相除定义，零概率分支不能强行归一化。
+
+这正对应 [Output-resolved §15 及 Q2、Q4、Q12、Q13][C10-output] 的逐分支、终端、合法性和资源边界。本章已完整证明幺正开环菜单的共轭应用；没有由该方法自动推出扩大仪器菜单仍保留六坐标或 $m^2$ 坐标，也没有由经典读者的合法标签取得量子制备与相位操作。
+
+### 10.16 来源映射与数学适用边界
+
+本章把经典方法用于一个具体有序五态模型：受控交换因式分解、三体混合见证及其精确顺序响应、指定链菜单的观察空间及全准备域最小性，由章内证明相互连接。一般 Jordan–Wigner 方法、CAR 二次闭合、单粒子矩阵演化、Givens 消元及观察空间方法保留其文献归属。
+
+| 来源 | 本章的精确消费 | 不随引用转入的结论 |
+| --- | --- | --- |
+| [Circulation §§24.1–24.4][C10-circulation] | 标签、$W,d$、负相位；定理 24.3 的 $A,V$ 精确对应 $A_{ab},K_{ab}$ | 相同乘积准备或交换对称输入不作为每次链接触的新假设 |
+| [Symplectic §§35.8–35.9][C10-symplectic] | $J_f$ 的目标系数、$\theta^{\rm old}=-\theta$、$\Phi^{\rm old}=-\chi$、非线性四次 Hamilton 背景 | 四次单份流不被识别为有序张量对线性 $K$ |
+| [Correlation §23.2、定理 26.15、§26.7][C10-correlation] | 单窗矩基；孤立位置、外部零、每步固定全部真子集计数的复制下界及其实际四份例子 | 不约束允许中间低阶关系变化的任意链协议 |
+| [Output-resolved §15 与编者限定][C10-output] | 终端测试经逐分支拉回闭合的原则；本章用迹对偶给出量子应用 | 不直接供应量子操作许可、反馈闭包维数或样本复杂度 |
+| [Walck–Lyons，Main Result][C10-walck] | 纯态由全部 $(n-1)$ 点边缘确定性的 GHZ 分类背景 | 不作为秩二混合 $\rho_\pm$ 的正性或两体边缘证明 |
+| [Pereira–Mueller，§II A–B、式 (1)–(11)][C10-pereira] | XX/Jordan–Wigner 方法，因子二、$Z^{\rm sf}=-\sigma^z$ 和相关矩阵指标对应 | 不使用其螺旋乘积准备、无穷链极限或式 (9) 的未换算自旋字符串 |
+| [D’Alessandro，§2、Theorem 1][C10-observation] | 共轭轨道、交换子稳定空间与 Hilbert–Schmidt 不可分辨方向的方法 | 不把本文的七维或链维数说成其直接定理结论 |
+| [Frerix–Bruna，§§2–3][C10-givens] | Givens 二维旋转与有限矩阵分解的经典背景 | 不用低因子数近似或 Lie 稠密性替代本章相邻菜单的精确消元 |
+| [Taranto 等，Definition 2、Theorem 4][C10-markov] | 相对于指定记忆仪器的量子 Markov 阶；其条件化历史与未来统计的范围 | 不提供本章线性坐标维数公式，也不把无中间仪器的词任务称为一般 Markov 阶定理 |
+
+D’Alessandro 的 *On Quantum State Observability and Measurement* 在 §2 以 $iS$ 及其反复交换子定义反 Hermitian 观察空间，Theorem 1 将相同受控终端期望与对该空间的迹配对相同联系。本章使用 Hermitian 记法，生成元为 $i[h,\cdot]$，并将多个终端占据和 $I$ 一起纳入。因此本章定理 10.10 的双包含及定理 10.11 的全正基点分离是该方法在明示菜单、明示准备域上的具体计算。
+
+Taranto、Pollock、Milz、Tomamichel、Modi 的 *Quantum Markov Order*（PRL 122, 140401）在 Definition 2 中固定记忆块的仪器族，历史与未来仪器仍任意；其 Theorem 4 排除非 Markov 过程对所有仪器都具有有限 Markov 阶。这是“仪器选择属于任务合同”的背景。它没有把记忆长度、观察空间维数、比特数和末端读数数目等同。
+
+相关书目还包括 Reck、Zeilinger、Bernstein、Bertani，*Experimental realization of any discrete unitary operator*，PRL 73, 58，DOI [10.1103/PhysRevLett.73.58][C10-reck]。此条只作书目背景，不作为本章的定理输入；有限可达性由定理 10.16、10.18 中逐列、相邻、正枢轴的完整构造承担，不作光学器件到本模型的移植。
+
+所有最小性均是“全部所声明归一化正半定准备、所有菜单内有限动作词、最终单点占据期望”这一合同内的实线性坐标最小性。它允许任意非 Gaussian、相关及跨激发数准备，既不假定固定激发数，也不承诺任意准备可免费获得。中间测量、反馈、新增动作、受限角度、资源预算或不同终端测试会改变合同，需要重新闭合和重新分离。
+
+[C10-circulation]: https://github.com/the-omega-institute/trureturing/blob/ed6e098014aa3914eaf3450cde7c07f0dbbab6da/docs/develop/theory/AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md
+[C10-symplectic]: https://github.com/the-omega-institute/trureturing/blob/9cc2ff145de5d4a6ad7357b22025b00b0557f630/docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md
+[C10-correlation]: https://github.com/the-omega-institute/trureturing/blob/f80965d4f7d8cade37c2ae23809730c6c030a2cc/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[C10-output]: https://github.com/the-omega-institute/trureturing/blob/9cc2ff145de5d4a6ad7357b22025b00b0557f630/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md
+[C10-walck]: https://arxiv.org/abs/0707.4428v2
+[C10-pereira]: https://arxiv.org/html/2110.05972v3
+[C10-observation]: https://arxiv.org/abs/quant-ph/0307127
+[C10-givens]: https://arxiv.org/abs/1905.05796
+[C10-markov]: https://arxiv.org/abs/1805.11341
+[C10-reck]: https://doi.org/10.1103/PhysRevLett.73.58
+
+## 追加锚（本行以下为增补区）
