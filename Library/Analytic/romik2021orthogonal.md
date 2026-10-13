@@ -8241,8 +8241,9 @@ for every integer $H>5040$ remain unproved.
 Retain the original source, local all-critical and complete-removal
 premises of (LC263), and the regrouping (LC284). In particular, every
 exterior zero and every far selected factor remains in
-$\widehat A=AQ_{\rm far}=F/Q_{\rm core}$. The core polynomial is monic,
-of degree $q\le C_0L$, with real roots $\alpha_j$ satisfying
+$\widehat A=AQ_{\rm far}=F/Q_{\rm core}$. Retain total selected
+multiplicity $r\le C_0L$, with $q\le r$. The core polynomial is monic,
+of degree $q$, with real roots $\alpha_j$ satisfying
 $|\alpha_j-c|\le D$; repeated core roots are allowed. Use
 $E=128(S+3C_0)L$ and the complete auxiliary functions
 $\widehat H,\widehat\ell,\widehat s,\widehat\chi,\widehat\eta$ from
@@ -8497,10 +8498,11 @@ kernels at $q\le C_0L$, $\nu\ge C_{\rm ker}L$, the transmission stage
 would require only
 $\nu\ge\max\{C_{\rm ker},65536(S+3C_0)\}L$.
 The existence of that $C_{\rm ker}$ remains unproved.
-The already known identity $\sum_j\gamma_j=q\widehat\eta>0$ supplies
-a total residue, not positivity of every residue.
-More generally, putting
-$V_t=\partial_tR_{q,t}+\widehat\chi'\partial_zR_{q,t}$, a certificate
+For real parameters and $q\ge1$, the already known identity
+$\sum_j\gamma_j=q\widehat\eta>0$ supplies a total residue, not
+positivity of every residue. Retaining the simple-real-root and
+complex-strip clauses of $\mathsf K$, hence $\delta_j>0$, put
+$V_t=\partial_tR_{q,t}+\widehat\chi'\partial_zR_{q,t}$. A certificate
 that every real-pole residue of $(U_{q,t}-gV_t)/R_{q,t}$ is nonnegative
 for some $g>0$ would give $G/J'\ge g$ by (LC312).
 This relative certificate too remains unpaid for growing degree.
@@ -8510,8 +8512,9 @@ This relative certificate too remains unpaid for growing degree.
 
 Retain the same complete source and auxiliary functions of
 (LC263), (LC276)--(LC280) and (LC284), with
-$E=128(S+3C_0)L$, $1\le q\le C_0L$ and
-$\nu\ge\max\{256E,128q\}$. The exact core recurrences remain
+$E=128(S+3C_0)L$, total selected multiplicity $r\le C_0L$,
+$1\le q\le r$ and $\nu\ge\max\{256E,128q\}$. The exact core
+recurrences remain
 $p_0=1,w_0=0$ and
 $p_j=(\widehat\chi-v\partial_t-\alpha_j)p_{j-1}$,
 $w_j=(\widehat\chi-v\partial_t-\alpha_j)w_{j-1}
