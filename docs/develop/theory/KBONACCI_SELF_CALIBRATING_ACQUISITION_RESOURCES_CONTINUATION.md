@@ -849,3 +849,652 @@ no finite-precision, computational-speed or physical-availability
 conclusion follows. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 113. Residual demand and a common stopped mixture
+
+**Definition 113.1 (Residual demand at a positive cap).** Retain the
+original source, carrier, consumer and selected laws of Definition
+110.1, with the entire positive nonincreasing vanishing sequence
+(110.2). The classes remain exactly those of Acquisition Resources,
+Definition 90.1: the resource is at most two actual requests,
+including repetitions, with zero advice and one source-independent
+seed. Original competitors retain arbitrary addresses, full-carrier
+outputs and sourcewise almost-sure finite handoff. No probability
+law on the source set is introduced.
+
+For $0<\varepsilon\le1$ define
+
+$$
+L=\max\bigl(\{i:a_i>\varepsilon\}\cup\{0\}\bigr),\qquad
+d_i=(a_i-\varepsilon)_+,\qquad
+D_3(a,\varepsilon)=\sum_{i=3}^{\infty}d_i.
+\tag{113.1}
+$$
+
+The active length $L$ is finite, so this residual sum is finite
+without a summability assumption on the amplitudes. In particular
+$d_i=0$ for $i>L$. The finite cap slice and the coefficient region
+are $\mathcal F_N(a,\varepsilon)$ and $\mathscr C_L$ from Sections
+108--110. All conclusions concern the separately selected atomic
+laws (110.3); the original nonatomic targets remain fixed.
+
+**Theorem 113.2 (An arbitrary-length necessary residual bound).** For
+every sequence (110.2) and every $0<\varepsilon\le1$,
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+D_3(a,\varepsilon)\le3\varepsilon+1-a_1.
+\tag{113.2}
+$$
+
+By Theorem 110.2 this is necessary for every original
+$\mathcal N_2$ acquisition at the cap, and hence for every original
+$\mathcal O_2$ acquisition there.
+
+**Proof.** If $L\le2$, the residual sum is zero and the inequality
+is automatic. Let $L\ge3$ and $p\in\mathcal F_N(a,\varepsilon)$.
+Extend the chain-score argument of Acquisition Resources, Theorem
+91.1, to the $L+1$ words and label events
+
+$$
+\begin{aligned}
+w_t&=1^t0^{L-t}\quad(0\le t\le L),\\
+H_0&=\{1\},\qquad H_1=\{0,2\},\\
+H_t&=\{t+1\}\quad(2\le t<L),\qquad H_L=\{0\}.
+\end{aligned}
+\tag{113.3}
+$$
+
+Fix the common seed of a finite preselected rule. Two distinct
+queried coordinates $i<j$ divide this chain into the three transcript
+intervals $t<i$, $i\le t<j$, and $j\le t$. A terminal label is
+constant on each interval. The only repeated label between distinct
+events in (113.3) is zero, shared by $H_1$ and $H_L$. No interval
+can contain both $t=1$ and $t=L$: equality of both queried bits on
+these two words would require both distinct coordinates to be at
+most one. Thus each interval scores at most one and the total is
+at most three. A single distinct coordinate gives at most two
+intervals, only one of which can score twice through that shared
+zero label, again giving at most three. With no coordinate the
+score is at most two. Repeated requests do not refine transcripts
+because the answers are static. These bounds permit every terminal
+label, including unqueried marks and the base label.
+
+Integrating under the one common mixture proves
+
+$$
+p_{w_0}(1)+p_{w_1}(0)+p_{w_1}(2)
+       +\sum_{t=2}^{L-1}p_{w_t}(t+1)+p_{w_L}(0)\le3.
+\tag{113.4}
+$$
+
+The cap rows (110.6) bound the first singleton, the pair event,
+the later singletons and the final base event from below by
+$a_1-\varepsilon$, $1-\varepsilon$, $d_{t+1}$, and
+$1-\varepsilon$, respectively. Hence
+
+$$
+a_1+2+D_3(a,\varepsilon)-3\varepsilon\le3,
+\tag{113.5}
+$$
+
+which is (113.2). The row at $w_1$ uses the pair event
+$\{0,2\}$, not just a singleton demand. The original-to-finite
+direction of Theorem 110.2 supplies the cap-feasible $p$ for any
+original competitor; no bounded-address or mark-support assumption
+on that competitor has entered this proof. $\square$
+
+**Theorem 113.3 (Synthesis from the residual increments).** For every
+sequence (110.2) and every $0<\varepsilon\le1$,
+
+$$
+D_3(a,\varepsilon)\le3\varepsilon
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\tag{113.6}
+$$
+
+There is an explicit original $\mathcal O_2$ acquisition at this
+closed cap, using one common seed and handing an original mark off
+after finitely many operations at every source and every seed. If
+$L\ge3$, its TV error is exactly $\varepsilon$ at every source
+with first absence at most $L$. At every actual tail source its
+error is $\max\{D_3(a,\varepsilon)/3,a_{n(x)}\}$. The finite
+kernel of this rule satisfies $c\ge H$ by Theorem 109.1.
+
+**Proof.** When $L\le2$, preselect the active prefix and query it
+in increasing order until its first zero or exhaustion. At a zero
+$n\le L$, emit $\theta_n$ with probability $a_n$ and otherwise
+$\theta_0$; emit $\theta_0$ on positive exhaustion. These terminal
+choices are fixed from the same seed before replies. Every active
+target is realized exactly, and every actual tail has error
+$a_{n(x)}\le\varepsilon$. For $L=0$ the rule immediately emits
+$\theta_0$. Theorems 109.1 and 110.2 give (113.6) in these cases.
+
+Let $L\ge3$, abbreviate $D=D_3(a,\varepsilon)$, and set
+$s=D/3$. Use the subset rule $P_{m,2}$ of Acquisition Resources,
+Theorem 87.1, for $3\le m\le L$. Its execution does not depend
+on the target amplitudes: choose uniformly a three-subset of the
+ordered labels $1<\cdots<m<\ast$, with $\ast$ meaning
+$\theta_0$; query its first two numerical labels increasingly until
+a zero, emit that zero's mark, and otherwise emit the third label
+without querying it. Denote its kernel, extended to $B_L$, by
+$p^{(m)}$.
+
+The supplied inclusion identity (87.5) gives, for every word whose
+first zero is $n\le m$,
+
+$$
+p^{(m)}_b(n)=\frac3{m+1}.
+\tag{113.7}
+$$
+
+It holds with every multiple-zero suffix: if the subset contains
+$n$, all selected coordinates before $n$ are positive, whether
+$n$ is queried or is its unqueried last label; if it does not
+contain $n$, no output can equal $n$. The same subset rule also has
+the following base formula. Put $k_m(b)=\sum_{i=1}^m b_i$. Base
+emission requires a subset containing $\ast$ whose two numerical
+coordinates both answer one. Consequently
+
+$$
+p^{(m)}_b(0)=
+\frac{\binom{k_m(b)}2}{\binom{m+1}3},\qquad
+\binom{k}2=0\quad(0\le k<2).
+\tag{113.8}
+$$
+
+In particular this is $3/(m+1)$ whenever the first $m$ bits are
+positive, including when the actual first absence is greater than
+$m$. No all-positive infinite source is required.
+
+Define the common schedule-family weights
+
+$$
+w_m=\frac{m+1}{3}(d_m-d_{m+1})\quad(3\le m\le L),\qquad
+W=\sum_{m=3}^Lw_m,\qquad R=1-W,\qquad d_{L+1}=0.
+\tag{113.9}
+$$
+
+They are nonnegative by monotonicity. Telescoping gives both a
+probability budget and a wrong-output budget:
+
+$$
+\begin{aligned}
+W&=\frac{4d_3+\sum_{i=4}^Ld_i}{3}=d_3+s,\\
+\sum_{m=3}^Lw_m\frac{m-2}{m+1}
+ &=\frac13\sum_{m=3}^L(m-2)(d_m-d_{m+1})=s.
+\end{aligned}
+\tag{113.10}
+$$
+
+Since $s\le\varepsilon$ and $d_3=a_3-\varepsilon$,
+
+$$
+W=a_3-\varepsilon+s\le a_3\le1,\qquad
+R\ge1-a_3\ge a_n-a_3\ge0\quad(n=1,2).
+\tag{113.11}
+$$
+
+With mass $w_m$ use $P_{m,2}$. With the remaining mass $R$, use
+the preselected increasing schedule $(1,2)$, stopping at its first
+zero. If $R>0$, on its zero cell $n=1$ or $2$ emit $\theta_n$
+with probability
+
+$$
+\alpha_n=\frac{a_n-a_3}{R},\qquad 0\le\alpha_n\le1,
+\tag{113.12}
+$$
+
+and otherwise emit $\theta_0$. On positive exhaustion emit
+$\theta_0$. If $R=0$, omit this branch. In that case (113.11)
+forces $a_3=1$ and $s=\varepsilon$, so $a_1=a_2=a_3=1$
+and both numerators in (113.12) vanish; no division is needed.
+There is no separate error cap on a branch.
+
+Let $p$ be the resulting mixed law. Fix any $b\ne1^L$ and put
+$n=n_L(b)$. When $n\ge3$, every branch $m<n$ outputs a label
+at most $m$ or zero, and the prefix branch emits zero. Thus
+
+$$
+p_b(n)=\sum_{m=n}^L\frac{3w_m}{m+1}=d_n=a_n-\varepsilon.
+\tag{113.13}
+$$
+
+When $n=1$ or $2$, all subset branches contribute in (113.7),
+and the prefix branch contributes $R\alpha_n=a_n-a_3$.
+If it is omitted this contribution and its numerator are both zero.
+Hence in these cases as well
+
+$$
+p_b(n)=d_3+a_n-a_3=a_n-\varepsilon.
+\tag{113.14}
+$$
+
+For all $n\le L$, let
+$\delta_b=1-p_b(0)-p_b(n)$ be the mass outside the target pair.
+The prefix branch adds none. If $n\le m$, (113.7) bounds the
+outside-pair mass of $P_{m,2}$ by $(m-2)/(m+1)$. If $n>m$,
+its positive prefix and (113.8) give exactly that outside-pair mass,
+since it cannot emit $n$. Applying the common weights in (113.10)
+therefore yields
+
+$$
+0\le\delta_b\le s\le\varepsilon.
+\tag{113.15}
+$$
+
+Equations (113.13)--(113.15) verify all three TV rows simultaneously
+for this one kernel:
+
+$$
+\begin{aligned}
+p_b(n)&=a_n-\varepsilon,\\
+p_b(0)&=1-a_n+\varepsilon-\delta_b\ge1-a_n,\\
+p_b(0)+p_b(n)&=1-\delta_b\ge1-\varepsilon.
+\end{aligned}
+\tag{113.16}
+$$
+
+These hold on every word, with every additional zero pattern.
+Relative to $(1-a_n)e_0+a_ne_n$, the mass at $n$ has deficit
+$\varepsilon$, while the base excess is
+$\varepsilon-\delta_b$ and the outside-pair mass is $\delta_b$.
+Thus the TV distance is exactly $\varepsilon$.
+
+At $1^L$, every subset branch has base probability $3/(m+1)$
+and the prefix branch emits base. Therefore
+
+$$
+p_{1^L}(0)=R+\sum_{m=3}^L\frac{3w_m}{m+1}
+          =R+d_3=1-s.
+\tag{113.17}
+$$
+
+All outputs are in $\{\theta_0,\ldots,\theta_L\}$, so at every
+actual source with $n(x)>L$, the exact tail identity (110.9) gives
+$\max\{s,a_{n(x)}\}\le\varepsilon$. This retains all original
+tail amplitudes, including $a_{L+1}=\varepsilon$, and all later
+zero patterns.
+
+For the common-seed realization, partition $U\in[0,1)$ into
+half-open intervals of masses $R,w_3,\ldots,w_L$, omitting zero
+masses. Refine the $w_m$ interval into equal intervals for its
+three-subsets. On a positive $R$ interval, its rescaled local seed
+$V$ fixes both prefix-cell choices before acquisition: cell $n$
+emits its mark exactly when $V<\alpha_n$. The two thresholds use
+the same $V$ and require no independence; each has its stipulated
+conditional marginal. Thus the entire increasing schedule and all
+its terminal outputs are fixed from one source-independent seed,
+not from knowledge of the actual first absence. Seed endpoints
+are assigned by the half-open convention. Every record and output
+event is measurable.
+
+Execute the chosen schedule by making its actual prime requests
+on the same original source, stopping at its first queried zero
+or exhaustion. Every branch makes at most two actual requests and
+hands its selected original tape off finitely for every seed and
+source. The finite kernel is in $\mathscr O_L$, so Theorem 109.1
+places it in $\mathscr C_L\subseteq\mathscr N_L$. Theorem 110.2
+provides the original closed-cap conclusion without changing the
+carrier, consumer, source or amplitudes. Proposition 90.2 supplies
+an $\mathcal N_2$ realization by completing the chosen schedule
+and ignoring the reply after its reconstructed stop; any such
+extra acquired reply is counted. Non-strict inequalities in
+(113.11) and (113.15) include $D=3\varepsilon$, $R=0$, zero
+residual increments, plateaus and every zero schedule weight.
+$\square$
+
+## 114. A saturated first amplitude and an attained common optimum
+
+**Theorem 114.1 (Exact feasibility when the first amplitude is one).**
+For every sequence (110.2) with $a_1=1$, and every
+$0<\varepsilon\le1$, the following conditions are equivalent:
+
+$$
+\begin{aligned}
+&\exists N\in\mathcal N_2:\ e_a(N)\le\varepsilon;\\
+&\exists O\in\mathcal O_2:\ e_a(O)\le\varepsilon;\\
+&\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing;\\
+&D_3(a,\varepsilon)\le3\varepsilon.
+\end{aligned}
+\tag{114.1}
+$$
+
+No condition of a unit plateau, summability or bounded active length
+is imposed. The comparison concerns replacement by some stopped
+kernel in the cap slice, not preservation of every preselected
+kernel's output law.
+
+**Proof.** Theorem 113.2 with $a_1=1$ gives the last condition
+from original preselected feasibility, using Theorem 110.2.
+Theorem 113.3 gives an original stopped rule from that condition.
+Stopped feasibility implies preselected feasibility by Proposition
+90.2, and Theorem 110.2 equates stopped feasibility to the displayed
+intersection. The constructions also cover $L=0,1,2$ and
+$\varepsilon=1$. $\square$
+
+**Theorem 114.2 (Attained optimum for every saturated vanishing
+profile).** For every sequence (110.2) with $a_1=1$, put
+
+$$
+S_m=\sum_{i=3}^m a_i\quad(m\ge3),\qquad
+r(a)=\max_{m\ge3}\frac{S_m}{m+1}.
+\tag{114.2}
+$$
+
+The maximum exists at a finite index and $0<r(a)<1$. With the
+original infima of Acquisition Resources, Definition 90.1,
+
+$$
+E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=r(a).
+\tag{114.3}
+$$
+
+Both infima are attained by original acquisitions with the same
+source-independent seed law, and the stopped attainer is the rule
+of Theorem 113.3 at $\varepsilon=r(a)$. In particular the optimum
+does not depend on $a_2$ within its allowed monotone range.
+
+**Proof.** By monotonicity the positive terms $a_i-\varepsilon$
+form a prefix, with a finite last index for each positive cap.
+Consequently
+
+$$
+D_3(a,\varepsilon)=
+\max\left\{0,\sup_{m\ge3}
+             \bigl(S_m-(m-2)\varepsilon\bigr)\right\}.
+\tag{114.4}
+$$
+
+If $L\ge3$, the expression is maximized at $m=L$, possibly also
+at subsequent indices whose amplitudes equal the cap. If $L\le2$,
+all its summands are nonpositive and the outer maximum is zero.
+It follows that
+
+$$
+D_3(a,\varepsilon)\le3\varepsilon
+\quad\Longleftrightarrow\quad
+S_m\le(m+1)\varepsilon\quad\hbox{for every }m\ge3.
+\tag{114.5}
+$$
+
+The ratios in (114.2) tend to zero. Indeed, for any $t>0$, choose
+$M\ge3$ with $a_i\le t$ for $i>M$; then for $m>M$,
+$S_m/(m+1)\le S_M/(m+1)+t(m-M)/(m+1)$, whose limit superior
+is at most $t$. Since $a_3/4>0$, a tail of these ratios is below
+half that positive value. Their positive supremum is therefore
+the maximum of a finite initial set. At its maximizing index,
+$S_m/(m+1)\le(m-2)/(m+1)<1$, so $0<r(a)<1$.
+
+At $\varepsilon=r(a)$ all inequalities in (114.5) hold. At a
+maximizing index $m$, one has
+$S_m-(m-2)r(a)=3r(a)$, so (114.4) also proves
+
+$$
+D_3(a,r(a))=3r(a).
+\tag{114.6}
+$$
+
+The active length at this positive cap is finite and at least three.
+Theorem 113.3 constructs the stopped rule, with error exactly
+$r(a)$ in every active first-absence class and at most $r(a)$
+at every actual tail. Each such class has an actual source by the
+finite-pattern supplier in Definition 110.1. Thus its uniform
+error is $r(a)$. Complete its schedule as in Proposition 90.2
+using the same seed to obtain a preselected attainer of the same
+error, still counting every acquired reply.
+
+If an original preselected rule had uniform error less than $r(a)$,
+choose a positive cap strictly between that error and $r(a)$.
+Theorem 114.1 and (114.5) would then contradict a maximizing
+prefix in (114.2). Stopped rules are included among preselected
+law families, so neither infimum can be smaller. This proves
+(114.3), including attainment. The argument uses vanishing, not
+summability, and every original amplitude remains part of the
+selected target family. $\square$
+
+## 115. Unequal amplitudes and a lost joint constraint
+
+**Proposition 115.1 (An unequal-amplitude closed-endpoint attainer).**
+Consider the sequence
+
+$$
+a_1=1,\quad a_2=\frac45,\quad a_3=\frac35,\quad
+a_4=\frac12,\quad a_5=\frac25,\qquad
+a_{5+j}=\frac1{4j}\quad(j\ge1).
+\tag{115.1}
+$$
+
+Its original hard-two optima in both restricted classes are
+$1/4$, attained at that closed cap. The stopped attainer of
+Theorem 113.3 uses the subset families $P_{3,2},P_{4,2},P_{5,2}$
+and the prefix family $(1,2)$ with respective weights
+$2/15,1/6,3/10,2/5$. In the prefix family, the zero at coordinate
+one is emitted surely; the zero at coordinate two is emitted with
+probability $1/2$, otherwise emitting the base mark.
+
+**Proof.** The sequence is positive, nonincreasing and vanishes,
+with unequal active amplitudes. At $\varepsilon=1/4$ its active
+length is five, since the actual next amplitude is exactly
+$a_6=1/4$. The residuals and budget are
+
+$$
+d_3=\frac7{20},\quad d_4=\frac14,\quad d_5=\frac3{20},\qquad
+D_3=\frac34,\quad s=\frac14,\quad R=\frac25.
+\tag{115.2}
+$$
+
+Substitution in (113.9) gives the stated weights, whose sum is
+one. Formula (113.12) gives $\alpha_1=1$ and $\alpha_2=1/2$.
+For every word with first zero $n\le5$, the correct-mark masses
+are, in order,
+
+$$
+\frac34,\quad\frac{11}{20},\quad\frac7{20},\quad
+\frac14,\quad\frac3{20}.
+\tag{115.3}
+$$
+
+Equations (113.15)--(113.16) verify the base and pair rows on all
+these words as well, giving TV exactly $1/4$. At the all-positive
+low word the base mass is $3/4$, so every actual tail has error
+$\max\{1/4,a_{n(x)}\}=1/4$, including $n(x)=6$.
+
+The first prefix ratios are $S_3/4=3/20$, $S_4/5=11/50$,
+$S_5/6=1/4$, and $S_6/7=1/4$. Since all subsequent amplitudes
+are at most $1/4$, induction preserves $S_m\le(m+1)/4$ for
+$m>6$. Thus $r(a)=1/4$, and Theorem 114.2 proves optimality
+against all original preselected and stopped competitors. The
+weights and inequalities are attained without removing the tail
+at the cap endpoint. $\square$
+
+**Definition 115.2 (A residual summary and its feasibility fibre).**
+For the fixed original source and a positive cap, consider the
+summary
+
+$$
+\Sigma_\varepsilon(a)=
+  \bigl(\varepsilon,a_1,D_3(a,\varepsilon),a_3,a_4\bigr).
+\tag{115.4}
+$$
+
+A summary determines cap feasibility on a class of amplitude
+sequences if any two sequences in that class with the same summary
+give the same truth value for
+$\mathcal F_N(a,\varepsilon)\ne\varnothing$. Theorem 114.1
+shows that $(\varepsilon,D_3)$ suffices for this predicate on
+$a_1=1$. It does not assert that the summary reconstructs a
+kernel; the sampler in (113.9) uses the individual residuals.
+
+**Proposition 115.3 (Identical residual summaries with different
+feasibility).** At $\varepsilon=1/10$, let two sequences $a^A,a^B$
+share
+
+$$
+a_1=\frac{17}{20},\quad a_3=\frac7{20},\quad a_4=\frac14,\qquad
+a_i=\frac1{10\cdot2^{i-4}}\quad(i\ge5),
+\tag{115.5}
+$$
+
+and set $a^A_2=4/5$, $a^B_2=17/20$. Both satisfy (110.2),
+have $L=4$, and have the same summary (115.4), with
+$D_3=2/5\le3\varepsilon+1-a_1=9/20$. Nevertheless
+
+$$
+\begin{aligned}
+\mathcal F_N(a^A,\varepsilon)\cap\mathscr C_4
+   &\ne\varnothing,\\
+\mathcal F_N(a^B,\varepsilon)&=\varnothing.
+\end{aligned}
+\tag{115.6}
+$$
+
+This is failure of the summary to determine general feasibility,
+not a separation of preselected and stopped cap feasibility.
+
+**Proof.** The shared residuals are $d_3=1/4,d_4=3/20$;
+the shared tail begins at $a_5=1/20$. All assertions about the
+sequence hypotheses and its summary follow directly.
+
+For an explicit stopped witness for $a^A$, write
+$[i;T_0,T_1]$ for querying coordinate $i$, followed by the zero
+or one branch, and write a label for its original output mark.
+Use the six seed-fixed tables with these common weights:
+
+$$
+\begin{array}{c|l}
+\text{weight}&\text{table}\\\hline
+3/5 &[1;1,[2;2,0]]\\
+1/20 &[1;1,[2;2,3]]\\
+1/20 &[1;1,[2;2,4]]\\
+1/10 &[1;1,[3;3,0]]\\
+1/10 &[2;0,[3;3,0]]\\
+1/10 &[3;0,[4;4,0]]
+\end{array}
+\tag{115.7}
+$$
+
+Every table preselects an increasing pair and stops at its first
+queried zero or at exhaustion. The unqueried outputs in its last
+cell are permitted by Definition 90.1. The weights sum to one.
+For every word in $B_4$ the mixed law has the following masses;
+free suffix bits in the first two rows are unrestricted:
+
+$$
+\begin{array}{c|c|c|c}
+\text{first zero}&p_b(n)&p_b(0)&p_b(0)+p_b(n)\\\hline
+1&4/5&
+  1/5-\tfrac1{10}b_2(1-b_3)-\tfrac1{10}b_3(1-b_4)&\ge9/10\\
+2&7/10&1/5+\tfrac1{10}b_3b_4&\ge9/10\\
+3&1/4&7/10&19/20\\
+4&3/20&4/5&19/20\\
+\text{none}&\text{--}&9/10&\text{--}
+\end{array}
+\tag{115.8}
+$$
+
+To obtain the first row, the first four tables contribute $4/5$
+to label one. The remaining two can output a nonbase label only
+on $b_2=1,b_3=0$ and on $b_3=1,b_4=0$, respectively. These
+events are disjoint, proving the lower base mass $1/10$ and the
+pair bound. In the second row the first three tables contribute
+$7/10$ to label two. The fifth always emits base, the fourth
+emits base when $b_3=1$, and the sixth emits base when $b_3=0$
+or $b_4=1$, giving its displayed base formula. The last three
+rows follow by substituting $110b_4$, $1110$ and $1111$ into
+the same tables.
+
+Thus for each first-zero class the correct singleton has mass at
+least $a^A_n-1/10$, the base singleton has mass at least
+$1-a^A_n-1/10$, and the pair has mass at least $9/10$. The
+all-positive row has base mass $9/10$. These are all the TV rows
+(110.6), including every multiple-zero word. The error equals
+$1/10$, for example in first-zero class two, whose correct-label
+deficit is $1/10$. Partitioning one uniform seed into the six
+weight intervals realizes the tables on the same actual source
+with at most two requests and finite handoff for every seed.
+Theorems 109.1 and 110.2 place its kernel in the first
+intersection in (115.6). Every actual tail has error
+$\max\{1/10,a_{n(x)}\}=1/10$ by (110.9).
+
+For $a^B$, use the weighted seven-event necessary certificate of
+Acquisition Resources, Lemma 97.2, specifically (97.5)--(97.7).
+It already includes arbitrary-address and full-carrier original
+competitors and yields
+
+$$
+a_2+2a_3+2a_4-1\le10\varepsilon.
+\tag{115.9}
+$$
+
+Its left side for $a^B$ is $21/20>1=10\varepsilon$, so no
+original preselected rule meets the cap. Equivalently the required
+weighted score is $121/20$, exceeding the supplied upper score
+six. Theorem 110.2 gives the second line of (115.6); containment
+also excludes a stopped attainer there. The lost joint relation
+can be written with $h=(a_3+a_4-5\varepsilon)_+=1/10$ as
+$a_2\le1-2h=4/5$, the restriction in Acquisition Resources,
+Corollary 96.3. Sequence $a^A$ meets it at equality and $a^B$
+violates it. Therefore even adjoining $a_3,a_4$ to the residual
+summary cannot recover this relation. The two restricted classes
+agree on each sequence's feasibility; (115.6) does not distinguish
+them. $\square$
+
+## 116. The remaining intersection strip
+
+**Corollary 116.1 (Necessary location of a cap separator).** If a
+sequence (110.2) and a cap $0<\varepsilon\le1$ satisfy
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing,\qquad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L=\varnothing,
+\tag{116.1}
+$$
+
+then necessarily
+
+$$
+a_1<1,\qquad L\ge5,\qquad
+3\varepsilon<D_3(a,\varepsilon)
+                 \le3\varepsilon+1-a_1.
+\tag{116.2}
+$$
+
+**Proof.** The upper bound is Theorem 113.2. Theorem 113.3
+excludes $D_3\le3\varepsilon$, and the strict lower bound together
+with the upper bound forces $a_1<1$. Acquisition Resources,
+Proposition 93.1 gives identical restricted feasibility for
+$L\le3$, and Theorem 96.2 gives it for $L=4$. For active length
+four its cap hypothesis holds automatically:
+$a_5\le\varepsilon<a_4$. Hence (116.1) requires $L\ge5$.
+These are necessary location conditions, not a stopped
+infeasibility certificate in the strip. $\square$
+
+**Definition 116.2 (The unresolved replacement obligation).** The
+remaining implication (110.14) still asks for a stopped kernel
+at the same cap whenever any preselected kernel is cap feasible.
+For $a_1<1$ in the strip (116.2), the residual sandwich does not
+settle this implication: the construction (113.9)--(113.16) uses
+the bound $D_3\le3\varepsilon$ and does not absorb the additional
+head allowance $1-a_1$. Proposition 115.3 exhibits a joint
+constraint lost by a residual summary, but neither its feasible
+sequence nor its infeasible sequence satisfies (116.1).
+The exact-law obstruction of Theorem 112.2 likewise retains
+a different stopped law at the same cap. No general cap separator
+or universal replacement theorem follows from those obstructions.
+
+All attainers here output original atomic marks in $B_1$, so the
+unchanged consumer returns unknown on them. Their distance from
+each unchanged nonatomic original target $\mu_x$ is one, as in
+Acquisition Resources, Theorem 82.1. These selected-target
+conclusions therefore change neither that consumer nor those
+targets. The common seed specifies exact measurable law existence;
+it imposes no runtime, address or mean-request resource in place
+of the hard actual-request count. A constructed finite address
+bound is an existence property of the attainer, not a restriction
+on competitors. Caps above one admit immediate base output;
+zero cap is outside the positive-cap statements.
+
+## 追加锚（本行以下为增补区）

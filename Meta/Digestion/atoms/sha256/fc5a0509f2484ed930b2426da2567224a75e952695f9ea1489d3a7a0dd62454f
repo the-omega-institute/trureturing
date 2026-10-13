@@ -1,0 +1,335 @@
+## 10. 有限精确核验
+
+```python
+import itertools
+
+def order2(n):
+    m, x = 1, 2 % n
+    while x != 1:
+        x, m = x * 2 % n, m + 1
+    return m
+
+class Field:
+    def __init__(self, n):
+        m = order2(n)
+        self.n, self.m, self.size = n, m, 1 << m
+        for poly in range(self.size + 1, 2 * self.size, 2):
+            exp, x = [], 1
+            for _ in range(self.size - 1):
+                exp.append(x)
+                x <<= 1
+                if x >> m & 1:
+                    x ^= poly
+            if x == 1 and len(set(exp)) == self.size - 1:
+                break
+        self.exp = exp + exp
+        self.log = {v: i for i, v in enumerate(exp)}
+        self.zeta = exp[(self.size - 1) // n]
+
+    def mul(self, a, b):
+        if a == 0 or b == 0:
+            return 0
+        return self.exp[self.log[a] + self.log[b]]
+
+    def inv(self, a):
+        return self.exp[(self.size - 1 - self.log[a]) % (self.size - 1)]
+
+    def power(self, a, e):
+        return self.exp[self.log[a] * e % (self.size - 1)]
+
+    def rank(self, rows):
+        rows = [r[:] for r in rows]
+        rk = 0
+        for c in range(len(rows[0]) if rows else 0):
+            piv = next((i for i in range(rk, len(rows)) if rows[i][c]), None)
+            if piv is None:
+                continue
+            rows[rk], rows[piv] = rows[piv], rows[rk]
+            iv = self.inv(rows[rk][c])
+            rows[rk] = [self.mul(iv, x) for x in rows[rk]]
+            for i in range(len(rows)):
+                if i != rk and rows[i][c]:
+                    f = rows[i][c]
+                    rows[i] = [x ^ self.mul(f, y) for x, y in zip(rows[i], rows[rk])]
+            rk += 1
+        return rk
+
+def rank2(rows):
+    vecs = [sum(b << j for j, b in enumerate(r)) for r in rows]
+    rk = 0
+    for c in range(len(rows)):
+        piv = next((i for i in range(rk, len(vecs)) if vecs[i] >> c & 1), None)
+        if piv is None:
+            continue
+        vecs[rk], vecs[piv] = vecs[piv], vecs[rk]
+        for i in range(len(vecs)):
+            if i != rk and vecs[i] >> c & 1:
+                vecs[i] ^= vecs[rk]
+        rk += 1
+    return rk
+
+def adjacency(N, edges):
+    A = [[0] * N for _ in range(N)]
+    for a, b in edges:
+        A[a][b] = A[b][a] = 1
+    return A
+
+def characters(n, q):
+    return itertools.product(range(n), repeat=q - 1)
+
+def fvalue(t, q, c):
+    return t[c - 1] if c < q else 0
+
+def rho_and_r(F, A, col, t, q):
+    N = len(A)
+    lam = [F.exp[F.log[F.zeta] * fvalue(t, q, col[u]) % (F.size - 1)] for u in range(N)]
+    M = [[(lam[u] ^ lam[v]) if A[u][v] else 0 for v in range(N)] for u in range(N)]
+    G = [[A[u][v] if lam[u] != lam[v] else 0 for v in range(N)] for u in range(N)]
+    return F.rank(M), rank2(G)
+
+def set_partitions(items):
+    if not items:
+        yield []
+        return
+    first, rest = items[0], items[1:]
+    for p in set_partitions(rest):
+        for i in range(len(p)):
+            yield p[:i] + [[first] + p[i]] + p[i + 1:]
+        yield [[first]] + p
+
+def masked_rank(A, col, blocks):
+    where = {c: i for i, b in enumerate(blocks) for c in b}
+    N = len(A)
+    return rank2([[A[u][v] if where[col[u]] != where[col[v]] else 0 for v in range(N)] for u in range(N)])
+
+def falling(a, k):
+    out = 1
+    for i in range(k):
+        out *= a - i
+    return out
+
+def has_even_cycle(N, edges):
+    adj = {u: set() for u in range(N)}
+    for a, b in edges:
+        adj[a].add(b)
+        adj[b].add(a)
+    def dfs(path):
+        u = path[-1]
+        for w in adj[u]:
+            if w == path[0] and len(path) >= 4 and len(path) % 2 == 0:
+                return True
+            if w not in path and dfs(path + [w]):
+                return True
+        return False
+    return any(dfs([s]) for s in range(N))
+
+def local_complement(edges, v):
+    nb = sorted({a if b == v else b for a, b in edges if v in (a, b)})
+    out = set(edges)
+    for a, b in itertools.combinations(nb, 2):
+        out ^= {(a, b)}
+    return frozenset(out)
+
+def lc_orbit(edges, N):
+    seen, stack = {edges}, [edges]
+    while stack:
+        g = stack.pop()
+        for v in range(N):
+            h = local_complement(g, v)
+            if h not in seen:
+                seen.add(h)
+                stack.append(h)
+    return seen
+
+def E(*pairs):
+    return frozenset((min(a, b) - 1, max(a, b) - 1) for a, b in pairs)
+
+FIELDS = {n: Field(n) for n in (5, 7, 9)}
+for n, F in FIELDS.items():
+    z = F.zeta
+    assert F.power(z, n) == 1 and all(F.power(z, d) != 1 for d in range(1, n))
+
+PAIRS4 = list(itertools.combinations(range(4), 2))
+MATCHINGS4 = [{(0, 1), (2, 3)}, {(0, 2), (1, 3)}, {(0, 3), (1, 2)}]
+
+# Equation (4.2) character by character and Theorem 5.1(d): all 64 graphs on four qubits in four parties.
+for n in (5, 7, 9):
+    F, q, col = FIELDS[n], 4, [1, 2, 3, 4]
+    D = (n - 1) * (n - 2) * (n - 3) * n ** (q - 4)
+    for mask in range(64):
+        edges = {PAIRS4[i] for i in range(6) if mask >> i & 1}
+        p = sum(m <= edges for m in MATCHINGS4)
+        expect = {2: 2, 3: -2}.get(p, 0)
+        total = 0
+        for t in characters(n, q):
+            rho, r = rho_and_r(F, adjacency(4, edges), col, t, q)
+            vals = {fvalue(t, q, c) for c in col}
+            assert rho - r == (expect if len(vals) == 4 else 0)
+            total += rho - r
+        assert total == expect * D
+
+# Theorem 7.3: equal masked-rank families, different S_n.
+STAR, PFLAT, PSHARP, ZC = E((1, 2), (1, 3), (1, 4)), E((1, 2), (1, 4), (2, 3)), E((1, 2), (1, 3), (2, 4)), E((1, 3), (1, 4), (2, 3), (2, 4))
+V = [E((1, 2), (1, 3)), E((1, 2), (1, 4)), E((1, 3), (1, 4)), E((2, 3), (2, 4))]
+
+def disjoint_union(components, isolated_per_party=0):
+    edges, col, base = set(), [], 0
+    for comp in components:
+        edges |= {(a + base, b + base) for a, b in comp}
+        col += [1, 2, 3, 4]
+        base += 4
+    col += [c for c in (1, 2, 3, 4) for _ in range(isolated_per_party)]
+    return adjacency(len(col), edges), col
+
+A_adj, A_col = disjoint_union([STAR] * 3 + [PFLAT, PSHARP, ZC], isolated_per_party=2)
+B_adj, B_col = disjoint_union([V[0], V[1], V[2], V[3]] * 2)
+assert len(A_col) == len(B_col) == 32
+for q in (4, 5):
+    for blocks in set_partitions(list(range(1, q + 1))):
+        if len(blocks) >= 2:
+            assert masked_rank(A_adj, A_col, blocks) == masked_rank(B_adj, B_col, blocks)
+F, q, n = FIELDS[5], 4, 5
+diff_rho = diff_r = 0
+for t in characters(n, q):
+    ra, ma = rho_and_r(F, A_adj, A_col, t, q)
+    rb, mb = rho_and_r(F, B_adj, B_col, t, q)
+    diff_rho += ra - rb
+    diff_r += ma - mb
+assert diff_r == 0 and diff_rho == 2 * (n - 1) * (n - 2) * (n - 3)
+
+# Theorem 7.2: local complementation chains and the local Clifford step.
+def gauss_mul(a, b):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+def apply_one(state, N, k, U):
+    out = [(0, 0)] * len(state)
+    for x, amp in enumerate(state):
+        bit = x >> (N - 1 - k) & 1
+        for nb in (0, 1):
+            c = U[nb][bit]
+            if c != (0, 0):
+                y = x ^ ((bit ^ nb) << (N - 1 - k))
+                prod = gauss_mul(c, amp)
+                out[y] = (out[y][0] + prod[0], out[y][1] + prod[1])
+    return out
+
+def graph_state(N, edges):
+    vec = []
+    for x in range(1 << N):
+        bits = [x >> (N - 1 - k) & 1 for k in range(N)]
+        sign = sum(bits[a] * bits[b] for a, b in edges) % 2
+        vec.append((-1, 0) if sign else (1, 0))
+    return vec
+
+def parallel(u, w):
+    i = next(k for k, a in enumerate(u) if a != (0, 0))
+    return all(gauss_mul(u[i], w[j]) == gauss_mul(w[i], u[j]) for j in range(len(u))) and w[i] != (0, 0)
+
+ROOT_X = [[(1, 0), (0, 1)], [(0, 1), (1, 0)]]
+PHASE_S = [[(1, 0), (0, 0)], [(0, 0), (0, 1)]]
+
+def lc_by_unitary(N, edges, v):
+    state = apply_one(graph_state(N, edges), N, v, ROOT_X)
+    for u in sorted({a if b == v else b for a, b in edges if v in (a, b)}):
+        state = apply_one(state, N, u, PHASE_S)
+    return parallel(state, graph_state(N, local_complement(edges, v)))
+
+K4 = E((1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4))
+C4, P4 = E((1, 2), (2, 3), (3, 4), (1, 4)), E((1, 3), (2, 3), (2, 4))
+assert local_complement(STAR, 0) == K4 and lc_by_unitary(4, STAR, 0)
+g1 = local_complement(C4, 0)
+g2 = local_complement(g1, 1)
+g3 = local_complement(g2, 2)
+assert g3 == P4 and lc_by_unitary(4, C4, 0) and lc_by_unitary(4, g1, 1) and lc_by_unitary(4, g2, 2)
+for mask in range(64):
+    edges = frozenset(PAIRS4[i] for i in range(6) if mask >> i & 1)
+    assert lc_by_unitary(4, edges, mask % 4)
+    assert any(not has_even_cycle(4, g) for g in lc_orbit(edges, 4))
+
+def delta(F, N, edges, col, q):
+    A = adjacency(N, edges)
+    return sum(a - b for a, b in (rho_and_r(F, A, col, t, q) for t in characters(F.n, q)))
+
+for n in (5, 7):
+    D = (n - 1) * (n - 2) * (n - 3)
+    F = FIELDS[n]
+    assert delta(F, 4, STAR, [1, 2, 3, 4], 4) == 0 and delta(F, 4, K4, [1, 2, 3, 4], 4) == -2 * D
+    assert delta(F, 4, P4, [1, 2, 3, 4], 4) == 0 and delta(F, 4, C4, [1, 2, 3, 4], 4) == 2 * D
+
+# Proposition 8.1 (bowtie) and Proposition 8.2 (bipartite, n = 5).
+F = FIELDS[5]
+z = F.zeta
+z2, z3 = F.mul(z, z), F.mul(F.mul(z, z), z)
+beta_a = F.mul(F.mul(1 ^ z, 1 ^ z2), F.inv(z ^ z2))
+beta_b = F.mul(F.mul(1 ^ z, 1 ^ z3), F.inv(z ^ z3))
+assert beta_a ^ beta_b == 1
+bowtie = adjacency(5, [(0, 1), (0, 2), (1, 2), (0, 3), (0, 4), (3, 4)])
+assert rho_and_r(F, bowtie, [4, 1, 2, 1, 3], (1, 2, 3), 4) == (4, 4)
+bip = adjacency(6, [(0, 3), (0, 4), (0, 5), (1, 3), (1, 5), (2, 3), (2, 4)])
+assert rho_and_r(F, bip, [5, 1, 1, 2, 3, 4], (1, 2, 3, 4), 5) == (4, 6)
+
+# Theorem 6.2: complete graphs K_p with one qubit in each party.
+def stirling2(p, k):
+    if p == k:
+        return 1
+    if k == 0 or k > p:
+        return 0
+    return k * stirling2(p - 1, k) + stirling2(p - 1, k - 1)
+
+for n, p in ((5, 4), (5, 5), (5, 6), (7, 4), (7, 5)):
+    F, q = FIELDS[n], p
+    A = adjacency(p, list(itertools.combinations(range(p), 2)))
+    col = list(range(1, p + 1))
+    total = 0
+    for t in characters(n, q):
+        k = len({fvalue(t, q, c) for c in col})
+        rho, r = rho_and_r(F, A, col, t, q)
+        assert rho == (2 if k >= 2 else 0) and r == 2 * (k // 2)
+        total += rho - r
+    formula = -2 * sum(stirling2(p, k) * falling(n - 1, k - 1) * (k // 2 - 1) for k in range(4, min(p, n) + 1))
+    assert total == formula < 0
+
+# Theorem 5.1(c): the six-cycle in six parties, n = 5.
+F, q = FIELDS[5], 6
+cyc = adjacency(6, [(i, (i + 1) % 6) for i in range(6)])
+terms = [a - b for a, b in (rho_and_r(F, cyc, [1, 2, 3, 4, 5, 6], t, q) for t in characters(5, q))]
+assert set(terms) <= {0, 2} and sum(terms) > 0
+
+# Proposition 8.3: a six-qubit orbit without a zero-correction graph form, n = 5 and n = 7.
+def masked_total(N, edges, n):
+    A = adjacency(N, edges)
+    col = list(range(1, N + 1))
+    return sum(falling(n - 1, len(b) - 1) * masked_rank(A, col, b)
+               for b in set_partitions(list(range(1, N + 1))) if len(b) >= 2)
+
+N = 6
+G0 = E((1, 3), (1, 4), (1, 6), (2, 3), (2, 4), (2, 5))
+orbit = sorted(lc_orbit(G0, N), key=sorted)
+assert len(orbit) == 40 and all(has_even_cycle(N, g) for g in orbit)
+col = list(range(1, N + 1))
+EXPECTED = {5: (12328, [-1296, -912, -864, 48]), 7: (66876, [-10320, -9840, -1440, 240])}
+for n, (rho_expected, delta_expected) in EXPECTED.items():
+    F = FIELDS[n]
+    for g in orbit[:3] + [G0]:
+        assert sum(rho_and_r(F, adjacency(N, g), col, t, N)[0] for t in characters(n, N)) == rho_expected
+    assert sorted({rho_expected - masked_total(N, g, n) for g in orbit}) == delta_expected
+
+# N in {4, 5}, q = N, one qubit per party, n = 5: every orbit contains a zero-correction form.
+for N in (4, 5):
+    pairs = list(itertools.combinations(range(N), 2))
+    seen = set()
+    for mask in range(1 << len(pairs)):
+        g = frozenset(pairs[i] for i in range(len(pairs)) if mask >> i & 1)
+        if g in seen:
+            continue
+        orb = lc_orbit(g, N)
+        seen |= orb
+        col = list(range(1, N + 1))
+        rho_total = sum(rho_and_r(FIELDS[5], adjacency(N, g), col, t, N)[0] for t in characters(5, N))
+        assert any(rho_total == masked_total(N, h, 5) for h in orb)
+
+print("ALL_FINITE_CHECKS_PASSED")
+```
+
+<!-- 追加区自下一行的「追加锚」开始。每批增补写在锚之后,并以一行新的、逐字相同的追加锚结尾。 -->
+
