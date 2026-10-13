@@ -53,7 +53,7 @@ The canonical source is `D5/S3/StatisticalMechanics/CellularAutomata/Diploid1024
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registration `Reg/D5/S3/StatisticalMechanics/CellularAutomata/Diploid10245Density.lean` (template `DependentFamily.realize`, readout the parameter λ) is `declared_validated`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/StatisticalMechanics/CellularAutomata/Diploid10245Density.lean.json`, statement `sha256:9691a76fefa764340a2dd89e0e704061d4f134fa4d91454a0fe96cf4a5299eb6`.
+Frozen state: `Golden/Frozen/state/D5/S3/StatisticalMechanics/CellularAutomata/Diploid10245Density.lean.json`, statement `sha256:e1a397273d8d689bbaa3003d47ba7b5b94b6f2f6162ef3af323bebb066b88e1b`.
 
 Declaration statements:
 - `result`: `sha256:8b2d23d003bb6787976d83ef0de532eb3bdf769ec5069ec5ca259ede605c9768`;
@@ -82,7 +82,7 @@ Every other declaration is a definition used by `claim` or a private helper on t
 **Argued, not formalized.**
 - *The mechanism.* The density sees the configuration only through q, the 0·1 correlation at distance two, and the update of q closes on itself because the two neighbourhood events A_0 and A_2 exclude each other pointwise. This is also why third-order local structure theory, which keeps three-block probabilities, can reproduce the density exactly. Mean-field replaces q_t by (1 − d_t) d_t, which turns d_{t+1} = λ + α q_t into the source's nonlinear Eq. (6), d_{t+1} = λ + α d_t (1 − d_t); the source reports that second order gives the same equation.
 - *Other starts.* For any shift-invariant initial law the same recursion gives d_{t+1} = 1/4 + λ/2 + α^{2t+1}(q_0 − 1/4) (checked exactly for several λ and q_0). For 0 < λ < 1 the density converges geometrically to 1/4 + λ/2 from every such start. At λ = 0 it is d_{t+1} = 1/4 + (q_0 − 1/4), and at λ = 1 it is d_{t+1} = 3/4 − (q_0 − 1/4); both depend on the start.
-- *The law is not Bernoulli.* Only d and q are pinned; the proof says nothing about stationarity of the whole law.
+- *What constancy does not say.* Only d and q are pinned; constant density does not by itself make the law Bernoulli or stationary. At λ = 1/2 every update probability is 1/2 and the fair Bernoulli law persists; for other λ the proof says nothing about the law beyond d and q.
 
 **Open.**
 - The source's companion question, whether third-order local structure theory is exact for rule 39-219, is not addressed.
