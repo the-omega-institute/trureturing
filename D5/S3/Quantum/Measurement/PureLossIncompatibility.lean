@@ -513,4 +513,89 @@ private theorem scalar_bounds (τ : Loss) (x : ℝ) (hx : 0 < x) :
       mul_nonneg hx.le (sub_nonneg.mpr hτA)]
   exact ⟨ha, hax, hδa.trans hax, hc⟩
 
+private def quad (H : Matrix (Fin 2) (Fin 2) ℂ) (v : Fin 2 → ℂ) : ℝ :=
+  (star v ⬝ᵥ H *ᵥ v).re
+
+private def schurVector (a b : ℝ) (z : ℂ) : Fin 2 → ℂ :=
+  ![((b / a : ℝ) : ℂ) * starRingEnd ℂ z, 1]
+
+private theorem common_subeffect_bound
+    (a b x : ℝ)
+    (zi zj : ℂ) (hzi : ‖zi‖ = 1) (hzj : ‖zj‖ = 1) (hne : zi ≠ zj)
+    (H : Matrix (Fin 2) (Fin 2) ℂ) (hH : H.PosSemidef)
+    (hqi : quad H (schurVector a b zi) ≤ x)
+    (hqj : quad H (schurVector a b zj) ≤ x) :
+    (H 1 1).re ≤ 4 * x / ‖zi - zj‖ ^ 2 := by
+  have hzi' : zi * starRingEnd ℂ zi = 1 := by
+    rw [RCLike.mul_conj, hzi]
+    norm_num
+  have hzj' : zj * starRingEnd ℂ zj = 1 := by
+    rw [RCLike.mul_conj, hzj]
+    norm_num
+  let p : Fin 2 → ℂ := zi • schurVector a b zi
+  let q : Fin 2 → ℂ := zj • schurVector a b zj
+  have hscale (z : ℂ) (v : Fin 2 → ℂ) (hz : ‖z‖ = 1) :
+      quad H (z • v) = quad H v := by
+    dsimp [quad]
+    simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.smul_apply,
+      StarModule.star_smul, smul_eq_mul]
+    rw [RCLike.mul_conj, hz]
+    norm_num
+    ring
+  have hp : quad H p ≤ x := by
+    dsimp [p]
+    rw [hscale zi _ hzi]
+    exact hqi
+  have hq : quad H q ≤ x := by
+    dsimp [q]
+    rw [hscale zj _ hzj]
+    exact hqj
+  have hpar : quad H (p - q) = 2 * quad H p + 2 * quad H q - quad H (p + q) := by
+    dsimp [quad]
+    change (star (p - q) ⬝ᵥ (H *ᵥ (p - q))).re = _
+    simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.sub_apply, Pi.add_apply]
+    ring
+  have hnon : 0 ≤ quad H (p + q) := by
+    exact (Complex.le_def.mp (hH.dotProduct_mulVec_nonneg (p + q))).1
+  have hbound : quad H (p - q) ≤ 4 * x := by
+    rw [hpar]
+    linarith
+  have hpq : p - q = ![0, zi - zj] := by
+    funext k
+    fin_cases k
+    · dsimp [p, q, schurVector]
+      calc
+        zi * ((b / a : ℝ) * starRingEnd ℂ zi) -
+            zj * ((b / a : ℝ) * starRingEnd ℂ zj) =
+          (b / a : ℝ) * (zi * starRingEnd ℂ zi) -
+            (b / a : ℝ) * (zj * starRingEnd ℂ zj) := by ring
+        _ = 0 := by rw [hzi', hzj']; ring
+    · dsimp [p, q, schurVector]
+      simp [smul_eq_mul]
+  have hdiag : (H 1 1).im = 0 := by
+    have hh := (Matrix.IsHermitian.ext_iff.mp hH.isHermitian)
+      (1 : Fin 2) (1 : Fin 2)
+    have ht := congrArg Complex.im hh
+    simp at ht
+    linarith
+  have hentry :
+      quad H (![0, zi - zj] : Fin 2 → ℂ) =
+        ‖zi - zj‖ ^ 2 * (H 1 1).re := by
+    dsimp [quad]
+    simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Matrix.cons_val_zero,
+      Matrix.cons_val_one]
+    simp only [map_zero, zero_mul, zero_add, mul_zero, add_zero]
+    rw [show H (1 : Fin 2) (1 : Fin 2) =
+        ((H (1 : Fin 2) (1 : Fin 2)).re : ℂ) by
+      apply Complex.ext
+      · rfl
+      · simpa [hdiag]]
+    simp [Complex.sq_norm, Complex.normSq, Complex.mul_re]
+    ring
+  rw [hpq, hentry] at hbound
+  have hdist : 0 < ‖zi - zj‖ ^ 2 := by
+    have : 0 < ‖zi - zj‖ := norm_pos_iff.mpr (sub_ne_zero.mpr hne)
+    positivity
+  exact (le_div_iff₀ hdist).2 (by linarith)
+
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
