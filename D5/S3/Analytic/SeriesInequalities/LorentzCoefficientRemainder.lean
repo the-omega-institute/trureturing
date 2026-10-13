@@ -240,7 +240,7 @@ private lemma radius_scale {d m : ℕ} (hd : 0 < d) (hdm : d ≤ m)
       1/(m : ℝ) = ((d : ℝ)/m) * (1/(d : ℝ)) := by field_simp
       _ ≤ Real.sqrt ((d : ℝ)/m) * derivativeRadius d 1 p := by gcongr
 
-private lemma grid_geometry {m r J i : ℕ} (hm : 0 < m) (hJ : J ≤ m+r)
+lemma grid_geometry {m r J i : ℕ} (hm : 0 < m) (hJ : J ≤ m+r)
     (hi : i ≤ m) (hiJ : i ≤ J) (hJi : J ≤ i+r) :
     (i : ℝ)/m ∈ Set.Icc (0 : ℝ) 1 ∧
     (J : ℝ)/(m+r) ∈ Set.Icc (0 : ℝ) 1 ∧
@@ -307,6 +307,59 @@ private lemma radius_local_comparison {m r : ℕ} (hm : 0 < m) {p t : ℝ}
     nlinarith [mul_nonneg (show 0 ≤ (r : ℝ)*((r : ℝ)+1) by positivity) (sq_nonneg δ)]
   · exact hsmall.trans (by nlinarith [mul_nonneg (show 0 ≤ (r : ℝ) by positivity) hδ.le])
 
+/-- A constant center can be removed from the zeroth row without changing the
+higher rows. The first row needs no bound because the first correction vanishes. -/
+lemma local_coefficient_deviation_bound (r : ℕ) :
+    ∃ K : ℝ, 1 ≤ K ∧ ∀ m : ℕ, 0 < m → r ≤ m → ∀ J : ℕ, J ≤ m + r →
+      ∀ A : ℝ, 0 ≤ A → ∀ f : ℕ → ℕ → ℂ, ∀ a : ℂ,
+      (∀ i : ℕ, i ≤ m → i ≤ J → J ≤ i + r → ‖f 0 i - a‖ ≤ A) →
+      (∀ ν : ℕ, 2 ≤ ν → ν ≤ r → ∀ i : ℕ, i ≤ m → i ≤ J → J ≤ i + r →
+        ‖f ν i‖ ≤ A / (derivativeRadius m 1 ((J : ℝ)/(m+r))) ^ ν) →
+      ‖bernsteinCoefficient (m+r) J (lorentzJet m r f) - a‖ ≤ K * A := by
+  obtain ⟨K, hK, hk⟩ := local_coefficient_bound r
+  refine ⟨K, hK, ?_⟩
+  intro m hm hr J hJ A hA f a hzero hhigher
+  let g : ℕ → ℕ → ℂ := fun ν i => if ν = 0 then f 0 i - a else
+    if ν = 1 then 0 else f ν i
+  have htau : tau m 1 = 0 := by simp [tau, central_one]
+  have he : lorentzJet m r f - lorentzJet m r g = C a := by
+    unfold lorentzJet
+    rw [← sum_sub_distrib]
+    rw [sum_eq_single 0]
+    · simp only [g, if_pos rfl, pow_zero, inv_one, C_1, tau, one_mul]
+      rw [← sum_sub_distrib]
+      simp_rw [← sub_mul, ← map_sub, sub_sub_cancel]
+      rw [← mul_sum, bernsteinPolynomial.sum, mul_one]
+    · intro ν hν hν0
+      by_cases hν1 : ν = 1
+      · subst ν
+        simp [htau]
+      · simp [g, hν0, hν1]
+    · simp
+  have hca : bernsteinCoefficient (m+r) J (C a) = a := by
+    simp [bernsteinCoefficient, coeff_C, ite_div]
+  have hcoeff : bernsteinCoefficient (m+r) J (lorentzJet m r f) - a =
+      bernsteinCoefficient (m+r) J (lorentzJet m r g) := by
+    have h := congrArg (bernsteinCoefficient (m+r) J) he
+    simp only [bernsteinCoefficient, coeff_sub, sub_mul, sub_div, sum_sub_distrib] at h
+    change bernsteinCoefficient (m+r) J (lorentzJet m r f) -
+      bernsteinCoefficient (m+r) J (lorentzJet m r g) =
+        bernsteinCoefficient (m+r) J (C a) at h
+    rw [hca] at h
+    linear_combination h
+  rw [hcoeff]
+  apply hk m hm hr J hJ A hA g
+  intro ν hν i hi hiJ hJi
+  by_cases hν0 : ν = 0
+  · subst ν
+    simpa only [g, if_pos rfl, pow_zero, div_one] using hzero i hi hiJ hJi
+  · by_cases hν1 : ν = 1
+    · simp only [g, if_neg hν0, if_pos hν1, norm_zero]
+      unfold derivativeRadius
+      positivity
+    · simpa only [g, if_neg hν0, if_neg hν1] using
+        hhigher ν (by omega) hν i hi hiJ hJi
+
 /-- Weighted grid bounds control the coefficients at the output grid, uniformly
 over every positive `m ≥ r`. The same actual Lorentz jet is used at both sides.
 The case `γ = 0` is consumed by the polynomial stability estimate below. -/
@@ -318,7 +371,7 @@ lemma local_jet_coefficient_bound (r : ℕ) (γ : ℝ) (hγ : 0 ≤ γ) :
       ∀ J : ℕ, J ≤ m+r →
       ‖bernsteinCoefficient (m+r) J (lorentzJet m r f)‖ ≤
         K * L * (derivativeRadius m 1 ((J : ℝ)/(m+r))) ^ γ := by
-  obtain ⟨B, hB, hb⟩ := local_coefficient_bound r
+  obtain ⟨B, hB, hb⟩ := local_coefficient_deviation_bound r
   let c : ℝ := (r : ℝ)+1
   have hc : 1 ≤ c := by dsimp [c]; have := Nat.cast_nonneg (α := ℝ) r; linarith
   have hc0 : 0 ≤ c := zero_le_one.trans hc
@@ -333,7 +386,14 @@ lemma local_jet_coefficient_bound (r : ℕ) (γ : ℝ) (hγ : 0 ≤ γ) :
     exact_mod_cast hJ
   let δ := derivativeRadius m 1 ((J : ℝ)/(m+r))
   have hδ : 0 < δ := (radius_properties hm (by omega : 0 < 1) hp).1
-  have hh := hb m hm hr J hJ (A * L * δ ^ γ) (by positivity) f
+  have hh : (∀ ν : ℕ, ν ≤ r → ∀ i : ℕ, i ≤ m → i ≤ J → J ≤ i+r →
+      ‖f ν i‖ ≤ (A * L * δ ^ γ) / δ ^ ν) →
+      ‖bernsteinCoefficient (m+r) J (lorentzJet m r f)‖ ≤ B * (A * L * δ ^ γ) := by
+    intro hj
+    have hh := hb m hm hr J hJ (A * L * δ ^ γ) (by positivity) f 0
+      (by intro i hi hiJ hJi; simpa using hj 0 (Nat.zero_le r) i hi hiJ hJi)
+      (by intro ν _ hν i hi hiJ hJi; exact hj ν hν i hi hiJ hJi)
+    simpa only [sub_zero] using hh
   apply (hh ?_).trans_eq
   · dsimp [δ]; ring
   intro ν hν i hi hiJ hJi

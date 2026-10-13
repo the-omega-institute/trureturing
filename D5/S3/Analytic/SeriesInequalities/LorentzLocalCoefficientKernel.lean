@@ -32,7 +32,7 @@ termination_by n => n
 lemma central_zero (m : ℕ) : centralMoment m 0 = 1 := by
   simp [centralMoment, bernsteinPolynomial.sum]
 
-private lemma central_one (m : ℕ) : centralMoment m 1 = 0 := by
+lemma central_one (m : ℕ) : centralMoment m 1 = 0 := by
   simp only [centralMoment, pow_one, sub_mul, sum_sub_distrib, ← mul_sum]
   have h := bernsteinPolynomial.sum_smul ℂ m
   simp only [nsmul_eq_mul, ← C_eq_natCast] at h
