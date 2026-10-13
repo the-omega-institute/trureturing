@@ -1917,3 +1917,205 @@ improvement, cannot replace the missing signed cancellation. The required
 input remains a same-height upper bound retaining the actual phases,
 real parts and multiplicities; improving a fixed strip exponent above
 $1/2$ does not supply that bound.
+
+## A fixed-zero obstruction to individual complex-modulus budgets
+
+Keep H1's one fixed exponent $\eta$, its $d>0$, every original full
+window, every maximizing tie, the positive weights $\delta_i$, and the
+actual core clocks $B_i$. Assume RH failure and put
+
+$$
+\Theta=\sup_{\gamma>0}\operatorname{Re}\rho\in(1/2,1],\qquad
+1-\Theta<\eta<1/2,\qquad
+\ell_X=(d/8)X^{1-\eta}\log X,\qquad
+M_X=X^{1/2-\eta}\log X.
+$$
+
+Use CR45--CR47's fixed real comparison parameter $0<a<5\kappa/8$
+and each actual selected height
+$\tau_i\in[(\sqrt{B_i}-4)/4,(\sqrt{B_i}-4)/2]$ with its original
+explicit-formula error contract. The argument does not select new
+heights, discard ties, change the window or replace its weights.
+Its conclusion concerns the budget
+
+$$
+\mathcal A_X=2\sum_i\delta_i
+ \sum_{0<\gamma\le\tau_i}m_\rho|c_{B_i,a}(\rho)|,\qquad
+c_{B,a}(s)=s_BF_B(s)-\frac{aB^s}{\sqrt B\,s}.
+$$
+
+The complex modulus is taken before conjugate pairing and before
+aggregation of labels or zeros. This is a different quantity from
+$\sum_i\delta_iH_{B_i,a}(\tau_i)$, from the modulus of an aggregated
+complex sum, and from a sum of absolute real parts.
+
+### A real compensation cannot remove the imaginary coefficient
+
+Reuse the complete Laplace representation VJ1 in
+[the Mertens note](../ArithSums/fabbian2026mertens.md).
+For $L=\log B\ge2$, write
+
+$$
+d\mu_L(z)=L(1+z)e^{-Lz}\,dz,\qquad
+J_L(s)=\int_0^\infty\frac{d\mu_L(z)}{1+z-s},\qquad
+c_{B,a}(s)=\frac{B^{s-1/2}}s[J_L(s)-a].
+$$
+
+All these integrals converge on $0<\operatorname{Re}s<1$.
+For $\rho=\beta+i\gamma$, $0<\beta<1$, $\gamma>0$,
+
+$$
+\operatorname{Im}J_L(\rho)
+=\int_0^\infty
+ \frac{\gamma}{(1+z-\beta)^2+\gamma^2}\,d\mu_L(z).
+$$
+
+The elementary exponential moments give
+
+$$
+q_L:=\mu_L([0,\infty))=1+1/L,\qquad
+\int_0^\infty(1+z)^2\,d\mu_L(z)
+=1+3/L+6/L^2+6/L^3.
+$$
+
+Since $0\le\beta\le1$ and $z\ge0$,
+$(1+z-\beta)^2\le(1+z)^2$. The normalized second moment is at most
+$19/6$ for $L\ge2$: after clearing its positive denominators, the
+required inequality is exactly
+
+$$
+(L-2)(13L^2+27L+18)\ge0.
+$$
+
+Apply the usual integral Jensen inequality for the convex reciprocal
+function to the probability measure $q_L^{-1}\mu_L$ and the positive
+denominator $(1+z-\beta)^2+\gamma^2$. Its denominator and reciprocal
+are integrable, the latter being bounded by $\gamma^{-2}$. It gives
+
+$$
+\operatorname{Im}J_L(\rho)
+\ge\frac{q_L\gamma}{\gamma^2+19/6}.
+$$
+
+Jensen and its equivalent Cauchy--Schwarz application are the standard
+integral inequalities in [Durrett, *Probability: Theory and Examples*,
+version 5, Theorems 1.5.1--1.5.2, printed page 25](https://sites.math.duke.edu/~rtd/PTE/PTE5_011119.pdf).
+Reciprocal convexity and the exponential moments are also reused
+standard results. The number $19/6$ is the maximum of the stated
+normalized second-moment relaxation, attained at $L=2,\beta=0$;
+this does not assert sharpness or equality for the resolvent integral
+on the original open zero strip. Because $a$ is real,
+$|J_L(\rho)-a|\ge\operatorname{Im}J_L(\rho)$. Therefore
+
+$$
+\boxed{
+|c_{B,a}(\rho)|\ge
+\frac{q_L\gamma}{|\rho|(\gamma^2+19/6)}B^{\beta-1/2}.}
+\tag{MB1}
+$$
+
+MB1 is valid for every real $a$. Its use here keeps the original
+fixed allowed parameter. It is stronger than the bound obtained by
+restricting the same integral to $0\le z\le1/L$, which has factor
+$(1-e^{-1})\gamma/(\gamma^2+4)$. Positive imaginary part before
+multiplication by $B^{i\gamma}/\rho$ gives no sign for the resulting
+real part.
+
+### Every original core eventually contains one fixed zero in its head
+
+Reuse the complete original zero formula and its pole and trivial-zero
+correction $r_B=O(B^{-1/2})$ from
+[the Nicolas note](../ArithSums/nicolas2025comparison.md), and the
+classical zero-count consequence
+$S_2=\sum_{\gamma>0}m_\rho/\gamma^2<\infty$.
+In VJ1 the real part of $\rho(1+z-\rho)$ is
+$\gamma^2+\beta(1+z-\beta)\ge\gamma^2$.
+Thus the complete original, uncompensated coefficients satisfy
+
+$$
+|s_BF_B(\rho)|\le q_L B^{\beta-1/2}/\gamma^2,
+\qquad
+|s_BI_\psi(B)|\le C B^{\Theta-1/2}\quad(B\ge e^2)
+$$
+
+for a fixed $C>0$. This sums the full degree-two original
+coefficients; it does not assert absolute convergence of the
+compensated infinite series. In particular it remains valid when
+$\Theta=1$, without inserting a coarse $O(x^\Theta)$ prime-error
+bound into an improper integral.
+
+CR20 gives $-s_BI_\psi(B)\ge\kappa t/\sqrt B$ for every original
+label and tie. Combining these two inequalities, with $t_i\ge\ell_X$,
+yields
+
+$$
+\boxed{B_i\ge b_X:=((\kappa/C)\ell_X)^{1/\Theta}.}
+\tag{MB2}
+$$
+
+Set
+
+$$
+\beta_c=\frac12+\frac{\Theta(1/2-\eta)}{1-\eta}.
+$$
+
+Then $\Theta-\beta_c=(\Theta+\eta-1)/(2(1-\eta))>0$.
+By the definition of the supremum, choose one fixed actual zero
+$\rho_*=\beta_*+i\gamma_*$ with $\gamma_*>0$ and $\beta_*>\beta_c$.
+No zero attaining $\Theta$ is required. Put
+
+$$
+q_*=(\beta_*-1/2)/\Theta>0,\qquad
+\varepsilon=(1-\eta)q_*-(1/2-\eta)>0.
+$$
+
+MB2 implies $b_X\to\infty$. Hence the lower bound on every original
+$\tau_i$ eventually exceeds this one fixed $\gamma_*$, uniformly
+over the full window and all ties. MB1, $q_L\ge1$, and the original
+positive weights now give
+
+$$
+\mathcal A_X\ge C_*\sum_i\delta_i B_i^{\beta_*-1/2}
+\ge C_* b_X^{\beta_*-1/2}L_X
+$$
+
+with a fixed $C_*>0$, after changing the constant where necessary.
+Consequently, for every sufficiently large qualifying original window,
+every maximizing-tie assignment and every height satisfying the
+original height contracts,
+
+$$
+\boxed{
+\frac{\mathcal A_X}{M_XL_X}
+\ge C_{**}X^\varepsilon(\log X)^{q_*-1}\longrightarrow\infty.}
+\tag{MB3}
+$$
+
+The fixed zero and common starting point are not asserted computable.
+The proof also covers $\Theta=1$; it uses $\Theta+\eta>1$ and never
+requires supremum attainment.
+
+### What the budget obstruction leaves unresolved
+
+MB3 rules out paying CR47's remaining target by $\mathcal A_X$, or
+by an upper allowance no smaller than this individual-complex-modulus
+budget. It supplies no corresponding lower bound for the signed head,
+for a sum of absolute real parts, or for a sum aggregated before
+taking its modulus. Conjugate pairing, cross-zero cancellation and
+cross-label cancellation remain available routes.
+
+For example, if a future same-source estimate establishes
+$S_X:=\sum_i\delta_iH_{B_i,a}(\tau_i)\le C_0M_XL_X$, then MB3 forces
+
+$$
+\frac{(S_X)_+}{\mathcal A_X}
+\ll X^{-\varepsilon}(\log X)^{1-q_*}\longrightarrow0.
+$$
+
+This quantifies a necessary one-sided cancellation for such an upper-bound
+route; it does not establish the cancellation. To leave CR20's strict
+remaining margin, the displayed upper-bound route additionally needs
+$C_0<d(1-\kappa)/16$. The joint signed
+estimate in CR47 and RH remain unresolved. MB1--MB3 are
+supplier-relative paper deductions using the cited original formula,
+H1, CR20 and CR45--CR47, with no originality or Lean-verification claim.
