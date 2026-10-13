@@ -14,6 +14,18 @@ internal sealed class GoldenResource5040PriceIntervalDocument : IScribeDocumentD
         H("Golden Resource 5040 Price Interval"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("golden-prime-local-original-strict-threshold-maximum"),
+                DeclarationHandle.Create(Prefix + "golden_prime_local_objective_unique_maximal_of_strict_threshold"),
+                H("Original generic strict-threshold uniqueness"),
+                StatementSource.FromAuthor(StrictThresholdFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The existing generic proof is exposed in place for ActualReservePrimeMask. "
+                    + "For any real price and actual prime, strict upper and lower thresholds make "
+                    + "the chosen exponent maximal, with equality exactly at that exponent. "
+                    + "The lower condition allows exponent zero. The theorem is generic despite "
+                    + "the 5040 filename; its original proof is unchanged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-resource-5040-price-interval"),
                 DeclarationHandle.Create(
                     Prefix + "golden_resource_5040_unique_maximum_of_price_interval"),
@@ -39,6 +51,27 @@ internal sealed class GoldenResource5040PriceIntervalDocument : IScribeDocumentD
                             + "ties, supply decimal approximations, compare classical sequences, "
                             + "or interpret the separate price lambda = 0.04 example."))),
                 DescribeRole.Theorem))));
+
+    private static Formula StrictThresholdFormula()
+    {
+        Formula lambda = F.Id("lambda");
+        Formula p = F.Id("p");
+        Formula a = F.Id("a");
+        Formula b = F.Id("b");
+        Formula next = new Formula.Binary(a, FormulaBinaryOperator.Add, D(1));
+        Formula lower = new Formula.Logic(Equal(a, D(0)), FormulaLogicOperator.Or,
+            Lt(lambda, Call("goldenLayerMarginal", p, a)));
+        Formula assumptions = And(Call("Prime", p),
+            And(Lt(Call("goldenLayerMarginal", p, next), lambda), lower));
+        Formula value = Call("goldenPrimeLocalObjective", lambda, p, b);
+        Formula maximum = Call("goldenPrimeLocalObjective", lambda, p, a);
+        Formula conclusion = And(Le(value, maximum),
+            Iff(Equal(value, maximum), Equal(b, a)));
+        return Disp(ForAll(
+            [Bound("p", Naturals()), Bound("a", Naturals()), Bound("lambda", Reals())],
+            Implies(Parenthesized(assumptions), ForAll([Bound("b", Naturals())],
+                Parenthesized(conclusion)))));
+    }
 
     private static Formula PriceIntervalFormula()
     {
