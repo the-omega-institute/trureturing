@@ -3230,3 +3230,559 @@ clock, native propagation authority, full-spectrum recovery, or a
 completion criterion for an unbounded source-to-spatial-propagation task.
 
 ## 110.99 追加锚（本行以下为增补区）
+
+## 111. Source-biased boundary propagation and its direct-locality obstruction
+
+**Definition 111.1 (the all-node fields and the free-root trace energy).**
+Retain the literal ordered $T_n$, all occurrence vertices, the counts
+$N_n$, and the closed unit-edge counting operators $L_n$ of §§92 and 103.
+In this section $J_n$ and $J$ always denote the path-summation maps of
+§98, not the ancestry pullback of §§109–110. Retain the actual law
+
+$$
+\Omega=\{L,R\}^{\mathbb N},\qquad
+M([p])=\varphi^{-\#_L(p)-2\#_R(p)},\qquad
+\mu_n=N_n^{-1}\sum_{x\in V_{T_n}}\delta_x,
+\qquad S_n(s)=e^{-N_nsL_n}.
+\tag{111.1}
+$$
+
+Thus $\mu_n$ includes the root, every interior occurrence and every leaf.
+The variable $s$ is the comparison time in (110.1). Set
+$\mathscr G=L^2(\Omega,M)$, $\Pi F=F-\int F\,dM$,
+$C=\Pi J$, and $\mathscr K=(\ker\Sigma)^\perp$. Then
+$C^*C=\Sigma$ by (98.13). Define
+
+$$
+\begin{aligned}
+\mathcal D&=\{F\in\mathscr G:F=c\mathbf1+Jz
+                  \text{ for some }c\in\mathbb R,\ z\in\mathscr H\},\\
+\mathcal E(F)&=\inf\{\|z\|^2:F=c\mathbf1+Jz,
+                                      \ c\in\mathbb R,\ z\in\mathscr H\}.
+\end{aligned}
+\tag{111.2}
+$$
+
+A pair $(c,z)$ specifies the finite-energy extension
+$u(\varnothing)=c$ and
+$u(p)=c+\sum_{\varnothing\ne q\preceq p}z_q$ on the complete binary
+address tree. Its unit-edge energy is $\|z\|^2$ and its trace is
+$c\mathbf1+Jz$ in the specified $L^2(M)$ sense. The root value is free
+in (111.2); there is no root killing term. The infimum varies extensions
+of the same trace, never the original $T_n$, its labels or its measure.
+Let $\mathcal A$ be the real algebra of finite cylinder functions on
+$\Omega$, with its product topology.
+
+**Theorem 111.2 (the actual biased trace gives a regular conservative form).**
+For every $F\in\mathcal D$ there is a unique $z_F\in\mathscr K$ with
+
+$$
+Cz_F=\Pi F,\qquad
+c_F=\int F\,dM-\langle v,z_F\rangle,
+\qquad F=c_F\mathbf1+Jz_F.
+\tag{111.3}
+$$
+
+It attains (111.2). The polarization
+$\mathcal E(F,G)=\langle z_F,z_G\rangle$ is a densely defined closed
+Dirichlet form on $\mathscr G$. The cylinder algebra $\mathcal A$ is a
+core both for the form norm and uniformly for $C(\Omega)$, so the form
+is regular. Its zero-energy functions are precisely the constants.
+For every 1-Lipschitz map $\chi:\mathbb R\to\mathbb R$,
+
+$$
+\chi\circ F\in\mathcal D,\qquad
+\mathcal E(\chi\circ F)\le\mathcal E(F).
+\tag{111.4}
+$$
+
+In particular $\mathbf1\in\mathcal D$ and $\mathcal E(\mathbf1)=0$.
+
+**Proof.**
+For any extension of $F$, $Cz=\Pi F$. The complete solution set is the
+closed affine space $z+\ker C$, and
+$\ker C=\ker\Sigma$ because $\|Cz\|^2=\langle z,\Sigma z\rangle$.
+Its unique least-norm point is $z_F=P_{\mathscr K}z$; the constant
+$c_F$ in (111.3) restores the mean. Conversely every solution of that
+centered equation gives an extension with this choice of constant.
+This proves attainment, uniqueness and polarization. It also shows
+that zero energy is equivalent to $\Pi F=0$.
+
+If $(F_j)$ is Cauchy for
+$\|F\|_{\mathcal E,1}^2=\|F\|_{\mathscr G}^2+\mathcal E(F)$,
+then $F_j\to F$ in $\mathscr G$ and $z_{F_j}\to z$ in the closed
+space $\mathscr K$. Boundedness of the actual $C$ gives
+$Cz=\Pi F$, proving $F\in\mathcal D$, $z_F=z$ and form-norm
+convergence. This proves closedness without an inverse-range closure
+assumption.
+
+For contraction, start with any extension $(c,z)$ and its vertex
+values $u(p)$. Put
+
+$$
+z^\chi_p=\chi(u(p))-\chi(u(p^-)),\qquad c^\chi=\chi(c).
+\tag{111.5}
+$$
+
+The Lipschitz inequality gives $z^\chi\in\mathscr H$ and
+$\|z^\chi\|\le\|z\|$. At level $h$, the cylinder function
+$c\mathbf1+JP_hz$ has value $u(p)$ on $[p]$, $|p|=h$. The telescoping
+identity on that level is therefore
+
+$$
+c^\chi\mathbf1+JP_hz^\chi
+             =\chi(c\mathbf1+JP_hz).
+\tag{111.6}
+$$
+
+The left side tends in $L^2(M)$ to $c^\chi\mathbf1+Jz^\chi$ by §98.
+The right side tends to $\chi(F)$ by its Lipschitz property. This proves
+trace compatibility and (111.4) by using the minimizing extension.
+In particular clipping to $[0,1]$ gives the Markov property. This step
+uses the actual $M$-trace, rather than transferring an almost-everywhere
+trace from another law.
+
+Every cylinder indicator is $J\delta_p$, hence belongs to $\mathcal D$.
+The finite cylinder functions are dense in $L^2(M)$: cylinder sets
+generate the Borel sigma algebra, and their finite partitions give the
+usual dense simple functions. For $F=c_F\mathbf1+Jz_F$, let
+$F_h=c_F\mathbf1+JP_hz_F$. Then $F_h\in\mathcal A$ and
+
+$$
+\|F_h-F\|_{\mathscr G}\le\|J\|\|(I-P_h)z_F\|,
+\qquad
+\mathcal E(F_h-F)\le\|(I-P_h)z_F\|^2\longrightarrow0.
+\tag{111.7}
+$$
+
+Continuous functions on compact $\Omega$ are uniformly approximated
+by constants on sufficiently long cylinders, by uniform continuity
+in the product topology. Thus $\mathcal A\subset\mathcal D\cap C(\Omega)$
+is both a form core and uniformly dense. The measure $M$ is a finite
+Borel measure with full support, since every cylinder has positive mass;
+it is Radon on this compact metrizable space. This proves regularity.
+A constant has extension $(c,0)$ and zero energy.
+
+The mature background is the trace-energy construction and its Markov
+property: Woess, [*On the duality between jump processes on ultrametric
+spaces and random walks on trees*, arXiv:1211.7216v1, §3.B,
+(3.21)–(3.24) and §4](https://arxiv.org/pdf/1211.7216v1), and
+Keller–Lenz–Schmidt–Schwarz, [*Boundary representation of Dirichlet forms
+on discrete spaces*, arXiv:1711.08304v1, Theorems 2.4, 3.4 and
+3.9](https://arxiv.org/pdf/1711.08304v1). Those statements use the
+random walk's harmonic reference law or harmonic measures on the
+Royden boundary. The fair end law of the unit-conductance binary tree
+is not $M$: its first-cylinder masses are $1/2,1/2$, whereas those in
+(111.1) are $a=\varphi^{-1}$ and $b=\varphi^{-2}$. No identification
+of these reference laws is used here. The bounded trace from §98,
+least-norm extension and (111.6) supply the needed hypotheses directly
+on the source-derived probability space. The general trace construction
+is a literature-attested intermediate supply; its relation to the
+all-occurrence source covariance is the present repo-derived synthesis.
+$\square$
+
+**Theorem 111.3 (the source-biased boundary Markov semigroup).**
+Let $H$ be the nonnegative self-adjoint operator associated with
+$(\mathcal E,\mathcal D)$, and put $T(s)=e^{-sH}$, $s\ge0$.
+There is a unitary $W:\mathscr K\to\mathbf1^\perp\subset\mathscr G$
+from the polar decomposition
+$C=W\Sigma^{1/2}$. Precisely,
+
+$$
+\begin{aligned}
+\mathcal D\cap\mathbf1^\perp
+     &=W\operatorname{ran}\bigl((\Sigma|_{\mathscr K})^{1/2}\bigr),\\
+H|_{\mathbf1^\perp}
+     &=W(\Sigma|_{\mathscr K})^{-1}W^*,\qquad H\mathbf1=0,\\
+T(s)|_{\mathbf1^\perp}&=W\mathcal T(s)W^*\quad(s>0),
+\qquad T(0)=I.
+\end{aligned}
+\tag{111.8}
+$$
+
+Here $\mathcal T(s)$ is exactly (103.7), restricted to $\mathscr K$.
+The semigroup is strongly continuous, symmetric, positivity preserving
+and conservative on $L^2(M)$; $0\le F\le1$ implies $0\le T(s)F\le1$,
+and $T(s)\mathbf1=\mathbf1$. Hence it preserves the $M$-integral.
+This is a boundary Markov law on the actual biased measure, not merely
+a spectral contraction on the edge carrier.
+
+**Proof.**
+The closure of $\operatorname{ran}C$ is $\mathbf1^\perp$, since each
+centered cylinder indicator is in its range and these are dense there.
+Polar decomposition therefore gives the displayed unitary. If
+$\Pi F=W\Sigma^{1/2}z_F$, then
+
+$$
+\mathcal E(F)=\|z_F\|^2
+   =\|\Sigma^{-1/2}W^*\Pi F\|^2.
+\tag{111.9}
+$$
+
+The spectral representation of this closed form yields (111.8), with
+operator domain $W\operatorname{ran}(\Sigma|_{\mathscr K})$ on the
+centered space. Constants supply the other summand. The representation
+and spectral calculus are the mature intermediate supplies already
+used in §103; no identity-at-zero on all of $\mathscr H$ is asserted.
+
+For positivity one can use (111.4) directly. For $\alpha>0$ and
+$0\le f\le1$, the unique minimizer in $\mathcal D$ of
+$\mathcal E(u)+\alpha\|u-f\|^2$ is
+$u=\alpha(H+\alpha)^{-1}f$. Clipping $u$ to $[0,1]$ decreases both
+terms, so uniqueness forces $0\le u\le1$. Spectral calculus gives
+
+$$
+T(s)=\operatorname*{s-lim}_{k\to\infty}(I+sH/k)^{-k}.
+\tag{111.10}
+$$
+
+Each factor preserves $[0,1]$, and the $L^2$-closedness of this order
+interval proves the same for $T(s)$. Scaling and truncating nonnegative
+$L^2$ functions gives positivity for all of them. Constants have zero
+form energy and lie in the operator kernel, so $T(s)\mathbf1=\mathbf1$.
+Symmetry then gives preservation of the integral; strong continuity
+follows from the spectral theorem, including at zero. $\square$
+
+**Theorem 111.4 (exact all-node correlations and the boundary limit).**
+Fix $c,d\in\mathbb R$ and finitely supported $z,y\in\mathscr H$.
+Use the corresponding fields on the actual finite nodes and their
+boundary traces:
+
+$$
+f_n=c\mathbf1+J_nz,\quad g_n=d\mathbf1+J_ny,
+\qquad F=c\mathbf1+Jz,\quad G=d\mathbf1+Jy.
+\tag{111.11}
+$$
+
+Every field in (111.11) includes its declared root value and every
+interior and terminal value. Put
+$\bar f_n=c+\langle v_n,z\rangle$,
+$\bar g_n=d+\langle v_n,y\rangle$,
+$\bar F=c+\langle v,z\rangle$ and
+$\bar G=d+\langle v,y\rangle$. Define the continuous multiplier
+
+$$
+h_s(x)=
+\begin{cases}xe^{-s/x},&x>0,\\0,&x=0,\end{cases}
+\quad(s\ge0),\qquad h_0(x)=x.
+\tag{111.12}
+$$
+
+For every $n\ge0$ and $s\ge0$ the exact correspondence is
+
+$$
+\begin{aligned}
+\langle g_n,S_n(s)f_n\rangle_{L^2(\mu_n)}
+  &=\bar g_n\bar f_n+\langle y,h_s(\Sigma_n)z\rangle,\\
+\langle G,T(s)F\rangle_{L^2(M)}
+  &=\bar G\bar F+\langle y,h_s(\Sigma)z\rangle.
+\end{aligned}
+\tag{111.13}
+$$
+
+Moreover, for these fixed observables,
+
+$$
+\sup_{s\ge0}\left|
+\langle g_n,S_n(s)f_n\rangle_{L^2(\mu_n)}
+ -\langle G,T(s)F\rangle_{L^2(M)}\right|\longrightarrow0.
+\tag{111.14}
+$$
+
+In particular it holds at $s=0$ and along every $s_n\to s\ge0$.
+As $s\to\infty$ the boundary correlation tends to $\bar G\bar F$;
+along $s_n\to\infty$ the finite correlations have the same limit as
+$n\to\infty$. These claims are for the original Fibonacci family and
+fixed finite-edge/cylinder observables. They assert no uniform recovery
+over arbitrary original sources, no arbitrary changing finite-state
+identification and no acquired node-count observation.
+
+**Proof.**
+Let $C_n=(I-\mathbf1\otimes\mathbf1)J_n$ with the projection taken
+in $L^2(\mu_n)$. Then $C_n^*C_n=\Sigma_n$. On the actual edges it
+is a bijection to the finite mean-zero node space: integration of
+edge differences inverts it after centering. Its polar decomposition
+is $C_n=W_n\Sigma_n^{1/2}$, with $W_n$ unitary between these spaces.
+The finite form of $N_nL_n$ in the normalized node inner product is
+exactly the original unit-edge energy:
+
+$$
+\langle u,N_nL_nu\rangle_{L^2(\mu_n)}
+   =\sum_{\{p^-,p\}\in E_{T_n}}|u(p)-u(p^-)|^2.
+\tag{111.15}
+$$
+
+For $u=C_nz$ this is $\|Q_nz\|^2$. Therefore, equivalently by
+(103.3), its centered generator is
+$W_n\Sigma_n^{-1}W_n^*$. Constants have generator zero, giving the
+first equation in (111.13). Absent edge coordinates are annihilated
+by $\Sigma_n$, as required. For $n=0,1$ there are no actual edges,
+$f_n=c$, $g_n=d$, and the first equation reduces correctly to the
+product of constants. The boundary equation remains the identity for
+the fixed $F,G$ in (111.11). The boundary polar decomposition in
+(111.8) gives the second equation. At zero, both equations use $h_0(\Sigma)=\Sigma$,
+so they give the full inner products including their means.
+
+Choose the uniform spectral bound $M_*>0$ from §103. On $[0,M_*]$,
+$h_s$ is continuous for each $s\ge0$ and
+
+$$
+\|h_s-h_t\|_\infty\le|s-t|,\qquad
+\|h_s\|_\infty\le M_*e^{-s/M_*}.
+\tag{111.16}
+$$
+
+The first inequality follows by differentiating at $x>0$, where
+$|\partial_sh_s(x)|=e^{-s/x}\le1$, and continuity at $x=0$.
+The second is monotonicity of $xe^{-s/x}$ in $x$.
+Norm convergence $\Sigma_n\to\Sigma$ in (98.6) and continuous
+functional calculus give norm convergence of each $h_s(\Sigma_n)$.
+A finite time net and the first bound in (111.16) make this uniform
+on $[0,S]$, including zero. The second bound makes the remainder
+$s\ge S$ uniformly small, proving uniformity for all $s\ge0$.
+The means converge by $v_n\to v$. Substitution proves (111.14).
+The spectral formula also gives continuity in $s$ and the asserted
+infinite-time limits. The factor $N_n$ in (111.15) is essential;
+no replacement of the counting carrier or closed operator occurs.
+$\square$
+
+**Theorem 111.5 (the exact first-cylinder energy and the two endpoint orders).**
+Let $F_L=\mathbf1_{[L]}$, $F_R=\mathbf1_{[R]}=\mathbf1-F_L$.
+Both are in $\mathcal A$, with means $a,b$ under the actual $M$.
+Their exact energies are
+
+$$
+\mathcal E(F_L)=\mathcal E(F_R)=\frac14,
+\qquad \mathcal E(F_L,F_R)=-\frac14.
+\tag{111.17}
+$$
+
+On the finite original $T_n$ put
+$f_{n,L}(x)=\mathbf1_{\{L\preceq x\}}$ and
+$f_{n,R}(x)=\mathbf1_{\{R\preceq x\}}$. In particular both vanish
+at the finite root. Write
+
+$$
+c_n(s)=\langle f_{n,R},S_n(s)f_{n,L}\rangle_{L^2(\mu_n)},
+\qquad c(s)=\langle F_R,T(s)F_L\rangle_{L^2(M)}.
+\tag{111.18}
+$$
+
+These are nonnegative. They satisfy $c_n(0)=c(0)=0$,
+$c_n(s)\to c(s)$ uniformly for $s\ge0$, and
+
+$$
+\begin{aligned}
+c(s)&=\frac{s}{4}+o(s)\quad(s\downarrow0),\\
+\lim_{s\downarrow0}\lim_{n\to\infty}\frac{c_n(s)}s&=\frac14,\\
+\lim_{n\to\infty}\lim_{s\downarrow0}\frac{c_n(s)}s&=0.
+\end{aligned}
+\tag{111.19}
+$$
+
+At each fixed $n\ge2$ the stronger finite endpoint is
+
+$$
+c_n'(0)=0,\qquad c_n''(0)=N_n,\qquad
+c_n(s)=\frac{N_n}{2}s^2+O_n(s^3).
+\tag{111.20}
+$$
+
+For $n=0,1$, $c_n$ is identically zero. The two ordered limits of
+$c_n(s)$ itself are both zero; it is the normalized first-time
+coefficient in (111.19) that fails to commute. Uniform convergence
+of correlations in (111.14) does not imply uniform convergence of
+their derivatives at zero.
+
+**Proof.**
+For any finite-energy extension $u$ of $F_L$, put
+$x=u(\varnothing)$, $\ell=u(L)$ and $r=u(R)$. Conditional on $[L]$
+and $[R]$, the suffix law is the same $M$. The descendant increments
+therefore have constant traces $1-\ell$ and $-r$, respectively.
+The constant-trace identity of Theorem 99.1 and $\|q\|=1$ give,
+for any suffix increment vector $z$ with constant trace $d$,
+
+$$
+\|z\|^2\ge|\langle q,z\rangle|^2=d^2,
+\qquad J(dq)=d\mathbf1.
+\tag{111.21}
+$$
+
+Thus the complete extension energy obeys
+
+$$
+\begin{aligned}
+\|Du\|^2
+ &\ge(\ell-x)^2+(1-\ell)^2+(r-x)^2+r^2\\
+ &\ge\frac{(1-x)^2}{2}+\frac{x^2}{2}\ge\frac14.
+\end{aligned}
+\tag{111.22}
+$$
+
+All inequalities are attained: choose $x=1/2$, $\ell=3/4$, $r=1/4$,
+with strict-descendant increments $q/4$ in the left subtree and
+$-q/4$ in the right subtree. The two root increments are $1/4$ and
+$-1/4$. This specifies an actual $\ell^2$ increment vector, with
+energy $1/4$, and trace $F_L$ on every end. It proves the first
+energy; replacing $u$ by $1-u$ proves the right energy.
+Linearity of minimizing increments gives $z_{F_R}=-z_{F_L}$,
+because constants have zero increments, so their cross energy is
+$-1/4$. The unit-resistance/equal-split calculation is the intermediate
+supply of §99; (111.22) uses it on each declared biased cylinder,
+without replacing the probability law by the equal-split law.
+
+Apply (111.13) with $z=\delta_L$, $y=\delta_R$, $c=d=0$.
+For $n\ge2$ their finite means are $N_{n-1}/N_n$ and $N_{n-2}/N_n$;
+they add to $1-1/N_n$, not to one. The missing $1/N_n$ is precisely
+the root outside the two finite cylinders. At the boundary the means
+are $a,b$ and the two cylinders cover $\Omega$. In particular
+
+$$
+c(s)=ab+\langle\delta_R,h_s(\Sigma)\delta_L\rangle,
+\qquad c(0)=ab+\langle\delta_R,\Sigma\delta_L\rangle=0.
+\tag{111.23}
+$$
+
+For form-domain vectors the spectral theorem gives
+
+$$
+\lim_{s\downarrow0}\frac{\langle G,(I-T(s))F\rangle}{s}
+       =\mathcal E(G,F).
+\tag{111.24}
+$$
+
+Indeed the diagonal limit follows from
+$(1-e^{-s\lambda})/s\to\lambda$, bounded above by $\lambda$,
+with integrable form spectral mass; polarization gives the mixed
+limit. Applying this to $F_L,F_R$, whose inner product is zero,
+proves the first line of (111.19) and positivity for sufficiently
+small positive time. Positivity at all times follows from the Markov
+semigroup; the finite heat matrices have nonnegative entries as well.
+Theorem 111.4 proves the uniform convergence and then the first
+ordered limit.
+
+For each actual $T_n$, $n\ge2$, write node point masses explicitly
+as $e_{n,r}$, $e_{n,L}$ and $e_{n,R}$. The closed unit-edge law gives
+
+$$
+L_nf_{n,L}=e_{n,L}-e_{n,r},\qquad
+L_nf_{n,R}=e_{n,R}-e_{n,r}.
+\tag{111.25}
+$$
+
+Their first mixed energy is zero, since the two fields change on
+different root edges. Their second mixed operator product is
+
+$$
+\langle f_{n,R},L_n^2f_{n,L}\rangle_{\rm counting}
+ =\langle L_nf_{n,R},L_nf_{n,L}\rangle_{\rm counting}=1.
+\tag{111.26}
+$$
+
+Taylor expansion of the finite $S_n(s)$, with the factor $1/N_n$
+from $\mu_n$, gives (111.20). No bound uniform in $n$ is asserted
+for the Taylor remainder. This yields the second ordered limit
+in (111.19); the singleton cases follow directly. $\square$
+
+**Definition 111.6 (a direct same-clock local-form realization).**
+Such a realization consists of a locally compact separable metric
+space $X$, a full-support Radon measure $m$, a regular symmetric
+Dirichlet form $(\mathcal E_X,\mathcal D_X)$ on $L^2(X,m)$, and a
+measure-space isomorphism from $(\Omega,M)$ to $(X,m)$ modulo null
+sets. Let $U:L^2(M)\to L^2(X,m)$ be its pullback identification,
+so it preserves products, order, integrals and $\mathbf1$. Require
+
+$$
+U\mathcal D=\mathcal D_X,\qquad
+\mathcal E_X(UF,UG)=\mathcal E(F,G).
+\tag{111.27}
+$$
+
+The form $\mathcal E_X$ is local in the following precise sense:
+$\mathcal E_X(f,g)=0$ whenever $f,g\in\mathcal D_X$ have compact,
+disjoint supports. Require in addition that $UF_L,UF_R$ have
+representatives in $\mathcal D_X\cap C_c(X)$ with disjoint supports.
+These are locality-applicable support and domain assumptions, not
+consequences of disjoint measurable sets or of a unitary operator.
+The propagation correspondence is the same-clock identity
+$UT(s)=e^{-sH_X}U$ for every $s\ge0$, where $H_X$ is the operator
+of $\mathcal E_X$. It follows from (111.27); if instead specified
+as a premise, it must hold with this domain and support contract.
+There is no additional interior carrier, elimination of interior
+time, fitted metric, or change of the time parameter in this class.
+
+**Theorem 111.7 (the cylinder cross term excludes that direct local class).**
+No realization of Definition 111.6 exists. More generally, the same
+obstruction holds for an isometric form-preserving identification
+whose two images have domain and supports to which the stated locality
+axiom applies, even without an onto measure-space isomorphism.
+
+**Proof.**
+The domain and support premises allow locality to be applied to the
+two specified images, giving
+$\mathcal E_X(UF_L,UF_R)=0$. Form preservation and (111.17) give
+instead $\mathcal E_X(UF_L,UF_R)=-1/4$. This contradiction proves
+the claim. If only same-clock semigroup intertwining is used to
+express form preservation, isometry and (111.24) give the identical
+cross-energy contradiction on those domain vectors. The nonzero
+small-time transfer in (111.19) is the corresponding propagation
+witness, after the actual source limit.
+
+This obstruction does not apply when cylinder images have touching
+supports, when their indicators are outside a proposed local form
+domain, or when extra interior states or occupation-time changes
+produce a nonlocal boundary trace. In particular an infinite tree
+interior with the free-root energy is already used in (111.2) to
+define the boundary trace; it is not a direct local form on the
+boundary carrier. A local cable or spatial interior with such a
+trace would require its own carrier, measure, trace, operation and
+clock correspondence. The occupation trace in §108 concerns a
+specified finite successor/old-set pair, with its own clock, and
+does not supply that spatial correspondence. $\square$
+
+**Assumption 111.8 (the distinct original-operation and physical bridges).**
+A native interpretation of (111.13) retains the complete original
+ordered source, its immutable INITIAL targets, same-source joint
+histories, reached-address guards, full accessible state, permission
+and refusal rules, and absorbing Stop of
+[Native Leaf Depth Contact, Assumptions 1.2 and Definition 1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md),
+[Continuation I, Definitions 58.1 and 60.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md),
+and Assumptions 106.3 and 109.3. All original whole-row targets,
+including equality partitions and concrete exteriors when present,
+are retained; a boundary amplitude or cylinder correlation is not
+substituted for them. The law (111.1) specifies a comparison ensemble,
+not permission to prepare it or to replace the unknown source by a
+new INITIAL. The family $T_n$ remains a source-specific comparison
+inside the full original domain.
+
+Any additional execution realizing these fields and correlations
+requires a typed same-source correspondence for preparation, action,
+readout and joint chronology. Original-root $\mathsf{Read}$, forward
+$\mathsf{ApplyRho}$ and absorbing $\mathsf{Halt}$ do not provide a
+heat actuator, probability preparation or cylinder amplitude port
+by definition. The finite apparatus in Continuation I, §60 has its
+own additional permissions and grounded Hamiltonian; it is not an
+installed realization of the closed $L_n$ in (111.1). A command,
+mathematical decoder or independent marginal realization does not
+supply an actual accepted joint operation. Preparation, installation,
+raw calls, actual address lengths, updates, arithmetic, authentication,
+memory, retention and output remain separately charged under their
+original contracts. Normalization by $N_n$ conveys no acquired source
+size or index. Same-source legality and event costs in the ExactChart
+contract of
+[Fiber III, Definition 32.1](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_III.md)
+and the immutable whole-target/own-endpoint distinction in
+[Kbonacci, §§83–89](KBONACCI_FULL_POSITIVE_WINDOW_LOGARITHMIC_PRICE.md)
+retain their original scopes.
+
+Theorems 111.2–111.5 establish the ordinary comparison boundary law
+and its all-node correlation correspondence. They do not establish
+the extra native-operation bridge just stated. Source-substitution
+steps, $s$, acquired-experiment chronology and physical duration
+remain distinct until their actual time correspondence is proved.
+The existence of a spatial realization beyond Definition 111.6,
+its metric or dimension, stable physical matter and physical-time
+calibration remain unproved. No full-spectrum recovery or native
+source-operation authority follows from (111.8).
+
+## 111.99 追加锚（本行以下为增补区）
