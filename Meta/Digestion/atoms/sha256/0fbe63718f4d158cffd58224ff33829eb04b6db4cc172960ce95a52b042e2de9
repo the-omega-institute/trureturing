@@ -1,0 +1,11 @@
+**Theorem 52.2 (greatest action-closed quotient).** The operator $\Psi$ is
+monotone. Its greatest fixed point
+
+$$
+R_\infty=\nu\Psi
+$$
+
+is the largest action congruence. The quotient $Q/R_\infty$ is the coarsest
+state representation that preserves every allowed finite future language,
+terminal row, and contracted resource trace.
+

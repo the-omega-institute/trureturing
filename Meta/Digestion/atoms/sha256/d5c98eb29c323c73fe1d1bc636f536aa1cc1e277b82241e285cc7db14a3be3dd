@@ -1,0 +1,22 @@
+**Proposition 58.15 (four seeds do not attain the meet).** On
+$U=\{1,2,3,4\}$ with uniform measure, define two finite record maps by
+
+$$
+\begin{aligned}
+(Y_s(1),Y_s(2),Y_s(3),Y_s(4))&=(0,0,1,1),\\
+(Y_t(1),Y_t(2),Y_t(3),Y_t(4))&=(0,1,0,1).
+\end{aligned}
+$$
+
+Their laws and their abstract meet are all
+$\tfrac12\delta_0+\tfrac12\delta_1$, of mass $1$. Every agreement event in
+this coupling has mass at most $\tfrac12$.
+
+Proof. Agreement occurs exactly at seeds $1$ and $4$, whose pushforward is
+$\tfrac14\delta_0+\tfrac14\delta_1$. Every event giving pointwise agreement
+is contained in these two seeds up to null sets. The remaining seeds produce
+opposite records even though the marginal laws are identical. These maps
+can be realized by a common one-read rule that returns its source-dependent
+visible response and halts. Thus the common-seed requirement does not imply
+that the coupling attains the abstract meet. ∎
+

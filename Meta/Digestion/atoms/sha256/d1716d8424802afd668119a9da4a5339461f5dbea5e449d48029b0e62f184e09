@@ -1,0 +1,24 @@
+**引理 14.1（尖锐界所需的实际支撑链）。** 记
+$S_j=\operatorname{Pos}(T_j)$，$H_k=\operatorname{Pos}(\langle T_{2k},T_{2k}\rangle)$。
+则
+
+$$
+S_{2k}\subsetneq S_{2k+1}\subsetneq H_k,
+\qquad
+S_{2k},S_{2k+1},H_k\text{ 在所有长度至 }k\text{ 的词上相同}.
+\tag{ABT.44}
+$$
+
+证明。这里只使用已有 $T_{j+2}=\langle T_{j+1},T_j\rangle$ 的支撑后果。
+$S_0=S_1=\{\varepsilon\}$，$S_1\subsetneq S_2$；递推和归纳给
+$S_j\subseteq S_{j+1}$ 对全部 $j$ 成立。
+$S_{2k+1}$ 的左、右子支撑为 $S_{2k},S_{2k-1}$，故它包含于 $H_k$。
+已有原位置标签表在 $R^{k-1}LL$ 区分 $T_{2k},T_{2k+1}$，在 $R^kL$
+区分 $T_{2k+1},\langle T_{2k},T_{2k}\rangle$，给两次严格包含。
+
+对 $T_{2k}$ 或 $T_{2k+1}$，长度至 $k$ 的任何词均可达：在第 $i+1$ 条
+边之前，$i\le k-1$，剩余等级至少为 $2k-2i\ge2$，所以每一步确从分支
+出发。$H_k$ 也含全部这些词。因而三者在该半径的支撑全为一，证明最后一句。
+这是一条关于原实际树的中间引理，不另认领原子导航或前缀恢复供应。
+$\square$
+

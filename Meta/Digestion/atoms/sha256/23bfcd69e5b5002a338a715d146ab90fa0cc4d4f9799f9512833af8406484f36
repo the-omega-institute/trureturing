@@ -1,0 +1,20 @@
+**Definition 92.2 (the native Fibonacci comparison family).**
+Let $F_0=0$, $F_1=1$ and $F_{j+2}=F_{j+1}+F_j$. Take exactly the
+original ordered substitution
+$\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$,
+$\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$. Its source
+family is
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_n=\langle T_{n-1},T_{n-2}\rangle\quad(n\ge2).
+\tag{92.3}
+$$
+
+Write $N_n=N_{T_n}$, $C_n=C(T_n)$ and $A_n=A(T_n)$. These are
+separately specified finite inputs for the responses in Definition 92.1.
+Their comparison does not replace INITIAL during one execution. In
+particular, the occurrence operator here is not the operator on complete
+successive source states considered in Continuation III, §89, nor is a
+post-observation quotient from its §90 substituted for the source.
+

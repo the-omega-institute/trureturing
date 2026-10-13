@@ -1,0 +1,25 @@
+**Proposition 58.8 (correct calibration obstruction).** In the calibration
+example of Continuation II, all three singleton histories are pairwise
+mergeable, with different common first actions for different pairs. The
+three-way union is unsolvable. Thus this example disproves existence of a
+coarsest successful history partition, not solvability of a two-way union.
+
+Proof. The source is $(i,z)\in\{1,2,3\}\times\{0,1\}$ and the target is $z$.
+The destructive experiment table is
+
+| History | $a$ | $b$ | $c$ |
+| --- | --- | --- | --- |
+| $i=1$ | $z$ | $z$ | $\star$ |
+| $i=2$ | $\star$ | $z$ | $z$ |
+| $i=3$ | $z$ | $\star$ | $z$ |
+
+Every experiment destroys the remaining target information after producing
+its response; a $\star$ branch has no later recovery action. Each singleton
+is solvable. Histories $\{1,2\}$ share first action $b$, $\{1,3\}$ share $a$,
+and $\{2,3\}$ share $c$. On all three histories, every first action has a
+$\star$ branch compatible with both target bits. Immediate halt is also
+incorrect for one of the bits. Hence the three-way union has no successful
+policy. The partitions $\{1,2\}\mid\{3\}$ and $\{1,3\}\mid\{2\}$ are feasible,
+whereas every common coarsening merges all three and fails. Fixed-policy
+minimization in 58.5 does not remove this incompatibility between policies. ∎
+
