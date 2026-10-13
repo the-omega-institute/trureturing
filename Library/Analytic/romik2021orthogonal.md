@@ -9883,3 +9883,288 @@ not imply real-rootedness of $Q_{\rm core}$ by definition.
 No original-node nonreal exclusion, principal signed product,
 all-degree Jensen hyperbolicity, RH, FIB arithmetic bridge or
 all-integer Robin conclusion is supplied by (LC377) alone.
+
+## A same-source infinite tower does not supply the missing cofactor sign
+
+The auxiliary-kernel conclusion (LC377) and the original-node interface
+(LC378) remain distinct even if the preceding actual Jensen rows are
+hyperbolic. The following model preserves a whole source, its infinite
+exterior zero set, strictly alternating nonzero coefficients, an arbitrarily
+long zero-shift hyperbolic prefix, and every positive-shift hyperbolic row.
+It nevertheless has a strictly negative response ratio at a simple node
+immediately before its first nonreal-root defect. The model is not the
+actual $\Xi$ source. It tests only whether these shared hypotheses supply
+a universal transmission principle.
+
+This is ordinary source-specific analytical exposition, without Lean or
+mathematical-priority certification. The classical real-root and complex-zero
+decreasing suppliers are reused. The added correspondence keeps the two
+responses on the same infinite source and places their failure inside an
+admissible full-growth chart.
+
+### One fixed source for the entire tower
+
+Fix $N\in\mathbb Z_{\ge2}$ and $c>0$. Set
+
+$$
+y=\frac{c}{\sqrt{N-1/2}}>0,\qquad C=c^2+y^2,\qquad
+Q(z)=(z-c)^2+y^2,\qquad
+B_\epsilon(z)=\frac{\sin\sqrt{\epsilon z}}{\sqrt{\epsilon z}},\qquad
+f_\epsilon(z)=\frac{Q(z)}C B_\epsilon(z),\quad\epsilon>0.
+\tag{LC379}
+$$
+
+The sinc expression denotes its entire power series, so no square-root
+branch is selected. Its classical sine product is
+$B_\epsilon(z)=\prod_{m\ge1}(1-z/\lambda_m)$ with
+$\lambda_m=\pi^2m^2/\epsilon$. Thus $f_\epsilon$ is real entire of order
+$1/2$, has the nonreal pair $c\pm iy$ and all these positive exterior
+zeros, and satisfies $f_\epsilon(0)=1$. For fixed $N,c,\epsilon$, every
+degree below uses this same function.
+
+Write $b_j=\epsilon^j/(2j+1)!$ for $j\ge0$ and $b_j=0$ otherwise.
+Then
+
+$$
+f_\epsilon(-z)=\sum_{j\ge0}a_jz^j,\qquad
+a_j=b_j+\frac{2c}C b_{j-1}+\frac1C b_{j-2}>0.
+\tag{LC380}
+$$
+
+Use the unchanged finite extraction
+$\mathscr T_k h(t)=\sum_{j=0}^k(k)_{\underline j}h_jt^j/k^j$ for
+$h(z)=\sum h_jz^j$, and define
+$J_k=\mathscr T_k f_\epsilon$, $G_k=\mathscr T_k f_\epsilon'$ and
+$q_k(x)=x^kJ_k(1/x)$. In particular,
+
+$$
+\begin{aligned}
+q_k(0)&=(-1)^k k!a_k/k^k\ne0,\qquad \deg q_k=k,\qquad q_k\text{ monic},\\
+q_k[h]&=h(\partial_x/k)x^k,\\
+q_k[f_\epsilon]&=B_\epsilon(\partial_x/k)q_k[Q/C].
+\end{aligned}
+\tag{LC381}
+$$
+
+The differential series in (LC381) truncates on a polynomial. Its last
+identity follows by multiplying the two constant-coefficient operators;
+it uses all coefficients of the same source. The first line and coefficient
+positivity exclude nonpositive real zeros of both $J_k$ and $q_k$. No
+low-degree polynomial is being counted as a complete degree-$k$ row.
+
+### A strict node before the first defect
+
+At $\epsilon=0$, used only to compute a strict limit, $f_0=Q/C$. For
+$k\ge2$ put $\delta_k=c^2-(1-1/k)C$. Direct extraction gives
+
+$$
+\begin{aligned}
+CJ_k^{(0)}(t)&=(1-1/k)t^2-2ct+C,&
+CG_k^{(0)}(t)&=2(t-c),\\
+\delta_k&=\frac{c^2-(k-1)y^2}{k},&
+\delta_N&=\frac{c^2}{N(2N-1)}>0,\qquad
+\delta_{N+1}=-\frac{c^2}{(N+1)(2N-1)}<0.
+\end{aligned}
+\tag{LC382}
+$$
+
+For $k\le N$, the reflected polynomial $q_k[Q/C]$ has only real
+zeros: for $k\ge2$ it is a real-root quadratic times $x^{k-2}$, while
+$k=1$ is linear. For every $k>N$, it has exactly two nonreal zeros.
+Let $d=\sqrt{\delta_N}$ and $t_-=(c-d)/(1-1/N)$. Since
+$d<c/N$, this smaller simple root of $J_N^{(0)}$ is larger than $c$.
+At this actual root,
+
+$$
+C(J_N^{(0)})'(t_-)=-2d<0,\qquad
+CG_N^{(0)}(t_-)=2(t_--c)>0,\qquad
+\frac{G_N^{(0)}(t_-)}{(J_N^{(0)})'(t_-)}
+=-\frac1{1+\sqrt{2-1/N}}<-\frac13.
+\tag{LC383}
+$$
+
+The two responses also obey the exact extraction identity
+$(J_N^{(0)})'=G_N^{(0)}-(t/N)(G_N^{(0)})'$. Their opposite signs
+were not obtained by assigning an independent adjacent polynomial.
+
+### Restore every exterior zero without losing the real prefix
+
+Bunton, Jacobs, Jenkins, McKenry, Piotrowski and Scott,
+[*Non-Real Zero Decreasing Operators Related to Orthogonal Polynomials*,
+arXiv:1312.2283v1](https://arxiv.org/html/1312.2283v1), Theorem 5,
+recalls Piotrowski's Proposition 68. With its parameters
+$(\alpha,\beta,c,d)=(1,0,0,-u)$ it states that $1-u\partial_x$
+does not increase a real polynomial's number of nonreal zeros, counted
+with multiplicity. The parameter called $c$ in that theorem is zero;
+it is not the center in (LC379). All its sign conditions are satisfied.
+Reuse that theorem for each factor in
+
+$$
+B_\epsilon(\partial_x/k)
+=\lim_{M\to\infty}\prod_{m=1}^M
+ \left(1-\frac{\epsilon}{k\pi^2m^2}\partial_x\right).
+\tag{LC384}
+$$
+
+For fixed $k$, this is finite-dimensional coefficient convergence, with
+the leading coefficient unchanged. If the limit had more nonreal roots
+than the bound, disjoint small discs about its nonreal roots and the
+classical continuity of polynomial roots would give the same excess in
+the approximants. Thus (LC381)--(LC384) make every $q_k$, $k\le N$,
+hyperbolic for every $\epsilon>0$, including the multiple-zero input at
+$\epsilon=0$. No openness claim at those input multiple zeros is used.
+For every $k$, the number of nonreal output roots is at most two.
+
+At $k=N+1$, the nonreal simple pair of the limiting quadratic persists
+for sufficiently small positive $\epsilon$. The exact same-source
+derivative tower (LC159)--(LC160), applied to the nonzero coefficients
+(LC380), makes its defect nondecreasing. Consequently, for a sufficiently
+small fixed positive $\epsilon$,
+
+$$
+\Delta_k=
+\begin{cases}0,&1\le k\le N,\\2,&k\ge N+1.\end{cases}
+\qquad
+\frac{G_N(t_\epsilon)}{J_N'(t_\epsilon)}<-\frac13
+\quad\text{at a positive simple }J_N\text{ root }t_\epsilon\to t_-.
+\tag{LC385}
+$$
+
+The last conclusion uses the simple-root continuation and strict margin
+in (LC383); it evaluates both actual responses at the continued actual
+root. It is not an approximate-node sign check.
+
+### All positive-shift rows can also remain hyperbolic
+
+Put $P_M(z)=\prod_{m=1}^M(1-z/\lambda_m)$ and
+$f_M=(Q/C)P_M$. Choose $\epsilon$ additionally small enough that
+
+$$
+\lambda_1>4c,\qquad
+\sum_{m\ge1}\frac1{\lambda_m-2c}<\frac{2c}C.
+\tag{LC386}
+$$
+
+For example, when $\lambda_1\ge4c$ the sum is at most
+$2\sum_m\lambda_m^{-1}=\epsilon/3$; hence these conditions can be
+paid together. For every $M\ge1$, $f_M'(0)<0$ and
+$f_M'(2c)/f_M(2c)=2c/C-\sum_{m=1}^M(\lambda_m-2c)^{-1}>0$.
+Also $f_M'(\lambda_1)<0$. This places two distinct real roots of
+$f_M'$ in $(0,2c)$ and $(2c,\lambda_1)$. Rolle's theorem supplies
+$M-1$ more between consecutive exterior roots. Since
+$\deg f_M'=M+1$, all its roots are positive and simple. Every higher
+derivative remains real-rooted by Rolle, unless it is zero.
+
+For a real-rooted polynomial $h$, the factorization of $h(\partial_x/k)$
+into real linear differential factors, with any zero factors giving
+ordinary derivatives, and the supplier above make
+$h(\partial_x/k)x^k$ real-rooted or zero. Thus all finite Jensen rows
+of $f_M^{(h)}$, $h\ge1$, are hyperbolic whenever nonzero. Letting
+$M\to\infty$ preserves each fixed row by coefficient convergence.
+For integers $h,k\ge1$, the leading coefficient is
+$[t^k]\mathscr T_k f_\epsilon^{(h)}
+=(-1)^{h+k}(h+k)!a_{h+k}/k^k\ne0$. Thus the limiting row
+has its complete degree $k$. Therefore
+
+$$
+\mathscr T_k f_\epsilon^{(h)}\text{ is hyperbolic}
+\quad\text{for every }h\ge1,\ k\ge1.
+\tag{LC387}
+$$
+
+The same sufficiently small $\epsilon$ pays this whole family and
+(LC385). Hyperbolicity of the adjacent response itself is therefore
+insufficient to repair the strict current-node sign.
+
+### The two actual kernel tangents fail on the same cofactors
+
+At the strict limit $\epsilon=0$, the exterior is $A=1/C$ and
+$H=\widehat H=1/C$, $\ell=s=0$, $\chi=t$ and $\eta=1$.
+Use the same kernels as (LC305), at degree $n=N$ and core degree two:
+
+$$
+M_t(u)=e^{-tu}(1+tu/N)^N,\quad b_t(u)=u,\quad
+R_{2,t}(z)=z^2-t^2/N,\quad U_{2,t}(z)=2z,\quad
+\beta_\pm=\pm t/\sqrt N,\quad \beta_\pm'=\pm N^{-1/2},\quad
+\gamma_\pm=1.
+\tag{LC388}
+$$
+
+For $p=t_--c>0$ and $\sigma=t_-/\sqrt N$, the centered core is
+$\overline Q(z)=z^2+y^2$ and the exact convolutions are
+$C_t(z)=z^2+y^2-t^2/N$, $W_t(z)=2z$. At the actual node,
+their cofactors and actual derivative weights are
+$a_+=p+\sigma$, $a_-=p-\sigma$ and
+$d_+=1-N^{-1/2}$, $d_-=1+N^{-1/2}$. Hence
+
+$$
+\sum_j\gamma_ja_j=2p>0,\qquad
+\sum_jd_ja_j=2p-2t_-/N=-2d<0.
+\tag{LC389}
+$$
+
+Even the frozen convolution $C_{t_-}$ has two simple real roots
+$\pm p$. The failure is not a lack of real roots in that frozen output.
+It is the opposite sign of the two correlated cofactor sums. This
+realizes (LC378) without independent weights or a zero denominator.
+
+### Arbitrarily large budgets do not exclude this thin-pair mechanism
+
+Take $c=T^2$, $T\ge32$, $0<\rho\le1/8$, $D=T\rho$ and
+$L=\log(T+2)$. Fix positive source-budget constants with $2\le C_0L$,
+$E=128(S+3C_0)L$, and choose $N$ sufficiently large that
+
+$$
+\nu=N\rho^2/T^2\ge2^{32}(E+2),\qquad
+\frac yD=\nu^{-1/2}\sqrt{\frac N{N-1/2}}<1,\qquad
+0<t_--c<\frac c{N-1}<D/16.
+\tag{LC390}
+$$
+
+Both nonreal roots belong to the core. Choose $\epsilon$ small enough
+that every exterior height $\sqrt{\lambda_m}$ lies outside the complete
+radius-$4\rho$ source selection. Thus $r=q=2$, all exterior zeros
+remain in $A=B_\epsilon/C$, and the actual simple bad node lies in
+the closed $D/16$ chart.
+
+For these fixed parameters, $A$ and every finite extraction of $A$
+converge locally uniformly to $1/C$ as $\epsilon\downarrow0$.
+The extraction of $A\prime$ converges to zero, while
+$J_k\to\mathscr T_k(Q/C)$. On a larger closed
+parameter disc their amplitudes are consequently nonzero, and Cauchy
+estimates give convergence of the complete analytic jets with their
+factorial/radius bounds. At the limit, the kernel labels in (LC388)
+are explicit on that disc, their speed is $N^{-1/2}<2^{-16}$, and
+$\gamma_\pm-\eta=0$. Continuation on a neighborhood of the closed disc
+therefore retains their strict speed and positive-response budgets,
+and any prescribed positive bound
+$|\gamma_j-\eta|\le2^{19}(E/\nu)\sqrt{2/\nu}$, after choosing
+$\epsilon$ sufficiently small. It also retains the full source jets,
+nonzero amplitudes, infinite exterior zeros and the strict bad-node
+ratio (LC385). This continuity argument fixes the chosen parameters
+before selecting $\epsilon$; it does not identify the model's source
+constants with those of $\Xi$.
+
+In the source-height plane, $\tau_\pm=\sqrt{c\pm iy}$ have
+$\Re\tau_\pm>T$ and
+
+$$
+|\tau_\pm-T|=\frac y{|\tau_\pm+T|}
+<\frac{T}{2\sqrt{N-1/2}}.
+\tag{LC391}
+$$
+
+To exclude this pair from the same-center closed radius-$4\rho$
+selection requires $4\rho<|\tau_\pm-T|$, which forces
+$\nu<N/[64(N-1/2)]<1/32$. This is incompatible with (LC390).
+The strictly positive off-line width can tend to zero as $N$ grows.
+Adaptive shrinking of the radius alone thus does not give a universal
+way to avoid the pair while retaining the full-growth budget.
+
+The construction rules out a universal first-defect bootstrap based only
+on the preceding same-source hyperbolic rows, positive-shift hyperbolicity
+and the auxiliary analytic/kernel certificate. It does not rule out an
+additional relation specific to the actual theta coefficients of $\Xi$,
+its finite extraction and its complete local/exterior factors. Such a
+relation, the actual witness-location bridge and all-node coverage remain
+unproved. No RH, FIB arithmetic or all-integer Robin conclusion follows.
