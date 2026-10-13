@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EJM;
 
 internal sealed class EJMContractionSymmetryDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/EJMContractionSymmetry.";
+    private const string Prefix = "D5/S3/Quantum/Entanglement/EJM/EJMContractionSymmetry.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact local EJM contraction symmetry for tail representatives.",

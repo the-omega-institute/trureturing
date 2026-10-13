@@ -1,27 +1,27 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMGlobalBoundReplay
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMGlobalBoundReplay
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMGlobalBoundReplay
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMGlobalBoundReplay
    mirror-E: none(waiver:actual-global-inflation-bound-replay)
-   anchors: [D5/S3/Quantum/Entanglement/EJMPartialBoundLookup, D5/S3/Quantum/Entanglement/EJMGlobalDAGData]
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundLookup, D5/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData]
    utility: none
    digest: Actual local lookup bounds sum to a valid global score bound and earned context-specific replay acceptance excludes the original EJM local model. -/
 
-import D5.S3.Quantum.Entanglement.EJMPartialBoundLookup
-import D5.S3.Quantum.Entanglement.EJMGlobalDAGData
+import D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundLookup
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalDAGData
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Entanglement.EJMGlobalBoundReplay
+namespace D5.S3.Quantum.Entanglement.EJM.EJMGlobalBoundReplay
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
 open D5.S0.Certificates.FinitePartialBoundDAG
 open D5.S3.Quantum.Entanglement.ElegantJointMeasurementInflation (Node)
 open D5.S3.Quantum.Entanglement.EJMInflationScore
-open D5.S3.Quantum.Entanglement.EJMCertificateData (F1 F2)
-open D5.S3.Quantum.Entanglement.EJMScoreSymmetry (triangleCentered singletonCentered)
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData
-open D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
-open D5.S3.Quantum.Entanglement.EJMPartialBoundLookup
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2)
+open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry (triangleCentered singletonCentered)
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundLookup
 open scoped BigOperators
 
 /-!
@@ -104,4 +104,4 @@ theorem accepted_excludes_triangle_local (triangleAccepted : TriangleAccepted)
 #print axioms accepted_score_positive
 #print axioms accepted_excludes_triangle_local
 
-end D5.S3.Quantum.Entanglement.EJMGlobalBoundReplay
+end D5.S3.Quantum.Entanglement.EJM.EJMGlobalBoundReplay

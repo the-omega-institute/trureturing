@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EJM;
 
 internal sealed class EJMGlobalScoreSymmetryDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/EJMGlobalScoreSymmetry.";
+    private const string Prefix = "D5/S3/Quantum/Entanglement/EJM/EJMGlobalScoreSymmetry.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual EJM score invariance and context-specific lexicographic symmetry cuts.",

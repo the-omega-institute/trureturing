@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EJM;
 
 internal sealed class EJMPartialBoundLookupDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/EJMPartialBoundLookup.";
+    private const string Prefix = "D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundLookup.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Assignment-checked lookup of the actual local EJM score bounds.",

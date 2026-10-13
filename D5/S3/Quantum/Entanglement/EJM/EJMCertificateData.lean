@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMCertificateData
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMCertificateData
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMCertificateData
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMCertificateData
    mirror-E: none(waiver:exact-inflation-dual-coefficients)
    anchors: []
    utility: none
@@ -29,7 +29,7 @@ set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option linter.style.longLine false
 
-namespace D5.S3.Quantum.Entanglement.EJMCertificateData
+namespace D5.S3.Quantum.Entanglement.EJM.EJMCertificateData
 open scoped BigOperators
 
 /-- A binary dictionary is proof data, with its own executable interpretation. -/
@@ -426,4 +426,4 @@ theorem F2_coordinate (e : Fin 9 → Fin 4) (j : Fin 12) :
 #print axioms F1_coordinate
 #print axioms F2_coordinate
 
-end D5.S3.Quantum.Entanglement.EJMCertificateData
+end D5.S3.Quantum.Entanglement.EJM.EJMCertificateData

@@ -1,16 +1,51 @@
-import D5.S3.Quantum.Entanglement.EJMTerminalBoundData
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMTerminalBoundSoundness
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMTerminalBoundSoundness
+   mirror-E: none(waiver:actual-exact-certificate-premise)
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMTerminalBoundData]
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.triangle_contractions,D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.singleton_contractions,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_tags,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_tags
+   digest: Actual terminal checks and earned contractions imply the required centered-score bounds. -/
+
+/-
+admission_basis: escape-witness
+This is part of the same actual-certificate delivery as the substantive
+recursive checker soundness and final locality refutation, not an
+independent numerical-instance or first-freeze deliverable. Numerical
+normalization and consumed binding helpers supply no separate escape.
+Public targets: triangle_terminal_sound, singleton_terminal_sound,
+triangle_all_terminal_bounds, singleton_all_terminal_bounds.
+proof_shape: bind-only relative to the earned contraction symmetries, original
+check interpretation and logical transport. These are consumed conditional
+helpers, not independent escape claims. The contraction and terminal-check
+premises stay explicit in their theorem types. EJMLocalBoundAcceptance supplies
+all of them from the actual full-domain kernel receipts in this same delivery.
+The singleton formula retains its factor 64, and every bound is on the
+original triangleCentered F1 or singletonCentered F2 at the actual event.
+The tag receipts identify every complete row's event; no terminal event or
+external numerical minimum is substituted without that checked equality.
+The concrete numeric premises listed in the utility header must be
+kernel-checked in this delivery, with the same original functions,
+finite domains, partial rows and inequality direction. Pending sources
+or external producer validations do not fulfill those premises.
+Four-slot registration remains unfinished under issue #16309. The
+specific public targets below lack a compiled original-source
+realization bridge, enrolled readout and variation/sensitivity evidence;
+this is a missing-registration statement, not a template-support claim.
+-/
+
+import D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Entanglement.EJMTerminalBoundSoundness
+namespace D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundSoundness
 open D5.S0.Certificates.FinitePartialBoundDAG
-open D5.S3.Quantum.Entanglement.EJMCertificateData (F1 F2)
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData
-open D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
-open D5.S3.Quantum.Entanglement.EJMContractionSymmetry
-open D5.S3.Quantum.Entanglement.EJMScoreSymmetry
-open D5.S3.Quantum.Entanglement.EJMTerminalBoundData
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2)
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
+open D5.S3.Quantum.Entanglement.EJM.EJMContractionSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData
 
 theorem triangle_terminal_sound
     (contractions : ∀ i, triangleContraction F1 (EJMContractionData.triangleTail i) =
@@ -29,7 +64,7 @@ theorem triangle_terminal_sound
       ⟨j.val, lt_trans j.isLt (by decide : 4588 < 41294)⟩).rule with
     | complete actual =>
       simp only [rule] at checked
-      exact (of_decide_eq_true checked).2
+      simpa only [one_mul] using (of_decide_eq_true checked).2
     | split i child sym => simp only [rule, Bool.false_eq_true] at checked
   have hc : EJMContractionData.triangleValue w.2 =
       triangleContraction F1 (fun i : Fin 7 => e (Fin.natAdd 3 i)) := by
@@ -109,4 +144,4 @@ theorem singleton_all_terminal_bounds
 
 #print axioms triangle_all_terminal_bounds
 #print axioms singleton_all_terminal_bounds
-end D5.S3.Quantum.Entanglement.EJMTerminalBoundSoundness
+end D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundSoundness

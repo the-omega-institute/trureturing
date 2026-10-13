@@ -1,24 +1,24 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMGlobalScoreSymmetry
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMGlobalScoreSymmetry
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMGlobalScoreSymmetry
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMGlobalScoreSymmetry
    mirror-E: none(waiver:actual-global-inflation-replay)
-   anchors: [D5/S3/Quantum/Entanglement/EJMScoreSymmetry, D5/S0/Certificates/FiniteSymmetryBoundReplay]
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry, D5/S0/Certificates/FiniteSymmetryBoundReplay]
    utility: none
    digest: The actual 192 by 24 EJM actions preserve the centered score and checked partial cuts strictly decrease finite lexicographic rank. -/
 
-import D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
+import D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Entanglement.EJMGlobalScoreSymmetry
+namespace D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
 open D5.S3.Quantum.Entanglement.ElegantJointMeasurementInflation (Node)
 open D5.S3.Quantum.Entanglement.EJMInflationScore (score)
-open D5.S3.Quantum.Entanglement.EJMCertificateData (F1 F2)
-open D5.S3.Quantum.Entanglement.EJMScoreSymmetry
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData (outcome)
-open D5.S3.Quantum.Entanglement.EJMPartialBoundTransport (outcomeEquiv)
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2)
+open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData (outcome)
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport (outcomeEquiv)
 
 /- Node is already Fin 20. The source table and all of its actual block/local
 transport witnesses are reused from EJMScoreSymmetry; the 24 outcome maps are
@@ -99,4 +99,4 @@ theorem dominates_rank_lt (s : Cut) (p : Partial Node (Fin 4))
 #print axioms actual_score_invariant
 #print axioms dominates_rank_lt
 
-end D5.S3.Quantum.Entanglement.EJMGlobalScoreSymmetry
+end D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry

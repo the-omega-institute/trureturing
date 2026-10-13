@@ -1,23 +1,23 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMGlobalDAGData
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMGlobalDAGData
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData
    mirror-E: none(waiver:literal-global-inflation-proof-data)
-   anchors: [D5/S0/Certificates/FiniteSymmetryDAGReplay, D5/S3/Quantum/Entanglement/EJMGlobalScoreSymmetry]
+   anchors: [D5/S0/Certificates/FiniteSymmetryDAGReplay, D5/S3/Quantum/Entanglement/EJM/EJMGlobalScoreSymmetry]
    utility: none
    digest: Literal shared branch shapes retain every child and are decoded in each reached actual partial context. -/
 
 import D5.S0.Certificates.FiniteSymmetryDAGReplay
-import D5.S3.Quantum.Entanglement.EJMGlobalScoreSymmetry
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option linter.style.longLine false
 
-namespace D5.S3.Quantum.Entanglement.EJMGlobalDAGData
+namespace D5.S3.Quantum.Entanglement.EJM.EJMGlobalDAGData
 open D5.S0.Certificates.FiniteSymmetryDAGReplay
-open D5.S3.Quantum.Entanglement.EJMGlobalScoreSymmetry
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData (RawTree)
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData (RawTree)
 
 /-! The external cover is untrusted data. There are 1,553,860 shared split
 shapes, 92,160 possible symmetry cut tags and one bound tag. Four children
@@ -813,4 +813,4 @@ def nodes (fuel : ℕ) (index : Fin Size) : Node Size (Fin 20) (Fin 4) Cut :=
 
 def root : Fin Size := ⟨1646020, by decide⟩
 
-end D5.S3.Quantum.Entanglement.EJMGlobalDAGData
+end D5.S3.Quantum.Entanglement.EJM.EJMGlobalDAGData

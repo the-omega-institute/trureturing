@@ -1,7 +1,41 @@
-import D5.S3.Quantum.Entanglement.EJMTerminalBoundData
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates
+   mirror-E: none(waiver:actual-exact-certificate-premise)
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMTerminalBoundData]
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_tags,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_tags
+   digest: Actual terminal events, contraction witnesses and scaled integer comparisons pass their checks. -/
+
+/-
+admission_basis: escape-witness
+This is part of the same actual-certificate delivery as the substantive
+recursive checker soundness and final locality refutation, not an
+independent numerical-instance or first-freeze deliverable. Numerical
+normalization and consumed binding helpers supply no separate escape.
+Public targets: triangle_terminals, singleton_terminals,
+triangle_tags, singleton_tags. Every private chunk and public check receipt
+has proof_shape: bind-only. The checks cover all 4588 triangle terminals,
+1192 singleton terminals, and the terminal-tag check on all 41294 and 8689
+local rows. They inspect actual complete events, exact local coordinate and
+outcome transport, and the stored inequality in its required lower-bound
+direction. The checks do not assume stored contraction values are correct:
+EJMTerminalBoundSoundness separately consumes the actual contraction receipts.
+All four public checks are live premises of local acceptance and the final
+refutation, not independently delivered finite positive instances.
+The concrete numeric premises listed in the utility header must be
+kernel-checked in this delivery, with the same original functions,
+finite domains, partial rows and inequality direction. Pending sources
+or external producer validations do not fulfill those premises.
+Four-slot registration remains unfinished under issue #16309. The
+specific public targets below lack a compiled original-source
+realization bridge, enrolled readout and variation/sensitivity evidence;
+this is a missing-registration statement, not a template-support claim.
+-/
+
+import D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData
 set_option maxRecDepth 1000000
-namespace D5.S3.Quantum.Entanglement.EJMTerminalCertificates
-open D5.S3.Quantum.Entanglement.EJMTerminalBoundData
+namespace D5.S3.Quantum.Entanglement.EJM.EJMTerminalCertificates
+open D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData
 set_option maxHeartbeats 100000000 in
 private theorem triangle_chunk_0 : ∀ j : Fin 128,
     triangleTerminalCheck ⟨0 + j.val, by have h := j.isLt; omega⟩ = true := by
@@ -616,4 +650,4 @@ theorem singleton_tags : ∀ j : Fin 8689, singletonTerminalTagCheck j = true :=
 
 #print axioms singleton_tags
 
-end D5.S3.Quantum.Entanglement.EJMTerminalCertificates
+end D5.S3.Quantum.Entanglement.EJM.EJMTerminalCertificates

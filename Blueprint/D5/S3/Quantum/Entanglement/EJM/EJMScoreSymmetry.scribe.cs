@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EJM;
 
 internal sealed class EJMScoreSymmetryDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/EJMScoreSymmetry.";
+    private const string Prefix = "D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact symmetries of the centered 2×2×4 EJM inflation score.",

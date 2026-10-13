@@ -1,20 +1,20 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMContractionSymmetry
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMContractionSymmetry
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMContractionSymmetry
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMContractionSymmetry
    mirror-E: none(waiver:exact-local-tail-contractions)
-   anchors: [D5/S3/Quantum/Entanglement/EJMScoreSymmetry]
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry]
    utility: none
    digest: Actual local coordinate and outcome symmetries preserve exact tail contractions. -/
 
-import D5.S3.Quantum.Entanglement.EJMScoreSymmetry
+import D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Entanglement.EJMContractionSymmetry
+namespace D5.S3.Quantum.Entanglement.EJM.EJMContractionSymmetry
 open D5.S3.Quantum.Entanglement.EJMInflationScore
-open D5.S3.Quantum.Entanglement.EJMCertificateData (F1 F2 trianglePerm singletonPerm)
-open D5.S3.Quantum.Entanglement.EJMScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2 trianglePerm singletonPerm)
+open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
 open scoped BigOperators
 
 def triangleContraction (F : (Fin 10 → Fin 4) → ℤ) (t : Fin 7 → Fin 4) : ℤ :=
@@ -114,4 +114,4 @@ theorem actual_singletonContraction_relabel (ν : Fin 4 ≃ Fin 4) (t : Fin 8 �
 #print axioms actual_triangleContraction_relabel
 #print axioms actual_singletonContraction_relabel
 
-end D5.S3.Quantum.Entanglement.EJMContractionSymmetry
+end D5.S3.Quantum.Entanglement.EJM.EJMContractionSymmetry

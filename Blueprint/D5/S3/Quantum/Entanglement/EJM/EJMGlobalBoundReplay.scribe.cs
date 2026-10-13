@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.EJM;
 
 internal sealed class EJMGlobalBoundReplayDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Entanglement/EJMGlobalBoundReplay.";
+    private const string Prefix = "D5/S3/Quantum/Entanglement/EJM/EJMGlobalBoundReplay.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual projected local bounds and the conditional complete EJM replay bridge.",

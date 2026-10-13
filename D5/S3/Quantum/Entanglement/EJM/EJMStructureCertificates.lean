@@ -1,9 +1,41 @@
-import D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMStructureCertificates
+   mirror-E: none(waiver:actual-exact-certificate-premise)
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport]
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates.triangle_structure,D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates.singleton_structure
+   digest: Every actual local row passes the exact structural check. -/
+
+/-
+admission_basis: escape-witness
+This is part of the same actual-certificate delivery as the substantive
+recursive checker soundness and final locality refutation, not an
+independent numerical-instance or first-freeze deliverable. Numerical
+normalization and consumed binding helpers supply no separate escape.
+Public targets: triangle_structure, singleton_structure.
+Each private chunk and public receipt has proof_shape: bind-only. The public
+interval dispatch consumes every chunk covering all 41294 triangle rows and
+8689 singleton rows. These receipts discharge checkStructure on the actual
+partial actions and row interpreters; the generic checked_structure_and_terminals
+consumer derives checkRow acceptance only when actual terminal inequalities
+are also proved. No centered-score arithmetic is supplied by structure alone.
+Both receipts are consumed by EJMLocalBoundAcceptance and the final refutation.
+The concrete numeric premises listed in the utility header must be
+kernel-checked in this delivery, with the same original functions,
+finite domains, partial rows and inequality direction. Pending sources
+or external producer validations do not fulfill those premises.
+Four-slot registration remains unfinished under issue #16309. The
+specific public targets below lack a compiled original-source
+realization bridge, enrolled readout and variation/sensitivity evidence;
+this is a missing-registration statement, not a template-support claim.
+-/
+
+import D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 set_option maxRecDepth 1000000
-namespace D5.S3.Quantum.Entanglement.EJMStructureCertificates
+namespace D5.S3.Quantum.Entanglement.EJM.EJMStructureCertificates
 open D5.S0.Certificates.FinitePartialBoundDAG
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData
-open D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 set_option maxHeartbeats 100000000 in
 private theorem triangle_chunk_0 : ∀ j : Fin 1024,
     checkStructure trianglePartialAct triangleRows
@@ -708,4 +740,4 @@ theorem singleton_structure (i : Fin 8689) :
   simpa only [he] using singleton_chunk_8192 j
 
 #print axioms singleton_structure
-end D5.S3.Quantum.Entanglement.EJMStructureCertificates
+end D5.S3.Quantum.Entanglement.EJM.EJMStructureCertificates

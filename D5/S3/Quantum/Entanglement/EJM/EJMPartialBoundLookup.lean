@@ -1,12 +1,12 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMPartialBoundLookup
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundLookup
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMPartialBoundLookup
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMPartialBoundLookup
    mirror-E: none(waiver:actual-local-bound-lookup)
-   anchors: [D5/S0/Certificates/FinitePartialBoundDAG, D5/S3/Quantum/Entanglement/EJMPartialBoundTransport]
+   anchors: [D5/S0/Certificates/FinitePartialBoundDAG, D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport]
    utility: none
    digest: Local row selectors propose normalized symmetry representatives whose lower bounds are used only after checking exact assignment transport. -/
 
-import D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
+import D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 import Mathlib.Data.List.FinRange
 
 set_option autoImplicit false
@@ -14,13 +14,13 @@ set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option linter.style.longLine false
 
-namespace D5.S3.Quantum.Entanglement.EJMPartialBoundLookup
+namespace D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundLookup
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
 open D5.S0.Certificates.FinitePartialBoundDAG
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData
-open D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
-open D5.S3.Quantum.Entanglement.EJMScoreSymmetry (triangleCentered singletonCentered)
-open D5.S3.Quantum.Entanglement.EJMCertificateData (F1 F2 trianglePerm singletonPerm)
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
+open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry (triangleCentered singletonCentered)
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2 trianglePerm singletonPerm)
 
 /-!
 The literal dictionaries map base-five representative hashes to local row
@@ -768,4 +768,4 @@ theorem singleton_lower_bound
 #print axioms triangle_lower_bound
 #print axioms singleton_lower_bound
 
-end D5.S3.Quantum.Entanglement.EJMPartialBoundLookup
+end D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundLookup

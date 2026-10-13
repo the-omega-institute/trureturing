@@ -1,25 +1,25 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMTerminalBoundData
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMTerminalBoundData
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMTerminalBoundData
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMTerminalBoundData
    mirror-E: none(waiver:exact-ejm-terminal-proof-data)
-   anchors: [D5/S3/Quantum/Entanglement/EJMPartialBoundTransport, D5/S3/Quantum/Entanglement/EJMContractionData]
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport, D5/S3/Quantum/Entanglement/EJM/EJMContractionData]
    utility: none
    digest: Untrusted complete-row witnesses retain the actual outcome and coordinate transport to exact contraction representatives. -/
 
-import D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
-import D5.S3.Quantum.Entanglement.EJMContractionData
+import D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
+import D5.S3.Quantum.Entanglement.EJM.EJMContractionData
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option linter.style.longLine false
 
-namespace D5.S3.Quantum.Entanglement.EJMTerminalBoundData
+namespace D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData
 open D5.S0.Certificates.FinitePartialBoundDAG
-open D5.S3.Quantum.Entanglement.EJMCertificateData (CoefficientTree)
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData
-open D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
-open D5.S3.Quantum.Entanglement.EJMScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (CoefficientTree)
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
+open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
 
 /-! Each proposed witness is checked against its literal complete row. Neither
 the generator nor an external contraction value is used as a proof premise. -/
@@ -558,4 +558,4 @@ def singletonTerminalTagCheck (j : Fin 8689) : Bool :=
     else false
   | .split _ _ _ => true
 
-end D5.S3.Quantum.Entanglement.EJMTerminalBoundData
+end D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData

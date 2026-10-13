@@ -1,23 +1,23 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMPartialBoundTransport
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMPartialBoundTransport
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport
    mirror-E: none(waiver:exact-local-partial-state-transport)
-   anchors: [D5/S0/Certificates/FinitePartialBoundDAG, D5/S3/Quantum/Entanglement/EJMScoreSymmetry]
+   anchors: [D5/S0/Certificates/FinitePartialBoundDAG, D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry]
    utility: none
    digest: Actual local symmetries transport partial events and preserve centered EJM scores. -/
 
-import D5.S3.Quantum.Entanglement.EJMPartialBoundData
-import D5.S3.Quantum.Entanglement.EJMScoreSymmetry
+import D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
+import D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
+namespace D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
-open D5.S3.Quantum.Entanglement.EJMCertificateData (F1 F2 trianglePerm singletonPerm)
-open D5.S3.Quantum.Entanglement.EJMScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2 trianglePerm singletonPerm)
+open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
 
-open D5.S3.Quantum.Entanglement.EJMPartialBoundData (outcome LocalSym)
+open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData (outcome LocalSym)
 
 private theorem outcome_bijective (s : Fin 24) : Function.Bijective (outcome s) := by
   have h : ∀ s : Fin 24, Function.Bijective (outcome s) := by decide
@@ -78,4 +78,4 @@ theorem singleton_score_invariant (s : LocalSym) (e : Fin 9 → Fin 4) :
 #print axioms triangle_score_invariant
 #print axioms singleton_score_invariant
 
-end D5.S3.Quantum.Entanglement.EJMPartialBoundTransport
+end D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport

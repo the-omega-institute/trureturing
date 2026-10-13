@@ -1,21 +1,21 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMContractionData
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMContractionData
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMContractionData
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMContractionData
    mirror-E: none(waiver:exact-ejm-contraction-proof-data)
-   anchors: [D5/S3/Quantum/Entanglement/EJMContractionSymmetry]
+   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMContractionSymmetry]
    utility: none
    digest: Explicit ninety-five and three-hundred-thirty-two representative tail contractions bind the exact EJM dual without repeated arithmetic. -/
 
-import D5.S3.Quantum.Entanglement.EJMContractionSymmetry
+import D5.S3.Quantum.Entanglement.EJM.EJMContractionSymmetry
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option linter.style.longLine false
 
-namespace D5.S3.Quantum.Entanglement.EJMContractionData
-open D5.S3.Quantum.Entanglement.EJMCertificateData
-open D5.S3.Quantum.Entanglement.EJMContractionSymmetry
+namespace D5.S3.Quantum.Entanglement.EJM.EJMContractionData
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData
+open D5.S3.Quantum.Entanglement.EJM.EJMContractionSymmetry
 
 /-! These are candidate exact integer values. Their kernel equality checks
 are separate proof obligations, and an external contraction check is not
@@ -43,4 +43,4 @@ def singletonTail (i : Fin 332) : Fin 8 → Fin 4 := fun j =>
 
 def singletonValue (i : Fin 332) : ℤ := singletonValues.get i.val
 
-end D5.S3.Quantum.Entanglement.EJMContractionData
+end D5.S3.Quantum.Entanglement.EJM.EJMContractionData

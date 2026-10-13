@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/EJMPartialBoundData
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundData
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/EJMPartialBoundData
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMPartialBoundData
    mirror-E: none(waiver:exact-inflation-local-proof-data)
    anchors: [D5/S0/Certificates/FinitePartialBoundDAG]
    utility: none
@@ -26,7 +26,7 @@ set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option linter.style.longLine false
 
-namespace D5.S3.Quantum.Entanglement.EJMPartialBoundData
+namespace D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
 open D5.S0.Certificates.FinitePartialBoundDAG
 
@@ -234,4 +234,4 @@ def singletonTree : RawTree :=
 def singletonRows (j : Fin 8689) : Row 8689 (Fin 9) (Fin 4) LocalSym :=
   row (by decide) (by decide) (singletonTree.read 9 j.val)
 
-end D5.S3.Quantum.Entanglement.EJMPartialBoundData
+end D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
