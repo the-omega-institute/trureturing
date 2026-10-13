@@ -104,5 +104,5 @@ The quantum cube-root pull-back curvature increases under the source majorizatio
 - Truth anchor: `D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.scal3`
 - Truth anchor: `D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.scal3_eq_spectral_ratio`
 - Dependency: [D5/S3/Geometry/AlphaGeometry/CoordinateCurvatureMajorization](CoordinateCurvatureMajorization.md)
-- Dependency: [D5/S3/Geometry/AlphaGeometry/EuclideanHypersurfaceGauss](EuclideanHypersurfaceGauss.md)
 - Dependency: [D5/S3/Geometry/AlphaGeometry/HermitianCubeDerivative](HermitianCubeDerivative.md)
+- Dependency: [D5/S3/Geometry/AlphaGeometry/HermitianHypersurfaceCalculus](HermitianHypersurfaceCalculus.md)

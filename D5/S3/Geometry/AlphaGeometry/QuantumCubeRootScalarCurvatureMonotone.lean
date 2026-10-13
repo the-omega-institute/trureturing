@@ -121,7 +121,7 @@ proof_shape: result: content; escape_witness: QuantumCubeRootScalarCurvatureMono
 
 
 import D5.S3.Geometry.AlphaGeometry.HermitianCubeDerivative
-import D5.S3.Geometry.AlphaGeometry.EuclideanHypersurfaceGauss
+import D5.S3.Geometry.AlphaGeometry.HermitianHypersurfaceCalculus
 import D5.S3.Geometry.AlphaGeometry.CoordinateCurvatureMajorization
 import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import Mathlib.Analysis.Calculus.FDeriv.Symmetric
@@ -738,7 +738,7 @@ private lemma shape_conjugate {n : ℕ} (hn : 0 < n) (x : (Fin (n ^ 2 - 1) → �
   apply LinearMap.ext
   intro v
   apply (fullFrameEquiv hn x hx).injective
-  simp only [LinearEquiv.conj_apply,LinearMap.comp_apply]
+  simp (config := { congrConsts := false }) only [LinearEquiv.conj_apply,LinearMap.comp_apply]
   change (fullFrameEquiv hn x hx) ((fullFrameEquiv hn x hx).symm
     (shape (immersion x) ((fullFrameEquiv hn x hx) v))) = _
   rw [ContinuousLinearEquiv.apply_symm_apply]

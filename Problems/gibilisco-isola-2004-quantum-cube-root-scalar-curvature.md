@@ -32,7 +32,7 @@ This settlement proves the quantum $p=3$ slice, equivalently $\alpha=1/3$, in ev
 
 ## Motivation
 
-The motivation declaration is `D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.result`. It identifies a quantum curvature quantity that strictly increases under spectral mixing. The tier-3 research line is preregistered in [#15179](https://github.com/the-omega-institute/trureturing/issues/15179). All six new modules have admission basis `escape-witness`; the Proved resolution metadata records the dossier's conclusion independently of that basis.
+The motivation declaration is `D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.result`. It identifies a quantum curvature quantity that strictly increases under spectral mixing. The tier-3 research line is preregistered in [#15179](https://github.com/the-omega-institute/trureturing/issues/15179). The five content hosts have admission basis `escape-witness`; `HermitianHypersurfaceCalculus` owns the density-coordinate and Gauss support together with the positive cubic derivative, and `HermitianCubeDerivative` owns the smooth inverse and immersion; the Proved resolution metadata records the dossier's conclusion independently of that basis.
 
 ## Gap
 
@@ -54,7 +54,7 @@ A faithful pair in any dimension $n\ge2$ whose eigenvalues satisfy the source's 
 
 ## Evidence
 
-The settling theorem is `QuantumCubeRootScalarCurvatureMonotone.result : claim`. Its geometric bridge is `scal3_eq_spectral_ratio`; its spectral strictness theorem is `CoordinateCurvatureMajorization.spectral_moreMixed_strict`. The supporting witnesses are `HermitianDensityCoordinates.hermitian_trace_one_chart_equiv`, `HermitianCubeDerivative.positive_hermitian_cube_derivative_equiv`, `EuclideanHypersurfaceGauss.ricci_of_structure` and `CubeRootSpectralMonotonicity.Pair.strict_t_transform_any_pair`. Their axiom closures use only `propext`, `Classical.choice` and `Quot.sound`.
+The settling theorem is `QuantumCubeRootScalarCurvatureMonotone.result : claim`. Its geometric bridge is `scal3_eq_spectral_ratio`; its spectral strictness theorem is `CoordinateCurvatureMajorization.spectral_moreMixed_strict`. The supporting content includes `HermitianCubeDerivative.positive_hermitian_cube_derivative_equiv`, its smooth cube-root inverse and immersion, and `CubeRootSpectralMonotonicity.Pair.strict_t_transform_any_pair`. The density chart equivalence and the metric-parametrized Gauss contraction are consumed bind-only support in `HermitianHypersurfaceCalculus`. Their axiom closures use only `propext`, `Classical.choice` and `Quot.sound`.
 
 The four-slot escape audit is unfinished under [#15716](https://github.com/the-omega-institute/trureturing/issues/15716), covering 42 new public theorem targets and the separately published owner. DTR reading: `DTR-Unregistered`. The typed source bridge and actual law compile, but the registration lacks a law-violating variation, whole-family slot sensitivity and actual observational dependence. Other targets also lack complete typed family realizations and exact bridges. No Reg file is delivered. These missing registration proofs are separate from the Lean mathematical proofs.
 

@@ -4,11 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The positive Hermitian cubic derivative is an invertible real operator. -/
+   digest: The smooth CFC cube-root immersion and its Hermitian normal and operator traces. -/
 
 /-
 admission_basis: escape-witness
-escape_witness: positive_hermitian_cube_derivative_equiv
+escape_witness: root_localInverse_identification
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
 DTR reading: DTR-Unregistered. No Reg mirror is delivered. The source-family registration lacks a law-violating variation, whole-family slot sensitivity, and actual observational-dependence proofs.
 Spectral conjugation reduces the cubic derivative kernel to positive two-eigenvalue coefficients. Inverse smoothness uses the inverse function theorem and CFC identities. The normalized normal derivative is a consumed bind-only calculation from product and chain rules. Jordan traces and rank-one contractions are consumed bind-only helpers.
@@ -17,34 +17,13 @@ F1: D5/S3/Weil/ZetaLinear/PosIndex.rtrace; declaration statement_id=sha256:355be
 F2: D5/S3/Weil/ZetaLinear/HermitianPosPart.rtrace_specMap; declaration statement_id=sha256:efa5f0bbdc4f0443275c16da086085a95c6f4e6395761aa1fadb48ed96f8ca46
 F3: D5/S3/Weil/ZetaLinear/HermitianPosPart.specMap; declaration statement_id=sha256:e1543a97599b6cc90234c264dc99210b245061ed4d182b4351174881ce0384e7
 Per-declaration classification; non-proposition definitions carry no content claim.
-proof_shape: herm_inner: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.DF_apply, HermitianCubeDerivative.F_fderiv, HermitianCubeDerivative.herm_inner_smul_left, HermitianCubeDerivative.herm_inner_smul_right, HermitianCubeDerivative.herm_inner_add_right, HermitianCubeDerivative.herm_inner_symm, HermitianCubeDerivative.normal_unit, HermitianCubeDerivative.DF_normal, HermitianCubeDerivative.projection, HermitianCubeDerivative.inner_normal_jordan, HermitianCubeDerivative.normInv_hasFDerivAt, HermitianCubeDerivative.regular_level_set_shape_operator, QuantumCubeRootScalarCurvatureMonotone.metric, QuantumCubeRootScalarCurvatureMonotone.frameMetric, QuantumCubeRootScalarCurvatureMonotone.frameMetric_posdef, QuantumCubeRootScalarCurvatureMonotone.metric_eq_nine_rootMetric, QuantumCubeRootScalarCurvatureMonotone.normalFunctional_apply, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent, QuantumCubeRootScalarCurvatureMonotone.fullFrame_injective, QuantumCubeRootScalarCurvatureMonotone.inner_normal_jordan_normal, QuantumCubeRootScalarCurvatureMonotone.inner_normal_jordan_square_normal, QuantumCubeRootScalarCurvatureMonotone.shape_gauss_spectral, QuantumCubeRootScalarCurvatureMonotone.shape_normal, QuantumCubeRootScalarCurvatureMonotone.DN_shape_derivative; frozen_dependencies: none
-proof_shape: cube_derivative_hermitian: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cubeDerivative_val, HermitianCubeDerivative.cube_hasFDerivAt; frozen_dependencies: none
-proof_shape: cubeDerivative: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cubeDerivative_val, HermitianCubeDerivative.cubeDerivative_injective, HermitianCubeDerivative.positive_hermitian_cube_derivative_equiv, HermitianCubeDerivative.cubeDerivativeEquiv, HermitianCubeDerivative.cube_hasFDerivAt, HermitianCubeDerivative.F_hasFDerivAt, HermitianCubeDerivative.root_derivative_leftInverse, HermitianCubeDerivative.root_derivative_injective; frozen_dependencies: none
-proof_shape: cubeDerivative_val: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cubeDerivative_injective, HermitianCubeDerivative.cube_hasFDerivAt, HermitianCubeDerivative.F_hasFDerivAt; frozen_dependencies: none
-proof_shape: cube_coefficient_pos: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cube_derivative_kernel; frozen_dependencies: none
-proof_shape: diagonal_cube_derivative_apply: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cube_derivative_kernel; frozen_dependencies: none
-proof_shape: cube_derivative_kernel: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: HermitianCubeDerivative.cubeDerivative_injective; frozen_dependencies: none
-proof_shape: cubeDerivative_injective: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: HermitianCubeDerivative.positive_hermitian_cube_derivative_equiv; frozen_dependencies: none
-proof_shape: positive_hermitian_cube_derivative_equiv: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: HermitianCubeDerivative.cubeDerivativeEquiv; frozen_dependencies: none
-proof_shape: cubeDerivativeEquiv: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cube_hasStrictFDerivAt_equiv, HermitianCubeDerivative.cubeLocalEquiv, HermitianCubeDerivative.root_localInverse_identification, HermitianCubeDerivative.root_contDiffAt_cube; frozen_dependencies: none
-proof_shape: hermProject_val: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cube_val, HermitianCubeDerivative.cube_hasFDerivAt; frozen_dependencies: none
-proof_shape: cube: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cube_val, HermitianCubeDerivative.cube_contDiff, HermitianCubeDerivative.cube_hasFDerivAt, HermitianCubeDerivative.F_hasFDerivAt, HermitianCubeDerivative.root_cube, HermitianCubeDerivative.cube_root, HermitianCubeDerivative.cube_hasStrictFDerivAt_equiv, HermitianCubeDerivative.cubeLocalEquiv, HermitianCubeDerivative.root_localInverse_identification, HermitianCubeDerivative.root_contDiffAt_cube, HermitianCubeDerivative.root_contDiffAt, HermitianCubeDerivative.root_derivative_leftInverse, HermitianCubeDerivative.immersion_level_one; frozen_dependencies: none
-proof_shape: cube_val: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.F_hasFDerivAt, HermitianCubeDerivative.root_cube, HermitianCubeDerivative.cube_root, HermitianCubeDerivative.immersion_level_one; frozen_dependencies: none
-proof_shape: cube_contDiff: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cube_hasStrictFDerivAt_equiv, HermitianCubeDerivative.root_contDiffAt_cube; frozen_dependencies: none
-proof_shape: cube_hasFDerivAt: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.F_hasFDerivAt, HermitianCubeDerivative.cube_hasStrictFDerivAt_equiv, HermitianCubeDerivative.root_contDiffAt_cube, HermitianCubeDerivative.root_derivative_leftInverse; frozen_dependencies: none
-proof_shape: trace_cubic_variation: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.F_hasFDerivAt; frozen_dependencies: none
-proof_shape: F: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.F_hasFDerivAt, HermitianCubeDerivative.F_fderiv, HermitianCubeDerivative.immersion_level_one, HermitianCubeDerivative.DF_normal, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent; frozen_dependencies: none
-proof_shape: DF: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.DF_apply, HermitianCubeDerivative.F_hasFDerivAt, HermitianCubeDerivative.F_fderiv, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent; frozen_dependencies: none
-proof_shape: DF_apply: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.F_fderiv; frozen_dependencies: none
-proof_shape: F_hasFDerivAt: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.F_fderiv, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent; frozen_dependencies: none
-proof_shape: F_fderiv: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.DF_normal; frozen_dependencies: none
 proof_shape: alphaEmbed3: bind-only; escape_witness: none; consumers: QuantumCubeRootScalarCurvatureMonotone.metric, QuantumCubeRootScalarCurvatureMonotone.metric_eq_nine_rootMetric; frozen_dependencies: none
 proof_shape: root: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.root_posdef, HermitianCubeDerivative.root_cube, HermitianCubeDerivative.cube_root, HermitianCubeDerivative.root_localInverse_identification, HermitianCubeDerivative.root_contDiffAt_cube, HermitianCubeDerivative.root_contDiffAt, HermitianCubeDerivative.immersion, HermitianCubeDerivative.immersion_contDiffAt, HermitianCubeDerivative.root_derivative_leftInverse, HermitianCubeDerivative.root_derivative_injective, HermitianCubeDerivative.immersion_derivative_injective, HermitianCubeDerivative.immersion_level_one, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent, QuantumCubeRootScalarCurvatureMonotone.root_trace_pow, QuantumCubeRootScalarCurvatureMonotone.root_moment, QuantumCubeRootScalarCurvatureMonotone.root_spectral_ratio, QuantumCubeRootScalarCurvatureMonotone.scal3_eq_spectral_ratio; frozen_dependencies: none
 proof_shape: root_posdef: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.root_contDiffAt, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent, QuantumCubeRootScalarCurvatureMonotone.fullFrame_injective, QuantumCubeRootScalarCurvatureMonotone.N_smooth, QuantumCubeRootScalarCurvatureMonotone.N_unit, QuantumCubeRootScalarCurvatureMonotone.DN_shape_derivative, QuantumCubeRootScalarCurvatureMonotone.shape_conjugate, QuantumCubeRootScalarCurvatureMonotone.chart_scalar_spectral; frozen_dependencies: none
 proof_shape: root_cube: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.root_localInverse_identification; frozen_dependencies: none
 proof_shape: cube_root: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.root_contDiffAt, HermitianCubeDerivative.root_derivative_leftInverse, HermitianCubeDerivative.immersion_level_one; frozen_dependencies: none
 proof_shape: positive_open: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.root_localInverse_identification, HermitianCubeDerivative.root_derivative_leftInverse; frozen_dependencies: none
-proof_shape: cube_hasStrictFDerivAt_equiv: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: HermitianCubeDerivative.cubeLocalEquiv, HermitianCubeDerivative.root_localInverse_identification; frozen_dependencies: none
+proof_shape: cube_hasStrictFDerivAt_equiv: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.cubeLocalEquiv, HermitianCubeDerivative.root_localInverse_identification; frozen_dependencies: none
 proof_shape: cubeLocalEquiv: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.root_localInverse_identification; frozen_dependencies: none
 proof_shape: root_localInverse_identification: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: HermitianCubeDerivative.root_contDiffAt_cube; frozen_dependencies: none
 proof_shape: root_contDiffAt_cube: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: HermitianCubeDerivative.root_contDiffAt; frozen_dependencies: none
@@ -57,7 +36,7 @@ proof_shape: rhoLinearMap: bind-only; escape_witness: none; consumers: Hermitian
 proof_shape: rhoLinear: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.rhoH_affine, HermitianCubeDerivative.rhoH_hasFDerivAt, HermitianCubeDerivative.rhoLinear_injective, HermitianCubeDerivative.immersion_derivative_injective; frozen_dependencies: none
 proof_shape: rhoH_affine: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.rhoH_hasFDerivAt, HermitianCubeDerivative.rhoLinear_injective; frozen_dependencies: none
 proof_shape: rhoH_hasFDerivAt: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.immersion_derivative_injective; frozen_dependencies: none
-proof_shape: rhoLinear_injective: content; escape_witness: HermitianDensityCoordinates.chart_left_inverse; consumers: HermitianCubeDerivative.immersion_derivative_injective; frozen_dependencies: none
+proof_shape: rhoLinear_injective: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.immersion_derivative_injective; frozen_dependencies: none
 proof_shape: immersion: bind-only; escape_witness: none; consumers: HermitianCubeDerivative.immersion_contDiffAt, HermitianCubeDerivative.immersion_derivative_injective, HermitianCubeDerivative.immersion_level_one, QuantumCubeRootScalarCurvatureMonotone.tangentFrame, QuantumCubeRootScalarCurvatureMonotone.tangentFrame_independent, QuantumCubeRootScalarCurvatureMonotone.metric_eq_nine_rootMetric, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent, QuantumCubeRootScalarCurvatureMonotone.fullFrame, QuantumCubeRootScalarCurvatureMonotone.fullFrame_apply, QuantumCubeRootScalarCurvatureMonotone.fullFrame_injective, QuantumCubeRootScalarCurvatureMonotone.secondForm, QuantumCubeRootScalarCurvatureMonotone.frame_smooth, QuantumCubeRootScalarCurvatureMonotone.N_smooth, QuantumCubeRootScalarCurvatureMonotone.b_smooth, QuantumCubeRootScalarCurvatureMonotone.frame_second, QuantumCubeRootScalarCurvatureMonotone.de_symm, QuantumCubeRootScalarCurvatureMonotone.N_unit, QuantumCubeRootScalarCurvatureMonotone.N_orthogonal, QuantumCubeRootScalarCurvatureMonotone.DN_orthogonal, QuantumCubeRootScalarCurvatureMonotone.DN_frame, QuantumCubeRootScalarCurvatureMonotone.dual_N, QuantumCubeRootScalarCurvatureMonotone.immersion_derivative_expansion, QuantumCubeRootScalarCurvatureMonotone.dual_derivative, QuantumCubeRootScalarCurvatureMonotone.frame_decomposition, QuantumCubeRootScalarCurvatureMonotone.frame_structure, QuantumCubeRootScalarCurvatureMonotone.b_symm, QuantumCubeRootScalarCurvatureMonotone.DN_dual, QuantumCubeRootScalarCurvatureMonotone.coordinate_ricci, QuantumCubeRootScalarCurvatureMonotone.DN_shape_derivative, QuantumCubeRootScalarCurvatureMonotone.DN_dual_vector, QuantumCubeRootScalarCurvatureMonotone.DN_fullFrame, QuantumCubeRootScalarCurvatureMonotone.shape_conjugate, QuantumCubeRootScalarCurvatureMonotone.shape_trace, QuantumCubeRootScalarCurvatureMonotone.shape_square_trace, QuantumCubeRootScalarCurvatureMonotone.coordinate_shape_gauss, QuantumCubeRootScalarCurvatureMonotone.chart_scalar_spectral, QuantumCubeRootScalarCurvatureMonotone.scal3_eq_spectral_ratio; frozen_dependencies: none
 proof_shape: immersion_contDiffAt: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: QuantumCubeRootScalarCurvatureMonotone.metric_eq_nine_rootMetric, QuantumCubeRootScalarCurvatureMonotone.immersion_normal_tangent, QuantumCubeRootScalarCurvatureMonotone.frame_smooth, QuantumCubeRootScalarCurvatureMonotone.N_smooth, QuantumCubeRootScalarCurvatureMonotone.frame_second, QuantumCubeRootScalarCurvatureMonotone.de_symm, QuantumCubeRootScalarCurvatureMonotone.DN_shape_derivative; frozen_dependencies: none
 proof_shape: root_derivative_leftInverse: content; escape_witness: HermitianCubeDerivative.cube_derivative_kernel; consumers: HermitianCubeDerivative.root_derivative_injective; frozen_dependencies: none
@@ -119,178 +98,15 @@ proof_shape: gauss_trace_rank_one_contraction: bind-only; escape_witness: none; 
 -/
 
 import Mathlib.Topology.Algebra.Module.FiniteDimensionBilinear
-import D5.S3.Geometry.AlphaGeometry.HermitianDensityCoordinates
+import D5.S3.Geometry.AlphaGeometry.HermitianHypersurfaceCalculus
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import D5.S3.Weil.ZetaLinear.HermitianPosPart
 import Mathlib.Analysis.Calculus.Deriv.Inv
 
-noncomputable section
-open scoped BigOperators MatrixOrder ComplexOrder Matrix Topology Matrix.Norms.Elementwise
-open Filter
-namespace D5.S3.Geometry.AlphaGeometry.HermitianCubeDerivative
 
-def herm_inner {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  RCLike.re (Matrix.trace (A * B))
-
-private lemma cube_derivative_hermitian {n : ℕ} (Y V : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) :
-    ((Y.val)^2*V.val + Y.val*V.val*Y.val + V.val*(Y.val)^2).IsHermitian := by
-  unfold Matrix.IsHermitian
-  simp only [Matrix.conjTranspose_add,Matrix.conjTranspose_mul,Y.property.isHermitian.eq,V.property.isHermitian.eq,
-    Matrix.conjTranspose_pow]
-  noncomm_ring
-
-noncomputable def cubeDerivative {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) →ₗ[ℝ] (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) :=
-  ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ)).toLinearMap.comp
-    ((LinearMap.mul ℝ (A := (Matrix (Fin n) (Fin n) ℂ))) (Y.val^2) +
-      ((LinearMap.mul ℝ (A := (Matrix (Fin n) (Fin n) ℂ))) Y.val).comp
-        ((LinearMap.mul ℝ (A := (Matrix (Fin n) (Fin n) ℂ))).flip Y.val) +
-      (LinearMap.mul ℝ (A := (Matrix (Fin n) (Fin n) ℂ))).flip (Y.val^2))).comp
-    (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)).subtype
-
-private lemma cubeDerivative_val {n : ℕ} (Y V : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) :
-    (cubeDerivative Y V).val = Y.val^2*V.val + Y.val*V.val*Y.val + V.val*Y.val^2 := by
-  change ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ))
-    (Y.val^2*V.val + Y.val*(V.val*Y.val) + V.val*Y.val^2)).val = _
-  have he : Y.val^2*V.val + Y.val*(V.val*Y.val) + V.val*Y.val^2 =
-      Y.val^2*V.val + Y.val*V.val*Y.val + V.val*Y.val^2 := by noncomm_ring
-  rw [he]
-  exact (cube_derivative_hermitian Y V).isSelfAdjoint.coe_selfAdjointPart_apply ℝ
-
-private lemma cube_coefficient_pos {n : ℕ} {Y : (Matrix (Fin n) (Fin n) ℂ)} (hY : Y.PosDef) (i j : Fin n) :
-    0 < (hY.isHermitian.eigenvalues i)^2 +
-      hY.isHermitian.eigenvalues i*hY.isHermitian.eigenvalues j +
-      (hY.isHermitian.eigenvalues j)^2 := by
-  exact add_pos (add_pos (sq_pos_of_pos (hY.eigenvalues_pos i))
-    (mul_pos (hY.eigenvalues_pos i) (hY.eigenvalues_pos j)))
-    (sq_pos_of_pos (hY.eigenvalues_pos j))
-
-private lemma diagonal_cube_derivative_apply {n : ℕ} (d : Fin n → ℂ) (V : (Matrix (Fin n) (Fin n) ℂ)) (i j : Fin n) :
-    ((Matrix.diagonal d)^2*V + Matrix.diagonal d*V*Matrix.diagonal d +
-      V*(Matrix.diagonal d)^2) i j = (d i^2+d i*d j+d j^2)*V i j := by
-  simp only [pow_two,Matrix.diagonal_mul_diagonal,Matrix.add_apply,
-    Matrix.diagonal_mul,Matrix.mul_diagonal,Pi.mul_apply]
-  ring
-
-private lemma cube_derivative_kernel {n : ℕ} {Y : (Matrix (Fin n) (Fin n) ℂ)} (hY : Y.PosDef) (V : (Matrix (Fin n) (Fin n) ℂ))
-    (hV : Y^2*V + Y*V*Y + V*Y^2 = 0) : V = 0 := by
-  let e := Unitary.conjStarAlgAut ℂ ((Matrix (Fin n) (Fin n) ℂ)) hY.isHermitian.eigenvectorUnitary
-  let d : Fin n → ℂ := fun i => (hY.isHermitian.eigenvalues i : ℂ)
-  have hd : e.symm Y = Matrix.diagonal d := by
-    have hy : Y = e (Matrix.diagonal d) := hY.isHermitian.spectral_theorem
-    rw [hy,e.symm_apply_apply]
-  have hh := congrArg e.symm hV
-  simp only [map_add,map_mul,map_pow,map_zero,hd] at hh
-  have hzero : e.symm V = 0 := by
-    ext i j
-    have hij := congrFun (congrFun hh i) j
-    rw [diagonal_cube_derivative_apply] at hij
-    have hp : d i^2+d i*d j+d j^2 ≠ 0 := by
-      dsimp [d]
-      exact_mod_cast (ne_of_gt (cube_coefficient_pos hY i j))
-    exact (mul_eq_zero.mp hij).resolve_left hp
-  exact e.symm.injective (by simpa using hzero)
-
-private lemma cubeDerivative_injective {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) (hY : Y.val.PosDef) :
-    Function.Injective (cubeDerivative Y) := by
-  apply (LinearMap.ker_eq_bot).mp
-  apply LinearMap.ker_eq_bot'.mpr
-  intro V hV
-  apply Subtype.ext
-  exact cube_derivative_kernel hY V.val (by simpa only [cubeDerivative_val, Submodule.coe_zero] using congrArg Subtype.val hV)
-
-theorem positive_hermitian_cube_derivative_equiv {n : ℕ}
-    (Y : selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) (hY : Y.val.PosDef) :
-    Function.Bijective (cubeDerivative Y) :=
-  ⟨cubeDerivative_injective Y hY,
-    LinearMap.surjective_of_injective (cubeDerivative_injective Y hY)⟩
-
-noncomputable def cubeDerivativeEquiv {n : ℕ}
-    (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) (hY : Y.val.PosDef) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) ≃L[ℝ] (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) :=
-  (LinearEquiv.ofInjectiveEndo (cubeDerivative Y) (positive_hermitian_cube_derivative_equiv Y hY).1).toContinuousLinearEquiv
 
 
 set_option backward.isDefEq.respectTransparency false
-
-private theorem hermProject_val {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
-    (hA : A.IsHermitian) : (selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ) A).val = A :=
-  hA.isSelfAdjoint.coe_selfAdjointPart_apply ℝ
-
-noncomputable def cube {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) := (selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ)) (Y.val^3)
-
-lemma cube_val {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : (cube Y).val = Y.val^3 :=
-  hermProject_val _ (Y.property.isHermitian.pow _)
-
-lemma cube_contDiff (n : ℕ) : ContDiff ℝ (⊤ : ℕ∞) (@cube n) := by
-  have hv : ContDiff ℝ (⊤ : ℕ∞) (fun Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) => Y.val) := ((selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))).subtypeL.contDiff
-  have hm : ContDiff ℝ (⊤ : ℕ∞) (fun p : (Matrix (Fin n) (Fin n) ℂ) × (Matrix (Fin n) (Fin n) ℂ) => (LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap p.1 p.2) :=
-    ((LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap).isBoundedBilinearMap.contDiff
-  have hsq : ContDiff ℝ (⊤ : ℕ∞) (fun Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) => (LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap Y.val Y.val) := hm.comp (hv.prodMk hv)
-  have hcu := hm.comp (hsq.prodMk hv)
-  convert ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ))).contDiff.comp hcu using 1 <;> try rfl
-  funext Y
-  simp only [cube,pow_succ,pow_zero,one_mul,Function.comp_apply]
-  rfl
-
-lemma cube_hasFDerivAt {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) :
-    HasFDerivAt cube (cubeDerivative Y).toContinuousLinearMap Y := by
-  let v : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) →L[ℝ] (Matrix (Fin n) (Fin n) ℂ) := ((selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))).subtypeL
-  have hv := v.hasFDerivAt (x := Y)
-  have hsq := ContinuousLinearMap.hasFDerivAt_of_bilinear ((LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap) hv hv
-  have hcu := ContinuousLinearMap.hasFDerivAt_of_bilinear ((LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap) hsq hv
-  have hp := ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ))).hasFDerivAt.comp Y hcu
-  convert hp using 1 <;> try rfl
-  · funext X
-    simp only [cube,pow_succ,pow_zero,one_mul,Function.comp_apply]
-    rfl
-  · ext1 V
-    apply Subtype.ext
-    change (cubeDerivative Y V).val =
-      ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ)) (Y.val*Y.val*V.val + (Y.val*V.val+V.val*Y.val)*Y.val)).val
-    rw [cubeDerivative_val]
-    change Y.val^2*V.val + Y.val*V.val*Y.val + V.val*Y.val^2 =
-      ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ)) _).val
-    change Y.val^2*V.val + Y.val*V.val*Y.val + V.val*Y.val^2 =
-      ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ)) (Y.val*Y.val*V.val + (Y.val*V.val+V.val*Y.val)*Y.val)).val
-    have he : Y.val*Y.val*V.val + (Y.val*V.val+V.val*Y.val)*Y.val =
-        Y.val^2*V.val + Y.val*V.val*Y.val + V.val*Y.val^2 := by noncomm_ring
-    rw [he,hermProject_val _ (cube_derivative_hermitian Y V)]
-
-private theorem trace_cubic_variation {n : ℕ} (Y V : (Matrix (Fin n) (Fin n) ℂ)) :
-    Matrix.trace (V*Y*Y+Y*V*Y+Y*Y*V) = 3*Matrix.trace (Y*Y*V) := by
-  rw [Matrix.trace_add, Matrix.trace_add,
-    Matrix.trace_mul_cycle V Y Y, Matrix.trace_mul_cycle Y V Y]
-  ring
-
-noncomputable def F {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : ℝ := (Y.val^3).trace.re
-
-noncomputable def DF {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) →L[ℝ] ℝ :=
-  (3 : ℝ) • (((Complex.reCLM.comp (Matrix.traceLinearMap (Fin n) ℝ ℂ : (Matrix (Fin n) (Fin n) ℂ) →ₗ[ℝ] ℂ).toContinuousLinearMap)).comp (((LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap (Y.val^2)).comp ((selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))).subtypeL))
-
-private lemma DF_apply {n : ℕ} (Y V : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : DF Y V = 3*herm_inner (Y.val^2) V.val := rfl
-
-lemma F_hasFDerivAt {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : HasFDerivAt F (DF Y) Y := by
-  have hp := (((Complex.reCLM.comp (Matrix.traceLinearMap (Fin n) ℝ ℂ : (Matrix (Fin n) (Fin n) ℂ) →ₗ[ℝ] ℂ).toContinuousLinearMap)).comp ((selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))).subtypeL).hasFDerivAt.comp Y
-    (cube_hasFDerivAt Y)
-  convert hp using 1 <;> try rfl
-  · funext X
-    change (X.val^3).trace.re = (cube X).val.trace.re
-    rw [cube_val]
-  · ext1 V
-    change 3*(Y.val^2*V.val).trace.re = (cubeDerivative Y V).val.trace.re
-    rw [cubeDerivative_val]
-    change 3*(Y.val^2*V.val).trace.re =
-      (Y.val^2*V.val+Y.val*V.val*Y.val+V.val*Y.val^2).trace.re
-    have he : Y.val^2*V.val+Y.val*V.val*Y.val+V.val*Y.val^2 =
-        V.val*Y.val*Y.val+Y.val*V.val*Y.val+Y.val*Y.val*V.val := by noncomm_ring
-    rw [he,D5.S3.Geometry.AlphaGeometry.HermitianCubeDerivative.trace_cubic_variation]
-    simp [pow_two,Complex.mul_re]
-
-lemma F_fderiv {n : ℕ} (Y V : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) :
-    fderiv ℝ F Y V = 3*herm_inner (Y.val^2) V.val := by
-  rw [(F_hasFDerivAt Y).fderiv,DF_apply]
-
-end D5.S3.Geometry.AlphaGeometry.HermitianCubeDerivative
-
 
 noncomputable section
 open scoped BigOperators MatrixOrder ComplexOrder Matrix Topology Matrix.Norms.Elementwise
@@ -392,7 +208,7 @@ private lemma rhoH_affine {n : ℕ} (x : (Fin (n ^ 2 - 1) → ℝ)) : rhoH x = r
     (selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ)) (rho 0) +
       (selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ)) ((rhoLinearMap n) x)
   rw [he]
-  simp [rho, map_add]
+  simp (config := { congrConsts := false }) [rho, map_add]
 
 private lemma rhoH_hasFDerivAt {n : ℕ} (x : (Fin (n ^ 2 - 1) → ℝ)) : HasFDerivAt rhoH (rhoLinear n) x := by
   have hp := (rhoLinear n).hasFDerivAt (x := x) |>.const_add (rhoH 0)
@@ -638,7 +454,7 @@ lemma regular_level_set_shape_operator {n : ℕ} (Y V : (selfAdjoint.submodule �
   change _ = (Real.sqrt (S4 Y))⁻¹ •
     (jordan Y V - (2*(Real.sqrt (S4 Y))⁻¹*herm_inner (Y.val^3) V.val) •
       ((Real.sqrt (S4 Y))⁻¹ • square Y))
-  simp only [ContinuousLinearMap.add_apply,ContinuousLinearMap.smul_apply,
+  simp (config := { congrConsts := false }) only [ContinuousLinearMap.add_apply,ContinuousLinearMap.smul_apply,
     ContinuousLinearMap.smulRight_apply,ContinuousLinearMap.comp_apply,smul_eq_mul]
   change _ + (-(2*(Real.sqrt (S4 Y))⁻¹^3)*herm_inner (Y.val^3) V.val) • square Y = _
   module
