@@ -57,9 +57,9 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
 
     private static Formula TensorUnitary() => All(V("N"), Nat,
         All(V("A"), Arrow(Fin(V("N")), Matrix(Fin(D(2)), Complex)),
-            Imp(All(V("i"), Fin(V("N")),
+            Imp(Parenthesized(All(V("i"), Fin(V("N")),
                     Seq(Apply(V("A"), V("i")), Sp, InMacro, Sp,
-                        Qualified("Matrix", "unitaryGroup", Fin(D(2)), Complex))),
+                        Qualified("Matrix", "unitaryGroup", Fin(D(2)), Complex)))),
                 Seq(TensorOperator(V("A")), Sp, InMacro, Sp,
                     Qualified("Matrix", "unitaryGroup", Arrow(Fin(V("N")), Fin(D(2))), Complex)))));
 
