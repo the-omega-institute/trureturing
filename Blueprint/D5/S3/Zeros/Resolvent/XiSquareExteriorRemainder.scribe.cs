@@ -497,6 +497,35 @@ internal sealed class XiSquareExteriorRemainderDocument : IScribeDocumentDefinit
                         + "compilation with the standard axiom closure; positivity of the auxiliary "
                         + "scale alone gives no original signed-cofactor conclusion.")),
                     Paragraph(Text(
+                        "The actual finite Appell kernel P_q(t,x) has a locally unique analytic root branch "
+                        + "beta(t) through each of its roots under the stronger budget "
+                        + "n>=1048576 times 196609 squared times U L T squared/rho squared, "
+                        + "with one U>0 chosen before all source parameters. Here T>=32, "
+                        + "0<rho<=1/8, L=log(T+2), D=T rho, 0<q<=512L and t is any complex center "
+                        + "in the closed D/32 square chart. This is the same exhaustive ZeroData, "
+                        + "removed local core, exterior source E and extraction H=T_n E throughout. "
+                        + "The source pays degree(H)<=n, H(t) nonzero and every root simple. The "
+                        + "finite normal form pays joint analyticity of P_q(t,x); the pinned analytic "
+                        + "implicit-function theorem constructs beta with the stated base root, "
+                        + "the exact kernel equation near t, and product-neighborhood uniqueness. "
+                        + "Its actual parameter operator and full remainder budget give "
+                        + "norm(beta prime(t))<=129/8388608. This complete-source application "
+                        + "passed Lean compilation with only the standard axiom closure.")),
+                    Paragraph(Text(
+                        "For that same branch, define the coordinate f(v)=chi(v)-beta(v). "
+                        + "Enlarge the fixed U to include the already paid near-identity scale "
+                        + "constant. At each chosen center the triangle inequality gives "
+                        + "norm(f prime(t)-1)<=1/128+129/8388608=65665/8388608<1/64. "
+                        + "Thus f prime(t) is nonzero, and the pinned analytic inverse-function "
+                        + "theorem constructs an analytic local inverse at f(t), with both "
+                        + "inverse identities valid on their respective neighborhoods. This "
+                        + "same-source local-coordinate application also passed exact Lean "
+                        + "compilation with the standard axiom closure. It supplies neither a "
+                        + "uniform inverse radius, global compatible root labels nor global "
+                        + "injectivity on the full square chart; those conclusions require "
+                        + "additional continuation. The original signed cofactor transmission "
+                        + "and the original core-root geometry remain separate obligations.")),
+                    Paragraph(Text(
                         "These complete-source applications supply neither realness of the "
                         + "original core roots nor a sign for the original "
                         + "convolution cofactors. In particular, positive auxiliary node speeds and "
