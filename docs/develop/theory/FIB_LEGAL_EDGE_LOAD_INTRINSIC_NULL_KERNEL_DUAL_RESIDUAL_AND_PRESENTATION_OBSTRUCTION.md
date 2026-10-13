@@ -2220,3 +2220,439 @@ The activity-matched distribution of §9 supplies an exact parent
 spectrum correspondence, while (10.6) separately optimizes this
 five-state sampling budget. General activities and longer legal
 chains require their own optimality certificates.
+
+## 11. Exact optimal readout for positive reflection-symmetric activities
+
+### 11.1. The fixed activity law and its spectral coordinates
+
+Retain the five legal words and the recorded-site, calibrated reference
+experiment of §§8–10. Fix $a,b>0$, write $s=1+a$ and $Z=s^2+b$, and use
+the single actual law and positive reference vector
+
+$$
+p=\frac{(1,a,b,a,a^2)}Z,\qquad
+\psi=\frac{(1,\sqrt a,\sqrt b,\sqrt a,a)}{\sqrt Z}.
+\tag{11.1}
+$$
+
+This is the hard-core activity family with equal endpoint activities.
+Its joint weight is $a^2$; an independently adjustable pair interaction
+is not part of (11.1). Define
+
+$$
+\begin{aligned}
+K_1&=\frac{
+(\sqrt a\,e_0-e_1)(\sqrt a\,e_0-e_1)^{\mathsf T}
++(\sqrt a\,e_3-e_{13})(\sqrt a\,e_3-e_{13})^{\mathsf T}}s,\\
+K_2&=\frac{(\sqrt b\,e_0-e_2)(\sqrt b\,e_0-e_2)^{\mathsf T}}{1+b},\\
+K_3&=\frac{
+(\sqrt a\,e_0-e_3)(\sqrt a\,e_0-e_3)^{\mathsf T}
++(\sqrt a\,e_1-e_{13})(\sqrt a\,e_1-e_{13})^{\mathsf T}}s.
+\end{aligned}
+\tag{11.2}
+$$
+
+These are orthogonal projections annihilating $\psi$. For
+$\omega\in\Delta_3$, put $H_\omega=\sum_i\omega_iK_i$ and
+$\gamma(\omega)=\lambda_{\min}(H_\omega|_{\psi^\perp})$.
+The identity of §9 identifies this gap with the minimum
+Fisher/QFI ratio for the same law and experiment. The site budget
+continues to tie both endpoint blocks to one weight.
+
+**Definition 11.1 (Secular coefficients and selected root).** Set
+
+$$
+c_0=\frac{Z}{s^2(1+b)},\qquad
+c_1=\frac{2ab}{s^2(1+b)},\qquad
+c_2=\frac{a^2b}{s^2(1+b)}.
+\tag{11.3}
+$$
+
+All three coefficients are positive and sum to one. They will be
+squared spectral coordinates, rather than occupation probabilities.
+For $0<t<1$, define
+
+$$
+\mathscr F(t)=\frac{c_0}t-\frac{c_1}{1-t}-\frac{c_2}{2-t},
+\qquad
+\mathscr R(t)=
+\sqrt{\frac{c_1}{2(1-t)^2}+\frac{c_2}{(2-t)^2}}.
+\tag{11.4}
+$$
+
+With $B_c=1+2c_0+c_1$, let
+
+$$
+N(t)=t^2-B_ct+2c_0,\qquad
+t_0=\frac{B_c-\sqrt{B_c^2-8c_0}}2.
+\tag{11.5}
+$$
+
+The polynomial $N$ is positive at zero and negative at one:
+$N(0)=2c_0>0$ and $N(1)=-c_1<0$. Thus its smaller root
+$t_0$ lies in $(0,1)$ and its larger root exceeds one. Also
+
+$$
+\mathscr F(t)=\frac{N(t)}{t(1-t)(2-t)}.
+\tag{11.6}
+$$
+
+The function $\mathscr F$ strictly decreases from $+\infty$ to
+zero on $(0,t_0)$, while $\mathscr R$ is positive and strictly
+increasing. Consequently there is a unique $t_*\in(0,t_0)$ with
+
+$$
+\mathscr F(t_*)=\mathscr R(t_*).
+\tag{11.7}
+$$
+
+Equivalently, $t_*$ is the unique root in that interval of
+
+$$
+2N(t)^2-t^2\bigl[c_1(2-t)^2+2c_2(1-t)^2\bigr]=0.
+\tag{11.8}
+$$
+
+The interval keeps $\mathscr F$ positive and excludes extraneous
+roots introduced by squaring.
+
+### 11.2. Global optimum, branch ordering and uniqueness
+
+**Theorem 11.2 (Positive-activity optimal site design).** Write
+$F_*=\mathscr F(t_*)$. The unique maximizer among all site
+distributions is
+
+$$
+\boxed{
+\omega^*=\frac{(F_*,1,F_*)}{1+2F_*},\qquad
+\gamma^*=\frac{t_*F_*}{1+2F_*}.
+}
+\tag{11.9}
+$$
+
+For every finite $a,b>0$, the active gap is simple and reflection
+even. A rank-one certificate suffices for global optimality, including
+comparison with every nonsymmetric distribution and every boundary.
+
+Proof. Put $e_+=(e_1+e_3)/\sqrt2$, $o=(e_1-e_3)/\sqrt2$, and
+
+$$
+\begin{aligned}
+g&=\frac{e_0+\sqrt{2a}\,e_++a e_{13}}s,\\
+h&=\frac{\sqrt{2a}(e_0-e_{13})+(a-1)e_+}s,\\
+k&=\frac{a e_0-\sqrt{2a}\,e_++e_{13}}s,\\
+u&=\frac{\sqrt b\,g-s e_2}{\sqrt Z}.
+\end{aligned}
+\tag{11.10}
+$$
+
+Direct inner products show that $(\psi,u,h,k,o)$ is orthonormal,
+with $\psi=(sg+\sqrt b\,e_2)/\sqrt Z$. Let $A=K_1+K_3$ and
+$\Delta=K_1-K_3$. Substitution into (11.2) gives
+
+$$
+A|_{\psi^\perp}=\operatorname{diag}(0,1,2,1)
+\quad\text{in the order }(u,h,k,o),
+\tag{11.11}
+$$
+
+$$
+\Delta u=\Delta k=0,\qquad
+\Delta h=-o,\qquad\Delta o=-h,
+\tag{11.12}
+$$
+
+and
+
+$$
+K_2=ww^{\mathsf T},\qquad
+w=\sqrt{c_0}\,u+\sqrt{c_1}\,h+\sqrt{c_2}\,k.
+\tag{11.13}
+$$
+
+All these are identities in an ordinary orthonormal space; no
+weighted occupation-coordinate quotient is treated as Euclidean.
+
+For symmetric weights $(x,y,x)$ with $x,y>0$ and $2x+y=1$,
+the odd eigenvalue is $x$, and the even block on $\psi^\perp$ is
+
+$$
+M(x)=\operatorname{diag}(0,x,2x)+y\,cc^{\mathsf T},
+\qquad c=(\sqrt{c_0},\sqrt{c_1},\sqrt{c_2})^{\mathsf T}.
+\tag{11.14}
+$$
+
+Its secular function is
+$1+y\sum_{j=0}^2c_j/(jx-\lambda)$. Its derivative with respect
+to $\lambda$ is strictly positive off its three poles. At successive
+ends of $(0,x)$ and $(x,2x)$ it runs from $-\infty$ to
+$+\infty$, and on $(2x,\infty)$ it runs from $-\infty$ to
+one. Thus its three eigenvalues satisfy
+
+$$
+0<\lambda_1<x<\lambda_2<2x<\lambda_3.
+\tag{11.15}
+$$
+
+The first root is strictly positive by its open interval.
+The poles themselves are not eigenvalues
+because every $c_j>0$. This also proves simplicity and identifies
+$\lambda_1$ as the full gap.
+
+Writing $\lambda_1=xt$, the secular equation is
+$(y/x)\mathscr F(t)=1$. Hence all positive symmetric weights
+are parameterized by $t\in(0,t_0)$ through
+
+$$
+x=\frac{\mathscr F(t)}{1+2\mathscr F(t)},\qquad
+y=\frac1{1+2\mathscr F(t)},\qquad
+\gamma(t)=\frac{t\mathscr F(t)}{1+2\mathscr F(t)}.
+\tag{11.16}
+$$
+
+Differentiation yields
+
+$$
+\gamma'(t)=
+\frac{2\mathscr F(t)^2
+-c_1/(1-t)^2-2c_2/(2-t)^2}
+{(1+2\mathscr F(t))^2}.
+\tag{11.17}
+$$
+
+It is positive before the root (11.7) and negative afterward,
+because its numerator is
+$2(\mathscr F-\mathscr R)(\mathscr F+\mathscr R)$.
+This proves unique optimality within symmetric weights.
+
+For a certificate against all weights, use
+
+$$
+v=\frac{\sqrt{c_0}}{t_*}u
+-\frac{\sqrt{c_1}}{1-t_*}h
+-\frac{\sqrt{c_2}}{2-t_*}k,\qquad
+L=v^{\mathsf T}v
+=\frac{c_0}{t_*^2}
++\frac{c_1}{(1-t_*)^2}
++\frac{c_2}{(2-t_*)^2}.
+\tag{11.18}
+$$
+
+Then $v\perp\psi$, $w^{\mathsf T}v=F_*$, and (11.16) gives
+$H_{\omega^*}v=\gamma^*v$. Reflection and (11.11) give
+
+$$
+v^{\mathsf T}K_1v=v^{\mathsf T}K_3v
+=\frac12\left[\frac{c_1}{(1-t_*)^2}
++\frac{2c_2}{(2-t_*)^2}\right]
+=F_*^2=v^{\mathsf T}K_2v.
+\tag{11.19}
+$$
+
+The middle equality is (11.7). Since the candidate weights sum
+to one, $\gamma^*=F_*^2/L$. Therefore
+$Y_*=vv^{\mathsf T}/L$ is positive semidefinite, has trace one,
+annihilates $\psi$, and satisfies
+$\operatorname{Tr}(Y_*K_i)=\gamma^*$ for every site. For all
+$\omega\in\Delta_3$,
+
+$$
+\gamma(\omega)\le
+\frac{v^{\mathsf T}H_\omega v}{L}
+=\sum_i\omega_i\operatorname{Tr}(Y_*K_i)=\gamma^*.
+\tag{11.20}
+$$
+
+The candidate attains this upper bound by (11.15).
+
+If another distribution attains it, equality in the Rayleigh
+quotient implies $H_\omega v=\gamma^*v$. Write
+$x=(\omega_1+\omega_3)/2$ and
+$\delta=(\omega_1-\omega_3)/2$. Its odd component, by (11.12), is
+$-\delta v_h o$. But
+$v_h=-\sqrt{c_1}/(1-t_*)\ne0$, so $\delta=0$.
+The $u$ coordinate then gives
+
+$$
+(1-2x)\sqrt{c_0}F_*
+=\gamma^*\frac{\sqrt{c_0}}{t_*},
+\tag{11.21}
+$$
+
+which fixes the center weight at $1/(1+2F_*)$ and both endpoint
+weights at $F_* /(1+2F_*)$. This proves global uniqueness.
+If any weight is zero, the positive-law legal graph disconnects
+as in §10.3, and its gap is zero. $\square$
+
+The trace-one spectral certificate is the classical $E$-optimal
+design mechanism; see [Dette and Grigoriev, Theorem 2.1 and
+Remark 2.1][DG11]. The source-specific conclusion here is the
+explicit reduction (11.10)–(11.14), the selected root and the
+nonzero odd coupling that proves uniqueness for these grouped sites.
+A general equivalence theorem alone does not supply these facts.
+
+### 11.3. A universal center premium and the occupation bridge
+
+**Theorem 11.3 (Sampling bounds and the joint-occupation coefficient).**
+For every finite positive activity pair,
+
+$$
+\frac14<\omega_1^*=\omega_3^*<\frac13
+<\omega_2^*<\frac12.
+\tag{11.22}
+$$
+
+For the law (11.1), set
+$X=\mathbb E_p n_1=\mathbb E_p n_3$,
+$z=\mathbb E_p n_2$, $\kappa=\mathbb E_p(n_1n_3)$,
+$p_0=p(000)$ and $D_{\rm occ}=(1-z)(p_0+z)$. Then the
+coefficients of the same optimal-design problem satisfy
+
+$$
+c_0=\frac{p_0}{D_{\rm occ}},\qquad
+c_1=\frac{2z(X-\kappa)}{D_{\rm occ}},\qquad
+c_2=\frac{z\kappa}{D_{\rm occ}}
+=\frac{\operatorname{Cov}_p(n_1,n_3)}{D_{\rm occ}}.
+\tag{11.23}
+$$
+
+Proof. At the root, (11.7) and $\sum_jc_j=1$ give the identities
+
+$$
+\frac{c_1}{(1-t_*)^2}
+=(2F_*-1)((2-t_*)F_*+1)>0,
+\tag{11.24}
+$$
+
+$$
+\frac{2c_2}{(2-t_*)^2}
+=1-t_*F_*-2(1-t_*)F_*^2>0.
+\tag{11.25}
+$$
+
+The first implies $F_*>1/2$. If $F_*\ge1$, the right side of
+the second is at most $t_*-1<0$, a contradiction. Thus
+$1/2<F_*<1$, and (11.9) gives (11.22).
+
+Conditioned on $n_2=0$, the endpoint occupations are independent
+Bernoulli variables with parameter $\rho=a/(1+a)$, directly
+from the four weights $(1,a,a,a^2)$. Hence
+
+$$
+X=(1-z)\rho,\qquad
+\kappa=(1-z)\rho^2,\qquad
+\kappa(1-z)=X^2,\qquad
+\operatorname{Cov}_p(n_1,n_3)=\kappa z.
+\tag{11.26}
+$$
+
+Also $p_0=1/Z$, $z=b/Z$, $X-\kappa=a/Z$ and
+$D_{\rm occ}=s^2(1+b)/Z^2$. Substitution into (11.3)
+gives (11.23). In particular, the activities can be recovered as
+
+$$
+a=\frac{\kappa}{X-\kappa},\qquad
+b=\frac{\kappa-X^2}{(X-\kappa)^2}.
+\tag{11.27}
+$$
+
+These formulas require the law (11.1), rather than arbitrary
+reflection-symmetric five-state probabilities. $\square$
+
+The coefficient $c_2$ measures the center projector's squared
+overlap with the double-endpoint spectral direction $k$.
+It is determined by a normalized occupation covariance.
+It is not a complex coherence or an interaction energy.
+
+For a centered phase function $f$, put $q_j=\psi_jf_j$.
+Direct substitution in the endpoint projector gives
+
+$$
+q^{\mathsf T}K_1q
+=\frac{X-\kappa}{1+a}(f_0-f_1)^2
++\frac{\kappa}{1+a}(f_3-f_{13})^2.
+\tag{11.28}
+$$
+
+Thus the joint state supplies a second phase-difference block
+whose conductance relative to the first is
+$\kappa/(X-\kappa)=a$. Both blocks consume the same endpoint
+site budget. Changing the phases of the pure state leaves
+$X,z,\kappa$ unchanged while changing its off-diagonal entries;
+the occupation bridge does not determine arbitrary coherence.
+
+### 11.4. Heat-bath interpretation and support boundaries
+
+For $D_\psi=\operatorname{diag}(\psi)$, the matrices
+
+$$
+P_i=D_\psi^{-1}(I-K_i)D_\psi,\qquad
+P_\omega=\sum_i\omega_iP_i
+=D_\psi^{-1}(I-H_\omega)D_\psi
+\tag{11.29}
+$$
+
+are the legal single-site heat-bath kernels and their random-scan
+mixture. On an endpoint pair the conditional probabilities are
+$(1,a)/(1+a)$; on the center pair they are $(1,b)/(1+b)$.
+The spectrum of $I-H_\omega$ is nonnegative because it is a
+convex combination of orthogonal projections. Thus
+
+$$
+\operatorname{SLEM}(P_\omega)=1-\gamma(\omega).
+\tag{11.30}
+$$
+
+Theorem 11.2 also solves fastest mixing within this fixed affine
+family of site kernels. The general spectral optimization and
+prescribed-equilibrium framework belongs to [Boyd, Diaconis and
+Xiao, §§2, 6][BDX11]. Allowing independently chosen graph-edge
+probabilities would be a different feasible family.
+
+**Theorem 11.4 (Positive-support limits differ from support restriction).**
+With the other activity fixed and positive, either $a\downarrow0$
+or $b\downarrow0$ gives
+
+$$
+\omega^*\longrightarrow(1/3,1/3,1/3),\qquad
+\gamma^*\longrightarrow1/3.
+\tag{11.31}
+$$
+
+At exactly $a=0$, restricting the phase experiment to its actual
+support $\{0,2\}$ instead gives optimal ratio one under center-only
+sampling. At exactly $b=0$, restricting it to
+$\{0,1,3,13\}$ instead gives optimal ratio $1/2$ under
+$(1/2,0,1/2)$.
+
+Proof. In either positive-activity limit,
+$(c_0,c_1,c_2)\to(1,0,0)$. The even matrix (11.14)
+therefore converges uniformly in $x\in[0,1/2]$ to
+$\operatorname{diag}(1-2x,x,2x)$, while the odd eigenvalue
+remains $x$. Its gap is $\min\{x,1-2x\}$, uniquely maximized
+at $x=1/3$ with value $1/3$. Continuity of the minimum eigenvalue
+and compactness imply convergence of the symmetric optimizers
+and values. Global symmetry for every positive activity pair was
+proved in Theorem 11.2.
+
+At $a=0$, the restricted endpoint projectors vanish and $K_2$
+is the sole rank-one projection on the nonconstant phase
+direction, so the restricted gap is $\omega_2$. At $b=0$,
+the restricted center projector vanishes and the endpoint
+operators act on the two independent hard-core endpoint bits.
+On the nonconstant directions their mixture has eigenvalues
+$\omega_1,\omega_3,\omega_1+\omega_3$, so its minimum is maximized
+by the stated weights. $\square$
+
+Positive-support minimax includes directions on rare states after
+normalization by their QFI. Removing those directions at zero
+support changes the parameter space. Theorems 11.2–11.4 concern
+the fixed reference-phase, recorded-site experiment. They establish
+no optimum over arbitrary quantum measurements, physical control
+availability or pair-interaction family with joint weight distinct
+from $a^2$.
+
+[DG11]: ../../../Library/Quantum/dettegrigoriev2014eoptimal.md
+[BDX11]: ../../../Library/Quantum/boyddiaconisxiao2004fastestmixing.md
+
+## 追加锚（本行以下为增补区）
