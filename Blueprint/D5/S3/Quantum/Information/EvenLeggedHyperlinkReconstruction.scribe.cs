@@ -36,7 +36,10 @@ internal sealed class EvenLeggedHyperlinkReconstructionDocument : IScribeDocumen
                         "The theorem concerns every real complement-symmetric set function vanishing at the empty set. The explicit coefficient family is legFactor. Möbius inversion on subsets recovers the set function from all its hyperlinks. The complement transform expresses each hyperlink of the complemented function as its parity sign times the sum over containing subsets. Descending induction then shows that the nonempty even hyperlinks, together with the empty value, uniquely determine a complement-symmetric set function.")),
                     Paragraph(Text(
                         "For each nonempty even subset K, the auxiliary family q_K has value minus one half when K meets both A and its complement, and zero otherwise. Its even hyperlinks give a triangular system over containing subsets. The recurrence defining legInverseCoeff inverts this system. The resulting linear combination of the q_K has the same even hyperlinks as the original function, so uniqueness identifies the two functions. Counting the subsets of each I that cross the split between A and its complement gives legFactor at the cardinalities of I and its intersection with A. This proves the reconstruction in (B2) for every finite N, along with the zero and symmetry laws."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("santalla-singha-roy-sierra-rodriguez-laguna-2026-even-legged-reconstruction"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
