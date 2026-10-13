@@ -1898,6 +1898,8 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Temporary integration probe (never merge)
+        run: rm -rf -- "${GITHUB_WORKSPACE:?}/.lake/build"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
         run: dotnet build $JUDGE_BUILD_ARGS
