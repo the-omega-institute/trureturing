@@ -32,10 +32,14 @@ rank-one projection. Proposition 5.19(1), printed page 33, gives p <= 1 as a
 necessary condition for joint concavity. Problem 5.20 asks for sufficient
 conditions away from the known midpoint alpha = 1/2.
 
-The project result excludes every 0 < alpha < 1/2 and every p > 0 by a strict
-first-variable Jensen violation with positive definite complex 2 by 2 inputs.
-This is a partial parameter exclusion, including 0 < p <= 1; it does not
-classify the upper-half weights or solve all of Problem 5.20.
+The project result excludes every 0 < alpha < 1 with alpha != 1/2 and every
+p > 0 by a strict first-variable Jensen violation with positive definite
+complex 2 by 2 inputs and one common positive definite second input. The
+formal functional itself is defined for arbitrary finite matrix dimensions,
+while this obstruction is proved in dimension two. This is a partial
+parameter exclusion; the midpoint sufficiency argument, the p > 1 midpoint
+obstruction, and the complete all-dimension classification remain open in the
+formal source.
 
 For P = (1/2)[[1,1],[1,1]] and A = diag(x,1), x > 0, the boundary calculation is
 
@@ -45,11 +49,13 @@ T_{\alpha,p}(A,P)=
 \frac{1+x^{2p(1-\alpha)}}2\right]^{1/p}.
 $$
 
-Normalizing A to exponent p/2 times P times A to exponent p/2 gives a positive
-semidefinite idempotent. Its positive powers justify this actual matrix
-identity. A decreasing interval of the displayed function gives a strict
-Jensen gap. Continuity of positive matrix powers on the semidefinite cone
-preserves the same gap for P + epsilon I with one positive epsilon.
+For a weighted rank-one projector with diagonal weight w, the same calculation
+uses mu=1-w+w x^p and nu=1-w+w x^(2p(1-alpha)). Normalizing A to exponent
+p/2 times P times A to exponent p/2 gives a positive semidefinite idempotent.
+Its positive powers justify the actual matrix identity. An exact two-point
+scalar gap works for both signs of 1-2 alpha; the resulting affine Jensen gap
+is transferred by continuity of positive matrix powers to P + epsilon I with
+one positive epsilon. No negative power is applied to the singular projector.
 
 Jeong, Kim, and Tam, *New Weighted Spectral Geometric Mean and Quantum
 Divergence*, https://arxiv.org/abs/2501.00287v1, Theorem 4.3, prove strict

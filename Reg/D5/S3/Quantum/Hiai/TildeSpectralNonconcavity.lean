@@ -32,7 +32,7 @@ noncomputable def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {α p : ℝ}, 0 < α → α < 1 / 2 → 0 < p →
+  Law R := ∀ {α p : ℝ}, 0 < α → α < 1 → α ≠ 1 / 2 → 0 < p →
     ∃ A₀ A₁ B : Mat, A₀.PosDef ∧ A₁.PosDef ∧ B.PosDef ∧
       ∃ θ : ℝ, 0 < θ ∧ θ < 1 ∧
         R.readout () (α, p, A₀, A₁, B) θ <
@@ -41,7 +41,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨A₀, A₁, B, _, _, _, θ, _, _, bad⟩ :=
-    h (α := 1 / 4) (p := 1) (by norm_num) (by norm_num) (by norm_num)
+    h (α := 1 / 4) (p := 1) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
   exact (lt_irrefl _ bad)
 
 noncomputable def family : Registration arena (type_of% (@strict_first_variable_jensen_violation)) where
@@ -60,7 +60,7 @@ noncomputable def family : Registration arena (type_of% (@strict_first_variable_
     intro i
     obtain ⟨A₀, A₁, B, _, _, _, θ, _, _, hgap⟩ :=
       strict_first_variable_jensen_violation (α := 1 / 4) (p := 1)
-        (by norm_num) (by norm_num) (by norm_num)
+        (by norm_num) (by norm_num) (by norm_num) (by norm_num)
     let z : signature.Params := (1 / 4, 1, A₀, A₁, B)
     by_cases hzero : actual.readout i z θ = actual.readout i z 0
     · refine ⟨z, θ, 1, ?_⟩
@@ -99,12 +99,12 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Hiai.TildeSpectralNonconcavity
     definition := none
-    coordinates := #[0, 1, 5, 6, 7]
+    coordinates := #[0, 1, 6, 7, 8]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body",
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body",
         "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "body",
         "arg", "arg", "fn", "arg"]
-      stateBinder := 8
+      stateBinder := 9
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

@@ -4,12 +4,10 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: First-variable nonconcavity of the tilde spectral trace below the midpoint. -/
+   digest: First-variable nonconcavity of the tilde spectral trace away from the midpoint. -/
 
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Isometric
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 
 noncomputable section
 namespace D5.S3.Quantum.Hiai.TildeSpectralNonconcavity
@@ -17,21 +15,24 @@ open scoped MatrixOrder Matrix.Norms.L2Operator ComplexOrder NNReal Topology
 open Matrix Set Filter
 
 abbrev Mat := Matrix (Fin 2) (Fin 2) ℂ
-local instance : Pow Mat ℝ := ⟨CFC.rpow⟩
+variable {d : Type*} [Fintype d] [DecidableEq d]
+local instance : Pow (Matrix d d ℂ) ℝ := ⟨CFC.rpow⟩
 
 /-- The first argument is the base of the weighted geometric mean. -/
-def geometricMean (α : ℝ) (X Y : Mat) : Mat :=
+def geometricMean (α : ℝ) (X Y : Matrix d d ℂ) : Matrix d d ℂ :=
   X ^ (1 / 2 : ℝ) * (X ^ (-1 / 2 : ℝ) * Y * X ^ (-1 / 2 : ℝ)) ^ α *
     X ^ (1 / 2 : ℝ)
 
 /-- Hiai's tilde spectral trace; every power is matrix continuous functional calculus. -/
-def tildeTrace (α p : ℝ) (A B : Mat) : ℝ :=
+def tildeTrace (α p : ℝ) (A B : Matrix d d ℂ) : ℝ :=
   let K := geometricMean α (A ^ (-p)) (B ^ p)
   (Matrix.trace ((K ^ (1 / 2 : ℝ) * A ^ (2 * p * (1 - α)) *
     K ^ (1 / 2 : ℝ)) ^ (1 / p))).re
 
 private def diagonal (x : ℝ) : Mat := Matrix.diagonal ![(x : ℂ), 1]
-private def projection : Mat := !![(1 / 2 : ℂ), 1 / 2; 1 / 2, 1 / 2]
+private def projection (w : ℝ) : Mat :=
+  !![(w : ℂ), (Real.sqrt (w * (1 - w)) : ℂ);
+     (Real.sqrt (w * (1 - w)) : ℂ), (1 - w : ℝ)]
 
 private lemma diagonal_posDef {x : ℝ} (hx : 0 < x) : (diagonal x).PosDef := by
   apply Matrix.posDef_diagonal_iff.mpr
@@ -40,18 +41,26 @@ private lemma diagonal_posDef {x : ℝ} (hx : 0 < x) : (diagonal x).PosDef := by
   · simpa [diagonal] using hx
   · norm_num [diagonal]
 
-private lemma projection_posSemidef : projection.PosSemidef := by
-  have h := (Matrix.posSemidef_vecMulVec_self_star (![1, 1] : Fin 2 → ℂ)).smul
-    (show (0 : ℝ) ≤ 1 / 2 by norm_num)
+private lemma projection_posSemidef {w : ℝ} (hw : 0 < w) (hw1 : w < 1) :
+    (projection w).PosSemidef := by
+  have h := Matrix.posSemidef_vecMulVec_self_star
+    (![(Real.sqrt w : ℂ), (Real.sqrt (1 - w) : ℂ)] : Fin 2 → ℂ)
   convert h using 1
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [projection, Matrix.vecMulVec, Pi.star_apply, Matrix.smul_apply]
+    simp [projection, Matrix.vecMulVec, Pi.star_apply, Complex.conj_ofReal,
+      ← Complex.ofReal_mul, Real.mul_self_sqrt hw.le,
+      Real.mul_self_sqrt (by linarith : 0 ≤ 1 - w), Real.sqrt_mul hw.le] <;> ring
 
-private lemma projection_sq : projection * projection = projection := by
+private lemma projection_sq {w : ℝ} (hw : 0 < w) (hw1 : w < 1) :
+    projection w * projection w = projection w := by
+  have hs : Real.sqrt (w * (1 - w)) * Real.sqrt (w * (1 - w)) = w * (1 - w) :=
+    Real.mul_self_sqrt (mul_nonneg hw.le (by linarith))
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [projection, Matrix.mul_apply, Fin.sum_univ_two]
+    simp [projection, Matrix.mul_apply, Fin.sum_univ_two, ← Complex.ofReal_mul,
+      ← Complex.ofReal_add, ← Complex.ofReal_sub, hs] <;>
+    norm_cast <;> nlinarith
 
 private lemma diagonal_rpow {x : ℝ} (hx : 0 < x) (t : ℝ) :
     (diagonal x) ^ t = diagonal (x ^ t) := by
@@ -97,19 +106,25 @@ private lemma scaled_projection_rpow (Q : Mat) (hQ : Q.PosSemidef)
   dsimp [H]
   module
 
-private lemma projection_rpow {q : ℝ} (hq : 0 < q) : projection ^ q = projection := by
-  simpa using scaled_projection_rpow projection projection_posSemidef projection_sq
-    (show (0 : ℝ) ≤ 1 by norm_num) hq
+private lemma projection_rpow {w q : ℝ} (hw : 0 < w) (hw1 : w < 1) (hq : 0 < q) :
+    (projection w) ^ q = projection w := by
+  simpa using scaled_projection_rpow (projection w) (projection_posSemidef hw hw1)
+    (projection_sq hw hw1) (show (0 : ℝ) ≤ 1 by norm_num) hq
 
-private lemma projection_diagonal_projection (x : ℝ) :
-    projection * diagonal x * projection = ((1 + x) / 2) • projection := by
+private lemma projection_diagonal_projection {w : ℝ} (hw : 0 < w) (hw1 : w < 1)
+    (x : ℝ) :
+    projection w * diagonal x * projection w = (1 - w + w * x) • projection w := by
+  have hs : Real.sqrt (w * (1 - w)) * Real.sqrt (w * (1 - w)) = w * (1 - w) :=
+    Real.mul_self_sqrt (mul_nonneg hw.le (by linarith))
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [projection, diagonal, Matrix.mul_apply, Matrix.vecMul, dotProduct,
-      Fin.sum_univ_two, Matrix.smul_apply, Complex.real_smul] <;> ring
+      Fin.sum_univ_two, Matrix.smul_apply, Complex.real_smul,
+      ← Complex.ofReal_mul, ← Complex.ofReal_add, ← Complex.ofReal_sub, hs] <;>
+    norm_cast <;> nlinarith [congrArg (fun z : ℝ => z * x) hs]
 
-private lemma geometricMean_power {A : Mat} (hA : A.PosDef) {p : ℝ} (hp : 0 < p)
-    (α : ℝ) (B : Mat) :
+private lemma geometricMean_power {A : Matrix d d ℂ} (hA : A.PosDef) {p : ℝ} (hp : 0 < p)
+    (α : ℝ) (B : Matrix d d ℂ) :
     geometricMean α (A ^ (-p)) (B ^ p) =
       A ^ (-p / 2) * (A ^ (p / 2) * B ^ p * A ^ (p / 2)) ^ α * A ^ (-p / 2) := by
   unfold geometricMean
@@ -118,30 +133,30 @@ private lemma geometricMean_power {A : Mat} (hA : A.PosDef) {p : ℝ} (hp : 0 < 
   congr 3 <;> ring
 
 
-private lemma geometricMean_projection {α p x : ℝ} (hα : 0 < α) (hp : 0 < p)
+private lemma geometricMean_projection {w α p x : ℝ} (hw : 0 < w) (hw1 : w < 1) (hα : 0 < α) (hp : 0 < p)
     (hx : 0 < x) :
-    geometricMean α ((diagonal x) ^ (-p)) (projection ^ p) =
-      (((1 + x ^ p) / 2) ^ (α - 1)) • projection := by
+    geometricMean α ((diagonal x) ^ (-p)) ((projection w) ^ p) =
+      ((1 - w + w * x ^ p) ^ (α - 1)) • (projection w) := by
   let D := diagonal x
   let S := D ^ (p / 2)
-  let R := S * projection * S
-  let μ : ℝ := (1 + x ^ p) / 2
+  let R := S * (projection w) * S
+  let μ : ℝ := 1 - w + w * x ^ p
   have hD : D.PosDef := diagonal_posDef hx
-  have hμ : 0 < μ := by dsimp [μ]; positivity
+  have hμ : 0 < μ := by dsimp [μ]; exact add_pos (by linarith) (mul_pos hw (Real.rpow_pos_of_pos hx _))
   have hS : S.IsHermitian := IsSelfAdjoint.of_nonneg CFC.rpow_nonneg
   have hR : R.PosSemidef := by
-    simpa [R, hS.eq] using projection_posSemidef.mul_mul_conjTranspose_same S
+    simpa [R, hS.eq] using (projection_posSemidef hw hw1).mul_mul_conjTranspose_same S
   have hSS : S * S = D ^ p := by
     dsimp [S]
     rw [← CFC.rpow_add hD.isUnit]
     congr 1
     ring
-  have hPDP : projection * D ^ p * projection = μ • projection := by
+  have hPDP : (projection w) * D ^ p * (projection w) = μ • (projection w) := by
     rw [diagonal_rpow hx p]
-    exact projection_diagonal_projection _
+    exact projection_diagonal_projection hw hw1 _
   have hRR : R * R = μ • R := by
     calc
-      R * R = S * (projection * (S * S) * projection) * S := by simp [R, mul_assoc]
+      R * R = S * ((projection w) * (S * S) * (projection w)) * S := by simp [R, mul_assoc]
       _ = μ • R := by rw [hSS, hPDP]; simp [R]
   let Q := μ⁻¹ • R
   have hQ : Q.PosSemidef := hR.smul (inv_nonneg.mpr hμ.le)
@@ -167,144 +182,178 @@ private lemma geometricMean_projection {α p x : ℝ} (hα : 0 < α) (hp : 0 < p
     convert CFC.rpow_neg_mul_rpow (p / 2) hD.isStrictlyPositive using 1 <;> congr 1 <;> ring
   have hright : S * D ^ (-p / 2) = 1 := by
     convert CFC.rpow_mul_rpow_neg (p / 2) hD.isStrictlyPositive using 1 <;> congr 1 <;> ring
-  have hcancel : D ^ (-p / 2) * R * D ^ (-p / 2) = projection := by
+  have hcancel : D ^ (-p / 2) * R * D ^ (-p / 2) = (projection w) := by
     calc
-      _ = (D ^ (-p / 2) * S) * projection * (S * D ^ (-p / 2)) := by
+      _ = (D ^ (-p / 2) * S) * (projection w) * (S * D ^ (-p / 2)) := by
         simp [R, mul_assoc]
-      _ = projection := by rw [hleft, hright, one_mul, mul_one]
-  rw [geometricMean_power hD hp, projection_rpow hp]
-  change D ^ (-p / 2) * R ^ α * D ^ (-p / 2) = μ ^ (α - 1) • projection
+      _ = (projection w) := by rw [hleft, hright, one_mul, mul_one]
+  rw [geometricMean_power hD hp, projection_rpow hw hw1 hp]
+  change D ^ (-p / 2) * R ^ α * D ^ (-p / 2) = μ ^ (α - 1) • (projection w)
   rw [hpow, Matrix.mul_smul, Matrix.smul_mul, hcancel]
 
-private def scalarCore (α p x : ℝ) : ℝ :=
-  (((1 + x ^ p) / 2) ^ (α - 1)) * ((1 + x ^ (2 * p * (1 - α))) / 2)
+private def scalarCore (w α p x : ℝ) : ℝ :=
+  ((1 - w + w * x ^ p) ^ (α - 1)) * (1 - w + w * x ^ (2 * p * (1 - α)))
 
-private def scalarTrace (α p x : ℝ) : ℝ := (scalarCore α p x) ^ (1 / p)
+private def scalarTrace (w α p x : ℝ) : ℝ := (scalarCore w α p x) ^ (1 / p)
 
-private lemma scalarCore_pos (α p : ℝ) {x : ℝ} (hx : 0 < x) : 0 < scalarCore α p x := by
+private lemma scalarCore_pos (w α p : ℝ) {x : ℝ} (hw : 0 < w) (hw1 : w < 1) (hx : 0 < x) : 0 < scalarCore w α p x := by
   unfold scalarCore
+  have hv : 0 < 1 - w := by linarith
   positivity
 
-private lemma scalarTrace_pos (α p : ℝ) {x : ℝ} (hx : 0 < x) : 0 < scalarTrace α p x :=
-  Real.rpow_pos_of_pos (scalarCore_pos α p hx) _
+private lemma scalarTrace_pos (w α p : ℝ) {x : ℝ} (hw : 0 < w) (hw1 : w < 1) (hx : 0 < x) : 0 < scalarTrace w α p x :=
+  Real.rpow_pos_of_pos (scalarCore_pos w α p hw hw1 hx) _
 
-private lemma trace_projection {α p x : ℝ} (hα : 0 < α) (hp : 0 < p) (hx : 0 < x) :
-    tildeTrace α p (diagonal x) projection = scalarTrace α p x := by
-  let s : ℝ := ((1 + x ^ p) / 2) ^ (α - 1)
-  let ν : ℝ := (1 + x ^ (2 * p * (1 - α))) / 2
-  have hs : 0 < s := by dsimp [s]; positivity
-  have hν : 0 < ν := by dsimp [ν]; positivity
+private lemma trace_projection {w α p x : ℝ} (hw : 0 < w) (hw1 : w < 1) (hα : 0 < α) (hp : 0 < p) (hx : 0 < x) :
+    tildeTrace α p (diagonal x) (projection w) = scalarTrace w α p x := by
+  let s : ℝ := (1 - w + w * x ^ p) ^ (α - 1)
+  let ν : ℝ := 1 - w + w * x ^ (2 * p * (1 - α))
+  have hs : 0 < s := by
+    have hv : 0 < 1 - w := by linarith
+    dsimp [s]
+    positivity
+  have hν : 0 < ν := by
+    have hv : 0 < 1 - w := by linarith
+    dsimp [ν]
+    positivity
   have hsquare : s ^ (1 / 2 : ℝ) * s ^ (1 / 2 : ℝ) = s := by
     rw [← Real.rpow_add hs]
     norm_num
-  have hinner : (s ^ (1 / 2 : ℝ) • projection) *
-      (diagonal x) ^ (2 * p * (1 - α)) * (s ^ (1 / 2 : ℝ) • projection) =
-      (s * ν) • projection := by
+  have hinner : (s ^ (1 / 2 : ℝ) • (projection w)) *
+      (diagonal x) ^ (2 * p * (1 - α)) * (s ^ (1 / 2 : ℝ) • (projection w)) =
+      (s * ν) • (projection w) := by
     rw [diagonal_rpow hx]
     simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul]
-    rw [projection_diagonal_projection]
+    rw [projection_diagonal_projection hw hw1]
     simp only [smul_smul]
     congr 1
     change (s ^ (1 / 2 : ℝ) * s ^ (1 / 2 : ℝ)) * ν = s * ν
     rw [hsquare]
   unfold tildeTrace
-  rw [geometricMean_projection hα hp hx]
+  rw [geometricMean_projection hw hw1 hα hp hx]
   dsimp only
-  change (Matrix.trace (((s • projection) ^ (1 / 2 : ℝ) *
-    (diagonal x) ^ (2 * p * (1 - α)) * (s • projection) ^ (1 / 2 : ℝ)) ^
-    (1 / p))).re = scalarTrace α p x
-  rw [scaled_projection_rpow projection projection_posSemidef projection_sq hs.le
+  change (Matrix.trace (((s • (projection w)) ^ (1 / 2 : ℝ) *
+    (diagonal x) ^ (2 * p * (1 - α)) * (s • (projection w)) ^ (1 / 2 : ℝ)) ^
+    (1 / p))).re = scalarTrace w α p x
+  rw [scaled_projection_rpow (projection w) (projection_posSemidef hw hw1) (projection_sq hw hw1) hs.le
       (show (0 : ℝ) < 1 / 2 by norm_num), hinner]
-  rw [scaled_projection_rpow projection projection_posSemidef projection_sq
+  rw [scaled_projection_rpow (projection w) (projection_posSemidef hw hw1) (projection_sq hw hw1)
     (mul_nonneg hs.le hν.le) (one_div_pos.mpr hp)]
   simp [Matrix.trace, projection, Fin.sum_univ_two, Complex.real_smul,
     scalarTrace, scalarCore, s, ν]
   ring
 
-private lemma scalarCore_derivative (α p : ℝ) {x : ℝ} (hx : 0 < x) :
-    HasDerivAt (scalarCore α p)
-      ((p * (1 - α) / 2) * ((1 + x ^ p) / 2) ^ (α - 2) * x ^ (p - 1) *
-        ((1 + x ^ p) * x ^ (p * (1 - 2 * α)) -
-          (1 + x ^ (2 * p * (1 - α))) / 2)) x := by
-  let μ : ℝ := (1 + x ^ p) / 2
-  have hμ : 0 < μ := by dsimp [μ]; positivity
-  have hdμ : HasDerivAt (fun y : ℝ => (1 + y ^ p) / 2) (p * x ^ (p - 1) / 2) x :=
-    ((Real.hasDerivAt_rpow_const (Or.inl hx.ne')).const_add 1).div_const 2
-  have hdν : HasDerivAt (fun y : ℝ => (1 + y ^ (2 * p * (1 - α))) / 2)
-      ((2 * p * (1 - α)) * x ^ (2 * p * (1 - α) - 1) / 2) x :=
-    ((Real.hasDerivAt_rpow_const (Or.inl hx.ne')).const_add 1).div_const 2
-  have hsplit : x ^ (2 * p * (1 - α) - 1) =
-      x ^ (p - 1) * x ^ (p * (1 - 2 * α)) := by
-    rw [← Real.rpow_add hx]
+private lemma scalarCore_at_root {w α p q k : ℝ} (hw1 : w < 1)
+    (hp : 0 < p) (hq : 0 < q) (hk : 0 < k) (hwq : w * q = 1 - w) :
+    scalarCore w α p ((k * q) ^ (1 / p)) =
+      ((1 - w) ^ α / (1 + k) ^ (1 - α)) *
+        (1 + k ^ (2 * (1 - α)) * q ^ (1 - 2 * α)) := by
+  have hv : 0 < 1 - w := by linarith
+  have hx : ((k * q) ^ (1 / p)) ^ p = k * q := by
+    rw [← Real.rpow_mul (mul_pos hk hq).le]
+    rw [show 1 / p * p = 1 by field_simp]
+    exact Real.rpow_one _
+  have hx2 : ((k * q) ^ (1 / p)) ^ (2 * p * (1 - α)) =
+      k ^ (2 * (1 - α)) * (q * q ^ (1 - 2 * α)) := by
+    rw [← Real.rpow_mul (mul_pos hk hq).le,
+      show 1 / p * (2 * p * (1 - α)) = 2 * (1 - α) by field_simp,
+      Real.mul_rpow hk.le hq.le]
+    congr 1
+    calc
+      q ^ (2 * (1 - α)) = q ^ (1 + (1 - 2 * α)) := by congr 1; ring
+      _ = q * q ^ (1 - 2 * α) := by rw [Real.rpow_add hq, Real.rpow_one]
+  have hμ : 1 - w + w * (k * q) = (1 - w) * (1 + k) := by
+    calc
+      _ = (1 - w) + k * (w * q) := by ring
+      _ = _ := by rw [hwq]; ring
+  have hν : 1 - w + w * (k ^ (2 * (1 - α)) * (q * q ^ (1 - 2 * α))) =
+      (1 - w) * (1 + k ^ (2 * (1 - α)) * q ^ (1 - 2 * α)) := by
+    calc
+      _ = 1 - w + (w * q) * k ^ (2 * (1 - α)) * q ^ (1 - 2 * α) := by ring
+      _ = _ := by rw [hwq]; ring
+  have hvpow : (1 - w) ^ (α - 1) * (1 - w) = (1 - w) ^ α := by
+    rw [← Real.rpow_add_one hv.ne']
     congr 1
     ring
-  have hμsplit : μ ^ (α - 1) = μ ^ (α - 2) * μ := by
-    rw [← Real.rpow_add_one hμ.ne']
-    congr 1
-    ring
-  convert! (hdμ.rpow_const (p := α - 1) (Or.inl hμ.ne')).mul hdν using 1
-  dsimp only [μ] at hμsplit
-  rw [show α - 1 - 1 = α - 2 by ring, hsplit, hμsplit]
-  ring
+  unfold scalarCore
+  rw [hx, hx2, hμ, hν, Real.mul_rpow hv.le (by linarith : 0 ≤ 1 + k)]
+  rw [show α - 1 = -(1 - α) by ring,
+    Real.rpow_neg (by linarith : 0 ≤ 1 + k)]
+  rw [show -(1 - α) = α - 1 by ring]
+  calc
+    _ = ((1 - w) ^ (α - 1) * (1 - w)) / (1 + k) ^ (1 - α) *
+        (1 + k ^ (2 * (1 - α)) * q ^ (1 - 2 * α)) := by ring
+    _ = _ := by rw [hvpow]
 
-private lemma scalarCore_decreases {α p : ℝ} (hαhalf : α < 1 / 2)
+private lemma scalarCore_decreases {α p : ℝ} (hα1 : α < 1) (hαne : α ≠ 1 / 2)
     (hp : 0 < p) :
-    ∃ a b : ℝ, 0 < a ∧ a < b ∧ scalarTrace α p b < scalarTrace α p a := by
-  let q : ℝ := p * (1 - 2 * α)
-  have hq : 0 < q := mul_pos hp (by linarith)
-  let x₀ : ℝ := (8 : ℝ) ^ (-1 / q)
-  have hx₀ : 0 < x₀ := Real.rpow_pos_of_pos (by norm_num) _
-  have hx₀1 : x₀ < 1 := by
-    dsimp [x₀]
-    exact Real.rpow_lt_one_of_one_lt_of_neg (by norm_num)
-      (div_neg_of_neg_of_pos (by norm_num) hq)
-  have hx₀q : x₀ ^ q = (1 / 8 : ℝ) := by
-    dsimp only [x₀]
-    rw [← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 8)]
-    rw [show -1 / q * q = -1 by field_simp [hq.ne']]
-    norm_num
-  have hneg : ∀ x ∈ Icc (x₀ / 4) (x₀ / 2), deriv (scalarCore α p) x < 0 := by
-    intro x hx
-    have hxpos : 0 < x := lt_of_lt_of_le (by positivity) hx.1
-    have hxx₀ : x ≤ x₀ := by linarith [hx.2]
-    have hx1 : x < 1 := lt_of_le_of_lt hxx₀ hx₀1
-    have hxp : x ^ p < 1 := Real.rpow_lt_one hxpos.le hx1 hp
-    have hxq : x ^ q ≤ 1 / 8 := by
-      simpa [hx₀q] using Real.rpow_le_rpow hxpos.le hxx₀ hq.le
-    have hxpnonneg : 0 ≤ x ^ p := Real.rpow_nonneg hxpos.le _
-    have hxqnonneg : 0 ≤ x ^ q := Real.rpow_nonneg hxpos.le _
-    have hxtnonneg : 0 ≤ x ^ (2 * p * (1 - α)) := Real.rpow_nonneg hxpos.le _
-    have hprod : (1 + x ^ p) * x ^ q ≤ 2 * (1 / 8 : ℝ) :=
-      mul_le_mul (by linarith) hxq hxqnonneg (by norm_num)
-    have hbracket : (1 + x ^ p) * x ^ q -
-        (1 + x ^ (2 * p * (1 - α))) / 2 < 0 := by nlinarith
-    rw [(scalarCore_derivative α p hxpos).deriv]
-    apply mul_neg_of_pos_of_neg
-    · have hr : 0 < 1 - α := by linarith
-      positivity
-    · exact hbracket
-  have hcont : ContinuousOn (scalarCore α p) (Icc (x₀ / 4) (x₀ / 2)) := by
-    intro x hx
-    exact (scalarCore_derivative α p
-      (lt_of_lt_of_le (by positivity : 0 < x₀ / 4) hx.1)).continuousAt.continuousWithinAt
-  have hanti := strictAntiOn_of_deriv_neg (convex_Icc (x₀ / 4) (x₀ / 2)) hcont
-    (fun x hx => hneg x (interior_subset hx))
-  have hab : x₀ / 4 < x₀ / 2 := by linarith
-  have hcore := hanti (by constructor <;> linarith : x₀ / 4 ∈ Icc (x₀ / 4) (x₀ / 2))
-    (by constructor <;> linarith : x₀ / 2 ∈ Icc (x₀ / 4) (x₀ / 2)) hab
-  refine ⟨x₀ / 4, x₀ / 2, by positivity, hab, ?_⟩
-  exact Real.rpow_lt_rpow (scalarCore_pos α p (by positivity)).le hcore (one_div_pos.mpr hp)
+    ∃ w a b : ℝ, 0 < w ∧ w < 1 ∧ 0 < a ∧ a < b ∧
+      scalarTrace w α p b < scalarTrace w α p a := by
+  let r := 1 - α
+  have hr : 0 < r := by dsimp [r]; linarith
+  let γ : ℝ := (3 / 2 : ℝ) ^ r
+  let η : ℝ := (4 : ℝ) ^ r
+  have hγ : 1 < γ := Real.one_lt_rpow (by norm_num) hr
+  have hγη : γ < η := Real.rpow_lt_rpow (by norm_num) (by norm_num) hr
+  let δ := (γ - 1) / (2 * (η - γ))
+  have hδ : 0 < δ := div_pos (by linarith) (mul_pos (by norm_num) (by linarith))
+  have hβ : 1 - 2 * α ≠ 0 := by intro he; apply hαne; linarith
+  let q := δ ^ (1 / (1 - 2 * α))
+  have hq : 0 < q := Real.rpow_pos_of_pos hδ _
+  have hqβ : q ^ (1 - 2 * α) = δ := by
+    dsimp [q]
+    rw [← Real.rpow_mul hδ.le, show 1 / (1 - 2 * α) * (1 - 2 * α) = 1 by field_simp [hβ]]
+    exact Real.rpow_one _
+  let w := 1 / (1 + q)
+  have hw : 0 < w := by dsimp [w]; positivity
+  have hw1 : w < 1 := by dsimp [w]; apply (div_lt_iff₀ (by positivity)).mpr; linarith
+  have hv : 0 < 1 - w := by linarith
+  have hwq : w * q = 1 - w := by dsimp [w]; field_simp; ring
+  let a := q ^ (1 / p)
+  let b := (2 * q) ^ (1 / p)
+  have ha : 0 < a := Real.rpow_pos_of_pos hq _
+  have hb : 0 < b := Real.rpow_pos_of_pos (by positivity) _
+  have hab : a < b := Real.rpow_lt_rpow hq.le (by linarith) (one_div_pos.mpr hp)
+  have heqa : scalarCore w α p a = (1 - w) ^ α / (2 : ℝ) ^ r * (1 + δ) := by
+    simpa [a, r, hqβ, show (1 + 1 : ℝ) = 2 by norm_num] using scalarCore_at_root (α := α) hw1 hp hq (show (0 : ℝ) < 1 by norm_num) hwq
+  have heqb : scalarCore w α p b = (1 - w) ^ α / (3 : ℝ) ^ r * (1 + η * δ) := by
+    have h2 : (2 : ℝ) ^ (2 * (1 - α)) = η := by
+      dsimp [η, r]
+      rw [show (4 : ℝ) = 2 ^ (2 : ℝ) by norm_num, ← Real.rpow_mul (by norm_num)]
+    simpa [b, r, hqβ, h2, show (1 + 2 : ℝ) = 3 by norm_num] using scalarCore_at_root (α := α) hw1 hp hq (show (0 : ℝ) < 2 by norm_num) hwq
+  have h2 : 0 < (2 : ℝ) ^ r := Real.rpow_pos_of_pos (by norm_num) _
+  have h3 : 0 < (3 : ℝ) ^ r := Real.rpow_pos_of_pos (by norm_num) _
+  have hγeq : γ = (3 : ℝ) ^ r / (2 : ℝ) ^ r := Real.div_rpow (by norm_num) (by norm_num) r
+  have hδeq : δ * (η - γ) = (γ - 1) / 2 := by
+    dsimp [δ]
+    field_simp [ne_of_gt (sub_pos.mpr hγη)] <;> ring
+  have hgap : scalarCore w α p a - scalarCore w α p b =
+      (1 - w) ^ α * (γ - 1) / (2 * (3 : ℝ) ^ r) := by
+    rw [heqa, heqb]
+    have hsmall : γ * (1 + δ) - (1 + η * δ) = (γ - 1) / 2 := by
+      nlinarith [hδeq]
+    calc
+      _ = ((1 - w) ^ α / (3 : ℝ) ^ r) * (γ * (1 + δ) - (1 + η * δ)) := by
+        rw [hγeq]
+        field_simp [h2.ne', h3.ne']
+      _ = _ := by rw [hsmall]; ring
+  have hdrop : scalarCore w α p b < scalarCore w α p a := by
+    have hg : 0 < (1 - w) ^ α * (γ - 1) / (2 * (3 : ℝ) ^ r) := by
+      exact div_pos (mul_pos (Real.rpow_pos_of_pos hv _) (by linarith)) (by positivity)
+    linarith [hgap]
+  refine ⟨w, a, b, hw, hw1, ha, hab, ?_⟩
+  exact Real.rpow_lt_rpow (scalarCore_pos w α p hw hw1 hb).le hdrop (one_div_pos.mpr hp)
 
-private lemma scalar_jensen {α p : ℝ} (hαhalf : α < 1 / 2)
+private lemma scalar_jensen {α p : ℝ} (hα1 : α < 1) (hαne : α ≠ 1 / 2)
     (hp : 0 < p) :
-    ∃ a b c θ : ℝ, 0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < θ ∧ θ < 1 ∧
+    ∃ w a b c θ : ℝ, 0 < w ∧ w < 1 ∧ 0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < θ ∧ θ < 1 ∧
       b = (1 - θ) * a + θ * c ∧
-      scalarTrace α p b < (1 - θ) * scalarTrace α p a + θ * scalarTrace α p c := by
-  obtain ⟨a, b, ha, hab, hdrop⟩ := scalarCore_decreases hαhalf hp
+      scalarTrace w α p b < (1 - θ) * scalarTrace w α p a + θ * scalarTrace w α p c := by
+  obtain ⟨w, a, b, hw, hw1, ha, hab, hdrop⟩ := scalarCore_decreases hα1 hαne hp
   have hb : 0 < b := ha.trans hab
-  have hha := scalarTrace_pos α p ha
-  have hhb := scalarTrace_pos α p hb
-  let θ := (scalarTrace α p a - scalarTrace α p b) / (2 * scalarTrace α p a)
+  have hha := scalarTrace_pos w α p hw hw1 ha
+  have hhb := scalarTrace_pos w α p hw hw1 hb
+  let θ := (scalarTrace w α p a - scalarTrace w α p b) / (2 * scalarTrace w α p a)
   have hθ : 0 < θ := div_pos (sub_pos.mpr hdrop) (by positivity)
   have hθhalf : θ < 1 / 2 := by
     dsimp [θ]
@@ -316,13 +365,13 @@ private lemma scalar_jensen {α p : ℝ} (hαhalf : α < 1 / 2)
     dsimp [c]
     field_simp [hθ.ne']
     ring
-  have hmid : (1 - θ) * scalarTrace α p a =
-      (scalarTrace α p a + scalarTrace α p b) / 2 := by
+  have hmid : (1 - θ) * scalarTrace w α p a =
+      (scalarTrace w α p a + scalarTrace w α p b) / 2 := by
     dsimp [θ]
     field_simp [hha.ne']
     ring
-  refine ⟨a, b, c, θ, ha, hb, hc, hθ, by linarith, haffine, ?_⟩
-  have hhc := scalarTrace_pos α p hc
+  refine ⟨w, a, b, c, θ, hw, hw1, ha, hb, hc, hθ, by linarith, haffine, ?_⟩
+  have hhc := scalarTrace_pos w α p hw hw1 hc
   rw [hmid]
   nlinarith [mul_pos hθ hhc]
 
@@ -390,24 +439,24 @@ private lemma diagonal_affine (a c θ : ℝ) :
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 set_option backward.isDefEq.respectTransparency false in
-/-- For every weight strictly between zero and one half and every positive power,
+/-- For every weight strictly between zero and one, away from one half and every positive power,
 positive definite complex 2 by 2 matrices violate first-variable concavity of the
 exact tilde spectral trace. -/
 theorem strict_first_variable_jensen_violation {α p : ℝ}
-    (hα : 0 < α) (hαhalf : α < 1 / 2) (hp : 0 < p) :
+    (hα : 0 < α) (hα1 : α < 1) (hαne : α ≠ 1 / 2) (hp : 0 < p) :
     ∃ A₀ A₁ B : Mat, A₀.PosDef ∧ A₁.PosDef ∧ B.PosDef ∧
       ∃ θ : ℝ, 0 < θ ∧ θ < 1 ∧
         tildeTrace α p ((1 - θ) • A₀ + θ • A₁) B <
           (1 - θ) * tildeTrace α p A₀ B + θ * tildeTrace α p A₁ B := by
-  obtain ⟨a, b, c, θ, ha, hb, hc, hθ, hθ1, habc, hgap⟩ := scalar_jensen hαhalf hp
-  have hboundary : tildeTrace α p (diagonal b) projection <
-      (1 - θ) * tildeTrace α p (diagonal a) projection +
-        θ * tildeTrace α p (diagonal c) projection := by
-    simpa [trace_projection hα hp ha, trace_projection hα hp hb,
-      trace_projection hα hp hc] using hgap
-  let Bε := fun e : ℝ => projection + e • (1 : Mat)
+  obtain ⟨w, a, b, c, θ, hw, hw1, ha, hb, hc, hθ, hθ1, habc, hgap⟩ := scalar_jensen hα1 hαne hp
+  have hboundary : tildeTrace α p (diagonal b) (projection w) <
+      (1 - θ) * tildeTrace α p (diagonal a) (projection w) +
+        θ * tildeTrace α p (diagonal c) (projection w) := by
+    simpa [trace_projection hw hw1 hα hp ha, trace_projection hw hw1 hα hp hb,
+      trace_projection hw hw1 hα hp hc] using hgap
+  let Bε := fun e : ℝ => (projection w) + e • (1 : Mat)
   have hBpos : ∀ e ∈ Ici (0 : ℝ), (Bε e).PosSemidef := fun e he =>
-    projection_posSemidef.add (Matrix.PosSemidef.one.smul he)
+    (projection_posSemidef hw hw1).add (Matrix.PosSemidef.one.smul he)
   have hBcont : Continuous Bε := by fun_prop
   let gap := fun e : ℝ => (1 - θ) * tildeTrace α p (diagonal a) (Bε e) +
     θ * tildeTrace α p (diagonal c) (Bε e) - tildeTrace α p (diagonal b) (Bε e)
@@ -423,7 +472,7 @@ theorem strict_first_variable_jensen_violation {α p : ℝ}
     hev.filter_mono (nhdsWithin_mono 0 Ioi_subset_Ici_self)
   obtain ⟨e, hegap, he⟩ := (hev'.and self_mem_nhdsWithin).exists
   have hBdef : (Bε e).PosDef := by
-    simpa [Bε, add_comm] using (Matrix.PosDef.one.smul he).add_posSemidef projection_posSemidef
+    simpa [Bε, add_comm] using (Matrix.PosDef.one.smul he).add_posSemidef (projection_posSemidef hw hw1)
   refine ⟨diagonal a, diagonal c, Bε e, diagonal_posDef ha, diagonal_posDef hc, hBdef,
     θ, hθ, hθ1, ?_⟩
   rw [← diagonal_affine, ← habc]
