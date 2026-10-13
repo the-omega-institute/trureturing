@@ -7,6 +7,7 @@
    digest: Both eight-vertex graphs have sharp qutrit value three and minimum dimension four. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.Normed.Module.Normalize
 import Mathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
@@ -21,13 +22,8 @@ namespace D5.S3.Quantum.Contextuality.EightVertexQutritBound
 abbrev Vertex := Fin 8
 abbrev E (d : ℕ) := EuclideanSpace ℝ (Fin d)
 
-private def fromEdges (edges : Finset (Vertex × Vertex)) : SimpleGraph Vertex where
-  Adj i j := i ≠ j ∧ ((i, j) ∈ edges ∨ (j, i) ∈ edges)
-  symm := ⟨fun _ _ h => ⟨h.1.symm, h.2.symm⟩⟩
-  loopless := ⟨fun _ h => h.1 rfl⟩
-
-private instance (edges : Finset (Vertex × Vertex)) : DecidableRel (fromEdges edges).Adj :=
-  fun _ _ => inferInstanceAs (Decidable (_ ≠ _ ∧ (_ ∈ edges ∨ _ ∈ edges)))
+private def fromEdges (edges : Finset (Vertex × Vertex)) : SimpleGraph Vertex :=
+  SimpleGraph.fromRel (fun i j => (i, j) ∈ edges)
 
 /-- The Wagner graph, with the labels of Table VI. -/
 def W : SimpleGraph Vertex := fromEdges
@@ -39,8 +35,8 @@ def G5 : SimpleGraph Vertex := fromEdges
   {(0, 3), (0, 5), (1, 4), (1, 5), (1, 6), (2, 5), (2, 6), (2, 7),
    (3, 6), (3, 7), (4, 7), (5, 7)}
 
-instance : DecidableRel W.Adj := inferInstanceAs (DecidableRel (fromEdges _).Adj)
-instance : DecidableRel G5.Adj := inferInstanceAs (DecidableRel (fromEdges _).Adj)
+instance : DecidableRel W.Adj := inferInstanceAs (DecidableRel (SimpleGraph.fromRel _).Adj)
+instance : DecidableRel G5.Adj := inferInstanceAs (DecidableRel (SimpleGraph.fromRel _).Adj)
 
 noncomputable section
 
@@ -108,15 +104,11 @@ private theorem rayEq_of_common_perp {a c b d : E 3}
     rw [hK, finrank_euclideanSpace_fin] at hsum
     omega
   have mem (x : E 3) (hax : ⟪a, x⟫ = 0) (hcx : ⟪c, x⟫ = 0) : x ∈ Kᗮ := by
-    apply (K.mem_orthogonal x).mpr
-    intro u hu
-    induction hu using Submodule.span_induction with
-    | mem u hu =>
-      obtain ⟨i, rfl⟩ := hu
+    have h : K ⟂ (ℝ ∙ x) := by
+      apply Submodule.isOrtho_span.mpr
+      rintro u ⟨i, rfl⟩ _ rfl
       fin_cases i <;> assumption
-    | zero => exact inner_zero_left _
-    | add u w _ _ hu hw => rw [inner_add_left, hu, hw, zero_add]
-    | smul r u _ hu => rw [real_inner_smul_left, hu, mul_zero]
+    exact h.ge (Submodule.mem_span_singleton_self x)
   have hb0 : b ≠ 0 := by intro h; simp [h] at hb
   obtain ⟨r, hr⟩ := exists_smul_eq_of_finrank_eq_one hdim
     (x := (⟨b, mem b hab hcb⟩ : Kᗮ))
@@ -207,7 +199,11 @@ private theorem w_pairDecomposition {v : Vertex → E 3} (hv : Realizes W v) :
     PairDecomposition W v := by
   have edges : W.Adj 0 1 ∧ W.Adj 1 2 ∧ W.Adj 2 3 ∧ W.Adj 3 4 ∧
       W.Adj 4 5 ∧ W.Adj 5 6 ∧ W.Adj 6 7 ∧ W.Adj 7 0 ∧
-      W.Adj 0 4 ∧ W.Adj 1 5 ∧ W.Adj 2 6 ∧ W.Adj 3 7 := by decide
+      W.Adj 0 4 ∧ W.Adj 1 5 ∧ W.Adj 2 6 ∧ W.Adj 3 7 := by
+    constructor
+    · rw [W, fromEdges, SimpleGraph.fromRel_adj]
+      decide
+    · decide
   obtain ⟨e01, e12, e23, e34, e45, e56, e67, e70, e04, e15, e26, e37⟩ := edges
   have h01 := hv.2 0 1 e01
   have h12 := hv.2 1 2 e12
@@ -295,7 +291,11 @@ private theorem g5_pairDecomposition {v : Vertex → E 3} (hv : Realizes G5 v) :
     PairDecomposition G5 v := by
   have edges : G5.Adj 0 3 ∧ G5.Adj 0 5 ∧ G5.Adj 1 4 ∧ G5.Adj 1 5 ∧
       G5.Adj 1 6 ∧ G5.Adj 2 5 ∧ G5.Adj 2 6 ∧ G5.Adj 2 7 ∧
-      G5.Adj 3 6 ∧ G5.Adj 3 7 ∧ G5.Adj 4 7 ∧ G5.Adj 5 7 := by decide
+      G5.Adj 3 6 ∧ G5.Adj 3 7 ∧ G5.Adj 4 7 ∧ G5.Adj 5 7 := by
+    constructor
+    · rw [G5, fromEdges, SimpleGraph.fromRel_adj]
+      decide
+    · decide
   obtain ⟨e03, e05, e14, e15, e16, e25, e26, e27, e36, e37, e47, e57⟩ := edges
   have h03 := hv.2 0 3 e03
   have h05 := hv.2 0 5 e05
@@ -384,26 +384,17 @@ private theorem attained_of_coloring {G : SimpleGraph Vertex} (color : Vertex �
     rw [Finset.sum_boole, hcount]
     norm_num
 
-private def normalize {d : ℕ} (u : E d) : E d := (Real.sqrt ⟪u, u⟫)⁻¹ • u
-
-private theorem normalize_unit {d : ℕ} {u : E d} (hu : 0 < ⟪u, u⟫) :
-    ‖normalize u‖ = 1 := by
-  unfold normalize
-  rw [← norm_eq_sqrt_real_inner]
-  apply norm_smul_inv_norm
-  intro h
-  rw [h, inner_zero_left] at hu
-  exact (lt_irrefl 0) hu
-
 private theorem normalize_orthogonal {d : ℕ} {u v : E d} (huv : ⟪u, v⟫ = 0) :
-    ⟪normalize u, normalize v⟫ = 0 := by
-  unfold normalize
+    ⟪NormedSpace.normalize u, NormedSpace.normalize v⟫ = 0 := by
+  unfold NormedSpace.normalize
   rw [real_inner_smul_left, real_inner_smul_right, huv, mul_zero, mul_zero]
 
 private theorem overlapSq_normalize {d : ℕ} {p u : E d}
     (hp : 0 < ⟪p, p⟫) (hu : 0 < ⟪u, u⟫) :
-    overlapSq (normalize p) (normalize u) = ⟪p, u⟫ ^ 2 / (⟪p, p⟫ * ⟪u, u⟫) := by
-  unfold overlapSq normalize
+    overlapSq (NormedSpace.normalize p) (NormedSpace.normalize u) =
+      ⟪p, u⟫ ^ 2 / (⟪p, p⟫ * ⟪u, u⟫) := by
+  unfold overlapSq NormedSpace.normalize
+  rw [norm_eq_sqrt_real_inner p, norm_eq_sqrt_real_inner u]
   rw [real_inner_smul_left, real_inner_smul_right]
   simp only [mul_pow, inv_pow, Real.sq_sqrt hp.le, Real.sq_sqrt hu.le]
   rw [div_eq_mul_inv, mul_inv]
@@ -415,8 +406,9 @@ private theorem normalized_witness {G : SimpleGraph Vertex} {d : ℕ} {t : ℝ}
     (hEdges : ∀ i j, G.Adj i j → ⟪u i, u j⟫ = 0)
     (hValue : (∑ i, ⟪p, u i⟫ ^ 2 / (⟪p, p⟫ * ⟪u i, u i⟫)) = t) :
     t ∈ UnitScores G d := by
-  refine ⟨fun i => normalize (u i), ⟨fun i => normalize_unit (hu i), ?_⟩,
-    normalize p, normalize_unit hp, ?_⟩
+  refine ⟨fun i => NormedSpace.normalize (u i),
+    ⟨fun i => NormedSpace.norm_normalize (real_inner_self_pos.mp (hu i)), ?_⟩,
+    NormedSpace.normalize p, NormedSpace.norm_normalize (real_inner_self_pos.mp hp), ?_⟩
   · intro i j hij
     exact normalize_orthogonal (hEdges i j hij)
   · rw [score.eq_1]
