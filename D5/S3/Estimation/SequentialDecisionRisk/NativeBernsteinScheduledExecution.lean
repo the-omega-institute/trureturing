@@ -261,4 +261,149 @@ theorem actual_schedule_and_return_landmarks (S : Bool) (p q : unitInterval) (ω
 
 end Landmarks
 
+
+def countPair (h : History) : ℕ × ℕ := (successCount false h, successCount true h)
+
+def incrementCounts (source b : Bool) (ij : ℕ × ℕ) : ℕ × ℕ :=
+  if source then (ij.1, ij.2 + if b then 1 else 0)
+  else (ij.1 + if b then 1 else 0, ij.2)
+
+private theorem countPair_append (h : History) (s b : Bool) :
+    countPair (h ++ [(s, b)]) = incrementCounts s b (countPair h) := by
+  cases s <;> cases b <;>
+    simp [countPair, successCount, incrementCounts, List.filter_append]
+
+section OneCall
+variable {Seed : Type} [MeasurableSpace Seed]
+  (π : Seed → Bool → History → Action) (S : Bool) (p q : unitInterval)
+
+omit [MeasurableSpace Seed] in
+private theorem native_history_call_step (n : ℕ) (ω : Seed × Tape) (s : Bool)
+    (ha : nativeAction π S p q n ω = .inl s) :
+    nativeHistory π S p q (n + 1) ω = nativeHistory π S p q n ω ++
+      [(s, sourceRead p q s n ω.2)] := by
+  change π ω.1 S (acquiredHistory π S (sourceRead p q) n ω) = .inl s at ha
+  simp only [nativeHistory, acquiredHistory, ha]
+
+omit [MeasurableSpace Seed] in
+private theorem native_full_history_iff (n : ℕ) (ω : Seed × Tape) :
+    (nativeHistory π S p q n ω).length = n ↔
+      (n : WithTop ℕ) ≤ nativeCalls π S p q ω := by
+  constructor
+  · intro hlen
+    by_contra hle
+    have ht : nativeCalls π S p q ω < (n : WithTop ℕ) := lt_of_not_ge hle
+    obtain ⟨m, hm, cell, hcell⟩ := (hittingAfter_lt_iff
+      (u := nativeAction π S p q) (s := Set.range (fun c : Bool × Bool => (Sum.inr c : Action)))
+      (n := 0) (i := n) (ω := ω)).mp ht
+    have hf := (acquired_history_geometry π S (sourceRead p q) ω).2.2 m cell hcell.symm (n - m)
+    have he : nativeHistory π S p q n ω = nativeHistory π S p q m ω := by
+      simpa only [nativeHistory, Nat.add_sub_of_le hm.2.le] using hf
+    have hbound := (acquired_history_geometry π S (sourceRead p q) ω).1 m
+    change (nativeHistory π S p q m ω).length ≤ m at hbound
+    rw [he] at hlen
+    exact (Nat.not_lt_of_ge (hlen ▸ hbound)) hm.2
+  · exact acquired_history_length_before_return π S (sourceRead p q) ω n
+
+/-- The actual joint count law advances by one charged call and one fresh
+answer, without assuming that the two old success counters are independent. -/
+theorem actual_one_call_count_recursion
+    (hπ : ∀ S h, Measurable (fun seed => π seed S h))
+    (ν : Measure Seed) [IsProbabilityMeasure ν] (n I J : ℕ) :
+    rawLaw ν {ω | ((n + 1 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (n + 1) ω) = (I, J)} =
+      ∑ s : Bool, ∑ b : Bool, ∑ i : Fin (n + 1), ∑ j : Fin (n + 1),
+        if (I, J) = incrementCounts s b (i.val, j.val) then
+          rawLaw ν {ω | (n : WithTop ℕ) < nativeCalls π S p q ω ∧
+            countPair (nativeHistory π S p q n ω) = (i.val, j.val) ∧
+            nativeAction π S p q n ω = .inl s} * bernoulliMass (if s then q else p) b
+        else 0 := by
+  classical
+  let : MeasurableSpace History := ⊤
+  let Tag := Bool × Bool × Fin (n + 1) × Fin (n + 1)
+  let A (t : Tag) : Set (Seed × Tape) := {ω |
+    (nativeHistory π S p q n ω).length = n ∧
+    countPair (nativeHistory π S p q n ω) = (t.2.2.1.val, t.2.2.2.val) ∧
+    nativeAction π S p q n ω = .inl t.1}
+  let E (t : Tag) : Set (Seed × Tape) := A t ∩ {ω | sourceRead p q t.1 n ω.2 = t.2.1}
+  let K : Finset Tag := Finset.univ.filter (fun t =>
+    (I, J) = incrementCounts t.1 t.2.1 (t.2.2.1.val, t.2.2.2.val))
+  have hm := native_execution_measurable π hπ S p q
+  have hA (t : Tag) : MeasurableSet (A t) := by
+    have hhist := (hm.1 n) (show MeasurableSet
+      {h : History | h.length = n ∧ countPair h = (t.2.2.1.val, t.2.2.2.val)} from .of_discrete)
+    have hact := (hm.2.1 n) (action_singleton_measurable (.inl t.1))
+    convert hhist.inter hact using 1
+    ext ω
+    change (_ ∧ _ ∧ _) ↔ ((_ ∧ _) ∧ _)
+    tauto
+  have hE (t : Tag) : MeasurableSet (E t) :=
+    (hA t).inter (((NativeBernoulliFactoryCriticalMoment.coin_measurable
+      (if t.1 then q else p)).comp ((measurable_pi_apply n).comp measurable_snd))
+        (measurableSet_singleton t.2.1))
+  have hsurvive (t : Tag) : A t = {ω | (n : WithTop ℕ) < nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q n ω) = (t.2.2.1.val, t.2.2.2.val) ∧
+      nativeAction π S p q n ω = .inl t.1} := by
+    ext ω
+    constructor
+    · rintro ⟨hlen, hc, ha⟩
+      have hnext : (nativeHistory π S p q (n + 1) ω).length = n + 1 := by
+        rw [native_history_call_step π S p q n ω t.1 ha, List.length_append,
+          List.length_singleton, hlen]
+      exact ⟨(WithTop.coe_lt_coe.mpr (Nat.lt_succ_self n)).trans_le
+        ((native_full_history_iff π S p q (n + 1) ω).mp hnext), hc, ha⟩
+    · rintro ⟨ht, hc, ha⟩
+      exact ⟨(native_full_history_iff π S p q n ω).mpr ht.le, hc, ha⟩
+  have hevent : {ω | ((n + 1 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (n + 1) ω) = (I, J)} = ⋃ t ∈ K, E t := by
+    ext ω
+    simp only [Set.mem_ofPred_eq, Set.mem_iUnion]
+    constructor
+    · rintro ⟨ht, hc⟩
+      have hlt : (n : WithTop ℕ) < nativeCalls π S p q ω :=
+        (WithTop.coe_lt_coe.mpr (Nat.lt_succ_self n)).trans_le ht
+      obtain ⟨s, ha⟩ := call_before_return π S (sourceRead p q) ω n hlt
+      change nativeAction π S p q n ω = .inl s at ha
+      have hlen := (native_full_history_iff π S p q n ω).mpr hlt.le
+      have hb (s : Bool) : successCount s (nativeHistory π S p q n ω) < n + 1 := by
+        have hh := List.length_filter_le
+          (fun v : Bool × Bool => decide (v.1 = s ∧ v.2 = true)) (nativeHistory π S p q n ω)
+        change successCount s (nativeHistory π S p q n ω) ≤ _ at hh
+        omega
+      let i : Fin (n + 1) := ⟨successCount false (nativeHistory π S p q n ω), hb false⟩
+      let j : Fin (n + 1) := ⟨successCount true (nativeHistory π S p q n ω), hb true⟩
+      let b := sourceRead p q s n ω.2
+      refine ⟨(s, b, i, j), ?_, ⟨hlen, rfl, ha⟩, rfl⟩
+      simp only [K, Finset.mem_filter, Finset.mem_univ, true_and]
+      rw [native_history_call_step π S p q n ω s ha, countPair_append] at hc
+      exact hc.symm
+    · rintro ⟨t, ht, hω⟩
+      obtain ⟨hlen, hc, ha⟩ := hω.1
+      have hstep := native_history_call_step π S p q n ω t.1 ha
+      have hlen' : (nativeHistory π S p q (n + 1) ω).length = n + 1 := by
+        rw [hstep, List.length_append, List.length_singleton, hlen]
+      refine ⟨(native_full_history_iff π S p q (n + 1) ω).mp hlen', ?_⟩
+      rw [hstep, countPair_append, hω.2, hc]
+      exact (Finset.mem_filter.mp ht).2.symm
+  have hd : Set.PairwiseDisjoint (↑K : Set Tag) E := by
+    intro t _ u _ hne
+    apply Set.disjoint_left.mpr
+    intro ω ht hu
+    have hs : t.1 = u.1 := Sum.inl.inj (ht.1.2.2.symm.trans hu.1.2.2)
+    have hb : t.2.1 = u.2.1 := ht.2.symm.trans (by simpa only [Set.mem_ofPred_eq, hs] using hu.2)
+    have hc := ht.1.2.1.symm.trans hu.1.2.1
+    exact hne (Prod.ext hs (Prod.ext hb (Prod.ext
+      (Fin.ext (congrArg Prod.fst hc)) (Fin.ext (congrArg Prod.snd hc)))))
+  rw [hevent, measure_biUnion_finset hd (fun t _ => hE t)]
+  have hmass (t : Tag) : rawLaw ν (E t) = rawLaw ν (A t) *
+      bernoulliMass (if t.1 then q else p) t.2.1 :=
+    aggregate_native_next_answer_kernel π hπ S ν p q n
+      {h | countPair h = (t.2.2.1.val, t.2.2.2.val)} t.1 t.2.1
+  simp_rw [hmass, hsurvive]
+  simp only [K, Finset.sum_filter]
+  dsimp only [Tag] at *
+  simp only [Fintype.sum_prod_type]
+
+end OneCall
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinScheduledExecution

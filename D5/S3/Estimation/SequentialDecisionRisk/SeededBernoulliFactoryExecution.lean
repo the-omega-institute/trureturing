@@ -126,7 +126,7 @@ lemma output_stopped_measurable (π : Seed → Bool → History → Action)
     (calls_stopping π hπ S)
 
 omit [MeasurableSpace Seed] in
-private lemma call_before_return (π : Seed → Bool → History → Action) (S : Bool)
+lemma call_before_return (π : Seed → Bool → History → Action) (S : Bool)
     {Tape : Type} (answer : Bool → ℕ → Tape → Bool)
     (ω : Seed × Tape) (n : ℕ)
     (hn : (n : WithTop ℕ) < hittingAfter (TapeAct π S answer) Returns 0 ω) :
