@@ -56,11 +56,11 @@ The refutation would fail if the source's stabilizer set were smaller than the c
 The canonical sources are two modules.
 - `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (797 lines):
   - definitions of qubit registers, tensor products, the generated Clifford group, pure stabilizer states, `STAB`, `S`, `sigma`, `bell`, `W` and `gammaWords`;
-  - the public theorem `stabilizer_polar_tensor_escape`, and the public local-gate laws `local_identity` and `local_product`, which the second module consumes.
+  - the public theorem `stabilizer_polar_tensor_escape`, and the public local-gate laws `local_adjoint`, `local_identity` and `local_product`, consumed on the proof paths of both modules.
 - `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean` (960 lines): the definitions `SupportLE`, `log2`, `DPI`, `Qaz`, `Daz` and `magic`; `claim` and `result`.
 - They reuse the frozen `StabilizerPairLocalUnitaryInequivalence` Pauli words and local operators, the frozen `Operator` of `StabilizerPovmMaximalEntanglementRefutation`, `IsDensity` of `GHZMeasureBiseparableBound`, `RHLinalg.rtrace`, `tensor_adj` of `BinaryStabilizerGraphNormalForm` (made public here), the frozen Hadamard of `NandiMutualPredictabilityLOCCRefutation`, and Mathlib's Hermitian functional calculus, `CFC.inverse_eq_rpow_neg_one`, convex hulls and Kronecker products.
 - Both use only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
-- The escape registrations in `Reg/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (three, one per public theorem of the first module) are `declared_validated`.
+- The escape registrations in `Reg/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (four, one per public theorem of the first module) and in `Reg/D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.lean` (for the newly public `tensor_adj`, `tensor_unitary`, `tensor_smul` and `gate_unitary`) are `declared_validated`.
 
 Frozen states:
 - `Golden/Frozen/state/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean.json`, statement `sha256:aea03a163d528e58c6f4490119d0c57898b1409a45f75bf7b7ef418ae1d72946`;
@@ -79,7 +79,7 @@ Tier 1 question of a 2024 paper, preregistered in issue #15943 before any Lean.
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
 | stabilizer_polar_tensor_escape | content | the stabilizer expectation bound and the anticommuting-support exclusion | escape-witness |
-| local_identity, local_product | bind-only (consumed by the second module) | none | consumed helpers |
+| local_adjoint, local_identity, local_product | bind-only (consumed on the proof paths of both modules) | none | consumed helpers |
 | polar_consumption, C_square_expectation_bound, marginal_lower_bound, magic_two_one_lower, conjugate_marginal_lower, magic_conjugate_lower (second module, private) | content | the same polar bound, through `stabilizer_polar_tensor_escape` | consumed helpers |
 | result | content | the stabilizer polar bound of the first module (pure-stabilizer expectations in {0, ±1}, the anticommuting-support exclusion), first frozen in the same delivery and consumed through `stabilizer_polar_tensor_escape` | open-problem-resolution |
 

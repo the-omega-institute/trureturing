@@ -42,7 +42,7 @@ The conjugate transpose of a tensor product is the tensor product of the conjuga
 
 **Lemma 1.4 (Tensor products of unitary factors).**
 
-$$\forall (N : \mathbb{N}), \forall (A : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), \forall (i : \operatorname{Fin}\left(N\right)), A(i) \in Matrix.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right) \Rightarrow (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(A\right) \in Matrix.\operatorname{unitaryGroup}\left((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)), \mathbb{C}\right))$$
+$$\forall (N : \mathbb{N}), \forall (A : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), (\forall (i : \operatorname{Fin}\left(N\right)), A(i) \in Matrix.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \Rightarrow (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(A\right) \in Matrix.\operatorname{unitaryGroup}\left((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)), \mathbb{C}\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_unitary` (`✓ std3`). ∎
 
