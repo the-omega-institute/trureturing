@@ -2,7 +2,7 @@
 
 The live source-preserving slice in `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SubstochasticEscape.lean` comes from YuZh98/aldous-broder-lean at immutable revision `bd20382923d987fc54a9773e04a4bc22b851872c`. Its source `EAB/Paper/ConfinedChain.lean` has SHA256 `d235b9788731933c6f9b315b164ed71859748ca44658eef3cf033acfefbb8fba`.
 
-The owning namespace and import list are adapted. Statement types and proof bodies are retained. The unused `rowSum_le_one` leaf, irreducible/confined-chain, Neumann-series and positive-minor results are omitted. Retire the port when this repository's pinned Mathlib contains equivalent suppliers and directly reuse those suppliers.
+The owning namespace and import list are adapted. Statement types and proof bodies are retained. The retained slice includes matrix-power decay, nonsingularity and the entrywise Neumann series. The unused `rowSum_le_one` leaf, irreducible/confined-chain and positive-minor results are omitted. Retire the port when this repository's pinned Mathlib contains equivalent suppliers and directly reuse those suppliers.
 
 The original NOTICE (SHA256 `0c7544de71e54ed13f5b4c59025c80b9d443a1ad544bbb550a2c272cc5c8c8f9`) and full LICENSE (SHA256 `c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c`) follow verbatim.
 
