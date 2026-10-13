@@ -121,7 +121,10 @@ internal sealed class RenyiBoundaryMagicAdditivityRefutationDocument : IScribeDo
         string prose, DescribeRole role, AssessedProvenance? provenance = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            declaration == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("rubboli-takagi-tomamichel-2024-magic-additivity-refutation"),
+                ResolutionKind.Refuted) : null);
     private static Formula X(string name) => F.Id(name);
     private static Formula Qualified(params string[] parts)
     {

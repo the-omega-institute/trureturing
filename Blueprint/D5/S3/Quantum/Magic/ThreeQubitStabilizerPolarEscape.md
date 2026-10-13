@@ -172,7 +172,43 @@ $$\forall n \in \mathbb{N},\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabil
 
 The mixed stabilizer states in §2 form the convex hull over the real numbers of the pure stabilizer projectors.
 
-**Definition 1.15 (Seven anticommuting Pauli terms).**
+**Definition 1.15 (The seven Pauli words).**
+
+$$\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.gammaWords} = ![![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.X}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Y}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.X}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Y}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.X}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Y}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}]]$$
+
+*Formalization.* `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.gammaWords` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The seven three-qubit words are XII, YII, ZXI, ZYI, ZZX, ZZY and ZZZ.
+
+**Theorem 1.16 (Local gates preserve products).**
+
+$$\forall n \in \mathbb{N},\; \forall i \in \operatorname{Fin}\left(n\right),\; \forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall B \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp}\left(i, A\right) \cdot \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp}\left(i, B\right) = \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp}\left(i, A \cdot B\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.local_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Embedding two single-qubit operators at the same coordinate preserves their product.
+
+**Theorem 1.17 (The local identity gate).**
+
+$$\forall n \in \mathbb{N},\; \forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp}\left(i, (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))\right) = (1: \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.local_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Embedding the single-qubit identity at any coordinate gives the identity on the full register.
+
+**Definition 1.18 (Seven anticommuting Pauli terms).**
 
 $$\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S} = \sum_{(j: \operatorname{Fin}\left(7\right))} (\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.wordOp}\left(![![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.X}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Y}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.X}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Y}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.I}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.X}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Y}], ![\operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}, \operatorname{D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli.Z}]]\left(j\right)\right))$$
 
@@ -184,7 +220,7 @@ $$\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S} = \sum_{(
 
 The seven words are XII, YII, ZXI, ZYI, ZZX, ZZY and ZZZ. Their Pauli operators anticommute pairwise, so the cross terms in the square cancel.
 
-**Definition 1.16 (A three-qubit state).**
+**Definition 1.19 (A three-qubit state).**
 
 $$\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.sigma} = ((\frac{1}{56}: \mathbb{R})) \cdot (((7: \mathbb{R})) \cdot ((1: \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(3\right))) + \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S})$$
 
@@ -196,7 +232,7 @@ $$\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.sigma} = ((\
 
 This state is one seventh of the sum of the seven states obtained from the identity plus each Pauli term, divided by eight. Its expectation of S is one.
 
-**Definition 1.17 (Three Bell pairs).**
+**Definition 1.20 (Three Bell pairs).**
 
 $$\forall x \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Bits}\left(6\right),\; \forall y \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Bits}\left(6\right),\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.bell}\left(x, y\right) = \operatorname{ite}\left(((\lambda (i: \operatorname{Fin}\left(3\right)) \mapsto (x\left(\operatorname{Fin.castAdd}\left(3, i\right)\right))) = (\lambda (i: \operatorname{Fin}\left(3\right)) \mapsto (x\left(\operatorname{Fin.natAdd}\left(3, i\right)\right)))) \land ((\lambda (i: \operatorname{Fin}\left(3\right)) \mapsto (y\left(\operatorname{Fin.castAdd}\left(3, i\right)\right))) = (\lambda (i: \operatorname{Fin}\left(3\right)) \mapsto (y\left(\operatorname{Fin.natAdd}\left(3, i\right)\right)))), (\frac{1}{8}: \mathbb{C}), (0: \mathbb{C})\right)$$
 
@@ -208,7 +244,7 @@ $$\forall x \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscap
 
 The projector has entry 1/8 when the two three-bit halves of each basis index coincide, and zero otherwise. It is the maximally entangled state between the two three-qubit factors.
 
-**Definition 1.18 (Positive polar elements).**
+**Definition 1.21 (Positive polar elements).**
 
 $$\forall s \in \mathbb{R},\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right) = ((\frac{1}{1 + s}: \mathbb{R})) \cdot ((1: \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(3\right)) + (s) \cdot (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S}))$$
 
@@ -220,7 +256,7 @@ $$\forall s \in \mathbb{R},\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabil
 
 For the parameter range in the theorem, this operator and its entrywise conjugate are positive definite and have expectation at most one on every three-qubit stabilizer state.
 
-**Theorem 1.19 (The tensor product exceeds the polar bound).**
+**Theorem 1.22 (The tensor product exceeds the polar bound).**
 
 $$\forall s \in \mathbb{R},\; (\frac{1}{3} < s) \Rightarrow ((7 \cdot (s)^{2} < 1) \Rightarrow ((\forall n \in \mathbb{N},\; \forall eta \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right),\; (eta \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.STAB}\left(n\right)) \Rightarrow (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.IsState}\left(eta\right))) \land (((\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.IsState}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.sigma}\right)) \land (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.sigma} \cdot \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S}\right) = 1)) \land ((\operatorname{Matrix.conjTranspose}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S}\right) = \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S}) \land ((\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S} \cdot \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S} = ((7: \mathbb{C})) \cdot ((1: \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(3\right)))) \land ((\operatorname{Matrix.trace}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.S}\right) = (0: \mathbb{C})) \land ((\forall A \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(3\right),\; \forall B \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(3\right),\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.bell} \cdot \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tensor}\left(A, \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.conjugate}\left(B\right)\right)\right) = \frac{\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(A \cdot \operatorname{Matrix.conjTranspose}\left(B\right)\right)}{8}) \land ((\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.bell} \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.STAB}\left(6\right)) \land ((\operatorname{Matrix.PosDef}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right)\right)) \land ((\operatorname{Matrix.PosDef}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.conjugate}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right)\right)\right)) \land ((\forall eta \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(3\right),\; (eta \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.STAB}\left(3\right)) \Rightarrow ((\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(eta \cdot \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right)\right) \le 1) \land (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(eta \cdot \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.conjugate}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right)\right)\right) \le 1))) \land ((\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.bell} \cdot \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tensor}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right), \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.conjugate}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right)\right)\right)\right) = \frac{1 + 7 \cdot (s)^{2}}{(1 + s)^{2}}) \land (1 < \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.bell} \cdot \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tensor}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right), \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.conjugate}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.W}\left(s\right)\right)\right)\right))))))))))))))$$
 
@@ -244,10 +280,13 @@ For 1/3 < s and 7s² < 1, the two positive definite three-qubit operators each h
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.W`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.bell`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.conjugate`
+- Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.gammaWords`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.gateCNOT`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.gateH`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.gateS`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.gates`
+- Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.local_identity`
+- Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.local_product`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.sigma`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.stabilizer_polar_tensor_escape`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.tensor`
