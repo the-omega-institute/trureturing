@@ -18,21 +18,29 @@ internal sealed class FourVertexRankDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(All("H", Call("SimpleGraph", Call("Fin", D(4))),
                     Eq(Call("pmCount", F.Id("H")), Call("card", Call("PerfectMatchingSubgraphs", F.Id("H"))))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("PerfectMatchingSubgraphs(H) is the subtype of all subgraphs M of H with M.IsPerfectMatching. Its cardinality is Nat.card of this finite type."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("actual-matching-count"), DeclarationHandle.Create(Prefix + "actual_matching_count"), H("Exact Matching Count"),
+            Describe.Lean(DescribeId.Create("actual-matching-count"), DeclarationHandle.Create(Prefix + "actual_matching_count"), H("Exact Matching Objects and Count"),
                 StatementSource.FromAuthor(MatchingStatement()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Choose the unique partner of vertex 0. It is 1, 2, or 3. Symmetry fixes its partner as 0. The two remaining vertices must be paired with each other, because the already paired vertices cannot acquire a second partner. Conversely, each of the three pairings gives a perfect-matching subgraph exactly when both of its edges occur in H. These constructions form a bijection, so their supported indicators sum to the actual cardinality. Each indicator is 1 when its two edges occur and 0 otherwise."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("Choose the unique partner of vertex 0. It is 1, 2, or 3. Symmetry fixes its partner as 0. The two remaining vertices must be paired with each other, because the already paired vertices cannot acquire a second partner. Conversely, each of the three pairings gives a perfect-matching subgraph exactly when both of its edges occur in H. The public equivalence ranges over every actual subgraph M of H: M is a perfect matching if and only if its adjacency relation is one of the three supported partner maps. Support means that H contains every prescribed partner edge. Because every vertex has a partner, these subgraphs also have the full vertex set; no isolated-vertex choices remain. The constructions form a bijection, so their supported indicators sum to the actual cardinality. Each indicator is 1 when its two edges occur and 0 otherwise."))), DescribeRole.Theorem),
             Paragraph(Text("The counting formula holds for every simple graph on these four vertices. The weighted and binary adjacency rank tables, the classification up to graph isomorphism, and the signed rank difference require further arguments.")))));
     private static Formula MatchingStatement()
     {
         Formula g = F.Id("H");
-        return Disp(All("H", Call("SimpleGraph", Call("Fin", D(4))), Eq(Call("pmCount", g),
+        Formula j = F.Id("j"), i = F.Id("i"), k = F.Id("k"), m = F.Id("M");
+        Formula supported = All("i", Call("Fin", D(4)), Call("Adj", g, i, Call("mate", j, i)));
+        Formula sameEdges = All("i", Call("Fin", D(4)), All("k", Call("Fin", D(4)),
+            Iff(Call("Adj", m, i, k), Eq(Call("mate", j, i), k))));
+        Formula objects = All("M", Call("Subgraph", g), Iff(Call("IsPerfectMatching", m),
+            Exists("j", Call("Fin", D(3)), And(supported, sameEdges))));
+        return Disp(All("H", Call("SimpleGraph", Call("Fin", D(4))), And(objects, Eq(Call("pmCount", g),
             Seq(Indicator(And(Call("Adj", g, D(0), D(1)), Call("Adj", g, D(2), D(3)))), Plus,
                 Indicator(And(Call("Adj", g, D(0), D(2)), Call("Adj", g, D(1), D(3)))), Plus,
-                Indicator(And(Call("Adj", g, D(0), D(3)), Call("Adj", g, D(1), D(2))))))));
+                Indicator(And(Call("Adj", g, D(0), D(3)), Call("Adj", g, D(1), D(2)))))))));
     }
     private static Formula Indicator(Formula p) => Call("indicator", p);
     private static Formula Call(string n, params Formula[] a) => a.Length == 0 ? new Formula.NamedConstant(FormulaIdentifier.Create(n)) : new Formula.Apply(new Formula.NamedConstant(FormulaIdentifier.Create(n)), [.. a]);
     private static Formula All(string n, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
+    private static Formula Exists(string n, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(n), t, b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.Iff, Seq(Open, b, Close));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Seq(Open, a, Close), FormulaLogicOperator.And, Seq(Open, b, Close));
 }

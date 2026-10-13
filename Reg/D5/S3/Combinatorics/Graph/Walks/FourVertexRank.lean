@@ -27,13 +27,21 @@ def rejected : Realization signature := realize signature
 
 abbrev arena : Arena.{0,0,0,0,0} where
   signature := signature
-  Law R := ∀ H : SimpleGraph (Fin 4), R.readout () () H =
+  Law R := ∀ H : SimpleGraph (Fin 4),
+    (∀ M : H.Subgraph, M.IsPerfectMatching ↔
+      ∃ j : Fin 3, (∀ i, H.Adj i (mate j i)) ∧
+        ∀ i k, M.Adj i k ↔ mate j i = k) ∧
+    R.readout () () H =
     (if H.Adj 0 1 ∧ H.Adj 2 3 then 1 else 0) +
     (if H.Adj 0 2 ∧ H.Adj 1 3 then 1 else 0) +
     (if H.Adj 0 3 ∧ H.Adj 1 2 then 1 else 0)
 
 def registration : Registration arena
-    (∀ H : SimpleGraph (Fin 4), pmCount H =
+    (∀ H : SimpleGraph (Fin 4),
+      (∀ M : H.Subgraph, M.IsPerfectMatching ↔
+        ∃ j : Fin 3, (∀ i, H.Adj i (mate j i)) ∧
+          ∀ i k, M.Adj i k ↔ mate j i = k) ∧
+      pmCount H =
       (if H.Adj 0 1 ∧ H.Adj 2 3 then 1 else 0) +
       (if H.Adj 0 2 ∧ H.Adj 1 3 then 1 else 0) +
       (if H.Adj 0 3 ∧ H.Adj 1 2 then 1 else 0)) where
@@ -41,7 +49,7 @@ def registration : Registration arena
   bridge := Iff.rfl
   variation := ⟨actual_matching_count, rejected, by
     intro h
-    have hh := h ⊥
+    have hh := (h ⊥).2
     simp [rejected, realize] at hh⟩
   sensitivity := by
     constructor
@@ -50,7 +58,7 @@ def registration : Registration arena
       · intro j hj
         exact (hj (Subsingleton.elim _ _)).elim
       · intro h
-        have hh := h ⊥
+        have hh := (h ⊥).2
         simp [rejected, realize] at hh
     · intro e
       exact nomatch e
@@ -58,7 +66,7 @@ def registration : Registration arena
     intro i
     refine ⟨(), ⊥, ⊤, ?_⟩
     change pmCount ⊥ ≠ pmCount ⊤
-    rw [actual_matching_count, actual_matching_count]
+    rw [(actual_matching_count ⊥).2, (actual_matching_count ⊤).2]
     simp
 
 def registration_contract : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
@@ -86,7 +94,7 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Graph.Walks.FourVertexRank
     coordinates := #[]
     readouts := #[{
-      path := #["body", "fn", "arg"]
+      path := #["body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

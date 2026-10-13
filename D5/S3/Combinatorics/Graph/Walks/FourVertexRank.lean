@@ -24,8 +24,11 @@ def mate (j : Fin 3) : Fin 4 → Fin 4 :=
 def pmCount (H : SimpleGraph (Fin 4)) : ℕ :=
   Nat.card {M : H.Subgraph // M.IsPerfectMatching}
 
-/-- Counts actual perfect-matching subgraphs by their uniquely determined pairs. -/
+/-- Identifies actual perfect-matching subgraphs with the supported pairings and counts them. -/
 theorem actual_matching_count (H : SimpleGraph (Fin 4)) :
+    (∀ M : H.Subgraph, M.IsPerfectMatching ↔
+      ∃ j : Fin 3, (∀ i, H.Adj i (mate j i)) ∧
+        ∀ i k, M.Adj i k ↔ mate j i = k) ∧
     pmCount H = (if H.Adj 0 1 ∧ H.Adj 2 3 then 1 else 0) +
       (if H.Adj 0 2 ∧ H.Adj 1 3 then 1 else 0) +
       (if H.Adj 0 3 ∧ H.Adj 1 2 then 1 else 0) := by
@@ -124,20 +127,35 @@ theorem actual_matching_count (H : SimpleGraph (Fin 4)) :
     apply Subgraph.ext (by change Set.univ = M.val.verts; exact M.property.2.verts_eq_univ.symm)
     funext i k
     exact propext (force j hj i k).symm
-  have card := Fintype.card_of_bijective (f := f) ⟨inj, surj⟩
-  have hc : pmCount H = Fintype.card J := by
-    rw [pmCount, Nat.card_eq_fintype_card]
-    exact card.symm
-  rw [hc, Fintype.card_subtype]
-  rw [Finset.card_filter]
-  simp only [Fin.sum_univ_succ]
-  have hs (j : Fin 3) : (∀ i, H.Adj i (mate j i)) ↔
-      (j = 0 ∧ H.Adj 0 1 ∧ H.Adj 2 3) ∨
-      (j = 1 ∧ H.Adj 0 2 ∧ H.Adj 1 3) ∨
-      (j = 2 ∧ H.Adj 0 3 ∧ H.Adj 1 2) := by
-    fin_cases j <;> simp [mate, Fin.forall_fin_succ] <;>
-      aesop (add safe forward SimpleGraph.Adj.symm)
-  simp [hs, add_assoc]
+  constructor
+  · intro M
+    constructor
+    · intro hM
+      obtain ⟨j, hj⟩ := surj ⟨M, hM⟩
+      refine ⟨j.val, j.property, ?_⟩
+      have hv := congrArg Subtype.val hj
+      change build j = M at hv
+      intro i k
+      rw [← hv]
+    · rintro ⟨j, _, hj⟩
+      rw [SimpleGraph.Subgraph.isPerfectMatching_iff]
+      intro i
+      exact ⟨mate j i, (hj i (mate j i)).mpr rfl,
+        fun k hk => ((hj i k).mp hk).symm⟩
+  · have card := Fintype.card_of_bijective (f := f) ⟨inj, surj⟩
+    have hc : pmCount H = Fintype.card J := by
+      rw [pmCount, Nat.card_eq_fintype_card]
+      exact card.symm
+    rw [hc, Fintype.card_subtype]
+    rw [Finset.card_filter]
+    simp only [Fin.sum_univ_succ]
+    have hs (j : Fin 3) : (∀ i, H.Adj i (mate j i)) ↔
+        (j = 0 ∧ H.Adj 0 1 ∧ H.Adj 2 3) ∨
+        (j = 1 ∧ H.Adj 0 2 ∧ H.Adj 1 3) ∨
+        (j = 2 ∧ H.Adj 0 3 ∧ H.Adj 1 2) := by
+      fin_cases j <;> simp [mate, Fin.forall_fin_succ] <;>
+        aesop (add safe forward SimpleGraph.Adj.symm)
+    simp [hs, add_assoc]
 
 #print axioms actual_matching_count
 end
