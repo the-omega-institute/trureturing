@@ -1,11 +1,11 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality
+import D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality
 import Mathlib.Combinatorics.SimpleGraph.Star
 import Reg.Support.DependentFamily
 
-namespace Reg.D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality
+namespace Reg.D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality
 
-open _root_.D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality
+open _root_.D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit SimpleGraph
 
@@ -90,8 +90,8 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@leaf_neighbor_isUniversal.{u})
     (type_of% (realize signature.{u} (fun _ p v => p.2.IsUniversal v)
       (fun e => nomatch e))) Unit Unit := {
-  unitName := `Reg.D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality.informationUnit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality.registration
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality.informationUnit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality.registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -109,7 +109,7 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     definition := none
-    owner := `D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality
+    owner := `D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality
     coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
@@ -125,4 +125,4 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 
 end
-end Reg.D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality
+end Reg.D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality

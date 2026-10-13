@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/MatchingConeLeafUniversality
+/- GID: D5/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/MatchingConeLeafUniversality
+   mirror-B: D5/B/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality
    mirror-E: none(waiver:structural-proof)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Copy, mathlib/module/Mathlib.Combinatorics.SimpleGraph.DeleteEdges, mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum]
    utility: none
@@ -12,7 +12,7 @@ import Mathlib.Combinatorics.SimpleGraph.Operations
 import Mathlib.Order.Minimal
 import Mathlib.Tactic
 
-namespace D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality
+namespace D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality
 
 open SimpleGraph Finset
 
@@ -317,4 +317,4 @@ theorem leaf_neighbor_isUniversal {V : Type*} [Fintype V] [DecidableEq V]
 
 #print axioms leaf_neighbor_isUniversal
 
-end D5.S3.Combinatorics.Graph.MatchingConeLeafUniversality
+end D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality

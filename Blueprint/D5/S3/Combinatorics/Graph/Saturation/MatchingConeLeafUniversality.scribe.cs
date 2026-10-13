@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Saturation;
 
 internal sealed class MatchingConeLeafUniversalityDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/MatchingConeLeafUniversality.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A leaf's neighbor is universal in every finite maximal H-free graph with at most order plus five edges, where H is the cone over three disjoint edges and an isolated vertex.",

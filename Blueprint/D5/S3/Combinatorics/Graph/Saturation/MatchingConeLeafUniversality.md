@@ -8,7 +8,7 @@ A leaf's neighbor is universal in every finite maximal H-free graph with at most
 
 $$H = \mathrm{Join}\left(\mathrm{K}\left(1\right), \mathrm{DisjointUnion}\left(\mathrm{ThreeCopies}\left(\mathrm{K}\left(2\right)\right), \mathrm{K}\left(1\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/MatchingConeLeafUniversality.H` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality.H` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ The carrier is Unit + (Unit + (Fin 3 x Bool)). Its left unit is the center, its 
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] [\mathrm{DecidableEq}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; [\mathrm{DecidableRel}\left(\mathrm{Adj}\left(G\right)\right)] \forall u \in V,\; \forall v \in V,\; ((\mathrm{Maximal}\left(\mathrm{Free}\left(H\right), G\right)) \land ((\mathrm{card}\left(\mathrm{edgeFinset}\left(G\right)\right) \le \mathrm{FintypeCard}\left(V\right) + 5) \land ((\mathrm{degree}\left(G, u\right) = 1) \land (\mathrm{Adj}\left(G, u, v\right))))) \Rightarrow (\mathrm{IsUniversal}\left(G, v\right))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MatchingConeLeafUniversality.leaf_neighbor_isUniversal` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality.leaf_neighbor_isUniversal` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,5 +34,5 @@ The quantifiers range over arbitrary finite host types. No order cutoff, connect
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/MatchingConeLeafUniversality.H`
-- Truth anchor: `D5/S3/Combinatorics/Graph/MatchingConeLeafUniversality.leaf_neighbor_isUniversal`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality.H`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality.leaf_neighbor_isUniversal`
