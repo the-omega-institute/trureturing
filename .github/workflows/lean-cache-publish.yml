@@ -23,15 +23,6 @@ on:
         description: '40-hex commit reachable from source_ref; the producer checks this pin'
         required: true
         type: string
-      runner:
-        description: 'Manual producer runner; non-arm choices are diagnostic only'
-        required: false
-        type: choice
-        options:
-          - arm64
-          - x64
-          - self-hosted
-        default: arm64
 
 permissions: {}
 
@@ -42,46 +33,16 @@ jobs:
       contents: write
       actions: write
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.ref == 'refs/heads/dev')
-    runs-on: ${{ github.event_name == 'workflow_dispatch' && inputs.runner == 'x64' && 'ubuntu-24.04' || github.event_name == 'workflow_dispatch' && inputs.runner == 'self-hosted' && 'omega-m3-ultra' || 'ubuntu-24.04-arm' }}
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: ${{ github.event_name == 'workflow_dispatch' && 360 || 120 }}
     env:
-      STRATALINT_CACHE_WRITES: ${{ github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted' && 'true' || 'false' }}
+      STRATALINT_CACHE_WRITES: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - name: Select Python with TOML support
-        shell: bash
-        run: |
-          set -euo pipefail
-          helper_dir="$GITHUB_WORKSPACE/.ci-python"
-          rm -rf "$helper_dir"
-          mkdir -p "$helper_dir"
-          for candidate in python3.13 python3.12 python3.11 python3; do
-            if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c 'import tomllib' >/dev/null 2>&1; then
-              ln -s "$(command -v "$candidate")" "$helper_dir/python3"
-              echo "$helper_dir" >> "$GITHUB_PATH"
-              "$candidate" --version
-              exit 0
-            fi
-          done
-          legacy_python="$(command -v python3 || true)"
-          if [[ -n "$legacy_python" ]] && "$legacy_python" -m pip --version >/dev/null 2>&1; then
-            "$legacy_python" -m pip install --disable-pip-version-check --target "$helper_dir" tomli
-            cat > "$helper_dir/tomllib.py" <<'PY_TOMLLIB'
-          from tomli import TOMLDecodeError, load, loads
-          PY_TOMLLIB
-            ln -s "$legacy_python" "$helper_dir/python3"
-            echo "$helper_dir" >> "$GITHUB_PATH"
-            echo "PYTHONPATH=$helper_dir${PYTHONPATH:+:$PYTHONPATH}" >> "$GITHUB_ENV"
-            PYTHONPATH="$helper_dir${PYTHONPATH:+:$PYTHONPATH}" "$legacy_python" -c 'import tomllib'
-            "$legacy_python" --version
-            exit 0
-          fi
-          echo 'CACHE_PRODUCER_ERROR no Python interpreter with tomllib support' >&2
-          exit 1
       - name: Validate the manual source ref and immutable pin
         if: github.event_name == 'workflow_dispatch'
         env:
@@ -108,38 +69,13 @@ jobs:
             echo "CACHE_SOURCE_ERROR source_sha must be a nonzero 40-hex SHA" >&2
             exit 2
           }
-          api_json() {
-            local endpoint="$1"
-            if command -v gh >/dev/null 2>&1; then
-              gh api "$endpoint"
-              return
-            fi
-            python3 - "$endpoint" <<'PY_API'
-          import json
-          import os
-          import sys
-          import urllib.request
-
-          endpoint = sys.argv[1]
-          request = urllib.request.Request(
-              "https://api.github.com/" + endpoint,
-              headers={
-                  "Authorization": "Bearer " + os.environ["GH_TOKEN"],
-                  "Accept": "application/vnd.github+json",
-                  "X-GitHub-Api-Version": "2022-11-28",
-              },
-          )
-          with urllib.request.urlopen(request, timeout=20) as response:
-              sys.stdout.write(response.read().decode("utf-8"))
-          PY_API
-          }
           branch="${SOURCE_REF#refs/heads/}"
-          protected="$(api_json "repos/$REPOSITORY/branches/$branch" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["protected"]).lower())')"
+          protected="$(gh api "repos/$REPOSITORY/branches/$branch" --jq '.protected')"
           [[ "$protected" == true ]] || {
             echo "CACHE_SOURCE_ERROR source branch is not protected" >&2
             exit 2
           }
-          merge_base="$(api_json "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" | python3 -c 'import json,sys; print(json.load(sys.stdin)["merge_base_commit"]["sha"])')"
+          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" --jq '.merge_base_commit.sha')"
           [[ "$merge_base" == "$SOURCE_SHA" ]] || {
             echo "CACHE_SOURCE_ERROR source_sha is not an ancestor of the protected branch" >&2
             exit 2
@@ -230,13 +166,13 @@ jobs:
           make compiled-judge-test
       - id: project_snapshot
         name: Prepare the manual project seed
-        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted'
+        if: github.event_name == 'workflow_dispatch'
         env:
           STRATALINT_CACHE_WRITES: 'true'
           STRATALINT_REPORT_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
       - name: Require a usable manual project seed
-        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted'
+        if: github.event_name == 'workflow_dispatch'
         env:
           READY: ${{ steps.project_snapshot.outputs.project_ready }}
           SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
@@ -246,20 +182,20 @@ jobs:
             exit 1
           fi
       - name: Publish the manual project seed
-        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted' && steps.project_snapshot.outputs.project_ready == 'true'
+        if: github.event_name == 'workflow_dispatch' && steps.project_snapshot.outputs.project_ready == 'true'
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - id: dependency_snapshot
         name: Prepare the manual dependency seed
-        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted'
+        if: github.event_name == 'workflow_dispatch'
         env:
           STRATALINT_CACHE_WRITES: 'true'
           STRATALINT_CHECK_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
       - name: Verify the manual project cache was published
-        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted' && steps.project_snapshot.outputs.project_ready == 'true'
+        if: github.event_name == 'workflow_dispatch' && steps.project_snapshot.outputs.project_ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           CACHE_KEY: ${{ steps.keys.outputs.project_key }}
@@ -272,13 +208,13 @@ jobs:
               exit 1
             }
       - name: Publish the manual dependency seed
-        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted' && steps.dependency_snapshot.outputs.dependency_ready == 'true'
+        if: github.event_name == 'workflow_dispatch' && steps.dependency_snapshot.outputs.dependency_ready == 'true'
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
       - name: Publish the manual toolchain seed
-        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted' && steps.elan.outputs.cache-hit != 'true'
+        if: github.event_name == 'workflow_dispatch' && steps.elan.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
         with:
           path: ~/.elan
