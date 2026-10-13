@@ -128,4 +128,3 @@ SynchronousHighSource(P,U,z,w)=address(synchronousPrefix(P,U,z)++w), and synchro
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations](Operations.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry](TailGeometry.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

@@ -74,4 +74,3 @@ This bound is necessary only. It supplies no subcritical sufficiency criterion, 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply.actual_strict_cost_supply`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply.actual_strict_record_supply`
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

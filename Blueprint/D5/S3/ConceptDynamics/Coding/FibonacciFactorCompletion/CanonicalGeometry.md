@@ -25,4 +25,3 @@ The statement permits equal words and a singleton hull. It does not identify the
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/CanonicalGeometry.canonical_legal_return_hull`
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry](TailGeometry.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

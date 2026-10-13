@@ -166,4 +166,3 @@ This is the scalar interval part of the original39.5 criterion. The concrete own
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry.prepend_legal_tail`
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations](Operations.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

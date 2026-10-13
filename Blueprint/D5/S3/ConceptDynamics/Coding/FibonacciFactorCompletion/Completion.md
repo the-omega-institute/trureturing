@@ -77,4 +77,3 @@ For either actual side and either model, two return lists of the same variable w
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral](Bilateral.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply](ClosedSupply.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply](StrictSupply.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

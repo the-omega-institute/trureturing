@@ -96,4 +96,3 @@ This theorem requires actual source-side witnesses and preserves their fixed-ste
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply](ClosedSupply.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Completion](Completion.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply](StrictSupply.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

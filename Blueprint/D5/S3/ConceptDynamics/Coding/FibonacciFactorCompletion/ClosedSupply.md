@@ -34,4 +34,3 @@ A single positive finite reset length M gives B_M greater than X_H, Y_H and d. I
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply.actual_reset_first_return`
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply](StrictSupply.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

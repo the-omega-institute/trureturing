@@ -35,4 +35,3 @@ Matching-past stability gives continuity in the product of the discrete letter s
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.bilateral_past_state`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.complete_execution_word_parser`
 - Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](../FibonacciLiteralSource.md)

@@ -188,4 +188,3 @@ The finite configuration lower bound uses full actual supply, safety and positio
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations](FibonacciFactorCompletion/Operations.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply](FibonacciFactorCompletion/StrictSupply.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry](FibonacciFactorCompletion/TailGeometry.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource](FibonacciLiteralSource.md)

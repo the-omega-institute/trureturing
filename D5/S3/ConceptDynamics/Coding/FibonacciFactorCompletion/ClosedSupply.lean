@@ -7,7 +7,6 @@
    digest: Owned endpoint equality controls closed supplies and finite actual resets. -/
 
 import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
-import D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 import Mathlib.Algebra.Order.Archimedean.Basic
 import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.Analysis.SpecificLimits.Basic
