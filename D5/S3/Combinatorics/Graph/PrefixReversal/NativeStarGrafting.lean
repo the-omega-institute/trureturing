@@ -303,6 +303,37 @@ private theorem piece_edges_in_chain {V : Type*} {G : SimpleGraph V}
       exact Or.inl he
     · exact Or.inr (Or.inr (ih q hr))
 
+private theorem seam_edge_at {V : Type*} {G : SimpleGraph V}
+    (p : Piece G) (ps : List (Piece G)) (i : ℕ) (hi : i + 1 < (p :: ps).length) :
+    s(((p :: ps)[i]'(by omega)).finish, ((p :: ps)[i + 1]'hi).start) ∈
+      chainEdges p ps := by
+  induction ps generalizing p i with
+  | nil => simp only [List.length_cons, List.length_nil] at hi; omega
+  | cons q qs ih =>
+    cases i with
+    | zero =>
+      simp only [List.getElem_cons_zero, Nat.zero_add, List.getElem_cons_succ,
+        chainEdges, List.mem_append, List.mem_cons]
+      exact Or.inr (Or.inl trivial)
+    | succ i =>
+      have hi' : i + 1 < (q :: qs).length := by
+        simp only [List.length_cons] at hi ⊢
+        omega
+      have he := ih q i hi'
+      simpa only [chainEdges, List.getElem_cons_succ, Nat.succ_eq_add_one] using
+        List.mem_append_right p.walk.edges (List.mem_cons_of_mem _ he)
+
+private theorem finish_of_getLast {V : Type*} {G : SimpleGraph V}
+    (p r : Piece G) (ps : List (Piece G)) (h : (p :: ps).getLast? = some r) :
+    finish p ps = r.finish := by
+  induction ps generalizing p with
+  | nil =>
+    have hpr : p = r := by simpa only [List.getLast?_singleton, Option.some.injEq] using h
+    exact congrArg Piece.finish hpr
+  | cons q qs ih =>
+    apply ih q
+    simpa only [List.getLast?_cons_cons] using h
+
 /-- If an independent old domain meets a new supplier star in exactly one
 complete circle, its actual contact b-edge can be replaced by the complete E
 ring. The resulting actual Hamilton cycle retains every other old edge and
@@ -318,12 +349,16 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
         q.IsHamiltonianCycle ∧
           (∀ u v : {v : Configuration m // U v}, s(u, v) ∈ w.edges →
             s(u, v) ≠ s(x, y) → s(liftOld x.val u, liftOld x.val v) ∈ q.edges) ∧
-          ∀ (i : Fin m), i.val ≠ 0 →
+          (∀ (i : Fin m), i.val ≠ 0 →
             ∀ (u v : {v : Configuration m // GraftDomain U x.val v}) (g : Configuration m),
               Circle (gapAnchor x.val i) u.val → (g = a m ∨ g = b m) →
               v.val = u.val * g →
               s(u.val, v.val) ≠ s(gapAnchor x.val i, gapAnchor x.val i * b m) →
-              s(u, v) ∈ q.edges := by
+              s(u, v) ∈ q.edges) ∧
+          ∀ i : Fin m,
+            ∃ u v : {v : Configuration m // GraftDomain U x.val v},
+              u.val = gapAnchor x.val i * b m ∧ v.val = u.val * c m ∧
+                s(u, v) ∈ q.edges := by
   classical
   let : BEq {v : Configuration m // GraftDomain U x.val v} := instBEqOfDecidableEq
   let f : Fin m → Piece (domainGraph (GraftDomain U x.val)) :=
@@ -405,7 +440,7 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
     have hstart : p.start.val = x.val := by
       rw [hpzero, (hf zero).1]
       simp only [gapAnchor, zero, pow_zero, mul_one]
-    refine ⟨p.start, hstart, q, hq, ?_, ?_⟩
+    refine ⟨p.start, hstart, q, hq, ?_, ?_, ?_⟩
     · intro u v hew hne
       have hr := (hf zero).2.2.2.2.1 rfl u v hew hne
       rw [hqe]
@@ -424,6 +459,37 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
       · rw [← hlist]
         exact List.mem_ofFn.mpr ⟨i, rfl⟩
       · exact hr
+    · intro i
+      by_cases hi : i.val + 1 < m
+      · let next : Fin m := ⟨i.val + 1, hi⟩
+        have he : s((f i).finish, (f next).start) ∈ chainEdges p ps := by
+          have hil : i.val + 1 < (p :: ps).length := by
+            rw [← hlist, List.length_ofFn]
+            exact hi
+          have he := seam_edge_at p ps i.val hil
+          have hgeti : (p :: ps)[i.val]'(by omega) = f i := by
+            simp only [← hlist, List.getElem_ofFn]
+          have hgetnext : (p :: ps)[i.val + 1]'hil = f next := by
+            simp only [← hlist, List.getElem_ofFn, next]
+          rwa [hgeti, hgetnext] at he
+        refine ⟨(f i).finish, (f next).start, (hf i).2.1, ?_, ?_⟩
+        · rw [(hf i).2.1, (hf next).1]
+          simp only [gapAnchor, next, pow_succ, mul_assoc]
+        · rw [hqe]
+          exact List.mem_cons_of_mem _ (List.mem_reverse.mpr he)
+      · have hilast : i = ⟨m - 1, by omega⟩ :=
+          Fin.ext (by change i.val = m - 1; have hlt := i.isLt; omega)
+        have hlast : (p :: ps).getLast? = some (f i) := by
+          rw [← hlist]
+          simpa only [hilast] using (ofFn_endpoints (by omega : 0 < m) f).2
+        have hfinish := finish_of_getLast p (f i) ps hlast
+        have hc : (f i).finish.val * c m = p.start.val := by
+          rw [(hf i).2.1, hstart, hilast]
+          simp only [gapAnchor, mul_assoc]
+          rw [← pow_succ, show m - 1 + 1 = m by omega, hbc, mul_one]
+        refine ⟨(f i).finish, p.start, (hf i).2.1, hc.symm, ?_⟩
+        rw [hqe, hfinish]
+        exact List.mem_cons.mpr (Or.inl Sym2.eq_swap)
 
 #print axioms native_one_contact_graft
 
