@@ -34,6 +34,10 @@ $$\neg \mathit{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Hypergraphs/CircularOrientationEntropy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pelekis-2018-circular-orientation-entropy` (refuted) by `D5/S0/Certificates/Hypergraphs/CircularOrientationEntropy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pelekis-2018-circular-orientation-entropy","declaration_gid":"D5/S0/Certificates/Hypergraphs/CircularOrientationEntropy.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Christos Pelekis (2019). *On the Shannon entropy of the number of vertices with zero in-degree in randomly oriented hypergraphs*. DOI: [10.4418/2019.74.1.8](https://doi.org/10.4418/2019.74.1.8). URL: <https://arxiv.org/abs/1808.04166>.

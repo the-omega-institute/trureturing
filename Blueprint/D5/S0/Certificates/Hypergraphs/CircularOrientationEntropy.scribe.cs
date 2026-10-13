@@ -55,7 +55,10 @@ internal sealed class CircularOrientationEntropyDocument : IScribeDocumentDefini
                     + "2^2·27^27·44^44·8^8 < 24^24·48^48·9^9, together with "
                     + "H=log₂81−log₂(∏c^c)/81, proves a strict entropy advantage. "
                     + "Thus the circular member is not an entropy maximiser."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pelekis-2018-circular-orientation-entropy"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula CircularFormula()
     {
