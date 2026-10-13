@@ -1559,3 +1559,99 @@ def word_weight_bounds_registration :
 #print axioms word_weight_bounds_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal95
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal93
+noncomputable section
+open scoped Matrix.Norms.Operator
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature
+  (fun _ _ z => z) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (side : MemorySide) (n K : ℕ) (d z : ℝ) (hz : 0 ≤ z),
+    ∃ v : CoreVertex side n K d,
+      MemoryEdge side K d v.val .u v.val ∧
+      ∀ k : ℕ, (z^6)^k ≤ pathMass side n K d (r.readout () () z) k
+
+theorem path_mass_zero_one (side : MemorySide) (n K : ℕ) (d : ℝ) :
+    pathMass side n K d 0 1 = 0 := by
+  classical
+  have bounds := path_mass_norm_bounds side n K d 0 le_rfl 1
+  refine le_antisymm ?_ bounds.1
+  simpa [(original_adjacency_zero_continuous side n K d).1] using bounds.2.2
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨_, _, mass⟩ := h .lower 0 0 0 1 (by norm_num)
+  have impossible := mass 1
+  change ((1 : ℝ)^6)^1 ≤ pathMass .lower 0 0 0 0 1 at impossible
+  rw [path_mass_zero_one] at impossible
+  norm_num at impossible
+
+def evidence : Registration sourceArena
+    (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_all_u_cycle) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_all_u_cycle,
+    rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def original_all_u_cycle_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_all_u_cycle)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ z => z) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal93.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal93.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_all_u_cycle_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal93
