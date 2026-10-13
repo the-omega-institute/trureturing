@@ -2503,3 +2503,497 @@ are not completed by this finite ordinary theorem.
 
 ## 117.99 追加锚（本行以下为增补区）
 
+## 118. Signed INITIAL response and unread leaf cones within one entire-row fibre
+
+### 118.1 Original sources, combined output and finite certificates
+
+**Definition 118.1 (the signed INITIAL consumer and its history fibre).**
+Use the authentic entry of [IV Definition 112.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md):
+the retained epoch-zero root Read reports branch, the old root-cut row is
+the constant one-hole row, and the original-root register is still INITIAL.
+The retained relation history is empty and the certified epoch is zero.
+The complete accessible state contains only that stipulated retained input
+and common code and parameters. Its source
+fibre is every finite ordered branch tree
+$D=\{\langle v,w\rangle:v,w\in\mathcal T\}$, with no acquired size,
+index, shape, archive or source law. Authentication and the complete access
+cut remain premises of that entry. Retain the original substitution
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+$$
+
+For INITIAL $u$, keep every occurrence at its original address, with
+counting inner product, $N_u=|V_u|$, and the closed unit-edge operator
+
+$$
+(L_ug)(p)=\sum_{q\sim p}(g(p)-g(q)),\qquad
+\langle g,L_ug\rangle=\sum_{\{p,q\}\in E_u}|g(p)-g(q)|^2.
+$$
+
+There is no root killing or boundary grounding. Define exactly
+
+$$
+f_u(p)=
+\begin{cases}
++1,&p\text{ is an INITIAL alpha leaf},\\
+-1,&p\text{ is an INITIAL beta leaf},\\
+0,&p\text{ is an INITIAL branch occurrence},
+\end{cases}
+\qquad
+R_u(t)=\bigl[e^{-tN_uL_u}f_u\bigr](\varepsilon).
+\tag{118.1}
+$$
+
+The constant mode is included in this response. Fix common rationals
+$t>0$ and $0<\epsilon<1/2$. The combined task returns, at the same
+absorbing Stop, a rational $z$ and the entire INITIAL row
+
+$$
+\mathsf{Row}(u)=
+\bigl((L,R),\langle\square_1,\square_2\rangle,\pi(u)\bigr),\qquad
+\pi(u)=
+\begin{cases}
+\{\{1,2\}\},&u|_L=u|_R,\\
+\{\{1\},\{2\}\},&u|_L\ne u|_R,
+\end{cases}
+\tag{118.2}
+$$
+
+with $|z-R_u(t)|\le\epsilon$. The partition compares entire ordered
+subtrees. Actual later updates change neither INITIAL target.
+
+Fix any deterministic effective controller $A$ with the common entry,
+unrestricted finite-address four-valued Reads, serial same-register
+Apply $\rho$, and Stop, under any fixed common guard of IV Contract 112.1a.
+The original guard accepts every Apply without a cap. A separately declared
+guard is a total effective $G(\gamma,e,H)$ depending only on the common
+parameter, actual accepted epoch and complete chronological native history;
+acceptance executes exactly $\rho$ and increments $e$, refusal changes
+neither register nor epoch. Every status, repeated or absent Read and its
+literal address remain observations. Local effective work uses only common
+input and acquired history. There are no further source-dependent status,
+timing or scheduler outputs. Sourcewise finite termination imposes no
+uniform update, work or stopping-horizon bound.
+
+For an actual finite terminal history $H$ and an entire row $r$, let
+
+$$
+\mathcal C_{A,G,H}(r)=
+\{v\in D:A\text{ has that same terminal native history on }v,
+\ \mathsf{Row}(v)=r\},
+\qquad
+\operatorname{rad}_t(H,r)=
+\inf_{z\in\mathbb R}\sup_{v\in\mathcal C_{A,G,H}(r)}|z-R_v(t)|.
+\tag{118.3}
+$$
+
+All common parameters are fixed in this definition. Equal histories from
+the same entry also give equal local control, local work and terminal
+output. Restricting this mathematical fibre to $r$ supplies no row oracle
+to $A$. A semantic $\epsilon$ certificate for $(H,r,z)$ means the full
+universal inequality in (118.3) for that $z$, together with correctness of
+the entire row on the unrestricted history fibre. A leaf cone is covered
+iff an actual requested word has that INITIAL leaf address as a prefix;
+an absent reply can cover a cone in this sense without identifying its
+INITIAL subtree. The separately paid pre-entry root Read covers no leaf
+of a branch source.
+
+### 118.2 A fixed-context perfect graft with the original signed field
+
+**Theorem 118.2 (signed perfect-graft response limit).** Let $u\in D$,
+let $x$ be any INITIAL leaf, and write $u=C[a]$ with a single hole at
+that occurrence. For $\sigma\in\{+1,-1\}$, let $B_m^\sigma$ be the
+perfect ordered binary tree of depth $m\ge0$, whose $2^m$ leaves are
+alpha for $\sigma=+1$ and beta for $\sigma=-1$. Put
+$v_m^\sigma=C[B_m^\sigma]$. Let $O=V_u\setminus\{x\}$ be the fixed
+outside vertices, with their unchanged labels, and set
+
+$$
+\begin{aligned}
+k&=|O|=N_u-1, & b&=\sum_{p\in O}f_u(p),\\
+D_C&=\sum_{p\in O}\operatorname{dist}(p,x),
+&K_C&=\max(2D_C,2k+6),\\
+N_m&=k+2^{m+1}-1,
+&c_C&=|b|+(k-1)/2.
+\end{aligned}
+\tag{118.4}
+$$
+
+Distances use the fixed context edges including the attachment to $x$;
+$k\ge2$. For every fixed real $t>0$ and either sign,
+
+$$
+\left|R_{v_m^\sigma}(t)-\frac{\sigma}{2}\right|
+\le \sqrt{N_m}\,e^{-tN_m/K_C}+\frac{c_C}{N_m}
+\longrightarrow0.
+\tag{118.5}
+$$
+
+The context is fixed while $m$ tends to infinity. The field, normalization,
+all occurrences and operator in (118.5) are precisely (118.1) on each
+finite INITIAL $v_m^\sigma$.
+
+Proof. Graph automorphisms within the perfect graft fix every
+outside occurrence and commute with the original closed Laplacian. They
+fix $f_{v_m^\sigma}$ too. Thus the heat trajectory belongs to the invariant
+subspace $\mathscr S_m$ whose outside values are unrestricted and whose
+value $g_i$ is constant on graft level $i$. These are symmetries of a
+finite operator used in a proof; no permutation of ordered sources is a
+native action. Level $i$ has $2^i$ separate occurrences and the next-level
+interface has $2^{i+1}$ separate unit edges. Accordingly write the actual
+energy as $E_{\rm out}+E_{\rm rad}$, where $E_{\rm out}$ includes the
+parent-to-graft-root attachment edge and
+
+$$
+E_{\rm rad}=\sum_{j=0}^{m-1}2^{j+1}|g_j-g_{j+1}|^2.
+$$
+
+Set $a_j=2^{(j+1)/2}(g_j-g_{j+1})$ and extend this finite sequence by
+zero. Telescoping gives
+
+$$
+2^{i/2}(g_i-g_m)=
+\sum_{r\ge0}2^{-(r+1)/2}a_{i+r},\qquad 0\le i\le m.
+$$
+
+Each shift is an $\ell^2$ contraction. The triangle inequality and
+$\sum_{r\ge0}2^{-(r+1)/2}=1+\sqrt2$ therefore give
+
+$$
+\sum_{i=0}^m2^i|g_i-g_m|^2
+\le(3+2\sqrt2)E_{\rm rad}<6E_{\rm rad}
+\quad\text{if }E_{\rm rad}>0.
+\tag{118.6}
+$$
+
+The non-strict bound with constant six also holds when the energy is zero,
+including $m=0$. Weighted Cauchy--Schwarz gives
+$|g_0-g_m|^2\le(\sum_{j=0}^{m-1}2^{-(j+1)})E_{\rm rad}\le E_{\rm rad}$.
+The unique context path from $p\in O$ to $x$ uses only $E_{\rm out}$
+edges. Path Cauchy--Schwarz followed by
+$|g(p)-g_m|^2\le2|g(p)-g_0|^2+2|g_0-g_m|^2$ yields
+
+$$
+\sum_{p\in O}|g(p)-g_m|^2
+\le2D_C E_{\rm out}+2kE_{\rm rad}.
+$$
+
+The counting mean $\bar g$ minimizes squared deviation from constants.
+Combining these inequalities proves, for every $g\in\mathscr S_m$,
+
+$$
+\sum_{p\in V_{v_m^\sigma}}|g(p)-\bar g|^2
+\le K_C\langle g,L_{v_m^\sigma}g\rangle.
+\tag{118.7}
+$$
+
+The restriction of this finite real symmetric nonnegative operator to
+$\mathscr S_m$ is self-adjoint, contains constants, and has no further
+zero mode because the original graph is connected. Its nonconstant
+eigenvalues are consequently at least $1/K_C$. Finite spectral calculus
+gives
+
+$$
+\|e^{-tN_mL}f-\bar f\mathbf1\|_2
+\le e^{-tN_m/K_C}\|f-\bar f\mathbf1\|_2
+\le\sqrt{N_m}\,e^{-tN_m/K_C}.
+$$
+
+Here $L=L_{v_m^\sigma}$, $f=f_{v_m^\sigma}$, and all norms count
+every occurrence. Root evaluation has counting norm one. The retained
+constant contribution is exactly
+
+$$
+\bar f=\frac{b+\sigma2^m}{N_m},\qquad
+\left|\bar f-\frac{\sigma}{2}\right|
+=\frac{|b-\sigma(k-1)/2|}{N_m}\le\frac{c_C}{N_m}.
+$$
+
+This proves (118.5). It is an invariant-subspace use of the mature
+variational and reversible heat-decay method of Levin--Peres,
+[*Markov Chains and Mixing Times*, second edition, Lemma 13.7,
+Remark 13.8 and Lemma 20.5](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf),
+with the displayed actual counting weights and edge multiplicities.
+For rational $t$ and any rational $\delta>0$, a wholly finite sufficient
+error condition is
+$N_m>(2K_C^2/t^2+c_C)/\delta$: the elementary bound
+$e^s\ge s^2/2$ gives
+$\sqrt{N_m}e^{-tN_m/K_C}\le2K_C^2/(t^2N_m)$.
+Thus choosing a witness requires no infinite source.
+
+The sector qualification is essential. For $m\ge1$, take a vector equal
+to $+1$ on one child subtree of the graft root, $-1$ on the other, and
+zero at that root and outside. It has counting mean zero, energy two
+and squared norm $2(2^m-1)$. Its Rayleigh quotient is
+$1/(2^m-1)$, bounding the full-tree gap above and tending to zero.
+This vector is outside $\mathscr S_m$. No depth-uniform full-tree gap,
+uniformity over changing contexts, or shrinking-$t$ limit is asserted.
+$\square$
+
+### 118.3 The same terminal history and the same entire unequal row
+
+**Theorem 118.3 (unread-cone certificate radius).** Fix any common rational
+$t>0$, controller $A$ and guard $G$ of Definition 118.1. On any actual
+finite terminal run on $u\in D$ with unequal root children, if an INITIAL
+leaf cone is unread, then
+
+$$
+\operatorname{rad}_t(H,\mathsf{Row}(u))\ge\frac12.
+\tag{118.8}
+$$
+
+This includes every literal address, arbitrary finite serial Apply
+histories and every common history-only guard of IV Contract 112.1a.
+
+Proof. Let $x$ be unread and write $u=C[a]$ as above. For any finite
+filling $w$ and every accepted epoch $e\ge0$, substitution preserves
+the context brackets and acts independently below its original leaf
+prefixes. Thus $\rho^e(C[w])$ has the same outside branches and the
+same independently substituted outside leaf blocks. At a requested
+address $p$ not prefixed by $x$, its actual four-valued reply is independent
+of $w$. This includes paths ending above $x$, paths in another leaf
+block, repeated calls and paths reporting absent. It extends precisely
+the substitution locality of IV Lemma 112.7 from a label flip to a
+whole filling in that one cone.
+
+Induct through every actual prefix of the finite run on $u$. The same
+complete entry and equal local state choose the same next effective
+computation and action. All its Reads lie outside the cone of $x$, so
+at the same accepted epoch they give the same actual replies on $C[w]$.
+Each Apply attempt has identical $(\gamma,e,H_{\rm prefix})$, hence
+identical status under the fixed $G$. Both registers advance by exactly
+one $\rho$ or neither advances. The same local state reaches the same
+Stop with the same output and no executed suffix. There is no bound on
+the number of these updates other than finiteness of this actual run.
+
+Choose $w=B_m^+$ and $B_m^-$ from Theorem 118.2. For all sufficiently
+large $m$, the root child containing $x$ has more occurrences than the
+unchanged other root child. They are therefore unequal for both signs.
+Both resulting finite sources retain exactly the entire row of $u$:
+reached list $(L,R)$, numbered exterior
+$\langle\square_1,\square_2\rangle$, and the two singleton partition
+classes. The count comparison proves a property of competitors; it is
+never input advice. Both graft sequences are members of
+$\mathcal C_{A,G,H}(\mathsf{Row}(u))$ and, by (118.5), their responses
+tend to $+1/2$ and $-1/2$. For every real $z$ it follows that
+
+$$
+\sup_{v\in\mathcal C_{A,G,H}(\mathsf{Row}(u))}|z-R_v(t)|
+\ge\max(|z-1/2|,|z+1/2|)\ge1/2.
+$$
+
+Taking the infimum proves (118.8). This is the ordinary two-compatible-input
+half-diameter argument, without assuming an attained supremum or an
+infinite admissible source. More explicitly, for each fixed
+$0<\epsilon<1/2$ choose a finite common $m$ meeting the row condition
+and making (118.5) smaller than $1/2-\epsilon$. The two finite signed
+targets differ by more than $2\epsilon$, although their terminal history,
+entire INITIAL row and output agree. Grafting is a construction of
+alternative INITIAL sources in $D$, not an operation executed on $u$;
+$m$ is not its accepted epoch. $\square$
+
+### 118.4 Simultaneous acquisition necessity and the reused finite consumer
+
+**Corollary 118.4 (all-source combined leaf coverage and paid coordinates).**
+For every fixed common rational $t>0$, rational $0<\epsilon<1/2$,
+and every guard $G$ of IV Contract 112.1a, every deterministic effective
+controller terminating correctly on all of $D$ for (118.1)--(118.2)
+at the same Stop covers every INITIAL leaf on each actual terminal run.
+Writing $l(u)$ for the INITIAL leaf count and
+$d_{\rm leaf}(u)=\sum_{x\text{ INITIAL leaf}}|x|$, that one run satisfies
+simultaneously
+
+$$
+q_A(u)\ge l(u),\qquad \ell_A(u)\ge d_{\rm leaf}(u).
+\tag{118.9}
+$$
+
+Here $q_A$ counts all post-entry raw Reads, repeated and absent included,
+and $\ell_A$ sums their literal word lengths. The genuine pre-entry
+root contributes one additional raw Read and zero literal length.
+
+For the unequal sources $u_h=\langle\alpha,B_h^+\rangle$, $h\ge1$,
+an all-domain row-only controller can return the entire row after two
+post-entry epoch-zero child Reads, with literal length two. Every correct
+combined controller instead has, on these same inputs,
+
+$$
+q_A(u_h)\ge1+2^h,\qquad
+\ell_A(u_h)\ge1+(h+1)2^h.
+\tag{118.10}
+$$
+
+There is a sourcewise finite sufficient combined controller using the
+existing epoch-zero acquisition and description consumer once, with
+post-entry $(q,\text{Apply attempts},\ell)=(N_u-1,0,\Lambda_u)$ when
+the authentic retained root report supplies the first traversal event,
+where $\Lambda_u=\sum_{p\in V_u}|p|$. Its total raw Reads and cumulative
+same-immutable-source distinct addresses are both $N_u$. These native
+Read and literal-length upper coordinates are within factor two of
+(118.9). No matching price is claimed for other resources.
+
+Proof. On an unequal-row input, an unread cone contradicts Theorem 118.3
+and correctness on its two finite competitors. On an equal-row input
+$u=\langle s,s\rangle$, reuse the one-leaf flip and actual-prefix replay
+in the proof of IV Theorem 112.8, with IV Lemma 112.7. Flipping one
+unread leaf label changes exactly one ordered child subtree, hence changes
+the INITIAL partition while preserving the terminal history. This
+argument applies to any finite $s$; the printed numerical statement of
+IV Theorem 112.8 is on its equal perfect family $U_h$. The equal-row
+case needs no additional heat argument.
+
+INITIAL leaves are prefix-free, so a literal Read belongs to at most
+one leaf cone, even after arbitrary serial updates. Select one covering
+call for each leaf on this same actual run. They are distinct calls and
+each pays length at least $|x|$, proving both (118.9) coordinates together.
+Apply attempts, status observations and local work are separate from
+Reads; no update combines two INITIAL cones into one Read.
+
+On $u_h$, epoch-zero Read$(L)$ and Read$(R)$ report alpha and branch.
+That mismatch certifies unequal entire subtrees, hence every field of
+(118.2). A common row-only policy uses this test and the existing genuine
+traversal as fallback when the two replies do not already decide equality
+or inequality. It is correct on all branch sources without a family
+selector. There are $1+2^h$ INITIAL leaves, with depth sum
+$1+(h+1)2^h$, giving (118.10) for the combined task. Common choices such
+as $t=1,\epsilon=1/4$ work across every $h$ and every lawful guard.
+
+For sufficiency reuse [IV Definition 112.9 and Theorem
+112.10](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md)
+and Definition 115.7 above,
+specifically [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)'s
+four-valued immutable readout, reply-driven frontier and report-only
+restoration. With the authentic retained root branch event as the
+already executed first event of that traversal, its pending frontier is
+$L,R$. Continue its genuine epoch-zero suffix without Apply, restore
+INITIAL from acquired reports, and compare its two ordered children.
+Its Boolean third-substitution-image Strategy and distinct-address
+tariff retain their original task and scope; this is a separate consumer
+of the acquisition phase. The zero-Apply sufficient policy is legal for
+every guard and places no restriction on lower-bound competitors.
+The owner's unchanged empty-phase root-first schedule is also sufficient;
+it actually repeats the root and has $N_u$ post-entry Reads and $N_u+1$
+total raw Reads, with cumulative distinct addresses $N_u$. Root reuse
+is neither a refund nor a claim that this latter schedule skipped a call.
+Old-version reports are not caches for later substituted versions.
+
+The binary-tree identities
+
+$$
+N_u=2l(u)-1,\qquad
+\Lambda_u=2d_{\rm leaf}(u)-2l(u)+2
+\tag{118.11}
+$$
+
+follow by structural recursion, counting the added prefix on every child
+occurrence or leaf. Thus $N_u-1<2l(u)$ and
+$\Lambda_u\le2d_{\rm leaf}(u)$ on $D$. These are coordinates of one
+combined acquisition, with no additive second heat traversal.
+
+The restored INITIAL description supplies $N_u,L_u,f_u$ to the paid
+finite-matrix consumer of Definition 115.7. For completeness of its
+finite error certificate, use the mature Poisson matrix expansion of
+[Levin--Peres, §20.1, equations (20.3)--(20.8)](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf).
+The actual maximum degree is three, so $P=I-L_u/3$ is nonnegative
+row-stochastic and $\|P^jf_u\|_\infty\le1$. With $\theta=3tN_u$,
+
+$$
+R_u(t)=e^{-\theta}\sum_{j\ge0}\frac{\theta^j}{j!}
+                 (P^jf_u)(\varepsilon).
+$$
+
+After acquisition choose finite $J$ with
+$\theta/(J+2)\le1/2$ and $2\theta^{J+1}/(J+1)!\le\epsilon/2$.
+Let $C_J=\sum_{j=0}^J\theta^j/j!$ and
+$y_J=\sum_{j=0}^J(\theta^j/j!)(P^jf_u)(\varepsilon)$.
+Successive tail ratios are at most $1/2$, so the omitted contribution
+has absolute value at most $\epsilon/2$, using $e^{-\theta}\le1$.
+Choose finite $M$ with $\theta/(M+2)\le1/2$ and
+$r_M=2\theta^{M+1}/(M+1)!\le\epsilon/(2C_J)$, and put
+$T_M=\sum_{j=0}^M\theta^j/j!$. Positive Taylor sums and the same
+geometric remainder give the rational enclosure
+
+$$
+\frac1{T_M+r_M}\le e^{-\theta}\le\frac1{T_M},\qquad
+\frac1{T_M}-\frac1{T_M+r_M}\le r_M.
+$$
+
+Since $|y_J|\le C_J$, the rational output $z=y_J/T_M$ has
+$|z-R_u(t)|\le\epsilon$. Both searches have rational stopping tests
+and terminate because the factorial tails tend to zero for fixed
+acquired $\theta$. This is deterministic arithmetic, with no sampling
+operation. Compute the full row and this output before the one Stop.
+The completed authentic epoch-zero traversal fixes the finite ordered
+INITIAL source uniquely on its actual history fibre; its finite reports
+and the rational inequalities therefore supply a finite semantic
+certificate. Coverage alone, especially by absent or later-epoch Reads,
+is only a necessary condition and supplies no such reconstruction.
+
+Sparse matrix-vector evaluation and enclosure construction take
+$O(N_u(J+1)+M+1)$ exact rational arithmetic operations after restoration.
+This count is not bit work: each numerator, denominator, intermediate,
+precision search and output encoding has its actual finite bit cost.
+Source acquisition, literal-address generation, report restoration,
+ordered comparison, control, retained syntax/history, numerical vectors,
+scratch storage and output storage remain paid separate coordinates.
+$J,M$ and these widths can grow with the acquired source and required
+precision; they are not initial advice. This establishes sourcewise
+finite sufficiency, not an optimal work/storage bound, implementation
+tariff or physical duration. $\square$
+
+### 118.5 Mathematical scope and supplier correspondence
+
+**Mathematical citation 118.5 (the uncovered relation and its boundaries).**
+The repo-derived addition is (118.5) in a fixed original context and
+its same-entire-unequal-row history consequence (118.8), giving (118.9)
+on every branch source for the combined service. IV Theorem 112.8 owns
+the equality-input bill; IV Theorem 112.10 and V Definition 115.7 own
+genuine acquisition/restoration and acquired-description evaluation.
+Those supplies establish sufficiency after acquisition, while the
+unequal two-Read family in (118.10) distinguishes this additional
+fixed-accuracy necessity. Path and weighted Cauchy--Schwarz, finite
+spectral calculus, compatible-input diameter and Poisson evaluation
+are mature intermediate methods, not additional discoveries. No
+exhaustive literature-absence or worldwide-priority claim is made.
+
+The hypotheses and source correspondence come from [Native Leaf Depth
+Contact, Definition 1.1, Assumption 1.2 and Definition 1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md),
+[Acquired Relation History, Definition 1.1 and Assumption 1.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md),
+and IV Contract 112.1a. This is a deterministic worst-case certificate
+statement over original sources, not an average-error statement for a
+supplied probability law. No finite-certificate impossibility on all
+histories follows: the paid full traversal supplies one sourcewise.
+At $t=0$ every branch-root signed response is zero, and the graft
+argument gives no heat acquisition obstruction. The argument makes
+no conclusion for $\epsilon\ge1/2$ and proves no globally sharp threshold.
+
+[Pyramid Correlation and Native Continuation, Definition 24.4 and
+Theorem 24.5](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)
+presuppose a known finite classical law, fixed cut, distinct nonempty
+future characters and nonzero coefficients. Their $d$-bit branch record
+excludes composition baseline and total machine state. It neither
+acquires arbitrary unknown trees nor transfers a storage bound to this
+task. [Predictive Quotient, Definition 8.1 and Theorems 8.2--8.3](FIB_LEGAL_EDGE_LOAD_PREDICTIVE_QUOTIENT_UNIFILAR_ERASURE_TAIL_AND_STRICT_SCOPE.md)
+fix one twelve-state stochastic law and the target $Q_0$;
+[Intrinsic Null Kernel, Definition 1.2 and Theorem 2.2](FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md)
+presuppose a specified finite producer for the collar test. Neither
+supplies a tree archive, original-source law, permission or free native
+certificate, and neither is a premise of the graft proof.
+
+The normalized real $t$, actual accepted source epoch, native chronology
+and physical duration remain different types, as in §117.5. Constructor
+Read does not prepare the signed field, actuate closed heat, measure a
+real amplitude or authorize transport. Root/epoch authentication, access
+isolation, field preparation, actuation/readout, physical clock or metric,
+spatial dimension and stable matter require their own realization bridges.
+The ordinary mathematical proofs assert no Lean/kernel verification or
+physical realization. The analytical transport scope of Theorem 117.5
+and its point-functional limitation are unchanged; (118.8) is an
+acquisition obstruction, not that theorem's uniform point-readout upgrade.
+These results leave the complete source-to-spatial-propagation programme
+and its physical obligations unresolved.
+
+## 117.99 追加锚（本行以下为增补区）
+
