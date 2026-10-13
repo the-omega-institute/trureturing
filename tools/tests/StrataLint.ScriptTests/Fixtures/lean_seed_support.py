@@ -54,7 +54,7 @@ class PartitionFixture:
 
 def prepare_release_report(root):
     """Canonical synthetic bundle for Release transport's existing strict reader."""
-    for directory, names in (("tools/lean-inspector", ("reuse.py", "publication.py", "materials.py")),
+    for directory, names in (("tools/lean-inspector", ("reuse.py", "publication.py", "materials.py", "fib_analysis.py")),
                              ("tools/scripts/report", ("lean-report-selection.py", "lean-report-input.sh"))):
         target = root / directory
         target.mkdir(parents=True, exist_ok=True)
