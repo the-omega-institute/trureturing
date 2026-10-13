@@ -150,6 +150,9 @@ jobs:
           heartbeat() {
             while :; do
               printf 'CACHE_PRODUCER_HEARTBEAT %s\n' "$(date -u +%FT%TZ)"
+              free -m || true
+              ps -eo pid,ppid,pgid,rss,comm --sort=-rss | head -12 || true
+              sudo -n dmesg --ctime 2>/dev/null | rg -i 'out of memory|killed process|oom|shutdown' | tail -8 || true
               sleep 60
             done
           }
@@ -162,7 +165,8 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
-          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+          source tools/scripts/lib/resource-observation-lib.sh
+          resource_observe_run_periodic make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
           make compiled-judge-test
       - id: project_snapshot
         name: Prepare the manual project seed
