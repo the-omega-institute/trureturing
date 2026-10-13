@@ -335,7 +335,7 @@ def instrumentRealization
     QuantumChannel (Qubit × Qubit) (Qubit × Qubit) :=
   (common_flag_instrument_complete.{0,0,0,0,0,0}.1 Γ).choose
 
-private theorem realization_entry
+theorem realization_entry
     (Γ : FlagInstrument (S := Qubit) (J := Qubit) (A := Qubit) (B := Qubit))
     (X : CStarMatrix (Qubit × Qubit) (Qubit × Qubit) ℂ)
     (j k a b : Qubit) :
@@ -351,7 +351,7 @@ private theorem realization_entry
 def diagonalInput (c : Qubit → ℂ) : Qubit × Qubit → ℂ :=
   fun p => if p.1 = p.2 then c p.1 else 0
 
-private theorem diagonal_input_norm (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) :
+theorem diagonal_input_norm (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) :
     star (diagonalInput c) ⬝ᵥ diagonalInput c = 1 := by
   have hh : (∑ j, (Complex.normSq (c j) : ℂ)) = 1 := by exact_mod_cast hc
   simpa [diagonalInput, dotProduct, Fintype.sum_prod_type,
