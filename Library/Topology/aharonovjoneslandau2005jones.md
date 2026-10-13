@@ -43,4 +43,9 @@ Jones identification, Laurent integrality and the ABF modulo-3 target
 remain separate proof obligations. The cited quantum algorithm and
 its complexity guarantees are not implemented by this algebraic bridge.
 
+## Verified locator
+
+Primary source: https://arxiv.org/abs/quant-ph/0511096v2.
 Primary HTML: https://arxiv.org/html/quant-ph/0511096v2.
+Inspected scope: Definition 2.5, Lemma 2.2/equation (4), and
+Definitions 3.2–3.3/Claim 3.6; no geometric closure identification claimed.
