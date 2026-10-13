@@ -439,7 +439,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4000
 set_option backward.isDefEq.respectTransparency false
-private theorem receiver_entry {M A B : Type}
+theorem receiver_entry {M A B : Type}
     [Fintype M] [DecidableEq M] [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (D : QuantumChannel A B)
     (X : CStarMatrix (M × A) (M × A) ℂ) (p q : M × B) :
@@ -777,7 +777,7 @@ private theorem rout_entry (X : CStarMatrix (Qubit × Qubit) (Qubit × Qubit) �
 private def jointPhase : QuantumChannel Output Output :=
   phaseChannel (fun p => flagSign p.1 * flagSign p.2.2) (fun p => by
     rw [mul_pow, sign_square, sign_square, one_mul])
-private theorem joint_phase_entry (X : CStarMatrix Output Output ℂ) (p q : Output) :
+theorem joint_phase_entry (X : CStarMatrix Output Output ℂ) (p q : Output) :
     jointPhase.toCompletelyPositiveMap X p q =
       ((flagSign p.1 * flagSign p.2.2 : ℝ) : ℂ) * X p q *
         ((flagSign q.1 * flagSign q.2.2 : ℝ) : ℂ) := phase_entry _ _ _ _ _
@@ -907,7 +907,7 @@ private theorem target_joint_invariant {F : Type} [Fintype F] [DecidableEq F]
       ((flagSign n * flagSign b : ℝ) : ℂ) = _
   simp_rw [target_entry]
   fin_cases m <;> fin_cases a <;> fin_cases n <;> fin_cases b <;> simp [xi, flagSign]
-private theorem flag_average_state {F : Type} [Fintype F] [DecidableEq F]
+theorem flag_average_state {F : Type} [Fintype F] [DecidableEq F]
     (D : QuantumChannel (Qubit × Qubit) (Qubit × Qubit))
     (X : CStarMatrix (F × Qubit) (F × Qubit) ℂ) :
     referenceAction (decoded ell beta gamma w hl hu hb hw hmax (flagSymmetrizedDecoder D)) X =

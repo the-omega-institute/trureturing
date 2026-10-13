@@ -207,7 +207,7 @@ def outputLabelPinch {F : Type*} [Fintype F] [DecidableEq F]
     CStarMatrix (F × (J × B)) (F × (J × B)) ℂ :=
   CStarMatrix.ofMatrix fun p q => if p.2.1 = q.2.1 then Y p q else 0
 
-private theorem decoder_reference {F : Type*} [Fintype F] [DecidableEq F]
+theorem decoder_reference {F : Type*} [Fintype F] [DecidableEq F]
     (Γ : FlagInstrument (S := S) (J := J) (A := A) (B := B))
     (X : CStarMatrix (F × (S × A)) (F × (S × A)) ℂ) :
     referenceAction Γ.decoder X = instrumentReference Γ X := by

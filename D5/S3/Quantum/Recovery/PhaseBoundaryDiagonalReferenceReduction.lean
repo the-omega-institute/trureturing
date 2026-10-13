@@ -580,5 +580,319 @@ theorem diamond_eq_matched_spectral_max :
     le_csSup hbd (Or.inr ⟨2,weightState t ht0 ht1,rfl⟩)
   linarith
 
+/-- Extract one common instrument from the actual lawful flag average. -/
+def symInstrument (Γ : Instrument) : Instrument :=
+  FlagInstrument.extract (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ))
+
+private theorem sym_source_entry {F : Type} [Fintype F] [DecidableEq F]
+    (X : CStarMatrix (F × Qubit) (F × Qubit) ℂ)
+    (f g : F) (m n k l a b : Qubit) :
+    (referenceAction (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) X
+      (f,(m,(k,a))) (g,(n,(l,b))) =
+    (1/2 : ℂ) * (referenceAction (decoded ell beta gamma w hl hu hb hw hmax Γ) X
+      (f,(m,(k,a))) (g,(n,(l,b))) +
+      ((flagSign m * flagSign a : ℝ) : ℂ) *
+        referenceAction (decoded ell beta gamma w hl hu hb hw hmax Γ) X
+          (f,(m,(k,a))) (g,(n,(l,b))) * ((flagSign n * flagSign b : ℝ) : ℂ))) ∧
+    referenceAction (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) X
+      (f,(m,(k,a))) (g,(n,(l,b))) =
+    referenceAction ((receiverChannel (M := Qubit)
+      (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ))).comp
+        (sourceChannel ell beta gamma w hl hu hb hw hmax)) X
+          (f,(m,(k,a))) (g,(n,(l,b))) := by
+  let S := PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ)
+  let Z : CStarMatrix ((F × Qubit) × (Qubit × Qubit))
+      ((F × Qubit) × (Qubit × Qubit)) ℂ := CStarMatrix.ofMatrix fun p q =>
+    referenceAction (sourceChannel ell beta gamma w hl hu hb hw hmax) X
+      (p.1.1,(p.1.2,p.2)) (q.1.1,(q.1.2,q.2))
+  have hZ : FlagDiagonal Z := by
+    rintro ⟨⟨r,u⟩,s,c⟩ ⟨⟨t,v⟩,o,d⟩ hso
+    change referenceAction (sourceChannel ell beta gamma w hl hu hb hw hmax) X
+      (r,(u,(s,c))) (t,(v,(o,d))) = 0
+    rw [source_reference]
+    simp [omega,hso]
+  have hChosen : referenceAction (instrumentRealization (symInstrument Γ)) Z =
+      referenceAction (symInstrument Γ).decoder Z := by
+    rw [decoder_reference]
+    exact (common_flag_instrument_complete.{0,0,0,0,0,0}.1 (symInstrument Γ)).choose_spec.2
+      (F × Qubit) Z
+  have hExtract := common_flag_instrument_complete.{0,0,0,0,0,0}.2 S (F × Qubit) Z hZ
+  have hAct := hChosen.trans hExtract
+  have hActEntry := congrArg (fun Y => Y ((f,m),(k,a)) ((g,n),(l,b))) hAct
+  have hDecoded : referenceAction (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) X
+      (f,(m,(k,a))) (g,(n,(l,b))) =
+      if k = l then referenceAction ((receiverChannel (M := Qubit) S).comp
+        (sourceChannel ell beta gamma w hl hu hb hw hmax)) X
+          (f,(m,(k,a))) (g,(n,(l,b))) else 0 := by
+    change referenceAction (receiverChannel (M := Qubit) (instrumentRealization (symInstrument Γ)))
+      (referenceAction (sourceChannel ell beta gamma w hl hu hb hw hmax) X)
+      (f,(m,(k,a))) (g,(n,(l,b))) =
+      if k = l then referenceAction (receiverChannel (M := Qubit) S)
+        (referenceAction (sourceChannel ell beta gamma w hl hu hb hw hmax) X)
+          (f,(m,(k,a))) (g,(n,(l,b))) else 0
+    rw [PhaseBoundarySourceModel.receiver_reference, PhaseBoundarySourceModel.receiver_reference]
+    exact hActEntry
+  have hAverage := PhaseBoundaryReferenceReduction.flag_average_state
+    ell beta gamma w hl hu hb hw hmax (instrumentRealization Γ) X
+  have hAverageEntry := congrArg (fun Y => Y (f,(m,(k,a))) (g,(n,(l,b)))) hAverage
+  simp only [CStarMatrix.smul_apply,CStarMatrix.add_apply,smul_eq_mul] at hAverageEntry
+  rw [PhaseBoundaryReferenceReduction.receiver_entry,
+    PhaseBoundaryReferenceReduction.joint_phase_entry] at hAverageEntry
+  have hAvg : referenceAction ((receiverChannel (M := Qubit) S).comp
+      (sourceChannel ell beta gamma w hl hu hb hw hmax)) X
+        (f,(m,(k,a))) (g,(n,(l,b))) =
+      (1/2 : ℂ) * (referenceAction (decoded ell beta gamma w hl hu hb hw hmax Γ) X
+        (f,(m,(k,a))) (g,(n,(l,b))) +
+        ((flagSign m * flagSign a : ℝ) : ℂ) *
+          referenceAction (decoded ell beta gamma w hl hu hb hw hmax Γ) X
+            (f,(m,(k,a))) (g,(n,(l,b))) * ((flagSign n * flagSign b : ℝ) : ℂ)) := hAverageEntry
+  have hEq : referenceAction (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) X
+      (f,(m,(k,a))) (g,(n,(l,b))) =
+    (1/2 : ℂ) * (referenceAction (decoded ell beta gamma w hl hu hb hw hmax Γ) X
+      (f,(m,(k,a))) (g,(n,(l,b))) +
+      ((flagSign m * flagSign a : ℝ) : ℂ) *
+        referenceAction (decoded ell beta gamma w hl hu hb hw hmax Γ) X
+          (f,(m,(k,a))) (g,(n,(l,b))) * ((flagSign n * flagSign b : ℝ) : ℂ)) := by
+    rw [hDecoded]
+    by_cases hkl : k = l
+    · rw [if_pos hkl,hAvg]
+    · rw [if_neg hkl]
+      have hz : referenceAction (decoded ell beta gamma w hl hu hb hw hmax Γ) X
+          (f,(m,(k,a))) (g,(n,(l,b))) = 0 := by
+        change referenceAction (receiverChannel (M := Qubit) (instrumentRealization Γ))
+          (referenceAction (sourceChannel ell beta gamma w hl hu hb hw hmax) X)
+            (f,(m,(k,a))) (g,(n,(l,b))) = 0
+        rw [PhaseBoundarySourceModel.receiver_reference,realization_entry,if_neg hkl]
+      rw [hz]
+      ring
+  exact ⟨hEq,hEq.trans hAvg.symm⟩
+
+private def evenEmbedding (p : Qubit × Qubit) : Qubit × Output := (p.1,(p.2,(p.1,p.2)))
+private def evenIsometry : Matrix (Qubit × Output) (Qubit × Qubit) ℂ :=
+  fun p t => if p = evenEmbedding t then 1 else 0
+private theorem even_isometry : evenIsometryᴴ * evenIsometry = 1 := by
+  ext ⟨j,a⟩ ⟨k,b⟩
+  fin_cases j <;> fin_cases a <;> fin_cases k <;> fin_cases b <;>
+    simp [evenIsometry,evenEmbedding,Matrix.mul_apply,Matrix.conjTranspose_apply,
+      Fintype.sum_prod_type,Fin.sum_univ_two]
+private theorem even_compression (A : Matrix (Qubit × Output) (Qubit × Output) ℂ) :
+    evenIsometryᴴ * A * evenIsometry = A.submatrix evenEmbedding evenEmbedding := by
+  ext ⟨j,a⟩ ⟨k,b⟩
+  fin_cases j <;> fin_cases a <;> fin_cases k <;> fin_cases b <;>
+    simp [evenIsometry,evenEmbedding,Matrix.mul_apply,Matrix.conjTranspose_apply,
+      Fintype.sum_prod_type,Fin.sum_univ_two]
+private theorem even_mul_right (A : Matrix (Qubit × Output) (Qubit × Output) ℂ)
+    (p : Qubit × Output) (t : Qubit × Qubit) :
+    (A * evenIsometry) p t = A p (evenEmbedding t) := by
+  rcases t with ⟨j,a⟩
+  fin_cases j <;> fin_cases a <;>
+    simp [evenIsometry,evenEmbedding,Matrix.mul_apply,Fintype.sum_prod_type,Fin.sum_univ_two]
+private theorem even_mul_left (C : Matrix (Qubit × Qubit) (Qubit × Qubit) ℂ)
+    (p : Qubit × Output) (t : Qubit × Qubit) :
+    (evenIsometry * C) p t =
+      if p.1 = p.2.2.1 ∧ p.2.1 = p.2.2.2 then C (p.1,p.2.1) t else 0 := by
+  rcases p with ⟨f,m,j,a⟩
+  fin_cases f <;> fin_cases m <;> fin_cases j <;> fin_cases a <;>
+    simp [evenIsometry,evenEmbedding,Matrix.mul_apply,Fintype.sum_prod_type,Fin.sum_univ_two]
+
+/-- The actual four-dimensional matched-label even block of the lawful average. -/
+def evenBlock (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) :
+    Matrix (Qubit × Qubit) (Qubit × Qubit) ℂ :=
+  (recoveryDifference ell beta gamma w hl hu hb hw hmax (instrumentRealization (symInstrument Γ))
+    (pureState (diagonalInput c) (diagonal_input_norm c hc))).submatrix evenEmbedding evenEmbedding
+
+/-- The actual matched-label odd complement is nonpositive for the lawful
+flag average, so the four-dimensional even block retains the half error. -/
+theorem even_error_eq_top_eigenvalue
+    (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) :
+    ∃ hC : (evenBlock ell beta gamma w hl hu hb hw hmax Γ c hc).IsHermitian,
+      IsGreatest (Set.range hC.eigenvalues)
+        (referenceError (targetChannel ell hl hu)
+          (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ))
+          (pureState (diagonalInput c) (diagonal_input_norm c hc)) / 2) := by
+  classical
+  let rho := pureState (diagonalInput c) (diagonal_input_norm c hc)
+  let target := referenceState (targetChannel ell hl hu) rho
+  let actual := referenceState (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) rho
+  let B := CStarMatrix.ofMatrix.symm actual.1
+  let v : Qubit × Output → ℂ := fun p => diagonalInput c (p.1,p.2.2.1) * xi ell (p.2.1,p.2.2.2)
+  let t : Qubit × Qubit → ℂ := fun p => c p.1 * xi ell (p.2,p.2)
+  have ht : CStarMatrix.ofMatrix.symm target.1 = vecMulVec v (star v) := by
+    ext ⟨f,m,j,a⟩ ⟨g,n,k,b⟩
+    change referenceAction (targetChannel ell hl hu) rho.1
+      (f,(m,(j,a))) (g,(n,(k,b))) = _
+    rw [target_reference]
+    simp only [rho,pureState,CStarMatrix.ofMatrix_apply,Matrix.vecMulVec_apply,v,Pi.star_apply,star_mul]
+    ring
+  have hB : B.PosSemidef := Matrix.nonneg_iff_posSemidef.mp
+    (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm actual.2.1)
+  have htr : (vecMulVec v (star v) - B).trace = 0 := by
+    rw [← ht,Matrix.trace_sub]
+    change Matrix.trace target.1 - Matrix.trace actual.1 = 0
+    rw [target.2.2,actual.2.2,sub_self]
+  have hvt : evenIsometry *ᵥ t = v := by
+    ext ⟨f,m,j,a⟩
+    fin_cases f <;> fin_cases m <;> fin_cases j <;> fin_cases a <;>
+      simp [evenIsometry,evenEmbedding,Matrix.mulVec,dotProduct,Fintype.sum_prod_type,
+        Fin.sum_univ_two,t,v,diagonalInput,xi]
+  have hvzero (p : Qubit × Output) (hp : ¬ (p.1 = p.2.2.1 ∧ p.2.1 = p.2.2.2)) : v p = 0 := by
+    rcases p with ⟨f,m,j,a⟩
+    fin_cases f <;> fin_cases m <;> fin_cases j <;> fin_cases a <;>
+      simp_all [v,diagonalInput,xi]
+  have hBlabel (p q : Qubit × Output) (hpq : p.1 ≠ q.1 ∨ p.2.2.1 ≠ q.2.2.1) : B p q = 0 := by
+    rcases p with ⟨f,m,j,a⟩
+    rcases q with ⟨g,n,k,b⟩
+    change referenceAction (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) rho.1
+      (f,(m,(j,a))) (g,(n,(k,b))) = 0
+    rw [decoded_pure_entry]
+    rcases hpq with hfg | hjk
+    · have hz (i : Qubit) : diagonalInput c (f,i) * star (diagonalInput c (g,i)) = 0 := by
+        by_cases hfi : f = i
+        · subst i
+          simp [diagonalInput,Ne.symm hfg]
+        · simp [diagonalInput,hfi]
+      simp only [starRingEnd_apply,hz,zero_mul,Finset.sum_const_zero,ite_self]
+    · rw [if_neg hjk]
+  have hBodd (p : Qubit × Output) (q : Qubit × Qubit)
+      (hp : p.2.1 ≠ p.2.2.2) : B p (evenEmbedding q) = 0 := by
+    rcases p with ⟨f,m,j,a⟩
+    rcases q with ⟨k,b⟩
+    change referenceAction (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) rho.1
+      (f,(m,(j,a))) (k,(b,(k,b))) = 0
+    rw [(sym_source_entry ell beta gamma w hl hu hb hw hmax Γ rho.1 f k m b j k a b).1]
+    fin_cases m <;> fin_cases a <;> fin_cases b <;>
+      simp_all [flagSign]
+    all_goals ring
+  let A := vecMulVec v (star v) - B
+  have hcomm : A * evenIsometry = evenIsometry * (evenIsometryᴴ * A * evenIsometry) := by
+    rw [even_compression]
+    ext p q
+    rw [even_mul_right,even_mul_left]
+    by_cases hp : p.1 = p.2.2.1 ∧ p.2.1 = p.2.2.2
+    · rw [if_pos hp]
+      rcases p with ⟨f,m,j,a⟩
+      rcases hp with ⟨hj,ha⟩
+      dsimp at hj ha
+      subst j
+      subst a
+      rfl
+    · rw [if_neg hp]
+      change v p * star (v (evenEmbedding q)) - B p (evenEmbedding q) = 0
+      have hbp : B p (evenEmbedding q) = 0 := by
+        by_cases he : p.2.1 = p.2.2.2
+        · apply hBlabel
+          have hf : p.1 ≠ p.2.2.1 := fun h => hp ⟨h,he⟩
+          by_cases hj : p.1 = q.1
+          · right
+            simpa [evenEmbedding,← hj] using Ne.symm hf
+          · exact Or.inl hj
+        · exact hBodd p q he
+      rw [hvzero p hp,hbp,zero_mul,sub_self]
+  have hcTr : 0 ≤ (evenIsometryᴴ * A * evenIsometry).trace.re := by
+    rw [even_compression]
+    have hdiag (p : Qubit × Output) (hp : ¬ (p.1 = p.2.2.1 ∧ p.2.1 = p.2.2.2)) : A p p ≤ 0 := by
+      change v p * star (v p) - B p p ≤ 0
+      rw [hvzero p hp,zero_mul,zero_sub]
+      exact neg_nonpos.mpr hB.diag_nonneg
+    have hsplit : A.trace = (A.submatrix evenEmbedding evenEmbedding).trace +
+        ∑ p : Qubit × Output, if ¬ (p.1 = p.2.2.1 ∧ p.2.1 = p.2.2.2) then A p p else 0 := by
+      simp [Matrix.trace,evenEmbedding,Fintype.sum_prod_type,Fin.sum_univ_two]
+      ring
+    have hn : (∑ p : Qubit × Output,
+        if ¬ (p.1 = p.2.2.1 ∧ p.2.1 = p.2.2.2) then A p p else 0).re ≤ 0 := by
+      rw [Complex.re_sum]
+      apply Finset.sum_nonpos
+      intro p _
+      by_cases hp : ¬ (p.1 = p.2.2.1 ∧ p.2.1 = p.2.2.2)
+      · rw [if_pos hp]
+        exact (Complex.nonpos_iff.mp (hdiag p hp)).1
+      · rw [if_neg hp]
+        simp
+    have hh := congrArg Complex.re hsplit
+    have hz : A.trace.re = 0 := by rw [htr]; rfl
+    rw [hz,Complex.add_re] at hh
+    linarith
+  obtain ⟨hC,hg⟩ := compression_retains_half_error v hB htr
+    evenIsometry even_isometry t hvt hcomm hcTr
+  have heven : evenIsometryᴴ * A * evenIsometry = evenBlock ell beta gamma w hl hu hb hw hmax Γ c hc := by
+    rw [even_compression]
+    change A.submatrix evenEmbedding evenEmbedding =
+      (CStarMatrix.ofMatrix.symm target.1 - B).submatrix evenEmbedding evenEmbedding
+    rw [ht]
+  have herror : referenceError (targetChannel ell hl hu)
+      (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) rho = traceNorm A := by
+    change traceNorm (CStarMatrix.ofMatrix.symm target.1 - B) = traceNorm A
+    rw [ht]
+  rw [herror,← heven]
+  exact ⟨hC,hg⟩
+
+/-- Complete reference error of the actual lawful average is the maximum
+of the top eigenvalue of its matched-label even block over the closed interval. -/
+theorem diamond_eq_even_spectral_max :
+    ∃ (q : ℝ) (h0 : 0 ≤ q) (h1 : q ≤ 1),
+      ∃ hC : (evenBlock ell beta gamma w hl hu hb hw hmax Γ
+        (weightInput q) (weight_norm q h0 h1)).IsHermitian,
+      IsGreatest (Set.range hC.eigenvalues)
+        (diamondDistance (targetChannel ell hl hu)
+          ((receiverChannel (M := Qubit)
+            (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ))).comp
+              (sourceChannel ell beta gamma w hl hu hb hw hmax)) / 2) ∧
+      ∀ (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1),
+        ∃ hT : (evenBlock ell beta gamma w hl hu hb hw hmax Γ
+          (weightInput t) (weight_norm t ht0 ht1)).IsHermitian,
+        ∀ i, hT.eigenvalues i ≤ diamondDistance (targetChannel ell hl hu)
+          ((receiverChannel (M := Qubit)
+            (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ))).comp
+              (sourceChannel ell beta gamma w hl hu hb hw hmax)) / 2 := by
+  have hChannel : decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ) =
+      (receiverChannel (M := Qubit)
+        (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ))).comp
+          (sourceChannel ell beta gamma w hl hu hb hw hmax) := by
+    have hMap : (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)).toCompletelyPositiveMap =
+        ((receiverChannel (M := Qubit)
+          (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ))).comp
+            (sourceChannel ell beta gamma w hl hu hb hw hmax)).toCompletelyPositiveMap := by
+      apply DFunLike.ext
+      intro X
+      ext ⟨m,j,a⟩ ⟨n,k,b⟩
+      exact (sym_source_entry ell beta gamma w hl hu hb hw hmax Γ
+        (CStarMatrix.ofMatrix fun p q : Unit × Qubit => X p.2 q.2) () () m n j k a b).2
+    cases hG : decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)
+    cases hH : (receiverChannel (M := Qubit)
+      (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ))).comp
+        (sourceChannel ell beta gamma w hl hu hb hw hmax)
+    simp only [hG,hH] at hMap
+    cases hMap
+    rfl
+  rw [← hChannel]
+  obtain ⟨q,h0,h1,heq⟩ := diamond_eq_weight_max ell beta gamma w hl hu hb hw hmax (symInstrument Γ)
+  obtain ⟨hC,hg⟩ := even_error_eq_top_eigenvalue ell beta gamma w hl hu hb hw hmax Γ
+    (weightInput q) (weight_norm q h0 h1)
+  change IsGreatest (Set.range hC.eigenvalues)
+    (referenceError (targetChannel ell hl hu)
+      (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) (weightState q h0 h1) / 2) at hg
+  refine ⟨q,h0,h1,hC,heq.symm ▸ hg,?_⟩
+  intro t ht0 ht1
+  obtain ⟨hT,hgT⟩ := even_error_eq_top_eigenvalue ell beta gamma w hl hu hb hw hmax Γ
+    (weightInput t) (weight_norm t ht0 ht1)
+  obtain ⟨_,_,_,_,_,hBound⟩ :=
+    diamond_eq_matched_spectral_max ell beta gamma w hl hu hb hw hmax (symInstrument Γ)
+  refine ⟨hT,fun i => ?_⟩
+  have hh := hgT.2 (show hT.eigenvalues i ∈ Set.range hT.eigenvalues from ⟨i,rfl⟩)
+  change hT.eigenvalues i ≤ referenceError (targetChannel ell hl hu)
+    (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) (weightState t ht0 ht1) / 2 at hh
+  have hScore : referenceError (targetChannel ell hl hu)
+      (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) (weightState t ht0 ht1) / 2 ≤
+      diamondDistance (targetChannel ell hl hu)
+        (decoded ell beta gamma w hl hu hb hw hmax (symInstrument Γ)) / 2 := by
+    obtain ⟨hM,hGM⟩ := matched_label_error_eq_top_eigenvalue ell beta gamma w hl hu hb hw hmax
+      (symInstrument Γ) (weightInput t) (weight_norm t ht0 ht1)
+    obtain ⟨j,hj⟩ := hGM.1
+    obtain ⟨hB,hb⟩ := hBound t ht0 ht1
+    have h := hb j
+    rw [hj] at h
+    exact h
+  exact hh.trans hScore
+
 end Actual
 end D5.S3.Quantum.Recovery.PhaseBoundaryDiagonalReferenceReduction

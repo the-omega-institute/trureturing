@@ -259,7 +259,7 @@ private theorem maximum_eigenvalue_nonnegative {n : Type*}
   rw [← hsum] at hh
   exact (not_lt_of_ge htr) hh
 
-private theorem compression_retains_half_error {n m : Type*}
+theorem compression_retains_half_error {n m : Type*}
     [Fintype n] [DecidableEq n] [Nonempty n]
     [Fintype m] [DecidableEq m] [Nonempty m]
     (v : n → ℂ) {B : Matrix n n ℂ} (hB : B.PosSemidef)
