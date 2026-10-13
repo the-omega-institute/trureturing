@@ -58,3 +58,96 @@ theorem dependence_impossible : ¬ ObservationalDependence signature actual := b
 #print axioms actual_law
 #print axioms invariant_on_legal_fiber
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers.Labels
+abbrev signature : Signature where
+  Params := CutSet
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Finset Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun _ p u => labels (canonicalRow p u)) (fun e => nomatch e)
+
+def bad : Realization signature := realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (P : CutSet) (u : Source), R.readout () P u =
+    (orderedHoles P u).toFinset.image (classOrdinal P u)
+
+theorem bridge : (type_of% (@labels_canonical)) ↔ arena.Law actual := Iff.rfl
+
+theorem actual_law : arena.Law actual := labels_canonical
+
+private theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  have eq := law {[]} (.of true)
+  change (∅ : Finset Nat) =
+    (orderedHoles {[]} (.of true)).toFinset.image (classOrdinal {[]} (.of true)) at eq
+  have order : orderedHoles {[]} (.of true) = [[]] := by simp [orderedHoles, reachedHoles]
+  rw [order] at eq
+  simp at eq
+
+def proof : Registration arena (type_of% (@labels_canonical)) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨actual_law,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,bad_law⟩,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    have role : i = () := Subsingleton.elim _ _
+    subst i
+    refine ⟨{[true]},.of true,.mul (.of true) (.of true),?_⟩
+    intro eq
+    have absent : actual.readout () {[true]} (.of true) = ∅ := by
+      simp [actual, realize, canonicalRow, literalRow, labels]
+    have present : actual.readout () {[true]} (.mul (.of true) (.of true)) =
+        {classOrdinal {[true]} (.mul (.of true) (.of true)) [true]} := by
+      simp [actual, realize, canonicalRow, literalRow, labels]
+    rw [absent, present] at eq
+    simp at eq
+
+noncomputable def labels_canonical_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers.labels_canonical)
+    (Realization signature) ((P : CutSet) → Type) Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers.labels_canonical
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers.Labels.proof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨proof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p u => labels (canonicalRow p u)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms proof
+#print axioms labels_canonical_registration
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers.Labels

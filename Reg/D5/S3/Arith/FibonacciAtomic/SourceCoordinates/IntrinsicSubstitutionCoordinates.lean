@@ -249,6 +249,60 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev pairArena : Arena where
+  signature := signature
+  Law R := ∀ s t : Source,
+    (∃ x : Source, R.readout () () x = .mul s t) ↔
+      (s = .of false ∧ t = .of true) ∨
+      ((∃ x : Source, substitution x = s) ∧ (∃ y : Source, substitution y = t))
+
+theorem pairBadLaw : ¬ pairArena.Law bad := by
+  intro h
+  obtain ⟨x,hx⟩ := (h (.of false) (.of true)).mpr (Or.inl ⟨rfl,rfl⟩)
+  change FreeMagma.of true = FreeMagma.mul _ _ at hx
+  cases hx
+
+def pairFamily : Registration pairArena (type_of% (@pair_image)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨pair_image,bad,pairBadLaw⟩
+  sensitivity := ⟨fun i => ⟨bad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,pairBadLaw⟩,
+    fun i => nomatch i⟩
+  dependence := dependence
+
+def pairRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@pair_image) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.SourceCoordinates.IntrinsicSubstitutionCoordinates.pair_image.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.SourceCoordinates.IntrinsicSubstitutionCoordinates.pairFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨pairArena⟩
+  objectArena := .source ⟨pairArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source pairArena ⟨pairFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.SourceCoordinates.IntrinsicSubstitutionCoordinates
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","fn","arg","arg","body","fn","arg"],
+      stateBinder := 2,
+      functionOperand := false,
+      stateOperand := none,
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms pairRegistration
 #print axioms no_alpha
 #print axioms registration
 #print axioms rootRegistration
