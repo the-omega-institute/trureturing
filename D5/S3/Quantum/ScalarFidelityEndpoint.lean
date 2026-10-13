@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/ScalarFidelityEndpoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["mathlib/module/Mathlib.Analysis.Real.Sqrt"]
+   anchors: [mathlib/module/Mathlib.Analysis.Real.Sqrt]
    utility: none
    digest: Sharp squared imbalance characterizes scalar fidelity endpoint dominance. -/
 
