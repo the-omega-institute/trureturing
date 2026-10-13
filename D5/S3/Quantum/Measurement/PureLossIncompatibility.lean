@@ -28,6 +28,7 @@ abbrev Loss := Set.Icc (0 : ℝ) 1
 private def e (k : ℕ) : H :=
   lp.single (E := fun _ : ℕ => ℂ) 2 k (1 : ℂ)
 
+-- Amplification acts on the retained vector at each environment coordinate.
 private theorem lift_exists (M : Op) :
     ∃ T : K →L[ℂ] K, ∀ (w : K) (k : ℕ), (T w) k = M (w k) := by
   refine ⟨lp.mapCLM 2 (fun _ : ℕ => M) (norm_nonneg M) (fun _ => le_rfl), ?_⟩
@@ -169,7 +170,6 @@ private theorem stinespring_eq_iso (τ : Loss) :
   ext v k
   rfl
 
-
 private theorem amplify_pos (M : Op) (hM : M.IsPositive) : (amplify M).IsPositive := by
   rw [ContinuousLinearMap.isPositive_iff]
   constructor
@@ -221,7 +221,7 @@ private theorem dualLoss_binary (τ : Loss) (M : Fin 2 → Op)
   change dualLoss τ (M 0) + dualLoss τ (M 1) = 1
   rw [← dualLoss_add, hM.2, dualLoss_one]
 
-
+-- Compression pulls quadratic forms back through the two-dimensional Fock embedding.
 private def compress (X : Op) : Matrix (Fin 2) (Fin 2) ℂ :=
   fun i j => inner ℂ (e i.val) (X (e j.val))
 
@@ -289,7 +289,6 @@ private theorem compressed_parent {m : ℕ} (F : Fin m → Fin 2 → Op)
     change s.sum (fun a => compress (G a)) = compress (F j b)
     rw [← compress_finset_sum s G]
     exact congrArg compress (hGmarg j b)
-
 
 private theorem dual_inner (τ : Loss) (M : Op) (u v : H) :
     inner ℂ u (dualLoss τ M v) =
@@ -369,6 +368,7 @@ private theorem split_one_coord (τ : Loss) (k : ℕ) :
   simp only [lp.coeFn_add, lp.coeFn_smul, Pi.add_apply, Pi.smul_apply, fock_slice]
   split_ifs <;> simp_all
 
+-- These input occupations populate only environment sectors zero and one.
 private theorem rank_entry (τ : Loss) (μ : ℂ) (i j : Fin 2) :
     compress (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ))) i j =
       ∑ k ∈ ({0, 1} : Finset ℕ), inner ℂ ((stinespring τ (e i.val)) k) (coherent μ) *
@@ -401,6 +401,7 @@ private theorem coherent_entries (x : ℝ) (hx : 0 < x) (z : ℂ) (hz : ‖z‖ 
       Real.sqrt_one, Complex.ofReal_one, div_one]
     ring
 
+-- The upper-right entry conjugates the phase in the first inner-product argument.
 private theorem compressed_rankOne (τ : Loss) (x : ℝ) (hx : 0 < x)
     (z : ℂ) (hz : ‖z‖ = 1) :
     compress (dualLoss τ (InnerProductSpace.rankOne ℂ
@@ -435,7 +436,7 @@ private theorem compressed_rankOne (τ : Loss) (x : ℝ) (hx : 0 < x)
   fin_cases i <;> fin_cases j <;>
     simp only [split_zero_coord, split_one_coord, ite_true, Nat.zero_ne_one, Nat.one_ne_zero,
       ite_false, inner_smul_left, inner_smul_right, inner_zero_left, inner_zero_right,
-      mul_zero, zero_mul, add_zero, zero_add, Complex.conj_ofReal, h0, h1, hc0, hc1]
+      mul_zero, zero_mul, add_zero, Complex.conj_ofReal, h0, h1, hc0, hc1]
   · change (Real.exp (-x / 2) : ℂ) * (Real.exp (-x / 2) : ℂ) = (Real.exp (-x) : ℂ)
     exact (pow_two _).symm.trans he
   · change (Real.exp (-x / 2) : ℂ) * ((Real.sqrt τ.1 : ℂ) *
@@ -480,6 +481,7 @@ private theorem compress_sub (X Y : Op) : compress (X - Y) = compress X - compre
   ext i j
   simp [compress]
 
+-- The click effect complements the coherent no-click effect.
 private theorem compressed_click (τ : Loss) (x : ℝ) (hx : 0 < x)
     (z : ℂ) (hz : ‖z‖ = 1) :
     compress (dualLoss τ (onOff ((Real.sqrt x : ℂ) * z) 1)) = clickMatrix τ x z := by
