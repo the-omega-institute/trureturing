@@ -889,3 +889,146 @@ closure, a Green kernel, or a physical dimension theorem. Under the current
 DEV assumptions, the established content remains finite response
 localization and its square-residual detection; the triplet conclusion is
 conditional on the separately stated interface.
+
+## 10. Finite path-family composition and shared triplet modes
+
+Section 9 treats one finite list of measurements as one response map. A
+recursive source normally supplies several declared paths, and those paths
+can probe the same hidden mode. The correct capacity is therefore computed
+after taking their joint Gram operator, rather than by adding the ranks of the
+individual path maps.
+
+**Definition 10.1 (Finite equivariant path family).** Let $\mathcal W$ be a
+finite set of declared paths. For every $w\in\mathcal W$, let
+
+$$
+\mathscr R_w:\mathcal V\longrightarrow\mathcal Y_w,
+\qquad
+G_w=\mathscr R_w^{\mathsf T}\mathscr R_w,
+$$
+
+and suppose that each path has the same source rotation action and an
+orthogonal output action:
+
+$$
+\mathscr R_w(I_m\otimes Q)=W_{w,Q}\mathscr R_w,\qquad Q\in SO(3).
+\tag{10.1}
+$$
+
+Put
+
+$$
+\mathscr R_{\mathcal W}v=(\mathscr R_wv)_{w\in\mathcal W},\qquad
+\mathcal Y_{\mathcal W}=\bigoplus_{w\in\mathcal W}\mathcal Y_w.
+$$
+
+The direct-sum output carries the block-diagonal orthogonal action
+$W_{\mathcal W,Q}=\bigoplus_wW_{w,Q}$.
+
+**Theorem 10.2 (Joint path Gram and exact capacity).** If
+
+$$
+G_w=A_w\otimes I_3,\qquad A_w\succeq0,
+$$
+
+for every $w\in\mathcal W$, then
+
+$$
+\boxed{
+G_{\mathcal W}:=\mathscr R_{\mathcal W}^{\mathsf T}\mathscr R_{\mathcal W}
+ =A_{\mathcal W}\otimes I_3,\qquad
+A_{\mathcal W}:=\sum_{w\in\mathcal W}A_w.
+}
+\tag{10.2}
+$$
+
+Consequently, in the same linear-decoder sense as Theorem 9.3, the exact
+linear boundary capacity of the joint path family is
+
+$$
+\boxed{
+\operatorname{rank}\mathscr R_{\mathcal W}
+ =3\operatorname{rank}A_{\mathcal W}.
+}
+\tag{10.3}
+$$
+
+If one path family is enlarged from $\mathcal W$ to
+$\mathcal W\cup\{u\}$, its exact additional capacity is
+
+$$
+\boxed{
+3\bigl(\operatorname{rank}(A_{\mathcal W}+A_u)
+       -\operatorname{rank}A_{\mathcal W}\bigr),
+}
+$$
+
+which can be zero even when $\mathscr R_u$ has positive rank.
+
+**Proof.** The joint map is a direct sum, so
+
+$$
+G_{\mathcal W}=\sum_{w\in\mathcal W}G_w
+ =\left(\sum_{w\in\mathcal W}A_w\right)\otimes I_3.
+$$
+
+The rank identity for a Kronecker product gives (10.3). The last formula is
+the difference of the two joint ranks. Since the summands are positive
+semidefinite, adding a path cannot decrease the rank, but it need not add a
+new multiplicity direction. $\square$
+
+This gives a precise distinction between a new path and a new response mode.
+For example, with two multiplicity coordinates,
+
+$$
+A_1=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+A_2=\begin{pmatrix}1&0\\0&0\end{pmatrix},
+$$
+
+each path has rank-three response, but their joint family still has capacity
+$3$. In contrast, replacing $A_2$ by
+
+$$
+\begin{pmatrix}0&0\\0&1\end{pmatrix}
+$$
+
+gives joint capacity $6$. The distinction is invisible to a count that adds
+the individual ranks.
+
+**Corollary 10.3 (Finite-precision joint selection).** Under the centered
+whitened source law and the equivariant orthogonal compression class of
+Theorem 9.4, let
+
+$$
+\lambda_1^{\mathcal W}\ge\cdots\ge\lambda_m^{\mathcal W}\ge0
+$$
+
+be the complete spectrum of $A_{\mathcal W}$. Retaining $r$ complete
+three-component multiplicity groups has minimum joint response error
+
+$$
+\boxed{
+3\sum_{i=r+1}^{m}\lambda_i^{\mathcal W},\qquad 0\le r\le m.
+}
+\tag{10.4}
+$$
+
+Thus path addition changes the finite-precision budget through the spectrum of
+the summed Gram matrix, not through a separate per-path dimension count.
+
+**Scope 10.4.** The result is finite: $\mathcal W$ is finite, all maps share
+one source and one $SO(3)$ action, and the source moments and projection class
+are those explicitly stated in Theorem 9.4. An infinite path closure requires
+its own operator convergence and summability hypotheses. The theorem still
+does not establish that the FIB source has this rotation action, that its
+paths are metric transports, or that the multiplicity rank is an ambient
+space dimension.
+
+**Scope clarification 10.5.** The finite path result uses the interface
+hypothesis (9.1), together with the centered/whitened source and
+orthogonal-projection assumptions of Theorem 9.4. These are the assumptions
+that make the joint response calculation conditional; they do not identify
+the FIB source with an $SO(3)$ representation or with a physical ambient
+space.
+
+## 10.99 追加锚（本行以下为增补区）
