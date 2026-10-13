@@ -356,7 +356,7 @@ private lemma hermitian_trace_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : 
         simp [blochMatrix, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
           spin, Matrix.trace, Matrix.diag_apply, Fin.sum_univ_two] <;> ring
 
-private lemma density_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) (ht : Matrix.trace A=1) : A=(blochMatrix 1 (WithLp.toLp 2 ![(2*(A 0 1).re),(-2*(A 0 1).im),(2*(A 0 0).re-1)])) := by
+lemma density_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) (ht : Matrix.trace A=1) : A=(blochMatrix 1 (WithLp.toLp 2 ![(2*(A 0 1).re),(-2*(A 0 1).im),(2*(A 0 0).re-1)])) := by
   conv_lhs => rw [hermitian_trace_coordinates A h,ht]
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
