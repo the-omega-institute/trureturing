@@ -19,11 +19,11 @@
    proof_shape: dio_finite_implies_boundedPQ: content; escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover; consumer: DiophantineExponentCriterion.result
    proof_shape: morphicImage_block_get: bind-only; consumer: BoundedPowers.morphicImage_block_position
    proof_shape: morphicImage_block_position: bind-only; consumer: BoundedPowers.morphic_periodic_factor_bound
-   proof_shape: Hword_prefix_decode: bind-only; consumer: BoundedPowers.Hword_prefix_reflect
-   proof_shape: Hword_prefix_reflect: bind-only; consumer: BoundedPowers.Hword_period_desubstitute
-   proof_shape: Hword_period_desubstitute: bind-only; consumer: BoundedPowers.extendedMu_period_lift
+   proof_shape: Hword_prefix_decode: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: BoundedPowers.Hword_prefix_reflect
+   proof_shape: Hword_prefix_reflect: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: BoundedPowers.Hword_period_desubstitute
+   proof_shape: Hword_period_desubstitute: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: BoundedPowers.extendedMu_period_lift
    definition: extendedMu; consumer: BoundedPowers.extendedMu_shift
-   proof_shape: muWord_shift: bind-only; consumer: BoundedPowers.extendedMu_shift
+   proof_shape: muWord_shift: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_shift; consumer: BoundedPowers.extendedMu_shift
    proof_shape: extendedMu_shift: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.central_prefix_extendedMu
    proof_shape: Hword_prefix: bind-only; consumer: BoundedPowers.central_prefix_extendedMu
    proof_shape: central_prefix_extendedMu: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.extendedMu_period_lift
@@ -36,7 +36,7 @@
    proof_shape: imagePrefix_length_strictMono: bind-only; consumer: BoundedPowers.morphic_periodic_factor_bound
    proof_shape: extendedMu_segment_occurrence: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.morphic_periodic_factor_bound
    proof_shape: mu_length_mono: bind-only; consumer: BoundedPowers.mu_length_increases_over_B
-   proof_shape: mu_length_uniform_ratio: bind-only; consumer: BoundedPowers.boundedPQ_image_scale
+   proof_shape: mu_length_uniform_ratio: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_length_triangle; consumer: BoundedPowers.boundedPQ_image_scale
    proof_shape: central_succ_morphic: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.central_length_le_image_sum
    proof_shape: image_sum_step: bind-only; consumer: BoundedPowers.central_length_le_image_sum
    proof_shape: central_length_le_image_sum: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.boundedPQ_image_scale
@@ -162,8 +162,31 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
  theorem morphicImage_block_get (s t : Nat → Fin d) (f : Fin d → List (Fin d))
     (hi : MorphicImage s t f) (k j : Nat) (hj : j < (f (s k)).length) :
     t ((imagePrefix s f k).length+j) = (f (s k))[j] := by
-  exact morphicImage_segment s t f hi k 1 (f (s k)) []
-    (by simp [imagePrefix,D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add]) j hj
+  let L := (D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor s 0 (k+1)).map f
+  have hk : k < L.length := by simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]
+  have ht : L.take k = (D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor s 0 k).map f := by
+    simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add, ← List.map_take, List.take_range]
+  have hp : ((L.map List.length).take k).sum = (imagePrefix s f k).length := by
+    rw [← List.map_take, ht]
+    simp [imagePrefix, List.length_flatMap, List.map_map, Function.comp_def]
+  have hq : ((L.map List.length).take (k+1)).sum = L.flatten.length := by
+    rw [List.take_of_length_le (by simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]), List.length_flatten]
+  have hb := List.drop_take_succ_flatten_eq_getElem L k hk
+  rw [hp, hq, List.take_length] at hb
+  have hz : L[k] = f (s k) := by simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]
+  rw [hz] at hb
+  have hbound : (imagePrefix s f k).length+j < (imagePrefix s f (k+1)).length := by
+    rw [imagePrefix_succ, List.length_append]
+    omega
+  have he := hi (k+1)
+  change D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor t 0 (imagePrefix s f (k+1)).length = imagePrefix s f (k+1) at he
+  have hb' : (imagePrefix s f (k+1)).drop (imagePrefix s f k).length = f (s k) := by
+    simpa [L, imagePrefix, List.flatMap_def] using hb
+  rw [← he] at hb'
+  have hh := congrArg (fun xs : List (Fin d) => xs[j]?) hb'
+  simpa [D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, List.getElem?_drop, List.getElem?_map, List.getElem?_range,
+    hbound, List.getElem?_eq_getElem hj] using hh
+
 
  theorem morphicImage_block_position (s t : Nat → Fin d) (f : Fin d → List (Fin d))
     (hi : MorphicImage s t f) (hpos : ∀ z, 0 < (f z).length) (n : Nat) :

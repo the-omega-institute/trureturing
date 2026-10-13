@@ -18,33 +18,33 @@
    definition: mu; consumer: MorphicDecomposition.mu_length_step
    proof_shape: mu_length_step: bind-only; consumer: MorphicDecomposition.mu_length_pos
    proof_shape: mu_length_pos: bind-only; consumer: BoundedPowers.cDelta_constant_run_cover
-   proof_shape: mu_length_triangle: bind-only; consumer: MorphicDecomposition.mu_length_at_run_start
-   proof_shape: mu_length_at_run_start: bind-only; consumer: BoundedPowers.cDelta_constant_run_cover
-   proof_shape: mu_constant_run: bind-only; consumer: BoundedPowers.cDelta_constant_run_cover
+   proof_shape: mu_length_triangle: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_length_triangle; consumer: MorphicDecomposition.mu_length_at_run_start
+   proof_shape: mu_length_at_run_start: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_length_triangle; consumer: BoundedPowers.cDelta_constant_run_cover
+   proof_shape: mu_constant_run: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_constant_run; consumer: BoundedPowers.cDelta_constant_run_cover
    definition: Lword; consumer: MorphicDecomposition.Hword
    definition: Hword; consumer: MorphicDecomposition.Hword_reverse
    proof_shape: letterImage_conjugacy: bind-only; consumer: MorphicDecomposition.Hword_reverse
-   proof_shape: Hword_reverse: bind-only; consumer: MorphicDecomposition.Hword_palindrome_iff
+   proof_shape: Hword_reverse: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palindrome_iff
    proof_shape: Hword_starts: bind-only; consumer: MorphicDecomposition.Hword_injective
    proof_shape: Hword_cons: bind-only; consumer: MorphicDecomposition.Hword_injective
-   proof_shape: Hword_injective: bind-only; consumer: MorphicDecomposition.Hword_palindrome_iff
-   proof_shape: Hword_palindrome_iff: bind-only; consumer: MorphicDecomposition.Hword_palCut
+   proof_shape: Hword_injective: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: MorphicDecomposition.Hword_palindrome_iff
+   proof_shape: Hword_palindrome_iff: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palCut
    proof_shape: Lword_append: bind-only; consumer: MorphicDecomposition.Lword_prefix
    proof_shape: Lword_prefix: bind-only; consumer: MorphicDecomposition.Hword_palCut
-   proof_shape: Hword_suffix_decode: bind-only; consumer: MorphicDecomposition.Hword_palCut
-   proof_shape: palindrome_suffix_Hword_starts: bind-only; consumer: MorphicDecomposition.Hword_palCut
-   proof_shape: Hword_palCut: bind-only; consumer: MorphicDecomposition.Hword_palClosure
-   proof_shape: Hword_palClosure: bind-only; consumer: MorphicDecomposition.Lword_palClosure
-   proof_shape: Lword_suffix_nonx: bind-only; consumer: MorphicDecomposition.Lword_palClosure
+   proof_shape: Hword_suffix_decode: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_suffix_decode; consumer: MorphicDecomposition.Hword_palCut
+   proof_shape: palindrome_suffix_Hword_starts: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palCut
+   proof_shape: Hword_palCut: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palClosure
+   proof_shape: Hword_palClosure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Lword_palClosure
+   proof_shape: Lword_suffix_nonx: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Lword_suffix_nonx; consumer: MorphicDecomposition.Lword_palClosure
    proof_shape: palindrome_suffix_last_starts: bind-only; consumer: MorphicDecomposition.Lword_palClosure
    proof_shape: palCut_le_of_suffix: bind-only; consumer: MorphicDecomposition.Lword_palClosure
-   proof_shape: Lword_palClosure: bind-only; consumer: MorphicDecomposition.Hword_append_letter_closure
+   proof_shape: Lword_palClosure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_append_letter_closure
    proof_shape: palClosure_of_palindrome: bind-only; consumer: MorphicDecomposition.central_Justin
-   proof_shape: Hword_append_letter_closure: bind-only; consumer: MorphicDecomposition.central_Justin
+   proof_shape: Hword_append_letter_closure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.central_Justin
    proof_shape: central_Justin: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: MorphicDecomposition.central_Justin_shift
    proof_shape: central_Justin_shift: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: MorphicDecomposition.central_morphic_finite
    definition: muWord; consumer: MorphicDecomposition.central_morphic_finite
-   proof_shape: mu_shift: bind-only; consumer: MorphicDecomposition.central_morphic_finite
+   proof_shape: mu_shift: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_shift; consumer: MorphicDecomposition.central_morphic_finite
    proof_shape: central_morphic_finite: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: MorphicDecomposition.cDelta_morphicImage
    definition: MorphicImage; consumer: MorphicDecomposition.cDelta_morphicImage
    proof_shape: wordPrefix_isPrefix: bind-only; consumer: MorphicDecomposition.cDelta_morphicImage

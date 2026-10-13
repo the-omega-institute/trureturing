@@ -229,8 +229,19 @@ theorem uniform_finite_window (x : Nat → Fin d) (q a M n : Nat)
 
  theorem imagePrefix_succ (s : Nat → Fin d) (f : Fin d → List (Fin d)) (k : Nat) :
     imagePrefix s f (k+1) = imagePrefix s f k ++ f (s k) := by
-  rw [imagePrefix_add]
-  simp [imagePrefix, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add]
+  let L := (D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor s 0 (k+1)).map f
+  have ht : L.take k = (D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor s 0 k).map f := by
+    simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add, ← List.map_take, List.take_range]
+  have hd : L.drop k = [f (s k)] := by
+    simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add, List.range_succ, List.map_append, List.drop_append]
+  have hp := List.take_sum_flatten L k
+  have hs := List.drop_sum_flatten L k
+  rw [ht] at hp
+  rw [hd] at hs
+  have he := List.take_append_drop ((L.map List.length).take k).sum L.flatten
+  rw [hp, hs] at he
+  simpa [L, imagePrefix, List.flatMap_def] using he.symm
+
 
  theorem imagePrefix_length_ge (s : Nat → Fin d) (f : Fin d → List (Fin d))
     (hpos : ∀ z, 0 < (f z).length) (k : Nat) : k ≤ (imagePrefix s f k).length := by
