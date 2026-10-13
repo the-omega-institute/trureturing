@@ -74,8 +74,9 @@ identity at singular B. The literature fixes the target and supplies
 the ordinary boundary argument; it does not replace the Lean proof
 or establish a global novelty claim.
 
-## Source binding
+## Verified locator
 
+Source page: https://arxiv.org/abs/2510.04691v3.
 Primary PDF: https://arxiv.org/pdf/2510.04691v3.
 SHA256: 517793e372e0d145619e517e7be0772e4852536ce65821cd5142e714e19e1a4b.
 The cached extracted text has SHA256
