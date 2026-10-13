@@ -8505,3 +8505,174 @@ that every real-pole residue of $(U_{q,t}-gV_t)/R_{q,t}$ is nonnegative
 for some $g>0$ would give $G/J'\ge g$ by (LC312).
 This relative certificate too remains unpaid for growing degree.
 
+
+## A local Euler response pays sign once branch geometry is available
+
+Retain the same complete source and auxiliary functions of
+(LC263), (LC276)--(LC280) and (LC284), with
+$E=128(S+3C_0)L$, $1\le q\le C_0L$ and
+$\nu\ge\max\{256E,128q\}$. The exact core recurrences remain
+$p_0=1,w_0=0$ and
+$p_j=(\widehat\chi-v\partial_t-\alpha_j)p_{j-1}$,
+$w_j=(\widehat\chi-v\partial_t-\alpha_j)w_{j-1}
+ +\widehat\eta p_{j-1}$.
+This conditional analytical application reuses the exact Euler identity;
+it does not assume the kernel residue condition in $\mathsf K$.
+It instead requires a quantitative local branch certificate, whose
+availability for growing degree is likewise unresolved.
+
+Let $t_0$ be a real actual node with $|t_0-c|\le D/64$ and fix
+$\delta>0$. Put
+
+$$
+h=\frac{\delta}{64(q+E\delta/D)}\le\frac D{64E}.
+\tag{LC317}
+$$
+
+The additional certificate is that, throughout $[t_0,t_0+h]$,
+$p_q=\prod_{k=1}^q f_k$ with real $C^1$ factors satisfying
+$1/2\le f_k'\le3/2$, exactly one $f_j(t_0)=0$, and
+$|f_k(t_0)|\ge\delta$ for $k\ne j$.
+The segment lies within $|t-c|<D/32$. The certificate concerns
+factor geometry, not $G$ or its sign, and is not asserted for every
+actual node. For $q=1$ the other-factor condition is empty.
+
+### Bound the endpoint independently of its sign
+
+On nested complex discs with radii
+$D/16-jD/(32q)$, $j=0,\ldots,q$, the complete jets give
+$|\widehat\chi-\alpha_j|<2D$,
+$|v|\le4D^2/\nu$, $|\widehat\eta|\le3/2$ and
+$|\widehat\ell|+|\widehat s|\le E/D$.
+Cauchy's estimate across a radius step $D/(32q)$ makes the recursive
+operator norm at most $2D+128qD/\nu\le3D$. Induction yields
+
+$$
+\|p_q\|_{D/32}\le(3D)^q,\qquad
+\|w_q\|_{D/32}\le\frac{3q}{2}(3D)^{q-1}.
+\tag{LC318}
+$$
+
+The other $f_k$ retain their signs on the short segment, and their
+product has magnitude at least
+$\delta^{q-1}(1-3/(128q))^{q-1}\ge(125/128)\delta^{q-1}$.
+Moreover $\widehat H(s)/\widehat H(t_0)\ge e^{-Eh/D}>1/2$.
+Direct differentiation gives
+
+$$
+J'(s)=\widehat H(s)\prod_{k\ne j}f_k(s)
+ \left[f_j'(s)+f_j(s)
+  \left(\widehat\ell(s)+\sum_{k\ne j}\frac{f_k'(s)}{f_k(s)}\right)\right].
+\tag{LC319}
+$$
+
+Here $0\le f_j(s)\le3h/2$,
+$\sum_{k\ne j}|f_k'/f_k|\le3q/\delta$ and the second bracket term
+has magnitude at most $3/32$. The bracket is at least $13/32$.
+Thus $J'(s)$ has the sign of $J'(t_0)$ on the whole segment, with
+
+$$
+\begin{gathered}
+|J'(s)|>d:=\frac18|\widehat H(t_0)|\delta^{q-1},\qquad
+|J'(t_0)|\ge\frac12|\widehat H(t_0)|\delta^{q-1},\\
+|G(t_0+h)|\le M:=2|\widehat H(t_0)|(3D)^{q-1}(3E+3q/2),\\
+M/d\le B:=16(3E+3q/2)(3D/\delta)^{q-1}.
+\end{gathered}
+\tag{LC320}
+$$
+
+The endpoint estimate uses (LC318),
+$G=\widehat H(\widehat s p_q+w_q)$ and
+$|\widehat H(t_0+h)|<2|\widehat H(t_0)|$.
+The common nonzero amplitude cancels in $M/d$; no absolute amplitude
+floor or endpoint sign has been assumed.
+
+### Keep and suppress the homogeneous contribution
+
+Apply the original exact identity $J'=G-(t/n)G'$ from (LC280).
+Integrating the derivative of $G(s)s^{-n}$ over only the short segment
+gives
+
+$$
+\begin{gathered}
+G(t_0)=\beta G(t_0+h)+nt_0^n
+ \int_{t_0}^{t_0+h}J'(s)s^{-n-1}\,ds,\\
+\beta=\left(\frac{t_0}{t_0+h}\right)^n
+ \le e^{-nh/(2c)},\qquad
+nt_0^n\int_{t_0}^{t_0+h}s^{-n-1}\,ds=1-\beta.
+\end{gathered}
+\tag{LC321}
+$$
+
+The actual endpoint term is retained. If
+$nh/(2c)>\log[4(1+B)]$, then
+$\operatorname{sgn}(J'(t_0))G(t_0)>3d/4$ and the original coupled
+node margin is
+
+$$
+P_r'(t_0)S_r(t_0)>\frac3{64}
+ \left(\frac{\widehat H(t_0)}{H(t_0)}\right)^2\delta^{2q-2}
+ >\frac1{32}\left(\frac{\widehat H(t_0)}{H(t_0)}\right)^2
+ \delta^{2q-2}>0.
+\tag{LC322}
+$$
+
+The endpoint bound is essential: adding a homogeneous term proportional
+to $t^n$ leaves the Euler identity unchanged and need not preserve sign.
+
+### A fixed linear budget pays every larger degree parameter
+
+Suppose the geometric certificate is available with
+$\delta=D/(K\sqrt{\nu q})$ for a fixed $K\ge1$.
+Write $E=C_EL$, where $C_E=128(S+3C_0)$, and define fixed constants
+
+$$
+\begin{aligned}
+a&=KC_0^{3/2},& b&=\max\{1,3K\sqrt{C_0}\},\\
+P&=\max\{1,48C_E+24C_0\},&
+A&=\log(8P)+1+C_0(1+\log b),\qquad U=a+C_E,\\
+C_*&=\max\{1,256C_E,128C_0,(1024AU)^4\}.
+\end{aligned}
+\tag{LC323}
+$$
+
+For every $\nu\ge C_*L$, put $\Lambda=\nu/L\ge C_*$.
+The exponent and endpoint bound obey
+
+$$
+\begin{gathered}
+X:=\frac{nh}{2c}
+ =\frac{\nu T}{128\rho(Kq\sqrt{\nu q}+E)}
+ \ge\frac{\sqrt\Lambda\,T}{16UL}
+ \ge\frac{\sqrt\Lambda\,L^2}{192U},\\
+B\le PL(bL\sqrt\Lambda)^{C_0L},\qquad
+\log[4(1+B)]\le AL(1+\log L+\log\Lambda)
+ \le AL^2(1+\log\Lambda).
+\end{gathered}
+\tag{LC324}
+$$
+
+Indeed $q\sqrt{\nu q}\le C_0^{3/2}L^2\sqrt\Lambda$,
+$\rho\le1/8$, $L>3$ and
+$T=e^L-2\ge e^L/2\ge L^3/12$. Also
+$1+\log\Lambda\le4\Lambda^{1/4}$ for $\Lambda\ge1$.
+The choice (LC323) ensures
+$\sqrt\Lambda/(192U)\ge(1024/192)A\Lambda^{1/4}
+ >4A\Lambda^{1/4}$, so $X>\log[4(1+B)]$.
+Both initial thresholds are paid. This holds for every larger $\nu$,
+uniformly for $T\ge32$ and all $0<\rho\le1/8$.
+
+This gives a conditional sign route at the stated central real nodes
+if growing-core branch geometry and the quantitative gap are supplied.
+It does not certify reality, a gap at every node, or target-boundary
+crossings. Reapplying it to $q\le3$ is reuse: (LC293)--(LC303) already
+give stronger results on that paid range. Likewise (LC218) and (LC245)
+remain suppliers at their larger or adaptive budgets.
+
+The complete-kernel certificate $\mathsf K$ and this quantitative
+geometric certificate are two different unpaid routes. The exact
+dual-kernel reduction, common-weight transmission and Euler endpoint
+estimate do not discharge either certificate at growing degree.
+No local all-critical premise has been removed, no FIB ATOM bridge to
+these complete signed responses has been established, and RH and
+strict Robin for every integer $H>5040$ remain unproved.
