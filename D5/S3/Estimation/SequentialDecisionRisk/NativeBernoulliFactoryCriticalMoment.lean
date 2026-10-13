@@ -550,7 +550,7 @@ private lemma history_actual_first_answer (π : Seed → Bool → History → Ac
       exact ih
     · exact ih
 
-private lemma table_rows_supported (table : (Bool × History) → PMF Action) :
+lemma table_rows_supported (table : (Bool × History) → PMF Action) :
     ∀ᵐ seed ∂(RowLaw table), ∀ row : Bool × History, table row (seed row) ≠ 0 := by
   let : MeasurableSingletonClass Action := ⟨action_singleton_measurable⟩
   apply ae_all_iff.mpr

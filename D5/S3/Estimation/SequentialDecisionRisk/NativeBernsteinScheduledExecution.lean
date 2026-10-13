@@ -120,4 +120,49 @@ theorem batchTable_supported_actions (S : Bool) (h : History) (a' : Action)
 
 end Table
 
+
+def safePolicy (σ : ℕ → Bool) (table : (Bool × History) → PMF Action)
+    (seed : RowSeed) (S : Bool) (h : History) : Action :=
+  if table (S, h) (seed (S, h)) = 0 then .inl (σ h.length) else seed (S, h)
+
+/-- The support repair is measurable and changes no execution on a common
+full-measure set of private seeds, uniformly in rates and innovation tapes. -/
+theorem supported_realization (σ : ℕ → Bool) (table : (Bool × History) → PMF Action) :
+    (∀ S h, Measurable (fun seed => safePolicy σ table seed S h)) ∧
+    (∀ᵐ seed ∂rowLaw table,
+      (∀ S h, safePolicy σ table seed S h = tablePolicy seed S h) ∧
+      ∀ (S : Bool) (p q : unitInterval) (tape : Tape),
+        (∀ n, nativeHistory (safePolicy σ table) S p q n (seed, tape) =
+          nativeHistory tablePolicy S p q n (seed, tape)) ∧
+        (∀ n, nativeAction (safePolicy σ table) S p q n (seed, tape) =
+          nativeAction tablePolicy S p q n (seed, tape)) ∧
+        nativeCalls (safePolicy σ table) S p q (seed, tape) =
+          nativeCalls tablePolicy S p q (seed, tape)) := by
+  classical
+  refine ⟨?_, ?_⟩
+  · intro S h
+    let : MeasurableSingletonClass Action := ⟨action_singleton_measurable⟩
+    exact (Measurable.of_discrete (f := fun x : Action =>
+      if table (S, h) x = 0 then Sum.inl (σ h.length) else x)).comp
+      (measurable_pi_apply (S, h))
+  · filter_upwards [NativeBernoulliFactoryCriticalMoment.table_rows_supported table] with seed hs
+    have he (S h) : safePolicy σ table seed S h = tablePolicy seed S h := by
+      simp [safePolicy, tablePolicy, hs (S, h)]
+    refine ⟨he, fun S p q tape => ?_⟩
+    have hh (n) : nativeHistory (safePolicy σ table) S p q n (seed, tape) =
+        nativeHistory tablePolicy S p q n (seed, tape) := by
+      induction n with
+      | zero => rfl
+      | succ n ih =>
+        change acquiredHistory (safePolicy σ table) S (sourceRead p q) (n + 1) (seed, tape) =
+          acquiredHistory tablePolicy S (sourceRead p q) (n + 1) (seed, tape)
+        change acquiredHistory (safePolicy σ table) S (sourceRead p q) n (seed, tape) =
+          acquiredHistory tablePolicy S (sourceRead p q) n (seed, tape) at ih
+        simp only [acquiredHistory, ih, he]
+    have ha (n) : nativeAction (safePolicy σ table) S p q n (seed, tape) =
+        nativeAction tablePolicy S p q n (seed, tape) := by
+      simp only [nativeAction, hh, he]
+    refine ⟨hh, ha, ?_⟩
+    simp only [nativeCalls, hittingAfter, ha]
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinScheduledExecution
