@@ -5,21 +5,16 @@
    anchors: []
    utility: none
    digest: Actual qubit survival and the extremal recorded-instrument distance. -/
-
 import D5.S3.Quantum.Measurement.ArbitraryDarkReferenceLowerBound
 import D5.S3.Quantum.Measurement.TwoRecordResetCalibration
 import D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.NumberTheory.Real.GoldenRatio
 import Mathlib.Tactic
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 noncomputable section
-
 namespace D5.S3.Quantum.Measurement.ExactFailureRadius
-
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -31,19 +26,15 @@ open D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
 open D5.S3.Quantum.Measurement.ArbitraryDarkReferenceLowerBound
 open Matrix Filter Topology
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Matrix Kronecker
-
 private abbrev Q := Fin 2
 private abbrev O := Bool × Q
 private abbrev KIndex := O × Q
-
 /-- Positive limiting probability of never clicking for an actual initial state. -/
 def Fails (I : TwoRecordInstrument Q Q) : Prop :=
   ∃ rho : DensityState Q, ∃ s : ℝ, 0 < s ∧
     Tendsto (fun n => (Matrix.trace (I.noClick^[n] rho.1)).re) atTop (𝓝 s)
-
 /-- The proposed extremal half-diamond distance. -/
 def radius : ℝ := Real.sqrt ((11 + 5 * Real.sqrt 5) / 32)
-
 private theorem actual_kraus (I : TwoRecordInstrument Q Q) :
     ∃ (N C : KIndex → Matrix Q Q ℂ),
       (∑ k, (N k)ᴴ * N k) + (∑ k, (C k)ᴴ * C k) = 1 ∧
@@ -62,8 +53,7 @@ private theorem actual_kraus (I : TwoRecordInstrument Q Q) :
       (∑ k, ∑ l : Q, star (C k l i)*C k l j) = (1 : Matrix Q Q ℂ) i j
     change (∑ k, ∑ p : O, star (K k p i)*K k p j) =
       (1 : Matrix Q Q ℂ) i j at h
-    simp only [N, C, Fintype.sum_prod_type, Fintype.sum_bool,
-      Finset.sum_add_distrib] at h ⊢
+    simp only [N, C, Fintype.sum_prod_type, Fintype.sum_bool, Finset.sum_add_distrib] at h ⊢
     convert h using 1 <;> abel
   · intro X
     ext i j
@@ -79,10 +69,8 @@ private theorem actual_kraus (I : TwoRecordInstrument Q Q) :
     change I.click (CStarMatrix.ofMatrix X) i j =
       (∑ k, K k * X * (K k)ᴴ) (true, i) (true, j) at h
     exact h
-
 private def primal (N : KIndex → Matrix Q Q ℂ) (X : Matrix Q Q ℂ) :
     Matrix Q Q ℂ := ∑ k, N k * X * (N k)ᴴ
-
 private theorem primal_dual_trace (N : KIndex → Matrix Q Q ℂ)
     (X Y : Matrix Q Q ℂ) :
     Matrix.trace (primal N X * Y) = Matrix.trace (X * noClickDual N Y) := by
@@ -94,7 +82,6 @@ private theorem primal_dual_trace (N : KIndex → Matrix Q Q ℂ)
       simp only [Matrix.mul_assoc]
     _ = Matrix.trace ((X * ((N k)ᴴ * Y)) * N k) := Matrix.trace_mul_comm _ _
     _ = _ := by simp only [Matrix.mul_assoc]
-
 private theorem survival_trace (I : TwoRecordInstrument Q Q)
     (N : KIndex → Matrix Q Q ℂ)
     (hN : ∀ X : Matrix Q Q ℂ, CStarMatrix.ofMatrix.symm
@@ -121,7 +108,6 @@ private theorem survival_trace (I : TwoRecordInstrument Q Q)
     | succ n ih => simp only [survival, ih, Function.iterate_succ_apply']
   change Matrix.trace (CStarMatrix.ofMatrix.symm (I.noClick^[n] rho)) = _
   simpa only [hs, Matrix.mul_one] using hiter rho n 1
-
 private theorem failing_dark (I : TwoRecordInstrument Q Q)
     (N C : KIndex → Matrix Q Q ℂ)
     (hcomp : (∑ k, (N k)ᴴ * N k) + (∑ k, (C k)ᴴ * C k) = 1)
@@ -147,7 +133,6 @@ private theorem failing_dark (I : TwoRecordInstrument Q Q)
       (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)) rho.2.2
   have : s = 0 := by simpa only [hz, Complex.zero_re] using hsF.symm
   linarith
-
 private theorem unit_in_subspace (D : Submodule ℂ (Q → ℂ)) (hD : D ≠ ⊥) :
     ∃ psi : Q → ℂ, psi ∈ D ∧
       Complex.normSq (psi 0) + Complex.normSq (psi 1) = 1 := by
@@ -175,7 +160,6 @@ private theorem unit_in_subspace (D : Submodule ℂ (Q → ℂ)) (hD : D ≠ ⊥
   · simp only [Complex.normSq_div, Complex.normSq_ofReal, ← add_div,
       ← sq, hts]
     exact div_self hp.ne'
-
 private theorem dark_qubit_split (N C : KIndex → Matrix Q Q ℂ)
     (hcomp : (∑ k, (N k)ᴴ * N k) + (∑ k, (C k)ᴴ * C k) = 1)
     (hD : darkLayer N C 2 ≠ ⊥) :
@@ -215,19 +199,15 @@ private theorem dark_qubit_split (N C : KIndex → Matrix Q Q ℂ)
     choose c hc using hex
     have hz (k : KIndex) : C k *ᵥ psi = 0 := hkill k psi hpsi
     have hunit : star psi ⬝ᵥ psi = 1 := by
-      simp only [dotProduct, Fin.sum_univ_two, Pi.star_apply, Complex.star_def,
-        ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_add, hu,
-        Complex.ofReal_one]
+      simp only [dotProduct, Fin.sum_univ_two, Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_add, hu, Complex.ofReal_one]
     have hmass : (∑ k, star (c k) * c k) = 1 := by
       have h := congrArg (fun M : Matrix Q Q ℂ => star psi ⬝ᵥ (M *ᵥ psi)) hcomp
       have hnorm (A : Matrix Q Q ℂ) :
           star psi ⬝ᵥ ((Aᴴ * A) *ᵥ psi) = star (A *ᵥ psi) ⬝ᵥ (A *ᵥ psi) := by
         rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec, Matrix.dotProduct_mulVec,
           Matrix.vecMul_vecMul]
-      simp only [Matrix.add_mulVec, Matrix.sum_mulVec, dotProduct_add,
-        dotProduct_sum, Matrix.one_mulVec, hunit] at h
-      simp only [hnorm, hz, star_zero, dotProduct_zero, Finset.sum_const_zero,
-        add_zero, ← hc] at h
+      simp only [Matrix.add_mulVec, Matrix.sum_mulVec, dotProduct_add, dotProduct_sum, Matrix.one_mulVec, hunit] at h
+      simp only [hnorm, hz, star_zero, dotProduct_zero, Finset.sum_const_zero, add_zero, ← hc] at h
       have hcunit (z : ℂ) : star (z • psi) ⬝ᵥ (z • psi) = star z*z := by
         calc
           _ = star z*z*(star psi ⬝ᵥ psi) := by
@@ -240,9 +220,7 @@ private theorem dark_qubit_split (N C : KIndex → Matrix Q Q ℂ)
       simpa only [hcunit] using h
     refine ⟨psi, hu, ?_⟩
     ext i j
-    simp only [primal, Matrix.sum_apply, Matrix.mul_vecMulVec,
-      Matrix.vecMulVec_mul, ← Matrix.star_mulVec, ← hc,
-      Matrix.vecMulVec_apply, Pi.smul_apply, Pi.star_apply, smul_eq_mul, star_mul]
+    simp only [primal, Matrix.sum_apply, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, ← Matrix.star_mulVec, ← hc, Matrix.vecMulVec_apply, Pi.smul_apply, Pi.star_apply, smul_eq_mul, star_mul]
     calc
       (∑ k, c k * psi i * (star (psi j) * star (c k))) =
           (∑ k, star (c k) * c k) * (psi i * star (psi j)) := by
@@ -251,7 +229,6 @@ private theorem dark_qubit_split (N C : KIndex → Matrix Q Q ℂ)
         intro k _
         ring
       _ = _ := by rw [hmass, one_mul]
-
 /-- Every failing actual qubit instrument either never clicks on any input or
 has a normalized pure no-click fixed state. No original Kraus representation is assumed. -/
 theorem failing_qubit_dark_split (I : TwoRecordInstrument (Fin 2) (Fin 2))
@@ -273,7 +250,6 @@ theorem failing_qubit_dark_split (I : TwoRecordInstrument (Fin 2) (Fin 2))
     refine ⟨psi, hu, ?_⟩
     apply CStarMatrix.ofMatrix.symm.injective
     exact (hN _).trans hp
-
 private theorem unitary_test_le_diamond (F G : QuantumChannel Q O)
     (psi : Q → ℂ) (hu : star psi ⬝ᵥ psi = 1)
     (U : Matrix O O ℂ) (hU : U ∈ Matrix.unitaryGroup O ℂ) :
@@ -335,7 +311,6 @@ private theorem unitary_test_le_diamond (F G : QuantumChannel Q O)
       change referenceError F G sigma/2 ≤ 1 at h
       linarith
   exact htest.trans (le_csSup hbdd (Or.inr ⟨1, rho, rfl⟩))
-
 set_option maxHeartbeats 2400000 in
 private theorem dark_input_test (I : TwoRecordInstrument Q Q) (psi : Q → ℂ)
     (hu : Complex.normSq (psi 0) + Complex.normSq (psi 1) = 1)
@@ -385,8 +360,7 @@ private theorem dark_input_test (I : TwoRecordInstrument Q Q) (psi : Q → ℂ)
     ext ⟨s, i⟩ ⟨r, j⟩
     change star (U (r, j) (s, i)) = U (s, i) (r, j)
     cases s <;> cases r <;>
-      simp only [U, Bool.false_eq_true, Bool.true_eq_false, if_true, if_false,
-        star_zero, star_neg, Matrix.one_apply, apply_ite, star_one]
+      simp only [U, Bool.false_eq_true, Bool.true_eq_false, if_true, if_false, star_zero, star_neg, Matrix.one_apply, apply_ite, star_one]
     · exact congrArg (fun M : Matrix Q Q ℂ => M i j) hWstar
     · by_cases h : i = j
       · simp [h]
@@ -403,8 +377,7 @@ private theorem dark_input_test (I : TwoRecordInstrument Q Q) (psi : Q → ℂ)
     change star U*U = 1 ∧ U*star U = 1
     simpa only [Matrix.star_eq_conjTranspose, hUstar] using And.intro hUU hUU
   have hunit : star psi ⬝ᵥ psi = 1 := by
-    simp only [dotProduct, Fin.sum_univ_two, Pi.star_apply, Complex.star_def,
-      ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_add, hu, Complex.ofReal_one]
+    simp only [dotProduct, Fin.sum_univ_two, Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_add, hu, Complex.ofReal_one]
   have hclick : Matrix.trace (I.click (pureState psi hunit).1) = 0 := by
     have h := I.trace_sum (pureState psi hunit).1
     rw [(pureState psi hunit).2.2] at h
@@ -445,9 +418,7 @@ private theorem dark_input_test (I : TwoRecordInstrument Q Q) (psi : Q → ℂ)
         if p.1 = q.1 then if p.1 then I.click (pureState psi hunit).1 p.2 q.2
           else psi p.2*star (psi q.2) else 0 := rfl
     simp only [hentry]
-    simp [Fintype.sum_prod_type, Fintype.sum_bool,
-      Fin.sum_univ_two, U, W, recordBlocks, Matrix.one_apply,
-      Matrix.vecMulVec_apply, Pi.star_apply, Complex.ofReal_add]
+    simp [Fintype.sum_prod_type, Fintype.sum_bool, Fin.sum_univ_two, U, W, recordBlocks, Matrix.one_apply, Matrix.vecMulVec_apply, Pi.star_apply, Complex.ofReal_add]
     field_simp [htne]
     have htC : (t : ℂ)^2 = (a : ℂ)^2+4*(b : ℂ)^2 := by exact_mod_cast hts
     have habC : (a : ℂ)+(b : ℂ) = 1 := by exact_mod_cast hab
@@ -463,7 +434,6 @@ private theorem dark_input_test (I : TwoRecordInstrument Q Q) (psi : Q → ℂ)
   rw [← he]
   change (a+t)/2 ≤ _
   linarith
-
 private theorem radius_bounds : 0 < radius ∧ radius < 5/6 := by
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
   have hn := Real.sqrt_nonneg (5 : ℝ)
@@ -472,7 +442,6 @@ private theorem radius_bounds : 0 < radius ∧ radius < 5/6 := by
   have hr := Real.sq_sqrt hp.le
   have hr0 := Real.sqrt_nonneg ((11 + 5 * Real.sqrt (5 : ℝ))/32)
   exact ⟨Real.sqrt_pos.mpr hp, by unfold radius; nlinarith⟩
-
 set_option maxHeartbeats 2400000 in
 private theorem middle_comparison (a : ℝ) (ha : 1/4 ≤ a) (ha1 : a ≤ 2/3) :
     radius ≤ referenceLowerBound a (Real.goldenRatio/2) := by
@@ -536,7 +505,6 @@ private theorem middle_comparison (a : ℝ) (ha : 1/4 ≤ a) (ha1 : a ≤ 2/3) :
   rw [hform]
   rw [hD] at hsum
   nlinarith [(radius_bounds).1, sq_nonneg (Real.sqrt A+Real.sqrt B+2*radius)]
-
 private theorem high_comparison (a : ℝ) (ha : 2/3 ≤ a) :
     radius ≤ referenceLowerBound a (1/2) := by
   have hab : a*(1-a) ≤ 2/9 := by
@@ -556,7 +524,6 @@ private theorem high_comparison (a : ℝ) (ha : 2/3 ≤ a) :
   have hm' : 4/5 ≤ Real.sqrt a := by nlinarith
   rw [hform]
   nlinarith [(radius_bounds).2]
-
 private theorem pure_fixed_lower (I : TwoRecordInstrument Q Q) (psi : Q → ℂ)
     (hu : Complex.normSq (psi 0) + Complex.normSq (psi 1) = 1)
     (hf : I.noClick (CStarMatrix.ofMatrix (Matrix.vecMulVec psi (star psi))) =
@@ -598,7 +565,6 @@ private theorem pure_fixed_lower (I : TwoRecordInstrument Q Q) (psi : Q → ℂ)
   · exact (high_comparison a (by linarith)).trans
       (reference_lower_bound I.channel psi (1/2) hu ha0 ha1'
         (by norm_num) (by norm_num) (by nlinarith) hfixed)
-
 private theorem zero_click_lower (I : TwoRecordInstrument Q Q)
     (hz : ∀ X : CStarMatrix Q Q ℂ, I.click X = 0) :
     1 ≤ diamondDistance I.channel nominalInstrument/2 := by
@@ -642,15 +608,12 @@ private theorem zero_click_lower (I : TwoRecordInstrument Q Q)
           else I.noClick (pureState psi hu).1 i j else 0) = _
         cases s <;> cases r <;> rfl
     simp only [hentry]
-    simp [U, Matrix.diagonal,
-      Fintype.sum_prod_type, Fintype.sum_bool, Fin.sum_univ_two,
-      Matrix.vecMulVec_apply, psi]
+    simp [U, Matrix.diagonal, Fintype.sum_prod_type, Fintype.sum_bool, Fin.sum_univ_two, Matrix.vecMulVec_apply, psi]
     linear_combination htr
   have h := unitary_test_le_diamond I.channel nominalInstrument psi hu U hU
   rw [hval] at h
   norm_num at h
   linarith
-
 /-- Every legal failing qubit instrument with arbitrary CP branches and retained
 quantum successors has half-diamond distance at least the explicit radius. -/
 theorem global_failure_distance_lower_bound
@@ -659,5 +622,377 @@ theorem global_failure_distance_lower_bound
   rcases failing_qubit_dark_split I hf with hz | ⟨psi, hu, hp⟩
   · exact (show radius ≤ 1 by linarith [(radius_bounds).2]).trans (zero_click_lower I hz)
   · exact pure_fixed_lower I psi hu hp
-
+private def outer {n : Type*} (x : n → ℂ) : Matrix n n ℂ :=
+  Matrix.vecMulVec x (star x)
+set_option maxHeartbeats 2400000 in
+private theorem outer_difference_norm {n : Type*} [Fintype n] [DecidableEq n]
+    (x y : n → ℂ) :
+    0 ≤ (((∑ i, Complex.normSq (x i)) + (∑ i, Complex.normSq (y i)))^2 -
+        4 * Complex.normSq (star x ⬝ᵥ y)) ∧
+    traceNorm (outer x - outer y) = Real.sqrt
+      (((∑ i, Complex.normSq (x i)) + (∑ i, Complex.normSq (y i)))^2 -
+        4 * Complex.normSq (star x ⬝ᵥ y)) := by
+  let p : ℝ := ∑ i, Complex.normSq (x i)
+  let q : ℝ := ∑ i, Complex.normSq (y i)
+  let r := star x ⬝ᵥ y
+  let X := outer x
+  let Y := outer y
+  let Z := Matrix.vecMulVec x (star y)
+  let T := Matrix.vecMulVec y (star x)
+  let A := X-Y
+  let C := ((p+q : ℝ) : ℂ) • (X+Y) - 2 • (r • Z + star r • T)
+  have hx : star x ⬝ᵥ x = (p : ℂ) := by
+    simp only [dotProduct, Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_sum, p]
+  have hy : star y ⬝ᵥ y = (q : ℂ) := by
+    simp only [dotProduct, Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self, ← Complex.ofReal_sum, q]
+  have hr : star y ⬝ᵥ x = star r := by
+    simp only [r, dotProduct, star_sum, star_mul, Pi.star_apply, star_star]
+  have hxy : star x ⬝ᵥ y = r := rfl
+  have hrr : r * star r = (Complex.normSq r : ℂ) := by
+    simpa only [Complex.star_def] using Complex.mul_conj r
+  have hmul (a b c d : n → ℂ) :
+      Matrix.vecMulVec a (star b) * Matrix.vecMulVec c (star d) =
+        (star b ⬝ᵥ c) • Matrix.vecMulVec a (star d) := by
+    rw [Matrix.vecMulVec_mul_vecMulVec]
+    ext i j
+    simp [Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul, mul_comm, mul_left_comm, mul_assoc]
+  have hW : C = A*A + ∑ i, outer ((y i) • x - (x i) • y) := by
+    have he (i : n) : outer ((y i) • x - (x i) • y) =
+        (y i*star (y i)) • X + (x i*star (x i)) • Y -
+          (y i*star (x i)) • Z - (x i*star (y i)) • T := by
+      ext j k
+      simp only [outer, X, Y, Z, T, Matrix.vecMulVec_apply, Pi.star_apply, Pi.sub_apply, Pi.smul_apply, Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply, smul_eq_mul, star_sub, star_mul]
+      ring
+    simp only [he, Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.sum_smul]
+    have hx' : ∑ i, x i*star (x i) = (p : ℂ) := by
+      simpa only [dotProduct, Pi.star_apply, mul_comm] using hx
+    have hy' : ∑ i, y i*star (y i) = (q : ℂ) := by
+      simpa only [dotProduct, Pi.star_apply, mul_comm] using hy
+    have hr' : ∑ i, y i*star (x i) = r := by
+      simp only [r, dotProduct, Pi.star_apply, mul_comm]
+    have hr'' : ∑ i, x i*star (y i) = star r := by
+      simpa only [dotProduct, Pi.star_apply, mul_comm] using hr
+    rw [hx', hy', hr', hr'']
+    dsimp only [C, A, X, Y, Z, T, outer]
+    simp only [sub_mul, mul_sub, hmul, hx, hy, hr]
+    ext i j
+    simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply, smul_eq_mul, Complex.ofReal_add]
+    ring
+  have hA : Aᴴ = A := by
+    dsimp [A, X, Y, outer]
+    simp [Matrix.conjTranspose_vecMulVec]
+  have hCP : C.PosSemidef := by
+    rw [hW]
+    nth_rw 1 [← hA]
+    exact (Matrix.posSemidef_conjTranspose_mul_self A).add
+      (Matrix.posSemidef_sum Finset.univ (fun i _ => Matrix.posSemidef_vecMulVec_self_star _))
+  let d2 := (p+q)^2 - 4*Complex.normSq r
+  have htrace : Matrix.trace C = (d2 : ℂ) := by
+    dsimp only [C, d2, X, Y, Z, T, outer]
+    simp only [Matrix.trace_sub, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_vecMulVec]
+    rw [dotProduct_comm x (star x), dotProduct_comm y (star y), hx, hy,
+      dotProduct_comm x (star y), dotProduct_comm y (star x), hr, hxy]
+    push_cast
+    rw [← hrr]
+    ring
+  have hd2 : 0 ≤ d2 := by
+    have h := hCP.trace_nonneg
+    rw [htrace] at h
+    exact_mod_cast h
+  have hsquare : C*C = (d2 : ℂ) • (A*A) := by
+    dsimp only [C, A, X, Y, Z, T, outer]
+    simp only [sub_mul, mul_sub, add_mul, mul_add, Matrix.smul_mul, Matrix.mul_smul, hmul, hx, hy, hr, hxy, smul_smul]
+    ext i j
+    simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply, smul_eq_mul, Complex.ofReal_add]
+    dsimp only [d2]
+    push_cast
+    rw [← hrr]
+    ring
+  refine ⟨hd2, ?_⟩
+  let d := Real.sqrt d2
+  have hds : d^2 = d2 := Real.sq_sqrt hd2
+  by_cases hd : d = 0
+  · have hz2 : d2 = 0 := by nlinarith
+    have hz : C = 0 := hCP.trace_eq_zero_iff.mp (by rw [htrace, hz2]; norm_num)
+    have hzA : A = 0 := by
+      have hAA : A*A = 0 := by
+        have hp := (Matrix.posSemidef_sum Finset.univ
+          (fun i _ => Matrix.posSemidef_vecMulVec_self_star
+            ((y i) • x - (x i) • y))).nonneg
+        have hle : Aᴴ*A ≤ 0 := by
+          rw [← hz, hW, hA]
+          exact le_add_of_nonneg_right hp
+        simpa only [hA] using le_antisymm hle (Matrix.posSemidef_conjTranspose_mul_self A).nonneg
+      exact Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp (by rw [hA, hAA]; simp)
+    change traceNorm A = d
+    rw [hzA, hd]
+    simp [traceNorm]
+  · have hdpos : 0 < d := lt_of_le_of_ne (Real.sqrt_nonneg _) (Ne.symm hd)
+    let B := ((d : ℂ)⁻¹) • C
+    have hBP : B.PosSemidef := hCP.smul (by exact_mod_cast inv_nonneg.mpr hdpos.le)
+    have hBsq : B*B = Aᴴ*A := by
+      rw [hA]
+      dsimp only [B]
+      rw [Matrix.smul_mul, Matrix.mul_smul, hsquare, smul_smul, smul_smul]
+      have hdC : (d : ℂ)^2 = (d2 : ℂ) := by exact_mod_cast hds
+      have hdne : (d : ℂ) ≠ 0 := by exact_mod_cast hd
+      rw [show (d : ℂ)⁻¹*(d : ℂ)⁻¹*(d2 : ℂ) = 1 by
+        rw [← hdC]; field_simp, one_smul]
+    change (CFC.sqrt (Aᴴ*A)).trace.re = d
+    rw [CFC.sqrt_unique hBsq hBP.nonneg]
+    dsimp only [B]
+    rw [Matrix.trace_smul, htrace]
+    change (((d : ℂ)⁻¹)*(d2 : ℂ)).re = d
+    have he : ((d : ℂ)⁻¹)*(d2 : ℂ) = (d : ℂ) := by
+      have hs : (d2 : ℂ) = (d : ℂ)^2 := by exact_mod_cast hds.symm
+      rw [hs]
+      field_simp
+    rw [he, Complex.ofReal_re]
+private def branchCP (K : CStarMatrix Q Q ℂ) : CStarMatrix Q Q ℂ →CP CStarMatrix Q Q ℂ where
+  toLinearMap :=
+    { toFun := fun X => K*X*star K
+      map_add' := fun X Y => by simp only [mul_add, add_mul]
+      map_smul' := fun c X => by simp only [mul_smul_comm, smul_mul_assoc, RingHom.id_apply] }
+  map_cstarMatrix_nonneg' k X hX := by
+    let D : CStarMatrix (Fin k) (Fin k) (CStarMatrix Q Q ℂ) := Matrix.diagonal fun _ => K
+    have h := star_right_conjugate_nonneg hX D
+    convert h using 1
+    apply CStarMatrix.ext
+    intro i j
+    change K*X i j*star K = (D*X*star D) i j
+    change K*X i j*star K = ∑ b : Fin k,
+      (∑ a : Fin k, (if i=a then K else 0)*X a b)*star (if j=b then K else 0)
+    simp [eq_comm,apply_ite]
+private def plusK : CStarMatrix Q Q ℂ := CStarMatrix.ofMatrix !![1/2,1/2;1/2,1/2]
+private def plusL : CStarMatrix Q Q ℂ :=
+  CStarMatrix.ofMatrix !![(1/Real.sqrt 2 : ℝ),(-1/Real.sqrt 2 : ℝ);0,0]
+private theorem plus_complete : star plusK*plusK + star plusL*plusL = 1 := by
+  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hn : (Real.sqrt 2 : ℝ) ≠ 0 := (Real.sqrt_pos.mpr (by norm_num)).ne'
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [plusK, plusL, CStarMatrix.mul_apply, CStarMatrix.star_apply, Fin.sum_univ_two] <;>
+    apply Complex.ext <;> simp <;> field_simp [hn] <;> nlinarith
+/-- The original balanced phase-zero instrument, including its clicked successor. -/
+def plusInstrument : TwoRecordInstrument Q Q where
+  noClick := branchCP plusK
+  click := branchCP plusL
+  trace_sum X := by
+    change Matrix.trace (plusK*X*star plusK) + Matrix.trace (plusL*X*star plusL) = _
+    have hcomp : (CStarMatrix.ofMatrix.symm plusK)ᴴ * CStarMatrix.ofMatrix.symm plusK +
+        (CStarMatrix.ofMatrix.symm plusL)ᴴ * CStarMatrix.ofMatrix.symm plusL = 1 := plus_complete
+    change Matrix.trace (CStarMatrix.ofMatrix.symm plusK * CStarMatrix.ofMatrix.symm X *
+      (CStarMatrix.ofMatrix.symm plusK)ᴴ) + Matrix.trace
+      (CStarMatrix.ofMatrix.symm plusL * CStarMatrix.ofMatrix.symm X *
+        (CStarMatrix.ofMatrix.symm plusL)ᴴ) = Matrix.trace (CStarMatrix.ofMatrix.symm X)
+    rw [Matrix.trace_mul_cycle (CStarMatrix.ofMatrix.symm plusK),
+      Matrix.trace_mul_cycle (CStarMatrix.ofMatrix.symm plusL), ← Matrix.trace_add,
+      ← Matrix.add_mul, hcomp, Matrix.one_mul]
+private theorem candidate_scalar_upper (x : ℝ) (hA : 0 ≤ 5/4-x)
+    (hB : 0 ≤ 1/4+x-x^2) :
+    (Real.sqrt (5/4-x) + Real.sqrt (1/4+x-x^2))/2 ≤ radius := by
+  let s := Real.sqrt (5 : ℝ)
+  let A := 5/4-x
+  let B := 1/4+x-x^2
+  let D := (11+5*s)/8
+  have hs : s^2 = 5 := Real.sq_sqrt (by norm_num)
+  have hs0 : 0 ≤ s := Real.sqrt_nonneg _
+  have hD : D = 4*radius^2 := by
+    dsimp [D, radius, s]
+    rw [Real.sq_sqrt (by positivity)]
+    ring
+  have hfactor : (D-A-B)^2-4*A*B =
+      (x-(3-s)/4)^2 * ((x-(5+s)/4)^2+(7+3*s)/2) := by
+    have hs3 : s^3 = 5*s := by
+      calc
+        _ = s*s^2 := by ring
+        _ = _ := by rw [hs]; ring
+    have hs4 : s^4 = 25 := by
+      calc
+        _ = (s^2)^2 := by ring
+        _ = _ := by rw [hs]; norm_num
+    dsimp [D, A, B]
+    ring_nf
+    rw [hs,hs3,hs4]
+    ring
+  have hprod : 0 ≤ (D-A-B)^2-4*A*B := by
+    rw [hfactor]
+    positivity
+  have hdiff : 0 < D-A-B := by dsimp [D,A,B]; nlinarith [sq_nonneg x]
+  have ha := Real.sqrt_nonneg A
+  have hb := Real.sqrt_nonneg B
+  have has := Real.sq_sqrt hA
+  have hbs := Real.sq_sqrt hB
+  change (Real.sqrt A)^2 = A at has
+  change (Real.sqrt B)^2 = B at hbs
+  have hmul : 2*Real.sqrt A*Real.sqrt B ≤ D-A-B := by
+    by_contra h
+    have hp := mul_pos (show 0 < 2*Real.sqrt A*Real.sqrt B-(D-A-B) by linarith)
+      (show 0 < 2*Real.sqrt A*Real.sqrt B+(D-A-B) by positivity)
+    nlinarith [sq_nonneg (Real.sqrt A*Real.sqrt B)]
+  rw [hD] at hmul
+  change (Real.sqrt A+Real.sqrt B)/2 ≤ radius
+  nlinarith [(radius_bounds).1]
+set_option maxHeartbeats 2400000 in
+private theorem plus_pure_upper (w : (Fin 2 × Q) → ℂ) (hw : star w ⬝ᵥ w = 1) :
+    referenceError plusInstrument.channel nominalInstrument (pureState w hw) ≤ 2*radius := by
+  let a := Complex.normSq (w (0,0)) + Complex.normSq (w (1,0))
+  let c := w (0,0)*star (w (0,1)) + w (1,0)*star (w (1,1))
+  let u := c.re
+  let v := c.im
+  let x := a-u
+  let t := Real.sqrt (2 : ℝ)
+  have ht : t^2 = 2 := Real.sq_sqrt (by norm_num)
+  have ht0 : t ≠ 0 := (Real.sqrt_pos.mpr (by norm_num)).ne'
+  have htotal : Complex.normSq (w (0,0)) + Complex.normSq (w (0,1)) +
+      Complex.normSq (w (1,0)) + Complex.normSq (w (1,1)) = 1 := by
+    have h := congrArg Complex.re hw
+    simpa [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
+      Pi.star_apply, Complex.star_def, Complex.normSq_apply,
+      Complex.mul_re,add_assoc] using h
+  let xn : (Fin 2 × O) → ℂ := fun p => if p.2.1 then 0 else
+    (w (p.1,0)+w (p.1,1))/2
+  let yn : (Fin 2 × O) → ℂ := fun p =>
+    if p.2 = (false,0) then w (p.1,1) else 0
+  let xc : (Fin 2 × O) → ℂ := fun p =>
+    if p.2 = (true,0) then (w (p.1,0)-w (p.1,1))/(t : ℂ) else 0
+  let yc : (Fin 2 × O) → ℂ := fun p =>
+    if p.2 = (true,0) then w (p.1,0) else 0
+  have hpN : ∑ p, Complex.normSq (xn p) = 1/2+u := by
+    simp [xn, Fintype.sum_prod_type, Fintype.sum_bool, Fin.sum_univ_two, u,c,Complex.normSq_apply,Complex.star_def,Complex.mul_re,Complex.mul_im]
+    simp [Complex.normSq_apply] at htotal
+    linear_combination htotal/2
+  have hqN : ∑ p, Complex.normSq (yn p) = 1-a := by
+    simp [yn,a,Fintype.sum_prod_type,Fintype.sum_bool,Fin.sum_univ_two]
+    linarith
+  have hrN : star xn ⬝ᵥ yn = ((1-a : ℝ) : ℂ)/2 + star c/2 := by
+    simp [xn,yn,dotProduct,Fintype.sum_prod_type,Fintype.sum_bool,Fin.sum_univ_two]
+    apply Complex.ext <;> simp [a,c,Complex.normSq_apply,Complex.star_def,
+      Complex.mul_re,Complex.mul_im,Complex.div_re,Complex.div_im]
+    · simp [Complex.normSq_apply] at htotal
+      linear_combination htotal/2
+    · ring
+  have hpC : ∑ p, Complex.normSq (xc p) = 1/2-u := by
+    simp [xc,Fintype.sum_prod_type,Fintype.sum_bool,Fin.sum_univ_two, Complex.normSq_div,Complex.normSq_ofReal,← sq,ht]
+    simp [u,c,Complex.normSq_apply,Complex.star_def,Complex.mul_re,Complex.mul_im]
+    simp [Complex.normSq_apply] at htotal
+    linear_combination htotal/2
+  have hqC : ∑ p, Complex.normSq (yc p) = a := by
+    simp [yc,a,Fintype.sum_prod_type,Fintype.sum_bool,Fin.sum_univ_two]
+  have hrC : star xc ⬝ᵥ yc = ((a : ℂ)-c)/(t : ℂ) := by
+    simp [xc,yc,dotProduct,Fintype.sum_prod_type,Fintype.sum_bool,Fin.sum_univ_two]
+    apply Complex.ext <;> simp [a,c,Complex.normSq_apply,Complex.star_def,
+      Complex.div_re,Complex.div_im,Complex.mul_re,Complex.mul_im]
+    all_goals field_simp [ht0] <;> ring
+  have hn := outer_difference_norm xn yn
+  have hc := outer_difference_norm xc yc
+  rw [hpN,hqN,hrN] at hn
+  rw [hpC,hqC,hrC] at hc
+  have hdN : (1/2+u+(1-a))^2 - 4*Complex.normSq
+      (((1-a : ℝ) : ℂ)/2+star c/2) = 5/4-x-v^2 := by
+    simp [Complex.normSq_apply,u,v,x,Complex.star_def]
+    ring
+  have hdC : (1/2-u+a)^2 - 4*Complex.normSq (((a : ℂ)-c)/(t : ℂ)) =
+      1/4+x-x^2-2*v^2 := by
+    rw [Complex.normSq_div,Complex.normSq_ofReal,← sq,ht]
+    simp [Complex.normSq_apply,u,v,x]
+    ring
+  rw [hdN] at hn
+  rw [hdC] at hc
+  have hentry : CStarMatrix.ofMatrix.symm
+      (referenceState plusInstrument.channel (pureState w hw)).1 -
+      CStarMatrix.ofMatrix.symm (referenceState nominalInstrument (pureState w hw)).1 =
+        (outer xn-outer yn)+(outer xc-outer yc) := by
+    ext ⟨r,⟨s,i⟩⟩ ⟨l,⟨b,j⟩⟩
+    change plusInstrument.channel.toCompletelyPositiveMap
+      (CStarMatrix.ofMatrix (fun e f => w (r,e)*star (w (l,f)))) (s,i) (b,j) -
+      nominalInstrument.toCompletelyPositiveMap
+        (CStarMatrix.ofMatrix (fun e f => w (r,e)*star (w (l,f)))) (s,i) (b,j) = _
+    have hnom := congrArg (fun M : Matrix O O ℂ => M (s,i) (b,j))
+      (nominal_instrument_apply (fun e f => w (r,e)*star (w (l,f))))
+    change nominalInstrument.toCompletelyPositiveMap
+      (CStarMatrix.ofMatrix (fun e f => w (r,e)*star (w (l,f)))) (s,i) (b,j) = _ at hnom
+    rw [(two_record_reset_calibration.{0,0} plusInstrument).1, hnom]
+    change (if s=b then (if s then
+      ∑ k : Q, (∑ e : Q, plusL i e*(w (r,e)*star (w (l,k))))*star (plusL j k)
+      else ∑ k : Q, (∑ e : Q, plusK i e*(w (r,e)*star (w (l,k))))*star (plusK j k)) else 0) -
+      (if (s,i)=(false,0) ∧ (b,j)=(false,0) then w (r,1)*star (w (l,1))
+        else if (s,i)=(true,0) ∧ (b,j)=(true,0) then w (r,0)*star (w (l,0)) else 0) =
+      (xn (r,(s,i))*star (xn (l,(b,j)))-yn (r,(s,i))*star (yn (l,(b,j)))) +
+        (xc (r,(s,i))*star (xc (l,(b,j)))-yc (r,(s,i))*star (yc (l,(b,j))))
+    cases s <;> cases b <;> fin_cases i <;> fin_cases j <;>
+      simp [plusK,plusL,xn,yn,xc,yc,Fin.sum_univ_two,map_ofNat,t] <;>
+      field_simp [Real.sqrt_ne_zero'.mpr (by norm_num : (0 : ℝ) < 2)] <;>
+      ring
+  unfold referenceError
+  rw [hentry]
+  have h := traceNorm_add_le (outer xn-outer yn) (outer xc-outer yc)
+  rw [hn.2,hc.2] at h
+  have ha : 0 ≤ 5/4-x := by nlinarith [hn.1,sq_nonneg v]
+  have hb : 0 ≤ 1/4+x-x^2 := by nlinarith [hc.1,sq_nonneg v]
+  have hN := Real.sqrt_le_sqrt (show 5/4-x-v^2 ≤ 5/4-x by nlinarith [sq_nonneg v])
+  have hC := Real.sqrt_le_sqrt (show 1/4+x-x^2-2*v^2 ≤ 1/4+x-x^2 by nlinarith [sq_nonneg v])
+  linarith [candidate_scalar_upper x ha hb]
+private theorem plus_upper : diamondDistance plusInstrument.channel nominalInstrument ≤ 2*radius := by
+  rw [(D5.S3.Quantum.Foundation.FiniteDiamondDistance.result.{0,0}
+    plusInstrument.channel nominalInstrument).2.2]
+  refine csSup_le ?_ ?_
+  · exact ⟨(0 : ℝ),Or.inl rfl⟩
+  · rintro d (hd | ⟨rho,hpure,rfl⟩)
+    · have hd0 : d = 0 := hd
+      rw [hd0]
+      linarith [(radius_bounds).1]
+    · obtain ⟨w,hw⟩ := hpure
+      have hu : star w ⬝ᵥ w = 1 := by
+        have htr := rho.2.2
+        rw [hw] at htr
+        change Matrix.trace (Matrix.vecMulVec w (star w)) = 1 at htr
+        simpa only [Matrix.trace_vecMulVec,dotProduct_comm] using htr
+      have he : rho = pureState w hu := Subtype.ext hw
+      rw [he]
+      exact plus_pure_upper w hu
+private theorem plus_failure : Fails plusInstrument := by
+  let t := Real.sqrt (2 : ℝ)
+  have hs : t^2 = 2 := Real.sq_sqrt (by norm_num)
+  have hsC : (t : ℂ)^2 = 2 := by exact_mod_cast hs
+  let psi : Q → ℂ := fun _ => (t : ℂ)/2
+  have hu : star psi ⬝ᵥ psi = 1 := by
+    simp [psi,dotProduct,Fin.sum_univ_two,Complex.star_def]
+    linear_combination hsC/2
+  let rho := pureState psi hu
+  have hrho : rho.1 = plusK := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [rho,pureState,psi,plusK,CStarMatrix.ofMatrix_apply, Matrix.vecMulVec_apply,Complex.star_def] <;>
+      linear_combination hsC/4
+  have hfix : plusInstrument.noClick rho.1 = rho.1 := by
+    rw [hrho]
+    change plusK*plusK*star plusK = plusK
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [plusK,CStarMatrix.mul_apply,CStarMatrix.star_apply,
+        CStarMatrix.ofMatrix_apply,Fin.sum_univ_two,Complex.star_def,map_ofNat]
+  refine ⟨rho,1,by norm_num,?_⟩
+  have he (n : ℕ) : (Matrix.trace (plusInstrument.noClick^[n] rho.1)).re = 1 := by
+    rw [Function.iterate_fixed hfix n,rho.2.2]
+    rfl
+  simpa only [he] using (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1))
+/-- The complete actual-instrument failure radius is attained by the original
+balanced projector instrument, with every finite quantum reference retained. -/
+theorem exact_failure_radius :
+    Fails plusInstrument ∧ diamondDistance plusInstrument.channel nominalInstrument/2 = radius ∧
+    sInf {d : ℝ | ∃ I : TwoRecordInstrument (Fin 2) (Fin 2), Fails I ∧
+      d = diamondDistance I.channel nominalInstrument/2} = radius := by
+  have hf := plus_failure
+  have he : diamondDistance plusInstrument.channel nominalInstrument/2 = radius := by
+    apply le_antisymm
+    · linarith [plus_upper]
+    · exact global_failure_distance_lower_bound plusInstrument hf
+  have hm : radius ∈ {d : ℝ | ∃ I : TwoRecordInstrument Q Q, Fails I ∧
+      d = diamondDistance I.channel nominalInstrument/2} := ⟨plusInstrument,hf,he.symm⟩
+  have hlow : ∀ d ∈ {d : ℝ | ∃ I : TwoRecordInstrument Q Q, Fails I ∧
+      d = diamondDistance I.channel nominalInstrument/2}, radius ≤ d := by
+    rintro d ⟨I,hI,rfl⟩
+    exact global_failure_distance_lower_bound I hI
+  exact ⟨hf,he,le_antisymm (csInf_le ⟨radius,hlow⟩ hm) (le_csInf ⟨radius,hm⟩ hlow)⟩
 end D5.S3.Quantum.Measurement.ExactFailureRadius
