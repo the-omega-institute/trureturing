@@ -150,7 +150,12 @@ class CompiledFibIntegration(unittest.TestCase):
     def command(self, args, expected=0, *, full=False):
         started = time.monotonic()
         self.activity.unlink(missing_ok=True)
-        env = dict(self.env, LAKE_ARTIFACT_CACHE="false") if full else self.env
+        # The initial scoped fixture acquisition may start with no project
+        # oleans. Use the existing one-command cold-build consent; ensure,
+        # cache ownership and the Native runner's cumulative guard still apply.
+        # Incremental and rejection commands keep the ordinary environment.
+        env = dict(self.env, LAKE_ARTIFACT_CACHE="false",
+                   STRATALINT_ACCEPT_COLD_BUILD="1") if full else self.env
         # The shared .NET native runner owns the cumulative 300s child-tree
         # guard, streams and cleanup; this command adds no FIB timeout layer.
         result = subprocess.run(args, cwd=ROOT, env=env, text=True,
