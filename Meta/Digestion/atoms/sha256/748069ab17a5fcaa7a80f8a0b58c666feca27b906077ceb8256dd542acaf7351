@@ -1,0 +1,24 @@
+## 49. Explicit finite-feasibility alias
+
+For every subsequent occurrence in this volume, define the formerly
+abbreviated predicate by the explicit alias
+
+$$
+\operatorname{Feas}_K(\bar B) :=\
+\operatorname{Feas}^{\mathrm{fin}}_K(\bar B).
+$$
+
+The finite synthesis sentence behind this alias quantifies a controller graph
+with $|E|\le K$, its fixed instruction and all-action factorization maps, and
+a finite vector $x\in\mathbb N^d$ satisfying $x\le\bar B$. It conjoins common
+legality, source-total all-response coverage, terminal-row equality, the
+uniform-history or exact-acceleration certificate, and
+
+$$
+\forall s\in D,\qquad c_C(s)\le x.
+$$
+
+Consequently, the alias is a finite-profile decision predicate rather than a
+search that may silently return an unbounded coordinate. The Pareto basis and
+all mixed-box statements in Sections 44--48 use this explicit predicate.
+
