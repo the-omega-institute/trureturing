@@ -186,14 +186,7 @@ private theorem dualLoss_pos (τ : Loss) (M : Op) (hM : M.IsPositive) :
 private theorem dualLoss_add (τ : Loss) (M N : Op) :
     dualLoss τ (M + N) = dualLoss τ M + dualLoss τ N := by
   unfold dualLoss
-  rw [amplify_add]
-  apply ContinuousLinearMap.ext
-  intro x
-  change (stinespring τ).adjoint ((amplify M + amplify N) (stinespring τ x)) =
-    (stinespring τ).adjoint (amplify M (stinespring τ x)) +
-      (stinespring τ).adjoint (amplify N (stinespring τ x))
-  rw [_root_.add_apply]
-  exact (stinespring τ).adjoint.map_add _ _
+  simp only [amplify_add, ContinuousLinearMap.comp_add, ContinuousLinearMap.add_comp]
 
 private theorem dualLoss_one (τ : Loss) : dualLoss τ 1 = 1 := by
   unfold dualLoss
@@ -254,13 +247,8 @@ private theorem compress_sum {ι : Type} [Fintype ι] (X : ι → Op) :
 
 private theorem compress_finset_sum {ι : Type} (s : Finset ι) (X : ι → Op) :
     compress (s.sum X) = s.sum (fun i => compress (X i)) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty =>
-      ext i j
-      simp [compress]
-  | @insert a s ha ih =>
-      simp only [Finset.sum_insert ha, compress_add, ih]
+  ext i j
+  simp [compress, Matrix.sum_apply]
 
 private theorem compressed_parent {m : ℕ} (F : Fin m → Fin 2 → Op)
     (hF : HasParent F) :
@@ -472,8 +460,9 @@ private theorem dualLoss_sub (τ : Loss) (M N : Op) :
   exact eq_sub_iff_add_eq.mpr h.symm
 
 private theorem compress_sub (X Y : Op) : compress (X - Y) = compress X - compress Y := by
-  ext i j
-  simp [compress]
+  have h := compress_add (X - Y) Y
+  rw [sub_add_cancel] at h
+  exact eq_sub_iff_add_eq.mpr h.symm
 
 -- The click effect complements the coherent no-click effect.
 private theorem compressed_click (τ : Loss) (x : ℝ) (hx : 0 < x)
