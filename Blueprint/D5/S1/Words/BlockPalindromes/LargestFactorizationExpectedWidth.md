@@ -142,6 +142,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/BlockPalindromes/LargestFactorizationExpectedWidth.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gabric-shallit-2023-block-palindrome-expected-width` (proved) by `D5/S1/Words/BlockPalindromes/LargestFactorizationExpectedWidth.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gabric-shallit-2023-block-palindrome-expected-width","declaration_gid":"D5/S1/Words/BlockPalindromes/LargestFactorizationExpectedWidth.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Gabrić and J. Shallit (2023). *Smallest and Largest Block Palindrome Factorizations*. DOI: [10.1007/978-3-031-33180-0_14](https://doi.org/10.1007/978-3-031-33180-0_14). URL: <https://arxiv.org/abs/2302.13147>.
