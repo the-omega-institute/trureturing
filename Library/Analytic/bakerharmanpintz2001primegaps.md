@@ -65,3 +65,24 @@ BHP-F can be used when only prime existence is required; it does not
 replace the prime-count supplier elsewhere. This note makes no claim
 that the exponent is the latest record. Neither prime existence nor the
 residence bound proves a favorable signed zero-head estimate or Robin/RH.
+
+## A newer preprint statement and the adopted supplier
+
+Runbo Li, *The number of primes in short intervals and numerical
+calculations for Harman's sieve*,
+[arXiv:2308.04458v8](https://arxiv.org/abs/2308.04458v8), version dated
+16 October 2025, states in Theorem 1, printed p.2, that
+$[x-x^{0.52},x]$ contains primes for every sufficiently large $x$.
+The versioned metadata and the theorem statement were read in the
+[primary PDF](https://arxiv.org/pdf/2308.04458v8). The same page uses
+sufficiently large integer $x$ as its general convention; a forward
+all-real consumer would therefore also need the explicit rounded
+endpoint conversion. Theorem 2's displayed prime-count bound uses
+$x^{\theta+\epsilon}$, and is not silently identified with Theorem 1's
+exact endpoint statement.
+
+The preprint's sieve proof and numerical integration certificates were
+not independently audited here, and its arXiv metadata supplies no
+journal reference. SM2--SM3 and SC3--SC4 continue to use the published
+BHP supplier. This records a checked recent statement, without asserting
+a current-best record or treating the newer numerical proof as verified.

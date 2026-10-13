@@ -2272,3 +2272,107 @@ frequencies, or bound the amplitude-weighted signed integral in SM5.
 SM1--SM3 pay an actual residence-weight interface using existing
 arithmetic and prime existence; they do not pay the signed upper estimate
 with CR20's required strict margin. CR21/CR23, CR47 and RH remain unproved.
+
+## The retained witness height bounds the actual selected core clocks
+
+Keep the original fixed $\Theta,\eta,d$, every qualifying full window,
+and all maximizing ties from MB1--MB3 and SM1--SM5. The following
+additional clock estimate consumes the existing unabridged CR19 height
+and the complete uncompensated zero-series bound from MB2's proof.
+It requires no prime-distribution, ambient sampling or phase hypothesis.
+
+Beyond one common source start CR18 has $\chi_{p,u}>0$, and CR19 gives
+
+$$
+-s_B I_\psi(B)\ge
+\frac d2\sqrt B\log B\,X^{-\eta}
++\chi_{p,u}\frac t{\sqrt B}.
+$$
+
+The already paid complete bound is
+$|s_BI_\psi(B)|\le C B^{\Theta-1/2}$. It retains the full
+uncompensated original coefficient and its convergent reciprocal-square
+zero sum; no compensated infinite $1/\rho$ series is made absolutely
+summable. Dropping only the nonnegative second term in the lower bound
+therefore gives
+
+$$
+\frac d2\sqrt B\log B\,X^{-\eta}
+\le C B^{\Theta-1/2},\qquad
+\boxed{B^{1-\Theta}\log B\le C_dX^\eta.}
+\tag{SC1}
+$$
+
+This is a necessary estimate on each actual selected $B$, uniform in
+the original labels and tie assignments. The height is not spent twice:
+SC1 only constrains the possible clocks by the same already-established
+lower and upper values of the complete response. No second independent
+positive reserve is created.
+
+### A polynomial ceiling when the zero-real-part supremum is below one
+
+If $\Delta:=1-\Theta>0$, MB2 and
+$\ell_X=(d/8)X^{1-\eta}\log X$ give $\log B\ge c_1\log X$
+uniformly for one $c_1>0$ and sufficiently large original witnesses.
+Substitution in SC1 yields
+
+$$
+\boxed{
+B_{\max,X}\ll_{\Theta,\eta,d}
+\left(\frac{X^\eta}{\log X}\right)^{1/(1-\Theta)}.}
+\tag{SC2}
+$$
+
+The implied constant includes the fixed original suppliers and is
+independent of label and tie choice. No uniformity as $\Theta\uparrow1$
+is asserted. SC2 bounds actual selected clocks; it is stronger than
+using the exponential source-window ceiling alone. At $\Theta=1$,
+SC1 instead gives only $\log B\ll X^\eta$, which does not improve
+the existing $\log R\asymp X^{\eta/2}$ ceiling.
+
+### The range in which the repeated-core mass actually decays
+
+Put $\alpha_X=\sup_B\nu_X(\{B\})$. Existing CR17 has
+$t_i/B_i\to0$ uniformly, with $t_i\ge\ell_X$, so
+$B_{\max,X}+2\ell_X\le2B_{\max,X}$ eventually. Combining SC2 with
+SM3 and the unchanged $L_X\sim\ell_X$, for $\vartheta=21/40$,
+gives
+
+$$
+\alpha_X\ll
+X^{\vartheta\eta/(1-\Theta)-(1-\eta)}
+(\log X)^{-1-\vartheta/(1-\Theta)}+\ell_X^{-1}.
+\tag{SC3}
+$$
+
+Thus the previously sufficient clock regime SM4, and consequently
+$\alpha_X\to0$, are paid for every allowed tie assignment whenever
+the original fixed parameters satisfy
+
+$$
+\boxed{
+\Theta<1,\qquad 1-\Theta<\eta<\frac12,\qquad
+\eta\le\frac{1-\Theta}{1-\Theta+21/40}.}
+\tag{SC4}
+$$
+
+The last inequality permits equality: the power of $X$ in SC3 is then
+zero and the negative logarithmic power still tends to zero. Equivalently,
+SC2 divided by $\ell_X^{40/21}$ tends to zero in this same range.
+Every statement here retains the original supplied $\eta$; no stronger
+oscillation supplier or a more favorable replacement exponent is assumed.
+The parameter interval in SC4 can be nonempty only when $\Theta>21/40$.
+For other fixed parameters with $\Theta<1$, SC2 still holds but this
+bound need not imply mass decay. The $\Theta\le21/40$ incompatibility
+already stated after SM4 concerns that sufficient regime, not an
+arithmetic concentration theorem.
+
+SC1--SC4 are source-specific paper applications of the existing CR19
+and MB2 bounds. They add no generic inequality, prime theorem or Lean
+declaration, and make no literature-originality or kernel-verification
+claim. The quantity tending to zero in SC4 is the maximum **normalized**
+single-core mass; the unnormalized maximum $w_X(U)$ need not tend to
+zero. Even in this paid parameter range, phases, amplitude weights,
+zero multiplicities and actual individual masks remain jointly constrained
+in SM5. Neither SC4 nor mass decay supplies the signed finite-head bound
+with the strict coefficient $C_0<d(1-\kappa)/16$. Robin/RH remain unproved.
