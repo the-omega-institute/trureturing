@@ -7,10 +7,6 @@
    digest: Seven anticommuting Paulis support a three-qubit stabilizer polar escape. -/
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Entanglement.NandiMutualPredictabilityLOCCRefutation
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Algebra.Group.Submonoid.Basic
 set_option autoImplicit false
 noncomputable section
 open Matrix
