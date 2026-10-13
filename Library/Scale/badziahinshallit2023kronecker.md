@@ -40,8 +40,9 @@ $$
 \qquad Q\in\mathbb N_{>0}.
 $$
 
-The source defines $S_B$ as the irrational numbers whose continued-fraction
-partial quotients after the integer part are at most $B$, and
+For an integer $B\ge1$, use $S_B$ here for the irrational members of
+the source's set of reals whose continued-fraction partial quotients
+after the integer part are at most $B$. The source defines
 
 $$
 f(B)=\sup_{\theta\in S_B}\sup_{Q\ge1}QH(\theta,Q).
@@ -78,7 +79,7 @@ That lemma characterizes fixed low digits by an interval condition on
 $(-1)^kn\varphi$ modulo one. Its use is already recorded in the
 [FIB theory, §148.2](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
 The following parameter correspondence also reuses that volume's
-§116.4–116.5 prefix parameterization; it is not inferred from density.
+Theorems 116.4–116.5 prefix parameterization; it is not inferred from density.
 
 Let $w=(w_0,\ldots,w_{L-1})$ be a fixed nonempty legal prefix. Put
 
@@ -207,6 +208,10 @@ windows and the unit digit contains one of these cylinders and has
 the same upper limsup. Intersecting a class with CA identity or other
 prime-factor restrictions changes the population; (P4) supplies no
 conclusion for that intersection.
+
+These cylinders impose no termination constraint. A certified End
+immediately after a fully observed prefix fixes a single integer;
+(P4) supplies no conclusion for additional End or length restrictions.
 
 ## The additive sign and the original source remain unpaid
 
