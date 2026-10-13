@@ -87,7 +87,7 @@ Every other declaration is a definition used by a public statement or a compiler
 **Established inside the proof.** The characteristic polynomial of the deformed Lax matrix is affine in Λ: det(1 − tL(z)) = 1 − Λ(z) Σ_k (h^(k)/k) t^k, with the same h^(k) for every z. Equivalently, Σ_m τ_m t^{m−1} = ΛH′(t) / (1 − ΛH(t)), and the expansion is the coefficient extraction of −log(1 − ΛH(t)).
 
 **Argued, not formalized.**
-- (S + A)^N = 0 because S + A is strictly triangular after ordering the positions, so h^(k) = 0 for k > N. Only h^(1), …, h^(N) are independent, and every τ_m with m > N is a polynomial in them. A numerical check (NumPy, N = 2, 3, 5, complex weights and parameters) gives |h^(k)| = 0 for k > N and agreement of det(1 − tL) with 1 − ΛH(t) to 2·10⁻¹⁵.
+- (S + A)^N = 0 because S + A is strictly triangular after ordering the positions, so h^(k) = 0 for k > N. So at most the first N Hamiltonians h^(1), …, h^(N) are needed, and every τ_m with m > N is a polynomial in them; their functional independence is not claimed. A numerical check (NumPy, N = 2, 3, 5, complex weights and parameters) gives |h^(k)| = 0 for k > N and agreement of det(1 − tL) with 1 − ΛH(t) to 2·10⁻¹⁵.
 - The Hamiltonians are coefficients of the spectral curve: comparing coefficients of t^k gives h^(k) = (−1)^{k+1} k e_k(L(z))/Λ(z) for every z with Λ(z) ≠ 0, where e_k is the k-th elementary symmetric function of the eigenvalues of L(z). This answers the source's request for "an explicit expression for the Hamiltonians h^(m), going beyond the expression (5.17)" in terms of the principal minors of L(z).
 
 **Open.**
