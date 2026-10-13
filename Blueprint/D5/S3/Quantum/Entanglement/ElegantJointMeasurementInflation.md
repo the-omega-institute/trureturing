@@ -32,3 +32,4 @@ A singleton outcome factors from its eight-node remainder and contributes the tw
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/ElegantJointMeasurementInflation.singleton_identity_renamed`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ElegantJointMeasurementInflation.triangle_identity_renamed`
+- Dependency: [D5/S3/Quantum/Entanglement/TriangleInflationSoundness](TriangleInflationSoundness.md)
