@@ -467,102 +467,117 @@ one still needs a same-source lower coefficient strictly smaller than
 $c_Q=(\sqrt2-1)/4$; (F5)–(F6) do not supply it. A diverging allowance
 is not a lower bound on the actual error or a Robin violation.
 
-## A globally consistent model separates interval accuracy from the signed target
+## Reuse the existing pulse model for the forward limitation
 
 The preceding allowance alone does not prove that the interval premise
 is insufficient: a nonsharp allowance may miss a stronger consequence.
-The following elementary model supplies that distinction for the
-specified premises. It is a paper-level application to the same forward
-kernel, not a new prime-distribution result or a Lean-verified refutation.
+The [existing FIB model, §261](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#261-精确-fibonacci-采样的相位盲区与单调脉冲模型),
+already supplies a single global positive pulse source with stronger
+increment and global-error bounds. The application here supplies its original
+forward response and a companion logarithmically weighted count; it
+neither re-proves the source's construction nor claims a new
+prime-distribution result or Lean-verified refutation.
 
-Put $X_0=e^{16}$ and, for $t\ge X_0$, define
+Let $M=\Psi^*=\lfloor B\rfloor$ be that source on $[X,\infty)$,
+with $X$ as in §261.1. Retain its existing definitions
 
 $$
-f(t)=\exp[-(\log t)^{3/4}],\qquad
-M(x)=\int_{X_0}^{x}(1-f(t))\,dt,\qquad
-\Pi(x)=\int_{X_0}^{x}\frac{1-f(t)}{\log t}\,dt.
+\begin{gathered}
+\omega=\pi/\log\varphi,\quad
+\Theta(t)=\omega\left(\log t+\frac{\log5}{2}\right),\\
+B(t)=t+t^{3/4}a(\log t),\qquad
+C_*=\omega^2+2\omega+2.
+\end{gathered}
 \tag{F7}
 $$
 
-These are nondecreasing continuous cumulative functions, with
-$dM(t)=\log t\,d\Pi(t)$. Since $f$ is decreasing, for every real
-$X_0\le u<v$,
+Here $a$ is the explicit function named $A(L)$ in (261.2); it is
+renamed only to distinguish it from the forward starting point $A$.
+The source is nondecreasing and right-continuous, with locally finite
+unit positive jumps. Reuse (261.5)–(261.6): for every $u\ge X$, $r\ge0$,
 
 $$
-(1-f(u))(v-u)\le M(v)-M(u)\le v-u.
+|M(u+r)-M(u)-r|\le C_*ru^{-1/4}+1,\qquad
+|M(u)-u|\le(1+\omega)u^{3/4}+1.
 \tag{F8}
 $$
 
-In particular (F1) holds on every finite domain beginning at $A\ge X_0$
-with $\epsilon=f(A)$, for every choice of $H>0$. This is one global
-measure, not a different measure chosen separately for each window.
+Consequently (F1) holds on every finite domain starting at $A\ge X$
+with $\epsilon=C_*A^{-1/4}+H^{-1}$, eventually less than one, for
+all lengths at least $H=(2A)^{7/12}$. This error is smaller than (F6).
+The global error in (F8) is also smaller than
+$u\exp[-c(\log u)^{3/5}(\log\log u)^{-1/5}]$ for every fixed $c>0$,
+eventually. Both are properties of the same existing source.
 
-It also has the cited count estimate's accuracy, uniformly in the cited
-length range. For $u\ge X_0$ and $0<r\le u^{99/100}$,
+For a companion count set
+$\Pi(x)=\int_{(X,x]}(\log t)^{-1}\,dM(t)$.
+Positive mass and the endpoint logarithm bounds give
 
 $$
-0\le\frac r{\log u}-[\Pi(u+r)-\Pi(u)]
-\le\frac{rf(u)}{\log u}+\frac{r^2}{u\log^2u}.
+\frac{M(u+r)-M(u)}{\log(u+r)}
+\le\Pi(u+r)-\Pi(u)
+\le\frac{M(u+r)-M(u)}{\log u}.
+$$
+
+Together with (F8), this yields
+
+$$
+\left|\Pi(u+r)-\Pi(u)-\frac r{\log u}\right|
+\le\frac{C_*ru^{-1/4}+1}{\log u}
+    +\frac{r^2}{u\log^2u}.
 \tag{F9}
 $$
 
-The first term bounds the density deficit; the second uses
-$0\le1/\log u-1/\log t\le(t-u)/(u\log^2u)$ on the interval.
-After division by $r\exp[-(\log u)^{1/4}]$, both terms tend to zero,
-uniformly for $r\le u^{99/100}$. Thus the same $\Pi$ obeys the displayed
-Corollary 1.3-shaped count error, in particular on
-$u^{7/12}\le r\le u^{99/100}$.
+After division by $r\exp[-(\log u)^{1/4}]$, the bound tends to zero
+uniformly for $u^{7/12}\le r\le u^{99/100}$. Thus $\Pi$ has the
+cited count estimate's numerical accuracy, with $dM=\log t\,d\Pi$.
+Its atoms have weights $1/\log t$, not unit prime counts; it is not the
+actual $\pi$.
 
-The global mass error is small as well:
+To evaluate the forward response, take the exact even Fibonacci prices
+$A_j=F_{2j}\to\infty$ and $h_j=A_j^{4/5}$. The existing Binet phase
+estimate (261.13) gives $\Theta(A_j)=2j\pi+o(1)$. The explicit source
+formula and (261.8) give
 
 $$
-M(x)-x=-(1+o(1))xf(x).
+B'(t)-1=t^{-1/4}\left[
+\left(\omega^2+\frac3{16}\right)\sin\Theta(t)
+-\frac\omega2\cos\Theta(t)
++O\left(\frac1{\log t}\right)\right].
 \tag{F10}
 $$
 
-Indeed, $xf(x)\to\infty$ and
-$(xf(x))'=f(x)[1-\tfrac34(\log x)^{-1/4}]$; comparison of derivatives
-gives $\int_{X_0}^x f(t)\,dt\sim xf(x)$. In particular (F10) is
-smaller in magnitude than
-$x\exp[-c(\log x)^{3/5}(\log\log x)^{-1/5}]$ for every fixed $c>0$,
-eventually. Such a global error scale still does not pay the forward
-target in this model.
-
-Take $h=A^{4/5}$. Uniformly for $0\le r\le h$,
-$f(A+r)/f(A)\to1$ and $\rho_A(r)\to1$. For the first limit, use
-
-$$
-\left|\log\frac{f(A+r)}{f(A)}\right|
-\le\frac{3h}{4A(\log A)^{1/4}}\longrightarrow0;
-$$
-
-the second follows directly from the explicit positive kernel $w$.
-Keeping the complete signed response gives
+Uniformly for $A_j\le t\le A_j+h_j$, the phase changes by
+$O(h_j/A_j)=o(1)$ and $t/A_j\to1$. Hence
+$B'(t)-1=-(\omega/2+o(1))A_j^{-1/4}$ throughout the window.
+Integration gives the same slope for the centered increment, while
+$M=\lfloor B\rfloor$ changes each increment by less than one.
+The original kernel satisfies $\rho_{A_j}(r)=1+o(1)$ uniformly.
+Therefore the complete signed response is
 
 $$
 \begin{aligned}
-\mathcal T_M(A,h)
-&=-\int_0^h\left(\int_A^{A+r}f(t)\,dt\right)\rho_A(r)\,dr\\
-&=-(1+o(1))\frac{f(A)h^2}{2},\\
-\frac{\mathcal T_M(A,A^{4/5})}{A^{11/10}}
-&=-(1+o(1))\frac{\sqrt A\,f(A)}2\longrightarrow-\infty.
+\mathcal T_M(A_j,h_j)
+&=-\left(\frac\omega4+o(1)\right)h_j^2A_j^{-1/4}+O(h_j),\\
+\frac{\mathcal T_M(A_j,A_j^{4/5})}{A_j^{11/10}}
+&=-\left(\frac\omega4+o(1)\right)A_j^{1/4}
+  +O(A_j^{-3/10})\longrightarrow-\infty.
 \end{aligned}
 \tag{F11}
 $$
 
-The last limit follows from
-$\log(\sqrt A f(A))=\tfrac12\log A-(\log A)^{3/4}\to\infty$.
-It shows that the leading $\epsilon\sqrt A/2$ term in (F5) reflects
-an attainable deficit under the interval premise, even with a much
-smaller relative error than (F6) and no sub-threshold irregularity.
+This forward application uses the existing model's source and
+increment facts; its previously proved tail and sampling obstruction
+remain in §261. It shows that monotonicity and the specified
+interval/count accuracy estimates alone cannot imply any fixed finite
+eventual lower coefficient for all admissible cumulative functions.
+It does not supply a deficit at every starting point: the divergence
+here is along the displayed subsequence.
 
-Consequently monotonicity and these interval/count accuracy estimates,
-by themselves, cannot imply any fixed finite eventual lower coefficient
-on the displayed forward scale for all cumulative functions satisfying
-them. The model is continuous and has no actual prime support,
-prime-power inventory, Euler product, or CA own-price source. It is
-neither an arithmetic counterexample nor a refutation of the cofinal
-selected-source obligation in CW5. An argument using those additional
-same-source arithmetic relations remains outside this countermodel's
-scope; the missing inequality must use information beyond the specified
-accuracy estimates if it is to exclude this deficit.
+The model events are not actual prime powers and there is no Euler
+product or CA own-price source. Even though the prices $A_j$ are
+Fibonacci numbers, $M$ is not the actual response of those integers.
+This is neither an arithmetic counterexample nor a refutation of the
+cofinal selected-source obligation in CW5. The application is a paper
+derivation without new Lean declarations; an argument using additional
+same-source arithmetic relations remains outside its scope.
