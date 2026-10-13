@@ -8767,3 +8767,341 @@ real parameter. The wider geometry, its growth-degree uniformity, and
 removal of the local all-critical premise remain unproved. The argument
 supplies no actual growing-core certificate, FIB ATOM bridge, RH proof,
 or strict Robin conclusion for every integer $H>5040$.
+
+## A restricted growing-core certificate from the complete matrix pair
+
+Retain the original source, the local critical-zero and complete-removal
+premises of (LC263), and the full regrouping (LC284). In particular, every
+source zero in the closed radius-$4\rho$ disc about $1/2+iT$ is assumed
+critical and fully removed; no condition is imposed on exterior zeros.
+Form the full selected factor $Q$ with every such multiplicity first,
+then write $Q=Q_{\rm core}Q_{\rm far}$ as in (LC284).
+Use the complete $\widehat A=F/Q_{\rm core}$, both nonzero amplitudes
+$H,\widehat H$, and the exact kernels (LC305)--(LC308). Write
+$E=C_EL$, where $C_E=128(S+3C_0)$, and retain $r\le C_0L$, $q\le r$,
+$T\ge32$, $0<\rho\le1/8$, $c=T^2$, $D=T\rho$, and
+$\nu=n\rho^2/T^2$ for a positive integer $n$.
+
+The following is a repo-derived conditional analytical application, with
+no Lean or originality certification. The Appell recurrence, multiplication
+matrix, determinant differentiation, Hermite comparison and Riesz
+perturbation argument are generic tools, not new general theorems.
+For the Appell recurrence, Srivastava, Jabee and Shadab,
+[*Differential equation and recurrence relations of the Sheffer-Appell
+polynomial sequence: A matrix approach*, arXiv:1903.09620v1](https://arxiv.org/html/1903.09620v1),
+Theorem 4, equation (3.23), applies with $h(u)=u$ and
+$l(u)=M_t(u)^{-1/2}$ as a normalized local germ. Its generating factor
+$[l(h^{-1}(u))l(u)]^{-1}$ is then exactly $M_t(u)$.
+Finite nilpotent matrix encodings of Appell families are classical; see
+Aceto, Malonek and Tomaz, [*A unified matrix approach to the representation
+of Appell polynomials*, arXiv:1406.1444v1](https://arxiv.org/html/1406.1444v1),
+section 3, Theorem 1, for the transfer-matrix construction. That theorem
+does not supply the complete-source spectral estimates below.
+The shared-weight and polarization transmission (LC309)--(LC316) is
+reused without another proof.
+
+### Quantitative range
+
+Put $\delta=E/\nu$ and $\varepsilon=D/c=\rho/T\le1/256$.
+For $q\ge1$, the sufficient conditions are
+
+$$
+\nu\ge2^{24}(E+q),\qquad
+\Theta_q:=(\delta+\varepsilon)\frac{q^{3/2}}{\sqrt\nu}
+\le2^{-19}.
+\tag{LC327}
+$$
+
+Under these conditions the actual $R_{q,t}$ has simple real roots for
+real $t\in I$, and its roots have compatible holomorphic labels on the
+whole closed $\mathcal D=\{|t-c|\le D/16\}$. Every label obeys
+$|\beta_j'|<1/4$ and $|\Im\beta_j(t)|\le|\Im t|/4$.
+For real $t\in I$, every actual response residue is greater than $3/4$.
+These conclusions are derived from the complete jets, rather than added
+as a kernel certificate. The local critical-zero premise is retained.
+
+### Preserve the value and response in one finite matrix
+
+Define the local EGF logarithmic coefficients by
+$\log M_t(u)=\sum_{m\ge2}\kappa_m(t)u^m/m!$.
+They are ordinary logarithmic coefficients; no identification with
+finite-free cumulants is used. Direct differentiation of (LC305) gives
+
+$$
+\partial_u\log M_t(u)
+=\widehat\chi(\psi_t(u))-\widehat\chi(t),\qquad
+b_t'(u)=\widehat\eta(\psi_t(u)),\qquad
+\kappa_2=-\frac{t^2}{n}\widehat\chi'.
+\tag{LC328}
+$$
+
+The paid jets imply
+$|\widehat\chi'-1|\le68\delta$ and
+$|\widehat\eta-1|\le64\delta$ on $\mathcal D$.
+Thus there is a holomorphic choice
+$\sigma=(t/\sqrt n)\sqrt{\widehat\chi'}$, positive on $I$, with
+$D/(2\sqrt\nu)\le|\sigma|\le2D/\sqrt\nu$.
+
+On $\mathbb C^q$ in its standard orthonormal basis, let
+$Ye_j=\sqrt j\,e_{j-1}$, $Ye_0=0$. Then $Y^q=0$ and
+$\|Y\|\le\sqrt q$. Define
+
+$$
+\begin{aligned}
+\mathcal A_q
+&=\sigma Y^*-
+ \sum_{k=1}^{q-1}\frac{\kappa_{k+1}}{k!\sigma^k}Y^k
+ =\sigma(Y^*+Y)+\mathcal E_q,\\
+\mathcal B_q&=b_t'(Y/\sigma)
+ =\widehat\eta\bigl(\psi_t(Y/\sigma)\bigr),\\
+R_{q,t}(z)&=\det(zI-\mathcal A_q),\qquad
+\frac{U_{q,t}(z)}{R_{q,t}(z)}
+ =\operatorname{tr}\bigl[(zI-\mathcal A_q)^{-1}\mathcal B_q\bigr].
+\end{aligned}
+\tag{LC329}
+$$
+
+All analytic matrix functions here mean finite Taylor evaluation at a
+nilpotent matrix. To check the first identity, the generating function
+$e^{zu}M_t(u)$ gives
+$zR_j=R_{j+1}-\sum_{k=1}^j\binom jk\kappa_{k+1}R_{j-k}$.
+Multiplication by $z$ modulo $R_q$, in the basis
+$R_j/(\sigma^j\sqrt{j!})$, has matrix $\mathcal A_q$.
+For the second identity, vary the germ formally as $M_t e^{h b_t}$,
+holding $\sigma$ fixed. The polynomial derivative is the actual $U_q$,
+and the multiplication matrix becomes $\mathcal A_q-h\mathcal B_q$.
+Jacobi's determinant formula gives the stated trace. This tangent
+calculation preserves the original response; it does not change the
+actual source or choose an Euler homogeneous term.
+
+If $\Pi_j$ is a rank-one Riesz projection at a simple root, then
+
+$$
+\gamma_j=\operatorname{tr}(\Pi_j\mathcal B_q),\qquad
+|\gamma_j-\widehat\eta|
+\le\|\Pi_j\|\,\|\mathcal B_q-\widehat\eta I\|.
+\tag{LC330}
+$$
+
+The trace norm of a rank-one operator equals its operator norm. No
+factor $q$ is lost in this individual-residue estimate.
+
+### Complete jets bound the finite matrices
+
+The product rule and (LC276), with $E$ replacing $C_1L$, give
+
+$$
+\begin{aligned}
+\frac{|\widehat\chi^{(j)}|}{j!}
+ &\le5\delta16^jD^{1-j} &&(j\ge2),\\
+\frac{|\widehat\eta^{(j)}|}{j!}
+ &\le128\delta(32/D)^j &&(j\ge1).
+\end{aligned}
+\tag{LC331}
+$$
+
+For the first line the three product terms are at most
+$\delta D^{1-j}(4\,16^j+4\,16^{j-1}+16^{j-2})$.
+For the second they are at most
+$\delta(16/D)^j[64(j+1)+4j+(j-1)/16]$,
+which is bounded by the displayed right side.
+Put $r_0=\sqrt{q/\nu}$ and $a=t/(n\sigma)$, and set
+
+$$
+\Delta=\psi_t(Y/\sigma)-tI
+=-\frac{\sigma}{\widehat\chi'}Y(I+aY)^{-1},\qquad
+r_0\le2^{-12},\quad
+\|aY\|\le2\varepsilon r_0,\quad
+\|\Delta\|\le2|\sigma|\sqrt q\le4Dr_0.
+\tag{LC332}
+$$
+
+The exact value remainder and the resulting estimates are
+
+$$
+\begin{aligned}
+\mathcal E_q
+ &=-\sigma aY^2(I+aY)^{-1}
+ -\sum_{j\ge2}\frac{\widehat\chi^{(j)}}{j!}\Delta^j,\\
+\|\mathcal E_q\|
+ &\le2^{15}|\sigma|(\delta+\varepsilon)q/\sqrt\nu,\\
+\|\mathcal B_q-\widehat\eta I\|
+ &\le2^{15}\delta r_0.
+\end{aligned}
+\tag{LC333}
+$$
+
+The sums terminate by nilpotence. The first value term costs at most
+$3|\sigma|q/\sqrt n$. The rest costs at most
+$5\delta D\sum_{j\ge2}(16\|\Delta\|/D)^j
+\le20480\delta|\sigma|q/\sqrt\nu$.
+The response estimate uses
+$128\delta\sum_{j\ge1}(32\|\Delta\|/D)^j
+\le2^{15}\delta r_0$.
+All coefficients of the complete source up to the required order
+remain in these finite evaluations.
+
+For parameter differentiation, freeze $\sigma$ at the point being
+evaluated. This keeps a fixed basis while the actual source parameter
+changes. Differentiating (LC328) yields
+
+$$
+\begin{gathered}
+\partial_t[\widehat\chi(\psi_t(u))-\widehat\chi(t)]
+=\widehat\chi'(\psi_t(u))(1+tu/n)^{-2}-\widehat\chi'(t),\\
+\|\dot{\mathcal A}^{\rm fr}_q\|
+\le40960\delta r_0+10\varepsilon r_0
+\le2^{16}(\delta+\varepsilon)r_0.
+\end{gathered}
+\tag{LC334}
+$$
+
+Indeed (LC331) bounds the first change of $\widehat\chi'$ by
+$80\delta\sum_{j\ge1}(j+1)(16\|\Delta\|/D)^j
+\le20480\delta r_0$; use
+$\|(I+aY)^{-2}\|\le2$ and
+$\|(I+aY)^{-2}-I\|\le4\|aY\|$.
+No scalar evaluation outside the target is assumed: these are bounds
+from the full jets at $t$ and finite nilpotent Taylor calculus.
+They apply at closed-boundary parameters as well.
+
+### Isolated spectrum pays every individual response
+
+The real symmetric Jacobi matrix $Y+Y^*$ has the simple roots $h_j$
+of probabilist Hermite $\mathrm{He}_q$ as eigenvalues. The standard
+Hermite equation for $w=e^{-x^2/4}\mathrm{He}_q(x)$ is
+$w''+(q+1/2-x^2/4)w=0$.
+Integration between adjacent zeros and the Dirichlet Poincare inequality
+give
+
+$$
+h_{j+1}-h_j\ge\frac\pi{\sqrt{q+1/2}}>\frac2{\sqrt q}.
+\tag{LC335}
+$$
+
+For complex $t$, the matrix $\sigma(Y+Y^*)$ is still normal.
+By (LC327) and (LC333),
+$\|\mathcal E_q\|\le|\sigma|/(16\sqrt q)$.
+The circles of radius $|\sigma|/(4\sqrt q)$ about $\sigma h_j$
+are disjoint. On each circle the normal reference resolvent is bounded
+by the reciprocal radius; the perturbation ratio is at most $1/4$.
+The Neumann series, homotopy count and Riesz integral therefore give
+one simple eigenvalue in each circle and
+
+$$
+\|\Pi_j\|\le4/3,
+\qquad \operatorname{mesh}(R_{q,t})\ge\sigma/\sqrt q
+\quad(t\in I,\ q\ge2).
+\tag{LC336}
+$$
+
+The disjoint labels are holomorphic throughout $\mathcal D$ and a
+neighborhood of its boundary. At real parameters each circle is
+conjugation-invariant, so its unique root is real.
+Using (LC330), (LC333) and the first condition of (LC327) gives
+
+$$
+|\gamma_j-\widehat\eta|\le2^{16}\delta r_0\le2^{-20},
+\qquad |\widehat\eta-1|\le2^{-18},
+\qquad \gamma_j>3/4\quad(t\in I).
+\tag{LC337}
+$$
+
+For $q\ge2$, the frozen-basis eigenvalue derivative satisfies
+
+$$
+|\beta_j'|
+=|\operatorname{tr}(\Pi_j\dot{\mathcal A}^{\rm fr}_q)|
+\le2^{17}(\delta+\varepsilon)r_0
+\le\frac1{4q}\le\frac18<\frac14.
+\tag{LC338}
+$$
+
+For $q=1$, $R_{1,t}=z$, $U_{1,t}=\widehat\eta$, so
+$\beta_1'=0$ and the same residue conclusion holds directly.
+Integrating each label along the vertical segment from $\Re t$ to $t$
+inside the closed disc gives
+$|\Im\beta_j(t)|\le|\Im t|/4$.
+This proves every clause of $\mathsf K$ in the restricted range (LC327).
+
+There is also a relative signed certificate. Let
+$V_{q,t}=\partial_tR_{q,t}+\widehat\chi'\partial_zR_{q,t}$ and
+$\delta_j=\widehat\chi'-\beta_j'$. For real $t$,
+$1/2<\delta_j<3/2$, so both $U_q/R_q$ and
+$(U_q-V_q/2)/R_q$ have real simple poles and strictly positive residues.
+They are strictly proper rational functions and have strictly negative
+imaginary part on the upper half-plane. This is a statement about
+the actual finite pair at fixed real $t$, not a Pick-closure assertion
+for the infinite exterior or an iterative reciprocal gauge.
+
+### A fixed linear budget covers an unbounded restricted degree range
+
+Let
+
+$$
+A_*=1+C_E+C_0,\qquad C_{\rm part}=2^{30}A_*^3.
+\tag{LC339}
+$$
+
+If $1\le q\le C_0L^{1/3}$ and $\nu\ge C_{\rm part}L$, then
+$E+q\le(C_E+C_0)L$ pays the first condition of (LC327), and
+
+$$
+\Theta_q\le C_0^{3/2}
+\left(\frac{C_E}{C_{\rm part}^{3/2}}
++\frac1{256\sqrt{C_{\rm part}}}\right)
+\le2^{-45}+2^{-23}<2^{-19}.
+\tag{LC340}
+$$
+
+Both inequalities improve with every larger $\nu$. The constants are
+fixed in $T,\rho,n$, depending only on the supplied source constants
+and $C_0$. The original total selected multiplicity may still grow
+to $C_0L$; all its far factors remain in $\widehat A$.
+
+Apply (LC310)--(LC316) to these now-certified actual kernels. At every
+actual target node, the same nonnegative row weights, with
+$\sum_j\omega_{ij}=1$, give the exact original amplitudes
+
+$$
+P_r'=\frac{\widehat H}{H}\partial_zC_t(\lambda_i)
+ \sum_j\omega_{ij}\delta_j,\qquad
+S_r=\frac{\widehat H}{H}\partial_zC_t(\lambda_i)
+ \sum_j\omega_{ij}\gamma_j.
+$$
+
+For the ratio, use
+$\widetilde\omega_{ij}=\omega_{ij}\delta_j/
+\sum_k\omega_{ik}\delta_k$ from (LC312).
+Since $\delta_j>1/2$, $\delta_j<3/2$ and $\gamma_j>3/4$,
+the complete original quantities satisfy
+
+$$
+\frac{G}{J'}>\frac12,\qquad
+P_r'S_r>\frac38
+ \left(\frac{\widehat H}{H}\right)^2
+ [\partial_z C_t(\lambda_i)]^2>0,
+\qquad
+N_J(\mathcal D)=\sum_{i=1}^q
+ \mathbf1_{\{f_i(t_-)\le0\le f_i(t_+)\}}\le q.
+\tag{LC341}
+$$
+
+Every target node is real and simple, including either endpoint;
+no existence of all $q$ nodes is asserted. Both original amplitudes
+are retained without a size assumption. For $q=0$, the unchanged
+identity $J=\widehat H\ne0$ gives no target nodes.
+The fixed source constants have not been numerically instantiated.
+
+This restricted unbounded-degree application uses the already-paid
+fixed-degree results without recertifying $q\le3$. It does not meet
+the full $q\le C_0L$ target: at $q\asymp C_0L$ and $\nu=C_*L$,
+the source part of $\Theta_q$ has order
+$C_EC_0^{3/2}L/C_*^{3/2}$. No fixed $C_*$ makes this absolute-norm
+perturbation condition small for every $L$. The loss comes from
+comparison with the microscopic Hermite gap, not a counterexample
+to the actual kernels. At full growth the missing step is simple real
+spectrum with sufficiently bounded individual projections for the
+complete matrix. The local all-critical premise, that full-growth
+estimate, a FIB ATOM bridge, RH and strict Robin for every integer
+$H>5040$ remain unresolved.
