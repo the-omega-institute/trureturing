@@ -12,6 +12,7 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
         "Deleting any retained b-edge from an independently defined zero star gives a Hamiltonian path with the exact complementary word Z_j.",
         H("Zero-Star Prefix-Reversal Complements"),
         Blocks(
+            CoordinateAPI("native_residual_nodup", "The Supplier Residual Has No Repeated Labels", "Deleting the last position from an actual permutation tuple leaves a list without repeated labels. Concrete supplier-star separation consumes this fact.", false),
             Paragraph(Text(
                 "A configuration is a permutation v of the positions Fin(m+1); v(i) is the label at position i. "
                 + "Right multiplication acts on positions: (v g)(i)=v(g(i)). The generators a, b and c reverse "
@@ -74,6 +75,20 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
             Paragraph(Text(
                 "The result concerns one zero star and its retained factor. It does not connect distinct stars "
                 + "or assert a Hamiltonian cycle on all permutations.")))));
+
+    private static Formula CoordinateFormula(string selector)
+    {
+        if (selector != "native_residual_nodup") throw new System.ArgumentOutOfRangeException(nameof(selector));
+        Formula m = F.Id("m"), z = F.Id("z");
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m),
+            Call("Nodup", Call("residualList", z)))));
+    }
+
+    private static DocumentBlock CoordinateAPI(string selector, string title, string meaning, bool definition) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(CoordinateFormula(selector)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
+            definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
     private static DocumentBlock Api(string selector, string title, string meaning) =>
         Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
