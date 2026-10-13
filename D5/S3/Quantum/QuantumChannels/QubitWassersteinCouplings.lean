@@ -441,7 +441,7 @@ private theorem ptrace2_left (U : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 2
     Matrix.conjTranspose_apply, Function.uncurry, Matrix.one_apply]
   ring
 
-private theorem ptrace1_right (V : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
+theorem ptrace1_right (V : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
     D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ V) * P * (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ V)).conjTranspose) = V * D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft P * V.conjTranspose := by
   ext i j
   simp [D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
@@ -474,7 +474,7 @@ private theorem ptrace2_right (V : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 
     linear_combination P (1,0) (1,0) * h00 + P (1,0) (1,1) * h10 +
       P (1,1) (1,0) * h01 + P (1,1) (1,1) * h11
 
-private theorem ptrace1_left (U : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (hu : U.conjTranspose * U = 1) :
+theorem ptrace1_left (U : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (hu : U.conjTranspose * U = 1) :
     D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft ((U ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) * P * ((U ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))).conjTranspose) = D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft P := by
   have h00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hu
   have h01 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 1) hu
