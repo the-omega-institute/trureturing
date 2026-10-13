@@ -629,4 +629,288 @@ private def localHom {n : ℕ} (i : Fin n) : Matrix (Fin 2) (Fin 2) ℂ →* Op 
     by_cases h : j = i <;> simp [h]
 
 
+private lemma clifford_bar {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
+    conjugate U ∈ Clifford n := by
+  have ha (A : Op n) : (barAlg A)ᴴ = barAlg Aᴴ := by ext x y; rfl
+  have hl (i : Fin n) (M : Matrix (Fin 2) (Fin 2) ℂ) :
+      barAlg (localHom i M) = localHom i (M.map star) := by
+    ext x y
+    change star (∏ j : Fin n, Function.update (fun _ => (1 : Matrix (Fin 2) (Fin 2) ℂ))
+      i M j (x j) (y j)) = ∏ j : Fin n,
+      Function.update (fun _ => (1 : Matrix (Fin 2) (Fin 2) ℂ)) i (M.map star) j (x j) (y j)
+    rw [star_prod]
+    apply Finset.prod_congr rfl
+    intro j _
+    by_cases hj : j = i <;> simp [hj, Matrix.one_apply]
+  have hh : gateH.map star = gateH := by
+    ext i j
+    change star (gateH i j) = gateH i j
+    fin_cases i <;> fin_cases j
+    all_goals norm_num only [gateH,
+      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
+      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2,
+      pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
+      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.add_apply,
+      Matrix.smul_apply, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_succ', Matrix.cons_val_zero', star_mul, star_div, star_ofNat,
+      star_one, star_neg, Complex.star_def, Complex.conj_ofReal, Complex.real_smul, smul_eq_mul, mul_one, one_mul, mul_neg_one, neg_one_mul]
+  have hs : gateS.map star = gateSᴴ := by
+    ext i j
+    change star (gateS i j) = star (gateS j i)
+    congr 1
+    fin_cases i <;> fin_cases j <;> rfl
+  have hg : ∀ A ∈ gates n, barAlg A ∈ gates n ∪ (fun X : Op n => Xᴴ) '' gates n := by
+    rintro A (⟨i, rfl⟩ | ⟨i, rfl⟩ | ⟨c, t, h, rfl⟩)
+    · change barAlg (localHom i gateH) ∈ _
+      rw [hl, hh]; exact Or.inl (Or.inl ⟨i, rfl⟩)
+    · have he : localHom i gateSᴴ = (localHom i gateS)ᴴ := by
+        ext x y
+        change (localOp i gateSᴴ) x y = star ((localOp i gateS) y x)
+        dsimp only [localOp, tensorOp, Matrix.of_apply]
+        rw [star_prod]
+        apply Finset.prod_congr rfl
+        intro j _
+        by_cases hj : j = i <;> simp [hj, Matrix.one_apply, eq_comm]
+      change barAlg (localHom i gateS) ∈ _
+      rw [hl, hs, he]
+      exact Or.inr ⟨localHom i gateS, Or.inr (Or.inl ⟨i, rfl⟩), rfl⟩
+    · have he : barAlg (gateCNOT c t) = gateCNOT c t := by
+        ext x y; change star (if _ then (1 : ℂ) else 0) = if _ then 1 else 0
+        split_ifs <;> simp
+      rw [he]; exact Or.inl (Or.inr (Or.inr ⟨c, t, h, rfl⟩))
+  change barAlg U ∈ Clifford n
+  induction hU using Submonoid.closure_induction with
+  | mem A hA =>
+    apply Submonoid.subset_closure
+    rcases hA with hA | ⟨B, hB, rfl⟩
+    · exact hg A hA
+    · dsimp only
+      rw [← ha]
+      rcases hg B hB with hb | ⟨D, hD, he⟩
+      · exact Or.inr ⟨barAlg B, hb, rfl⟩
+      · rw [← he, Matrix.conjTranspose_conjTranspose]; exact Or.inl hD
+  | one => rw [map_one]; exact (Clifford n).one_mem
+  | mul A B hA hB ihA ihB => rw [map_mul]; exact (Clifford n).mul_mem ihA ihB
+
+private lemma stab_bar {n : ℕ} {A : Op n} (hA : A ∈ STAB n) : conjugate A ∈ STAB n := by
+  apply convexHull_min (t := barAlg.toLinearMap ⁻¹' STAB n) ?_
+    ((convex_convexHull ℝ _).linear_preimage barAlg.toLinearMap) hA
+  rintro X ⟨U, hU, rfl⟩
+  apply subset_convexHull ℝ (PureStabilizer n)
+  refine ⟨conjugate U, clifford_bar hU, ?_⟩
+  change barAlg (U * vacuum n * Uᴴ) = _
+  rw [map_mul, map_mul]
+  have hv : barAlg (vacuum n) = vacuum n := by
+    ext x y; change star (Matrix.single (0 : Bits n) 0 (1 : ℂ) x y) =
+      Matrix.single (0 : Bits n) 0 (1 : ℂ) x y
+    simp only [Matrix.single_apply, apply_ite star, star_one, star_zero]
+  rw [hv]
+  rfl
+
+private def tau : Op 6 := (4095 / 4096 : ℝ) • tensor sigma (conjugate sigma) +
+  (1 / 4096 : ℝ) • bell
+
+
+private def baseFree : Op 6 := tensor sigma (conjugate sigma)
+private def baseInv : Op 6 := tensor sigmaInv (conjugate sigmaInv)
+private def joint : Op 6 := tensor rho rhoBar
+private def jointInv : Op 6 := (4096 / 4095 : ℝ) •
+  (baseInv - (9 / 37751 : ℝ) • (baseInv * bell * baseInv))
+private def F : ℝ := 270853390336 / 138572892315
+
+private lemma tensor_trace {n m : ℕ} (A : Op n) (B : Op m) :
+    (tensor A B).trace = A.trace * B.trace := by
+  change (∑ x : Bits (n + m), (Matrix.kronecker A B) (blocks n m x) (blocks n m x)) = _
+  unfold Matrix.kronecker
+  exact ((blocks n m).sum_comp (fun x => (Matrix.kroneckerMap (· * ·) A B) x x)).trans
+    (Matrix.trace_kronecker A B)
+
+private lemma tensor_bar {n m : ℕ} (A : Op n) (B : Op m) :
+    conjugate (tensor A B) = tensor (conjugate A) (conjugate B) := by
+  ext x y
+  change star (A ((blocks n m x).1) ((blocks n m y).1) *
+    B ((blocks n m x).2) ((blocks n m y).2)) = _
+  change star (_ : ℂ) = star (_ : ℂ) * star (_ : ℂ)
+  rw [star_mul, mul_comm]
+  rfl
+
+private lemma base_inverse : baseFree * baseInv = (1 : Op 6) := by
+  unfold baseFree baseInv
+  rw [tensor_product, sigma_inverse_certificate]
+  have hb : conjugate sigma * conjugate sigmaInv = (1 : Op 3) := by
+    change barAlg sigma * barAlg sigmaInv = 1
+    rw [← map_mul, sigma_inverse_certificate, map_one]
+  rw [hb, tensor_identity]
+
+private lemma sigma_pos : sigma.PosDef :=
+  source_certificate.2.1.1.1.posDef_iff_isUnit.mpr
+    (isUnit_iff_exists_inv.mpr ⟨sigmaInv, sigma_inverse_certificate⟩)
+
+private lemma tau_pos : tau.PosDef := by
+  have hb : (conjugate sigma).PosDef := by
+    rw [bar_transpose sigma sigma_pos.isHermitian]
+    exact sigma_pos.transpose
+  have hf : baseFree.PosDef := (sigma_pos.kronecker hb).submatrix (blocks 3 3).injective
+  have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
+  rcases h with ⟨hstates, _, _, _, _, _, _, hbell, _, _, _, _, _⟩
+  exact (hf.smul (by norm_num : (0 : ℝ) < 4095 / 4096)).add_posSemidef
+    ((hstates 6 bell hbell).1.smul (by norm_num : (0 : ℝ) ≤ 1 / 4096))
+
+private lemma bell_sandwich (A : Op 6) : bell * A * bell = (bell * A).trace • bell := by
+  let v : Bits 6 → ℂ := fun x => if (blocks 3 3 x).1 = (blocks 3 3 x).2 then 1 else 0
+  have hb : bell = (1 / 8 : ℂ) • Matrix.vecMulVec v v := by
+    ext x y
+    change (if (blocks 3 3 x).1 = (blocks 3 3 x).2 ∧
+      (blocks 3 3 y).1 = (blocks 3 3 y).2 then (1 / 8 : ℂ) else 0) = (1 / 8 : ℂ) * (v x * v y)
+    dsimp only [v]
+    split_ifs <;> norm_num <;> tauto
+  rw [hb]
+  simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, smul_smul]
+  rw [Matrix.vecMulVec_mul]
+  rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.vecMulVec_smul, Matrix.trace_vecMulVec,
+    dotProduct_comm]
+  simp only [smul_smul]
+  congr 1
+  ring
+
+private lemma baseInv_hermitian : baseInv.IsHermitian := by
+  have hh : sigmaInv.IsHermitian := by
+    change sigmaInvᴴ = sigmaInv
+    unfold sigmaInv
+    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]
+  unfold baseInv
+  rw [bar_transpose sigmaInv hh]
+  change (tensor sigmaInv sigmaInvᵀ)ᴴ = tensor sigmaInv sigmaInvᵀ
+  rw [tensor_star, hh, hh.transpose]
+
+private lemma base_bell_trace : tr (bell * baseInv) = 896 / 9 := by
+  have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
+  rcases h with ⟨_, _, _, _, _, _, ht, _, _, _, _, _, _⟩
+  unfold baseInv
+  rw [ht]
+  have hh : sigmaInvᴴ = sigmaInv := by
+    unfold sigmaInv
+    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]
+  rw [hh]
+  unfold sigmaInv
+  rw [sub_eq_add_neg]
+  simp only [← neg_smul]
+  rw [two_coeff_mul]
+  unfold tr
+  simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
+    source_certificate.2.2.2.2.1]
+  norm_num
+
+private lemma base_bell_sandwich : bell * baseInv * bell = (896 / 9 : ℝ) • bell := by
+  rw [bell_sandwich]
+  have hb : bell.IsHermitian := by
+    have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
+    rcases h with ⟨hstates, _, _, _, _, _, _, hbell, _, _, _, _, _⟩
+    exact (hstates 6 bell hbell).1.isHermitian
+  have hr : ((bell * baseInv).trace.re : ℂ) = (bell * baseInv).trace :=
+    Complex.conj_eq_iff_re.mp (by
+      change star (bell * baseInv).trace = _
+      rw [← Matrix.trace_conjTranspose, Matrix.conjTranspose_mul,
+        hb, baseInv_hermitian, Matrix.trace_mul_comm])
+  rw [← hr]
+  change ((tr (bell * baseInv) : ℝ) : ℂ) • bell = _
+  rw [base_bell_trace]
+  rfl
+
+private lemma joint_inverse : tau⁻¹ = jointInv := by
+  apply Matrix.inv_eq_left_inv
+  have hi : baseInv * baseFree = (1 : Op 6) := mul_eq_one_comm.mp base_inverse
+  have h1 : baseInv * bell * baseInv * baseFree = baseInv * bell := by
+    rw [Matrix.mul_assoc, Matrix.mul_assoc, hi, Matrix.mul_one]
+  have h2 : baseInv * bell * baseInv * bell = (896 / 9 : ℝ) • (baseInv * bell) := by
+    rw [Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_assoc bell,
+      base_bell_sandwich, Matrix.mul_smul]
+  unfold jointInv tau
+  change _ * ((4095 / 4096 : ℝ) • baseFree + (1 / 4096 : ℝ) • bell) = _
+  simp only [Matrix.smul_mul, Matrix.mul_add, Matrix.mul_smul, Matrix.sub_mul,
+    smul_sub, smul_smul, hi, h1, h2]
+  module
+
+private lemma joint_state : IsState joint := by
+  refine ⟨(rho_pos.kronecker rhoBar_pos).posSemidef.submatrix (blocks 3 3), ?_⟩
+  change (tensor rho rhoBar).trace = 1
+  rw [tensor_trace, rho_state.2, rhoBar_state.2, one_mul]
+
+-- The tensor trace identities reduce the inverse certificate without expanding its entries.
+set_option maxHeartbeats 2000000 in
+private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
+  have hc : sigmaInv * rho = C := by
+    unfold sigmaInv rho C
+    rw [sub_eq_add_neg]
+    simp only [← neg_smul]
+    rw [two_coeff_mul]
+    module
+  have ht : (rho * C).trace = (Q : ℂ) := by
+    unfold rho C Q
+    rw [two_coeff_mul]
+    simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
+      source_certificate.2.2.2.2.1]
+    norm_num
+  have hb : tr (joint * joint * baseInv) = Q ^ 2 := by
+    unfold joint baseInv rhoBar
+    rw [tensor_product, tensor_product, Matrix.mul_assoc, C_relation]
+    have he : conjugate rho * conjugate rho * conjugate sigmaInv = conjugate (rho * C) := by
+      change barAlg rho * barAlg rho * barAlg sigmaInv = barAlg (rho * C)
+      rw [← map_mul, ← map_mul, Matrix.mul_assoc, C_relation]
+    rw [he]
+    unfold tr
+    rw [tensor_trace, ht]
+    change ((Q : ℂ) * ((rho * C).map (starRingEnd ℂ)).trace).re = _
+    rw [← AddMonoidHom.map_trace (starRingEnd ℂ), ht]
+    norm_num [Complex.star_def, pow_two]
+  have hh : baseInv * (joint * joint) * baseInv = tensor (C * C) (conjugate (C * C)) := by
+    unfold baseInv joint rhoBar
+    rw [tensor_product, tensor_product, tensor_product]
+    have he : sigmaInv * (rho * rho) * sigmaInv = C * C := by
+      rw [← Matrix.mul_assoc, hc, Matrix.mul_assoc, C_relation]
+    rw [he]
+    change tensor (C * C) (barAlg sigmaInv * (barAlg rho * barAlg rho) * barAlg sigmaInv) = _
+    rw [← map_mul, ← map_mul, ← map_mul, he]
+    rfl
+  have hv : tr (joint * joint * (baseInv * bell * baseInv)) =
+      Q ^ 2 * (198983 / 189225 : ℝ) := by
+    unfold tr
+    have he : (joint * joint * (baseInv * bell * baseInv)).trace =
+        (bell * (baseInv * (joint * joint) * baseInv)).trace := by
+      calc
+        _ = ((baseInv * bell * baseInv) * (joint * joint)).trace := Matrix.trace_mul_comm _ _
+        _ = ((bell * baseInv) * (joint * joint) * baseInv).trace := by
+          simpa only [Matrix.mul_assoc] using
+            Matrix.trace_mul_comm baseInv ((bell * baseInv) * (joint * joint))
+        _ = _ := by simp only [Matrix.mul_assoc]
+    rw [he]
+    change tr (bell * (baseInv * (joint * joint) * baseInv)) = _
+    rw [hh, actual_consumption]
+    have hbar : conjugate (Q • W (119 / 316 : ℝ)) = Q • conjugate (W (119 / 316 : ℝ)) :=
+      map_smul barAlg Q _
+    rw [hbar]
+    change tr (bell * (tensorRight (n := 3) (m := 3) (Q • conjugate (W (119 / 316 : ℝ)))
+      (Q • W (119 / 316 : ℝ)))) = _
+    rw [map_smul]
+    change tr (bell * (Q • (tensorLeft (n := 3) (m := 3) (W (119 / 316 : ℝ))
+      (Q • conjugate (W (119 / 316 : ℝ)))))) = _
+    rw [map_smul]
+    have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
+    rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, htW, _⟩
+    unfold tr at htW ⊢
+    simp only [smul_smul, Matrix.mul_smul, Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
+    change Q * Q * (bell * tensor (W (119 / 316 : ℝ))
+      (conjugate (W (119 / 316 : ℝ)))).trace.re = _
+    rw [htW]
+    ring
+  rw [joint_inverse]
+  unfold jointInv
+  simp only [Matrix.mul_smul, Matrix.mul_sub]
+  unfold tr at hb hv ⊢
+  simp only [Matrix.trace_sub, Matrix.trace_smul, Complex.sub_re, Complex.smul_re, smul_eq_mul]
+  rw [hb, hv]
+  norm_num [Q, F]
+
 end D5.S3.Quantum.Magic.RenyiBoundaryMagicAdditivityRefutation
