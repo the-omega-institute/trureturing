@@ -137,7 +137,7 @@ theorem terminal_sampling_uniform_law (maxTrue : ℕ) :
     let rebuild (tail : Tape) : Tape := fun i => if i < e then false else tail (i - e)
     let B : Set Tape := {tail | ∃ stop, sample maxTrue (rebuild tail) f q e = some (word, stop)}
     have rebuildMeas : Measurable rebuild := by
-      apply measurable_pi_lambda
+      apply Measurable.of_eval
       intro i
       by_cases hi : i < e
       · simpa [rebuild, hi] using (measurable_const : Measurable (fun _ : Tape => false))

@@ -194,8 +194,8 @@ private theorem seriesDerivation_coeff (D : LatticeData)
 
 private theorem seriesDerivation_derivative (D : LatticeData)
     (f : PowerSeries (Oscillator D)) :
-    seriesDerivation D (PowerSeries.derivative (Oscillator D) f) =
-      PowerSeries.derivative (Oscillator D) (seriesDerivation D f) := by
+    seriesDerivation D (PowerSeries.derivative (R := (Oscillator D)) f) =
+      PowerSeries.derivative (R := (Oscillator D)) (seriesDerivation D f) := by
   apply PowerSeries.ext
   intro n
   simp only [seriesDerivation_coeff, PowerSeries.coeff_derivative,
@@ -205,7 +205,7 @@ private theorem seriesDerivation_derivative (D : LatticeData)
 
 private theorem logarithm_derivative_coeff (D : LatticeData) (α : Charge D)
     (n : ℕ) :
-    PowerSeries.coeff n (PowerSeries.derivative (Oscillator D) (creationSeries D α)) =
+    PowerSeries.coeff n (PowerSeries.derivative (R := (Oscillator D)) (creationSeries D α)) =
       ∑ i : Fin D.rank, (α i : ℂ) • (X (i,n) : Oscillator D) := by
   rw [PowerSeries.coeff_derivative]
   simp only [creationSeries, PowerSeries.coeff_mk, Nat.succ_ne_zero, ↓reduceDIte,
@@ -228,9 +228,9 @@ theorem exponential_constant (D : LatticeData) (α : Charge D) :
     simp [hj]
 
 private theorem exponential_derivative (D : LatticeData) (α : Charge D) :
-    PowerSeries.derivative (Oscillator D) (creationExponential D α) =
+    PowerSeries.derivative (R := (Oscillator D)) (creationExponential D α) =
       creationExponential D α *
-        PowerSeries.derivative (Oscillator D) (creationSeries D α) := by
+        PowerSeries.derivative (R := (Oscillator D)) (creationSeries D α) := by
   have hA : PowerSeries.constantCoeff (creationSeries D α) = 0 := by
     simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
   rw [creationExponential,
@@ -240,15 +240,15 @@ private theorem exponential_derivative (D : LatticeData) (α : Charge D) :
 /-- The oscillator derivative of the actual exponential, proved from its ODE. -/
 private theorem creation_derivation_series (D : LatticeData) (α : Charge D) :
     seriesDerivation D (creationExponential D α) =
-      PowerSeries.derivative (Oscillator D) (creationExponential D α) -
+      PowerSeries.derivative (R := (Oscillator D)) (creationExponential D α) -
         PowerSeries.C (chargePolynomial D α) * creationExponential D α := by
   let E := creationExponential D α
-  let A := PowerSeries.derivative (Oscillator D) (creationSeries D α)
-  let H := seriesDerivation D E - PowerSeries.derivative (Oscillator D) E +
+  let A := PowerSeries.derivative (R := (Oscillator D)) (creationSeries D α)
+  let H := seriesDerivation D E - PowerSeries.derivative (R := (Oscillator D)) E +
     PowerSeries.C (chargePolynomial D α) * E
-  have hE : PowerSeries.derivative (Oscillator D) E = E * A :=
+  have hE : PowerSeries.derivative (R := (Oscillator D)) E = E * A :=
     exponential_derivative D α
-  have hA : seriesDerivation D A = PowerSeries.derivative (Oscillator D) A := by
+  have hA : seriesDerivation D A = PowerSeries.derivative (R := (Oscillator D)) A := by
     apply PowerSeries.ext
     intro n
     rw [seriesDerivation_coeff]
@@ -266,11 +266,11 @@ private theorem creation_derivation_series (D : LatticeData) (α : Charge D) :
     intro i hi
     simp only [map_natCast]
     ring
-  have hH : PowerSeries.derivative (Oscillator D) H = H * A := by
+  have hH : PowerSeries.derivative (R := (Oscillator D)) H = H * A := by
     dsimp only [H]
     rw [map_add, map_sub, ← seriesDerivation_derivative, hE,
-      (seriesDerivation D).leibniz, (PowerSeries.derivative (Oscillator D)).leibniz,
-      (PowerSeries.derivative (Oscillator D)).leibniz,
+      (seriesDerivation D).leibniz, (PowerSeries.derivative (R := (Oscillator D))).leibniz,
+      (PowerSeries.derivative (R := (Oscillator D))).leibniz,
       PowerSeries.derivative_C, hA, hE]
     simp only [smul_eq_mul, mul_zero, add_zero]
     ring
@@ -304,7 +304,7 @@ private theorem creation_derivation_series (D : LatticeData) (α : Charge D) :
             mul_zero, zero_mul] using hr
         exact (smul_right_inj (Nat.succ_ne_zero n)).mp hr'
   dsimp only [H] at hzero
-  change seriesDerivation D E = PowerSeries.derivative (Oscillator D) E -
+  change seriesDerivation D E = PowerSeries.derivative (R := (Oscillator D)) E -
     PowerSeries.C (chargePolynomial D α) * E
   linear_combination hzero
 
@@ -912,7 +912,7 @@ theorem sugawaraMode_weighted_homogeneous (D : LatticeData)
     conv_lhs => rw [p.as_sum]
     rw [map_sum]
     calc
-      _ = ∑ d ∈ p.support, (r : ℂ) • monomial d (coeff d p) := by
+      _ = ∑ d ∈ p.support, (r : ℂ) • monomial d (AddMonoidAlgebra.coeff p d) := by
         apply Finset.sum_congr rfl
         intro d hd
         rw [oscillatorEuler_monomial, hp (mem_support_iff.mp hd)]

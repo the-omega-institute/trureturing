@@ -140,7 +140,7 @@ def scalarNumerator (P : (Fin N → ℕ) →₀ V) (lambda : V →ₗ[K] K) : La
 theorem scalarNumerator_coefficient (P : (Fin N → ℕ) →₀ V) (lambda : V →ₗ[K] K)
     (a : Fin N → ℕ) :
     (scalarNumerator K P lambda).coeff (naturalExponent a) = lambda (P a) := by
-  simp [scalarNumerator, Finsupp.mapDomain_apply naturalExponent_injective]
+  simp [scalarNumerator, Finsupp.mapDomain_apply_of_injective naturalExponent_injective]
 
 theorem scalarNumerator_nonnegative (P : (Fin N → ℕ) →₀ V) (lambda : V →ₗ[K] K)
     (e : Fin N → ℤ) (he : e ∈ (scalarNumerator K P lambda).coeff.support) (z : Fin N) :

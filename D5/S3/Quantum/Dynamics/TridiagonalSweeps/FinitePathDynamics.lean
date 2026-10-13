@@ -187,7 +187,6 @@ theorem real_mulVec_powers_tendsto_zero {m : ℕ} (hm : 1 ≤ m)
     simpa only [Complex.coe_algebraMap, Complex.ofReal_re] using congrArg Complex.re hx.symm
   convert hr using 1
   · simpa only [Function.comp_def] using he.symm
-  · rfl
 
 
 #print axioms extend_interior

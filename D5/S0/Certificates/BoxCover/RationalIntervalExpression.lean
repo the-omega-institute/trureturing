@@ -7,6 +7,7 @@
    digest: A decidable rational endpoint checker entails enclosure of the actual real evaluation of an annotated arithmetic expression. -/
 
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Rat.Cast.Lemmas
 import Mathlib.Algebra.Order.Field.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Linarith
@@ -234,13 +235,17 @@ theorem checked_expression_encloses {n : ℕ}
       · right; left
         constructor
         · exact_mod_cast hp
-        · exact_mod_cast hv
+        · rw [← Rat.cast_pow]
+          exact Rat.cast_le.mpr hv
       · right; right
         constructor
         · exact_mod_cast hn
-        · exact_mod_cast hv
-    · exact_mod_cast hla
-    · exact_mod_cast hua
+        · rw [← Rat.cast_pow]
+          exact Rat.cast_le.mpr hv
+    · rw [← Rat.cast_pow]
+      exact Rat.cast_le.mpr hla
+    · rw [← Rat.cast_pow]
+      exact Rat.cast_le.mpr hua
   | inv l u a iha =>
     intro hcheck
     have hc := Bool.and_eq_true_iff.mp hcheck

@@ -274,7 +274,7 @@ theorem map_finsetSum_gaussian {N : ℕ} {δ : ℝ≥0} (s : Finset (Fin N)) :
       have hY : HasLaw (fun v : Fin N → ℝ => ∑ i ∈ s, v i)
           (gaussianReal 0 (s.card • δ)) (Measure.pi fun _ : Fin N => gaussianReal 0 δ) :=
         ⟨(by fun_prop), ih⟩
-      have hsum := gaussianReal_add_gaussianReal_of_indepFun hXY hX.map_eq hY.map_eq
+      have hsum := gaussianReal_add_gaussianReal_of_indepFun hXY hX hY
       have hfun : (fun v : Fin N → ℝ => ∑ i ∈ insert a s, v i)
           = (fun v : Fin N → ℝ => v a) + (fun v : Fin N → ℝ => ∑ i ∈ s, v i) := by
         funext v

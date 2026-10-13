@@ -203,10 +203,14 @@ theorem setMatchingSpec_cons_iff {α : Type*} [DecidableEq α]
       rcases Finset.mem_insert.mp hmem with heq | hused
       · exact hpair x hxR c hcR hxc heq
       · exact hunused x hxR hused
-    · have hR : R = insert c (R.erase c) := (Finset.insert_erase hcR).symm
-      rw [hR] at hcover
-      simpa [Finset.image_insert, Finset.union_insert,
-        Finset.insert_union] using hcover
+    · calc
+        Finset.image id (R.erase c) ∪ insert (id c) used =
+            insert (id c) (Finset.image id (R.erase c) ∪ used) :=
+          Finset.union_insert _ _ _
+        insert (id c) (Finset.image id (R.erase c) ∪ used) =
+            Finset.image id R ∪ used := by
+          rw [← Finset.insert_union, ← Finset.image_insert, Finset.insert_erase hcR]
+        _ = target := hcover
   · rintro ⟨c, hcA, hcR, hcUnused, htail⟩
     obtain ⟨hsub, hwords, hpair, hunused, hcover⟩ := htail
     have hR : R = insert c (R.erase c) := (Finset.insert_erase hcR).symm
@@ -242,9 +246,13 @@ theorem setMatchingSpec_cons_iff {α : Type*} [DecidableEq α]
       rcases Finset.mem_insert.mp (hR ▸ hx) with rfl | hxT
       · exact hcUnused hused
       · exact hunused x hxT (Finset.mem_insert.mpr (Or.inr hused))
-    · rw [hR]
-      simpa [Finset.image_insert, Finset.union_insert,
-        Finset.insert_union] using hcover
+    · calc
+        Finset.image id R ∪ used =
+            insert (id c) (Finset.image id (R.erase c) ∪ used) := by
+          rw [← Finset.insert_union, ← Finset.image_insert, Finset.insert_erase hcR]
+        _ = Finset.image id (R.erase c) ∪ insert (id c) used :=
+          (Finset.union_insert _ _ _).symm
+        _ = target := hcover
 
 theorem matchingSets_subset {α : Type*} [DecidableEq α]
     (words : List (Finset α)) (id : α → ℕ) (target used : Finset ℕ)

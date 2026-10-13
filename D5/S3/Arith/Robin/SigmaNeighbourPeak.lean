@@ -43,7 +43,7 @@ private lemma sigma_product_bound (m : ℕ) (hm : m ≠ 0) :
     exact_mod_cast Nat.prod_primeFactors_pow_factorization hm
   rw [sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul hm, Nat.cast_prod,
     hden, ← prod_div_distrib]
-  apply prod_le_prod
+  apply prod_le_prod₀
   · intro p hp
     positivity
   · intro p hp
@@ -71,7 +71,7 @@ private lemma rough_abundancy (x m : ℕ) (hx : 4 ≤ x) (hm : m ≠ 0)
     calc
       _ ≤ ∏ p ∈ m.primeFactors, (p : ℝ) / (p - 1) := sigma_product_bound m hm
       _ ≤ ∏ p ∈ m.primeFactors, (1 + (x : ℝ)⁻¹) := by
-        apply prod_le_prod
+        apply prod_le_prod₀
         · intro p hp
           have hpone : (1 : ℝ) < p := by
             exact_mod_cast (Nat.prime_of_mem_primeFactors hp).one_lt

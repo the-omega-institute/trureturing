@@ -565,7 +565,6 @@ private theorem negative : ¬ arena.Law oracle := by
   intro law
   have bad := law 3 1 [fun _ => 0] 0 0
   norm_num [oracle, realize, windowCharge] at bad
-  cases bad
 
 def evidence : Registration arena (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.row_readings_index)) where
   actual := actual

@@ -148,7 +148,8 @@ theorem endpoint_certificate (q : Fin 21) (a : Fin 2) (t : Fin 21)
   obtain ⟨hl, hu⟩ := phi_bounds
   have hs := Real.goldenRatio_sq
   fin_cases q <;> fin_cases a <;>
-    norm_num [step, zeroTarget, oneTarget] at h hq
+    norm_num [step, zeroTarget, oneTarget] at h
+  all_goals norm_num at hq
   all_goals first | contradiction | subst t
   all_goals refine ⟨by decide, ?_, ?_⟩
   all_goals

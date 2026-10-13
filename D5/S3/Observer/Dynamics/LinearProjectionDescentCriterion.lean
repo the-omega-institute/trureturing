@@ -113,12 +113,12 @@ theorem linear_projection_descent_criterion
   · have hSix :=
       deterministic_interface_sixfold_equivalence
         (fun x => Matrix.toLin' P x) (fun x => Matrix.toLin' T x)
-    tfae_have 1 ↔ 2 := hSix.out 0 1
-    tfae_have 2 ↔ 3 := hSix.out 1 2
-    tfae_have 3 ↔ 4 := hSix.out 2 3
-    tfae_have 4 ↔ 5 := hSix.out 3 4
-    tfae_have 5 ↔ 6 := hSix.out 4 5
-    tfae_have 6 ↔ 7 := (hSix.out 5 1).trans hInterface
+    tfae_have 1 ↔ 2 := hSix.out 1 2
+    tfae_have 2 ↔ 3 := hSix.out 2 3
+    tfae_have 3 ↔ 4 := hSix.out 3 4
+    tfae_have 4 ↔ 5 := hSix.out 4 5
+    tfae_have 5 ↔ 6 := hSix.out 5 6
+    tfae_have 6 ↔ 7 := (hSix.out 6 2).trans hInterface
     tfae_finish
   · intro hTHermitian
     constructor

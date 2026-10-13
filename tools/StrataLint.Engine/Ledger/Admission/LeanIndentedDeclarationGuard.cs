@@ -437,7 +437,8 @@ internal sealed partial class LeanSourceCatalog
                 || leaf.StartsWith("term", StringComparison.Ordinal)
                 || leaf.StartsWith("match_", StringComparison.Ordinal)
                 || leaf.EndsWith("_getElem?", StringComparison.Ordinal)
-                || leaf is "congr_simp" or "splitter";
+                || leaf is "congr_simp" or "splitter" or "eq_def"
+                || leaf.EndsWith("_assoc", StringComparison.Ordinal);
         });
 
     private static LeanSourceDeclaration CreateGeneratorClosure(
