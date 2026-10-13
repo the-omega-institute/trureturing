@@ -3843,3 +3843,130 @@ coefficient suppliers to the original selected source. They introduce
 no PNT or density theorem, literature-priority claim, Lean declaration
 or kernel verification. The complementary signed comparison and RH
 remain unproved.
+
+
+## The retained stronger PNT narrows the same unpaid real-part sector
+
+Keep CP1--CP3's original conditional source hypotheses, fixed supplied
+$\Theta,\eta,d,\kappa,a$, exact N1/N2 finite domain and full parameter
+window, every original label including $t_m$, and every maximizing tie.
+Use the same endpoint-inclusive $B^{\rm end}_{\max,X}$ and weighted
+$B_{\max,X}\le B^{\rm end}_{\max,X}$. The original source clock is
+$B=\log u$; below $U_X=\log X$ and $L=\log B$ are different quantities.
+All starts are common existential starts in the original fixed parameters
+and the auxiliary constants below, never label- or tie-dependent.
+
+### Reuse the published PNT shape and its existing inverse scale
+
+The [Nicolas supplier note](../ArithSums/nicolas2025comparison.md)
+already records Fiori--Jaskari, arXiv:2609.23222v1, Theorem 1.1 and
+Table 1, and its complete-integral consequence. Put
+
+$$
+V(y)=\frac{y^{3/5}}{(\log y)^{1/5}},\qquad
+D=\frac52\left(\frac53\right)^{1/5}
+ \left(\frac{2000}{161967}\right)^{3/5}.
+$$
+
+At sufficiently large real arguments the source's extra exponential
+factor is at least one. Thus its leading $D$ supplies, for any fixed
+$0<c<D$, the already used complete-future majorant
+
+$$
+|I_\psi(B)|\le C_c e^{-cV(\log B)}.
+$$
+
+The loss $D-c$ absorbs the integrated kernel's polynomial factor;
+all prime powers and the improper upper endpoint remain. The source
+statement and table are reused: this application does not independently
+audit the external analytic proof or computations. It asserts no new
+PNT or generic integration theorem.
+
+Reuse CP1's original CR19 consequence
+$-I_\psi(B)\ge(d/2)X^{-\eta}$ for every original label and tie.
+Combining the two bounds on that same response gives
+
+$$
+cV(L)\le\eta U_X+\log(2C_c/d).
+\tag{VC1}
+$$
+
+The [existing inverse-scale calculation](../Analytic/ng2004summatorymobius.md),
+(N5), is the identity
+$V(KU^{5/3}(\log U)^{1/3})\sim K^{3/5}(3/5)^{1/5}U$.
+Its variables map here to $U=U_X$, its original cutoff logarithm to
+$L=\log B$, and its target exponent $1/2$ to the original supplied
+$\eta$. No Mertens or odd-prefix bound from that note is transported
+to this different arithmetic response; only its scalar inverse is reused.
+
+Fix $K>0$ satisfying
+
+$$
+D(3/5)^{1/5}K^{3/5}>\eta.
+$$
+
+Choose a fixed $c<D$ still satisfying
+$c(3/5)^{1/5}K^{3/5}>\eta$. Eventual monotonicity of $V$ and the
+reused inverse imply that $L\ge KU_X^{5/3}(\log U_X)^{1/3}$ would
+contradict VC1. Therefore, with every original endpoint and tie retained,
+
+$$
+\boxed{
+\log B^{\rm end}_{\max,X}
+\le K(\log X)^{5/3}(\log\log X)^{1/3}.}
+\tag{VC2}
+$$
+
+N2 gives the same ceiling for intervening active real-parameter clocks;
+those labels do not create new prime-labelled sources. VC2 is a necessary
+restriction inside the unchanged source domain, not a new positive reserve.
+It includes $\Theta=1$. Where $\Theta<1$, SC2's polynomial source-clock
+ceiling remains stronger. Neither the original $\eta$ nor $a$ is reselected.
+
+### Apply the unchanged full coefficient majorant to the wider shrinking band
+
+Reuse SR1 and CP3's threshold-independent absolute majorant. Fix
+
+$$
+0<\zeta<\frac{1/2-\eta}{K},\qquad
+\widetilde\sigma_X=\frac12+
+ \frac{\zeta}{(\log X)^{2/3}(\log\log X)^{1/3}},\qquad
+\widetilde\epsilon_\zeta=\frac12-\eta-K\zeta>0.
+$$
+
+One common start makes $\widetilde\sigma_X\le1$. VC2 supplies
+$B_{\max,X}^{\widetilde\sigma_X-1/2}\le X^{K\zeta}$ and
+$1+\log^2 B_{\max,X}=O_K((\log X)^{10/3}(\log\log X)^{2/3})$.
+With the original positive outgoing weights summing to $L_X$ and
+$M_X=X^{1/2-\eta}\log X$, the same retained subhead obeys
+
+$$
+\boxed{
+\frac{|S_X^{\le\widetilde\sigma_X}|}{M_XL_X}
+\ll_{\eta,d,a,K,\zeta}
+X^{-\widetilde\epsilon_\zeta}
+ (\log X)^{7/3}(\log\log X)^{2/3}\longrightarrow0.}
+\tag{VC3}
+$$
+
+The same SR1 majorant applied separately at $\sigma=1/2$ gives its
+critical-line subhead this bound with $\widetilde\epsilon_0=1/2-\eta$. Relative to CP3's $1/\log X$ width,
+the new band has a larger scale by
+$(\log X/\log\log X)^{1/3}$, up to the fixed allowed constants.
+This is a consequence of the existing stronger PNT shape at the actual
+source clocks, not a new density theorem or moving-parameter density claim.
+
+All original legal height masks, real parts, phases and multiplicities
+remain. The complement uses the actual strict condition
+$\beta>\widetilde\sigma_X$ and is not discarded. Every fixed zero with
+$\beta>1/2$ eventually remains in that unpaid complement; zeros with
+$\beta<1/2$ remain in the controlled sector. No positive-width zero-free
+region is obtained. The existing removal account permits an arbitrarily
+small fixed loss of the strict signed margin, but VC3 supplies no signed
+bound for the complementary head or the actual continuous integral.
+
+VC1--VC3 are source-specific paper applications of retained external
+PNT, full-height, inverse-scale and coefficient results. They establish
+no literature-priority claim, new generic theorem, Lean declaration or
+kernel verification. The original full-window signed comparison and RH
+remain unproved.
