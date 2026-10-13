@@ -1,7 +1,7 @@
 /- GID: D5/S1/Words/WeakShuffleNormalization
    generality: I
    mirror-B: D5/B/S1/Words/WeakShuffleNormalization
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Mammez Conjecture 3.10 normalization for every alphabet. -/
