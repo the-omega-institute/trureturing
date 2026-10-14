@@ -74,7 +74,7 @@ private theorem atomic_injective :
   have clock := congrArg kappa h
   simpa only [kappa_iterate, kappa, Nat.zero_add] using clock
 
-private theorem atomic_pair (s : Nat) :
+theorem atomic_pair (s : Nat) :
     substitution^[s+2] (.of true) =
       .mul (substitution^[s+1] (.of true)) (substitution^[s] (.of true)) := by
   rw [Function.iterate_add_apply]
