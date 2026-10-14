@@ -66,15 +66,16 @@ private theorem j2_raw_half_cuts {m : ℕ} (hm : 5 ≤ m) :
     actualHalfCuts (F2Domain m) false = Finset.univ.image (j2RawCut hm) := by
   classical
   ext e
-  simp only [actualHalfCuts, Finset.mem_filter, Finset.mem_univ, true_and,
-    HalfCut, Finset.mem_image]
+  change (e ∈ Finset.univ.filter (fun z : Sym2 {x : Configuration m // F2Domain m x} =>
+    HalfCut m false (Sym2.map Subtype.val z))) ↔ _
+  rw [Finset.mem_filter, Finset.mem_image]
   constructor
-  · rintro ⟨i, hi⟩
+  · rintro ⟨_, i, hi⟩
     refine ⟨i, Finset.mem_univ _, ?_⟩
     apply Sym2.map.injective Subtype.val_injective
     simpa only [j2RawCut, Sym2.map_mk, markedEdge] using hi.symm
   · rintro ⟨i, _, rfl⟩
-    exact ⟨i, rfl⟩
+    exact ⟨Finset.mem_univ _, i, rfl⟩
 
 private theorem j2_mapped_half_cuts {m : ℕ} (hm : 5 ≤ m)
     (F : SupplyFrame m 2) (hB : 3 ≤ F.base.length) :
@@ -82,6 +83,12 @@ private theorem j2_mapped_half_cuts {m : ℕ} (hm : 5 ≤ m)
       (Sym2.map (frameDomainIso hm F).toHom)).image
         (Sym2.map (j2SpecialMap F hB)) = specialCuts (by omega : 3 ≤ m) F hB := by
   classical
+  let rawToFrame : {x : Configuration m // F2Domain m x} →
+      {x : Configuration m // FrameDomain F x} := (frameDomainIso hm F).toHom
+  let frameToSpecial : {x : Configuration m // FrameDomain F x} →
+      {x : Configuration m // SpecialDomain F hB x} := j2SpecialMap F hB
+  change ((actualHalfCuts (F2Domain m) false).image (Sym2.map rawToFrame)).image
+    (Sym2.map frameToSpecial) = specialCuts (by omega : 3 ≤ m) F hB
   rw [j2_raw_half_cuts hm, Finset.image_image, Finset.image_image]
   unfold specialCuts
   congr 1
