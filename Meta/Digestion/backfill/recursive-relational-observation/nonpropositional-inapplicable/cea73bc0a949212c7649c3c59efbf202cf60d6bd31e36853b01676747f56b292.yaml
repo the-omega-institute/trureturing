@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cea73bc0a949212c7649c3c59efbf202cf60d6bd31e36853b01676747f56b292
+  normalized_sha256: sha256:cea73bc0a949212c7649c3c59efbf202cf60d6bd31e36853b01676747f56b292
+cas_ref: sha256:cea73bc0a949212c7649c3c59efbf202cf60d6bd31e36853b01676747f56b292
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义与假设 104.1 只指定共享方向的独立分段实验、设计与风险记号，独立重启属于输入契约。
+    previous_atom_id: 479741761b9d848080df94f7b84531fa95f488e82d7d00b500330c3489b79bfc
+    next_atom_id: 56b494dc7901697c94fd0af6c265d352577f721da6f2b468ce9d5d7dffa5e91c
