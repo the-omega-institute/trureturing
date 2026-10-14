@@ -128,10 +128,14 @@ theorem exists_path_edge_slicing (E : Finset (Sym2 V)) {start finish : V}
   · exact hfirst
   · exact hlater z hz
 
-private theorem exists_open_cycle_at_edge [Fintype V] {a x y : V}
+/-- Open a Hamilton cycle at a supplied actual edge. The endpoints remain in
+the walk type, and precisely that undirected edge is removed. -/
+theorem exists_open_cycle_at_edge {a x y : V}
     (p : G.Walk a a) (hp : p.IsHamiltonianCycle) (he : s(x, y) ∈ p.edgeSet) :
     ∃ q : G.Walk y x, q.IsHamiltonian ∧
       ∀ e, e ∈ q.edges ↔ e ∈ p.edges ∧ e ≠ s(x, y) := by
+  let : Finite V := hp.finite
+  let : Fintype V := Fintype.ofFinite V
   let r := p.rotate x (hp.mem_support x)
   have hr : r.IsHamiltonianCycle := hp.rotate (hp.mem_support x)
   have hrEdge : r.edgeSet = p.edgeSet := by
@@ -227,6 +231,7 @@ theorem exists_cycle_edge_slicing [Fintype V] (E : Finset (Sym2 V)) {a : V}
       exact hnot (hee.symm ▸ he₀)
 
 #print axioms exists_path_edge_slicing
+#print axioms exists_open_cycle_at_edge
 #print axioms exists_cycle_edge_slicing
 
 end D5.S3.Combinatorics.Graph.Walks.EdgeSlicing

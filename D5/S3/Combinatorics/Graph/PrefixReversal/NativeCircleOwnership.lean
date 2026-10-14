@@ -304,7 +304,9 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
 open Equiv
 open Fin.NatCast
 
-private theorem star_iff_gap_circle {m : ℕ} (hm : 3 ≤ m)
+/-- An independently deletion-defined supplier star consists exactly of its
+complete native insertion-gap circles. -/
+theorem native_star_circle_partition {m : ℕ} (hm : 3 ≤ m)
     (z v : Configuration m) :
     Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) v ↔
       ∃ i : Fin m, Circle (gapAnchor z i) v := by
@@ -476,8 +478,8 @@ theorem native_t_core_intersection {m : ℕ} (hm : 4 ≤ m) (v : Configuration m
           Cycle (Fin (m + 1))) v) ↔
       Circle (1 : Configuration m) v ∨
         Circle (Equiv.swap (0 : Fin (m + 1)) (Fin.last m)) v := by
-  rw [star_iff_gap_circle (by omega : 3 ≤ m),
-    star_iff_gap_circle (by omega : 3 ≤ m)]
+  rw [native_star_circle_partition (by omega : 3 ≤ m),
+    native_star_circle_partition (by omega : 3 ≤ m)]
   constructor
   · rintro ⟨⟨i, hi⟩, ⟨j, hj⟩⟩
     by_cases hjn : j.val < m - 2
@@ -553,8 +555,8 @@ theorem native_t_circle_partition {m : ℕ} (hm : 4 ≤ m) (v : Configuration m)
         (residualList (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) :
           Cycle (Fin (m + 1))) v) ↔
       ∃! p : Fin m ⊕ Fin (m - 2), Circle (tCircleAnchor p) v := by
-  rw [star_iff_gap_circle (by omega : 3 ≤ m),
-    star_iff_gap_circle (by omega : 3 ≤ m)]
+  rw [native_star_circle_partition (by omega : 3 ≤ m),
+    native_star_circle_partition (by omega : 3 ≤ m)]
   constructor
   · intro h
     have hex : ∃ p : Fin m ⊕ Fin (m - 2), Circle (tCircleAnchor p) v := by
