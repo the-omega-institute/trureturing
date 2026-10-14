@@ -1290,3 +1290,752 @@ these unbounded statements; their proofs are the arguments above.
 [CEK]: https://arxiv.org/html/0903.2507
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Exact literal support and a materialized immutable tail
+
+**Definition 8.1 (parameters and physical meaning).** Retain Definitions
+1.1–1.4, including whole materialization before the source call. Put
+$H=h-1$. For $T=0$ choose the complete native table of SLHC Construction
+11.6 with candidate width zero, and put $J=0$. For even $h$ and finite
+$T>0$ choose SLHC Theorem 12.2 with $\Delta=2$, and put
+$J=\lceil(T+2h)/2\rceil$. In both cases write $P=H+J$ and use the
+corresponding $k,\ell,W_*,Q,U$ from Corollary 5.1. In particular $U=0$
+on all promised runs, although the second native installation includes
+unreachable Update rows.
+
+A materialized letter cell need not be writable. A fixed cell containing
+$R$ is an actual letter, whereas a binary integer meaning “repeat $R$”
+is not a materialized string. The construction below has **$J$ distinct,
+permanently read-only letter cells**, each containing $R$, on the receiver
+side of the source boundary. They are physically installed and billed.
+Their contents and protection are invariant on every installed control
+valuation. Their allocation is not $\log J$ physical cells. The online
+mutable count and the total physical storage are different quantities.
+
+The operand will be one contiguous interval of actual letter cells:
+a bounded writable prefix immediately followed by some of those fixed
+$R$ cells. Its endpoints, every head used to produce it, and the retained
+received information are mutable and counted. The source receives that
+whole interval as its literal operand, just as (4.4) supplies a flat
+array interval. It receives neither a repeat instruction nor a request
+to follow a pointer into a compressed representation. There is no
+source call while this interval is being prepared.
+
+**Lemma 8.2 (the complete native menu, including unreachable rows).**
+For these particular complete native tables the exact distinct literal
+menu, and also its prefix union, is
+
+$$
+\begin{aligned}
+\mathcal D_{H,J}
+ &=\{pR^j: |p|\le H,\ 0\le j\le J\}\\
+ &=\{p:|p|\le H\}\ \cup\
+   \{xR^j:|x|=H,\ 1\le j\le J\},\\
+\mathcal M_{\rm nat}&=\operatorname{Pref}(\mathcal M_{\rm nat})
+ =\mathcal D_{H,J},\qquad
+|\mathcal D_{H,J}|=2^H(J+2)-1,\qquad
+P_{\rm inst}^{\rm nat}=H+J.
+\tag{8.1}
+\end{aligned}
+$$
+
+Proof. At $T=0$, every valid VALUE code permits every path of length
+at most $H$: choose its padding zero and its independent branch, leaf
+and parity counters zero. Its literal is that path. GUARD, POLL and
+UPDATE are unavailable in this case; malformed codes and routing rows
+read the root. Thus its exact menu is $\mathcal D_{H,0}$, including
+$H=0$.
+
+For $T>0$, inspect the total intermediate table $I_{12}$, rather than
+only its lawful executions. At cell $c$ its installed candidates are
+
+$$
+N\in[\max(0,2c-2h+1),\ \max(0,2c-2h+1)+2h],
+\qquad 0\le c<J.
+\tag{8.2}
+$$
+
+Here $J\ge h+1$. The intervals for $c<h$ are $[0,2h]$;
+subsequent lower endpoints increase by two, and the last upper endpoint
+is $2J-1$. Their union is exactly $[0,2J-1]$. Hence VALUE supplies
+every $pR^j$ in (8.1): choose a candidate with $\lceil N/2\rceil=j$
+and choose that valid path $p$. For $j=0$ use $N=0$; for $j>0$ one
+may use $N=2j-1$. Counter bounds do not impose a reachable-traversal
+condition on these installed rows.
+
+A GUARD literal is $p^-R^{\lfloor N/2\rfloor+1}$, with
+$1\le |p|\le H$ and $1\le N\le2J-1$. Its prefix has length at most
+$H-1$ and its right suffix at most $J$. SEARCH and POLL use respectively
+$R^m$, $1\le m<J$, and $R^c$, $0\le c<J$. Invalid intermediate
+codes use the empty literal. Construction 11.6 only adds root Reads:
+in ready phases it exposes every intermediate instruction, including
+each valid VALUE row; every other Read is a root Read. It introduces
+no additional nonempty literal even on malformed bank/flag combinations.
+This proves equality, not merely a reachable-menu containment.
+
+To obtain the second description in (8.1), split a word at position
+$H$ when its length exceeds $H$; the remaining letters are all $R$.
+Conversely its full length-$H$ prefix can serve as $p$. Short words
+contribute $2^{H+1}-1$, and each positive excess length contributes
+$2^H$ disjoint words. Prefix closure and the attained maximum follow.
+The actual D5 query syntax `originalQueries` has precisely the VALUE
+and GUARD forms used here; its private `original_query_bounds` is
+already a supplier of the length bound. ∎
+
+**Construction 8.3 (receiver storage and actual operand).** Reserve two
+disjoint writable arrays $X,Y$, each of $H$ letter bits. $X$ retains
+the first $\min(d,H)$ arrivals in order. Place $Y$ at positions
+$-H,\ldots,-1$ of an operand lane, and place the immutable string
+$R^J$ at its positions $0,\ldots,J-1$. These are actual consecutive
+letter positions of a single lane. Other registers and the $X$ lane
+are elsewhere. Fixed wiring between letter positions does not select a
+current position: its moving head and interval endpoints are counted.
+
+When the arrived word has length $d$, set
+
+$$
+m=\min(d,H),\qquad n=\max(d-H,0).
+\tag{8.3}
+$$
+
+After the end delimiter, compute these two integers by paid bit loops.
+Copy $X_i$ into $Y_{-m+i}$ for $0\le i<m$, using two counted heads
+and a one-bit buffer. Walk the operand head over all $n$ tail cells,
+reading and checking each $R$; no tail cell is written. Walk back to
+$-m$ and verify the assembled interval against the retained receiver
+representation, one cell at a time, before setting its material seal.
+The latter scan has length $m+n=d$. Its comparisons use $X_i$ in
+the prefix and the constant letter $R$ in the tail. Neither scan
+consults the sender's row, graph literal or source.
+
+The source-facing value is now the whole flat word
+
+$$
+\operatorname{mat}(Y;m,n)
+   =Y_{-m}\cdots Y_{-1}\,R_0\cdots R_{n-1},
+\quad 0\le m\le H,\quad 0\le n\le J,\quad (n=0\ \lor\ m=H).
+\tag{8.4}
+$$
+
+The subscripts on $R$ denote different installed cells, not a runtime
+expansion operation. Empty intervals are permitted. The physical
+source service consumes the same root-relative letters as before;
+it is given no extra source operation, prefix feedback, decoder or
+history. The receiver's interval descriptor is ordinary operand
+framing, counted just like the length in (4.4). It is resolved on the
+observer side into an already present interval before the call.
+Relocating an operand within observer memory does not reroot the
+source: its first letter still means an edge from the original root.
+
+**Proposition 8.4 (materialization, and its exact information premise).**
+Suppose $X[0:\min(d,H)]$ is the actually arrived prefix and all subsequent
+arrivals are $R$, with $d\le H+J$. Construction 8.3 terminates using
+$H$ further writable letter cells and a constant number of
+$O(\log(H+J+2))$-bit slots. At its seal the entire materialized operand
+equals the arrived word and is determined by receiver information
+alone. Its mutable data do not include a length-$J$ tail.
+
+Proof. The prefix-copy invariant is
+$Y[-m:-m+i]=X[0:i]$ after $i$ copies; reading, seeking and the separate
+write cuts preserve the already copied part. All $n$ other cells are
+present and equal $R$ before and after every online step. Thus (8.4)
+equals $X[0:m]R^n$. The stipulated received-prefix premise and (8.3)
+identify this word with all $d$ arrivals. Each loop has its finite
+bound in counted slots. The final verification and head homing finish
+before the source instruction is enabled on a lawful run. ∎
+
+This proposition uses the source-specific support theorem: past
+position $H$, there is only one allowed letter. A received $R$ still
+changes the receiver's represented length, and that length determines
+how many **physical** tail cells belong to its operand. Removing an
+arrival changes that boundary; changing an early letter changes a
+writable cell and its copied operand letter. An unexpected late $L$
+is retained as a pending letter and rejected before sealing. Thus this
+is not a passive transmission followed by unrelated ROM row selection.
+No complete-word dictionary is searched at commitment. The reusable
+right tail is a fixed part of the receiver's material, selected only
+through the number of letters it actually received.
+
+If an additional interface required every operand cell to be writable,
+this construction would not meet that additional requirement. Definition
+1.3 requires actual arrivals, paid decoding and whole materialization;
+it does not require writability of each materialized letter. Here the
+entire word is simultaneously present, and its immutable cells are
+billed as physical storage. Streaming $R^n$ into an uncounted output
+tape, passing $n$ to the source, or calling a fixed $P$-cell writable
+tail “logarithmic space” would not establish Proposition 8.4.
+
+## 9. Arrival invariants through every local cut
+
+**Construction 9.1 (transactional prefix accumulation).** Use one
+single-letter mailbox, separate from both receiver arrays, and a
+receiver-owned pending-letter bit $e$. Use two $r$-bit receiver count
+banks $a_0,a_1$, an active-bank bit $v$, and a receiver phase
+$\phi\in\{\mathsf{pre},\mathsf{ready},\mathsf{pending},\mathsf{sealed}\}$.
+Put $a=a_v$ only in the mathematical description; it is not a third
+register. On each frame entry set $\phi=\mathsf{pre}$ and clear the
+material-seal bit in the same paid entry transition. RESET clears
+$X,Y$, both count banks, all response
+flags and mailbox control by scans. Only after those scans does it
+enter ready with $v=0$, $a_0=a_1=0$. No arrival takes place in pre.
+
+To receive a letter, the sender first writes the mailbox, seals it
+and hands ownership to the receiver. The mailbox bit is read into
+a local transfer bit by a paid instruction. The receiver arrival is
+one paid write of that bit into $e$, simultaneously setting
+$\phi=\mathsf{pending}$. This event counts as an arrival even if $e$
+already held that bit. Until this occurrence the received word has
+not changed. The active count $a_v$ and selector $v$ are held fixed
+through the following routine.
+
+If $a<H$, seek to $X_a$ and copy $e$ there; otherwise check $e=R$.
+An overflow $a=P$ or a late $L$ enters a source-free error hold without
+acknowledging another letter. On a lawful frame neither occurs, by
+Lemma 8.2. Copy the active count into the inactive bank one bit at a
+time, then increment that inactive bank by the ordinary carry scan.
+Finish all its carry clearing, head motion, comparison and return work.
+Finally, one paid local control transition flips $v$ and changes
+$\phi$ to ready. These are permitted local multi-bit writes, not
+source-response writes. Acknowledgement releases the mailbox for
+the next letter. No next arrival can precede this acknowledgement.
+
+The end delimiter is a distinct nonletter handoff. It can be accepted
+only in ready, after the last acknowledgement. Its acceptance changes
+$\phi$ to sealed. Construction 8.3 then uses the active count and
+$X$, preserving both. Its additional material-seal bit is different
+from the arrival phase. All materialization, source-receipt and response
+continuation cuts retain the sealed receiver phase until the next
+frame's pre transition. An empty frame follows this same delimiter
+path with active count zero.
+
+**Theorem 9.2 (every-cut recovery with pending writes and carries).**
+On every lawful Read frame, let $A_c$ be the word of actual receiver
+arrivals through cut $c$. This is proof notation, not a stored log.
+Define
+
+$$
+\begin{aligned}
+B(X,a)&=X[0:\min(a,H)]R^{\max(a-H,0)},\\
+\mathcal R(c)&=
+\begin{cases}
+\varepsilon,&\phi=\mathsf{pre},\\
+B(X,a_v),&\phi=\mathsf{ready}\text{ or }\mathsf{sealed},\\
+B(X,a_v)e,&\phi=\mathsf{pending}.
+\end{cases}
+\tag{9.1}
+\end{aligned}
+$$
+
+Use the empty default when a count is outside $[0,P]$. This makes a
+total mathematical projection on installed valuations. Its claimed
+arrival meaning is on lawful executions. At **every** paid microstep
+cut, $\mathcal R(c)=A_c$. In particular it does not rely on a torn
+counter, a routine PC or a moving materialization head for its length.
+
+Proof. In pre, no new-frame arrival has occurred; partial reset of old
+data is irrelevant. Entry to ready establishes the empty word. Suppose
+ready represents $A_c$ of length $a$. Sender/ROM/mailbox work leaves
+$(X,a_v,v,\phi)$ fixed. The arrival changes only $e$ and the phase
+among the fields in (9.1), so immediately after it (9.1) equals the
+old prefix followed by the actually copied letter.
+
+When $a<H$, the only prefix-array write is at $X_a$; the pending
+projection uses $X[0:a]e$, so its meaning is unchanged before and
+after that write. When $a\ge H$, $X$ is unchanged and the pending
+letter is $R$. The active counter and selector stay fixed during
+every bit-copy, carry, branch, head move and return cut. Therefore
+none of the inactive bank's intermediate values changes (9.1).
+
+For completeness, if the old count's first zero bit is $j$, clearing
+its lower $i\le j$ one bits in the copied inactive bank gives
+$a-(2^i-1)$; setting bit $j$ gives
+$a-(2^j-1)+2^j=a+1$. The scan terminates because $a<P<2^r-1$.
+After the final selector/phase transition, the new active count is
+$a+1$. For $a<H$, its longer $X$ prefix includes exactly the copied
+$e$; for $a\ge H$, its right-run length increases by one. Ready
+therefore has the same word as pending. Acknowledgement and arbitrary
+head motions preserve it. The delimiter only changes ready to sealed;
+its word is unchanged. Materialization writes only $Y$ and scratch,
+so its every cut preserves the same whole received word. Source receipt
+changes only a response flag. The next frame entry alone changes the
+meaning to a new empty word before reset begins. This covers $H=0$,
+$d=0$, the cut at $a=H$, all binary carries and partial clearing. ∎
+
+The pending-letter bit is essential to this particular invariant. For
+example an arrival of $L$ into an already zero bit changes the prefix
+without changing that data bit. Ready and pending remain distinguishable
+by their phase. Similarly $a=3$ need not be recoverable from a partially
+incremented inactive bank passing through $2,0,4$; the still-active
+bank says $3$ until the selector changes. Both banks and that selector
+are charged even when one is semantically inactive.
+
+**Proposition 9.3 (dynamic sufficiency and its failure fibers).** For
+lawful prefixes in $\mathcal D_{H,J}$, (9.1), with the pending discipline,
+supports the next arrival, termination, and paid production of (8.4).
+It is dynamically sufficient for those operations, rather than merely
+an injective code at completed cuts. It is not a receiver for arbitrary
+words of length $P$.
+
+Proof. Constructions 9.1 and 8.3 give the required operations and their
+intermediate storage. Omitting $e$ from a pending cut identifies the
+two possible next letters before position $H$. Omitting the phase
+identifies the zero-write example. Omitting the count identifies
+$xR^n$ and $xR^{n+1}$ and loses the materialized endpoint. A late $L$
+cannot be incorporated as an $R$ without identifying distinct words;
+the stated error behavior preserves it pending and makes no source
+call. Retaining a count without the material lane would recover a word
+mathematically but would not supply its whole physical operand. These
+are distinct insufficiencies, not alternative encodings of one missing
+bit. ∎
+
+## 10. One autonomous complete installation
+
+**Construction 10.1 (graph interpreter and finite inventory).** Keep
+the exact padded native image $T_0$, graph nodes $N=W_*(P+16)$, graph
+format, $w_G$ and $T_G$ of Definitions 4.1–4.2. Every native row,
+including a routing row, still has its own block. Replace only the
+local meanings of RESET, PUT and COPY. RESET is Construction 9.1.
+Each nonpadding PUT actually sends its one installed letter through
+the one-letter mailbox and waits for the receiver acknowledgement;
+it does not build a sender array. NOP sends nothing. COPY sends and
+accepts the end delimiter, runs Construction 8.3 and sets its material
+seal. ISSUE-READ then submits (8.4). Update blocks bypass delivery
+and materialization as before. Halt blocks retain their fixed output.
+
+The expanded graph is an immutable sender program. Its moving graph
+and ROM positions belong to the following forty-eight $r$-bit slots.
+This inventory replaces the arrays and slots of Definition 4.3;
+none of its old three $P$-cell arrays is retained.
+
+| Slots | Persistent meanings, in displayed order |
+| --- | --- |
+| 1–8 | Current graph node; pending node; saved old node; interpreter PC; routine return PC; code head; graph/ROM head; work head |
+| 9–16 | Table base; row base; row offset; field position; field length; row width; graph-node limit; image end |
+| 17–24 | Receiver count bank $a_0$; count bank $a_1$; prefix head; operand head encoded with offset $H$; copy index; clear index; bit index; carry-scan index |
+| 25–32 | $H$; $J$; $P$; final operand prefix length $m$; final tail length $n$; materialization position; verification position; bounded continuation |
+| 33–40 | First arithmetic temporary; second arithmetic temporary; comparison position; saved transfer-node identity; first macro-row bank; second macro-row bank; next macro-row scratch; response-slot offset |
+| 41–48 | Header input head; header position; allocation position; loader return; graph-index width; native-word width; bounded loop limit; saved field return |
+
+There are ninety-six additional Boolean cells. They include the five
+typed response flags; the mailbox, sender-transfer and receiver pending
+bits; mailbox owner/seal/acknowledgement and delimiter flags; $v$;
+the two bits of $\phi$; the material seal; macro-bank selector and
+response-continuation stage; graph-transfer stage; carries, borrow,
+comparison and bit-operation flags; current ROM/work bits and fixed
+finite control. Reserve unused Boolean cells too. They introduce no
+hidden data type. Only $X$ and $Y$, of $H$ bits each, are further
+writable arrays. All routines are inlined or use the listed bounded
+returns; no call stack, whole-address staging array or history persists.
+
+Use the paid bit-read/write, unit head movement and finite-control
+convention of Definition 4.3. Integer copying and arithmetic are bit
+loops. A head's location is the numeric value of its named slot, never
+an additional physical position excluded from the configuration.
+A paid head move updates that encoding and its fixed continuation;
+local multi-bit writes are allowed. Copying a variable-width index
+still costs its bit loop. Row fetches scan the actual ROM distance.
+Offset computation may enumerate row boundaries instead of multiplying.
+
+The current native row is retained in the active one of slots 37–38
+throughout the frame. Before a response, it supplies the macro
+projection independently of partly copied graph indices. After a
+response it and the one response flag supply $\delta(w,r)$. The selected
+LINK contains its compiled successor block; a paid scan counting block
+boundaries recovers that block's native row index in the next-row
+scratch slot. Copy this index into the inactive macro bank while the
+old bank and flag remain fixed. A local continuation transition marks
+that completed bank authoritative before clearing the flag. Its selector changes
+only after completion. Graph transfers use slots 1–3 and their own
+stage in exactly the saved-old/pending manner of Definition 4.4.
+All frame-entry and return operations use these counted stages.
+Neither a torn graph field nor an erased flag supplies authority.
+
+**Definition 10.2 (allocation and readonly protection).** Let $I_1$
+be the bit length of fixed sequential interpreter, initializer and
+nonrecursive routines implementing Constructions 8.3, 9.1 and 10.1;
+let $I_c$ include the fixed graph writer and tail manufacturer. These
+are fixed finite bit programs independent of $h,T$. Put
+
+$$
+\begin{aligned}
+Z&=T_G+I_1+I_c+N+W_*+P+\ell+H+J+64,\\
+r&=\left\lceil\log_2\bigl(2^{20}(Z+1)^2+1\bigr)\right\rceil,\\
+b&=2H+48r+96,\qquad L=2b-1,\qquad S_{\rm inst}=2^b.
+\tag{10.1}
+\end{aligned}
+$$
+
+Install the zero-interleaving image of **all** $b$-bit valuations.
+Separators are fixed zero. Thus $b$ is the number of independently
+writable bit cells physically reserved, $L$ is the no-$11$ configuration
+encoding width, and $2^b$ counts all installed composite states.
+Neither unreachable states nor dirty scratch arrays are quotiented out.
+The two $H$-cell letter lanes can be physically consecutive letter
+positions while the configuration has this abstract zero-interleaving
+encoding: separators encode states, not extra address letters. If
+separators are physically realized as well, charge their $b-1$ fixed
+cells separately; they do not create writable tail cells.
+
+A self-delimiting allocation header $J_r$ declares the forty-eight
+slot widths, ninety-six Boolean cells and two array lengths. A fixed
+gamma format, with zero array lengths encoded by their value plus
+one, has $|J_r|\le256r+256$. The resident immutable image has
+
+$$
+B_{\rm ro}=T_G+I_1+|J_r|+J
+\tag{10.2}
+$$
+
+bits, before optional physical zero separators. The last summand is
+the actual $R$ lane; it is additional to every literal copy in $T_G$.
+The permission map is fixed by physical region, not a mutable owner
+bit: every write addressed to code, headers, the $R$ lane or a fixed
+separator holds that cell on **all** controls. The error continuation
+may change counted local control, never readonly content.
+
+All heads, counters, offsets, header scans and bounded arithmetic
+intermediates used on lawful executions are below the slot bound
+$2^{20}(Z+1)^2$. Indeed the original graph/table extents are at most
+$Z$, extra readonly and writable lengths are at most
+$2Z+400r+512$, and row-offset arithmetic is bounded by $Z^2$.
+Here $Z\ge160$ and $r\le22+2\log_2(Z+1)\le24+2Z$; these inequalities
+put the stated extents strictly below the chosen squared bound.
+No numeric register is an unbounded natural-number workspace.
+
+**Proposition 10.3 (total rows, exact composite menu and receipt).**
+There is a total instruction rule on the installed set (10.1) with
+the described lawful execution. Its complete Read menu is exactly
+$\mathcal D_{H,J}$, not all words of length at most $P$. Every installed
+source-response receipt changes at most one encoded bit. With one
+Read PC, one Update PC and two fixed-output Halt PCs, its counts are
+
+$$
+n_R^{\rm comp}=n_U^{\rm comp}=2^{b-r-5},\qquad
+n_H^{\rm comp}=2^{b-r+1},\qquad
+n_{\rm typed}^{\rm comp}=5\,2^{b-r-5}.
+\tag{10.3}
+$$
+
+Proof. Use ERROR holds for unused PC/opcode patterns; use fixed-width
+arithmetic, zero for an out-of-range read, and a holding protected write
+for out-of-range or readonly destinations. Out-of-range motion has a
+local error successor. These rules are total and create no memory or
+source information. Ordinary bit-loop branches inspect their named
+bits. Lawful paths perform the bounds/permission scans before using
+their results. Malformed paths need not terminate or simulate a promised
+entry; they remain installed and counted.
+
+At Read PC with all five response flags zero, select (8.4) when its
+three range conditions hold, and the empty materialized interval
+otherwise. This is the same total operand-framing convention as
+Proposition 4.5, now for one mixed readonly/writable flat lane. It
+does not decode $X$ or a repeat count during the source operation.
+Even at an unreachable unsealed issue configuration, every selected
+letter already exists in that lane. Validity of receiver provenance
+at such an arbitrary configuration is not asserted. On lawful runs
+the paid scans and material seal precede this PC.
+
+Every selected word lies in $\mathcal D_{H,J}$. Conversely choose
+any $p$ of length $m\le H$ by putting its bits in the last $m$ cells
+of $Y$ and setting $n=0$; choose any $xR^n$ with $|x|=H$ by filling
+all of $Y$ and selecting that $n\le J$. Set Read PC and zero flags.
+These configurations are all installed, regardless of reachability.
+They realize every member of (8.1), proving the exact composite menu
+and its exact prefix union and longest installed literal.
+
+At actual Read receipt set exactly its typed flag; at actual Update
+receipt set only $f_\star$. The PC and every other bit hold. The issue
+PC with nonzero flags performs local continuation or ERROR, never
+a repeated source call. Wrong-typed, multiset or malformed flags enter
+ERROR by local work. Thus all source rows, reachable or not, have
+legal one-bit receipt; the zero-interleaving map preserves that one
+coordinate change. Each of the two source PCs fixes $r$ bits and
+requires five zero flags, giving (10.3). The two Halt PCs each fix
+$r$ bits and their output. The remaining configurations are local.
+The original native Update and Halt row counts remain the different
+counts of Definition 4.1 and SLHC.12.5. ∎
+
+**Theorem 10.4 (complete trace refinement and sharp encoded width).**
+For $T=0$ and every $h\ge1$, and for finite $T>0$ and even $h$, the
+installation above meets Definition 1.3 on the original all-shape
+parity task. It has
+
+$$
+L=O\bigl(h+\log_2(T+1)\bigr),\qquad U=0,
+\qquad
+L_{\min}=\Theta\bigl(h+\log_2(T+1)\bigr).
+\tag{10.4}
+$$
+
+The minimum is over complete encoded online mutable width under that
+definition, with immutable and physical storage separately billed.
+It includes online initialization. Erasure preserves every selected
+native row, exact literal, raw reply, source successor, routing Read,
+genuine Update and first fixed-bit Halt of the chosen native table.
+The receiver projection is (9.1) at every local cut, and the actual
+operand is fully materialized as (8.4) before each Read.
+
+Proof. Lemma 8.2 guarantees every installed native PUT sequence has
+only $R$ after position $H$ and length at most $P$. Each letter's
+bounded receipt routine terminates and acknowledges before the next
+PUT. Theorem 9.2 makes the sealed receiver word exactly the sequence
+of these actual arrivals. Proposition 8.4 then supplies exactly the
+original table literal in physical cells. This also handles every
+routing Read, whose frame delivers zero letters but still commits
+Read$(\varepsilon)$ and receives its real raw reply.
+
+The explicit simulation relation uses the unchanged source $y$ and
+the active macro-row bank before a source call. Source-free fetches,
+mailbox operations, counter carries and materialization preserve
+$(y,w)$. At actual receipt of $r$ it relates to
+$(y',\delta(w,r))$: until the new macro bank is completed, its value
+is determined by the fixed old bank and one-hot flag; afterwards by
+the completed new bank and continuation stage. The flag is cleared
+only in the latter case. Partial graph copies have their separate
+old-node stage and do not change this macro projection. Finite local
+cleanup arrives at the block of precisely $\delta(w,r)$. An Update
+block performs the same one genuine $\rho$, with only its original
+constant acknowledgement. Only the original Halt block's node zero
+selects its fixed Halt bit.
+
+Induction on native calls is therefore the simulation of Definition
+3.1, with identity address map and same-source action map. It gives
+the entire raw trace, not just equal parity. A single causal simulator
+executes the fixed local program and pauses for each raw reply only at
+its actual receipt, as in PR57.T3. All earlier labels and local fees
+are functions of the installation and acquired native prefix. No
+source-duration or source-work label is used. The native supplier's
+termination and parity theorem then give finite firstHalt. Its
+$\Delta=2$ choice has no reachable Update, and the $T=0$ choice also
+has none.
+
+Finally $k=O(h+\log(T+1))$, $\log W_*=2k+8$ and
+$P=O(h+T)$. The displayed expanded graph gives
+$\log(Z+1)=O(k+\log(P+\ell+2))=O(h+\log(T+1))$.
+Equation (10.1) proves the upper bound, counting both dirty banks,
+both arrays and every malformed valuation. Corollary 2.3 supplies
+the lower bound for this same complete autonomous interface, even
+allowing unrestricted genuine Updates. At $h=1,T=0$, $H=J=P=0$;
+arrays and the tail are empty, while counted control and response
+storage give a constant upper and the lower remains positive. ∎
+
+## 11. Simultaneous bills, initialization and retained boundaries
+
+**Proposition 11.1 (cost vector of this one construction).** Define
+$C(Z)=2^{50}(Z+1)^{10}$. There are choices of the indicated sequential
+scan routines such that, on every promised run,
+
+$$
+\begin{aligned}
+Q_{\rm serial}&=Q,& U_{\rm serial}&=U=0,&
+A_{\rm serial}&=E_{\rm receiver}=A,\\
+E_{\rm two\ channels}&=2A,& P_{\rm run}^{\rm serial}&=P_{\rm run},&
+P_{\rm inst}^{\rm comp}&=P,\\
+M_{\rm comp}&=|\operatorname{Pref}(\mathcal M_{\rm comp})|
+ =2^H(J+2)-1,\\
+I+I_{\rm init}&\le(Q+U+2)C(Z).
+\tag{11.1}
+\end{aligned}
+$$
+
+Here $Q,A$ have simultaneously the explicit native bounds in Corollary
+5.1: its $T=0$ row or (5.2). In particular the native $Q$ is polynomial
+in $h+\log(T+1)$ for the positive-$T$ choice. The local work bound is
+polynomial in **expanded installation size** $Z$, not in that binary
+parameter size. Immutable bits are (10.2), writable cells are $b$,
+reserved encoded span is $L$, and the materialized lane has $H+J$
+physical letter cells of which exactly $H$ are writable.
+
+Proof. One PUT has the following four distinguished paid occurrences:
+mailbox letter write/seal, ownership handoff, receiver arrival, and
+acknowledgement. Preparation of its transfer bit, all ROM fetches,
+seeks, tests, receiver normalization and graph transitions are additional
+paid occurrences. A Read frame also has end-marker handoff, receiver
+end acceptance and final material seal. Under this explicit convention,
+
+$$
+I_{\rm handoff}=4A+3Q.
+\tag{11.2}
+$$
+
+There are exactly $A$ letter events in each channel; end markers are
+not letters. Materialization separately has $\sum_i\min(|p_i|,H)$
+prefix-copy writes, $\sum_i\max(|p_i|-H,0)$ tail-check reads and
+$A$ final interval-verification visits, with all positioning and
+comparisons additional. RESET makes $2HQ$ array-clear writes on the
+Read frames. These counts do not inherit the old $8A+4Q$, whose two
+full-buffer copy bodies are absent here.
+
+For a coarse work bound, sequential field operations and full seeks
+cost at most $2^{16}(Z+1)^3$ bit/move/control steps each: slot widths
+are $O(\log Z)$, physical extents $O(Z+r)$, and offsets can be
+obtained by scans of the at most $Z$ graph bits. Each macro frame
+visits at most $P+16$ graph nodes, has at most $P$ receipt loops,
+clears $2H$ letter cells and runs bounded copy/compare/materialization
+loops of length at most $P+H+48r+96$. Even allowing full-field scans
+and repeated-addition offset work inside each, fewer than
+$2^{16}(Z+1)^3$ such routine invocations suffice per frame.
+Initialization satisfies the same estimate. Their product is below
+$C(Z)$. The graph writer of Theorem 4.7 uses at most five native-table
+scans per row plus $N$ record writes; two extra nested loops bounded
+by $Z$ still fit $C(Z)$. Manufacturing the $J$ literal $R$ cells and
+checking them is a further bounded sequential loop, also covered.
+These are analytic upper bounds for finite routines, not unit-cost
+arithmetic or measurements of a compiled interpreter. ∎
+
+**Definition 11.2 (offline and online peaks).** Manufacture the fixed
+graph, native image, code, header and $R$ lane before an online run.
+A sufficient total simultaneous manufacturing/installation allocation,
+including an input image, output image, compiler, two native-key scratch
+words and the allocated online apparatus, is
+
+$$
+B_{\rm manufacture}\le8(Z+|J_r|)+L.
+\tag{11.3}
+$$
+
+The writer is the sequential row enumerator of Theorem 4.7, followed
+by writing $J$ fixed $R$ letters; its input/output/key storage and
+bounded slots fit this allowance. Its work is at most $C(Z)$ for this
+expanded-image convention. If compiling from binary $h,T$ also
+enumerates the native table, its finite table-construction time is
+an additional offline cost; (11.3) permits enumeration with the fixed
+field rules and bounded native keys, without retaining all source trees.
+One may bound that enumeration by a further polynomial in $Z$ using
+bitwise field tests and the explicit SLHC response rules. It is not
+a polynomial in the binary input length claim.
+
+After manufacture the readonly regions are permanently protected.
+The online initializer parses those regions with its listed heads,
+zeros only the $b$ writable bits, installs the common graph/macro row,
+and sets the pre phase. Its initialization path makes no source call
+and enters no Halt. It needs no writable image copy and never converts
+readonly cells into writable cells. Its peak writable allocation is
+already $b$, simultaneously with all of (10.2). Thus online startup
+is included in (10.4); the manufacturer's temporary writable output
+image is separately included in (11.3). Counting all manufacturing
+workspace as well as online workspace in one lifetime maximum gives
+that larger bound, not (10.4). This distinction is also necessary for
+the expanded immutable table of the macro supplier itself.
+
+**Proposition 11.3 (source time, addresses and boundary information).**
+The following maps refer to one actual run, with no new observation port.
+
+1. At a sender cut, the installed native literal and counted graph
+   position determine the remaining PUT letters. The sender is not
+   represented by immutable code with an omitted moving position.
+2. At each receiver cut, (9.1) recovers precisely the arrived prefix.
+   The same prefix may occur in many native rows, so this recovery
+   need not determine the sender row or future continuation. The
+   separate retained macro bank supplies that continuation.
+3. At material seal, the receiver's $(X,a_v)$ determines $(m,n)$ and
+   the whole interval (8.4). Conversely, reading that materialized
+   interval and its counted length recovers the arrived word.
+   Irrelevant padding, inactive count bits and scratch are fibers of
+   this recovery; they remain charged configurations.
+4. At source receipt, the one-hot flag identifies the raw reply;
+   together with the old native row it determines the macro successor.
+   The reply alone generally identifies neither the address nor the
+   historical source. Cleanup can discard that flag after transferring
+   the required successor information.
+
+For the positive-$T$ table, the acquired cell and accepted polling
+reply identify the current right clock $K=2c$ or $2c+1$. Since $U=0$
+this is also the entry clock, but still $K=t+\kappa(u)$. The completed
+address code is not a certificate of either summand. Proposition 6.2's
+identical-current-tree history fibers and its odd-$h$ obstruction are
+unchanged. For even $h$, one fixed finite installation still cannot
+handle unbounded lag: its finite $J$, heads and complete state set
+contradict Theorem 2.2 as the entry bound increases.
+
+Proof. The first four assertions use respectively the graph rule,
+Theorem 9.2, Proposition 8.4 and the macro-bank receipt invariant.
+The clock statement is exactly the supplier's $\Delta=2$ right-ray
+law, not a measurement of hidden time. For example the histories
+$(A_S,1)$ and $(B_S,0)$ retain the same current source, literal arrivals
+and all future replies under common initialization. Their parity
+differs when $h$ is odd. A materialized address cannot separate these
+fibers. For unbounded even lag, Corollary 2.3 requires unbounded width
+even if arbitrarily many immutable letters have been installed at
+each separate finite parameter choice. ∎
+
+The exchange established here is precise: a source-specific arbitrary
+prefix of at most $h-1$ bits is retained, a repetitive spatial suffix
+is represented during receipt by a counted length, and paid decoding
+uses a physically present immutable run to restore the whole operand.
+The $\log(T+1)$ mutable coordinate replaces no physical tail storage
+or actual transmission time. Theorem 2.2 and (2.1) still force the
+same long-frame configurations and same-run traffic. A run's $A$
+still cannot stand in for (8.1)'s installed union. This is a resource
+comparison for the stated observer/source boundary, not an
+identification of physical space with time or memory.
+
+## 12. Provenance and falsifiable scope of the materialization bridge
+
+**Proposition 12.1 (what supplies the new conclusion).** The additional
+source-specific bridge is the conjunction of the **exact full native
+support** (8.1), an actually receiving representation with the
+every-cut invariant (9.1), and a **whole physical operand** (8.4)
+with only $H$ writable materialization cells. The inventory and total
+rules make this bridge compatible with complete-state counting and
+one-bit raw receipt. Removing any of these premises removes the
+claimed proof of (10.4): a small dictionary alone says nothing about
+operand production; completed-cut recovery alone says nothing about
+pending arrivals; and a small online working tape alone says nothing
+about an omitted output tape.
+
+The exact existing-work correspondence is as follows.
+
+| Source | Role and boundary in §§8–11 |
+| --- | --- |
+| SLHC Constructions 11.5–11.6 and Theorem 12.2 at [5798b485][SLHC12] | Complete native supplier on all unknown shapes, including its invalid-code defaults, bank routing, VALUE/GUARD syntax, cell-search rows, exact genuine Updates and native cost bounds. Lemma 8.2 derives the exact menu from these full rules; the supplier's looser menu bound alone would not give it. |
+| SLHC Theorem 12.3 and this volume §§2, 5.3, 6.2 | Same-run long literals, autonomous complete-width lower order, unchanged source-growth/service coordinates and history/unbounded-entry obstructions. These results are reused, not newly proved here. |
+| EA Proposition 8.1 at [3605ccfd][PH81]; this volume §§4.1–4.2, 4.4–4.7 | Paid finite graph fetch, bit loops, explicit heads, saved-old/pending graph transfers, graph writer and expanded immutable storage. The inventory, receiver routines, readonly tail, online allocation and event constants here are separately specified; the old flat-buffer allocation is not imported. |
+| Transport PR57.D7/L4/T3 at [3605ccfd][PR57] | Owned copy induction and causal simulation proof. Its full growing archives and two complete-buffer protocol are different allocations. The letter mailbox has its own stated four-event handshake and prefix invariant; no $8d+4$ price is transferred to it. |
+| `DelayedOriginalReadout.originalQueries`, `right_clock_iterate`, `right_clock_readout`, `original_decoder_correct`; private `original_query_bounds`, `clock_step` | Existing precise suffix syntax, current clock, image-licensed decoding and query-length facts. Private status does not make them new gaps in this prose application. |
+| `NativeSerialMachine.nativeStep`, `Run`, `replay_deterministic`, `operational_replay`; `NativeSerialEffective.original_code_service_simulation` | Same-source chronological vocabulary and erasure preserving addresses/replies/Updates/Halt. The effective theorem's arbitrary numeric workspace and certified epoch/history interface do not supply the present finite-width result. |
+| `NativeSerialDepth.descriptor`, private `descriptor_eq`, `bounded_read_support` | Proof-only descriptor and support constraints, not an autonomous receiver or materialization service. |
+| Pinned Mathlib `Computability/TuringMachine/StackTuringMachine.lean`, `TM2.Cfg`, `stepAux`, `step`, revision `db584cd6d46c92f209a44c0f1c829460d327499d` | Generic configurations include the label, internal value and all stacks. This supplies a machine vocabulary, not a finite receiver allocation or a whole-materialized-literal theorem. No upstream simulation theorem is used as a substitute for the receiver proof. |
+| Cabello–Eppstein–Klavžar, Proposition 3.1 [CEK] | The explicit zero-interleaving map; no isometric embedding or optimal coding constant is required. |
+| Bille, Ettienne, Gagie, Gørtz and Prezza, *Decompressing Lempel–Ziv Compressed Text*, §1 and Theorems 1–2 [LZSPACE] | Their problem explicitly outputs a stream without storing it, and counts working space on top of input and output. Its small working-space decompression results therefore do not establish this whole-operand contract. No LZ theorem is needed to build the fixed right tail. |
+| Turing §§1–2 [TURING] | Complete configuration and automatic progress; an immutable tape with an omitted moving head is not an autonomous small-state machine. |
+
+These are ordinary mathematical derivations in the stated model, with
+no new Lean certification or worldwide originality claim. The new
+materialization argument uses readonly **letters** already paid in
+physical storage, not a readonly state name masquerading as a payload.
+The universal memory statement concerns the online mutable coordinate;
+physical source Read/Update internals and their separate costs in
+(5.5)–(5.6) remain premises. Since $U=0$ here, the source stays at its
+actual entry tree throughout; the address routines do not construct
+or copy that tree.
+
+**Definition 12.2 (finite falsification targets).** A finite receiver
+model can enumerate $\mathcal D_{H,J}$ and interrupt the specified
+routines before and after each pending write, inactive-bank copy bit,
+carry bit, selector change, head move, reset write, delimiter and
+materialization step. Its assertions are equality of (9.1) with the
+actual arrival trace, equality of (8.4) with the whole word at issue,
+and absence of a source issue before material seal on an initialized
+execution. Empty words, $H=0,J=0$, counts on both sides of $H$, and
+all-ones counts immediately before a carry are mandatory instances.
+Malformed range descriptors must select root; malformed response masks
+must not reissue. Each of four Read replies and the sole Update reply
+must set just its own zero flag, even if other scratch is malformed.
+Writes addressed to the immutable tail must preserve every tail cell
+regardless of control.
+
+Such a receiver/string model does not execute a complete graph
+interpreter, prove supplier parity, or exhaust (10.1)'s complete state
+set. A further falsifiable full realization question is whether a
+bit-level interpreter with exactly the inventory in Construction 10.1
+realizes the stated routines and simulation on arbitrary parameter
+instances without an extra persistent field. Its proof obligation is
+the specified total transition refinement and allocation, rather than
+finite agreement of final XOR alone. The ordinary construction and
+proofs above do not claim that such a compiled interpreter has been
+produced or kernel checked.
+
+[LZSPACE]: https://arxiv.org/html/1802.10347
+
+## 追加锚（本行以下为增补区）
