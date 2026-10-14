@@ -9,6 +9,7 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
     private const string Prefix = "D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.";
     private const string Owner = "D5.S3.Quantum.Entanglement.UniversalTeleportationCriticalConcurrence";
     private const string Companion = "D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction";
+    private const string KrausOwner = "D5.S3.QuantumChannels.SwitchUselessConcatenationRefutation";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/QuantumChannels/ghosal2021qubitchannelsteleportation");
 
@@ -22,9 +23,6 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
             Node("initial", "The initial two-qubit operator", InitialFormula(),
                 "The initial operator is the outer product |psi(a)><psi(a)|, expressed by Matrix.vecMulVec with the pointwise complex conjugate Star.star of the vector. For 0 <= a <= 1 this is a rank-one density matrix.",
                 "initial", DescribeRole.Definition),
-            Node("is-channel", "Trace preservation in Kraus form", IsChannelFormula(),
-                "A finite family of complex two-by-two Kraus matrices represents a trace-preserving qubit channel when the sum of K_k adjoint K_k is the identity. The number m of Kraus matrices is arbitrary.",
-                "IsChannel", DescribeRole.Definition),
             Node("non-unital", "Failure to preserve the identity", NonUnitalFormula(),
                 "The Kraus family is non-unital when the sum of K_k K_k adjoint differs from the identity. Thus its action on the identity does not return the identity.",
                 "NonUnital", DescribeRole.Definition),
@@ -140,15 +138,6 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
             QCall("Matrix", "vecMulVec", vector, QCall("Star", "star", vector))));
     }
 
-    private static Formula IsChannelFormula()
-    {
-        var m = F.Id("m");
-        var k = F.Id("K");
-        var entry = At(k, F.Id("k"));
-        return All("m", Natural(), All("K", KrausFamily(m), Iff(Local("IsChannel", k),
-            Equal(SumOver("k", Fin(m), Multiply(Adjoint(entry), entry)), Typed(D(1), QubitOperators())))));
-    }
-
     private static Formula NonUnitalFormula()
     {
         var m = F.Id("m");
@@ -204,12 +193,13 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
         var a = F.Id("a");
         var m = F.Id("m");
         var k = F.Id("K");
+        var channel = QCall(KrausOwner, "IsKrausChannel", k);
         var above = LessThan(Local("Cstar"), Local("conc", a));
         var useful = Local("UsefulUQT", Local("out", a, k));
         var necessity = All("m", Natural(), All("K", KrausFamily(m),
-            Implies(Local("IsChannel", k), Implies(useful, above))));
+            Implies(channel, Implies(useful, above))));
         var attainment = Some("m", Natural(), Some("K", KrausFamily(m),
-            And(Local("IsChannel", k), Local("NonUnital", k), useful)));
+            And(channel, Local("NonUnital", k), useful)));
         return All("a", Real(), Implies(LessThan(new Formula.Fraction(D(1), D(2)), a),
             Implies(LessThan(a, D(1)), And(necessity, Implies(above, attainment)))));
     }

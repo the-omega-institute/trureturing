@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+import D5.S3.QuantumChannels.SwitchUselessConcatenationRefutation
 
 set_option autoImplicit false
 noncomputable section
@@ -25,6 +26,7 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (Pauli pa
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
   (pauli_hermitian letter_mul)
+open D5.S3.QuantumChannels.SwitchUselessConcatenationRefutation (IsKrausChannel)
 
 namespace D5.S3.Quantum.Entanglement.UniversalTeleportationCriticalConcurrence
 
@@ -33,7 +35,6 @@ set_option linter.style.longLine false
 def psi (a : ℝ) (p : Fin 2 × Fin 2) : ℂ :=
   if p = (0, 0) then (Real.sqrt a : ℂ) else if p = (1, 1) then (Real.sqrt (1 - a) : ℂ) else 0
 def initial (a : ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := Matrix.vecMulVec (psi a) (star (psi a))
-def IsChannel {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) : Prop := ∑ k, (K k)ᴴ * K k = 1
 def NonUnital {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) : Prop := ∑ k, K k * (K k)ᴴ ≠ 1
 def out {m : ℕ} (a : ℝ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   ∑ k, ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K k) * initial a * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K k)ᴴ
@@ -45,8 +46,8 @@ def Cstar : ℝ := Real.sqrt (5 - 2 * Real.sqrt 3) / 3
 def conc (a : ℝ) : ℝ := 2 * Real.sqrt (a * (1 - a))
 def claim : Prop :=
   ∀ a : ℝ, (1 / 2 : ℝ) < a → a < 1 →
-    (∀ (m : ℕ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ), IsChannel K → UsefulUQT (out a K) → Cstar < conc a) ∧
-    (Cstar < conc a → ∃ (m : ℕ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ), IsChannel K ∧ NonUnital K ∧ UsefulUQT (out a K))
+    (∀ (m : ℕ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ), IsKrausChannel (ι := Fin m) K → UsefulUQT (out a K) → Cstar < conc a) ∧
+    (Cstar < conc a → ∃ (m : ℕ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ), IsKrausChannel (ι := Fin m) K ∧ NonUnital K ∧ UsefulUQT (out a K))
 
 set_option linter.style.longLine true
 
@@ -137,7 +138,8 @@ private def localConj (U V : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) : TwoQu
   (U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ
 
 private lemma out_state (a : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
-    {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) (hK : IsChannel K) :
+    {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ)
+    (hK : IsKrausChannel (ι := Fin m) K) :
     (out a K).PosSemidef ∧ trace (out a K) = 1 ∧
       partialTraceRight (out a K) = Matrix.diagonal ![(a : ℂ), 1 - (a : ℂ)] := by
   have hp : (out a K).PosSemidef := by
@@ -184,7 +186,8 @@ private lemma out_state (a : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
   simp
 
 private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
-    {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) (hK : IsChannel K)
+    {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ)
+    (hK : IsKrausChannel (ι := Fin m) K)
     (U V : Matrix (Fin 2) (Fin 2) ℂ)
     (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ)
     (hV : V ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
@@ -374,10 +377,10 @@ private def damping (γ : ℝ) : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ :=
   ![!![(Real.sqrt (1 - γ) : ℂ), 0; 0, 1], !![0, 0; (Real.sqrt γ : ℂ), 0]]
 
 private lemma damping_channel (γ : ℝ) (hγ0 : 0 ≤ γ) (hγ1 : γ ≤ 1) :
-    IsChannel (damping γ) := by
+    IsKrausChannel (ι := Fin 2) (damping γ) := by
   have hs0 := Real.sq_sqrt hγ0
   have hs1 := Real.sq_sqrt (sub_nonneg.mpr hγ1)
-  rw [IsChannel.eq_def]
+  unfold IsKrausChannel
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp only [damping.eq_def, Fin.sum_univ_two, Matrix.mul_apply, Matrix.conjTranspose_apply,
@@ -445,7 +448,7 @@ private lemma damping_useful (a t γ : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
 private lemma sufficient_two (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
     (hC : Cstar < conc a) :
     ∃ K : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ,
-      IsChannel K ∧ NonUnital K ∧ UsefulUQT (out a K) := by
+      IsKrausChannel (ι := Fin 2) K ∧ NonUnital K ∧ UsefulUQT (out a K) := by
   let r := 2 * a - 1
   let t := tmax r
   let γ := (1 - t) / (1 + r)
@@ -528,7 +531,8 @@ private lemma isotropic_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace
   exact eliminate_beta r t β hr.le ht (by linarith) (by nlinarith only [hminor])
 
 private lemma necessary (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
-    {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) (hK : IsChannel K)
+    {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ)
+    (hK : IsKrausChannel (ι := Fin m) K)
     (hUQT : UsefulUQT (out a K)) : Cstar < conc a := by
   obtain ⟨U, V, t, hU, hV, ht, hT⟩ := hUQT
   obtain ⟨hp, htr, hA⟩ := output_frame a ha ha1 K hK U V hU hV

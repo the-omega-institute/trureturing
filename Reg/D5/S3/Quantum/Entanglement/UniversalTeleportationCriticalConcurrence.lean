@@ -4,6 +4,7 @@ import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Quantum.Entanglement.UniversalTeleportationCriticalConcurrence
 open _root_.D5.S3.Quantum.Entanglement.UniversalTeleportationCriticalConcurrence
+open _root_.D5.S3.QuantumChannels.SwitchUselessConcatenationRefutation (IsKrausChannel)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 set_option autoImplicit false
@@ -25,9 +26,9 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ a : ℝ, (1 / 2 : ℝ) < a → a < 1 →
     (∀ (m : ℕ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ),
-      IsChannel K → UsefulUQT (out a K) → Cstar < R.readout () () a) ∧
+      IsKrausChannel (ι := Fin m) K → UsefulUQT (out a K) → Cstar < R.readout () () a) ∧
     (Cstar < conc a → ∃ (m : ℕ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ),
-      IsChannel K ∧ NonUnital K ∧ UsefulUQT (out a K))
+      IsKrausChannel (ι := Fin m) K ∧ NonUnital K ∧ UsefulUQT (out a K))
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
