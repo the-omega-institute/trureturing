@@ -3635,3 +3635,1158 @@ $\square$
 [FR34]: https://arxiv.org/html/2107.03557v1
 
 ## 追加锚（本行以下为增补区）
+
+## 35. AURIC FIB-ATOM: shared-root gluing, synchronized irreducibility and canonical growth
+
+### 35.1 One root, one degree and one array of rows
+
+**Definition 35.1 (The shared-root occupancy algebra).**
+Fix integers $k\ge2$ and $b\ge1$. Let $G_{k,b}$ consist of $b$
+labelled copies of $C_{2k+1}$ meeting precisely at one vertex $o$.
+On cycle $a$ use positions $0,1,\ldots,2k$, with position $0=o$;
+write its other vertices as $(a,i)$, $1\le i\le2k$.
+All these nonroot vertices are distinct, and the only edges are the
+cyclic edges in these $b$ copies. Thus $|V(G_{k,b})|=2kb+1$.
+Let $\mathcal B_{k,b}$ be the independent subsets of this graph,
+including the empty subset. A common array of $m$ rows consists of
+$m$ members of $\mathcal B_{k,b}$ on a single row set $[m]$.
+Its occupancy observation is $(m,c)$, with $c_v$ the number of rows
+containing $v$ and $t=c_o$ the root occupancy.
+
+For a vector $p=(m,c)$, let $p_a=(m,c^{(a)})$ be its restriction to
+cycle $a$, retaining the root and degree. Put
+
+$$
+\begin{aligned}
+\mathcal S_{k,b}=\{(m,c)\in\mathbb Z_{\ge0}^{2kb+2}:&\quad
+ c_u+c_v\le m\text{ for every edge }\{u,v\},\\
+ &\quad t+\sum_{i=1}^{2k}c_{a,i}\le km\text{ for every }a\},\\
+\delta_a(m,c)&=km-t-\sum_{i=1}^{2k}c_{a,i},\\
+R_{k,b}&=\mathbb C[\mathcal S_{k,b}].
+\end{aligned}
+\tag{35.1}
+$$
+
+The root occurs once in each cycle inequality; it is one coordinate
+of the global vector. Write $X^p$ for a semigroup monomial and
+$X^pX^s=X^{p+s}$. The ordinary degree is $m$, and the boundary
+bigrading is $(m,t)$. The single-cycle ring $R_k$ of Definition 31.1
+is used also for $k=2$, with the same inequalities. This is an
+occupancy algebra, without a specified order of the rows.
+
+**Theorem 35.2 (Common-root realization and its canonical interior).**
+Every point of $\mathcal S_{k,b}$ is the observation of $m$ actual
+global independent sets. Restriction gives an addition-preserving
+bijection
+
+$$
+\mathcal S_{k,b}\longleftrightarrow
+\{(p_1,\ldots,p_b)\in\mathcal S_k^b:
+             \deg_{(m,t)}p_1=\cdots=\deg_{(m,t)}p_b\}.
+\tag{35.2}
+$$
+
+Consequently there is an isomorphism of boundary-bigraded algebras
+
+$$
+R_{k,b}\simeq
+\bigoplus_{m\ge0}\ \bigoplus_{0\le t\le m}
+ (R_k)_{(m,t)}\otimes_{\mathbb C}\cdots\otimes_{\mathbb C}
+ (R_k)_{(m,t)},
+\tag{35.3}
+$$
+
+with $b$ tensor factors. The ring is a normal standard graded
+Cohen–Macaulay domain of dimension $2kb+2$. In its full exponent
+lattice its canonical module is the ideal with monomial basis
+
+$$
+\omega_{R_{k,b}}=
+\operatorname{span}_{\mathbb C}\{X^p:p\in\mathcal S_{k,b}^{\circ}\},
+\qquad
+\mathcal S_{k,b}^{\circ}=
+\{(m,c):c_v\ge1,\ c_u+c_v\le m-1,\ \delta_a(m,c)\ge1\}.
+\tag{35.4}
+$$
+
+In particular $p$ is interior if and only if all its cycle
+restrictions are interior with the same $(m,t)$.
+
+Proof. The single-cycle integer decomposition of Theorem 28.2 applies
+to each $p_a$, including the five-cycle. Choose $m$ local independent
+sets realizing it. Exactly $t$ of its rows contain the root. Permute
+the rows separately in each cycle so that these are precisely rows
+$1,\ldots,t$. In each row take the union of the local independent
+sets, identifying their root vertices. All root choices now agree.
+An edge is entirely in a single cycle, where that row is independent;
+there is no cross edge. The rowwise union is therefore a global
+independent set, and its occupancies are exactly $c$. For $m=0$ this
+is the empty array. Conversely any global array restricts to such
+local arrays and satisfies every inequality in (35.1).
+
+The supplied local decomposition is more than local real feasibility:
+it uses exactly $m$ rows and exactly $t$ root-one rows. This is why the
+permutations establish a simultaneous realization. The bijection
+(35.2) itself is between exponent vectors, not between chosen arrays:
+the nonroot coordinates and the common root reconstruct $c$ uniquely.
+Restriction and reconstruction both commute with addition.
+
+Map a pure tensor of monomials in (35.3) to the reconstructed global
+monomial. The monomial tensor bases and (35.2) make this a linear
+bijection. Multiplication is explicitly
+
+$$
+(X^{p_1}\otimes\cdots\otimes X^{p_b})
+(X^{s_1}\otimes\cdots\otimes X^{s_b})
+=X^{p_1+s_1}\otimes\cdots\otimes X^{p_b+s_b}.
+\tag{35.5}
+$$
+
+Its boundary degree is $(m+q,t+u)$ when the two factors have boundary
+degrees $(m,t)$ and $(q,u)$. Equation (35.2) identifies (35.5) with
+$X^{p+s}$, proving the algebra assertion. This is the specified
+bigraded Segre-style diagonal, not an ordinary product of local
+ungraded spaces or an independent product of their degree counts.
+
+For the real geometry, let $P$ be the polyhedron in degree one defined
+by the nonnegativity, edge and cycle inequalities in (35.1). It is
+bounded since each vertex has a neighbor and hence $0\le c_v\le1$.
+It contains the convex hull of the global independent-set indicators.
+For any rational point of $P$, multiply by a positive common denominator
+$m$ and apply the row construction; division by $m$ expresses the
+point as an average of global indicators. Rational points are dense
+in this rational polytope, and that convex hull is closed. Thus $P$
+is exactly the stable-set polytope of $G_{k,b}$. Its homogenized real
+cone $K_{k,b}$ is exactly the cone given by (35.1) over the reals:
+at degree zero the edge bounds force every coordinate to be zero.
+
+The degree-one empty set gives $(1,0)$, and subtracting it from the
+degree-one singleton at $v$ gives $(0,e_v)$. These generate the full
+group lattice $\mathbb Z^{2kb+2}$. At degree one a sufficiently small
+constant positive occupancy has every edge sum less than one and
+every cycle sum less than $k$. Together with $m>0$ these strict
+inequalities exhibit a full-dimensional neighborhood in the cone.
+Thus $\dim K_{k,b}=2kb+2$. The cone is rational and pointed, and
+
+$$
+\mathcal S_{k,b}=K_{k,b}\cap\mathbb Z^{2kb+2}.
+\tag{35.6}
+$$
+
+The row decomposition also proves finite generation by the degree-one
+indicators. Equation (35.6) proves saturation in the full group lattice,
+hence normality. The ring is a domain by its monomial embedding into
+$\mathbb C[z_0,(z_v)_{v\in V}]$ and is standard graded by that same
+degree-one generation.
+
+Every linear inequality used here is a nonzero supporting form of this
+full-dimensional cone. If one is an equality, its supporting hyperplane
+prevents an ambient open ball. If they are all strict, finitely many
+positive margins give such a ball. Therefore their simultaneous
+strictness describes the interior, even without assuming a minimal
+facet list. For integral points this is precisely (35.4); the coordinate
+and edge strictness already force $m\ge3$. Adding a semigroup point
+preserves all strict inequalities, so their monomials form an ideal.
+
+Hochster's theorem gives Cohen–Macaulayness for this normal affine
+monoid ring. The Danilov–Stanley formula in Barile–Bruns,
+*$\mathbb Z^r$-graded rings and their canonical modules*,
+[§5 and Theorem 5.1][BB35], identifies its canonical module with the
+interior ideal. In that theorem take the coefficient field to be
+$\mathbb C$, the monoid to be $\mathcal S_{k,b}$ and
+$r=2kb+2$; finite generation, normality, full group and full cone
+dimension have just been established. These are the same classical
+inputs used in §§29.2 and 31.2, now for the global cone.
+
+There is also an exact literature correspondence for the gluing step.
+Matsuda–Ohsugi–Shibata, *Toric rings and ideals of stable set polytopes*,
+[Proposition 1.3][MOS35], states that for a clique sum the stable-set
+toric ideal is a toric fiber product, and that its ring is normal if
+and only if both constituent rings are normal. Here the intersection
+is the singleton clique $\{o\}$, and the edge set is exactly the union
+of the two edge sets at each successive gluing. The two singleton-clique
+states, root absent and root present, have multiplicities $m-t$ and $t$;
+these determine and are determined by $(m,t)$. Thus its fiber grading
+matches (35.2). The proposition is a precedent for this specific
+clique sum, whereas (35.2)–(35.5) give the actual maps used here.
+The ordinary Segre product for disconnected graphs in their Example 1.2
+has a different boundary condition. Neither result by itself proves
+the synchronized interior subtraction below. $\square$
+
+### 35.2 Uniform descent and every minimal canonical generator
+
+**Definition 35.3 (Interior basic exponents).**
+An exponent $p\in\mathcal S_{k,b}^{\circ}$ is basic if no nonzero
+$s\in\mathcal S_{k,b}$ has $p-s\in\mathcal S_{k,b}^{\circ}$.
+Use the same definition for a single cycle. In its local coordinates put
+
+$$
+\nu_j=(2j+1;j\mathbf1),\qquad 1\le j\le k-1.
+\tag{35.7}
+$$
+
+These are local vectors; a global vector whose restrictions all equal
+$\nu_j$ will be written $(2j+1;j\mathbf1_V)$.
+
+**Theorem 35.4 (Synchronized descent at a single common root).**
+A global interior exponent is basic if and only if at least one of its
+cycle restrictions is exactly one of (35.7). Equivalently, all global
+basic exponents are the compatible tuples of local interior exponents
+of common degree $2j+1$ and root occupancy $j$, with at least one entry
+$\nu_j$, for exactly one $j\in\{1,\ldots,k-1\}$.
+Their monomials are exactly the minimal monomial generators of
+$\omega_{R_{k,b}}$.
+
+Proof. The needed local classification is the supplied result of
+Theorem 31.3 and §31.2. Its primary source for $k\ge3$ is Miyazaki,
+*Non-Gorenstein locus and almost Gorenstein property of the Ehrhart ring
+of the stable set polytope of a cycle graph*, [§4][MI35]. His length is
+$2\ell+1\ge7$; substitute $\ell=k$, his vertex function $\eta(v_i)=c_i$
+and $\eta(-\infty)=m$. His $\eta_j$ is (35.7). Lemma 4.1 identifies
+the translate by $\nu_1$; Lemmas 4.2–4.3 identify the maximum-set face
+algebra; Lemma 4.4 supplies its free canonical layers. The argument
+immediately before Theorem 4.5 establishes that $\eta_1,\ldots,
+\eta_{\ell-1}$ are the minimal canonical generators. His map has target
+$\omega_{R_k}(3)$, so its cokernel is $\mathcal C_k(3)$ in the notation
+of Definition 31.2. Theorem 4.5 itself concerns the Ulrich and
+almost-Gorenstein conclusions; those conclusions are not substituted
+for the preceding generator classification.
+
+Here are the exact local consequences, including their proof in the
+coordinates needed for descent. For a local interior $p=(m,c)$ write
+$\delta=km-\sum_i c_i$. If $\delta\ge k-1$, then $p-\nu_1$ has
+nonnegative coordinates, edge sums at most $m-3$, nonnegative deficit
+and degree $m-3\ge0$. Thus it is a local semigroup point. Otherwise
+$1\le\delta\le k-2$ and put $j=k-\delta$. For each $i$, deleting
+vertex $i$ leaves $k$ disjoint edges covering the other $2k$ vertices;
+the strict edge bounds give
+
+$$
+km-\delta=\sum_r c_r\le c_i+k(m-1),\qquad c_i\ge k-\delta=j.
+\tag{35.8}
+$$
+
+An edge then implies $m\ge2j+1$. Subtracting $\nu_j$ leaves
+nonnegative coordinates and degree, edge bounds in degree $m-2j-1$
+and deficit zero. Hence every local interior is $\nu_j+s$ with
+$s\in\mathcal S_k$. Conversely these sums are interior, since
+$\nu_j$ has coordinate $j$, edge slack one and deficit $k-j\ge1$.
+When $k=2$, only the first case occurs: every interior is
+$\nu_1+\mathcal S_2$. This directly proves the five-cycle assertion,
+without extending Miyazaki's length-at-least-seven hypothesis.
+
+For local minimality, suppose $\nu_j-s$ is interior, where
+$s=(q,d)\in\mathcal S_k$. Each edge slack of $\nu_j$ is one,
+so the nonnegative edge slacks of $s$ must all be zero. Then
+$d_i+d_{i+1}=q$ for every edge. Oddness forces $d_i=q/2$ for all
+$i$, and the cycle inequality gives $(2k+1)q/2\le kq$. Thus
+$q=0$ and $d=0$. This proves that precisely the $\nu_j$ are local
+basic exponents. All other interior exponents have a representation
+$\nu_j+s$ with $s\ne0$, so $q=\deg s>0$.
+
+It is not enough to subtract any local independent set separately.
+For such a nonbasic local exponent, retain its common boundary $(m,t)$
+and write
+
+$$
+p=\nu_j+s,\qquad q=m-2j-1>0,\qquad u=t-j.
+\tag{35.9}
+$$
+
+The single-cycle integer decomposition realizes $s$ by $q$ rows,
+exactly $u$ containing the root. Choose a row according to the rule
+
+$$
+\varepsilon(m,t)=
+\begin{cases}
+0,&2t<m,\\
+1,&2t\ge m.
+\end{cases}
+\tag{35.10}
+$$
+
+This choice is always available. If $2t<m$, then $2u<q+1$.
+Since $u,q$ are integers and $q>0$, this implies $u<q$, so there
+is a root-zero row. If $2t\ge m$, then $2u\ge q+1>0$, so
+$u>0$ and there is a root-one row. At equality $2t=m$, the
+formula gives $2u=q+1$; in particular $q$ is odd and $u\ge1$,
+so the root-one choice remains valid. Removing the chosen row
+$I$ leaves a semigroup point $s-(1,\mathbf1_I)$. Consequently
+$p-(1,\mathbf1_I)=\nu_j+(s-(1,\mathbf1_I))$ is still interior.
+The rule depends only on $(m,t)$, even when different cycles use
+different $j$ in (35.9).
+
+Now suppose all local restrictions of a global interior $p$ are
+nonbasic. Apply (35.10) to every cycle and take the union of the
+chosen rows. They have the same root bit and no cross edges, so the
+union is a legal global independent set $I$. The global remainder
+$p-(1,\mathbf1_I)$ restricts to interior vectors on every cycle
+and is therefore interior by (35.4). Thus $p$ is not basic.
+
+Conversely suppose $p_a=\nu_j$ for some $a$. Any nonzero global
+$s\in\mathcal S_{k,b}$ has positive degree: degree zero forces
+all coordinates to vanish. Its restriction $s_a$ has that same
+positive degree and is nonzero. If $p-s$ were interior, then
+$\nu_j-s_a$ would be local interior, contradicting local minimality.
+Thus $p$ is basic. The boundary of $\nu_j$ forces $m=2j+1,t=j$,
+and two different $j$ cannot occur at that same boundary.
+
+Repeated descent lowers the integer degree and stops at a basic
+interior exponent. It therefore generates the whole interior ideal
+from precisely the asserted monomials. A basic monomial cannot be a
+positive-degree multiple of any other interior monomial. Distinct
+exponents are linearly independent, so the basic classes form a basis
+of $\omega_{R_{k,b}}/R_{k,b,+}\omega_{R_{k,b}}$. This proves both
+minimality and completeness for arbitrary polynomial generators as
+well. $\square$
+
+### 35.3 Root-conditioned transfer counts and the growth of type
+
+**Theorem 35.5 (All canonical generator counts).**
+For $1\le j\le k-1$ define
+
+$$
+\begin{aligned}
+T_q(a,c)&=\mathbf1_{a+c\le q},\quad 0\le a,c\le q,\\
+M_{k,j}&=(T_{2j-2}^{\,2k+1})_{j-1,j-1},\\
+\mu_{k,b,j}&=M_{k,j}^{\,b}-(M_{k,j}-1)^b.
+\end{aligned}
+\tag{35.11}
+$$
+
+There are exactly $\mu_{k,b,j}$ minimal canonical generators in
+degree $2j+1$ and no minimal generators in any other degree. Thus
+
+$$
+\operatorname{type}R_{k,b}
+=\sum_{j=1}^{k-1}\bigl(M_{k,j}^{\,b}-(M_{k,j}-1)^b\bigr).
+\tag{35.12}
+$$
+
+Proof. A local interior exponent of degree $2j+1$ has edge sums at
+most $2j$. Summing the $2k+1$ edge bounds yields
+$\sum_i c_i\le(2k+1)j$. For $j\le k-1$,
+
+$$
+(2k+1)j\le k(2j+1)-1.
+\tag{35.13}
+$$
+
+Hence the strict cycle inequality is automatic in these degrees.
+Set $d_i=c_i-1$. Its conditions are $d_i\ge0$,
+$d_i+d_{i+1}\le2j-2$ and root $d_0=j-1$. Each coordinate lies
+between zero and $2j-2$ because it has a nonnegative neighbor.
+The closed transfer walk starting and ending at $j-1$ counts exactly
+these labelled vectors, with each factor imposing one cyclic edge.
+This proves that $M_{k,j}$ is their number. For $j=1$ the matrix
+$T_0=[1]$ has one state, so $M_{k,1}=1$; no empty-matrix convention
+is involved.
+
+At this fixed boundary the $b$ cycle vectors can be chosen independently
+and then glued by (35.2); there are $M_{k,j}^b$ tuples. Exactly one
+of the $M_{k,j}$ possibilities in each cycle is $\nu_j$. The tuples
+with no such entry number $(M_{k,j}-1)^b$, and Theorem 35.4 excludes
+precisely those tuples from the basic set. Different $j$ give different
+degrees and hence disjoint sets. Their number is the minimal number
+of generators of the canonical module, which for this Cohen–Macaulay
+ring is its type. This proves (35.11)–(35.12). It counts all compatible
+local interiors with a basic entry, rather than multiplying the local
+types. $\square$
+
+**Proposition 35.6 (One seven-cycle has type two; two have type 202).**
+For the shared-root seven-cycle family,
+
+$$
+\operatorname{type}R_{3,b}=1+101^b-100^b.
+\tag{35.14}
+$$
+
+In particular the types for $b=1,2,3$ are $2,202,30302$.
+For every $b\ge1$ the five-cycle family has type one.
+
+Proof. For $k=3$ the two local canonical degrees are three and five.
+At degree three $M_{3,1}=1$. At degree five use
+
+$$
+T_2=\begin{pmatrix}1&1&1\\1&1&0\\1&0&0\end{pmatrix}.
+\tag{35.15}
+$$
+
+Starting at the middle state, its row vectors for powers zero through
+seven are
+
+$$
+\begin{aligned}
+&(0,1,0),\ (1,1,0),\ (2,2,1),\ (5,4,2),\\
+&(11,9,5),\ (25,20,11),\ (56,45,25),\ (126,101,56).
+\end{aligned}
+\tag{35.16}
+$$
+
+Each step replaces $(a,b,c)$ by $(a+b+c,a+b,a)$, proving the
+entries directly. Thus $M_{3,2}=101$. There are $100$ other local
+interiors at boundary $(5,2)$, besides $\nu_2$. For two labelled
+cycles the basic degree-five tuples divide into $(\nu_2,\nu_2)$,
+$(\nu_2,p)$ and $(p,\nu_2)$ with $p\ne\nu_2$. Their counts are
+$1,100,100$, giving $201$. Including the single degree-three
+basic exponent gives $202$, whereas the product of the two local
+types would be $2\cdot2=4$. For three cycles the calculation is
+$1+101^3-100^3=30302$.
+
+For an explicit mixed tuple, take on one seven-cycle
+$p=\nu_1+(2;\mathbf1_{\{0\}})=(5;2,1,1,1,1,1,1)$.
+The remainder is realized by one root singleton and one empty row,
+so $p$ is locally reducible. Pair it with $\nu_2$ on the other
+cycle; both have boundary $(5,2)$. This tuple is globally basic:
+any global subtraction lowers the common degree on the second cycle
+as well and contradicts minimality of $\nu_2$. A local reduction
+cannot leave the other cycle's degree unchanged. This explains the
+extra generators without treating the rings as independent factors.
+
+For $k=2$ the only index is $j=1$, so (35.12) gives
+$1^b-0^b=1$ for $b\ge1$. The direct five-cycle proof in Theorem
+35.4 supplies the endpoint classification. $\square$
+
+[MI35]: https://arxiv.org/pdf/2205.01409v1
+[MOS35]: https://arxiv.org/pdf/1603.01850v1
+[BB35]: https://arxiv.org/pdf/2505.11402v1
+
+## 36. Root-resolved canonical layers and the complete quotient counts
+
+### 36.1 Keeping the root in the local layers
+
+**Definition 36.1 (Legal, interior and exceptional root sectors).**
+For one cycle define
+
+$$
+\begin{aligned}
+L_k(m,t)&=\#\{(m,c)\in\mathcal S_k:c_0=t\},\\
+I_k(m,t)&=\#\{(m,c)\in\mathcal S_k^\circ:c_0=t\},\\
+B_k(m,t)&=L_k(m-3,t-1),\\
+E_k(m,t)&=I_k(m,t)-B_k(m,t).
+\end{aligned}
+\tag{36.1}
+$$
+
+A count is zero for negative degree, negative root occupancy or root
+occupancy exceeding the degree of the object counted; the interior
+count is also zero whenever its strict inequalities are infeasible.
+In particular $I_k(0,t)=0$ and $L_k(0,t)=\mathbf1_{t=0}$.
+The two-argument $E_k(m,t)$ here is an exceptional canonical count.
+It is different from the one-argument local-trace error $E_k(q)$ of
+Definition 32.1; the latter counts locally feasible tuples without a
+common-copy lift. No equality between those two counts is implicit.
+
+**Theorem 36.2 (Root resolution of the supplied face layers).**
+For $k\ge3$ one has
+
+$$
+E_k(m,t)=
+\sum_{\substack{2\le j\le k-1\\t\ge j,\ m-t\ge j+1}}
+\binom{t-j+k-1}{k-1}
+\binom{m-t-j+k-1}{k}.
+\tag{36.2}
+$$
+
+For $k=2$ the sum is empty and $E_2(m,t)=0$. Let
+
+$$
+\nu=(3;\mathbf1_V),\qquad
+C_{k,b}=\omega_{R_{k,b}}/X^\nu R_{k,b}.
+\tag{36.3}
+$$
+
+Then the complete degree counts are
+
+$$
+\begin{aligned}
+\dim_{\mathbb C}(\omega_{R_{k,b}})_m
+ &=\sum_{t=0}^{m}I_k(m,t)^b,\\
+\dim_{\mathbb C}(X^\nu R_{k,b})_m
+ &=\dim_{\mathbb C}(R_{k,b})_{m-3}
+   =\sum_{t=0}^{m}B_k(m,t)^b,\\
+\dim_{\mathbb C}(C_{k,b})_m
+ &=\sum_{t=0}^{m}\bigl((B_k(m,t)+E_k(m,t))^b-B_k(m,t)^b\bigr).
+\end{aligned}
+\tag{36.4}
+$$
+
+The right sides are zero for $m<0$. For $b=2$ the last summand is
+$2B_k(m,t)E_k(m,t)+E_k(m,t)^2$ at each common root occupancy.
+
+Proof. In the local canonical classification used in Theorem 35.4,
+translation by $\nu_1$ is exactly the range $\delta\ge k-1$.
+It changes the boundary by $(3,1)$, giving the ordinary count $B_k$.
+The remaining exponents are exactly the disjoint free face layers
+
+$$
+p=\nu_j+s_0,\qquad 2\le j\le k-1,\qquad\delta(s_0)=0.
+\tag{36.5}
+$$
+
+These are Miyazaki's Lemma 4.4 layers, with the parameter and shift
+correspondence in Theorem 35.4; their additive face coordinates are
+(31.13)–(31.14). To retain the root, write $s_0=(q,d)$ and put
+
+$$
+\alpha_i=q-d_i-d_{i+1}\ge0,\qquad
+q=\sum_{i=0}^{2k}\alpha_i,\qquad
+d_i=\sum_{r=0}^{k-1}\alpha_{i+1+2r}.
+\tag{36.6}
+$$
+
+All indices are modulo $2k+1$. The two alternating sums for adjacent
+$i$ cover every $\alpha$ except $\alpha_i$, so the edge equations
+hold. Summing the occupancies gives $\sum_i d_i=kq$. Conversely
+these odd-cycle edge equations have unique solution, since a difference
+alternates sign around an odd cycle and must vanish. Thus (36.6)
+is precisely the bijection between the face semigroup and
+$\mathbb N^{2k+1}$ already supplied in §31.3.
+
+At the root, $d_0=\alpha_1+\alpha_3+\cdots+\alpha_{2k-1}$ is the
+sum of exactly $k$ coordinates. The complementary $k+1$ coordinates
+sum to $q-d_0$. In (36.5), therefore,
+
+$$
+q=m-2j-1,\qquad d_0=t-j,\qquad q-d_0=m-t-j-1.
+\tag{36.7}
+$$
+
+These are nonnegative precisely under the restrictions in (36.2).
+Stars and bars for the two specified, disjoint coordinate sets gives
+respectively $\binom{t-j+k-1}{k-1}$ and
+$\binom{m-t-j+k-1}{k}$. The deficit of (36.5) is $k-j$,
+so different layers cannot overlap. This proves (36.2) and its zero
+conventions. For $k=2$ direct translation already exhausts the local
+interior, so there are no layers to count.
+
+A global interior vector is a tuple of local interiors at the same
+$(m,t)$ by Theorem 35.2, giving the first line of (36.4). The vector
+$\nu$ is interior: its coordinates are one, edge slack one and each
+cycle deficit $k-1\ge1$. Since $R_{k,b}$ is a domain, multiplication
+by $X^\nu$ is injective, with boundary shift $(3,1)$. To be in its
+image every local interior must lie in its ordinary translated sector;
+subtracting the same $\nu_1$ in each cycle leaves compatible boundary
+$(m-3,t-1)$ and hence a global semigroup point. This proves the
+second line. The quotient of two monomial spaces has as basis exactly
+the interior exponents outside this image, so subtraction proves the
+last line, with no unproved module splitting.
+
+For two cycles the cross terms count one ordinary and one exceptional
+local sector at this same $(m,t)$, in either labelled order. The term
+$E_k^2$ counts two exceptional sectors. Summing local exceptional
+counts first, or tensoring unrelated root degrees, would lose this
+compatibility. The counts are amplified only by actual compatible
+global exponents. $\square$
+
+### 36.2 Three full tables for two seven-cycles
+
+**Proposition 36.3 (All root sectors in degrees five, six and seven).**
+For $k=3,b=2$ the root-resolved entries of (36.4) are the following.
+Here $B=B_3(m,t)$, $E=E_3(m,t)$, $I=I_3(m,t)$; the last three
+columns count global interior monomials, ordinary translates and
+surviving quotient monomials in that root sector.
+
+| $m=5$, $t$ | $B$ | $E$ | $I=B+E$ | $I^2$ | $B^2$ | $I^2-B^2$ |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 157 | 0 | 157 | 24649 | 24649 | 0 |
+| 2 | 100 | 1 | 101 | 10201 | 10000 | 201 |
+| 3 | 31 | 0 | 31 | 961 | 961 | 0 |
+| 4 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total | 288 | 1 | 289 | 35811 | 35610 | 201 |
+
+| $m=6$, $t$ | $B$ | $E$ | $I=B+E$ | $I^2$ | $B^2$ | $I^2-B^2$ |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 707 | 0 | 707 | 499849 | 499849 | 0 |
+| 2 | 543 | 4 | 547 | 299209 | 294849 | 4360 |
+| 3 | 298 | 3 | 301 | 90601 | 88804 | 1797 |
+| 4 | 85 | 0 | 85 | 7225 | 7225 | 0 |
+| 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total | 1633 | 7 | 1640 | 896884 | 890727 | 6157 |
+
+| $m=7$, $t$ | $B$ | $E$ | $I=B+E$ | $I^2$ | $B^2$ | $I^2-B^2$ |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 2353 | 0 | 2353 | 5536609 | 5536609 | 0 |
+| 2 | 1978 | 10 | 1988 | 3952144 | 3912484 | 39660 |
+| 3 | 1359 | 12 | 1371 | 1879641 | 1846881 | 32760 |
+| 4 | 695 | 6 | 701 | 491401 | 483025 | 8376 |
+| 5 | 190 | 0 | 190 | 36100 | 36100 | 0 |
+| 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total | 6575 | 28 | 6603 | 11895895 | 11815099 | 80796 |
+
+Proof. There is only the local layer $j=2$ for seven positions.
+Formula (36.2) becomes
+
+$$
+E_3(m,t)=\binom{t}{2}\binom{m-t}{3}
+\quad\text{if }t\ge2,\ m-t\ge3,
+\tag{36.8}
+$$
+
+and is zero otherwise. This gives the $E$ columns directly: in degree
+five only $t=2$ contributes one; in degree six the values at $t=2,3$
+are four and three; in degree seven those at $t=2,3,4$ are ten,
+twelve and six.
+
+For a complete finite recurrence determining the $B$ columns, fix a
+local degree $q$ and root $u\in\{0,\ldots,q\}$. Let
+$H_r(v,h)$ count choices of the first $r$ path coordinates
+$c_1,\ldots,c_r$, with $c_r=v$ and $h=u+\sum_{i=1}^r c_i$,
+respecting all edges encountered from the root. Start with
+$H_0(u,u)=1$, all other values zero, and for $0\le r<2k$ use
+
+$$
+H_{r+1}(w,h+w)=\sum_{\substack{v\ge0\\v+w\le q}}H_r(v,h).
+\tag{36.9}
+$$
+
+Only $0\le w\le q$ is needed. Closure and the total constraint give
+
+$$
+L_k(q,u)=\sum_{\substack{v+u\le q\\h\le kq}}H_{2k}(v,h).
+\tag{36.10}
+$$
+
+Each admissible vector has one unique sequence of intermediate states,
+so (36.9)–(36.10) count it once. For $k=3$, their evaluations at
+$q=2,3,4$, with root columns in increasing order, are
+
+$$
+\begin{aligned}
+(L_3(2,u))_{u=0}^2&=(157,100,31),\\
+(L_3(3,u))_{u=0}^3&=(707,543,298,85),\\
+(L_3(4,u))_{u=0}^4&=(2353,1978,1359,695,190).
+\end{aligned}
+\tag{36.11}
+$$
+
+Inserting $q=m-3,u=t-1$ gives every $B$ entry. Adding (36.8)
+gives $I$, squaring at each common root gives the next two columns,
+and subtraction gives the last. Their sums are the stated totals.
+For instance the degree-six difference is
+$2\cdot543\cdot4+4^2+2\cdot298\cdot3+3^2=6157$;
+the degree-seven difference is $39660+32760+8376=80796$.
+The sums of the first three numerical columns are local counts;
+they are not to be squared to obtain the last three totals.
+
+At degree five every surviving quotient monomial is one of the $201$
+additional minimal canonical generators in Proposition 35.6, since
+there is no quotient in smaller degree. The numbers $6157$ and $80796$
+are entire degree pieces of the quotient, including positive-degree
+multiples. They count no new minimal canonical generators in degrees
+six or seven: Theorem 35.5 places all such generators for $k=3$ in
+degrees three and five, with the unique degree-three generator removed
+in $C_{3,2}$. $\square$
+
+## 37. Cyclewise deficit action, polynomial annihilators and sharp ideal depth
+
+### 37.1 The full action and its simultaneous threshold
+
+**Theorem 37.1 (The shared-root canonical quotient action).**
+For $k\ge3$, a monomial $X^p$ with $p$ interior has nonzero class in
+$C_{k,b}$ precisely when
+
+$$
+1\le\delta_a(p)\le k-2\quad\text{for at least one }a.
+\tag{37.1}
+$$
+
+The action of any semigroup monomial on this basis is
+
+$$
+X^s[X^p]=
+\begin{cases}
+[X^{p+s}],&\delta_a(p)+\delta_a(s)\le k-2
+                         \text{ for at least one }a,\\
+0,&\delta_a(p)+\delta_a(s)\ge k-1\text{ for every }a.
+\end{cases}
+\tag{37.2}
+$$
+
+For arbitrary polynomials, extended linearly, its full annihilator is
+
+$$
+\operatorname{Ann}_{R_{k,b}}C_{k,b}
+=\operatorname{span}_{\mathbb C}
+ \{X^s:s\in\mathcal S_{k,b},\ \delta_a(s)\ge k-2\text{ for every }a\}.
+\tag{37.3}
+$$
+
+For $k=2$ one instead has $\omega_{R_{2,b}}=X^\nu R_{2,b}$,
+$C_{2,b}=0$ and $\operatorname{Ann}_{R_{2,b}}C_{2,b}=R_{2,b}$.
+
+Proof. Subtract $\nu=(3;\mathbf1_V)$ from an interior $p=(m,c)$.
+The degree is nonnegative since $m\ge3$, the coordinates are
+nonnegative, and an edge sum becomes at most $m-3$, as required
+at the new degree. The only remaining conditions are the cycle
+inequalities, whose deficits become
+
+$$
+\delta_a(p-\nu)=\delta_a(p)-(k-1),
+\tag{37.4}
+$$
+
+because $\delta_a(\nu)=3k-(2k+1)=k-1$ on each cycle.
+Thus $p-\nu$ is a global semigroup point if and only if every
+$\delta_a(p)\ge k-1$. The image $X^\nu R_{k,b}$ is a monomial
+ideal, so the complementary exponents are a quotient basis. Since
+interior deficits are positive integers, this is exactly (37.1).
+For $k=2$ every interior already satisfies all thresholds in (37.4),
+proving its separate zero-quotient assertion.
+
+Each $\delta_a$ is additive on the actual common-root exponent:
+the degree and the root occupancy are each added once in that cycle's
+formula. Adding $s\in\mathcal S_{k,b}$ preserves the strict
+coordinate and edge inequalities. Applying (37.1) to $p+s$ gives
+(37.2). It is an algebra action, since exponent addition is associative
+and the removed monomials form an ideal. Equivalently, once every
+deficit has reached $k-1$, adding nonnegative deficits can never make
+a class survive again. This is the global counterpart of the local
+slack/deficit action in (31.7), retaining a vector of cycle deficits.
+
+If all deficits of $s$ are at least $k-2$, then adding $s$ to any
+interior $p$ gives every deficit at least $k-1$, so $X^s$ annihilates
+the module. For the converse there is a single common witness
+
+$$
+p_*=(2k-1;(k-1)\mathbf1_V),\qquad
+\delta_a(p_*)=1\quad\text{for every }a.
+\tag{37.5}
+$$
+
+Its coordinates are positive and each edge has sum $2k-2$, one
+below its degree. The displayed deficits prove interior membership.
+For $k\ge3$ it survives (37.1). If some $\delta_a(s)<k-2$,
+then $\delta_a(p_*+s)\le k-2$, so $X^s[X^{p_*}]\ne0$.
+This proves the monomial criterion.
+
+To obtain the entire polynomial annihilator, combine equal exponents
+in $f=\sum_s\lambda_sX^s$, with distinct $s$ and nonzero coefficients.
+Multiplication by $[X^{p_*}]$ kills exactly the terms satisfying all
+thresholds in (37.3). Every other term survives by the same witness.
+Translation in the torsion-free exponent lattice is injective:
+$p_*+s=p_*+s'$ implies $s=s'$. Hence these surviving exponents are
+distinct members of the quotient monomial basis and cannot cancel.
+Therefore $f[X^{p_*}]=0$ forces every term of $f$ into the displayed
+threshold set. Conversely such a polynomial annihilates every class
+by the first direction. This proves (37.3) for polynomials, including
+all linear combinations, and makes clear that the threshold must hold
+on every cycle, not just one. $\square$
+
+### 37.2 Face primes and the exact depth of the ideal action
+
+**Definition 37.2 (The cycle face primes and their intersection).**
+For $k\ge3$ and each labelled cycle set
+
+$$
+\mathfrak p_a=\operatorname{span}_{\mathbb C}
+ \{X^s:\delta_a(s)>0\},\qquad
+J=\bigcap_{a=1}^b\mathfrak p_a.
+\tag{37.6}
+$$
+
+The powers $J^r$ below are ordinary ideal powers; $J^0=R_{k,b}$.
+
+**Theorem 37.3 (Radical support and sharp simultaneous nilpotence).**
+Each $\mathfrak p_a$ is the prime ideal of the face $\delta_a=0$.
+Moreover
+
+$$
+\begin{aligned}
+J&=\operatorname{span}_{\mathbb C}
+      \{X^s:\delta_a(s)\ge1\text{ for every }a\},\\
+\sqrt{\operatorname{Ann}_{R_{k,b}}C_{k,b}}&=J,\\
+J^{k-2}C_{k,b}&=0,\qquad J^{k-3}C_{k,b}\ne0.
+\end{aligned}
+\tag{37.7}
+$$
+
+When $k=3$, $\operatorname{Ann}C_{3,b}=J$ and the nonvanishing
+statement is $J^0C_{3,b}=C_{3,b}\ne0$. When $k\ge4$,
+
+$$
+J^{k-2}\subsetneq\operatorname{Ann}C_{k,b}\subsetneq J.
+\tag{37.8}
+$$
+
+Proof. Since $\delta_a$ is nonnegative and additive on the semigroup,
+its zero locus is a face submonoid: if $\delta_a(s+s')=0$, both
+summands have deficit zero. The linear map fixing its monomials and
+killing the positive-deficit monomials is therefore a surjective
+algebra homomorphism onto its semigroup algebra. Its kernel is
+$\mathfrak p_a$. That algebra is a domain, as a monomial subalgebra
+of the same ambient polynomial ring; thus $\mathfrak p_a$ is prime.
+The face is proper: the empty degree-one mode has deficit $k>0$,
+whereas simultaneous root-zero maximum sets on all cycles give
+nonzero points on it. The forms $\delta_a$ are supporting forms of
+$K_{k,b}$, so this is exactly the asserted face prime.
+
+The ideals have a common monomial basis. A polynomial is in all of
+them if and only if each of its terms has positive deficit on every
+cycle; this proves the first line of (37.7). It also proves directly
+that no cancellation changes membership in their intersection.
+For distinct cycles the primes are distinct: take a degree-one global
+set with root zero, size $k-1$ on cycle $a$, and size $k$ on every
+other cycle. It has deficit one on $a$ and zero on the others.
+Such sets exist on the $2k$-vertex paths, for example the odd positions
+through $2k-3$ and through $2k-1$, respectively.
+
+Every product of $r$ monomials from $J$ has deficit at least $r$
+on each cycle. Extending by linearity and taking $r=k-2$ gives
+$J^{k-2}\subseteq\operatorname{Ann}C_{k,b}$ by Theorem 37.1.
+That theorem also gives $\operatorname{Ann}C_{k,b}\subseteq J$.
+A finite intersection of primes is radical, so taking radicals in
+
+$$
+J^{k-2}\subseteq\operatorname{Ann}C_{k,b}\subseteq J
+\tag{37.9}
+$$
+
+proves the radical assertion. It describes a union of the cycle-face
+supports; it does not replace the full annihilator by a reduced ideal.
+
+For sharpness choose the single global independent set $U$ whose
+root is zero and whose occupied positions on every cycle are
+$\{1,3,\ldots,2k-3\}$. Its local size is $k-1$, so its mode
+$s_U=(1,\mathbf1_U)$ has $\delta_a(s_U)=1$ for all $a$ and
+$X^{s_U}\in J$. Acting on the common witness (37.5) gives
+
+$$
+(X^{s_U})^{k-3}[X^{p_*}]
+=[X^{p_*+(k-3)s_U}]\ne0,
+\qquad\delta_a(p_*+(k-3)s_U)=k-2.
+\tag{37.10}
+$$
+
+The strict inequalities persist under addition. For $k=3$ this is
+exponent zero: the monomial power is $1$, $J^0=R_{3,b}$ and
+$[X^{p_*}]$ is nonzero. Thus the endpoint is included rather than
+silently requiring a positive power.
+
+If $k\ge4$, the same $X^{s_U}$ lies in $J$ but fails the threshold
+$k-2\ge2$, proving the right strict inclusion in (37.8). The empty
+degree-one mode has every deficit $k$, so belongs to the annihilator.
+It is not in $J^{k-2}$: every monomial in $J$ has degree at least one,
+and hence that power has no nonzero element of degree less than
+$k-2\ge2$. This proves the other strict inclusion. In particular
+ordinary ideal powers are not identified with the monomial threshold
+ideal. For $k=3$ the threshold is one, giving the stated equality.
+The $k=2$ zero module has annihilator and radical equal to the whole
+ring by Theorem 37.1 and is outside (37.6)–(37.10). $\square$
+
+### 37.3 Two seven-cycles and a nonzero action of every positive power
+
+**Proposition 37.4 (Two complementary deficit directions).**
+In $R_{3,2}$, choose the root-zero global sets
+
+$$
+\begin{array}{c|cc}
+ &\text{cycle 1}&\text{cycle 2}\\ \hline
+I_x&\{1,3\}&\{1,3,5\}\\
+I_y&\{1,3,5\}&\{1,3\}
+\end{array}
+\qquad
+x=X^{(1,\mathbf1_{I_x})},\quad y=X^{(1,\mathbf1_{I_y})}.
+\tag{37.11}
+$$
+
+Their deficit vectors are $(1,0)$ and $(0,1)$, respectively, and
+
+$$
+xC_{3,2}\ne0,\qquad yC_{3,2}\ne0,\qquad xyC_{3,2}=0,
+\qquad x^qC_{3,2}\ne0\quad\text{for every integer }q\ge1.
+\tag{37.12}
+$$
+
+Proof. On each seven-cycle the nonroot vertices form the path
+$1,\ldots,6$. Both displayed subsets are independent on this path
+and the root is absent, so they are legal also across the two edges
+to the root. Their sizes are two and three; subtracting from $k=3$
+gives the stated deficit vectors. Use the same nonzero class
+$[X^{p_*}]$ with $p_*=(5;2\mathbf1_V)$. Its deficits are $(1,1)$.
+After multiplication by $x$ they are $(2,1)$, and after multiplication
+by $y$ they are $(1,2)$. A deficit one remains in each case, so
+both images are nonzero by (37.2).
+
+The mode $xy$ has deficit $(1,1)$, which meets every annihilator
+threshold for $k=3$, so it kills the entire quotient, not merely
+this chosen class. In contrast, $x^q$ has deficit $(q,0)$, and
+$x^q[X^{p_*}]$ has deficits $(q+1,1)$. It survives for every
+$q\ge1$ because the second cycle is untouched. This supplies one
+class witnessing every claimed nonzero operator; it does not assert
+that $x$ acts nontrivially on every nonzero class. For example
+$y[X^{p_*}]\ne0$ but $x(y[X^{p_*}])=0$.
+
+The equality $JC_{3,2}=0$ from Theorem 37.3 is consistent with all
+of this: $x\notin J$ and $y\notin J$, whereas $xy\in J$.
+A positive deficit in one direction does not force a positive deficit
+in the other, and repeated application of $x$ does not eventually
+annihilate the whole quotient. The simultaneous condition in
+(37.3) is essential. $\square$
+
+## 38. The complete terminal module of the shared-root relation presentation
+
+### 38.1 Actual modes, projective dimension and canonical duality
+
+**Definition 38.1 (The polynomial ring in global independent sets).**
+Let $F_0=0$, $F_1=1$, $F_{r+2}=F_{r+1}+F_r$ be the Fibonacci
+numbers. To distinguish free resolution modules from these integers,
+write $\mathcal F_i$ for the free modules below. Put
+
+$$
+\begin{aligned}
+\mathscr P_{k,b}&=\mathbb C[z_I:I\in\mathcal B_{k,b}],\\
+z_I&\longmapsto X^{\gamma_I},\qquad
+\gamma_I=(1,\mathbf1_I),\\
+D_{k,b}&=|\mathcal B_{k,b}|,\qquad
+\Sigma_{k,b}=\sum_{I\in\mathcal B_{k,b}}\gamma_I.
+\end{aligned}
+\tag{38.1}
+$$
+
+Every global independent set, including the empty set, has one variable.
+The map is onto $R_{k,b}$ by Theorem 35.2. Its kernel is the toric
+relation ideal for these actual modes. Use the shift convention
+$\mathscr P(-d)_m=\mathscr P_{m-d}$, and the analogous convention
+for full exponent degrees. Let $\mathcal G_{k,b,j}$ be the complete
+set of basic exponents at boundary $(2j+1,j)$ in Theorem 35.4.
+
+**Theorem 38.2 (All terminal summands, with their degree shifts).**
+For this presentation,
+
+$$
+\begin{aligned}
+D_{k,b}&=F_{2k+2}^{\,b}+F_{2k}^{\,b},\\
+\dim R_{k,b}&=2kb+2,\\
+c_{k,b}=\operatorname{pd}_{\mathscr P_{k,b}}R_{k,b}
+ &=D_{k,b}-2kb-2.
+\end{aligned}
+\tag{38.2}
+$$
+
+The complete final module in a minimal ordinarily graded free
+resolution is
+
+$$
+\mathcal F_{c_{k,b}}=
+\bigoplus_{j=1}^{k-1}
+\mathscr P_{k,b}\bigl(-(D_{k,b}-2j-1)\bigr)^{\mu_{k,b,j}}.
+\tag{38.3}
+$$
+
+More precisely its full multigrading is
+
+$$
+\mathcal F_{c_{k,b}}=
+\bigoplus_{j=1}^{k-1}\ \bigoplus_{p\in\mathcal G_{k,b,j}}
+\mathscr P_{k,b}\bigl(-(\Sigma_{k,b}-p)\bigr).
+\tag{38.4}
+$$
+
+Thus (35.11) supplies every terminal multiplicity as well as every
+ordinary degree, and the compatible-tuple description supplies every
+full exponent shift. No intervening resolution matrices are specified.
+
+Proof. A path of length $r$ vertices has $F_{r+2}$ independent sets:
+separating the first vertex according to absence or presence leaves
+paths of lengths $r-1$ and $r-2$, with initial counts one for the
+empty path and two for a one-vertex path. If a global independent
+set omits the root, each of the $b$ cycles leaves a path of $2k$
+vertices and the choices are independent, giving $F_{2k+2}^b$.
+If it contains the root, its two neighbors on every cycle are absent,
+leaving a path of $2k-2$ vertices in each cycle, giving $F_{2k}^b$.
+These cases are disjoint and exhaustive. Their sum proves the first
+line of (38.2), and the dimension is the full lattice rank from
+Theorem 35.2.
+
+The polynomial ring has $D_{k,b}$ variables and depth $D_{k,b}$
+at its homogeneous maximal ideal $\mathfrak n=(z_I)_I$.
+Its nonzero finite quotient $R_{k,b}$ is Cohen–Macaulay of depth
+$2kb+2$. Hilbert syzygy gives finite projective dimension over the
+polynomial ring. Apply Auslander–Buchsbaum after localizing at
+$\mathfrak n$: [Stacks, §10.111, tag 090U, Proposition 10.111.1][AB38]
+states for a nonzero finite module of finite projective dimension
+over a Noetherian local ring that depth of the ring equals projective
+dimension plus depth of the module. It gives the last line of (38.2).
+A minimal graded resolution localizes to a minimal local resolution
+at $\mathfrak n$, so its length is this same $c_{k,b}$.
+
+Choose a minimal resolution in the full exponent grading. Such a
+choice is possible by homogeneous generator selection: the grading
+has a positive ordinary coarsening and finite-dimensional pieces,
+and all variables have positive ordinary degree. Its differentials
+have entries in $\mathfrak n$. The canonical module of the polynomial
+ring in this grading is
+$\omega_{\mathscr P_{k,b}}=\mathscr P_{k,b}(-\Sigma_{k,b})$,
+since the top exterior product of the variable differentials has
+degree equal to the sum of their degrees.
+
+Barile–Bruns [Theorem 4.5(a)][BB35] applies to the regular graded-local
+ring $\mathscr P_{k,b}$ and its Cohen–Macaulay residue ring $R_{k,b}$.
+Their codimension is $c_{k,b}$, and their graded canonical module is
+the one identified with the full-lattice interior ideal by Theorem 5.1.
+The theorem and the Ext vanishing in its proof give
+
+$$
+\operatorname{Ext}^{c_{k,b}}_{\mathscr P_{k,b}}
+ (R_{k,b},\mathscr P_{k,b}(-\Sigma_{k,b}))
+ \simeq\omega_{R_{k,b}},\qquad
+\operatorname{Ext}^{i}_{\mathscr P_{k,b}}
+ (R_{k,b},\mathscr P_{k,b}(-\Sigma_{k,b}))=0\ (i\ne c_{k,b}).
+\tag{38.5}
+$$
+
+This is the same duality supplier as (33.3), with the actual global
+mode set and its full lattice replacing the single-cycle data.
+
+Dualize the chosen resolution into $\mathscr P_{k,b}(-\Sigma_{k,b})$.
+By (38.5) the reversed dual complex resolves $\omega_{R_{k,b}}$.
+In particular the canonical module is the cokernel of the map into
+$\operatorname{Hom}(\mathcal F_{c_{k,b}},
+\mathscr P_{k,b}(-\Sigma_{k,b}))$. Tensoring this cokernel with
+$\mathscr P_{k,b}/\mathfrak n=\mathbb C$ makes the incoming map
+zero, because the original and the dual differentials both have
+entries in $\mathfrak n$. Consequently each summand of that final
+dual free module contributes exactly one minimal canonical generator,
+with no hidden cancellation. A summand $\mathscr P_{k,b}(-\Theta)$
+dualizes to a free module whose generator has degree
+$\Sigma_{k,b}-\Theta$. By Theorems 35.4–35.5 the full set of such
+generator degrees is precisely $\bigcup_j\mathcal G_{k,b,j}$,
+each once. Solving $\Sigma_{k,b}-\Theta=p$ proves (38.4).
+Coarsening to ordinary degree gives $D_{k,b}-(2j+1)$ with multiplicity
+$\mu_{k,b,j}$ and proves (38.3). This establishes the entire last
+module from the canonical generators, rather than inferring it from
+an alternating Hilbert numerator alone. $\square$
+
+**Proposition 38.3 (Explicit full-degree sum and the two-seven-cycle end).**
+Set $A=F_{2k+2}$ and $B=F_{2k}$. The root coordinate of
+$\Sigma_{k,b}$ is $B^b$. For $1\le i\le2k$ on any cycle its
+nonroot coordinate is
+
+$$
+(\Sigma_{k,b})_{a,i}
+=A^{b-1}F_iF_{2k-i+1}+B^{b-1}v_i,
+\qquad
+v_i=
+\begin{cases}
+0,&i=1\text{ or }i=2k,\\
+F_{i-1}F_{2k-i},&2\le i\le2k-1.
+\end{cases}
+\tag{38.6}
+$$
+
+For two seven-cycles in particular,
+
+$$
+\begin{aligned}
+D_{3,2}&=21^2+8^2=505,\qquad c_{3,2}=505-14=491,\\
+\mathcal F_{491}
+ &=\mathscr P_{3,2}(-502)\oplus\mathscr P_{3,2}(-500)^{201}.
+\end{aligned}
+\tag{38.7}
+$$
+
+The last rank is $202$, the Cohen–Macaulay type. A single seven-cycle
+has type two, with one canonical generator in degree three and one
+in degree five; the shared-root pair has one in degree three and
+$201$ in degree five.
+
+Proof. A mode contains the root in exactly the root-one case counted
+above, proving $B^b$. In the root-zero case, requiring position $i$
+on one path removes it and its two neighboring path positions. The
+remaining left and right paths have independent-set counts $F_i$
+and $F_{2k-i+1}$, including the endpoint cases where one contribution
+is $F_1=1$. All other cycles contribute $A^{b-1}$. In the root-one
+case positions $1,2k$ are forbidden. For any other $i$, the remaining
+path from $2$ through $2k-1$, with $i$ required, has counts
+$F_{i-1}$ and $F_{2k-i}$ on its two remaining sides. The other cycles
+contribute $B^{b-1}$. This proves (38.6) and completely evaluates
+the degree vector used in (38.4).
+
+For $k=3,b=2$, the root coordinate is $64$, and on each cycle the
+six nonroot coordinates of $\Sigma_{3,2}$ are
+$(168,129,142,142,129,168)$. They follow from
+$F_iF_{7-i}=(8,5,6,6,5,8)$ and
+$(v_1,\ldots,v_6)=(0,3,2,2,3,0)$ in (38.6).
+Thus (38.4), with these coordinates and the basic tuples of Theorem
+35.4, also fixes every full shift in (38.7). Formula (38.2) gives
+$505$ modes and projective dimension $491$; Proposition 35.6 gives
+multiplicities one and $201$. Subtracting canonical degrees three
+and five from $505$ gives $502$ and $500$. For $b=1$, (35.14)
+is $1+101-100=2$, agreeing with Theorem 29.2 and (33.2).
+The pair's $202$ is therefore a synchronized amplification of a
+single-cycle type of two, not a correction to a supposed type one.
+$\square$
+
+### 38.2 The mathematical boundary of the common-root application
+
+**Proposition 38.4 (What the shared-root correspondence preserves).**
+The conclusions (35.2), (35.10)–(35.12), (36.2)–(36.4),
+(37.2)–(37.12) and (38.2)–(38.7) concern the graph consisting of
+one common vertex and otherwise disjoint labelled odd cycles, with no
+additional edges. They neither identify the full middle of the relation
+resolution nor determine a supplied ordered history or a physical
+operator. The terminal rank $202$ in (38.7) is an algebraic type, not
+a physical dimension, a full zero-mode count or an Atiyah–Singer index.
+
+Proof. The forward realization in Theorem 35.2 uses the fact that a
+root state is a single bit, and that agreement of its multiplicity
+$t$ allows all local root-one rows to be moved to the same positions.
+The union remains independent because every edge is already tested
+in one constituent cycle. The descent in Theorem 35.4 uses the stronger
+fact that the local interior generators have degree $2j+1$ and root
+$j$; it is this relation that makes the inequality $2t<m$ choose a
+root-zero row for every local representation, with the complementary
+case including equality. Neither proof supplies that property for
+an arbitrary shared boundary. With several shared vertices or a
+shared path, separate vertex totals need not specify the frequencies
+of joint boundary states, and a common removable boundary state would
+require a new proof. Extra cross edges can invalidate a rowwise union
+even when every local row is legal. Those graph classes are excluded.
+
+The maps retain occupancies, degree, root and the stated algebraic
+action. They do not retain row order: even permuting two distinct
+rows leaves $(m,c)$ unchanged. They can also lose unordered row
+correlations. On any one of the constituent cycles, the arrays
+$\{\{1\},\{3\}\}$ and $\{\varnothing,\{1,3\}\}$, with all
+other vertices empty, are both legal and have identical degree-two
+occupancies. They are not the same unordered array. Thus no recovery
+of a prescribed native ordered FIB history or an allowed physical
+operation follows from the existence of some common realization.
+
+The rank in (38.7) counts summands in one final free module. Computing
+an alternating invariant of a complex requires its other terms and
+maps or a justified equivalent description. A zero-mode or analytic
+index interpretation additionally requires an operator, its domain,
+its grading and the appropriate kernel or ellipticity comparison.
+None is specified by (38.7); the analytic constructions of chapters
+30 and 34 have their own stated modules and operators and are not
+transported to this graph by equality of a number. The complete final
+module does not claim a list of the $491$ differential matrices or
+all intermediate Betti numbers.
+
+The local integer decomposition is Theorem 28.2; the canonical
+classification and face layers are Miyazaki's §4 results with the
+explicit correspondence in Theorem 35.4, as used in chapters 29 and
+31–32. The action and terminal-duality precedents are §§31.3–31.4
+and chapter 33; chapter 34 distinguishes an action from observations
+that forget it. Matsuda–Ohsugi–Shibata's Proposition 1.3 supplies
+the singleton-clique toric-fiber precedent, Barile–Bruns supply the
+interior and Ext identifications, and Stacks supplies the precise
+Auslander–Buchsbaum formula. These are intermediate suppliers in
+the common-root application. Its additional derivation is the uniform
+root-compatible descent, the resulting complete compatible-tuple
+classification and counts, and their consequences for the shared-root
+quotient action and terminal module. This attribution makes no global
+priority claim for the classic supplier results or for graph gluing
+in general. $\square$
+
+[AB38]: https://stacks.math.columbia.edu/tag/090U
+
+## 追加锚（本行以下为增补区）
