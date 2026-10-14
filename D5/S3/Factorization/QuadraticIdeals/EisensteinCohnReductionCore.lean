@@ -1,5 +1,5 @@
 /- GID: D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
