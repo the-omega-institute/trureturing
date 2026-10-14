@@ -2738,3 +2738,90 @@ $$
 不能交换为变化秩的统一 $G$，更不能推出 Robin 全称不等式或 RH。该节是
 仓内对已有入口秩约束的量化组合，未新增 Lean 声明、未重复外部 Robin
 判据，也未把分辨率成本冒充定理结论。
+
+## 463. 超丰数整除条件对变化秩 FIB 候选的必要过滤
+
+§462 只使用 $F_r$ 的缺失 Euler 因子。这里接入一个不同的、只针对最小
+反例的外部结构输入：[Segovia 的分拆预印本](../../../Library/ArithSums/segovia2026partitions.md)
+Lemma 8 声称：对每个固定 $0<c<1$，存在 $N_0(c)$，使得每个大于该阈值的
+超丰数 $N$ 都被
+
+$$
+L_c(N):=\operatorname{lcm}\bigl(1,\ldots,\lfloor c\log N\rfloor\bigr)
+$$
+
+整除。这里使用的是该来源的陈述；本项目没有独立审计其完整证明，也没有把
+它当作无条件的 Robin 定理。
+
+### 命题 463.1（FIB 同余与超丰数整除的相容性条件）
+
+固定 $0<c<1$。若 $r>5$ 为素数，且
+
+$$
+N_{r,g}=1+F_rg
+$$
+
+是大于 $\max\{5040,N_0(c)\}$ 的最小 Robin 反例，则
+
+$$
+\boxed{
+\gcd(F_r,L_c(N_{r,g}))=1,\qquad
+P^-(F_r)>\lfloor c\log N_{r,g}\rfloor,
+}
+\tag{463.1}
+$$
+
+其中 $P^-(m)$ 表示 $m>1$ 的最小素因子。
+
+**证明。** 最小 Robin 反例是超丰数，这是 Robin 候选缩减所使用的已知结构
+输入。由上述 Segovia 引理，$L_c(N_{r,g})\mid N_{r,g}$。另一方面
+
+$$
+N_{r,g}\equiv1\pmod {F_r},
+$$
+
+所以 $\gcd(N_{r,g},F_r)=1$。任何同时整除 $F_r$ 与 $L_c(N_{r,g})$ 的素数
+都会整除 $N_{r,g}$，矛盾，得到第一个结论。若素数 $p\mid F_r$ 且
+$p\le\lfloor c\log N_{r,g}\rfloor$，则 $p\mid L_c(N_{r,g})$，又得到同一
+矛盾。因此所有 $F_r$ 的素因子都大于该整数，得到第二个结论。证毕。
+$\square$
+
+### 推论 463.2（窗口形式与路线边界）
+
+若同时取已有窗口
+
+$$
+g\in I_r=\left[\left\lceil\frac{F_r}{10}\right\rceil,
+             \left\lfloor\frac{F_r}{5}\right\rfloor\right]\cap\mathbb Z,
+$$
+
+则任何满足命题 463.1 的候选都必须满足
+
+$$
+\boxed{
+P^-(F_r)>c\bigl(2\log F_r-\log 10\bigr)-1.
+}
+\tag{463.2}
+$$
+
+因为 $N_{r,g}\ge F_r^2/10$，而
+$\lfloor x\rfloor\ge x-1$。若 $F_r$ 为合数，则还必须有
+
+$$
+c\bigl(2\log F_r-\log 10\bigr)-1< P^-(F_r)\le\sqrt{F_r}.
+\tag{463.3}
+$$
+
+这是一条可以只用 $F_r$ 的实际分解检查的候选排除条件：一旦发现
+$p\mid F_r$ 且 $p\le\lfloor c\log N_{r,g}\rfloor$，整个该窗口都不可能含有
+这样的**最小** Robin 反例。
+
+这条过滤没有关闭变化秩缺口。对素数秩，已有入口秩下界
+$p\ge2r-1$，而窗口中 $\log F_r\sim r\log\varphi$；因此对固定 $c<1$
+，已知下界本身通常已经高于（463.2）的右侧，不能产生统一矛盾。若 $F_r$
+本身为素数，条件更不会排除候选。故（463.1）是最小反例的必要结构，
+不是所有 $N_{r,g}$ 的 Robin 安全定理，也不是 RH 证明；它只把最新的
+超丰数整除输入接回 FIB 同余，并明确显示该接口还不足以支付完整有符号余量。
+
+本节复用 Robin 的最小反例—超丰数缩减、Fibonacci 同余和 Segovia 的来源
+陈述；没有重做这些外部结果，未新增 Lean 声明。
