@@ -83,11 +83,11 @@ private theorem frame_selected_coordinates {m : ℕ} (hm : 5 ≤ m)
   have hp := congrArg (fun l : List (Fin (m + 1)) => l[0]?) ht
   have hq := congrArg (fun l : List (Fin (m + 1)) => l[1]?) ht
   have hp' : anchor F 0 = p := by
-    simpa only [List.getElem?_ofFn, if_pos (by omega : 0 < m + 1),
+    simpa only [List.getElem?_ofFn, dif_pos (by omega : 0 < m + 1),
       hs, List.cons_append, List.nil_append, List.getElem?_cons_zero,
       Option.some.injEq] using hp
   have hq' : anchor F ⟨1, by omega⟩ = q := by
-    simpa only [List.getElem?_ofFn, if_pos (by omega : 1 < m + 1),
+    simpa only [List.getElem?_ofFn, dif_pos (by omega : 1 < m + 1),
       hs, List.cons_append, List.nil_append, List.getElem?_cons_succ,
       List.getElem?_cons_zero, Option.some.injEq] using hq
   rw [hs, hp', hq']
@@ -115,7 +115,7 @@ private theorem relabel_selected {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) 
   rw [frame_selected_coordinates hm F]
   ext x
   simp only [Finset.mem_image, Finset.mem_insert, Finset.mem_singleton,
-    List.toFinset_cons, List.toFinset_nil, Finset.not_mem_empty, or_false]
+    List.toFinset_cons, List.toFinset_nil, Finset.notMem_empty, or_false]
   constructor
   · rintro ⟨y, rfl | rfl, rfl⟩ <;> simp [hz, ho]
   · rintro (rfl | rfl)
@@ -196,7 +196,8 @@ private theorem raw_right_supply {m : ℕ} (hm : 5 ≤ m) (i : Fin 3) :
         rw [show j.val + 1 + m = j.val + (m + 1) by omega,
           Nat.add_mod_right, Nat.mod_eq_of_lt j.isLt]
     · have he : j.val = m := by have h := j.isLt; omega
-      simp only [dif_neg hj, he, if_neg (by omega : m ≠ m - 1), if_pos rfl]
+      rw [dif_neg hj]
+      simp only [he, if_neg (by omega : m ≠ m - 1), if_true]
       rw [show m + m = m - 1 + (m + 1) by omega,
         Nat.add_mod_right, Nat.mod_eq_of_lt (by omega : m - 1 < m + 1)]
   fin_cases i
