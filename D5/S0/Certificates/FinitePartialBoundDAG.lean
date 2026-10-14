@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/FinitePartialBoundDAG
    mirror-E: none(waiver:finite-symmetry-partial-bound-replay)
-   anchors: [D5/S0/Certificates/FiniteSymmetryBoundReplay]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCacheSoundness.associated_lower_le_score; instance=D5/S3/Quantum/Entanglement/EJM/EJMLocalBoundAcceptance.triangle_accepted
    digest: A topologically ordered local DAG checks every value branch and earns partial lower bounds using actual score-preserving symmetries. -/
 
