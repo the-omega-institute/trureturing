@@ -76,7 +76,7 @@ private theorem corec_leaf (b : Bool) : PFunctor.M.corec rhoStep (.inr b) = leaf
   funext b
   cases b <;> rfl
 
-private theorem node_inj {l r s t : CompletionTree} (h : node l r = node s t) :
+theorem node_inj {l r s t : CompletionTree} (h : node l r = node s t) :
     l = s ∧ r = t := by
   have h' := PFunctor.M.mk_inj h
   have hf : (fun b : Bool => if b then r else l) =
@@ -201,7 +201,7 @@ def IsFinite (X : CompletionTree) : Prop := ∃ t : Source, embed t = X
 
 private theorem finite_leaf (b : Bool) : IsFinite (leaf b) := ⟨.of b, rfl⟩
 
-private theorem finite_subtree (p : Address) {X Y : CompletionTree}
+theorem finite_subtree (p : Address) {X Y : CompletionTree}
     (finite : IsFinite X) (present : subtree p X = some Y) : IsFinite Y := by
   obtain ⟨t, rfl⟩ := finite
   induction p generalizing t with
@@ -235,7 +235,7 @@ private theorem finite_rho_iff (X : CompletionTree) : IsFinite (rho X) ↔ IsFin
   · rintro ⟨t, rfl⟩
     exact ⟨substitution t, (rho_embed t).symm⟩
 
-private theorem finite_iterate_iff (n : Nat) (X : CompletionTree) :
+theorem finite_iterate_iff (n : Nat) (X : CompletionTree) :
     IsFinite (rho^[n] X) ↔ IsFinite X := by
   induction n with
   | zero => rfl
@@ -345,7 +345,7 @@ theorem infinite_feedback_preimages (a : Nat) (H : Homogeneous) (p : Address) (b
 def Omega : CompletionTree :=
   PFunctor.M.corec (fun _ : Unit => (⟨.inr (), fun _ => ()⟩ : completionFunctor Unit)) ()
 
-private theorem omega_node : Omega = node Omega Omega := by
+theorem omega_node : Omega = node Omega Omega := by
   unfold Omega
   conv_lhs => rw [PFunctor.M.corec_def]
   simp only [PFunctor.map, Function.comp_def, node, ite_self]
@@ -415,7 +415,7 @@ private theorem two_steps_deepen (n : Nat) (X : CompletionTree) (h : Full n X) :
       simp only [rho_node]
       exact (full_node (n+1) _ _).mpr ⟨ih l hl, ih r hr⟩
 
-private theorem iterate_full (n : Nat) (X : CompletionTree) : Full n (rho^[2*n] X) := by
+theorem iterate_full (n : Nat) (X : CompletionTree) : Full n (rho^[2*n] X) := by
   induction n with
   | zero => exact full_zero _
   | succ n ih =>
@@ -429,7 +429,7 @@ private theorem omega_readout (p : Address) : completionReadout p Omega = .branc
     rw [omega_node]
     cases b <;> simpa [completionReadout, node] using ih
 
-private theorem eq_omega_of_full (X : CompletionTree) (h : ∀ n, Full n X) : X = Omega := by
+theorem eq_omega_of_full (X : CompletionTree) (h : ∀ n, Full n X) : X = Omega := by
   apply readout_ext
   intro p
   rw [h (p.length+1) p (by omega), omega_readout]
@@ -439,7 +439,7 @@ private theorem eq_omega_of_full (X : CompletionTree) (h : ∀ n, Full n X) : X 
   intro n
   exact full_rho n Omega (fun p _ => omega_readout p)
 
-private theorem iterate_omega (n : Nat) : rho^[n] Omega = Omega := by
+theorem iterate_omega (n : Nat) : rho^[n] Omega = Omega := by
   induction n with
   | zero => rfl
   | succ n ih => rw [Function.iterate_succ_apply', ih, rho_omega]
@@ -525,7 +525,7 @@ private theorem mass_eval_ge (H : Homogeneous) (t : Source) :
   | of b => simp [finiteEval, gamma_iterate]
   | mul A B ihA _ => exact ihA.trans (gamma_parent _ _).1
 
-private theorem atomicRank_sound (t : Source) (c : Nat) (h : atomicRank t = some c) :
+theorem atomicRank_sound (t : Source) (c : Nat) (h : atomicRank t = some c) :
     substitution^[c] (.of true) = t := by
   induction t generalizing c with
   | of b =>
