@@ -271,9 +271,4 @@ theorem weighted_path_full_generation (N : ℕ) (hN : 2 ≤ N)
 #print axioms path_fresh_fiber_subsingleton
 #print axioms weighted_path_full_generation
 
--- Uniform positive weights give admissible parameters at every depth.
-#check (fun n : ℕ => weighted_path_full_generation 2 (Nat.le_refl 2)
-  (fun _ => 1) (fun _ => zero_lt_one) 1 zero_lt_one n)
-#check (1 : C (SimpleGraph.pathGraph 2).Adj 0 ⟨0, Nat.zero_lt_two⟩)
-
 end D5.S3.Quantum.Algebra.Knot.WeightedPathFullGeneration

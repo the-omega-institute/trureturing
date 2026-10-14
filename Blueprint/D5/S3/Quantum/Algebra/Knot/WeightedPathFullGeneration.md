@@ -62,7 +62,7 @@ At depth m+2, reuse weighted_path_returning_blocks: the linear span of iota(X) l
 
 Induct on the depth. Projection naturality sends each old literal generator to the same site at the new depth. The actual iotaHom and the adjoin/comap universal property consequently put the full preceding algebra image into the new generated subalgebra. The new lastProjection is precisely localProjection at site m+1. The fresh-block argument proves the induction step for every m, including depths beyond the last new endpoint.
 
-The result is a derivation for the repository's literal weighted path coordinates using its returning-block theorem. The line-graph path-model operators are classical: Aharonov, Jones and Landau, A Polynomial Quantum Algorithm for Approximating the Jones Polynomial, arXiv:quant-ph/0511096, Definition 3.2 and equation (4), provide related operators with specific weights. No claim of mathematical novelty is made for full path-algebra generation. This theorem does not identify an abstract Temperley-Lieb quotient kernel, prove a Jones-Wenzl cutoff, or construct a geometric knot invariant.
+The result is a derivation for the repository's literal weighted path coordinates using its returning-block theorem. The line-graph path-model operators are classical: Aharonov, Jones and Landau, A Polynomial Quantum Algorithm for Approximating the Jones Polynomial, arXiv:quant-ph/0511096v2, Definition 3.2 and equation (4), provide related operators with specific weights. No claim of mathematical novelty is made for full path-algebra generation. This theorem does not identify an abstract Temperley-Lieb quotient kernel, prove a Jones-Wenzl cutoff, or construct a geometric knot invariant.
 
 ## References
 
