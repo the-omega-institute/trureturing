@@ -1666,3 +1666,401 @@ one has $DH_2(P,S)[U,V]=2(PU+\Delta(SV))=0$. The coefficient vector of this vari
 This example concerns one solution of one positive quartic input. Its cubic coefficient is $2+1/2500$, whereas that of $((t+1)^5-t^5)/5$ is two; it is not the normalized monomial-difference input. It proves neither singularity of every solution for its own input nor singularity of the ninth-degree zero in Theorem 12.2, and it gives no obstruction to the uniform existence theorem. Its computational consequence is that positivity and squarefreeness alone cannot replace the explicit derivative estimate (12.10) when certifying local coefficient selection. The certificate, its error transfer and this counterexample are repository mathematical derivations using the cited classical fixed-point principle and the existing uniform suppliers, without a claim of worldwide novelty.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Detector dead time, reachable support and actual reset rigidity
+
+**Definition 13.1 (Finite CP detection and gap indexing).** Let $H$ be a complex Hilbert space of finite dimension $D\ge0$. For a finite, possibly empty family of operators $K_i:H\to H$, let
+
+$$
+\Phi(X)=\sum_iK_iXK_i^\dagger,\qquad
+\Phi^*(Y)=\sum_iK_i^\dagger YK_i.
+\tag{13.1}
+$$
+
+Here $\dagger$ denotes the Hilbert-space adjoint and $\Phi^*$ the trace dual. A word $w=(i_1,\ldots,i_k)$ acts as $K_w=K_{i_k}\cdots K_{i_1}$; the empty word acts as the identity. For arbitrary positive semidefinite operators $\tau,F$, define
+
+$$
+\begin{aligned}
+U&=\operatorname{ran}\tau,&u&=\operatorname{rank}\tau,\\
+R&=\operatorname{span}\{K_wU:w\text{ a finite word}\},&r&=\dim R,\\
+R^\vee&=\operatorname{span}\{K_{i_k}^\dagger\cdots K_{i_1}^\dagger
+\operatorname{ran}F:k\ge0\},&r^\vee&=\dim R^\vee,\\
+w_k&=\operatorname{Tr}[F\Phi^k(\tau)]\quad(k\ge0).
+\end{aligned}
+\tag{13.2}
+$$
+
+The seed need not be pure or normalized, and $F$ need not be an effect. If some $w_k>0$, the first-hit index is $h=\min\{k\ge0:w_k>0\}$. In a binary instrument, $\Phi$ is the no-tick branch: $k$ counts zeros after a tick and before the next tick. Thus a first possible gap index $h$ means an earliest interevent duration $h+1$; it means exactly that gap counts $0,\ldots,h-1$ are forbidden and gap count $h$ has positive probability. It makes no assertion about later gaps.
+
+**Theorem 13.2 (Support horizon and its two detector bounds).** For the data of Definition 13.1, put $b=r-u$. Then
+
+$$
+X_b=\sum_{k=0}^{b}\Phi^k(\tau),\qquad
+\operatorname{ran}X_b=R,\qquad \ker X_b=R^\perp.
+\tag{13.3}
+$$
+
+Vanishing of $w_0,\ldots,w_b$ is equivalent both to $F$ annihilating $R$ and to vanishing of every $w_k$. If detection is nontrivial, both $\tau$ and $F$ have positive rank and
+
+$$
+h\le r-\operatorname{rank}\tau,\qquad
+h\le r^\vee-\operatorname{rank}F,
+\qquad
+h\le\min(r-u,r^\vee-\operatorname{rank}F)
+\le D-\max(\operatorname{rank}\tau,\operatorname{rank}F).
+\tag{13.4}
+$$
+
+No trace preservation, trace contraction, stability, commutation or single-Kraus premise is required.
+
+Proof. The increasing-support mechanism has the finite-dimensional antecedents of [Nengkun Yu and Mingsheng Ying, *Reachability and Termination Analysis of Concurrent Quantum Programs*, arXiv:1206.1935v1, Theorem 1, pp. 7–8](https://arxiv.org/pdf/1206.1935v1), and [Shenggang Ying, Yuan Feng, Nengkun Yu and Mingsheng Ying, *Reachability Probabilities of Quantum Markov Chains*, arXiv:1304.0060v2, Lemma 1(2), p. 5](https://arxiv.org/pdf/1304.0060v2). Those displayed horizons are $D-1$. The following argument keeps the reachable and seed ranks, and supplies the detector and dual interfaces needed here.
+
+Let $W_n=\operatorname{span}\{K_wU:|w|\le n\}$. Then
+
+$$
+W_0=U,\qquad W_{n+1}=W_n+\sum_iK_iW_n,\qquad W_n\subseteq R.
+\tag{13.5}
+$$
+
+If $W_{n+1}=W_n$, each $K_i$ preserves $W_n$, so induction on word length gives $W_n=R$. Otherwise the dimension increases by at least one. Therefore $W_{r-u}=R$: either a plateau has already occurred, or the $r-u$ strict increases from dimension $u$ reach dimension $r$. This includes $r=u$, since then $U\subseteq R$ already has equal dimension.
+
+For any matrix $M$, $\ker(MM^\dagger)=\ker M^\dagger$, by $y^\dagger MM^\dagger y=\|M^\dagger y\|^2$; taking orthogonal complements gives $\operatorname{ran}(MM^\dagger)=\operatorname{ran}M$. Since $\operatorname{ran}\tau^{1/2}=U$, it follows that
+
+$$
+\operatorname{ran}(K_w\tau K_w^\dagger)=K_wU.
+\tag{13.6}
+$$
+
+For a finite collection of positive semidefinite matrices $Y_j$, their sum has kernel $\bigcap_j\ker Y_j$: a zero quadratic form of the sum forces every nonnegative summand to be zero, and $y^\dagger Y_jy=\|Y_j^{1/2}y\|^2$. Hence its range is the sum of their ranges. Expanding $\Phi^k$ into all length-$k$ Kraus words and applying this fact yields
+
+$$
+\operatorname{ran}\Big(\sum_{k=0}^n\Phi^k(\tau)\Big)=W_n.
+\tag{13.7}
+$$
+
+At $n=b$ this proves (13.3), including the exact orthogonal-complement kernel. A vector merely outside $R$ need not belong to that kernel.
+
+For positive $F,X$,
+
+$$
+\operatorname{Tr}(FX)
+=\|F^{1/2}X^{1/2}\|_{\rm HS}^2\ge0.
+\tag{13.8}
+$$
+
+It vanishes exactly when $F^{1/2}$, equivalently $F$, annihilates $\operatorname{ran}X$. Thus $\sum_{k=0}^bw_k=\operatorname{Tr}(FX_b)=0$ exactly when $F$ annihilates $R$. Every later $\Phi^k(\tau)$ is supported in $R$, so this condition makes every later detection weight zero as well. Conversely, vanishing forever includes vanishing through $b$. Nontrivial detection must therefore occur by $b$.
+
+Cyclicity of the finite-dimensional trace gives, for every $k$,
+
+$$
+w_k=\operatorname{Tr}\big[\tau(\Phi^*)^k(F)\big].
+\tag{13.9}
+$$
+
+Apply the same argument to the CP map $\Phi^*$ with Kraus family $K_i^\dagger$, seed $F$ and detector $\tau$. Its reachable dimension is exactly $r^\vee$, by (13.2), and it has the same nontrivial sequence and the same $h$. This proves the second bound in (13.4). Since $r,r^\vee\le D$, taking the smaller of the two ambient bounds gives the last inequality.
+
+If $\tau=0$, then $R=0$, $b=0$, $X_b=0$ and all weights vanish. If $F=0$, detection is also trivial. If $D=0$, both operators are zero. For an empty Kraus family, $\Phi=0$, $R=U$, $b=0$ and $X_b=\tau$; detection, if any, occurs at $h=0$. The same conclusion holds for a full-rank seed whenever detection occurs. These cases require no minimum over an empty set: $h$ is defined only for nontrivial detection. $\square$
+
+**Theorem 13.3 (Saturation from an actual post-tick state forces global reset).** Let $D\ge1$ and let $(\Phi,\Psi)$ be any finite homogeneous binary CP instrument on $M_D(\mathbb C)$, with $\Phi+\Psi$ trace preserving. For a density matrix $\rho_0$, suppose
+
+$$
+\nu=\operatorname{Tr}\Psi(\rho_0)>0,\qquad
+\tau=\frac{\Psi(\rho_0)}\nu,\qquad F=\Psi^*(I_D).
+\tag{13.10}
+$$
+
+Assume the first nonzero value of $\operatorname{Tr}[F\Phi^k(\tau)]$ occurs at $h=D-1$. Then $\operatorname{rank}\tau=\operatorname{rank}F=1$, $R=R^\vee=\mathbb C^D$, and, for every complex matrix $X$,
+
+$$
+\Psi(X)=\tau\operatorname{Tr}(FX).
+\tag{13.11}
+$$
+
+The tick branch has Choi rank one. Every nonzero member of any of its Kraus representations has matrix rank one, and all such members span a single operator direction. If a density $\rho$ is invariant under $\Phi+\Psi$ and has $\operatorname{Tr}\Psi(\rho)=\widetilde\nu>0$, then $\rho$ is faithful. It is mixed when $D>1$.
+
+Proof. Nontrivial detection and (13.4) give $D-1\le D-\max(\operatorname{rank}\tau,\operatorname{rank}F)$. Both ranks are positive, so both equal one. The separate reachable bounds give $D-1\le r-1,r^\vee-1$, hence both reachable spaces have dimension $D$.
+
+Choose a unit vector $\eta$ and $\lambda>0$ with $F=\lambda\eta\eta^\dagger$, and write an arbitrary Kraus representation $\Psi(X)=\sum_iJ_iXJ_i^\dagger$. For $y\perp\eta$,
+
+$$
+0=y^\dagger Fy=\sum_i\|J_iy\|^2.
+\tag{13.12}
+$$
+
+Every $J_i$ therefore vanishes on $\eta^\perp$ and has the form $J_i=v_i\eta^\dagger$. Put $M=\sum_iv_iv_i^\dagger$. Then $\operatorname{Tr}M=\lambda$ and
+
+$$
+\Psi(X)=(\eta^\dagger X\eta)M,\qquad
+\nu=\lambda\eta^\dagger\rho_0\eta>0,\qquad
+\tau=M/\lambda.
+\tag{13.13}
+$$
+
+The last identity uses precisely the actual-output premise (13.10), not an unrelated chosen pure seed. It proves (13.11). Write $\tau=\xi\xi^\dagger$ with $\|\xi\|=1$. Since $M=\lambda\xi\xi^\dagger$, for $y\perp\xi$ the identity $0=y^\dagger My=\sum_i|y^\dagger v_i|^2$ forces every $v_i$ to be parallel to $\xi$. Thus all nonzero $J_i$ are multiples of $\xi\eta^\dagger$, and the map has the single nonzero rank-one representation $J=\sqrt\lambda\xi\eta^\dagger$. Its Choi matrix is the nonzero outer product of the vectorization of $J$ with itself, so its rank is one. Extra proportional or zero Kraus matrices do not create additional directions.
+
+By (13.11), any invariant $\rho$ with positive tick rate satisfies $\rho=\Phi(\rho)+\widetilde\nu\tau$. Iterating $D$ times gives
+
+$$
+\rho=\Phi^D(\rho)+\widetilde\nu\sum_{k=0}^{D-1}\Phi^k(\tau)
+\ \ge\ \widetilde\nu\sum_{k=0}^{D-1}\Phi^k(\tau)>0.
+\tag{13.14}
+$$
+
+The last sum is positive definite by (13.3), since $r=D$ and $u=1$. Hence $\rho$ has rank $D$, and is mixed if $D>1$. When $D=1$ and $h=0$, the same argument holds: the sole density is rank one and faithful, not mixed; the sum in (13.14) is just $\tau$. A zero-dimensional carrier admits no density and is excluded from this theorem. No conclusion about the required number of no-tick Kraus directions is used in this argument. $\square$
+
+## 14. A delayed squared-falling-factorial renewal law with exact memory dimension
+
+**Definition 14.1 (The delayed law and the comparison class).** Fix an integer $m\ge1$ and a real $0<q<1$. For nonnegative integers $t,k$, define
+
+$$
+\begin{aligned}
+(t)_{\underline m}&=t(t-1)\cdots(t-m+1),\\
+P_m(k)&=\sum_{t=0}^{k-1}(t)_{\underline m}^{\,2},\qquad P_m(0)=0,\\
+\mathcal Z_m(q)&=\sum_{k\ge0}q^kP_m(k),\qquad
+\gamma_k=\frac{q^kP_m(k)}{\mathcal Z_m(q)},\\
+S_a&=\sum_{j\ge a}\gamma_j,\qquad
+\mu=\sum_{k\ge0}(k+1)\gamma_k.
+\end{aligned}
+\tag{14.1}
+$$
+
+The $\gamma,S,\mu$ in Section 14 belong to (14.1). This is a separate law from the monomial law (1.1). The target stationary cylinders are
+
+$$
+\begin{aligned}
+\mathbb P_{m,q}(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i}\quad(r\ge1),\\
+\mathbb P_{m,q}(0^N)&=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j\quad(N\ge0).
+\end{aligned}
+\tag{14.2}
+$$
+
+All zero-run lengths are nonnegative integers. The internal product is one at $r=1$, and $N=0$ denotes the empty word. The existence and stationary consistency of this law follow from the actual instrument in Theorem 14.4.
+
+A competing realization consists of a finite-dimensional complex memory, fixed CP maps $\mathcal E_0,\mathcal E_1$ whose sum is trace preserving, and a density $\rho_0$, such that for every finite binary word
+
+$$
+\operatorname{Tr}\big[\mathcal E_{w_N}\cdots\mathcal E_{w_1}(\rho_0)\big]
+=\mathbb P_{m,q}(w_1\cdots w_N).
+\tag{14.3}
+$$
+
+Neither invariance of $\rho_0$ nor a reset structure is assumed for the competitor. Every persistent register and any controller affecting later operations belongs to the counted complex memory dimension, as in Definition 1.2. The maps are homogeneous in time and there is no additional correlated external input.
+
+**Theorem 14.2 (Raw realization, full complex stability and two kinds of full span).** Put $D=m+2$ and use the ordered orthonormal basis $e_0,\ldots,e_m,e_s$, where $s=m+1$. On the target coordinates $e_0,\ldots,e_m$ let $N_{j,j+1}=1$ for $0\le j<m$, all other entries zero, and $U=I_{m+1}+N$. Embed $v=m!e_m$ in the target and set
+
+$$
+A=\begin{pmatrix}U&0\\0&1\end{pmatrix},\qquad
+B=ve_s^{\mathsf T},\qquad x=e_s,\qquad f=e_0,\qquad
+F_0=ff^{\mathsf T},\qquad
+\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T}).
+\tag{14.4}
+$$
+
+These real matrices act on all of $M_D(\mathbb C)$. They satisfy
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F_0\mathcal T_q^k(xx^{\mathsf T})]&=q^kP_m(k),\\
+\operatorname{spec}(\mathcal T_q)&=\{q\},\qquad \rho(\mathcal T_q)=q<1,\\
+Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F_0)&>0,\qquad
+x^{\mathsf T}Qx=\mathcal Z_m(q)\in(0,\infty).
+\end{aligned}
+\tag{14.5}
+$$
+
+The raw reachable span from $x$ is all of $\mathbb C^D$. Moreover $P_m$ extends to a polynomial of degree $2m+1$ with leading coefficient $1/(2m+1)$, and its exact initial zero set on the nonnegative integers is $0,\ldots,m$.
+
+Proof. Since $N^{m+1}=0$, the finite binomial expansion gives $U^t=\sum_{j=0}^m\binom tjN^j$ for every nonnegative integer $t$. Therefore
+
+$$
+f^{\mathsf T}A^kx=0,\qquad
+f^{\mathsf T}A^tBA^rx=m!\binom tm=(t)_{\underline m},\qquad
+BA^rB=0
+\tag{14.6}
+$$
+
+for all $k,t,r\ge0$. Indeed $A^rx=x$, $Bx=v$, and $e_0^{\mathsf T}N^jv$ is zero except at $j=m$, where it is $m!$. The last matrix identity follows because $B$ maps into the target, $A$ preserves the target and $B$ annihilates it.
+
+In the expansion of $\mathcal T_q^k$, the all-$A$ word has zero detector amplitude. The words with exactly one $B$ are uniquely $A^tBA^{k-1-t}$, one for each $0\le t<k$, and their squared detector amplitudes are $(t)_{\underline m}^{2}$. Every word with at least two $B$ factors contains a factor $BA^rB$ and is zero. Consequently
+
+$$
+\operatorname{Tr}[F_0\mathcal T_q^k(xx^{\mathsf T})]
+=q^k\sum_{|w|=k}|f^{\mathsf T}wx|^2
+=q^k\sum_{t=0}^{k-1}(t)_{\underline m}^{2}.
+\tag{14.7}
+$$
+
+At $k=0$ the sole word is the identity and $f^{\mathsf T}x=0$, so the formula includes the empty word. The CP sum adds squared amplitudes of separate Kraus words, with no cross-word interference.
+
+The squared falling factorial vanishes for integers $0\le t<m$ and is strictly positive for $t\ge m$. Thus $P_m(0)=\cdots=P_m(m)=0$, $P_m(m+1)=(m!)^2$, and $P_m(k)>0$ for every $k\ge m+1$. To justify the polynomial assertion, the difference operator $\Delta p(t)=p(t+1)-p(t)$ maps polynomials of degree at most $2m+1$ modulo constants bijectively onto polynomials of degree at most $2m$: in monomial bases it is triangular with nonzero leading coefficients $\Delta t^j=jt^{j-1}+\text{lower terms}$. There is therefore a unique polynomial with $p(0)=0$ and $\Delta p(t)=(t)_{\underline m}^{2}$. Telescoping identifies its nonnegative integer values with $P_m(k)$, and the leading coefficient is $1/(2m+1)$. For example, $P_1(k)=k(k-1)(2k-1)/6$, since the displayed polynomial is zero at zero and its forward difference is $k^2$.
+
+Both $A$ and $B$ are upper triangular, with respective diagonals all one and all zero. Column vectorization on the full complex matrix algebra represents $\mathcal T_q$ by $q(A\otimes A+B\otimes B)$, an upper triangular $D^2$ by $D^2$ matrix with every diagonal entry $q$. This proves the spectrum assertion on the full complex space. Writing this matrix as $qI+V$ with $V^{D^2}=0$ bounds its $k$th power by a constant times a polynomial in $k$ times $q^k$. Equivalently, for each $q<a<1$ there is a constant $C_a$ with $\|\mathcal T_q^k\|\le C_aa^k$. The same bound holds for the dual, so the Gramian series converges in norm.
+
+Every term of $Q$ is real symmetric positive semidefinite. Its quadratic form on a complex vector $y=(y_T,y_s)$ is
+
+$$
+y^\dagger Qy=\sum_{k\ge0}q^k\sum_{|w|=k}|f^{\mathsf T}wy|^2.
+\tag{14.8}
+$$
+
+If this vanishes, the row $f^{\mathsf T}A^mB=m!e_s^{\mathsf T}$ forces $y_s=0$. The all-$A$ rows $f^{\mathsf T}A^j$ for $0\le j\le m$ then give $\sum_{\ell=0}^m\binom j\ell(y_T)_\ell=0$. Their coefficient matrix is lower triangular with diagonal one, so $y_T=0$. This proves $Q>0$ on complex vectors, not only on real states or the reset direction.
+
+Separately, the vectors $x,A^jBx$ for $0\le j\le m$ span the full memory. Their target components are $U^jv=\sum_{\ell=0}^m\binom j\ell N^\ell v$. The same invertible binomial coefficient matrix relates these vectors to $N^\ell v=m!e_{m-\ell}$, a target basis. The additional $x=e_s$ supplies the source direction. This is reachability from $x$, distinct from the detector observability proving $Q>0$.
+
+Finally $x^{\mathsf T}Qx=\sum_{k\ge0}q^kP_m(k)$ by (14.7). For $k\ge1$, $0\le P_m(k)\le k^{2m+1}$, since the terms below $m$ are zero and $0<(t)_{\underline m}\le t^m$ for $t\ge m$. The ratio test applied to $q^kk^{2m+1}$ proves convergence, and the $k=m+1$ term proves positivity. The same estimate with any additional fixed power of $k$ gives finite moments, in particular $\mu<\infty$ in (14.1). $\square$
+
+**Theorem 14.3 (Real complete instrument and exact Kraus directions).** For (14.4)–(14.5), set $z=\mathcal Z_m(q)$, let $G=Q^{1/2}$ be the positive real symmetric square root, and define
+
+$$
+\begin{aligned}
+\xi&=Gx/\sqrt z,&\tau&=\xi\xi^{\mathsf T},&E&=G^{-1}F_0G^{-1},\\
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=\xi f^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T}.
+\end{aligned}
+\tag{14.9}
+$$
+
+This is a homogeneous binary CP instrument on $M_D(\mathbb C)$ with real entries and
+
+$$
+\begin{aligned}
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_D,\\
+\rho(\Phi)&=q<1,\qquad \Psi(X)=\tau\operatorname{Tr}(EX),\\
+\Psi\Phi^k(\tau)&=\gamma_k\tau,\qquad
+\sum_{k\ge0}\gamma_k=1,\qquad
+\operatorname{Tr}\Phi^a(\tau)=S_a.
+\end{aligned}
+\tag{14.10}
+$$
+
+The no-tick branch has exactly two independent Kraus directions and Choi rank two. The displayed no-tick matrix ranks are $D$ and one. The tick branch has one nonzero rank-one Kraus operator and Choi rank one. Its positive-probability outputs all normalize to the same pure state $\tau$. Its first-hit gap index is $m+1=D-1$.
+
+Proof. Theorem 2.1 applies with raw Kraus family $\sqrt q A,\sqrt q B$, detector column $f$, reset $x$, dimension $D=m+2$ and square root $G$. Theorem 14.2 verifies its full-complex stability and positive-Gramian premises and identifies its normalization as $z=\mathcal Z_m(q)$. Real orthogonal diagonalization of $Q>0$ gives real invertible $G$ and $\xi^{\mathsf T}\xi=1$. For explicit verification, shifting the norm-convergent Gramian gives
+
+$$
+Q-qA^{\mathsf T}QA-qB^{\mathsf T}QB=F_0.
+\tag{14.11}
+$$
+
+Conjugating by $G^{-1}$ yields completeness in (14.10); the detector term is $J^{\mathsf T}J=E$. Each displayed Kraus expression is completely positive on arbitrary complex positive inputs, because its amplification is a sum of conjugations by the Kraus matrices tensored with the identity. Completeness gives trace preservation of the sum and trace nonincrease of each branch. Thus the real entries do not restrict the allowed inputs to real densities.
+
+For the invertible matrix-space map $\Gamma(X)=GXG$,
+
+$$
+\Phi=\Gamma\mathcal T_q\Gamma^{-1},\qquad
+\Phi^k(\tau)=\frac{G\mathcal T_q^k(xx^{\mathsf T})G}{z}.
+\tag{14.12}
+$$
+
+This proves full stability. The outer-product formula for $J$ proves $\Psi(X)=\tau\operatorname{Tr}(EX)$ for every $X$. Combining (14.12) with (14.7) gives $\Psi\Phi^k(\tau)=q^kP_m(k)\tau/z$. Normalization is exactly the defining sum for $z$. If $s_a=\operatorname{Tr}\Phi^a(\tau)$, completeness gives $s_a-s_{a+1}=\gamma_a$, and stability gives $s_a\to0$. Telescoping gives $s_a=S_a$, including $S_0=1$ and no mass at an infinite next gap.
+
+The matrix $A$ is invertible, whereas $B=ve_s^{\mathsf T}$ is nonzero of rank one. They are linearly independent over $\mathbb C$, since a nonzero scalar multiple of $A$ has rank $D>1$. Invertible similarity and nonzero scaling preserve their ranks and independence. The Choi matrix of $\Phi$ is the sum of the outer products of the vectorizations of $L_A,L_B$; its range is their two-dimensional span, by the positive-sum argument of (13.7). Hence its rank is two, which is also the minimum Kraus count: any Kraus representation gives such a sum and must span its range, while the displayed two operators attain that count. Both factors of $J$ are nonzero, so it has matrix rank one and its Choi matrix has rank one. Lastly Theorem 14.2 gives $\gamma_0=\cdots=\gamma_m=0$ and $\gamma_{m+1}>0$, proving the asserted first-hit index and earliest interevent duration $m+2$. $\square$
+
+**Theorem 14.4 (Faithful mixed stationary initialization and every cylinder).** With the instrument of Theorem 14.3, define
+
+$$
+R_0=\sum_{a\ge0}\Phi^a(\tau),\qquad
+\rho_* = R_0/\mu.
+\tag{14.13}
+$$
+
+Then $\rho_*$ is a real faithful mixed invariant density, its tick rate is $1/\mu$, and its actual output cylinders equal (14.2) for every finite binary word. The process is the proper stationary renewal law of (14.1), without an additional all-zero component.
+
+Proof. Stability makes the operator series converge in norm. By (14.10) and nonnegative summation,
+
+$$
+\operatorname{Tr}R_0=\sum_{a\ge0}S_a
+=\sum_{j\ge0}(j+1)\gamma_j=\mu<\infty.
+\tag{14.14}
+$$
+
+Thus $\rho_*$ is a density. The reset identity and gap normalization give
+
+$$
+\Phi(R_0)=R_0-\tau,\qquad
+\Psi(R_0)=\sum_{a\ge0}\gamma_a\tau=\tau.
+\tag{14.15}
+$$
+
+These prove invariance and tick rate $1/\mu$. For a raw word $w$ in $A,B$, the corresponding completed word obeys
+
+$$
+L_w\xi=\frac{q^{|w|/2}Gwx}{\sqrt z}.
+\tag{14.16}
+$$
+
+The full raw reachability in Theorem 14.2 therefore persists under completion. For any complex $y$, expansion of the positive series gives $y^\dagger R_0y=\sum_{a\ge0}\sum_{|w|=a}|y^\dagger L_w\xi|^2$. Its vanishing forces $y$ orthogonal to that full reachable span, hence $y=0$. This proves faithfulness. Every summand is real symmetric, and $D=m+2\ge3$ makes the rank-$D$ density mixed, whereas $\tau$ is pure.
+
+After an initial run of $a$ zeros and the first tick, the actual unnormalized memory is
+
+$$
+\Psi\Phi^a(\rho_*)
+=\frac1\mu\sum_{c\ge0}\Psi\Phi^{a+c}(\tau)
+=\frac{S_a}{\mu}\tau.
+\tag{14.17}
+$$
+
+For a word with $r\ge1$ ticks, each internal gap $g_i$ followed by its tick multiplies this state by $\gamma_{g_i}$ and resets to $\tau$. The final $b$ zeros have survival probability $S_b$. Taking the trace gives exactly the first formula of (14.2), including the empty internal product when $r=1$. For a word with no ticks,
+
+$$
+\operatorname{Tr}\Phi^N(\rho_*)
+=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j.
+\tag{14.18}
+$$
+
+At $N=0$, (14.14) makes this one. These two cases exhaust all finite words. Trace preservation gives consistency on summing the last symbol; invariance of $\rho_*$ gives consistency on summing the first symbol. Thus these are stationary cylinder probabilities. Conditioned on any positive-probability tick history, the memory is exactly $\tau$. Repeated use of $\Psi\Phi^k(\tau)=\gamma_k\tau$ gives the product of the $\gamma$ values for any finite sequence of following complete gaps; $\sum_k\gamma_k=1$ gives a proper next gap each time. This proves the renewal assertion from the actual conditioned states.
+
+Moreover
+
+$$
+0\le\mathbb P_{m,q}(0^N)
+\le\frac1\mu\sum_{j\ge N}(j+1)\gamma_j\longrightarrow0.
+\tag{14.19}
+$$
+
+The decreasing events of having no tick in the first $N$ steps therefore have an intersection of probability zero. In particular no positive all-zero stationary component remains. Also $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$, whereas $\operatorname{Tr}\Psi(\rho_*)=1/\mu>0$, so the stationary initialization and the post-tick state are distinct.
+
+The invariant-state and ordered-cylinder convention agrees with [Alex Monras, Almut Beige and Karoline Wiesner, *Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, p. 12, equations (25)–(27)](https://arxiv.org/pdf/1002.2337v2). The summation mechanism is the one used in Section 5, but Theorem 5.1 and the application in Section 11 specify the monomial law. Equations (14.14)–(14.19) provide the stationary derivation for the distinct law (14.1) with its own tails and mean. $\square$
+
+**Theorem 14.5 (Exact minimum complex dimension and saturation of every minimizer).** For every $m\ge1$ and $0<q<1$, the minimum complex memory dimension among all realizations in Definition 14.1 is exactly $m+2$. For a competitor of dimension $D'$ let $\tau_0$ be its actual average state just after the first tick and let $F_1=\mathcal E_1^*(I_{D'})$. Then
+
+$$
+D'\ge m+1+\max(\operatorname{rank}\tau_0,\operatorname{rank}F_1)
+\ge m+2.
+\tag{14.20}
+$$
+
+At the minimum, both ranks are one, both reachable spaces of (13.2) are the full memory, and the competitor's entire tick map is $\mathcal E_1(X)=\tau_0\operatorname{Tr}(F_1X)$ with Choi rank one. Any invariant initialization of that minimum-dimensional competitor reproducing the law is faithful and mixed. These conclusions allow a noninvariant hidden initializer in (14.3) and assume no reset for the competitor.
+
+Proof. Theorem 14.4 supplies a realization in dimension $m+2$, establishing the upper bound with all stationary cylinders. For any competitor, use the one-symbol cylinder and the two-tick cylinders in (14.2):
+
+$$
+\begin{aligned}
+\nu&=\operatorname{Tr}\mathcal E_1(\rho_0)
+=\mathbb P_{m,q}(1)=1/\mu>0,\\
+\tau_0&=\mathcal E_1(\rho_0)/\nu,\qquad
+F_1=\mathcal E_1^*(I_{D'}),\\
+\operatorname{Tr}[F_1\mathcal E_0^k(\tau_0)]
+&=\frac{\operatorname{Tr}[\mathcal E_1\mathcal E_0^k\mathcal E_1(\rho_0)]}{\nu}
+=\frac{\mathbb P_{m,q}(1\,0^k1)}{\mathbb P_{m,q}(1)}
+=\gamma_k.
+\end{aligned}
+\tag{14.21}
+$$
+
+The last equality uses $S_0=1$. This is the conditional next-gap marginal after an actual tick; no independence premise is needed for the displayed equality. The imposed stationary output law fixes this marginal even when $\rho_0$ itself is not invariant. Positivity makes $\tau_0$ a density and $F_1$ a positive effect. A finite-dimensional CP map admits a finite Kraus representation, as follows by diagonalizing its finite positive Choi matrix and unvectorizing its eigenvectors, so Theorem 13.2 applies to $\mathcal E_0$ without a restriction on its Kraus count.
+
+Theorem 14.2 identifies the first positive $\gamma_k$ as $k=m+1$. Equation (13.4), with $h=m+1$, proves (14.20). If $D'=m+2$, then $h=D'-1$ and (14.21) supplies precisely the actual-output premise of Theorem 13.3. That theorem gives the pure output, rank-one effect, full primal and dual reachable spaces, global reset and tick Choi rank one. If the competitor also has an invariant initialization reproducing the cylinders, its tick rate is $1/\mu>0$, and (13.14) makes it faithful; $D'\ge3$ makes it mixed. No hidden invariance is used for the lower bound or the global-reset conclusion. $\square$
+
+**Definition 14.6 (Scope of the delayed-family conclusion).** The mathematical result of Section 14 concerns exact classical output cylinders of the finite homogeneous instruments in Definition 14.1. Its lower bound uses the initial forbidden block of gap counts $0,\ldots,m$ and the first positive count $m+1$, via Theorem 13.2. It uses no finite-CP polynomial-growth or peripheral-radius lower bound. The original monomial law (1.1) has a different initial support and is outside this minimum-dimension conclusion; the unresolved minimum dependencies stated for that law are not resolved by (14.20).
+
+The support-saturation mechanism cited in Theorem 13.2 and the ordered-instrument convention cited in Theorem 14.4 are literature antecedents. The two-sided detector interface, its actual-post-tick saturation consequence, and the completed delayed-family application are repository derivations with the complete arguments above. These attributions do not assert global novelty or priority. In particular the cited reachability formulas do not by attribution establish the explicit matrices, their stationary law or its minimum; those are derived in (14.4)–(14.21).
+
+The displayed construction has two independent no-tick Kraus directions. The saturation argument proves a restriction on the tick branch, and supplies no universal lower bound on the no-tick Kraus count. Its global reset conclusion requires the actual-output identity (13.10); choosing an unrelated pure seed is not that premise. Positive tick rate alone does not prove renewal independence or exclude a silent stationary component; the construction uses its reset identity and stability to establish those facts explicitly.
+
+These are handwritten mathematical arguments. A general Lean verification of the detector interfaces, rigidity, completed family and all stationary cylinders is not supplied here. Real coordinates mean ordinary CP maps on a complex memory; they do not assert a physical real-Hilbert-space equivalence, native AURIC realization, preparation or precision guarantee, coherent-output equivalence, memory entropy, energy or work bound. The memory comparison counts persistent complex Hilbert-space dimension only.
+
+## 追加锚（本行以下为增补区）
