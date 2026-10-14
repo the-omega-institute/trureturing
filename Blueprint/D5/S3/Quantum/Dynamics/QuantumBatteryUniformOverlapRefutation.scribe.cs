@@ -15,7 +15,7 @@ internal sealed class QuantumBatteryUniformOverlapRefutationDocument : IScribeDo
         H("The star bound for the least-energy uniform overlap fails"), Blocks(
             Paragraph(Text(
                 "The vertex set is Fin n, and G is a simple graph with decidable adjacency. "
-                    + "The variable d supplies that decision procedure; its argument is implicit in the matrix and overlap expressions. "
+                    + "The bracket denotes the instance argument for decidable adjacency; this argument is implicit in the matrix and overlap expressions. "
                     + "SimpleGraph.adjMatrix G real is the real adjacency matrix. Named objects retain their Lean namespaces.")),
             Node("lamMin", "The least adjacency eigenvalue", LamMinFormula(),
                 "The real adjacency matrix is symmetric, hence Hermitian. The local hA is its Hermitian proof, obtained from SimpleGraph.isSymm_adjMatrix by Matrix.isHermitian_iff_isSymm. Matrix.IsHermitian.eigenvalues hA enumerates its real eigenvalues on Fin n. Their infimum in the real numbers defines lamMin, with every natural n included. For n greater than zero this is the least adjacency eigenvalue in the diagonalization of Section III.A, equation (11).",
@@ -90,7 +90,8 @@ internal sealed class QuantumBatteryUniformOverlapRefutationDocument : IScribeDo
 
     private static Formula GraphParameters(Formula body) => All("n", Naturals(),
         All("G", At(Qualified("SimpleGraph"), FinOf(X("n"))),
-            All("d", At(Qualified("DecidableRel"), At(Qualified("SimpleGraph", "Adj"), X("G"))), body)));
+            Seq(OpenBracket, At(Qualified("DecidableRel"), At(Qualified("SimpleGraph", "Adj"), X("G"))),
+                CloseBracket, Comma, Sp, body)));
     private static Formula Local(string name) =>
         Qualified("D5", "S3", "Quantum", "Dynamics", "QuantumBatteryUniformOverlapRefutation", name);
     private static Formula LocalCall(string name, params Formula[] args) => At(Local(name), args);
