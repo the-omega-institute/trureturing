@@ -119,14 +119,14 @@ theorem escape_zero_iff_determined_with_audited_minimizer
     have emptyEscape :
         defectRelation (conceptJoin q (definitions a)) target = ∅ := by
       exact (faithfulWeight _).mp zeroDefect
-    exact (equivalence a).out 0 2 |>.mp emptyEscape
+    exact (equivalence a).out 1 3 |>.mp emptyEscape
   have determinedImpliesZero :
       Function.FactorsThrough target (conceptJoin q (definitions a)) ->
         parameterEscapeDefect q definitions target weight a = 0 := by
     intro determined
     have emptyEscape :
         defectRelation (conceptJoin q (definitions a)) target = ∅ :=
-      (equivalence a).out 0 2 |>.mpr determined
+      (equivalence a).out 1 3 |>.mpr determined
     exact (faithfulWeight _).mpr emptyEscape
   refine ⟨zeroImpliesDetermined, determinedImpliesZero, ?_⟩
   intro uniqueCompletion

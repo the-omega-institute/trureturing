@@ -65,8 +65,8 @@ theorem sequential_completeness_criterion
   dsimp only
   have hFour := informational_completeness_four_way d centeredEffects
   dsimp only at hFour
-  tfae_have 1 ↔ 2 := hFour.out 0 1
-  tfae_have 2 ↔ 3 := hFour.out 1 2
+  tfae_have 1 ↔ 2 := hFour.out 1 2
+  tfae_have 2 ↔ 3 := hFour.out 2 3
   tfae_finish
 
 #print axioms sequential_completeness_criterion

@@ -75,7 +75,7 @@ private theorem isPGroup_closure_of_commuting_involutions {G : Type*} [Group G] 
   have hc : ∀ x ∈ Subgroup.closure S, ∀ y ∈ Subgroup.closure S, x * y = y * x := by
     intro x hx y hy
     exact congrArg Subtype.val
-      ((Subgroup.isMulCommutative_closure hSc).is_comm.comm ⟨x, hx⟩ ⟨y, hy⟩)
+      ((Subgroup.isMulCommutative_closure (fun x hx y hy _ => hSc x hx y hy)).is_comm.comm ⟨x, hx⟩ ⟨y, hy⟩)
   have hsq : ∀ x ∈ Subgroup.closure S, x * x = 1 := by
     intro x hx
     induction hx using Subgroup.closure_induction with

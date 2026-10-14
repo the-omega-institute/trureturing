@@ -30,12 +30,12 @@ def readUnary : List Bool → Option (Nat × List Bool)
 /-- The budget is a fixed three-literal syntax bound, not an input-sized state. -/
 def readClause (n : Nat) : Nat → List Bool →
     Option (Std.Sat.CNF.Clause (Fin n) × List Bool)
-  | _, true :: false :: rest => some ([], rest)
+  | _, true :: false :: rest => some (.empty, rest)
   | budget + 1, true :: true :: polarity :: rest => do
       let (i, rest) ← readUnary rest
       if h : i < n then
         let (c, tail) ← readClause n budget rest
-        some ((⟨i, h⟩, polarity) :: c, tail)
+        some (.ofLiterals ((⟨i, h⟩, polarity) :: c.literals), tail)
       else none
   | _, _ => none
 
@@ -70,7 +70,7 @@ def readWord (physical : Bool) (w : List Bool) : Option (Σ n, UnaryFormula n) :
 
 def termWord {n : Nat} (physical : Bool) (c : Std.Sat.CNF.Clause (Fin n)) : List Bool :=
   (if physical then List.replicate (n + 1) true ++ [false] else []) ++
-    c.flatMap unaryLiteral ++ [true, false]
+    c.literals.flatMap unaryLiteral ++ [true, false]
 
 def bodyWord {n : Nat} (physical : Bool) (F : UnaryFormula n) : List Bool :=
   F.flatMap (fun c => [false, true] ++ termWord physical c) ++ [false, false]
@@ -106,8 +106,17 @@ theorem codec_exact (physical : Bool) (w : List Bool) (n : Nat) (F : UnaryFormul
           · intro h
             refine ⟨(i, rest), (ih i rest).mpr ?_, rfl⟩
             simpa [List.replicate_succ] using h
-  have clause : ∀ budget w (c : Std.Sat.CNF.Clause (Fin n)) rest,
-      readClause n budget w = some (c, rest) ↔
+  have literals_inj (xs ys : List (Fin n × Bool)) :
+      Std.Sat.CNF.Clause.ofLiterals xs = Std.Sat.CNF.Clause.ofLiterals ys ↔ xs = ys := by
+    constructor
+    · intro h
+      simpa only [Std.Sat.CNF.Clause.literals_ofLiterals] using
+        congrArg Std.Sat.CNF.Clause.literals h
+    · exact congrArg Std.Sat.CNF.Clause.ofLiterals
+  have empty_eq : (Std.Sat.CNF.Clause.empty : Std.Sat.CNF.Clause (Fin n)) =
+      .ofLiterals [] := rfl
+  have clauseLists : ∀ budget w (c : List (Fin n × Bool)) rest,
+      readClause n budget w = some (.ofLiterals c, rest) ↔
         w = c.flatMap unaryLiteral ++ [true, false] ++ rest ∧ c.length ≤ budget := by
     intro budget
     induction budget with
@@ -115,54 +124,54 @@ theorem codec_exact (physical : Bool) (w : List Bool) (n : Nat) (F : UnaryFormul
       intro w c rest
       cases c with
       | nil => cases w with
-        | nil => simp [readClause]
+        | nil => simp [empty_eq, literals_inj, readClause]
         | cons b w => cases b <;> cases w with
-          | nil => simp [readClause]
-          | cons b w => cases b <;> simp [readClause]
+          | nil => simp [empty_eq, literals_inj, readClause]
+          | cons b w => cases b <;> simp [empty_eq, literals_inj, readClause]
       | cons l c =>
         have h : ¬ (l :: c).length ≤ 0 := by simp
         simp only [h, and_false, iff_false]
         cases w with
-        | nil => simp [readClause]
+        | nil => simp [empty_eq, literals_inj, readClause]
         | cons b w => cases b <;> cases w with
-          | nil => simp [readClause]
-          | cons b w => cases b <;> simp [readClause]
+          | nil => simp [empty_eq, literals_inj, readClause]
+          | cons b w => cases b <;> simp [empty_eq, literals_inj, readClause]
     | succ budget ih =>
       intro w c rest
       constructor
       · intro h
         cases w with
-        | nil => simp [readClause] at h
+        | nil => simp [empty_eq, literals_inj, readClause] at h
         | cons b w => cases b with
-          | false => simp [readClause] at h
+          | false => simp [empty_eq, literals_inj, readClause] at h
           | true => cases w with
-            | nil => simp [readClause] at h
+            | nil => simp [empty_eq, literals_inj, readClause] at h
             | cons b w => cases b with
               | false =>
-                simp only [readClause, Option.some.injEq, Prod.mk.injEq] at h
+                simp only [readClause, Option.some.injEq, Prod.mk.injEq, empty_eq, literals_inj] at h
                 rcases h with ⟨rfl, rfl⟩
                 simp
               | true => cases w with
-                | nil => simp [readClause] at h
+                | nil => simp [empty_eq, literals_inj, readClause] at h
                 | cons p w =>
                   cases hu : readUnary w with
-                  | none => simp [readClause, hu] at h
+                  | none => simp [empty_eq, literals_inj, readClause, hu] at h
                   | some r =>
                     rcases r with ⟨i, tail⟩
                     by_cases hi : i < n
                     · cases hc : readClause n budget tail with
-                      | none => simp [readClause, hu, hi, hc] at h
+                      | none => simp [empty_eq, literals_inj, readClause, hu, hi, hc] at h
                       | some r =>
                         rcases r with ⟨d, tail'⟩
-                        simp [readClause, hu, hi, hc, bind, Option.bind] at h
+                        simp [empty_eq, literals_inj, readClause, hu, hi, hc, bind, Option.bind] at h
                         rcases h with ⟨rfl, rfl⟩
-                        obtain ⟨hw, hd⟩ := (ih tail d tail').mp hc
+                        obtain ⟨hw, hd⟩ := (ih tail d.literals tail').mp (by simpa using hc)
                         rw [(unary w i tail).mp hu, hw]
                         simp [unaryLiteral, List.append_assoc, hd, Nat.succ_le_succ_iff]
-                    · simp [readClause, hu, hi] at h
+                    · simp [empty_eq, literals_inj, readClause, hu, hi] at h
       · rintro ⟨rfl, width⟩
         cases c with
-        | nil => simp [readClause]
+        | nil => simp [empty_eq, literals_inj, readClause]
         | cons l c =>
           rcases l with ⟨i, p⟩
           have tailWidth : c.length ≤ budget := by simp only [List.length_cons] at width; omega
@@ -171,7 +180,13 @@ theorem codec_exact (physical : Bool) (w : List Bool) (n : Nat) (F : UnaryFormul
             (c.flatMap unaryLiteral ++ [true, false] ++ rest)).mpr rfl
           have hc := (ih _ c rest).mpr ⟨rfl, tailWidth⟩
           simp only [List.cons_append, List.nil_append, List.append_assoc] at hu hc
-          simp [unaryLiteral, List.append_assoc, readClause, hu, i.isLt, hc]
+          simp [empty_eq, literals_inj, unaryLiteral, List.append_assoc, readClause, hu, i.isLt, hc]
+  have clause : ∀ budget w (c : Std.Sat.CNF.Clause (Fin n)) rest,
+      readClause n budget w = some (c, rest) ↔
+        w = c.literals.flatMap unaryLiteral ++ [true, false] ++ rest ∧ c.length ≤ budget := by
+    intro budget w c rest
+    simpa only [Std.Sat.CNF.Clause.ofLiterals_literals] using
+      clauseLists budget w c.literals rest
   have term : ∀ w c rest, readTerm n physical w = some (c, rest) ↔
       w = termWord physical c ++ rest ∧ c.length ≤ 3 := by
     intro w c rest
@@ -183,7 +198,7 @@ theorem codec_exact (physical : Bool) (w : List Bool) (n : Nat) (F : UnaryFormul
       | none =>
         simp only [hu, bind, Option.bind, reduceCtorEq, false_iff, not_and]
         intro hw
-        have : readUnary w = some (n + 1, c.flatMap unaryLiteral ++ [true, false] ++ rest) :=
+        have : readUnary w = some (n + 1, c.literals.flatMap unaryLiteral ++ [true, false] ++ rest) :=
           (unary _ _ _).mpr (by simpa [termWord, List.append_assoc] using hw)
         rw [hu] at this
         contradiction
@@ -200,7 +215,7 @@ theorem codec_exact (physical : Bool) (w : List Bool) (n : Nat) (F : UnaryFormul
         · simp only [bind, Option.bind, Prod.fst, Prod.snd, hi, ↓reduceIte,
             reduceCtorEq, false_iff, not_and]
           intro hw
-          have : readUnary w = some (n + 1, c.flatMap unaryLiteral ++ [true, false] ++ rest) :=
+          have : readUnary w = some (n + 1, c.literals.flatMap unaryLiteral ++ [true, false] ++ rest) :=
             (unary _ _ _).mpr (by simpa [termWord, List.append_assoc] using hw)
           rw [hu] at this
           simp only [Option.some.injEq, Prod.mk.injEq] at this

@@ -107,7 +107,7 @@ def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
 
 @[fun_prop] theorem measurable_prepend {A : Type*} [MeasurableSpace A] (a : A) :
     Measurable (prepend a) := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   cases n with
   | zero => exact measurable_const
@@ -124,7 +124,9 @@ theorem marked_regenerate (M : Observer Z) (e : InstalledEmitter M)
   intro v
   rw [Measure.map_finset_sum' (Measurable.aemeasurable (by fun_prop))]
   simp only [Measure.coe_finsetSum, Finset.sum_apply]
-  simp only [Measure.map_smul, Measure.smul_apply, smul_eq_mul]
+  simp only [Measure.map_smul _
+    (show Measurable (fun x : ℕ → Marked Z => fun i : Fin (n+1) => x i.val) from by fun_prop).aemeasurable,
+    Measure.smul_apply, smul_eq_mul]
   rw [prefix_mass]
   cases n with
   | zero =>
@@ -232,7 +234,7 @@ def rawFrom (x : ℕ → Marked Z) : Stream := fun n =>
   | _ => 0
 
 @[fun_prop] theorem rawFrom_measurable : Measurable (rawFrom (Z := Z)) := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   change Measurable (fun x : ℕ → Marked Z => match (x (n+1)).2 with
     | some (.read b) => b | _ => (0 : Letter))
@@ -246,7 +248,7 @@ def decode (M : Observer Z) (z : Z) (x : ℕ → Marked Z) : FullTranscript :=
 
 @[fun_prop] private theorem decode_measurable (M : Observer Z) (z : Z) :
     Measurable (decode M z) := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   let f : Option (List Operation × AcquiredNativeState × ℕ) → FullOutput :=
     fun r => r.map fun t => (t.1, t.2.1.source.finiteFields, eventBlocks (M.project z) t.1)
@@ -277,7 +279,7 @@ private theorem decoded_mark_irrelevance (M : Observer Z) (e : InstalledEmitter 
   rw [nativeLaw, marked_regenerate M e (z,a), marked_regenerate M e (z,none)]
   rw [Measure.map_finset_sum' (decode_measurable M z).aemeasurable,
     Measure.map_finset_sum' (decode_measurable M z).aemeasurable]
-  simp only [Measure.map_smul]
+  simp only [Measure.map_smul _ (decode_measurable M z).aemeasurable]
   apply Finset.sum_congr rfl
   intro w _
   rw [Measure.map_map (decode_measurable M z) (measurable_prepend _),
@@ -291,7 +293,7 @@ def blockEvent (f f' : FiniteFields) (op : Operation) (E : Set FullTranscript) :
       t 1 = some ([op], f', [eventBlock f op]) ∧ deleteBlock t ∈ E}
 
 private theorem deleteBlock_measurable : Measurable deleteBlock := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   exact (measurable_of_countable (fun a : FullOutput =>
     a.map fun r => (r.1.tail,r.2.1,r.2.2.tail))).comp (measurable_pi_apply (n+1))
@@ -370,7 +372,7 @@ def markedTranscript (M : Observer Z) (x : ℕ → Marked Z) : FullTranscript :=
 
 @[fun_prop] private theorem markedTranscript_measurable (M : Observer Z) :
     Measurable (markedTranscript M) := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   let f : Option (List Operation) × Z × Z → FullOutput :=
     fun p => p.1.map fun ops => (ops,M.project p.2.1,eventBlocks (M.project p.2.2) ops)
@@ -482,8 +484,9 @@ def fullLaw (M : Observer Z) (e : InstalledEmitter M) (z : Z) : Measure FullTran
   (markedLaw M e (z,none)).map (markedTranscript M)
 
 instance (M : Observer Z) (e : InstalledEmitter M) (z : Z) :
-    IsProbabilityMeasure (fullLaw M e z) :=
-  Measure.isProbabilityMeasure_map (markedTranscript_measurable M).aemeasurable
+    IsProbabilityMeasure (fullLaw M e z) := by
+  unfold fullLaw
+  infer_instance
 
 private theorem fullLaw_native (M : Observer Z) (e : InstalledEmitter M) (z : Z) :
     fullLaw M e z = nativeLaw M e z := by
@@ -506,8 +509,9 @@ def tailLaw (M : Observer Z) (e : InstalledEmitter M) (s : ActivePhase) (z : Z) 
   (markedLaw M e (z,none)).map (fun x => tailValue s (rawFrom x))
 
 instance (M : Observer Z) (e : InstalledEmitter M) (s : ActivePhase) (z : Z) :
-    IsProbabilityMeasure (tailLaw M e s z) :=
-  Measure.isProbabilityMeasure_map ((tailValue_measurable s).comp rawFrom_measurable).aemeasurable
+    IsProbabilityMeasure (tailLaw M e s z) := by
+  unfold tailLaw
+  infer_instance
 
 /-- The installed law is the literal full-record renderer of a configuration-only fourth tail. -/
 theorem installed_configuration_identity (M : Observer Z) (e : InstalledEmitter M)
@@ -645,7 +649,8 @@ theorem installed_first_block_recursion (M : Observer Z) (e : InstalledEmitter M
   simp_rw [fullLaw_native]
   rw [nativeLaw,marked_regenerate M e (z,none),
     Measure.map_finset_sum' (decode_measurable M z).aemeasurable]
-  simp only [Measure.coe_finsetSum,Finset.sum_apply,Measure.map_smul,Measure.smul_apply,
+  simp only [Measure.coe_finsetSum,Finset.sum_apply,
+    Measure.map_smul _ (decode_measurable M z).aemeasurable,Measure.smul_apply,
     smul_eq_mul,Measure.map_map (decode_measurable M z) (measurable_prepend _)]
   change (∑ y : Marked Z, markedRow M e (z,none) y *
     ((markedLaw M e y).map (decode M z ∘ prepend (z,none))) C) = _

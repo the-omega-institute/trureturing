@@ -23,7 +23,7 @@ noncomputable def eCoeff (f : PowerSeries ℚ) (n : ℕ) : ℚ := n.factorial * 
   simp [eCoeff, coeff_zero_eq_constantCoeff]
 
 @[simp] theorem eCoeff_derivative (f : PowerSeries ℚ) (n : ℕ) :
-    eCoeff (derivative ℚ f) n = eCoeff f (n + 1) := by
+    eCoeff (PowerSeries.derivative (R := ℚ) f) n = eCoeff f (n + 1) := by
   simp [eCoeff, coeff_derivative, Nat.factorial_succ]
   ring
 
@@ -75,7 +75,7 @@ theorem eCoeff_composition (f g : PowerSeries ℚ) (hg : constantCoeff g = 0) (n
       apply sum_congr rfl
       intro i hi
       rw [ih i (mem_range.mp hi), eCoeff_derivative]
-      rw [show eCoeff (derivative ℚ f) = (fun j => eCoeff f (j + 1)) from
+      rw [show eCoeff (PowerSeries.derivative (R := ℚ) f) = (fun j => eCoeff f (j + 1)) from
         funext (eCoeff_derivative f)]
 
 theorem composition_map {R S : Type*} [CommSemiring R] [CommSemiring S]

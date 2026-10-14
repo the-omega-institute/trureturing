@@ -382,9 +382,7 @@ theorem five_champion_gap_orbit (k : Nat) :
       have hmiddle := five_large_to_middle (2 * k + 7) hlarge
       constructor
       · convert hlarge using 1
-        omega
       · convert hmiddle using 1
-        omega
 
 theorem five_champion_survivor_even (k : Nat) :
     dbonacciSurvivor 5 (2 * k + 5) dbonacciFiveChampionPoint = lowArm := by

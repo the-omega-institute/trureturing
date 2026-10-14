@@ -494,7 +494,7 @@ theorem result (U : ℕ → ℕ) (h : Hyp21_1 U) :
     have gb : IsBoundedUnder (· ≥ ·) atTop (fun n => (G n : ℝ) / n) :=
       isBoundedUnder_of ⟨0, fun n => div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)⟩
     rw [← glimit.liminf_eq]
-    apply liminf_le_liminf (hu := gb) (hv := rbd.isCoboundedUnder_ge)
+    apply liminf_le_liminf (hv := gb) (hu := rbd.isCoboundedUnder_ge)
     filter_upwards [eventually_ge_atTop 1] with n hn
     apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg _)
     exact_mod_cast (h.bounds n hn).2.1

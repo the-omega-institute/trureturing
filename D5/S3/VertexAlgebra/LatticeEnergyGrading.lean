@@ -43,7 +43,7 @@ def carrierBasis (D : LatticeData) : Module.Basis (Label D) ℂ (Carrier D) :=
   rw [LinearEquiv.apply_symm_apply]
   ext b
   change Finsupp.single a (1 : ℂ) b =
-    coeff b.2 ((Finsupp.single a.1 (monomial a.2 1)) b.1)
+    ((Finsupp.single a.1 (monomial a.2 1)) b.1).coeff b.2
   by_cases h : a.1 = b.1
   · simp [Finsupp.single_apply, h, coeff_monomial,
       Prod.ext_iff, and_comm]
@@ -55,7 +55,7 @@ abbrev grade (D : LatticeData) (n : ℤ) : Submodule ℂ (Carrier D) :=
     (carrierCoeffEquiv D).toLinearMap
 
 theorem mem_grade_iff (D : LatticeData) (n : ℤ) (v : Carrier D) :
-    v ∈ grade D n ↔ ∀ a : Label D, energy D a ≠ n → coeff a.2 (v a.1) = 0 := by
+    v ∈ grade D n ↔ ∀ a : Label D, energy D a ≠ n → (v a.1).coeff a.2 = 0 := by
   change carrierCoeffEquiv D v ∈ Finsupp.supported ℂ ℂ _ ↔ _
   rw [Finsupp.mem_supported']
   rfl

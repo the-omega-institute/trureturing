@@ -12,7 +12,7 @@ import sys
 import tarfile
 from unittest.mock import patch
 
-from lean_seed_support import OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, prepare_release_report, write
+from lean_seed_support import OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, prepare_release_report, write, write_release_report
 
 sys.path.insert(0, str(PUBLISH.parent))
 from lean_cache_release import checkout_topology
@@ -49,8 +49,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
         write(self.root / ".gitignore", "*\n!untracked-input.lean\n")
         subprocess.run(["git", "init", "-q", str(self.root)], check=True, capture_output=True)
         self.commit_fixture()
-        subprocess.run(["python3", "-B", str(ROOT / "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
-            "write-release-report", str(self.root)], check=True, capture_output=True)
+        write_release_report(self.root)
         self.publisher = helper_dir / "lean-cache-publish.sh"
         self.publisher.chmod(0o755)
         for path in self.bin.iterdir():

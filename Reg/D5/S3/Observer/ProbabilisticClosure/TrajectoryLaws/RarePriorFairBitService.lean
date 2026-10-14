@@ -127,7 +127,6 @@ def resetRecord : Registration resetArena (type_of% (@prefix_reset)) where
     have hp := congrArg Service.pc he
     norm_num [resetActual, realize, trialRun, finishTrial, entry, packet_transaction,
       packetEquiv, finProdFinEquiv, threshold] at hp
-    cases hp
 
 def resetRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@prefix_reset) (type_of% (realize resetSignature

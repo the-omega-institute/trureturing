@@ -9,6 +9,9 @@
 import D5.S1.Words.Patterns.Separable.EndpointHistoryKernel
 import Mathlib.Data.Fintype.BigOperators
 
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
+
 /-!
 The algorithm acts on actual avoiding permutations and recovers actual factors.
 All parameters are arbitrary natural numbers, including zero. A selected history
@@ -313,8 +316,8 @@ theorem actual_capped_partition (state : Option Bool) (n m B H K : ℕ) :
   have mass (event : Avoider n → Prop) : actualMass n event =
       (Nat.card {π : Avoider n // event π} : ℝ) / Nat.card (Avoider n) := by
     let : Nonempty (Avoider n) := ⟨identityAvoider n⟩
-    change ((PMF.uniformOfFintype (Avoider n)).toOuterMeasure {π | event π}).toReal = _
-    rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+    change ((uniformPmf (Avoider n)).toOuterMeasure {π | event π}).toReal = _
+    rw [uniformPmf_toOuterMeasure_apply]
     simp only [ENNReal.toReal_div, ENNReal.toReal_natCast, Nat.card_eq_fintype_card]
     rfl
   have sourcePositive : (Nat.card (Avoider n) : ℝ) ≠ 0 := by

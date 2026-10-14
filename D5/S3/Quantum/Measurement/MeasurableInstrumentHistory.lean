@@ -98,14 +98,14 @@ theorem positive_history_density (base : Matrix I I ℂ) (hbase : Matrix.PosSemi
       change (∫ h in s, (M.coordinate i j).re.rnDeriv M.traceMeasure h
         ∂M.traceMeasure) = (M.coordinate i j s).re
       rw [withDensityᵥ_apply (SignedMeasure.integrable_rnDeriv _ _) hs] at hre'
-      simpa [ComplexMeasure.re, VectorMeasure.mapRangeₗ,
+      simpa [ComplexMeasure.re, VectorMeasure.mapRangeL,
         VectorMeasure.mapRange_apply, Complex.reCLM_apply] using hre'
     · change RCLike.im (∫ h in s, ρ h i j ∂M.traceMeasure) = _
       rw [← integral_im ((hρ.eval i).eval j).integrableOn]
       change (∫ h in s, (M.coordinate i j).im.rnDeriv M.traceMeasure h
         ∂M.traceMeasure) = (M.coordinate i j s).im
       rw [withDensityᵥ_apply (SignedMeasure.integrable_rnDeriv _ _) hs] at him'
-      simpa [ComplexMeasure.im, VectorMeasure.mapRangeₗ,
+      simpa [ComplexMeasure.im, VectorMeasure.mapRangeL,
         VectorMeasure.mapRange_apply, Complex.imCLM_apply] using him'
   have htrace_int : Integrable (fun h => Matrix.trace (ρ h)) M.traceMeasure := by
     change Integrable (fun h => ∑ i : I, ρ h i i) M.traceMeasure
@@ -311,7 +311,7 @@ theorem positive_history_density_from_coordinates
       _ = ∑ i : I, (coordinate i i s).re := by
         apply Finset.sum_congr rfl
         intro i _
-        simp [ComplexMeasure.re, VectorMeasure.mapRangeₗ,
+        simp [ComplexMeasure.re, VectorMeasure.mapRangeL,
           VectorMeasure.mapRange_apply]
       _ = (Matrix.trace (fun i j => coordinate i j s : Matrix I I ℂ)).re := by
         simp [Matrix.trace, Matrix.diag, Complex.re_sum]

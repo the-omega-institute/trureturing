@@ -38,7 +38,6 @@ private theorem rowBad : ¬ rowArena.Law rowRejected := by
   intro h
   have hb := h 1 [true,false]
   norm_num [rowRejected, realize, rows] at hb
-  cases hb
 
 def rowRegistration : Registration rowArena (type_of% @rows_literalPowerWord) where
   actual := rowActual
@@ -60,8 +59,6 @@ def rowRegistration : Registration rowArena (type_of% @rows_literalPowerWord) wh
     intro i
     refine ⟨1, [], [true,false], ?_⟩
     norm_num [rowActual, realize, literalPowerWord, rows]
-    intro he
-    cases he
 
 abbrev geometrySignature : Signature where
   Params := ℕ

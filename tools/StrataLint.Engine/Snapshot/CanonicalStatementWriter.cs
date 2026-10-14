@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Trureturing.Truth;
 
@@ -7,6 +8,11 @@ namespace StrataLint.Engine;
 
 internal static class CanonicalStatementWriter
 {
+    private static readonly JsonSerializerOptions StringOptions = new()
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    };
+
     // Lean's report already carries the canonical elaborated statement bytes.
     // This address intentionally excludes declaration/module identity so a
     // Frontier declaration can be compared with its delivered F declaration.
@@ -59,14 +65,33 @@ internal static class CanonicalStatementWriter
 
     private static ImmutableArray<byte> WriteDeclaration(RepoPath path, LeanDeclaration declaration)
     {
-        var material = JsonSerializer.SerializeToElement(new
+        using var material = new MemoryStream();
+        material.Write("{\"declaration_name_key\": "u8);
+        WriteString(material, declaration.NameKey);
+        material.Write(", \"kind\": "u8);
+        WriteString(material, declaration.Kind);
+        material.Write(", \"module_path\": "u8);
+        WriteString(material, path.Value);
+        material.Write(", \"schema\": \"declaration-statement-v1\", \"statement_material\": "u8);
+        WriteString(material, declaration.LoadTypeRepresentation());
+        material.Write("}\n"u8);
+        return ImmutableArray.CreateRange(material.ToArray());
+    }
+
+    private static void WriteString(Stream output, string value)
+    {
+        output.WriteByte((byte)'"');
+        for (var offset = 0; offset < value.Length;)
         {
-            declaration_name_key = declaration.NameKey,
-            kind = declaration.Kind,
-            module_path = path.Value,
-            schema = "declaration-statement-v1",
-            statement_material = declaration.LoadTypeRepresentation(),
-        });
-        return StructuredCanonicalWriter.WriteJson(material);
+            var length = Math.Min(65536, value.Length - offset);
+            if (offset + length < value.Length
+                && char.IsHighSurrogate(value[offset + length - 1])
+                && char.IsLowSurrogate(value[offset + length]))
+                length--;
+            var encoded = JsonSerializer.SerializeToUtf8Bytes(value.Substring(offset, length), StringOptions);
+            output.Write(encoded.AsSpan(1, encoded.Length - 2));
+            offset += length;
+        }
+        output.WriteByte((byte)'"');
     }
 }

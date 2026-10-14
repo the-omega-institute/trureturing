@@ -5,7 +5,7 @@
    anchors: []
    digest: Existence notions are represented by distinct predicates. -/
 
-import Mathlib.Logic.IsEmpty.Basic
+import Mathlib.Basic.IsEmpty.Basic
 
 /-!
 Dependent type theory represents several notions commonly called existence by

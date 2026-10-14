@@ -108,7 +108,7 @@ theorem hasseDeriv_rename (he : Injective e) (μ : σ →₀ ℕ) (P : MvPolynom
     congr 1
     rw [Finsupp.prod_mapDomain_index_inj he]
     exact congrArg _ (Finsupp.prod_congr fun j _ ↦
-      congrArg (fun t ↦ (t + μ j).choose (μ j)) (Finsupp.mapDomain_apply he n' j))
+      congrArg (fun t ↦ (t + μ j).choose (μ j)) (Finsupp.mapDomain_apply_of_injective he n' j))
   · obtain ⟨j, hj, hjr⟩ : ∃ j, n j ≠ 0 ∧ j ∉ Set.range e := by
       by_contra h
       exact hn (fun j hj ↦ by

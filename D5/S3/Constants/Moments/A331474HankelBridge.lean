@@ -74,7 +74,7 @@ private def catalanInt : PowerSeries Int :=
   PowerSeries.map (Nat.castRingHom Int) PowerSeries.catalanSeries
 
 private def F0 : PowerSeries Int :=
-  PowerSeries.derivative Int catalanInt
+  PowerSeries.derivative (R := Int) catalanInt
 
 private def F1 : PowerSeries Int :=
   (1 - 4 * PowerSeries.X) * F0
@@ -169,8 +169,8 @@ private theorem source_tails :
     simpa [catalanInt] using hmapped
   have hder :
       catalanInt ^ 2 + 2 * catalanInt * F0 * PowerSeries.X = F0 := by
-    have hd := congrArg (PowerSeries.derivative Int) hcat
-    simp only [map_add, (PowerSeries.derivative Int).leibniz,
+    have hd := congrArg (PowerSeries.derivative (R := Int)) hcat
+    simp only [map_add, (PowerSeries.derivative (R := Int)).leibniz,
       PowerSeries.derivative_one, PowerSeries.derivative_X,
       PowerSeries.derivative_pow, smul_eq_mul] at hd
     change catalanInt ^ 2 * 1 + PowerSeries.X *

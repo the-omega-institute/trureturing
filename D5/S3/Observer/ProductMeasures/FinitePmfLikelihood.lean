@@ -279,7 +279,7 @@ lemma prefixRootLikelihood_memLp_two
     (∏ i ∈ Finset.range n, ∑ o, |rootLikelihood (p i) (q i) o|) <|
       .of_forall fun x => by
         rw [Real.norm_eq_abs, prefixRootLikelihood, Finset.abs_prod]
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro i hi
           exact abs_nonneg _
         · intro i hi
@@ -487,7 +487,7 @@ private lemma one_sub_prod_le_sum_one_sub {A : Type*}
       have hi1 : a i ≤ 1 := ha1 i (Finset.mem_insert_self i s)
       have hs0 : 0 ≤ ∏ j ∈ s, a j := Finset.prod_nonneg fun j hj =>
         ha0 j (Finset.mem_insert_of_mem hj)
-      have hs1 : ∏ j ∈ s, a j ≤ 1 := Finset.prod_le_one
+      have hs1 : ∏ j ∈ s, a j ≤ 1 := Finset.prod_le_one₀
         (fun j hj => ha0 j (Finset.mem_insert_of_mem hj))
         (fun j hj => ha1 j (Finset.mem_insert_of_mem hj))
       have hih := ih
@@ -664,7 +664,7 @@ theorem productLaw_ac_of_summable
   have hsetIntegral (s : Set ((i : Nat) -> Output i)) :
       Tendsto (fun n => ∫ x in s, prefixRootLikelihood p q n x ^ 2 ∂Q)
         atTop (𝓝 (∫ x in s, g2 x ∂Q)) := by
-    exact tendsto_setIntegral_of_L1' g2 hg2int.1
+    exact tendsto_setIntegral_of_L1' g2
       (.of_forall fun n => (prefixRootLikelihood_memLp_two p q n).integrable_sq)
       hnorm s
   let density : ((i : Nat) -> Output i) -> ENNReal := fun x => ENNReal.ofReal (g2 x)

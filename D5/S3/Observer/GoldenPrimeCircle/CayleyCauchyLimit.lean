@@ -172,7 +172,7 @@ theorem cayleyPhase_eq_neg_cot (u : Real) :
 /-- The finite cyclic Haar phase after the Cayley map. -/
 def cayleyCauchyEmpirical (n : Nat) : ProbabilityMeasure Real :=
   (cyclicHaarPhase n).map
-    cayleyPhase_measurable.aemeasurable
+    (fun x => cayleyPhase (x 0))
 
 /-- The canonical standard Cauchy probability measure from Mathlib. -/
 def standardCauchyProbabilityMeasure : ProbabilityMeasure Real :=

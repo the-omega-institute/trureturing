@@ -53,7 +53,7 @@ private noncomputable def expScale (t : ℂ) : PowerSeries ℂ := rescale t (exp
 end RS16Series
 namespace RS16Series
 open PowerSeries
-private lemma linear_ODE_unique (F G R : PowerSeries ℂ) (hF : derivative ℂ F = F*R) (hG : derivative ℂ G = G*R) (h0 : constantCoeff F = constantCoeff G) : F = G := by
+private lemma linear_ODE_unique (F G R : PowerSeries ℂ) (hF : PowerSeries.derivative (R := ℂ) F = F*R) (hG : PowerSeries.derivative (R := ℂ) G = G*R) (h0 : constantCoeff F = constantCoeff G) : F = G := by
   have local_RS16Series_coeff_product (f g : PowerSeries ℂ) (n : ℕ) : coeff n (f*g) = ∑ q ∈ range (n+1), coeff q f * coeff (n-q) g := by rw [coeff_mul, Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   ext n
   induction n using Nat.strong_induction_on with
@@ -138,10 +138,10 @@ private lemma F_translation (m : ℕ) (t : ℂ) : F m t = (1 - C t * X) ^ m * (F
       rw [pow_succ]; ring
     · apply sum_congr rfl
       intro r hr; change ((bernoulli (r+1) : ℂ)*(Nat.choose (n+1) (r+1) : ℂ))*t^(n-r) = _; ring
-  have local_RS16Translation_F_differential (m : ℕ) (t : ℂ) : derivative ℂ (RS16Translation.F m t) = RS16Translation.F m t * (C (-(m : ℂ))*RS16Translation.BT t) ∧ constantCoeff (RS16Translation.F m t) = 1 := by
+  have local_RS16Translation_F_differential (m : ℕ) (t : ℂ) : PowerSeries.derivative (R := ℂ) (RS16Translation.F m t) = RS16Translation.F m t * (C (-(m : ℂ))*RS16Translation.BT t) ∧ constantCoeff (RS16Translation.F m t) = 1 := by
     have hs0 : constantCoeff (RS16Translation.S m t) = 0 := by simp [RS16Translation.S]
     have hs : HasSubst (RS16Translation.S m t) := HasSubst.of_constantCoeff_zero' hs0
-    have hD : derivative ℂ (RS16Translation.S m t) = C (-(m : ℂ))*RS16Translation.BT t := by
+    have hD : PowerSeries.derivative (R := ℂ) (RS16Translation.S m t) = C (-(m : ℂ))*RS16Translation.BT t := by
       ext n; rw [coeff_derivative, coeff_C_mul]; simp only [RS16Translation.S, RS16Translation.BT, coeff_mk, Nat.succ_ne_zero, ↓reduceIte, Nat.cast_add, Nat.cast_one]
       have hn : (n+1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
       field_simp
@@ -154,22 +154,22 @@ private lemma F_translation (m : ℕ) (t : ℂ) : F m t = (1 - C t * X) ^ m * (F
     have hh := congrArg (rescale t) (mk_one_mul_one_sub_eq_one (S := ℂ))
     have hX := rescale_X t
     simpa only [U, map_mul, map_sub, map_one, hX] using hh
-  have hDU : derivative ℂ (U t) = C t * U t^2 := by
+  have hDU : PowerSeries.derivative (R := ℂ) (U t) = C t * U t^2 := by
     ext n; simp only [coeff_derivative, U, coeff_rescale, coeff_mk, Pi.one_apply, mul_one, coeff_C_mul]; rw [← map_pow, show (2:ℕ) = 1+1 by rfl, mk_one_pow_eq_mk_choose_add]
     simp only [coeff_rescale, coeff_mk, Nat.choose_one_right, Nat.cast_add, Nat.cast_one, pow_succ]; ring
-  have hDY : derivative ℂ (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t) = U t^2 := by
-    change derivative ℂ (X * U t) = U t^2
+  have hDY : PowerSeries.derivative (R := ℂ) (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t) = U t^2 := by
+    change PowerSeries.derivative (R := ℂ) (X * U t) = U t^2
     rw [Derivation.leibniz, derivative_X, hDU]; simp only [smul_eq_mul, mul_one]
     have hh : U t^2 * (1 - C t * X) = U t := by rw [pow_two, mul_assoc, hUV, mul_one]
     linear_combination -hh
-  have hDV : derivative ℂ ((1 - C t * X)) = -C t := by simp [map_sub, derivative_one, Derivation.leibniz, smul_eq_mul]
+  have hDV : PowerSeries.derivative (R := ℂ) ((1 - C t * X)) = -C t := by simp [map_sub, derivative_one, Derivation.leibniz, smul_eq_mul]
   have hY0 : constantCoeff (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t) = 0 := by simp [D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius]
   have hY : HasSubst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t) := HasSubst.of_constantCoeff_zero' hY0
   have hF0 := (local_RS16Translation_F_differential m 0).1
-  have hFs : derivative ℂ ((F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t)) = (F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t) * (C (-(m : ℂ))*(BT 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t)) * U t^2 := by
+  have hFs : PowerSeries.derivative (R := ℂ) ((F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t)) = (F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t) * (C (-(m : ℂ))*(BT 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t)) * U t^2 := by
     rw [derivative_subst hY, hF0, subst_mul hY, subst_mul hY, subst_C, hDY]
     rfl
-  have hT : derivative ℂ ((1 - C t * X) ^ m * (F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t)) = ((1 - C t * X) ^ m * (F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t))*(C (-(m : ℂ))*BT t) := by
+  have hT : PowerSeries.derivative (R := ℂ) ((1 - C t * X) ^ m * (F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t)) = ((1 - C t * X) ^ m * (F m 0).subst (D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.mobius t))*(C (-(m : ℂ))*BT t) := by
     rw [Derivation.leibniz, hFs, derivative_pow, hDV, local_bernoulli_tail_translation t]; simp only [smul_eq_mul]
     have hmcast : (m : PowerSeries ℂ) = C (m : ℂ) := by simp
     rw [hmcast]; simp only [map_neg]
@@ -815,7 +815,7 @@ theorem result : claim := by
     have local_RS16Series_coeff_expScale (t : ℂ) (n : ℕ) : coeff n (RS16Series.expScale t) = t^n / (n ! : ℂ) := by simp [RS16Series.expScale, coeff_rescale, div_eq_mul_inv]
     have local_RS16Series_coeff_product (f g : PowerSeries ℂ) (n : ℕ) : coeff n (f*g) = ∑ q ∈ range (n+1), coeff q f * coeff (n-q) g := by rw [coeff_mul, Nat.sum_antidiagonal_eq_sum_range_succ_mk]
     have local_RS16Series_coeff_product_right (f g : PowerSeries ℂ) (n : ℕ) : coeff n (f*g) = ∑ q ∈ range (n+1), coeff (n-q) f * coeff q g := by rw [mul_comm, local_RS16Series_coeff_product]; apply sum_congr rfl; intro q hq; ring
-    have local_RS16Series_derivative_expScale (t : ℂ) : PowerSeries.derivative ℂ (RS16Series.expScale t) = C t * RS16Series.expScale t := by
+    have local_RS16Series_derivative_expScale (t : ℂ) : PowerSeries.derivative (R := ℂ) (RS16Series.expScale t) = C t * RS16Series.expScale t := by
       ext n; rw [coeff_derivative, coeff_C_mul, local_RS16Series_coeff_expScale, local_RS16Series_coeff_expScale]; simp only [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
       have hn : (n+1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
       have hf : (n ! : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
@@ -824,7 +824,7 @@ theorem result : claim := by
       rw [← mul_assoc]
       have h : RS16Series.expScale (1/2) * RS16Series.expScale (-1/2) = 1 := by rw [RS16Series.expScale, RS16Series.expScale, exp_mul_exp_eq_exp_add]; norm_num
       rw [h, one_mul]
-    have local_RS16Series_derivative_reconstruct (F : PowerSeries ℂ) : PowerSeries.derivative ℂ F - C (1/2) * F = RS16Series.expScale (1/2) * PowerSeries.derivative ℂ (RS16Series.expScale (-1/2) * F) := by
+    have local_RS16Series_derivative_reconstruct (F : PowerSeries ℂ) : PowerSeries.derivative (R := ℂ) F - C (1/2) * F = RS16Series.expScale (1/2) * PowerSeries.derivative (R := ℂ) (RS16Series.expScale (-1/2) * F) := by
       have hrec := local_RS16Series_reconstruct F
       conv_lhs => lhs; rw [hrec]
       rw [Derivation.leibniz, local_RS16Series_derivative_expScale]; simp only [smul_eq_mul]

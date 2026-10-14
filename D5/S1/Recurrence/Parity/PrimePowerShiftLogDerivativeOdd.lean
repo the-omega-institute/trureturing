@@ -18,7 +18,7 @@ private noncomputable def f : PowerSeries (ZMod 2) :=
   map (Int.castRingHom (ZMod 2)) generatingSeries
 
 private noncomputable def defect (B : PowerSeries (ZMod 2)) : PowerSeries (ZMod 2) :=
-  (1 + X) * derivative (ZMod 2) B - B
+  (1 + X) * PowerSeries.derivative (R := (ZMod 2)) B - B
 
 private theorem coeff_defect (B : PowerSeries (ZMod 2)) (k : ℕ) :
     coeff k (defect B) = coeff (k + 1) B * (k + 1) + coeff k B * (k - 1) := by
@@ -101,7 +101,7 @@ theorem generating_coeff_pair (m : ℕ) :
     mul_neg, map_zero, ← sub_eq_add_neg] at h
   exact (sub_eq_zero.mp h).symm
 
-private theorem paired_derivative : (1 + X) * derivative (ZMod 2) f = f := by
+private theorem paired_derivative : (1 + X) * PowerSeries.derivative (R := (ZMod 2)) f = f := by
   apply sub_eq_zero.mp
   change defect f = 0
   ext k
@@ -120,8 +120,8 @@ private theorem paired_derivative : (1 + X) * derivative (ZMod 2) f = f := by
 
 private theorem log_mod_two_identity :
     (1 + X) * map (Int.castRingHom (ZMod 2)) logDerivative = 1 := by
-  have hmap : map (Int.castRingHom (ZMod 2)) (derivative ℤ generatingSeries) =
-      derivative (ZMod 2) f := by
+  have hmap : map (Int.castRingHom (ZMod 2)) (PowerSeries.derivative (R := ℤ) generatingSeries) =
+      PowerSeries.derivative (R := (ZMod 2)) f := by
     ext k
     simp [f, coeff_derivative]
   rw [logDerivative, map_mul, hmap, ← mul_assoc, paired_derivative]

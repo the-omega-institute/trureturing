@@ -413,7 +413,7 @@ theorem golden_period_eleven_orbits_ab_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitA, goldenPeriodElevenOrbitB,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_cd_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitC).Forall
@@ -422,7 +422,7 @@ theorem golden_period_eleven_orbits_cd_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitC, goldenPeriodElevenOrbitD,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_ef_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitE).Forall
@@ -431,7 +431,7 @@ theorem golden_period_eleven_orbits_ef_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitE, goldenPeriodElevenOrbitF,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_gh_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitG).Forall
@@ -440,7 +440,7 @@ theorem golden_period_eleven_orbits_gh_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitG, goldenPeriodElevenOrbitH,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_ij_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitI).Forall
@@ -449,7 +449,7 @@ theorem golden_period_eleven_orbits_ij_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitI, goldenPeriodElevenOrbitJ,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_kl_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitK).Forall
@@ -458,7 +458,7 @@ theorem golden_period_eleven_orbits_kl_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitK, goldenPeriodElevenOrbitL,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_mn_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitM).Forall
@@ -467,7 +467,7 @@ theorem golden_period_eleven_orbits_mn_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitM, goldenPeriodElevenOrbitN,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_op_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitO).Forall
@@ -476,7 +476,7 @@ theorem golden_period_eleven_orbits_op_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitO, goldenPeriodElevenOrbitP,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_orbits_qr_large_three_step_fourth_legal :
     (goldenOrbitStateFirstFourSteps goldenPeriodElevenOrbitQ).Forall
@@ -485,7 +485,7 @@ theorem golden_period_eleven_orbits_qr_large_three_step_fourth_legal :
         goldenLargeThreeStepFourthLegal := by
   norm_num [goldenPeriodElevenOrbitQ, goldenPeriodElevenOrbitR,
     goldenOrbitStateFirstFourSteps, goldenOrbitStates, goldenTraceCode,
-    goldenLargeThreeStepFourthLegal] ; tauto
+    goldenLargeThreeStepFourthLegal]
 
 theorem golden_period_eleven_large_three_step_fourth_legal :
     goldenPeriodElevenStateFirstFourSteps.Forall

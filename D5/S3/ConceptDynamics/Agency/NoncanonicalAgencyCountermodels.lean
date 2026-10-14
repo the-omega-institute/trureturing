@@ -6,17 +6,20 @@
    digest: Fair and reason-sensitive choices separate authorship from canonicity. -/
 
 import D5.S3.ConceptDynamics.Agency.SelfFormationFreeWillBoundary
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 
-/- Library-search audit trail (2026-08-27):
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
+
+/- Library dependencies:
    * No repository theorem packages both Boolean countermodels. The existing
      symmetric-tie theorem has no stochastic law or internal-reason clause,
      while the existing deterministic-autonomy model lacks a public clause
      making distinct internal reasons select distinct actions.
    * Exact family hit `FunctionalFuture` supplies the canonical deterministic
      process predicate and is imported rather than restated.
-   * Exact pinned-Mathlib hits `PMF.uniformOfFintype`,
-     `PMF.uniformOfFintype_apply`, and `Bool.not_ne_self` construct the fair law
+   * The imported finite-uniform PMF, Mathlib's `PMF.ofFintype_apply`,
+     and `Bool.not_ne_self` construct the fair law
      and exclude a deterministic selector invariant under candidate exchange.
      No packaged theorem supplies both models. -/
 
@@ -51,15 +54,15 @@ theorem noncanonical_and_deterministic_agency_countermodels :
               process external reason₂ = {action₂} /\
               action₁ ≠ action₂) := by
   constructor
-  · refine ⟨fun _ => PMF.uniformOfFintype Bool, ?_, ?_, ?_⟩
+  · refine ⟨fun _ => uniformPmf Bool, ?_, ?_, ?_⟩
     · intro reason action
-      norm_num [PMF.uniformOfFintype_apply, Fintype.card_bool]
+      norm_num [uniformPmf, PMF.ofFintype_apply, Fintype.card_bool]
     · intro leftReason rightReason
       rfl
     · rintro ⟨selector, canonical⟩
       have fixedPoint := canonical false (by
         intro action
-        simp only [PMF.uniformOfFintype_apply])
+        simp only [uniformPmf, PMF.ofFintype_apply])
       exact Bool.not_ne_self (selector false) fixedPoint
   · refine ⟨fun _ reason => {reason}, ?_, ?_⟩
     · intro external

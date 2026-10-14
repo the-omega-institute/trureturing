@@ -321,7 +321,7 @@ private lemma w0_eigen (s : ℕ) :
     (tree (hubCount s) (leafCount s)).lapMatrix ℝ *ᵥ w0 s = (0 : ℝ) • w0 s := by
   have hc : (cell 1 1 1 : (Option (Fin (hubCount s) × Option (Fin (leafCount s)))) → ℝ) = (fun _ => 1) := by
     funext v; rcases v with (_ | ⟨i, _ | j⟩) <;> rfl
-  simpa [w0, hc] using (tree (hubCount s) (leafCount s)).lapMatrix_mulVec_const_eq_zero (R := ℝ)
+  simpa [w0, hc, Pi.one_def] using (tree (hubCount s) (leafCount s)).lapMatrix_mulVec_one_eq_zero ℝ
 private lemma wa_eigen (s : ℕ) :
     (tree (hubCount s) (leafCount s)).lapMatrix ℝ *ᵥ wa s = eigA s • wa s := by
   rw [wa, lap_cell]

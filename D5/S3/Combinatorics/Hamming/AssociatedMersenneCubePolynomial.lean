@@ -806,7 +806,7 @@ set_option maxHeartbeats 5000000
 set_option maxRecDepth 4096
 set_option backward.isDefEq.respectTransparency false
 
-local notation "D" => (PowerSeries.derivative (Polynomial ℤ))
+local notation "D" => (PowerSeries.derivative (R := Polynomial ℤ))
 
 private lemma geom_partial_approx (N : ℕ) :
     AgreeUpTo N (geom blockSeries) (∑ ell ∈ Finset.range (N+1),blockSeries^ell) := by

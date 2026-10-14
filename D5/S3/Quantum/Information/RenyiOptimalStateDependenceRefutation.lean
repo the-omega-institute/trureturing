@@ -155,7 +155,7 @@ theorem result : ¬ claim := by
         have hd := hdiag j
         change ρ.val j j = if j = k then 1 else 0 at hd
         simp [x, dotProduct, Matrix.mulVec, Pi.single_apply, hd, hj]
-      have hz := ((psd ρ).dotProduct_mulVec_zero_iff x).mp hx
+      have hz := ((psd ρ).dotProduct_mulVec_zero_iff (x := x)).mp hx
       have hi := congrFun hz i
       simpa [x, Matrix.mulVec, dotProduct, Pi.single_apply] using hi
     apply Subtype.ext
