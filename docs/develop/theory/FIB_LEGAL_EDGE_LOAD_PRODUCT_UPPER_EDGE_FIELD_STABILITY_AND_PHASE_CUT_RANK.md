@@ -1840,8 +1840,8 @@ Schmidt spectra because fixed-reference coherence readings
 are not invariant under position-local phases. The source
 also establishes smaller capacities on its symmetry walls
 and an anisotropic realized response Gram; none supplies a
-spatial dimension, a triplet rotation action or the missing
-joint phase gate.
+spatial dimension, a triplet rotation action or longer-chain
+joint phase controls.
 
 For the three-site Gibbs specialization used here,
 $p_{13}/p_0=\lambda_1\lambda_3$ and
