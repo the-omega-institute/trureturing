@@ -120,4 +120,7 @@ For attainment, Alice and Bob send the computational-basis states labeled by xâ‚
 - Truth anchor: `D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.score`
 - Truth anchor: `D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.tensor`
 - Truth anchor: `D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.win`
+- Dependency: [D5/S3/Fourier/FullBispectrumStability](../Fourier/FullBispectrumStability.md)
+- Dependency: [D5/S3/Fourier/SparseGeneratorFamily](../Fourier/SparseGeneratorFamily.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall](../Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.md)
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Quantum/Matrix/CartesianVariance.md)

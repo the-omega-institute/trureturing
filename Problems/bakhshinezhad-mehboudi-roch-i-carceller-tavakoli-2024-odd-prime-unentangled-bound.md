@@ -51,13 +51,13 @@ The proof would not settle the conjecture if the module's strategies were narrow
 
 ## Evidence
 
-The canonical source is `D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.lean` (651 lines).
+The canonical source is `D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.lean` (632 lines).
 - It defines `tensor`, `phase`, `win`, `Valid`, `score`, `mixtureScore` and `claim`, and proves `result : claim` for every odd prime d.
-- It uses the frozen `CartesianVariance.trace_product_cauchy`, `frobSq_eq_sum` and `psd_entry_bound`, `RHLinalg.frobSq`, `RHLinalg.trace_mul_nonneg_of_posSemidef` and `ProjectionProbabilityFlow.trace_hermitian_product_real`, with Mathlib's `ZMod.stdAddChar`, `AddChar.sum_mulShift`, `Matrix.trace_kronecker` and `finProdFinEquiv`.
+- It uses the frozen `CartesianVariance.trace_product_cauchy` and `frobSq_eq_sum`, `RHLinalg.frobSq`, `RHLinalg.trace_mul_nonneg_of_posSemidef`, `ProjectionProbabilityFlow.trace_hermitian_product_real`, `GurvitsBarnumBall.psd_trace_sq` (made public for this settlement), `FullBispectrumStability.cyclic_parseval` and `SparseGeneratorFamily.char_sum`, with Mathlib's `ZMod.stdAddChar`, `Matrix.trace_kronecker` and `finProdFinEquiv`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registration in `Reg/D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.lean` reads out the bound d ↦ 2/(d + 1) of the fixed-strategy clause of `claim`. Its rejected realization, d ↦ 1/(d + 1), fails at d = 3, where the attaining strategy of `result` scores 1/2 > 1/4. It is `declared_validated`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.lean.json`, statement `sha256:1291c15219b34269757b1dbf2267735db5d9fad8585df90c74abd21eaaccf329`.
+Frozen state: `Golden/Frozen/state/D5/S3/QuantumBounds/UnentangledOddPrimeCommunication.lean.json`, statement `sha256:5d5b48b9af9eeb99ee86e41c69c32b3dc1bcd057b5b4b0d918fa955336c4c323`.
 
 Declaration statements:
 - `result`: `sha256:8d8a4cf6e96ccc82fcee57b2cf36c862a556407d8fc3af7a70556979544efafc`;
