@@ -1806,3 +1806,719 @@ Neither the universal implication nor such an original separator is
 established here; these ordinary structural results leave that goal active.
 
 ## 追加锚（本行以下为增补区）
+## 214. Simultaneous late coordinates: signed cones, fixed fibers, and a necessary stock envelope
+
+This increment uses the full score and catalog inherited from Definition 210.1. Words use the literal answer bits: $0$ means a zero answer, $1$ means a positive answer, $n(w)$ is the first literal zero, and $1^L$ is the all-positive word. Thus $w(Z)$ has literal zeros exactly at $Z$. The separate zero indicators in §214.4 are $z_i=1-w_{j_i}$, with $j_6=\ell$. Every word, including multiple-zero words and the all-positive word, remains in the domain. A score has independent nonnegative rows $A,C,P$ on zero words and terminal mass $T$ on the all-positive word. Its quotient is
+
+$$
+Q(V)=(\beta,K),\qquad \beta_j=\sum_{\Omega_j}(C-A),\qquad
+K=\sum_w(A_w+C_w+P_w)+T,
+$$
+
+and its excess is the complete all-label support minus its anchor. Empty schedules, singleton schedules, increasing pairs, reversed pairs, repeated addresses, arbitrary labels (including earlier and unqueried labels), and the independent pair row are always included. The finite statements below are statements about this full catalog; a listed table is only a detector or a supplier inside that catalog.
+
+The original universal implication remains the surrounding question:
+$\mathcal F_N(a,\varepsilon)\ne\varnothing$ should imply
+$\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing$ at every positive closed cap, or else a same-realization separator must be supplied. None of the four results below settles that implication.
+
+### 214.1. A signed exact-$Q$ cone with one positive late coordinate
+
+**Definition 214.1 (signed one-pivot cone).** Let $L\ge3$, let $q=(\beta,K)$ satisfy
+$K\ge\sum_{j=1}^L|\beta_j|$, and suppose that at most one late coordinate is positive. Put
+
+$$
+D=(-\beta _1)_++(-\beta _2)_+.
+$$
+
+If all late coordinates are nonpositive, define $D_*=D$ directly. Otherwise let $n$ be the unique index with $n\ge3$ and $g=\beta_n>0$, set $H=K-g$, and put
+
+$$
+a=\bigl(|\beta _1|,|\beta _2|,-\beta _3,\ldots,-\beta _{n-1},
+              \sum_{j>n}(-\beta_j)\bigr).
+$$
+
+In this positive-pivot branch, $a$ has $n$ nonnegative entries, $\sum_i a_i\le H$, and $a_{[1]}\ge a_{[2]}$ denote its two largest entries. Define
+
+$$
+J=\max\left\{a_{[1]}+a_{[2]},
+       \frac{H+(n-2)a_{[1]}}{n-1},\frac{2H}{n}\right\},
+\qquad
+D_* =D+(g-H+J)_+ .
+$$
+
+**Theorem 214.2 (full signed one-pivot minimum).** Over all nonnegative full scores $V$ with $Q(V)=q$,
+
+$$
+\min_{Q(V)=q}\Delta_N(V)=\min_{Q(V)=q}\Delta_O(V)=D_* .
+\tag{214.1}
+$$
+
+One and the same score attains both minima. If every late coordinate is nonpositive, the value is $D$, with no pivot required. All zero masses, ties, $n=L=3$, $K=\sum|\beta_j|$, and the closed value $D_*=1$ are included. The theorem allows arbitrary signed early coordinates, arbitrary late pair rows, changed anchors and unaries, and simultaneous negative late coordinates. It does not cover two positive late coordinates.
+
+**Proof.** First consider the lower rows. The stopped schedule $(1,2)$, with output zero at a queried early zero whenever the corresponding early coefficient is negative and with the ordinary correct output otherwise, gives the anchor lower bound $\Delta_O\ge D$; its $N$ completion gives the same bound.
+
+In the positive-pivot branch, take any two-element subset $S\subseteq\{1,\ldots,n\}$, query it in increasing order, output at a first zero $i<n$ the label $i$ when $i\le2$ and $\beta_i\ge0$, and output $0$ otherwise; at a first zero at $n$ output $n$; on exhaustion output $0$ when $n\in S$ and $n$ otherwise. This is a legal stopped table, and it retains every label allowed by Definition 210.1. Average such tables under an arbitrary law on the two-element sets. Write
+$p_i=\Pr(i\in S)$ and $r=\min_i p_i$. The resulting detector outputs $n$ on every $\Omega_n$, outputs the designated early correct or base label on $\Omega_j$ with probability at least $p_j$ for $j<n$, has base probability $p_n$ on every $\Omega_j$ with $j>n$, has every independent pair probability at least $r$, and has positive-word base probability $p_n\ge r$.
+
+Put $k=r-1$. For $j<n$ define
+
+$$
+\xi_j=\begin{cases}
+p_j-r,&j\le2,\ \beta_j\ge0,\\
+-1-p_j+r,&j\le2,\ \beta_j<0,\\
+r-p_j,&j\ge3,
+\end{cases}
+$$
+
+and put $\xi_n=2-r$, $\xi_j=r-p_n$ for $j>n$. The detector's complete event vector dominates the anchor plus the coefficient vector of
+$\sum_j\xi_j\beta_j+kK$. On an early positive class the three required event thresholds are
+$(2r-p_j-1,p_j,r)$; on an early negative or later negative class they are
+$(p_j,2r-p_j-1,r)$ (with $p_n$ after the pivot); on $\Omega_n$ they are
+$(2r-2,1,r)$; and the terminal threshold is $r$. These are requirements on event probabilities, not nonnegative slacks; the actual probability minus its threshold is the slack. Since $2r-p_i-1\le0$, every independent $A,C,P$ row, including negative singleton rows and the pair row, is covered. Multiplying by an arbitrary nonnegative score gives
+
+$$
+\Delta_O(V)\ge D+g-H+\sum_i a_i p_i+B r,
+\qquad B=H-\sum_i a_i.
+\tag{214.2}
+$$
+
+Three concrete detector mixtures give the three sharp lower tests. Put weight one on the pair of the two largest entries of $a$; this gives
+$D+g-H+a_{[1]}+a_{[2]}$. Put equal weight on all pairs containing an index of largest mass and average over the remaining $n-1$ choices; this gives
+$D+g-H+[H+(n-2)a_{[1]}]/(n-1)$. Put equal weight on all $\binom n2$ pairs; this gives
+$D+g-H+2H/n$. Together with $D$, these are exactly $D_*$.
+
+For the matching score choose nonnegative $z_i\ge a_i$ with
+$\sum_i z_i=H$ and with the largest-two sum equal to $J$. Such a choice is obtained by water filling: choose $h\ge0$ with
+$z_i=\max(a_i,h)$ and the required sum (with the evident $h=0$ convention when $B=0$). If $h\le a_{[2]}$, the largest-two sum is $a_{[1]}+a_{[2]}$; if $a_{[2]}\le h\le a_{[1]}$, it is
+$[H+(n-2)a_{[1]}]/(n-1)$; and if $h\ge a_{[1]}$, it is $2H/n$. Conversely, every vector $z\ge a$ of sum $H$ has largest-two sum at least $a_{[1]}+a_{[2]}$ and at least the average pair sum $2H/n$. Pair the coordinate above the largest floor with the largest remaining coordinate: if that coordinate has value $x\ge a_{[1]}$, their sum is at least $x+(H-x)/(n-1)\ge[H+(n-2)a_{[1]}]/(n-1)$. Thus every vector obeys all three bounds and water filling is optimal.
+
+Write $w(Z)$ for the length-$L$ word whose zero set is $Z$. For each $i<n$ put
+$P_{w(\{i,n\})}=z_i-a_i$ and, on that word, put $C=\beta_i$ if $\beta_i\ge0$ and $A=-\beta_i$ if $\beta_i<0$. Put $C_{w(\{n\})}=g$, put $A_{w(\{j\})}=-\beta_j$ for $j>n$, and put $T=z_n-a_n$; all other coefficients are zero. The rows on coincident words add. Direct substitution gives $Q(V)=q$ and anchor $W_V=H-D$.
+
+For a full catalog cell, a guard $i<n$ can contribute at most $z_i$, while all post-pivot negative-base atoms together with the terminal atom contribute at most $z_n$. A table that collects no reward from the positive-pivot atom earns at most $H$. If it collects that atom, its cell is assigned label $n$, which collects no guard reward; only guards in other cells can contribute. A schedule isolating two guards earns at most $g+z_i+z_j$; one guard and the pivot earns at most $g+z_i+z_n$; a schedule using an address after the pivot can isolate only its own negative-base atom, at most $z_n$, and two such addresses recover at most $z_n$ beyond the pivot. These bounds use the maximum over every legal numerical label in each cell. Hence
+
+$$
+B_N(V),B_O(V)\le\max(H,g+J),
+$$
+
+while the pair of slots realizing $J$ gives a stopped table attaining the corresponding value: two guard slots use their maximizing guard labels and pivot label on exhaustion; a guard-pivot pair uses the guard label, pivot label on the $10$ cell, and zero on the $11$ cell. The modified anchor earns $H$. Thus equality holds and
+$\Delta_N(V)=\Delta_O(V)=D_*$ in the positive-pivot branch.
+
+If all late coordinates are nonpositive, instead put, for every $j$,
+
+$$
+ C_{w(\{j\})}=(\beta_j)_+,\qquad
+ A_{w(\{j\})}=(-\beta_j)_+,\qquad
+ P=0,\qquad T=K-\sum_j|\beta_j|.
+$$
+
+All these coefficients are nonnegative; every negative early and late coordinate is retained. The quotient is exactly $q$, and the anchor is
+$W_V=\sum_{j\le2}(\beta_j)_++\sum_{j\ge3}(-\beta_j)_++T=K-D$.
+The total of the pointwise maximum rewards is $K$, so every schedule in either full catalog has support at most $K$. The modified $(1,2)$ anchor collects every coefficient: it emits the appropriate correct or base label on the early singleton words and zero on every late singleton and the positive word. Its reward is $K$. Hence both supports equal $K$ and both excesses equal $D$. This also covers $K=0$, all zero coefficients, and all unused terminal stock, and completes (214.1). $\square$
+
+**Corollary 214.3 (one exact certificate and its boundary).** If an actual unit-$O$ input has a quotient in the cone of Theorem 214.2, the single score above has $Q(V)=Q(y)$, $\Delta_N(V)=D_*\le\Delta_O(y)\le1$, and the residual is zero. Thus the certificate uses one common score and $\theta=0$. For every complete feasible $\lambda$ for the same $b\in H_N$, of mass $M$, the existing weak-duality row gives
+$F_{Q(y)}(b)\le M\Delta_N(V)\le M\le\max(1,M)$; no $H_L$ point is substituted for the original $H_N$ witness. A detector mixture itself has actual tail error
+$\max(1-p_n,a_m)$ at a later first absence $m$, by the closed-tail identity supplied with Theorem 110.2; it is not asserted to attain every arbitrary cap. The nonnegative one-late specialization is Theorem 213.18, so the new content is the signed early cone and the aggregate post-pivot negative stock.
+
+### 214.2. A fixed-$\{3,4\}$ fiber and a common-seed companion
+
+**Definition 214.4 (fixed two-late fiber).** Let $L\ge4$, $g,h,B\ge0$, and
+
+$$
+q=(0,0,g,h,0,\ldots,0;g+h+B).
+$$
+
+For a score on this fiber, $B=K-\beta_3-\beta_4=2\sum A+\sum P+T$; an arbitrary competitor need not have $W=B$, because $W=B-\sum A$. The minimization below is over every nonnegative full score, with arbitrary $A$, early $P$, late $P$, cancellations, changed anchor and arbitrary labels.
+
+**Theorem 214.5 (one simultaneous minimum for the fixed fiber).** Define
+
+$$
+\Phi(g,h,B)=\max\left\{0,\ g-\frac B3,
+ \frac{g+2h-B}{2},\frac{3g+h-B}{4},
+ \frac{2g+2h-B}{4},g+h-\frac{2B}{3},
+ \frac{4g+3h-2B}{5}\right\}.
+\tag{214.3}
+$$
+
+Then
+
+$$
+\min_{Q(V)=q}\Delta_N(V)=\min_{Q(V)=q}\Delta_O(V)=\Phi(g,h,B).
+\tag{214.4}
+$$
+
+The same score attains both minima. Equivalently, for an allowance $d\ge0$ the least stock is
+
+$$
+B_*(g,h,d)=\max\left\{0,3g-3d,g+2h-2d,3g+h-4d,
+2g+2h-4d,\frac{4g+3h-5d}{2},\frac{3(g+h-d)}2\right\}.
+\tag{214.5}
+$$
+
+In particular the exact zero-cost threshold is $B\ge\max(3g+h,2g+2h)$. Fixed addresses are part of the theorem; no relabelling to arbitrary positions is claimed.
+
+**Proof.** Use the following nine legal stopped tables, where $(i,j;x,y,z)$ means that the increasing schedule $(i,j)$ outputs $x,y,z$ in cells $0,10,11$:
+
+$$
+\begin{array}{c|c}
+ a=(1,2;0,0,3)&b=(1,2;0,0,4)\\
+ c=(1,3;0,3,0)&e=(2,3;0,3,0)\\
+ f=(1,3;0,3,4)&g_0=(2,3;0,3,4)\\
+ h_0=(2,4;0,4,0)&i_0=(3,4;0,4,0)\\
+ j_0=(3,4;3,4,0)&
+\end{array}
+$$
+
+For a multiset of $k$ tables let $N_0(w)$ count output zero and $N_n(w)$ count output $n(w)$ on a zero word. Its coefficients on independent $(A,C,P)$ rows are
+$(N_0-k\mathbf1_{n\ge3},N_n-k\mathbf1_{n\le2},N_0+N_n-k)$, and its terminal coefficient is $N_0-k$. The following six bundles, with their displayed $(u,v,m;k)$, have rowwise sums dominating the complete functional
+$u\beta_3+v\beta_4-k(\beta_1+\beta_2)-m\mathcal S(V)$, where
+$\mathcal S(V)=K-\sum_j\beta_j=2\sum A+\sum P+T$. This assertion is before imposing the early equalities and holds on every suffix and every multiple-zero word:
+
+$$
+\begin{array}{c|c|c|c|c|c}
+\text{bundle}&\text{tables}&u&v&m&k\\\hline
+1&a,c,e&3&0&1&3\\
+2&f,h_0&1&2&1&2\\
+3&b,c,e,i_0&2&2&1&4\\
+4&c,e,f,g_0,i_0&4&3&2&5\\
+5&a,c,e,i_0&3&1&1&4\\
+6&f,g_0,j_0&3&3&2&3
+\end{array}
+$$
+
+For completeness, the verification is uniform. On an early prefix $00,01,10$, the bundle has no output equal to the actual early first-zero label, and its total zero-output count is at least $k-m$. On class $3$ the bundle has exactly $u$ correct outputs, on class $4$ exactly $v$, and at most $m$ outputs outside the set $\{0,n\}$; on every class $n>4$ the first four bits are $1111$, the zero count is $k-m$ and the correct count is zero. Thus the rowwise coefficients dominate respectively
+$(-u-2m,u,-m)$ on class $3$, $(-v-2m,v,-m)$ on class $4$, $(-2m,0,-m)$ later, and $(-m)$ at the terminal, while its actual early coefficients dominate $(k-2m,-k,-m)$. Multiplication by arbitrary nonnegative $A,C,P,T$ and summation first gives
+$k\Delta_O(V)\ge u\beta_3+v\beta_4-k(\beta_1+\beta_2)-m\mathcal S(V)$. Only now use $\beta_1=\beta_2=0$ and $\mathcal S(V)=B$ on the fiber to obtain $k\Delta_O(V)\ge ug+vh-mB$. Since $\Delta_N\ge\Delta_O$, the six bundles yield all six nonzero terms in (214.3), and the anchor gives the term $0$.
+
+It remains to attain the bound with one score. Use the following eight scores, all padded by ones to length $L$; omitted rows are zero and coincident rows add:
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{score}&(g,h,d,B)&C\text{-atoms}&P\text{-atoms}&T\\\hline
+U&(1,0,0,3)&1101:1&0101:1,1001:1&1\\
+V&(0,1,0,2)&1110:1&0110:\tfrac12,1010:\tfrac12,1100:\tfrac12&\tfrac12\\
+Z&(1,1,0,4)&1101:1,1110:1&0100,0101,0110,1000,1001,1010:\tfrac12&1\\
+X&(2,1,1,3)&1100:1,1101:1,1110:1&0100,0101,1000,1001:\tfrac12&1\\
+Y&(2,3,1,6)&1100:2,1110:3&0100,0110,1000,1010:1&2\\
+Z_3&(3,3,1,8)&1100:3,1110:3&0100:2,0110:1,1000:2,1010:1&2\\
+E_3&(1,0,1,0)&1101:1&-&0\\
+E_4&(0,1,1,0)&1110:1&-&0
+\end{array}
+$$
+
+Here $1101$ has zero set $\{3\}$. In pair order $12,13,14,23,24,34$, the exact $N$ cell maxima, in cell order $00,01,10,11$, are
+
+$$
+\begin{array}{c|cccccc}
+ &12&13&14&23&24&34\\\hline
+U&(0,1,1,1)&(1,0,1,1)&(0,1,0,2)&(1,0,1,1)&(0,1,0,2)&(0,2,0,1)\\
+V&(0,\tfrac12,\tfrac12,1)&(0,\tfrac12,\tfrac12,1)&(\tfrac12,0,1,\tfrac12)&(0,\tfrac12,\tfrac12,1)&(\tfrac12,0,1,\tfrac12)&(\tfrac12,0,1,\tfrac12)\\
+Z&(0,\tfrac32,\tfrac32,1)&(1,\tfrac12,1,\tfrac32)&(1,\tfrac12,1,\tfrac32)&(1,\tfrac12,1,\tfrac32)&(1,\tfrac12,1,\tfrac32)&(1,1,1,1)\\
+X&(0,1,1,2)&(1,0,2,1)&(\tfrac12,\tfrac12,1,\tfrac32)&(1,0,2,1)&(\tfrac12,\tfrac12,1,\tfrac32)&(1,1,1,1)\\
+Y&(0,2,2,3)&(1,1,2,3)&(2,0,3,2)&(1,1,2,3)&(2,0,3,2)&(2,0,3,2)\\
+Z_3&(0,3,3,3)&(2,1,3,3)&(3,0,3,2)&(2,1,3,3)&(3,0,3,2)&(4,0,3,2)
+\end{array}
+$$
+
+The anchors are $3,2,4,3,6,8,0,0$ for $U,V,Z,X,Y,Z_3,E_3,E_4$. Consequently the pair excess vectors are zero for $U,V,Z$,
+$(1,1,\tfrac12,1,\tfrac12,1)$ for $X$,
+$(1,1,1,1,1,1)$ for $Y$, and $(1,1,0,1,0,1)$ for $Z_3$.
+Each raw ray $E_3,E_4$ has one unit correct atom and no anchor; exactly one cell can collect it under any schedule, so every pair has excess $1$.
+These maxima follow by summing, in each cell $E$,
+
+$$
+\max\left\{\sum_E P+T\mathbf1_{1^L\in E},\
+        \max_{1\le\ell\le L}\sum_{E\cap\Omega_\ell}(C+P)\right\}.
+$$
+
+Thus earlier and unqueried labels are included. Every empty or singleton observation is a coarsening of an active $N$ pair. Every address above four is constantly one on these scored words, and every label above four has zero reward. Reversals permute $N$ cells and repetitions give singleton information. These facts bound every full $N$ schedule, and hence every $O$ schedule, by the listed anchor plus $d$ for every $L\ge4$.
+
+Put $F_1=3g-3d$, $F_2=g+2h-2d$, $F_3=3g+h-4d$, $F_4=2g+2h-4d$, $F_5=(4g+3h-5d)/2$, and $F_6=3(g+h-d)/2$. For any branch attaining the maximum $B_*$, the following single conic sums reproduce $(g,h,B_*)$ and have excess at most $d$:
+
+$$
+\begin{array}{c|l}
+0&gE_3+hE_4\\
+F_1&(g-d-h)U+(d-h)E_3+hX\\
+F_2&(h-d-g)V+(d-g/2)E_4+(g/2)Y\\
+F_3&t=(h+d-g)_+:\ (g-h-d+t)U+(h-d-2t)Z+(d-t)X+tZ_3\\
+F_4&t=(g+d-h)_+:\ (h-g-d+t)V+(g-2d-t)Z+(d-t)Y+tZ_3\\
+F_5&((3d-h)/2)X+((3d+h-2g)/2)Y+(g-2d)Z_3\\
+F_6&t=(h-d)_+/2,\ s=(g+h-d)/2:\ (d-h+2t)E_3+((h-g+d)/2-t)E_4+(s-2t)X+tY
+\end{array}
+$$
+
+A maximum of the seven real affine forms always exists. The zero branch gives $g+h\le d$ by $F_6\le0$. On any other maximizing branch, comparisons with the other six forms give the following bounds, valid also at ties: the $F_1$ branch gives $d\ge h$ and $g\ge d+h$; $F_2$ gives $d\ge g/2$ and $h\ge d+g$; $F_3$ gives $h\ge d$, $g\ge h$, $2g\ge h+3d$ and $0\le t\le\min(d,(h-d)/2)$; $F_4$ gives $g\ge2d$, $h\ge g$, $h\ge3d$ and $0\le t\le\min(d,g-2d)$; $F_5$ gives $g\ge2d$, $h\le3d$, $2g\le3d+h$; and $F_6$ gives $d\ge|g-h|$, $g\le2d$, $g+h\ge d$ and $0\le t\le\min(s/2,(h-g+d)/2)$. These inequalities make every displayed coefficient nonnegative. Substitution of the generator tuples gives $(g,h,B_*)$ and total weighted allowance $d$ in each nonzero branch; the zero branch has allowance $g+h\le d$. Thus the cases cover all real parameters, not only interior cones. For example $(g,h,d)=(4,2,1)$ selects $F_3=10$ and gives $U+Z+X$, with quotient late coordinates $(4,2)$, stock $10$ and allowance $1$. A sum of scores has support at most the sum of supports, while its anchor is linear, so the one conic sum has excess at most $d$; it is one score on one carrier, not several separately funded scores. If $B>B_*$, add $B-B_*$ to $T$; the anchor rises by $B-B_*$ and each table reward rises by at most that amount, so the excess cannot increase. Exact support increase or preservation of excess is not needed. Taking $d=\Phi(g,h,B)$ and combining with the lower bounds proves (214.4)--(214.5), including all ties and zero endpoints. $\square$
+
+**Corollary 214.6 (one-budget exact certificate).** If a full unit-$O$ input has quotient in this fiber, Theorem 214.5 gives one exact-$Q$ score with $\theta=0$ and $\Delta_N=\Phi\le\Delta_O\le1$. For a signed target outside the fiber it gives only the sufficient residual test
+
+$$
+\Phi(g,h,B)+\max\{0,\sigma_{H_L}(q-q_2(g,h,B))\}\le1,
+\tag{214.6}
+$$
+
+where $q_2(g,h,B)=(0,0,g,h,0,\ldots,0;g+h+B)$ and $g,h,B\ge0$ are the same parameters as in Definition 214.4. The second term is one residual charged to the same budget. It does not license adding separately affordable fibers.
+
+**Proposition 214.7 (an explicit same-seed continuous companion).** Let
+$s\in[5/11,5/9]$ and $e=2s/5$. For a finite $L\ge4$ set
+
+$$
+b=(1-s/5,6s/5,6s/5,s,e,\ldots,e).
+$$
+
+There are four distinct objects in this construction. The deterministic anchor kernel is $R=(1,2;1,2,0)$. The nonnegative dual score $V_\star$ has
+$C_{1100}=C_{1101}=C_{1110}=1$, $P_{0101}=P_{1000}=1$, $T=1$, with positive padding and every other row zero. The conic acquisition measure is
+
+$$
+\lambda_s=\frac{s}{5}\bigl[\delta_{(13;130)}+\delta_{(13;134)}+
+\delta_{(23;030)}+\delta_{(23;034)}+\delta_{(34;040)}\bigr],\qquad
+M=\lambda_s(\mathcal D_O)=s.
+$$
+
+Finally the normalized probability-vector kernel is
+
+$$
+p_s=(1-s)p_R+\sum_D\lambda_s(D)p_D.
+\tag{214.7}
+$$
+
+Here $(ij;xyz)$ is a deterministic stopped table with schedule $(i,j)$ and outputs $(x,y,z)$ in cells $0,10,11$, and $p_D$ is its output law. The nonnegative weights in (214.7) sum to one. One source-independent uniform seed selects the entire table before any answer, by a partition of $[0,1)$ into these six weights. The $O$ rule stops at its first queried zero; its $N$ completion obtains both preselected replies and ignores any reply not used by the stopped table. These use the same seed and output the same original mark, with at most two actual requests and finite handoff.
+
+**Proof.** For first-zero classes $1,2,3,4$, the correct probabilities and the minima of the base and independent pair probabilities over every word in the class are
+
+$$
+\begin{array}{c|cccc}
+ &1&2&3&4\\\hline
+p_s(n)&1-3s/5&1-s&4s/5&3s/5\\
+\min p_s(0)&s/5&3s/5&1-4s/5&1-3s/5\\
+\min[p_s(0)+p_s(n)]&1-2s/5&1-2s/5&1&1\\
+\text{correct slack}&0&1-9s/5&0&0\\
+\text{base slack}&2s/5&11s/5-1&4s/5&4s/5
+\end{array}
+$$
+
+The last two rows subtract $b_n-e$ and $1-b_n-e$, respectively. To obtain the table, evaluate the five stopped outputs on the first four bits; every suffix gives the same outputs, so multiple-zero suffixes are unrestricted. The two potentially restrictive slacks are nonnegative exactly when $5/11\le s\le5/9$. Pair demand is $1-e$ and positive-word base mass is $1-e$. The first base demand is $-s/5$, retained without truncation. For $n>4$, all first four replies are one: correct probability is zero, base and pair probabilities are $1-e$, with $b_n=e$. Thus every independent finite cap row holds, including both closed endpoints.
+
+The conic measure has event matrix
+$G_{\mathcal C}\lambda_s=z_{p_s}-r$ because $M=s$, $r=z_R$, and
+$z_{p_s}=(1-s)r+\sum_D\lambda_s(D)z_D$, where $z_{p_s}$ is the complete event vector of the normalized kernel $p_s$.
+Therefore the same full measure satisfies $G_O\lambda_s\ge h(b,e)$ and, after completion of its tables, $G_N\lambda_s\ge h(b,e)$.
+Also
+
+$$
+\sum_{j=3}^Lb_j-(L+1)e=s/5,\qquad
+b_1+\sum_{j=3}^Lb_j-(L+1)e=1.
+$$
+
+The remaining order conditions in $H_L$ follow from $s\le5/9$; hence $(b,e)\in H_L$ and this same feasible $\lambda_s$ establishes $(b,e)\in H_N$.
+
+For the separate score, $Q(V_\star)=(0,0,2,1,0,\ldots,0;6)$ and $W_{V_\star}=3$. Its exact $N$ pair supports, in order $12,13,14,23,24,34$, are $(4,4,3,4,4,4)$; its stopped pair supports are the same. Short and inactive-address schedules have no larger support, by the all-label cell formula and coarsening. Thus both costs are $1$. Weak duality with this score and the very same $\lambda_s$ gives
+
+$$
+F_{Q(V_\star)}(b,e)=2b_3+b_4-6e=s=M,
+\qquad \rho_N(b,e)=\rho_O(b,e)=s.
+$$
+
+This is conic attainment; $V_\star$ is not a probability kernel and $\lambda_s$ is not normalized by itself.
+
+For the actual marked targets take
+$a_1=1-s/5$, $a_2=a_3=6s/5$, $a_4=s$ and
+$a_n=e2^{-(n-5)}$ for $n\ge5$. This is a positive monotone vanishing sequence, with strict active length four at cap $e$ and $a_5=e$. Execute the normalized mixture on the original prime queries and return its original marks. Every actual $n>4$ has law $(1-e)\delta_{\theta_0}+e\delta_{\theta_4}$, so the exact tail error is $\max(e,a_n)=e$, including $a_5=e$. Theorem 110.2 supplies the original closed-cap correspondence with arbitrary-address and full-carrier competitors under its selected-law hypotheses. Active-four cap feasibility is already Theorem 96.2; this companion records explicit same-$\lambda$ conic attainment in that regime and is not a separator or an arbitrary-position relabelling. $\square$
+
+### 214.3. Balanced equal triple
+
+**Theorem 214.8 (balanced three-late full-fiber minimum).** Let $L\ge5$, $c,g,B\ge0$, and
+
+$$
+q=(c,c,g,g,g,0,\ldots,0;2c+3g+B).
+$$
+
+Among all nonnegative full exact-$Q$ scores, including arbitrary $A$, early and late $P$, classwise cancellations, changed anchors, suffixes and all legal labels,
+
+$$
+\min\Delta_N=\min\Delta_O=
+D(c,g,B):=\max\left\{0,g-B,3g-2c-B,
+\frac{4g-5c-B}{3},\frac{4g-\frac92c-B}{4}\right\}.
+\tag{214.8}
+$$
+
+One score attains both minima. Equivalently, the least stock at allowance $d$ is
+
+$$
+\Phi_3(c,g,d)=\max\left\{0,g-d,3g-2c-d,4g-5c-3d,
+4g-\frac92c-4d\right\}.
+\tag{214.9}
+$$
+
+The theorem includes $c=0$, $g=0$, $B=0$, all ties and zero-cost cores. It covers only equal early credits and equal late totals at fixed addresses $3,4,5$.
+
+**Proof.** Use four stopped detector bundles. The notation $(i,j;x,y,z)$ is as above. Bundle A is $(1,2;1,2,3)$ together with half each of
+$(1,3;1,3,0),(1,4;1,4,0),(2,3;0,3,0),(2,4;2,4,0),(3,4;0,4,0),(4,5;0,5,0)$; its total weight is $4$. Bundle B is
+$(1,3;1,3,0)+(2,3;0,3,0)+(3,4;0,4,5)$, of weight $3$. Bundle C is $(3,4;3,4,5)$, of weight $1$. Bundle D is $(1,2;1,2,5)$, of weight $1$.
+
+For a bundle of weight $m$, let $N_0(w),N_n(w)$ be its weighted counts of output zero and actual first-zero label $n$. The row coefficients are
+$(N_0-m\mathbf1_{n\ge3},N_n-m\mathbf1_{n\le2},N_0+N_n-m)$ and the terminal coefficient is $N_0-m$. Direct substitution on each suffix gives the following minima, in class order $1,2,3,4,5,n\ge6$, followed by the terminal row:
+
+$$
+\begin{array}{c|rrrrrr|r}
+ &1&2&3&4&5&n\ge6&T\\\hline
+A&(1,-2,-1)&(3/2,-5/2,-1)&(-3,2,-1)&(-5/2,3/2,-1)&(-3/2,1/2,-1)&(-1,0,-1)&-1\\
+B&(1,-2,-1)&(2,-3,-1)&(-2,2,0)&(-1,1,0)&(-1,1,0)&(-1,0,-1)&-1\\
+C&(0,-1,-1)&(0,-1,-1)&(-1,1,0)&(-1,1,0)&(-1,1,0)&(-1,0,-1)&-1\\
+D&(0,0,0)&(0,0,0)&(-1,0,-1)&(-1,0,-1)&(-1,1,0)&(-1,0,-1)&-1
+\end{array}
+$$
+
+For a proposed right side $v\cdot\beta-K$, its row coefficients are $(-v_n-1,v_n-1,-1)$ and $-1$ at $T$. The displayed minima dominate the corresponding rows, so multiplying by the actual nonnegative score and summing gives
+
+$$
+\begin{aligned}
+4\Delta_O&\ge-\beta_1-\tfrac32\beta_2+3\beta_3+\tfrac52\beta_4+\tfrac32\beta_5-K,\\
+3\Delta_O&\ge-\beta_1-2\beta_2+3\beta_3+2\beta_4+2\beta_5-K,\\
+\Delta_O&\ge2\beta_3+2\beta_4+2\beta_5-K,\\
+\Delta_O&\ge\beta_1+\beta_2+\beta_3+\beta_4+2\beta_5-K.
+\end{aligned}
+$$
+
+Substitution of $q$ gives the four nonzero branches in (214.8); the anchor gives $0$. The inequalities apply to $N$ because $\Delta_N\ge\Delta_O$.
+
+For attainment use the following seven scores on length-five words, padded by ones for larger $L$; the entries are `word:weight`, with literal $0$ denoting a zero answer and positive padding by ones; $A=0$ throughout:
+
+$$
+\begin{array}{c|c|l|l|c}
+& (c,g,d,B)&C\text{-atoms}&P\text{-atoms}&T\\\hline
+Z&(0,2,0,8)&11001:2,11101:2,11110:2&01001,01010,01100,10001,10010,10100:1&2\\
+U&(2,5,0,11)&01000:2,10000:1,10110:1,11000:4,11010:1,11100:5,11110:5&00010:1,00100:1,01000:1,10000:3&5\\
+V&(2,8,1,19)&00101:1,01000:1,10100:1,10110:1,11000:5,11001:1,11010:2,11100:7,11101:1,11110:8&00100:1,00110:1,01000:2,01010:1,01100:1,10000:3,10001:1,10010:1,10100:1&7\\
+X&(0,2,1,5)&11000:1,11010:1,11100:2,11110:2&01000:1,01110:1,10010:1,10100:1&1\\
+H&(1,1,0,1)&00000:1,10000:1,11000:1,11100:1,11110:1&-&1\\
+J&(1,1,1,0)&00000:1,10000:1,11000:1,11100:1,11110:1&-&0\\
+K&(0,1,3,0)&11000:1,11100:1,11110:1&-&0
+\end{array}
+$$
+
+In the $V$ row, the compact list means weights $1$ on the first four displayed $C$ words, then weights $5,1,2,7,1,8$ on the remaining six; the compact list in its $P$ column means weights $1,1,2,1,1,3,1,1,1$ in the displayed order. In particular $U$ has $K=30$, stock $11$ and anchor $15$, while $V$ has $K=47$, stock $19$ and anchor $23$. The corresponding anchors are $8,15,23,5,3,2,0$ in the order
+$Z,U,V,X,H,J,K$. For every score, direct use of the cell formula
+
+$$
+\max\left\{\sum_{E}P+T\mathbf1_{1^L\in E},
+       \max_{1\le\ell\le L}\sum_{E\cap\Omega_\ell}(C+P)\right\}
+$$
+
+on all ten pairs $(12),(13),(14),(15),(23),(24),(25),(34),(35),(45)$ gives support at most the listed anchor plus the listed $d$: the pair supports for $Z,U,V,X,H,J,K$ are respectively
+
+$$
+(8^{10}),\quad(15^{10}),\quad(24,24,24,24,24,24,23,24,23,24),
+(6,6,6,5,6,6,5,6,5,5),
+(3^{10}),\quad(3,3,3,2,3,3,2,3,2,2),
+(1,2,2,1,2,2,1,3,2,2).
+$$
+
+Here $(a^{10})$ denotes ten repeated entries equal to $a$. The maximum over empty and singleton schedules is respectively $8,13,21,5,2,2,2$ for $Z,U,V,X,H,J,K$, also below the same bounds. Addresses above five are constant one on the scored support and labels above five have zero reward, while reversals and repetitions coarsen or permute these cases. Thus these are full-catalog bounds, not a selected-table check.
+
+For the real-parameter proof, normalize by $g>0$ and write $x=c/g$, $y=d/g$. The normalized seed points are
+
+$$
+Z=(0,0),\quad U=(2/5,0),\quad V=(1/4,1/8),\quad X=(0,1/2),
+\quad H=(1,0),\quad J=(1,1),\quad K=(0,3).
+$$
+
+For $x,y\ge0$, comparison of the five affine stock forms gives exactly the following regions; boundary overlaps are allowed:
+
+$$
+\begin{array}{c|l|l}
+\text{active stock}/g&\text{region}&\text{vertices or boundary}\\\hline
+4-\frac92x-4y&y\le x/2,\quad5x+6y\le2&ZUV\\
+4-5x-3y&y\ge x/2,\quad3x+2y\le1&ZVX\\
+3-2x-y&x\le1,\quad5x+6y\ge2,\quad3x+2y\ge1,\quad2x+y\le3&XVUHJK\\
+1-y&x\ge1,\quad0\le y\le1&HJ\text{ and increasing }x\\
+0&y\ge\max(1,3-2x)&KJ\text{ and }y\ge1\text{ for }x\ge1
+\end{array}
+$$
+
+For example the first two forms differ by $x/2-y$, and their differences from $3-2x-y$ are $1-5x/2-3y$ and $1-3x-2y$; the difference between $3-2x-y$ and $1-y$ is $2-2x$. These comparisons give the table, including its unbounded regions, and any maximum lies in at least one listed region. The polygon is convex and is partitioned by the four triangles $XVU$, $XUH$, $XHJ$, $XJK$, whose interiors are disjoint. This proves the entire face-fan cover.
+
+On a bounded triangle let $\lambda_i\ge0$, $\sum_i\lambda_i=1$, be its barycentric coordinates at $(x,y)$. If seed $i$ has parameters $(c_i,g_i,d_i,B_i)$, use the single score
+
+$$
+V=g\sum_i\frac{\lambda_i}{g_i}V_i.
+$$
+
+Its early coordinates are $c$, its three late coordinates are $g$, and its stock is
+$g\sum_i\lambda_i B_i/g_i=\Phi_3(c,g,d)$, because each vertex stock lies on that region's same affine form. Its total weighted cost allowance is
+$g\sum_i\lambda_i d_i/g_i=gy=d$. Linearity of the anchor and subadditivity of full support give $\Delta_N(V)\le d$, with one common allocation. The formulas agree on shared faces by their parameter identities; no choice at a tie loses coverage.
+
+On the strip use $g[(1-y)H+yJ]$, then add correct mass $c-g$ to a singleton word in each early class. The added reward of every table is at most $2(c-g)$, exactly the anchor increment, so excess cannot increase. The stock is $g-d$. In the zero-stock region with $x\le1$, use $g[(1-x)K+xJ]$; it has early total $c$, late total $g$ and cost allowance $g(3-2x)\le d$. For $x\ge1$, use $gJ$ plus the same early additions; its allowance $g\le d$ suffices. When $g=0$, early correct singleton rows of mass $c$ and terminal stock give zero excess directly.
+
+For a prescribed $B\ge\Phi_3(c,g,d)$ add $B-\Phi_3(c,g,d)$ to $T$. Every table reward increases by at most the anchor increment, so excess cannot increase. For example $J$ has excess $1$ at $T=0$ and excess $1/2$ after adding $T=1/2$; preservation of excess is not assumed. Take $d=D(c,g,B)$, for which all five stock inequalities give $B\ge\Phi_3(c,g,d)$. The lower bounds and this one-score construction prove (214.8). $\square$
+
+**Corollary 214.9 (balanced residual and amplitude consequence).** For every actual full unit-$O$ input $y$ with $Q(y)=q(c,g,B)$, Theorem 214.8 supplies one score $V$ with $Q(V)=Q(y)$ and $\Delta_N(V)=D(c,g,B)\le\Delta_O(y)\le1$, hence a one-score, one-budget exact-$Q$ certificate with $\theta=0$. Pairing with the same complete feasible $\lambda$ of mass $M$ for any $b\in H_N$ gives $F_{Q(y)}(b)\le M D\le M\le\max(1,M)$. In general, an exact-$Q$ unit certificate with $\theta=0$ exists if and only if $D(c,g,B)\le1$. For another signed quotient $q$, choosing $c,g,B$ with
+
+$$
+D(c,g,B)+\max\{0,\sigma_{H_L}(q-q(c,g,B))\}\le1
+\tag{214.10}
+$$
+
+is only a sufficient one-residual test. Pairing the same complete feasible $\lambda$ of mass $M$ gives
+$F_q\le M D+\theta\le\max(1,M)$. For an actual original hard-two attainer at active length at least five, the transported rows imply the necessary amplitude inequality
+
+$$
+ c(a_1+a_2)+g(a_3+a_4+a_5)
+ \le 2c+D(c,g,B)+(2c+3g+B)\varepsilon .
+\tag{214.11}
+$$
+
+Unequal early credits, unequal or signed triples, arbitrary replacement positions, and larger positive late domains remain outside this theorem.
+
+### 214.4. A necessary six-coordinate projection and fixed-lift diagnostics
+
+**Definition 214.10 (six-coordinate slice).** Fix ordered late addresses
+$j_1<j_2<j_3<j_4<j_5<\ell$, five equal correct totals $g$ and a sixth total $h$ with $0\le h\le g$, and cap parameter $d\ge0$. Stay in the input slice $A=0$, $E=0$, with $E=\gamma_1+\gamma_2$, $\gamma_j=\sum_{\Omega_j}C_w$, and $P$ supported on $\Omega_1\cup\Omega_2$, including the early prefix $00$. Other correct coefficients may be present, but the displayed endpoint measures set all unlisted coefficients to zero. Define
+
+$$
+\begin{aligned}
+z_i&=1-w_{j_i},\quad j_6=\ell,\quad\text{so }z_i=1\text{ exactly when the selected answer is zero},\\
+S&=\nu(\{0,1\}^6),\qquad m_i=\int z_i\,d\nu,\qquad
+D_{ij}=\int(1-z_i)z_j\,d\nu,\\
+\nu&\text{ is the one common late projection of the full early-pair measure},\qquad \nu(\{0,1\}^6)=S,\\
+\nu&\text{ is a proof measure, not a source distribution},\\
+u&=(g-d)_+,\qquad v=(h-d)_+.
+\end{aligned}
+$$
+
+Thus $0\le v\le u$. The stock in this theorem is one stock $B=S+T$.
+
+**Theorem 214.11 (directed six-coordinate stock envelope).** Every complete score in this slice with $\Delta_O\le d$ satisfies
+
+$$
+T\ge u,\qquad
+S\ge\max\left\{\frac{13u}{4},\frac{22u+v}{7}\right\},\qquad
+B\ge u+\max\left\{\frac{13u}{4},\frac{22u+v}{7}\right\}.
+\tag{214.12}
+$$
+
+This is a necessary projection statement. It is not a full-fiber minimum and does not assert that an endpoint lift is affordable at cost $d$.
+
+**Proof.** The legal head table $(1,2;1,2,j_1)$ has reward at least $S+g$, against anchor $S+T$, and therefore gives $T\ge g-d$. Combining this with $T\ge0$ gives $T\ge(g-d)_+=u$, also when $g<d$. For each selected late class $j$, the two legal tables $(1,j;0,j,0)$ with the two early addresses have disjoint pair-loss sets, both contained in the selected zero cylinder. Each loss is at least $(\gamma_j-d)_+$, so
+
+$$
+ m_i\ge2u\ (i\le5),\qquad m_6\ge2v.
+\tag{214.13}
+$$
+
+The legal late/late table $(j_i,j_k;0,j_k,0)$ gives
+$D_{ik}\ge u$ for $1\le i<k\le5$, and $(j_i,\ell;0,\ell,0)$ gives $D_{i6}\ge v$. These are lower bounds from one full score and the same common measure; no independently funded projection is introduced. The underlying full catalog retains its independent base rows; this slice fixes their score coefficients $A$ to zero.
+
+For the first cut put
+
+$$
+P_4(z)=2z_1+z_2+\sum_{1\le i<j\le4}(1-z_i)z_j+(1-z_4)z_5.
+$$
+
+If $k=z_1+z_2+z_3$, then for $z_4=1$ it equals
+$3+(3k-k^2)/2$, and for $z_4=0$ it equals $(5k-k^2)/2+z_5$; each is at most $4$. Integrating and using (214.13) gives
+$4S\ge2m_1+m_2+\sum_{i<k\le4}D_{ik}+D_{45}\ge13u$.
+
+For the second cut put
+
+$$
+P_6(z)=3z_1+2z_2+z_3+
+\sum_{1\le i<k\le5}(1-z_i)z_k+(1-z_5)z_6.
+$$
+
+With $k=z_1+z_2+z_3+z_4$, if $z_5=0$ then
+$P_6=(7k-k^2)/2+z_6$, and if $z_5=1$ then
+$P_6=4+(5k-k^2)/2$. For $k=0,1,2,3,4$ both expressions are at most $7$. Hence
+
+$$
+7S\ge3m_1+2m_2+m_3+\sum_{1\le i<k\le5}D_{ik}+D_{56}
+\ge22u+v.
+$$
+
+The two inequalities use the same $\nu$, so adding two separately attainable stocks is not occurring. This proves (214.12). $\square$
+
+**Proposition 214.12 (exact projection endpoints).** In the single common Boolean projection cone defined by
+
+$$
+ m_i\ge2u (i\le5),\quad m_6\ge2v,\quad
+ D_{ik}\ge u\ (i<k\le5),\quad D_{i6}\ge v,
+\tag{214.14}
+$$
+
+one has $\min S=13u/4$ when $v=3u/4$ and $\min S=23u/7$ when $v=u$, with equality at the following measures. The displayed masses already include their factor $u$.
+
+For $v=3u/4$, put mass $u/4$ on each of
+
+$$
+001111,010111,011011,011101,011110,100111,101011,101101,101110,
+110010,110101,110110,111011.
+$$
+
+Then
+
+$$
+S=13u/4,\quad m=(2,2,2,9/4,5/2,9/4)u,
+$$
+
+all $D_{ik}=u$ for $i<k\le5$, and
+$(D_{16},D_{26},D_{36},D_{46},D_{56})=(1,1,3/4,3/4,3/4)u$.
+
+For $v=u$, put mass $2u/7$ on
+
+$$
+001111,010111,011011,011101,100111,101011,101101,110011,110101
+$$
+
+and mass $u/7$ on
+
+$$
+011110,101110,110110,111011,111101.
+$$
+
+Then
+
+$$
+S=23u/7,\quad m=(2,2,2,16/7,16/7,20/7)u,
+$$
+
+all high-high $D_{ik}=u$, and
+$(D_{16},D_{26},D_{36},D_{46},D_{56})=(8/7,8/7,8/7,1,1)u$.
+
+At $u=0$ one has $v=0$ and the zero measure attains zero. The inequalities from $P_4$ and $P_6$ prove the lower endpoints; the displayed moments verify feasibility and equality, so both are exact projection minima. All inequalities are closed and scaling by arbitrary $u\ge0$ preserves them.
+
+**Proof.** The mass totals are $13u/4$ and $9(2u/7)+5(u/7)=23u/7$. Counting each bit and each directed pair gives the displayed vectors; the high-high and low-directed counts are immediate from the lists. Thus (214.14) holds, while the two cut inequalities force the stated lower values. $\square$
+
+**Proposition 214.13 (canonical lift and fixed-method failures).** Lift either endpoint on one actual early-pair carrier: an atom $z$ of $\nu$ supplies half its mass to each raw word with early prefix $01$ and $10$, selected answers $w_{j_i}=1-z_i$ and inactive answers one. Write $\widetilde\nu$ for the resulting measure on all late raw answer coordinates, of mass $S$. For each selected correct class $n=j_i$ and $0\le r<\gamma_n$, put every bit before $n$ to one, bit $n$ to zero, and every later bit $k$ to one exactly when
+
+$$
+ r<a_{nk},\qquad
+ a_{nk}=\widetilde\nu\{w_n=0,w_k=1\},\qquad
+ a_{j_i j_k}=\nu\{z_i=1,z_k=0\}\quad(i<k).
+\tag{214.15}
+$$
+
+Put at each resulting correct word its interval length in $r$, add coincident words, and keep $T=1$. This is the threshold construction (203.9)–(203.10). Its correct totals are $\gamma_n$; its early-pair projection, hence every $m_i,D_{ik}$, is the original $\nu$. The threshold $a_{j_i j_k}=m_i-m_k+D_{ik}$ is distinct from the directed loss $D_{ik}$. There is one score and one stock. At both specified endpoints $\mu=\max\gamma_n=2>T=1$, so the protected-terminal equality in Theorem 203.2 is unavailable.
+
+For the first endpoint, take $u=d=1$, $g=2$, $h=7/4$, $T=1$. Then
+
+$$
+S=13/4,\quad W=17/4,\quad B_N=B_O=6,\quad
+\Delta_N=\Delta_O=7/4.
+\tag{214.16}
+$$
+
+At the $(j_4,j_5)$ schedule the $N$ cell maxima are
+$(3/2,3/4,2,7/4)$ and the $O$ maxima are $(9/4,2,7/4)$. The maxima within the other schedule classes are empty/singleton $17/4$, early pair $21/4$, early/high $45/8$, early/low $39/8$, and late pair $6$; individual supports are given in the complete table below.
+
+For the second endpoint, use $u=d=1$, $g=h=2$, $T=1$. The fourteen atoms are the nine mass-$2/7$ strings
+
+$$
+001111,010111,011011,011101,100111,101011,101101,110011,110101
+$$
+
+and the five mass-$1/7$ strings
+
+$$
+011110,101110,110110,111011,111101.
+$$
+
+The lift has
+
+$$
+S=23/7,\quad W=30/7,\quad B_N=B_O=44/7,
+\qquad\Delta_N=\Delta_O=2.
+\tag{214.17}
+$$
+
+At $(j_4,j_5)$ the $N$ maxima are $(9/7,1,2,2)$ and the $O$ maxima are $(16/7,2,2)$. The remaining full support maxima are empty/singleton $30/7$, early pair $37/7$, early/high $79/14$, early/low $34/7$, and late pair $44/7$; every high-high pair except $(j_4,j_5)$ has support $6$, the pairs $(j_i,\ell)$ for $i\le3$ have $36/7$, and $(j_4,\ell),(j_5,\ell)$ have $37/7$.
+
+**Proof of the lift calculations.** In selected-pair order
+$12,13,14,15,16,23,24,25,26,34,35,36,45,46,56$, the thresholds $a_{j_i j_k}=m_i-m_k+D_{ik}$ of the two endpoints are respectively
+
+$$
+\begin{aligned}
+a^{(1)}&=(1,1,3/4,1/2,3/4,1,3/4,1/2,3/4,3/4,1/2,1/2,3/4,3/4,1),\\
+a^{(2)}&=(1,1,5/7,5/7,2/7,1,5/7,5/7,2/7,5/7,5/7,2/7,1,3/7,3/7).
+\end{aligned}
+$$
+
+For each selected class split $[0,\gamma_n)$ at these thresholds, clipped to that interval. On each subinterval the raw correct word is constant and its coefficient is the subinterval length. In each catalog cell $E$, maximize
+
+$$
+\max\left\{\sum_E(A+P)+T\mathbf1_{1^L\in E},\
+       \max_{1\le a\le L}\sum_{E\cap\Omega_a}(C+P)\right\}.
+$$
+
+This includes every earlier and unqueried label. The resulting support totals for both $N$ and $O$ are in the following complete schedule-class table. Here $a\in\{1,2\}$ is an early address and $i,k$ are selected-index positions, not raw answer bits.
+
+$$
+\begin{array}{c|cc}
+\text{schedule class}&\text{first endpoint}&\text{second endpoint}\\\hline
+\varnothing\text{ or any active singleton}&17/4&30/7\\
+(1,2)&21/4&37/7\\
+(a,j_i),\ 1\le i\le4&45/8&79/14\\
+(a,j_5)&43/8&79/14\\
+(a,\ell)&39/8&34/7\\
+(j_i,j_k),\ 1\le i<k\le3&6&6\\
+(j_i,j_4),\ 1\le i\le3&6&6\\
+(j_i,j_5),\ 1\le i\le3&23/4&6\\
+(j_4,j_5)&6&44/7\\
+(j_i,\ell),\ i=1,2&5&36/7\\
+(j_3,\ell)&21/4&36/7\\
+(j_i,\ell),\ i=4,5&21/4&37/7
+\end{array}
+$$
+
+For example at $(j_4,j_5)$ the first lift has raw pair-cell masses
+$(3/2,3/4,1,0)$. Its correct class $j_5$ gives $2$ in cell $10$ and the unqueried class $\ell$ gives $7/4$ in cell $11$, yielding the displayed four maxima. The merged stopped cell $0$ collects $9/4$. At the second endpoint the pair masses are $(9/7,1,1,0)$; the four maxima are $(9/7,1,2,2)$ and the merged zero-cell maximum is $16/7$. Thus the largest entries in the table are attained, giving (214.16) and (214.17).
+
+At each endpoint $m_i\ge\gamma_{j_i}$. For an inactive address $k>j_i$ the raw projection has $w_k=1$ throughout, so $a_{j_i k}=m_i\ge\gamma_{j_i}$ and the threshold construction also keeps that bit one. Inactive bits before a correct class are one by construction. Thus all gap and padding coordinates are one on every scored word; their queries coarsen to one of the listed empty, singleton or pair observations. Their output labels have zero reward, while all active labels were already included in every cell maximum. Reversed $N$ pairs permute cells; repetitions provide singleton information, with the actual requests still counted. This proves the full-catalog bounds for arbitrary ordered selected late addresses, including gaps.
+
+These are fixed-lift calculations, not lower bounds against every exact-$Q$ representative. Both lifts exceed $d=1$ and therefore are not affordable full scores, acquisition laws, universal obstructions, or original separators. $\square$
+
+The endpoint atoms may be embedded into actual finite source words by the finite-pattern supplier for the original prime-divisibility source. The weights are proof weights, not a source distribution. For a full score in the slice with $\Delta_O\le d$, first discard every unselected late $C$ row, retaining all $P,T$ and the six selected correct classes. The anchor $W=B=S+T$ is unchanged and every table reward, hence full support, can only decrease. If the removed correct mass is $G_{\rm out}$, the original charge $K=5g+h+G_{\rm out}+B$ becomes exactly $K^\sharp=5g+h+B$; one cannot remove its amplitude contribution while silently retaining or dropping its charge. Pair the resulting score with an actual normalized cap-feasible $O$ acquisition transported by Theorem 110.2. Its complete rows give expected reward at least
+$W+g\sum_{r=1}^5a_{j_r}+ha_\ell-K^\sharp\varepsilon$,
+while its support is at most $W+d$. Consequently
+
+$$
+ g\sum_{r=1}^{5}a_{j_r}+h a_\ell
+ \le d+(5g+h+B)\varepsilon,
+\tag{214.18}
+$$
+
+for the selected active addresses. This implication is conditional on the existence of the full score and acquisition; the projection endpoint by itself supplies neither.
+
+### 214.5. Source bridge, literature correspondence, and limits
+
+All four statements use the original source and resource contract. The source is
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\quad
+N(r,g)=1+F_rg,\quad q_i=\mathbf1_{p_i\mid N(r,g)},
+$$
+
+with $n(x)$ the first absent prime. Every finite answer word has an actual source witness. The full Borel carrier is $\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$ with the unchanged consumer (unknown on $B_j$, proposing $j$ on $P_j$), and the marks are $\theta_j=(B_1,1/(j+2))$. The original nonatomic family $\mu_x$ remains exactly the family specified in Definition 213.22 and Source-Correlated Laws 67.5; neither its carrier nor its consumer is replaced. Separately, following 73.1 and 110.1, choose the marked laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\to0.
+$$
+
+There is no distribution on source labels. There is zero advice, one source-independent common seed, sourcewise almost-sure finite handoff, arbitrary addresses, arbitrary full-carrier outputs, and at most two actual requests, including repetitions and ignored replies. An $N$ rule preselects its schedule and obtains its replies; an $O$ rule preselects an increasing schedule and stops at its first queried zero or exhaustion. The actual finite table is selected before answers by the common seed. Its original tape output is then transported with the measurable finite-mark projection. For active length $L_a=\max(\{j:a_j>\varepsilon\}\cup\{0\})$, every actual tail source $n>L_a$ obeys the exact identity
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+=\max\{1-p_{1^{L_a}}(0),a_n\},
+\tag{214.19}
+$$
+
+including the closed equality $a_n=\varepsilon$. Theorem 109.1 is used only for its normalized degree-two stopped-kernel criterion $c\ge H$ together with its common scalar condition $\beta\le1$ (redundant once the normalized vector condition holds); Theorem 110.2 is used only for its exact closed-cap transport, with arbitrary addresses and full-carrier necessity. Theorem 112.2 remains an exact-law obstruction with another stopped law at the same cap, not a cap separator.
+
+The continuous companion in Proposition 214.7 has one explicit original tail: $a_1=1-s/5$, $a_2=a_3=6s/5$, $a_4=s$, and $a_n=e2^{-(n-5)}$ for $n\ge5$. Its active length is four, $a_5=e$ is the closed endpoint, and the common seed realizes the five table events with at most two actual requests. Its actual tail law is $(1-e)\delta_{\theta_0}+e\delta_{\theta_4}$ and its tail error is $e$.
+
+The literature correspondence is limited. David Blackwell, *Comparison of Experiments*, §§2 and 5, supplies the attainable-risk and common-randomization analogy, but its unrestricted decision procedures do not identify the stopped three-cell catalog with the four-cell catalog here. Lasse Leskela, *Stochastic relations of random variables and processes*, arXiv:0806.3562, Theorem 2.5 and Remark 2.7, gives closed-relation coupling tests and the finite tests for countable spaces; it supplies the warning that marginal feasibility is not joint feasibility and supplies no score-preserving hard-two conversion. Samal's fractional cut bounds, Kaniewski--Lee--de Wolf's randomized query trees, Winkler's finite-moment extreme-point result, and Altman--Avrachenkov--Garnaev's water-filling theorem are structural analogies only; none supplies the original source, stopped first-zero operation, full-carrier TV, signed residual, and one-budget bridge.
+
+The universal comparison is unresolved. A general full-score certificate is still missing for simultaneous positive late coordinates outside Theorems 214.2, 214.5 and 214.8, for unequal or signed late profiles, for arbitrary positions beyond the fixed fibers, and for mixed early-$A$/late-$P$ inputs. Theorem 214.11 and Proposition 214.12 supply necessary projection stock and its two projection endpoints; Proposition 214.13 supplies fixed-method diagnostics. It does not provide an affordable full-score representative, a $b\in H_N$ separator, a uniform lower certificate against every original full-carrier $O_2$ competitor, an $H_N$/$H_L$ identification, or a full-$\lambda$/$H_N$ separator. Separately affordable allocations never become one common affordable allocation by addition. No claim of universal classification, whole-goal completion, kernel verification or exhaustive literature novelty is made.
+
+## 追加锚（本行以下为增补区）
