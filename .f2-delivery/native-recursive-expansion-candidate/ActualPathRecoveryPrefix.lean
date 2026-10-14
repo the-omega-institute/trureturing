@@ -1,7 +1,7 @@
 /- UNCOMPILED path recovery helper.
    Restoring the other marked order retains every old joint-piece edge.
    An old joint path starting at a new single-order boundary endpoint is
-   therefore a literal prefix of that actual boundary path. This earns
+   therefore a literal front of that actual boundary path. This earns
    internal cut occurrence from the previous joint state. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualPiecePrefix
 
@@ -34,7 +34,7 @@ theorem actual_partition_rooted_walk_edges
     intro ha hkeep
     have hhead : s(a, x) ∈ p.walk.edges :=
       actual_partition_incident_edge_owner pieces hn p hp ha
-        (hkeep _ (by simp only [SimpleGraph.Walk.edges_cons, List.mem_cons]; exact Or.inl rfl))
+        (hkeep _ (by simp only [SimpleGraph.Walk.edges_cons]; exact List.mem_cons_self))
     have hx : x ∈ p.walk.support := p.walk.snd_mem_support_of_mem_edges hhead
     have htail := ih hx (fun e he => hkeep e
       (by simp only [SimpleGraph.Walk.edges_cons, List.mem_cons]; exact Or.inr he))
@@ -45,7 +45,7 @@ theorem actual_partition_rooted_walk_edges
     · exact htail e he
 
 /-- Sharing the start and retaining all actual edges of a simple path
-forces it to be a literal prefix of another simple path. Undirected edge
+forces it to be a literal front of another simple path. Undirected edge
 inclusion cannot reverse an interior piece at the common starting point. -/
 theorem actual_rooted_path_is_prefix {a b c : V}
     (q : G.Walk a b) (hq : q.IsPath) (p : G.Walk a c) (hp : p.IsPath)
@@ -59,12 +59,13 @@ theorem actual_rooted_path_is_prefix {a b c : V}
   | @cons a x b h q ih =>
     intro hq p hp hkeep
     have hhead : s(a, x) ∈ p.edges := hkeep _
-      (by simp only [SimpleGraph.Walk.edges_cons, List.mem_cons]; exact Or.inl rfl)
+      (by simp only [SimpleGraph.Walk.edges_cons]; exact List.mem_cons_self)
     have hx : x = p.snd := hp.eq_snd_of_mem_edges hhead
     cases p with
     | nil => simp only [SimpleGraph.Walk.edges_nil, List.not_mem_nil] at hhead
     | @cons a y c h' p =>
       have hxy : x = y := by simpa only [SimpleGraph.Walk.snd_cons] using hx
+      clear hx
       subst y
       have hsub : ∀ e ∈ q.edges, e ∈ p.edges := by
         intro e he
@@ -83,7 +84,7 @@ theorem actual_rooted_path_is_prefix {a b c : V}
 
 /-- Apply the previous joint path directly to the single-order actual
 pieces obtained by restoring the other marks. Its retained global edges
-earn the local ownership and hence its actual prefix position. -/
+earn the local ownership and hence its actual front position. -/
 theorem actual_restored_partition_joint_prefix
     (pieces : List (Piece G))
     (hn : (pieces.flatMap fun z => z.walk.support).Nodup)
@@ -134,7 +135,7 @@ theorem actual_restored_initial_joint_prefix
 joint pieces and one restored marked edge. Its simplicity follows from
 the joint support partition. The same-cycle inventories put every route
 edge in the actual single-order partition; ownership at its start then
-forces it to be a prefix of that whole boundary path. No route-retention
+forces it to be a front of that whole boundary path. No route-retention
 or route-factorization certificate is an input. -/
 theorem actual_restored_bridge_route_prefix
     {base ℓ z r x y : V} (c : G.Walk base base)
@@ -151,16 +152,16 @@ theorem actual_restored_bridge_route_prefix
       fun p : Piece G => p.walk.edges) ↔ e ∈ c.edges ∧ e ∉ K)
     (hcuts : ∀ e ∈ K ∪ H, e ∈ c.edges) (hseam : s(r, ℓ) ∈ H) :
     ∃ hrestore : G.Adj r ℓ,
-      let prefix := cross.reverse.concat hrestore
-      (prefix.append d).support.Nodup ∧
-      (∀ e ∈ (prefix.append d).edges, e ∈ old.edges) ∧
+      let front := cross.reverse.concat hrestore
+      (front.append d).support.Nodup ∧
+      (∀ e ∈ (front.append d).edges, e ∈ old.edges) ∧
       ∃ tail : G.Walk z y,
-        old = prefix.append (d.append tail) ∧ tail.IsPath := by
+        old = front.append (d.append tail) ∧ tail.IsPath := by
   classical
   have hrestore : G.Adj r ℓ :=
     c.adj_of_mem_edges (hcuts _ (Finset.mem_union.mpr (Or.inr hseam)))
-  let prefix := cross.reverse.concat hrestore
-  let route := prefix.append d
+  let front := cross.reverse.concat hrestore
+  let route := front.append d
   have hroute : route = cross.reverse.append (d.cons hrestore) :=
     SimpleGraph.Walk.concat_append cross.reverse hrestore d
   have hpair : (d.support ++ cross.support).Nodup := by

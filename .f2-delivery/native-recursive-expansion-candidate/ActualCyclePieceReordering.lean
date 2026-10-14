@@ -93,7 +93,7 @@ theorem actual_cycle_slices_reordered (E : Finset (Sym2 V)) {a : V}
   have hmem (i : Fin n) : old i ∈ pieces := List.get_mem _ _
   have hold : List.ofFn old = pieces := by
     rw [List.ofFn_congr hlen.symm old]
-    simpa only [old, Fin.cast_cast, Fin.cast_refl] using List.ofFn_get pieces
+    simpa only [old, Fin.cast_cast, Fin.cast_refl, id_eq] using List.ofFn_get pieces
   let index (i : Fin n) : Fin n := Classical.choose (hmatch (old i) (hmem i))
   have hindex (i : Fin n) :
       s((old i).start, (old i).finish) = routeEdge route (index i) :=
@@ -221,12 +221,9 @@ theorem actual_cycle_slices_joined (E : Finset (Sym2 V)) {a : V}
     have hlastList : ((List.ofFn ordered).getLast (by simp)).finish =
         route ⟨2 * (n + 1) - 1, by omega⟩ := by
       rw [List.getLast_ofFn]
-      have hlast : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by omega)
+      have hlast : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by simp only [Fin.val_mk, Fin.val_last]; omega)
       rw [hlast, (hend (Fin.last n)).2]
       congr 1
-      apply Fin.ext
-      simp only [Fin.val_mk, Fin.val_last]
-      omega
     simpa only [hlist] using hlastList
   let q := (join p ps hlink).copy hs hf
   refine ⟨ordered, q, ?_, hend, ?_, ?_, hedges⟩

@@ -29,8 +29,8 @@ marks of the same next cycle, so no source supplier edge is reintroduced. -/
 theorem actual_single_order_boundary_update
     {base x ℓ z y ℓ₀ r₀ ℓ₁ r₁ : V}
     (c : G.Walk base base) (hc : c.IsHamiltonianCycle)
-    (d : G.Walk ℓ z) (prefix : G.Walk x ℓ) (tail : G.Walk z y)
-    (old : G.Walk x y) (hold : old = prefix.append (d.append tail))
+    (d : G.Walk ℓ z) (front : G.Walk x ℓ) (tail : G.Walk z y)
+    (old : G.Walk x y) (hold : old = front.append (d.append tail))
     (oldrest jointrest : List (Piece G))
     (holdNodup : (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup)
     (holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
@@ -61,20 +61,20 @@ theorem actual_single_order_boundary_update
       endpointPairs pieces =
         (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) ∪ {s(ℓ₀, y), s(r₀, x)} ∧
       boundary₀ = new₀.reverse.append tail ∧
-      boundary₁ = (new₁.append (new₂.cons hrestore)).append prefix.reverse := by
+      boundary₁ = (new₁.append (new₂.cons hrestore)).append front.reverse := by
   classical
   let boundary₀ : G.Walk ℓ₀ y := new₀.reverse.append tail
-  let boundary₁ : G.Walk r₀ x := (new₁.append (new₂.cons hrestore)).append prefix.reverse
+  let boundary₁ : G.Walk r₀ x := (new₁.append (new₂.cons hrestore)).append front.reverse
   let pieces : List (Piece G) := [⟨ℓ₀, y, boundary₀⟩, ⟨r₀, x, boundary₁⟩] ++ oldrest
   let cuts := deleted.toFinset
   have hscount (v : V) :
-      (tail.support.tail ++ prefix.reverse.support.tail ++
+      (tail.support.tail ++ front.reverse.support.tail ++
         oldrest.flatMap fun p => p.walk.support).count v =
         (jointrest.flatMap fun p => p.walk.support).count v := by
     have hs := holdSupport.count_eq v
     rw [hold, SimpleGraph.Walk.support_append,
       SimpleGraph.Walk.tail_support_append] at hs
-    have hp := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support prefix.reverse)
+    have hp := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support front.reverse)
     rw [SimpleGraph.Walk.support_reverse, List.count_reverse] at hp
     have hd := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support d)
     simp only [List.count_append, List.count_cons] at hs hp hd ⊢
@@ -98,7 +98,7 @@ theorem actual_single_order_boundary_update
   have hpaths (p : Piece G) (hp : p ∈ pieces) : p.walk.IsPath :=
     SimpleGraph.Walk.IsPath.mk' ((List.nodup_flatMap.mp hn).1 p hp)
   have hecounts (e : Sym2 V) :
-      (prefix.edges ++ tail.edges ++ oldrest.flatMap fun p => p.walk.edges).count e =
+      (front.edges ++ tail.edges ++ oldrest.flatMap fun p => p.walk.edges).count e =
         ((jointrest.flatMap fun p => p.walk.edges) ++ restored).count e := by
     have he := holdEdges.count_eq e
     rw [hold, SimpleGraph.Walk.edges_append, SimpleGraph.Walk.edges_append] at he
@@ -162,8 +162,8 @@ exact retained-edge inventory are earned on the same actual cycle. -/
 theorem actual_single_order_first_cut_boundary_update
     {base x ℓ z y ℓ₀ r₀ ℓ₁ r₁ : V}
     (c : G.Walk base base) (hc : c.IsHamiltonianCycle)
-    (d : G.Walk ℓ z) (prefix : G.Walk x ℓ) (tail : G.Walk z y)
-    (old : G.Walk x y) (hold : old = prefix.append (d.append tail))
+    (d : G.Walk ℓ z) (front : G.Walk x ℓ) (tail : G.Walk z y)
+    (old : G.Walk x y) (hold : old = front.append (d.append tail))
     (oldrest jointrest : List (Piece G))
     (holdNodup : (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup)
     (holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
@@ -194,20 +194,20 @@ theorem actual_single_order_first_cut_boundary_update
       endpointPairs pieces =
         (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) ∪ {s(ℓ₁, y), s(r₁, x)} ∧
       boundary₀ = (new₁.reverse.append (new₀.reverse.cons hrestore.symm)).append tail ∧
-      boundary₁ = new₂.append prefix.reverse := by
+      boundary₁ = new₂.append front.reverse := by
   classical
   let boundary₀ : G.Walk ℓ₁ y := (new₁.reverse.append (new₀.reverse.cons hrestore.symm)).append tail
-  let boundary₁ : G.Walk r₁ x := new₂.append prefix.reverse
+  let boundary₁ : G.Walk r₁ x := new₂.append front.reverse
   let pieces : List (Piece G) := [⟨ℓ₁, y, boundary₀⟩, ⟨r₁, x, boundary₁⟩] ++ oldrest
   let cuts := deleted.toFinset
   have hscount (v : V) :
-      (tail.support.tail ++ prefix.reverse.support.tail ++
+      (tail.support.tail ++ front.reverse.support.tail ++
         oldrest.flatMap fun p => p.walk.support).count v =
         (jointrest.flatMap fun p => p.walk.support).count v := by
     have hs := holdSupport.count_eq v
     rw [hold, SimpleGraph.Walk.support_append,
       SimpleGraph.Walk.tail_support_append] at hs
-    have hp := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support prefix.reverse)
+    have hp := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support front.reverse)
     rw [SimpleGraph.Walk.support_reverse, List.count_reverse] at hp
     have hd := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support d)
     simp only [List.count_append, List.count_cons] at hs hp hd ⊢
@@ -231,7 +231,7 @@ theorem actual_single_order_first_cut_boundary_update
   have hpaths (p : Piece G) (hp : p ∈ pieces) : p.walk.IsPath :=
     SimpleGraph.Walk.IsPath.mk' ((List.nodup_flatMap.mp hn).1 p hp)
   have hecounts (e : Sym2 V) :
-      (prefix.edges ++ tail.edges ++ oldrest.flatMap fun p => p.walk.edges).count e =
+      (front.edges ++ tail.edges ++ oldrest.flatMap fun p => p.walk.edges).count e =
         ((jointrest.flatMap fun p => p.walk.edges) ++ restored).count e := by
     have he := holdEdges.count_eq e
     rw [hold, SimpleGraph.Walk.edges_append, SimpleGraph.Walk.edges_append] at he

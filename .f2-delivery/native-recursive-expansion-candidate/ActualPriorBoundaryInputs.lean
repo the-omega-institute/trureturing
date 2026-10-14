@@ -84,15 +84,15 @@ theorem actual_prior_opposite_boundary_inputs {base ℓ z r x y : V}
       fun p : Piece G => p.walk.edges).Perm (w.edges.filter fun e => decide (e ∉ K)))
     (hcuts : ∀ e ∈ K ∪ H, e ∈ w.edges) (hseam : s(r, ℓ) ∈ H) :
     ∃ hrestore : G.Adj r ℓ,
-      let prefix := cross.reverse.concat hrestore
-      old.IsPath ∧ (prefix.append d).support.Nodup ∧
-      (∀ e ∈ (prefix.append d).edges, e ∈ old.edges) ∧
+      let front := cross.reverse.concat hrestore
+      old.IsPath ∧ (front.append d).support.Nodup ∧
+      (∀ e ∈ (front.append d).edges, e ∈ old.edges) ∧
       (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup ∧
       (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
         (d.support ++ cross.support ++ jointrest.flatMap fun p => p.walk.support) ∧
       (old.edges ++ oldrest.flatMap fun p => p.walk.edges).Perm
         (d.edges ++ cross.edges ++ (jointrest.flatMap fun p => p.walk.edges) ++ H.toList) ∧
-      ∃ tail : G.Walk z y, old = prefix.append (d.append tail) ∧ tail.IsPath := by
+      ∃ tail : G.Walk z y, old = front.append (d.append tail) ∧ tail.IsPath := by
   classical
   have hnjoint : ((⟨ℓ, z, d⟩ :: ⟨r, x, cross⟩ :: jointrest).flatMap
       fun p : Piece G => p.walk.support).Nodup :=

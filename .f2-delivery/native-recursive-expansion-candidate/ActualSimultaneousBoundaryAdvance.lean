@@ -138,9 +138,9 @@ theorem actual_simultaneous_boundary_advance
     c.adj_of_mem_edges (hcurrent.cut_mem _ (Finset.mem_union.mpr (Or.inr hzero₁)))
   have hrestore₀ : G.Adj ℓ₀ r₀ :=
     c.adj_of_mem_edges (hcurrent.cut_mem _ (Finset.mem_union.mpr (Or.inl hzero₀)))
-  let prefix := cross.reverse.concat hpriorRestore
+  let front := cross.reverse.concat hpriorRestore
   obtain ⟨primary₀, primary₁, _, _, hps, hpe, _, hpc, _, hpp, hpformula, _⟩ :=
-    actual_single_order_boundary_update c hc d prefix tail₁ old₁ hfactor₁
+    actual_single_order_boundary_update c hc d front tail₁ old₁ hfactor₁
       oppositerest remaining hn₁ hs₁' (H.erase s(ℓ₁, r₁)).toList K.toList he₁'
       new₀ new₁ new₂ hrestore₁ hcurrentSupport hsource₁
   have hfactor₀' : old₀ = (G.Walk.nil : G.Walk ℓ ℓ).append (d.append tail₀) := by
