@@ -16,7 +16,19 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 namespace D5.S3.Quantum.Information.ActualPureQubitCostInfimum
-
+theorem matrix_energy (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian) :
+    2*(Matrix.trace (M*M)).re=(Matrix.trace M).re^2+‖bloch M‖^2 := by
+  have hre (i j : Fin 2) : (M i j).re = (M j i).re := by
+    simpa using congrArg Complex.re (hM.apply j i)
+  have him (i j : Fin 2) : -(M i j).im = (M j i).im := by
+    simpa using congrArg Complex.im (hM.apply j i)
+  have h00 : (M 0 0).im = 0 := by linarith [him 0 0]
+  have h11 : (M 1 1).im = 0 := by linarith [him 1 1]
+  simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, bloch,
+    EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_three, h00, h11, hre 1 0, ← him 0 1]
+  ring
+set_option linter.style.longLine false in
+set_option linter.style.whitespace false in
 theorem result {m : ℕ} (p v : Fin m → ℝ)
     (hp : ∀ j,0<p j) (hp1 : ∑ j,p j=1) (hv0 : ∑ j,v j=0) (hv : v≠0)
     (hthree : ∃ i j k,v i/p i≠v j/p j ∧ v i/p i≠v k/p k ∧ v j/p j≠v k/p k) :
@@ -28,7 +40,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
     Tendsto (fun R => (C2 p v R-B)/R^2) (𝓝[>] 0) (𝓝 (V/4)) := by
   classical
   revert m
-
   have upper_result : ∀ {m : ℕ}
         (p v : Fin m → ℝ) (hp : ∀ j, 0<p j) (hp1 : ∑ j, p j=1)
         (hv0 : ∑ j, v j=0) (hv : ∃ j, v j ≠ 0),
@@ -77,7 +88,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
     rw [hc] at hlim
     rw [hvd] at hprog
     exact ⟨N,rho,I,Q,hlim,hprog⟩
-
   have coefficient_inequality (p v b A q e c x : ℝ)
       (hp : 0 < p) (hc : 0 < c) (he : e < 1)
       (hb : b = v/c) (hAf : A = (p-b*x-e*q)/(1-e)) (hpsd : b^2 ≤ A*q) :
@@ -95,7 +105,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       nlinarith only [hh, congrArg (fun r : ℝ => r*q) hap]
     rw [← hid] at hh'
     exact nonpos_of_mul_nonpos_left hh' (sq_pos_of_pos hp)
-
   have coefficient_degeneration {ι : Type} [Fintype ι]
       (p v : ι → ℝ) (B : ℝ)
       (hp : ∀ j, 0 < p j) (hpsum : ∑ j, p j = 1)
@@ -168,7 +177,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         exact (mul_eq_zero.mp hh).resolve_left (sub_ne_zero.mpr hab)
       have hh : L*(s j-s k)=0 := by linear_combination hd i j hij - hd i k hik
       exact hjk (sub_eq_zero.mp ((mul_eq_zero.mp hh).resolve_left (ne_of_gt hL)))
-
     have normalized_convergence
         (p s : ι → ℝ) (B M : ℝ)
         (hp : ∀ j, 0 < p j) (hpsum : ∑ j, p j = 1)
@@ -321,7 +329,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         e n*t n j^2-(1-k n*s j)*t n j+(1-e n)*z n*s j^2 ≤ 0 := by
       exact coefficient_inequality (p j) (v j) (b n j) (A n j) (q n j) (e n) (c n) (x n)
         (hp j) (hc n) (lt_of_le_of_lt (he n).2 (by norm_num)) (hb n j) (hAf n j) (hpsd n j)
-
     have hIn (n : ℕ) : k n^2 ≤ 4*e n*(1-e n)*z n := by
       dsimp [k,z]; rw [div_pow]
       simpa only [div_eq_mul_inv,one_mul,mul_assoc] using
@@ -352,7 +359,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
     convert hh using 1
     · ext n; dsimp [t]; field_simp [ne_of_gt (hp j)]
     · dsimp [s]; field_simp [ne_of_gt (hp j)]
-
   have coefficient_matching_lower {ι : Type} [Fintype ι]
       (p v : ι → ℝ) (B : ℝ)
       (hp : ∀ j, 0 < p j) (hpsum : ∑ j, p j = 1)
@@ -416,7 +422,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       have h2 := mul_le_mul_of_nonneg_left hgap (show 0 ≤ 4*(1-e) by positivity)
       apply (div_le_div_iff₀ (by positivity : 0 < 4*(1-e)^2*B) (sq_pos_of_pos hR)).mpr
       nlinarith only [h1,h2]
-
     have matching_lower_of_limits
         (p s : ι → ℝ) (B : ℝ) (hp : ∀ j,0 ≤ p j)
         (hp1 : ∑ j,p j=1) (hs : ∑ j,p j*s j=0)
@@ -492,13 +497,11 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         e n*t n j^2-(1-k n*s j)*t n j+(1-e n)*z n*s j^2 ≤ 0 := by
       exact coefficient_inequality (p j) (v j) (b n j) (A n j) (q n j) (e n) (c n) (x n)
         (hp j) (hc n) (lt_of_le_of_lt (he n).2 (by norm_num)) (hb n j) (hAf n j) (hpsd n j)
-
     have hCost (n : ℕ) : Q n*(4*e n*(1-e n)*z n-k n^2)=4*e n*(1-e n) := by
       have hh := (eq_div_iff (ne_of_gt (sub_pos.mpr (hinside n)))).mp (hQf n)
       dsimp only [z,k]
       rw [div_pow, mul_one_div, ← sub_div, ← mul_div_assoc]
       exact (div_eq_iff (ne_of_gt (sq_pos_of_pos (hc n)))).mpr (by nlinarith only [hh])
-
     obtain ⟨he0,hc0,hq0⟩ := coefficient_degeneration p v B hp hpsum hv hvsum hB hthree
       e c x Q q A b he hc hq hA hqsum hb hAf hpsd hinside hQf hQ
     have ht0 (j : ι) : Tendsto (fun n => t n j) atTop (𝓝 (s j^2/B)) := by
@@ -514,7 +517,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
     exact matching_lower_of_limits p s B (fun j => (hp j).le) hpsum hsumS hB.symm hBp
       e z k Q c R t (fun n => ⟨(he n).1,lt_of_le_of_lt (he n).2 (by norm_num)⟩)
       hQp hR htSum hfn hCost hRadius he0 hQ hc0 ht0
-
   have actual_rank_two_lower {m : ℕ}
       (p v : Fin m → ℝ) (B : ℝ)
       (hp : ∀ j, 0 < p j) (hpsum : ∑ j, p j = 1)
@@ -551,27 +553,15 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         c^2*(4*ε*(1-ε))/(4*ε*(1-ε)-x^2) := by
       clear * - coefficient_matching_lower
       classical
-      have matrix_energy (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian) :
-          2*(Matrix.trace (M*M)).re=(Matrix.trace M).re^2+‖bloch M‖^2 := by
-        have hre (i j : Fin 2) : (M i j).re = (M j i).re := by
-          simpa using congrArg Complex.re (hM.apply j i)
-        have him (i j : Fin 2) : -(M i j).im = (M j i).im := by
-          simpa using congrArg Complex.im (hM.apply j i)
-        have h00 : (M 0 0).im = 0 := by linarith [him 0 0]
-        have h11 : (M 1 1).im = 0 := by linarith [him 1 1]
-        simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, bloch,
-          EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_three, h00, h11, hre 1 0, ← him 0 1]
-        ring
       have bloch_energy (a : ℝ) (r : EuclideanSpace ℝ (Fin 3)) :
           2*(Matrix.trace (blochMatrix a r * blochMatrix a r)).re=a^2+‖r‖^2 := by
-        simp [Matrix.trace, Matrix.mul_apply, blochMatrix, Fin.sum_univ_two,
+        simp [Matrix.trace, blochMatrix, Fin.sum_univ_two,
           EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_three]
         ring
       have reframe_energy (O : EuclideanSpace ℝ (Fin 3) ≃ₗᵢ[ℝ] EuclideanSpace ℝ (Fin 3))
           (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian) :
           2*(Matrix.trace (reframe O M*reframe O M)).re=2*(Matrix.trace (M*M)).re := by
         rw [reframe, bloch_energy, matrix_energy M hM, O.norm_map]
-
       have pure_energy {n : Type} [Fintype n] [DecidableEq n] (rho B : Matrix n n ℂ)
           (hp : rho.PosSemidef) (hB : B.IsHermitian) (htan : B*rho+rho*B=B) :
           spectralQFI rho B hp = 2*(Matrix.trace (B*B)).re := by
@@ -584,8 +574,10 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         have hu' : (U : Matrix n n ℂ) * star (U : Matrix n n ℂ) = 1 := U.property.2
         have hdiag : star (U : Matrix n n ℂ) * rho * (U : Matrix n n ℂ) = diagonal d := by
           conv_lhs => rw [hp.isHermitian.spectral_theorem]
-          simp [U, d, Unitary.conjStarAlgAut_apply, Function.comp_def, Matrix.mul_assoc]
-          rw [← Matrix.mul_assoc, Unitary.coe_star_mul_self, one_mul]
+          simp only [Complex.coe_algebraMap, Unitary.conjStarAlgAut_apply]
+          change star (U : Matrix n n ℂ) * ((U : Matrix n n ℂ) * diagonal d * star (U : Matrix n n ℂ)) * U = diagonal d
+          simp only [Matrix.mul_assoc, hu, mul_one]
+          rw [← Matrix.mul_assoc, hu, one_mul]
         have hentry (i j : n) : M i j * (d i+d j) = M i j := by
           have he := congrArg (fun X : Matrix n n ℂ =>
             (star (U : Matrix n n ℂ) * X * (U : Matrix n n ℂ)) i j) htan
@@ -622,7 +614,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         intro j _
         rw [← hM.apply j i]
         simp [Complex.mul_conj, Complex.normSq_apply]
-
       intro rho I hI h0 hc hrho O x c ε s hs hinside hcoord
       let D := deriv rho 0
       have hd : HasDerivAt rho D 0 :=
@@ -695,8 +686,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       rw [hpureQ, ← hpair, hdd]
       simp only [div_pow, mul_pow, hs2, one_mul, hy2]
       field_simp [ne_of_gt (sub_pos.mpr hinside)]
-      <;> ring
-
+      ring
     classical
     choose basis x c e s A q b hcpos hepos hele hs
       hcoeff hqsum hcoord hinside hend using fun n =>
@@ -725,7 +715,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       (fun n j => (hcoeff n j).2.2.2.1) (fun n j => (hcoeff n j).2.2.2.2)
       (fun n j => (hcoeff n j).2.2.1) (fun n => by simpa using hinside n 0 (h0 n))
       hQf hQ R hR hRadius
-
   have score_separation {ι : Type} [Fintype ι]
       (p s : ι → ℝ) (hp : ∀ j, 0<p j) (hp1 : ∑ j,p j=1)
       (hs : ∑ j,p j*s j=0)
@@ -749,12 +738,12 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
           p j*s j^4 - 2*(C/B)*(p j*s j^3) + ((C/B)^2-2*B)*(p j*s j^2) +
           (2*C)*(p j*s j) + B^2*p j := by
         field_simp
-        <;> ring
+        ring
       simp_rw [hid]
       simp only [sum_add_distrib,sum_sub_distrib,←mul_sum,hp1,hs,mul_zero,add_zero,mul_one]
       change D-2*(C/B)*C+((C/B)^2-2*B)*B+B^2=D-B^2-C^2/B
       field_simp
-      <;> ring
+      ring
     have hV : 0<D-B^2-C^2/B := by
       rw [←hrid]
       apply sum_pos'
@@ -805,7 +794,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       change 0<0-B-s lo*s hi at hsum
       linarith only [hsum]
     exact ⟨hB,hV,lo,hi,hlo0,hhi0,hgap⟩
-
   have infimum_limit (S : ℝ → Set ℝ) (B K : ℝ) (U : ℝ → ℝ)
       (hlower : ∀ R,0<R → ∀ q∈S R,B≤q)
       (hupper : ∀ᶠ R in 𝓝[>] 0,U R∈S R)
@@ -847,7 +835,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       have heq : (fun n => (U (R n)-B)/R n^2*R n^2+B)=(fun n => U (R n)) := by
         funext n
         field_simp [(hR n).ne']
-        <;> ring
+        ring
       rw [heq] at ht
       simpa using ht
     have hQt : Tendsto Q atTop (𝓝 B) := tendsto_of_tendsto_of_tendsto_of_le_of_le
@@ -874,7 +862,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
           (sq_nonneg _)) hn
     apply (tendsto_add_atTop_iff_nat n0).mp
     exact hClim
-
   have cost_set_bounds {m : ℕ} (p v : Fin m → ℝ)
       (hp : ∀ j, 0<p j) (hp1 : ∑ j,p j=1) (hv0 : ∑ j,v j=0) (hv : v≠0) :
       (∀ R, 0≤R → ∀ Q ∈ costs p v R, (∑ j,v j^2/p j) ≤ Q) ∧
@@ -898,7 +885,6 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
     filter_upwards [hprog, self_mem_nhdsWithin] with R hR hRp
     have hmem : Q R ∈ costs p v R := ⟨N R,rho R,I R,hR⟩
     exact ⟨⟨Q R,hmem⟩,⟨∑ j,v j^2/p j,fun q hq => hlower R (le_of_lt hRp) q hq⟩⟩
-
   have all_program_lower {m : ℕ} (p v : Fin m → ℝ)
       (hp : ∀ j, 0<p j) (hp1 : ∑ j,p j=1) (hv0 : ∑ j,v j=0) (hv : v≠0)
       (hthree : ∃ i j k, v i/p i≠v j/p j ∧ v i/p i≠v k/p k ∧ v j/p j≠v k/p k)

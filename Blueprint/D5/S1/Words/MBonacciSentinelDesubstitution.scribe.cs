@@ -14,6 +14,13 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
         H("Sentinel Desubstitution of the m-bonacci Word"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("factor-length"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.factor_len"),
+                H("Exact factor length"), StatementSource.FromAuthor(WindowSupplier("factor_len")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every alphabet size m, every function x from the naturals to Fin m, and all natural i and n, the length-n factor of x at i has length n. This identity gives the lengths of finite prefixes in periodic intervals."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("window-iterate-prefix"),
                 DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.iterate_prefix"),
                 H("Nested actual iterates"), StatementSource.FromAuthor(WindowSupplier("iterate_prefix")),
@@ -293,7 +300,7 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
                     CFIff(CFCall("Occ", m, CFCall("cons", a, s), q),
                         CFAnd(CFEq(CFCall("word", m, q), a),
                             CFCall("Occ", m, s, CFAdd(q, F.D(1)))))))),
-            "factor_add" => CFAll("x", CFCall("Function", CFN(), CFCall("Fin", m)),
+            "factor_add" => CFAll("x", Parenthesized(new Formula.TypeArrow(CFN(), CFCall("Fin", m))),
                 CFAll("i", CFN(), CFAll("n", CFN(), CFAll("t", CFN(),
                     CFEq(CFCall("factor", x, i, CFAdd(n, t)),
                         CFCall("append", CFCall("factor", x, i, n),
@@ -340,14 +347,20 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
             "iterate_growth" => WA("k", WN(), WL(WP(k, F.D(1)), WC("length", P(k)))),
             "word_eq_iterate" => WA("k", WN(), WA("n", WN(),
                 WI(WT(n, WC("length", P(k))), WQ(WC("word", m, n), WC("getElem", P(k), n))))),
-            "factor_get" => WA("x", WC("Function", WN(), alphabet),
+            "factor_get" => WA("x", Parenthesized(new Formula.TypeArrow(WN(), alphabet)),
                 WA("i", WN(), WA("n", WN(), WA("j", WN(), WI(WT(j, n),
                     WQ(WC("getElem", WC("factor", x, i, n), j),
                         new Formula.Apply(x, [WP(i, j)]))))))),
+            "factor_len" => WA("x", Parenthesized(new Formula.TypeArrow(WN(), alphabet)),
+                WA("i", WN(), WA("n", WN(),
+                    WQ(WC("length", WC("factor", x, i, n)), n)))),
             _ => throw new ArgumentOutOfRangeException(nameof(name)),
         };
-        return F.Disp(WA("m", WN(), name == "factor_get" ? body : WI(WL(F.D(2), m), body)));
+        return F.Disp(WA("m", WN(), name == "factor_get" || name == "factor_len"
+            ? body : WI(WL(F.D(2), m), body)));
     }
+
+    private static Formula Parenthesized(Formula value) => F.Seq(F.Open, value, F.Close);
 
     private static Formula WN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
     private static Formula WC(string name, params Formula[] args) =>
