@@ -6,6 +6,7 @@
    these identities do not choose replacement cycles or endpoint states. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 
 set_option autoImplicit false
 
@@ -20,6 +21,110 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.CircularWords.CyclicInsertionGap
 open private p_circle_eq from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
+open private frame_terminal_fresh from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansionDomains
+open private anchor_coordinates bc_terminal from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+
+private theorem child_frame_full_perm {m k : ℕ} (F : SupplyFrame m k)
+    (j : Fin F.base.length) :
+    (F.selected ++ F.base.rotate j.val ++ [F.terminal]).Perm
+      (F.selected ++ F.base ++ [F.terminal]) := by
+  simpa only [List.append_assoc] using
+    ((List.Perm.refl F.selected).append (List.rotate_perm F.base j.val)).append_right [F.terminal]
+
+/-- Every independent outer child has its own literal prior marked
+frame. Only the base circle is rotated to its actual gap; the selected
+list and terminal are unchanged. This supplies an all-base induction
+instance rather than assuming an unrelated cycle on that child graph. -/
+def nativeChildFrame {m k : ℕ} (F : SupplyFrame m k)
+    (j : Fin F.base.length) : SupplyFrame m k where
+  selected := F.selected
+  base := F.base.rotate j.val
+  terminal := F.terminal
+  selected_length := F.selected_length
+  prefix_length := by
+    simpa only [List.length_append, List.length_rotate] using F.prefix_length
+  full_nodup := (child_frame_full_perm F j).nodup_iff.mpr F.full_nodup
+  full_labels := fun x => (child_frame_full_perm F j).mem_iff.mpr (F.full_labels x)
+
+theorem native_child_frame_domain {m k : ℕ} (F : SupplyFrame m k)
+    (hB : 3 ≤ F.base.length) (j : Fin F.base.length) (x : Configuration m) :
+    SpecialDomain (nativeChildFrame F j)
+      (by simpa only [nativeChildFrame, List.length_rotate] using hB) x ↔
+        ChildDomain (childGap F j) x := by
+  change Layer F.selected.toFinset _ x ↔ Layer F.selected.toFinset _ x
+  have hc : (childGap (nativeChildFrame F j) ⟨0, by
+      simpa only [nativeChildFrame, List.length_rotate] using (by omega : 0 < F.base.length)⟩).val =
+      (childGap F j).val := by
+    change (F.terminal :: (F.base.rotate j.val).rotate 0 : Cycle _) =
+      (F.terminal :: F.base.rotate j.val : Cycle _)
+    rw [List.rotate_zero]
+  rw [hc]
+
+def childMarkedDomainMap {m k : ℕ} (F : SupplyFrame m k)
+    (hB : 3 ≤ F.base.length) (j : Fin F.base.length) :
+    domainGraph (SpecialDomain (nativeChildFrame F j)
+      (by simpa only [nativeChildFrame, List.length_rotate] using hB)) →g
+        domainGraph (ChildDomain (childGap F j)) :=
+  ⟨fun x => ⟨x.val, (native_child_frame_domain F hB j x.val).mp x.property⟩,
+    fun h => h⟩
+
+theorem child_marked_domain_map_bijective {m k : ℕ} (F : SupplyFrame m k)
+    (hB : 3 ≤ F.base.length) (j : Fin F.base.length) :
+    Function.Bijective (childMarkedDomainMap F hB j) := by
+  constructor
+  · intro x y h
+    exact Subtype.ext (congrArg Subtype.val h)
+  · intro y
+    exact ⟨⟨y.val, (native_child_frame_domain F hB j y.val).mpr y.property⟩, Subtype.ext rfl⟩
+
+/-- A supplied prior marked cycle is converted into the specified
+ordinary-child input of the parent constructor. Its remaining-b
+invariant proves the actual supplier cut, and the returned child cycle
+is exactly the image of this same walk, with literal raw inventories. -/
+theorem native_child_frame_specified_ordinary {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    (j : Fin F.base.length) (hj : 0 < j.val)
+    {a : {x : Configuration m // SpecialDomain (nativeChildFrame F j)
+      (by simpa only [nativeChildFrame, List.length_rotate] using hB) x}}
+    (w : (domainGraph (SpecialDomain (nativeChildFrame F j)
+      (by simpa only [nativeChildFrame, List.length_rotate] using hB))).Walk a a)
+    (hw : w.IsHamiltonianCycle)
+    (hkeepB : ∀ (x y : {v : Configuration m // SpecialDomain (nativeChildFrame F j)
+        (by simpa only [nativeChildFrame, List.length_rotate] using hB) v}),
+      y.val = x.val * b m → x.val (Fin.last m) ∉ F.selected.toFinset → s(x, y) ∈ w.edges) :
+    ∃ C : SpecifiedOrdinaryCycle hm F hB j hj,
+      ∃ hbase : C.base = childMarkedDomainMap F hB j a,
+        C.walk.copy hbase hbase = w.map (childMarkedDomainMap F hB j) ∧
+        C.walk.support.map Subtype.val = w.support.map Subtype.val ∧
+        C.walk.edges.map (Sym2.map Subtype.val) = w.edges.map (Sym2.map Subtype.val) := by
+  let lift := childMarkedDomainMap F hB j
+  let r := ordinaryRight hm F hB j hj
+  let l := ordinaryLeft hm F hB j hj
+  let r' : {v : Configuration m // SpecialDomain (nativeChildFrame F j)
+      (by simpa only [nativeChildFrame, List.length_rotate] using hB) v} :=
+    ⟨r.val, (native_child_frame_domain F hB j r.val).mpr r.property⟩
+  let l' : {v : Configuration m // SpecialDomain (nativeChildFrame F j)
+      (by simpa only [nativeChildFrame, List.length_rotate] using hB) v} :=
+    ⟨l.val, (native_child_frame_domain F hB j l.val).mpr l.property⟩
+  have hterminal : r'.val (Fin.last m) ∉ F.selected.toFinset := by
+    rw [show r'.val = rightPort F (k + j.val) by rfl]
+    rw [rightPort, bc_terminal (by omega : 2 ≤ m), (anchor_coordinates F).2]
+    simp only [List.mem_toFinset]
+    exact fun h => frame_terminal_fresh F (List.mem_append.mpr (Or.inl h))
+  have hcut : s(r, l) ∈ (w.map lift).edgeSet := by
+    change s(r, l) ∈ (w.map lift).edges
+    rw [SimpleGraph.Walk.edges_map]
+    exact List.mem_map.mpr ⟨s(r', l'), hkeepB r' l' rfl hterminal, rfl⟩
+  let C : SpecifiedOrdinaryCycle hm F hB j hj :=
+    ⟨lift a, w.map lift, SimpleGraph.Walk.IsHamiltonianCycle.map
+      (child_marked_domain_map_bijective F hB j) hw, hcut⟩
+  refine ⟨C, rfl, rfl, ?_, ?_⟩
+  · simp only [C, SimpleGraph.Walk.support_map, List.map_map]
+    rfl
+  · simp only [C, SimpleGraph.Walk.edges_map, List.map_map, Sym2.map_map]
+    rfl
 
 /-- Swapping the selected p/q order changes ports, but not the actual
 native configuration domain. The base and terminal keep their literal
@@ -97,5 +202,7 @@ theorem p_marked_parent_lift_injective {m k : ℕ}
 #print axioms native_marked_orders_same_domain
 #print axioms native_p_marked_domain_eq_child
 #print axioms native_next_marked_domain_eq_parent
+#print axioms native_child_frame_domain
+#print axioms native_child_frame_specified_ordinary
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
