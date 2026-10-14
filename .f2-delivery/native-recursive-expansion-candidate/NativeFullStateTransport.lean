@@ -5,6 +5,7 @@
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateTransport
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 import D5.S3.Combinatorics.Graph.Walks.ActualTwoOrderStateTransport
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 
 set_option autoImplicit false
 
@@ -20,6 +21,7 @@ open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 open D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
 open D5.S3.Combinatorics.Graph.Walks.ActualTwoOrderStateTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 
 /-- Identity on actual configurations carries all three partitions and
 both native endpoint templates at once, including for a proper child
@@ -105,14 +107,18 @@ theorem native_actual_full_parent_state_next_marked {m k : ℕ}
         s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(p, q) → s(x, y) ∈ next.edges) ∧
       (∀ (x y : {v : Configuration m // SpecialDomain N hN v}),
         y.val = x.val * b m → x.val (Fin.last m) ∉ N.selected.toFinset →
-          s(x, y) ∈ next.edges) := by
+          s(x, y) ∈ next.edges) ∧
+      (∀ hk : 2 ≤ k,
+        protectedP N (by omega) = protectedP F hk ∧
+          protectedQ N (by omega) = protectedQ F hk) := by
   dsimp only
   obtain ⟨hstate, hprimary, hopposite, hK, hH⟩ :=
     native_actual_identity_two_order_state_transport _ _ (parentNextMarkedMap F A u hbase hA)
       (fun _ => rfl) F₀ F₁ odd₀ odd₁ c K H joint primary opposite hs hp ho
   obtain ⟨hnext, hsupport, hedges, hnextA, hnextB⟩ :=
     native_same_parent_cycle_next_marked F A u hbase hA p q c hc hkeepA hkeepB
-  exact ⟨hnext, hstate, hprimary, hopposite, hsupport, hedges, hK, hH, hnextA, hnextB⟩
+  exact ⟨hnext, hstate, hprimary, hopposite, hsupport, hedges, hK, hH, hnextA, hnextB,
+    fun hk => native_protected_labels_prepend F (nextFrame F A u hbase) hk u rfl⟩
 
 #print axioms native_actual_identity_two_order_state_transport
 #print axioms native_actual_full_parent_state_next_marked
