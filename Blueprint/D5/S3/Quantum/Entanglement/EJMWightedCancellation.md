@@ -97,3 +97,4 @@ The consumed adapter preserves the original Fin(m+n) coefficient order when sepa
 - Truth anchor: `D5/S3/Quantum/Entanglement/EJMWightedCancellation.inflation_expectation_tuple`
 - Truth anchor: `D5/S3/Quantum/Entanglement/EJMWightedCancellation.singleton_mass_in_B_order`
 - Truth anchor: `D5/S3/Quantum/Entanglement/EJMWightedCancellation.triangle_mass_in_BAC_order`
+- Dependency: [D5/S3/Quantum/Entanglement/TriangleInflationSoundness](TriangleInflationSoundness.md)
