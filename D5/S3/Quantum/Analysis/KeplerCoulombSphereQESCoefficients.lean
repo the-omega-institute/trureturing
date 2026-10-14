@@ -553,5 +553,137 @@ private theorem denormalize {m : ℕ} {Q κ : ℝ} {e o : ℕ → ℝ}
       norm_num
       nlinarith [hh]
 
+private theorem normalized_mass {m : ℕ} {x : ℝ} {e o : ℕ → ℝ}
+    (h : Normalized m x e o) : (∑ k ∈ Finset.range (m / 2 + 1), e k) = 1 := by
+  have hh := h.2.1 0 (Nat.zero_le _)
+  rw [sum_range_head]
+  simp only [t.eq_1, Nat.cast_zero, mul_zero, sub_zero, Nat.zero_add] at hh
+  linarith [h.1]
+
+private theorem normalized_step {m k : ℕ} {x : ℝ} {e o : ℕ → ℝ}
+    (h : Normalized m x e o) (hk : k < m / 2) :
+    (t m k + 1) * t m k * e k = (x + (t m k) ^ 2) * e (k + 1) := by
+  have ha := h.2.1 k hk.le
+  have hb := h.2.1 (k + 1) (by omega)
+  have hc := h.2.2 k hk
+  have ht : t m (k + 1) = t m k - 2 := by
+    simp only [t.eq_1, Nat.cast_add, Nat.cast_one]; ring
+  rw [sum_head _ (k + 1) (m / 2) (by omega)] at ha
+  rw [ht] at hb
+  linear_combination -(t m k) * ha + (t m k) * hb + hc
+
+private theorem proportional {m : ℕ} {x : ℝ} {e o : ℕ → ℝ}
+    (h : Normalized m x e o) : ∀ k, k ≤ m / 2 →
+    e k * F m (2 * (m / 2)) = e (m / 2) * (E m k).eval x := by
+  intro k hk
+  generalize hn : m / 2 - k = n
+  induction n generalizing k with
+  | zero =>
+    have he : k = m / 2 := by omega
+    subst k
+    rw [(terminal_values m x).1]
+  | succ n ih =>
+    have hlt : k < m / 2 := by omega
+    have hh := ih (k := k + 1) (by omega) (by omega)
+    have hs := normalized_step h hlt
+    have he := E_step hlt x
+    have ht := t_pos hlt
+    apply mul_left_cancel₀ (show (t m k + 1) * t m k ≠ 0 by positivity)
+    linear_combination F m (2 * (m / 2)) * hs - e (m / 2) * he +
+      (x + (t m k) ^ 2) * hh
+
+private theorem normalized_values {m : ℕ} {x : ℝ} {e o : ℕ → ℝ}
+    (hx : 0 < x) (h : Normalized m x e o) : ∀ k, k ≤ m / 2 →
+    e k = (E m k).eval x / (D m).eval x ∧ o k = (H m k).eval x / (D m).eval x := by
+  have hd := (D_eval_pos m hx.le).ne'
+  have hf := (F_pos (m := m) (r := 2 * (m / 2)) (by omega)).ne'
+  have hs : F m (2 * (m / 2)) = e (m / 2) * (D m).eval x := by
+    calc
+      F m (2 * (m / 2)) = (∑ k ∈ Finset.range (m / 2 + 1), e k) * F m (2 * (m / 2)) := by
+        rw [normalized_mass h, one_mul]
+      _ = ∑ k ∈ Finset.range (m / 2 + 1), e k * F m (2 * (m / 2)) := Finset.sum_mul ..
+      _ = ∑ k ∈ Finset.range (m / 2 + 1), e (m / 2) * (E m k).eval x := by
+        apply Finset.sum_congr rfl
+        intro k hk
+        exact proportional h k (by simp only [Finset.mem_range] at hk; omega)
+      _ = e (m / 2) * (D m).eval x := by
+        rw [D.eq_1, Polynomial.eval_finsetSum, Finset.mul_sum]
+  have he (k : ℕ) (hk : k ≤ m / 2) : e k = (E m k).eval x / (D m).eval x := by
+    apply (eq_div_iff hd).mpr
+    apply mul_right_cancel₀ hf
+    linear_combination (D m).eval x * proportional h k hk - (E m k).eval x * hs
+  intro k hk
+  refine ⟨he k hk, ?_⟩
+  rw [h.2.1 k hk, he k hk]
+  have ht : (∑ l ∈ Finset.Icc (k + 1) (m / 2), e l) =
+      (∑ l ∈ Finset.Icc (k + 1) (m / 2), (E m l).eval x) / (D m).eval x := by
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro l hl
+    exact he l (Finset.mem_Icc.mp hl).2
+  rw [ht]
+  field_simp
+  linear_combination E_tail hk x
+
+private theorem normalized_explicit (m : ℕ) {x : ℝ} (hx : 0 < x) :
+    Normalized m x (fun k => (E m k).eval x / (D m).eval x)
+      (fun k => (H m k).eval x / (D m).eval x) := by
+  have hd := (D_eval_pos m hx.le).ne'
+  rw [Normalized.eq_1]
+  refine ⟨?_, ?_, ?_⟩
+  · field_simp
+    linear_combination first_identity m x
+  · intro k hk
+    rw [← Finset.sum_div]
+    field_simp
+    linear_combination -E_tail hk x
+  · intro k hk
+    field_simp
+    linear_combination H_step hk x
+
+private def answer (m : ℕ) (Q κ : ℝ) : ℕ → ℝ :=
+  assemble Q (fun k => (E m k).eval (Q ^ 2 / κ) / (D m).eval (Q ^ 2 / κ))
+    (fun k => (H m k).eval (Q ^ 2 / κ) / (D m).eval (Q ^ 2 / κ))
+
+private theorem answer_system {m : ℕ} {Q κ : ℝ}
+    (hm : 2 ≤ m) (hQ : 0 < Q) (hκ : 0 < κ) : System m Q κ (answer m Q κ) := by
+  rw [answer.eq_1]
+  exact denormalize hm hκ.ne' (normalized_explicit m (div_pos (sq_pos_of_pos hQ) hκ))
+
+private theorem solution_values {m : ℕ} {Q κ : ℝ} {a : ℕ → ℝ}
+    (hm : 2 ≤ m) (hQ : 0 < Q) (hκ : 0 < κ) (ha : System m Q κ a) :
+    a 0 = (E m 0).eval (Q ^ 2 / κ) / (D m).eval (Q ^ 2 / κ) ∧
+    (∀ k, 1 ≤ k → k ≤ m / 2 → a (2 * k) =
+      Q * (E m k).eval (Q ^ 2 / κ) / (D m).eval (Q ^ 2 / κ)) ∧
+    (∀ k, k ≤ (m - 1) / 2 → a (2 * k + 1) =
+      (H m k).eval (Q ^ 2 / κ) / (D m).eval (Q ^ 2 / κ)) := by
+  have h := normalized_values (div_pos (sq_pos_of_pos hQ) hκ) (normalize hm hQ.ne' hκ.ne' ha)
+  refine ⟨?_, ?_, ?_⟩
+  · simpa only [evenPart.eq_1, ite_true] using (h 0 (Nat.zero_le _)).1
+  · intro k hk hkm
+    have hh := (h k hkm).1
+    rw [evenPart.eq_1, if_neg (by omega)] at hh
+    rw [(div_eq_iff hQ.ne').mp hh]
+    ring
+  · intro k hk
+    have hh := (h k (by omega)).2
+    simpa only [oddPart.eq_1, if_pos (show 2 * k + 1 ≤ m by omega)] using hh
+
+private theorem system_unique {m : ℕ} {Q κ : ℝ} {a a' : ℕ → ℝ}
+    (hm : 2 ≤ m) (hQ : 0 < Q) (hκ : 0 < κ)
+    (ha : System m Q κ a) (ha' : System m Q κ a') : ∀ i, i ≤ m → a i = a' i := by
+  have h := solution_values hm hQ hκ ha
+  have h' := solution_values hm hQ hκ ha'
+  intro i hi
+  by_cases hz : i = 0
+  · subst i; exact h.1.trans h'.1.symm
+  · by_cases he : i % 2 = 0
+    · have hh : i = 2 * (i / 2) := by omega
+      exact (congrArg a hh).trans ((h.2.1 _ (by omega) (by omega)).trans
+        ((h'.2.1 _ (by omega) (by omega)).symm.trans (congrArg a' hh).symm))
+    · have hh : i = 2 * (i / 2) + 1 := by omega
+      exact (congrArg a hh).trans ((h.2.2 _ (by omega)).trans
+        ((h'.2.2 _ (by omega)).symm.trans (congrArg a' hh).symm))
+
 end
 end D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
