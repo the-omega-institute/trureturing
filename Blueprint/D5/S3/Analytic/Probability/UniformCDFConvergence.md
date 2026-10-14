@@ -123,3 +123,17 @@ $$\forall (m: \mathbb{N}), \forall (p: \operatorname{Fin}\left(m\right) \to \ope
 *Commentary.*
 
 The real measure of a singleton is its product weight.
+
+## References
+
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.bernoulliSpace`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.bernoulliSpaceProbability`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.bernoulliWeight`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.bernoulli_atom`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.centeredBernoulli`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.centeredBernoulli_eq_phase`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.centered_bernoulli_charFun_tendsto`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.charFun_limit_uniform_gaussian_cdf`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.monotone_cdf_pointwise_to_uniform`
+- Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.normalized_bernoulli_product_envelope`
+- Dependency: [D5/S3/Zeros/Endpoints/BernoulliBridgeVariance](../../Zeros/Endpoints/BernoulliBridgeVariance.md)

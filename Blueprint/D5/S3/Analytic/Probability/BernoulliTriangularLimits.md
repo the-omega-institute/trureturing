@@ -243,3 +243,28 @@ $$\forall (f: \mathbb{N} \to \operatorname{Polynomial}\left(\mathbb{R}\right)), 
 *Commentary.*
 
 For polynomial arrays with an eventual shifted Bernoulli factorization, variance divergence yields both the uniform central and local limits.
+
+## References
+
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.CLT`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.LLT`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.bernoulliPGF`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.bernoulli_array_uniform_lattice_limit`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.bernoulli_polynomial_uniform_limits`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.factorization_moments`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.mu`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.normalized`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.prob`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowMass`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowMean`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowVariance`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.sigma`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.sigmaSq`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.sigmaSq_C`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.sigmaSq_X`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.sigmaSq_mul`
+- Truth anchor: `D5/S3/Analytic/Probability/BernoulliTriangularLimits.uniform_lattice_limit_to_floor`
+- Truth anchor: `D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalCDF`
+- Truth anchor: `D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalPDF`
+- Dependency: [D5/S3/Analytic/Probability/UniformCDFConvergence](UniformCDFConvergence.md)
+- Dependency: [D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers](../../TotalVariation/Asymptotics/StatLeanFourierSuppliers.md)
