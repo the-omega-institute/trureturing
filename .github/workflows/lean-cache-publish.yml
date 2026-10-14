@@ -289,6 +289,15 @@ jobs:
           compatibility_roots=(
             D5.S3.Weil.ZetaPntBase.AdditiveCombination
             D5.S0.Tower.NonPisot.GapCountInstances
+            D5.S0.Computability.NatPresburgerSolver
+            D5.S1.Recurrence.LinearRows.DoubledLinearExponentDyadicSupport
+            D5.S1.Recurrence.Residue.IterateExponentialParity
+            D5.S1.Recurrence.Residue.IterateProductFourFiveEighthModEight
+            D5.S1.Recurrence.Residue.QuadraticPowerDiagonalFibbinaryParity
+            D5.S1.Words.ChauveZhangUnaryNeighborhoodRefutation
+            D5.S1.Words.Complexity.LyndonBrackets.LyndonStandardFactorization
+            D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryScheduleEvaluation
+            D5.S1.Words.Complexity.ThueMorseReducedAbelianEven
           )
           make lean-report-scoped \
             LEAN_REPORT=.lake/build/stratalint/upgrade-compatibility-scoped-report.json \
@@ -341,6 +350,19 @@ jobs:
           LEAN
           bash tools/scripts/worktree/lean-cache-run.sh lake env lean \
             build/lean-cache/additive-compatibility.lean
+      - name: Regenerate the solver Blueprint from its compiled inputs
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          printf '%s\0' Blueprint/D5/S0/Computability/NatPresburgerSolver.scribe.cs > build/lean-cache/solver-scribe-paths
+          make emit PATHS=build/lean-cache/solver-scribe-paths
+      - name: Export the generated solver Blueprint
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathlib-upgrade-blueprint-${{ github.run_id }}-${{ github.run_attempt }}
+          path: Blueprint/D5/S0/Computability/NatPresburgerSolver.md
+          if-no-files-found: error
+          retention-days: 3
       - name: Export compatibility diagnostics and scoped report
         if: always()
         uses: actions/upload-artifact@v4

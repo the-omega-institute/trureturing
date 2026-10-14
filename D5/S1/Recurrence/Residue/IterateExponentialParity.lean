@@ -6,6 +6,7 @@
    utility: none
    digest: Parity of integral coefficients of the exponential of X exp(X). -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.QuarticEGFModFour
 
 open PowerSeries Finset

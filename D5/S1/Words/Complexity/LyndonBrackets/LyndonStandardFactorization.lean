@@ -6,6 +6,7 @@
    utility: none
    digest: The longest Lyndon suffix gives the recursive standard factorization. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
 
 set_option autoImplicit false
