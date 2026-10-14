@@ -276,8 +276,8 @@ private theorem negMulLog_pair_spread {l r p q : ℝ}
   rcases lt_or_eq_of_le (hp.1.trans hp.2) with hlr | hlr
   · exact D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation.pair_entropy_le
       hl hlr hp.1 hp.2 hs
-  · have hp' : p = l := by linarith [hp.1, hp.2]
-    have hq' : q = r := by linarith [hq.1, hq.2]
+  · have hp' : p = l := le_antisymm (hp.2.trans hlr.ge) hp.1
+    have hq' : q = r := le_antisymm hq.2 (hlr.ge.trans hq.1)
     simp only [hp', hq', le_refl]
 
 private theorem entropy3_box
