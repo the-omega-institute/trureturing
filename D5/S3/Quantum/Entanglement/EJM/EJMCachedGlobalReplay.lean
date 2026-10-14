@@ -96,6 +96,25 @@ theorem accepted_score_lower_bound (accepted : globalAccepted) :
     EJMGlobalScoreSymmetry.dominates_rank_lt 21 EJMGlobalDAGData.root initial
     initial_valid accepted
 
+/-- A complete prefix and separately earned actual suffix receipts prove the
+same original bound. This is conditional until every reached frontier receipt
+and the actual prefix check have been checked by the kernel. -/
+theorem accepted_prefix_score_lower_bound
+    (frontier : ℕ → Fin EJMGlobalDAGData.Size → Cache →
+      Partial (Fin 20) (Fin 4) → Bool)
+    (suffixes : ∀ fuel index cache p, frontier fuel index cache p = true →
+      D5.S0.Certificates.FiniteCachedSymmetryDAGReplay.check EJMGlobalDAGData.nodes
+        step lower EJMGlobalScoreSymmetry.dominates scale fuel index cache p = true)
+    (depth : ℕ)
+    (accepted : D5.S0.Certificates.FiniteCachedSymmetryDAGReplay.checkPrefix
+      EJMGlobalDAGData.nodes step lower EJMGlobalScoreSymmetry.dominates scale
+      frontier depth 21 EJMGlobalDAGData.root initial (fun _ => none) = true) :
+    ∀ e : Event (Fin 20) (Fin 4), scale ≤ score F1 F2 e := by
+  apply accepted_score_lower_bound
+  exact D5.S0.Certificates.FiniteCachedSymmetryDAGReplay.checked_prefix_and_frontier
+    EJMGlobalDAGData.nodes step lower EJMGlobalScoreSymmetry.dominates scale
+    frontier suffixes depth 21 EJMGlobalDAGData.root initial (fun _ => none) accepted
+
 theorem accepted_score_positive (accepted : globalAccepted) :
     ∀ e : Event (Fin 20) (Fin 4), 1 ≤ score F1 F2 e := by
   intro e
@@ -109,6 +128,7 @@ theorem accepted_excludes_triangle_local (accepted : globalAccepted) :
 #print axioms step_valid
 #print axioms valid_lower_le_score
 #print axioms accepted_score_lower_bound
+#print axioms accepted_prefix_score_lower_bound
 #print axioms accepted_excludes_triangle_local
 
 end D5.S3.Quantum.Entanglement.EJM.EJMCachedGlobalReplay

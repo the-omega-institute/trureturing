@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/FiniteCachedSymmetryDAGReplay
    mirror-E: none(waiver:finite-cached-certificate-replay)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCachedGlobalReplay.accepted_prefix_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData.root
    digest: Checked finite local transitions retain their actual-context association through exhaustive cached replay. -/
 
 /- Draft only: not compiled, not a canonical module and not a delivered
@@ -39,6 +39,60 @@ def check
     | .split i children => decide (∀ a,
         check nodes step lower dominates gap fuel (children a)
           (step cache i a) (Function.update p i (some a)) = true)
+
+/-- A finite prefix keeps the original bound and symmetry tests. At its
+frontier it passes the complete actual fuel, node, cache and partial event to
+the suffix receipt selector. No node shape or hash transfers acceptance. -/
+def checkPrefix
+    (nodes : ℕ → Fin N → Node N Coord Value Sym)
+    (step : Cache → Coord → Value → Cache) (lower : Cache → ℤ)
+    (dominates : Sym → Partial Coord Value → Bool) (gap : ℤ)
+    (frontier : ℕ → Fin N → Cache → Partial Coord Value → Bool) :
+    ℕ → ℕ → Fin N → Cache → Partial Coord Value → Bool
+  | 0, fuel, index, cache, p => frontier fuel index cache p
+  | _ + 1, 0, _, _, _ => false
+  | depth + 1, fuel + 1, index, cache, p =>
+    match nodes (fuel + 1) index with
+    | .bound => decide (gap ≤ lower cache)
+    | .symmetry s => dominates s p
+    | .split i children => decide (∀ a,
+        checkPrefix nodes step lower dominates gap frontier depth fuel (children a)
+          (step cache i a) (Function.update p i (some a)) = true)
+
+/-- Complete separately checked suffixes splice into the existing replay.
+The actual EJM consumer can earn each bounded suffix once and combine it with
+the prefix without running a second numeric decision over the entire tree.
+Its selector must preserve every actual cache row and action, not only an
+index proposal. The existing global rank-descent theorem then applies without
+any additional mathematical premise. -/
+theorem checked_prefix_and_frontier
+    (nodes : ℕ → Fin N → Node N Coord Value Sym)
+    (step : Cache → Coord → Value → Cache) (lower : Cache → ℤ)
+    (dominates : Sym → Partial Coord Value → Bool) (gap : ℤ)
+    (frontier : ℕ → Fin N → Cache → Partial Coord Value → Bool)
+    (suffixes : ∀ fuel index cache p, frontier fuel index cache p = true →
+      check nodes step lower dominates gap fuel index cache p = true)
+    (depth fuel : ℕ) (index : Fin N) (cache : Cache) (p : Partial Coord Value)
+    (accepted : checkPrefix nodes step lower dominates gap frontier
+      depth fuel index cache p = true) :
+    check nodes step lower dominates gap fuel index cache p = true := by
+  induction depth generalizing fuel index cache p with
+  | zero => exact suffixes fuel index cache p accepted
+  | succ depth ih =>
+    cases fuel with
+    | zero => simp only [checkPrefix, Bool.false_eq_true] at accepted
+    | succ fuel =>
+      cases hn : nodes (fuel + 1) index with
+      | bound => simpa only [checkPrefix, check, hn] using accepted
+      | symmetry s => simpa only [checkPrefix, check, hn] using accepted
+      | split i children =>
+        simp only [checkPrefix, hn] at accepted
+        have all := of_decide_eq_true accepted
+        simp only [check, hn]
+        apply decide_eq_true
+        intro a
+        exact ih fuel (children a) (step cache i a)
+          (Function.update p i (some a)) (all a)
 
 private theorem compatible_update (p : Partial Coord Value)
     (e : Event Coord Value) (hp : Compatible p e) (i : Coord) :
@@ -146,5 +200,6 @@ theorem checked_global_lower_bound
 
 #print axioms checked_forces_smaller_bad_event
 #print axioms checked_global_lower_bound
+#print axioms checked_prefix_and_frontier
 
 end D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
