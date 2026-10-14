@@ -7,6 +7,7 @@
    digest: Fixed literal tails supply every history and common-stem operation counts. -/
 
 import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+import D5.S3.ConceptDynamics.Coding.DecoderStartup
 import Mathlib.Algebra.Order.Archimedean.Basic
 import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.Analysis.SpecificLimits.Basic

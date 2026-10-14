@@ -7,6 +7,7 @@
    digest: Actual operation traces and equal-weight codebooks bound complete storage. -/
 
 import D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
+import D5.S3.ConceptDynamics.Coding.DecoderStartup
 import Mathlib.Algebra.Order.Archimedean.Basic
 import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.Analysis.SpecificLimits.Basic
