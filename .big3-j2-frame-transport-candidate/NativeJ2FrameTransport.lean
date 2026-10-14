@@ -10,6 +10,8 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
 
+open Equiv Fin.NatCast
+
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
@@ -80,8 +82,14 @@ private theorem frame_selected_coordinates {m : ℕ} (hm : 5 ≤ m)
   have ht := anchor_tuple F
   have hp := congrArg (fun l : List (Fin (m + 1)) => l[0]?) ht
   have hq := congrArg (fun l : List (Fin (m + 1)) => l[1]?) ht
-  have hp' : anchor F 0 = p := by simpa [hs] using hp
-  have hq' : anchor F ⟨1, by omega⟩ = q := by simpa [hs] using hq
+  have hp' : anchor F 0 = p := by
+    simpa only [List.getElem?_ofFn, if_pos (by omega : 0 < m + 1),
+      hs, List.cons_append, List.nil_append, List.getElem?_cons_zero,
+      Option.some.injEq] using hp
+  have hq' : anchor F ⟨1, by omega⟩ = q := by
+    simpa only [List.getElem?_ofFn, if_pos (by omega : 1 < m + 1),
+      hs, List.cons_append, List.nil_append, List.getElem?_cons_succ,
+      List.getElem?_cons_zero, Option.some.injEq] using hq
   rw [hs, hp', hq']
 
 private theorem raw_zero_coordinates {m : ℕ} (hm : 5 ≤ m) :
@@ -107,7 +115,7 @@ private theorem relabel_selected {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) 
   rw [frame_selected_coordinates hm F]
   ext x
   simp only [Finset.mem_image, Finset.mem_insert, Finset.mem_singleton,
-    List.toFinset_cons, List.toFinset_nil, Finset.mem_empty, or_false]
+    List.toFinset_cons, List.toFinset_nil, Finset.not_mem_empty, or_false]
   constructor
   · rintro ⟨y, rfl | rfl, rfl⟩ <;> simp [hz, ho]
   · rintro (rfl | rfl)
@@ -167,13 +175,14 @@ theorem native_j2_frame_domain_iff {m : ℕ} (hm : 5 ≤ m)
 private theorem raw_right_supply {m : ℕ} (hm : 5 ≤ m) (i : Fin 3) :
     NativeJ2Words.rightPort m i = NativeJ2Words.rightPort m 0 * (b m * c m)^i.val := by
   have hstep : NativeJ2Words.rightPort m 0 * (b m * c m) =
-      NativeJ2Words.rightPort m 1 := by
+      Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m) := by
     apply Equiv.ext
     intro j
     apply Fin.ext
-    simp only [NativeJ2Words.rightPort, Fin.val_zero, Fin.val_one',
-      Equiv.Perm.mul_apply, rotate_val, swap_val, Fin.val_last, Fin.val_mk]
-    rw [bc_apply (by omega : 2 ≤ m)]
+    change (((finRotate (m + 1))^m) ((b m * c m) j)).val =
+      ((Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m)) j).val
+    rw [rotate_val, bc_apply (by omega : 2 ≤ m)]
+    simp only [swap_val, Fin.val_last, Fin.val_mk]
     by_cases hj : j.val < m
     · simp only [dif_pos hj, Fin.val_mk]
       by_cases hlast : j.val = m - 1
@@ -192,8 +201,10 @@ private theorem raw_right_supply {m : ℕ} (hm : 5 ≤ m) (i : Fin 3) :
         Nat.add_mod_right, Nat.mod_eq_of_lt (by omega : m - 1 < m + 1)]
   fin_cases i
   · simp
-  · simpa only [Fin.val_one', pow_one] using hstep.symm
-  · change NativeJ2Words.rightPort m 1 * (b m * c m) =
+  · change Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m) =
+      NativeJ2Words.rightPort m 0 * (b m * c m)
+    exact hstep.symm
+  · change Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m) * (b m * c m) =
       NativeJ2Words.rightPort m 0 * (b m * c m)^2
     rw [← hstep, pow_succ, pow_one, mul_assoc]
 
@@ -234,7 +245,7 @@ private theorem swap_prefix_tuple {α : Type*} [DecidableEq α]
     have hfix : ∀ x ∈ tail, Equiv.swap q p x = id x := by
       intro x hx
       exact Equiv.swap_apply_of_ne_of_ne
-        (fun he => hq (he ▸ hx)) (fun he => hp (by simp [he, hx]))
+        (fun he => hq (he ▸ hx)) (fun he => hp (List.mem_cons_of_mem q (he ▸ hx)))
     simpa only [List.map_id] using List.map_congr_left hfix
   simp only [List.map_cons, Equiv.swap_apply_right, Equiv.swap_apply_left, htail]
 
@@ -251,6 +262,8 @@ private theorem barred_anchor {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) :
   rw [(raw_zero_coordinates hm).2] at ho
   rw [NativeJ2Words.bar, ← mul_assoc, Equiv.mul_swap_eq_swap_mul,
     mul_assoc, relabel_anchor, ho, hz]
+  apply Equiv.ext
+  apply congrFun
   apply List.ofFn_injective
   change List.ofFn (fun i =>
     Equiv.swap (anchor F ⟨1, by omega⟩) (anchor F 0) (anchor F i)) = _
