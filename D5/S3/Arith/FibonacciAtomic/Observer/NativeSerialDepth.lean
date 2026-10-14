@@ -106,7 +106,7 @@ private theorem run_unique {C O : Type} {δ : C → Op C O}
           obtain ⟨he,hp⟩ := ih q
           exact ⟨congrArg (List.cons _) he,hp⟩
 
-private theorem transfer {C O : Type} {δ : C → Op C O}
+theorem transfer {C O : Type} {δ : C → Op C O}
     {c : C} {e : Nat} {r : Source} {t : Trace} {o : O}
     (h : Run δ c e r t o) (u v : Source) (cert : r = substitution^[e] u)
     (truth : ∀ n a y, Event.read n a y ∈ t → readout a (substitution^[n] v) = y) :

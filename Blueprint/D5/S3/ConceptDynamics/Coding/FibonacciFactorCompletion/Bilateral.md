@@ -54,9 +54,35 @@ $$\forall K \in Nat, d \in Real, omega \in Int \to CuLetter, i \in Int, xs \in \
 
 The bilateral sequence independently belongs to AuxiliaryLanguage. Its letters agree with the prescribed complete execution word at every position except that the final u may have been appended as a terminal fill. All c letters must still agree. Each run inherits the cap from the original forbidden K+1 c letters. At a run of length K, the original state before its last c is chi^(K-1) times its run-start state, so the independent before-Kth-c guard yields the weak return guard. When another return follows, every intervening u is an original occurrence letter and the exact transition law aligns its next start. No state alignment is claimed across an appended terminal u.
 
+**Theorem 1.5 (Recursive guards at every execution split).**
+
+$$\forall K \in Nat, d \in Real, strict \in Bool, j \in Side, execution \in \operatorname{List}\left(Return\right), D \in Real,\; \operatorname{GuardTrace}\left(K, d, strict, j, execution, D\right) \Leftrightarrow \left(\forall before \in \operatorname{List}\left(Return\right), a \in Return, after \in \operatorname{List}\left(Return\right),\; execution = \operatorname{append}\left(before, \operatorname{cons}\left(a, after\right)\right) \Rightarrow \left(\operatorname{le}\left(\operatorname{r}\left(a\right), K\right) \land \left(\operatorname{r}\left(a\right) = K \Rightarrow \left(\left(strict = true \Rightarrow \operatorname{lt}\left(d, \operatorname{execute}\left(j, before, D\right)\right)\right) \land \left(strict = false \Rightarrow \operatorname{le}\left(d, \operatorname{execute}\left(j, before, D\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.uniform_guard_trace_iff_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural cap K, real threshold d, Boolean strictness, side, finite positive-return list and real initial state D, the recursive GuardTrace holds exactly when each split before ++ a :: after obeys a.r <= K and, when a.r = K, tests the state obtained by executing before from D. The test is d < state when strict is true and d <= state when strict is false; the displayed pair of implications states that Boolean conditional completely. Return carries positive natural r and m. No lower bound on K, restriction to an actual literal starting state, or bound on the list length is assumed. Induction aligns the tail's initial state with returnMap after its first return. This structural equivalence alone does not assert whole-record supply.
+
+**Theorem 1.6 (Exact active costs at every execution split).**
+
+$$\forall j \in Side, budget \in Real, execution \in \operatorname{List}\left(Return\right), D \in Real,\; \operatorname{StrictControl}\left(j, budget, execution, D\right) \Leftrightarrow \left(\forall before \in \operatorname{List}\left(Return\right), a \in Return, after \in \operatorname{List}\left(Return\right),\; execution = \operatorname{append}\left(before, \operatorname{cons}\left(a, after\right)\right) \Rightarrow \operatorname{lt}\left(\operatorname{subtract}\left(lam, \operatorname{multiply}\left(\operatorname{multiply}\left(\operatorname{power}\left(g, 2\right), \operatorname{power}\left(chi, \operatorname{r}\left(a\right)\right)\right), \operatorname{execute}\left(j, before, D\right)\right)\right), budget\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.exact_control_iff_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either side, every real budget and initial state, and every finite list of positive returns, StrictControl is equivalent to testing lam - g^2 * chi^(a.r) * execute(j,before,D) < budget at every split before ++ a :: after of the same execution. StrictControl recursively tests the current cost and continues at returnMap(j,a,D); execute follows that same return map. The constants are T2 = 1 - t and lam = T2 / 10, with the original Fibonacci t, g and chi. The empty list satisfies both sides. The proof uses unbounded list induction and imposes no actual-start, budget-interval or cap hypothesis. It proves no record-error, reset or rate assertion.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.bilateral_past_state`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.complete_execution_word_parser`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.exact_control_iff_split`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.finite_run_decomposition`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.occurrence_run_guards`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.uniform_guard_trace_iff_split`
