@@ -557,7 +557,123 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                 Paragraph(Text(
                     "This establishes the original C08 energy identities and their zero and empty cases for the actual means, alongside "
                     + "the C01-C06 applications above. C07 and C09-C13, including the remaining quantile bounds, design caps and asymptotic "
-                    + "risk laws, remain outside these conclusions. No completion of the parent problem is asserted.")))))));
+                    + "risk laws, remain outside these conclusions. No completion of the parent problem is asserted.")))),
+            new DocumentBlock.Section(H("C10/C11: energy thresholds and joint design optimization for the original experiment"), Blocks(
+                Paragraph(Text(
+                    "Retain the original telescope: J is any finite type, including the empty type, w:J -> R has arbitrary signed entries, and t:J -> R "
+                    + "is an arbitrary fixed delay family. Assume 0<epsilon<=1/2, sigma>0 and 0<alpha<1/2. On the same measurable sample space Omega, each "
+                    + "mu_b is a probability measure; each xi_b,j:Omega -> B is AEMeasurable for mu_b, the family xi_b is independent under mu_b, and "
+                    + "(mu_b).map(xi_b,j)=multivariateGaussian(0,sigma^2 I) on B=EuclideanSpace R (Fin 3 x Fin 2). Independence is within each class; no "
+                    + "coupling or independence between the two classes is required. Noise is added after the signal weight. The delays, noise laws and "
+                    + "measures stay fixed when weights and classifiers are optimized.")),
+                Paragraph(Text(
+                    "For H= sensor(epsilon,.), phi_false=0 and phi_true=2pi/3, the actual observation is Y_b^w(omega)(j)=w_j H(phi_b-t_j)+xi_b,j(omega), "
+                    + "and P_b^w=(mu_b).map(Y_b^w) on O=J -> B. Every classifier below is an arbitrary deterministic measurable delta:O -> Bool. Define "
+                    + "R(w,delta)=[(P_false^w).real({y | delta(y)=true})+(P_true^w).real({y | delta(y)=false})]/2. Thus the objective is the original "
+                    + "half-sum of class error probabilities. In particular, the optimization does not restrict delta to scores or replace its domain by "
+                    + "the flattened Euclidean space.")),
+                Paragraph(Text(
+                    "Use the preceding actual flattening A(y)=toLp 2 (p -> y(p.1)(p.2)), means m_b^w=A(j -> w_j H(phi_b-t_j)), separation "
+                    + "D(w)=norm(m_true^w-m_false^w), energy E(w)=sum_j w_j^2, and physical infimum g=lowerGain(epsilon). The C08 identities give "
+                    + "g=sqrt(2epsilon/(9+20epsilon))>0 and D(w)=sqrt(3E(w))g for every such w and t. Set c_w=(m_false^w+m_true^w)/2. If D(w)>0 put "
+                    + "u_w=(D(w))^(-1)(m_true^w-m_false^w), and let delta_w(y)=true exactly when inner(u_w,A(y)-c_w)>=0. If D(w)=0 let delta_w be constant "
+                    + "false. The earlier C05/C06 argument gives Measurable(delta_w) and, for every measurable original delta, "
+                    + "R(w,delta_w)=Phi(-sqrt(3E(w))g/(2sigma))<=R(w,delta), where Phi(x)=cdf(gaussianReal(0,1),x). The zero-separation branch uses equal "
+                    + "laws, not division by D(w).")))),
+            new DocumentBlock.Section(H("The literal quantile and the exact C10 energy cut"), Blocks(
+                Paragraph(Text(
+                    "Define q=sInf {x:R | 1-alpha<=Phi(x)} and E_req=4sigma^2 q^2/(3g^2). Here sInf is the literal real infimum and Phi is the actual "
+                    + "standard Gaussian CDF. Its continuity, strict monotonicity, limits zero and one, Phi(0)=1/2 and reflection Phi(-x)=1-Phi(x) give a "
+                    + "unique q with Phi(q)=1-alpha. More explicitly, continuity and the limits provide such a point, and strict monotonicity identifies "
+                    + "the defining set as {x | q<=x}; this point is its least element and hence its sInf. Since 1-alpha>1/2=Phi(0), q>0. Reflection gives "
+                    + "Phi(-q)=alpha. For every real s, strict monotonicity now gives Phi(-s)<=alpha iff q<=s, and Phi(-s)=alpha iff s=q. These all-real "
+                    + "comparisons are established before any squaring.")),
+                Paragraph(Text(
+                    "For E>=0 put s=sqrt(3E)g/(2sigma). Both s>=0 and q>0 are known, and 3g^2 and 4sigma^2 are positive. Therefore q<=s iff q^2<=s^2, "
+                    + "while s=q iff s^2=q^2. Since s^2(4sigma^2)=3E g^2, multiplication and division by these positive factors yield "
+                    + "Phi(-sqrt(3E)g/(2sigma))<=alpha iff E_req<=E, and equality to alpha iff E=E_req. The same signs show E_req>0. No positive-energy "
+                    + "premise was introduced, so this calculation includes E=0.")),
+                Paragraph(Text(
+                    "Apply this cut to E=E(w). For every signed design w, R(w,delta_w)<=alpha iff E(w)>=E_req iff there exists a measurable deterministic "
+                    + "delta:O -> Bool with R(w,delta)<=alpha. The forward existence direction uses this very delta_w. Conversely, any such delta satisfies "
+                    + "R(w,delta_w)<=R(w,delta)<=alpha by the original all-classifier lower bound, so E(w)>=E_req. Moreover R(w,delta_w)=alpha iff "
+                    + "E(w)=E_req. The equality assertion concerns the optimum midpoint risk; a nonoptimal classifier at a larger energy is not asserted to "
+                    + "have a different risk. When J is empty, E(w)=D(w)=0 and every measurable original classifier has risk 1/2>alpha. Accordingly all "
+                    + "three C10 threshold conditions are false, and neither energy equality to E_req nor midpoint risk equality to alpha occurs.")))),
+            new DocumentBlock.Section(H("C11: the literal joint risk infimum and its same-design witness"), Blocks(
+                Paragraph(Text(
+                    "For a real budget E0>=0 define S(E0)={r:R | there exist w:J -> R and delta:O -> Bool such that E(w)<=E0, Measurable(delta), and "
+                    + "R(w,delta)=r}, and C(E0)=sInf S(E0). This is one joint feasible set of the actual risk. Define the comparison curve "
+                    + "F(E)=Phi(-sqrt(3E)g/(2sigma)) for E>=0. If 0<=E<=E0, monotonicity of the nonnegative square root, g>0, sigma>0 and monotonicity of "
+                    + "Phi give F(E0)<=F(E). Thus every feasible pair satisfies F(E0)<=F(E(w))=R(w,delta_w)<=R(w,delta). The zero design with its "
+                    + "constant-false midpoint is feasible and has risk 1/2, so S(E0) is nonempty; the displayed bound also makes it bounded below.")),
+                Paragraph(Text(
+                    "If J is nonempty, choose j0:J and set w^(E0)(j)=sqrt(E0) when j=j0 and zero otherwise. The finite sum and (sqrt(E0))^2=E0 give "
+                    + "E(w^(E0))=E0, with all of the original fixed delays retained. Its own midpoint delta_(w^(E0)) is measurable and has actual risk "
+                    + "F(E0). Hence F(E0) belongs to S(E0) and is no larger than any member. Applying IsLeast.csInf_eq to this attained least element gives "
+                    + "C(E0)=Phi(-sqrt(3E0)g/(2sigma)). The witnesses are the single weight family and that family's actual midpoint together; the argument "
+                    + "does not independently choose a weight optimum and an unrelated classifier optimum.")),
+                Paragraph(Text(
+                    "If J is empty, every weight has E(w)=0 and every measurable classifier has risk 1/2. Hence S(E0)={1/2} for every E0>=0, and "
+                    + "C(E0)=1/2 is attained by the zero weight and its constant-false midpoint. Combining the cases gives C(E0)=if Nonempty J then "
+                    + "Phi(-sqrt(3E0)g/(2sigma)) else 1/2. In both cases there exists one w with E(w)<=E0 and a measurable delta_w such that "
+                    + "R(w,delta_w)=C(E0) and R(w,delta_w)<=R(v,delta) for every v,delta satisfying E(v)<=E0 and Measurable(delta).")))),
+            new DocumentBlock.Section(H("Budget endpoints, saturation and the least feasible real budget"), Blocks(
+                Paragraph(Text(
+                    "There exists a weight family with E(w)=E0 if and only if J is nonempty or E0=0. For nonempty J use the single-index construction; "
+                    + "for E0=0 use zero weights. Conversely, for empty J every finite energy sum is zero, so saturation forces E0=0. At zero budget "
+                    + "C(0)=Phi(0)=1/2 in the nonempty case and C(0)=1/2 in the empty case. For an empty J and E0>0, the positive signs give "
+                    + "sqrt(3E0)g/(2sigma)>0, so F(E0)<Phi(0)=1/2. That comparison value is unattainable by any feasible weight/classifier pair; the actual "
+                    + "cap remains 1/2 even at positive budget.")),
+                Paragraph(Text(
+                    "For nonempty J, C(E0)<=alpha iff E_req<=E0. At E0=E_req choose j0:J, put w_req(j)=sqrt(E_req) when j=j0 and zero otherwise, and use "
+                    + "its own delta_(w_req). This same pair satisfies E(w_req)=E_req, Measurable(delta_(w_req)), R(w_req,delta_(w_req))=alpha and "
+                    + "C(E_req)=alpha. In particular, E_req belongs to the actual feasible-budget set B_alpha={B:R | 0<=B and there exist w,delta with "
+                    + "E(w)<=B, Measurable(delta) and R(w,delta)<=alpha}. For any member B, its witnesses obey E_req<=E(w)<=B by C10. Thus E_req is the "
+                    + "attained least element of B_alpha, not just a lower bound on budgets. For empty J this feasible-budget set is empty: no finite "
+                    + "nonnegative B, design and original measurable classifier can achieve risk at most alpha.")))),
+            new DocumentBlock.Section(H("The literal ENNReal energy minimum, including the empty feasible set"), Blocks(
+                Paragraph(Text(
+                    "Keep the same original experiment and classifier domain, and define T_alpha={z:ENNReal | there exist w:J -> R and delta:O -> Bool "
+                    + "such that Measurable(delta), R(w,delta)<=alpha, and z=ENNReal.ofReal(E(w))}. Define M_alpha=sInf T_alpha in ENNReal. This definition "
+                    + "optimizes the actual attained design energies, with each energy tied to its own feasible classifier. It is separate from the real "
+                    + "risk infimum C(E0) and from the real feasible-budget set B_alpha.")),
+                Paragraph(Text(
+                    "For nonempty J use the single-index w_req and its own midpoint from the preceding paragraph. Since their actual risk is exactly "
+                    + "alpha, z_req=ENNReal.ofReal(E_req)=ENNReal.ofReal(E(w_req)) belongs to T_alpha. Every z in T_alpha comes with a particular feasible "
+                    + "w and delta, so C10 gives E_req<=E(w); ENNReal.ofReal_mono gives z_req<=ENNReal.ofReal(E(w))=z. Consequently z_req is an attained "
+                    + "least element of this very set. The complete-order instance of IsLeast.csInf_eq yields M_alpha=ENNReal.ofReal(E_req), and the same "
+                    + "pair w_req,delta_(w_req) attains it with real risk alpha.")),
+                Paragraph(Text(
+                    "For empty J every candidate measurable delta has R(w,delta)=1/2>alpha. Thus T_alpha is proved equal to the empty set. Unfolding the "
+                    + "actual minimum and applying sInf_empty in ENNReal gives M_alpha=top, that is, infinity. No real empty-infimum convention is used for "
+                    + "this conclusion. Altogether M_alpha=if Nonempty J then ENNReal.ofReal(E_req) else top, with the explicit joint attainment in the "
+                    + "nonempty branch and the absence of every finite nonnegative feasible budget in the empty branch.")))),
+            new DocumentBlock.Section(H("Supplier correspondence, external CDF provenance and applicability"), Blocks(
+                Paragraph(Text(
+                    "The geometry suppliers are the same sensor, physical lowerGain, six_chord_norm_sq, lower_gain_eq_sqrt and lower_gain_sq used in C08 "
+                    + "above; the probability and all-classifier suppliers are those used in C01-C06 above. In the energy cut, the generic real variable E "
+                    + "is E(w), the nonnegative score magnitude s is sqrt(3E(w))g/(2sigma), and the quantile probability is 1-alpha. In the cap argument, "
+                    + "IsLeast.csInf_eq is applied to S(E0) with the actual risk of (w^(E0),delta_(w^(E0))); in the extended-energy argument it is applied "
+                    + "to T_alpha with ENNReal.ofReal(E(w_req)). Mathlib at db584cd6d46c92f209a44c0f1c829460d327499d supplies the real square-order and "
+                    + "nonnegative square-root identities, finite single-index sums, IsLeast.csInf_eq, ENNReal.ofReal_mono and sInf_empty. Each use has the "
+                    + "positivity, membership and lower-bound premises supplied above.")),
+                Paragraph(Text(
+                    "The standard Gaussian CDF and probit facts used for the literal q are existing upstream mathematics from Jiyuan-Tan/CausalSmith, "
+                    + "revision a7085d88d2e4b30003db7097ca374f4718da0f01, source Causalean/Mathlib/Probability/StdNormalCDF.lean. That source defines "
+                    + "stdNormalCDF using cdf(gaussianReal 0 1) and probit through the same real sInf; its stdNormalCDF_probit and CDF continuity, "
+                    + "strict-order and reflection results supply the quantile step at probability 1-alpha. The source is distributed under Apache-2.0 with "
+                    + "its upstream NOTICE and provenance chain; the exact source and license are available at "
+                    + "https://github.com/Jiyuan-Tan/CausalSmith/blob/a7085d88d2e4b30003db7097ca374f4718da0f01/Causalean/Mathlib/Probability/StdNormalCDF.lean "
+                    + "and the LICENSE and NOTICE alongside the Causalean tree. This citation identifies an upstream mathematical result used in the "
+                    + "application; it does not add a canonical Lean dependency. Canonical admission A17 remains open.")),
+                Paragraph(Text(
+                    "These C10/C11 conclusions apply to the finite original Gaussian experiment with fixed arbitrary delays, signed weights, equal class "
+                    + "priors, isotropic positive post-weight noise and the stated epsilon and alpha ranges. The explicit witness presumes freedom to "
+                    + "choose a real weight at one existing index; it makes no claim about hardware amplitude constraints, delay optimization, non-Gaussian "
+                    + "or correlated noise, unequal priors, or physical implementation costs beyond E=sum_j w_j^2. This owning application introduces no "
+                    + "new Lean mathematical declaration or library novelty. C07, canonical C09/A17 and C12/C13 remain outside this application, and it "
+                    + "does not complete the parent problem.")))))));
 
     private static Formula ActualEtaLimitFormula() => Disp(Call("Tendsto",
         Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,
