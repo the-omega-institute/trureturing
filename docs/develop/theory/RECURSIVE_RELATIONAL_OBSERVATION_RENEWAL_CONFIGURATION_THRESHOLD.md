@@ -1,18 +1,20 @@
-# Recursive relational observation: the renewal configuration threshold
+# Recursive relational observation: two normalized likelihood caps and a quantitative renewal converse
 
 ## 1. Mathematical scope and ownership
 
-For the fixed rational polynomial and stationary renewal experiment below, the smallest polynomial growth exponent of complete observer configurations permitting a cubic paid mean is
+For the fixed rational polynomial and stationary renewal experiment below, [Entropy-harmonic renewal converse and complete-state threshold](https://github.com/the-omega-institute/trureturing/blob/55bd69959604fd168733fbf1ea976765c9303010/docs/develop/theory/FIB_ENTROPY_HARMONIC_RENEWAL_STATE_THRESHOLD.md), abbreviated E, already establishes the all-budget eighth-power entropy lower bound, the necessity of $M(s)=\Omega(s^{-1})$ for a fixed cubic paid-mean target, and conditional matching state growth. Its Theorems 12.1–13.1 give the lower and necessity without its separate upper premise; its Corollary 14.2 gives the matching growth order conditional on that premise.
+
+The distinct contribution here is the two normalized likelihood-cap construction in Section 4, its directed entropy control at every interior $q$ and every finite cutoff, and the resulting explicit quantitative converse in Sections 5–6. Its squared cap-excess charge is bounded by a weighted sum of seventh powers, with both normalization factors included. The eighth-power budget order and necessary exponent one are credited to E; Section 11 compares the two analytical laws and the displayed coefficients exactly.
+
+Combining the established necessity with the counted upper in [Retuned finite-state cubic renewal upper bounds](FIB_RETUNED_FINITE_STATE_CUBIC_RENEWAL_UPPER.md), Theorem 8.1, abbreviated U, gives the credited consequence
 
 $$
 \gamma_c=1,
 $$
 
-and exponent one is attained. Necessity holds even when the uniform cubic bound is imposed under only one fixed target label, while all six compliance conditions remain in force. Sufficiency uses one common observer under both labels at each known common parameter.
+and exponent one is attained, in the precise sense of Definition 2.5. Necessity holds even when the uniform cubic bound is imposed under only one fixed target label, while all six compliance conditions remain in force. Sufficiency uses one common observer under both labels at each known common parameter. Section 7 retains an alternative derivation through the paired-cap quantitative bound and an explicit correspondence with U. References to a new converse in the ensuing derivation denote this construction and its quantitative bound, not a previously absent growth exponent or eighth-power budget order.
 
-The new source-relative result is the all-competitor entropy converse in Sections 4–6. Scalar likelihood clipping bounds the information charge by a weighted sum of seventh powers, in place of charging the entire short-gap mass, whose bound involves ninth powers. This strengthens the budget factor from order $M^{-10}$ to order $M^{-8}$. The attained threshold follows by combining this converse with the already supplied finite-state upper, rather than proposing another version of that upper.
-
-The exact source, complete-state normal form, initial-row estimate, positive-forest comparison and predictable tick payment are supplied by [Growing state budgets in the renewal paid-mean tradeoff](FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md), Sections 2–7, abbreviated G. Its Theorems 9.1–10.1 already give the all-budget eleventh-power lower bound and necessary configuration growth of order $s^{-4/5}$. The matching sufficient exponent one is credited to [Retuned finite-state cubic renewal upper bounds](FIB_RETUNED_FINITE_STATE_CUBIC_RENEWAL_UPPER.md), Theorem 8.1, abbreviated U. The older deterministic bit-controller bridge uses Sections 28–30 of [Real renewal instruments and detector rank: finite observer memory](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_CONTINUATION.md), abbreviated C. Its logarithmic bit sufficiency, and the consequences of converting that count to configurations, are credited reuse.
+The exact source, complete-state normal form, initial-row estimate, positive-forest comparison and predictable tick payment are supplied by [Growing state budgets in the renewal paid-mean tradeoff](FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md), Sections 2–7, abbreviated G. Its Theorems 9.1–10.1 give the earlier all-budget eleventh-power lower bound with tenth-power budget deterioration and necessary configuration growth of order $s^{-4/5}$. E already improves that budget order to eighth power. The older deterministic bit-controller bridge uses Sections 28–30 of [Real renewal instruments and detector rank: finite observer memory](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_CONTINUATION.md), abbreviated C. Its logarithmic bit sufficiency, and the consequences of converting that count to configurations, are credited reuse.
 
 This is ordinary mathematical reference theory, conditional on the explicitly credited all-integer envelope and source moment premises. Its proofs are not independent review or Lean kernel certification. Entropy contraction, sequential information charging, directed forest formulas and absorbing random walks are classical methods. No worldwide originality or completion of the broader relational-observation programme is asserted. Existing source statements retain their own hypotheses and remain unchanged.
 
@@ -765,7 +767,7 @@ The payment identity uses inclusion decided before each interval; it does not re
 
 ## 11. Source and primary-literature correspondence
 
-**Definition 11.1 (Evidence scope).** The new ordinary statements are repo-derived: Lemma 4.1's paired normalized cap, its common-machine finite-path application in Section 5, the strengthened paid converse in Section 6 and the necessary threshold consequence in Section 7. The exact threshold combines that new converse with U's credited attainment. Proposition 8.1 is an interface consequence of C, and Proposition 9.1 identifies the failure of a proposed universal shortcut. Generic entropy, finite-memory, forest and renewal methods are literature-attested background. The bounded primary search below does not certify global priority.
+**Definition 11.1 (Evidence scope).** The distinct repo-derived contribution is Lemma 4.1's two normalized likelihood caps, the directed entropy control (4.5) at every interior $q$ and every finite cutoff, and the resulting explicit quantitative converse (6.2)–(6.5). E already supplies the all-budget eighth-power entropy lower, the $\Omega(s^{-1})$ necessity and conditional matching growth order. Theorem 7.1 is an alternative derivation of that necessity; Theorem 7.3 expresses the credited consequence with U's attainment in Definition 2.5's notation. Proposition 8.1 is an interface consequence of C, and Proposition 9.1 identifies the failure of a proposed universal shortcut. Generic entropy, finite-memory, forest and renewal methods are literature-attested background. The bounded primary search below does not certify global priority.
 
 | Repository supplier | Correspondence and boundary |
 | --- | --- |
@@ -773,11 +775,71 @@ The payment identity uses inclusion decided before each interval; it does not re
 | G, Theorem 5.1 | Positive-forest eventual-label comparison on a common finite state set, including reducible supports, zero edges and nonabsorbing abstract classes. Applied to $V_i,U_{1-i}$ for the same actual $A,C$. |
 | G, Lemmas 6.1 and 7.1–7.2 | Initial-row total variation, actual analytical epoch count, and predictable hazard payment including the stationary first interval and interrupted final gaps. |
 | G, Theorems 9.1–10.1 | Published $M^{-10}s^{-11}$ converse and necessary exponent $4/5$, retained as credited baseline. Their simultaneous all-budget neighborhood is not replaced by a fixed-$M$ limit. |
+| E, Definitions 2.1–3.1, Lemmas 3.2 and 5.1, Section 6 | The same source, parameter, complete-state class, stationary initial row, stopping and actual-read payment contract, as mapped explicitly below. |
+| E, Sections 7–13, especially Theorems 12.1–13.1 | Already established collapsed-law directed entropy control, all-budget eighth-power paid converse and necessary first-power state growth, including a cubic bound under only one fixed target with opposing compliance retained. |
+| E, Assumption 14.1 and Corollary 14.2 | Conditional matching inverse-$s$ state growth and both cubic mean orders through its separate geometric-mark upper premise. The present Section 7 uses U's published upper theorem for the corresponding sufficient family. |
 | U, Sections 2–8, especially Theorem 8.1 | Already sufficient exponent one with the full $4L+1$ count, both risks, both stops and both cubic paid means, on the same actual stationary experiment. Its exact stochastic matrix model is retained. |
 | C, Sections 28–30 | Rational-band deterministic controller, cap, two separate band risks, all-history terminating bit-computation refinement, complete bank/heads/control/initialization count and separate compilation/internal-work resources. |
 | Retuned bounded-memory uniform renewal converse, Definitions 3.1–3.2 and Sections 5–7 | The selected-common-parameter retuned class and the initial/payment interface corroborate the same quantifiers. A fixed parameter-free machine across nuisance families is not identified with this class. |
 
-Public mathematical-code inspection includes [StoppedLikelihoodAbsorption](../../../D5/S3/Estimation/SequentialDecisionRisk/StoppedLikelihoodAbsorption.lean), [BernoulliCommonEndpointCharge](../../../D5/S3/Estimation/SequentialDecisionRisk/BernoulliCommonEndpointCharge.lean), and [SequentialHellingerLocalization](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.lean). These concern stopped likelihood/moment, Bernoulli common-endpoint and sequential Hellinger interfaces. Their statements do not supply this complete-state renewal exponent. They are related reusable mathematical context, with no compiled exact application asserted here. A search for the exact configuration-threshold and likelihood-clipping relations in the public theory and relevant code does not identify an already supplied matching converse; that bounded search is not a proof of absence from the entire literature.
+**Definition 11.2 (Exact correspondence with E).** E's $H,F_i,\delta,B,a,Z_i,f_i,\mu_i,\beta_i,\tau,K_r$ are respectively the $H_c,F_i,\delta,B,a,Z_i,f_i,\mu_i,\beta_i,\tau,K_r$ of Section 2, with identical rational coefficients and labels. Its convention $f_i(0)=0$ makes $S_i(u)=\sum_{k\ge u}f_i(k)$ equal the present $\sum_{k\ge\max(1,u)}f_i(k)$, including $u=0$. Both first waits have mass $S_i(u)/\mu_i$, independently followed by the same iid positive zero counts; the first wait is not a complete gap.
+
+E's $\mathfrak A_M(q,\alpha)$ in Definition 3.1 is exactly Definition 2.4's class: $q=e^{-s}$ is known and common, $0<\alpha<1/2$ and $H_c$ are fixed independently of $s$, the same source-blind design serves both labels, and $M$ counts every persistent configuration, initialization, retained random consequence and both labels. Both classes allow arbitrary real immutable transition probabilities, discontinuous retuning and arbitrarily small positive edges, and prohibit hidden mutable storage, additional source access and a stopping-time label decoder. All six risks, stops and finite pointwise means coincide; a uniform cubic target is a further eventual condition under one fixed label, not a replacement for opposing compliance.
+
+Their common $\eta,A,C$ give the same $U_i,\nu_i$ and stationary variation bound $r_H$. E's Section 6 and Proposition 3.3 use the same $N,Q_T,T,D$: $N$ counts actual live epochs, $Q_T$ counts actually read ticks, and $T$ counts the whole paid prefix. Initial stopping gives $N=0$; stopping in zeros freezes the label until a later analytical tick, which is not charged as a read. Both proofs use $\mathbb E_iN\le B(1-q)\mathbb E_iT$, including the stationary first wait and terminal partial gap. Their auxiliary kernels provide neither observations nor a stopping promise. E's finite-path harmonic argument and Section 5's finite-path label-event limit both start from the actual target row $\nu_i$ and require only actual target absorption; the opponent's actual absorption is used separately in the probability decomposition.
+
+For the separate upper comparison, E's $z_i$ and $R$ in (14.1) are $u_i$ and the upper boundary $L$ in (7.8), not the lower cutoff. Its $c_{\rm sep},K_U,C_U$ in (14.5)–(14.6) equal $c,C_M^{\rm up},C_T^{\rm up}$ in (7.7). Its completed-gap count $G$ is $N_{\rm up}$ in (7.9), giving the identical payment $T=1+\tau+\sum_{r=1}^{N_{\rm up}}(K_r+1)$; this upper-specific count is not the generic live-epoch count $N$. E's conditional comparison retains Assumption 14.1, while Section 7 explicitly cites U for the sufficient family.
+
+**Definition 11.3 (Different normalized comparison laws).** To distinguish E's law from (4.2), write it as $\widetilde g_i^L$. With $j=1-i$ and $\pi_i=\sum_{k=1}^Lf_i(k)$, E's (7.4)–(7.8) are exactly
+
+$$
+\widetilde g_i^L(k)=
+\begin{cases}
+f_j(k),&k\le L,\\
+\dfrac{1-\pi_j}{1-\pi_i}f_i(k),&k>L,
+\end{cases}
+\qquad
+\widetilde d_i(q,L)=D(a_i^L\Vert a_j^L)
+=D(f_i\Vert\widetilde g_i^L),
+\tag{11.1}
+$$
+
+where $a_i^L=(f_i(1),\ldots,f_i(L),1-\pi_i)$. This copies the opponent's entire short law and rescales the target tail to the opponent's tail mass. The normalization drift is retained in the collapsed tail symbol. Its stochastic image is E's $W_i$.
+
+Equations (4.1)–(4.2) instead use $P=f_0$, $r(k)=H_c(k)/k^9$, $G_L=1+\delta/(L+1)$ and $v=\min\{r,G_L\}$ to form
+
+$$
+g_1=\frac{Pv}{\mathbb E_Pv},\qquad
+g_0=\frac{Pr/v}{\mathbb E_P(r/v)}.
+\tag{11.2}
+$$
+
+The cap excess $e=r-v$ is nonnegative and supported on $k\le L$, but need not be nonzero at every short index. These laws normalize two different modifications of the shape ratio, rather than copying every short opponent mass. Normalization affects the full law. Equations (4.8)–(4.10) retain it exactly and give the separate bounds $D(f_1\Vert g_1)\le\mathbb E_Pe^2$ and $D(f_0\Vert g_0)\le\tfrac12\mathbb E_P(e/v)^2$. Thus both directions are controlled by $d_L(q)=\delta^2Z_0(q)^{-1}\sum_{k\le L}k^7q^k$ for every interior $q$ and finite $L$, without a small-$sL$ condition. This $d_L$ is an upper coefficient, not E's exact collapsed entropy $\widetilde d_i$. Both pairs are $G_L$-comparable to the actual opponent and are averaged through the same channel $k\mapsto A^kC$ of the same actual observer; their images $V_i$ and $W_i$ need not coincide.
+
+For an exact coefficient comparison, choose one source-only $s_H$ satisfying (2.8) and E's (2.9), and use the identical
+
+$$
+s_\alpha=\min\{s_H,1,5b/(8\delta)\},\qquad
+L_M=\max\{1,\lceil2\delta(M-2)/b\rceil\},\qquad
+X_M=1+2\delta(M-2)/b.
+\tag{11.3}
+$$
+
+Since $b+2\delta(M-2)=bX_M$, on $0<s<s_\alpha$, for the same compliant observer and each target, E's (12.2) and the second bound in (6.5) give, respectively,
+
+$$
+\begin{aligned}
+\mathbb E_iT&\ge C_\alpha\max\{s^{-3},s^{-11}/X_M^8\},
+&C_\alpha&=\frac{b^2}{8B\delta^2},\\
+\mathbb E_iT&\ge\frac{9!b^2}{4B\delta^2}\frac{s^{-11}}{X_M^8}
+=2\cdot9!\,C_\alpha\frac{s^{-11}}{X_M^8}.
+\end{aligned}
+\tag{11.4}
+$$
+
+The eighth-power displayed coefficients therefore have ratio $2\cdot9!$ with the same neighborhood and denominator. This algebraic comparison concerns those two estimates only; it orders neither their exact directed entropies nor optimal constants. E's proof (9.8) also retains the sharper intermediate estimate $\widetilde d_i\le(16\delta^2/9!)s^{10}L^8$ when $sL\le1$, so the displayed ratio does not compare every refinement available in that proof. E also retains its separate cubic floor, so (11.4) asserts no universal ordering of the whole lower bounds. The two-label budget $M=2$ is empty in both classes. The necessity exponent and E's conditional matching order remain established results; the paired-cap construction supplies the distinct explicit quantitative derivation.
+
+Public mathematical-code context includes [StoppedLikelihoodAbsorption](../../../D5/S3/Estimation/SequentialDecisionRisk/StoppedLikelihoodAbsorption.lean), [BernoulliCommonEndpointCharge](../../../D5/S3/Estimation/SequentialDecisionRisk/BernoulliCommonEndpointCharge.lean), and [SequentialHellingerLocalization](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.lean). These concern stopped likelihood/moment, Bernoulli common-endpoint and sequential Hellinger interfaces, with no compiled exact application asserted here. E supplies the already established renewal-state converse and growth consequence; these related code interfaces are not premises of the distinct paired-cap estimate.
 
 The primary papers below have their model interfaces checked from their original texts. No finite-memory testing theorem for an incompatible observation or decision criterion is transferred as a theorem about this experiment.
 
