@@ -86,9 +86,83 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                 B("omega", words), B("j", I("Int")), B("K", I("Nat")), B("d", I("Real")))));
     }
 
+    private static Formula FiniteRunDecomposition()
+    {
+        var w = I("w"); var a = I("a"); var xs = I("xs");
+        var ap = I("ap"); var xp = I("xp");
+        var letters = Call("List", I("CuLetter"));
+        Formula Rep(Formula n) => Call("replicate", n, I("u"));
+        Formula Parsed(Formula n, Formula list) => Call("append", Rep(n), Call("executionWord", list));
+        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+        var ends = new Formula.Logic(Equal(w, I("nil")), FormulaLogicOperator.Or,
+            Equal(Call("getLastOption", w), Call("some", I("u"))));
+        var body = And(Equal(w, Parsed(a, xs)),
+            All(Imp(Equal(w, Parsed(ap, xp)), And(Equal(ap, a), Equal(xp, xs))),
+                B("ap", I("Nat")), B("xp", Returns)));
+        return Disp(All(Imp(ends,
+            new Formula.BindMany(FormulaQuantifier.Exists, [B("a", I("Nat")), B("xs", Returns)], body)),
+            B("w", letters)));
+    }
+
+    private static Formula OccurrenceRunGuards()
+    {
+        var kmax = I("K"); var d = I("d"); var omega = I("omega");
+        var i = I("i"); var xs = I("xs"); var k = I("k");
+        var word = Call("executionWord", xs); var len = Call("length", word);
+        var value = Call("getElem", word, k);
+        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+        var observed = new Formula.Logic(Call("lt", Add(Call("val", k), D(1)), len),
+            FormulaLogicOperator.Or, Equal(value, I("c")));
+        var letters = All(Imp(observed, Equal(Call("apply", omega, Add(i, Call("castInt", Call("val", k)))), value)),
+            B("k", Call("Fin", len)));
+        var premise = And(Call("le", D(1), kmax), Call("member", omega, Call("AuxiliaryLanguage", kmax, d)), letters);
+        return Disp(All(Imp(premise,
+            Call("GuardTrace", kmax, d, I("false"), I("high"), xs, Call("pastState", omega, i))),
+            B("K", I("Nat")), B("d", I("Real")),
+            B("omega", new Formula.TypeArrow(I("Int"), I("CuLetter"))),
+            B("i", I("Int")), B("xs", Returns)));
+    }
+
+
+    private static Formula UniformGuardTraceSplit()
+    {
+        var cap = I("K"); var d = I("d"); var strict = I("strict");
+        var side = I("j"); var execution = I("execution"); var state = I("D");
+        var before = I("before"); var a = I("a"); var after = I("after");
+        var reached = Call("execute", side, before, state);
+        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+        var bound = And(
+            Imp(Equal(strict, I("true")), Call("lt", d, reached)),
+            Imp(Equal(strict, I("false")), Call("le", d, reached)));
+        var local = And(Call("le", Call("r", a), cap),
+            Imp(Equal(Call("r", a), cap), bound));
+        var splits = All(Imp(Equal(execution, Call("append", before, Call("cons", a, after))), local),
+            B("before", Returns), B("a", I("Return")), B("after", Returns));
+        return Disp(All(new Formula.Logic(
+            Call("GuardTrace", cap, d, strict, side, execution, state), FormulaLogicOperator.Iff, splits),
+            B("K", I("Nat")), B("d", I("Real")), B("strict", I("Bool")),
+            B("j", I("Side")), B("execution", Returns), B("D", I("Real"))));
+    }
+
+    private static Formula ExactControlSplit()
+    {
+        var side = I("j"); var budget = I("budget");
+        var execution = I("execution"); var state = I("D");
+        var before = I("before"); var a = I("a"); var after = I("after");
+        var cost = Sub(I("lam"), Mul(Mul(Pow(I("g"), D(2)), Pow(I("chi"), Call("r", a))),
+            Call("execute", side, before, state)));
+        var splits = All(new Formula.Logic(
+            Equal(execution, Call("append", before, Call("cons", a, after))),
+            FormulaLogicOperator.Implies, Call("lt", cost, budget)),
+            B("before", Returns), B("a", I("Return")), B("after", Returns));
+        return Disp(All(new Formula.Logic(
+            Call("StrictControl", side, budget, execution, state), FormulaLogicOperator.Iff, splits),
+            B("j", I("Side")), B("budget", I("Real")), B("execution", Returns), B("D", I("Real"))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Positive Fibonacci return lists have unique execution-word and color-history decodings, while bilateral letter pasts determine a unique bounded state.",
-        H("Execution parsing and bilateral past states"),
+        "Positive Fibonacci return lists have unique execution-word and color-history decodings. Bilateral letter pasts determine a unique bounded state, terminal-u words have unique positive-run decompositions, and independently occurring runs inherit their exact return guards.",
+        H("Execution parsing, bilateral past states and return guards"),
         Blocks(
             Describe.Lean(DescribeId.Create("fib-complete-execution-word-parser"),
                 DeclarationHandle.Create(Prefix + "complete_execution_word_parser"),
@@ -102,5 +176,25 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(BilateralPast()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The auxiliary letter maps are c: z maps to chi*z and u: z maps to A_H+rho*z, with the original high-side constants. The finite past at i composes the N letters immediately before i in chronological order. Its exact seed difference is g raised to their original 20/6 weight times the seed difference, bounded by rho^N. The zero-seed sequence is increasing and bounded in [0,h_H]; its supremum is the independently defined pastState. Every seed in that interval has the same limit. This state satisfies the letter transition law and is the unique bilateral solution confined to [0,h_H]. Two sequences agreeing on the last N past letters have states differing by at most h_H*rho^N. The all-u state equals h_H. In the formula, Sequence denotes the function of N and const(u) denotes the constant bilateral u sequence.")),
                     Paragraph(Text("Matching-past stability gives continuity in the product of the discrete letter spaces. AuxiliaryLanguage forbids K+1 consecutive c letters and checks chi^(K-1)*d before a current c whose preceding K-1 letters are c. For K at least one and every real d, the all-u sequence belongs to this closed compact language. States commute with every integer shift, where shift(omega,j)(n)=omega(n+j), and membership is invariant under those shifts. This language is defined by the independent letter conditions and is not a completion image or an actual literal source."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-finite-run-decomposition"),
+                DeclarationHandle.Create(Prefix + "finite_run_decomposition"),
+                H("Unique decomposition of arbitrary terminal-u words"),
+                StatementSource.FromAuthor(FiniteRunDecomposition()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every finite c/u word that is empty or ends in u has exactly one decomposition into a leading u run and a positive complete return list. The leading run may be empty; the return list may be empty for an all-u word. The existence proof constructs the runs by induction on the literal letters; uniqueness directly reuses the complete execution parser. The displayed two-variable existential with equality of every alternative pair is the unique-existence statement on Nat times List Return. getLastOption denotes getLast?."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-occurrence-run-guards"),
+                DeclarationHandle.Create(Prefix + "occurrence_run_guards"),
+                H("Independent occurrence guards on canonical complete runs"),
+                StatementSource.FromAuthor(OccurrenceRunGuards()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The bilateral sequence independently belongs to AuxiliaryLanguage. Its letters agree with the prescribed complete execution word at every position except that the final u may have been appended as a terminal fill. All c letters must still agree. Each run inherits the cap from the original forbidden K+1 c letters. At a run of length K, the original state before its last c is chi^(K-1) times its run-start state, so the independent before-Kth-c guard yields the weak return guard. When another return follows, every intervening u is an original occurrence letter and the exact transition law aligns its next start. No state alignment is claimed across an appended terminal u."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-uniform-guard-trace-iff-split"),
+                DeclarationHandle.Create(Prefix + "uniform_guard_trace_iff_split"),
+                H("Recursive guards at every execution split"),
+                StatementSource.FromAuthor(UniformGuardTraceSplit()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural cap K, real threshold d, Boolean strictness, side, finite positive-return list and real initial state D, the recursive GuardTrace holds exactly when each split before ++ a :: after obeys a.r <= K and, when a.r = K, tests the state obtained by executing before from D. The test is d < state when strict is true and d <= state when strict is false; the displayed pair of implications states that Boolean conditional completely. Return carries positive natural r and m. No lower bound on K, restriction to an actual literal starting state, or bound on the list length is assumed. Induction aligns the tail's initial state with returnMap after its first return. This structural equivalence alone does not assert whole-record supply."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-exact-control-iff-split"),
+                DeclarationHandle.Create(Prefix + "exact_control_iff_split"),
+                H("Exact active costs at every execution split"),
+                StatementSource.FromAuthor(ExactControlSplit()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For either side, every real budget and initial state, and every finite list of positive returns, StrictControl is equivalent to testing lam - g^2 * chi^(a.r) * execute(j,before,D) < budget at every split before ++ a :: after of the same execution. StrictControl recursively tests the current cost and continues at returnMap(j,a,D); execute follows that same return map. The constants are T2 = 1 - t and lam = T2 / 10, with the original Fibonacci t, g and chi. The empty list satisfies both sides. The proof uses unbounded list induction and imposes no actual-start, budget-interval or cap hypothesis. It proves no record-error, reset or rate assertion."))), DescribeRole.Theorem))));
 }
