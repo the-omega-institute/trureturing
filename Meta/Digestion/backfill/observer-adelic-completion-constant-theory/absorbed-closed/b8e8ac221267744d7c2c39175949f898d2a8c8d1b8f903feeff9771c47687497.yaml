@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:b8e8ac221267744d7c2c39175949f898d2a8c8d1b8f903feeff9771c47687497
   normalized_sha256: sha256:b8e8ac221267744d7c2c39175949f898d2a8c8d1b8f903feeff9771c47687497
 cas_ref: sha256:b8e8ac221267744d7c2c39175949f898d2a8c8d1b8f903feeff9771c47687497
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/Pick/UniversalNormalizedSaturationCell.universal_normalized_saturation_cell
+    target_statement_id: sha256:b968d7d386f91f123cadaa55a61e424a3221dd2da34d7428618273cf566dbb4c
 receipts:
   unresolved_subitems: []
   chain_atoms:
