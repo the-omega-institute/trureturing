@@ -1,0 +1,43 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.Jensen;
+
+internal sealed class ActualSourceJensenFixedWindowDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The normalized all-mode theta source has a fixed-window actual-node target and an original-disk occurrence target.",
+        H("Actual source Jensen fixed window"),
+        Blocks(Describe.Lean(
+            DescribeId.Create("actual-source-jensen-fixed-window"),
+            DeclarationHandle.Create(
+                "D5/S3/Zeros/Jensen/ActualSourceJensenFixedWindow.actual_source_jensen_fixed_window"),
+            H("Fixed windows and arbitrary-order isolating disks"),
+            StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("Let F be the cosine-square transform of the normalized full theta density, and let f be half the transform of the raw full kernel. Then Z=fullZ>0 and F=(2/Z)f. The polynomial p_n is sourceP(n) at the negative argument, complexified. On the real line p_n(t)=originalJ(n,t), and D=fullD(n,t)=-sourceP(n)'(-t).")),
+                Paragraph(Text("For every T>0 there is n0 such that for every n>=n0 and every t with 0<t<=T AND originalJ(n,t)=0, D*G>=D^2/2>0. All actual nodes are included; the threshold may depend on T.")),
+                Paragraph(Text("At such a node D and G are nonzero and (2n+1)G=2nD-M/2. At ell*t, ell=(n+1)/n, originalJ(n+1) has parameter derivative G and value t*G/n!=0. sourceQ(n) has a simple zero at 1/t and a nonzero simple cofactor.")),
+                Paragraph(Text("For xi=n/(n+1)/t and q=sourceQ(n+1), xi>0, q'(xi)=0, (n+1)q(xi)=xi^n*G and xi^2*q''(xi)=-n*xi^n*D. Their product is -(n/(n+1))*xi^(2n-2)*D*G. Both q(xi) and q''(xi) are nonzero. The guarded coupling satisfies coupling*D^2=(xi^2/n)*D*G>0.")),
+                Paragraph(Text("For every positive zero t0 of F, every exact finite order m>=1 and every original isolating radius delta>0, there are C,d>0 and N such that every n>=N has injectively indexed positive real nodes nodes:Fin(m)->Real. Each node is an actual originalJ(n) zero and a simple p_n zero strictly inside the original delta disk; |nodes(i)-t0|<=C/sqrt(n), |D(n,nodes(i))|>=d/(sqrt(n))^(m-1), and |M(n,nodes(i))|<=n*|D(n,nodes(i))| for EVERY index.")),
+                Paragraph(Text("The original boundary has no polynomial zero. The filtered polynomial root multiset equals the multiset map of all Fin(m) indices under nodes, has cardinality m, and has count one at every nodes(i). Each simple cofactor is nonzero. Every signed, adjacent and reflected consequence is evaluated at nodes(i) for the same n.")),
+                Paragraph(Text("The elementary coefficient recurrence separates e0=1 and uses simultaneous induction over all orders. Analytic correction estimates require all coefficients and all derivative orders. The separate function estimate includes order zero and is used for h=-4z*F''-2F'. Local Taylor uses sigma=min(delta/2,t0/2,1); the original boundary uses Rdisk=max(1,t0+delta).")),
+                Paragraph(Text("The unit/logarithm disk comparison retains multiset multiplicities. No RH, simple limiting zero, global hyperbolicity, chosen actual root list, count premise or error premise is included. The threshold is not uniform over growing windows."))),
+            DescribeRole.Theorem))));
+
+    private static Formula Statement() => Disp(new Formula.Aligned([
+        Seq(D(0), Lt, F.Id("Z"), Comma, Sp, F.Id("F"), Eq, Frac, Grp(D(2)), Grp(F.Id("Z")), F.Id("f")),
+        Seq(Forall, Sp, F.Id("T"), Gt, D(0), Comma, Sp, Exists, Sp, F.Id("n_0"), Comma,
+            Sp, Forall, Sp, F.Id("n"), Ge, F.Id("n_0"), Comma, Sp, Forall, Sp, F.Id("t"), Comma),
+        Seq(D(0), Lt, F.Id("t"), Le, F.Id("T"), Sp, Land, Sp,
+            Call(F.Id("originalJ"), F.Id("n"), F.Id("t")), Eq, D(0), Implies,
+            F.Id("DG"), Ge, Frac, Grp(Seq(F.Id("D"), Sup, D(2))), Grp(D(2)), Gt, D(0),
+            Sp, Land, Sp, Call(F.Id("NodeResponse"), F.Id("n"), F.Id("t"))),
+        Seq(Forall, Sp, F.Id("t_0"), Gt, D(0), Comma, Sp,
+            Call(F.Id("F"), F.Id("t_0")), Eq, D(0), Comma, Sp, Forall, Sp, F.Id("m"), Ge, D(1), Comma),
+        Seq(Forall, Sp, F.Id("delta"), Comma, Sp, Call(F.Id("IsExactRealOrder"), F.Id("F"), F.Id("t_0"), F.Id("m")), Sp, Land, Sp,
+            Call(F.Id("IsolatingDisk"), F.Id("F"), F.Id("t_0"), F.Id("delta")), Implies,
+            Call(F.Id("LocalConclusion"), F.Id("t_0"), F.Id("delta"), F.Id("m")))
+    ]));
+}
