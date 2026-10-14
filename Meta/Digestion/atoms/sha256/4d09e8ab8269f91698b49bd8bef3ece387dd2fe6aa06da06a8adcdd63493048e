@@ -1,0 +1,75 @@
+**Definition 10.2 (joint support with a common completed contact).** Let $B$
+be any finite set of at least two distinct attained complete rows. Select one
+chart $b_r$ and one guarded graph branch $\tau_r$ for every $r\in B$.
+Let $S_{\tau_r}$ be its slot set and $F_{\tau_r}\subseteq S_{\tau_r}$ its
+free-state slots. Write $B_{\rm code}$ for the bijection in Theorem 9.2.
+A branch datum contains finite scalar data $\lambda_r$, including a partition
+$K_r^{\rm fin}\sqcup K_r^{\rm div}=\{1,\ldots,k_{r,b_r}\}$ and fixed values
+$c_r\in\mathbb N^{K_r^{\rm fin}}$,
+free-state values $\xi_r:F_{\tau_r}\to\widehat{\mathcal T}$, a full reduced
+code valuation $\gamma_r:S_{\tau_r}\to\mathscr C_{\mathbb N}^{\rm red}$,
+and one completed tree $W$. The valuation extends the free-state assignment
+by $\gamma_r(f)=B_{\rm code}(\xi_r(f))$ and satisfies every retained guarded
+positive equation, repeated definition, image condition and native guard of its
+completed branch. A full satisfying extension is part of the datum; neither
+its uniqueness nor effective construction from $\lambda_r,\xi_r$ is assumed.
+
+For each original chart residual index $1\le i\le m_{r,b_r}$, retain its
+original slot $o_{r,i}\in S_{\tau_r}$. Reconstruction into the original
+coordinates is the tuple
+
+$$
+\eta_r=\operatorname{Rec}_{r,\tau_r}(\lambda_r,\xi_r,\gamma_r)
+ \in\widehat{\mathcal T}^{m_{r,b_r}},
+\qquad
+\eta_{r,i}=\llbracket\gamma_r(o_{r,i})\rrbracket.
+\tag{NIS.38r}
+$$
+
+If an original slot is eliminated in favor of a weighted representative
+$(s_{r,i},d_{r,i})$, its retained equation is
+$\gamma_r(o_{r,i})=\sigma^{d_{r,i}}\gamma_r(s_{r,i})$, and this expression
+is decoded in (NIS.38r). Negative shifts are used only with their native
+nonnegativity and actual-image guards. Repeated occurrences use the retained
+same-name lookup and all their defining equations. Thus reconstruction does
+not identify the graph's free-state index set with the chart's residual
+index set, or drop coordinates that were aliased during saturation.
+
+Write $\widehat\Theta_{r,b_r}$ for the completed chart expression: fixed
+scalar atoms keep their recorded finite ranks, divergent scalar atoms become
+$\Omega$, and original residuals are replaced by $\eta_r$, with the same
+pairing and fixed native powers. Require the completed positive contact
+equation $\widehat\Theta_{r,b_r}(\lambda_r,\eta_r)=W$ for every row.
+This is a semantic reconstruction, not an algorithm for evaluating arbitrary
+infinite assignments. The finite witnesses below have
+$\mathbf n_r\in\mathbb N^{k_{r,b_r}}$ and
+$\mathbf z_r\in\mathcal T^{m_{r,b_r}}$. The datum has joint signed support when
+
+$$
+\begin{aligned}
+\forall h,M\in\mathbb N\ \exists\,(\mathbf n_r,\mathbf z_r)_{r\in B}
+\quad &\text{such that for every }r\in B,\\
+&P_{r,b_r}(\mathbf n_r)\land E^+_{r,b_r}(\mathbf n_r,\mathbf z_r)
+ \land\Delta^-_{r,b_r}(\mathbf n_r,\mathbf z_r),\\
+&n_{r,j}=c_{r,j}\quad(j\in K_r^{\rm fin}),\qquad
+ n_{r,j}\ge M\quad(j\in K_r^{\rm div}),\\
+&z_{r,i}\equiv_h\eta_{r,i}\quad(1\le i\le m_{r,b_r}),\\
+&\Theta_{r,b_r}(\mathbf n_r,\mathbf z_r)\equiv_h W.
+\end{aligned}
+\tag{NIS.38}
+$$
+
+All scalar data, graph valuations, reconstructed tuples and $W$ are fixed
+before $\forall h,M$. The witnesses are one simultaneous tuple, and they use
+the same producer contract and the same original/register/root premise.
+Both signed endpoints must be reached; every repeated name, image constraint,
+positive equality and complete chart condition remains on the finite
+witnesses. Disequalities are evaluated only on those finite witnesses. No
+completed disequality is imposed on $W$. An empty original residual product
+has its singleton empty-tuple meaning even when the graph has other slots.
+
+The common-source quantifier is essential: replacing each row independently
+by a different canonical representative does not produce a common $W$ or a
+single producer contract. Coordinatewise closure of the separate row supports
+is therefore weaker than (NIS.38).
+

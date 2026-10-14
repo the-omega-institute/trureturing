@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c11d45d28f49113cd28caa6e31fd01e03740b3d1dcbd009467520ee95d9de232
+  normalized_sha256: sha256:c11d45d28f49113cd28caa6e31fd01e03740b3d1dcbd009467520ee95d9de232
+cas_ref: sha256:c11d45d28f49113cd28caa6e31fd01e03740b3d1dcbd009467520ee95d9de232
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.low_degree_coefficient_remainder
+    target_statement_id: sha256:59b687707eedc46e2a6b7eee9e0a646b10c1f1bc7e47be87a9b35ca24fbaa0ea
+receipts:
+  unresolved_subitems: []

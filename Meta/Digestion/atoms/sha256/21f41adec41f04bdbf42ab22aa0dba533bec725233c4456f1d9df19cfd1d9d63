@@ -1,0 +1,50 @@
+**Lemma 6.2 (finite native invariants and entire source reconstruction).** The
+entire fiber of Definition 6.1 is exactly
+
+$$
+D=\{U(a,x,z):a\in\{\alpha,\beta\},\ x\notin\{T_n:n\in\mathbb N\},\ z\ne a\},
+\qquad T_n=\rho^n\alpha.
+\tag{FFM.24}
+$$
+
+Every such source satisfies the full old row and all records, and every original
+satisfying that input is reconstructed as itself by (FFM.24).
+
+Proof. The old exterior reaches $a=u|_L$ and $x=u|_{RL}$.
+The absence at $LL$ forces $a$ to be a leaf. The four branch literals reveal
+
+$$
+u=\langle a,\langle x,\langle y,
+       \langle\langle b,c\rangle,\langle z,z'\rangle\rangle\rangle\rangle\rangle.
+\tag{FFM.25}
+$$
+
+Every endpoint in (FFM.22) is reached on this displayed skeleton at epoch zero,
+and the original branches at $R,RL$'s ancestors survive the positive iterates.
+The first four whole equalities force respectively $y=\rho^2x$, $b=\rho x$,
+$c=x$, and $z=z'$. Thus the source is precisely (FFM.20). The first negative
+says $F(x)\ne G(x)$, and the second says $z\ne a$.
+The first conjunct of [SourceTransportCentralizer,
+`source_transport_centralizer`][CENTRALIZER] gives on finite native trees
+
+$$
+\rho^2x=\langle\rho x,x\rangle\iff x=T_n\text{ for some }n\ge0.
+\tag{FFM.26}
+$$
+
+This supplier, including its local `hinj` and `classify` proof, is finite-tree
+classification. It is not a classification of completion solutions. Applying it
+gives exactly the restriction on $x$ in (FFM.24), proving the first source direction.
+
+Conversely choose any $a,x,z$ in (FFM.24). Its displayed constructors give all
+literals and reached endpoints. The first four records are the defining native
+identities and repeated $z$; (FFM.26) gives the first negative and $z\ne a$ the
+second. The old class values are $a,x,s$, where
+$s=\langle F(x),\langle G(x),\langle z,z\rangle\rangle\rangle$.
+The non-atomic $x$ is a branch, hence differs from the leaf $a$; so does $s$.
+For finite native leaf count $\lambda$, structural induction in (FFM.1) gives
+$\lambda(\rho x)\ge\lambda(x)$. Consequently
+$\lambda(s)>\lambda(F(x))\ge\lambda(x)$, so $s\ne x$. The three old classes
+are therefore distinct, with exactly the required exterior and reached set.
+This proves the converse including every old constraint. $\square$
+

@@ -1,0 +1,47 @@
+**Theorem 6.2 (exact native criterion becomes the published every-branch
+diagonal).** Conditional on a faithful safe exact convolution carrier,
+one can effectively obtain a safe scheme $\mathcal G_K$ with
+finite-output language $\mathcal K_{I,B}$ of Theorem 5.2. Moreover
+the following statements are equivalent:
+
+$$
+\begin{aligned}
+&\forall h\in\mathbb N\ J_B(h);\\
+&\forall n\in\mathbb N\ \exists T\in\mathcal L(\mathcal G_K)
+  \quad\forall\pi\text{ a branch of }T\quad\#_a(\pi)\ge n;\\
+&\inf_{\mathbf u\in\mathcal E_{I,B}}W_q(\mathbf u)=0
+       \quad(q\in\mathbb Q,\ 0<q<1/2).
+\end{aligned}
+\tag{NMF.24}
+$$
+
+The conditional all-depth alternative is decidable by the published
+safe-scheme every-branch diagonal theorem. This is a decision
+conditional on (NMF.23), not a construction of (NMF.23).
+
+Proof. BCCP §5, “Closure under transductions”, proves effective
+closure of finite-tree languages recognized by safe recursion
+schemes under linear FTT transductions, preserving safety.
+Apply that result successively to $\mathsf A_m$, $\mathsf P_m$
+and $\mathsf H$. Their alphabets, finite rule sets, ranks and
+linearity were checked explicitly in Theorem 5.1. The input
+language is precisely (NMF.23), so Theorem 5.2 gives both
+directions of the resulting language equality. Nothing in these
+three operations builds a convolution from separated source fields
+or evaluates an unspecified feasibility predicate.
+
+By Theorem 2.5 the middle statement of (NMF.24) is the unbounded
+minimum mismatch depth of one chosen tuple at each $n$. For
+$n=h+1$ it is exactly $J_B(h)$. The $n=0$ requirement is automatic
+because the original rows are attained, so their finite product is
+nonempty. This proves the first equivalence. Theorem 3.2 on the
+same entire product proves the second.
+
+The middle statement is exactly $\{a\}$-diagonality as defined
+in BCCP [§4.4, “The diagonal problem for trees”][BCCP44]: every
+branch of one finite tree has the requested label multiplicity.
+BCCP [§5, “Solving the diagonal problem”][BCCP5] proves this
+problem decidable for safe schemes. Its input hypotheses are now
+met by the condition on $\mathcal G$ and the proved transductions.
+This supplies the conditional decision. $\square$
+

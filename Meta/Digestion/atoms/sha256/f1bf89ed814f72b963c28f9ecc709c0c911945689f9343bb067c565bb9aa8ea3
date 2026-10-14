@@ -1,0 +1,11 @@
+**Corollary 10.3 (Algebraic existence for rational polynomial data).** If the polynomial $d$ in Theorem 10.1 has rational coefficients, at least one pair $p,s$ satisfying (10.1) has real algebraic coefficients. In particular the pairs in Theorem 10.2 can be chosen real algebraic.
+
+Proof. Write $p(t)=\sum_{j=0}^m p_jt^j$ and $s(t)=\sum_{j=1}^m s_jt^j$. Equating all $2m+1$ coefficients of
+
+$$
+p(t)^2+s(t+1)^2-s(t)^2-d(t)=0
+\tag{10.13}
+$$
+
+is a finite system of polynomial equations over $\mathbb Q$ in $2m+1$ real variables. Theorem 10.1 proves that its existential formula is true over $\mathbb R$. The real algebraic numbers form a real closed subfield, and the transfer principle for real closed fields carries this rational existential formula to that subfield. Any resulting solution has $s(0)=0$ by its parametrization and $p_m^2=[t^{2m}]d>0$ by its top coefficient equation. It therefore has all the required degree properties. This is an existence assertion for rational $d$, not a claim that every solution is algebraic or that a solution is isolated or nonsingular. It supplies no sampling algorithm or coefficient-computation bound. For arbitrary real $q$ it asserts no algebraicity of the completed instrument entries below. $\square$
+

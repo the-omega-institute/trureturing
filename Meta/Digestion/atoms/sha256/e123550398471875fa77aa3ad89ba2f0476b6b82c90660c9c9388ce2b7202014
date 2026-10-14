@@ -1,0 +1,48 @@
+**Theorem 3.3 (productive certificate for the prescribed pair).** The
+exact pieces $U_0(z_0)=U(z_0,z_0)$ and $U_1(z_1)=U(F(z_1),z_1)$,
+with independent residuals ranging over all of $\mathcal T$, admit
+Definition 2.1's certificate. Their prescribed $J(h)$ has actual
+finite witnesses at every inclusive depth $h$.
+
+Proof. Theorem 3.2 supplies both inclusions for each exact stratum
+and all complete signed predicates. Their only nontrivial negative
+is $z_i\ne F(z_i)$, valid on every finite assignment by (SPC.16).
+Couple witnesses by $z_0=z_1$, and take
+
+$$
+\begin{aligned}
+S(z_0,z_1)&=(F(z_0),F(z_1)),\qquad \theta^*=(\beta,\beta),\\
+A_1&=z_0,\qquad B_1=F(z_1),\\
+H_1(\theta;\mathbf w)&=F(w_1),\\
+H_0(\theta;\mathbf w)&=
+\langle F(w_1),\langle F(z_0),F^2(z_0)\rangle\rangle.
+\end{aligned}
+\tag{SPC.17}
+$$
+
+These are mixed templates. The coupling is nonempty and preserved.
+Every finite iterate satisfies the complete piece predicates.
+For comparison $1$, substitution gives $F(z_0),F^2(z_1)$, exactly
+the two $H_1$ values. For comparison $0$, substitution gives
+$\langle F(z_0),\langle F(z_0),F^2(z_0)\rangle\rangle$ and
+$\langle F^2(z_1),\langle F(z_1),F^2(z_1)\rangle\rangle$.
+They are the corresponding $H_0$ values because $z_0=z_1$.
+The graph has edges $0\to1$ of weight $1+d+\lfloor a/2\rfloor$
+and $1\to1$ of weight $d+\lfloor a/2\rfloor$, both positive.
+Theorem 2.2 applies.
+
+Explicitly, put $y_0=\beta,y_{t+1}=F(y_t)$ and
+
+$$
+u_t^0=U(y_t,y_t),\qquad u_t^1=U(y_{t+1},y_t).
+\tag{SPC.18}
+$$
+
+The hole depth and (SPC.9) give, with $b=d+\lfloor a/2\rfloor$,
+$\delta(F(s),F(t))\ge\delta(s,t)+b$; hence
+$\delta(y_t,y_{t+1})\ge tb$. The two $U$ sources share their
+entire right subtree and differ only below $L$, so their discrepancy
+is at least $1+tb$. Taking $t=h+1$ suffices. Both exact finite
+labels remain $r_0,r_1$, and all retained records hold at each stage.
+No partition is assigned to a limit. $\square$
+

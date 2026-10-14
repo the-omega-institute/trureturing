@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeContactIteration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeStarContacts]
+   anchors: []
    utility: none
    digest: Sequential actual contact grafts yield a Hamilton cycle on the full F2 union. -/
 

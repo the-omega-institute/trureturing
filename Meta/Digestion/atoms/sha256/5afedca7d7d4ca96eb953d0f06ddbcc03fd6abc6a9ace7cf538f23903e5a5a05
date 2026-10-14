@@ -1,0 +1,8 @@
+**Proposition 11.7 (edge cases, positive lags and unbounded codes).** The
+finite-vector theorem and the attained family include arbitrary $P$,
+$D=0$ and $H=0$. If $r=0$, there is no legal future cut; the coding task
+is vacuous and has a one-value, zero-bit code. If $r>0$, the all-source
+task admits no fixed finite alphabet, even with strictly positive lags.
+Nevertheless every actual vector can be encoded as one integer of
+unbounded representation size.
+

@@ -1,0 +1,47 @@
+**Definition 2.2 (whole-domain target coordinates and supplied correspondence).** The map $k\mapsto T_k$
+is a bijection from (AOF.3) onto (AOF.1), and the target in these coordinates
+is exactly $f(k)=R_Q(T_k)$, including its exterior and full partition.
+The finite-output cases are precisely $\tau=0$ or complete $Q$.
+For nonempty inputs in those cases there is an effective finite nonempty $F\subseteq S$ and
+surjection $\pi:S\to F$, identical on $F$, such that
+
+$$
+f=f|_F\circ\pi.
+\tag{AOF.5}
+$$
+
+For finite nonempty $S$, take $F=S$ and $\pi$ the identity. For $\tau=1$
+and complete $Q$, put $D=\max(B,B_Q)$, with $B_Q$ defined by (AOF.4), and take
+
+$$
+F=(S\cap[0,D))\cup\{D\},\qquad \pi(k)=\min(k,D).
+\tag{AOF.6}
+$$
+
+No source restriction to $F$ is made.
+
+The correspondence follows from the cited ARH results as follows. The
+root-certificate theorem first excludes every non-orbit source.
+The compiler then tests the full conjunction on each small index and proves
+its constant truth on every index in the tail. Thus a source in (AOF.1)
+has exactly one admitted index, and every admitted index satisfies the
+entire old row and every retained record. This proves both domain
+inclusions; checking separate existential realizations of records would
+not suffice. Computing $R_Q$ on that same tree proves both directions
+of the target correspondence.
+
+For complete $Q$ and $k\ge B_Q$, all original cuts are reached. Its exterior
+is exactly the cut trie, and its hole values are $T_{k-w(q)}$. Hence the
+whole partition, including repeats between different branches, is
+$q\sim q'\Longleftrightarrow w(q)=w(q')$. This proves (AOF.5)–(AOF.6).
+All smaller indices use direct finite-tree rows; in particular an absent
+cut creates no hole. A root cut gives the same single-hole row for all
+indices. An empty cut gives the whole concrete tree, not an empty answer.
+
+If $\tau=1$ and $Q$ is incomplete, take $r$ incomparable with its cuts.
+For all sufficiently large admitted indices the distinct entire trees
+$T_{k-w(r)}$ survive at that fixed position in the concrete exterior.
+There are infinitely many target rows. This is also the necessity
+argument of [ARH, Theorem 6.1][ARH]. Finite $S$ has finite image regardless
+of the shape of $Q$. The compiler detects empty $S$ separately. $\square$
+
