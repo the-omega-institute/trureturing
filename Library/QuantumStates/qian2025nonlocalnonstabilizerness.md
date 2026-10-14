@@ -63,13 +63,13 @@ The source reports the numerical local-unitary minimum $\mathcal M_R(\rho_0)\app
 Appendix C, PDF pp. 6–7, uses the Haar distribution P(x) = 3(1 − 2x)² of the Schmidt weight x = cos²θ, and the two-qubit formula
 
 $$
-M(x)=\lnrac{8}{7+\cos 8	heta}=\lnrac{1}{1+4x(x-1)(1-2x)^2}. 	ag{C1}
+M(x)=\ln\frac{8}{7+\cos 8\theta}=\ln\frac{1}{1+4x(x-1)(1-2x)^2}. \tag{C1}
 $$
 
 It derives the density of y = M(x), with z ≡ √(4 − 3e^y):
 
 $$
-P(y)=rac{3e^{-y/2}}{4z\sqrt{2(e^y-1)}}\Big[(e^{y/2}+z)\sqrt{1-e^{-y/2}z}+(e^{y/2}-z)\sqrt{1+e^{-y/2}z}\Big], 	ag{C5}
+P(y)=\frac{3e^{-y/2}}{4z\sqrt{2(e^y-1)}}\Big[(e^{y/2}+z)\sqrt{1-e^{-y/2}z}+(e^{y/2}-z)\sqrt{1+e^{-y/2}z}\Big], \tag{C5}
 $$
 
 and then states:
