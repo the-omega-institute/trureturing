@@ -949,3 +949,471 @@ heat, KLMN or compact-resolvent theorem is claimed as new, and no worldwide
 originality claim or physical realization follows from this composition.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Added phase cover and unchanged native histories
+
+**Definition 9.1 (native source and covering contract).** Retain Definition
+4.1, with $0<Z<1$, $r=1-Z$, $H=r/2$, $X=Y=H$ and probabilities
+$(k,H-k,Z,H-k,k)$ in the original mode order. Preparation phases remain
+arbitrary and fixed, and the amplitudes retain the negative phase
+convention. Write
+
+$$
+\widetilde\Omega=I\times\mathbb R^2,\qquad
+I=(l,u),\quad 0<l<k_o<u<H,\qquad
+\varpi(k,A,B)=(k,[A]_{2\pi},[B]_{2\pi}).
+\tag{9.1}
+$$
+
+Here $A,B$ denote real phase coordinates. This is additional
+covering structure over $\Omega=I\times\mathbb T^2$, not a replacement of
+its current-ray torus. The deck transformations are
+$(A,B)\mapsto(A+2\pi n,B+2\pi m)$, $(n,m)\in\mathbb Z^2$.
+The unimodular change in Definition 4.1 fixes these two actual periods.
+Lift the same fields, with the same notation,
+
+$$
+P=\partial_k,\qquad Q=\tfrac12\partial_A+
+c(k)\partial_B,\qquad c(k)=\tfrac12-k/r,\qquad
+d\widetilde\mu=dk\,dA\,dB.
+\tag{9.2}
+$$
+
+For an original numerical absolutely continuous or piecewise $C^1$
+command $(a,b)$ starting at zero, put $J_t=\int_0^t a\,db$.
+The exact lifted path from $(k,A_0,B_0)$ is
+
+$$
+(k+a_t,\ A_0+b_t/2,\
+ B_0+c(k)b_t-J_t/r).
+\tag{9.3}
+$$
+
+Its original whole-height guard remains $k+\min a>0$ and
+$k+\max a<H$. Requiring this path to remain in $I$ adds precisely
+$k+\min a>l$ and $k+\max a<u$. Neither endpoint membership nor taking a
+lift changes these extrema conditions. Formula (9.3) directly reuses
+[N, Theorems 9.2--9.3] and the full-path correspondence in
+[Native guarded lift limits and diffusion selection, §§2.2--2.4](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
+No new control, mean selector, phase reset or unrestricted rotation is
+included.
+
+**Definition 9.2 (one fixed free and attractive analytic realization).**
+Fix $\varepsilon>0$ and a lifted pole
+$o=(k_o,A_o,B_o)$. Let
+
+$$
+\begin{aligned}
+\widetilde T[f]&=\int_{\widetilde\Omega}
+  (\varepsilon^2|Pf|^2+|Qf|^2)\,d\widetilde\mu,\\
+\widetilde{\mathcal F}&=
+ \overline{C_c^\infty(\widetilde\Omega)}^{(\|\cdot\|_2^2+\widetilde T)^{1/2}},
+ \qquad \widetilde L=-(\varepsilon^2P^2+Q^2)_{F,\widetilde\Omega},\\
+\widetilde G_o(q)&=\int_0^\infty\widetilde p_t(o,q)\,dt,\qquad
+\widetilde V[f]=\int_{\widetilde\Omega}\widetilde G_o|f|^2\,d\widetilde\mu,
+ \qquad \widetilde q_g=\widetilde T-g\widetilde V .
+\end{aligned}
+\tag{9.4}
+$$
+
+The free operator is the operator represented by the closed free form:
+$f\in D(\widetilde L)$ exactly when $f\in\widetilde{\mathcal F}$ and
+$\widetilde T(f,v)=\langle F,v\rangle$ for some $F\in L^2$ and every
+$v\in\widetilde{\mathcal F}$, in which case $\widetilde Lf=F$.
+This specifies height Dirichlet killing and no phase boundary.
+The semigroup clock is $e^{-t\widetilde L}$, with control covariance
+$2\operatorname{diag}(\varepsilon^2,1)\,dt$. The field in (9.4) is the
+full unshifted Green field of this free operator, with unit source
+relative to $d\widetilde\mu$. No threshold shift is made in its definition.
+The closed horizontal form domain, rather than isotropic $H^1_0$, is used.
+
+## 10. Same-field noncompact Green stability and attained binding
+
+**Theorem 10.1 (native cover localization at every fixed positive
+covariance parameter).** In Definitions 9.1--9.2 let $C_H$ be the
+Lebesgue-normalized constant already supplied by (4.8), and set
+
+$$
+g_*=\frac{\varepsilon^2}{2rC_H},\qquad
+d=u-l,\qquad \lambda_D=\frac{\varepsilon^2\pi^2}{d^2}.
+\tag{10.1}
+$$
+
+The free form is closed and Markovian after closure, and
+$\widetilde T\ge\lambda_D\|\cdot\|_2^2$. Its killed heat law projects
+under $\varpi$ to precisely the periodic free law of Definition 4.1.
+For original phase representatives $q=(k,A,B)$,
+
+$$
+\begin{aligned}
+p_t^\Omega(\varpi o,\varpi q)
+ &=\sum_{(n,m)\in\mathbb Z^2}
+ \widetilde p_t(o,(k,A+2\pi n,B+2\pi m)),\\
+\Gamma_{\varepsilon,\varpi o}(\varpi q)
+ &=\sum_{(n,m)\in\mathbb Z^2}
+ \widetilde G_o(k,A+2\pi n,B+2\pi m).
+\end{aligned}
+\tag{10.2}
+$$
+
+The Green sum is interpreted as a nonnegative sum, including infinite
+values at projected poles. The cover field is positive, finite and smooth
+off $o$, integrable, bounded outside every relatively compact
+neighbourhood of $o$, and tends to zero uniformly in $k\in I$ as
+$|(A-A_o,B-B_o)|\to\infty$. It has unit source:
+
+$$
+\int_{\widetilde\Omega}\widetilde G_o\widetilde L\varphi\,
+ d\widetilde\mu=\varphi(o)\quad(\varphi\in C_c^\infty(\widetilde\Omega)).
+\tag{10.3}
+$$
+
+With $G_I$ exactly as in (6.1), its phase marginal and mass are
+
+$$
+\int_{\mathbb R^2}\widetilde G_o(k,A,B)\,dA\,dB
+ =\varepsilon^{-2}G_I(k_o,k),\qquad
+\int_{\widetilde\Omega}\widetilde G_o\,d\widetilde\mu
+ =\frac{(k_o-l)(u-k_o)}{2\varepsilon^2}.
+\tag{10.4}
+$$
+
+The marginal equality is an $L^1(I)$ identity with the nonnegative
+integral representative. For every $0<g<g_*$ the attractive form is closed
+on exactly $\widetilde{\mathcal F}$ and satisfies
+
+$$
+(1-g/g_*)\widetilde T[f]\le\widetilde q_g[f]\le\widetilde T[f].
+\tag{10.5}
+$$
+
+If $\widetilde H_g$ denotes its represented operator, then
+
+$$
+\begin{gathered}
+\inf\sigma_{\rm ess}(\widetilde L)
+ =\inf\sigma_{\rm ess}(\widetilde H_g)=\lambda_D,\\
+0<(1-g/g_*)\lambda_D\le
+E_g:=\inf_{\|f\|_2=1}\widetilde q_g[f]<\lambda_D.
+\end{gathered}
+\tag{10.6}
+$$
+
+There is a finite admissible test with Rayleigh quotient below
+$\lambda_D$. The bottom $E_g$ is attained by a normalized member of
+$D(\widetilde H_g)$ and is an isolated eigenvalue of finite multiplicity.
+Every normalized minimizing sequence has a subsequence converging in the
+free form norm. Thus the assertion includes absence of mass escape and
+concentration loss, while its absolute energy remains positive.
+
+Proof. Use (4.2) globally on the real cover:
+
+$$
+\xi=(k-k_o)/\varepsilon,\quad
+\eta=2(A-A_o),\quad
+\zeta=-r\{B-B_o-c(k_o)\eta\}/\varepsilon.
+\tag{10.7}
+$$
+
+This maps the cover onto the slab
+$D=((l-k_o)/\varepsilon,(u-k_o)/\varepsilon)\times\mathbb R^2$ in
+the group (4.5). Equations (4.3) hold globally:
+$\varepsilon P=U$, $Q=V$ and
+$d\widetilde\mu=j\,d\xi\,d\eta\,d\zeta$, $j=\varepsilon^2/(2r)$.
+The form is therefore exactly the constant-density Dirichlet restriction
+of $L_H$, with unchanged time, not a tangent approximation.
+Integration by parts proves closability as in Proposition 2.1; the
+contraction chain rule proves the Markov property. Height Poincaré on
+each real phase fiber proves the stated lower bound and passes to closure.
+
+The full-group heat and Green suppliers are [R, §2, (2.1), (2.6)--(2.7)].
+Killing that process on exit from $D$, and accounting for $j$, gives
+
+$$
+0\le\widetilde p_t(o,q)\le j^{-1}p_t^H(0,(\xi,\eta,\zeta)),
+\qquad
+0\le\widetilde G_o(q)\le j^{-1}G_H(\xi,\eta,\zeta).
+\tag{10.8}
+$$
+
+This is domination by earlier killing, with neither a reflection image
+formula nor any change to the attractive field. The bracket
+$[U,V]=\partial_\zeta$ and connected slab give interior hypoellipticity
+and strict heat positivity. In particular horizontal rectangles at
+interior heights generate central displacements, and height and $V$ legs
+connect all points without crossing a height face. Such finite paths can
+be traversed in any prescribed positive time. The usual positive
+Hörmander heat setting is [H, §3.1.2]; these fields are smooth, divergence
+free, bracket generating of step two, with zero drift and potential.
+
+Choose a proper continuous homogeneous norm $N$ on (4.5).
+The supplied smooth degree $-2$ kernel satisfies
+$G_H\le C_NN^{-2}$. For example one may use a constant multiple of
+$((\xi^2+\eta^2)^2+(2\zeta-\xi\eta)^2)^{1/4}$.
+As the two real phases diverge with $\xi$ in this bounded slab,
+$N\to\infty$ uniformly. Consequently (10.8) proves the claimed uniform
+tail bound and every global off-pole bound, including near the height
+faces. It also proves off-pole finiteness and local integrability at the
+pole; homogeneous dimension four makes $N^{-2}$ locally integrable.
+
+For the marginal and projection, the exact real process is
+
+$$
+dK_t=\sqrt2\varepsilon\,dW_t^1,\qquad
+dA_t=2^{-1/2}dW_t^2,\qquad
+dB_t=\sqrt2c(K_t)\,dW_t^2,
+\quad \tau=\inf\{t:K_t\notin I\}.
+\tag{10.9}
+$$
+
+The Brownian motions $W^1,W^2$ are independent. The Stratonovich and Itô formulas
+agree because $Qk=0$; the generator before killing is
+$\varepsilon^2P^2+Q^2$. Wrapping both real phases gives the same unique
+killed free diffusion as (6.4), including its lifetime. Integration of
+its real kernel over both phases is therefore the height Dirichlet heat
+kernel for $\varepsilon^2\partial_k^2$. Tonelli and the one-dimensional
+inverse computed in Proposition 6.1 prove (10.4), hence global
+integrability. Integration of
+$-\partial_t(e^{-t\widetilde L}\varphi)(o)$ proves (10.3): the initial
+value is $\varphi(o)$ and the terminal value is zero, since
+$\mathbb P_o(\tau>t)\to0$. Absolute interchange follows from (10.4) and
+bounded $\widetilde L\varphi$. Spatial hypoellipticity of (10.3) proves
+smoothness off $o$. Strict heat positivity proves $\widetilde G_o>0$.
+At $o$ the value is infinite: [H, Theorem 3.2] compares the slab and
+full-group kernels on an interior compact containing zero with error
+$O(t^N)$ for every $N$, whereas $p_t^H(0,0)=t^{-2}p_1^H(0,0)$.
+Both realizations here are selfadjoint contractions of the identical
+smooth expression and density, as required by that comparison theorem.
+
+Projection of (10.9) also proves the heat equality (10.2) as equality of
+densities. It holds pointwise for positive time: the full-group Schwartz
+heat bound in (10.8), also for general starting points, makes the lattice
+sum locally uniformly convergent; its continuous sum agrees with the
+periodic density almost everywhere and hence everywhere. Tonelli gives
+the Green equality. Ordinary continuous path lifting with fixed initial
+representatives, already used in the supplied full-path correspondence,
+is consistent with this law and with (9.3); it adds no Brownian history
+to the original numerical command class.
+
+For $f$ in the smooth compact core, zero extension of its image under
+(10.7) is a full-group test. Apply exactly (4.8), supplied by
+[R, Corollary 3.2], with $p=2$, $\alpha=1$, $Q_{\rm vol}=4$.
+The condition $0<1<4/2$ holds. Write $v$ for that zero extension.
+Keeping the factor $j$ gives
+
+$$
+\widetilde V[f]\le
+\int_{\mathbb R^3}G_H|v|^2\,d\xi\,d\eta\,d\zeta
+\le j^{-1}C_H\widetilde T[f]=g_*^{-1}\widetilde T[f].
+\tag{10.10}
+$$
+
+The Hardy estimate is unweighted; no horizontal-gradient factor is
+inserted. Apply (10.10) to differences of a free-core sequence. Its
+weighted $L^2$ limit agrees almost everywhere with its ordinary $L^2$
+limit, so every $f\in\widetilde{\mathcal F}$ has finite potential energy
+and (10.10) holds there. [T, Theorem 6.24 (KLMN)] now applies with relative
+bound $g/g_*<1$ and additive bound zero. It proves (10.5), closedness and
+equivalence of the attractive and free form norms on exactly the same
+domain. More explicitly,
+$f\in D(\widetilde H_g)$ exactly when $f\in\widetilde{\mathcal F}$ and
+$\widetilde q_g(f,v)=\langle F,v\rangle$ for some $F\in L^2$ and all
+$v\in\widetilde{\mathcal F}$, and then $\widetilde H_gf=F$.
+This is the operator domain used below; no point condition or different
+selfadjoint extension at the pole is imposed.
+
+We next verify the local compactness needed for the actual essential
+threshold. For any finite-measure set $E\subset\widetilde\Omega$ and
+$t>0$, symmetry, the semigroup identity and group domination give
+
+$$
+\|{\bf1}_E e^{-t\widetilde L}\|_{\rm HS}^2
+=\int_E\widetilde p_{2t}(q,q)\,d\widetilde\mu(q)
+\le j^{-1}p_{2t}^H(0,0)\,\widetilde\mu(E)<\infty.
+\tag{10.11}
+$$
+
+Thus the localized heat operator is compact. Apply
+[Lenz--Stollmann--Wingert, Theorem 1.3(iv)--(v)] to the nonnegative
+selfadjoint $\widetilde L$ and bounded multiplier $\mathbf1_E$.
+Restriction $\widetilde{\mathcal F}\to L^2(E)$ is compact. In particular
+this includes $E=I\times\{|s|\le R\}$, where
+$s=(A-A_o,B-B_o)$; the statement controls sequences
+approaching either height face as well as interior sequences.
+
+Choose smooth phase cutoffs $\chi_R,\vartheta_R$ with
+$\chi_R^2+\vartheta_R^2=1$, $\chi_R=1$ for $|s|\le R$,
+$\chi_R=0$ for $|s|\ge2R$, and horizontal squared derivative sum at most
+$C/R^2$. Such cutoffs are obtained as cosine and sine of a smooth radial
+transition; $P\chi_R=P\vartheta_R=0$ and $c(k)$ is bounded on $I$.
+Here $\widetilde G_o(k,s)$ abbreviates the field at $(k,A_o+s_1,B_o+s_2)$.
+Put $m_R=\sup_{k\in I,\ |s|\ge R}\widetilde G_o(k,s)$, so $m_R\to0$.
+The exact IMS identity (4.10), now with real phases and the same potential
+on both pieces, together with (10.5), yields
+
+$$
+\widetilde q_g[h]\ge
+(\lambda_D-gm_R)\|\vartheta_Rh\|_2^2
+-CR^{-2}\|h\|_2^2.
+\tag{10.12}
+$$
+
+The discarded interior form is nonnegative by (10.5), including its
+critical singularity. If $h_n$ is free-form bounded, weakly zero in $L^2$,
+and $\|h_n\|_2^2\to b$, (10.11) makes $\chi_Rh_n\to0$ strongly for fixed
+$R$. Taking the lower limit in (10.12), then $R\to\infty$, proves
+
+$$
+\liminf_n\widetilde q_g[h_n]\ge\lambda_Db.
+\tag{10.13}
+$$
+
+These arguments include $g=0$. If a spectral subspace below
+$\lambda_D-\delta$ were infinite dimensional, an orthonormal sequence
+in it would be free-form bounded by (10.5), weakly zero, and contradict
+(10.13). Hence every such spectral subspace is finite dimensional.
+
+For the opposite essential bound let
+$\phi(k)=\sqrt{2/d}\sin(\pi(k-l)/d)$ and take a real normalized
+$v\in C_c^\infty(\mathbb R^2)$. Products
+$f_R(k,s)=\phi(k)R^{-1}v(s/R)$ belong to
+$\widetilde{\mathcal F}$ by height and phase approximation, and satisfy
+
+$$
+\|f_R\|_2=1,\qquad
+\widetilde T[f_R]=\lambda_D+O(R^{-2}).
+\tag{10.14}
+$$
+
+Indeed the height contribution is exactly $\lambda_D$ and the remaining
+term is $\int_I\phi^2\int|(\tfrac12,c(k))\cdot\nabla(R^{-1}v(s/R))|^2$.
+Infinitely many disjoint phase translates of this fixed-size support
+have the same free energy. Their span has attractive Rayleigh quotient
+at most $\lambda_D+C/R^2$, since $\widetilde q_g\le\widetilde T$ and
+all cross forms between disjoint supports vanish. The form version of
+[T, Theorem 4.10] gives essential bottom at most this number. Letting
+$R\to\infty$, and combining with the preceding finite-dimensional
+spectral-subspace conclusion, proves both essential equalities in (10.6).
+This uses only local compactness, not compactness of the full critical
+Green multiplier or a Persson or extended-Kato premise.
+
+For a finite below-threshold witness fix $a>0$ and $R>a$. Let $v_R(s)$
+be one on $|s|\le a$, equal to $\log(R/|s|)/\log(R/a)$ for
+$a<|s|<R$, and zero outside. This compactly supported $H^1(\mathbb R^2)$
+function has $\int|\nabla v_R|^2=2\pi/\log(R/a)$. Put
+
+$$
+M=\int_I\phi(k)^2|(\tfrac12,c(k))|^2\,dk,\qquad
+W_a=\int_{I\times\{|s|\le a\}}\phi(k)^2\widetilde G_o\,d\widetilde\mu .
+\tag{10.15}
+$$
+
+Here $0<W_a<\infty$ by positivity and (10.4), and $M<\infty$.
+The same product approximation makes $F_R(k,s)=\phi(k)v_R(s)$
+admissible. It has finite nonzero norm, and (10.10) makes its potential
+finite. Directly in the original fields,
+
+$$
+\widetilde q_g[F_R]-\lambda_D\|F_R\|_2^2
+\le \frac{2\pi M}{\log(R/a)}-gW_a<0
+\quad\hbox{if }\log(R/a)>\frac{2\pi M}{gW_a}.
+\tag{10.16}
+$$
+
+Thus a finite $R$ suffices for each fixed $g>0$ in the strict form range.
+Core approximation and continuity in the equivalent form norm also give
+a smooth compactly supported witness with the same strict inequality.
+The logarithmic cutoff is the classical two-dimensional weak-binding
+mechanism, used here only after evaluating its energy and admissibility
+for the actual native fields and full $\widetilde G_o$.
+
+Finally let $f_n$ be any normalized minimizing sequence for $E_g$.
+The lower bound (10.5) gives free-form boundedness; extract a weak
+free-form limit $f$. For $h_n=f_n-f$, put $m=\|f\|_2^2\le1$.
+Weak convergence and continuity of the polarized forms give
+
+$$
+\|h_n\|_2^2\to1-m,\qquad
+\widetilde q_g[f_n]=\widetilde q_g[f]+\widetilde q_g[h_n]+o(1).
+\tag{10.17}
+$$
+
+By (10.13) and the definition of $E_g$,
+$E_g\ge E_gm+\lambda_D(1-m)$. Since (10.16) gives $E_g<\lambda_D$,
+necessarily $m=1$. Equation (10.17) then gives
+$\widetilde q_g[f]=E_g$ and $\widetilde q_g[h_n]\to0$; (10.5) implies
+strong convergence in the free form norm. Variation of this minimum
+gives $f\in D(\widetilde H_g)$ and $\widetilde H_gf=E_gf$.
+The finite-dimensional spectral-subspace conclusion makes this bottom
+isolated and of finite multiplicity. The remaining energy bounds are
+immediate from (10.5) and height Poincaré. $\square$
+
+## 11. Observation information, suppliers and limits of the increment
+
+**Proposition 11.1 (what the noncompact conclusion observes).** The
+covering law and localization of Theorem 10.1 retain the native
+current-observation distinction, and add no physical spatial directions
+or acquisition procedure.
+
+Proof. Every original present-ray observable pulls back to a
+$2\pi\mathbb Z^2$-invariant function. Distinct deck translates therefore
+give identical original current observations. A supplied entire continuous
+wrapped path and initial representatives determine its unique lift;
+for original numerical histories (9.3) computes that lift already.
+These assertions require path information, not just its terminal ray.
+Neither assertion provides an observer with freely acquired unwrapped
+phases. The analytic diffusion (10.9) remains additional stochastic
+structure, not an absolutely continuous native command.
+
+A nonzero periodic amplitude cannot belong to $L^2(\widetilde\Omega)$:
+its identical nonzero squared mass would repeat over infinitely many
+fundamental cells. The attained nonperiodic amplitude is consequently
+an analytic state on the added cover, not a prepared five-mode ray or an
+original current-ray observable. A single lifted source is also
+additional information: its positive field tends to zero at phase
+infinity and so is not deck invariant. Only the periodized sum (10.2)
+recovers the original torus source. In particular the single-source
+attractive operator does not descend as the original periodic attraction.
+The free law does descend, with exactly the same killing and clock.
+
+The strict range compares the attractive bottom with its own actual
+essential bottom, both for that single full field. It gives positive
+absolute energy and a strictly positive gap below $\lambda_D$, without
+a sharp coupling, gap asymptotic or estimate uniform as
+$\varepsilon\downarrow0$. The state dimension three, two primitive
+controls, two lifted phase directions, local homogeneous dimension four
+and physical axes remain different quantities. This conclusion supplies
+the specified noncompact analytic bridge to §§7.2--7.3; it selects no
+means or physical realization and completes no why-three claim.
+$\square$
+
+**Mathematical citation 11.2 (scope and exact supplier correspondence).**
+The native inputs [N, §§8--9],
+[Observation quotient, Definitions 1.1--1.3](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md),
+and the guarded-lift source cited in Definition 9.1 are used at immutable
+revision $\mathtt{8464cb20c1ef0954d4561a3d5c4855de289c0e5a}$.
+They supply the actual torus, arbitrary preparation, numerical histories,
+whole-height guards and distinction between current state and path.
+Definitions 4.1--4.2 supply the exact fields and normalization; Theorem
+5.1 supplies compact-domain stability, not the noncompact conclusion.
+
+| Primary supplier | Applied scope and remaining native work |
+| --- | --- |
+| [R] Ciatti--Cowling--Ricci, arXiv:1308.2373v1, §2 and Corollary 3.2 | The full-group unit-source heat integral and unweighted Hardy inequality are reused with $U,V$, Haar measure, $Q_{\rm vol}=4$, $p=2,\alpha=1$. The global slab map has density $j$, producing precisely $j^{-1}C_H=2rC_H/\varepsilon^2$. |
+| [H] Colin de Verdière--Hillairet--Trélat, DOI 10.5802/ahl.93, §3.1.2 and Theorem 3.2 | Smooth bracket-generating fields, zero drift and potential, identical local density and selfadjoint contraction realizations give the heat setting and local comparison. Domination, integrability and tails here also use the actual global slab and height law. |
+| [T] Teschl, 2009 edition, Theorems 6.24 and 4.10 | The verified relative form bound is $g/g_*<1$ with additive bound zero; KLMN preserves precisely $\widetilde{\mathcal F}$. Form min-max is used with the disjoint native product tests after the exterior lower bound is proved. |
+| Lenz--Stollmann--Wingert, *Compactness of Schrödinger semigroups*, [arXiv:0903.0280v2](https://arxiv.org/pdf/0903.0280v2), Theorem 1.3 | For bounded $\mathbf1_E$ and nonnegative selfadjoint $\widetilde L$, the verified localized Hilbert--Schmidt heat estimate gives compact restriction of the free form domain. It does not assert compactness of the full Green multiplier. |
+| Hoang--Hundertmark--Richter--Vugalter, *Quantitative bounds versus existence of weakly coupled bound states for Schrödinger type operators*, [arXiv:1610.09891v2](https://arxiv.org/pdf/1610.09891v2), Theorem 1.1 and Remarks 1.2 | These are established weak-binding context for scalar Fourier kinetic symbols, with relative form compactness among their hypotheses. Those hypotheses are not imported for the singular native multiplier. The actual height-mode trial and essential-threshold/no-escape estimates are (10.11)--(10.17). |
+
+These literature-attested intermediate facts are not separately proposed
+as new general theorems. The repo-derived application is their integrated
+same-source noncompact Green/domain/threshold/trial/no-escape
+correspondence. It neither substitutes a local singular model for the
+full field nor transfers compact-torus attainment. Bounded comparison
+with baseline D5, including private declarations, Blueprint, Library and
+mathlib revision $\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$
+did not identify this complete native contract; that comparison is not
+an absence proof or a literature-priority claim. All statements here are
+ordinary mathematics, without Lean or kernel certification.
+
+## 追加锚（本行以下为增补区）
