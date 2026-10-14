@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72808e05e9d168e20159a1b7bd0d9423f3dc7e88e87dac982e2bf42f56b39d48
+  normalized_sha256: sha256:72808e05e9d168e20159a1b7bd0d9423f3dc7e88e87dac982e2bf42f56b39d48
+cas_ref: sha256:72808e05e9d168e20159a1b7bd0d9423f3dc7e88e87dac982e2bf42f56b39d48
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述固定情境的逐点整数选择容量刻画。
+    previous_atom_id: 8ccf8e14020ece3dd03f18912d248afb478b1addf286fa760effdb9526fceccf
+    next_atom_id: a1596a1d7fe53e4c555ab710462adc75175b381276fbe8c0890e2a5ebe6e92b1

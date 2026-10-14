@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5998367d799fa32c0ef6fdd07959bd7ae08e4ed3bc20eb4299e09ac175aa4729
+  normalized_sha256: sha256:5998367d799fa32c0ef6fdd07959bd7ae08e4ed3bc20eb4299e09ac175aa4729
+cas_ref: sha256:5998367d799fa32c0ef6fdd07959bd7ae08e4ed3bc20eb4299e09ac175aa4729
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只逐参数应用前述命题并论证结果像等式。
+    previous_atom_id: 6c9805f389ed79cc99a8e604ee53da9a3d3536c4693ab3c6e9ea49dc0159efcc
+    next_atom_id: b7c0c6bd38d66b1032f6e4d0ea812e7804d5a36328fb813bead61cd80009cba0
