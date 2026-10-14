@@ -1,7 +1,10 @@
-/- UNCOMPILED native metadata for the actual simultaneous state.
-   Work in one ambient graph and use an injective raw-configuration map.
-   This removes graph-order casts from the mathematical restoration and
-   carries both native boundary laws with the same actual current cycle. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeSimultaneousBoundaryState
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeSimultaneousBoundaryState
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Advance Both Actual Native Boundary Templates on One Cycle. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualBoundaryAdvance
 import D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 

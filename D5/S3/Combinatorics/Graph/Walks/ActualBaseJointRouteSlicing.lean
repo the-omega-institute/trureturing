@@ -1,8 +1,10 @@
-/- UNCOMPILED actual k2 Q-order exception.
-   The middle whole boundary path is earned as a join of three actual
-   joint pieces and two restored b seams. Its first and third joint
-   pieces contain the two Q cuts. Refining the actual full Q route then
-   earns their strict order, without importing the k>=3 cross invariant. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualBaseJointRouteSlicing
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualBaseJointRouteSlicing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Slice the Exceptional Base Q Route from Actual Joint Pieces. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualJointRouteSlicing
 
 set_option autoImplicit false

@@ -1,8 +1,10 @@
-/- UNCOMPILED actual boundary recovery after restoring one marked order.
-   An endpoint of a still-deleted actual cycle edge cannot lie inside a
-   retained simple path. A retained route assembled from previous joint
-   paths therefore earns the finish of the actual restored slice and
-   recovers that whole slice. No restored endpoint pairing is assumed. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualRestoredBoundaryRecovery
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualRestoredBoundaryRecovery
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Recover Whole Actual Boundary Pieces from Retained Routes. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
 
 set_option autoImplicit false

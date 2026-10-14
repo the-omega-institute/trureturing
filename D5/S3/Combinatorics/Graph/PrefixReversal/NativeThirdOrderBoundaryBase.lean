@@ -1,7 +1,10 @@
-/- UNCOMPILED native k3 simultaneous-state base.
-   The actual eight-path restoration earns both full partitions. Literal
-   native port coordinates identify their cut groups and O3/E3 endpoints.
-   This initializes the two-order native state; no boundary is assumed. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeThirdOrderBoundaryBase
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeThirdOrderBoundaryBase
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Restore the Actual Native Third-Order Base State. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 import D5.S3.Combinatorics.Graph.Walks.ActualThirdOrderBoundaryBase
 
