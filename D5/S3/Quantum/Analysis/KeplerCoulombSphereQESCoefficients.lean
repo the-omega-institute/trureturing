@@ -792,5 +792,97 @@ private theorem H_rescale {m k : ℕ} {Q κ : ℝ}
     norm_num
     field_simp
 
+private theorem solution_forms {m : ℕ} {Q κ : ℝ} {a : ℕ → ℝ}
+    (hm : 2 ≤ m) (hQ : 0 < Q) (hκ : 0 < κ) (ha : System m Q κ a) :
+    ClosedForms m Q κ (bValue m) (cValue m) a := by
+  have hv := solution_values hm hQ hκ ha
+  have hquot (v : ℝ) : v / (D m).eval (Q ^ 2 / κ) =
+      (κ ^ (m / 2) * v) / delta (m / 2) (bValue m) Q κ := by
+    rw [delta_rescale m hκ.ne']
+    exact (mul_div_mul_left v _ (pow_ne_zero _ hκ.ne')).symm
+  have hz : a 0 = (∏ r ∈ Finset.range (m / 2),
+      (Q ^ 2 + (((2 * r + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ)) /
+      delta (m / 2) (bValue m) Q κ := by
+    rw [hv.1, hquot, E_rescale (Nat.zero_le _) hκ.ne']
+    simp only [F.eq_1, mul_zero, Nat.descFactorial_zero, Nat.cast_one, pow_zero,
+      one_mul, mul_one, Nat.sub_zero]
+  have he (k : ℕ) (hk0 : 1 ≤ k) (hk : k ≤ m / 2) : a (2 * k) =
+      F m (2 * k) * κ ^ k * Q * (∏ r ∈ Finset.range (m / 2 - k),
+        (Q ^ 2 + (((2 * r + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ)) /
+        delta (m / 2) (bValue m) Q κ := by
+    rw [hv.2.1 k hk0 hk, hquot]
+    rw [show κ ^ (m / 2) * (Q * (E m k).eval (Q ^ 2 / κ)) =
+      Q * (κ ^ (m / 2) * (E m k).eval (Q ^ 2 / κ)) by ring, E_rescale hk hκ.ne']
+    ring
+  have ho (k : ℕ) (hk : k ≤ (m - 1) / 2) : a (2 * k + 1) =
+      F m (2 * k + 1) * κ ^ k * Q ^ (2 * (1 - m % 2)) *
+        series ((m - 1) / 2 - k) (cValue m k) Q κ /
+        delta (m / 2) (bValue m) Q κ := by
+    rw [hv.2.2 k hk, hquot, H_rescale hm hk hκ.ne']
+  rw [ClosedForms.eq_1]
+  constructor
+  · intro hp
+    have hm' : m = 2 * (m / 2) + 1 := by omega
+    have hprod (n : ℕ) : (∏ r ∈ Finset.range n,
+        (Q ^ 2 + (((2 * r + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ)) =
+        ∏ r ∈ Finset.range n, (Q ^ 2 + 4 * ((r : ℝ) + 1) ^ 2 * κ) := by
+      apply Finset.prod_congr rfl
+      intro r _
+      rw [hp]
+      push_cast
+      ring
+    rw [OddForm.eq_1]
+    refine ⟨?_, ?_, ?_⟩
+    · rw [hz, hprod]
+    · intro k hk0 hk
+      have hf : F m (2 * k) = ((2 * (m / 2) + 1).factorial : ℝ) /
+          ((2 * (m / 2) - 2 * k + 1).factorial : ℝ) := by
+        rw [F_ratio (by omega)]
+        exact congrArg₂ (fun u v : ℕ => (u.factorial : ℝ) / (v.factorial : ℝ)) hm' (by omega)
+      rw [he k hk0 hk, hf, hprod]
+    · intro k hk
+      have hf : F m (2 * k + 1) = ((2 * (m / 2) + 1).factorial : ℝ) /
+          ((2 * (m / 2) - 2 * k).factorial : ℝ) := by
+        rw [F_ratio (by omega)]
+        exact congrArg₂ (fun u v : ℕ => (u.factorial : ℝ) / (v.factorial : ℝ)) hm' (by omega)
+      rw [ho k (by omega), hf, hp, show (m - 1) / 2 - k = m / 2 - k by omega]
+      simp only [Nat.sub_self, mul_zero, pow_zero, mul_one]
+  · intro hp
+    have hm' : m = 2 * (m / 2) := by omega
+    have hprod (n : ℕ) : (∏ r ∈ Finset.range n,
+        (Q ^ 2 + (((2 * r + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ)) =
+        ∏ r ∈ Finset.range n, (Q ^ 2 + (2 * (r : ℝ) + 1) ^ 2 * κ) := by
+      apply Finset.prod_congr rfl
+      intro r _
+      rw [hp]
+      push_cast
+      ring
+    rw [EvenForm.eq_1]
+    refine ⟨?_, ?_, ?_⟩
+    · rw [hz, hprod]
+    · intro k hk0 hk
+      have hf : F m (2 * k) = ((2 * (m / 2)).factorial : ℝ) /
+          ((2 * (m / 2) - 2 * k).factorial : ℝ) := by
+        rw [F_ratio (by omega)]
+        exact congrArg₂ (fun u v : ℕ => (u.factorial : ℝ) / (v.factorial : ℝ)) hm' (by omega)
+      rw [he k hk0 hk, hf, hprod]
+    · intro k hk
+      have hf : F m (2 * k + 1) = ((2 * (m / 2)).factorial : ℝ) /
+          ((2 * (m / 2) - 2 * k - 1).factorial : ℝ) := by
+        rw [F_ratio (by omega)]
+        exact congrArg₂ (fun u v : ℕ => (u.factorial : ℝ) / (v.factorial : ℝ)) hm' (by omega)
+      rw [ho k (by omega), hf, hp, show (m - 1) / 2 - k = m / 2 - k - 1 by omega]
+
+theorem result : claim := by
+  rw [claim.eq_1]
+  intro m hm
+  refine ⟨bValue m, cValue m, constants_positive hm, ?_⟩
+  intro Q κ hQ hκ
+  refine ⟨⟨answer m Q κ, answer_system hm hQ hκ⟩, ?_, ?_⟩
+  · intro a ha
+    exact solution_forms hm hQ hκ ha
+  · intro a a' ha ha'
+    exact system_unique hm hQ hκ ha ha'
+
 end
 end D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
