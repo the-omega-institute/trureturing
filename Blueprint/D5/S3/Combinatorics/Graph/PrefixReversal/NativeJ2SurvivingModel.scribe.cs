@@ -26,10 +26,7 @@ internal sealed class NativeJ2SurvivingModelDocument : IScribeDocumentDefinition
                 + "at s(x,y), together with x distinct from y."),
             Paragraph(Text(
                 "The internal proof takes one actual F2 Hamilton witness containing all "
-                + "six marked edges. Lifted marked cuts are injective in its subtype vertex "
-                + "domain. Cutting that same witness preserves every subtype vertex exactly "
-                + "once, retains exactly the independent surviving edge inventory, and "
-                + "produces six actual simple paths. Mapping the original actual cycle into "
+                + "six marked edges. Mapping the original actual cycle into "
                 + "the Cayley graph bounds surviving degree by two. Each port loses its "
                 + "marked incident edge, so its surviving neighbor set has at most one "
                 + "element. These earned facts are consumed by the actual word-component proof.")))));
