@@ -7,10 +7,7 @@
    digest: CHSH nonlocality is sharply bounded by the steering-ellipsoid centre. -/
 
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
-import D5.S3.Weil.ZetaLinear.RankTrace
-import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-import Mathlib.LinearAlgebra.CrossProduct
 
 set_option autoImplicit false
 noncomputable section
@@ -58,6 +55,7 @@ private lemma bell_trace_expansion (ρ : TwoQubit) (a a' b b' : Fin 3 → ℝ) :
   ring
 
 private lemma chshValues_nonempty (ρ : TwoQubit) : (chshValues ρ).Nonempty := by
+  rw [chshValues.eq_def]
   refine ⟨_, ![0, 0, 1], ![0, 0, 1], ![0, 0, 1], ![0, 0, 1], ?_, ?_, ?_, ?_, rfl⟩ <;>
     norm_num [vlen, Fin.sum_univ_succ]
 
@@ -193,7 +191,9 @@ private lemma bloch_marginals (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
     Complex.conj_re, Complex.conj_im, Complex.add_re, Complex.add_im] at hRre hRim hLre hLim
   constructor <;> ext i <;> fin_cases i <;>
     simp [blochA, blochB, pauli,
-      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_2,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_3,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_4,
       D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
       D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
       Matrix.trace, Matrix.mul_apply, partialTraceRight, partialTraceLeft,
@@ -329,7 +329,10 @@ private lemma exists_canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef)
       (1 / 2 : ℂ) • (1 - ∑ j, (blochB ρ j : ℂ) • pauli j) := by
     rw [hPmat, hbP, Fin.sum_univ_three]
     ext i j; fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      simp [pauli, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      simp [pauli,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_2,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_3,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_4,
         D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
         Complex.mul_re, Complex.mul_im] <;> linarith
   set c : ℝ := 1 / (2 * p * d) with hcdef
@@ -344,7 +347,11 @@ private lemma exists_canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef)
         simp [partialTraceLeft, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
           Matrix.conjTranspose_apply] <;> ring
     rw [he, H1, smul_smul]
-    congr 1; rw [hcdef]; push_cast; field_simp
+    congr 1
+    rw [hcdef]
+    push_cast
+    field_simp (discharger :=
+      first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
   have hσA : blochA σ = centre ρ := by
     rw [centre, if_neg (ne_of_lt hb)]
     funext i
@@ -368,7 +375,7 @@ private lemma exists_canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef)
       simp only [Fin.sum_univ_three, Matrix.mul_add, Matrix.mul_smul, trace_add, trace_smul,
         smul_eq_mul]
       rw [hcdef]; push_cast
-      field_simp [Complex.ofReal_ne_zero.mpr hp.ne', Complex.ofReal_ne_zero.mpr hd0.ne']
+      field_simp (discharger := first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
       ring
     change (trace (σ * (pauli i ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)))).re = _
     rw [ht, Complex.re_ofReal_mul, Complex.sub_re, Complex.re_sum]
@@ -376,9 +383,10 @@ private lemma exists_canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef)
     rw [hlen]
     change 1 / (4 * d) * (blochA ρ i - ∑ j, blochB ρ j * corr ρ i j) = _
     simp only [Fin.sum_univ_three]
-    field_simp [hd0.ne']
+    field_simp (discharger := first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
     simp only [corr]
-    ring
+    ring_nf
+    simp only [mul_assoc, mul_inv_cancel₀ hd0.ne', mul_one]
   set Y : TwoQubit := (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ G with hYdef
   have hYX : Y * X = ((p * u : ℝ) : ℂ) • 1 := by
     rw [hYdef, hXdef, ← mul_kronecker_mul, Matrix.one_mul, H2, kronecker_smul,
@@ -394,7 +402,7 @@ private lemma exists_canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef)
     rw [hcdef, Complex.star_def, Complex.conj_ofReal,
       ← Complex.ofReal_mul, ← Complex.ofReal_mul]
     congr 1
-    field_simp
+    field_simp (discharger := first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
     nlinarith [hu]
   set v := Real.sqrt (2 / p) with hvdef
   have hv : v ^ 2 = 2 / p := Real.sq_sqrt (by positivity)
@@ -406,8 +414,8 @@ private lemma exists_canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef)
     rw [hT, smul_smul, ← Complex.ofReal_mul, ← Complex.ofReal_mul]
     norm_cast
     rw [show v * v = v ^ 2 by ring, hv]
-    field_simp
-    exact one_smul _ _
+    field_simp (discharger := first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
+    norm_num
   have hdet : Complex.normSq (det F) = 4 * d := by
     rw [hFdef, det_smul, hGdef, det_fin_two]
     simp only [Fintype.card_fin, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
@@ -415,7 +423,11 @@ private lemma exists_canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef)
       ← Complex.ofReal_pow, Complex.normSq_ofReal]
     calc
       _ = (v ^ 2) ^ 2 * p ^ 2 * (u * u) := by ring
-      _ = 4 * d := by rw [hv, hu]; field_simp; ring
+      _ = 4 * d := by
+        rw [hv, hu]
+        field_simp (discharger :=
+          first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
+        ring
   exact ⟨σ, F, hσ, hσB, hσA, hback.symm, hdet.trans (by linarith [hlen])⟩
 
 private def flipMatrix (n : Fin 3 → ℝ) : TwoQubit := pauli 1 ⊗ₖ (spin n * pauli 1)
@@ -435,7 +447,9 @@ private lemma flip_purity_homogeneous (ρ : TwoQubit) (hρ : ρ.IsHermitian)
   rw [vlen, Real.sq_sqrt (Finset.sum_nonneg fun i _ => sq_nonneg _)]
   simp only [flipped.eq_def, flipMatrix.eq_def, spin.eq_def, delta.eq_def,
     corr, blochB, pauli,
-    D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_2,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_3,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_4,
     D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
     Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.mulVec, dotProduct,
     Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three,
@@ -530,17 +544,15 @@ private lemma planeSum_le_purity (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : tr
   linarith [sq_nonneg (blochB ρ ⬝ᵥ crossProduct u v)]
 private lemma normalized_unit (u : Fin 3 → ℝ) (hu : u ≠ 0) :
     vlen ((vlen u)⁻¹ • u) = 1 ∧ vlen u • ((vlen u)⁻¹ • u) = u := by
-  have hnorm : vlen u = ‖WithLp.toLp 2 u‖ := by
+  have hnorm (x : Fin 3 → ℝ) : vlen x = ‖WithLp.toLp 2 x‖ := by
     rw [EuclideanSpace.norm_eq]
     simp only [Real.norm_eq_abs, sq_abs, vlen]
-  have hn : vlen u ≠ 0 := by
-    rw [hnorm, norm_ne_zero_iff]
-    simpa only [ne_eq, WithLp.toLp_eq_zero] using hu
-  have hz : 0 ≤ vlen ((vlen u)⁻¹ • u) := Real.sqrt_nonneg _
-  have hs : vlen ((vlen u)⁻¹ • u) ^ 2 = 1 := by
-    rw [vlen_sq, smul_dotProduct, dotProduct_smul, smul_eq_mul, smul_eq_mul, ← vlen_sq]
-    field_simp
-  exact ⟨by nlinarith, by rw [smul_smul, mul_inv_cancel₀ hn, one_smul]⟩
+  have hU : WithLp.toLp 2 u ≠ 0 := by simpa only [ne_eq, WithLp.toLp_eq_zero] using hu
+  refine ⟨?_, ?_⟩
+  · rw [hnorm, WithLp.toLp_smul, hnorm]
+    exact NormedSpace.norm_normalize hU
+  · have he := congrArg WithLp.ofLp (NormedSpace.norm_smul_normalize (WithLp.toLp 2 u))
+    simpa only [NormedSpace.normalize, ← hnorm, WithLp.ofLp_smul, WithLp.ofLp_toLp] using he
 
 private lemma perpendicular_unit (u : Fin 3 → ℝ) :
     ∃ v : Fin 3 → ℝ, vlen v = 1 ∧ v ⬝ᵥ u = 0 := by
@@ -637,16 +649,16 @@ private lemma pure_bob_support (ρ : TwoQubit) (hρ : ρ.PosSemidef)
   have htz : trace (E * ρ * Eᴴ) = 0 := by
     rw [hEH, trace_mul_cycle, hEE, trace_mul_comm E ρ, hpair, Matrix.mul_sub, Matrix.mul_one,
       hBB, sub_self, trace_zero]
-  open scoped MatrixOrder in
-  obtain ⟨R, hR⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hρ.nonneg
-  have hRE : R * E = 0 := by
-    apply trace_conjTranspose_mul_self_eq_zero_iff.mp
-    rw [conjTranspose_mul, hEH, ← star_eq_conjTranspose]
-    calc
-      _ = trace (E * ρ * Eᴴ) := by rw [hR, hEH]; simp only [Matrix.mul_assoc]
-      _ = 0 := htz
+  have hZ : E * ρ * Eᴴ = 0 := (hρ.mul_mul_conjTranspose_same E).trace_eq_zero_iff.mp htz
+  have hZ' : Eᴴ * ρ * E = 0 := by simpa only [hEH] using hZ
   have hρE : ρ * E = 0 := by
-    rw [hR, Matrix.mul_assoc, hRE, Matrix.mul_zero]
+    ext i j
+    have hz : ρ *ᵥ (E *ᵥ Pi.single j 1) = 0 :=
+      (hρ.dotProduct_mulVec_zero_iff _).mp (by
+        rw [star_mulVec, ← dotProduct_mulVec, mulVec_mulVec, mulVec_mulVec,
+          hZ', zero_mulVec, dotProduct_zero])
+    rw [mulVec_mulVec, mulVec_single_one] at hz
+    exact congrFun hz i
   have hEρ : E * ρ = 0 := by
     have he := congrArg conjTranspose hρE
     simpa only [conjTranspose_mul, hEH, hρ.isHermitian.eq, conjTranspose_zero] using he
@@ -773,5 +785,175 @@ private lemma universal_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace
       Real.sqrt_one]
     ring_nf
   exact hc.trans_eq he
+
+private def tightVector (t s : ℝ) : Fin 2 × Fin 2 → ℂ :=
+  fun k => ![![(Real.sqrt (1 + s) : ℂ), 0],
+    ![0, (Real.sqrt ((1 - t) * (1 - s)) : ℂ)]] k.1 k.2
+
+private def ket01 : Fin 2 × Fin 2 → ℂ := Pi.single (0, 1) 1
+
+private def tightState (t s : ℝ) : TwoQubit :=
+  (1 / 2 : ℂ) • vecMulVec (tightVector t s) (star (tightVector t s)) +
+    ((t * (1 - s) / 2 : ℝ) : ℂ) • vecMulVec ket01 (star ket01)
+
+private lemma tight_psd (t s : ℝ) (ht : 0 ≤ t) (hs : s ≤ 1) :
+    (tightState t s).PosSemidef := by
+  rw [tightState.eq_def]
+  have hhalf : (0 : ℂ) ≤ (1 / 2 : ℂ) := by norm_num [Complex.le_def]
+  have hc : (0 : ℂ) ≤ ((t * (1 - s) / 2 : ℝ) : ℂ) :=
+    Complex.zero_le_real.mpr (by positivity)
+  exact ((posSemidef_vecMulVec_self_star _).smul hhalf).add
+    ((posSemidef_vecMulVec_self_star _).smul hc)
+
+private lemma tight_readouts (t s : ℝ) (_ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
+    (hs₀ : 0 ≤ s) (hs₁ : s ≤ 1) : trace (tightState t s) = 1 ∧
+    blochA (tightState t s) = ![0, 0, t + (1 - t) * s] ∧
+    blochB (tightState t s) = ![0, 0, s] ∧
+    corr (tightState t s) = diagonal
+      ![Real.sqrt (1 + s) * Real.sqrt ((1 - t) * (1 - s)),
+        -(Real.sqrt (1 + s) * Real.sqrt ((1 - t) * (1 - s))), 1 - t + t * s] := by
+  have hx : Real.sqrt (1 + s) * Real.sqrt (1 + s) = 1 + s := Real.mul_self_sqrt (by positivity)
+  have hy : Real.sqrt ((1 - t) * (1 - s)) * Real.sqrt ((1 - t) * (1 - s)) =
+      (1 - t) * (1 - s) := Real.mul_self_sqrt (mul_nonneg (by linarith) (by linarith))
+  have hxC : (Real.sqrt (1 + s) : ℂ) * Real.sqrt (1 + s) = (1 + s : ℝ) := by exact_mod_cast hx
+  have hyC : (Real.sqrt ((1 - t) * (1 - s)) : ℂ) * Real.sqrt ((1 - t) * (1 - s)) =
+      ((1 - t) * (1 - s) : ℝ) := by exact_mod_cast hy
+  let R : TwoQubit := fun (k l : Fin 2 × Fin 2) =>
+      ((![![![![(1 + s) / 2, 0], ![0, t * (1 - s) / 2]],
+          ![![0, Real.sqrt (1 + s) * Real.sqrt ((1 - t) * (1 - s)) / 2], ![0, 0]]],
+        ![![![0, 0], ![Real.sqrt (1 + s) * Real.sqrt ((1 - t) * (1 - s)) / 2, 0]],
+          ![![0, 0], ![0, (1 - t) * (1 - s) / 2]]]]
+        k.1 l.1 k.2 l.2 : ℝ) : ℂ)
+  have hentry : tightState t s = R := by
+    ext k l
+    simp only [tightState.eq_def, Matrix.add_apply, Matrix.smul_apply,
+      vecMulVec_apply, Pi.star_apply, smul_eq_mul, tightVector.eq_def, ket01.eq_def]
+    rcases k with ⟨a,b⟩; rcases l with ⟨c,d⟩
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      norm_num [R, Complex.star_def, Pi.single_apply, hxC, hyC]
+    all_goals ring
+  refine ⟨?_, ?_, ?_, ?_⟩
+  all_goals rw [hentry]
+  all_goals try (funext i; fin_cases i)
+  all_goals try (funext j; fin_cases j)
+  all_goals
+    simp only [blochA, blochB, corr, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, kronecker_apply]
+    norm_num [R, pauli,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_2,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_3,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_4,
+      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+      diagonal, Complex.mul_re, Complex.mul_im]
+    try push_cast
+    try ring
+
+private lemma tight_centre (t s : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
+    (hs₀ : 0 ≤ s) (hs₁ : s < 1) : vlen (centre (tightState t s)) = t := by
+  obtain ⟨_, ha, hb, hT⟩ := tight_readouts t s ht₀ ht₁ hs₀ hs₁.le
+  have hbl : vlen (blochB (tightState t s)) = s := by
+    rw [hb, vlen]
+    norm_num [Fin.sum_univ_succ, Real.sqrt_sq hs₀]
+  have hden : 1 - s ^ 2 ≠ 0 := by nlinarith
+  have hc : centre (tightState t s) = ![0, 0, t] := by
+    rw [centre, hbl, if_neg (ne_of_lt hs₁)]
+    funext i
+    fin_cases i <;> norm_num [ha, hb, hT, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, diagonal]
+    field_simp [hden]
+    ring
+  rw [hc, vlen]
+  norm_num [Fin.sum_univ_succ, Real.sqrt_sq ht₀]
+
+private lemma tight_z_setting (t s : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
+    (hs₀ : 0 ≤ s) (hs₁ : s ≤ 1) : 2 * (1 - t + t * s) ≤ chsh (tightState t s) := by
+  have hz : 0 ≤ 1 - t + t * s := add_nonneg (by linarith) (mul_nonneg ht₀ hs₀)
+  have hv : trace (tightState t s * bell ![0,0,1] ![0,0,1] ![0,0,1] ![0,0,1]) =
+      ((2 * (1 - t + t * s) : ℝ) : ℂ) := by
+    rw [bell_trace_real_expansion _ (tight_psd t s ht₀ hs₁).isHermitian,
+      (tight_readouts t s ht₀ ht₁ hs₀ hs₁).2.2.2]
+    norm_num [dotProduct, Matrix.mulVec, Fin.sum_univ_succ, diagonal]
+    ring
+  have hh := setting_le_chsh (tightState t s) ![0,0,1] ![0,0,1] ![0,0,1] ![0,0,1]
+    (by norm_num [vlen, Fin.sum_univ_succ]) (by norm_num [vlen, Fin.sum_univ_succ])
+    (by norm_num [vlen, Fin.sum_univ_succ]) (by norm_num [vlen, Fin.sum_univ_succ])
+  rw [hv, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (by norm_num) hz)] at hh
+  exact hh
+
+private lemma tight_low_setting (t : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1) :
+    2 * Real.sqrt (2 * (1 - t)) ≤ chsh (tightState t 0) := by
+  have hunit : vlen (![1 / Real.sqrt 2, 1 / Real.sqrt 2, 0] : Fin 3 → ℝ) = 1 ∧
+      vlen (![1 / Real.sqrt 2, -(1 / Real.sqrt 2), 0] : Fin 3 → ℝ) = 1 := by
+    constructor <;> rw [vlen] <;> norm_num [Fin.sum_univ_succ, Real.sqrt_div,
+      Real.sq_sqrt, Real.sqrt_sq_eq_abs]
+  have hval :
+      ((![1,0,0] : Fin 3 → ℝ) ⬝ᵥ ((corr (tightState t 0)) *ᵥ
+        (![1 / Real.sqrt 2, 1 / Real.sqrt 2, 0] + ![1 / Real.sqrt 2, -(1 / Real.sqrt 2), 0])) +
+        (![0,-1,0] : Fin 3 → ℝ) ⬝ᵥ ((corr (tightState t 0)) *ᵥ
+        (![1 / Real.sqrt 2, 1 / Real.sqrt 2, 0] - ![1 / Real.sqrt 2, -(1 / Real.sqrt 2), 0]))) =
+        2 * Real.sqrt (2 * (1 - t)) := by
+    rw [(tight_readouts t 0 ht₀ ht₁ (by norm_num) (by norm_num)).2.2.2]
+    norm_num [dotProduct, Matrix.mulVec, Fin.sum_univ_succ, diagonal]
+    have hs : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+    field_simp (discharger := positivity)
+    rw [hs]
+    ring
+  have hvalue := congrArg (fun x : ℝ => (x : ℂ)) hval
+  -- The norm of the nonnegative real expectation is its ordinary value.
+  have hv : trace (tightState t 0 * bell ![1,0,0] ![0,-1,0]
+      ![1 / Real.sqrt 2, 1 / Real.sqrt 2, 0] ![1 / Real.sqrt 2, -(1 / Real.sqrt 2), 0]) =
+      ((2 * Real.sqrt (2 * (1 - t)) : ℝ) : ℂ) :=
+    (bell_trace_real_expansion _ (tight_psd t 0 ht₀ (by norm_num)).isHermitian _ _ _ _).trans hvalue
+  have hh := setting_le_chsh (tightState t 0) ![1,0,0] ![0,-1,0]
+    ![1 / Real.sqrt 2, 1 / Real.sqrt 2, 0] ![1 / Real.sqrt 2, -(1 / Real.sqrt 2), 0]
+    (by norm_num [vlen, Fin.sum_univ_succ]) (by norm_num [vlen, Fin.sum_univ_succ]) hunit.1 hunit.2
+  rw [hv, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by positivity)] at hh
+  exact hh
+theorem result : claim := by
+  rw [claim.eq_def]
+  refine ⟨universal_bound, ?_⟩
+  intro t ht₀ ht₁ ε hε
+  by_cases ht : t ≤ 1 / 2
+  · have hb : bound t = 2 * Real.sqrt (2 * (1 - t)) := by
+      rw [bound.eq_def, max_eq_left]
+      have hs : 1 ≤ Real.sqrt (2 * (1 - t)) := Real.one_le_sqrt.mpr (by linarith)
+      linarith
+    refine ⟨tightState t 0, tight_psd t 0 ht₀ (by norm_num),
+      (tight_readouts t 0 ht₀ ht₁ (by norm_num) (by norm_num)).1,
+      tight_centre t 0 ht₀ ht₁ (by norm_num) (by norm_num), ?_⟩
+    rw [hb]
+    exact lt_of_lt_of_le (by linarith) (tight_low_setting t ht₀ ht₁)
+  · have hb : bound t = 2 := by
+      rw [bound.eq_def, max_eq_right]
+      have hs : Real.sqrt (2 * (1 - t)) ≤ 1 := Real.sqrt_le_one.mpr (by linarith)
+      linarith
+    by_cases htend : t = 1
+    · subst t
+      refine ⟨tightState 1 1, tight_psd 1 1 (by norm_num) (by norm_num),
+        (tight_readouts 1 1 (by norm_num) (by norm_num) (by norm_num) (by norm_num)).1,
+        ?_, ?_⟩
+      · have hdata := tight_readouts 1 1 (by norm_num) (by norm_num)
+          (by norm_num) (by norm_num)
+        norm_num [centre, hdata.2.1, hdata.2.2.1, vlen, Fin.sum_univ_succ]
+      · have he := tight_z_setting 1 1 (by norm_num) (by norm_num)
+          (by norm_num) (by norm_num)
+        rw [hb]
+        norm_num at he
+        linarith
+    · let s : ℝ := 2 / (2 + ε)
+      have hd : 0 < 2 + ε := by linarith
+      have hs₀ : 0 ≤ s := by dsimp only [s]; positivity
+      have hs₁ : s < 1 := by dsimp only [s]; exact (div_lt_one hd).mpr (by linarith)
+      have he : 2 - ε < 2 * (1 - t + t * s) := by
+        have hprod : (2 + ε) * s = 2 := by dsimp only [s]; field_simp
+        have hgap : 0 < ε * (2 + ε - 2 * t) := mul_pos hε (by linarith)
+        have hcert : (2 * (1 - t + t * s) - (2 - ε)) * (2 + ε) =
+            ε * (2 + ε - 2 * t) := by
+          linear_combination 2 * t * hprod
+        exact (mul_pos_iff_of_pos_right hd).mp (by rw [hcert]; exact hgap) |> sub_pos.mp
+      refine ⟨tightState t s, tight_psd t s ht₀ hs₁.le,
+        (tight_readouts t s ht₀ ht₁ hs₀ hs₁.le).1,
+        tight_centre t s ht₀ ht₁ hs₀ hs₁, ?_⟩
+      rw [hb]
+      exact he.trans_le (tight_z_setting t s ht₀ ht₁ hs₀ hs₁.le)
 
 end D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
