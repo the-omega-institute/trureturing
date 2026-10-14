@@ -692,7 +692,9 @@ private theorem scale_power {n j : ℕ} {Q κ : ℝ} (hj : j ≤ n) (hκ : κ �
   have hp : κ ^ n = κ ^ j * κ ^ (n - j) := by
     rw [← pow_add, Nat.add_sub_of_le hj]
   rw [div_pow, ← pow_mul, hp]
-  field_simp
+  calc
+    _ = κ ^ j * ((Q ^ (2 * (n - j)) / κ ^ (n - j)) * κ ^ (n - j)) := by ring
+    _ = _ := by rw [div_mul_cancel₀ _ (pow_ne_zero _ hκ)]
 
 private theorem series_rescale {p : Polynomial ℝ} {n : ℕ} {L Q κ : ℝ}
     (hp : Shape p n L) (hκ : κ ≠ 0) :
@@ -743,7 +745,12 @@ private theorem P_rescale (m n : ℕ) {Q κ : ℝ} (hκ : κ ≠ 0) :
       Finset.prod_range_succ, pow_succ]
     calc
       _ = (κ ^ n * (basePoly m n).eval (Q ^ 2 / κ)) *
-          (Q ^ 2 + (((2 * n + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ) := by field_simp
+          (Q ^ 2 + (((2 * n + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ) := by
+        rw [mul_add, mul_add]
+        rw [show κ ^ n * κ * ((basePoly m n).eval (Q ^ 2 / κ) * (Q ^ 2 / κ)) =
+          (κ ^ n * (basePoly m n).eval (Q ^ 2 / κ)) * ((Q ^ 2 / κ) * κ) by ring,
+          div_mul_cancel₀ _ hκ]
+        ring
       _ = _ := by rw [ih]
 
 private theorem E_rescale {m k : ℕ} {Q κ : ℝ} (hk : k ≤ m / 2) (hκ : κ ≠ 0) :
@@ -780,8 +787,15 @@ private theorem H_rescale {m k : ℕ} {Q κ : ℝ}
       omega
     rw [if_pos he, he, hn, H.eq_1, hz, Polynomial.C_0, zero_add,
       Polynomial.eval_mul, Polynomial.eval_X, hp]
-    norm_num
-    field_simp
+    simp only [Nat.sub_zero, mul_one]
+    rw [show (κ ^ k * κ ^ (m / 2 - k - 1) * κ) *
+      (Q ^ 2 / κ * (R m k).eval (Q ^ 2 / κ)) =
+      κ ^ k * κ ^ (m / 2 - k - 1) * ((Q ^ 2 / κ) * κ) *
+        (R m k).eval (Q ^ 2 / κ) by ring, div_mul_cancel₀ _ hκ]
+    rw [show F m (2 * k + 1) * κ ^ k * Q ^ 2 *
+      (κ ^ (m / 2 - k - 1) * (R m k).eval (Q ^ 2 / κ) / F m (2 * k + 1)) =
+      κ ^ k * κ ^ (m / 2 - k - 1) * Q ^ 2 * (R m k).eval (Q ^ 2 / κ) *
+        (F m (2 * k + 1) / F m (2 * k + 1)) by ring, div_self hf, mul_one]
   · have ho : m % 2 = 1 := by omega
     have hn : (m - 1) / 2 - k = m / 2 - k := by omega
     have hp : κ ^ (m / 2) = κ ^ k * κ ^ (m / 2 - k) := by
@@ -789,8 +803,11 @@ private theorem H_rescale {m k : ℕ} {Q κ : ℝ}
       congr 1
       omega
     rw [if_neg he, ho, hn, hp]
-    norm_num
-    field_simp
+    simp only [Nat.sub_self, mul_zero, pow_zero, mul_one]
+    rw [show F m (2 * k + 1) * κ ^ k *
+      (κ ^ (m / 2 - k) * (H m k).eval (Q ^ 2 / κ) / F m (2 * k + 1)) =
+      κ ^ k * κ ^ (m / 2 - k) * (H m k).eval (Q ^ 2 / κ) *
+        (F m (2 * k + 1) / F m (2 * k + 1)) by ring, div_self hf, mul_one]
 
 private theorem solution_forms {m : ℕ} {Q κ : ℝ} {a : ℕ → ℝ}
     (hm : 2 ≤ m) (hQ : 0 < Q) (hκ : 0 < κ) (ha : System m Q κ a) :
