@@ -1016,3 +1016,463 @@ completion of the broad mutual-recovery target, follows.
 [DOR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Exact invocation-cut classification from the first observation
+
+**Assumption 10.1 (protected first Read, unprotected continuation).**
+Use the source, complete row, deterministic read-only observer and separate
+Return of Definitions 1.1–1.4. Fix any public finite prefix-free cut $P$.
+The invocation source ranges over all of $\mathcal T$, including both
+one-leaf trees. Observer initialization and every source-free transition
+before the first Read depend only on $P$ and the fixed effective program.
+No writer update is allowed before that first Read. Subsequently the writer
+may perform any unknown finite number of global $\rho$ updates on the same
+register and root, including during local computation and before Return.
+Every pending observer has the progress of Definition 1.4.
+
+An invocation solver must terminate on every such history and return
+$R_P(u)$ for its invocation source $u$. The target remains $R_P(u)$ after
+any later source change. No source-dependent initial record, literal,
+program, size bound, epoch or scheduling observation is supplied.
+A retained finite tree must be acquired by paid Reads. Correctness covers
+the literal exterior, every reached address, every concrete strict-prefix
+blocking guard, and the entire equality/disequality partition.
+
+**Lemma 10.2 (the first literal and a lawful one-update comparison).**
+Let $P\ne\{\varepsilon\}$. Any invocation solver under Assumption 10.1
+must reach a first Read after finitely many source-free steps. Its first
+literal is one fixed finite word $a$, independent of the source.
+If there is $u\in\mathcal T$ such that
+
+$$
+r_u(a)=r_{\rho u}(a),\qquad R_P(u)\ne R_P(\rho u),
+\tag{CNA.16}
+$$
+
+then no such solver exists. More generally, the comparison excludes any
+observer with this first literal that is correct on all histories with
+at most one later update and terminates on quiescent inputs.
+
+**Proof.** Prefix freedom and $P\ne\{\varepsilon\}$ imply
+$\varepsilon\notin P$. Thus $R_P(\alpha)$ and $R_P(\beta)$ have distinct
+concrete root labels, empty reached sets and empty partitions.
+A source-blind return without any Read has the same output on these
+two quiescent sources and cannot be correct on both. An infinite
+source-free computation before any Read violates quiescent termination.
+The finite initial computation therefore selects a fixed literal $a$.
+Its materialization and every continuation are actual observer work.
+
+Given (CNA.16), run two calls with invocation sources $u$ and $\rho u$.
+Their first Reads precede every writer update and have the same reply.
+Immediately after that Read, let the first call's writer perform exactly
+one update and halt. Let the second call's writer perform no update.
+The two registers now contain exactly $\rho u$, while observer control,
+retained records and the next selected operation agree. Both calls keep
+their own original register and root throughout; neither history replaces,
+resets or reroots a source.
+
+Continue both calls with the same observer transitions and no further
+writer events. At each local transition the records agree; at each Read
+the selected finite literal and the source agree, hence the replies agree.
+This is induction on the actual events, including address construction,
+rereads, output preparation and Return. The quiescent call starting at
+$\rho u$ terminates, so the paired call terminates with the same output.
+Their required invocation rows differ. Both histories are finite and
+observer-progressing, with respective update totals one and zero.
+A separate Return leaves a legal update position even if the observer
+returns immediately after its first Read. $\square$
+
+**Theorem 10.3 (four-tree separation for every first literal).**
+For every finite prefix-free $P\ne\{\varepsilon\}$ the following
+source-specific alternatives hold.
+
+1. If $a\ne\varepsilon$, then $u=\alpha$ satisfies (CNA.16).
+2. If $a=\varepsilon$ and $P\ne\{L,R\}$, then
+   $u=\langle\alpha,\alpha\rangle$ satisfies (CNA.16).
+3. If $a=\varepsilon$ and $P=\{L,R\}$, every $u$ with
+   $r_u(a)=r_{\rho u}(a)$ instead satisfies $R_P(u)=R_P(\rho u)$.
+
+Consequently, among nonroot cuts, absence of a one-step separation at
+the first literal holds exactly for $(P,a)=(\{L,R\},\varepsilon)$.
+The separating sources in the first two cases belong to the single set
+
+$$
+\{\alpha,\beta,\langle\alpha,\alpha\rangle,
+                         \langle\beta,\beta\rangle\},
+\tag{CNA.17}
+$$
+
+independently of cut size, cut depth or first-literal length.
+
+**Proof.** For a nonempty literal $a$, both one-leaf trees $\alpha$ and
+$\rho\alpha=\beta$ give $\mathsf{absent}$. Their complete rows differ
+at the concrete root, as in Lemma 10.2. This holds even when no cut
+address is reached; absence of holes does not discard the exterior.
+
+For a root literal, both
+$u=\langle\alpha,\alpha\rangle$ and
+$\rho u=\langle\beta,\beta\rangle$ give $\mathsf{branch}$.
+Since $P$ contains neither the root nor both children, choose
+$q\in\{L,R\}\setminus P$. Here the assertion that it cannot contain
+both children uses prefix freedom: every nonempty word extends one
+of them, so containing both would force $P=\{L,R\}$.
+Neither the root nor $q$ is a cut address. Thus the exterior at $q$
+is the concrete leaf $\alpha$ in $u$ and $\beta$ in $\rho u$.
+No descendant cut hides this strict-prefix leaf.
+
+For completeness, the reached sets in this comparison are exactly
+$O=P\cap\{L,R\}$ on both sources. If $O$ is nonempty, all its hidden
+subtrees are equal on each source, so its complete partition has one
+class in both rows. If $O$ is empty, both partitions are empty.
+Every deeper cut word is blocked at its first letter; whenever such
+a word extends $q$, that same strict-prefix guard changes label.
+If no word extends $q$, the changed leaf remains a visible exterior
+leaf without a blocked descendant. In either case the literal exteriors,
+hence the complete rows, differ. No partition information is dropped
+from this comparison.
+
+Finally, equality of root replies before and after one update forces
+$u$ to be a branch: $\alpha$ changes to $\beta$, and $\beta$ to branch.
+For $u=\langle x,y\rangle$ and $P=\{L,R\}$ both holes are reached,
+and the exterior is $\langle\square_L,\square_R\rangle$.
+Homomorphism and the supplied native injectivity give
+$x=y$ if and only if $\rho x=\rho y$.
+Thus the complete partition, including its possible disequality, is
+unchanged. These algebraic facts are the suppliers [GFT] and [STC]
+used in Proposition 7.3; they are not new injectivity assertions.
+This proves the three alternatives. $\square$
+
+**Theorem 10.4 (universal complete invocation-row classification).**
+Under Assumption 10.1, a deterministic initially source-blind effective
+invocation solver for $P$ exists if and only if
+
+$$
+P=\{\varepsilon\}\quad\text{or}\quad P=\{L,R\}.
+\tag{CNA.18}
+$$
+
+This is unchanged if the allowed interference is restricted to at most
+one update after the first Read. Every solver for the nonconstant positive
+target $P=\{L,R\}$ must make its first Read at $\varepsilon$.
+More precisely, if a first Read at a specified literal $a$ is required,
+a solver exists exactly when
+
+$$
+P=\{\varepsilon\}\quad\text{or}\quad
+(P=\{L,R\}\ \text{and}\ a=\varepsilon).
+\tag{CNA.19}
+$$
+
+A zero-Read solver exists exactly for the root cut.
+
+**Proof.** For any nonroot cut a solver has a fixed first literal by
+Lemma 10.2. If it is nonempty, the first alternative of Theorem 10.3
+contradicts correctness. If it is the root and $P\ne\{L,R\}$, the
+second alternative does so. Each contradiction uses the lawful
+one-versus-zero-update histories of Lemma 10.2, not an infinite
+interference limit or a chosen distribution on sources. It applies
+without a bound on observer storage or the length of later literals.
+
+For sufficiency reuse the zero-Read root shortcut of Proposition 4.3
+and the root-first procedure of Proposition 7.3, with its effective
+paid capture and costs made explicit in §11. They terminate under
+unknown finite interference and give the full invocation row, so they
+also solve every at-most-one-update history. A root-cut procedure required
+to Read $a$ can materialize that public finite literal, perform the Read,
+discard its reply and return the constant root row. This costs an actual
+Read and the delivery of $a$; it is not the zero-Read shortcut.
+
+The first alternative of Theorem 10.3 forces the root first for
+$\{L,R\}$. The two leaf rows show that every other cut has a nonconstant
+target, excluding a universally correct zero-Read return. The root row
+is constant. These observations prove (CNA.19) and the final claim.
+$\square$
+
+**Mathematical consequence 10.5 (finite cuts, covering cuts and guards).**
+The new necessity includes the gap left by Theorem 7.2: a finite cut
+covering every infinite binary ray is still impossible unless it is
+one of the two cuts in (CNA.18). Coverage of rays concerns the public
+address tree, not the presence of those addresses in every finite source.
+For example, $\{L,RL,RR\}$ covers every ray. On the branch sources in
+(CNA.17), only $L$ is reached, and the concrete guard at $R$ changes
+from alpha to beta. At $\{LL,LR,RL,RR\}$ no cut address is reached
+on either branch source; both visible child guards change.
+
+The empty cut is covered by the same proof: it retains the entire source.
+A singleton nonroot cut leaves at least one child unhidden. Arbitrarily
+deep and mixed cuts either hide both children, forcing $\{L,R\}$,
+or expose the changed child of Theorem 10.3. These are applications of
+that one universal separation, without additional shape or reachability
+promises. Theorems 7.1 and 7.2 retain their respective pre-first-Read,
+Return-endpoint and uncovered-ray assumptions; their conclusions are
+not used outside those domains.
+
+## 11. Executable sufficiency and its paid retained data
+
+**Definition 11.1 (the supplied root-first observer as a finite program).**
+For $P=\{L,R\}$ use Proposition 7.3 with the first-leaf capture of
+Definitions 3.1–3.2. First materialize $\varepsilon$, Read it and retain
+its constructor $b$. This is the invocation constructor by Assumption 10.1.
+If $b=\alpha$ or $b=\beta$, materialize and save the complete row of
+that one-leaf tree, with both cut addresses blocked at the root and an
+empty partition, and Return it. No capture is needed in this case.
+
+If $b=\mathsf{branch}$, retain that fact and start the full first-leaf
+capture from its own empty record and root stack. In particular, its
+first root Read is paid again; the earlier invocation Read is not silently
+installed as part of a validated traversal. Each stack literal, constructor
+reply, guard, failed-attempt decision and accepted finite tree is an
+actual retained finite record. On acceptance, construct $R_P(T)$ from
+the validated tree $T$, comparing its two full child subtrees structurally.
+Return that row after finite local output preparation. No step asks for
+an update count, a current epoch, subtree equality at the port, or a signal
+that interference has ended.
+
+The complete-row safety is precisely the supplied Proposition 7.3:
+if the invocation tree is $\langle x,y\rangle$, then any accepted tree
+is $T=\langle\rho^k x,\rho^k y\rangle$ for one actual $k\ge0$.
+Theorem 3.3 supplies that equality at its validation Read; homomorphism
+and injectivity from [GFT] and [STC] give
+
+$$
+x=y\quad\Longleftrightarrow\quad \rho^k x=\rho^k y.
+\tag{CNA.20}
+$$
+
+The observer computes the right side from its acquired tree; $k$ is only
+a semantic witness. Thus it returns the original two-hole exterior and
+its full partition, whether the children are equal or unequal.
+The branch case cannot become a leaf. In the leaf case the saved original
+row stays the invocation target even if the source later branches.
+Updates after validation or during Return preparation cannot change that
+target. This is an application of the existing positive construction,
+not another capture primitive or a newly claimed positive theorem.
+
+The finite-interference termination supplier is Theorem 5.2. Every attempt
+finishes; every failed validation charges a distinct actual update; the
+unknown finite update count bounds the number of failures. The observer
+does not wait for a notification or choose an iteration bound from that
+count. The initial Read and the final finite row computation add only
+finite observer work, so the same progress premise suffices.
+
+**Mathematical citation 11.2 (resource specialization of §§3–5).**
+Use the analytical $B,N_B,H_B,A_B,L,M,w_B$ of Definition 5.1 and
+Theorem 5.4, measured from the invocation source of this call.
+They are not supplied to the observer. On the branch case of
+Definition 11.1, $M=2$ and $L=4$. If capture completes $J$ attempts,
+with the actual $N_j,A_j,d_j$ of Definition 5.1, the exact Read and
+submitted-letter bills are
+
+$$
+\operatorname{Reads}=1+\sum_{j=1}^{J}(N_j+1),\qquad
+\operatorname{Letters}=\sum_{j=1}^{J}(A_j+d_j),\qquad J\le B+1.
+\tag{CNA.21}
+$$
+
+The leading Read is the invocation root Read, whose literal has length
+zero. All capture root rereads and leaf validations occur in the sum.
+Theorem 5.3 therefore gives bounds
+$1+(B+1)(N_B+1)$ and $(B+1)(A_B+H_B)$ respectively.
+An update between the invocation root Read and the start of capture
+is included in $B$ even if no failed attempt charges it.
+Every later visited address still belongs to $\operatorname{Pos}(\rho^B u)$,
+so these bounds remain valid without restarting their analytical origin.
+
+Theorem 5.4, with the extra retained constructor and initial operation,
+gives logical work
+$O((B+1)(N_B+A_B+H_B+1)+1)$ and peak storage
+$O(N_B+A_B+1)$ characters and bounded-index cells.
+These bounds include literal construction and delivery, all control,
+retries and discards, traversal and comparison stacks, a retained accepted
+full tree and certificate, optional certificate checking, and complete-row
+output materialization. The two-child partition includes both its true
+and false entries. Conservative bit bounds multiply these expressions
+by $O(w_B)$ as in Theorem 5.4. Dynamically represented indices are paid;
+no source-dependent word size is advice.
+
+The leaf case costs one Read, zero submitted letters and constant work
+and storage for these fixed cuts. The root shortcut costs no Read and
+constant row-output work and storage. Validated trees and certificates
+kept after the call continue to occupy their actual storage. Source-register
+space and the writer's global substitution work remain separate costs.
+These are upper bounds for this supplied implementation, with no claim
+of sharp workspace or optimal bit work.
+
+## 12. Interference promises and information boundaries
+
+**Proposition 12.1 (a separate exactly-one-update variation).**
+Consider a variation in which every observer must reach a first Read
+after finite source-free work before it may Return. Require termination
+under observer progress when exactly one writer update occurs after that
+Read while the call is pending and the writer then halts. Require invocation
+correctness on histories with exactly one such update before the separate
+Return. Under this variation the classification (CNA.18), and the forced
+root first for its nonconstant positive case, still hold.
+
+**Proof.** Take the fixed first literal $a$ and a separating $u$ from
+Theorem 10.3. Run the call from $u$, perform its first Read, immediately
+apply one update, and halt the writer. By the stated termination premise
+it has a finite observer continuation and Return. Starting instead from
+$\rho u$, perform the same first Read and the same continuation with no
+updates up through its last Read and all required output preparation.
+The two observer records agree at each step: the first replies agree,
+and the source used by every subsequent Read is $\rho u$.
+
+Immediately before the second call's separate Return, apply its sole
+update. This takes its register to $\rho^2u$ but supplies no observer
+input. Return still has the same prepared output. Both complete histories
+now have exactly one update after their first Read and before Return,
+while their invocation rows differ. This excludes every negative case
+and every nonroot first literal for $\{L,R\}$.
+
+Definition 11.1 already works with finite interference. The root shortcut
+can perform one root Read before returning its constant row to satisfy
+the additional first-Read requirement. These give sufficiency. $\square$
+
+This variation specifies finite first-Read progress expressly: restricting
+correctness only to completed exactly-one histories must not give a
+zero-Read program an empty correctness domain when pre-first updates
+are forbidden. The main Assumption 10.1 has no such vacuity because
+zero-update histories are included. The comparison in Lemma 10.2 uses
+one versus zero updates; Proposition 12.1 instead needs the last-Read to
+Return position to put one update in each history. A fused Read/Return
+port removes that position and is outside Proposition 12.1.
+
+A known zero-update budget is another model: stationary full traversal
+recovers every $R_P(u)$, including the empty cut, by the suppliers of §2.
+A positive upper bound is not an assertion that an update occurred.
+Nor does the assertion that exactly one update will occur before Return
+tell the observer when it has been spent. An authentic already-spent count
+and a later acquired whole tree would supply different data; inverse
+transport on its actual image is the [STC] supplier, not a free entry
+snapshot. No such input is used in Theorem 10.4.
+
+**Definition 12.2 (geometry, retained observations and the scope of recovery).**
+A public cut can cover every infinite ray while a finite source ends
+strictly before some of its addresses. The concrete leaf at such a stop
+is part of the observed boundary, not a hidden hole. Theorem 10.3 detects
+exactly this distinction at depth one: hiding both root children removes
+all changing branch-case exterior labels; any other nonroot cut exposes
+at least one possible changing child leaf. A first root observation also
+identifies the entire invocation source when it is a leaf. These two
+facts, together with the invariant hidden-child partition, explain the
+two positive cuts without identifying ray coverage with source reachability.
+
+On a restricted domain where a covering cut's every address is promised
+present at invocation, the exterior is its fixed cut skeleton and all
+hidden subtrees advance by the same injective $\rho^k$. The same transport
+calculation (CNA.20) makes the complete row constant along that trajectory,
+so the supplied coherent capture recovers the invocation row there.
+This is a consequence of the existing capture and transport suppliers,
+with an additional source-family promise. It excludes the early-blocking
+sources in (CNA.17) for every deeper covering cut and therefore cannot
+supply universal recovery under Assumption 10.1. For incomplete cuts,
+even that reachability promise need not fix the exterior outside the cut.
+
+The memory used by Definition 11.1 consists of the actually acquired root
+constructor and later finite capture records. It determines an earlier
+relational boundary for $\{L,R\}$ without determining how many intervening
+updates occurred. On a fixed invocation branch that row is constant for
+all update counts. This differs from the relative clock recovered from
+two retained full trees in Theorem 8.3, and from the overlap criterion
+for its strictly row-only interface. A retained full tree is a larger
+input than its row and must be charged and declared separately.
+
+The negative histories of Lemma 10.2 have identical complete observer
+records after their first Read and identical future source values.
+Thus retaining every later tree, certificate and local computation cannot
+repair their different entry rows. This impossibility already permits
+unbounded finite memory. It is stronger than an ambiguity created only
+by a later deliberate row-only retention cut, and says nothing about
+sharp minimum workspace on the positive cases.
+
+## 13. Mathematical antecedents and the next recovery question
+
+**Mathematical citation 13.1 (snapshot and prefix-tree correspondence).**
+The history and linearization definitions of Herlihy and Wing cited in
+§9 distinguish an invocation, a response and a permitted instant between
+them. Lemma 10.2 uses equality of an observer's local history under two
+actual executions. It does not infer equality of their invocation states
+from a linearizable later scan. Proposition 12.1 additionally uses the
+separate response event. These are source-specific indistinguishability
+arguments, not new definitions of linearizability.
+
+Afek, Attiya, Dolev, Gafni, Merritt and Shavit's atomic snapshot construction,
+§§2–3 and §3.1 of the authors' manuscript cited in §9, makes unsuccessful
+double collects reveal movement through sequence fields; its wait-free
+completion can borrow a view stored by a writer. Here a raw reply has only
+four possible constructor values, and the writer only applies $\rho$.
+The positive call uses the existing native leaf-validation certificate
+and its finite-interference progress theorem. The snapshot theorem
+supplies neither an invocation-time scan nor those missing register fields.
+The literature's arbitrary-writer-progress quantifier is also stronger
+than the finite-total-interference termination used in Theorem 10.4.
+
+Shannon, *A Mathematical Theory of Communication*, §9's second coding
+construction and §10's binary example
+([text, pp. 17–18](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf)),
+uses finite binary descriptions whose earlier codewords differ within
+their own lengths from later ones; the recursive subdivision description
+terminates at single-message groups. This gives the classical prefix-tree
+interpretation relevant here. Its explicit code $\{0,10,110,111\}$ becomes
+$P=\{L,RL,RRL,RRR\}$ under $0\mapsto L$, $1\mapsto R$.
+These are terminal addresses of a finite full binary code tree and cover
+every infinite ray. On $\langle\alpha,\alpha\rangle$, however, the native
+source stops at $R$ before the last three codewords, so the same cut has
+the changing guard of Theorem 10.3. The code tree and the actual source
+are different objects. Shannon's source probabilities and mean coding
+lengths give neither a native-source reachability promise nor a concurrent
+Read protocol. Only the prefix relation and finite code-tree interpretation
+are used; no coding theorem is republished as a new cut-recovery result.
+
+**Mathematical citation 13.2 (repository derivation and its limits).**
+The classification and the uniform four-tree first-literal separation
+are repo-derived additions. Their necessity is not the uncovered-ray
+clock of Theorem 7.2: it applies also to complete deep prefix cuts, using
+an exposed early leaf and a lawful merge of two histories. The prescribed
+first-literal characterization and the exactly-one comparison retain
+all source-blind control, full-row and endpoint conditions stated above.
+The positive procedure, native injectivity and homomorphism, complete-row
+encoding and finite-interference capture retain their suppliers
+Propositions 4.3 and 7.3, Theorems 3.3 and 5.2–5.4, [GFT], [STC] and
+[ACPD], including its *literalRecord* and *canonicalRow_record_iff*.
+
+The public *transfer* of [NativeSerialDepth][NSD] transfers an actual
+*NativeSerialMachine.Run* using truth of every recorded Read at its
+recorded controller epoch. Its updates are that same controller's
+*applyRho* actions. The private replay arguments and public
+*parity_read_lower_bound* and *literal_parity_lower_bounds* of
+[SparseLiteralParityReadLowerBound][SPR] likewise concern serial Runs
+and their installed source families. They supply no unrecorded writer
+transition, concurrent workspace optimum or entry-cut classification.
+The event induction in Lemma 10.2 explicitly handles the extra writer;
+matching notation alone would not justify invoking a serial Run theorem.
+
+The mathematical statements here are prose consequences in the declared
+native model. Literature attribution is limited to the stated primary
+results and their ports and quantifiers; no worldwide originality or
+new kernel certificate is asserted. Spatial cuts, relative time and
+memory refer to these finite relational objects, not physical spacetime.
+
+**Definition 13.3 (remaining mutual-recovery problem).**
+Theorem 10.4 settles universal invocation-row acquisition in Assumption
+10.1. The broader target of a smallest relational structure expressing
+cuts, internal relative time, boundaries and memory remains separate.
+A next question is to characterize which paid finite initial observation
+records, beyond the one protected Read, suffice to recover a deeper
+invocation cut when subsequent interference is unobserved. Such a result
+must specify how that initial record is actually obtained and protected,
+retain concrete early guards and the entire hidden partition, and charge
+its literal delivery and storage. It cannot assume an entry snapshot
+or replace the record by semantic ancestor witnesses.
+
+Sharp acquisition space, exact finite-transcript languages, stronger
+interference progress, authenticated designated origins and richer retained
+interfaces remain the distinct questions in Definition 9.3. The present
+classification supplies no minimal workspace theorem, physical duration,
+full hidden event history or completion of that broader program.
+
+[NSD]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialDepth.lean
+[SPR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/SparseLiteralParityReadLowerBound.lean
+
+## 追加锚（本行以下为增补区）
