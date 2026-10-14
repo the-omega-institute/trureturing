@@ -12,6 +12,8 @@ triage: anchor
 
 # Cohn's direct three-adic obstruction
 
+## Locator
+
 J. H. E. Cohn, *The Diophantine equation x²+3=yⁿ*, Glasgow Mathematical
 Journal 35 (1993), 203–206. DOI: 10.1017/S0017089500009757.
 
