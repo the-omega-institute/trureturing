@@ -12,6 +12,16 @@ internal sealed class NativeJ2MarkedInventoryDocument : IScribeDocumentDefinitio
         "All twelve independently defined J2 ports are actual F2 vertices, and one actual F2 Hamilton witness contains all six marked b edges while retaining its exact full edge inventory.",
         H("Actual J2 Marked Edges in One F2 Hamilton Witness"),
         Blocks(
+            Node("native-j2-port-circle", "native_j2_port_circle", "Every Actual Port Has Its Specified Native Owner",
+                Scoped(All("p", PortIndex(), Call("Circle",
+                    Call("rightOwner", F.Id("m"), Call("CutIndexOf", F.Id("p"))),
+                    Call("port", F.Id("m"), F.Id("p"))))),
+                "For every m at least five, each actual port lies in the native circle anchored by "
+                + "rightOwner at the same right-port number and label-swap bit. The six right-port "
+                + "rotation identities establish this for the right endpoints. Multiplication by b "
+                + "stays in the same independently specified native circle, giving the left endpoints. "
+                + "Port-domain membership and exclusion of marked edges from intermediate complete "
+                + "native-circle complements consume this owner fact."),
             Node("native-j2-port-domain", "native_j2_port_domain", "Every Actual J2 Port Belongs to F2",
                 PortDomainFormula(),
                 "For every m at least five and p in Fin(3) times Bool times Bool, port(m,p) lies in the "

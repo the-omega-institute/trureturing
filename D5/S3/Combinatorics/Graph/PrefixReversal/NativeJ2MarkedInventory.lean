@@ -31,7 +31,8 @@ open Equiv Fin.NatCast
 private def contactIndex {m : ℕ} (hm : 5 ≤ m) : Fin (m - 2) :=
   ⟨m - 3, by omega⟩
 
-private noncomputable def rightOwner {m : ℕ} (hm : 5 ≤ m)
+/-- The literal native-circle anchor of each of the six right ports. -/
+noncomputable def rightOwner {m : ℕ} (hm : 5 ≤ m)
     (p : Fin 3 × Bool) : Configuration m :=
   match p.1.val, p.2 with
   | 0, false => 1
@@ -141,18 +142,22 @@ private theorem left_port_eq (m : ℕ) (p : Fin 3 × Bool) :
   rcases p with ⟨r, t⟩
   cases t <;> simp [port, leftPort, bar, mul_assoc]
 
-/-- All twelve independently defined J2 ports are actual vertices of F2. -/
-theorem native_j2_port_domain {m : ℕ} (hm : 5 ≤ m) (p : Fin 3 × Bool × Bool) :
-    F2Domain m (port m p) := by
+/-- Both orientations of each marked edge stay in its specified native owner. -/
+theorem native_j2_port_circle {m : ℕ} (hm : 5 ≤ m) (p : Fin 3 × Bool × Bool) :
+    Circle (rightOwner hm (p.1, p.2.1)) (port m p) := by
   rcases p with ⟨r, t, u⟩
   have hr := right_in_owner hm (r, t)
   cases u
-  · exact right_owner_domain hm (r, t) _ hr
-  · apply right_owner_domain hm (r, t)
-    rw [left_port_eq m (r, t)]
+  · exact hr
+  · rw [left_port_eq m (r, t)]
     exact native_circle_edge_endpoint _ _ _
       ⟨port m (r, t, false), b m, hr, Or.inr rfl, rfl⟩
       (Sym2.mem_mk_right _ _)
+
+/-- All twelve independently defined J2 ports are actual vertices of F2. -/
+theorem native_j2_port_domain {m : ℕ} (hm : 5 ≤ m) (p : Fin 3 × Bool × Bool) :
+    F2Domain m (port m p) := by
+  exact right_owner_domain hm (p.1, p.2.1) _ (native_j2_port_circle hm p)
 
 /-- None of the six marked b edges belongs to the complete T/E cut set.
 Their terminal m-1 is different from both selected b-cut terminals 0 and m. -/
@@ -189,6 +194,7 @@ theorem native_j2_hamiltonian_cycle_with_marked_edges {m : ℕ} (hm : 5 ≤ m) :
     (native_j2_port_domain hm (p.1, p.2, false)) (Or.inr rfl)).mpr
   simpa only [native_j2_marked_edge] using native_j2_marked_uncut hm p
 
+#print axioms native_j2_port_circle
 #print axioms native_j2_port_domain
 #print axioms native_j2_marked_uncut
 #print axioms native_j2_hamiltonian_cycle_with_marked_edges
