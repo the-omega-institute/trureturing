@@ -68188,3 +68188,23 @@ $$
 这是仓内新增的固定禁素集—FIB 应用综合；经典 Robin、Mertens、素数定理，
 以及 2025 年不含 $2,3,5$ 的特例均按已有文献库存复用。本文档未新增 Lean
 声明或冻结状态，不把该固定秩结论报告为 RH 证明。
+
+### 变化秩余量的现有边界
+
+Robin 完整库存续卷 §462 进一步量化了这里尚未闭合的变化秩接口。若
+$r>5$ 为素数，则入口秩同余给出
+
+$$
+\frac1{F_r}
+\le
+1-\prod_{p\mid F_r}\left(1-\frac1p\right)
+\le
+\frac{r\log\varphi}{(2r-1)\log(2r-1)}.
+$$
+
+这只是禁素 Euler 因子的双边窗口：它不能交换 §441 的逐秩量词，也没有
+给出 Robin 的全称证明。用仓内 §459 的有限 Mertens 误差时，若只采用左端
+的最坏余量，所需的相对误差必须压到不超过 $O(F_r^{-1})$；允许素数
+primorial、低 $\omega$ 分支与同一整数的完整素支撑仍须另行支付。详细证明
+和该路线的剩余义务见
+[Robin 完整库存续卷 §462](FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_FULL_STOCK.md#462-素秩-fibonacci-禁素因子的-euler-余量窗口)。
