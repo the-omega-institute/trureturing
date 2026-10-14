@@ -28,7 +28,10 @@ internal sealed class UnitalBlockOverlapRefutationDocument : IScribeDocumentDefi
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Two qutrit coarse-graining channels", Disp(new Formula.Not(F.Id("claim"))),
                 "Use the Kraus families (E00, E01, E12) and (E10, E11, E02), with Eij = Matrix.single i j 1. The first channel sends a matrix A to diagonal(A00+A11, A22, 0); the second sends it to diagonal(A22, A00+A11, 0). Each Kraus representation proves complete positivity, and FiniteKrausChannel.finite_kraus_quantum_channel supplies trace preservation because each sum of adjoint Kraus products is the identity. Choose the nine Hermitian operators I/sqrt(3), diagonal(1,-1,0)/sqrt(2), diagonal(1,1,-2)/sqrt(6), and the symmetric and imaginary antisymmetric matrix units for the three off-diagonal pairs, each divided by sqrt(2). Their eighty-one inner products give an orthonormal basis. On the eight traceless operators both channels have just one nonzero Liouville entry, at row one and column two, with values 4/(sqrt(2) sqrt(6)) and its negative. Their overlap is therefore minus four thirds, strictly below minus one. Neither channel is unital, and dimension three lies outside the qubit case of Lemma C.4.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("girling-cirstoiu-jennings-2022-unital-block-overlap"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
