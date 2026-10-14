@@ -7,6 +7,9 @@
    digest: CHSH nonlocality is sharply bounded by the steering-ellipsoid centre. -/
 
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
+import D5.S3.Quantum.Information.ActualPureQubitCostInfimum
+import D5.S3.Quantum.Information.ActualQubitChordObstruction
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 set_option autoImplicit false
@@ -14,9 +17,11 @@ noncomputable section
 open Matrix
 open scoped Kronecker ComplexOrder
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
-  (pauli blochA blochB corr vlen centre canonical_bound canonical_filter vlen_eq_norm
-    blochVec blochVec_eq_bloch trace_mul_kron_one trace_mul_one_kron kron_sub vlen_e3)
+  (pauli blochA blochB corr vlen centre canonical_bound canonical_trace canonical_filter
+    vlen_eq_norm blochVec blochVec_eq_bloch trace_mul_kron_one trace_mul_one_kron
+    kron_sub vlen_e3 ev)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (spin sigma)
 
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation (pauli_hermitian)
 open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow (trace_hermitian_product_real)
@@ -24,7 +29,6 @@ open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow (trace_hermitian_product_r
 namespace D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 
 abbrev TwoQubit := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ
-def spin (u : Fin 3 → ℝ) : Matrix (Fin 2) (Fin 2) ℂ := ∑ i, (u i : ℂ) • pauli i
 def bell (a a' b b' : Fin 3 → ℝ) : TwoQubit := spin a ⊗ₖ spin (b + b') + spin a' ⊗ₖ spin (b - b')
 def chshValues (ρ : TwoQubit) : Set ℝ :=
   {r | ∃ a a' b b' : Fin 3 → ℝ, vlen a = 1 ∧ vlen a' = 1 ∧ vlen b = 1 ∧ vlen b' = 1 ∧
@@ -36,6 +40,9 @@ def claim : Prop :=
   (∀ t : ℝ, 0 ≤ t → t ≤ 1 → ∀ ε : ℝ, 0 < ε → ∃ ρ : TwoQubit,
      ρ.PosSemidef ∧ Matrix.trace ρ = 1 ∧ vlen (centre ρ) = t ∧ bound t - ε < chsh ρ)
 
+private lemma sigma_succ (i : Fin 3) : sigma i.succ = pauli i := by
+  fin_cases i <;> rfl
+
 private lemma unit_coord (u : Fin 3 → ℝ) (hu : vlen u = 1) (i : Fin 3) : |u i| ≤ 1 := by
   simpa only [Real.norm_eq_abs, ← vlen_eq_norm, hu] using
     PiLp.norm_apply_le (WithLp.toLp 2 u) i
@@ -44,7 +51,7 @@ private lemma bell_trace_expansion (ρ : TwoQubit) (a a' b b' : Fin 3 → ℝ) :
     trace (ρ * bell a a' b b') = ∑ i, ∑ j,
       ((a i * (b j + b' j) + a' i * (b j - b' j) : ℝ) : ℂ) *
         trace (ρ * (pauli i ⊗ₖ pauli j)) := by
-  simp only [bell.eq_def, spin.eq_def, Fin.sum_univ_three, add_kronecker, kronecker_add,
+  simp only [bell.eq_def, spin, sigma_succ, Fin.sum_univ_three, add_kronecker, kronecker_add,
     smul_kronecker, kronecker_smul, Matrix.mul_add, Matrix.mul_smul, trace_add, trace_smul,
     smul_eq_mul, Pi.add_apply, Pi.sub_apply, Complex.ofReal_add, Complex.ofReal_sub,
     Complex.ofReal_mul]
@@ -190,9 +197,7 @@ private lemma bloch_marginals (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
 private lemma canonical_delta_le (σ : TwoQubit) (hσ : σ.PosSemidef)
     (hB : partialTraceLeft σ = (1 / 2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) :
     delta σ ≤ 1 / 2 - vlen (blochA σ) := by
-  have htr : trace σ = 1 := by
-    rw [← trace_partialTraceLeft, hB, trace_smul, trace_one]
-    norm_num
+  have htr : trace σ = 1 := canonical_trace σ hB
   have hread := (bloch_marginals σ hσ).1
   have hnorm : vlen (blochA σ) =
       ‖D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch (partialTraceRight σ)‖ := by
@@ -226,19 +231,10 @@ private lemma canonical_delta_le (σ : TwoQubit) (hσ : σ.PosSemidef)
     exact he
   have hpurA : (trace (partialTraceRight σ * partialTraceRight σ)).re =
       (1 + vlen (blochA σ) ^ 2) / 2 := by
-    rw [hnorm]
-    conv_lhs =>
-      rw [(D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
-        (partialTraceRight σ) (partialTraceRight_posSemidef hσ).isHermitian).1]
-    rw [trace_partialTraceRight, htr, Complex.one_re, EuclideanSpace.real_norm_sq_eq]
-    simp only [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-      Matrix.trace, Matrix.diag, Matrix.mul_apply, Fin.sum_univ_two, Fin.sum_univ_three,
-      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one,
-      Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_re,
-      Complex.div_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-      ]
-    norm_num
-    ring
+    have he := D5.S3.Quantum.Information.ActualPureQubitCostInfimum.matrix_energy
+      (partialTraceRight σ) (partialTraceRight_posSemidef hσ).isHermitian
+    rw [trace_partialTraceRight, htr, Complex.one_re, ← hnorm] at he
+    linarith
   have hmass := sum_sq_le_two_mass hσ.isHermitian.eigenvalues (1 - vlen (blochA σ) / 2)
     hσ.eigenvalues_nonneg hsum hcap (by linarith)
   change (trace (σ * σ)).re - (trace (partialTraceRight σ * partialTraceRight σ)).re ≤ _
@@ -260,7 +256,7 @@ private lemma flip_purity_homogeneous (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     simp only [Complex.star_def, Complex.conj_im] at he
     linarith
   rw [vlen, Real.sq_sqrt (Finset.sum_nonneg fun i _ => sq_nonneg _)]
-  simp only [flipped.eq_def, flipMatrix.eq_def, spin.eq_def, delta.eq_def,
+  simp only [flipped.eq_def, flipMatrix.eq_def, spin, sigma_succ, delta.eq_def,
     corr, blochB, pauli,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_2,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_3,
@@ -297,8 +293,8 @@ private lemma flip_purity_identity (ρ : TwoQubit) (hρ : ρ.IsHermitian)
   rw [hs, htr, Complex.one_re, one_pow, one_mul] at he
   linarith
 private lemma vlen_sq (u : Fin 3 → ℝ) : vlen u ^ 2 = u ⬝ᵥ u := by
-  rw [vlen, Real.sq_sqrt (Finset.sum_nonneg fun i _ => sq_nonneg _)]
-  simp only [dotProduct, pow_two]
+  simpa only [← vlen_eq_norm, EuclideanSpace.inner_toLp_toLp, star_trivial] using
+    (real_inner_self_eq_norm_sq (WithLp.toLp 2 u)).symm
 
 private def OrthoPair (u v : Fin 3 → ℝ) : Prop :=
   vlen u = 1 ∧ vlen v = 1 ∧ u ⬝ᵥ v = 0
@@ -421,23 +417,18 @@ private lemma pure_bob_support (ρ : TwoQubit) (hρ : ρ.PosSemidef)
     rw [← (bloch_marginals ρ hρ).2, ← vlen_eq_norm]
     exact hb
   have hd : det B = 0 := by
-    have hs := congrArg (fun x : ℝ => x ^ 2) hn
-    rw [EuclideanSpace.real_norm_sq_eq] at hs
-    simp only [Fin.sum_univ_three, one_pow] at hs
     rw [(D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
-      B hB.isHermitian).1, ht, Complex.one_re]
-    apply Complex.ext <;>
-      simp [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-        det_fin_two, Complex.mul_re, Complex.mul_im] <;>
-      nlinarith [hs]
-  have hadj : adjugate B = 1 - B := by
-    rw [adjugate_fin_two]
-    have he : B 0 0 + B 1 1 = 1 := by simpa only [trace_fin_two] using ht
-    ext i j; fin_cases i <;> fin_cases j <;> norm_num [Matrix.sub_apply] <;> linear_combination he
+      B hB.isHermitian).1, ht, Complex.one_re,
+      D5.S3.Quantum.Information.ActualQubitChordObstruction.det_bloch, hn]
+    norm_num
   have hBB : B * B = B := by
-    have he := mul_adjugate B
-    rw [hd, zero_smul, hadj, Matrix.mul_sub, Matrix.mul_one] at he
-    exact (sub_eq_zero.mp he).symm
+    conv_lhs =>
+      rw [(D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+        B hB.isHermitian).1, ht, Complex.one_re]
+    rw [D5.S3.Quantum.Information.ActualQubitChordObstruction.pure _ hn]
+    simpa only [ht, Complex.one_re] using
+      (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+        B hB.isHermitian).1.symm
   set E : TwoQubit := (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ (1 - B) with hEdef
   have hEH : Eᴴ = E := by
     rw [hEdef, conjTranspose_kronecker, conjTranspose_one, conjTranspose_sub,
@@ -588,11 +579,9 @@ private def tightVector (t s : ℝ) : Fin 2 × Fin 2 → ℂ :=
   fun k => ![![(Real.sqrt (1 + s) : ℂ), 0],
     ![0, (Real.sqrt ((1 - t) * (1 - s)) : ℂ)]] k.1 k.2
 
-private def ket01 : Fin 2 × Fin 2 → ℂ := Pi.single (0, 1) 1
-
 private def tightState (t s : ℝ) : TwoQubit :=
   (1 / 2 : ℂ) • vecMulVec (tightVector t s) (star (tightVector t s)) +
-    ((t * (1 - s) / 2 : ℝ) : ℂ) • vecMulVec ket01 (star ket01)
+    ((t * (1 - s) / 2 : ℝ) : ℂ) • vecMulVec (fun k => (ev k : ℂ)) (star (fun k => (ev k : ℂ)))
 
 private lemma tight_psd (t s : ℝ) (ht : 0 ≤ t) (hs : s ≤ 1) :
     (tightState t s).PosSemidef := by
@@ -625,7 +614,7 @@ private lemma tight_readouts (t s : ℝ) (ht₁ : t ≤ 1)
   have hentry : tightState t s = R := by
     ext k l
     simp only [tightState.eq_def, Matrix.add_apply, Matrix.smul_apply,
-      vecMulVec_apply, Pi.star_apply, smul_eq_mul, tightVector.eq_def, ket01.eq_def]
+      vecMulVec_apply, Pi.star_apply, smul_eq_mul, tightVector.eq_def, ev]
     rcases k with ⟨a,b⟩; rcases l with ⟨c,d⟩
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
       norm_num [R, Complex.star_def, Pi.single_apply, hxC, hyC]

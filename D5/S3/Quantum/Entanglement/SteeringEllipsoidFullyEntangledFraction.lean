@@ -343,6 +343,10 @@ private lemma psd_sub_rank_one {M : TwoQubit} (hM : M.PosSemidef) (φ : Fin 2 ×
     linarith
   · simp
 
+theorem canonical_trace (σ : TwoQubit)
+    (hB : partialTraceLeft σ = (1 / 2 : ℂ) • 1) : trace σ = 1 := by
+  rw [← trace_partialTraceLeft, hB, trace_smul, trace_one]; norm_num
+
 /-- A positive semidefinite two-qubit operator whose Bob marginal is `1/2` satisfies
 `σ ⪯ (1 - |a(σ)|/2) 1`, where `a(σ)` is the Bloch vector of its Alice marginal. -/
 theorem canonical_bound (σ : TwoQubit) (hσ : σ.PosSemidef)
@@ -350,8 +354,7 @@ theorem canonical_bound (σ : TwoQubit) (hσ : σ.PosSemidef)
     (star φ ⬝ᵥ (σ *ᵥ φ)).re ≤ (1 - vlen (blochA σ) / 2) * (star φ ⬝ᵥ φ).re := by
   have hA : blochA σ = blochVec (partialTraceRight σ) := by
     funext i; simp only [blochA, blochVec, trace_mul_kron_one]
-  have htrσ : trace σ = 1 := by
-    rw [← trace_partialTraceLeft, hB, trace_smul, trace_one]; norm_num
+  have htrσ : trace σ = 1 := canonical_trace σ hB
   have hrA : vlen (blochA σ) ≤ 1 := by
     have := rad_le_trace (partialTraceRight_posSemidef hσ)
     rwa [trace_partialTraceRight, htrσ, Complex.one_re, ← hA] at this
@@ -793,7 +796,7 @@ private lemma fef_le (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1) 
 
 private def tv (t : ℝ) (k : Fin 2 × Fin 2) : ℝ := ![![1, 0], ![0, 1 - t]] k.1 k.2
 
-private def ev (k : Fin 2 × Fin 2) : ℝ := ![![0, 1], ![0, 0]] k.1 k.2
+def ev (k : Fin 2 × Fin 2) : ℝ := ![![0, 1], ![0, 0]] k.1 k.2
 
 private def tight (t : ℝ) : TwoQubit :=
   ((1 / (2 - t) : ℝ) : ℂ) • (vecMulVec (fun k => (tv t k : ℂ)) (star fun k => (tv t k : ℂ)) +
