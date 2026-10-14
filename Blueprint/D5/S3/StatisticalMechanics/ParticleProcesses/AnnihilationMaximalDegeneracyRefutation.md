@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/ParticleProcesses/AnnihilationMaximalDegeneracyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ayyer-mallick-2010-annihilation-maximal-degeneracy` (refuted) by `D5/S3/StatisticalMechanics/ParticleProcesses/AnnihilationMaximalDegeneracyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ayyer-mallick-2010-annihilation-maximal-degeneracy","declaration_gid":"D5/S3/StatisticalMechanics/ParticleProcesses/AnnihilationMaximalDegeneracyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Ayyer and K. Mallick (2010). *Exact results for an asymmetric annihilation process with open boundaries*. DOI: [10.1088/1751-8113/43/4/045003](https://doi.org/10.1088/1751-8113/43/4/045003). URL: <https://arxiv.org/abs/0910.0693>.

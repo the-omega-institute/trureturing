@@ -29,11 +29,15 @@ internal sealed class AnnihilationMaximalDegeneracyRefutationDocument : IScribeD
             Node("claim", "The maximal-degeneracy assertion", ClaimFormula(),
                 "Ayyer–Mallick, after Eq. (79), p. 14: \"We also conjecture that the Markov matrices are maximally undiagonalizable in the sense that each eigenvalue seems to have exactly one eigenvector independent of the number of times the eigenvalue appears (this implies that the Jordan blocks are of the maximum possible size). In other words, the degeneracy seems to be so strong that the Markov matrix M_L which is of size 2^L has only 2L eigenvectors.\" Ayyer–Strehl, Conjecture 1, p. 466 (PDF p. 6): \"The matrix M_L is maximally degenerate in the sense that it has exactly 2L eigenvectors.\" The claim is the geometric-multiplicity clause: every real eigenspace has dimension at most one for positive length and positive real rates. For numbers outside the spectrum the kernel has dimension zero. A real eigenvalue with a two-dimensional eigenspace also contradicts the unrestricted assertion.", DescribeRole.Definition),
             Node("result", "Refutation at length five", Disp(new Formula.Not(F.Id("claim"))),
-                "At L = 5, alpha = 1/3 and beta = 2/5, write p(n) for the product over indices i < n of -1 when s(i) is true and 1 otherwise. The integer-valued functions v1 = p(1)p(2) - 3p(2) + 9p(1) - 5 and v2 = p(1)p(4) - p(2)p(3) - 3p(4) + 9p(3) - 27p(2) + 81p(1) - 40 yield two real left eigenvectors at -2. Their values are (2,20) at the empty state and (2,24) at the state occupied only at index 3; the nonzero minor proves independence. Exact rational matrix-vector equalities transfer to the real generator by casting. Rank equality with the transpose and rank–nullity give dimension at least two for the right eigenspace, contradicting claim.", DescribeRole.Theorem, true)),
+                "At L = 5, alpha = 1/3 and beta = 2/5, write p(n) for the product over indices i < n of -1 when s(i) is true and 1 otherwise. The integer-valued functions v1 = p(1)p(2) - 3p(2) + 9p(1) - 5 and v2 = p(1)p(4) - p(2)p(3) - 3p(4) + 9p(3) - 27p(2) + 81p(1) - 40 yield two real left eigenvectors at -2. Their values are (2,20) at the empty state and (2,24) at the state occupied only at index 3; the nonzero minor proves independence. Exact rational matrix-vector equalities transfer to the real generator by casting. Rank equality with the transpose and rank–nullity give dimension at least two for the right eigenspace, contradicting claim.", DescribeRole.Theorem, true,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ayyer-mallick-2010-annihilation-maximal-degeneracy"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, bool derived = false) =>
+        string prose, DescribeRole role, bool derived = false,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("annihilation-" + (name switch
             {
                 "bulkMove" => "bulk-move", "bulkCount" => "bulk-count",
@@ -42,7 +46,7 @@ internal sealed class AnnihilationMaximalDegeneracyRefutationDocument : IScribeD
             })),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
