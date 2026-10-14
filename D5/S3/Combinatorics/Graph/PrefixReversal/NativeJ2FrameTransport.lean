@@ -1,7 +1,14 @@
-/- UNCOMPILED candidate. This earns the arbitrary-frame identification used
-   by the k=2 recursive base case. It assumes no target domain equivalence,
-   endpoint certificate, prior-cycle inventory, or changed barred numbering.
-   NativeRecursiveSupply must first be installed under its canonical name. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2FrameTransport
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeJ2FrameTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeRecursiveSupply, D5/S3/Combinatorics/Graph/PrefixReversal/NativeF2Coverage]
+   utility: none
+   digest: Arbitrary two-label supply frames earn the complete native F2 domain and literal indexed port identification by actual label relabelling. -/
+/- This earns the arbitrary-frame identification used by the k=2 recursive
+   base case from actual independent label tuples. It assumes no target domain
+   equivalence, endpoint certificate, prior-cycle inventory, or changed barred
+   numbering. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2Coverage
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
