@@ -21,8 +21,8 @@ ROW_FIELDS = {"application", "owner", "target", "target_module", "target_type_id
 
 
 def validate(value, *, complete=True):
-    if (not isinstance(value, dict) or set(value) != {"schema_version", "applications"}
-            or value["schema_version"] != 1 or not isinstance(value["applications"], list)):
+    if (not isinstance(value, dict) or set(value) != {"applications"}
+            or not isinstance(value["applications"], list)):
         raise ValueError("fib.invalid_partition")
     previous = None
     for row in value["applications"]:
@@ -231,7 +231,7 @@ def consume(report, targets=()):
         if found != set(targets):
             raise ValueError("fib.requested_declaration_not_in_report")
         records = selected
-    return {"schema_version": 1, "applications": records,
+    return {"applications": records,
             "authority": "downstream analysis; proof and admission fields unchanged"}
 
 
