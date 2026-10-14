@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f20abff59202b93858c02ad76bb53e124e9cd42280fe7847e51dff76f6f1c838
+  normalized_sha256: sha256:f20abff59202b93858c02ad76bb53e124e9cd42280fe7847e51dff76f6f1c838
+cas_ref: sha256:f20abff59202b93858c02ad76bb53e124e9cd42280fe7847e51dff76f6f1c838
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 39.2 义务论：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: d8a3f5fdf2bd0123d049b440214f41423604ecdc35722b9a235aeee3f81f7866
+    next_atom_id: 6b78f6771301fe61c34e86e1e77da910bdb0afd67d539cb1c8dc7b01f19798b1

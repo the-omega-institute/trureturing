@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2c672ac0fee909e51f3fa44ffdaad658a15e8c0b642894ff9528f14863625fc
+  normalized_sha256: sha256:f2c672ac0fee909e51f3fa44ffdaad658a15e8c0b642894ff9528f14863625fc
+cas_ref: sha256:f2c672ac0fee909e51f3fa44ffdaad658a15e8c0b642894ff9528f14863625fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 416.2（结构理解）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: e3c7c70655eb38798bc06dc63d82b2c11e378a2f8fdc8c5f64cc4583f6fc2a4f
+    next_atom_id: 70079a083f85ad9c34495cfaa003ddd532bc8940197c1554dfaca322f32f73ea
