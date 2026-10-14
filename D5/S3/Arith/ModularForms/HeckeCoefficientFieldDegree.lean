@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/ModularForms/HeckeCoefficientFieldDegree
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: A normalized actual Hecke eigenform has coefficient field degree at most m. -/
 
 import D5.S1.Eigenstructure.CommonEigenvalueFieldDegree

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Eigenstructure/CommonEigenvalueFieldDegree
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: A common eigenvector bounds the degree of the full eigenvalue field. -/
 
 import Mathlib.FieldTheory.IntermediateField.Algebraic
