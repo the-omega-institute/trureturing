@@ -51,7 +51,10 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
                     "Put r = 2a - 1, so the squared initial concurrence is 1 - r squared. Bob's trace-preserving channel leaves Alice's marginal unchanged, and local unitaries preserve the length r of Alice's Bloch vector. In a frame with correlation matrix -t I, let n be the unit direction of Alice's Bloch vector and beta Bob's Bloch component along n. Positivity of the corner on the two negative spin projections gives r + beta <= 1 - t. Cauchy-Schwarz for the positive trace form, applied to the opposite spin projections and their product with the swap matrix, gives (r - beta) squared <= (1 - t)(1 + 3t). Eliminating beta yields r squared + rt + t squared <= r + t. Since t > 1/3, this forces r < (1 + sqrt(3))/3 and hence concurrence strictly greater than Cstar.")),
                     Paragraph(Text(
                     "For sufficiency take t = (1 - r + sqrt((1 - r)(1 + 3r)))/2 and gamma = (1 - t)/(1 + r). Above the concurrence threshold one has 1/3 < t < 1 and gamma > 0. The amplitude-damping Kraus pair K_0 = diag(sqrt(1 - gamma), 1), K_1 = sqrt(gamma)|1><0| is trace preserving and non-unital. The identity t squared = (1 - r)(t + r) gives output correlation matrix diag(t, -t, t); conjugating Bob by sigma_y changes it to -t I. Thus the exact threshold is sqrt(5 - 2 sqrt(3))/3, with strict inequality required for usefulness."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ghosal-das-banerjee-2021-critical-concurrence-universal-teleportation"),
+                    ResolutionKind.Proved))
         ),
         []));
 
