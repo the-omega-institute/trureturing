@@ -350,7 +350,7 @@ check. A failure discards the branch. A success supplies finite terms
 $S_v$ in residual shape variables $w_1,\ldots,w_s$ and the complete
 factorization of all finite shape solutions. Keep unused names as well.
 This is precisely the free-shape step of NSF Section 3; the classical
-unification supplier is Baader–Snyder §2.2.4, Lemmas 2.2–2.4 and
+unification supplier is Baader–Snyder §2.2.4, Lemma 2.2, Corollary 2.3, Lemma 2.4 and
 Theorems 2.5–2.6 [BS]. It is applied after native collapse splitting,
 never to $\rho$ as a free unary constructor.
 
@@ -867,7 +867,7 @@ native assembly in Lemma 3.3, Theorem 4.1 and their applications is
 
 | Primary source | Mathematical scope and use |
 | --- | --- |
-| Baader–Snyder, *Unification Theory*, Chapter 8, §2.2.4, pp. 450–452, Lemmas 2.2–2.4, Theorems 2.5–2.6 [BS] | Finite syntactic equations over free constructors have terminating solved-form transformation, an idempotent unifier, and factorization of every unifier. Used solely for the $c,f$ shape equations after collapse splitting. The chapter's §3 distinguishes complete sets modulo a specified equational theory; it does not identify this native interpreted theory with the free one. |
+| Baader–Snyder, *Unification Theory*, Chapter 8, §2.2.4, pp. 450–452, Lemma 2.2, Corollary 2.3, Lemma 2.4, Theorems 2.5–2.6 [BS] | Finite syntactic equations over free constructors have terminating solved-form transformation, an idempotent unifier, and factorization of every unifier. Used solely for the $c,f$ shape equations after collapse splitting. The chapter's §3 distinguishes complete sets modulo a specified equational theory; it does not identify this native interpreted theory with the free one. |
 | Comon–Lescanne, *Equational Problems and Disunification*, §§4.2, 5.2–5.3, Theorems 2–4 [CL] | Equations/disequations and first-order equational problems over specified term algebras, with solved forms and terminating transformations. The finite Herbrand term domain and rational-tree cases are distinguished. These are precedents for complete solution descriptions, not a transfer theorem for unknown powers of the native substitution or its normal subdomain. |
 | Kuncak–Rinard, *On the Theory of Structural Subtyping*, arXiv:cs/0408015v1, Figure 9, Theorem 90 and Corollary 91, §6.6 [KR] | The linked version's term-power quantifier-elimination and decidability results concern the stated four-sort language over a decidable base structure. Section 6.6 treats a selected-leaf/element operation as a different extension and explains why stronger decidability is not automatic. The present finite supplied-shape traversals do not assert definability or quantifier elimination in that ambient language. |
 | Marshall–Meadows–Narendran, *On Unification Modulo One-Sided Distributivity: Algorithms, Variants and Asymmetry*, arXiv:1503.06687v2, §§3, 5 [MMN] | Equational unification under one-sided distributivity; the single-homomorphism case uses a specified two-sort discipline. Its homomorphism paths suggest offset graphs, but its equational signature, substitutions and solution order are different. It supplies no normality, negative-witness or source-preserving theorem for (SFP.1). |
