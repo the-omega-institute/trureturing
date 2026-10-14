@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cf3b5bc0102ebfbaf5ad58517e09aa9d7ea3ab0b23184f3dd0d4076bc425a2d2
+  normalized_sha256: sha256:cf3b5bc0102ebfbaf5ad58517e09aa9d7ea3ab0b23184f3dd0d4076bc425a2d2
+cas_ref: sha256:cf3b5bc0102ebfbaf5ad58517e09aa9d7ea3ab0b23184f3dd0d4076bc425a2d2
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/PublicAnnouncement/AdmissibleAnnouncementCommonKnowledge.true_public_announcement_is_common_knowledge_on_admitted_domain
+    target_statement_id: sha256:f2f30d875df8a3a87c8fa0fb09268618522ad9261c84e514e0efbebac2e0b09e
+receipts:
+  unresolved_subitems: []

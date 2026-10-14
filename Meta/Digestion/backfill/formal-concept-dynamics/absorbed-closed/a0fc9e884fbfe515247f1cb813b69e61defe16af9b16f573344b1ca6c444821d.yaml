@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a0fc9e884fbfe515247f1cb813b69e61defe16af9b16f573344b1ca6c444821d
+  normalized_sha256: sha256:a0fc9e884fbfe515247f1cb813b69e61defe16af9b16f573344b1ca6c444821d
+cas_ref: sha256:a0fc9e884fbfe515247f1cb813b69e61defe16af9b16f573344b1ca6c444821d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/CanonicalAllowedReasonMeet.meet_closed_allowed_reasons_have_unique_coarsest_ratio
+    target_statement_id: sha256:d87893b6b2e5d1b076009dd1467425c70910fe1caf83eda771c666664ed0df96
+receipts:
+  unresolved_subitems: []

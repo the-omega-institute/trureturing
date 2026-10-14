@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7216043faf4640a742e48725faa297051ea0a5e853ad5fd3c07672d8a704f2db
+  normalized_sha256: sha256:7216043faf4640a742e48725faa297051ea0a5e853ad5fd3c07672d8a704f2db
+cas_ref: sha256:7216043faf4640a742e48725faa297051ea0a5e853ad5fd3c07672d8a704f2db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段接续前述 ZFC 解释证明，只给出全序列与 Cauchy 子集的构造。
+    previous_atom_id: 1fbdf5ebf3f4067010fb0ecfaacd83bc1ddcf9e5f586e66bb28f4fd907077995
+    next_atom_id: 3157d1576e05be789df21db307d7c54efb975f7cd5f669fbb92c80e23a87ce75

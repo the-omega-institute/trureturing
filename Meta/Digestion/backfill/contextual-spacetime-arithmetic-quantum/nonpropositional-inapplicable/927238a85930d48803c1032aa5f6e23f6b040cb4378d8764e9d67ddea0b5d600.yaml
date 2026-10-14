@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:927238a85930d48803c1032aa5f6e23f6b040cb4378d8764e9d67ddea0b5d600
+  normalized_sha256: sha256:927238a85930d48803c1032aa5f6e23f6b040cb4378d8764e9d67ddea0b5d600
+cas_ref: sha256:927238a85930d48803c1032aa5f6e23f6b040cb4378d8764e9d67ddea0b5d600
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 268.1 只规定同一辅助态与同一基底适用于整族的实扩充条件。
+    previous_atom_id: 84dcdce8b77e04d56574fb8cb3e1e8b55e3ee4a0132aaa3346f4dbcc19dbb7a1
+    next_atom_id: ec5bb921ecceeee5f55d9e9b6f0ce7bce6505929c7816725dc571c44bd834aa9

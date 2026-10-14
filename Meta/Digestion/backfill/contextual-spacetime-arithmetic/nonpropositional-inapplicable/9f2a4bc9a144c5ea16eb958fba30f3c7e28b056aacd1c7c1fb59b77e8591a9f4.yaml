@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f2a4bc9a144c5ea16eb958fba30f3c7e28b056aacd1c7c1fb59b77e8591a9f4
+  normalized_sha256: sha256:9f2a4bc9a144c5ea16eb958fba30f3c7e28b056aacd1c7c1fb59b77e8591a9f4
+cas_ref: sha256:9f2a4bc9a144c5ea16eb958fba30f3c7e28b056aacd1c7c1fb59b77e8591a9f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述混合上下文的充分与必要关系，末尾仅说明来源及范围。
+    previous_atom_id: c740383c672d1fb71c07be2a3bc3916bb9918eaead2bfe648e5c8a3717b3f264
+    next_atom_id: 68e842855213f72af360d0d995a702c0525825ec8d668ff9d6bcbf59de367d3d

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66fa2b38d0d15bd9367f6bf48a4dfc78c550eaa8ff56dbe17157bb4f7578ae53
+  normalized_sha256: sha256:66fa2b38d0d15bd9367f6bf48a4dfc78c550eaa8ff56dbe17157bb4f7578ae53
+cas_ref: sha256:66fa2b38d0d15bd9367f6bf48a4dfc78c550eaa8ff56dbe17157bb4f7578ae53
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 235.1 只固定内部窗口并定义受虚性预算限制的峰值与积分代价。
+    previous_atom_id: dea38b831c80191683a4606e2dc6b856a2ac039c216be485e0e712b79c0b5ee3
+    next_atom_id: e7a8db9938dc80944a4517b90e151f69001c79ff185ed134d670af8207c68a17
