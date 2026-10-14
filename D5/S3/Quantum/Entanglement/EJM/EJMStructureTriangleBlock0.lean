@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-exact-certificate-premise)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCacheSoundness.associated_lower_le_score; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureTriangleBlock0.accepted
-   digest: Exact structural checks for actual triangle row interval [0, 8192). -/
+   digest: Exact structural checks for actual triangle row interval [0, 4096). -/
 
 /- These are the same original checkStructure obligations, split at existing
 1024-row boundaries so interruption preserves completed kernel modules.
@@ -50,36 +50,8 @@ private theorem triangle_chunk_3072 : ∀ j : Fin 1024,
       ⟨3072 + j.val, by have h := j.isLt; omega⟩ = true := by
   decide +kernel
 
-set_option maxHeartbeats 100000000 in
--- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_4096 : ∀ j : Fin 1024,
-    checkStructure trianglePartialAct triangleRows
-      ⟨4096 + j.val, by have h := j.isLt; omega⟩ = true := by
-  decide +kernel
-
-set_option maxHeartbeats 100000000 in
--- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_5120 : ∀ j : Fin 1024,
-    checkStructure trianglePartialAct triangleRows
-      ⟨5120 + j.val, by have h := j.isLt; omega⟩ = true := by
-  decide +kernel
-
-set_option maxHeartbeats 100000000 in
--- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_6144 : ∀ j : Fin 1024,
-    checkStructure trianglePartialAct triangleRows
-      ⟨6144 + j.val, by have h := j.isLt; omega⟩ = true := by
-  decide +kernel
-
-set_option maxHeartbeats 100000000 in
--- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_7168 : ∀ j : Fin 1024,
-    checkStructure trianglePartialAct triangleRows
-      ⟨7168 + j.val, by have h := j.isLt; omega⟩ = true := by
-  decide +kernel
-
 /-- Every actual row in this whole interval passes the original structural check. -/
-theorem accepted (j : Fin 8192) :
+theorem accepted (j : Fin 4096) :
     checkStructure trianglePartialAct triangleRows
       ⟨0 + j.val, by have h := j.isLt; omega⟩ = true := by
   by_cases h0 : j.val < 1024
@@ -106,44 +78,12 @@ theorem accepted (j : Fin 8192) :
       apply Fin.ext
       dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_2048 k
-  by_cases h3 : j.val < 4096
-  ·
-    let k : Fin 1024 := ⟨j.val - 3072, by have h := j.isLt; omega⟩
-    have he : (⟨3072 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-        ⟨0 + j.val, by have h := j.isLt; omega⟩ := by
-      apply Fin.ext
-      dsimp [k] <;> omega
-    simpa only [he] using triangle_chunk_3072 k
-  by_cases h4 : j.val < 5120
-  ·
-    let k : Fin 1024 := ⟨j.val - 4096, by have h := j.isLt; omega⟩
-    have he : (⟨4096 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-        ⟨0 + j.val, by have h := j.isLt; omega⟩ := by
-      apply Fin.ext
-      dsimp [k] <;> omega
-    simpa only [he] using triangle_chunk_4096 k
-  by_cases h5 : j.val < 6144
-  ·
-    let k : Fin 1024 := ⟨j.val - 5120, by have h := j.isLt; omega⟩
-    have he : (⟨5120 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-        ⟨0 + j.val, by have h := j.isLt; omega⟩ := by
-      apply Fin.ext
-      dsimp [k] <;> omega
-    simpa only [he] using triangle_chunk_5120 k
-  by_cases h6 : j.val < 7168
-  ·
-    let k : Fin 1024 := ⟨j.val - 6144, by have h := j.isLt; omega⟩
-    have he : (⟨6144 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-        ⟨0 + j.val, by have h := j.isLt; omega⟩ := by
-      apply Fin.ext
-      dsimp [k] <;> omega
-    simpa only [he] using triangle_chunk_6144 k
-  let k : Fin 1024 := ⟨j.val - 7168, by have h := j.isLt; omega⟩
-  have he : (⟨7168 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
+  let k : Fin 1024 := ⟨j.val - 3072, by have h := j.isLt; omega⟩
+  have he : (⟨3072 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
       ⟨0 + j.val, by have h := j.isLt; omega⟩ := by
     apply Fin.ext
     dsimp [k] <;> omega
-  simpa only [he] using triangle_chunk_7168 k
+  simpa only [he] using triangle_chunk_3072 k
 
 #print axioms accepted
 end D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock0

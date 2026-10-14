@@ -115,6 +115,30 @@ theorem step_associated (cache : Cache) (p : Partial (Fin 20) (Fin 4))
       simpa only [step, projection, incidence] using
         singleton_step_valid (cache.singleton k) _ (associated.2 k) i a localUnknown
 
+set_option maxHeartbeats 10000000 in
+-- This finite kernel receipt exhausts its explicit concrete domain; no producer premise is used.
+private theorem triangle_mirror_root : EJMTriangleCacheData.assignment 41293 =
+    (fun _ => none) := by decide +kernel
+set_option maxHeartbeats 10000000 in
+-- This finite kernel receipt exhausts its explicit concrete domain; no producer premise is used.
+private theorem singleton_mirror_root : EJMSingletonCacheData.assignment 8688 =
+    (fun _ => none) := by decide +kernel
+
+theorem initial_associated : AssociatedCache initial (fun _ => none) := by
+  constructor
+  · intro k
+    constructor
+    · rfl
+    · change (triangleRows (41293 : Fin 41294)).assignment =
+        trianglePartialAct identity (fun _ => none)
+      rw [triangle_identity, ← EJMTriangleCacheReceipts.assignment_eq, triangle_mirror_root]
+  · intro k
+    constructor
+    · rfl
+    · change (singletonRows (8688 : Fin 8689)).assignment =
+        singletonPartialAct identity (fun _ => none)
+      rw [singleton_identity, ← EJMSingletonCacheReceipts.assignment_eq, singleton_mirror_root]
+
 theorem triangle_valid_lower (current : CachedLocal 41294) (p : Partial (Fin 10) (Fin 4))
     (e : Event (Fin 10) (Fin 4)) (valid : TriangleValid current p) (hp : Compatible p e) :
     current.row.lower ≤ triangleCentered F1 e := by
@@ -161,6 +185,7 @@ theorem associated_lower_le_score (cache : Cache) (p : Partial (Fin 20) (Fin 4))
 #print axioms triangle_step_valid
 #print axioms singleton_step_valid
 #print axioms step_associated
+#print axioms initial_associated
 #print axioms associated_lower_le_score
 
 end D5.S3.Quantum.Entanglement.EJM.EJMCacheSoundness

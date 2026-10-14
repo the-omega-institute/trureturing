@@ -37,8 +37,14 @@ import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock2
 import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock3
 import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock4
 import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock5
+import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock6
+import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock7
+import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock8
+import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock9
+import D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock10
 import D5.S3.Quantum.Entanglement.EJM.EJMStructureSingletonBlock0
 import D5.S3.Quantum.Entanglement.EJM.EJMStructureSingletonBlock1
+import D5.S3.Quantum.Entanglement.EJM.EJMStructureSingletonBlock2
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Entanglement.EJM.EJMStructureCertificates
@@ -49,64 +55,106 @@ open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 /-- All original 41294 rows are covered by exact disjoint kernel intervals. -/
 theorem triangle_structure (i : Fin 41294) :
     checkStructure trianglePartialAct triangleRows i = true := by
-  by_cases h0 : i.val < 8192
+  by_cases h0 : i.val < 4096
   ·
-    let j : Fin 8192 := ⟨i.val - 0, by have h := i.isLt; omega⟩
+    let j : Fin 4096 := ⟨i.val - 0, by have h := i.isLt; omega⟩
     have he : (⟨0 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
       dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock0.accepted j
-  by_cases h1 : i.val < 16384
+  by_cases h1 : i.val < 8192
   ·
-    let j : Fin 8192 := ⟨i.val - 8192, by have h := i.isLt; omega⟩
-    have he : (⟨8192 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+    let j : Fin 4096 := ⟨i.val - 4096, by have h := i.isLt; omega⟩
+    have he : (⟨4096 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
       dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock1.accepted j
-  by_cases h2 : i.val < 24576
+  by_cases h2 : i.val < 12288
   ·
-    let j : Fin 8192 := ⟨i.val - 16384, by have h := i.isLt; omega⟩
-    have he : (⟨16384 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+    let j : Fin 4096 := ⟨i.val - 8192, by have h := i.isLt; omega⟩
+    have he : (⟨8192 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
       dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock2.accepted j
-  by_cases h3 : i.val < 32768
+  by_cases h3 : i.val < 16384
   ·
-    let j : Fin 8192 := ⟨i.val - 24576, by have h := i.isLt; omega⟩
-    have he : (⟨24576 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+    let j : Fin 4096 := ⟨i.val - 12288, by have h := i.isLt; omega⟩
+    have he : (⟨12288 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
       dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock3.accepted j
-  by_cases h4 : i.val < 40960
+  by_cases h4 : i.val < 20480
   ·
-    let j : Fin 8192 := ⟨i.val - 32768, by have h := i.isLt; omega⟩
-    have he : (⟨32768 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+    let j : Fin 4096 := ⟨i.val - 16384, by have h := i.isLt; omega⟩
+    have he : (⟨16384 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
       dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock4.accepted j
+  by_cases h5 : i.val < 24576
+  ·
+    let j : Fin 4096 := ⟨i.val - 20480, by have h := i.isLt; omega⟩
+    have he : (⟨20480 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+      apply Fin.ext
+      dsimp [j] <;> omega
+    simpa only [he] using EJMStructureTriangleBlock5.accepted j
+  by_cases h6 : i.val < 28672
+  ·
+    let j : Fin 4096 := ⟨i.val - 24576, by have h := i.isLt; omega⟩
+    have he : (⟨24576 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+      apply Fin.ext
+      dsimp [j] <;> omega
+    simpa only [he] using EJMStructureTriangleBlock6.accepted j
+  by_cases h7 : i.val < 32768
+  ·
+    let j : Fin 4096 := ⟨i.val - 28672, by have h := i.isLt; omega⟩
+    have he : (⟨28672 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+      apply Fin.ext
+      dsimp [j] <;> omega
+    simpa only [he] using EJMStructureTriangleBlock7.accepted j
+  by_cases h8 : i.val < 36864
+  ·
+    let j : Fin 4096 := ⟨i.val - 32768, by have h := i.isLt; omega⟩
+    have he : (⟨32768 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+      apply Fin.ext
+      dsimp [j] <;> omega
+    simpa only [he] using EJMStructureTriangleBlock8.accepted j
+  by_cases h9 : i.val < 40960
+  ·
+    let j : Fin 4096 := ⟨i.val - 36864, by have h := i.isLt; omega⟩
+    have he : (⟨36864 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
+      apply Fin.ext
+      dsimp [j] <;> omega
+    simpa only [he] using EJMStructureTriangleBlock9.accepted j
   let j : Fin 334 := ⟨i.val - 40960, by have h := i.isLt; omega⟩
   have he : (⟨40960 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
     apply Fin.ext
     dsimp [j] <;> omega
-  simpa only [he] using EJMStructureTriangleBlock5.accepted j
+  simpa only [he] using EJMStructureTriangleBlock10.accepted j
 
 #print axioms triangle_structure
 
 /-- All original 8689 rows are covered by exact disjoint kernel intervals. -/
 theorem singleton_structure (i : Fin 8689) :
     checkStructure singletonPartialAct singletonRows i = true := by
-  by_cases h0 : i.val < 8192
+  by_cases h0 : i.val < 4096
   ·
-    let j : Fin 8192 := ⟨i.val - 0, by have h := i.isLt; omega⟩
+    let j : Fin 4096 := ⟨i.val - 0, by have h := i.isLt; omega⟩
     have he : (⟨0 + j.val, by have h := j.isLt; omega⟩ : Fin 8689) = i := by
       apply Fin.ext
       dsimp [j] <;> omega
     simpa only [he] using EJMStructureSingletonBlock0.accepted j
+  by_cases h1 : i.val < 8192
+  ·
+    let j : Fin 4096 := ⟨i.val - 4096, by have h := i.isLt; omega⟩
+    have he : (⟨4096 + j.val, by have h := j.isLt; omega⟩ : Fin 8689) = i := by
+      apply Fin.ext
+      dsimp [j] <;> omega
+    simpa only [he] using EJMStructureSingletonBlock1.accepted j
   let j : Fin 497 := ⟨i.val - 8192, by have h := i.isLt; omega⟩
   have he : (⟨8192 + j.val, by have h := j.isLt; omega⟩ : Fin 8689) = i := by
     apply Fin.ext
     dsimp [j] <;> omega
-  simpa only [he] using EJMStructureSingletonBlock1.accepted j
+  simpa only [he] using EJMStructureSingletonBlock2.accepted j
 
 #print axioms singleton_structure
 end D5.S3.Quantum.Entanglement.EJM.EJMStructureCertificates

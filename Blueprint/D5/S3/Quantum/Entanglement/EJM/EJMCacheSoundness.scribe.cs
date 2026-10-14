@@ -18,6 +18,8 @@ internal sealed class EJMCacheSoundnessDocument : IScribeDocumentDefinition
                 "The corresponding statement covers every valid singleton row, every unknown coordinate and every outcome, with the complete action retained."),
             Item("global-step", "step_associated", "A global fill preserves every actual local projection",
                 "For every associated cache and global partial assignment, any unknown global-coordinate fill preserves association to the updated assignment in all thirty-two placements. Injective incidence laws derive each affected local update; unaffected projections stay associated."),
+            Item("initial-associated", "initial_associated", "The actual initial cache represents the empty original assignment",
+                "Both actual root rows have the empty assignment. Their full identity actions establish association in all thirty-two placements, giving the exact starting invariant for every subsequent unknown fill. This reuses the existing checked same-certificate initialization proof."),
             Item("triangle-bound", "triangle_valid_lower", "Every compatible triangle completion satisfies its lower",
                 "For any valid cached triangle row and any complete local event compatible with the represented partial assignment, its stored integer lower is at most the original centered triangle score with the exact pinned coefficient function F1. Complete local acceptance and score invariance discharge the numeric premises."),
             Item("singleton-bound", "singleton_valid_lower", "Every compatible singleton completion satisfies its lower",
