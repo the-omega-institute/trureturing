@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Divergence.ResolventDefectRigidity
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Order.Interval.Set.Infinite
+import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.Tactic
 
 noncomputable section
@@ -18,15 +18,22 @@ open scoped BigOperators ComplexOrder MatrixOrder
 
 namespace D5.S3.Quantum.Divergence.ResolventFunctionalRigidity
 
-/-- Clearing the common denominator turns a finite Stieltjes readout into a
-polynomial; infinitely many positive samples then determine every residue. -/
-private theorem stieltjes_coefficients_zero (s : Finset ℝ) (c : ℝ → ℂ)
-    (hs : ∀ z ∈ s, 0 ≤ z)
-    (h : ∀ t : ℝ, 0 < t → ∑ z ∈ s, ((z + t : ℝ) : ℂ)⁻¹ * c z = 0) :
+/-- The number of distinct positive samples needed to identify the residues
+is at most the number of distinct spectral sites, including a possible zero site. -/
+private theorem stieltjes_coefficients_zero {κ : Type*} [Fintype κ]
+    (s : Finset ℝ) (c : ℝ → ℂ) (samples : κ → ℝ)
+    (hs : ∀ z ∈ s, 0 ≤ z) (hpositive : ∀ k, 0 < samples k)
+    (hinjective : Function.Injective samples) (hcard : s.card ≤ Fintype.card κ)
+    (h : ∀ k, ∑ z ∈ s, ((z + samples k : ℝ) : ℂ)⁻¹ * c z = 0) :
     ∀ z ∈ s, c z = 0 := by
   classical
+  by_cases hempty : s = ∅
+  · simp [hempty]
+  have hspos : 0 < s.card := Finset.card_pos.mpr (Finset.nonempty_iff_ne_empty.mpr hempty)
   let P : ℂ[X] := ∑ z ∈ s, C (c z) * ∏ w ∈ s.erase z, (X + C (w : ℂ))
-  have heval (t : ℝ) (ht : 0 < t) : P.eval (t : ℂ) = 0 := by
+  have heval (k : κ) : P.eval (samples k : ℂ) = 0 := by
+    let t := samples k
+    have ht : 0 < t := hpositive k
     have hne (z : ℝ) (hz : z ∈ s) : ((z + t : ℝ) : ℂ) ≠ 0 :=
       Complex.ofReal_ne_zero.mpr (ne_of_gt (add_pos_of_nonneg_of_pos (hs z hz) ht))
     have heq : P.eval (t : ℂ) =
@@ -45,12 +52,21 @@ private theorem stieltjes_coefficients_zero (s : Finset ℝ) (c : ℝ → ℂ)
       have hh := hne z hz
       push_cast at hh
       field_simp [hh]
-    rw [heq, h t ht, mul_zero]
+    rw [heq, h k, mul_zero]
+  have hdegree : P.natDegree ≤ s.card - 1 := by
+    dsimp only [P]
+    apply Polynomial.natDegree_sum_le_of_forall_le
+    intro z hz
+    have hprod := Polynomial.natDegree_prod_le (s.erase z)
+      (fun w : ℝ => (X + C (w : ℂ) : ℂ[X]))
+    have hprod' : (∏ w ∈ s.erase z, (X + C (w : ℂ) : ℂ[X])).natDegree ≤
+        s.card - 1 := by
+      simpa [Polynomial.natDegree_X_add_C, Finset.card_erase_of_mem hz] using hprod
+    exact Polynomial.natDegree_mul_le.trans (by simpa using hprod')
   have hP : P = 0 := by
-    apply Polynomial.eq_zero_of_infinite_isRoot
-    apply ((Set.Ioi_infinite (0 : ℝ)).image Complex.ofReal_injective.injOn).mono
-    rintro _ ⟨t, ht, rfl⟩
-    exact heval t ht
+    apply Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero P
+      (Complex.ofReal_injective.comp hinjective) heval
+    omega
   intro z hz
   have hp := congrArg (fun p : ℂ[X] => p.eval (-(z : ℂ))) hP
   have hisolate : P.eval (-(z : ℂ)) = c z * ∏ w ∈ s.erase z, ((w - z : ℝ) : ℂ) := by
@@ -75,9 +91,12 @@ private theorem stieltjes_coefficients_zero (s : Finset ℝ) (c : ℝ → ℂ)
   exact (mul_eq_zero.mp hp).resolve_right hn
 
 /-- Group repeated eigenvalues before applying residue uniqueness. -/
-private theorem finite_spectral_readout_rigidity {ι : Type*} [Fintype ι]
+private theorem finite_spectral_readout_rigidity {ι κ : Type*} [Fintype ι] [Fintype κ]
     (eig : ι → ℝ) (d : ι → ℂ) (heig : ∀ i, 0 ≤ eig i)
-    (h : ∀ t : ℝ, 0 < t → ∑ i, ((eig i + t : ℝ) : ℂ)⁻¹ * d i = 0)
+    (samples : κ → ℝ) (hpositive : ∀ k, 0 < samples k)
+    (hinjective : Function.Injective samples)
+    (hcard : (Finset.univ.image eig).card ≤ Fintype.card κ)
+    (h : ∀ k, ∑ i, ((eig i + samples k : ℝ) : ℂ)⁻¹ * d i = 0)
     (f : ℝ → ℂ) : ∑ i, f (eig i) * d i = 0 := by
   classical
   let s := Finset.univ.image eig
@@ -89,9 +108,10 @@ private theorem finite_spectral_readout_rigidity {ι : Type*} [Fintype ι]
     intro i hi
     simp only [mul_ite, mul_zero]
     simp [eq_comm, s]
-  have hc : ∀ z ∈ s, c z = 0 := stieltjes_coefficients_zero s c
+  have hc : ∀ z ∈ s, c z = 0 := stieltjes_coefficients_zero s c samples
     (by intro z hz; obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hz; exact heig i)
-    (by intro t ht; rw [group]; exact h t ht)
+    hpositive hinjective hcard
+    (by intro k; rw [group]; exact h k)
   rw [← group]
   exact Finset.sum_eq_zero fun z hz => by rw [hc z hz, mul_zero]
 
@@ -128,11 +148,16 @@ theorem cfc_shift_inverse (A : Matrix n n ℂ) (hA : A.PosSemidef)
 
 /-- Equality of the actual positive-shift resolvent vectors forces equality
 for every real finite spectral function, with repeated spectra allowed. -/
-private theorem resolvents_determine_cfc (A : Matrix n n ℂ) (B : Matrix m m ℂ)
+private theorem resolvents_determine_cfc {κ : Type*} [Fintype κ] (A : Matrix n n ℂ) (B : Matrix m m ℂ)
     (hA : A.PosSemidef) (hB : B.PosSemidef) (V : Matrix n m ℂ)
     (a : n → ℂ) (b : m → ℂ)
-    (h : ∀ t : ℝ, 0 < t → (A + t • (1 : Matrix n n ℂ))⁻¹ *ᵥ a =
-      V *ᵥ ((B + t • (1 : Matrix m m ℂ))⁻¹ *ᵥ b)) (f : ℝ → ℝ) :
+    (samples : κ → ℝ) (hpositive : ∀ k, 0 < samples k)
+    (hinjective : Function.Injective samples)
+    (hcard : (Finset.univ.image
+      (Sum.elim hA.isHermitian.eigenvalues hB.isHermitian.eigenvalues)).card ≤
+        Fintype.card κ)
+    (h : ∀ k, (A + samples k • (1 : Matrix n n ℂ))⁻¹ *ᵥ a =
+      V *ᵥ ((B + samples k • (1 : Matrix m m ℂ))⁻¹ *ᵥ b)) (f : ℝ → ℝ) :
     cfc f A *ᵥ a = V *ᵥ (cfc f B *ᵥ b) := by
   classical
   let eig : n ⊕ m → ℝ := Sum.elim hA.isHermitian.eigenvalues hB.isHermitian.eigenvalues
@@ -167,9 +192,11 @@ private theorem resolvents_determine_cfc (A : Matrix n n ℂ) (B : Matrix m m �
     simpa only [Fintype.sum_sum_type, eig, d, Sum.elim_inl, Sum.elim_inr,
       mul_neg, Finset.sum_neg_distrib, sub_eq_add_neg] using
       congrArg₂ (fun x y : ℂ => x - y) hleft hright
-  have hr : ∀ t : ℝ, 0 < t → ∑ j, ((eig j + t : ℝ) : ℂ)⁻¹ * d j = 0 := by
-    intro t ht
-    have hx := congrFun (h t ht) i
+  have hr : ∀ k, ∑ j, ((eig j + samples k : ℝ) : ℂ)⁻¹ * d j = 0 := by
+    intro k
+    let t := samples k
+    have ht : 0 < t := hpositive k
+    have hx := congrFun (h k) i
     rw [← cfc_shift_inverse A hA t ht, ← cfc_shift_inverse B hB t ht] at hx
     simpa only [Complex.ofReal_inv] using (expansion (fun z => (z + t)⁻¹)).trans
       (sub_eq_zero.mpr hx)
@@ -177,9 +204,36 @@ private theorem resolvents_determine_cfc (A : Matrix n n ℂ) (B : Matrix m m �
     (by intro j; cases j with
         | inl j => exact hA.eigenvalues_nonneg j
         | inr j => exact hB.eigenvalues_nonneg j)
-    hr (fun z => (f z : ℂ))
+    samples hpositive hinjective hcard hr (fun z => (f z : ℂ))
   rw [expansion f] at hz
   exact sub_eq_zero.mp hz
+
+/-- A finite family of distinct positive shifts detects complete spectral
+intertwining when it has at least as many points as the union of the two spectra.
+Repeated eigenvalues and zero eigenvalues are allowed. -/
+theorem finite_resolvent_defects_force_functional_intertwining {κ : Type*} [Fintype κ]
+    (A : Matrix n n ℂ) (B : Matrix m m ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef)
+    (V : Matrix n m ℂ) (hV : Vᴴ * V ≤ 1) (hAB : Vᴴ * A * V ≤ B)
+    (b : m → ℂ)
+    (hb : (star (V *ᵥ b) ⬝ᵥ (V *ᵥ b)).re = (star b ⬝ᵥ b).re)
+    (samples : κ → ℝ) (hpositive : ∀ k, 0 < samples k)
+    (hinjective : Function.Injective samples)
+    (hcard : (Finset.univ.image
+      (Sum.elim hA.isHermitian.eigenvalues hB.isHermitian.eigenvalues)).card ≤
+        Fintype.card κ)
+    (hzero : ∀ k,
+      (star (V *ᵥ b) ⬝ᵥ ((A + samples k • (1 : Matrix n n ℂ))⁻¹ *ᵥ (V *ᵥ b))).re -
+      (star b ⬝ᵥ ((B + samples k • (1 : Matrix m m ℂ))⁻¹ *ᵥ b)).re = 0)
+    (f : ℝ → ℝ) : cfc f A *ᵥ (V *ᵥ b) = V *ᵥ (cfc f B *ᵥ b) := by
+  apply resolvents_determine_cfc A B hA hB V (V *ᵥ b) b
+    samples hpositive hinjective hcard
+  intro k
+  have hdefect :=
+    D5.S3.Quantum.Divergence.ResolventDefectRigidity.resolvent_defect_identity_and_bound
+      A B hA hB V hV hAB b hb (samples k) (hpositive k)
+  have hz := hdefect.2.2.mp (hzero k)
+  exact sub_eq_zero.mp hz.1
 
 /-- Zero comparison defect for every positive shift determines the entire
 finite spectral calculus on the distinguished vector, rather than assuming
@@ -194,13 +248,22 @@ theorem zero_resolvent_defects_force_functional_intertwining
       (star (V *ᵥ b) ⬝ᵥ ((A + t • (1 : Matrix n n ℂ))⁻¹ *ᵥ (V *ᵥ b))).re -
       (star b ⬝ᵥ ((B + t • (1 : Matrix m m ℂ))⁻¹ *ᵥ b)).re = 0)
     (f : ℝ → ℝ) : cfc f A *ᵥ (V *ᵥ b) = V *ᵥ (cfc f B *ᵥ b) := by
-  apply resolvents_determine_cfc A B hA hB V (V *ᵥ b) b
-  intro t ht
-  have hdefect :=
-    D5.S3.Quantum.Divergence.ResolventDefectRigidity.resolvent_defect_identity_and_bound
-      A B hA hB V hV hAB b hb t ht
-  have hz := hdefect.2.2.mp (hzero t ht)
-  exact sub_eq_zero.mp hz.1
+  classical
+  let samples : Fin (Fintype.card (n ⊕ m)) → ℝ := fun k => (k.val : ℝ) + 1
+  apply finite_resolvent_defects_force_functional_intertwining A B hA hB V hV hAB b hb
+    samples (fun k => by dsimp only [samples]; positivity)
+    (by intro i j hij
+        apply Fin.ext
+        have hval : (i.val : ℝ) = (j.val : ℝ) := add_right_cancel hij
+        exact_mod_cast hval)
+    (by
+      have hbound := Finset.card_image_le
+        (s := (Finset.univ : Finset (n ⊕ m)))
+        (f := Sum.elim hA.isHermitian.eigenvalues hB.isHermitian.eigenvalues)
+      simpa using hbound)
+    (fun k => hzero (samples k) (by dsimp only [samples]; positivity)) f
+
+#print axioms finite_resolvent_defects_force_functional_intertwining
 
 #print axioms zero_resolvent_defects_force_functional_intertwining
 

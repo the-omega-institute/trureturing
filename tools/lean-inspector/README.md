@@ -69,7 +69,11 @@ independent `lean-cache-publish.yml` producer route. The scheduled Release publi
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 
-为受保护的 `dev` 或 `integration-*` 分支生产独立 Actions 种子，按精确提交手动触发：
+受保护的 `dev` 和 `integration-*` push 自动生产分支内 Actions 种子。普通 current 作业限时 30 分钟，
+先以 `fetch-or-fail` 消费已有种子并由 Lake 增量构建；缺失或不兼容种子直接给出长任务补救入口。
+current 已确认发布的增量种子直接供后续使用；未发布时，同一 push 在 current 结束后自动运行
+360 分钟缓存 producer，不加入 required 检查集合。长任务按分支串行，保留正在执行的任务，
+后续 push 只替换尚未执行的 pending 任务，避免持续取消构建。手动补救仍按精确提交触发：
 
 ```sh
 gh workflow run lean-cache-publish.yml --ref dev \
@@ -86,11 +90,15 @@ gh pr edit <PR> --add-label lean-cache-produce
 缓存只写该 PR 的 `refs/pull/<PR>/merge` 空间。producer 成功后重试该 PR 的 required CI；
 再次启动时先移除再添加 label。普通 PR required job 不发布 project 种子。
 PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
-这些私有种子不能给其它 PR 或合并后的 dev push 使用。新 pin 合并后，为受保护 dev 手动运行上述
-producer，再重试首次 dev push 中因缺种子失败的检查。
+这些私有种子不能给其它 PR 或合并后的 dev push 使用。合并后由上述自动 producer 在实际
+dev/integration push 提交上生产；不将 PR merge tree 的缓存提升到另一个分支。若首次 push
+因缺种子失败，自动 producer 完成后重试检查。
 
 `source_ref` 必须等于 dispatch ref，且分支受保护；`source_sha` 必须是该分支可达的 40 位提交。
-手动作业使用 GitHub-hosted 的 360 分钟上限；定时的受保护 `dev` Release publisher 仍为 120 分钟。
+手动、PR 标签和自动 push producer 共用 `lean-cache-produce` action，均为 360 分钟，
+只构建报告及普通检查所需的原生程序和 fixture 产物，再发布缓存，不运行测试套件。
+发布保留来源验证、run/attempt key、正构建工作和已恢复有效种子时的 `no-build-work` 条件。
+手动与自动分支 producer 共用分支 concurrency；定时受保护 `dev` Release publisher 独立保持 120 分钟。
 
 `LEAN_REPORT` 可省略；默认输出为
 `.lake/build/stratalint/raw-lean-report.json`。相对目的路径按仓库根目录解析，
@@ -104,8 +112,14 @@ dependency is the mathematical-dependency-free Core module. Mathematical
 contract heads use fully qualified names; the existing `RawArtifacts` reader
 loads their compiled declarations at runtime. Root `make compiled-judge-test`
 delegates to [the test entrypoint](../scripts/compiled-judge-test.sh), which uses
-`make lean` to build the test library and both executables, then runs the native
-tests. The library's existing directory glob includes
+`make lean` to build the test library, both audit executables and the finite
+analysis executable, then runs the native tests. CI executes this entry only
+when the existing `tests-lean` unit is selected; its source list includes runtime
+D5/Reg inputs, fixtures, compiler, scripts and consumers. FIB behavior coverage
+uses one compiled fixture through the production consumer and two finite input
+batches against the native analysis executable. It does not mutate fixtures or
+force report regeneration. Source-binding regression execution follows the
+`tests-declared-template` selection. The library's existing directory glob includes
 [Fixtures/CompiledInputs.lean](LeanInformationAuditRegTests/Fixtures/CompiledInputs.lean);
 its imports register the runtime Reg inputs. Lake builds these dependencies and
 the fixture artifacts separately from the executable import graph; dispatchers
@@ -393,8 +407,9 @@ Utility refutations require the raw claim type `Prop` and the raw result type `N
 The implementation library contains the production artifact evaluator and its pure
 support modules. Tests and independent analyses live in the downstream host
 `tools/lean-inspector-reg`, which requires both Reg and Impl.
-The production report builds no test library. CI explicitly builds the full
-downstream test library and runs the native compiled judge tests.
+The ordinary production report builds no test library. The long cache producer
+builds the downstream test library and native programs without running tests.
+Ordinary CI runs the compiled judge tests when their owning unit is selected.
 `make compiled-judge-test` builds and runs the native tests against the same
 artifact evaluator used by production, including constructor discovery, source
 reconstruction, negative dependencies and catalog/seal checks. Fixed work and

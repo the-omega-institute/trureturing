@@ -8,6 +8,7 @@ internal sealed class NativeCutFibersDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "NativeCutFibers", H("NativeCutFibers"), Blocks(
             Entry("labels", "Actually occurring old classes", "The finite support contains exactly the names retained in the actual old row. No unused Nat coordinates become extra source information.", DescribeRole.Definition),
+            Entry("labels_canonical", "Occurring canonical names", "The occurring labels of a canonical row are exactly the image of its ordered reached holes under classOrdinal. This identifies the finite set counted in NativeSharpPredecessorFiber without assuming consecutive raw ordinals.", DescribeRole.Theorem),
             Entry("LegalValues", "Complete legal old-class valuations", "One value is reused at every occurrence of an old class. Injectivity on the entire appearing class set preserves every cross-class disequality, including classes outside the new cones.", DescribeRole.Definition),
             Entry("legal_values_row", "Actual old-row reconstruction", "Filling an actual canonical row by any entire legal valuation returns the same canonical row. The independent addressed exterior and full partition record prove the bridge. Every absent public cut retains its concrete original leaf guard.", DescribeRole.Theorem),
             Entry("RowFiber", "Entire actual old-row fiber", "The carrier is every actual original Boolean tree with the specified canonicalRow, without a size bound, sample restriction or product-fiber premise.", DescribeRole.Definition),
@@ -20,6 +21,7 @@ internal sealed class NativeCutFibersDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static StatementSource Statement(string n) => n switch
     {
+        "labels_canonical" => StatementSource.FromAuthor(Disp(All("P", V("CutSet"), All("u", V("Source"), EqOf(Call("labels", Call("canonicalRow", V("P"), V("u"))), Call("image", Call("toFinset", Call("orderedHoles", V("P"), V("u"))), Call("classOrdinal", V("P"), V("u")))))))),
         "legal_values_row" => StatementSource.FromAuthor(Disp(All("P", V("CutSet"), Imp(Call("CutPrefixFree", V("P")), All("u", V("Source"), All("v", Call("LegalValues", Call("canonicalRow", V("P"), V("u"))), EqOf(Call("canonicalRow", V("P"), Call("evaluateRow", Call("extend", Call("canonicalRow", V("P"), V("u")), Call("val", V("v"))), Call("canonicalRow", V("P"), V("u")))), Call("canonicalRow", V("P"), V("u"))))))))),
         _ => StatementSource.WithoutFormula()
     };
