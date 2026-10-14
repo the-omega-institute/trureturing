@@ -57,11 +57,34 @@ private theorem anchor_coordinates {m k : Nat} (F : SupplyFrame m k) :
     residualList (anchor F) = F.selected ++ F.base ∧
       anchor F (Fin.last m) = F.terminal := by
   have h := anchor_tuple F
-  rw [tuple_decompose, ← List.append_assoc] at h
+  rw [tuple_decompose] at h
   have hl : (residualList (anchor F)).length = (F.selected ++ F.base).length := by
     simp only [residualList, List.length_ofFn, F.prefix_length]
   obtain ⟨hp, ht⟩ := List.append_inj h hl
   exact ⟨hp, by simpa using ht⟩
+
+-- The same native rotation calculation used privately in NativeSwitches.
+private theorem native_bc_pow_val {m : ℕ} (hm : 2 ≤ m) (k : ℕ) (i : Fin (m + 1)) :
+    (((b m * c m) ^ k) i).val =
+      if i.val < m then (i.val + k) % m else i.val := by
+  have hmpos : 0 < m := by omega
+  induction k with
+  | zero =>
+    simp only [pow_zero, Equiv.Perm.one_apply, Nat.add_zero]
+    by_cases hi : i.val < m
+    · simp only [if_pos hi, Nat.mod_eq_of_lt hi]
+    · simp only [if_neg hi]
+  | succ k ih =>
+    rw [pow_succ', Equiv.Perm.mul_apply, bc_apply hm]
+    by_cases hi : i.val < m
+    · have hv : (((b m * c m) ^ k) i).val = (i.val + k) % m := by
+        simpa only [if_pos hi] using ih
+      simp only [hv, Nat.mod_lt _ hmpos, dite_true, Fin.val_mk, if_pos hi]
+      rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod]
+      rfl
+    · have hv : (((b m * c m) ^ k) i).val = i.val := by
+        simpa only [if_neg hi] using ih
+      simp only [hv, hi, dite_false, if_false]
 
 private theorem bc_prefix_tuple {m : Nat} (hm : 2 ≤ m)
     (z : Configuration m) (i : Nat) :
@@ -114,8 +137,8 @@ private theorem c_ne_one {m : Nat} (hm : 3 ≤ m) : c m ≠ 1 := by
   intro he
   have hv := congrArg (fun z : Configuration m => (z (0 : Fin (m + 1))).val) he
   simp only [c_apply, Fin.val_zero, Equiv.Perm.one_apply] at hv
-  rw [if_pos (by omega : 0 < m - 1)] at hv
-  omega
+  change (if (0 : Nat) < m - 1 then m - 2 - 0 else 0) = 0 at hv
+  split_ifs at hv <;> omega
 
 private theorem c_adj {m : Nat} (hm : 3 ≤ m) (x y : Configuration m)
     (hxy : x * c m = y) :
