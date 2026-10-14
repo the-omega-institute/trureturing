@@ -1,7 +1,10 @@
-/- UNCOMPILED independent helper candidate.
-   Reorders and reverses the pieces of one actual sliced Hamilton cycle.
-   No coverage or reordering certificate is a premise: those are derived
-   from the supplied cycle and actual cut membership. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualCyclePieceReordering
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualCyclePieceReordering
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Supplied actual cycle pieces are oriented along a route and joined with exact support and retained-edge inventories. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 import Mathlib.Data.List.FinRange

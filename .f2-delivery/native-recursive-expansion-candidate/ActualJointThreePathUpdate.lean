@@ -1,8 +1,10 @@
-/- UNCOMPILED actual three-path recombination for the J recurrence.
-   The P second-edge split and exhaustive Q two-cut split are recombined
-   using the actual outer chain and actual remaining c connection. New
-   paths earn simplicity, disjointness and exhaustive support from the
-   old actual pieces, rather than taking the new J pairing as a premise. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualJointThreePathUpdate
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualJointThreePathUpdate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Literal P and Q fragments and the real connector assemble three simple joint paths with exact support and edge permutations. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualJointRouteSlicing
 import Mathlib.Data.List.Perm.Basic
 

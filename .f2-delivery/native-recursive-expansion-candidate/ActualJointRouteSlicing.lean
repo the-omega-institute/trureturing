@@ -1,9 +1,10 @@
-/- UNCOMPILED actual Q slicing bridge.
-   The previous joint piece rooted at the first single-order port retains
-   its actual suffix. Restoring the other marked order makes it an actual
-   prefix of the first B path. The other new cut is forced into the B path
-   finishing at the old left-zero port. Their E/O route positions then
-   earn the two-cut order and three exhaustive fragments. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualJointRouteSlicing
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualJointRouteSlicing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual retained joint edges and ordered route cuts produce the literal P and Q fragments used by graph surgery. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualRouteCutOrder
 

@@ -1,9 +1,10 @@
-/- UNCOMPILED exhaustive actual J partition update.
-   The full source cycle supplies its literal support and edge inventories.
-   Three paths are recombined from the actual P/Q fragments; every other P
-   path is retained unchanged. The output partitions every vertex once,
-   retains exactly all uncut cycle edges, and has exactly as many pieces as
-   actual cuts. No target pairing or target slicing is a premise. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualJointPartitionUpdate
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualJointPartitionUpdate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual recombination exhausts one supplied Hamilton cycle and retains exactly its uncut edges with distinct actual cuts. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualJointThreePathUpdate
 
 set_option autoImplicit false

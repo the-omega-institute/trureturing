@@ -1,7 +1,10 @@
-/- UNCOMPILED actual-route helper for the J-state update.
-   Ordered cut positions are a conclusion of the literal support of an
-   actual joined route. Inputs identify the two real route pieces and their
-   real oriented cuts; no final i<j certificate or next pairing is an input. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualRouteCutOrder
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualRouteCutOrder
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Literal support of an actual joined route locates two directed cuts and earns their strict order and three actual fragments. -/
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 import D5.S3.Combinatorics.Graph.Walks.OrderedTwoCutSlicing
 import D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering

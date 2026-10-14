@@ -1,8 +1,10 @@
-/- UNCOMPILED path recovery helper.
-   Restoring the other marked order retains every old joint-piece edge.
-   An old joint path starting at a new single-order boundary endpoint is
-   therefore a literal front of that actual boundary path. This earns
-   internal cut occurrence from the previous joint state. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualPathRecoveryPrefix
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualPathRecoveryPrefix
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual retained inventories recover literal initial paths and restored crossing prefixes inside supplied simple boundary walks. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualPiecePrefix
 
 set_option autoImplicit false
