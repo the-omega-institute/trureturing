@@ -37,7 +37,7 @@ $$
 \frac78-B_{\mathrm{Sang}}=0.0001133.
 $$
 
-This is below the Liu v2 boundary already recorded in [the Liu source card](liu2026quasirh.md),
+This is below the Liu v2 boundary already recorded in [the Liu source card](../Analytic/liu2026quasirh.md),
 
 $$
 B_{\mathrm{Liu,v2}}=0.874957019420098946\ldots,

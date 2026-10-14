@@ -2405,163 +2405,21 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 461. 固定禁素集的最终 Robin 安全与固定秩 FIB 仿射族
+## 461. 变化秩问题的既有固定参数输入
 
-前面的固定种子、固定轨道和有限素数筛分别控制不同的量词。这里加入一条
-更窄但完整的尾部结论：先固定一个有限的禁素集，再让整数本身增长。它不
-重复 Assani--Chester--Paschal 对不含 $2,3,5$ 的显式门槛，也不重复
-§165、§199、§204 的固定 Fibonacci 种子或乘法轨道；它只使用经典的
-Mertens 乘积与素数定理作一个新的量词组合。没有给出统一于禁素集、固定秩
-或全部 FIB 地址的阈值，也没有声称原创性或 Lean 核验。
+固定禁素集的限制最大阶直接由 Tóth–Wirsing (2003), Corollary 2 给出。
+[增长模数文献笔记的固定参数应用](../../../Library/ArithSums/fibaffine2026growingmoduli.md)
+记录原文、$f(n)=\sigma(n)/n$、$S=\{p:p\mid m\}$ 的参数对应，及其
+对 $1+F_rg$ 的固定秩消费者。该已发表输入同时给出固定 $m$ 的严格
+尾部和因子 $c_m=\prod_{p\mid m}(1-p^{-1})$；本卷不重证它。
 
-### 定理 461.1（固定有限禁素集的最终严格 Robin）
-
-固定整数 $m>1$，令
-
-$$
-\mathcal P_m=\{p\text{ prime}:p\nmid m\}
-$$
-
-并按升序写为 $q_1<q_2<\cdots$。则存在 $N_m$，使得所有
-
-$$
-n>N_m,\qquad \gcd(n,m)=1
-$$
-
-都满足严格 Robin 不等式
-
-$$
-\frac{\sigma(n)}n<e^\gamma\log\log n.
-\tag{461.1}
-$$
-
-阈值 $N_m$ 依赖于 $m$；本定理不声称 $N_m=5040$，也不声称对 $m$ 变化
-时存在共同阈值。
-
-**证明。** 置
-
-$$
-Q_k=\prod_{j\le k}q_j,
-\qquad
-A_k=\prod_{j\le k}\frac{q_j}{q_j-1}.
-$$
-
-若 $n$ 与 $m$ 互素且有 $k=\omega(n)$ 个不同素因子，则这些素因子至少是
-$q_1,\ldots,q_k$，从而
-
-$$
-n\ge Q_k,
-\qquad
-\frac{\sigma(n)}n
- =\prod_{p^a\parallel n}\frac{1-p^{-a-1}}{1-p^{-1}}
- <A_k.
-\tag{461.2}
-$$
-
-令 $R_m=\operatorname{rad}(m)$、
-
-$$
-c_m=\prod_{p\mid m}\left(1-\frac1p\right)\in(0,1).
-$$
-
-当 $q_k$ 超过 $m$ 的最大素因子后，Mertens 乘积和素数定理给出
-
-$$
-A_k
- =\left(\prod_{p\le q_k}\left(1-\frac1p\right)^{-1}\right)c_m
- \sim e^\gamma c_m\log q_k,
-\tag{461.3}
-$$
-
-以及
-
-$$
-\log Q_k
- =\vartheta(q_k)-\log R_m
- \sim q_k,
-\qquad
-\log\log Q_k\sim\log q_k.
-\tag{461.4}
-$$
-
-因此
-
-$$
-\frac{A_k}{e^\gamma\log\log Q_k}\longrightarrow c_m<1.
-\tag{461.5}
-$$
-
-选择 $0<\eta<1-c_m$，则存在 $K$，使 $k\ge K$ 时
-
-$$
-A_k\le(1-\eta)e^\gamma\log\log Q_k.
-$$
-
-对满足 $\omega(n)=k\ge K$ 的 $n$，式（461.2）及 $n\ge Q_k$ 遂给
-
-$$
-\frac{\sigma(n)}n
- <(1-\eta)e^\gamma\log\log Q_k
- \le(1-\eta)e^\gamma\log\log n
- <e^\gamma\log\log n.
-$$
-
-剩下的 $k<K$ 只有一个固定上界 $A_{K-1}$。取 $N_m$ 足够大，使
-$N_m>5040$ 且 $e^\gamma\log\log n>A_{K-1}$ 对所有 $n>N_m$ 成立，
-便覆盖这些有限阶数情形。证毕。 $\square$
-
-这里的关键不是把缺失素数的影响当作一个可调误差，而是保留了固定的
-Euler 因子 $c_m<1$。若禁素集随 $n$ 增长，这个严格损失可能消失，故不能
-把定理的量词改成 $m=m(n)$。
-
-### 推论 461.2（固定秩的 FIB 仿射尾部）
-
-对每个固定 $r\ge3$，置
-
-$$
-N_{r,g}=1+F_rg,\qquad g\ge1.
-$$
-
-则存在 $G_r$，使得所有 $g\ge G_r$ 的 $N_{r,g}$ 满足严格 Robin 不等式。
-
-**证明。** 取定理 461.1 中的 $m=F_r$。因为
-
-$$
-N_{r,g}\equiv1\pmod{F_r},
-$$
-
-所以 $\gcd(N_{r,g},F_r)=1$；并且 $N_{r,g}\to\infty$。取 $G_r$ 使
-$N_{r,g}>N_{F_r}$ 对 $g\ge G_r$ 成立，即得结论。证毕。 $\square$
-
-推论 461.2 正好切掉固定秩仿射族的一个真实尾部，但它没有处理
-
-$$
-r=r(g)\to\infty,
-$$
-
-的变化秩族。也不能从逐个 $r$ 的阈值 $G_r$ 交换量词得到所有合法五窗口
-来源的统一 Robin 界。对当前 FIB 研究，剩余的真实缺口因此进一步收缩为：
-控制禁素因子集合 $\operatorname{supp}(F_r)$ 随秩变化时的统一阈值，或直接
-在变化秩来源上支付同一整数的完整素支撑与双对数预算。
-
-### 文献排重边界
-
-Robin 的等价判据、Grönwall 极限及 Mertens 乘积是经典输入；Choie--
-Lichiardopol--Moree--Solé 给出奇数等族的早期结果，Hertlein 给出包含
-固定 $2,3,5$ 特例在内的指数条件，Assani--Chester--Paschal 的 2025
-预印本用更初等的方式证明了“不被 $2$、$3$ 或 $5$ 整除”的全体
-$n>5040$ 版本。当前仓内文献库存没有把同一论证表述为任意固定有限禁素集的
-最终尾部，也没有把它接到 $1+F_rg$ 的固定秩仿射族；本节只登记这个仓内
-综合的量词推进，不把它报告为外部优先权。2026 年 Musin 的高阶 CA 接触、
-Mishra--Sarkar 的 $\omega$ 截断判据与 Molnar 的倒数 LCM 参数准则均已在
-文献卡中登记；它们不提供本推论所需的 FIB 同余桥，因此不再重复其证明。
-
-本节仍是理论散文推导，未新增 Lean 声明或冻结状态；它不证明 Robin 全称
-不等式，也不证明 RH。
+下面 §462 需要研究的是这个固定参数因子在 $m=F_r$ 变化时的退化，
+以及同一变化秩候选的完整 Robin 预算。固定秩的
+$\forall r\,\exists G_r\,\forall g\ge G_r$ 不能交换成共同阈值。
 
 ## 462. 素秩 Fibonacci 禁素因子的 Euler 余量窗口
 
-§461 的固定禁素集结论留下了一个具体的变化秩问题：固定证明所使用的
+§461 引用的固定禁素集结论留下了一个具体的变化秩问题：固定参数结果中的
 严格因子
 
 $$
@@ -2613,7 +2471,11 @@ $$
 
 得到左侧。
 
-再考虑右侧。任意 $p\mid F_r$ 的入口秩满足 $z(p)\mid r$；因 $r>5$
+对（462.1）的右侧，$p\ge2r-1$ 给
+$\omega(F_r)\log(2r-1)\le\log F_r<r\log\varphi$，故
+$\delta_r\le\omega(F_r)/(2r-1)$ 即得该显式界。
+
+对更强的（462.2），任意 $p\mid F_r$ 的入口秩满足 $z(p)\mid r$；因 $r>5$
 为素数，$p=2,5$ 被排除且 $z(p)=r$。因此
 
 $$
@@ -2656,7 +2518,7 @@ $$
 A_{r,k}\le(1-\eta)e^\gamma\log\log Q_{r,k}.
 $$
 
-**证明。** §461 的固定禁素集极限给出，对每个固定 $r$，
+**证明。** §461 所引的经典 Mertens 极限给出，对每个固定 $r$，
 
 $$
 \lim_{k\to\infty}
@@ -2676,7 +2538,7 @@ $A_{r,k}$ 只是约数比的上包络；真实整数的指数层、同一来源�
 
 ### 推论 462.3（固定禁素集路线的最坏分辨率代价）
 
-若只使用命题 462.1 的下界来选择 §461 证明中的严格余量，可以安全取
+若只使用命题 462.1 的下界来选择固定禁素集证书的严格余量，可以安全取
 
 $$
 \eta_r=\frac1{2F_r}\le\frac{\delta_r}{2}.
@@ -2704,8 +2566,7 @@ $$
 $$
 
 这只支付有限 Euler 乘积的误差；允许素数 primorial 与
-$\log\log Q_k$ 的比较、有限个低 $\omega$ 分支仍须按 §461 的原账本另行
-处理。因而（462.5）不是一个已经闭合的统一 Robin 阈值，而是当前路线的
+$\log\log Q_k$ 的比较、有限个低 $\omega$ 分支仍须另行处理。因而（462.5）不是一个已经闭合的统一 Robin 阈值，而是当前路线的
 可核查分辨率成本。
 
 若把 $x$ 视为最后一个允许素数，$\log Q_k\asymp x$ 的经典尺度关系还会
@@ -2829,7 +2690,7 @@ $p\ge2r-1$，而窗口中 $\log F_r\sim r\log\varphi$；因此对固定 $c<1$
 ## 464. 素秩 Fibonacci 支撑的局部修复分层
 
 上一节的超丰数整除条件只给出 $F_r$ 与小素数库存互素。这里接入一个不同
-的近期局部结果：[Chuysurichay--Jaidee--Panraksa--Ward 的 Dold 文献卡](../../../Library/Arith/chuysurichay2026fibdold.md)
+的近期局部结果：[Chuysurichay--Jaidee--Panraksa--Ward 的 Dold 文献卡](../../../Library/Scale/chuysurichay2026fibdold.md)
 的 Theorem 2.4 给出 Fibonacci 序列在每个素数 $p$ 处的精确修复因子。文献把
 入口秩记作 $\varphi(p)$；本节改写为 $z(p)$，以免与黄金比混淆。
 

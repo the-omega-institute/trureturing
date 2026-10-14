@@ -53,12 +53,12 @@ Using $k=92$ consecutive primes beginning at $M=7{,}608{,}793$ and the
 $\ell=47$ largest primes below
 
 $$
-B=29{,}582{,}000{,}000{,}000,
+P_*=29{,}582{,}000{,}000{,}000,
 $$
 
 the source checks both exchange inequalities after clearing denominators by
 exact integer arithmetic. It follows that every superabundant $n$ with
-$P^+(n)>B$ satisfies
+$P^+(n)>P_*$ satisfies
 
 $$
 \nu_p(n)\ge2\qquad(p\le7{,}608{,}793).
@@ -66,7 +66,7 @@ $$
 
 Vega's lower bound on the largest prime factor of a hypothetical least Robin
 counterexample among integers greater than 5040 places that source beyond
-$B$, so the same cutoff is a necessary condition for such a counterexample.
+$P_*$, so the same cutoff is a necessary condition for such a counterexample.
 The paper compares it with
 the earlier direct cutoff $5{,}438{,}903$ and with the collective-tail cutoff
 $233{,}911$.
@@ -121,7 +121,8 @@ rounded rank scales as certified boundaries.
 ## Finite Fibonacci-rank exclusion mask
 
 The valuation conclusion supplies a finite necessary-condition filter for the
-Fibonacci candidate family. Let $z(p)$ denote the least positive index with
+Fibonacci candidate family. In this section set $B=7\,608\,793$, distinct
+from the largest-prime threshold $P_*$ above. Let $z(p)$ denote the least positive index with
 $p\mid F_{z(p)}$, and define
 
 $$
@@ -188,6 +189,27 @@ $z(2)=3$, $z(3)=4$, and $z(5)=5$ already force
 $3\nmid r$, $4\nmid r$, and $5\nmid r$ for any such least-counterexample
 candidate. This is a necessary sieve only: membership in $\mathcal A_B$ does
 not establish Robin for $1+F_rg$.
+
+For the original multiplier window $g\in I_r$, the entire enumerated
+prime-rank mask lies below Axler's existing finite range. Indeed,
+$F_r<2^r$ gives
+
+$$
+\log(1+gF_r)<2r\le7\,608\,794
+\qquad(r\in R_B,\ g\in I_r).
+$$
+
+By contrast, with $K=999999476056$ from Axler's Lemma 2.3,
+
+$$
+\log N_K\ge K\log2>K/2=499999738028.
+$$
+
+Thus every such integer greater than 5040 already satisfies Robin by that
+lemma, independently of the block-exchange certificate. This comparison
+is for the enumerated prime ranks and the stated bounded window; it does
+not bound candidates with unrestricted $g$ or all composite ranks in
+$\mathcal A_B$.
 
 This is a parameter application of existing CRT and size comparisons,
 not a new estimate. Its low-rank scales are already inside the finite
