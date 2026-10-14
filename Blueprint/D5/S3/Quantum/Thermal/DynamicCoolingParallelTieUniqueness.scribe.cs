@@ -156,8 +156,7 @@ internal sealed class DynamicCoolingParallelTieUniquenessDocument : IScribeDocum
                 Equal(LocalCall("coherence", evolved, X("alpha")), D(0)))));
         Formula predicate = Some("U", RegisterMatrix(), And(
             Member(X("U"), At(Qualified("Matrix", "unitaryGroup"), Register(), Complexes())), targets));
-        Formula set = Seq(
-            OpenBrace, X("g"), Colon, Sp, Reals(), Sp, Mid, Sp, predicate, CloseBrace);
+        Formula set = Seq(OpenBrace, X("g"), Colon, Sp, Reals(), Sp, Mid, Sp, predicate, CloseBrace);
         return All("N", Naturals(), All("M", Naturals(), All("P", Reals(), Equal(
             LocalCall("feasible", X("N"), X("M"), X("P")), set))));
     }

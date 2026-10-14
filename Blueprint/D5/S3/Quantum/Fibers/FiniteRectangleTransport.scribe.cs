@@ -24,8 +24,7 @@ internal sealed class FiniteRectangleTransportDocument : IScribeDocumentDefiniti
             DescribeRole.Theorem))));
 
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
-    private static Formula Apply(Formula f, Formula x) => Seq(f, Parenthesized(x));
+    private static Formula Apply(Formula f, Formula x) => Seq(f, Open, x, Close);
     private static Formula Part(string name, Formula q, Formula t) => Call(name, Apply(q, t));
 
     private static Formula Statement()
@@ -42,19 +41,19 @@ internal sealed class FiniteRectangleTransportDocument : IScribeDocumentDefiniti
             Call("ValidBase", b), Rightarrow, RowBreak, Grp(),
             Forall, Sp, kzero, InMacro, Sp, interval, Comma, Sp,
             Forall, Sp, menu, Colon, Call("List", Seq(R, Caret, Grp(D(2)))), Comma, RowBreak, Grp(),
-            Parenthesized(Seq(Forall, Sp, e, InMacro, Sp, menu, Comma, Sp,
-                Call("fst", e), InMacro, Sp, interval)), Rightarrow, RowBreak, Grp(),
+            Open, Forall, Sp, e, InMacro, Sp, menu, Comma, Sp,
+            Call("fst", e), InMacro, Sp, interval, Close, Rightarrow, RowBreak, Grp(),
             Exists, Sp, q, Colon, Seq(R, To, Sp, Operatorname, Grp(F.Id("State"))), Comma, Sp,
             Call("Admissible", b, duration, q), Land, RowBreak, Grp(),
-            Apply(q, D(0)), Eq, Parenthesized(Seq(kzero, Comma, D(0), Comma, D(0))), Land, RowBreak, Grp(),
+            Apply(q, D(0)), Eq, Open, kzero, Comma, D(0), Comma, D(0), Close, Land, RowBreak, Grp(),
             Part("kappa", q, duration), Eq, kzero, Land, Sp,
             Part("chi", q, duration), Eq, D(0), Land, RowBreak, Grp(),
-            Parenthesized(Seq(Forall, Sp, t, InMacro, Sp, OpenBracket, D(0), Comma, duration, CloseBracket,
-                Comma, Sp, Exists, Sp, p, Colon, Call("InteriorProbability", D(4)), Comma, Sp,
-                Call("weight", p), Eq, Call("probability", b, Part("kappa", q, t)))),
+            Open, Forall, Sp, t, InMacro, Sp, OpenBracket, D(0), Comma, duration, CloseBracket,
+            Comma, Sp, Exists, Sp, p, Colon, Call("InteriorProbability", D(4)), Comma, Sp,
+            Call("weight", p), Eq, Call("probability", b, Part("kappa", q, t)), Close,
             Land, RowBreak, Grp(),
-            Parenthesized(Seq(Forall, Sp, t, InMacro, Sp, OpenBracket, D(0), Comma, duration, CloseBracket,
-                Comma, Sp, Call("Compatible", Apply(q, t)))), Land, RowBreak, Grp(),
+            Open, Forall, Sp, t, InMacro, Sp, OpenBracket, D(0), Comma, duration, CloseBracket,
+            Comma, Sp, Call("Compatible", Apply(q, t)), Close, Land, RowBreak, Grp(),
             Part("phase", q, duration), Eq, target,
             End, Grp(F.Id("gathered"))));
     }

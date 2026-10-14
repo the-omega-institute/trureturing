@@ -805,10 +805,8 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     + "beyond sum_j w_j^2. The eight conclusions here are applications of existing mathematics, with zero new Lean mathematical declarations, Describe "
                     + "blocks or library-novelty credit. C07 and canonical C09/A17 remain outside this extension; no completion of the parent problem is asserted.")))))));
 
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
-
     private static Formula ActualEtaLimitFormula() => Disp(Call("Tendsto",
-        Seq(Parenthesized(Seq(Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")))),
+        Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,
             Sp, Mapsto, Sp, Frac, Grp(Call("actualEta", Varepsilon)),
             Grp(Sqrt, Grp(Varepsilon))),
         Call("nhdsWithin", Num(0), Call("Ioi", Num(0))),
@@ -816,7 +814,7 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
             Grp(Num(2), Sp, Cdot, Sp, Sqrt, Grp(Num(2)))))));
 
     private static Formula RankDefectGainLimitFormula() => Disp(Call("Tendsto",
-        Seq(Parenthesized(Seq(Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")))),
+        Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,
             Sp, Mapsto, Sp, Frac,
             Grp(Num(2), Sp, Minus, Sp, Call("actualRank", Varepsilon)),
             Grp(Call("lowerGain", Varepsilon))),

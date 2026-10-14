@@ -72,11 +72,9 @@ internal sealed class GerzonEqualityParameterIdentityDocument : IScribeDocumentD
     private static Formula Count => Apply(Qualified("Nat", "choose"), Parenthesized(Seq(V("d"), Sp, Plus, Sp, D(1))), D(2));
     private static Formula Pairing(Formula i, Formula j) => Call("B", Apply(Varphi, i), Apply(Varphi, j));
     private static Formula Instances(bool finite, Formula body) => finite
-        ? Seq(
-            OpenBracket, Call("Field", V("F")), CloseBracket, Sp,
+        ? Seq(OpenBracket, Call("Field", V("F")), CloseBracket, Sp,
             OpenBracket, Call("Fintype", V("F")), CloseBracket, Sp, body)
-        : Seq(
-            OpenBracket, Call("Field", V("F")), CloseBracket, Sp, body);
+        : Seq(OpenBracket, Call("Field", V("F")), CloseBracket, Sp, body);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Typed(Formula name, Formula type) => Parenthesized(Seq(name, Sp, Colon, Sp, type));
     private static Formula All(Formula name, Formula type, Formula body) => Seq(Forall, Sp, Typed(name, type), Comma, Sp, body);

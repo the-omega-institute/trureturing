@@ -121,8 +121,7 @@ internal sealed class RebitExclusionDistanceDocument : IScribeDocumentDefinition
         Formula attained = Some("rho", FamilyType(), Some("E", FamilyType(), And(
             LocalCall("IsRebitStrategy", X("rho"), X("E")),
             Equal(X("d"), LocalCall("dist", X("rho"), X("E"))))));
-        Formula distances = Seq(
-            OpenBrace, X("d"), Colon, Sp, Reals(), Sp, Mid, Sp, attained, Sp, CloseBrace);
+        Formula distances = Seq(OpenBrace, X("d"), Colon, Sp, Reals(), Sp, Mid, Sp, attained, Sp, CloseBrace);
         return Equivalent(Local("claim"), At(Qualified("IsLeast"), distances,
             new Formula.Fraction(D(1), D(1, 2))));
     }
