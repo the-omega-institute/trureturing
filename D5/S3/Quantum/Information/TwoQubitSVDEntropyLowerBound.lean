@@ -8,7 +8,13 @@
 
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
-import Mathlib.LinearAlgebra.Matrix.Adjugate
+
+/-!
+For two-qubit coefficient matrices, the adjugate complement identity bounds the square
+of the trace of the transition's absolute value by one. After normalization, its determinant
+is at least the smaller reduced-state determinant. Qubit entropy increases with this determinant.
+The spectral entropy uses natural logarithms, including zero eigenvalues.
+-/
 
 noncomputable section
 open Matrix
@@ -54,8 +60,9 @@ private theorem svdDensity_posSemidef (T : Matrix (Fin 2) (Fin 2) ℂ) :
 
 private theorem reducedTransition_eq_mul (A B : Matrix (Fin 2) (Fin 2) ℂ) :
     reducedTransition A B = A * Bᴴ := by
+  rw [reducedTransition.eq_1]
   ext i j
-  simp only [reducedTransition, partialTraceRight, Matrix.vecMulVec, Function.uncurry,
+  simp only [partialTraceRight, Matrix.vecMulVec, Function.uncurry,
     Pi.star_apply, Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply]
 
 private theorem reducedDensity_trace (A : Matrix (Fin 2) (Fin 2) ℂ) :
@@ -224,7 +231,7 @@ private theorem qubit_entropy_parameter (R : Matrix (Fin 2) (Fin 2) ℂ)
       D5.S3.Quantum.CloningMachine.binaryEntropyBits
         ((1 - Real.sqrt (1 - 4 * R.det.re)) / 2) =
       Real.binEntropy ((1 - Real.sqrt (1 - 4 * R.det.re)) / 2) / Real.log 2 using 1
-    · congr 2 <;> ring
+    · congr 2; ring
     simp only [D5.S3.Quantum.CloningMachine.binaryEntropyBits, Real.logb,
       Real.binEntropy, Real.log_inv]
     ring
@@ -238,6 +245,7 @@ private theorem qubit_entropy_mono_det {R S : Matrix (Fin 2) (Fin 2) ℂ}
   rw [hep, heq]
   exact binEntropy_mono_product hp hq (by simpa only [← hdp, ← hdq] using hdet)
 
+/-- SVD entanglement entropy dominates the smaller of the two input entanglement entropies. -/
 theorem result : claim := by
   intro A B hA hB hT
   have hρA := reducedDensity_posSemidef A
