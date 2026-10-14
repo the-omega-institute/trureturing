@@ -61,7 +61,7 @@ private noncomputable def finalParentIso {m : ℕ} (hm : 3 ≤ m) :
       SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m)) :=
   fullParentDomainIso (finalFrame m) (final_base_length hm)
 
-/- UNCOMPILED new boundary consumer of the unconditional J2 construction.
+/- The six-label boundary consumer uses the unconditional J2 construction.
    No all-size result is claimed until the all-k induction is earned. -/
 private theorem native_six_hamiltonian_cycle :
     ∃ base : Configuration 5,

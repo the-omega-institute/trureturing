@@ -4,12 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual native two-label witnesses construct an unconditional full parent Hamilton cycle. -/
-/- UNCOMPILED unconditional two-selected-label parent construction.
+   digest: Actual two-label witnesses construct an unconditional parent Hamilton cycle. -/
+/- Unconditional two-selected-label parent construction.
    The special path uses the literal false-half pieces of one native F2
    cycle. Each other child uses its own native frame cycle and earned
-   remaining-b cut. Independent child coverage earns the parent cycle.
-   Candidate recursive-assembly dependencies still await kernel checks. -/
+   remaining-b cut. Independent child coverage earns the parent cycle. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2HalfPaths
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialBoundaryInstances
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
