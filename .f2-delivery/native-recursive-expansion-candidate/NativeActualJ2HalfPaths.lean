@@ -3,7 +3,7 @@
    domain of a supplied prior F2 cycle. The retained inventory is stated
    against that same supplied w, including the literal barred exception. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
-import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+import D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 
 set_option autoImplicit false
 
@@ -18,8 +18,15 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+open D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 open private half_adj_iff from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
+
+/-- The actual subtype cuts retain their literal raw three-cut side. -/
+noncomputable def actualHalfCuts {m : ℕ} (D : Configuration m → Prop) (side : Bool) :
+    Finset (Sym2 {x : Configuration m // D x}) := by
+  classical
+  exact Finset.univ.filter (fun e => HalfCut m side (Sym2.map Subtype.val e))
 
 /-- The actual half-restored paths live in the same independent domain and
 retain precisely the selected prior cycle's edges minus the selected three
@@ -28,7 +35,7 @@ The end tables remain `halfStart/halfFinish` in their original native order. -/
 theorem native_actual_j2_half_paths {m : ℕ} (hm : 5 ≤ m) (side : Bool)
     (D : Configuration m → Prop) (hD : ∀ x, D x ↔ F2Domain m x)
     {base : {x : Configuration m // D x}}
-    (w : (domainGraph D).Walk base base)
+    (w : (domainGraph D).Walk base base) (hw : w.IsHamiltonianCycle)
     (hinv : ∀ e, e ∈ w.edges.map (Sym2.map Subtype.val) ↔
       (F2NativeEdge m e ∧ ¬ F2DeletedEdge m e) ∨ F2Seam m e) :
     ∃ pieces : Fin 3 → Piece (domainGraph D),
@@ -36,9 +43,13 @@ theorem native_actual_j2_half_paths {m : ℕ} (hm : 5 ≤ m) (side : Bool)
         (pieces i).finish.val = port m (halfFinish side i)) ∧
       (∀ i, (pieces i).walk.IsPath) ∧
       (∀ v : {x : Configuration m // D x}, ∃! i, v ∈ (pieces i).walk.support) ∧
-      ∀ e, e ∈ (List.ofFn fun i =>
+      (∀ e, e ∈ (List.ofFn fun i =>
         (pieces i).walk.edges.map (Sym2.map Subtype.val)).flatten ↔
-          e ∈ w.edges.map (Sym2.map Subtype.val) ∧ ¬ HalfCut m side e := by
+          e ∈ w.edges.map (Sym2.map Subtype.val) ∧ ¬ HalfCut m side e) ∧
+      ((List.ofFn pieces).flatMap fun p => p.walk.support).Perm w.support.tail ∧
+      ((List.ofFn pieces).flatMap fun p => p.walk.edges).Perm
+        (w.edges.filter fun e => decide (e ∉ actualHalfCuts D side)) ∧
+      (∀ e ∈ actualHalfCuts D side, e ∈ w.edges) := by
   classical
   obtain ⟨paths, hpath, hreach, _, hcover, hflat⟩ := native_j2_half_component_partition hm side
   let ambient := SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))
@@ -91,21 +102,49 @@ theorem native_actual_j2_half_paths {m : ℕ} (hm : 5 ≤ m) (side : Bool)
     · intro hv
       obtain ⟨u, hu, huv⟩ := List.mem_map.mp hv
       exact (Subtype.ext huv) ▸ hu
-  refine ⟨pieces, fun _ => ⟨rfl, rfl⟩, ?_, ?_, ?_⟩
-  · intro i
+  have hpaths (i : Fin 3) : (pieces i).walk.IsPath := by
     apply SimpleGraph.Walk.IsPath.of_map (f := forget)
     rw [hmap]
     exact (hpath i).mapLe hsub
-  · intro v
+  have hcoverage (v : {x : Configuration m // D x}) :
+      ∃! i, v ∈ (pieces i).walk.support := by
     obtain ⟨i, hi, huniq⟩ := (hcover v.val).mp ((hD v.val).mp v.property)
     exact ⟨i, (hsupport i v).mpr hi, fun j hj => huniq j ((hsupport j v).mp hj)⟩
-  · intro e
+  have hflatRaw (e : Sym2 (Configuration m)) :
+      e ∈ (List.ofFn fun i =>
+        (pieces i).walk.edges.map (Sym2.map Subtype.val)).flatten ↔
+          e ∈ w.edges.map (Sym2.map Subtype.val) ∧ ¬ HalfCut m side e := by
     have heq : (List.ofFn fun i => (pieces i).walk.edges.map (Sym2.map Subtype.val)).flatten =
         (List.ofFn fun i => (paths i).edges).flatten := by
       congr 1
       exact congrArg List.ofFn (funext hemap)
     rw [heq, hflat, hinv]
     rfl
+  have hflatMap : (((List.ofFn pieces).flatMap fun p => p.walk.edges).map
+      (Sym2.map Subtype.val)) = (List.ofFn fun i =>
+        (pieces i).walk.edges.map (Sym2.map Subtype.val)).flatten := by
+    simp only [List.map_flatMap, List.flatMap, List.map_ofFn]
+    rfl
+  have hmember (l : List (Sym2 {x : Configuration m // D x}))
+      (e : Sym2 {x : Configuration m // D x}) :
+      Sym2.map Subtype.val e ∈ l.map (Sym2.map Subtype.val) ↔ e ∈ l := by
+    exact List.mem_map_of_injective (Sym2.map.injective Subtype.val_injective)
+  have hedge (e : Sym2 {x : Configuration m // D x}) :
+      e ∈ ((List.ofFn pieces).flatMap fun p => p.walk.edges) ↔
+        e ∈ w.edges ∧ e ∉ actualHalfCuts D side := by
+    rw [← hmember, hflatMap, hflatRaw, hmember]
+    simp only [actualHalfCuts, Finset.mem_filter, Finset.mem_univ, true_and]
+  obtain ⟨hs, he⟩ := actual_path_family_cycle_inventory pieces hpaths hcoverage w hw
+    (actualHalfCuts D side) hedge
+  refine ⟨pieces, fun _ => ⟨rfl, rfl⟩, hpaths, hcoverage, hflatRaw, hs, he, ?_⟩
+  intro e hecut
+  have hcut : HalfCut m side (Sym2.map Subtype.val e) := by
+    simpa only [actualHalfCuts, Finset.mem_filter, Finset.mem_univ, true_and] using hecut
+  obtain ⟨i, hi⟩ := hcut
+  apply (hmember w.edges e).mp
+  rw [hi]
+  obtain ⟨_, _, _, hinv₀, _, hmarked⟩ := native_j2_hamiltonian_cycle_with_marked_edges hm
+  exact (hinv _).mpr ((hinv₀ _).mp (hmarked (i, side)))
 
 #print axioms native_actual_j2_half_paths
 

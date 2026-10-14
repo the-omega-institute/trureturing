@@ -4,7 +4,7 @@
    occurrence from the distinguished joint path; all old marked edges
    are restored. This earns the full P inventory used by the parent J
    update, without assuming that parent inventory or a next pairing. -/
-import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+import D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 import Mathlib.Data.List.Perm.Basic
 
 set_option autoImplicit false
@@ -12,27 +12,10 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.Walks.ActualOpenedChildInventory
 
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+open D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 
 universe u
 variable {V : Type u} [DecidableEq V] {G : SimpleGraph V}
-
-/-- A vertex-disjoint actual path partition cannot repeat an undirected
-edge, even across different pieces. -/
-private theorem actual_partition_edges_nodup (pieces : List (Piece G))
-    (hn : (pieces.flatMap fun p => p.walk.support).Nodup) :
-    (pieces.flatMap fun p => p.walk.edges).Nodup := by
-  obtain ⟨hpaths, hdis⟩ := List.nodup_flatMap.mp hn
-  apply List.nodup_flatMap.mpr
-  refine ⟨?_, hdis.imp ?_⟩
-  · intro p hp
-    exact (SimpleGraph.Walk.IsPath.mk' (hpaths p hp)).isTrail.edges_nodup
-  · intro p q hd
-    apply List.disjoint_left.mpr
-    intro e he₁ he₂
-    obtain ⟨⟨x, y⟩, rfl⟩ := Sym2.mk_surjective e
-    exact List.disjoint_left.mp hd
-      (p.walk.fst_mem_support_of_mem_edges he₁)
-      (q.walk.fst_mem_support_of_mem_edges he₂)
 
 /-- The ordinary P supplier path has the full previous joint inventory,
 with only its actual second prefix edge removed and every old marked edge
@@ -58,7 +41,7 @@ theorem actual_opened_child_from_joint_partition
   have hjn : ((⟨ℓ, z, d⟩ :: rest).flatMap fun p : Piece G => p.walk.support).Nodup :=
     List.nodup_iff_count_le_one.mpr (fun v => by rw [hjfull v])
   let kept := s(ℓ, s) :: (tail.edges ++ rest.flatMap fun p => p.walk.edges)
-  have hn := actual_partition_edges_nodup (⟨ℓ, z, d⟩ :: rest) hjn
+  have hn := actual_path_partition_edges_nodup (⟨ℓ, z, d⟩ :: rest) hjn
   have hnold : (s(ℓ, s) :: s(s, t) ::
       (tail.edges ++ rest.flatMap fun p => p.walk.edges)).Nodup := by
     simpa only [List.flatMap_cons, hd, SimpleGraph.Walk.edges_cons,
