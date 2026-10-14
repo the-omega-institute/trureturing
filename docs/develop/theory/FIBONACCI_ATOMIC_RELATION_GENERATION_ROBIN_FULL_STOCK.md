@@ -2886,6 +2886,19 @@ $\gcd(r,p-1)=1$，故该比值为 $r$。代入文献 Theorem 2.4 得（464.1）�
 若 $F_r\equiv\pm2\pmod5$，则 $\mathcal P_r^-$ 必非空，因为只由
 $\pm1\pmod5$ 的素数幂组成的乘积不可能同余于 $\pm2\pmod5$。
 
+Fibonacci 数模 $5$ 的周期为 $20$。因此对素数 $r>5$，还可把这个充分条件写成
+
+$$
+r\equiv3,7,13,17\pmod{20}
+\quad\Longrightarrow\quad
+\operatorname{lcm}_{p\mid F_r}\operatorname{Fail}_p(F)=r.
+\tag{464.3}
+$$
+
+这覆盖素数秩的四个约化剩余类；其余四类不能由模 $5$ 的乘积单独判定。
+例如 $r=31\equiv11\pmod{20}$ 时，$F_{31}=557\cdot2417$ 的两个支撑素数仍都
+属于 $\mathcal P_r^-$，说明（464.3）是充分条件而非分类的逆命题。
+
 命题 464.1 是一个新的素切面：它把同一 $F_r$ 的素支撑区分为“局部可直接
 实现”和“必须支付 $r$ 级修复”的两类。它仍不提供 $N_{r,g}=1+F_rg$ 的
 素数幂赋值，也不控制 $\sigma(N_{r,g})/N_{r,g}$ 的有符号 Robin 余量；因此
