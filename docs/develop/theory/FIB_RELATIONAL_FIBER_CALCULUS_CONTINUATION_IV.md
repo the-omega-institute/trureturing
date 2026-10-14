@@ -1334,3 +1334,17 @@ unmerged IV text was deleted. Initialization, acquisition, source promises,
 installation, selection, literal delivery, primitive execution, response
 writing, and output remain separately supplied and charged. No physical-service,
 termination, latency, total-cost, or kernel-validation conclusion follows.
+
+## 55. Mathematical citation for the sparse parity example in §53
+
+**Citation convention (for §53).** The phrase “sparse parity controllers
+such as SLHC §13” in §53 designates [SLHC §14, Theorem 14.2 and
+Corollary 14.3][FIB55-SLHC]: the redundant realization of the entire
+Construction 11.5 table, with fixed halts and the original call trace.
+SLHC §13, “Bounded genuine Updates and binary-size native acquisition”,
+has a different clock-cell construction; it is not the construction
+designated by this particular citation.
+
+[FIB55-SLHC]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT_CONTINUATION.md#14-unknown-shape-parity-with-no-added-routing-calls
+
+## 追加锚（本行以下为增补区）
