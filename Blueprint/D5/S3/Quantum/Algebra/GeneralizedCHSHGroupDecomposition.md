@@ -238,6 +238,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cui-mehta-mousavi-nezhadi-2020-chsh-group-decomposition` (proved) by `D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cui-mehta-mousavi-nezhadi-2020-chsh-group-decomposition","declaration_gid":"D5/S3/Quantum/Algebra/GeneralizedCHSHGroupDecomposition.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Cui; A. Mehta; H. Mousavi; S. S. Nezhadi (2020). *A generalization of CHSH and the algebraic structure of optimal strategies*. DOI: [10.22331/q-2020-10-21-346](https://doi.org/10.22331/q-2020-10-21-346). URL: <https://arxiv.org/abs/1911.01593>.

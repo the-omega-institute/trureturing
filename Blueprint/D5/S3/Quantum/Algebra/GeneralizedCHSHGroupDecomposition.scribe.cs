@@ -61,15 +61,19 @@ internal sealed class GeneralizedCHSHGroupDecompositionDocument : IScribeDocumen
             Node("claim", "The uniform decomposition", ClaimFormula(),
                 "Section 1.4 (Further work), item 2, printed p. 7: \"In Section 5, we give efficient explicit presentations for G_n and its multiplication table. Can we go further and characterize these groups in terms of direct and semidirect products of small well-known groups? The first few cases are as follows\" The encoding answers this question for every natural n >= 2 by an actual multiplicative equivalence. C_m is Multiplicative (ZMod m); the elementary abelian factor uses Fin (n-2), and alpha is the displayed action.", AssessedProvenance.FromRepo(Source)),
             Node("result", "The decomposition theorem", Call("claim"),
-                "The forward homomorphism sends P0 to inr(ofAdd 1), P1 to inl(s) times inr(ofAdd 1), and J to inl(s^2). In the presented group, the elements P0^i P1^(-i) commute, allowing the inverse map from L. Its compatibility with conjugation by P0 gives a homomorphism from the semidirect product. Both composites fix the generators, so the maps form a multiplicative equivalence. No group-order computation is used.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                "The forward homomorphism sends P0 to inr(ofAdd 1), P1 to inl(s) times inr(ofAdd 1), and J to inl(s^2). In the presented group, the elements P0^i P1^(-i) commute, allowing the inverse map from L. Its compatibility with conjugation by P0 gives a homomorphism from the semidirect product. Both composites fix the generators, so the maps form a multiplicative equivalence. No group-order computation is used.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cui-mehta-mousavi-nezhadi-2020-chsh-group-decomposition"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("cmmn-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
