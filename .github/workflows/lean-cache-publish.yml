@@ -1,120 +1,21 @@
 name: Lean build cache publication
 
-# Scheduled runs keep the protected-dev Release publication contract. Manual
-# runs share the cache core with PR labels and automatic protected pushes.
-# Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
-# allow up to the GitHub-hosted 360-minute job limit.  Example:
-# gh workflow run lean-cache-publish.yml --ref dev \
-#   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
-  pull_request:
-    branches: [dev, 'integration-**']
-    types: [labeled]
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
-    inputs:
-      source_ref:
-        description: 'Exact protected source ref (refs/heads/dev or refs/heads/integration-...)'
-        required: true
-        type: string
-        default: refs/heads/dev
-      source_sha:
-        description: '40-hex commit reachable from source_ref; the producer checks this pin'
-        required: true
-        type: string
 
 permissions: {}
 
 jobs:
-  manual-producer:
-    name: Produce the protected branch Lean cache
-    permissions:
-      contents: write
-      actions: write
+  compatibility-probe:
+    name: Verify mathlib upgrade against the prepared dev increment
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 360
-    concurrency:
-      group: lean-cache-branch-${{ github.ref }}
-      cancel-in-progress: false
-    env:
-      STRATALINT_CACHE_WRITES: 'true'
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
-          fetch-depth: 2
-          persist-credentials: false
-      - name: Validate the manual source ref and immutable pin
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          SOURCE_REF: ${{ inputs.source_ref }}
-          SOURCE_SHA: ${{ inputs.source_sha }}
-          WORKFLOW_REF: ${{ github.ref }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-          [[ "$SOURCE_REF" == "$WORKFLOW_REF" ]] || {
-            echo "CACHE_SOURCE_ERROR source_ref must equal the workflow dispatch ref" >&2
-            exit 2
-          }
-          [[ "$SOURCE_REF" =~ ^refs/heads/(dev|integration-[A-Za-z0-9._/-]+)$ ]] || {
-            echo "CACHE_SOURCE_ERROR source ref is outside dev/integration protected scope" >&2
-            exit 2
-          }
-          git check-ref-format "$SOURCE_REF" >/dev/null || {
-            echo "CACHE_SOURCE_ERROR source ref is not a valid Git ref" >&2
-            exit 2
-          }
-          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ && "$SOURCE_SHA" != "$(printf '%040d' 0)" ]] || {
-            echo "CACHE_SOURCE_ERROR source_sha must be a nonzero 40-hex SHA" >&2
-            exit 2
-          }
-          branch="${SOURCE_REF#refs/heads/}"
-          protected="$(gh api "repos/$REPOSITORY/branches/$branch" --jq '.protected')"
-          [[ "$protected" == true ]] || {
-            echo "CACHE_SOURCE_ERROR source branch is not protected" >&2
-            exit 2
-          }
-          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" --jq '.merge_base_commit.sha')"
-          [[ "$merge_base" == "$SOURCE_SHA" ]] || {
-            echo "CACHE_SOURCE_ERROR source_sha is not an ancestor of the protected branch" >&2
-            exit 2
-          }
-          {
-            echo "STRATALINT_CACHE_SOURCE_REF=$SOURCE_REF"
-            echo "STRATALINT_CACHE_SOURCE_COMMIT=$SOURCE_SHA"
-            echo "STRATALINT_CACHE_CHECKED_OUT_SHA=$SOURCE_SHA"
-            echo "STRATALINT_CACHE_SOURCE_VALIDATED=true"
-          } >> "$GITHUB_ENV"
-      - name: Validate candidate and strip checkout remote
-        env:
-          CI_HIT_PATHS: '*'
-          CI_PUSH_BEFORE: ${{ github.event.before }}
-        run: |
-          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
-            export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
-          fi
-          bash tools/scripts/workflow/ci-entry.sh
-      - name: Produce the Actions cache
-        uses: ./.github/actions/lean-cache-produce
-
-  pr-producer:
-    name: Produce the pull request Lean cache
-    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'lean-cache-produce'
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 360
+    timeout-minutes: 120
     permissions:
       contents: read
       actions: read
-    concurrency:
-      group: lean-cache-pr-${{ github.event.pull_request.number }}
-      cancel-in-progress: false
     env:
-      STRATALINT_CACHE_WRITES: 'true'
-      STRATALINT_CACHE_PR_PRODUCER: 'true'
+      STRATALINT_CACHE_WRITES: 'false'
     steps:
       - uses: actions/checkout@v5
         with:
@@ -126,34 +27,11 @@ jobs:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Produce the Actions cache
-        uses: ./.github/actions/lean-cache-produce
-
-  publish:
-    name: Publish the Lean build cache
-    if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
-    permissions:
-      contents: write
-      actions: write
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
-    env:
-      STRATALINT_CACHE_WRITES: 'false'
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 2
-          persist-credentials: false
-      - name: Validate candidate and strip checkout remote
-        env:
-          CI_HIT_PATHS: '*'
-        run: bash tools/scripts/workflow/ci-entry.sh
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - name: Build the scheduled Release producer
-        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+      - name: Build the Lean producer for the PR seed
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
       - id: keys
         env:
           GH_TOKEN: ${{ github.token }}
@@ -180,16 +58,116 @@ jobs:
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
+          key: ${{ steps.keys.outputs.project_restore_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional validated seeds
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Publish the protected-dev Release snapshot
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Compile and inspect the compatibility roots
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-to-github-without-mathlib
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          set -euo pipefail
+          unset LEAN_NUM_THREADS
+          mkdir -p build/lean-cache
+          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
+          if [[ -n "$producer" ]]; then
+            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+          else
+            unset STRATALINT_LEAN_PRODUCER_DLL
+          fi
+          compatibility_roots=(
+            D5.S1.Eigenstructure.CommonEigenvalueFieldDegree
+            D5.S1.Words.AdmissibleWords.FibonacciGrayPath
+            D5.S3.Analytic.LowerHalfPlaneFactorContinuity
+            D5.S3.Analytic.SeriesInequalities.UniformTailAmplification
+            D5.S3.Arith.FibonacciAtomic.Observer.CompletionHomogeneousFixedPoints
+            D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeBirthVectorDecoder
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionSupportClosure
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeControlConjugacy
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciActiveTable
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeFullRootFeasibility
+            D5.S3.Arith.FibonacciAtomic.Observer.NativePrefixIdentityReflection
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeRankedEqualityCompiler
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber
+            D5.S3.Arith.FibonacciAtomic.Observer.NativeWholeRowPlan
+            D5.S3.Arith.ModularForms.HeckeCoefficientFieldDegree
+            D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleTerminalEdge
+            D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2CutLabels
+            D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
+            D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeInventory
+            D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2NativeInventory
+            D5.S3.Combinatorics.Graph.PrefixReversal.NativeFiveBase
+            D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+            D5.S3.Combinatorics.Graph.Walks.ActualPiecePrefix
+            D5.S3.Fourier.RepresentativeOrbitCoordinates
+            D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
+            D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
+            D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalLawTrimming
+            D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalMarkedLaw
+            D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveSupportPresentation
+            D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
+            D5.S3.Quantum.Algebra.CStarSmaleHigherOrder
+            D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
+            D5.S3.Quantum.Fibers.FiniteRectangleTransport
+            D5.S3.Quantum.Matrix.CirculantUnitaryLiftRefutation
+            D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
+            D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
+            D5.S3.QuantumChannels.PositiveKrausSideEntanglementRefutation
+            D5.S3.QuantumChannels.SwitchUselessConcatenationRefutation
+            D5.S3.QuantumChannels.UnitalBlockOverlapRefutation
+            D5.S3.StatisticalMechanics.CellularAutomata.KleinFourFactorization
+            D5.S3.StatisticalMechanics.CellularAutomata.KleinFourInvariant
+            D5.S3.Topology.Resolution.StoneanFiniteClosedRefinement
+            D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
+            Reg.D5.S1.Eigenstructure.CommonEigenvalueFieldDegree
+            Reg.D5.S1.Words.AdmissibleWords.FibonacciGrayPath
+            Reg.D5.S3.Analytic.LowerHalfPlaneFactorContinuity
+            Reg.D5.S3.Analytic.SeriesInequalities.UniformTailAmplification
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.CompletionHomogeneousFixedPoints
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeControlConjugacy
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciActiveTable
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFullRootFeasibility
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber
+            Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeWholeRowPlan
+            Reg.D5.S3.Arith.ModularForms.HeckeCoefficientFieldDegree
+            Reg.D5.S3.Fourier.RepresentativeOrbitCoordinates
+            Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
+            Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalLawTrimming
+            Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalMarkedLaw
+            Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
+            Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport
+            Reg.D5.S3.StatisticalMechanics.CellularAutomata.KleinFourFactorization
+            Reg.D5.S3.Topology.Resolution.StoneanFiniteClosedRefinement
+            Reg.D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
+          )
+          make lean-report-scoped \
+            LEAN_REPORT=.lake/build/stratalint/upgrade-additional-scoped-report.json \
+            LEAN_TARGETS="${compatibility_roots[*]}" \
+            2>&1 | tee build/lean-cache/compatibility-probe.log
+      - name: Export compatibility diagnostics and scoped report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathlib-upgrade-additional-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .lake/build/stratalint/upgrade-additional-scoped-report.json*
+            .lake/build/stratalint/upgrade-additional-scoped-report.json.logs/
+            build/lean-cache/compatibility-probe.log
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 3
