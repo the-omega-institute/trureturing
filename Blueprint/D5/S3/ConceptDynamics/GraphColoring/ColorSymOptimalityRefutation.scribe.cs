@@ -76,7 +76,10 @@ internal sealed class ColorSymOptimalityRefutationDocument : IScribeDocumentDefi
                     + "Every ColorSym execution has final loads (5,3,4,4), independently of color choice. "
                     + "Vertex 2 receives only three colors. Current-load balancing spends the pair pool "
                     + "on vertex 1 before its later triple pool, while vertex 2 has no later supply."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("godin-grisot-togni-2022-colorsym-optimality"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, AssessedProvenance provenance, string prose) =>
         Describe.Lean(DescribeId.Create("colorsym-" + name.ToLowerInvariant()),

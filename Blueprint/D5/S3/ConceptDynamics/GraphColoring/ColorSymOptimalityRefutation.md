@@ -178,6 +178,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/ColorSymOptimalityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/godin-grisot-togni-2022-colorsym-optimality` (refuted) by `D5/S3/ConceptDynamics/GraphColoring/ColorSymOptimalityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"godin-grisot-togni-2022-colorsym-optimality","declaration_gid":"D5/S3/ConceptDynamics/GraphColoring/ColorSymOptimalityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jean-Christophe Godin; Rémi Grisot; Olivier Togni (2025). *On List Coloring with Separation of the Complete Graph and Set System Intersections*. DOI: [10.5614/ejgta.2025.13.1.5](https://doi.org/10.5614/ejgta.2025.13.1.5). URL: <https://arxiv.org/abs/2209.03436>.
