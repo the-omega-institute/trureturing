@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76c5bbd36574bc9f717337d15755e4b7496fbbba7ad73871139290ab9c383266
+  normalized_sha256: sha256:76c5bbd36574bc9f717337d15755e4b7496fbbba7ad73871139290ab9c383266
+cas_ref: sha256:76c5bbd36574bc9f717337d15755e4b7496fbbba7ad73871139290ab9c383266
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第48.2节开场仅定义有限前缀来源类、像、负前缀及截止长度，不断言最近点性质。
+    previous_atom_id: 146024857149e05e539ca5395bb15c710b2a64bd9cff6ed1ad81adfc6a6a68d1
+    next_atom_id: b52d244d9ab32a718184120725ee46787be4a84180bf8ddfd66dd12e3b5993e2

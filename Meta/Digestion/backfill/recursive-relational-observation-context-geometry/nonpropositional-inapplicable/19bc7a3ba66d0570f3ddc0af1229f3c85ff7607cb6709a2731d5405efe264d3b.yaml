@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:19bc7a3ba66d0570f3ddc0af1229f3c85ff7607cb6709a2731d5405efe264d3b
+  normalized_sha256: sha256:19bc7a3ba66d0570f3ddc0af1229f3c85ff7607cb6709a2731d5405efe264d3b
+cas_ref: sha256:19bc7a3ba66d0570f3ddc0af1229f3c85ff7607cb6709a2731d5405efe264d3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 13.2（完整记录商的精确性）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 52874652421b6bcaab7c888a5b4cff10e7179097e977001a601758a704f474b0
+    next_atom_id: 7c744662b137a337e33139f7864e1848a9128069cfe900b1bb8b057c03c4433b

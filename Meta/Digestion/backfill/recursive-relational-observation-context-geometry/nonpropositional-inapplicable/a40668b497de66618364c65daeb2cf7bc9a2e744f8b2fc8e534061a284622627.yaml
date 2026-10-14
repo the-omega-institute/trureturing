@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a40668b497de66618364c65daeb2cf7bc9a2e744f8b2fc8e534061a284622627
+  normalized_sha256: sha256:a40668b497de66618364c65daeb2cf7bc9a2e744f8b2fc8e534061a284622627
+cas_ref: sha256:a40668b497de66618364c65daeb2cf7bc9a2e744f8b2fc8e534061a284622627
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 推论 9.6（对数评分的两层代价）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 7a96f2fbbee7a2915dd80ea037c57c70acd2038772c6401b20375e652ce76bb2
+    next_atom_id: 834b18c2a7430dbe112ee7b8bd331a012eaac38c3ea9b8de1f06b4fe3ab3ae13
