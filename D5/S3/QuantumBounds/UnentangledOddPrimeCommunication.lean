@@ -49,7 +49,8 @@ def claim : Prop :=
     letI : NeZero d := ⟨hp.ne_zero⟩
     ((∀ α β M, Valid (d := d) α β M → score (d := d) α β M ≤ 2 / ((d : ℝ) + 1)) ∧
      (∀ (L : ℕ) (q : Fin L → ℝ) α β M, (∀ l, 0 ≤ q l) → ∑ l, q l = 1 →
-        (∀ l, Valid (d := d) (α l) (β l) (M l)) → mixtureScore (d := d) q α β M ≤ 2 / ((d : ℝ) + 1))) ∧
+        (∀ l, Valid (d := d) (α l) (β l) (M l)) →
+          mixtureScore (d := d) q α β M ≤ 2 / ((d : ℝ) + 1))) ∧
     (∃ α β M, Valid (d := d) α β M ∧ score (d := d) α β M = 2 / ((d : ℝ) + 1))
 
 private theorem tensor_trace {m n : ℕ} (A : Matrix (Fin m) (Fin m) ℂ)
