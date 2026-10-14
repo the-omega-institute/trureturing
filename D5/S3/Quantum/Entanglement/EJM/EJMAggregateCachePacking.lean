@@ -108,6 +108,7 @@ theorem replay_eq_streaming (fuel : ℕ) (index : Fin EJMGlobalDAGData.Size)
     cases hn : EJMGlobalDAGData.nodes (fuel + 1) index with
     | bound =>
       simp only [checkPacked, hn, lower]
+      apply decide_eq_decide.mpr
       rw [show cache.total = EJMStreamingCachePacking.lower cache.words from h]
     | symmetry s =>
       simp only [checkPacked, hn]
