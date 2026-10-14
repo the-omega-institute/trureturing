@@ -482,9 +482,82 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     "This is the C05/C06 application of the existing results to the actual original harmonic-sensor experiment. "
                     + "Its indicator definitions, Fubini reduction, scalar Gaussian comparison, deterministic midpoint attainment "
                     + "and degenerate reductions introduce no new Lean declaration, theorem Describe, registration, frozen identity "
-                    + "or claim of library novelty. C01/C04 and their original parameter scope remain as above. C07-C13, including "
-                    + "energy and quantile bounds, design caps and asymptotic risk laws, are not established by this risk "
-                    + "calculation; it does not claim completion of the parent problem.")))))));
+                    + "or claim of library novelty. C01/C04 and their original parameter scope remain as above. C07 and C09-C13, including "
+                    + "quantile bounds, design caps and asymptotic risk laws, are not established by this risk calculation; "
+                    + "the deterministic C08 energy identities follow below. No completion of the parent problem is claimed.")))),
+            new DocumentBlock.Section(H("C08: exact energy of the original harmonic-sensor means"), Blocks(
+                Paragraph(Text(
+                    "Keep 0<epsilon<=1/2, sigma>0, every finite J including the empty type, arbitrary signed real weights w:J -> R and "
+                    + "arbitrary real delays t:J -> R. Put Z=normalization(epsilon)=9+20epsilon>0, K=Fin 3 x Fin 2, B=EuclideanSpace R K, "
+                    + "O=J -> B and V=EuclideanSpace R (J x K). The same actual sensor H= sensor(epsilon,.) has frequencies k=(2,3,4), "
+                    + "amplitudes a=(sqrt(epsilon),1,sqrt(epsilon))/sqrt(Z), and coordinates H(phi)(i,0)=a_i cos(k_i phi), H(phi)(i,1)=a_i "
+                    + "sin(k_i phi). These are the existing frequencies, amplitudes and pairedSensor definitions, with "
+                    + "a_0^2=a_2^2=epsilon/Z and a_1^2=1/Z.")),
+                Paragraph(Text(
+                    "Use exactly the earlier flattening A:O -> V, A(y)=toLp 2 (p -> y(p.1)(p.2)). Set m_false=A(j -> w_j H(-t_j)), "
+                    + "m_true=A(j -> w_j H(2pi/3-t_j)), d=m_true-m_false, D=norm(d), and E=sum_j w_j^2. In particular, for each Boolean b, "
+                    + "A(j -> w_j H(phi_b-t_j)) is m_false or m_true according to b, with phi_false=0 and phi_true=2pi/3. These are the "
+                    + "means of the preceding actual experiment. The deterministic calculation below needs no further noise assumption; "
+                    + "sigma remains its positive post-weight noise scale and does not enter E or D. All norms and sums used below are "
+                    + "Euclidean in B or V. No identification of the Pi-space norm on O with the Euclidean norm of its flattening is used.")))),
+            new DocumentBlock.Section(H("Third-turn chord, rotation invariance and the Euclidean energy sum"), Blocks(
+                Paragraph(Text(
+                    "For the ith two-coordinate block, shifting a phase by -t_j rotates that block through -k_i t_j. The same orthogonal "
+                    + "rotation acts on both endpoints, so it preserves the block chord norm. Explicitly, "
+                    + "(cos(alpha)-cos(beta))^2+(sin(alpha)-sin(beta))^2=4 sin((alpha-beta)/2)^2. Multiplying by a_i^2 and summing the "
+                    + "three blocks gives norm(H(phi)-H(psi))^2=4 sum_i a_i^2 sin(k_i(phi-psi)/2)^2. With phi=2pi/3-t_j and psi=-t_j, their "
+                    + "difference is exactly 2pi/3 for every delay. The three sine squares are sin(2pi/3)^2=3/4, sin(pi)^2=0 and "
+                    + "sin(4pi/3)^2=3/4. Therefore each actual sensor chord has square "
+                    + "4[(epsilon/Z)(3/4)+(1/Z)0+(epsilon/Z)(3/4)]=6epsilon/Z.")),
+                Paragraph(Text(
+                    "Equivalently, apply the existing six_chord_norm_sq to these actual endpoints. Their half-difference is pi/3, "
+                    + "chordParameter=4cos(pi/3)^2-1=0, and chordPolynomial(epsilon,0)=2epsilon. The theorem therefore gives "
+                    + "(4sin(pi/3)^2/Z)(2epsilon)=6epsilon/Z. This directly identifies the delay-independent coordinate calculation with "
+                    + "the original owner theorem.")),
+                Paragraph(Text(
+                    "For any y:O, EuclideanSpace.real_norm_sq_eq and the finite-product sum identity give norm(A(y))^2=sum_(j,k) "
+                    + "y(j)(k)^2=sum_j norm(y(j))^2. Coordinatewise distributivity gives d=A(j -> w_j [H(2pi/3-t_j)-H(-t_j)]). Thus "
+                    + "D^2=sum_j norm(w_j [H(2pi/3-t_j)-H(-t_j)])^2=sum_j w_j^2 norm(H(2pi/3-t_j)-H(-t_j))^2. The scalar norm law is "
+                    + "norm(w_j v)=abs(w_j) norm(v), and abs(w_j)^2=w_j^2, so this step includes negative as well as zero weights. Distinct "
+                    + "j occupy distinct Euclidean blocks; no cross-block cancellation term occurs. Substituting the chord square and "
+                    + "distributing the finite sum yields D^2=(6epsilon/Z)sum_j w_j^2=6epsilon E/(9+20epsilon).")))),
+            new DocumentBlock.Section(H("The actual infimum gain and the positive square-root identities"), Blocks(
+                Paragraph(Text(
+                    "The lower gain is the existing physical infimum, not an introduced scalar surrogate: "
+                    + "chordGain(epsilon,phi,psi)=norm(H(phi)-H(psi))/norm(circleState(phi)-circleState(psi)); gainValues(epsilon) contains "
+                    + "these ratios for all phi,psi with distinct physical circle states; lowerGain(epsilon)=sInf(gainValues(epsilon)). The "
+                    + "original lower_gain_eq_sqrt, with its existing proof body and the same hypotheses 0<epsilon<=1/2, gives "
+                    + "lowerGain(epsilon)=sqrt(2epsilon/Z). Its argument bounds every actual chord gain below and attains the bound at a "
+                    + "realized chordParameter of zero; it therefore identifies this actual infimum over physical states. The existing "
+                    + "lower_gain_sq gives lowerGain(epsilon)^2=2epsilon/Z.")),
+                Paragraph(Text(
+                    "Because epsilon>0 and Z>0, lowerGain(epsilon)>0, in particular it is nonnegative. Also E>=0 as a sum of squares and "
+                    + "D>=0 as a norm. Combining the exact energy square with lower_gain_sq gives D^2=3E lowerGain(epsilon)^2. The "
+                    + "nonnegative square root of D^2 is D, so D=sqrt(6epsilon E/(9+20epsilon)). Both D and sqrt(3E) lowerGain(epsilon) are "
+                    + "nonnegative and have equal squares, hence D=sqrt(3E) lowerGain(epsilon). The sign checks apply also at E=0 and "
+                    + "require no division by E or D.")))),
+            new DocumentBlock.Section(H("Zero energy, empty designs and the remaining scope"), Blocks(
+                Paragraph(Text(
+                    "Since 6epsilon/Z>0, the squared identity gives E=0 if and only if D=0. If E=0, norm(m_true-m_false)=0 and therefore "
+                    + "m_true=m_false; conversely equal means give D=0 and hence E=0. All-zero weights are included. Signed weights remain "
+                    + "arbitrary, but a negative weight does not itself make E or D vanish. If J is empty, its finite sum is zero and J x K "
+                    + "has no coordinates: E=0, D=0 and both actual means are the zero vector. These conclusions use the same definitions "
+                    + "and do not assume J is nonempty or pass to a positive-dimensional limit.")),
+                Paragraph(Text(
+                    "The supplier correspondence is precise: the epsilon in normalization, sensor, six_chord_norm_sq, lower_gain_eq_sqrt "
+                    + "and lower_gain_sq is the experiment's epsilon; the two chord phases are 2pi/3-t_j and -t_j; the index in the "
+                    + "Euclidean product sum is (j,k); and scalar multiplication uses the original signed w_j. These declarations are in "
+                    + "D5/S3/ConceptDynamics/ObservationTopology/HarmonicSensors/SixDimensionalSharpGeometry.lean, while "
+                    + "PairedDelayGeometry.paired_chord_norm_sq in that same source gives the block sum. At Mathlib pin "
+                    + "db584cd6d46c92f209a44c0f1c829460d327499d, Mathlib/Analysis/InnerProductSpace/PiL2.lean supplies "
+                    + "EuclideanSpace.real_norm_sq_eq, the finite-product big-operator APIs supply Fintype.sum_prod_type and "
+                    + "Finset.sum_mul, the normed scalar-action API supplies norm_smul, and Mathlib/Analysis/Real/Sqrt.lean supplies the "
+                    + "nonnegative square-root identities. This is an application of these existing results; the exact gain formula is not "
+                    + "claimed as new mathematics.")),
+                Paragraph(Text(
+                    "This establishes the original C08 energy identities and their zero and empty cases for the actual means, alongside "
+                    + "the C01-C06 applications above. C07 and C09-C13, including the remaining quantile bounds, design caps and asymptotic "
+                    + "risk laws, remain outside these conclusions. No completion of the parent problem is asserted.")))))));
 
     private static Formula ActualEtaLimitFormula() => Disp(Call("Tendsto",
         Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,
