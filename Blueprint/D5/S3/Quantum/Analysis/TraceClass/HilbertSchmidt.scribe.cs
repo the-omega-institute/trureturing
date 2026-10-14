@@ -10,7 +10,7 @@ internal sealed class HilbertSchmidtDocument : IScribeDocumentDefinition
             DescribeId.Create("attributed-traceclass-hilbertschmidt"),
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/HilbertSchmidt.tsum_mul_le_sqrt_mul_sqrt"),
             H("Scalar square-sum Cauchy-Schwarz"), StatementSource.FromAuthor(Endpoint()),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/diem2026traceclass")),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumAnalysis/diem2026traceclass")),
             Blocks(Paragraph(Text("For nonnegative real families f and g on any set-indexed basis carrier, summability of their squares bounds the sum of their products by the product of the square roots of their square sums. The same supplied module gives product summability, basis-independent Hilbert-Schmidt square sums, and bounded multiplication closure. The consumer applies these supplied estimates directly rather than reproving them.")),
                 Paragraph(Text("Attributed to Tom Ole Diem, Physlib at immutable revision "
                     + "b9043cc548ef6d63a28454cf3a57fb12a0c2e142, Apache-2.0. "

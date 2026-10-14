@@ -10,7 +10,7 @@ internal sealed class PolarDocument : IScribeDocumentDefinition
             DescribeId.Create("attributed-traceclass-polar"),
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/Polar.polarFactor_mul_absOperator"),
             H("Actual polar factorization"), StatementSource.FromAuthor(Endpoint()),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/diem2026traceclass")),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumAnalysis/diem2026traceclass")),
             Blocks(Paragraph(Text("For every bounded operator T on a complete complex Hilbert space, the supplied contraction polarFactor of T multiplied by the actual continuous-functional-calculus absolute operator is T. No invertibility, closed range, finite dimension, or self-adjointness premise is introduced.")),
                 Paragraph(Text("Attributed to Tom Ole Diem, Physlib at immutable revision "
                     + "b9043cc548ef6d63a28454cf3a57fb12a0c2e142, Apache-2.0. "
