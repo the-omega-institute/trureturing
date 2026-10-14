@@ -48,7 +48,10 @@ internal sealed class UnentangledOddPrimeCommunicationDocument : IScribeDocument
                         "For either encoding sign s, the slope frequencies (s k, 0) for none and (−2s t k, k) for some t, with k nonzero, enumerate every nonzero frequency in (ZMod d)² exactly once. This uses that d is prime and odd. Parseval with the constant mode removed gives d² times the sum of the squared state norms minus the squared norm of their sum. Each density matrix has squared Frobenius norm at most one, while their sum has trace d² and squared norm at least d³. Hence the total nonzero-mode energy is at most d⁴ − d³ for each sender, giving the score bound 2/(d + 1). Nonnegative normalized mixtures preserve the bound.")),
                     Paragraph(Text(
                         "For attainment, Alice and Bob send the computational-basis states labeled by x₀ and y₀. For none, Charlie measures their label difference and wins with probability one. For some t, the uniform effects (1/d) times the identity give success probability 1/d. Averaging over the d + 1 inputs gives (1 + d(1/d))/(d + 1) = 2/(d + 1)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bakhshinezhad-mehboudi-roch-i-carceller-tavakoli-2024-odd-prime-unentangled-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
