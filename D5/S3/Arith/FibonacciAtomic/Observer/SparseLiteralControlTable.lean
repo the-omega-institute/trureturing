@@ -465,10 +465,12 @@ def Recovery (q : Nat → Address) (original : Source) (bits : List Bool)
 
 private theorem original_recovery (q : Nat → Address) (original : Source) (bits : List Bool)
     (positive : 0 < bits.length)
-    (leaves : ∀ i (hi : i < bits.length), subtree (q i) original = some (.of (Bool.not (bits[i])))) :
+    (leaves : ∀ i (hi : i < bits.length),
+      subtree (q i) original = some (.of (Bool.not (bits[i])))) :
     Recovery q original bits positive := by
   have decoded := original_decoded_path q original bits 0 (by simpa using leaves)
-  have run := sparse_literal_control_run (height := bits.length) (pref := []) decoded rfl (by simp) positive
+  have run := sparse_literal_control_run (height := bits.length) (pref := [])
+    decoded rfl (by simp) positive
   have actual : NativeSerialMachine.Run (controlProgram bits.length (queries q))
       (.q []) 0 original (chronology (queries q) bits.length 0 original) bits := by
     simpa using run

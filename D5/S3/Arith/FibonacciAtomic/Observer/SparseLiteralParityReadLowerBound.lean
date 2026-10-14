@@ -7,6 +7,7 @@
    digest: Every native parity run reads every independent original cone. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralControlTable
+import D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 
 set_option autoImplicit false
@@ -53,9 +54,9 @@ private theorem parity_flip {h : Nat} (x : Fin h → Bool) (i : Fin h) :
   rw [new, old]
   rcases cases_mod with hm0 | hm1
   · have hs : (base+1)%2 = 1 := by omega
-    cases hb : x i <;> simp [hb, hm0, hs]
+    cases x i <;> simp [hm0, hs]
   · have hs : (base+1)%2 = 0 := by omega
-    cases hb : x i <;> simp [hb, hm1, hs]
+    cases x i <;> simp [hm1, hs]
 
 private theorem assigned_off_slot {h depth : Nat}
     (slots : Fin h → Frontier (fullPattern depth)) (x : Fin h → Bool)
@@ -117,21 +118,10 @@ private theorem replay_avoiding {C O : Type} {δ : C → Op C O}
     (same : ∀ e a r, Event.read e a r ∈ trace →
       readout a (substitution^[e] v) = readout a (substitution^[e] u)) :
     Run δ c epoch (substitution^[epoch] v) trace out := by
-  generalize hu : substitution^[epoch] u = current at run
-  induction run with
-  | stop row => exact .stop row
-  | localStep row tail ih =>
-      exact .localStep row (ih (fun e a r hr => same e a r (by simp [hr])) hu)
-  | @update c c' e r t o row tail ih =>
-      apply Run.update row
-      rw [← Function.iterate_succ_apply' (f := (substitution : Source → Source))]
-      apply ih (fun e a r hr => same e a r (by simp [hr]))
-      rw [Function.iterate_succ_apply', hu]
-  | @read c e r a k y t o row reply tail ih =>
-      apply Run.read row (y := y)
-      · rw [same e a y (by simp), hu]
-        exact reply
-      · exact ih (fun e a r hr => same e a r (by simp [hr])) hu
+  obtain ⟨_, _, _, _, _, truth⟩ :=
+    NativeSerialMachine.actual_register_execution δ run u rfl []
+  exact NativeSerialDepth.transfer run u v rfl
+    (fun e a r hr => (same e a r hr).trans (truth e a r hr))
 
 private theorem cone_must_be_read {h depth : Nat} {C : Type}
     (slots : Fin h → Frontier (fullPattern depth)) (δ : C → Op C Bool) (start : C)
