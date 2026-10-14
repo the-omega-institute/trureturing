@@ -55,7 +55,7 @@ The canonical source is `D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefuta
 - It defines `lambda1`–`lambda5`, `sourceQ`, `sourceD`, `sourceB`, `sourceE`, `sourceNoise`, `sourceC`, `sourcePolar`, `matrixAction`, `TraceNonincreasing`, `inputFirstChoi`, `entanglementFidelity` and `claim`, and proves `result : ¬ claim`.
 - The decoder is the frozen `PassiveMemoryNonclassicalRefutation.discardMemory`.
 - The Kraus fidelity comes from the frozen `MayerZeroFidelityTightness.kraus_survival` with `PeritoTsirelson.max_entangled_trace`.
-- Choi matrices and Kraus maps come from `FiniteKrausChannel`.
+- Kraus maps come from the frozen `FiniteKrausChannel`. The Choi matrix and `choi_of_kraus` come from `FiniteKrausRepresentation` (Closed, not frozen), under the same namespace.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - `result` is the refutation result of a `refutes` utility, which CLAUDE.md §3.9 exempts from four-slot registration.
 
