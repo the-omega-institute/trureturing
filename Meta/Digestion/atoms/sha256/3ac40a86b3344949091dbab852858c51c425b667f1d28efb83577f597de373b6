@@ -1,0 +1,36 @@
+**Example 213.20 (All branches, unit stock and the zero endpoint).**
+At $L=n=5,c_1=c_2=0,g=4,B=5$, (213.23) is
+
+$$
+P_{01110}=P_{10110}=P_{11010}=P_{11100}=1,\qquad
+C_{11110}=4,\qquad T=1.
+$$
+
+It has W=5, Q=$(0,0,0,0,4;9)$, and both costs one.
+For every $i<j<5$ its N maxima are $(0,1,1,4)$ and O maxima
+$(1,1,4)$; for every $(i,5)$ they are $(1,0,4,1)$ and $(1,4,1)$.
+All pair supports are six, and all empty/singleton supports are five.
+Theorem 213.19 forces $I_5\ge2$ for every full exact-Q score of N
+cost at most one; these two intermediate P atoms attain equality.
+Changing only g to three gives a zero-cost core and the same exact
+intermediate requirement two for exact-Q zero-cost representatives.
+
+The one-clamped branch with unequal credit occurs at
+$c_1=3,c_2=1,B=4,g=19/4,n=5$. Here a=$5/4$,
+$R_n=15/4$, W=8, K=$51/4$, and both costs one. The actual rows are
+$C_{01110}=3$, $C_{10110}=1$, $C_{11110}=19/4$,
+$P_{10110}=1/4$, $P_{11010}=P_{11100}=5/4$, and T=$5/4$.
+For a both-clamped example take $c_1=c_2=2,B=3,g=4,n=5$:
+a=1, $R_n=3$, P is one on $11010,11100$, early C is two on
+$01110,10110$, late C is four on $11110$, and T=1; both costs
+are one. At $B=0$ equation (213.22) gives a=0 and R=0 for any
+early credits; at all-zero parameters the score is zero. The branch
+ties are already included in the exact equation, requiring no limit.
+
+The conclusion covers nonnegative net coordinates supported on
+$\{1,2,n\}$, even when the input uses arbitrary A or late P.
+It makes no claim for multiple late net coordinates, negative beta,
+or a joint budget obtained by adding separately optimal allocations.
+The value D is an exact-Q minimum, not a necessary and sufficient
+criterion for unrestricted signed-residual membership in $E_N$.
+
