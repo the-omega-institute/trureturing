@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee811194fac4c0adf58d0b11cfb861a6f21ffb2985b2f6e591b116d92868f8ae
+  normalized_sha256: sha256:ee811194fac4c0adf58d0b11cfb861a6f21ffb2985b2f6e591b116d92868f8ae
+cas_ref: sha256:ee811194fac4c0adf58d0b11cfb861a6f21ffb2985b2f6e591b116d92868f8ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 521.1（随机预测充分）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 3076b7a424fc0001f3d096d1a43baf5b135bf6d444ebc864af9f264af0a07e54
+    next_atom_id: 214ccf057d4d39cdb1bae1355a692101e1d33d9d1f18754c0232d0c9f8f7ec0d

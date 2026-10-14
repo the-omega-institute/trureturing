@@ -1,0 +1,12 @@
+**推论 6.3（leafless obstruction）。** If $C$ has no concrete leaf, no finite
+refined code handoff together with a finite uniform read bound can recover
+exact $\nu$ on $U_R$. A deterministic consumer with one of $m$ code
+values has, for each fixed code, a prefix-free set of terminal reply words:
+if one run stops after a word $w$, no longer run with the same code can
+have $w$ as a prefix. With at most $K'$ reads, Kraft's inequality over
+the four-reply alphabet gives at most $4^{K'}$ terminal words per code
+(the bound also covers $K'=0$). Hence there are at most $m4^{K'}$
+code/transcript outcomes, whereas Theorem 3.1 supplies infinitely many
+attainable depths. An unbounded integer retained by the producer or
+sourcewise unbounded reacquisition is a different contract.
+

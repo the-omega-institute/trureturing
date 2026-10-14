@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a5e8d1f29379e335966630d5139747bd5cc1f3daaf5e1f0a2550d85cb2fc85a
+  normalized_sha256: sha256:2a5e8d1f29379e335966630d5139747bd5cc1f3daaf5e1f0a2550d85cb2fc85a
+cas_ref: sha256:2a5e8d1f29379e335966630d5139747bd5cc1f3daaf5e1f0a2550d85cb2fc85a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“公司治理规则”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 0156c4b5f62d236729df64b5ca82d9136f20dd9ec3e774a96dbd1690b12e24f9
+    next_atom_id: 654255a94c158ed17ce2b4cccfbf20344e3c66315e9ff698fb23b78394f433a9

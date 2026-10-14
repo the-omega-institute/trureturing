@@ -1,0 +1,4 @@
+**定义 1.3（根深度服务）。** A row-only consumer receives $R$ and common installed data, may perform local computation, and may make static native `Read(q)` requests with the four replies above. It has no equality, image-membership, update, stream, reroot, clock or source-selection oracle. A service is *row-uniform with bound $K_R$* when one deterministic effective consumer halts on every $u\in U_R$, returns $\nu(u)$, and makes at most $K_R$ new reads. Maximum queried word length, total submitted word length, producer work, retained memory, local computation and elapsed time are separate resources.
+
+The exact row correspondence in (RDR.1) is the supplied common-producer result. The present volume studies the remaining root task after class values have been forgotten.
+

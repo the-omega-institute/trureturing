@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d72dc4bba0d2e275ef9f19cd633f465fc451a4578a2c5a6b2aa3ef2df17cb52f
+  normalized_sha256: sha256:d72dc4bba0d2e275ef9f19cd633f465fc451a4578a2c5a6b2aa3ef2df17cb52f
+cas_ref: sha256:d72dc4bba0d2e275ef9f19cd633f465fc451a4578a2c5a6b2aa3ef2df17cb52f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 256.2（制度身份充分）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 1ea51939b743e2fbe2beb3f42d84b7cbc496c7633e32370146cae04125f7fcf9
+    next_atom_id: 1332f7e75280b4320eb1ac957d23c208f3d82e56f6284793f753dc384ba339f9
