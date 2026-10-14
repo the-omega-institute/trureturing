@@ -5905,3 +5905,235 @@ the all-integer Robin inequality and RH remain unproved.
 This application reuses its generic inequalities and existing
 total-clock occupation identity; no new generic theorem,
 literature-priority claim or kernel verification is made.
+
+
+## Retain the compensation while controlling forward primitive excursions
+
+Keep the original source and every full window, parameter and tie from
+JM1--JM7, AO1--AO6 and MT8. In particular $0<a<5\kappa/8$,
+$\eta<1/2$, $M_X=X^{1/2-\eta}\log X$ and
+$C_*=d(1-\kappa)/16>0$ are unchanged. Write
+$\mathcal J_X=\int_{t_0}^{t_m}G_a(\mathcal B_X(t))dt$ as in CQ5.
+The source-specific consumer below keeps most of the original local
+subtraction while moving the lower endpoint of its future integral
+from $B$ to $A=B+t$. It then bounds that future by ordinary
+real-center primitive excursions. This is a `repo-derived` paper
+application; the resulting amplitude-weighted upper obligation is
+unproved and is not a new prime theorem or Lean result.
+
+### Absorb the finite past into the same local subtraction
+
+At every intervening selected real clock, PG1 gives $K(A)=B$.
+Put
+
+$$
+\Delta(A)=K(A)-K(K(A))=B-K(B)\ge0,
+\qquad E(B)=\Delta(A)+Q(B).
+$$
+
+Nonnegativity follows from $B\le A$ and monotonicity of $K$.
+All-choice ordering and CR17 extend the original uniform $t/B\to0$
+to this entire real window: $t\le2\ell_X$ and its least core is at
+least the original least left-endpoint core, whose ratio to
+$\ell_X$ tends to infinity. The existing uniform
+$|Q(v)|\le H_Q\sqrt v$ is retained.
+
+Let $r=t/B$ and $c=B\log B/(A\log A)$. Monotonicity of the complete
+$\psi$ gives $E(v)\le E(B)+v-B$ on $[B,A]$. The original decreasing
+positive kernel, its exact integral, and $s_Bk(B)\le2B^{-3/2}$ give
+
+$$
+\begin{aligned}
+I_{\rm past}:=s_B\int_B^A E(v)k(v)dv
+&\le\frac{1-c}{\sqrt B}E(B)+\frac{t^2}{B^{3/2}}\\
+&\le2r\frac{\Delta(A)}{\sqrt B}+2H_Qr
+ +\frac{t^2}{B^{3/2}}.
+\end{aligned}
+\tag{PE1}
+$$
+
+Here $0\le1-c\le2r$ follows by integrating the derivative of
+$v\log v$; no sign is assigned to $E(B)$.
+If $t\le B^{3/4}$, the last term in PE1 is at most one.
+If $t>B^{3/4}$, apply the existing LO1 with $u=B$, $v=A$.
+Since $A/B\to1$ uniformly and $21/40<3/4$, it gives
+$\Delta(A)\ge(9/200)t$ beyond one common start. Hence
+$t^2/B^{3/2}\le(200/9)r\Delta(A)/\sqrt B$ in this second case.
+For every fixed $0<\epsilon<a$, both cases therefore give
+
+$$
+I_{\rm past}\le\epsilon\frac{\Delta(A)}{\sqrt B}+2H_Q+1.
+$$
+
+Subtract the original $aE(B)/\sqrt B$ before discarding any term.
+The remaining $Q(B)$ term is bounded by $aH_Q$, so
+
+$$
+\boxed{
+G_a(B)\le s_B\int_A^\infty E(v)k(v)dv
+ -(a-\epsilon)\frac{\Delta(A)}{\sqrt B}+C_\epsilon.}
+\tag{PE2}
+$$
+
+The constant and start are uniform in the original labels and ties
+and in their selected real interpolation. This uses no SI1,
+$B\ge X$, $\Theta<1$ or bound on $V_X^{\rm lag}$.
+CR24 already absorbs a quadratic lag into the positive removal gain;
+PE2 instead absorbs it into the same actual local subtraction and
+retains a nonnegative compensation credit for an upper comparison.
+Neither the complete future integral nor the full recentering
+error is declared small.
+
+### Reuse the paid common horizon and bound its forward primitives
+
+Use FH1's unchanged common horizon $\mathsf U_X$. It is eventually
+beyond all original $A$ clocks as well as their cores, since
+$A\le2B$ and $\log\mathsf U_X/\mathsf Y_X\to\infty$.
+FH1 pays the integrated remote tail once at $o(L_X)$.
+For any real center $x\ge b_X$, put $u_j=2^jx$ and
+$v_j=\min(2u_j,\mathsf U_X)$. Define
+
+$$
+P_{X,j}(x)=u_j^{-3/2}
+\sup_{u_j\le v\le v_j}\int_{u_j}^vE(w)dw
+\quad(u_j<\mathsf U_X),
+\qquad P_{X,j}(x)=0\quad(u_j\ge\mathsf U_X).
+\tag{PE3}
+$$
+
+These are nonnegative continuous bounded readouts on each compact
+center shell, using the actual complete $\psi$. The primitive is
+continuous even at its prime-power atoms. Integrating each shell by
+parts, with $F(v)=\int_{u_j}^vE(w)dw$, gives
+
+$$
+\int_{u_j}^{v_j}E(v)k(v)dv
+=F(v_j)k(v_j)-\int_{u_j}^{v_j}F(v)k'(v)dv
+\le u_j^{3/2}P_{X,j}(x)k(u_j).
+$$
+
+Consequently
+
+$$
+s_x\int_x^{\mathsf U_X}E(v)k(v)dv
+\le\sum_j2^{-j/2}\frac{\log x}{\log(2^jx)}
+\left(1+\frac1{\log(2^jx)}\right)P_{X,j}(x).
+$$
+
+All summands on the right are nonnegative. Thus multiplication by
+$s_B/s_A\le1$ preserves this upper bound without dropping a signed
+normalization factor. Set $c_X=1+1/\log b_X$ and
+$N_X=\lceil\log_2(\mathsf U_X/b_X)\rceil$.
+For the canonical visited set $D_X$ in PG9, define
+
+$$
+V_X^K=\int_{D_X}
+\frac{K(x)-K(K(x))}{\sqrt{K(x)}}dx\ge0.
+$$
+
+Use PE2 and precisely PT10/PG9's existing total-clock change of
+variables. Together with FH1 this gives
+
+$$
+\boxed{
+\mathcal J_X\le c_X\sum_{j<N_X}2^{-j/2}
+\int_{D_X}P_{X,j}(x)dx
+ -(a-\epsilon)V_X^K+O_\epsilon(L_X)+o(L_X).}
+\tag{PE4}
+$$
+
+No domination of atomic $B$-occupation or sign of skipped intervals
+is assumed. The only new consumer of the occupation identity is
+this nonnegative forward-primitive bound with its original credit.
+
+### Count amplitudes on the same window, rather than only centers
+
+Cover all possible $A$ centers by the dyadic shells
+$S_r=[2^rb_X,2^{r+1}b_X)$, stopping after
+$C_X+2\ell_X$, where $C_X$ is the original endpoint core ceiling.
+There are $O(\mathsf Y_X)$ center shells. The existing refined FH1
+horizon gives
+$N_X=O(\mathsf Y_X^{5/3}(\log\mathsf Y_X)^{1/3})$, including
+$\Theta=1$. Keep every future shell with its actual weight;
+$\sum_{j<N_X}2^{-j/2}\le S:=2+\sqrt2$.
+
+Put $L_{X,r}=|D_X\cap S_r|$, so $\sum_rL_{X,r}=L_X$, and define
+ordinary unselected Lebesgue exceptional measures
+
+$$
+e_{X,r,j}(z)=|\{x\in S_r:P_{X,j}(x)>zM_X\}|.
+$$
+
+For fixed $\tau>0$ let
+
+$$
+\mathcal E_X(\tau)=\sum_{j<N_X}2^{-j/2}\sum_r
+\int_\tau^\infty\min\{L_{X,r},e_{X,r,j}(z)\}dz.
+\tag{PE5}
+$$
+
+The existing coarse PNT input $|E(v)|\le H_2v/\log^2v$ yields
+$P_{X,j}(x)\le(3H_2/2)\sqrt{2^jx}/\log^2(2^jx)$ whenever the
+shell is active. This supplies finite amplitude ceilings, not an
+$M_X$-scale bound. Reuse the layer-cake formula inside the actual
+consumer: the intersection at each level has measure at most both
+$L_{X,r}$ and $e_{X,r,j}(z)$. Hence
+
+$$
+\sum_{j<N_X}2^{-j/2}\int_{D_X}P_{X,j}(x)dx
+\le M_X[S\tau L_X+\mathcal E_X(\tau)].
+$$
+
+FH2--FH3, FP4, MR2--MR3 and MT7 already give
+$\mathcal J_X-Z_X^{\rm right}(T_X)=o(M_XL_X)$.
+Apply this paid transfer once, and use $M_X\to\infty$ in PE4:
+
+$$
+\boxed{
+Z_X^{\rm right}(T_X)\le
+c_XM_X[S\tau L_X+\mathcal E_X(\tau)]
+ -(a-\epsilon)V_X^K+o(M_XL_X).}
+\tag{PE6}
+$$
+
+The head, every actual zero and multiplicity, its prescribed cutoff,
+all original ties and the single common cofinal sequence remain
+unchanged. No smoothing loss is paid separately per shell.
+
+A sufficient next supplier, not proved here, is that some fixed
+$\epsilon\in(0,a)$, $\tau>0$ and $\delta>0$ satisfy
+
+$$
+c_X\left[S\tau+\frac{\mathcal E_X(\tau)}{L_X}\right]
+ -(a-\epsilon)\frac{V_X^K}{M_XL_X}\le C_*-\delta
+\tag{PE7}
+$$
+
+on a common cofinal sequence of original full windows.
+Retain $c_X$ exactly: a potentially large cancellation against
+$V_X^K$ does not permit replacing it by one for free.
+The stronger condition $\tau=C_*/(4S)$ and
+$\mathcal E_X(\tau)\le(C_*/4)L_X$ would give, after enlarging one
+common start, $Z_X^{\rm right}(T_X)\le(3C_*/4)M_XL_X$ even without
+using the credit. Neither condition has been established.
+
+The observable PE3 explicitly retains
+
+$$
+\int_u^vE(w)dw=(v-u)E(u)
++\int_u^v[(w-u)-(\psi(w)-\psi(u))]dw.
+$$
+
+The already recorded Gafni--Tao short-increment result controls a
+different observable, not this baseline-containing primitive.
+The newer [Harm short-progression refinements](../Analytic/harm2026shortprogressions.md)
+also concern increments; their pointwise and mean-square refinements
+do not supply PE7. Even at the visited initial center,
+$E(A)=t+Q(A)$ is endogenous and cannot be set to zero.
+A primitive allowance of order $M_Xu^{3/2}$ would require a relative
+$u^2$ allowance of order $M_X/\sqrt u$, which is not one fixed
+tolerance across the full retained horizon. Counting exceptional
+centers without their amplitudes therefore leaves the stated gap.
+The finite past is paid jointly with the original subtraction;
+the amplitude-weighted forward-primitive estimate, original signed
+upper comparison, all-integer Robin inequality and RH remain unproved.
