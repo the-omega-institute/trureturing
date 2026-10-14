@@ -31,8 +31,9 @@ input-first encoder Choi rank at most one. Fidelity is the canonical-purificatio
 before any output trace normalization.
 
 At d=2 and p=9/13, a feasible single-Kraus encoder with columns
-(24|00> - 7|11>)/25 and |10> has strictly larger fidelity. The proof derives the
-source noise, positive Gram root, polar columns and both fidelities from these definitions.
+(24|00> - 7|11>)/25 and |10> has strictly larger fidelity. The source polar columns are
+(3|00> - |11>)/sqrt(10) and |10>. The source fidelity is
+1537/4160 + 7 sqrt(10)/80, whereas the competing fidelity is 336031/520000.
 -/
 
 set_option backward.isDefEq.respectTransparency false
@@ -186,7 +187,6 @@ theorem result : Not claim := by
     | .inl ab => (Real.sqrt 702 / 104 : ℂ) • Matrix.single ab.1 ab.2 1
     | .inr (.inl st) => (Real.sqrt 245 / 104 : ℂ) • R st
     | .inr (.inr ij) => (Real.sqrt 21 / 104 : ℂ) • T ij
-
   have hQ : sourceQ 2 (9/13) =
     ((Real.sqrt 26)⁻¹ : ℂ) •
       A := by
@@ -240,12 +240,10 @@ theorem result : Not claim := by
       norm_num [A, Matrix.smul_apply, Matrix.one_apply, Matrix.of_apply,
         Matrix.add_apply, Matrix.sub_apply]
     all_goals ring
-
   have hA : A.conjTranspose = A := by
       ext ⟨a,b⟩ ⟨c,d⟩
       fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
         norm_num [A, Matrix.conjTranspose_apply]
-
   have hEraw : ∀ ij, sourceE 2 (9/13) ij =
       (Real.sqrt 78 : ℂ)⁻¹ • ((1/2:ℂ) •
         (13 • Matrix.vecMulVec (fun a => if a=ij then (1:ℂ) else 0)
@@ -301,10 +299,8 @@ theorem result : Not claim := by
     ext a b
     simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sub_apply, delta]
     ring
-
   have hE : ∀ ij, sourceE 2 (9/13) ij = (Real.sqrt 78 : ℂ)⁻¹ • T ij := by
     simpa only [T, hA] using hEraw
-
   have hK : (∑ r, (K r).conjTranspose * K r) = 1 := by
     have hint : (2808 : ℂ) • (1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) +
         (490 : ℂ) • (A*A) + (21 : ℂ) • ∑ ij, (T ij).conjTranspose * T ij = (10816:ℂ) • 1 := by
@@ -343,7 +339,6 @@ theorem result : Not claim := by
     have h := congrArg ((10816:ℂ)⁻¹ • ·) hint
     norm_num [smul_add, smul_smul] at h ⊢
     simpa only [add_assoc] using h
-
   have hNoise : PhyslibLeaf.MatrixMap.of_kraus K K = sourceNoise 2 (9/13) := by
     classical
     have hscalar (q : ℝ) (hq : 0 ≤ q) :
@@ -405,11 +400,9 @@ theorem result : Not claim := by
       Matrix.kroneckerMap_apply, Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul,
       Finset.mul_sum]
     ring
-
   let V (x y : ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2) ℂ := Matrix.of
     (fun a b => if b=0 then (if a=(0,0) then (x:ℂ) else if a=(1,1) then (y:ℂ) else 0)
       else if a=(1,0) then 1 else 0)
-
   have hPolar : sourcePolar 2 (9/13) (fun i => if i=0 then 1 else 0) =
       V (3/Real.sqrt 10) (-1/Real.sqrt 10) := by
     have hAdef : A = Matrix.of (fun a b : Fin 2 × Fin 2 =>
@@ -492,7 +485,6 @@ theorem result : Not claim := by
     rw [hsqrt]
     change C * H⁻¹ = P
     rw [hinv, hfactor, Matrix.mul_assoc, hright, Matrix.mul_one]
-
   have hFidelity (d : ℕ) (hd : 0 < d) {k : Type} [Fintype k]
       (L : k → Matrix (Fin d) (Fin d) ℂ) :
       entanglementFidelity d (PhyslibLeaf.MatrixMap.of_kraus L L) =
@@ -555,7 +547,6 @@ theorem result : Not claim := by
     dsimp only [Lf]
     rw [← Finset.sum_div, e.sum_comp (fun j => Complex.normSq (Matrix.trace (L j)))]
     simp [div_eq_mul_inv, inv_pow, mul_comm]
-
   have hEncoder {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (V : Matrix b a ℂ)
     (hV : V.conjTranspose * V = 1) :
@@ -580,21 +571,18 @@ theorem result : Not claim := by
     · rw [inputFirstChoi, Matrix.rank_reindex, hmap, PhyslibLeaf.MatrixMap.choi_of_kraus]
       simpa using Matrix.rank_vecMulVec_le (fun x : b×a => V x.1 x.2)
         (fun x : b×a => star (V x.1 x.2))
-
   have hRight (d : ℕ) (X : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
       (discardMemory (d := d) (r := d)) X = ∑ j, sourceD d j * X * (sourceD d j).conjTranspose := by
     classical
     ext a b
     simp [discardMemory, partialTraceRight, sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.sum_apply, Fintype.sum_prod_type, Finset.sum_ite_eq, ite_and, apply_ite]
-
   have hDcomplete (d : ℕ) : ∑ j, (sourceD d j).conjTranspose * sourceD d j = 1 := by
     classical
     ext ⟨a,b⟩ ⟨c,e⟩
     simp [sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.sum_apply,
       Matrix.one_apply, ite_and, apply_ite, eq_comm]
     by_cases hac : a=c <;> by_cases hbe : b=e <;> simp [hac,hbe]
-
   have hComp {a b c : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] [Fintype c] [DecidableEq c]
     (second : QuantumChannel b c) (first : QuantumChannel a b) :
@@ -606,7 +594,6 @@ theorem result : Not claim := by
       (CStarMatrix.ofMatrix X)) i j = _
     rw [QuantumChannel.comp_apply]
     rfl
-
   have hComposite {k : Type} [Fintype k]
       (K : k → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
       (V : Matrix (Fin 2 × Fin 2) (Fin 2) ℂ) :
@@ -620,7 +607,6 @@ theorem result : Not claim := by
     simp [PhyslibLeaf.MatrixMap.of_kraus, LinearMap.comp_apply,
       Matrix.conjTranspose_mul,
       Matrix.mul_assoc, Fintype.sum_prod_type, Finset.sum_add_distrib]
-
   have hIsometry (x y : ℝ) (hxy : x^2+y^2=1) : (V x y).conjTranspose * V x y=1 := by
     have hc : (x:ℂ)^2+(y:ℂ)^2=1 := by exact_mod_cast hxy
     ext i j
@@ -628,7 +614,6 @@ theorem result : Not claim := by
       norm_num [V, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.of_apply,
         Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_two]
     linear_combination hc
-
   have hTracePolynomial (x y : ℝ) :
       (1/4:ℝ) * (∑ j : Fin 2, ∑ r, Complex.normSq (Matrix.trace (sourceD 2 j * K r * V x y))) =
       (132*x^2+210*x+76*y^2-98*y+181)/832 := by
@@ -643,7 +628,6 @@ theorem result : Not claim := by
     ring_nf
     rw [hs702,hs245,hs21]
     ring
-
   obtain ⟨N, hNraw⟩ := finite_kraus_quantum_channel K hK
   have hN : matrixAction N.toCompletelyPositiveMap = sourceNoise 2 (9/13) := by
     apply LinearMap.ext
@@ -669,13 +653,13 @@ theorem result : Not claim := by
     intro X
     exact hRight 2 X
   have hObjective (x y : ℝ) (hxy : x^2+y^2=1) :
-      entanglementFidelity 2 (((discardMemory (d := 2) (r := 2))).comp ((sourceNoise 2 (9/13)).comp
+      entanglementFidelity 2 ((discardMemory (d := 2) (r := 2)).comp ((sourceNoise 2 (9/13)).comp
         (PhyslibLeaf.MatrixMap.of_kraus (fun _ : Unit => V x y) (fun _ : Unit => V x y)))) =
       (132*x^2+210*x+76*y^2-98*y+181)/832 := by
     obtain ⟨C,hC,hCTNI,hCRank⟩ := hEncoder (V x y) (hIsometry x y hxy)
     let S := D.comp (N.comp C)
     have hS : matrixAction S.toCompletelyPositiveMap =
-        ((discardMemory (d := 2) (r := 2))).comp ((sourceNoise 2 (9/13)).comp
+        (discardMemory (d := 2) (r := 2)).comp ((sourceNoise 2 (9/13)).comp
           (PhyslibLeaf.MatrixMap.of_kraus (fun _ : Unit => V x y) (fun _ : Unit => V x y))) := by
       dsimp only [S]
       rw [hComp, hComp, hD, hN, hC]
