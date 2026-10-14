@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-exact-certificate-premise)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCacheSoundness.associated_lower_le_score; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureTriangleBlock6.accepted
-   digest: Exact structural checks for actual triangle row interval [24576, 28672). -/
+   digest: Exact structural checks for actual triangle row interval [14336, 16384). -/
 
 /- These are the same original checkStructure obligations, split at existing
 1024-row boundaries so interruption preserves completed kernel modules.
@@ -24,66 +24,36 @@ open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 set_option maxHeartbeats 100000000 in
 -- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_24576 : ∀ j : Fin 1024,
+private theorem triangle_chunk_14336 : ∀ j : Fin 1024,
     checkStructure trianglePartialAct triangleRows
-      ⟨24576 + j.val, by have h := j.isLt; omega⟩ = true := by
+      ⟨14336 + j.val, by have h := j.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
 -- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_25600 : ∀ j : Fin 1024,
+private theorem triangle_chunk_15360 : ∀ j : Fin 1024,
     checkStructure trianglePartialAct triangleRows
-      ⟨25600 + j.val, by have h := j.isLt; omega⟩ = true := by
-  decide +kernel
-
-set_option maxHeartbeats 100000000 in
--- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_26624 : ∀ j : Fin 1024,
-    checkStructure trianglePartialAct triangleRows
-      ⟨26624 + j.val, by have h := j.isLt; omega⟩ = true := by
-  decide +kernel
-
-set_option maxHeartbeats 100000000 in
--- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_27648 : ∀ j : Fin 1024,
-    checkStructure trianglePartialAct triangleRows
-      ⟨27648 + j.val, by have h := j.isLt; omega⟩ = true := by
+      ⟨15360 + j.val, by have h := j.isLt; omega⟩ = true := by
   decide +kernel
 
 /-- Every actual row in this whole interval passes the original structural check. -/
-theorem accepted (j : Fin 4096) :
+theorem accepted (j : Fin 2048) :
     checkStructure trianglePartialAct triangleRows
-      ⟨24576 + j.val, by have h := j.isLt; omega⟩ = true := by
+      ⟨14336 + j.val, by have h := j.isLt; omega⟩ = true := by
   by_cases h0 : j.val < 1024
   ·
     let k : Fin 1024 := ⟨j.val - 0, by have h := j.isLt; omega⟩
-    have he : (⟨24576 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-        ⟨24576 + j.val, by have h := j.isLt; omega⟩ := by
+    have he : (⟨14336 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
+        ⟨14336 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
       dsimp [k] <;> omega
-    simpa only [he] using triangle_chunk_24576 k
-  by_cases h1 : j.val < 2048
-  ·
-    let k : Fin 1024 := ⟨j.val - 1024, by have h := j.isLt; omega⟩
-    have he : (⟨25600 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-        ⟨24576 + j.val, by have h := j.isLt; omega⟩ := by
-      apply Fin.ext
-      dsimp [k] <;> omega
-    simpa only [he] using triangle_chunk_25600 k
-  by_cases h2 : j.val < 3072
-  ·
-    let k : Fin 1024 := ⟨j.val - 2048, by have h := j.isLt; omega⟩
-    have he : (⟨26624 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-        ⟨24576 + j.val, by have h := j.isLt; omega⟩ := by
-      apply Fin.ext
-      dsimp [k] <;> omega
-    simpa only [he] using triangle_chunk_26624 k
-  let k : Fin 1024 := ⟨j.val - 3072, by have h := j.isLt; omega⟩
-  have he : (⟨27648 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
-      ⟨24576 + j.val, by have h := j.isLt; omega⟩ := by
+    simpa only [he] using triangle_chunk_14336 k
+  let k : Fin 1024 := ⟨j.val - 1024, by have h := j.isLt; omega⟩
+  have he : (⟨15360 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
+      ⟨14336 + j.val, by have h := j.isLt; omega⟩ := by
     apply Fin.ext
     dsimp [k] <;> omega
-  simpa only [he] using triangle_chunk_27648 k
+  simpa only [he] using triangle_chunk_15360 k
 
 #print axioms accepted
 end D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock6
