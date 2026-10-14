@@ -53,7 +53,7 @@ local notation "RawCost" => fun {Seed : Type} (π : Seed → Bool → History �
 local notation "Bits" => fun {Seed : Type} (p : unitInterval) (ω : Seed × (ℕ → ℝ)) =>
   (ω.1, fun n : ℕ => Coin p (ω.2 n))
 
-private lemma uniform_probability : IsProbabilityMeasure Uniform := by
+lemma uniform_probability : IsProbabilityMeasure Uniform := by
   constructor
   simp [Real.volume_Icc]
 

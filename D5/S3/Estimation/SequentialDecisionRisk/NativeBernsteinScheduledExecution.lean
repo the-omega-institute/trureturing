@@ -453,7 +453,7 @@ private theorem tensor_one_coin (p q : unitInterval) (i j l m L I J : ℕ)
           (if y.val = J then translatedBinomial m j y.val q else 0) := by
       simp only [incrementCounts, Bool.false_eq_true, ↓reduceIte, Prod.mk.injEq]
       by_cases hx : x.val + (if b then 1 else 0) = I <;>
-        by_cases hy : y.val = J <;> simp [hx, hy, eq_comm, mul_assoc, mul_comm, mul_left_comm] <;> aesop
+        by_cases hy : y.val = J <;> simp [hx, hy, eq_comm, mul_assoc, mul_comm] <;> aesop
     simp only [Bool.false_eq_true, ↓reduceIte, Nat.add_zero]
     simp_rw [he, ← Finset.mul_sum, translated_select q j m L J hm, ← Finset.sum_mul]
     rw [Finset.sum_comm]
@@ -478,7 +478,7 @@ private theorem tensor_one_coin (p q : unitInterval) (i j l m L I J : ℕ)
 
 private theorem mixture_one_coin (p q : unitInterval) (N l m L I J : ℕ)
     (hl : N + l ≤ L) (hm : N + m ≤ L) (s : Bool)
-    (w : Fin (N+1) → Fin (N+1) → ℝ≥0∞) :
+    (w : Fin (N + 1) → Fin (N + 1) → ℝ≥0∞) :
     (∑ b : Bool, ∑ x : Fin (L+1), ∑ y : Fin (L+1),
       if (I,J) = incrementCounts s b (x.val,y.val) then
         (∑ i : Fin (N+1), ∑ j : Fin (N+1),
@@ -760,12 +760,108 @@ theorem actual_two_block_count_transport (S : Bool) (p q : unitInterval) (k I J 
     have ht := (actual_between_landmarks D d a hD hd hc S p q ω k
       (D (k+1)+d (k+1)-1) (by omega) (by omega)).2.1
     have hp : D (k+1)+d (k+1)-1+1 = D (k+1)+d (k+1) := by omega
-    simpa only [hp, N, Set.mem_setOf_eq] using and_congr_left (fun _ => ht)
+    simpa only [hp, N, Set.mem_ofPred_eq] using and_congr_left (fun _ => ht)
   rw [hevent]
   exact (hind (X+Y) le_rfl I J).trans (by
     simp only [Nat.min_eq_right (Nat.le_add_right X Y), Nat.add_sub_cancel_left]
     rfl)
 
 end BetweenLandmarks
+
+section InitialBatch
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+
+private theorem fixedSchedule_initial (n : ℕ) (hn : n < D 0 + d 0) :
+    σ n = if n < D 0 then false else true := by
+  have he : some (σ n) = (stageWord D d 0)[n]? := by
+    simpa only [fixedSchedule, List.getElem?_ofFn, dif_pos hn] using congrArg
+      (fun l : List Bool => l[n]?)
+      (Classical.choose_spec (construct_fixed_block_schedule D d hD hd) 0)
+  have hz : stageWord D d 0 = List.replicate (D 0) false ++ List.replicate (d 0) true := by
+    simp [stageWord, block]
+  rw [hz] at he
+  simp only [List.getElem?_append, List.length_replicate, List.getElem?_replicate] at he
+  by_cases h : n < D 0
+  · simpa only [if_pos h, Option.some.injEq] using he
+  · have ht : n - D 0 < d 0 := by omega
+    simpa only [if_pos ht, if_neg h, Option.some.injEq] using he
+
+/-- The initial actual batch has the two binomial count laws, also when one
+or both initial degrees vanish and either source rate is an endpoint. -/
+theorem initial_actual_batch_mass (S : Bool) (p q : unitInterval) (I J : ℕ) :
+    rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+      ((D 0+d 0 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (D 0+d 0) ω) = (I,J)} =
+        binomialMass (D 0) I p * binomialMass (d 0) J q := by
+  classical
+  let μ := rawLaw (rowLaw (batchTable D d a hD hd hc))
+  let F (n I J : ℕ) := μ {ω | countPair (nativeHistory π S p q n ω) = (I,J)}
+  have := NativeBernoulliFactoryCriticalMoment.uniform_probability
+  let hprob : IsProbabilityMeasure μ := by
+    dsimp [μ, rawLaw, rowLaw]
+    infer_instance
+  let : IsProbabilityMeasure (rowLaw (batchTable D d a hD hd hc)) := by
+    unfold rowLaw
+    infer_instance
+  have hbound (ω : RowSeed × Tape) :=
+    (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.1
+  have hind (n : ℕ) (hn : n ≤ D 0+d 0) (I J : ℕ) :
+      F n I J = translatedBinomial (min n (D 0)) 0 I p *
+        translatedBinomial (n-D 0) 0 J q := by
+    induction n generalizing I J with
+    | zero =>
+      simp only [Nat.zero_min, Nat.zero_sub, translated_zero]
+      change μ {ω | (0,0) = (I,J)} = (if I = 0 then 1 else 0) * (if J = 0 then 1 else 0)
+      by_cases hI : I = 0 <;> by_cases hJ : J = 0 <;> simp [hI, hJ, eq_comm]
+    | succ n ih =>
+      let s := if n < D 0 then false else true
+      have ha (ω : RowSeed × Tape) : nativeAction π S p q n ω = .inl s := by
+        have hlt : (n : WithTop ℕ) < nativeCalls π S p q ω :=
+          (WithTop.coe_lt_coe.mpr (by omega : n < D 0+d 0)).trans_le (hbound ω)
+        obtain ⟨source, hs⟩ := call_before_return π S (sourceRead p q) ω n hlt
+        have hlen := acquired_history_length_before_return π S (sourceRead p q) ω n hlt.le
+        have hh := (safe_supported_actions D d a hD hd hc ω.1 S
+          (nativeHistory π S p q n ω)).1 source hs
+        change (nativeHistory π S p q n ω).length = n at hlen
+        rw [hlen, fixedSchedule_initial D d hD hd n (by omega)] at hh
+        change nativeAction π S p q n ω = .inl source at hs
+        simpa only [hh, s] using hs
+      have he := actual_one_call_count_recursion π S p q
+        (supported_realization σ (batchTable D d a hD hd hc)).1
+        (rowLaw (batchTable D d a hD hd hc)) n I J
+      have ht (ω : RowSeed × Tape) : ((n+1 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω :=
+        (WithTop.coe_le_coe.mpr hn).trans (hbound ω)
+      have hl (ω : RowSeed × Tape) : (n : WithTop ℕ) < nativeCalls π S p q ω :=
+        (WithTop.coe_lt_coe.mpr (Nat.lt_succ_self n)).trans_le (ht ω)
+      simp only [ht, hl, true_and, ha, Sum.inl.injEq] at he
+      change F (n+1) I J = _ at he
+      rw [he, Finset.sum_eq_single s]
+      · simp only [eq_self, and_true]
+        change (∑ b : Bool, ∑ i : Fin (n+1), ∑ j : Fin (n+1),
+          if (I,J) = incrementCounts s b (i.val,j.val) then F n i.val j.val *
+            bernoulliMass (if s then q else p) b else 0) = _
+        simp_rw [ih (by omega)]
+        rw [tensor_one_coin p q 0 0 (min n (D 0)) (n-D 0) n I J (by omega) (by omega) s]
+        by_cases hs : n < D 0
+        · have hm : min (n+1) (D 0) = min n (D 0)+1 := by omega
+          have hd' : n+1-D 0 = n-D 0 := by omega
+          simp only [s, if_pos hs, Bool.false_eq_true, ↓reduceIte, Nat.add_zero, hm, hd']
+        · have hm : min (n+1) (D 0) = min n (D 0) := by omega
+          have hd' : n+1-D 0 = n-D 0+1 := by omega
+          simp only [s, if_neg hs, ↓reduceIte, Nat.add_zero, hm, hd']
+      · intro s' _ hs
+        have hs' : s ≠ s' := Ne.symm hs
+        simp only [hs', and_false, Set.ofPred_false, measure_empty, zero_mul,
+          ite_self, Finset.sum_const_zero]
+      · simp
+  simp only [hbound, true_and]
+  exact (hind (D 0+d 0) le_rfl I J).trans (by
+    simp only [Nat.min_eq_right (Nat.le_add_right _ _), Nat.add_sub_cancel_left,
+      translatedBinomial, Nat.zero_le, ↓reduceIte, Nat.sub_zero])
+
+end InitialBatch
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinScheduledExecution
