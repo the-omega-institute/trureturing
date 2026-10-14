@@ -661,3 +661,354 @@ All the assertions refer to the one fixed $H_c$, its ninth-degree comparison sha
 The supplier correspondences concern those specified mathematical inputs. They imply neither an exhaustive classification of finite-memory testing results nor a claim of worldwide priority for these deductions.
 
 ## 追加锚（本行以下为增补区）
+
+## 28. A rounded conditional-product observer on a known band
+
+**Definition 28.1 (Risk inputs, band and rational compilation).** The source is exactly Definition 23.2, with $F_0(k)=k^9$ and the fixed rational-center $F_1(k)=H_c(k)$. Fix a real target $0<\alpha<1/2$. For the fixed-$\alpha$ existence assertion choose once a rational $\rho\in[\alpha/2,\alpha]$. Such a choice needs no real-number oracle: choose an integer $s$ with $2^{-s}<\alpha/2$, and an integer $a$ with $\alpha/2\le a2^{-s}\le\alpha$, by the Archimedean property and the integer ceiling. A finite compiler receives the chosen fraction $\rho$, not an arbitrary real encoding of $\alpha$. The relationship with $\alpha$ is a mathematical certificate on that supplied choice.
+
+The supplied rational risk is denoted by $\rho=\alpha_0$. The more general independent input domain $0<\rho\le\alpha$ is also allowed. All finite constructions and inequalities below hold on that domain, with constants depending on $H_c,\rho$. Constants denoted by dependence on $H_c,\alpha$ alone refer to the once-chosen controlled surrogate, or uniformly to choices in $[\alpha/2,\alpha]$. There is no uniform upper-resource assertion as an independent $\rho$ tends to zero.
+
+Let $h$ be the least nonnegative integer with $2^{-h}\le\rho/2$, and put
+
+$$
+b=h+1,\qquad \kappa=1/32,\qquad R=h+2+2\delta_9.
+$$
+
+Supply a rational $0<\varepsilon<1/4$, and put $u=1-2\varepsilon$, $v=1-\varepsilon$, $I_\varepsilon=[u,v]$. Reuse the finite rational certificate and moment evaluations (22.28)–(22.32) of the owning volume to obtain
+
+$$
+\begin{aligned}
+d_{\min}&=\underline d_{u,v}>0,&
+\bar\mu&=\max_i\mu_i(v),&\bar\beta&=\max_i\beta_i(v),\\
+\mathcal B&=1+\bar\beta+\frac{2\bar\mu R}{d_{\min}},&
+W&=\left\lceil\frac{2\mathcal B}{\rho}\right\rceil.
+\end{aligned}
+\tag{28.1}
+$$
+
+These are rational calculations; $R$ is rational as well. The supplier proves $\mathfrak d_i(q)\ge d_{\min}$ on the band, and (22.34) gives $d_{\min}=\Theta_H(\varepsilon^2)$, $\bar\mu,\bar\beta=O_H(\varepsilon^{-1})$. Thus $\mathcal B,W=O_{H,\rho}(\varepsilon^{-3})$; with the controlled surrogate these bounds are $O_{H,\alpha}(\varepsilon^{-3})$. Neither $q$ nor $q'$ is an input.
+
+**Definition 28.2 (Paid pair score and deadline).** Read consecutive actual source bits until the first observed one, and thereafter close every gap and partition consecutive gaps into disjoint pairs. For complete pair $(k,l)=(K_{2j-1},K_{2j})$, set
+
+$$
+t_j=k+l,\qquad
+\ell_j=\frac{F_1(k)F_1(l)A_0(t_j)}{F_0(k)F_0(l)A_1(t_j)}
+       =\frac{c_{1,t_j}(k)}{c_{0,t_j}(k)},\qquad
+U^{-1}\le\ell_j\le U=(1+\delta_9)^2<2.
+\tag{28.2}
+$$
+
+The quantities $A_i,c_{i,t}$ and these bounds are exactly the suppliers (22.2)–(22.3). Let $c_j=\lceil\log_2(j+1)\rceil$, $p_0=0$, and $p_j=b+2c_j+7$ for $j\ge1$. Store the positive dyadic score $G_0=1$. At an active pair update round $G_{j-1}\ell_j$ to the nearest multiple of $2^{-p_j}$, with an exact half-way tie rounded upward, obtaining $G_j$. Emit label one if $G_j\ge2^b$ and label zero if $G_j\le2^{-b}$; otherwise continue.
+
+The capped rule permits at most $W$ reads. On the $W$-th read, if a pair closes, finish its internal arithmetic and give the ordinary threshold decision priority. If no ordinary decision results, emit default zero. A first tick, a zero, or the closing tick of a first gap at the deadline goes to that default after its ordinary bookkeeping. No arithmetic step reads the source. Both terminal labels are internally emitted and absorbing. Write $N,L_\infty$ for the uncapped pair stopping index and paid count, and $L_\varepsilon$ for the capped paid count. All initial zeros, all intervening zeros and ones, and a final incomplete gap or pair are paid. No complete pair is discarded; if a deadline leaves an unscored partial pair, all of its reads remain in $L_\varepsilon$.
+
+**Lemma 28.3 (Error at active and deciding updates).** On every finite sequence of positive gap lengths processed while active, including its deciding update,
+
+$$
+G_j>0,\qquad
+\left|\log G_n-S_n\right|<\kappa,\qquad
+S_n=\sum_{j=1}^n\log\ell_j.
+\tag{28.3}
+$$
+
+Proof. The predecessor has $2^{-b}<G_{j-1}<2^b$, including $G_0=1$. Hence $x_j=G_{j-1}\ell_j>2^{-b-1}$ and nearest rounding gives
+
+$$
+\frac{|G_j-x_j|}{x_j}\le2^{b-p_j}
+\le\frac1{128(j+1)^2}=:e_j<1/2.
+\tag{28.4}
+$$
+
+It follows that $G_j>0$ and the absolute logarithmic error at that update is at most $e_j/(1-e_j)<2e_j$. Since $\sum_{j\ge1}(j+1)^{-2}<1$, their total is below $1/64<\kappa$. The predecessor of a deciding update is active, so the argument includes that update. It is a pathwise error bound, not a claim that the rounded product is a martingale. $\square$
+
+**Theorem 28.4 (Separate risks, finite mean and fully paid band order).** The uncapped rounded rule has each full-family error at most $\rho/2$, terminates almost surely, and has finite paid mean at every fixed parameter. On the supplied band its mean is at most $\mathcal B$. The capped rule satisfies
+
+$$
+\begin{gathered}
+\sup_{q\in I_\varepsilon}\mathsf P_{0,q}(D=1)\le\rho\le\alpha,
+\qquad
+\sup_{q'\in I_\varepsilon}\mathsf P_{1,q'}(D=0)\le\rho\le\alpha,\\
+L_\varepsilon=\min\{L_\infty,W\}\le W,\qquad
+c_{H,\alpha}\varepsilon^{-3}
+\le\mathbb E_{i,q}L_\varepsilon\le\mathcal B
+\quad(i=0,1,\ q\in I_\varepsilon)
+\end{gathered}
+\tag{28.5}
+$$
+
+for all sufficiently small rational $\varepsilon$, where $c_{H,\alpha}>0$. The upper constants have the dependencies in Definition 28.1.
+
+Proof. Reuse the pair-time conditional cancellation and Ville argument of Theorem 22.3: $e^{S_n}$ is a mean-one nonnegative martingale under each $\mathsf P_{0,q}$, and $e^{-S_n}$ under each $\mathsf P_{1,q'}$. These are separate assertions under the two laws' own pair-sum distributions, not an unconditional likelihood ratio between equal nuisance parameters. Lemma 28.3 puts each erroneous rounded crossing inside the corresponding true-product crossing of height $2^be^{-\kappa}$. Either error is therefore at most
+
+$$
+e^\kappa2^{-b}\le e^{1/32}\rho/4<\rho/2.
+\tag{28.6}
+$$
+
+For the stopped-mean argument set $Z_n=-S_n$ in family zero and $Z_n=+S_n$ in family one. The supplier (22.2) gives $\mathbb E_{0,q}\log\ell=-\mathfrak d_0(q)$ and $\mathbb E_{1,q'}\log\ell=+\mathfrak d_1(q')$. Thus the directed increments have positive mean $\mathfrak d_i$ and absolute size at most $2\delta_9$. Before exit, $|S_n|<b\log2+\kappa<h+2$; the last increment adds at most $2\delta_9$. Consequently $|Z_{N\wedge n}|\le R$ pathwise. The inclusion event $\{N\ge j\}$ is determined before pair $j$. Independence of that pair, followed only by a finite sum, yields
+
+$$
+\mathbb E_{i,q}Z_{N\wedge n}
+=\mathfrak d_i(q)\sum_{j=1}^n\mathsf P_{i,q}(N\ge j)
+=\mathfrak d_i(q)\mathbb E_{i,q}(N\wedge n)\le R.
+\tag{28.7}
+$$
+
+Monotone convergence proves $\mathbb E N\le R/\mathfrak d_i(q)<\infty$, and hence $N<\infty$ almost surely. Every acquired gap and the stationary initial interval are finite almost surely by the source supplier. Reuse the predictable acquisition identity (22.24), with this rule's predictable inclusion events: a pair duration need not be independent of its own score. It gives
+
+$$
+\begin{aligned}
+L_\infty&=1+\tau+\sum_{j=1}^N(K_{2j-1}+K_{2j}+2),\\
+\mathbb E_{i,q}L_\infty
+&=1+\beta_i(q)+2\mu_i(q)\mathbb E_{i,q}N
+\le\mathcal B\quad(q\in I_\varepsilon).
+\end{aligned}
+\tag{28.8}
+$$
+
+This counts the stationary first interval and every complete acquired pair. Couple the capped and uncapped rules on the same history. They agree through the deadline, including completion of any pair computation on its last read. Their decisions can differ only when $L_\infty>W$, whose probability is at most $\mathcal B/W\le\rho/2$. Adding (28.6) proves the separate capped risks. Their paid counts obey the minimum identity in (28.5), also on histories timing out in the initial wait or a partial pair. The controller is consequently in the band class of owner Corollary 22.11; its uniform per-family, per-parameter mean lower bound applies directly at risk $\alpha$. No fixed-machine eleventh-order bound is used across band retuning. $\square$
+
+## 29. A bounded bit-transition construction
+
+**Definition 29.1 (Integer words and slack).** Clear the fixed coefficient denominators by a positive integer $D$, and set $\bar F_i=DF_i$, $\bar A_i=D^2A_i$. These four integer polynomials have degree at most nineteen by the owning source's (22.7). Pad them to twenty coefficient slots each. Choose an integer $B\ge8$ so every coefficient has absolute value below $2^B$. Define
+
+$$
+\begin{aligned}
+m&=\lceil\log_2(2W+2)\rceil,&L_0&=B+8+19m,\\
+\lambda&=3L_0+4,&P&=b+2m+7,\\
+w&=8(b+P+\lambda+B+m+32),&
+a&=8+\lceil\log_2(w+1)\rceil.
+\end{aligned}
+\tag{29.1}
+$$
+
+In particular $w\ge128$, $a\le w$, and
+
+$$
+2W+2\le2^m<4W+4.
+\tag{29.2}
+$$
+
+A word has exactly $w$ bits, numbered from zero at the least significant bit. A signed value uses a magnitude word and a sign bit, with zero assigned positive sign. Every loop bound and stored constant below is an integer fitting a word. A pointer has a cell selector in $\{0,\ldots,255\}$ and a position in $\{0,\ldots,w\}$, costing at most $a$ bits. Position $w$ is a sentinel and is never dereferenced. End tests and moves concern these finite domains; there is no external time coordinate.
+
+**Definition 29.2 (Local transitions and primitive contracts).** Use 256 word cells, 32 pointers, 64 Boolean flags, one input bit and a three-valued output latch. A local internal transition inspects or writes at most four addressed tape bits, changes finite control and flags, and moves at most four heads by one neighboring position, or changes a head's selector to a specified cell. Selector changes preserve its position. A finite sequence of such moves implements a reset or seek. At a boundary a head reverses or exits as specified; it never moves outside $\{0,\ldots,w\}$. Reading or writing a word is a sweep, not one transition. All heads, selectors, flags and intermediate modes are configuration coordinates. For binary encodings of these coordinates charge at most $128w$ internal bit inspections or changes per local transition: $32a+64+30+16\le128w$. This deliberately charges the whole pointer and finite-control encoding, rather than treating a growing address as one bit operation.
+
+The following relations define bounded primitive graphs. Inputs remain protected for a primitive unless an in-place output is explicitly specified. Distinct scratch words receive all other outputs. Copies between operands and scratch are themselves sweeps. Each displayed digit recurrence is one local full-adder or full-subtractor relation on Boolean inputs; it invokes no integer arithmetic on a word.
+
+A zero or copy sweep writes respectively zero or the corresponding input digit for positions $0,\ldots,w-1$. A comparison scans from position $w-1$ down to zero, retaining a flag in $\{<,=,>\}$; the first unequal high digit fixes the flag, which subsequent lower digits preserve. Its invariant is comparison of the already scanned high prefixes. Addition scans upward with carry $c_0=0$ and relations
+
+$$
+x_r+y_r+c_r=z_r+2c_{r+1},\qquad z_r,c_{r+1}\in\{0,1\}.
+\tag{29.3}
+$$
+
+At position $s$ its invariant is $x\bmod2^s+y\bmod2^s=z\bmod2^s+2^sc_s$. The final carry is zero whenever the promised sum is below $2^w$. Subtraction, called only after comparison has certified $x\ge y$, uses borrow $e_0=0$ and
+
+$$
+x_r-y_r-e_r=z_r-2e_{r+1},\qquad z_r,e_{r+1}\in\{0,1\}.
+\tag{29.4}
+$$
+
+The analogous low-prefix identity proves its result and zero final borrow. During either sweep every partially written output is a $w$-bit word; carries and borrows are single flags. Increment, decrement and adding a fixed small integer use these same relations with copied constant operands. A signed addition first compares magnitudes: equal signs select addition; unequal signs select larger minus smaller with the larger operand's sign; equality yields positive zero. This proves its exact signed contract, including cancellation, without two's-complement overflow assumptions.
+
+A one-place left shift sweeps downward, copying each old digit to its upper neighbor and writing zero in bit zero; a one-place right shift sweeps upward and clears the top bit. A bit latch protects the digit when needed. A shift by a supplied $s\in\{0,\ldots,w\}$ repeats this sweep, with a separate loop word initially $s$ decreased by (29.4) after each sweep. Its invariant is the requested partial shift after the completed repetitions. Left shift is called only when the exact final value is below $2^w$, so every discarded high bit is zero. A power word $2^s$, $0\le s<w$, is obtained by shifting the word one. Thus even data-dependent shift lengths are bounded loops with charged counters.
+
+For multiplication of nonnegative words $x,y$ with $xy<2^w$, initialize output $z=0$ and scan the multiplier at positions $r=0,\ldots,w-1$. If $y_r=0$ the row is skipped. If $y_r=1$, form a zeroed row with $x$ shifted by $r$, then add it in place to $z$ by (29.3). Here row formation needs no loop of $r$ shifts: temporarily change the multiplier head's selector to a marker word, mark position $r$, and return its selector. Seek a row head to that marker by a sweep; copy the digits of $x$ upward starting there, then erase the marker. Each copy advances its two heads by one square. Digits of $x$ beyond the row boundary are zero because the selected row $2^rx$ is at most $xy<2^w$. The row invariant is its copied low prefix; the outer invariant is
+
+$$
+z=x\sum_{s<r}y_s2^s.
+\tag{29.5}
+$$
+
+The pending row and every completed accumulation are at most $xy$. Low-digit carry propagation is justified by (29.3), also for the in-place accumulator since its old digit is latched before replacement. No two-word or unbounded product is silently used.
+
+For division of a dividend $A<2^w$ by a positive divisor $V$ with $2V<2^w$, initialize quotient and remainder to zero and scan the dividend downward. For each digit $\xi$, form $r'=2r+\xi$, compare it with $V$, and retain $r'$ or subtract $V$ accordingly; append quotient digit zero or one. If $A_s$ is the dividend prefix already scanned, the invariant is
+
+$$
+A_s=Vq_s+r_s,\qquad 0\le r_s<V.
+\tag{29.6}
+$$
+
+Indeed $0\le2r_s+\xi<2V$, so at most one subtraction restores the invariant. The applications below have $2V<2^w$; the shifted transient therefore fits. Quotient append is an exact one-place shift and bit insertion, and the quotient prefix never exceeds the final quotient. Comparison and subtraction are the preceding sweeps, with their carry/borrow flags reset at entry. These relations prove the division contract, not merely its terminal numerical identity.
+
+All scans use separate heads for the outer digit, inner digit and marker seek. Marker words start and finish zero. Remaining-iteration words use the preceding ripple relations; no loop counter is an uncounted integer. Sentinel entry ends a scan before any dereference. Descending scans enter at sentinel $w$ and first move to $w-1$; ascending scans enter at zero and exit on reaching $w$. Fixed boundary checks and neighboring head moves are finite tape relations, not calls to an arithmetic oracle.
+
+**Lemma 29.3 (Bounded primitive realization and control).** Each contract of Definition 29.2 has a graph with fewer than $2^{14}$ local modes, at most sixteen working pointers and sixteen scratch words, and at most $2^{16}w^2$ local transitions. Its internal bit work, including pointer/control encoding, is at most $2^{23}w^3$. Every bit inspection is of a designated operand, output, scratch or marker cell, or a counted control coordinate; it never inspects the source latch.
+
+Proof. A sweep has entry, seek/reset, digit, end-test and exit modes, with at most two carry/borrow or comparison flags. Each return to the next sweep is a fixed edge. Copy, zero, comparison, addition and subtraction each use at most eight such modes. A repeated shift adds entry/test/decrement/return modes to its two sweeps. Multiplication has outer test, bit choice, row clear, marker set/seek, row copy, marker erase, add, head reset and outer advance. Division has outer test, remainder shift, comparison, conditional subtraction, quotient shift/insertion, reset and outer advance. Include the counter-decrement and zero-test sweeps in the shift graph. Each primitive has at most 32 constituent sweep or connecting types: the ten multiplication types just listed, the eight division types including its digit insertion, and the repeated-shift types each stay within that allowance, including all resets. Allocate sixteen local positions to each type, covering its entry, two seek/reset directions, digit relation, end/sentinel tests and exits. Even allowing all sixteen valuations of four local Boolean branch flags gives $32\cdot16\cdot16=8192$ modes. An additional 1024 connecting/entry/exit positions still leave the total below $2^{14}$. The loop-control words are decremented or tested by their own sweeps in these types, not by extra calls. Signed addition is expanded into comparison and unsigned branches at the caller and is not a recursive primitive.
+
+Eight heads suffice for protected inputs, output, row/remainder, marker and seek scans; allowing sixteen includes saved outer heads while an inner sweep runs. The live scratch consists of row or remainder, quotient, marker, operand copies and loop words; sixteen words exceed the twelve needed even with disjoint outputs. An inner sweep cannot reset the saved outer head. In multiplication the outer scan has $w$ iterations, each with at most sixteen sweeps or resets of length at most $2w+2$; row construction is by marker alignment, not repeated shifting. Division has $w$ such iterations. Repeated shift has at most $w$ repetitions, each with a shift and loop-decrement sweep. Thus $2^{16}w^2$ bounds all moves, flag handling and selector changes, including resets and loop tests, for $w\ge128$. Multiplication's outer invariant (29.5), division's (29.6), and the digit invariants prove the result by induction on their respective scans. They also prove that each loop ends and each promised no-overflow precondition suffices throughout it. Multiplying the local-transition bound by $128w$ proves the bit-work bound. Every transition mentioned concerns tape bits or finite coordinates already counted. $\square$
+
+**Definition 29.4 (Bank allocation and composition).** Cells 0–79 hold the eighty coefficient magnitudes; their signs are fixed branches of the immutable graph. Cells 80–95 hold compiled constants: in order $W,b,m,P,L_0,\lambda,w,0,1,2,7,B$, followed by four zeros. Logical cells 96–115 hold, in order,
+
+$$
+r,z,k,l,t,j,p,v,c,M,p_{\rm new},\Delta p,v_s,n,d,A,V,v_{\rm new},H_+,H_-.
+\tag{29.7}
+$$
+
+Here $r$ is paid reads, $z$ the current zero count, $M=2^c$ the precision comparison word, and $v2^{-p}$ the retained score. Cell 116 holds the disjoint pair-sum output $\sigma$; cells 117–127 are reserved. Cells 128–133 retain the six evaluations $\bar F_1(k),\bar F_1(l),\bar A_0(t),\bar F_0(k),\bar F_0(l),\bar A_1(t)$. Cells 134–143 are signed Horner magnitudes, signs, coefficient copies and outputs; 144–159 are reserved. Cells 160–175 hold factor and rounding product outputs; within that bank cells 164–166 hold respectively the temporary words $J=j+1$, $e_+=p_{\rm new}+b$ and $e_-=p_{\rm new}-b$. Cells 176–191 are reserved. Cells 192–207 are the primitive scratch, including marker and loop words; 208–223 are additional disjoint copies. Cells 224–255 are reserved control scratch. A sign word is always zero or one. Input, output, seen-first-tick, retained-first-gap, carry, borrow and comparison flags belong to the separate latch/flag coordinates, whose allowance of 64 flags also covers primitive branches. Eight pointers are protected caller/initialization heads, sixteen are primitive heads, and eight are spare; there is no hidden tape head.
+
+The second-gap closing-one exit first finishes the copy from $z$ to $l$ and the reset of $z$. Its sole successor is an unsigned addition occurrence with protected inputs $k,l$ in cells 98,99 and disjoint output $\sigma$ in cell 116. Reset the carry at that occurrence's entry and use (29.3) at each digit. Its exit leads only to a copy sweep from cell 116 to $t$ in cell 100; that copy's exit leads only to the first Horner occurrence. Neither exit is read-enabled or tests the deadline. Thus a completed pair produces its actual sum before any evaluation: $\sigma=t=k+l$. Cells 98–100 are protected through all six evaluations and the ensuing score computation. Cell 116 is not primitive scratch and cannot be reused before its copy finishes. Between pairs an old value of $t$ or $\sigma$ has no consumer; every next completed pair traverses these same two occurrences before either $\bar A_i(t)$ call.
+
+Every invocation has fixed operand cell selectors. Copies produce disjoint outputs before a logical cell is overwritten. Coefficient signs and the six argument choices are fixed by call-site identity. No indirect coefficient index is required: for each of the six evaluations unroll the twenty coefficient positions from degree nineteen to zero. At a Horner position, multiply the current magnitude by its nonnegative argument, retain its sign, and signed-add the next coefficient using the branches of Definition 29.2. Starting at signed zero, the invariant is the exact polynomial suffix evaluated at that argument. The output of each evaluation is copied to its protected cell before scratch is reused. Positive final signs follow from $F_i(k)>0$ and $A_i(t)>0$ for $k,l\ge1$, $t=k+l\ge2$, not from coefficient signs.
+
+After the pair-sum copy and all six evaluations, a completed pair obtains the two positive words
+
+$$
+n=\bar F_1(k)\bar F_1(l)\bar A_0(t),\qquad
+d=\bar F_0(k)\bar F_0(l)\bar A_1(t).
+\tag{29.8}
+$$
+
+The two-factor outputs use cells 160,161, and are multiplied by their respective third evaluations before copying into $n,d$. These cells and the rounding-product cells are disjoint from 164–166. The factors $D^4$ cancel, so after incrementing $j$ the identity $n/d=\ell_j$ holds for that new pair index. Initially $c=0,M=1$; after the increment produce $J=j+1$ in cell 164 by addition with the stored one, and compare that output with $M$. If larger, double $M$ and increment $c$ once. Initially $J=2$; subsequently the previous $j+1$ was at most $M$, so its increase is at most $M+1\le2M$. Hence one doubling suffices and $c=\lceil\log_2(j+1)\rceil$ exactly. Calculate $p_{\rm new}=b+2c+7$ and $\Delta p=p_{\rm new}-p\ge0$ by protected additions/subtraction. Shift $v$ by $\Delta p$ to $v_s$, and form and divide
+
+$$
+A=2v_sn+d,\qquad V=2d,\qquad
+v_{\rm new}=\left\lfloor\frac A V\right\rfloor.
+\tag{29.9}
+$$
+
+This is nearest rounding with upward ties at denominator $2^{p_{\rm new}}$. Produce $e_+$ in cell 165 by addition and $e_-$ in cell 166 by subtraction, then generate the threshold words $H_+=2^{e_+}$ and $H_-=2^{e_-}$ by bounded shifts of one. Compare $v_{\rm new}$ first with $H_+$ and then with $H_-$, and take the specified label if either comparison crosses. Otherwise copy the new numerator and precision to $v,p$, clear the pair-retention flag, and apply the deadline check. A terminal threshold or deadline output enters its absorbing label without another read.
+
+The producer order within a completed-pair path is the following. An exit connects only to its listed next stage, with the fixed branch alternatives already specified. No operand is consumed during a partially completed producing sweep.
+
+| Produced live value | Producing contract and protected inputs | First consumer and required lifetime |
+| --- | --- | --- |
+| $k,l$ | Closing-one copy sweeps from the exact zero counts; $k$ survives the second-gap reads | Pair-sum addition, followed by all six evaluations; both stay protected until score completion |
+| $\sigma,t$ | Addition (29.3) on $k,l$, then the complete copy $\sigma\to t$ | Horner calls on $t$; $t$ stays protected throughout pair arithmetic |
+| Six cells 128–133 | Twenty signed Horner positions each, on protected $k,l,t$ and fixed coefficients | Two-factor and third-factor products; all six outputs are written for the current pair before any factor product |
+| $n,d$ | Two protected two-factor products, then their third-factor products and copies | Precision-shifted dividend and divisor; neither is overwritten during rounding |
+| $j,J,c,M,p_{\rm new},\Delta p$ | Pair-index increment, addition for $J$, comparison/optional doubling, precision additions and subtraction using old $p$ | Exact shift $v_s=2^{\Delta p}v$; old $v,p$ remain protected until score commitment |
+| $v_s,A,V$ | Precision shift, product $v_sn$, one-place doubling and addition of $d$; separately double $d$ | Division (29.6), entered only after both $A,V$ are complete and positive |
+| $v_{\rm new},e_+,e_-,H_+,H_-$ | Completed quotient, two exponent operations, then bounded power shifts | Threshold comparisons, followed only by a label or score commitment and the deadline check |
+
+The remaining product outputs use cells 162,163 and 167–175, and protective copies use 208–223; each primitive's other scratch stays in 192–207. In particular the dividend and divisor remain protected throughout division, its quotient is copied to cell 113 before division scratch is reused, and the two threshold words remain protected through their comparisons. All disjoint copies and exponent operations in this order belong to the existing precision and factor/rounding occurrence allowances. The pair-sum addition and its copy are two additional primitive occurrences. There is no additional latch, head, flag, stored return address or shift in that pair-sum stage.
+
+There are three read-enabled entry types: initial wait, first-gap collection and second-gap collection. Exactly one next source bit is read into the latch, and control immediately enters a source-disabled bookkeeping graph. Increment $r$ once there. In initial wait a zero changes no gap data, and a one sets seen-first-tick and resets $z$. Thereafter a zero increments $z$; a one copies $z$ into $k$ or $l$, resets $z$, and respectively retains the first gap or enters completed-pair arithmetic. At a non-pair read apply the deadline check after bookkeeping. At a pair read apply it only after the arithmetic and both ordinary comparisons. Only if $r<W$ and no label was produced does control return to a read-enabled entry. The input latch is inspected only in the immediate bookkeeping choice, never by arithmetic. On an impossible adjacent-one input after the first tick, halt with zero; this completes the graph outside the legitimate no11 domain without scoring a zero gap.
+
+Calls are static expansions, not runtime recursion: give every primitive occurrence its own disjoint copy of its local modes and connect its exits directly to its specified successor. A completed inner sweep returns by that fixed edge. There is no return-address stack. A signed Horner position needs at most sixteen primitive occurrences: one coefficient copy, one magnitude product and its protective copy, one magnitude comparison on the unequal-sign branch, at most one addition or one of two subtraction branches, and at most eight copies, clears or sign normalizations on the branch alternatives. Allowing 32 per position also includes entry/exit and both sign choices. The non-Horner stages use fewer than 32 arithmetic/copy occurrences each: the precision stage has one pair-index increment, one $J=j+1$ addition, one comparison, one possible doubling and increment, three precision additions/shifts and a subtraction; the factor/rounding stage has four factor products, one precision shift, three dividend operations, one divisor shift, one division, two exponent operations, two power shifts, two comparisons and the resulting copies. Allowing 128 for each such stage includes disjoint operands, all branches and counter/flag handling. Read bookkeeping needs only increment, zero test, gap copy/reset and deadline comparison on its alternatives. For an explicit graph budget, initialization uses at most 512 primitive occurrences (256 clears, 96 descriptor copies and at most 160 constant/flag/head preparations); read bookkeeping at most 128; pair-sum production exactly two; precision scheduling at most 128; each of 120 Horner positions at most 32 (including all signed branches and protective copies); and factor formation, rounding, comparisons and halts at most 128. Their sum is 4738, below 8192. Branch alternatives count as separate occurrences in this total. One completed read path traverses at most that many occurrences, since the only outer loops are the next-read edge and the one bounded precision doubling; polynomial positions are unrolled. Primitive loops are already counted in Lemma 29.3. The pair-sum stage adds fewer than $2^{15}$ local modes and at most 32 connecting nodes. Adding all read nodes, branch nodes and label nodes to $8192\cdot2^{14}$ local modes fits a control set $Q$ with $|Q|=2^{30}$. Call-site identity and every return edge therefore fit the counted 30-bit control coordinate.
+
+**Lemma 29.5 (All reachable histories and transient widths).** From the initialization below, every legitimate no11 stream has the exact read/score semantics of Definition 28.2. Every transient arithmetic configuration obeys the primitive preconditions in its counted bank; every run halts after at most $W$ paid reads and finite internal work, even on an infinite all-zero stream.
+
+Proof. Initialization sets $r=z=k=l=t=j=p=c=\sigma=0$, $M=v=1$, both source-history flags false, and output empty. Induct on the number of paid reads, inserting the terminating primitive inductions of Lemma 29.3 between reads. At every active read-enabled state, stored $j$ counts the already scored pairs, $p=p_j$ and $v2^{-p}=G_j$; initialization supplies this at $j=0$. Before the first observed one no zeros contribute to a complete-gap statistic. After that one, $z$ is exactly the number of zeros actually read since the last observed one. In first-gap collection no old $k,l,t$ is consumed. Its closing one finishes the copy of $z$ to $k$ before setting retention and entering second-gap collection; subsequent reads protect $k$. The second closing one finishes the copy to $l$ before resetting $z$ and entering pair-sum production. Thus its $k,l$ are the next two exact positive gap lengths. The retention flag determines which, so no partial or discarded interval is substituted for a complete gap. The bookkeeping counter is exactly $r$, with $0\le r\le W$. At every read-enabled state it is below $W$, and every current or completed gap count is at most $W$.
+
+Let $\nu$ denote the current pair's index in this induction; before the precision-stage increment the stored $j$ is $\nu-1$. This is a proof index, with no additional stored coordinate. At the pair-sum addition, $k+l\le2W<2^m<2^w$. Its partial-output invariant is precisely $k\bmod2^s+l\bmod2^s=\sigma\bmod2^s+2^sc_s$ from (29.3). At $s=w$ there is zero final carry, so its completed output is the exact $k+l$. The next copy has the invariant that its written digits of $t$ equal the corresponding digits of that protected $\sigma$; only its completed exit enables Horner. Consequently, at every polynomial-argument consumer,
+
+$$
+k=K_{2\nu-1},\qquad l=K_{2\nu},\qquad t=\sigma=k+l,\qquad 2\le t\le2W<2^m.
+$$
+
+No read or deadline edge can intervene in these producer paths, and the bank partition prevents scratch from changing $k,l,t$ afterward. This proves the argument invariant for every completed pair, including one closing when $r=W$; it imposes no assertion on an unused stale $t$ between pairs. The subsequent index increment gives stored $j=\nu\le W$ before its precision consumers, while $v,p$ still encode $G_{\nu-1}$. An active score commitment restores $p=p_\nu$, $v2^{-p}=G_\nu$ before any next read. These statements hold on every legitimate stream, irrespective of its probability.
+
+For an argument $1\le x<2^m$, every signed Horner suffix and each multiplication just before coefficient addition have magnitude bounded by
+
+$$
+20\,2^B(2^m)^{19}<2^{L_0}.
+\tag{29.10}
+$$
+
+This bound follows by expanding at most twenty terms, and also bounds a prefix of the Horner recurrence before adding its next coefficient; the maximum exponent reached is nineteen. Same-sign additions and intermediate magnitudes in a signed subtraction satisfy the same envelope. All six positive evaluation outputs are below $2^{L_0}$. The two-factor partial products and the three-factor outputs in (29.8) are positive and below $2^{3L_0}<2^\lambda$. The multiplication primitive's selected rows and accumulated sums are bounded by these exact products. Subtractor partial words need only the full $w$-bit bound, and their borrow is explicitly retained; no assertion that each partially written word satisfies the final polynomial envelope is needed.
+
+The precision induction in Definition 29.4, after producing $J=j+1\le W+1<2^m$, proves $c\le m$, $M\le2^m$, $p_{\rm new}\le P$. Each exponent word is produced before its power shift. The stored $p$ is the previous precision, so its subtraction gives $\Delta p\ge0$; the old score numerator $v$ is still protected at that shift. Initially $p=0,v=1$. Before a later active update $G=v2^{-p}<2^b$, so after the exact precision shift $0<v_s<2^{b+P}$. Thus
+
+$$
+0<A=2v_sn+d<2^{b+P+\lambda+2}<2^w,
+\qquad 0<V=2d<2^{\lambda+1}.
+\tag{29.11}
+$$
+
+The rounding product and its partial accumulations fit the same slack. Division restores $0\le r_{\rm div}<V=2d$ after every digit, and its shifted transient satisfies
+
+$$
+0\le2r_{\rm div}+\xi<2V=4d<2^{\lambda+2}<2^w.
+\tag{29.12}
+$$
+
+In particular the restored remainder need not be below $d$. This divisor-specific invariant includes $n=d$, where the final remainder in (29.9) is $d$. The quotient prefix and its append operations fit since the final quotient is at most $A<2^w$.
+
+For the deciding score as well as an active one, nearest rounding and $U<2$ give the safe bound with its additive slack
+
+$$
+G_j\le G_{j-1}U+2^{-p_j-1}
+<2^{b+1}+2^{-p_j-1}<3\cdot2^b.
+\tag{29.13}
+$$
+
+Hence $v_{\rm new}<3\cdot2^{b+P}<2^{b+P+2}<2^w$. The thresholds have exponents $p_j\pm b$ in $[0,P+b]$, strictly below $w$; the first update has $p_j\ge b$, so no negative shift occurs. All shift counts, precision sums and subtraction operands consequently meet their primitive contracts. Loop words and head positions are at most $w$; $w$, $w^2$, $256w$ and the fixed allocation/selector constants are below $2^w$ for the chosen $w\ge128$. All copies, arithmetic scratch, signs and pending carries are therefore within their complete coordinate domains.
+
+Protected cells are not overwritten until the corresponding exact output has been proved. In the producer order of Definition 29.4, the current pair's six evaluation outputs are all positive by the just-established $k,l\ge1,t\ge2$ invariant and the owner's defining sums. Hence both products $n,d$ are positive before their dividend/divisor consumers, and division receives the promised positive $V=2d$, rather than an initialized or previous pair's word. The temporary $\sigma,J,e_+,e_-$ fit their bounds above; their fixed cells lie outside primitive scratch. The primitive scratch and pointer partition preserves all suspended caller data. This proves composition by induction on graph edges, not by assuming that membership in a Cartesian set implies correctness. All primitive loops terminate by their scan/repetition bounds. A completed pair's exact quotient (29.9) and threshold tests are precisely Definition 28.2. No arithmetic return edge is read-enabled. Finally, when the last read closes a second gap, its gap copies, sum production, six evaluations, factor products, precision, division and both ordinary comparisons all finish before the deadline consumer; a crossing emits its ordinary label, otherwise the score commit leads to default zero. A last read in any other phase reaches default only after its prescribed bookkeeping. Thus $r=W$ forces a label and no next-read edge is reachable, even on a history with no first tick or no closing pair. $\square$
+
+**Theorem 29.6 (Complete configurations and online work).** The deterministic transducer just constructed has at most
+
+$$
+2^{30}\,2^{256w+32a+67}
+=2^{256w+32a+97}
+\tag{29.14}
+$$
+
+complete configurations, and can be encoded by $256w+32a+97$ mutable bits. This includes all operands, constants copied into the bank, scratch, heads, selectors, input and output, flags, modes, call sites and halts. Its paid count is at most $W$ and its internal online work is at most $2^{40}Ww^3$ bit operations, with a separate initialization allowance $2^{34}w^3$.
+
+Proof. There are 256 word cells, 32 pointers, 64 Boolean flags, one input bit, at most two bits for the output latch, and 30 control bits. Lemma 29.5 proves reachability and exact refinement within those domains; multiplying their cardinalities gives (29.14), allowing unused encodings. The pair-sum output occupies one of the already counted cleared words; $J,e_+,e_-$ occupy existing product-bank words. Their lives require no extra coordinates. Per read, at most 8192 primitive occurrences and their connecting edges are traversed. Specifically the two pair-sum occurrences cost at most $2^{17}w^2$ local transitions and $2^{24}w^3$ bit work, with at most $32\cdot128w=4096w$ additional bit work for their connections. This is below $2^{25}w^3$ per completed pair. No shift is added there; the precision and threshold shifts retain their proved counts below $w$. Lemma 29.3 charges $2^{23}w^3$ per occurrence; $2^{40}w^3$ leaves slack for all 4738 occurrences, read nodes, phase/selector/flag setting and the threshold/timeout output. Initialization has fewer than 512 occurrences; its corresponding $2^{34}w^3$ allowance includes every clear and copy, including cell 116 and the temporary product-bank words. No operations before the first source read are omitted from that separate charge. For fixed $H,\rho$, (29.1)–(29.2) give $w=O_{H,\rho}(1+\log(W+2))$ and $a=O(1+\log(w+1))$. Thus the complete online bit bound is logarithmic in $W+2$ and its configuration count is polynomial in $W+2$. Under the controlled surrogate the constants depend only on $H,\alpha$. $\square$
+
+**Proposition 29.7 (Compiler, deployed descriptor and initialization).** Let $B_{\rm in}$ be the total binary length of the supplied rational band and risk descriptions, including any unreduced or padded representation. Fixed-model preparation and rational compilation are outside the deployed bank and are separately paid. The compiler retains only a bounded compiled descriptor for deployment; it never copies an arbitrary input fraction into a $w$-only online word.
+
+Proof. Apply owner Proposition 22.6 explicitly as follows. Its fixed-degree preparation computes $A_i$, the polynomials (22.28), and the doubling certificate $T_0$; coefficient clearing supplies the four integer polynomials and the fixed $B$ here. If $B_{\rm mod}$ counts those fixed descriptions, that supplier charges the coefficient generation separately and the doubling search by
+
+$$
+O\!\left((1+\log(T_0+2))(B_{\rm mod}+\log(T_0+2))^2\right)
+$$
+
+bit work and $O(B_{\rm mod}+\log(T_0+2))$ workspace, up to its absolute fixed-degree constants. Thereafter its band preprocessing (22.57) applies with this input's $u,v,\rho$:
+
+$$
+K_{\rm pre}=O\!\left(B_{\rm mod}+(T_0+20)(B_{\rm in}+\log(T_0+2))+1\right),
+\qquad
+\text{work}=O\!\left((1+\log(T_0+2))K_{\rm pre}^2\right).
+\tag{29.15}
+$$
+
+The correspondence is exact: evaluate the same $G_{17}(u,T_0)$ and moment rational functions, compute $h$ by risk comparisons, and replace $R_\alpha$ by the identical rational expression $h+2+2\delta_9=R$. Equation (28.1) then uses the same positive-denominator rational operations and integer ceiling. From $W$ the compiler obtains $m$ by power-of-two comparisons, and then $b,P,L_0,\lambda,w$ by fixed integer operations. These extra shifts/comparisons and descriptor padding take $O(K_{\rm pre}^2)$ work and $O(K_{\rm pre})$ workspace after increasing the supplier's fixed constants: $h=O(B_{\rm in}+1)$ and the binary length of $W$ is already bounded by $K_{\rm pre}$. No logarithm of a real quantity is evaluated by an oracle. The existence choice of a rational surrogate is separate from these finite rational-input compilation costs.
+
+The deployed immutable description is the fixed local-transition schema and its static call graph, together with exactly 96 $w$-bit words: the eighty coefficient magnitudes and the sixteen compiled fields in Definition 29.4. Coefficient signs are fixed graph branches. The schema describes width and endpoint domains using the stored integer $w$; it is not an explicitly printed exponentially large transition table. The fixed schema can be encoded with a numerical constant $C_{\rm graph}=2^{48}$ bits: fewer than $2^{30}$ mode records, each of at most $2^{12}$ bits specifying its Boolean guards, at most four head/bit actions and its fixed successor labels, leave space for all graph headers and fixed coefficient-sign branches within that constant. Endpoint tests use the width symbol, whose integer value is in the compiled fields. Its description length therefore satisfies
+
+$$
+D_{\rm dep}\le C_{\rm graph}+96w.
+\tag{29.16}
+$$
+
+Here $C_{\rm graph}$ is independent of the band and risk, since the graph has the fixed bounds in Definition 29.4, fixed cell selectors and fixed polynomial degree. Width-dependent scalar fields are among the 96 words. Raw fractions, $d_{\min}$, moments and other compiler intermediates are discarded; their construction is charged by (29.15). A redundant long encoding of a fixed numerical band therefore affects preprocessing, without becoming hidden online storage.
+
+Initialization first clears the 256 cells by bounded sweeps. It then copies the 96 immutable words, one bit at a time, into their corresponding bank cells; its call sites for the 96 fields are unrolled. The descriptor address is a field in $\{0,\ldots,95\}$ and a bit position in $\{0,\ldots,w\}$, so it needs at most $7+\lceil\log_2(w+1)\rceil\le a$ bits, using an already counted initialization pointer. That pointer has an immutable-source role during copying, fixed by the mode; the destination pointer has the bank role. Thus no extra uncounted memory-kind selector is required. The fixed graph is selected by the counted 30-bit control label and is never addressed as mutable data. Each field's sentinel ends its copy before dereference. An optional serial descriptor counter is at most $96w<2^w$ and fits a reserved word. No raw input-description address is needed. The same head/selector budget covers clears, copies and resets; endpoint-dependent constants are read-only until copied, and every copied field fits because of (29.1), (29.10) and $w\ge128$. Finally set $M=v=1$, clear the logical cells and flags as in Lemma 29.5, and enter initial wait. Preparation of known word one or zero is a bounded sweep. This is the initialization already counted by $2^{34}w^3$; it uses the complete bank and heads of (29.14). The graph itself remains immutable and is charged in $D_{\rm dep}$, rather than copied to an uncounted program tape. After initialization no mutable descriptor address persists outside the bank and no descriptor access carries a source observation. $\square$
+
+## 30. The implementation theorem and its scope
+
+**Corollary 30.1 (Fixed-risk complete-memory existence).** For the fixed stationary renewal families with polynomial $H_c$ and every fixed real $0<\alpha<1/2$, choose once a rational $\rho\in[\alpha/2,\alpha]$ as in Definition 28.1. For every sufficiently small supplied rational $\varepsilon>0$ there exists the deterministic controller of Section 29, compiled from that band and risk fraction, with source-independent initialization, satisfying
+
+$$
+\begin{gathered}
+\sup_{q\in[1-2\varepsilon,1-\varepsilon]}\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad
+\sup_{q'\in[1-2\varepsilon,1-\varepsilon]}\mathsf P_{1,q'}(D=0)\le\alpha,\\
+L_\varepsilon\le W=O_{H,\alpha}(\varepsilon^{-3}),\qquad
+\mathbb E_{i,q}L_\varepsilon=\Theta_{H,\alpha}(\varepsilon^{-3})
+\quad(i=0,1,\ q\in I_\varepsilon),\\
+\text{complete online mutable bits}\le256w+32a+97
+=O_{H,\alpha}(1+\log(1/\varepsilon)),\\
+\text{internal online bit work}\le2^{40}Ww^3,
+\qquad
+\text{initialization bit work}\le2^{34}w^3.
+\end{gathered}
+\tag{30.1}
+$$
+
+Its complete configuration count is (29.14), polynomial in $\varepsilon^{-1}$. The same construction accepts every independent rational $0<\rho\le\alpha$ with the exact bounds (28.1), (29.1), (29.14)–(29.16); for that larger input domain the upper asymptotic constants are $H,\rho$ dependent. The lower mean constant can still be taken from the target-risk $\alpha$ supplier. No actual nuisance value is supplied, estimated for compilation, or used as an immutable transition parameter.
+
+Proof. Theorem 28.4 gives the risks, paid cap, fully priced mean upper bound and the direct owner 22.11 mean lower. Lemma 29.5 proves exact agreement for every legal capped history, not only in distribution or on selected examples. Theorem 29.6 gives all mutable coordinates and internal work; Proposition 29.7 supplies the separately charged compiler and bounded descriptor initialization. These apply simultaneously to this one controller at each band. $\square$
+
+**Definition 30.2 (Supplier correspondence and evidential boundary).** The exact fixed source, positive envelope, stationary initial wait and iid post-tick gaps come from owner Definition 20.1, Theorems 15.5 and 17.4, and continuation Definition 23.2. The finite pair-sum cancellation, factor orientation and bounded increments are (22.2)–(22.3); positive drift and the rational band certificate are Theorems 22.2 and 22.4, especially (22.28)–(22.34). The predictable duration identity and the Ville crossing argument are reused from Theorem 22.3, including its cited Howard–Ramdas–McAuliffe–Sekhon Lemma 1, (2.11). The compiler accounting is Proposition 22.6, especially (22.57). The mean lower is precisely Corollary 22.11, uniform over band-retuned protocols and separately for each family and each parameter on the band. Those analytic and preprocessing suppliers are applied here, not reproved. The added mathematical content is the summably rounded positive product and its complete bounded bit-transition refinement.
+
+The background correspondences have narrower scope. Flower and Hellman, “Hypothesis Testing With Finite Memory in Finite Time,” *IEEE Transactions on Information Theory* 18, 429–431, use iid observations, a finite statistic, time-invariant possibly randomized updates, and a decision at a fixed horizon. That supplies background for finite-valued observers, not this dependent-renewal stopping or memory theorem. Marzen and Crutchfield, *Informational and Causal Architecture of Discrete-Time Renewal Processes*, arXiv:1408.6876v2, supply the classical iid interevent-count and stationary-survival conventions used by the owner. Broniatowski and Caron, *Conditional inference in parametric models*, arXiv:1202.0944v1, Section 4.1, (9)–(11), give background on nuisance conditioning by sufficient statistics; the discrete pair-sum identity used here is already the exact owner calculation. No approximation theorem from that paper enters the controller proof. These limited attributions do not assert that any external paper supplies the complete construction.
+
+Compiler workspace/work, deployed immutable description, initialization, complete online mutable bits, internal bit operations, paid reads and emitted labels are distinct coordinates. The construction has no fresh or retained random inputs. It uses one consecutive actual history, pays every initial and partial interval, emits its own labels, and has no free age, clock, probability query, source copy, reset, skip or archive. Its bit-transition model and numerical charges imply no physical elapsed-time, energy or device claim. This is an ordinary-paper construction, with no kernel-verification, worldwide-priority, sharp-constant or minimum-memory assertion. The necessity established by the supplier concerns paid mean; no memory necessity or converse uniform over band-retuned finite machines is inferred from the fixed-machine results of Sections 23–27. Varying $H_c$ or sending its residual to zero is outside the theorem.
+
+## 追加锚（本行以下为增补区）
