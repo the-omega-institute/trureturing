@@ -273,11 +273,13 @@ next marked domain, with literal raw support and edge inventories. -/
 theorem native_same_parent_cycle_next_marked {m k : ℕ}
     (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
     (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (p q : Fin (m + 1))
     {a₀ : {x : Configuration m // ParentDomain (outerFrame F A u hbase) x}}
     (c : (domainGraph (ParentDomain (outerFrame F A u hbase))).Walk a₀ a₀)
     (hc : c.IsHamiltonianCycle)
     (hkeepA : ∀ (x y : {v : Configuration m // ParentDomain (outerFrame F A u hbase) v}),
-      y.val = x.val * a m → s(x, y) ∈ c.edges)
+      y.val = x.val * a m →
+      s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(p, q) → s(x, y) ∈ c.edges)
     (hkeepB : ∀ (x y : {v : Configuration m // ParentDomain (outerFrame F A u hbase) v}),
       y.val = x.val * b m → x.val (Fin.last m) ∉ insert u F.selected.toFinset →
         s(x, y) ∈ c.edges) :
@@ -289,7 +291,8 @@ theorem native_same_parent_cycle_next_marked {m k : ℕ}
       next.support.map Subtype.val = c.support.map Subtype.val ∧
       next.edges.map (Sym2.map Subtype.val) = c.edges.map (Sym2.map Subtype.val) ∧
       (∀ (x y : {v : Configuration m // SpecialDomain N hN v}),
-        y.val = x.val * a m → s(x, y) ∈ next.edges) ∧
+        y.val = x.val * a m →
+        s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(p, q) → s(x, y) ∈ next.edges) ∧
       (∀ (x y : {v : Configuration m // SpecialDomain N hN v}),
         y.val = x.val * b m → x.val (Fin.last m) ∉ N.selected.toFinset →
           s(x, y) ∈ next.edges) := by
@@ -304,10 +307,10 @@ theorem native_same_parent_cycle_next_marked {m k : ℕ}
     rfl
   · simp only [SimpleGraph.Walk.edges_map, List.map_map, Sym2.map_map]
     rfl
-  · intro x y hxy
+  · intro x y hxy hprotected
     rw [SimpleGraph.Walk.edges_map]
     exact List.mem_map.mpr ⟨s(⟨x.val, hinverse x⟩, ⟨y.val, hinverse y⟩),
-      hkeepA _ _ hxy, rfl⟩
+      hkeepA _ _ hxy hprotected, rfl⟩
   · intro x y hxy hterminal
     rw [SimpleGraph.Walk.edges_map]
     have hterminal' : x.val (Fin.last m) ∉ insert u F.selected.toFinset := by
