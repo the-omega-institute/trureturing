@@ -36,7 +36,7 @@ internal sealed class DynamicCoolingParallelTieUniquenessDocument : IScribeDocum
                 "Section I, requirement 2, and Equation (90) define the global optimum under equal diagonal target marginals. Here it is sInf in the real numbers of the set of feasible common populations. The definition is made for every N, M and P; the theorem uses parameters for which this set is nonempty and bounded below.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The strict global-versus-parallel inequality", "claim", ClaimFormula(),
-                "Section IX, Equations (88) through (92), compares global cooling with M disjoint groups of size floor(N/M), each cooling one target, while leaving N modulo M qubits unused. The displayed floor is natural-number division, Nat.div N M. The conjectured uniqueness of the exceptional tie gives the strict inequality for every natural pair with 2 <= M and M + 2 <= N other than (6, 2), and every real P1 with 0 < P1 < 1/2. The equality at (6, 2) is stated in Equation (92); it is not asserted by this claim.",
+                "Section IX, Equations (88) through (92), compares global cooling with M disjoint groups of size floor(N/M), each cooling one target, while leaving N modulo M qubits unused. The displayed Nat.div operator denotes natural-number integer division. The conjectured uniqueness of the exceptional tie gives the strict inequality for every natural pair with 2 <= M and M + 2 <= N other than (6, 2), and every real P1 with 0 < P1 < 1/2. The equality at (6, 2) is stated in Equation (92); it is not asserted by this claim.",
                 AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
                 DescribeId.Create("dynamic-cooling-result"), DeclarationHandle.Create(Prefix + "result"),
@@ -164,7 +164,7 @@ internal sealed class DynamicCoolingParallelTieUniquenessDocument : IScribeDocum
 
     private static Formula ClaimFormula()
     {
-        Formula quotient = Seq(Lfloor, new Formula.Fraction(X("N"), X("M")), Rfloor);
+        Formula quotient = At(Qualified("Nat", "div"), X("N"), X("M"));
         Formula inequality = Less(LocalCall("pGlob", X("N"), X("M"), X("P1")),
             LocalCall("pGlob", quotient, D(1), X("P1")));
         Formula temperatures = All("P1", Reals(), Implies(Less(D(0), X("P1")),
