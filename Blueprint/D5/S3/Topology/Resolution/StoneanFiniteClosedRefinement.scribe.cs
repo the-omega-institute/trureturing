@@ -84,10 +84,25 @@ internal sealed class StoneanFiniteClosedRefinementDocument : IScribeDocumentDef
                         + "For n = 0 the premise forces T empty and the same construction uses an empty index type; no point or nonempty piece is chosen.")),
                     Paragraph(Text(
                         "For the compact Hausdorff Stonean application, B is compact Hausdorff and extremally disconnected, and T is compact Hausdorff in the same universe as B. "
-                        + "The original Ref telescope quantifies over continuous open onto p : T to B and every n and U : Fin n to Set T. "
+                        + "Ref(B) means that every compact Hausdorff T in the same universe, every continuous open onto p : T to B, "
+                        + "and every n and U : Fin n to Set T admit HasFiniteClosedRefinement p U whenever each U(j) is open and "
+                        + "the pointwise cover condition holds: for every t there is j with t in U(j). This condition gives iUnion U = univ. "
                         + "Existing instances provide RegularSpace T and NormalSpace T; Continuous.isClosedMap supplies closedness from compact T and Hausdorff B. "
-                        + "Apply the general finite-refinement theorem to p and U. Onto and compactness of B are retained in this application telescope but are unused by the stronger supplier. "
-                        + "The application is checked directly without retaining a separate specialization declaration.")),
+                        + "Apply the general finite-refinement theorem to p and U to obtain Ref(B). Onto and compactness of B "
+                        + "belong to this application telescope but are unused by the stronger supplier.")),
+                    Paragraph(Text(
+                        "The source-owned Local.familyRegistration and Finite.familyRegistration compile with complete "
+                        + "topology/map telescopes, kernel-checked equivalence bridges, actual positive laws, complete-family "
+                        + "variation, sensitivity and actual observational dependence. Their Contract registrations remain "
+                        + "incomplete: the scoped report records declared_unresolved for both, with IE-C050 ClosedTruthReadout, "
+                        + "reason=unclassified_form, rule=source.selection_missing, and no binding certificate. The packed "
+                        + "Inputs/State families do not yet supply a legal raw sourceSelection or exact structural reconstruction of "
+                        + "the original Pi telescope. Topology dictionaries and proof hypotheses cannot simply become independently "
+                        + "variable source coordinates, and the V or refinement-witness scopes are inside the applied IsOpenMap and "
+                        + "HasFiniteClosedRefinement predicates. The missing evidence is a lawful parameter/state/readout "
+                        + "correspondence and complete raw Law reconstruction with rigid universes and binder modes. This gap is "
+                        + "disclosed under https://github.com/the-omega-institute/trureturing/issues/16293; neither registration is "
+                        + "declared_validated.")),
                     Paragraph(Text(
                         "The pinned Mathlib shrinking and separation theorems are suppliers, and the local assembly is repository-derived. "
                         + "Library/Dynamics/gleason1958projective.md provides separate classical Stonean projectivity context; this composition is not attributed to Gleason. "

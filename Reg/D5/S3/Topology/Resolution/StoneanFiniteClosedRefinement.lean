@@ -36,7 +36,7 @@ structure Inputs where
   W : Set T
   openW : @IsOpen T topT W
 
-def State (P : Inputs.{u, v}) :=
+abbrev State (P : Inputs.{u, v}) :=
   letI := P.topT
   Set (closure P.W)
 
@@ -60,7 +60,9 @@ def actual : DependentFamily.Realization signature.{u, v} :=
 
 def arena : DependentFamily.Arena where
   signature := signature.{u, v}
-  Law := fun R => ∀ P V, letI := P.topT; IsOpen V → R.readout () P V
+  Law := fun R => ∀ (P : Inputs.{u, v}) (V : State P),
+    @IsOpen (↥(@closure P.T P.topT P.W))
+      (TopologicalSpace.induced Subtype.val P.topT) V → R.readout () P V
 
 abbrev sourceScope := type_of%
   (@isOpenMap_closure_domRestrict_of_regular_extremallyDisconnected.{u, v})
@@ -128,24 +130,46 @@ def sampleInputs : Inputs.{u, v} where
       rw [hr]
       exact isClosed_univ
   W := univ
-  openW := isOpen_univ
+  openW := by
+    letI : TopologicalSpace (ULift.{u} Bool) := ⊤
+    exact isOpen_univ
 
 def rejected : DependentFamily.Realization signature.{u, v} :=
   DependentFamily.realize signature (fun _ _ _ => False) (fun a => nomatch a)
 
 theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
-  have hf := h sampleInputs univ (by letI := sampleInputs.topT; exact isOpen_univ)
+  have hf := h sampleInputs.{u, v} univ (by letI := sampleInputs.{u, v}.topT; exact isOpen_univ)
   exact hf
 
 def singletonState : State sampleInputs.{u, v} :=
-  {⟨ULift.up false, by simp [sampleInputs]⟩}
+  {⟨ULift.up false, @subset_closure _ sampleInputs.{u, v}.topT _ _ (mem_univ _)⟩}
 
 theorem singleton_readout_false : ¬ readout sampleInputs.{u, v} singletonState := by
   letI : TopologicalSpace (ULift.{v} Bool) := ⊤
   intro h
   have ho : IsOpen ({ULift.up false} : Set (ULift.{v} Bool)) := by
-    simpa [readout, singletonState, sampleInputs] using h
+    change @IsOpen (ULift.{v} Bool) ⊤
+      ((fun t : ↥(@closure (ULift.{u} Bool) ⊤ univ) =>
+        (ULift.up t.val.down : ULift.{v} Bool)) '' singletonState) at h
+    have hi : (fun t : ↥(@closure (ULift.{u} Bool) ⊤ univ) =>
+        (ULift.up t.val.down : ULift.{v} Bool)) '' singletonState =
+        {ULift.up false} := by
+      ext b
+      constructor
+      · rintro ⟨t, ht, rfl⟩
+        have ht' : t = ⟨ULift.up false,
+            @subset_closure _ sampleInputs.{u, v}.topT _ _ (mem_univ _)⟩ :=
+          mem_singleton_iff.mp ht
+        subst t
+        rfl
+      · intro hb
+        have hb' := mem_singleton_iff.mp hb
+        subst b
+        exact ⟨⟨ULift.up false, @subset_closure _ sampleInputs.{u, v}.topT _ _ (mem_univ _)⟩,
+          mem_singleton _, rfl⟩
+    rw [hi] at h
+    exact h
   rcases (IndiscreteTopology.isOpen_iff _).mp ho with he | he
   · have hf : (ULift.up false : ULift.{v} Bool) ∈ (∅ : Set (ULift.{v} Bool)) :=
       he ▸ mem_singleton _
@@ -164,16 +188,17 @@ def familyRegistration : DependentFamily.Registration arena.{u, v} sourceScope.{
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
+      exact (hji (show j = i from by change Unit at j i; cases j; cases i; rfl)).elim
     · intro a
+      change Empty at a
       exact nomatch a
   dependence := by
     intro i
-    refine ⟨sampleInputs, univ, singletonState, ?_⟩
+    refine ⟨sampleInputs.{u, v}, univ, singletonState, ?_⟩
     intro heq
-    have hg := actual_positive sampleInputs univ
-      (by letI := sampleInputs.topT; exact isOpen_univ)
-    have he : readout sampleInputs univ = readout sampleInputs singletonState := heq
+    have hg := actual_positive sampleInputs.{u, v} univ
+      (by letI := sampleInputs.{u, v}.topT; exact isOpen_univ)
+    have he : readout sampleInputs.{u, v} univ = readout sampleInputs.{u, v} singletonState := heq
     exact singleton_readout_false (he ▸ hg)
 
 noncomputable def registration :
@@ -184,14 +209,14 @@ noncomputable def registration :
   realizationName := `Reg.D5.S3.Topology.Resolution.StoneanFiniteClosedRefinement.Local.familyRegistration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u, v}⟩
+  objectArena := .source ⟨arena.{u, v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨familyRegistration⟩
+  realization := .source arena.{u, v} ⟨familyRegistration.{u, v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (DependentFamily.realize signature
+  readout := some (DependentFamily.realize signature.{u, v}
     (fun _ P V => readout P V) (fun a => nomatch a))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
@@ -223,7 +248,7 @@ structure Inputs where
   openU : ∀ i, @IsOpen T topT (U i)
   cover : iUnion U = univ
 
-def State (P : Inputs.{u, v}) :=
+abbrev State (P : Inputs.{u, v}) :=
   Σ m : ℕ, (Fin m → Set P.T) × (Fin m → Fin P.n)
 
 def readout (P : Inputs.{u, v}) (w : State P) : Prop :=
@@ -287,14 +312,18 @@ def sampleInputs : Inputs.{u, v} where
   n := 1
   U := fun _ => univ
   openU := fun _ => isOpen_univ
-  cover := by simp
+  cover := by
+    ext x
+    constructor
+    · intro _; trivial
+    · intro _; exact mem_iUnion.mpr ⟨0, mem_univ _⟩
 
 def rejected : DependentFamily.Realization signature.{u, v} :=
   DependentFamily.realize signature (fun _ _ _ => False) (fun a => nomatch a)
 
 theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
-  obtain ⟨w, hw⟩ := h sampleInputs
+  obtain ⟨w, hw⟩ := h sampleInputs.{u, v}
   exact hw
 
 def emptyState : State sampleInputs.{u, v} := ⟨0, Fin.elim0, Fin.elim0⟩
@@ -314,15 +343,16 @@ noncomputable def familyRegistration :
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
+      exact (hji (show j = i from by change Unit at j i; cases j; cases i; rfl)).elim
     · intro a
+      change Empty at a
       exact nomatch a
   dependence := by
     intro i
-    obtain ⟨w, hw⟩ := actual_positive sampleInputs
-    refine ⟨sampleInputs, w, emptyState, ?_⟩
+    obtain ⟨w, hw⟩ := actual_positive sampleInputs.{u, v}
+    refine ⟨sampleInputs.{u, v}, w, emptyState, ?_⟩
     intro heq
-    have he : readout sampleInputs w = readout sampleInputs emptyState := heq
+    have he : readout sampleInputs.{u, v} w = readout sampleInputs.{u, v} emptyState := heq
     exact empty_readout_false (he ▸ hw)
 
 noncomputable def registration :
@@ -333,14 +363,14 @@ noncomputable def registration :
   realizationName := `Reg.D5.S3.Topology.Resolution.StoneanFiniteClosedRefinement.Finite.familyRegistration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u, v}⟩
+  objectArena := .source ⟨arena.{u, v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨familyRegistration⟩
+  realization := .source arena.{u, v} ⟨familyRegistration.{u, v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (DependentFamily.realize signature
+  readout := some (DependentFamily.realize signature.{u, v}
     (fun _ P w => readout P w) (fun a => nomatch a))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
