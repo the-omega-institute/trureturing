@@ -21,13 +21,13 @@
      direct frozen dependencies: effect-owner.
    a_mem: proof_shape: bind-only; escape_witness: none;
      consumers: not_sob;
-     direct frozen dependencies: effect-owner.
+     direct frozen dependencies: block-owner, effect-owner.
    double_subobservable: proof_shape: bind-only; escape_witness: none;
      consumers: not_sob;
-     direct frozen dependencies: effect-owner.
+     direct frozen dependencies: block-owner, effect-owner.
    preimage_eq: proof_shape: bind-only; escape_witness: none;
      consumers: double_not_mem;
-     direct frozen dependencies: none.
+     direct frozen dependencies: block-owner.
    double_quadratic_form: proof_shape: bind-only; escape_witness: none;
      consumers: double_not_effect;
      direct frozen dependencies: none.
@@ -36,20 +36,25 @@
      direct frozen dependencies: effect-owner.
    double_not_mem: proof_shape: bind-only; escape_witness: none;
      consumers: not_sob;
-     direct frozen dependencies: effect-owner.
+     direct frozen dependencies: block-owner, effect-owner.
    not_sob: proof_shape: bind-only; escape_witness: none;
      consumers: result;
-     direct frozen dependencies: none.
+     direct frozen dependencies: block-owner, effect-owner.
    result: proof_shape: bind-only; escape_witness: none;
      admission_basis: open-problem-resolution (#16759; Proved);
-     direct frozen dependencies: none.
+     direct frozen dependencies: block-owner, effect-owner.
    Direct frozen dependency identities:
    effect-owner:
      GID: D5/S0/Diagonal/Lawvere/TypedEscapeNeedsPositivity
      declaration: D5.S0.Diagonal.Lawvere.TypedEscapeNeedsPositivity.IsEffect
      statement_id: sha256:5f32d535fdc03150ce20023e4cc4a396bcc2873b7a155c0db6acf48dd7fdb634
+   block-owner:
+     GID: D5/S3/Quantum/Bogoliubov/HardyBlockConservation
+     declaration: D5.S3.Quantum.Bogoliubov.HardyBlockConservation.compressedBlock
+     statement_id: sha256:2ac1332dea41c82e6801ecbf96346c6b514d05a0d9b6a632a6962d7efbaf156d
    The claim states the preregistered effect body literally in ludersImage, and
    the proofs use TypedEscapeNeedsPositivity.IsEffect under MatrixOrder.
+   The family A uses HardyBlockConservation.compressedBlock (K x) E.
    The public result is the designated refutation result (`basis=refutes`) and
    is exempt from four-slot escape registration (CLAUDE.md §3.9).
    The observable condition is inlined as IsSubObservable Z and sum Z = 1;
@@ -59,6 +64,7 @@
    use pinned Mathlib directly. -/
 
 import D5.S0.Diagonal.Lawvere.TypedEscapeNeedsPositivity
+import D5.S3.Quantum.Bogoliubov.HardyBlockConservation
 import Mathlib.Analysis.Matrix.Order
 
 set_option autoImplicit false
@@ -92,7 +98,8 @@ private def K : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ :=
     Matrix.diagonal ![(3/5 : ℂ), (4/5 : ℂ)]]
 
 private def E : Matrix (Fin 2) (Fin 2) ℂ := (1/400 : ℂ) • !![(151 : ℂ), 50; 50, 151]
-private def A : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ := fun x => K x * E * K x
+private def A : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ := fun x =>
+  D5.S3.Quantum.Bogoliubov.HardyBlockConservation.compressedBlock (K x) E
 
 private theorem effect_iff_owner (a : Matrix (Fin d) (Fin d) ℂ) :
     (a.PosSemidef ∧ (1 - a).PosSemidef) ↔
@@ -149,7 +156,8 @@ private theorem double_subobservable : IsSubObservable (A + A) := by
     convert h using 1
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [A, K, E, Fin.sum_univ_two, Matrix.mul_apply, Matrix.diagonal,
+      norm_num [A, D5.S3.Quantum.Bogoliubov.HardyBlockConservation.compressedBlock,
+        K, E, Fin.sum_univ_two, Matrix.mul_apply, Matrix.diagonal,
         Matrix.vecMulVec, Pi.star_apply, RCLike.star_def]
 
 private theorem preimage_eq (a : Matrix (Fin 2) (Fin 2) ℂ)

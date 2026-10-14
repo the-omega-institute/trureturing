@@ -74,3 +74,4 @@ Take K_0 = diag(4/5, 3/5), K_1 = diag(3/5, 4/5), E = (1/400)[[151, 50], [50, 151
 - Truth anchor: `D5/S3/Quantum/Measurement/LudersSubObservableClosure.ludersImage`
 - Truth anchor: `D5/S3/Quantum/Measurement/LudersSubObservableClosure.result`
 - Dependency: [D5/S0/Diagonal/Lawvere/TypedEscapeNeedsPositivity](../../../S0/Diagonal/Lawvere/TypedEscapeNeedsPositivity.md)
+- Dependency: [D5/S3/Quantum/Bogoliubov/HardyBlockConservation](../Bogoliubov/HardyBlockConservation.md)
