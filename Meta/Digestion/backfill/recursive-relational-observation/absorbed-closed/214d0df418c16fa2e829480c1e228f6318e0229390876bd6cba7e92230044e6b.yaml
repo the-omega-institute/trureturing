@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:214d0df418c16fa2e829480c1e228f6318e0229390876bd6cba7e92230044e6b
+  normalized_sha256: sha256:214d0df418c16fa2e829480c1e228f6318e0229390876bd6cba7e92230044e6b
+cas_ref: sha256:214d0df418c16fa2e829480c1e228f6318e0229390876bd6cba7e92230044e6b
+coverage_gids:
+  - gid: D5/S3/TotalVariation/ParryBilateralLaw.bilateral_parry_law
+    target_statement_id: sha256:92a203e6dd37708864bcc7c2189deb22d4cfe36134f01813f740f0810eeb40a7
+  - gid: D5/S3/TotalVariation/ParryBoundaryCylinderBound.parry_boundary_cylinder_bound
+    target_statement_id: sha256:5b1a4b9fb51802d991762fdc4f84b532efb45a5c375396d33ba2822671a7cd6d
+  - gid: D5/S3/TotalVariation/ParrySharedRuleBound.parry_shared_rule_bound
+    target_statement_id: sha256:76e1c07af6019072b5c958ba9c4ae579d0c38dea1d500c4b339426d670abe1df
+  - gid: D5/S3/TotalVariation/ParrySharedZeroRule.parry_complete_run_laws
+    target_statement_id: sha256:6f552b3090137f827f4a7b6d3c7a97060d4795982d2e17b13857a3fd892cf79e
+  - gid: D5/S3/TotalVariation/ParrySharedZeroRule.parry_no_complete_run_bound
+    target_statement_id: sha256:caf8d4ecd3c249559106e5973d14162ceed17b6eadaa58299795c3c9ac244c75
+  - gid: D5/S3/TotalVariation/SharedZeroBoundaryInclusion.shared_rule_defect_boundary_inclusion
+    target_statement_id: sha256:288e99c8996048678f73435dd87b39968eca672e8a6c50502473eb18b3115c78
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 7715eaf9b4b097281e9dbb45dac49b8b63f3e2394b5006de047a95ff52c74f73
+    - 3b82f88660ae131d30845a83c40807afd37ae4ed6ae109acc3e7e31e0c33f364

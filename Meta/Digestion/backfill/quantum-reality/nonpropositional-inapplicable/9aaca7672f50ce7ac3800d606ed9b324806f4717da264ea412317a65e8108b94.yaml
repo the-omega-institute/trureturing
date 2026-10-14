@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9aaca7672f50ce7ac3800d606ed9b324806f4717da264ea412317a65e8108b94
+  normalized_sha256: sha256:9aaca7672f50ce7ac3800d606ed9b324806f4717da264ea412317a65e8108b94
+cas_ref: sha256:9aaca7672f50ce7ac3800d606ed9b324806f4717da264ea412317a65e8108b94
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯说明性片段：该 atom 仅解释定理245.1的物理边界，明确指针概率独立不推出时钟与系统完全无关，并提示需将反作用纳入模型；没有新的形式命题、量词或证明义务。
+    previous_atom_id: 6f0d21482e026dc7147e44955c9a40b65003cf81158cb66fe12d050cfb0100d8
+    next_atom_id: f73c22e5d0b289bacfa6a455a5835ca50fdd00ea8050d0584b065a4773afa2d7
