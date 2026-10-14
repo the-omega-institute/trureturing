@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:0a641ac49a275bcd92f5c91d7ef7c568dcc09661e81d56ed080f23071108a050
   normalized_sha256: sha256:0a641ac49a275bcd92f5c91d7ef7c568dcc09661e81d56ed080f23071108a050
 cas_ref: sha256:0a641ac49a275bcd92f5c91d7ef7c568dcc09661e81d56ed080f23071108a050
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/FibonacciFactorialBlockTailFilling.factorial_block_tail_filling
+    target_statement_id: sha256:ec1a7786b3991b84dc207f93c808b68999031593516d61448b4703202808e9d9
 receipts:
   unresolved_subitems: []
   chain_atoms:
