@@ -24,12 +24,12 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
             Def("sourceE", "Source orthonormal matrices", EFormula(), "Literal Eq. 22, including B_ij adjoint. The ket e_ij is the product-basis vector and psi is maxEntangledVector(Fin(d))."),
             Def("sourceNoise", "Source noise on all matrices", NoiseFormula(), "Literal all-matrix Eq. 23. The identity in the first term acts on the code space; the identity in the Kronecker term acts on the auxiliary factor. Neither input nor output is normalized by its trace."),
             Def("sourceC", "Source polar column matrix", CFormula(), "Supplement Eq. S60: chi is an auxiliary vector, and sourceC is Q times the column map I tensor ket(chi)."),
-            Def("sourcePolar", "Source polar encoder", PolarFormula(), "Eq. S60. CFCsqrt denotes CFC.sqrt and ofMatrixInverse denotes CStarMatrix.ofMatrix.symm. The square root is the ordered positive CFC square root of the actual Gram matrix, transported through that equivalence; the inverse is the matrix inverse."),
-            RepoDef("matrixAction", "Matrix action of a completely positive map", ActionFormula(), "The carrier is CompletelyPositiveMap on the finite CStarMatrix algebras, so complete positivity means positivity at every amplification. ofMatrix is CStarMatrix.ofMatrix, and ofMatrixInverse is its inverse CStarMatrix.ofMatrix.symm; they transport input and output matrices across that equivalence."),
+            Def("sourcePolar", "Source polar encoder", PolarFormula(), "Eq. S60. CFC.sqrt is the ordered positive square root, and CStarMatrix.ofMatrix.symm transports it back to a matrix. The square root is the ordered positive CFC square root of the actual Gram matrix, transported through that equivalence; the inverse is the matrix inverse."),
+            RepoDef("matrixAction", "Matrix action of a completely positive map", ActionFormula(), "The carrier is CompletelyPositiveMap on the finite CStarMatrix algebras, so complete positivity means positivity at every amplification. ofMatrix is CStarMatrix.ofMatrix, and CStarMatrix.ofMatrix.symm is its inverse; they transport input and output matrices across that equivalence."),
             Def("TraceNonincreasing", "Trace constraint on every positive input", TNIFormula(), "Eq. 13 permits trace-nonincreasing encoding and decoding. X ranges over every positive semidefinite matrix, and Re extracts the real part of its trace."),
-            Def("inputFirstChoi", "Input-first Choi convention", ChoiFormula(), "MatrixMap denotes PhyslibLeaf.MatrixMap, and choiMatrix denotes its choi_matrix. The source's input-first convention is obtained by swapping both product indices of that output-first Choi matrix. The reindexing uses Equiv.prodComm(b,a)."),
+            Def("inputFirstChoi", "Input-first Choi convention", ChoiFormula(), "MatrixMap denotes PhyslibLeaf.MatrixMap, whose PhyslibLeaf.MatrixMap.choi_matrix gives the output-first Choi matrix. The source's input-first convention is obtained by swapping both product indices of that output-first Choi matrix. The reindexing uses Equiv.prodComm(b,a)."),
             Def("entanglementFidelity", "Unrenormalized canonical-purification fidelity", FidelityFormula(), "The shared maxEntangledVector(Fin(d)) is the normalized purification of I/d, in logical-factor-first product order, and maxEntangled(Fin(d)) is its rank-one projector. This is the source overlap for tau=I/d: apply the logical channel to the first purification factor and the identity to the reference factor, then take the real overlap. No output trace division is made, including for trace-decreasing competitors."),
-            Def("claim", "Full fixed-noise polar-pair dominance assertion", ClaimFormula(), "Li and Jiang, arXiv:2609.00778v1, printed p. 17 after Eq. S64: 'Exact optimality of this pair at fixed p > 0 remains open.' The antecedent is the Eq. S60 polar encoder and the actual right partial trace. The claim quantifies over every natural d >= 2, every real 0 < p < 1, every unit complex auxiliary vector chi, and every completely positive trace-nonincreasing encoder C and decoder D with input-first encoder Choi rank at most one. ofKraus denotes PhyslibLeaf.MatrixMap.of_kraus, and comp composes maps in outer-then-inner order. Competitors are arbitrary members of that class, rather than just the isometric pairs used in the refutation."),
+            Def("claim", "Full fixed-noise polar-pair dominance assertion", ClaimFormula(), "Li and Jiang, arXiv:2609.00778v1, printed p. 17 after Eq. S64: 'Exact optimality of this pair at fixed p > 0 remains open.' The antecedent is the Eq. S60 polar encoder and the actual right partial trace. The claim quantifies over every natural d >= 2, every real 0 < p < 1, every unit complex auxiliary vector chi, and every completely positive trace-nonincreasing encoder C and decoder D with input-first encoder Choi rank at most one. PhyslibLeaf.MatrixMap.of_kraus constructs the single-Kraus map, and comp composes maps in outer-then-inner order. Competitors are arbitrary members of that class, rather than just the isometric pairs used in the refutation."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("A feasible qubit pair strictly improves the source polar pair"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(F.Id("claim"))))),
@@ -56,6 +56,8 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
             {
                 "D5" => Seq(F.Id("D"), D(5)),
                 "S3" => Seq(F.Id("S"), D(3)),
+                "choi_matrix" => Seq(F.Id("choi"), Esc, Underscore, Grp(F.Id("matrix"))),
+                "of_kraus" => Seq(F.Id("of"), Esc, Underscore, Grp(F.Id("kraus"))),
                 _ => F.Id(part)
             });
         }
@@ -78,6 +80,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     private static Formula Named(string name, Formula value) => Parenthesized(Seq(F.Id(name), Sp, Colon, Eq, Sp, value));
     private static Formula Smul(Formula scalar, Formula value) => At(Qualified("HSMul", "hSMul"), scalar, value);
     private static Formula OfReal(Formula value) => At(Qualified("Complex", "ofReal"), value);
+    private static Formula ToReal(Formula value) => new Formula.Subscript(Fn("val", value), RealType);
     private static Formula AndTo(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula IffTo(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, Parenthesized(b));
@@ -105,7 +108,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
 
     private static Formula Parameters(string name)
     {
-        Formula d=F.Id("d"), p=F.Id("p"), d2=Sq(d), l1=Fn("lambda1",d,p), l4=Fn("lambda4",d,p);
+        Formula d=F.Id("d"), p=F.Id("p"), d2=Sq(ToReal(d)), l1=Fn("lambda1",d,p), l4=Fn("lambda4",d,p);
         Formula rhs = name switch
         {
             "lambda1" => Sub(D(1),Fr(p,Sub(d2,D(2)))),
@@ -120,7 +123,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     private static Formula QFormula()
     {
         Formula d=F.Id("d"),p=F.Id("p"),pi=Fn("maxEntangled",FinOf(d));
-        return WithDP(EqTo(Fn("sourceQ",d,p),Smul(OfReal(Fn("sqrt",d)),PlusTo(Smul(OfReal(Fn("sqrt",Fr(Fn("lambda4",d,p),Sub(Sq(d),D(1))))),Sub(D(1),pi)),Smul(OfReal(Fn("sqrt",Fn("lambda5",d,p))),pi)))));
+        return WithDP(EqTo(Fn("sourceQ",d,p),Smul(OfReal(Fn("sqrt",ToReal(d))),PlusTo(Smul(OfReal(Fn("sqrt",Fr(Fn("lambda4",d,p),Sub(Sq(ToReal(d)),D(1))))),Sub(D(1),pi)),Smul(OfReal(Fn("sqrt",Fn("lambda5",d,p))),pi)))));
     }
     private static Formula DFormula()
     {
@@ -155,13 +158,13 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     private static Formula PolarFormula()
     {
         Formula d=F.Id("d"),p=F.Id("p"),chi=F.Id("chi"),c=Fn("sourceC",d,p,chi);
-        Formula root=Fn("ofMatrixInverse",Fn("CFCsqrt",Fn("ofMatrix",Mul(Adj(c),c))));
+        Formula root=At(Qualified("CStarMatrix", "ofMatrix", "symm"),At(Qualified("CFC", "sqrt"),Fn("ofMatrix",Mul(Adj(c),c))));
         return WithDP(All("chi",new Formula.TypeArrow(FinOf(d),ComplexType),EqTo(Fn("sourcePolar",d,p,chi),Mul(c,Inv(root)))));
     }
     private static Formula ActionFormula()
     {
         Formula a=F.Id("a"),b=F.Id("b"),f=F.Id("f"),x=F.Id("X");
-        return Disp(WithFiniteIndices(All("f",CP(a,b),All("X",Mat(a,a),EqTo(Fn("matrixAction",f,x),Fn("ofMatrixInverse",At(f,Fn("ofMatrix",x))))))));
+        return Disp(WithFiniteIndices(All("f",CP(a,b),All("X",Mat(a,a),EqTo(Fn("matrixAction",f,x),At(Qualified("CStarMatrix", "ofMatrix", "symm"),At(f,Fn("ofMatrix",x))))))));
     }
     private static Formula TNIFormula()
     {
@@ -172,7 +175,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     private static Formula ChoiFormula()
     {
         Formula a=F.Id("a"),b=F.Id("b"),f=F.Id("f"),swap=Fn("prodComm",b,a);
-        return Disp(WithFiniteIndices(All("f",Map(a,b),EqTo(Fn("inputFirstChoi",f),Fn("reindex",swap,swap,Fn("choiMatrix",f))))));
+        return Disp(WithFiniteIndices(All("f",Map(a,b),EqTo(Fn("inputFirstChoi",f),Fn("reindex",swap,swap,At(Qualified("PhyslibLeaf", "MatrixMap", "choi_matrix"),f))))));
     }
     private static Formula FidelityFormula()
     {
@@ -185,7 +188,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
         Formula d=F.Id("d"),p=F.Id("p"),chi=F.Id("chi"),c=F.Id("C"),dec=F.Id("D"),i=F.Id("i");
         Formula actionC=Fn("matrixAction",c),actionD=Fn("matrixAction",dec),noise=Fn("sourceNoise",d,p),polar=Fn("sourcePolar",d,p,chi);
         Formula single=Parenthesized(Seq(Underscore, Colon, N("Unit"), Mapsto, polar));
-        Formula rhs=Fn("entanglementFidelity",d,Fn("comp",At(Qualified("D5", "S3", "QuantumChannels", "PassiveMemoryNonclassicalRefutation", "discardMemory"), Named("d", d), Named("r", d)),Fn("comp",noise,Fn("ofKraus",single,single))));
+        Formula rhs=Fn("entanglementFidelity",d,Fn("comp",At(Qualified("D5", "S3", "QuantumChannels", "PassiveMemoryNonclassicalRefutation", "discardMemory"), Named("d", d), Named("r", d)),Fn("comp",noise,At(Qualified("PhyslibLeaf", "MatrixMap", "of_kraus"),single,single))));
         Formula lhs=Fn("entanglementFidelity",d,Fn("comp",actionD,Fn("comp",noise,actionC)));
         Formula competitors=All("C",CP(FinOf(d),Code(d)),All("D",CP(Code(d),FinOf(d)),Imp(Fn("TraceNonincreasing",c),Imp(Fn("TraceNonincreasing",dec),Imp(LeTo(Fn("rank",Fn("inputFirstChoi",actionC)),D(1)),LeTo(lhs,rhs))))));
         Formula body=All("d",NatType,Imp(LeTo(D(2),d),All("p",RealType,Imp(LtTo(D(0),p),Imp(LtTo(p,D(1)),All("chi",new Formula.TypeArrow(FinOf(d),ComplexType),Imp(EqTo(SumOver("i",FinOf(d),Fn("normSq",At(chi,i))),D(1)),competitors)))))));
