@@ -17,6 +17,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2NativeInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeContactIteration
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingEdges
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
@@ -88,10 +89,12 @@ private theorem actual_half_cycle_model {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
   have hf : (f : {x : Configuration m // F2Domain m x} → Configuration m) =
       Subtype.val := rfl
   let p := w.map f
+  have hedges : p.edges = w.edges.map (Sym2.map Subtype.val) := by
+    exact SimpleGraph.Walk.edges_map f w
   refine ⟨base.val, p, hw.isCycle.map Subtype.val_injective, ?_, ?_, ?_⟩
   · intro x y hxy
     apply SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges.mpr
-    rw [SimpleGraph.Walk.edges_map]
+    rw [hedges]
     exact (hinv _).mpr ((half_adj_iff m side x y).mp hxy).1.1
   · intro x
     rw [show p.support = w.support.map Subtype.val by
@@ -103,7 +106,7 @@ private theorem actual_half_cycle_model {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
     · intro hx
       exact List.mem_map.mpr ⟨⟨x, hx⟩, hw.mem_support _, rfl⟩
   · intro q
-    rw [SimpleGraph.Walk.edges_map]
+    rw [hedges]
     exact hmarked q
 
 private theorem actual_half_degree {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
