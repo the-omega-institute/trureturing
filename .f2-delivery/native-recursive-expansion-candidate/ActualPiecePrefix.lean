@@ -1,7 +1,10 @@
-/- UNCOMPILED generic helper for the actual J-state propagation.
-   A retained edge incident to an actual piece vertex belongs to that same
-   piece. Two such retained edges at its start therefore give its literal
-   two-edge prefix. Neither a degree bound nor a path prefix is assumed. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualPiecePrefix
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualPiecePrefix
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Two retained edges at an actual simple path start force a literal prefix whose second-edge cut preserves every vertex and exactly the uncut edges. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 
 set_option autoImplicit false
