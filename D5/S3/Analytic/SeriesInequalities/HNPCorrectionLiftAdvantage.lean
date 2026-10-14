@@ -817,7 +817,7 @@ def ringUpper (τ b r : ℕ) (ρ θ D : ℝ) (f : ℝ → ℂ) (k t : ℕ) : ℝ
   (bernsteinCoefficient (τ*b^k+r) t (center τ b r f k)).re +
     D*lift (τ*b^k+r) (τ*b^k) t (correction ρ θ (τ*b^k))
 
-private lemma coefficient_elevation {d D t : ℕ} (hd : d ≤ D) (ht : t ≤ D)
+lemma coefficient_elevation {d D t : ℕ} (hd : d ≤ D) (ht : t ≤ D)
     (P : ℂ[X]) (hP : P.natDegree ≤ d) :
     lift D d t (fun i => (bernsteinCoefficient d i P).re) =
       (bernsteinCoefficient D t P).re := by
@@ -865,7 +865,7 @@ private lemma coefficient_elevation {d D t : ℕ} (hd : d ≤ D) (ht : t ≤ D)
       rw [bernstein_coefficient_C_mul,hb i (by have := Finset.mem_range.mp hi; omega)]
       split_ifs <;> simp [Complex.mul_re,mul_comm]
 
-private lemma center_degree {τ b : ℕ} (hb : 0 < b) (r : ℕ) (f : ℝ → ℂ) (k : ℕ) :
+lemma center_degree {τ b : ℕ} (hb : 0 < b) (r : ℕ) (f : ℝ → ℂ) (k : ℕ) :
     (center τ b r f k).natDegree ≤ τ*b^k+r := by
   induction k with
   | zero =>

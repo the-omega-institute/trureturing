@@ -762,7 +762,7 @@ lemma coefficient_smooth {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
     ((Complex.ofRealCLM.contDiff.comp (reference_smooth hφ η a d y)).contDiffOn.of_le
       (by exact_mod_cast (le_top : (r : ℕ∞) ≤ ⊤)))).symm
 
-private lemma lift_mixture {n d t : ℕ} (hd : d ≤ n) (ht : t ≤ n)
+lemma lift_mixture {n d t : ℕ} (hd : d ≤ n) (ht : t ≤ n)
     (a w : ℝ) (s : Finset ℕ) (v : ℕ → ℝ) (f : ℕ → ℕ → ℝ) :
     HNPCorrectionLiftAdvantage.lift n d t (fun i => a+w*∑ j ∈ s, v j*f j i) =
       a+w*∑ j ∈ s, v j*HNPCorrectionLiftAdvantage.lift n d t (f j) := by

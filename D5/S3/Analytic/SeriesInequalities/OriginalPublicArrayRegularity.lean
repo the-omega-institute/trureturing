@@ -5,21 +5,16 @@
    anchors: []
    utility: none
    digest: Common weighted parameter jets of the original smooth public arrays. -/
-
 import D5.S3.Analytic.SeriesInequalities.LogScalePartitionJets
 import D5.S3.Estimation.SequentialDecisionRisk.NonintegerForwardDifferenceSignal
 import Mathlib.Topology.MetricSpace.Holder
-
 noncomputable section
 open Finset Filter
 open scoped Topology ContDiff NNReal
-
 namespace D5.S3.Analytic.SeriesInequalities.OriginalPublicArrayRegularity
-
 open ParametricLorentzJetTransport LogScalePartitionJets
 open OriginalRingEnvelopeScale ReferenceProfileMixedJets LorentzCoefficientRemainder
 open LorentzCommonGridStability LorentzLowDegreeCoefficientRemainder
-
 /-- Legality of the original corrected rings on the same fixed public grid. -/
 def RingEnvelopes (χ : ℝ → ℝ) (T β a d : ℝ) (r : ℕ) (ρ θ : ℝ)
     (b N : ℕ) (D X : ℝ) : Prop :=
@@ -32,7 +27,6 @@ def RingEnvelopes (χ : ℝ → ℝ) (T β a d : ℝ) (r : ℕ) (ρ θ : ℝ)
     (∀ t ≤ (N*b^j)*b^(k+1)+r,
       HNPCorrectionLiftAdvantage.lift ((N*b^j)*b^(k+1)+r) ((N*b^j)*b^k+r) t (low k) ≤ low (k+1) t ∧
       upp (k+1) t ≤ HNPCorrectionLiftAdvantage.lift ((N*b^j)*b^(k+1)+r) ((N*b^j)*b^k+r) t (upp k))
-
 private lemma ring_scale_jet_bound {X x : ℝ} {b j : ℕ} (hX : 0 < X) (hx : 0 < x)
     (hb : 1 < b) (hz : |scaleCoordinate X b x-j| < 1) (m : ℕ) :
     (ringScale X b j)^(-(m : ℝ)) ≤ (Real.sqrt b)^(m : ℝ)*x^(-(m : ℝ)) := by
@@ -41,8 +35,6 @@ private lemma ring_scale_jet_bound {X x : ℝ} {b j : ℕ} (hX : 0 < X) (hx : 0 
   apply (Real.rpow_le_rpow_of_nonpos (div_pos hx hs) (jet_ring_scale hX hx hb hz).2
     (neg_nonpos.mpr (Nat.cast_nonneg m))).trans_eq
   rw [Real.div_rpow hx.le hs.le,Real.rpow_neg hs.le,div_inv_eq_mul,mul_comm]
-
-
 private lemma original_ring_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ χ)
     (hcχ : HasCompactSupport χ) {T β : ℝ} (hT : 0 < T) (hβ : 0 ≤ β)
     (hsχ : tsupport χ ⊆ Set.Ioo 0 T) (hχrange : ∀ t, 0 ≤ χ t ∧ χ t ≤ 1)
@@ -114,8 +106,6 @@ private lemma original_ring_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ χ)
       iteratedDeriv_const,if_neg hm,zero_sub,
       iteratedDeriv_fun_add hfr contDiffAt_const,iteratedDeriv_const,if_neg hm,add_zero,abs_neg]
     exact hest
-
-
 /-- A single original grid and fixed ring corrections give all public parameter
 jets a common weighted bound. Constants are chosen before the stage, coefficient
 index and world parameter; the order zero bound is centered at one half. -/
@@ -223,86 +213,6 @@ theorem reference_public_weighted_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
   rw [hl,hu,iteratedDeriv_const_mul_field,abs_mul,abs_neg,abs_one,one_mul]
   constructor <;> apply (hprod _).trans <;>
     exact mul_le_mul_of_nonneg_right (by linarith) (by positivity)
-
-
-private lemma coordinate_tendsto_zero {X : ℝ} (hX : 0 < X) {b : ℕ} (hb : 1 < b) :
-    Tendsto (scaleCoordinate X b) (𝓝[≠] (0 : ℝ)) atTop := by
-  have hbR : (1 : ℝ) < b := by exact_mod_cast hb
-  have h : Tendsto (fun x : ℝ => Real.log X - Real.log x) (𝓝[≠] (0 : ℝ)) atTop := by
-    simpa only [sub_eq_add_neg,Function.comp_def] using tendsto_atTop_add_const_left _ (Real.log X)
-      (tendsto_neg_atBot_atTop.comp Real.tendsto_log_nhdsNE_zero)
-  have hh := h.const_mul_atTop (div_pos (by norm_num : (0 : ℝ) < 2) (Real.log_pos hbR))
-  apply hh.congr'
-  filter_upwards [self_mem_nhdsWithin] with x hx
-  have hx0 : x ≠ 0 := hx
-  dsimp [scaleCoordinate]
-  rw [Real.log_div hX.ne' hx0]
-  ring
-
-private lemma public_zero_germ (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
-    (b N : ℕ) (D X W β : ℝ) (hX : 0 < X) (hb : 1 < b) (hβ : 0 < β) (k t : ℕ) :
-    publicLower φ η a d r ρ θ b N D X W β k t =ᶠ[𝓝 0] (fun x => (1-W*x^β)/2) ∧
-    publicUpper φ η a d r ρ θ b N D X W β k t =ᶠ[𝓝 0] (fun x => (1+W*x^β)/2) := by
-  have hz := (coordinate_tendsto_zero hX hb).eventually (eventually_gt_atTop ((k : ℝ)+1))
-  have hz' := eventually_nhdsWithin_iff.mp hz
-  have hboth : ∀ᶠ x : ℝ in 𝓝 0,
-      publicLower φ η a d r ρ θ b N D X W β k t x = (1-W*x^β)/2 ∧
-      publicUpper φ η a d r ρ θ b N D X W β k t x = (1+W*x^β)/2 := by
-    filter_upwards [hz'] with x hx
-    by_cases hx0 : x = 0
-    · subst x
-      simp [publicLower,publicUpper,Real.zero_rpow hβ.ne']
-    have hw (j : ℕ) (hj : j ∈ range (k+1)) : scaleWeight X b j x = 0 := by
-      have hjk : (j : ℝ) ≤ k := by exact_mod_cast (show j ≤ k by simpa using Nat.le_of_lt_succ (mem_range.mp hj))
-      have hz := hx hx0
-      exact (show scaleBump (scaleCoordinate X b x-j) / scaleDenominator (scaleCoordinate X b x) = 0 by
-        rw [bump_zero (Or.inr (by linarith)),zero_div])
-    have hs (F : ℕ → ℝ) : ∑ j ∈ range (k+1), scaleWeight X b j x*F j = 0 := by
-      apply sum_eq_zero
-      intro j hj
-      rw [hw j hj,zero_mul]
-    simp only [publicLower,publicUpper,hs,mul_zero,add_zero,sub_zero,and_self]
-  exact ⟨hboth.mono (fun _ h => h.1),hboth.mono (fun _ h => h.2)⟩
-
-private lemma public_smooth {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
-    (η a d : ℝ) (r : ℕ) (ρ θ : ℝ) {b N : ℕ} (hb : 1 < b) (hN : 0 < N)
-    (D X W β : ℝ) (hX : 0 < X) (k t : ℕ) {x : ℝ} (hx : 0 < x) (hxx : x ≤ X) :
-    ContDiffAt ℝ ∞ (publicLower φ η a d r ρ θ b N D X W β k t) x ∧
-    ContDiffAt ℝ ∞ (publicUpper φ η a d r ρ θ b N D X W β k t) x := by
-  have hpow : ContDiffAt ℝ ∞ (fun y : ℝ => W*y^β) x :=
-    contDiffAt_const.mul (Real.contDiffAt_rpow_const_of_ne hx.ne')
-  have hr (j : ℕ) := Complex.reCLM.contDiff.contDiffAt.comp x
-    (coefficient_smooth (by positivity : 0 < N*b^j) (by omega : 0 < b) hφ η a d
-      r (k-j) ((N*b^j)*b^(k-j)+r) t hx)
-  constructor
-  · exact ((contDiffAt_const.sub hpow).div_const 2).add (hpow.mul
-      (ContDiffAt.sum (fun j _ => (weight_smooth hX hx hxx hb j).mul ((hr j).sub contDiffAt_const))))
-  · exact ((contDiffAt_const.add hpow).div_const 2).sub (hpow.mul
-      (ContDiffAt.sum (fun j _ => (weight_smooth hX hx hxx hb j).mul
-        (contDiffAt_const.sub ((hr j).add contDiffAt_const)))))
-
-private lemma public_closed_smooth {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
-    (η a d : ℝ) (r : ℕ) (ρ θ : ℝ) {b N : ℕ} (hb : 1 < b) (hN : 0 < N)
-    (D X W β : ℝ) (hX : 0 < X) (k t n : ℕ) (hβ : (n : ℝ) < β) :
-    (∀ x ∈ Set.Icc 0 X, ContDiffAt ℝ n (publicLower φ η a d r ρ θ b N D X W β k t) x) ∧
-    (∀ x ∈ Set.Icc 0 X, ContDiffAt ℝ n (publicUpper φ η a d r ρ θ b N D X W β k t) x) := by
-  have hβ0 : 0 < β := lt_of_le_of_lt (Nat.cast_nonneg n) hβ
-  have hz := public_zero_germ φ η a d r ρ θ b N D X W β hX hb hβ0 k t
-  have hp : ContDiffAt ℝ n (fun y : ℝ => W*y^β) 0 :=
-    contDiffAt_const.mul (Real.contDiffAt_rpow_const_of_le hβ.le)
-  constructor <;> intro x hx
-  · rcases eq_or_lt_of_le hx.1 with he | he
-    · subst x
-      exact ContDiffAt.congr_of_eventuallyEq ((contDiffAt_const.sub hp).div_const 2) hz.1
-    · exact ((public_smooth hφ η a d r ρ θ hb hN D X W β hX k t he hx.2).1).of_le
-        (by exact_mod_cast (le_top : (n : ℕ∞) ≤ ⊤))
-  · rcases eq_or_lt_of_le hx.1 with he | he
-    · subst x
-      exact ContDiffAt.congr_of_eventuallyEq ((contDiffAt_const.add hp).div_const 2) hz.2
-    · exact ((public_smooth hφ η a d r ρ θ hb hN D X W β hX k t he hx.2).2).of_le
-        (by exact_mod_cast (le_top : (n : ℕ∞) ≤ ⊤))
-
-
 /-- The actual public arrays extend through zero with vanishing centered jets,
 and one highest-order Hölder constant works for every stage and coefficient.
 The polynomial approximation order `r` and parameter order `n` are distinct. -/
@@ -338,8 +248,7 @@ theorem reference_public_closed_holder {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
   let H : ℝ≥0 := ⟨max (C (n+1)) (C n*(1+2^(β-n))),
     (hC (n+1)).le.trans (le_max_left _ _)⟩
   refine ⟨C,hC,H,?_⟩
-  intro k t ht u
-  dsimp only
+  intro k t ht u; dsimp only
   let f := if u then publicUpper (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β k t
     else publicLower (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β k t
   have hb1 : 1 < b := by omega
@@ -367,8 +276,6 @@ theorem reference_public_closed_holder {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
     (fun x hx => (hc x hx).sub contDiffAt_const)
     (fun x hx hxx => (hs x hx hxx).sub contDiffAt_const) he
   exact ⟨fun x hx => (hc x hx).contDiffWithinAt,hh.2.1,hh.2.2.1,he,hh.2.2.2⟩
-
-
 private lemma public_width_formula (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
     (b N : ℕ) (D X W β : ℝ) (k t : ℕ) (x : ℝ) :
     publicUpper φ η a d r ρ θ b N D X W β k t x-
@@ -389,14 +296,12 @@ private lemma public_width_formula (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (
       2*D*(ringScale X b j)^(-ρ)*HNPCorrectionLiftAdvantage.lift
         (N*b^k+r) (N*b^k) t (HNPCorrectionLiftAdvantage.correction ρ θ (N*b^k)) := by
     dsimp [upp,low,ringUpper,ringLower]
-    rw [he j hj]
-    ring
+    rw [he j hj]; ring
   change (1+W*x^β)/2-W*x^β*(∑ j ∈ range (k+1), scaleWeight X b j x*(1-upp j))-
     ((1-W*x^β)/2+W*x^β*(∑ j ∈ range (k+1), scaleWeight X b j x*low j)) = _
   rw [← sum_congr rfl (fun j hj => congrArg (fun z => scaleWeight X b j x*z) (hgap j hj))]
   simp only [mul_sub,mul_one,sum_sub_distrib]
   ring
-
 private lemma public_width_endpoint_scale (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
     {b N : ℕ} (hb : 1 < b) (hN : 2 ≤ N)
     (D X W β : ℝ) (hD : 0 < D) (hX : 0 < X) (hW : 0 < W)
@@ -461,8 +366,7 @@ private lemma public_width_endpoint_scale (φ : ℝ → ℝ) (η a d : ℝ) (r :
     calc
       _ = (2*D*(x*Real.sqrt b)^(-ρ))*(θ*(n : ℝ)^(-ρ)) := by
         dsimp [K]
-        rw [Real.mul_rpow hnR.le hx0.le,Real.mul_rpow hx0.le hs.le]
-        ring
+        rw [Real.mul_rpow hnR.le hx0.le,Real.mul_rpow hx0.le hs.le]; ring
       _ ≤ (2*D*(ringScale X b j)^(-ρ))*(θ*(n : ℝ)^(-ρ)) := by gcongr
       _ ≤ G j := mul_le_mul_of_nonneg_left hH (by dsimp [ringScale]; positivity)
   have hsum : (min 1 K*ν)*A ≤ ∑ j ∈ range (k+1), scaleWeight X b j x*G j := by
@@ -482,7 +386,6 @@ private lemma public_width_endpoint_scale (φ : ℝ → ℝ) (η a d : ℝ) (r :
   calc
     _ = W*x^β*(min 1 K*ν) := by ring
     _ ≤ _ := mul_le_mul_of_nonneg_left htotal (by positivity)
-
 /-- Every actual width jet has the common minimum world scale. The fine-world
 proof uses a neighborhood identity for the unstarted tail, and keeps the
 original elevated correction coefficients. -/
@@ -568,8 +471,7 @@ theorem public_width_jets_min_scale (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) 
       rw [D5.S3.Estimation.SequentialDecisionRisk.NonintegerForwardDifferenceSignal.iterated_deriv_rpow_pos β m hx,
         abs_mul,abs_of_pos (Real.rpow_pos_of_pos hx _)]
     apply (mul_le_mul_of_nonneg_left ((abs_add_le _ _).trans (add_le_add (le_of_eq hp) hh)) (abs_nonneg W)).trans_eq
-    dsimp [A]
-    ring
+    dsimp [A]; ring
   have hfine (hscale : M < (n : ℝ)*x^2) :
       |iteratedDeriv m f x| ≤ B*x^(β-m)*((n : ℝ)*x^2)^(-ρ/2) := by
     have hmass := full_mass_germ_of_scale hX hx hxx hb hN
@@ -582,8 +484,7 @@ theorem public_width_jets_min_scale (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) 
       change W*y^β*(∑ j ∈ range (k+1), scaleWeight X b j y*(2*D*(ringScale X b j)^(-ρ)*H)) = _
       simp only [mul_sum,sum_mul]
       apply sum_congr rfl
-      intro j _
-      ring
+      intro j _; ring
     have hh := hRb (range (k+1)) (fun j => D*(ringScale X b j)^(-ρ)) x hx hxx ?_
     · rw [he.iteratedDeriv_eq m,iteratedDeriv_const_mul_field,abs_mul]
       have hab : |2*W*H| = 2*|W| *H := by
@@ -597,8 +498,7 @@ theorem public_width_jets_min_scale (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) 
           norm_num only [Nat.cast_ofNat]
           rw [show (2 : ℝ)*(-ρ/2) = -ρ by ring]
           rw [show β+-ρ-(m : ℝ) = (β-m)+-ρ by ring,Real.rpow_add hx]
-          dsimp [B]
-          ring
+          dsimp [B]; ring
     · intro j _ hz
       have hs := Real.sqrt_pos.mpr hbR
       have hh := Real.rpow_le_rpow_of_nonpos (div_pos hx hs) (jet_ring_scale hX hx hb hz).2
@@ -611,7 +511,6 @@ theorem public_width_jets_min_scale (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) 
   exact hh.trans (by
     apply mul_le_mul_of_nonneg_right _ (by positivity)
     exact mul_le_mul_of_nonneg_right (by dsimp [C]; linarith) (by positivity))
-
 /-- The actual coefficient width has a uniform world-scale upper bound,
 including the unstarted tail. The endpoint correction is retained. -/
 theorem public_width_min_scale (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
@@ -630,7 +529,6 @@ theorem public_width_min_scale (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ �
   · subst x
     simp [publicUpper,publicLower,Real.zero_rpow hβ.ne']
   · exact (le_abs_self _).trans (by simpa using hbnd k t ht x hxpos hx.2)
-
 private lemma public_width_closed {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
     (η a d : ℝ) (r : ℕ) (ρ θ : ℝ) {b N : ℕ} (hb : 1 < b) (hN : 0 < N)
     (hNr : r ≤ N) (D X W β : ℝ) (hD : 0 ≤ D) (hX : 0 < X)
@@ -653,8 +551,7 @@ private lemma public_width_closed {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
   let H : ℝ≥0 := ⟨max (K (n+1)) (K n*(1+2^(β-n))),
     (hK (n+1)).le.trans (le_max_left _ _)⟩
   refine ⟨K,hK,H,?_⟩
-  intro k t ht
-  dsimp only
+  intro k t ht; dsimp only
   let g := fun y => publicUpper φ η a d r ρ θ b N D X W β k t y-
     publicLower φ η a d r ρ θ b N D X W β k t y
   have hc := public_closed_smooth hφ η a d r ρ θ hb hN D X W β hX k t n hn
@@ -689,7 +586,6 @@ private lemma public_width_closed {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
       (min_scale_global (ρ := ρ) hNk hx.1 hp (by have := Nat.cast_nonneg (α := ℝ) m; linarith)) (hK m).le
     rw [show -(β-(m : ℝ))/2 = ((m : ℝ)-β)/2 by ring] at hh
     simpa only [mul_assoc] using hh
-
 private lemma public_elevated_width_closed {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
     (η a d : ℝ) (r : ℕ) (ρ θ : ℝ) {b N : ℕ} (hb : 1 < b) (hN : 0 < N)
     (hNr : r ≤ N) (D X W β : ℝ) (hD : 0 ≤ D) (hX : 0 < X)
@@ -717,8 +613,7 @@ private lemma public_elevated_width_closed {φ : ℝ → ℝ} (hφ : ContDiff �
   let H : ℝ≥0 := ⟨max (K (n+1)) (K n*(1+2^(β-n))),
     (hK (n+1)).le.trans (le_max_left _ _)⟩
   refine ⟨K,hK,H,?_⟩
-  intro k t ht
-  dsimp only
+  intro k t ht; dsimp only
   let f (j : ℕ) (y : ℝ) := publicUpper φ η a d r ρ θ b N D X W β k j y-
     publicLower φ η a d r ρ θ b N D X W β k j y
   let g (y : ℝ) := HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t (fun j => f j y)
@@ -742,8 +637,7 @@ private lemma public_elevated_width_closed {φ : ℝ → ℝ} (hφ : ContDiff �
     have hp := min_scale_step hbR (by positivity : 0 ≤ ((N*b^k : ℕ) : ℝ)*x^2) hρ
     have heq : (b : ℝ)*(((N*b^k : ℕ) : ℝ)*x^2) = ((N*b^(k+1) : ℕ) : ℝ)*x^2 := by
       push_cast
-      rw [pow_succ]
-      ring
+      rw [pow_succ]; ring
     rw [heq] at hp
     exact (mul_le_mul_of_nonneg_left hp
       (mul_nonneg (hA m).le (Real.rpow_pos_of_pos hx _).le)).trans_eq (by dsimp [K]; ring)
@@ -771,90 +665,192 @@ private lemma public_elevated_width_closed {φ : ℝ → ℝ} (hφ : ContDiff �
         (by have := Nat.cast_nonneg (α := ℝ) m; linarith)) (hK m).le
     rw [show -(β-(m : ℝ))/2 = ((m : ℝ)-β)/2 by ring] at hs
     simpa only [mul_assoc] using hs
-
+/-- The actual lower or upper adjacent public coefficient increment. -/
+def publicIncrement (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
+    (b N : ℕ) (D X W β : ℝ) (u : Bool) (k t : ℕ) (x : ℝ) : ℝ :=
+  if u then HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t
+    (fun i => publicUpper φ η a d r ρ θ b N D X W β k i x)-
+      publicUpper φ η a d r ρ θ b N D X W β (k+1) t x
+  else publicLower φ η a d r ρ θ b N D X W β (k+1) t x-
+    HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t
+      (fun i => publicLower φ η a d r ρ θ b N D X W β k i x)
 set_option maxHeartbeats 600000 in
-private lemma public_increment_closed {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
+private lemma reference_ring_increment_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ χ)
+    (hcχ : HasCompactSupport χ) (hsχ : tsupport χ ⊆ Set.Ioi 0)
+    (β η a d : ℝ) (r : ℕ) (ρ θ : ℝ) (hρ : (r : ℝ) < ρ)
+    (hρ1 : ρ < (r : ℝ)+1) (hθ : 0 ≤ θ) :
+    ∃ B : ℕ, 2 ≤ B ∧ ∀ b : ℕ, B ≤ b → ∀ X : ℝ, 0 < X → X ≤ 1 →
+    ∀ N : ℕ, r+1 ≤ N → ∀ D : ℝ, 0 ≤ D → ∀ m : ℕ,
+    ∃ A : ℝ, 0 < A ∧ ∀ j k t : ℕ, t ≤ (N*b^j)*b^(k+1)+r →
+    ∀ x : ℝ, 0 < x → x ≤ X → |scaleCoordinate X b x-j| < 1 → ∀ u : Bool,
+    let R := fun l i y => if u then 1-ringUpper (N*b^j) b r ρ θ
+      (D*(ringScale X b j)^(-ρ)) (fun q => (reference (cutoff χ β) η a d y q : ℂ)) l i
+      else ringLower (N*b^j) b r ρ θ (D*(ringScale X b j)^(-ρ))
+        (fun q => (reference (cutoff χ β) η a d y q : ℂ)) l i
+    |iteratedDeriv m (fun y => R (k+1) t y-HNPCorrectionLiftAdvantage.lift
+      ((N*b^j)*b^(k+1)+r) ((N*b^j)*b^k+r) t (fun i => R k i y)) x| ≤
+      A*x^(-ρ-m)*(((N*b^j)*b^(k+1) : ℕ) : ℝ)^(-ρ/2) := by
+  obtain ⟨B,hB,hbnd⟩ := reference_center_mixed_scales hχ hcχ hsχ β η a d r ρ hρ hρ1
+  refine ⟨B,hB,?_⟩
+  intro b hb X hX hX1 N hN D hD m
+  obtain ⟨C,hC,hcb⟩ := hbnd b hb X hX N hN m
+  have hb1 : 1 < b := by omega
+  have hb0 : 0 < b := by omega
+  have hρ0 : 0 ≤ ρ := by have := Nat.cast_nonneg (α := ℝ) r; linarith
+  have hbR : (0 : ℝ) < b := by exact_mod_cast hb0
+  let K := D*(θ+1)*((b : ℝ)^(ρ/2)+1)
+  have hK : 0 ≤ K := by dsimp [K]; positivity
+  refine ⟨(C+K)*(Real.sqrt b)^((m : ℝ)+ρ),by positivity,?_⟩
+  intro j k t ht x hx hxx hz u; dsimp only
+  have hN0 : 0 < N := by omega
+  have hτ : 0 < N*b^j := by positivity
+  have hτr : r ≤ N*b^j := (by omega : r ≤ N).trans (Nat.le_mul_of_pos_right N (pow_pos hb0 j))
+  have hs : 0 < ringScale X b j := by dsimp [ringScale]; positivity
+  have hh := ring_increment_jets (cutoff_smooth hχ hsχ β) η a d r ρ θ
+    (D*(ringScale X b j)^(-ρ)) hτ hb1 hτr hρ0 hθ (by positivity)
+    k t m ht hx ((hcb j x hx (hxx.trans hX1) (jet_ring_scale hX hx hb1 hz).1 k).2.1 t ht) u
+  apply hh.trans
+  have hbase : C*(ringScale X b j)^(-(m : ℝ)-ρ)*
+      (((N*b^j)*b^(k+1) : ℕ) : ℝ)^(-ρ/2) + (if m = 0 then
+      (D*(ringScale X b j)^(-ρ))*(θ+1)*((b : ℝ)^(ρ/2)+1)*
+      (((N*b^j)*b^(k+1) : ℕ) : ℝ)^(-ρ/2) else 0) ≤
+      (C+K)*(ringScale X b j)^(-(m : ℝ)-ρ)*
+      (((N*b^j)*b^(k+1) : ℕ) : ℝ)^(-ρ/2) := by
+    split_ifs with hm
+    · subst m; simp only [Nat.cast_zero,neg_zero,zero_sub]; dsimp [K]; exact le_of_eq (by ring)
+    · rw [add_zero]; gcongr; linarith
+  apply hbase.trans
+  have hpow := Real.rpow_le_rpow_of_nonpos (div_pos hx (Real.sqrt_pos.mpr hbR))
+    (jet_ring_scale hX hx hb1 hz).2 (by have := Nat.cast_nonneg (α := ℝ) m; linarith : -(m : ℝ)-ρ ≤ 0)
+  rw [Real.div_rpow hx.le (Real.sqrt_nonneg _),show -(m : ℝ)-ρ = -((m : ℝ)+ρ) by ring,
+    Real.rpow_neg (Real.sqrt_nonneg _),div_inv_eq_mul] at hpow
+  rw [show -(m : ℝ)-ρ = -((m : ℝ)+ρ) by ring,
+    show -ρ-(m : ℝ) = -((m : ℝ)+ρ) by ring]
+  calc
+    _ ≤ (C+K)*(x^(-((m : ℝ)+ρ))*(Real.sqrt b)^((m : ℝ)+ρ))*
+        (((N*b^j)*b^(k+1) : ℕ) : ℝ)^(-ρ/2) := by gcongr
+    _ = _ := by ring
+set_option maxHeartbeats 600000 in
+private lemma public_increment_min_scale {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
     (η a d : ℝ) (r : ℕ) (ρ θ : ℝ) {b N : ℕ} (hb : 1 < b) (hN : 0 < N)
-    (D X W β : ℝ) (hX : 0 < X) (n : ℕ) (hn : (n : ℝ) < β)
-    (hn1 : β < (n : ℝ)+1) (C : ℕ → ℝ) (hC : ∀ m, 0 < C m)
-    (hbnd : ∀ k j, j ≤ N*b^k+r → ∀ u : Bool,
-      let f := if u then publicUpper φ η a d r ρ θ b N D X W β k j
-        else publicLower φ η a d r ρ θ b N D X W β k j
-      ∀ m x, 0 < x → x ≤ X → |iteratedDeriv m (fun y => f y-1/2) x| ≤ C m*x^(β-m)) :
-    ∃ H : ℝ≥0, ∀ k t, t ≤ N*b^(k+1)+r → ∀ u : Bool,
-      let low := publicLower φ η a d r ρ θ b N D X W β
-      let upp := publicUpper φ η a d r ρ θ b N D X W β
-      let g := if u then fun y => HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t
-          (fun j => upp k j y)-upp (k+1) t y
-        else fun y => low (k+1) t y-HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t
-          (fun j => low k j y)
-      ContDiffOn ℝ n g (Set.Icc 0 X) ∧
-      (∀ m ≤ n, iteratedDeriv m g 0 = 0) ∧
-      (∀ m x, 0 < x → x ≤ X → |iteratedDeriv m g x| ≤ (2*C m)*x^(β-m)) ∧
-      HolderOnWith H ⟨β-n,by linarith⟩ (iteratedDeriv n g) (Set.Icc 0 X) := by
-  let K (m : ℕ) := 2*C m
-  have hK (m : ℕ) : 0 < K m := mul_pos (by norm_num) (hC m)
-  let H : ℝ≥0 := ⟨max (K (n+1)) (K n*(1+2^(β-n))),
-    (hK (n+1)).le.trans (le_max_left _ _)⟩
-  refine ⟨H,?_⟩
-  intro k t ht u
-  dsimp only
-  let F (stage j : ℕ) := if u then publicUpper φ η a d r ρ θ b N D X W β stage j
-    else publicLower φ η a d r ρ θ b N D X W β stage j
-  let f (j : ℕ) (y : ℝ) := F k j y-1/2
-  let fnew (y : ℝ) := F (k+1) t y-1/2
-  let L (y : ℝ) := HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t (fun j => f j y)
-  let g (y : ℝ) := (if u then (-1 : ℝ) else 1)*(fnew y-L y)
-  have hd : N*b^k+r ≤ N*b^(k+1)+r :=
-    Nat.add_le_add_right (Nat.mul_le_mul_left N (Nat.pow_le_pow_right (by omega : 0 < b) (by omega))) r
-  have hsame : (if u then fun y => HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t
-      (fun j => publicUpper φ η a d r ρ θ b N D X W β k j y)-
-        publicUpper φ η a d r ρ θ b N D X W β (k+1) t y
-    else fun y => publicLower φ η a d r ρ θ b N D X W β (k+1) t y-
-      HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t
-        (fun j => publicLower φ η a d r ρ θ b N D X W β k j y)) = g := by
-    ext y
-    dsimp [g,fnew,L,f,F]
-    cases u <;> simp only [Bool.false_eq_true,ite_false,ite_true,HNPCorrectionLiftAdvantage.lift,
-      mul_sub,sum_sub_distrib,← sum_mul,HNPCorrectionLiftAdvantage.weight_sum hd ht] <;> ring
-  rw [hsame]
-  have hc (stage j : ℕ) (x : ℝ) (hx : x ∈ Set.Icc 0 X) : ContDiffAt ℝ n (F stage j) x := by
-    have hh := public_closed_smooth hφ η a d r ρ θ hb hN D X W β hX stage j n hn
+    (D X W β : ℝ) (hX : 0 < X) (hρ : 0 ≤ ρ)
+    (hjets : ∀ m : ℕ, ∃ A : ℝ, 0 < A ∧ ∀ j k t : ℕ, t ≤ (N*b^j)*b^(k+1)+r →
+      ∀ x : ℝ, 0 < x → x ≤ X → |scaleCoordinate X b x-j| < 1 → ∀ u : Bool,
+      let R := fun l i y => if u then 1-ringUpper (N*b^j) b r ρ θ
+        (D*(ringScale X b j)^(-ρ)) (fun q => (reference φ η a d y q : ℂ)) l i
+        else ringLower (N*b^j) b r ρ θ (D*(ringScale X b j)^(-ρ))
+          (fun q => (reference φ η a d y q : ℂ)) l i
+      |iteratedDeriv m (fun y => R (k+1) t y-HNPCorrectionLiftAdvantage.lift
+        ((N*b^j)*b^(k+1)+r) ((N*b^j)*b^k+r) t (fun i => R k i y)) x| ≤
+        A*x^(-ρ-m)*(((N*b^j)*b^(k+1) : ℕ) : ℝ)^(-ρ/2))
+    (C : ℕ → ℝ) (hC : ∀ m, 0 ≤ C m)
+    (hcoarse : ∀ m k t, t ≤ N*b^(k+1)+r → ∀ u x, 0 < x → x ≤ X →
+      |iteratedDeriv m (publicIncrement φ η a d r ρ θ b N D X W β u k t) x| ≤ C m*x^(β-m)) :
+    ∀ m : ℕ, ∃ K : ℝ, 0 < K ∧ ∀ k t, t ≤ N*b^(k+1)+r → ∀ u x, 0 < x → x ≤ X →
+      |iteratedDeriv m (publicIncrement φ η a d r ρ θ b N D X W β u k t) x| ≤
+        K*x^(β-m)*(max 1 (((N*b^(k+1) : ℕ) : ℝ)*x^2))^(-ρ/2) := by
+  choose A hA hAb using hjets
+  choose Q hQ hQb using fun i => scaled_mixture_factor hX hb (-ρ) i A (fun i => (hA i).le)
+  intro m
+  let P (i : ℕ) := |W| * |∏ j ∈ range i, (β-(j : ℝ))|
+  let B := ∑ i ∈ range (m+1), (m.choose i : ℝ)*P i*Q (m-i)
+  let M := max 1 ((b : ℝ)*N*X^2)
+  let K := max (C m*M^(ρ/2)) B
+  have hP (i : ℕ) : 0 ≤ P i := by dsimp [P]; positivity
+  have hB : 0 ≤ B := sum_nonneg (fun i _ => by have := hQ (m-i); positivity)
+  have hK : 0 ≤ K := hB.trans (le_max_right _ _)
+  refine ⟨K+1,by positivity,?_⟩
+  intro k t ht u x hx hxx
+  have hb0 : 0 < b := by omega
+  let nn := N*b^(k+1)
+  let no := N*b^k
+  have hnR : (0 : ℝ) < nn := by dsimp [nn]; positivity
+  have hd : no+r ≤ nn+r := Nat.add_le_add_right
+    (Nat.mul_le_mul_left N (Nat.pow_le_pow_right hb0 (by omega))) r
+  let R (j l i : ℕ) (y : ℝ) := if u then 1-ringUpper (N*b^j) b r ρ θ
+      (D*(ringScale X b j)^(-ρ)) (fun q => (reference φ η a d y q : ℂ)) (l-j) i
+      else ringLower (N*b^j) b r ρ θ (D*(ringScale X b j)^(-ρ))
+        (fun q => (reference φ η a d y q : ℂ)) (l-j) i
+  let F (j : ℕ) (y : ℝ) := R j (k+1) t y-
+    HNPCorrectionLiftAdvantage.lift (nn+r) (no+r) t (fun i => R j k i y)
+  let V (y : ℝ) := ∑ j ∈ range (k+1), scaleWeight X b j y*F j y
+  have hsR (j l i : ℕ) : ContDiffAt ℝ ∞ (R j l i) x := by
+    have hh := Complex.reCLM.contDiff.contDiffAt.comp x
+      (coefficient_smooth (by positivity : 0 < N*b^j) hb0 hφ η a d r (l-j)
+        ((N*b^j)*b^(l-j)+r) i hx)
     cases u
-    · exact hh.1 x hx
-    · exact hh.2 x hx
-  have hs (stage j : ℕ) (x : ℝ) (hx : 0 < x) (hxx : x ≤ X) : ContDiffAt ℝ ∞ (F stage j) x := by
-    have hh := public_smooth hφ η a d r ρ θ hb hN D X W β hX stage j hx hxx
-    cases u
-    · exact hh.1
-    · exact hh.2
-  have hgc (x : ℝ) (hx : x ∈ Set.Icc 0 X) : ContDiffAt ℝ n g x :=
-    contDiffAt_const.mul (((hc (k+1) t x hx).sub contDiffAt_const).sub
-      (ContDiffAt.sum (fun j _ => contDiffAt_const.mul ((hc k j x hx).sub contDiffAt_const))))
-  have hgs (x : ℝ) (hx : 0 < x) (hxx : x ≤ X) : ContDiffAt ℝ ∞ g x :=
-    contDiffAt_const.mul (((hs (k+1) t x hx hxx).sub contDiffAt_const).sub
-      (ContDiffAt.sum (fun j _ => contDiffAt_const.mul ((hs k j x hx hxx).sub contDiffAt_const))))
-  have he (m : ℕ) (x : ℝ) (hx : 0 < x) (hxx : x ≤ X) :
-      |iteratedDeriv m g x| ≤ K m*x^(β-m) := by
-    have hsm (stage j : ℕ) : ContDiffAt ℝ m (fun y => F stage j y-1/2) x :=
-      ((hs stage j x hx hxx).sub contDiffAt_const).of_le
+    · exact hh.sub contDiffAt_const
+    · exact contDiffAt_const.sub (hh.add contDiffAt_const)
+  have hsF (j : ℕ) : ContDiffAt ℝ ∞ (F j) x :=
+    (hsR j (k+1) t).sub (ContDiffAt.sum (fun i _ => contDiffAt_const.mul (hsR j k i)))
+  have hbF (i j : ℕ) (hj : j ∈ range (k+1)) (hz : |scaleCoordinate X b x-j| < 1) :
+      |iteratedDeriv i (F j) x| ≤ (nn : ℝ)^(-ρ/2)*A i*x^(-ρ-i) := by
+    have hjk : j ≤ k := by have := mem_range.mp hj; omega
+    have ho : (N*b^j)*b^(k-j) = no := by dsimp [no]; rw [mul_assoc,← pow_add,Nat.add_sub_of_le hjk]
+    have hn : (N*b^j)*b^(k-j+1) = nn := by
+      dsimp [nn]; rw [mul_assoc,← pow_add,show j+(k-j+1)=k+1 by omega]
+    have hh := hAb i j (k-j) t (by rwa [hn]) x hx hxx hz u
+    dsimp only at hh
+    rw [ho,hn,show k-j+1 = k+1-j by omega] at hh
+    exact hh.trans_eq (by ring)
+  have hbV (i : ℕ) : |iteratedDeriv i V x| ≤ (nn : ℝ)^(-ρ/2)*Q i*x^(-ρ-i) :=
+    hQb i (range (k+1)) F x ((nn : ℝ)^(-ρ/2)) hx hxx (by positivity)
+      (fun j _ => (hsF j).of_le (by exact_mod_cast (le_top : (i : ℕ∞) ≤ ⊤)))
+      (fun j hj hz ell _ => hbF ell j hj hz)
+  have hfine (hscale : M < (nn : ℝ)*x^2) :
+      |iteratedDeriv m (publicIncrement φ η a d r ρ θ b N D X W β u k t) x| ≤
+        B*x^(β-m)*((nn : ℝ)*x^2)^(-ρ/2) := by
+    have hz := new_weight_zero_germ hX hx hb hN ((le_max_right _ _).trans_lt hscale)
+    have he : publicIncrement φ η a d r ρ θ b N D X W β u k t =ᶠ[𝓝 x]
+        fun y => (W*y^β)*V y := by
+      filter_upwards [hz] with y hy
+      have hm (v c : ℝ) := lift_mixture hd ht c v (range (k+1))
+        (fun j => scaleWeight X b j y) (fun j i => R j k i y)
+      dsimp only [publicIncrement]
+      cases u <;> dsimp only [R] at hm ⊢
+      · simp only [Bool.false_eq_true,ite_false,publicLower] at hm ⊢
+        rw [hm]
+        simp only [V,F,R,Bool.false_eq_true,ite_false,sum_range_succ,hy,zero_mul,add_zero,
+          mul_sub,sum_sub_distrib]
+        ring
+      · simp only [ite_true,publicUpper] at hm ⊢
+        simp only [sub_eq_add_neg] at hm ⊢
+        have hm' := hm (-(W*y^β)) ((1+W*y^β)/2)
+        simp only [neg_mul] at hm'
+        rw [hm']
+        simp only [V,F,R,ite_true,sum_range_succ,hy,zero_mul,add_zero,mul_sub,sum_sub_distrib]
+        simp only [← sub_eq_add_neg,mul_sub,mul_one,sum_sub_distrib]
+        ring
+    have hsV : ContDiffAt ℝ m V x :=
+      (ContDiffAt.sum (fun j _ => (weight_smooth hX hx hxx hb j).mul (hsF j))).of_le
         (by exact_mod_cast (le_top : (m : ℕ∞) ≤ ⊤))
-    have hl := lift_jet_bound hd ht f (fun j => hsm k j)
-      (fun j hj => hbnd k j hj u m x hx hxx)
-    have hnew := hbnd (k+1) t ht u m x hx hxx
-    have hLm : ContDiffAt ℝ m L x :=
-      ContDiffAt.sum (fun j _ => contDiffAt_const.mul (hsm k j))
-    dsimp only [g]
-    rw [iteratedDeriv_const_mul_field,abs_mul,iteratedDeriv_fun_sub (hsm (k+1) t) hLm]
-    have hsign : |if u then (-1 : ℝ) else 1| = 1 := by cases u <;> norm_num
-    rw [hsign,one_mul]
-    exact ((abs_sub _ _).trans (add_le_add hnew hl)).trans_eq (by dsimp [K]; ring)
-  have hh := closed_jets_holder hX hn hn1 K hK hgc hgs he
-  exact ⟨hh.1,hh.2.1,he,hh.2.2.2⟩
+    have hp (i : ℕ) : |iteratedDeriv i (fun y : ℝ => W*y^β) x| ≤ P i*x^(β-i) := by
+      rw [iteratedDeriv_const_mul_field,
+        D5.S3.Estimation.SequentialDecisionRisk.NonintegerForwardDifferenceSignal.iterated_deriv_rpow_pos β i hx,
+        abs_mul,abs_mul,abs_of_pos (Real.rpow_pos_of_pos hx _)]; exact le_of_eq (by dsimp [P]; ring)
+    have hh := product_jet_bound (p := β) (q := -ρ) hx
+      (contDiffAt_const.mul (Real.contDiffAt_rpow_const_of_ne hx.ne')) hsV P
+      (fun i => (nn : ℝ)^(-ρ/2)*Q i) hP (fun i => by have := hQ i; positivity)
+      (fun i _ => hp i) (fun i _ => hbV i)
+    rw [he.iteratedDeriv_eq m]
+    apply hh.trans_eq
+    have heq : (∑ i ∈ range (m+1), (m.choose i : ℝ)*P i*((nn : ℝ)^(-ρ/2)*Q (m-i))) =
+        (nn : ℝ)^(-ρ/2)*B := by
+      dsimp [B]; rw [mul_sum]; apply sum_congr rfl; intro i _; ring
+    rw [heq,Real.mul_rpow hnR.le (sq_nonneg _),← Real.rpow_natCast x 2,← Real.rpow_mul hx.le]
+    norm_num only [Nat.cast_ofNat]
+    rw [show (2 : ℝ)*(-ρ/2) = -ρ by ring,
+      show β+-ρ-(m : ℝ) = (β-m)+-ρ by ring,Real.rpow_add hx]
+    ring
+  have hh := min_scale_combine (by positivity : 0 ≤ x^(β-m)) (le_max_left _ _)
+    (hC m) hρ (hcoarse m k t ht u x hx hxx) hfine
+  exact hh.trans (by
+    apply mul_le_mul_of_nonneg_right _ (by positivity)
+    exact mul_le_mul_of_nonneg_right (by dsimp [K,M]; linarith) (by positivity))
 
-/-- The same original public arrays have uniformly bounded closed parameter
-jets and Hölder seminorms, a coarse min-scale width upper bound, and the finer
-endpoint-scale positive width lower bound. -/
+set_option maxHeartbeats 800000 in
+/-- One legal grid controls closed public jets, widths and both actual increments,
+including their minimum world scales and low-order grid decay. -/
 theorem reference_public_regularity {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ χ)
     (hcχ : HasCompactSupport χ) {T β : ℝ} (hT : 0 < T) (hβ : 0 < β)
     (hsχ : tsupport χ ⊆ Set.Ioo 0 T) (hχrange : ∀ t, 0 ≤ χ t ∧ χ t ≤ 1)
@@ -867,6 +863,7 @@ theorem reference_public_regularity {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ �
       ∃ C : ℕ → ℝ, (∀ m, 0 < C m) ∧ ∃ H : ℝ≥0, ∃ c U : ℝ, 0 < c ∧ 0 < U ∧
       ∃ K : ℕ → ℝ, (∀ m, 0 < K m) ∧ ∃ HΓ : ℝ≥0,
       ∃ KE : ℕ → ℝ, (∀ m, 0 < KE m) ∧ ∃ HE HI : ℝ≥0,
+      ∃ KI : ℕ → ℝ, (∀ m, 0 < KI m) ∧
       let lower := publicLower (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β
       let upper := publicUpper (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β
       (∀ k t : ℕ, t ≤ N*b^k+r →
@@ -907,12 +904,18 @@ theorem reference_public_regularity {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ �
        ContDiffOn ℝ n g (Set.Icc 0 X) ∧
        (∀ m ≤ n, iteratedDeriv m g 0 = 0) ∧
        (∀ m x, 0 < x → x ≤ X → |iteratedDeriv m g x| ≤ (2*C m)*x^(β-m)) ∧
+       (∀ m x, 0 < x → x ≤ X → |iteratedDeriv m g x| ≤
+         KI m*x^(β-m)*(max 1 (((N*b^(k+1) : ℕ) : ℝ)*x^2))^(-ρ/2)) ∧
+       (∀ m ≤ n, ∀ x ∈ Set.Icc 0 X, |iteratedDeriv m g x| ≤
+         KI m*((N*b^(k+1) : ℕ) : ℝ)^(((m : ℝ)-β)/2)) ∧
        HolderOnWith HI ⟨β-n,by linarith⟩ (iteratedDeriv n g) (Set.Icc 0 X)) := by
   obtain ⟨B,hB,hb⟩ := reference_public_closed_holder hχ hcχ hT hβ hsχ hχrange
     a d r ρ θ hρ hρ1 hρ2 hθ n hn hn1
-  refine ⟨B,hB,?_⟩
+  obtain ⟨BI,hBI,hbi⟩ := reference_ring_increment_jets hχ hcχ (fun y hy => (hsχ hy).1)
+    β (2/(5*T^β)) a d r ρ θ hρ hρ1 hθ.le
+  refine ⟨max B BI,hB.trans (le_max_left _ _),?_⟩
   intro b hBb X hX hX1
-  obtain ⟨D,hD,N,hN,hring,h⟩ := hb b hBb X hX hX1
+  obtain ⟨D,hD,N,hN,hring,h⟩ := hb b ((le_max_left _ _).trans hBb) X hX hX1
   refine ⟨D,hD,N,hN,hring,?_⟩
   intro W hW
   obtain ⟨C,hC,H,h⟩ := h W
@@ -933,7 +936,53 @@ theorem reference_public_regularity {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ �
     (cutoff_smooth hχ (fun y hy => (hsχ hy).1) β) (2/(5*T^β)) a d r ρ θ
     (by omega : 1 < b) (by omega : 0 < N) D X W β hX n hn hn1 C hC
     (fun k j hj u => (h k j hj u).2.2.2.1)
-  refine ⟨C,hC,H,c,U,hc,hU,K,hK,HΓ,KE,hKE,HE,HI,?_,hE,hI⟩
+  have hcoarse (m k t : ℕ) (ht : t ≤ N*b^(k+1)+r) (u : Bool) (x : ℝ)
+      (hx : 0 < x) (hxx : x ≤ X) :
+      |iteratedDeriv m (publicIncrement (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β u k t) x| ≤
+        (2*C m)*x^(β-m) := by
+    cases u
+    · exact (hI k t ht false).2.2.1 m x hx hxx
+    · exact (hI k t ht true).2.2.1 m x hx hxx
+  choose KI hKI hKIb using public_increment_min_scale
+    (cutoff_smooth hχ (fun y hy => (hsχ hy).1) β) (2/(5*T^β)) a d r ρ θ
+    (by omega : 1 < b) (by omega : 0 < N) D X W β hX (by linarith)
+    (hbi b ((le_max_right _ _).trans hBb) X hX hX1 N (by omega) D hD.le)
+    (fun m => 2*C m) (fun m => by have := hC m; positivity) hcoarse
+  have hi (k t : ℕ) (ht : t ≤ N*b^(k+1)+r) (u : Bool) :
+      let g := publicIncrement (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β u k t
+      (∀ m x, 0 < x → x ≤ X → |iteratedDeriv m g x| ≤
+        KI m*x^(β-m)*(max 1 (((N*b^(k+1) : ℕ) : ℝ)*x^2))^(-ρ/2)) ∧
+      (∀ m ≤ n, ∀ x ∈ Set.Icc 0 X, |iteratedDeriv m g x| ≤
+        KI m*((N*b^(k+1) : ℕ) : ℝ)^(((m : ℝ)-β)/2)) := by
+    refine ⟨fun m x hx hxx => hKIb m k t ht u x hx hxx,?_⟩
+    intro m hm x hx
+    have hNk : (0 : ℝ) < ((N*b^(k+1) : ℕ) : ℝ) := by
+      have hN0 : 0 < N := by omega
+      have hb0 : 0 < b := by omega
+      exact_mod_cast (show 0 < N*b^(k+1) by positivity)
+    rcases eq_or_lt_of_le hx.1 with heq | hxpos
+    · subst x
+      have hz : iteratedDeriv m
+          (publicIncrement (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β u k t) 0 = 0 := by
+        cases u
+        · exact (hI k t ht false).2.1 m hm
+        · exact (hI k t ht true).2.1 m hm
+      rw [hz,abs_zero]; exact mul_nonneg (hKI m).le (Real.rpow_pos_of_pos hNk _).le
+    · have hp : 0 < β-(m : ℝ) := by
+        have : (m : ℝ) ≤ n := by exact_mod_cast hm
+        linarith
+      apply (hKIb m k t ht u x hxpos hx.2).trans
+      have hh := mul_le_mul_of_nonneg_left
+        (min_scale_global (ρ := ρ) hNk hx.1 hp
+          (by have := Nat.cast_nonneg (α := ℝ) m; linarith)) (hKI m).le
+      rw [show -(β-(m : ℝ))/2 = ((m : ℝ)-β)/2 by ring] at hh
+      simpa only [mul_assoc] using hh
+  refine ⟨C,hC,H,c,U,hc,hU,K,hK,HΓ,KE,hKE,HE,HI,KI,hKI,?_,hE,?_⟩
+  swap
+  · intro k t ht u
+    have hh := hI k t ht u
+    have hh' := hi k t ht u
+    cases u <;> exact ⟨hh.1,hh.2.1,hh.2.2.1,hh'.1,hh'.2,hh.2.2.2⟩
   dsimp only
   intro k t ht
   refine ⟨h k t ht,?_,hΓ k t ht⟩
