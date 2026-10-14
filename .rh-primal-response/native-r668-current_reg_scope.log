@@ -1,0 +1,16 @@
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=ensure status=started
+LEAN_INSPECTOR_PHASE phase=ensure status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=54 declarations=2091
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": ["Reg.D5.S3.Zeros.Jensen.OriginalPrimalTailResponse"], "compiled_modules": 1, "extracted_module_names": ["Reg.D5.S3.Zeros.Jensen.OriginalPrimalTailResponse"], "extracted_modules": 1, "selected_modules": 54}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-rh-primal-tail-response-20261014/.rh-primal-response/current-reg-scoped-r668.json sha256=12449762b7a3aff4baddc735d7241d068221b797857020c21cf988246c3297ba
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=97789780 fd_soft_limit=256 fd_peak=266 rss_peak_kb=5403584

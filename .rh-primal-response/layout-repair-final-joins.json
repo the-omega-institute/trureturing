@@ -1,0 +1,1766 @@
+[
+  {
+    "new_line": 19,
+    "original_lines": [
+      22,
+      23
+    ],
+    "new": "open private primalJet_zero primalJet_deriv shiftedBudget shifted_summable scale_summable full_shifted_comparison flux_summable tailJet_summable_ray tailJet_deriv",
+    "original": [
+      "open private primalJet_zero primalJet_deriv shiftedBudget shifted_summable",
+      "  scale_summable full_shifted_comparison flux_summable tailJet_summable_ray tailJet_deriv"
+    ]
+  },
+  {
+    "new_line": 21,
+    "original_lines": [
+      25,
+      26
+    ],
+    "new": "  adjoint_deriv adjoint_second_deriv adjoint_square flux_eq from D5.S3.Zeros.Jensen.OriginalPrimalTailProjection",
+    "original": [
+      "  adjoint_deriv adjoint_second_deriv adjoint_square flux_eq from",
+      "  D5.S3.Zeros.Jensen.OriginalPrimalTailProjection"
+    ]
+  },
+  {
+    "new_line": 23,
+    "original_lines": [
+      29,
+      30
+    ],
+    "new": "private theorem jet_one (z : ℝ) : (jetPolynomial 1).eval z = -8*z^3+30*z^2-15*z := by",
+    "original": [
+      "private theorem jet_one (z : ℝ) :",
+      "    (jetPolynomial 1).eval z = -8*z^3+30*z^2-15*z := by"
+    ]
+  },
+  {
+    "new_line": 26,
+    "original_lines": [
+      34,
+      35
+    ],
+    "new": "private theorem jet_two (z : ℝ) : (jetPolynomial 2).eval z = 16*z^4-112*z^3+165*z^2-(75/2)*z := by",
+    "original": [
+      "private theorem jet_two (z : ℝ) :",
+      "    (jetPolynomial 2).eval z = 16*z^4-112*z^3+165*z^2-(75/2)*z := by"
+    ]
+  },
+  {
+    "new_line": 29,
+    "original_lines": [
+      39,
+      40
+    ],
+    "new": "private theorem cancelled_polynomial {A z : ℝ} (hA : 12 ≤ A) (hAz : A ≤ z) : |4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z)| ≤",
+    "original": [
+      "private theorem cancelled_polynomial {A z : ℝ} (hA : 12 ≤ A) (hAz : A ≤ z) :",
+      "    |4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z)| ≤"
+    ]
+  },
+  {
+    "new_line": 45,
+    "original_lines": [
+      57,
+      58
+    ],
+    "new": "    (hs : 12 ≤ s) (has : a ≤ s) (hL : L ≤ 12) (hx : 0 ≤ x) : a*x^2/2+L*x-s*(exp (2*x)-1) ≤ -s*x := by",
+    "original": [
+      "    (hs : 12 ≤ s) (has : a ≤ s) (hL : L ≤ 12) (hx : 0 ≤ x) :",
+      "    a*x^2/2+L*x-s*(exp (2*x)-1) ≤ -s*x := by"
+    ]
+  },
+  {
+    "new_line": 52,
+    "original_lines": [
+      66,
+      67
+    ],
+    "new": "private theorem exp_increment {x : ℝ} (_hx : 0 ≤ x) : exp (4*x)-1 ≤ 4*x*exp (4*x) := by",
+    "original": [
+      "private theorem exp_increment {x : ℝ} (_hx : 0 ≤ x) :",
+      "    exp (4*x)-1 ≤ 4*x*exp (4*x) := by"
+    ]
+  },
+  {
+    "new_line": 57,
+    "original_lines": [
+      73,
+      74
+    ],
+    "new": "private theorem leading_split {A s x : ℝ} (hx : 0 ≤ x) (hs : 0 ≤ s) : (s*exp (2*x))^2*((s*exp (2*x))^2-A^2) ≤",
+    "original": [
+      "private theorem leading_split {A s x : ℝ} (hx : 0 ≤ x) (hs : 0 ≤ s) :",
+      "    (s*exp (2*x))^2*((s*exp (2*x))^2-A^2) ≤"
+    ]
+  },
+  {
+    "new_line": 59,
+    "original_lines": [
+      76,
+      77
+    ],
+    "new": "  have h := mul_le_mul_of_nonneg_left (exp_increment hx) (show 0 ≤ s^4*exp (4*x) by positivity)",
+    "original": [
+      "  have h := mul_le_mul_of_nonneg_left (exp_increment hx)",
+      "    (show 0 ≤ s^4*exp (4*x) by positivity)"
+    ]
+  },
+  {
+    "new_line": 66,
+    "original_lines": [
+      86,
+      87
+    ],
+    "new": "    (hs : 12 ≤ s) (has : a ≤ s) (hL : L+1/2 ≤ 12) (hx : 0 ≤ x) : exp (a*x^2/2)*exp (x/2)*exp (-s*exp (2*x))*exp (L*x) ≤",
+    "original": [
+      "    (hs : 12 ≤ s) (has : a ≤ s) (hL : L+1/2 ≤ 12) (hx : 0 ≤ x) :",
+      "    exp (a*x^2/2)*exp (x/2)*exp (-s*exp (2*x))*exp (L*x) ≤"
+    ]
+  },
+  {
+    "new_line": 72,
+    "original_lines": [
+      94,
+      95
+    ],
+    "new": "private theorem primal_polynomial_bounds {z : ℝ} (hz : 12 ≤ z) : |4*z^2-6*z| ≤ 4*z^2 ∧ |-8*z^3+30*z^2-15*z| ≤ 11*z^3 := by",
+    "original": [
+      "private theorem primal_polynomial_bounds {z : ℝ} (hz : 12 ≤ z) :",
+      "    |4*z^2-6*z| ≤ 4*z^2 ∧ |-8*z^3+30*z^2-15*z| ≤ 11*z^3 := by"
+    ]
+  },
+  {
+    "new_line": 83,
+    "original_lines": [
+      107,
+      108
+    ],
+    "new": "    (hα : 0 ≤ α) {x : ℝ} (hx : 0 ≤ x) : exp (a*x^2/2)*|4*A^2*primalMode m x-primalJet 2 m x-",
+    "original": [
+      "    (hα : 0 ≤ α) {x : ℝ} (hx : 0 ≤ x) :",
+      "    exp (a*x^2/2)*|4*A^2*primalMode m x-primalJet 2 m x-"
+    ]
+  },
+  {
+    "new_line": 84,
+    "original_lines": [
+      109,
+      110
+    ],
+    "new": "      α*(primalMode m x+x*primalJet 1 m x)| ≤ exp (-modeScale m)*",
+    "original": [
+      "      α*(primalMode m x+x*primalJet 1 m x)| ≤",
+      "    exp (-modeScale m)*"
+    ]
+  },
+  {
+    "new_line": 85,
+    "original_lines": [
+      111,
+      112
+    ],
+    "new": "      ((64*(modeScale m)^4+11*α*(modeScale m)^3)*x+ 151*(modeScale m)^3+16*((modeScale m)^2-A^2)*(modeScale m)^2+",
+    "original": [
+      "      ((64*(modeScale m)^4+11*α*(modeScale m)^3)*x+",
+      "        151*(modeScale m)^3+16*((modeScale m)^2-A^2)*(modeScale m)^2+"
+    ]
+  },
+  {
+    "new_line": 109,
+    "original_lines": [
+      136,
+      137
+    ],
+    "new": "  have hres : |4*A^2*primalMode m x-primalJet 2 m x- α*(primalMode m x+x*primalJet 1 m x)| ≤",
+    "original": [
+      "  have hres : |4*A^2*primalMode m x-primalJet 2 m x-",
+      "      α*(primalMode m x+x*primalJet 1 m x)| ≤"
+    ]
+  },
+  {
+    "new_line": 110,
+    "original_lines": [
+      138,
+      139
+    ],
+    "new": "      e*(64*x*s^4*exp (8*x)+16*(s^2-A^2)*s^2*exp (4*x)+151*z^3+ α*(4*z^2+11*x*z^3)) := by",
+    "original": [
+      "      e*(64*x*s^4*exp (8*x)+16*(s^2-A^2)*s^2*exp (4*x)+151*z^3+",
+      "        α*(4*z^2+11*x*z^3)) := by"
+    ]
+  },
+  {
+    "new_line": 112,
+    "original_lines": [
+      141,
+      142
+    ],
+    "new": "    have hid : 4*A^2*(e*(4*z^2-6*z))-e*(16*z^4-112*z^3+165*z^2-(75/2)*z)- α*(e*(4*z^2-6*z)+x*(e*(-8*z^3+30*z^2-15*z))) =",
+    "original": [
+      "    have hid : 4*A^2*(e*(4*z^2-6*z))-e*(16*z^4-112*z^3+165*z^2-(75/2)*z)-",
+      "        α*(e*(4*z^2-6*z)+x*(e*(-8*z^3+30*z^2-15*z))) ="
+    ]
+  },
+  {
+    "new_line": 113,
+    "original_lines": [
+      143,
+      144
+    ],
+    "new": "        e*((4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z))- α*((4*z^2-6*z)+x*(-8*z^3+30*z^2-15*z))) := by ring",
+    "original": [
+      "        e*((4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z))-",
+      "          α*((4*z^2-6*z)+x*(-8*z^3+30*z^2-15*z))) := by ring"
+    ]
+  },
+  {
+    "new_line": 125,
+    "original_lines": [
+      156,
+      157
+    ],
+    "new": "              (abs_sub_le (4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z))",
+    "original": [
+      "              (abs_sub_le",
+      "                (4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z))"
+    ]
+  },
+  {
+    "new_line": 160,
+    "original_lines": [
+      194,
+      195
+    ],
+    "new": "private theorem linear_exp_integrable {s : ℝ} (hs : 0 < s) : IntegrableOn (fun x : ℝ => x*exp (-s*x)) (Ioi 0) := by",
+    "original": [
+      "private theorem linear_exp_integrable {s : ℝ} (hs : 0 < s) :",
+      "    IntegrableOn (fun x : ℝ => x*exp (-s*x)) (Ioi 0) := by"
+    ]
+  },
+  {
+    "new_line": 161,
+    "original_lines": [
+      196,
+      197
+    ],
+    "new": "  simpa using (integrableOn_rpow_mul_exp_neg_mul_rpow (p := 1) (s := 1) (b := s) (by norm_num) (by norm_num) hs)",
+    "original": [
+      "  simpa using (integrableOn_rpow_mul_exp_neg_mul_rpow",
+      "    (p := 1) (s := 1) (b := s) (by norm_num) (by norm_num) hs)"
+    ]
+  },
+  {
+    "new_line": 162,
+    "original_lines": [
+      199,
+      200
+    ],
+    "new": "private theorem linear_exp_integral {s : ℝ} (hs : 0 < s) : (∫ x in Ioi (0 : ℝ), x*exp (-s*x)) = 1/s^2 := by",
+    "original": [
+      "private theorem linear_exp_integral {s : ℝ} (hs : 0 < s) :",
+      "    (∫ x in Ioi (0 : ℝ), x*exp (-s*x)) = 1/s^2 := by"
+    ]
+  },
+  {
+    "new_line": 168,
+    "original_lines": [
+      207,
+      208
+    ],
+    "new": "    (hα : 0 ≤ α) (hαs : α ≤ modeScale m) : IntegrableOn (fun x : ℝ => exp (a*x^2/2)*",
+    "original": [
+      "    (hα : 0 ≤ α) (hαs : α ≤ modeScale m) :",
+      "    IntegrableOn (fun x : ℝ => exp (a*x^2/2)*"
+    ]
+  },
+  {
+    "new_line": 169,
+    "original_lines": [
+      209,
+      210
+    ],
+    "new": "      |4*A^2*primalMode m x-primalJet 2 m x- α*(primalMode m x+x*primalJet 1 m x)|) (Ioi 0) ∧",
+    "original": [
+      "      |4*A^2*primalMode m x-primalJet 2 m x-",
+      "        α*(primalMode m x+x*primalJet 1 m x)|) (Ioi 0) ∧"
+    ]
+  },
+  {
+    "new_line": 170,
+    "original_lines": [
+      211,
+      212
+    ],
+    "new": "    (∫ x in Ioi (0 : ℝ), exp (a*x^2/2)* |4*A^2*primalMode m x-primalJet 2 m x-",
+    "original": [
+      "    (∫ x in Ioi (0 : ℝ), exp (a*x^2/2)*",
+      "      |4*A^2*primalMode m x-primalJet 2 m x-"
+    ]
+  },
+  {
+    "new_line": 171,
+    "original_lines": [
+      213,
+      214
+    ],
+    "new": "        α*(primalMode m x+x*primalJet 1 m x)|) ≤ 230*(modeScale m)^2*exp (-modeScale m)+",
+    "original": [
+      "        α*(primalMode m x+x*primalJet 1 m x)|) ≤",
+      "      230*(modeScale m)^2*exp (-modeScale m)+"
+    ]
+  },
+  {
+    "new_line": 176,
+    "original_lines": [
+      219,
+      220
+    ],
+    "new": "  let f := fun x : ℝ => exp (a*x^2/2)* |4*A^2*primalMode m x-primalJet 2 m x-α*(primalMode m x+x*primalJet 1 m x)|",
+    "original": [
+      "  let f := fun x : ℝ => exp (a*x^2/2)*",
+      "    |4*A^2*primalMode m x-primalJet 2 m x-α*(primalMode m x+x*primalJet 1 m x)|"
+    ]
+  },
+  {
+    "new_line": 188,
+    "original_lines": [
+      232,
+      233
+    ],
+    "new": "    have h0 := (show ∀ x, HasDerivAt (primalJet 0 m) (primalJet 1 m x) x from fun x => primalJet_deriv 0 m x)",
+    "original": [
+      "    have h0 := (show ∀ x, HasDerivAt (primalJet 0 m) (primalJet 1 m x) x from",
+      "      fun x => primalJet_deriv 0 m x)"
+    ]
+  },
+  {
+    "new_line": 197,
+    "original_lines": [
+      242,
+      243
+    ],
+    "new": "      ((((hq.const_mul (4*A^2)).sub h2).sub ((hq.add (continuous_id.mul h1)).const_mul α)).abs)",
+    "original": [
+      "      ((((hq.const_mul (4*A^2)).sub h2).sub",
+      "        ((hq.add (continuous_id.mul h1)).const_mul α)).abs)"
+    ]
+  },
+  {
+    "new_line": 210,
+    "original_lines": [
+      256,
+      257
+    ],
+    "new": "    rw [hg, integral_const_mul, integral_add (hi1.const_mul c) (hi0.const_mul d), integral_const_mul, integral_const_mul, linear_exp_integral hs,",
+    "original": [
+      "    rw [hg, integral_const_mul, integral_add (hi1.const_mul c) (hi0.const_mul d),",
+      "      integral_const_mul, integral_const_mul, linear_exp_integral hs,"
+    ]
+  },
+  {
+    "new_line": 213,
+    "original_lines": [
+      260,
+      261
+    ],
+    "new": "  have hcalc : exp (-s)*(c/s^2+d/s) ≤ 230*s^2*exp (-s)+16*(s^2-A^2)*s*exp (-s) := by",
+    "original": [
+      "  have hcalc : exp (-s)*(c/s^2+d/s) ≤",
+      "      230*s^2*exp (-s)+16*(s^2-A^2)*s*exp (-s) := by"
+    ]
+  },
+  {
+    "new_line": 222,
+    "original_lines": [
+      272,
+      273
+    ],
+    "new": "private theorem later_mode_comparison {N : ℕ} (hN : 1 ≤ N) (k j : ℕ) (hj : 1 ≤ j) : (modeScale (N+j+1))^k*exp (-modeScale (N+j+1)) ≤",
+    "original": [
+      "private theorem later_mode_comparison {N : ℕ} (hN : 1 ≤ N) (k j : ℕ) (hj : 1 ≤ j) :",
+      "    (modeScale (N+j+1))^k*exp (-modeScale (N+j+1)) ≤"
+    ]
+  },
+  {
+    "new_line": 223,
+    "original_lines": [
+      274,
+      275
+    ],
+    "new": "      (modeScale (N+1))^k*exp (-modeScale (N+1))* exp (-2*Real.pi*((N+1:ℕ):ℝ))*",
+    "original": [
+      "      (modeScale (N+1))^k*exp (-modeScale (N+1))*",
+      "        exp (-2*Real.pi*((N+1:ℕ):ℝ))*"
+    ]
+  },
+  {
+    "new_line": 231,
+    "original_lines": [
+      283,
+      284
+    ],
+    "new": "    have hh := pow_le_pow_left₀ (show 0 ≤ M+z by linarith) (show M+z ≤ M*(z+1) by nlinarith) 2",
+    "original": [
+      "    have hh := pow_le_pow_left₀ (show 0 ≤ M+z by linarith)",
+      "      (show M+z ≤ M*(z+1) by nlinarith) 2"
+    ]
+  },
+  {
+    "new_line": 235,
+    "original_lines": [
+      288,
+      289
+    ],
+    "new": "  have hex : exp (-modeScale (N+j+1)) ≤ exp (-modeScale (N+1))*exp (-2*Real.pi*M)*exp (-Real.pi*z) := by",
+    "original": [
+      "  have hex : exp (-modeScale (N+j+1)) ≤",
+      "      exp (-modeScale (N+1))*exp (-2*Real.pi*M)*exp (-Real.pi*z) := by"
+    ]
+  },
+  {
+    "new_line": 245,
+    "original_lines": [
+      299,
+      300
+    ],
+    "new": "        (exp (-modeScale (N+1))*exp (-2*Real.pi*M)*exp (-Real.pi*z)) := mul_le_mul (pow_le_pow_left₀ (by dsimp [modeScale]; positivity) hscale k)",
+    "original": [
+      "        (exp (-modeScale (N+1))*exp (-2*Real.pi*M)*exp (-Real.pi*z)) :=",
+      "      mul_le_mul (pow_le_pow_left₀ (by dsimp [modeScale]; positivity) hscale k)"
+    ]
+  },
+  {
+    "new_line": 248,
+    "original_lines": [
+      304,
+      305
+    ],
+    "new": "private theorem later_mode_sum {N : ℕ} (hN : 1 ≤ N) (k : ℕ) : (∑' j : ℕ, (modeScale (N+(j+1)+1))^k*exp (-modeScale (N+(j+1)+1))) ≤",
+    "original": [
+      "private theorem later_mode_sum {N : ℕ} (hN : 1 ≤ N) (k : ℕ) :",
+      "    (∑' j : ℕ, (modeScale (N+(j+1)+1))^k*exp (-modeScale (N+(j+1)+1))) ≤"
+    ]
+  },
+  {
+    "new_line": 249,
+    "original_lines": [
+      306,
+      307
+    ],
+    "new": "      (modeScale (N+1))^k*exp (-modeScale (N+1))* exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget k-1) := by",
+    "original": [
+      "      (modeScale (N+1))^k*exp (-modeScale (N+1))*",
+      "        exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget k-1) := by"
+    ]
+  },
+  {
+    "new_line": 252,
+    "original_lines": [
+      310,
+      311
+    ],
+    "new": "  have hsplit : (∑' j : ℕ, (((j+1+1:ℕ):ℝ)^(2*k)*exp (-Real.pi*((j+1:ℕ):ℝ)))) = shiftedBudget k-1 := by",
+    "original": [
+      "  have hsplit : (∑' j : ℕ, (((j+1+1:ℕ):ℝ)^(2*k)*exp (-Real.pi*((j+1:ℕ):ℝ)))) =",
+      "      shiftedBudget k-1 := by"
+    ]
+  },
+  {
+    "new_line": 256,
+    "original_lines": [
+      315,
+      316
+    ],
+    "new": "    (ht.mul_left ((modeScale (N+1))^k*exp (-modeScale (N+1))* exp (-2*Real.pi*((N+1:ℕ):ℝ))))",
+    "original": [
+      "    (ht.mul_left ((modeScale (N+1))^k*exp (-modeScale (N+1))*",
+      "      exp (-2*Real.pi*((N+1:ℕ):ℝ))))"
+    ]
+  },
+  {
+    "new_line": 258,
+    "original_lines": [
+      319,
+      320
+    ],
+    "new": "private theorem scale_gap {N : ℕ} (hN : 1 ≤ N) : exp (-2*Real.pi*((N+1:ℕ):ℝ)) ≤ 1/(2*Real.pi*modeScale (N+1)) := by",
+    "original": [
+      "private theorem scale_gap {N : ℕ} (hN : 1 ≤ N) :",
+      "    exp (-2*Real.pi*((N+1:ℕ):ℝ)) ≤ 1/(2*Real.pi*modeScale (N+1)) := by"
+    ]
+  },
+  {
+    "new_line": 275,
+    "original_lines": [
+      338,
+      339
+    ],
+    "new": "    (hA : 12 ≤ modeScale (N+1)) : (11/2)*(modeScale (N+1))^3*exp (-modeScale (N+1)) ≤ originalFlux N := by",
+    "original": [
+      "    (hA : 12 ≤ modeScale (N+1)) :",
+      "    (11/2)*(modeScale (N+1))^3*exp (-modeScale (N+1)) ≤ originalFlux N := by"
+    ]
+  },
+  {
+    "new_line": 276,
+    "original_lines": [
+      340,
+      341
+    ],
+    "new": "  have hterm (j : ℕ) : (11/2)*(modeScale (N+j+1))^3*exp (-modeScale (N+j+1)) ≤ exp (-modeScale (N+j+1))*(8*(modeScale (N+j+1))^3-",
+    "original": [
+      "  have hterm (j : ℕ) : (11/2)*(modeScale (N+j+1))^3*exp (-modeScale (N+j+1)) ≤",
+      "      exp (-modeScale (N+j+1))*(8*(modeScale (N+j+1))^3-"
+    ]
+  },
+  {
+    "new_line": 284,
+    "original_lines": [
+      349,
+      350
+    ],
+    "new": "    nlinarith [mul_nonneg (show 0 ≤ (5/2)*(modeScale (N+j+1))^3- 30*(modeScale (N+j+1))^2+15*modeScale (N+j+1) by nlinarith)",
+    "original": [
+      "    nlinarith [mul_nonneg (show 0 ≤ (5/2)*(modeScale (N+j+1))^3-",
+      "      30*(modeScale (N+j+1))^2+15*modeScale (N+j+1) by nlinarith)"
+    ]
+  },
+  {
+    "new_line": 291,
+    "original_lines": [
+      359,
+      360
+    ],
+    "new": "    {x : ℝ} (hx : 0 ≤ x) : HasSum (fun j : ℕ => 4*A^2*primalMode (N+j+1) x-primalJet 2 (N+j+1) x-",
+    "original": [
+      "    {x : ℝ} (hx : 0 ≤ x) :",
+      "    HasSum (fun j : ℕ => 4*A^2*primalMode (N+j+1) x-primalJet 2 (N+j+1) x-"
+    ]
+  },
+  {
+    "new_line": 301,
+    "original_lines": [
+      370,
+      371
+    ],
+    "new": "  change HasSum _ (4*A^2*tailJet 0 N x-tailJet 2 N x- α*(tailJet 0 N x+x*tailJet 1 N x)) at h",
+    "original": [
+      "  change HasSum _ (4*A^2*tailJet 0 N x-tailJet 2 N x-",
+      "    α*(tailJet 0 N x+x*tailJet 1 N x)) at h"
+    ]
+  },
+  {
+    "new_line": 305,
+    "original_lines": [
+      376,
+      377
+    ],
+    "new": "private def residualConstant : ℝ := 230*shiftedBudget 2+(8/Real.pi)*(shiftedBudget 3-1)",
+    "original": [
+      "private def residualConstant : ℝ :=",
+      "  230*shiftedBudget 2+(8/Real.pi)*(shiftedBudget 3-1)"
+    ]
+  },
+  {
+    "new_line": 306,
+    "original_lines": [
+      379,
+      380
+    ],
+    "new": "private theorem residual_budget_sum {N : ℕ} (hN : 1 ≤ N) : (∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+",
+    "original": [
+      "private theorem residual_budget_sum {N : ℕ} (hN : 1 ≤ N) :",
+      "    (∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+"
+    ]
+  },
+  {
+    "new_line": 307,
+    "original_lines": [
+      381,
+      382
+    ],
+    "new": "      16*((modeScale (N+j+1))^2-(modeScale (N+1))^2)* modeScale (N+j+1)*exp (-modeScale (N+j+1)))) ≤",
+    "original": [
+      "      16*((modeScale (N+j+1))^2-(modeScale (N+1))^2)*",
+      "        modeScale (N+j+1)*exp (-modeScale (N+j+1)))) ≤"
+    ]
+  },
+  {
+    "new_line": 310,
+    "original_lines": [
+      385,
+      386
+    ],
+    "new": "  let f := fun j : ℕ => ((modeScale (N+j+1))^2-A^2)* modeScale (N+j+1)*exp (-modeScale (N+j+1))",
+    "original": [
+      "  let f := fun j : ℕ => ((modeScale (N+j+1))^2-A^2)*",
+      "    modeScale (N+j+1)*exp (-modeScale (N+j+1))"
+    ]
+  },
+  {
+    "new_line": 319,
+    "original_lines": [
+      395,
+      396
+    ],
+    "new": "  have hsm : Summable (fun j : ℕ => (modeScale (N+(j+1)+1))^3* exp (-modeScale (N+(j+1)+1))) :=",
+    "original": [
+      "  have hsm : Summable (fun j : ℕ => (modeScale (N+(j+1)+1))^3*",
+      "      exp (-modeScale (N+(j+1)+1))) :="
+    ]
+  },
+  {
+    "new_line": 321,
+    "original_lines": [
+      398,
+      399
+    ],
+    "new": "  have hmajor : (∑' j, f j) ≤ A^3*exp (-A)*exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget 3-1) := by",
+    "original": [
+      "  have hmajor : (∑' j, f j) ≤",
+      "      A^3*exp (-A)*exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget 3-1) := by"
+    ]
+  },
+  {
+    "new_line": 323,
+    "original_lines": [
+      401,
+      402
+    ],
+    "new": "    apply le_trans ((hf.comp_injective Nat.succ_injective).tsum_le_tsum (fun j => ?_) hsm) (later_mode_sum hN 3)",
+    "original": [
+      "    apply le_trans ((hf.comp_injective Nat.succ_injective).tsum_le_tsum",
+      "      (fun j => ?_) hsm) (later_mode_sum hN 3)"
+    ]
+  },
+  {
+    "new_line": 325,
+    "original_lines": [
+      404,
+      405
+    ],
+    "new": "    have h := mul_nonneg (sq_nonneg A) (show 0 ≤ modeScale (N+(j+1)+1)* exp (-modeScale (N+(j+1)+1)) by dsimp [modeScale]; positivity)",
+    "original": [
+      "    have h := mul_nonneg (sq_nonneg A) (show 0 ≤ modeScale (N+(j+1)+1)*",
+      "      exp (-modeScale (N+(j+1)+1)) by dsimp [modeScale]; positivity)"
+    ]
+  },
+  {
+    "new_line": 335,
+    "original_lines": [
+      415,
+      416
+    ],
+    "new": "      A^3*exp (-A)*exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget 3-1) = (A^3*exp (-A)*(shiftedBudget 3-1))*exp (-2*Real.pi*((N+1:ℕ):ℝ)) := by ring",
+    "original": [
+      "      A^3*exp (-A)*exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget 3-1) =",
+      "          (A^3*exp (-A)*(shiftedBudget 3-1))*exp (-2*Real.pi*((N+1:ℕ):ℝ)) := by ring"
+    ]
+  },
+  {
+    "new_line": 339,
+    "original_lines": [
+      420,
+      421
+    ],
+    "new": "  have hsum' : (∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+",
+    "original": [
+      "  have hsum' :",
+      "      (∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+"
+    ]
+  },
+  {
+    "new_line": 340,
+    "original_lines": [
+      422,
+      423
+    ],
+    "new": "        16*((modeScale (N+j+1))^2-A^2)*modeScale (N+j+1)*exp (-modeScale (N+j+1)))) = 230*(∑' j : ℕ, (modeScale (N+j+1))^2*exp (-modeScale (N+j+1)))+",
+    "original": [
+      "        16*((modeScale (N+j+1))^2-A^2)*modeScale (N+j+1)*exp (-modeScale (N+j+1)))) =",
+      "      230*(∑' j : ℕ, (modeScale (N+j+1))^2*exp (-modeScale (N+j+1)))+"
+    ]
+  },
+  {
+    "new_line": 348,
+    "original_lines": [
+      431,
+      432
+    ],
+    "new": "  change (∑' j : ℕ, (modeScale (N+j+1))^2*exp (-modeScale (N+j+1))) ≤ A^2*exp (-A)*shiftedBudget 2 at hmain",
+    "original": [
+      "  change (∑' j : ℕ, (modeScale (N+j+1))^2*exp (-modeScale (N+j+1))) ≤",
+      "    A^2*exp (-A)*shiftedBudget 2 at hmain"
+    ]
+  },
+  {
+    "new_line": 358,
+    "original_lines": [
+      443,
+      444
+    ],
+    "new": "    (hA : max 12 a ≤ modeScale (N+1)) (hα : 0 ≤ α) (hαa : α ≤ a) : IntegrableOn (fun x : ℝ => exp (a*x^2/2)*",
+    "original": [
+      "    (hA : max 12 a ≤ modeScale (N+1)) (hα : 0 ≤ α) (hαa : α ≤ a) :",
+      "    IntegrableOn (fun x : ℝ => exp (a*x^2/2)*"
+    ]
+  },
+  {
+    "new_line": 359,
+    "original_lines": [
+      445,
+      446
+    ],
+    "new": "      |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) (Ioi 0) ∧ (∫ x in Ioi (0:ℝ), exp (a*x^2/2)*",
+    "original": [
+      "      |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) (Ioi 0) ∧",
+      "    (∫ x in Ioi (0:ℝ), exp (a*x^2/2)*"
+    ]
+  },
+  {
+    "new_line": 360,
+    "original_lines": [
+      447,
+      448
+    ],
+    "new": "      |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) ≤ residualConstant*(modeScale (N+1))^2*exp (-modeScale (N+1)) := by",
+    "original": [
+      "      |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) ≤",
+      "      residualConstant*(modeScale (N+1))^2*exp (-modeScale (N+1)) := by"
+    ]
+  },
+  {
+    "new_line": 362,
+    "original_lines": [
+      450,
+      451
+    ],
+    "new": "  let r := fun j : ℕ => fun x : ℝ => 4*A^2*primalMode (N+j+1) x-primalJet 2 (N+j+1) x-",
+    "original": [
+      "  let r := fun j : ℕ => fun x : ℝ =>",
+      "    4*A^2*primalMode (N+j+1) x-primalJet 2 (N+j+1) x-"
+    ]
+  },
+  {
+    "new_line": 365,
+    "original_lines": [
+      454,
+      455
+    ],
+    "new": "  let f := fun x : ℝ => exp (a*x^2/2)* |4*A^2*originalTail N x-densityAdjoint α (originalTail N) x|",
+    "original": [
+      "  let f := fun x : ℝ => exp (a*x^2/2)*",
+      "    |4*A^2*originalTail N x-densityAdjoint α (originalTail N) x|"
+    ]
+  },
+  {
+    "new_line": 376,
+    "original_lines": [
+      466,
+      467
+    ],
+    "new": "    apply (((scale_summable N 2).mul_left 230).add ((scale_summable N 3).mul_left 16)).of_nonneg_of_le",
+    "original": [
+      "    apply (((scale_summable N 2).mul_left 230).add",
+      "      ((scale_summable N 3).mul_left 16)).of_nonneg_of_le"
+    ]
+  },
+  {
+    "new_line": 385,
+    "original_lines": [
+      476,
+      477
+    ],
+    "new": "  have hlin (j : ℕ) : (∫⁻ x, ‖F j x‖ₑ ∂μ) = ENNReal.ofReal (∫ x, ‖F j x‖ ∂μ) := (ofReal_integral_norm_eq_lintegral_enorm (hFi j)).symm",
+    "original": [
+      "  have hlin (j : ℕ) : (∫⁻ x, ‖F j x‖ₑ ∂μ) = ENNReal.ofReal (∫ x, ‖F j x‖ ∂μ) :=",
+      "    (ofReal_integral_norm_eq_lintegral_enorm (hFi j)).symm"
+    ]
+  },
+  {
+    "new_line": 420,
+    "original_lines": [
+      512,
+      513
+    ],
+    "new": "    _ ≤ ∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+ 16*((modeScale (N+j+1))^2-A^2)*modeScale (N+j+1)*exp (-modeScale (N+j+1))) := by",
+    "original": [
+      "    _ ≤ ∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+",
+      "        16*((modeScale (N+j+1))^2-A^2)*modeScale (N+j+1)*exp (-modeScale (N+j+1))) := by"
+    ]
+  },
+  {
+    "new_line": 422,
+    "original_lines": [
+      515,
+      516
+    ],
+    "new": "      convert! (((scale_summable N 2).mul_left 230).add (((scale_summable N 3).sub ((scale_summable N 1).mul_left (A^2))).mul_left 16)) using 1",
+    "original": [
+      "      convert! (((scale_summable N 2).mul_left 230).add",
+      "        (((scale_summable N 3).sub ((scale_summable N 1).mul_left (A^2))).mul_left 16)) using 1"
+    ]
+  },
+  {
+    "new_line": 426,
+    "original_lines": [
+      521,
+      522
+    ],
+    "new": "private theorem relative_residual : ∃ K:ℝ, 0<K ∧ ∀ a:ℝ, ∀ N:ℕ, 1≤N → max 12 a ≤ modeScale (N+1) →",
+    "original": [
+      "private theorem relative_residual :",
+      "    ∃ K:ℝ, 0<K ∧ ∀ a:ℝ, ∀ N:ℕ, 1≤N → max 12 a ≤ modeScale (N+1) →"
+    ]
+  },
+  {
+    "new_line": 427,
+    "original_lines": [
+      523,
+      524
+    ],
+    "new": "      ∀ α:ℝ, 0≤α → α≤a → IntegrableOn (fun x:ℝ => exp (a*x^2/2)*",
+    "original": [
+      "      ∀ α:ℝ, 0≤α → α≤a →",
+      "      IntegrableOn (fun x:ℝ => exp (a*x^2/2)*"
+    ]
+  },
+  {
+    "new_line": 428,
+    "original_lines": [
+      525,
+      526
+    ],
+    "new": "        |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) (Ioi 0) ∧ (∫ x in Ioi (0:ℝ), exp (a*x^2/2)*",
+    "original": [
+      "        |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) (Ioi 0) ∧",
+      "      (∫ x in Ioi (0:ℝ), exp (a*x^2/2)*"
+    ]
+  },
+  {
+    "new_line": 429,
+    "original_lines": [
+      527,
+      528
+    ],
+    "new": "        |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) ≤ (K/modeScale (N+1))*originalFlux N := by",
+    "original": [
+      "        |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) ≤",
+      "          (K/modeScale (N+1))*originalFlux N := by"
+    ]
+  },
+  {
+    "new_line": 448,
+    "original_lines": [
+      547,
+      548
+    ],
+    "new": "    residualConstant*(modeScale (N+1))^2*exp (-modeScale (N+1)) = (((2/11)*residualConstant)/modeScale (N+1))*",
+    "original": [
+      "    residualConstant*(modeScale (N+1))^2*exp (-modeScale (N+1)) =",
+      "      (((2/11)*residualConstant)/modeScale (N+1))*"
+    ]
+  },
+  {
+    "new_line": 455,
+    "original_lines": [
+      557,
+      558
+    ],
+    "new": "def originalB (n : ℕ) (t x : ℝ) : ℝ := ∑ j ∈ Finset.range (n+1), (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j*x^(2*j)/",
+    "original": [
+      "def originalB (n : ℕ) (t x : ℝ) : ℝ :=",
+      "  ∑ j ∈ Finset.range (n+1), (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j*x^(2*j)/"
+    ]
+  },
+  {
+    "new_line": 463,
+    "original_lines": [
+      570,
+      571
+    ],
+    "new": "private def originalCoefficient (n : ℕ) (t : ℝ) (j : ℕ) : ℝ := (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j/((n:ℝ)^j*((2*j).factorial:ℝ))",
+    "original": [
+      "private def originalCoefficient (n : ℕ) (t : ℝ) (j : ℕ) : ℝ :=",
+      "  (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j/((n:ℝ)^j*((2*j).factorial:ℝ))"
+    ]
+  },
+  {
+    "new_line": 464,
+    "original_lines": [
+      573,
+      574
+    ],
+    "new": "private theorem original_coefficient_recurrence {n : ℕ} (hn : 1 ≤ n) (t : ℝ) (j : ℕ) : ((2*j:ℕ):ℝ)+2 ≠ 0 ∧",
+    "original": [
+      "private theorem original_coefficient_recurrence {n : ℕ} (hn : 1 ≤ n) (t : ℝ) (j : ℕ) :",
+      "    ((2*j:ℕ):ℝ)+2 ≠ 0 ∧"
+    ]
+  },
+  {
+    "new_line": 465,
+    "original_lines": [
+      575,
+      576
+    ],
+    "new": "    (((2*j:ℕ):ℝ)+2)*(((2*j:ℕ):ℝ)+1)*originalCoefficient n t (j+1)+ (t-2*(t/(2*(n:ℝ)))*(j:ℝ))*originalCoefficient n t j = 0 := by",
+    "original": [
+      "    (((2*j:ℕ):ℝ)+2)*(((2*j:ℕ):ℝ)+1)*originalCoefficient n t (j+1)+",
+      "      (t-2*(t/(2*(n:ℝ)))*(j:ℝ))*originalCoefficient n t j = 0 := by"
+    ]
+  },
+  {
+    "new_line": 469,
+    "original_lines": [
+      580,
+      581
+    ],
+    "new": "  · have hf : (((2*(j+1)).factorial:ℕ):ℝ) = (((2*j:ℕ):ℝ)+2)*(((2*j:ℕ):ℝ)+1)*((2*j).factorial:ℝ) := by",
+    "original": [
+      "  · have hf : (((2*(j+1)).factorial:ℕ):ℝ) =",
+      "        (((2*j:ℕ):ℝ)+2)*(((2*j:ℕ):ℝ)+1)*((2*j).factorial:ℝ) := by"
+    ]
+  },
+  {
+    "new_line": 474,
+    "original_lines": [
+      586,
+      587
+    ],
+    "new": "    simp only [originalCoefficient, Nat.descFactorial_succ, Nat.cast_mul, Nat.cast_sub hj, pow_succ]",
+    "original": [
+      "    simp only [originalCoefficient, Nat.descFactorial_succ, Nat.cast_mul,",
+      "      Nat.cast_sub hj, pow_succ]"
+    ]
+  },
+  {
+    "new_line": 480,
+    "original_lines": [
+      593,
+      594
+    ],
+    "new": "    simp only [originalCoefficient, Nat.descFactorial_of_lt hj', Nat.descFactorial_of_lt (show n < j+1 by omega), Nat.cast_zero, mul_zero,",
+    "original": [
+      "    simp only [originalCoefficient, Nat.descFactorial_of_lt hj',",
+      "      Nat.descFactorial_of_lt (show n < j+1 by omega), Nat.cast_zero, mul_zero,"
+    ]
+  },
+  {
+    "new_line": 482,
+    "original_lines": [
+      597,
+      598
+    ],
+    "new": "private def originalPolynomial (n : ℕ) (t : ℝ) : ℝ[X] := ∑ j ∈ Finset.range (n+1), C (originalCoefficient n t j)*X^(2*j)",
+    "original": [
+      "private def originalPolynomial (n : ℕ) (t : ℝ) : ℝ[X] :=",
+      "  ∑ j ∈ Finset.range (n+1), C (originalCoefficient n t j)*X^(2*j)"
+    ]
+  },
+  {
+    "new_line": 483,
+    "original_lines": [
+      600,
+      601
+    ],
+    "new": "private theorem original_polynomial_coeff_even (n j : ℕ) (t : ℝ) : (originalPolynomial n t).coeff (2*j) = originalCoefficient n t j := by",
+    "original": [
+      "private theorem original_polynomial_coeff_even (n j : ℕ) (t : ℝ) :",
+      "    (originalPolynomial n t).coeff (2*j) = originalCoefficient n t j := by"
+    ]
+  },
+  {
+    "new_line": 493,
+    "original_lines": [
+      612,
+      613
+    ],
+    "new": "private theorem original_polynomial_coeff_odd (n j : ℕ) (t : ℝ) : (originalPolynomial n t).coeff (2*j+1) = 0 := by",
+    "original": [
+      "private theorem original_polynomial_coeff_odd (n j : ℕ) (t : ℝ) :",
+      "    (originalPolynomial n t).coeff (2*j+1) = 0 := by"
+    ]
+  },
+  {
+    "new_line": 499,
+    "original_lines": [
+      620,
+      621
+    ],
+    "new": "private theorem original_polynomial_ode {n : ℕ} (hn : 1 ≤ n) (t : ℝ) : (originalPolynomial n t).derivative.derivative-",
+    "original": [
+      "private theorem original_polynomial_ode {n : ℕ} (hn : 1 ≤ n) (t : ℝ) :",
+      "    (originalPolynomial n t).derivative.derivative-"
+    ]
+  },
+  {
+    "new_line": 500,
+    "original_lines": [
+      622,
+      623
+    ],
+    "new": "      C (t/(2*(n:ℝ)))*(X*(originalPolynomial n t).derivative)+ C t*originalPolynomial n t = 0 := by",
+    "original": [
+      "      C (t/(2*(n:ℝ)))*(X*(originalPolynomial n t).derivative)+",
+      "      C t*originalPolynomial n t = 0 := by"
+    ]
+  },
+  {
+    "new_line": 506,
+    "original_lines": [
+      629,
+      630
+    ],
+    "new": "  change p.coeff (k+1+1)*(((k+1:ℕ):ℝ)+1)*((k:ℝ)+1)- t/(2*(n:ℝ))*(X*p.derivative).coeff k+t*p.coeff k = 0",
+    "original": [
+      "  change p.coeff (k+1+1)*(((k+1:ℕ):ℝ)+1)*((k:ℝ)+1)-",
+      "    t/(2*(n:ℝ))*(X*p.derivative).coeff k+t*p.coeff k = 0"
+    ]
+  },
+  {
+    "new_line": 526,
+    "original_lines": [
+      651,
+      652
+    ],
+    "new": "private theorem original_polynomial_eval (n : ℕ) (t x : ℝ) : (originalPolynomial n t).eval x = originalB n t x := by",
+    "original": [
+      "private theorem original_polynomial_eval (n : ℕ) (t x : ℝ) :",
+      "    (originalPolynomial n t).eval x = originalB n t x := by"
+    ]
+  },
+  {
+    "new_line": 527,
+    "original_lines": [
+      653,
+      654
+    ],
+    "new": "  simp only [originalPolynomial, originalB, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X]",
+    "original": [
+      "  simp only [originalPolynomial, originalB, eval_finsetSum, eval_mul, eval_C,",
+      "    eval_pow, eval_X]"
+    ]
+  },
+  {
+    "new_line": 532,
+    "original_lines": [
+      660,
+      661
+    ],
+    "new": "private theorem original_polynomial_origin (n : ℕ) (t : ℝ) : (originalPolynomial n t).eval 0 = 1 ∧",
+    "original": [
+      "private theorem original_polynomial_origin (n : ℕ) (t : ℝ) :",
+      "    (originalPolynomial n t).eval 0 = 1 ∧"
+    ]
+  },
+  {
+    "new_line": 535,
+    "original_lines": [
+      664,
+      665
+    ],
+    "new": "  · rw [← coeff_zero_eq_eval_zero, show 0=2*0 by omega, original_polynomial_coeff_even]",
+    "original": [
+      "  · rw [← coeff_zero_eq_eval_zero, show 0=2*0 by omega,",
+      "      original_polynomial_coeff_even]"
+    ]
+  },
+  {
+    "new_line": 541,
+    "original_lines": [
+      672,
+      673
+    ],
+    "new": "    {x : ℝ} (hx : 0≤x) : |(originalPolynomial n t).eval x| ≤ exp ((t/(2*(n:ℝ)))*x^2/2) := by",
+    "original": [
+      "    {x : ℝ} (hx : 0≤x) :",
+      "    |(originalPolynomial n t).eval x| ≤ exp ((t/(2*(n:ℝ)))*x^2/2) := by"
+    ]
+  },
+  {
+    "new_line": 553,
+    "original_lines": [
+      685,
+      686
+    ],
+    "new": "  have hdG (y : ℝ) : HasDerivAt G (-2*α*y*exp (-α*y^2)*(B y)^2) y := by",
+    "original": [
+      "  have hdG (y : ℝ) : HasDerivAt G",
+      "      (-2*α*y*exp (-α*y^2)*(B y)^2) y := by"
+    ]
+  },
+  {
+    "new_line": 554,
+    "original_lines": [
+      687,
+      688
+    ],
+    "new": "    have he : HasDerivAt (fun x : ℝ => exp (-α*x^2)) ((-α*(2*y))*exp (-α*y^2)) y := by",
+    "original": [
+      "    have he : HasDerivAt (fun x : ℝ => exp (-α*x^2))",
+      "        ((-α*(2*y))*exp (-α*y^2)) y := by"
+    ]
+  },
+  {
+    "new_line": 593,
+    "original_lines": [
+      729,
+      730
+    ],
+    "new": "private theorem monomial_jet {N : ℕ} (hN : 1≤N) (r k : ℕ) : IntegrableOn (fun x : ℝ => x^k*tailJet r N x) (Ioi 0) ∧",
+    "original": [
+      "private theorem monomial_jet {N : ℕ} (hN : 1≤N) (r k : ℕ) :",
+      "    IntegrableOn (fun x : ℝ => x^k*tailJet r N x) (Ioi 0) ∧"
+    ]
+  },
+  {
+    "new_line": 595,
+    "original_lines": [
+      732,
+      733
+    ],
+    "new": "  have hbound {x : ℝ} (hx : 0≤x) : ‖x^k*tailJet r N x‖ ≤ (1+x)^k*|tailJet r N x| := by",
+    "original": [
+      "  have hbound {x : ℝ} (hx : 0≤x) :",
+      "      ‖x^k*tailJet r N x‖ ≤ (1+x)^k*|tailJet r N x| := by"
+    ]
+  },
+  {
+    "new_line": 597,
+    "original_lines": [
+      735,
+      736
+    ],
+    "new": "    exact mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hx (by linarith) k) (abs_nonneg _)",
+    "original": [
+      "    exact mul_le_mul_of_nonneg_right",
+      "      (pow_le_pow_left₀ hx (by linarith) k) (abs_nonneg _)"
+    ]
+  },
+  {
+    "new_line": 610,
+    "original_lines": [
+      749,
+      750
+    ],
+    "new": "  · simpa using (tendsto_exp_atBot.comp (tendsto_id.const_mul_atTop_of_neg (show -A<0 by linarith))).const_mul c",
+    "original": [
+      "  · simpa using (tendsto_exp_atBot.comp",
+      "      (tendsto_id.const_mul_atTop_of_neg (show -A<0 by linarith))).const_mul c"
+    ]
+  },
+  {
+    "new_line": 611,
+    "original_lines": [
+      752,
+      753
+    ],
+    "new": "private theorem polynomial_jet {N : ℕ} (hN : 1≤N) (r : ℕ) (p : ℝ[X]) : IntegrableOn (fun x : ℝ => p.eval x*tailJet r N x) (Ioi 0) ∧",
+    "original": [
+      "private theorem polynomial_jet {N : ℕ} (hN : 1≤N) (r : ℕ) (p : ℝ[X]) :",
+      "    IntegrableOn (fun x : ℝ => p.eval x*tailJet r N x) (Ioi 0) ∧"
+    ]
+  },
+  {
+    "new_line": 627,
+    "original_lines": [
+      770,
+      771
+    ],
+    "new": "private theorem polynomial_adjoint {N : ℕ} (hN : 1≤N) (α : ℝ) (p : ℝ[X]) : IntegrableOn (fun x : ℝ => p.eval x*densityAdjoint α (originalTail N) x) (Ioi 0) ∧",
+    "original": [
+      "private theorem polynomial_adjoint {N : ℕ} (hN : 1≤N) (α : ℝ) (p : ℝ[X]) :",
+      "    IntegrableOn (fun x : ℝ => p.eval x*densityAdjoint α (originalTail N) x) (Ioi 0) ∧"
+    ]
+  },
+  {
+    "new_line": 632,
+    "original_lines": [
+      776,
+      777
+    ],
+    "new": "  have he : (fun x : ℝ => p.eval x*densityAdjoint α (originalTail N) x) = fun x => p.eval x*tailJet 2 N x+(p*C α).eval x*tailJet 0 N x+",
+    "original": [
+      "  have he : (fun x : ℝ => p.eval x*densityAdjoint α (originalTail N) x) =",
+      "      fun x => p.eval x*tailJet 2 N x+(p*C α).eval x*tailJet 0 N x+"
+    ]
+  },
+  {
+    "new_line": 640,
+    "original_lines": [
+      786,
+      787
+    ],
+    "new": "private theorem polynomial_adjoint_deriv_limit {N : ℕ} (hN : 1≤N) (α : ℝ) (p : ℝ[X]) : Tendsto (fun x : ℝ => p.eval x*deriv (densityAdjoint α (originalTail N)) x)",
+    "original": [
+      "private theorem polynomial_adjoint_deriv_limit {N : ℕ} (hN : 1≤N) (α : ℝ) (p : ℝ[X]) :",
+      "    Tendsto (fun x : ℝ => p.eval x*deriv (densityAdjoint α (originalTail N)) x)"
+    ]
+  },
+  {
+    "new_line": 645,
+    "original_lines": [
+      792,
+      793
+    ],
+    "new": "  have he : (fun x : ℝ => p.eval x*deriv (densityAdjoint α (originalTail N)) x) = fun x => p.eval x*tailJet 3 N x+(p*C (2*α)).eval x*tailJet 1 N x+",
+    "original": [
+      "  have he : (fun x : ℝ => p.eval x*deriv (densityAdjoint α (originalTail N)) x) =",
+      "      fun x => p.eval x*tailJet 3 N x+(p*C (2*α)).eval x*tailJet 1 N x+"
+    ]
+  },
+  {
+    "new_line": 654,
+    "original_lines": [
+      803,
+      804
+    ],
+    "new": "    (α : ℝ) (p : ℝ[X]) : IntegrableOn (fun x : ℝ => p.eval x*",
+    "original": [
+      "    (α : ℝ) (p : ℝ[X]) :",
+      "    IntegrableOn (fun x : ℝ => p.eval x*"
+    ]
+  },
+  {
+    "new_line": 669,
+    "original_lines": [
+      820,
+      821
+    ],
+    "new": "    (hiA : IntegrableOn (fun x => (originalPolynomial n t).eval x* densityAdjoint (t/(2*(n:ℝ))) F x) (Ioi 0))",
+    "original": [
+      "    (hiA : IntegrableOn (fun x => (originalPolynomial n t).eval x*",
+      "      densityAdjoint (t/(2*(n:ℝ))) F x) (Ioi 0))"
+    ]
+  },
+  {
+    "new_line": 672,
+    "original_lines": [
+      824,
+      825
+    ],
+    "new": "    (hl2 : Tendsto (fun x => (C (t/(2*(n:ℝ)))*X*originalPolynomial n t).eval x*F x) atTop (𝓝 0)) :",
+    "original": [
+      "    (hl2 : Tendsto (fun x => (C (t/(2*(n:ℝ)))*X*originalPolynomial n t).eval x*F x)",
+      "      atTop (𝓝 0)) :"
+    ]
+  },
+  {
+    "new_line": 673,
+    "original_lines": [
+      826,
+      827
+    ],
+    "new": "    (∫ x in Ioi (0:ℝ), (originalPolynomial n t).eval x* densityAdjoint (t/(2*(n:ℝ))) F x)+",
+    "original": [
+      "    (∫ x in Ioi (0:ℝ), (originalPolynomial n t).eval x*",
+      "        densityAdjoint (t/(2*(n:ℝ))) F x)+"
+    ]
+  },
+  {
+    "new_line": 685,
+    "original_lines": [
+      839,
+      840
+    ],
+    "new": "  have hdK (x : ℝ) : HasDerivAt K (B x*densityAdjoint α F x+t*(B x*F x)) x := by",
+    "original": [
+      "  have hdK (x : ℝ) : HasDerivAt K",
+      "      (B x*densityAdjoint α F x+t*(B x*F x)) x := by"
+    ]
+  },
+  {
+    "new_line": 697,
+    "original_lines": [
+      852,
+      853
+    ],
+    "new": "  have h := integral_Ioi_of_hasDerivAt_of_tendsto' (fun x _ => hdK x) hi hlim",
+    "original": [
+      "  have h := integral_Ioi_of_hasDerivAt_of_tendsto'",
+      "    (fun x _ => hdK x) hi hlim"
+    ]
+  },
+  {
+    "new_line": 704,
+    "original_lines": [
+      861,
+      862
+    ],
+    "new": "private theorem original_moment_bridge (n : ℕ) (t : ℝ) : Integrable (fun x:ℝ => originalB n t x*sourceThetaDensity x) ∧",
+    "original": [
+      "private theorem original_moment_bridge (n : ℕ) (t : ℝ) :",
+      "    Integrable (fun x:ℝ => originalB n t x*sourceThetaDensity x) ∧"
+    ]
+  },
+  {
+    "new_line": 705,
+    "original_lines": [
+      863,
+      864
+    ],
+    "new": "    originalJ n t = (sourceP n).eval (-t) ∧ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = (originalJ n t:ℂ) ∧",
+    "original": [
+      "    originalJ n t = (sourceP n).eval (-t) ∧",
+      "    (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = (originalJ n t:ℂ) ∧"
+    ]
+  },
+  {
+    "new_line": 707,
+    "original_lines": [
+      866,
+      867
+    ],
+    "new": "  let c := fun j:ℕ => (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j/ ((n:ℝ)^j*((2*j).factorial:ℝ))",
+    "original": [
+      "  let c := fun j:ℕ => (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j/",
+      "    ((n:ℝ)^j*((2*j).factorial:ℝ))"
+    ]
+  },
+  {
+    "new_line": 711,
+    "original_lines": [
+      871,
+      872
+    ],
+    "new": "  have he (x:ℝ) : originalB n t x*sourceThetaDensity x = ∑ j ∈ Finset.range (n+1), c j*(x^(2*j)*sourceThetaDensity x) := by",
+    "original": [
+      "  have he (x:ℝ) : originalB n t x*sourceThetaDensity x =",
+      "      ∑ j ∈ Finset.range (n+1), c j*(x^(2*j)*sourceThetaDensity x) := by"
+    ]
+  },
+  {
+    "new_line": 733,
+    "original_lines": [
+      894,
+      895
+    ],
+    "new": "    change ((sourceP n).map (algebraMap ℝ ℂ)).eval ((algebraMap ℝ ℂ) (-t)) = (algebraMap ℝ ℂ) (originalJ n t)",
+    "original": [
+      "    change ((sourceP n).map (algebraMap ℝ ℂ)).eval ((algebraMap ℝ ℂ) (-t)) =",
+      "      (algebraMap ℝ ℂ) (originalJ n t)"
+    ]
+  },
+  {
+    "new_line": 738,
+    "original_lines": [
+      901,
+      902
+    ],
+    "new": "private theorem primal_source_mode (j : ℕ) (x : ℝ) : primalMode (j+1) |x| = thetaSummand j x := by",
+    "original": [
+      "private theorem primal_source_mode (j : ℕ) (x : ℝ) :",
+      "    primalMode (j+1) |x| = thetaSummand j x := by"
+    ]
+  },
+  {
+    "new_line": 750,
+    "original_lines": [
+      914,
+      915
+    ],
+    "new": "    (4*Real.pi^2*((j+1:ℕ):ℝ)^4*exp (-(Real.pi*((j+1:ℕ):ℝ)^2*exp (2*|x|))))*h9- (6*Real.pi*((j+1:ℕ):ℝ)^2*exp (-(Real.pi*((j+1:ℕ):ℝ)^2*exp (2*|x|))))*h5",
+    "original": [
+      "    (4*Real.pi^2*((j+1:ℕ):ℝ)^4*exp (-(Real.pi*((j+1:ℕ):ℝ)^2*exp (2*|x|))))*h9-",
+      "    (6*Real.pi*((j+1:ℕ):ℝ)^2*exp (-(Real.pi*((j+1:ℕ):ℝ)^2*exp (2*|x|))))*h5"
+    ]
+  },
+  {
+    "new_line": 751,
+    "original_lines": [
+      917,
+      918
+    ],
+    "new": "private theorem original_source_split (N : ℕ) {x : ℝ} (hx : 0≤x) : sourceThetaKernel x=originalHead N x+originalTail N x := by",
+    "original": [
+      "private theorem original_source_split (N : ℕ) {x : ℝ} (hx : 0≤x) :",
+      "    sourceThetaKernel x=originalHead N x+originalTail N x := by"
+    ]
+  },
+  {
+    "new_line": 769,
+    "original_lines": [
+      937,
+      938
+    ],
+    "new": "private theorem original_full_source {N n : ℕ} (hN : 1≤N) (t : ℝ) : IntegrableOn (fun x : ℝ => originalB n t x*originalHead N x) (Ioi 0) ∧",
+    "original": [
+      "private theorem original_full_source {N n : ℕ} (hN : 1≤N) (t : ℝ) :",
+      "    IntegrableOn (fun x : ℝ => originalB n t x*originalHead N x) (Ioi 0) ∧"
+    ]
+  },
+  {
+    "new_line": 770,
+    "original_lines": [
+      939,
+      940
+    ],
+    "new": "    originalJ n t=(2/fullZ)* ((∫ x in Ioi (0:ℝ), originalB n t x*originalHead N x)+",
+    "original": [
+      "    originalJ n t=(2/fullZ)*",
+      "      ((∫ x in Ioi (0:ℝ), originalB n t x*originalHead N x)+"
+    ]
+  },
+  {
+    "new_line": 777,
+    "original_lines": [
+      947,
+      948
+    ],
+    "new": "    simpa only [original_polynomial_eval,hq] using (polynomial_jet hN 0 (originalPolynomial n t)).1",
+    "original": [
+      "    simpa only [original_polynomial_eval,hq] using",
+      "      (polynomial_jet hN 0 (originalPolynomial n t)).1"
+    ]
+  },
+  {
+    "new_line": 786,
+    "original_lines": [
+      957,
+      958
+    ],
+    "new": "    change originalB n t x*sourceThetaKernel x-originalB n t x*originalTail N x= originalB n t x*originalHead N x",
+    "original": [
+      "    change originalB n t x*sourceThetaKernel x-originalB n t x*originalTail N x=",
+      "      originalB n t x*originalHead N x"
+    ]
+  },
+  {
+    "new_line": 794,
+    "original_lines": [
+      966,
+      967
+    ],
+    "new": "  have hfull : (∫ x : ℝ, originalB n t x*sourceThetaKernel x)= 2*(∫ x in Ioi (0:ℝ), originalB n t x*sourceThetaKernel x) := by",
+    "original": [
+      "  have hfull : (∫ x : ℝ, originalB n t x*sourceThetaKernel x)=",
+      "      2*(∫ x in Ioi (0:ℝ), originalB n t x*sourceThetaKernel x) := by"
+    ]
+  },
+  {
+    "new_line": 802,
+    "original_lines": [
+      975,
+      976
+    ],
+    "new": "  have hray : (∫ x in Ioi (0:ℝ), originalB n t x*sourceThetaKernel x)= (∫ x in Ioi (0:ℝ), originalB n t x*originalHead N x)+",
+    "original": [
+      "  have hray : (∫ x in Ioi (0:ℝ), originalB n t x*sourceThetaKernel x)=",
+      "      (∫ x in Ioi (0:ℝ), originalB n t x*originalHead N x)+"
+    ]
+  },
+  {
+    "new_line": 813,
+    "original_lines": [
+      988,
+      989
+    ],
+    "new": "theorem original_primal_tail_response : 0 < fullZ ∧ (∫ x:ℝ, sourceThetaDensity x) = 1 ∧",
+    "original": [
+      "theorem original_primal_tail_response :",
+      "  0 < fullZ ∧ (∫ x:ℝ, sourceThetaDensity x) = 1 ∧"
+    ]
+  },
+  {
+    "new_line": 814,
+    "original_lines": [
+      990,
+      991
+    ],
+    "new": "  ∃ K:ℝ, 0<K ∧ ∀ a:ℝ, 0<a → ∃ C:ℝ, 0<C ∧ ∀ N n:ℕ, 1≤N → 1≤n → ∀ t:ℝ, 0<t → t/(2*(n:ℝ))≤a →",
+    "original": [
+      "  ∃ K:ℝ, 0<K ∧ ∀ a:ℝ, 0<a → ∃ C:ℝ, 0<C ∧",
+      "    ∀ N n:ℕ, 1≤N → 1≤n → ∀ t:ℝ, 0<t → t/(2*(n:ℝ))≤a →"
+    ]
+  },
+  {
+    "new_line": 818,
+    "original_lines": [
+      995,
+      996
+    ],
+    "new": "      0<originalFlux N ∧ MeasureTheory.IntegrableOn (fun x:ℝ => originalB n t x*originalTail N x) (Set.Ioi 0) ∧",
+    "original": [
+      "      0<originalFlux N ∧",
+      "      MeasureTheory.IntegrableOn (fun x:ℝ => originalB n t x*originalTail N x) (Set.Ioi 0) ∧"
+    ]
+  },
+  {
+    "new_line": 819,
+    "original_lines": [
+      997,
+      998
+    ],
+    "new": "      MeasureTheory.IntegrableOn (fun x:ℝ => originalB n t x*originalHead N x) (Set.Ioi 0) ∧ MeasureTheory.Integrable (fun x:ℝ => originalB n t x*sourceThetaDensity x) ∧",
+    "original": [
+      "      MeasureTheory.IntegrableOn (fun x:ℝ => originalB n t x*originalHead N x) (Set.Ioi 0) ∧",
+      "      MeasureTheory.Integrable (fun x:ℝ => originalB n t x*sourceThetaDensity x) ∧"
+    ]
+  },
+  {
+    "new_line": 820,
+    "original_lines": [
+      999,
+      1000
+    ],
+    "new": "      originalJ n t = (sourceP n).eval (-t) ∧ originalJ n t = (2/fullZ)*(H+I) ∧",
+    "original": [
+      "      originalJ n t = (sourceP n).eval (-t) ∧",
+      "      originalJ n t = (2/fullZ)*(H+I) ∧"
+    ]
+  },
+  {
+    "new_line": 821,
+    "original_lines": [
+      1001,
+      1002
+    ],
+    "new": "      (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = (originalJ n t:ℂ) ∧ sourceJensenPolynomial n = normalizedJensen sourceThetaCoefficient n ∧",
+    "original": [
+      "      (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = (originalJ n t:ℂ) ∧",
+      "      sourceJensenPolynomial n = normalizedJensen sourceThetaCoefficient n ∧"
+    ]
+  },
+  {
+    "new_line": 822,
+    "original_lines": [
+      1003,
+      1004
+    ],
+    "new": "      ((sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = 0 ↔ originalJ n t = 0) ∧ |t*I/originalFlux N-1| ≤ C*((N:ℝ)+1)^4/t ∧",
+    "original": [
+      "      ((sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = 0 ↔ originalJ n t = 0) ∧",
+      "      |t*I/originalFlux N-1| ≤ C*((N:ℝ)+1)^4/t ∧"
+    ]
+  },
+  {
+    "new_line": 823,
+    "original_lines": [
+      1005,
+      1006
+    ],
+    "new": "      (2*C*((N:ℝ)+1)^4 ≤ t → (originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →",
+    "original": [
+      "      (2*C*((N:ℝ)+1)^4 ≤ t →",
+      "        (originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →"
+    ]
+  },
+  {
+    "new_line": 824,
+    "original_lines": [
+      1007,
+      1008
+    ],
+    "new": "        (2/fullZ)*H ≤ -originalFlux N/(fullZ*t)) ∧ (max 12 a ≤ A → |(t+4*A^2)*I/originalFlux N-1| ≤ K/A) ∧",
+    "original": [
+      "        (2/fullZ)*H ≤ -originalFlux N/(fullZ*t)) ∧",
+      "      (max 12 a ≤ A → |(t+4*A^2)*I/originalFlux N-1| ≤ K/A) ∧"
+    ]
+  },
+  {
+    "new_line": 825,
+    "original_lines": [
+      1009,
+      1010
+    ],
+    "new": "      (max (max 12 a) (2*K) ≤ A → originalFlux N/(2*(t+4*A^2)) ≤ I ∧",
+    "original": [
+      "      (max (max 12 a) (2*K) ≤ A →",
+      "        originalFlux N/(2*(t+4*A^2)) ≤ I ∧"
+    ]
+  },
+  {
+    "new_line": 826,
+    "original_lines": [
+      1011,
+      1012
+    ],
+    "new": "        0<originalFlux N/(2*(t+4*A^2)) ∧ ((originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →",
+    "original": [
+      "        0<originalFlux N/(2*(t+4*A^2)) ∧",
+      "        ((originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →"
+    ]
+  },
+  {
+    "new_line": 827,
+    "original_lines": [
+      1013,
+      1014
+    ],
+    "new": "          (2/fullZ)*H ≤ -originalFlux N/(fullZ*(t+4*A^2)) ∧ -originalFlux N/(fullZ*(t+4*A^2))<0)) := by",
+    "original": [
+      "          (2/fullZ)*H ≤ -originalFlux N/(fullZ*(t+4*A^2)) ∧",
+      "          -originalFlux N/(fullZ*(t+4*A^2))<0)) := by"
+    ]
+  },
+  {
+    "new_line": 861,
+    "original_lines": [
+      1048,
+      1049
+    ],
+    "new": "  have hiE : IntegrableOn (fun x : ℝ => originalB n t x* densityAdjoint α (densityAdjoint α (originalTail N)) x) (Ioi 0) := by",
+    "original": [
+      "  have hiE : IntegrableOn (fun x : ℝ => originalB n t x*",
+      "      densityAdjoint α (densityAdjoint α (originalTail N)) x) (Ioi 0) := by"
+    ]
+  },
+  {
+    "new_line": 879,
+    "original_lines": [
+      1067,
+      1068
+    ],
+    "new": "    have hdAQ : Differentiable ℝ (densityAdjoint α (originalTail N)) := fun x => (adjoint_deriv N hN α x).differentiableAt",
+    "original": [
+      "    have hdAQ : Differentiable ℝ (densityAdjoint α (originalTail N)) :=",
+      "      fun x => (adjoint_deriv N hN α x).differentiableAt"
+    ]
+  },
+  {
+    "new_line": 880,
+    "original_lines": [
+      1069,
+      1070
+    ],
+    "new": "    have hddAQ : Differentiable ℝ (deriv (densityAdjoint α (originalTail N))) := fun x => (adjoint_second_deriv N hN α x).differentiableAt",
+    "original": [
+      "    have hddAQ : Differentiable ℝ (deriv (densityAdjoint α (originalTail N))) :=",
+      "      fun x => (adjoint_second_deriv N hN α x).differentiableAt"
+    ]
+  },
+  {
+    "new_line": 893,
+    "original_lines": [
+      1083,
+      1084
+    ],
+    "new": "  have hE : |E|≤∫ x in Ioi (0:ℝ), exp (a*x^2/2)* |densityAdjoint α (densityAdjoint α (originalTail N)) x| := by",
+    "original": [
+      "  have hE : |E|≤∫ x in Ioi (0:ℝ), exp (a*x^2/2)*",
+      "      |densityAdjoint α (densityAdjoint α (originalTail N)) x| := by"
+    ]
+  },
+  {
+    "new_line": 901,
+    "original_lines": [
+      1092,
+      1093
+    ],
+    "new": "    have hid : (t*I/originalFlux N-1)*t= (deriv (densityAdjoint α (originalTail N)) 0+E)/originalFlux N := by",
+    "original": [
+      "    have hid : (t*I/originalFlux N-1)*t=",
+      "        (deriv (densityAdjoint α (originalTail N)) 0+E)/originalFlux N := by"
+    ]
+  },
+  {
+    "new_line": 923,
+    "original_lines": [
+      1115,
+      1116
+    ],
+    "new": "  have hnode_old : 2*C*((N:ℝ)+1)^4≤t → (originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →",
+    "original": [
+      "  have hnode_old : 2*C*((N:ℝ)+1)^4≤t →",
+      "      (originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →"
+    ]
+  },
+  {
+    "new_line": 943,
+    "original_lines": [
+      1136,
+      1137
+    ],
+    "new": "    have hiR : IntegrableOn (fun x : ℝ => originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) (Ioi 0) := by",
+    "original": [
+      "    have hiR : IntegrableOn (fun x : ℝ => originalB n t x*",
+      "        (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) (Ioi 0) := by"
+    ]
+  },
+  {
+    "new_line": 944,
+    "original_lines": [
+      1138,
+      1139
+    ],
+    "new": "      change Integrable (fun x : ℝ => originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x))",
+    "original": [
+      "      change Integrable (fun x : ℝ => originalB n t x*",
+      "        (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x))"
+    ]
+  },
+  {
+    "new_line": 952,
+    "original_lines": [
+      1147,
+      1148
+    ],
+    "new": "    have hRint : (∫ x in Ioi (0:ℝ), originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) = (t+4*A^2)*I-originalFlux N := by",
+    "original": [
+      "    have hRint : (∫ x in Ioi (0:ℝ), originalB n t x*",
+      "        (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) = (t+4*A^2)*I-originalFlux N := by"
+    ]
+  },
+  {
+    "new_line": 953,
+    "original_lines": [
+      1149,
+      1150
+    ],
+    "new": "      have he : (fun x : ℝ => originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) =",
+    "original": [
+      "      have he : (fun x : ℝ => originalB n t x*",
+      "          (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) ="
+    ]
+  },
+  {
+    "new_line": 954,
+    "original_lines": [
+      1151,
+      1152
+    ],
+    "new": "          fun x => (4*A^2)*(originalB n t x*originalTail N x)- originalB n t x*densityAdjoint α (originalTail N) x := by ext x; ring",
+    "original": [
+      "          fun x => (4*A^2)*(originalB n t x*originalTail N x)-",
+      "            originalB n t x*densityAdjoint α (originalTail N) x := by ext x; ring"
+    ]
+  },
+  {
+    "new_line": 965,
+    "original_lines": [
+      1163,
+      1164
+    ],
+    "new": "    have hid : (t+4*A^2)*I/originalFlux N-1= ((t+4*A^2)*I-originalFlux N)/originalFlux N := by field_simp <;> ring",
+    "original": [
+      "    have hid : (t+4*A^2)*I/originalFlux N-1=",
+      "        ((t+4*A^2)*I-originalFlux N)/originalFlux N := by field_simp <;> ring"
+    ]
+  },
+  {
+    "new_line": 968,
+    "original_lines": [
+      1167,
+      1168
+    ],
+    "new": "  refine ⟨hk,hiQ,hs.1,hm.1,hm.2.1,hs.2,hm.2.2.1, sourceJensenPolynomial_eq_normalizedJensen n hn,hm.2.2.2,hP,hnode_old,hR,?_⟩",
+    "original": [
+      "  refine ⟨hk,hiQ,hs.1,hm.1,hm.2.1,hs.2,hm.2.2.1,",
+      "    sourceJensenPolynomial_eq_normalizedJensen n hn,hm.2.2.2,hP,hnode_old,hR,?_⟩"
+    ]
+  },
+  {
+    "new_line": 986,
+    "original_lines": [
+      1186,
+      1187
+    ],
+    "new": "  change (2/fullZ)*H≤ -originalFlux N/(fullZ*(t+4*A^2)) ∧ -originalFlux N/(fullZ*(t+4*A^2))<0",
+    "original": [
+      "  change (2/fullZ)*H≤ -originalFlux N/(fullZ*(t+4*A^2)) ∧",
+      "    -originalFlux N/(fullZ*(t+4*A^2))<0"
+    ]
+  }
+]

@@ -1,0 +1,446 @@
+Merge made by the 'ort' strategy.
+ .../S1/Words/AdmissibleWords/FibonacciGrayPath.md  |   28 +
+ .../AdmissibleWords/FibonacciGrayPath.scribe.cs    |   49 +
+ .../GeneralizedPseudostandardPeriodicity.md        |   54 +
+ .../GeneralizedPseudostandardPeriodicity.scribe.cs |   99 +
+ .../Palindromes/PseudopalindromicNormalization.md  |  372 ++++
+ .../PseudopalindromicNormalization.scribe.cs       |  482 ++++
+ .../Observer/NativeClassRootImage.md               |   52 +-
+ .../Observer/NativeClassRootImage.scribe.cs        |    4 +
+ .../Observer/NativeControlConjugacy.md             |   28 +
+ .../Observer/NativeControlConjugacy.scribe.cs      |   67 +
+ .../FibonacciAtomic/Observer/NativeCutFibers.md    |   17 +-
+ .../Observer/NativeCutFibers.scribe.cs             |    2 +
+ .../Observer/NativeFibonacciActiveTable.md         |   50 +
+ .../Observer/NativeFibonacciActiveTable.scribe.cs  |   84 +
+ .../Observer/NativeFullRootFeasibility.md          |  129 ++
+ .../Observer/NativeFullRootFeasibility.scribe.cs   |  113 +
+ .../Observer/NativeSharpPredecessorFiber.md        |   33 +-
+ .../Observer/NativeSharpPredecessorFiber.scribe.cs |   17 +-
+ .../FibonacciAtomic/Observer/NativeWholeRowPlan.md |   41 +-
+ .../Observer/NativeWholeRowPlan.scribe.cs          |   17 +-
+ .../PrefixReversal/NativeJ2MarkedInventory.md      |   76 +
+ .../NativeJ2MarkedInventory.scribe.cs              |  135 ++
+ .../Graph/PrefixReversal/NativeJ2MarkedPorts.md    |   65 +
+ .../PrefixReversal/NativeJ2MarkedPorts.scribe.cs   |   65 +
+ .../PrefixReversal/NativeJ2SurvivingCircles.md     |   11 +
+ .../NativeJ2SurvivingCircles.scribe.cs             |   11 +
+ .../Graph/PrefixReversal/NativeJ2SurvivingEdges.md |   28 +
+ .../NativeJ2SurvivingEdges.scribe.cs               |   82 +
+ .../Graph/PrefixReversal/NativeJ2SurvivingModel.md |   53 +
+ .../NativeJ2SurvivingModel.scribe.cs               |   76 +
+ .../Graph/PrefixReversal/NativeJ2SurvivingRows.md  |   11 +
+ .../PrefixReversal/NativeJ2SurvivingRows.scribe.cs |   11 +
+ .../Graph/PrefixReversal/NativeJ2SurvivingSeams.md |   11 +
+ .../NativeJ2SurvivingSeams.scribe.cs               |   11 +
+ .../Graph/PrefixReversal/NativeJ2Words.md          |   43 +
+ .../Graph/PrefixReversal/NativeJ2Words.scribe.cs   |   75 +
+ .../ConceptDynamics/Coding/FiniteResponseTable.md  |  233 ++
+ .../Coding/FiniteResponseTable.scribe.cs           |  236 ++
+ .../ProjectionRange/LocalGramCertificate.md        |   29 +
+ .../ProjectionRange/LocalGramCertificate.scribe.cs |   43 +
+ .../D5/S3/Geometry/ProjectionRange/Prebundle.md    |  688 ++++++
+ .../Geometry/ProjectionRange/Prebundle.scribe.cs   |  356 +++
+ .../Existence/EmpiricalReflexiveSeparation.md      |   15 +-
+ .../EmpiricalReflexiveSeparation.scribe.cs         |   26 +-
+ .../D5/S3/Quantum/Algebra/CStarSmaleHigherOrder.md |   19 +-
+ .../Algebra/CStarSmaleHigherOrder.scribe.cs        |   15 +-
+ .../D5/S3/Quantum/Analysis/HilbertTraceClass.md    |  105 +
+ .../Quantum/Analysis/HilbertTraceClass.scribe.cs   |  112 +
+ .../PurificationLowerBoundQutritRefutation.md      |  138 ++
+ ...urificationLowerBoundQutritRefutation.scribe.cs |  206 ++
+ .../UnitalBlockOverlapRefutation.md                |   82 +
+ .../UnitalBlockOverlapRefutation.scribe.cs         |  115 +
+ D5/S1/Words/AdmissibleWords/FibonacciGrayPath.lean |  171 ++
+ .../GeneralizedPseudostandardPeriodicity.lean      |  702 ++++++
+ .../PseudopalindromicNormalization.lean            |  748 +++++++
+ .../Observer/NativeClassRootImage.lean             |    4 +-
+ .../Observer/NativeControlConjugacy.lean           |  164 ++
+ .../FibonacciAtomic/Observer/NativeCutFibers.lean  |    2 +-
+ .../Observer/NativeFibonacciActiveTable.lean       |  503 +++++
+ .../Observer/NativeFullRootFeasibility.lean        |  491 +++++
+ .../Observer/NativeSerialDepth.lean                |    2 +-
+ .../Observer/NativeSharpPredecessorFiber.lean      |    2 +-
+ .../Observer/NativeWholeRowPlan.lean               |    2 +-
+ .../PrefixReversal/NativeJ2MarkedInventory.lean    |  207 ++
+ .../Graph/PrefixReversal/NativeJ2MarkedPorts.lean  |  134 ++
+ .../PrefixReversal/NativeJ2SurvivingCircles.lean   |  339 +++
+ .../PrefixReversal/NativeJ2SurvivingEdges.lean     |  347 +++
+ .../PrefixReversal/NativeJ2SurvivingModel.lean     |  296 +++
+ .../PrefixReversal/NativeJ2SurvivingRows.lean      |  700 ++++++
+ .../PrefixReversal/NativeJ2SurvivingSeams.lean     |  299 +++
+ .../Graph/PrefixReversal/NativeJ2Words.lean        |  372 ++++
+ .../Coding/FiniteResponseTable.lean                |  362 +++
+ .../ProjectionRange/LocalGramCertificate.lean      |  105 +
+ D5/S3/Geometry/ProjectionRange/Prebundle.lean      |  614 ++++++
+ .../Existence/EmpiricalReflexiveSeparation.lean    |    5 +-
+ D5/S3/Quantum/Algebra/CStarSmaleHigherOrder.lean   |    6 +-
+ D5/S3/Quantum/Analysis/HilbertTraceClass.lean      |  260 +++
+ .../PurificationLowerBoundQutritRefutation.lean    |  521 +++++
+ .../UnitalBlockOverlapRefutation.lean              |  253 +++
+ .../AdmissibleWords/FibonacciGrayPath.lean.json    |    1 +
+ .../GeneralizedPseudostandardPeriodicity.lean.json |    1 +
+ .../PseudopalindromicNormalization.lean.json       |    1 +
+ .../Observer/NativeClassRootImage.lean.json        |    2 +-
+ .../Observer/NativeControlConjugacy.lean.json      |    1 +
+ .../Observer/NativeCutFibers.lean.json             |    2 +-
+ .../Observer/NativeFibonacciActiveTable.lean.json  |    1 +
+ .../Observer/NativeFullRootFeasibility.lean.json   |    1 +
+ .../Observer/NativeSerialDepth.lean.json           |    2 +-
+ .../Observer/NativeSharpPredecessorFiber.lean.json |    2 +-
+ .../Observer/NativeWholeRowPlan.lean.json          |    2 +-
+ .../NativeJ2MarkedInventory.lean.json              |    1 +
+ .../PrefixReversal/NativeJ2MarkedPorts.lean.json   |    1 +
+ .../NativeJ2SurvivingCircles.lean.json             |    1 +
+ .../NativeJ2SurvivingEdges.lean.json               |    1 +
+ .../NativeJ2SurvivingModel.lean.json               |    1 +
+ .../PrefixReversal/NativeJ2SurvivingRows.lean.json |    1 +
+ .../NativeJ2SurvivingSeams.lean.json               |    1 +
+ .../Graph/PrefixReversal/NativeJ2Words.lean.json   |    1 +
+ .../Coding/FiniteResponseTable.lean.json           |    1 +
+ .../ProjectionRange/LocalGramCertificate.lean.json |    1 +
+ .../Geometry/ProjectionRange/Prebundle.lean.json   |    1 +
+ .../EmpiricalReflexiveSeparation.lean.json         |    2 +-
+ .../Algebra/CStarSmaleHigherOrder.lean.json        |    2 +-
+ .../Quantum/Analysis/HilbertTraceClass.lean.json   |    1 +
+ ...urificationLowerBoundQutritRefutation.lean.json |    1 +
+ .../UnitalBlockOverlapRefutation.lean.json         |    1 +
+ .../Estimation/trureturing2026pricegapconvexity.md |  253 +++
+ Library/QuantumBounds/das2026krylovpurification.md |   41 +
+ .../girlingcirstoiujennings2022unitarity.md        |   58 +
+ .../Rewriting/floriandvorakova2016periodicity.md   |   59 +
+ ...a3999b25680e0011679343a99c10c2cfa52a873f23.yaml |    4 +-
+ ...a30c985f1975469fb61837277cba21269961bfa7d4.yaml |    4 +-
+ ...633bdb84b01d989e8fb2fcfd34e207a47af84ae89a.yaml |    4 +-
+ ...9ed4ee322d5bd3d2ea61a7b46798711c3ca4d4a6f0.yaml |    4 +-
+ ...c8da01ea591c3199f8e9f5ab81a4d2759e669b16c6.yaml |    4 +-
+ ...7ea37ed5eb43317b0170bbc0a85e5e2fc1afa4059e.yaml |    4 +-
+ ...9919a50cd2a13803693119702a9b778d00058a4d2d.yaml |   15 +
+ ...49c5b7571a531afd13f3701443f38982066592bc57.yaml |    4 +-
+ ...cfa1ad0713b54cb9e55dbf08287da4db12915592c2.yaml |    4 +-
+ ...959df4ec31eb7bb708e71850bf0718b523707cf378.yaml |    4 +-
+ ...75a1b9e7ff4633a14596417e55d7d0d1bd5a1f845a.yaml |    4 +-
+ ...4996b446c15c73ff4eedf5bf0ff7a44ce7a0020882.yaml |   11 +
+ ...d02bbd9b018d1be5424d88ef265babf5f2164af8f0.yaml |    6 +-
+ ...6754cc156079c7eefff5b280990c6a7e41ce1cd1c5.yaml |   11 +
+ ...2399e522a6a7e8cba2ea4408494bc71a63f3df2a8b.yaml |    4 +-
+ ...9919a50cd2a13803693119702a9b778d00058a4d2d.yaml |    7 -
+ ...4996b446c15c73ff4eedf5bf0ff7a44ce7a0020882.yaml |    7 -
+ ...6754cc156079c7eefff5b280990c6a7e41ce1cd1c5.yaml |    7 -
+ ...c8949d4217ccbe7c110daf2ff38fa5a56b1bb6a11b.yaml |   16 +
+ ...15c62d3ad62bfea7c3974215bcca79abf897390011.yaml |   17 +
+ ...9e9bfa85516bd50312697ac3ba8c2947de8c61e85f.yaml |    4 +-
+ ...41e5feaf3326c765c9139c0f3e846323b9ad0509ae.yaml |   24 +
+ ...a9db54f2b5936a12fd5a6be109ff822a00d6e218b9.yaml |    4 +-
+ ...a7d6ccc962a1301054e731eb4a6726d0eb79371108.yaml |    6 +-
+ ...16d0d314e9d295972d29bd5b6d63c85e3c11d68e48.yaml |    8 +-
+ ...bdc331a1dac4e7a300622b3a777a36c09fbe39cdb4.yaml |    4 +-
+ ...45573b4eaf9159fb153088bba1c335972d7c1daf07.yaml |    4 +-
+ ...008ad45615fff58aa4fd77881768e3301353cc3227.yaml |   39 +
+ ...0a5f75e8ab7ef21afbd1939b04da5262f477acb9ab.yaml |   13 +
+ ...e7360d6637c9152ece4bcac1d059e68635c636bd87.yaml |    6 +-
+ ...00c56b0dcf2bcb9e5ff67e738952d933c91454ebd1.yaml |   11 +
+ ...6ca780829b5b01325e06fda40dfd736f2c2759f1c6.yaml |   38 +
+ ...f5477b33071e9781408a5f926c5d754826f94c8cfb.yaml |   21 +
+ ...a4c21a095a3ff1f71615ee2d9261257ffbc2e4f166.yaml |   11 +
+ ...3936bc7f5a7d4355f5988d85e13b8607d2f7bff696.yaml |   24 +
+ ...fbb3764ff6321a9b9898b9e9bb59887ca2508be3a7.yaml |   15 +
+ ...b5f869a245fc5f890d49638800d4fe19e779b8a43b.yaml |   11 +
+ ...69ea879e1768ebbffdca6bfb97cb83f5d4e551bb7c.yaml |   13 +
+ ...d78a3acb3de6dc35edaa999e7e300bdd16fa0eab1e.yaml |    4 +-
+ ...3063d7b754e0b4b0cad839524fd79d57b2e08119f0.yaml |   11 +
+ ...c8949d4217ccbe7c110daf2ff38fa5a56b1bb6a11b.yaml |   10 -
+ ...15c62d3ad62bfea7c3974215bcca79abf897390011.yaml |    7 -
+ ...41e5feaf3326c765c9139c0f3e846323b9ad0509ae.yaml |   10 -
+ ...008ad45615fff58aa4fd77881768e3301353cc3227.yaml |    7 -
+ ...0a5f75e8ab7ef21afbd1939b04da5262f477acb9ab.yaml |    7 -
+ ...00c56b0dcf2bcb9e5ff67e738952d933c91454ebd1.yaml |    7 -
+ ...6ca780829b5b01325e06fda40dfd736f2c2759f1c6.yaml |   10 -
+ ...f5477b33071e9781408a5f926c5d754826f94c8cfb.yaml |    7 -
+ ...a4c21a095a3ff1f71615ee2d9261257ffbc2e4f166.yaml |    7 -
+ ...3936bc7f5a7d4355f5988d85e13b8607d2f7bff696.yaml |   10 -
+ ...fbb3764ff6321a9b9898b9e9bb59887ca2508be3a7.yaml |    7 -
+ ...b5f869a245fc5f890d49638800d4fe19e779b8a43b.yaml |    7 -
+ ...69ea879e1768ebbffdca6bfb97cb83f5d4e551bb7c.yaml |    7 -
+ ...3063d7b754e0b4b0cad839524fd79d57b2e08119f0.yaml |    7 -
+ ...9a8dd9c0a35988119cb6e4f1b55b56ab250ae69fcc.yaml |    4 +-
+ ...6a4caa4487d783311664ffa661ab52092973475c5b.yaml |    4 +-
+ ...604daa8721ab5258f6c451a25ed8f2d0092d823ca0.yaml |    4 +-
+ ...eb393ba654e9da212fc9263e72b87ce07e9b79c8a3.yaml |    4 +-
+ ...b892e662e11f297f01c4b77d71107d6676c64fead4.yaml |    4 +-
+ ...ca63b1f42858a516c1febceb6751fc05aab260135b.yaml |   11 +
+ ...d9fa14bde9d9d23d2ade0c449b00f7cdf5c616baec.yaml |    4 +-
+ ...2be822b3b0f7a042c7b2a5f8d9ee837df2ca1de391.yaml |   13 +
+ ...da52f94567c9cfa10dd305b90a5764316014037a21.yaml |    6 +-
+ ...1b451f7f3ba61d1337f85a87b7eb42cc1568f9621f.yaml |    4 +-
+ ...7e31a1e217adb85d4b344ba0d75c23ba4420dbf0e1.yaml |    4 +-
+ ...105b7ca50308837331c2231a256fba17c258115eff.yaml |    4 +-
+ ...dae2f03f6aa847b19a5d16e68a95518b8caef0da80.yaml |   35 +
+ ...ca63b1f42858a516c1febceb6751fc05aab260135b.yaml |    7 -
+ ...2be822b3b0f7a042c7b2a5f8d9ee837df2ca1de391.yaml |    7 -
+ ...dae2f03f6aa847b19a5d16e68a95518b8caef0da80.yaml |    7 -
+ ...809fb311a1b96020a27d1a45c43701493d10e0e135.yaml |   11 +
+ ...24efc655af6f64b31c84e6d5f1d80aaa36f1909e15.yaml |   15 +
+ ...5028bf43834ee4deea8c3049020c53f5b466283188.yaml |   15 +
+ ...0f6eb444d37512e9e8f042726638bd0b782aa399e9.yaml |   11 +
+ ...4e553be2f6e5ed2d2e47bef84bbfc748075cdd761a.yaml |    4 +-
+ ...314f20fd49dff174960e1cfb6eaa3c55664deeb96d.yaml |    4 +-
+ ...46b2f495e4d36f6eef1fcce340b280063ed8acf7a4.yaml |    4 +-
+ ...63b8ed01eb08b4a02fd20e6aa3cded7587871432fc.yaml |    4 +-
+ ...b197a14072ea8f49d98b7d30a84b12ca0359834c09.yaml |   15 +
+ ...550ff14e48db38761555d2d19a0f4b584e28736012.yaml |    4 +-
+ ...913a5d05a52c0a7a19fa1c94dad24544872def5545.yaml |    4 +-
+ ...02c993bb9e137ae2fccad157a13163d1c51abb299a.yaml |   11 +
+ ...809fb311a1b96020a27d1a45c43701493d10e0e135.yaml |    7 -
+ ...24efc655af6f64b31c84e6d5f1d80aaa36f1909e15.yaml |    7 -
+ ...5028bf43834ee4deea8c3049020c53f5b466283188.yaml |    7 -
+ ...0f6eb444d37512e9e8f042726638bd0b782aa399e9.yaml |    7 -
+ ...b197a14072ea8f49d98b7d30a84b12ca0359834c09.yaml |    7 -
+ ...02c993bb9e137ae2fccad157a13163d1c51abb299a.yaml |    7 -
+ ...a4259c5e1bc7038144d0b47d4b563fdca1277d06ff.yaml |    4 +-
+ ...3bebe2de2568962667783aa5443980f21992e5ecfd.yaml |   13 +
+ ...825eae8d0a181766c1d6e0800550f91502e45e89ad.yaml |   13 +
+ ...9654730d0e1c65e6533e1727b0658e82b12f637199.yaml |   11 +
+ ...bbb05ff1ac68c90e73090be966db3876fa07309d3d.yaml |    4 +-
+ ...73718b0b849b6a155adeb0e3aae5aeade78bf32bd6.yaml |   11 +
+ ...3bebe2de2568962667783aa5443980f21992e5ecfd.yaml |    7 -
+ ...825eae8d0a181766c1d6e0800550f91502e45e89ad.yaml |    7 -
+ ...9654730d0e1c65e6533e1727b0658e82b12f637199.yaml |    7 -
+ ...73718b0b849b6a155adeb0e3aae5aeade78bf32bd6.yaml |    7 -
+ ...3b5e159c21efa95a211730778b4c7e70be8f8cc86d.yaml |    4 +-
+ ...79cc01d4c15585b524af4e70902eeb8dea49c363f6.yaml |    4 +-
+ ...106e99b0ebd40a0569191be2d25be1950150abea62.yaml |    4 +-
+ ...fd21c394054e8a229e486f637967a99e01c02d5a39.yaml |    4 +-
+ ...6d396ea1f392c4b8e68cdb219f9e6cc551a7186fed.yaml |    4 +-
+ ...0f98c590c4a8e4e6f3af2162cd62858887bf392fe1.yaml |    4 +-
+ ...075a3ea7515f0b727eec581a82347f73889b7d47a3.yaml |    4 +-
+ ...b0bf11cb1a92b9336663a036f69e7e66567acd8bef.yaml |   11 +
+ ...b0bf11cb1a92b9336663a036f69e7e66567acd8bef.yaml |    7 -
+ ...ori-2026-purification-lower-bound-refutation.md |  104 +
+ ...-2016-generalized-pseudostandard-periodicity.md |   83 +
+ ...-cirstoiu-jennings-2022-unital-block-overlap.md |  200 ++
+ .../Words/AdmissibleWords/FibonacciGrayPath.lean   |   75 +
+ .../Observer/NativeClassRootImage.lean             |  170 ++
+ .../Observer/NativeControlConjugacy.lean           |  105 +
+ .../FibonacciAtomic/Observer/NativeCutFibers.lean  |   89 +
+ .../Observer/NativeFibonacciActiveTable.lean       |  209 ++
+ .../Observer/NativeFullRootFeasibility.lean        |  152 ++
+ .../Observer/NativeSerialDepth.lean                |   76 +
+ .../Observer/NativeSharpPredecessorFiber.lean      |   86 +
+ .../Observer/NativeWholeRowPlan.lean               |   92 +
+ ...L_KL_ACTION_AND_TORIC_RELATIONS_CONTINUATION.md | 2300 ++++++++++++++++++++
+ ...MS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md | 1048 +++++++++
+ ...B_NATIVE_FIXED_POLE_STRICT_GROUND_ENERGY_GAP.md | 1173 ++++++++++
+ ...E_FOUR_DIMENSIONAL_STRICT_AFFINE_IMPROVEMENT.md | 1539 +++++++++++++
+ ..._GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md |  914 ++++++++
+ ...B_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md |  672 ++++++
+ ...RATING_ACQUISITION_RESOURCES_CONTINUATION_XI.md | 1808 +++++++++++++++
+ .../hilbert-trace-class/physlib-LICENSE.txt        |  201 ++
+ docs/reports/licenses/hilbert-trace-class.md       |    9 +
+ .../StrataLint.Cli/Commands/TruthReleaseCommand.cs |    2 +-
+ .../Snapshot/RawLeanReportArtifact.cs              |   13 +
+ .../Runtime/RawLeanReportArtifactTests.cs          |  117 +
+ 241 files changed, 24787 insertions(+), 344 deletions(-)
+ create mode 100644 Blueprint/D5/S1/Words/AdmissibleWords/FibonacciGrayPath.md
+ create mode 100644 Blueprint/D5/S1/Words/AdmissibleWords/FibonacciGrayPath.scribe.cs
+ create mode 100644 Blueprint/D5/S1/Words/Palindromes/GeneralizedPseudostandardPeriodicity.md
+ create mode 100644 Blueprint/D5/S1/Words/Palindromes/GeneralizedPseudostandardPeriodicity.scribe.cs
+ create mode 100644 Blueprint/D5/S1/Words/Palindromes/PseudopalindromicNormalization.md
+ create mode 100644 Blueprint/D5/S1/Words/Palindromes/PseudopalindromicNormalization.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeControlConjugacy.md
+ create mode 100644 Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeControlConjugacy.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.md
+ create mode 100644 Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullRootFeasibility.md
+ create mode 100644 Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullRootFeasibility.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedInventory.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedInventory.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedPorts.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedPorts.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingCircles.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingCircles.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingEdges.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingEdges.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingModel.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingModel.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingRows.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingRows.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingSeams.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingSeams.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2Words.md
+ create mode 100644 Blueprint/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2Words.scribe.cs
+ create mode 100644 Blueprint/D5/S3/ConceptDynamics/Coding/FiniteResponseTable.md
+ create mode 100644 Blueprint/D5/S3/ConceptDynamics/Coding/FiniteResponseTable.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Geometry/ProjectionRange/LocalGramCertificate.md
+ create mode 100644 Blueprint/D5/S3/Geometry/ProjectionRange/LocalGramCertificate.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Geometry/ProjectionRange/Prebundle.md
+ create mode 100644 Blueprint/D5/S3/Geometry/ProjectionRange/Prebundle.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Quantum/Analysis/HilbertTraceClass.md
+ create mode 100644 Blueprint/D5/S3/Quantum/Analysis/HilbertTraceClass.scribe.cs
+ create mode 100644 Blueprint/D5/S3/Quantum/Dynamics/PurificationLowerBoundQutritRefutation.md
+ create mode 100644 Blueprint/D5/S3/Quantum/Dynamics/PurificationLowerBoundQutritRefutation.scribe.cs
+ create mode 100644 Blueprint/D5/S3/QuantumChannels/UnitalBlockOverlapRefutation.md
+ create mode 100644 Blueprint/D5/S3/QuantumChannels/UnitalBlockOverlapRefutation.scribe.cs
+ create mode 100644 D5/S1/Words/AdmissibleWords/FibonacciGrayPath.lean
+ create mode 100644 D5/S1/Words/Palindromes/GeneralizedPseudostandardPeriodicity.lean
+ create mode 100644 D5/S1/Words/Palindromes/PseudopalindromicNormalization.lean
+ create mode 100644 D5/S3/Arith/FibonacciAtomic/Observer/NativeControlConjugacy.lean
+ create mode 100644 D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.lean
+ create mode 100644 D5/S3/Arith/FibonacciAtomic/Observer/NativeFullRootFeasibility.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedInventory.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedPorts.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingCircles.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingEdges.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingModel.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingRows.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingSeams.lean
+ create mode 100644 D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2Words.lean
+ create mode 100644 D5/S3/ConceptDynamics/Coding/FiniteResponseTable.lean
+ create mode 100644 D5/S3/Geometry/ProjectionRange/LocalGramCertificate.lean
+ create mode 100644 D5/S3/Geometry/ProjectionRange/Prebundle.lean
+ create mode 100644 D5/S3/Quantum/Analysis/HilbertTraceClass.lean
+ create mode 100644 D5/S3/Quantum/Dynamics/PurificationLowerBoundQutritRefutation.lean
+ create mode 100644 D5/S3/QuantumChannels/UnitalBlockOverlapRefutation.lean
+ create mode 100644 Golden/Frozen/state/D5/S1/Words/AdmissibleWords/FibonacciGrayPath.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S1/Words/Palindromes/GeneralizedPseudostandardPeriodicity.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S1/Words/Palindromes/PseudopalindromicNormalization.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Arith/FibonacciAtomic/Observer/NativeControlConjugacy.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullRootFeasibility.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedInventory.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2MarkedPorts.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingCircles.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingEdges.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingModel.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingRows.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2SurvivingSeams.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2Words.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/ConceptDynamics/Coding/FiniteResponseTable.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Geometry/ProjectionRange/LocalGramCertificate.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Geometry/ProjectionRange/Prebundle.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Quantum/Analysis/HilbertTraceClass.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/Quantum/Dynamics/PurificationLowerBoundQutritRefutation.lean.json
+ create mode 100644 Golden/Frozen/state/D5/S3/QuantumChannels/UnitalBlockOverlapRefutation.lean.json
+ create mode 100644 Library/QuantumBounds/das2026krylovpurification.md
+ create mode 100644 Library/QuantumChannels/girlingcirstoiujennings2022unitarity.md
+ create mode 100644 Library/Rewriting/floriandvorakova2016periodicity.md
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/1b0740ef78dbef33ab9314a3999b25680e0011679343a99c10c2cfa52a873f23.yaml (66%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/1cb44f0475d50047b23045a30c985f1975469fb61837277cba21269961bfa7d4.yaml (59%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/204e8e599b990da2083860633bdb84b01d989e8fb2fcfd34e207a47af84ae89a.yaml (57%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/24b292d525cf68e9de6c259ed4ee322d5bd3d2ea61a7b46798711c3ca4d4a6f0.yaml (58%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/3297029a31fc9c094011e2c8da01ea591c3199f8e9f5ab81a4d2759e669b16c6.yaml (59%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/6ef9989bfcb22dab2fcbac7ea37ed5eb43317b0170bbc0a85e5e2fc1afa4059e.yaml (56%)
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/absorbed-closed/7996a645bb5eba6120a09a9919a50cd2a13803693119702a9b778d00058a4d2d.yaml
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/9517989a2c26f49ed51dc449c5b7571a531afd13f3701443f38982066592bc57.yaml (56%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/b82eb15008b1350bcfad9dcfa1ad0713b54cb9e55dbf08287da4db12915592c2.yaml (58%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/cca4497c5d087df36efe9f959df4ec31eb7bb708e71850bf0718b523707cf378.yaml (59%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/d19bc88c4913ce6545adcc75a1b9e7ff4633a14596417e55d7d0d1bd5a1f845a.yaml (59%)
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/absorbed-closed/e6a422e55433eddb47fd554996b446c15c73ff4eedf5bf0ff7a44ce7a0020882.yaml
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/eb62046c61200d68f6376cd02bbd9b018d1be5424d88ef265babf5f2164af8f0.yaml (60%)
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/absorbed-closed/ef92c9e2ad840caf0edd216754cc156079c7eefff5b280990c6a7e41ce1cd1c5.yaml
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/{residual-open => absorbed-closed}/f530477655cacb375371dc2399e522a6a7e8cba2ea4408494bc71a63f3df2a8b.yaml (56%)
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/residual-open/7996a645bb5eba6120a09a9919a50cd2a13803693119702a9b778d00058a4d2d.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/residual-open/e6a422e55433eddb47fd554996b446c15c73ff4eedf5bf0ff7a44ce7a0020882.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic-quantum/residual-open/ef92c9e2ad840caf0edd216754cc156079c7eefff5b280990c6a7e41ce1cd1c5.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/022443ab026d843dfeba33c8949d4217ccbe7c110daf2ff38fa5a56b1bb6a11b.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/1fbf9d908cce5104ce7b1e15c62d3ad62bfea7c3974215bcca79abf897390011.yaml
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/2900f4eac022adf2f748e69e9bfa85516bd50312697ac3ba8c2947de8c61e85f.yaml (62%)
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/361877ea91c6b2ebffad9941e5feaf3326c765c9139c0f3e846323b9ad0509ae.yaml
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/3fdb01d5fea0b70a8de045a9db54f2b5936a12fd5a6be109ff822a00d6e218b9.yaml (60%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/55ac751fee24a09d3f77aea7d6ccc962a1301054e731eb4a6726d0eb79371108.yaml (62%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/582c1a807b9de4102f968316d0d314e9d295972d29bd5b6d63c85e3c11d68e48.yaml (56%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/6f93364abd4d4a88b0d776bdc331a1dac4e7a300622b3a777a36c09fbe39cdb4.yaml (57%)
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/702c7c270b1b5cd7deb96445573b4eaf9159fb153088bba1c335972d7c1daf07.yaml (60%)
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/70fa4f82d58f23f7a40f52008ad45615fff58aa4fd77881768e3301353cc3227.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/8096f7d60be98bed7fa1490a5f75e8ab7ef21afbd1939b04da5262f477acb9ab.yaml
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/82ad39e313b5dcee748cf8e7360d6637c9152ece4bcac1d059e68635c636bd87.yaml (53%)
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/8fd04b82e98a605afadcb300c56b0dcf2bcb9e5ff67e738952d933c91454ebd1.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/a46dfc036e9dfc878161536ca780829b5b01325e06fda40dfd736f2c2759f1c6.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/a924ceec3f5769064e1d0df5477b33071e9781408a5f926c5d754826f94c8cfb.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/aec42a660e36d4d9fb3109a4c21a095a3ff1f71615ee2d9261257ffbc2e4f166.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/dc1a479f2055145ded91a43936bc7f5a7d4355f5988d85e13b8607d2f7bff696.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/dc89aa4c1f2da84eae9208fbb3764ff6321a9b9898b9e9bb59887ca2508be3a7.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/e2c85a6ea8441646764ee6b5f869a245fc5f890d49638800d4fe19e779b8a43b.yaml
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/f1a780f557902fbb65d01369ea879e1768ebbffdca6bfb97cb83f5d4e551bb7c.yaml
+ rename Meta/Digestion/backfill/contextual-spacetime-arithmetic/{residual-open => absorbed-closed}/fac445cacd22e032f56b3bd78a3acb3de6dc35edaa999e7e300bdd16fa0eab1e.yaml (67%)
+ create mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/absorbed-closed/fb685e4730b67da85335673063d7b754e0b4b0cad839524fd79d57b2e08119f0.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/022443ab026d843dfeba33c8949d4217ccbe7c110daf2ff38fa5a56b1bb6a11b.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/1fbf9d908cce5104ce7b1e15c62d3ad62bfea7c3974215bcca79abf897390011.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/361877ea91c6b2ebffad9941e5feaf3326c765c9139c0f3e846323b9ad0509ae.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/70fa4f82d58f23f7a40f52008ad45615fff58aa4fd77881768e3301353cc3227.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/8096f7d60be98bed7fa1490a5f75e8ab7ef21afbd1939b04da5262f477acb9ab.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/8fd04b82e98a605afadcb300c56b0dcf2bcb9e5ff67e738952d933c91454ebd1.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/a46dfc036e9dfc878161536ca780829b5b01325e06fda40dfd736f2c2759f1c6.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/a924ceec3f5769064e1d0df5477b33071e9781408a5f926c5d754826f94c8cfb.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/aec42a660e36d4d9fb3109a4c21a095a3ff1f71615ee2d9261257ffbc2e4f166.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/dc1a479f2055145ded91a43936bc7f5a7d4355f5988d85e13b8607d2f7bff696.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/dc89aa4c1f2da84eae9208fbb3764ff6321a9b9898b9e9bb59887ca2508be3a7.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/e2c85a6ea8441646764ee6b5f869a245fc5f890d49638800d4fe19e779b8a43b.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/f1a780f557902fbb65d01369ea879e1768ebbffdca6bfb97cb83f5d4e551bb7c.yaml
+ delete mode 100644 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open/fb685e4730b67da85335673063d7b754e0b4b0cad839524fd79d57b2e08119f0.yaml
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/01598f4a08825b443176739a8dd9c0a35988119cb6e4f1b55b56ab250ae69fcc.yaml (57%)
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/0831062a074c8393d5e0d16a4caa4487d783311664ffa661ab52092973475c5b.yaml (61%)
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/087e3caa7c278b4ea58f06604daa8721ab5258f6c451a25ed8f2d0092d823ca0.yaml (60%)
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/190473184c33b3e29dff7feb393ba654e9da212fc9263e72b87ce07e9b79c8a3.yaml (61%)
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/1ce65ce21d19f7291526f1b892e662e11f297f01c4b77d71107d6676c64fead4.yaml (62%)
+ create mode 100644 Meta/Digestion/backfill/quantum-rh/absorbed-closed/478965d094e421c98d412eca63b1f42858a516c1febceb6751fc05aab260135b.yaml
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/7b2657006891568aa395dfd9fa14bde9d9d23d2ade0c449b00f7cdf5c616baec.yaml (62%)
+ create mode 100644 Meta/Digestion/backfill/quantum-rh/absorbed-closed/8a1900b281e35bf99c03af2be822b3b0f7a042c7b2a5f8d9ee837df2ca1de391.yaml
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/c12648e965420f874adc44da52f94567c9cfa10dd305b90a5764316014037a21.yaml (56%)
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/c3316916b643d8cf28de3e1b451f7f3ba61d1337f85a87b7eb42cc1568f9621f.yaml (64%)
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/c352d304105e02cbbcb0607e31a1e217adb85d4b344ba0d75c23ba4420dbf0e1.yaml (63%)
+ rename Meta/Digestion/backfill/quantum-rh/{residual-open => absorbed-closed}/cfe3a0e1b9ecadc1acf7af105b7ca50308837331c2231a256fba17c258115eff.yaml (61%)
+ create mode 100644 Meta/Digestion/backfill/quantum-rh/absorbed-closed/deaf86853b1217a64e0283dae2f03f6aa847b19a5d16e68a95518b8caef0da80.yaml
+ delete mode 100644 Meta/Digestion/backfill/quantum-rh/residual-open/478965d094e421c98d412eca63b1f42858a516c1febceb6751fc05aab260135b.yaml
+ delete mode 100644 Meta/Digestion/backfill/quantum-rh/residual-open/8a1900b281e35bf99c03af2be822b3b0f7a042c7b2a5f8d9ee837df2ca1de391.yaml
+ delete mode 100644 Meta/Digestion/backfill/quantum-rh/residual-open/deaf86853b1217a64e0283dae2f03f6aa847b19a5d16e68a95518b8caef0da80.yaml
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/absorbed-closed/01c609688bb23f874489d5809fb311a1b96020a27d1a45c43701493d10e0e135.yaml
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/absorbed-closed/0b2156693529162808d98824efc655af6f64b31c84e6d5f1d80aaa36f1909e15.yaml
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/absorbed-closed/14a41bdebc022870bfeeb75028bf43834ee4deea8c3049020c53f5b466283188.yaml
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/absorbed-closed/8173e25073b89664f346620f6eb444d37512e9e8f042726638bd0b782aa399e9.yaml
+ rename Meta/Digestion/backfill/recursive-relational-observation-context-geometry/{residual-open => absorbed-closed}/88aa88f803a28a5a5638c84e553be2f6e5ed2d2e47bef84bbfc748075cdd761a.yaml (57%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-context-geometry/{residual-open => absorbed-closed}/90512c6cc1291348faaceb314f20fd49dff174960e1cfb6eaa3c55664deeb96d.yaml (54%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-context-geometry/{residual-open => absorbed-closed}/91a840cad9decae7ba319646b2f495e4d36f6eef1fcce340b280063ed8acf7a4.yaml (58%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-context-geometry/{residual-open => absorbed-closed}/95ea4fdcec8d9977659ca263b8ed01eb08b4a02fd20e6aa3cded7587871432fc.yaml (61%)
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/absorbed-closed/b03e799072b990b224299ab197a14072ea8f49d98b7d30a84b12ca0359834c09.yaml
+ rename Meta/Digestion/backfill/recursive-relational-observation-context-geometry/{residual-open => absorbed-closed}/bed6fbd14d55ab9ff8c126550ff14e48db38761555d2d19a0f4b584e28736012.yaml (59%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-context-geometry/{residual-open => absorbed-closed}/e24dc7dd55bc6b609c7b8c913a5d05a52c0a7a19fa1c94dad24544872def5545.yaml (54%)
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/absorbed-closed/fa6573c463df28e8aa68f202c993bb9e137ae2fccad157a13163d1c51abb299a.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/residual-open/01c609688bb23f874489d5809fb311a1b96020a27d1a45c43701493d10e0e135.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/residual-open/0b2156693529162808d98824efc655af6f64b31c84e6d5f1d80aaa36f1909e15.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/residual-open/14a41bdebc022870bfeeb75028bf43834ee4deea8c3049020c53f5b466283188.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/residual-open/8173e25073b89664f346620f6eb444d37512e9e8f042726638bd0b782aa399e9.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/residual-open/b03e799072b990b224299ab197a14072ea8f49d98b7d30a84b12ca0359834c09.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-context-geometry/residual-open/fa6573c463df28e8aa68f202c993bb9e137ae2fccad157a13163d1c51abb299a.yaml
+ rename Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/{residual-open => absorbed-closed}/68cd8ca5853086cc24ef50a4259c5e1bc7038144d0b47d4b563fdca1277d06ff.yaml (55%)
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/absorbed-closed/915789057b6104f3f31ece3bebe2de2568962667783aa5443980f21992e5ecfd.yaml
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/absorbed-closed/aea9dfe9738625fb6180c9825eae8d0a181766c1d6e0800550f91502e45e89ad.yaml
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/absorbed-closed/d306b2dc6204a1f55a1fef9654730d0e1c65e6533e1727b0658e82b12f637199.yaml
+ rename Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/{residual-open => absorbed-closed}/e8501cf1c52738019c5f6fbbb05ff1ac68c90e73090be966db3876fa07309d3d.yaml (62%)
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/absorbed-closed/eccbdf1ff33a0999c3897c73718b0b849b6a155adeb0e3aae5aeade78bf32bd6.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/residual-open/915789057b6104f3f31ece3bebe2de2568962667783aa5443980f21992e5ecfd.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/residual-open/aea9dfe9738625fb6180c9825eae8d0a181766c1d6e0800550f91502e45e89ad.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/residual-open/d306b2dc6204a1f55a1fef9654730d0e1c65e6533e1727b0658e82b12f637199.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-effective-resolution/residual-open/eccbdf1ff33a0999c3897c73718b0b849b6a155adeb0e3aae5aeade78bf32bd6.yaml
+ rename Meta/Digestion/backfill/recursive-relational-observation-native-birth-provenance/{residual-open => absorbed-closed}/3f0b3b0dba82bb09e3b2573b5e159c21efa95a211730778b4c7e70be8f8cc86d.yaml (59%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-native-birth-provenance/{residual-open => absorbed-closed}/4dbf0e1da9a4a7768fc61879cc01d4c15585b524af4e70902eeb8dea49c363f6.yaml (59%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-native-birth-provenance/{residual-open => absorbed-closed}/58a9559fdab11cb690ceea106e99b0ebd40a0569191be2d25be1950150abea62.yaml (71%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-native-birth-provenance/{residual-open => absorbed-closed}/9f85a1ead6cc07e0802107fd21c394054e8a229e486f637967a99e01c02d5a39.yaml (59%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-phase-boundary/{residual-open => absorbed-closed}/89852c530c82d3fcc855e96d396ea1f392c4b8e68cdb219f9e6cc551a7186fed.yaml (59%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-phase-boundary/{residual-open => absorbed-closed}/95b045e9a2dc4c14dc336b0f98c590c4a8e4e6f3af2162cd62858887bf392fe1.yaml (69%)
+ rename Meta/Digestion/backfill/recursive-relational-observation-phase-boundary/{residual-open => absorbed-closed}/a99800f0ccd60bb6e052ee075a3ea7515f0b727eec581a82347f73889b7d47a3.yaml (59%)
+ create mode 100644 Meta/Digestion/backfill/recursive-relational-observation-phase-boundary/absorbed-closed/d90a39de85011f5d1fc036b0bf11cb1a92b9336663a036f69e7e66567acd8bef.yaml
+ delete mode 100644 Meta/Digestion/backfill/recursive-relational-observation-phase-boundary/residual-open/d90a39de85011f5d1fc036b0bf11cb1a92b9336663a036f69e7e66567acd8bef.yaml
+ create mode 100644 Problems/das-mori-2026-purification-lower-bound-refutation.md
+ create mode 100644 Problems/florian-dvorakova-2016-generalized-pseudostandard-periodicity.md
+ create mode 100644 Problems/girling-cirstoiu-jennings-2022-unital-block-overlap.md
+ create mode 100644 Reg/D5/S1/Words/AdmissibleWords/FibonacciGrayPath.lean
+ create mode 100644 Reg/D5/S3/Arith/FibonacciAtomic/Observer/NativeControlConjugacy.lean
+ create mode 100644 Reg/D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.lean
+ create mode 100644 Reg/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullRootFeasibility.lean
+ create mode 100644 docs/develop/theory/FIB_NATIVE_FIXED_POLE_STRICT_GROUND_ENERGY_GAP.md
+ create mode 100644 docs/develop/theory/FIB_NATIVE_FOUR_DIMENSIONAL_STRICT_AFFINE_IMPROVEMENT.md
+ create mode 100644 docs/develop/theory/FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md
+ create mode 100644 docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XI.md
+ create mode 100644 docs/reports/hilbert-trace-class/physlib-LICENSE.txt
+ create mode 100644 docs/reports/licenses/hilbert-trace-class.md
