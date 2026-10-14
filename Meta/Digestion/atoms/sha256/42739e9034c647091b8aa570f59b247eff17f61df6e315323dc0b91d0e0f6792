@@ -1,0 +1,37 @@
+**Definition 213.7 (Actual moment cones and the shared pair variable).**
+On the full cube set
+$\phi(w)=(1,(w_i)_i,(w_iw_j)_{i<j})$ and
+$\mathcal M(\mu)=\sum_w\mu(w)\phi(w)$.
+Let $\mathcal C_n=\operatorname{cone}\{\phi(w):w\in\Omega_n\}$;
+membership means representation by one actual nonnegative measure on
+that entire first-zero class. Write $|v|$ for its constant coordinate.
+For an arbitrary full score $y$ define its label-reward measures
+
+$$
+\begin{aligned}
+U&=\sum_{w\ne1^L}(A_w+P_w)\delta_w+T\delta_{1^L},&u&=\mathcal M(U),\\
+V_n&=\sum_{w\in\Omega_n}(C_w+P_w)\delta_w,&v_n&=\mathcal M(V_n),\\
+s_n&=\sum_{\Omega_n}(A_w+P_w),&t&=T.
+\end{aligned}
+$$
+
+Thus $\beta_n=|v_n|-s_n$.
+Let $\mathcal F(y)$ be the full nonnegative scores with this same
+$\beta$ and every individual O schedule-cell-label reward equal to
+that of $y$. Equality is before maximization. Define $J(y)$ by the
+single coupled optimization
+
+$$
+\begin{aligned}
+J(y)=\max\ &\sum_n|p_n|,\\
+p_n&\in\mathcal C_n,\quad x_n-p_n\in\mathcal C_n,\quad
+v_n-p_n\in\mathcal C_n,\\
+|x_n|&=s_n,\qquad \sum_n x_n+t\phi(1^L)=u.
+\end{aligned}
+\tag{213.9}
+$$
+
+The same $p_n$ is used in both reward measures. The aggregate baseline
+equation is one equation on the common cube; one cannot replace it by
+independently feasible classwise marginals.
+
