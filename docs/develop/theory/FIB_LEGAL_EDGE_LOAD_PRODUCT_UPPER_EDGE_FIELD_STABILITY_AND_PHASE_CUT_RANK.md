@@ -2331,3 +2331,488 @@ as (18.4) proves. None of these parent expectations assigns
 a physical energy unit or the work of acquiring the phases.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 19. Four classical hidden states do not bound coherent Schmidt rank
+
+**Definition 19.1 (One fixed stationary mixture on the original no11 shift).**
+For $0<r<1$ let $P_r$ be the stationary binary Markov law
+with transition and stationary row
+
+$$
+T_r=
+\begin{pmatrix}1-r&r\\1&0\end{pmatrix},\qquad
+\pi_r=\frac{(1,r)}{1+r}.
+\tag{19.1}
+$$
+
+Fix once and for all $0<p<q<1$ and $0<a<1$, and put
+$P=aP_p+(1-a)P_q$. These parameters do not depend on
+window length or desired rank. For every finite window,
+let $P_n$ be its actual marginal and prescribe the positive
+coherent representative
+
+$$
+|\Psi_n\rangle=\sum_{w\in B_n}\sqrt{P_n(w)}|w\rangle.
+\tag{19.2}
+$$
+
+The classical law is one stationary law on the whole
+no11 shift. Equation (19.2) specifies separate finite-window
+pure-state embeddings; it does not assert that they are
+compatible reduced states of one infinite quantum pure state.
+
+The two-state edge-emission matrices of each component are
+
+$$
+E_0(r)=\begin{pmatrix}1-r&0\\1&0\end{pmatrix},\qquad
+E_1(r)=\begin{pmatrix}0&r\\0&0\end{pmatrix}.
+\tag{19.3}
+$$
+
+Use the four-state matrices
+$M_x=E_x(p)\oplus E_x(q)$ and initial stationary row
+$(a\pi_p,(1-a)\pi_q)$. They are nonnegative,
+$M_0+M_1$ is stochastic, the displayed row is stationary,
+and $M_1^2=0$. Their cylinder formula is exactly $P_n$.
+Thus they belong to the entire four-state domain of the
+[uniform renewal and three-state separation source](https://github.com/the-omega-institute/trureturing/blob/f0babd0c3289992dff4b7704c6465bfeda6bef07/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_UNIFORM_RENEWAL_NONATTAINMENT_AND_THREE_STATE_SEPARATION.md),
+Definition 1.2, including its permission for reducible
+presentations. This mixture is not the source's irreducible
+four-state example of §12.
+
+**Theorem 19.2 (Unbounded positive coherent rank with fixed classical producer).**
+The law P has full support on every finite legal word,
+and has one classical edge-emission representation with four
+hidden states. For every integer $d\ge1$, the positive
+coherent state $\Psi_{4d+2}$ has Schmidt rank at least
+$d+1$ across the cut after site $2d+1$. Consequently no
+fixed exact matrix-product bond dimension represents all
+these prescribed positive coherent states.
+
+Proof. The finite stationary word probability is
+$\pi_r(w_1)\prod_{j=1}^{n-1}T_r(w_j,w_{j+1})$.
+Every legal word has positive weight, so every $P_n$ has
+full legal support. The matrices in (19.3) give the claimed
+fixed classical representation. At any cut its classical
+probability matrix factors as
+
+$$
+P_n(\ell,r)=\sum_{h=1}^4
+(\lambda M_\ell)_h(M_r\mathbf1)_h,
+\tag{19.4}
+$$
+
+so its nonnegative rank is at most four. Here $\lambda$
+is the stationary row of Definition 19.1, not a Gibbs
+activity.
+
+Set $L=2d+1$ and choose complete half-window words
+
+$$
+u_i=0(10)^i0^{2(d-i)},\qquad 0\le i\le d.
+\tag{19.5}
+$$
+
+Every $u_i$ has length L, starts and ends in zero, and
+has exactly i ones. Each concatenation $u_iu_j$ is legal
+in the original carrier, with $i+j$ transitions $0\to1$,
+$i+j$ transitions $1\to0$ and $4d+1-2(i+j)$
+transitions $0\to0$. Therefore, writing $n=4d+2$,
+
+$$
+P_r(u_iu_j)=A_r(n)b_r^{i+j},\qquad
+A_r(n)=\frac{(1-r)^{n-1}}{1+r},\qquad
+b_r=\frac{r}{(1-r)^2}.
+\tag{19.6}
+$$
+
+The function $b_r$ is strictly increasing on $(0,1)$.
+Thus $t=b_q/b_p>1$. Put
+$c_n=(1-a)A_q(n)/(aA_p(n))>0$.
+The corresponding full coefficient submatrix of (19.2) is
+
+$$
+\sqrt{P_n(u_iu_j)}=
+\sqrt{aA_p(n)}\,b_p^{i/2}b_p^{j/2}
+\sqrt{1+c_nt^{i+j}}.
+\tag{19.7}
+$$
+
+All row and column factors are nonzero. Invoke the existing
+matrix theorem of Jain,
+[*Hadamard powers of rank two, doubly nonnegative matrices*,
+arXiv:2004.03909v1, Corollary 5, p. 8](https://arxiv.org/abs/2004.03909v1).
+It states that $[(1+y_ix_j)^s]$ is nonsingular for distinct
+real $x_j,y_i$ with all $1+y_ix_j>0$, when
+$s\notin\{0,1,\ldots,N-2\}$. Here choose
+$N=d+1$, $x_i=y_i=\sqrt{c_n}t^i$ and $s=1/2$.
+These are distinct positive coordinates and satisfy all
+hypotheses. The square-root kernel in (19.7) is therefore
+nonsingular, so this actual $(d+1)$-dimensional minor has
+rank $d+1$. The reduced density matrix is $AA^*$ and is
+positive semidefinite regardless of the coefficient matrix's
+eigenvalue signs. The full coefficient matrix, on every legal
+word and with zero entries on forbidden pairs, has at least
+that rank. Pure-state Schmidt rank equals coefficient-matrix
+rank, proving the theorem. $\square$
+
+The scalar $c_n$ depends on window length; the law's
+parameters $a,p,q$ remain fixed. The cited nonsingularity
+holds for every positive $c_n$, so no length-dependent
+choice of law, limiting genericity argument or unproved
+avoidance of determinant zeros is used. The matrix theorem
+and the distinction between ordinary and entrywise-power
+ranks are existing results. The displayed stationary no11
+construction identifies their exact interface to the
+finite-hidden domains; it makes no literature-priority claim.
+
+**Proposition 19.3 (One occupation law permits different quantum carriers).**
+For the same finite marginal $P_n$, $n\ge2$, put
+
+$$
+|\psi_{r,n}\rangle=\sum_{w\in B_n}\sqrt{P_{r,n}(w)}|w\rangle,
+\qquad
+\sigma_n=a|\psi_{p,n}\rangle\langle\psi_{p,n}|
++(1-a)|\psi_{q,n}\rangle\langle\psi_{q,n}|.
+\tag{19.8}
+$$
+
+The mixed state $\sigma_n$ and the pure state
+$|\Psi_n\rangle\langle\Psi_n|$ have identical occupation
+probabilities. Schmidt number is the minimum, over pure-state
+ensembles of a mixed state, of their largest cut Schmidt rank.
+At each proper cut $\sigma_n$ has Schmidt
+number at most two through its displayed ensemble, whereas
+Theorem 19.2 gives arbitrarily large pure-state Schmidt
+rank for $\Psi_n$.
+
+Proof. Both diagonals are exactly
+$aP_{p,n}(w)+(1-a)P_{q,n}(w)=P_n(w)$.
+The two component vectors are not proportional: their
+one-site occupation probabilities are $p/(1+p)$ and
+$q/(1+q)$, which differ. With both mixture weights positive,
+$\sigma_n$ is therefore mixed.
+For a legal word with k ones and endpoint bits $s_1,s_n$,
+transition counting gives
+
+$$
+P_{r,n}(w)=\frac{(1-r)^{n-1}}{1+r}
+\left(\frac{r}{(1-r)^2}\right)^k
+(1-r)^{s_1+s_n}.
+\tag{19.9}
+$$
+
+Thus each component is precisely a positive hard-core
+product-activity law: internal activities are
+$r/(1-r)^2$, and the two endpoint activities are
+$r/(1-r)$. Its positive coherent state has Schmidt rank
+two at every proper cut by the positive-reference
+factorization of §4. The ensemble in (19.8) therefore
+bounds the mixed-state Schmidt number by two. No rank
+bound is inferred for the coherent square root of the
+mixture; its explicit larger minor is (19.7). $\square$
+
+This supplies a paired same-observation example. Classical
+probability data specify neither the positive coherent
+preparation (19.2) nor the mixed preparation (19.8).
+Unbounded exact Schmidt rank gives no conclusion here about
+entropy divergence, approximate bond dimension, minimal
+quantum statistical memory or physical preparation work.
+
+Under the uniform renewal source's stated Universal and
+Direct premises, its Lemma 11.1 and Theorem 11.4 also give
+
+$$
+d(P)=a\,d(P_p)+(1-a)\,d(P_q)
+\le C_2\le C_3<c_\star.
+\tag{19.10}
+$$
+
+The two positive closed hidden components each have two
+states and are the irreducible chains (19.1), so the
+source's actual-component affinity applies with weights
+a and $1-a$. This uses its classical conclusions only
+under their supplier premises. The coherent embedding
+keeps the exact same visible probabilities and hence the
+same harmonic-edge objective. Its large Schmidt rank
+does not turn this classical mixture into an attainer or
+settle the original all-dimension question.
+
+## 追加锚（本行以下为增补区）
+
+
+## 20. Unbounded exact rank coexists with exponential bond-four approximation
+
+**Definition 20.1 (Overlap and a coherent sum of the two components).**
+Retain the single fixed stationary mixture of Definition 19.1.
+All vectors below have nonnegative real coefficients. Define
+
+$$
+\mathcal B_n=\langle\psi_{p,n},\psi_{q,n}\rangle
+=\sum_{w\in B_n}\sqrt{P_{p,n}(w)P_{q,n}(w)},\qquad
+C_n=2\sqrt{a(1-a)}\,\mathcal B_n,
+\tag{20.1}
+$$
+
+and prescribe another pure state
+
+$$
+v_n=\sqrt a\,\psi_{p,n}+\sqrt{1-a}\,\psi_{q,n},\qquad
+\Phi_n=\frac{v_n}{\sqrt{1+C_n}}.
+\tag{20.2}
+$$
+
+Unlike the mixed state $\sigma_n$, the state $\Phi_n$ is a
+coherent sum. Its occupation law need not equal $P_n$.
+It is used only as an approximation to $\Psi_n$.
+
+**Lemma 20.2 (Exponential classical Hellinger overlap).**
+Put
+
+$$
+x=\sqrt{(1-p)(1-q)},\quad y=\sqrt{pq},\quad
+\gamma=x+y.
+\tag{20.3}
+$$
+
+Then $0<\gamma<1$ and, for every $n\ge1$,
+
+$$
+0<\mathcal B_n\le\gamma^{\lfloor(n-1)/2\rfloor},\qquad
+0<C_n\le\mathcal B_n.
+\tag{20.4}
+$$
+
+Proof. The two distinct unit vectors
+$(\sqrt{1-p},\sqrt p)$ and $(\sqrt{1-q},\sqrt q)$
+have positive inner product $\gamma<1$. This is the
+strict scalar Cauchy inequality; equality would force
+$p=q$. Entrywise square roots of the two Markov word
+weights give the exact transfer formula
+
+$$
+\mathcal B_n=bK^{n-1}\mathbf1,\qquad
+b=\left(\sqrt{\pi_p(0)\pi_q(0)},
+\sqrt{\pi_p(1)\pi_q(1)}\right),\quad
+K=\begin{pmatrix}x&y\\1&0\end{pmatrix}.
+\tag{20.5}
+$$
+
+No hidden-path sum is placed inside a square root: each
+component is itself a visible first-order Markov law.
+The row b is nonnegative with $b\mathbf1\le1$.
+Coordinatewise,
+
+$$
+K\mathbf1=(\gamma,1)^{\mathsf T}\le\mathbf1,\qquad
+K^2\mathbf1=(x\gamma+y,\gamma)^{\mathsf T}
+\le\gamma\mathbf1.
+\tag{20.6}
+$$
+
+Positivity of K permits iteration of the second inequality;
+for an odd remaining power also use the first. Thus
+$K^{n-1}\mathbf1\le\gamma^{\lfloor(n-1)/2\rfloor}\mathbf1$,
+proving the first bound. The second follows from
+$2\sqrt{a(1-a)}\le1$. $\square$
+
+**Theorem 20.3 (One rank-four approximation works across all cuts).**
+For every $n\ge2$, the single state $\Phi_n$ has Schmidt
+rank at most four at every cut and hence an exact open-chain
+matrix-product representation with bond dimensions at most
+four. It satisfies
+
+$$
+\langle\Psi_n,\Phi_n\rangle\ge\frac1{\sqrt{1+C_n}},\qquad
+\|\Psi_n-\Phi_n\|^2\le
+2-\frac2{\sqrt{1+C_n}}\le C_n.
+\tag{20.7}
+$$
+
+For the trace distance, with the factor-one-half convention,
+
+$$
+\begin{aligned}
+T_n&=\tfrac12\big\|
+|\Psi_n\rangle\langle\Psi_n|
+-|\Phi_n\rangle\langle\Phi_n|\big\|_1\\
+&\le t_n:=\sqrt{\frac{C_n}{1+C_n}}
+\le\sqrt{2\sqrt{a(1-a)}}\,
+\gamma^{\lfloor(n-1)/2\rfloor/2}.
+\end{aligned}
+\tag{20.8}
+$$
+
+The parameters $a,p,q$ and the bound four do not depend on
+n or on a chosen cut.
+
+Proof. Each component coefficient matrix has rank two by
+Proposition 19.3. At every cut the coefficient matrix of
+$v_n$ is their weighted sum, with rank at most four;
+normalization preserves that bound. Sequential Schmidt
+decompositions of this same vector give the stated
+matrix-product representation. Independent choices of
+approximant at different cuts are unnecessary.
+
+The norm of $v_n$ is $\sqrt{1+C_n}$. For every legal word,
+
+$$
+v_n(w)=\sqrt{aP_{p,n}(w)}+\sqrt{(1-a)P_{q,n}(w)}
+\ge\sqrt{aP_{p,n}(w)+(1-a)P_{q,n}(w)}=\Psi_n(w).
+\tag{20.9}
+$$
+
+Multiplying by $\Psi_n(w)$ and summing gives
+$\langle\Psi_n,v_n\rangle\ge1$, proving the overlap
+and the first distance bound. For $c\ge0$,
+$2-2/\sqrt{1+c}\le c$: with $s=\sqrt{1+c}\ge1$,
+$cs-2s+2=(s-1)^2(s+2)\ge0$. This proves (20.7).
+
+For normalized pure vectors u,v, diagonalizing the difference
+of the two projectors on their two-dimensional span gives
+$\tfrac12\||u\rangle\langle u|-|v\rangle\langle v|\|_1
+=\sqrt{1-|\langle u,v\rangle|^2}$.
+Apply (20.7), then Lemma 20.2, to obtain (20.8). $\square$
+
+**Corollary 20.4 (No entropy divergence for this exact-rank example).**
+Use natural logarithms, and let $S_{n,k}$ be the cut
+entanglement entropy of $\Psi_n$ after site k. For all
+sufficiently large n, uniformly in $1\le k<n$,
+
+$$
+S_{n,k}\le\log4+n(\log2)t_n+h(t_n),\qquad
+h(t)=-t\log t-(1-t)\log(1-t).
+\tag{20.10}
+$$
+
+In particular
+
+$$
+\limsup_{n\to\infty}\max_{1\le k<n}S_{n,k}\le\log4,
+\qquad
+\sup_{n\ge2}\max_{1\le k<n}S_{n,k}<\infty.
+\tag{20.11}
+$$
+
+Proof. Partial trace contracts trace distance. For example,
+its variational characterization tests an operator Q with
+$0\le Q\le I$ on the subsystem by the allowed operator
+$Q\otimes I$ on the full system. Thus every cut reduction
+of $\Psi_n$ is within trace distance $t_n$ of that of
+$\Phi_n$. The latter has rank at most four and entropy at
+most $\log4$.
+
+Use the existing sharp entropy-continuity inequality of
+[Audenaert, *A Sharp Fannes-type Inequality for the von
+Neumann Entropy*, arXiv:quant-ph/0610146v1, Theorem 1,
+p. 2, equation (6)](https://arxiv.org/abs/quant-ph/0610146v1).
+After multiplying its base-two form by $\log2$, its bound
+is $T\log(d-1)+h(T)$. The subsystem dimension is at most
+$2^n$. For all sufficiently large n, $t_n\le1/2$;
+h is then increasing on $[0,t_n]$, so replacing the actual
+reduced-state distance T by $t_n$ gives (20.10).
+Exponential decay in (20.8) implies $nt_n\to0$ and
+$h(t_n)\to0$. The remaining finitely many n have finite
+dimension, proving both assertions. $\square$
+
+The unbounded exact ranks of Theorem 19.2 and the fixed-bond
+approximation of Theorem 20.3 concern the same fixed law
+and the same prescribed positive coherent vectors. The
+rank lower bound detects nonzero Schmidt coefficients,
+including arbitrarily small ones. It supplies neither
+approximate bond-dimension growth nor entropy divergence.
+The low-bond approximation need not reproduce the diagonal
+law exactly and is not the mixed carrier of Proposition
+19.3. No physical preparation, efficient parameter-learning
+procedure, common infinite pure state or minimal quantum
+statistical memory is inferred. Hellinger transfer, rank
+subadditivity, sequential Schmidt decomposition and entropy
+continuity are reused methods; this stationary no11
+application makes no priority claim.
+
+## 追加锚（本行以下为增补区）
+
+
+## 21. An extensive phase energy with exactly fixed reference cut spectrum
+
+In Proposition 17.3, the vacuum error written W in
+(17.14)–(17.15) and their proof means $\mathcal W(\chi)$
+of Definition 11.1. It is distinct from the total update
+weight $W=\sum_iw_i$ of Definition 1.1. In §§17–18 the
+local anchor estimate numbered 14.3 is Proposition 14.3.
+
+**Proposition 21.1 (Fixed cut data do not control the global orbit energy).**
+Let $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. On $P_{2m}$,
+$m\ge3$, cut after site m and use the mirror phase of
+(18.2). Choose all update weights $w_i=1$ and activities
+
+$$
+\lambda_m=\lambda_{m+1}=1,\qquad
+\lambda_{m-1}=\lambda_{m+2}=\frac{F_m}{F_{m-1}},\qquad
+\lambda_i=1\ \text{at every other site}.
+\tag{21.1}
+$$
+
+Every activity belongs to $[1,2]$, all actual deletion
+clocks belong to $[1/3,1/2]$, and the three reference
+boundary sectors and the smaller Schmidt probability are
+exactly
+
+$$
+\alpha=\tfrac12,\qquad\beta=\zeta=\tfrac14,\qquad
+s_-=\frac{2-\sqrt3}{4},
+\tag{21.2}
+$$
+
+independent of m. Nevertheless
+
+$$
+E_{\rm orb}(\chi)\ge\frac{2(m-1)}{75}.
+\tag{21.3}
+$$
+
+Consequently there is no finite constant determined only
+by the two cut activities and the exact positive-reference
+Schmidt spectrum that bounds $E_{\rm orb}$ above by a
+constant times $\delta_{\rm local}$ or $\Delta_2$ on this
+family. The update weights, their uniform bounds and the
+global activity bounds are fixed as well.
+
+Proof. For one unjoined half-chain let $Z_0,Z_1$ be its
+partition sums with its cut endpoint vacant or occupied.
+The endpoint activity is one; occupation forces its neighbor
+vacant and leaves a unit-activity path of length $m-2$.
+Thus, putting $t=F_m/F_{m-1}$,
+
+$$
+Z_1=F_m,\qquad
+Z_0=F_m+tF_{m-1}=2F_m.
+\tag{21.4}
+$$
+
+The right half is its reflection. Gluing the two endpoints
+retains sectors $00,01,10$, with unnormalized weights
+$4F_m^2,2F_m^2,2F_m^2$. This proves the three sector
+masses in (21.2). The rank-two reference formula gives
+$s_-=(1-\sqrt{1-4\beta\zeta})/2=(2-\sqrt3)/4$.
+No limiting replacement of the exact spectrum is used.
+
+The Fibonacci recurrence gives $1\le t\le2$. Apply
+Theorem 18.2 with $\ell_0=1,M=2$, so $\eta=1/10$.
+There are $2(m-1)$ matched endpoints, each of weight one;
+(18.3) yields (21.3). The actual deletion clock at site i
+is $1/(1+\lambda_i)$ as asserted. Finally
+$\delta_{\rm local}\le2$ and $\Delta_2\le1$ while
+(21.3) is unbounded. All the proposed arguments of such
+a constant are identical for every member of this family,
+so no such finite constant exists. $\square$
+
+This fixed-spectrum family supplies the global-scale
+obstruction in the last paragraph of §18 with identical
+cut data, including the exact spectrum. The norm factor
+in (18.8) remains the actual global parent norm, and none
+of these dimensionless expectations determines a physical
+energy unit.
+
+## 追加锚（本行以下为增补区）
