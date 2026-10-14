@@ -106,7 +106,7 @@ private theorem b_eq : (RHLinalg.normSqMatrix U) = Matrix.circulant b := by
   fin_cases i <;> fin_cases j <;>
     norm_num [RHLinalg.normSqMatrix, U, W, Q, b, Matrix.circulant_apply,
       Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply, Matrix.ofNat_apply,
-      Complex.sq_norm, Complex.normSq_apply, Matrix.of_apply, Fin.sub_def, Fin.neg_def]
+      Complex.sq_norm, Complex.normSq_apply, Matrix.of_apply, Fin.sub_def, Fin.neg_def, Fin.val_neg']
 
 private theorem b_circulant : IsCirculant (RHLinalg.normSqMatrix U) := ⟨b, b_eq⟩
 private theorem b_unistochastic : IsUnistochastic (RHLinalg.normSqMatrix U) := ⟨U, u_unitary, rfl⟩

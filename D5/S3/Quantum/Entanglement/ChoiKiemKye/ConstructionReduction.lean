@@ -358,7 +358,7 @@ private theorem rank_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) : (Matrix.block
   rw [hker,Module.finrank_pi,Fintype.card_sigma] at htot; change (Matrix.blockDiagonal' M).rank+_= _ at htot;
   have hs : ∑ i, ((M i).rank+Module.finrank ℂ (LinearMap.ker (M i).mulVecLin)) = ∑ i,Fintype.card (κ i) := by { apply Finset.sum_congr rfl; intro i hi; simpa only [Matrix.rank,Module.finrank_pi] using (M i).mulVecLin.finrank_range_add_finrank_ker };
   rw [Finset.sum_add_distrib] at hs; omega }
-private theorem psd_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) (hM : ∀ i,(M i).PosSemidef) : (Matrix.blockDiagonal' M).PosSemidef := by {
+theorem psd_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) (hM : ∀ i,(M i).PosSemidef) : (Matrix.blockDiagonal' M).PosSemidef := by {
   have h : ∀ i,∃ B : Matrix (κ i) (κ i) ℂ, M i=star B*B := fun i => CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (hM i).nonneg; choose B hB using h;
   have he : Matrix.blockDiagonal' M = (Matrix.blockDiagonal' B)ᴴ*Matrix.blockDiagonal' B := by { rw [Matrix.blockDiagonal'_conjTranspose, ← Matrix.blockDiagonal'_mul]; congr 1; funext i; exact hB i };
   rw [he]; exact Matrix.posSemidef_conjTranspose_mul_self _ }

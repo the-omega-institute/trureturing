@@ -194,7 +194,7 @@ theorem representative_fourier_coordinates
     change g^[k] (x : F) = (x : F)
     rw [← heφ]
     refine IntermediateField.adjoin_induction (F := ZMod 2)
-      (p := fun y _ => φ y=y) ?_ ?_ ?_ ?_ ?_ x.property
+      (motive := fun y _ => φ y=y) ?_ ?_ ?_ ?_ ?_ x.property
     · rintro y ⟨j,rfl⟩
       have hh := congrFun (iterate_minimalPeriod (f := (p : G → G)) (x := sec q)) j
       rw [hpiter] at hh
