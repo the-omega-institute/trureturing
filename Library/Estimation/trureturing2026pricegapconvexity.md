@@ -6739,3 +6739,255 @@ majorant $t_m/\sqrt w$ is of order $M_X$; the same localization bound
 does not pay that term with a vanishing allowance.
 The strict combined supplier BL8, MT8, the all-integer Robin inequality
 and RH remain unproved. This application has no Lean/kernel proof.
+## Weighted short-interval counts pay more actual gap residuals
+
+Retain the full source, all original windows and ties, $\Theta=1$,
+BL1--BL7's horizon and exact credit. The new consumer is the positive
+residual area on a comparable actual gap. It uses the published
+[Thorner--Zaman weighted short-interval estimate](../Analytic/thornerzaman2021progressions.md),
+with LO1's already established first-layer endpoint rule. The original
+PG2 suffix sign and AC/VP capped-occupation comparison are reused.
+This is a `repo-derived` paper application, not a new prime theorem,
+generic perturbation theorem, Lean result or RH proof.
+
+### Match the published weighted count to the actual strict inventory
+
+Use Theorem 1.1 of arXiv:2108.10878v2 with modulus $2$, residue $1$
+and fixed $\varepsilon_{\rm TZ}=1/60$. There is no nontrivial real
+character modulo $2$, so the exceptional-zero branch is absent;
+$\lambda_{\rm TZ}=1$ and $\theta_{\rm TZ}+\varepsilon_{\rm TZ}=3/5$.
+The actual increment intervals used below start at $\alpha\to\infty$,
+so all their primes are odd; restriction to odd primes already gives
+the lower bound in PA1's wider length range.
+The parameter $\varepsilon_{\rm TZ}$ is independent of the fixed
+$\epsilon$ in BL7's credit coefficient.
+
+Put
+
+$$
+\Phi(y)=\left(\frac{\log y}{\log\log y}\right)^{1/3},\qquad
+\mathfrak e(y)=e^{-c\Phi(y)}.
+$$
+
+The published effective constants, with a smaller fixed $c>0$, give
+fixed $C>0$ and one start such that, uniformly for
+$\alpha\le z\le2\alpha$ and $z^{3/5}\le h\le z$,
+
+$$
+\sum_{z-h<p\le z}\log p\ge h[1-C\mathfrak e(\alpha)].
+\tag{PA1}
+$$
+
+Indeed the source's error denominator at modulus $2$ is
+
+$$
+\log2+(\log(z/h))^{2/3}
+ (\log^+\log(z/h))^{1/3}
+ +(\log z)^{2/5}(\log\log z)^{1/5}.
+$$
+
+It is at most a fixed multiple of
+$(\log\alpha)^{2/3}(\log\log\alpha)^{1/3}$ in this range.
+The first product is zero by its continuous convention when
+$\log(z/h)=0$. The numerator is at least $\log\alpha$,
+which supplies PA1 after decreasing $c$.
+These are weighted prime sums; no extra $\log\alpha$ factor is
+charged to a prime-count error.
+
+### Bound positive residual area on every comparable actual gap
+
+Let $G_s=(\alpha,\beta)$ be any original actual gap with
+$h=\beta-\alpha\le\alpha$. Set $T_\alpha=1+(2\alpha)^{3/5}$.
+PG1's endpoint contact and monotonicity of the same strict $K$ give
+
+$$
+r_s(\alpha+t)=t-[K(\alpha+t)-K(\alpha)]\le t
+\qquad(0\le t\le h).
+$$
+
+If $t\ge T_\alpha$, every prime in $(\alpha,\alpha+t-1]$
+has its first activation strictly in $(\alpha,\alpha+t)$ by the
+existing rule $p<\xi_{p,1}<p+1$. Its full $\log p$ mass belongs
+to this $K$ increment. Higher layers and simultaneous activations
+remain nonnegative parts of the same full inventory. In PA1 take
+$z=\alpha+t-1$ and $h_{\rm TZ}=t-1$. Then
+$\alpha\le z\le2\alpha$, $z-h_{\rm TZ}=\alpha$ and
+$h_{\rm TZ}\ge(2\alpha)^{3/5}\ge z^{3/5}$, so
+
+$$
+r_s(\alpha+t)
+\le t-(t-1)[1-C\mathfrak e(\alpha)]
+\le1+C\mathfrak e(\alpha)t.
+$$
+
+Integrating these nonnegative upper bounds on the two ranges gives
+
+$$
+\boxed{
+\int_\alpha^\beta(r_s(w))_+dw
+\le\frac{T_\alpha^2}{2}+h
+ +\frac C2\mathfrak e(\alpha)h^2
+\ll\alpha^{6/5}+h+\mathfrak e(\alpha)h^2.}
+\tag{PA2}
+$$
+
+If $h<T_\alpha$, the first upper bound alone suffices. PA2 therefore
+holds for every sufficiently large comparable actual gap, independently
+of the following classification. Its right side also bounds
+$\int_y^z r_s(w)dw$ for every $\alpha\le y\le z\le\beta$.
+Unlike the generic $h^2/8$ estimate, PA2 gives a decaying coefficient
+on the long-range quadratic term using an actual arithmetic count.
+The contact at $\alpha$ is essential; an exterior interval without
+that contact would retain its unbounded starting baseline.
+
+### Enlarge the paid class without claiming any coverage fraction
+
+Keep AC9's unchanged $\upsilon_X=\min\{b_X^{1/8},M_X^{1/4}\}$ and
+set
+
+$$
+\mathscr G_X^{\rm ar}
+=\left\{G_s:
+h_s\le\upsilon_X\alpha_s^{3/4}
+             e^{c\Phi(\alpha_s)/2}\right\}.
+\tag{PA3}
+$$
+
+Every endpoint has $\alpha_s\ge b_X$. Since
+$\upsilon_X\le b_X^{1/8}\le\alpha_s^{1/8}$ and
+$\Phi(y)/\log y\to0$, eventually
+$e^{c\Phi(\alpha_s)/2}\le\alpha_s^{1/16}$. Thus
+$h_s/\alpha_s\le\alpha_s^{-1/16}\le b_X^{-1/16}\to0$
+uniformly throughout this class. PA2 applies there beyond one common
+start, including arbitrarily large original clocks.
+
+AC4 already gives $h_s\le2\upsilon_X\alpha_s^{3/4}$ on the old
+class $\mathscr G_X^{(\upsilon)}$. Since
+$e^{c\Phi(\alpha_s)/2}\to\infty$ uniformly for $\alpha_s\ge b_X$,
+
+$$
+\mathscr G_X^{(\upsilon)}\subseteq\mathscr G_X^{\rm ar}
+\tag{PA4}
+$$
+
+beyond that same enlarged start. No existence or positive proportion
+of newly admitted gaps is asserted.
+
+The criteria can be distinguished without assigning such a gap to
+an actual window. If an actual gap satisfies
+$3\upsilon_X\alpha_s^{3/4}\le h_s\le
+\upsilon_X\alpha_s^{3/4}e^{c\Phi(\alpha_s)/2}$, its first-layer
+activation times are distinct because they lie in disjoint
+$(p,p+1)$ intervals. PA1 applied up to $\beta_s-1$ consequently gives
+
+$$
+m_s\log(2\alpha_s)
+\ge\sum_{\alpha_s<p\le\beta_s-1}\log p
+\ge(1-o(1))h_s>\upsilon_X\alpha_s^{3/4}.
+$$
+
+Such a gap would be outside AC3's old class and inside PA3. This
+conditional comparison does not prove that a gap in that band exists.
+
+### Apply the existing last-unfinished-gap and occupation consumers
+
+Remove only the still-unpaid residuals in the added class:
+
+$$
+R_X^{\rm add}(w)=
+\sum_{G_s\in\mathscr G_X^{\rm ar}\setminus\mathscr G_X^{(\upsilon)}}
+\mathbf1_{G_s}(w)r_s(w),\qquad
+E_X^{\rm red}(w)=E^{\rm loc}_{X,H_X}(w)-R_X^{\rm add}(w).
+\tag{PA5}
+$$
+
+PG2's nonpositive unweighted suffix is available on every actual gap,
+not only on AC3's classified family. Reuse the AC6--AC7 consumer:
+in any interval $[u,v]$ the initial suffix and every complete added
+gap have nonpositive contribution. Only the final unfinished added
+gap can need payment; if both endpoints are in one gap, PA2 applies
+directly. For $u\le v\le\min\{2u,\mathsf U_X\}$ its left endpoint
+satisfies $\alpha_s<v\le2u$. Dividing PA2 by $u^{3/2}$ and using PA3,
+$h_s\le\alpha_s$ and $\alpha_s\ge b_X$, gives one fixed $C_2>0$ with
+
+$$
+u^{-3/2}\int_u^vR_X^{\rm add}(w)dw
+\le J_X:=C_2[\upsilon_X^2+b_X^{-3/10}].
+\tag{PA6}
+$$
+
+Here $\mathfrak e(\alpha_s)h_s^2/\alpha_s^{3/2}
+\le\upsilon_X^2$ and $h_s/\alpha_s^{3/2}\le\alpha_s^{-1/2}$.
+When no final unfinished added gap exists, the integral is nonpositive.
+There is no factor counting gaps or future shells.
+
+Define $P_{X,j}^{\rm red}$, $e_{X,r,j}^{\rm red}$ and
+$\mathcal E_X^{\rm red}(\tau)$ by the unchanged PE3--PE5 formulas,
+with integrand PA5 and the original zero convention. PA6 holds before
+taking the same endpoint supremum at every ordinary center
+$x\ge b_X$, including centers outside $D_X$. Directly applying
+VP/AC's existing capped layer-cake comparison gives
+
+$$
+P_{X,H_X,j}^{\rm loc}(x)\le P_{X,j}^{\rm red}(x)+J_X,
+\qquad
+\mathcal E_{X,H_X}^{\rm loc}(\tau)
+\le\mathcal E_X^{\rm red}(\tau)+\frac{SJ_X}{M_X}L_X.
+\tag{PA7}
+$$
+
+All original caps $L_{X,r}$, center shells, future weights and the
+full horizon remain. PA7 is one-sided, not an absolute perturbation
+estimate. It uses no selected-center density or $|S_r|/L_{X,r}$ factor.
+
+### Retain the remaining baseline, exterior and credit together
+
+Apply PA7 once in BL7. The original explicitly paid allowances are
+unchanged, and the additional normalized allowance is
+
+$$
+\Delta_X^{\rm add}:=\frac{c_XSJ_X}{M_X}
+\le C_2Sc_X\left[M_X^{-1/2}
++\frac{b_X^{-3/10}}{M_X}\right]\longrightarrow0.
+\tag{PA8}
+$$
+
+The leading upper account is therefore the same expression with
+$\mathcal E_X^{\rm red}$ replacing $\mathcal E_{X,H_X}^{\rm loc}$:
+
+$$
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le c_X\left[S\tau+\frac{\mathcal E_X^{\rm red}(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
++\mathfrak r_X^{\rm old}+\Delta_X^{\rm add},
+$$
+
+where $\mathfrak r_X^{\rm old}=o(1)$ denotes exactly BL7's old
+allowances at $H=H_X$, including $\omega_X$ and the AC9 payment.
+The exact $c_X$ and entire credit coefficient remain; no new
+multiple of $V_X^K$ is introduced or discarded.
+
+Almost everywhere, the retained integrand is exactly
+
+$$
+E_X^{\rm red}(w)=\mathbf1_{I_X^c}(w)E(w)
++\sum_{G_s\in\mathscr G_X}s\mathbf1_{G_s\cap\{w<H_X\}}(w)
++\sum_{G_s\notin\mathscr G_X^{\rm ar}}\mathbf1_{G_s}(w)r_s(w).
+$$
+
+Thus every low-clock baseline, the entire exterior arithmetic future
+and every residual outside PA3 remain. Added residuals are paid on
+their whole gaps, including portions above $H_X$. No original source,
+window, tie, phase or horizon is changed, and no new cofinal sequence
+is selected.
+
+The remaining sufficient strict joint upper has not been established.
+For the full contradiction objective, JM4's already recorded budget
+$R_0-\delta$, or JM7's $R_\eta-\delta$, with fixed $\delta>0$,
+can be used on the same original cofinal sequence; the stronger
+MT8/BL8 budget remains unproved as well. These existing lower-margin
+routes are reused, not new conclusions of PA1--PA8. The near-clock
+baselines, remaining residuals and exterior $E$ still need a single
+joint arithmetic estimate against the original credit.
+The original strict signed upper, all-integer Robin inequality and RH
+remain unproved; this application has no Lean/kernel verification.
