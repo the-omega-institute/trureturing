@@ -1,6 +1,10 @@
-/- UNCOMPILED actual path-family inventory bridge.
-   Unique vertex coverage earns literal support and retained-edge
-   permutations of the same supplied Hamilton cycle. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualPathFamilyInventory
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualPathFamilyInventory
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [D5/S3/Combinatorics/Graph/Walks/EdgeSlicing]
+   utility: none
+   digest: Unique actual path coverage earns the full support and exact uncut-edge inventories of the same supplied Hamilton cycle. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 import Mathlib.Data.List.OfFn
 import Mathlib.Data.List.Nodup

@@ -149,6 +149,7 @@ theorem actual_joint_partition_of_cycle_inventory
   intro e
   rw [← hfiltered.mem_iff]
   simp only [List.mem_filter, decide_eq_true_eq, SimpleGraph.Walk.mem_edgeSet]
+  rfl
 
 #print axioms actual_joint_partition_of_cycle_inventory
 
