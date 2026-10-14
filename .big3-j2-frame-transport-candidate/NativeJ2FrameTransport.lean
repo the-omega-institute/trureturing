@@ -90,7 +90,7 @@ private theorem frame_selected_coordinates {m : ℕ} (hm : 5 ≤ m)
     have hz : (⟨0, by omega⟩ : Fin (m + 1)) = 0 := by
       apply Fin.ext
       simp
-    simpa only [hz] using hp
+    simpa only [hz] using hp''
   have hq' : anchor F ⟨1, by omega⟩ = q := by
     simpa only [List.getElem?_ofFn, dif_pos (by omega : 1 < m + 1),
       hs, List.cons_append, List.nil_append, List.getElem?_cons_succ,
