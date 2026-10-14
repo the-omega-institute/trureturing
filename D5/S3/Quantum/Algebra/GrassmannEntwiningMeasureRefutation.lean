@@ -8,12 +8,7 @@
 
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Basis
 import Mathlib.Analysis.Calculus.Deriv.Inv
-import Mathlib.Analysis.Calculus.FDeriv.Bilinear
 import Mathlib.LinearAlgebra.Determinant
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option maxRecDepth 4000
@@ -41,12 +36,13 @@ noncomputable def unitC : C := coord 1
 noncomputable def gmul (u v : C) : C := coord (coord.symm u * coord.symm v)
 
 private lemma monomialBasis_empty : monomialBasis ∅ = 1 := by
-  rw [monomialBasis, ExteriorAlgebra.basis_apply_ofCard (Pi.basisFun ℝ (Fin 3)) (Finset.card_empty)]
+  rw [monomialBasis, ExteriorAlgebra.basis_apply_ofCard
+    (Pi.basisFun ℝ (Fin 3)) (Finset.card_empty)]
   exact ExteriorAlgebra.ιMulti_zero_apply _
 
 private lemma unitC_apply (s : Mon) : unitC s = if s = ∅ then 1 else 0 := by
   rw [unitC, ← monomialBasis_empty]
-  simp only [coord, Module.Basis.equivFun_self, eq_comm]
+  simp only [coord.eq_1, Module.Basis.equivFun_self, eq_comm]
 
 private lemma decode_gmul (u v : C) :
     coord.symm (gmul u v) = coord.symm u * coord.symm v :=
@@ -84,7 +80,7 @@ private lemma monomial_product_wrong_parity (s t r : Mon)
     change monomialBasis s * monomialBasis t =
       (_ : ℤˣ) • monomialBasis (s.disjUnion t hd) at hm
     rw [hm, map_zsmul_unit]
-    simp only [Pi.smul_apply, coord, Module.Basis.equivFun_self]
+    simp only [Pi.smul_apply, coord.eq_1, Module.Basis.equivFun_self]
     rw [if_neg, smul_zero]
     intro he
     apply h
@@ -95,7 +91,7 @@ private lemma monomial_product_wrong_parity (s t r : Mon)
 private lemma gmul_expansion (u v : C) :
     gmul u v = ∑ s : Mon, ∑ t : Mon,
       (u s * v t) • coord (monomialBasis s * monomialBasis t) := by
-  simp only [gmul, coord, Module.Basis.equivFun_symm_apply, Finset.sum_mul,
+  simp only [gmul.eq_1, coord.eq_1, Module.Basis.equivFun_symm_apply, Finset.sum_mul,
     Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul]
   rw [Finset.sum_comm]
 
@@ -178,7 +174,7 @@ private noncomputable def mulB : C →L[ℝ] C →L[ℝ] C :=
 
 private lemma mulB_apply (u v : C) : mulB u v = gmul u v := by
   rw [gmul_expansion]
-  simp [mulB, coeffEval, Finset.smul_sum, smul_smul]
+  simp [mulB.eq_1, coeffEval.eq_1, Finset.smul_sum, smul_smul]
 
 private lemma gmul_ginv (u : C) (hu : HasParity 0 u) (hc : u ∅ ≠ 0) :
     gmul u (ginv u) = unitC := by
@@ -204,7 +200,7 @@ private lemma gmul_ginv (u : C) (hu : HasParity 0 u) (hc : u ∅ ≠ 0) :
 private lemma ginv_gmul (u : C) (hu : HasParity 0 u) (hc : u ∅ ≠ 0) :
     gmul (ginv u) u = unitC := by
   rw [← gmul_ginv u hu hc]
-  simp only [← mulB_apply, ginv, map_sub, map_smul,
+  simp only [← mulB_apply, ginv.eq_1, map_sub, map_smul,
     sub_apply, smul_apply]
   simp only [mulB_apply, gmul_unit_left, gmul_unit_right]
 
@@ -249,14 +245,14 @@ def claim : Prop :=
 
 private lemma parity_pick (p : ℕ) (j : Fin 4) (z : X) : HasParity p (pick p j z) := by
   intro s hs
-  simp [pick, hs]
+  simp [pick.eq_1, hs]
 
 private lemma outputs_have_parity (a b : ℝ) (z : X) :
     (∀ j, HasParity 0 (evenOut a b z j)) ∧ (∀ j, HasParity 1 (oddOut z j)) := by
   have he := fun j => parity_pick 0 j z
   have ho := fun j => parity_pick 1 j z
   have hr : HasParity 0 (ratio z) := parity_gmul (he 2) (parity_ginv _ (he 0))
-  constructor <;> intro j <;> fin_cases j <;> dsimp [evenOut, oddOut]
+  constructor <;> intro j <;> fin_cases j <;> dsimp [evenOut.eq_1, oddOut.eq_1]
   · exact parity_add (parity_gmul (parity_gmul (parity_gmul (he 2) (he 2))
       (parity_add parity_unitC (parity_gmul (ho 0) (ho 3))))
       (parity_ginv _ (parity_smul (he 0) b))) (parity_smul
@@ -275,11 +271,11 @@ private lemma pick_pack (e o : Fin 4 → C)
     (he : ∀ j, HasParity 0 (e j)) (ho : ∀ j, HasParity 1 (o j)) :
     (∀ j, pick 0 j (pack e o) = e j) ∧ (∀ j, pick 1 j (pack e o) = o j) := by
   constructor <;> intro j <;> ext s <;> by_cases hs : s.card % 2 = 0
-  · simp [pick, pack, hs]
-  · simp [pick, hs, he j s hs]
-  · simp [pick, hs, ho j s (by omega)]
-  · have hs1 : s.card % 2 = 1 := by omega
-    simp [pick, pack, hs1]
+  · simp [pick.eq_1, pack.eq_1, hs]
+  · simp [pick.eq_1, hs, he j s hs]
+  · simp [pick.eq_1, hs, ho j s (Nat.mod_two_ne_one.mpr hs)]
+  · have hs1 : s.card % 2 = 1 := Nat.mod_two_ne_zero.mp hs
+    simp [pick.eq_1, pack.eq_1, hs1]
 
 private lemma pick_F (a b : ℝ) (z : X) :
     (∀ j, pick 0 j (F a b z) = evenOut a b z j) ∧
@@ -288,7 +284,7 @@ private lemma pick_F (a b : ℝ) (z : X) :
 
 private lemma F_y_scalar (a b : ℝ) (z : X) : F a b z (∅, 2) = z (∅, 0) := by
   have h := congrFun ((pick_F a b z).1 2) ∅
-  simpa [pick, evenOut] using h
+  simpa [pick.eq_1, evenOut.eq_1] using h
 
 private lemma isOpen_domain : IsOpen {z : X | domain z} :=
   (isOpen_ne_fun (continuous_apply (∅, 0)) continuous_const).inter
@@ -315,15 +311,15 @@ set_option maxHeartbeats 800000 in
 private lemma hasFDerivAt_ginv_scalar (c : ℝ) (hc : c ≠ 0) :
     HasFDerivAt ginv (-((c⁻¹)^2) • ContinuousLinearMap.id ℝ C) (c • unitC) := by
   have he := (coeffEval ∅).hasFDerivAt (x := c • unitC)
-  have hi := (hasFDerivAt_inv (by simpa [coeffEval, unitC_apply] using hc)).comp
+  have hi := (hasFDerivAt_inv (by simpa [coeffEval.eq_1, unitC_apply] using hc)).comp
     (c • unitC) he
   have hn := (hasFDerivAt_id (𝕜 := ℝ) (c • unitC)).sub (he.smul_const unitC)
   convert! (hi.smul_const unitC).sub ((hi.mul hi).smul hn) using 1
   · ext u s
-    simp [ginv, coeffEval, pow_two]
+    simp [ginv.eq_1, coeffEval.eq_1, pow_two]
   · ext h s
     by_cases hs : s = ∅ <;>
-      simp [coeffEval, unitC_apply, pow_two, mul_inv_rev,
+      simp [coeffEval.eq_1, unitC_apply, pow_two, mul_inv_rev,
         ContinuousLinearMap.toSpanSingleton_apply, hs]
     all_goals ring
 
@@ -350,16 +346,16 @@ private lemma pick_even_z0 (j : Fin 4) :
     pick 0 j z0 = ((![1, 3, 2, 4] : Fin 4 → ℝ) j) • unitC := by
   ext s
   by_cases hs : s = ∅
-  · simp [pick, z0, unitC_apply, hs]
-  · by_cases hp : s.card % 2 = 0 <;> simp [pick, z0, unitC_apply, hs, hp]
+  · simp [pick.eq_1, z0.eq_1, unitC_apply, hs]
+  · by_cases hp : s.card % 2 = 0 <;> simp [pick.eq_1, z0.eq_1, unitC_apply, hs, hp]
 
 private lemma pick_odd_z0 (j : Fin 4) : pick 1 j z0 = 0 := by
   ext s
   by_cases hs : s = ∅
-  · simp [pick, hs]
-  · by_cases hp : s.card % 2 = 1 <;> simp [pick, z0, hs, hp]
+  · simp [pick.eq_1, hs]
+  · by_cases hp : s.card % 2 = 1 <;> simp [pick.eq_1, z0.eq_1, hs, hp]
 
-private lemma z0_mem_domain : domain z0 := by norm_num [domain, z0]
+private lemma z0_mem_domain : domain z0 := by norm_num [domain.eq_1, z0.eq_1]
 
 private noncomputable def evenD : Fin 4 → (X →L[ℝ] C) :=
   ![(-2 : ℝ) • pick 0 0 + (7/2 : ℝ) • pick 0 2 + pick 0 3,
@@ -418,10 +414,10 @@ private lemma jet_odd_pick (j : Fin 4) :
 private lemma ratio_jet : ratio z0 = (2 : ℝ) • unitC ∧
     HasFDerivAt ratio ((-2 : ℝ) • pick 0 0 + pick 0 2) z0 := by
   have h := jet_gmul (jet_even_pick 2) (jet_ginv (jet_even_pick 0) (by norm_num))
-  refine ⟨by simpa [ratio] using h.2, ?_⟩
+  refine ⟨by simpa [ratio.eq_1] using h.2, ?_⟩
   convert! h.1 using 1
   ext v s
-  norm_num [ratio]
+  norm_num [ratio.eq_1]
 
 set_option maxHeartbeats 800000 in
 -- Four composed output derivatives require finite linear-map normalization.
@@ -440,21 +436,21 @@ private lemma hasFDerivAt_evenOut :
       (jet_sub (jet_sub (jet_even_pick 3) (jet_const 1)) hpp))
     refine ((jet_add hleft hright).1.congr_fderiv ?_).congr_of_eventuallyEq ?_
     · ext h s
-      (norm_num [evenD]; ring)
-    · exact Filter.Eventually.of_forall fun z => by simp [evenOut]
+      (norm_num [evenD.eq_1]; ring)
+    · exact Filter.Eventually.of_forall fun z => by simp [evenOut.eq_1]
   · refine ((jet_smul 2 (jet_ginv (jet_even_pick 2) (by norm_num))).1.congr_fderiv
       ?_).congr_of_eventuallyEq ?_
     · ext h s
-      norm_num [evenD, smul_smul]
-    · exact Filter.Eventually.of_forall fun z => by simp [evenOut]
-  · simpa [evenOut, evenD] using (jet_even_pick 0).1
+      norm_num [evenD.eq_1, smul_smul]
+    · exact Filter.Eventually.of_forall fun z => by simp [evenOut.eq_1]
+  · simpa [evenOut.eq_1, evenD.eq_1] using (jet_even_pick 0).1
   · have hxx := jet_gmul (jet_even_pick 0) (jet_even_pick 1)
     have hcc := jet_gmul (jet_odd_pick 0) (jet_odd_pick 1)
     refine ((jet_add (jet_sub (jet_add (jet_const 1) hxx) ratio_jet.symm)
       hcc).1.congr_fderiv ?_).congr_of_eventuallyEq ?_
     · ext h s
-      (simp [evenD]; ring)
-    · exact Filter.Eventually.of_forall fun z => by simp [evenOut]
+      (simp [evenD.eq_1]; ring)
+    · exact Filter.Eventually.of_forall fun z => by simp [evenOut.eq_1]
 
 private lemma hasFDerivAt_oddOut :
     HasFDerivAt oddOut (ContinuousLinearMap.pi oddD) z0 := by
@@ -463,12 +459,12 @@ private lemma hasFDerivAt_oddOut :
   fin_cases j
   · convert! (jet_sub (jet_odd_pick 2) (jet_gmul ratio_jet.symm (jet_odd_pick 0))).1 using 1
     ext h s
-    (simp [oddD]; ring)
-  · simpa [oddOut, oddD] using (jet_odd_pick 3).1
-  · simpa [oddOut, oddD] using (jet_odd_pick 0).1
+    (simp [oddD.eq_1]; ring)
+  · simpa [oddOut.eq_1, oddD.eq_1] using (jet_odd_pick 3).1
+  · simpa [oddOut.eq_1, oddD.eq_1] using (jet_odd_pick 0).1
   · convert! (jet_add (jet_odd_pick 1) (jet_gmul ratio_jet.symm (jet_odd_pick 3))).1 using 1
     ext h s
-    simp [oddD]
+    simp [oddD.eq_1]
 
 private noncomputable def evenBlock : Matrix (Fin 4) (Fin 4) ℝ :=
   !![-2, 0, 7/2, 1; 0, 0, -1/2, 0; 1, 0, 0, 0; 5, 1, -1, 0]
@@ -491,10 +487,14 @@ private lemma packed_derivative_eq_L :
         (if i.1.card % 2 = 0 then evenD i.2 else oddD i.2)) = L := by
   ext h i
   rcases i with ⟨s, i⟩
-  by_cases hs : s.card % 2 = 0 <;> fin_cases i <;>
-    simp [L, block, hs, evenBlock, oddBlock, evenD, oddD, coeffEval,
-      pick, Fin.sum_univ_succ, show s.card % 2 = 1 ↔ s.card % 2 ≠ 0 by omega]
-  <;> ring
+  by_cases hs : s.card % 2 = 0
+  · fin_cases i <;>
+      simp [L.eq_1, block.eq_1, hs, evenBlock.eq_1, evenD.eq_1,
+        coeffEval.eq_1, pick.eq_1, Fin.sum_univ_succ] <;> ring
+  · have hs1 : s.card % 2 = 1 := Nat.mod_two_ne_zero.mp hs
+    fin_cases i <;>
+      simp [L.eq_1, block.eq_1, hs1, oddBlock.eq_1, oddD.eq_1,
+        coeffEval.eq_1, pick.eq_1, Fin.sum_univ_succ]
 
 private lemma hasFDerivAt_F_z0 : HasFDerivAt (F 1 2) L z0 := by
   rw [← packed_derivative_eq_L]
@@ -504,10 +504,10 @@ private lemma hasFDerivAt_F_z0 : HasFDerivAt (F 1 2) L z0 := by
   apply hasFDerivAt_pi.mpr
   intro i
   by_cases hs : i.1.card % 2 = 0
-  · simpa [F, pack, hs, coeffEval, Function.comp_def] using
+  · simpa [F.eq_1, pack.eq_1, hs, coeffEval.eq_1, Function.comp_def] using
       (coeffEval i.1).hasFDerivAt.comp z0
         ((hasFDerivAt_pi.mp hasFDerivAt_evenOut) i.2)
-  · simpa [F, pack, hs, coeffEval, Function.comp_def] using
+  · simpa [F.eq_1, pack.eq_1, hs, coeffEval.eq_1, Function.comp_def] using
       (coeffEval i.1).hasFDerivAt.comp z0
         ((hasFDerivAt_pi.mp hasFDerivAt_oddOut) i.2)
 
@@ -519,20 +519,20 @@ private lemma toMatrix_L : LinearMap.toMatrix' L.toLinearMap =
   rcases j with ⟨t, j⟩
   by_cases hs : s = t
   · subst t
-    simp [LinearMap.toMatrix'_apply, L, Matrix.reindex_apply,
+    simp [LinearMap.toMatrix'_apply, L.eq_1, Matrix.reindex_apply,
       Matrix.blockDiagonal, Pi.single_apply, eq_comm]
-  · simp [LinearMap.toMatrix'_apply, L, Matrix.reindex_apply,
+  · simp [LinearMap.toMatrix'_apply, L.eq_1, Matrix.reindex_apply,
       Matrix.blockDiagonal, hs]
 
 private lemma det_evenBlock : Matrix.det evenBlock = (1/2 : ℝ) := by
   rw [Matrix.det_succ_row evenBlock 1]
-  norm_num [evenBlock, Fin.sum_univ_succ]
+  norm_num [evenBlock.eq_1, Fin.sum_univ_succ]
   change Matrix.det (!![-2, 0, 1; 1, 0, 0; 5, 1, 0] : Matrix (Fin 3) (Fin 3) ℝ) = 1
   norm_num [Matrix.det_fin_three]
 
 private lemma det_oddBlock : Matrix.det oddBlock = (1 : ℝ) := by
   rw [Matrix.det_succ_row oddBlock 1]
-  norm_num [oddBlock, Fin.sum_univ_succ]
+  norm_num [oddBlock.eq_1, Fin.sum_univ_succ]
   change Matrix.det (!![-2, 0, 1; 1, 0, 0; 0, 1, 0] : Matrix (Fin 3) (Fin 3) ℝ) = 1
   norm_num [Matrix.det_fin_three]
 
@@ -542,7 +542,7 @@ private lemma even_monomial_count :
 private lemma det_L : LinearMap.det L.toLinearMap = (1/16 : ℝ) := by
   rw [← LinearMap.det_toMatrix', toMatrix_L, Matrix.det_reindex_self,
     Matrix.det_blockDiagonal]
-  simp only [block]
+  simp only [block.eq_1]
   simp_rw [apply_ite Matrix.det, det_evenBlock, det_oddBlock]
   rw [Finset.prod_ite]
   simp [Finset.prod_const, even_monomial_count]
@@ -553,7 +553,7 @@ private lemma jacobian_z0 : jacobian 1 2 z0 = (1/16 : ℝ) := by
 
 private lemma density_ratio_z0 : m z0 / m (F 1 2 z0) = (1/8 : ℝ) := by
   rw [m, m, F_y_scalar]
-  norm_num [z0]
+  norm_num [z0.eq_1]
 
 theorem result : ¬ claim := by
   intro h
