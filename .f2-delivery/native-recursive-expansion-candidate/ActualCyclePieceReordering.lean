@@ -68,15 +68,63 @@ private theorem flatMap_perm_of_pointwise {α β : Type*} (l : List α)
     exact (h x List.mem_cons_self).append
       (ih (fun y hy => h y (List.mem_cons_of_mem x hy)))
 
-/-- Every actual slice is assigned one whole route edge by the earned
+/-- Exact support and filtered-edge inventories of a supplied Hamilton
+cycle earn the number of supplied pieces. Each piece contributes one more
+support vertex than edge, including an actual nil piece at adjacent cuts. -/
+theorem actual_cycle_partition_inventory (E : Finset (Sym2 V)) {a : V}
+    (w : G.Walk a a) (hw : w.IsHamiltonianCycle) (pieces : List (Piece G))
+    (hs : (pieces.flatMap fun z => z.walk.support).Perm w.support.tail)
+    (he : (pieces.flatMap fun z => z.walk.edges).Perm
+      (w.edges.filter fun e => decide (e ∉ E)))
+    (hcuts : ∀ e ∈ E, e ∈ w.edges) :
+    (∀ v, (pieces.flatMap fun z => z.walk.support).count v = 1) ∧
+    (∀ e, e ∈ pieces.flatMap (fun z => z.walk.edges) ↔
+      e ∈ w.edgeSet ∧ e ∉ E) ∧ pieces.length = E.card := by
+  classical
+  have hcount (v : V) : (pieces.flatMap fun z => z.walk.support).count v = 1 := by
+    rw [hs.count_eq v]
+    exact (SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hw).2 v
+  have hedge (e : Sym2 V) : e ∈ pieces.flatMap (fun z => z.walk.edges) ↔
+      e ∈ w.edgeSet ∧ e ∉ E := by
+    rw [he.mem_iff]
+    simp only [List.mem_filter, decide_eq_true_eq, SimpleGraph.Walk.mem_edgeSet]
+  have hlength : (pieces.flatMap fun z => z.walk.support).length =
+      (pieces.flatMap fun z => z.walk.edges).length + pieces.length := by
+    induction pieces with
+    | nil => rfl
+    | cons p ps ih =>
+      simp only [List.flatMap_cons, List.length_append, List.length_cons,
+        SimpleGraph.Walk.length_support, SimpleGraph.Walk.length_edges] at ih ⊢
+      omega
+  have hsubset : E ⊆ w.edges.toFinset := by
+    intro e he
+    exact List.mem_toFinset.mpr (hcuts e he)
+  have hn := hw.isCycle.isTrail.edges_nodup
+  have hwhole : w.edges.toFinset.card = w.length :=
+    (List.toFinset_card_of_nodup hn).trans (SimpleGraph.Walk.length_edges w)
+  have hset : (w.edges.filter fun e => decide (e ∉ E)).toFinset = w.edges.toFinset \ E := by
+    ext e
+    simp only [List.mem_toFinset, List.mem_filter, decide_eq_true_eq, Finset.mem_sdiff]
+  have hf := List.toFinset_card_of_nodup (hn.filter (fun e => decide (e ∉ E)))
+  rw [hset, Finset.card_sdiff_of_subset hsubset, hwhole] at hf
+  have hc : E.card ≤ w.length := by
+    simpa only [hwhole] using Finset.card_le_card hsubset
+  have hsl := hs.length_eq
+  have hel := he.length_eq
+  simp only [List.length_tail, SimpleGraph.Walk.length_support] at hsl
+  exact ⟨hcount, hedge, by omega⟩
+
+/-- Every supplied actual piece is assigned one whole route edge by the earned
 endpoint law. Distinct actual slices cannot receive the same route edge:
 that would repeat an endpoint in the exact sliced support partition.
 Finite cardinality then makes this assignment a permutation. -/
-theorem actual_cycle_slices_reordered (E : Finset (Sym2 V)) {a : V}
-    (w : G.Walk a a) (hw : w.IsHamiltonianCycle) (hE : E.Nonempty)
-    (hcuts : ∀ e ∈ E, e ∈ w.edgeSet) (n : ℕ) (hcard : E.card = n)
+theorem actual_partition_pieces_reordered (E : Finset (Sym2 V)) {a : V}
+    (w : G.Walk a a) (pieces : List (Piece G)) (n : ℕ)
+    (hcount : ∀ v, (pieces.flatMap fun z => z.walk.support).count v = 1)
+    (hedges : ∀ e, e ∈ pieces.flatMap (fun z => z.walk.edges) ↔
+      e ∈ w.edgeSet ∧ e ∉ E) (hlen : pieces.length = n)
     (route : Fin (2 * n) → V)
-    (hmatch : ∀ z ∈ cyclePieces E w hw hE hcuts,
+    (hmatch : ∀ z ∈ pieces,
       ∃ i : Fin n, s(z.start, z.finish) = routeEdge route i) :
     ∃ ordered : Fin n → Piece G,
       (∀ i, (ordered i).start = route ⟨2 * i.val, by have hi := i.isLt; omega⟩ ∧
@@ -85,10 +133,6 @@ theorem actual_cycle_slices_reordered (E : Finset (Sym2 V)) {a : V}
       (∀ e, e ∈ ((List.ofFn ordered).flatMap fun z => z.walk.edges) ↔
         e ∈ w.edgeSet ∧ e ∉ E) := by
   classical
-  letI : Finite V := hw.finite
-  let pieces := cyclePieces E w hw hE hcuts
-  obtain ⟨_, hcount, hedges, hlength⟩ := cyclePieces_spec E w hw hE hcuts
-  have hlen : pieces.length = n := hlength.trans hcard
   let old : Fin n → Piece G := fun i => pieces.get (Fin.cast hlen.symm i)
   have hmem (i : Fin n) : old i ∈ pieces := List.get_mem _ _
   have hold : List.ofFn old = pieces := by
@@ -156,6 +200,26 @@ theorem actual_cycle_slices_reordered (E : Finset (Sym2 V)) {a : V}
   · intro e
     exact heperm.mem_iff.trans (hedges e)
 
+/-- Every actual slice is assigned one whole route edge by the earned
+endpoint law. Distinct actual slices cannot receive the same route edge:
+that would repeat an endpoint in the exact sliced support partition.
+Finite cardinality then makes this assignment a permutation. -/
+theorem actual_cycle_slices_reordered (E : Finset (Sym2 V)) {a : V}
+    (w : G.Walk a a) (hw : w.IsHamiltonianCycle) (hE : E.Nonempty)
+    (hcuts : ∀ e ∈ E, e ∈ w.edgeSet) (n : ℕ) (hcard : E.card = n)
+    (route : Fin (2 * n) → V)
+    (hmatch : ∀ z ∈ cyclePieces E w hw hE hcuts,
+      ∃ i : Fin n, s(z.start, z.finish) = routeEdge route i) :
+    ∃ ordered : Fin n → Piece G,
+      (∀ i, (ordered i).start = route ⟨2 * i.val, by have hi := i.isLt; omega⟩ ∧
+        (ordered i).finish = route ⟨2 * i.val + 1, by have hi := i.isLt; omega⟩) ∧
+      (∀ v, ((List.ofFn ordered).flatMap fun z => z.walk.support).count v = 1) ∧
+      (∀ e, e ∈ ((List.ofFn ordered).flatMap fun z => z.walk.edges) ↔
+        e ∈ w.edgeSet ∧ e ∉ E) := by
+  obtain ⟨_, hcount, hedges, hlength⟩ := cyclePieces_spec E w hw hE hcuts
+  exact actual_partition_pieces_reordered E w (cyclePieces E w hw hE hcuts) n
+    hcount hedges (hlength.trans hcard) route hmatch
+
 #print axioms actual_cycle_slices_reordered
 
 private theorem linked_of_getElem (p : Piece G) (ps : List (Piece G))
@@ -182,11 +246,13 @@ private theorem finish_eq_last (p : Piece G) (ps : List (Piece G)) :
 /-- Real connectors expand the permutation into a real Hamilton path on
 the original child vertex type. Its support is precisely the joined actual
 piece supports; its edges are precisely the actual chain inventory. -/
-theorem actual_cycle_slices_joined (E : Finset (Sym2 V)) {a : V}
-    (w : G.Walk a a) (hw : w.IsHamiltonianCycle) (hE : E.Nonempty)
-    (hcuts : ∀ e ∈ E, e ∈ w.edgeSet) (n : ℕ) (hcard : E.card = n + 1)
+theorem actual_partition_pieces_joined (E : Finset (Sym2 V)) {a : V}
+    (w : G.Walk a a) (pieces : List (Piece G)) (n : ℕ)
+    (hcount : ∀ v, (pieces.flatMap fun z => z.walk.support).count v = 1)
+    (hedges : ∀ e, e ∈ pieces.flatMap (fun z => z.walk.edges) ↔
+      e ∈ w.edgeSet ∧ e ∉ E) (hlen : pieces.length = n + 1)
     (route : Fin (2 * (n + 1)) → V)
-    (hmatch : ∀ z ∈ cyclePieces E w hw hE hcuts,
+    (hmatch : ∀ z ∈ pieces,
       ∃ i : Fin (n + 1), s(z.start, z.finish) = routeEdge route i)
     (hlinks : ∀ i (hi : i + 1 < n + 1),
       G.Adj (route ⟨2 * i + 1, by omega⟩) (route ⟨2 * (i + 1), by omega⟩)) :
@@ -200,7 +266,7 @@ theorem actual_cycle_slices_joined (E : Finset (Sym2 V)) {a : V}
       ∀ e, e ∈ ((List.ofFn ordered).flatMap fun z => z.walk.edges) ↔
         e ∈ w.edgeSet ∧ e ∉ E := by
   obtain ⟨ordered, hend, hcount, hedges⟩ :=
-    actual_cycle_slices_reordered E w hw hE hcuts (n + 1) hcard route hmatch
+    actual_partition_pieces_reordered E w pieces (n + 1) hcount hedges hlen route hmatch
   let p := ordered 0
   let ps := List.ofFn fun i : Fin n => ordered i.succ
   have hlist : p :: ps = List.ofFn ordered := (List.ofFn_succ (f := ordered)).symm
@@ -232,6 +298,33 @@ theorem actual_cycle_slices_joined (E : Finset (Sym2 V)) {a : V}
   · simp only [q, SimpleGraph.Walk.support_copy, join_support, hlist]
   · simp only [q, SimpleGraph.Walk.edges_copy, join_edges, p, ps]
 
+/-- Real connectors expand the permutation into a real Hamilton path on
+the original child vertex type. Its support is precisely the joined actual
+piece supports; its edges are precisely the actual chain inventory. -/
+theorem actual_cycle_slices_joined (E : Finset (Sym2 V)) {a : V}
+    (w : G.Walk a a) (hw : w.IsHamiltonianCycle) (hE : E.Nonempty)
+    (hcuts : ∀ e ∈ E, e ∈ w.edgeSet) (n : ℕ) (hcard : E.card = n + 1)
+    (route : Fin (2 * (n + 1)) → V)
+    (hmatch : ∀ z ∈ cyclePieces E w hw hE hcuts,
+      ∃ i : Fin (n + 1), s(z.start, z.finish) = routeEdge route i)
+    (hlinks : ∀ i (hi : i + 1 < n + 1),
+      G.Adj (route ⟨2 * i + 1, by omega⟩) (route ⟨2 * (i + 1), by omega⟩)) :
+    ∃ ordered : Fin (n + 1) → Piece G,
+      ∃ q : G.Walk (route ⟨0, by omega⟩) (route ⟨2 * (n + 1) - 1, by omega⟩),
+      q.IsHamiltonian ∧
+      (∀ i, (ordered i).start = route ⟨2 * i.val, by have hi := i.isLt; omega⟩ ∧
+        (ordered i).finish = route ⟨2 * i.val + 1, by have hi := i.isLt; omega⟩) ∧
+      q.support = (List.ofFn ordered).flatMap (fun z => z.walk.support) ∧
+      q.edges = chainEdges (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) ∧
+      ∀ e, e ∈ ((List.ofFn ordered).flatMap fun z => z.walk.edges) ↔
+        e ∈ w.edgeSet ∧ e ∉ E := by
+  obtain ⟨_, hcount, hedges, hlength⟩ := cyclePieces_spec E w hw hE hcuts
+  exact actual_partition_pieces_joined E w (cyclePieces E w hw hE hcuts) n
+    hcount hedges (hlength.trans hcard) route hmatch hlinks
+
+#print axioms actual_cycle_partition_inventory
+#print axioms actual_partition_pieces_reordered
+#print axioms actual_partition_pieces_joined
 #print axioms actual_cycle_slices_joined
 
 end D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering

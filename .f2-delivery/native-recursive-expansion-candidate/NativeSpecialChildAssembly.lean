@@ -156,6 +156,62 @@ theorem native_special_child_assembled {m k : ℕ} (hm : 3 ≤ m)
       (fun i hi => native_internal_seam_adj hm F hB _ _ (hseams i hi))
   exact ⟨ordered, q, hq, hend, hs, he, hinv⟩
 
+/-- Consume the actual supplied partition of the same previous cycle.
+Its support and edge inventories earn its cardinality, and its native
+endpoint law earns the complete route without selecting new slices. -/
+theorem native_special_child_from_actual_partition {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    {a : {x : Configuration m // SpecialDomain F hB x}}
+    (w : (domainGraph (SpecialDomain F hB)).Walk a a) (hw : w.IsHamiltonianCycle)
+    (pieces : List (Piece (domainGraph (SpecialDomain F hB))))
+    (hs : (pieces.flatMap fun z => z.walk.support).Perm w.support.tail)
+    (he : (pieces.flatMap fun z => z.walk.edges).Perm
+      (w.edges.filter fun e => decide (e ∉ specialCuts hm F hB)))
+    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edges)
+    (B : RawPort → RawPort → Prop) (route : Fin (2 * (k + 1)) → Port k)
+    (honce : ∀ p q : Port k, B (code p) (code q) →
+      ∃! i : Fin (k + 1), s(p, q) = routeEdge route i)
+    (hpair : ∀ z ∈ pieces,
+      ∃ p q : Port k, z.start.val = specialPort F p ∧
+        z.finish.val = specialPort F q ∧ B (code p) (code q))
+    (hseams : ∀ i (hi : i + 1 < k + 1), internalSeam k
+      (code (route ⟨2 * i + 1, by omega⟩)) (code (route ⟨2 * (i + 1), by omega⟩))) :
+    ∃ ordered : Fin (k + 1) → Piece (domainGraph (SpecialDomain F hB)),
+      ∃ q : (domainGraph (SpecialDomain F hB)).Walk
+        (specialVertex hm F hB (route ⟨0, by omega⟩))
+        (specialVertex hm F hB (route ⟨2 * (k + 1) - 1, by omega⟩)),
+      q.IsHamiltonian ∧
+      (∀ i, (ordered i).start =
+        specialVertex hm F hB (route ⟨2 * i.val, by have hi := i.isLt; omega⟩) ∧
+        (ordered i).finish =
+        specialVertex hm F hB (route ⟨2 * i.val + 1, by have hi := i.isLt; omega⟩)) ∧
+      q.support = (List.ofFn ordered).flatMap (fun z => z.walk.support) ∧
+      q.edges = chainEdges (ordered 0) (List.ofFn fun i : Fin k => ordered i.succ) ∧
+      ∀ e, e ∈ ((List.ofFn ordered).flatMap fun z => z.walk.edges) ↔
+        e ∈ w.edgeSet ∧ e ∉ specialCuts hm F hB := by
+  classical
+  let actualRoute := fun i => specialVertex hm F hB (route i)
+  have hmatch : ∀ z ∈ pieces,
+      ∃ i : Fin (k + 1), s(z.start, z.finish) = routeEdge actualRoute i := by
+    intro z hz
+    obtain ⟨p, q, hs, hf, hb⟩ := hpair z hz
+    obtain ⟨i, hi, _⟩ := honce p q hb
+    refine ⟨i, ?_⟩
+    have hs' : z.start = specialVertex hm F hB p := Subtype.ext hs
+    have hf' : z.finish = specialVertex hm F hB q := Subtype.ext hf
+    rw [hs', hf']
+    simpa only [routeEdge, Sym2.map_mk, actualRoute] using
+      congrArg (Sym2.map (specialVertex hm F hB)) hi
+  obtain ⟨hcount, hedges, hlen⟩ :=
+    actual_cycle_partition_inventory (specialCuts hm F hB) w hw pieces hs he hcuts
+  obtain ⟨ordered, q, hq, hend, hs, he, hinv⟩ :=
+    actual_partition_pieces_joined (specialCuts hm F hB) w pieces k hcount hedges
+      (hlen.trans (special_cuts_card hm F hB)) actualRoute hmatch
+      (fun i hi => native_internal_seam_adj hm F hB _ _ (hseams i hi))
+  exact ⟨ordered, q, hq, hend, hs, he, hinv⟩
+
+#print axioms native_special_child_from_actual_partition
+
 #print axioms native_special_child_assembled
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
