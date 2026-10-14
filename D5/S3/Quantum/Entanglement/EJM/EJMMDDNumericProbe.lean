@@ -3,6 +3,7 @@ subtrees per local block. It is not the full simulation certificate, a final
 original-score theorem, or an independently deliverable numeric instance. -/
 import D5.S3.Quantum.Entanglement.EJM.EJMMDDData
 import D5.S3.Quantum.Entanglement.EJM.EJMCacheState
+import D5.S3.Quantum.Entanglement.EJM.EJMMDDPrefixSimulation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -14,6 +15,19 @@ namespace D5.S3.Quantum.Entanglement.EJM.EJMMDDNumericProbe
 open D5.S0.Certificates.FiniteMDDCacheSimulation
 open D5.S3.Quantum.Entanglement.EJM.EJMMDDData
 open D5.S3.Quantum.Entanglement.EJM.EJMCacheState
+open D5.S3.Quantum.Entanglement.EJM.EJMMDDPrefixSimulation
+
+set_option trace.profiler true in
+private theorem triangle_indexed_prefixes : ∀ j : Fin 8,
+    trianglePrefixCheck ⟨j.val, by have h := j.isLt; omega⟩ = true := by
+  decide +kernel
+#print axioms triangle_indexed_prefixes
+
+set_option trace.profiler true in
+private theorem singleton_indexed_prefixes : ∀ j : Fin 8,
+    singletonPrefixCheck ⟨j.val, by have h := j.isLt; omega⟩ = true := by
+  decide +kernel
+#print axioms singleton_indexed_prefixes
 
 set_option trace.profiler true in
 private theorem triangle_prefix_0 :

@@ -46,6 +46,50 @@ def checkSimulation (nodes : Fin N → Node N Coord Value)
     | .branch i children => decide (∀ a,
         checkSimulation nodes step lower fuel (children a) (step cache i a) = true)
 
+/-- A prefix follows the literal diagram and the actual cache simultaneously.
+An early leaf stutters, retaining its own actual cache for the final check. -/
+def followPrefix (nodes : Fin N → Node N Coord Value)
+    (step : Cache → Coord → Value → Cache) :
+    (depth : ℕ) → Fin N → Cache → (Fin depth → Value) → Fin N × Cache
+  | 0, index, cache, _ => (index, cache)
+  | depth + 1, index, cache, path =>
+    match nodes index with
+    | .leaf _ => (index, cache)
+    | .branch i children =>
+      followPrefix nodes step depth (children (path 0)) (step cache i (path 0))
+        (fun j => path j.succ)
+
+/-- Independent bounded subtree receipts cover the complete simulation when
+they quantify over every prefix. No diagram-only or sampled cache check is
+substituted for the actual prefix updates in these premises. -/
+theorem checked_prefixes
+    (nodes : Fin N → Node N Coord Value)
+    (step : Cache → Coord → Value → Cache) (lower : Cache → ℤ)
+    (defaultValue : Value) (depth fuel : ℕ) (index : Fin N) (cache : Cache)
+    (accepted : ∀ path : Fin depth → Value,
+      checkSimulation nodes step lower (fuel + 1)
+        (followPrefix nodes step depth index cache path).1
+        (followPrefix nodes step depth index cache path).2 = true) :
+    checkSimulation nodes step lower (depth + fuel + 1) index cache = true := by
+  induction depth generalizing index cache with
+  | zero =>
+    simpa only [followPrefix, Nat.zero_add] using
+      accepted (fun i => Fin.elim0 i)
+  | succ depth ih =>
+    have amount : depth + 1 + fuel + 1 = (depth + fuel + 1) + 1 := by omega
+    rw [amount, checkSimulation]
+    cases hn : nodes index with
+    | leaf value =>
+      simpa only [followPrefix, hn, checkSimulation] using
+        accepted (fun _ => defaultValue)
+    | branch i children =>
+      apply decide_eq_true
+      intro a
+      apply ih (children a) (step cache i a)
+      intro path
+      simpa only [followPrefix, hn, Fin.cases_zero, Fin.cases_succ] using
+        accepted (Fin.cases a path)
+
 private theorem compatible_update (p : Partial Coord Value)
     (event : Event Coord Value) (compatible : Compatible p event) (i : Coord) :
     Compatible (Function.update p i (some (event i))) event := by
@@ -116,7 +160,36 @@ theorem activation_forces_evaluation
       simp only [eval, hn] at evaluated
       exact ih (children (event i)) evaluated (hbranch index i children hn activated)
 
+/-- Successful evaluations supply an activation valuation: activate exactly
+the nodes which can evaluate to the chosen readout at the fixed event. This
+also covers shared nodes, without enumerating or selecting a path witness. -/
+theorem activation_model_of_evaluation
+    (nodes : Fin N → Node N Coord Value) (event : Event Coord Value)
+    (fuel : ℕ) (root : Fin N) (readout : ℤ)
+    (evaluated : eval nodes fuel root event = some readout) :
+    ∃ active : Fin N → Prop, active root ∧
+      (∀ index i children, nodes index = .branch i children →
+        active index → active (children (event i))) ∧
+      (∀ index value, nodes index = .leaf value → active index → readout = value) := by
+  refine ⟨fun index => ∃ fuel, eval nodes fuel index event = some readout,
+    ⟨fuel, evaluated⟩, ?_, ?_⟩
+  · intro index i children branch activated
+    obtain ⟨fuel, evaluation⟩ := activated
+    cases fuel with
+    | zero => simp only [eval, reduceCtorEq] at evaluation
+    | succ fuel =>
+      exact ⟨fuel, by simpa only [eval, branch] using evaluation⟩
+  · intro index value leaf activated
+    obtain ⟨fuel, evaluation⟩ := activated
+    cases fuel with
+    | zero => simp only [eval, reduceCtorEq] at evaluation
+    | succ fuel =>
+      simp only [eval, leaf, Option.some.injEq] at evaluation
+      exact evaluation.symm
+
 #print axioms checked_simulation_lower_bound
+#print axioms checked_prefixes
 #print axioms activation_forces_evaluation
+#print axioms activation_model_of_evaluation
 
 end D5.S0.Certificates.FiniteMDDCacheSimulation
