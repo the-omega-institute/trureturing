@@ -62,22 +62,26 @@ capture 只读输入，不改 base 或成功收据，也不依赖 Release 模块
 跳过或拒绝的恢复不改 base。
 CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式、输入、收据或缓存 key 的兼容性判断。
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
-主 checkout 的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。
+仍可复用原生模块报告，不保证重评全部历史登记。主 checkout 的 ensure
+仍可按现有主检出专用路径由归档补齐冷的项目层。
 CI required checks use `fetch-or-fail`; a missing or incompatible native seed exits nonzero with the
 independent `lean-cache-publish.yml` producer route. The scheduled Release publisher continues to use
 `reuse-or-build`. Environment variables do not select local or CI policy. Direct `inspect.sh` defaults to `reuse-or-build`,
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 
-受保护的 `dev` 和 `integration-*` push 自动生产分支内 Actions 种子。普通 current 作业限时 30 分钟，
-先以 `fetch-or-fail` 消费已有种子并由 Lake 增量构建；缺失或不兼容种子直接给出长任务补救入口。
-current 已确认发布的增量种子直接供后续使用；未发布时，同一 push 在 current 结束后自动运行
-360 分钟缓存 producer，不加入 required 检查集合。长任务按分支串行，保留正在执行的任务，
-后续 push 只替换尚未执行的 pending 任务，避免持续取消构建。手动补救仍按精确提交触发：
+CI/cache 流程以 [SPEC A22](../../docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 为准。
+普通 current 作业限时 30 分钟；需要 Lean/report 时，以 `fetch-or-fail` 消费已有种子并由 Lake
+增量构建，缺失或不兼容种子直接给出长任务补救入口。
+受保护的 `dev` 和 `integration-*` push 在 current 结束且未取消、需要 Lean/report
+而无可用种子时，按实际 push SHA 自动运行 360 分钟缓存 producer，不加入 required 检查集合。
+current 已确认发布增量种子，或已接受有效 Actions 种子、报告成功且工作已知为 `no-build-work` 时，
+不再触发长任务；不需要 Lean/report 的路径也不触发。长任务按分支串行，保留正在执行的任务，
+后续 push 只替换尚未执行的 pending 任务。手动补救按精确提交触发：
 
 ```sh
 gh workflow run lean-cache-publish.yml --ref dev \
-  -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
+  -f operation=build -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 ```
 
 尚未合并的升级 PR 可以手动加 `lean-cache-produce` label：
@@ -86,19 +90,36 @@ gh workflow run lean-cache-publish.yml --ref dev \
 gh pr edit <PR> --add-label lean-cache-produce
 ```
 
-独立 producer 用 `pull_request:labeled` 的 merge SHA 构建，token 只读仓库和 Actions；
-缓存只写该 PR 的 `refs/pull/<PR>/merge` 空间。producer 成功后重试该 PR 的 required CI；
-再次启动时先移除再添加 label。普通 PR required job 不发布 project 种子。
-PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
-这些私有种子不能给其它 PR 或合并后的 dev push 使用。合并后由上述自动 producer 在实际
-dev/integration push 提交上生产；不将 PR merge tree 的缓存提升到另一个分支。若首次 push
-因缺种子失败，自动 producer 完成后重试检查。
+标签 job 限时 5 分钟，只用 `contents:read/actions:write` dispatch `operation=pr`，
+返回确切目标 producer 的 `workflow_run_id`，不编译、恢复或保存缓存。
+唯一一次长构建使用受保护目标 ref 的固定 workflow 提交 `T` 和缓存上下文，源码检出固定的
+未合并候选 `M`；`pr_source` 绑定真实事件的仓库、PR、head `H`、`M`、base `B`、源 run/attempt 和目标 ref。
+开工和结束均校验当前 PR open/head/target、源事件、目标保护及 `M^1=B,M^2=H`；
+`B` 须在目标历史内，`M` 不必已合入。编译 job 使用 `contents:read/actions:read`，
+通过目标 ref 的 Actions runtime 直接保存缓存，确认 project/dependency/elan 的实际可读 keys；
+不采用 artifact adoption，不作第二次长构建，也不发布 Release。
 
-`source_ref` 必须等于 dispatch ref，且分支受保护；`source_sha` 必须是该分支可达的 40 位提交。
-手动、PR 标签和自动 push producer 共用 `lean-cache-produce` action，均为 360 分钟，
+目标分支须先经普通安装 PR 获得 `operation=pr` 入口；同一 integration 先安装再用后续未合并 PR 验证，
+dev 同样须正常交付安装。调用者以 `AUTO_MERGE=0` 保持选定长缓存 PR 未合并，等待返回的确切
+producer run 和当前 head 的 required 均成功后，才执行普通 pinned merge；head 改变须重新取得成功。
+dispatch 成功不代表构建、恢复或 required 成功。dispatch、来源、构建、保存或可读 key 确认失败
+保留原始原因，调用者不得合并；producer 成功后可重试 required，重新触发标签须先移除再添加。
+普通 PR required job 不发布 project 种子。
+PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
+
+手动 `operation=build`（默认）要求 `source_ref` 等于 dispatch ref，且为受保护的 dev/integration 分支；
+`source_sha` 必须是该分支可达的非零 40 位小写十六进制提交。`operation=pr` 使用上述独立来源校验。
+两种 dispatch 与自动 push producer 共用 `lean-cache-produce` action，均为 360 分钟，
 只构建报告及普通检查所需的原生程序和 fixture 产物，再发布缓存，不运行测试套件。
-发布保留来源验证、run/attempt key、正构建工作和已恢复有效种子时的 `no-build-work` 条件。
-手动与自动分支 producer 共用分支 concurrency；定时受保护 `dev` Release publisher 独立保持 120 分钟。
+发布使用既有格式和 key，验证完整 bundle；正工作保存 run/attempt 快照，已恢复有效种子的
+`no-build-work` 保留实际恢复 key。手动与自动分支 producer 共用分支 concurrency；PR producer
+按源 PR 串行并取消旧运行。定时受保护 `dev` Release publisher 独立保持 120 分钟。
+
+两种 dispatch 可显式设 `regenerate_report_artifacts=true`，默认关闭；本地等价入口为
+`make lean-report REGENERATE_REPORT_ARTIFACTS=1`。它在缓存写锁内清除生成的报告状态并重产，
+跳过整份收据复用与 Release 恢复，禁止该次 Lake 从 artifact cache 恢复旧报告；
+保留编译产物、依赖和 toolchain，由 Lake 判定其有效性。普通短 CI、自动标签 dispatch、自动 push
+及定时 Release 不隐式启用此选项。
 
 `LEAN_REPORT` 可省略；默认输出为
 `.lake/build/stratalint/raw-lean-report.json`。相对目的路径按仓库根目录解析，

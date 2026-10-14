@@ -4827,3 +4827,98 @@ physical-space-three assertion. Sharp constants, acquisition mechanisms
 and physically calibrated costs remain separate questions.
 
 ## 追加锚（本行以下为增补区）
+
+## 41. Paid wrapped current points and the original hard tube
+
+**Definition 41.1 (the added interface and its acquired filtration).**
+Retain exactly Definition 33.1's source, coupling, arbitrary preparation
+phases, negative amplitude convention, both actual $2\pi$ periods,
+$P,Q$, original clock, chronology, guards and four executed costs.
+In particular $W^1,W^2,C$ are one persistent independent covariance-$2$
+Brownian triple, $\nu\ne0$, and $K,\tau,S,\bar q$ are precisely (33.1).
+There is no replacement of the stopped target by a new sample.
+
+Add the following analytic sensor. At a charged time $R_i\in(0,T]$,
+$\operatorname{Read}(R_i)$ returns only $\bar q_{R_i}$: its real height
+and its two wrapped phases. The preparation $q_0$ is known. Put
+
+$$
+\mathcal H_i=\sigma\bigl(U,(R_j,\bar q_{R_j}):1\le j\le i\bigr),
+\qquad \mathcal H_0=\sigma(U),
+\tag{41.1}
+$$
+
+where $U$ is independent of the entire Brownian triple. The next positive
+time $R_{i+1}>R_i$, or the decision to make no further call, is chosen
+from $\mathcal H_i$, the known own execution and the clock, before the
+next unseen interval. Known own execution is a function of these data,
+not another target observation. All issued numerical profiles have the
+same measurability restriction. Clock events already determined by these
+data may end a profile; a subsequent Read may replace only its unexecuted
+continuation. No other source-dependent interruption is allowed.
+The actual paid count $M$ and the actual numerical issuance count are
+almost surely finite through $T$, including own death. Repeated calls
+are charged separately. Native death remains actual own height exit,
+with the ensuing hold of Definition 20.3.
+
+The continuous-time acquired information consists of the paid records
+which have arrived by that time, $U$, and the clock. Its usual augmentation
+is contained in the joint Brownian filtration enlarged by $U$. In
+particular all recursively chosen Read times are stopping times in that
+larger filtration: a time chosen measurably at a stopping time and lying
+later is a stopping time. This larger filtration will be used for
+probability estimates and converses, never as an acquisition input.
+
+One Read supplies neither continuous past nor an unwrapped phase,
+nonzero winding label, bridge, threshold crossing, central coordinate,
+nor target death time. A returned height equal to $l$ or $u$ does certify
+that this held target has already exited; it does not reveal when it
+exited. The sensor is an explicitly added exact-real interface. It is
+not a finite-bit, finite-shot or native physical acquisition theorem.
+
+For $0<\delta<1/4$ let $\mathcal C(\eta,\delta)$ be this class with
+$\mathbb P(D_{\max}(\bar q^{\rm N},\bar q)\le\eta)\ge1-\delta$,
+and define
+
+$$
+V(\eta,\delta)=\inf_{\mathcal C(\eta,\delta)}\mathbb E M.
+\tag{41.2}
+$$
+
+All expectations use the original joint Wiener law and actual execution,
+including unsuccessful paths. The infimum of an empty class is infinity.
+
+**Theorem 41.2 (the almost-sure hard tube is impossible).**
+For every deterministic $0<\eta<\pi$, no policy of Definition 41.1
+satisfies $D_{\max}(\bar q^{\rm N},\bar q)\le\eta$ almost surely.
+
+Proof. Before the first positive Read $R_1$, or through the horizon if
+there is none, the entire actual numerical execution is determined by
+$U$ and the clock. Its own cutoff is determined by that same numerical
+execution. Conditional on $U$, choose a positive time
+$t<\min(R_1,T)$, for example half that minimum, interpreting a missing
+$R_1$ as infinity. The event $\{\tau>t\}$ has positive conditional
+probability and depends only on $W^1$. Independently, $W^2_t$ has a
+nondegenerate centered normal distribution with variance $2t$, so
+$\mathbb P(|b(t)-W^2_t|>2\eta\mid U)>0$.
+
+On a complete native tube of radius $\eta<\pi$, continuity of the two
+phase lifts from their common initial representatives forces
+$|b-W^2_{\cdot\wedge S}|\le2\eta$ on the whole interval, by exactly
+the connected-lift argument of Theorem 13.2. Hence the intersection of
+the two preceding events violates the tube. Its conditional probability
+is strictly positive for almost every $U$, and therefore its probability
+is positive. Clock-driven bends, arbitrary numerical AC profiles and a
+very small first waiting time do not change this argument. $\square$
+
+**Continuation.** Sections 42–49 are in
+[Paid-point observation tracking](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md).
+The section, theorem and equation numbering continues there: the
+[Read converse](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#42-a-read-converse-for-the-complete-predictable-gap-class),
+[chance resource floors](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#43-chance-class-floors-for-actual-native-execution),
+[paid-polling construction](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#45-one-finite-command-policy-using-only-paid-polling),
+[full held accuracy](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#47-missed-excursions-local-branches-and-complete-held-accuracy),
+and [joint orders and lifetime behavior](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#48-joint-fixed-risk-optimum-and-coupled-own-death-behavior)
+use the interface and class of Definition 41.1 above.
+
+## 追加锚（本行以下为增补区）

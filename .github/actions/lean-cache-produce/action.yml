@@ -1,5 +1,22 @@
 name: Produce the Lean Actions cache
 description: Build and publish validated project, dependency and toolchain seeds without running test suites.
+inputs:
+  preparation-only:
+    description: Build for isolated PR artifact transport without ordinary cache publication
+    default: 'false'
+  regenerate-report-artifacts:
+    description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
+    default: 'false'
+outputs:
+  project-key:
+    description: 'Newly published or accepted restored project seed'
+    value: ${{ steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.project.outputs.cache-matched-key }}
+  dependency-key:
+    description: 'Newly published or retained dependency seed'
+    value: ${{ steps.dependency_snapshot.outputs.dependency_ready == 'true' && steps.keys.outputs.dependency_key || steps.dependency.outputs.cache-matched-key }}
+  elan-key:
+    description: 'Existing platform and toolchain pin key'
+    value: ${{ steps.keys.outputs.elan_key }}
 runs:
   using: composite
   steps:
@@ -9,6 +26,12 @@ runs:
     - name: Build the Lean producer for the cache seed
       shell: bash
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
+    - id: prepared
+      if: inputs.preparation-only != 'true'
+      env:
+        GH_TOKEN: ${{ github.token }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
     - id: keys
       env:
         GH_TOKEN: ${{ github.token }}
@@ -24,7 +47,7 @@ runs:
     - shell: bash
       run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
     - id: dependency
-      if: steps.keys.outputs.dependency_key != ''
+      if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -32,7 +55,7 @@ runs:
         key: ${{ steps.keys.outputs.dependency_key }}
         restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
     - id: project
-      if: steps.keys.outputs.project_key != ''
+      if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -52,6 +75,7 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
+        REGENERATE_REPORTS: ${{ inputs.regenerate-report-artifacts }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         # Include ordinary audit programs in the same measured Lake invocation.
         STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
@@ -63,8 +87,15 @@ runs:
         else
           unset STRATALINT_LEAN_PRODUCER_DLL
         fi
-        make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+        case "$REGENERATE_REPORTS" in
+          true) regenerate=1 ;;
+          false) regenerate=0 ;;
+          *) echo "CACHE_SEED_ERROR invalid report regeneration input" >&2; exit 2 ;;
+        esac
+        make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build REGENERATE_REPORT_ARTIFACTS="$regenerate"
+        python3 tools/lean-inspector/publication.py validate .lake/build/stratalint/raw-lean-report.json --repository "$GITHUB_WORKSPACE"
     - id: project_snapshot
+      if: inputs.preparation-only != 'true'
       name: Prepare the project seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
@@ -72,6 +103,7 @@ runs:
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
     - name: Require a usable project seed
+      if: inputs.preparation-only != 'true'
       env:
         READY: ${{ steps.project_snapshot.outputs.project_ready }}
         SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
@@ -88,6 +120,7 @@ runs:
         path: ${{ steps.keys.outputs.project_archive_path }}
         key: ${{ steps.keys.outputs.project_key }}
     - id: dependency_snapshot
+      if: inputs.preparation-only != 'true'
       name: Prepare the dependency seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
@@ -115,7 +148,7 @@ runs:
         path: ${{ steps.keys.outputs.dependency_archive_path }}
         key: ${{ steps.keys.outputs.dependency_key }}
     - name: Publish the toolchain seed
-      if: steps.elan.outputs.cache-hit != 'true'
+      if: inputs.preparation-only != 'true' && steps.elan.outputs.cache-hit != 'true'
       uses: actions/cache/save@v5
       with:
         path: ~/.elan

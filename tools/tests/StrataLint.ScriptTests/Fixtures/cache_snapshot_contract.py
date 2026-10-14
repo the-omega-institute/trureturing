@@ -702,11 +702,14 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 self.assertEqual("pull-requests-do-not-publish-project-seeds", receipts["project"]["reason"])
                 self.assertEqual("true", ready["dependency_ready"])
 
-    def test_pr_producer_publishes_built_project_material_in_its_merge_ref(self):
+    def test_pr_dispatch_never_publishes_candidate_to_ordinary_native_prefix(self):
         _, _, target = self.native_seed("project")
-        self.env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge",
-                        STRATALINT_CACHE_PR_PRODUCER="true")
-        for report, programs, expected in ((2, 0, "true"), (0, 3, "true"),
+        self.env.update(GITHUB_EVENT_NAME="workflow_dispatch", GITHUB_REF="refs/heads/dev",
+                        STRATALINT_CACHE_PR_SOURCE_VALIDATED="true",
+                        STRATALINT_CACHE_SOURCE_REF="refs/pull/12/merge",
+                        STRATALINT_CACHE_TARGET_REF="refs/heads/dev",
+                        STRATALINT_CACHE_SOURCE_COMMIT="a" * 40, STRATALINT_CACHE_CHECKED_OUT_SHA="a" * 40)
+        for report, programs, expected in ((2, 0, "false"), (0, 3, "false"),
                                            (0, 0, "false"), (None, None, "false")):
             with self.subTest(report=report, programs=programs):
                 self.work(report, programs)
@@ -716,18 +719,22 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     self.assertEqual(report + programs, receipts["project"]["build_work"])
                 self.assertEqual(b"native build material", (target / "module.olean").read_bytes())
 
-    def test_pr_producer_publication_rejects_missing_authorization_or_foreign_refs(self):
+    def test_pr_dispatch_publication_rejects_missing_authorization_or_wrong_source_scope(self):
         self.native_seed("project")
         self.work(2, 0)
-        valid = dict(self.env, GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge",
-                     STRATALINT_CACHE_PR_PRODUCER="true")
-        for defect in ({"STRATALINT_CACHE_PR_PRODUCER": "false"},
+        valid = dict(self.env, GITHUB_EVENT_NAME="workflow_dispatch", GITHUB_REF="refs/heads/dev",
+                     STRATALINT_CACHE_PR_SOURCE_VALIDATED="true", STRATALINT_CACHE_SOURCE_REF="refs/pull/12/merge",
+                     STRATALINT_CACHE_TARGET_REF="refs/heads/dev", STRATALINT_CACHE_SOURCE_COMMIT="a" * 40,
+                     STRATALINT_CACHE_CHECKED_OUT_SHA="a" * 40)
+        for defect in ({"STRATALINT_CACHE_PR_SOURCE_VALIDATED": "false"},
                        {"STRATALINT_CACHE_WRITES": "false"},
                        {"STRATALINT_REPORT_SUCCEEDED": "false"},
-                       {"GITHUB_REF": "refs/heads/dev"},
-                       {"GITHUB_REF": "refs/pull/12/head"},
-                       {"GITHUB_REF": "refs/pull/0/merge"},
-                       {"GITHUB_EVENT_NAME": "pull_request_target"}):
+                       {"GITHUB_REF": "refs/heads/integration-another"},
+                       {"STRATALINT_CACHE_SOURCE_REF": "refs/pull/12/head"},
+                       {"STRATALINT_CACHE_SOURCE_REF": "refs/pull/0/merge"},
+                       {"STRATALINT_CACHE_CHECKED_OUT_SHA": "b" * 40},
+                       {"STRATALINT_CACHE_SOURCE_COMMIT": "0" * 40},
+                       {"GITHUB_EVENT_NAME": "pull_request"}):
             with self.subTest(defect=defect):
                 self.env = dict(valid, **defect)
                 ready, _ = self.snapshot_result()

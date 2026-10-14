@@ -48,9 +48,9 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 442. Liu 的 quasi-RH 零自由半平面改进与 FIB 接口
+## 442. Liu v1 的 quasi-RH 零自由半平面改进与 FIB 接口
 
-2026 年 10 月 8 日提交的 Baiying Liu 预印本 [*Slightly improved zero-free half-planes for the quasi-Riemann hypothesis*](../../../Library/Analytic/liu2026quasirh.md)，arXiv:2610.12234v1，给出当前仓内 OpenAI 7/8 路线的最新参数改进。其 Theorem 21.1 对 $\mathbb Q(\sqrt{-3})$ 上全部有限阶 Hecke $L$ 函数以及全部 Dirichlet $L$ 函数给出
+2026 年 10 月 8 日提交的 Baiying Liu 预印本 v1 [*Slightly improved zero-free half-planes for the quasi-Riemann hypothesis*](../../../Library/Analytic/liu2026quasirh.md)，arXiv:2610.12234v1，给出仓内 OpenAI 7/8 路线的第一阶段参数改进。其 Theorem 21.1 对 $\mathbb Q(\sqrt{-3})$ 上全部有限阶 Hecke $L$ 函数以及全部 Dirichlet $L$ 函数给出
 
 $$
 \beta_*\le B_{\mathrm{new}}
@@ -64,7 +64,7 @@ $$
 
 即使该外部预印本的 Lean 形式化经过独立迁移，$B_{\mathrm{new}}>1/2$ 仍不会提供临界线结论；它也没有给普通整数 Möbius 的平方根消去、完整 signed Robin 尾项或 FIB 来源到约数和的保真映射。因此它改善的是零自由辅助输入，不闭合 Robin/RH 的核心联合预算。仓内未重复 OpenAI 7/8 的推导，只记录这个参数优化及其迁移义务。
 
-## 443. Liu 界对现有 FIB packet 门槛的精确影响
+## 443. Liu v1 界对现有 FIB packet 门槛的精确影响
 
 把新界与仓内已有的 packet 预算放在同一坐标中，得到
 
@@ -126,3 +126,107 @@ $$
 这里的窗口应用是本仓综合推导（`repo-derived`）；CRT 和 Fibonacci 进入秩判据是已知工具。结论没有判断这些高 $\omega$ 点的 Robin 符号，也没有否定对每个实际整数成立的 Robin 不等式。它只排除以固定低素因子数筛覆盖全部规范窗口的充分条件；同一实际候选的 CA/SA 来源保持或完整有符号余量仍需独立估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 445. Liu v2 的迭代边界更新
+
+Liu 的 [v2](../../../Library/Analytic/liu2026quasirh.md) 将最终边界从一次代数优化的
+
+$$
+B_{\mathrm{alg}}=\frac{1507-2\sqrt{921}}{1653}
+=0.874957069799168740\ldots
+$$
+
+推进到迭代极限
+
+$$
+B_{\mathrm{new}}=\frac{18\xi_{\mathrm{new}}+7}{18\xi_{\mathrm{new}}+9}
+=0.874957019420098946\ldots,
+$$
+
+其中 $\xi_{\mathrm{new}}\in(0.38858,0.38859)$ 是
+
+$$
+1188\xi^3-2160\xi^2+171\xi+190=0
+$$
+
+在该区间内的唯一根。v2 的新内容是把无权第四矩的可用范围推进到
+$13/18\le\kappa\le1$，再以 $\kappa=2B_{\mathrm{new}}-1$ 迭代长度参数；它不是只替换旧常数。
+
+相对原 $7/8$，可用侧的数值余量变为
+
+$$
+\frac78-B_{\mathrm{new}}
+=0.000042980579901054\ldots,
+$$
+
+比 v1 的 $0.000042930200831260\ldots$ 增加
+
+$$
+5.0379069794\times10^{-8}.
+$$
+
+这仍不改变仓内 packet 的适用分区：已有无槽门槛 $3/4$ 与正槽联合门槛 $63/64$ 都不因这一级微小改进而跨过边界。因而 v2 应更新外部零自由输入的版本和常数，但不产生新的同一来源 signed Robin 估计；继续重复 v1 的零检测推导不会推进当前缺口。
+
+## 446. Ye 短条带零密度与 FIB 相位接口
+
+Yangbo Ye 的 [*Zero density in short strips and short-interval bounds toward Hypothesis S*](../../../Library/Zeros/ye2026shortstripdensity.md)，arXiv:2610.15989v1，给出一个不同于仓内 Guth--Maynard 全局大值输入的短条带接口。其 Theorem 1.2 对 $2/3\le a\le1$ 的 zeta 零点计数给出
+
+$$
+N_\zeta(\sigma;T,T+T^a)
+\ll_{a,\varepsilon}T^{aB(\sigma)+\varepsilon},
+$$
+
+其中在 $7/10\le\sigma\le4/5$ 的分支为
+
+$$
+B(\sigma)=\frac{15(1-\sigma)}{3+5\sigma}.
+$$
+
+Theorem 1.3 进一步对
+
+$$
+\sum_n\Lambda(n)e(\alpha n^\beta)\,\varphi((n-K)/K^\delta)
+$$
+
+给出带显式频率 $m^{-1/2}$ 代价的平滑幂节省，zeta 应用的最小长度阈值为 $\delta>2/3$。
+
+这条输入目前不能接到 FIB Robin 主线：仓内五窗相位是黄金递归／双嵌入读出，尚无保持系数、平滑权重和同一实际 $N_*$ 的映射到 $e(\alpha n^\beta)$ 的定理；而短条带零密度本身也不提供全部 prime powers 的 signed Robin 余项。因此它是可运输的外部解析供应商和明确的接口缺口，不是新的 Robin 估计或 RH 证明。继续重做已有短区间素数计数不会消费这一缺口，必须先建立 FIB 相位到该振荡和的同源桥。
+
+## 447. Sang 对 $7/8$ 零自由边界的进一步改进
+
+Hejian Sang 的 [*Refining the $7/8$ zero-free half-plane for Hecke and Dirichlet $L$-functions*](../../../Library/Zeros/sang2026seveneighths.md)，arXiv:2610.15291v1（2026 年 10 月 11 日），是 Liu v2 之后尚未记录的同族新输入。它假设最近 $7/8$ 结果的解析输入，对 $\mathbb Q(\sqrt{-3})$ 上有限阶 Hecke $L$ 函数及其 Dirichlet 转移给出
+
+$$
+B_{\mathrm{Sang}}=\frac{8748867}{10000000}=0.8748867.
+$$
+
+相对 $7/8$ 的可用侧余量为
+
+$$
+\frac78-B_{\mathrm{Sang}}=0.0001133,
+$$
+
+比仓内 Liu v2 的 $0.874957019420098946\ldots$ 再低约
+$0.000070319420098946$。摘要所述改进来自放宽直接估计并对反射分子使用放大的第一矩，仍以既有第四矩输入为前提；它不是临界线结论。
+
+这条更小的零自由边界不能直接替换现有 FIB packet 的 $7/8$ 参数。若要运输，必须同时重算长度参数、矩范围、反射项、轮廓高度和每个端点不等式；即使运输成功，当前 packet 的无槽缺口、同一实际候选的完整 signed Robin 预算以及 FIB 地址到约数和的保真映射仍未支付。因此这里记录的是一个新外部参数供应商，不重复 Liu 或 OpenAI 的零检测推导，也不把它当作 Robin 不等式或 RH 的证据。
+
+对当前无槽门槛
+
+$$
+\beta>\frac23+\frac{5a}{6},
+$$
+
+可以直接反解其允许的最大短区间指数：
+
+$$
+a<\frac65\left(\beta-\frac23\right).
+$$
+
+因此 Sang 的边界给出
+
+$$
+a<0.24986404,
+$$
+
+而 Liu v2 给出约 $a<0.2499484233$，原始 $7/8$ 给出 $a<1/4$。现有示例 $a=1/10$ 离三者都很远；这项改进没有打开新的 packet 分区，只精确量化了尚未支付的参数余量。
