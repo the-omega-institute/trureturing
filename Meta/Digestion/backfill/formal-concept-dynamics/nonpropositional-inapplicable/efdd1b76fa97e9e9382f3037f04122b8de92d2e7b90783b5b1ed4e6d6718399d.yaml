@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:efdd1b76fa97e9e9382f3037f04122b8de92d2e7b90783b5b1ed4e6d6718399d
+  normalized_sha256: sha256:efdd1b76fa97e9e9382f3037f04122b8de92d2e7b90783b5b1ed4e6d6718399d
+cas_ref: sha256:efdd1b76fa97e9e9382f3037f04122b8de92d2e7b90783b5b1ed4e6d6718399d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“签名”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: f466691f3343bdcd3109b5bcdeb7a70aa6104deb877cb7fc3fd68bfda970db24
+    next_atom_id: 3803f6ecd9b8db53c69f9b8c0ae6dbf7f53479c52499a2d4282b2d3b313e14f5

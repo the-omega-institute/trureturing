@@ -1,0 +1,27 @@
+**Lemma 7.2 (finite exploration under a total-update cap).** Fix a concrete
+finite source $u$, a natural $M$, and an effective observer satisfying the
+liveness premise. There is a terminating algorithm enumerating every
+finite active execution from $u$ with at most $M$ writer updates through
+Return, including its entire boundary and event annotations. No runtime
+bound or totality decision is supplied to the algorithm.
+
+Proof. Explore the rooted tree of concrete configurations and a spent-update
+counter. At each nonterminal node there are at most two successors:
+execute the unique next observer microstep, evaluating a Read on the
+current concrete tree if necessary; or perform one writer update if the
+counter is below $M$. Return is an observer event ending that branch.
+There is no idle-stutter successor. Every successor is effectively
+computable on finite data. Keep histories separate when nodes coincide
+if their annotations are requested.
+
+If this finitely branching tree had infinitely many nodes, a node with
+infinitely many descendants would have a child with infinitely many
+descendants; choosing such children repeatedly gives an infinite path.
+It has at most $M$ writer updates, hence eventually only observer steps.
+Every pending observer transition occurs after finitely many intervening
+events, so this is a progressing finite-interference execution without
+Return, contradicting liveness. The tree therefore has finitely many
+nodes. Breadth-first exploration empties its queue and yields the complete
+finite list. This proves termination under the promise without computing
+tree height in advance or deciding the promise. $\square$
+

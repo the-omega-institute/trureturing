@@ -1,0 +1,44 @@
+**Proposition 214.13 (canonical lift and fixed-method failures).** Lift either endpoint on one actual early-pair carrier: an atom $z$ of $\nu$ supplies half its mass to each raw word with early prefix $01$ and $10$, selected answers $w_{j_i}=1-z_i$ and inactive answers one. Write $\widetilde\nu$ for the resulting measure on all late raw answer coordinates, of mass $S$. For each selected correct class $n=j_i$ and $0\le r<\gamma_n$, put every bit before $n$ to one, bit $n$ to zero, and every later bit $k$ to one exactly when
+
+$$
+ r<a_{nk},\qquad
+ a_{nk}=\widetilde\nu\{w_n=0,w_k=1\},\qquad
+ a_{j_i j_k}=\nu\{z_i=1,z_k=0\}\quad(i<k).
+\tag{214.15}
+$$
+
+Put at each resulting correct word its interval length in $r$, add coincident words, and keep $T=1$. This is the threshold construction (203.9)–(203.10). Its correct totals are $\gamma_n$; its early-pair projection, hence every $m_i,D_{ik}$, is the original $\nu$. The threshold $a_{j_i j_k}=m_i-m_k+D_{ik}$ is distinct from the directed loss $D_{ik}$. There is one score and one stock. At both specified endpoints $\mu=\max\gamma_n=2>T=1$, so the protected-terminal equality in Theorem 203.2 is unavailable.
+
+For the first endpoint, take $u=d=1$, $g=2$, $h=7/4$, $T=1$. Then
+
+$$
+S=13/4,\quad W=17/4,\quad B_N=B_O=6,\quad
+\Delta_N=\Delta_O=7/4.
+\tag{214.16}
+$$
+
+At the $(j_4,j_5)$ schedule the $N$ cell maxima are
+$(3/2,3/4,2,7/4)$ and the $O$ maxima are $(9/4,2,7/4)$. The maxima within the other schedule classes are empty/singleton $17/4$, early pair $21/4$, early/high $45/8$, early/low $39/8$, and late pair $6$; individual supports are given in the complete table below.
+
+For the second endpoint, use $u=d=1$, $g=h=2$, $T=1$. The fourteen atoms are the nine mass-$2/7$ strings
+
+$$
+001111,010111,011011,011101,100111,101011,101101,110011,110101
+$$
+
+and the five mass-$1/7$ strings
+
+$$
+011110,101110,110110,111011,111101.
+$$
+
+The lift has
+
+$$
+S=23/7,\quad W=30/7,\quad B_N=B_O=44/7,
+\qquad\Delta_N=\Delta_O=2.
+\tag{214.17}
+$$
+
+At $(j_4,j_5)$ the $N$ maxima are $(9/7,1,2,2)$ and the $O$ maxima are $(16/7,2,2)$. The remaining full support maxima are empty/singleton $30/7$, early pair $37/7$, early/high $79/14$, early/low $34/7$, and late pair $44/7$; every high-high pair except $(j_4,j_5)$ has support $6$, the pairs $(j_i,\ell)$ for $i\le3$ have $36/7$, and $(j_4,\ell),(j_5,\ell)$ have $37/7$.
+

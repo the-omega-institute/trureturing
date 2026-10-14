@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ee68fe093c4128466569262b66812044322e2bd1bf5e56a0d6453e8c45dfd00
+  normalized_sha256: sha256:8ee68fe093c4128466569262b66812044322e2bd1bf5e56a0d6453e8c45dfd00
+cas_ref: sha256:8ee68fe093c4128466569262b66812044322e2bd1bf5e56a0d6453e8c45dfd00
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 44.3（分类异化）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: d936373fa0668cf3db0a156c27735770fd4a83e4d754cf4f0fddb059c9d41622
+    next_atom_id: dbc33bb8e82517359ab19e5351268ac646ddb34dc116f52b6ea9461ebe64a196

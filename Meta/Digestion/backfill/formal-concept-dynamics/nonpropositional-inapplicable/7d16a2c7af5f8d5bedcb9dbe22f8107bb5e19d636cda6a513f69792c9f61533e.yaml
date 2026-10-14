@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7d16a2c7af5f8d5bedcb9dbe22f8107bb5e19d636cda6a513f69792c9f61533e
+  normalized_sha256: sha256:7d16a2c7af5f8d5bedcb9dbe22f8107bb5e19d636cda6a513f69792c9f61533e
+cas_ref: sha256:7d16a2c7af5f8d5bedcb9dbe22f8107bb5e19d636cda6a513f69792c9f61533e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“解释”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 5871a61d44b4182e72e811f0567ffde61f555f816b25d0d177a983fdde1fda6a
+    next_atom_id: 5baac6e32c0498be41f90b2768dfa4755c0e5b623af4fe4c2f4023cf2397b3f3
