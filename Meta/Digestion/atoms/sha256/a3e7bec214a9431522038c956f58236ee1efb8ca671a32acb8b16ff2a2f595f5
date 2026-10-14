@@ -1,0 +1,19 @@
+**Corollary 4.3 (degenerate domains).** Logical emptiness of $D$ is decidable by
+NSF; it has no acquired-entry or field-minimum conclusion. Unattained labels or
+non-row descriptions fail the input check. For a nonempty $D$, a singleton
+attained $B$ has $J_B(h)$ for every $h$, using one finite source; an empty $B$ is
+vacuous. These cases do not use the distinct-row exclusion argument. Duplicate
+serialized labels must be identified as the same full row before applying the
+set formulation. A frame with no coordinates, or a split with no live coordinates,
+has only finite slices. A nonempty finite entire $D$ therefore has finite prefix
+determination, independent of admission: take one more than the maximum height of
+its sources. The root target cut has one constant row; an empty target cut returns
+the entire source as its exterior, so an infinite source fiber then has infinite
+row image.
+
+Proof. Feasibility and row validity are NSF's complete-source queries. Empty
+products and singletons have their usual unique-tuple meanings. Coordinate-free
+filling yields a single ground tree. Lemma 2.3 isolates each source in a finite
+source list. The statements about the two cuts follow directly from Definition
+1.2. None supplies a physical source for an empty logical fiber. $\square$
+

@@ -1,0 +1,15 @@
+**Assumption 1.5 (exact ordinary suppliers).** The following pinned contracts are
+used with their original domains. [NSF, Lemma 5.1 and Theorem 5.2][NSF] compile
+fixed native observations, signed guards and complete row tests exactly and decide
+finite-source existential feasibility with original witnesses. [NPL, Theorem 4.1,
+Corollary 4.2 and Proposition 4.3][NPL] decide the exact finite or infinite image
+of a designated native expression, including fixed navigation and auxiliary
+variables; finite images are completely enumerated with original witnesses.
+[NPL, Theorem 5.3][NPL] decides and enumerates the entire finite complete-row
+image. [NLC, Theorem 4.1 and Corollary 4.2][NLC] decide simultaneous minimum-leaf-depth
+escape for a nonempty finite tuple of designated native outputs, retaining the
+whole predicate. A DEEP answer constructs a whole finite assignment for every
+requested depth; a BARRIER answer bounds the minimum of that tuple on every
+original solution. These are ordinary proof suppliers, not evidence of a newly
+compiled application.
+

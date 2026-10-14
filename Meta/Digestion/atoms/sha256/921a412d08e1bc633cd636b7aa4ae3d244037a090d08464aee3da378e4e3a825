@@ -1,0 +1,40 @@
+**Corollary 7.3 (all retained closed positive equations and filters).**
+For Definition 7.1, consistency of the defining subsystem together with
+all the additional positive equations and fixed image filters is
+decidable. If consistent, it has exactly the valuation $\mathbf K$.
+
+Proof. Every solution of the conjunction must first solve (SPC.21),
+so must equal $\mathbf K$. Apply Theorem 7.2 to each additional
+$A_l(\mathbf K)=B_l(\mathbf K)$ and conjoin the answers. A second
+definition for the same head is therefore checked as an equality,
+not interpreted as another possible production. A failed comparison
+rejects this valuation; it does not authorize choosing independent
+values for its repeated state occurrences.
+
+Image tests remain separate conjuncts. Their decision here is an exact
+application of [NIS, Definition 3.1 and Proposition 4.3][NIS], with the
+following full correspondence. Its parameter tuple is empty: all grounds,
+atomic indices and powers are already fixed. There is exactly one
+defining equation per state, every state is defined, every recursive
+right side is explicitly pair-rooted, and the only other constructors
+are its permitted finite grounds, $\Omega$ and fixed native decorators.
+There are no free states and therefore one empty saturation mode;
+its canonical guarded extension is precisely $\mathbf K$. Each
+retained filter is literally an expression $C_l\in L_{s_l}$ of that
+definition, with a supplied finite threshold. Additional equations
+do not change this extension and are checked separately.
+Proposition 4.3's Presburger guard in an empty parameter tuple is a
+decidable truth value for the conjunction of these exact filters.
+This uses its closed functional canonical case only; no replacement
+of arbitrary shared unknowns by $\Omega$ or additional model-checking
+theorem is assumed.
+
+In particular, selecting a guarded subsystem from a larger equation
+list is valid for this consumer only when every variable is covered.
+An uncovered residual is still an existential tree variable, outside
+this corollary. The existence of some syntactic selection is a finite
+check on a supplied list; its existence for every acquired-input chart
+has not been proved. The bound (SPC.27) concerns fixed expressions and
+fixed numeric data, not elimination of unbounded rank parameters or a
+uniform depth bound for arbitrary acquired inputs. $\square$
+

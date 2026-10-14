@@ -1,0 +1,37 @@
+**Definition 1.2 (whole row product and inclusive joint prefix).** Let
+$B=(r_1,\ldots,r_m)$ be a finite list of distinct attained complete
+$Q$-rows, with $m\ge2$. Set
+
+$$
+D_i=\{u\in D(I):R_Q(u)=r_i\},\qquad
+\mathcal E_{I,B}=\prod_{i=1}^m D_i,
+$$
+
+and, for $h\in\mathbb N$, put
+
+$$
+J_B(h)\quad\Longleftrightarrow\quad
+\exists\mathbf u=(u_1,\ldots,u_m)\in\mathcal E_{I,B}\quad
+\forall p\in\{L,R\}^*\quad
+|p|\le h\ \Longrightarrow
+r_{u_1}(p)=\cdots=r_{u_m}(p).
+\tag{NMF.2}
+$$
+
+The quantifier order is $\forall h\,\exists\mathbf u\,\forall p$ in
+the all-depth alternative. Different rows index alternative original
+sources; no common auxiliary valuation is imposed across rows.
+Within each $u_i$, all its records, auxiliary values, images, ranks
+and repeated references remain jointly constrained. The tuple may
+change with $h$. A finite disequality is checked on each such finite
+tuple; it need not persist at a limiting object.
+
+[NIC, Theorem 4.3][NIC] supplies entire overlapping signed image
+presentations for each $D_i$, with both original-source directions.
+Its produced values satisfy the complete original row and records;
+conversely it reconstructs each original source itself. These
+presentations can substitute for $D_i$ in (NMF.2), but their parameters
+are kept together within one image case. NSF supplies finite
+feasibility and source reconstruction, not a stopping theorem for
+$\forall h\,J_B(h)$.
+
