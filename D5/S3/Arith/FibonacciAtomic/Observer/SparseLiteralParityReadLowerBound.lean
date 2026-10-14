@@ -574,7 +574,7 @@ noncomputable def source {h depth : Nat} (slots : Fin h → Frontier (fullPatter
     (x : Fin h → Bool) : Source :=
   fill (fullPattern depth) (fun j => .of (!(assigned slots x j)))
 
-private theorem parity_flip {h : Nat} (x : Fin h → Bool) (i : Fin h) :
+theorem parity_flip {h : Nat} (x : Fin h → Bool) (i : Fin h) :
     parity (Function.update x i (!(x i))) ≠ parity x := by
   let base := ∑ j ∈ Finset.univ.erase i, (x j).toNat
   have old : (∑ j, (x j).toNat) = base + (x i).toNat :=
