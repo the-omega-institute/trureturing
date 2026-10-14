@@ -1,0 +1,61 @@
+**Definition 9.4 (finite graph saturation with free states).** Flatten the
+finite displayed syntax, distributing fixed numeral powers through displayed
+pairs, finite atoms, and $\Omega$. Name every displayed subterm and preserve
+the lookup from every original name and occurrence to its slot. Let $S_0$ be
+this finite slot set. For each $s\in S_0$, reserve two ordered child slots
+$(s,L),(s,R)$ before choosing its root case. The initial slot universe is
+$S_{\rm init}=S_0\cup(S_0\times\{L,R\})$, with fresh child-slot names.
+The finite-atom, $\Omega$, and reduced-constructor root cases are exhaustive
+by Theorem 9.2. A constructor case uses its one reserved pair of children;
+all retained definitions of that name refer to the same pair. The resulting
+facts have the forms
+
+$$
+U=[a],\qquad U=\Omega,\qquad U=\sigma^dV,\qquad
+U=F(\sigma^{d_1}V,\sigma^{d_2}W).
+\tag{NIS.33}
+$$
+
+Weighted congruence saturation keeps every parallel edge and propagates both
+child relations whenever two pair roots have been equated. A nonzero shift
+cycle is incompatible with a finite leaf and hence forces that component to
+be leafless. A constructor cycle is retained as a guarded graph; it is never
+converted into an occurs-check failure. A component with no reachable finite
+terminal is recorded as a **free-state node**. The node may later be assigned
+$\Omega$, but it may also be assigned any completed tree satisfying its guarded
+cycle. Components with finite terminals retain all such terminals. Atomic
+collapses and native nonnegativity, image lower bounds, rank guards, and
+noncollapse guards are imposed on every branch.
+
+For a declared finite slot set $S\supseteq S_{\rm init}$, a constructor
+record has a parent in $S$, two children in $S$, and the two stored shifts in
+(NIS.33). Let $\mathcal P_S$ be the declared finite set of such records.
+The work universe must include every retained input relation, every root split
+to be performed on a slot of $S$, and both propagation keys
+$(c,c',L),(c,c',R)$ for every $c,c'\in\mathcal P_S$. A key records the
+corresponding child equation when the parent values are equated, including
+their shift difference. Every parallel relation and every cycle-consistency
+condition remains a conjunct; a key is not permission to discard a second
+definition. Any further constructor record must have its children reserved
+in $S$ and all its propagation keys already reserved in the work universe.
+
+The initial allocation does not prove closure under arbitrary further root
+splitting. An introduced child can itself require a constructor case with
+further child slots. A general saturation theorem must prove that all such
+requests fit a computably supplied finite $S$ and finite obligation universe
+$\mathcal F$, or retain the unprocessed request as a guarded equation. It
+must also justify processing each key once, or reserve finitely many keys for
+the required updates when weighted representatives change. These allocation,
+closure and scheduling assertions are open for the arbitrary presentation.
+
+Conditional on those finite closure and scheduling assertions, weighted
+union-find may store component potentials and all parallel edge differences
+without enumerating repeated path sums. The measure
+$(|\mathcal F\setminus\mathcal A|,r)$, ordered lexicographically, decreases
+when a reserved obligation enters the processed set $\mathcal A$, or one of
+the $r$ reserved unresolved root splits is fixed. No new slot or unreserved
+obligation may be added under this measure. It proves termination of that
+closed syntactic worklist, including finite branching, but not termination
+of an unrestricted slot-generating procedure. Even a proved finite graph
+closure would supply no arithmetic elimination of its completed-tree values.
+

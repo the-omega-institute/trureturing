@@ -1,0 +1,31 @@
+**Corollary 10.9 (effective joint root-protocol criterion).** From the
+finite input $P,R_*$ with its nonempty actual image fiber and
+integers $r\ge1,q\ge0$, the joint feasibility question is decidable
+and a positive answer supplies a finite acquired encoder and
+stationary native reader under Assumption 10.6. This requires no
+supplied source bound or physical word-length bound.
+
+To express the criterion using the existing finite decision-tree
+supplier, form the finite relation table
+
+$$
+\mathcal J_*=\{(G_*(\theta),(\theta(d))_{d\in D}):
+                         \theta\in\Theta_*\}.
+\tag{NBP.10.12}
+$$
+
+For a coloring $c:\Theta_*\to\{1,\ldots,r\}$, let
+$\mathcal J_{c,i}$ consist of its rows with $c(\theta)=i$. Use
+the existing finite minimax call value $V$ in (SLH.69.17), with
+experiment menu $D$ and four-reply alphabet whose absent classes
+are empty. Then the exact criterion is
+
+$$
+\mathsf{InvFeas}_*(r,q)
+\quad\Longleftrightarrow\quad
+\exists c:\Theta_*\to\{1,\ldots,r\}\quad
+ \max_{i:\mathcal J_{c,i}\ne\varnothing}
+       V(\mathcal J_{c,i},D)\le q.
+\tag{NBP.10.13}
+$$
+

@@ -1,0 +1,51 @@
+**Assumption 1.1 (one original source and a complete entry).** Use the finite
+free ordered trees and actual substitution of [ARH, Definitions 1.1–1.2][ARH]:
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+The reply alphabet is $\mathcal A=\{\alpha,\beta,\mathsf b,\bot\}$,
+where $\mathsf b$ denotes a branch and $\bot$ an absent address. For arbitrary
+finite prefix-free original cuts $P,Q$, the entire row $R_P(u)$ consists of
+the concrete exterior, the reached holes in address order, and the partition
+by equality of their whole original subtrees. Empty cuts, absent cuts and
+the root cut are allowed. Fix an acquired old row $R$, a finite literal
+history $H_0$, and a finite signed history $H_{\rm rel}$. A record
+$(a,s,b,t,\bowtie)$ requires both endpoints to exist and compares the whole
+trees $(\rho^a u)|_s$ and $(\rho^b u)|_t$ using $\bowtie\in\{=,\ne\}$.
+Either sign is false when either endpoint is absent. The original domain is
+exactly
+
+$$
+U=\{u:R_P(u)=R,\ r_{\rho^a u}(s)=c\ ((a,s,c)\in H_0),\
+                 \operatorname{Rel}_e(u)\ (e\in H_{\rm rel})\}.
+\tag{AOF.1}
+$$
+
+In particular, all repeated old classes and all original cross-class
+inequalities remain constraints, including classes outside the new task.
+There is a recognized positive root certificate
+$(n,\varepsilon,m,p,=)$ with $p\ne\varepsilon$, allowing exchange of the
+two endpoints. The other records are arbitrary within this finite contract.
+
+The acquisition and complete-state conditions are exactly [ARH,
+Assumption 1.3 and Proposition 2.1][ARH]. The same original-root register
+has actually reached certified epoch $N$ at least every recorded epoch.
+Its accessible initial state is common precisely on (AOF.1). No forgotten
+size, description, timing field, traversal length or control distinction
+is available. In a legal acquired entry $U\ne\varnothing$. Logical empty
+inputs will also be recognized below.
+
+A comparator is a deterministic effective program, correct and terminating
+on each source in $U$, with arbitrary-address literal $\mathsf{Read}$,
+forward actual $\mathsf{ApplyRho}$, and absorbing $\mathsf{Halt}$. Addresses,
+updates, local computation and stopping can depend on received replies;
+there is no initial uniform action or work bound. There is no reset, moved
+root, cloning, unknown-tree equality, identity or witness port. The output
+is the entire original $R_Q(u)$. These are the operation and cost contracts
+of [JRF, Definitions 1.2–1.3][JRF], with (AOF.1) as the domain.
+

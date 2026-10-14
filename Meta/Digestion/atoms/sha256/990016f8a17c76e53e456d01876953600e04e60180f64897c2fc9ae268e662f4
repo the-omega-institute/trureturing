@@ -1,0 +1,33 @@
+**Proof, a majority code and its actual decoder.** Write
+$w(a)=\sum_{i\in I}a_i$. When $2k>r$, retain the bit
+
+$$
+E(a)=\begin{cases}1,&2w(a)>r,\\0,&2w(a)\le r.\end{cases}
+\tag{NAR.13.14}
+$$
+
+This convention assigns any global tie to zero. Binary displacements
+in a conflict edge can only be $1$ or $-1$. If $a_i-a'_i=1$ on at least
+$k$ positions, then $w(a)\ge k>r/2$ and
+$w(a')\le r-k<r/2$. The two codes differ; the reverse displacement is
+symmetric. This proves properness.
+
+There is also a direct decoder using (NAR.13.10). If the selected ages
+are mixed, their normalized later values include both $\ell$ and
+$\ell+1$, so return $\min_{i\in S}z_i$. The retained bit is unnecessary
+on this input. If the $z_i$ are uniform, say all equal $t$, the selected
+ages are either all zero with lag $t$, or all one with lag $t-1$.
+Because $k>r/2$, their common selected age is the strict global majority:
+all zero leaves at most $r-k<r/2$ ones, and all one provides at least
+$k>r/2$ ones. Thus the retained bit is exactly that common age; return
+$t-E(a)$. On promised inputs this has the correct allowed sign. The
+same proof covers $k=1$ when it satisfies the threshold and $k=r$ when
+the whole selected row may be mixed. No numeric epoch is retained.
+
+The all-zero and all-one vectors are adjacent for every $k\le r$,
+so a single code value is impossible. Both bit values are attained,
+proving $N_1(r,k)=2$ above the threshold. At or below it the clique from
+Theorem 13.4 has at least four members; this proves necessity, excludes
+two- and three-value optima and supplies the stronger displayed block
+lower bound.
+

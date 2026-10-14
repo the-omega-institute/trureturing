@@ -1,0 +1,4 @@
+**Definition 2.1 (actual image).** For fixed $k\in\mathbb N$, put
+$L_k=\rho^k[\widehat{\mathcal T}]$. In particular $L_0=\widehat{\mathcal T}$.
+These are interpreted native images, including finite leaf images.
+

@@ -1,0 +1,7 @@
+**Proposition 12.5 (stationary per-source paths and cyclic union graphs).**
+Every terminating run of either counted table visits each running
+state at most once. The graph obtained by taking the union of paths
+from different actual sources or different attained types need not be
+acyclic. The transfers of Theorems 12.3--12.4 apply to this shared graph
+without an acyclicity premise.
+

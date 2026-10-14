@@ -1,0 +1,25 @@
+**Proposition 15.9 (a six-region, thirty-one-source native consumer).**
+At $D=3$ write $W_3=\{w_0,\ldots,w_7\}$ in the original lexicographic
+order $LLL,LLR,LRL,LRR,RLL,RLR,RRL,RRR$. Take
+$P=\{w_6,w_7\}$, $I=\{0,\ldots,5\}$, $H=5$ and $q=6$. The actual
+source family is
+
+$$
+X_a=\mathcal B_3[T_{a_0},T_{6+a_1},T_{12+a_2},T_{18+a_3},
+                 T_{24+a_4},T_{30+a_5},T_{36},T_{42}],
+\qquad a\in\{0,\ldots,5\}^{6}.
+\tag{NAR.15.14}
+$$
+
+Let $\mathcal M=\{S_h:0\le h\le5\}$, where $S_h=I\setminus\{h\}$,
+so $Q_{S_h}=\{w_h,w_6,w_7\}$. The $q=t=6$ certificate of (NAR.15.8)
+gives $31$ distinct actual sources and $195$ distinct named native conflict
+edges. Under either lag convention,
+
+$$
+7\le N_5(6,5)\le36.
+\tag{NAR.15.15}
+$$
+
+No exact alphabet size beyond these bounds is asserted.
+

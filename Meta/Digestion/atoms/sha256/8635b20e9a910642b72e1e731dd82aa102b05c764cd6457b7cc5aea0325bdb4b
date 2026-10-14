@@ -1,0 +1,17 @@
+**Definition 13.2 (the native menu conflict graph).** On the age vectors
+in (NAR.13.1), define a finite undirected graph $G_{H,r,k}$ by
+
+$$
+a\mathrel{\sim_G}a'
+\quad\Longleftrightarrow\quad
+\exists d\in\mathbb Z\setminus\{0\}:\quad
+|\{i\in I:a_i-a'_i=d\}|\ge k.
+\tag{NAR.13.4}
+$$
+
+Exchanging the two vectors exchanges $d$ with $-d$, so the graph is
+symmetric and has no loops. A code is proper when it gives different
+values to adjacent vectors. Coordinates in graph calculations may be
+identified with $1,\ldots,r$ by the public order of $I$; this leaves the
+native offsets in (NAR.13.1) unchanged.
+

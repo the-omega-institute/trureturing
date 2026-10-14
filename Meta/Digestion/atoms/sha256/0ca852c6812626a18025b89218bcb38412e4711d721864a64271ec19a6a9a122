@@ -1,0 +1,25 @@
+**Theorem 3.1 (effective closure and exact conditional distinction).** For every
+finite source $u$,
+
+$$
+S_P(\rho u)=\operatorname{Step}_P(S_P(u)).
+\tag{NAR.3.1}
+$$
+
+For every pair $u,v$ with the same current row $R=(C,\pi)$,
+
+$$
+\begin{aligned}
+&\forall n\ge0,\ R_P(\rho^n u)=R_P(\rho^n v)\\
+&\quad\Longleftrightarrow\
+R_P(\rho u)=R_P(\rho v)\\
+&\quad\Longleftrightarrow\
+\bigl(L_C=\varnothing\ \text{or}\ A_P(u)=A_P(v)\bigr).
+\end{aligned}
+\tag{NAR.3.2}
+$$
+
+Thus a left birth makes the old alpha label exactly the missing distinction;
+without a left birth that distinction is unnecessary even for all later
+same-$P$ rows.
+

@@ -1,0 +1,37 @@
+**Corollary 7.1 (actual whole-row obstruction and conditional recovery).**
+Under Assumption 1.4, a positive all-depth answer for any selected $|B|\ge2$
+rules out a uniform finite-new-read recovery service for the whole row on
+the entire $D$, including lawful adaptive serial forward updates.
+Sourcewise finite original traversal at the actual certified $N$ still
+terminates. In particular the entire eight-hole input has this obstruction
+at $N=2$.
+
+If the exact entire attained row image $A=R_Q(D)$ is finite, every distinct
+pair is exhaustively handled by the recognized class or an owning accepted
+alternative, and every such pair has a finite exclusion, then whole-row
+recovery has an effective finite original-prefix bound. With $H$ the maximum
+pair exclusion depth, the existing current-register decoder gives
+
+$$
+q\le2(2^{H+1}-1),\qquad a=0,\qquad
+\max |p|\le H+\lceil N/2\rceil.
+\tag{NIS.29}
+$$
+
+Proof. The first assertion is the ARH original-prefix/static/serial existence
+correspondence (ARH.2.3): every finite depth admits distinct full rows at one
+common prefix. Its sourcewise alternative uses the paid current-register
+decoder to traverse the original finite tree and then compute its whole row.
+It yields no uniform call cap.
+
+For the positive recovery assertion, NPL Theorem 5.3 supplies the exact finite
+whole-row image under its full-input hypotheses. Depth $H$ separates every
+distinct pair. Decode all $2^{H+1}-1$ original replies through $H$ using
+DelayedOriginalReadout.original_decoder_service, with at most two actual
+current reads per original reply and the displayed address bound. A local
+NSF query with that acquired prefix and all input constraints yields a finite
+candidate; its whole row is forced. The candidate is not a free physical
+source selection. Total submitted literal length is at most the call bound
+times the word bound. Preparation, local computation and memory retain
+their separate charges. $\square$
+
