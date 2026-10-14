@@ -4065,3 +4065,835 @@ entries; they assert no worldwide priority for those suppliers or for
 these ordinary mathematical deductions. $\square$
 
 ## 9.99 追加锚
+
+## 10. Native operational geometry and the second-order bridge
+
+### 10.1 The local native contract
+
+**Definition 10.1 (Native fields, interior domains and added costs).** Fix
+precisely Definition 8.1: one full-support fixed-mean source, one preparation
+with arbitrary fixed phases, and the two controls of Definition 3.1. Put
+$g=4-\mathbf1_{E_-}-\mathbf1_{E_+}$ and use grouped increments $h_a$ on
+$\mathcal M_b=J_b\times(U_b/\Lambda_b)$, not a fixed-height slice. The
+actual representatives remain (8.5), with its negative phase convention.
+The original velocity fields are
+
+$$
+P=\partial_\kappa,\qquad
+Q=\sum_{a=1}^{g}w_a(\kappa)\partial_{h_a},\qquad
+w_a(\kappa)=\frac1{I(\kappa)(\kappa-\lambda_a)}.
+\tag{10.1}
+$$
+
+Here the distinct grouped poles and $I$ are those of §§3.2 and 9.3; group
+multiplicities remain in $I$. A horizontal curve is absolutely continuous
+with $\dot q=v^1P+v^2Q$, $v\in L^1$. A relative command $\gamma=(a,b)$
+starts at zero and has $v^1=\dot a$, $v^2=\dot b$. Its full path guard is
+
+$$
+\kappa(t)=k+a(t)\in J_b\quad\hbox{for every }t.
+\tag{10.2}
+$$
+
+Choose an open connected $\Omega\Subset\mathcal M_b$, and smooth symmetric
+positive definite $A(q)=(a^{ij}(q))$ on a neighbourhood of its closure.
+Declare the horizontal energy and length
+
+$$
+\mathsf E_A(\gamma)=\int_0^T v^{\mathsf T}A(q)^{-1}v\,dt,
+\qquad
+\mathsf L_A(\gamma)=\int_0^T\sqrt{v^{\mathsf T}A(q)^{-1}v}\,dt.
+\tag{10.3}
+$$
+
+Energy may be infinite. The distance $d_A^\Omega$ is the infimum of lengths
+of horizontal curves in $\Omega$ joining the specified states. A density,
+when used, is separately chosen as $d\mu=\rho(\kappa,h)d\kappa\,dh$, with
+$\rho$ smooth and strictly positive near $\overline\Omega$; grouped phases
+have period $2\pi$. Neither structure is supplied by the finite alphabet.
+The original phase variation is
+
+$$
+\mathsf V_\chi(\gamma)=\int_0^T|v^2|\,dt.
+\tag{10.4}
+$$
+
+For a compact height promise $[l,u]\subset J_b$, the exact common-command
+conditions, independent of the initial phases, are
+
+$$
+l+m_\gamma>\kappa_-,\qquad u+M_\gamma<\kappa_+.
+\tag{10.5}
+$$
+
+For an open promise the corresponding inequalities are non-strict. The
+command domain is still $D_\gamma$ in (9.4), and its phase increment is
+$H_\gamma(k)$ in (9.3). An additional requirement to stay in $\Omega$ is a
+restriction of this lawful family, not a replacement for its positivity guard.
+
+**Proposition 10.2 (Command correspondence, chart bounds and cost).** Every
+horizontal curve in this contract is an original history from its starting
+ray, and conversely every Definition 3.1 history in $\Omega$ is such a curve.
+The same prescribed controls give an original-source lawful family on a
+height promise exactly under (10.5). Concatenation and reversal retain (9.6)--(9.7), with
+their translated domains.
+
+Choose $q_0=(k_0,[h_0])$, a box
+$|\kappa-k_0|<\delta$, $|h-h_0|_\infty<\eta<\pi$ whose closure lies in
+$\Omega$, and constants $0<\lambda\le\Lambda$ with
+$\lambda I_2\le A\le\Lambda I_2$ there. Put
+$M=\max_{|k-k_0|\le\delta}|w(k)|_\infty$. Every initial path segment in
+this box satisfies
+
+$$
+|\kappa-k_0|\le\sqrt\Lambda\,\mathsf L_A,
+\quad |h-h_0|_\infty\le M\sqrt\Lambda\,\mathsf L_A,
+\quad \mathsf V_\chi\le\sqrt\Lambda\,\mathsf L_A,
+\quad \mathsf L_A^2\le T\mathsf E_A.
+\tag{10.5a}
+$$
+
+Consequently a curve from $q_0$ of length less than
+$\min(\delta,\eta/M)/\sqrt\Lambda$ cannot first exit this box. This is
+an explicit positive-probability and phase-chart bound for local metric use.
+
+For loops to which Theorem 3.11 applies, with all bottom masses at least
+$\varepsilon>0$ and $A\le\Lambda I_2$ along the whole path, its cost bounds give
+
+$$
+\mathsf L_A\ge
+\frac{16\varepsilon^2}{r\sqrt\Lambda}
+\frac{|h_1-h_3|}{|X-Y|},\qquad
+\mathsf L_A\ge
+\frac{16\varepsilon^2}{r\sqrt\Lambda}
+\frac{|h_0-h_{13}|}{|X+Y-r|},
+\tag{10.5b}
+$$
+
+Here $h_s$ denotes the loop's full five-mode increment, expanded from the
+grouped coordinates. Each bound requires its denominator to be nonzero.
+For phase-class targets replace the
+numerator by its distance to $2\pi\mathbb Z$. On the exact wall the
+corresponding increment difference vanishes; there is no division by zero.
+
+**Proof.** In a continuous real phase lift, (10.1) gives
+$\dot\kappa=v^1$, $\dot h=w(\kappa)v^2$. Integrating $v$ reconstructs
+$a,b$ and gives exactly (9.2). Conversely differentiation of that original
+history gives the displayed equation. Path lifting on a compact time
+interval uses finitely many torus charts; it preserves absolute continuity.
+The coefficient $Q$ never vanishes, and on a compact interior set its inverse
+on its one-dimensional image is bounded, so the two control coefficients
+are integrable. The identity $d^{\mathsf T}w=1$ also recovers the real
+relation increment. Thus no extra phase velocity has been admitted.
+Theorem 9.2 supplies precisely the extrema guard and composition rules.
+
+Pointwise $|v|\le\sqrt\Lambda\sqrt{v^{\mathsf T}A^{-1}v}$ gives the
+first three estimates by integration; Cauchy--Schwarz gives the fourth.
+At a first box exit one of the first two inequalities contradicts the
+strict length bound. Combining the third with Theorem 3.11 gives (10.5b),
+including its real-lift and positive-margin restrictions. These comparisons
+are consequences of the declared norm, not a physical calibration. A distance
+between specified rays supplies neither unknown-height feedback nor phase
+acquisition, reset, extra controls or a finite-shot readout. $\square$
+
+### 10.2 Bracket growth, anisotropic balls and local volume
+
+**Theorem 10.3 (Native privileged coordinates in every mean regime).** The
+flag $\mathcal D^1=\operatorname{span}\{P,Q\}$,
+$\mathcal D^{j+1}=\mathcal D^j+[\mathcal D^1,\mathcal D^j]$ has the following
+constant growth on each fixed-mean manifold:
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{regime}&g&\text{growth}&\text{weights}&Q_{\rm vol}\\ \hline
+ E_-^c\cap E_+^c&4&(2,3,4,5)&(1,1,2,3,4)&11\\
+ E_-\cap E_+^c&3&(2,3,4)&(1,1,2,3)&7\\
+ E_-^c\cap E_+&3&(2,3,4)&(1,1,2,3)&7\\
+ E_-\cap E_+&2&(2,3)&(1,1,2)&4.
+\end{array}
+\tag{10.6}
+$$
+
+At $q_0=(k_0,[h_0])$ take real grouped phase differences and define
+
+$$
+W_{k_0}=\left(\frac{w^{(j)}(k_0)}{j!}\right)_{0\le j<g},\qquad
+x=\kappa-k_0,\quad (z_0,\ldots,z_{g-1})^{\mathsf T}=W_{k_0}^{-1}(h-h_0).
+\tag{10.6a}
+$$
+
+These are privileged coordinates with weights $1$ for $x$ and $j+1$ for
+$z_j$. Write $\nu=(1,1,2,\ldots,g)$. For $q_0$ in any compact
+$K\Subset\Omega$, there are uniform $c,C,s_0>0$ such that
+
+$$
+\{|(x,z)_i|<c s^{\nu_i}\}
+\subset B_{d_A^\Omega}(q_0,s)
+\subset\{|(x,z)_i|<C s^{\nu_i}\},\qquad 0<s<s_0,
+\tag{10.7}
+$$
+
+and
+
+$$
+c s^{Q_{\rm vol}}\le\mu(B_{d_A^\Omega}(q_0,s))
+\le C s^{Q_{\rm vol}},\qquad
+Q_{\rm vol}=1+\frac{g(g+1)}2.
+\tag{10.8}
+$$
+
+Equivalently $d_A^\Omega(q_0,q)\asymp
+|x|+\sum_{j=0}^{g-1}|z_j|^{1/(j+1)}$ locally. The estimates are for fixed
+means and compact interiors, with no uniformity across a wall or at a
+probability endpoint.
+
+**Proof.** Reuse Theorem 9.5: $[P,Q_n]=Q_{n+1}$ and $[Q_i,Q_j]=0$,
+where $Q_n=w^{(n)}\cdot\partial_h$. Smooth-coefficient brackets add no
+new directions beyond these, so
+$\mathcal D^j=\operatorname{span}(P,Q_0,\ldots,Q_{j-1})$ until saturation.
+The grouped-pole Vandermonde determinant (9.25) makes the first $g$
+vertical vectors independent at every interior height. This gives (10.6)
+and invertibility of $W_{k_0}$, with no further exceptional means or heights.
+
+In (10.6a), Taylor's formula gives
+
+$$
+P=\partial_x,\qquad Q=\sum_{j=0}^{g-1}f_j(x)\partial_{z_j},\qquad
+f_j(x)=x^j+O(x^g).
+\tag{10.8a}
+$$
+
+Every word in $P,Q$ of length less than $j+1$ annihilates $z_j$ at the
+origin; a word containing two $Q$'s, applied to $z_j$, vanishes identically,
+since all coefficients depend only on $x$. But $P^jQz_j(0)=j!$. Hence the nonholonomic order of
+$z_j$ is exactly $j+1$, and $x$ has order one. This proves the required
+privileged property, rather than inferring it from ordinary coordinates.
+The weighted dilations and leading fields are explicitly
+
+$$
+\delta_s(x,z_0,\ldots,z_{g-1})=(sx,sz_0,s^2z_1,\ldots,s^gz_{g-1}),
+\qquad \widehat P=\partial_x,\quad
+\widehat Q=\sum_{j=0}^{g-1}x^j\partial_{z_j}.
+\tag{10.8b}
+$$
+
+The chart is injective whenever $|x|<\delta$ and
+$|W_{k_0}z|_\infty<\eta<\pi$. Proposition 10.2 bounds the length before
+its first exit. The smooth fields satisfy the bracket condition with step
+$g$ everywhere in this chart. Their growth ranks are constant, so all its
+points are regular. These are the hypotheses of
+[Jean, *Control of Nonholonomic Systems*, Theorem 3.5,
+Corollary 3.6 and Remark 3.3](https://arxiv.org/abs/1209.4387v2).
+Apply the ball-box estimate to $P,Q$ with the Euclidean control norm.
+On a compact interior neighbourhood,
+$\mathsf L_{I_2}/\sqrt\Lambda\le\mathsf L_A
+\le\mathsf L_{I_2}/\sqrt\lambda$; the same two-sided comparison holds for
+distances. Thus the very same privileged coordinates give (10.7) for $A$.
+The charts vary smoothly with $k_0$ and phase translation; regularity and a
+finite compact cover give uniform constants on $K$.
+
+For volume, $d\mu=\rho(k_0+x,h_0+W_{k_0}z)|\det W_{k_0}|\,dx\,dz$.
+Its factor is bounded above and below on these compact charts. Integrating
+the two boxes gives (10.8). This also matches Jean's Corollary 4.8: the
+adapted frame $(P,Q_0,\ldots,Q_{g-1})$ has lengths $(1,1,2,\ldots,g)$,
+a nonzero volume determinant, and a compactly bounded step. No singular
+stratum is crossed in this use. The exponent is distinct from state
+count, current-ray dimension $g+1$, direct rank two, and the finite or
+infinite real Lie-algebra dimension in §9.3. The inverse-gap costs (10.5b)
+retain the obstruction to cross-wall uniform synthesis. Varying $\kappa$
+alone injects an open interval into the rays, since $p_{13}=\kappa$; the
+state set is uncountable in every regime. $\square$
+
+### 10.3 An exact double-wall chart and a sharp central scale
+
+**Theorem 10.4 (Guarded central transport and the original output).** Assume
+$X=Y=r/2$. At any actual ray $q_0=(k_0,\alpha_0,\beta_0)$ use the phases
+of (8.17), $\alpha=u-v$, $\beta=u$, and the real local differences
+
+$$
+c_0=\frac12-\frac{k_0}{r},\qquad
+x=\kappa-k_0,\quad y=2(\alpha-\alpha_0),\quad
+z=-r\{(\beta-\beta_0)-c_0y\}.
+\tag{10.9}
+$$
+
+A source chart is $|x|<\delta$, $|y|<2\pi$,
+$|c_0y-z/r|<\pi$, where
+$0<\delta\le\min(k_0,r/2-k_0)$; all inequalities are strict. In it
+
+$$
+P=\partial_x,\qquad Q=\partial_y+x\partial_z,
+\qquad [P,Q]=\partial_z.
+\tag{10.10}
+$$
+
+Declare $A=I_2$. For a compact promise $[l,u]\subset(0,r/2)$, choose
+$0<R<\min(l,r/2-u)$ and either sign $s\in\{1,-1\}$. One and the same
+relative command is lawful for every height in the promise and every phase,
+and closes its real control base with central displacement $\tau=s\pi R^2$.
+At every $k_0\in[l,u]$, the distance to its resulting ray is exactly
+
+$$
+d_{I_2}(q_0,q_\tau)=2\pi R=2\sqrt{\pi|\tau|},
+\qquad \Delta\alpha=0,\quad\Delta\beta=-\tau/r.
+\tag{10.11}
+$$
+
+Here the distance may allow all positive native paths, or be restricted to
+any interior open domain containing the constructed path. The original
+$02$ coherence pair differs by
+
+$$
+\|y_{02}(q_\tau)-y_{02}(q_0)\|_2
+=4\sqrt{k_0Z}\left|\sin\left(\frac{\tau}{2r}\right)\right|.
+\tag{10.12}
+$$
+
+All other original coherence pairs return, so (10.12) is also the Euclidean
+norm of the full ten-component output difference. This holds for arbitrary
+preparation phases and arbitrary current phases.
+
+**Proof.** From §8.5, $Q\alpha=1/2$, $Q\beta=1/2-\kappa/r$.
+The map (10.9) is invertible with
+$\kappa=k_0+x$, $\alpha=\alpha_0+y/2$,
+$\beta=\beta_0+c_0y-z/r$, so it gives exactly (10.10), including the
+bracket sign. Take, on $0\le t\le1$,
+
+$$
+a(t)=x(t)=R\sin(2\pi t),\qquad
+b(t)=y(t)=sR(1-\cos(2\pi t)),\qquad z(t)=\int_0^t x\,dy.
+\tag{10.13}
+$$
+
+Then $A_\gamma=B_\gamma=0$, $m_\gamma=-R$, $M_\gamma=R$ and
+$K_\gamma=\tau=s\pi R^2$. Formula (9.11) gives precisely the displayed
+phase endpoint. All bottom masses on the common promise are at least
+$\min(l-R,r/2-u-R)>0$; the middle mass remains $Z>0$.
+The phase variation is $4R<\infty$, so this is an original admissible
+zero-winding loop, not a new central actuator.
+
+At a fixed $k_0$, the path satisfies $|x|\le R$, $|y|\le2R$ and
+$|z|\le\pi R^2$. Since $R<r/4$ and $0<c_0<1/2$, it has
+$|\alpha-\alpha_0|\le R<\pi$ and
+$|\beta-\beta_0|\le R+\pi R^2/r<\pi$. Thus one may choose
+$R<\delta\le\min(k_0,r/2-k_0)$ in the chart above. Its control norm is
+$\sqrt{\dot x^2+\dot y^2}$, so its length is $2\pi R$.
+
+For any rectifiable horizontal path with these real central endpoints,
+$x,y$ form a closed planar curve and $\tau=\int x\,dy$. Reparametrize
+by arclength on $[0,L]$ and subtract the two coordinate means. Periodic
+Wirtinger and Cauchy--Schwarz give the classical intermediate inequality
+
+$$
+\left|\int x\,dy\right|
+=\frac12\left|\int(x\dot y-y\dot x)\,dt\right|
+\le\frac12\left(\int(x^2+y^2)\right)^{1/2}\sqrt L
+\le\frac{L^2}{4\pi}.
+\tag{10.13a}
+$$
+
+The circle attains equality. This lower bound also applies to every
+potential shorter path between the actual rays, without assuming its lift:
+if $L<2\pi R<\pi/2$, then
+$|\Delta\alpha|\le L/2<\pi/4$ and $|\Delta\beta|\le L/2<\pi/4$,
+since $|Q\beta|<1/2$ throughout the positive source. Its endpoint must
+have $\Delta\alpha=2\pi m$ and
+$\Delta\beta=-\tau/r+2\pi n$. As $|\tau|/r<\pi/16$, these bounds force
+$m=n=0$. Its real $y$ endpoint is zero and its real $z$ endpoint is $\tau$;
+(10.13a) excludes the shorter path. This proves sharp distance on rays,
+not just a lower bound in one chosen winding sector. Larger displacements
+must be reduced by the phase lattice; (10.11) asserts only the stated range.
+
+The original output (8.8) has radius $2\sqrt{k_0Z}$ and angle
+$\delta_{02}^0+\beta$. Its chord under $\Delta\beta=-\tau/r$ gives
+(10.12); the arbitrary preparation rotates both vectors equally. In (8.19),
+the four bottom-edge pairs depend only on the returned $k_0,\alpha_0$, so
+the full output difference has exactly this same norm. For an
+explicit instance, let $Z=1/5$, $r=4/5$, $X=Y=2/5$,
+$[l,u]=[3/20,1/4]$, $k_0=1/5$, $R=1/20$ and $s=1$.
+Every bottom mass is at least
+$1/10$ on the whole promised family, while at $k_0$
+
+$$
+\tau=\pi/400,\qquad d_{I_2}=\pi/10,\qquad
+\Delta\beta=-\pi/320,\qquad
+\|\Delta y_{02}\|_2=\frac45\sin(\pi/640)>0.
+\tag{10.13b}
+$$
+
+For the mature Heisenberg correspondence, put $\zeta=z-xy/2$.
+Then (10.10) becomes
+$\partial_x-(y/2)\partial_\zeta$ and
+$\partial_y+(x/2)\partial_\zeta$, exactly the fields and orthonormal
+horizontal norm of [Bonnefont--Juillet, §2.1](https://arxiv.org/abs/1801.04109v2).
+Their generator is half the sum of squares; the full sum below uses their
+process at time $2t$. The coordinate map applies only on the guarded source
+chart, not as a global homogeneous identification of the phase torus.
+The sharp constant above follows from (10.13a) with the native norm, so no
+unspecified normalization of a central-distance formula is used. $\square$
+
+### 10.4 The principal-symbol obstruction to a Euclidean second order bridge
+
+**Theorem 10.5 (No same-clock full-state elliptic identification).**  Let
+$A(q)$ be any smooth positive $2\times2$ native-control covariance and let
+$b^1,b^2$ be arbitrary smooth lower-order coefficients.  The most general
+second-order operator with this covariance and horizontal drift has
+the form
+
+$$
+\mathscr G_Af=\sum_{i,j=1}^2a^{ij}(q)X_iX_jf
+ +\sum_{i=1}^2b^i(q)X_if,\qquad (X_1,X_2)=(P,Q).
+\tag{10.14}
+$$
+
+Its principal symbol is
+
+$$
+\sigma_q(\xi)=\sum_{i,j=1}^2a^{ij}(q)\,\xi(X_i(q))\xi(X_j(q)).
+\tag{10.15}
+$$
+
+It has rank exactly two on every current-ray manifold.  Consequently:
+
+1. no smooth change of coordinates on the full current-state manifold can
+   identify (10.14), in the same clock, with a nondegenerate isotropic
+   Euclidean operator in dimension $g+1$;
+2. no smooth three-dimensional target factor of the native state can have a
+   nondegenerate elliptic second-order generator induced by (10.14);
+3. adding $[P,Q]^2$ supplies a third independent principal direction;
+   adding any nonzero further bracket square also changes the specified
+   second-order law. Zero brackets supply no direction.
+
+**Proof.** The map
+$B_q:\mathbb R^2\to T_q\mathcal M_b$, $B_qe_i=X_i(q)$, is injective because
+$P$ has a nonzero $\kappa$ component and $Q$ is nonzero and vertical.  Since $A(q)$ is
+positive definite, the contravariant symbol is $B_qA(q)B_q^{\mathsf T}$ and
+has rank two.  Equivalently, every covector annihilating both $P$ and $Q$ is
+in the symbol kernel.  On the double wall the nonzero covector $dz-x\,dy$ annihilates
+both fields in (10.10); $dz$ itself does so at the chart centre $x=0$.
+Thus a reachable central direction does not provide principal variance in
+the missing cotangent direction.
+
+Under a smooth coordinate map, a principal symbol transforms by an invertible
+congruence on cotangent spaces, so its rank is unchanged.  The isotropic
+Euclidean operator $\sum_{j=1}^{g+1}\partial_{x_j}^2$ has rank $g+1>2$.
+For a smooth map into a three-dimensional target, the pushed-forward symbol
+has rank at most two and hence cannot be elliptic of rank three.  Drift terms,
+Jacobian terms and the choice between Itô and Stratonovich conventions are
+lower order and cannot change (10.15).
+
+The infinitesimal variance statement is the same obstruction.  If
+$A=\Sigma\Sigma^{\mathsf T}$ and the native diffusion is written with the
+same clock as
+
+$$
+dq_t=\sqrt2\sum_{a=1}^2\left(\sum_{i=1}^2\Sigma_{ia}X_i(q_t)\right)\circ dB_t^a
+ +\text{(drift)}\,dt,
+\tag{10.16}
+$$
+
+then for a smooth test $f$ and exit time $\sigma_U$ from a relatively
+compact interior chart containing the starting point $q$,
+
+$$
+\lim_{t\downarrow0}\frac1t
+\operatorname{Var}_q\bigl(f(q_{t\wedge\sigma_U})\bigr)
+=2\sigma_q(df_q).
+\tag{10.16a}
+$$
+
+Here $f$ is smooth near the chart closure. Itô isometry and continuity of
+the stopped coefficients give this limit; the drift contributes $o(t)$ to
+the variance. Every covector at $q$ is $df_q$ for such a local test.
+
+A covector annihilating the native two-plane has zero variance in this clock,
+whereas a nondegenerate three-dimensional Euclidean Brownian motion has
+strictly positive variance in every nonzero covector.  Squaring the commutator
+would assign positive variance in that missing direction and is therefore a
+different stochastic law, not bookkeeping for the original two controls.
+More explicitly, a factor would require a smooth map $F$ onto an open
+three-dimensional target and a generator $\overline{\mathscr G}$ with
+$\mathscr G_A(f\circ F)=(\overline{\mathscr G}f)\circ F$ for all local
+smooth tests. Quadratic tests with zero first derivative at $F(q)$ identify
+the target symbol with $DF_qB_qA(q)B_q^{\mathsf T}DF_q^{\mathsf T}$, of rank
+at most two. Cutoffs supported inside the source and target charts make
+these legitimate interior tests for any matched Dirichlet realization.
+Hence neither killing nor lower-order terms can repair the rank defect.
+A smooth positive clock multiplier also preserves rank, although it changes
+the operator; singular scaling limits or homogenization are different
+questions. Positive-time smooth transition densities from brackets do not
+contradict a rank-two infinitesimal covariance. $\square$
+
+### 10.5 A declared local analytic diffusion and its observable factor
+
+**Definition 10.6 (Added Dirichlet diffusion).** In any one fixed mean regime
+choose $I=(l,u)\Subset J_b$ and $\Omega=I\times\mathbb T^g$. Take the
+smooth density and positive covariance of Definition 10.1 on a neighbourhood
+of $\overline\Omega$. With $X_1=P$, $X_2=Q$, set
+
+$$
+d\mu=\rho\,d\kappa\,dh,\qquad
+\mathsf T_A[f]=\int_\Omega\sum_{i,j=1}^2a^{ij}
+ (X_jf)\overline{X_if}\,d\mu,
+\qquad X_i^*=-X_i-\operatorname{div}_\mu X_i.
+\tag{10.17}
+$$
+
+Close this form from $C_c^\infty(\Omega)$ and take its nonnegative
+Friedrichs operator and heat semigroup
+
+$$
+\mathcal L_{A,\Omega}=\left(\sum_{i,j}X_i^*(a^{ij}X_j)\right)_{F,\Omega},
+\qquad H_t^\Omega=e^{-t\mathcal L_{A,\Omega}}.
+\tag{10.18}
+$$
+
+The boundary convention is Dirichlet killing at $\kappa=l,u$ and periodic
+phases. Both height boundary components are noncharacteristic because
+$P\kappa=1$. The single analytic clock $t$ assigns instantaneous control
+covariance $2A\,dt$, so the principal part of $-\mathcal L_{A,\Omega}$ is
+$\sum a^{ij}X_iX_j$. Density, covariance, clock and killing are additional
+structure; Definition 3.1 itself supplies no diffusion.
+
+**Theorem 10.7 (Native local heat, stochastic scales and a weaker factor).**
+The added operator has a smooth positive interior heat density
+$p_t^\Omega(q,q')$ with respect to $\mu$. Use the privileged chart $\Phi_q$
+of (10.6a), centred at $q$, and its dilation (10.8b). Then
+
+$$
+\epsilon^{Q_{\rm vol}}p_{\epsilon^2t}^\Omega
+ \bigl(q,\Phi_q^{-1}(\delta_\epsilon\xi)\bigr)
+\longrightarrow\widehat p_q(t,0,\xi).
+\tag{10.19}
+$$
+
+The convergence is smooth locally for $t>0$, and uniform for $q$ in compact
+interior sets. The tangent operator is
+$\sum a^{ij}(q)\widehat X_i\widehat X_j$, with
+$(\widehat X_1,\widehat X_2)=(\widehat P,\widehat Q)$ of (10.8b), and its
+density is $d\widehat\mu_q=\rho(q)|\det W_k|\,dx\,dz$. In particular,
+
+$$
+\mu(B_{d_A^\Omega}(q,\epsilon))\asymp\epsilon^{Q_{\rm vol}},\qquad
+p_t^\Omega(q,q)\sim\widehat p_q(1,0,0)t^{-Q_{\rm vol}/2},
+\quad \widehat p_q(1,0,0)>0.
+\tag{10.20}
+$$
+
+Thus the diagonal powers are $11/2,7/2,7/2,2$ in the four regimes. These
+are local small-time exponents for this added process, not a global spectral
+law or a count of physical axes.
+
+On the double wall, specialize to $A=I_2$ and
+$d\mu=d\kappa\,d\alpha\,d\beta$ (unnormalized angular measure). Then
+$\mathcal L_{I_2,\Omega}=\bigl(-(P^2+Q^2)\bigr)_{F,\Omega}$.
+The change $(u,v)\mapsto(\alpha,\beta)$ has absolute determinant one,
+so this is the grouped constant density. An unrestricted real
+comparison process, started at $(k,\alpha_0,\beta_0)$, is
+
+$$
+\begin{aligned}
+dK_t&=\sqrt2\,dB_t^1,\\
+d\alpha_t&=\frac1{\sqrt2}\,dB_t^2,\\
+d\beta_t&=\sqrt2\left(\frac12-\frac{K_t}{r}\right)dB_t^2,
+\end{aligned}
+\tag{10.21}
+$$
+
+where the two Brownian motions are independent. Project its phases onto the
+actual torus and kill at $\tau_I=\inf\{t:K_t\notin I\}$ to obtain exactly
+the diffusion in (10.18). The unrestricted process is only a comparison
+extension; its states outside $J_b$ are not probability states. On its real
+lift, at every finite $t$,
+
+$$
+K_t=k+\sqrt2B_t^1,\quad
+\alpha_t=\alpha_0+B_t^2/\sqrt2,\quad
+\beta_t=\beta_0+\sqrt2\int_0^t(1/2-K_s/r)\,dB_s^2.
+\tag{10.22}
+$$
+
+Conditionally on the whole $K$ path, the two phase increments are jointly
+Gaussian, with
+
+$$
+\begin{aligned}
+\operatorname{Var}(\alpha_t-\alpha_0\mid K)&=t/2,\\
+\operatorname{Var}(\beta_t-\beta_0\mid K)&=2\int_0^t(1/2-K_s/r)^2ds,\\
+\operatorname{Cov}(\alpha_t-\alpha_0,\beta_t-\beta_0\mid K)
+ &=\int_0^t(1/2-K_s/r)ds.
+\end{aligned}
+\tag{10.23}
+$$
+
+In the centred coordinates (10.9) this unrestricted comparison has exactly
+
+$$
+x_t=\sqrt2B_t^1,\quad y_t=\sqrt2B_t^2,\quad
+z_t=2\int_0^t B_s^1\,dB_s^2,\qquad
+\operatorname{Var}(x_t)=\operatorname{Var}(y_t)=2t,\quad
+\operatorname{Var}(z_t)=2t^2.
+\tag{10.23a}
+$$
+
+These unconditional finite-time moments are not moments of the killed or
+wrapped law. If $\sigma$ is the exit time from a fixed coordinate box centred
+at the initial point with closure inside the source chart and $\Omega$,
+then the corresponding localized statements are
+$\operatorname{Var}(x_t\mid\sigma>t)=2t+o(t)$,
+$\operatorname{Var}(y_t\mid\sigma>t)=2t+o(t)$ and
+$\operatorname{Var}(z_t\mid\sigma>t)=2t^2+o(t^2)$ as $t\downarrow0$.
+
+There is an exact two-dimensional observable factor in the same clock:
+for every bounded Borel $f$ on $I\times\mathbb T$,
+
+$$
+H_t^\Omega(f\circ\pi)(k,\alpha,\beta)
+=\left(e^{t(\partial_k^2+\frac14\partial_\alpha^2)}_{D,I\times\mathbb T}
+ f\right)(k,\alpha),\qquad \pi(k,\alpha,\beta)=(k,\alpha).
+\tag{10.24}
+$$
+
+It retains $p_k$ and the relative bottom phase $\alpha$, and loses the
+original middle-reference output
+
+$$
+y_{02}(k,\beta)=2\sqrt{kZ}
+\begin{pmatrix}\cos(\delta_{02}^0+\beta)\\
+\sin(\delta_{02}^0+\beta)\end{pmatrix}.
+\tag{10.25}
+$$
+
+Locally $y=2\alpha$ makes the factor generator $\partial_k^2+\partial_y^2$;
+globally that coordinate has period $4\pi$. It is not a three-target factor.
+
+**Proof.** Write $A=\Sigma\Sigma^{\mathsf T}$ with its smooth positive
+square root and $Y_a=\sum_i\Sigma_{ia}X_i$. The form in (10.17) is
+$\sum_a\|Y_af\|_2^2$. It is closable: if $f_n\to0$ in $L^2$ and
+$Y_af_n\to g_a$ in $L^2$, testing against $Y_a^*\varphi$ for
+$\varphi\in C_c^\infty(\Omega)$ gives $g_a=0$. In the interior
+
+$$
+-\mathcal L_{A,\Omega}=\sum_aY_a^2+Y_0,\qquad
+Y_0=\sum_a(\operatorname{div}_\mu Y_a)Y_a.
+\tag{10.25a}
+$$
+
+The drift is horizontal and smooth; there is zero potential. An invertible
+smooth change of horizontal frame preserves the full bracket flag, as
+follows inductively by expanding coefficient brackets. Theorem 10.3 thus
+gives strong Hörmander generation, constant ranks and bounded step $g$ on a
+neighbourhood of $\overline\Omega$. The manifold is connected, the density
+is smooth positive, and the Friedrichs realization is selfadjoint and
+nonnegative, with contraction semigroup. These verify the semigroup and
+positivity hypotheses in §3.1.2 of
+[Colin de Verdière--Hillairet--Trélat,
+*Small-time asymptotics of hypoelliptic heat kernels near the diagonal,
+nilpotentization and related results*](https://doi.org/10.5802/ahl.93).
+Their Theorem B, equation (2.8), uses privileged coordinates, a smooth
+horizontal drift and locally bounded bracket step, all verified here.
+The drift disappears on rescaling; $\Sigma$ freezes at $q$ and the density
+rescales to the displayed $\widehat\mu_q$. This proves (10.19).
+
+Their Theorem 3.2 permits different boundary realizations of the same smooth
+operator and density with bounded semigroup norms. Applied to a larger
+interior cylinder and the present Dirichlet cylinder, both are contractions
+and have identical interior differential expressions. It makes their kernel
+difference $O(t^N)$ for every $N$, with derivatives on overlap compacts.
+Thus (10.19) is valid away from the declared killing boundary; no new
+localization theorem or global homogeneous source is presumed. All points
+are regular, which is the supplier's condition for uniformity in $q$.
+Positivity of the tangent kernel, $t=1$, and $\epsilon=\sqrt t$ give the
+second estimate (10.20); the first was proved in Theorem 10.3.
+
+For the double-wall specialization $P,Q$ have zero divergence in the declared
+measure. There is no Itô correction in (10.21), since $QK=0$ and
+$Q(Q\beta)=0$, and the two Brownian motions have zero cross variation.
+Its generator is $P^2+Q^2$, with the factor $\sqrt2$ fixing the clock.
+Integration gives (10.22), and independence of $B^2$ from $K$ gives (10.23).
+In (10.9), $c_0=1/2-k/r$, so cancellation of the common $B^2$ term gives
+$z_t=2\int B^1dB^2$. Itô isometry gives
+$\mathbb E z_t^2=4\int_0^t s\,ds=2t^2$, with zero mean. In this chart
+$d\mu=(2r)^{-1}dx\,dy\,dz$; this is the density of its tangent heat kernel,
+not unit Lebesgue measure silently substituted into (10.19).
+
+For the localized moments, before exit from a box $|x|<d$, the stopped
+martingale $z$ has quadratic variation at most $2d^2t$. Brownian reflection
+for $x,y$ and the exponential martingale inequality for stopped $z$ give
+$\mathbb P(\sigma\le t)\le C e^{-c/t}$ for this fixed box. The unrestricted
+variables in (10.23a) have moments of every order, with Brownian scaling
+$x,y=O_{L^m}(\sqrt t)$ and $z=O_{L^m}(t)$. Cauchy--Schwarz bounds their
+first and second moments on the exit event by exponentially small errors.
+Dividing by $\mathbb P(\sigma>t)$ proves the stated conditional asymptotics.
+This argument concerns only the explicit comparison process and this box.
+
+For a smooth factor test, $Q(f\circ\pi)=\tfrac12(\partial_\alpha f)\circ\pi$,
+so its generator is $\partial_k^2+\tfrac14\partial_\alpha^2$. Tests compactly
+supported in the height interior pull back to $C_c^\infty(\Omega)$.
+More strongly, (10.21) projects to this cylinder diffusion and the exit
+event is exactly $\{\tau_I\le t\}$ on both sides. The killed expectation
+therefore gives (10.24) for bounded Borel tests. Surjectivity makes this
+pullback injective and isometric for the supremum norm; it is not a zero
+intertwiner. Changing the killing boundary to depend on $\beta$ would not
+justify this semigroup identity merely from the generator computation.
+Two states with the same $k,\alpha$ and different $\beta\bmod2\pi$ are
+actual reachable rays by Theorem 8.2, and (10.25) distinguishes them.
+The finite-time stochastic identities, their localized small-time versions
+and the original finite-variation histories are therefore distinct contracts.
+Brownian control paths are almost surely not Definition 3.1 controls. $\square$
+
+### 10.6 Comparison with the actual spatial and stability contracts
+
+**Proposition 10.8 (The missing second-order spatial correspondence).** For
+the same varying-height rays and original controls, the source data are
+
+$$
+\begin{array}{c|c|c|c}
+\text{regime}&\text{current-ray dimension}&\text{native rank}&Q_{\rm vol}\\ \hline
+\text{neither wall}&5&2&11\\
+E_-\text{ only}&4&2&7\\
+E_+\text{ only}&4&2&7\\
+\text{both walls}&3&2&4.
+\end{array}
+\tag{10.26}
+$$
+
+No row supplies a smooth same-clock full-state Euclidean identification or
+an elliptic three-target factor of a positive native two-control operator.
+Neither the local volume/heat estimates nor the observable factor (10.24)
+satisfies the actual dual-scale or rank-three stability hypotheses.
+
+**Proof.** The table and the operator exclusions are Theorems 10.3 and 10.5.
+For precise supplier correspondence, [Boundary Geometry,
+§52.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md)
+identifies the Euclidean dual-scale contract as an infinite Euclidean spatial
+domain, isotropic second-order field, unscreened attractive point source,
+second-order localization and the specified form domain. Native probability
+and phase coordinates furnish none of those additional identifications.
+The same-source obligation in [Continuation III,
+§81.5](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+requires an actual source map inducing the operator on stated function spaces,
+with measures, variances, domains, boundaries and clocks matched. It also
+requires the field and potential to correspond under that same map. The
+factor (10.24) does meet a bounded-observable operator correspondence on its
+stated cylinder, but has only two target coordinates and loses (10.25).
+
+Continuation III Definition 82.1 instead fixes a connected simply connected
+stratified nilpotent group with $\dim V_1=3$, a positive horizontal inner
+product, three left-invariant orthonormal fields, Haar measure and the
+positive homogeneous point-source Green kernel of their sum of squares.
+Its kinetic form and attractive field use this same operator, measure and
+clock on the full punctured test core. Nonabelianity then forces $Q\ge5$;
+this rank-three implication is essential to its scaling instability.
+The literal §82.3 example is $H^1\times\mathbb R$, with a third independent
+Brownian input, topological dimension four and $Q=5$. It is not the native
+rank-two double-wall chart (10.10). Adding its extra Euclidean field would
+alter both the source and the principal symbol.
+
+Definition 83.1 fixes three smooth independent fields, strong Hörmander
+generation, a smooth positive density, a relatively compact smooth domain
+in a flow box, and a Dirichlet Friedrichs realization. Its matched field is
+the full Green integral of that realization, coupled to the same kinetic
+form. Its local implication uses $Q(o)\ge2n-3\ge5$ when $n>3$ because
+exactly three weights are one. The native structure instead has exactly two
+weights one. Even the native double-wall tangent has $Q=4$, where the
+hypothetical homogeneous Green weight and kinetic localization would both
+scale as $s^{-2}$; the strict power comparison in §82.2 or §83.2 gives no
+coupling-independent conclusion at that critical exponent. No such
+attractive potential or stability requirement is part of Definition 3.1.
+
+Thus local control volume, local diagonal heat power, real Lie-algebra
+dimension, affine response capacity and physical axes remain different
+quantities. A smooth positive two-control covariance cannot supply the
+missing third instantaneous variance. The density, stochastic clock and
+Dirichlet law in §10.5 are explicit additions, and do not establish a
+physical kinetic/field relation, a bound state, a global Green law, free
+rotations, mean selection, or a finite-bit acquisition guarantee.
+The fixed-mean law has no operation choosing $X=Y=r/2$.
+
+The separate [native affine continuation result, §§4--6](https://github.com/the-omega-institute/trureturing/blob/6ea83df2b1efe0fbbe16220bc9870321dc2b74b3/docs/develop/theory/FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md)
+concerns exact affine updates and positive-band probability-leg
+approximation; it supplies none of these metric, diffusion or physical
+correspondences. The new deductions here are their distinct native
+control-coordinate, cost, output and second-order applications. Jean's
+estimates and the cited heat results are literature-attested intermediates;
+no general classical theorem or worldwide priority is claimed. $\square$
+
+### 10.7 Finite measure and the precise killed Green boundary
+
+**Proposition 10.9 (Native finite-volume and killed-domain limits).** With
+the explicitly chosen constant density $d\mu_0=d\kappa\,dh$, the whole
+positive source has
+
+$$
+\mu_0(\mathcal M_b)=(\kappa_+-\kappa_-)(2\pi)^g<\infty.
+\tag{10.27}
+$$
+
+Consequently its metric balls cannot satisfy a positive lower bound
+$cR^{Q_{\rm vol}}$ for every $R>0$. This is a limitation for this density,
+not for arbitrary densities with singular endpoint growth.
+
+For the double-wall identity-covariance Dirichlet realization in Theorem 10.7,
+let $\Gamma_q(q')=\int_0^\infty p_t^\Omega(q,q')\,dt$. Its full integral is
+positive, finite and smooth for $q'\ne q$, is infinite at $q'=q$, and obeys
+
+$$
+\int_\Omega\Gamma_q(q')\,d\mu(q')
+=\frac{(k-l)(u-k)}2\le\frac{(u-l)^2}{8},\qquad q=(k,\alpha,\beta).
+\tag{10.28}
+$$
+
+**Proof.** Integrate the constant density over the finite interval and the
+$g$ phase circles to get (10.27). Every ball is a subset of this finite
+measure space, whereas $cR^{Q_{\rm vol}}\to\infty$, proving the global
+volume obstruction. On each $\Omega\Subset\mathcal M_b$, any smooth
+positive density defined near its closure also has finite total mass by
+boundedness and compactness. These facts preclude importing all-scale
+homogeneous volume growth from the local chart.
+
+In the double-wall cylinder, apply the one-dimensional Dirichlet Poincaré
+inequality at each $(\alpha,\beta)$ and then integrate over the torus:
+
+$$
+\|f\|_{L^2(\mu)}^2\le\frac{(u-l)^2}{\pi^2}\|Pf\|_{L^2(\mu)}^2
+\le\frac{(u-l)^2}{\pi^2}\mathsf T_{I_2}[f],\qquad
+\mathcal L_{I_2,\Omega}\ge\lambda_D:=\frac{\pi^2}{(u-l)^2}>0.
+\tag{10.29}
+$$
+
+The estimate passes from $C_c^\infty(\Omega)$ to the closed form domain.
+Symmetry and the semigroup law therefore give, for $t\ge1$,
+
+$$
+0\le p_t^\Omega(q,q')\le e^{-\lambda_D(t-1)}
+\sqrt{p_1^\Omega(q,q)p_1^\Omega(q',q')}.
+\tag{10.30}
+$$
+
+Indeed each time-$1/2$ kernel row has squared $L^2$ norm equal to the
+corresponding diagonal time-one kernel; the intervening operator has norm
+at most $e^{-\lambda_D(t-1)}$. For $q'\ne q$, the off-diagonal
+flatness at $t=0$ in the cited heat paper §3.2.1 gives $O(t^N)$ on compact
+sets for every $N$. These small- and large-time bounds make $\Gamma_q$
+finite off $q$. Integrating the heat equation against compactly supported
+tests gives $\mathcal L_{I_2,\Omega}\Gamma_q=\delta_q$ in distributions;
+hypoellipticity then gives smoothness off $q$. Positivity follows from the
+positive interior heat density. At $q'=q$, (10.20) has power $t^{-2}$,
+whose integral at zero diverges.
+
+For spatial integrability and (10.28), the kernel row mass is exactly
+$\mathbb P_q(\tau_I>t)$, by the killed representation (10.21).
+The bounded nonnegative function $v(k)=(k-l)(u-k)/2$ has $v''=-1$ and
+zero boundary values. Itô's formula at $t\wedge\tau_I$ gives
+$\mathbb E v(K_{t\wedge\tau_I})=v(k)-\mathbb E(t\wedge\tau_I)$.
+Nonnegativity first implies $\mathbb E\tau_I\le v(k)<\infty$; bounded
+convergence then gives equality. Tonelli's theorem yields (10.28), including
+integrability despite the single-point infinite value. This also justifies
+the distributional heat integration above, with the terminal contribution
+zero by the spectral gap and smoothing. None of these killed-domain facts
+asserts an all-scale unscreened field on the original source, an attractive
+interaction, an attained binding state or a physical spatial realization.
+$\square$
+
+## 10.99 追加锚
