@@ -1,0 +1,93 @@
+**Theorem 4.1 (Cubic dimension three, zero Choi rank two and tick Choi rank one).** For every $0<q<1$, there is a real instrument on $\mathbb C^3$ realizing (1.1) for $n=3$, with a pure actual post-tick reset, zero Choi rank exactly two and tick Choi rank exactly one. It is obtained from the following raw data in the ordered basis $e_0,e_1,e_2$:
+
+$$
+A=\begin{pmatrix}
+1&\sqrt3&1\\
+0&1&0\\
+0&0&1
+\end{pmatrix},\qquad
+B=\begin{pmatrix}
+0&1&0\\
+0&0&1\\
+0&0&0
+\end{pmatrix},\qquad
+x=e_2,\quad f=e_0,\quad F=ff^{\mathsf T}, \tag{4.1}
+$$
+
+with $K_A=\sqrt q A$, $K_B=\sqrt q B$ and $\mathcal T(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T})$.
+
+Proof. Write $A=I+N$ with $N=\sqrt3 E_{01}+E_{02}$. The matrix unit $E_{ij}$ sends $e_j$ to $e_i$. Then $N^2=0$, $BN=0$, $B^2=E_{02}$, $B^3=0$ and $NB^2=0$. These relations classify every interleaved word; no commutation of $A$ and $B$ is assumed.
+
+For the all-$A$ word, $A^k=I+kN$, and
+
+$$
+f^{\mathsf T}A^kx=k. \tag{4.2}
+$$
+
+For exactly one $B$, every length-$k$ word is $A^tBA^{k-1-t}$ with a unique $0\le t<k$. Since $BA^r=B$ for every $r\ge0$, its action on $x$ is $A^te_1=e_1+\sqrt3\,t e_0$. Its detector amplitude is therefore $\sqrt3\,t$. There are exactly $k$ such positions, one for each $t$.
+
+For exactly two $B$ factors, every word is uniquely
+
+$$
+A^aBA^bBA^c,\qquad a,b,c\ge0,\qquad a+b+c=k-2. \tag{4.3}
+$$
+
+The identity $BA^bB=B^2$ and $A^aB^2A^c=B^2$ show that its amplitude is $f^{\mathsf T}B^2x=1$, independently of all three intervening run lengths. For $k\ge2$ there are $\binom{k}{2}$ choices of the two positions, equivalently $\binom{k}{2}$ triples in (4.3). Three or more $B$ factors annihilate: after replacing adjacent interleavings by $B^2$, the next such factor gives $B^3=0$. For $k=0,1$ the two-$B$ contribution is absent.
+
+Each word has the common Kraus scale $q^{k/2}$, and different words contribute separate squared amplitudes. Summing every class gives, for all integers $k\ge0$,
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F\mathcal T^k(xx^{\mathsf T})]
+&=q^k\left(k^2+3\sum_{t=0}^{k-1}t^2+\binom{k}{2}\right)\\
+&=q^k\left(k^2+\frac{k(k-1)(2k-1)}2+\frac{k(k-1)}2\right)
+=q^kk^3.
+\end{aligned} \tag{4.4}
+$$
+
+The empty sum and $\binom{k}{2}$ are zero for $k=0,1$ as appropriate. Thus the identity includes the zero-tick probability at $k=0$. All interleavings have been counted, including those with two jumps; their nonzero contribution is essential to the exact cubic.
+
+Both $A$ and $B$ are upper triangular, with diagonals $(1,1,1)$ and $(0,0,0)$ respectively. In column vectorization the full complex superoperator is represented by
+
+$$
+q(A\otimes A+B\otimes B). \tag{4.5}
+$$
+
+It is upper triangular with every diagonal entry equal to $q$. Hence $\rho(\mathcal T)=q<1$. The Gramian converges, and selected positive word terms already give
+
+$$
+\begin{aligned}
+Q&=\sum_{k\ge0}(\mathcal T^*)^k(F)\\
+&\ge F+qB^{\mathsf T}FB+q^2(B^2)^{\mathsf T}FB^2
+=\operatorname{diag}(1,q,q^2)>0.
+\end{aligned} \tag{4.6}
+$$
+
+This is a positive-operator inequality on the full memory. The three selected terms belong respectively to the empty word, the word $B$ and the word $BB$; all omitted terms are positive. The real-to-complex positivity argument (2.10) supplies the same strict bound for complex vectors.
+
+By (4.4), the scalar normalization is
+
+$$
+z=x^{\mathsf T}Qx=Z_3(q)
+=\frac{q(1+4q+q^2)}{(1-q)^4}. \tag{4.7}
+$$
+
+The rational expression follows by applying $(q\,d/dq)^3$ to $(1-q)^{-1}$, with termwise differentiation valid for $|q|<1$. With $S=Q^{1/2}$, the actual completed instrument is
+
+$$
+\begin{aligned}
+b&=Se_2/\sqrt{Z_3(q)},\qquad \tau=bb^{\mathsf T},\\
+L_A&=\sqrt q\,SAS^{-1},\qquad
+L_B=\sqrt q\,SBS^{-1},\qquad
+J=be_0^{\mathsf T}S^{-1}.
+\end{aligned} \tag{4.8}
+$$
+
+Theorem 2.1 proves exact completeness, real coefficients, complete positivity on all complex positive inputs, properness and the actual reset identity. In particular
+
+$$
+\Psi\Phi^k(\tau)=\frac{k^3q^k}{Z_3(q)}\tau\qquad(k\ge0). \tag{4.9}
+$$
+
+The invertible $A$ and nonzero strictly upper triangular $B$ are linearly independent; the zero Choi rank is two after similarity. The nonzero rank-one $F$ gives tick Choi rank one and exactly one nonzero reset Kraus operator. Raw reachability is already witnessed by $x=e_2$, $Bx=e_1$ and $B^2x=e_0$. Invertible completion preserves their span, giving full reachable memory. $\square$
+
