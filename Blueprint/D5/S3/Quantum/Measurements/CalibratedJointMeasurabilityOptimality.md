@@ -118,6 +118,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/CalibratedJointMeasurabilityOptimality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/beyer-uola-luoma-strunz-2022-calibrated-visibility-optimality` (proved) by `D5/S3/Quantum/Measurements/CalibratedJointMeasurabilityOptimality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"beyer-uola-luoma-strunz-2022-calibrated-visibility-optimality","declaration_gid":"D5/S3/Quantum/Measurements/CalibratedJointMeasurabilityOptimality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Beyer; R. Uola; K. Luoma; W. T. Strunz (2022). *Joint measurability in nonequilibrium quantum thermodynamics*. DOI: [10.1103/PhysRevE.106.L022101](https://doi.org/10.1103/PhysRevE.106.L022101). URL: <https://arxiv.org/abs/2111.02854>.

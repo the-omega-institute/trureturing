@@ -36,13 +36,16 @@ internal sealed class CalibratedJointMeasurabilityOptimalityDocument : IScribeDo
             Node("claim", "Optimality of the calibrated visibility", ClaimFormula(),
                 Conjecture + " The encoding states necessity of Eq. (8) for every d ≥ 2 and 0 < lam, gam < 1 when every intermediate unitary has a parent POVM satisfying (i) and (ii). IsPOVM is the positive-effect and normalization predicate from ConcealmentKernelNecessityRefutation. The source proves sufficiency by its inverse Lüders construction.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "No parent POVM exceeds the bound", Disp(V("claim")),
-                "Evaluating the fluctuation condition on each diagonal matrix unit fixes every parent effect's diagonal to the product of the two marginal diagonals. CartesianVariance.psd_entry_bound and the triangle inequality bound the sum of coherences between two levels. A Hadamard rotation of those levels gives gam/2 ≤ kappa d lam · (gam/2 + (1−gam)/d). The identity kappa d lam = 1 − (√(lam+(1−lam)/d) − √((1−lam)/d))² ensures a positive denominator, yielding the visibility bound. This proves necessity for arbitrary parent effects. Sufficiency is the source's theorem and is not asserted by the Lean result.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                "Evaluating the fluctuation condition on each diagonal matrix unit fixes every parent effect's diagonal to the product of the two marginal diagonals. CartesianVariance.psd_entry_bound and the triangle inequality bound the sum of coherences between two levels. A Hadamard rotation of those levels gives gam/2 ≤ kappa d lam · (gam/2 + (1−gam)/d). The identity kappa d lam = 1 − (√(lam+(1−lam)/d) − √((1−lam)/d))² ensures a positive denominator, yielding the visibility bound. This proves necessity for arbitrary parent effects. Sufficiency is the source's theorem and is not asserted by the Lean result.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("beyer-uola-luoma-strunz-2022-calibrated-visibility-optimality"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("calibrated-visibility-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
