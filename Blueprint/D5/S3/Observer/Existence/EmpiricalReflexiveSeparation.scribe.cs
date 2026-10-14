@@ -15,6 +15,18 @@ internal sealed class EmpiricalReflexiveSeparationDocument : IScribeDocumentDefi
         H("Empirical and Reflexive Completeness Separate"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("empirical-complex-sqrt-two-square"),
+                DeclarationHandle.Create("D5/S3/Observer/Existence/EmpiricalReflexiveSeparation.complex_sqrt_two_sq"),
+                H("The embedded square root of two"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    new Formula.Power(Seq(Open,
+                        new Formula.Apply(Seq(F.Id("Real"), Dot, F.Id("sqrt")), [D(2)]),
+                        Colon, Sp, F.Id("Complex"), Close), D(2)),
+                    FormulaRelationOperator.Equal, D(2)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The real square root of two, embedded in Complex, has square two. This identity normalizes the rank-one qubit projectors."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("empirical-completeness-does-not-imply-reflexive-completeness"),
                 DeclarationHandle.Create(Declaration),
                 H("Empirical completeness coexists with reflexive incompleteness"),

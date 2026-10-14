@@ -14,6 +14,18 @@ internal sealed class CStarSmaleHigherOrderDocument : IScribeDocumentDefinition
         "The higher-order C*-algebraic Smale mean value conjecture fails at degree three in Complex x Complex with its supremum norm.",
         H("A degree-three counterexample to the higher-order C*-algebraic Smale conjecture"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("cstar-smale-complex-sqrt-three-square"),
+                DeclarationHandle.Create(Prefix + "sqrt3_sq"),
+                H("The embedded square root of three"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    new Formula.Power(Seq(Open,
+                        App(Qualified("Real", "sqrt"), D(3)),
+                        Colon, Sp, V("Complex"), Close), D(2)),
+                    FormulaRelationOperator.Equal, D(3)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The real square root of three, embedded in Complex, has square three. This identity determines the second coordinate of the root product."))),
+                DescribeRole.Theorem),
             Node("smale-polynomial", "The factor polynomial", "smalePoly", PolynomialFormula(),
                 @"Section 2, Conjecture HIGHERMEAN (journal p. 44, Conjecture 2.3): ""Let P(z) ≔ (z−a₁)⋯(z−aₙ) be a polynomial of degree n ≥ 2 over 𝒜, a₁, …, aₙ ∈ 𝒜."" The polynomial is a product in Polynomial A; its value at z is Polynomial.eval z (smalePoly a). The index j : Fin n denotes the source's a_(j+1), retaining all n factors with multiplicity. The definition applies to every commutative ring; the conjecture specializes it to a commutative C*-algebra.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
