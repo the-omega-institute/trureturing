@@ -129,4 +129,89 @@ theorem native_actual_p_joint_prefix {m k : ℕ} (hm : 3 ≤ m)
 
 #print axioms native_actual_p_joint_prefix
 
+/-- The two literal Q zero-cut prefix edges survive the old actual Q
+joint partition. Its supplier terminal is u, while the new b has terminal
+F.terminal; these labels differ because u belongs to the old base. The
+protected a joins precisely those two remaining labels. Applying this
+to each selected order supplies the real retained edges used by the
+ordered Q slicing, without assuming their membership in a desired route. -/
+theorem native_actual_q_zero_cut_retained {m k : ℕ} (hm : 3 ≤ m)
+    (F G : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hGterminal : G.terminal = u)
+    (p q : Fin (m + 1)) (hp : p ∈ F.selected.toFinset) (hq : q ∈ F.selected.toFinset)
+    (D : Configuration m → Prop)
+    {base w₀ r ℓ : {x : Configuration m // D x}}
+    (w : (domainGraph D).Walk base base)
+    (hA : ∀ (x y : {v : Configuration m // D v}), y.val = x.val * a m →
+      s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(p, q) → s(x, y) ∈ w.edges)
+    (hB : ∀ (x y : {v : Configuration m // D v}), y.val = x.val * b m →
+      x.val (Fin.last m) ∉ F.selected.toFinset → s(x, y) ∈ w.edges)
+    (pieces : List (Piece (domainGraph D)))
+    (K : Finset (Sym2 {x : Configuration m // D x}))
+    (hK : K.image (Sym2.map Subtype.val) = markedCuts (outerFrame F A u hbase) ∪ markedCuts G)
+    (hinv : ∀ e, e ∈ (pieces.flatMap fun z => z.walk.edges) ↔ e ∈ w.edges ∧ e ∉ K)
+    (hw₀ : w₀.val = leftPort (outerFrame F A u hbase) 0)
+    (hr : r.val = rightPort (nextFrame F A u hbase) 0)
+    (hℓ : ℓ.val = leftPort (nextFrame F A u hbase) 0) :
+    s(w₀, r) ∈ pieces.flatMap (fun z => z.walk.edges) ∧
+      s(r, ℓ) ∈ pieces.flatMap (fun z => z.walk.edges) ∧ ℓ ≠ w₀ := by
+  classical
+  have huBase : u ∈ F.base := by
+    rw [hbase]
+    exact List.mem_append.mpr (Or.inr (List.mem_singleton.mpr rfl))
+  have huTerminal : u ≠ F.terminal := fun he =>
+    frame_terminal_fresh F (List.mem_append.mpr (Or.inr (he ▸ huBase)))
+  have htSelected : F.terminal ∉ F.selected.toFinset := by
+    simp only [List.mem_toFinset]
+    exact fun h => frame_terminal_fresh F (List.mem_append.mpr (Or.inl h))
+  have hwa : r.val = w₀.val * a m := by
+    rw [hw₀, hr]
+    exact (native_q_index_zero_prefix hm F A u hbase).1.symm
+  have hrb : ℓ.val = r.val * b m := by rw [hℓ, hr]; rfl
+  have hwLast : w₀.val (Fin.last m) = u := by
+    rw [hw₀, leftPort, Equiv.Perm.mul_apply, b_last,
+      right_port_terminal hm (outerFrame F A u hbase) 0]
+    rfl
+  have hrLast : r.val (Fin.last m) = F.terminal := by
+    rw [hr, right_port_terminal hm (nextFrame F A u hbase) 0]
+    rfl
+  have hℓLast : ℓ.val (Fin.last m) = F.terminal := by
+    rw [hrb, Equiv.Perm.mul_apply, b_last, hrLast]
+  have hprotected : s(w₀.val (Fin.last m), r.val (Fin.last m)) ≠ s(p, q) := by
+    rw [hwLast, hrLast]
+    intro he
+    rcases Sym2.eq_iff.mp he with ⟨_, htq⟩ | ⟨_, htp⟩
+    · exact htSelected (htq.symm ▸ hq)
+    · exact htSelected (htp.symm ▸ hp)
+  have hAraw : s(w₀.val, r.val) ∉ markedCuts (outerFrame F A u hbase) ∪ markedCuts G := by
+    intro he
+    rcases Finset.mem_union.mp he with he | he
+    · exact a_not_marked hm (outerFrame F A u hbase) w₀.val r.val hwa he
+    · exact a_not_marked hm G w₀.val r.val hwa he
+  have hBraw : s(r.val, ℓ.val) ∉ markedCuts (outerFrame F A u hbase) ∪ markedCuts G := by
+    intro he
+    rcases Finset.mem_union.mp he with he | he
+    · exact b_not_marked hm (outerFrame F A u hbase) r.val ℓ.val hrb
+        (by rw [hrLast]; exact huTerminal.symm) he
+    · exact b_not_marked hm G r.val ℓ.val hrb
+        (by rw [hrLast, hGterminal]; exact huTerminal.symm) he
+  have hAnot : s(w₀, r) ∉ K := by
+    intro he
+    apply hAraw
+    rw [← hK]
+    exact Finset.mem_image.mpr ⟨s(w₀, r), he, rfl⟩
+  have hBnot : s(r, ℓ) ∉ K := by
+    intro he
+    apply hBraw
+    rw [← hK]
+    exact Finset.mem_image.mpr ⟨s(r, ℓ), he, rfl⟩
+  exact ⟨(hinv _).mpr ⟨hA w₀ r hwa hprotected, hAnot⟩,
+    (hinv _).mpr ⟨hB r ℓ hrb (by rw [hrLast]; exact htSelected), hBnot⟩,
+    fun h => by
+      have ht := congrArg (fun x => x.val (Fin.last m)) h
+      rw [hℓLast, hwLast] at ht
+      exact huTerminal ht.symm⟩
+
+#print axioms native_actual_q_zero_cut_retained
+
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
