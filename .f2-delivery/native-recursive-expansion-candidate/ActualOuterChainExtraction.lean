@@ -1,9 +1,10 @@
-/- UNCOMPILED actual full outside-chain extraction.
-   In the same actual closed child route, the first full child is Q and
-   the last full child is P. Every intervening full child and its actual
-   seams form a genuine chain from Q.finish to P.start. Both endpoints
-   stay in the walk type; its interior is exactly all intervening child
-   supports. The parent cycle's literal inventories are preserved. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualOuterChainExtraction
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualOuterChainExtraction
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Extract the literal intermediate route and its inventories from a supplied closed parent. -/
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 import Mathlib.Data.List.Perm.Basic
 

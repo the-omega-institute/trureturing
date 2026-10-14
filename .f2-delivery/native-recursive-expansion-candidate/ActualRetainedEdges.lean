@@ -1,6 +1,10 @@
-/- UNCOMPILED actual inventory helper.
-   Path joining and closing preserve every edge of every actual input
-   piece. The cycle's literal reversed inventory makes this explicit. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualRetainedEdges
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualRetainedEdges
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Closing an actual piece chain preserves every retained child edge. -/
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 
 set_option autoImplicit false

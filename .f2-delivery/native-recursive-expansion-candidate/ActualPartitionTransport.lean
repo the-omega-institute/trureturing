@@ -1,7 +1,10 @@
-/- UNCOMPILED injective transport of an actual same-cycle partition.
-   Mapping every actual piece and the same cycle preserves the complete
-   support permutation, exact filtered edge inventory, and real cuts.
-   This also covers a prior cycle included in a larger native graph. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualPartitionTransport
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualPartitionTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Map the same cycle, pieces and cuts through an injective graph homomorphism. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 
 set_option autoImplicit false
