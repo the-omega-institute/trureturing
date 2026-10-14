@@ -1151,3 +1151,798 @@ early credit charged once, covers the omitted unit inputs, or whether
 an actual full-budget separator exists.
 
 ## 追加锚（本行以下为增补区）
+
+## 208. Actual ordered-event bounds and changed-carrier stock minima
+
+**Definition 208.1 (Input measures and the unchanged comparison).**
+Use the original source, resources, complete scores, catalogs, quotient
+and one-budget certificate of Definitions 207.1–207.3. In particular,
+$L\ge3$, $A=0$, $P$ is supported on $\Omega_1\cup\Omega_2$, and
+the correct rows are arbitrary. Write
+
+$$
+c_a=\gamma_a,\quad p_a=\sum_{\Omega_a}P_w\quad(a=1,2),\qquad
+E=c_1+c_2,\quad S=p_1+p_2,\quad T=t,\quad W=E+S+t,
+\qquad \delta=\Delta_O(y).
+\tag{208.1}
+$$
+
+The actual late-bit measure, of mass $S$, is
+
+$$
+\nu(x)=P_{00x}+P_{01x}+P_{10x},\qquad
+Z_j=\{x:x_j=0\},\quad m_j=\nu(Z_j),\quad
+d_{ij}=\nu(Z_j\setminus Z_i)\quad(3\le i<j\le L).
+\tag{208.2}
+$$
+
+Thus prefix $00$ is included. The late totals $\gamma_j$ need not
+be ordered, and $t$ may be zero. All finite words, all labels, the
+independent pair row and negative singleton demands remain as in
+(207.3)–(207.4), even when their score coefficients are zero.
+The measures here are nonnegative proof weights. Their normalizations
+are not laws on the original sources or acquisitions.
+
+Fixed-total families below retain their specified correct totals and
+stock variables, while allowing every joint placement consistent with
+the input shape. A replacement may change $\nu$, the early pair split
+and unary correct marginals unless a theorem explicitly fixes them.
+The certificate still consists of one full score and one residual
+charge in (207.9); it does not require preservation of these auxiliary
+coordinates.
+
+### 208.1 Marginal spread of the actual input
+
+**Theorem 208.2 (All-threshold spread and joint stock bounds).** Set
+$d=\delta+E$. For $s>0$ let
+$J_s=\{j\ge3:\gamma_j\ge d+s\}$ and $m=|J_s|$. Define
+
+$$
+\chi_r=\frac{2\lfloor r^2/4\rfloor}{r(r-1)}\quad(r\ge2),\qquad
+\Gamma_1=2,\qquad
+\Gamma_m=\max\left\{3,\
+ \max_{2\le r\le m}\frac{2(q+1)}{1+q\chi_r}\right\}\quad(m\ge2),
+\quad q=\left\lfloor\frac{m-1}{r-1}\right\rfloor.
+\tag{208.3}
+$$
+
+On the same actual measure (208.2),
+
+$$
+m_j\ge2s\quad(j\in J_s),\qquad
+d_{ij}\ge s\quad(i<j,\ i,j\in J_s).
+\tag{208.4}
+$$
+
+For any $r\ge2$ selected events, the range $R$ of their marginal
+masses satisfies $R\ge2s-\chi_rS$. More generally, if $n\ge2$
+selected marginal masses lie in an interval of length $R_0$, then
+
+$$
+R_0\ge q(2s-\chi_rS),\qquad
+2\le r\le n,\quad q=\left\lfloor\frac{n-1}{r-1}\right\rfloor.
+\tag{208.5}
+$$
+
+Consequently every input satisfies, simultaneously at every such
+threshold,
+
+$$
+\begin{aligned}
+t&\ge(\mu-\delta)_+,\qquad S\ge\Gamma_ms &&(m\ge1),\\
+S+t&\ge4s+d &&(m\ge3),\\
+(1+q\chi_r)S+t&\ge2(q+2)s+d
+ &&\left(m\ge4,\ 2\le r\le m-2,\
+ q=\left\lfloor\frac{m-3}{r-1}\right\rfloor\right).
+\end{aligned}
+\tag{208.6}
+$$
+
+These are necessary conditions on complete $O$ inputs, without
+independence, exchangeability or a condition on a replacement measure.
+
+**Proof.** Delete only the early correct rows, obtaining $y_c$.
+Its support cannot increase and its anchor decreases by $E$, so
+$\Delta_O(y_c)\le\delta+E=d$. Constant output zero on this score
+earns $S+t$. For $a=1,2$, the legal stopped table $(a,j;0,j,0)$
+changes only cell $10$ and gains
+
+$$
+\gamma_j-P\{w_a=1,w_j=0\}.
+\tag{208.7}
+$$
+
+The two loss sets are disjoint on $\Omega_1\cup\Omega_2$ and their
+union is contained in $Z_j$. Prefix $00$ belongs to neither loss
+set. Hence $m_j\ge2(\gamma_j-d)_+$. The table
+$(i,j;0,j,0)$ similarly gives $d_{ij}\ge(\gamma_j-d)_+$.
+This proves (208.4), charging the deleted $E$ once.
+
+For an original-order pair $i<j$ among $r$ selected events,
+
+$$
+\nu(Z_i\mathbin{\triangle}Z_j)
+ =2\nu(Z_j\setminus Z_i)+m_i-m_j\ge2s-R.
+\tag{208.8}
+$$
+
+At a point where exactly $k$ of the $r$ events occur, exactly
+$k(r-k)\le\lfloor r^2/4\rfloor$ unordered pairs disagree.
+Integrating on this one measure yields
+$\binom r2(2s-R)\le S\lfloor r^2/4\rfloor$, proving the range
+bound. This is the classical cut-count argument; see Robert Šámal,
+[*Cubical coloring — fractional covering by cuts and semidefinite
+programming*](https://arxiv.org/pdf/0911.2589v3), Lemma 2.1 and
+Corollary 2.2, for the fractional-cut counting principle. Here its
+inputs are the actual directed losses (208.7).
+
+Sort only the $n$ numerical marginal masses. Take $q$ consecutive
+blocks of $r$ numbers, consecutive blocks sharing one endpoint.
+Their ranges telescope and each obeys (208.8), independently of the
+original address order. Their total range is at most $R_0$, which
+proves (208.5), also when its right side is negative. For all $m$
+events the range is at most $S-2s$, so
+$(1+q\chi_r)S\ge2(q+1)s$. If $m\ge2$, the disjoint sets
+$Z_i$ and $Z_j\setminus Z_i$ also force $S\ge3s$; for $m=1$
+use $S\ge2s$. This proves the $\Gamma_m$ bound. Sorting the
+marginal numbers has not relabeled any query address.
+
+In the original score, $(1,2;1,2,j_*)$ collects all $E+S$ and
+$\mu=\gamma_{j_*}$, forcing $t\ge\mu-\delta$. For late $i<j<k$,
+the one stopped table $(i,j;0,j,k)$ collects at least
+$m_i+\gamma_j+\gamma_k$. Its exhaustion label $k$ is legal even
+though unqueried. Thus
+
+$$
+m_i+\gamma_j+\gamma_k\le S+t+d.
+\tag{208.9}
+$$
+
+Retain the first $m-2$ addresses of $J_s$ and use its last two
+addresses as $j,k$. The retained marginal masses lie in
+$[2s,S+t-2s-d]$. Nonemptiness gives the second line of (208.6).
+For $m\ge4$, apply (208.5) to their range, at most $S+t-4s-d$,
+and rearrange. No sum of separately attainable support gains occurs.
+$\square$
+
+**Theorem 208.3 (Dense restricted asymptotic minimum).** Fix $s>0$
+and $0\le\delta_0\le s$. For $m\ge1$, let $S_m$ be the minimum
+pair mass among all complete input-family scores on $L=m+2$ with
+
+$$
+E=0,\qquad \gamma_j=s+\delta_0\quad(3\le j\le L),\qquad
+T=s,\qquad \Delta_O\le\delta_0.
+\tag{208.10}
+$$
+
+All correct suffixes and actual joint early pair measures are free,
+including early $00$. The minimum is attained and
+
+$$
+\Gamma_ms\le S_m\le4s,\qquad
+\lim_{m\to\infty}S_m=4s,\qquad
+\lim_{m\to\infty}(S_m+T)=5s.
+\tag{208.11}
+$$
+
+**Proof.** The head table in 208.2 forces
+$\Delta_O\ge\gamma_j-T=\delta_0$, so each feasible score has
+exact excess $\delta_0$. Apply 208.2 with $d=\delta_0$.
+For the upper witness, use the fair-suffix score of
+[Theorem 203.6](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md)
+with $\kappa_f=2s$ and terminal $s$. Its pair rows on $01x,10x$
+each have weight $2s/2^m$; class $j$ is uniform on all of its
+suffixes with total $s+\delta_0$. Its one actual product measure has
+$S=4s$. Since every late total is at most $2s$, 203.6 gives both
+complete excesses equal to $\delta_0$. That existing full-catalog
+supplier provides the upper witness, rather than an assumption that
+prescribed pair marginals can be glued.
+
+Restrict the feasible set to $S\le4s$. At fixed $m$ it is a closed,
+bounded set of finitely many nonnegative score coefficients: correct
+totals and $T$ are fixed, and every table inequality is closed.
+The set is nonempty by the witness, so $S$ attains its minimum.
+Choose integers $r\to\infty$ with $r=o(m)$. Then
+$q=\lfloor(m-1)/(r-1)\rfloor\to\infty$ and $\chi_r\to1/2$.
+The corresponding ratio in (208.3) tends to four. Each ratio is
+less than four since $\chi_r\ge1/2$, so $\Gamma_m\to4$ and
+(208.11) follows. The endpoints $\delta_0=0,s$ are included.
+This is an asymptotic minimum in (208.10), not an exact finite-$m$
+formula or a minimum over arbitrary signed representatives.
+The dense sufficient constructions of §206 and the fixed-projection
+minima of 207.17 retain their different fixed-data scopes. $\square$
+
+### 208.2 Ordered packing and strict affordability
+
+**Theorem 208.4 (Actual-input ordered-event packing).** Suppose
+$\Delta_O(y)\le d$. Select $m\ge2$ late addresses
+$j_1<\cdots<j_m$ with $\gamma_j\ge g$, and put $s=g-E-d>0$.
+For $3\le\tau<4$ define
+
+$$
+\begin{aligned}
+a_\tau&=\frac{4-\tau}{\tau},&
+n_\tau&=\max\left\{1,\left\lceil\frac{2(\tau-3)}{a_\tau}\right\rceil\right\},\\
+w_\tau&=\frac{\tau-3}{n_\tau},&
+\Pi(\tau)&=n_\tau\left\lfloor\frac1{a_\tau-w_\tau}\right\rfloor.
+\end{aligned}
+\tag{208.12}
+$$
+
+Then $S\ge3s$, $t\ge(\mu-d)_+$, and
+
+$$
+S\le\tau s\quad\Longrightarrow\quad m-1\le\Pi(\tau).
+\tag{208.13}
+$$
+
+**Proof.** The actual losses in (208.7), using the bound $d$ for
+the original excess, give $m_j\ge2s$ and $d_{ij}\ge s$ on the
+selected addresses. The disjoint-union and terminal arguments of
+208.2 give the first two assertions. Delete the largest selected
+address and, for each remaining one, put $A_i=Z_i^c$ and
+$r_i=\nu(A_i)/s$. Write $q=S/s\le\tau$. The outgoing directed
+loss to the deleted address is at least $s$, whereas $m_i\ge2s$,
+so
+
+$$
+1\le r_i\le q-2\le\tau-2,\qquad
+\frac{\nu(A_i\cap A_j)}s
+ =r_i-\frac{d_{ij}}s\le r_i-1\quad(i<j).
+\tag{208.14}
+$$
+
+Partition $[1,\tau-2]$ into $n_\tau$ bins of width $w_\tau$,
+assigning each endpoint to one bin. At $\tau=3$ this is one
+singleton bin. In a bin with lower endpoint $r$ and $N$ events,
+let $Z=\sum\mathbf1_{A_i}$ and integrate against $\nu/s$.
+The marginal lower bound and the ordered intersection upper bound
+give
+
+$$
+\int Z\ge Nr,\qquad
+\int Z^2\le N(r+w_\tau)+N(N-1)(r+w_\tau-1)
+ =N^2(r+w_\tau-1)+N.
+\tag{208.15}
+$$
+
+Cauchy–Schwarz on a measure of mass $q\le\tau$ gives
+$\int Z^2\ge N^2r^2/\tau$. Therefore
+
+$$
+N(1-r-w_\tau+r^2/\tau)\le1.
+\tag{208.16}
+$$
+
+On $[1,\tau-2]$, $1-r+r^2/\tau$ is decreasing and is at least
+$a_\tau$. The definition of $n_\tau$ gives
+$0\le w_\tau\le a_\tau/2$, so the denominator is positive.
+Each bin contains at most
+$\lfloor1/(a_\tau-w_\tau)\rfloor$ events. Summing over bins
+proves (208.13) for real, not just rational or integral, score
+weights.
+
+The threshold four in this dimension-free statement cannot be
+increased. For any $s>0$, $0\le d\le s$, the existing fair witness
+used in 208.3 has arbitrarily many late classes of weight $s+d$,
+actual $m_j=2s$, $d_{ij}=s$, $S=4s$, $T=s$, and both excesses
+$d$. This is a full score with one measure. It supplies no extension
+of the finite packing bound to $\tau=4$. $\square$
+
+**Theorem 208.5 (Strict packing implies fair-score affordability).**
+Suppose $\Delta_O(y)\le d\le1$, $\mu\ge2$, and at least $m\ge2$
+late classes have weight at least $g$. Put
+
+$$
+s=g-E-d>0,\qquad \tau=\frac{4\mu-5+d-E}{s}.
+\tag{208.17}
+$$
+
+If either $\tau<3$, or $3\le\tau<4$ and $m-1>\Pi(\tau)$, then
+$W>5(\mu-1)$. There is one full comparison score $V$ with
+
+$$
+\Delta_N(V)=\Delta_O(V)=1,\qquad
+\sigma_H(Q(y)-Q(V))=0,
+\tag{208.18}
+$$
+
+and therefore $Q(y)\in E_N$ with $\theta=0$.
+
+**Proof.** If $W\le5(\mu-1)$, the actual terminal bound
+$t\ge\mu-d$ gives $S\le4\mu-5+d-E=\tau s$. This contradicts
+$S\ge3s$ when $\tau<3$, and otherwise contradicts 208.4.
+
+Set $a=\mu-1\ge1$. Use the existing fair score of 203.6 with
+$\kappa_f=2a$, all original late totals, zero early correct mass,
+and $T_V=W-4a>a$. The second-largest late total is at most
+$\mu=a+1\le2a$, as required there. Its exact excess is
+$\max(0,\mu-a,\mu-T_V)=1$. Its correct total is $G$ and its
+anchor is $W$, so it preserves $K=G+W$ and all late quotient
+coordinates. The residual is
+
+$$
+F_{Q(y)-Q(V)}(b,e)=c_1(b_1-1)+c_2(b_2-1)\le0
+\quad((b,e)\in H_L).
+\tag{208.19}
+$$
+
+It equals zero at every $v_k$ of (207.7), hence its support charge
+is zero. The single budget in (207.9) is exactly $1+0$.
+The measure, all correct rows and terminal stock coexist in this
+one score; no cell receives a separate budget.
+
+For an explicit specialization of the input implication, take
+$E=0,d=3/4,\mu=g=3$ and at least $68$ late classes of weight
+three. Then
+
+$$
+s=9/4,\quad\tau=31/9,\quad a_\tau=5/31,\quad
+n_\tau=6,\quad w_\tau=2/27,\quad
+\Pi(\tau)=6\lfloor837/73\rfloor=66.
+\tag{208.20}
+$$
+
+Thus $m-1\ge67$ forces $W>10$. This input class is nonempty at
+every such length: the old fair witness has $S=9,T=9/4$ and
+both excesses $3/4$, with $W=45/4$.
+The certificate construction remains 203.6's supplier. The additional
+implication is from the actual input to its affordability.
+
+The strict condition $\tau<4$ is equivalently
+$4(\mu-g)+3E+5d<5$. No conclusion at its critical equality, or
+for arbitrary remaining profiles and early credit, follows from this
+argument. In particular the critical $\tau=4$ affordability question
+remains unresolved. $\square$
+
+### 208.3 Relocating early support at fixed totals
+
+**Definition 208.6 (Relocated carrier and ordered statistics).**
+For nonnegative $c_1,c_2,p_1,p_2,\gamma_3,\ldots,\gamma_L,t$, let
+$r_a=c_a+p_a$, $S=p_1+p_2$, $Z=E+S$, and $W=Z+t$.
+For a multiset $D$, let $\operatorname{top}_k(D)$ be the sum of its
+$k$ largest entries, padding with zeros. Put
+
+$$
+\begin{aligned}
+D&=\{\gamma_3,\ldots,\gamma_L,t\},&
+M_k&=\operatorname{top}_k(D),\\
+U_2&=\operatorname{top}_2(\{\gamma_4,\ldots,\gamma_L,t\}),&
+q_3&=\operatorname{top}_3(\{r_1,r_2\}\cup D),\\
+h&=\max(Z/2,c_1,c_2),&
+B_*&=\max(M_3,h+M_2,Z+M_1).
+\end{aligned}
+\tag{208.21}
+$$
+
+The fixed-total family $\mathcal A(c_1,c_2,\gamma,S,t)$ consists of
+all input scores with these correct totals, total early pair mass $S$
+and terminal $t$. Its pair split and every correct or pair suffix
+are free, including early $00$. It fixes neither the actual measure
+(208.2) nor unary correct marginals.
+
+**Theorem 208.7 (Complete support of the relocated carrier).** Put
+$e_1=010^{L-2}$, $e_2=100^{L-2}$ and
+$z_n=1^{n-1}0^{L-n+1}$ for $n\ge3$. The full score
+
+$$
+C_{e_a}=c_a,\quad P_{e_a}=p_a\quad(a=1,2),\qquad
+C_{z_n}=\gamma_n\quad(n\ge3),\qquad T=t
+\tag{208.22}
+$$
+
+with all other coefficients zero preserves $Q,W$ and has
+
+$$
+B_N(V)=B_O(V)=\max(q_3,S+U_2).
+\tag{208.23}
+$$
+
+**Proof.** Its actual late pair measure is $S\delta_{0^{L-2}}$;
+all correct suffixes and both early lifts have been specified on the
+same word space. Class totals, $K$ and $W$ are unchanged.
+Maximizing over every label gives the following complete cell values.
+Empty maxima in the table are zero.
+
+| Schedule | $N$ maxima in order $00,01,10,11$ |
+| --- | --- |
+| $(1,2)$ | $(0,r_1,r_2,\max(t,\mu))$ |
+| early/late $(a,j)$, other early label $b$ | $(r_a,0,\max(r_b,\max_{3\le n\le j}\gamma_n),\max(t,\max_{n>j}\gamma_n))$ |
+| late/late $i<j$ | $(\max(S,r_1,r_2,\max_{3\le n\le i}\gamma_n),0,\max_{i<n\le j}\gamma_n,\max(t,\max_{n>j}\gamma_n))$ |
+
+For early/late pairs the other early class's zero-label reward is
+$p_b\le r_b$. For late pairs, zero earns the pooled mass $S$ in
+$00$, each early label earns its $r_a$ there, and every other label
+earns only its own correct mass. This explains all entries, including
+earlier and unqueried labels.
+
+If a late pair's first entry uses a class weight rather than $S$,
+the three nonzero maxima are distinct entries of the multiset defining
+$q_3$. If it uses $S$, the other two maxima are distinct entries
+from $\{\gamma_4,\ldots,\gamma_L,t\}$ and sum to at most $U_2$.
+The early-pair and early/late bounds are at most $q_3$ as well.
+The full $N$ upper bound follows by the catalog completion in 207.2.
+
+For the lower bound, reuse the three-label collection from 198.4
+and 203.7, now assigning early label $a$ its weight $r_a$.
+Order any three selected distinct labels from $\{1,\ldots,L,*\}$,
+where $*$ means output zero and is last. Query the first two
+increasingly and output their labels at their first zero; on positive
+exhaustion output the third label. Every selected first-zero class
+is collected, for every suffix. An early class contributes all its
+$C+P$, and selection of $*$ collects $t$. Thus this one legal
+stopped table supplies the selected three weights, and
+$B_O\ge q_3$ on $V$ (indeed on any input with that early split).
+
+For $L\ge4$, select the two entries defining $U_2$. If they are
+$\gamma_j,\gamma_k$ with $4\le j<k$, table $(3,j;0,j,k)$
+collects at least $S+\gamma_j+\gamma_k$ on $V$. If they are
+$\gamma_j,t$, use $(3,j;0,j,0)$. Zero-weight ties may be selected
+as distinct multiset entries. At $L=3$, $U_2=t$ and
+$S+t\le W\le q_3$, so this second lower table is unnecessary.
+This proves the matching $O$ lower bound and (208.23).
+
+At $(1,2)$ the nonempty first-zero $N$ cell is $01$.
+For both choices of the early address in an early/late pair it is
+$00$, and a late pair likewise has empty $01$. Thus merging
+$00,01$ before maximizing is consistent with the stated stopped
+attainers. All zero totals, unordered late weights, ties and $t=0$
+are included. This changes joint support; it imposes no preservation
+of an input's auxiliary pair projection. $\square$
+
+**Theorem 208.8 (Dominance region for attained fixed-total minima).**
+In $\mathcal A(c_1,c_2,\gamma,S,t)$, define the data (208.21)
+independently of the early pair split. Then
+
+$$
+B_*\le\min_{\mathcal A}B_O\le\min_{\mathcal A}B_N
+ \le\max(B_*,S+U_2).
+\tag{208.24}
+$$
+
+The split
+$p_1^*=\min\{S,\max(0,Z/2-c_1)\}$, $p_2^*=S-p_1^*$ in
+(208.22) attains the displayed upper bound. If
+
+$$
+B_*\ge S+U_2,
+\tag{208.25}
+$$
+
+both minima in (208.24) equal $B_*$, and both minimum excesses
+equal $B_*-W$. Condition (208.25) holds in particular if
+$E\ge S$, $\max(c_1,c_2)\ge S$, or $\gamma_3\ge S$.
+For any actual input $y$ with these totals, the constructed score
+also satisfies
+
+$$
+\Delta_N(V)=\Delta_O(V)
+ \le\max\{\delta,U_2-E-t\}.
+\tag{208.26}
+$$
+
+Thus $U_2\le E+t+\delta$ suffices for a same-$Q$ comparison at
+excess at most $\delta$; and $\delta\le1$ with
+$U_2\le E+t+1$ suffices for $(V,0)$ in (207.9).
+
+**Proof.** For any early split, separate the three selected weights
+according to whether zero, one or two are early:
+
+$$
+q_3=\max\{M_3,\max(r_1,r_2)+M_2,Z+M_1\}.
+\tag{208.27}
+$$
+
+The interval for $r_1$ is $[c_1,c_1+S]$, with $r_2=Z-r_1$.
+Clamping $Z/2$ to that interval gives the stated split, minimizing
+$\max(r_1,r_2)$ at $h$. The three-label lower table in 208.7
+therefore supplies $B_*$ for every competitor, including its
+arbitrary early $00$ rows and suffix correlations; the optimized
+relocated score gives the upper bound. The finite coefficient
+simplex for $\mathcal A$ is compact, and supports are continuous,
+so both minima exist. This proves (208.24) and attainment under
+(208.25).
+
+This input lower bound is exactly the one already supplied by
+[206.7](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VIII.md).
+To match its notation, let $H_k$ be the sum of the $k$ largest
+late totals and put
+
+$$
+q=\max(\mu,H_2-t),\qquad
+c_0=\min(Z/2,S+\min(c_1,c_2)).
+\tag{208.28}
+$$
+
+Then $h=Z-c_0$,
+$M_1=\max(\mu,t)$, $M_2=\max(H_2,\mu+t)$, and
+$M_3=\max(H_3,H_2+t)$. Substitution gives
+
+$$
+B_*-W
+ =\max\{0,\mu-t,H_2-Z,H_3-W,q-c_0\}=d_0
+\tag{208.29}
+$$
+
+of (206.21). Padding at short lengths contributes only dominated
+terms, not fictitious queried labels. The lower bound is reused;
+the relocated score has cost $\max(d_0,U_2-E-t)$, whereas
+206.7's particular balanced chain has $\max(d_0,q-E)$.
+Since $U_2\le M_2$ and $M_2-t=q$, the former is no larger.
+This compares two constructions, not all signed or convex
+consequences of the earlier one.
+
+If $E\ge S$ or $\max(c_1,c_2)\ge S$, then $h\ge S$ and
+$B_*\ge h+M_2\ge S+U_2$. If $\gamma_3\ge S$, its entry and
+the two entries defining $U_2$ give $M_3\ge S+U_2$.
+At $L=3$ the padded zero causes no change to this inequality.
+Finally $B_*\le B_O(y)=W+\delta$, so subtracting $W=E+S+t$
+from the constructed maximum proves (208.26). There is one maximum
+of two costs, not their sum.
+
+In particular any unit-$O$ input with $Q(y)\notin E_N$ would have
+to satisfy
+
+$$
+U_2>E+t+1,\qquad E<S,\qquad\gamma_3<S,\qquad
+c_1+p_1<S,\quad c_2+p_2<S
+\tag{208.30}
+$$
+
+for its actual early split. Indeed if some actual $r_a\ge S$,
+then $q_3\ge r_a+U_2\ge S+U_2$, and (208.22) at that split
+has support $q_3\le B_O(y)$, giving a certificate. The other
+conditions follow from the preceding sufficient cases.
+These exclusions are necessary, not sufficient for nonmembership.
+Outside (208.25), (208.24) and (208.26) are the asserted bounds;
+no global fixed-total minimum equal to their upper endpoint is
+implied. $\square$
+
+### 208.4 A free carrier with two leading classes and bounded later classes
+
+**Theorem 208.9 (Three-block stock and restricted minima).** Suppose
+$E=0$ and the first two positive late classes are at actual addresses
+$a<b$, with totals $\gamma_a=\mu$, $\gamma_b=\eta>0$.
+All remaining positive late classes lie in $J\subseteq\{b+1,\ldots,L\}$
+and have totals $g_j$ in arbitrary order. Let $d\ge0$ satisfy
+
+$$
+\mu\ge\eta+d,\qquad \eta\ge2d,\qquad
+u=\mu-d,\quad v=\eta-d,\quad A=2u-v,\qquad
+r=\frac{Av}{A+v},\qquad 0\le g_j\le r.
+\tag{208.31}
+$$
+
+Other late totals are zero; zero $g_j$ may also be retained in $J$.
+Among all $A_w=0$/early-pair scores with these correct totals and
+$E=0$, allowing both $S,T$ and all joint placements to vary, the
+least stock $B=S+T$ permitting $\Delta_O\le d$ or permitting
+$\Delta_N\le d$ is in both cases
+
+$$
+B^\star=3u+v=3\mu+\eta-4d.
+\tag{208.32}
+$$
+
+At $B=B^\star$ the minimum of each excess is exactly $d$.
+For every $B\ge B^\star$ there is one score with that stock and
+these correct totals, hence the prescribed $Q$, with
+$\Delta_N=\Delta_O=d$. Consequently each actual input of this
+profile with $\Delta_O\le d$ has a same-$Q$ representative of
+$N$ cost $d$. It is a unit certificate when $d\le1$.
+No claim that $d$ is the minimum excess at $B>B^\star$ is made.
+
+**Proof.** The disjoint-loss bound (202.35), from the original
+stopped tables, applies to every competitor of excess $\epsilon$:
+
+$$
+S\ge2(\mu-\epsilon)_++(\eta-\epsilon)_+,\qquad
+T\ge(\mu-\epsilon)_+.
+\tag{208.33}
+$$
+
+For completeness, the first two losses are
+$\{w_1=1,w_a=0\}$ and $\{w_2=1,w_a=0\}$, each forced by
+$(h,a;0,a,0)$ to have mass at least $\mu-\epsilon$.
+They are disjoint on early pair support, also with early $00$.
+The third loss, forced by $(a,b;0,b,0)$, is
+$\{w_a=1,w_b=0\}$ and is disjoint from the first two.
+The table $(1,2;1,2,a)$ gives the terminal bound.
+Thus (208.33) reuses the existing lower mechanism on one measure.
+For $\epsilon\le d$, it gives
+$B\ge3\mu+\eta-4\epsilon\ge B^\star$.
+
+Here is a joint construction attaining the bound. Set every inactive
+late bit to one. On the active late bits use three finite measures:
+
+| Component | Mass | $(x_a,x_b)$ | Later bits $j\in J$ |
+| --- | --- | --- | --- |
+| I | $v$ | $00$ | all one |
+| II | $A$ | $01$ | product with zero probabilities $g_j/A$ |
+| III | $v$ | $10$ | product with zero probabilities $g_j/v$ |
+
+Their sum is $\nu$, of total $2u+v$. The hypotheses imply
+$u\ge v+d$, $v\ge d$, $v>0$, $A\ge\mu$ and
+$r<\min(A,v)$, so every component is nonnegative.
+For each atom $x$, put pair mass $\nu(x)/2$ at each of $01x,10x$.
+Put correct mass $\mu$ at $w(\{a\})$ and $g_j$ at
+$w(\{j\})$ for $j\in J$.
+
+For class $b$, use length measure on $q\in[0,\eta)$.
+Bits before $b$ are one, bit $b$ is zero, and a later active bit
+$j$ is one exactly when $q<2v-g_j$; inactive bits are one.
+Assign each resulting word the length of its parameter set.
+The finitely many thresholds partition this interval, supplying
+nonnegative correct coefficients of total $\eta$ on $\Omega_b$.
+Coincident words have their coefficients added. Put $T=u$.
+This defines one full score of stock $3u+v$.
+The product measures and interval lengths specify proof weights;
+they require no source law or acquisition randomness.
+
+The $(a,b)$ pair masses are $(v,A,v,0)$. For $j\in J$,
+
+$$
+\nu(x_j=0)=2g_j,\qquad
+\nu(x_a=0,x_j=0)=\nu(x_b=0,x_j=0)=g_j.
+\tag{208.34}
+$$
+
+Write $c=1/A+1/v=1/r$. For $i<j$ in $J$ the actual pair
+masses, in $00,01,10,11$ order, are
+
+$$
+\begin{aligned}
+p_{00}&=cg_ig_j,&p_{01}&=2g_i-p_{00},\\
+p_{10}&=2g_j-p_{00},&
+p_{11}&=2u+v-2g_i-2g_j+p_{00}.
+\end{aligned}
+\tag{208.35}
+$$
+
+Since $cg_i,cg_j\le1$, $p_{01}\ge g_i$ and $p_{10}\ge g_j$.
+Component I lies wholly in $11$, so $p_{11}\ge v$.
+These are marginals of the same $\nu$.
+
+Label zero collects each cell's entire pair mass and also $T$ in
+the all-positive cell. Early labels collect subsets of that baseline,
+because $E=0$. It remains to bound every late correct label.
+The head pair $(1,2)$ has maxima
+$(0,(2u+v)/2,(2u+v)/2,\mu)$ and excess $d$.
+For an early/$a$ pair, the $10$ baseline is $u$ and the largest
+correct reward there is $\mu=u+d$. Its $11$ baseline
+$u+v/2$ covers $\eta$ and every $g_j$, since
+$u\ge v+d$. For an early/$b$ pair, cell $10$ has baseline
+$v$ and reward $\eta=v+d$; the $11$ baseline
+$2u-v/2$ covers $\mu$. For an early/$j$ pair, the $10$
+baseline $g_j$ covers both class $j$ and class $b$'s mass
+$(d-v+g_j)_+\le g_j$. Its $11$ baseline
+$2u+v/2-g_j\ge\mu$ covers all labels.
+In each of these schedules the two early-zero cells contain no
+late correct mass. Therefore the early-pair types cost at most $d$.
+
+For $(a,b)$ the complete four maxima are
+
+$$
+(v,A,v+d,u),
+\tag{208.36}
+$$
+
+because $A\ge\mu$ and all remaining totals are at most $v\le u$.
+The stopped maxima are $(2u,v+d,u)$, attaining excess $d$.
+For $(a,j)$ the pair baselines are
+$(g_j,2u-g_j,g_j,v-g_j)$. Class $a$ earns $\mu$ in $01$,
+covered by $2u-g_j\ge A\ge\mu$. Class $b$ earns
+$(d-v+g_j)_+\le g_j$ in $10$ and at most $\eta$ in $11$,
+whose baseline including $T$ is $u+v-g_j\ge\eta$.
+Class $j$ is covered in $10$; all other sole-zero classes lie
+in $11$ and have total at most $r<v$.
+
+For $(b,j)$ the pair baselines are
+$(g_j,2v-g_j,g_j,A-g_j)$. Class $b$ contributes
+$(d-v+g_j)_+\le g_j$ in $00$ and
+$\min(\eta,2v-g_j)$ in $01$, both covered. Class $j$ is
+covered in $10$, while class $a$ and every other correct label
+are covered in $11$ by $u+A-g_j\ge\mu$. Thus these two
+pair types have no excess.
+
+For $i<j$ in $J$, class $i$ is covered by $p_{01}\ge g_i$,
+and class $j$ by $p_{10}\ge g_j$. Class $b$'s off-diagonal
+rewards are at most $(g_i-g_j)_+$ and $(g_j-g_i)_+$,
+respectively, so are covered too, without an ordering assumption
+on $g_i,g_j$. In $11$, the baseline is
+$u+p_{11}\ge u+v\ge\mu$, covering every label, including
+$a$ and $b$ when neither is queried. The only possible uncovered
+reward is class $b$'s $00$ mass
+
+$$
+h_{ij}=(d-v+\min(g_i,g_j))_+\le d.
+\tag{208.37}
+$$
+
+The excess of this complete table is therefore at most
+$(h_{ij}-p_{00})_+\le d$. Its other three cells have no positive
+excess to add. This checks every earlier, intermediate and future
+label on the same carrier.
+
+Inactive coordinates are one on all positive-score rows, so a
+schedule involving them supplies only singleton or constant
+information. Empty schedules, repetitions and reversals are covered
+by the information identities in 207.2; repetitions still count as
+actual requests. Consequently $\Delta_N\le d$. The stopped
+$(a,b;0,b,0)$ table attains $d$, proving both equalities.
+
+For $B>B^\star$, add $B-B^\star$ at $T$. Each fixed table's
+reward increases by at most this increment and its anchor by
+exactly the increment, so no excess increases. The same stopped
+table uses zero in $11$ and retains excess $d$.
+At $B=B^\star$, a competitor with $\epsilon<d$ would violate
+(208.33), proving the claimed minimum of each excess. This also
+proves the minimum-stock statement for both catalogs and the
+same-$Q$ comparison for any original input in the declared class.
+All comparisons use (207.9) with the single charge $\theta=0$.
+
+The construction includes $d=0$, $\eta=2d$, $\mu=\eta+d$,
+$g_j=0,r$, empty $J$, ties, and arbitrary gaps between active
+addresses. The case $\eta=0$ belongs to the earlier single-class
+result and is not included in the denominators of (208.31).
+For empty $J$, this is the attained two-class case of 204.3.
+The new assertion here is its stated bounded-later-class extension
+and restricted stock minimum; it does not optimize over arbitrary
+full-score representatives or signed residual certificates.
+$\square$
+
+**Definition 208.10 (Earlier coverage and original-source boundary).**
+The fair/common-suffix mechanisms remain those of 198.2 and 203.6;
+the fixed two-late minima and zero-cost rays remain those of
+204.3–204.4. The lower bound (208.29) is 206.7's $d_0$.
+The retained early-credit restrictions of 205.5–205.6 and the
+fixed-projection results of §207 keep their own hypotheses.
+None of (208.6), (208.13), (208.24) or (208.32) asserts a
+sufficient characterization of unrestricted $E_N$.
+
+In particular the portion of 208.9 with every $g_j\le d$ is
+already covered by the zero-cost rays of 204.4 with one signed
+residual charge at most $d$. The same-$Q$ stock minimum does not
+assert new quotient membership for that portion. For $r>d$, no
+exclusion from the complete old convex, signed or zero-core closure
+is asserted either.
+
+The original countable labeled source, static prime replies,
+unchanged consumer and nonatomic targets are exactly those in
+207.1 and [110.1–110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+The original sequences remain positive, monotone and vanishing;
+zero finite score totals place no zero-amplitude restriction on them.
+Only an actual normalized finite probability configuration satisfying
+all of (207.3) is supplied to 110.2. That theorem retains full-carrier
+outputs and arbitrary addresses in its necessary direction, and its
+compact finite-catalog limit retains the exact closed cap. In its
+sufficient direction one source-independent uniform seed selects
+the whole schedule and terminal table before replies. Two class
+configurations can use partitions of this same seed and their common
+refinement. Outputs need not agree seedwise. Handoff is actually
+finite, advice is zero, and the hard budget remains at most two
+actual requests, including repetitions and ignored replies.
+$N$ obtains its preselected replies; $O$ uses its increasing
+preselected schedule and stops at the first queried zero.
+
+Every multiple-zero word and independent pair demand remains in
+that finite configuration. The exact actual-tail identity (207.51)
+includes $a_n=\varepsilon$, small active lengths and the cap-one
+endpoint; the finite positive word is not an infinite positive
+source. The coefficient conditions $c\ge H$ and $\beta\le1$ retain
+all the probability-vector and degree hypotheses of 109.1.
+Neither a score measure nor a deterministic
+table maximizing its support is thereby a feasible probability
+configuration or acquired information.
+
+The all-profile, low-terminal, full-carrier comparison (207.52)
+remains unresolved, as does the critical $\tau=4$ affordability
+case omitted by 208.5. These results supply actual-input necessary
+relations and the stated restricted constructors and minima.
+They supply neither a universal affordable selector nor an original
+common-seed $N_2$ attainer together with a lower certificate against
+every original arbitrary-address $O_2$ competitor. In particular
+112.2's obstruction to preserving one law does not exclude a different
+stopped law at the same cap.
+
+## 追加锚（本行以下为增补区）
