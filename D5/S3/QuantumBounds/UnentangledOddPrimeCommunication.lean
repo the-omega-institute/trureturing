@@ -190,28 +190,14 @@ private def measurementMode {d : ℕ} [NeZero d]
     (z : Option (ZMod d)) (k : ZMod d) : Matrix (Fin (d * d)) (Fin (d * d)) ℂ :=
   ∑ c : ZMod d, ZMod.stdAddChar (-(k * c)) • M z c
 
-private theorem char_sum {d : ℕ} [NeZero d] (t : ZMod d) :
-    (∑ k : ZMod d, ZMod.stdAddChar (k * t)) = if t = 0 then (d : ℂ) else 0 := by
-  simpa -congrConsts only [mul_comm] using
-    D5.S3.Fourier.SparseGeneratorGapObstruction.char_sum t
-
 private theorem delta_expansion {d : ℕ} [NeZero d] (c w : ZMod d) :
     (if c = w then (1 : ℂ) else 0) =
       (d : ℂ)⁻¹ * ∑ k : ZMod d, ZMod.stdAddChar (k * (w - c)) := by
-  rw [char_sum]
+  simp_rw -congrConsts [mul_comm _ (w - c)]
+  rw [D5.S3.Fourier.SparseGeneratorGapObstruction.char_sum]
   by_cases h : c = w
   · simp -congrConsts [h, NeZero.ne (d : ℂ)]
   · simp -congrConsts [h, sub_eq_zero, Ne.symm h]
-
-private theorem plane_char_sum {d : ℕ} [NeZero d] (x y : ZMod d × ZMod d) :
-    (∑ u : ZMod d × ZMod d,
-      ZMod.stdAddChar (u.1 * (x.1 - y.1) + u.2 * (x.2 - y.2))) =
-      if x = y then (d : ℂ) ^ 2 else 0 := by
-  simp -congrConsts only [Fintype.sum_prod_type, AddChar.map_add_eq_mul, ← Finset.mul_sum,
-    char_sum,
-    ← Finset.sum_mul, sub_eq_zero]
-  by_cases h₁ : x.1 = y.1 <;> by_cases h₂ : x.2 = y.2 <;>
-    simp -congrConsts [h₁, h₂, Prod.ext_iff, pow_two]
 
 private theorem scalar_parseval {d : ℕ} [NeZero d] (f : ZMod d × ZMod d → ℂ) :
     (∑ u : ZMod d × ZMod d, Complex.normSq
