@@ -1,0 +1,60 @@
+PLAYBOOK_STEP command=deposit-uncovered detail=lean-report-scoped
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=ensure status=started
+LEAN_INSPECTOR_PHASE phase=ensure status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=14 declarations=477
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": ["D5.S3.Zeros.Jensen.OriginalPrimalTailResponse"], "compiled_modules": 1, "extracted_module_names": ["D5.S3.Zeros.Jensen.OriginalPrimalTailResponse"], "extracted_modules": 1, "selected_modules": 14}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-rh-primal-tail-response-20261014/.lake/build/stratalint/delivery-lean-report.json sha256=8ef13ae412f682b0ada704c90e22e9cee8b0ab76cdf491c9a0cedb44dc395f7e
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=97156220 fd_soft_limit=256 fd_peak=264 rss_peak_kb=5431904
+PLAYBOOK_STEP command=deposit-uncovered detail=deposit-header-check
+DEPOSIT_HEADER_CHECKED SL-012 D5/S3/Zeros/Jensen/OriginalPrimalTailResponse.lean
+PLAYBOOK_STEP command=deposit-uncovered detail=emit
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:00.98
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=ensure status=started
+LEAN_INSPECTOR_PHASE phase=ensure status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=14 declarations=477
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": [], "compiled_modules": 0, "extracted_module_names": [], "extracted_modules": 0, "selected_modules": 14}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-rh-primal-tail-response-20261014/.lake/build/stratalint/scoped-lean-report.json sha256=8ef13ae412f682b0ada704c90e22e9cee8b0ab76cdf491c9a0cedb44dc395f7e
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=96430132 fd_soft_limit=256 fd_peak=248 rss_peak_kb=1783184
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=ensure status=started
+LEAN_INSPECTOR_PHASE phase=ensure status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+SCOPED_LEAN_REPORT_VERIFIED path=/var/folders/w7/2vgtbgdx5r3fvfw0gj82s1hc0000gp/T/stratalint-report-consumer.JGpCCN42/scoped-lean-report.json
+document graph: receipt-free=1 receipt-bound=0 wired=1 truth-anchor=1 dependency=3 narrative=0
+emitted: 0 changed blueprint(s)
+RESOURCE_OBSERVATION stage=report-supervisor-scribe-consumer disk_free_kb=95760040 fd_soft_limit=256 fd_peak=518 rss_peak_kb=1574016
+checked: Evidence/D5/values.json
+PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=D5/S3/Zeros/Jensen/OriginalPrimalTailResponse.lean
+PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=D5/S3/Zeros/Jensen/OriginalPrimalTailResponse.lean
+PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED gid=D5/S3/Zeros/Jensen/OriginalPrimalTailResponse.original_primal_tail_response reason=NO_ATOM

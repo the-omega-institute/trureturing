@@ -1,0 +1,914 @@
+orig nonblank 1145 out 913 joins 232
+   1 /- GID: D5/S3/Zeros/Jensen/OriginalPrimalTailResponse
+   2    generality: I
+   3    mirror-B: D5/B/S3/Zeros/Jensen/OriginalPrimalTailResponse
+   4    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   5    anchors: []
+   6    utility: none
+   7    digest: Cancelled differential residual for the complete original primal theta tail. -/
+   8 import D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
+   9 import D5.S3.Zeros.Jensen.SourceJensenIntegralExtension
+  10 import D5.S3.Analytic.Fourier.XiThetaTransform
+  11 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+  12 set_option autoImplicit false
+  13 set_option relaxedAutoImplicit false
+  14 noncomputable section
+  15 namespace D5.S3.Zeros.Jensen.OriginalPrimalTailResponse
+  16 open Real Set MeasureTheory Filter Polynomial
+  17 open scoped Topology
+  18 open OriginalPrimalTailProjection
+  19 open private primalJet_zero primalJet_deriv shiftedBudget shifted_summable scale_summable full_shifted_comparison flux_summable tailJet_summable_ray tailJet_deriv
+  20   tailJet_endpoint tailJet_integral tailJet_continuous tailJet_eq_iterated adjoint_formula
+  21   adjoint_deriv adjoint_second_deriv adjoint_square flux_eq from
+  22   D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
+  23 open private source_map from D5.S3.Zeros.Jensen.SourceJensenIntegralExtension
+  24 private theorem jet_one (z : ℝ) :
+  25     (jetPolynomial 1).eval z = -8*z^3+30*z^2-15*z := by norm_num [jetPolynomial, derivative_sub, derivative_mul, derivative_pow]
+  26   <;> ring
+  27 private theorem jet_two (z : ℝ) :
+  28     (jetPolynomial 2).eval z = 16*z^4-112*z^3+165*z^2-(75/2)*z := by norm_num [jetPolynomial, derivative_sub, derivative_mul, derivative_pow]
+  29   <;> ring
+  30 private theorem cancelled_polynomial {A z : ℝ} (hA : 12 ≤ A) (hAz : A ≤ z) :
+  31     |4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z)| ≤ 16*z^2*(z^2-A^2)+151*z^3 := by
+  32   have hz : 12 ≤ z := hA.trans hAz
+  33   have hz0 : 0 ≤ z := by linarith
+  34   have hA0 : 0 ≤ A := by linarith
+  35   have hsq : A^2 ≤ z^2 := pow_le_pow_left₀ hA0 hAz 2
+  36   have hlead := mul_nonneg (sq_nonneg z) (sub_nonneg.mpr hsq)
+  37   have h24 := mul_le_mul_of_nonneg_right hsq hz0
+  38   have h165 := mul_nonneg (sq_nonneg z) (show 0 ≤ 14*z-165 by linarith)
+  39   have h75 := mul_nonneg hz0 (show 0 ≤ z^2-75/2 by nlinarith)
+  40   have hz3 : 0 ≤ z^3 := pow_nonneg hz0 3
+  41   have hz2 : 0 ≤ z^2 := sq_nonneg z
+  42   have hAz0 := mul_nonneg (sq_nonneg A) hz0
+  43   apply abs_le.mpr
+  44   constructor <;> nlinarith
+  45 private theorem weighted_exponent {a s L x : ℝ}
+  46     (hs : 12 ≤ s) (has : a ≤ s) (hL : L ≤ 12) (hx : 0 ≤ x) :
+  47     a*x^2/2+L*x-s*(exp (2*x)-1) ≤ -s*x := by have he := quadratic_le_exp_of_nonneg (show 0 ≤ 2*x by linarith)
+  48   have hs0 : 0 ≤ s := by linarith
+  49   have he' := mul_le_mul_of_nonneg_left he hs0
+  50   have hq := mul_nonneg (sq_nonneg x) (show 0 ≤ 2*s-a/2 by linarith)
+  51   have hl := mul_nonneg hx (show 0 ≤ s-L by linarith)
+  52   nlinarith
+  53 private theorem exp_increment {x : ℝ} (_hx : 0 ≤ x) :
+  54     exp (4*x)-1 ≤ 4*x*exp (4*x) := by have h := mul_le_mul_of_nonneg_right (add_one_le_exp (-4*x)) (exp_pos (4*x)).le
+  55   have he : exp (-4*x)*exp (4*x) = 1 := by rw [← exp_add]; ring_nf; exact exp_zero
+  56   rw [he] at h
+  57   nlinarith
+  58 private theorem leading_split {A s x : ℝ} (hx : 0 ≤ x) (hs : 0 ≤ s) :
+  59     (s*exp (2*x))^2*((s*exp (2*x))^2-A^2) ≤ 4*x*s^4*exp (8*x)+(s^2-A^2)*s^2*exp (4*x) := by
+  60   have h := mul_le_mul_of_nonneg_left (exp_increment hx)
+  61     (show 0 ≤ s^4*exp (4*x) by positivity)
+  62   have he4 : exp (4*x) = exp (2*x)^2 := by rw [← exp_nat_mul]; congr 1; ring
+  63   have he8 : exp (8*x) = exp (4*x)^2 := by rw [← exp_nat_mul]; congr 1; ring
+  64   rw [he8, he4]
+  65   rw [he4] at h
+  66   linear_combination h
+  67 private theorem weighted_mode_exp {a s L x : ℝ}
+  68     (hs : 12 ≤ s) (has : a ≤ s) (hL : L+1/2 ≤ 12) (hx : 0 ≤ x) :
+  69     exp (a*x^2/2)*exp (x/2)*exp (-s*exp (2*x))*exp (L*x) ≤ exp (-s)*exp (-s*x) := by
+  70   simp only [← exp_add]
+  71   apply exp_le_exp.mpr
+  72   have h := weighted_exponent hs has hL hx
+  73   nlinarith
+  74 private theorem primal_polynomial_bounds {z : ℝ} (hz : 12 ≤ z) :
+  75     |4*z^2-6*z| ≤ 4*z^2 ∧ |-8*z^3+30*z^2-15*z| ≤ 11*z^3 := by have hz0 : 0 ≤ z := by linarith
+  76   have h0 : 0 ≤ 4*z^2-6*z := by nlinarith
+  77   constructor
+  78   · rw [abs_of_nonneg h0]; nlinarith
+  79   · have h30 := mul_nonneg (sq_nonneg z) (show 0 ≤ (5/2)*z-30 by linarith)
+  80     have h15 := mul_nonneg hz0 (show 0 ≤ z^2/2-15 by nlinarith)
+  81     apply abs_le.mpr
+  82     constructor <;> nlinarith [pow_nonneg hz0 3]
+  83 private theorem mode_residual_majorant {A a α : ℝ} {m : ℕ}
+  84     (hA : 12 ≤ A) (hAs : A ≤ modeScale m) (has : a ≤ modeScale m)
+  85     (hα : 0 ≤ α) {x : ℝ} (hx : 0 ≤ x) :
+  86     exp (a*x^2/2)*|4*A^2*primalMode m x-primalJet 2 m x- α*(primalMode m x+x*primalJet 1 m x)| ≤
+  87     exp (-modeScale m)* ((64*(modeScale m)^4+11*α*(modeScale m)^3)*x+
+  88         151*(modeScale m)^3+16*((modeScale m)^2-A^2)*(modeScale m)^2+ 4*α*(modeScale m)^2)*exp (-modeScale m*x) := by
+  89   let s := modeScale m
+  90   let z := s*exp (2*x)
+  91   let e := exp (x/2)*exp (-s*exp (2*x))
+  92   let w := exp (a*x^2/2)
+  93   have hs : 12 ≤ s := hA.trans hAs
+  94   have hs0 : 0 ≤ s := by linarith
+  95   have he : 0 < e := by dsimp [e]; positivity
+  96   have hw : 0 < w := exp_pos _
+  97   have hxexp : 1 ≤ exp (2*x) := one_le_exp_iff.mpr (by linarith)
+  98   have hsz : s ≤ z := by dsimp [z]; nlinarith
+  99   have hz : 12 ≤ z := hs.trans hsz
+ 100   have hp := primal_polynomial_bounds hz
+ 101   have hD := cancelled_polynomial hA (hAs.trans hsz)
+ 102   have hsplit := leading_split (A := A) hx hs0
+ 103   have hq0 : primalMode m x = e*(4*z^2-6*z) := by rw [← primalJet_zero]
+ 104     simp only [primalJet, jetPolynomial, eval_sub, eval_mul, eval_C, eval_pow, eval_X]
+ 105     rfl
+ 106   have hq1 : primalJet 1 m x = e*(-8*z^3+30*z^2-15*z) := by rw [primalJet, jet_one]
+ 107   have hq2 : primalJet 2 m x = e*(16*z^4-112*z^3+165*z^2-(75/2)*z) := by rw [primalJet, jet_two]
+ 108   have hres : |4*A^2*primalMode m x-primalJet 2 m x- α*(primalMode m x+x*primalJet 1 m x)| ≤
+ 109       e*(64*x*s^4*exp (8*x)+16*(s^2-A^2)*s^2*exp (4*x)+151*z^3+ α*(4*z^2+11*x*z^3)) := by
+ 110     rw [hq0, hq1, hq2]
+ 111     have hid : 4*A^2*(e*(4*z^2-6*z))-e*(16*z^4-112*z^3+165*z^2-(75/2)*z)- α*(e*(4*z^2-6*z)+x*(e*(-8*z^3+30*z^2-15*z))) =
+ 112         e*((4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z))- α*((4*z^2-6*z)+x*(-8*z^3+30*z^2-15*z))) := by ring
+ 113     rw [hid, abs_mul, abs_of_pos he]
+ 114     apply mul_le_mul_of_nonneg_left _ he.le
+ 115     have hb : |(4*z^2-6*z)+x*(-8*z^3+30*z^2-15*z)| ≤ 4*z^2+11*x*z^3 := by calc
+ 116         _ ≤ |4*z^2-6*z|+|x*(-8*z^3+30*z^2-15*z)| := abs_add_le _ _
+ 117         _ = |4*z^2-6*z|+x*|-8*z^3+30*z^2-15*z| := by rw [abs_mul, abs_of_nonneg hx]
+ 118         _ ≤ _ := by nlinarith [mul_le_mul_of_nonneg_left hp.2 hx]
+ 119     calc _ ≤ |4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z)|+
+ 120           |α*((4*z^2-6*z)+x*(-8*z^3+30*z^2-15*z))| := by simpa only [sub_zero, zero_sub, abs_neg] using
+ 121               (abs_sub_le
+ 122                 (4*A^2*(4*z^2-6*z)-(16*z^4-112*z^3+165*z^2-(75/2)*z))
+ 123                 (0 : ℝ) (α*((4*z^2-6*z)+x*(-8*z^3+30*z^2-15*z))))
+ 124       _ ≤ 16*z^2*(z^2-A^2)+151*z^3+α*(4*z^2+11*x*z^3) := by rw [abs_mul, abs_of_nonneg hα]
+ 125         exact add_le_add hD (mul_le_mul_of_nonneg_left hb hα)
+ 126       _ ≤ _ := by dsimp [z] at *; nlinarith
+ 127   have he8 := weighted_mode_exp (a := a) (L := 8) hs has (by norm_num) hx
+ 128   have he6 := weighted_mode_exp (a := a) (L := 6) hs has (by norm_num) hx
+ 129   have he4 := weighted_mode_exp (a := a) (L := 4) hs has (by norm_num) hx
+ 130   have he6' : w*e*z^3 ≤ s^3*(exp (-s)*exp (-s*x)) := by have hid : w*e*z^3 = s^3*(w*e*exp (6*x)) := by
+ 131       dsimp [z]
+ 132       rw [mul_pow, show exp (2*x)^3 = exp (6*x) by rw [← exp_nat_mul]; congr 1; ring]
+ 133       ring
+ 134     rw [hid]
+ 135     simpa only [w,e,mul_assoc] using mul_le_mul_of_nonneg_left he6 (pow_nonneg hs0 3)
+ 136   have he4' : w*e*z^2 ≤ s^2*(exp (-s)*exp (-s*x)) := by have hid : w*e*z^2 = s^2*(w*e*exp (4*x)) := by
+ 137       dsimp [z]
+ 138       rw [mul_pow, show exp (2*x)^2 = exp (4*x) by rw [← exp_nat_mul]; congr 1; ring]
+ 139       ring
+ 140     rw [hid]
+ 141     simpa only [w,e,mul_assoc] using mul_le_mul_of_nonneg_left he4 (sq_nonneg s)
+ 142   have hmis : 0 ≤ s^2-A^2 := by have := pow_le_pow_left₀ (show 0 ≤ A by linarith) hAs 2
+ 143     linarith
+ 144   have h8 := mul_le_mul_of_nonneg_left he8 (show 0 ≤ 64*x*s^4 by positivity)
+ 145   have h4 := mul_le_mul_of_nonneg_left he4 (show 0 ≤ 16*(s^2-A^2)*s^2 by positivity)
+ 146   have h6 := mul_le_mul_of_nonneg_left he6' (show (0:ℝ) ≤ 151 by norm_num)
+ 147   have hα4 := mul_le_mul_of_nonneg_left he4' (show 0 ≤ 4*α by positivity)
+ 148   have hα6 := mul_le_mul_of_nonneg_left he6' (show 0 ≤ 11*α*x by positivity)
+ 149   have hresw := mul_le_mul_of_nonneg_left hres hw.le
+ 150   change w*|_| ≤ _
+ 151   dsimp only [w,e,s] at hresw h8 h4 h6 hα4 hα6 ⊢
+ 152   linear_combination hresw+h8+h4+h6+hα4+hα6
+ 153 private theorem linear_exp_integrable {s : ℝ} (hs : 0 < s) :
+ 154     IntegrableOn (fun x : ℝ => x*exp (-s*x)) (Ioi 0) := by simpa using (integrableOn_rpow_mul_exp_neg_mul_rpow
+ 155     (p := 1) (s := 1) (b := s) (by norm_num) (by norm_num) hs)
+ 156 private theorem linear_exp_integral {s : ℝ} (hs : 0 < s) :
+ 157     (∫ x in Ioi (0 : ℝ), x*exp (-s*x)) = 1/s^2 := by have h := integral_rpow_mul_exp_neg_mul_Ioi (a := 2) (r := s) (by norm_num) hs
+ 158   norm_num [show Gamma (2:ℝ) = 1 by simpa using Gamma_nat_eq_factorial 1] at h
+ 159   simpa [one_div_pow] using h
+ 160 private theorem mode_residual_integral {A a α : ℝ} {m : ℕ}
+ 161     (hA : 12 ≤ A) (hAs : A ≤ modeScale m) (has : a ≤ modeScale m)
+ 162     (hα : 0 ≤ α) (hαs : α ≤ modeScale m) :
+ 163     IntegrableOn (fun x : ℝ => exp (a*x^2/2)* |4*A^2*primalMode m x-primalJet 2 m x-
+ 164         α*(primalMode m x+x*primalJet 1 m x)|) (Ioi 0) ∧ (∫ x in Ioi (0 : ℝ), exp (a*x^2/2)*
+ 165       |4*A^2*primalMode m x-primalJet 2 m x- α*(primalMode m x+x*primalJet 1 m x)|) ≤
+ 166       230*(modeScale m)^2*exp (-modeScale m)+ 16*((modeScale m)^2-A^2)*modeScale m*exp (-modeScale m) := by
+ 167   let s := modeScale m
+ 168   let c := 64*s^4+11*α*s^3
+ 169   let d := 151*s^3+16*(s^2-A^2)*s^2+4*α*s^2
+ 170   let f := fun x : ℝ => exp (a*x^2/2)* |4*A^2*primalMode m x-primalJet 2 m x-α*(primalMode m x+x*primalJet 1 m x)|
+ 171   let g := fun x : ℝ => exp (-s)*(c*x+d)*exp (-s*x)
+ 172   have hs : 0 < s := lt_of_lt_of_le (by norm_num : (0:ℝ) < 12) (hA.trans hAs)
+ 173   have hi0 := integrableOn_exp_mul_Ioi (show -s < 0 by linarith) 0
+ 174   have hi1 := linear_exp_integrable hs
+ 175   have hgi : IntegrableOn g (Ioi 0) := by change Integrable g (volume.restrict (Ioi (0 : ℝ)))
+ 176     have hg : g = fun x => exp (-s)*(c*(x*exp (-s*x))+d*exp (-s*x)) := by ext x; dsimp [g]; ring
+ 177     rw [hg]
+ 178     exact ((hi1.const_mul c).add (hi0.const_mul d)).const_mul (exp (-s))
+ 179   have hcont : Continuous f := by have h0 := (show ∀ x, HasDerivAt (primalJet 0 m) (primalJet 1 m x) x from
+ 180       fun x => primalJet_deriv 0 m x)
+ 181     have h1 : Continuous (primalJet 1 m) := continuous_iff_continuousAt.mpr
+ 182       (fun x => (primalJet_deriv 1 m x).continuousAt)
+ 183     have h2 : Continuous (primalJet 2 m) := continuous_iff_continuousAt.mpr
+ 184       (fun x => (primalJet_deriv 2 m x).continuousAt)
+ 185     have hq : Continuous (primalMode m) := by exact (continuous_iff_continuousAt.mpr (fun x => (h0 x).continuousAt)).congr
+ 186         (fun x => primalJet_zero m x)
+ 187     exact (by fun_prop : Continuous (fun x : ℝ => exp (a*x^2/2))).mul
+ 188       ((((hq.const_mul (4*A^2)).sub h2).sub
+ 189         ((hq.add (continuous_id.mul h1)).const_mul α)).abs)
+ 190   have hbound : ∀ x ∈ Ioi (0:ℝ), f x ≤ g x := by intro x hx
+ 191     convert! mode_residual_majorant hA hAs has hα hx.le using 1 <;> dsimp [f,g,c,d,s] <;> ring
+ 192   have hfi : IntegrableOn f (Ioi 0) := by apply hgi.mono' hcont.aestronglyMeasurable
+ 193     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 194     rw [Real.norm_eq_abs, abs_of_nonneg (by dsimp [f]; positivity)]
+ 195     exact hbound x hx
+ 196   refine ⟨hfi, ?_⟩
+ 197   have hgint : (∫ x in Ioi (0:ℝ), g x) = exp (-s)*(c/s^2+d/s) := by have hg : g = fun x => exp (-s)*(c*(x*exp (-s*x))+d*exp (-s*x)) := by
+ 198       ext x; dsimp [g]; ring
+ 199     rw [hg, integral_const_mul, integral_add (hi1.const_mul c) (hi0.const_mul d), integral_const_mul, integral_const_mul, linear_exp_integral hs,
+ 200       integral_exp_mul_Ioi (by linarith)]
+ 201     simp [div_eq_mul_inv]
+ 202   have hcalc : exp (-s)*(c/s^2+d/s) ≤ 230*s^2*exp (-s)+16*(s^2-A^2)*s*exp (-s) := by
+ 203     have hid : c/s^2+d/s = 215*s^2+15*α*s+16*(s^2-A^2)*s := by dsimp [c,d]; field_simp [hs.ne']; ring
+ 204     rw [hid]
+ 205     have hh := mul_le_mul_of_nonneg_right hαs hs.le
+ 206     nlinarith [mul_le_mul_of_nonneg_left hh (exp_pos (-s)).le]
+ 207   exact (integral_mono_ae hfi hgi (by filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 208     exact hbound x hx)).trans (hgint.trans_le hcalc)
+ 209 private theorem later_mode_comparison {N : ℕ} (hN : 1 ≤ N) (k j : ℕ) (hj : 1 ≤ j) :
+ 210     (modeScale (N+j+1))^k*exp (-modeScale (N+j+1)) ≤ (modeScale (N+1))^k*exp (-modeScale (N+1))*
+ 211         exp (-2*Real.pi*((N+1:ℕ):ℝ))* (((j+1:ℕ):ℝ)^(2*k)*exp (-Real.pi*(j:ℝ))) := by
+ 212   let M : ℝ := ((N+1:ℕ):ℝ)
+ 213   let z : ℝ := j
+ 214   have hM : 2 ≤ M := by dsimp [M]; exact_mod_cast (show 2 ≤ N+1 by omega)
+ 215   have hz : 1 ≤ z := by dsimp [z]; exact_mod_cast hj
+ 216   have hm : ((N+j+1:ℕ):ℝ) = M+z := by dsimp [M,z]; push_cast; ring
+ 217   have hscale : modeScale (N+j+1) ≤ modeScale (N+1)*(z+1)^2 := by have hh := pow_le_pow_left₀ (show 0 ≤ M+z by linarith)
+ 218       (show M+z ≤ M*(z+1) by nlinarith) 2
+ 219     dsimp [modeScale]; rw [hm]
+ 220     change Real.pi*(M+z)^2 ≤ Real.pi*M^2*(z+1)^2
+ 221     nlinarith [mul_le_mul_of_nonneg_left hh pi_pos.le]
+ 222   have hex : exp (-modeScale (N+j+1)) ≤ exp (-modeScale (N+1))*exp (-2*Real.pi*M)*exp (-Real.pi*z) := by
+ 223     simp only [← exp_add]
+ 224     apply exp_le_exp.mpr
+ 225     have hh : 0 ≤ 2*M*(z-1)+z*(z-1) := by positivity
+ 226     have h := mul_nonneg pi_pos.le hh
+ 227     dsimp [modeScale]; rw [hm]
+ 228     change -(Real.pi*(M+z)^2) ≤ -(Real.pi*M^2)+-2*Real.pi*M+-Real.pi*z
+ 229     nlinarith
+ 230   calc _ ≤ (modeScale (N+1)*(z+1)^2)^k*
+ 231         (exp (-modeScale (N+1))*exp (-2*Real.pi*M)*exp (-Real.pi*z)) := mul_le_mul (pow_le_pow_left₀ (by dsimp [modeScale]; positivity) hscale k)
+ 232         hex (exp_pos _).le (by dsimp [modeScale]; positivity)
+ 233     _ = _ := by simp only [mul_pow, ← pow_mul]; dsimp [M,z]; push_cast; ring
+ 234 private theorem later_mode_sum {N : ℕ} (hN : 1 ≤ N) (k : ℕ) :
+ 235     (∑' j : ℕ, (modeScale (N+(j+1)+1))^k*exp (-modeScale (N+(j+1)+1))) ≤ (modeScale (N+1))^k*exp (-modeScale (N+1))*
+ 236         exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget k-1) := by have hs := (scale_summable N k).comp_injective Nat.succ_injective
+ 237   have ht := (shifted_summable k).comp_injective Nat.succ_injective
+ 238   have hsplit : (∑' j : ℕ, (((j+1+1:ℕ):ℝ)^(2*k)*exp (-Real.pi*((j+1:ℕ):ℝ)))) = shiftedBudget k-1 := by
+ 239     have h := (shifted_summable k).sum_add_tsum_nat_add 1
+ 240     simpa [shiftedBudget] using (eq_sub_iff_add_eq.mpr (by simpa [add_comm] using h))
+ 241   have h := hs.tsum_le_tsum (fun j => later_mode_comparison hN k (j+1) (by omega))
+ 242     (ht.mul_left ((modeScale (N+1))^k*exp (-modeScale (N+1))* exp (-2*Real.pi*((N+1:ℕ):ℝ))))
+ 243   simpa only [Function.comp_def, Nat.succ_eq_add_one, tsum_mul_left, hsplit] using h
+ 244 private theorem scale_gap {N : ℕ} (hN : 1 ≤ N) :
+ 245     exp (-2*Real.pi*((N+1:ℕ):ℝ)) ≤ 1/(2*Real.pi*modeScale (N+1)) := by let M : ℝ := ((N+1:ℕ):ℝ)
+ 246   have hM : 0 < M := by dsimp [M]; positivity
+ 247   have he := quadratic_le_exp_of_nonneg (show 0 ≤ 2*Real.pi*M by positivity)
+ 248   have hden : 0 < 2*Real.pi*modeScale (N+1) := by dsimp [modeScale]; positivity
+ 249   calc _ = 1/exp (2*Real.pi*M) := by
+ 250       rw [one_div, ← exp_neg]
+ 251       congr 1
+ 252       dsimp [M]
+ 253       ring
+ 254     _ ≤ _ := by apply one_div_le_one_div_of_le hden
+ 255       dsimp [modeScale]
+ 256       change 2*Real.pi*(Real.pi*M^2) ≤ exp (2*Real.pi*M)
+ 257       nlinarith [mul_pos pi_pos hM]
+ 258 private theorem full_flux_lower {N : ℕ} (hN : 1 ≤ N)
+ 259     (hA : 12 ≤ modeScale (N+1)) :
+ 260     (11/2)*(modeScale (N+1))^3*exp (-modeScale (N+1)) ≤ originalFlux N := by have hterm (j : ℕ) : (11/2)*(modeScale (N+j+1))^3*exp (-modeScale (N+j+1)) ≤
+ 261       exp (-modeScale (N+j+1))*(8*(modeScale (N+j+1))^3- 30*(modeScale (N+j+1))^2+15*modeScale (N+j+1)) := by
+ 262     have hsc : modeScale (N+1) ≤ modeScale (N+j+1) := by apply mul_le_mul_of_nonneg_left _ pi_pos.le
+ 263       exact pow_le_pow_left₀ (Nat.cast_nonneg _) (by exact_mod_cast (by omega : N+1 ≤ N+j+1)) 2
+ 264     have hs : 12 ≤ modeScale (N+j+1) := hA.trans hsc
+ 265     have hp := mul_nonneg (sq_nonneg (modeScale (N+j+1)))
+ 266       (show 0 ≤ (5/2)*modeScale (N+j+1)-30 by linarith)
+ 267     nlinarith [mul_nonneg (show 0 ≤ (5/2)*(modeScale (N+j+1))^3- 30*(modeScale (N+j+1))^2+15*modeScale (N+j+1) by nlinarith)
+ 268       (exp_pos (-modeScale (N+j+1))).le]
+ 269   apply le_trans (by simpa using hterm 0)
+ 270   exact (flux_summable N).le_tsum 0 (fun j _ => le_trans (by have := hA; have h := sq_nonneg ((N+j+1:ℕ):ℝ)
+ 271                  dsimp [modeScale]; positivity) (hterm j))
+ 272 private theorem residual_series {N : ℕ} (hN : 1 ≤ N) (A α : ℝ)
+ 273     {x : ℝ} (hx : 0 ≤ x) :
+ 274     HasSum (fun j : ℕ => 4*A^2*primalMode (N+j+1) x-primalJet 2 (N+j+1) x- α*(primalMode (N+j+1) x+x*primalJet 1 (N+j+1) x))
+ 275       (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x) := by have h0 := (tailJet_summable_ray 0 N hN hx).hasSum
+ 276   have h1 := (tailJet_summable_ray 1 N hN hx).hasSum
+ 277   have h2 := (tailJet_summable_ray 2 N hN hx).hasSum
+ 278   have h := ((h0.mul_left (4*A^2)).sub h2).sub ((h0.add (h1.mul_left x)).mul_left α)
+ 279   have hz : tailJet 0 N x = originalTail N x := by simpa using congrFun (tailJet_eq_iterated 0 N hN) x
+ 280   rw [adjoint_formula N hN α x]
+ 281   change HasSum _ (4*A^2*tailJet 0 N x-tailJet 2 N x- α*(tailJet 0 N x+x*tailJet 1 N x)) at h
+ 282   rw [hz] at h
+ 283   rw [hz]
+ 284   simpa only [primalJet_zero, sub_add_eq_sub_sub] using h
+ 285 private def residualConstant : ℝ := 230*shiftedBudget 2+(8/Real.pi)*(shiftedBudget 3-1)
+ 286 private theorem residual_budget_sum {N : ℕ} (hN : 1 ≤ N) :
+ 287     (∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+ 16*((modeScale (N+j+1))^2-(modeScale (N+1))^2)*
+ 288         modeScale (N+j+1)*exp (-modeScale (N+j+1)))) ≤ residualConstant*(modeScale (N+1))^2*exp (-modeScale (N+1)) := by
+ 289   let A := modeScale (N+1)
+ 290   let f := fun j : ℕ => ((modeScale (N+j+1))^2-A^2)* modeScale (N+j+1)*exp (-modeScale (N+j+1))
+ 291   have hA : 0 < A := by dsimp [A,modeScale]; positivity
+ 292   have hf : Summable f := by convert! (scale_summable N 3).sub ((scale_summable N 1).mul_left (A^2)) using 1
+ 293     ext j; dsimp [f]; ring
+ 294   have hf0 : f 0 = 0 := by simp [f,A]
+ 295   have hfsplit : (∑' j, f j) = ∑' j, f (j+1) := by have h := hf.sum_add_tsum_nat_add 1
+ 296     simpa [hf0] using h.symm
+ 297   have hsm : Summable (fun j : ℕ => (modeScale (N+(j+1)+1))^3* exp (-modeScale (N+(j+1)+1))) :=
+ 298     (scale_summable N 3).comp_injective Nat.succ_injective
+ 299   have hmajor : (∑' j, f j) ≤ A^3*exp (-A)*exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget 3-1) := by
+ 300     rw [hfsplit]
+ 301     apply le_trans ((hf.comp_injective Nat.succ_injective).tsum_le_tsum
+ 302       (fun j => ?_) hsm) (later_mode_sum hN 3)
+ 303     dsimp [f]
+ 304     have h := mul_nonneg (sq_nonneg A) (show 0 ≤ modeScale (N+(j+1)+1)* exp (-modeScale (N+(j+1)+1)) by dsimp [modeScale]; positivity)
+ 305     nlinarith
+ 306   have hS : 0 ≤ shiftedBudget 3-1 := by have h := (shifted_summable 3).le_tsum 0 (fun j _ => by positivity)
+ 307     simpa [shiftedBudget] using sub_nonneg.mpr h
+ 308   have hmis : (∑' j, f j) ≤ (1/(2*Real.pi))*(shiftedBudget 3-1)*A^2*exp (-A) := by apply hmajor.trans
+ 309     have h := mul_le_mul_of_nonneg_left (scale_gap hN)
+ 310       (show 0 ≤ A^3*exp (-A)*(shiftedBudget 3-1) by positivity)
+ 311     calc
+ 312       A^3*exp (-A)*exp (-2*Real.pi*((N+1:ℕ):ℝ))*(shiftedBudget 3-1) = (A^3*exp (-A)*(shiftedBudget 3-1))*exp (-2*Real.pi*((N+1:ℕ):ℝ)) := by ring
+ 313       _ ≤ (A^3*exp (-A)*(shiftedBudget 3-1))*(1/(2*Real.pi*A)) := h
+ 314       _ = _ := by field_simp [hA.ne', pi_ne_zero] <;> ring
+ 315   have hsum := ((scale_summable N 2).mul_left 230).tsum_add (hf.mul_left 16)
+ 316   have hsum' :
+ 317       (∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+ 16*((modeScale (N+j+1))^2-A^2)*modeScale (N+j+1)*exp (-modeScale (N+j+1)))) =
+ 318       230*(∑' j : ℕ, (modeScale (N+j+1))^2*exp (-modeScale (N+j+1)))+ 16*(∑' j, f j) := by
+ 319     calc _ = ∑' j : ℕ, (230*((modeScale (N+j+1))^2*exp (-modeScale (N+j+1)))+16*f j) :=
+ 320         tsum_congr (fun j => by dsimp [f]; ring)
+ 321       _ = _ := by rw [hsum, tsum_mul_left, tsum_mul_left]
+ 322   rw [hsum']
+ 323   have hmain := full_shifted_comparison hN 2
+ 324   change (∑' j : ℕ, (modeScale (N+j+1))^2*exp (-modeScale (N+j+1))) ≤ A^2*exp (-A)*shiftedBudget 2 at hmain
+ 325   calc _ ≤ 230*(A^2*exp (-A)*shiftedBudget 2)+
+ 326         16*((1/(2*Real.pi))*(shiftedBudget 3-1)*A^2*exp (-A)) := by exact add_le_add (mul_le_mul_of_nonneg_left hmain (by norm_num))
+ 327         (mul_le_mul_of_nonneg_left hmis (by norm_num))
+ 328     _ = _ := by dsimp [residualConstant,A]
+ 329       field_simp [pi_ne_zero] <;> ring
+ 330 private theorem full_residual_integral {N : ℕ} (hN : 1 ≤ N) {a α : ℝ}
+ 331     (hA : max 12 a ≤ modeScale (N+1)) (hα : 0 ≤ α) (hαa : α ≤ a) :
+ 332     IntegrableOn (fun x : ℝ => exp (a*x^2/2)* |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) (Ioi 0) ∧
+ 333     (∫ x in Ioi (0:ℝ), exp (a*x^2/2)* |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) ≤
+ 334       residualConstant*(modeScale (N+1))^2*exp (-modeScale (N+1)) := by let A := modeScale (N+1)
+ 335   let r := fun j : ℕ => fun x : ℝ => 4*A^2*primalMode (N+j+1) x-primalJet 2 (N+j+1) x-
+ 336       α*(primalMode (N+j+1) x+x*primalJet 1 (N+j+1) x)
+ 337   let F := fun j : ℕ => fun x : ℝ => exp (a*x^2/2)*|r j x|
+ 338   let f := fun x : ℝ => exp (a*x^2/2)* |4*A^2*originalTail N x-densityAdjoint α (originalTail N) x|
+ 339   let μ := volume.restrict (Ioi (0:ℝ))
+ 340   have hscale (j : ℕ) : A ≤ modeScale (N+j+1) := by apply mul_le_mul_of_nonneg_left _ pi_pos.le
+ 341     exact pow_le_pow_left₀ (Nat.cast_nonneg _) (by exact_mod_cast (by omega : N+1 ≤ N+j+1)) 2
+ 342   have hm (j : ℕ) := mode_residual_integral (le_max_left 12 a |>.trans hA) (hscale j)
+ 343     ((le_max_right 12 a).trans (hA.trans (hscale j))) hα
+ 344     (hαa.trans ((le_max_right 12 a).trans (hA.trans (hscale j))))
+ 345   have hFi (j : ℕ) : Integrable (F j) μ := (hm j).1
+ 346   have hFn (j : ℕ) (x : ℝ) : 0 ≤ F j x := by dsimp [F]; positivity
+ 347   have hsum : Summable (fun j : ℕ => ∫ x, F j x ∂μ) := by apply (((scale_summable N 2).mul_left 230).add
+ 348       ((scale_summable N 3).mul_left 16)).of_nonneg_of_le
+ 349       (fun j => integral_nonneg (hFn j))
+ 350     intro j
+ 351     apply (hm j).2.trans
+ 352     have hh := mul_nonneg (sq_nonneg A)
+ 353       (show 0 ≤ modeScale (N+j+1)*exp (-modeScale (N+j+1)) by dsimp [modeScale]; positivity)
+ 354     nlinarith
+ 355   have hnormsum : Summable (fun j : ℕ => ∫ x, ‖F j x‖ ∂μ) := by simpa only [Real.norm_eq_abs, abs_of_nonneg (hFn _ _)] using hsum
+ 356   have hlin (j : ℕ) : (∫⁻ x, ‖F j x‖ₑ ∂μ) = ENNReal.ofReal (∫ x, ‖F j x‖ ∂μ) := (ofReal_integral_norm_eq_lintegral_enorm (hFi j)).symm
+ 357   have hsumint : Integrable (fun x => ∑' j, F j x) μ := by refine ⟨AEStronglyMeasurable.tsum (fun j => (hFi j).aestronglyMeasurable), ?_⟩
+ 358     apply hasFiniteIntegral_iff_enorm.mpr
+ 359     apply lt_of_le_of_lt (lintegral_mono (fun x => enorm_tsum_le_tsum_enorm))
+ 360     rw [lintegral_tsum (fun j => (hFi j).aestronglyMeasurable.enorm)]
+ 361     simp_rw [hlin]
+ 362     rw [← ENNReal.ofReal_tsum_of_nonneg (fun j => integral_nonneg (fun x => norm_nonneg _)) hnormsum]
+ 363     exact ENNReal.ofReal_lt_top
+ 364   have hsigned {x : ℝ} (hx : 0 ≤ x) := residual_series hN A α hx
+ 365   have hfbound : ∀ x ∈ Ioi (0:ℝ), f x ≤ ∑' j, F j x := by intro x hx
+ 366     have h := (hsigned hx.le).mul_left (exp (a*x^2/2))
+ 367     have hn := norm_tsum_le_tsum_norm (f := fun j => exp (a*x^2/2)*r j x) h.summable.norm
+ 368     rw [h.tsum_eq] at hn
+ 369     simpa only [Real.norm_eq_abs, abs_mul, abs_of_pos (exp_pos _)] using hn
+ 370   have hfmeas : AEStronglyMeasurable f μ := by have hc0 := tailJet_continuous 0 N hN
+ 371     have hc1 := tailJet_continuous 1 N hN
+ 372     have hc2 := tailJet_continuous 2 N hN
+ 373     have h0 : originalTail N = tailJet 0 N := by simpa using (tailJet_eq_iterated 0 N hN).symm
+ 374     dsimp [f]
+ 375     simp_rw [adjoint_formula N hN α, h0]
+ 376     fun_prop
+ 377   have hfi : Integrable f μ := by apply hsumint.mono' hfmeas
+ 378     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 379     rw [Real.norm_eq_abs, abs_of_nonneg (by dsimp [f]; positivity)]
+ 380     exact hfbound x hx
+ 381   refine ⟨hfi, ?_⟩
+ 382   calc
+ 383     (∫ x, f x ∂μ) ≤ ∫ x, ∑' j, F j x ∂μ := integral_mono_ae hfi hsumint (by filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 384       exact hfbound x hx)
+ 385     _ = ∑' j, ∫ x, F j x ∂μ := (integral_tsum_of_summable_integral_norm hFi hnormsum).symm
+ 386     _ ≤ ∑' j : ℕ, (230*(modeScale (N+j+1))^2*exp (-modeScale (N+j+1))+ 16*((modeScale (N+j+1))^2-A^2)*modeScale (N+j+1)*exp (-modeScale (N+j+1))) := by
+ 387       apply hsum.tsum_le_tsum (fun j => (hm j).2)
+ 388       convert! (((scale_summable N 2).mul_left 230).add
+ 389         (((scale_summable N 3).sub ((scale_summable N 1).mul_left (A^2))).mul_left 16)) using 1
+ 390       ext j
+ 391       ring
+ 392     _ ≤ _ := residual_budget_sum hN
+ 393 private theorem relative_residual :
+ 394     ∃ K:ℝ, 0<K ∧ ∀ a:ℝ, ∀ N:ℕ, 1≤N → max 12 a ≤ modeScale (N+1) → ∀ α:ℝ, 0≤α → α≤a →
+ 395       IntegrableOn (fun x:ℝ => exp (a*x^2/2)* |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) (Ioi 0) ∧
+ 396       (∫ x in Ioi (0:ℝ), exp (a*x^2/2)* |4*(modeScale (N+1))^2*originalTail N x-densityAdjoint α (originalTail N) x|) ≤
+ 397           (K/modeScale (N+1))*originalFlux N := by have hS (k:ℕ) : 1≤shiftedBudget k := by
+ 398     have h := (shifted_summable k).le_tsum 0 (fun j _ => by positivity)
+ 399     simpa [shiftedBudget] using h
+ 400   have hL : 0<residualConstant := by dsimp [residualConstant]
+ 401     have h2 := hS 2
+ 402     have h3 : 0≤shiftedBudget 3-1 := sub_nonneg.mpr (hS 3)
+ 403     have h := mul_nonneg (show 0≤8/Real.pi by positivity) h3
+ 404     linarith
+ 405   refine ⟨(2/11)*residualConstant, by positivity, ?_⟩
+ 406   intro a N hN hA α hα hαa
+ 407   have hAi : 12≤modeScale (N+1) := (le_max_left 12 a).trans hA
+ 408   have hpos : 0<modeScale (N+1) := by linarith
+ 409   have hb := full_residual_integral hN hA hα hαa
+ 410   refine ⟨hb.1, hb.2.trans ?_⟩
+ 411   have h := mul_le_mul_of_nonneg_left (full_flux_lower hN hAi)
+ 412     (show 0≤((2/11)*residualConstant)/modeScale (N+1) by positivity)
+ 413   calc
+ 414     residualConstant*(modeScale (N+1))^2*exp (-modeScale (N+1)) = (((2/11)*residualConstant)/modeScale (N+1))*
+ 415         ((11/2)*(modeScale (N+1))^3*exp (-modeScale (N+1))) := by field_simp [hpos.ne'] <;> ring
+ 416     _ ≤ _ := h
+ 417 open NormalizedJensenDegreeLowering SourceJensenIntegralExtension SourceThetaMomentBounds
+ 418 open D5.S3.Zeros.CompletedZeta /-- The literal finite original polynomial, with its original factorial convention. -/
+ 419 def originalB (n : ℕ) (t x : ℝ) : ℝ := ∑ j ∈ Finset.range (n+1), (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j*x^(2*j)/
+ 420     ((n:ℝ)^j*((2*j).factorial:ℝ)) /-- Every retained positive mode. -/
+ 421 def originalHead (N : ℕ) (x : ℝ) : ℝ := ∑ m ∈ Finset.Icc 1 N, primalMode m x /-- The unchanged canonical xi denominator. -/
+ 422 def fullZ : ℝ := (xiReading (1/2:ℂ)).re /-- Expectation against the actual full normalized theta density. -/
+ 423 def originalJ (n : ℕ) (t : ℝ) : ℝ := ∫ x:ℝ, originalB n t x*sourceThetaDensity x
+ 424 private def originalCoefficient (n : ℕ) (t : ℝ) (j : ℕ) : ℝ := (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j/((n:ℝ)^j*((2*j).factorial:ℝ))
+ 425 private theorem original_coefficient_recurrence {n : ℕ} (hn : 1 ≤ n) (t : ℝ) (j : ℕ) :
+ 426     ((2*j:ℕ):ℝ)+2 ≠ 0 ∧ (((2*j:ℕ):ℝ)+2)*(((2*j:ℕ):ℝ)+1)*originalCoefficient n t (j+1)+
+ 427       (t-2*(t/(2*(n:ℝ)))*(j:ℝ))*originalCoefficient n t j = 0 := by refine ⟨by positivity, ?_⟩
+ 428   have hn0 : (n:ℝ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
+ 429   by_cases hj : j ≤ n
+ 430   · have hf : (((2*(j+1)).factorial:ℕ):ℝ) = (((2*j:ℕ):ℝ)+2)*(((2*j:ℕ):ℝ)+1)*((2*j).factorial:ℝ) := by
+ 431       rw [show 2*(j+1) = (2*j+1)+1 by omega, Nat.factorial_succ, Nat.factorial_succ]
+ 432       push_cast
+ 433       ring
+ 434     have hfac0 : ((2*j).factorial:ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (2*j)
+ 435     simp only [originalCoefficient, Nat.descFactorial_succ, Nat.cast_mul, Nat.cast_sub hj, pow_succ]
+ 436     rw [hf]
+ 437     field_simp [hn0,hfac0]
+ 438     push_cast
+ 439     ring
+ 440   · have hj' : n < j := by omega
+ 441     simp only [originalCoefficient, Nat.descFactorial_of_lt hj', Nat.descFactorial_of_lt (show n < j+1 by omega), Nat.cast_zero, mul_zero,
+ 442       zero_mul, zero_div, zero_add]
+ 443 private def originalPolynomial (n : ℕ) (t : ℝ) : ℝ[X] := ∑ j ∈ Finset.range (n+1), C (originalCoefficient n t j)*X^(2*j)
+ 444 private theorem original_polynomial_coeff_even (n j : ℕ) (t : ℝ) :
+ 445     (originalPolynomial n t).coeff (2*j) = originalCoefficient n t j := by simp only [originalPolynomial, finsetSum_coeff, coeff_C_mul_X_pow]
+ 446   rw [Finset.sum_eq_single j]
+ 447   · simp
+ 448   · intro k _ hkj
+ 449     have hk : 2*k ≠ 2*j := by omega
+ 450     simp [Ne.symm hkj]
+ 451   · intro hj
+ 452     have hjn : n < j := by simpa using hj
+ 453     simp [originalCoefficient, Nat.descFactorial_of_lt hjn]
+ 454 private theorem original_polynomial_coeff_odd (n j : ℕ) (t : ℝ) :
+ 455     (originalPolynomial n t).coeff (2*j+1) = 0 := by simp only [originalPolynomial, finsetSum_coeff, coeff_C_mul_X_pow]
+ 456   apply Finset.sum_eq_zero
+ 457   intro k _
+ 458   have hk : 2*k ≠ 2*j+1 := by omega
+ 459   simp [Ne.symm hk]
+ 460 private theorem original_polynomial_ode {n : ℕ} (hn : 1 ≤ n) (t : ℝ) :
+ 461     (originalPolynomial n t).derivative.derivative- C (t/(2*(n:ℝ)))*(X*(originalPolynomial n t).derivative)+
+ 462       C t*originalPolynomial n t = 0 := by let p := originalPolynomial n t
+ 463   have hxd (k : ℕ) : (X*p.derivative).coeff k = p.coeff k*(k:ℝ) := by cases k <;> simp [coeff_X_mul, coeff_derivative]
+ 464   ext k
+ 465   simp only [coeff_add, coeff_sub, coeff_C_mul, coeff_derivative, coeff_zero]
+ 466   change p.coeff (k+1+1)*(((k+1:ℕ):ℝ)+1)*((k:ℝ)+1)- t/(2*(n:ℝ))*(X*p.derivative).coeff k+t*p.coeff k = 0
+ 467   rw [hxd]
+ 468   have hk : k%2=0 ∨ k%2=1 := by omega
+ 469   rcases hk with hk|hk
+ 470   · have he : k=2*(k/2) := by omega
+ 471     rw [he]
+ 472     have he' : 2*(k/2)+1+1=2*(k/2+1) := by omega
+ 473     rw [he']
+ 474     dsimp [p]
+ 475     rw [original_polynomial_coeff_even, original_polynomial_coeff_even]
+ 476     have h := (original_coefficient_recurrence hn t (k/2)).2
+ 477     push_cast at *
+ 478     linear_combination h
+ 479   · have he : k=2*(k/2)+1 := by omega
+ 480     rw [he]
+ 481     have he' : 2*(k/2)+1+1+1=2*(k/2+1)+1 := by omega
+ 482     rw [he']
+ 483     dsimp [p]
+ 484     rw [original_polynomial_coeff_odd, original_polynomial_coeff_odd]
+ 485     ring
+ 486 private theorem original_polynomial_eval (n : ℕ) (t x : ℝ) :
+ 487     (originalPolynomial n t).eval x = originalB n t x := by simp only [originalPolynomial, originalB, eval_finsetSum, eval_mul, eval_C,
+ 488     eval_pow, eval_X]
+ 489   apply Finset.sum_congr rfl
+ 490   intro j _
+ 491   dsimp [originalCoefficient]
+ 492   ring
+ 493 private theorem original_polynomial_origin (n : ℕ) (t : ℝ) :
+ 494     (originalPolynomial n t).eval 0 = 1 ∧ (originalPolynomial n t).derivative.eval 0 = 0 := by
+ 495   constructor
+ 496   · rw [← coeff_zero_eq_eval_zero, show 0=2*0 by omega, original_polynomial_coeff_even]
+ 497     simp [originalCoefficient]
+ 498   · rw [← coeff_zero_eq_eval_zero, coeff_derivative]
+ 499     simp only [zero_add, Nat.cast_one, mul_one]
+ 500     simpa using original_polynomial_coeff_odd n 0 t
+ 501 private theorem original_polynomial_energy {n : ℕ} (hn : 1≤n) {t : ℝ} (ht : 0<t)
+ 502     {x : ℝ} (hx : 0≤x) :
+ 503     |(originalPolynomial n t).eval x| ≤ exp ((t/(2*(n:ℝ)))*x^2/2) := by let p := originalPolynomial n t
+ 504   let α := t/(2*(n:ℝ))
+ 505   let B := fun x : ℝ => p.eval x
+ 506   let D := fun x : ℝ => p.derivative.eval x
+ 507   let G := fun x : ℝ => exp (-α*x^2)*((B x)^2+(D x)^2/t)
+ 508   have hα : 0≤α := by dsimp [α]; positivity
+ 509   have hode (y : ℝ) : p.derivative.derivative.eval y = α*y*D y-t*B y := by have h := congrArg (fun q : ℝ[X] => q.eval y) (original_polynomial_ode hn t)
+ 510     simp only [eval_add, eval_sub, eval_mul, eval_C, eval_X, eval_zero] at h
+ 511     dsimp [p,α,B,D] at * linarith
+ 512   have hdG (y : ℝ) : HasDerivAt G
+ 513       (-2*α*y*exp (-α*y^2)*(B y)^2) y := by have he : HasDerivAt (fun x : ℝ => exp (-α*x^2))
+ 514         ((-α*(2*y))*exp (-α*y^2)) y := by convert! (((hasDerivAt_id y).pow 2).const_mul (-α)).exp using 1 <;>
+ 515         simp only [id_eq,Pi.pow_apply] <;> ring
+ 516     have hb := p.hasDerivAt y
+ 517     have hd := p.derivative.hasDerivAt y
+ 518     rw [hode y] at hd
+ 519     convert! he.mul ((hb.pow 2).add ((hd.pow 2).div_const t)) using 1 <;>
+ 520       dsimp [G,B,D] <;> field_simp [ht.ne'] <;> ring
+ 521   have hmono : AntitoneOn G (Ici 0) := by apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici 0)
+ 522       (continuous_iff_continuousAt.mpr (fun y => (hdG y).continuousAt)).continuousOn
+ 523       (fun y _ => (hdG y).hasDerivWithinAt)
+ 524     intro y hy
+ 525     have hy0 : 0≤y := le_of_lt (by simpa only [interior_Ici, mem_Ioi] using hy)
+ 526     have h : 0≤2*α*y*exp (-α*y^2)*(B y)^2 := by positivity
+ 527     nlinarith
+ 528   have hzero : G 0=1 := by dsimp [G,B,D,p]
+ 529     rw [(original_polynomial_origin n t).1, (original_polynomial_origin n t).2]
+ 530     simp
+ 531   have hG : G x≤1 := by simpa only [hzero] using hmono (by simp) hx hx
+ 532   have heprod : exp (α*x^2)*G x = (B x)^2+(D x)^2/t := by dsimp [G]
+ 533     rw [← mul_assoc, ← exp_add]
+ 534     simp
+ 535   have hs : (B x)^2 ≤ exp (α*x^2) := by have h := mul_le_mul_of_nonneg_left hG (exp_pos (α*x^2)).le
+ 536     rw [heprod, mul_one] at h
+ 537     have hd : 0≤(D x)^2/t := by positivity
+ 538     linarith
+ 539   have he : exp (α*x^2/2)^2=exp (α*x^2) := by rw [← exp_nat_mul]
+ 540     congr 1
+ 541     ring
+ 542   change |B x| ≤ exp (α*x^2/2)
+ 543   apply (sq_le_sq₀ (abs_nonneg _) (exp_pos _).le).mp
+ 544   rw [sq_abs,he]
+ 545   exact hs
+ 546 open private jetSize endpointConstant from D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
+ 547 private theorem monomial_jet {N : ℕ} (hN : 1≤N) (r k : ℕ) :
+ 548     IntegrableOn (fun x : ℝ => x^k*tailJet r N x) (Ioi 0) ∧ Tendsto (fun x : ℝ => x^k*tailJet r N x) atTop (𝓝 0) := by
+ 549   have hbound {x : ℝ} (hx : 0≤x) :
+ 550       ‖x^k*tailJet r N x‖ ≤ (1+x)^k*|tailJet r N x| := by rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg (pow_nonneg hx k)]
+ 551     exact mul_le_mul_of_nonneg_right
+ 552       (pow_le_pow_left₀ hx (by linarith) k) (abs_nonneg _)
+ 553   have hi : IntegrableOn (fun x : ℝ => (1+x)^k*|tailJet r N x|) (Ioi 0) := by simpa using (tailJet_integral 0 r k N hN).1
+ 554   refine ⟨hi.mono' ((continuous_id.pow k).mul (tailJet_continuous r N hN)).aestronglyMeasurable (by filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 555     exact hbound hx.le), ?_⟩
+ 556   let A := modeScale (N+1)
+ 557   let c := jetSize r*endpointConstant 0 r k*A^(r+2)*exp (-A)*shiftedBudget (r+2)
+ 558   have hA : 0<A := by dsimp [A,modeScale]; positivity
+ 559   apply squeeze_zero_norm' (a := fun x : ℝ => c*exp (-A*x))
+ 560   · filter_upwards [eventually_ge_atTop (0 : ℝ)] with x hx
+ 561     apply (hbound hx).trans
+ 562     simpa [c,A] using tailJet_endpoint 0 r k N hN hx
+ 563   · simpa using (tendsto_exp_atBot.comp
+ 564       (tendsto_id.const_mul_atTop_of_neg (show -A<0 by linarith))).const_mul c
+ 565 private theorem polynomial_jet {N : ℕ} (hN : 1≤N) (r : ℕ) (p : ℝ[X]) :
+ 566     IntegrableOn (fun x : ℝ => p.eval x*tailJet r N x) (Ioi 0) ∧ Tendsto (fun x : ℝ => p.eval x*tailJet r N x) atTop (𝓝 0) := by
+ 567   induction p using Polynomial.induction_on' with
+ 568   | add p q hp hq =>
+ 569     constructor
+ 570     · convert! hp.1.add hq.1 using 1 <;> first | rfl | (ext x; simp [eval_add,add_mul])
+ 571     · simpa only [eval_add, add_mul, add_zero] using hp.2.add hq.2
+ 572   | monomial k c =>
+ 573     have h := monomial_jet hN r k
+ 574     constructor
+ 575     · change Integrable (fun x : ℝ => (monomial k c).eval x*tailJet r N x)
+ 576         (volume.restrict (Ioi (0:ℝ)))
+ 577       have hc : Integrable (fun x : ℝ => c*(x^k*tailJet r N x))
+ 578           (volume.restrict (Ioi (0:ℝ))) := h.1.const_mul c
+ 579       simpa only [eval_monomial,mul_assoc] using hc
+ 580     · simpa only [eval_monomial, mul_assoc, mul_zero] using h.2.const_mul c
+ 581 private theorem polynomial_adjoint {N : ℕ} (hN : 1≤N) (α : ℝ) (p : ℝ[X]) :
+ 582     IntegrableOn (fun x : ℝ => p.eval x*densityAdjoint α (originalTail N) x) (Ioi 0) ∧ Tendsto (fun x : ℝ => p.eval x*densityAdjoint α (originalTail N) x) atTop (𝓝 0) := by
+ 583   have h2 := polynomial_jet hN 2 p
+ 584   have h0 := polynomial_jet hN 0 (p*C α)
+ 585   have h1 := polynomial_jet hN 1 (p*C α*X)
+ 586   have he : (fun x : ℝ => p.eval x*densityAdjoint α (originalTail N) x) = fun x => p.eval x*tailJet 2 N x+(p*C α).eval x*tailJet 0 N x+
+ 587         (p*C α*X).eval x*tailJet 1 N x := by ext x
+ 588     rw [adjoint_formula N hN α x]
+ 589     simp only [eval_mul,eval_C,eval_X]
+ 590     ring
+ 591   rw [he]
+ 592   exact ⟨h2.1.add h0.1 |>.add h1.1, by simpa using h2.2.add h0.2 |>.add h1.2⟩
+ 593 private theorem polynomial_adjoint_deriv_limit {N : ℕ} (hN : 1≤N) (α : ℝ) (p : ℝ[X]) :
+ 594     Tendsto (fun x : ℝ => p.eval x*deriv (densityAdjoint α (originalTail N)) x)
+ 595       atTop (𝓝 0) := by have h3 := (polynomial_jet hN 3 p).2
+ 596   have h1 := (polynomial_jet hN 1 (p*C (2*α))).2
+ 597   have h2 := (polynomial_jet hN 2 (p*C α*X)).2
+ 598   have he : (fun x : ℝ => p.eval x*deriv (densityAdjoint α (originalTail N)) x) = fun x => p.eval x*tailJet 3 N x+(p*C (2*α)).eval x*tailJet 1 N x+
+ 599         (p*C α*X).eval x*tailJet 2 N x := by ext x
+ 600     rw [(adjoint_deriv N hN α x).deriv]
+ 601     simp only [eval_mul,eval_C,eval_X]
+ 602     ring
+ 603   rw [he]
+ 604   simpa using (h3.add h1).add h2
+ 605 private theorem polynomial_adjoint_square_integrable {N : ℕ} (hN : 1≤N)
+ 606     (α : ℝ) (p : ℝ[X]) :
+ 607     IntegrableOn (fun x : ℝ => p.eval x* densityAdjoint α (densityAdjoint α (originalTail N)) x) (Ioi 0) := by
+ 608   have h4 := (polynomial_jet hN 4 p).1
+ 609   have h3 := (polynomial_jet hN 3 (p*C (2*α)*X)).1
+ 610   have h2 := (polynomial_jet hN 2 (p*(C (4*α)+C (α^2)*X^2))).1
+ 611   have h1 := (polynomial_jet hN 1 (p*C (3*α^2)*X)).1
+ 612   have h0 := (polynomial_jet hN 0 (p*C (α^2))).1
+ 613   convert! (((h4.add h3).add h2).add h1).add h0 using 1
+ 614   ext x
+ 615   rw [adjoint_square N hN α x]
+ 616   simp only [Pi.add_apply,eval_mul,eval_C,eval_X,eval_add,eval_pow]
+ 617   ring
+ 618 private theorem original_green {n : ℕ} (hn : 1≤n) (t : ℝ)
+ 619     (F : ℝ→ℝ) (hdF : Differentiable ℝ F) (hddF : Differentiable ℝ (deriv F))
+ 620     (hiF : IntegrableOn (fun x => (originalPolynomial n t).eval x*F x) (Ioi 0))
+ 621     (hiA : IntegrableOn (fun x => (originalPolynomial n t).eval x* densityAdjoint (t/(2*(n:ℝ))) F x) (Ioi 0))
+ 622     (hl0 : Tendsto (fun x => (originalPolynomial n t).eval x*deriv F x) atTop (𝓝 0))
+ 623     (hl1 : Tendsto (fun x => (originalPolynomial n t).derivative.eval x*F x) atTop (𝓝 0))
+ 624     (hl2 : Tendsto (fun x => (C (t/(2*(n:ℝ)))*X*originalPolynomial n t).eval x*F x)
+ 625       atTop (𝓝 0)) :
+ 626     (∫ x in Ioi (0:ℝ), (originalPolynomial n t).eval x* densityAdjoint (t/(2*(n:ℝ))) F x)+
+ 627       t*(∫ x in Ioi (0:ℝ), (originalPolynomial n t).eval x*F x) = -deriv F 0 := by let p := originalPolynomial n t
+ 628   let α := t/(2*(n:ℝ))
+ 629   let B := fun x : ℝ => p.eval x
+ 630   let D := fun x : ℝ => p.derivative.eval x
+ 631   let K := fun x : ℝ => B x*deriv F x-D x*F x+α*x*B x*F x
+ 632   have hode (x : ℝ) : p.derivative.derivative.eval x=α*x*D x-t*B x := by have h := congrArg (fun q : ℝ[X] => q.eval x) (original_polynomial_ode hn t)
+ 633     simp only [eval_add,eval_sub,eval_mul,eval_C,eval_X,eval_zero] at h
+ 634     dsimp [p,α,B,D] at * linarith
+ 635   have hdK (x : ℝ) : HasDerivAt K
+ 636       (B x*densityAdjoint α F x+t*(B x*F x)) x := by have hb := p.hasDerivAt x
+ 637     have hd := p.derivative.hasDerivAt x
+ 638     rw [hode x] at hd
+ 639     convert! ((hb.mul (hddF x).hasDerivAt).sub (hd.mul (hdF x).hasDerivAt)).add
+ 640       (((((hasDerivAt_id x).const_mul α).mul hb).mul (hdF x).hasDerivAt)) using 1 <;>
+ 641       dsimp [K,B,D,densityAdjoint] <;> ring
+ 642   have hlim : Tendsto K atTop (𝓝 0) := by have hl2' : Tendsto (fun x : ℝ => α*x*B x*F x) atTop (𝓝 0) := by
+ 643       simpa only [eval_mul,eval_C,eval_X] using hl2
+ 644     simpa [K,B,D] using (hl0.sub hl1).add hl2'
+ 645   have hi := hiA.add (hiF.const_mul t)
+ 646   have h := integral_Ioi_of_hasDerivAt_of_tendsto'
+ 647     (fun x _ => hdK x) hi hlim
+ 648   rw [integral_add hiA (hiF.const_mul t), integral_const_mul] at h
+ 649   have hzero : K 0=deriv F 0 := by dsimp [K,B,D,p]
+ 650     rw [(original_polynomial_origin n t).1,(original_polynomial_origin n t).2]
+ 651     ring
+ 652   simpa only [hzero,zero_sub] using h
+ 653 private theorem original_moment_bridge (n : ℕ) (t : ℝ) :
+ 654     Integrable (fun x:ℝ => originalB n t x*sourceThetaDensity x) ∧ originalJ n t = (sourceP n).eval (-t) ∧
+ 655     (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = (originalJ n t:ℂ) ∧ ((sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = 0 ↔ originalJ n t = 0) := by
+ 656   let c := fun j:ℕ => (-1:ℝ)^j*(n.descFactorial j:ℝ)*t^j/ ((n:ℝ)^j*((2*j).factorial:ℝ))
+ 657   have hi (j:ℕ) : Integrable (fun x:ℝ => x^(2*j)*sourceThetaDensity x) := by simpa only [sourceThetaDensity, fullZ, mul_div_assoc] using
+ 658       (source_theta_raw_moments j).1.div_const fullZ
+ 659   have he (x:ℝ) : originalB n t x*sourceThetaDensity x = ∑ j ∈ Finset.range (n+1), c j*(x^(2*j)*sourceThetaDensity x) := by
+ 660     simp only [originalB, Finset.sum_mul]
+ 661     apply Finset.sum_congr rfl
+ 662     intro j _
+ 663     dsimp [c]
+ 664     ring
+ 665   have hfi : Integrable (fun x:ℝ => originalB n t x*sourceThetaDensity x) := by simp_rw [he]
+ 666     exact integrable_finsetSum _ (fun j _ => (hi j).const_mul (c j))
+ 667   have hreal : originalJ n t = (sourceP n).eval (-t) := by dsimp [originalJ]
+ 668     simp_rw [he]
+ 669     rw [integral_finsetSum _ (fun j _ => (hi j).const_mul (c j))]
+ 670     simp only [sourceP, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X, integral_const_mul]
+ 671     apply Finset.sum_congr rfl
+ 672     intro j _
+ 673     dsimp [c,sourceThetaCoefficient,sourceThetaMoment]
+ 674     rw [neg_pow]
+ 675     simp only [div_eq_mul_inv, mul_inv_rev]
+ 676     ring
+ 677   have hcomplex : (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = (originalJ n t:ℂ) := by rw [← source_map]
+ 678     change ((sourceP n).map (algebraMap ℝ ℂ)).eval ((algebraMap ℝ ℂ) (-t)) = (algebraMap ℝ ℂ) (originalJ n t)
+ 679     rw [eval_map_apply, hreal]
+ 680   refine ⟨hfi, hreal, hcomplex, ?_⟩
+ 681   rw [hcomplex]
+ 682   exact Complex.ofReal_eq_zero
+ 683 private theorem primal_source_mode (j : ℕ) (x : ℝ) :
+ 684     primalMode (j+1) |x| = thetaSummand j x := by have h9 : exp (|x|/2)*exp (4*|x|)=exp (9*|x|/2) := by
+ 685     rw [← exp_add]
+ 686     congr 1
+ 687     ring
+ 688   have h5 : exp (|x|/2)*exp (2*|x|)=exp (5*|x|/2) := by rw [← exp_add]
+ 689     congr 1
+ 690     ring
+ 691   dsimp [primalMode,modeScale,thetaSummand]
+ 692   simp only [neg_mul] at *
+ 693   linear_combination
+ 694     (4*Real.pi^2*((j+1:ℕ):ℝ)^4*exp (-(Real.pi*((j+1:ℕ):ℝ)^2*exp (2*|x|))))*h9- (6*Real.pi*((j+1:ℕ):ℝ)^2*exp (-(Real.pi*((j+1:ℕ):ℝ)^2*exp (2*|x|))))*h5
+ 695 private theorem original_source_split (N : ℕ) {x : ℝ} (hx : 0≤x) :
+ 696     sourceThetaKernel x=originalHead N x+originalTail N x := by have hs : Summable (fun j : ℕ => primalMode (j+1) x) := by
+ 697     simpa only [← primal_source_mode,abs_of_nonneg hx] using source_theta_summable x
+ 698   have hsource : sourceThetaKernel x=∑' j : ℕ, primalMode (j+1) x := by unfold sourceThetaKernel
+ 699     apply tsum_congr
+ 700     intro j
+ 701     simpa only [abs_of_nonneg hx,thetaSummand] using (primal_source_mode j x).symm
+ 702   have hhead : originalHead N x=∑ j ∈ Finset.range N, primalMode (j+1) x := by dsimp [originalHead]
+ 703     rw [← Finset.Ico_add_one_right_eq_Icc,Finset.sum_Ico_eq_sum_range]
+ 704     simp only [Nat.add_sub_cancel]
+ 705     apply Finset.sum_congr rfl
+ 706     intro j _
+ 707     rw [Nat.add_comm 1 j]
+ 708   rw [hsource,hhead]
+ 709   have h := hs.sum_add_tsum_nat_add N
+ 710   simpa only [originalTail,Nat.add_comm] using h.symm
+ 711 private theorem original_full_source {N n : ℕ} (hN : 1≤N) (t : ℝ) :
+ 712     IntegrableOn (fun x : ℝ => originalB n t x*originalHead N x) (Ioi 0) ∧ originalJ n t=(2/fullZ)*
+ 713       ((∫ x in Ioi (0:ℝ), originalB n t x*originalHead N x)+ ∫ x in Ioi (0:ℝ), originalB n t x*originalTail N x) := by
+ 714   have hz : fullZ≠0 := ne_of_gt
+ 715     D5.S3.Analytic.Fourier.XiThetaTransform.source_theta_normalized.2.1
+ 716   dsimp [fullZ] at hz
+ 717   have hq : tailJet 0 N=originalTail N := by simpa using tailJet_eq_iterated 0 N hN
+ 718   have hiQ : IntegrableOn (fun x : ℝ => originalB n t x*originalTail N x) (Ioi 0) := by simpa only [original_polynomial_eval,hq] using
+ 719       (polynomial_jet hN 0 (originalPolynomial n t)).1
+ 720   have hraw : Integrable (fun x : ℝ => originalB n t x*sourceThetaKernel x) := by convert! (original_moment_bridge n t).1.mul_const fullZ using 1
+ 721     ext x
+ 722     dsimp [sourceThetaDensity,fullZ]
+ 723     field_simp [hz]
+ 724   have hhead : IntegrableOn (fun x : ℝ => originalB n t x*originalHead N x) (Ioi 0) := by apply (hraw.integrableOn.sub hiQ).congr
+ 725     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 726     change originalB n t x*sourceThetaKernel x-originalB n t x*originalTail N x= originalB n t x*originalHead N x
+ 727     rw [original_source_split N hx.le]
+ 728     ring
+ 729   refine ⟨hhead,?_⟩
+ 730   have heven (x : ℝ) : originalB n t |x|=originalB n t x := by simp only [originalB,Even.pow_abs (even_two_mul _) x]
+ 731   have hkernel (x : ℝ) : sourceThetaKernel |x|=sourceThetaKernel x := by simp only [sourceThetaKernel,abs_abs]
+ 732   have hfull : (∫ x : ℝ, originalB n t x*sourceThetaKernel x)= 2*(∫ x in Ioi (0:ℝ), originalB n t x*sourceThetaKernel x) := by
+ 733     calc _ = ∫ x : ℝ, originalB n t |x| * sourceThetaKernel |x| := by
+ 734         simp only [heven,hkernel]
+ 735       _ = _ := integral_comp_abs (f := fun x : ℝ => originalB n t x*sourceThetaKernel x)
+ 736   dsimp [originalJ]
+ 737   simp only [sourceThetaDensity,← mul_div_assoc,integral_div]
+ 738   rw [hfull]
+ 739   have hray : (∫ x in Ioi (0:ℝ), originalB n t x*sourceThetaKernel x)= (∫ x in Ioi (0:ℝ), originalB n t x*originalHead N x)+
+ 740         ∫ x in Ioi (0:ℝ), originalB n t x*originalTail N x := by rw [← integral_add hhead hiQ]
+ 741     apply setIntegral_congr_fun measurableSet_Ioi
+ 742     intro x hx
+ 743     dsimp only
+ 744     rw [original_source_split N hx.le]
+ 745     ring
+ 746   rw [hray]
+ 747   dsimp [fullZ]
+ 748   ring
+ 749 theorem original_primal_tail_response :
+ 750   0 < fullZ ∧ (∫ x:ℝ, sourceThetaDensity x) = 1 ∧ ∃ K:ℝ, 0<K ∧ ∀ a:ℝ, 0<a → ∃ C:ℝ, 0<C ∧
+ 751     ∀ N n:ℕ, 1≤N → 1≤n → ∀ t:ℝ, 0<t → t/(2*(n:ℝ))≤a →
+ 752       let A := modeScale (N+1)
+ 753       let I := ∫ x in Set.Ioi (0:ℝ), originalB n t x*originalTail N x
+ 754       let H := ∫ x in Set.Ioi (0:ℝ), originalB n t x*originalHead N x
+ 755       0<originalFlux N ∧ MeasureTheory.IntegrableOn (fun x:ℝ => originalB n t x*originalTail N x) (Set.Ioi 0) ∧
+ 756       MeasureTheory.IntegrableOn (fun x:ℝ => originalB n t x*originalHead N x) (Set.Ioi 0) ∧ MeasureTheory.Integrable (fun x:ℝ => originalB n t x*sourceThetaDensity x) ∧
+ 757       originalJ n t = (sourceP n).eval (-t) ∧ originalJ n t = (2/fullZ)*(H+I) ∧
+ 758       (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = (originalJ n t:ℂ) ∧ sourceJensenPolynomial n = normalizedJensen sourceThetaCoefficient n ∧
+ 759       ((sourceJensenPolynomial n).eval (((-t:ℝ):ℂ)) = 0 ↔ originalJ n t = 0) ∧ |t*I/originalFlux N-1| ≤ C*((N:ℝ)+1)^4/t ∧
+ 760       (2*C*((N:ℝ)+1)^4 ≤ t → (originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →
+ 761         (2/fullZ)*H ≤ -originalFlux N/(fullZ*t)) ∧ (max 12 a ≤ A → |(t+4*A^2)*I/originalFlux N-1| ≤ K/A) ∧
+ 762       (max (max 12 a) (2*K) ≤ A → originalFlux N/(2*(t+4*A^2)) ≤ I ∧
+ 763         0<originalFlux N/(2*(t+4*A^2)) ∧ ((originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →
+ 764           (2/fullZ)*H ≤ -originalFlux N/(fullZ*(t+4*A^2)) ∧ -originalFlux N/(fullZ*(t+4*A^2))<0)) := by
+ 765   have hz := D5.S3.Analytic.Fourier.XiThetaTransform.source_theta_normalized
+ 766   obtain ⟨K,hK,hres⟩ := relative_residual
+ 767   refine ⟨hz.2.1,hz.2.2.1,K,hK,?_⟩
+ 768   intro a ha
+ 769   obtain ⟨C,hC,hW⟩ := original_primal_tail_budget a ha
+ 770   refine ⟨C,hC,?_⟩
+ 771   intro N n hN hn t ht hαa
+ 772   dsimp only
+ 773   let α := t/(2*(n:ℝ))
+ 774   let A := modeScale (N+1)
+ 775   let p := originalPolynomial n t
+ 776   let I := ∫ x in Ioi (0:ℝ), originalB n t x*originalTail N x
+ 777   let D := ∫ x in Ioi (0:ℝ), originalB n t x*densityAdjoint α (originalTail N) x
+ 778   let E := ∫ x in Ioi (0:ℝ), originalB n t x*densityAdjoint α (densityAdjoint α (originalTail N)) x
+ 779   let H := ∫ x in Ioi (0:ℝ), originalB n t x*originalHead N x
+ 780   have hα : 0≤α := by dsimp [α]; positivity
+ 781   have hw := hW N hN α hα hαa
+ 782   have hk := hw.2.2.1
+ 783   have hq0 : tailJet 0 N=originalTail N := by simpa using tailJet_eq_iterated 0 N hN
+ 784   have hq1 : deriv (originalTail N)=tailJet 1 N := by rw [← hq0]
+ 785     exact funext (fun x => (tailJet_deriv 0 N hN x).deriv)
+ 786   have hdQ : Differentiable ℝ (originalTail N) := by rw [← hq0]
+ 787     exact fun x => (tailJet_deriv 0 N hN x).differentiableAt
+ 788   have hddQ : Differentiable ℝ (deriv (originalTail N)) := by rw [hq1]
+ 789     exact fun x => (tailJet_deriv 1 N hN x).differentiableAt
+ 790   have hiQ : IntegrableOn (fun x : ℝ => originalB n t x*originalTail N x) (Ioi 0) := by convert! (polynomial_jet hN 0 p).1 using 1 <;>
+ 791       first | rfl | (ext x; simp [p,original_polynomial_eval,hq0])
+ 792   have hiD : IntegrableOn (fun x : ℝ => originalB n t x*densityAdjoint α (originalTail N) x) (Ioi 0) := by simpa only [p,original_polynomial_eval] using (polynomial_adjoint hN α p).1
+ 793   have hiE : IntegrableOn (fun x : ℝ => originalB n t x* densityAdjoint α (densityAdjoint α (originalTail N)) x) (Ioi 0) := by
+ 794     simpa only [p,original_polynomial_eval] using polynomial_adjoint_square_integrable hN α p
+ 795   have g1 : D+t*I=originalFlux N := by have hl0 : Tendsto (fun x : ℝ => p.eval x*deriv (originalTail N) x) atTop (𝓝 0) := by
+ 796       rw [hq1]
+ 797       exact (polynomial_jet hN 1 p).2
+ 798     have hl1 : Tendsto (fun x : ℝ => p.derivative.eval x*originalTail N x) atTop (𝓝 0) := by rw [← hq0]
+ 799       exact (polynomial_jet hN 0 p.derivative).2
+ 800     have hl2 : Tendsto (fun x : ℝ => (Polynomial.C α*X*p).eval x*originalTail N x) atTop (𝓝 0) := by rw [← hq0]
+ 801       exact (polynomial_jet hN 0 (Polynomial.C α*X*p)).2
+ 802     have h := original_green hn t (originalTail N) hdQ hddQ
+ 803       (by simpa only [original_polynomial_eval] using hiQ)
+ 804       (by simpa only [original_polynomial_eval] using hiD) hl0 hl1 hl2
+ 805     rw [← hw.2.1] at h
+ 806     simpa only [original_polynomial_eval] using h
+ 807   have g2 : E+t*D= -deriv (densityAdjoint α (originalTail N)) 0 := by have hdAQ : Differentiable ℝ (densityAdjoint α (originalTail N)) :=
+ 808       fun x => (adjoint_deriv N hN α x).differentiableAt
+ 809     have hddAQ : Differentiable ℝ (deriv (densityAdjoint α (originalTail N))) := fun x => (adjoint_second_deriv N hN α x).differentiableAt
+ 810     have h := original_green hn t (densityAdjoint α (originalTail N)) hdAQ hddAQ
+ 811       (polynomial_adjoint hN α p).1
+ 812       (polynomial_adjoint_square_integrable hN α p)
+ 813       (polynomial_adjoint_deriv_limit hN α p)
+ 814       (polynomial_adjoint hN α p.derivative).2
+ 815       (polynomial_adjoint hN α (Polynomial.C α*X*p)).2
+ 816     simpa only [original_polynomial_eval] using h
+ 817   have hB {x : ℝ} (hx : 0≤x) : |originalB n t x|≤exp (a*x^2/2) := by rw [← original_polynomial_eval]
+ 818     apply (original_polynomial_energy hn ht hx).trans
+ 819     apply exp_le_exp.mpr
+ 820     exact div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_right hαa (sq_nonneg x)) (by norm_num)
+ 821   have hE : |E|≤∫ x in Ioi (0:ℝ), exp (a*x^2/2)* |densityAdjoint α (densityAdjoint α (originalTail N)) x| := by
+ 822     apply (abs_integral_le_integral_abs).trans
+ 823     apply integral_mono_ae hiE.abs hw.2.2.2.1
+ 824     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 825     rw [abs_mul]
+ 826     exact mul_le_mul_of_nonneg_right (hB hx.le) (abs_nonneg _)
+ 827   have hP : |t*I/originalFlux N-1|≤C*((N:ℝ)+1)^4/t := by apply (le_div_iff₀ ht).mpr
+ 828     have hid : (t*I/originalFlux N-1)*t= (deriv (densityAdjoint α (originalTail N)) 0+E)/originalFlux N := by
+ 829       apply (eq_div_iff hk.ne').mpr
+ 830       field_simp [hk.ne']
+ 831       nlinarith [congrArg (fun x : ℝ => t*x) g1]
+ 832     calc _ = |(t*I/originalFlux N-1)*t| := by rw [abs_mul,abs_of_pos ht]
+ 833       _ = |deriv (densityAdjoint α (originalTail N)) 0+E|/originalFlux N := by rw [hid,abs_div,abs_of_pos hk]
+ 834       _ ≤ _ := by apply (div_le_iff₀ hk).mpr
+ 835         exact (abs_add_le _ _).trans
+ 836           ((add_le_add_right hE _).trans (by simpa only [add_comm] using hw.2.2.2.2))
+ 837   have hm := original_moment_bridge n t
+ 838   have hs := original_full_source (n := n) hN t
+ 839   have hzero (h : originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) : H= -I := by have hj : originalJ n t=0 := h.elim id hm.2.2.2.mp
+ 840     have hz0 : 2/fullZ≠0 := div_ne_zero (by norm_num) (ne_of_gt hz.2.1)
+ 841     have hh := hs.2
+ 842     change originalJ n t=(2/fullZ)*(H+I) at hh
+ 843     rw [hj] at hh
+ 844     have hh' : H+I=0 := (mul_eq_zero.mp hh.symm).resolve_left hz0
+ 845     linarith
+ 846   have hnode_old : 2*C*((N:ℝ)+1)^4≤t → (originalJ n t=0 ∨ (sourceJensenPolynomial n).eval (((-t:ℝ):ℂ))=0) →
+ 847       (2/fullZ)*H≤ -originalFlux N/(fullZ*t) := by intro hth hnode
+ 848     rw [hzero hnode]
+ 849     have hhalf : C*((N:ℝ)+1)^4/t≤1/2 := by apply (div_le_iff₀ ht).mpr
+ 850       linarith
+ 851     have hlo : 1/2≤t*I/originalFlux N := by have h := (abs_le.mp (hP.trans hhalf)).1
+ 852       linarith
+ 853     have hI : originalFlux N/(2*t)≤I := by apply (div_le_iff₀ (by positivity : 0<2*t)).mpr
+ 854       have h := (le_div_iff₀ hk).mp hlo
+ 855       nlinarith
+ 856     have h := mul_le_mul_of_nonneg_left (neg_le_neg hI)
+ 857       (show 0≤2/fullZ from (div_pos (by norm_num) hz.2.1).le)
+ 858     convert! h using 1 <;> field_simp [ht.ne',ne_of_gt hz.2.1] <;> ring
+ 859   have hR : max 12 a≤A → |(t+4*A^2)*I/originalFlux N-1|≤K/A := by intro hA
+ 860     have hb := hres a N hN hA α hα hαa
+ 861     have hiR : IntegrableOn (fun x : ℝ => originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) (Ioi 0) := by
+ 862       change Integrable (fun x : ℝ => originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x))
+ 863         (volume.restrict (Ioi (0:ℝ)))
+ 864       have hq : Integrable (fun x : ℝ => originalB n t x*originalTail N x)
+ 865           (volume.restrict (Ioi (0:ℝ))) := hiQ
+ 866       have hd : Integrable (fun x : ℝ => originalB n t x*densityAdjoint α (originalTail N) x)
+ 867           (volume.restrict (Ioi (0:ℝ))) := hiD
+ 868       convert! (hq.const_mul (4*A^2)).sub hd using 1 <;>
+ 869         first | rfl | (ext x; simp only [Pi.sub_apply]; ring)
+ 870     have hRint : (∫ x in Ioi (0:ℝ), originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) = (t+4*A^2)*I-originalFlux N := by
+ 871       have he : (fun x : ℝ => originalB n t x* (4*A^2*originalTail N x-densityAdjoint α (originalTail N) x)) =
+ 872           fun x => (4*A^2)*(originalB n t x*originalTail N x)- originalB n t x*densityAdjoint α (originalTail N) x := by ext x; ring
+ 873       rw [he,integral_sub (hiQ.const_mul (4*A^2)) hiD,integral_const_mul]
+ 874       change 4*A^2*I-D=(t+4*A^2)*I-originalFlux N
+ 875       nlinarith [g1]
+ 876     have hbint : |(t+4*A^2)*I-originalFlux N|≤(K/A)*originalFlux N := by rw [← hRint]
+ 877       apply (abs_integral_le_integral_abs).trans
+ 878       apply le_trans (integral_mono_ae hiR.abs hb.1 ?_) hb.2
+ 879       filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+ 880       rw [abs_mul]
+ 881       exact mul_le_mul_of_nonneg_right (hB hx.le) (abs_nonneg _)
+ 882     have hid : (t+4*A^2)*I/originalFlux N-1= ((t+4*A^2)*I-originalFlux N)/originalFlux N := by field_simp <;> ring
+ 883     rw [hid,abs_div,abs_of_pos hk]
+ 884     exact (div_le_iff₀ hk).mpr hbint
+ 885   refine ⟨hk,hiQ,hs.1,hm.1,hm.2.1,hs.2,hm.2.2.1, sourceJensenPolynomial_eq_normalizedJensen n hn,hm.2.2.2,hP,hnode_old,hR,?_⟩
+ 886   intro hA
+ 887   have hA0 : 0<A := lt_of_lt_of_le (by norm_num : (0:ℝ)<12)
+ 888     ((le_max_left 12 a).trans ((le_max_left (max 12 a) (2*K)).trans hA))
+ 889   have hKA : K/A≤1/2 := by apply (div_le_iff₀ hA0).mpr
+ 890     have h := (le_max_right (max 12 a) (2*K)).trans hA
+ 891     linarith
+ 892   have hr := hR ((le_max_left (max 12 a) (2*K)).trans hA)
+ 893   have htA : 0<t+4*A^2 := by positivity
+ 894   have hI : originalFlux N/(2*(t+4*A^2))≤I := by apply (div_le_iff₀ (by positivity : 0<2*(t+4*A^2))).mpr
+ 895     have hh := (abs_le.mp (hr.trans hKA)).1
+ 896     have hrat : 1/2≤(t+4*A^2)*I/originalFlux N := by linarith
+ 897     have h := (le_div_iff₀ hk).mp hrat
+ 898     nlinarith
+ 899   refine ⟨hI,by positivity,?_⟩
+ 900   intro hnode
+ 901   change (2/fullZ)*H≤ -originalFlux N/(fullZ*(t+4*A^2)) ∧ -originalFlux N/(fullZ*(t+4*A^2))<0
+ 902   rw [hzero hnode]
+ 903   constructor
+ 904   · have h := mul_le_mul_of_nonneg_left (neg_le_neg hI)
+ 905       (show 0≤2/fullZ from (div_pos (by norm_num) hz.2.1).le)
+ 906     convert! h using 1 <;> field_simp [htA.ne',ne_of_gt hz.2.1] <;> ring
+ 907   · exact div_neg_of_neg_of_pos (neg_neg_of_pos hk)
+ 908       (mul_pos (show 0<fullZ from hz.2.1) htA)
+ 909 #print axioms original_primal_tail_response
+ 910 #print axioms mode_residual_integral
+ 911 #print axioms full_residual_integral
+ 912 #print axioms original_moment_bridge
+ 913 end D5.S3.Zeros.Jensen.OriginalPrimalTailResponse
