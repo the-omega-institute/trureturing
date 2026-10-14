@@ -31,6 +31,15 @@ namespace D5.S3.Combinatorics.IsingUniquenessSets
 /-- The coordinate value in `{-1, +1}`: `true ↦ +1`, `false ↦ -1`. -/
 def sgn (b : Bool) : ℝ := if b then 1 else -1
 
+/-
+proof_shape: sgn_not: bind-only
+Consumers: result; FourQubitParentConstruction.SignParent.signed_sum_t and signed_sum_a;
+  RepetitionVarianceLinear.witness_flip_self and witness_projection_pointwise.
+Escape registration is unfinished: https://github.com/the-omega-institute/trureturing/issues/16773.
+-/
+theorem sgn_not (b : Bool) : sgn (!b) = -sgn b := by
+  cases b <;> norm_num [sgn]
+
 /-- The Walsh function `w_L(x) = ∏_{j ∈ L} x_j` on `X = {-1, +1}^k`. -/
 def walsh {k : ℕ} (L : Finset (Fin k)) (x : Fin k → Bool) : ℝ := ∏ j ∈ L, sgn (x j)
 
@@ -170,8 +179,6 @@ theorem result : claim := by
       simp only [a, hsome, zero_mul, Finset.sum_const_zero, add_zero] at h1
       simpa using h1
     | some i => simpa using hsome i
-  have sgn_not (b : Bool) : sgn (!b) = -sgn b := by
-    cases b <;> norm_num [sgn]
   have sgn_decide (p : Prop) [Decidable p] :
       sgn (decide p) = 2 * (if p then 1 else 0) - 1 := by
     by_cases hp : p <;> norm_num [sgn, hp]
@@ -382,6 +389,5 @@ theorem result : claim := by
     · exact le_csInf ⟨_, Finset.univ, hcard, huniv⟩
         fun n ⟨U, hUc, hU⟩ => by rw [← hUc, two_two_univ U hU, hcard]
 
-#print axioms result
 
 end D5.S3.Combinatorics.IsingUniquenessSets

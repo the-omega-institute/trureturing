@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2687cc0016c10c48ee347cb51d7653e4c46d39741955884b73a8d84f98afe55c
+  normalized_sha256: sha256:2687cc0016c10c48ee347cb51d7653e4c46d39741955884b73a8d84f98afe55c
+cas_ref: sha256:2687cc0016c10c48ee347cb51d7653e4c46d39741955884b73a8d84f98afe55c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义38.5只规定加法图的数据、实际联合关系与逐门关系的记号，不断言二者相等或包含。
+    previous_atom_id: c4ed14b73b04b2f854769c2588eee7da06c0f17aa7dce5ba0a5996e8b53d75a3
+    next_atom_id: 04c623c518c0080b58f3d499b73a3be9aef126cefc606f4102326e68487846ca

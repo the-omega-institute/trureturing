@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ddecfbf0e25b4525873e23c77eda4f49e1baa8cb2724774b77482167d5fc1323
+  normalized_sha256: sha256:ddecfbf0e25b4525873e23c77eda4f49e1baa8cb2724774b77482167d5fc1323
+cas_ref: sha256:ddecfbf0e25b4525873e23c77eda4f49e1baa8cb2724774b77482167d5fc1323
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 19.11（删除连续最低位观察后，紧算术实现仍可存在）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 338aa92738bce0cd5320d810f180b05ac0742c72880c68cba8ef6fb3de34ef8f
+    next_atom_id: 4b61147944b30761e56e21dbffb613f9fa133e33108aaad6250e68cbffae4c5c
