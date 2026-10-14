@@ -5,7 +5,7 @@ year: 2026
 title: Growing-modulus interfaces for affine Fibonacci Robin candidates
 doi: null
 url: https://github.com/the-omega-institute/trureturing
-claim: "Applications of published maximal-order and strong-divisibility sieve results give fixed-rank tails and density-one whole multiplier windows; the prime-index same-candidate strict Robin budget remains unresolved by the cited growing-modulus estimates."
+claim: "Published maximal-order and strong-divisibility sieve inputs give fixed-rank tails and density-one whole multiplier windows; on the prime-index window, every supported multiple worsens the stated Axler envelope, leaving the actual strict Robin budget unresolved."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -619,6 +619,94 @@ $$
 所以它们全部留在（FW.1）未支付的分支中。特别地，（FW.4）不排除
 素指标上的任何潜在反例，也未支付 §233.5 的完整逐点预算。
 本段没有 Lean 声明或形式核验，不作全球原创性断言。
+
+## 素指标窗口：Axler 倍数上界不能支付 Robin 预算
+
+回到 $r\ge7$ 为素数、$V=F_r$、$g\in I_r$、$N=1+gV$。
+只考察上述 Axler totient 界产生的一族上界，记
+
+$$
+h(t)=t+\frac{a_0}{t^2},\qquad a_0=0.0094243,\qquad
+U_d(N)=e^\gamma\frac{\varphi(d)}d\,h(\log\log(dN)),
+$$
+
+其中 $d$ 为正整数，全部素因子均整除 $V$。由 $(N,d)=1$，当
+$dN\ge N_K$ 时，Axler 原文式（3.4）—（3.5）合法给出
+
+$$
+Z(N)<\frac N{\varphi(N)}
+=\frac{\varphi(d)}d\frac{dN}{\varphi(dN)}<U_d(N).
+\tag{FM.1}
+$$
+
+这里必须对实际倍数 $dN$ 使用原界，因而参考大小也变成 $dN$。
+直接在 $N$ 的 $Z$ 上界上乘缺失素数因子，不由原定理支持。
+
+在本窗口，整族数值上界的唯一最小项是 $d=1$：
+
+$$
+U_d(N)>U_1(N)
+=e^\gamma\left(L+\frac{a_0}{L^2}\right)
+>e^\gamma L,\qquad L=\log\log N,\quad d>1.
+\tag{FM.2}
+$$
+
+下面是该现成上界在实际 FIB 参数下的纸面比较，不另立解析定理。
+素指标的标准秩同余给 $p\mid V\Rightarrow p\ge2r-1$。
+令 $\phi=(1+\sqrt5)/2$。又有 $N<V^2$、$V<\phi^r$、
+$\log\phi<1/2$、$N\ge27$，故 $L>1$。
+
+先令 $d$ 平方自由，且 $p\nmid d$、$dp\mid\operatorname{rad}(V)$。
+设
+
+$$
+A=\log(dN),\quad B=\log(dpN)=A+\log p,\qquad
+f(u)=\log h(\log u).
+$$
+
+因为 $dp\le V$，所以 $B\le\log(VN)<3r/2$。在 $[A,B]$ 上，
+$\log u\ge L>1$，且
+
+$$
+f'(u)=\frac{1-2a_0/(\log u)^3}
+ {u\log u\,[1+a_0/(\log u)^3]}
+>\frac{9}{10u\log u}.
+$$
+
+最后一步用 $a_0<1/100$ 和 $98/101>9/10$。积分并用
+$p\ge2r-1>3r/2$，得到
+
+$$
+f(B)-f(A)>
+\frac{(9/10)\log p}{B\log B}
+>\frac{(9/10)\log p}{(3r/2)\log(3r/2)}
+>\frac3{5r}.
+$$
+
+另一方面，$-\log(1-1/p)<1/(p-1)\le1/(2r-2)$，从而
+
+$$
+\log\frac{U_{dp}(N)}{U_d(N)}
+>\frac3{5r}-\frac1{2r-2}
+=\frac{r-6}{10r(r-1)}>0.
+\tag{FM.3}
+$$
+
+依次加入平方自由支撑即得严格增长。提高已经出现的素数幂次不改变
+$\varphi(d)/d$，同时严格增大 $\log\log(dN)$；$h$ 在 $t>1$
+严格递增。因此比较延伸到全部受支持的 $d>1$，证明（FM.2）。
+
+当 $N\ge N_K$ 时，所有 $U_d$ 都是合法上界，最优项仍高于
+Robin 预算。当 $N<N_K$ 时，只有另满足 $dN\ge N_K$ 的项可由
+（FM.1）取得；即使如此，（FM.2）仍使它们高于预算。原文对
+$5041\le N\le N_K$ 的有限验证另行适用，不能与倍数界混为一谈。
+
+所以，选择禁素因子的任意子集、加入全部禁素因子或提高其幂次，
+均不能让这套 Axler 倍数上界证明当前窗口的 Robin。不需要继续优化
+这族证书；实际 $N$ 的素幂截断损失、同价价格损失或另一解析上界
+不在此排除范围内。这个比较不判断真实 $\Delta(N)$ 的符号。
+固定 $r$、让 $g$ 任意增大时，$N<V^2$ 不再成立，因此也不反驳
+（FT.2）的已知最终安全性。以上没有 Lean 核验或全球原创性结论。
 
 ## 仍缺的联合关系
 
