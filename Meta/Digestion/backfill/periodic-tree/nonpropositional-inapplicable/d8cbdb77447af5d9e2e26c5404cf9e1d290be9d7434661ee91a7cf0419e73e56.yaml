@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8cbdb77447af5d9e2e26c5404cf9e1d290be9d7434661ee91a7cf0419e73e56
+  normalized_sha256: sha256:d8cbdb77447af5d9e2e26c5404cf9e1d290be9d7434661ee91a7cf0419e73e56
+cas_ref: sha256:d8cbdb77447af5d9e2e26c5404cf9e1d290be9d7434661ee91a7cf0419e73e56
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「8.7 有限载体与 Fibonacci 窗口」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 8f48634a996a31fb7dea48b637a31ee6785560f377216dd4ed9a2bb4eeb57db0
+    next_atom_id: f95dedf1e22d6bea1331273dbb3751eae9c09347396e5aec0caa75b5b8d9496d

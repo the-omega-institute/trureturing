@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5acc20e34b4c710e95ecc87c5058caa41028ca2debe641d0a0f33b3a7a76dc23
+  normalized_sha256: sha256:5acc20e34b4c710e95ecc87c5058caa41028ca2debe641d0a0f33b3a7a76dc23
+cas_ref: sha256:5acc20e34b4c710e95ecc87c5058caa41028ca2debe641d0a0f33b3a7a76dc23
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「JP.6 非不动点的减半律与迭代界」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 5b3f0bc93034a4200244990138d13a225968f43da4423296c3faebb66f6bd88a
+    next_atom_id: 498bdd83275e1b6d40d9dc3cac5aa4211083d9b0bc1f84b69da32161a4e17faa

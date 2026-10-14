@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb158b49f0aca226759c26ebf4a5d58d4d45582747c412a2d559943dc6ce834d
+  normalized_sha256: sha256:cb158b49f0aca226759c26ebf4a5d58d4d45582747c412a2d559943dc6ce834d
+cas_ref: sha256:cb158b49f0aca226759c26ebf4a5d58d4d45582747c412a2d559943dc6ce834d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 68.2 只引入可达空间、不可观测空间、条件性的诱导映射和截止记号，不变性与良定义性留给后项定理。
+    previous_atom_id: d6566d445d8d9db5f5859313075436146ed481ab81fa8420f9613a1ed482ca84
+    next_atom_id: 9a4b46af840787dab6caa60b4926308539b7d5d49ac5809405b2712a45d3ae83

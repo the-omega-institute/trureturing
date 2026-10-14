@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b656b7183bca0e3127983eb17437d57b2c5cd9a8669850bae3e0c56fdc86b4c
+  normalized_sha256: sha256:4b656b7183bca0e3127983eb17437d57b2c5cd9a8669850bae3e0c56fdc86b4c
+cas_ref: sha256:4b656b7183bca0e3127983eb17437d57b2c5cd9a8669850bae3e0c56fdc86b4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 推论 139.8（一致 $3/R$ 与上界首项）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 454172f9cfb1ce3327c0c6b7df1389576d916f242d591caab983733051865b8d
+    next_atom_id: c22ead5e4ce934723a57b6bdd60bec49cc27777d1ab91ef589f39476849fafbe

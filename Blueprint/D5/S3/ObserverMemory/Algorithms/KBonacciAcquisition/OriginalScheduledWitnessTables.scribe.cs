@@ -21,6 +21,14 @@ internal sealed class OriginalScheduledWitnessTablesDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("For an arbitrary address type, Boolean stop mode, finite address list and static Boolean response map, view returns every scheduled reply in order. In stopped mode it includes the first false reply and omits everything after it. In preselected mode it retains every reply, including repeated addresses and reversed pairs."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("scheduled-witness-view-congr"),
+                DeclarationHandle.Create(Owner + "view_congr"),
+                H("Chronological view congruence"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every address type A, stop mode, finite list xs and Boolean reply maps q,r on A, agreement q(i)=r(i) for every occurrence i in xs implies view stop xs q equals view stop xs r. List induction retains order, repetitions and first-false stopping. Equal-rank chain words use this congruence through the actual catalog factorization."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("scheduled-witness-step"),
                 DeclarationHandle.Create(Owner + "step"),
                 H("Actual requests and silent processing"),

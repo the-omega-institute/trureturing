@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6d2347e64743931d1202badea008c5da190469e9d94c30cdf86b857ad16024d
+  normalized_sha256: sha256:a6d2347e64743931d1202badea008c5da190469e9d94c30cdf86b857ad16024d
+cas_ref: sha256:a6d2347e64743931d1202badea008c5da190469e9d94c30cdf86b857ad16024d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** e=1 时，由 FD9、FD10 得 delta(p)>=N_p/p>=1/p。若 e>=2，则  \[ \delta(p)…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: c35bc1aa3d92edc8445f8deb7829a409dc3bdd71cbf000817bebb6992f41e457
+    next_atom_id: 3e25b1afc2b6181a9f6f00e2ec0d61aeb70a4558cac36888e88bfbf4d7b6e725

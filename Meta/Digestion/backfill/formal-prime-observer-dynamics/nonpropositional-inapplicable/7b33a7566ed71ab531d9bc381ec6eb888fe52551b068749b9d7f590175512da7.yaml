@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b33a7566ed71ab531d9bc381ec6eb888fe52551b068749b9d7f590175512da7
+  normalized_sha256: sha256:7b33a7566ed71ab531d9bc381ec6eb888fe52551b068749b9d7f590175512da7
+cas_ref: sha256:7b33a7566ed71ab531d9bc381ec6eb888fe52551b068749b9d7f590175512da7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：154. 目标族的最小充分商：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: c21aac25875fef150bc48ab67a6c920447d2826b9d109ceb6f572d1f0c9bac82
+    next_atom_id: 70b2b46634feefd01eb66e5e80c6847baadf09cae79c34da887b693721f457ca

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e9e7bad80395f67e6e7640b83c2180e32e0a3d3a3ab799f45d88dc87847e9ec5
+  normalized_sha256: sha256:e9e7bad80395f67e6e7640b83c2180e32e0a3d3a3ab799f45d88dc87847e9ec5
+cas_ref: sha256:e9e7bad80395f67e6e7640b83c2180e32e0a3d3a3ab799f45d88dc87847e9ec5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 278.2（目标 posterior）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 8c08622f83a9b3a813b9773967bfc2210434e72855a987aafecd9f66d4de451e
+    next_atom_id: add054cd5af5917d2080b2217cebcfa54a38c363391c2c300b74b89aaf944ddf

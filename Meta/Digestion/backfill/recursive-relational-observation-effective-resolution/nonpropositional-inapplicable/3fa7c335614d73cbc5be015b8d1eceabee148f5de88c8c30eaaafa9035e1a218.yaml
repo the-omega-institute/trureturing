@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3fa7c335614d73cbc5be015b8d1eceabee148f5de88c8c30eaaafa9035e1a218
+  normalized_sha256: sha256:3fa7c335614d73cbc5be015b8d1eceabee148f5de88c8c30eaaafa9035e1a218
+cas_ref: sha256:3fa7c335614d73cbc5be015b8d1eceabee148f5de88c8c30eaaafa9035e1a218
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只定义加权支撑和 F(S) 及二值取舍的记号，不陈述唯一性、恢复性或估计性质。
+    previous_atom_id: 54007071eb10c58ac6998872d6c9081cc36416f2a85698e8bcd3b9e53ab7eb4b
+    next_atom_id: 49180d74f6537accf5b03be075a0521c4a76087fa00cae495178c205f8401305

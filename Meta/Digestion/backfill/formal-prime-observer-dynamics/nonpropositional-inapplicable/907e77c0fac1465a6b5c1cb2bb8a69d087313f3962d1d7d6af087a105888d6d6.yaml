@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:907e77c0fac1465a6b5c1cb2bb8a69d087313f3962d1d7d6af087a105888d6d6
+  normalized_sha256: sha256:907e77c0fac1465a6b5c1cb2bb8a69d087313f3962d1d7d6af087a105888d6d6
+cas_ref: sha256:907e77c0fac1465a6b5c1cb2bb8a69d087313f3962d1d7d6af087a105888d6d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 P(Y_x=y\mid X=x)：\[：本片段仅论证相邻的既有陈述，不另行提出命题。
+    previous_atom_id: 3627e2ad78cf9b433ba8ef88dfbf3271fd37e0e3efa863ee8021541ca8d16a7d
+    next_atom_id: 8ddfea54d84db1959f2d552218af4b04eab5e9e99ad30fb447ddf6109447c952

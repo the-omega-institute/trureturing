@@ -153,7 +153,7 @@ private lemma hadamard_eq :
     simp [D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
       D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2, pauliMatrix, qubitX, qubitZ]
 
-private lemma half_sqrt_two_sq : (Real.sqrt 2 / 2) * (Real.sqrt 2 / 2) = (1 / 2 : ℝ) := by
+lemma half_sqrt_two_sq : (Real.sqrt 2 / 2) * (Real.sqrt 2 / 2) = (1 / 2 : ℝ) := by
   nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 lemma hadamard_unitary : hadamard₂ ∈ Matrix.unitaryGroup (Fin 2) ℂ := by

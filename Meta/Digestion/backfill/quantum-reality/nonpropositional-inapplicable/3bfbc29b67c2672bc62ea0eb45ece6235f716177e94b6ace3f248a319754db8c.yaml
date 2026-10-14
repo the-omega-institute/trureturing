@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3bfbc29b67c2672bc62ea0eb45ece6235f716177e94b6ace3f248a319754db8c
+  normalized_sha256: sha256:3bfbc29b67c2672bc62ea0eb45ece6235f716177e94b6ace3f248a319754db8c
+cas_ref: sha256:3bfbc29b67c2672bc62ea0eb45ece6235f716177e94b6ace3f248a319754db8c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 386 节此片段仅给定有限 Hamiltonian 与效果，定义频率集、读数、非恒定性和周期性，不断言周期或生成元性质。
+    previous_atom_id: cbfc6c05b6b8822223e134eecd54035ff04e464e50fb3b1669020107b153476b
+    next_atom_id: 51a81c14655c2ec4093ec748faeb593edb7a27f44a10c0ecc61b3a3d54f854e3

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa11db358650bff5a77c8225610881a45a6b2c3032a525722fc2a47ac8f1c643
+  normalized_sha256: sha256:aa11db358650bff5a77c8225610881a45a6b2c3032a525722fc2a47ac8f1c643
+cas_ref: sha256:aa11db358650bff5a77c8225610881a45a6b2c3032a525722fc2a47ac8f1c643
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：**日期：** 2026-08-21：仅解释记号或说明阅读、证明状态边界，不提出新的数学断言。
+    previous_atom_id: e5fce0306832de2d99c4d223c186f5adf5ab8dd2f52455b2d441c69f4d24dec5
+    next_atom_id: cc80926563f3832539b16fa141c3282e9165b56b98df647838c244843e928817

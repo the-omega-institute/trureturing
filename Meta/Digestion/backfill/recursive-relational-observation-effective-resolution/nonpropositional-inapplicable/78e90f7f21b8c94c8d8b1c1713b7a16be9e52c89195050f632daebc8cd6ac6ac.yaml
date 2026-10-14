@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78e90f7f21b8c94c8d8b1c1713b7a16be9e52c89195050f632daebc8cd6ac6ac
+  normalized_sha256: sha256:78e90f7f21b8c94c8d8b1c1713b7a16be9e52c89195050f632daebc8cd6ac6ac
+cas_ref: sha256:78e90f7f21b8c94c8d8b1c1713b7a16be9e52c89195050f632daebc8cd6ac6ac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅固定二进前缀的阅读约定，并说明章节所承接的结果、证明类型及有限覆盖问题的范围；不另立具体数学陈述。
+    previous_atom_id: 966e186392a65a6a336249a04cafbd9a904c1039e5d63ebaca37dafb64b677d3
+    next_atom_id: d6d8eaf95eec7bb0d01e536c7eda749978c93826f6ed443a04491d728e9069f2

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:146cf92d8b6e759af7e1c36c34b6aca7b3e692e6a7381112a3960600f947909d
+  normalized_sha256: sha256:146cf92d8b6e759af7e1c36c34b6aca7b3e692e6a7381112a3960600f947909d
+cas_ref: sha256:146cf92d8b6e759af7e1c36c34b6aca7b3e692e6a7381112a3960600f947909d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片段是既有定理的 3⇒2 证明方向，末尾仅有空的结论标题，无新增结论正文。
+    previous_atom_id: c4d5d0525bf8889278ab5a11cf1428e463d3bfe653923c730113f5a6c76bd5a4
+    next_atom_id: 00d32c598013b273281184299a2bc032591eebbe38001b49d15b796f6916c13f

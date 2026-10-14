@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b18000900c22b6b664b125278aa1385baab0af0e884a045a813ba177cec002a5
+  normalized_sha256: sha256:b18000900c22b6b664b125278aa1385baab0af0e884a045a813ba177cec002a5
+cas_ref: sha256:b18000900c22b6b664b125278aa1385baab0af0e884a045a813ba177cec002a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ST34–ST42 文献片段，只列参考来源和引用范围，不提出新的数学结论。
+    previous_atom_id: f775a35b1cab2df46840b938940343e037ce4bd6534ea79f5306b24525ec2212
+    next_atom_id: 9644d0a92611293a4f18a77a88b5ff0fd5bec44b9f149d1b3dbd8833cd87e014

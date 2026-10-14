@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b98d7f1da904e268e54861dd919e0499ecde2c4b7bf55a91ff36b0c6ac3fe163
+  normalized_sha256: sha256:b98d7f1da904e268e54861dd919e0499ecde2c4b7bf55a91ff36b0c6ac3fe163
+cas_ref: sha256:b98d7f1da904e268e54861dd919e0499ecde2c4b7bf55a91ff36b0c6ac3fe163
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- 若声称来自全局状态，则有胶合见证或证明。：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: c2561191d8ad4f60c795b3c86e45b833ece190dac935ee8a750869713da1453a
+    next_atom_id: 8087964b1c3655a472cfaa4da28e515f86e436fb5e22e551328326325b02acb6

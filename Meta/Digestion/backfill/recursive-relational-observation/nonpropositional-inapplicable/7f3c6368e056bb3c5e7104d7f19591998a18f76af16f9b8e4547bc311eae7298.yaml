@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7f3c6368e056bb3c5e7104d7f19591998a18f76af16f9b8e4547bc311eae7298
+  normalized_sha256: sha256:7f3c6368e056bb3c5e7104d7f19591998a18f76af16f9b8e4547bc311eae7298
+cas_ref: sha256:7f3c6368e056bb3c5e7104d7f19591998a18f76af16f9b8e4547bc311eae7298
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 58.15 完全展开二进制输出的无条件长度障碍。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 99bea1a7b5476f2878cb4941b3498c0ce9c00abec949f1f08bc4698f17254e7d
+    next_atom_id: db69315c207335c26c3654d711bfcd852a446be941169a2f4a199eee1143dd82

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:914a907b57cd63ac7393fc8e2678e412259d952e039ac106a11b3b103eba00b2
+  normalized_sha256: sha256:914a907b57cd63ac7393fc8e2678e412259d952e039ac106a11b3b103eba00b2
+cas_ref: sha256:914a907b57cd63ac7393fc8e2678e412259d952e039ac106a11b3b103eba00b2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段（### IP.10 Exact distance between any two layers）只引入对象、参数、集合或谓词记号；给出的条件是定义内容，不断言额外性质。
+    previous_atom_id: 426c3c4ff9e2abedbfa9f49149cc3666c8e5025526b8353d6051cfe5aad4d900
+    next_atom_id: 5e454fd3dd39d9739efda30785cc6f2ecebcc2948c3171d22602b81ca4473c02
