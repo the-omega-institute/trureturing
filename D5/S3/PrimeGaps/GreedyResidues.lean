@@ -350,7 +350,7 @@ theorem assignment_row_bound {α : Type*} [Fintype α]
       intro p _
       cases σ p <;> simp [localRow]
     _ ≤ ∏ _ ∈ assignmentSupport σ, Real.exp ((k : ℝ) / (z - 1)) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro p _
         exact add_nonneg zero_le_one
           (div_nonneg hk1 (hz1.le.trans (sub_le_sub_right (hsize p) 1)))

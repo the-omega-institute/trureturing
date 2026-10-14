@@ -77,7 +77,8 @@ class CleanupMakeTests(NativeFixture):
         self.mark_phase("source-copy")
         # The selected CLI project and its production references do not build test
         # sources. Copy its current tool inputs without unrelated test checkouts.
-        files = subprocess.check_output(["git", "ls-files", "-z", "tools", ":(exclude)tools/tests"],
+        files = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard",
+                                         "-z", "tools", ":(exclude)tools/tests"],
                                         cwd=SOURCE).split(b"\0")
         paths = [Path(os.fsdecode(name)) for name in files if name]
         paths += list(map(Path, ["Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json"]))

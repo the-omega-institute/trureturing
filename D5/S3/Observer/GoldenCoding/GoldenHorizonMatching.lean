@@ -184,7 +184,7 @@ example :
   · norm_num only [zero_pow, sub_zero, inv_one]
     nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio]
   · intro hAll
-    have hSamplingSquare := (hAll.out 0 2).mp rfl
+    have hSamplingSquare := (hAll.out 1 3).mp rfl
     have hInvPos : 0 < Real.goldenRatio⁻¹ := inv_pos.mpr Real.goldenRatio_pos
     have hZero : (0 : ℝ) ^ 2 = 0 := by norm_num
     rw [hZero] at hSamplingSquare

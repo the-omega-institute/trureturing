@@ -9,7 +9,7 @@
 import D5.S3.Factorization.MordellTwoAdicNonTorsion
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.Tactic
-import D5.S3.Factorization.Mordell.SymmetricSquareAddition
+import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.AddSubMap
 import D5.S3.QuadraticForms.ParallelogramConstruction
 import D5.S3.Factorization.Mordell.CanonicalPointHeight
 import D5.S3.Factorization.Dedekind.GaloisScalarHeight
@@ -131,7 +131,7 @@ theorem mordell_family_canonical_height_gram
       match q with
       | 0 => simp [WeierstrassCurve.Affine.Point.naiveHeight,
           WeierstrassCurve.Affine.Point.xRep]
-      | .some .. => simpa [WeierstrassCurve.Affine.Point.naiveHeight] using
+      | .some .. => simpa [WeierstrassCurve.Affine.Point.naiveHeight_eq_logHeight] using
           (logHeight₁_eq_logHeight _).symm
     simp only [hheight]
     rw [← Function.comp_def]

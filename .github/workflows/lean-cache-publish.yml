@@ -111,7 +111,7 @@ jobs:
       actions: read
     concurrency:
       group: lean-cache-pr-${{ github.event.pull_request.number }}
-      cancel-in-progress: true
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'true'
       STRATALINT_CACHE_PR_PRODUCER: 'true'

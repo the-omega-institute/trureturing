@@ -545,7 +545,7 @@ private theorem choi_identity (eps tx ty tz : ℝ)
   have hz : star z ⬝ᵥ ((fun (p r : Fin 2 × Fin 2) => affine 0 tx ty 0 (Matrix.single p.2 r.2 1) p.1 r.1) *ᵥ z) = 0 := by
     simp [z,dotProduct,mulVec,Fintype.sum_prod_type,Fin.sum_univ_two,
       affine,LinearMap.copy,Matrix.single]
-  have hk := (hC.dotProduct_mulVec_zero_iff z).mp hz
+  have hk := (hC.dotProduct_mulVec_zero_iff (x := z)).mp hz
   have hxy := congrFun hk (0,0)
   simp [z,mulVec,affine,LinearMap.copy,Matrix.single] at hxy
   have hx := congrArg Complex.re hxy

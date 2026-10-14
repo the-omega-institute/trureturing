@@ -25,7 +25,7 @@ namespace PredictiveThermodynamic
 open Turing StateTransition ClauseCodec
 
 def preparedFormula (w : List Bool) : Σ n, UnaryFormula n :=
-  (readWord false w).getD ⟨0,[[]]⟩
+  (readWord false w).getD ⟨0,[.empty]⟩
 
 def preparedQuery (w : List Bool) : List Bool :=
   match readWord false w with
@@ -50,7 +50,7 @@ theorem pre_word_run (w : List Bool) :
     w = bodyWord false F ∧ ∀ c ∈ F, c.length ≤ 3
   let Clause (n b : Nat) (w : List Bool) : Prop :=
     ∃ (c : Std.Sat.CNF.Clause (Fin n)) (tail : List Bool),
-      w = c.flatMap unaryLiteral ++ [true, false] ++ tail ∧ c.length ≤ b ∧ Body n tail
+      w = c.literals.flatMap unaryLiteral ++ [true, false] ++ tail ∧ c.length ≤ b ∧ Body n tail
   let Header (h : Nat) (w : List Bool) : Prop := ∃ j tail,
     w = List.replicate j true ++ false :: tail ∧ Body (h + j) tail
   let Index (n b h : Nat) (w : List Bool) : Prop := ∃ j tail,
@@ -63,7 +63,7 @@ theorem pre_word_run (w : List Bool) :
       cases F with
       | nil => exact Or.inl rfl
       | cons c F =>
-        refine Or.inr ⟨c.flatMap unaryLiteral ++ [true, false] ++ bodyWord false F, ?_,
+        refine Or.inr ⟨c.literals.flatMap unaryLiteral ++ [true, false] ++ bodyWord false F, ?_,
           c, bodyWord false F, rfl, width c (by simp), F, rfl, ?_⟩
         · simp [bodyWord, termWord, List.append_assoc]
         · intro d hd; exact width d (by simp [hd])
@@ -83,19 +83,28 @@ theorem pre_word_run (w : List Bool) :
     intro n b w
     constructor
     · rintro ⟨c, tail, rfl, hc, ht⟩
-      cases c with
-      | nil => exact Or.inl ⟨tail, rfl, ht⟩
-      | cons literal c =>
+      change c.literals.length ≤ b at hc
+      cases hs : c.literals with
+      | nil =>
+        left
+        exact ⟨tail, by simp [hs], ht⟩
+      | cons literal literals =>
         rcases literal with ⟨i, p⟩
-        refine Or.inr ⟨i, p, c.flatMap unaryLiteral ++ [true, false] ++ tail,
-          by simp only [List.length_cons] at hc; omega, ?_, c, tail, rfl, ?_, ht⟩
-        · simp [unaryLiteral, List.append_assoc]
-        · simp only [List.length_cons] at hc; omega
+        simp only [hs, List.length_cons] at hc
+        refine Or.inr ⟨i, p, literals.flatMap unaryLiteral ++ [true, false] ++ tail,
+          by omega, ?_, .ofLiterals literals, tail, ?_, ?_, ht⟩
+        · simp [hs, unaryLiteral, List.append_assoc]
+        · simp
+        · simpa only [Std.Sat.CNF.Clause.length,
+            Std.Sat.CNF.Clause.literals_ofLiterals] using (by omega : literals.length ≤ b - 1)
     · rintro (⟨tail, rfl, ht⟩ | ⟨i, p, rest, hb, rfl, c, tail, rfl, hc, ht⟩)
-      · exact ⟨[], tail, rfl, Nat.zero_le _, ht⟩
-      · refine ⟨(i,p) :: c, tail, ?_, ?_, ht⟩
+      · exact ⟨.empty, tail, rfl, Nat.zero_le _, ht⟩
+      · refine ⟨.ofLiterals ((i,p) :: c.literals), tail, ?_, ?_, ht⟩
         · simp [unaryLiteral, List.append_assoc]
-        · simp only [List.length_cons]; omega
+        · change (Std.Sat.CNF.Clause.ofLiterals ((i,p) :: c.literals)).literals.length ≤ b
+          simp only [Std.Sat.CNF.Clause.literals_ofLiterals, List.length_cons]
+          change c.literals.length ≤ b - 1 at hc
+          omega
   have bodyNil : ∀ n, ¬ Body n [] := by intro n; rw [bodyCases]; simp
   have bodyShort : ∀ n, ¬ Body n [false] := by
     intro n; rw [bodyCases]; simp
@@ -704,8 +713,8 @@ theorem pre_word_run (w : List Bool) :
       (input.length+header.length+scratch.length+query.length+5) _ _ _ errorRun cleanup
     have identity := terminalUnique out dummyQuery _ _ run complete
     subst out
-    have check : readWord true dummyQuery = some ⟨0,[[]]⟩ := by decide
-    have formulaEq : preparedFormula w = ⟨0,[[]]⟩ := by
+    have check : readWord true dummyQuery = some ⟨0,[.empty]⟩ := by decide
+    have formulaEq : preparedFormula w = ⟨0,[.empty]⟩ := by
       unfold preparedFormula
       rw [decoded]
       rfl

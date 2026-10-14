@@ -48,7 +48,7 @@ public sealed class TetrahelixSourceEvidenceTests
             });
             files.Add(source, file);
         }
-        Assert.Equal("b0b9950cbe5055e4067a07d5f6598995daa854b0157a8d8778d36470842d6740", Convert.ToHexStringLower(
+        Assert.Equal("048bdc1fc53afdc90ced1c7f3db6eadd02458372eaa12984eac2f4826d41d1ce", Convert.ToHexStringLower(
             SHA256.HashData(sources[sourcePath].Bytes.AsSpan())));
         var path = RepoPath.CreateKnown(sourcePath);
         var statementId = FrozenContentHash.Compute(FrozenHashDomains.Statement,

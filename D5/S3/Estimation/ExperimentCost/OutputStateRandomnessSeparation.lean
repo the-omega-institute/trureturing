@@ -4,19 +4,22 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Bool kernels separate state, output, and prior randomness, including zero cases. -/
-/- Library-search audit trail (2026-08-25):
+/- Library dependencies:
    * `SingleSampleLawNonimplication` concerns one coupled sample, not randomness sources.
    * `PointwiseAlmostEverywhereSeparation` concerns exact versus a.e. factorization.
    * `TranslationLossMonotonicity` concerns deterministic postprocessing of target defects.
    * `PositivePriorConditionalIndependence` concerns sufficiency under positive priors.
    * `BlackwellCostOrthogonality` uses measure kernels, but its cost order is unrelated.
    * Pinned Mathlib hits `PMF.pure_bind`, `PMF.bind_pure`, `PMF.bind_const`,
-     `PMF.mem_support_pure_iff`, and `PMF.mem_support_uniformOfFintype` are used below.
+     `PMF.mem_support_pure_iff`, `PMF.mem_support_iff`, and `PMF.ofFintype_apply` are used below.
    * No repository theorem packages the two output-state countermodels or three sources.
    * No prime parameter, primality assumption, natural index, or `n = 0` case occurs here.
 -/
 
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -63,18 +66,18 @@ def observableLaw (model : BoolUncertaintyModel) : PMF Bool :=
 /-- Only the state transition is random; the prior and measurement rows are Dirac. -/
 def stateOnlyModel : BoolUncertaintyModel where
   prior := PMF.pure false
-  stateKernel := fun _ => PMF.uniformOfFintype Bool
+  stateKernel := fun _ => uniformPmf Bool
   measurementKernel := PMF.pure
 
 /-- Only the measurement is random; the prior and state-transition rows are Dirac. -/
 def measurementOnlyModel : BoolUncertaintyModel where
   prior := PMF.pure false
   stateKernel := PMF.pure
-  measurementKernel := fun _ => PMF.uniformOfFintype Bool
+  measurementKernel := fun _ => uniformPmf Bool
 
 /-- Only the prior is random; both kernels are identity-valued Dirac kernels. -/
 def priorOnlyModel : BoolUncertaintyModel where
-  prior := PMF.uniformOfFintype Bool
+  prior := uniformPmf Bool
   stateKernel := PMF.pure
   measurementKernel := PMF.pure
 
@@ -86,10 +89,9 @@ def deterministicModel
   measurementKernel := fun state => PMF.pure (measurementMap state)
 
 private theorem fair_bool_law_nondegenerate :
-    NondegenerateLaw (PMF.uniformOfFintype Bool) := by
-  exact ⟨false, true, Bool.false_ne_true,
-    PMF.mem_support_uniformOfFintype false,
-    PMF.mem_support_uniformOfFintype true⟩
+    NondegenerateLaw (uniformPmf Bool) := by
+  refine ⟨false, true, Bool.false_ne_true, ?_, ?_⟩ <;>
+    norm_num [PMF.mem_support_iff, uniformPmf, PMF.ofFintype_apply]
 
 /-- A Dirac PMF has singleton support and is therefore degenerate. -/
 theorem dirac_law_is_degenerate {A : Type*} (value : A) :
@@ -109,7 +111,7 @@ theorem fixed_state_random_output :
       stateLaw = PMF.pure state ∧
         NondegenerateLaw (kernel state) ∧
         NondegenerateLaw (inducedOutputLaw stateLaw kernel) := by
-  refine ⟨false, PMF.pure false, fun _ => PMF.uniformOfFintype Bool, rfl,
+  refine ⟨false, PMF.pure false, fun _ => uniformPmf Bool, rfl,
     fair_bool_law_nondegenerate, ?_⟩
   simpa [inducedOutputLaw] using fair_bool_law_nondegenerate
 
@@ -121,7 +123,7 @@ theorem random_state_deterministic_output :
       NondegenerateLaw stateLaw ∧
         (∀ state, kernel state = PMF.pure output) ∧
         inducedOutputLaw stateLaw kernel = PMF.pure output := by
-  refine ⟨PMF.uniformOfFintype Bool, fun _ => PMF.pure false, false,
+  refine ⟨uniformPmf Bool, fun _ => PMF.pure false, false,
     fair_bool_law_nondegenerate, fun _ => rfl, ?_⟩
   simp [inducedOutputLaw]
 
@@ -165,7 +167,7 @@ theorem single_source_models_isolate_uncertainties :
       PriorUncertainty priorOnlyModel) := by
   constructor
   · refine ⟨?_, ?_, ?_⟩
-    · change ∃ _ : Bool, NondegenerateLaw (PMF.uniformOfFintype Bool)
+    · change ∃ _ : Bool, NondegenerateLaw (uniformPmf Bool)
       exact ⟨false, fair_bool_law_nondegenerate⟩
     · change ¬∃ state : Bool, NondegenerateLaw (PMF.pure state)
       rintro ⟨state, random⟩
@@ -177,7 +179,7 @@ theorem single_source_models_isolate_uncertainties :
     · change ¬∃ state : Bool, NondegenerateLaw (PMF.pure state)
       rintro ⟨state, random⟩
       exact dirac_law_is_degenerate state random
-    · change ∃ _ : Bool, NondegenerateLaw (PMF.uniformOfFintype Bool)
+    · change ∃ _ : Bool, NondegenerateLaw (uniformPmf Bool)
       exact ⟨false, fair_bool_law_nondegenerate⟩
     · change ¬NondegenerateLaw (PMF.pure false)
       exact dirac_law_is_degenerate false
@@ -188,16 +190,16 @@ theorem single_source_models_isolate_uncertainties :
     · change ¬∃ state : Bool, NondegenerateLaw (PMF.pure state)
       rintro ⟨state, random⟩
       exact dirac_law_is_degenerate state random
-    · change NondegenerateLaw (PMF.uniformOfFintype Bool)
+    · change NondegenerateLaw (uniformPmf Bool)
       exact fair_bool_law_nondegenerate
 
 #print axioms single_source_models_isolate_uncertainties
 
 /-- All three single-source models induce the same fair Boolean observation law. -/
 theorem single_source_models_observationally_equal :
-    observableLaw stateOnlyModel = PMF.uniformOfFintype Bool ∧
-      observableLaw measurementOnlyModel = PMF.uniformOfFintype Bool ∧
-      observableLaw priorOnlyModel = PMF.uniformOfFintype Bool := by
+    observableLaw stateOnlyModel = uniformPmf Bool ∧
+      observableLaw measurementOnlyModel = uniformPmf Bool ∧
+      observableLaw priorOnlyModel = uniformPmf Bool := by
   simp [observableLaw, stateOnlyModel, measurementOnlyModel, priorOnlyModel]
 
 #print axioms single_source_models_observationally_equal
@@ -244,7 +246,7 @@ theorem singleton_state_can_still_have_random_output :
   · intro stateLaw
     rintro ⟨left, right, distinct, _, _⟩
     exact distinct (Subsingleton.elim left right)
-  · exact ⟨fun _ => PMF.uniformOfFintype Bool, fair_bool_law_nondegenerate⟩
+  · exact ⟨fun _ => uniformPmf Bool, fair_bool_law_nondegenerate⟩
 
 #print axioms singleton_state_can_still_have_random_output
 
@@ -290,9 +292,9 @@ theorem fpod_principle_202_1 :
       (¬∀ model, PriorUncertainty model → StateUncertainty model) ∧
       (¬∀ model, MeasurementNoise model → PriorUncertainty model) ∧
       (¬∀ model, PriorUncertainty model → MeasurementNoise model)) ∧
-    (observableLaw stateOnlyModel = PMF.uniformOfFintype Bool ∧
-      observableLaw measurementOnlyModel = PMF.uniformOfFintype Bool ∧
-      observableLaw priorOnlyModel = PMF.uniformOfFintype Bool) := by
+    (observableLaw stateOnlyModel = uniformPmf Bool ∧
+      observableLaw measurementOnlyModel = uniformPmf Bool ∧
+      observableLaw priorOnlyModel = uniformPmf Bool) := by
   exact ⟨output_state_randomness_nonimplication,
     single_source_models_isolate_uncertainties,
     uncertainty_sources_pairwise_do_not_imply,

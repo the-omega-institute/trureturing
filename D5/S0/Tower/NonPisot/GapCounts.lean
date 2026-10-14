@@ -170,13 +170,13 @@ def beta13RemainderSpectrum (Q : Nat) : Finset Beta13GapCode :=
 theorem beta13_normalized_gap_code_count_six :
     (beta13NormalizedGapCodes 6).card = 6 := by
   set_option maxRecDepth 100000 in
-    decide
+    decide +kernel
 
 /-- The exact code spectrum has cardinality eight at level eight. -/
 theorem beta13_normalized_gap_code_count_eight :
     (beta13NormalizedGapCodes 8).card = 8 := by
   set_option maxRecDepth 100000 in
-    decide
+    decide +kernel
 
 set_option maxRecDepth 100000 in
 /-- The exact code spectrum has cardinality ten at level ten. -/

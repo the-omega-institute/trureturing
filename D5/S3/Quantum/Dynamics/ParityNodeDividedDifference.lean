@@ -172,7 +172,7 @@ theorem evenOdd_dividedDifference_twoAdicUnit {ι : Type*} [Fintype ι] [Decidab
     refine hN'.le.trans ?_
     rw [← Finset.mul_prod_erase A _ hi]
     exact mul_le_of_le_one_right (norm_nonneg _)
-      (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => Padic.norm_int_le_one _)
+      (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => Padic.norm_int_le_one _)
   have h2norm : ‖(2 : ℚ_[2])‖ = 1 / 2 := by
     have h := Padic.norm_p (p := 2)
     norm_num at h ⊢
@@ -181,7 +181,7 @@ theorem evenOdd_dividedDifference_twoAdicUnit {ι : Type*} [Fintype ι] [Decidab
     intro i
     by_cases hi : i ∈ A
     · refine ⟨⟨(2 : ℚ_[2]) ^ N' / (Pk i : ℚ_[2]), ?_⟩, fun _ => rfl⟩
-      rw [norm_div, norm_pow, h2norm]
+      rw [PadicInt.mem_subring_iff, norm_div, norm_pow, h2norm]
       exact div_le_one_of_le₀ (hle i hi) (norm_nonneg _)
     · exact ⟨0, fun h => absurd h hi⟩
   choose δ hδ using hδ

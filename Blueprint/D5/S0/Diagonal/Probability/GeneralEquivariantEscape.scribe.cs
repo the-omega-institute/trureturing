@@ -49,13 +49,12 @@ internal sealed class GeneralEquivariantEscapeDocument : IScribeDocumentDefiniti
                         Paragraph(Text(
                             "The imported orbit-product count gives the numerator. Counting the "
                             + "same public parameter equivalence gives the denominator, and the "
-                            + "pinned uniform-PMF theorem converts their cardinality ratio into "
+                            + "imported finite-uniform PMF bridge converts their cardinality ratio into "
                             + "the displayed outer-measure probability.")),
                         Paragraph(Text(
-                            "Repository searches found only the transitive probability theorem. "
-                            + "Pinned Mathlib supplies PMF.toOuterMeasure_uniformOfFintype_apply, "
-                            + "Fintype.card_pi, and the finite product arithmetic, but no packaged "
-                            + "equivariant orbit-decomposition probability formula."))),
+                            "The imported uniformPmf_toOuterMeasure_apply bridge supplies the event "
+                            + "cardinality ratio. Fintype.card_pi and finite product arithmetic "
+                            + "identify the total number of equivariant listings."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("transitive-probability-is-a-general-corollary"),

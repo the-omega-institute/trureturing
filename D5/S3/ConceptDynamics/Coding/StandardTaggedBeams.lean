@@ -65,10 +65,10 @@ structure Matching (A B : Object G) (n : ℤ) where
 past splice on its actual subsets. -/
 def Matching.pieceSplice {A B : Object G} {n : ℤ} (m : Matching G A B n)
     (P : Pieces G A n) : P.2.val.val ≃ (m.pieces P).2.val.val :=
-  (Equiv.setCongr (RayAt.set_eq G P.2.val)).trans
+  (Set.equivOfEq (RayAt.set_eq G P.2.val)).trans
     ((spliceEquiv G (RayAt.representative G P.2.val)
       (RayAt.representative G (m.pieces P).2.val) n (m.endpoints P).symm).trans
-      (Equiv.setCongr (RayAt.set_eq G (m.pieces P).2.val)).symm)
+      (Set.equivOfEq (RayAt.set_eq G (m.pieces P).2.val)).symm)
 
 /-- Endpoint rows are a CONSEQUENCE of actual geometric matchings. -/
 theorem Matching.rows {A B : Object G} {n : ℤ} (m : Matching G A B n) :

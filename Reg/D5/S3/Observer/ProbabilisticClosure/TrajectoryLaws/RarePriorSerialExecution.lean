@@ -130,7 +130,6 @@ private theorem positive_dependence : ObservationalDependence positiveSignature 
   cases i
   refine ⟨(),(0,0,0,0,0,0,0),(1,1,1,1,1,1,1),?_⟩
   norm_num [positiveActual,realize,packetEquiv,finProdFinEquiv]
-  decide
 
 def positiveRecord : Registration positiveArena (type_of% (@acceptance_positive)) where
   actual := positiveActual

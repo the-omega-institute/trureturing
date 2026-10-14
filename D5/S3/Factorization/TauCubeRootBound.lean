@@ -111,7 +111,7 @@ theorem result :
         prod_subset subset_union_right (fun p _ hp => hout p hp)
       calc
         _ ≤ ∏ p ∈ j.primeFactors ∪ ({2, 3, 5, 7} : Finset ℕ), cost p :=
-          prod_le_prod_of_subset_of_one_le subset_union_left
+          prod_le_prod_of_subset_of_one_le₀ subset_union_left
             (fun p _ => by have h := cost_ge_one p; linarith)
             (fun p _ _ => cost_ge_one p)
         _ = ∏ p ∈ ({2, 3, 5, 7} : Finset ℕ), cost p := heq.symm
@@ -121,7 +121,7 @@ theorem result :
         _ = ∏ p ∈ j.primeFactors, (j.factorization p + 1 : ℚ) ^ 3 := by
           rw [ht, prod_pow]
         _ ≤ ∏ p ∈ j.primeFactors, cost p * (p : ℚ) ^ j.factorization p :=
-          prod_le_prod (fun _ _ => by positivity)
+          prod_le_prod₀ (fun _ _ => by positivity)
             (fun p hp => prime_bound p _ (Nat.prime_of_mem_primeFactors hp))
         _ = (∏ p ∈ j.primeFactors, cost p) * j := by
           rw [prod_mul_distrib, ← hjq]

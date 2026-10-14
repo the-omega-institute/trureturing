@@ -118,10 +118,10 @@ theorem result :
     dsimp [smallWeight, delta]
     rw [← Finset.prod_div_distrib, ← Finset.prod_inv_distrib]
     constructor
-    · exact Finset.prod_le_prod
+    · exact Finset.prod_le_prod₀
         (fun p hp => (deltapos p (mem_filter.mp hp).2).le)
         (fun p hp => (scalar p (mem_filter.mp hp).2).1)
-    · exact Finset.prod_le_prod
+    · exact Finset.prod_le_prod₀
         (fun p hp => (div_pos (factorpos p (mem_filter.mp hp).2 _)
           (factorpos p (mem_filter.mp hp).2 _)).le)
         (fun p hp => (scalar p (mem_filter.mp hp).2).2)
@@ -223,7 +223,7 @@ theorem result :
       have hp1 : (1 : ℝ) < p := by exact_mod_cast (mem_filter.mp hp).2.one_lt
       exact ⟨by dsimp [f]; positivity,
         pow_le_one₀ (by positivity) ((inv_le_one₀ (by positivity)).mpr hp1.le)⟩
-    have hupper : delta m ≤ 1 := Finset.prod_le_one
+    have hupper : delta m ≤ 1 := Finset.prod_le_one₀
       (fun p hp => sub_nonneg.mpr (hf p hp).2)
       (fun p hp => sub_le_self _ (hf p hp).1)
     have hlower : 1 - (∑ p ∈ s, f p) ≤ delta m := by
@@ -233,7 +233,7 @@ theorem result :
       apply Finset.sum_le_sum
       intro p hp
       apply mul_le_of_le_one_right (hf p hp).1
-      exact Finset.prod_le_one
+      exact Finset.prod_le_one₀
         (fun j hj => sub_nonneg.mpr (hf j (mem_filter.mp hj).1).2)
         (fun j hj => sub_le_self _ (hf j (mem_filter.mp hj).1).1)
     rw [abs_of_nonpos (sub_nonpos.mpr hupper)]

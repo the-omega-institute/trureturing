@@ -115,7 +115,7 @@ private theorem decay_eq_sub {ι : Type*} [Fintype ι]
 
 private theorem tail_integrable (delta omega c : ℝ) :
     IntegrableOn ((Iio delta).indicator (fun _ : ℝ => c)) (Ioi omega) := by
-  rw [integrableOn_indicator_iff measurableSet_Iio]
+  rw [integrableOn_indicator_iff measurableSet_Iio.nullMeasurableSet]
   have hi : Iio delta ∩ Ioi omega = Ioo omega delta := by ext x; simp [and_comm]
   rw [hi]
   exact integrableOn_const (by simp [Real.volume_Ioo])

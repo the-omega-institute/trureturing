@@ -31,9 +31,10 @@ abbrev PathSeries {α : Type} (r : α → α → Prop) := RelSeries {p : α × �
 /-- The bridge to LTSeries uses exactly the archive's relation, not a time quotient. -/
 theorem path_length_bound (a : Archive d) (p : PathSeries a.causal) :
     p.length ≤ a.events.card - 1 := by
-  let := strictOrder a
-  let := partialOrderOfSO a.causal
-  have hh := LTSeries.length_lt_card (α := a.Event) p
+  letI : IsStrictOrder a.Event a.causal := strictOrder a
+  letI : PartialOrder a.Event := partialOrderOfSO a.causal
+  have hh := @LTSeries.length_lt_card a.Event (partialOrderOfSO a.causal).toPreorder
+    inferInstance p
   rw [Fintype.card_coe] at hh
   omega
 
