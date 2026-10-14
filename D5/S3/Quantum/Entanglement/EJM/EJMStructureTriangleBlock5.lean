@@ -37,8 +37,7 @@ theorem accepted (j : Fin 334) :
   have he : (⟨40960 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
       ⟨40960 + j.val, by have h := j.isLt; omega⟩ := by
     apply Fin.ext
-    dsimp [k]
-    omega
+    dsimp [k] <;> omega
   simpa only [he] using triangle_chunk_40960 k
 
 #print axioms accepted

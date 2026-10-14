@@ -37,8 +37,7 @@ theorem accepted (j : Fin 497) :
   have he : (⟨8192 + k.val, by have h := k.isLt; omega⟩ : Fin 8689) =
       ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
     apply Fin.ext
-    dsimp [k]
-    omega
+    dsimp [k] <;> omega
   simpa only [he] using singleton_chunk_8192 k
 
 #print axioms accepted

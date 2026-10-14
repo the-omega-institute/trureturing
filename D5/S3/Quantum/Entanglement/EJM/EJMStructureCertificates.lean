@@ -54,46 +54,40 @@ theorem triangle_structure (i : Fin 41294) :
     let j : Fin 8192 := ⟨i.val - 0, by have h := i.isLt; omega⟩
     have he : (⟨0 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
-      dsimp [j]
-      omega
+      dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock0.accepted j
   by_cases h1 : i.val < 16384
   ·
     let j : Fin 8192 := ⟨i.val - 8192, by have h := i.isLt; omega⟩
     have he : (⟨8192 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
-      dsimp [j]
-      omega
+      dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock1.accepted j
   by_cases h2 : i.val < 24576
   ·
     let j : Fin 8192 := ⟨i.val - 16384, by have h := i.isLt; omega⟩
     have he : (⟨16384 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
-      dsimp [j]
-      omega
+      dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock2.accepted j
   by_cases h3 : i.val < 32768
   ·
     let j : Fin 8192 := ⟨i.val - 24576, by have h := i.isLt; omega⟩
     have he : (⟨24576 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
-      dsimp [j]
-      omega
+      dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock3.accepted j
   by_cases h4 : i.val < 40960
   ·
     let j : Fin 8192 := ⟨i.val - 32768, by have h := i.isLt; omega⟩
     have he : (⟨32768 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
       apply Fin.ext
-      dsimp [j]
-      omega
+      dsimp [j] <;> omega
     simpa only [he] using EJMStructureTriangleBlock4.accepted j
   let j : Fin 334 := ⟨i.val - 40960, by have h := i.isLt; omega⟩
   have he : (⟨40960 + j.val, by have h := j.isLt; omega⟩ : Fin 41294) = i := by
     apply Fin.ext
-    dsimp [j]
-    omega
+    dsimp [j] <;> omega
   simpa only [he] using EJMStructureTriangleBlock5.accepted j
 
 #print axioms triangle_structure
@@ -106,14 +100,12 @@ theorem singleton_structure (i : Fin 8689) :
     let j : Fin 8192 := ⟨i.val - 0, by have h := i.isLt; omega⟩
     have he : (⟨0 + j.val, by have h := j.isLt; omega⟩ : Fin 8689) = i := by
       apply Fin.ext
-      dsimp [j]
-      omega
+      dsimp [j] <;> omega
     simpa only [he] using EJMStructureSingletonBlock0.accepted j
   let j : Fin 497 := ⟨i.val - 8192, by have h := i.isLt; omega⟩
   have he : (⟨8192 + j.val, by have h := j.isLt; omega⟩ : Fin 8689) = i := by
     apply Fin.ext
-    dsimp [j]
-    omega
+    dsimp [j] <;> omega
   simpa only [he] using EJMStructureSingletonBlock1.accepted j
 
 #print axioms singleton_structure

@@ -88,8 +88,7 @@ theorem accepted (j : Fin 8192) :
     have he : (⟨8192 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
         ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
-      dsimp [k]
-      omega
+      dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_8192 k
   by_cases h1 : j.val < 2048
   ·
@@ -97,8 +96,7 @@ theorem accepted (j : Fin 8192) :
     have he : (⟨9216 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
         ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
-      dsimp [k]
-      omega
+      dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_9216 k
   by_cases h2 : j.val < 3072
   ·
@@ -106,8 +104,7 @@ theorem accepted (j : Fin 8192) :
     have he : (⟨10240 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
         ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
-      dsimp [k]
-      omega
+      dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_10240 k
   by_cases h3 : j.val < 4096
   ·
@@ -115,8 +112,7 @@ theorem accepted (j : Fin 8192) :
     have he : (⟨11264 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
         ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
-      dsimp [k]
-      omega
+      dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_11264 k
   by_cases h4 : j.val < 5120
   ·
@@ -124,8 +120,7 @@ theorem accepted (j : Fin 8192) :
     have he : (⟨12288 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
         ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
-      dsimp [k]
-      omega
+      dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_12288 k
   by_cases h5 : j.val < 6144
   ·
@@ -133,8 +128,7 @@ theorem accepted (j : Fin 8192) :
     have he : (⟨13312 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
         ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
-      dsimp [k]
-      omega
+      dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_13312 k
   by_cases h6 : j.val < 7168
   ·
@@ -142,15 +136,13 @@ theorem accepted (j : Fin 8192) :
     have he : (⟨14336 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
         ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
       apply Fin.ext
-      dsimp [k]
-      omega
+      dsimp [k] <;> omega
     simpa only [he] using triangle_chunk_14336 k
   let k : Fin 1024 := ⟨j.val - 7168, by have h := j.isLt; omega⟩
   have he : (⟨15360 + k.val, by have h := k.isLt; omega⟩ : Fin 41294) =
       ⟨8192 + j.val, by have h := j.isLt; omega⟩ := by
     apply Fin.ext
-    dsimp [k]
-    omega
+    dsimp [k] <;> omega
   simpa only [he] using triangle_chunk_15360 k
 
 #print axioms accepted
