@@ -1,0 +1,20 @@
+**Theorem 5.2 (effective actual-family recursion).** The empty cut has
+$\mathcal B(\varnothing)=\{()\}$ and the root cut has
+$\mathcal B(\{\varepsilon\})=\{(0)\}$. For every nonempty prefix-free cut
+not containing the root, define
+
+$$
+v_\alpha(p)=2+w(p^-),\qquad v_\beta(p)=1+w(p^-).
+$$
+
+Then its exact recursion is the deduplicated set union
+
+$$
+\mathcal B(P)=
+\{v_\alpha,v_\beta\}\ \cup\
+\{a\boxtimes c:a\in\mathcal B(P_L),\ c\in\mathcal B(P_R)\}.
+\tag{NBP.5.2}
+$$
+
+It effectively computes a finite family of actual vectors.
+
