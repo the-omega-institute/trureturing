@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:692319b80d92c2831e9e4b339cd2551829d82f5722c075929498ab365d1eb817
+  normalized_sha256: sha256:692319b80d92c2831e9e4b339cd2551829d82f5722c075929498ab365d1eb817
+cas_ref: sha256:692319b80d92c2831e9e4b339cd2551829d82f5722c075929498ab365d1eb817
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/CombLiteralInstallationBounds.comb_installed_lower_bounds
+    target_statement_id: sha256:477e663f049d0c4a48c753e3a5b5d5b0f4ce1e21e69199cc595c3172146d3177
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/CombLiteralInstallationBounds.static_comb_installed_lower_bounds
+    target_statement_id: sha256:e745e184e4ed2e1500bfdb24f76060e33e00e21cecfbb96f9f24363208c9d22e
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/CombLiteralInstallationBounds.successful_run_read_lower_bound
+    target_statement_id: sha256:d646c9be705206bbab92e85b0b14e121786a06a71fc525844f2ea60c96a76be1
+receipts:
+  unresolved_subitems: []

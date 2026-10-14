@@ -1,0 +1,25 @@
+**Verification 4.3 (word-only execution and first halt).** For any chosen
+code $e:K_h\to L_\ell$, install exactly $W=e(K_h)$. The instruction at
+$e(v)$ is the instruction of Construction 3.2 at $v$. For a supported
+reply $o$, the immediate write sends it to $e(v_o)$, its encoded child.
+For an unsupported reply it stays at $e(v)$. Both choices are legal,
+and all table rows are defined on their declared response alphabets.
+Only a fixed table depends on $e^{-1}$; there is no saved decoded pointer.
+Additional adjacency among codewords creates no permission to jump to
+them: the response table selects the sole successor.
+
+Fix one original $u_x$. Initially the source is $u_x$ and the word is
+$e(Q_\varepsilon)$. Suppose that its source and encoded vertex agree
+with Construction 3.2. Its selected instruction is the same. Executing
+that instruction on the same tree gives exactly the same raw reply and
+device successor. The response service immediately writes the child's
+word and discards the reply. This proves the invariant at the next
+primitive, including each fixed-acknowledgement Update. Induction ends
+at the same $Z_x$, and no earlier vertex halts. The supports (SLHC.5) and
+ranks transport through $e$ as in FIB §45.4; they are never consulted.
+
+All $N$ installed words occur on some source path. There are exactly
+$H$ response bit changes per path, no extra state or internal action,
+and the first Halt is the next instruction after the last write.
+Initialization and output are not included in those $H$ writes.
+

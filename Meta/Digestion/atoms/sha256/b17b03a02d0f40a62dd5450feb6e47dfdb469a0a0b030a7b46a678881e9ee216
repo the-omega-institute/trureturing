@@ -1,0 +1,9 @@
+**Proposition 9.3 (updated native witnesses and all-address correspondence).**
+Put $H=B\cup\{\bot\}$. There is a family
+$(u_i)_{i\in H}\subseteq\mathcal U_R$ with $A_P(u_i)=i$ such that every
+finite native address on $(\rho u_i)_{i\in H}$ has a constant reply or a
+reply differing from one common value at at most one index $b\in B$.
+If $L_C\ne\varnothing$, the required entire next rows
+$(R_P(\rho u_i))_{i\in H}$ are pairwise distinct. These statements include
+$k=0$, when the family has one member.
+

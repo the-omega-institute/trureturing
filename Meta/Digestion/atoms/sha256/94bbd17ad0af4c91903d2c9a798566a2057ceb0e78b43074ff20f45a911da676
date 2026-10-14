@@ -1,0 +1,73 @@
+**Definition 12.1 (full-fiber stationary Moore feasibility).** Fix any
+$P,R_*$ of Definition 10.1 with $\mathcal U_*\ne\varnothing$. Keep
+exactly its actual finite origins, injective class valuations
+$\mathcal X_*$, complete exterior, reached classes $D$ and representative
+occurrences $p_d$. Keep the attained chart $\Theta_*$ of Proposition 10.2
+and the whole predecessor target $G_*$ of Theorem 10.4. Equivalently,
+write $\Phi_C=\Theta_*$ and $G_C=G_*$ for the finite attained class-root
+task. No source-size, depth, intrinsic-rank or selected-witness promise
+is added to $\mathcal U_*$. The source and update remain the finite
+ordered $\alpha/\beta$ trees and homomorphic $\rho$ of Definition 1.1.
+
+Use the acquired/exported, complete-access-cut, authenticated one-update,
+lawful-common-entry and stationary-reading premises of Assumption 10.6.
+Impose the finite Moore restriction of Definition 11.1 on this general
+row: there is one common installed finite set
+$\mathcal K=Q\sqcup Z$ of running and halting states and fixed tables
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^*,\\
+\operatorname{next}&:Q\times\mathcal A\longrightarrow\mathcal K,
+ &\mathcal A&=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\},\\
+\operatorname{out}&:Z\longrightarrow\mathcal R_P.
+\end{aligned}
+\tag{NBP.12.1}
+$$
+
+At a running state $a$ one invocation reads the actual stationary
+$t=\rho u$ at $\operatorname{addr}(a)$; its reply $z$ sets the next
+state to $\operatorname{next}(a,z)$. A halting state returns its fixed
+entire row $\operatorname{out}(a)$ without a call. All installed states
+count, including unused states and distinct halts with equal outputs.
+There is one fixed finite address per running state. Replies, repeated
+queries, exterior queries, arbitrarily deep queries and absence all
+obey the original native contract and each invocation counts.
+
+The actual pre-cut export initializes the current state. After entry,
+that state is the entire accessible source-dependent controller memory:
+there is no separate advice register, pointer, phase, clock, trace,
+archive, decoder, variable address or source-dependent table selection.
+The row, cut and installed tables are common source-independent data.
+In particular every halting output is already a complete predecessor
+row, rather than a label requiring a source-bearing output decoder.
+
+Complete-entry recoverability is retained as in Assumptions 9.2 and
+10.6 and Definition 11.1. If an original export $\sigma$ and entry map
+$\iota$ merge values, the admissible joint normalization is the actual
+pre-cut computation and export
+
+$$
+\tau(u)=\iota(\sigma(u))\in\mathcal K.
+\tag{NBP.12.2}
+$$
+
+The declared exported value is then this initial-state code, its entry
+map is inclusion, and it is recoverable from the initial state. Its
+actual range has at most $|\sigma[\mathcal U_*]|$ elements. The producer
+uses its acquired data, actually exports $\tau$ before the access cut,
+and uses the supplied lawful entry for that export. This is a changed
+encoder when $\iota$ merges; it does not retain the old $\sigma$ as an
+extra accessible field. It grants no pointwise statement for a fixed
+arbitrary encoder. Below the normalized initialization is written
+$\tau:\mathcal U_*\to\mathcal K$ and must be so acquired and exported.
+
+For integers $r\ge1,K\ge1,q\ge0$, let
+$\mathsf{MooreInvFeas}_*(r,K,q)$ mean joint existence of such an actual
+export and table with $|\tau[\mathcal U_*]|\le r$,
+$|\mathcal K|\le K$, and at most $q$ native invocations on each origin,
+terminating with $F(u)=R_P(u)$ on every $u\in\mathcal U_*$. The three
+budgets are upper bounds. Address representation, installed tables,
+fixed whole-output storage, acquisition, export and physical services
+have separate prices; $K$ counts states, not all physical memory.
+

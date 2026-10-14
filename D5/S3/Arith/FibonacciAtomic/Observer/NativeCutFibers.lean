@@ -41,7 +41,7 @@ private theorem labels_literal (P : CutSet) (root : Source) (a : Address) (t : S
   | mul l r ihl ihr =>
       by_cases ha : a ∈ P <;> simp [literalRow, labels, reachedHoles, ha, ihl, ihr, Finset.image_union]
 
-private theorem labels_canonical (P : CutSet) (u : Source) :
+theorem labels_canonical (P : CutSet) (u : Source) :
     labels (canonicalRow P u) = (orderedHoles P u).toFinset.image (classOrdinal P u) := by
   rw [canonicalRow, labels_literal]
   simp [orderedHoles]

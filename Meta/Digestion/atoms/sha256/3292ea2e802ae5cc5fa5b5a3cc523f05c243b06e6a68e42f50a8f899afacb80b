@@ -1,0 +1,52 @@
+**Proposition 3.3 (terminating projection, slice and contact computations).**
+From the complete input and one generated frame, one can compute (FFM.8)–(FFM.10),
+decide whether each selected slice is empty, finite nonempty or infinite, and
+list every source of every finite slice. For an infinite slice one can decide
+$K_{\eta,\mathbf f}\in\overline{D_{\eta,\mathbf f,r}}$, with finite whole-source
+witnesses for every requested depth on a positive answer.
+
+Proof. For each coordinate designate $v_i$ as NPL's output, with all other
+coordinates and constraints still present. NPL Theorem 4.1 and Proposition 4.3
+give its exact projection and finite list, including any hidden compiler
+witnesses. This computes $F_\eta$ and the finite index list. In a slice designate
+the entire $W_\eta(\mathbf v)$ as output and impose the complete row test by
+NSF Lemma 5.1. NPL Corollary 4.2 enumerates its exact finite source image or
+returns infinitude. Every output source satisfies all of (FFM.10). Conversely
+any original source in that slice gives its actual representative coordinates
+and is in that output image. No direction identifies a marker family with all
+solutions.
+
+Let $L_\eta=\{1,\ldots,k_\eta\}\setminus F_\eta$. If it is empty, all coordinates
+are fixed, and the slice has at most one source; an infinite slice cannot occur.
+Otherwise designate the nonempty tuple $(v_i)_{i\in L_\eta}$ under the whole slice
+predicate for NLC Corollary 4.2. Write $\mu(t)$ for the minimum leaf depth of a
+finite tree, so $\mu(t)>h$ is equivalent to its agreement with $\Omega$ through
+$h$. The exact equivalence needed here is
+
+$$
+K_{\eta,\mathbf f}\in\overline{D_{\eta,\mathbf f,r}}
+\iff
+\forall h\ \exists\mathbf v\text{ satisfying (FFM.10)}\quad
+\forall i\in L_\eta\quad\mu(v_i)>h.
+\tag{FFM.12}
+$$
+
+For the right-to-left implication, fill these same coordinates at every repeated
+occurrence. Agreement of each with $\Omega$ through $h$ implies agreement of the
+ordinary whole term with (FFM.11) through $h$, by constructor induction; the fixed
+coordinates remain exactly $\mathbf f$. For the reverse implication put
+$b_\eta=\max_{i\in L_\eta}|p_{\eta,i}|$. A source in the slice agreeing with $K$
+through $h+b_\eta$ has, at each representative address, only branch replies
+through its relative depth $h$. Its actual coordinate therefore has $\mu(v_i)>h$.
+These are the actual coordinates recovered from that original source. Both
+implications preserve the same original and the entire slice.
+
+NLC's EMPTY/DEEP/BARRIER trichotomy now decides (FFM.12). The slice is already
+known infinite and hence nonempty; DEEP constructs all coordinates together,
+including auxiliaries, and filling gives the required finite original. BARRIER
+bounds their simultaneous minimum and refutes (FFM.12). Separate unboundedness
+of individual coordinates is insufficient. Native normal ranks, scalar/block
+incidence, positive feedback, normality and negative records remain inside the
+supplier's full joint predicate until it constructs a whole assignment. They are
+not removed by (FFM.8). $\square$
+

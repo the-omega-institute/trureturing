@@ -1,0 +1,15 @@
+**Proof.** Theorem 5.4 gives the upper bound; the atomic formula for alpha
+is $b_\alpha(p)=T_p$ for nonroot $p$, with root birth zero. This proves
+worst-source attainment, also for empty/root cuts. Monotonicity yields
+$H_j=P$ exactly when $j\ge\tau_P(u)$. Hence Theorem 2.2 can use the
+known old set $P$ on the next step. Its uniform current-epoch condition
+is $n-1\ge T_P$.
+
+Current saturation alone cannot justify $O=P$. At $P=\{L,R\}$ and
+$n=2=T_P$, the origins alpha and beta in (NBP.6.4) have the same
+saturated current row. Their predecessor rows are beta and $D_{\ne}$,
+and their previous reached sets are $\varnothing$ and $P$. Even after
+all later steps are individually mask-free, the early three histories
+in Theorem 6.3 remain different and require their early provenance.
+$\square$
+
