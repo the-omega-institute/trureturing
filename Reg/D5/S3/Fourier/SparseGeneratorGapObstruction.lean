@@ -5,7 +5,7 @@ import Reg.Support.DependentFamily
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Fourier.SparseGeneratorGapObstruction
 open LeanInformationAudit
-open private large_order_pos lower_endpoint translation_dependence
+open private lower_endpoint translation_dependence
   from D5.S3.Fourier.SparseGeneratorGapObstruction
 open scoped BigOperators ComplexConjugate
 

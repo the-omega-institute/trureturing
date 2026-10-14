@@ -42,5 +42,4 @@ The literal theorem Not claim chooses N=ceil(exp(128+16*pi*(C+1))) and applies t
 
 - Truth anchor: `D5/S3/Fourier/SparseGeneratorGapObstruction.parameter_family`
 - Truth anchor: `D5/S3/Fourier/SparseGeneratorGapObstruction.result`
-- Dependency: [D5/S3/Fourier/FinitePoisson](FinitePoisson.md)
-- Dependency: [D5/S3/Fourier/GeneratorRowStability](GeneratorRowStability.md)
+- Dependency: [D5/S3/Fourier/SparseGeneratorFamily](SparseGeneratorFamily.md)
