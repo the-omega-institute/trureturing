@@ -43,8 +43,9 @@ private theorem mod_two_cases {x n : ℕ} (_hn : 0 < n) (hx : x < 2 * n) :
   · rw [if_neg h, Nat.mod_eq_sub_mod (by omega : n ≤ x),
       Nat.mod_eq_of_lt (by omega : x - n < n)]
 
-private def signature (m : ℕ) (z : Configuration m) : ℕ × ℕ × ℕ × ℕ :=
-  ((z 0).val, (z 1).val, (z 2).val, (z ⟨m - 1, by omega⟩).val)
+private def signature {m : ℕ} (hm : 5 ≤ m) (z : Configuration m) : ℕ × ℕ × ℕ × ℕ :=
+  ((z ⟨0, by omega⟩).val, (z ⟨1, by omega⟩).val,
+    (z ⟨2, by omega⟩).val, (z ⟨m - 1, by omega⟩).val)
 
 private def portSignature (m : ℕ) (p : Fin 3 × Bool × Bool) : ℕ × ℕ × ℕ × ℕ :=
   match p.1.val, p.2.1, p.2.2 with
@@ -63,19 +64,25 @@ private def portSignature (m : ℕ) (p : Fin 3 × Bool × Bool) : ℕ × ℕ × 
 
 set_option maxHeartbeats 600000 in
 private theorem signature_port {m : ℕ} (hm : 5 ≤ m) (p : Fin 3 × Bool × Bool) :
-    signature m (port m p) = portSignature m p := by
+    signature hm (port m p) = portSignature m p := by
   rcases p with ⟨i, t, u⟩
   fin_cases i <;> cases t <;> cases u
   all_goals
-    simp (disch := omega) [signature, portSignature, port, rightPort, leftPort, bar,
-      Equiv.Perm.mul_apply, swap_val, rotate_val, b_apply, c_apply, mod_two_cases,
-      Nat.mod_eq_of_lt, Fin.val_mk, Fin.val_last, Fin.val_zero]
+    simp only [signature, portSignature, port, rightPort, leftPort, bar,
+      Fin.val_mk, Bool.false_eq_true, ↓reduceIte, Prod.mk.injEq]
+    constructor <;> try constructor <;> try constructor
+    all_goals
+      simp (disch := omega) only [Equiv.Perm.mul_apply, swap_val, rotate_val,
+        b_apply, c_apply, Fin.val_mk, Fin.val_last, Fin.val_zero,
+        mod_two_cases, Nat.mod_eq_of_lt, if_pos, if_neg, ite_true, ite_false,
+        Nat.zero_add, Nat.add_zero, Nat.sub_zero, Nat.sub_self]
+      <;> omega
 
 /-- All twelve actual port vertices are distinct at every J2 size. -/
 theorem native_j2_port_injective {m : ℕ} (hm : 5 ≤ m) :
     Function.Injective (port m) := by
   rintro ⟨i, t, u⟩ ⟨j, s, v⟩ he
-  have hs := congrArg (signature m) he
+  have hs := congrArg (signature hm) he
   rw [signature_port hm, signature_port hm] at hs
   fin_cases i <;> fin_cases j <;> cases t <;> cases u <;> cases s <;> cases v
   all_goals first | rfl | skip
