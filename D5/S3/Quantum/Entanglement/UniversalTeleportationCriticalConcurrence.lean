@@ -7,6 +7,9 @@
    digest: The exact critical concurrence for universal teleportation through qubit channels. -/
 
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Information.ActualPureQubitCostInfimum
 import D5.S3.Quantum.Information.ActualQubitChordObstruction
@@ -65,8 +68,7 @@ private lemma critical_constants :
   have hlow : 1 < Real.sqrt 3 := by
     simpa only [Real.sqrt_one] using
       Real.sqrt_lt_sqrt (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < 3)
-  have hhigh : Real.sqrt 3 < 2 := (Real.sqrt_lt
-    (by norm_num : (0 : ℝ) ≤ 3) (by norm_num : (0 : ℝ) ≤ 2)).mpr (by norm_num)
+  have hhigh := D5.S3.Quantum.Information.SignedPauliSumNormRefutation.sqrt_three_lt_two
   have hc := Real.sq_sqrt (show 0 ≤ 5 - 2 * Real.sqrt 3 by linarith)
   dsimp [rcrit, Cstar]
   constructor
@@ -160,19 +162,27 @@ private lemma out_state (a : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
       _ = ∑ k, trace (initial a * (H ⊗ₖ ((K k)ᴴ * K k))) := by
         apply Finset.sum_congr rfl
         intro k _
-        rw [Matrix.mul_assoc, trace_mul_comm, ← Matrix.mul_assoc,
-          conjTranspose_kronecker, conjTranspose_one,
-          ← mul_kronecker_mul, ← mul_kronecker_mul]
-        simp only [one_mul, mul_one]
-        rw [trace_mul_comm]
+        exact D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.trace_conj_kron
+          (K k) H (initial a)
       _ = _ := by
         rw [← Matrix.trace_sum, ← Matrix.mul_sum, hsum]
   have hs0 := Real.sq_sqrt ha0
   have hs1 := Real.sq_sqrt (sub_nonneg.mpr ha1)
   have hi : partialTraceRight (initial a) = Matrix.diagonal ![(a : ℂ), 1 - (a : ℂ)] := by
+    let S : Matrix (Fin 2) (Fin 2) ℂ :=
+      Matrix.diagonal ![(Real.sqrt a : ℂ), (Real.sqrt (1 - a) : ℂ)]
+    have hpsi : psi a = Function.uncurry S := by
+      funext ⟨i, j⟩
+      fin_cases i <;> fin_cases j <;> simp [S, Matrix.diagonal, psi.eq_def, Function.uncurry]
+    have hinit : initial a =
+        D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pureCoupling S := by
+      change Matrix.vecMulVec (psi a) (star (psi a)) =
+        Matrix.vecMulVec (Function.uncurry S) (star (Function.uncurry S))
+      rw [hpsi]
+    rw [hinit, D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.ptrace2_pure]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [partialTraceRight, initial.eq_def, Matrix.vecMulVec_apply, Pi.star_apply, psi.eq_def,
+      simp [S, Matrix.mul_apply, Matrix.diagonal, Matrix.conjTranspose_apply,
         ← sq, hs0, hs1, Complex.ofReal_sub, ← Complex.ofReal_pow]
   refine ⟨hp, ?_, hm.trans hi⟩
   rw [← trace_partialTraceRight, hm, hi, Matrix.trace_diagonal]
@@ -194,18 +204,9 @@ private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
   refine ⟨hpos, ht, ?_⟩
   let M := partialTraceRight (localConj U V (out a K))
   have hM : M = U * Matrix.diagonal ![(a : ℂ), 1 - (a : ℂ)] * Uᴴ := by
-    dsimp only [M]
-    apply Matrix.ext_iff_trace_mul_right.mpr
-    intro H
-    rw [← trace_mul_kron_one, localConj.eq_def]
-    rw [Matrix.mul_assoc, trace_mul_comm, ← Matrix.mul_assoc,
-      conjTranspose_kronecker, ← mul_kronecker_mul, ← mul_kronecker_mul]
-    simp only [mul_one,
-      (show Vᴴ * V = 1 from Matrix.mem_unitaryGroup_iff'.mp hV)]
-    rw [trace_mul_comm, trace_mul_kron_one, hm]
-    simp only [Matrix.mul_assoc]
-    rw [trace_mul_comm U]
-    simp only [Matrix.mul_assoc]
+    dsimp only [M, localConj]
+    rw [D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.trace_local_right
+      (out a K) U V (Matrix.mem_unitaryGroup_iff'.mp hV), hm]
   have htM : trace M = 1 := (trace_partialTraceRight _).trans ht
   have he := matrix_energy M (partialTraceRight_posSemidef hpos).isHermitian
   rw [htM, Complex.one_re] at he
@@ -343,14 +344,8 @@ private lemma swap_projection_trace (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     trace (ρ * ((projector n 1 ⊗ₖ projector n (-1)) * swapOp)) = ((-t / 2 : ℝ) : ℂ) := by
   have hE (i j : Fin 3) :
       trace (ρ * (pauli i ⊗ₖ pauli j)) = ((if i = j then -t else 0 : ℝ) : ℂ) := by
-    apply Complex.ext
-    · exact congrFun (congrFun hT i) j
-    · simpa only [Complex.ofReal_im] using
-        D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow.trace_hermitian_product_real
-          ρ (pauli i ⊗ₖ pauli j) hρ
-          (isHermitian_kronecker
-            (by fin_cases i <;> exact pauli_hermitian _)
-            (by fin_cases j <;> exact pauli_hermitian _))
+    rw [D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.trace_pauli_kronecker_eq_corr ρ hρ,
+      hT]
   have hN : trace (ρ * (spin n ⊗ₖ spin n)) = (-t : ℂ) := by
     simp only [spin, Fin.sum_univ_three]
     change trace (ρ *

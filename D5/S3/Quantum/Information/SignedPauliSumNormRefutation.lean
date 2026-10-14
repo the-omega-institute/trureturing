@@ -94,6 +94,10 @@ private def SZ : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) GaussianInt :=
   ∑ g ∈ Finset.univ.filter (fun g : Fin 3 → Pauli => g ≠ fun _ => Pauli.I),
     ((-1 : GaussianInt) ^ (βw g : ℕ)) • wordZ g
 
+theorem sqrt_three_lt_two : Real.sqrt 3 < 2 := by
+  rw [Real.sqrt_lt' (by norm_num)]
+  norm_num
+
 /-- The conjecture fails for three qubits: one sign function gives `‖Σ(β)‖ ≥ 21 > (√3+1)³ - 1`. -/
 theorem result : ¬ claim := by
   intro h
@@ -154,9 +158,7 @@ theorem result : ¬ claim := by
     rw [this] at hle
     exact le_of_mul_le_mul_right hle hx0
   -- `(√3 + 1)³ - 1 = 9 + 6√3 < 21`.
-  have hs : Real.sqrt 3 < 2 := by
-    rw [Real.sqrt_lt' (by norm_num)]
-    norm_num
+  have hs := sqrt_three_lt_two
   have hs0 := Real.sqrt_nonneg 3
   have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
   nlinarith [h 3 βk, h21]
