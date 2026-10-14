@@ -11,6 +11,10 @@ import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
 import Mathlib.Tactic
 
+/- These are uniform symbolic lower bounds over arbitrary controllers, tree
+shapes and finite entry intervals. They are not bounded enumeration, a checker,
+a numeric reduction or a certified finite instance; hence utility is none. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
