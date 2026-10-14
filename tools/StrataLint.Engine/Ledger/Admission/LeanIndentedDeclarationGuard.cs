@@ -339,9 +339,13 @@ internal sealed partial class LeanSourceCatalog
         }
     }
 
-    private static ImmutableArray<string> DecodeNameKey(string key)
+    private static ImmutableArray<string> DecodeNameKey(string key) =>
+        DecodeNameKeySegments(key).Where(static segment => !segment.IsNumeric)
+            .Select(static segment => segment.Text).ToImmutableArray();
+
+    private static ImmutableArray<(string Text, bool IsNumeric)> DecodeNameKeySegments(string key)
     {
-        var result = ImmutableArray.CreateBuilder<string>();
+        var result = ImmutableArray.CreateBuilder<(string Text, bool IsNumeric)>();
         var index = 0;
         if (!TryDecodeNameKeyNode(key, ref index, result) || index != key.Length)
         {
@@ -354,7 +358,7 @@ internal sealed partial class LeanSourceCatalog
     private static bool TryDecodeNameKeyNode(
         string key,
         ref int index,
-        ImmutableArray<string>.Builder result)
+        ImmutableArray<(string Text, bool IsNumeric)>.Builder result)
     {
         if (key.AsSpan(index).StartsWith("n0", StringComparison.Ordinal))
         {
@@ -401,7 +405,11 @@ internal sealed partial class LeanSourceCatalog
                 return false;
             }
 
-            result.Add(segment);
+            result.Add((segment, false));
+        }
+        else
+        {
+            result.Add((key[digitStart..index], true));
         }
 
         return index < key.Length && key[index++] == ')';
@@ -440,6 +448,47 @@ internal sealed partial class LeanSourceCatalog
                 || leaf is "congr_simp" or "splitter" or "eq_def"
                 || leaf.EndsWith("_assoc", StringComparison.Ordinal);
         });
+
+    private static bool HasNamedGenerator(LeanSourceDeclaration source, string recordedKey)
+    {
+        var name = DecodeNameKeySegments(recordedKey);
+        if (name.IsEmpty) return false;
+        if (name[0] == ("_private", false))
+        {
+            var module = FullNameSegments(ModuleName(source.Path));
+            var counter = 1 + module.Length;
+            if (name.Length <= counter + 1
+                || !module.Select(static segment => (segment, false))
+                    .SequenceEqual(name.Skip(1).Take(module.Length))
+                || !name[counter].IsNumeric)
+                return false;
+            name = name[(counter + 1)..];
+        }
+
+        return name.All(static segment => !segment.IsNumeric)
+            && source.NamedGenerators.Any(generated => FullNameSegments(generated)
+                .SequenceEqual(name.Select(static segment => segment.Text)));
+    }
+
+    private static string? NamedGeneratorName(ImmutableArray<LeanSourceToken> command)
+    {
+        var header = command.TakeWhile(static token => token.Text != "=>").ToImmutableArray();
+        var kind = header.SkipWhile(static token => token.Text is "local" or "scoped" or "public" or "private")
+            .FirstOrDefault()?.Text;
+        if (kind is not ("notation" or "syntax" or "macro" or "elab")) return null;
+        for (var index = 0; index + 4 < header.Length; index++)
+            if (header[index].Text == "(" && header[index + 1].Text == "name"
+                && header[index + 2].Text == ":=" && IsIdentifier(header[index + 3].Text)
+                && header[index + 4].Text == ")")
+                return header[index + 3].Text;
+        return null;
+    }
+
+    private static string QualifySourceName(string name, IEnumerable<LeanSourceScope> scopeStack) =>
+        name.StartsWith("_root_.", StringComparison.Ordinal)
+            ? name["_root_.".Length..]
+            : string.Join('.', scopeStack.Select(static scope => scope.NamespaceName)
+                .Where(static namespaceName => namespaceName is not null).Append(name));
 
     private static LeanSourceDeclaration CreateGeneratorClosure(
         ImmutableArray<LeanSourceDeclaration> moduleDeclarations,

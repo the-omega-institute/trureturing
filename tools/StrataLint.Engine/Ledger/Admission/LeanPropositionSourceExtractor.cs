@@ -15,6 +15,7 @@ internal sealed record LeanSourceDeclaration(
     ImmutableHashSet<string> CustomSyntaxLiterals)
 {
     internal bool IsAnonymousOnlySource { get; init; }
+    internal ImmutableHashSet<string> NamedGenerators { get; init; } = ImmutableHashSet<string>.Empty;
 }
 
 internal sealed record LeanSourceScope(string? NamespaceName);
@@ -256,6 +257,7 @@ internal sealed partial class LeanSourceCatalog
         if (matches.IsEmpty)
         {
             if (IsCompilerGeneratedName(recordedSegments)
+                || HasNamedGenerator(moduleDeclarations[0], recorded.DeclarationNameKey)
                 || recordedSegments.Any(static segment => LeafName(segment).StartsWith("tactic", StringComparison.Ordinal))
                     && GeneratorCommands(moduleDeclarations[0].AmbientTokens).Any(static command =>
                     {
@@ -535,6 +537,7 @@ internal sealed partial class LeanSourceCatalog
             includeLocal: false);
         var ambientTokens = ParseAmbientTokens(tokens, commandStarts);
         var scopeStack = new List<LeanSourceScope>();
+        var namedGenerators = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var result = ImmutableArray.CreateBuilder<LeanSourceDeclaration>();
         for (var commandIndex = 0; commandIndex < commandStarts.Length; commandIndex++)
         {
@@ -594,6 +597,9 @@ internal sealed partial class LeanSourceCatalog
             var kindIndex = FindDeclarationKind(tokens, start, end);
             if (kindIndex < 0)
             {
+                var generatedName = NamedGeneratorName(tokens[start..end]);
+                if (generatedName is not null)
+                    namedGenerators.Add(QualifySourceName(generatedName, scopeStack));
                 continue;
             }
 
@@ -605,12 +611,7 @@ internal sealed partial class LeanSourceCatalog
             }
 
             var name = tokens[nameIndex].Text;
-            var fullName = name.StartsWith("_root_.", StringComparison.Ordinal)
-                ? name["_root_.".Length..]
-                : string.Join('.', scopeStack
-                    .Select(static scope => scope.NamespaceName)
-                    .Where(static namespaceName => namespaceName is not null)
-                    .Append(name));
+            var fullName = QualifySourceName(name, scopeStack);
             var semanticEnd = end;
             if (ProofKinds.Contains(kind))
             {
@@ -646,7 +647,9 @@ internal sealed partial class LeanSourceCatalog
             }
         }
 
-        return result.ToImmutable();
+        var generatedNames = namedGenerators.ToImmutable();
+        return result.Select(declaration => declaration with { NamedGenerators = generatedNames })
+            .ToImmutableArray();
     }
 
     private static ImmutableArray<int> FindCommandStarts(ImmutableArray<LeanSourceToken> tokens)

@@ -567,4 +567,90 @@ public sealed partial class FrozenLedgerTests
 
         Assert.Equal(accepted, result.Authorized);
     }
+
+    [Theory]
+    [InlineData("unchanged", true)]
+    [InlineData("namespaced", true)]
+    [InlineData("imported-definition", false)]
+    [InlineData("local-expansion", false)]
+    [InlineData("generator-name", false)]
+    [InlineData("unresolved-root", false)]
+    [InlineData("private-string-counter", false)]
+    [InlineData("private-other-module", false)]
+    [InlineData("trailing-root-segment", false)]
+    [InlineData("wrong-namespace", false)]
+    public void MathlibReanchorTracksExplicitlyNamedNotationGenerators(string mutation, bool authorized)
+    {
+        var namespaced = mutation == "namespaced";
+        var source = "import D5.S0.Carrier.B\n"
+            + (namespaced ? "namespace N\n" : "")
+            + "local notation (name := seedNotation) \"seed_alias\" => D5.S0.Carrier.seed\n"
+            + "theorem a : True := by trivial\n"
+            + (namespaced ? "end N\n" : "");
+        var root = ModuleWithReport("A", source, "old notation generator",
+            declarations: [mutation switch
+            {
+                "unresolved-root" => "undeclaredNotation",
+                "private-string-counter" => "_private.D5.S0.Carrier.A.0.seedNotation",
+                "private-other-module" => "_private.D5.S0.Carrier.B.0.seedNotation",
+                "trailing-root-segment" => "seedNotation.unknown",
+                "wrong-namespace" => "Wrong.seedNotation",
+                _ => namespaced ? "N.seedNotation" : "seedNotation",
+            }], kind: "def")
+            with { Imports = ["B"] };
+        var dependency = ModuleWithReport("B",
+            "namespace D5.S0.Carrier\ndef seed : Nat := 7\nend D5.S0.Carrier\n",
+            "seed", declarations: ["D5.S0.Carrier.seed"], kind: "def");
+        var candidate = root with
+        {
+            Source = mutation switch
+            {
+                "local-expansion" => source.Replace("=> D5.S0.Carrier.seed", "=> 8", StringComparison.Ordinal),
+                "generator-name" => source.Replace("name := seedNotation", "name := otherNotation", StringComparison.Ordinal),
+                _ => source,
+            },
+            StatementMaterial = "new notation generator",
+        };
+        var result = ValidateMathlibReanchor(
+            [root, dependency], [candidate, dependency with
+            {
+                Source = mutation == "imported-definition"
+                    ? dependency.Source.Replace("7", "8", StringComparison.Ordinal) : dependency.Source,
+            }], ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(authorized, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData(false, false, false)]
+    [InlineData(false, true, false)]
+    [InlineData(true, false, false)]
+    [InlineData(true, true, false)]
+    [InlineData(false, false, true)]
+    [InlineData(true, false, true)]
+    public void MathlibReanchorNamedNotationPreservesNumericPrivateNameSegments(
+        bool namespaced, bool changed, bool wrongModule)
+    {
+        var source = "import D5.S0.Carrier.B\n" + (namespaced ? "namespace N\n" : "")
+            + "local notation (name := seedNotation) \"seed_alias\" => D5.S0.Carrier.seed\n"
+            + "theorem a : True := by trivial\n" + (namespaced ? "end N\n" : "");
+        const string privatePrefix = "nn(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S0),7:Carrier),1:A),0)";
+        var prefix = wrongModule ? privatePrefix.Replace("1:A", "1:B", StringComparison.Ordinal) : privatePrefix;
+        var key = "ns(" + (namespaced ? "ns(" + prefix + ",1:N)" : prefix) + ",12:seedNotation)";
+        var recorded = ImmutableArray.Create(new FrozenDeclaration(key, "def"));
+        var dependency = "namespace D5.S0.Carrier\ndef seed : Nat := 7\nend D5.S0.Carrier\n";
+        var baseline = Snapshot([TextFile(PathFor("A"), source), TextFile(PathFor("B"), dependency)]);
+        var candidate = Snapshot([TextFile(PathFor("A"), source), TextFile(PathFor("B"), changed
+            ? dependency.Replace("7", "8", StringComparison.Ordinal) : dependency)]);
+        if (wrongModule)
+        {
+            Assert.Throws<LeanSourceExtractionException>(() =>
+                LeanSourceCatalog.Parse(baseline).ExtractPropositionSource(RepoPathFor("A"), recorded));
+            return;
+        }
+        var original = LeanSourceCatalog.Parse(baseline).ExtractPropositionSource(RepoPathFor("A"), recorded);
+        var updated = LeanSourceCatalog.Parse(candidate).ExtractPropositionSource(RepoPathFor("A"), recorded);
+
+        Assert.Equal(!changed, original.AsSpan().SequenceEqual(updated.AsSpan()));
+    }
 }
