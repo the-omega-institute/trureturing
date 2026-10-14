@@ -264,3 +264,41 @@ $$
 证明某个异常子族统一满足 $N_y>z$，并同时保留移动 Fibonacci 同余。无条件的全体整数计数不能推出指定剩余类中没有命中，也不能把不同候选的最优值合并。
 
 即使这个接口闭合，它最多改进候选数量或稀疏层的容量；它不估计同一 $N$ 的完整 prime-power 权重、$D^*(a)$ 或 signed Robin tail $H_a$。因此本来源已登记为可复用的外围估计与明确的接口义务，不重复已有光滑数分布工作，也不构成 Robin 不等式或 RH 证明。
+
+### 448.1 现有尺度下的条件性比较
+
+这条来源不能直接替换 (TC.11)。若另有一个尚未证明的同源桥同时给出
+
+$$
+\log C=a+O\!\left(\frac a{\log a}\right),
+\qquad N_y\ge C e^{-L},
+\qquad L=O(a^{3/4}),
+$$
+
+并且 $C e^{-L}\le X_+/2$，可以形式上取 $y\asymp a$、$z=C e^{-L}$。此时
+
+$$
+ v=\frac{\log z}{\log y}
+ =\frac{a-L+O(a/\log a)}{\log a},
+$$
+
+从而
+
+$$
+ v\log\!\bigl(v\log(3v)\bigr)
+ =a-L+O\!\left(\frac a{\log a}\right).
+$$
+
+在 $\log X_+=a+O(1)$ 的同一附加尺度下，Tenenbaum--Wang 的人口界至多给出
+
+$$
+\log\Theta(X_+,y,z)=O\!\left(\frac a{\log a}\right),
+$$
+
+与当前精确同余计数的
+
+$$
+\log\tau(C)=O\!\left(\frac a{\log a}\right)
+$$
+
+同阶。这里的三项附加条件尚未由 FIB/CA 接口证明；即使它们都成立，也只说明人口层没有新的渐近量级，仍未支付同一候选的 signed Robin tail。要取得实质推进，必须得到常数级改进并保留同余，或直接建立联合有符号估计。
