@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e80c661ba28521582f8bf6f586aa808032699dc6897739fb3ebf7d48bf2d2613
+  normalized_sha256: sha256:e80c661ba28521582f8bf6f586aa808032699dc6897739fb3ebf7d48bf2d2613
+cas_ref: sha256:e80c661ba28521582f8bf6f586aa808032699dc6897739fb3ebf7d48bf2d2613
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces interaction projections and stipulates the one-step propagation-radius assumption for the following theorem.
+    previous_atom_id: df376f21ee61583194a4b6ed587b2fa97d0ac2a24faf9a5a6f1dac192a195ca8
+    next_atom_id: 062d6f5a910eed117ab7596a2e34f1a6a0728de5e8599136b47689b29d2870c9

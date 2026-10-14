@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a97140816444d95e92f99d245291806cfbf6ce54e6e57a857311934be752e91
+  normalized_sha256: sha256:4a97140816444d95e92f99d245291806cfbf6ce54e6e57a857311934be752e91
+cas_ref: sha256:4a97140816444d95e92f99d245291806cfbf6ce54e6e57a857311934be752e91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Noun-only label for two-register correlation in the preceding decomposition.
+    previous_atom_id: a98d2e6d9a8f839d502ff239217580960df87a1f6f91d1d5221d13626d54f056
+    next_atom_id: d421b1bf6c2981b42d4f328e14bc95cd683cbccf05c8f5d2c1767304438c714b

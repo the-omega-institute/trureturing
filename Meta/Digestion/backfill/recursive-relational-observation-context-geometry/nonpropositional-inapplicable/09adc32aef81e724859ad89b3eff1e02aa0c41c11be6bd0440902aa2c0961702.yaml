@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09adc32aef81e724859ad89b3eff1e02aa0c41c11be6bd0440902aa2c0961702
+  normalized_sha256: sha256:09adc32aef81e724859ad89b3eff1e02aa0c41c11be6bd0440902aa2c0961702
+cas_ref: sha256:09adc32aef81e724859ad89b3eff1e02aa0c41c11be6bd0440902aa2c0961702
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 7.6（按点对删去超预算实验也会破坏三角）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: b4c82d41d1ac60cfd1952293d581f3bde5c52c12ead1520161924ed5d1e050fa
+    next_atom_id: de5d989094f8f8a665f92139bcb7e28b4df7491b931acdb6124856d36d3d8fce

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85a6ebc69e8ea4c8587837f6ea462235c16e758c28365b49d83347329cad4d31
+  normalized_sha256: sha256:85a6ebc69e8ea4c8587837f6ea462235c16e758c28365b49d83347329cad4d31
+cas_ref: sha256:85a6ebc69e8ea4c8587837f6ea462235c16e758c28365b49d83347329cad4d31
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 407.2（二值来源的全时域初始近似）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: ac1f0e4ce7043cfc472f9311323fc9f3aae767d5aae2deac08a3f6d08c628efe
+    next_atom_id: d3dd5673a6feacd4c8bbaa3404be67153554aad6df0d0f133baeee4638ddeec8

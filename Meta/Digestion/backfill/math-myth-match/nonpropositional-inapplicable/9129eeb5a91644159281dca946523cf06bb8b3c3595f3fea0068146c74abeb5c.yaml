@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9129eeb5a91644159281dca946523cf06bb8b3c3595f3fea0068146c74abeb5c
+  normalized_sha256: sha256:9129eeb5a91644159281dca946523cf06bb8b3c3595f3fea0068146c74abeb5c
+cas_ref: sha256:9129eeb5a91644159281dca946523cf06bb8b3c3595f3fea0068146c74abeb5c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 357.1（初始判断的统计模型）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: b28d56145583b858540387f5779bb3aeacb009b5c80e221bac7ddc86b0c91c76
+    next_atom_id: 74436a0f5fca5dbe2cccc61fcce6a4beb13c708ded7b0e766d5c6171e041b16d

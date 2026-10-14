@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4a1b2e0f1ab4220fe16cdfdf93b995edf04d1c08de1e5f7574740a5be889afa
+  normalized_sha256: sha256:f4a1b2e0f1ab4220fe16cdfdf93b995edf04d1c08de1e5f7574740a5be889afa
+cas_ref: sha256:f4a1b2e0f1ab4220fe16cdfdf93b995edf04d1c08de1e5f7574740a5be889afa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 论证三角读出式（3）的求和积分对应，附文只解释该结论；不另立独立新命题，原陈述保留自身状态。
+    previous_atom_id: cb6ec2722c259276bcd05609ac220751345a3f6648a431428fb7ddde8495ea6f
+    next_atom_id: a0fdcd9abeed251b09da9d793392e2f738e01556671623b33bdb551f6db476c8

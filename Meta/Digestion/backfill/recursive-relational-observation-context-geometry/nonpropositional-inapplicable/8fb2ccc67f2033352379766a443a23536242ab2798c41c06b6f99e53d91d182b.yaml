@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8fb2ccc67f2033352379766a443a23536242ab2798c41c06b6f99e53d91d182b
+  normalized_sha256: sha256:8fb2ccc67f2033352379766a443a23536242ab2798c41c06b6f99e53d91d182b
+cas_ref: sha256:8fb2ccc67f2033352379766a443a23536242ab2798c41c06b6f99e53d91d182b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 15.7（正方形预测域与不能恢复的交互目标）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 0017a98948701662a54b6264ebbed71eb7f5cfccdc32422192abbfcb72c2a438
+    next_atom_id: 4a476955b4eaaebc16ac8e20b3e03d04cbba1cda6b2ddb6d280c9067485b34da
