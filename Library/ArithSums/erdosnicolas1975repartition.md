@@ -611,9 +611,35 @@ $$
 
 satisfies $L=o(\log V)$ along the Fibonacci rank family. Hence $e^L<V$
 eventually and the number of such near-extremal pairs is at most
-$\tau(C)$. If a separate size estimate gives $\log C=O(\log V)$, the
-standard divisor bound further makes this $V^{o(1)}$; that size estimate is
-not silently imported here.
+$\tau(C)$. The needed size estimate is available from the existing CA
+layer threshold. Every accepted prime layer has
+
+$$
+v_p(C)\log p\le\log s+O(1),
+$$
+
+as recorded in the preceding resource comparison; primes above the first
+threshold have exponent at most one. Hence for $p>\sqrt a$,
+$v_p(C)=O(1)$, while for $p\le\sqrt a$,
+$\log(v_p(C)+1)=O(\log\log a)$. The standard prime-counting bound then
+gives
+
+$$
+\log\tau(C)
+=\sum_{p\mid C}\log(v_p(C)+1)
+=O\!\left(\frac{a}{\log a}\right).
+\tag{TC.9}
+$$
+
+Since $a=2\log V+O(1)$ for $X_-=1+V\lceil V/10\rceil$,
+
+$$
+\boxed{\tau(C)=\exp O\!\left(\frac{\log V}{\log\log V}\right)=V^{o(1)}.}
+$$
+
+Thus the subpolynomial conclusion uses an existing CA threshold and a
+standard prime-counting estimate; it does not assume an unproved bound on
+$\log C$.
 
 The conclusion only sparsifies the candidates left by the benefit bound.
 Each surviving pair still has to satisfy the window and the complete signed
