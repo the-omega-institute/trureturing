@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:81cafdbd93672f4d2bc6db2bf7e6a077f2b85114616fd23e586b7db1e0633af9
+  normalized_sha256: sha256:81cafdbd93672f4d2bc6db2bf7e6a077f2b85114616fd23e586b7db1e0633af9
+cas_ref: sha256:81cafdbd93672f4d2bc6db2bf7e6a077f2b85114616fd23e586b7db1e0633af9
+coverage_gids:
+  - gid: D5/S1/Solenoid/Connectivity/FiniteNameInverseLimitNoGo.finite_name_inverse_limit_no_go
+    target_statement_id: sha256:d591c963b0bf040df8bcda2b9f1e0797dc14efb553d2c20d3117d5b8da418689
+receipts:
+  unresolved_subitems: []
