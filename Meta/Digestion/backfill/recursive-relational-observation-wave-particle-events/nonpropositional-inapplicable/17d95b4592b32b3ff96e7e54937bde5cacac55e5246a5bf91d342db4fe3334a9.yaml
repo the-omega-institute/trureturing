@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17d95b4592b32b3ff96e7e54937bde5cacac55e5246a5bf91d342db4fe3334a9
+  normalized_sha256: sha256:17d95b4592b32b3ff96e7e54937bde5cacac55e5246a5bf91d342db4fe3334a9
+cas_ref: sha256:17d95b4592b32b3ff96e7e54937bde5cacac55e5246a5bf91d342db4fe3334a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 199.1（集合值分支合同）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 9c2ae4be06b8ebdb8ad413c6449f0a0c356007f2a167e787712733cea0fdd9ab
+    next_atom_id: 08e8b2496d3fa2274085de62f722a1a5dd7fd42f8eae7737f53395c18c7022ba

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47c1a0fdc81c151a38abee12d665c3749e3ac0506e0c45ffc35be3a3d4704c7d
+  normalized_sha256: sha256:47c1a0fdc81c151a38abee12d665c3749e3ac0506e0c45ffc35be3a3d4704c7d
+cas_ref: sha256:47c1a0fdc81c151a38abee12d665c3749e3ac0506e0c45ffc35be3a3d4704c7d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 21.3（经典时间读出通道）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: f74117d3d633ae3ab9a0c93b09c2759e38226682ea14429994499ba332523110
+    next_atom_id: 906f9e415db96b5bbf225e2c615c35d8236d2797ff171fdb26b009367f2f1f36

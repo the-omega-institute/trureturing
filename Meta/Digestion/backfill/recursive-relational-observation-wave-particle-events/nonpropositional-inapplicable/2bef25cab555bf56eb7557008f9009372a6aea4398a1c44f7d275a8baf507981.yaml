@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2bef25cab555bf56eb7557008f9009372a6aea4398a1c44f7d275a8baf507981
+  normalized_sha256: sha256:2bef25cab555bf56eb7557008f9009372a6aea4398a1c44f7d275a8baf507981
+cas_ref: sha256:2bef25cab555bf56eb7557008f9009372a6aea4398a1c44f7d275a8baf507981
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 201.1（联合条件后继与矩形包络）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: e24e2b01a7af359fa1e40bc35ba7af90efbe8cadc8013d192c7395fd5f0ea05b
+    next_atom_id: d849fe92f9f950c11f12d81e90da36e59461ebbe9f43c7c6074bf99fc3f4b171

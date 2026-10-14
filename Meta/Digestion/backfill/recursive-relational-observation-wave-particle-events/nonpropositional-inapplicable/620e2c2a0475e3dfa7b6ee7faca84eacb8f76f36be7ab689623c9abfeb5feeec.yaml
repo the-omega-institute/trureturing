@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:620e2c2a0475e3dfa7b6ee7faca84eacb8f76f36be7ab689623c9abfeb5feeec
+  normalized_sha256: sha256:620e2c2a0475e3dfa7b6ee7faca84eacb8f76f36be7ab689623c9abfeb5feeec
+cas_ref: sha256:620e2c2a0475e3dfa7b6ee7faca84eacb8f76f36be7ab689623c9abfeb5feeec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 22.1（有限记录的恢复常数）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: f3cce516e029a1c822cba61e899b65b3411404c2daa655251a9b1c413f32f949
+    next_atom_id: dfc70660884242109d700907e66c3c952892636decc240f73d8a95fbbffd34ed
