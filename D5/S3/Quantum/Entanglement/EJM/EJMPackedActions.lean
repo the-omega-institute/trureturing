@@ -92,7 +92,7 @@ def triangleWord (g : Fin 20) (a : Fin 4) (k : Fin 16) (word : ℕ) : ℕ :=
   match triangleIncidence g k with
   | none => encodeState state
   | some i =>
-    let next := readTransition (by decide) (EJMTriangleCacheData.mirror state.1)
+    let next := readTransition (by decide : 0 < 41294) (EJMTriangleCacheData.mirror state.1)
       (trianglePreimage state.2.1 i).val (outcome state.2.2 a)
     encodeState (next.1, triangleCompose next.2 state.2)
 
@@ -101,7 +101,7 @@ def singletonWord (g : Fin 20) (a : Fin 4) (k : Fin 16) (word : ℕ) : ℕ :=
   match singletonIncidence g k with
   | none => encodeState state
   | some i =>
-    let next := readTransition (by decide) (EJMSingletonCacheData.mirror state.1)
+    let next := readTransition (by decide : 0 < 8689) (EJMSingletonCacheData.mirror state.1)
       (singletonPreimage state.2.1 i).val (outcome state.2.2 a)
     encodeState (next.1, singletonCompose next.2 state.2)
 
