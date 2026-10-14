@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-exact-certificate-premise)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCacheSoundness.associated_lower_le_score; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureSingletonBlock2.accepted
-   digest: Exact structural checks for actual singleton row interval [4096, 6144). -/
+   digest: Exact structural checks for actual singleton row interval [2048, 3072). -/
 
 /- These are the same original checkStructure obligations, split at existing
 1024-row boundaries so interruption preserves completed kernel modules.
@@ -24,36 +24,16 @@ open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 set_option maxHeartbeats 100000000 in
 -- Full literal row transport requires bounded kernel reduction.
-private theorem singleton_chunk_4096 : ∀ j : Fin 1024,
+private theorem singleton_chunk_2048 : ∀ j : Fin 1024,
     checkStructure singletonPartialAct singletonRows
-      ⟨4096 + j.val, by have h := j.isLt; omega⟩ = true := by
-  decide +kernel
-
-set_option maxHeartbeats 100000000 in
--- Full literal row transport requires bounded kernel reduction.
-private theorem singleton_chunk_5120 : ∀ j : Fin 1024,
-    checkStructure singletonPartialAct singletonRows
-      ⟨5120 + j.val, by have h := j.isLt; omega⟩ = true := by
+      ⟨2048 + j.val, by have h := j.isLt; omega⟩ = true := by
   decide +kernel
 
 /-- Every actual row in this whole interval passes the original structural check. -/
-theorem accepted (j : Fin 2048) :
+theorem accepted (j : Fin 1024) :
     checkStructure singletonPartialAct singletonRows
-      ⟨4096 + j.val, by have h := j.isLt; omega⟩ = true := by
-  by_cases h0 : j.val < 1024
-  ·
-    let k : Fin 1024 := ⟨j.val - 0, by have h := j.isLt; omega⟩
-    have he : (⟨4096 + k.val, by have h := k.isLt; omega⟩ : Fin 8689) =
-        ⟨4096 + j.val, by have h := j.isLt; omega⟩ := by
-      apply Fin.ext
-      dsimp [k] <;> omega
-    simpa only [he] using singleton_chunk_4096 k
-  let k : Fin 1024 := ⟨j.val - 1024, by have h := j.isLt; omega⟩
-  have he : (⟨5120 + k.val, by have h := k.isLt; omega⟩ : Fin 8689) =
-      ⟨4096 + j.val, by have h := j.isLt; omega⟩ := by
-    apply Fin.ext
-    dsimp [k] <;> omega
-  simpa only [he] using singleton_chunk_5120 k
+      ⟨2048 + j.val, by have h := j.isLt; omega⟩ = true := by
+  exact singleton_chunk_2048 j
 
 #print axioms accepted
 end D5.S3.Quantum.Entanglement.EJM.EJMStructureSingletonBlock2

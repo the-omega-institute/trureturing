@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-exact-certificate-premise)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCacheSoundness.associated_lower_le_score; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureTriangleBlock19.accepted
-   digest: Exact structural checks for actual triangle row interval [40960, 41294). -/
+   digest: Exact structural checks for actual triangle row interval [26624, 27648). -/
 
 /- These are the same original checkStructure obligations, split at existing
 1024-row boundaries so interruption preserves completed kernel modules.
@@ -24,16 +24,16 @@ open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 set_option maxHeartbeats 100000000 in
 -- Full literal row transport requires bounded kernel reduction.
-private theorem triangle_chunk_40960 : ∀ j : Fin 334,
+private theorem triangle_chunk_26624 : ∀ j : Fin 1024,
     checkStructure trianglePartialAct triangleRows
-      ⟨40960 + j.val, by have h := j.isLt; omega⟩ = true := by
+      ⟨26624 + j.val, by have h := j.isLt; omega⟩ = true := by
   decide +kernel
 
 /-- Every actual row in this whole interval passes the original structural check. -/
-theorem accepted (j : Fin 334) :
+theorem accepted (j : Fin 1024) :
     checkStructure trianglePartialAct triangleRows
-      ⟨40960 + j.val, by have h := j.isLt; omega⟩ = true := by
-  exact triangle_chunk_40960 j
+      ⟨26624 + j.val, by have h := j.isLt; omega⟩ = true := by
+  exact triangle_chunk_26624 j
 
 #print axioms accepted
 end D5.S3.Quantum.Entanglement.EJM.EJMStructureTriangleBlock19

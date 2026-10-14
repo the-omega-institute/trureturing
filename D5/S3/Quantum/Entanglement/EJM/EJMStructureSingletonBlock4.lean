@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-exact-certificate-premise)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCacheSoundness.associated_lower_le_score; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureSingletonBlock4.accepted
-   digest: Exact structural checks for actual singleton row interval [8192, 8689). -/
+   digest: Exact structural checks for actual singleton row interval [4096, 5120). -/
 
 /- These are the same original checkStructure obligations, split at existing
 1024-row boundaries so interruption preserves completed kernel modules.
@@ -24,16 +24,16 @@ open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 set_option maxHeartbeats 100000000 in
 -- Full literal row transport requires bounded kernel reduction.
-private theorem singleton_chunk_8192 : ∀ j : Fin 497,
+private theorem singleton_chunk_4096 : ∀ j : Fin 1024,
     checkStructure singletonPartialAct singletonRows
-      ⟨8192 + j.val, by have h := j.isLt; omega⟩ = true := by
+      ⟨4096 + j.val, by have h := j.isLt; omega⟩ = true := by
   decide +kernel
 
 /-- Every actual row in this whole interval passes the original structural check. -/
-theorem accepted (j : Fin 497) :
+theorem accepted (j : Fin 1024) :
     checkStructure singletonPartialAct singletonRows
-      ⟨8192 + j.val, by have h := j.isLt; omega⟩ = true := by
-  exact singleton_chunk_8192 j
+      ⟨4096 + j.val, by have h := j.isLt; omega⟩ = true := by
+  exact singleton_chunk_4096 j
 
 #print axioms accepted
 end D5.S3.Quantum.Entanglement.EJM.EJMStructureSingletonBlock4

@@ -6,9 +6,9 @@ internal sealed class EJMStructureTriangleBlock9Document : IScribeDocumentDefini
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete actual structural checks for one original EJM row interval.",
-        H("Actual triangle structural row interval 20480 to 22528"),
+        H("Actual triangle structural row interval 16384 to 17408"),
         Blocks(
-            Paragraph(Text("This module checks every original triangle row with index at least 20480 and below 22528. Each split retains all four actual values, earlier child indices, stored lower inequalities and full partial-assignment symmetry transport. Terminal rows retain exact completed events. Only kernel checkpoint boundaries change.")),
+            Paragraph(Text("This module checks every original triangle row with index at least 16384 and below 17408. Each split retains all four actual values, earlier child indices, stored lower inequalities and full partial-assignment symmetry transport. Terminal rows retain exact completed events. Only kernel checkpoint boundaries change.")),
             Describe.Lean(DescribeId.Create("accepted-interval"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/EJM/EJMStructureTriangleBlock9.accepted"),
                 H("The whole original row interval passes its exact structural check"),
