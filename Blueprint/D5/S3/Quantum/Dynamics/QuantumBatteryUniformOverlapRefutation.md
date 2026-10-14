@@ -71,3 +71,4 @@ The sum of the coordinates of v is -125 and its squared norm is 25. Since v lies
 - Truth anchor: `D5/S3/Quantum/Dynamics/QuantumBatteryUniformOverlapRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Dynamics/QuantumBatteryUniformOverlapRefutation.wmin`
 - Dependency: [D5/S3/Quantum/Dynamics/AverageMixingTraceMaximum](AverageMixingTraceMaximum.md)
+- Dependency: [D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees](LaplacianPeakTransferTrees.md)
