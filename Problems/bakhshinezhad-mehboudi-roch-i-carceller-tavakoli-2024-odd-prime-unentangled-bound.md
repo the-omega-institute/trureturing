@@ -83,11 +83,11 @@ Every other declaration is a definition used by a public statement or a compiler
 
 **Argued, not formalized.**
 - The mechanism: the sum of the d² unit-trace states of an encoding has trace d², so by Cauchy–Schwarz its squared Frobenius norm is at least d⁴/d = d³, and removing the constant Fourier mode subtracts at least d³ from the encoding's energy (step 4). Each nonzero Fourier mode of a measurement has squared Frobenius norm at most d² (step 2). In the classical attaining strategy the encoding sums to d·1 and saturates the encoding energy bound, and the measurement bound is saturated on the contributing z = none modes; for z = some t the uniform measurement has zero nonzero modes.
-- Primality is used only to make 2 and the slopes invertible; the same proof applies to any odd d for which every nonzero element of ZMod d is invertible, which is exactly the odd primes.
-- With the bound established, every state whose maximally entangled fraction EF_d exceeds 1/d gives R_d = 1/(d + 1) + d·EF_d/(d + 1) > 2/(d + 1) by the source's Proposition 3 (Eq. (30)), so the witness certifies entanglement in every odd prime dimension.
+- Oddness makes 2 invertible in ZMod d, and primality makes every nonzero slope invertible; for odd d > 1 the latter holds exactly when d is prime.
+- With the bound established, every state whose maximally entangled fraction EF_d exceeds 1/d admits a quantum model with R_d = 1/(d + 1) + d·EF_d/(d + 1) > 2/(d + 1) by the source's Proposition 3 (Eq. (30)), so the witness certifies entanglement in every odd prime dimension.
 
 **Open.**
-- The largest score achievable with bound entangled states for d > 7, which Roch i Carceller–Tavakoli compute numerically for d = 3, 5, 7.
+- The largest score achievable with bound entangled states. Roch i Carceller–Tavakoli (arXiv:2410.15388, Table I) find 0.5387, 0.3862 and 0.2931 at d = 3, 5, 7 by numerical search, without an optimality proof, and do not treat d > 7.
 - Analogous bounds for composite d, where the slope bijection fails.
 
 **Effect on the paper.** Conjecture 1 holds for every odd prime d, so the scalable entanglement witness of §VI is valid in every odd prime dimension, not only for d = 3, 5, 7.
