@@ -34,6 +34,8 @@ this is a missing-registration statement, not a template-support claim.
 
 import D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData
 set_option maxRecDepth 1000000
+-- Kernel-check each complete block before beginning the next one.
+set_option Elab.async false
 namespace D5.S3.Quantum.Entanglement.EJM.EJMTerminalCertificates
 open D5.S3.Quantum.Entanglement.EJM.EJMTerminalBoundData
 set_option maxHeartbeats 100000000 in

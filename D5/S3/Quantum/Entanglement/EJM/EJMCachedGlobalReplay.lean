@@ -47,10 +47,8 @@ private theorem split_coordinate (fuel : ℕ) (index : Fin EJMGlobalDAGData.Size
     i.val = (21 - (fuel + 1)) % 20 := by
   unfold EJMGlobalDAGData.nodes at split
   split_ifs at split
-  · cases split
-  · cases split
-  · cases split
-    rfl
+  cases split
+  rfl
 
 /-- Fuel zero rejects, so a successful split with remaining child fuel uses
 the exact next unknown global coordinate. No known-coordinate table is needed. -/
