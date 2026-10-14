@@ -80,7 +80,7 @@ def registration : Registration arena.{u} (type_of% @effect_density_representati
       exact nomatch i
   dependence := dependence
 
-noncomputable def registration_1 : Contract.Registration
+noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Foundation.EffectProbabilityExtension.effect_density_representation.{u})
     (type_of% (realize signature.{u} (fun _ _ x => x.1 x.2) (fun e => nomatch e)))
     Unit Unit := {

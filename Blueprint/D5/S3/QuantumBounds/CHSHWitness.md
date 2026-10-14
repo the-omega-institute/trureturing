@@ -4,6 +4,10 @@
 
 A normalized Bell state and fixed Pauli observables attain the positive Tsirelson value.
 
+The classical comparison uses four measurable sign-valued random variables on one probability space whose law is independent of the settings. The commutative CHSH inequality bounds the absolute value pointwise by two. Integrating with respect to that same probability law gives the bound for the four correlations; finite support is not required. The Bell witness uses the Pauli Z and X observables and their normalized sum and difference to attain twice the square root of two.
+
+For finite local positive operator-valued measurements, summing the joint trace probabilities over the second outcome replaces its effects by the identity. The first marginal therefore depends only on the first effect and the common density matrix, independently of the second setting. The argument uses normalization of each local measurement and a shared quantum state, and does not require a shared classical table of answers for all incompatible settings.
+
 **Theorem 1.1 (The Bell density is a normalized positive state).**
 
 $$\operatorname{PosSemidef}(\rho_{Bell}) \land \operatorname{tr}(\rho_{Bell})=1$$

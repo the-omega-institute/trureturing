@@ -68,7 +68,7 @@ internal sealed class SparseProbePortBoundDocument : IScribeDocumentDefinition
     private static Formula ProbabilityFormula()
     {
         Formula d=V("d"),u=V("U"),rho=V("rho"),i=V("i");
-        return All([B("d",N),B("U",Mat(d)),B("rho",Call("DensityState",Fin(d))),B("i",Fin(d))],Eq(At(Call("probabilities",u,rho),i),Call("re",At(Mul(Mul(u,Call("matrix",rho)),Call("adjoint",u)),i,i))));
+        return All([B("d",N),B("U",Mat(d)),B("rho",Call("DensityState",Fin(d))),B("i",Fin(d))],Eq(At(Call("probabilities",u,rho),i),Call("re",At(Parenthesized(Mul(Mul(u,Call("matrix",rho)),Call("adjoint",u))),i,i))));
     }
     private static Formula ErrorFormula()
     {

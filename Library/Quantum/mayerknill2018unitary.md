@@ -5,7 +5,7 @@ year: 2018
 title: Quantum process fidelity bounds from sets of input states
 doi: null
 url: https://arxiv.org/html/1805.04491v1
-claim: Theorem 1: a spanning family of pure input states identifies a unitary channel exactly when its nonorthogonality graph is connected.
+claim: "Theorem 1: a spanning family of pure input states identifies a unitary channel exactly when its nonorthogonality graph is connected."
 strata_touched:
   - D5/S3/Quantum/Reduction/ProbeComponentRigidity
 license: citation-only
