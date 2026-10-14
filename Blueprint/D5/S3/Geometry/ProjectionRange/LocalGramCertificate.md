@@ -8,7 +8,7 @@ In the formula, LocalGramData consists of all E, its topology, finite decidable 
 
 Let E be any topological space, n any finite decidable index type, s a subset of E, and x0 a point of s. Let Q:E -> Matrix n n C be positive semidefinite on s, continuous within s at x0, with rank eventually equal to its rank k at x0 in the relative neighborhood filter.
 
-There exist an injection J:Fin k -> n and an open set U containing x0 such that for every y in U intersect s the selected-column matrix C(y) has invertible Gram matrix C(y)* C(y), and its columns span exactly the columns of Q(y). The conclusion also preserves positive semidefiniteness of Q(y). All quantifiers remain in the Lean-derived statement; n and k may be empty or zero.
+There exist an injection J:Fin k -> n and an open set U containing x0 such that for every y in U intersect s the selected-column matrix C(y) has invertible Gram matrix C(y)* C(y), and its columns span exactly the columns of Q(y). The conclusion also preserves positive semidefiniteness of Q(y). All quantifiers of the Lean theorem are preserved in this authored presentation; n and k may be empty or zero.
 
 The selection is fixed throughout this neighborhood, not chosen separately at every nearby point. Invertibility persists because the Gram determinant is continuous and nonzero at x0. Equality of spans follows from inclusion and equal finite dimension. The projection-range constructor consumes this theorem with s equal to the whole base and derives positivity from Hermitian idempotence.
 
