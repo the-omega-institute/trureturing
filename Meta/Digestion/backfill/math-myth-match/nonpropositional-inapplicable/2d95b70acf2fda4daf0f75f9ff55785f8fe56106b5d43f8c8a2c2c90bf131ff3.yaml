@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d95b70acf2fda4daf0f75f9ff55785f8fe56106b5d43f8c8a2c2c90bf131ff3
+  normalized_sha256: sha256:2d95b70acf2fda4daf0f75f9ff55785f8fe56106b5d43f8c8a2c2c90bf131ff3
+cas_ref: sha256:2d95b70acf2fda4daf0f75f9ff55785f8fe56106b5d43f8c8a2c2c90bf131ff3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 4.4（可持续相容部分）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 5f5bc37bee0f3ac8f9eecb705d32c0020a7a8583a0060e74811e6a53dfbbc70e
+    next_atom_id: d4db2bbe8cd43d0cc691fc884021c353b03b49752d413aa22b674a0f72b66901

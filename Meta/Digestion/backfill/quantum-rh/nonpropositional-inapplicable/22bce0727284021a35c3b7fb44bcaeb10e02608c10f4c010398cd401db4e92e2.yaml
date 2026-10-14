@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22bce0727284021a35c3b7fb44bcaeb10e02608c10f4c010398cd401db4e92e2
+  normalized_sha256: sha256:22bce0727284021a35c3b7fb44bcaeb10e02608c10f4c010398cd401db4e92e2
+cas_ref: sha256:22bce0727284021a35c3b7fb44bcaeb10e02608c10f4c010398cd401db4e92e2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Organizes the proposed semantic interfaces in a diagram and introduces the project-interface table; no independent mathematical conclusion is stated.
+    previous_atom_id: f03db08ac16d48014ddad12d7f585e24e17c423fa64fe226e2f27b664ff209fa
+    next_atom_id: a4a7175a40e00d605eff52a4dc6017c5f9f716f39db608248f7c55edd4554236

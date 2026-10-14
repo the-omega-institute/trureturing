@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a98d2e6d9a8f839d502ff239217580960df87a1f6f91d1d5221d13626d54f056
+  normalized_sha256: sha256:a98d2e6d9a8f839d502ff239217580960df87a1f6f91d1d5221d13626d54f056
+cas_ref: sha256:a98d2e6d9a8f839d502ff239217580960df87a1f6f91d1d5221d13626d54f056
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Noun-only label for single-register readout in the preceding decomposition.
+    previous_atom_id: 5fbbf9867874eb6e9358ffbcce4f024ec191913425949316ef5bc481c724eb9d
+    next_atom_id: 4a97140816444d95e92f99d245291806cfbf6ce54e6e57a857311934be752e91

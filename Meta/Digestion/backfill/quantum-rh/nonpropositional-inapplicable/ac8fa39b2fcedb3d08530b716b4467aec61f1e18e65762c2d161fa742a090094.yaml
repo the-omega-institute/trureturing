@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac8fa39b2fcedb3d08530b716b4467aec61f1e18e65762c2d161fa742a090094
+  normalized_sha256: sha256:ac8fa39b2fcedb3d08530b716b4467aec61f1e18e65762c2d161fa742a090094
+cas_ref: sha256:ac8fa39b2fcedb3d08530b716b4467aec61f1e18e65762c2d161fa742a090094
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Second proof step of the preceding one-sided-bound lemma calculating the Laplace transform and pole cancellation.
+    previous_atom_id: 5a83942976dab5fe835ab5112237169a3f9e950e1bfeeed50929b6b87a28b7ac
+    next_atom_id: fca52fea6870c0f6e06dd42aca1863b3390c4ebaac908ae093a33580246d7dfd

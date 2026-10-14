@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f630fc252decc4d7cd419426382e2024fc6675b2e82df58377cff5ae2fb00011
+  normalized_sha256: sha256:f630fc252decc4d7cd419426382e2024fc6675b2e82df58377cff5ae2fb00011
+cas_ref: sha256:f630fc252decc4d7cd419426382e2024fc6675b2e82df58377cff5ae2fb00011
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 控制器规则清单只规定Done阶段的输出和形式后继，不断言执行正确性。
+    previous_atom_id: f95b152b4e187512b5b4b2f9a20123ebb2f272f641c0f40ca3dccae82bda0f36
+    next_atom_id: ea12cd9306c1f3c9ac1594278d728a381cf2a67b43b4a9220947530e3ccea44d

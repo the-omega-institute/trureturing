@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:416f7137b850c52eb160dd7796dd05f7ab5f92f181ae522a61ff3769272aaa34
+  normalized_sha256: sha256:416f7137b850c52eb160dd7796dd05f7ab5f92f181ae522a61ff3769272aaa34
+cas_ref: sha256:416f7137b850c52eb160dd7796dd05f7ab5f92f181ae522a61ff3769272aaa34
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 4.6（合法端点不足以产生混合链）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 829f30ebd1082e238bf71f5f532e950302a0df4d8596ae7329267fde92e1f3a9
+    next_atom_id: bbb8721a5010b8f3381bf9c5441f7e53d320f27903d546354bf1f319e379d807

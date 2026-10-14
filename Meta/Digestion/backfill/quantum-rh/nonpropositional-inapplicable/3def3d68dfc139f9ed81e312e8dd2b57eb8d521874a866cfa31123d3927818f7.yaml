@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3def3d68dfc139f9ed81e312e8dd2b57eb8d521874a866cfa31123d3927818f7
+  normalized_sha256: sha256:3def3d68dfc139f9ed81e312e8dd2b57eb8d521874a866cfa31123d3927818f7
+cas_ref: sha256:3def3d68dfc139f9ed81e312e8dd2b57eb8d521874a866cfa31123d3927818f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Final proof step of theorem six excluding right-hand zeros via a Laplace transform; closing prose only interprets the unproved bound target.
+    previous_atom_id: 1fce65b9d726290e0f61fa8010638e4864c7515bf0c0f89859aa60a32b4111c1
+    next_atom_id: cc673c288b99fe223d3282a89354c54f164f529f11e3f2f59ee111d41f0eb432
