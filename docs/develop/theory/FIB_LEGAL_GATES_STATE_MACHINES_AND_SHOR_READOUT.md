@@ -214,3 +214,156 @@ The remaining implementation obligations are a primitive reversible arithmetic c
 - [IBM] IBM Quantum Learning, *Phase-estimation and factoring*, especially *Shor's algorithm*, [course](https://quantum.cloud.ibm.com/learning/en/courses/fundamentals-of-quantum-algorithms/phase-estimation-and-factoring/shor-algorithm) and [implementation tutorial](https://quantum.cloud.ibm.com/docs/en/tutorials/shors-algorithm), consulted 14 October 2026. Explicit power-access, clock-precision and classical-reconstruction explanation. No tutorial hardware result or library-version claim is transferred to these checks.
 
 Monomial spectral decomposition, tensor-conjugate cancellation, finite Fourier orthogonality and reversible computation are established mathematical tools. The work here supplies their concrete gate-word correspondence, phase-offset counterexample, clean-work criterion and modular companion interface. Their historical novelty has not been established.
+
+## 10. Continuation: controllable states, observable states and circuit costs
+
+This continuation reads the native pulse supplier at dev `b7d3aa4ba9bcfd787a543660cd1ea382d6a79bae`. Its Definition 8.3 still specifies independently addressed single-position pulses with arbitrary phase and angle. Sections 10-15 use exactly those ideal projected generators, with no finite-blockade approximation, uncontrolled drift, noise or hardware accessibility claim. Earlier implementation limits in Sections 1-9 describe the first delivery. Section 13 now supplies a native-pulse compiler for known ordinary-qubit circuits and Section 14 exercises a complete small period-readout circuit. A scalable modular-arithmetic compiler and hardware realization remain separate obligations.
+
+Let d=|B_n|=F_{n+2} for n>=1, X_i=H_i(0), Y_i=H_i(pi/2), and P_s=|s><s| on K_n. Both X_i and Y_i are traceless Hermitian matrices. The site-i edges form a matching; on each oriented edge their matrices are the usual Pauli X and Y, and on blocked words they vanish. Pulse angles are real and inverses are available. Negative angles can also be replaced modulo 2pi for these generators. The following controllability assertions do not bound duration, pulse count or precision.
+
+The external combinatorial input is Numata-Yamanouchi [NY22], Theorem 3.7: the toggles of independent sets of the open path generate the entire symmetric group on those independent sets. Its vertices 1,...,n and independent-set indicator strings map literally to our B_n and tau_i. It is a theorem about permutations, not a theorem about their phases or quantum control. The added lifting argument appears below.
+
+## 11. A phase restriction has an exact blind sector; one extra quadrature removes it
+
+### Proposition 11.1. The phase-zero obstruction
+
+Define W|s>=i^{|s|}|s>, where |s| is the number of occupied sites, and Z_par|s>=(-1)^{|s|}|s>. With only pulses exp(-it X_i), their conjugates W^dagger U W are real orthogonal matrices of determinant one. Equivalently, the antiunitary A=Z_par times coordinate conjugation commutes with every allowed U. The ray quantity |psi^T Z_par psi| is invariant.
+
+Consequently every finite adaptive protocol consisting of these pulses, word-basis projective measurements and hypothesis-independent classical choices gives identical complete-record probabilities on rho and A rho A^{-1}. In particular the orthogonal states
+
+$$|\psi_\pm\rangle=\frac{|0^n\rangle\pm|10^{n-1}\rangle}{\sqrt2} \tag{11.1}$$
+
+cannot be distinguished by that entire menu. A single pulse R_1(pi/2,pi/4) followed by word measurement distinguishes them perfectly.
+
+Proof. An enabled edge changes |s| by one, so W^dagger(-i X_i)W is real antisymmetric. Exponentiation proves the orthogonal statement. The identity Z_par X_i Z_par=-X_i, together with conjugation of i, gives A U A^{-1}=U and U^T Z_par U=Z_par. Word projectors also commute with A. Every fixed branch Kraus product therefore intertwines A, and its nonnegative probability on the two conjugate hypotheses is equal. The same conditional policy weights preserve equality for adaptive complete histories; summing records preserves it too. A exchanges the two vectors in (11.1). On their enabled two-dimensional block exp(-i pi Y/4) sends psi_+ to the occupied word and psi_- to the empty word. QED.
+
+This result is stronger than failure of one selected experiment. It describes a whole allowed control-and-readout class. It excludes coherent clock couplings or phase gates absent from that class. Full-flip monomial gates followed only by word measurement have the still smaller diagonal observable space of dimension d.
+
+### Theorem 11.2. Any one site with a second quadrature gives full finite control
+
+Fix any j in {1,...,n}. The real dynamical Lie algebra is
+
+$$\boxed{\operatorname{Lie}_{\mathbb R}\{-iX_1,\ldots,-iX_n,-iY_j\}=\mathfrak{su}(d).} \tag{11.2}$$
+
+Thus arbitrary finite products with real pulse angles generate SU(d). All pure states in K_n are mutually reachable up to a phase; a mixed state's spectrum is preserved by these unitary controls. The theorem uses independently addressable X_i at every site and the additional Y quadrature at one site. Global, translation-invariant control alone does not satisfy these hypotheses.
+
+Proof. Denote the Lie algebra by l. The commutator of -iX_j and -iY_j supplies iD for a nonconstant traceless real diagonal D: its diagonal entries on each enabled pair are opposite and nonzero. For every full-flip word G, Ad_G l=l, since its factors are exponentials of generators of l. By Section 2 each such G is monomial, and its conjugation on diagonal matrices is the underlying permutation. By [NY22], these permutations cover Sym(B_n); the pulse phases cancel in diagonal conjugation.
+
+It follows that l contains i pi(D) for every permutation pi. Choose two unequal entries of D. For any distinct a,b, permute those entries to a,b and subtract the conjugate under the transposition (ab). This gives a nonzero real multiple of i(P_a-P_b). Hence l contains every traceless imaginary diagonal matrix.
+
+Take any enabled pair (u,v) in X_j. Commuting i(P_u-P_v) with -iX_j isolates a nonzero multiple of |u><v|-|v><u|, because the support of X_j is a matching and every other matched pair is disjoint from u,v. A second bracket with i(P_u-P_v) yields i(|u><v|+|v><u|). Conjugating these two matrices by the available monomial words moves the pair to any ordered pair (a,b). Any accompanying phase merely rotates this two-dimensional real span. Therefore l contains both off-diagonal generators for every pair, as well as every traceless imaginary diagonal. These form a basis of su(d). All original generators are traceless skew-Hermitian, giving the reverse inclusion.
+
+The final reachability assertion uses the standard finite-dimensional driftless Lie-group controllability theorem [AD01, D03]: the connected subgroup generated by the supplied one-parameter subgroups has this Lie algebra. Since its Lie algebra is all su(d), it is an open subgroup of the connected group SU(d), hence equals SU(d). This external control principle is distinct from the explicitly proved Lie-algebra calculation. QED.
+
+This proof can be reused for a finite family of matching-supported flips whenever their underlying permutations generate the full symmetric group and one matching has both quadratures. The open-path conclusion uses an existing nontrivial combinatorial theorem rather than guessing full controllability from connectedness alone. With all phases fixed to zero, Proposition 11.1 prevents full su(d); within these stated menus the extra quadrature is an actual resource.
+
+## 12. Exact observation consequences, with a generic complexity boundary
+
+### Corollary 12.1. Full controlled observations separate every density matrix
+
+With the controls of Theorem 11.2 and final word measurement,
+
+$$\mathcal W=\operatorname{span}_{\mathbb R}\{U^\dagger P_sU:U\text{ reachable},\ s\in B_n\}
+=\operatorname{Herm}(d). \tag{12.1}$$
+
+For any two density matrices rho,sigma,
+
+$$\sup_U\operatorname{TV}\bigl((\operatorname{Tr}\rho U^\dagger P_sU)_s,
+(\operatorname{Tr}\sigma U^\dagger P_sU)_s\bigr)
+=\frac12\|\rho-\sigma\|_1. \tag{12.2}$$
+
+Proof. SU(d) acts transitively on unit vectors, so the effects include all rank-one projectors. Their real span is Herm(d): projectors on (|a>+|b>)/sqrt(2) and (|a>+i|b>)/sqrt(2), together with P_a, extract both off-diagonal quadratures. For (12.2), choose a reachable U that diagonalizes rho-sigma; multiplying a diagonalizing unitary by a global phase adjusts its determinant without changing the measurement. The output absolute differences sum to the sum of absolute eigenvalues. The reverse inequality is trace-norm contraction under measurement, or trace duality for the signed sum of these orthogonal effects. QED.
+
+This is informational completeness across a family of settings, not exact tomography from one specimen. The optimal U in (12.2) depends on the two specified hypotheses. Unitary evolution preserves trace distance; control exposes its existing distinguishability to the chosen measurement. In contrast, the clock alone for a single fixed U in Section 4 depends only on spectral weights and remains blind to coherences between its eigenvectors.
+
+For an affine-linear predictive representation that must reproduce all these probabilities for all initial density matrices, the traceless state coordinates must have rank at least d^2-1. Otherwise a nonzero traceless Hermitian kernel vector A gives valid states I/d plus or minus epsilon A, for sufficiently small epsilon, with the same representation but different output probabilities by (12.1). A representation including normalization needs d^2 real linear coordinates. This statement concerns linear state representations, not unrestricted nonlinear encodings or a claimed classical simulation lower bound in time.
+
+### Proposition 12.2. Full controllability does not imply short synthesis
+
+For the finite generator menu in Theorem 11.2, almost every U in SU(d) requires at least d^2-1 one-parameter pulses for exact synthesis. With arbitrary independently chosen phase and angle on each pulse, the analogous generic lower bound is ceil((d^2-1)/2). For a fixed pure input the corresponding generic bounds are 2d-2 and d-1 pulses, respectively.
+
+Proof. A fixed word of L generator labels defines a smooth map from R^L to SU(d), whose dimension is d^2-1. For L<d^2-1 its image has Haar measure zero by the smooth dimension/Sard theorem. There are finitely many label words at any fixed length, and countably many bounded parameter charts, so their union remains null. Two continuous parameters per pulse replace L by 2L. Apply the same argument to the orbit in complex projective space of dimension 2d-2 for pure-state preparation. QED.
+
+These are generic exact-synthesis statements, not worst-case approximation bounds or lower bounds for a particular structured circuit. Since d is Fibonacci-sized, a generic unitary on all legal states can require exponentially many pulses. A structured algorithm can use a small computational subspace and a structured gate list. The next section supplies such a compilation interface.
+
+## 13. A clean encoded circuit compiler inside the existing legal pulse model
+
+For m>=1 set n=2m-1 and define the isometry
+
+$$J_m|b_1\cdots b_m\rangle=|b_1\,0\,b_2\,0\cdots0\,b_m\rangle. \tag{13.1}$$
+
+Odd sites carry data; the m-1 even sites are separators initialized to zero. Every encoded word is legal. During an entangling pulse a separator may be excited, but no11 legality is maintained and the separator is restored at the gate boundary. This is an explicit map from ordinary qubit registers into the no11 carrier. It makes no identification with Fibonacci fusion-category gates.
+
+Write R_x(t)=exp(-itX), R_y(t)=exp(-itY). On the encoded space, R_{2q-1}(0,t) and R_{2q-1}(pi/2,t) implement those single-qubit rotations at data bit q, because both neighboring separators are zero. Euler decomposition implements any one-qubit SU(2) gate with at most three such pulses.
+
+### Theorem 13.1. Five-pulse CZ and nine-pulse nearest-neighbor CNOT
+
+The separator pulse D_q=R_{2q}(0,pi) satisfies
+
+$$D_qJ_m=J_m\,\operatorname{diag}(-1,1,1,1)_{q,q+1}. \tag{13.2}$$
+
+Let S_q=R_{2q+1}(0,pi/2)R_{2q-1}(0,pi/2). Then
+
+$$S_q^\dagger D_q S_qJ_m=J_m\operatorname{CZ}_{q,q+1}. \tag{13.3}$$
+
+Define h_q=R_{2q-1}(0,pi/2)R_{2q-1}(pi/2,pi/4). Its encoded action is -i times the Hadamard gate. For either orientation of adjacent data bits c,t,
+
+$$h_t(S_q^\dagger D_q S_q)h_t^\dagger J_m
+=J_m\operatorname{CNOT}_{c\to t},\qquad q=\min(c,t). \tag{13.4}$$
+
+The pulse counts in (13.3) and (13.4) are five and nine, respectively, counting inverses separately.
+
+Proof. If the adjacent data bits are 00, the separator is an enabled two-state block and exp(-i pi X)=-I on it. It returns to zero with phase minus one. If either data bit is one, the separator is blocked and the pulse is the identity. This gives (13.2), including exact restoration of the work bit. On code states S_q acts as -X_q X_{q+1}, so conjugation moves the minus sign from 00 to 11; its global minus sign cancels with its adjoint. This gives (13.3). Direct Pauli multiplication gives R_x(pi/2)R_y(pi/4)=-i H. The two opposite phases of h_t and h_t^dagger cancel, and H_t CZ H_t=CNOT. Every identity is an equality on the entire encoded Hilbert space, and thus also holds with an arbitrary external reference system. QED.
+
+For a CNOT between data bits a,b at distance delta=|a-b|, move the control next to the target with delta-1 adjacent SWAPs, apply the adjacent CNOT, then undo the SWAPs. Each SWAP uses three adjacent CNOTs. Thus one such gate needs at most 6(delta-1)+1 adjacent CNOTs, or 9[6(delta-1)+1] native pulses. No layout information is discarded.
+
+### Corollary 13.2. Circuit-level intertwining and an explicit overhead
+
+Given a known m-qubit circuit C with G_1 one-qubit SU(2) gates and CNOT pairs at distances delta_1,...,delta_{G_2}, the construction yields a finite native word V_C with
+
+$$\boxed{V_CJ_m=J_mC,\qquad
+L\le3G_1+9\sum_{e=1}^{G_2}[6(\delta_e-1)+1].} \tag{13.5}$$
+
+For general U(2) single-qubit gates, the same statement has an explicitly tracked input-independent phase e^{i theta_C}. The clock and arithmetic work qubits of a known algorithm are included among the m data bits. In particular, a supplied ordinary Shor/phase-estimation circuit can be compiled with linear space overhead and at most linear-in-m pulse overhead per source two-qubit gate.
+
+Proof. The elementary identities return the separators to zero, so they compose by induction without entangling the final data with residual separator records. SWAP routing restores the original order. Removing the determinant phase of each single-qubit U(2) gate produces only a tracked global phase on the full m-qubit register. The gate universality of one-qubit gates and CNOT is established [B95]; (13.2)-(13.5) supply their present native realization. QED.
+
+This compilation translates a known circuit including its controlled operations. It does not attach a new control to an unknown compiled black box, so the phase-reference issue in Section 5 is retained. It also does not itself produce cheap large powers for a generic state machine. Section 7's modular-arithmetic structure still supplies that separate ingredient. The blocker-controlled phase mechanism has established neutral-atom gate precedent [J00]; the present theorem is a precise ideal-model encoding and pulse-count construction, without a novelty or experimental-fidelity claim.
+
+## 14. A complete small clock circuit actually compiled and checked
+
+The companion `verify_control_compiler.py` implements the compiler at the level of the native pulses (site, phase, angle), using only the two phases 0 and pi/2. It expands ordinary H, phase, CNOT, controlled-phase, SWAP and Toffoli constructions with a tracked global phase. Routing is explicit and not optimized.
+
+The test circuit has three binary clock qubits and two target qubits. Its target permutation is the actual modulus-two Fibonacci map
+
+$$(x,y)\longmapsto(x+y,x)\pmod2,$$
+
+implemented by CNOT_{2->1} followed by CNOT_{1->2}. Clock-controlled powers 1,2,4 are expanded into Toffoli circuits, then an inverse eight-point Fourier transform is applied to the clock. This small test intentionally uses repeated powers and proves no fast-forwarding result. All five qubits are encoded on nine native sites, whose complete legal Hilbert space has dimension 89.
+
+The generated example has 234 source H/phase/CNOT gates after the first decomposition, 771 routed adjacent CNOTs, and 7,328 native pulses. The checker compares the full 89-by-32 encoded action with an independently formed controlled-permutation/Fourier matrix, retaining all input columns rather than checking one selected state. The observed operator-norm residual is about 2.10e-14; final separator leakage norm is about 1.37e-14. These are floating residuals in the ideal model, not interval bounds or hardware errors.
+
+For initial clock 000 and target 10, the ideal clock law is obtained directly from
+
+$$p(y)=\frac1{64}\sum_{r=0}^{2}\left|\sum_{0\le a<8,\ a\equiv r\ (3)}e^{-2\pi iay/8}\right|^2. \tag{14.1}$$
+
+The native simulation gives the same distribution within its declared tolerance. An eight-point clock has finite precision; a single outcome does not certify the integer period. This is a compiled, simulated small order-probe, not a quantum processor experiment or a large-integer factoring benchmark. Its deliberately conservative 7,328-pulse implementation is not a claimed optimal realization.
+
+## 15. Verification, source ownership and current meaning for state machines
+
+The all-n Lie-algebra argument uses the published open-path toggle-group theorem [NY22], followed by the explicit diagonal-orbit and matching-edge commutators of Theorem 11.2. It does not infer Lie rank from a few tested values. The native compiler and its register-cleaning claims use the exact gate identities of Section 13. The general control/observability and universal-gate principles remain attributed to their existing sources.
+
+The companion checker has three distinct evidence classes. Exact symbolic identities verify single-qubit, separator, CZ and both CNOT orientations for two and three encoded data qubits, and the gauged-real/antiunitary identities for legal lengths 1-5. Exact finite-field rank calculations at prime 1009 retain actual nested-commutator ancestry, giving full complexified rank d^2-1 for n=1,...,5 with a phase reference at site one, and for all three reference locations at n=3. A full rank minor modulo a prime gives an exact characteristic-zero lower bound for those integer Lie words; trace zero supplies the matching upper bound. This is a finite algebraic certificate, not a Lean proof. Floating calculations check the complete small compiler and its output law with tolerance 2e-10. The separate reproduction note distinguishes structural integer assertions from symbolic matrix equalities and records the actual counts and source hash.
+
+The all-phase-zero finite ranks observed for n=1,...,5 are 1,3,10,28,78, while the added-quadrature ranks are 3,8,24,63,168. The phase-zero containment in a conjugate orthogonal algebra is proved for every n; a general equality theorem for that smaller algebra is not required here. Three concrete negative controls check the blind orthogonal hypotheses, leakage from replacing the complete separator pulse by a half pulse, and non-identification of a state from one fixed spectrum's weights. Their finite tests do not replace the universal proofs.
+
+The state-machine consequence is precise: gates act on amplitudes and coherences, and their composition changes which effects can be measured. In the native ideal model, a single extra local phase quadrature removes an exact symmetry obstruction, while a clean separator encoding compiles known quantum circuits with explicit overhead. Computational advantage still requires an efficient task-specific circuit, meaningful output statistics, state preparation and error control. Full controllability, state identifiability and computational speed are separate properties.
+
+No new Lean compilation, Scribe emission, inherited HS4 replay, canonical admission, independent mathematical review, hardware realization, optimized large-N arithmetic implementation or historical-first claim is made. This continuation remains on the independent gate/state-machine PR; it adds no dependency on HS4, spacetime or the many-body chapter.
+
+### Additional primary sources
+
+- [NY22] Y. Numata and Y. Yamanouchi, *On the action of the toggle group of the Dynkin diagram of type A*, Algebraic Combinatorics 5 (2022), 149-161, Theorem 3.7, printed p.155. [arXiv:2103.16217](https://arxiv.org/abs/2103.16217), [DOI:10.5802/alco.204](https://doi.org/10.5802/alco.204). Its complete open-path toggle group is the only nontrivial external combinatorial input to Theorem 11.2. The source also credits earlier automaton-theoretic work; no toggle-group priority is claimed here.
+- [AD01] F. Albertini and D. D'Alessandro, *Notions of controllability for quantum mechanical systems*, [arXiv:quant-ph/0106128](https://arxiv.org/abs/quant-ph/0106128). Established finite-dimensional operator/state controllability distinction and Lie criteria.
+- [D03] D. D'Alessandro, *On Quantum State Observability and Measurement*, Journal of Physics A 36 (2003), 9721, [arXiv:quant-ph/0307127](https://arxiv.org/abs/quant-ph/0307127), [DOI:10.1088/0305-4470/36/37/310](https://doi.org/10.1088/0305-4470/36/37/310). Sections 1-2 distinguish controlled evolution, state-equivalence classes and the observation space. The present full-space identification follows directly from Theorem 11.2 and the projector argument above.
+- [B95] A. Barenco et al., *Elementary gates for quantum computation*, Physical Review A 52 (1995), 3457. [arXiv:quant-ph/9503016](https://arxiv.org/abs/quant-ph/9503016), [DOI:10.1103/PhysRevA.52.3457](https://doi.org/10.1103/PhysRevA.52.3457). Established one-qubit/CNOT universality and finite circuit decomposition. Generic dimension-counting barriers retain their standard ownership.
+- [J00] D. Jaksch et al., *Fast Quantum Gates for Neutral Atoms*, Physical Review Letters 85 (2000), 2208-2211. [arXiv:quant-ph/0004038](https://arxiv.org/abs/quant-ph/0004038), [DOI:10.1103/PhysRevLett.85.2208](https://doi.org/10.1103/PhysRevLett.85.2208). Historical context for blockade-mediated conditional phases; its physical level scheme and error analysis are not asserted to be implemented by the ideal occupancy compiler.
