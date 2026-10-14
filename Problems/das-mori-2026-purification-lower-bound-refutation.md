@@ -94,7 +94,7 @@ Every other declaration is a definition used by a public statement or a compiler
 
 **Open.**
 - Whether the right inequality of Eq. (4), C_K(ρ(t)) ≤ C_K(|Ψ^I_ρ(t)⟩), holds in general; this settlement does not address it.
-- The authors' conjectures 2 and 3 (the approximately constant ratio and C_K ≥ 2C_S for the same purification scheme).
+- The authors' conjectures 2 and 3: the approximately constant ratio C_S(|Ψ^{U*}_ρ(t)⟩)/C_K(ρ(t)), and C_K(|Ψ^{U*,I}_ρ(t)⟩) ≥ 2C_S(|Ψ^{U*,I}_ρ(t)⟩) for the same purification scheme, where C_K is the operator complexity of the purified state, not of ρ(t).
 - A characterization of the states and Hamiltonians for which the left inequality holds.
 
 **Effect on the paper.** The lower bound of Eq. (4) is not a general property of purification; it holds for one-qubit states (as the source proves) but fails already for a full-rank qutrit. The Werner-state evidence of the source concerns a family for which the inequality happens to hold.
