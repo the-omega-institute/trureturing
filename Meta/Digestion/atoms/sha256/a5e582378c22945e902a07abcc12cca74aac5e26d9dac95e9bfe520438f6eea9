@@ -1,0 +1,21 @@
+**定义 C-103.2（二份端口的类型提升）。** 若 \(v_i\in\mathcal H\) 是单份 probe，
+二份问题的自然 probe 是
+
+$$
+w_{(i,j)}=v_i\otimes v_j\in\mathcal H\otimes\mathcal H.
+$$
+
+只有在端口的输入域、密度输入的全称量词以及保持的 probe 概率都同时提升到
+\(\mathcal H\otimes\mathcal H\) 后，才可以提出二份 port 维数下界，例如比较各
+product component 的维数与二份相干维数。C-102 的 \(\Delta\) 在这一路线上只供应
+来源敏感度
+
+$$
+\delta_{ij}=\operatorname{tr}\!\left[
+(P_i\otimes P_j)\Delta
+\right],
+$$
+
+不供应端口下界本身。当前仓内结果尚未证明该二份 product-component 下界，故该桥接
+仍标为开放问题。
+

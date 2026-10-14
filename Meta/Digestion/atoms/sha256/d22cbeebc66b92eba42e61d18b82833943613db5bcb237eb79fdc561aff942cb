@@ -1,0 +1,129 @@
+**定理 C-99.2（付费试验的有限平均值及超越界上限）。** 令
+
+$$
+h=w(r-w)>0,\qquad A=\log(1/\alpha)>0,
+$$
+
+$$
+d(\lambda)=\frac{1+\lambda}{2}\log(1+\lambda)
++\frac{1-\lambda}{2}\log(1-\lambda).
+\tag{C99.1}
+$$
+
+则 $d(\lambda)>0$、$\mathbb E\tau<\infty$，并有
+
+$$
+\mathbb E\tau\le
+\frac{\log(1/\alpha)+\log(1+\lambda)}{w(r-w)d(\lambda)}.
+\tag{C99.2}
+$$
+
+$\tau$ 为全部双副本试验次数，平均制备份数为 $2\mathbb E\tau$。
+
+证明。式 (C96.3) 给每轮完整三值分布
+
+$$
+\Pr(V=1)=\tfrac h2(1+\gamma^2),\quad
+\Pr(V=-1)=\tfrac h2(1-\gamma^2),\quad
+\Pr(V=0)=1-h.
+\tag{C99.3}
+$$
+
+因此 $\Pr(V\ne0)=h$，条件于保留的两种符号，正号概率为
+$(1+\gamma^2)/2\ge(1+\lambda)/2$。
+记 $Y_n=\log(1+\lambda V_n)$、$S_N=\sum_{n=1}^NY_n=\log E_N$，
+则增量 iid，并且
+
+$$
+\log(1-\lambda)\le Y_n\le\log(1+\lambda).
+\tag{C99.4}
+$$
+
+它们的均值为
+
+$$
+\begin{aligned}
+\mu&=\frac h2\bigl[(1+\gamma^2)\log(1+\lambda)
+ +(1-\gamma^2)\log(1-\lambda)\bigr]\\
+&=h\left[d(\lambda)+\frac{\gamma^2-\lambda}{2}
+\log\frac{1+\lambda}{1-\lambda}\right]\ge h d(\lambda)>0.
+\end{aligned}
+\tag{C99.5}
+$$
+
+最后的严格正性可直接微分：$d(0)=0$，
+$d'(\lambda)=\tfrac12\log((1+\lambda)/(1-\lambda))>0$ 对 $0<\lambda<1$ 成立。
+
+先证明有限平均停止，之后才使用无界停止和恒等式。
+由有界性，函数 $c(t)=\mathbb E e^{-tY_1}$ 在零邻域可微，
+$c(0)=1$、$c'(0)=-\mu<0$。
+具体在三值分布上它就是
+
+$$
+c(t)=1-h+\tfrac h2(1+\gamma^2)(1+\lambda)^{-t}
++\tfrac h2(1-\gamma^2)(1-\lambda)^{-t}.
+\tag{C99.6}
+$$
+
+故存在固定 $t_*>0$ 使 $0<c(t_*)<1$。
+若 $\tau>N$，前 $N$ 轮从未达到 $A$，特别有 $S_N<A$。
+对非负变量 $e^{-t_*S_N}$ 用 Markov 不等式，再用跨轮独立性，得到实际尾界
+
+$$
+\Pr(\tau>N)\le\Pr(S_N<A)
+\le e^{t_*A}\mathbb E e^{-t_*S_N}
+=e^{t_*A}c(t_*)^N\qquad(N\ge0).
+\tag{C99.7}
+$$
+
+$\tau>0$ 的尾和等式由指标函数的单调收敛给出，即使事先允许无穷期望也成立。
+因此
+
+$$
+\mathbb E\tau=\sum_{N\ge0}\Pr(\tau>N)
+\le\frac{e^{t_*A}}{1-c(t_*)}<\infty.
+\tag{C99.8}
+$$
+
+这也推出 $\Pr(\tau<\infty)=1$；有限均值没有以 Wald 恒等式作为前提。
+这里使用的是指数矩与 Markov 的经典 Chernoff 方法，所需 iid、有界性、
+正漂移以及实际几何尾上界均已明确给出，不从“有正漂移”直接省略可积性。
+
+现在固定有限整数 $m$。路径上
+
+$$
+S_{\tau\wedge m}=\sum_{k=1}^mY_k\mathbf1_{\{\tau\ge k\}}.
+\tag{C99.9}
+$$
+
+事件 $\{\tau\ge k\}$ 只由前 $k-1$ 轮决定，和 $Y_k$ 独立。
+有限求和取期望所以得到
+
+$$
+\mathbb E S_{\tau\wedge m}
+=\mu\sum_{k=1}^m\Pr(\tau\ge k)=\mu\mathbb E(\tau\wedge m).
+\tag{C99.10}
+$$
+
+设 $B=\max\{-\log(1-\lambda),\log(1+\lambda)\}$。
+由 $\tau$ 可积及增量有界，$|S_{\tau\wedge m}|\le B\tau$ 是可积支配，
+且 $S_{\tau\wedge m}\to S_\tau$ 几乎必然。
+支配收敛和右侧单调收敛使式 (C99.10) 成为
+
+$$
+\mathbb E S_\tau=\mu\mathbb E\tau.
+\tag{C99.11}
+$$
+
+这是在此实际假设下证明的 Wald 停止和恒等式。
+首越界前有 $S_{\tau-1}<A$，末次增量至多 $b=\log(1+\lambda)$，故
+
+$$
+A\le S_\tau<A+b,\qquad
+\mu\mathbb E\tau=\mathbb E S_\tau\le A+b.
+\tag{C99.12}
+$$
+
+代入式 (C99.5) 即得所需上界。
+每轮确实使用两份，路径上制备数等于 $2\tau$，故平均数亦乘二。证毕。
+

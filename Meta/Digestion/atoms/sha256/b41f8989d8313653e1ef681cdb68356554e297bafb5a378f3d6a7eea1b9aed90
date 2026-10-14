@@ -1,0 +1,57 @@
+**定理 C-98.3（条件乘积零假设下的全时间误判界）。** 在假设 C-98.1 下，
+
+$$
+\Pr(\exists N\ge1:E_N\ge1/\alpha)\le\alpha.
+\tag{C98.4}
+$$
+
+不需要知道 $r_n,X_n,Y_n,Z_n$，也不需要假定 $\tau$ 有限或可积。
+
+证明。每个因子属于 $\{1-\lambda,1,1+\lambda\}$，严格为正，
+且 $0<E_n\le(1+\lambda)^n$，所以各有限时刻可积。
+条件于 $\mathcal F_{n-1}$，假设 C-98.1 允许对同一条件态使用式 (C97.1)，
+因而
+
+$$
+\mathbb E[V_n\mid\mathcal F_{n-1}]
+=q_{--}^{(n)}-q_{-+}^{(n)}
+=\frac{r_n^2}{2}\bigl(\mathcal P^{(n)}-\mathcal P_B^{(n)}\bigr)\le0.
+\tag{C98.5}
+$$
+
+$r_n=0$ 时同样成立。$E_{n-1}$ 对过去可测且非负，故
+
+$$
+\mathbb E[E_n\mid\mathcal F_{n-1}]
+=E_{n-1}\bigl(1+\lambda\mathbb E[V_n\mid\mathcal F_{n-1}]\bigr)
+\le E_{n-1}.
+\tag{C98.6}
+$$
+
+所以 $E_n$ 是非负超鞅。为完整写出有界停止的步骤，固定整数 $N$，
+$T=\tau\wedge N$。对 $k\le N$ 有路径恒等式
+
+$$
+E_T=1+\sum_{k=1}^N\mathbf1_{\{T\ge k\}}(E_k-E_{k-1}).
+\tag{C98.7}
+$$
+
+$\{T\ge k\}$ 对 $\mathcal F_{k-1}$ 可测；各项可积，
+对每项先取条件期望，由式 (C98.6) 得 $\mathbb E E_T\le1$。
+在 $\{\tau\le N\}$ 上 $E_T=E_\tau\ge1/\alpha$，其余事件上仍非负。
+于是
+
+$$
+\alpha^{-1}\Pr(\tau\le N)\le\mathbb E E_{\tau\wedge N}\le1.
+\tag{C98.8}
+$$
+
+事件 $\{\tau\le N\}$ 随 $N$ 递增，其并为 $\{\tau<\infty\}$，
+概率的下连续性给式 (C98.4)。这一步未对无界停止时刻直接套用可积性结论。证毕。
+
+所用全时间机制是 Ville 的非负超鞅不等式；精确文献供应为
+Howard、Ramdas、McAuliffe、Sekhon，*Time-uniform Chernoff bounds via nonnegative supermartingales*，
+[arXiv:1808.03204v6](https://arxiv.org/abs/1808.03204v6)，§2.3 Lemma 1、式 (18)，
+其 §6.1 给证明并归属 Ville。此处的具体因子由五模式双事件纯度差供应，
+上面的有限停止推导给它在本条件零假设中的全部参数与风险范围。
+

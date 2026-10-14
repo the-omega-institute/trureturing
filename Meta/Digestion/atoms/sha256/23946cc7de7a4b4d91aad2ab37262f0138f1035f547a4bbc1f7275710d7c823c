@@ -1,0 +1,125 @@
+## 102. 单份底面质量与配对来源的量子边界
+
+**定义 C-102.1（底面事件与连接算子）。** 令
+
+$$
+P_{\mathrm b}=\Pi_0+\Pi_1+\Pi_3+\Pi_{13},
+\qquad r=\operatorname{tr}(P_{\mathrm b}\rho).
+$$
+
+设 $\Gamma$ 是两份五模式系统上的任意密度算子，且两份边缘都等于 $\rho$：
+
+$$
+\operatorname{Tr}_1\Gamma=\operatorname{Tr}_2\Gamma=\rho.
+$$
+
+把
+
+$$
+\Delta=\Gamma-\rho\otimes\rho
+$$
+
+称为配对连接算子。它满足
+
+$$
+\operatorname{Tr}_1\Delta=\operatorname{Tr}_2\Delta=0.
+\tag{C102.1}
+$$
+
+因此任意单份观测量 $A$、$B$ 都看不到它：
+
+$$
+\operatorname{tr}\bigl((A\otimes I)\Delta\bigr)=0,\qquad
+\operatorname{tr}\bigl((I\otimes B)\Delta\bigr)=0.
+\tag{C102.2}
+$$
+
+它只可能通过真正的二份观测量显现。这个连接可以是经典相关，也可以含有跨份相干；零偏迹本身不判定纠缠。
+
+**命题 C-102.2（底面联合质量的 Fréchet 区间）。** 定义
+
+$$
+r_{12}=\operatorname{tr}\bigl((P_{\mathrm b}\otimes P_{\mathrm b})\Gamma\bigr).
+$$
+
+则
+
+$$
+\boxed{
+\max(0,2r-1)\le r_{12}\le r.
+}
+\tag{C102.3}
+$$
+
+若来源是乘积来源 $\Gamma=\rho\otimes\rho$，则
+
+$$
+r_{12}=r^2.
+\tag{C102.4}
+$$
+
+对任意底面内的二份效果 $0\le Q\le P_{\mathrm b}\otimes P_{\mathrm b}$，其事件概率
+
+$$
+q_Q(\Gamma)=\operatorname{tr}(Q\Gamma)
+$$
+
+满足
+
+$$
+0\le q_Q(\Gamma)\le r_{12}\le r,\qquad
+q_Q(\Gamma)-q_Q(\rho\otimes\rho)=\operatorname{tr}(Q\Delta).
+\tag{C102.5}
+$$
+
+**证明。** 由 $0\le P_{\mathrm b}\le I$，有
+$0\le P_{\mathrm b}\otimes P_{\mathrm b}\le P_{\mathrm b}\otimes I$。
+取 $\Gamma$ 的迹并使用第一边缘为 $\rho$，得 $r_{12}\le r$。
+同样，正算子
+
+$$
+(I-P_{\mathrm b})\otimes(I-P_{\mathrm b})\ge0
+$$
+
+给出 $1-2r+r_{12}\ge0$，从而 $r_{12}\ge2r-1$；再与
+$r_{12}\ge0$ 合并即得 (C102.3)。乘积情形直接因迹的乘法性得到 (C102.4)。
+对 $Q$ 使用 $0\le Q\le P_{\mathrm b}\otimes P_{\mathrm b}$ 即得第一项不等式，第二项是 $\Delta$ 的定义展开。式 (C102.1)–(C102.2) 由偏迹的定义和迹的循环性得到。证毕。
+
+这个命题把“相同单份状态”与“相同配对来源”分开：固定 $\rho$ 只固定 $r$，不固定 $r_{12}$，更不固定 $q_Q$。乘积零假设把 $r_{12}$ 压到 $r^2$；历史条件下的共同来源可以把它推向区间的另一端。因而单份边缘、单份纯度或单份相位读数都不能替代 C-98.1 所需的联合来源条件。
+
+**例 C-102.3（当前五模式的饱和上端）。** 在 C-100.1 的构造中取 $r=4/5$，并令 $\Gamma_{\rm corr}$ 为式 (C100.1) 的两份来源。它的两个单份边缘仍都是 $I_5/5$，但
+
+$$
+r_{12}(\Gamma_{\rm corr})=r=\frac45,\qquad
+r_{12}(I_5/5\otimes I_5/5)=r^2=\frac{16}{25}.
+\tag{C102.6}
+$$
+
+而 $Q_{--}\le P_{\mathrm b}\otimes P_{\mathrm b}$ 且式 (C100.3) 给出
+$q_{--}(\Gamma_{\rm corr})=4/5$。因此这里的二十倍事件差首先是配对连接
+$\Delta$ 的读出；它不能被解释成单份底面状态改变，也不能单独推出底面内部
+$A$、$B$ 两个模式已经纠缠。
+
+**推论 C-102.4（连接读出是二份证据）。** 对任一二份效果 $Q$，若
+
+$$
+\delta_Q=\left|\operatorname{tr}(Q\Delta)\right|>0,
+$$
+
+则 $\Gamma$ 与乘积来源 $\rho\otimes\rho$ 的二份迹距离满足
+
+$$
+\frac12\left\|\Gamma-\rho\otimes\rho\right\|_1\ge\delta_Q.
+\tag{C102.7}
+$$
+
+证明。将 $\Delta$ 的迹与效果 $Q$ 配对，并使用迹距离对任意效果的变分界。
+这个证据只认证配对来源偏离乘积来源；若要把它称为跨份纠缠，还必须另加
+可分离集合、部分转置或其他纠缠判据。$\square$
+
+本节的算子不等式是有限维正性和迹的直接推导，不主张新的普遍量子不等式。
+在本项目中它的新增用途是：把 C-98 的乘积来源合同、C-100 的相同单份边缘反例，
+以及实际双副本读口统一成一个可测的连接算子 $\Delta$；因此 $F[1,3]$ 型的二阶关系
+只有在指定二份效果或相互作用后才成为量子可观测量，不能由单份读数自动升级为
+能量、纠缠或曲率。
+

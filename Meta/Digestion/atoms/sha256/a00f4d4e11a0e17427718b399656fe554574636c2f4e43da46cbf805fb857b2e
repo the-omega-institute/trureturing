@@ -1,0 +1,20 @@
+**证明。** 取 \(\mathcal E^*\) 为 Hilbert--Schmidt 对偶。迹的循环性和对偶定义给出
+
+$$
+\operatorname{tr}\!\left[
+(M\otimes I)(\mathcal E\otimes\operatorname{id})(\Delta)
+\right]
+=
+\operatorname{tr}\!\left[
+(\mathcal E^*(M)\otimes I)\Delta
+\right].
+$$
+
+右端由式 (C-102.2) 为零。完全正性和保迹性只保证 \(\mathcal E\) 是合法的局部量子
+操作；零值本身只使用 \(\operatorname{Tr}_1\Delta=0\)。证毕。
+
+这条命题把两个层次分开。\(\Delta\) 可以被二份效果 \(Q\) 读出，因为
+\(\operatorname{tr}(Q\Delta)\) 未必为零；但任何单份通道都只能看到边缘 \(\rho\)。因此
+“存在非零二份连接读数”不能推出单份 coherent flag port，也不能推出纠缠。后两种
+结论分别需要二份端口的量词和独立的纠缠判据。
+
