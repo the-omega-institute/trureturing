@@ -7,7 +7,6 @@
    digest: Quesne's Kepler-Coulomb coefficient system has positive closed forms. -/
 
 import D5.S3.Constants.NewtonHankelRealRootCriterion
-import Mathlib.Tactic
 
 namespace D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
 open scoped BigOperators
