@@ -190,7 +190,7 @@ theorem native_actual_j2_frame_joint_paths {m : ℕ} (hm : 5 ≤ m)
     (hraw : rawWalk.IsHamiltonianCycle)
     (hinv : ∀ e, e ∈ rawWalk.edges.map (Sym2.map Subtype.val) ↔
       (F2NativeEdge m e ∧ ¬ F2DeletedEdge m e) ∨ F2Seam m e) :
-    let iso := frameDomainIso hm F
+    let iso : domainGraph (F2Domain m) ≃g domainGraph (FrameDomain F) := frameDomainIso hm F
     let w := rawWalk.map iso.toHom
     let cuts := (actualJointCuts (F2Domain m)).image (Sym2.map iso.toHom)
     ∃ pieces : Fin 6 → Piece (domainGraph (FrameDomain F)),
@@ -204,10 +204,11 @@ theorem native_actual_j2_frame_joint_paths {m : ℕ} (hm : 5 ≤ m)
       (∀ e ∈ cuts, e ∈ w.edges) := by
   classical
   dsimp only
-  let iso := frameDomainIso hm F
+  let iso : domainGraph (F2Domain m) ≃g domainGraph (FrameDomain F) := frameDomainIso hm F
   obtain ⟨rawPieces, hend, _, _, _, hs, he, hc⟩ :=
     native_actual_j2_joint_paths hm (F2Domain m) (fun _ => Iff.rfl) rawWalk hraw hinv
-  let pieces (i : Fin 6) := mapPiece iso.toHom (rawPieces i)
+  let pieces (i : Fin 6) : Piece (domainGraph (FrameDomain F)) :=
+    mapPiece iso.toHom (rawPieces i)
   have hlist : List.ofFn pieces = (List.ofFn rawPieces).map (mapPiece iso.toHom) := by
     rw [List.map_ofFn]
     rfl
