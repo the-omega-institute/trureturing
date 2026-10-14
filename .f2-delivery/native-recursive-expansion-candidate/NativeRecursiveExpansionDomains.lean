@@ -1,8 +1,10 @@
-/- UNCOMPILED mathematical candidate for NativeRecursiveExpansion.
-This proves independent full child coverage and actual supply cut ownership.
-It does not assume a parent walk, a selected-child coverage certificate, or
-an abstract port graph realization. Actual E/O path assembly comes next.
--/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeRecursiveExpansionDomains
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeRecursiveExpansionDomains
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Literal native deletion assigns every supplied cut to exactly one independent insertion child. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 import D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 import D5.S3.Combinatorics.CircularWords.CyclicInsertionGap
