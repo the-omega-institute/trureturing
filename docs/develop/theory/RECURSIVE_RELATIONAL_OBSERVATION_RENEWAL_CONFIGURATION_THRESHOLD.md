@@ -14,7 +14,7 @@ The new source-relative result is the all-competitor entropy converse in Section
 
 The exact source, complete-state normal form, initial-row estimate, positive-forest comparison and predictable tick payment are supplied by [Growing state budgets in the renewal paid-mean tradeoff](FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md), Sections 2–7, abbreviated G. Its Theorems 9.1–10.1 already give the all-budget eleventh-power lower bound and necessary configuration growth of order $s^{-4/5}$. The matching sufficient exponent one is credited to [Retuned finite-state cubic renewal upper bounds](FIB_RETUNED_FINITE_STATE_CUBIC_RENEWAL_UPPER.md), Theorem 8.1, abbreviated U. The older deterministic bit-controller bridge uses Sections 28–30 of [Real renewal instruments and detector rank: finite observer memory](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_CONTINUATION.md), abbreviated C. Its logarithmic bit sufficiency, and the consequences of converting that count to configurations, are credited reuse.
 
-This is ordinary mathematical reference theory, conditional on the explicitly credited all-integer envelope and source moment premises. Its proofs and author checks are not independent review or Lean kernel certification. Entropy contraction, sequential information charging, directed forest formulas and absorbing random walks are classical methods. No worldwide originality or completion of the broader relational-observation programme is asserted. Existing source statements retain their own hypotheses and remain unchanged.
+This is ordinary mathematical reference theory, conditional on the explicitly credited all-integer envelope and source moment premises. Its proofs are not independent review or Lean kernel certification. Entropy contraction, sequential information charging, directed forest formulas and absorbing random walks are classical methods. No worldwide originality or completion of the broader relational-observation programme is asserted. Existing source statements retain their own hypotheses and remain unchanged.
 
 ## 2. Fixed experiment and the original threshold
 
@@ -712,76 +712,56 @@ This sensor alone does not satisfy both fixed risks at small $s$: both event pro
 
 A converse for machines that see only U's one geometric mark per completed gap would concern a restricted channel. No assertion that arbitrary raw-bit observers factor through that channel is used here. Similarly a lower bound confined to deterministic counters, likelihood-score registers or product-state designs would not establish Theorem 7.1's quantifiers. The common-channel contraction in Lemma 5.1 is an analytical bound on every actual row, rather than a restriction on what raw histories the observer may use.
 
-## 10. Finite and limiting checks
+## 10. Stationary initialization and dependent payment
 
-The results below are author checks of scalar formulas, finite matrices and resource interfaces. They are supplementary data. The ordinary proofs, together with the credited source premises and upper theorem, establish the all-budget assertions; finite enumeration cannot establish those universal quantifiers.
-
-**Check 10.1 (Both clipping laws for the actual fixed polynomial).** At 120 decimal digits, use the exact rational coefficients and polynomial-geometric identities
+**Example 10.1 (A two-point gap law).** To illustrate the stationary initialization in (2.5) and the payment identity (7.9), take $\mathsf P(K=1)=1/3$ and $\mathsf P(K=3)=2/3$. Then
 
 $$
-R_j(q)=\frac{qA_j(q)}{(1-q)^{j+1}},\qquad A_j(1)=j!,
-\tag{10.1}
+\mu=\mathbb E(K+1)=\frac13\cdot2+\frac23\cdot4=\frac{10}{3},
+\qquad S(0)=S(1)=1,\qquad S(2)=S(3)=\frac23,
 $$
 
-with Eulerian coefficient recurrence $A(j,k)=(k+1)A(j-1,k)+(j-k)A(j-1,k-1)$. The recurrence's factorial coefficient sums and the identity $R_2(q)=q(1+q)/(1-q)^3$ are checked. Because $e=0$ above $L$, the tail is aggregated exactly through these rational generating functions, rather than discarded.
-
-The selected $(s,L)$ pairs are
-
-$$
-\begin{gathered}
-(0.2,1),\ (0.2,5),\ (0.2,50),\
-(0.02,2),\ (0.02,50),\ (0.02,500),\\
-(0.002,1),\ (0.002,100),\ (0.002,500),\ (0.002,2000).
-\end{gathered}
-$$
-
-They include $sL=1$ and $sL=4,10$. Both normalizations, both opposite-law comparisons, the exact chi-square identity (4.8), the distinct directed KL bounds (4.8)–(4.10), (4.11) and $d_L\le\delta^2L^8/Z_0$ pass. The maximum normalization error is below $4\cdot10^{-121}$. In both target directions, the largest computed ratio $D(f_i\Vert g_i)/d_L$ is at most $0.125000000001$; the $L=1$ cases give approximately $0.125$. The two directed ratios agree at the displayed precision because the source perturbation is tiny; that numerical agreement is not assumed in the proof.
-
-To discriminate the two algebraic directions at larger perturbations, 100 exact-rational six-point cases use positive integer weights between 1 and 12, ratios in $\{10,\ldots,25\}/10$ and caps in $\{10,\ldots,22\}/10$, with pseudorandom seed 713. These check normalization and comparison exactly, the exact chi-square identity and upper bound exactly, and both directed KL inequalities numerically. They check the general positive-law algebra in (4.8)–(4.10), not a different source substituted into the main theorem.
-
-**Check 10.2 (Zero entries, small edges, nonabsorbing states and finite paths).** A five-state test uses two active states $x_0,x_1$, one closed state $z$, and the two labels. On the active states take
+and $S(b)=0$ for $b\ge4$. Hence the stationary first-wait law and its mean are
 
 $$
 \begin{aligned}
-A(x_0,\cdot)&=(1/2,1/3,0,1/6,0),&
-A(x_1,\cdot)&=(0,1-\epsilon_*,0,0,\epsilon_*),\\
-C(x_0,\cdot)&=(1/3,1/6,0,1/4,1/4),&
-C(x_1,\cdot)&=(1/6,1/6,0,1/3,1/3),
+\bigl(\mathsf P(\tau=0),\ldots,\mathsf P(\tau=3)\bigr)
+&=\frac1\mu\left(1,1,\frac23,\frac23\right)
+=\left(\frac3{10},\frac3{10},\frac15,\frac15\right),\\
+\beta=\mathbb E\tau&=\frac3{10}+2\cdot\frac15+3\cdot\frac15=\frac{13}{10}.
 \end{aligned}
 $$
 
-in the order $(x_0,x_1,z,d_0,d_1)$, where $\epsilon_*=10^{-25}$. The last three states fix themselves in both matrices. The initial row is $(3/5,0,0,1/5,1/5)$, so initial labels are retained while the closed nonlabel class demonstrates absence of global absorption.
-
-Use the finite gap-channel test law $P(k)=k/15$, $k=1,\ldots,5$, ratios $(3/2,5/4,6/5,9/8,11/10)$ and cap $6/5$. Form both target and comparison laws, then all four channel averages with $A^kC$. Exact fractions verify stochasticity, common zero supports and the opposite-kernel entrywise comparisons. Direct finite path enumeration at horizons $1,2,3,4$ in both target directions agrees with the entropy chain rule (5.4); the largest 100-digit residual is below $9\cdot10^{-103}$. All eight cases satisfy (5.3). Direct hitting solves on the active states give comparison differences approximately $0.0005665908819$ and $0.0005291143797$, each below the supplied forest bound. These are finite channel tests, not compliant actual-source detectors or enumeration of all machines.
-
-**Check 10.3 (Stationary initialization and dependent payment).** For the finite stress-test gap law $\mathsf P(K=1)=1/3$, $\mathsf P(K=3)=2/3$, the stationary first-wait probabilities at $0,1,2,3$ are exactly $(3/10,3/10,1/5,1/5)$. Their sum is one and their mean is $13/10=\beta$, whereas the full interval mean is $\mu=10/3$. At survival probability $q=2/3$, the mean interval conditional on its own successful mark is $50/17$, which differs from $\mu$. Thus duration/own-mark independence would be an incorrect payment justification.
-
-Stopping at the first successful mark nevertheless has fully paid mean
+For subsequent iid gaps $K_r$, form survival marks $Y_r$ using fresh independent coins with $q=2/3$, so $\mathsf P(Y_r=1\mid K_r)=q^{K_r}$. The pairs $(K_r,Y_r)$ are iid, and their success probability is
 
 $$
-1+\beta+\frac{\mu}{\mathbb E q^K}=\frac{1741}{170},
+p=\mathbb E q^K=\frac13\cdot\frac23+\frac23\left(\frac23\right)^3=\frac{34}{81}.
 $$
 
-using predictable inclusion before each interval. Exact finite-history enumeration over $\tau\in\{0,1,2,3\}$, five gaps in $\{1,3\}$ and every prefix through the last closing tick verifies $N\le Q_T\le T$ in 2368 cases, including initial stopping, stops before the first tick, stops on ticks and stops inside zeros. This validates the distinctions used in Proposition 3.3; the actual-source hazard proof supplies the infinite-law paid inequality.
-
-**Check 10.4 (Ceilings, constants and the credited upper).** Exact fractions with $b=4/5$ and the actual $\delta$ verify (6.6), (6.10) and the coefficient inequality in (6.5) for
+The mean interval conditional on its own successful mark is
 
 $$
-M-2\in\{0,1,2,10,10^{11},10^{12},10^{15},10^{30}\}.
+\mathbb E[K+1\mid Y=1]
+=\frac{\frac13\cdot2\cdot\frac23+\frac23\cdot4\left(\frac23\right)^3}{34/81}
+=\frac{100/81}{34/81}=\frac{50}{17}\ne\mu.
 $$
 
-This includes a zero interior, small budgets, nontrivial ceiling transitions and very large cutoffs. The analytic ceiling argument covers every budget and every fixed risk.
+Let $J=\min\{r\ge1:Y_r=1\}$. Reading through the closing tick of the first successful gap has paid duration $T=1+\tau+\sum_{r=1}^J(K_r+1)$. The event $\{J\ge r\}$ depends only on earlier marks, so it is independent of $K_r$. Therefore
 
-For U's actual fixed-polynomial calibration, 120-digit evaluations with $\alpha=0.1$ give $c=1.34478334\cdot10^{-16}$. Its source ratio and resource formulas yield:
+$$
+\mathbb E\sum_{r=1}^J(K_r+1)
+=\sum_{r\ge1}\mathbb E\bigl[(K_r+1)\mathbf1_{\{J\ge r\}}\bigr]
+=\mu\sum_{r\ge1}(1-p)^{r-1}=\frac\mu p,
+$$
 
-| $s$ | $\Delta/(cs)$ | $s(4L+1)$ | $s^3\mathbb E_iT$, either label to shown precision |
-| --- | --- | --- | --- |
-| $0.02$ | $1.0131399135401$ | $1.290157377\cdot10^{17}$ | $4.744152824\cdot10^{33}$ |
-| $0.002$ | $1.0013399624858$ | $1.305360799\cdot10^{17}$ | $4.847898873\cdot10^{33}$ |
-| $0.0002$ | $1.0001342597256$ | $1.306934465\cdot10^{17}$ | $4.858720048\cdot10^{33}$ |
-| $0.00002$ | $1.0000134286111$ | $1.307092381\cdot10^{17}$ | $4.859806795\cdot10^{33}$ |
+and thus
 
-Both separate errors computed from U's lazy-walk formulas are below $0.1$ on this grid. The count and each paid mean obey (7.7), whose constants here are approximately $2.61422\cdot10^{17}$ and $2.13837\cdot10^{34}$. The calculations use generating functions and exact finite-walk formulas, not simulation or construction of an enormous transition table. They corroborate the credited source sign, resource correspondence and large fixed constants; they do not independently prove an endpoint neighborhood or make the observation procedure practically inexpensive.
+$$
+\mathbb ET=1+\beta+\frac\mu p
+=1+\frac{13}{10}+\frac{10/3}{34/81}=\frac{1741}{170}.
+$$
+
+The payment identity uses inclusion decided before each interval; it does not require duration to be independent of that interval's own mark.
 
 ## 11. Source and primary-literature correspondence
 
