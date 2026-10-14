@@ -69,10 +69,10 @@ private theorem list_length_le_piece_support {V : Type*} {G : SimpleGraph V}
     simp only [List.length_cons, List.flatMap_cons, List.length_append]
     omega
 
+set_option maxHeartbeats 800000 in
 /-- Actual full-child paths, arranged by the native supply order, form one
 real parent Hamilton cycle. Disjointness, full support, minimum size and all
 connections are proved from the independent domains and native c seams. -/
-set_option maxHeartbeats 800000 in
 theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
     (paths : ∀ j : Fin F.base.length, ActualChildPath F j) :

@@ -1,8 +1,10 @@
-/- UNCOMPILED simultaneous actual J / two-order boundary state.
-   One supplied current cycle and its earned J partition determine both
-   half-restored boundaries. The old primary and opposite inventories
-   belong to one supplied prior cycle. Next distinguished and crossing
-   paths retain their literal identities for the following step. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualSimultaneousBoundaryAdvance
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualSimultaneousBoundaryAdvance
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: One supplied current joint partition simultaneously earns both restored boundary inventories and their literal distinguished prefixes. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualPriorBoundaryInputs
 import D5.S3.Combinatorics.Graph.Walks.ActualSingleOrderBoundaryUpdate
 

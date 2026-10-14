@@ -12,7 +12,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 
-def markedCut {m k : ℕ} (F : SupplyFrame m k) (i : ℕ) : Sym2 (Configuration m) :=
+noncomputable def markedCut {m k : ℕ} (F : SupplyFrame m k) (i : ℕ) : Sym2 (Configuration m) :=
   s(rightPort F i, leftPort F i)
 
 noncomputable def markedCuts {m k : ℕ} (F : SupplyFrame m k) :

@@ -38,7 +38,8 @@ theorem native_frame_predecessor {m k : ℕ} (F : SupplyFrame m (k + 1)) :
         terminal := v
         selected_length := by simpa only [List.length_cons, Nat.add_right_cancel_iff] using hlen
         prefix_length := by
-          simp only [List.length_append, List.length_cons, List.length_singleton] at hprefix ⊢
+          simp only [List.length_append, List.length_cons, List.length_singleton,
+            List.length_nil] at hprefix ⊢
           omega
         full_nodup := (next_full_perm S B u v).nodup_iff.mp hnodup
         full_labels := fun x => (next_full_perm S B u v).mem_iff.mp (hlabels x) }
