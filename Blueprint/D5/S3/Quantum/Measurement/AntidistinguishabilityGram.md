@@ -126,7 +126,49 @@ $$\forall (n d : \mathbb{N}) (\psi : Fin n \to EuclideanSpace \mathbb{C} (Fin d)
 
 The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted.
 
-**Theorem 1.10 (stateGram diag).**
+**Theorem 1.10 (Positive complementary projection).**
+
+$$\forall (d : \mathbb{N}) , \forall (P : Matrix (Fin d) (Fin d) \mathbb{C}) , ((P).\operatorname{IsHermitian}) \to (P \cdot P = P) \to (1 - P).\operatorname{PosSemidef}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.hermitian_projection_complement_psd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nathaniel Johnston, Vincent Russo, Jamie Sikora (2025). *Tight bounds for antidistinguishability and circulant sets of pure quantum states*. DOI: [10.22331/q-2025-02-04-1622](https://doi.org/10.22331/q-2025-02-04-1622). URL: <https://arxiv.org/abs/2311.17047v2>.
+
+*Commentary.*
+
+The complement of a Hermitian idempotent is positive semidefinite.
+
+**Theorem 1.11 (Matrix Penrose inverse).**
+
+$$\forall (n : \mathbb{N}) , \forall (d : \mathbb{N}) , \forall (A : Matrix (Fin d) (Fin n) \mathbb{C}) , \exists (B : Matrix (Fin n) (Fin d) \mathbb{C}) , (A \cdot B \cdot A = A) \land ((B \cdot A \cdot B = B) \land (((A \cdot B).\operatorname{IsHermitian}) \land ((B \cdot A).\operatorname{IsHermitian})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.matrix_penrose_exists` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nathaniel Johnston, Vincent Russo, Jamie Sikora (2025). *Tight bounds for antidistinguishability and circulant sets of pure quantum states*. DOI: [10.22331/q-2025-02-04-1622](https://doi.org/10.22331/q-2025-02-04-1622). URL: <https://arxiv.org/abs/2311.17047v2>.
+
+*Commentary.*
+
+Every rectangular complex matrix admits a Penrose inverse: both absorption identities hold and both products are Hermitian. The construction transports the finite-dimensional Moore–Penrose inverse through Matrix.toEuclideanLin.
+
+**Theorem 1.12 (Projection of positive summands).**
+
+$$\forall (n : \mathbb{N}) , \forall (F : Fin n \to Matrix (Fin n) (Fin n) \mathbb{C}) , (\forall (i : Fin n) , (F\left(i\right)).\operatorname{PosSemidef}) \to \forall (Q : Matrix (Fin n) (Fin n) \mathbb{C}) , ((Q).\operatorname{IsHermitian}) \to ((\sum i : Fin n , F\left(i\right)) \cdot Q = \sum i : Fin n , F\left(i\right)) \to \forall (i : Fin n) , Q \cdot F\left(i\right) \cdot Q = F\left(i\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.psd_summand_projection` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nathaniel Johnston, Vincent Russo, Jamie Sikora (2025). *Tight bounds for antidistinguishability and circulant sets of pure quantum states*. DOI: [10.22331/q-2025-02-04-1622](https://doi.org/10.22331/q-2025-02-04-1622). URL: <https://arxiv.org/abs/2311.17047v2>.
+
+*Commentary.*
+
+A Hermitian matrix that fixes the sum of positive semidefinite matrices fixes each summand on both sides.
+
+**Theorem 1.13 (stateGram diag).**
 
 $$\forall (n d : \mathbb{N}) (\psi : Fin n \to EuclideanSpace \mathbb{C} (Fin d)) , (\forall (i : Fin n) , \Vert \psi i \Vert = 1) \to \forall (i : Fin n) , (Matrix . gram \mathbb{C} \psi) i i = 1$$
 
@@ -140,7 +182,7 @@ $$\forall (n d : \mathbb{N}) (\psi : Fin n \to EuclideanSpace \mathbb{C} (Fin d)
 
 The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted.
 
-**Theorem 1.11 (incoherent gram antidistinguishable).**
+**Theorem 1.14 (incoherent gram antidistinguishable).**
 
 $$\forall (n d : \mathbb{N}) , (1 \leq n) \to \forall (\psi : Fin n \to EuclideanSpace \mathbb{C} (Fin d)) , (IsIncoherent ((Matrix . gram \mathbb{C} \psi))) \to IsAntidistinguishable \psi$$
 
@@ -162,9 +204,12 @@ A Gram certificate yields positive measurement effects through a finite Penrose 
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.cSq`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.delta`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.gramPsd`
+- Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.hermitian_projection_complement_psd`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.incoherent_gram_antidistinguishable`
+- Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.matrix_penrose_exists`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.orderedSpectrum_antitone`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.orderedSpectrum_nonneg`
+- Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.psd_summand_projection`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.stateGram_diag`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.sum_orderedSpectrum`
 - Dependency: [D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse](../../Observer/Hilbert/FiniteMoorePenroseInverse.md)
