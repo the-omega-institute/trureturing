@@ -38,7 +38,7 @@ The source's run convention and `BoundedPQ` agree: if every maximal run has leng
 
 The kernel-checked settling declaration is `D5.S1.Words.Episturmian.DiophantineExponentCriterion.result`. Literal palindromic closure constructs the standard word. Morphic decomposition, uniformly located powers and period desubstitution connect its factor language to the exponent of every word with that language.
 
-The supporting literature is [Droubay–Justin–Pirillo](../Library/Words/droubayjustinpirello2001episturmian.md), [Justin–Pirillo](../Library/Rewriting/justinpirillo2002episturmian.md), and [Peltomäki](../Library/Words/peltomaki2024episturmian.md). The classical closure and morphism results are literature-attested; the unrestricted finite-window transfer supplies the settlement's additional information.
+The supporting literature is [Droubay–Justin–Pirillo](../Library/Rewriting/droubayjustinpirello2001episturmian.md), [Justin–Pirillo](../Library/Rewriting/justinpirillo2002episturmian.md), and [Peltomäki](../Library/Words/peltomaki2024episturmian.md). The classical closure and morphism results are literature-attested; the unrestricted finite-window transfer supplies the settlement's additional information.
 
 ## Gap
 
