@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14297ef5e03c3bcbc857f43b65cce434e2e57f1d5ebb55a415d3a662096eda69
+  normalized_sha256: sha256:14297ef5e03c3bcbc857f43b65cce434e2e57f1d5ebb55a415d3a662096eda69
+cas_ref: sha256:14297ef5e03c3bcbc857f43b65cce434e2e57f1d5ebb55a415d3a662096eda69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“descent／carry”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 23b66dcf9056d2636d17b87174c2c9d14e06dc2fd4274e3d735dbbe3dad69d46
+    next_atom_id: 7b4586803f2a7fc07d9a1c898c6fcd2999f65c9d42a1540e14b7170288668da5
