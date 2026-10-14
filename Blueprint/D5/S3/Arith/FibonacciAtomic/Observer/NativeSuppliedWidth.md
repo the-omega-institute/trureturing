@@ -8,6 +8,8 @@ An Installation of positive width w has an arbitrary finite type of complete mut
 
 Feasible(S,T,w) asserts that such an installation is correct on every independent original assignment and every entry from zero through T on the single supplied skeleton. StaticFeasible additionally requires zero actual Updates on every promised successful run. The inverse capacity d(n), for positive n, is the existing stage dimension at n minus one: it is the least d with n at most fib(d+2). Thus it counts the full admissible word space. The minima a(S,T) and s(S,T) range over the entire respective classes.
 
+Generality I: the substitution, binary no-adjacent-ones language, Fibonacci capacity and golden-ratio base are fixed. The bounds are uniform over every supplied skeleton, even leaf count and finite lag promise within this family. The logarithmic estimate relies on the instance supplier AxisConvergence.goldenRatio_pow_div_le_fib_succ; extending it to other recurrences or quadratic families requires further results.
+
 **Theorem 1.1 (Native members of both full classes).**
 
 $$\forall S: Source, (\forall T: Nat, ((\operatorname{mod}\left(\operatorname{length}\left(S\right), 2\right) = 0) \implies ((\operatorname{Feasible}\left(S, T, (\operatorname{dimension}\left(\operatorname{length}\left(S\right)\right)) + (7)\right)) \land (\operatorname{StaticFeasible}\left(S, T, (\operatorname{dimension}\left((\operatorname{length}\left(S\right))((\operatorname{div}\left((T) + (1), 2\right)) + (1))\right)) + (7)\right)))))$$
