@@ -396,5 +396,162 @@ private theorem shape_eval_pos {p : Polynomial ℝ} {n : ℕ} {L x : ℝ}
 private theorem D_eval_pos (m : ℕ) {x : ℝ} (hx : 0 ≤ x) : 0 < (D m).eval x :=
   shape_eval_pos (D_shape m) hx
 
+private theorem parity_power (m : ℕ) :
+    (-1 : ℝ) ^ m = if m % 2 = 0 then 1 else -1 := by
+  rw [neg_one_pow_eq_pow_mod_two]
+  have h : m % 2 = 0 ∨ m % 2 = 1 := by omega
+  rcases h with h | h <;> simp [h]
+
+private theorem assemble_zero (Q : ℝ) (e o : ℕ → ℝ) : assemble Q e o 0 = e 0 := by
+  rw [assemble.eq_1, if_pos rfl]
+private theorem assemble_even (Q : ℝ) (e o : ℕ → ℝ) {k : ℕ} (hk : 0 < k) :
+    assemble Q e o (2 * k) = Q * e k := by
+  rw [assemble.eq_1, if_neg (by omega), if_pos (by omega)]
+  congr 2
+  omega
+private theorem assemble_odd (Q : ℝ) (e o : ℕ → ℝ) (k : ℕ) :
+    assemble Q e o (2 * k + 1) = o k := by
+  rw [assemble.eq_1, if_neg (by omega), if_neg (by omega)]
+  congr 1
+  omega
+
+private theorem normalize {m : ℕ} {Q κ : ℝ} {a : ℕ → ℝ}
+    (hm : 2 ≤ m) (hQ : Q ≠ 0) (hκ : κ ≠ 0) (ha : System m Q κ a) :
+    Normalized m (Q ^ 2 / κ) (evenPart Q a) (oddPart m a) := by
+  rw [System.eq_1] at ha
+  rcases ha with ⟨h0, h1, h2, h3, h4⟩
+  have hs (k : ℕ) : (∑ l ∈ Finset.Icc (k + 1) (m / 2), evenPart Q a l) =
+      (∑ l ∈ Finset.Icc (k + 1) (m / 2), a (2 * l)) / Q := by
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro l hl
+    rw [evenPart.eq_1, if_neg (by simp only [Finset.mem_Icc] at hl; omega)]
+  rw [Normalized.eq_1]
+  refine ⟨?_, ?_, ?_⟩
+  · simpa [evenPart.eq_1, oddPart.eq_1, show 1 ≤ m by omega] using h0
+  · intro k hk
+    rw [hs]
+    by_cases hz : k = 0
+    · subst k
+      simp only [evenPart.eq_1, oddPart.eq_1, Nat.zero_add, ite_true,
+        if_pos (show 1 ≤ m by omega), t.eq_1, Nat.cast_zero, mul_zero, sub_zero]
+      field_simp
+      nlinarith [h1]
+    · rw [evenPart.eq_1, if_neg hz, oddPart.eq_1]
+      by_cases ho : 2 * k + 1 ≤ m
+      · rw [if_pos ho, t.eq_1]
+        have hh := h2 k (by simp only [Finset.mem_Icc]; omega)
+        field_simp
+        nlinarith [hh]
+      · have he : k = m / 2 := by omega
+        have hc : (m : ℝ) = 2 * (k : ℝ) := by exact_mod_cast (show m = 2 * k by omega)
+        rw [if_neg ho, t.eq_1, hc, sub_self, sub_add_cancel,
+          show Finset.Icc (k + 1) (m / 2) = ∅ by subst k; simp]
+        simp
+  · intro k hk
+    have he : k + 1 ≠ 0 := by omega
+    rw [evenPart.eq_1, if_neg he, oddPart.eq_1, if_pos (by omega), oddPart.eq_1]
+    have hh : κ * t m k *
+        (a (2 * k + 1) - if 2 * (k + 1) + 1 ≤ m then a (2 * (k + 1) + 1) else 0) =
+        Q * a (2 * (k + 1)) := by
+      by_cases ht : k + 1 < m / 2
+      · rw [if_pos (by omega), t.eq_1]
+        have hh := h3 (k + 1) (by simp only [Finset.mem_Icc]; omega)
+        rw [show 2 * (k + 1) - 1 = 2 * k + 1 by omega] at hh
+        push_cast at hh
+        nlinarith [hh]
+      · have hlast : k + 1 = m / 2 := by omega
+        rw [parity_power] at h4
+        by_cases hp : m % 2 = 0
+        · have hm' : m = 2 * (k + 1) := by omega
+          have hc : (m : ℝ) = 2 * ((k : ℝ) + 1) := by exact_mod_cast hm'
+          simp only [hp, ite_true] at h4
+          rw [if_neg (by omega), t.eq_1, hc,
+            show 2 * k + 1 = m - 1 by omega, show 2 * (k + 1) = m by omega]
+          nlinarith [h4]
+        · have hm' : m = 2 * (k + 1) + 1 := by omega
+          have hc : (m : ℝ) = 2 * ((k : ℝ) + 1) + 1 := by exact_mod_cast hm'
+          rw [if_neg hp] at h4
+          rw [if_pos (by omega), t.eq_1, hc,
+            show 2 * k + 1 = m - 2 by omega, show 2 * (k + 1) + 1 = m by omega,
+            show 2 * (k + 1) = m - 1 by omega]
+          nlinarith [h4]
+    apply (mul_left_cancel₀ hκ)
+    field_simp
+    nlinarith [hh]
+
+private theorem denormalize {m : ℕ} {Q κ : ℝ} {e o : ℕ → ℝ}
+    (hm : 2 ≤ m) (hκ : κ ≠ 0)
+    (h : Normalized m (Q ^ 2 / κ) e o) : System m Q κ (assemble Q e o) := by
+  rw [Normalized.eq_1] at h
+  rcases h with ⟨h0, h1, h2⟩
+  have hs (k : ℕ) : (∑ l ∈ Finset.Icc (k + 1) (m / 2), assemble Q e o (2 * l)) =
+      Q * ∑ l ∈ Finset.Icc (k + 1) (m / 2), e l := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro l hl
+    exact assemble_even Q e o (by simp only [Finset.mem_Icc] at hl; omega)
+  rw [System.eq_1]
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · rw [assemble_zero, assemble_odd Q e o 0]
+    exact h0
+  · rw [assemble_zero, show 1 = 2 * 0 + 1 from rfl, assemble_odd, hs 0]
+    have hh := h1 0 (Nat.zero_le _)
+    simp only [t.eq_1, Nat.cast_zero, mul_zero, sub_zero] at hh
+    linear_combination -Q * hh
+  · intro k hk
+    simp only [Finset.mem_Icc] at hk
+    rw [assemble_even Q e o (by omega), assemble_odd, hs]
+    have hh := h1 k (by omega)
+    rw [t.eq_1] at hh
+    linear_combination -Q * hh
+  · intro k hk
+    simp only [Finset.mem_Icc] at hk
+    rw [show 2 * k - 1 = 2 * (k - 1) + 1 by omega, assemble_odd,
+      assemble_even Q e o (by omega), assemble_odd]
+    have hh := h2 (k - 1) (by omega)
+    rw [show k - 1 + 1 = k by omega, t.eq_1, Nat.cast_sub (by omega)] at hh
+    push_cast at hh
+    field_simp at hh
+    nlinarith [hh]
+  · have hmu : 0 < m / 2 := by omega
+    have hh := h2 (m / 2 - 1) (by omega)
+    rw [show m / 2 - 1 + 1 = m / 2 by omega, t.eq_1,
+      Nat.cast_sub (by omega)] at hh
+    push_cast at hh
+    field_simp at hh
+    rw [parity_power]
+    by_cases hp : m % 2 = 0
+    · have hc : (m : ℝ) = 2 * (m / 2 : ℕ) := by exact_mod_cast (show m = 2 * (m / 2) by omega)
+      have hz := h1 (m / 2) (Nat.le_refl _)
+      simp only [t.eq_1, hc, sub_self, Finset.Icc_eq_empty_of_lt (Nat.lt_succ_self _),
+        Finset.sum_empty] at hz
+      have ha : assemble Q e o (m - 1) = o (m / 2 - 1) := by
+        exact (congrArg (assemble Q e o) (show m - 1 = 2 * (m / 2 - 1) + 1 by omega)).trans
+          (assemble_odd Q e o _)
+      have hb : assemble Q e o m = Q * e (m / 2) := by
+        exact (congrArg (assemble Q e o) (show m = 2 * (m / 2) by omega)).trans
+          (assemble_even Q e o hmu)
+      rw [if_pos hp, ha, hb]
+      rw [hc] at hh
+      norm_num at hz ⊢
+      rw [hz] at hh
+      nlinarith [hh]
+    · have hc : (m : ℝ) = 2 * (m / 2 : ℕ) + 1 := by
+        exact_mod_cast (show m = 2 * (m / 2) + 1 by omega)
+      have ha : assemble Q e o (m - 2) = o (m / 2 - 1) := by
+        exact (congrArg (assemble Q e o) (show m - 2 = 2 * (m / 2 - 1) + 1 by omega)).trans
+          (assemble_odd Q e o _)
+      have hb : assemble Q e o (m - 1) = Q * e (m / 2) := by
+        exact (congrArg (assemble Q e o) (show m - 1 = 2 * (m / 2) by omega)).trans
+          (assemble_even Q e o hmu)
+      have hd : assemble Q e o m = o (m / 2) := by
+        exact (congrArg (assemble Q e o) (show m = 2 * (m / 2) + 1 by omega)).trans
+          (assemble_odd Q e o _)
+      rw [if_neg hp, ha, hb, hd]
+      rw [hc] at hh
+      norm_num
+      nlinarith [hh]
+
 end
 end D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
