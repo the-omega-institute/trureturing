@@ -89,6 +89,13 @@ recorded result is exit 0, `ALL_OK`.
   permutation-mixture contradiction for `d ≥ 3`, together with the Bloch and
   amplitude-damping contradiction for `d = 2`; the double-transpose reduction
   covers the second target.
+- **Computed:** the pinned experiment entry in Evidence runs
+  `docs/reports/chiribella-aurell-zyczkowski-2021-channel-time-reversal/check.py`
+  at commit `6a407664a24c54c1992ebf59d6b4ba8b9146d845`; it exits 0 with
+  `ALL_OK`, has SHA-256
+  `ddebc31101db2f2706ee1be8f9d1c082847f5e4a2d69097f29f56be0aed8b3d8`, and
+  tests `d = 3, 4, 5, 6, 7, 8`, the exact amplitude-damping calculation, and
+  five seeded random `3 × 3` unitaries.
 - **Published consequence:** the order-reversal axiom used by Chiribella–Liu
   (arXiv:2012.03859) is redundant for this no-go statement.
 - **Boundary open:** the source’s positive result for bistochastic channels in
