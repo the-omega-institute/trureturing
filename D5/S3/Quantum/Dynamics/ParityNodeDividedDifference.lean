@@ -181,7 +181,7 @@ theorem evenOdd_dividedDifference_twoAdicUnit {ι : Type*} [Fintype ι] [Decidab
     intro i
     by_cases hi : i ∈ A
     · refine ⟨⟨(2 : ℚ_[2]) ^ N' / (Pk i : ℚ_[2]), ?_⟩, fun _ => rfl⟩
-      rw [norm_div, norm_pow, h2norm]
+      rw [PadicInt.mem_subring_iff, norm_div, norm_pow, h2norm]
       exact div_le_one_of_le₀ (hle i hi) (norm_nonneg _)
     · exact ⟨0, fun h => absurd h hi⟩
   choose δ hδ using hδ

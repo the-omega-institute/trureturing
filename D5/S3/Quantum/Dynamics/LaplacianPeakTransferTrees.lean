@@ -212,8 +212,6 @@ private lemma neighbor_sum_hub {R : Type*} [AddCommMonoid R] (k l : ℕ) (i : Fi
     ext; simp
   rw [hn, Finset.sum_filter]
   simp [tree, Fintype.sum_option, Fintype.sum_prod_type]
-  rw [Finset.sum_comm]
-  simp
 private lemma neighbor_sum_leaf {R : Type*} [AddCommMonoid R] (k l : ℕ) (i : Fin k) (j : Fin l)
     (f : (Option (Fin k × Option (Fin l))) → R) :
     ∑ x ∈ (tree k l).neighborFinset (some (i, some j)), f x = f (some (i, none)) := by
