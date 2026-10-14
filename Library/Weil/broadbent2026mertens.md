@@ -46,7 +46,7 @@ $$
 
 Theorem 3(i)'s printed exponential rate $0.8746$ differs from the $C\approx0.84768$ used in its proof; its prefactor $9.2203$ also differs from equation (150)'s $9.2204$. Neither exponential version is used here.
 
-An alternative explicit supplier, independent of that Table 5 value, is [Fiori–Jaskari, arXiv:2609.23222v1](https://arxiv.org/pdf/2609.23222v1). Theorem 1.1, printed p.3, applies for $x\ge x_0\ge e^3$; Table 1, printed p.4, gives $L(e^3)=0.2390$. With
+An alternative explicit supplier, independent of that Table 5 value, is [Fiori–Jaskari, arXiv:2609.23222v2](https://arxiv.org/pdf/2609.23222v2). Theorem 1.1, printed p.3, applies for $x\ge x_0\ge e^3$; Table 1, printed p.4, gives $L(e^3)=0.2390$. With
 
 $$
 D=\frac52\left(\frac53\right)^{1/5}\left(\frac{2000}{161967}\right)^{3/5},
@@ -72,7 +72,7 @@ M_1\le\int_0^\infty(v+v^2/2)|\Delta(v)|\,dv
 \le\frac{225}{8}+\frac{239}{1000}\left(\frac{12}{D^4}+\frac{120}{D^6}\right)+\frac{240}{\log2}<500000.
 $$
 
-For the last comparison, $D>99/500$ follows by an exact rational fifth-power comparison, and $\log2>1/2$ suffices. This alternative still uses the Fiori–Jaskari theorem and its Table 1 constant as external inputs. It does not certify either source's computations. The weaker $\vartheta(x)=x+O(x/\log^2x)$ row in the [Dusart note](dusart2010estimates.md) alone does not supply this weighted moment.
+For the last comparison, $D>99/500$ follows by an exact rational fifth-power comparison, and $\log2>1/2$ suffices. Version 2 additionally records a conditional $7/8$ zero-free-region consequence, with a different two-term PNT error; the unconditional Theorem 1.1 estimate and the calculation above are unchanged. This alternative still uses the Fiori–Jaskari theorem and its Table 1 constant as external inputs. It does not certify either source's computations. The weaker $\vartheta(x)=x+O(x/\log^2x)$ row in the [Dusart note](dusart2010estimates.md) alone does not supply this weighted moment.
 
 ## Application to every compact smooth test
 
