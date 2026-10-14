@@ -20,9 +20,9 @@ $$\forall C: Type, (\forall E: Type, (\forall O: Type, (\forall e: \operatorname
 
 *Commentary.*
 
-Induction on the actual finite Run preserves every event and the Stop payload. A separate one-step calculation preserves the source successor and appended event. Equal-step iteration gives exact finite prefixes, including empty reachability fibers. The inverse control equivalence supplies both implications. Determinism compares any two terminating traces, so every charged coordinate agrees even when the two traces are supplied independently.
+Induction on the actual finite Run preserves every event and the Stop payload. A separate one-step calculation preserves the source successor and appended event. Equal-step iteration gives exact finite prefixes, including empty reachability fibers. The inverse control equivalence supplies both implications. NativeSerialDepth.run_unique compares any two terminating runs from the same control, epoch and source. Applying that result after inverse run transport gives equality of the chronological traces and fixed halt payloads, and hence equality of all five charged coordinates even when the two traces are supplied independently.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeControlConjugacy.native_control_conjugacy`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine](NativeSerialMachine.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialDepth](NativeSerialDepth.md)

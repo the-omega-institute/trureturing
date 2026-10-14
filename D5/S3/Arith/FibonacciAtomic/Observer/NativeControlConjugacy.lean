@@ -6,7 +6,7 @@
    utility: none
    digest: Complete control equivalences preserve native actions, same-source traces and exact finite prefixes. -/
 
-import D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialMachine
+import D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -70,50 +70,6 @@ private theorem step_map {C D O : Type} (f : C → D) (δ : C → Op C O)
   obtain ⟨c,j,u,t⟩ := x
   simp only [mapConfig, nativeStep, rows]
   cases δ c <;> rfl
-
-private theorem native_run_unique {C O : Type} {δ : C → Op C O}
-    {c : C} {j : Nat} {u : Source} {t s : Trace} {o b : O}
-    (p : Run δ c j u t o) (q : Run δ c j u s b) : t = s ∧ o = b := by
-  induction p generalizing s b with
-  | stop h =>
-      cases q with
-      | stop hq => exact ⟨rfl, Op.stop.inj (h.symm.trans hq)⟩
-      | localStep hq _ => cases h.symm.trans hq
-      | update hq _ => cases h.symm.trans hq
-      | read hq _ _ => cases h.symm.trans hq
-  | localStep h _ ih =>
-      cases q with
-      | stop hq => cases h.symm.trans hq
-      | localStep hq q =>
-          have same := Op.localStep.inj (h.symm.trans hq)
-          cases same
-          obtain ⟨hs,ho⟩ := ih q
-          exact ⟨congrArg (List.cons _) hs, ho⟩
-      | update hq _ => cases h.symm.trans hq
-      | read hq _ _ => cases h.symm.trans hq
-  | update h _ ih =>
-      cases q with
-      | stop hq => cases h.symm.trans hq
-      | localStep hq _ => cases h.symm.trans hq
-      | update hq q =>
-          have same := Op.applyRho.inj (h.symm.trans hq)
-          cases same
-          obtain ⟨hs,ho⟩ := ih q
-          exact ⟨congrArg (List.cons _) hs, ho⟩
-      | read hq _ _ => cases h.symm.trans hq
-  | @read c j u a k y t o h hy p ih =>
-      cases q with
-      | stop hq => cases h.symm.trans hq
-      | localStep hq _ => cases h.symm.trans hq
-      | update hq _ => cases h.symm.trans hq
-      | @read _ _ _ a' k' y' s b hq hyq q =>
-          obtain ⟨ha,hk⟩ := Op.read.inj (h.symm.trans hq)
-          cases ha
-          cases hk
-          have same := hy.symm.trans hyq
-          cases same
-          obtain ⟨hs,ho⟩ := ih q
-          exact ⟨congrArg (List.cons _) hs, ho⟩
 
 /-- The complete same-source certificate, including empty reachability fibers.
 The prefix equivalence counts each actual action and preserves the full log. -/
@@ -192,9 +148,9 @@ theorem native_control_conjugacy {C D O : Type} (e : C ≃ D) (δ : C → Op C O
   · intro c j u n o
     simp only [Remaining, runs]
   · intro c j u t s o b p q
-    exact native_run_unique p q
+    exact NativeSerialDepth.run_unique p q
   · intro c j u t s o b m p q
-    obtain ⟨same,out⟩ := native_run_unique p ((runs c j u s b).mp q)
+    obtain ⟨same,out⟩ := NativeSerialDepth.run_unique p ((runs c j u s b).mp q)
     exact ⟨same,out,fun i => congrArg (fun trace => cost m trace i) same⟩
 
 /-- Typed packaging of the complete conjugacy, used by installed-table realizations. -/

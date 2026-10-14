@@ -14,7 +14,7 @@ internal sealed class NativeControlConjugacyDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeControlConjugacy.native_control_conjugacy"),
                 H("Exact native conjugacy"), StatementSource.FromAuthor(Disp(Statement())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Induction on the actual finite Run preserves every event and the Stop payload. A separate one-step calculation preserves the source successor and appended event. Equal-step iteration gives exact finite prefixes, including empty reachability fibers. The inverse control equivalence supplies both implications. Determinism compares any two terminating traces, so every charged coordinate agrees even when the two traces are supplied independently."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Induction on the actual finite Run preserves every event and the Stop payload. A separate one-step calculation preserves the source successor and appended event. Equal-step iteration gives exact finite prefixes, including empty reachability fibers. The inverse control equivalence supplies both implications. NativeSerialDepth.run_unique compares any two terminating runs from the same control, epoch and source. Applying that result after inverse run transport gives equality of the chronological traces and fixed halt payloads, and hence equality of all five charged coordinates even when the two traces are supplied independently."))), DescribeRole.Theorem))));
 
     private static Formula Statement() {
         var C=V("C"); var E=V("E"); var O=V("O"); var e=V("e"); var f=V("f");
