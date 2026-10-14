@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8264d21969c55af85ddffbfd715c0f5d1dcd931996e784b68676be87c44a6fb0
+  normalized_sha256: sha256:8264d21969c55af85ddffbfd715c0f5d1dcd931996e784b68676be87c44a6fb0
+cas_ref: sha256:8264d21969c55af85ddffbfd715c0f5d1dcd931996e784b68676be87c44a6fb0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 134.4（两种自由群探针的充分性）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 9c12a17449815bede1208a3dc6347fbe1080924abdfb94521babf30cc68e9ecb
+    next_atom_id: 1efcb0fe5a74103c9676d1afddac135d924c3dbcdeac5a23efa85080879bc8cf

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0df75007aea7609175c9f77903d7c68b15a30b5304045a32e98cd69b5437008
+  normalized_sha256: sha256:f0df75007aea7609175c9f77903d7c68b15a30b5304045a32e98cd69b5437008
+cas_ref: sha256:f0df75007aea7609175c9f77903d7c68b15a30b5304045a32e98cd69b5437008
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 223.1　观察者希望保持的结构只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 0c2bc6871c02977139078aa0cbe27892a0c833534895e1c691c3a943589b6a7a
+    next_atom_id: 20af61ec3bfee0b1c7baf7c2bb8ed803a886c04afd0dd0a286029ea24c61c948

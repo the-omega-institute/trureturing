@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af74a6f2ed12601ae049510f2413427bb94018154fe995013f68759444cbf349
+  normalized_sha256: sha256:af74a6f2ed12601ae049510f2413427bb94018154fe995013f68759444cbf349
+cas_ref: sha256:af74a6f2ed12601ae049510f2413427bb94018154fe995013f68759444cbf349
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 比较 $C_kU=UD_k$ 的第一行两个矩阵元，依次解得 $c$ 与 $d$。将它们代入 $ad-bc$ 并展开，得到行列…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: a25d84a993b1efc53890ecfc2386f316bfbb92c8109ba0690497439a77997fe3
+    next_atom_id: 3af09cefe59ffc8f676aec688f194cba171b6210306c1c588aefdf33a3227b3a

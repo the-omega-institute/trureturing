@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72508fb8bffaf08b85d5a8a9e1f86c422433e0750b38c154a20a3306220a2c9b
+  normalized_sha256: sha256:72508fb8bffaf08b85d5a8a9e1f86c422433e0750b38c154a20a3306220a2c9b
+cas_ref: sha256:72508fb8bffaf08b85d5a8a9e1f86c422433e0750b38c154a20a3306220a2c9b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 255.1 只规定预算路径、原尾窗上的联合代价及共同聚点的观察对象。
+    previous_atom_id: 07a07de8b3ff455b5668bd37a3d661febb72f933e0671002b2b73ede653964c7
+    next_atom_id: 38c02e3e98fc06f8fa6909fa33508ac4c1fc45569d0534548b8988f2ef7c8585

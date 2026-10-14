@@ -78,6 +78,11 @@ def output_archive_paths(layer, paths):
     print(key + "=" + json.dumps(paths, separators=(",", ":")))
 
 
+def elan_key(root):
+    system, arch = binary_platform()
+    return f"elan-pinned-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
+
+
 def manual_source_is_valid() -> bool:
     """Accept cache writes from a workflow dispatch only after its source pin was checked.
 
@@ -100,12 +105,6 @@ def manual_source_is_valid() -> bool:
     return source_commit == os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA", "")
 
 
-def is_pr_producer() -> bool:
-    return (os.environ.get("GITHUB_EVENT_NAME") == "pull_request"
-            and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", os.environ.get("GITHUB_REF", "")) is not None
-            and os.environ.get("STRATALINT_CACHE_PR_PRODUCER") == "true")
-
-
 def actions_keys(root: pathlib.Path) -> dict:
     revision = resolved_mathlib(root)
     system, machine = binary_platform()
@@ -117,13 +116,12 @@ def actions_keys(root: pathlib.Path) -> dict:
     push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
     pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
     dispatch_writer = manual_source_is_valid()
-    pr_producer = is_pr_producer()
     writer_allowed = (push_writer or pr_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
     result = {
         "mathlib_revision": revision, "os": system, "arch": machine,
         "partition": partition_path(root),
         "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
-        "project_save_allowed": (push_writer or dispatch_writer or pr_producer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+        "project_save_allowed": (push_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
         and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
         "release_prefix": f"lean-cache-v2-{revision}-{system}-{machine}-",
     }
@@ -378,7 +376,30 @@ def restore_native(root, keys, layer, key, outcome):
         return False
 
 
+def adoption_record(root):
+    """Invocation-local acceptance, outside every transported native path."""
+    path = root / "build/lean-cache/pr-adopted.json"
+    try:
+        if path.is_symlink():
+            return None
+        value = json.loads(path.read_text())
+        checkout = os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA", os.environ.get("GITHUB_SHA"))
+        if (value["run"] != os.environ.get("GITHUB_RUN_ID")
+                or value["attempt"] != os.environ.get("GITHUB_RUN_ATTEMPT")
+                or value["repository"] != str(root.resolve()) or value["checkout"] != checkout
+                or value["ref"] != os.environ.get("GITHUB_REF")
+                or type(value["artifact"]) is not int or value["artifact"] <= 0
+                or type(value["merged"]) is not bool):
+            return None
+        return value
+    except (OSError, ValueError, TypeError, KeyError):
+        return None
+
+
 def restore(root, keys, matched, layers=LAYERS, *, outcomes=None):
+    if adoption_record(root) is not None:
+        receipt("project", "preparation-retained", reason="validated PR artifact already adopted")
+        return
     seeded = False
     for layer in layers:
         accepted = restore_native(root, keys, layer, matched.get(layer, ""), (outcomes or {}).get(layer, "success"))
@@ -414,11 +435,14 @@ def project_work(root):
 
 
 def project_publication(root):
-    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" and not is_pr_producer():
+    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request":
         return False, "pull-requests-do-not-publish-project-seeds", None
     work = project_work(root)
     if work is None:
         return False, "build-work-unknown", work
+    adopted = adoption_record(root)
+    if adopted is not None and adopted["merged"]:
+        return True, "adopted-merged-preparation", work
     if work == 0:
         return False, "no-build-work", work
     return True, "built-project-artifacts", work
@@ -483,8 +507,7 @@ def main():
             if "project" in args.layers:
                 keys["project"]["restore_key"] = project_restore_key(keys)
             values = {key: keys[key] for key in ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")}
-            system, arch = binary_platform()
-            values["elan_key"] = f"elan-pinned-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
+            values["elan_key"] = elan_key(root)
             for layer in args.layers:
                 values.update({layer + "_" + key: value for key, value in keys[layer].items()})
             output(values)

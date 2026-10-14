@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d9c8f98083f347ec30227c5a2e9f56f24bfd60a20c20ce7e761554bd81e59135
+  normalized_sha256: sha256:d9c8f98083f347ec30227c5a2e9f56f24bfd60a20c20ce7e761554bd81e59135
+cas_ref: sha256:d9c8f98083f347ec30227c5a2e9f56f24bfd60a20c20ce7e761554bd81e59135
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「R.9 等幂的归一化系数输运」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: c09ff9396a0012597babf5ca8258ff7d7a1b266f08261b6646d5fd9ef89e8f3c
+    next_atom_id: a278fc6994dd1b920da9e9d55e83a8a51029175be2336f3678aae542260fe76c

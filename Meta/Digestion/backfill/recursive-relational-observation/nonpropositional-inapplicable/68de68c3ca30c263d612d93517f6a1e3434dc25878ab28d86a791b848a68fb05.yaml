@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68de68c3ca30c263d612d93517f6a1e3434dc25878ab28d86a791b848a68fb05
+  normalized_sha256: sha256:68de68c3ca30c263d612d93517f6a1e3434dc25878ab28d86a791b848a68fb05
+cas_ref: sha256:68de68c3ca30c263d612d93517f6a1e3434dc25878ab28d86a791b848a68fb05
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 54.10（精确无穷路径上的 $p=2/p=3$ 系数例外）.的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 761e863cb4dc978770101c03b9bf470276936d199e0ded5b838b977bf5a764d7
+    next_atom_id: b33e6ec917fff35805c467cec18f5474973fd5ce79bc737182c701d85a4dc0b7

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37d95713c3418c963b39866fcb71757556c42e57fc70371739a69a8b4605fb86
+  normalized_sha256: sha256:37d95713c3418c963b39866fcb71757556c42e57fc70371739a69a8b4605fb86
+cas_ref: sha256:37d95713c3418c963b39866fcb71757556c42e57fc70371739a69a8b4605fb86
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明。** 四个 \(z_i\) 都严格正且恰为此节点的行距离,不只由数值交叠猜测。…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: fe42b97cf7003daf8e7c14127151544b64b155a4ea4d7a705e7dc6b93a53e31f
+    next_atom_id: 0b86b421e593430316ac2b34d2ed1925b8d3540a045f5dd53aab1d81592cefe2

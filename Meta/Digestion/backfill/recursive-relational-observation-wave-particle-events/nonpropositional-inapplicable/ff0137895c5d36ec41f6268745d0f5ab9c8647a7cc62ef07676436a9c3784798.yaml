@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff0137895c5d36ec41f6268745d0f5ab9c8647a7cc62ef07676436a9c3784798
+  normalized_sha256: sha256:ff0137895c5d36ec41f6268745d0f5ab9c8647a7cc62ef07676436a9c3784798
+cas_ref: sha256:ff0137895c5d36ec41f6268745d0f5ab9c8647a7cc62ef07676436a9c3784798
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 13.1（协议暗空间）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: 7ac2a61b8bf8004fd25c59e1990b1fd52b3912ad92dae3e1f7d39f73e9433418
+    next_atom_id: 17842841ea495dca2896874287931f3ba4b973dff906c7a095a5265db73317f2

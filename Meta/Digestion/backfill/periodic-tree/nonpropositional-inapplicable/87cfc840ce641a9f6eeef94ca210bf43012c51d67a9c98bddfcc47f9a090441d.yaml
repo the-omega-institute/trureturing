@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:87cfc840ce641a9f6eeef94ca210bf43012c51d67a9c98bddfcc47f9a090441d
+  normalized_sha256: sha256:87cfc840ce641a9f6eeef94ca210bf43012c51d67a9c98bddfcc47f9a090441d
+cas_ref: sha256:87cfc840ce641a9f6eeef94ca210bf43012c51d67a9c98bddfcc47f9a090441d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「TR.3 返回模的有限基数」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: ddd2e7f58ccd6c180d3199508dd217cf66a3f7330d95b816330df5bb2ffdc988
+    next_atom_id: d98daf906727dd897eb87bc6580558d054f0f8d8683b755f7b32d95caa27169c

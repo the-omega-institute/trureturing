@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08ed1eb04014983eef07bb42e03a4a85c2ec739123a3b075c2bba263e599e477
+  normalized_sha256: sha256:08ed1eb04014983eef07bb42e03a4a85c2ec739123a3b075c2bba263e599e477
+cas_ref: sha256:08ed1eb04014983eef07bb42e03a4a85c2ec739123a3b075c2bba263e599e477
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 24.1 指定拉格朗日量、参数约束及模型族边界，仅引入后续讨论的模型条件。
+    previous_atom_id: 8cc9e4c2e0cfc52d1df96bad740582af468c89584ca4ea805a3b123901a38abb
+    next_atom_id: d4a6985bf82d695da48753e5a34993f3426b30ca4cd0d79189cf9e3220bc6fdb

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7143f5b55cd832865906634ece1599b7da6a838a17b34847332ef63c185ea761
+  normalized_sha256: sha256:7143f5b55cd832865906634ece1599b7da6a838a17b34847332ef63c185ea761
+cas_ref: sha256:7143f5b55cd832865906634ece1599b7da6a838a17b34847332ef63c185ea761
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 正整数称为强力数，当且仅当每个素数因子均以至少二次幂出现。令 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对素数 $p\ne2,5$，定义），没有另行断言这些对象的性质。
+    previous_atom_id: f71ca647e343811806704582ef980eac62abf145182f695ee8e762eafd569706
+    next_atom_id: 00c9b6e4538b53ace3b3faa0262cddffc40f4690e35556dc9a296483deca203c

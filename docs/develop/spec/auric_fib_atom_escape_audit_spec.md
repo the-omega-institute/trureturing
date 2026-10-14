@@ -516,7 +516,10 @@ AURIC FIB 分析是开发者可选的逃逸审计扩展：来源所有者通过�
 不为其取得 FIB 数据或运行 FIB 数值计算，也不要求补写分析登记。
 
 正常 Inspector 编译报告中的独立 `fib_analysis` 下游分区承载来源所有者 Reg
-分析合同的取得数据。通用接口须接受任意定理种类的忠实合同，并将原声明绑定与
+分析合同的取得数据，闭键形态为 `{applications}`，不定义独立 `schema_version`；
+可选导出也不带独立版本字段。主报告沿用 `stratalint-raw-lean-report-v3`，原
+`information_templates` 的版本契约不变。无参与合同的模块不产生该分区，也不调用
+FIB 提取器。通用接口须接受任意定理种类的忠实合同，并将原声明绑定与
 可选有限取得分开；`NullReplyFiber.native_execution` 的名称或命题类型均不得定义
 核心入口域。没有合同的声明仍可被请求，并得到具名的 missing-contract unavailable
 说明。该分区不参与四槽登记、proof escape、seal、冻结或准入状态判定。
@@ -557,8 +560,10 @@ Lake 现有 report facet、compiler export/transitive traces、模块材料包�
 未失效的模块沿原 facet 保留材料包字节及写入时点。
 
 程序重建是独立必需义务，失败传递；程序字节、HEAD 与完整允许来源目录不进入
-读数复用键。汇总与 provenance 随实际成员和材料变化保持一致。完整重生用于首次
-取得、显式迁移或有界等价比较，日常增量不得以全量回退代替依赖失效。
+读数复用键。汇总与 provenance 随实际成员和材料变化保持一致。现有读取和校验
+边界严格拒绝不合当前形态的数据，包括仍带 FIB 版本字段的旧缓存；保留实际错误，
+不增加 FIB 兼容扫描、迁移、探测、缓存 key 或自动恢复。完整缓存构建归独立长 CI，
+短 CI 恢复缓存并可写回合法增量，日常增量不得以全量回退代替依赖失效。
 
 `make -C tools auric-fib-report` 先经过正常 `make lean-report`，再从完成的报告与
 材料、来源 sidecar 消费 FIB 数据；下游不得把该投影重新作为证明证书。

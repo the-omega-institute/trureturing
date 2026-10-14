@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5736e642aacd9f002744786e572a1fc18a6abb89bab433d8e8a6527027b45d6
+  normalized_sha256: sha256:b5736e642aacd9f002744786e572a1fc18a6abb89bab433d8e8a6527027b45d6
+cas_ref: sha256:b5736e642aacd9f002744786e572a1fc18a6abb89bab433d8e8a6527027b45d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 4.1.1 只规定共同概率模型、条件律、分割符号及外部体积输入假设，不断言这些输入条件总能成立。
+    previous_atom_id: 25ff8b125f327ce028392f4f44a9693e4fb47440da53c21e2ab7284d9349091e
+    next_atom_id: 1e73640abc9970b019f1362b55d729a7d3386bc8796553afd0caf941f08aab23

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c2675a22f9e1d0be1e581388fddc8e275520691b78e6b11188f2ec0034ddf26
+  normalized_sha256: sha256:0c2675a22f9e1d0be1e581388fddc8e275520691b78e6b11188f2ec0034ddf26
+cas_ref: sha256:0c2675a22f9e1d0be1e581388fddc8e275520691b78e6b11188f2ec0034ddf26
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「NP.3 The leading digit has a fixed signed coefficient」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: d9a350242f88b9680482949a142133d9f4199db55f9b8f2cb2e39006e5ac78ef
+    next_atom_id: a8e88783edd26896ceb4facc2939b7f7a62223eabf530d10afba9dc42ec1f83b

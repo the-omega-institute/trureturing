@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:67df7419dd0235aeb87c63b74df3fd9959bbdaead9d402cbdab098075b106a8a
+  normalized_sha256: sha256:67df7419dd0235aeb87c63b74df3fd9959bbdaead9d402cbdab098075b106a8a
+cas_ref: sha256:67df7419dd0235aeb87c63b74df3fd9959bbdaead9d402cbdab098075b106a8a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该项仅列出证书的“证明”字段，属于定理 1.1 构造的说明性枚举，没有独立断言。
+    previous_atom_id: 3413ea86f7bc2a59cc27694c5da70081eccb096b6bbd13640d395904a66e5f54
+    next_atom_id: cd0aa7ce07feb40e86f588948a3748b92855fb1578a3d1541dc56397665c1602

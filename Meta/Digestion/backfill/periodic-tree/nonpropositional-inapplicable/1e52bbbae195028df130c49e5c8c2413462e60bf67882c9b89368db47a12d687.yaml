@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e52bbbae195028df130c49e5c8c2413462e60bf67882c9b89368db47a12d687
+  normalized_sha256: sha256:1e52bbbae195028df130c49e5c8c2413462e60bf67882c9b89368db47a12d687
+cas_ref: sha256:1e52bbbae195028df130c49e5c8c2413462e60bf67882c9b89368db47a12d687
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Apply U.6 to m=n^2, using `Omega(n^2)=2Omega(n)` and `v_5(n…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: a37956cf985a1aa6460d91b2289a1f90cc9881f5684ff2377a8dd21c73d82039
+    next_atom_id: 722b54634d82eb8603573c8ad78494ad2014dd6a7a5b142f31f7f78cd9109d49
