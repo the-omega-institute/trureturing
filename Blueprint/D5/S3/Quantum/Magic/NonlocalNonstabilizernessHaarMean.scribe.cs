@@ -35,7 +35,10 @@ internal sealed class NonlocalNonstabilizernessHaarMeanDocument : IScribeDocumen
                         "For 0 < y < a, set w = √(4e^(−y) − 3) and t₋ = √((1 − w)/2), t₊ = √((1 + w)/2). Both branches satisfy t⁴ − t² + 1 = e^(−y), and (C5) becomes 3e^(−y)(t₋ + t₊)/(2w). Thus G(y) = F(t₋(y)) − F(t₊(y)) has derivative yP(y). Its endpoint values are G(0) = −(10/3 − π) and G(a) = 0.")),
                     Paragraph(Text(
                         "On this interval, 0 ≤ yP(y) ≤ a√3/√(a − y). The majorant is integrable because its endpoint singularity has exponent −1/2. The fundamental theorem of calculus gives the first moment as G(a) − G(0) = 10/3 − π. The integrand vanishes outside the interval, so integrability and the same integral value hold on the whole real line."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("qian-wang-2025-nonlocal-nonstabilizerness-haar-mean"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
