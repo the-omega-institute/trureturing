@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:4a32139a95efa98bc6b1132faffb79a47ef89df88808788e620cdc22e2f01697
   normalized_sha256: sha256:4a32139a95efa98bc6b1132faffb79a47ef89df88808788e620cdc22e2f01697
 cas_ref: sha256:4a32139a95efa98bc6b1132faffb79a47ef89df88808788e620cdc22e2f01697
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
+    target_statement_id: sha256:9e1e5dcc8445342c8de82c50f19b0e501f48bda194e0ff4190cd6f2fae8bd3a3
 receipts:
   unresolved_subitems: []
   chain_atoms:
