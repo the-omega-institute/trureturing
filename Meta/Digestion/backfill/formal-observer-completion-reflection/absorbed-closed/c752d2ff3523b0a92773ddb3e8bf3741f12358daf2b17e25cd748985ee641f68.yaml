@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:c752d2ff3523b0a92773ddb3e8bf3741f12358daf2b17e25cd748985ee641f68
   normalized_sha256: sha256:c752d2ff3523b0a92773ddb3e8bf3741f12358daf2b17e25cd748985ee641f68
 cas_ref: sha256:c752d2ff3523b0a92773ddb3e8bf3741f12358daf2b17e25cd748985ee641f68
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/MeasurableDeficiencyTriangle.measurable_deficiency_triangle
+    target_statement_id: sha256:408044adae4f57cbc390a036cbeeab508f561046b60d2830c5daf7ef6dfd6279
 receipts:
   unresolved_subitems: []
   chain_atoms:
