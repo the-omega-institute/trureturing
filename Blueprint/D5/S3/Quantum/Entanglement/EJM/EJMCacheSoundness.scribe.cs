@@ -26,7 +26,7 @@ internal sealed class EJMCacheSoundnessDocument : IScribeDocumentDefinition
                 "For every globally associated cache, every represented partial assignment and every compatible complete event, the sum of its thirty-two stored lowers is at most the unchanged actual integer EJM inflation score. The proof applies the earned local inequalities to the actual injective placements and sums them."),
             Paragraph(Text("This result validates the local cache and lower-bound part of the certificate pipeline. It supplies neither complete global search acceptance nor a positive global score margin. Nonlocality of the ideal EJM law and a concrete source-noise region still require those further proofs; this local delivery makes no such claim.")))));
 
-    private static ScribeNode Item(string id, string declaration, string title, string explanation) =>
+    private static DocumentBlock Item(string id, string declaration, string title, string explanation) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
