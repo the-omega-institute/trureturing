@@ -1,8 +1,18 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMSharedStaticPilotData
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMSharedStaticPilotData
+   mirror-E: none(waiver:exact-shared-local-readout-suffix-data)
+   anchors: []
+   utility: none
+   digest: Actual suffix contexts bind every bound leaf to original shared local readouts. -/
+
 /- Prepared transient exact-context data. This is untrusted input until every
 shared readout and every actual row passes its canonical kernel checker.
 The root retains the original nonempty depth-12 prefix, so even complete suffix
 acceptance does not imply global score acceptance or a locality refutation. -/
-import D5.S3.Quantum.Entanglement.EJM.EJMStaticGlobalReplay
+import D5.S0.Certificates.FiniteAnnotatedSymmetryDAG
+import D5.S3.Quantum.Entanglement.EJM.EJMSharedLocalReadouts
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 65536

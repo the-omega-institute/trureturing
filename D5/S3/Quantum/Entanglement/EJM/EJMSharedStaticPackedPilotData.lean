@@ -5,7 +5,9 @@ an original row/action readout: checkBound still checks every actual projected
 assignment and the original lower-value sum. No hash supplies a proof.
 The root retains the same nonempty depth-12 prefix, so this suffix does not
 claim complete global acceptance or an unconditional locality refutation. -/
-import D5.S3.Quantum.Entanglement.EJM.EJMStaticGlobalReplay
+import D5.S0.Certificates.FiniteAnnotatedSymmetryDAG
+import D5.S3.Quantum.Entanglement.EJM.EJMSharedLocalReadouts
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 65536

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMSharedLocalReadoutsPilot
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMSharedLocalReadoutsPilot
+   mirror-E: none(waiver:exact-shared-local-readout-suffix-acceptance)
+   anchors: []
+   utility: none
+   digest: Every actual readout, projection and child edge of the original suffix is independently checked. -/
+
 /- Prepared actual-suffix receipts, not yet kernel accepted or delivered.
 All 647 triangle and 425 singleton readouts and all 2497 context checks are
 required below. The concrete root carries the original depth-12 prefix;
