@@ -16,6 +16,10 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord
 
+/- This is a symbolic construction for arbitrary bank width and source table.
+It does not enumerate bounded instances, certify a numerical instance, or expose
+a decision checker, so its utility classification is none. -/
+
 open scoped symmDiff
 
 abbrev Bank (k : Nat) := Finset (Fin k)
