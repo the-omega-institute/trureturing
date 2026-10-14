@@ -21,6 +21,20 @@ attributed to Edgar Alcalá-Arroyo, Alonso Castillo-Ramirez, Haobo Ma and
 Wenlin Zhang. Its MIT copyright and permission notice are retained in the
 adapted Lean modules.
 
+The repository pins `leanprover/lean4:v4.33.0` and Mathlib commit
+`db584cd6d46c92f209a44c0f1c829460d327499d` in `lean-toolchain` and
+`lake-manifest.json`. Retirement of each transplanted supplier declaration
+is tested against the dependencies actually resolved at the repository's
+own pins: when an equivalent declaration is available there, verify its
+elaborated statement and any required domain correspondence, migrate all
+live consumers to direct references, and remove the replaced transplant
+after the affected proofs and repository checks pass without expanding
+the axiom or sorry closure. Preserve the actual-domain transport proofs
+that those consumers still require. Upstream acceptance alone does not
+satisfy this condition. No equivalent replacement or direct-reference
+migration is established here at the current dependency pin; this note
+does not assert that the retirement condition is already satisfied.
+
 The orbit model has two constant configurations, three two-point orbits
 and two free orbits. A lawful lazy map preserves the merger implication,
 as do invertible maps and composition. Conversely, elementary collapses

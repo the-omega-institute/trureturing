@@ -10,9 +10,7 @@ $$\forall A,B \in CA, \operatorname{Criterion}\left(A\right) \land \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/KleinFourInvariant.criterion_mul` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Edgar Alcalá-Arroyo; Alonso Castillo-Ramirez; Haobo Ma; Wenlin Zhang (2026). *Supplementary material for Generation by lazy and invertible cellular automata over the Klein four-group*. DOI: [10.5281/zenodo.23280244](https://doi.org/10.5281/zenodo.23280244). URL: <https://github.com/the-omega-institute/klein-four-lazy-ca-supplement/tree/fae47ad9dbbd4cbc1462a058dffe6ad4c2e416f1>.
+*Citation.* Edgar Alcalá-Arroyo; Alonso Castillo-Ramirez; Haobo Ma; Wenlin Zhang (2026). *Supplementary material for Generation by lazy and invertible cellular automata over the Klein four-group*. DOI: [10.5281/zenodo.23280244](https://doi.org/10.5281/zenodo.23280244). URL: <https://github.com/the-omega-institute/klein-four-lazy-ca-supplement/tree/fae47ad9dbbd4cbc1462a058dffe6ad4c2e416f1>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ $$\forall T \in CA, T \in M \implies \operatorname{Criterion}\left(T\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/KleinFourInvariant.membership_implies_criterion` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Edgar Alcalá-Arroyo; Alonso Castillo-Ramirez; Haobo Ma; Wenlin Zhang (2026). *Supplementary material for Generation by lazy and invertible cellular automata over the Klein four-group*. DOI: [10.5281/zenodo.23280244](https://doi.org/10.5281/zenodo.23280244). URL: <https://github.com/the-omega-institute/klein-four-lazy-ca-supplement/tree/fae47ad9dbbd4cbc1462a058dffe6ad4c2e416f1>.
+*Citation.* Edgar Alcalá-Arroyo; Alonso Castillo-Ramirez; Haobo Ma; Wenlin Zhang (2026). *Supplementary material for Generation by lazy and invertible cellular automata over the Klein four-group*. DOI: [10.5281/zenodo.23280244](https://doi.org/10.5281/zenodo.23280244). URL: <https://github.com/the-omega-institute/klein-four-lazy-ca-supplement/tree/fae47ad9dbbd4cbc1462a058dffe6ad4c2e416f1>.
 
 *Commentary.*
 
