@@ -7,10 +7,13 @@
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
+
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
@@ -98,7 +101,10 @@ theorem native_child_frame_specified_ordinary {m k : ℕ} (hm : 3 ≤ m)
       ∃ hbase : C.base = childMarkedDomainMap F hB j a,
         C.walk.copy hbase hbase = w.map (childMarkedDomainMap F hB j) ∧
         C.walk.support.map Subtype.val = w.support.map Subtype.val ∧
-        C.walk.edges.map (Sym2.map Subtype.val) = w.edges.map (Sym2.map Subtype.val) := by
+        C.walk.edges.map (Sym2.map Subtype.val) = w.edges.map (Sym2.map Subtype.val) ∧
+        (∀ hk : 2 ≤ k,
+          protectedP (nativeChildFrame F j) hk = protectedP F hk ∧
+            protectedQ (nativeChildFrame F j) hk = protectedQ F hk) := by
   let lift := childMarkedDomainMap F hB j
   let r := ordinaryRight hm F hB j hj
   let l := ordinaryLeft hm F hB j hj
@@ -120,11 +126,13 @@ theorem native_child_frame_specified_ordinary {m k : ℕ} (hm : 3 ≤ m)
   let C : SpecifiedOrdinaryCycle hm F hB j hj :=
     ⟨lift a, w.map lift, SimpleGraph.Walk.IsHamiltonianCycle.map
       (child_marked_domain_map_bijective F hB j) hw, hcut⟩
-  refine ⟨C, rfl, rfl, ?_, ?_⟩
+  refine ⟨C, rfl, rfl, ?_, ?_, ?_⟩
   · simp only [C, SimpleGraph.Walk.support_map, List.map_map]
     rfl
   · simp only [C, SimpleGraph.Walk.edges_map, List.map_map, Sym2.map_map]
     rfl
+  · intro hk
+    exact native_protected_labels_same_selected F (nativeChildFrame F j) hk rfl
 
 /-- Swapping the selected p/q order changes ports, but not the actual
 native configuration domain. The base and terminal keep their literal
