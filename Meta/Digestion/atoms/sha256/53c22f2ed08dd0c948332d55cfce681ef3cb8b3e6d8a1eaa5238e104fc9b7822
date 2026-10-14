@@ -1,0 +1,13 @@
+**Definition 5.1 (backward closure under advancement).** A set
+$A\subseteq\mathcal T$ is backward closed if
+
+$$
+\forall u\in\mathcal T\ \forall j\ge0,\qquad
+\rho^j u\in A\ \Longrightarrow\ u\in A.
+\tag{NASF.8}
+$$
+
+Computable enumerability uses a fixed effective finite-tree syntax.
+This is closure toward earlier sources, not forward orbit invariance.
+Programs and public parameters are fixed independently of the source.
+
