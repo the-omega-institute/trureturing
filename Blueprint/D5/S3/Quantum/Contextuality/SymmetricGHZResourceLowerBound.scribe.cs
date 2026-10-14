@@ -72,7 +72,10 @@ internal sealed class SymmetricGHZResourceLowerBoundDocument : IScribeDocumentDe
                         + "The binomial lower estimate n^m/(2^m m!) gives the requested asymptotic "
                         + "bound with c=1/(2^m m!) and N=2k. For k=1 a nonempty layer gives "
                         + "at least one qubit, which bounds n^(−1) for n≥1."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("de-oliveira-barbosa-galvao-2024-symmetric-ghz-resource"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
