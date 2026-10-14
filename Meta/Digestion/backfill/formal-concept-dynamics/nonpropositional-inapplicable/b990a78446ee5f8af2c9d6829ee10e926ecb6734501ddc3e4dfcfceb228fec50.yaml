@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b990a78446ee5f8af2c9d6829ee10e926ecb6734501ddc3e4dfcfceb228fec50
+  normalized_sha256: sha256:b990a78446ee5f8af2c9d6829ee10e926ecb6734501ddc3e4dfcfceb228fec50
+cas_ref: sha256:b990a78446ee5f8af2c9d6829ee10e926ecb6734501ddc3e4dfcfceb228fec50
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“稳定性”仅列举考虑维度；本片段不提出性质断言。
+    previous_atom_id: 596728fea9165c79d9ad890ba27b353aec6ca8e3d60297b0a156a8beea2e9403
+    next_atom_id: 9a62184abbda0cdbb9d8713273889b870e5d56c62d00bc34a35210379608b04d
