@@ -1,0 +1,11 @@
+**Definition 3.1 (current alpha label).** For a realized current row
+$R=R_P(t)$, let $B$ be its class set, with $k=|B|$. Define $A_P(t)\in
+B\cup\{\bot\}$ to be the class whose actual hidden value is $\alpha$,
+or $\bot$ if no hole has that value. Completeness of the partition makes
+this class unique when it exists. This is a semantic label until it has
+been acquired or retained.
+
+For a visible node root $q$ of $C$, let $\operatorname{Alpha}_C(q,A)$
+hold if it is a concrete alpha leaf, or a hole belonging to class $A$.
+A branch root and any other concrete leaf fail this predicate.
+

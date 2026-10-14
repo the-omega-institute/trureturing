@@ -1,0 +1,22 @@
+**Proposition 10.3 (the extra state distinction and its representation
+boundary).** For a fixed nonsingleton interval, $N$ complete-output halts
+require exactly $J(L,U)$ additional running states in a minimum table.
+Compared with a positive interval of the same size, the zero origin
+requires one extra running state exactly when $N\equiv1\pmod3$ and
+$N\ge4$. An injective fixed-width binary representation of the complete
+minimum state set needs and admits $\lceil\log_2(N+J(L,U))\rceil$ bits.
+This width excludes the immutable literal, transition and output tables.
+
+On $[0,3]$ there are two running states and four halts: one state reads
+$E$, sends alpha and beta to outputs zero and one, and sends branch to
+the second state, which reads $R$ and sends alpha and beta to outputs
+two and three. Fill the remaining entries with the halt zero. On $[1,4]$
+one running state reads $R$ and sends absent, alpha, beta and branch
+directly to the four respective fixed outputs $1,2,3,4$.
+
+Positive intervals $[l,l+1]$, $l\ge1$, have three total states and one
+call, while their minimum peak is $\lfloor l/2\rfloor$, unbounded in
+$l$. A single finite table with fixed numeric halts cannot identify all
+unbounded ages. These state, call and literal-length results impose no
+summed-length minimum or physical-memory or physical-time equivalence.
+

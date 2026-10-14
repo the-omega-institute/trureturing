@@ -1,0 +1,28 @@
+**Corollary 10.11 (the established depth-three frontier as an
+application).** For the row of Definition 9.1, the finite
+criterion gives exactly the previously established frontier
+
+$$
+\mathsf{InvFeas}_*(r,q)\Longleftrightarrow r2^q\ge5.
+\tag{NBP.10.14}
+$$
+
+**Proof.** Proposition 9.3 identifies the attained target rows
+as $R_0,\ldots,R_4$. Its five witnesses are actual entries
+of the chart, with arbitrary branch fillings still in the
+full fiber. Proposition 9.4 restricts every address on those
+witnesses to at most two replies, so the binary protocol-depth
+supplier used in Theorem 9.5 gives the necessity
+$r2^q\ge5$ even for full-value-dependent export. The root
+experiments and acquired block encoders in the full-domain
+attainments of Theorem 9.5 give sufficiency. They are allowed
+trees and colorings in Definition 10.7. Theorem 10.8 carries
+them to and from the complete actual fiber at the same
+$r,q$, giving (NBP.10.14) as an application of the already
+established result. $\square$
+
+This example does not turn the general finite criterion
+into a target-cardinality-only law. Its repeated partner
+classes supply particular experiments; a different
+$\Theta_*$ and menu can have different query geometry.
+

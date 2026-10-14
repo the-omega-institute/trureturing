@@ -1,0 +1,30 @@
+**Definition 12.2 (attained class-root Moore feasibility).** The root
+task has input $\theta\in\Theta_*\ne\varnothing$ and entire target
+$G_*(\theta)$. It has one finite shared table on
+$\mathcal K=Q\sqcup Z$, with the same fixed complete halting outputs
+and reply-only transition rule as (NBP.12.1), except that
+
+$$
+\operatorname{coord}:Q\longrightarrow D
+\tag{NBP.12.3}
+$$
+
+labels each running state by one actual hidden-class root coordinate.
+One call at that state returns $\theta(\operatorname{coord}(a))$;
+$\mathsf{br}$ in the chart denotes the native $\mathsf{branch}$ reply.
+All coordinates are reached, so absence is impossible, but the fourth
+transition entry may be filled with an arbitrary existing state. Every
+invocation, including a repeated coordinate, costs one. There is no
+constant-query port or free control step. If $D=\varnothing$, the
+coordinate map forces $Q=\varnothing$.
+
+A finite coloring $c:\Theta_*\to\mathcal K$ with
+$|c[\Theta_*]|\le r$ specifies the complete exported initial-state
+code; only that current state remains accessible after entry. No free
+color register is retained. Let $\mathsf{MooreRootFeas}_*(r,K,q)$ mean
+joint existence of this coloring and table with $|\mathcal K|\le K$,
+terminating in at most $q$ calls with $G_*(\theta)$ for every attained
+$\theta$. Installed running and halting states, including unused ones,
+are charged exactly as in Definition 12.1. This is a finite comparison
+task, not an extra observation port supplied to the original register.
+

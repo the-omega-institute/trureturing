@@ -1,0 +1,60 @@
+**Definition 13.1 (four upper budgets).** Retain Definitions 10.1--10.3
+and 12.1--12.2 without changing their domain or operational premises.
+Thus $\mathcal U_*\ne\varnothing$ contains every actual finite ordered
+$\alpha/\beta$ origin with $R_P(\rho u)=R_*$, and $\Theta_*$ is its
+attained root chart. The complete exterior, reached support $H$,
+partition, different-class disequalities and blocked-cut guards remain
+fixed. The target is the entire predecessor row
+$F(u)=G_*(\theta_x)$ of Theorem 10.4. There is no bound on source size,
+depth or intrinsic rank.
+
+For each unchanged class name $d\in D$, choose
+
+$$
+a_d=\underset{p\in H,\ [p]=d}{\operatorname{argmin}}\, (|p|,p),
+\qquad \lambda(d)=|a_d|.
+\tag{NBP.13.1}
+$$
+
+The first coordinate is minimized first and the second uses the common
+lexicographic order to break ties. This is the shortest physical
+occurrence convention of Serial Joint Resource Frontier Lemma 3.4.
+The canonical class name is still the original first-hole name; neither
+$a_d$ nor $\lambda(d)$ renames it. In particular the first
+lexicographic occurrence need not be shortest.
+
+For a terminating native run with successive running-state visits
+$b_1,\ldots,b_n$, define its literal submission cost by
+
+$$
+\ell_N(u)=\sum_{i=1}^{n}|\operatorname{addr}(b_i)|,
+\qquad q_N(u)=n.
+\tag{NBP.13.2}
+$$
+
+For a root run on $\theta$, replace the summand by
+$\lambda(\operatorname{coord}(b_i))$ and write $\ell_R(\theta)$ and
+$q_R(\theta)=n$. These are sums along one run before any worst bound.
+Each invocation costs one call, including repeated coordinates,
+absences and the empty native word, whose literal length is zero.
+An initial halt has both costs zero.
+
+For integers $r\ge1,K\ge1,q\ge0,\ell\ge0$, let
+$\mathsf{MooreInvFeas}_*(r,K,q,\ell)$ mean Definition 12.1's joint
+existence with the additional requirement $\ell_N(u)\le\ell$ for
+every $u\in\mathcal U_*$. Let
+$\mathsf{MooreRootFeas}_{*,\lambda}(r,K,q,\ell)$ mean Definition 12.2's
+joint existence with $\ell_R(\theta)\le\ell$ for every attained
+$\theta$. The other requirements remain actual exported initial-state
+range at most $r$, all installed running and complete-output halting
+states at most $K$, and every run terminating correctly within $q$
+calls. Unused states count. The initial-state export is normalized
+before the access cut as in (NBP.12.2); only that current state remains
+accessible after entry. Both encoder and controller may be reselected.
+
+The added coordinate prices only the physical words actually submitted
+to the native port. Address construction, address and table storage,
+whole-output representation, local work, elapsed time, acquisition,
+export, authentication, isolation, entry and native service retain their
+separate costs and supplied premises.
+
