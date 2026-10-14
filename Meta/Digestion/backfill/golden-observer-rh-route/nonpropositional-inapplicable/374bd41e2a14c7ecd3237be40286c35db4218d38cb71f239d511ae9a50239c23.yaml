@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:374bd41e2a14c7ecd3237be40286c35db4218d38cb71f239d511ae9a50239c23
+  normalized_sha256: sha256:374bd41e2a14c7ecd3237be40286c35db4218d38cb71f239d511ae9a50239c23
+cas_ref: sha256:374bd41e2a14c7ecd3237be40286c35db4218d38cb71f239d511ae9a50239c23
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional proof-plan and validation instructions for W-2: dependency choices, expected compilation or axiom behavior, and handling of failed attempts. The separately stated theorem obligation has existing frozen coverage; this receipt does not certify a historical implementation forecast as a mathematical theorem.'
+    previous_atom_id: 934248c7abb28a947d72182d827919fb8f56fb5891edf10cf4bab5c505c8e9c8
+    next_atom_id: 50efe63faadc8d63ac20917b713e0f057a8924d12d7a213aa81e88f2a06eb4d0
