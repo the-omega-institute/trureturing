@@ -2,7 +2,13 @@ fingerprints:
   raw_sha256: sha256:582c1a807b9de4102f968316d0d314e9d295972d29bd5b6d63c85e3c11d68e48
   normalized_sha256: sha256:582c1a807b9de4102f968316d0d314e9d295972d29bd5b6d63c85e3c11d68e48
 cas_ref: sha256:582c1a807b9de4102f968316d0d314e9d295972d29bd5b6d63c85e3c11d68e48
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ContextExtensionComplement.complement_decomposition
+    target_statement_id: sha256:0a47d9f1c5277e4cc32c94a7449f1c94e852c436106579e66e5e28ba1984daca
+  - gid: D5/S3/ConceptDynamics/Spacetime/ContextExtensionComplement.context_extension_complement_spec
+    target_statement_id: sha256:76b2ca7814cd1c493faadad87096d21b2806c613ec9530b81e2f6943e565d63f
+  - gid: D5/S3/ConceptDynamics/Spacetime/ContextExtensionComplement.map_charge
+    target_statement_id: sha256:b2a44e3301e13965de9b1ab6413cca36954c40866bd41f14ea6168d14365b628
 receipts:
   unresolved_subitems: []
   chain_atoms:
