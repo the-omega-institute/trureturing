@@ -779,22 +779,9 @@ theorem odd_boundary_hamiltonian_path (s : ℕ) :
     rw [hs]
     obtain ⟨j, rfl⟩ := odd_enumerate_surjective s p
     exact List.mem_ofFn.mpr ⟨j, rfl⟩
-/-- Complete symbolic port skeleton, with no assumed connectedness or coverage. -/
-theorem boundary_hamiltonian_path {k : ℕ} (hk : 2 ≤ k) :
-    ∃ w : (boundaryGraph k).Walk (0, 0) (Fin.last k, 1), w.IsHamiltonian := by
-  obtain ⟨r, he | ho⟩ := Nat.even_or_odd' k
-  · have hke : k = 2 * (r - 1) + 2 := by omega
-    rw [hke]
-    obtain ⟨w, hw, _⟩ := even_boundary_hamiltonian_path (r - 1)
-    exact ⟨w, hw⟩
-  · have hko : k = 2 * (r - 1) + 3 := by omega
-    rw [hko]
-    obtain ⟨w, hw, _⟩ := odd_boundary_hamiltonian_path (r - 1)
-    exact ⟨w, hw⟩
 /- Native consumers must earn disjoint full-domain pieces, their E/O endpoints and real c seams. -/
 #print axioms even_boundary_hamiltonian_path
 #print axioms odd_boundary_hamiltonian_path
-#print axioms boundary_hamiltonian_path
 #print axioms even_boundary_edges_once
 #print axioms odd_boundary_edges_once
 end D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
