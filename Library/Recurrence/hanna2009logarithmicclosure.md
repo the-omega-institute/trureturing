@@ -14,6 +14,10 @@ triage: anchor
 
 # Hanna's logarithmic closure question
 
+## Locator
+
+https://oeis.org/A167138 contains the quoted general closure conjecture.
+
 The quoted general conjecture occurs identically in OEIS A167138 and A167139.
 A167141 repeats the same assertion with capitalization and grammar differences. These are locations of one question. The partition example
 A167137 and the square examples do not restrict its arbitrary sequence L.
