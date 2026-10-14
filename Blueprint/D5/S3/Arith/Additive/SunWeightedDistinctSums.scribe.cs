@@ -34,7 +34,10 @@ internal sealed class SunWeightedDistinctSumsDocument : IScribeDocumentDefinitio
             Node("result", "The conjecture is false", ResultFormula(),
                 "At F = ℚ, n = 2 and A = {0,1,2}, the six ordered pairs give the values 2, 4, 1, 5, 2, 4. "
                     + "Thus the distinct sums are {1,2,4,5}, of cardinality 4, while sunBound 3 2 is 5; the "
-                    + "claimed inequality would be 5 ≤ 4, a contradiction.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                    + "claimed inequality would be 5 ≤ 4, a contradiction.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sun-2021-conjecture-4-9-weighted-distinct-sums"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
