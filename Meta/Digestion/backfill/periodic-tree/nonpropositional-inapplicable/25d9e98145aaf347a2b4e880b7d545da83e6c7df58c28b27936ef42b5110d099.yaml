@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:25d9e98145aaf347a2b4e880b7d545da83e6c7df58c28b27936ef42b5110d099
+  normalized_sha256: sha256:25d9e98145aaf347a2b4e880b7d545da83e6c7df58c28b27936ef42b5110d099
+cas_ref: sha256:25d9e98145aaf347a2b4e880b7d545da83e6c7df58c28b27936ef42b5110d099
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The reverse implication is Fibonacci divisibility. Suppose …）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 79fdb7ca3be7abf5cc41dc1d8e9e1bc1b8305ebc72d91b8f7619b97d63a4c7a5
+    next_atom_id: 64bfa87827359f409431069ff8866c8d5fc08601e1397ff0a3d8a748b12cda0f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca1d5d432f0f28e5ed1c0d1a4b7efa0135b79a635f83753cc6ef9eecbb39acfb
+  normalized_sha256: sha256:ca1d5d432f0f28e5ed1c0d1a4b7efa0135b79a635f83753cc6ef9eecbb39acfb
+cas_ref: sha256:ca1d5d432f0f28e5ed1c0d1a4b7efa0135b79a635f83753cc6ef9eecbb39acfb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 取 $\operatorname{Hits}_L(e)$ 的见证 $h$ 及其参数 $u\in(0,1)$。 若 $u<\a…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: a171274225004b5d3a742b530df4acd35c06a3cdc993d9c3d8873aa4ce2a5e35
+    next_atom_id: 32622de74f8aa9d9ba76140f5ec2c1d63ca924fa88587ce19f3de58ccedff7a6

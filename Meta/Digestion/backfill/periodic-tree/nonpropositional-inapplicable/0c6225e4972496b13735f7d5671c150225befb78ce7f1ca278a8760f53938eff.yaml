@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c6225e4972496b13735f7d5671c150225befb78ce7f1ca278a8760f53938eff
+  normalized_sha256: sha256:0c6225e4972496b13735f7d5671c150225befb78ce7f1ca278a8760f53938eff
+cas_ref: sha256:0c6225e4972496b13735f7d5671c150225befb78ce7f1ca278a8760f53938eff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 对 $m\in\mathbb Z$，定义黄金返回映射），没有另行断言这些对象的性质。
+    previous_atom_id: 709f31661d7f37483a4e959c4184f0cd78b8fdc88c83201f28010bf0daf7a002
+    next_atom_id: ee804d1807448823d878d1b85ea312cbcbff5cd8378eb76532a2bd00879911c7

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:487c460b2ecc7aeaafcab31713c4794577568da2ad2eebf13aaf386a768b1fb2
+  normalized_sha256: sha256:487c460b2ecc7aeaafcab31713c4794577568da2ad2eebf13aaf386a768b1fb2
+cas_ref: sha256:487c460b2ecc7aeaafcab31713c4794577568da2ad2eebf13aaf386a768b1fb2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The case k=3 is 1<2. Otherwise put m=floor(k/2)>=2. Fibonac…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: be2f8b5af0703886a28612255c65b1d66b37956390fd1e590dca8204db4b24e8
+    next_atom_id: 79fdb7ca3be7abf5cc41dc1d8e9e1bc1b8305ebc72d91b8f7619b97d63a4c7a5

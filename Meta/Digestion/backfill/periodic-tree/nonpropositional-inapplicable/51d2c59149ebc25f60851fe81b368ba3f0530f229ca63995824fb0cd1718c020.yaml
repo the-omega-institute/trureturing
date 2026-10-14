@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51d2c59149ebc25f60851fe81b368ba3f0530f229ca63995824fb0cd1718c020
+  normalized_sha256: sha256:51d2c59149ebc25f60851fe81b368ba3f0530f229ca63995824fb0cd1718c020
+cas_ref: sha256:51d2c59149ebc25f60851fe81b368ba3f0530f229ca63995824fb0cd1718c020
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 对 $n\in\mathbb N$，定义），没有另行断言这些对象的性质。
+    previous_atom_id: 70d2255bb13af1aa52c0e910c3d1351acaf1e4fb866aac2653c2abaa60f1f8c8
+    next_atom_id: 086e8abe1b4143905e353c8692b4e5f1b6fbdd810880a42d8a0a1e3dbe81eb9c
