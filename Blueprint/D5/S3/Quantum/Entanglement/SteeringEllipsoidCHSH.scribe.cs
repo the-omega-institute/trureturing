@@ -41,7 +41,10 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
                     "The two-by-two determinant polarization identity gives Delta((I tensor F)X(I tensor F) adjoint) = |det F| squared Delta(X). For a state sigma with Bob marginal I/2 and Alice Bloch length c, the canonical bound sigma <= (1 - c/2)I bounds its eigenvalues and yields Delta(sigma) <= 1/2 - c. An explicit invertible filter makes Bob's marginal maximally mixed when |b| < 1, giving Delta(rho) <= (1 - |b| squared)(1/2 - c). When |b| = 1, Bob's marginal is a projector; filtering by this projector leaves rho fixed and has determinant zero, so Delta(rho) = 0. Thus every plane sum is at most max(2(1 - c), 1), giving the stated CHSH bound.")),
                     Paragraph(Text(
                     "For tightness, let R(t, s) = |v><v|/2 + t(1 - s)|01><01|/2, where v = sqrt(1 + s)|00> + sqrt((1 - t)(1 - s))|11>. For 0 <= t <= 1 and 0 <= s < 1 this is a density matrix with centre (0, 0, t). At s = 0, CHSH settings in the xy plane attain 2 sqrt(2(1 - t)), proving tightness when t <= 1/2. For 1/2 < t < 1, the four z directions give 2(1 - t + ts); choosing s = 2/(2 + epsilon) makes this strictly greater than 2 - epsilon. At t = s = 1 the product state |00><00| has centre length one and CHSH value two."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("milne-jennings-jevtic-rudolph-2014-chsh-centre-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
