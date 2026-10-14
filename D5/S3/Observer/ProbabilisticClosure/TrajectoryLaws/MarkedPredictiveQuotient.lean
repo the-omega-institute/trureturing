@@ -169,7 +169,7 @@ private theorem trajectory_last (δ : H → Bool → H) (n : ℕ) (i : H) (w : F
   | succ n ih => simpa [trajectory, endpoint, ← Fin.succ_last] using ih (δ i (w 0)) (Fin.tail w)
 
 omit [Fintype H] in
-private theorem path_step (M : Bool → Matrix H H ℝ) (n : ℕ)
+theorem path_step (M : Bool → Matrix H H ℝ) (n : ℕ)
     (h : Fin (n + 2) → H) (w : Fin (n + 1) → Bool) :
     pathMass M (n + 1) h w = M (w 0) (h 0) (h 1) *
       pathMass M n (Fin.tail h) (Fin.tail w) := by
@@ -218,7 +218,7 @@ def endpointEvent (M : Bool → Matrix H H ℝ) (t : ℤ) (n : ℕ)
     (w : Fin n → Bool) (a : FutureClass M) : Set (PathSpace H) :=
   {z | (∀ k : Fin n, z.2 (t + (k.val : ℤ)) = w k) ∧ classOf M (z.1 (t + n)) = a}
 
-private theorem sum_paths (n : ℕ) (f : (Fin (n + 1) → H) → ℝ) :
+theorem sum_paths (n : ℕ) (f : (Fin (n + 1) → H) → ℝ) :
     ∑ h, f h = ∑ i : H, ∑ h : Fin n → H, f (Fin.cons i h) := by
   let e := (Fin.consEquiv (fun _ : Fin (n + 1) => H)).symm
   calc
