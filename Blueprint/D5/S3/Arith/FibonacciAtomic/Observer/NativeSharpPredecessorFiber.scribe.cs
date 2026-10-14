@@ -7,6 +7,7 @@ internal sealed class NativeSharpPredecessorFiberDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "NativeSharpPredecessorFiber", H("Sharp native predecessor fibers"), Blocks(
+            Entry("right_birth", "Right-Child Birth on Every Actual Transition", "For every legal finite parent address q and every original source v, if its current right child is present, its predecessor right child is absent exactly when the current child is alpha. This theorem applies to all sources and addresses, independently of the comb witness family. Whole-row support repair uses it for either child together with equality of the two child-presence flags.", DescribeRole.Theorem),
             Entry("position", "Native child-cut sites", "For k=n+1, position i is hole n i followed by the true edge. The arbitrary-size right-comb context, its hole addresses and its complete address/suffix law are reused directly from FiniteHereditaryPatternRealization.B_T, hole, hole_locate and result. The unique hole/suffix law proves that this single finite public cut is prefix-free. No bound on n or source size is imposed.", DescribeRole.Definition),
             Entry("cut", "One fixed public cut", "The cut is the image of all Fin(n+1) indices under position. It is shared by every selector and every actual origin in the family.", DescribeRole.Definition),
             Entry("site", "Changing old constructors", "A selected old site is beta. Every other old site is the ordered pair of alpha and an arbitrary native tag. After one genuine native update the selected site is the pair of beta and alpha, while an unselected site is the pair of beta and the native image of its tag. The uniform installation identity retains the whole common exterior, stopping at the right child of each site. Its contextual induction uses the existing comb rather than reproving its geometry.", DescribeRole.Definition),
@@ -22,11 +23,25 @@ internal sealed class NativeSharpPredecessorFiberDocument : IScribeDocumentDefin
         Describe.Lean(DescribeId.Create("nativesharppredecessorfiber-" + n.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + n), H(title), Statement(n),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
-    private static StatementSource Statement(string n) => n == "native_sharp_predecessor_fiber"
+    private static StatementSource Statement(string n) => n == "right_birth"
+        ? BirthStatement()
+        : n == "native_sharp_predecessor_fiber"
         ? StatementSource.FromAuthor(Disp(All("n", V("Nat"), All("z", Call("NativeTags", V("n")),
             Imp(Call("Injective", V("z")), Call("Sharp", V("n"), V("z"),
                 Call("oldRows", V("n"), V("z"))))))))
         : StatementSource.WithoutFormula();
+    private static StatementSource BirthStatement()
+    {
+        var q=V("q"); var v=V("v");
+        var address=Call("append",q,Call("singleton",V("true")));
+        var current=Call("subtree",address,Call("rho",v));
+        var birth=IffOf(EqOf(Call("subtree",address,v),V("none")),
+            EqOf(current,Call("some",Call("of",V("true")))));
+        return StatementSource.FromAuthor(Disp(All("q",V("Address"),All("v",V("Source"),
+            Imp(Call("isSome",current),birth)))));
+    }
+    private static Formula IffOf(Formula a,Formula b) => Seq(Par(a),Sp,Iff,Sp,Par(b));
+    private static Formula EqOf(Formula a,Formula b) => Seq(a,Sp,Eq,Sp,b);
     private static Formula V(string n) => F.Id(n);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string n, params Formula[] args) =>

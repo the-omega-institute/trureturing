@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:c12648e965420f874adc44da52f94567c9cfa10dd305b90a5764316014037a21
+  normalized_sha256: sha256:c12648e965420f874adc44da52f94567c9cfa10dd305b90a5764316014037a21
+cas_ref: sha256:c12648e965420f874adc44da52f94567c9cfa10dd305b90a5764316014037a21
+coverage_gids:
+  - gid: D5/S3/Analytic/Fourier/XiThetaTransform.source_theta_coefficient_zero
+    target_statement_id: sha256:59e5616836f4e0cb1c8657980f8d80846db7743de4cdd27bfc6ded1d51c3824d
+  - gid: D5/S3/Analytic/Fourier/XiThetaTransform.source_theta_normalized
+    target_statement_id: sha256:09edf6c4eba965dc3d2f4ec46b9d54adee21ab99597e9de000904b38db8a9d11
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 478965d094e421c98d412eca63b1f42858a516c1febceb6751fc05aab260135b
+    - 1ce65ce21d19f7291526f1b892e662e11f297f01c4b77d71107d6676c64fead4

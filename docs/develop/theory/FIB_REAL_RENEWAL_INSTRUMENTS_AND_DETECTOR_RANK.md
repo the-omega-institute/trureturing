@@ -3531,3 +3531,356 @@ The supplied polynomial-growth result, Theorem 31.2 of [Product upper edge field
 These are ordinary paper derivations using the stated source conditions and cited classical methods, without a claim of Lean verification or worldwide novelty. The cited correspondences and bounded source comparison do not establish exhaustive repository or literature coverage. The endpoint orders are for a fixed pair of polynomials and a fixed risk; they do not give a uniform finite budget over $q$ or over nonzero residuals. Unknown-$q$ composite inference, sharp minimax constants, optimal expected stopping, optimal control storage, and efficient uniform preprocessing are not settled here. None of the bounds is an operator-, diamond- or hidden-state-distance estimate, a physical finite-precision or thermodynamic-cost statement, or a certificate for arbitrary hidden-dimensional attainment. Infinite-path identification, finite-confidence termination and finite zero-error certification retain the separate meanings proved in Section 17.
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Unknown parameter identification by paid conditional gap pairs
+
+The fixed rational center of Section 19 admits a finite conditional statistic that removes the unknown geometric parameter. This section addresses that part of the unknown-$q$ boundary in Definition 19.5: it proves a single family-uniform risk guarantee with pointwise finite mean acquisition, effective deadlines on supplied compact bands, and the optimal deterministic-deadline order on bands approaching zero. Sections 17–19 retain their common-known-$q$ meanings. In particular their $q^{-1}$ order at zero is a different experiment from the composite $\epsilon^{-2}$ order below.
+
+**Definition 20.1 (Two full nuisance families on the original history).** Throughout this section fix $H=H_c$ exactly as in (19.7), and put
+
+$$
+\begin{aligned}
+F_0(k)&=k^9,&F_1(k)&=H(k),&Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,\\
+f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),&f_{i,q}(0)&=0,\\
+\mu_i(q)&=\mathbb E_{i,q}(K+1),&
+\beta_i(q)&=\frac{\mathbb E_{i,q}[K(K+1)]}{2\mu_i(q)}.
+\end{aligned} \tag{20.1}
+$$
+
+Write $\mathsf P_{i,q}$ for the actual stationary binary law supplied by Theorems 11.5 and 15.3 with these weights. Positivity and the bound
+$1\le r_k:=H(k)/k^9\le1+\delta_9/k$ are supplied by Theorem 15.5. The promise is membership in one of the two families $\{\mathsf P_{0,q}:0<q<1\}$ and $\{\mathsf P_{1,q'}:0<q'<1\}$. The opposing $q'$ is unconstrained by $q$; only an explicitly supplied band below restricts either parameter.
+
+The only source actions remain consecutive read-next-bit and stop, beginning at a stationary time. The observer knows the two fixed rational polynomials and a rational risk allowance $0<\alpha<1/2$, but receives no value, approximation or oracle for the true parameter. Each source has its own stationary initialization. There are no resets, parallel copies, hidden ages, probability queries, skipped zeros or free conditional samples. The initial wait, rejected pairs and any unfinished interval at a deadline all count as reads. Rational allowances suffice for any prescribed positive real risk by choosing a smaller rational allowance. All logarithms below are natural.
+
+**Theorem 20.2 (A finite positive shape certificate and its conditional mark).** Define
+
+$$
+\begin{aligned}
+\chi&=\frac{r_1r_3}{r_2^2},&\lambda&=\frac{r_1}{r_2},\\
+C_i&=F_i(2)^2+2F_i(1)F_i(3),&
+\theta_i&=\frac{F_i(2)^2}{C_i},&
+\eta_i(q)&=\frac{C_iq^4}{Z_i(q)^2}.
+\end{aligned} \tag{20.2}
+$$
+
+Then $\chi>1$, $1<\lambda<2$ and $0<\theta_1<\theta_0<1$. The two full stationary families in Definition 20.1 are disjoint. For two independent complete gaps of either shape, the event $E=\{K_1+K_2=4\}$ has probability $\eta_i(q)>0$, and
+
+$$
+\mathsf P_{i,q}\big((K_1,K_2)=(k,4-k)\mid E\big)
+=\frac{F_i(k)F_i(4-k)}{C_i}\quad(k=1,2,3).
+\tag{20.3}
+$$
+
+Thus the conditional mark $Y=\mathbf1_{\{(K_1,K_2)=(2,2)\}}$ has the parameter-free Bernoulli mean $\theta_i$. In particular $C_0=301510$ and $\theta_0=131072/150755$.
+
+Proof. Substituting $k=1,2,3$ in the fixed polynomial (19.7) gives the exact finite certificate
+
+$$
+\begin{aligned}
+r_1&=\frac{1000000000002749658638697}{10^{24}},\\
+r_2&=\frac{64000000000054585242730647}{64\cdot10^{24}},\\
+r_3&=\frac{29160000000015267459958171}{2916\cdot10^{22}},\\
+r_1r_3-r_2^2
+&=\frac{520040714516414119558257878908551006355871}
+{331776\cdot10^{48}}>0.
+\end{aligned} \tag{20.4}
+$$
+
+These identities are verified by multiplying the displayed rational numbers and clearing positive denominators. They use no rounded coefficient. Equation (19.1) gives $r_1>r_2$, while $r_1=1+\delta_9<2$ and $r_2\ge1$, proving the assertion about $\lambda$.
+
+For either nuisance value the positive gap probabilities obey
+
+$$
+\frac{f_{i,q}(1)f_{i,q}(3)}{f_{i,q}(2)^2}
+=\frac{F_i(1)F_i(3)}{F_i(2)^2}
+=\begin{cases}3^9/2^{18},&i=0,\\(3^9/2^{18})\chi,&i=1.\end{cases}
+\tag{20.5}
+$$
+
+Both the powers of $q$ and the normalizers cancel. Hence no gap law in one family equals any gap law in the other. Equality of two stationary binary laws would imply equality of their gaps, since their cylinders give
+$f_{i,q}(k)=\mathsf P_{i,q}(10^k1)/\mathsf P_{i,q}(1)$ and $\mathsf P_{i,q}(1)=1/\mu_i(q)>0$. This proves stationary disjointness. The ratio is an identity used in a proof, not an observation available to the controller.
+
+The three ordered compositions of four have masses $F_i(k)F_i(4-k)q^4/Z_i(q)^2$. Summing and dividing proves (20.3), including its normalization. Also $\theta_i=(1+2F_i(1)F_i(3)/F_i(2)^2)^{-1}$, so (20.4) proves the strict ordering. Among pairs of positive gaps, sums two and three have only one unordered composition; their conditional laws are respectively a point mass and two equal masses. Sum four is the first such pair sum with a shape distinction. This is a statement about this conditional construction, not an observer minimality theorem. $\square$
+
+**Theorem 20.3 (One parameter-free rule, uniform risk and finite paid mean).** Set the positive rational constants
+
+$$
+\Delta=\theta_0-\theta_1,\qquad
+V=\max_{i=0,1}\theta_i(1-\theta_i),\qquad
+M=\left\lceil\frac{8V}{\alpha\Delta^2}\right\rceil.
+\tag{20.6}
+$$
+
+Read until the first actual one, at $\tau=\min\{t\ge0:X_t=1\}$. Partition all subsequent complete gaps consecutively into disjoint pairs $(K_1,K_2),(K_3,K_4),\ldots$. Accept a pair exactly when its sum is four and retain its mark from Theorem 20.2. Read every rejected pair through its closing tick. Stop at the tick closing the $M$th accepted pair. If $S$ is the sum of the $M$ retained marks, emit label zero exactly when
+
+$$
+S\ge\left\lceil M\frac{\theta_0+\theta_1}{2}\right\rceil;
+\tag{20.7}
+$$
+
+otherwise emit label one. The two family-wise errors satisfy the separate bounds
+
+$$
+\sup_{0<q<1}\mathsf P_{0,q}(\text{label }1)\le\alpha/2,
+\qquad
+\sup_{0<q'<1}\mathsf P_{1,q'}(\text{label }0)\le\alpha/2.
+\tag{20.8}
+$$
+
+The rule terminates almost surely at every fixed true parameter in either family. If $J_M$ is the number of complete pairs read through its last acceptance and $L$ is the number of actual bits read, then
+
+$$
+\begin{aligned}
+L&=1+\tau+\sum_{j=1}^{J_M}(K_{2j-1}+K_{2j}+2),\\
+\mathbb E_{i,q}J_M&=\frac{M}{\eta_i(q)},\qquad
+\mathbb E_{i,q}L=1+\beta_i(q)+\frac{2\mu_i(q)M}{\eta_i(q)}<\infty.
+\end{aligned} \tag{20.9}
+$$
+
+Proof. Theorem 17.4 derives from the actual stationary cylinders that $\tau$ is finite almost surely, has mean $\beta_i(q)$, and is independent of the iid complete gaps following that observed tick. Its argument applies to each actual law individually; it does not require knowledge of $q$ to acquire those gaps. Consequently the nonoverlapping pairs are iid. For a block consisting of $j-1$ rejected pairs followed by an accepted mark $y\in\{0,1\}$, its probability is
+
+$$
+(1-\eta_i(q))^{j-1}\eta_i(q)
+\theta_i^y(1-\theta_i)^{1-y}\quad(j\ge1).
+\tag{20.10}
+$$
+
+Multiplying this formula over successive blocks and summing over their positive integer lengths proves that retained marks are iid Bernoulli($\theta_i$), and the block lengths are iid geometric variables of mean $1/\eta_i(q)$. In particular $J_M$ is finite almost surely and has the mean in (20.9). Every gap has finite length almost surely, so the stated stopping tick exists.
+
+A wrong midpoint decision entails $|S/M-\theta_i|\ge\Delta/2$, with (20.7) resolving ties. The Bernoulli variance bound used in Theorem 19.3 therefore gives an error at most $4V/(M\Delta^2)\le\alpha/2$. Its distribution is independent of the nuisance value, proving both suprema in (20.8), without equating their parameters.
+
+To account for acquisition, put $B_j=K_{2j-1}+K_{2j}+2$. The event $\{J_M\ge j\}$ depends only on earlier pairs, and hence is independent of $B_j$. Tonelli and nonnegativity give
+
+$$
+\mathbb E_{i,q}\sum_{j=1}^{J_M}B_j
+=\sum_{j\ge1}\mathsf P_{i,q}(J_M\ge j)\mathbb E_{i,q}B_j
+=2\mu_i(q)\mathbb E_{i,q}J_M.
+\tag{20.11}
+$$
+
+Pair duration is not assumed independent of that pair's acceptance. The predictable inclusion event is what justifies the product. Adding the first $\tau+1$ reads proves (20.9). Polynomial-geometric tails give finite $\mu_i(q),\beta_i(q)$, and $\eta_i(q)>0$, so the full expectation is finite for each fixed true parameter. Discarding a pair's statistic has not discarded its time cost. $\square$
+
+**Theorem 20.4 (Effective deterministic deadlines on supplied compact bands).** Supply rational $0<a<b<1$ and promise that the true parameter lies in $[a,b]$ under either label, still independently across the two hypotheses. Define
+
+$$
+\begin{aligned}
+\eta_{a,b}&=\min_{i=0,1}\frac{C_i a^4}{Z_i(b)^2}>0,&
+\overline\mu_b&=\max_i\mu_i(b),&\overline\beta_b&=\max_i\beta_i(b),\\
+\mathcal B_{a,b}&=1+\overline\beta_b+
+\frac{2\overline\mu_b M}{\eta_{a,b}},&
+W_{a,b}&=\left\lceil\frac{2\mathcal B_{a,b}}\alpha\right\rceil.
+\end{aligned} \tag{20.12}
+$$
+
+Run Theorem 20.3 with at most $W_{a,b}$ reads; if unfinished, emit a fixed default label. This deterministic rule has each family-wise error at most $\alpha$ uniformly on the supplied band. Every quantity in (20.12) is computable by finite rational arithmetic from $a,b,H,\alpha$.
+
+Proof. Positivity of the values $F_i(k)$ implies $Z_i(q)\le Z_i(b)$ for $q\le b$, regardless of signs in the monomial coefficient description of $H$. Thus $\eta_i(q)\ge\eta_{a,b}$ on the band. Differentiating an expectation under weights $w_kq^k$ with respect to $\log q$ gives $\operatorname{Var}(K)$ when the observable is $K$; all differentiations are justified by polynomial-geometric domination on compact subintervals of $(0,1)$. Apply this first with $w_k=F_i(k)$ to see that $\mu_i$ is nondecreasing. Apply it with $w_k=(k+1)F_i(k)$ to see that
+
+$$
+\beta_i(q)=\frac12
+\frac{\sum_{k\ge1}k(k+1)F_i(k)q^k}
+{\sum_{k\ge1}(k+1)F_i(k)q^k}
+\tag{20.13}
+$$
+
+is nondecreasing too. Equation (20.9) now gives $\mathbb E_{i,q}L\le\mathcal B_{a,b}$. A wrong capped decision is contained in the union of a wrong uncapped decision and $\{L>W_{a,b}\}$. Markov's inequality bounds the latter probability by $\mathcal B_{a,b}/W_{a,b}\le\alpha/2$. This argument does not condition retained marks on finishing before the deadline. It includes no initial tick, an unfinished rejected pair, and an unfinished final gap at timeout.
+
+For effectivity, writing each fixed $F_i$ in monomials expresses $Z_i$, $\sum kF_i(k)q^k$ and $\sum k^2F_i(k)q^k$ as finite rational combinations of $Z_j(q)$ for $j\le11$. Recurrence (19.8) evaluates them exactly at rational $b$. Their normalizers are positive by Definition 20.1. Rational maxima, minima and ceilings then compute (20.12). The true parameter itself need not be rational or represented. $\square$
+
+**Proposition 20.5 (Finite controller and separate arithmetic resources).** The uncapped rule requires only a first-tick flag, pair phase, the first gap's category in $\{1,2,3,\ge4\}$, a current zero count saturated at four, an accepted-pair count and a mark count, together with the precomputed integers $M$ and the threshold (20.7). It uses $O(\log(M+2))$ online control bits in addition to the fixed model and risk descriptions. A capped rule adds $O(\log(W_{a,b}+2))$ bits. With binary arithmetic, conservative online operation bounds are
+
+$$
+O\bigl(L\log(M+2)\bigr)\quad\hbox{and}\quad
+O\bigl(W_{a,b}\log((M+2)(W_{a,b}+2))\bigr),
+\tag{20.14}
+$$
+
+respectively. These are attainable upper bounds, not optimal storage or computation claims.
+
+Proof. Before the first one only the flag and, if present, the read counter are updated. Thereafter each zero updates the saturated counter. A tick closes a gap, saves its category or completes the current pair, and resets the zero counter. Exactly $(1,3),(2,2),(3,1)$ trigger acceptance; only $(2,2)$ increments the mark count. Pair phase advances after every completed pair, including rejected ones. Even when a category already forces rejection, the controller continues reading through both closing ticks before starting the next pair. No unbounded gap counter or trial-count register is needed. The accepted-pair and mark counts are at most $M$, and the final decision is an integer comparison. The uncapped rule stops only at the designated closing tick; the capped rule additionally stops after the actual read counter reaches its deadline, using the ordinary decision if that very read completes it and the default otherwise. These updates give the storage and operation bounds.
+
+The constants in (20.2), (20.6), (20.7) and, when needed, (20.12) are preprocessed from finite binary numerator-denominator descriptions. All rational operand lengths, preprocessing workspace and operations, and the stored integers are charged separately. Positivity of $\Delta$ proves termination of this exact preprocessing without any approximation to a source probability or to $\log q$. No efficient bound uniform in the risk or band inputs is asserted. The rules require no independent random seed and retain no raw record. The generating instruments' existing complex dimension $D=6$ is a separate resource coordinate; it is not the observer's control storage or a physical running-time estimate. $\square$
+
+**Lemma 20.6 (The unequal-parameter converse on actual histories).** Fix any $q,t\in(0,1)$ and put $p=f_{0,q}$, $h=f_{1,t}$, $U_a=\sum_{k\ge a}p_k$, $V_a=\sum_{k\ge a}h_k$, $\mu=\mathbb E_p(K+1)$ and $\widetilde\mu=\mathbb E_h(K+1)$. Define
+
+$$
+\begin{aligned}
+d(q,t)&=D(p\Vert h),&I(q,t)&=d(q,t)/\mu,\\
+\pi(a)&=U_a/\mu,&\widetilde\pi(a)&=V_a/\widetilde\mu,&
+C(q,t)&=D(\pi\Vert\widetilde\pi),\\
+\Lambda(k,a)&=p_k/\mu,&
+\widetilde\Lambda(k,a)&=h_k/\widetilde\mu\quad(0\le a\le k).
+\end{aligned} \tag{20.15}
+$$
+
+These divergences are finite, $d(q,t)>0$, and for every integer $W\ge1$,
+
+$$
+D(\mathsf P_{0,q}^W\Vert\mathsf P_{1,t}^W)
+\le C(q,t)+(W-1)I(q,t),\qquad
+C(q,t)\le D(\Lambda\Vert\widetilde\Lambda).
+\tag{20.16}
+$$
+
+Consequently a decision with deadline $W$ and both errors at most $\alpha$ for this selected pair must satisfy
+
+$$
+b_\alpha:=(1-2\alpha)\log\frac{1-\alpha}\alpha
+\le C(q,t)+(W-1)I(q,t).
+\tag{20.17}
+$$
+
+This includes early stopping and common independent randomization. Interchanging the two laws gives the analogous bounds.
+
+Proof. The age-chain projection and chain rule in Theorem 17.3 apply once their summability and terminal-tail conditions are checked for this pair. They cannot be imported from its bounded-common-$q$ premise. Here
+
+$$
+\log\frac{p_k}{h_k}
+=\log\frac{Z_1(t)}{Z_0(q)}-\log r_k+k\log(q/t),
+\tag{20.18}
+$$
+
+which need not be bounded in $k$, but has absolute value at most a constant times $k+1$. To check tails explicitly, for $0<v<1$ put $S_9(v)=\sum_{j\ge0}(j+1)^9v^j<\infty$. For $a\ge1$, $(a+j)^9\le a^9(j+1)^9$ and the center envelope imply
+
+$$
+\begin{aligned}
+\frac{a^9q^a}{Z_0(q)}&\le U_a\le
+\frac{a^9q^a S_9(q)}{Z_0(q)},\\
+\frac{a^9t^a}{Z_1(t)}&\le V_a\le
+\frac{(1+\delta_9)a^9t^a S_9(t)}{Z_1(t)}.
+\end{aligned} \tag{20.19}
+$$
+
+Thus $|\log(U_a/V_a)|\le A+B a$ for finite constants depending on the fixed pair. Both $\sum_a(a+1)U_a$ and $\sum_k(k+1)^2p_k$ are finite. It follows that the gap, age and interval-position log-density ratios are absolutely integrable, that $U_{N+1}\log(U_{N+1}/V_{N+1})\to0$, and that the reset and advance log terms of the age chains are absolutely summable against their stationary transition masses. At age zero the advance is forced under both laws; the absent reset term is taken as zero.
+
+In detail, if $Q,\widetilde Q$ are the two age transition kernels, summing their two branches through age $N$ gives exactly
+
+$$
+\begin{aligned}
+\mu\sum_{a=0}^N\pi(a)D(Q(a,\cdot)\Vert\widetilde Q(a,\cdot))
+={}&\sum_{a=1}^Np_a\log\frac{p_a}{h_a}
++U_{N+1}\log\frac{U_{N+1}}{V_{N+1}}
+-U_0\log\frac{U_0}{V_0}.
+\end{aligned} \tag{20.20}
+$$
+
+The last term is zero because $U_0=V_0=1$. The established bounds let $N$ tend to infinity, leaving $d(q,t)$. The two chains start in their own invariant laws $\pi,\widetilde\pi$, and their binary emissions are the actual stationary cylinders by the same construction as in Theorem 17.3. The chain rule for their $W$ states therefore gives $C(q,t)+(W-1)d(q,t)/\mu$. Projection to the visible word proves the first part of (20.16). Projection of interval-position to age proves the second. Strict positivity of $d$ follows from Theorem 20.2 and strictness of relative entropy for different positive probability laws. The Bernoulli-decision data-processing argument of (17.11) gives (20.17); adjoining the same independent seed does not change the divergence. Neither a bounded same-parameter log ratio nor the remainder $3\log\kappa$ of (17.5) is asserted here. Age and interval-position variables are only converse proof variables. $\square$
+
+**Theorem 20.7 (The composite small-band deadline order).** Let $\mathcal W_\alpha([a,b])$ be the least integer cap for one deterministic rule that receives $H,\alpha,[a,b]$ and has both family-wise errors at most $\alpha$ on that band. It may stop early and is not supplied the true nuisance value. For the fixed $H$ of this section, as rational $\epsilon\downarrow0$ with $2\epsilon<1$,
+
+$$
+\mathcal W_\alpha([\epsilon,2\epsilon])
+=\Theta_{H,\alpha}(\epsilon^{-2}).
+\tag{20.21}
+$$
+
+The same order holds if the decision may use independent randomization. The constants depend on the fixed center and risk, and are not sharp minimax constants.
+
+Proof. For the necessary bound choose the permitted unequal-parameter pair $p=f_{0,q}$, $h=f_{1,\lambda q}$, with $q>0$ small enough that $\lambda q<1$. Theorem 20.2 gives $1<\lambda<2$. With
+
+$$
+d_k=\frac{r_k}{r_1}\lambda^{k-1},\qquad
+A(q)=\sum_{k\ge1}k^9q^{k-1},\qquad
+B(q)=\sum_{k\ge1}k^9d_kq^{k-1},
+\tag{20.22}
+$$
+
+we have $d_1=d_2=1$, $d_3=\chi>1$, and $p_k=k^9q^{k-1}/A(q)$, $h_k=k^9d_kq^{k-1}/B(q)$. In particular $h_2/h_1=p_2/p_1=512q$: changing the nuisance matches the first rare-gap odds exactly. The analytic expansions are
+
+$$
+\begin{aligned}
+A(q)&=1+512q+19683q^2+O_H(q^3),\\
+B(q)&=1+512q+19683\chi q^2+O_H(q^3),\\
+\mathbb E_p\log d_K&=19683\log\chi\,q^2+O_H(q^3).
+\end{aligned} \tag{20.23}
+$$
+
+Here is a remainder justification that includes the unbounded tilt. Fix $q_0>0$ with $\lambda q_0<1$. The envelope for $r_k$ gives $d_k\le(1+\delta_9)\lambda^{k-1}/r_1$ and $|\log d_k|\le A_0+B_0k$. After extracting $q^3$ from the terms $k\ge4$, the three tail series in (20.23) are bounded uniformly for $0<q\le q_0$ by convergent constant multiples of $\sum_{k\ge4}k^{10}(\lambda q_0)^{k-4}$. The denominator $A(q)$ is at least one. Expanding its reciprocal and the logarithms near one thus preserves the displayed remainders; all constants are for this fixed $H$.
+
+It follows that, with $\gamma=19683(\chi-1-\log\chi)>0$,
+
+$$
+\begin{aligned}
+d(q,\lambda q)&=\log\frac{B(q)}{A(q)}-\mathbb E_p\log d_K
+=\gamma q^2+O_H(q^3),\\
+I(q,\lambda q)&=\frac\gamma2q^2+O_H(q^3).
+\end{aligned} \tag{20.24}
+$$
+
+The mean in the second line is $\mu_0(q)=2+O_H(q)$. To control the stationary initial information as well, the $K$ marginals of $\Lambda,\widetilde\Lambda$ in (20.15) have weights $a_kq^{k-1}$ and $a_kd_kq^{k-1}$, where $a_k=(k+1)k^9/2$. Conditional on $K=k$, both position laws are uniform on $\{0,\ldots,k\}$. Their divergence is therefore exactly the divergence of those marginals. Their two normalizers begin
+
+$$
+1+768q+39366q^2+O_H(q^3),\qquad
+1+768q+39366\chi q^2+O_H(q^3).
+\tag{20.25}
+$$
+
+The same calculation gives
+$D(\Lambda\Vert\widetilde\Lambda)=2\gamma q^2+O_H(q^3)$: the first nonzero log-tilt term is $39366\log\chi\,q^2$. Its remainder is controlled as above with $k^{11}$ in place of $k^{10}$. Hence $C(q,\lambda q)=O_H(q^2)$ by (20.16), not by a common-$q$ variance bound. Since $b_\alpha>0$, (20.17) and (20.24) imply $W=\Omega_{H,\alpha}(q^{-2})$ for any rule handling this pair. More explicitly, sufficiently small $q$ has $C\le b_\alpha/2$ and $I\le\gamma q^2$, giving $W\ge1+b_\alpha/(2\gamma q^2)$. Set $q=\epsilon$; both $\epsilon$ and $\lambda\epsilon$ belong to $[\epsilon,2\epsilon]$. Every composite rule must handle this pair, proving the necessary band order also for randomized rules.
+
+For sufficiency use the concrete deadline (20.12). The fixed positive coefficients at the first gap and convergent power series give, uniformly near zero,
+
+$$
+Z_i(q)=F_i(1)q(1+O_H(q)),\qquad
+\mu_i(q)=2+O_H(q),\qquad
+\beta_i(q)=\tfrac12+O_H(q).
+\tag{20.26}
+$$
+
+With $a=\epsilon,b=2\epsilon$ this yields
+
+$$
+\eta_{\epsilon,2\epsilon}
+=\min_i\frac{C_i}{4F_i(1)^2}\,\epsilon^2(1+O_H(\epsilon)).
+\tag{20.27}
+$$
+
+The positive minimum is a fixed constant, $M$ depends only on $H,\alpha$, and the other terms of $\mathcal B_{\epsilon,2\epsilon}$ stay bounded. Thus $W_{\epsilon,2\epsilon}=O_{H,\alpha}(\epsilon^{-2})$, with both errors controlled for every parameter in the band. The deterministic rule supplies the upper bound for both decision classes. $\square$
+
+**Proposition 20.8 (Achieved endpoint costs and the global time boundary).** For the particular uncapped rule of Theorem 20.3, with $M$ fixed by its risk,
+
+$$
+\begin{aligned}
+\mathbb E_{i,q}L
+&=\frac{4MF_i(1)^2}{C_i}\,q^{-2}(1+O_H(q))
+&& (q\downarrow0),\\
+\mathbb E_{i,e^{-s}}L
+&=\frac{20M(9!)^2}{C_i}\,s^{-21}(1+O_H(s))
+&& (s\downarrow0).
+\end{aligned} \tag{20.28}
+$$
+
+The second line is an inefficiency of fixed-small-sum rejection, not an unknown-$q$ optimal-order assertion. No fixed finite deadline, and no uniformly finite mean read count, can support a two-family risk bound $\alpha<1/2$ on the entire open interval.
+
+Proof. Near zero, (20.26) gives
+$\eta_i(q)=(C_i/F_i(1)^2)q^2(1+O_H(q))$. Substitute in (20.9); its initial cost is bounded and gives a smaller relative error. Near one, the monicity and degree nine of both polynomials, with (18.13), give
+
+$$
+\begin{aligned}
+Z_i(e^{-s})&=9!s^{-10}(1+O_H(s)),&
+\mu_i(e^{-s})&=10/s+O_H(1),\\
+\beta_i(e^{-s})&=11/(2s)+O_H(1),&
+\eta_i(e^{-s})&=\frac{C_i}{(9!)^2}s^{20}(1+O_H(s)).
+\end{aligned} \tag{20.29}
+$$
+
+For the waiting mean, the leading numerator in (20.13) is $11!s^{-12}$ and its denominator is $2\cdot10!s^{-11}$. All remaining polynomial terms have at least one lower power, so the remainders stated here follow from the same power-sum bounds. Formula (20.9) proves the second line of (20.28), including every rejected long pair. No sharp near-one composite cost is inferred.
+
+The final paragraph of Theorem 18.4 already proves that, at either endpoint, each fixed-length same-$q$ pair of stationary window laws coalesces in total variation. These pairs lie inside the two composite families. The minimum sum of two errors tends to one, so no fixed deadline can make both errors at most any fixed number below $1/2$. For the mean assertion, suppose a uniformly $\alpha$-correct stopping rule had $B:=\sup_{i,q}\mathbb E_{i,q}L<\infty$. Choose $\alpha<\alpha'<1/2$ and an integer $W>B/(\alpha'-\alpha)$. Truncating that rule at $W$, with a fixed default on timeout, gives both family-wise errors at most $\alpha+B/W<\alpha'$, a contradiction. Independent randomization does not alter either argument. This excludes a uniformly bounded mean, while leaving the pointwise finite mean in (20.9) intact. $\square$
+
+**Definition 20.9 (Supplier correspondence and remaining scope).** The new consumer consists of the exact certificate (20.4), its actually acquired conditional marks, the paid random acceptance count, and the unequal-nuisance comparison yielding (20.21). Conditional inference, stationary renewal structure, variance bounds, chain rules and data processing are classical ingredients. Their specific correspondence is:
+
+| Supplier | Input used in this section and limit of the application |
+| --- | --- |
+| This volume, Theorems 11.5, 15.3, 15.5 and 17.4; equations (19.7)–(19.8) | The two actual stationary instruments, positive weights, the fixed rational $H$, iid complete gaps after the first observed tick, paid initial wait, and exact rational power sums. The conditional observer changes no source-generating construction. |
+| This volume, Theorems 17.3, 18.4 and 19.3 | The age-chain and Bernoulli-decision mechanisms, endpoint coalescence and midpoint variance calculation. Lemma 20.6 supplies the unequal-parameter integrability missing from the common-$q$ version; no bounded common-$q$ likelihood remainder is transferred. |
+| M. Zamparo, *Renewal model for dependent binary sequences*, *Journal of Statistical Physics* **187**, 5 (2022), [arXiv:2108.11293v2](https://arxiv.org/html/2108.11293v2), Theorem 2.1 and Propositions 2.1, 3.1 | His $S_2=K+1$ and $S_1=\tau+1$. The stationarity condition $\mathbb E[S_2]\mathsf P(S_1=s)=\mathsf P(S_2\ge s)$, boundary-tail cylinders and regeneration identify the classical renewal objects used here. They do not supply free acquired gaps. |
+| M. Broniatowski and V. Caron, *Conditional inference in parametric models*, [arXiv:1202.0944v1](https://arxiv.org/pdf/1202.0944v1), Section 4.1, equations (9)–(11) | The classical principle is cancellation of a nuisance canonical parameter on conditioning on its sufficient statistic. Here the discrete weights embed as $k^9\exp\{\gamma\log r_k+\eta k\}$, with $\gamma\in\{0,1\}$ and $\eta=\log q<0$; bounded $\log r_k$ ensures normalization. Conditioning a pair on its sum cancels $\eta$. Equation (20.3) proves the finite discrete specialization directly; the paper's continuous-density approximations and Monte Carlo procedures are not imported. |
+| Y. Polyanskiy and Y. Wu, [*Information Theory*, Chapter 7 author notes](https://people.lids.mit.edu/yp/homepage/data/LN_fdiv.pdf), Theorems 7.2, 7.5 and equation (7.15) | Relative-entropy data processing and minimum simple-testing sum of errors $1-d_{\rm TV}$. The composite lower bound selects one admissible cross-parameter pair; it does not assume that a simple-test achievability result solves composite inference. |
+| [FIB atom statistical laws](FIB_ATOM_STATISTICAL_LAWS.md), Section 100, especially (100.8) | The existing effective-information Schur complement is for a separately specified regular experiment. It is not a premise of this finite conditional observer or its deadline bound, and no generic Fisher or LAN assertion is added here. |
+
+The external passages specified above support only these correspondences; no unavailable conditional-inference theorem is a premise. The source-specific calculations are ordinary paper derivations, with no Lean, physical implementation, worldwide novelty or exhaustive-search claim. The shape is the single fixed rational center $H_c$; arbitrary residuals, varying centers and uniformity as the residual vanishes are outside the conclusions. All cost constants may depend on this fixed $H$ and risk. Uniform risk in (20.8), pointwise finite expected reads in (20.9), and supplied-band deterministic deadlines in (20.12) have different quantifiers.
+
+This resolves the stated fixed-center portion of the unknown-$q$ boundary in Definition 19.5. Sharp composite constants, optimal expected stopping, optimal observer storage, efficient uniform preprocessing, and an efficient unknown-$q$ near-one acquisition rule remain unsettled here. The $s^{-21}$ mean describes only this deliberately small conditional statistic. The known-$q$ orders in (19.14) remain unchanged. Positive probabilities for every legal finite word also persist across arbitrary nuisance pairs, so Corollary 17.5's finite zero-error obstruction still applies; finite-confidence identification does not certify the model promise or exact probabilities. Producer dimension, physical precision, hidden-state comparison and thermodynamic resources retain their separate boundaries.
+
+## 追加锚（本行以下为增补区）
