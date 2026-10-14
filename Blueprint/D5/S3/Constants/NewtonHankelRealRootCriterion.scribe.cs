@@ -50,6 +50,8 @@ internal sealed class NewtonHankelRealRootCriterionDocument : IScribeDocumentDef
         Blocks(Paragraph(Text(
             "A real polynomial of degree d with strictly positive coefficients from zero through d "
                 + "has a strictly positive value at every nonnegative real argument. "
+                + "The displayed degree equality and coefficient inequalities are the definition of "
+                + "HasPositiveCoefficientsOfDegree. "
                 + "Every term in its evaluation sum is nonnegative, and its constant term is strictly positive."))),
         DescribeRole.Theorem);
 
@@ -58,8 +60,14 @@ internal sealed class NewtonHankelRealRootCriterionDocument : IScribeDocumentDef
         Formula reals = Seq(Mathbb, Grp(F.Id("R")));
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
         Formula polynomial = ApplyNamed(Named("Polynomial"), reals);
-        Formula positive = ApplyNamed(Named("D5", "S3", "Constants", "NewtonHankelRealRootCriterion",
-            "HasPositiveCoefficientsOfDegree"), F.Id("P"), F.Id("d"));
+        Formula degree = new Formula.Relation(ApplyNamed(Named("Polynomial", "natDegree"), F.Id("P")),
+            FormulaRelationOperator.Equal, F.Id("d"));
+        Formula coefficients = Quantify("k", naturals, Implication(
+            new Formula.Relation(F.Id("k"), FormulaRelationOperator.LessThanOrEqual, F.Id("d")),
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThan,
+                ApplyNamed(Named("Polynomial", "coeff"), F.Id("P"), F.Id("k")))));
+        Formula positive = new Formula.Logic(Parenthesized(degree), FormulaLogicOperator.And,
+            Parenthesized(coefficients));
         Formula nonnegative = new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, F.Id("x"));
         Formula evaluation = ApplyNamed(Named("Polynomial", "eval"), F.Id("x"), F.Id("P"));
         Formula conclusion = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, evaluation);
