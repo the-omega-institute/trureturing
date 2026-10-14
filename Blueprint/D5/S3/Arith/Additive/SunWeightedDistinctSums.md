@@ -60,6 +60,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/SunWeightedDistinctSums.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sun-2021-conjecture-4-9-weighted-distinct-sums` (refuted) by `D5/S3/Arith/Additive/SunWeightedDistinctSums.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun-2021-conjecture-4-9-weighted-distinct-sums","declaration_gid":"D5/S3/Arith/Additive/SunWeightedDistinctSums.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhi-Wei Sun (2021). *On permutations of {1,...,n} and related topics*. DOI: [10.1007/s10801-021-01028-8](https://doi.org/10.1007/s10801-021-01028-8). URL: <https://arxiv.org/abs/1811.10503v6>.
