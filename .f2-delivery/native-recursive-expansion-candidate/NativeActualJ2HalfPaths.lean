@@ -183,10 +183,12 @@ theorem native_actual_j2_frame_half_paths {m : ℕ} (hm : 5 ≤ m)
       (∀ e ∈ cuts, e ∈ w.edges) := by
   classical
   dsimp only
-  let iso := frameDomainIso hm F
+  let iso : domainGraph (F2Domain m) ≃g domainGraph (FrameDomain F) :=
+    frameDomainIso hm F
   obtain ⟨rawPieces, hend, _, _, _, hs, he, hc⟩ :=
     native_actual_j2_half_paths hm side (F2Domain m) (fun _ => Iff.rfl) rawWalk hraw hinv
-  let pieces (i : Fin 3) := mapPiece iso.toHom (rawPieces i)
+  let pieces (i : Fin 3) : Piece (domainGraph (FrameDomain F)) :=
+    mapPiece iso.toHom (rawPieces i)
   have hlist : List.ofFn pieces = (List.ofFn rawPieces).map (mapPiece iso.toHom) := by
     rw [List.map_ofFn]
     rfl

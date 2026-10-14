@@ -19,9 +19,9 @@ def advance (k : ℕ) (B : RawPort → RawPort → Prop) (p q : RawPort) : Prop 
     ¬ pair (previousIndex p) (previousIndex q) (k - 1, 1) (0, 1)) ∨
     pair p q (0, 1) (k, 1) ∨ pair p q (0, 0) (1, 1)
 
+set_option maxHeartbeats 800000 in
 /-- The complete even template, including its guarded ladder range,
 is stable under the single-order path update. -/
-set_option maxHeartbeats 800000 in
 theorem advance_even_boundary (k : ℕ) (hk : 3 ≤ k) (p q : RawPort) :
     advance k (evenBoundary k) p q ↔ evenBoundary (k + 1) p q := by
   rcases p with ⟨i, s⟩
@@ -30,9 +30,9 @@ theorem advance_even_boundary (k : ℕ) (hk : 3 ≤ k) (p q : RawPort) :
     by_cases ht₀ : t = 0 <;> by_cases ht₁ : t = 1 <;>
     simp_all [advance, previousIndex, evenBoundary, ladder, pair] <;> omega
 
+set_option maxHeartbeats 800000 in
 /-- The odd template has the same update; k=3 retains its empty old
 ladder and gains precisely the new R0--L1 ladder edge at k=4. -/
-set_option maxHeartbeats 800000 in
 theorem advance_odd_boundary (k : ℕ) (hk : 3 ≤ k) (p q : RawPort) :
     advance k (oddBoundary k) p q ↔ oddBoundary (k + 1) p q := by
   rcases p with ⟨i, s⟩
