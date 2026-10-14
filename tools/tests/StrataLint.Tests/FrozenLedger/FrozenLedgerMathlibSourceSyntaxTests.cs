@@ -5,6 +5,50 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Theory]
+    [InlineData("unchanged", true)]
+    [InlineData("fieldType", false)]
+    [InlineData("fieldName", false)]
+    [InlineData("structure", false)]
+    public void MathlibReanchorPreservesCompiledInductiveClassSource(string mutation, bool authorized)
+    {
+        const string source = "class Carrier where\n  value : Nat\n";
+        var baseline = ModuleWithReport("A", source, "old compiled class",
+            declarations: ["Carrier"], kind: "inductive");
+        var candidate = baseline with
+        {
+            Source = mutation switch
+            {
+                "fieldType" => source.Replace("Nat", "Int", StringComparison.Ordinal),
+                "fieldName" => source.Replace("value", "other", StringComparison.Ordinal),
+                "structure" => source.Replace("class", "structure", StringComparison.Ordinal),
+                _ => source,
+            },
+            StatementMaterial = "new compiled class",
+        };
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")], [candidate, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(authorized, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData("def")]
+    [InlineData("theorem")]
+    [InlineData("opaque")]
+    public void MathlibReanchorRejectsWrongCompiledClassKind(string kind)
+    {
+        var baseline = ModuleWithReport("A", "class Carrier where\n  value : Nat\n",
+            "old wrong class kind", declarations: ["Carrier"], kind: kind);
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")],
+            [baseline with { StatementMaterial = "new wrong class kind" }, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.False(result.Authorized);
+    }
+
+    [Theory]
     [InlineData("pre_transition", "PredictiveThermodynamic.tacticPre_transition")]
     [InlineData("parser_transition", "PredictiveThermodynamic.tacticParser_transition")]
     public void MathlibReanchorBindsTacticGeneratedRootsToTheirModuleSource(
