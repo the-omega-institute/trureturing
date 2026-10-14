@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aeb91814533efb0522f7e02033592d39c2af75692e9d1d30f1f9abfc17040a32
+  normalized_sha256: sha256:aeb91814533efb0522f7e02033592d39c2af75692e9d1d30f1f9abfc17040a32
+cas_ref: sha256:aeb91814533efb0522f7e02033592d39c2af75692e9d1d30f1f9abfc17040a32
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只解释「以我为中心」这一表述在模型中的含义，没有提出新的性质。
+    previous_atom_id: 4e90e992251c5fe6055931d72ebcaa9fb9fb961b87a30bcf86f773ec6b7d47de
+    next_atom_id: 573f18a48c32710e7c27b31b721d8a2c851db586768cc3b4f1838bc3cc3f6b47
