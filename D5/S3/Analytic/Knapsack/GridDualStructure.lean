@@ -18,7 +18,7 @@ namespace D5.S3.Analytic.Knapsack.GridDualStructure
 
 open Interpolation.TwoPointGridDominance (logValue)
 open private weak_duality box_bound from D5.S3.Analytic.Knapsack.FractionalKnapsackDual
-open D5.S3.Analytic.Interpolation.TwoPointGridDominance (logValue_strictMono)
+open private logValue_strictMono from D5.S3.Analytic.Interpolation.TwoPointGridDominance
 
 variable {ι : Type*} [Fintype ι]
 

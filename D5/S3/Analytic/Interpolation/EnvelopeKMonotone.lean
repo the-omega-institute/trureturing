@@ -20,7 +20,7 @@ noncomputable section
 namespace D5.S3.Analytic.Interpolation.EnvelopeKMonotone
 
 open TwoPointGridDominance
-open D5.S3.Analytic.Interpolation.TwoPointGridDominance (logValue_strictMono)
+open private logValue_strictMono from D5.S3.Analytic.Interpolation.TwoPointGridDominance
 
 /-- The two-node logarithmic envelope, with V the total squared deviation. -/
 def psiK (k : ℕ) (m V : ℝ) : ℝ :=
