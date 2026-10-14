@@ -5,7 +5,7 @@ year: 1975
 title: Répartition des nombres superabondants
 doi: 10.24033/bsmf.1793
 url: https://www.numdam.org/item/BSMF_1975__103__65_0/
-claim: The classical benefit is the nonnegative loss relative to a colossally abundant optimizer; the FIB price-loss expression is exactly this existing quantity.
+claim: The classical CA benefit has explicit arbitrary-host thin-layer capacity bounds and a same-host signed-tail application; the joint FIB Robin budget remains unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -321,6 +321,252 @@ window and source checks. An asymptotic height improvement is not an
 effective reconstruction threshold or a positive Robin margin. It does
 not prove that the actual host's gcd resources satisfy the strict budget
 in the preceding section.
+
+## An explicit thin-layer capacity for the same arbitrary host
+
+The existing [uniform inventory application CR40](../Estimation/trureturing2026pricegapconvexity.md#the-prime-interval-supplier-and-both-competitor-costs-control-actual-stock)
+already has a square-root buffer for actual core activations. The
+following is an explicit application to the arbitrary-integer benefit
+above, using a uniform short-interval prime bound. It is not a new sieve,
+quadratic-cost mechanism, or literature-priority claim. All conclusions
+here are paper derivations, without Lean verification.
+
+Let $a\ge16$, $s=a\log a$, and reuse the **maximal** reference $C=C_s$,
+including every zero-cost tied layer. For the same positive integer $n$,
+write
+
+$$
+\begin{aligned}
+\lambda_{p,j}&=\ell_{p,j}/\log p,\qquad b_p=v_p(C),\\
+\beta_a(n)&=\log Z(C)-\log Z(n)+\frac{\log n-\log C}{s},\\
+E_a(n)&=\sum_p|v_p(n)-b_p|\log p
+       =\log\frac{nC}{\gcd(n,C)^2}.
+\end{aligned}
+$$
+
+Thus $s\beta_a(n)=D_s(n)$ is the existing benefit account. Define the
+complete weak-layer capacity, including ties and all prime powers, by
+
+$$
+\mathfrak C_a(h)=
+\sum_{\substack{p\ {\rm prime},\ j\ge1\\
+                 |s\lambda_{p,j}-1|\le h}}\log p.
+$$
+
+The quantitative bound used below is
+
+$$
+\boxed{\mathfrak C_a(h)\le24ah+32\sqrt a}
+\qquad(a\ge16,\ 0\le h\le1/4).
+\tag{TC.1}
+$$
+
+Its prime input is [Yamada, arXiv:2312.16090v1](../Scale/yamada2023arbitraryintervals.md),
+Theorem 2, p.3, with modulus one. It gives, for every real $x>0$ and
+$y>1$,
+
+$$
+\pi(x+y)-\pi(x)<\frac{2y}{\log y+0.8601}<\frac{2y}{\log y}.
+$$
+
+This is used as a preprint input, not an independently verified sieve
+proof. For the higher layers use the already cited
+[Dusart bound](../Weil/dusart2010estimates.md#同一-robin-来源的有效素数幂修正)
+$\vartheta(t)<2t$ for $t\ge1$.
+
+To check the application, put $T_j=p+\cdots+p^j$. The exact marginal
+already used above satisfies
+
+$$
+\ell_{p,j}>\frac1{T_j+1}>p\ell_{p,j+1},
+\qquad T_{j+1}=p(T_j+1).
+$$
+
+Since $(1+h)/(1-h)\le5/3<2$, at most one weak layer occurs per prime.
+A weak layer with $j\ge2$ has
+$p^2\log p<(4/3)a\log a$, hence $p<2\sqrt a$. Its entire prime mass
+is at most $\vartheta(2\sqrt a)<4\sqrt a$, in particular at most
+$8\sqrt a$.
+
+For $a^{-1/2}\le h\le1/4$, the first-layer inequalities
+
+$$
+\frac1{(p+1)\log p}<\lambda_{p,1}<\frac1{p\log p}
+$$
+
+place every weak first-layer prime strictly in
+$((1-2h)a,(1+2h)a)$. On the left, $ha\ge\sqrt a\ge4$ gives
+$p+1\le(1-h)a$, contradicting
+$\lambda_{p,1}\le(1+h)/s$. On the right,
+$1/(1+2h)<1-h$ contradicts the lower weak-layer threshold.
+The interval has positive start, length $4ha\ge4\sqrt a$, and
+$\log p\le(3/2)\log a$. Its weighted prime mass is consequently at most
+
+$$
+\frac{8ha}{\log(4ha)}\frac32\log a\le24ha.
+$$
+
+Add the higher-layer allowance. For $0\le h<a^{-1/2}$, monotonicity
+bounds the entire capacity by its value at $a^{-1/2}$, which is at most
+$32\sqrt a$. This proves (TC.1), including $h=0$ and $a=16$.
+
+### A finite loss bound and the conditional near-extremal radius
+
+Set
+
+$$
+H_a(z)=\begin{cases}
+z^2/(48a),&0\le z\le6a,\\
+z/4-3a/4,&z\ge6a.
+\end{cases}
+$$
+
+For the actual layers crossed between $n$ and $C$, reuse the exact
+benefit decomposition and the finite layer-cake argument. They give
+
+$$
+\begin{aligned}
+s\beta_a(n)
+&\ge\int_0^{1/4}(E_a(n)-\mathfrak C_a(h))_+\,dh\\
+&\ge H_a\bigl((E_a(n)-32\sqrt a)_+\bigr).
+\end{aligned}
+\tag{TC.2}
+$$
+
+A tied removal contributes to $E_a(n)$ at cost zero and is already
+counted in $\mathfrak C_a(0)$; no tie is discarded. This alternative
+bound may be combined with the earlier capacity bound by taking their
+maximum. Adding both would spend the same benefit twice.
+
+For any $M>0$ and $a>\max\{16,(4M/3)^2\}$, it follows that
+
+$$
+\beta_a(n)\le\frac M{\sqrt a\log a}
+\quad\Longrightarrow\quad
+E_a(n)\le32\sqrt a+\sqrt{48M}\,a^{3/4}.
+\tag{TC.3}
+$$
+
+Indeed $s\beta_a(n)\le M\sqrt a<3a/4=H_a(6a)$ forces the quadratic
+branch in (TC.2). This is a conditional radius for every positive
+integer at the same price. It does not assert that each Robin violation
+has that benefit upper bound. At the larger increment-loss budget used
+in the preceding reconstruction application, it only recovers the
+already known $O(a/\log a)$ order; that order is not an additional result.
+The new usable version here is the explicit buffer and the conditional
+$a^{3/4}$ radius, rather than a uniform improvement of every old bound.
+
+### Retain the full signed tail and the original FIB window
+
+Use the logarithmic Robin margin
+$\Delta_{\log}(n)=\gamma+\log\log\log n-\log Z(n)$, for $n>e$.
+Let $I_\psi(a)$, $C_{\rm pp}(a)$ and $D^*(a)$ be exactly the
+[independent full-support quantities in the Polak source note](../Analytic/polak2026finiterobinca.md#directly-reusable-effective-core):
+
+$$
+\begin{aligned}
+I_\psi(a)&=\int_a^\infty(\psi(t)-t)
+                    \frac{1+\log t}{t^2\log^2t}\,dt,\\
+D^*(a)&=\sum_{p\le a}\min_{j\ge1}
+ \left\{\frac{(j-1)\log p}{a\log a}
+                   -\log(1-p^{-(j+1)})\right\}-C_{\rm pp}(a).
+\end{aligned}
+$$
+
+There is a small correction between that full-support optimizer and
+$C$. Define
+
+$$
+J(a)=\sum_{p\le a}
+ \left(\frac{\log p}{a\log a}-\log(1+1/p)\right)_+.
+$$
+
+All primes of $C$ are less than $a$, and every $p\le a-1$ has its first
+layer strictly accepted. The full-support optimizer $C^+$ therefore only
+adds a possible first layer at one prime in $(a-1,a]$. Its price-objective
+loss is exactly $J(a)$. The summand before its positive part increases
+with $p$, so
+
+$$
+0\le J(a)\le\frac1a-\log(1+1/a)<\frac1{2a^2}.
+$$
+
+The cited full-support identity at $C^+$, followed by the exact benefit
+of the unchanged integer $n$, gives, with $A=\log n$,
+
+$$
+\begin{aligned}
+\Delta_{\log}(n)&=I_\psi(a)+D^*(a)-J(a)+\beta_a(n)+\kappa_a(A),\\
+\kappa_a(A)&=\log\log A-\log\log a-\frac{A-a}{a\log a}.
+\end{aligned}
+\tag{TC.4}
+$$
+
+For the sign check, replacing $C^+$ by the unconstrained optimizer $C$
+**decreases** the full-support account by $J(a)$. Explicitly the former
+account is
+$\gamma+\log\log a-\log Z(C^+)+(\log C^+-a)/s$;
+then add $\beta_a(n)$ and the displayed tangent remainder. No CA
+property of the actual $n$ is assumed.
+
+For prime $r\ge7$, put $V=F_r$ and retain the exact original endpoints
+
+$$
+X_-=1+V\lceil V/10\rceil,\quad
+X_+=1+V\lfloor V/5\rfloor,\quad
+a=\log X_-\ge16,\quad w=\log(X_+/X_-)<\log2.
+$$
+
+Every original $N=1+Vg$ has $A\in[a,a+w]$. The decreasing positive
+curvature $(1+\log a)/(a^2\log^2a)$ of $\log\log a$ gives
+
+$$
+-\frac{w^2(1+\log a)}{2a^2\log^2a}\le\kappa_a(A)\le0.
+$$
+
+Thus (TC.2) and (TC.4) yield the same-host lower certificate
+
+$$
+\Delta_{\log}(N)\ge I_\psi(a)+D^*(a)
++\frac{H_a((E_a(N)-32\sqrt a)_+)}{a\log a}-R(a,w),
+\quad R(a,w)=\frac1{2a^2}+
+              \frac{w^2(1+\log a)}{2a^2\log^2a}.
+\tag{TC.5}
+$$
+
+The existing FIB bound $a<r$ and $p\mid V\Rightarrow p\ge2r-1$ give
+$(C,V)=1$. Writing the actual reduced ratio $N/C=u/v$ retains precisely
+
+$$
+\begin{gathered}
+u,v\in\mathbb N_{>0},\quad(u,v)=1,\quad v\mid C,\\
+Cu\equiv v\pmod V,\qquad X_-v\le Cu\le X_+v,\\
+E_a(N)=\log(uv).
+\end{gathered}
+\tag{TC.6}
+$$
+
+Conversely these conditions give the integer $N=Cu/v$ in exactly the
+original progression and multiplier window. A lower certificate from
+(TC.5) therefore has to hold on these **joint** pairs, not on separately
+optimized numerator and denominator sets.
+
+The sufficient inequality
+
+$$
+I_\psi(a)+D^*(a)+
+\frac{H_a((\log(uv)-32\sqrt a)_+)}{a\log a}>R(a,w)
+\tag{TC.7}
+$$
+
+is still unproved on the complete original candidate set. For a fixed
+$K>0$ and sufficiently large $a$, an excess edit resource
+$E_a(N)-32\sqrt a=Ka^{3/4}$ contributes
+$K^2/(48\sqrt a\log a)$, the natural core scale. No uniform distance
+of that size, signed-tail bound, or joint compensation is supplied here.
+When the actual integer is $C$ itself, its benefit and edit resource
+vanish, so this estimate adds no loss at all. It cannot replace the
+unpaid same-source signed tail in the global CA route or prove RH.
 
 ## Charge the actual removals before bounding additions
 
