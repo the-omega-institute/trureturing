@@ -1,6 +1,6 @@
 ---
 bibkey: adamopoulou2025entwininggrassmann
-authors: Pavlos Adamopoulou, Georgios Papamikos
+authors: P. Adamopoulou, G. Papamikos
 year: 2025
 title: "Entwining Yang–Baxter maps over Grassmann algebras"
 doi: 10.1016/j.physd.2024.134469
