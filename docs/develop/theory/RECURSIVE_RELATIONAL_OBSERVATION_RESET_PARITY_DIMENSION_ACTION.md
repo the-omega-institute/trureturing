@@ -816,7 +816,7 @@ limitation in Theorem 16; its five-character assertions are unchanged.
 Proof. Necessity is Theorem 15, since the image of a homeomorphism under
 $\rho_q$ is an integer-linear equivalence. For sufficiency use the
 existing two-step numbered-history endpoint realization at $4\mid q$
-([D5.S3.ConceptDynamics.Coding.ResetTwoStepArithmetic.TwoStep.rho_eq](../../../D5/S3/ConceptDynamics/Coding/ResetTwoStepArithmetic.lean#L919)).
+([D5.S3.ConceptDynamics.Coding.ResetNumberedHistories.TwoStep.rho_eq](../../../D5/S3/ConceptDynamics/Coding/ResetTwoStepArithmetic.lean#L919)).
 Its set-image action on every original beam generator is the sum of that
 generator and its two forward-time image. Those generators generate the
 original integer dimension group, giving $\rho_q(h)=I+\Theta_q^2$.
