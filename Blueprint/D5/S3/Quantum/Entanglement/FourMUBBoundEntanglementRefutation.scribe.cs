@@ -23,15 +23,19 @@ internal sealed class FourMUBBoundEntanglementRefutationDocument : IScribeDocume
             Node("claim", "The necessity half of Conjecture 1", ClaimFormula(),
                 "Section VIII, p. 8: '" + Conjecture + "' The preceding sentence reads: 'When d = 2^r, we predict that d/2 + 1 MUBs are both necessary and sufficient for the witness W^Γ(M_m, s) to be non-decomposable.' The formula states the necessity half for every natural r at least two, every family size below 2^(r−1)+1, every MUB family and every modular shift. Subtraction r−1 is natural subtraction. Refuting this half refutes the stated equality for the minimum.", true),
             Node("result", "Refutation in dimension eight", Disp(new Formula.Not(F.Id("claim"))),
-                "Take r=3, m=4 and s=1. The bases are I, H/√8, diag(a)H/√8 and diag(b)H/√8, where H[x,k]=(−1)^(x·k) for the three binary coordinates, a=(1,1,i,i,i,−i,−1,1), and b=(1,1,1,−1,i,i,−i,i). Their overlap calculations use Walsh multiplication and finite character sums. The rational state is M/10134, with eight XOR sectors, each of the form [[A,B],[B,A]]. Thirty-two separate LDL identities with 128 positive pivots prove that the state and its partial transpose are positive semidefinite. Its trace is one and its exact witness expectation is −14/563. Thus four bases detect a PPT density matrix although the conjecture requires at least five. The proof establishes positive semidefiniteness, without a public strict-positivity or optimal-minimum statement.", false, DescribeRole.Theorem)),
+                "Take r=3, m=4 and s=1. The bases are I, H/√8, diag(a)H/√8 and diag(b)H/√8, where H[x,k]=(−1)^(x·k) for the three binary coordinates, a=(1,1,i,i,i,−i,−1,1), and b=(1,1,1,−1,i,i,−i,i). Their overlap calculations use Walsh multiplication and finite character sums. The rational state is M/10134, with eight XOR sectors, each of the form [[A,B],[B,A]]. Thirty-two separate LDL identities with 128 positive pivots prove that the state and its partial transpose are positive semidefinite. Its trace is one and its exact witness expectation is −14/563. Thus four bases detect a PPT density matrix although the conjecture requires at least five. The proof establishes positive semidefiniteness, without a public strict-positivity or optimal-minimum statement.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bae-bera-chruscinski-hiesmayr-mcnulty-2022-four-mub-bound-entanglement"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolutionClaim = null) => Describe.Lean(
             DescribeId.Create("fourmub-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolutionClaim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name)));

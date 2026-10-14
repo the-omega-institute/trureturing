@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bae-bera-chruscinski-hiesmayr-mcnulty-2022-four-mub-bound-entanglement` (refuted) by `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bae-bera-chruscinski-hiesmayr-mcnulty-2022-four-mub-bound-entanglement","declaration_gid":"D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Bae; A. Bera; D. Chruściński; B. C. Hiesmayr; D. McNulty (2022). *How many mutually unbiased bases are needed to detect bound entangled states?*. DOI: [10.1088/1751-8121/acaa16](https://doi.org/10.1088/1751-8121/acaa16). URL: <https://arxiv.org/abs/2108.01109>.
