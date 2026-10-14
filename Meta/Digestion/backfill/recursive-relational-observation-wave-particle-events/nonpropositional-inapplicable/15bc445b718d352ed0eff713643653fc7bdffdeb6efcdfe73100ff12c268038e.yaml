@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15bc445b718d352ed0eff713643653fc7bdffdeb6efcdfe73100ff12c268038e
+  normalized_sha256: sha256:15bc445b718d352ed0eff713643653fc7bdffdeb6efcdfe73100ff12c268038e
+cas_ref: sha256:15bc445b718d352ed0eff713643653fc7bdffdeb6efcdfe73100ff12c268038e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 202. 概率加权的鲁棒全息合同 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 0f59624c2a390d9e191df267b400f0abfedf2eafc4546c6b976fc9bd27e227ee
+    next_atom_id: d88e3a82ee779b6f9363aca91eefd65c990ac9a1e6cfdae56794895157e38377
