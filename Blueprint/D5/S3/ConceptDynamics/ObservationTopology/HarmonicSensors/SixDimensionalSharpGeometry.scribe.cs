@@ -580,13 +580,24 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     + "false. The earlier C05/C06 argument gives Measurable(delta_w) and, for every measurable original delta, "
                     + "R(w,delta_w)=Phi(-sqrt(3E(w))g/(2sigma))<=R(w,delta), where Phi(x)=cdf(gaussianReal(0,1),x). The zero-separation branch uses equal "
                     + "laws, not division by D(w).")))),
-            new DocumentBlock.Section(H("The literal quantile and the exact C10 energy cut"), Blocks(
+            new DocumentBlock.Section(H("C09: the literal Gaussian quantile and the C10 energy cut"), Blocks(
                 Paragraph(Text(
-                    "Define q=sInf {x:R | 1-alpha<=Phi(x)} and E_req=4sigma^2 q^2/(3g^2). Here sInf is the literal real infimum and Phi is the actual "
-                    + "standard Gaussian CDF. Its continuity, strict monotonicity, limits zero and one, Phi(0)=1/2 and reflection Phi(-x)=1-Phi(x) give a "
-                    + "unique q with Phi(q)=1-alpha. More explicitly, continuity and the limits provide such a point, and strict monotonicity identifies "
-                    + "the defining set as {x | q<=x}; this point is its least element and hence its sInf. Since 1-alpha>1/2=Phi(0), q>0. Reflection gives "
-                    + "Phi(-q)=alpha. For every real s, strict monotonicity now gives Phi(-s)<=alpha iff q<=s, and Phi(-s)=alpha iff s=q. These all-real "
+                    "Write Phi(x)=cdf(gaussianReal(0,1),x). This actual standard Gaussian CDF is continuous and strictly increasing on all real "
+                    + "numbers, tends to zero at minus infinity and to one at plus infinity, satisfies Phi(-x)=1-Phi(x) for every real x and "
+                    + "Phi(0)=1/2, and obeys 0<Phi(x)<1 at every finite real x. For each 0<p<1 define q(p)=sInf {x:R | p<=Phi(x)}, using the "
+                    + "literal real infimum. No convention for q(0) or q(1) is needed.")),
+                Paragraph(Text(
+                    "The two limits bracket every interior p, so continuity and the intermediate value theorem give a real root r with "
+                    + "Phi(r)=p. Strict monotonicity identifies {x:R | p<=Phi(x)} with Ici(r), whose infimum is r. Hence Phi(q(p))=p, this root "
+                    + "is unique among all real numbers, and the same superlevel set is exactly Ici(q(p)). For every real x, Phi(x)=p iff "
+                    + "x=q(p). Comparing with Phi(0)=1/2 gives all three signs: q(p)>0 iff p>1/2, q(p)=0 iff p=1/2, and q(p)<0 iff p<1/2. "
+                    + "Together these facts identify the range of Phi as exactly (0,1). This is the literal-infimum application of "
+                    + "stdNormalCDF_probit and stdNormalCDF_strictMono from the upstream source cited below.")),
+                Paragraph(Text(
+                    "For every 0<alpha<1/2 put q=q(1-alpha)=sInf {x:R | 1-alpha<=Phi(x)} and E_req=4sigma^2 q^2/(3g^2). Then q>0, "
+                    + "Phi(q)=1-alpha and, by stdNormalCDF_neg, Phi(-q)=alpha. The value q is the unique positive real root of "
+                    + "Phi(x)=1-alpha; indeed it is the unique real root, and {x:R | 1-alpha<=Phi(x)}=Ici(q). For every real s, including "
+                    + "zero and negative s, strict monotonicity gives Phi(-s)<=alpha iff q<=s, and Phi(-s)=alpha iff s=q. These all-real "
                     + "comparisons are established before any squaring.")),
                 Paragraph(Text(
                     "For E>=0 put s=sqrt(3E)g/(2sigma). Both s>=0 and q>0 are known, and 3g^2 and 4sigma^2 are positive. Therefore q<=s iff q^2<=s^2, "

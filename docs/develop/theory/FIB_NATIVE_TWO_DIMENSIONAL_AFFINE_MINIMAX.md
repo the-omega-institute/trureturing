@@ -1580,3 +1580,1331 @@ The following boundaries are part of the conclusions:
   These handwritten proofs are not kernel-verified declarations.
 
 ## 11.99 追加锚
+
+## 12. The unrestricted three-coordinate question and its inherited interface
+
+Sections 12–20 establish the dimension-three plateau
+$e_3^{\rm aff}(Z)=e_2^{\rm aff}(Z)$ on the same full native domain.
+The additional coordinate may be unbounded and may carry a nontrivial
+hidden phase action. The conclusion is domination in uniform readout
+error by a two-coordinate radial model, not a classification of all
+three-coordinate encoders. The proofs are ordinary handwritten
+mathematics, unverified by Lean.
+
+The source, preparation, and metric are exactly those of §§1–2. In
+particular, $0<Z<1$, $r=1-Z$, $H=r/2$, the fixed preparation is
+arbitrary, and every point of
+$\mathcal M=(0,H)\times\mathbb T^2$ is an actual current ray.
+The commands remain
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),\qquad
+0<k,k+s<H,
+$$
+
+$$
+Q_t(k,\alpha,\beta)=
+\left(k,\alpha+t/2,\beta+(1/2-k/r)t\right),\qquad
+(k,\alpha,\beta)\in\mathcal M,
+$$
+
+for every signed real $s,t$. The first formula specifies the full
+partial domain of $P_s$; $Q_t$ has full domain. No phase control,
+height selector, endpoint ray, or history variable is added.
+
+**Definition 12.1 (Budget three and the radial comparison family).**
+Let $\mathfrak F_{\le3}^{\rm aff}(Z)$ consist of the models of
+Definition 2.1 with stored dimension $m\in\{0,1,2,3\}$. Thus
+
+$$
+e_3^{\rm aff}(Z)=
+\inf_{(E,q)\in\mathfrak F_{\le3}^{\rm aff}(Z)}
+\sup_{x\in\mathcal M}\|q(x)-y(x)\|_2.
+$$
+
+There is one fixed affine ten-output decoder and one state-independent
+affine map for each original command, including both update offsets.
+Encoders may be irregular, nonmeasurable, unbounded, and noninjective.
+No ambient inverse, ambient composition law, common affine center,
+or regularity in a command parameter is required. Infinite errors are
+included. Guard recovery and prescribed paths retain Definition 2.2.
+
+For $C\ge0$ and $\gamma\in\mathbb R$ write
+
+$$
+\mathcal R_Z(C,\gamma)=
+\sup_{0<k<H}\left\{4(Ce^{\gamma k}-A(k))^2+4Zk\right\},
+\qquad A(k)=2\sqrt{k(H-k)}.
+$$
+
+Here $C=0$ means the zero model, so
+$\mathcal R_Z(0,\gamma)=R_0^2$ independently of $\gamma$.
+Every positive $C$ and finite $\gamma$ gives the actual model of
+Theorem 6.4, with encoder $Ce^{\gamma k}U(\alpha)$ and decoder
+$D(E,0)$. Thus these comparisons refer to lawful models in the
+original metric, not just scalar lower bounds.
+
+**Proposition 12.2 (The inherited useful-observable interface).**
+For every finite-error competitor of Definition 12.1 there is a bounded,
+$\beta$-independent affine two-output observable $a$ of its encoder
+such that
+
+$$
+\operatorname{err}(E,q)^2\ge
+\sup_{0<k<H,\ \alpha\in\mathbb T}
+\left\{4\|a(k,\alpha)-A(k)U(\alpha)\|_2^2+4Zk\right\}.
+\tag{12.1}
+$$
+
+Replacing the decoder by $D(a,0)$ cannot increase its error.
+Furthermore,
+
+$$
+(e_2^{\rm aff}(Z))^2=\inf_{C\ge0,\ \gamma\in\mathbb R}
+\mathcal R_Z(C,\gamma).
+\tag{12.2}
+$$
+
+**Proof of Proposition 12.2.** Theorem 3.4 applies to the bounded
+components of the decoder, since finite error and bounded $y$ imply
+bounded $q$. Proposition 3.5 then gives the orthogonal decomposition
+$q=D(a,b)+w$ and the exact worst-$\beta$ expression
+
+$$
+\|w\|^2+4\|a-A(k)U(\alpha)\|^2+(\|b\|+B(k))^2,
+\qquad B(k)^2=4Zk.
+$$
+
+Dropping the indicated nonnegative terms gives (12.1) and the decoder
+domination. This uses $D^{\mathsf T}D=4I_2\oplus I_2$ from Lemma
+1.5, including the fixed preparation rotations. Equation (12.2), and
+the stronger assertion that each budget-two competitor is dominated
+by an individual radial choice, are Theorem 6.4. These are reused
+results. Neither their application nor boundedness of $a$ bounds an
+unread coordinate of $E$. $\square$
+
+The bounded-observable erasure and worst-$\beta$ reduction are the
+credited results of [O, §§3–4], presented in §3 of this volume.
+The exact two-coordinate reduction, scalar endpoint, and matching
+witnesses are §§4–10 of this volume. The new lower-bound obligation is
+therefore to control the extra hidden direction at budget three.
+
+## 13. Actual affine hulls and propagation into every partial domain
+
+**Lemma 13.1 (Restriction to the actual affine hull).** Let
+$\mathscr H=\operatorname{aff}E(\mathcal M)$ and
+$d=\dim\mathscr H\le m$. One may replace the ambient stored space
+by affine coordinates on $\mathscr H$, retaining the same source,
+decoder values, and all lawful affine identities. This does not require
+a probability command to preserve $\mathscr H$ away from its lawful
+encoded states.
+
+**Proof of Lemma 13.1.** Choose an affine retraction
+$\mathcal P:\mathbb R^m\to\mathscr H$ that is the identity on
+$\mathscr H$. Such a retraction is obtained by choosing an origin in
+$\mathscr H$, extending a basis of its direction space to the ambient
+space, and projecting along the added directions. Replace an ambient
+update $\mathcal U$ by
+$\mathcal P\circ\mathcal U|_{\mathscr H}$. On a lawful encoded
+state the original update equals another actual encoding, so the
+retraction changes nothing there. Restrict the affine decoder to
+$\mathscr H$ and choose affine coordinates on this hull. These maps
+include all their affine offsets. Empty domains still impose no
+identity. In the resulting $\mathbb R^d$, the encoded image has full
+affine hull. $\square$
+
+Use these actual-hull coordinates from now on, and write the useful
+observable as
+
+$$
+a(x)=a_0+L E(x),\qquad L:\mathbb R^d\to\mathbb R^2.
+$$
+
+The rank here is the rank of this useful readout on the direction
+space of the actual hull. It is neither the stored dimension nor the
+rank of the entire ten-output decoder.
+
+**Proposition 13.2 (The deficient-rank and two-dimensional branches).**
+If $\operatorname{rank}L\le1$, then
+$\operatorname{err}(E,q)\ge R_0$. If
+$\operatorname{rank}L=2$ and $d=2$, the competitor is dominated by
+a budget-two model with bounded encoder $a$. These branches cover all
+$d\le2$.
+
+**Proof of Proposition 13.2.** In the first case the image of $a$
+lies in an affine line or point. Choose a unit normal $\nu$ and a
+constant $c_0$ such that $\nu\cdot a=c_0$. For every interior $k$,
+
+$$
+\sup_\alpha\|a(k,\alpha)-A(k)U(\alpha)\|
+\ge\sup_\alpha|c_0-A(k)\nu\cdot U(\alpha)|
+=|c_0|+A(k)\ge A(k).
+$$
+
+Equation (12.1) gives the lower bound
+$\sup_k\{4A(k)^2+4Zk\}=R_0^2$ in squared error.
+The radial choice $C=0$ realizes this comparison.
+
+In the second case the affine map $z\mapsto a_0+Lz$ is an
+isomorphism on $\mathbb R^2$. Conjugating each hull update by it
+makes $a$ an exact affine encoder on every original lawful domain.
+Theorem 3.4 gives its $\beta$-independence, finite error gives its
+boundedness, and Proposition 12.2 supplies the decoder $D(a,0)$ of
+no greater error. Theorem 6.4 applies. Rank cannot exceed $d$, so
+there is no other case with $d\le2$. $\square$
+
+**Lemma 13.3 (Nonzero beta fibers propagate and give a lawful quotient).**
+Suppose $d=3$ and $\operatorname{rank}L=2$, and put
+$N=\ker L$, a real line. If the encoder is not $\beta$-independent,
+then every nonempty-domain update preserves $N$ in its linear part.
+The affine quotient $\mathbb R^3/N$, identified with $\mathbb R^2$
+by $a$, is consequently a lawful budget-two encoder with no greater
+readout error. This is a literal-class quotient; guard recovery is
+not a conclusion.
+
+**Proof of Lemma 13.3.** The $\beta$-independence of $a$ implies
+that every difference between encodings at the same $(k,\alpha)$
+belongs to $N$. Failure of $\beta$-independence of $E$ gives an
+actual nonzero difference
+
+$$
+v=E(k_*,\alpha_*,\beta_1)-E(k_*,\alpha_*,\beta_2)\in N.
+$$
+
+Write the hull probability update as $z\mapsto A_sz+b_s$.
+For every $l\in(0,H)$, both original states admit the leg
+$P_{l-k_*}$. Their transported difference is
+
+$$
+v_l=A_{l-k_*}v
+=E(l,\alpha_*,\beta_1)-E(l,\alpha_*,\beta_2)\in N.
+$$
+
+The reverse leg is lawful at both transported states, and gives
+
+$$
+A_{k_*-l}v_l=v.
+$$
+
+Thus $v_l\ne0$ and spans $N$ at every interior height. This is an
+identity on actual pairs of states, not an ambient inverse assertion.
+Offsets cancel in differences but are retained in the affine maps.
+
+For a fixed $s$ with $|s|<H$, the interval
+
+$$
+I_s=(\max\{0,-s\},\ \min\{H,H-s\})
+$$
+
+is nonempty. Choose $l\in I_s$ and use the nonzero pair just
+constructed there. Its images under $P_s$ have the same height and
+$\alpha$, so their useful readouts agree. Hence
+$LA_s v_l=0$, and, since $v_l$ spans $N$, one has
+$A_sN\subseteq N$. For a phase update
+$z\mapsto C_tz+d_t$, the same pair at any interior $l$ has images
+with the same height and $\alpha+t/2$. Thus $LC_tv_l=0$ and
+$C_tN\subseteq N$ for every real $t$. The nonzero fiber has been
+placed inside each command's own domain before it is used.
+
+An affine map whose linear part preserves $N$ induces a fixed affine
+map on the quotient: changing a representative by an element of $N$
+changes its image by an element of $N$. Since $L$ is surjective,
+$[z]\mapsto a_0+Lz$ is an affine isomorphism of that quotient with
+$\mathbb R^2$. The encoder $a(k,\alpha)$ therefore has exact affine
+updates for all nonempty original command domains. For $|s|\ge H$
+the probability domain is empty and any affine quotient update may be
+assigned. This supplies maps for every real command, with offsets.
+The decoder $D(a,0)$ has no greater error by Proposition 12.2, so
+Theorem 6.4 gives a radial comparison.
+
+A quotient encoder may identify rays of different heights. None of
+this reasoning says its fibers determine a probability guard. Its
+only role is to supply the literal-class lower bound. $\square$
+
+**Corollary 13.4 (Exhaustive remaining case).** Every budget-three
+competitor either is already dominated by a radial budget-two model,
+or has finite error, actual hull dimension three, useful rank two,
+and a $\beta$-independent encoder.
+
+**Proof of Corollary 13.4.** Infinite-error competitors are dominated
+by the finite zero witness. Proposition 13.2 handles every deficient
+useful rank and every actual hull of dimension at most two. In the
+remaining dimension-three, rank-two case, either a nonzero beta-fiber
+difference exists and Lemma 13.3 applies, or all such differences
+vanish, which is exactly $\beta$-independence of $E$. $\square$
+
+## 14. The full phase action and the bounded useful module
+
+The next arguments apply to a $\beta$-independent encoder on its
+actual affine hull of any dimension $d\le3$. They will be used for
+the remaining case of Corollary 13.4. Write
+
+$$
+F(k,\alpha)=(1,E(k,\alpha))^{\mathsf T},\qquad
+X=\operatorname{span}_{\mathbb R}\{F(k,\alpha):0<k<H,
+\ \alpha\in\mathbb T\}.
+$$
+
+The full actual affine hull implies $\dim_{\mathbb R}X=d+1\le4$.
+Let $\lambda_0$ be its first-coordinate covector, so
+$\lambda_0F(k,\alpha)=1$. Homogenize the hull updates, including
+offsets, as $T_s$ for probability commands and $S_t$ for phase
+commands.
+
+**Lemma 14.1 (An actual phase representation and a fixed covector).**
+There is a representation $\delta\mapsto V_\delta$ of the abstract
+circle $\mathbb T$ on $X$ satisfying
+
+$$
+V_\delta F(k,\alpha)=F(k,\alpha+\delta),\qquad
+V_\delta V_\epsilon=V_{\delta+\epsilon},\qquad
+V_0=I,\qquad V_\delta^{-1}=V_{-\delta}.
+\tag{14.1}
+$$
+
+It obeys $\lambda_0V_\delta=\lambda_0$. The assertion is about a
+covector; it does not assert a fixed vector with first coordinate one
+or a common affine fixed point.
+
+**Proof of Lemma 14.1.** For a real representative of $\delta$,
+restrict $S_{2\delta}$ to $X$. The full-domain $Q_{2\delta}$ identity
+and $\beta$-independence give the first equality in (14.1).
+Changing that representative by $2\pi$ gives the same values on
+every actual $F$, and therefore the same linear operator on their
+span $X$. Products, zero, and inverses in (14.1) likewise agree on
+all actual $F$, hence on $X$. The full-domain phase operators
+preserve $X$ because they map these generators to generators. The
+first coordinate of every generator is one, which also proves the
+covector identity. None of these arguments applies an asserted
+ambient law to unused directions. $\square$
+
+**Lemma 14.2 (Only the useful observable module is bounded).** Let
+$\ell_1,\ell_2\in X_{\mathbb C}^{\vee}$ be the homogeneous rows
+of $a$, where $X_{\mathbb C}$ is the complexification of $X$. Let
+$W$ be the complex span of $\lambda_0$ and all rows
+$\ell_iV_\delta$. Then $W$ has a basis of common eigencovectors
+for right multiplication by all $V_\delta$. Their eigenvalues are
+abstract unitary characters of $\mathbb T$. There is at most one
+nontrivial conjugate pair, and each member of that pair has
+multiplicity one. Trivial-character rows may have different height
+profiles.
+
+**Proof of Lemma 14.2.** Each generating row is a bounded function
+on actual states, since
+$\ell_iV_\delta F(k,\alpha)=a_i(k,\alpha+\delta)$ and $a$ is
+uniformly bounded. Every finite linear combination is also bounded.
+On $W$ set
+
+$$
+\|\ell\|_{\rm obs}=
+\sup_{0<k<H,\ \alpha\in\mathbb T}|\ell F(k,\alpha)|.
+$$
+
+It is a genuine norm: a row vanishing on all actual states vanishes
+on their span $X_{\mathbb C}$. Right multiplication by $V_\delta$
+is an invertible isometry, since it permutes the phase circle at
+every height. These maps commute. The finite-dimensional argument
+of Lemma 3.2 now applies to this normed space: eigenvalues have
+modulus one, nontrivial Jordan chains would have unbounded iterates,
+and induction over invariant eigenspaces simultaneously diagonalizes
+the entire commuting family. This argument uses no norm on $E$.
+
+For a common eigenrow $\ell\ne0$, write
+$\ell V_\delta=\chi(\delta)\ell$. Equation (14.1) proves that
+$\chi$ is a group homomorphism into the unit circle, and
+
+$$
+\ell F(k,\alpha)=\chi(\alpha)\,\ell F(k,0).
+\tag{14.2}
+$$
+
+The coefficient at a particular height is allowed to vanish. Two
+independent eigenrows with the same character would represent two
+independent height profiles; they are not identified by evaluation
+at one height.
+
+The space $W$ is closed under conjugation, because its original rows
+and phase operators are real. The covector $\lambda_0$ gives a
+nonzero trivial-character row. Any real unitary character is trivial:
+for every circle element $\delta$ choose a half-element $\eta$;
+then $\chi(\delta)=\chi(\eta)^2=1$ if its values lie in
+$\{1,-1\}$. Thus each nontrivial character is distinct from its
+conjugate and consumes at least two dimensions together with it.
+Since $\dim_{\mathbb C}W\le d+1\le4$, there is at most one
+such pair. A multiplicity of two for one member would force two for
+its conjugate and, together with $\lambda_0$, at least five
+dimensions. Each member therefore has multiplicity one. The
+trivial eigenspace need not have dimension one. $\square$
+
+Identify the useful output plane with $\mathbb C$ and put
+$z(k,\alpha)=a_1(k,\alpha)+i a_2(k,\alpha)$ and
+$\xi(\alpha)=e^{i\alpha}$. If $W$ has a nontrivial pair
+$\chi,\overline\chi$, Lemma 14.2 gives
+
+$$
+z(k,\alpha)=c(k)+u(k)\chi(\alpha)
+                  +v(k)\overline{\chi(\alpha)}.
+\tag{14.3}
+$$
+
+The term $c(k)$ may depend on height. No common affine center is
+implicit in this formula.
+
+**Proposition 14.3 (Unmatched abstract characters give the baseline).**
+If $a$ is phase-independent, or if the nontrivial pair in (14.3)
+is neither $\xi,\xi^{-1}$, then
+$\operatorname{err}(E,q)\ge R_0$.
+
+**Proof of Proposition 14.3.** At fixed $k$, a phase-independent
+value has worst distance from the radius-$A(k)$ circle at least
+$A(k)$. In the other case the characters
+
+$$
+\xi^{-1},\qquad \chi\xi^{-1},\qquad
+\overline\chi\xi^{-1}
+$$
+
+are all nontrivial. Lemma 6.1 applies to this finite list on the
+abstract circle. Explicitly, choose one circle element for each
+listed character on which it differs from one, and average over
+all finite sums of integer multiples of those elements with
+coefficients $0,\ldots,N-1$. The average of each character is a
+product of finite geometric averages; one factor tends to zero
+and the others have modulus at most one. Consequently, at this
+fixed height, the finite average of $z(k,\alpha)\xi(\alpha)^{-1}$
+tends to zero. Since
+
+$$
+|z-A(k)\xi|^2=|z|^2+A(k)^2
+       -2A(k)\operatorname{Re}(z\xi^{-1}),
+$$
+
+and $|z|^2\ge0$, the supremum of the squared useful error is at
+least $A(k)^2$. Equation (12.1) gives $R_0^2$ after taking the
+height supremum. These are finite averages of actual phase states;
+no Haar integral, measurability, continuity, or density of a chosen
+phase sequence is required. This exhausts every nonnative pair in
+the bounded useful module. $\square$
+
+## 15. Complete primary blocks, the invariant covector, and hidden phases
+
+The useful module is not the whole hidden state. To isolate a native
+coefficient under a partial probability command, a projector on the
+full homogeneous hull is needed, including any nonsemisimple or
+nonunitary hidden action.
+
+**Lemma 15.1 (Primary projectors are finite combinations of phase maps).**
+For the representation (14.1), there are finitely many distinct
+abstract characters $\lambda:\mathbb T\to\mathbb C^\times$
+and a direct sum
+
+$$
+X_{\mathbb C}=\bigoplus_{\lambda\in\Lambda}X_\lambda
+$$
+
+of invariant primary subspaces. On $X_\lambda$ every $V_\delta$
+has sole eigenvalue $\lambda(\delta)$. The projector
+$\Pi_\lambda$ onto $X_\lambda$ along the other primary subspaces
+has a finite expression
+
+$$
+\Pi_\lambda=\sum_{j=1}^{J_\lambda}
+ c_{\lambda,j}V_{\delta_{\lambda,j}},
+\qquad c_{\lambda,j}\in\mathbb C,\quad
+\delta_{\lambda,j}\in\mathbb T.
+\tag{15.1}
+$$
+
+Neither unitarity nor diagonalizability of the representation on
+$X_{\mathbb C}$ is assumed.
+
+**Proof of Lemma 15.1.** First simultaneously triangularize the
+commuting complex family. A common eigenvector exists by a finite
+dimension descent: in a nonzero common invariant subspace, if every
+operator is scalar choose any nonzero vector; otherwise take a
+nonzero proper eigenspace of a nonscalar operator. All other
+operators preserve it by commutation. Repeat until a common
+eigenline is obtained. Induction on the quotient by that line
+produces a common invariant flag and a simultaneous triangular
+basis. The diagonal functions $\lambda_j(\delta)$ are nonzero,
+and the representation law makes each a character. There are
+only finitely many distinct such functions; call their set
+$\Lambda$.
+
+Choose finitely many circle elements $\delta_1,\ldots,\delta_b$
+so that their evaluations distinguish each pair of distinct
+characters in $\Lambda$. For each selected $V_{\delta_h}$,
+factor its characteristic polynomial into powers of distinct
+linear factors. Bezout identities for those relatively prime
+powers, together with Cayley–Hamilton, give polynomial projectors
+onto its generalized eigenspaces: for eigenvalue $\omega$, choose
+a polynomial congruent to one modulo the factor for $\omega$
+and to zero modulo each other factor. Evaluating it at
+$V_{\delta_h}$ gives the required projector. All these projectors
+commute, since the phase operators commute.
+
+For $\lambda\in\Lambda$, multiply the selected projectors for
+the eigenvalues $\lambda(\delta_h)$. The resulting idempotent
+$\Pi_\lambda$ selects their joint generalized eigenspace. To see
+that these are exactly all nonzero joint pieces, use the common
+triangular flag. The diagonal of a joint projector is one at a
+flag position precisely when its tuple of selected eigenvalues
+matches that position's character, and zero otherwise. An
+idempotent has rank equal to the number of ones on this diagonal.
+Every nonzero joint piece therefore matches some character in
+$\Lambda$, and the selected tuples distinguish those characters.
+The projectors are pairwise disjoint and sum to the identity.
+Their images inherit the common flag, with precisely the diagonal
+positions belonging to $\lambda$, so each $V_\delta$ has sole
+eigenvalue $\lambda(\delta)$ on $X_\lambda$.
+
+Finally the complex linear span of all $V_\delta$ is an algebra:
+it contains $I=V_0$, and a product $V_\delta V_\epsilon$ equals
+$V_{\delta+\epsilon}$. Each polynomial projector and each finite
+product of such projectors belongs to that algebra. Expansion is
+therefore a finite linear combination as in (15.1). If there is
+only one character, the projector is simply $I$. This proof
+selects complete generalized blocks, including any Jordan parts,
+and does not use an average over infinitely many phases. $\square$
+
+**Lemma 15.2 (Native blocks have multiplicity one in the full hull).**
+The set $\Lambda$ contains the trivial character, with
+$\dim X_1\ge1$. If a native pair $\xi,\xi^{-1}$ is used by the
+bounded useful readout, then
+
+$$
+\dim_{\mathbb C}X_\xi=
+\dim_{\mathbb C}X_{\xi^{-1}}=1.
+\tag{15.2}
+$$
+
+On these lines $V_\delta$ acts as multiplication by
+$\xi(\delta)$ and $\xi(\delta)^{-1}$ respectively, without a
+Jordan part. Their vectors have homogeneous coordinate zero.
+
+**Proof of Lemma 15.2.** For a nontrivial $\lambda$, choose
+$\delta$ with $\lambda(\delta)\ne1$. On $X_\lambda$, the
+operator $V_\delta-I$ is invertible because its only eigenvalue
+is $\lambda(\delta)-1$. The invariant covector satisfies
+$\lambda_0(V_\delta-I)=0$, so it annihilates $X_\lambda$.
+If there were no trivial block, it would annihilate all of
+$X_{\mathbb C}$, contrary to $\lambda_0F=1$. This proves the
+trivial-block assertion using a covector, without producing a
+fixed vector.
+
+A nonzero native eigencovector $\ell$ in $W$ obeys
+$\ell V_\delta=\xi(\delta)\ell$. For $\lambda\ne\xi$,
+choose $\delta$ with $\lambda(\delta)\ne\xi(\delta)$.
+The operator $V_\delta-\xi(\delta)I$ is invertible on
+$X_\lambda$, so $\ell$ annihilates that block. It cannot
+annihilate every block. Hence $X_\xi\ne0$. Reality of the
+representation gives
+$\overline{X_\xi}=X_{\xi^{-1}}$ with equal dimension. If that
+dimension were at least two, the two distinct conjugate blocks
+would consume at least four dimensions, and the trivial block
+would consume a fifth. This contradicts $\dim X_{\mathbb C}\le4$.
+They are therefore lines, proving (15.2). The first part of the
+proof also shows that $\lambda_0$ annihilates both lines.
+$\square$
+
+In this native case the real residual module has dimension at most
+two and contains a trivial composition factor. If it has two
+dimensions, it can contain a separate nontrivial real character,
+or two trivial factors with a nontrivial unipotent extension. A
+real character takes positive values, since
+$\lambda(\delta)=\lambda(\delta/2)^2>0$. A second nonreal pair,
+or an extra generalized dimension in either native block, would
+exceed the dimension budget. The residual action need not be
+trivial.
+
+For clarity, this count does not hide a boundedness assertion.
+Every eigenrow in $W$ is unitary and annihilates full primary
+blocks with a different character by the invertibility argument
+above. Moreover $W$ is stable under each $\Pi_\lambda$, since
+(15.1) is a finite combination of phase maps. In the native case,
+put
+
+$$
+\Pi_{\rm res}=I-\Pi_\xi-\Pi_{\xi^{-1}}.
+$$
+
+For the complex readout row $\ell_1+i\ell_2$, its product with
+$\Pi_{\rm res}$ is a row in $W$ whose native components vanish.
+Lemma 14.2 makes it a trivial-character row. Its evaluation is
+therefore independent of $\alpha$, but may depend on $k$.
+Nonunitary hidden primary blocks and hidden Jordan directions
+have not been declared bounded or absent.
+
+**Example 15.3 (A lawful positive hidden phase character).** There
+are full-hull three-coordinate, finite-error encoders whose third
+coordinate has a nontrivial positive phase character.
+
+**Proof of Example 15.3.** Choose a nonzero rational-linear map
+$\ell:\mathbb R\to\mathbb R$ with $\ell(2\pi)=0$. For example,
+extend $2\pi$ and a rationally independent real number to a
+rational vector-space basis, assign zero to $2\pi$, one to that
+other number, and zero to the other basis elements. It descends
+to an additive map $h:\mathbb T\to\mathbb R$. Choose a circle
+element $\alpha_0$ with $h(\alpha_0)>0$, changing sign if
+necessary. Then $h(n\alpha_0)=nh(\alpha_0)$ and
+$e^{h(n\alpha_0)}\to\infty$.
+
+For fixed $C>0$, set
+
+$$
+E_+(k,\alpha,\beta)=
+(C\cos\alpha,\ C\sin\alpha,\ e^{h(\alpha)}).
+$$
+
+Use the identity update for every $P_s$, and for every real $t$
+use
+
+$$
+(z_1,z_2,z_3)\longmapsto
+\bigl(R_{t/2}(z_1,z_2),\ e^{h(t/2)}z_3\bigr)
+$$
+
+for $Q_t$, with circle arguments in $h$. Direct substitution gives
+the exact source identities on all original domains. The fixed
+decoder is $D((z_1,z_2),0)$. Its error is finite, since its first
+pair has fixed norm $C$ and $y$ is bounded. The affine hull is
+three-dimensional: any affine dependence with a nonzero
+coefficient of $e^{h(\alpha)}$ would bound that unbounded function
+by a combination of $1,\cos\alpha,\sin\alpha$; with that
+coefficient zero, those three functions are linearly independent.
+The homogeneous phase representation has the trivial factor, the
+native conjugate pair, and the positive character $e^h$.
+$\square$
+
+**Example 15.4 (A lawful additive shear without an affine center).**
+Using the same $h$ and $C$, the encoder
+
+$$
+E_{\rm sh}(k,\alpha,\beta)=
+(C\cos\alpha,\ C\sin\alpha,\ h(\alpha))
+$$
+
+has full affine hull and finite error with the same decoder, but
+its phase action has no common affine fixed point.
+
+**Proof of Example 15.4.** The probability maps are again the
+identity, and the exact phase maps are
+
+$$
+(z_1,z_2,z_3)\longmapsto
+\bigl(R_{t/2}(z_1,z_2),\ z_3+h(t/2)\bigr).
+$$
+
+Additivity proves all lawful identities. Unboundedness of $h$
+and linear independence of $1,\cos,\sin$ prove the full hull as
+in Example 15.3. The decoder remains bounded. Choose a phase
+increment $\delta$ with $h(\delta)\ne0$. Its map translates the
+third coordinate by a nonzero constant, and therefore fixes no
+ambient point. On the homogeneous coordinates $(1,z_3)$ its block
+is
+
+$$
+\begin{pmatrix}1&0\\h(\delta)&1\end{pmatrix}.
+$$
+
+It has the invariant first-coordinate covector but no vector with
+first coordinate one fixed by this increment. Thus the full phase
+family has no normalized fixed vector or common affine center.
+$\square$
+
+These examples disprove phase-triviality of every extra hidden
+coordinate and the inference from a fixed homogeneous covector to
+an affine center. They do not disprove the capacity plateau: their
+useful readout is already the constant-radius radial model. They
+ignore height, so no guard-recovery assertion is made for them.
+Both examples satisfy the unrestricted literal contract. The basis
+choice only exhibits permitted irregular encoders and is not a
+premise of the lower-bound proof.
+
+## 16. A native projector on each lawful orbit and its height modulus
+
+Assume now that the bounded useful readout uses the native pair.
+The lines and projectors in Lemmas 15.1–15.2 are defined on the
+whole actual homogeneous hull, while a probability identity is
+still required only on its original partial domain.
+
+**Lemma 16.1 (Projector intertwining on an individual actual orbit).**
+Set
+
+$$
+u_\xi(k)=\Pi_\xi F(k,0).
+$$
+
+For each lawful pair $0<k,k+s<H$,
+
+$$
+T_s\Pi_\xi F(k,0)=\Pi_\xi T_sF(k,0),\qquad
+u_\xi(k+s)=T_su_\xi(k).
+\tag{16.1}
+$$
+
+Also
+
+$$
+\Pi_\xi F(k,\alpha)=\xi(\alpha)u_\xi(k).
+\tag{16.2}
+$$
+
+The vector $u_\xi(k)$ is a finite complex linear combination of
+actual homogeneous states at that single height. No spanning
+assumption about a probability-command domain is needed.
+
+**Proof of Lemma 16.1.** For each circle element $\delta$ and
+this particular lawful starting height,
+
+$$
+T_sV_\delta F(k,0)=T_sF(k,\delta)=F(k+s,\delta)
+=V_\delta F(k+s,0)=V_\delta T_sF(k,0).
+\tag{16.3}
+$$
+
+Here the native commands can change $\beta$ differently in the
+two orders. Their encoded values agree because this encoder is
+$\beta$-independent. Equation (16.3) is asserted on the selected
+actual state, not as an operator commutation law on all of $X$.
+
+Insert the finite expression (15.1) for $\Pi_\xi$ into (16.3)
+and use linearity. This proves (16.1). The same expression gives
+
+$$
+u_\xi(k)=\sum_j c_{\xi,j}F(k,\delta_{\xi,j}),
+$$
+
+so the projected vector lies in the span of that actual phase
+orbit. Projectors commute with all phase operators, and the
+native block is a line on which $V_\alpha$ acts by
+$\xi(\alpha)$. Applying this to $F(k,\alpha)=V_\alpha F(k,0)$
+proves (16.2). $\square$
+
+**Lemma 16.2 (Nonvanishing and the partial multiplier law).**
+The vector $u_\xi(k)$ is nonzero at every interior height. For
+every $|s|<H$ there is a single $m_s\in\mathbb C^\times$ such
+that
+
+$$
+T_s|_{X_\xi}=m_sI,\qquad
+u_\xi(k+s)=m_su_\xi(k)\quad(k\in I_s).
+\tag{16.4}
+$$
+
+These scalars satisfy
+
+$$
+m_0=1,\qquad m_{-s}=m_s^{-1},\qquad
+m_{s+t}=m_tm_s
+\quad\text{if }|s|,|t|,|s+t|<H.
+\tag{16.5}
+$$
+
+These are derived local laws. There is no asserted relation for
+probability maps with empty source domain.
+
+**Proof of Lemma 16.2.** If $u_\xi(k)$ vanished at every height,
+(16.2) would make $\Pi_\xi$ vanish on every actual state, and
+therefore on their span. This contradicts $X_\xi\ne0$. Choose
+a height $k_*$ where it is nonzero. For any other interior $l$,
+the leg $P_{k_*-l}$ is lawful at height $l$. If $u_\xi(l)=0$,
+(16.1) would imply
+$u_\xi(k_*)=T_{k_*-l}u_\xi(l)=0$, a contradiction. This proves
+nonvanishing everywhere, without a regularity assertion at any
+height.
+
+Fix $|s|<H$ and choose one $k\in I_s$. The nonzero vector
+$u_\xi(k)$ spans $X_\xi$, and (16.1) takes it to the nonzero
+vector $u_\xi(k+s)$ in the same line. Thus the one fixed linear
+map $T_s$ preserves this line and acts on it by a nonzero scalar
+$m_s$. The scalar is independent of the lawful starting height,
+and (16.1) gives (16.4) at every such height. Zero and reverse
+lawful legs give $m_0=1$ and $m_{-s}m_s=1$.
+
+If $|s|,|t|,|s+t|<H$, the spread of the three real numbers
+$0,s,s+t$ is
+$\max\{|s|,|t|,|s+t|\}<H$. Choose a translation of these three
+numbers placing all of them in $(0,H)$. From the resulting
+starting height $k$, the two successive legs and the single
+summed leg are lawful and yield
+
+$$
+m_{s+t}u_\xi(k)=u_\xi(k+s+t)=m_tm_su_\xi(k).
+$$
+
+Nonvanishing gives the local product law. No partial domain was
+assumed to span $X$ or any residual hidden block. $\square$
+
+The homogeneous coordinate vanishes on $X_\xi$ by Lemma 15.2,
+so the vector being multiplied in (16.4) is a genuine direction
+vector. Nevertheless both probability and phase offsets are
+present in $T_s$ and $V_\delta$. The finite projector identity,
+not an assumption that those offsets vanish, prevents an
+additional inhomogeneous term in the native coefficient on
+lawful states. It also prevents hidden blocks from supplying such
+a term there. It imposes no general off-image block decomposition
+on $T_s$. The fixed decoder offset belongs to the trivial
+observable part.
+
+**Proposition 16.3 (A bounded native coefficient has exponential modulus).**
+There are fixed $p_+,p_-\in\mathbb C$, a function
+$c:(0,H)\to\mathbb C$, and a nowhere-zero function
+$f:(0,H)\to\mathbb C$ such that
+
+$$
+z(k,\alpha)=c(k)+p_+f(k)e^{i\alpha}
+                    +p_-\overline{f(k)}e^{-i\alpha}.
+\tag{16.6}
+$$
+
+In a used native-pair case at least one of $p_+,p_-$ is nonzero.
+Normalize $f(H/2)=1$. Then for some finite real $\gamma$,
+
+$$
+f(k+s)=m_sf(k)\quad(k\in I_s),\qquad
+|m_s|=e^{\gamma s}\quad(|s|<H),\qquad
+|f(k)|=e^{\gamma(k-H/2)}.
+\tag{16.7}
+$$
+
+Only the modulus is asserted to be an ordinary exponential.
+
+**Proof of Proposition 16.3.** Choose the native basis vector
+$v_*=u_\xi(H/2)\ne0$ and write $u_\xi(k)=f(k)v_*$. This gives
+the normalization, nonvanishing, and the first identity in (16.7).
+Reality and uniqueness of the primary decomposition imply
+$\overline{\Pi_\xi}=\Pi_{\xi^{-1}}$. Since $F$ is real, its
+conjugate primary component is therefore
+$\overline{f(k)}\,\overline{v_*}$ at phase zero. Apply the fixed
+complex row $\ell=\ell_1+i\ell_2$ to these two components and
+set $p_+=\ell v_*$, $p_-=\ell\overline{v_*}$. The residual
+row $\ell\Pi_{\rm res}$ is phase-invariant by the argument
+after Lemma 15.2. This gives (16.6), with
+$c(k)=\ell\Pi_{\rm res}F(k,0)$. If both fixed coefficients
+vanish, $z$ and both of its real components are phase-independent;
+that is the baseline case of Proposition 14.3, not a used native
+pair.
+
+It remains to justify a bound on $f$, rather than on the hidden
+state. Put $M=\sup_{k,\alpha}|z(k,\alpha)|<\infty$, as supplied
+by finite readout error. Let $\omega=e^{2\pi i/3}$. Evaluating
+(16.6) at the three actual phases $2\pi j/3$ gives the finite
+coefficient identities
+
+$$
+p_+f(k)=\frac13\sum_{j=0}^2
+ z(k,2\pi j/3)\omega^{-j},\qquad
+p_-\overline{f(k)}=\frac13\sum_{j=0}^2
+ z(k,2\pi j/3)\omega^j.
+\tag{16.8}
+$$
+
+They follow from $1+\omega+\omega^2=0$. Both right sides have
+modulus at most $M$. Since at least one fixed coefficient is
+nonzero, there is a finite $K\ge1$ with $|f(k)|\le K$ for all
+interior $k$. No latent norm or hidden residual coordinate has
+been bounded.
+
+For $|s|<H/2$, use (16.4) at the reference height $H/2$ to get
+$|m_s|\le K$. Use $-s$ and (16.5) to get the reciprocal bound.
+Thus
+
+$$
+K^{-1}\le|m_s|\le K\quad(|s|<H/2).
+$$
+
+The function $b(s)=\log|m_s|$ is locally additive on $(-H,H)$
+by (16.5), and $|b(s)|\le\log K$ near zero. This is the
+bounded-additivity mechanism already used in Lemma 5.3. Explicitly,
+for a positive integer $N$ and $|s|<H/(2N)$, all partial sums
+up to $Ns$ remain lawful for the local scalar law, so
+
+$$
+|b(s)|=|b(Ns)|/N\le\log K/N.
+$$
+
+This proves continuity at zero. Local additivity gives continuity
+at every point of $(-H,H)$. With $a_*=H/4$, subdivision, finite
+addition, and sign reversal give
+$b(qa_*)=q b(a_*)$ for every rational $q$ with $|qa_*|<H$.
+Density and continuity then give $b(s)=\gamma s$, where
+$\gamma=b(a_*)/a_*$ is finite. Applying the multiplier identity
+between $H/2$ and $k$ proves the last equality in (16.7).
+$\square$
+
+Neither the complex multiplier nor the unit phase $f/|f|$ has
+been proved continuous. Example 5.4 already supplies bounded
+encoders $e^{\gamma k}U(\alpha+\ell(k))$ with additive,
+possibly discontinuous height twists and exact updates
+$e^{\gamma s}R_{\ell(s)}$, $R_{t/2}$. They remain within the
+contract. The modulus argument does not exclude them.
+
+## 17. Original-metric domination and the dimension-three plateau
+
+**Lemma 17.1 (Radial domination with a height-dependent residual).**
+In the native case of Proposition 16.3 there are $C\ge0$ and
+finite $\gamma\in\mathbb R$ such that
+
+$$
+\operatorname{err}(E,q)^2\ge\mathcal R_Z(C,\gamma).
+\tag{17.1}
+$$
+
+The residual $c(k)$ need not be constant across heights.
+
+**Proof of Lemma 17.1.** At a fixed interior height the complex
+useful error is
+
+$$
+z(k,\alpha)-A(k)e^{i\alpha}
+=c(k)+(p_+f(k)-A(k))e^{i\alpha}
+             +p_-\overline{f(k)}e^{-i\alpha}.
+$$
+
+Call the nonconstant part $h_k(\alpha)$. It changes sign under
+$\alpha\mapsto\alpha+\pi$. The mean of the squared errors
+at these two actual phases is
+
+$$
+\frac{|c(k)+h_k(\alpha)|^2+|c(k)-h_k(\alpha)|^2}{2}
+=|c(k)|^2+|h_k(\alpha)|^2.
+$$
+
+Thus the worst useful error at this height is at least
+$\sup_\alpha|h_k(\alpha)|$. For complex numbers $u,v$,
+
+$$
+\sup_\alpha|ue^{i\alpha}+ve^{-i\alpha}|=|u|+|v|:
+$$
+
+the triangle inequality gives one direction, and choosing
+$2\alpha$ to align the two nonzero terms gives the other; if
+one term is zero the equality is immediate. Consequently
+
+$$
+\begin{aligned}
+\sup_\alpha|z(k,\alpha)-A(k)e^{i\alpha}|
+&\ge |p_+f(k)-A(k)|+|p_-|\,|f(k)|\\
+&\ge \bigl||p_+|\,|f(k)|-A(k)\bigr|\\
+&=|Ce^{\gamma k}-A(k)|,
+\end{aligned}
+$$
+
+where $C=|p_+|e^{-\gamma H/2}\ge0$ by (16.7). In particular
+$p_+=0$ yields the valid comparison $C=0$. Equation (12.1)
+restores the fourfold useful-plane weight and the exact residual
+$4Zk$, giving (17.1). The opposite-phase comparison is made at
+each height separately. It neither constructs a common affine
+center nor asserts that removing $c(k)$ is an admissible change
+of encoder. $\square$
+
+**Theorem 17.2 (Unrestricted three-dimensional plateau).** For
+every $0<Z<1$ and every fixed preparation, every affine competitor
+of stored dimension at most three is dominated in uniform
+original-output error by some radial competitor of dimension at
+most two. In particular,
+
+$$
+\boxed{
+(e_3^{\rm aff}(Z))^2=(e_2^{\rm aff}(Z))^2
+=\inf_{C\ge0,\ \gamma\in\mathbb R}
+\sup_{0<k<H}\{4(Ce^{\gamma k}-A(k))^2+4Zk\}.}
+\tag{17.2}
+$$
+
+Hence $e_3^{\rm aff}(Z)=e_2^{\rm aff}(Z)$.
+
+**Proof of Theorem 17.2.** A competitor of infinite error is
+dominated by the finite zero witness. For finite error, the
+actual-hull reduction and rank split of §13 are exhaustive.
+Deficient useful rank gives the zero radial comparison. A
+full-rank hull of dimension two, or the lawful quotient of a
+nonzero beta fiber at dimension three, is dominated by a radial
+choice using the already-proved Theorem 6.4. Every other
+competitor has a $\beta$-independent encoder on a hull of
+dimension three.
+
+For this last case, §14 bounds only the useful observable module.
+A phase-independent readout or any unmatched abstract character
+gives the zero radial comparison by Proposition 14.3. If the
+native pair is used, the full primary-block argument of §15,
+the lawful projector identities and nonzero multipliers of §16,
+and Lemma 17.1 give a radial comparison. These cases include
+rank loss, a missing pair, both possible zero useful coefficients,
+unbounded hidden coordinates, and both affine offsets. No
+partial-domain spanning or regularity assumption enters them.
+
+Every radial comparison is an actual budget-two model, as stated
+in Definition 12.1 and proved in Theorem 6.4. Thus the radial
+infimum is a lower bound for every budget-three squared error. Conversely
+all those radial models lie in the budget-three class, and the
+budget-two class is a subclass of the budget-three class.
+Equation (12.2) now gives both inequalities in (17.2).
+Nonnegativity permits taking square roots. This argument compares
+each individual competitor before taking any infimum; no compact
+latent image, convergent sequence of encoders, or bound on model
+parameters is needed. $\square$
+
+The source's $\beta$ motion and its noncommuting rectangles are
+unchanged. The only commuting action used globally is the phase
+action on the actual homogeneous hull after the relevant encoder
+has been shown to be $\beta$-independent. The probability/phase
+identity used for the projector is only (16.3) on lawful states.
+Thus (17.2) is an error plateau, not a claim that every hidden
+coordinate is phase-trivial or that every affine realization is
+radial.
+
+## 18. Exact endpoint and attainment by reuse of the scalar solution
+
+**Corollary 18.1 (The exact shared value and its parameter map).**
+Define $v(Z)=e_2^{\rm aff}(Z)=e_3^{\rm aff}(Z)$. Then
+
+$$
+v(Z)=
+\begin{cases}
+4H\sqrt{T_\tau},&0<Z<2/3,\\
+2\sqrt{ZH},&2/3\le Z<1,
+\end{cases}
+\qquad \tau=\frac{Z}{4H}\quad\text{in the first case}.
+\tag{18.1}
+$$
+
+Here $T_\tau$ is the unique root supplied by Theorem 7.4, with
+
+$$
+\tau<T_\tau<T_0=\frac{(1+\tau)^2}{4},
+$$
+
+$$
+\max_{0\le x\le1}
+\left\{\sqrt{x(1-x)}-\sqrt{T_\tau-\tau x}
+-T_\tau^{(1-x)/2}(T_\tau-\tau)^{x/2}\right\}=0.
+\tag{18.2}
+$$
+
+Below the transition,
+
+$$
+2\sqrt{ZH}<v(Z)<1-Z/2.
+$$
+
+The normalization and the optimal radial parameters are exactly
+
+$$
+x=\frac{k}{H},\qquad c=\frac{C}{2H},\qquad
+\lambda=\gamma H,\qquad
+\mathcal R_Z(C,\gamma)=16H^2\mathcal J(c,\lambda),
+$$
+
+$$
+C_*=2H\sqrt{T_\tau},\qquad
+\gamma_*=\frac{1}{2H}\log\frac{T_\tau-\tau}{T_\tau}<0.
+\tag{18.3}
+$$
+
+**Proof of Corollary 18.1.** Equation (17.2) has exactly the same
+radial objective, with exactly the same $A(k)$ and metric
+coefficient four, as Theorem 6.4. Lemma 7.2 identifies its
+normalization by the displayed substitution. Lemma 7.3 and Theorems 7.4–7.6
+then give (18.2), its unique root, the strict interval for that
+root, the exact value, and the parameters (18.3). At and above
+$Z=2/3$, Theorem 10.2 gives $e_2^{\rm aff}=2\sqrt{ZH}$;
+Theorem 17.2 transfers it to budget three. This reuses the
+published endpoint-log corridor, root, contact, and transition
+proofs without introducing a different scalar optimization.
+$\square$
+
+**Corollary 18.2 (Attained tolerance endpoints and retained distinctions).**
+In the literal class, the finite achievable tolerance set at
+either budget two or budget three is $[v(Z),\infty)$.
+For $0<Z<2/3$ the optimal positive radial amplitude is the same
+unique amplitude
+
+$$
+\rho(k)=2H\sqrt{T_\tau}\,e^{\gamma_*k}
+$$
+
+as in Theorem 7.6. Its annular model attains error $v(Z)$ at
+every phase pair of the actual interior height $k=Hx_\tau$,
+where $x_\tau$ is the unique contact in Theorem 7.5. For
+$Z\ge2/3$ the zero decoder attains the error infimum, although
+none of its lawful states attains its error supremum. The
+transition value is $v(2/3)=2/3$.
+
+**Proof of Corollary 18.2.** The annulus of Theorem 8.1 is an
+actual budget-two model, hence also a budget-three model, with
+the stated attained error and interior maximizing height. Its
+radial uniqueness and the contact statements are precisely
+Theorems 7.5–7.6 and 8.1, with the parameter map (18.3).
+Theorem 10.2 supplies the zero decoder and its strict pointwise
+error inequality in the other range, including the transition.
+Theorem 17.2 excludes every tolerance below $v(Z)$; the stated
+single witnesses include the endpoint and every larger finite
+tolerance. $\square$
+
+The uniqueness here is only that of the optimal positive radial
+amplitude, not of arbitrary optimizing affine realizations. The
+scalar limits of Proposition 10.4 also apply to the shared value
+$v(Z)$, including the limit $1/2$ as $Z\downarrow0$ and $2/3$
+as $Z\uparrow2/3$ from below. In the latter limit the radial
+exponent tends to $-\infty$; the separate transition witness
+supplies attainment there. Scalar maxima at $x=0,1$ or scalar
+parameter limits do not extend an arbitrary encoder or the source
+to $k=0,H$ or to $Z=0,1$. Escaping radial parameters and varying
+arbitrary encoders cannot improve the value, because (17.2)
+already bounds every competitor before taking an infimum.
+
+## 19. Equal capacities with guards and all prescribed paths
+
+For $n=2,3$, write $\mathfrak F_{\le n}^{\rm lit}$,
+$\mathfrak F_{\le n}^{\rm g}$,
+$\mathfrak F_{\le n}^{\rm p}$, and
+$\mathfrak F_{\le n}^{\rm gp}$ for the four classes of
+Definition 2.2: literal, recoverable straight guards, all prescribed
+paths, and both guard and path requirements. In the combined class,
+the full path guards are recoverable as well. Every path is a
+prescribed finite simultaneous native path with its velocities
+fixed independently of the starting ray. Its domain is its full
+all-times guard.
+
+**Theorem 19.1 (The same endpoint in all four contracts).** For
+each $0<Z<1$, every fixed preparation, and $n\in\{2,3\}$,
+the capacities of all four classes equal $v(Z)$ from (18.1),
+and their finite tolerance sets are all $[v(Z),\infty)$.
+The attaining witnesses have exact encoding at every truncated
+path, every intermediate time, and every prefix of every finite
+lawful concatenation, with the same current-state uniform error.
+
+**Proof of Theorem 19.1.** The inclusions at each fixed dimension
+budget are
+
+$$
+\mathfrak F_{\le n}^{\rm gp}\subseteq
+\mathfrak F_{\le n}^{\rm g}\subseteq
+\mathfrak F_{\le n}^{\rm lit},\qquad
+\mathfrak F_{\le n}^{\rm gp}\subseteq
+\mathfrak F_{\le n}^{\rm p}\subseteq
+\mathfrak F_{\le n}^{\rm lit}.
+\tag{19.1}
+$$
+
+Therefore the literal lower bounds of Theorem 7.6, Theorem 10.2,
+and Theorem 17.2 are lower bounds for each corresponding stronger
+class. The direction of inclusion is essential: the quotient of
+Lemma 13.3 was only required to be literal and is not being
+asserted to recover guards.
+
+Below the transition use the actual annulus of Theorem 8.1, with
+$\gamma_*<0$ and $C_*$ from (18.3). Its image and recovered
+height, as proved in Proposition 8.2, are
+
+$$
+2H\sqrt{T_\tau-\tau}<\|z\|<2H\sqrt{T_\tau},\qquad
+\kappa(z)=\frac1{\gamma_*}
+\log\frac{\|z\|}{2H\sqrt{T_\tau}}.
+$$
+
+The exact straight guards are $0<\kappa(z)+s<H$ for every real
+$s$ and the whole actual image for every real $t$. The fixed
+maps are $e^{\gamma_*s}I$ and $R_{t/2}$. This includes zero,
+negative, and empty-domain commands. The original preparation
+initializes $z=\rho(k_0)U(0)$, with all preparation phases still
+in the fixed original decoder $D$. Recovering height from the
+actual stored norm adds no external input and changes no affine
+readout requirement.
+
+To match the full path contract explicitly, use the parameters
+of Proposition 9.1. For prescribed integrable velocities on
+$[0,T_{\rm p}]$ put
+
+$$
+\eta(u)=\int_0^u a_c(v)\,dv,\qquad
+\Delta=\eta(T_{\rm p}),\qquad
+L=\int_0^{T_{\rm p}}b_c(u)\,du,\qquad
+C_{\rm p}=\int_0^{T_{\rm p}}\eta(u)b_c(u)\,du.
+$$
+
+The native all-times guard and endpoint remain
+
+$$
+0<k+\eta(u)<H\quad\text{for every }u\in[0,T_{\rm p}],
+\tag{19.2}
+$$
+
+$$
+k'=k+\Delta,\qquad \alpha'=\alpha+L/2,\qquad
+\beta'=\beta+(1/2-k/r)L-C_{\rm p}/r.
+\tag{19.3}
+$$
+
+The proof of these formulas, the existence of the mixed integral,
+and the equivalence of (19.2) to
+$k+\min\eta>0$, $k+\max\eta<H$ are Proposition 9.1.
+In particular, the extrema are attained on the compact time
+interval; lawful endpoints alone are not a substitute for
+(19.2). The negative mixed term remains in the true source.
+
+Theorem 9.2 supplies the fixed annular path map
+
+$$
+z\longmapsto e^{\gamma_*\Delta}R_{L/2}z
+$$
+
+on the exact recoverable guard
+$0<\kappa(z)+\eta(u)<H$ for every $u$. It is defined even for
+a prescribed path with empty guard. Substitution into (19.3)
+is its exact encoding identity; the mixed term is invisible
+only because this particular encoder forgets $\beta$.
+For every truncation, replace the upper integration limit by
+the truncated time and retain that truncation's own all-times
+guard. The same identity holds. For two concatenated paths,
+Proposition 9.1 gives the full source triple
+
+$$
+(\Delta_1+\Delta_2,\ L_1+L_2,
+ C_1+C_2+\Delta_1L_2),
+$$
+
+and its guard is the first full guard together with the second
+full guard from the actual intervening height. The encoded maps
+compose by adding $\Delta$ and $L$, consistently with this
+source formula and the permitted loss of $\beta$. Induction
+gives every finite lawful concatenation. Exact latent encoding
+at each current state lets Theorem 8.1 apply at each time without
+accumulating readout error.
+
+At and above the transition, use the actual one-coordinate
+height witness of Theorems 10.1–10.2:
+
+$$
+E_{\rm h}(k,\alpha,\beta)=K=k,\qquad q(K)=0,
+$$
+
+with probability update $K\mapsto K+s$, phase update $K\mapsto K$,
+and prescribed-path update $K\mapsto K+\Delta$. Its full path
+guard is exactly $0<K+\eta(u)<H$ for all $u$; its straight
+guards are the corresponding special cases. The same truncation
+and concatenation identities are exact. Its error is $v(Z)$.
+The zero-dimensional literal witness also attains that value,
+but is not used to supply recoverable guards.
+
+The annulus uses two real coordinates and the height witness one,
+so each belongs to the combined class at both budgets two and
+three. These matching upper witnesses, together with (19.1),
+prove every capacity equality. The endpoints are included because
+these are actual attaining models, and larger finite tolerances
+are satisfied by the same models. Equality of capacities does
+not assert equality of the four model classes. $\square$
+
+## 20. Three-dimensional result map, sources, and surviving boundaries
+
+All results in the following map retain the arbitrary fixed
+preparation, full actual current-ray domain, original signed command
+menu, affine offsets, and ten-output Euclidean metric.
+
+| Result | Declarations | Role in the three-dimensional conclusion |
+|---|---|---|
+| At-most-three budget and inherited interface | 12.1–12.2 | Keeps the original contract; reuses bounded-observable erasure and the exact two-dimensional radial minimax |
+| Actual-hull restriction and useful-rank split | 13.1–13.2 | Includes degenerate hulls and derives bounded useful coordinates only when justified |
+| Nonzero beta-fiber propagation and quotient | 13.3–13.4 | Places a nonzero kernel direction in every nonempty partial domain before descending the update; quotient is only literal |
+| Full phase representation and useful module | 14.1–14.2 | Derives the circle action on the actual homogeneous hull and distinguishes its fixed covector from a fixed vector |
+| Unmatched character exclusion | 14.3 | Finite geometric averages cover discontinuous abstract characters without integration |
+| Complete primary blocks and finite phase projectors | 15.1–15.2 | Counts the whole native blocks, including possible Jordan multiplicity, and leaves lawful hidden residual blocks |
+| Hidden positive character and additive shear | 15.3–15.4 | Actual full-hull examples showing that hidden phase-triviality and a common affine center are not required |
+| Orbitwise projector and nonvanishing multiplier | 16.1–16.2 | Uses only lawful actual phase orbits, not a partial-domain spanning assumption or an ambient group law |
+| Useful native amplitude and its modulus | 16.3 | Bounds only observable coefficients and derives exponential modulus from reciprocal local multipliers |
+| Original-metric radial domination and plateau | 17.1–17.2 | Every budget-three competitor is dominated by an actual budget-two radial model |
+| Exact scalar value, parameter map, and attainment | 18.1–18.2 | Applies the existing root/contact/transition results with their original normalization and tolerance endpoints |
+| Recoverable guards and all prescribed paths | 19.1 | Uses proper subclass lower bounds and actual matching annular/height witnesses, with every truncation and finite concatenation |
+
+The published suppliers retain their precise roles. [F], *Native FIB
+continuation: exact affine obstruction and compact-band approximation*,
+supplies the native source conventions and original-output/path
+interfaces reconstructed in §§1 and 9. [O], *Native FIB on the full
+open domain: affine approximation and finite attainment*, supplies
+bounded affine observable erasure and the worst-$\beta$ reduction,
+as reused in §3 and Proposition 12.2. Its all-finite floor,
+nonattainment, fixed-dimension gap, and dimension-limit results
+remain prior results, not substitutes for the dimension-three
+argument. Sections 4–10 of this volume supply the exact budget-two
+minimax, endpoint-log corridor, unique root and radial amplitude,
+attaining annulus, transition, and exact path witnesses used in
+§§18–19. Their proofs are reused rather than claimed as new
+three-dimensional scalar results.
+
+The additional mathematical synthesis is the actual-hull rank
+alternative with nonzero-fiber transport into each partial domain,
+the invariant-covector count of complete conjugate primary blocks,
+and the finite phase projector acting on each individual lawful
+orbit. Together these give a nonvanishing native coefficient,
+its local multiplier law, and an ordinary exponential modulus
+without bounding arbitrary hidden coordinates. Opposite-phase
+comparison then handles a height-dependent residual and yields
+the exact plateau in the original metric. The hidden examples
+specify why stronger statements about centers and phase-trivial
+hidden state are unavailable under this contract.
+
+The general ingredients are finite-dimensional affine
+homogenization, invariant flags and primary decompositions,
+polynomial spectral projectors from Bezout identities,
+characters of abstract abelian groups, divisibility, finite
+geometric averages, and the bounded additive-function argument.
+The needed forms are proved here or reused from the preceding
+sections. No topological character classification or external
+regularity theorem is a premise. This is a statement of content
+relative to the specified sources, with no worldwide-priority
+claim.
+
+The remaining boundaries are part of the result:
+
+- The source has $0<Z<1$ and $0<k<H$. All phase points are actual
+  current rays from the arbitrary fixed preparation. No endpoint
+  ray, vanished support, stored real lift, producing-history
+  encoder, reduced command menu, or finite-horizon replacement
+  is included. Each executed history is individually finite.
+- Stored dimension, actual affine-hull dimension, and useful-readout
+  rank are distinct. Homogeneous dimension at most four is used
+  only after actual-hull restriction. An invariant covector is
+  not a normalized fixed vector. Hidden positive characters and
+  unipotent blocks remain lawful, as the examples demonstrate.
+- The boundedness arguments concern the decoder, its useful
+  phase translates, and the native coefficients they expose.
+  They impose no measurability, continuity, injectivity, or
+  latent bound on arbitrary encoders. The native modulus is
+  regular only because the useful coefficient supplies local
+  upper and reciprocal bounds; its unit phase remains unrestricted.
+- Every probability inference is made on a nonempty lawful
+  partial domain, or on a lawful reversible leg or triple.
+  Empty-domain maps are unconstrained. Global phase identities
+  hold on the actual homogeneous hull because the phase maps
+  have full domain. No ambient probability group law or
+  off-image inverse is assumed.
+- The radial comparison is an error domination, not a guard
+  theorem for intermediate quotients or a classification of all
+  affine factors or optimizers. The matching annular and height
+  witnesses separately establish the full guard and path claims.
+  General radial choices need not recover height; only the
+  specified attaining witnesses are used for the stronger classes.
+- The exact small budgets established here are $0,1,2,3$.
+  Below $Z=2/3$, this result supplies no exact capacity or
+  attainment classification for general budgets $n\ge4$, no
+  general parity law, and no dimension-four theorem. The earlier
+  all-finite and fixed-dimension results do not remove those
+  remaining questions or give a general sharp dimension rate.
+- The original finite-hidden-$N$ attainment alternative remains
+  unresolved. No identification of its objective and admissible
+  realizations with this affine-readout problem is supplied, and
+  no broader research-completion conclusion follows.
+- Initialization and continuation are exact over real coordinates.
+  The permitted witnesses are noninjective and have decoded
+  vectors outside the native physical output image. Imposing
+  injection or physical readouts would require a different
+  upper-bound analysis. No finite-bit, conditioning, noise,
+  acquisition, physical-implementation, training, or empirical
+  machine-learning claim is made.
+- These proofs are handwritten source mathematics. They are not
+  Lean declarations, kernel verification, or a certification of
+  unrelated statements in the cited manuscripts.
+
+## 20.99 追加锚
