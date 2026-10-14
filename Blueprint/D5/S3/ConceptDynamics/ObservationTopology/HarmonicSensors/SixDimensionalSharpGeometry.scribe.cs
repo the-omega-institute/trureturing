@@ -227,7 +227,101 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     + "all-classifier event-probability transport. It does not establish a scalar score/residual "
                     + "decomposition, a reconstruction kernel, an optimized global risk formula, an energy or quantile "
                     + "bound, a design cap or an asymptotic risk law. Those would require their own assumptions and "
-                    + "arguments beyond the law and probability identities given here.")))))));
+                    + "arguments beyond the law and probability identities given here.")))),
+            new DocumentBlock.Section(H("The actual score and orthogonal residual"), Blocks(
+                Paragraph(Text(
+                    "Continue the same weighted observation experiment with 0<epsilon<=1/2, sigma>0, arbitrary finite J, "
+                    + "signed real weights w_j and real delays t_j. The preceding block-noise and flattening argument supplies "
+                    + "C01/C02; the following score and reconstruction argument supplies C03/C04. Use its actual flattened means "
+                    + "m_b=A(s_b), covariance S=sigma^2 I, centered law N=multivariateGaussian(0,S), and observation laws "
+                    + "Q_b=multivariateGaussian(m_b,S)=N.map(x -> m_b+x). All formulas use the same Fin 6 reindexing of K=Fin 3 "
+                    + "x Fin 2 already specified; equivalently they can be written in EuclideanSpace R (J x K) before "
+                    + "reindexing. The weights still multiply only the sensor signal, and the isotropic noise is added "
+                    + "afterwards. No target score law, residual law, independence or support statement is an extra hypothesis.")),
+                Paragraph(Text(
+                    "Set d=m_true-m_false, D=norm(d), and c=(m_false+m_true)/2. For D>0 define u=D^{-1} d, "
+                    + "alpha(x)=inner(u,x), and P_perp(x)=x-alpha(x)u. Thus alpha=innerSL R u and P_perp=id-alpha.smulRight(u) "
+                    + "are continuous linear maps. Put beta_false=-D/2, beta_true=D/2, lambda_b=gaussianReal(beta_b,sigma^2), "
+                    + "and nu=N.map(P_perp); sigma^2 is viewed as a nonnegative real parameter in gaussianReal. Define the "
+                    + "actual score T(y)=alpha(y-c), residual R(y)=P_perp(y-c), F(y)=(T(y),R(y)), and G(r,z)=c+r u+z. These maps "
+                    + "are measurable. The product target uses this particular pushforward nu of the actual centered noise.")),
+                Paragraph(Text(
+                    "Normalization gives norm(u)=1, alpha(u)=1 and D u=d, whence m_b-c=beta_b u. Directly from the formula for "
+                    + "P_perp, alpha(P_perp x)=0, P_perp(u)=0, P_perp(P_perp x)=P_perp x, and inner(v,P_perp x)=inner(P_perp "
+                    + "v,x). Its range equals ker(alpha): the first identity gives one inclusion, and alpha(z)=0 implies "
+                    + "P_perp(z)=z for the other. These identities use D>0 only to obtain the unit direction; no unit vector is "
+                    + "asserted when D=0.")))),
+            new DocumentBlock.Section(H("Joint Gaussianity, independence and the product law"), Blocks(
+                Paragraph(Text(
+                    "On the single probability space (V,N), start with the actual pair x -> (alpha(x),P_perp(x)). "
+                    + "IsGaussian.hasGaussianLaw_id and HasGaussianLaw.map_fun applied to the continuous linear map "
+                    + "alpha.prod(P_perp) give its joint Gaussian law. Matrix.PosSemidef.one.smul makes S positive semidefinite, "
+                    + "and covarianceBilin_multivariateGaussian gives covarianceBilin(N)(v,w)=sigma^2 inner(v,w). For every real "
+                    + "a and vector v, self-adjointness of P_perp therefore gives "
+                    + "Cov_N(inner(a,alpha(x)),inner(v,P_perp(x)))=sigma^2 inner(a u,P_perp(v))=sigma^2 a alpha(P_perp(v))=0. "
+                    + "This checks all scalar cross-covariances. HasGaussianLaw.indepFun_of_covariance_inner now derives "
+                    + "independence of alpha and P_perp from their common joint Gaussian law; separate Gaussian marginals alone "
+                    + "would not supply that inference.")),
+                Paragraph(Text(
+                    "The centered score has integral zero: commute alpha with integration and use "
+                    + "integral_id_multivariateGaussian. Its variance is covarianceBilin(N)(u,u)=sigma^2 because norm(u)=1. For "
+                    + "each b, translation by m_b sends N to Q_b and F(m_b+x)=(beta_b+alpha(x),P_perp(x)). Hence under Q_b the "
+                    + "actual T is Gaussian with expectation beta_b and variance sigma^2. HasGaussianLaw.map_eq_gaussianReal "
+                    + "identifies Q_b.map(T)=lambda_b. Independence survives adding beta_b to the first component by "
+                    + "IndepFun.comp; IndepFun.map_prod_eq_prod_map_map then gives Q_b.map(F)=lambda_b.prod(nu). The second "
+                    + "component of the same translation identity gives Q_b.map(R)=nu for both labels. Thus the label "
+                    + "information appears only in the score mean; the common residual and product law are derived from the "
+                    + "original Q_b.")),
+                Paragraph(Text(
+                    "The identity alpha(P_perp x)=0 also proves nu(ker(alpha))=1 by Measure.map_apply, since the preimage of "
+                    + "that closed kernel is all of V and N has mass one. The residual is allowed to be singular on the ambient "
+                    + "space: no invertible residual covariance or ambient Lebesgue density is assumed. Both labels use exactly "
+                    + "N.map(P_perp), with its full mass on the same orthogonal hyperplane.")))),
+            new DocumentBlock.Section(H("Reconstruction and one label-independent Markov kernel"), Blocks(
+                Paragraph(Text(
+                    "For every y in V, cancellation in c+alpha(y-c)u+((y-c)-alpha(y-c)u) gives the GLOBAL identity G(F(y))=y. "
+                    + "In the other direction, for every real r and every z with alpha(z)=0, alpha(r u+z)=r and P_perp(r u+z)=z, "
+                    + "so F(G(r,z))=(r,z). This second identity is asserted on R x ker(alpha), a set of full lambda_b.prod(nu) "
+                    + "measure, rather than on all of R x V. Applying Measure.map_map to Q_b.map(F)=lambda_b.prod(nu) and the "
+                    + "global G-after-F identity gives the exact reverse law (lambda_b.prod(nu)).map(G)=Q_b for each b.")),
+                Paragraph(Text(
+                    "Define kappa(r)=nu.map(z -> c+r u+z), using the SAME c, u and nu for both labels. A concrete measurable "
+                    + "kernel is ((Kernel.id : Kernel R R) x_kernel Kernel.const R nu).map(G); Kernel.prod_apply, "
+                    + "Kernel.id_apply, Kernel.const_apply and Measure.dirac_prod give the displayed value at every r. Since nu "
+                    + "is a probability measure and G is measurable, Kernel.IsMarkovKernel.map makes kappa a Markov kernel. "
+                    + "There is no label argument in its definition, and no desired conditional law is assumed.")),
+                Paragraph(Text(
+                    "To obtain the actual score-observation joint law, set H(r,z)=(r,G(r,z)). For every measurable E in R x V, "
+                    + "Measure.compProd_apply integrates kappa(r)({y | (r,y) in E}) against lambda_b. Substitute the explicit "
+                    + "kappa and use Measure.map_apply and Measure.prod_apply: this integral is (lambda_b.prod(nu))(H^{-1}(E)). "
+                    + "Consequently lambda_b compProd kappa=(lambda_b.prod(nu)).map(H). Substituting Q_b.map(F) for the product "
+                    + "and using H(F(y))=(T(y),y), by the global inverse, proves Q_b.map(y -> (T(y),y))=lambda_b compProd kappa. "
+                    + "This identifies the true joint law, beyond a reconstruction marginal. Taking its second marginal yields "
+                    + "(lambda_b compProd kappa).map(Prod.snd)=Q_b. Finally F(G(r,z))=(r,z) on the full-nu kernel gives "
+                    + "(kappa(r)).map(T)=Measure.dirac(r) for EVERY real r, including values outside any chosen "
+                    + "almost-everywhere version.")))),
+            new DocumentBlock.Section(H("Coincident means, empty designs and remaining limits"), Blocks(
+                Paragraph(Text(
+                    "If D=0, norm(d)=0 implies m_true=m_false, hence Q_true=Q_false. Use the constant score T_0(y)=0 and the "
+                    + "constant Markov kernel kappa_0(r)=Q_false for every real r. Then Q_b.map(T_0)=Measure.dirac(0), and "
+                    + "Measure.compProd_const together with Measure.dirac_prod gives Q_b.map(y -> (0,y))=Measure.dirac(0) "
+                    + "compProd kappa_0. Its second marginal is Q_b. This branch uses neither division by D nor a unit "
+                    + "direction, and its score variance is zero, not sigma^2. The nondegenerate identity "
+                    + "(kappa(r)).map(T)=dirac(r) is not extended to every r for this constant-score kernel.")),
+                Paragraph(Text(
+                    "If J is empty, the flattened coordinate space has only its zero vector. Thus m_b=0, D=0, "
+                    + "N=Measure.dirac(0) and Q_b=Measure.dirac(0); the original P_b is also the zero Dirac law by the preceding "
+                    + "flattening argument. Every probability measure on that singleton is the zero Dirac law, so this is the "
+                    + "actual empty experiment, not a limiting positive-dimensional model. Arbitrary zero weights and coincident "
+                    + "means are likewise handled by the D=0 branch without assuming J nonempty.")),
+                Paragraph(Text(
+                    "The sensor and its weighted means remain those of SixDimensionalSharpGeometry. The Gaussian mapping, "
+                    + "covariance, independence, pushforward and kernel arguments apply the existing public Mathlib suppliers "
+                    + "named above, at pin db584cd6d46c92f209a44c0f1c829460d327499d. Together with C01/C02, these identities "
+                    + "retain the original C03/C04 score, common residual, reverse law and shared Markov joint law as an "
+                    + "application of existing results. C05-C13 remain open here: optimized global risk, energy or quantile "
+                    + "bounds, design caps and asymptotic risk laws require their own assumptions and arguments. No conclusion "
+                    + "about completion of the parent problem follows.")))))));
 
     private static Formula ActualEtaLimitFormula() => Disp(Call("Tendsto",
         Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,
