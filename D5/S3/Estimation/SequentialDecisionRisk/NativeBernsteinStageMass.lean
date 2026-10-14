@@ -435,4 +435,92 @@ theorem actual_limit_output_mass (S : Bool) (p q : unitInterval) (e : Bool) (L :
 
 end LimitLaw
 
+def sourceCalls {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (source : Bool) (ω : Seed × Tape) : WithTop ℕ :=
+  ⨆ n : ℕ, (sourceCount source (nativeHistory π S p q n ω) : WithTop ℕ)
+
+private theorem sourceCount_prefix (s : Bool) {h h' : History} (hp : h.IsPrefix h') :
+    sourceCount s h ≤ sourceCount s h' := by
+  obtain ⟨t,rfl⟩ := hp
+  simp only [sourceCount, List.filter_append, List.length_append]
+  exact Nat.le_add_right _ _
+
+section SourceCosts
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+
+/-- The supremum of actual charged source counts is exactly the returned
+batch degree; in a nonreturning execution both actual source counts diverge. -/
+theorem actual_source_supremum_at_return (S : Bool) (p q : unitInterval) (ω : RowSeed × Tape) :
+    (∀ k, nativeCalls π S p q ω = ((D k+d k : ℕ) : WithTop ℕ) →
+      sourceCalls π S p q false ω = (D k : WithTop ℕ) ∧
+      sourceCalls π S p q true ω = (d k : WithTop ℕ)) ∧
+    (nativeCalls π S p q ω = ⊤ →
+      sourceCalls π S p q false ω = ⊤ ∧ sourceCalls π S p q true ω = ⊤) := by
+  have hgeom := acquired_history_geometry π S (sourceRead p q) ω
+  have hcounts := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1
+  constructor
+  · intro k ht
+    have hmem := hittingAfter_mem_set_of_ne_top
+      (u := nativeAction π S p q) (s := Set.range (fun c : Bool × Bool => (Sum.inr c : Action)))
+      (n := 0) (ω := ω) (show nativeCalls π S p q ω ≠ ⊤ by rw [ht]; simp)
+    change nativeAction π S p q (nativeCalls π S p q ω).untopA ω ∈ _ at hmem
+    rw [ht] at hmem
+    obtain ⟨cell,hcell⟩ := hmem
+    have hsup (s : Bool) : sourceCalls π S p q s ω =
+        (sourceCount s (nativeHistory π S p q (D k+d k) ω) : WithTop ℕ) := by
+      apply le_antisymm
+      · apply iSup_le
+        intro n
+        apply WithTop.coe_le_coe.mpr
+        by_cases hn : n ≤ D k+d k
+        · exact sourceCount_prefix s (hgeom.2.1 n (D k+d k) hn)
+        · have he := hgeom.2.2 (D k+d k) cell hcell.symm (n-(D k+d k))
+          have hn' : D k+d k+(n-(D k+d k)) = n := by omega
+          have he' : nativeHistory π S p q n ω = nativeHistory π S p q (D k+d k) ω := by
+            simpa only [hn', nativeHistory] using he
+          rw [he']
+      · exact le_iSup (fun n : ℕ => (sourceCount s (nativeHistory π S p q n ω) : WithTop ℕ)) (D k+d k)
+    exact ⟨(hsup false).trans (congrArg (fun n : ℕ => (n : WithTop ℕ)) (hcounts k ht.ge).1),
+      (hsup true).trans (congrArg (fun n : ℕ => (n : WithTop ℕ)) (hcounts k ht.ge).2)⟩
+  · intro ht
+    have hb (s : Bool) : sourceCalls π S p q s ω = ⊤ := by
+      apply WithTop.eq_top_iff_forall_ge.mpr
+      intro n
+      have hs := hcounts n (by rw [ht]; exact le_top)
+      have hh : (n : WithTop ℕ) ≤
+          (sourceCount s (nativeHistory π S p q (D n+d n) ω) : WithTop ℕ) := by
+        apply WithTop.coe_le_coe.mpr
+        cases s
+        · rw [hs.1]; exact hD.id_le n
+        · rw [hs.2]; exact hd.id_le n
+      exact hh.trans (le_iSup (fun m : ℕ =>
+        (sourceCount s (nativeHistory π S p q m ω) : WithTop ℕ)) (D n+d n))
+    exact ⟨hb false,hb true⟩
+
+/-- Source-tail events and the unresolved landmark event are literally the
+same event of the same execution, including nonreturning paths. -/
+theorem exact_same_execution_source_tail_events (S : Bool) (p q : unitInterval)
+    (ω : RowSeed × Tape) (k : ℕ) :
+    ((D k : WithTop ℕ) < sourceCalls π S p q false ω ↔
+      ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω) ∧
+    ((d k : WithTop ℕ) < sourceCalls π S p q true ω ↔
+      ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω) := by
+  have hN : StrictMono (fun k => D k+d k) := fun x y h => Nat.add_lt_add (hD h) (hd h)
+  have hcounters := actual_source_supremum_at_return D d a hD hd hc S p q ω
+  cases ht : nativeCalls π S p q ω with
+  | top => simp [ht, (hcounters.2 ht).1, (hcounters.2 ht).2]
+  | coe n =>
+    obtain ⟨j,hj⟩ := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.2 n ht
+    have ht' : nativeCalls π S p q ω = ((D j+d j : ℕ) : WithTop ℕ) := by rw [ht, hj]; rfl
+    rw [(hcounters.1 j ht').1, (hcounters.1 j ht').2, hj]
+    exact ⟨WithTop.coe_lt_coe.trans (hD.lt_iff_lt.trans
+      (hN.lt_iff_lt.symm.trans WithTop.coe_lt_coe.symm)),
+      WithTop.coe_lt_coe.trans (hd.lt_iff_lt.trans
+      (hN.lt_iff_lt.symm.trans WithTop.coe_lt_coe.symm))⟩
+
+end SourceCosts
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinStageMass
