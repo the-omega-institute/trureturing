@@ -27,68 +27,253 @@ open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
 open D5.S3.Quantum.Entanglement.EJM.EJMSingletonCacheData
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem mirror_0 : ∀ k : Fin 2048,
+private theorem mirror_0 : ∀ k : Fin 512,
     checkMirrorFields ⟨0 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem mirror_2048 : ∀ k : Fin 2048,
+private theorem mirror_512 : ∀ k : Fin 512,
+    checkMirrorFields ⟨512 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_1024 : ∀ k : Fin 512,
+    checkMirrorFields ⟨1024 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_1536 : ∀ k : Fin 512,
+    checkMirrorFields ⟨1536 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_2048 : ∀ k : Fin 512,
     checkMirrorFields ⟨2048 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem mirror_4096 : ∀ k : Fin 2048,
+private theorem mirror_2560 : ∀ k : Fin 512,
+    checkMirrorFields ⟨2560 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_3072 : ∀ k : Fin 512,
+    checkMirrorFields ⟨3072 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_3584 : ∀ k : Fin 512,
+    checkMirrorFields ⟨3584 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_4096 : ∀ k : Fin 512,
     checkMirrorFields ⟨4096 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem mirror_6144 : ∀ k : Fin 2048,
+private theorem mirror_4608 : ∀ k : Fin 512,
+    checkMirrorFields ⟨4608 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_5120 : ∀ k : Fin 512,
+    checkMirrorFields ⟨5120 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_5632 : ∀ k : Fin 512,
+    checkMirrorFields ⟨5632 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_6144 : ∀ k : Fin 512,
     checkMirrorFields ⟨6144 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_6656 : ∀ k : Fin 512,
+    checkMirrorFields ⟨6656 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_7168 : ∀ k : Fin 512,
+    checkMirrorFields ⟨7168 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem mirror_7680 : ∀ k : Fin 512,
+    checkMirrorFields ⟨7680 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
 private theorem mirror_8192 : ∀ k : Fin 497,
     checkMirrorFields ⟨8192 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 private theorem mirror_fields_accepted (j : Fin 8689) : checkMirrorFields j = true := by
-  by_cases h0 : j.val < 2048
+  by_cases h0 : j.val < 512
   ·
-    let k : Fin 2048 := ⟨j.val - 0, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 0, by have h := j.isLt; omega⟩
     have he : (⟨0 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using mirror_0 k
-  by_cases h1 : j.val < 4096
+  by_cases h1 : j.val < 1024
   ·
-    let k : Fin 2048 := ⟨j.val - 2048, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 512, by have h := j.isLt; omega⟩
+    have he : (⟨512 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_512 k
+  by_cases h2 : j.val < 1536
+  ·
+    let k : Fin 512 := ⟨j.val - 1024, by have h := j.isLt; omega⟩
+    have he : (⟨1024 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_1024 k
+  by_cases h3 : j.val < 2048
+  ·
+    let k : Fin 512 := ⟨j.val - 1536, by have h := j.isLt; omega⟩
+    have he : (⟨1536 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_1536 k
+  by_cases h4 : j.val < 2560
+  ·
+    let k : Fin 512 := ⟨j.val - 2048, by have h := j.isLt; omega⟩
     have he : (⟨2048 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using mirror_2048 k
-  by_cases h2 : j.val < 6144
+  by_cases h5 : j.val < 3072
   ·
-    let k : Fin 2048 := ⟨j.val - 4096, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 2560, by have h := j.isLt; omega⟩
+    have he : (⟨2560 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_2560 k
+  by_cases h6 : j.val < 3584
+  ·
+    let k : Fin 512 := ⟨j.val - 3072, by have h := j.isLt; omega⟩
+    have he : (⟨3072 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_3072 k
+  by_cases h7 : j.val < 4096
+  ·
+    let k : Fin 512 := ⟨j.val - 3584, by have h := j.isLt; omega⟩
+    have he : (⟨3584 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_3584 k
+  by_cases h8 : j.val < 4608
+  ·
+    let k : Fin 512 := ⟨j.val - 4096, by have h := j.isLt; omega⟩
     have he : (⟨4096 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using mirror_4096 k
-  by_cases h3 : j.val < 8192
+  by_cases h9 : j.val < 5120
   ·
-    let k : Fin 2048 := ⟨j.val - 6144, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 4608, by have h := j.isLt; omega⟩
+    have he : (⟨4608 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_4608 k
+  by_cases h10 : j.val < 5632
+  ·
+    let k : Fin 512 := ⟨j.val - 5120, by have h := j.isLt; omega⟩
+    have he : (⟨5120 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_5120 k
+  by_cases h11 : j.val < 6144
+  ·
+    let k : Fin 512 := ⟨j.val - 5632, by have h := j.isLt; omega⟩
+    have he : (⟨5632 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_5632 k
+  by_cases h12 : j.val < 6656
+  ·
+    let k : Fin 512 := ⟨j.val - 6144, by have h := j.isLt; omega⟩
     have he : (⟨6144 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using mirror_6144 k
+  by_cases h13 : j.val < 7168
+  ·
+    let k : Fin 512 := ⟨j.val - 6656, by have h := j.isLt; omega⟩
+    have he : (⟨6656 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_6656 k
+  by_cases h14 : j.val < 7680
+  ·
+    let k : Fin 512 := ⟨j.val - 7168, by have h := j.isLt; omega⟩
+    have he : (⟨7168 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_7168 k
+  by_cases h15 : j.val < 8192
+  ·
+    let k : Fin 512 := ⟨j.val - 7680, by have h := j.isLt; omega⟩
+    have he : (⟨7680 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using mirror_7680 k
   let k : Fin 497 := ⟨j.val - 8192, by have h := j.isLt; omega⟩
   have he : (⟨8192 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
     apply Fin.ext
@@ -102,68 +287,253 @@ theorem mirror_accepted (j : Fin 8689) : checkMirror j = true := by
     (mirror j) (singletonTree.read 9 j.val) (mirror_fields_accepted j)
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem transitions_0 : ∀ k : Fin 2048,
+private theorem transitions_0 : ∀ k : Fin 512,
     checkTransitions ⟨0 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem transitions_2048 : ∀ k : Fin 2048,
+private theorem transitions_512 : ∀ k : Fin 512,
+    checkTransitions ⟨512 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_1024 : ∀ k : Fin 512,
+    checkTransitions ⟨1024 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_1536 : ∀ k : Fin 512,
+    checkTransitions ⟨1536 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_2048 : ∀ k : Fin 512,
     checkTransitions ⟨2048 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem transitions_4096 : ∀ k : Fin 2048,
+private theorem transitions_2560 : ∀ k : Fin 512,
+    checkTransitions ⟨2560 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_3072 : ∀ k : Fin 512,
+    checkTransitions ⟨3072 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_3584 : ∀ k : Fin 512,
+    checkTransitions ⟨3584 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_4096 : ∀ k : Fin 512,
     checkTransitions ⟨4096 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
-private theorem transitions_6144 : ∀ k : Fin 2048,
+private theorem transitions_4608 : ∀ k : Fin 512,
+    checkTransitions ⟨4608 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_5120 : ∀ k : Fin 512,
+    checkTransitions ⟨5120 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_5632 : ∀ k : Fin 512,
+    checkTransitions ⟨5632 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_6144 : ∀ k : Fin 512,
     checkTransitions ⟨6144 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_6656 : ∀ k : Fin 512,
+    checkTransitions ⟨6656 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_7168 : ∀ k : Fin 512,
+    checkTransitions ⟨7168 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
+set_option trace.profiler true in
+private theorem transitions_7680 : ∀ k : Fin 512,
+    checkTransitions ⟨7680 + k.val, by have h := k.isLt; omega⟩ = true := by
+  decide +kernel
+
+set_option maxHeartbeats 100000000 in
+-- Exhaust the unchanged finite row block with kernel reduction.
 set_option trace.profiler true in
 private theorem transitions_8192 : ∀ k : Fin 497,
     checkTransitions ⟨8192 + k.val, by have h := k.isLt; omega⟩ = true := by
   decide +kernel
 
 theorem transitions_accepted (j : Fin 8689) : checkTransitions j = true := by
-  by_cases h0 : j.val < 2048
+  by_cases h0 : j.val < 512
   ·
-    let k : Fin 2048 := ⟨j.val - 0, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 0, by have h := j.isLt; omega⟩
     have he : (⟨0 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using transitions_0 k
-  by_cases h1 : j.val < 4096
+  by_cases h1 : j.val < 1024
   ·
-    let k : Fin 2048 := ⟨j.val - 2048, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 512, by have h := j.isLt; omega⟩
+    have he : (⟨512 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_512 k
+  by_cases h2 : j.val < 1536
+  ·
+    let k : Fin 512 := ⟨j.val - 1024, by have h := j.isLt; omega⟩
+    have he : (⟨1024 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_1024 k
+  by_cases h3 : j.val < 2048
+  ·
+    let k : Fin 512 := ⟨j.val - 1536, by have h := j.isLt; omega⟩
+    have he : (⟨1536 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_1536 k
+  by_cases h4 : j.val < 2560
+  ·
+    let k : Fin 512 := ⟨j.val - 2048, by have h := j.isLt; omega⟩
     have he : (⟨2048 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using transitions_2048 k
-  by_cases h2 : j.val < 6144
+  by_cases h5 : j.val < 3072
   ·
-    let k : Fin 2048 := ⟨j.val - 4096, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 2560, by have h := j.isLt; omega⟩
+    have he : (⟨2560 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_2560 k
+  by_cases h6 : j.val < 3584
+  ·
+    let k : Fin 512 := ⟨j.val - 3072, by have h := j.isLt; omega⟩
+    have he : (⟨3072 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_3072 k
+  by_cases h7 : j.val < 4096
+  ·
+    let k : Fin 512 := ⟨j.val - 3584, by have h := j.isLt; omega⟩
+    have he : (⟨3584 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_3584 k
+  by_cases h8 : j.val < 4608
+  ·
+    let k : Fin 512 := ⟨j.val - 4096, by have h := j.isLt; omega⟩
     have he : (⟨4096 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using transitions_4096 k
-  by_cases h3 : j.val < 8192
+  by_cases h9 : j.val < 5120
   ·
-    let k : Fin 2048 := ⟨j.val - 6144, by have h := j.isLt; omega⟩
+    let k : Fin 512 := ⟨j.val - 4608, by have h := j.isLt; omega⟩
+    have he : (⟨4608 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_4608 k
+  by_cases h10 : j.val < 5632
+  ·
+    let k : Fin 512 := ⟨j.val - 5120, by have h := j.isLt; omega⟩
+    have he : (⟨5120 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_5120 k
+  by_cases h11 : j.val < 6144
+  ·
+    let k : Fin 512 := ⟨j.val - 5632, by have h := j.isLt; omega⟩
+    have he : (⟨5632 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_5632 k
+  by_cases h12 : j.val < 6656
+  ·
+    let k : Fin 512 := ⟨j.val - 6144, by have h := j.isLt; omega⟩
     have he : (⟨6144 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
       apply Fin.ext
       dsimp [k]
       omega
     simpa only [he] using transitions_6144 k
+  by_cases h13 : j.val < 7168
+  ·
+    let k : Fin 512 := ⟨j.val - 6656, by have h := j.isLt; omega⟩
+    have he : (⟨6656 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_6656 k
+  by_cases h14 : j.val < 7680
+  ·
+    let k : Fin 512 := ⟨j.val - 7168, by have h := j.isLt; omega⟩
+    have he : (⟨7168 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_7168 k
+  by_cases h15 : j.val < 8192
+  ·
+    let k : Fin 512 := ⟨j.val - 7680, by have h := j.isLt; omega⟩
+    have he : (⟨7680 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
+      apply Fin.ext
+      dsimp [k]
+      omega
+    simpa only [he] using transitions_7680 k
   let k : Fin 497 := ⟨j.val - 8192, by have h := j.isLt; omega⟩
   have he : (⟨8192 + k.val, by dsimp [k]; have h := k.isLt; omega⟩ : Fin 8689) = j := by
     apply Fin.ext
