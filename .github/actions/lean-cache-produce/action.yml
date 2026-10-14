@@ -52,6 +52,7 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         # Include ordinary audit programs in the same measured Lake invocation.
         STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
       shell: bash

@@ -319,9 +319,245 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     + "covariance, independence, pushforward and kernel arguments apply the existing public Mathlib suppliers "
                     + "named above, at pin db584cd6d46c92f209a44c0f1c829460d327499d. Together with C01/C02, these identities "
                     + "retain the original C03/C04 score, common residual, reverse law and shared Markov joint law as an "
-                    + "application of existing results. C05-C13 remain open here: optimized global risk, energy or quantile "
-                    + "bounds, design caps and asymptotic risk laws require their own assumptions and arguments. No conclusion "
-                    + "about completion of the parent problem follows.")))))));
+                    + "application of existing results. Beyond these C01/C04 identities, optimized global risk, energy or quantile "
+                    + "bounds, design caps and asymptotic risk laws require further arguments; C05/C06 is supplied below. No conclusion "
+                    + "about completion of the parent problem follows.")))),
+            new DocumentBlock.Section(H("Actual equal-prior risk over every original classifier"), Blocks(
+                Paragraph(Text(
+                    "Continue exactly the same experiment: 0<epsilon<=1/2, sigma>0, arbitrary finite J (including empty J), real "
+                    + "signed weights w_j and arbitrary real delays t_j. The two phases are phi_false=0 and phi_true=2pi/3. The "
+                    + "original observation is Y_b(omega)(j)=s_b(j)+xi_bj(omega), where s_b(j)=w_j sensor(epsilon,phi_b-t_j). For "
+                    + "each b the base measure mu_b is a probability measure, each xi_bj is AE-measurable, the family is "
+                    + "independent under that same mu_b, and each coordinate noise has law multivariateGaussian(0,sigma^2 I_K), "
+                    + "K=Fin 3 x Fin 2. No relation between the two underlying label spaces is used. These are the original noise "
+                    + "assumptions: weights multiply the signal before the independent noise is added. In particular the noise "
+                    + "covariance is sigma^2 I, not a covariance multiplied by w_j^2.")),
+                Paragraph(Text(
+                    "Write P_b=(mu_b).map(Y_b) on O=J -> EuclideanSpace R K, m_b=A(s_b), Q_b=multivariateGaussian(m_b,sigma^2 I), "
+                    + "and D=norm(m_true-m_false). The preceding coordinate equivalence gives P_b.map(A)=Q_b and Q_b.map(Ainv)=P_b. "
+                    + "For EVERY measurable deterministic delta:O -> Bool define its actual equal-prior error risk by "
+                    + "Risk(delta)=[P_false.real({y | delta(y)=true})+P_true.real({y | delta(y)=false})]/2. Here measure.real is "
+                    + "ENNReal.toReal of the event measure; both laws are probabilities, so these values are finite. Equivalently "
+                    + "Risk(delta)=[integral_O 1_{delta=true}(y) dP_false(y)+integral_O 1_{delta=false}(y) dP_true(y)]/2. The two "
+                    + "real indicator functions are measurable, take values in [0,1], and are integrable against the corresponding "
+                    + "probability measures. Thus 0<=Risk(delta)<=1. The infimum below is taken over this original class of "
+                    + "measurable deterministic rules on O.")),
+                Paragraph(Text(
+                    "For D>0 keep the already derived c=(m_false+m_true)/2, u=(m_true-m_false)/D, alpha(x)=inner(u,x), "
+                    + "P_perp(x)=x-alpha(x)u, T(x)=alpha(x-c), G(q,z)=c+q u+z, N=multivariateGaussian(0,sigma^2 I), "
+                    + "nu=N.map(P_perp), and lambda_b=gaussianReal(beta_b,sigma^2), with beta_false=-D/2 and beta_true=D/2. In the "
+                    + "following formulas q is a real score variable, unrelated to the earlier chord parameter. The C03/C04 "
+                    + "argument proves that nu is a probability measure, nu(ker(alpha))=1, Q_b.map(F)=lambda_b.prod(nu), and "
+                    + "(lambda_b.prod(nu)).map(G)=Q_b. Composing the last identity with Ainv gives (lambda_b.prod(nu)).map(Ainv "
+                    + "composed with G)=P_b. These are consequences of the actual observation model. No product law, support, score "
+                    + "distribution or score/residual independence premise is added.")))),
+            new DocumentBlock.Section(H("Fubini reduction of the actual deterministic-rule risk"), Blocks(
+                Paragraph(Text(
+                    "For a fixed measurable delta:O -> Bool put a_delta(q,z)=1 if delta(Ainv(G(q,z)))=true and 0 otherwise, and "
+                    + "r_delta(q)=integral_V a_delta(q,z) dnu(z). Composition of the measurable reconstruction, Ainv, delta and the "
+                    + "Boolean indicator shows that a_delta is jointly measurable. For every q, both a_delta(q,.) and "
+                    + "1-a_delta(q,.) are measurable and bounded between zero and one. They are therefore integrable against nu. "
+                    + "Since nu(V)=1, monotonicity of the integral gives 0<=r_delta(q)<=1 for every q, and integral_V "
+                    + "(1-a_delta(q,z)) dnu(z)=1-r_delta(q).")),
+                Paragraph(Text(
+                    "Parameter integration of the strongly measurable real-valued function a_delta gives a measurable r_delta. "
+                    + "For each b, a_delta and 1-a_delta are integrable on lambda_b.prod(nu), because they are bounded measurable "
+                    + "functions on a probability space. Likewise r_delta and 1-r_delta are integrable against lambda_b. All these "
+                    + "assertions include every score q for the section integrals; they do not require a density for nu. The actual "
+                    + "nu can be singular as a measure on V.")),
+                Paragraph(Text(
+                    "Apply the pushforward integral formula to (lambda_b.prod(nu)).map(Ainv composed with G)=P_b and to the "
+                    + "measurable event indicators. It gives P_b.real({delta=true})=integral_(R x V) a_delta d(lambda_b.prod(nu)) "
+                    + "and P_b.real({delta=false})=integral_(R x V) (1-a_delta) d(lambda_b.prod(nu)). Fubini applies to the "
+                    + "integrable functions just checked. Consequently Risk(delta)=[integral_R r_delta(q) "
+                    + "dlambda_false(q)+integral_R (1-r_delta(q)) dlambda_true(q)]/2. This is an equality for each original "
+                    + "deterministic classifier, not a replacement of that classifier class by randomized Markov rules. The "
+                    + "function r_delta is only the average of its actual indicator over the derived common residual.")))),
+            new DocumentBlock.Section(H("Density domination and the lower bound for all rules"), Blocks(
+                Paragraph(Text(
+                    "View v=sigma^2 as a strictly positive nonnegative-real variance. With respect to Lebesgue measure dq on R "
+                    + "define f_minus(q)=gaussianPDFReal(-D/2,v,q) and f_plus(q)=gaussianPDFReal(D/2,v,q). Explicitly "
+                    + "f_minus(q)=exp(-(q+D/2)^2/(2sigma^2))/sqrt(2pi sigma^2), and f_plus(q)=exp(-(q-D/2)^2/(2sigma^2))/sqrt(2pi "
+                    + "sigma^2). These densities are measurable, nonnegative and integrable, with integral one. Since "
+                    + "0<=r_delta<=1, the products r_delta f_minus and (1-r_delta) f_plus are measurable, nonnegative, and "
+                    + "dominated respectively by f_minus and f_plus; hence both are Lebesgue integrable. Changing from the Gaussian "
+                    + "measures to their densities and adding integrals therefore gives Risk(delta)=(1/2) integral_R "
+                    + "[r_delta(q)f_minus(q)+(1-r_delta(q))f_plus(q)] dq.")),
+                Paragraph(Text(
+                    "Set h(q)=min(f_minus(q),f_plus(q)) and L=(1/2) integral_R h(q) dq. The measurable function h is integrable "
+                    + "because 0<=h<=f_minus. Pointwise, for any 0<=r<=1, r f_minus+(1-r)f_plus-h=r(f_minus-h)+(1-r)(f_plus-h)>=0. "
+                    + "Substituting r_delta(q) and applying integral monotonicity yields L<=Risk(delta) for EVERY measurable "
+                    + "deterministic delta on O. The scalar inequality works for every measurable [0,1]-valued r, but the "
+                    + "conclusion here concerns the original all-classifier risk through its proved integral identity.")),
+                Paragraph(Text(
+                    "For D>0 the normalizing density constant and 2sigma^2 are positive. The exponential is strictly increasing, "
+                    + "and (q+D/2)^2-(q-D/2)^2=2qD. Hence f_minus(q)<=f_plus(q) if and only if q>=0. At q=0 the two densities "
+                    + "agree. Thus q_star(q)=1 for q>=0 and 0 for q<0 satisfies q_star f_minus+(1-q_star)f_plus=min(f_minus,f_plus) "
+                    + "at every q, including the midpoint tie. Integrating proves that the scalar lower bound L is attained by this "
+                    + "threshold average.")))),
+            new DocumentBlock.Section(H("Attainment by a measurable rule on the original observation space"), Blocks(
+                Paragraph(Text(
+                    "Define delta_star(y)=true exactly when T(A(y))>=0, choosing true at a tie. The set {y | 0<=T(A(y))} is "
+                    + "closed because T and A are continuous, so delta_star:O -> Bool is measurable. This rule is deterministic and "
+                    + "acts on the actual original observation y. It has been defined using only the model parameters, without "
+                    + "introducing extra residual randomness.")),
+                Paragraph(Text(
+                    "For EVERY q in R and every z in ker(alpha), A(Ainv(G(q,z)))=G(q,z) and T(G(q,z))=q. Since nu(ker(alpha))=1, "
+                    + "a_delta_star(q,z)=q_star(q) for nu-almost every z. Integrating this equality against the probability measure "
+                    + "nu gives r_delta_star(q)=q_star(q) for every real q. In particular r_delta_star(0)=1 with the chosen tie "
+                    + "convention. The risk identity then gives Risk(delta_star)=L. Combining this equality with the all-rule lower "
+                    + "bound proves Risk(delta_star)<=Risk(delta) for every measurable delta:O -> Bool. The support property needed "
+                    + "for this step was derived from nu=N.map(P_perp), including its possible singularity; it was not imposed on "
+                    + "an arbitrary auxiliary law.")))),
+            new DocumentBlock.Section(H("Gaussian tails and the attained literal real infimum"), Blocks(
+                Paragraph(Text(
+                    "Define Phi(x)=cdf(gaussianReal(0,1),x)=gaussianReal(0,1).real((-infinity,x]). To evaluate L, first push "
+                    + "gaussianReal(0,1) forward by z -> m+sigma z. The public Gaussian multiplication and translation laws give "
+                    + "gaussianReal(m,sigma^2). Because sigma>0, the preimage of (-infinity,a] is (-infinity,(a-m)/sigma], so "
+                    + "gaussianReal(m,sigma^2).real((-infinity,a])=Phi((a-m)/sigma). The positive variance Gaussian has no atoms. "
+                    + "The same equality therefore holds for (-infinity,a), without a boundary mass at a.")),
+                Paragraph(Text(
+                    "Reflection z -> -z preserves gaussianReal(0,1). Applying that pushforward identity to half-lines, using the "
+                    + "zero mass of a singleton and the probability complement identity, gives Phi(-x)=1-Phi(x); at x=0 this yields "
+                    + "Phi(0)=1/2. For the threshold rule, the false-label error is "
+                    + "lambda_false.real([0,infinity))=1-Phi(D/(2sigma))=Phi(-D/(2sigma)). The true-label error is "
+                    + "lambda_true.real((-infinity,0))=Phi(-D/(2sigma)). Thus L=Risk(delta_star)=Phi(-D/(2sigma)). The endpoint "
+                    + "convention agrees with the deterministic tie choice, and atomlessness makes the displayed tail calculation "
+                    + "exact.")),
+                Paragraph(Text(
+                    "Let S_Risk={q in R | there exists delta:O -> Bool with Measurable(delta) and Risk(delta)=q}. The measurable "
+                    + "rule delta_star supplies Risk(delta_star) in S_Risk, so the set is nonempty. Every element is at least L by "
+                    + "the all-rule bound (and is nonnegative from the original indicator formula), so S_Risk is bounded below. "
+                    + "Since Risk(delta_star)=L, L is an attained least element of S_Risk. The conditionally complete real-order "
+                    + "identity IsLeast.csInf_eq gives the literal equality sInf {q:R | exists delta:O -> Bool, Measurable(delta) "
+                    + "and Risk(delta)=q}=Phi(-D/(2sigma)). This is the real sInf of the actual deterministic-rule risk set, "
+                    + "together with an original-space rule attaining it.")))),
+            new DocumentBlock.Section(H("Zero distance and empty designs in the same risk theorem"), Blocks(
+                Paragraph(Text(
+                    "If D=0, norm(m_true-m_false)=0 implies m_true=m_false, hence Q_true=Q_false. Applying Ainv to these "
+                    + "identical laws gives P_true=P_false=P. For any measurable delta:O -> Bool the Boolean events {delta=true} "
+                    + "and {delta=false} are measurable complements. Their P.real probabilities sum to one, so Risk(delta)=1/2 for "
+                    + "every such delta. The constant-false classifier is measurable and attains 1/2. Therefore S_Risk is the "
+                    + "singleton {1/2}, its literal real sInf is 1/2, and Phi(-D/(2sigma))=Phi(0)=1/2. This branch never divides by "
+                    + "D and never requires a unit direction.")),
+                Paragraph(Text(
+                    "If J is empty, O and V are singletons, m_b=0 and D=0. The actual original P_b and flattened Q_b are the zero "
+                    + "Dirac laws derived in C01/C02. Thus every original measurable classifier has risk 1/2, the constant rule "
+                    + "attains it, and the real infimum is 1/2. All-zero weights and any other design with coincident means are covered by the D=0 argument. "
+                    + "Arbitrary signed weights remain allowed in both branches, with the branch determined by D. Combining D=0 with D>0 (D is always a norm and nonnegative) proves for every "
+                    + "admitted design that there exists a measurable deterministic delta_star on O attaining Phi(-D/(2sigma)), "
+                    + "that this risk is no larger than that of any other measurable original classifier, and that the literal real "
+                    + "sInf equals this value.")))),
+            new DocumentBlock.Section(H("Parameter correspondence, existing suppliers and scope"), Blocks(
+                Paragraph(Text(
+                    "The correspondence is exact: epsilon and the two phases determine the same harmonic sensor, w and t "
+                    + "determine its original means s_b, mu and xi determine its actual observation laws P_b, sigma is the positive "
+                    + "post-weight noise scale, and sigma^2 is the variance parameter of gaussianReal. Flattening through the "
+                    + "stated Fin 6 bijection identifies the formulas above with coordinates J x (Fin 3 x Fin 2); sums of squares, "
+                    + "D, inner products, alpha and the risk are unchanged by this coordinate reindexing. The common residual is "
+                    + "specifically N.map(P_perp), and reconstruction on O is specifically Ainv composed with G. In supplier "
+                    + "formulas for a product integral, the first measure is lambda_b, the second is nu and the integrand is "
+                    + "a_delta or 1-a_delta; in the Gaussian density formula the mean is -D/2 or D/2 and the variance is sigma^2. "
+                    + "The order-theoretic supplier is applied to S_Risk and its attained least element.")),
+                Paragraph(Text(
+                    "The sensor is the existing definition in "
+                    + "D5/S3/ConceptDynamics/ObservationTopology/HarmonicSensors/SixDimensionalSharpGeometry.lean; its observation "
+                    + "and score laws are derived above using the existing public Gaussian suppliers. For the risk step, "
+                    + "Mathlib/MeasureTheory/Function/L1Space/Integrable.lean supplies Integrable.of_mem_Icc. "
+                    + "Mathlib/MeasureTheory/Integral/Prod.lean supplies StronglyMeasurable.integral_prod_right' and integral_prod. "
+                    + "The Bochner integral files Mathlib/MeasureTheory/Integral/Bochner/Basic.lean and Set.lean supply "
+                    + "integral_map_of_stronglyMeasurable, integral_indicator_one, integral_sub, integral_add and integral_mono. "
+                    + "These are used on the actual bounded indicators and probability measures just identified.")),
+                Paragraph(Text(
+                    "At the same pinned Mathlib revision db584cd6d46c92f209a44c0f1c829460d327499d, "
+                    + "Mathlib/Probability/Distributions/Gaussian/Real.lean supplies gaussianPDFReal, gaussianPDFReal_nonneg, "
+                    + "measurable_gaussianPDFReal, integrable_gaussianPDFReal, integral_gaussianReal_eq_integral_smul, "
+                    + "gaussianReal_map_const_mul, gaussianReal_map_const_add, gaussianReal_map_neg and "
+                    + "nullSingletonClass_gaussianReal. Mathlib/Probability/CDF.lean supplies cdf_eq_real; "
+                    + "Mathlib/MeasureTheory/Measure/Typeclasses/NullSingletonClass.lean supplies Iio_ae_eq_Iic and Ioi_ae_eq_Ici; "
+                    + "Mathlib/MeasureTheory/Measure/Real.lean supplies the real probability-complement identities. The real-order "
+                    + "step uses IsLeast.csInf_eq from Mathlib/Order/ConditionallyCompletePartialOrder/Basic.lean. These source "
+                    + "citations identify existing suppliers of the application, not new repository declarations.")),
+                Paragraph(Text(
+                    "This is the C05/C06 application of the existing results to the actual original harmonic-sensor experiment. "
+                    + "Its indicator definitions, Fubini reduction, scalar Gaussian comparison, deterministic midpoint attainment "
+                    + "and degenerate reductions introduce no new Lean declaration, theorem Describe, registration, frozen identity "
+                    + "or claim of library novelty. C01/C04 and their original parameter scope remain as above. C07 and C09-C13, including "
+                    + "quantile bounds, design caps and asymptotic risk laws, are not established by this risk calculation; "
+                    + "the deterministic C08 energy identities follow below. No completion of the parent problem is claimed.")))),
+            new DocumentBlock.Section(H("C08: exact energy of the original harmonic-sensor means"), Blocks(
+                Paragraph(Text(
+                    "Keep 0<epsilon<=1/2, sigma>0, every finite J including the empty type, arbitrary signed real weights w:J -> R and "
+                    + "arbitrary real delays t:J -> R. Put Z=normalization(epsilon)=9+20epsilon>0, K=Fin 3 x Fin 2, B=EuclideanSpace R K, "
+                    + "O=J -> B and V=EuclideanSpace R (J x K). The same actual sensor H= sensor(epsilon,.) has frequencies k=(2,3,4), "
+                    + "amplitudes a=(sqrt(epsilon),1,sqrt(epsilon))/sqrt(Z), and coordinates H(phi)(i,0)=a_i cos(k_i phi), H(phi)(i,1)=a_i "
+                    + "sin(k_i phi). These are the existing frequencies, amplitudes and pairedSensor definitions, with "
+                    + "a_0^2=a_2^2=epsilon/Z and a_1^2=1/Z.")),
+                Paragraph(Text(
+                    "Use exactly the earlier flattening A:O -> V, A(y)=toLp 2 (p -> y(p.1)(p.2)). Set m_false=A(j -> w_j H(-t_j)), "
+                    + "m_true=A(j -> w_j H(2pi/3-t_j)), d=m_true-m_false, D=norm(d), and E=sum_j w_j^2. In particular, for each Boolean b, "
+                    + "A(j -> w_j H(phi_b-t_j)) is m_false or m_true according to b, with phi_false=0 and phi_true=2pi/3. These are the "
+                    + "means of the preceding actual experiment. The deterministic calculation below needs no further noise assumption; "
+                    + "sigma remains its positive post-weight noise scale and does not enter E or D. All norms and sums used below are "
+                    + "Euclidean in B or V. No identification of the Pi-space norm on O with the Euclidean norm of its flattening is used.")))),
+            new DocumentBlock.Section(H("Third-turn chord, rotation invariance and the Euclidean energy sum"), Blocks(
+                Paragraph(Text(
+                    "For the ith two-coordinate block, shifting a phase by -t_j rotates that block through -k_i t_j. The same orthogonal "
+                    + "rotation acts on both endpoints, so it preserves the block chord norm. Explicitly, "
+                    + "(cos(alpha)-cos(beta))^2+(sin(alpha)-sin(beta))^2=4 sin((alpha-beta)/2)^2. Multiplying by a_i^2 and summing the "
+                    + "three blocks gives norm(H(phi)-H(psi))^2=4 sum_i a_i^2 sin(k_i(phi-psi)/2)^2. With phi=2pi/3-t_j and psi=-t_j, their "
+                    + "difference is exactly 2pi/3 for every delay. The three sine squares are sin(2pi/3)^2=3/4, sin(pi)^2=0 and "
+                    + "sin(4pi/3)^2=3/4. Therefore each actual sensor chord has square "
+                    + "4[(epsilon/Z)(3/4)+(1/Z)0+(epsilon/Z)(3/4)]=6epsilon/Z.")),
+                Paragraph(Text(
+                    "Equivalently, apply the existing six_chord_norm_sq to these actual endpoints. Their half-difference is pi/3, "
+                    + "chordParameter=4cos(pi/3)^2-1=0, and chordPolynomial(epsilon,0)=2epsilon. The theorem therefore gives "
+                    + "(4sin(pi/3)^2/Z)(2epsilon)=6epsilon/Z. This directly identifies the delay-independent coordinate calculation with "
+                    + "the original owner theorem.")),
+                Paragraph(Text(
+                    "For any y:O, EuclideanSpace.real_norm_sq_eq and the finite-product sum identity give norm(A(y))^2=sum_(j,k) "
+                    + "y(j)(k)^2=sum_j norm(y(j))^2. Coordinatewise distributivity gives d=A(j -> w_j [H(2pi/3-t_j)-H(-t_j)]). Thus "
+                    + "D^2=sum_j norm(w_j [H(2pi/3-t_j)-H(-t_j)])^2=sum_j w_j^2 norm(H(2pi/3-t_j)-H(-t_j))^2. The scalar norm law is "
+                    + "norm(w_j v)=abs(w_j) norm(v), and abs(w_j)^2=w_j^2, so this step includes negative as well as zero weights. Distinct "
+                    + "j occupy distinct Euclidean blocks; no cross-block cancellation term occurs. Substituting the chord square and "
+                    + "distributing the finite sum yields D^2=(6epsilon/Z)sum_j w_j^2=6epsilon E/(9+20epsilon).")))),
+            new DocumentBlock.Section(H("The actual infimum gain and the positive square-root identities"), Blocks(
+                Paragraph(Text(
+                    "The lower gain is the existing physical infimum, not an introduced scalar surrogate: "
+                    + "chordGain(epsilon,phi,psi)=norm(H(phi)-H(psi))/norm(circleState(phi)-circleState(psi)); gainValues(epsilon) contains "
+                    + "these ratios for all phi,psi with distinct physical circle states; lowerGain(epsilon)=sInf(gainValues(epsilon)). The "
+                    + "original lower_gain_eq_sqrt, with its existing proof body and the same hypotheses 0<epsilon<=1/2, gives "
+                    + "lowerGain(epsilon)=sqrt(2epsilon/Z). Its argument bounds every actual chord gain below and attains the bound at a "
+                    + "realized chordParameter of zero; it therefore identifies this actual infimum over physical states. The existing "
+                    + "lower_gain_sq gives lowerGain(epsilon)^2=2epsilon/Z.")),
+                Paragraph(Text(
+                    "Because epsilon>0 and Z>0, lowerGain(epsilon)>0, in particular it is nonnegative. Also E>=0 as a sum of squares and "
+                    + "D>=0 as a norm. Combining the exact energy square with lower_gain_sq gives D^2=3E lowerGain(epsilon)^2. The "
+                    + "nonnegative square root of D^2 is D, so D=sqrt(6epsilon E/(9+20epsilon)). Both D and sqrt(3E) lowerGain(epsilon) are "
+                    + "nonnegative and have equal squares, hence D=sqrt(3E) lowerGain(epsilon). The sign checks apply also at E=0 and "
+                    + "require no division by E or D.")))),
+            new DocumentBlock.Section(H("Zero energy, empty designs and the remaining scope"), Blocks(
+                Paragraph(Text(
+                    "Since 6epsilon/Z>0, the squared identity gives E=0 if and only if D=0. If E=0, norm(m_true-m_false)=0 and therefore "
+                    + "m_true=m_false; conversely equal means give D=0 and hence E=0. All-zero weights are included. Signed weights remain "
+                    + "arbitrary, but a negative weight does not itself make E or D vanish. If J is empty, its finite sum is zero and J x K "
+                    + "has no coordinates: E=0, D=0 and both actual means are the zero vector. These conclusions use the same definitions "
+                    + "and do not assume J is nonempty or pass to a positive-dimensional limit.")),
+                Paragraph(Text(
+                    "The supplier correspondence is precise: the epsilon in normalization, sensor, six_chord_norm_sq, lower_gain_eq_sqrt "
+                    + "and lower_gain_sq is the experiment's epsilon; the two chord phases are 2pi/3-t_j and -t_j; the index in the "
+                    + "Euclidean product sum is (j,k); and scalar multiplication uses the original signed w_j. These declarations are in "
+                    + "D5/S3/ConceptDynamics/ObservationTopology/HarmonicSensors/SixDimensionalSharpGeometry.lean, while "
+                    + "PairedDelayGeometry.paired_chord_norm_sq in that same source gives the block sum. At Mathlib pin "
+                    + "db584cd6d46c92f209a44c0f1c829460d327499d, Mathlib/Analysis/InnerProductSpace/PiL2.lean supplies "
+                    + "EuclideanSpace.real_norm_sq_eq, the finite-product big-operator APIs supply Fintype.sum_prod_type and "
+                    + "Finset.sum_mul, the normed scalar-action API supplies norm_smul, and Mathlib/Analysis/Real/Sqrt.lean supplies the "
+                    + "nonnegative square-root identities. This is an application of these existing results; the exact gain formula is not "
+                    + "claimed as new mathematics.")),
+                Paragraph(Text(
+                    "This establishes the original C08 energy identities and their zero and empty cases for the actual means, alongside "
+                    + "the C01-C06 applications above. C07 and C09-C13, including the remaining quantile bounds, design caps and asymptotic "
+                    + "risk laws, remain outside these conclusions. No completion of the parent problem is asserted.")))))));
 
     private static Formula ActualEtaLimitFormula() => Disp(Call("Tendsto",
         Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,

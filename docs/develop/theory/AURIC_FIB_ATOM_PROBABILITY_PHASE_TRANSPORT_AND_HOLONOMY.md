@@ -2614,3 +2614,676 @@ Corollary 7.4 and (7.6). The finite loops constructed in the theorem remain
 inside this source's positive fiber. $\square$
 
 ## 7.99 追加锚
+
+## 8. Reachable open-prefix rays and their fixed affine response boundary
+
+### 8.1 The prefix query on the original controls
+
+**Definition 8.1 (Current source task).** Fix the means of Definition 2.1,
+one initial height $\kappa_0\in J_b:=(\kappa_-,\kappa_+)$, and arbitrary
+fixed preparation phases $\theta^{\rm in}$. Every history starts from this
+same preparation. Use exactly Definition 3.1 controls on finite compact
+intervals, with finite phase variation and full support throughout. Query
+the current ray at any terminal time, without imposing the base/phase
+closing condition at that time. This is a new prefix query on the existing
+controls; the endpoint query in §§3–7 continues to require its original
+closing condition.
+
+Write the real phase increment and real control increment as
+
+$$
+h(t)=\theta(t)-\theta^{\rm in},\qquad
+L(t)=\chi(t)-\chi(0).
+\tag{8.1}
+$$
+
+Choose the initial relation lift consistently with
+$d^{\mathsf T}\theta^{\rm in}$; only increments will matter. Then
+$h_2=0$ and $d^{\mathsf T}h=L$ on every admissible history. A common
+constant gauge change makes the middle amplitude positive, with initial
+relative phases $\eta_s=\theta_s^{\rm in}-\theta_2^{\rm in}$ and
+$\eta_2=0$. It does not set any of the other preparation phases to zero.
+
+Use the walls $E_-:X+Y=r$ and $E_+:X=Y$ and the grouped space $U_b$
+from the proof of Theorem 3.2. Thus $h_2=0$, with the additional increment
+equalities $h_0=h_{13}$ on $E_-$ and $h_1=h_3$ on $E_+$. Let
+
+$$
+g=4-\mathbf1_{E_-}-\mathbf1_{E_+},\qquad
+\Lambda_b=U_b\cap 2\pi\mathbb Z^5.
+\tag{8.2}
+$$
+
+The equalities concern increments, not equality of arbitrary initial
+phases. The current source, a history producing it, and the controller's
+real lifted record are separate objects in this task.
+
+### 8.2 Exact realization of the entire current-ray domain
+
+**Theorem 8.2 (Open-prefix source manifold).** The exact set of pairs
+$(\kappa(T),h(T))$ of real lifted source coordinates obtainable from
+Definition 8.1 is $J_b\times U_b$. In particular the exact current-ray
+domain, with its inherited smooth structure, is
+
+$$
+\mathcal M_b\simeq J_b\times(U_b/\Lambda_b)
+\simeq J_b\times\mathbb T^g.
+\tag{8.3}
+$$
+
+| Fixed mean regime | Exact phase increment domain | Intrinsic current-ray dimension |
+| --- | --- | --- |
+| Neither wall | $\mathbb T^4$ | $5$ |
+| $E_-$ only | $\mathbb T^3$, with $h_0=h_{13}$ | $4$ |
+| $E_+$ only | $\mathbb T^3$, with $h_1=h_3$ | $4$ |
+| Both walls | $\mathbb T^2$, with both equalities | $3$ |
+
+Every point has an exact finite piecewise linear control realization. At
+most $g-1$ of the rectangles already supplied by Theorem 3.2, one
+fixed-height phase leg and one probability leg suffice. In the full-support
+fixed-mean model, the current-ray domain is three-dimensional if and only
+if $X=Y=r/2$.
+
+Proof. For the converse inclusion, $w(\kappa)\in U_b$ at every interior
+height by Theorem 3.2. Integrating the original ODE therefore gives
+$h(T)\in U_b$ for every admissible history, including absolutely
+continuous ones. The endpoint probability coordinate is in $J_b$ by
+admissibility. There are no further real constraints from a closing
+condition, because the query in Definition 8.1 imposes none.
+
+For sufficiency, prescribe any $\kappa_*\in J_b$ and $v\in U_b$. Set
+
+$$
+L_*=d^{\mathsf T}v,\qquad
+v_0=v-L_*w(\kappa_0).
+\tag{8.4}
+$$
+
+The identity $d^{\mathsf T}w=1$ gives $v_0\in V_b$. Theorem 3.2 supplies
+an exact zero-winding rectangle menu at $\kappa_0$ with residual $v_0$,
+using $g-1$ heights selected independently of $v$. Execute that menu,
+then at $\kappa_0$ increase the real control phase by $L_*$, and finally
+move $\kappa_0$ to $\kappa_*$ with control phase fixed. The phase leg adds
+$L_*w(\kappa_0)$ and the probability leg adds zero phase. Thus the final
+real increment is exactly $v$, and the final height is exactly
+$\kappa_*$. The control ends with real increment $L_*$, as required by
+the integrated ODE.
+
+Here the rectangle construction is consumed, not replaced by an
+accessibility or density argument. Its actual continuous realization is
+also supplied by
+[`finite_rectangles_realize`](https://github.com/the-omega-institute/trureturing/blob/c8dd0930fa71461d0d6ee93c10fb7075e3251a6e/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean).
+The correspondence is $b=(X,Y,Z)$, $k_0=\kappa_0$, and menu entries
+$(k,a)=(\kappa_j,a_j)$ from Theorem 3.2; its mode index $4$ is mode
+$13$ here. Its $\operatorname{phaseWeight}$ is exactly $w$, its
+$\operatorname{probability}$ is $p_\kappa$, and its residual is
+$\sum_j a_j(w(\kappa_j)-w(\kappa_0))$. Its initial zero phases are
+increments $h=0$ here. Translating its control phase by $\chi(0)$ and its
+state phase by $\theta^{\rm in}$ preserves the ODE because the
+coefficients depend only on $\kappa$. The supplier includes empty menus,
+negative or zero coefficients and both walls. The existence of the menu
+representing $v_0$ comes from Theorem 3.2, rather than from that supplier.
+
+The two extra legs obey Definition 3.1 directly. Each is an affine
+control leg; $w$ is constant on the phase leg and the phase derivative is
+zero on the probability leg. Every probability segment stays inside
+$J_b$ by convexity. The finite set of heights and finite real phase
+increments give a compact positive range and finite total phase
+variation. Concatenation consequently gives a lawful finite history,
+with no speed, time-budget or uniform variation bound asserted.
+
+It remains to justify that (8.3) describes rays rather than redundant
+phase representatives. In the middle-positive gauge the state is
+
+$$
+\psi_s(\kappa,h)=\sqrt{p_s(\kappa)}\,
+e^{-i(\eta_s+h_s)},\qquad \psi_2=\sqrt Z>0.
+\tag{8.5}
+$$
+
+Equality of rays forces equality of these representatives: their middle
+entries fix the common phase. Equality of moduli then gives equal
+$\kappa$, for example from $p_{13}=\kappa$, and equality of phases gives
+$h-h'\in\Lambda_b$. Conversely these conditions give the same ray.
+Each pole group has one independent real increment and one independent
+$2\pi$ period, so $U_b/\Lambda_b\simeq\mathbb T^g$. There is no further
+finite quotient. The inverse in the projective chart with nonzero middle
+coordinate recovers $\kappa$ and each phase circle smoothly from the
+nonzero component ratios. Thus (8.5) is a smooth embedding with the
+claimed dimension. The two wall equations hold together precisely when
+$X=Y=r/2$. $\square$
+
+**Proposition 8.3 (Containment of prefixes and retained lift information).**
+Every actual prefix in Definition 8.1 extends to a Definition 3.1
+base/phase loop of any specified integer winding. On a history already
+known to be admissible, its current ray tests the endpoint closing
+condition by
+
+$$
+\kappa=\kappa_0,\qquad e^{i d^{\mathsf T}h}=1.
+\tag{8.6}
+$$
+
+It does not determine the integer winding, the full lifted control record,
+or whether an arbitrary proposed intervening path obeyed the ODE.
+
+Proof. Given the actual terminal lift $L$ of a prefix, first return its
+height to $\kappa_0$ at fixed control phase. At $\kappa_0$ append a phase
+leg of increment $2\pi m-L$. Both legs are finite and legal, and the
+complete history has winding $m$. The existing prefix is preserved, not
+replaced by a history with the same endpoint. Thus querying all prefixes
+does not add a new kind of legal control.
+
+The quantity $e^{i d^{\mathsf T}h}$ is a well-defined function of the ray
+and fixed preparation: $d$ is integral and
+$d^{\mathsf T}\mathbf1=0$. For an admissible history it equals $e^{iL}$,
+so (8.6) is exactly the original periodic base closing condition. This
+conditional test does not certify the preceding evolution.
+
+To exhibit the loss of winding, let group $a$ have multiplicity $m_a$
+and sign $\varepsilon_a$, and put $c_a=m_a\varepsilon_a$ as in §3.3.
+A returned ray has real grouped increments $2\pi\ell_a$ and hence
+winding $m=\sum_a c_a\ell_a$. Conversely every such integer choice is
+realized at $\kappa_0$ by Theorem 8.2, and gives the initial ray. The
+possible windings of ray-returning loops are consequently
+$\gcd(c_1,\ldots,c_g)\mathbb Z$, namely $\mathbb Z$ off the double wall
+and $2\mathbb Z$ on it. Nonzero examples have exactly the same current
+ray as the constant loop. A path followed by its reverse supplies a
+separate ambiguity even with real terminal increments fixed.
+
+For path certification, compare the constant history with the proposed
+path $\kappa(t)=\kappa_0$, $\chi(t)=\chi(0)$,
+$h(t)=\sin^2(\pi t)(1,1,0,1,1)^{\mathsf T}$ on $[0,1]$. The latter
+has full support, the same endpoints, the middle-fixed gauge and
+$d^{\mathsf T}h=0$ throughout, including both wall equalities when
+applicable. But its nonzero phase derivative violates
+$\dot\theta=w\dot\chi=0$ in the interior. Its endpoint ray cannot
+distinguish it from the legal constant history. The ray therefore
+retains the closing predicate conditional on admissibility while
+forgetting integer and path data. $\square$
+
+### 8.3 The unchanged coherence menu observes this same source
+
+**Theorem 8.4 (Current-ray observability over variable probability).**
+The ten doubled coherence outputs of Theorem 3.12 separate every pair of
+current rays in $\mathcal M_b$. The resulting output map is a smooth
+embedding, including on either individual wall and their intersection.
+
+Proof. Keep the oriented edge order
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)).
+\tag{8.7}
+$$
+
+For $e=(i,j)$ let $\delta_e^0=\theta_i^{\rm in}-\theta_j^{\rm in}$.
+The original output pair, with the original factor of two, is
+
+$$
+y_e(\kappa,h)=2\sqrt{p_i(\kappa)p_j(\kappa)}
+\begin{pmatrix}
+\cos(\delta_e^0+h_i-h_j)\\
+\sin(\delta_e^0+h_i-h_j)
+\end{pmatrix}.
+\tag{8.8}
+$$
+
+Its middle-reference block recovers the probability coordinate directly:
+
+$$
+\|y_{02}\|^2=4Z(r-X-Y+\kappa),\qquad
+\kappa=\frac{\|y_{02}\|^2}{4Z}-(r-X-Y).
+\tag{8.9}
+$$
+
+The strict condition $Z>0$ is used here. Once $\kappa$ is known, all
+edge amplitudes in (8.8) are known and nonzero. Normalizing each pair and
+removing its fixed preparation phase gives $e^{i(h_i-h_j)}$. Reuse the
+connected graph of Theorem 3.12: the $02$ edge fixes $h_0$ relative to
+$h_2=0$; edges $01$ and $03$ then fix $h_1,h_3$; edge $1,13$ fixes
+$h_{13}$. These are precisely the current phase classes, with any group
+equalities already imposed. No new observable has been introduced.
+
+Equation (8.9) and these circle-valued phase reconstructions are smooth
+on the positive domain; division is only by nonzero amplitudes. They give
+a smooth inverse on the output image, proving the embedding assertion.
+The reconstruction is of ideal expectations on the same source; it is
+neither recovery of the producing history nor an assertion about exact
+finite-shot acquisition. $\square$
+
+### 8.4 One affine decoder across the full prefix family
+
+**Definition 8.5 (Prefix affine capacity).** Apply the contract of
+Definition 4.1 to the domain $\mathcal M_b$ instead of the closed-loop
+endpoint domain. Thus $\operatorname{cap}^{\rm pre}_{\rm aff}(b)$ is the
+least integer $n$ for which
+
+$$
+y(\kappa,h)=c+D z(\kappa,h)\qquad((\kappa,h)\in\mathcal M_b)
+\tag{8.10}
+$$
+
+with an arbitrary encoder into $\mathbb R^n$, one linear
+$D:\mathbb R^n\to\mathbb R^{10}$ and one offset $c\in\mathbb R^{10}$.
+Both $D$ and $c$ are fixed over all current probabilities, phases and
+histories in this fiber. They may depend on the fixed means and fixed
+preparation. The output metric is the original Euclidean metric on the
+ten doubled expectations. This is a current-output contract, without an
+additional linear continuation contract.
+
+**Theorem 8.6 (Exact prefix capacities and the double-wall decoder).**
+For Definition 8.5,
+
+$$
+\operatorname{cap}^{\rm pre}_{\rm aff}(b)=
+\begin{cases}
+10,&\text{neither wall},\\
+6,&\text{exactly one wall},\\
+4,&\text{both walls}.
+\end{cases}
+\tag{8.11}
+$$
+
+All upper bounds use offset zero and one decoder fixed on the whole
+variable-probability domain. The lower bounds allow arbitrary fixed
+offsets and arbitrary nonlinear encoders.
+
+Proof. Let $\upsilon(t)=(\cos t,\sin t)^{\mathsf T}$,
+$J=\operatorname{diag}(1,-1)$, and let
+
+$$
+O=\bigoplus_{e\in\mathcal E}R_{\delta_e^0},\qquad
+\widetilde y=O^{\mathsf T}y.
+\tag{8.12}
+$$
+
+This fixed orthogonal change merely exposes the preparation phases in
+the proof; the final decoder into the original outputs includes $O$.
+It neither whitens nor rescales the output metric.
+
+At no wall the five phase characters are, on the full $\mathbb T^4$,
+
+$$
+h_0-h_1,\quad h_0,\quad h_0-h_3,\quad
+h_1-h_{13},\quad h_3-h_{13}.
+\tag{8.13}
+$$
+
+Their integer coefficient vectors, in order $(h_0,h_1,h_3,h_{13})$, are
+
+$$
+(1,-1,0,0),\ (1,0,0,0),\ (1,0,-1,0),\
+(0,1,0,-1),\ (0,0,1,-1).
+\tag{8.14}
+$$
+
+They are nonzero and pairwise distinct even up to sign. Fix any interior
+$\kappa_*$. Theorem 8.2 realizes the entire phase torus at this one
+height; every amplitude in (8.8) is strictly positive. Distinct torus
+characters, including the constant and both signs of (8.14), are linearly
+independent. Hence the constant and the ten real sine/cosine output
+functions on this slice are independent. Its affine hull is all of
+$\mathbb R^{10}$, proving the lower bound ten for the whole prefix
+family. The identity decoder gives the upper bound.
+
+For $E_-$ only, write $h_0=h_{13}=x$, $h_1=y$, $h_3=z$ and use the
+three independent angles
+
+$$
+\alpha=x-y,\qquad\beta=x,\qquad\gamma=x-z.
+$$
+
+The change of circle coordinates has the integer inverse
+$(x,y,z)=(\beta,\beta-\alpha,\beta-\gamma)$. Here
+$p_0=p_{13}=\kappa$. Set
+
+$$
+z_\alpha=2\sqrt{\kappa(X-\kappa)}\,\upsilon(\alpha),\quad
+z_\beta=2\sqrt{\kappa Z}\,\upsilon(\beta),\quad
+z_\gamma=2\sqrt{\kappa(Y-\kappa)}\,\upsilon(\gamma).
+$$
+
+Then, in the edge order (8.7),
+
+$$
+\widetilde y=(z_\alpha,z_\beta,z_\gamma,Jz_\alpha,Jz_\gamma).
+\tag{8.15}
+$$
+
+This is a fixed rank-six linear map of the three displayed pairs,
+independent of $\kappa$. At a fixed interior height the three pairs
+range over a product of three circles of positive radii. Its affine hull
+is $\mathbb R^6$, giving the matching lower bound.
+
+For $E_+$ only, write $h_0=x$, $h_1=h_3=y$, $h_{13}=z$ and use
+
+$$
+\alpha=x-y,\qquad\beta=x,\qquad\gamma=y-z.
+$$
+
+Their integer inverse is
+$(x,y,z)=(\beta,\beta-\alpha,\beta-\alpha-\gamma)$.
+Here $p_1=p_3=X-\kappa$. Define
+
+$$
+z_\alpha=2\sqrt{p_0(X-\kappa)}\,\upsilon(\alpha),\quad
+z_\beta=2\sqrt{p_0Z}\,\upsilon(\beta),\quad
+z_\gamma=2\sqrt{\kappa(X-\kappa)}\,\upsilon(\gamma).
+$$
+
+The full response is now
+
+$$
+\widetilde y=(z_\alpha,z_\beta,z_\alpha,z_\gamma,z_\gamma).
+\tag{8.16}
+$$
+
+Again the map is fixed and rank six across every probability, and the
+fixed-height three-circle slice proves sharpness. The two individual
+walls thus have the same capacity for explicitly different edge
+identifications.
+
+At both walls let
+
+$$
+B=r/2-\kappa>0,\qquad h_0=h_{13}=u,\quad h_1=h_3=v,
+\qquad \alpha=u-v,\quad\beta=u.
+\tag{8.17}
+$$
+
+The two circle coordinates are independent, with inverse
+$(u,v)=(\beta,\beta-\alpha)$. Define four real response coordinates by
+the two pairs
+
+$$
+z_a=2\sqrt{\kappa B}\,\upsilon(\alpha),\qquad
+z_b=2\sqrt{\kappa Z}\,\upsilon(\beta),\qquad z=(z_a,z_b).
+\tag{8.18}
+$$
+
+With $I_2$ the two-by-two identity, an explicit decoder into the original
+ten outputs is
+
+$$
+D=O D_0,\qquad
+D_0=
+\begin{pmatrix}
+I_2&0\\
+0&I_2\\
+I_2&0\\
+J&0\\
+J&0
+\end{pmatrix},\qquad y=Dz,
+\qquad D^{\mathsf T}D=4I_2\oplus I_2.
+\tag{8.19}
+$$
+
+All dependence on the current probability is in the encoder (8.18),
+not in $D$ or an offset. The two radii are nonzero at every interior
+height. At any such height the full product of two circles is reachable,
+so its affine hull is $\mathbb R^4$. Injectivity of $D$ gives a
+four-dimensional affine hull of the outputs, proving that no fixed
+affine decoder with three input coordinates can serve this domain.
+
+For completeness, the character-independence step is the classical
+theorem for distinct homomorphisms to $\mathbb C^\times$, with
+$G=\mathbb T^g$, as in Keith Conrad,
+[*Linear Independence of Characters*, Theorem 2.1](https://kconrad.math.uconn.edu/blurbs/galoistheory/linearchar.pdf).
+For these characters the same conclusion follows from the torus
+orthogonality used in §4: multiply by a conjugate character and integrate
+over the phase torus. Sine and cosine are the two linear combinations
+of a nonzero character and its inverse. Including the trivial character
+rules out a nonzero constant affine relation. This is a test of
+functional independence on the realized slice, not an assumption about
+the probability distribution of histories.
+
+Finally, the affine hull of $c+D z(\mathcal M_b)$ has dimension at most
+$\operatorname{rank}D\le n$, regardless of the encoder. This supplies
+all stated lower bounds even when a nonzero fixed offset is allowed.
+$\square$
+
+The four coordinates (8.18) carry a three-dimensional curved source
+image rather than an open subset of $\mathbb R^4$. Explicitly, if
+$a=\|z_a\|^2$ and $b=\|z_b\|^2$, that exact image is
+
+$$
+0<b<2rZ,\qquad
+a=\frac{rb}{2Z}-\frac{b^2}{4Z^2},
+\tag{8.20}
+$$
+
+with arbitrary angles of the two nonzero pairs. Indeed
+$\kappa=b/(4Z)$, and substitution gives
+$a=4\kappa(r/2-\kappa)$; Theorem 8.2 realizes every such point. This
+description explains why intrinsic dimension three and affine capacity
+four coexist for the same source. Equation (8.19) also retains the
+original output distance exactly:
+
+$$
+\|y-y'\|^2=4\|z_a-z_a'\|^2+\|z_b-z_b'\|^2.
+\tag{8.21}
+$$
+
+No additional metric choice is involved in this decoder identity.
+
+### 8.5 The native third direction on the double wall
+
+**Theorem 8.7 (Observable commutator direction of the original law).**
+On the actual three-dimensional domain
+$\mathcal M_b=(0,r/2)\times\mathbb T^2$ of the double wall, the original
+two controls have rank-two distribution
+
+$$
+\mathcal D=\operatorname{span}\{P,Q\},\qquad
+P=\partial_\kappa,\qquad
+Q=\left(\frac12-\frac\kappa r\right)\partial_u
+       -\frac\kappa r\partial_v.
+\tag{8.22}
+$$
+
+Their commutator
+
+$$
+C=[P,Q]=-\frac1r(\partial_u+\partial_v)
+\tag{8.23}
+$$
+
+is a third independent source tangent direction at every interior point.
+Finite legal control rectangles realize its flow exactly. This direction
+is visible in the original $02$ coherence pair, even though the reduced
+relation phase does not change along it.
+
+Proof. Theorem 3.7 supplies the affine double-wall formula for $w$.
+Without imposing loop closure, the same pointwise formula gives
+
+$$
+\dot u=\left(\frac12-\frac\kappa r\right)\dot\chi,
+\qquad\dot v=-\frac\kappa r\dot\chi.
+\tag{8.24}
+$$
+
+Thus the two independent real control velocities multiply $P$ and $Q$.
+Differentiating the coefficients gives (8.23). The determinant of the
+two phase columns $Q,C$ in $(u,v)$ coordinates is $-1/(2r)$, which is
+nonzero. Together with $P$ they span the tangent space. This is a
+statement about the actual source coordinates of Theorem 8.2.
+
+To realize the commutator rather than infer lawfulness from its name,
+choose any nonzero $s$ with $\kappa+s\in(0,r/2)$ and any finite real
+$A$. Execute the probability leg from $\kappa$ to $\kappa+s$, a phase
+leg of increment $A$, the returning probability leg, and a phase leg
+of increment $-A$. The supplied rectangle identity of Theorem 2.6 and
+the affine formula for $w$ give exactly
+
+$$
+\Delta u=\Delta v=-\frac{sA}{r},\qquad
+\Delta\kappa=0,\qquad\Delta\chi=0.
+\tag{8.25}
+$$
+
+This is the time-$sA$ flow of $C$, with no limiting approximation.
+For any desired common phase increment $t$, set $A=-rt/s$. All four
+legs are legal and finite; neither sign of $A$ is excluded. Small
+rectangles also give arbitrarily small nonzero local displacements.
+The finite paths in Theorem 8.2 already prove the full global reachable
+domain, so no general bracket-accessibility theorem is needed.
+
+In the observable coordinates (8.17), $C\alpha=0$ and
+$C\beta=-1/r$. At fixed $\kappa$ the $02$ output is
+$2\sqrt{\kappa Z}\,R_{\delta_{02}^0}\upsilon(\beta)$, so its derivative
+along $C$ has norm
+
+$$
+\|C y_{02}\|=\frac{2\sqrt{\kappa Z}}r>0.
+\tag{8.26}
+$$
+
+Consequently the new tangent direction is not removed by the ray gauge
+or by the declared read menu. The pure probability direction changes
+(8.9), while $Q$ changes $\alpha$ at rate $1/2$; these and (8.26)
+also exhibit the three independent directions in the same output map.
+The commutator changes the phase of the four bottom modes relative to
+the positive middle reference. It is not common phase on all five modes.
+
+The contact description is a consumed explanation of this distribution.
+The one-form obtained from the actual probability-weighted phase is
+
+$$
+\lambda=2\kappa\,du+(r-2\kappa)\,dv,\qquad
+\ker\lambda=\mathcal D,\qquad
+\lambda\wedge d\lambda=2r\,d\kappa\wedge du\wedge dv\ne0.
+\tag{8.27}
+$$
+
+Both vector fields in (8.22) annihilate $\lambda$, and their independence
+gives its entire two-dimensional kernel. The displayed exterior
+derivative verifies the contact criterion directly in this domain.
+The form uses the given probabilities and phase convention, with no
+new metric imposed.
+
+To connect this precisely to the classical two-amplitude model, define
+the fixed orthonormal vectors incorporating all preparation phases by
+
+$$
+|+\rangle=\frac{e^{-i\eta_0}|0\rangle+
+                         e^{-i\eta_{13}}|13\rangle}{\sqrt2},\qquad
+|-\rangle=\frac{e^{-i\eta_1}|1\rangle+
+                         e^{-i\eta_3}|3\rangle}{\sqrt2}.
+$$
+
+Then the same source representative (8.5) is exactly
+
+$$
+|\psi\rangle=\sqrt r\,(z_+|+\rangle+z_-|-\rangle)+\sqrt Z\,|2\rangle,
+\qquad
+z_+=\sqrt{\frac{2\kappa}{r}}e^{-iu},\quad
+z_-=\sqrt{1-\frac{2\kappa}{r}}e^{-iv}.
+\tag{8.28}
+$$
+
+This parametrizes precisely
+$\{(z_+,z_-)\in\mathbb C^2:|z_+|^2+|z_-|^2=1,\ z_+z_-\ne0\}$,
+the part of the unit three-sphere with both amplitudes nonzero. John
+Etnyre's
+[*Introductory Lectures on Contact Geometry*, §2, Example 2.12, equation (7)](https://arxiv.org/abs/math/0111118v2)
+uses the form
+$\alpha_{\rm std}=\sum_{j=1}^2(x_j\,dy_j-y_j\,dx_j)
+=\operatorname{Im}(\overline z_+\,dz_++\overline z_-\,dz_-)$
+on the unit sphere. Under (8.28) its pullback is $-\lambda/r$.
+The sign follows from the negative exponential convention, and the
+nonzero constant does not change the kernel. Etnyre's criterion
+$\alpha\wedge d\alpha\ne0$ therefore describes exactly the native
+distribution already verified in (8.27).
+
+The simultaneous phase of $(z_+,z_-)$ is the circle direction ordinarily
+removed in the Hopf quotient. Here it is measured against $\sqrt Z|2\rangle$;
+removing it would erase precisely the direction detected in (8.26).
+The correspondence is with this open source domain and this plane field.
+It supplies no free $SU(2)$ control on the two amplitudes, no free
+$SO(3)$ action on observations, and no identification with physical
+position space. $\square$
+
+### 8.6 Current response, continuation and the remaining bridge
+
+**Proposition 8.8 (Four current coordinates need not update affinely).**
+On the double wall, the exact current response (8.18) does not admit a
+fixed affine update for a nonzero pure probability displacement $s$,
+even on any nonempty open interval of starting heights for which both
+$\kappa$ and $\kappa+s$ belong to $(0,r/2)$.
+
+Proof. Use the same open-loop velocities $\dot\kappa=s$ and
+$\dot\chi=0$ on $[0,1]$ for every starting state in that interval.
+Convexity gives lawful probability paths, and the phases $\alpha,\beta$
+remain fixed. The updated middle pair is
+
+$$
+z_b'=\sqrt{\frac{\kappa+s}{\kappa}}\,z_b.
+\tag{8.29}
+$$
+
+If a fixed affine map on $(z_a,z_b)$ gave this update for every state,
+its middle block would have form $c_b+M z_a+N z_b$. At any fixed
+starting height the two phases vary independently. Averaging over both
+circles forces $c_b=0$, varying $\alpha$ forces $M=0$, and varying
+$\beta$ forces
+$N=\sqrt{(\kappa+s)/\kappa}\,I_2$. This factor is nonconstant on
+every such open interval when $s\ne0$, a contradiction. The updates
+remain completely determined by the current ray and the specified
+legal continuation; the obstruction is to a fixed affine update in
+these four response coordinates. $\square$
+
+**Mathematical correspondence 8.9 (Scope of the source-level advance).**
+Theorems 8.2, 8.4, 8.6 and 8.7 concern one common preparation, the
+original ODE, all of its finite admissible prefixes and the unchanged
+coherence menu. Their new operational content is the exact open source
+domain, its same-source observation map, its fixed affine capacity over
+variable probability, and the visibility of its native commutator.
+The real-span and finite rectangle suppliers are Theorem 3.2 and the
+immutable declaration cited in Theorem 8.2; the connected measurement
+graph is supplied by Theorem 3.12. Neither endpoint result alone states
+these prefix conclusions.
+
+At $\kappa=\kappa_0$, imposing $e^{id^{\mathsf T}h}=1$ recovers exactly
+the original loop phase domains of Theorem 3.3. On the double wall this
+condition is $2(u-v)=0\pmod{2\pi}$, or
+$\alpha\in\{0,\pi\}$. It reduces the two independent prefix phases
+to the old circle and parity. Theorem 4.2 consequently retains its
+closed-loop capacities $6,4,3$. Restricting actual histories further to
+zero winding retains Proposition 4.3's value $2$; even nonzero winding
+can have the same endpoint and is still outside that restricted history
+class. The values $10,6,4$ in (8.11) answer the distinct prefix task.
+No averaging over current probabilities or choice of controller record
+enters their definition.
+
+The
+[observer interface, §10](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)
+requires a common linear source, calibrated distance and ordered
+response data, together with closure under all declared generators.
+The
+[harmonic interface, §§9 and 12](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md)
+requires, respectively, an additional rotational intertwining and a
+common realization of the specified response family. Those hypotheses
+are not supplied by a three-dimensional nonlinear source manifold or
+by its contact plane field. In particular, Proposition 8.8 separates
+the present current-output factorization from a linear continuation
+contract. The native-loop and source-law obstructions of §§6–7 retain
+their stated endpoint scope.
+
+The character independence and contact-sphere formulas consumed above
+are literature-attested classical tools with their explicit parameter
+correspondences. The results for this fixed five-mode source are
+repo-derived ordinary proofs, not a claim of worldwide originality.
+No Fubini–Study metric theorem is needed for these operational
+conclusions; the metric and quotient assertions of §2 keep their
+original domains.
+
+Within these hypotheses the double wall is exactly the condition for
+three-dimensional current rays. Definition 3.1 keeps the means fixed
+and supplies no law selecting that wall. Connecting this conditional
+source result to a three-axis predictive or physical interface would
+still require a selector of the means and a same-source realization of
+the additional tasks and operations. The present result neither erases
+the unwrapped controller record nor supplies acquisition, memory or
+physical spatial-dimension bounds.
+
+## 8.99 追加锚
