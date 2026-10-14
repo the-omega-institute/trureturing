@@ -40,9 +40,22 @@ $$\forall S: Source, (\forall x: (\operatorname{Fin}\left(\operatorname{length}\
 
 The original native_active_parity_execution theorem is applied on the same full original skeleton, every independent label assignment and the same unknown entry t. Its finite guarded Run is lifted instruction by instruction to NativeSerialMachine.Run, with the same Read epoch, literal and raw reply and the same Update successor. An explicit Stop endpoint supplies the finite suffix. The exact genuine Update count is twice the difference between K and floor((t plus bit(x(0))) divided by two). The conditions are t at most twice K and either even original leaf count or t equal to zero. No claim is made for the excluded odd-entry regime. actual_register_execution certifies the same source evolution, chronological log and every literal truth. The fixed original parity payload is preserved. The existing event-cost vector is preserved in all five coordinates; no absolute three-h plus four-k plus c bill is asserted.
 
+**Theorem 1.3 (Actual Run fixes the first halt).**
+
+$$\forall C: Type, (\forall delta: (C) \to (\operatorname{Op}\left(C, Bool\right)), (\forall c: C, (\forall j: Nat, (\forall u: Source, (\forall trace: Trace, (\forall a: Bool, ((\operatorname{Run}\left(delta, c, j, u, trace, a\right)) \implies (\operatorname{FirstHalt}\left(delta, c, j, u, \operatorname{length}\left(trace\right), a\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.first_of_run` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every control type C, native instruction function, initial control, epoch and source, any terminating actual native Run reaches its first halt at precisely the length of its complete trace, with the same fixed output. A purported shorter remaining execution contradicts native run uniqueness. The statement retains the arbitrary native machine and actual source; it requires neither a finite control carrier nor an encoding premise. The static scan uses this identity for its exact first-halt count and each remaining suffix.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.encoded_active_parity_execution`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.first_of_run`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.native_fibonacci_active_table`
 - Dependency: [D5/S1/Words/AdmissibleWords/FibonacciGrayPath](../../../../S1/Words/AdmissibleWords/FibonacciGrayPath.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution](NativeActiveParityExecution.md)

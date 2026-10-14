@@ -1,0 +1,139 @@
+**Proof.** On the entire late cube let
+$\nu_0(x)=P_{00x}$, $\nu_1(x)=P_{01x}$, $\nu_2(x)=P_{10x}$.
+Write $S_a=|\nu_a|$, $\nu=\nu_0+\nu_1+\nu_2$, $S=|\nu|$ and
+$W=E+S+t$. These are three parts of the same actual measure.
+
+First suppose $\mu\le E+\delta$. Apply the optimized absorbing-chain
+supplier 206.7 with these exact $\gamma,S,t$. If $M_r$ denotes the
+sum of the r largest late totals, padded by zeros, set
+
+$$
+\begin{aligned}
+c_0&=\min((E+S)/2,S+\min(E_1,E_2)),\\
+d_0&=\max(0,\mu-t,M_2-E-S,M_3-W,\mu-c_0),\\
+s_1&=\min(S,\max(0,(E_2+S-E_1)/2)).
+\end{aligned}
+$$
+
+That supplier places C=$\gamma_n$ on $1^{n-1}0^{L-n+1}$,
+P=$s_1,S-s_1$ on the first two chain words, and T=t.
+Its parameter $q=\max(\mu,M_2-t)$ equals $\mu$ because $t\ge\mu$.
+Its actual-input lower bound is $d_0\le\delta$, and its exact complete
+cost is $\max(d_0,\mu-E)\le\delta$. Its hypotheses are precisely
+the present fixed totals and early-P family; no sorted input profile
+is required. This branch is a direct use of 206.7.
+
+It remains to handle $\mu>E+\delta$. Define
+$m_{aj}=\nu_a\{x_j=0\}$ and $\chi=E_1+\min(E_2,S_0)$.
+The legal stopped table $(1,n;1,n,0)$ has reward
+$W+\gamma_n-E_2-m_{2n}$. The better of
+$(2,n;0,n,0)$ and $(2,n;2,n,0)$ has reward
+$W+\gamma_n-m_{1n}-\chi$. In the latter table output 2 loses
+the early-00 P mass, since its first zero is 1. Hence the actual input
+gives, for every $n\ge3$,
+
+$$
+\gamma_n\le E_2+m_{2n}+\delta,\qquad
+\gamma_n\le\chi+m_{1n}+\delta.
+\tag{213.13}
+$$
+
+At a class attaining $\mu$ these inequalities imply
+$S_2>E_1$ and $S_1>(E_2-S_0)_+$.
+Consequently the following actual measures are defined:
+
+$$
+\tau_1=\frac{E_1}{S_2}\nu_2,\qquad
+\tau_2=
+\begin{cases}
+(E_2/S_0)\nu_0,&0\le E_2\le S_0, S_0>0,\\
+0,&E_2=S_0=0,\\
+\nu_0+((E_2-S_0)/S_1)\nu_1,&E_2>S_0.
+\end{cases}
+\tag{213.14}
+$$
+
+They have masses $E_1,E_2$, satisfy $\tau_1\le\nu_2$ and
+$\tau_2\le\nu_0+\nu_1$, and $\tau_2$ is pointwise comparable
+with $\nu_0$. Equality $E_2=S_0$ gives $\tau_2=\nu_0$ by either
+nonzero branch. Also $t\ge\mu>E$.
+
+Retain every original P row and T=t. Replace all early C by
+$C_{01x}=\tau_1(x)$ and $C_{10x}=\tau_2(x)$.
+Place every late C total by the threshold constructor 203.2 using
+this same $\nu$, $a_{nk}=\nu\{x_n=0,x_k=1\}$, and interval
+$[0,\gamma_n)$. No A is introduced. All class totals, S and t
+are preserved, hence Q and W are preserved.
+
+On any late-coordinate cell, label 1 earns
+$\nu_0+\nu_1+\tau_1\le\nu$, and label 2 earns
+$\nu_2+\tau_2\le\nu$. Thus zero dominates both early labels.
+Put $m_n=\nu\{x_n=0\}$, $D_{ij}=\nu\{x_i=1,x_j=0\}$ and
+
+$$
+\kappa=\max\bigl(0,\max_n(\gamma_n-m_n/2)_+,\
+\max_{i<j}[(\gamma_i-m_i)_++(\gamma_j-D_{ij})_+]\bigr).
+$$
+
+Deleting the original early C gives a score whose support cannot
+increase and whose anchor drops by E. The actual-input lower bounds
+(203.11)–(203.12), which retain early-00 mass, give
+$\kappa\le\delta+E$. For the constructed late rows the joint
+non-$11$ estimate (203.14)–(203.18) bounds all late-pair gains by
+one $\kappa$. Its simultaneous positive gains use winning classes
+$n\le i<m\le j$ and the union bound displayed in the proof of 213.4;
+earlier-label off-diagonal rewards are bounded by the same actual
+event differences. Since $t\ge\mu$, zero dominates the $11$ cell.
+Every late N pair therefore has support at most
+$S+t+\kappa\le W+\delta$.
+
+To check the remaining pairs exactly, let
+
+$$
+L_j=\max\bigl(\{\gamma_j\}\cup
+       \{(\gamma_n-a_{nj})_+:3\le n<j\}\bigr),\qquad
+\tau_{aj}=\tau_a\{x_j=0\}.
+$$
+
+For pair $(1,j)$, label 1 dominates both early-zero cells, so their
+maxima sum to $S_0+S_1+E_1$. For pair $(2,j)$, the comparable
+measures $\tau_2,\nu_0$ make that sum exactly
+$S_2+\max(S_0,E_2)$. In either $11$ cell zero wins since $t\ge\mu$
+and $t>E$. In $10$ compare the other early label with every late label.
+Subtracting the same anchor gives the exact identities
+
+$$
+\begin{aligned}
+B_N^{1j}(V)-W&=\max(\tau_{2j},L_j-m_{2j})-E_2,\\
+B_N^{2j}(V)-W&=\max(\tau_{1j},L_j-m_{1j})-\chi.
+\end{aligned}
+\tag{213.15}
+$$
+
+For $a=1,2$ and $n<j$ the event inclusion
+$\{x_n=0\}\subseteq\{x_j=0\}\cup\{x_n=0,x_j=1\}$,
+together with $\nu_a\le\nu$, gives $m_{an}-a_{nj}\le m_{aj}$.
+Subtract $a_{nj}$ in (213.13) and take positive parts. Including
+the $n=j$ guard proves
+
+$$
+L_j\le m_{2j}+E_2+\delta,\qquad
+L_j\le m_{1j}+\chi+\delta.
+$$
+
+Also $\tau_{2j}\le E_2$ and $\tau_{1j}\le E_1\le\chi$.
+Both lines of (213.15) are at most $\delta$. The head pair has
+support exactly W: its first three cells collect the full early
+rewards, and its positive cell is protected by $t\ge\mu$.
+Every short N function refines into a pair, so these bounds exhaust
+the catalog. The early-credit subtractions occur in alternative
+whole-schedule bounds relative to W; they are not separate allowances.
+
+The equality $\mu=E+\delta$ uses the chain branch. Zero totals,
+$L=3$, $t=\mu$, $\delta=0$, $E_2=S_0$, and threshold ties all
+remain covered. Finally the stopped head table with exhaustion label
+at a largest late class gives $\delta\ge(\mu-t)_+$ for every
+input in $\mathcal I_L$. Thus $\delta=0$ implies $t\ge\mu$ and
+the theorem gives the forward inclusion in (213.12); the reverse
+uses $\Delta_O\le\Delta_N$. $\square$
+

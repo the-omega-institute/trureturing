@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:616ba11a728bd048b0257ebb6fd6fae51f994707162bd7532245155e9e48c13d
+  normalized_sha256: sha256:616ba11a728bd048b0257ebb6fd6fae51f994707162bd7532245155e9e48c13d
+cas_ref: sha256:616ba11a728bd048b0257ebb6fd6fae51f994707162bd7532245155e9e48c13d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列表条目只列出章节主题或待审计维度，作为导引短语，不陈述可真可假的新事实。
+    previous_atom_id: a83a28025a391bda093dd20af3116ea1f630f1c2a1231ad0178527bf6ae42153
+    next_atom_id: ba2986848e715849b7abf6ebf7dc373189f35dadc5e5e218e1e9ef7a1f60e2fc

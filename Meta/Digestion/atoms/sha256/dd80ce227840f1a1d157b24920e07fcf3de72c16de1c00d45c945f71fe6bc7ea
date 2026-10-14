@@ -1,0 +1,19 @@
+**Proposition 7.5 (an earlier authentic stamp is insufficient).** Replacing
+Assumption 7.1 by a stamp at an earlier capture does not ensure decidable
+source membership, even with universal finite-interference liveness.
+
+Proof. Modify $P_*$ to retain its first capture's stamp beside its
+accepting output while still erasing the second stamp. On every accepting
+run the first tree is $E_e$, with stamp one. Thus the same fixed accepting
+boundary now contains an authentic $K=1$, but its source support remains
+(NASF.11). The later second capture supplies unbounded budget $1+j$.
+An alleged cap $K-\ell(E_e)=0$ would discard accepting runs that need
+$j>0$. The stamp is authentic but is not at the last source observation.
+$\square$
+
+Instead retaining $K$ from $P_*$'s already-final CAB capture gives a
+family of different boundaries. At fixed $K\ge1$, their accepting
+support is exactly $\{E_e:M_e\text{ halts within }K\text{ steps}\}$
+by (NASF.12), hence decidable as Theorem 7.3 predicts. Erasing $K$ takes
+the unbounded union and recovers the undecidable support.
+

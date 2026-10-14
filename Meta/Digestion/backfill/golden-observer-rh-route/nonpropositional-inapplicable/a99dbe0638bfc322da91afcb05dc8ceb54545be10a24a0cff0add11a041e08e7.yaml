@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a99dbe0638bfc322da91afcb05dc8ceb54545be10a24a0cff0add11a041e08e7
+  normalized_sha256: sha256:a99dbe0638bfc322da91afcb05dc8ceb54545be10a24a0cff0add11a041e08e7
+cas_ref: sha256:a99dbe0638bfc322da91afcb05dc8ceb54545be10a24a0cff0add11a041e08e7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional scope and interpretation note for M3-d-1-prime; it preserves the stated assumptions and exclusions or points back to the surrounding section. It does not assert RH, an inhabitant of ZeroData, or a new zero existence claim.
+    previous_atom_id: 4cf26e485727bc9b59f13d209a0173eb3c2e53787ec4db4fd42718508fbd63d4
+    next_atom_id: bb301e050b6372295597f61fed0f6735741ace5836eaf7c21699715953450b88

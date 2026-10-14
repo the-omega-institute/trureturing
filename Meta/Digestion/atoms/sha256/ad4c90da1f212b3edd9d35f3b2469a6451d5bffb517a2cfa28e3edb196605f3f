@@ -1,0 +1,1 @@
+- Zero-read identifiability is (RDR.10). Sourcewise finite termination is available from complete representative-class traversal and finite parsing, but its call count depends on the actual finite values; it is not a uniform bound.

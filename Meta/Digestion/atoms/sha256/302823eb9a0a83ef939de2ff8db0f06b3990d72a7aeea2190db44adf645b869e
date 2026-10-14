@@ -1,0 +1,19 @@
+**证明。** Sufficiency is the explicit finite menu. For necessity, suppose a
+bounded service has bound $K'$. Across its finitely many reply histories
+there are finitely many addresses; let $d$ be their maximum length. If
+some legal $\theta$ has two values in $V_R(\theta)$, use the following
+deep form of the finite lifting in Theorem 3.3. Keep every integer-labelled
+class fixed. For every $*$ class choose the required $D_j$ or $H$
+representative from a pairwise distinct non-atomic primitive all-$\alpha$
+seed whose minimum leaf depth is greater than $d+K$; after the finite
+powers of $\rho$, the representative still has no leaf at an address of
+length at most $d$. The same choice is made simultaneously for all
+classes in each profile, so it preserves every cross-class disequality.
+The two selected profiles therefore give finite sources with the same
+row and identical four replies at every address of length at most $d$, but
+different root depths. The bounded consumer follows the same run and is
+wrong on one source. The same construction rules out a service restricted
+to any fixed address radius, even if it may repeat calls without a call
+bound. No infinite source is used; the witnesses have arbitrarily large
+minimum leaf depth in every varied class. $\square$
+
