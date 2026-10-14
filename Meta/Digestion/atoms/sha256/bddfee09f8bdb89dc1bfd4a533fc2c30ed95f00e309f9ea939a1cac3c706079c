@@ -1,0 +1,47 @@
+**Construction 11.4 (paid alignment and short offset interval).**
+Assume $T\ge1$ and even $h$. Repeatedly read the single installed
+literal $R^{B/2}$. On absent, execute one genuine Update and repeat.
+On $\alpha$, stop updating and start the increasing trials at
+
+$$
+N_0=B-2h+1,\qquad N=N_0+j,\qquad 0\le j\le2h-1.
+\tag{SLHC.11.6}
+$$
+
+The other polling replies enter the nonhalting error control.
+The actual controller retains neither the number of polls nor the
+number of Updates.
+
+Proof of alignment. The rightmost original leaf has depth at most
+$h-1$, whence $0\le\kappa(u)\le2h-1$. SLH §2's right-clock and raw-ray
+laws give
+
+$$
+\kappa(\rho^{t+a}u)=t+a+\kappa(u),\qquad
+r_w(R^{B/2})=
+\begin{cases}
+\mathsf{absent},&\kappa(w)<B,\\
+\alpha,&\kappa(w)=B,\\
+\beta,&\kappa(w)=B+1,\\
+\mathsf{branch},&\kappa(w)\ge B+2.
+\end{cases}
+\tag{SLHC.11.7}
+$$
+
+At entry $t+\kappa(u)\le T+2h-1<B$. Each Update increases this clock
+by exactly one. Therefore the first non-absent poll is precisely
+$\alpha$, after $U=B-t-\kappa(u)$ Updates and $U+1$ polling Reads.
+All routing Reads leave the source unchanged, so they do not affect
+this argument. The stationary tree at the end is $\rho^\tau u$ with
+
+$$
+\tau=t+U=B-\kappa(u)\in[B-2h+1,B].
+\tag{SLHC.11.8}
+$$
+
+Consequently $N_0\le\tau$ and at most $2h$ increasing trials suffice
+by Lemma 11.3. The proof knows $\tau$; the observer only stores $j$.
+The large integer $N_0$ and each expanded literal are fixed installed
+constants. The observed clock threshold certifies this interval, not
+the historical value $t$ or an original reference label. $\square$
+
