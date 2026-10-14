@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8354d528288193955db09b93536a12fb87608ab5493d70d6134dd6dd703f584f
+  normalized_sha256: sha256:8354d528288193955db09b93536a12fb87608ab5493d70d6134dd6dd703f584f
+cas_ref: sha256:8354d528288193955db09b93536a12fb87608ab5493d70d6134dd6dd703f584f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Second proof step of preceding theorem six, extending the integer-scale estimate to continuous scales.
+    previous_atom_id: cb9624cb49e6c38f18c1a1bd1791d074f9b02433731b4c65fe8814d895c9a46c
+    next_atom_id: 8d9bc9832d457bcc53b0ef041898ebf95ad221c4e18b72dad1c86174e2c4af7b

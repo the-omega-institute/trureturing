@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f493ae6a70e6b7a3bf126dc7d6f1e075cb465270296dcef9ac04dc6fdefe2a63
+  normalized_sha256: sha256:f493ae6a70e6b7a3bf126dc7d6f1e075cb465270296dcef9ac04dc6fdefe2a63
+cas_ref: sha256:f493ae6a70e6b7a3bf126dc7d6f1e075cb465270296dcef9ac04dc6fdefe2a63
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the normalized history-parity readout and o(n), distinguishing their meanings from step-count parity before the separate screening theorem.
+    previous_atom_id: 40b3c0a668452573393f472c16c3134413872b4e0f42ebf4dd1ed7cf53cb702b
+    next_atom_id: 24e7f65c67cec1074a6af47cd138dda33f014adcc2b6d569e14823c62aadc6ea

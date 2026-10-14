@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:27769625394ab20116ed99ace7e5e257ac99b6ad4e1c64c0f4e10bab9154a22d
+  normalized_sha256: sha256:27769625394ab20116ed99ace7e5e257ac99b6ad4e1c64c0f4e10bab9154a22d
+cas_ref: sha256:27769625394ab20116ed99ace7e5e257ac99b6ad4e1c64c0f4e10bab9154a22d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines inversion count A on a length-L history and explains what the notation counts; the area identity is in the following atom.
+    previous_atom_id: 233bbc0f70b862afda0debf849f0813b0560f579a65a1a95f9611cb05fc1ef07
+    next_atom_id: 242b4bce8d62256f3e13b97d19b5a20e09d3dc04498155e580296fd0ceed3b4d

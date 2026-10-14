@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f64fc55a9ca65720c18d28d7eaa2111141174eacaa47a8133b9288535cc1448d
+  normalized_sha256: sha256:f64fc55a9ca65720c18d28d7eaa2111141174eacaa47a8133b9288535cc1448d
+cas_ref: sha256:f64fc55a9ca65720c18d28d7eaa2111141174eacaa47a8133b9288535cc1448d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the spectral residual as a sum of squared imaginary eigenvalue parts with algebraic multiplicities; the following theorem supplies its properties.
+    previous_atom_id: 71ea7fe4e89104fa1a1d3f3dc991d0b36b284943fdada7ab6cf8d4929ae041f2
+    next_atom_id: e17855c9db943466019087527afd9e178fa5c465197a1a9de44490e5fa8444b2

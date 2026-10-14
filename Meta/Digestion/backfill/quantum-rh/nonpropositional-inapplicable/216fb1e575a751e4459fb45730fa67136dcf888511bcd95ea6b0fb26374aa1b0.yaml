@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:216fb1e575a751e4459fb45730fa67136dcf888511bcd95ea6b0fb26374aa1b0
+  normalized_sha256: sha256:216fb1e575a751e4459fb45730fa67136dcf888511bcd95ea6b0fb26374aa1b0
+cas_ref: sha256:216fb1e575a751e4459fb45730fa67136dcf888511bcd95ea6b0fb26374aa1b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and introductory sentence announcing the following classification of three boundaries.
+    previous_atom_id: d6b42502b48e084945032bf0ba9481c4a3b6a96616e5f61d25f6a2659aff5772
+    next_atom_id: 077dfd60e625c6c3885d345c7bc1dad567a9a293b9d984ac7fd0b555bdb2dcab

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17d74a63051c4857791f6e68733098d2bc3b3958b15bc428f161b371dde08613
+  normalized_sha256: sha256:17d74a63051c4857791f6e68733098d2bc3b3958b15bc428f161b371dde08613
+cas_ref: sha256:17d74a63051c4857791f6e68733098d2bc3b3958b15bc428f161b371dde08613
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces the notation chi_2, chi_4 and chi_6 by formulas; the actual root criteria occur in the following theorem atoms.
+    previous_atom_id: d1bb7d13c7a40dc1c08518d07707e1e7b3323d95e144d8bd8c47795c878b71f5
+    next_atom_id: 478965d094e421c98d412eca63b1f42858a516c1febceb6751fc05aab260135b
