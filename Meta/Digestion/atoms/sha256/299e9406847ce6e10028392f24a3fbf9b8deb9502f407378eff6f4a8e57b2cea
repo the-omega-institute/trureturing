@@ -1,0 +1,30 @@
+**Theorem 16.6 (uniform literal-address caps recover the zero-read obligation).**
+Fix any acquired encoder $e$. There exists a correct finite current
+recovery protocol and a finite $B$ such that every fresh query satisfies
+$|p|\le B$ on every promised input if and only if $e$ already separates
+every edge of the zero-read menu relation (NAR.16.7). No uniform bound
+on the number of those capped calls is needed for the necessity.
+
+More precisely, suppose $e(a)=e(b)$ and a conflict is witnessed by
+$S,d$ with $a_i-b_i=d\ne0$ for $i\in S$. Choose positive baseline lags
+$\ell_0,\ell'_0$ with $\ell'_0-\ell_0=d$, and define
+
+$$
+\mu=\min_{j\in I}\{jq+a_j+\ell_0,\ jq+b_j+\ell'_0\},
+\qquad M_K=K+\mu.
+\tag{NAR.16.17}
+$$
+
+For every integer $K\ge0$ with $M_K\ge2$, any correct recovery protocol
+for $e$, if one exists, must on these shifted histories issue a
+distinguishing native query of length at least
+
+$$
+D+\left\lfloor\frac{K+\mu}{2}\right\rfloor.
+\tag{NAR.16.18}
+$$
+
+This gives a linear address witness even when the encoder is otherwise
+feasible under Theorem 16.5. If the pair also collides as a whole current
+tree, recovery is impossible outright by Theorem 16.3.
+
