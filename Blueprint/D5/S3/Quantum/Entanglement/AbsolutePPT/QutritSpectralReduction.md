@@ -184,7 +184,43 @@ $$\forall (k:\mathbb{N}), \forall (l:Fin\left(3\cdot (3+k)\right)\to \mathbb{R})
 
 The dependent Fin constructor carries the displayed natural-number index and its bound proof. The first three coordinates are unchanged; the remaining six have index 3k+q. Here n=3+k, and the full dimension is 3(3+k).
 
-**Theorem 1.16 (Density-to-spectral-certificate reduction).**
+**Definition 1.16 (Bell change of basis).**
+
+$$\forall (i:Fin\left(3\right)), \forall (j:Fin\left(3\right)), \forall (k:Fin\left(3\right)), \forall (l:Fin\left(3\right)), bell\left((i,j), (k,l)\right)=if i=j then if (i,j)=(k,l) then 1 else 0 else if (i,j)=(k,l) then if i<j then (Real.sqrt\left(2\right):\mathbb{C})^{-1} else -(Real.sqrt\left(2\right):\mathbb{C})^{-1} else if (i,j)=(l,k) then (Real.sqrt\left(2\right):\mathbb{C})^{-1} else 0$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.bell` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Diagonal tensor coordinates are fixed. Each pair of off-diagonal tensor coordinates is changed to its symmetric and antisymmetric combinations with coefficient one over the square root of two.
+
+**Theorem 1.17 (The Bell basis matrix is unitary).**
+
+$$bell\in unitaryGroup\left((Fin\left(3\right)\times Fin\left(3\right)), \mathbb{C}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.bell_mem_unitaryGroup` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The Bell basis matrix is unitary. Its diagonal entries fix the diagonal basis vectors, while each off-diagonal pair is rotated by the reciprocal square root of two. Spectral reduction and the diagonalization of a pure state's partial transpose use this change of basis.
+
+**Definition 1.18 (Permutation unitary).**
+
+$$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (e:Equiv.Perm\left(I\right)), (permutationU\left(e\right):Matrix\left(I, I, \mathbb{C}\right))=Equiv.permMatrix\left(e, \mathbb{C}\right)$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.permutationU` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The unitary associated with a permutation has its permutation matrix as its underlying complex matrix. It reorders the diagonal coordinates in spectral decompositions.
+
+**Theorem 1.19 (Density-to-spectral-certificate reduction).**
 
 $$\forall (k:\mathbb{N}), \forall (rho:Matrix\left((Fin\left(3\right)\times Fin\left(3+k\right)), (Fin\left(3\right)\times Fin\left(3+k\right)), \mathbb{C}\right)), ((Matrix.PosSemidef\left(rho\right))\land (Matrix.trace\left(rho\right)=1)\land (APPT\left(rho\right)))\Rightarrow \exists (l:Fin\left(3\cdot (3+k)\right)\to \mathbb{R}), (Antitone\left(l\right))\land (\forall (i:Fin\left(3\cdot (3+k)\right)), 0\leq l\left(i\right))\land (\sum_{i:Fin\left(3\cdot (3+k)\right)} l\left(i\right)=1)\land (Matrix.PosSemidef\left(K1\left(boundaryValues\left(k, l\right)\right)\right))\land (Matrix.PosSemidef\left(K2\left(boundaryValues\left(k, l\right)\right)\right))\land (Complex.re\left(Matrix.trace\left(rho\cdot rho\right)\right)=\sum_{i:Fin\left(3\cdot (3+k)\right)} (l\left(i\right))^{2})$$
 
@@ -200,6 +236,8 @@ For every k and every positive semidefinite trace-one Matrix on Fin 3 × Fin (3+
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.K1`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.K2`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.bell`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.bell_mem_unitaryGroup`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.boundaryValues`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.castIntMat`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.castIntMat_diagonal`
@@ -211,6 +249,7 @@ For every k and every positive semidefinite trace-one Matrix on Fin 3 × Fin (3+
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.castMat_transpose`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.cast_vec_cons`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.cast_vec_empty`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.permutationU`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.psd_of_int_scaled_ldl`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.psd_of_rat_ldl`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.spectral_reduction`
