@@ -167,4 +167,235 @@ theorem one_table_all_stage_joint_mass (S : Bool) (p q : unitInterval) :
 
 end StageMass
 
+section SurvivalMass
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+local notation "μ" => rawLaw (rowLaw (batchTable D d a hD hd hc))
+
+private theorem landmark_count_partition (S : Bool) (p q : unitInterval) (k : ℕ)
+    (E : Set (RowSeed × Tape)) (hE : MeasurableSet E)
+    (hreach : ∀ ω ∈ E, ((D k+d k : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω) :
+    μ E = ∑ i : Fin (D k+1), ∑ j : Fin (d k+1),
+      μ {ω | ω ∈ E ∧ countPair (nativeHistory π S p q (D k+d k) ω) = (i.val,j.val)} := by
+  classical
+  let Tag := Fin (D k+1) × Fin (d k+1)
+  let A (t : Tag) := {ω | ω ∈ E ∧
+    countPair (nativeHistory π S p q (D k+d k) ω) = (t.1.val,t.2.val)}
+  have he : E = ⋃ t : Tag, A t := by
+    ext ω
+    simp only [Set.mem_iUnion]
+    constructor
+    · intro hω
+      have hs := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 k (hreach ω hω)
+      have hi := success_le_source (nativeHistory π S p q (D k+d k) ω) false
+      have hj := success_le_source (nativeHistory π S p q (D k+d k) ω) true
+      rw [hs.1] at hi
+      rw [hs.2] at hj
+      exact ⟨(⟨successCount false (nativeHistory π S p q (D k+d k) ω), Nat.lt_succ_of_le hi⟩,
+        ⟨successCount true (nativeHistory π S p q (D k+d k) ω), Nat.lt_succ_of_le hj⟩),hω,rfl⟩
+    · rintro ⟨t,hω⟩
+      exact hω.1
+  have hdis : Pairwise (fun t u : Tag => Disjoint (A t) (A u)) := by
+    intro t u htu
+    apply Set.disjoint_left.mpr
+    intro ω ht hu
+    have he := ht.2.symm.trans hu.2
+    exact htu (Prod.ext (Fin.ext (congrArg Prod.fst he)) (Fin.ext (congrArg Prod.snd he)))
+  have hm (t : Tag) : MeasurableSet (A t) := by
+    let : MeasurableSpace History := ⊤
+    have hh := (native_execution_measurable π
+      (supported_realization σ (batchTable D d a hD hd hc)).1 S p q).1 (D k+d k)
+    exact hE.inter (hh (show MeasurableSet
+      {h : History | countPair h = (t.1.val,t.2.val)} from .of_discrete))
+  conv_lhs => rw [he, measure_iUnion hdis hm, tsum_fintype]
+  exact Fintype.sum_prod_type _
+
+/-- The actual unresolved probability equals the Bernstein evaluation of the
+residual coefficients, with both source counters from the same execution. -/
+theorem actual_unresolved_mass (S : Bool) (p q : unitInterval) (k : ℕ) :
+    μ {ω | ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω} =
+      bernsteinEval (D k) (d k) (residualCoefficients D d a k) p q := by
+  have hm := (native_execution_measurable π
+    (supported_realization σ (batchTable D d a hD hd hc)).1 S p q).2.2 (D k+d k)
+  rw [landmark_count_partition D d a hD hd hc S p q k _ hm (fun _ h => h.le)]
+  change (∑ i : Fin (D k+1), ∑ j : Fin (d k+1),
+    unresolvedMass D d a hD hd hc S p q k i.val j.val) = _
+  simp_rw [fun i j => (one_table_all_stage_joint_mass D d a hD hd hc S p q k i j).2.1]
+  rfl
+
+/-- Vanishing residual evaluations force almost-sure finite return for the
+same single table and its actual source-count execution. -/
+theorem actual_return_of_residual_limit (S : Bool) (p q : unitInterval)
+    (hlim : Filter.Tendsto (fun k =>
+      bernsteinEval (D k) (d k) (residualCoefficients D d a k) p q)
+      Filter.atTop (nhds 0)) :
+    μ {ω | nativeCalls π S p q ω = ⊤} = 0 := by
+  have hb (k : ℕ) : μ {ω | nativeCalls π S p q ω = ⊤} ≤
+      bernsteinEval (D k) (d k) (residualCoefficients D d a k) p q := by
+    rw [← actual_unresolved_mass D d a hD hd hc S p q k]
+    apply measure_mono
+    intro ω hω
+    change nativeCalls π S p q ω = ⊤ at hω
+    simp [hω]
+  exact le_antisymm (le_of_tendsto_of_tendsto' tendsto_const_nhds hlim hb) bot_le
+
+end SurvivalMass
+
+private theorem native_action_freezes {Seed : Type}
+    (π : Seed → Bool → History → Action) (S : Bool) (p q : unitInterval)
+    (ω : Seed × Tape) (n m : ℕ) (hnm : n ≤ m) (cell : Bool × Bool)
+    (ha : nativeAction π S p q n ω = .inr cell) : nativeAction π S p q m ω = .inr cell := by
+  have he := (acquired_history_geometry π S (sourceRead p q) ω).2.2 n cell ha (m-n)
+  have he' : nativeHistory π S p q m ω = nativeHistory π S p q n ω := by
+    simpa only [nativeHistory, Nat.add_sub_of_le hnm] using he
+  simpa only [nativeAction, he'] using ha
+
+private theorem native_return_le {Seed : Type}
+    (π : Seed → Bool → History → Action) (S : Bool) (p q : unitInterval)
+    (ω : Seed × Tape) (n : ℕ) (cell : Bool × Bool)
+    (ha : nativeAction π S p q n ω = .inr cell) : nativeCalls π S p q ω ≤ (n : WithTop ℕ) :=
+  hittingAfter_le_of_mem (Nat.zero_le n) ⟨cell,ha.symm⟩
+
+section CumulativeOutputs
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+local notation "μ" => rawLaw (rowLaw (batchTable D d a hD hd hc))
+
+private theorem stage_exit_mass (S : Bool) (p q : unitInterval) (k : ℕ) (e : Bool) :
+    μ {ω | ((D k+d k : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      nativeAction π S p q (D k+d k) ω = .inr (false,e)} =
+        bernsteinEval (D k) (d k) (exitCoefficients D d a k e) p q := by
+  let : MeasurableSpace History := ⊤
+  have hm := native_execution_measurable π
+    (supported_realization σ (batchTable D d a hD hd hc)).1 S p q
+  have hE : MeasurableSet {ω | ((D k+d k : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      nativeAction π S p q (D k+d k) ω = .inr (false,e)} := by
+    have hh := (hm.1 (D k+d k)) (show MeasurableSet {h : History | h.length = D k+d k} from .of_discrete)
+    have ha := (hm.2.1 (D k+d k)) (action_singleton_measurable (.inr (false,e)))
+    convert hh.inter ha using 1
+    ext ω
+    exact and_congr_left (fun _ => (native_full_history_iff π S p q (D k+d k) ω).symm)
+  rw [landmark_count_partition D d a hD hd hc S p q k _ hE (fun _ h => h.1)]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  have he : μ {ω | ω ∈ {ω | ((D k+d k : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      nativeAction π S p q (D k+d k) ω = .inr (false,e)} ∧
+      countPair (nativeHistory π S p q (D k+d k) ω) = (i.val,j.val)} =
+      actionMass D d a hD hd hc S p q k i.val j.val (some e) := by
+    apply congrArg μ
+    ext ω
+    change ((_ ∧ _) ∧ _) ↔ (_ ∧ _ ∧ _)
+    tauto
+  rw [he]
+  exact (one_table_all_stage_joint_mass D d a hD hd hc S p q k i j).2.2 e
+
+include hD hd hc in
+private theorem exit_evaluation_balance (p q : unitInterval) (k : ℕ) (e : Bool) :
+    bernsteinEval (D (k+1)) (d (k+1)) (exitCoefficients D d a (k+1) e) p q +
+      bernsteinEval (D k) (d k) (a k e) p q =
+      bernsteinEval (D (k+1)) (d (k+1)) (a (k+1) e) p q := by
+  rw [← lift_preserves_bernstein_evaluation (D k) (d k) (D (k+1)) (d (k+1))
+    (hD.monotone (Nat.le_succ k)) (hd.monotone (Nat.le_succ k)) (a k e) (hc.nonneg k e) p q]
+  unfold bernsteinEval
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro I _
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro J _
+  have hx := (coefficient_node_balance D d a hD.monotone hd.monotone hc (k+1) I J).2.2.1 e
+  have hl : 0 ≤ liftTwo (D k) (d k) (D (k+1)) (d (k+1)) (a k e) I J := by
+    apply Finset.sum_nonneg
+    intro i _
+    apply Finset.sum_nonneg
+    intro j _
+    exact mul_nonneg (mul_nonneg (hc.nonneg k e i j)
+      ((hypergeometric_stochastic_rows _ _ (hD.monotone (Nat.le_succ k)) I).1 i))
+      ((hypergeometric_stochastic_rows _ _ (hd.monotone (Nat.le_succ k)) J).1 j)
+  rw [← add_mul, ← add_mul, ← ENNReal.ofReal_add hx hl]
+  simp only [exitCoefficients, sub_add_cancel]
+
+/-- By each batch boundary, the probability of an already returned color is
+exactly its coefficient-array Bernstein evaluation for the same table. -/
+theorem actual_cumulative_output_mass (S : Bool) (p q : unitInterval) (e : Bool) (k : ℕ) :
+    μ {ω | nativeAction π S p q (D k+d k) ω = .inr (false,e)} =
+      bernsteinEval (D k) (d k) (a k e) p q := by
+  classical
+  have hN : StrictMono (fun k => D k+d k) := fun x y h => Nat.add_lt_add (hD h) (hd h)
+  induction k with
+  | zero =>
+    have he : {ω | nativeAction π S p q (D 0+d 0) ω = .inr (false,e)} =
+        {ω | ((D 0+d 0 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+          nativeAction π S p q (D 0+d 0) ω = .inr (false,e)} := by
+      ext ω
+      exact ⟨fun h => ⟨(actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.1,h⟩,
+        fun h => h.2⟩
+    rw [he, stage_exit_mass]
+    rfl
+  | succ k ih =>
+    let E := {ω | nativeAction π S p q (D k+d k) ω = .inr (false,e)}
+    let F := {ω | ((D (k+1)+d (k+1) : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      nativeAction π S p q (D (k+1)+d (k+1)) ω = .inr (false,e)}
+    have hn : D k+d k < D (k+1)+d (k+1) := hN (Nat.lt_succ_self k)
+    have he : {ω | nativeAction π S p q (D (k+1)+d (k+1)) ω = .inr (false,e)} = E ∪ F := by
+      ext ω
+      constructor
+      · intro hω
+        by_cases ht : nativeCalls π S p q ω ≤ ((D k+d k : ℕ) : WithTop ℕ)
+        · left
+          obtain ⟨m,hm⟩ := WithTop.ne_top_iff_exists.mp (ne_top_of_le_ne_top (by simp) ht)
+          have hm := hm.symm
+          have hmle : m ≤ D k+d k := by
+            rw [hm] at ht
+            exact WithTop.coe_le_coe.mp ht
+          have hmem := hittingAfter_mem_set_of_ne_top
+            (u := nativeAction π S p q) (s := Set.range (fun c : Bool × Bool => (Sum.inr c : Action)))
+            (n := 0) (ω := ω) (show nativeCalls π S p q ω ≠ ⊤ by rw [hm]; simp)
+          change nativeAction π S p q (nativeCalls π S p q ω).untopA ω ∈ _ at hmem
+          rw [hm] at hmem
+          obtain ⟨cell,hcell⟩ := hmem
+          have ho := native_action_freezes π S p q ω m (D k+d k) hmle cell hcell.symm
+          have hn' := native_action_freezes π S p q ω m (D (k+1)+d (k+1)) (hmle.trans hn.le) cell hcell.symm
+          change nativeAction π S p q (D (k+1)+d (k+1)) ω = .inr (false,e) at hω
+          exact ho.trans (hn'.symm.trans hω)
+        · right
+          have hlt := lt_of_not_ge ht
+          have hb := (actual_between_landmarks D d a hD hd hc S p q ω k
+            (D (k+1)+d (k+1)-1) (by omega) (by omega)).2.1
+          have hp : D (k+1)+d (k+1)-1+1 = D (k+1)+d (k+1) := by omega
+          exact ⟨by simpa only [hp] using hb.mpr hlt,hω⟩
+      · rintro (hω | hω)
+        · exact native_action_freezes π S p q ω (D k+d k) (D (k+1)+d (k+1)) hn.le (false,e) hω
+        · exact hω.2
+    have hdis : Disjoint E F := by
+      apply Set.disjoint_left.mpr
+      intro ω hE hF
+      have ht := native_return_le π S p q ω (D k+d k) (false,e) hE
+      have hn' := hF.1.trans ht
+      exact (Nat.not_le_of_gt hn) (WithTop.coe_le_coe.mp hn')
+    have hF : MeasurableSet F := by
+      let : MeasurableSpace History := ⊤
+      have hm := native_execution_measurable π
+        (supported_realization σ (batchTable D d a hD hd hc)).1 S p q
+      have hh := (hm.1 (D (k+1)+d (k+1)))
+        (show MeasurableSet {h : History | h.length = D (k+1)+d (k+1)} from .of_discrete)
+      have ha := (hm.2.1 (D (k+1)+d (k+1))) (action_singleton_measurable (.inr (false,e)))
+      convert hh.inter ha using 1
+      ext ω
+      exact and_congr_left (fun _ => (native_full_history_iff π S p q _ ω).symm)
+    rw [he, measure_union hdis hF]
+    change μ E + μ F = _
+    rw [show μ E = bernsteinEval (D k) (d k) (a k e) p q from ih,
+      show μ F = bernsteinEval (D (k+1)) (d (k+1)) (exitCoefficients D d a (k+1) e) p q from
+        stage_exit_mass D d a hD hd hc S p q (k+1) e]
+    exact (add_comm _ _).trans (exit_evaluation_balance D d a hD hd hc p q k e)
+
+end CumulativeOutputs
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinStageMass
