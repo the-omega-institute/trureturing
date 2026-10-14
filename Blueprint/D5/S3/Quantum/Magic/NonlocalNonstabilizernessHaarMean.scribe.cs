@@ -22,7 +22,7 @@ internal sealed class NonlocalNonstabilizernessHaarMeanDocument : IScribeDocumen
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Integrability and the exact first moment", "claim", ClaimFormula(),
                 "The source asks in §III and Appendix C for a closed form of the mean ȳ ≡ ∫ yP(y)dy, with P given by (C5). The statement combines integrability of the first-moment function on the real line with the value 10/3 − π of its Lebesgue integral, taken with respect to volume. Through the substitution t = 1 − 2x, this mean equals ∫₀¹ M(x)·3(1 − 2x)² dx, the Haar average under (C1) and the source's Schmidt-weight density P(x) = 3(1 − 2x)². This equivalence is mathematical background and is not part of the formal statement.",
-                AssessedProvenance.FromLiterature(Source)),
+                AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("nn-haar-mean-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The first moment is 10/3 minus pi"),
