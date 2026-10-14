@@ -165,6 +165,30 @@ For context, FIB §205.2 gives $p\ge2r-1$ for every prime divisor of
 $F_r$ when $r\ge7$ is prime, so this cutoff can reach no rank above
 $(B+1)/2=3\,804\,397$; the enumeration reaches that endpoint.
 
+The same argument has an all-rank form. Write
+
+$$
+P_B=\prod_{p\le B}p,
+\qquad
+\mathcal A_B=\{r\ge1:\gcd(F_r,P_B)=1\}.
+$$
+
+Under the same least-counterexample hypothesis, every candidate
+$N_{r,g}=1+F_rg$ must have $r\in\mathcal A_B$. Equivalently,
+
+$$
+r\in\mathcal A_B
+\iff
+z(p)\nmid r\quad\text{for every prime }p\le B.
+$$
+
+Thus the finite cutoff creates a rank sieve for the whole FIB address space;
+the set $R_B$ above is its prime-rank slice. For example, the witnesses
+$z(2)=3$, $z(3)=4$, and $z(5)=5$ already force
+$3\nmid r$, $4\nmid r$, and $5\nmid r$ for any such least-counterexample
+candidate. This is a necessary sieve only: membership in $\mathcal A_B$ does
+not establish Robin for $1+F_rg$.
+
 This is a parameter application of existing CRT and size comparisons,
 not a new estimate. Its low-rank scales are already inside the finite
 Robin ranges recorded in [Axler's Lemma 2.3](../notes/axler2023robin.md)
