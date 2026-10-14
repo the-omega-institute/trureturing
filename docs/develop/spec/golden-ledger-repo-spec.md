@@ -453,35 +453,36 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰
 | --- | --- |
 | 短 CI | 准入与检查消费者；`current` 限时 30 分钟，`ci-unit.yml` 默认 30 分钟。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
 | 独立长 Actions producer | manual、PR label、自动 protected push 共用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，不执行测试套件。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
-| PR 合入前交接 | 标签自动 dispatch 到受保护目标 ref；唯一一次长构建检出固定 PR merge candidate，直接保存目标可读的 Actions 种子；不运输整份 artifact、不作第二次长构建、不发布 Release。 |
+| PR 合入前准备、合入时启用 | 标签 dispatch 到受保护目标 ref；长构建检出固定 PR merge candidate，仅上传 Actions artifact。源 PR 可显式取回；目标短 CI 在实际合并与事件检出相符时直接采用，不等待另一次发布作业。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
 | GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
 
 ```text
 source + selected path changes
   +--> detect / CI_UNITS --> short current + selected unit checks --> required
-  |                          | theory-only nonempty delta: SL-003 / SL-015
-  |                          | report path: restore -> native increment -> consume
-  +--> PR label --> dispatch(target ref, pinned PR/H/M/B) ---------+
-  +--> manual ---------------------------------------------------+
-  +--> protected push -> after current: Lean needed + no usable seed
-                                                                  |
-                                              long Actions producer (once)
-                                                                  |
-Actions Cache (visible ref) --restore--> local workspace <--native build
-                                          |
-  .lake/build: compiler artifacts + native per-module / aggregate report
-               + materials + sidecars + successful report receipt
-  .lake/packages: dependency artifacts; ~/.elan: pinned toolchain
+  |                          | theory-only delta: SL-003 / SL-015; no Lean transport
+  |                          | Lean: adopt matching preparation OR ordinary restore
+  |                          |       -> native increment -> report/check consumers
+  +--> PR label --> dispatch(target ref, pinned PR/H/M/B)
+  |                      -> long shared build + strict validation
+  |                      -> Actions artifact (native.tar.gz + preparation.json)
+  |                           | source PR: same PR/H/target, current-head required
+  |                           | target: actual merged K = event checkout, same PR/H/target
+  |                           +--> direct adoption before ordinary restore
+  +--> manual / protected push fallback --> same long core
+                             | adopt matching preparation first; otherwise restore
+                             +--> native build + validate -> ordinary Actions save
+
+Actions Cache (visible ref) --restore--> job-local workspace <--eligible adoption
+  .lake/build: compiler artifacts + reports + materials + sidecars + receipt
+  .lake/packages: dependency artifacts; ~/.elan: independently pinned toolchain
   judge cache: compiled .NET outputs (separate from report evidence)
-                                          |
-  project/dependency/elan --allowed save--> Actions Cache (runtime ref)
-  judge outputs ----------allowed save--> Actions Cache (runtime ref)
-  PR source: M, parents B/H; workflow/cache runtime: protected target ref/T
-      target producer confirms actual visible keys + current PR head
-                                          |
-      caller: producer success + current-head required -> pinned merge
-      integration: fresh target restore + ordinary short CI consumption
+                             |
+  validated report + (positive work OR validated merged adoption + known zero work)
+                             +--> ordinary target project key -> confirm availability
+  PR preparation: no ordinary project/dependency/elan writes in target scope
+  source M has parents B/H; workflow runtime T and actual merged K remain distinct
+
   .lake/build --Release publication entry--> GitHub Release cache
   GitHub Release cache --local fetch entry--> .lake/build
   schedule --> own Release job: optional Actions restore -> report -> publish
@@ -493,11 +494,11 @@ Actions Cache (visible ref) --restore--> local workspace <--native build
 
 | 入口 / 触发 | 固定源码与读取范围 | 写入范围 | job 时限 |
 | --- | --- | --- | --- |
-| 普通 PR | merge candidate `M=GITHUB_SHA`，`B=M^1` 只作数据；project 先自身 merge ref，再 base branch | required job 不写 project；dependency、elan、judge 只写该 PR ref | current 30m；unit 默认 30m |
-| 普通 push | `HEAD=GITHUB_SHA=event.after`；完整 before/after delta；project 查自身 branch ref | dev/integration 可在报告成功后写 project 增量；辅助缓存各依自身条件 | current 30m；unit 默认 30m |
+| 普通 PR | merge candidate `M=GITHUB_SHA`，`B=M^1` 只作数据；先显式取同 PR/head/target 的准备；未取得时 project 先自身 merge ref，再 base branch | required job 不写 project；dependency、elan、judge 只写该 PR ref | current 30m；unit 默认 30m |
+| 普通 push | `HEAD=GITHUB_SHA=event.after`；完整 before/after delta；匹配实际合入时先采用准备，否则 project 查自身 branch ref | dev/integration 可在报告成功后写 project 增量；辅助缓存各依自身条件 | current 30m；unit 默认 30m |
 | `pull_request:labeled`，标签 `lean-cache-produce` | 检出事件 `M`，校验 `M^1=B,M^2=H`；只读内容、可写 actions 的 dispatch job 固定事件 PR/run/attempt | 不编译、不下载或保存种子；自动向受保护目标 ref dispatch 并输出具体 producer run ID；dispatch 成功不代表生产成功 | 5m |
 | `workflow_dispatch`，`operation=build`（默认） | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | 同一已校验 branch scope | 360m |
-| `workflow_dispatch`，`operation=pr` | workflow/runtime 为受保护目标 ref 的固定提交 `T`；源码检出 `source_sha=M`，`pr_source` 绑定事件 PR/H/M/B/run/attempt/target；不要求 M 已合入 | 唯一一次长构建使用共享 Actions 核心，原生保存到目标 ref；编译 job 的 contents/actions token 只读；完成后确认实际可读 keys | 360m |
+| `workflow_dispatch`，`operation=pr` | workflow/runtime 为受保护目标 ref 的固定提交 `T`；源码检出 `source_sha=M`，`pr_source` 绑定事件 PR/H/M/B/run/attempt/target；不要求 M 已合入 | 共享核心仅构建并严格校验；原生路径打包上传 Actions artifact，不保存普通 cache key；编译 job 的 contents/actions token 只读；完成确认 immutable artifact ID | 360m |
 | 自动 protected dev/integration push | current 结束后且未取消，`lean_required=true`、`project_seed_available!=true`；使用实际 push SHA | 同一 branch scope，复用长 Actions 核心 | 360m |
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 120m |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
@@ -516,26 +517,34 @@ Actions Cache (visible ref) --restore--> local workspace <--native build
 | 格式仍为 v3，但实际载荷被既有 consumer 拒绝 | 保留该 consumer 的真实错误及阶段；不能伪称 cache missing、静默兼容或自动迁移，也不为 FIB 新增探测器。 |
 | 短任务超时、编译失败或报告失败 | 保留实际失败阶段、退出/取消状态与诊断；独立 producer 是补救入口，不把本次失败转绿、不静默改为完整构建或抬预算。 |
 | 报告成功，当前工作收据中 report + programs 已知为正 | 有写入资格的 writer 可准备并保存 project 快照；普通 push 不等待准入判词。短 CI 保存/确认传输失败不改变检查结果。 |
-| 报告成功，工作已知为零 | `no-build-work`，不重复上传相同产物；已接受 Actions project 种子时可作为可用种子，避免自动长任务。独立 producer 的零上传成功也必须满足已接受种子。 |
+| 报告成功，工作已知为零 | 普通恢复仍为 `no-build-work`，不重复上传；已接受普通 Actions project 种子时避免自动长任务。有效的合入准备采用记录允许按既有 target key 保存，即使 work=0；源 PR 不获 project 写入资格。 |
 | 工作缺失、畸形、陈旧或未知 | `build-work-unknown`，禁写 project，未知不等于零；长 producer 无可用种子则失败。 |
-| 长 producer 新建种子 | 必须完成报告/程序生产并验证可用性，保存后核同 ref 的实际 cache key；不能仅凭 save 调用结束宣称已发布。PR 目标 producer 还须确认三个实际可读 keys 与当前源 PR 身份。 |
-| PR 目标 producer 的有效种子，本次工作为零 | 普通 snapshot 仍为 `no-build-work`，共享核心输出实际恢复的 project key；完成确认要求该 key 在目标 ref 或其可读的默认分支 scope 真实存在，不伪造正工作量或重复上传。 |
-| PR dispatch、来源、构建、保存或可读 key 确认失败 | 对应 dispatch 或目标 producer 非零并保留原始原因；标签 job 的 dispatch 成功不掩盖目标 run 的失败。调用者不得合并，须重新取得实际生产与 required 成功；旧有效缓存仍可使用，不在短 CI 自动修复。 |
+| 长 producer 新建种子 | 必须完成报告/程序生产并验证可用性，保存后核同 ref 的实际 cache key；不能仅凭 save 调用结束宣称已发布。PR 准备入口仅上传 artifact，并确认 artifact ID、producer run 与当前源 PR 身份；该成功不等于普通 cache 可用。 |
+| PR 准备构建工作为零 | 仍执行既有报告/程序生产及严格验证，再包装已复用的原生材料；不伪造正工作量，不写普通目标 cache。 |
+| PR dispatch、来源、构建、artifact 上传或身份确认失败 | 对应 dispatch 或目标 producer 非零并保留原始原因；标签 job 的 dispatch 成功不掩盖目标 run 的失败。受控交接的调用者须重新取得实际准备与 required 成功；旧有效缓存仍可使用，不在短 CI 自动修复。 |
+| 准备缺失、过期或 producer attempt 未成功 | 不算交接成功；未采用时继续既有普通恢复。短 CI 仍为 `fetch-or-fail`，长 producer 可按既有完整生产职责补救。下载期间 API 失败保留原错误并失败，不伪报采用。 |
+| 准备身份、partition、原生归档或实际报告载荷无效 | 身份/运输失败保持 `PR_CACHE_ERROR`；报告/程序由既有 consumer 判定并保留原始判词。无扫描迁移、额外兼容版本或静默冷构建。 |
 | Release 发布 | 构建/内容校验失败保持硬失败；可选传输失败可返回 0 并给出 `failed`/`skipped`，清理失败记录 `prune_error`。新发布成功须 `published` 且远端 published 状态、manifest/资产清单已验证；exit 0 本身不足，`exists` 只表示已核对既存快照。 |
 
-`fetch-or-fail` 不扩大 Release 的使用范围：`lean_cache_release.fetch` 在 `GITHUB_ACTIONS=true` 时明确 `skipped`，CI 不下载生产 Release 种子，随后仍须通过兼容种子检查；本地主检出可走 Release recovery，linked worktree 依既有 warm-main/reseed 边界拒绝直接下载。恢复边界不授权短 CI 冷项目构建。需要 Lean/report 的自动 push 仅在已确认发布增量种子，或 Actions 种子已接受、报告成功且本次工作确为 `no-build-work` 时免去长 producer；不需要 Lean/report 时也不触发。cache hit、unknown work 或未核实的上传均不能替代这些条件。
+`fetch-or-fail` 不扩大 Release 的使用范围：`lean_cache_release.fetch` 在 `GITHUB_ACTIONS=true` 时明确 `skipped`，CI 不下载生产 Release 种子，随后仍须通过兼容种子检查；本地主检出可走 Release recovery，linked worktree 依既有 warm-main/reseed 边界拒绝直接下载。恢复边界不授权短 CI 冷项目构建。需要 Lean/report 的自动 push 仅在已确认发布增量种子，或普通 Actions 种子已接受、报告成功且本次工作确为 `no-build-work` 时免去长 producer；不需要 Lean/report 时也不触发。cache hit、unknown work 或未核实的上传均不能替代这些条件。
 
-**写入权限与不可变快照。** 普通构建 snapshot 的 project 写入前置是 `STRATALINT_REPORT_SUCCEEDED`、已知正的 report/program 工作和既有 writer 身份，不是全部检查绿。普通 push 在报告生产成功后、准入判卷开始前尝试一次；普通 PR required job 由 `project_publication` 返回 `pull-requests-do-not-publish-project-seeds`。普通 current 的 dependency/elan 在该作业检查成功后各按条件保存，不等待其它并行 job；judge 在自身编译成功后即可保存。源 PR job 的辅助缓存写入也不能跨越 PR ref 边界。Actions save 为本次 run/attempt 创建新 project/dependency 快照，不修改旧 immutable key；普通 snapshot 零工作无需重复上传。PR 长构建直接在目标 dispatch 上下文发布，不在源 PR scope 先发布一份。短 CI 的可选运输与实际报告/编译/判卷成败分开，缓存不是真源。
+**写入权限与不可变快照。** 普通构建 snapshot 的 project 写入前置是 `STRATALINT_REPORT_SUCCEEDED`、已知的 report/program 工作和既有 writer 身份；通常要求正工作，当前调用已验证的合入准备采用记录允许零工作。写入不要求全部检查绿。普通 push 在报告生产成功后、准入判卷开始前尝试一次；普通 PR required job 由 `project_publication` 返回 `pull-requests-do-not-publish-project-seeds`。普通 current 的 dependency/elan 在该作业检查成功后各按条件保存，不等待其它并行 job；judge 在自身编译成功后即可保存。源 PR job 的辅助缓存写入也不能跨越 PR ref 边界。Actions save 为本次 run/attempt 创建新 project/dependency 快照，不修改旧 immutable key；无合入准备采用记录时，普通 snapshot 零工作无需重复上传。PR 长构建在目标 dispatch 上下文只准备 artifact；普通 target/project、dependency 和 elan save 均关闭，旧 reader 和 native prefix fallback 因而也无未合入候选可选。短 CI 的可选运输与实际报告/编译/判卷成败分开，缓存不是真源。
 
-**PR 合入前交接。** `lean-cache-publish.yml` 是唯一 dispatch 入口，`operation=build` 保持手动受保护提交的长构建语义；`operation=pr` 把唯一一次长构建放在目标 ref 的 workflow/cache 上下文，检出独立的固定 `source_sha=M`。两者与自动 push 共用 `.github/actions/lean-cache-produce` 的编译、报告、严格 bundle 验证、原生 snapshot 与 save 核心，不增加 key、schema、报告格式或独立缓存生命周期。没有源种子 tar、artifact adoption、材料清单比对或附加回读 job；elan 继续使用平台与 pin 的既有不可变 key，不要求整个 elan home 的字节相等。
+**PR 准备与合并启用。** `lean-cache-publish.yml` 是 dispatch 入口，`operation=build` 保持手动受保护提交的长构建语义；`operation=pr` 在目标 ref 的 workflow 上下文检出独立固定 `source_sha=M`。两者和自动 push 共用 `.github/actions/lean-cache-produce` 的编译、报告与严格 bundle 验证；PR 使用 `preparation-only`，跳过所有普通 cache snapshot/save。长任务仍仅构建缓存，不执行测试套件。`regenerate_report_artifacts` 仍是显式选择，不由交接自动启用。
 
-标签 `lean-cache-produce` 的 `pull_request` job 自动捕获仓库、事件 PR 编号、head `H`、实际检出 merge `M`、父提交 `B=M^1` 与 `H=M^2`、源 run/attempt 和目标 ref。它使用 `contents:read/actions:write` 调用既有 dispatch API，`return_run_details=true` 返回的具体 `workflow_run_id` 是调用者等待的对象，不靠标题或时间查找；缺失 ID、权限不足或 API 错误直接失败。该 job 不编译、恢复或保存缓存。它保留 `pull_request` 入口的既有权限边界；fork token 无 dispatch 写权限时返回原始拒绝，不声称标签操作已完成生产，也不引入 `pull_request_target` 或新的提权入口。
+标签 `lean-cache-produce` 的 `pull_request` job 捕获仓库、事件 PR 编号、head `H`、实际检出 merge `M`、父提交 `B=M^1` 与 `H=M^2`、源 run/attempt 和目标 ref。它使用 `contents:read/pull-requests:read/actions:write` 调用 dispatch API，`return_run_details=true` 返回具体 `workflow_run_id`；缺失 ID、权限不足或 API 错误直接失败。该 job 不编译或保存缓存。fork token 无 dispatch 权限时保留原始拒绝，不引入 `pull_request_target` 或新的提权入口。
 
-目标 producer 使用 `contents:read/actions:read`，Actions runtime cache 凭证归目标 ref。开工和结束均核对真实 API 的当前源 PR open/head/target、源 run 的 event/workflow/head/attempt、受保护目标以及 B 在目标历史内，并核对本地 `HEAD=M`、`M` 的两个父提交为 `B,H`。`run.pull_requests` 的可变同 head PR/Draft 关联不参与身份判定。B 可落后当前 tip，不要求 M 为目标祖先，不启用 strict=true。实际 `GITHUB_REF`、`GITHUB_SHA=T`、`GITHUB_WORKFLOW_REF/SHA`、目标 run/attempt 与源身份分列输出；工作流必须来自目标 ref 的固定 T，源码和报告仍属于 M。`ci-entry.sh` 只在自身调用中用 M 校验 checkout，不改其它步骤的真实 runtime 身份。PR 专用的已校验来源标记不伪装为普通 manual 的受保护祖先来源。
+准备 producer 使用 `contents:read/pull-requests:read/actions:read`；开工核对当前源 PR open/head/target、源 run 的 event/workflow/head/attempt、受保护目标、B 在目标历史内以及本地 `HEAD=M`、父提交 `B,H`。完成打包和上传确认允许同 head/target 的 PR 已实际 merged，但不允许 closed-unmerged。`run.pull_requests` 的可变关联不参与身份判定。B 可落后 tip，M 不必为目标祖先，不启用 strict=true。真实 `GITHUB_SHA=T`、workflow ref/SHA、producer run/attempt 与源 M 分列；`ci-entry.sh` 只在自身调用中用 M 校验 checkout。
 
-共享核心输出实际 project/dependency/elan keys：有正工作时为本次保存 key，零工作或未变依赖时为实际恢复的 key。目标 producer 完成时核对这些 exact keys 位于目标 ref 或默认分支的可读 scope；保存到不可读 PR ref 不算成功。新建种子使用现有 runtime run/attempt key，既有有效种子保留原 key；省略上传不等于省略报告、程序和严格 bundle 校验。producer 成功只证构建、验证与 key 可见性；真实空 runner 的恢复、权限、API 行为、耗时及普通短 CI 消费仍须同一 integration 的真实事件核验，本地 helper 测试不能代替。
+Actions artifact 名为 `lean-pr-preparation-<PR>-<H>`；这是精确发现地址，不是新 cache key 或格式代际。artifact 内仅 `preparation.json` 与 `native.tar.gz`：前者绑定源身份、producer runtime、现有 native partition 与 elan pin key，不含 schema/version；后者从 `lean_actions.native_archive_paths` 和 `Meta/ci-cache-paths.json` 展开原生 project/dependency 成员，保留隐藏文件与可执行权限。toolchain 仍由普通 elan restore/install 负责。artifact ID 是不可变取回地址；同一 run 重试上传替换名称对应的旧 artifact 时取得新 ID。消费者核对该 ID 的 workflow run/SHA、记录的精确 producer attempt 成功以及 artifact 创建时点落在该 attempt 区间；latest run 状态与可变 PR 关联不替代精确 attempt。源身份、M 父提交与 protected runtime history 继续校验。
 
-受控合并顺序归调用者的既有 PR 生命周期：选定长缓存 PR 用 `AUTO_MERGE=0` 保持未合并，等待返回的确切目标 producer run 成功及当前 head 的普通 required 成功，再执行普通 pinned merge。dispatch 成功、cache 存在或另一 head 的旧证据均不够；head 改变须重新取得相应成功。此顺序不新增 required check、保护规则、调度器或 `pr.sh` 分支，不保证任意已开启的 UI auto-merge。首次使用要求同一目标分支已通过普通安装 PR 获得 `operation=pr`；先安装到同一 integration，再用后续未合并源 PR 触发，核实际 workflow T 与候选 M。dev 也须经普通交付安装后才能服务后续 PR；安装本身不冒称已验证新 dispatch，不能为解锁验证直推 dev。
+`current` 的报告路径、`ci-unit` 的 `lean=build` 路径和共享长核心在普通 dependency/project restore 前尝试显式采用；纯理论和 `lean=none/toolchain` 不增加此工作。源 PR 仅可取自身仍 open 的相同 PR/H/target 准备，允许 event M 的基线已推进，随后仍须通过当前 head 的全部 required。目标 push 由实际 event.after/ref 与 checkout 相等，再从该 commit 的 PR 关联中确认唯一实际 merged PR、目标和 `merge_commit_sha=checkout=K`；手动 protected build 对固定 source checkout 作相同确认。K 与准备 M 分列，不要求 SHA 相同。未合并、关闭未合并、另一 PR、另一 head 或目标均不取得该准备的使用资格。多提交 push 中 checkout 不是该 PR 的实际 merge commit 时不选该准备；后续普通 target cache 复用沿原规则，不扫描历史候选。
+
+采用前先校验身份并在临时目录解包；拒绝重复、越界、未登记成员与逃逸链接。完成后替换 job 本地 native 目录，并在运输树之外写当前 run/attempt/checkout/artifact 的采用记录。普通 restore actions 跳过这两层，`lean_actions.restore` 也保留已采用材料。既有报告与程序消费者承担实际载荷校验与 Lake 增量；运输与 trace 不证明 producer/consumer 语义兼容，不加入 producer 程序字节指纹。若实际合并树、配置或源输入漂移，必要的原生增量仍须执行，30m 预算不增加。
+
+合并本身使匹配准备对该目标事件具备采用资格；不需第二个异步 publisher 完成，不强制重复完整冷编译。调度、API 可见性和下载仍有延迟。target 报告成功且工作量已知时，已验证采用可保存现有普通 project key，真实零工作也保留 `build_work=0`；无采用的普通零工作仍抑制上传。`project_seed_available` 只认可确认的普通发布，或普通缓存已接受且报告零工作；artifact 存在、已采用或 upload 成功均不单独抑制长 fallback。若短保存失败，长核心仍优先采用同一匹配准备，不能忽略它而冗余冷构建。
+
+调用者沿现有生命周期持有 `AUTO_MERGE=0`，等待具体 producer run 成功及当前 head required 成功，再 pinned merge；源 required 可在准备完成后重跑以取得材料，无目标 cache 时也适用。准备成功不代表 required 成功；head 改变须重新准备。此顺序不新增 required check、保护规则、调度器或全局合并门。先在同一 integration 安装入口，再以未合入源 PR 验证隔离、当前 required、实际合并首次消费、零工作普通发布和长 fallback。实际 artifact 大小、权限、API、传输成本与首次事件仍需真实集成核验，本地 helper 测试不替代；dev 安装须经普通交付，不直推解锁。
 
 **键、格式及归属。** 以下标识分别承担各自契约，报告格式与容器/manifest 代际不得混用：
 

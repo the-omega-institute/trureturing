@@ -16,6 +16,7 @@ on:
 permissions:
   contents: read
   actions: read
+  pull-requests: read
 
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
@@ -361,6 +362,8 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-cache]
+            .github/actions/lean-cache-produce/action.yml
+            .github/workflows/lean-cache-publish.yml
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/scripts/workflow/elan-cache-inventory.sh
@@ -1872,6 +1875,12 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: steps.report_entry.outputs.hit == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
       - id: keys
         if: steps.report_entry.outputs.hit == 'true'
         env:
@@ -1888,7 +1897,7 @@ jobs:
         if: steps.report_entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -1896,7 +1905,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -2045,6 +2054,7 @@ jobs:
     permissions:
       contents: read
       actions: read
+      pull-requests: read
     concurrency:
       group: lean-cache-branch-${{ github.ref }}
       cancel-in-progress: false

@@ -7,7 +7,7 @@ namespace StrataLint.Cache.Tests;
 public sealed class LeanCachePublishTests
 {
     [Fact]
-    public void PrCacheBuildPreservesSourceAndTargetScope()
+    public void PrPreparationActivatesOnlyForSourceHeadOrActualMerge()
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();

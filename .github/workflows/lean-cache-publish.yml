@@ -45,6 +45,7 @@ jobs:
     permissions:
       contents: write
       actions: write
+      pull-requests: read
     if: github.event_name == 'workflow_dispatch' && inputs.operation == 'build'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
@@ -124,6 +125,7 @@ jobs:
     permissions:
       contents: read
       actions: write
+      pull-requests: read
     steps:
       - uses: actions/checkout@v5
         with:
@@ -141,13 +143,14 @@ jobs:
         run: python3 tools/scripts/worktree/lean_pr_cache.py dispatch --repository "$GITHUB_WORKSPACE"
 
   pr-producer:
-    name: Produce the PR Lean cache in the target scope
+    name: Prepare the PR Lean cache artifact
     if: github.event_name == 'workflow_dispatch' && inputs.operation == 'pr'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     permissions:
       contents: read
       actions: read
+      pull-requests: read
     concurrency:
       group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
       cancel-in-progress: true
@@ -171,18 +174,29 @@ jobs:
           CI_HIT_PATHS: '*'
         run: |
           GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA" bash tools/scripts/workflow/ci-entry.sh
-      - id: produce
-        name: Produce the Actions cache once in the target scope
+      - name: Build and validate the isolated preparation
         uses: ./.github/actions/lean-cache-produce
         with:
+          preparation-only: 'true'
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
-      - name: Confirm target-readable keys and current PR identity
+      - id: pack
+        name: Package the registered native cache paths
         env:
           GH_TOKEN: ${{ github.token }}
-          PROJECT_CACHE_KEY: ${{ steps.produce.outputs.project-key }}
-          DEPENDENCY_CACHE_KEY: ${{ steps.produce.outputs.dependency-key }}
-          ELAN_CACHE_KEY: ${{ steps.produce.outputs.elan-key }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py confirm --repository "$GITHUB_WORKSPACE"
+        run: python3 tools/scripts/worktree/lean_pr_cache.py pack --repository "$GITHUB_WORKSPACE" --directory "$RUNNER_TEMP/pr-preparation"
+      - id: preparation
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.artifact_path }}/
+          if-no-files-found: error
+          compression-level: 0
+          overwrite: true
+      - name: Confirm the immutable preparation artifact and source identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.preparation.outputs.artifact-id }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py confirm --repository "$GITHUB_WORKSPACE" --artifact-id "$ARTIFACT_ID"
 
   publish:
     name: Publish the Lean build cache
