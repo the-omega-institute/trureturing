@@ -118,6 +118,46 @@ one candidate. The same source has $N_{r,g}\le1+V^2/5$, so $M\mid N_{r,g}$
 also requires $V^2\ge5(M-1)$. These exact integer conditions avoid treating
 rounded rank scales as certified boundaries.
 
+## Finite Fibonacci-rank exclusion mask
+
+The valuation conclusion supplies a finite necessary-condition filter for the
+Fibonacci candidate family. Let $z(p)$ denote the least positive index with
+$p\mid F_{z(p)}$, and define
+
+$$
+R_B=\{r\ge7:r\text{ is prime and }z(p)=r\text{ for some prime }p\le B\}.
+$$
+
+For every $r\in R_B$, choose such a witness $p$. Then $p\mid F_r$ gives
+
+$$
+1+F_rg\equiv1\pmod p,
+$$
+
+so $p\nmid1+F_rg$. Consequently no member of this rank class can satisfy
+the external necessary condition $p^2\mid N$ at every prime $p\le B$.
+Conditional on the block-exchange and least-counterexample hypotheses above,
+the implication is therefore
+
+$$
+r\in R_B
+\Longrightarrow
+1+F_rg\text{ is not the globally least Robin counterexample}
+$$
+
+for every integer $g$ for which the candidate is in the stated range. This
+does not rule out that an individual candidate violates Robin's inequality;
+it only removes it from the least-counterexample search under the external
+valuation certificate.
+
+The exact enumeration in the companion experiment
+[`research220-fib-rank-cutoff`](https://github.com/the-omega-institute/trureturing-experiments/tree/ad3e57ac/research220-fib-rank-cutoff)
+finds $25\,370$ distinct prime ranks in $R_B$ for
+$B=7\,608\,793$, with largest rank $3\,804\,397$. The output records a
+witness prime and witness count for each rank; it is a finite computation and
+does not assert that the complementary ranks are admissible or that the mask
+extends beyond this cutoff.
+
 This is a parameter application of existing CRT and size comparisons,
 not a new estimate. Its low-rank scales are already inside the finite
 Robin ranges recorded in [Axler's Lemma 2.3](../notes/axler2023robin.md)
