@@ -40,7 +40,10 @@ internal sealed class CirculantUnitaryLiftRefutationDocument : IScribeDocumentDe
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("rajchel-korzekwa-puchala-zyczkowski-2021-conjecture19-circulant-lift"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula LiftFormula()
     {
