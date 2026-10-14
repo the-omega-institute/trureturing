@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJMWightedCancellation
    mirror-E: none(waiver:exact-inflation-certificate-consumer)
-   anchors: [D5/S3/Quantum/Entanglement/TriangleInflationSoundness]
+   anchors: []
    utility: none
    digest: Finite weighted contractions preserve actual triangle party order. -/
 

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJMInflationScore
    mirror-E: none(waiver:exact-inflation-certificate-consumer)
-   anchors: [D5/S3/Quantum/Entanglement/EJMWightedCancellation, D5/S3/Quantum/Entanglement/ElegantJointMeasurementInflation]
+   anchors: []
    utility: none
    digest: The exact 32 EJM inflation blocks cancel under every actual local model. -/
 

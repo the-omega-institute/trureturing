@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/ElegantJointMeasurementInflation
    mirror-E: none(waiver:exact-inflation-certificate-consumer)
-   anchors: [D5/S3/Quantum/Entanglement/TriangleInflationSoundness]
+   anchors: []
    utility: none
    digest: Exact upstream inflation marginal identities for actual continuous triangle responses. -/
 import D5.S3.Quantum.Entanglement.TriangleInflationSoundness
