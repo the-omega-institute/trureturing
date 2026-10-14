@@ -98,7 +98,10 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
     (hrestBoundary : ∀ p ∈ oldrest, ∃ a b : Port k,
       p.start.val = specialPort F a ∧ p.finish.val = specialPort F b ∧
         (if odd then oddBoundary k else evenBoundary k) (code a) (code b)) :
-    ∃ pieces : List (Piece (ParentGraph F A u hbase)),
+    ∃ boundary₀ : (ParentGraph F A u hbase).Walk ℓ₀ y,
+      ∃ boundary₁ : (ParentGraph F A u hbase).Walk r₀ x,
+      let pieces : List (Piece (ParentGraph F A u hbase)) :=
+        [⟨ℓ₀, y, boundary₀⟩, ⟨r₀, x, boundary₁⟩] ++ oldrest
       (∀ p ∈ pieces, p.walk.IsPath) ∧
       (∀ v, (pieces.flatMap fun p => p.walk.support).count v = 1) ∧
       (pieces.flatMap fun p => p.walk.support).Perm c.support.tail ∧
@@ -231,7 +234,7 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
           (if odd then oddBoundary k else evenBoundary k) (code a) (code b) ∧
           ¬ pair (code a) (code b) (k - 1, 1) (0, 1) from
           ⟨by omega, by omega, hb, hnot⟩)
-  exact ⟨pieces, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
+  exact ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
     hrawinv, hrawcuts, hrawcard, hboundary, hpairs, hrestoreNotDeleted'⟩
 
 /-- The primary old order restores the first Q zero cut of the same
@@ -287,7 +290,10 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
     (hrestBoundary : ∀ p ∈ oldrest, ∃ a b : Port k,
       p.start.val = specialPort F a ∧ p.finish.val = specialPort F b ∧
         (if odd then oddBoundary k else evenBoundary k) (code a) (code b)) :
-    ∃ pieces : List (Piece (ParentGraph F A u hbase)),
+    ∃ boundary₀ : (ParentGraph F A u hbase).Walk ℓ₁ y,
+      ∃ boundary₁ : (ParentGraph F A u hbase).Walk r₁ ℓ,
+      let pieces : List (Piece (ParentGraph F A u hbase)) :=
+        [⟨ℓ₁, y, boundary₀⟩, ⟨r₁, ℓ, boundary₁⟩] ++ oldrest
       (∀ p ∈ pieces, p.walk.IsPath) ∧
       (∀ v, (pieces.flatMap fun p => p.walk.support).count v = 1) ∧
       (pieces.flatMap fun p => p.walk.support).Perm c.support.tail ∧
@@ -419,7 +425,7 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
           (if odd then oddBoundary k else evenBoundary k) (code a) (code b) ∧
           ¬ pair (code a) (code b) (k - 1, 1) (0, 1) from
           ⟨by omega, by omega, hb, hnot⟩)
-  exact ⟨pieces, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
+  exact ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
     hrawinv, hrawcuts, hrawcard, hboundary, hpairs, hrestoreNotDeleted'⟩
 
 #print axioms native_actual_even_odd_boundary_advance
