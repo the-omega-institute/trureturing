@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9080929ecfa06db3b5c8f94583a158ecfc56b1ca2c738225d8dc1993c0c2d7f8
+  normalized_sha256: sha256:9080929ecfa06db3b5c8f94583a158ecfc56b1ca2c738225d8dc1993c0c2d7f8
+cas_ref: sha256:9080929ecfa06db3b5c8f94583a158ecfc56b1ca2c738225d8dc1993c0c2d7f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 12.9（缺陷的合法运输与多层接口）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 87fc4444278a61fe9fdf6f988e5164899144571b7c8c56026227d7c8a25b063d
+    next_atom_id: c456c15327c0bd8a92c408145073df004252d1c6e6a94dad606e0a3ffc44dfa4
