@@ -6,7 +6,10 @@ internal sealed class FiniteKrausRepresentationDocument : IScribeDocumentDefinit
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every finite rectangular completely positive matrix map has a finite Kraus witness.",
-        H("Finite Kraus Representations"), Blocks(Describe.Lean(
+        H("Finite Kraus Representations"), Blocks(
+            Paragraph(Text("Use the output-input order for the Choi coordinates: the channel acts on the first factor of the unnormalized maximally entangled projector. The finite Kraus family has rectangular output-by-input matrices; the zero map is included. Trace preservation is equivalent to the sum of the adjoint-Kraus products being the identity: cyclicity proves sufficiency, and testing every matrix unit proves necessity.")),
+            Paragraph(Text("Ordinary transposition preserves positive matrices but is not completely positive. Its Choi matrix is the swap. On two qubits the partial transpose of the normalized Bell density is half the swap, with three eigenvalues equal to one half and one equal to minus one half. The antisymmetric vector detects the negative direction. Positivity on inputs alone therefore does not replace positivity with every auxiliary interface.")),
+Describe.Lean(
             DescribeId.Create("finite-kraus-representation"),
             DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausRepresentation.exists_kraus"),
             H("Complete positivity gives a rectangular Kraus family"),

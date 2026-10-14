@@ -14,6 +14,74 @@ internal sealed class HistoryPayloadFactorizationDocument : IScribeDocumentDefin
             + "Global admission and complete local completion sets are two such payloads.",
         H("History Payload Factorization"),
         Blocks(
+            new DocumentBlock.Section(H("Clocks on realized observation fibers"), Blocks(
+                Paragraph(Text(
+                    "Let X be any set of complete finite histories, R a readout into Y, and t a "
+                    + "natural-valued clock. The realized-image factorization applies with beta = R and payload "
+                    + "= t: a unique function on range(R) recovers t precisely when R(x) = R(y) implies t(x) = "
+                    + "t(y). This includes an empty X; no arbitrary output at an unrealized value of Y is "
+                    + "required.")),
+                Paragraph(Text(
+                    "For serial group-valued gate readout, the literal word [g, inverse(g)] and the empty "
+                    + "word both have product one, but their lengths are two and zero. Thus product readout "
+                    + "alone does not determine length. The joint readout (R,t) determines both components. If "
+                    + "Q has decoders r and c with R = r composed with Q and t = c composed with Q, then z maps "
+                    + "to (r(z),c(z)) is a decoder for the joint readout. This universal property does not "
+                    + "assert that the joint readout is injective on histories.")))),
+            new DocumentBlock.Section(H("Multiplicity at a fixed clock value"), Blocks(
+                Paragraph(Text(
+                    "Let c assign r distinct literal words of width two to the alphabet of neutral blocks. "
+                    + "Represent a width-two word by a function on Fin(2), and a sequence of k choices by s on "
+                    + "Fin(k). The history at position 2i+j is c(s(i))(j). The product equivalence between "
+                    + "Fin(k) times Fin(2) and Fin(2k), followed by List.ofFn, represents precisely the "
+                    + "concatenation of these blocks; List.ofFn_mul supplies the equality with the flattened "
+                    + "block list.")),
+                Paragraph(Text(
+                    "Equality of the histories gives equality at every position 2i+j, hence equality of each "
+                    + "selected block, and injectivity of c gives equality of s. There are r to the power k "
+                    + "choices. All histories have length 2k. If the product readout of each block is the "
+                    + "monoid identity, List.prod_flatten makes every concatenation neutral. These facts use "
+                    + "literal distinctness of blocks, independently of their common operator value.")),
+                Paragraph(Text(
+                    "On this family, a memory M that reconstructs history together with the constant product "
+                    + "and clock must be injective. Its realized range has at least r to the power k elements. "
+                    + "A fixed b-bit memory has 2 to the power b values, so b is at least the ceiling of k "
+                    + "times log base two of r. The bound concerns exact recovery on the entire family.")))),
+            new DocumentBlock.Section(H("Support-covered assignment gluing"), Blocks(
+                Paragraph(Text(
+                    "Let V index possibly dependent value types. For each constraint c, let K(c) be its "
+                    + "support and let its allowed relation be a predicate on complete assignments on K(c). An "
+                    + "assignment on A is legal when every constraint with support contained in A holds. "
+                    + "Suppose subsets U(i) cover A, each local assignment is legal, and the assignments agree "
+                    + "pointwise on all overlaps.")),
+                Paragraph(Text(
+                    "The sheaf of dependent functions on the discrete space V supplies the unique underlying "
+                    + "assignment on A. If each support K(c) contained in A lies entirely inside some U(i), its "
+                    + "restriction equals the corresponding local restriction, so local legality gives the "
+                    + "constraint on the glued assignment. No pairwise reduction of a constraint is used. The "
+                    + "argument works even for infinite supports when the same containment hypothesis holds; "
+                    + "finite supports give the stated local-constraint setting.")),
+                Paragraph(Text(
+                    "Support containment is essential. On three Boolean coordinates impose that their "
+                    + "exclusive-or is false. The three regions obtained by omitting one coordinate cover all "
+                    + "positions, but none contains the ternary support. Restricting (false,false,true) to "
+                    + "those regions gives legal local records with matching overlaps, while their unique union "
+                    + "violates the ternary constraint. The general sheaf gluing condition is the standard one "
+                    + "described in the Stacks Project, tag 006S.")))),
+            new DocumentBlock.Section(H("Linear boundary recovery"), Blocks(
+                Paragraph(Text(
+                    "Let M and P be linear maps on a finite-dimensional vector space over a field, with legal "
+                    + "interior S equal to kernel(M) and boundary readout the restriction of P to S. "
+                    + "LinearMap.injective_domRestrict_iff identifies injectivity with disjointness of "
+                    + "kernel(M) and kernel(P), equivalently their intersection is zero.")),
+                Paragraph(Text(
+                    "The paired map x maps to (M(x),P(x)) has kernel equal to that intersection by "
+                    + "LinearMap.ker_prod. Rank-nullity therefore identifies injectivity on S with full column "
+                    + "rank of the vertically stacked matrix [M;P]. For domain K to the power n the rank is n. "
+                    + "These equivalent conditions give uniqueness only for boundary values in P(S); they do "
+                    + "not imply that P(S) is the entire boundary space. For a target function on S, the "
+                    + "earlier realized-image factorization instead requires only that the target be constant "
+                    + "on the boundary fibers.")))),
             Describe.Lean(
                 DescribeId.Create("payload-factorization"),
                 DeclarationHandle.Create(Module + "ker_beta_subset_ker_payload_iff_unique_factorization"),
@@ -118,10 +186,8 @@ internal sealed class HistoryPayloadFactorizationDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text(
                     "For each summary fiber and complete complement record, completion membership "
                         + "is characterized by existence of an admitted complete raw global record "
-                        + "with both exact restrictions. This is the preregistered live consumer of "
-                        + "mem_completion_payload_iff; its path uses the pinned dependent-function "
-                        + "sheaf gluing owner. The factorization and local-tests companions do not "
-                        + "consume this bridge."))),
+                        + "with both exact restrictions. The membership equivalence uses the "
+                        + "sheaf of dependent functions to construct the common assignment."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("local-tests"),
