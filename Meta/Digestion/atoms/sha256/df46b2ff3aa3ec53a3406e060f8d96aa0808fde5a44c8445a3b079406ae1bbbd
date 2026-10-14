@@ -1,0 +1,125 @@
+**Theorem 214.8 (balanced three-late full-fiber minimum).** Let $L\ge5$, $c,g,B\ge0$, and
+
+$$
+q=(c,c,g,g,g,0,\ldots,0;2c+3g+B).
+$$
+
+Among all nonnegative full exact-$Q$ scores, including arbitrary $A$, early and late $P$, classwise cancellations, changed anchors, suffixes and all legal labels,
+
+$$
+\min\Delta_N=\min\Delta_O=
+D(c,g,B):=\max\left\{0,g-B,3g-2c-B,
+\frac{4g-5c-B}{3},\frac{4g-\frac92c-B}{4}\right\}.
+\tag{214.8}
+$$
+
+One score attains both minima. Equivalently, the least stock at allowance $d$ is
+
+$$
+\Phi_3(c,g,d)=\max\left\{0,g-d,3g-2c-d,4g-5c-3d,
+4g-\frac92c-4d\right\}.
+\tag{214.9}
+$$
+
+The theorem includes $c=0$, $g=0$, $B=0$, all ties and zero-cost cores. It covers only equal early credits and equal late totals at fixed addresses $3,4,5$.
+
+**Proof.** Use four stopped detector bundles. The notation $(i,j;x,y,z)$ is as above. Bundle A is $(1,2;1,2,3)$ together with half each of
+$(1,3;1,3,0),(1,4;1,4,0),(2,3;0,3,0),(2,4;2,4,0),(3,4;0,4,0),(4,5;0,5,0)$; its total weight is $4$. Bundle B is
+$(1,3;1,3,0)+(2,3;0,3,0)+(3,4;0,4,5)$, of weight $3$. Bundle C is $(3,4;3,4,5)$, of weight $1$. Bundle D is $(1,2;1,2,5)$, of weight $1$.
+
+For a bundle of weight $m$, let $N_0(w),N_n(w)$ be its weighted counts of output zero and actual first-zero label $n$. The row coefficients are
+$(N_0-m\mathbf1_{n\ge3},N_n-m\mathbf1_{n\le2},N_0+N_n-m)$ and the terminal coefficient is $N_0-m$. Direct substitution on each suffix gives the following minima, in class order $1,2,3,4,5,n\ge6$, followed by the terminal row:
+
+$$
+\begin{array}{c|rrrrrr|r}
+ &1&2&3&4&5&n\ge6&T\\\hline
+A&(1,-2,-1)&(3/2,-5/2,-1)&(-3,2,-1)&(-5/2,3/2,-1)&(-3/2,1/2,-1)&(-1,0,-1)&-1\\
+B&(1,-2,-1)&(2,-3,-1)&(-2,2,0)&(-1,1,0)&(-1,1,0)&(-1,0,-1)&-1\\
+C&(0,-1,-1)&(0,-1,-1)&(-1,1,0)&(-1,1,0)&(-1,1,0)&(-1,0,-1)&-1\\
+D&(0,0,0)&(0,0,0)&(-1,0,-1)&(-1,0,-1)&(-1,1,0)&(-1,0,-1)&-1
+\end{array}
+$$
+
+For a proposed right side $v\cdot\beta-K$, its row coefficients are $(-v_n-1,v_n-1,-1)$ and $-1$ at $T$. The displayed minima dominate the corresponding rows, so multiplying by the actual nonnegative score and summing gives
+
+$$
+\begin{aligned}
+4\Delta_O&\ge-\beta_1-\tfrac32\beta_2+3\beta_3+\tfrac52\beta_4+\tfrac32\beta_5-K,\\
+3\Delta_O&\ge-\beta_1-2\beta_2+3\beta_3+2\beta_4+2\beta_5-K,\\
+\Delta_O&\ge2\beta_3+2\beta_4+2\beta_5-K,\\
+\Delta_O&\ge\beta_1+\beta_2+\beta_3+\beta_4+2\beta_5-K.
+\end{aligned}
+$$
+
+Substitution of $q$ gives the four nonzero branches in (214.8); the anchor gives $0$. The inequalities apply to $N$ because $\Delta_N\ge\Delta_O$.
+
+For attainment use the following seven scores on length-five words, padded by ones for larger $L$; the entries are `word:weight`, with literal $0$ denoting a zero answer and positive padding by ones; $A=0$ throughout:
+
+$$
+\begin{array}{c|c|l|l|c}
+& (c,g,d,B)&C\text{-atoms}&P\text{-atoms}&T\\\hline
+Z&(0,2,0,8)&11001:2,11101:2,11110:2&01001,01010,01100,10001,10010,10100:1&2\\
+U&(2,5,0,11)&01000:2,10000:1,10110:1,11000:4,11010:1,11100:5,11110:5&00010:1,00100:1,01000:1,10000:3&5\\
+V&(2,8,1,19)&00101:1,01000:1,10100:1,10110:1,11000:5,11001:1,11010:2,11100:7,11101:1,11110:8&00100:1,00110:1,01000:2,01010:1,01100:1,10000:3,10001:1,10010:1,10100:1&7\\
+X&(0,2,1,5)&11000:1,11010:1,11100:2,11110:2&01000:1,01110:1,10010:1,10100:1&1\\
+H&(1,1,0,1)&00000:1,10000:1,11000:1,11100:1,11110:1&-&1\\
+J&(1,1,1,0)&00000:1,10000:1,11000:1,11100:1,11110:1&-&0\\
+K&(0,1,3,0)&11000:1,11100:1,11110:1&-&0
+\end{array}
+$$
+
+In the $V$ row, the compact list means weights $1$ on the first four displayed $C$ words, then weights $5,1,2,7,1,8$ on the remaining six; the compact list in its $P$ column means weights $1,1,2,1,1,3,1,1,1$ in the displayed order. In particular $U$ has $K=30$, stock $11$ and anchor $15$, while $V$ has $K=47$, stock $19$ and anchor $23$. The corresponding anchors are $8,15,23,5,3,2,0$ in the order
+$Z,U,V,X,H,J,K$. For every score, direct use of the cell formula
+
+$$
+\max\left\{\sum_{E}P+T\mathbf1_{1^L\in E},
+       \max_{1\le\ell\le L}\sum_{E\cap\Omega_\ell}(C+P)\right\}
+$$
+
+on all ten pairs $(12),(13),(14),(15),(23),(24),(25),(34),(35),(45)$ gives support at most the listed anchor plus the listed $d$: the pair supports for $Z,U,V,X,H,J,K$ are respectively
+
+$$
+(8^{10}),\quad(15^{10}),\quad(24,24,24,24,24,24,23,24,23,24),
+(6,6,6,5,6,6,5,6,5,5),
+(3^{10}),\quad(3,3,3,2,3,3,2,3,2,2),
+(1,2,2,1,2,2,1,3,2,2).
+$$
+
+Here $(a^{10})$ denotes ten repeated entries equal to $a$. The maximum over empty and singleton schedules is respectively $8,13,21,5,2,2,2$ for $Z,U,V,X,H,J,K$, also below the same bounds. Addresses above five are constant one on the scored support and labels above five have zero reward, while reversals and repetitions coarsen or permute these cases. Thus these are full-catalog bounds, not a selected-table check.
+
+For the real-parameter proof, normalize by $g>0$ and write $x=c/g$, $y=d/g$. The normalized seed points are
+
+$$
+Z=(0,0),\quad U=(2/5,0),\quad V=(1/4,1/8),\quad X=(0,1/2),
+\quad H=(1,0),\quad J=(1,1),\quad K=(0,3).
+$$
+
+For $x,y\ge0$, comparison of the five affine stock forms gives exactly the following regions; boundary overlaps are allowed:
+
+$$
+\begin{array}{c|l|l}
+\text{active stock}/g&\text{region}&\text{vertices or boundary}\\\hline
+4-\frac92x-4y&y\le x/2,\quad5x+6y\le2&ZUV\\
+4-5x-3y&y\ge x/2,\quad3x+2y\le1&ZVX\\
+3-2x-y&x\le1,\quad5x+6y\ge2,\quad3x+2y\ge1,\quad2x+y\le3&XVUHJK\\
+1-y&x\ge1,\quad0\le y\le1&HJ\text{ and increasing }x\\
+0&y\ge\max(1,3-2x)&KJ\text{ and }y\ge1\text{ for }x\ge1
+\end{array}
+$$
+
+For example the first two forms differ by $x/2-y$, and their differences from $3-2x-y$ are $1-5x/2-3y$ and $1-3x-2y$; the difference between $3-2x-y$ and $1-y$ is $2-2x$. These comparisons give the table, including its unbounded regions, and any maximum lies in at least one listed region. The polygon is convex and is partitioned by the four triangles $XVU$, $XUH$, $XHJ$, $XJK$, whose interiors are disjoint. This proves the entire face-fan cover.
+
+On a bounded triangle let $\lambda_i\ge0$, $\sum_i\lambda_i=1$, be its barycentric coordinates at $(x,y)$. If seed $i$ has parameters $(c_i,g_i,d_i,B_i)$, use the single score
+
+$$
+V=g\sum_i\frac{\lambda_i}{g_i}V_i.
+$$
+
+Its early coordinates are $c$, its three late coordinates are $g$, and its stock is
+$g\sum_i\lambda_i B_i/g_i=\Phi_3(c,g,d)$, because each vertex stock lies on that region's same affine form. Its total weighted cost allowance is
+$g\sum_i\lambda_i d_i/g_i=gy=d$. Linearity of the anchor and subadditivity of full support give $\Delta_N(V)\le d$, with one common allocation. The formulas agree on shared faces by their parameter identities; no choice at a tie loses coverage.
+
+On the strip use $g[(1-y)H+yJ]$, then add correct mass $c-g$ to a singleton word in each early class. The added reward of every table is at most $2(c-g)$, exactly the anchor increment, so excess cannot increase. The stock is $g-d$. In the zero-stock region with $x\le1$, use $g[(1-x)K+xJ]$; it has early total $c$, late total $g$ and cost allowance $g(3-2x)\le d$. For $x\ge1$, use $gJ$ plus the same early additions; its allowance $g\le d$ suffices. When $g=0$, early correct singleton rows of mass $c$ and terminal stock give zero excess directly.
+
+For a prescribed $B\ge\Phi_3(c,g,d)$ add $B-\Phi_3(c,g,d)$ to $T$. Every table reward increases by at most the anchor increment, so excess cannot increase. For example $J$ has excess $1$ at $T=0$ and excess $1/2$ after adding $T=1/2$; preservation of excess is not assumed. Take $d=D(c,g,B)$, for which all five stock inequalities give $B\ge\Phi_3(c,g,d)$. The lower bounds and this one-score construction prove (214.8). $\square$
+
