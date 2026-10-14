@@ -12,7 +12,7 @@ motivation_gids:
 
 ## Problem
 
-J. Florian and Ľ. Dvořáková, *On periodicity of generalized pseudostandard words*, Electronic Journal of Combinatorics 23(1), P1.2, Conjecture 29, asks whether a generalized pseudostandard word over any finite alphabet is periodic exactly when its normalized directive sequence satisfies the two tail conditions. The source and literal definitions are in [the Library note](../Library/Words/floriandvorakova2016periodicity.md). The named assertion is proved by `D5.S1.Words.Palindromes.GeneralizedPseudostandardPeriodicity.result`. Preregistration: [#15626](https://github.com/the-omega-institute/trureturing/issues/15626).
+J. Florian and Ľ. Dvořáková, *On periodicity of generalized pseudostandard words*, Electronic Journal of Combinatorics 23(1), P1.2, Conjecture 29, asks whether a generalized pseudostandard word over any finite alphabet is periodic exactly when its normalized directive sequence satisfies the two tail conditions. The source and literal definitions are in [the Library note](../Library/Rewriting/floriandvorakova2016periodicity.md). The named assertion is proved by `D5.S1.Words.Palindromes.GeneralizedPseudostandardPeriodicity.result`. Preregistration: [#15626](https://github.com/the-omega-institute/trureturing/issues/15626).
 
 For some common tail offset $k$, the conditions are:
 

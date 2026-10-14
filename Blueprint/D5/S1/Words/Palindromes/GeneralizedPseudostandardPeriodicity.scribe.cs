@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Palindromes;
 
 internal sealed class GeneralizedPseudostandardPeriodicityDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Note = LibraryNoteRef.Create("D5/L/Words/floriandvorakova2016periodicity");
+    private static readonly LibraryNoteRef Note = LibraryNoteRef.Create("D5/L/Rewriting/floriandvorakova2016periodicity");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Generalized pseudostandard words and involutory reflection structure.",
         H("GeneralizedPseudostandardPeriodicity"),
