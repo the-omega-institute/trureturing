@@ -1,7 +1,7 @@
 /- GID: D5/S3/QuantumChannels/ChannelTimeReversalNoGo
    generality: I
    mirror-B: D5/B/S3/QuantumChannels/ChannelTimeReversalNoGo
-   mirror-E: none
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: No randomisation-consistent channel symmetry reverses every unitary. -/
