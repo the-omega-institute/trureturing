@@ -572,10 +572,10 @@ private lemma coefficient_homogeneous {D J a b : ℕ} (hJ : J ≤ D) (hab : a+b 
     rw [coefficient_basis hJ (by have := mem_range.mp hk; omega),
       if_neg (by have := mem_range.mp hk; omega), mul_zero]
 
-private def homogeneousWeight (D J a b : ℕ) : ℝ :=
+def homogeneousWeight (D J a b : ℕ) : ℝ :=
   if a ≤ J ∧ b ≤ D-J then ((D-a-b).choose (J-a) : ℝ) / (D.choose J : ℝ) else 0
 
-private lemma coefficient_homogeneous_real {D J a b : ℕ} (hJ : J ≤ D) (hab : a+b ≤ D) :
+lemma coefficient_homogeneous_real {D J a b : ℕ} (hJ : J ≤ D) (hab : a+b ≤ D) :
     bernsteinCoefficient D J ((X : ℂ[X])^a * (1-X)^b) =
       (homogeneousWeight D J a b : ℂ) := by
   rw [coefficient_homogeneous hJ hab]
