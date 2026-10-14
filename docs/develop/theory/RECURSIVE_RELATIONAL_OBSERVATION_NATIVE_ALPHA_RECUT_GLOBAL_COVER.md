@@ -1154,3 +1154,722 @@ and defect-moment identities in Theorems 2.2 and 3.2 retain their
 original scope.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Equality in the residue charge of a chosen cover
+
+**Assumption 10.1 (one oriented geometric equality cover).** Retain
+Assumption 1.1 and the full families of Definition 1.2. For Sections
+10--12, fix one chosen complete positive-lag cover
+$\mathcal C=(C_t)_{t=0}^{18}$ with
+
+$$
+q=19,\qquad G(\mathcal C)=13,\qquad N_9=19.
+\tag{NAGC.10.1}
+$$
+
+Every class is the actual chosen member of $\mathcal P_t^+$, with
+all twenty macro orders, all initial points, the prescribed diagonal
+anchor and all positive integer outer lengths allowed by that family.
+Proposition 8.3 supplies, for this orientation,
+
+$$
+(\Gamma_a,\Gamma_b;N_9,M_9)=(6,7;19,16).
+\tag{NAGC.10.2}
+$$
+
+It also supplies equality in both charge chains (NAGC.7.9), singleton
+intersections of every class with $a=9$, and exactly one four-point
+$AAA$ triple of $C_9$ on $b=9$. Every other class meeting $b=9$
+has a singleton intersection. A nonnegative-lag cover is in this
+positive geometric family; its extra native condition is the original
+first-step condition of [NARC, Theorem 13.4][NARC].
+
+Use the actual projections and gaps of Definition 7.1. Superscripts
+$\xi\in\{a,b\}$ on $\varepsilon_{t,j}^\xi,W_j^\xi,Q_\xi$
+denote the two applications of (NAGC.7.6)--(NAGC.7.8). Write
+$[r,s]_{\mathbb Z}=[r,s]\cap\mathbb Z$. List the ten distinct
+first coordinates of $C_t$ as
+
+$$
+x_{t,0}<x_{t,1}<\cdots<x_{t,9}.
+\tag{NAGC.10.3}
+$$
+
+The supplied normal form [NARC, Theorem 13.3][NARC] makes the
+second, fifth and eighth $A$ changes unit:
+$x_{t,2}-x_{t,1}=x_{t,5}-x_{t,4}=x_{t,8}-x_{t,7}=1$.
+Indices in this projection list run from zero to nine, independently
+of the zero-to-eighteen indices in the complete path.
+
+**Lemma 10.2 (local saturation, no cancellation and class budgets).**
+Under Assumption 10.1 the following properties hold on each axis.
+For $S=S_t^\xi$, $s=\min S$, $u=\max S$ and
+$\gamma=\gamma_t^\xi$, every pair of representatives available
+inside its span is occupied:
+
+$$
+\{j,j+10\}\subseteq S
+\quad\text{for every }j\in[s,u-10]_{\mathbb Z}.
+\tag{NAGC.10.4}
+$$
+
+Each missing integer in $[s,u]_{\mathbb Z}\setminus S$ has a
+residue absent from $S$ altogether, and distinct such integers have
+distinct residues modulo ten. If a residue is duplicated in one
+projection on that axis, it is duplicated in exactly one class and
+is absent from no class. In particular it cannot be the residue of
+a span omission in any other class. The aggregate values are
+
+$$
+\begin{array}{c|c|c|c}
+\text{axis}&\text{positive }W_j\ (0\le j\le8)
+ &\text{negative }W_j\ (0\le j\le8)&W_9\\ \hline
+a&\text{six values }1&\text{three values }-2&0\\
+b&\text{seven values }1&\text{two values }-2&-3.
+\end{array}
+\tag{NAGC.10.5}
+$$
+
+Consequently
+
+$$
+0\le\gamma_t^a\le3,\qquad 0\le\gamma_t^b\le3
+\quad(0\le t\le18).
+\tag{NAGC.10.6}
+$$
+
+If $\gamma>0$, the projection duplicates both residue $s$ and
+residue $u-10$, which may be the same residue.
+
+**Proof.** Set $D_t^\xi=\sum_{j=0}^9(\varepsilon_{t,j}^\xi)_+$.
+The charge proof in Lemma 7.2 gives $D_t^\xi\le\gamma_t^\xi$.
+Proposition 8.3 gives equality in
+
+$$
+\Gamma_\xi\ge\sum_tD_t^\xi\ge Q_\xi.
+\tag{NAGC.10.7}
+$$
+
+All the first differences $\gamma_t^\xi-D_t^\xi$ are
+nonnegative, so every one vanishes. Within $[0,18]_{\mathbb Z}$,
+$D_t^\xi$ counts exactly the pairs $j,j+10$ occupied by $S$.
+The possible lower representatives in its span are precisely
+$[s,u-10]_{\mathbb Z}$, containing $\gamma=u-s-9$ integers.
+Equality of their count with $D_t^\xi$ proves (NAGC.10.4).
+
+If a span omission had another representative of its residue inside
+the span, that pair would be required by (NAGC.10.4), a contradiction.
+Representatives outside the span do not belong to $S$ either. Thus
+the omission's residue is absent from $S$. Two omissions with one
+residue would themselves form one of the required pairs, so this
+map from omissions to absent residues is injective.
+
+For a fixed residue and axis, let $P_j$ count classes with
+$\varepsilon_{t,j}^\xi=1$ and let $Z_j$ count classes with
+$\varepsilon_{t,j}^\xi=-1$. These are the only nonzero values
+of $\varepsilon$, and $W_j^\xi=P_j-Z_j$. Hence
+
+$$
+\sum_tD_t^\xi-Q_\xi
+=\sum_{j=0}^9\bigl(P_j-(P_j-Z_j)_+\bigr)
+=\sum_{j=0}^9\min(P_j,Z_j)=0.
+\tag{NAGC.10.8}
+$$
+
+Each summand is nonnegative. Therefore no residue has both a
+duplicating class and an omitting class.
+
+To determine the magnitudes, use (NAGC.7.10)--(NAGC.7.11) at
+the supplied values $(Q_a,\eta_a)=(6,0)$ and
+$(Q_b,\eta_b)=(7,3)$. On axis $a$, the number $k$ of positive
+entries among the first nine obeys $k\le6$ and
+$6\ge2(9-k)$, so $k=6$. Their total is six, forcing all six
+to be one. The remaining three have total minus six and each is
+at most minus two, so all are minus two. Also $W_9^a=0$.
+On axis $b$, the inequalities are $k\le7$ and
+$7-3\ge2(9-k)$, giving $k=7$. The positive entries are all one,
+the other two are minus two, and $W_9^b=-3$. This proves
+(NAGC.10.5). At a duplicated residue, no cancellation and
+$W_j^\xi=1$ now give $P_j=1$ and $Z_j=0$.
+
+Each axis has precisely three residue types with negative aggregate
+value. The injective omission-to-residue map above must take its
+values in those types, by no cancellation. Since a projection has
+exactly $\gamma_t^\xi$ omissions in its span, (NAGC.10.6) follows.
+Finally $\gamma>0$ makes $s\le u-10$, so both endpoints of
+this interval supply pairs in (NAGC.10.4). $\square$
+
+## 11. Exact center ownership and exhaustion of the lower boundary
+
+**Lemma 11.1 (center points, forced row segments and anchor ranks).**
+Under Assumption 10.1, the actual classes satisfy
+
+$$
+\begin{aligned}
+&(9,t)\in C_t &&(0\le t\le18),\\
+&(a,t)\in C_t
+ &&\bigl(\min(t,9)\le a\le\max(t,9),\ a\in\mathbb Z\bigr),\\
+&S_0^a=[0,9]_{\mathbb Z},\qquad
+ S_{18}^a=[9,18]_{\mathbb Z}.&
+\end{aligned}
+\tag{NAGC.11.1}
+$$
+
+For every $(a,b)\in C_t$, one has $b\ge t$ if $a<9$ and
+$b\le t$ if $a>9$. The zero-based rank of $t$ in the increasing
+list of $S_t^b$ belongs to $\{0,3,6,9\}$.
+
+**Proof.** Proposition 8.3 supplies one point $(9,b_t)$ from each
+class on $a=9$, with all $b_t$ distinct. The belt inequality in
+[NARC, Theorem 14.3, part 1][NARC] gives $b_t\le t$ for
+$t<9$, and $b_t\ge t$ for $t>9$. Also $b_9=9$ by the anchor.
+For $t=0$, the former inequality forces $b_0=0$. Inductively,
+if the values $0,\ldots,t-1$ already belong to their respective
+classes, distinctness and $0\le b_t\le t$ force $b_t=t$.
+This proves the assertion for $t<9$. Descending induction from
+$t=18$, using $t\le b_t\le18$, gives the assertion for $t>9$.
+Thus $(9,t)$ is the actual center-line point of $C_t$.
+
+The first coordinate never decreases along a chosen path and the
+second never increases. Every point of $C_t$ with $a<9$ is
+therefore before $(9,t)$ and has $b\ge t$; every point with
+$a>9$ is after it and has $b\le t$.
+
+Now fix an integer $t\le a<9$ and let $C_j$ own $(a,t)$ in
+the complete cover. The belt gives $t\le j\le a$, while the
+preceding inequality applied to $C_j$ gives $t\ge j$.
+Hence $j=t$. For $9<a\le t$ the belt instead gives
+$a\le j\le t$ and the center-line inequality gives $t\le j$,
+again forcing $j=t$. The cases $a=9$ are already known.
+This proves the entire row segment in (NAGC.11.1): every indicated
+cell has its owner fixed within this same cover.
+
+For $t=0$ and $18$ these segments contain ten distinct first
+coordinates. Each projection has exactly ten elements by Definition
+7.1, so they exhaust $S_0^a$ and $S_{18}^a$ respectively.
+
+No $B$ edge can be incident to $(9,t)$, because it would give
+a second point of $C_t$ on $a=9$. Every $B$ triple is consequently
+entirely before or entirely after that point. The number of $B$
+changes after it is one of $0,3,6,9$. Each such change reaches a
+new and strictly smaller second coordinate; these are precisely
+the elements of $S_t^b$ smaller than $t$. Their number is its
+zero-based rank, proving the last assertion. $\square$
+
+**Lemma 11.2 (four actual classes on the lower boundary).** Under
+Assumption 10.1, if $C_t$ meets $b=0$ and $\gamma_t^b=0$,
+then
+
+$$
+S_t^b=[0,9]_{\mathbb Z},\qquad t\in\{0,3,6,9\}.
+\tag{NAGC.11.2}
+$$
+
+At most one class meeting $b=0$ has $\gamma_t^b>0$, and
+
+$$
+M_0=4.
+\tag{NAGC.11.3}
+$$
+
+In particular, if $C_3,C_6,C_9$ all have second-coordinate
+projection $[0,9]_{\mathbb Z}$, the classes meeting $b=0$
+are exactly $C_0,C_3,C_6,C_9$.
+
+**Proof.** A class meeting $b=0$ has $\min S_t^b=0$.
+If its gap is zero, its ten coordinates occupy all of
+$[0,9]_{\mathbb Z}$. The anchor's second coordinate $t$ is
+then its own zero-based rank. Lemma 11.1 restricts that rank to
+$0,3,6,9$, proving (NAGC.11.2).
+
+If instead $\gamma_t^b>0$, Lemma 10.2 requires both zero and
+ten in $S_t^b$. Thus this class duplicates residue zero. That
+lemma allows only one duplicating class per residue on an axis,
+so there is at most one such positive-gap boundary class. There
+are at most four zero-gap boundary classes, by their distinct
+labels in (NAGC.11.2). Consequently $M_0\le4+1=5$.
+
+The incidence supplier (NAGC.7.3), equivalently [NARC, Theorem
+14.3, part 3][NARC], applies to this complete saturated cover.
+It gives both $M_0\ge4$ and $M_0\equiv1\pmod3$. The only
+integers between four and five are four and five; five has residue
+two modulo three. Thus these three conditions force $M_0=4$.
+Finally $C_0$ always meets $b=0$ at its anchor. Under the stated
+additional hypothesis, $C_3,C_6,C_9$ do also. These are four
+distinct classes and exhaust the incidence count. $\square$
+
+## 12. The actual three-class boundary collision
+
+**Lemma 12.1 (three unit second-coordinate projections are impossible).**
+No cover satisfying Assumption 10.1 can have
+
+$$
+S_3^b=S_6^b=S_9^b=[0,9]_{\mathbb Z}.
+\tag{NAGC.12.1}
+$$
+
+**Proof, the common boundary and the supplied corner arms.** Suppose
+(NAGC.12.1) holds in the fixed cover $\mathcal C$. Its three
+indicated paths have all nine $B$ lengths equal to one. Their $A$
+triples can therefore occur only at second coordinates $9,6,3,0$:
+any $A$ triple occurs after zero, one, two or three complete $B$
+triples. All three paths start at $b=9$ and end at $b=0$.
+For every label put
+
+$$
+F_t=\{a:(a,0)\in C_t\}.
+\tag{NAGC.12.2}
+$$
+
+These sets refer to intersections of the chosen classes, not to
+independently selected paths. Lemma 11.2 says that only the labels
+$0,3,6,9$ meet $b=0$. By [NARC, Theorem 14.3, part 1][NARC],
+$C_0$ is the $B^9A^9$ path with corner $(0,0)$. Its entire
+first-coordinate projection occurs on its horizontal arm. Lemma 11.1
+therefore gives $F_0=[0,9]_{\mathbb Z}$, and complete disjoint
+coverage gives
+
+$$
+[10,18]_{\mathbb Z}=F_3\sqcup F_6\sqcup F_9.
+\tag{NAGC.12.3}
+$$
+
+The same corner supplier gives, for $j=0,1,2$, a fixed-first-coordinate
+arm of $C_j$ consisting of all $(j,b)$ with $b\in S_j^b$, where
+
+$$
+\min S_j^b=j,\qquad
+\max S_j^b=j+9+\gamma_j^b\ge j+9.
+\tag{NAGC.12.4}
+$$
+
+Lemma 10.2 bounds the number of omitted integers in each of these
+spans by three. Thus four distinct points of a different class on
+$a=j$, whose second coordinates lie in this span, would already
+contradict disjointness. This uses the actual vertical arm of $C_j$.
+
+**Proof, the forced path of $C_3$.** Since $C_3\ne C_9$,
+Proposition 8.3 makes its intersection with $b=9$ a singleton.
+It consequently begins with a $BBB$ triple. Write its initial first
+coordinate as $s$. The anchor gives $s\le3$. If $s=0$, its
+first triple occupies $(0,b)$ for $b=6,7,8,9$. These four second
+coordinates lie in the span of $S_0^b$ by (NAGC.12.4). Disjointness
+would omit all four from that projection, contrary to its budget.
+Hence $s\ge1$.
+
+No $A$ triple can occur before the path reaches $b=3$: one such
+triple would increase the first coordinate to at least $s+3\ge4$,
+after which the anchor $(3,3)$ could not be reached. It therefore
+makes its first six unit $B$ changes at $a=s$ and occupies all
+$(s,b)$ with $3\le b\le9$. If $s=1$ or $2$, these seven
+second coordinates lie in the span (NAGC.12.4) of $C_s$.
+Disjointness would force seven omissions there, again contradicting
+Lemma 10.2. Thus $s=3$.
+
+Lemma 11.1 puts every $(a,3)$ with $3\le a\le9$ in $C_3$.
+Three $B$ changes remain after this row, because its terminal second
+coordinate is zero. The row cannot be left at $a<9$, since it must
+first contain $(9,3)$, and it cannot be left at $a=9$, since the
+next $B$ edge would add another point to its singleton intersection
+with $a=9$. Thus its row $b=3$ contains those seven points and
+at least one further point with $a>9$.
+
+By [NARC, Theorem 14.3, part 3][NARC], a nonempty class-row
+intersection has size $1+3j\le10$. A size of at least eight
+therefore forces size ten. All nine $A$ changes occur on that row.
+The path and its first-coordinate endpoint are consequently
+
+$$
+C_3:\ B^6A^9B^3,\qquad
+\min S_3^a=3,\qquad
+u:=\max S_3^a=12+\gamma_3^a\in[12,15]_{\mathbb Z},
+\qquad F_3=\{u\}.
+\tag{NAGC.12.5}
+$$
+
+The notation $B^6A^9B^3$ specifies directions; the $A$ lengths
+retain their allowed values. In particular the first seven entries
+of its projection are
+
+$$
+x_{3,i}=3+i\quad(0\le i\le6).
+\tag{NAGC.12.6}
+$$
+
+**Proof, the restrictions on $C_6$ and $C_9$.** The intersection
+of $C_6$ with $b=9$ is also a singleton, so it starts with a
+unit $BBB$ triple. Let $s=\min S_6^a$ be its initial first
+coordinate. For $s=0,1,2$, its four initial second coordinates
+$6,7,8,9$ are all inside the corresponding corner span in
+(NAGC.12.4), giving the same four-omission contradiction. If
+$s=3$, these initial points intersect the fixed segment of $C_3$
+at $a=3$, $3\le b\le9$, just established. The anchor of $C_6$
+then gives
+
+$$
+4\le s\le6.
+\tag{NAGC.12.7}
+$$
+
+The forced row segment of Lemma 11.1 puts $a=6,7,8,9$ on
+$b=6$ in $C_6$. Six unit $B$ changes remain after this row.
+The same singleton-center argument requires the row to extend
+beyond $a=9$ before those changes begin. It has at least five
+points, so the supplied $1+3j$ intersection law makes it have
+at least seven. Thus at least two of the three $A$ triples of
+$C_6$ occur on $b=6$. At most one $A$ triple remains for
+$b=0$, whence
+
+$$
+|F_6|\in\{1,4\}.
+\tag{NAGC.12.8}
+$$
+
+For $C_9$, Proposition 8.3 supplies exactly four points on $b=9$,
+forming one complete $AAA$ triple containing $(9,9)$. Since the
+path starts at $b=9$ and never returns after a $B$ change, this
+is its first $A$ triple and its first macro block. It uses
+$x_{9,0},x_{9,1},x_{9,2},x_{9,3}$. The anchor nine cannot be
+$x_{9,3}$: the next block is $BBB$ and would then supply another
+point on $a=9$. Thus for some $r\in\{0,1,2\}$,
+
+$$
+x_{9,r}=9,\qquad x_{9,3}>9.
+\tag{NAGC.12.9}
+$$
+
+Together, (NAGC.12.3), $|F_3|=1$ and (NAGC.12.8) leave
+exactly the two terminal allocations
+
+$$
+(|F_6|,|F_9|)=(1,7)\quad\text{or}\quad(4,4).
+\tag{NAGC.12.10}
+$$
+
+Indeed, their sizes must sum to eight. In the first allocation,
+$C_9$ uses its two remaining $A$ triples at $b=0$, so
+$F_9=\{x_{9,3},\ldots,x_{9,9}\}$. In the second allocation,
+its last $A$ triple is at $b=0$, its middle $A$ triple is at
+$b=6$ or $3$, and $F_9=\{x_{9,6},\ldots,x_{9,9}\}$.
+These are all possibilities under the stated hypotheses, because
+there are exactly three $A$ triples per class and second coordinates
+never return.
+
+**Proof, allocation $(1,7)$.** The singleton $F_6$ is the maximum
+first coordinate of $C_6$, at least $s+9\ge13$. Also $u\ge12$
+by (NAGC.12.5). Hence the two smallest coordinates ten and eleven
+in (NAGC.12.3) both belong to $F_9$. They must be its first two
+values $x_{9,3}=10$ and $x_{9,4}=11$. The supplied unit fifth
+$A$ change makes $x_{9,5}=12$, so twelve also belongs to $F_9$.
+Disjointness now gives $u\ge13$, and therefore
+$\gamma_3^a=u-12>0$.
+
+Apply (NAGC.10.4) to the actual projection $S_3^a$, with
+$s=3$ and maximum $u$. It requires the pair $u-10,u$, so
+$C_3$ duplicates residue $u-10$. On the other hand $u\le15$,
+and at least two of $16,17,18$ belong to $F_9$: $F_3=\{u\}$
+contains none of them and $F_6$ can contain at most one. Thus
+$S_9^a$ has a value above $u$ as well as the value ten below it.
+The coordinate $u$ is absent from $F_9$ by boundary disjointness.
+Every first coordinate of $C_9$ preceding $F_9$ is one of
+$x_{9,0},x_{9,1},x_{9,2}$ and is strictly smaller than ten.
+It follows that $u$ is absent from $S_9^a$ altogether while
+lying inside its span.
+
+Lemma 10.2 therefore makes residue $u-10$ absent from $S_9^a$.
+This contradicts no cancellation with its duplication in $S_3^a$.
+Both projections are those of the same classes furnishing the
+partition (NAGC.12.3), so the contradiction concerns the chosen
+cover itself.
+
+**Proof, allocation $(4,4)$.** Here (NAGC.12.9) and positivity
+of all $A$ lengths give
+
+$$
+\min F_9=x_{9,6}\ge x_{9,r}+(6-r)\ge13.
+\tag{NAGC.12.11}
+$$
+
+Since $u\ge12$, neither ten nor eleven can belong to $F_3$ or
+$F_9$. Hence both belong to $F_6$. Its four points constitute
+its last $A$ triple, namely $x_{6,6},x_{6,7},x_{6,8},x_{6,9}$.
+The boundary partition gives $x_{6,6}=10$, $x_{6,7}=11$, and
+the unit eighth $A$ change gives $x_{6,8}=12$. Put
+$v=x_{6,9}\ge13$. The six earlier $A$ changes go from the
+initial coordinate $s\ge4$ to $x_{6,6}=10$. Their total is
+at least six, so $s=4$ and all six lengths are one. Therefore
+
+$$
+S_6^a=[4,12]_{\mathbb Z}\cup\{v\},\qquad
+F_6=\{10,11,12,v\},\qquad v\ge13.
+\tag{NAGC.12.12}
+$$
+
+If $v\ge15$, the interval of pairs required by (NAGC.10.4)
+contains the lower representative four and requires $4,14$ in
+$S_6^a$. Formula (NAGC.12.12) omits fourteen whenever $v\ge15$.
+Thus $v=13$ or $14$.
+
+Twelve now belongs to $F_6$, so $u\ge13$. Saturation of
+$S_3^a$, whose minimum is three, requires the pair $3,13$:
+$C_3$ duplicates residue three. If $v=14$, the span of $S_6^a$
+contains its omitted integer thirteen. Lemma 10.2 would then
+make that same residue three absent from $S_6^a$, violating no
+cancellation. Consequently
+
+$$
+v=13,\qquad u\ge14.
+\tag{NAGC.12.13}
+$$
+
+The latter inequality uses $u\ne13$, since thirteen is now in
+$F_6$. Local saturation of $S_3^a$ requires both pairs $3,13$
+and $4,14$. Its first seven values are fixed by (NAGC.12.6),
+so thirteen and fourteen are among $x_{3,7},x_{3,8},x_{3,9}$.
+In particular $x_{3,8}\ge13$. The unit eighth $A$ change gives
+$x_{3,7}=x_{3,8}-1\ge12$. There is therefore no place for ten
+or eleven in this projection:
+
+$$
+10,11\notin S_3^a.
+\tag{NAGC.12.14}
+$$
+
+Eleven lies inside the span $[3,u]_{\mathbb Z}$. Lemma 10.2
+makes residue one absent from $S_3^a$. The actual corner class
+$C_1$ has $\min S_1^a=1$ by [NARC, Theorem 14.3, part 1][NARC].
+If $\gamma_1^a>0$, its local saturation would require the pair
+$1,11$, contradicting no cancellation on the first axis. Thus
+$\gamma_1^a=0$, and its ten coordinates fill $[1,10]_{\mathbb Z}$.
+The same corner supplier puts its entire $A$ arm on $b=1$.
+Hence
+
+$$
+(10,1)\in C_1.
+\tag{NAGC.12.15}
+$$
+
+In this allocation, $C_6$ uses its last $A$ triple at $b=0$
+and at least two at $b=6$, so exactly its first two $A$ triples
+occur at $b=6$. By (NAGC.12.12) they go from first coordinate
+four to ten. Its two remaining unit $BBB$ triples then go from
+$b=6$ to $b=0$ at the fixed first coordinate ten, before the
+last $A$ triple starts. They contain $(10,1)$. Thus
+
+$$
+(10,1)\in C_6,
+\tag{NAGC.12.16}
+$$
+
+contradicting (NAGC.12.15) and the disjointness of $C_1$ and
+$C_6$ in $\mathcal C$. Both terminal allocations have now led
+to contradictions within the same chosen cover. This proves the
+lemma. $\square$
+
+## 13. Extreme-class rigidity and the nonnegative fourteen-gap necessity
+
+**Theorem 13.1 (both extreme anchor classes are unit at equality).**
+Every chosen complete positive geometric cover $\mathcal C$ of
+Definition 1.2 with $q=19$ satisfies
+
+$$
+G(\mathcal C)=13\quad\Longrightarrow\quad g_0=g_{18}=0.
+\tag{NAGC.13.1}
+$$
+
+Thus equality forces every edge of both extreme anchor classes to
+have unit length. The assertion quantifies over the full family
+$\mathcal P_t^+$ for each anchor, without a restriction on the
+macro words, initial points or positive outer lengths beyond
+Definition 1.2.
+
+**Proof, the lower extreme in the orientation $N_9=19$.** Assume
+$G=13$ and $N_9=19$. All hypotheses of Assumption 10.1 hold.
+Lemma 11.1 gives $S_0^a=[0,9]_{\mathbb Z}$ and
+$\gamma_0^a=0$. Suppose $\gamma_0^b>0$. Since $(0,0)\in C_0$,
+its second-coordinate projection has minimum zero. Lemma 10.2
+makes it duplicate residue zero. The same lemma forbids any other
+class meeting $b=0$ from having positive second-coordinate gap,
+because that class would also duplicate residue zero.
+
+Lemma 11.2 gives exactly four classes meeting $b=0$. Apart from
+$C_0$, the other three must therefore have zero second-coordinate
+gap, projection $[0,9]_{\mathbb Z}$ and labels in $\{0,3,6,9\}$.
+Their labels are distinct and none is zero, so they are precisely
+$C_3,C_6,C_9$. This contradicts Lemma 12.1. Hence
+$\gamma_0^b=0$. The existing identity (NAGC.7.2) for this same
+class gives $g_0=\gamma_0^a+\gamma_0^b=0$.
+
+**Proof, the upper extreme and the other orientation.** Consider
+coordinate complementation and transposition, with transformed
+classes relabeled by their transformed anchors:
+
+$$
+\begin{aligned}
+R(a,b)&=(18-a,18-b),&
+ \mathcal C^R_t&=R(C_{18-t}),\\
+T(a,b)&=(b,a),&
+ \mathcal C^T_t&=T(C_t).
+\end{aligned}
+\tag{NAGC.13.2}
+$$
+
+For either transformation, reverse each path list to restore
+increasing difference order. These are bijections of the square,
+so they preserve complete disjoint coverage. Under $R$ an original
+$A$ edge reversed becomes an $A$ edge of the same length, and
+likewise for $B$; under $T$ the reversed edges exchange $A$ and
+$B$. Reversal takes each complete triple to a complete triple
+and preserves its middle edge. Thus each transformation preserves
+the six-triple normal form with three triples of each direction,
+all positive lengths and the unit-middle conditions. The transformed
+anchor is exactly the one used in (NAGC.13.2), and strict increase
+of the transformed difference excludes any other diagonal point.
+Each image class is therefore a nineteen-point subset satisfying
+every hypothesis of the converse in [NARC, Theorem 13.3][NARC].
+That converse supplies both-cut readability at every positive lag,
+so each image class belongs to the full family $\mathcal P_t^+$
+of Definition 1.2. Together with the preserved disjoint whole-square
+coverage, [NARC, Theorem 14.2][NARC] supplies the same full native
+encoder-service contract for each image cover. These are thus
+positive geometric covers. The existing identity (NAGC.4.1) gives
+
+$$
+G(\mathcal C^R)=G(\mathcal C^T)=G(\mathcal C),\qquad
+ g_t(\mathcal C^R)=g_{18-t}(\mathcal C),\qquad
+ g_t(\mathcal C^T)=g_t(\mathcal C).
+\tag{NAGC.13.3}
+$$
+
+Complementation preserves the line $a=9$ and its incidence count.
+For the orientation already treated, $\mathcal C^R$ therefore
+satisfies $G=13$ and $N_9=19$. Applying the lower-extreme result
+to this cover yields $g_0(\mathcal C^R)=0$, hence
+$g_{18}(\mathcal C)=0$ as well.
+
+Finally, Proposition 8.3 says every equality cover has either
+$(N_9,M_9)=(19,16)$ or $(16,19)$. In the latter case $T$
+exchanges the two incidence counts, so $\mathcal C^T$ has
+$N_9=19$. The two extreme conclusions just proved apply to it,
+and (NAGC.13.3) transfers both to the original $\mathcal C$.
+This exhausts the alternatives in Proposition 8.3.
+
+All these transformations act within the positive geometric family.
+No invariance of the additional nonnegative first-step condition is
+used. Finally (NAGC.4.1) expresses $g_t$ as the sum of the eighteen
+nonnegative integers $\ell_i-1$. Its vanishing is exactly the
+assertion that all eighteen lengths are one. $\square$
+
+**Theorem 13.2 (the original nonnegative-lag cover needs fourteen gaps).**
+For every chosen complete cover $\mathcal C$ of Definition 1.2 with
+$q=19$ and $\lambda=0$,
+
+$$
+G(\mathcal C)\ge14,\qquad
+\sum_{t=0}^{18}(U_t-L_t)\ge356.
+\tag{NAGC.13.4}
+$$
+
+These are necessary inequalities for the chosen cover, with $G$
+counting the missing integer differences of Definition 2.1, including
+class multiplicity. They are not counts of uncovered cells or prices
+of native Reads.
+
+**Proof.** Theorem 8.1 already gives $G(\mathcal C)\ge13$.
+Suppose equality holds. Each $\mathcal P_t^0$ is a subfamily of
+$\mathcal P_t^+$, so Theorem 13.1 applies to this very cover and
+gives $g_0=0$. Return now to the actual original class $C_0$,
+with the original coordinate roles and the original lag convention.
+[NARC, Theorem 14.3, part 1][NARC] supplies its $B^9A^9$ order
+and corner $(0,0)$. Theorem 13.1 makes all its lengths unit;
+therefore its first point is $(0,9)$ and its first edge is the
+unit $B$ edge to $(0,8)$.
+
+This is exactly the excluded conjunction in [NARC, Theorem
+13.4][NARC]: initial first coordinate zero and a unit first $B$
+edge. That theorem's saturated-class hypothesis holds because
+$C_0$ has nineteen points and the supplied normal form, and its
+full native readability hypothesis is precisely the requirement
+$C_0\in\mathcal P_0^0$ of Definition 1.2. It excludes this
+original class under $\lambda=0$. Thus $G=13$ is impossible
+in the original nonnegative-lag cover. Integrality and the already
+supplied lower bound give $G\ge14$.
+
+Theorem 2.2, applied to the same $q=19$, class difference sets
+and gap count, gives $\sum_t(U_t-L_t)=342+G\ge356$.
+The zero-lag gate has been applied only to the original $C_0$;
+none of the geometric symmetries in Theorem 13.1 is asserted to
+preserve that asymmetric gate. $\square$
+
+## 14. Equality suppliers and the remaining existence questions
+
+**Mathematical attribution 14.1 (consumed premises and joint deductions).**
+Theorems 13.1 and 13.2 use the following supplier correspondence.
+All class parameters refer to a single chosen complete cover at each
+application.
+
+| Supplier | Exact specialization | Role in the deductions |
+| --- | --- | --- |
+| Assumption 1.1, Definition 1.2 and [NARC, Definition 14.1 and Theorem 14.2][NARC] | $q=19$; all $C_t\in\mathcal P_t^+$ for the geometric theorem; the original $C_t\in\mathcal P_t^0$ for the nonnegative theorem | Complete disjoint whole-square coverage with every anchor, macro order and legal outer length, under the inherited acquired-label and same-original native service contract. |
+| Theorem 8.1 and Proposition 8.3 | $G(\mathcal C)=13$ on that whole family | The existing thirteen-gap lower bound, the two axis-budget alternatives, equality in both residue charge chains, nineteen singleton center-line intersections and the other central line's unique four-point triple. |
+| Lemma 7.2 and (NAGC.7.6)--(NAGC.7.11) | First $S_t=S_t^a$, then $S_t=S_t^b$, for those same nineteen classes | The residue variables and inequalities whose equality yields local saturation, no cancellation and the three-omission class budgets in Lemma 10.2. |
+| [NARC, Theorem 13.3][NARC] | The actual increasing-$d$ path and its increasing first-coordinate list $x_{t,0},\ldots,x_{t,9}$; the reversed image paths under $R$ and $T$ | Whole pure triples, monotonicity, nine changes per axis, and unit second, fifth and eighth coordinate changes. These determine the anchor rank restriction and the terminal triples in Lemma 12.1. The converse certifies the positive-lag readability of each transformed class in Theorem 13.1. |
+| [NARC, Theorem 14.3, part 1][NARC] | The belt at every actual point; the corner classes with labels $0,1,2,18$ | Exact center-point ownership, the vertical arms excluding initial coordinates zero through two, the original $C_0$ corner, and the horizontal $C_1$ arm containing the final collision point. |
+| [NARC, Theorem 14.3, part 3][NARC] and (NAGC.7.3) | The actual rows $b=0,3,6,9$ and center line $a=9$ | Sizes $1+3j$ of nonempty intersections, $M_0\ge4$ and $M_0\equiv1\pmod3$, combined with $M_0\le5$ to exhaust the four boundary owners and the two terminal allocations. |
+| (NAGC.7.2) and (NAGC.4.1) | The original or explicitly transformed class with its actual coordinate spans and edge lengths | Conversion of the two projection gaps to $g_t$, preservation of $G$ under the geometric symmetries, and unit lengths when $g_t=0$. |
+| [NARC, Theorem 13.4][NARC] | Only the original $C_0\in\mathcal P_0^0$, after Theorem 13.1 gives $g_0=0$ | The saturated nonnegative-lag first-step exclusion at $(0,9)\to(0,8)$. |
+| Theorem 2.2 | The same original nonnegative cover, $q=19$ and $G(\mathcal C)\ge14$ | The exact span identity giving the necessary total $356$. |
+
+The repo-derived content is the equality refinement of the residue
+charge, its exact center and boundary ownership consequences, the
+two-allocation collision in one common cover, and the resulting
+extreme-class rigidity and fourteen-gap necessity. The inherited
+thirteen-gap theorem, native normal form, corner geometry, incidence
+law and zero-lag criterion remain the direct premises. No numerical
+conclusion from external tiling literature is invoked, and no worldwide
+priority or absence-of-publication claim is assigned to these deductions.
+
+**Definition 14.2 (necessary ranges and unresolved attainment).** Retain
+$\mathsf{Cover}(q,\lambda)$ as the existence statement of Definition
+6.2. For a chosen nineteen-label cover, the necessary ranges furnished
+by Theorems 8.1, 13.1 and 13.2 are
+
+$$
+\begin{array}{c|c}
+\text{lag convention}&\text{necessary conditions on a chosen cover }\mathcal C\\ \hline
+\lambda=1&G(\mathcal C)\ge13,\quad
+ G(\mathcal C)=13\ \Longrightarrow\ g_0=g_{18}=0\\
+\lambda=0&G(\mathcal C)\ge14,\quad
+ \sum_t(U_t-L_t)\ge356.
+\end{array}
+\tag{NAGC.14.1}
+$$
+
+A bound on $G(\mathcal C)$ is conditional on that chosen complete
+cover; it is not an assignment of a gap count to the existential
+proposition $\mathsf{Cover}(q,\lambda)$. All four existence
+questions $\mathsf{Cover}(18,0)$, $\mathsf{Cover}(18,1)$,
+$\mathsf{Cover}(19,0)$ and $\mathsf{Cover}(19,1)$ remain unresolved.
+In particular the existence of a positive-lag cover with $G=13$,
+sharpness of either necessary range, a complete cover construction
+and attainment by an arbitrary finite producer remain unresolved.
+
+At eighteen labels the full families of Definition 1.2 still admit
+all their defect allocations, saturated and higher-defect classes,
+both nine-run cases, fused nonmonotone classes and complete
+zero-containing states. The ten-value projections and saturated
+line-intersection law used here are not supplied for that whole
+family. No eighteen-label gap bound or existence obstruction is
+inferred from the equality argument.
+
+The native contract remains Assumption 1.1: genuine original
+acquisition and export, discard of all other source-bearing data,
+continuation of the same original, complete future acquired rows,
+all permitted cuts and lags, and at most two chronological native
+Reads with materialized finite original-root words and termination
+on every promised input. The complete current tree is stationary
+during those Reads. No fixed finite controller, address limit,
+workspace limit or physical-cost bound is imposed by these necessary
+cover inequalities.
+
+## 追加锚（本行以下为增补区）
