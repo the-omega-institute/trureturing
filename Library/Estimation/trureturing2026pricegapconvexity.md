@@ -6137,3 +6137,173 @@ centers without their amplitudes therefore leaves the stated gap.
 The finite past is paid jointly with the original subtraction;
 the amplitude-weighted forward-primitive estimate, original signed
 upper comparison, all-integer Robin inequality and RH remain unproved.
+
+## Future visits to the same selected set have a paid compensation bound
+
+Retain the complete original source, every full window and all ties from
+PE1--PE7, including $\Theta=1$. Use the same canonical $D_X$, horizon
+$\mathsf U_X$, real-center shells, future-shell weights and amplitude
+normalization. This is a `repo-derived` paper application of PE2's
+existing two-case lag estimate and PT10/PG9's occupation interface.
+No new generic perturbation theorem, prime estimate or Lean result is
+asserted. The application controls only future integration over the
+same visited set; the unvisited future remains in the upper obligation.
+
+Define
+
+$$
+\rho_X=\sup_{\substack{t\in[t_0,t_m]\\u\text{ active at }t}}
+\frac{t}{\log u}\longrightarrow0,
+\qquad
+g_X(x)=\frac{K(x)-K(K(x))}{\sqrt{K(x)}}\quad(x\in D_X).
+$$
+
+The uniform limit is already supplied in PE2's real-clock scope,
+including all active ties. In particular $V_X^K=\int_{D_X}g_X(x)dx$.
+For almost every $w\in D_X$, put $B(w)=K(w)$ and
+$t(w)=w-B(w)\in[t_0,t_m]$. The same actual complete error satisfies
+$E(w)=t(w)+Q(w)$, with $|Q(w)|\le H_Q\sqrt w$.
+
+Split the complete error spatially, without changing $\psi$:
+
+$$
+E_X^\circ(w)=\mathbf1_{D_X^c}(w)E(w).
+$$
+
+Define $P_{X,j}^\circ$, $e_{X,r,j}^\circ$ and
+$\mathcal E_X^\circ(\tau)$ by the exact formulas PE3 and PE5,
+replacing $E$ only by $E_X^\circ$. Their lower endpoints, upper
+endpoints, zero conventions, $N_X$, $S_r$, $L_{X,r}$ and $M_X$
+are unchanged. Every skipped gap and every exterior future point
+through $\mathsf U_X$ remains in this complement. The integral
+primitive remains continuous even where its integrand has jumps.
+
+### Bound the perturbation on ordinary centers before taking occupations
+
+Write $T_r=2^rb_X$. For any ordinary center $y\in S_r$ and
+$u=2^jy<\mathsf U_X$, comparison of the two suprema gives
+
+$$
+\begin{aligned}
+|P_{X,j}(y)-P_{X,j}^\circ(y)|
+&\le u^{-3/2}
+ \int_{D_X\cap[u,\min(2u,\mathsf U_X)]}|E(w)|dw\\
+&\le\frac{t_mL_X}{u^{3/2}}+
+ \frac{\sqrt2H_QL_X}{u}\\
+&\le h_{rj}:=
+ \frac{t_mL_X}{(2^jT_r)^{3/2}}+
+ \frac{\sqrt2H_QL_X}{2^jT_r}.
+\end{aligned}
+\tag{VP1}
+$$
+
+When $u\ge\mathsf U_X$, both readouts are zero. The centers in
+VP1 need not belong to $D_X$: this uniform shell bound controls
+the unselected exceptional measures in PE5 as well as selected
+values. No sign on $E$ or on a skipped interval is used.
+
+A uniform perturbation by $h_{rj}$ shifts each normalized amplitude
+threshold by at most $h_{rj}/M_X$. Integrating the corresponding
+superlevel inclusions, with the cap $L_{X,r}$ retained, changes
+
+$$
+\int_\tau^\infty
+\min\{L_{X,r},e_{X,r,j}(z)\}dz
+$$
+
+by at most $L_{X,r}h_{rj}/M_X$, in either direction, for every
+$\tau\ge0$. This is the usual superlevel perturbation bound applied
+inside the present consumer, rather than a separately delivered
+generic lemma. Summing the original weights and enlarging only
+the finite geometric sums gives
+
+$$
+\begin{aligned}
+M_X|\mathcal E_X(\tau)-\mathcal E_X^\circ(\tau)|
+\le{}&\frac43t_mL_X\sum_rL_{X,r}T_r^{-3/2}\\
+&+\frac{\sqrt2}{1-2^{-3/2}}H_QL_X
+ \sum_rL_{X,r}T_r^{-1}.
+\end{aligned}
+\tag{VP2}
+$$
+
+For $x\in D_X\cap S_r$, one has $T_r\le x<2T_r$ and
+$B(x)\le x$. The original full label window has
+$t_0\ge\ell_X$, $t_m\le2\ell_X$ and
+$L_X=t_m-t_0\le\ell_X$, so $t_mL_X\le2t(x)^2$.
+Also $L_X/x\le t(x)/B(x)\le\rho_X$.
+Since $(8/3)2^{3/2}<8$ and
+$2\sqrt2/(1-2^{-3/2})<5$, VP2 consequently gives
+
+$$
+M_X|\mathcal E_X(\tau)-\mathcal E_X^\circ(\tau)|
+\le8\int_{D_X}\frac{t(x)^2}{B(x)^{3/2}}dx
+ +5H_Q\rho_XL_X.
+$$
+
+Reuse the two cases already proved in the PE2 argument:
+when $t\le B^{3/4}$ the ratio $t^2/B^{3/2}$ is at most one;
+otherwise $\Delta(x)\ge(9/200)t$ beyond the same common start.
+They give $t^2/B^{3/2}\le1+(200/9)\rho_Xg_X(x)$.
+Thus, uniformly in the original full windows, all ties and every
+$\tau\ge0$,
+
+$$
+\boxed{
+M_X|\mathcal E_X(\tau)-\mathcal E_X^\circ(\tau)|
+\le\frac{1600}{9}\rho_XV_X^K+
+ (8+5H_Q\rho_X)L_X.}
+\tag{VP3}
+$$
+
+This pays the amplitude-integrated effect of revisiting $D_X$,
+without assuming $V_X^K=O(M_XL_X)$.
+
+### Keep the correction inside the same signed upper account
+
+For the unchanged $c_X$ put
+
+$$
+\gamma_X=\frac{1600}{9}c_X\rho_X\longrightarrow0,
+\qquad
+\omega_X=\frac{c_X(8+5H_Q\rho_X)}{M_X}\longrightarrow0.
+$$
+
+Apply VP3 once in PE6. The original head and already paid transfer
+remain unchanged, and the resulting upper account is
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&c_X\left[S\tau+
+ \frac{\mathcal E_X^\circ(\tau)}{L_X}\right]\\
+&-(a-\epsilon-\gamma_X)
+ \frac{V_X^K}{M_XL_X}+\omega_X+o(1).
+\end{aligned}}
+\tag{VP4}
+$$
+
+For fixed $0<\epsilon<a$, the retained credit coefficient is
+eventually positive. The term
+$\gamma_XV_X^K/(M_XL_X)$ need not tend to zero and is not
+discarded. The logarithmic factor $c_X$ is kept exactly.
+
+The restricted estimate VP3 is supplied; the remaining sufficient
+supplier is a strict joint upper comparison
+
+$$
+c_X\left[S\tau+\frac{\mathcal E_X^\circ(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
++\omega_X\le C_*-\delta
+\tag{VP5}
+$$
+
+for some fixed $\epsilon\in(0,a)$, $\tau>0$ and $\delta>0$
+on one common cofinal sequence of the original full windows.
+VP5 is not proved here. In particular $E_X^\circ$ retains the
+entire unvisited future, not just skipped gaps, and no sign or
+phase balance is assigned to it. This application introduces
+neither an independent sample nor a favorable tie choice or a
+new subsequence. The original strict signed-head estimate,
+all-integer Robin inequality and RH remain unproved.
