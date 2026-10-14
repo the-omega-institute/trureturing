@@ -13,6 +13,16 @@ triage: anchor
 
 # Monomial forms and the field-dynamics approximation boundary
 
+## Verified locator
+
+Canonical version URL: https://arxiv.org/abs/2609.21936v1.
+Primary text: https://arxiv.org/pdf/2609.21936v1.
+Section 3.2, equations (13), (21) and (22), supplies the
+occupied-endpoint form and the normalized joint-monomial
+covariance and energy. Equation (11) supplies the auxiliary
+unit-deletion polynomial approximation estimate under the
+field-stability and integrability hypotheses.
+
 The primary source is [arXiv:2609.21936v1](https://arxiv.org/pdf/2609.21936v1),
 Section 3.2, equations (13), (21) and (22). The source's principal
 sampling results concern matchings. The monomial calculation in
