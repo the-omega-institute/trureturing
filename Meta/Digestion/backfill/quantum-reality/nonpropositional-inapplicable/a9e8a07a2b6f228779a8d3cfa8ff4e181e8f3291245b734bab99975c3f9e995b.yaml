@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a9e8a07a2b6f228779a8d3cfa8ff4e181e8f3291245b734bab99975c3f9e995b
+  normalized_sha256: sha256:a9e8a07a2b6f228779a8d3cfa8ff4e181e8f3291245b734bab99975c3f9e995b
+cas_ref: sha256:a9e8a07a2b6f228779a8d3cfa8ff4e181e8f3291245b734bab99975c3f9e995b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 357 节开头片段只引入多个端口的耦合向量和响应权重矩阵记号，不提出正性或共同实现结论。
+    previous_atom_id: 28f4db971cfd714960364c2299e5ad8805ce1726c47282452ab85b30472a5fef
+    next_atom_id: 28f215304c260b9fe1d0df6417bfcf8f88500f170f2c8a9d1de63cfbc7bf572f

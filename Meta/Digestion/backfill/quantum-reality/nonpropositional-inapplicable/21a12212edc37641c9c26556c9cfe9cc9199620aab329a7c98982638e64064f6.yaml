@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:21a12212edc37641c9c26556c9cfe9cc9199620aab329a7c98982638e64064f6
+  normalized_sha256: sha256:21a12212edc37641c9c26556c9cfe9cc9199620aab329a7c98982638e64064f6
+cas_ref: sha256:21a12212edc37641c9c26556c9cfe9cc9199620aab329a7c98982638e64064f6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 296 节开头只指定正耦合的相邻移动 Hamiltonian 与交替符号算子 Γ，不陈述零模性质。
+    previous_atom_id: 45bf54d9e66e6f3496ac42a2bbcdcb9d24db9976556368833ef20475ff752e89
+    next_atom_id: bd14fe41c1ad1e57daca95dcecb2a4d15a1ee8d95e5be20c05195c70883cc460
