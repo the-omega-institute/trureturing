@@ -6,21 +6,9 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.claim; result=D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.result; claim=D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.claim
    digest: A feasible qubit rank-one encoder strictly improves the source polar pair. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
-import D5.S3.QuantumBounds.PeritoTsirelson
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
 import D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness
 import D5.S3.Quantum.Recovery.KrausCompletion
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
 
 /-!
 Li–Jiang, arXiv:2609.00778v1, Eqs.18–23 and supplement S60, asks after S64
