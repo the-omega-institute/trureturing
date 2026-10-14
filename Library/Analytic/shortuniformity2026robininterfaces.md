@@ -5,7 +5,7 @@ year: 2026
 title: Short-interval higher-order uniformity and the same-source Robin tail
 doi: null
 url: https://arxiv.org/abs/2610.09567v1
-claim: "Versioned short-interval Gowers, nilsequence and well-factorable estimates retain distinct models, weight hypotheses and error rates; no interface from these statements to the complete same-source signed Robin tail is supplied."
+claim: "Versioned pointwise, mean-square, weighted, Gowers, nilsequence and well-factorable short-interval estimates retain distinct models, weight hypotheses and error rates; no interface from these statements to the complete same-source signed Robin tail is supplied."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,8 +13,8 @@ triage: anchor
 
 # Short-interval uniformity: reusable inputs and the unpaid Robin interface
 
-This note records the statements and parameter correspondence of three
-versioned primary manuscripts. Their complete proofs are not independently
+This note records the statements and parameter correspondence of
+versioned primary sources. Their complete proofs are not independently
 audited here. The published suppliers are cited directly; no new supplier
 proof, signed Robin estimate, exhaustive literature survey or Lean
 certification is claimed.
@@ -152,3 +152,83 @@ the $q=1$ discrepancy is identically zero, so this theorem does not
 bound the common total-prime error. For the Robin consumer the prime
 scale is $x\asymp A$, not $N=e^A$. Replacing it by $N$ to turn a
 logarithmic saving into $A^{-L}$ changes the actual summation problem.
+
+## Short-increment refinements and the retained Robin baseline
+
+Michael Harm, *Refinements for primes in short arithmetic progressions*.
+
+The inspected primary is [arXiv:2507.15334v2](https://arxiv.org/html/2507.15334v2),
+19 May 2026, *Refinements for primes in short arithmetic progressions*.
+Theorem 2.4 is a pointwise estimate for the short-interval prime-count
+error $\Delta_\pi(x,y,q,a)$. Theorem 2.11 is its mean-square counterpart
+over real centers $X\le u\le2X$, summed over reduced residues modulo
+$q$. Both assume Conditions 1.1 and 1.2, with the stated restriction
+on the zero-free-region parameter and density exponent. Their
+interval-length ranges, zero-free factors and logarithmic losses
+must all be retained. These are `literature-attested` inputs; neither
+analytic proof is reproduced or Lean verified here.
+
+For the ordinary prime problem take modulus $q=1$ and residue $a=1$.
+The paper explicitly allows density exponent $A=30/13$ in that case
+from Guth--Maynard. This letter $A$ and the paper's zero-free function
+$\eta$ are separate from the Robin source's total clock $A=B+t$ and
+source exponent $\eta$. Section 3.1 defines $\Delta_\pi$,
+$\Delta_\vartheta$ and $\Delta_\psi$ and their conversion errors;
+the theorem for $\Delta_\pi$ must not be silently substituted for a
+complete-$\psi$ theorem.
+
+In the [forward-primitive consumer PE3--PE7](../Estimation/trureturing2026pricegapconvexity.md#retain-the-compensation-while-controlling-forward-primitive-excursions),
+the relevant ordinary center is the same actual real center after
+any required change of variables. Its observable includes
+$(v-u)E(u)$ in addition to the integrated short-increment error,
+where $E(u)=u-\psi(u)$. The source's $E(A)=t+Q(A)$ is endogenous.
+The cited increment theorems do not provide an estimate for that
+baseline, the complete future primitive, its amplitude-integrated
+exceptional occupation, or the original signed growing head.
+No fixed-tolerance or density-one conclusion from this paper is
+asserted to close the selected Robin comparison or prove RH.
+
+## Effective weighted prime counts in short intervals
+
+Jesse Thorner and Asif Zaman, *Refinements to the prime number theorem for arithmetic progressions*.
+
+Primary source: [arXiv:2108.10878v2](https://arxiv.org/pdf/2108.10878v2),
+version 21 September 2021, §1.1, Theorem 1.1, printed p.1.
+The statement is cited directly; no proof of the published theorem or
+Lean certification is supplied by this note.
+
+For coprime integers $q\ge2$ and $a$, and $4\le h\le x$, the theorem
+defines an exceptional-zero-dependent factor $\lambda$ and exponent
+$\theta$. Without the exceptional real zero they are $\lambda=1$
+and $\theta=7/12$. For each fixed $0<\varepsilon<1-\theta$, if
+$\lambda h/\varphi(q)\ge x^{\theta+\varepsilon}$, it gives
+
+$$
+\sum_{\substack{x-h<p\le x\\p\equiv a\pmod q}}\log p
+=\frac{\lambda h}{\varphi(q)}
+\left[1+O_\varepsilon\left(
+\exp\left\{-\frac{c_1\log x}{
+\log q+(\log(x/h))^{2/3}(\log^+\log(x/h))^{1/3}
++(\log x)^{2/5}(\log\log x)^{1/5}}\right\}\right)\right].
+$$
+
+The constant $c_1=c_1(\varepsilon)>0$ and the implied constant are
+effectively computable. The first product in the denominator has its
+continuous zero convention at $h=x$; $\log^+u=\max\{0,\log u\}$.
+The general exceptional-zero branch must not be omitted for arbitrary
+moduli.
+
+For the Robin gap application, set $q=2$, $a=1$ and
+$\varepsilon=1/60$. Modulo $2$ there is no nontrivial real character,
+so the exceptional-zero branch does not occur. Hence
+$\lambda=1$, $\varphi(2)=1$ and
+$\theta+\varepsilon=7/12+1/60=3/5$. At large interval starts all primes
+in the interval are odd, so the progression sum equals the full weighted
+prime sum there.
+
+The [owning actual-gap application](../Estimation/trureturing2026pricegapconvexity.md#weighted-short-interval-counts-pay-more-actual-gap-residuals)
+uses this increment estimate with an actual endpoint contact and the
+existing strict first-layer activation rule. It does not use an
+increment bound to erase an arbitrary complete primitive baseline.
+The theorem and this note supply neither a same-source signed future
+occupation/credit bound nor a Robin or RH proof.

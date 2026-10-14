@@ -6126,7 +6126,7 @@ $$
 
 The already recorded Gafni--Tao short-increment result controls a
 different observable, not this baseline-containing primitive.
-The newer [Harm short-progression refinements](../Analytic/harm2026shortprogressions.md)
+The newer [Harm short-progression refinements](../Analytic/shortuniformity2026robininterfaces.md#short-increment-refinements-and-the-retained-robin-baseline)
 also concern increments; their pointwise and mean-square refinements
 do not supply PE7. Even at the visited initial center,
 $E(A)=t+Q(A)$ is endogenous and cannot be set to zero.
@@ -6744,7 +6744,7 @@ and RH remain unproved. This application has no Lean/kernel proof.
 Retain the full source, all original windows and ties, $\Theta=1$,
 BL1--BL7's horizon and exact credit. The new consumer is the positive
 residual area on a comparable actual gap. It uses the published
-[Thorner--Zaman weighted short-interval estimate](../Analytic/thornerzaman2021progressions.md),
+[Thorner--Zaman weighted short-interval estimate](../Analytic/shortuniformity2026robininterfaces.md#effective-weighted-prime-counts-in-short-intervals),
 with LO1's already established first-layer endpoint rule. The original
 PG2 suffix sign and AC/VP capped-occupation comparison are reused.
 This is a `repo-derived` paper application, not a new prime theorem,
