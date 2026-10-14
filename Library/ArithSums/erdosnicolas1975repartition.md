@@ -568,6 +568,60 @@ When the actual integer is $C$ itself, its benefit and edit resource
 vanish, so this estimate adds no loss at all. It cannot replace the
 unpaid same-source signed tail in the global CA route or prove RH.
 
+### Congruence sparsity inside the conditional near-extremal set
+
+The radius in (TC.3) also gives a discrete consequence that is useful for
+future finite checks. It is a counting statement for the original source
+window, not a replacement for the signed Robin estimate.
+
+Let $V=F_r$ and keep the same $C=C_s$, $a$, and quotient conditions
+(TC.6). If a candidate satisfies $E_a(N)\le L$, then
+
+$$
+uv\le e^L.
+$$
+
+The existing Fibonacci bounds give $(C,V)=1$. Fix a divisor $v\mid C$.
+The congruence in (TC.6) determines one residue class
+
+$$
+u\equiv C^{-1}v\pmod V.
+$$
+
+Consequently, whenever $e^L<V$, the interval
+$1\le u\le e^L/v<V$ contains at most one admissible numerator for this
+fixed denominator. Therefore
+
+$$
+\boxed{
+\#\{(u,v): uv\le e^L,\ v\mid C,\ Cu\equiv v\pmod V\}
+\le \tau(C).
+}
+\tag{TC.8}
+$$
+
+This retains the denominator divisibility and the exact unit residue; it
+does not count separately optimized numerators and denominators. Combining
+(TC.3) with $a\asymp\log V$ shows that, for every fixed $M$, its conditional
+radius
+
+$$
+L=32\sqrt a+\sqrt{48M}\,a^{3/4}
+$$
+
+satisfies $L=o(\log V)$ along the Fibonacci rank family. Hence $e^L<V$
+eventually and the number of such near-extremal pairs is at most
+$\tau(C)$. If a separate size estimate gives $\log C=O(\log V)$, the
+standard divisor bound further makes this $V^{o(1)}$; that size estimate is
+not silently imported here.
+
+The conclusion only sparsifies the candidates left by the benefit bound.
+Each surviving pair still has to satisfy the window and the complete signed
+tail in (TC.5), and (TC.8) supplies neither a positive Robin margin nor a
+uniform way to verify all the remaining pairs. It is therefore a finite
+or subpolynomial reduction of the unresolved joint problem, rather than an
+RH proof.
+
 ## Charge the actual removals before bounding additions
 
 The classical layer identity also permits a stronger pointwise use of the
