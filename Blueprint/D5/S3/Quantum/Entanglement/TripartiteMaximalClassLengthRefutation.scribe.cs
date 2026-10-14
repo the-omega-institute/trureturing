@@ -87,7 +87,10 @@ internal sealed class TripartiteMaximalClassLengthRefutationDocument : IScribeDo
                     Paragraph(Text(
                         "All four invariants are zero, their least possible value, so this state belongs to the maximally entangled class. "
                             + "Its length nine is less than 3 + 3 + 7 - 2 = 11, refuting the stated lower bound."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("buniy-feger-kephart-2024-tripartite-mec-length-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
