@@ -152,7 +152,9 @@ theorem actual_third_order_boundary_base {base : V}
     apply List.perm_iff_count.mpr
     intro z
     have hH := hcutH.count_eq z
-    simp only [List.ofFn_succ, List.ofFn_zero, List.count_cons, List.count_nil] at hH
+    change H.toList.count z =
+      ([cut p true 0, cut p true 1, cut p true 2, cut p true 3] : List (Sym2 V)).count z at hH
+    simp only [List.count_cons, List.count_nil] at hH
     simp only [primary, primary₁, primary₂, joint, List.flatMap_cons,
       List.flatMap_nil, List.append_nil, SimpleGraph.Walk.edges_append,
       SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_reverse,
@@ -169,7 +171,9 @@ theorem actual_third_order_boundary_base {base : V}
     apply List.perm_iff_count.mpr
     intro z
     have hK := hcutK.count_eq z
-    simp only [List.ofFn_succ, List.ofFn_zero, List.count_cons, List.count_nil] at hK
+    change K.toList.count z =
+      ([cut p false 0, cut p false 1, cut p false 2, cut p false 3] : List (Sym2 V)).count z at hK
+    simp only [List.count_cons, List.count_nil] at hK
     simp only [opposite, opposite₀, opposite₂, tail, joint, List.flatMap_cons,
       List.flatMap_nil, List.append_nil, SimpleGraph.Walk.edges_append,
       SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_reverse,
