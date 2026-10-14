@@ -645,3 +645,363 @@ the unbounded coordinate, but it is not a witness for the finite-profile
 threshold set. If unrestricted source-total weighted optimization is desired,
 it is a separate problem requiring its own decision and attainment hypothesis;
 it is not supplied by the finite Pareto theorem.
+## 51. Redundant complete words with the original call trace
+
+**Definition 51.1 (the supplied complete finite controller).** Let $Q$ be
+all installed logical states of a controller, with $K=|Q|\ge1$. Include
+halt states, unreachable states, error states and every installed invalid-code
+completion. At $q\in Q$ there is one fixed original instruction $I(q)$:
+either a primitive with its entire literal payload, or $\mathsf{Halt}(Y_q)$
+with one fixed complete output. A nonhalt instruction has a declared finite
+typed-response set $O_q$ and a total table
+
+$$
+\delta_q:O_q\longrightarrow Q.
+\tag{FIB.51.1}
+$$
+
+Every typed response has its row, whether or not it is possible on an
+admitted source. A silent primitive uses its declared constant response, such
+as $\bot$ in Definition 46.1. A primitive that is undefined outside its
+legal domain remains undefined there; this definition supplies no observable
+failure response for a missing strict edge. Halt has no response rows.
+For notational uniformity put $O_q=\varnothing$ at a halt, with its
+unique empty successor map.
+
+The source and apparatus domains may be infinite. Their original legality,
+actual response and apparatus-successor maps are retained. The complete
+proof-side apparatus state includes any history needed by these maps, as in
+§47; it is not an additional observer input. All mutable information used
+by instruction selection is already in $q$, and its next value depends only
+on $q$ and the actual declared response. In particular, the all-action
+factorization of Definition 46.1 is a premise. A source-indexed successor
+list that fails this factorization is not an input controller.
+
+Initialization is either a common $q_0$ or a map $c(i)\in Q$ of an initial
+record $i$ that was genuinely acquired under the original contract. The
+original source, target and acquired record stay paired. Neither an arbitrary
+source label nor a retrospectively compatible history qualifies as $i$.
+The record is not available again after initialization unless already
+represented in the counted control.
+
+Use exactly the conditional whole-word instruction and immediate-response
+services of [FIB continuation II][FIB51-II], Definition 45.1. A word is the
+whole mutable observer. The static instruction service selects the original
+instruction; that primitive's transient response immediately selects hold or
+one legal bit flip and is discarded. There is no intervening instruction.
+These control services obtain no further source response and perform no
+apparatus update beyond the declared original primitive.
+Installation, acquisition, initialization, selection, literal delivery,
+primitive execution, response writing and output are supplied and charged
+separately. The premise grants these functions at the chosen finite width;
+it does not construct their physical implementation from a word count.
+
+**Theorem 51.2 (finite redundant realization of every typed row).** For
+any controller in Definition 51.1, these conditional services admit a finite
+installed set $W\subseteq L_\ell$ and a proof-side surjection
+$\pi:W\to Q$ with fixed instruction table $\widehat I$ and immediate
+response table $\widehat\delta$, satisfying
+
+$$
+\begin{aligned}
+\widehat I(w)&=I(\pi(w)),\\
+\pi(\widehat\delta(w,o))&=\delta_{\pi(w)}(o),\\
+d_H(w,\widehat\delta(w,o))
+ &=\mathbf1_{\{\delta_{\pi(w)}(o)\ne\pi(w)\}}
+ \qquad(o\in O_{\pi(w)}).
+\end{aligned}
+\tag{FIB.51.2}
+$$
+
+For $K\ge2$, put
+
+$$
+r=\lceil\log_2K\rceil,\qquad m=2^r-1,\qquad
+f=2^{m-r}.
+\tag{FIB.51.3}
+$$
+
+One realization has
+
+$$
+\ell=2m-1=2^{r+1}-3,\qquad |W|=Kf,
+\qquad |\pi^{-1}(q)|=f\quad(q\in Q).
+\tag{FIB.51.4}
+$$
+
+For $K=1$ one may take $\ell=1$, $W=\{0\}$ and $f=1$.
+These bounds depend on the installed controller, not on source cardinality,
+a maximum execution length or an acyclicity assumption.
+
+For each admitted source and its original initialization, the realization
+preserves every original primitive, entire submitted literal, actual raw
+response, apparatus successor and original target. A first Halt exists in
+one run exactly when it exists in the other; its complete output and the
+number of preceding primitives are equal.
+This includes immediate halt, every finite execution prefix and infinite
+runs. Legality, success and termination transfer wherever the original
+controller has them; they are not conclusions about an arbitrary finite
+table solely from its encoding.
+
+Proof. For $K\ge2$, label the logical states injectively by
+$a:Q\hookrightarrow\mathbb F_2^r$. Index the $m$ data coordinates in a
+fixed order by the nonzero vectors $v\in\mathbb F_2^r$. Use the classical
+Hamming check map and the zero-interleaving map
+
+$$
+\sigma(x)=\sum_{v\ne0}x_vv,\qquad
+J(x_1,\ldots,x_m)=x_1\,0\,x_2\,0\,\cdots\,0\,x_m.
+\tag{FIB.51.5}
+$$
+
+The all-distinct nonzero check vectors and the rule identifying a one-bit
+change by its check vector are the Hamming construction in *Matrix Hamming
+Codes*, §§9.1–9.3 [MIT-HAMMING]. The displayed zero-interleaving map is
+Cabello–Eppstein–Klavžar's Proposition 3.1 [FIB51-CEK]. These are
+literature-attested ingredients, not new coding or coloring results.
+Their use here does not require the old controller graph to embed in a cube.
+
+The check vectors include a basis, so $\sigma$ is onto. Fixing all $m-r$
+coordinates outside those basis positions leaves a unique choice of the
+basis coordinates for each prescribed syndrome. Each syndrome fiber
+therefore has exactly $f$ elements. Install precisely
+
+$$
+W=\{J(x):\sigma(x)\in a(Q)\},\qquad
+\pi(J(x))=a^{-1}(\sigma(x)).
+\tag{FIB.51.6}
+$$
+
+Thus each logical state has exactly $f$ installed aliases, including states
+with empty actual support. When $K<2^r$, the unused syndrome fibers are not
+installed. Neither these words nor other ambient no-$11$ words have rows.
+The map $J$ is injective, has length $2m-1$ and always gives a no-$11$ word.
+
+At $w=J(x)$ install the exact instruction $I(q)$, where $q=\pi(w)$.
+For each typed response $o$, put $q'=\delta_q(o)$ and $d=a(q)+a(q')$.
+If $d=0$, install hold. Otherwise install the flip of data coordinate $d$,
+namely physical bit $2\operatorname{index}(d)-1$. If $e_d$ is the unit
+vector in that data coordinate, then
+
+$$
+\sigma(x+e_d)=\sigma(x)+d=a(q').
+\tag{FIB.51.7}
+$$
+
+The successor is in $W$, projects to $q'$ and differs in one physical bit.
+All separator bits stay zero. Injection of $a$ gives $d=0$ exactly when
+$q=q'$, proving all three equations (FIB.51.2). This specifies every typed
+row, including error transitions and responses with empty actual support;
+none is replaced by a convenient hold unless the original successor is
+$q$ itself. Every alias of a halt state has its original fixed full output
+and no response entries.
+
+For a common initial state, choose $a(q_0)=0$ and initialize at $0^\ell$.
+More generally the explicit section
+
+$$
+s(q)=
+\begin{cases}
+J(0^m),&a(q)=0,\\
+J(e_{a(q)}),&a(q)\ne0
+\end{cases}
+\quad\text{satisfies}\quad \pi(s(q))=q.
+\tag{FIB.51.8}
+$$
+
+Initialize to $s(c(i))$ using only the genuinely acquired $i$. This is one
+separately supplied whole-word initialization; it is not a response step
+or a free acquisition of $i$. For $K=1$, the sole instruction is copied to
+word $0$, every typed successor holds, and the same claims follow directly.
+
+The quantities $a,\sigma,\pi,q,q'$ and $d$ in these formulas specify
+finite static rows. They are not runtime computations or registers. Each
+entire installed word already selects its fixed original instruction, and
+each pair of that word and a typed response already selects hold or one
+fixed bit index. The conditional service has no external decoded PC,
+syndrome, phase, response latch or retained history. If an implementation
+needs such persistent state to perform the selection, it does not satisfy
+Definition 51.1's complete-word service premise.
+
+For the execution proof, relate an old boundary $(z,s,q)$ to a new boundary
+$(z,s,w)$ by $\pi(w)=q$, retaining the same original target $z$, complete
+apparatus state $s$ and ordered primitive history. Initialization establishes
+this relation. At related nonhalt boundaries, the instructions and their
+legality domains are equal. The same primitive with the same literal acts
+on the same apparatus, giving the same actual response and successor.
+Equation (FIB.51.2) restores the relation immediately. No instruction occurs
+between this response and the next corresponding boundary. Induction proves
+equality of every finite original event prefix. If execution reaches an
+undefined action, both sides have the same undefined action; no success or
+failure sensor is manufactured there.
+
+A new boundary is a halt exactly when its projected old boundary is one,
+with exactly the same output. Hence finite first halt and zero-call first
+halt correspond in both directions. An infinite original run has arbitrarily
+long matching finite prefixes; the recursively defined new run cannot halt
+at any finite boundary and is infinite. Conversely an infinite new run
+projects to the infinite old run. A logical cycle may return to another
+alias of its starting state; future rows still obey (FIB.51.2). No unfolding
+of histories and no bound on the number of traversals was used. $\square$
+
+## 52. Full installation bills and the transfer boundary
+
+**Corollary 52.1 (aliases, payloads and one matched run).** Use Theorem
+51.2, with its $f=1$ convention when $K=1$. Let $K_H$ count old halt states
+and let $E_0=\sum_{q\text{ nonhalt}}|O_q|$. The realization has exactly
+
+| Installed item | Count |
+| --- | --- |
+| Complete words and instruction rows | $Kf$ |
+| Aliases of each individual logical state | $f$ |
+| Halt rows, including unreachable halts | $K_Hf$ |
+| Typed response entries | $E_0f$ |
+| Full word-key bits in an explicit table | $Kf\ell$ |
+| Hold/flip-index bits for the typed entries | $E_0f\lceil\log_2(\ell+1)\rceil$ |
+
+If $\mathcal R$ is the set of old literal-Read states with literal $p_q$,
+the new Read-row count is $f|\mathcal R|$. Its distinct installed literal
+union is exactly the old one. Fully inlining the literals gives exactly
+$f\sum_{q\in\mathcal R}|p_q|$ address letters, with $f$ copies of each
+old row's payload. Empty literals have zero letters but still have rows,
+length fields, delivery and execution. Each old fixed halt payload is
+likewise installed $f$ times; no two different old halt states are silently
+merged merely because their outputs coincide.
+
+For a finite terminating run with logical states $q_0,\ldots,q_n$, the
+native call count is exactly the original $n$. There are $n+1$ instruction
+selections including Halt, $n$ immediate response selections and one output.
+The response bit-change count is
+
+$$
+b=\sum_{j=0}^{n-1}\mathbf1_{\{q_{j+1}\ne q_j\}}\le n.
+\tag{FIB.52.1}
+$$
+
+The same identity holds on every finite prefix of a nonterminating run.
+Counts of each primitive, submitted literal order and address-length sums,
+actual apparatus epochs and source-state peaks are preserved on the same
+source whenever these coordinates are defined by the original events.
+Initialization writes, table-selection costs and other implementation
+services are not included in this equality of event coordinates.
+
+Proof. Each old state has $f$ aliases, and each alias copies precisely that
+state's instruction, payload and typed-response list. This gives the table
+and payload counts. Equation (FIB.51.2) gives the exact bit-change indicator;
+the execution correspondence gives the remaining same-run equalities.
+No source maximum or coordinate minimum was taken. $\square$
+
+**Definition 52.2 (an explicit finite table representation).** Suppose
+the old fixed instructions, including their response types, literal lengths
+and complete halt outputs, have supplied finite binary records. Let $b_I$
+be a common padded record width, and fix the response order for each such
+record. Put
+
+$$
+t_* =\max\bigl(\{0\}\cup\{|O_q|:q\text{ nonhalt}\}\bigr),\qquad
+\beta=\lceil\log_2(\ell+1)\rceil.
+$$
+
+One explicit rectangular representation stores, for each of the $Kf$ words,
+its full $\ell$-bit key, its $b_I$-bit instruction record and $t_*$ response
+slots of $\beta$ bits each. Zero means hold; $j\in\{1,\ldots,\ell\}$
+means flip physical bit $j$. Unused slots are fixed zero padding, not typed
+response entries. Its exact record-array length is
+
+$$
+S_{\rm rows}=Kf(\ell+b_I+t_*\beta).
+\tag{FIB.52.2}
+$$
+
+The supplied format, record interpretation and any extra framing, dictionary,
+index or selection apparatus are charged in addition when present. The
+literal and halt payloads already included in $b_I$ must not be charged
+a second time as extra row-array bits. If output objects have no supplied
+binary representation, Corollary 52.1 counts their copies but assigns no
+finite bit-length to them by fiat.
+
+A stored common initial word adds $\ell$ immutable bits. For acquired-input
+initialization, an explicit section table for (FIB.51.8) instead adds
+$K\ell$ word bits in the original fixed state order, plus its framing and
+the original realization of $c(i)$. The acquisition and selection of $i$
+and the physical initialization service retain their original permissions
+and separate prices. Existence of this finite section does not realize an
+arbitrary unsupplied map $c$ on an infinite input domain.
+
+For a matched finite run, use the cost vector
+
+$$
+\begin{aligned}
+C={}&C_{\rm acquire}+C_{\rm promise/source}
+ +C_{\rm compile/install}+C_{\rm init}(i)\\
+ &+\sum_{j=0}^{n-1}\bigl(
+ C_{\rm select}(w_j)+C_{\rm deliver}(I(q_j))
+ +C_{\rm primitive}(I(q_j),s_j)
+ +C_{\rm response}(w_j,o_j)\bigr)\\
+ &+C_{\rm select}(w_n)+C_{\rm output}(Y_{q_n}).
+\end{aligned}
+\tag{FIB.52.3}
+$$
+
+Terms charge the services actually supplied and do not assume zero tariffs.
+Compilation and installation have finite combinatorial descriptions here;
+their physical time, workspace and energy are not inferred from
+(FIB.52.2). The trace equality does not identify new selection or output
+tariffs with the old ones.
+
+**Corollary 52.3 (inherited certificates and distinct realization scopes).**
+Given the old exact reachable supports $C_q$, let $\widehat C_w$ be the
+exact support at $w$ in the matched new runs. Then
+
+$$
+\widehat C_w\subseteq C_{\pi(w)},\qquad
+\bigcup_{\pi(w)=q}\widehat C_w=C_q.
+\tag{FIB.52.4}
+$$
+
+An existing support–rank certificate from continuation II, Theorem 27.2,
+restricts to the new exact supports by
+$\widehat\rho(z,s,w)=\rho(z,s,\pi(w))$. All its legality, closure,
+descent and fixed-output conditions hold there. This is a reuse of that
+certificate theorem; support closure alone supplies no rank or termination.
+In particular, (FIB.52.4) does not assert that each alias has the whole old
+exact support. Some aliases can remain unreachable.
+
+Proof. Each actual new prefix projects to its old prefix, proving inclusion.
+Every actual old prefix has its lifted prefix, proving the union equality.
+The commuting successor equation and equal primitive supply the conditions
+of the old certificate on each restricted support; any assumed strict rank
+decrease is therefore retained. $\square$
+
+The present realization has a surjective logical correspondence with $Kf$
+installed states. It is distinct from continuation II's Theorem 45.4, which
+requires one word per old state and is subject to the fixed $K_{2,3}$
+obstruction of Proposition 46.2. It is also distinct from Corollary 47.2's
+actual-history forest, whose bounds require finite sources and a finite
+maximum actual length and which need not preserve unsupported typed rows.
+Those results remain in their original scopes. This construction neither
+reproves their graph statements nor supplies a compact optimum. When a
+budget counts every installed state, the new witness belongs at budget
+$Kf$, not $K$.
+
+The all-action and complete-history requirements of §§41, 46–47 remain
+premises. This realization does not synthesize an ExactChart, repair the
+pseudo-controller of Counterexample 41.4, authenticate a source promise or
+turn a cycling candidate cover into a successful controller. Nor does it
+supply the uniform bounds or exact acceleration required by §§47–50 for
+finite-profile decision and Pareto conclusions. An infinite-domain controller
+may terminate on each source with unbounded worst event cost, and that
+property is also preserved.
+
+The Hamming check construction and zero interleaving in Theorem 51.2 are
+literature-attested. The complete typed-table application, exact original
+execution correspondence and itemized installation bill are repo-derived
+ordinary conditional mathematics. No new Hamming code, syndrome method,
+coupon coloring, graph classification, optimal width or total physical-cost
+claim is made. These statements provide no Lean/kernel certification.
+
+[MIT-HAMMING]: https://math.mit.edu/~djk/18.310/Lecture-Notes/matrix_hamming_codes_2007.html
+[FIB51-CEK]: https://arxiv.org/pdf/0903.2507v1
+[FIB51-II]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+
+## 追加锚（本行以下为增补区）
