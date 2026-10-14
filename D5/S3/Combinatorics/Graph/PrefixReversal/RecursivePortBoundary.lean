@@ -1,4 +1,12 @@
-/- Static candidate for BIG3_TWO_A_CUT_REPAIR §58.8–58.9.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/RecursivePortBoundary
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/RecursivePortBoundary
+   mirror-E: none(waiver:native-recursive-port-boundary)
+   anchors: []
+   utility: none
+   digest: The complete even and odd boundary matchings with internal seams have explicit Hamilton paths and use each matching edge once. -/
+
+/- Candidate for BIG3_TWO_A_CUT_REPAIR §58.8–58.9.
 No elaboration, kernel acceptance or actual native realization is asserted.
 The boundary graph is specified independently by the E/O matching and the
 internal seams. Coverage and uniqueness are proved by explicit inverses,
@@ -53,26 +61,52 @@ def internalSeam (k : ℕ) (p q : RawPort) : Prop :=
 def boundary (k : ℕ) (p q : RawPort) : Prop :=
   if k % 2 = 0 then evenBoundary k p q else oddBoundary k p q
 
+private theorem pair_symm {p q x y : RawPort} (h : pair p q x y) : pair q p x y := by
+  rcases h with ⟨hpx, hqy⟩ | ⟨hpy, hqx⟩
+  · exact Or.inr ⟨hqy, hpx⟩
+  · exact Or.inl ⟨hqx, hpy⟩
+
+private theorem even_boundary_symm (k : ℕ) (p q : RawPort) :
+    evenBoundary k p q → evenBoundary k q p := by
+  intro h
+  rcases h with h | h | h | h
+  · exact Or.inl ⟨h.1, h.2.symm⟩
+  · exact Or.inr (Or.inl (pair_symm h))
+  · exact Or.inr (Or.inr (Or.inl (pair_symm h)))
+  · exact Or.inr (Or.inr (Or.inr (pair_symm h)))
+
+private theorem odd_boundary_symm (k : ℕ) (p q : RawPort) :
+    oddBoundary k p q → oddBoundary k q p := by
+  intro h
+  rcases h with h | h | h | h | h
+  · exact Or.inl ⟨h.1, h.2.symm⟩
+  · exact Or.inr (Or.inl (pair_symm h))
+  · exact Or.inr (Or.inr (Or.inl (pair_symm h)))
+  · exact Or.inr (Or.inr (Or.inr (Or.inl (pair_symm h))))
+  · exact Or.inr (Or.inr (Or.inr (Or.inr (pair_symm h))))
+
 private theorem boundary_symm (k : ℕ) (p q : RawPort) :
     boundary k p q → boundary k q p := by
-  unfold boundary evenBoundary oddBoundary pair
-  split_ifs <;> tauto
+  unfold boundary
+  split_ifs
+  · exact even_boundary_symm k p q
+  · exact odd_boundary_symm k p q
 
 private theorem internalSeam_symm (k : ℕ) (p q : RawPort) :
     internalSeam k p q → internalSeam k q p := by
-  unfold internalSeam
-  tauto
+  exact Or.symm
 
 /-- The graph contains just the independently specified boundary paths and
 the internal c seams; loop exclusion is explicit for all parameter values. -/
 def boundaryGraph (k : ℕ) : SimpleGraph (Port k) where
   Adj p q := p ≠ q ∧ (boundary k (code p) (code q) ∨ internalSeam k (code p) (code q))
   symm := by
+    constructor
     intro p q h
     exact ⟨h.1.symm, h.2.elim
       (fun hb => Or.inl (boundary_symm k _ _ hb))
       (fun hc => Or.inr (internalSeam_symm k _ _ hc))⟩
-  loopless := by intro p h; exact h.1 rfl
+  loopless := by constructor; intro p h; exact h.1 rfl
 
 /-- For k=2s+2 this is the exact even trace described in §58.9.
 Its ranges are even ladder, four middle ports, then odd ladder. -/
@@ -101,6 +135,7 @@ private theorem even_route_bound (s j : ℕ) (hj : j < 4 * s + 6) :
 private theorem even_inverse_bound (s : ℕ) (p : RawPort)
     (hi : p.1 ≤ 2 * s + 2) (hb : p.2 < 2) : evenInverse s p < 4 * s + 6 := by
   rcases p with ⟨i, b⟩
+  dsimp only at hi hb
   have hmod := Nat.mod_lt i (by decide : 0 < 2)
   unfold evenInverse
   split_ifs <;> dsimp at * <;> omega
@@ -108,33 +143,56 @@ private theorem even_inverse_bound (s : ℕ) (p : RawPort)
 set_option maxHeartbeats 800000 in
 private theorem even_inverse_route (s j : ℕ) (hj : j < 4 * s + 6) :
     evenInverse s (evenRoute s j) = j := by
-  have hmod := Nat.mod_lt j (by decide : 0 < 2)
-  unfold evenRoute evenInverse
-  split_ifs <;> dsimp at * <;> omega
+  have hm := Nat.mod_lt j (by decide : 0 < 2)
+  have hpar : j % 2 = 0 ∨ j % 2 = 1 := by omega
+  rcases hpar with hp | hp
+  all_goals
+    unfold evenRoute
+    split_ifs
+    all_goals
+      simp (disch := omega) [evenInverse, hp] <;> omega
 
 set_option maxHeartbeats 800000 in
 private theorem even_route_inverse (s : ℕ) (p : RawPort)
     (hi : p.1 ≤ 2 * s + 2) (hb : p.2 < 2) :
     evenRoute s (evenInverse s p) = p := by
   rcases p with ⟨i, b⟩
-  have hmod := Nat.mod_lt i (by decide : 0 < 2)
+  dsimp only at hi hb
+  have hm := Nat.mod_lt i (by decide : 0 < 2)
   have hb' : b = 0 ∨ b = 1 := by omega
   rcases hb' with rfl | rfl
   all_goals
-    simp only [evenInverse, Prod.fst, Prod.snd, ite_true, ite_false, Nat.zero_ne_one]
-    unfold evenRoute
-    split_ifs <;> simp only [Prod.mk.injEq] <;> omega
+    unfold evenInverse
+    simp only [Prod.fst, Prod.snd, ↓reduceIte]
+    split_ifs
+    all_goals
+      simp (disch := omega) [evenRoute] <;> omega
 
+set_option maxHeartbeats 800000 in
 /-- At positions 2j the trace uses B; at positions 2j+1 it uses an
 internal c seam. This proves actual alternation rather than merely adjacency. -/
-set_option maxHeartbeats 800000 in
 private theorem even_route_steps (s j : ℕ) (hj : j + 1 < 4 * s + 6) :
     (j % 2 = 0 → evenBoundary (2 * s + 2) (evenRoute s j) (evenRoute s (j + 1))) ∧
       (j % 2 = 1 → internalSeam (2 * s + 2) (evenRoute s j) (evenRoute s (j + 1))) := by
   have hm := Nat.mod_lt j (by decide : 0 < 2)
   have hm' := Nat.mod_lt (j + 1) (by decide : 0 < 2)
-  unfold evenRoute evenBoundary ladder pair internalSeam
-  split_ifs <;> simp only [Prod.fst, Prod.snd, Prod.mk.injEq] <;> omega
+  by_cases hfirst : j < 2 * s
+  · simp only [evenRoute, if_pos (by omega : j ≤ 2 * s),
+      if_pos (by omega : j + 1 ≤ 2 * s)]
+    simp only [evenBoundary, ladder, pair, internalSeam, Prod.fst, Prod.snd,
+      Prod.mk.injEq]
+    omega
+  · by_cases hmiddle : j ≤ 2 * s + 3
+    · have casesj : j = 2 * s ∨ j = 2 * s + 1 ∨ j = 2 * s + 2 ∨
+          j = 2 * s + 3 := by omega
+      rcases casesj with rfl | rfl | rfl | rfl
+      all_goals
+        simp (disch := omega) only [evenRoute, evenBoundary, ladder, pair,
+          internalSeam, Prod.fst, Prod.snd, Prod.mk.injEq, ↓reduceIte]
+        omega
+    · simp (disch := omega) only [evenRoute, evenBoundary, ladder, pair,
+        internalSeam, Prod.fst, Prod.snd, Prod.mk.injEq, ↓reduceIte]
+      omega
 
 /-- For k=2s+3 this is the exact odd trace: even ladder, four middle
 ports, odd ladder, then the four final ports in §58.9. -/
@@ -171,6 +229,7 @@ private theorem odd_route_bound (s j : ℕ) (hj : j < 4 * s + 8) :
 private theorem odd_inverse_bound (s : ℕ) (p : RawPort)
     (hi : p.1 ≤ 2 * s + 3) (hb : p.2 < 2) : oddInverse s p < 4 * s + 8 := by
   rcases p with ⟨i, b⟩
+  dsimp only at hi hb
   have hmod := Nat.mod_lt i (by decide : 0 < 2)
   unfold oddInverse
   split_ifs <;> dsimp at * <;> omega
@@ -178,22 +237,30 @@ private theorem odd_inverse_bound (s : ℕ) (p : RawPort)
 set_option maxHeartbeats 800000 in
 private theorem odd_inverse_route (s j : ℕ) (hj : j < 4 * s + 8) :
     oddInverse s (oddRoute s j) = j := by
-  have hmod := Nat.mod_lt j (by decide : 0 < 2)
-  unfold oddRoute oddInverse
-  split_ifs <;> dsimp at * <;> omega
+  have hm := Nat.mod_lt j (by decide : 0 < 2)
+  have hpar : j % 2 = 0 ∨ j % 2 = 1 := by omega
+  rcases hpar with hp | hp
+  all_goals
+    unfold oddRoute
+    split_ifs
+    all_goals
+      simp (disch := omega) [oddInverse, hp] <;> omega
 
 set_option maxHeartbeats 800000 in
 private theorem odd_route_inverse (s : ℕ) (p : RawPort)
     (hi : p.1 ≤ 2 * s + 3) (hb : p.2 < 2) :
     oddRoute s (oddInverse s p) = p := by
   rcases p with ⟨i, b⟩
-  have hmod := Nat.mod_lt i (by decide : 0 < 2)
+  dsimp only at hi hb
+  have hm := Nat.mod_lt i (by decide : 0 < 2)
   have hb' : b = 0 ∨ b = 1 := by omega
   rcases hb' with rfl | rfl
   all_goals
-    simp only [oddInverse, Prod.fst, Prod.snd, ite_true, ite_false, Nat.zero_ne_one]
-    unfold oddRoute
-    split_ifs <;> simp only [Prod.mk.injEq] <;> omega
+    unfold oddInverse
+    simp only [Prod.fst, Prod.snd, ↓reduceIte]
+    split_ifs
+    all_goals
+      simp (disch := omega) [oddRoute] <;> omega
 
 set_option maxHeartbeats 800000 in
 private theorem odd_route_steps (s j : ℕ) (hj : j + 1 < 4 * s + 8) :
@@ -201,8 +268,31 @@ private theorem odd_route_steps (s j : ℕ) (hj : j + 1 < 4 * s + 8) :
       (j % 2 = 1 → internalSeam (2 * s + 3) (oddRoute s j) (oddRoute s (j + 1))) := by
   have hm := Nat.mod_lt j (by decide : 0 < 2)
   have hm' := Nat.mod_lt (j + 1) (by decide : 0 < 2)
-  unfold oddRoute oddBoundary ladder pair internalSeam
-  split_ifs <;> simp only [Prod.fst, Prod.snd, Prod.mk.injEq] <;> omega
+  by_cases hfirst : j < 2 * s
+  · simp only [oddRoute, if_pos (by omega : j ≤ 2 * s),
+      if_pos (by omega : j + 1 ≤ 2 * s)]
+    simp only [oddBoundary, ladder, pair, internalSeam, Prod.fst, Prod.snd,
+      Prod.mk.injEq]
+    omega
+  · by_cases hmiddle : j ≤ 2 * s + 3
+    · have casesj : j = 2 * s ∨ j = 2 * s + 1 ∨ j = 2 * s + 2 ∨
+          j = 2 * s + 3 := by omega
+      rcases casesj with rfl | rfl | rfl | rfl
+      all_goals
+        simp (disch := omega) only [oddRoute, oddBoundary, ladder, pair,
+          internalSeam, Prod.fst, Prod.snd, Prod.mk.injEq, ↓reduceIte]
+        omega
+    · by_cases hlast : j < 4 * s + 3
+      · simp (disch := omega) only [oddRoute, oddBoundary, ladder, pair,
+          internalSeam, Prod.fst, Prod.snd, Prod.mk.injEq, ↓reduceIte]
+        omega
+      · have casesj : j = 4 * s + 3 ∨ j = 4 * s + 4 ∨ j = 4 * s + 5 ∨
+            j = 4 * s + 6 := by omega
+        rcases casesj with rfl | rfl | rfl | rfl
+        all_goals
+          simp (disch := omega) only [oddRoute, oddBoundary, ladder, pair,
+            internalSeam, Prod.fst, Prod.snd, Prod.mk.injEq, ↓reduceIte]
+          omega
 
 def evenEnumerate (s : ℕ) (j : Fin (4 * s + 6)) : Port (2 * s + 2) :=
   (⟨(evenRoute s j.val).1, Nat.lt_succ_of_le (even_route_bound s j.val j.isLt).1⟩,
@@ -229,27 +319,18 @@ private theorem odd_enumerate_injective (s : ℕ) : Function.Injective (oddEnume
 private theorem even_enumerate_surjective (s : ℕ) : Function.Surjective (evenEnumerate s) := by
   intro p
   let j : Fin (4 * s + 6) := ⟨evenInverse s (code p),
-    even_inverse_bound s (code p) (by have h := p.1.isLt; omega) p.2.isLt⟩
+    even_inverse_bound s (code p) (by change p.1.val ≤ _; have h := p.1.isLt; omega) p.2.isLt⟩
   refine ⟨j, code_injective _ ?_⟩
-  exact even_route_inverse s (code p) (by have h := p.1.isLt; omega) p.2.isLt
+  exact even_route_inverse s (code p) (by change p.1.val ≤ _; have h := p.1.isLt; omega) p.2.isLt
 
 private theorem odd_enumerate_surjective (s : ℕ) : Function.Surjective (oddEnumerate s) := by
   intro p
   let j : Fin (4 * s + 8) := ⟨oddInverse s (code p),
-    odd_inverse_bound s (code p) (by have h := p.1.isLt; omega) p.2.isLt⟩
+    odd_inverse_bound s (code p) (by change p.1.val ≤ _; have h := p.1.isLt; omega) p.2.isLt⟩
   refine ⟨j, code_injective _ ?_⟩
-  exact odd_route_inverse s (code p) (by have h := p.1.isLt; omega) p.2.isLt
+  exact odd_route_inverse s (code p) (by change p.1.val ≤ _; have h := p.1.isLt; omega) p.2.isLt
 
-private theorem even_boundary_symm (k : ℕ) (p q : RawPort) :
-    evenBoundary k p q → evenBoundary k q p := by
-  unfold evenBoundary pair
-  tauto
-
-private theorem odd_boundary_symm (k : ℕ) (p q : RawPort) :
-    oddBoundary k p q → oddBoundary k q p := by
-  unfold oddBoundary pair
-  tauto
-
+set_option maxHeartbeats 800000 in
 private theorem even_mate_unique (s : ℕ) (p q r : Port (2 * s + 2))
     (hq : evenBoundary (2 * s + 2) (code p) (code q))
     (hr : evenBoundary (2 * s + 2) (code p) (code r)) : q = r := by
@@ -263,6 +344,7 @@ private theorem even_mate_unique (s : ℕ) (p q r : Port (2 * s + 2))
   simp only [evenBoundary, ladder, pair, code, Prod.mk.injEq] at hq hr ⊢
   omega
 
+set_option maxHeartbeats 800000 in
 private theorem odd_mate_unique (s : ℕ) (p q r : Port (2 * s + 3))
     (hq : oddBoundary (2 * s + 3) (code p) (code q))
     (hr : oddBoundary (2 * s + 3) (code p) (code r)) : q = r := by
@@ -336,7 +418,7 @@ theorem even_boundary_edges_once (s : ℕ) (p q : Port (2 * s + 2))
         (even_boundary_symm _ _ _ hb)
       rw [hq]
       simp only [evenBEdge, hj]
-      exact Sym2.eq_swap _ _
+      exact Sym2.eq_swap
   refine ⟨i, he, ?_⟩
   intro r hr
   exact even_bedge_injective s (hr.symm.trans he)
@@ -372,7 +454,7 @@ theorem odd_boundary_edges_once (s : ℕ) (p q : Port (2 * s + 3))
       have hq := odd_mate_unique s _ _ _ hB (odd_boundary_symm _ _ _ hb)
       rw [hq]
       simp only [oddBEdge, hj]
-      exact Sym2.eq_swap _ _
+      exact Sym2.eq_swap
   refine ⟨i, he, ?_⟩
   intro r hr
   exact odd_bedge_injective s (hr.symm.trans he)
@@ -380,22 +462,13 @@ theorem odd_boundary_edges_once (s : ℕ) (p q : Port (2 * s + 3))
 def evenTrace (s : ℕ) : List (Port (2 * s + 2)) := List.ofFn (evenEnumerate s)
 def oddTrace (s : ℕ) : List (Port (2 * s + 3)) := List.ofFn (oddEnumerate s)
 
-private theorem even_trace_count (s : ℕ) (p : Port (2 * s + 2)) : (evenTrace s).count p = 1 := by
-  obtain ⟨j, rfl⟩ := even_enumerate_surjective s p
-  exact (List.nodup_ofFn_ofInjective (even_enumerate_injective s)).count_eq_one.mpr
-    (List.mem_ofFn.mpr ⟨j, rfl⟩)
-
-private theorem odd_trace_count (s : ℕ) (p : Port (2 * s + 3)) : (oddTrace s).count p = 1 := by
-  obtain ⟨j, rfl⟩ := odd_enumerate_surjective s p
-  exact (List.nodup_ofFn_ofInjective (odd_enumerate_injective s)).count_eq_one.mpr
-    (List.mem_ofFn.mpr ⟨j, rfl⟩)
-
 private theorem even_trace_chain (s : ℕ) : (evenTrace s).IsChain (boundaryGraph (2 * s + 2)).Adj := by
   rw [evenTrace, List.isChain_ofFn]
   intro i hi
   refine ⟨?_, ?_⟩
   · intro he
     have h := congrArg Fin.val (even_enumerate_injective s he)
+    simp only [Fin.val_mk] at h
     omega
   · change boundary _ (evenRoute s i) (evenRoute s (i + 1)) ∨ _
     have hpar : (2 * s + 2) % 2 = 0 := by omega
@@ -411,6 +484,7 @@ private theorem odd_trace_chain (s : ℕ) : (oddTrace s).IsChain (boundaryGraph 
   refine ⟨?_, ?_⟩
   · intro he
     have h := congrArg Fin.val (odd_enumerate_injective s he)
+    simp only [Fin.val_mk] at h
     omega
   · change boundary _ (oddRoute s i) (oddRoute s (i + 1)) ∨ _
     have hpar : ¬ (2 * s + 3) % 2 = 0 := by omega
@@ -423,26 +497,32 @@ private theorem odd_trace_chain (s : ℕ) : (oddTrace s).IsChain (boundaryGraph 
 private theorem even_trace_start (s : ℕ) (hne : evenTrace s ≠ []) :
     (evenTrace s).head hne = (0, 0) := by
   apply code_injective
-  rw [List.head_eq_getElem_zero]
-  simp (disch := omega) [evenTrace, evenEnumerate, code, evenRoute]
+  rw [evenTrace, List.head_ofFn]
+  change evenRoute s 0 = (0, 0)
+  simp only [evenRoute, Nat.zero_le, ↓reduceIte, Nat.zero_mod]
 
 private theorem odd_trace_start (s : ℕ) (hne : oddTrace s ≠ []) :
     (oddTrace s).head hne = (0, 0) := by
   apply code_injective
-  rw [List.head_eq_getElem_zero]
-  simp (disch := omega) [oddTrace, oddEnumerate, code, oddRoute]
+  rw [oddTrace, List.head_ofFn]
+  change oddRoute s 0 = (0, 0)
+  simp only [oddRoute, Nat.zero_le, ↓reduceIte, Nat.zero_mod]
 
 private theorem even_trace_finish (s : ℕ) (hne : evenTrace s ≠ []) :
     (evenTrace s).getLast hne = (Fin.last (2 * s + 2), 1) := by
   apply code_injective
-  rw [List.getLast_eq_getElem]
-  simp (disch := omega) [evenTrace, evenEnumerate, code, evenRoute] <;> omega
+  rw [evenTrace, List.getLast_ofFn]
+  change evenRoute s (4 * s + 6 - 1) = (2 * s + 2, 1)
+  simp (disch := omega) only [evenRoute, ↓reduceIte, Prod.mk.injEq]
+  omega
 
 private theorem odd_trace_finish (s : ℕ) (hne : oddTrace s ≠ []) :
     (oddTrace s).getLast hne = (Fin.last (2 * s + 3), 1) := by
   apply code_injective
-  rw [List.getLast_eq_getElem]
-  simp (disch := omega) [oddTrace, oddEnumerate, code, oddRoute] <;> omega
+  rw [oddTrace, List.getLast_ofFn]
+  change oddRoute s (4 * s + 8 - 1) = (2 * s + 3, 1)
+  simp (disch := omega) only [oddRoute, ↓reduceIte, Prod.mk.injEq]
+  omega
 
 /-- Every even boundary plus the actual internal seam pattern is a Hamilton
 path from R0 to Lk. The literal trace is retained for later piece expansion. -/
@@ -456,9 +536,14 @@ theorem even_boundary_hamiltonian_path (s : ℕ) :
     omega
   let w := SimpleGraph.Walk.ofSupport (evenTrace s) hne (even_trace_chain s)
   refine ⟨w.copy (even_trace_start s hne) (even_trace_finish s hne), ?_, ?_⟩
-  · intro p
-    simpa only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport]
-      using even_trace_count s p
+  · apply SimpleGraph.Walk.IsPath.isHamiltonian_of_mem
+    · apply SimpleGraph.Walk.IsPath.mk'
+      simpa only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport,
+        evenTrace] using List.nodup_ofFn_ofInjective (even_enumerate_injective s)
+    · intro p
+      obtain ⟨j, rfl⟩ := even_enumerate_surjective s p
+      simpa only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport,
+        evenTrace] using List.mem_ofFn.mpr ⟨j, rfl⟩
   · simp only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport]
 
 /-- Every odd boundary at k≥3 has the same full-path conclusion, including
@@ -473,9 +558,14 @@ theorem odd_boundary_hamiltonian_path (s : ℕ) :
     omega
   let w := SimpleGraph.Walk.ofSupport (oddTrace s) hne (odd_trace_chain s)
   refine ⟨w.copy (odd_trace_start s hne) (odd_trace_finish s hne), ?_, ?_⟩
-  · intro p
-    simpa only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport]
-      using odd_trace_count s p
+  · apply SimpleGraph.Walk.IsPath.isHamiltonian_of_mem
+    · apply SimpleGraph.Walk.IsPath.mk'
+      simpa only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport,
+        oddTrace] using List.nodup_ofFn_ofInjective (odd_enumerate_injective s)
+    · intro p
+      obtain ⟨j, rfl⟩ := odd_enumerate_surjective s p
+      simpa only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport,
+        oddTrace] using List.mem_ofFn.mpr ⟨j, rfl⟩
   · simp only [SimpleGraph.Walk.support_copy, w, SimpleGraph.Walk.support_ofSupport]
 
 /-- This all-k conclusion proves the complete symbolic port skeleton.
