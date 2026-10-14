@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c48f6539ca7e03ee310c2983b588ecf916a1e78379e10e77a48eae960a1c17c
+  normalized_sha256: sha256:7c48f6539ca7e03ee310c2983b588ecf916a1e78379e10e77a48eae960a1c17c
+cas_ref: sha256:7c48f6539ca7e03ee310c2983b588ecf916a1e78379e10e77a48eae960a1c17c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 68.4（任意隐藏初态的强制终止由整个可见隐藏商控制）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: d08d3e29b94b7f1b3d2b337a32fc2e1733e05c90f20b5f64f6102703843211ef
+    next_atom_id: 7f89cd806036af8868cf1ffe259cb34e06b598a7e2e4d86d232fa1f61ec197b5

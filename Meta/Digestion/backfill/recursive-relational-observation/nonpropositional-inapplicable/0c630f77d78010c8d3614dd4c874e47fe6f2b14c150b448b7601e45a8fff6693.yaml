@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c630f77d78010c8d3614dd4c874e47fe6f2b14c150b448b7601e45a8fff6693
+  normalized_sha256: sha256:0c630f77d78010c8d3614dd4c874e47fe6f2b14c150b448b7601e45a8fff6693
+cas_ref: sha256:0c630f77d78010c8d3614dd4c874e47fe6f2b14c150b448b7601e45a8fff6693
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义48.4只规定常量锚定集合的递推及补集记号，不断言固定点或坐标界。
+    previous_atom_id: aa2dcb38dd5dd040e72091dad0021fd0f05c4749895636aca4e25862333d0369
+    next_atom_id: aebc106b939f3615737961148076e3e14ec06686368f5e8b5eab443cc445a248

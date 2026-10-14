@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:322cd255a85052184fb92e1c90486c81747cd7bf11af9f72fc8c387a62986204
+  normalized_sha256: sha256:322cd255a85052184fb92e1c90486c81747cd7bf11af9f72fc8c387a62986204
+cas_ref: sha256:322cd255a85052184fb92e1c90486c81747cd7bf11af9f72fc8c387a62986204
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 43.10（相位像的全部整数线性关系）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: e6111c31a3d7ea0bf13bb6a173a04c0b96288ac71245939632165abe5a6966e0
+    next_atom_id: f165b9466d6e9f308a65bae3eee504d1b392afbb19cfc1053a833cc66ef37946
