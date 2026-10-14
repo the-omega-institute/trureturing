@@ -65,6 +65,49 @@ theorem actual_two_retained_edges_force_prefix {a b x y : V}
       subst y
       exact ⟨h₀, h₁, q, rfl, hq.of_cons, rfl, rfl⟩
 
+/-- Removing the actual second edge of that forced prefix leaves precisely
+the one-edge first piece and the whole actual remainder, with no vertex or
+uncut edge lost. This is the P split used by the joint-state update. -/
+theorem actual_second_edge_cut_of_prefix {a b x y : V}
+    (p : G.Walk a b) (hp : p.IsPath)
+    (hax : s(a, x) ∈ p.edges) (hxy : s(x, y) ∈ p.edges) (hya : y ≠ a) :
+    ∃ p₀ : G.Walk a x, ∃ p₁ : G.Walk y b,
+      p₀.IsPath ∧ p₁.IsPath ∧ p₀.length = 1 ∧
+      p₀.support ++ p₁.support = p.support ∧
+      p₀.edges ++ [s(x, y)] ++ p₁.edges = p.edges ∧
+      p₀.edges ++ p₁.edges = p.edges.filter (fun e => decide (e ≠ s(x, y))) := by
+  obtain ⟨h₀, h₁, q, heq, hq, _, _⟩ :=
+    actual_two_retained_edges_force_prefix p hp hax hxy hya
+  have hcut : s(a, x) ≠ s(x, y) := by
+    intro he
+    rcases Sym2.eq_iff.mp he with ⟨he₀, _⟩ | ⟨he₀, _⟩
+    · exact h₀.ne he₀
+    · exact hya he₀.symm
+  have hqcut : s(x, y) ∉ q.edges := by
+    have hn := hp.isTrail.edges_nodup
+    rw [heq] at hn
+    simp only [SimpleGraph.Walk.edges_cons, List.nodup_cons] at hn
+    exact hn.2.1
+  have hf : q.edges.filter (fun e => decide (e ≠ s(x, y))) = q.edges := by
+    apply List.filter_eq_self.mpr
+    intro e he
+    apply decide_eq_true
+    intro h
+    exact hqcut (h ▸ he)
+  let first : G.Walk a x := SimpleGraph.Walk.cons h₀ .nil
+  refine ⟨first, q, ?_, hq, rfl, ?_, ?_, ?_⟩
+  · exact SimpleGraph.Walk.IsPath.nil.cons (by
+      simpa only [SimpleGraph.Walk.support_nil, List.mem_singleton] using h₀.ne)
+  · rw [heq]
+    rfl
+  · rw [heq]
+    rfl
+  · rw [heq]
+    simp only [first, SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_nil,
+      List.filter_cons, hcut, ne_eq, not_false_eq_true, decide_true,
+      not_true_eq_false, decide_false, ↓reduceIte, hf,
+      List.singleton_append]
+
 /-- Global retained-edge membership is enough to obtain both local edges,
 then the actual prefix, at a selected actual partition piece's start. -/
 theorem actual_piece_prefix_from_retained_inventory
@@ -111,6 +154,7 @@ theorem actual_piece_suffix_from_retained_inventory
 
 #print axioms actual_partition_incident_edge_owner
 #print axioms actual_two_retained_edges_force_prefix
+#print axioms actual_second_edge_cut_of_prefix
 #print axioms actual_piece_prefix_from_retained_inventory
 #print axioms actual_piece_suffix_from_retained_inventory
 
