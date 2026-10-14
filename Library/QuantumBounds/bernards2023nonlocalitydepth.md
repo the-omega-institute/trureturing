@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2205.04250v2
 claim: "For (k,m) models with m > 2, the classical bound F_n <= n 2^(n-2) is conjectured and proving it or finding a counterexample remains open."
 strata_touched:
   - D5/S3/QuantumBounds/HybridMerminDepthBound
+  - D5/S3/QuantumBounds/NonlocalityDepthQuantumBound
 license: citation-only
 triage: anchor
 ---
@@ -47,3 +48,20 @@ The sign is evaluated by natural-number division as $(-1)^{1+\lfloor(h+1)/2\rflo
 
 - DOI: https://doi.org/10.1103/PhysRevA.107.022412
 - URL: https://arxiv.org/abs/2205.04250v2
+
+## Quantum source statement
+
+Section III.F, PDF p. 5, Eq. (28), displays:
+
+> $F_n = \sum_{\ell=1}^n (-1)^{1+\lceil\ell/2\rceil} \ell (1\ldots1\,2\ldots2) \leq n 2^{n-2}$, (28)
+
+On the same page, Eq. (29) states verbatim:
+
+> In the following, we discuss numerical findings concerning the Bell inequalities F_n for n ≤ 8 parties. We find, that the quantum bound of the inequalities is F_n = √2 n 2^{n−2} (29) up to numerical precision, which is achieved by choosing A₁ = B₁ = … = σ_x and A₂ = B₂ = … = σ_z
+
+The quantum statement reported here is numerical for at most eight parties.
+`NonlocalityDepthQuantumBound.result` proves the exact maximum for every n ≥ 3,
+all finite local dimensions, Hermitian binary observables and positive trace-one
+states. The entrywise tensor product, the Hamming weight and the existing integer
+phase encode the distinct-party-permutation sum of Eq. (28). The proof uses the
+all-party shifted operator estimate and a phase-adjusted GHZ state with X/Y settings.

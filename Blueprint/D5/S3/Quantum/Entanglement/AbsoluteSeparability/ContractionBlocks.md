@@ -46,3 +46,4 @@ Aubrun--Davidson--Muller-Hermes--Paulsen--Rahaman Theorem 3.7, printed page 9, g
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.separableCone_scalar_add_of_opNorm_le_one`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.separableCone_sum`
 - Dependency: [D5/S3/Quantum/BlockNorm/EssentiallyHermitian](../../BlockNorm/EssentiallyHermitian.md)
+- Dependency: [D5/S3/QuantumBounds/NonlocalityDepthQuantumBound](../../../QuantumBounds/NonlocalityDepthQuantumBound.md)

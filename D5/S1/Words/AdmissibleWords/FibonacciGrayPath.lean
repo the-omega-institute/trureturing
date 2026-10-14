@@ -4,7 +4,13 @@
    mirror-E: none(waiver:unbounded-path-construction)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming, mathlib/module/Mathlib.Data.List.Chain]
    utility: none
-   digest: Reflected Fibonacci word paths supply distinct admissible consecutive stages in every dimension. -/
+   digest: Reflected Fibonacci words give distinct admissible one-bit paths in every dimension. -/
+/-
+proof_shape: hamming_cons: bind-only; consumers: gray_chain,
+  D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment.weight_cons
+Escape audit unfinished for hamming_cons:
+  https://github.com/the-omega-institute/trureturing/issues/16779
+-/
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import Mathlib.InformationTheory.Hamming
@@ -92,7 +98,7 @@ private theorem head_gray (d : Nat) :
       · simp [List.head?_map, List.head?_reverse]
       · simpa using gray_nonempty (d+1)
 
-private theorem hamming_cons {d : Nat} (a b : Bool) (x y : Fin d → Bool) :
+theorem hamming_cons {d : Nat} (a b : Bool) (x y : Fin d → Bool) :
     hammingDist (Fin.cons (α := fun _ => Bool) a x)
       (Fin.cons (α := fun _ => Bool) b y) =
       (if a = b then 0 else 1) + hammingDist x y := by
@@ -166,6 +172,5 @@ theorem exists_stage_path (d h : Nat) (capacity : h + 1 ≤ Nat.fib (d+2)) :
     have adj := List.isChain_iff_getElem.mp (gray_chain d) i.val (by omega)
     simpa [idx, List.get_eq_getElem] using adj
 
-#print axioms exists_stage_path
 
 end D5.S1.Words.AdmissibleWords.FibonacciGrayPath

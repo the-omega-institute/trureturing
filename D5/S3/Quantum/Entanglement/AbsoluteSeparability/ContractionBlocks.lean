@@ -7,6 +7,7 @@
    digest: Finite phase decompositions of contractions yield separable Hermitian scalar shifts. -/
 
 import Mathlib
+import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 import D5.S3.Resource.EntanglementWitness
 import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 
@@ -139,16 +140,6 @@ private lemma contraction_posSemidef {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [he, Complex.zero_le_real]
   exact sub_nonneg.mpr (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _) |>.mpr (hC x))
 
-private lemma one_add_posSemidef_of_contraction {ι : Type*} [Fintype ι]
-    [DecidableEq ι] (C : Matrix ι ι ℂ) (hH : C.IsHermitian)
-    (hC : (1 - Cᴴ * C).PosSemidef) : (1 + C).PosSemidef := by
-  have hp := (posSemidef_conjTranspose_mul_self (1 + C)).add hC
-  have he : (1 + C)ᴴ * (1 + C) + (1 - Cᴴ * C) = (2 : ℝ) • (1 + C) := by
-    rw [conjTranspose_add, conjTranspose_one, hH.eq, two_smul ℝ]
-    noncomm_ring
-  have h := hp.smul (show (0 : ℝ) ≤ 1 / 2 by norm_num)
-  simpa only [he, smul_smul, div_mul_cancel₀ _ (by norm_num : (2 : ℝ) ≠ 0),
-    one_smul] using h
 
 private def pairBlock {n : ℕ} (C : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin 2 × Fin n) (Fin 2 × Fin n) ℂ :=
@@ -408,7 +399,7 @@ theorem separableCone_scalar_add_of_opNorm_le_one {m n : ℕ}
     have hi : (block H i i).IsHermitian := by
       ext p q
       exact congrArg (fun M => M (i, p) (i, q)) hH.eq
-    have hp := one_add_posSemidef_of_contraction (block H i i) hi
+    have hp := D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.one_add_posSemidef_of_contraction (block H i i) hi
       (contraction_posSemidef _ (block_contraction H hbound i i))
     refine ⟨1, fun _ => vecMulVec (Pi.single i (1 : ℂ)) (star (Pi.single i (1 : ℂ))),
       fun _ => 1 + block H i i, fun _ => ⟨posSemidef_vecMulVec_self_star _, hp⟩, ?_⟩
@@ -423,8 +414,5 @@ theorem separableCone_scalar_add_of_opNorm_le_one {m n : ℕ}
     · exact embeddedPair_separable i j _
         (contraction_posSemidef _ (block_contraction H hbound i j))
 
-#print axioms separableCone_sum
-#print axioms contraction_decomposition
-#print axioms separableCone_scalar_add_of_opNorm_le_one
 
 end D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks
