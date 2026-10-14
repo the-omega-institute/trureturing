@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:0afe137be5d9e5c6a592a9b96a428be679e1192f47dbac061686b4ffec482304
   normalized_sha256: sha256:0afe137be5d9e5c6a592a9b96a428be679e1192f47dbac061686b4ffec482304
 cas_ref: sha256:0afe137be5d9e5c6a592a9b96a428be679e1192f47dbac061686b4ffec482304
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/TotalVariation/ParryBilateralLaw.bilateral_reset_coding
+    target_statement_id: sha256:96ed7f4c69cba5febd8a4a848a7c04388fe3d8fb472f6233830f33524ae2debe
 receipts:
   unresolved_subitems: []
   chain_atoms:
