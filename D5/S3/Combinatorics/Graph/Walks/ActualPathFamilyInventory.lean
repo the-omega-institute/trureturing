@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualPathFamilyInventory
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Walks/EdgeSlicing]
+   anchors: []
    utility: none
    digest: Unique actual path coverage earns the full support and exact uncut-edge inventories of the same supplied Hamilton cycle. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
