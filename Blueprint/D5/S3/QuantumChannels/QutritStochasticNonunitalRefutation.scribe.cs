@@ -23,12 +23,16 @@ internal sealed class QutritStochasticNonunitalRefutationDocument : IScribeDocum
                 AssessedProvenance.FromLiterature(Source)),
             Entry("refutation", "result", "A nonunital stochastic qutrit channel", Disp(Seq(Neg, Sp, V("claim"))),
                 "Take Kraus matrices I/√2, diag(1,−1/2,−1/2)/√2, √(3/8) Matrix.single 0 1 1, and √(3/8) Matrix.single 0 2 1, with zero-based indices. Their right Gram sum is the identity, giving trace preservation, and their Kraus sum is completely positive. The resulting channel acts by Phi(X)₀₀ = X₀₀ + (3/8)(X₁₁+X₂₂), by multiplication by 1/4 on entries with exactly one index zero, and by multiplication by 5/8 on the lower-right 2 by 2 block. Its normalized Choi state sends the identity vector to one half of that vector. Yet Phi(I) = diag(7/4,5/8,5/8), whose first diagonal entry differs from one. Thus the qutrit question has a negative answer. Appendix A's unitality theorem for stochastic qubit channels concerns dimension two.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("graydon-skanes-norman-wallman-2022-qutrit-stochastic-unitality"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula StochasticFormula()
     {

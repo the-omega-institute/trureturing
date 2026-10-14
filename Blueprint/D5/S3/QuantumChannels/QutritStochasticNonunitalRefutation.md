@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/QutritStochasticNonunitalRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/graydon-skanes-norman-wallman-2022-qutrit-stochastic-unitality` (refuted) by `D5/S3/QuantumChannels/QutritStochasticNonunitalRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"graydon-skanes-norman-wallman-2022-qutrit-stochastic-unitality","declaration_gid":"D5/S3/QuantumChannels/QutritStochasticNonunitalRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Matthew A. Graydon and Joshua Skanes-Norman and Joel J. Wallman (2022). *Designing Stochastic Channels*. URL: <https://arxiv.org/abs/2201.07156v1>.
