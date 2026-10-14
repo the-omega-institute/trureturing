@@ -52,10 +52,9 @@ theorem actual_joint_three_path_update
     simp only [new₀, SimpleGraph.Walk.support_append, SimpleGraph.Walk.support_reverse,
       SimpleGraph.Walk.support_cons, List.tail_cons]
   have hs₂ : new₂.support = q₂.support ++ chain.support.tail.dropLast ++ [s, ℓ] := by
-    rw [show new₂.support = (q₂.support ++ chain.support.tail) ++ [ℓ] from by
-      simp only [new₂, SimpleGraph.Walk.support_concat, SimpleGraph.Walk.support_append],
-      ← hcs]
-    simp only [List.append_assoc, List.singleton_append]
+    have h := congrArg (fun xs : List V => q₂.support ++ xs ++ [ℓ]) hcs
+    simpa only [new₂, SimpleGraph.Walk.support_concat,
+      SimpleGraph.Walk.support_append, List.append_assoc, List.singleton_append] using h.symm
   have hsperm : (new₀.support ++ q₁.support ++ new₂.support).Perm
       (d.support ++ Λ.support ++ chain.support.tail.dropLast) := by
     apply List.perm_iff_count.mpr
@@ -70,7 +69,8 @@ theorem actual_joint_three_path_update
     simp only [new₀, SimpleGraph.Walk.edges_append, SimpleGraph.Walk.edges_reverse,
       SimpleGraph.Walk.edges_cons]
   have he₂ : new₂.edges = q₂.edges ++ chain.edges ++ [s(s, ℓ)] := by
-    simp only [new₂, SimpleGraph.Walk.edges_concat, SimpleGraph.Walk.edges_append]
+    simp only [new₂, SimpleGraph.Walk.edges_concat, SimpleGraph.Walk.edges_append,
+      List.concat_eq_append]
   have he_a : s(s, ℓ) = s(ℓ, s) := Sym2.eq_swap
   have heperm : (new₀.edges ++ q₁.edges ++ new₂.edges).Perm
       (tail.edges ++ q₀.edges ++ q₁.edges ++ q₂.edges ++ chain.edges ++

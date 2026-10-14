@@ -77,8 +77,8 @@ private theorem route_piece_support_position (ps : List (Piece G))
   have hsplit := List.take_append_drop r ps
   have hdrop := List.drop_eq_getElem_cons hr
   conv_lhs => arg 1; rw [← hsplit, List.flatMap_append, hdrop, List.flatMap_cons]
-  rw [List.getElem_append_right (by omega), Nat.add_sub_cancel_left,
-    List.getElem_append_left hi]
+  rw [List.getElem_append_right (by omega)]
+  simp only [Nat.add_sub_cancel_left, List.getElem_append_left hi]
 
 private theorem route_offsets_strict (ps : List (Piece G))
     {r s i j : ℕ} (hrs : r < s) (hs : s < ps.length)
