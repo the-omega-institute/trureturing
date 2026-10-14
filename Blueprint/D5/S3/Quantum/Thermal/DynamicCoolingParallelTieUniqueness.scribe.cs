@@ -52,7 +52,10 @@ internal sealed class DynamicCoolingParallelTieUniquenessDocument : IScribeDocum
                         "A cooling permutation in each of the M blocks sends the half-hot set to the target-excited half, so all targets initially reach that total weight. A real reflection then exchanges two orthogonal unit vectors: the equal superposition of M basis strings, each with exactly one target excited, and one basis string with every target in its ground state. The strings have total excitation counts k = ceil(n/2) and K = M floor(n/2) + r, respectively, and are fixed by the block permutation. The reflection reduces every target population by the same positive amount, the difference of their thermal weights divided by M, while every target coherence remains zero.")),
                     Paragraph(Text(
                         "The arithmetic inequality ceil(n/2) < M floor(n/2) + (N modulo M) holds under the stated assumptions except at (N, M) = (6, 2). Since thermal weights strictly decrease with excitation count when 0 < P1 < 1/2, this gives a feasible common population strictly below the single-target lower bound. Taking the infimum over global unitaries proves the claim for every allowed pair and temperature."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("reda-sacchi-macchiavello-guarnieri-2026-dynamic-cooling-tie-uniqueness"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
