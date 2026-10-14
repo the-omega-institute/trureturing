@@ -77,4 +77,6 @@ private theorem native_six_hamiltonian_cycle :
   exact ⟨iso base, w.map iso.toHom,
     SimpleGraph.Walk.IsHamiltonianCycle.map iso.toEquiv.bijective hw⟩
 
+#print axioms native_six_hamiltonian_cycle
+
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeAllSizes
