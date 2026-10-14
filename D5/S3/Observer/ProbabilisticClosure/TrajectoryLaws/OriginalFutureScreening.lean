@@ -325,7 +325,7 @@ private theorem screening_from_fiber_factor
   exact (congrArg ENNReal.toReal (hpair (q ω) A B hA hB)).trans
     ENNReal.toReal_mul
 
-private instance positiveNonempty (θ : Presentation H) : Nonempty (Positive θ) := by
+instance positiveNonempty (θ : Presentation H) : Nonempty (Positive θ) := by
   by_contra hn
   haveI : IsEmpty (Positive θ) := not_nonempty_iff.mp hn
   have hs := (trim θ).initial_sum
@@ -388,7 +388,7 @@ private theorem original_class_factor (θ : Presentation H) (t : ℤ)
     (same_law_trimming θ).2.1 (fun i => i.property) t a (includePast θ ⁻¹' A) B
     (hA.preimage (by unfold includePast; fun_prop)) hB
 
-private theorem originalClass_measurable (θ : Presentation H) (t : ℤ) :
+theorem originalClass_measurable (θ : Presentation H) (t : ℤ) :
     Measurable (originalClass θ t) :=
   (measurable_of_finite (fun i : H => classOf (trim θ).matrix (retainState θ i))).comp
     (by unfold state; fun_prop)
