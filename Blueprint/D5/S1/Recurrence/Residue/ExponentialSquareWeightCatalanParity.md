@@ -4,7 +4,7 @@
 
 The coefficients of OEIS A397242 are odd exactly one below a power of two.
 
-The first conjecture in hanna2026a397242 concerns the equation A=exp(L), where L=x+Sum (n^2-1)a(n)x^n/n^2 for n>=2. Its formal differential reading is A(0)=1 and X A'=M A, with M=X L'. The differential identity and rational uniqueness below use exactly this reading. The two conjectures modulo three are separate statements.
+The first conjecture in hanna2026a397242b concerns the equation A=exp(L), where L=x+Sum (n^2-1)a(n)x^n/n^2 for n>=2. Its formal differential reading is A(0)=1 and X A'=M A, with M=X L'. The differential identity and rational uniqueness below use exactly this reading. The two conjectures modulo three are separate statements.
 
 Indices are natural numbers. Subtraction inside an index is natural subtraction, whereas the factors n^2-1 use ring subtraction. The functions a and d have integer values; int casts a natural number to an integer, ratNat and ratInt cast to the rationals, and modTwo casts an integer to ZMod(2). All displayed fractions are rational division. The operator mk constructs a formal power series, coeff extracts a coefficient, and derivative takes the formal derivative over its indicated ring. The maps mapRat and mapTwo apply the canonical integer-to-rational and integer-to-ZMod(2) ring homomorphisms. The sets range(n) and Ico(r,n) mean 0<=j<n and r<=j<n.
 
@@ -92,7 +92,7 @@ $$\forall n: \mathbb{N}, (2 \le n) \implies (\operatorname{coeff}\left(n, \opera
 
 *Commentary.*
 
-For n>=2, substitution of a(n)=n d(n) and cancellation of the nonzero rational n gives coefficient (n^2-1)a(n)/n. This is coefficient n of X L' for the exponent in hanna2026a397242.
+For n>=2, substitution of a(n)=n d(n) and cancellation of the nonzero rational n gives coefficient (n^2-1)a(n)/n. This is coefficient n of X L' for the exponent in hanna2026a397242b.
 
 **Theorem 1.8 (Uniqueness among rational solutions).**
 
@@ -128,7 +128,7 @@ $$\forall n: \mathbb{N}, \operatorname{Odd}\left(\operatorname{a}\left(n\right)\
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a397242-exponential-square-weight-catalan-parity","declaration_gid":"D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.hanna_conjecture","resolution_kind":"proved"} -->
 
-*Citation.* Paul D. Hanna (2026). *OEIS A397242, o.g.f. A(x) = exp(x + Sum (n^2-1) a(n) x^n / n^2), parity conjecture*. URL: <https://oeis.org/A397242>.
+*Citation.* Paul D. Hanna (2026). *OEIS A397242, o.g.f. A = exp(x + Sum (n^2-1) a(n) x^n / n^2)*. URL: <https://oeis.org/A397242>.
 
 *Commentary.*
 
