@@ -1,0 +1,91 @@
+**Theorem 10.1 (Strictly positive even-degree polynomials admit anchored telescoping squares).** Let $m\ge1$ be an integer and let $d\in\mathbb R[t]$ have degree exactly $2m$, with $d(t)>0$ for every real $t$. Then there exist real polynomials $p,s$ such that
+
+$$
+\begin{aligned}
+\deg p&=m,\qquad \deg s\le m,\qquad s(0)=0,\\
+d(t)&=p(t)^2+s(t+1)^2-s(t)^2\quad(t\in\mathbb R),\\
+\big([t^m]p\big)^2&=[t^{2m}]d>0.
+\end{aligned} \tag{10.1}
+$$
+
+Proof. Write $\delta=[t^{2m}]d$. Positivity on the whole real line and the even degree imply $\delta>0$. Give the coefficient space
+
+$$
+V_m=\{s\in\mathbb R[t]:\deg s\le m,\ s(0)=0\}
+\tag{10.2}
+$$
+
+its usual finite-dimensional real topology, and set
+
+$$
+c_0=0,\qquad c_j=\sum_{\ell=0}^{j-1}d(\ell),\qquad
+\mathcal K=\{s\in V_m:|s(j)|\le\sqrt{c_j},\ 1\le j\le m\}.
+\tag{10.3}
+$$
+
+Every $c_j$ for $j\ge1$ is strictly positive. Evaluation at $1,\ldots,m$ is a linear isomorphism from $V_m$ to $\mathbb R^m$: a polynomial in its kernel vanishes at the $m+1$ distinct points $0,1,\ldots,m$, so a polynomial of degree at most $m$ in that kernel is zero; the source and target both have dimension $m$. Thus $\mathcal K$ is the inverse image of the product of closed intervals $\prod_{j=1}^m[-\sqrt{c_j},\sqrt{c_j}]$ under a linear homeomorphism. It is nonempty, compact and convex, and contains the zero polynomial.
+
+For $s\in V_m$, write $s_m=[t^m]s$, allowing $s_m=0$, and define
+
+$$
+H_s(t)=d(t)+s(t)^2,\qquad
+\lambda_s=[t^{2m}]H_s=\delta+s_m^2\ge\delta>0.
+\tag{10.4}
+$$
+
+The polynomial $H_s$ has degree exactly $2m$, real coefficients, and no real zero. Complex conjugation pairs its roots with their multiplicities, so precisely $m$ roots lie in each open half-plane. Let the lower-half-plane roots, counted with multiplicity, be $\zeta_1,\ldots,\zeta_m$. Define
+
+$$
+\begin{aligned}
+b_s(z)&=\sqrt{\lambda_s}\prod_{j=1}^m(z-\zeta_j),\\
+b_s^{\#}(z)&=\overline{b_s(\overline z)},\qquad H_s=b_s b_s^{\#},\\
+a_s(z)&=b_s(z)\frac{\overline{b_s(-1)}}{|b_s(-1)|}.
+\end{aligned} \tag{10.5}
+$$
+
+The positive square root makes the leading coefficient of $b_s$ positive real. This fixes $b_s$ uniquely because its multiset of roots is the entire lower-half-plane multiset of $H_s$. The real point $-1$ is never a root: $|b_s(-1)|^2=H_s(-1)>0$. Hence the last line is defined without choosing a branch of an argument, and
+
+$$
+a_s(-1)=|b_s(-1)|>0,\qquad
+|a_s(t)|^2=H_s(t)\quad(t\in\mathbb R).
+\tag{10.6}
+$$
+
+The leading coefficient of $a_s$ need not be positive real; the positive-leading normalization belongs to $b_s$, while the real-value anchor belongs to $a_s$. The factorization ingredient is the scalar case of real-line polynomial spectral factorization, as in [Ephremidze, arXiv:1011.3777v1, Theorem 2, p. 2](https://arxiv.org/pdf/1011.3777v1), whose factor is nonsingular in the upper half-plane. Here it is also given directly by (10.5). The coefficient-continuity and anchor assertions needed below follow from the next argument.
+
+We prove continuity even at repeated roots. If $s_\nu\to s$ in coefficient space, then $H_{s_\nu}\to H_s$ coefficientwise and $\lambda_{s_\nu}\to\lambda_s\ge\delta$. On a sufficiently small coefficient neighborhood of $s$, the coefficients of the monic polynomials $H_{s'}/\lambda_{s'}$ are uniformly bounded. The Cauchy root bound therefore places all their roots in one fixed closed disk. More explicitly, if the absolute values of all nonleading coefficients are at most $M$, every root has modulus at most $1+M$.
+
+Take any subsequence of the $s_\nu$, and enumerate the $m$ lower roots arbitrarily at each of its indices. Compactness of the product of the root disks supplies a further subsequence on which this $m$-tuple converges. No continuity of the enumeration is assumed. Every limiting root is a root of $H_s$, by coefficient convergence and the defining root equation, and lies in the closed lower half-plane. Since $H_s$ has no real roots, every such limit lies in the open lower half-plane. Along this further subsequence the products defining $b_{s_\nu}$ converge coefficientwise to a polynomial $b$ of degree $m$ with positive leading coefficient $\sqrt{\lambda_s}$. Passing to the limit in $H_{s_\nu}=b_{s_\nu}b_{s_\nu}^{\#}$ gives $H_s=bb^{\#}$. The roots of $b$ are all lower, those of $b^{\#}$ all upper, so this identity assigns to $b$ exactly every lower root of $H_s$ with its full multiplicity. Uniqueness of the positive-leading lower factor gives $b=b_s$.
+
+Thus every subsequence has a further subsequence converging to $b_s$. In finite-dimensional coefficient space this implies $b_{s_\nu}\to b_s$: otherwise a subsequence staying a fixed positive distance from $b_s$ would contradict the further-subsequence conclusion. This proves continuity of $s\mapsto b_s$. Evaluation at $-1$, complex conjugation, modulus and division by a nonzero scalar are continuous, so (10.5) proves continuity of $s\mapsto a_s$. Root collisions within a half-plane cause no exception; multiplicities are retained by the product identity, and no continuously ordered individual roots are required.
+
+Define a continuous coefficient map
+
+$$
+\mathcal F(s)(t)=\operatorname{Im}a_s(t-1).
+\tag{10.7}
+$$
+
+Here real and imaginary parts are taken coefficientwise, equivalently by evaluating at real $t$. Its degree is at most $m$, and its value at zero vanishes by (10.6), so $\mathcal F(s)\in V_m$. For $s\in\mathcal K$ and $1\le j\le m$,
+
+$$
+\begin{aligned}
+|\mathcal F(s)(j)|^2
+&\le |a_s(j-1)|^2
+=d(j-1)+s(j-1)^2\\
+&\le d(j-1)+c_{j-1}=c_j.
+\end{aligned} \tag{10.8}
+$$
+
+At $j=1$ the last inequality uses $s(0)=0=c_0$; for $j\ge2$ it uses precisely the constraint at $j-1$ in (10.3). Consequently $\mathcal F$ maps $\mathcal K$ into itself. Brouwer's fixed-point theorem for a nonempty compact convex subset of a finite-dimensional real vector space gives $`s_*\in\mathcal K`$ with $`s_*=\mathcal F(s_*)`$.
+
+Set $`p(t)=\operatorname{Re}a_{s_*}(t)`$. The fixed-point identity at $t+1$ gives $`\operatorname{Im}a_{s_*}(t)=s_*(t+1)`$ for every real $t$. Hence
+
+$$
+a_{s_*}(t)=p(t)+i s_*(t+1),\qquad
+p(t)^2+s_*(t+1)^2=d(t)+s_*(t)^2.
+\tag{10.9}
+$$
+
+Both real polynomials have degree at most $m$, and $`s_*(0)=0`$. If $h$ is any polynomial of degree at most $2m$, the leading terms of $h(t+1)$ and $h(t)$ cancel, so $\deg(h(t+1)-h(t))\le2m-1$ whenever the difference is nonzero. Apply this to $`h=s_*^2`$. Comparison of degree $2m$ in (10.9) gives $([t^m]p)^2=\delta>0$, proving that $p$ has degree exactly $m$ and establishing (10.1). $\square$
+
