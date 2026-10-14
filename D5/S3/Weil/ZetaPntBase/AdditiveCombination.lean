@@ -142,7 +142,7 @@ def elabAdditiveCombination (tk : Syntax)
     match ← expandAdditiveCombo ty e with
     | .const c => `(Eq.refl $c)
     | .proof _ p => pure p
-  let norm := norm?.getD (Unhygienic.run <| withRef tk `(tactic| ((try simp only [smul_add, smul_sub]); abel)))
+  let norm := norm?.getD (Unhygienic.run <| withRef tk `(tactic| ((try simp only [smul_add, smul_sub]) <;> abel)))
   Term.withoutErrToSorry <| Tactic.evalTactic <| ← withFreshMacroScope <|
   if twoGoals then
     `(tactic| (
