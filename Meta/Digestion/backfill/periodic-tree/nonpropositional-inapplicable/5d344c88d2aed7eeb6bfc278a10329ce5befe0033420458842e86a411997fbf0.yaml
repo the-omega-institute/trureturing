@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5d344c88d2aed7eeb6bfc278a10329ce5befe0033420458842e86a411997fbf0
+  normalized_sha256: sha256:5d344c88d2aed7eeb6bfc278a10329ce5befe0033420458842e86a411997fbf0
+cas_ref: sha256:5d344c88d2aed7eeb6bfc278a10329ce5befe0033420458842e86a411997fbf0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 展开 $u(k+n\varphi)$ 并使用 $\varphi^2=\varphi+1$，其 $\varphi$ 坐标即为 …）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: b07d4b5995cc11ad99c5fa4d2c5eaf3902118047259e7b8fdae0769ed9f5ac03
+    next_atom_id: b88d1ebac3130ea36c274708d44c7218a4a854b8dfaff27eb075b60f752632e4
