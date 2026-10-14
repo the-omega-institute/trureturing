@@ -12,6 +12,9 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
         "Actual native circle complements and literal c edges construct a Hamilton cycle on the complete two-star T core union.",
         H("Splicing the Complete Native T Core"),
         Blocks(
+            CoordinateAPI("cutStart", "The Actual T Cut Start", "The T cut starts at its owner port, except that the identity core starts literally at the identity.", true),
+            CoordinateAPI("cutGenerator", "The Actual T Cut Generator", "The two core cuts use a; each noncore cut uses b.", true),
+            CoordinateAPI("native_cut_circle_iff", "T Cut Starts Have Their Declared Circle Owners", "For m at least four, the actual cut start and the independently indexed T anchor define the same complete circle domain.", false),
             Paragraph(Text(
                 "For m at least four, configurations are the actual permutations of Fin(m+1). "
                 + "The generators a, b and c reverse the first m+1, m and m-1 positions. "
@@ -62,6 +65,35 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
                 + "prove their complete actual contact classification, or establish the "
                 + "higher simultaneous boundary induction. Those are separate remaining obligations "
                 + "for all-size three-prefix-reversal Hamiltonicity.")))));
+
+    private static Formula CoordinateFormula(string selector)
+    {
+        Formula m = F.Id("m"), p = F.Id("p"), v = F.Id("v"), i = F.Id("i"), j = F.Id("j");
+        Formula owners = Call("Sum", Call("Fin", m), Call("Fin", Call("sub", m, D(2))));
+        Formula iv = Call("val", i), li = Call("inl", i), rj = Call("inr", j);
+        Formula and(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
+        Formula body = selector switch
+        {
+            "cutStart" => and(All("i", Call("Fin", m), Eq(Call("cutStart", li),
+                Call("ite", Eq(iv, Call("sub", m, D(1))), D(1), Call("tCircleAnchor", li)))),
+                All("j", Call("Fin", Call("sub", m, D(2))), Eq(Call("cutStart", rj), Call("tCircleAnchor", rj)))),
+            "cutGenerator" => and(All("i", Call("Fin", m), Eq(Call("cutGenerator", li),
+                Call("ite", Le(Call("sub", m, D(2)), iv), Call("a", m), Call("b", m)))),
+                All("j", Call("Fin", Call("sub", m, D(2))), Eq(Call("cutGenerator", rj), Call("b", m)))),
+            "native_cut_circle_iff" => Implies(Le(D(4), m), All("p", owners,
+                All("v", Call("Configuration", m), new Formula.Logic(
+                    Call("Circle", Call("cutStart", p), v), FormulaLogicOperator.Iff,
+                    Call("Circle", Call("tCircleAnchor", p), v))))),
+            _ => throw new System.ArgumentOutOfRangeException(nameof(selector))
+        };
+        return Disp(All("m", Call("Nat"), body));
+    }
+
+    private static DocumentBlock CoordinateAPI(string selector, string title, string meaning, bool definition) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(CoordinateFormula(selector)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
+            definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
     private static Formula CycleFormula()
     {

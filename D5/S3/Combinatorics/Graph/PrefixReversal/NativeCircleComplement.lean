@@ -38,7 +38,7 @@ private theorem circleCoordinate_injective {m : ℕ} (hm : 3 ≤ m)
   have hi := (coordinateEquiv hm z).injective hsub
   exact congrArg Prod.snd hi
 
-private theorem configurationCycle_rotation {m : ℕ} (z : Configuration m)
+theorem native_configurationCycle_rotation {m : ℕ} (z : Configuration m)
     (r : Fin (m + 1)) : configurationCycle (z * finCycle r) = configurationCycle z := by
   have hr : finRotate (m + 1) ^ r.val = finCycle r := by
     simpa using rotate_pow_eq_cycle (m := m) r.val
@@ -47,7 +47,7 @@ private theorem configurationCycle_rotation {m : ℕ} (z : Configuration m)
   rw [rotate_pow_list]
   exact List.IsRotated.symm ⟨r.val, rfl⟩
 
-private theorem configurationCycle_reversal {m : ℕ} (z : Configuration m) :
+theorem native_configurationCycle_reversal {m : ℕ} (z : Configuration m) :
     configurationCycle (z * a m) = (configurationCycle z).reverse := by
   change ((List.ofFn (z * a m) : List (Fin (m + 1))) : Cycle (Fin (m + 1))) = _
   rw [full_reverse_list]
@@ -59,10 +59,10 @@ private theorem circleCoordinate_mem {m : ℕ} (z : Configuration m)
   cases s
   · left
     simpa only [circleCoordinate, Bool.false_eq_true, ↓reduceIte, mul_one] using
-      configurationCycle_rotation z r
+      native_configurationCycle_rotation z r
   · right
-    simpa only [circleCoordinate, ↓reduceIte, configurationCycle_reversal,
-      configurationCycle_rotation]
+    simpa only [circleCoordinate, ↓reduceIte, native_configurationCycle_reversal,
+      native_configurationCycle_rotation]
 
 private theorem positive_coordinate {m : ℕ} (z v : Configuration m)
     (hv : configurationCycle v = configurationCycle z) :
@@ -80,7 +80,7 @@ private theorem circleCoordinate_surjective {m : ℕ} (z v : Configuration m)
   · obtain ⟨r, hr⟩ := positive_coordinate z v hv
     exact ⟨(r, false), by simpa [circleCoordinate] using hr⟩
   · have hva : configurationCycle (v * a m) = configurationCycle z := by
-      rw [configurationCycle_reversal, hv, Cycle.reverse_reverse]
+      rw [native_configurationCycle_reversal, hv, Cycle.reverse_reverse]
     obtain ⟨r, hr⟩ := positive_coordinate z (v * a m) hva
     refine ⟨(r, true), ?_⟩
     simp only [circleCoordinate, ↓reduceIte, hr, mul_assoc, a_sq, mul_one]

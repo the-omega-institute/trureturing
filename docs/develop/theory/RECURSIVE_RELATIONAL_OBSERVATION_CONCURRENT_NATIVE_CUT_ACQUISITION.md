@@ -1476,3 +1476,825 @@ full hidden event history or completion of that broader program.
 [SPR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/SparseLiteralParityReadLowerBound.lean
 
 ## 追加锚（本行以下为增补区）
+## 14. Protected entry and the public cut geometry
+
+**Assumption 14.1 (protected entry, followed by unknown finite interference).**
+Keep the actual source, four-valued literal port, complete row and observer
+progress of Definitions 1.1–1.4. The observer is deterministic, read-only
+and initially source-blind. Its program may depend on the public finite
+prefix-free cut $P$ and an integer budget $k\geq0$. It may perform adaptive
+Reads and finite local work in an entry phase, ending with a source-free
+Release event or a Return. The writer performs zero updates from invocation
+through that event. After Release it may apply any unknown finite total
+number of global $\rho$ updates, at any permitted positions during Reads,
+local computation and the separate Return. It uses the same register and
+root throughout. Release conveys no source-dependent information.
+
+Protection is an additional scheduling hypothesis. It is neither a native
+lock construction nor a derived physical capability. Every protected
+Read counts, including a repeated, root, absent, below-hole or arbitrarily
+deep query. On **every** finite source, the entry phase must reach Release
+or Return after finitely many local steps and at most $k$ Reads. There is
+no source-dependent height, epoch, update bound, query-length bound or
+nonuniform advice in its initial state. Post-Release observations,
+materialized trees and finite computation are permitted and paid.
+Correctness means returning the fixed $R_P(u)$ of the invocation source
+on every observer-progressing history with finite interference.
+
+**Definition 14.2 (the optimization and its scope).** Let $q(P)$ be the
+minimum such worst-case protected Read bound among universally correct
+programs under Assumption 14.1, and put $q(P)=\infty$ when no finite bound
+exists. This minimizes one resource only. The achieved cost on a particular
+source, an expected cost under a supplied probability law, the size of
+installed control, address traffic and peak retained bits are different
+quantities. No probability law or total-workspace optimality is assumed.
+
+The case $k=1$ recovers the protected first-observation classification of
+Theorem 10.4; that classification and the executable positive endpoint in §11 are
+suppliers. The new question is the optimum over arbitrary protected
+multi-Read entry programs, including programs that first query far below
+an unreached cut.
+
+**Definition 14.3 (complete cuts and ordered ancestor coverage).** Write
+$a\preceq b$ when $a$ is a prefix of $b$, and $a\prec b$ for a strict
+prefix. Call $P$ complete if every infinite binary ray has a prefix in
+$P$. This includes $\{\varepsilon\}$ and excludes $\varnothing$.
+Completeness is decidable from the finite public trie: $P$ is nonempty
+and every nonterminal trie vertex has both children. Equivalently,
+
+$$
+\sum_{p\in P}2^{-|p|}=1.
+\tag{CNA.22}
+$$
+
+Indeed, choose a depth at least every cut-word length (depth zero is
+allowed for the empty cut). At that level the disjoint sets of
+extensions of cut words cover exactly that fraction of the finite level.
+An uncovered word at that level extends to an uncovered ray. This
+finite-prefix calculation concerns the public cut, not the shape of the
+unknown finite source.
+
+For complete $P$, define its internal public skeleton
+
+$$
+I=\{x: x\prec p\text{ for some }p\in P\},\qquad
+A(a)=\{x\in I:x\preceq a\}\quad(a\in I).
+\tag{CNA.23}
+$$
+
+The addresses not hidden by any cut word are exactly $I$. A covering
+sequence is a finite list $a_1,\ldots,a_m\in I$ for which
+$B_0=\varnothing$, $B_i=B_{i-1}\cup A(a_i)$,
+$d_i=|B_i\setminus B_{i-1}|\geq1$, and $B_m=I$.
+Its geometric cost is
+
+$$
+K(a_1,\ldots,a_m)=
+\max_{1\leq i\leq m}\bigl(i+\lceil\log_2 d_i\rceil\bigr).
+\tag{CNA.24}
+$$
+
+The empty sequence covers $I=\varnothing$ and has cost zero.
+Each $B_i$ is prefix-closed. The new vertices of $A(a_i)$ form one
+consecutive ancestor chain; $d_i$ is its length. In particular $K\geq m$.
+There are finitely many covering sequences because every entry adds a
+vertex, so $m\leq|I|$. No native source is enumerated in this definition.
+
+## 15. What an actual protected record enables later
+
+**Lemma 15.1 (one acquired leaf calibrates the invocation origin).**
+For every finite cut $P$, an authentic protected record
+$\operatorname{Read}(a)=\ell\in\{\alpha,\beta\}$, with the complete
+literal $a$ and its label retained, suffices for an effective continuation
+recovering the entire invocation tree, hence its complete row, under
+Assumption 14.1.
+
+**Proof.** After Release run the existing first-leaf full-tree acquisition
+of Definitions 3.1–3.2 from its own fresh stack and transcript. Theorems
+3.3 and 5.2 give a retained actual tree $T=\rho^n u$ at its validation
+Read and finite-interference termination. Here $n\geq0$ is initially
+unknown. Original-present transport, Theorem 2.2, gives
+$T|_a=\rho^n\ell$ because the protected record was acquired at invocation.
+Use the already supplied right clock (CNA.15), with
+$\eta(\alpha)=0$ and $\eta(\beta)=1$, to compute
+
+$$
+n=c(T|_a)-\eta(\ell).
+\tag{CNA.25}
+$$
+
+Both operands are computed from retained finite data. This is the actual
+invocation-to-validation update count; it is not a timestamp, a scheduler
+observation or an extra port. The original leaf address stays present.
+
+For executable inversion reuse the finite parser *delta* and its private
+*delta_sigma* proof in [NativePredecessorRowRecovery][NPR], specialized to
+rows with no hole markers. On plain trees it sends $\beta$ to $\alpha$,
+rejects $\alpha$, sends $\langle\beta,\alpha\rangle$ to $\beta$, and
+otherwise recursively pairs two successfully parsed children. The special
+pair case is disjoint from a pair of images because a root $\alpha$ is
+not in the image. Its actual-image law is $\delta(\rho t)=t$; the image
+alternatives are also supplied by [ISC] *pair_image*. Apply this parser
+$n$ times to the saved $T$. Every application succeeds and the result is
+$u$. This is local computation on records, not a reverse update of the
+register. Extract $C_P(u)$, all reached hole addresses, every blocking
+leaf, and the complete equality/disequality partition by structural
+comparison of the recovered subtrees, as in Definition 1.2.
+
+Subsequent writer updates, including updates during parsing and before
+Return, change neither the saved $T$ nor the recovered $u$. No update
+count or finite interference bound is an input to the program. $\square$
+
+**Lemma 15.2 (complete branch coverage removes the need to calibrate).**
+Let $P$ be complete. If authentic protected branch replies certify every
+vertex of $I$ as a branch at invocation, a paid later validated tree
+suffices to recover $R_P(u)$ without identifying $u$ or the update count.
+
+**Proof.** A branch reply at $a$ certifies every prefix of $a$ as a branch.
+Under the stated coverage every $p\in P$ is originally present. The
+invocation exterior is exactly the fixed public trie with address-marked
+holes at all of $P$, with no exposed concrete leaf. Homomorphism preserves
+that exterior and transports every hidden subtree by the same iterate.
+For the actual validation tree $T=\rho^n u$, native injectivity gives
+
+$$
+u|_p=u|_q\quad\Longleftrightarrow\quad T|_p=T|_q
+\qquad(p,q\in P).
+\tag{CNA.26}
+$$
+
+This reflects disequality as well as equality. Constructing $R_P(T)$
+therefore constructs $R_P(u)$. Use the same paid acquisition and progress
+suppliers as in Lemma 15.1. For $P=\{\varepsilon\}$ the row is constant
+and the zero-Read Return of Proposition 4.3 avoids acquisition entirely.
+$\square$
+
+These two continuations retain different information. A leaf record plus
+a later acquired tree identifies the origin itself. A branch-coverage
+record can leave many origins possible while making the requested row
+identical on them. Neither continuation discards the hidden partition.
+A read of a leaf inside a hidden hole would also satisfy Lemma 15.1;
+the optimum proved below does not assume such queries are prohibited.
+
+## 16. Finite native witnesses and lawful history merging
+
+**Lemma 16.1 (identical protected histories cannot be repaired after merging).**
+Suppose two finite sources $u$ and $\rho u$ give the same complete
+protected transcript to a deterministic observer, through Release or
+protected Return, but $R_P(u)\ne R_P(\rho u)$. That observer cannot solve
+the universal invocation task, regardless of its later adaptive queries,
+finite computation or retained data.
+
+**Proof.** Source-free control and the entire protected replies agree,
+so every retained record and the terminal entry action agree. A protected
+Return already has the same output on two different targets. Otherwise,
+in the history beginning at $u$, perform one global update immediately
+after Release and halt the writer. In the history beginning at $\rho u$,
+perform zero updates. Both respect protection, use their own one actual
+register throughout, and now have the identical register value $\rho u$
+and identical observer state. There is no source replacement.
+
+Give the observers progress with the writers halted. At each subsequent
+local transition the states agree; at each Read the requested literal
+and reply agree; hence all later records and outputs agree by induction.
+Finite-interference termination supplies the common finite Return.
+It cannot equal both invocation targets. An arbitrarily large later
+saved tree, certificate or local calculation does not alter this
+argument. The histories use at most one update in total. $\square$
+
+**Lemma 16.2 (the minimal finite realization of a leaf-free transcript).**
+Let $\tau$ be any realizable finite protected transcript whose replies
+are only branch and absent. Let $B$ be the prefix closure, including the
+queried vertices, of its branch-query addresses. There is a finite full
+tree $u_B$ having exactly $B$ as its internal vertices and $\alpha$ at
+every leaf. Both $u_B$ and $\rho u_B$ realize $\tau$. If $P$ is incomplete,
+or if $P$ is complete but $I\nsubseteq B$, their complete $P$-rows differ.
+
+**Proof.** A finite prefix-closed internal set determines a finite full
+shape: its leaves are the children of $B$ outside $B$, or just the root
+when $B$ is empty. Every branch address in $\tau$ is internal in that
+shape. Moreover its present-address set is contained in the present set
+of every realization of $\tau$, since every child of a certified branch
+must be present. Thus any address absent in a realization remains absent
+in $u_B$. Relabeling all its leaves $\alpha\mapsto\beta$ changes no
+shape, and is exactly $\rho u_B$. It preserves every branch and absent
+reply, including repeats and deep queries.
+
+If $P$ is incomplete, follow an uncovered infinite ray until its first
+leaf in this finite tree. That leaf is exposed in $C_P$, and changes
+label. If $P$ is complete and some vertex of $I$ is outside $B$, choose
+such a vertex with no shorter missing prefix. It is a leaf of $u_B$,
+and no cut word prefixes it. Again the concrete exterior changes from
+$\alpha$ to $\beta$ there. These are full-row differences regardless of
+the hidden partition. $\square$
+
+**Theorem 16.3 (exact sufficient form of a retained protected transcript).**
+For a realizable finite protected transcript available in full at Release, there is
+a continuation correct on every source realizing it and every allowed
+finite-interference history if and only if either it contains an actual
+leaf reply, or $P$ is complete and the prefix closure of its branch
+queries covers $I$.
+
+**Proof.** Lemmas 15.1 and 15.2 give the two executable continuations.
+If neither condition holds, the transcript is leaf-free and Lemma 16.2
+supplies the paired sources for Lemma 16.1. $\square$
+
+The necessity applies also to a procedure that discards some of its
+transcript: the paired executions have equal full histories, hence equal
+retained states. Sufficiency requires keeping the stated data. This
+result is a condition on correctness over all realizations of a
+transcript, not a claim that every individual later-tree fiber is
+ambiguous. Complete branch coverage permits a later continuation; it
+does not by itself give a protected Return with an unknown partition.
+
+**Lemma 16.4 (finite realization licenses adversarial reply paths).**
+For a procedure with the entry contract of Assumption 14.1, its all-branch
+reply path reaches Release or Return after at most $k$ Reads and finite
+local work. The following additional construction is legitimate in a
+lower bound: fix a prospective blocking address $t$, answer absent at
+strict descendants of $t$, branch outside its cone, and leave a query
+at $t$ as a leaf hit. Every finite prefix before a hit has a finite
+native realization, with a leaf at $t$ and no other queried leaf.
+
+**Proof.** Any finite all-branch prefix is realized by a complete finite
+binary tree of depth strictly larger than all its queried literal
+lengths. If after any such prefix the next local computation never
+finished, the same finite source would violate entry termination. If
+the path issued a $(k+1)$st Read, its preceding finite prefix would give
+a finite source violating the Read bound. Thus the path terminates as
+claimed; no infinite tree is an allowed input or is needed.
+
+For the blocking rule, choose a depth $H$ strictly larger than $|t|$ and
+all literal lengths in the finite prefix. Take the complete depth-$H$
+tree, truncate the cone at $t$ to a leaf, and label every leaf $\alpha$.
+A query strictly below $t$ is absent, and a query not prefixed by $t$ is
+a branch. The only queried leaf can be $t$ itself. This constructs one
+actual finite source realizing all the replies simultaneously. The same
+local-termination and Read-bound argument applies at every finite
+prefix. After any completed finite adversarial path, choose $H$ once
+for that path; the resulting source realizes the entire path from its
+invocation. Its one-step successor has the same shape and all leaves
+$\beta$. Address lengths need not have any a priori bound. $\square$
+
+## 17. Executing an ordered cover within its budget
+
+**Theorem 17.1 (geometric upper construction).**
+For complete $P$, every covering sequence from Definition 14.3 gives a
+universally correct procedure using at most its cost $K$ protected Reads.
+It retains only actual protected replies and public derived control before
+Release; its subsequent tree is acquired through paid native Reads.
+
+**Proof.** The root cut uses its constant shortcut. Otherwise keep the
+ordered transcript $\tau$, the public sequence, the current index and
+the set $B$ certified by earlier branch replies. While all scheduled
+replies are branch, actually query the successive $a_i$.
+
+A leaf reply supplies the literal and label for Lemma 15.1; mark leaf
+mode and Release. A branch reply replaces $B$ by $B_i$. If it is the
+last scheduled query, mark cover mode and Release. The remaining case
+is the first absent reply, at $a_i$. Every previously certified prefix
+is a branch in the still unchanged invocation source. Its unique first
+blocking leaf therefore lies in the ordered list
+
+$$
+\bigl(A(a_i)\setminus B_{i-1}\bigr)\setminus\{a_i\},
+\tag{CNA.27}
+$$
+
+which has exactly $d_i-1$ vertices. These are actual candidate positions
+on one chain, not candidate source trees or supplied leaf labels. When
+$d_i=1$, absent is impossible.
+
+Query a middle candidate literal. A leaf reply records the actual label
+and ends the search. Branch means that the blocker is deeper; absent
+means it is shallower. Keep the corresponding subinterval and repeat.
+An ordered successful search among $n$ candidates needs at most
+$\lceil\log_2(n+1)\rceil$ actual queries: a search tree of height $s$
+can contain $2^s-1$ candidate vertices, with one at the root and at most
+$2^{s-1}-1$ on each side. Choosing middle vertices realizes that bound.
+Here $n=d_i-1$, so a leaf is actually read within
+$\lceil\log_2 d_i\rceil$ additional Reads. Merely inferring a leaf's
+position does not waive its label Read.
+
+Consequently this absent branch costs at most
+$i+\lceil\log_2 d_i\rceil\leq K$. A direct leaf costs $i\leq K$;
+the all-branch path costs $m\leq K$. All local searches and all literals
+are finite. Each queried literal belongs to $I$, but this is a property
+of the construction, not a restriction on competing observers.
+
+After Release execute the continuation selected by the retained mode.
+Leaf mode keeps an index to the authentic $(a,\ell)$ in $\tau$; cover
+mode keeps the completed branch certificate. In both modes start the
+CNA acquisition from a fresh record, paying its root Read again, all
+traversal Reads and all failed and successful validations. The decoder
+receives exactly the public $P$, public control, the actual $\tau$ and
+mode, and this newly acquired transcript and tree $T$. It receives no
+historical register, epoch, hidden equality, source-walk handle or
+notification that the writer has stopped. Lemmas 15.1–15.2 establish
+complete invocation-row safety. Theorem 5.2 and finite local decoding
+establish termination on every allowed history. $\square$
+
+## 18. Arbitrary-address lower bounds and the exact minimum
+
+**Lemma 18.1 (each first-absent branch has a limited candidate capacity).**
+Let a universally correct procedure have protected budget $k$, and let
+$a_1,\ldots,a_t$ be its actual literals on the all-branch entry path,
+where $t\leq k$. For complete $P$, put
+
+$$
+B_i=\{x\in I:x\preceq a_j\text{ for some }j\leq i\},\qquad
+ d_i=|B_i\setminus B_{i-1}|.
+\tag{CNA.28}
+$$
+
+These $a_i$ are arbitrary literals, not necessarily in $I$.
+Whenever $d_i>0$,
+
+$$
+d_i\leq 2^{k-i}.
+\tag{CNA.29}
+$$
+
+**Proof.** There are at least $d_i-1$ newly certified vertices of $I$
+that are strict ancestors of $a_i$. If $a_i\in I$, only $a_i$ itself
+must be excluded. If it lies beyond $I$, all $d_i$ vertices are strict
+ancestors; discard one to retain the stated weaker count. Choose a set
+$S$ of $d_i-1$ such vertices. For every $t_0\in S$, no earlier branch
+query is at or below $t_0$. It is therefore consistent to put the
+invocation leaf at $t_0$: all earlier queries are branch, and query $i$
+is absent. The candidate leaf is exposed, because $t_0\in I$.
+
+Suppose $d_i>2^{k-i}$, so initially $|S|\geq2^{k-i}$. Set $r=k-i$.
+Before each remaining query maintain at least $2^r$ possible blockers,
+all consistent with the finite transcript and with no leaf yet read.
+For an arbitrary next literal $b$, discard the at most one candidate
+$t_0=b$. Every remaining candidate belongs to exactly one of two groups:
+
+- $t_0\prec b$, giving absent;
+- $t_0\npreceq b$, giving branch under finite padding.
+
+Choose a group of largest cardinality and give its reply. If $r\geq1$,
+it has at least $\lceil(2^r-1)/2\rceil=2^{r-1}$ members. Decrement $r$.
+This argument includes off-chain, below-hole, repeated and root queries.
+An arbitrarily long literal still has only these two nonleaf outcomes
+and can hit at most one candidate exactly.
+
+Every chosen finite transcript has the simultaneous finite realization
+of Lemma 16.4 for each surviving blocker. Hence the procedure cannot
+avoid this argument by infinite local work or a $(k+1)$st Read. If it
+Releases or Returns early with any candidate remaining, choose one of
+them. Otherwise after all $k-i$ further Reads at least one remains.
+Choose a final depth $H$ beyond every literal used, and realize the
+whole transcript by the finite all-alpha padded source with that leaf.
+Its $\rho$ successor has the same branch/absent transcript and a different
+exposed leaf label in the invocation row. Lemma 16.1 contradicts
+correctness even with arbitrary later computation and storage. This
+proves (CNA.29). $\square$
+
+Equivalently, $s$ remaining Reads can guarantee an actual hit among at
+most $2^s-1$ such candidates: a query hits at most one, and its two
+nonleaf continuations each have $s-1$ Reads. The finite-padding argument
+is essential. It makes this a lower bound for the native four-reply
+port on actual finite trees, rather than a presumed comparison-oracle
+restriction on the observer.
+
+**Theorem 18.2 (exact protected invocation-row budget for every finite cut).**
+Under Assumption 14.1,
+
+$$
+q(P)=
+\begin{cases}
+\infty,&P\text{ is incomplete},\\
+\displaystyle\min_{\text{covering sequences in }I}
+\max_{1\leq i\leq m}\bigl(i+\lceil\log_2 d_i\rceil\bigr),
+ &P\text{ is complete}.
+\end{cases}
+\tag{CNA.30}
+$$
+
+The empty maximum is zero. Thus, for complete $P$, a public integer $k$
+suffices exactly when there is a covering sequence with
+
+$$
+m\leq k,\qquad d_i\leq2^{k-i}\quad(1\leq i\leq m).
+\tag{CNA.31}
+$$
+
+All negative and minimality assertions already hold when the writer is
+restricted to at most one update after Release. They quantify arbitrary
+adaptive protected literal queries and arbitrary later legal observations,
+retention and finite computation.
+
+**Proof.** Fix any allegedly correct finite-budget program. Lemma 16.4
+makes its all-branch path finite. If $P$ is incomplete, Lemmas 16.2 and
+16.1 refute its terminal protected transcript. Thus no finite $k$ works.
+
+For complete $P$, Lemmas 16.2 and 16.1 force the branch-query prefix
+closure on that path to cover $I$, whether it Releases or Returns.
+Use the $B_i,d_i$ of Lemma 18.1. Delete each query
+with $d_i=0$. Project every remaining query to its deepest prefix in
+$I$. Its $I$-ancestor set, and thus its positive contribution $d_i$,
+are unchanged. The projected sequence lies in $I$, adds vertices at
+every step, and covers $I$. If a retained query has new index $j$ and
+old index $i$, then $j\leq i$; (CNA.29) gives
+$d_i\leq2^{k-i}\leq2^{k-j}$. This is a covering sequence satisfying
+(CNA.31). Deleting uninformative Reads does not pretend they were free:
+the lower bound first counted them at their original indices.
+
+Conversely, Theorem 17.1 executes every such sequence within $k$.
+Taking the finite minimum gives (CNA.30). The witness histories in all
+lower-bound steps are precisely the one-update/zero-update pair of
+Lemma 16.1, or two protected Returns with no update. $\square$
+
+**Corollary 18.3 (effective public recurrence).** For complete $P$ and a
+prefix-closed $B\subseteq I$, define $F(I)=0$ and, for $B\ne I$,
+
+$$
+F(B)=1+\min_{a\in I\setminus B}
+\max\left\{
+\left\lceil\log_2|A(a)\setminus B|\right\rceil,
+F(B\cup A(a))
+\right\}.
+\tag{CNA.32}
+$$
+
+Then $q(P)=F(\varnothing)$. The minimum and an optimal covering sequence
+are effectively computable from $P$ alone.
+
+**Proof.** Each transition adds at least one vertex, so the recurrence
+terminates on a finite set of public states. After the first query,
+the leaf outcome has no more protected work, the absent outcome has
+cost $\lceil\log_2|A(a)\setminus B|\rceil$, and the all-branch suffix
+has the residual covering cost. Taking their maximum and then minimizing
+is exactly the first-entry decomposition of (CNA.24). Theorem 18.2
+identifies that finite optimization with the unrestricted native optimum.
+$\square$
+
+This recurrence is a finite algorithm, with no asserted polynomial
+running time or optimal installation size. It optimizes ordered public
+ancestor coverage; it is not an enumeration of a bounded native source
+family and does not receive a source-dependent signature as advice.
+
+## 19. Endpoints, shape dependence and finite adaptive protection
+
+**Corollary 19.1 (small budgets and general bounds).** The root cut has
+$q(\{\varepsilon\})=0$. Every incomplete cut, including the empty cut,
+a singleton nonroot cut and a cut leaving an uncovered ray, has infinite
+uniform budget. Among complete nonroot cuts, $q=1$ exactly for
+$P=\{L,R\}$, as already supplied by Theorem 10.4. For complete $P$,
+$q(P)\leq2$ exactly when $|I|\leq3$.
+
+For nonempty $I$, let $w(I)$ be the number of its maximal vertices. Then
+
+$$
+\max\{w(I),\lceil\log_2(|I|+1)\rceil\}
+\ \leq q(P)\leq |I|.
+\tag{CNA.33}
+$$
+
+**Proof.** The root has empty $I$. For any nonroot complete cut, coverage
+needs a query. Cost one allows only one new vertex, forcing $I$ to be
+just the root. A cover needs at least one endpoint for each maximal
+vertex, giving the width bound. Summing the capacities in (CNA.31)
+gives $|I|\leq2^k-1$. Querying $I$ in an ancestor-before-descendant order
+has every $d_i=1$, proving the upper bound. Thus $q\leq2$ forces
+$|I|\leq3$. Conversely, an internal skeleton of at most three vertices
+is a chain, or the root with its two children. A chain of length two or
+three is covered in budget two, and the two-child skeleton is covered by
+querying its children, with contributions $(2,1)$. These cover all cases.
+$\square$
+
+For example the complete mixed cut $\{L,RL,RRL,RRR\}$ and the balanced
+cut $\{LL,LR,RL,RR\}$ both have budget two, even on sources ending at
+the root or before either scheduled address. An absent query is resolved
+by actually reading its blocker, not by assuming every cut word reached.
+
+**Corollary 19.2 (comb and balanced families).** For the comb
+$P_h=\{R^jL:0\leq j<h\}\cup\{R^h\}$, $h\geq1$,
+and the complete level $Q_h=\{L,R\}^h$, $h\geq1$,
+
+$$
+q(P_h)=\lceil\log_2(h+1)\rceil,\qquad
+q(Q_h)=2^{h-1}.
+\tag{CNA.34}
+$$
+
+**Proof.** The comb has a chain of $h$ internal vertices. The sum bound
+in (CNA.33) is necessary. If $h\leq2^k-1$, split this chain consecutively
+into nonempty blocks of lengths at most
+$2^{k-1},2^{k-2},\ldots,1$, omitting unused final blocks, and query their
+endpoints. Such a split exists by repeatedly taking the first block up
+to its capacity and applying the same construction to the remainder.
+It satisfies (CNA.31), proving the first equality.
+
+For $Q_h$, its $w=2^{h-1}$ maximal internal vertices force $w$ queries.
+Query those vertices in any fixed order. If query $i$ adds a chain of
+$d_i$ new ancestors, every new ancestor above its endpoint has a sibling
+subtree containing an as yet unqueried maximal internal vertex. These
+$d_i-1$ sibling subtrees are disjoint. Hence $d_i-1\leq w-i$, so
+$d_i\leq w-i+1\leq2^{w-i}$. The capacity test with $k=w$ gives the
+upper bound. $\square$
+
+Thus two cuts with eight holes can need three protected Reads (the
+seven-vertex comb) or four (the complete depth-three level). The maximum
+of the width and counting lower bounds in (CNA.33) need not be attained.
+
+**Proposition 19.3 (a strict gap above the width and counting bounds).**
+Take the complete cut whose internal set is
+
+$$
+I=\{R^j:0\leq j\leq9\}\cup\{L,RL,RRL\}.
+\tag{CNA.35}
+$$
+
+It has thirteen internal vertices and four maximal vertices, but $q=5$;
+both lower bounds in (CNA.33) give only four.
+
+**Proof.** A budget-four sequence would have to query exactly the four
+maximal vertices $L,RL,RRL,R^9$, since each needs an endpoint and there
+is no room for any other query. If $R^9$ is first, it adds ten vertices,
+exceeding capacity eight. If it is later, the side endpoints can already
+have covered at most $\varepsilon,R,RR$ on that chain, so it adds at
+least seven vertices, exceeding the remaining capacity, which is at
+most four. Budget four is impossible. The order
+$R^9,L,RL,RRL$ has contributions $(10,1,1,1)$ and cost five, giving
+sufficiency. $\square$
+
+**Proposition 19.4 (source-dependent finite protection is always possible).**
+There is one adaptive protected procedure for every finite cut $P$
+which terminates its entry phase on every finite source and recovers
+the complete invocation row, even when $q(P)=\infty$.
+
+**Proof.** Read $\varepsilon,L,L^2,\ldots$ until an actual leaf is
+returned, retain its literal and label, Release, and apply Lemma 15.1.
+If the source's leftmost leaf has depth $h$, this costs exactly $h+1$
+protected Reads and $h(h+1)/2$ submitted letters. Every source is finite,
+so its achieved cost is finite, but $h$ is unbounded over the source
+domain and is not advice to the procedure. $\square$
+
+The costs in Proposition 19.4 describe that algorithm on a source, not
+instance-optimality or an expectation. A protected entire-tree traversal
+could instead Return its row before Release, with its own unbounded
+source-dependent Read cost. These are distinct from the finite uniform
+contract. The minimum $q$ permits protected Return, but its lower bound
+already covers that option.
+
+The accepted tree is certified at its validation Read; the decoded output
+refers to invocation and need not be the row at the separate Return.
+Termination with infinitely many post-Release updates is not asserted.
+
+## 20. Retention, installation and continuation costs
+
+**Definition 20.1 (the paid interface of the optimal construction).**
+An implementation of Theorem 17.1 retains the public cut trie and covering
+sequence, current index and candidate interval, and the ordered list
+$\tau=((a_j,r_j))_{j=1}^{r}$ of its actual protected Reads. On Release
+it also retains its mode and, in leaf mode, the selected record's index.
+Every derived branch assertion is justified by a recorded branch at a
+descendant. The mode, transcript, address strings, counters and installed
+sequence occupy actual storage. In the lower bound all of them, including
+arbitrarily richer source-dependent state, agree between the paired
+executions.
+
+For complete $P$, put $D=\max_{p\in P}|p|$, $M=|P|$ and
+$L=\sum_{p\in P}(|p|+1)$. If $E=\sum_j|a_j|$ is the actual protected
+letter traffic, then
+
+$$
+r\leq q(P),\qquad E\leq q(P)\max\{D-1,0\}.
+\tag{CNA.36}
+$$
+
+The stored public trie costs $O(L)$ characters and node cells; the
+materialized sequence and full protected transcript cost
+$O(q(P)(D+1))$, with index widths additionally charged. A trie implementation
+can construct and process the protected addresses and intervals in
+$O(L+q(P)(D+1))$ logical operations after the public schedule is selected.
+Literal delivery remains from the root on every Read. Pointers within
+retained public records do not become handles into the source register.
+
+Let $W_{\rm opt}(P)$ and $S_{\rm opt}(P)$ be the actual work and peak
+storage used by a chosen implementation of the finite public optimization
+(CNA.32). If it is run during the call, those are additional costs even
+though it makes no Read and is source-blind. If precomputed, charge its
+installation work and stored literals/control instead. Dependence on
+public $P,k$ is allowed; dependence on unknown source or later interference
+is not. The formula for $q$ does not certify a minimal or free optimizer.
+
+**Mathematical consequence 20.2 (composition with the paid CNA capture).**
+Use the actual-history analytical parameters $B,N_B,H_B,A_B$ of
+Definition 5.1, still measured from the invocation source. They are not
+runtime inputs. If capture makes $J$ attempts, its exact additional
+Read and letter bills are
+
+$$
+\sum_{j=1}^{J}(N_j+1),\qquad
+\sum_{j=1}^{J}(A_j+d_j),\qquad J\leq B+1.
+\tag{CNA.37}
+$$
+
+Here $d_j$ denotes that attempt's validation-leaf depth as in Definition
+5.1, not the ancestor contribution in (CNA.24). Every repeated capture
+root, failed validation, discarded traversal and successful validation
+is included. The total bills add $r$ and $E$, respectively, and are at
+most $q(P)+(B+1)(N_B+1)$ Reads and
+$q(P)\max\{D-1,0\}+(B+1)(A_B+H_B)$ letters.
+The root shortcut has neither sum.
+
+In leaf mode the computed lag is at most $B$. A direct parser using a
+working copy of the retained tree performs at most $O(BN_B)$ additional
+logical work and uses $O(N_B)$ additional node storage. It never enlarges
+the saved tree during inversion. Retaining the validation tree and the
+working predecessor at once pays for both. Computing the clock and
+locating the retained address are finite tree traversals, included in
+the same bounds with the acquisition terms when $B=0$.
+
+The complete-row output uses the cut trie, structural comparisons and an
+explicit equality matrix, including every false entry. The work and
+storage accounting of Theorem 5.4 therefore gives the conservative bounds
+
+$$
+\begin{aligned}
+W={}&O\bigl(W_{\rm opt}(P)+(B+1)(N_B+A_B+H_B+1)\\
+ &\hspace{23mm}+L+q(P)(D+1)+BN_B+M^2N_B\bigr),\\
+S={}&O\bigl(S_{\rm opt}(P)+N_B+A_B+L+q(P)(D+1)+M^2\bigr).
+\end{aligned}
+\tag{CNA.38}
+$$
+
+If the optimizer is discarded before capture, the displayed sum for
+peak space can be replaced by the corresponding maximum; no sharp bound
+is asserted. These are character and bounded-index-cell counts in the
+model of Definition 5.1. Bit accounting additionally charges each growing
+address index, count, public optimization state and matrix index at its
+actual width; it does not assume a source-dependent machine word for free.
+Source-register storage and the writer's global substitutions are separate
+costs. Any retained transcript, validation tree or output kept after Return
+continues to occupy its actual storage.
+
+For the adaptive search of Proposition 19.4, retaining its entire prefix
+transcript takes $O((h+1)^2)$ characters; discarding previous replies and
+keeping the authentic final address/label and required control uses
+$O(h+1)$ characters plus indices before capture. Both charge all $h+1$
+Reads and all submitted letters. This optional retention change is not
+a claim of minimum bits or minimum total workspace.
+
+## 21. Suppliers, primary precedents and the recovery boundary
+
+**Mathematical citation 21.1 (precise source reuse).** The native alphabet,
+free ordered pairing and substitution are [GFT] *Source* and
+*substitution*. [ACQ] *Address*, *Reply* and *readout* implement exactly
+the finite literal/four-reply interface: true/false source labels denote
+alpha/beta, while false/true address letters denote left/right. The row
+is [ACPD] *literalRecord*, with its complete *actualPartition* and
+*canonicalRow_record_iff*. No constructor-only surrogate is used.
+
+The transported address in Lemma 15.1 is supplied by [NDP]
+*original_present_transport*. Its clock is [DOR] *rightClock* and
+*right_clock_iterate*, whose private *clock_step* establishes the native
+increment. The inverse is [NPR] *delta*, using its private
+*sigma_not_alpha* and *delta_sigma* on actual images. Native injectivity
+is supplied through [STC] *source_transport_centralizer*; [ISC]'s private
+*substitution_injective*, *intrinsic_coordinates* and *pair_image*
+expose the corresponding ancestry and image boundaries. Primitive
+ancestry alone is not an invocation timestamp.
+
+The finite full-tree padding pattern has existing suppliers [NCRP]
+private *pad*, *pad_reply* and *padded_values*. Those declarations concern
+their specified row/class assignments. Lemmas 16.4 and 18.1 explicitly
+construct and justify the adaptive protected-phase finite realizations;
+they do not claim that the existing class-root theorem already handles
+an independent writer or this origin target. Likewise [NSD]'s private
+replay/descriptor arguments, *bounded_read_support* and *transfer*, and
+[SPR]'s private chronology arguments and public parity lower bounds retain
+their serial Run, installed-family and recorded-epoch hypotheses.
+
+The actual later acquisition, validation equality, finite-interference
+termination and resource bills are Theorems 3.3 and 5.2–5.4 of this volume.
+The endpoint results in §§7 and 10–13 remain suppliers; in particular the
+one-protected-Read classification is not a new contribution here.
+[NBP, Assumption 1.3 and Theorems 2.2, 4.3][NBP] require their authentic
+origin, old support/birth records and authenticated lag. [NAR, §§11–12][NAR]
+requires its truthful same-history row inputs. The protected-leaf bridge
+actually acquires an origin calibration; it does not silently assume
+those richer inputs. Source inspection supplies the stated correspondence,
+not a new Lean compilation or kernel certificate.
+
+**Mathematical citation 21.2 (search, prefix codes and concurrent histories).**
+Bose, Cardinal, Iacono, Koumoutsos and Langerman, *Competitive Online Search
+Trees on Trees*, [author preprint, introduction and search-tree model,
+arXiv:1908.00848v1](https://arxiv.org/pdf/1908.00848v1), defines a vertex
+query which succeeds or names the remaining connected component. On a
+path this is ordered binary search. The candidate chain after an absent
+Read has precisely the success/shallower/deeper comparison structure,
+with a paid alpha/beta observation required for success. The paper's
+online rotations, unit-cost pointer moves and general component oracle
+are not this native port. Its competitive results do not imply (CNA.30).
+The arbitrary-literal reduction in Lemma 18.1 supplies the missing
+correspondence before that comparison capacity is used.
+
+Huffman, *A Method for the Construction of Minimum-Redundancy Codes*,
+[primary paper, p. 1098, restriction (b) and its explanation](https://compression.ru/download/articles/huff/huffman_1952_minimum-redundancy-codes.pdf),
+requires that no message code occur as the initial digits of a longer
+message code. On a binary alphabet, $0\mapsto L$, $1\mapsto R$ gives
+the prefix-free words whose prefixes form the public trie in Definition
+14.3. The same page defines the probability-weighted mean length in its
+equation (2). That coding objective supplies neither a source probability
+law here nor a worst-case native Read budget. A terminal code word also
+does not promise that its address exists in an arbitrary finite native
+tree; the early blockers in (CNA.27) are separate actual-source data.
+
+Herlihy and Wing's history and linearization definitions, [primary paper,
+§2](https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf), distinguish
+invocation from a valid observation instant between invocation and
+response. Theorem 3.3 supplies the latter. Formula (CNA.25) or invariant
+(CNA.26), with actual protected evidence, is needed to recover the former.
+
+Afek, Attiya, Dolev, Gafni, Merritt and Shavit, *Atomic Snapshots of Shared
+Memory*, [authors' manuscript, §§2–3](https://www.cs.tau.ac.il/~afek/papers/snapshot.ps),
+uses sequence numbers to detect movement between collects, and stored
+writer views for wait-free completion. Neither those fields nor that
+writer cooperation exists here. Its specification and double-collect
+argument motivate separating endpoint safety from completion, but provide
+no native protection interval or invocation snapshot. The finite-total-
+interference premise here is weaker than wait-free termination against
+arbitrary ongoing writers.
+
+Fischer, Lynch and Paterson, *Impossibility of Distributed Consensus with
+One Faulty Process*, [primary paper, §2 and Lemma 2](https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf),
+uses deterministic configurations and schedules, including runs with
+identical observable evolution from suitably differing initial states.
+Lemma 16.1 uses that indistinguishability method with its own explicit
+same-register histories. No consensus, failed-process, message-channel
+or bivalence theorem is imported into the present model.
+
+**Mathematical consequence 21.3 (geometry, origin memory and relative time).**
+The geometric quantity $d_i$ has two simultaneous meanings: a branch
+reply certifies that many new ancestor vertices, whereas absent leaves
+$d_i-1$ possible exposed origin blockers. Later information can settle
+the complete row once either the real blocker label has calibrated the
+origin or every public exterior vertex has been certified branch.
+The ordered capacities record this tradeoff. They depend on how ancestor
+chains overlap and on when they are queried, rather than on cut size,
+maximum depth or width separately.
+
+In the leaf continuation, the actual retained origin relation and a later
+finite acquired tree recover the invocation source and the relative
+number of updates. In the cover continuation the row is recoverable
+without either of those stronger identifications. An extra retained
+clock, guard or whole tree changes the available interface: the strictly
+row-only necessity conditions of §8 cannot be transferred to it. The
+complete row itself continues to mean an exterior and a full relation
+on hidden occurrences, including concrete early guards and disequalities.
+
+These are repo-derived ordinary proofs of the protected multi-Read bridge,
+the finite-realization capacity bound and the all-cut optimum. Classical
+search, prefix geometry, native transport, inversion and CNA acquisition
+are antecedents, not claimed inventions. No worldwide originality, new
+Lean verification, physical spacetime identification or completion of
+the broader RRO program is asserted. The unknown event positions,
+physical duration and pre-invocation provenance are not recovered by
+knowing the relative update count. Sharp total workspace and address/
+retention tradeoffs, and a physical realization of protection, remain
+separate questions.
+
+**Definition 21.4 (bounded falsification criterion).** A finite test can
+compare (CNA.32) with an independent adaptive decision game on all
+realizable prunings of small public skeletons, allowing additional
+below-hole literal queries. In that game a directly observed leaf ends
+the search, while a leaf-free terminal must certify the full skeleton.
+Test the resulting executable schedule on finite labelled native trees,
+compare its decoded **complete** invocation row at several later lags,
+and run the supplied acquisition under actual finite update interleavings.
+Separately realize leaf-free transcripts by $u_B,\rho u_B$, including
+deep, absent and repeated queries, perform the one actual post-Release
+update in the first history, and check both the identical future register
+and the different invocation exteriors when coverage fails.
+
+A bounded instance takes all ordered internal skeletons with at most six
+vertices together with all complete cuts of maximum depth three. Its
+independent decision game permits literals through one level below the
+maximum cut depth. For the cuts of maximum depth three, use all labelled
+sources of height at most three and lags $0,1,2$ for decoding, and sources
+of height at most two for eight
+fixed finite capture-event patterns with at most two scheduled updates,
+also allowing one update during decoding and one before Return. For the
+merging check, use all shapes of height at most three and literal menus
+of size at most two through depth three, supplemented by repeated and
+three-query menus. Comb lengths through 32, balanced levels through four
+and (CNA.35) check the displayed geometric specializations. These are
+finite falsification bounds, not assumed source or schedule restrictions
+in any theorem.
+
+Decisive counterconditions are a smaller adaptive-game value on the tested
+interface, a budget overrun, a wrong computed lag or inverse, a lost guard,
+an incorrect true or false partition entry, or a failed claimed finite
+realization/history merge. Finite bounds do not certify arbitrary-address
+minimality, all-source entry totality or arbitrary-schedule progress.
+Those obligations are carried by Lemmas 16.1–16.4, Theorem 17.1,
+Lemma 18.1 and the cited CNA progress proof, rather than by enumeration.
+
+[NPR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.lean
+[NCRP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootPadding.lean
+
+## 追加锚（本行以下为增补区）

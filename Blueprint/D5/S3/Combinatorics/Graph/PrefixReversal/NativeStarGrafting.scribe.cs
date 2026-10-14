@@ -32,7 +32,9 @@ internal sealed class NativeStarGraftingDocument : IScribeDocumentDefinition
                         + "circle Circle(x). Then there is an actual Hamilton cycle q on their full union, "
                         + "based at the configuration x. Every old edge other than {x,y} occurs in q. "
                         + "In each nonzero supplier gap, every native a/b edge other than that gap's "
-                        + "actual b cut occurs in q. The retained edges belong to this same constructed "
+                        + "actual b cut occurs in q. For every supplier gap i, the actual c edge from "
+                        + "z_i*b to z_i*b*c also occurs in q, including the final return to gap zero. "
+                        + "The retained edges and new seams belong to this same constructed "
                         + "cycle, including old c edges; the theorem does not choose unrelated witnesses.")),
                     Paragraph(Text(
                         "Open the supplied old cycle at its actual contact edge, rotate and reverse as "
@@ -50,7 +52,10 @@ internal sealed class NativeStarGraftingDocument : IScribeDocumentDefinition
                         + "Hamilton cycle from these actual full paths and real connections. Opening the "
                         + "old cycle removes exactly its contact edge. The native complement inventory "
                         + "retains every other a/b edge in a new circle, and injective induced edge maps "
-                        + "and the exact spliced edge list carry both inventories into q."))),
+                        + "and the exact spliced edge list carry both inventories into q. Adjacent "
+                        + "indexed pieces place every interior seam into that literal edge list. "
+                        + "The final piece is identified from the list's actual last element, and "
+                        + "(b*c)^m=1 identifies the initial closing edge as the final supplier seam."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "The contact intersection and occurrence of the old b edge are explicit mathematical "
@@ -85,9 +90,14 @@ internal sealed class NativeStarGraftingDocument : IScribeDocumentDefinition
         Formula newInventory = All("i", Call("Fin", m), Implies(Not(Eq(val(i), D(0))),
             All("u", union, All("v", union, All("g", conf, Implies(newPremises,
                 Member(edge(F.Id("u"), F.Id("v")), Call("edges", q))))))));
+        Formula seamInventory = All("i", Call("Fin", m), Some("u", union, Some("v", union,
+            And(Eq(val(F.Id("u")), Call("mul", gap, b)),
+                And(Eq(val(F.Id("v")), Call("mul", val(F.Id("u")), c)),
+                    Member(edge(F.Id("u"), F.Id("v")), Call("edges", q)))))));
         Formula cycle = Some("start", union, And(Eq(val(start), z),
             Some("q", Call("Walk", Call("domainGraph", Call("GraftDomain", u, z)), start, start),
-                And(Call("IsHamiltonianCycle", q), And(oldInventory, newInventory)))));
+                And(Call("IsHamiltonianCycle", q),
+                    And(oldInventory, And(newInventory, seamInventory))))));
         Formula hypotheses = And(Call("IsHamiltonianCycle", w),
             And(Eq(val(y), Call("mul", z, b)), And(Member(cut, Call("edges", w)), contact)));
         return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),

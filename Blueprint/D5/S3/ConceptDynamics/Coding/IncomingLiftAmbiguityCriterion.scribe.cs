@@ -37,6 +37,12 @@ internal sealed class IncomingLiftAmbiguityCriterionDocument : IScribeDocumentDe
         "The original-edge code of a finite incoming lift is classified by unordered fiber ambiguity.",
         H("Exact memory and bounded periodic collisions"),
         Blocks(Describe.Lean(
+            DescribeId.Create("numbered-path-concatenation"),
+            DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.concatenate_paths"),
+            H("Concatenation preserves the numbered word and incoming lift"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For any natural matrix A, any state type Q and any incoming lift L, concatenate a length-d numbered path p from i to j with a length-b path q from j to k. There is a path r of length d+b from i to k whose complete numbered word is word(p) ++ word(q). For every state z over k, lifting r at z equals lifting p at the state obtained by lifting q at z. Induction on p gives q in the empty case and preserves the first numbered edge in the cons case. No finiteness of Q, essentiality or positive-length hypothesis is required. This is the existing proof-local supplier exposed at its unique owner and reused by the original BDR Proposition 3.4 derivation; it has no new mathematical-content credit."))),
+            DescribeRole.Theorem), Describe.Lean(
             DescribeId.Create("incoming-lift-ambiguity-criterion"),
             DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.incoming_lift_ambiguity_criterion"),
             H("The specified code and the longest surviving ambiguity"),

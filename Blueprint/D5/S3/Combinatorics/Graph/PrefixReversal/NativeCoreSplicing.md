@@ -4,9 +4,45 @@
 
 Actual native circle complements and literal c edges construct a Hamilton cycle on the complete two-star T core union.
 
+**Definition 1.1 (The Actual T Cut Start).**
+
+$$\forall m \in \mathrm{Nat},\; \left(\forall i \in \mathrm{Fin}\left(m\right),\; \mathrm{cutStart}\left(\mathrm{inl}\left(i\right)\right) = \mathrm{ite}\left(\mathrm{val}\left(i\right) = \mathrm{sub}\left(m, 1\right), 1, \mathrm{tCircleAnchor}\left(\mathrm{inl}\left(i\right)\right)\right)\right) \land \left(\forall j \in \mathrm{Fin}\left(\mathrm{sub}\left(m, 2\right)\right),\; \mathrm{cutStart}\left(\mathrm{inr}\left(j\right)\right) = \mathrm{tCircleAnchor}\left(\mathrm{inr}\left(j\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/PrefixReversal/NativeCoreSplicing.cutStart` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The T cut starts at its owner port, except that the identity core starts literally at the identity.
+
+**Definition 1.2 (The Actual T Cut Generator).**
+
+$$\forall m \in \mathrm{Nat},\; \left(\forall i \in \mathrm{Fin}\left(m\right),\; \mathrm{cutGenerator}\left(\mathrm{inl}\left(i\right)\right) = \mathrm{ite}\left(\mathrm{sub}\left(m, 2\right) \le \mathrm{val}\left(i\right), \mathrm{a}\left(m\right), \mathrm{b}\left(m\right)\right)\right) \land \left(\forall j \in \mathrm{Fin}\left(\mathrm{sub}\left(m, 2\right)\right),\; \mathrm{cutGenerator}\left(\mathrm{inr}\left(j\right)\right) = \mathrm{b}\left(m\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/PrefixReversal/NativeCoreSplicing.cutGenerator` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two core cuts use a; each noncore cut uses b.
+
+**Theorem 1.3 (T Cut Starts Have Their Declared Circle Owners).**
+
+$$\forall m \in \mathrm{Nat},\; 4 \le m \Rightarrow \left(\forall p \in \mathrm{Sum}\left(\mathrm{Fin}\left(m\right), \mathrm{Fin}\left(\mathrm{sub}\left(m, 2\right)\right)\right),\; \forall v \in \mathrm{Configuration}\left(m\right),\; \mathrm{Circle}\left(\mathrm{cutStart}\left(p\right), v\right) \Leftrightarrow \mathrm{Circle}\left(\mathrm{tCircleAnchor}\left(p\right), v\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversal/NativeCoreSplicing.native_cut_circle_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For m at least four, the actual cut start and the independently indexed T anchor define the same complete circle domain.
+
 For m at least four, configurations are the actual permutations of Fin(m+1). The generators a, b and c reverse the first m+1, m and m-1 positions. Let tau exchange position zero with the last position. CoreDomain(m) is the union of the two insertion stars supplied by a*c and tau*a*c. Each star is specified by deleting its last label from the actual oriented tuple circle, allowing whole reversal. The graph coreGraph(m) is the full three-generator Cayley graph induced on this independently specified union. CoreDeletedEdge(m) is the literal set of old T cuts: one a edge at each core and one b edge at each noncore port. It is specified from those actual ports before any paths or cycle are chosen.
 
-**Theorem 1.1 (One Actual Hamilton Cycle Covers the Whole Core Union).**
+**Theorem 1.4 (One Actual Hamilton Cycle Covers the Whole Core Union).**
 
 $$\forall m \in \mathrm{Nat},\; 4 \le m \Rightarrow \left(\exists z \in \mathrm{CoreVertices}\left(m\right),\; \mathrm{val}\left(z\right) = 1 \land \left(\exists w \in \mathrm{Walk}\left(\mathrm{coreGraph}\left(m\right), z, z\right),\; \mathrm{IsHamiltonianCycle}\left(w\right) \land \left(\left(\exists y \in \mathrm{CoreVertices}\left(m\right),\; \mathrm{val}\left(y\right) = \mathrm{c}\left(m\right) \land \mathrm{headOption}\left(\mathrm{edges}\left(w\right)\right) = \mathrm{some}\left(\mathrm{Sym2}\left(z, y\right)\right)\right) \land \left(\forall x \in \mathrm{CoreVertices}\left(m\right),\; \forall y \in \mathrm{CoreVertices}\left(m\right),\; \forall g \in \mathrm{Configuration}\left(m\right),\; \left(\left(g = \mathrm{a}\left(m\right) \lor g = \mathrm{b}\left(m\right)\right) \land \left(\mathrm{val}\left(y\right) = \mathrm{rightMultiply}\left(\mathrm{val}\left(x\right), g\right) \land \left(\neg \mathrm{CoreDeletedEdge}\left(m, \mathrm{Sym2}\left(\mathrm{val}\left(x\right), \mathrm{val}\left(y\right)\right)\right)\right)\right)\right) \Rightarrow \mathrm{mem}\left(\mathrm{Sym2}\left(x, y\right), \mathrm{edges}\left(w\right)\right)\right)\right)\right)\right)$$
 
@@ -26,7 +62,10 @@ This theorem constructs the entire initial two-star core for every m at least fo
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/NativeCoreSplicing.cutGenerator`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/NativeCoreSplicing.cutStart`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/NativeCoreSplicing.native_core_hamiltonian_cycle`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/NativeCoreSplicing.native_cut_circle_iff`
 - Dependency: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeCircleOwnership](NativeCircleOwnership.md)
 - Dependency: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeSwitches](NativeSwitches.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/PathRingSplicing](../Walks/PathRingSplicing.md)

@@ -12,6 +12,8 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
         "A native a/b circle has complete actual cut complements, with supports exhausting its independently defined rotation-and-reversal domain.",
         H("Complete Native Circle Cut Pieces"),
         Blocks(
+            CoordinateAPI("native_configurationCycle_rotation", "Actual Rotation Preserves the Tuple Cycle", "Right multiplication by any finCycle rotation preserves the actual tuple modulo rotations.", false),
+            CoordinateAPI("native_configurationCycle_reversal", "Actual Full Reversal Reverses the Tuple Cycle", "Right multiplication by a reverses the actual configuration tuple cycle.", false),
             Paragraph(Text(
                 "Let m be at least three and let z be a permutation of Fin(m+1). Circle(z,v) means that the "
                 + "actual circular tuple of v equals that of z or its whole reversal; only rotations are "
@@ -56,6 +58,26 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
                 + "equivalences cover every configuration in the independent circle domain, with no finite search. "
                 + "Connecting multiple circles still requires actual connecting edges, distinct circle ownership "
                 + "and complete coverage of the intended larger domain.")))));
+
+    private static Formula CoordinateFormula(string selector)
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), r = F.Id("r");
+        Formula cycle(Formula v) => Call("configurationCycle", v);
+        Formula body = selector switch
+        {
+            "native_configurationCycle_rotation" => All("r", Call("Fin", Add(m, D(1))),
+                Eq(cycle(Mul(z, Call("finCycle", r))), cycle(z))),
+            "native_configurationCycle_reversal" => Eq(cycle(Mul(z, Call("a", m))), Call("reverse", cycle(z))),
+            _ => throw new System.ArgumentOutOfRangeException(nameof(selector))
+        };
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m), body)));
+    }
+
+    private static DocumentBlock CoordinateAPI(string selector, string title, string meaning, bool definition) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(CoordinateFormula(selector)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
+            definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
     private static DocumentBlock Complement(string id, string name, string title, bool aCut, string proof) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
