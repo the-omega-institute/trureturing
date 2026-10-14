@@ -190,3 +190,78 @@ noncomputable def registration.{config,seed,tape} : LeanInformationAudit.Contrac
 #print axioms registration
 end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ScheduledViewCongruence
+noncomputable section
+universe u
+
+abbrev Parameters := Σ A : Type u, Σ _ : Bool, List A
+@[reducible] def signature : Signature.{u+1,u,0,0,0} where
+  Params := Parameters.{u}
+  State p := p.1 → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ p q => view p.2.1 p.2.2 q) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ => []) (fun e => nomatch e)
+
+@[reducible] def arena : Arena.{u+1,u,0,0,0} where
+  signature := signature.{u}
+  Law R := ∀ {A : Type u} (stop : Bool) (xs : List A) (q r : A → Bool)
+    (_same : ∀ i ∈ xs, q i = r i),
+    R.readout () ⟨A,stop,xs⟩ q = view stop xs r
+
+private theorem positive : arena.{u}.Law actual.{u} := view_congr
+private theorem faithful_bridge : (type_of% (@view_congr.{u})) ↔ arena.{u}.Law actual.{u} := Iff.rfl
+private theorem negative : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  have bad := h false [ULift.up ()] (fun _ : ULift.{u} Unit => true)
+    (fun _ => true) (by simp)
+  simp [rejected,realize,view] at bad
+private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
+  intro role
+  refine ⟨⟨ULift.{u} Unit,false,[ULift.up ()]⟩,fun _ => true,fun _ => false,?_⟩
+  simp [actual,realize,view]
+
+def evidence : Registration arena.{u} (type_of% (@view_congr.{u})) where
+  actual := actual.{u}
+  bridge := faithful_bridge
+  variation := ⟨positive,rejected.{u},negative⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected.{u},(by intro j hj; exact (hj (Subsingleton.elim _ _)).elim),
+        (by funext e; exact nomatch e),negative⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{u+1,0,1,0,0,0,u+1,u,0,0,0,0}
+    (@view_congr.{u}) (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor)) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ScheduledViewCongruence.view_congr,
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ScheduledViewCongruence.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{u} ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature.{u} actual.{u}.readout actual.{u}.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables,
+    definition := none, coordinates := #[0,1,2],
+    readouts := #[{
+      path := #["body","body","body","body","body","body","fn","arg"],
+      stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms evidence
+#print axioms registration
+end
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ScheduledViewCongruence
