@@ -48,6 +48,18 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Owner + ".gramPsd"), H("gramPsd"),
                 StatementSource.FromAuthor(Disp(Formula8())), AssessedProvenance.FromRepo(Paper),
                 Blocks(Paragraph(Text("The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hermitian-projection-complement-psd"),
+                DeclarationHandle.Create(Owner + ".hermitian_projection_complement_psd"), H("Positive complementary projection"),
+                StatementSource.FromAuthor(Disp(ProjectionComplement())), AssessedProvenance.FromRepo(Paper),
+                Blocks(Paragraph(Text("The complement of a Hermitian idempotent is positive semidefinite."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("matrix-penrose-exists"),
+                DeclarationHandle.Create(Owner + ".matrix_penrose_exists"), H("Matrix Penrose inverse"),
+                StatementSource.FromAuthor(Disp(MatrixPenrose())), AssessedProvenance.FromRepo(Paper),
+                Blocks(Paragraph(Text("Every rectangular complex matrix admits a Penrose inverse: both absorption identities hold and both products are Hermitian. The construction transports the finite-dimensional Moore–Penrose inverse through Matrix.toEuclideanLin."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("psd-summand-projection"),
+                DeclarationHandle.Create(Owner + ".psd_summand_projection"), H("Projection of positive summands"),
+                StatementSource.FromAuthor(Disp(SummandProjection())), AssessedProvenance.FromRepo(Paper),
+                Blocks(Paragraph(Text("A Hermitian matrix that fixes the sum of positive semidefinite matrices fixes each summand on both sides."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("stategram-diag"),
                 DeclarationHandle.Create(Owner + ".stateGram_diag"), H("stateGram diag"),
                 StatementSource.FromAuthor(Disp(Formula9())), AssessedProvenance.FromRepo(Paper),
@@ -89,4 +101,32 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
 
     private static Formula Formula10() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Parenthesized(Seq(D(1), Sp, Leq, Sp, F.Id("n"))), Sp, To, Sp, Forall, Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("EuclideanSpace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))))), Sp, Comma, Sp, Parenthesized(Seq(F.Id("IsIncoherent"), Sp, Parenthesized(Parenthesized(Seq(F.Id("Matrix"), Sp, Dot, Sp, F.Id("gram"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Psi))))), Sp, To, Sp, F.Id("IsAntidistinguishable"), Sp, Psi);
+
+    private static Formula X(string name) => F.Id(name);
+    private static Formula C => Seq(Mathbb, Grp(X("C")));
+    private static Formula Naturals => Seq(Mathbb, Grp(X("N")));
+    private static Formula FinOf(string name) => Seq(X("Fin"), Sp, X(name));
+    private static Formula Mat(string rows, string cols) => Seq(X("Matrix"), Sp, Parenthesized(FinOf(rows)), Sp, Parenthesized(FinOf(cols)), Sp, C);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Parenthesized(Seq(X(name), Sp, Colon, Sp, type)), Sp, Comma, Sp, body);
+    private static Formula Imp(Formula h, Formula body) => Seq(Parenthesized(h), Sp, To, Sp, body);
+    private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula Multiply(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
+    private static Formula Property(Formula a, string name) => Seq(Parenthesized(a), Dot, Operatorname, Grp(X(name)));
+    private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
+    private static Formula SumF => Seq(Sum, Sp, X("i"), Sp, Colon, Sp, FinOf("n"), Sp, Comma, Sp, App(X("F"), X("i")));
+    private static Formula ProjectionComplement() => All("d", Naturals, All("P", Mat("d", "d"),
+        Imp(Property(X("P"), "IsHermitian"), Imp(Eqn(Multiply(X("P"), X("P")), X("P")),
+            Property(Seq(D(1), Sp, Minus, Sp, X("P")), "PosSemidef")))));
+    private static Formula MatrixPenrose() => All("n", Naturals, All("d", Naturals, All("A", Mat("d", "n"),
+        Seq(Exists, Sp, Parenthesized(Seq(X("B"), Sp, Colon, Sp, Mat("n", "d"))), Sp, Comma, Sp,
+            And(Eqn(Multiply(Multiply(X("A"), X("B")), X("A")), X("A")),
+                And(Eqn(Multiply(Multiply(X("B"), X("A")), X("B")), X("B")),
+                    And(Property(Multiply(X("A"), X("B")), "IsHermitian"), Property(Multiply(X("B"), X("A")), "IsHermitian"))))))));
+    private static Formula SummandProjection() => All("n", Naturals,
+        All("F", new Formula.TypeArrow(FinOf("n"), Mat("n", "n")),
+            Imp(All("i", FinOf("n"), Property(App(X("F"), X("i")), "PosSemidef")),
+                All("Q", Mat("n", "n"), Imp(Property(X("Q"), "IsHermitian"),
+                    Imp(Eqn(Multiply(Parenthesized(SumF), X("Q")), SumF), All("i", FinOf("n"),
+                        Eqn(Multiply(Multiply(X("Q"), App(X("F"), X("i"))), X("Q")), App(X("F"), X("i"))))))))));
 }
