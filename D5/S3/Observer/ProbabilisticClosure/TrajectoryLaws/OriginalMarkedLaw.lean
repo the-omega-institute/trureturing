@@ -190,7 +190,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
       have h3 : -t ≤ (t.natAbs : ℤ) := by simpa using (Int.le_natAbs (a := -t))
       omega⟩
   have unpack_measurable : Measurable unpack := by
-    apply measurable_pi_lambda
+    apply Measurable.of_eval
     intro t
     exact (measurable_pi_apply _).comp ((measurable_pi_apply _).comp measurable_subtype_coe)
   have unpack_block (x : T) (l : ℕ) (i : Fin (2 * l + 1)) :
@@ -213,7 +213,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
     dsimp [t] at *
     omega
   let ν : ProbabilityMeasure (ℤ → S) :=
-    threadLaw.map (unpack_measurable.comp (measurable_pi_apply 0)).aemeasurable
+    threadLaw.map (fun z => unpack (z 0))
   have ν_center (l : ℕ) :
       (ν : Measure (ℤ → S)).map (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) =
         (pLaw (2 * l)).toMeasure := by
