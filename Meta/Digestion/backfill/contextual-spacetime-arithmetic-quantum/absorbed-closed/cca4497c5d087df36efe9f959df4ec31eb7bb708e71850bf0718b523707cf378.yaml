@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cca4497c5d087df36efe9f959df4ec31eb7bb708e71850bf0718b523707cf378
+  normalized_sha256: sha256:cca4497c5d087df36efe9f959df4ec31eb7bb708e71850bf0718b523707cf378
+cas_ref: sha256:cca4497c5d087df36efe9f959df4ec31eb7bb708e71850bf0718b523707cf378
+coverage_gids:
+  - gid: D5/S3/Quantum/Decoherence/ReducedRecordAccessDefect.reduced_irreversibility_is_access_defect
+    target_statement_id: sha256:f8d574eab94482ad0fe872baf6484e832f4e70891030356821d6abce077d9c4f
+receipts:
+  unresolved_subitems: []

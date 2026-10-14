@@ -4,7 +4,19 @@
 
 A complete quantum-state readout does not make internal self-evaluation exhaustive.
 
-**Theorem 1.1 (Empirical completeness coexists with reflexive incompleteness).**
+**Theorem 1.1 (The embedded square root of two).**
+
+$$(Real.sqrt\left(2\right): Complex)^{2} = 2$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Existence/EmpiricalReflexiveSeparation.complex_sqrt_two_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The real square root of two, embedded in Complex, has square two. This identity normalizes the rank-one qubit projectors.
+
+**Theorem 1.2 (Empirical completeness coexists with reflexive incompleteness).**
 
 $$\exists context \in \operatorname{Fin}\left(3\right) \to \operatorname{RankOneContext}\left(2\right),\; \operatorname{Injective}\left((rho: \operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right) \mapsto \operatorname{contextReadout}\left(context, \operatorname{matrix}\left(rho\right)\right))\right) \land \left(\forall evaluation \in \operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right) \to \left(\operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right) \to Bool\right),\; \neg (state \mapsto \operatorname{not}\left(\operatorname{evaluation}\left(state, state\right)\right)) \in \operatorname{range}\left(evaluation\right)\right)$$
 
@@ -22,6 +34,7 @@ The concrete witness uses the three standard mutually unbiased qubit bases. The 
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/Existence/EmpiricalReflexiveSeparation.complex_sqrt_two_sq`
 - Truth anchor: `D5/S3/Observer/Existence/EmpiricalReflexiveSeparation.empirical_complete_reflexive_incomplete`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../../Quantum/Foundation/FiniteStateChannel.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../../Quantum/PureState/PureStateHandshake.md)
