@@ -95,10 +95,10 @@ internal static class TruthExportCommand
         return true;
     }
 
-    internal static bool IsTruthInput(string path) => LeanClosureValidator.IsReportLean(path)
+    internal static bool IsTruthInput(string path) => path.EndsWith(".lean", StringComparison.Ordinal)
         || path == RepositoryPathPolicy.AssumptionRegistryPath
         || FrozenStatePath.IsUnderRoot(path)
-        || path is "lean-toolchain" or "lakefile.toml" or "lake-manifest.json";
+        || path is "lean-toolchain" or "lakefile.toml" or "lake-manifest.json" or "lean-report-inputs.json";
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
