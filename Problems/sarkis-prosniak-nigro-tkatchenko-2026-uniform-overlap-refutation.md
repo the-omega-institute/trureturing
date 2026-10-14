@@ -64,7 +64,7 @@ The module defines w_min as 1ᵀE_{λ_min}1 with the repository's spectral proje
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Dynamics/QuantumBatteryUniformOverlapRefutation.lean` (390 lines).
+The canonical source is `D5/S3/Quantum/Dynamics/QuantumBatteryUniformOverlapRefutation.lean` (382 lines).
 - It defines `lamMin`, `wmin` and `claim`, and proves `result : ¬ claim` with the witness G₁₀ on `Fin 1225`, built on the structured vertex type and transported by an explicit equivalence.
 - It uses the frozen `idempotent` of `D5/S3/Quantum/Dynamics/AverageMixingTraceMaximum` and the frozen `eig_dot_zero` of `D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees` (an eigenbasis vector with a different eigenvalue is orthogonal to an eigenvector), with pinned Mathlib spectral theory (`Matrix.IsHermitian.eigenvectorBasis`), Cauchy–Schwarz and `Equiv.sum_comp`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
