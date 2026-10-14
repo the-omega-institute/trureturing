@@ -7779,3 +7779,411 @@ dominate these coefficients on their shorter ranges. All exterior and
 unspent-credit terms in LC8 remain, so neither this conditional branch
 nor the preprint count alone supplies the missing strict signed bound
 or a proof of RH.
+
+## Local pole cancellation exceeds the small absolute-norm allowance
+
+Retain WT1--WT3 and MR5's actual smoothed test, original full windows
+and every maximizing tie. Set $F_X(x)=\widetilde f_X(e^x)$ and use
+$\widehat F_X(z)=\int_{\mathbb R}F_X(x)e^{-izx}dx$. This is the same
+real even compact smooth test as MT5, which gives
+
+$$
+\widehat F_X(i/2)=\widehat F_X(-i/2)
+=\frac{\mathsf P_X^{\rm Weil}}2,\qquad
+\mathsf P_X^{\rm Weil}=\mathsf P_X
++O_\chi\!\left(L_X\frac{\log b_X}{\sqrt{b_X}}\right),
+$$
+
+where $b_X=\min_t\mathcal B_X(t)$. Fix $0<r_*<\log2$, and let
+$c_X\in L^1(\mathbb R)$ be real and even, supported in $[-r_*,r_*]$.
+It changes no prime-power evaluation of $F_X$. For either
+$\epsilon\in\{1,-1\}$, suppose $H_X=\epsilon F_X+c_X$ satisfies
+$\widehat H_X(i/2)=\widehat H_X(-i/2)=0$. Evenness then gives
+
+$$
+\int_{\mathbb R}c_X(x)\cosh(x/2)dx
+=-\epsilon\frac{\mathsf P_X^{\rm Weil}}2,\qquad
+\boxed{\|c_X\|_1\ge
+\frac{\mathsf P_X^{\rm Weil}}{2\cosh(r_*/2)}.}
+\tag{WT4}
+$$
+
+The inequality is the usual bounded-weight integral estimate; no new
+generic norm theorem is asserted. Its actual-source scale follows
+without redoing the continuum account. The
+[whole-horizon growth comparison](#the-whole-horizon-growth-hypothesis-fails)
+already supplies $\mathsf P_X/S_X\to\infty$ for
+$S_X=\int_{t_0}^{t_m}\sqrt{B(t)}\log B(t)dt$.
+Since $S_X\ge L_X\sqrt{b_X}\log b_X$, the displayed MT5 error is
+negligible relative to $\mathsf P_X$. Reuse CR17's
+$b_X/\ell_X\to\infty$ and the original scales:
+
+$$
+\frac{\sqrt{\ell_X}}{M_X}
+=\sqrt{\frac d8}\,
+\frac{X^{\eta/2}}{\sqrt{\log X}}\longrightarrow\infty,
+\qquad
+\boxed{\frac{\|c_X\|_1}{M_XL_X}\longrightarrow\infty.}
+\tag{WT5}
+$$
+
+Here the unchanged $1-\Theta<\eta<1/2$ and $\Theta\le1$ imply
+$\eta>0$, including $\Theta=1$. No upper bound on $b_X/X$ or
+bounded normalized lag is used.
+
+Thus a prime-free local correction cannot both cancel these pole
+moments and satisfy the sufficient absolute allowance
+$\|c_X\|_1=o(M_XL_X)$. For general corrections this does not force a large full signed
+pole-minus-archimedean contribution: cancellation between large terms
+remains outside this absolute-norm estimate. An integrable
+correction suffices for WT4; an explicit-formula application still
+requires its own smoothness and domain conditions.
+
+In the [adopted Connes--Consani theorem](../Weil/connesconsani2021archimedean.md),
+the vanishing condition is on the factor $g$. If $H=g*g^*$ and
+$\widehat g(-i/2)=0$, both pole moments of $H$ vanish; their vanishing
+alone supplies neither a factor nor positivity. Also a local correction
+leaves $\epsilon F_X$ unchanged outside $[-r_*,r_*]$, so its growing
+support still violates that theorem's fixed support contract. WT4--WT5
+are a paper application boundary, without Lean verification or a new
+Robin upper estimate. The required signed comparison and RH remain
+unproved.
+
+## A smooth paid completion narrows the signed local-correction boundary
+
+Keep the same MR5 test $F=F_X$, full windows, all endpoint ties and
+common horizon $U$ from MT1--MT6. Put
+$C=B^{\rm end}_{\max,X}$, $Q=Q_X$, $Y=\mathsf Y_X$, $L=L_X$ and
+$D=2+\sqrt C/Q$. The following is an actual-source paper application;
+the smooth spectral factorization and small-support spectral floor are
+reused from the sources cited below. No generic positivity theorem,
+Lean verification or improvement of the original Robin upper is asserted.
+
+### Complete the actual test without losing smoothness
+
+MR1 and MR5 give $\|F\|_\infty+\|F\|_1+\|F'\|_1\ll L$.
+For the second derivative, use MT1 with weight $r^{3/2}$ rather than
+MT2's $r^2$. Its four terms cost respectively
+
+$$
+O_{\rho,a}(\sqrt B/Q),\qquad O_{\rho,a}(1),\qquad
+O_{\rho,a}(1),\qquad
+s_B\int_B^U O_\rho(v^{3/2}|k'(v)|)dv=O_\rho(1).
+$$
+
+The third term is the remote $U$ endpoint; it is retained. The final
+bound follows from MT1's displayed $k'$ and $s_B=\sqrt B\log B$,
+without a ceiling on $U/B$. In the additive coordinate,
+
+$$
+(r\partial_r)^2(\sqrt r\,w)
+=\tfrac14\sqrt r\,w+2r^{3/2}w'+r^{5/2}w''.
+$$
+
+Integrate with $dx=dr/r$, then against the actual residence. The fixed
+MR5 calibration contributes $O_\chi(L)$. Consequently
+
+$$
+\|F''\|_1\ll LD,\qquad
+|\widehat F(\xi)|\ll
+L\min(1,|\xi|^{-1},D|\xi|^{-2})\quad(\xi\ne0).
+\tag{WT6}
+$$
+
+Fix $0<\tau<\log2$. Choose a fixed nonnegative real even smooth $u$
+with sufficiently narrow compact support in $(-\tau/2,\tau/2)$.
+For $u^*(x)=\overline{u(-x)}$, put $\psi=u*u^*$. Then $\psi\ge0$,
+$\widehat\psi\ge0$, its support is compactly contained in
+$(-\tau,\tau)$, and the choice can ensure
+$\widehat\psi\ge m>0$ on $[-2,2]$.
+Let $I_0=[-2,2]$ and
+$I_j=\{\xi:2^j\le|\xi|\le2^{j+1}\}$ for $j\ge1$. Define
+
+$$
+a_j=m^{-1}2^j\sup_{\xi\in I_j}|\widehat F(\xi)|,
+\qquad c_X(x)=\sum_{j\ge0}a_j\psi(2^jx).
+\tag{WT7}
+$$
+
+These bands cover the real axis. At each frequency in $I_j$, the
+$j$th Fourier summand alone is at least $|\widehat F|$; every other
+summand is nonnegative. WT6 gives
+
+$$
+a_0\ll L,\qquad a_j\ll L\min(1,D2^{-j})\ (j\ge1),\qquad
+\sum_j2^{-j}a_j\ll L,\qquad
+\sum_j(1+j)a_j\ll L(1+\log D)^2.
+$$
+
+There is no smoothing after taking this majorant. For each fixed $X$,
+the actual $F$ is compact smooth, so for every $N$ one also has
+$a_j\ll_{X,N}2^{-j(N-1)}$. Taking $N>k+1$ proves uniform convergence
+of the $k$th derivative series for every $k$. All supports lie in one
+fixed compact subinterval of $(-\tau,\tau)$; hence
+$c_X\in C_c^\infty(-\tau,\tau)$ is real, even and nonnegative.
+The $L^1$ summability permits Fourier interchange and proves
+$\widehat c_X\ge|\widehat F|$. Thus both $c_X-F$ and $c_X+F$ are
+positive definite. No change to $F$ or its prime evaluations is needed.
+
+### Pay the full correction, including all complex zeros
+
+For an additive test $H$, use MT5's exact normalization
+
+$$
+G_H(s)=\int_{\mathbb R}H(x)e^{(s-1/2)x}dx,\qquad
+\mathcal P(H)=G_H(0)+G_H(1)
+=\int_{\mathbb R}2\cosh(x/2)H(x)dx,
+$$
+
+and $\mathscr W(H)=\mathcal P(H)+\mathcal A(H)-\Pi(H)$, where
+$\mathcal A(H)=-\mathcal W_{\mathbb R}(r^{-1/2}H(\log r))$
+and $\Pi$ is the complete finite-prime term. This is the full Weil
+functional, not the archimedean part alone.
+For $\psi_j(x)=\psi(2^jx)$, the full archimedean integral satisfies
+$|\mathcal A(\psi_j)|\ll_\tau1+j$: near zero use smooth evenness,
+between scales $2^{-j}$ and $1$ integrate the subtraction against
+$dx/x$, and retain its exponential tail beyond the support. The same
+bound holds for the absolute integral, so the weighted summability
+above justifies Fubini, including the $c_X(0)$ subtraction.
+Also $|\mathcal P(c_X)|\ll_\tau\|c_X\|_1\ll_\tau L$.
+
+For every nontrivial zero $\varrho=\beta+i\gamma$, two integrations
+by parts on the shrinking bump give, uniformly in $0\le\beta\le1$,
+
+$$
+|G_{\psi_j}(\varrho)|\ll_\tau
+\min(2^{-j},2^j/\gamma^2)\quad(\gamma\ne0).
+$$
+
+Use MT3's full multiplicity count and reciprocal-square tail, split at
+$\max(4,2^j)$, keeping both ordinate signs and all low zeros. They give
+$\sum_\varrho m_\varrho|G_{\psi_j}(\varrho)|\ll_\tau1+j$.
+Thus the correction's complete account is
+
+$$
+\boxed{
+|\mathcal P(c_X)|+|\mathcal A(c_X)|
++\sum_\varrho m_\varrho|G_{c_X}(\varrho)|
+\ll_\tau L(1+\log D)^2
+\ll_\tau LY^2=o(M_XL_X).}
+\tag{WT8}
+$$
+
+Its prime term is zero by $\tau<\log2$. Absolute convergence justifies
+all correction interchanges. The last two ways of accounting for the
+same explicit formula do not create two independent reserves.
+The final scale uses only $Q\ge1$, $C\le e^Y$ and the original
+$Y^2/M_X\to0$; no bounded clock ratio, changed window or restriction
+excluding $\Theta=1$ is introduced.
+
+### A restricted local replacement has a large signed debit
+
+Now fix $\tau$ sufficiently small that the existing
+[Suzuki small-window floor](../Weil/frankliebseiringer2006hardy.md#reuse-the-stronger-small-window-spectral-floor)
+has $\lambda^W_{\tau/2}>0$, in addition to $\tau<\log2$.
+Suppose a real even $c_X^\flat\in C_c^\infty(-\tau,\tau)$ satisfies
+
+$$
+c_X^\flat-F_X\text{ is positive definite},\qquad
+\widehat{c_X^\flat-F_X}(i/2)
+=\widehat{c_X^\flat-F_X}(-i/2)=0.
+\tag{WT9}
+$$
+
+No existence of such replacements is asserted. Their pole condition
+implies $\mathcal P(c_X^\flat)=\mathsf P_X^{\rm Weil}$.
+Set $Z=c_X^\flat+c_X$. This is compact smooth with the same small
+support, and it is positive definite since it is the sum of
+$c_X^\flat-F_X$ and $F_X+c_X$. Reuse the smooth Boas--Kac
+factorization in [Connes--Consani, Proposition 3.2, manuscript p.17](../Weil/connesconsani2021archimedean.md):
+$Z=v*v^*$ with smooth $v$ supported in $[-\tau/2,\tau/2]$.
+The factor may be complex and need not be even; Suzuki's stated domain
+covers it. Therefore
+$\mathscr W(Z)\ge\lambda^W_{\tau/2}\|v\|_2^2
+=\lambda^W_{\tau/2}Z(0)$.
+
+Positive definiteness gives $|Z(x)|\le Z(0)$. Separately, $c_X\ge0$
+gives $\mathcal P(Z)\ge\mathsf P_X^{\rm Weil}$. Together,
+
+$$
+\mathsf P_X^{\rm Weil}\le\mathcal P(Z)
+\le8\sinh(\tau/2)Z(0),\qquad
+\boxed{\mathscr W(c_X^\flat)\ge
+\frac{\lambda^W_{\tau/2}}{8\sinh(\tau/2)}
+\mathsf P_X^{\rm Weil}-O_\tau(L_XY^2).}
+\tag{WT10}
+$$
+
+WT4--WT5's actual-source comparison gives
+$\mathsf P_X^{\rm Weil}/(M_XL_X)\to\infty$. Consequently WT10
+forces $\mathscr W(c_X^\flat)/(M_XL_X)\to+\infty$ along any cofinal
+family satisfying WT9. Unlike the absolute-norm obstruction, this
+excludes even a signed $O(M_XL_X)$ upper allowance for this restricted
+class. The argument uses WT9's upper-oriented positive-definite
+comparison and vanishing pole moments; arbitrary local corrections and
+wider supports are not covered.
+
+WT7--WT8 do not supply those vanishing moments: their pole mass is
+only $O_\tau(L_X)$, whereas the actual test's pole mass is larger than
+$M_XL_X$. Moreover, $c_X-F_X$ retains the original growing support.
+Real-axis Fourier order does not determine the sign of the full Weil
+functional at the complex zero arguments. The missing same-source
+signed comparison on this growing-support test, and hence the original
+strict Robin upper and RH, remain unproved. This continuation retains
+an application of existing source results, not a literature-priority
+claim or a new formalized theorem.
+
+## A remote completion cancels the actual poles at small signed cost
+
+Keep WT6--WT8's actual $F_X$, $c_X$ and $H_X=c_X-F_X$, with all
+original windows, maximizing ties, layers and common horizon. This
+application reuses the complete explicit formula and the
+[Johnston--Yang cumulative prime-power error](../Weil/johnstonyang2022pnt.md).
+The autocorrelation construction and the all-support constrained Weil
+criterion in [Connes--Consani, Appendix C, Proposition C.1](../Weil/connesconsani2021archimedean.md#vanishing-constraints-and-the-remaining-semilocal-comparison)
+are existing tools. The additional interface here is an explicit
+pole-null completion of this same test, with its support and signed
+cost paid on the original scales. No generic criterion, literature
+priority or Lean verification is asserted.
+
+### Add positive-definite mass far beyond the original support
+
+Write $A_X=\log\mathsf V_X$ for MR5's original additive support
+ceiling for $F_X$; FH1 gives $A_X=O((\log X)^4)$. To distinguish that width from
+the pole deficit, put
+
+$$
+N_X=-\mathcal P(H_X)
+=\mathsf P_X^{\rm Weil}-\mathcal P(c_X)>0.
+$$
+
+The inequality holds cofinally: WT4--WT5 give
+$\mathsf P_X^{\rm Weil}/(M_XL_X)\to\infty$, whereas WT8 gives
+$\mathcal P(c_X)=O_\tau(L_X)$ and $M_X\to\infty$.
+The support bound and WT6--WT8's $L^1$ estimate also give
+$N_X\ll_\tau L_Xe^{A_X/2}$.
+Use the same fixed nonzero even nonnegative autocorrelation $\psi$
+as WT7. For $R>A_X+2\tau+\log2$, define
+
+$$
+q_R(x)=2\psi(x)+\psi(x-R)+\psi(x+R),\qquad
+\widehat q_R(\xi)=2(1+\cos R\xi)\widehat\psi(\xi)\ge0.
+$$
+
+This is the usual autocorrelation identity applied to
+$u+u(\cdot-R)$, not a new positivity theorem.
+Evenness gives the exact moment and completion
+
+$$
+\mathcal P(q_R)=2(1+\cosh(R/2))\mathcal P(\psi),\qquad
+e_X=\varepsilon_Xq_{R_X},\qquad
+\varepsilon_X=\frac{N_X}{\mathcal P(q_{R_X})}>0,
+\qquad H_X'=H_X+e_X.
+\tag{WT11}
+$$
+
+Thus $H_X'$ remains real, even, compact smooth and positive definite.
+Since $\mathcal P(H_X')=0$ and it is even, both individual pole
+moments $G_{H_X'}(0)$ and $G_{H_X'}(1)$ vanish. Also
+$c_X'=c_X+e_X$ still satisfies $\widehat c_X'\ge|\widehat F_X|$.
+The auxiliary completion is supported in
+$[-R_X-\tau,R_X+\tau]$; the original $F_X$ and its arithmetic
+evaluations have not changed.
+
+### Retain every remote prime power in the signed account
+
+For $R>\tau+\log2$, the central bump has no prime-power term and
+the negative translated bump does not meet $\log n$ for $n\ge2$.
+Consequently the complete prime term is
+
+$$
+\Pi(q_R)=2\sum_{n\ge2}\Lambda(n)n^{-1/2}\psi(\log n-R).
+$$
+
+Set
+$\eta_\tau(R)=\sup_{|v-R|\le\tau}9.39v^{1.515}
+e^{-0.8274\sqrt v}$, with $R-\tau\ge\log2$.
+Apply the cited cumulative bound for $\Psi(t)-t$ to the compact
+weight $w_R(t)=2t^{-1/2}\psi(\log t-R)$. Its endpoint terms vanish
+and
+$w_R'(t)=2t^{-3/2}[\psi'(\log t-R)-\psi(\log t-R)/2]$.
+Stieltjes integration therefore gives
+
+$$
+\Pi(q_R)=e^{R/2}\mathcal P(\psi)
++O_\psi(e^{R/2}\eta_\tau(R)).
+$$
+
+Here the main term is exactly $\int w_R(t)dt$, using evenness of
+$\psi$. The sum includes all prime powers in the added band
+$|\log n-R|<\tau$; it is not replaced by a prime-free correction.
+The full Gamma convention in MT5 gives for the translated pair
+
+$$
+\mathcal A\bigl(\psi(\cdot-R)+\psi(\cdot+R)\bigr)
+=-2\int_0^\infty
+\frac{e^{-x/2}\psi(x-R)}{1-e^{-2x}}\,dx
+=O_\psi(e^{-R/2}).
+$$
+
+Its value at zero is zero, so it has no Gamma subtraction term.
+The central term retains its whole contribution $2\mathcal A(\psi)$,
+including the subtraction outside the support. Since
+$\mathcal P(q_R)=(2+e^{R/2}+e^{-R/2})\mathcal P(\psi)$,
+the same test's pole and prime main terms cancel. Thus
+
+$$
+|\mathscr W(q_R)|\ll_\psi1+e^{R/2}\eta_\tau(R),\qquad
+\boxed{|\mathscr W(e_X)|\ll_\psi
+N_X\bigl(e^{-R_X/2}+\eta_\tau(R_X)\bigr).}
+\tag{WT12}
+$$
+
+This pays the full signed functional, not the sum of the absolute
+pole and prime contributions. Indeed $\mathcal P(e_X)=N_X$ and
+$\Pi(e_X)=N_X+O_\psi(N_X[e^{-R_X/2}+\eta_\tau(R_X)])$ are both
+large on the original scale. No absolute complex-zero-sum estimate
+for $e_X$ is inferred.
+
+### Choose a sufficient radius and transfer the original target
+
+Take $Z_X=1+A_X+\log X$ and one fixed $K$ with
+$0.8274\sqrt K>3$. Put $R_X=KZ_X^2$. It eventually satisfies the
+separation required above, and the polynomial factor in
+$\eta_\tau(R_X)$ is absorbed by the strict exponential slack:
+
+$$
+\eta_\tau(R_X)=O_\tau(e^{-3Z_X}),\qquad
+N_X(e^{-R_X/2}+\eta_\tau(R_X))=o(L_X),\qquad
+R_X=O((\log X)^8).
+\tag{WT13}
+$$
+
+This uses the already owned square-root-logarithm PNT error; a sharper
+PNT supplier is unnecessary for this payment. For each fixed $k$,
+$\|e_X^{(k)}\|_1\le4\varepsilon_X\|\psi^{(k)}\|_1$ and
+$\varepsilon_X\ll_\psi N_Xe^{-R_X/2}$, so its small ordinary norms
+do not express the large exponentially weighted pole mass.
+Linearity and WT8 now give
+
+$$
+\mathscr W(H_X')=\mathscr W(H_X)+o(L_X),\qquad
+\mathscr W(c_X')=O_\tau(L_XY_X^2)=o(M_XL_X).
+\tag{WT14}
+$$
+
+A lower bound for $\mathscr W(H_X')$ with a fixed strict margin on
+the original $M_XL_X$ scale would therefore transfer to $H_X$ with
+the same margin and an $o(M_XL_X)$ allowance. This does not reselect
+a window, discard a tie or impose a bounded normalized clock, and it
+includes $\Theta=1$ on its original parameter range.
+
+WT10's obstruction concerns a fixed small-support replacement, so it
+does not apply to this remote completion. Conversely, the added support
+does not satisfy the fixed prime-free support contract of the
+archimedean positivity theorem. The all-support constrained criterion
+still needs its positivity estimate. The added remote prime powers
+must also be present in any semilocal comparison; no bound for their
+compressed trace, or for the enlarged completion's semilocal trace,
+is supplied by WT12. The missing same-test signed lower bound, the
+original strict Robin upper and RH remain unproved.
