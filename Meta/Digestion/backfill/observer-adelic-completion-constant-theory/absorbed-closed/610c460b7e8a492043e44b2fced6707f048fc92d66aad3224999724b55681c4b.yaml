@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:610c460b7e8a492043e44b2fced6707f048fc92d66aad3224999724b55681c4b
   normalized_sha256: sha256:610c460b7e8a492043e44b2fced6707f048fc92d66aad3224999724b55681c4b
 cas_ref: sha256:610c460b7e8a492043e44b2fced6707f048fc92d66aad3224999724b55681c4b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockPowerOPE.power_state_coefficients
+    target_statement_id: sha256:7d6e9723709a841168637b15f23cd8f3327527a22d75c25da334cfb43df11166
 receipts:
   unresolved_subitems: []
   chain_atoms:
