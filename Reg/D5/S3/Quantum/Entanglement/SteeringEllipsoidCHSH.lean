@@ -4,6 +4,7 @@ import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+open _root_.D5.S3.QuantumBounds.CHSHWitness renaming TwoQubitMatrix → TwoQubit
 open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
   (vlen centre)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

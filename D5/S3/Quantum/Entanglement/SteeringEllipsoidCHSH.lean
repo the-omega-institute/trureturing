@@ -22,13 +22,13 @@ open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
     kron_sub vlen_e3 ev)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (spin sigma)
+open D5.S3.QuantumBounds.CHSHWitness renaming TwoQubitMatrix → TwoQubit
 
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation (pauli_hermitian)
 open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow (trace_hermitian_product_real)
 
 namespace D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 
-abbrev TwoQubit := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ
 def bell (a a' b b' : Fin 3 → ℝ) : TwoQubit := spin a ⊗ₖ spin (b + b') + spin a' ⊗ₖ spin (b - b')
 def chshValues (ρ : TwoQubit) : Set ℝ :=
   {r | ∃ a a' b b' : Fin 3 → ℝ, vlen a = 1 ∧ vlen a' = 1 ∧ vlen b = 1 ∧ vlen b' = 1 ∧
