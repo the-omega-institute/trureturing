@@ -121,7 +121,7 @@ theorem native_actual_q_even_three_fragments {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
   obtain ⟨hlink, hs, hf, _⟩ :=
     actual_ordered_path_is_join ordered Λ hstart hfinish hseams hΛsupport
   let rest := List.ofFn fun i : Fin (2 * s + 2) => ordered i.succ
-  have hlist : ordered 0 :: rest = List.ofFn ordered := (List.ofFn_succ ordered).symm
+  have hlist : ordered 0 :: rest = List.ofFn ordered := (List.ofFn_succ (f := ordered)).symm
   let actual := Λ.copy hs.symm hf.symm
   have hactualSupport : actual.support = (ordered 0 :: rest).flatMap fun z => z.walk.support := by
     rw [SimpleGraph.Walk.support_copy, hlist]
@@ -149,8 +149,7 @@ theorem native_actual_q_even_three_fragments {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
   have hipos : 0 < s + 1 := by omega
   have hi : s + 1 < (ordered 0 :: rest).length := by rw [hlist, List.length_ofFn]; omega
   have hbfinish : ((ordered 0 :: rest)[s + 1]'hi).finish = sv (0, 1) := by
-    rw [hlist]
-    simpa only [List.getElem_ofFn] using hposition
+    simpa only [hlist, List.getElem_ofFn] using hposition
   have hboundaryInventory' : ∀ e,
       e ∈ (ordered 0 :: rest).flatMap (fun z => z.walk.edges) ↔ e ∈ w.edges ∧ e ∉ K := by
     rw [hlist]
@@ -257,7 +256,7 @@ theorem native_actual_q_odd_three_fragments {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
   obtain ⟨hlink, hs, hf, _⟩ :=
     actual_ordered_path_is_join ordered Λ hstart hfinish hseams hΛsupport
   let rest := List.ofFn fun i : Fin (2 * s + 3) => ordered i.succ
-  have hlist : ordered 0 :: rest = List.ofFn ordered := (List.ofFn_succ ordered).symm
+  have hlist : ordered 0 :: rest = List.ofFn ordered := (List.ofFn_succ (f := ordered)).symm
   let actual := Λ.copy hs.symm hf.symm
   have hactualSupport : actual.support = (ordered 0 :: rest).flatMap fun z => z.walk.support := by
     rw [SimpleGraph.Walk.support_copy, hlist]
@@ -285,8 +284,7 @@ theorem native_actual_q_odd_three_fragments {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
   have hipos : 0 < s + 1 := by omega
   have hi : s + 1 < (ordered 0 :: rest).length := by rw [hlist, List.length_ofFn]; omega
   have hbfinish : ((ordered 0 :: rest)[s + 1]'hi).finish = sv (0, 1) := by
-    rw [hlist]
-    simpa only [List.getElem_ofFn] using hposition
+    simpa only [hlist, List.getElem_ofFn] using hposition
   have hboundaryInventory' : ∀ e,
       e ∈ (ordered 0 :: rest).flatMap (fun z => z.walk.edges) ↔ e ∈ w.edges ∧ e ∉ K := by
     rw [hlist]

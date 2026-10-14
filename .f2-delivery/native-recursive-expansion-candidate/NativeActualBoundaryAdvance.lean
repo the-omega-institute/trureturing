@@ -129,7 +129,7 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
     actual_prior_opposite_boundary_inputs prior hprior d cross jointtail old oldrest
       oldK oldH holdDisjoint hpriorJointSupport hpriorSingleSupport
       hpriorJointEdges hpriorSingleEdges hpriorCuts hpriorSeam
-  let prefix := cross.reverse.concat hpriorRestore
+  let front := cross.reverse.concat hpriorRestore
   have holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
       (d.support ++ (⟨r, x, cross⟩ :: jointtail).flatMap fun p => p.walk.support) := by
     simpa only [List.flatMap_cons, List.append_assoc] using holdSupport'
@@ -154,7 +154,7 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
     simpa only [hdeletedList, List.mem_toFinset, Finset.mem_toList] using hrestoreNotDeleted
   obtain ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts,
       hcard, hpairs, _, _⟩ :=
-    actual_single_order_boundary_update c hc d prefix tail old hold oldrest (⟨r, x, cross⟩ :: jointtail)
+    actual_single_order_boundary_update c hc d front tail old hold oldrest (⟨r, x, cross⟩ :: jointtail)
       holdNodup holdSupport restored deleted holdEdges new₀ new₁ new₂ hrestore
       hcurrentSupport hcurrentEdges
   let pieces : List (Piece (ParentGraph F A u hbase)) :=
@@ -321,9 +321,9 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
     actual_prior_primary_boundary_inputs prior hprior d jointrest old oldrest
       oldK oldH holdDisjoint hpriorJointSupport hpriorSingleSupport
       hpriorJointEdges hpriorSingleEdges hpriorCuts
-  let prefix : (ParentGraph F A u hbase).Walk ℓ ℓ := .nil
-  have hold : old = prefix.append (d.append tail) := by
-    simpa only [prefix, SimpleGraph.Walk.nil_append] using hold'
+  let front : (ParentGraph F A u hbase).Walk ℓ ℓ := .nil
+  have hold : old = front.append (d.append tail) := by
+    simpa only [front, SimpleGraph.Walk.nil_append] using hold'
   have heinjPrior : Function.Injective (Sym2.map
       (Subtype.val : ParentVertex F A u hbase → Configuration m)) :=
     Sym2.map.injective Subtype.val_injective
@@ -345,7 +345,7 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
     simpa only [hdeletedList, List.mem_toFinset, Finset.mem_toList] using hrestoreNotDeleted
   obtain ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts,
       hcard, hpairs, _, _⟩ :=
-    actual_single_order_first_cut_boundary_update c hc d prefix tail old hold oldrest jointrest
+    actual_single_order_first_cut_boundary_update c hc d front tail old hold oldrest jointrest
       holdNodup holdSupport restored deleted holdEdges new₀ new₁ new₂ hrestore
       hcurrentSupport hcurrentEdges
   let pieces : List (Piece (ParentGraph F A u hbase)) :=

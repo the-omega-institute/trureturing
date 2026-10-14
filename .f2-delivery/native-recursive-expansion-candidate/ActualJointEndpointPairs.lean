@@ -1,8 +1,10 @@
-/- UNCOMPILED endpoint inventory of the actual joint update.
-   The old distinguished whole path is removed from the endpoint-pair
-   set using its actual support disjointness. The actual three replacement
-   walks then give exactly the three new endpoint pairs. This helper is
-   consumed by the complete closed-parent partition theorem. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualJointEndpointPairs
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualJointEndpointPairs
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual three-path replacement removes precisely the disjoint old distinguished endpoint pair and inserts the three new endpoint pairs. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 import Mathlib.Tactic.Tauto
 

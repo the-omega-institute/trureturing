@@ -38,19 +38,25 @@ theorem actual_ordered_path_is_join {n : ℕ} {a b : V}
       ∃ hf : finish (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) = b,
         q = (join (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) hlink).copy hs hf := by
   have hlist : ordered 0 :: (List.ofFn fun i : Fin n => ordered i.succ) = List.ofFn ordered :=
-    (List.ofFn_succ ordered).symm
+    (List.ofFn_succ (f := ordered)).symm
   have hlink : Linked (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) := by
+    have hindexed : ∀ i (hi : i + 1 < (List.ofFn ordered).length),
+        G.Adj ((List.ofFn ordered)[i]'(by omega)).finish
+          ((List.ofFn ordered)[i + 1]'hi).start := by
+      intro i hi
+      simp only [List.length_ofFn] at hi
+      simp only [List.getElem_ofFn]
+      exact hseams i hi
     apply linked_of_getElem
-    intro i hi
-    rw [hlist, List.length_ofFn] at hi
-    rw [hlist]
-    simp only [List.getElem_ofFn]
-    exact hseams i hi
+    simpa only [hlist] using hindexed
   have hf : finish (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) = b := by
-    rw [finish_eq_last, hlist, List.getLast_ofFn]
-    rw [show (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n by
-      apply Fin.ext; simp only [Fin.val_mk, Fin.val_last]; omega]
-    exact hfinish
+    rw [finish_eq_last]
+    have hlastList : ((List.ofFn ordered).getLast (by simp)).finish = b := by
+      rw [List.getLast_ofFn]
+      rw [show (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n by
+        apply Fin.ext; simp only [Fin.val_mk, Fin.val_last]; omega]
+      exact hfinish
+    simpa only [hlist] using hlastList
   refine ⟨hlink, hstart, hf, ?_⟩
   apply SimpleGraph.Walk.ext_support
   rw [SimpleGraph.Walk.support_copy, join_support, hlist]
