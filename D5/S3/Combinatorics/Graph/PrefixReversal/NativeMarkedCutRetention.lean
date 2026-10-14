@@ -1,7 +1,10 @@
-/- UNCOMPILED actual a/b-edge preservation for the recursive marked state.
-   Every deleted supplier b edge has the supplier terminal. New marked
-   b edges have another, remaining terminal, so no supplier cut can remove
-   them. Actual child and parent joining retain these actual edges. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedCutRetention
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedCutRetention
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Preserve Protected a and Remaining b Edges Through Native Recursion. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 import D5.S3.Combinatorics.Graph.Walks.ActualRetainedEdges

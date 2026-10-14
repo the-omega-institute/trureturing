@@ -1,7 +1,10 @@
-/- UNCOMPILED native E/O route positions used by the Q ordered split.
-   The B path finishing at actual L0 is strictly later than the B path
-   starting at actual R0. These are consequences of the verified explicit
-   E/O enumerations and native port injectivity, not new state assumptions. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeBoundaryRoutePositions
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeBoundaryRoutePositions
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Locate the Actual Zero Left Port in Native Routes. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialBoundaryInstances
 
 set_option autoImplicit false

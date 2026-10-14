@@ -1,7 +1,10 @@
-/- UNCOMPILED carry of the actual joint/two-boundary induction state.
-   Every component uses the same mapped cycle. Raw configurations,
-   both cut groups and both boundary templates preserve their identity.
-   The parent-to-next map also preserves the earned cycle invariants. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeFullStateTransport
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeFullStateTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Preserve Both Literal Native Boundary Orders. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateTransport
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 import D5.S3.Combinatorics.Graph.Walks.ActualTwoOrderStateTransport

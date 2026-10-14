@@ -1,7 +1,10 @@
-/- UNCOMPILED actual selected-c invariant for recursive joining.
-   Retained child edges keep their previous label classification. New
-   internal and outer seams have the actual supplier terminal. The proof
-   consumes the same chosen paths and parent cycle's literal edge list. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeSelectedCInvariant
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeSelectedCInvariant
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Classify Every Retained and New Native c Edge. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedCutRetention
 
 set_option autoImplicit false
@@ -139,6 +142,7 @@ theorem native_parent_cycle_c_labels {m k : ℕ} (hm : 3 ≤ m)
   let ps := List.ofFn fun i : Fin (F.base.length - 1) =>
     pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩
   have hlist : p :: ps = List.ofFn pieces := by
+    dsimp only [p, ps]
     apply List.ext_getElem
     · simp only [List.length_cons, List.length_ofFn]; omega
     · intro i hi hj

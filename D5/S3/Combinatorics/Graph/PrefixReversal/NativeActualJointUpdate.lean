@@ -1,9 +1,10 @@
-/- UNCOMPILED same-cycle native actual J propagation bridge.
-   The complete closed-parent construction is mapped through the injective
-   native-domain inclusion. Its actual cut set is identified by literal
-   shifted native ports. The complete endpoint-pair update is earned from
-   the actual old joint pieces and the three actual replacement walks.
-   This is an induction-step interface, not an all-n existence theorem. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualJointUpdate
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualJointUpdate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Update the Complete Actual Native Joint Partition. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 import D5.S3.Combinatorics.Graph.Walks.ActualClosedParentJointUpdate
