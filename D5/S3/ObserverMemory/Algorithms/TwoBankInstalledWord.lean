@@ -687,6 +687,33 @@ private theorem execution_physical {T : Table k} {obs : Nat → Address → RawR
     (responses := by intros; rfl)).mp
   exact execution_run path
 
+private theorem suffix_after_native {T : Table k} {obs : Nat → Address → RawReply}
+    {w v u : Word k} {a b c : Nat} {events : List Event} {bit : Bool}
+    (initial : Run (wordProgram T) obs w a u c)
+    (whole : Execution T obs w a v b events)
+    (halt : (installed T v).instruction = .halt bit) :
+    ∃ suffix, Execution T obs u c v b suffix := by
+  induction initial generalizing v b events with
+  | refl => exact ⟨events, whole⟩
+  | @read w p next a u c hi rest ih =>
+      cases whole with
+      | refl => simp [wordProgram, halt] at hi
+      | @read _ v _ b q es hrow hbit tail =>
+          have eq : Instruction.read q (fun r => (installed T w).next (replyFlag r)) =
+              Instruction.read p next := by simpa [wordProgram, hrow] using hi
+          cases eq
+          exact ih tail halt
+      | update hrow hbit tail => simp [wordProgram, hrow] at hi
+  | @update w next a u c hi rest ih =>
+      cases whole with
+      | refl => simp [wordProgram, halt] at hi
+      | read hrow hbit tail => simp [wordProgram, hrow] at hi
+      | update hrow hbit tail =>
+          have eq : (installed T w).next 4 = next := by
+            simpa [wordProgram, hrow] using hi
+          subst next
+          exact ih tail halt
+
 private theorem execution_trace_unique {T : Table k} {obs : Nat → Address → RawReply}
     {w v u : Word k} {a b c : Nat} {s t : List Event} {bit bit' : Bool}
     (left : Execution T obs w a v b s) (right : Execution T obs w a u c t)
@@ -765,6 +792,9 @@ theorem installed_halt {T : Table k} {obs : Nat → Address → RawReply}
         physicalProgram T w = .halt → w = physicalEquiv (ready last t) ∧ c = b) ∧
       remaining T obs (ready right z) a = events.length ∧
       remaining T obs (ready last t) b = 0 ∧
+      (∀ w c, Run (wordProgram T) obs (ready right z) a w c →
+        ∃ suffix, Execution T obs w c (ready last t) b suffix ∧
+          remaining T obs w c = suffix.length) ∧
       (∀ w v u : Word k, ∀ a' b' c' : Nat, ∀ e es bit',
         Execution T obs w a' v b' [e] → Execution T obs v b' u c' es →
         (installed T u).instruction = .halt bit' →
@@ -782,7 +812,7 @@ theorem installed_halt {T : Table k} {obs : Nat → Address → RawReply}
     cases last <;> simp [ready, installed, halt]
   refine ⟨last, events, run, hi, ?_, by simpa [physicalInstruction] using hi,
     execution_physical run, ?_, remaining_eq run hi,
-    remaining_eq (.refl _ _) hi, ?_⟩
+    remaining_eq (.refl _ _) hi, ?_, ?_⟩
   · intro w c other final
     exact GuardedPhaseExecution.run_halt_unique other (execution_run run) final
       (by simp [wordProgram, hi])
@@ -790,6 +820,9 @@ theorem installed_halt {T : Table k} {obs : Nat → Address → RawReply}
     exact GuardedPhaseExecution.run_halt_unique other (execution_physical run) final
       (by simp [physicalProgram, GuardedPhaseExecution.transportProgram, wordProgram, hi,
         GuardedPhaseExecution.Instruction.transport])
+  · intro w c initial
+    obtain ⟨suffix, tail⟩ := suffix_after_native initial run hi
+    exact ⟨suffix, tail, remaining_eq tail hi⟩
   · intro w v u a' b' c' e es bit' step tail halt'
     exact remaining_step step tail halt'
 
