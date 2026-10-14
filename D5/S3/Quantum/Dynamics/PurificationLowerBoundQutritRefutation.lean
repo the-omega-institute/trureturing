@@ -59,8 +59,9 @@ private lemma liouvillian_ketVec (H A : Matrix (Fin d) (Fin d) ℂ) :
   dsimp only [Matrix.kronecker]
   rw [Matrix.kronecker_mulVec_vec (1 : Matrix (Fin d) (Fin d) ℂ) A.transpose H,
     Matrix.kronecker_mulVec_vec H.transpose A.transpose (1 : Matrix (Fin d) (Fin d) ℂ)]
-  simp only [Matrix.one_mul, Matrix.transpose_one, Matrix.mul_one, ← Matrix.vec_sub,
+  simp only [Matrix.one_mul, Matrix.transpose_one, Matrix.mul_one,
     Matrix.transpose_sub, Matrix.transpose_mul]
+  rw [← Matrix.vec_sub]
 
 private lemma partialTraceRight_ketVec (A : Matrix (Fin d) (Fin d) ℂ) :
     partialTraceRight (rankOneDensity (fun p => ketVec A p)) = A * A.conjTranspose := by
@@ -220,12 +221,11 @@ private lemma krylovVector_three_step (L : E →L[ℂ] E) (v : E)
     | add y z hy hz ihy ihz => simpa only [map_add] using W.add_mem ihy ihz
     | smul c y hy ih => simpa only [map_smul] using W.smul_mem c ih
   have hfmem (n : ℕ) : f n ∈ W := by
-    induction n with
-    | zero => rw [hf0]; exact hqm 0
-    | succ n ih =>
-      change (L ^ (n + 1)) ((‖v‖ : ℂ)⁻¹ • v) ∈ W
-      rw [pow_succ', mul_apply_eq_comp]
-      exact hLmem _ ih
+    change (L ^ n) ((‖v‖ : ℂ)⁻¹ • v) ∈ W
+    rw [hseed]
+    change ((↑(L ^ n) : E →ₗ[ℂ] E) (q 0)) ∈ W
+    rw [ContinuousLinearMap.toLinearMap_pow]
+    exact Module.End.pow_apply_mem_of_forall_mem n hLmem (q 0) (hqm 0)
   intro n hn
   have hgn : g n ∈ W := by
     apply (Submodule.span_le.mpr ?_) (InnerProductSpace.gramSchmidt_mem_span ℂ f le_rfl)
