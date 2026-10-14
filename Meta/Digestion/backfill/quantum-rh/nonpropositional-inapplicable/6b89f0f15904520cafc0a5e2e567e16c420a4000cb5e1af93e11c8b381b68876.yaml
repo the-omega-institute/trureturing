@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b89f0f15904520cafc0a5e2e567e16c420a4000cb5e1af93e11c8b381b68876
+  normalized_sha256: sha256:6b89f0f15904520cafc0a5e2e567e16c420a4000cb5e1af93e11c8b381b68876
+cas_ref: sha256:6b89f0f15904520cafc0a5e2e567e16c420a4000cb5e1af93e11c8b381b68876
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 为定理 N4 的有限负平方测试存在性的论证及相应解释，不另立新命题；所证明的原陈述保留自身状态。
+    previous_atom_id: e9720c882324b7c79f984b3a679f76fadc56b24259982372cfb13ef034c4860a
+    next_atom_id: 658f5c2c7db0f52728e5456e40fa3185a607aa0c5268f89a2fe85be07524dce6

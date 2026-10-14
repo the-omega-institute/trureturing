@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8309c41778cf628649e79ca810a4abcc0ccac01558ecfbd074aeed5fc42b405e
+  normalized_sha256: sha256:8309c41778cf628649e79ca810a4abcc0ccac01558ecfbd074aeed5fc42b405e
+cas_ref: sha256:8309c41778cf628649e79ca810a4abcc0ccac01558ecfbd074aeed5fc42b405e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof that the two preceding reduced matrices have the same nonzero spectrum; formula (28) restates that same conclusion.
+    previous_atom_id: 77e422146335f0f0864e0c08b5d318d0d4c144ba7a6c5f27164ed03235d84866
+    next_atom_id: 66a3b319b5bfc48d90ee01f45aac7a612ffcf8cc65143f7a412568a572af832a
