@@ -19,6 +19,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Words
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2CutLabels
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
@@ -321,7 +322,7 @@ macro "solve_j2_seam_coordinate" m:term : tactic => `(tactic| {
       b_apply, c_apply, j2_rotate_val, native_bc_pow_val (by omega : 2 ≤ $m),
       j2_swap_val, contactAnchor_val, Fin.val_mk, Fin.val_last, Fin.val_zero,
       j2_mod_two_cases, if_pos, if_neg, ite_true, ite_false]
-    <;> (split_ifs <;> omega)
+    <;> (try split_ifs) <;> omega
 })
 
 private theorem j2_h_product (m : Nat) : (uWord m m).prod = b m := by
@@ -486,6 +487,65 @@ private theorem j2_word4_c {m : Nat} (hm : 5 ≤ m) :
     solve_j2_seam_coordinate m
   exact j2_reverse_t_seam p _ he.symm
 
+private theorem j2_word1_initial_reflected {m : Nat} (hm : 5 ≤ m) :
+    wordStart m 1 = finRotate (m + 1) ^ (m - 1) * a m := by
+  solve_j2_seam_coordinate m
+
+private theorem j2_word0_contact_reflected {m : Nat} (hm : 5 ≤ m) :
+    c m = contactAnchor (j2Contact hm) * finRotate (m + 1) ^ (m - 2) * a m := by
+  solve_j2_seam_coordinate m
+
+private theorem j2_word0_final_b_start {m : Nat} (hm : 5 ≤ m) :
+    contactAnchor (j2Contact hm) * c m =
+      gapAnchor (contactAnchor (j2Contact hm)) ⟨m - 1, by omega⟩ * b m := by
+  solve_j2_seam_coordinate m
+
+private theorem j2_word2_initial_positive {m : Nat} (hm : 5 ≤ m) :
+    wordStart m 2 = contactAnchor (j2Contact hm) * finRotate (m + 1) ^ m := by
+  solve_j2_seam_coordinate m
+
+private theorem j2_word3_initial_reflected {m : Nat} (hm : 5 ≤ m) :
+    wordStart m 3 =
+      gapAnchor (contactAnchor (j2Contact hm)) ⟨m - 1, by omega⟩ * a m := by
+  solve_j2_seam_coordinate m
+
+private theorem j2_word3_final_b_start {m : Nat} (hm : 5 ≤ m) :
+    wordStart m 3 * a m * c m =
+      gapAnchor (contactAnchor (j2Contact hm)) ⟨m - 2, by omega⟩ * b m := by
+  rw [j2_word3_seed hm, show m - 1 = (m - 2) + 1 by omega, pow_succ]
+  simp only [gapAnchor, Fin.val_mk, mul_assoc, c_sq, mul_one]
+
+private theorem j2_word4_final_b_start {m : Nat} (hm : 5 ≤ m) :
+    wordStart m 4 * a m * b m * c m = lowerPort (j2Contact hm) * b m := by
+  solve_j2_seam_coordinate m
+
+private theorem j2_cb_c_pow (m t : Nat) :
+    (c m * b m) ^ t * c m = c m * (b m * c m) ^ t := by
+  induction t with
+  | zero => simp only [pow_zero, one_mul, mul_one]
+  | succ t ih =>
+    calc
+      _ = (c m * b m) * ((c m * b m) ^ t * c m) := by
+        rw [pow_succ', mul_assoc]
+      _ = (c m * b m) * (c m * (b m * c m) ^ t) := by rw [ih]
+      _ = c m * ((b m * c m) * (b m * c m) ^ t) := by simp only [mul_assoc]
+      _ = c m * (b m * c m) ^ (t + 1) := by rw [pow_succ']
+
+private theorem j2_word1_final_a_start {m : Nat} (hm : 5 ≤ m) :
+    wordStart m 1 * (a m * b m) ^ (m - 1) *
+        (c m * b m) ^ (m - 3) * c m = lowerPort (j2Contact hm) := by
+  rw [j2_word1_seed hm, mul_assoc (a m), j2_cb_c_pow]
+  simp only [lowerPort, j2Contact, Fin.val_mk, mul_assoc]
+
+private theorem j2_word2_final_aba_start {m : Nat} (hm : 5 ≤ m) :
+    wordStart m 2 * a m * (c m * b m) ^ (m - 3) * c m =
+      gapAnchor (contactAnchor (j2Contact hm)) ⟨m - 2, by omega⟩ := by
+  rw [j2_word2_seed hm, mul_assoc (contactAnchor (j2Contact hm)), j2_b_cb_pow]
+  simp only [← mul_assoc, gapAnchor, Fin.val_mk]
+  rw [show m - 2 = (m - 3) + 1 by omega, pow_succ]
+  simp only [mul_assoc]
+
+
 private theorem j2_edge_generator_unique {m : Nat} (x y g h : Configuration m)
     (hg : g * g = 1) (he : s(x, x * g) = s(y, y * h)) : g = h := by
   rcases Sym2.eq_iff.mp he with ⟨hxy, hend⟩ | ⟨hxy, hend⟩
@@ -600,11 +660,14 @@ private theorem j2_h_marked_owner_inventory {m : ℕ} (hm : 5 ≤ m)
     exact hp
   · right
     refine ⟨⟨0, by omega⟩, Or.inl rfl, ?_⟩
-    simpa only [gapAnchor, Fin.val_mk, pow_zero, mul_one] using hp
+    simp only [gapAnchor, Fin.val_mk, pow_zero, mul_one]
+    exact hp
   · left
     refine ⟨⟨m - 3, by omega⟩, le_rfl, ?_⟩
-    simpa only [NativeCoreSplicing.cutStart, Fin.val_mk,
-      if_neg (by omega : m - 3 ≠ m - 1), tCircleAnchor, gapAnchor, lowerPort] using hp
+    simp only [NativeCoreSplicing.cutStart, Fin.val_mk,
+      if_neg (by omega : m - 3 ≠ m - 1), tCircleAnchor, gapAnchor,
+      lowerPort, j2_h_contact_index]
+    exact hp
   · right
     exact ⟨⟨m - 1, by omega⟩, Or.inr (Or.inl rfl), hp⟩
   · right
@@ -764,6 +827,92 @@ private theorem j2_h_newgap_survives {m : ℕ} (hm : 5 ≤ m)
           (gapAnchor (contactAnchor (j2_h_contact_index hm)) i) x :=
   native_b_complement_survives hm _ (j2_h_newgap_domain hm i)
     (j2_h_newgap_deleted hm i (by omega)) (j2_h_newgap_unmarked hm i hi0 hi)
+
+private theorem scanl_chain_cons {m : ℕ} (G : SimpleGraph (Configuration m))
+    (z g : Configuration m) (l : List (Configuration m))
+    (hg : G.Adj z (z * g))
+    (hl : (List.scanl (· * ·) (z * g) l).IsChain G.Adj) :
+    (List.scanl (· * ·) z (g :: l)).IsChain G.Adj := by
+  rw [List.scanl_cons, List.isChain_cons]
+  refine ⟨?_, hl⟩
+  intro y hy
+  simp only [List.head?_scanl, Option.mem_some_iff] at hy
+  subst y
+  exact hg
+
+private theorem scanl_chain_append {m : ℕ} (G : SimpleGraph (Configuration m))
+    (z : Configuration m) (l k : List (Configuration m))
+    (hl : (List.scanl (· * ·) z l).IsChain G.Adj)
+    (hk : (List.scanl (· * ·) (z * l.prod) k).IsChain G.Adj) :
+    (List.scanl (· * ·) z (l ++ k)).IsChain G.Adj := by
+  induction l generalizing z with
+  | nil => simpa only [List.nil_append, List.prod_nil, mul_one] using hk
+  | cons g l ih =>
+    rw [List.scanl_cons, List.isChain_cons] at hl
+    apply scanl_chain_cons
+    · apply hl.1
+      simp only [List.head?_scanl, Option.mem_some_iff]
+    · apply ih _ hl.2
+      simpa only [List.prod_cons, mul_assoc] using hk
+
+private theorem repeated_ch_chain {m : ℕ} (z : Configuration m) (k : ℕ)
+    (hc : ∀ t, t < k → (survivingGraph m).Adj
+      (z * (c m * b m) ^ t) (z * (c m * b m) ^ t * c m))
+    (hh : ∀ t, t < k →
+      (List.scanl (· * ·) (z * (c m * b m) ^ t * c m)
+        (uWord m m)).IsChain (survivingGraph m).Adj) :
+    (List.scanl (· * ·) z
+      (List.replicate k ([c m] ++ uWord m m)).flatten).IsChain
+        (survivingGraph m).Adj := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    rw [List.replicate_succ', List.flatten_append, List.flatten_cons,
+      List.flatten_nil, List.append_nil]
+    apply scanl_chain_append
+    · exact ih (fun t ht => hc t (by omega)) (fun t ht => hh t (by omega))
+    · have hp : ((List.replicate k ([c m] ++ uWord m m)).flatten).prod =
+          (c m * b m) ^ k := by
+        simp only [List.prod_flatten, List.map_replicate, List.prod_replicate,
+          List.prod_append, List.prod_cons, List.prod_nil, mul_one, j2_h_product]
+      rw [hp, List.singleton_append]
+      exact scanl_chain_cons _ _ _ _ (hc k (by omega)) (hh k (by omega))
+
+private theorem j2_word1_repeated_chain {m : ℕ} (hm : 5 ≤ m) :
+    (List.scanl (· * ·) (a m)
+      (List.replicate (m - 3) ([c m] ++ uWord m m)).flatten).IsChain
+        (survivingGraph m).Adj := by
+  apply repeated_ch_chain
+  · intro t ht
+    exact j2_c_survives hm _ (j2_word1_repeated_c hm ⟨t, by omega⟩)
+  · intro t ht
+    let j : Fin (m - 2) := ⟨t, by omega⟩
+    have he : a m * (c m * b m) ^ t * c m = lowerPort j := by
+      rw [mul_assoc (a m), j2_cb_c_pow]
+      simp only [lowerPort, j, Fin.val_mk, mul_assoc]
+    rw [he]
+    obtain ⟨w, _, _, hs, _⟩ := j2_h_lower_survives hm j ht
+    rw [← hs]
+    exact w.isChain_adj_support
+
+private theorem j2_word2_repeated_chain {m : ℕ} (hm : 5 ≤ m) :
+    (List.scanl (· * ·) (contactAnchor (j2Contact hm) * b m)
+      (List.replicate (m - 3) ([c m] ++ uWord m m)).flatten).IsChain
+        (survivingGraph m).Adj := by
+  apply repeated_ch_chain
+  · intro t ht
+    exact j2_c_survives hm _ (j2_word2_repeated_c hm ⟨t, by omega⟩)
+  · intro t ht
+    let i : Fin m := ⟨t + 1, by omega⟩
+    have he : contactAnchor (j2Contact hm) * b m * (c m * b m) ^ t * c m =
+        gapAnchor (contactAnchor (j2Contact hm)) i := by
+      rw [mul_assoc (contactAnchor (j2Contact hm)), j2_b_cb_pow]
+      simp only [gapAnchor, i, Fin.val_mk, pow_succ, mul_assoc]
+    rw [he]
+    obtain ⟨w, _, _, hs, _⟩ := j2_h_newgap_survives hm i (by simp only [i, Fin.val_mk]; omega)
+      (by simp only [i, Fin.val_mk]; omega)
+    rw [← hs]
+    exact w.isChain_adj_support
 
 private theorem word_foldl {m : ℕ} (z : Configuration m)
     (l : List (Configuration m)) : l.foldl (· * ·) z = z * l.prod := by
