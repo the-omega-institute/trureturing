@@ -719,6 +719,8 @@ jobs:
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
           compatibility_roots=(
+            D5.S3.Weil.ZetaPntBase.AdditiveCombination
+            D5.S3.Weil.ZetaPntBase.ResidueRectangles
             D5.S3.Analytic.Interpolation.OEISA394578RatioRefutation
             D5.S3.Arith.Robin.GoldenCongruenceRobin
             D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex
@@ -733,6 +735,48 @@ jobs:
             LEAN_REPORT=.lake/build/stratalint/upgrade-compatibility-scoped-report.json \
             LEAN_TARGETS="${compatibility_roots[*]}" \
             2>&1 | tee build/lean-cache/compatibility-probe.log
+      - name: Check the additive tactic domains and equation operations
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          set -euo pipefail
+          cat > build/lean-cache/additive-compatibility.lean <<'LEAN'
+          import D5.S3.Weil.ZetaPntBase.AdditiveCombination
+          set_option autoImplicit false
+
+          example {A : Type*} [AddGroup A] (a b : A) (h : a = b) : a = b := by
+            additive_combination (norm := simp [h]) h
+
+          example {A : Type*} [AddGroup A] (a b c : A) (h : a = b) :
+              a + c = b + c := by
+            additive_combination (norm := (change (a + c - (b + c)) -
+              ((a + c) - (b + c)) = 0; exact sub_self _)) (h + c)
+
+          example {R : Type*} [Ring R] (a b c d : R) (h : a = b) (k : c = d) :
+              a * c = b * d := by
+            additive_combination (h * k)
+
+          example {R : Type*} [DivisionRing R] (a b c d : R) (h : a = b) (k : c = d) :
+              a / c = b / d := by
+            additive_combination (h / k)
+
+          example {R : Type*} [DivisionRing R] (a b : R) (h : a = b) :
+              a⁻¹ = b⁻¹ := by
+            additive_combination (h⁻¹)
+
+          example {R : Type*} [Ring R] [IsReduced R] (a b : R) (h : a = b) :
+              a = b := by
+            additive_combination (norm := simp [h]) (exp := 2) h
+
+          elab "additive_two_test " e:term : tactic =>
+            Mathlib.Tactic.LinearCombinationPrime.elabAdditiveCombination
+              e none none (some e) true
+
+          example {A : Type*} [AddCommGroup A] (a b : A) (h : a = b) : a = b := by
+            additive_two_test h
+          LEAN
+          bash tools/scripts/worktree/lean-cache-run.sh lake env lean \
+            build/lean-cache/additive-compatibility.lean
       - name: Export compatibility diagnostics and scoped report
         if: always()
         uses: actions/upload-artifact@v4

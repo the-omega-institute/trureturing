@@ -212,7 +212,7 @@ private theorem omitted_small_prime_product (n : ℕ) (y : ℝ) (E : Finset ℕ)
     exact hEn p he (Nat.dvd_of_mem_primeFactors (mem_filter.mp hs).1)
   have hb : (∏ p ∈ S, F p) * (∏ p ∈ E, F p) ≤ ∏ p ∈ B, F p := by
     rw [← prod_union hdis]
-    exact prod_le_prod_of_subset_of_one_le hsub
+    exact prod_le_prod_of_subset_of_one_le₀ hsub
       (fun p hp => (hone p (mem_filter.mp (hsub hp)).2).trans' zero_le_one)
       (fun p hp _ => hone p (mem_filter.mp hp).2)
   have hc : (∏ p ∈ E, F p) * (∏ p ∈ E, G p) = 1 := by
