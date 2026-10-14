@@ -5,6 +5,7 @@
    are constructed, not supplied as parent-state certificates. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualOuterChainExtraction
 import D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
+import D5.S3.Combinatorics.Graph.Walks.ActualJointEndpointPairs
 
 set_option autoImplicit false
 
@@ -14,6 +15,7 @@ open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 open D5.S3.Combinatorics.Graph.Walks.ActualOuterChainExtraction
 open D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
+open D5.S3.Combinatorics.Graph.Walks.ActualJointEndpointPairs
 
 universe u
 variable {V : Type u} [DecidableEq V] {G : SimpleGraph V}
@@ -62,6 +64,9 @@ theorem actual_closed_parent_joint_partition
         (∀ e, e ∈ (pieces.flatMap fun p => p.walk.edges) ↔
           e ∈ c.edgeSet ∧ e ∉ cuts) ∧
         (∀ e ∈ cuts, e ∈ c.edgeSet) ∧ pieces.length = cuts.card ∧
+        endpointPairs pieces =
+          (endpointPairs (⟨ℓ, z, d⟩ :: rest)).erase s(ℓ, z) ∪
+            {s(z, ℓ₀), s(r₀, ℓ₁), s(r₁, ℓ)} ∧
         new₀ = tail.reverse.append (q₀.cons hseam) ∧
         new₁ = q₁ ∧ new₂ = (q₂.append chain).concat hₐ.symm := by
   obtain ⟨chain, hchain, hinterior, hs, he⟩ :=
@@ -84,9 +89,27 @@ theorem actual_closed_parent_joint_partition
     have hp := hPe.count_eq e
     simp only [List.count_append, List.count_cons, List.count_nil] at hp ⊢
     omega
-  refine ⟨chain, hinterior, ?_⟩
-  exact actual_joint_partition_of_cycle_inventory c hc rest d tail hₐ h_b hd
+  have hnsource : (((⟨a, b, Λ⟩ :: (others ++ [⟨s, t, P⟩])).flatMap
+      fun p : Piece G => p.walk.support)).Nodup := by
+    apply List.nodup_iff_count_le_one.mpr
+    intro v
+    have hcount :=
+      (SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hc).2 v
+    rw [hcs, List.count_reverse] at hcount
+    omega
+  have hPnodup : P.support.Nodup :=
+    (List.nodup_flatMap.mp hnsource).1 ⟨s, t, P⟩ (by
+      simp only [List.mem_cons, List.mem_append, List.mem_singleton]
+      exact Or.inr (Or.inr rfl))
+  have hnjoint : (d.support ++ rest.flatMap fun p => p.walk.support).Nodup :=
+    hPs.nodup_iff.mp hPnodup
+  obtain ⟨new₀, new₁, new₂, hpaths, hcount, hsupport, hedges, hmem, hcuts,
+      hcard, he₀, he₁, he₂⟩ :=
+    actual_joint_partition_of_cycle_inventory c hc rest d tail hₐ h_b hd
     Λ q₀ q₁ q₂ hQs hQe chain hchain hseam deleted hsparent heparent
+  exact ⟨chain, hinterior, new₀, new₁, new₂, hpaths, hcount, hsupport, hedges,
+    hmem, hcuts, hcard, actual_three_path_endpoint_update d rest hnjoint new₀ new₁ new₂,
+    he₀, he₁, he₂⟩
 
 #print axioms actual_closed_parent_joint_partition
 
