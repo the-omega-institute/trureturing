@@ -10,7 +10,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
             DescribeId.Create("attributed-traceclass-basic"),
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/Basic.trace_eq_of_hilbertBasis_of_nonneg"),
             H("Positive analytic trace in every basis"), StatementSource.FromAuthor(Endpoint()),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumAnalysis/diem2026traceclass")),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumBounds/diem2026traceclass")),
             Blocks(Paragraph(Text("For any positive trace-class bounded operator T on a complete complex Hilbert space, its actual analytic trace is the sum of its diagonal in any set-indexed Hilbert basis. Trace-class membership is defined through the absolute operator and summability. The finite-dimensional algebraic trace is used only in compatibility statements; the infinite-dimensional consumer uses the analytic trace.")),
                 Paragraph(Text("Attributed to Tom Ole Diem, Physlib at immutable revision "
                     + "b9043cc548ef6d63a28454cf3a57fb12a0c2e142, Apache-2.0. "

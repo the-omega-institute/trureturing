@@ -10,7 +10,7 @@ internal sealed class GeneralIdealDocument : IScribeDocumentDefinition
             DescribeId.Create("attributed-traceclass-generalideal"),
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/GeneralIdeal.trace_eq_of_hilbertBasis"),
             H("Analytic trace in an arbitrary basis"), StatementSource.FromAuthor(Endpoint()),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumAnalysis/diem2026traceclass")),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumBounds/diem2026traceclass")),
             Blocks(Paragraph(Text("For every trace-class bounded operator T and every set-indexed Hilbert basis e, the genuine trace of T equals the convergent sum of inner products of e of i with T applied to e of i. No positivity or self-adjointness premise on T is required. The consumer uses this for the original products rho B and sigma B squared.")),
                 Paragraph(Text("Attributed to Tom Ole Diem, Physlib at immutable revision "
                     + "b9043cc548ef6d63a28454cf3a57fb12a0c2e142, Apache-2.0. "
