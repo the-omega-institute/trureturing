@@ -19,8 +19,8 @@ submitted 28 September 2026 and revised 11 October 2026. The paper is a
 four-page preprint; its proof and the cited Hildebrand--Tenenbaum inputs
 were not independently formalized here.
 
-For (y\ge2), let (n_y) be the largest divisor of (n) all of whose
-prime factors are at most (y), and put
+For $y\ge2$, let $n_y$ be the largest divisor of $n$ all of whose
+prime factors are at most $y$, and put
 
 $$
 \Theta(x,y,z)=\#\{n\le x:n_y>z\},
@@ -66,12 +66,12 @@ $$
 
 with parameters satisfying the theorem's displayed range. The congruence
 condition must then be retained while counting that subfamily; an
-unrestricted count of all integers with (N_y>z) does not certify the
+unrestricted count of all integers with $N_y>z$ does not certify the
 absence or presence of a hit in the particular Fibonacci residue class.
 
 Even if this bridge were supplied, the theorem controls only the number of
 integers. It does not control the complete prime-power weight of the same
-(N), the CA price defect (D^*(a)), or the signed Robin tail
-(H_a). Thus it is a possible refinement of the sparse candidate count,
+$N$, the CA price defect $D^*(a)$, or the signed Robin tail
+$H_a$. Thus it is a possible refinement of the sparse candidate count,
 not the missing joint estimate and not a Robin or RH proof.
 
