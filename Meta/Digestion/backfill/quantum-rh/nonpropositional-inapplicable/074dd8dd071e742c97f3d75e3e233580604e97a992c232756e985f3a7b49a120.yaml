@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:074dd8dd071e742c97f3d75e3e233580604e97a992c232756e985f3a7b49a120
+  normalized_sha256: sha256:074dd8dd071e742c97f3d75e3e233580604e97a992c232756e985f3a7b49a120
+cas_ref: sha256:074dd8dd071e742c97f3d75e3e233580604e97a992c232756e985f3a7b49a120
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 论证定理 T5 的双副本补偿恒等式，附文只解释该结论；不另立独立新命题，原陈述保留自身状态。
+    previous_atom_id: fe2435c31f17b225da1fc23447f6bc697da4eab605315d6d8611f1370db9369d
+    next_atom_id: 851c2a6a3e79920dcb2e1e8c6a8c3383ffff09e225c3e7724a363daa2ead85e1

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:567fb6fe0962e60cda8ea008f1bda68899a9a71a6c44a0df041f54709babaef5
+  normalized_sha256: sha256:567fb6fe0962e60cda8ea008f1bda68899a9a71a6c44a0df041f54709babaef5
+cas_ref: sha256:567fb6fe0962e60cda8ea008f1bda68899a9a71a6c44a0df041f54709babaef5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 控制器规则清单只规定Step阶段的一次等待和计数更新，不断言执行性质。
+    previous_atom_id: 23a347fb1571be11f9265ae0d3b7603a10b7fbf10e992b357f22b87ea785b3a6
+    next_atom_id: e230074ad9e10a2e1cbc930dba754c32584380de0c20c45148a7e38d2c5f0e03

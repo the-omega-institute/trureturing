@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:507d8d47bd162778cd428620ddcb190baa590daef02ec46522f167798dedf33c
+  normalized_sha256: sha256:507d8d47bd162778cd428620ddcb190baa590daef02ec46522f167798dedf33c
+cas_ref: sha256:507d8d47bd162778cd428620ddcb190baa590daef02ec46522f167798dedf33c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 410.2（共同模型中的近似对应不认证共同本体）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 8382760a992bf1465c89117601bfbff0b069a44657b85a014ae9ad0a8c0bbea0
+    next_atom_id: d6be4fa8dced878ba5255c6a731e8fa9ab6400048df3082dcca7e6fcf21d5d60

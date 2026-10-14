@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd61cd9f7ae309b71d853719e35e5430e3fbf0d1e029ac13743adfe679613f98
+  normalized_sha256: sha256:dd61cd9f7ae309b71d853719e35e5430e3fbf0d1e029ac13743adfe679613f98
+cas_ref: sha256:dd61cd9f7ae309b71d853719e35e5430e3fbf0d1e029ac13743adfe679613f98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本批导航。：仅交代各节讨论顺序、承接范围与解释口径，是阅读导引，不另提独立命题。
+    previous_atom_id: d50f09b64b8b07a4f60c3d9b08fc827d0469f7252f6754fe8ab03838807646fc
+    next_atom_id: e595a21259d8141ecd4aceddd2ac98e7cb0b01f6651e3227a8cf223dfce2b723

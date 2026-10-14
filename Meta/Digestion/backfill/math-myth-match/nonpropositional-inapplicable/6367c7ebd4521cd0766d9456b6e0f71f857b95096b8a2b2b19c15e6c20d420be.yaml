@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6367c7ebd4521cd0766d9456b6e0f71f857b95096b8a2b2b19c15e6c20d420be
+  normalized_sha256: sha256:6367c7ebd4521cd0766d9456b6e0f71f857b95096b8a2b2b19c15e6c20d420be
+cas_ref: sha256:6367c7ebd4521cd0766d9456b6e0f71f857b95096b8a2b2b19c15e6c20d420be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 53.3（有限观察策略的准确范围）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 2bb6057957acdab9b542aa74cdddf74b383e708905c6a10e769ac903a8d5a70a
+    next_atom_id: 089a70bf34fe6fa4f0224ac253497c10ff4bf4640ad4b525774bc5d59fe89b7c

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:54980385126e7fd91e2ad22e751fb342991c67d672be25fad60a61c19c644030
+  normalized_sha256: sha256:54980385126e7fd91e2ad22e751fb342991c67d672be25fad60a61c19c644030
+cas_ref: sha256:54980385126e7fd91e2ad22e751fb342991c67d672be25fad60a61c19c644030
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 2.4（增益与语言的单调性）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 21f65482f5e04ce6f54f9103917c909fdbdbb5e06d44a4516ad7b108f95d3cbc
+    next_atom_id: a092e8542ad87b38c6a57b017e96aa3375fc41a5203f1458b33048a1151e74b3
