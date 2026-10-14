@@ -72,6 +72,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/DeletionChannelEntropyOrdering.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/atashpendar-mestel-roscoe-ryan-2018-kappa2-entropy-ordering` (refuted) by `D5/S3/Entropy/DeletionChannelEntropyOrdering.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"atashpendar-mestel-roscoe-ryan-2018-kappa2-entropy-ordering","declaration_gid":"D5/S3/Entropy/DeletionChannelEntropyOrdering.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arash Atashpendar, David Mestel, A. W. Roscoe, and Peter Y. A. Ryan (2018). *A Proof of Entropy Minimization for Outputs in Deletion Channels via Hidden Word Statistics*. URL: <https://arxiv.org/abs/1807.11609>.
