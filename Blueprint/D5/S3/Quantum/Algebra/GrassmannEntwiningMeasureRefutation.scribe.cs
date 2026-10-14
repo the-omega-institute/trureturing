@@ -96,7 +96,10 @@ internal sealed class GrassmannEntwiningMeasureRefutationDocument : IScribeDocum
                         "Thus the coefficient Jacobian is J = (1/2)⁴ = 1/16. "
                             + "The scalar coefficient of the output v₁ is 1, so the density ratio is m(z)/m(S(z)) = 1/8. "
                             + "These unequal values refute the stated identity."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("adamopoulou-papamikos-2025-grassmann-measure-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
