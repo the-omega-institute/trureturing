@@ -12,7 +12,10 @@ internal sealed record LeanSourceDeclaration(
     ImmutableArray<LeanSourceToken> SemanticTokens,
     ImmutableArray<LeanSourceToken> AmbientTokens,
     ImmutableArray<string> Imports,
-    ImmutableHashSet<string> CustomSyntaxLiterals);
+    ImmutableHashSet<string> CustomSyntaxLiterals)
+{
+    internal bool IsAnonymousOnlySource { get; init; }
+}
 
 internal sealed record LeanSourceScope(string? NamespaceName);
 
@@ -49,6 +52,7 @@ internal sealed partial class LeanSourceCatalog
     private readonly ImmutableDictionary<string, ImmutableArray<LeanSourceDeclaration>> byLeafName;
     private readonly ImmutableDictionary<string, ImmutableArray<string>> importsByModule;
     private readonly LeanCustomSyntaxCatalog customSyntaxCatalog;
+    private readonly ImmutableDictionary<string, LeanSourceDeclaration> anonymousSourcesByModule;
 
     private LeanSourceCatalog(
         ImmutableArray<LeanSourceDeclaration> declarations,
@@ -57,16 +61,30 @@ internal sealed partial class LeanSourceCatalog
     {
         this.declarations = declarations;
         this.importsByModule = importsByModule;
+        anonymousSourcesByModule = declarations
+            .GroupBy(static declaration => ModuleName(declaration.Path), StringComparer.Ordinal)
+            .Select(static group => group.First())
+            .Select(static source => source with
+            {
+                FullName = ModuleName(source.Path) + "._anonymous_instance_source",
+                Kind = "instance", IsProof = false, IsAnonymousOnlySource = true,
+                SemanticTokens = AnonymousInstanceCommands(source.AmbientTokens)
+                    .SelectMany(static command => command).ToImmutableArray(),
+            })
+            .Where(static source => !source.SemanticTokens.IsEmpty)
+            .ToImmutableDictionary(static source => ModuleName(source.Path), StringComparer.Ordinal);
         customSyntaxCatalog = new LeanCustomSyntaxCatalog(
             importsByModule,
             customSyntaxByModule);
         byFullName = declarations
+            .Where(static declaration => !declaration.IsAnonymousOnlySource)
             .GroupBy(static declaration => declaration.FullName, StringComparer.Ordinal)
             .ToImmutableDictionary(
                 static group => group.Key,
                 static group => group.ToImmutableArray(),
                 StringComparer.Ordinal);
         byLeafName = declarations
+            .Where(static declaration => !declaration.IsAnonymousOnlySource)
             .GroupBy(static declaration => LeafName(declaration.FullName), StringComparer.Ordinal)
             .ToImmutableDictionary(
                 static group => group.Key,
@@ -231,7 +249,8 @@ internal sealed partial class LeanSourceCatalog
         }
 
         var matches = moduleDeclarations
-            .Where(declaration => NameKeyCanReferTo(recordedSegments, declaration.FullName))
+            .Where(declaration => !declaration.IsAnonymousOnlySource
+                && NameKeyCanReferTo(recordedSegments, declaration.FullName))
             .OrderByDescending(static declaration => declaration.FullName.Length)
             .ToImmutableArray();
         if (matches.IsEmpty)
@@ -304,8 +323,33 @@ internal sealed partial class LeanSourceCatalog
             yield break;
         }
 
-        foreach (var dependency in ResolveTokenDependencies(declaration, declaration.SemanticTokens, respectBinders: true))
-            yield return dependency;
+        if (declaration.IsAnonymousOnlySource)
+        {
+            foreach (var command in AnonymousInstanceCommands(declaration.AmbientTokens))
+                foreach (var dependency in ResolveTokenDependencies(declaration, command, respectBinders: true))
+                    yield return dependency;
+        }
+        else
+        {
+            foreach (var dependency in ResolveTokenDependencies(declaration, declaration.SemanticTokens, respectBinders: true))
+                yield return dependency;
+        }
+
+        foreach (var source in VisibleAnonymousSourceClosures(declaration))
+            yield return source;
+    }
+
+    private IEnumerable<LeanSourceDeclaration> VisibleAnonymousSourceClosures(LeanSourceDeclaration owner)
+    {
+        var queue = new Queue<string>(owner.Imports.Prepend(ModuleName(owner.Path)));
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        while (queue.TryDequeue(out var module))
+        {
+            if (!visited.Add(module)) continue;
+            if (anonymousSourcesByModule.TryGetValue(module, out var source)) yield return source;
+            if (importsByModule.TryGetValue(module, out var imports))
+                foreach (var import in imports) queue.Enqueue(import);
+        }
     }
 
     private IEnumerable<LeanSourceDeclaration> ResolveTokenDependencies(
@@ -351,7 +395,7 @@ internal sealed partial class LeanSourceCatalog
             }
 
             foreach (var local in declarations.Where(declaration =>
-                declaration.Path == owner.Path
+                !declaration.IsAnonymousOnlySource && declaration.Path == owner.Path
                 && LeafName(declaration.FullName) == LeafName(lookupName)))
             {
                 result.TryAdd(local.Path.Value + "\0" + local.FullName, local);
@@ -453,6 +497,8 @@ internal sealed partial class LeanSourceCatalog
         }
 
         RejectCustomSyntaxTokens(declaration, declaration.SemanticTokens);
+        foreach (var command in AnonymousInstanceCommands(declaration.AmbientTokens))
+            RejectCustomSyntaxTokens(declaration, command);
     }
 
     private void RejectCustomSyntaxTokens(
@@ -477,7 +523,7 @@ internal sealed partial class LeanSourceCatalog
         var tokens = LeanSourceTokenizer.Tokenize(file.Text);
         var commandStarts = FindCommandStarts(tokens);
         RejectIndentedDeclarations(tokens, commandStarts, file.Path);
-        imports = ParseImports(tokens, commandStarts);
+        imports = ParseFileImports(file);
         customSyntax = LeanCustomSyntaxCatalog.ParseLiterals(
             tokens,
             commandStarts,
@@ -552,7 +598,7 @@ internal sealed partial class LeanSourceCatalog
 
             var kind = tokens[kindIndex].Text;
             var nameIndex = NextIdentifier(tokens, kindIndex + 1, end);
-            if (nameIndex < 0 || kind == "instance" && tokens[nameIndex].Text == "(")
+            if (nameIndex < 0 || IsAnonymousInstance(tokens, kindIndex, end))
             {
                 continue;
             }
@@ -586,6 +632,19 @@ internal sealed partial class LeanSourceCatalog
                 ambientTokens,
                 imports,
                 moduleCustomSyntax));
+        }
+
+        if (result.Count == 0)
+        {
+            var anonymousTokens = AnonymousInstanceCommands(ambientTokens)
+                .SelectMany(static command => command).ToImmutableArray();
+            if (!anonymousTokens.IsEmpty)
+            {
+                result.Add(new LeanSourceDeclaration(
+                    file.Path, ModuleName(file.Path) + "._anonymous_instance_source",
+                    "instance", IsProof: false, anonymousTokens, ambientTokens,
+                    imports, moduleCustomSyntax) { IsAnonymousOnlySource = true });
+            }
         }
 
         return result.ToImmutable();
@@ -639,8 +698,9 @@ internal sealed partial class LeanSourceCatalog
         {
             var start = commandStarts[index];
             var end = index + 1 < commandStarts.Length ? commandStarts[index + 1] : tokens.Length;
-            if (FindDeclarationKind(tokens, start, end) < 0
-                && tokens[start].Text is not ("@" or "example"))
+            var kindIndex = FindDeclarationKind(tokens, start, end);
+            if (kindIndex < 0 && tokens[start].Text is not ("@" or "example")
+                || IsAnonymousInstance(tokens, kindIndex, end))
             {
                 result.AddRange(tokens[start..end]);
             }
@@ -651,6 +711,24 @@ internal sealed partial class LeanSourceCatalog
         }
 
         return result.ToImmutable();
+    }
+
+    private static bool IsAnonymousInstance(
+        ImmutableArray<LeanSourceToken> tokens, int kindIndex, int end) =>
+        kindIndex >= 0 && tokens[kindIndex].Text == "instance"
+        && (kindIndex + 1 >= end || !IsIdentifier(tokens[kindIndex + 1].Text));
+
+    private static IEnumerable<ImmutableArray<LeanSourceToken>> AnonymousInstanceCommands(
+        ImmutableArray<LeanSourceToken> tokens)
+    {
+        var starts = FindCommandStarts(tokens);
+        for (var index = 0; index < starts.Length; index++)
+        {
+            var start = starts[index];
+            var end = index + 1 < starts.Length ? starts[index + 1] : tokens.Length;
+            if (IsAnonymousInstance(tokens, FindDeclarationKind(tokens, start, end), end))
+                yield return tokens[start..end];
+        }
     }
 
     private static IEnumerable<ImmutableArray<LeanSourceToken>> GeneratorCommands(
@@ -666,32 +744,6 @@ internal sealed partial class LeanSourceCatalog
                 token.Text is "macro" or "macro_rules" or "syntax" or "notation" or "elab" or "elab_rules"))
                 yield return command;
         }
-    }
-
-    private static ImmutableArray<string> ParseImports(
-        ImmutableArray<LeanSourceToken> tokens,
-        ImmutableArray<int> commandStarts)
-    {
-        var result = ImmutableArray.CreateBuilder<string>();
-        for (var index = 0; index < commandStarts.Length; index++)
-        {
-            var start = commandStarts[index];
-            if (tokens[start].Text != "import")
-            {
-                continue;
-            }
-
-            var end = index + 1 < commandStarts.Length ? commandStarts[index + 1] : tokens.Length;
-            for (var token = start + 1; token < end; token++)
-            {
-                if (IsIdentifier(tokens[token].Text))
-                {
-                    result.Add(tokens[token].Text);
-                }
-            }
-        }
-
-        return result.Distinct(StringComparer.Ordinal).ToImmutableArray();
     }
 
     private static int FindDeclarationKind(

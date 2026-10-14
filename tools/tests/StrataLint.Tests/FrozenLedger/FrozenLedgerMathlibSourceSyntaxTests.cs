@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using StrataLint.Engine;
 using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
@@ -43,6 +45,208 @@ public sealed partial class FrozenLedgerTests
         var result = ValidateMathlibReanchor(
             [baseline, Module("B")],
             [baseline with { StatementMaterial = "new wrong class kind" }, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.False(result.Authorized);
+    }
+
+    [Theory]
+    [InlineData("", "", true)]
+    [InlineData("", "", false)]
+    [InlineData("N", "", true)]
+    [InlineData("N", "", false)]
+    [InlineData("N", "[Inhabited Nat] ", true)]
+    [InlineData("N", "[Inhabited Nat] ", false)]
+    public void MathlibReanchorKeepsAnonymousInstanceDistinctFromItsClass(
+        string scope, string parameters, bool unchanged)
+    {
+        var source = (scope.Length == 0 ? "" : "namespace " + scope + "\n")
+            + "class Carrier where\n  value : Nat\n"
+            + "instance " + parameters + ": Carrier := ⟨7⟩\n"
+            + (scope.Length == 0 ? "" : "end " + scope + "\n");
+        var baseline = ModuleWithReport("A", source, "old class",
+            declarations: [scope.Length == 0 ? "Carrier" : scope + ".Carrier"], kind: "inductive");
+        var candidate = baseline with
+        {
+            Source = unchanged ? source : source.Replace("⟨7⟩", "⟨8⟩", StringComparison.Ordinal),
+            StatementMaterial = "new class",
+        };
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")], [candidate, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(unchanged, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData(false, true)]
+    [InlineData(false, false)]
+    [InlineData(true, true)]
+    [InlineData(true, false)]
+    public void MathlibReanchorTracksAnonymousInstanceImportedDependencies(
+        bool transitive, bool unchanged)
+    {
+        var root = ModuleWithReport("A",
+            "import D5.S0.Carrier.B\nclass Carrier where\n  value : Nat\n"
+                + "instance : Carrier := ⟨D5.S0.Carrier.seed⟩\n",
+            "old class", declarations: ["Carrier"], kind: "inductive") with { Imports = ["B"] };
+        var dependency = ModuleWithReport("B",
+            (transitive ? "import D5.S0.Carrier.C\n" : "")
+                + "namespace D5.S0.Carrier\ndef seed : Nat := "
+                + (transitive ? "baseValue" : "7") + "\nend D5.S0.Carrier\n",
+            "seed", declarations: ["D5.S0.Carrier.seed"], kind: "def")
+            with { Imports = transitive ? ["C"] : [] };
+        var leaf = ModuleWithReport("C",
+            "namespace D5.S0.Carrier\ndef baseValue : Nat := 7\nend D5.S0.Carrier\n",
+            "base", declarations: ["D5.S0.Carrier.baseValue"], kind: "def");
+        var candidateDependency = dependency with
+        {
+            Source = transitive || unchanged ? dependency.Source
+                : dependency.Source.Replace("7", "8", StringComparison.Ordinal),
+        };
+        var candidateLeaf = leaf with
+        {
+            Source = !transitive || unchanged ? leaf.Source
+                : leaf.Source.Replace("7", "8", StringComparison.Ordinal),
+        };
+        var result = ValidateMathlibReanchor(
+            [root, dependency, leaf],
+            [root with { StatementMaterial = "new class" }, candidateDependency, candidateLeaf],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(unchanged, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData(false, true, "")]
+    [InlineData(false, false, "")]
+    [InlineData(true, true, "")]
+    [InlineData(true, false, "")]
+    [InlineData(false, true, "public ")]
+    [InlineData(false, false, "public ")]
+    [InlineData(true, true, "public ")]
+    [InlineData(true, false, "public ")]
+    public void MathlibReanchorTracksImportedAnonymousInstancesWithoutFrozenDependencies(
+        bool transitive, bool unchanged, string importPrefix)
+    {
+        var root = ModuleWithReport("A",
+            importPrefix + "import D5.S0.Carrier.B\ndef a : Nat := (inferInstance : Inhabited Nat).default\n",
+            "old default", declarations: ["a"], kind: "def") with { Imports = ["B"] };
+        var dependency = ModuleWithReport("B",
+            transitive ? importPrefix + "import D5.S0.Carrier.C\ntheorem b : True := by trivial\n"
+                : "instance : Inhabited Nat := ⟨7⟩\n",
+            "dependency", declarations: [transitive ? "b" : "instInhabitedNat"],
+            kind: transitive ? "theorem" : "def") with { Imports = transitive ? ["C"] : [] };
+        var leaf = ModuleWithReport("C", "instance : Inhabited Nat := ⟨7⟩\n",
+            "leaf", declarations: ["instInhabitedNat"], kind: "def");
+        ModuleSpec[] baseline = [root, dependency, leaf];
+        ModuleSpec[] candidate =
+        [
+            root with { StatementMaterial = "new default" },
+            dependency with { Source = transitive || unchanged ? dependency.Source
+                : dependency.Source.Replace("7", "8", StringComparison.Ordinal) },
+            leaf with { Source = !transitive || unchanged ? leaf.Source
+                : leaf.Source.Replace("7", "8", StringComparison.Ordinal) },
+        ];
+        var protectedBase = Snapshot(StateFiles(BuildCatalog(baseline))
+            .Where(file => file.Path.Value == "Golden/Frozen/state/" + PathFor("A") + ".json")
+            .Concat(ReanchorInputFiles(baseline, ReanchorEnvironment.PinUpgrade, candidate: false)));
+        var current = Snapshot(StateFiles(BuildCatalog(candidate))
+            .Where(file => file.Path.Value == "Golden/Frozen/state/" + PathFor("A") + ".json")
+            .Concat(ReanchorInputFiles(candidate, ReanchorEnvironment.PinUpgrade, candidate: true)));
+        var baseState = FrozenStateCatalog.Load(protectedBase);
+        Assert.Equal(RepoPathFor("A"), Assert.Single(baseState.Selectors));
+        var authorization = new MathlibUpgradeFrozenLedgerReplacementAuthorization(protectedBase, current);
+
+        Assert.Equal(unchanged, authorization.IsAuthorized(
+            new[] { RepoPathFor("A") }.ToImmutableHashSet(), baseState, Report(candidate)));
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void MathlibReanchorKeepsImportedAnonymousCommandBindersSeparate(bool unchanged)
+    {
+        var root = ModuleWithReport("A",
+            "import D5.S0.Carrier.B\ndef a : Nat := (inferInstance : Inhabited Nat).default\n",
+            "old default", declarations: ["a"], kind: "def") with { Imports = ["B"] };
+        var dependency = ModuleWithReport("B",
+            "import D5.S0.Carrier.C\nopen D5.S0.Carrier\n"
+                + "instance : Inhabited (Nat → Nat) := ⟨fun seed => seed⟩\n"
+                + "instance : Inhabited Nat := ⟨seed⟩\n",
+            "instances", declarations: ["instInhabitedNat"], kind: "def") with { Imports = ["C"] };
+        var leaf = ModuleWithReport("C",
+            "namespace D5.S0.Carrier\ndef seed : Nat := 7\nend D5.S0.Carrier\n",
+            "seed", declarations: ["D5.S0.Carrier.seed"], kind: "def");
+        ModuleSpec[] baseline = [root, dependency, leaf];
+        ModuleSpec[] candidate =
+        [
+            root with { StatementMaterial = "new default" }, dependency,
+            leaf with { Source = unchanged ? leaf.Source
+                : leaf.Source.Replace("7", "8", StringComparison.Ordinal) },
+        ];
+        var protectedBase = Snapshot(StateFiles(BuildCatalog(baseline))
+            .Where(file => file.Path.Value == "Golden/Frozen/state/" + PathFor("A") + ".json")
+            .Concat(ReanchorInputFiles(baseline, ReanchorEnvironment.PinUpgrade, candidate: false)));
+        var current = Snapshot(StateFiles(BuildCatalog(candidate))
+            .Where(file => file.Path.Value == "Golden/Frozen/state/" + PathFor("A") + ".json")
+            .Concat(ReanchorInputFiles(candidate, ReanchorEnvironment.PinUpgrade, candidate: true)));
+        var baseState = FrozenStateCatalog.Load(protectedBase);
+        Assert.Equal(RepoPathFor("A"), Assert.Single(baseState.Selectors));
+        var authorization = new MathlibUpgradeFrozenLedgerReplacementAuthorization(protectedBase, current);
+
+        Assert.Equal(unchanged, authorization.IsAuthorized(
+            new[] { RepoPathFor("A") }.ToImmutableHashSet(), baseState, Report(candidate)));
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void MathlibReanchorRetainsAnonymousOnlyModuleSource(bool unchanged)
+    {
+        const string source = "instance : Inhabited Nat := ⟨7⟩\n";
+        var baseline = ModuleWithReport("A", source, "old instance",
+            declarations: ["instInhabitedNat"], kind: "def");
+        var candidate = baseline with
+        {
+            Source = unchanged ? source : source.Replace("7", "8", StringComparison.Ordinal),
+            Declarations = ["instInhabitedNat_drift"],
+            StatementMaterial = "new instance",
+        };
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")], [candidate, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(unchanged, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData("instance : Inhabited Nat := ⟨7⟩\n", "missing")]
+    [InlineData("instance (priority := 10) named : Inhabited Nat := ⟨7⟩\n", "named")]
+    public void MathlibReanchorDoesNotUseAnonymousSourceForUnresolvedNamedDeclaration(
+        string source, string name)
+    {
+        var baseline = ModuleWithReport("A", source, "old named root",
+            declarations: [name], kind: "def");
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")],
+            [baseline with { StatementMaterial = "new named root" }, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.False(result.Authorized);
+    }
+
+    [Fact]
+    public void MathlibReanchorRefusesAnonymousInstanceUnsupportedImportedSyntax()
+    {
+        var root = ModuleWithReport("A",
+            "import D5.S0.Carrier.B\nclass Carrier where\n  value : Nat\n"
+                + "instance : Carrier := ⟨payload⟩\n",
+            "old class", declarations: ["Carrier"], kind: "inductive") with { Imports = ["B"] };
+        var dependency = ModuleWithReport("B",
+            "notation \"payload\" => 7\ntheorem b : True := by trivial\n", "notation");
+        var result = ValidateMathlibReanchor(
+            [root, dependency], [root with { StatementMaterial = "new class" }, dependency],
             ["A"], ReanchorEnvironment.PinUpgrade);
 
         Assert.False(result.Authorized);
