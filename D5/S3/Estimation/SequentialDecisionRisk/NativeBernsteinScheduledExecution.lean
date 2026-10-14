@@ -407,6 +407,132 @@ theorem actual_one_call_count_recursion
 end OneCall
 
 
+private theorem translated_zero (p : unitInterval) (i I : ℕ) :
+    translatedBinomial 0 i I p = if I = i then 1 else 0 := by
+  by_cases h : I = i
+  · subst I
+    simp [translatedBinomial, binomialMass, binomial_singleton]
+  · by_cases hi : i ≤ I
+    · have hlt : 0 < I - i := by omega
+      simp [translatedBinomial, hi, h, (binomial_mass_support_and_pascal p).2.1 0 (I-i) hlt]
+    · simp [translatedBinomial, hi, h]
+
+private theorem translated_select (p : unitInterval) (i l L I : ℕ) (h : i + l ≤ L) :
+    (∑ x : Fin (L + 1), if x.val = I then translatedBinomial l i x.val p else 0) =
+      translatedBinomial l i I p := by
+  classical
+  by_cases hI : I ≤ L
+  · let t : Fin (L+1) := ⟨I, by omega⟩
+    have he (x : Fin (L+1)) : x.val = I ↔ x = t := ⟨fun h => Fin.ext h, fun h => congrArg Fin.val h⟩
+    simp_rw [he]
+    simp [t]
+  · have hi : i ≤ I := by omega
+    have hz := (binomial_mass_support_and_pascal p).2.1 l (I-i) (by omega)
+    rw [translatedBinomial, if_pos hi, hz]
+    apply Finset.sum_eq_zero
+    intro x _
+    have hx : x.val ≠ I := by have := x.isLt; omega
+    simp [hx]
+
+private theorem tensor_one_coin (p q : unitInterval) (i j l m L I J : ℕ)
+    (hl : i + l ≤ L) (hm : j + m ≤ L) (s : Bool) :
+    (∑ b : Bool, ∑ x : Fin (L+1), ∑ y : Fin (L+1),
+      if (I,J) = incrementCounts s b (x.val,y.val) then
+        translatedBinomial l i x.val p * translatedBinomial m j y.val q *
+          bernoulliMass (if s then q else p) b else 0) =
+      translatedBinomial (l + if s then 0 else 1) i I p *
+        translatedBinomial (m + if s then 1 else 0) j J q := by
+  classical
+  cases s
+  · have he (b : Bool) (x y : Fin (L+1)) :
+        (if (I,J) = incrementCounts false b (x.val,y.val) then
+          translatedBinomial l i x.val p * translatedBinomial m j y.val q *
+            bernoulliMass p b else 0) =
+        (translatedBinomial l i x.val p *
+          (if x.val + (if b then 1 else 0) = I then bernoulliMass p b else 0)) *
+          (if y.val = J then translatedBinomial m j y.val q else 0) := by
+      simp only [incrementCounts, Bool.false_eq_true, ↓reduceIte, Prod.mk.injEq]
+      by_cases hx : x.val + (if b then 1 else 0) = I <;>
+        by_cases hy : y.val = J <;> simp [hx, hy, eq_comm, mul_assoc, mul_comm, mul_left_comm] <;> aesop
+    simp only [Bool.false_eq_true, ↓reduceIte, Nat.add_zero]
+    simp_rw [he, ← Finset.mul_sum, translated_select q j m L J hm, ← Finset.sum_mul]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.mul_sum]
+    rw [bounded_one_coin_transport p i l L I hl]
+  · have he (b : Bool) (x y : Fin (L+1)) :
+        (if (I,J) = incrementCounts true b (x.val,y.val) then
+          translatedBinomial l i x.val p * translatedBinomial m j y.val q *
+            bernoulliMass q b else 0) =
+        (if x.val = I then translatedBinomial l i x.val p else 0) *
+          (translatedBinomial m j y.val q *
+            (if y.val + (if b then 1 else 0) = J then bernoulliMass q b else 0)) := by
+      simp only [incrementCounts, ↓reduceIte, Prod.mk.injEq]
+      by_cases hx : x.val = I <;>
+        by_cases hy : y.val + (if b then 1 else 0) = J <;>
+          simp [hx, hy, eq_comm, mul_assoc] <;> aesop
+    simp only [↓reduceIte, Nat.add_zero]
+    simp_rw [he, ← Finset.mul_sum, ← Finset.sum_mul, translated_select p i l L I hl]
+    rw [← Finset.mul_sum, Finset.sum_comm]
+    simp_rw [← Finset.mul_sum]
+    rw [bounded_one_coin_transport q j m L J hm]
+
+private theorem mixture_one_coin (p q : unitInterval) (N l m L I J : ℕ)
+    (hl : N + l ≤ L) (hm : N + m ≤ L) (s : Bool)
+    (w : Fin (N+1) → Fin (N+1) → ℝ≥0∞) :
+    (∑ b : Bool, ∑ x : Fin (L+1), ∑ y : Fin (L+1),
+      if (I,J) = incrementCounts s b (x.val,y.val) then
+        (∑ i : Fin (N+1), ∑ j : Fin (N+1),
+          w i j * translatedBinomial l i.val x.val p * translatedBinomial m j.val y.val q) *
+          bernoulliMass (if s then q else p) b else 0) =
+      ∑ i : Fin (N+1), ∑ j : Fin (N+1),
+        w i j * translatedBinomial (l + if s then 0 else 1) i.val I p *
+          translatedBinomial (m + if s then 1 else 0) j.val J q := by
+  classical
+  simp_rw [Finset.sum_mul, Finset.ite_sum_zero]
+  calc
+    _ = ∑ i : Fin (N+1), ∑ j : Fin (N+1), ∑ b : Bool,
+        ∑ x : Fin (L+1), ∑ y : Fin (L+1),
+        if (I,J) = incrementCounts s b (x.val,y.val) then
+          w i j * translatedBinomial l i.val x.val p * translatedBinomial m j.val y.val q *
+            bernoulliMass (if s then q else p) b else 0 := by
+      conv_lhs =>
+        arg 2; ext b
+        arg 2; ext x
+        rw [Finset.sum_comm]
+      conv_lhs =>
+        arg 2; ext b
+        rw [Finset.sum_comm]
+      rw [Finset.sum_comm]
+      conv_lhs =>
+        arg 2; ext i
+        arg 2; ext b
+        arg 2; ext x
+        rw [Finset.sum_comm]
+      conv_lhs =>
+        arg 2; ext i
+        arg 2; ext b
+        rw [Finset.sum_comm]
+      conv_lhs =>
+        arg 2; ext i
+        rw [Finset.sum_comm]
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      have he (b : Bool) (x y : Fin (L+1)) :
+          (if (I,J) = incrementCounts s b (x.val,y.val) then
+            w i j * translatedBinomial l i.val x.val p * translatedBinomial m j.val y.val q *
+              bernoulliMass (if s then q else p) b else 0) =
+          w i j * (if (I,J) = incrementCounts s b (x.val,y.val) then
+            translatedBinomial l i.val x.val p * translatedBinomial m j.val y.val q *
+              bernoulliMass (if s then q else p) b else 0) := by
+        split_ifs <;> simp only [mul_assoc, mul_zero]
+      simp_rw [he, ← Finset.mul_sum]
+      rw [tensor_one_coin p q i.val j.val l m L I J
+        (by have := i.isLt; omega) (by have := j.isLt; omega) s]
+      simp only [mul_assoc]
+
 section BetweenLandmarks
 variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
   (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
@@ -528,6 +654,117 @@ theorem actual_between_landmark_count_recursion (S : Bool) (p q : unitInterval)
   · intro s' _ hs
     simp only [he, if_neg hs, measure_empty, zero_mul, ite_self, Finset.sum_const_zero]
   · simp
+
+/-- The joint law of the actual acquired counts at the next batch is the
+previous unresolved count law convolved with the two prescribed independent
+binomial increments. The unresolved event belongs to this same execution. -/
+theorem actual_two_block_count_transport (S : Bool) (p q : unitInterval) (k I J : ℕ) :
+    rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+      ((D (k+1) + d (k+1) : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (D (k+1) + d (k+1)) ω) = (I,J)} =
+    ∑ i : Fin (D k + d k + 1), ∑ j : Fin (D k + d k + 1),
+      rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+        ((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ∧
+        countPair (nativeHistory π S p q (D k + d k) ω) = (i.val,j.val)} *
+      translatedBinomial (D (k+1) - D k) i.val I p *
+      translatedBinomial (d (k+1) - d k) j.val J q := by
+  classical
+  let N := D k + d k
+  let X := D (k+1) - D k
+  let Y := d (k+1) - d k
+  let F (n I J : ℕ) := rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+    (N : WithTop ℕ) < nativeCalls π S p q ω ∧
+    countPair (nativeHistory π S p q n ω) = (I,J)}
+  have hDk : D k < D (k+1) := hD (Nat.lt_succ_self k)
+  have hdk : d k < d (k+1) := hd (Nat.lt_succ_self k)
+  have hn : N + (X+Y) = D (k+1) + d (k+1) := by dsimp [N,X,Y]; omega
+  have hz (I J : ℕ) (hij : N < I ∨ N < J) : F N I J = 0 := by
+    apply measure_mono_null (t := ∅) _ measure_empty
+    intro ω hω
+    have hlen := acquired_history_length_before_return π S (sourceRead p q) ω N hω.1.le
+    have hb (s : Bool) : successCount s (nativeHistory π S p q N ω) ≤ N := by
+      have hh := List.length_filter_le
+        (fun v : Bool × Bool => decide (v.1 = s ∧ v.2 = true)) (nativeHistory π S p q N ω)
+      change successCount s (nativeHistory π S p q N ω) ≤ _ at hh
+      change (nativeHistory π S p q N ω).length = N at hlen
+      omega
+    have he : countPair (nativeHistory π S p q N ω) = (I,J) := hω.2
+    have hi := hb false
+    have hj := hb true
+    have hi' := congrArg Prod.fst he
+    have hj' := congrArg Prod.snd he
+    simp only [countPair] at hi' hj'
+    rcases hij with hij | hij <;> omega
+  have hbase (I J : ℕ) : F N I J =
+      ∑ i : Fin (N+1), ∑ j : Fin (N+1), F N i.val j.val *
+        translatedBinomial 0 i.val I p * translatedBinomial 0 j.val J q := by
+    simp_rw [translated_zero]
+    by_cases hi : I ≤ N
+    · let i : Fin (N+1) := ⟨I, by omega⟩
+      have hei (x : Fin (N+1)) : I = x.val ↔ x = i :=
+        ⟨fun h => Fin.ext h.symm, fun h => (congrArg Fin.val h).symm⟩
+      by_cases hj : J ≤ N
+      · let j : Fin (N+1) := ⟨J, by omega⟩
+        have hej (x : Fin (N+1)) : J = x.val ↔ x = j :=
+          ⟨fun h => Fin.ext h.symm, fun h => (congrArg Fin.val h).symm⟩
+        simp [hei, hej, i, j]
+      · rw [hz I J (Or.inr (by omega))]
+        symm
+        apply Finset.sum_eq_zero
+        intro x _
+        apply Finset.sum_eq_zero
+        intro y _
+        have he : J ≠ y.val := by have := y.isLt; omega
+        simp [he]
+    · rw [hz I J (Or.inl (by omega))]
+      symm
+      apply Finset.sum_eq_zero
+      intro x _
+      have he : I ≠ x.val := by have := x.isLt; omega
+      simp [he]
+  have hind (r : ℕ) (hr : r ≤ X+Y) (I J : ℕ) :
+      F (N+r) I J = ∑ i : Fin (N+1), ∑ j : Fin (N+1), F N i.val j.val *
+        translatedBinomial (min r X) i.val I p * translatedBinomial (r-X) j.val J q := by
+    induction r generalizing I J with
+    | zero => simpa only [Nat.add_zero, Nat.zero_min, Nat.zero_sub] using hbase I J
+    | succ r ih =>
+      have hlo : D k + d k ≤ N+r := by dsimp [N]; omega
+      have hhi : N+r < D (k+1) + d (k+1) := by omega
+      have he := actual_between_landmark_count_recursion D d a hD hd hc S p q k (N+r) I J hlo hhi
+      change F (N+r+1) I J = _ at he
+      rw [show N+(r+1) = N+r+1 by omega, he]
+      change (∑ b : Bool, ∑ x : Fin (N+r+1), ∑ y : Fin (N+r+1),
+        if (I,J) = incrementCounts (if N+r < D (k+1)+d k then false else true) b (x.val,y.val)
+        then F (N+r) x.val y.val *
+          bernoulliMass (if (if N+r < D (k+1)+d k then false else true) then q else p) b
+        else 0) = _
+      simp_rw [ih (by omega)]
+      rw [mixture_one_coin p q N (min r X) (r-X) (N+r) I J
+        (by omega) (by omega) (if N+r < D (k+1)+d k then false else true)
+        (fun i j => F N i.val j.val)]
+      by_cases hx : r < X
+      · have hs : N+r < D (k+1)+d k := by dsimp [N,X] at *; omega
+        have hmin : min (r+1) X = min r X + 1 := by omega
+        have hsub : r+1-X = r-X := by omega
+        simp only [if_pos hs, Bool.false_eq_true, ↓reduceIte, Nat.add_zero, hmin, hsub]
+      · have hs : ¬ N+r < D (k+1)+d k := by dsimp [N,X] at *; omega
+        have hmin : min (r+1) X = min r X := by omega
+        have hsub : r+1-X = r-X+1 := by omega
+        simp only [if_neg hs, ↓reduceIte, Nat.add_zero, hmin, hsub]
+  have hevent : {ω | ((D (k+1)+d (k+1) : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (D (k+1)+d (k+1)) ω) = (I,J)} =
+      {ω | (N : WithTop ℕ) < nativeCalls π S p q ω ∧
+        countPair (nativeHistory π S p q (N+(X+Y)) ω) = (I,J)} := by
+    ext ω
+    rw [hn]
+    have ht := (actual_between_landmarks D d a hD hd hc S p q ω k
+      (D (k+1)+d (k+1)-1) (by omega) (by omega)).2.1
+    have hp : D (k+1)+d (k+1)-1+1 = D (k+1)+d (k+1) := by omega
+    simpa only [hp, N, Set.mem_setOf_eq] using and_congr_left (fun _ => ht)
+  rw [hevent]
+  exact (hind (X+Y) le_rfl I J).trans (by
+    simp only [Nat.min_eq_right (Nat.le_add_right X Y), Nat.add_sub_cancel_left]
+    rfl)
 
 end BetweenLandmarks
 
