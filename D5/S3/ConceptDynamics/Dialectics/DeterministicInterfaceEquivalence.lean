@@ -142,7 +142,7 @@ theorem deterministic_interface_sixfold_equivalence {X B : Type*}
   tfae_finish
 
 example : EffectiveDescent (id : Bool → Bool) Bool.not := by
-  apply ((deterministic_interface_sixfold_equivalence id Bool.not).out 1 0).mp
+  apply ((deterministic_interface_sixfold_equivalence id Bool.not).out 2 1).mp
   intro x y hxy
   exact congrArg Bool.not hxy
 

@@ -8,8 +8,11 @@
 
 import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Tactic.FinCases
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -399,8 +402,8 @@ noncomputable def uniformLift
     [Fintype G.edgeSet] [Fintype G.ConnectedComponent]
     [Fintype (Anchor G)]
     (o : (K : G.ConnectedComponent) → K) (ν : PMF (Label G)) : LiftSpace G ν := by
-  exact ⟨liftFrom G o ν (fun _ => PMF.uniformOfFintype (Anchor G)),
-    liftFrom_marginal G o ν (fun _ => PMF.uniformOfFintype (Anchor G))⟩
+  exact ⟨liftFrom G o ν (fun _ => uniformPmf (Anchor G)),
+    liftFrom_marginal G o ν (fun _ => uniformPmf (Anchor G))⟩
 
 theorem probability_lift_point_masses
     {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
@@ -433,14 +436,14 @@ private noncomputable def addTranslateEquiv
 private theorem pmf_translation_invariant_uniform
     {A : Type*} [Fintype A] [AddCommGroup A]
     (p : PMF A) (h : ∀ g : A, PMF.map (addTranslateEquiv g) p = p) :
-    p = PMF.uniformOfFintype A := by
+    p = uniformPmf A := by
   apply PMF.ext
   intro a
   have hmass (b : A) : p b = p 0 := by
     have hb := congrArg (fun r : PMF A => r b) (h b)
     rw [map_equiv_apply] at hb
     simpa [addTranslateEquiv] using hb.symm
-  rw [PMF.uniformOfFintype_apply]
+  rw [uniformPmf, PMF.ofFintype_apply]
   have hsum := p.tsum_coe
   rw [tsum_eq_sum (s := Finset.univ)
       (fun b hb => (hb (Finset.mem_univ b)).elim)] at hsum
@@ -467,7 +470,7 @@ theorem flip_invariant_positive_fiber_uniform
     (o : (K : G.ConnectedComponent) → K) (ν : PMF (Label G))
     (μ : LiftSpace G ν) (hμ : FlipInvariant G μ.1) (y : ν.support) :
     (phi_probability_lift_classification G o ν μ) y =
-      PMF.uniformOfFintype (Anchor G) := by
+      uniformPmf (Anchor G) := by
   letI : Fintype (Anchor G) := Fintype.ofFinite (Anchor G)
   apply pmf_translation_invariant_uniform
   intro g
@@ -535,9 +538,9 @@ theorem uniform_lift_flip_invariant
   letI : Fintype (Anchor G) := Fintype.ofFinite (Anchor G)
   have hmass (y : Label G) (a : Anchor G) :
       (PMF.map (phiEquiv G o) (uniformLift G o ν).1) (y, a) =
-        ν y * PMF.uniformOfFintype (Anchor G) a := by
+        ν y * uniformPmf (Anchor G) a := by
     change (PMF.map (phiEquiv G o)
-      (liftFrom G o ν (fun _ => PMF.uniformOfFintype (Anchor G)))) (y, a) = _
+      (liftFrom G o ν (fun _ => uniformPmf (Anchor G)))) (y, a) = _
     rw [liftFrom, PMF.map_comp, Equiv.self_comp_symm, PMF.map_id, bind_pair_apply]
     by_cases hy : y ∈ ν.support
     · simp [conditionalAt, hy]
@@ -572,10 +575,10 @@ theorem uniform_lift_flip_invariant
         ((flipPairEquiv G g).symm (y, a)) := map_equiv_apply _ _ _
     _ = (PMF.map (phiEquiv G o) (uniformLift G o ν).1) (y, a + g) := by
       rfl
-    _ = ν y * PMF.uniformOfFintype (Anchor G) (a + g) :=
+    _ = ν y * uniformPmf (Anchor G) (a + g) :=
       hmass y (a + g)
-    _ = ν y * PMF.uniformOfFintype (Anchor G) a := by
-      rw [PMF.uniformOfFintype_apply, PMF.uniformOfFintype_apply]
+    _ = ν y * uniformPmf (Anchor G) a := by
+      simp only [uniformPmf, PMF.ofFintype_apply]
     _ = (PMF.map (phiEquiv G o) (uniformLift G o ν).1) (y, a) :=
       (hmass y a).symm
 
@@ -589,13 +592,13 @@ theorem flip_invariant_lift_unique
   intro μ hμ
   have hq (y : ν.support) :
       (phi_probability_lift_classification G o ν μ) y =
-        PMF.uniformOfFintype (Anchor G) :=
+        uniformPmf (Anchor G) :=
     flip_invariant_positive_fiber_uniform G o ν μ hμ y
   have hquniform (y : ν.support) :
       (phi_probability_lift_classification G o ν (uniformLift G o ν)) y =
-        PMF.uniformOfFintype (Anchor G) := by
+        uniformPmf (Anchor G) := by
     have hr := (phi_probability_lift_classification G o ν).right_inv
-      (fun _ => PMF.uniformOfFintype (Anchor G))
+      (fun _ => uniformPmf (Anchor G))
     exact congrFun hr y
   apply (phi_probability_lift_classification G o ν).injective
   funext y
@@ -650,13 +653,13 @@ theorem flip_invariant_positive_fiber_fair_bits
       rw [Fintype.card_congr e, Fintype.card_fun, ZMod.card, Fintype.card_coe]
     have hprob :
         PMF.map (fun a : Anchor G => fun K : S => a K)
-          (PMF.uniformOfFintype (Anchor G)) b =
-            (PMF.uniformOfFintype (Anchor G)).toOuterMeasure C := by
+          (uniformPmf (Anchor G)) b =
+            (uniformPmf (Anchor G)).toOuterMeasure C := by
       rw [PMF.map_apply, PMF.toOuterMeasure_apply]
       apply tsum_congr
       intro a
       simp [C, Set.indicator_apply, eq_comm]
-    rw [hprob, PMF.toOuterMeasure_uniformOfFintype_apply, hC, hcard]
+    rw [hprob, uniformPmf_toOuterMeasure_apply, hC, hcard]
     rw [← Finset.card_compl_add_card S, Nat.cast_pow, Nat.cast_pow, pow_add]
     calc
       (2 : ENNReal) ^ (Sᶜ).card /
@@ -668,7 +671,7 @@ theorem flip_invariant_positive_fiber_fair_bits
       _ = (2 : ENNReal)⁻¹ ^ S.card := by
         rw [one_div, ENNReal.inv_pow]
   · intro a
-    rw [hq, PMF.uniformOfFintype_apply, hcard, Nat.cast_pow, ENNReal.inv_pow]
+    rw [hq, uniformPmf, PMF.ofFintype_apply, hcard, Nat.cast_pow, ENNReal.inv_pow]
     rfl
 
 end

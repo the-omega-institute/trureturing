@@ -299,7 +299,7 @@ theorem deletion_readout_inversion_constant (r : ℕ) (m : Fin r → ℕ)
         |R T a w| ≤ ∏ i, ((m i : ℝ) - 1) := by
       intro T a
       rw [hreading]
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro i _
         have hmi : (2 : ℝ) ≤ (m i : ℝ) := by exact_mod_cast hm i
         split

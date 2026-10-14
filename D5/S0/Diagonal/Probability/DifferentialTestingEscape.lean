@@ -21,6 +21,21 @@ noncomputable section
 
 variable {A : Type u} {Y : Type v}
 
+private noncomputable def uniformPmf (α : Type*) [Fintype α] [Nonempty α] : PMF α :=
+  PMF.ofFintype (fun _ => (Fintype.card α : ℝ≥0∞)⁻¹) (by
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    exact ENNReal.mul_inv_cancel (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+      (ENNReal.natCast_ne_top _))
+
+private theorem uniformPmf_toOuterMeasure_apply (α : Type*) [Fintype α] [Nonempty α]
+    (s : Set α) [Fintype s] :
+    (uniformPmf α).toOuterMeasure s = Fintype.card s / Fintype.card α := by
+  classical
+  rw [PMF.toOuterMeasure_apply_fintype]
+  simp only [uniformPmf, PMF.ofFintype_apply, Set.indicator_apply]
+  rw [← Finset.sum_filter]
+  simp [Fintype.card_subtype, div_eq_mul_inv]
+
 noncomputable instance directoryFintype [Fintype A] [Fintype Y] : Fintype (A → A → Y) := by
   classical
   infer_instance
@@ -38,7 +53,7 @@ def directoryEscapes (f : Y → Y) (g : A → A → Y) : Prop :=
 
 def directoryEscapeProbability [Fintype A] [Fintype Y] [Nonempty Y]
     (f : Y → Y) : ℝ≥0∞ :=
-  (PMF.uniformOfFintype (A → A → Y)).toOuterMeasure
+  (uniformPmf (A → A → Y)).toOuterMeasure
     {g | directoryEscapes f g}
 
 theorem directoryEscapes_iff_isEscaped (f : Y → Y) (g : A → A → Y) :
@@ -60,18 +75,18 @@ theorem directory_escape_probability_exact [Fintype A] [Fintype Y] [Nonempty Y]
       letI : IsEmpty A := hA
       have hcardA : Fintype.card A = 0 := Fintype.card_eq_zero_iff.mpr hA
       rw [hcardA]
-      simp [directoryEscapeProbability, PMF.toOuterMeasure_uniformOfFintype_apply,
+      simp [directoryEscapeProbability, uniformPmf, PMF.ofFintype_apply,
         directoryEscapes, diagonalMutant, escaped_listing_card, Nat.card_eq_fintype_card]
   | inr hA =>
       letI : Nonempty A := hA
-      rw [directoryEscapeProbability, PMF.toOuterMeasure_uniformOfFintype_apply]
+      rw [directoryEscapeProbability, uniformPmf_toOuterMeasure_apply]
       have hEscapedCard :
           Fintype.card
               ↥({g | directoryEscapes f g} : Set (A → A → Y)) =
             Nat.card {g : A → A → Y // IsEscaped f g} := by
         rw [Nat.card_eq_fintype_card]
         apply Fintype.card_congr
-        exact Equiv.setCongr (by
+        exact Set.equivOfEq (by
           ext g
           exact directoryEscapes_iff_isEscaped f g)
       have hTotalCard :

@@ -21,9 +21,12 @@
      `iIndepFun.hasLaw_pi`; neither already carries the intervention semantics. -/
 
 import D5.S3.ConceptDynamics.Interventions.BlockCausalQuotientDecomposition
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Tactic.NormNum
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -124,7 +127,7 @@ def directedEdgeResponse : Bool -> Unit -> Bool × Bool -> Bool
 /-- Block independence is necessary: the concrete directed-edge model has a
 one-half diagonal mass, while the product of its fair marginals has mass one quarter. -/
 theorem block_independence_is_necessary :
-    let source := (PMF.uniformOfFintype (Bool × Bool)).toMeasure
+    let source := (uniformPmf (Bool × Bool)).toMeasure
     let intervention := fun _ : Bool => ()
     Not (BlockIndependent source intervention directedEdgeResponse) /\
       Not (blockInterventionalLaw source intervention directedEdgeResponse =
@@ -146,13 +149,14 @@ theorem block_independence_is_necessary :
     rcases exogenous with ⟨first, second⟩
     cases i <;> cases first <;> cases second <;> simp [directedEdgeResponse]
   letI (i : Bool) : IsProbabilityMeasure
-      (localInterventionalLaw (PMF.uniformOfFintype (Bool × Bool)).toMeasure
-        (fun _ : Bool => ()) directedEdgeResponse i) :=
-    Measure.isProbabilityMeasure_map (measurableEdge i).aemeasurable
+      (localInterventionalLaw (uniformPmf (Bool × Bool)).toMeasure
+        (fun _ : Bool => ()) directedEdgeResponse i) := by
+    unfold localInterventionalLaw
+    infer_instance
   have lawMismatch :
-      Not (blockInterventionalLaw (PMF.uniformOfFintype (Bool × Bool)).toMeasure
+      Not (blockInterventionalLaw (uniformPmf (Bool × Bool)).toMeasure
         (fun _ : Bool => ()) directedEdgeResponse =
-          Measure.pi (localInterventionalLaw (PMF.uniformOfFintype (Bool × Bool)).toMeasure
+          Measure.pi (localInterventionalLaw (uniformPmf (Bool × Bool)).toMeasure
             (fun _ : Bool => ()) directedEdgeResponse)) := by
     intro lawsEqual
     have atAllTrue := congrArg
@@ -166,7 +170,7 @@ theorem block_independence_is_necessary :
     simp_rw [Measure.map_apply (measurableEdge _) (measurableSet_singleton true)] at atAllTrue
     simp_rw [localPreimage] at atAllTrue
     norm_num [directedEdgeResponse, PMF.toMeasure_apply_fintype,
-      PMF.uniformOfFintype_apply, Fintype.card_prod, Fintype.card_bool,
+      uniformPmf, PMF.ofFintype_apply, Fintype.card_prod, Fintype.card_bool,
       Fintype.sum_prod_type, Fintype.sum_bool, Set.indicator] at atAllTrue
     have realEquality := congrArg ENNReal.toReal atAllTrue
     norm_num [ENNReal.toReal_add] at realEquality
@@ -195,12 +199,12 @@ example :
 -- The identity response is likewise the one-coordinate product of its own law.
 example :
     blockInterventionalLaw (I := Unit) (Action := fun _ => Unit)
-        (State := fun _ => Bool) (PMF.uniformOfFintype Bool).toMeasure
+        (State := fun _ => Bool) (uniformPmf Bool).toMeasure
           (fun _ => ()) (fun _ _ source => source) =
       Measure.pi (localInterventionalLaw (I := Unit) (Action := fun _ => Unit)
-        (State := fun _ => Bool) (PMF.uniformOfFintype Bool).toMeasure
+        (State := fun _ => Bool) (uniformPmf Bool).toMeasure
           (fun _ => ()) (fun _ _ source => source)) := by
-  exact (single_block_factorization_witness (PMF.uniformOfFintype Bool).toMeasure
+  exact (single_block_factorization_witness (uniformPmf Bool).toMeasure
     (fun _ => ()) (fun _ _ source => source) (by fun_prop)).2
 
 -- There is no repetition count or depth parameter, so an `n = 0` case is inapplicable.

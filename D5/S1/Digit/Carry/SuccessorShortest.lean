@@ -7,6 +7,7 @@
    digest: Zeckendorf successor folds give exact bit changes and shortest directed carry paths. -/
 
 import D5.S1.Digit.Carry.Successor
+import Batteries.Tactic.OpenPrivate
 import Mathlib.Data.Finset.SymmDiff
 import Mathlib.Data.Nat.Dist
 

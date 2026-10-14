@@ -75,14 +75,14 @@ theorem detection_certificate (Q : α → Matrix (Fin d) (Fin d) ℂ)
     exact smul_le_smul_of_nonneg_left h (Complex.zero_le_real.mpr hc)
   refine ⟨fun hD => ?_, fun g hg hgle => ?_⟩
   · -- (i) a positive lower bound for the quadratic form of `I - S_d`
-    have hPD : (1 - survival Q d).PosDef := (htfae.out 0 2).mp hD
+    have hPD : (1 - survival Q d).PosDef := (htfae.out 1 3).mp hD
     by_cases hd0 : d = 0
     · exact ⟨1, one_pos, htriv hd0 _ _⟩
     · -- a strictly positive element dominates a positive multiple of the identity
       haveI : Nonempty (Fin d) := ⟨⟨0, Nat.pos_of_ne_zero hd0⟩⟩
       have hsp : IsStrictlyPositive (1 - survival Q d) := hPD.isStrictlyPositive
       obtain ⟨r, hr, hle⟩ :=
-        (CFC.exists_pos_algebraMap_le_iff hsp.isSelfAdjoint).2 fun x hx => hsp.spectrum_pos hx
+        (CFC.exists_pos_algebraMap_le_iff (1 - survival Q d) hsp.isSelfAdjoint).2 fun x hx => hsp.spectrum_pos hx
       refine ⟨r, hr, ?_⟩
       rwa [Algebra.algebraMap_eq_smul_one, RCLike.real_smul_eq_coe_smul (K := ℂ)] at hle
   · -- (ii) block decay of the survival effects

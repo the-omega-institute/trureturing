@@ -81,12 +81,12 @@ theorem dark_block_contraction {d : ℕ} {ι : Type*} [Fintype ι]
         Matrix.toEuclideanLin A v = 0 ↔ A *ᵥ v.ofLp = 0 := by
       constructor
       · intro h
-        have happ := Matrix.ofLp_toEuclideanLin_apply A v
+        have happ := Matrix.ofLp_toLpLin 2 2 A v
         rw [h, WithLp.ofLp_zero] at happ
         exact happ.symm
       · intro h
         apply WithLp.ofLp_injective
-        rw [Matrix.ofLp_toEuclideanLin_apply, h]
+        rw [Matrix.ofLp_toLpLin 2 2, Matrix.toLin'_apply, h]
         rfl
     simpa only [hzero] using
       FiniteDetectionDarkSpace.dark_space_eq_survival_defect_kernel Q L hcomp v.ofLp
@@ -243,11 +243,11 @@ theorem dark_block_contraction {d : ℕ} {ι : Type*} [Fintype ι]
       rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] at hinner
       change star w.ofLp ⬝ᵥ
         (Matrix.toEuclideanLin (1 - (Qᴴ) ^ d * Q ^ d) w).ofLp = 0 at hinner
-      rwa [Matrix.ofLp_toEuclideanLin_apply] at hinner
+      rwa [Matrix.ofLp_toLpLin 2 2] at hinner
     have hlinzero : Matrix.toEuclideanLin (1 - (Qᴴ) ^ d * Q ^ d) w = 0 := by
       apply WithLp.ofLp_injective
-      rw [Matrix.ofLp_toEuclideanLin_apply,
-        (hdefect.dotProduct_mulVec_zero_iff w.ofLp).mp hquad]
+      rw [Matrix.ofLp_toLpLin 2 2, Matrix.toLin'_apply,
+        (hdefect.dotProduct_mulVec_zero_iff (x := w.ofLp)).mp hquad]
       rfl
     have hvD : w ∈ D := hD_kernel.symm ▸ hlinzero
     have hvbot : w ∈ (⊥ : Submodule ℂ (EuclideanSpace ℂ (Fin d))) := by

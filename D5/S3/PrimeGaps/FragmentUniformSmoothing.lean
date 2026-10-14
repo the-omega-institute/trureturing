@@ -53,7 +53,7 @@ theorem uniformScaleMixture_isProbabilityMeasure
   letI : IsProbabilityMeasure (volume.restrict (Set.Ioc (0 : ℝ) 1)) :=
     ⟨by simp [Real.volume_Ioc]⟩
   unfold uniformScaleMixture
-  exact Measure.isProbabilityMeasure_map (by fun_prop)
+  exact inferInstance
 
 /-- Integrating the conditional scaled-uniform sections gives a genuine
 Lebesgue-volume bound for every measurable set, including unbounded sets. -/

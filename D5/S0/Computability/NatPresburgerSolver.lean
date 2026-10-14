@@ -44,11 +44,11 @@ private theorem exists_test_correct {m n : Nat}
   rw [BoundedFormula.realize_exs]
   exact exists_congr (fun xs => (test_correct φ v xs).symm)
 
-/-- Search uses the supplied computable `Encodable.chooseX`, including dimension zero. -/
+/-- Search uses the supplied computable `Encodable.choose`, including dimension zero. -/
 def solveBounded {m n : Nat} (φ : presburger.BoundedFormula (Fin m) n)
     (v : Fin m → Nat) : Option (Fin n → Nat) :=
   if h : existsTest φ v = true then
-    some (Encodable.chooseX ((exists_test_correct φ v).mp h)).val
+    some (Encodable.choose ((exists_test_correct φ v).mp h))
   else none
 
 theorem solve_bounded_sound {m n : Nat} (φ : presburger.BoundedFormula (Fin m) n)
@@ -59,7 +59,7 @@ theorem solve_bounded_sound {m n : Nat} (φ : presburger.BoundedFormula (Fin m) 
   · next hsat =>
       have heq := Option.some.inj h
       exact (test_correct φ v xs).mp
-        (heq ▸ (Encodable.chooseX ((exists_test_correct φ v).mp hsat)).property)
+        (heq ▸ (Encodable.choose_spec ((exists_test_correct φ v).mp hsat)))
   · contradiction
 
 theorem solve_bounded_exists_some_iff {m n : Nat}

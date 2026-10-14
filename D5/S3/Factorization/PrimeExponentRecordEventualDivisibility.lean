@@ -329,12 +329,12 @@ private lemma nat_le_of_prime_factorization_bounds {n B Q : ℕ} (hn : n ≠ 0) 
   calc
     (∏ q ∈ n.primeFactors, q ^ n.factorization q) ≤
         ∏ q ∈ n.primeFactors, Q ^ B := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · simp
       · intro q hq
         exact pow_le_pow (hsupp q hq) hQ (hexp q (Nat.prime_of_mem_primeFactors hq))
     _ ≤ ∏ _q ∈ Finset.range (Q + 1), Q ^ B := by
-      apply Finset.prod_le_prod_of_subset_of_one_le
+      apply Finset.prod_le_prod_of_subset_of_one_le₀
       · intro q hq
         simpa using Nat.lt_succ_iff.mpr (hsupp q hq)
       · simp

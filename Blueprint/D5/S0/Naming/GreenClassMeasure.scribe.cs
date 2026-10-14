@@ -35,7 +35,7 @@ internal sealed class GreenClassMeasureDocument : IScribeDocumentDefinition
                         "The green class is the cylinder Set.pi S (fun i => { t i }); Measure.infinitePi_pi "
                         + "evaluates it under the infinite product measure as the product over i in S of the "
                         + "per-coordinate uniform singleton mass, each equal to (card O)^(-1) "
-                        + "(PMF.uniformOfFintype), and Finset.prod_const folds the constant over S to "
+                        + "(PMF.ofFintype), and Finset.prod_const folds the constant over S to "
                         + "(card O)^(-1) ^ |S|. Positivity then follows since (card O)^(-1) > 0.")),
                     Paragraph(Text(
                         "This records the green-class positive-measure clause for the uniform product measure "

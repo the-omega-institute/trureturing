@@ -498,7 +498,7 @@ theorem actual_common_cubic_ramification_three_divides
         rw [Ideal.span_singleton_pow, Ideal.dvd_iff_le,
           Ideal.span_singleton_le_span_singleton]
       _ = multiplicity p (block j) := Int.natCast_multiplicity p (block j)
-      _ = (block j).factorization p := Nat.multiplicity_eq_factorization hp hB0
+      _ = (block j).factorization p := Nat.multiplicity_eq_factorization (n := block j) hp
   have hbase : v0.valuation ℚ (block j : ℚ) =
       WithZero.exp (-(block j).factorization p : ℤ) := by
     change v0.valuation ℚ (algebraMap ℤ ℚ (block j : ℤ)) = _
@@ -852,7 +852,7 @@ theorem actual_common_cubic_absolute_different_sixth_power
         Ideal.ramificationIdx'_eq_ramificationIdx v0.asIdeal P v0.ne_bot, hv0,
         Ideal.emultiplicity_eq_emultiplicity_span, Int.natCast_emultiplicity,
         (Nat.finiteMultiplicity_iff.mpr ⟨hp.ne_one, Nat.pos_of_ne_zero ha⟩).emultiplicity_eq_multiplicity,
-        Nat.multiplicity_eq_factorization hp ha] at hmap
+        Nat.multiplicity_eq_factorization (n := a) hp] at hmap
       exact hmap
     have hDmult : emultiplicity P D = (multiplicity P D : ℕ∞) :=
       (FiniteMultiplicity.of_prime_left hPprime hDne).emultiplicity_eq_multiplicity

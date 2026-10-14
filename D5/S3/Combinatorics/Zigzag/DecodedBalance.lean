@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Zigzag.PathEncoding
 import D5.S3.Combinatorics.Zigzag.ChoiceClassification
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Order.Fin.Basic
 
 set_option autoImplicit false

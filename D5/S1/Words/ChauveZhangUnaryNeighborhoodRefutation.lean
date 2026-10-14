@@ -380,10 +380,10 @@ theorem resultCondensed : ¬ claimCondensed := by
       exact (hall (mem_wordsUpTo_iff y _ |>.2 hy.length_le)) ⟨hy, hne, hyn⟩
   have hunary : (condensed (List.replicate 3 false) 2).ncard = 3 := by
     rw [condensed_eq, Set.ncard_coe_finset]
-    rfl
+    decide +kernel
   have hwitness : (condensed [false, false, true] 2).ncard = 2 := by
     rw [condensed_eq, Set.ncard_coe_finset]
-    rfl
+    decide +kernel
   omega
 
 theorem resultSuperCondensed : ¬ claimSuperCondensed := by
@@ -449,10 +449,10 @@ theorem resultSuperCondensed : ¬ claimSuperCondensed := by
       exact (hall (mem_wordsUpTo_iff y _ |>.2 hy.length_le)) ⟨hy, hne, hyn⟩
   have hunary : (superCondensed (List.replicate 4 false) 1).ncard = 3 := by
     rw [superCondensed_eq, Set.ncard_coe_finset]
-    rfl
+    decide +kernel
   have hwitness : (superCondensed [false, false, true, true] 1).ncard = 2 := by
     rw [superCondensed_eq, Set.ncard_coe_finset]
-    rfl
+    decide +kernel
   omega
 
 example (ys : List α) : levenshtein [] ys = ys.length := by

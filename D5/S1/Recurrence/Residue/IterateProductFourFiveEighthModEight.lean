@@ -6,6 +6,7 @@
    utility: none
    digest: The eighth iterate of A396798 has coefficients above degree one divisible by eight. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Invariants.ThreeFourIterateProductModSix
 import D5.S1.Recurrence.Residue.IterateProductTwentyFiveModFive
 import D5.S1.Recurrence.Parity.DiagonalIterateEven

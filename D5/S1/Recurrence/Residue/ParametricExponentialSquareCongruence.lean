@@ -79,7 +79,7 @@ private theorem convolution (q : ℤ) (n : ℕ) (hn : 2 ≤ n) :
 
 /-- Formal exponential reading: A(0)=1 and q X A' = (q X L') A. -/
 theorem log_derivative_identity (q : ℤ) :
-    coeff 0 (mk (a q)) = 1 ∧ C q * (X * derivative ℤ (mk (a q))) = M q * mk (a q) := by
+    coeff 0 (mk (a q)) = 1 ∧ C q * (X * PowerSeries.derivative (R := ℤ) (mk (a q))) = M q * mk (a q) := by
   refine ⟨by simp [a_zero], ?_⟩
   ext n
   rcases n with _ | n
@@ -107,13 +107,13 @@ theorem coeff_M_rat (q : ℤ) (n : ℕ) (hn : 2 ≤ n) :
   field_simp
 
 private theorem rational_identity (q : ℤ) :
-    C (q : ℚ) * (X * derivative ℚ (mk (fun n => (a q n : ℚ)))) =
+    C (q : ℚ) * (X * PowerSeries.derivative (R := ℚ) (mk (fun n => (a q n : ℚ)))) =
       (M q).map (Int.castRingHom ℚ) * mk (fun n => (a q n : ℚ)) := by
   have ha : (mk (a q)).map (Int.castRingHom ℚ) = mk (fun n => (a q n : ℚ)) := by
     ext n
     simp
-  have hd : (derivative ℤ (mk (a q))).map (Int.castRingHom ℚ) =
-      derivative ℚ ((mk (a q)).map (Int.castRingHom ℚ)) := by
+  have hd : (PowerSeries.derivative (R := ℤ) (mk (a q))).map (Int.castRingHom ℚ) =
+      PowerSeries.derivative (R := ℚ) ((mk (a q)).map (Int.castRingHom ℚ)) := by
     ext n
     simp [coeff_derivative]
   have he := congrArg (PowerSeries.map (Int.castRingHom ℚ)) (log_derivative_identity q).2
@@ -133,7 +133,7 @@ private theorem convolution_split (b : ℕ → ℚ) (m : PowerSeries ℚ)
 theorem generating_unique (q : ℤ) (hq : q ≠ 0) (b : ℕ → ℚ) (m : PowerSeries ℚ)
     (hb0 : b 0 = 1) (hm0 : coeff 0 m = 0) (hm1 : coeff 1 m = (q : ℚ))
     (hshape : ∀ n : ℕ, 2 ≤ n → coeff n m = ((q : ℚ) * (n : ℚ) ^ 2 - 1) * b n / n)
-    (heq : C (q : ℚ) * (X * derivative ℚ (mk b)) = m * mk b) :
+    (heq : C (q : ℚ) * (X * PowerSeries.derivative (R := ℚ) (mk b)) = m * mk b) :
     ∀ n : ℕ, b n = (a q n : ℚ) := by
   intro n
   induction n using Nat.strong_induction_on with
@@ -157,7 +157,7 @@ theorem generating_unique (q : ℤ) (hq : q ≠ 0) (b : ℕ → ℚ) (m : PowerS
       intro j hj
       obtain ⟨hj1, hjn⟩ := mem_Ico.mp hj
       rw [hprev j hjn, ih (n - j) (by omega)]
-    have hx (f : PowerSeries ℚ) : coeff n (X * derivative ℚ f) =
+    have hx (f : PowerSeries ℚ) : coeff n (X * PowerSeries.derivative (R := ℚ) f) =
         coeff n f * (n : ℚ) := by
       obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn0
       simp [coeff_succ_X_mul, coeff_derivative]
@@ -190,7 +190,7 @@ private theorem exponent_zero (q : ℤ) (f : ℕ → ℚ) :
 
 private theorem exponent_shape (q : ℤ) (hq : q ≠ 0) (f : ℕ → ℚ) (n : ℕ)
     (hn : 2 ≤ n) :
-    coeff n (C (q : ℚ) * (X * derivative ℚ (exponent q f))) =
+    coeff n (C (q : ℚ) * (X * PowerSeries.derivative (R := ℚ) (exponent q f))) =
       ((q : ℚ) * (n : ℚ) ^ 2 - 1) * f n / n := by
   obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
   rw [coeff_C_mul, coeff_succ_X_mul, coeff_derivative]
@@ -211,7 +211,7 @@ private theorem exp_subst_zero (L : PowerSeries ℚ) (hL : constantCoeff L = 0) 
 
 private theorem linear_ode_unique (F G H : PowerSeries ℚ)
     (h0 : coeff 0 F = coeff 0 G)
-    (hF : derivative ℚ F = H * F) (hG : derivative ℚ G = H * G) : F = G := by
+    (hF : PowerSeries.derivative (R := ℚ) F = H * F) (hG : PowerSeries.derivative (R := ℚ) G = H * G) : F = G := by
   ext n
   induction n using Nat.strong_induction_on with
   | h n ih =>
@@ -234,17 +234,17 @@ private theorem linear_ode_unique (F G H : PowerSeries ℚ)
 theorem source_iff (q : ℤ) (hq : q ≠ 0) (f : ℕ → ℚ) :
     mk f = (exp ℚ).subst (exponent q f) ↔ ∀ n : ℕ, f n = (a q n : ℚ) := by
   let L := exponent q f
-  let N := C (q : ℚ) * (X * derivative ℚ L)
+  let N := C (q : ℚ) * (X * PowerSeries.derivative (R := ℚ) L)
   have hL0 : constantCoeff L = 0 := exponent_zero q f
   have hN0 : coeff 0 N = 0 := by simp [N]
   have hN1 : coeff 1 N = (q : ℚ) := by
-    change coeff (0 + 1) (C (q : ℚ) * (X * derivative ℚ L)) = _
+    change coeff (0 + 1) (C (q : ℚ) * (X * PowerSeries.derivative (R := ℚ) L)) = _
     rw [coeff_C_mul, coeff_succ_X_mul, coeff_derivative]
     simp [L, exponent]
   have hNshape : ∀ n : ℕ, 2 ≤ n →
       coeff n N = ((q : ℚ) * (n : ℚ) ^ 2 - 1) * f n / n :=
     exponent_shape q hq f
-  have hE : derivative ℚ ((exp ℚ).subst L) = derivative ℚ L * (exp ℚ).subst L := by
+  have hE : PowerSeries.derivative (R := ℚ) ((exp ℚ).subst L) = PowerSeries.derivative (R := ℚ) L * (exp ℚ).subst L := by
     rw [derivative_subst (HasSubst.of_constantCoeff_zero' hL0), derivative_exp, mul_comm]
   constructor
   · intro heq
@@ -253,7 +253,7 @@ theorem source_iff (q : ℤ) (hq : q ≠ 0) (f : ℕ → ℚ) :
       rw [← heq, ← coeff_zero_eq_constantCoeff_apply, coeff_mk] at hz
       exact hz
     apply generating_unique q hq f N hf0 hN0 hN1 hNshape
-    have hd : derivative ℚ (mk f) = derivative ℚ L * mk f := by
+    have hd : PowerSeries.derivative (R := ℚ) (mk f) = PowerSeries.derivative (R := ℚ) L * mk f := by
       simpa only [heq] using hE
     rw [hd]
     dsimp [N]
@@ -270,11 +270,11 @@ theorem source_iff (q : ℤ) (hq : q ≠ 0) (f : ℕ → ℚ) :
     have hqq : (q : ℚ) ≠ 0 := by exact_mod_cast hq
     have hunit : C (q : ℚ) * (X : PowerSeries ℚ) ≠ 0 :=
       mul_ne_zero (by simpa only [map_zero] using C_injective.ne hqq) X_ne_zero
-    have hF : derivative ℚ (mk f) = derivative ℚ L * mk f := by
+    have hF : PowerSeries.derivative (R := ℚ) (mk f) = PowerSeries.derivative (R := ℚ) L * mk f := by
       apply mul_left_cancel₀ hunit
       dsimp [N] at hscale
       linear_combination hscale
-    apply linear_ode_unique (mk f) ((exp ℚ).subst L) (derivative ℚ L) _ hF hE
+    apply linear_ode_unique (mk f) ((exp ℚ).subst L) (PowerSeries.derivative (R := ℚ) L) _ hF hE
     rw [coeff_mk, hf 0, a_zero, Int.cast_one,
       coeff_zero_eq_constantCoeff_apply, exp_subst_zero L hL0]
 
