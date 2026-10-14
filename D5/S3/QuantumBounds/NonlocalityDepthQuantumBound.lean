@@ -30,10 +30,9 @@ Direct frozen dependencies:
     declaration statement_id: sha256:dbf2eda8f06c7495505e44726b0bd1f721d38c12ba1720b3219e7626161ed906
   D5/S3/Weil/ZetaLinear/RankTrace (Lean declaration RHLinalg.trace_mul_nonneg_of_posSemidef)
     declaration statement_id: sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3
-The density condition is literally the body of GHZMeasureBiseparableBound.IsDensity;
-  its I owner cannot be imported into this G module. No duplicate predicate is added.
-The observable interval and entrywise product are literal in the public formulas; proofs use
-  ProductPrefixRigidity.productMap through the consumed bellOp_eq_generalBellOp correspondence.
+Under Convention revision 1 on #16626, claim uses IsBinaryObservable by name,
+  bellOp keeps corrOp's product body literal because ProductPrefixRigidity.productMap owns it,
+  and claim keeps IsDensity's body literal because SL-010 forbids importing its I owner into this G module.
 The Pauli selector is the expression of StabilizerPairLocalUnitaryInequivalence.pauliMatrix
   at X or Y. Its I owner cannot be imported by this G module; no selector alias is added.
 Upper.unweighted_bound establishes a new shifted all-party PSD estimate by induction;
@@ -129,6 +128,9 @@ theorem one_add_posSemidef_of_contraction {ι : Type*} [Fintype ι]
   simpa only [he, smul_smul, div_mul_cancel₀ _ (by norm_num : (2 : ℝ) ≠ 0),
     one_smul] using h
 
+def IsBinaryObservable {m : ℕ} (M : Matrix (Fin m) (Fin m) ℂ) : Prop :=
+  M.IsHermitian ∧ (1 - M).PosSemidef ∧ (1 + M).PosSemidef
+
 def bellOp (n : ℕ) {d : Fin n → ℕ}
     (A : ∀ j : Fin n, Bool → Matrix (Fin (d j)) (Fin (d j)) ℂ) :
     Matrix (∀ j, Fin (d j)) (∀ j, Fin (d j)) ℂ :=
@@ -154,7 +156,7 @@ def claim : Prop :=
     {v : ℝ | ∃ (d : Fin n → ℕ)
       (A : ∀ j : Fin n, Bool → Matrix (Fin (d j)) (Fin (d j)) ℂ)
       (ρ : Matrix (∀ j, Fin (d j)) (∀ j, Fin (d j)) ℂ),
-      (∀ j s, ((A j s).IsHermitian ∧ (1 - A j s).PosSemidef ∧ (1 + A j s).PosSemidef)) ∧ (ρ.PosSemidef ∧ Matrix.trace ρ = 1) ∧
+      (∀ j s, IsBinaryObservable (A j s)) ∧ (ρ.PosSemidef ∧ Matrix.trace ρ = 1) ∧
       v = (Matrix.trace (ρ * bellOp n A)).re}
     (Real.sqrt 2 * n * 2 ^ (n - 2))
 

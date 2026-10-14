@@ -14,6 +14,9 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
         "For every n >= 3, the Bernards--Gühne Bell functional has exact quantum maximum sqrt(2) n 2^(n-2), over all finite local dimensions, binary observables and density matrices.",
         H("The exact quantum bound for nonlocality depth"),
         Blocks(
+            Node("IsBinaryObservable", "Binary observables", BinaryObservableFormula(),
+                "A binary observable is Hermitian and both its shifts 1 - M and 1 + M are positive semidefinite. The Bell maximum ranges over two such observables at each party.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("one_add_posSemidef_of_contraction", "The positive shift of a Hermitian contraction", ContractionFormula(),
                 "For a Hermitian matrix C, positivity of 1 - C conjugate-transpose times C implies positivity of 1 + C. Adding the positive square of 1 + C to the contraction defect gives twice 1 + C. This implication gives positivity of both shifts of an involution and of the diagonal blocks in the separable scalar-shift construction.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
@@ -79,6 +82,15 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
     private static Formula Trace(Formula value) => At(Q("Matrix", "trace"), value);
     private static Formula Smul(Formula a, Formula b) => At(Q("SMul", "smul"), a, b);
 
+    private static Formula BinaryObservableFormula()
+    {
+        Formula m = X("m"), matrix = X("M");
+        Formula body = And(Hermitian(matrix),
+            And(PSD(Sub(D(1), matrix)), PSD(Add(D(1), matrix))));
+        return Disp(All("m", Numbers("N"), All("M", Matrix(Fin(m)),
+            new Formula.Logic(Call("IsBinaryObservable", matrix), FormulaLogicOperator.Iff, body))));
+    }
+
     private static Formula ContractionFormula()
     {
         Formula iota = X("iota"), c = X("C");
@@ -110,7 +122,7 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
         Formula index = Family("j", Fin(n), Fin(At(d, j)));
         Formula observable = At(X("A"), j, X("s"));
         Formula binary = All("j", Fin(n), All("s", X("Bool"),
-            And(Hermitian(observable), And(PSD(Sub(D(1), observable)), PSD(Add(D(1), observable))))));
+            Call("IsBinaryObservable", observable)));
         Formula density = And(PSD(rho), Equal(Trace(rho), D(1)));
         Formula expectation = At(Q("Complex", "re"), Trace(Mul(rho, Call("bellOp", n, X("A")))));
         Formula membership = Ex("d", Arrow(Fin(n), Numbers("N")), Ex("A", local, Ex("rho", Matrix(index),
