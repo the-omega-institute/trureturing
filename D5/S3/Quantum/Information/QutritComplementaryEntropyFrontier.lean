@@ -177,4 +177,156 @@ def claim : Prop :=
       mapEntropy (swap (attainer a)) = g a ∧
       mapEntropy (swap (swap (attainer a))) = h a))
 
+-- Complementary Choi spectrum.
+private theorem reshuffle_gram (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
+    (1 / 3 : ℝ) • ((reshuffle V).conjTranspose * reshuffle V) = (rhoE V).transpose := by
+  rw [rhoE, joint_eq_scaled_gram]
+  ext i j
+  simp only [Matrix.smul_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.transpose_apply, partialTraceLeft, reshuffle, Finset.smul_sum]
+  rw [Fintype.sum_prod_type, Finset.sum_comm]
+  congr 1
+  funext b
+  congr 1
+  funext k
+  rw [mul_comm]
+
+private theorem choi_charpoly (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
+    (choi V).charpoly = Polynomial.X ^ 6 * (rhoE V).charpoly := by
+  rw [choi_eq_scaled_gram, ← Matrix.mul_smul]
+  rw [Matrix.charpoly_mul_comm_of_le (reshuffle V)
+    ((1 / 3 : ℝ) • (reshuffle V).conjTranspose) (by simp)]
+  rw [Matrix.smul_mul, reshuffle_gram, Matrix.charpoly_transpose]
+  norm_num
+
+private theorem spectralEntropy_of_charpoly_factor
+    {m n : Type*} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
+    {A : Matrix m m ℂ} {B : Matrix n n ℂ}
+    (hA : A.IsHermitian) (hB : B.IsHermitian) (k : ℕ)
+    (hchar : A.charpoly = Polynomial.X ^ k * B.charpoly) :
+    spectralEntropy hA = spectralEntropy hB := by
+  have hr := congrArg (fun p : Polynomial ℂ => p.roots) hchar
+  rw [Polynomial.roots_mul (by rw [← hchar]; exact A.charpoly_monic.ne_zero),
+    Polynomial.roots_X_pow] at hr
+  have he := congrArg (fun s : Multiset ℂ => (s.map (fun z => Real.negMulLog (RCLike.re z))).sum) hr
+  rw [hA.roots_charpoly_eq_eigenvalues, hB.roots_charpoly_eq_eigenvalues] at he
+  change (∑ i, Real.negMulLog (hA.eigenvalues i)) = ∑ i, Real.negMulLog (hB.eigenvalues i)
+  rw [Finset.sum, Finset.sum]
+  simpa only [Multiset.map_map, Function.comp_apply, RCLike.ofReal_re,
+    Multiset.map_add, Multiset.sum_add, Multiset.nsmul_singleton, Multiset.map_replicate,
+    Multiset.sum_replicate, map_zero, Real.negMulLog_zero, nsmul_zero, zero_add] using he
+
+private theorem spectralEntropy_of_diagonal
+    {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n ℂ}
+    (hA : A.IsHermitian) (d : n → ℝ)
+    (hD : A = Matrix.diagonal (fun i => (d i : ℂ))) :
+    spectralEntropy hA = ∑ i, Real.negMulLog (d i) := by
+  apply spectral_sum_eq_of_charpoly_prod hA d Real.negMulLog
+  rw [hD, Matrix.charpoly_diagonal]
+  rfl
+
+private theorem source_bridge (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
+    (hV : admissible V) :
+    (choi V).trace = 1 ∧ mapEntropy V = outputEntropy (swap V) := by
+  constructor
+  · rw [choi_eq_scaled_gram, Matrix.trace_smul, Matrix.trace_mul_comm,
+      ← Matrix.trace_smul, reshuffle_gram, Matrix.trace_transpose,
+      rhoE, trace_partialTraceLeft, joint_trace V hV]
+  · change spectralEntropy (choi_posSemidef V).isHermitian = _
+    have hs := spectralEntropy_of_charpoly_factor (choi_posSemidef V).isHermitian
+      (rhoE_posSemidef V).isHermitian 6 (choi_charpoly V)
+    rw [outputEntropy]
+    simpa only [rhoB_swap] using hs
+
+-- Scalar monotonicity and the two capacity cuts.
+private theorem g_eq_binary (u : ℝ) :
+    g u = h (1 / 3) + (2 / 3 : ℝ) * h ((1 + 3 * u) / 2) := by
+  rw [g, h, h, Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,
+    Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+  rw [show (1 / 3 : ℝ) + u = (2 / 3) * ((1 + 3 * u) / 2) by ring,
+    show (1 / 3 : ℝ) - u = (2 / 3) * (1 - (1 + 3 * u) / 2) by ring,
+    Real.negMulLog_mul, Real.negMulLog_mul]
+  rw [show (1 : ℝ) - 1 / 3 = 2 / 3 by norm_num]
+  ring
+
+private theorem g_antitone : AntitoneOn g (Set.Icc 0 (1 / 3 : ℝ)) := by
+  intro u hu v hv huv
+  rw [g_eq_binary, g_eq_binary]
+  apply add_le_add (le_refl _)
+  apply mul_le_mul_of_nonneg_left _ (by norm_num)
+  exact Real.binEntropy_strictAntiOn.antitoneOn
+    (by constructor <;> norm_num <;> linarith [hu.1, hu.2])
+    (by constructor <;> norm_num <;> linarith [hv.1, hv.2]) (by linarith)
+
+private theorem table_cuts (w : Matrix (Fin 3) (Fin 3) ℝ)
+    (hw : ∀ i j, w i j ∈ Set.Icc 0 (1 / 3 : ℝ))
+    (hs : (∑ i, ∑ j, w i j) = 1) (i j : Fin 3) :
+    (∑ k, w i k) + (∑ k, w k j) ≤ 4 / 3 ∧
+      (∑ k, w i k) - (∑ k, w k j) ≤ 2 / 3 := by
+  have hrow := Finset.sum_erase_add Finset.univ (fun k => w i k) (Finset.mem_univ j)
+  have hcol := Finset.sum_erase_add Finset.univ (fun k => w k j) (Finset.mem_univ i)
+  have htotal : (∑ k ∈ Finset.univ.erase i, ∑ l, w k l) + (∑ l, w i l) = 1 :=
+    (Finset.sum_erase_add Finset.univ (fun k => ∑ l, w k l) (Finset.mem_univ i)).trans hs
+  have hcap : (∑ k ∈ Finset.univ.erase j, w i k) ≤ 2 / 3 := by
+    calc
+      _ ≤ ∑ k ∈ Finset.univ.erase j, (1 / 3 : ℝ) :=
+        Finset.sum_le_sum fun k _ => (hw i k).2
+      _ = 2 / 3 := by norm_num [Finset.card_erase_of_mem]
+  have hcol0 : 0 ≤ ∑ k ∈ Finset.univ.erase i, w k j :=
+    Finset.sum_nonneg fun k _ => (hw k j).1
+  have hout : (∑ k ∈ Finset.univ.erase i, w k j) ≤
+      ∑ k ∈ Finset.univ.erase i, ∑ l, w k l := by
+    apply Finset.sum_le_sum
+    intro k _
+    exact Finset.single_le_sum (fun l _ => (hw k l).1) (Finset.mem_univ j)
+  constructor <;> linarith [(hw i j).2]
+
+-- The explicit isometry and its two diagonal marginals.
+private theorem attainer_admissible (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)) :
+    admissible (attainer a) := by
+  have hs0 : (Real.sqrt (1 - 3 * a) : ℂ) ^ 2 = (1 - 3 * a : ℝ) := by
+    exact_mod_cast Real.sq_sqrt (by linarith [ha.2] : 0 ≤ 1 - 3 * a)
+  have hs1 : (Real.sqrt (3 * a) : ℂ) ^ 2 = (3 * a : ℝ) := by
+    exact_mod_cast Real.sq_sqrt (by linarith [ha.1] : 0 ≤ 3 * a)
+  change (attainer a).conjTranspose * attainer a = 1
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [attainer, Matrix.single, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_three, ← pow_two, hs0, hs1, -Real.sqrt_mul]
+
+private theorem attainer_marginals (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)) :
+    rhoB (attainer a) = Matrix.diagonal
+      (fun i => ((![1 / 3 + a, 1 / 3 - a, 1 / 3] i : ℝ) : ℂ)) ∧
+    rhoE (attainer a) = Matrix.diagonal
+      (fun i => ((![1 - a, a, 0] i : ℝ) : ℂ)) := by
+  have hs0 : (Real.sqrt (1 - 3 * a) : ℂ) ^ 2 = (1 - 3 * a : ℝ) := by
+    exact_mod_cast Real.sq_sqrt (by linarith [ha.2] : 0 ≤ 1 - 3 * a)
+  have hs1 : (Real.sqrt (3 * a) : ℂ) ^ 2 = (3 * a : ℝ) := by
+    exact_mod_cast Real.sq_sqrt (by linarith [ha.1] : 0 ≤ 3 * a)
+  constructor <;> simp only [rhoB, rhoE] <;> rw [joint_eq_scaled_gram] <;> ext i j <;>
+    fin_cases i <;> fin_cases j <;>
+    simp [partialTraceRight, partialTraceLeft, attainer, Matrix.single, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Fin.sum_univ_three,
+      ← pow_two, hs0, hs1, Matrix.smul_apply, Complex.real_smul, -Real.sqrt_mul,
+      Matrix.cons_val, eq_comm, Finset.filter_eq'] <;> ring
+
+private theorem attainer_entropies (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)) :
+    mapEntropy (attainer a) = h a ∧ mapEntropy (swap (attainer a)) = g a := by
+  obtain ⟨hB, hE⟩ := attainer_marginals a ha
+  constructor
+  · rw [(source_bridge _ (attainer_admissible a ha)).2]
+    have he := spectralEntropy_of_diagonal (rhoB_posSemidef (swap (attainer a))).isHermitian
+      ![1 - a, a, 0] (by rw [rhoB_swap]; exact hE)
+    change spectralEntropy (rhoB_posSemidef (swap (attainer a))).isHermitian = _
+    rw [he, h, Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+    simp only [Fin.sum_univ_three, Matrix.cons_val, Real.negMulLog_zero, add_zero]
+    ring
+  · rw [(source_bridge _ (swap_admissible _ (attainer_admissible a ha))).2, swap_swap]
+    have he := spectralEntropy_of_diagonal (rhoB_posSemidef (attainer a)).isHermitian
+      ![1 / 3 + a, 1 / 3 - a, 1 / 3] hB
+    change spectralEntropy (rhoB_posSemidef (attainer a)).isHermitian = _
+    rw [he, g]
+    simp only [Fin.sum_univ_three, Matrix.cons_val]
+    ring
+
 end D5.S3.Quantum.Information.QutritComplementaryEntropyFrontier
