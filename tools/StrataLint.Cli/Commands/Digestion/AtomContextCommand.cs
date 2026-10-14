@@ -46,6 +46,7 @@ internal static class AtomContextCommand
             if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
             WriteText(writer, "CURRENT", context.Current.RawBytes);
             if (context.Next is { } next) WriteText(writer, "NEXT", next.RawBytes);
+            WriteGoverningContext(writer, context);
         }
         return writer.ToString();
     }
@@ -66,7 +67,17 @@ internal static class AtomContextCommand
         if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
         WriteText(writer, "CURRENT", context.Current.RawBytes);
         if (context.Next is { } next) WriteText(writer, "NEXT", next.RawBytes);
+        WriteGoverningContext(writer, context);
         return writer.ToString();
+    }
+
+    private static void WriteGoverningContext(StringWriter writer, DigestionAtomContext context)
+    {
+        foreach (var item in context.GoverningContext)
+        {
+            writer.WriteLine($"WORK_CONTEXT relation={item.Relation} transient=true");
+            WriteText(writer, "WORK_CONTEXT", item.RawBytes);
+        }
     }
 
     private static void WriteNeighbor(StringWriter writer, string label,

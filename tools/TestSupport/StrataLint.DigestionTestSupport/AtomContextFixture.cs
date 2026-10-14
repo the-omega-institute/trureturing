@@ -50,6 +50,15 @@ internal sealed record AtomContextFixture(
             new(TheoryAtomizerDataLoader.DataPath, [.. DigestionTestSupport.RulesBytes]),
         };
         if (includeSource) files.Add(new RawRepositoryEntry(SourcePath, [.. SourceBytes]));
+        var cas = new Dictionary<string, DigestionAtom>();
+        var pending = new Stack<DigestionAtom>(Atomized.Claims);
+        while (pending.TryPop(out var atom))
+        {
+            if (!cas.TryAdd(Id(atom), atom)) continue;
+            if (DigestionDecomposition.PlanClauses(atom) is { } plan)
+                foreach (var child in plan.Children) pending.Push(child);
+        }
+        files.AddRange(cas.Values.Select(atom => new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes)));
         foreach (var source in Ledger.RequireDigestionSources())
         {
             files.Add(new RawRepositoryEntry(BackfillInventoryLoader.RootPath + source.SourceId + "/source.toml",

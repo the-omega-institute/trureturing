@@ -15,14 +15,6 @@ internal static class DigestionDecompositionPolicy
     internal static bool IsMultiClause(DigestionAtom atom)
     {
         ArgumentNullException.ThrowIfNull(atom);
-        var lines = DigestionDecomposition.Lines(System.Text.Encoding.UTF8.GetString(atom.RawBytes.AsSpan()))
-            .Select(static line => line.Text).ToArray();
-        var explicitSections = lines
-            .Skip(1)
-            .Count(static line => line.StartsWith("**", StringComparison.Ordinal));
-        var listClaims = lines.Count(static line =>
-            line.StartsWith("- ", StringComparison.Ordinal)
-            || line.StartsWith("* ", StringComparison.Ordinal));
-        return explicitSections > 0 || listClaims > 1;
+        return DigestionDecomposition.PlanClauses(atom) is not null;
     }
 }

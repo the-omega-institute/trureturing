@@ -283,7 +283,7 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.True(calls > 0);
         Assert.Contains(result.Findings, finding => finding.Contains(
-            "chain cardinality",
+            "clause plan has no proper claim decomposition",
             StringComparison.Ordinal));
     }
 
@@ -309,7 +309,7 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.True(calls > 0);
         Assert.Contains(result.Findings, finding => finding.Contains(
-            "chain cardinality",
+            "clause plan has no proper claim decomposition",
             StringComparison.Ordinal));
     }
 
@@ -332,7 +332,7 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.True(calls > 0);
         Assert.Contains(result.Findings, finding => finding.Contains(
-            "chain cardinality",
+            "clause plan has no proper claim decomposition",
             StringComparison.Ordinal));
     }
 

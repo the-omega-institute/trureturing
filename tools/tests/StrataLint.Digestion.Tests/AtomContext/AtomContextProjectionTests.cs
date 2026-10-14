@@ -111,20 +111,31 @@ public sealed class AtomContextProjectionTests
     [Fact]
     public void AtomContextRecursivelyExpandsNestedChains()
     {
-        const string text = "## Before\n\nBefore.\n\n## Bundle\n\nPreamble.\n\n**Items**\n\n* Alpha;\n* Beta;\n* Gamma.\n\n## After\n\nAfter.\n";
-        var fixture = Create(text, expand: true);
-        var parentPlan = Assert.Single(fixture.Atomized.ClausePlans);
-        var list = parentPlan.Children[1];
-        var nested = Assert.IsType<DigestionClausePlan>(DigestionDecomposition.PlanClauses(list));
+        var fixture = Create(ListClaims, expand: true);
+        var plan = Assert.Single(fixture.Atomized.ClausePlans);
+        var first = plan.Children[0];
+        var text = Encoding.UTF8.GetString(first.RawBytes.AsSpan());
+        var cut = Encoding.UTF8.GetByteCount("## Bundle\n\n");
+        var prefix = DigestionAtom.FromFrozenCas(first.RawBytes[..cut]);
+        var suffix = DigestionAtom.FromFrozenCas(first.RawBytes[cut..]) with
+        {
+            StartByte = cut, EndByte = first.RawBytes.Length,
+        };
+        var nested = new DigestionClausePlan(DigestionAtom.FromFrozenCas(first.RawBytes),
+            [new DigestionSegment(DigestionSegmentKind.Claim, prefix),
+             new DigestionSegment(DigestionSegmentKind.Claim, suffix)]) { IsExplicit = true };
         var entries = fixture.Ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId);
-        var materialized = DigestionDecomposition.Materialize(entries[Id(list)], nested, entries);
-        entries[Id(list)] = materialized.Parent;
+        var materialized = DigestionDecomposition.Materialize(entries[Id(first)], nested, entries);
+        entries[Id(first)] = materialized.Parent;
         foreach (var child in materialized.NewEntries) entries.Add(child.AtomId, child);
         fixture = fixture.WithEntries(entries.Values);
-        var result = Resolve(fixture, Id(nested.Children[1]));
-        Assert.Equal(Id(nested.Children[0]), result.Previous!.Value.AtomId);
-        Assert.Equal(Id(nested.Children[2]), result.Next!.Value.AtomId);
-        Assert.Equal((4, 6), (result.Index, result.Count));
+        var raw = RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
+            materialized.CasObjects.Select(item => new RawRepositoryEntry(item.RelativePath, item.Bytes))));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var result = DigestionAtomContextProjection.Resolve(snapshot, fixture.Ledger, Id(suffix));
+        Assert.Equal(Id(prefix), result.Previous!.Value.AtomId);
+        Assert.Equal(Id(plan.Children[1]), result.Next!.Value.AtomId);
+        Assert.Equal((3, 6), (result.Index, result.Count));
     }
 
     [Fact]

@@ -212,7 +212,7 @@ public sealed partial class DigestionAlignmentTests
                 fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
             DigestionAlignmentMode.Admission);
 
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
+        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "clause plan has no proper claim decomposition");
         Assert.DoesNotContain(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
     }
 
@@ -231,7 +231,7 @@ public sealed partial class DigestionAlignmentTests
 
         var result = EvaluateSelfContainedClauseChain(fixture, ledger);
 
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
+        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "clause plan has no proper claim decomposition");
     }
 
     [Fact]
@@ -252,7 +252,7 @@ public sealed partial class DigestionAlignmentTests
         AssertMalformedClauseChain(
             result,
             fixture.Parent.AtomId,
-            "bytes differ from parent CAS plan member");
+            "differs from its parent span");
     }
 
     [Fact]
@@ -302,7 +302,7 @@ public sealed partial class DigestionAlignmentTests
 
         var result = EvaluateSelfContainedClauseChain(fixture, ledger, casObjects);
 
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "bytes differ from parent CAS plan member");
+        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "differs from its parent span");
     }
 
     [Fact]
@@ -323,7 +323,7 @@ public sealed partial class DigestionAlignmentTests
         AssertMalformedClauseChain(
             result,
             fixture.Parent.AtomId,
-            "bytes differ from parent CAS plan member");
+            "differs from its parent span");
     }
 
     [Fact]

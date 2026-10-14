@@ -1,4 +1,5 @@
 using StrataLint.Engine;
+using System.Text;
 
 namespace StrataLint.Cli;
 
@@ -48,6 +49,25 @@ internal static partial class DigestionQuerySelection
             for (var neighbor = Math.Max(0, index - 1); neighbor <= Math.Min(atomized.Claims.Length - 1, index + 1); neighbor++)
                 neighborIds.Add(atomized.Claims[neighbor].Fingerprints.RawSha256[7..]);
         }
+        // Physical AST leaves locate old row/paragraph identities without regenerating
+        // historical decomposition. Only their immediate neighborhoods are selected.
+        var text = Encoding.UTF8.GetString(sourceFile.RawBytes.AsSpan());
+        var leaves = MarkdigBlockAst.Parse(text);
+        foreach (var occurrence in DigestionAtomContextProjection.OccurrenceStarts(sourceFile.RawBytes, targetBytes.Value))
+        {
+            for (var index = 0; index < leaves.Length; index++)
+            {
+                var start = MarkdownAstAtomizer.ByteOffset(text, leaves[index].Start);
+                var end = MarkdownAstAtomizer.ByteOffset(text, leaves[index].End);
+                if (start >= occurrence + targetBytes.Value.Length || end <= occurrence) continue;
+                for (var neighbor = Math.Max(0, index - 1); neighbor <= Math.Min(leaves.Length - 1, index + 1); neighbor++)
+                {
+                    start = MarkdownAstAtomizer.ByteOffset(text, leaves[neighbor].Start);
+                    end = MarkdownAstAtomizer.ByteOffset(text, leaves[neighbor].End);
+                    neighborIds.Add(DigestionFingerprint.Compute(sourceFile.RawBytes.AsSpan()[start..end]).RawSha256[7..]);
+                }
+            }
+        }
         if (neighborIds.Count > 0)
         {
             var neighbors = ReadAtoms(repository, neighborIds.ToArray(), [target.SourceId]);
@@ -58,6 +78,9 @@ internal static partial class DigestionQuerySelection
             if (missing.Length > 0) raw = Merge(raw, ReadAtoms(repository, missing).Raw);
         }
         var local = Load(raw);
+        raw = Merge(raw, repository.ReadCurrent(local.Document.RequireDigestionEntries()
+            .Select(CasPath).Distinct(StringComparer.Ordinal).ToArray()));
+        local = Load(raw);
         return ReadChains(repository, local, allowMissing: allowMissing);
     }
 }

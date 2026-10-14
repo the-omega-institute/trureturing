@@ -7,21 +7,9 @@ using Markdig.Syntax;
 namespace StrataLint.Engine;
 
 /// <summary>
-/// The block AST behind the default atomizer, parsed by Markdig rather than by the line
-/// scanner in <see cref="MarkdownBlockAst"/>. The scanner knows four shapes — ATX heading,
-/// fenced code, pipe table, paragraph — and folds everything else into a paragraph, so a
-/// volume that states its claims as list items or inside a quote digests as one blob. This
-/// reads CommonMark, so those become the blocks they are.
-///
-/// It replaces the scanner only under <c>generic-v1</c>. The registered dialects keep the
-/// scanner because their block boundaries are already baked into content-addressed
-/// receipts: a different parser would move the boundaries and invalidate them, which is
-/// exactly the thing the frozen ledger does not permit.
-///
-/// Only leaf blocks are emitted — a heading, a paragraph, a table row — and never the
-/// container that holds them. Emitting both would produce overlapping spans, and the
-/// atomizer slices the source in one forward pass, so its spans must be disjoint and
-/// ordered for the claim slices to reassemble the source byte for byte.
+/// Markdig supplies precise source spans for claim discovery and transient context.
+/// Parse exposes physical leaves; ParseOwned retains complete lists and tables for
+/// fresh work. Stored decomposition is reconstructed from CAS by its plan owner.
 /// </summary>
 internal static class MarkdigBlockAst
 {
@@ -39,7 +27,15 @@ internal static class MarkdigBlockAst
     {
         ArgumentNullException.ThrowIfNull(source);
         var blocks = ImmutableArray.CreateBuilder<MarkdownBlock>();
-        Walk(Markdown.Parse(source, Pipeline), source, LegacyDisplaySpans(source), blocks);
+        Walk(Markdown.Parse(source, Pipeline), source, LegacyDisplaySpans(source), blocks, owned: false);
+        return blocks.ToImmutable();
+    }
+
+    internal static ImmutableArray<MarkdownBlock> ParseOwned(string source)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        var blocks = ImmutableArray.CreateBuilder<MarkdownBlock>();
+        Walk(Markdown.Parse(source, Pipeline), source, LegacyDisplaySpans(source), blocks, owned: true);
         return blocks.ToImmutable();
     }
 
@@ -47,12 +43,29 @@ internal static class MarkdigBlockAst
         ContainerBlock container,
         string source,
         ImmutableArray<SourceSpan> legacyDisplaySpans,
-        ImmutableArray<MarkdownBlock>.Builder blocks)
+        ImmutableArray<MarkdownBlock>.Builder blocks,
+        bool owned)
     {
         foreach (var block in container)
         {
             if (IsInsideLegacyDisplay(block, legacyDisplaySpans))
             {
+                continue;
+            }
+
+            if (owned && block is ListBlock or Table)
+            {
+                // A list or table owns its complete syntax and the immediately preceding
+                // paragraph in the same container. Nested rows cannot shed that lead.
+                var start = LineStart(source, block.Span.Start);
+                var leadStart = start;
+                if (blocks.Count > 0 && blocks[^1] is MarkdownParagraph lead
+                    && container.IndexOf(block) > 0
+                    && container[container.IndexOf(block) - 1] is ParagraphBlock)
+                    leadStart = lead.Start;
+                var end = LineEnd(source, End(block));
+                blocks.Add(new MarkdownGovernedBlock(start, end, leadStart,
+                    block is Table ? "table" : "list"));
                 continue;
             }
 
@@ -90,7 +103,7 @@ internal static class MarkdigBlockAst
                     break;
 
                 case ContainerBlock nested:
-                    Walk(nested, source, legacyDisplaySpans, blocks);
+                    Walk(nested, source, legacyDisplaySpans, blocks, owned);
                     break;
 
                 default:
@@ -119,11 +132,11 @@ internal static class MarkdigBlockAst
             }
 
             var line = source.AsSpan(lineStart, lineEnd - lineStart).Trim();
-            if (displayStart is null && line.SequenceEqual("["))
+            if (displayStart is null && (line.SequenceEqual("[") || line.SequenceEqual(@"\[")))
             {
                 displayStart = lineStart;
             }
-            else if (displayStart is not null && line.SequenceEqual("]"))
+            else if (displayStart is not null && (line.SequenceEqual("]") || line.SequenceEqual(@"\]")))
             {
                 spans.Add(new SourceSpan(displayStart.Value, lineEnd));
                 displayStart = null;
@@ -200,6 +213,36 @@ internal static class MarkdigBlockAst
     /// A span is clamped to the source because an empty block reports an empty span whose
     /// end sits one before its start.
     /// </summary>
+    internal static int LineStart(string source, int offset) =>
+        offset <= 0 ? 0 : source.LastIndexOfAny(['\r', '\n'], offset - 1) + 1;
+
+    internal static int LineEnd(string source, int offset)
+    {
+        var end = offset;
+        while (end < source.Length && source[end] is not ('\r' or '\n')) end++;
+        if (end < source.Length && source[end] == '\r') end++;
+        if (end < source.Length && source[end] == '\n') end++;
+        return end;
+    }
+
+    // Bare, flat lists can be decomposed. A preceding paragraph governs the list;
+    // nested lists preserve their enclosing item even in the absence of a lead.
+    internal static ImmutableArray<int> IndependentListStarts(string source)
+    {
+        var starts = ImmutableArray.CreateBuilder<int>();
+        var document = Markdown.Parse(source, Pipeline);
+        for (var index = 0; index < document.Count; index++)
+        {
+            if (document[index] is not ListBlock list
+                || index > 0 && document[index - 1] is ParagraphBlock
+                || list.Descendants().Any(block => block is ListBlock))
+                continue;
+            foreach (var item in list)
+                starts.Add(LineStart(source, item.Span.Start));
+        }
+        return starts.ToImmutable();
+    }
+
     private static int End(MarkdownObject block) =>
         Math.Max(block.Span.Start, block.Span.End + 1);
 
@@ -208,3 +251,6 @@ internal static class MarkdigBlockAst
 
     private sealed record SourceSpan(int Start, int End);
 }
+
+internal sealed record MarkdownGovernedBlock(int Start, int End, int LeadStart, string Kind)
+    : MarkdownBlock(Start, End);

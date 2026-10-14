@@ -39,5 +39,6 @@ internal static class NonpropositionalTestSupport
     internal static RawRepositorySnapshot WithCas(AtomContextFixture fixture) =>
         RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
             fixture.Atomized.Claims.Select(atom => new RawRepositoryEntry(
-                DigestionCasStore.RootPath + AtomContextFixture.Id(atom), atom.RawBytes))));
+                DigestionCasStore.RootPath + AtomContextFixture.Id(atom), atom.RawBytes)))
+            .GroupBy(static entry => entry.Path).Select(static group => group.First()));
 }

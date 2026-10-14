@@ -24,6 +24,17 @@ internal static class DigestionDecomposition
             || parent.Fingerprints != frozen.Fingerprints)
             throw new FormatException($"CAS_MISMATCH atom_id={parent.AtomId}");
 
+        // Stored direct children own history. Fresh grammar is never substituted for
+        // an ordinary read of a materialized parent.
+        if (!parent.Receipts.ChainAtoms.IsEmpty && snapshot is null)
+            throw new FormatException("CHILD_CAS_MISSING stored chain requires its CAS snapshot");
+        var persisted = PersistedPlan(parent, frozen, snapshot);
+        if (persisted is not null)
+        {
+            RequireValid(persisted);
+            if (splitAt.IsDefaultOrEmpty) return persisted;
+        }
+
         // Whole-source validators can require chapter context absent from frozen CAS.
         // Consume emitted plans where registered; other adapters use the same CAS grammar.
         ImmutableArray<DigestionClausePlan> plans = [];
@@ -45,7 +56,7 @@ internal static class DigestionDecomposition
             && !canonical.Children.Select(static child => child.Fingerprints)
                 .SequenceEqual(explicitPlan.Children.Select(static child => child.Fingerprints)))
             throw new FormatException("PLAN_CONFLICT split points differ from canonical clause plan");
-        var plan = canonical ?? explicitPlan ?? PersistedPlan(parent, frozen, snapshot)
+        var plan = explicitPlan ?? persisted ?? canonical
             ?? throw new FormatException("parent CAS blob has no clause plan (NO_CLAUSE_PLAN)");
         RequireValid(plan);
         return plan;
@@ -110,36 +121,61 @@ internal static class DigestionDecomposition
     internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)
     {
         var text = StrictUtf8.GetString(parent.RawBytes.AsSpan());
-        var lines = Lines(text).ToArray();
-        var bold = lines.Skip(1).Where(static line => line.Text.StartsWith("**", StringComparison.Ordinal)).ToArray();
-        int[] boundaries;
-        if (bold.Length > 0)
+        var document = GenericAtomizer.AtomizeStructure(parent.RawBytes.AsSpan());
+        if (document.Claims.Length > 1)
         {
-            boundaries = [0, .. bold.Select(static line => line.Start)];
-        }
-        else
-        {
-            var items = lines.Where(static line => line.Text.StartsWith("- ", StringComparison.Ordinal)
-                || line.Text.StartsWith("* ", StringComparison.Ordinal)).ToArray();
-            if (items.Length < 2) return null;
-            boundaries = [0, .. items.Skip(1).Select(static line => line.Start)];
+            var segments = ImmutableArray.CreateBuilder<DigestionSegment>();
+            var cursor = 0;
+            foreach (var atom in document.Claims)
+            {
+                if (atom.StartByte > cursor) Add(cursor, atom.StartByte, DigestionSegmentKind.Structural);
+                Add(atom.StartByte, atom.EndByte, DigestionSegmentKind.Claim);
+                cursor = atom.EndByte;
+            }
+            if (cursor < parent.RawBytes.Length) Add(cursor, parent.RawBytes.Length, DigestionSegmentKind.Structural);
+            return new DigestionClausePlan(parent, segments.ToImmutable());
+
+            void Add(int start, int end, DigestionSegmentKind kind) =>
+                segments.Add(new DigestionSegment(kind, Slice(parent, start, end)));
         }
 
-        // Persisted chains define the grammar: every span is a child, including
-        // preamble, closing prose, and markers at any indentation or inside code.
-        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(boundaries.Length);
-        for (var index = 0; index < boundaries.Length; index++)
-        {
-            var start = MarkdownAstAtomizer.ByteOffset(text, boundaries[index]);
-            var end = index + 1 == boundaries.Length ? parent.RawBytes.Length
-                : MarkdownAstAtomizer.ByteOffset(text, boundaries[index + 1]);
-            var raw = parent.RawBytes[start..end];
-            segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, new DigestionAtom(
-                parent.StartByte + start, parent.StartByte + end, raw,
-                DigestionFingerprint.Compute(raw.AsSpan()), parent.Context,
-                DigestionAtomStatusMarker.Parse(raw.AsSpan()))));
-        }
-        return new DigestionClausePlan(parent, segments.MoveToImmutable());
+        var blocks = MarkdigBlockAst.ParseOwned(text);
+        var bold = blocks.OfType<MarkdownParagraph>()
+            .SelectMany(block => Lines(block.Text).Select(line => line with { Start = block.Start + line.Start }))
+            .Where(line => IsIndependentBoldLead(line.Text))
+            .Select(static line => line.Start).Where(static start => start > 0).ToArray();
+        // Internal proof headings stay in the numbered claim's scope. Tables and
+        // governed lists are opaque to paragraph-lead and list-item discovery.
+        var boundaries = bold.Length > 0
+            ? new[] { 0 }.Concat(bold).Distinct().Order().ToArray()
+            : new[] { 0 }.Concat(MarkdigBlockAst.IndependentListStarts(text).Skip(1)).Distinct().Order().ToArray();
+        if (boundaries.Length < 2) return null;
+        return new DigestionClausePlan(parent, [.. boundaries.Select((start, index) =>
+            new DigestionSegment(DigestionSegmentKind.Claim, Slice(parent,
+                MarkdownAstAtomizer.ByteOffset(text, start),
+                index + 1 == boundaries.Length ? parent.RawBytes.Length
+                    : MarkdownAstAtomizer.ByteOffset(text, boundaries[index + 1]))))]);
+    }
+
+    private static bool IsIndependentBoldLead(string text)
+    {
+        if (!text.StartsWith("**", StringComparison.Ordinal)) return false;
+        var close = text.IndexOf("**", 2, StringComparison.Ordinal);
+        if (close <= 2) return false;
+        var label = text[2..close].Trim();
+        if (label.EndsWith(':') || label.EndsWith('：')
+            || label.StartsWith("证明", StringComparison.Ordinal)
+            || label.StartsWith("Proof", StringComparison.OrdinalIgnoreCase))
+            return false;
+        return !string.IsNullOrWhiteSpace(text[(close + 2)..]);
+    }
+
+    private static DigestionAtom Slice(DigestionAtom parent, int start, int end)
+    {
+        var raw = parent.RawBytes[start..end];
+        return new DigestionAtom(parent.StartByte + start, parent.StartByte + end, raw,
+            DigestionFingerprint.Compute(raw.AsSpan()), parent.Context,
+            DigestionAtomStatusMarker.Parse(raw.AsSpan()));
     }
 
     internal static string? IntegrityFailure(DigestionClausePlan plan)
