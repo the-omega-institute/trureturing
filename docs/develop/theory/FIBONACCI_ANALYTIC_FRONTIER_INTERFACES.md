@@ -48,9 +48,9 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 442. Liu 的 quasi-RH 零自由半平面改进与 FIB 接口
+## 442. Liu v1 的 quasi-RH 零自由半平面改进与 FIB 接口
 
-2026 年 10 月 8 日提交的 Baiying Liu 预印本 [*Slightly improved zero-free half-planes for the quasi-Riemann hypothesis*](../../../Library/Analytic/liu2026quasirh.md)，arXiv:2610.12234v1，给出当前仓内 OpenAI 7/8 路线的最新参数改进。其 Theorem 21.1 对 $\mathbb Q(\sqrt{-3})$ 上全部有限阶 Hecke $L$ 函数以及全部 Dirichlet $L$ 函数给出
+2026 年 10 月 8 日提交的 Baiying Liu 预印本 v1 [*Slightly improved zero-free half-planes for the quasi-Riemann hypothesis*](../../../Library/Analytic/liu2026quasirh.md)，arXiv:2610.12234v1，给出仓内 OpenAI 7/8 路线的第一阶段参数改进。其 Theorem 21.1 对 $\mathbb Q(\sqrt{-3})$ 上全部有限阶 Hecke $L$ 函数以及全部 Dirichlet $L$ 函数给出
 
 $$
 \beta_*\le B_{\mathrm{new}}
@@ -64,7 +64,7 @@ $$
 
 即使该外部预印本的 Lean 形式化经过独立迁移，$B_{\mathrm{new}}>1/2$ 仍不会提供临界线结论；它也没有给普通整数 Möbius 的平方根消去、完整 signed Robin 尾项或 FIB 来源到约数和的保真映射。因此它改善的是零自由辅助输入，不闭合 Robin/RH 的核心联合预算。仓内未重复 OpenAI 7/8 的推导，只记录这个参数优化及其迁移义务。
 
-## 443. Liu 界对现有 FIB packet 门槛的精确影响
+## 443. Liu v1 界对现有 FIB packet 门槛的精确影响
 
 把新界与仓内已有的 packet 预算放在同一坐标中，得到
 
@@ -126,3 +126,43 @@ $$
 这里的窗口应用是本仓综合推导（`repo-derived`）；CRT 和 Fibonacci 进入秩判据是已知工具。结论没有判断这些高 $\omega$ 点的 Robin 符号，也没有否定对每个实际整数成立的 Robin 不等式。它只排除以固定低素因子数筛覆盖全部规范窗口的充分条件；同一实际候选的 CA/SA 来源保持或完整有符号余量仍需独立估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 445. Liu v2 的迭代边界更新
+
+Liu 的 [v2](../../../Library/Analytic/liu2026quasirh.md) 将最终边界从一次代数优化的
+
+$$
+B_{\mathrm{alg}}=\frac{1507-2\sqrt{921}}{1653}
+=0.874957069799168740\ldots
+$$
+
+推进到迭代极限
+
+$$
+B_{\mathrm{new}}=\frac{18\xi_{\mathrm{new}}+7}{18\xi_{\mathrm{new}}+9}
+=0.874957019420098946\ldots,
+$$
+
+其中 $\xi_{\mathrm{new}}\in(0.38858,0.38859)$ 是
+
+$$
+1188\xi^3-2160\xi^2+171\xi+190=0
+$$
+
+在该区间内的唯一根。v2 的新内容是把无权第四矩的可用范围推进到
+$13/18\le\kappa\le1$，再以 $\kappa=2B_{\mathrm{new}}-1$ 迭代长度参数；它不是只替换旧常数。
+
+相对原 $7/8$，可用侧的数值余量变为
+
+$$
+\frac78-B_{\mathrm{new}}
+=0.000042980579901054\ldots,
+$$
+
+比 v1 的 $0.000042930200831260\ldots$ 增加
+
+$$
+5.0379069794\times10^{-8}.
+$$
+
+这仍不改变仓内 packet 的适用分区：已有无槽门槛 $3/4$ 与正槽联合门槛 $63/64$ 都不因这一级微小改进而跨过边界。因而 v2 应更新外部零自由输入的版本和常数，但不产生新的同一来源 signed Robin 估计；继续重复 v1 的零检测推导不会推进当前缺口。
