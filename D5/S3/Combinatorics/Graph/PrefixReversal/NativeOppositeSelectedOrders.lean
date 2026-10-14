@@ -109,7 +109,7 @@ theorem native_opposite_selected_involutive {m k : ℕ} (F : SupplyFrame m k)
         (protectedQ (oppositeSelectedFrame F hk) hk)) = F.selected
     rw [(native_opposite_protected_labels F hk).1,
       (native_opposite_protected_labels F hk).2, Equiv.swap_comm, List.map_map]
-    simpa only [Function.comp_def, Equiv.swap_apply_self] using List.map_id F.selected
+    simpa only [Function.comp_def, Equiv.swap_apply_self] using List.map_id' F.selected
   · rfl
   · rfl
 

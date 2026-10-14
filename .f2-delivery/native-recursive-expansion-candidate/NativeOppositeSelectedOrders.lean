@@ -109,7 +109,7 @@ theorem native_opposite_selected_involutive {m k : ℕ} (F : SupplyFrame m k)
         (protectedQ (oppositeSelectedFrame F hk) hk)) = F.selected
     rw [(native_opposite_protected_labels F hk).1,
       (native_opposite_protected_labels F hk).2, Equiv.swap_comm, List.map_map]
-    simpa only [Function.comp_def, Equiv.swap_apply_self, List.map_id]
+    simpa only [Function.comp_def, Equiv.swap_apply_self] using List.map_id' F.selected
   · rfl
   · rfl
 
@@ -130,7 +130,7 @@ theorem native_opposite_selected_two {m : ℕ} (F : SupplyFrame m 2) :
         have ht : tail = [] := List.length_eq_zero_iff.mp (by
           simp only [h, hr, List.length_cons] at hlen
           omega)
-        exact ⟨p, q, by rw [h, hr, ht]⟩
+        exact ⟨p, q, by rw [ht]⟩
   have hp : protectedP F (by omega) = p := by simp [protectedP, hs]
   have hq : protectedQ F (by omega) = q := by simp [protectedQ, hs]
   apply frame_ext
@@ -154,7 +154,9 @@ private theorem opposite_prepend_selected {m k : ℕ} (F : SupplyFrame m k)
   rw [hs, List.map_cons, hpq.1, hpq.2]
   have hp := (native_protected_labels F hk).2.1
   have hq := (native_protected_labels F hk).2.2.1
-  rw [Equiv.swap_apply_of_ne_of_ne (fun he => hu (he.symm ▸ hp)) (fun he => hu (he.symm ▸ hq))]
+  have hup : u ≠ protectedP F hk := fun he => hu (he.symm ▸ hp)
+  have huq : u ≠ protectedQ F hk := fun he => hu (he.symm ▸ hq)
+  rw [Equiv.swap_apply_of_ne_of_ne hup huq]
 
 /-- Prepending the new marked label commutes with exchanging the fixed
 protected pair; the new label itself is not exchanged. -/

@@ -1,6 +1,10 @@
-/- WIP: opposite native marked port separation. Pending scoped kernel check.
-   Candidate uses the canonical opposite selected frame, not an arbitrary
-   frame whose selected set merely agrees. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeOppositeMarkedPorts
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeOppositeMarkedPorts
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The canonical protected-label exchange separates both complete native marked-port tables and their actual deletion sets. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOppositeSelectedOrders
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 import Mathlib.Data.Nat.ModEq
@@ -39,11 +43,18 @@ private theorem anchor_base {m k : ℕ} (hm : 3 ≤ m) (F : SupplyFrame m k)
     anchor F ⟨k + i, by have hp := F.prefix_length
                        simp only [List.length_append, F.selected_length] at hp
                        omega⟩ = F.base[i] := by
-  have h := congrArg (fun L : List (Fin (m + 1)) => L[k+i]?) (anchor_list hm F)
   have hp := F.prefix_length
   simp only [List.length_append, F.selected_length] at hp
-  simpa [List.getElem?_eq_getElem, List.getElem_append, F.selected_length,
-    show ¬ k+i < k by omega, show k+i < k+F.base.length by omega] using h
+  have ht : k+i < (F.selected ++ F.base ++ [F.terminal]).length := by
+    simp only [List.length_append, List.length_singleton, F.selected_length]
+    omega
+  have h := congrArg (fun L : List (Fin (m+1)) => L[k+i]?) (anchor_list hm F)
+  rw [List.getElem?_eq_getElem (by simp only [List.length_ofFn]; omega),
+    List.getElem?_eq_getElem ht] at h
+  simp only [List.getElem_ofFn] at h
+  rw [List.getElem_append_left (by simp only [List.length_append, F.selected_length]; omega),
+    List.getElem_append_right (by rw [F.selected_length]; omega)] at h
+  simpa only [F.selected_length, Nat.add_sub_cancel_left, Option.some.injEq] using h
 
 private theorem rotation_separation {m : ℕ} (hm : 3 ≤ m)
     (A τ : Configuration m) (hτ : τ ≠ 1)
