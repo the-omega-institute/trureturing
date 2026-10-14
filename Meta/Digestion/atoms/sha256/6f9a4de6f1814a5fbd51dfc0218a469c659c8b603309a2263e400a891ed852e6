@@ -1,0 +1,25 @@
+**Proof.** The actual origins alpha, beta and $\langle\alpha,\beta\rangle$
+give respectively
+
+$$
+\begin{array}{c|c|c}
+u& (R_0,R_1,R_2)&b_P(u)\\ \hline
+\alpha&(\alpha,\beta,D_{\ne})&(2,2)\\
+\beta&(\beta,D_{\ne},D_{\ne})&(1,1)\\
+\langle\alpha,\beta\rangle&(D_{\ne},D_{\ne},D_{\ne})&(0,0).
+\end{array}
+\tag{NBP.6.4}
+$$
+
+In the second origin, the epoch-two hole values are $E,\beta$; in the
+third they are $E,\rho^2\beta$, and in the first they are $\beta,\alpha$.
+Each pair is unequal. The three current complete rows coincide, while
+the three histories differ. Theorem 5.3 and the existing depth-zero
+prefix count give exactly three actual cut vectors, excluding a fourth
+history in this fiber. Theorem 6.2 proves the exact count and bits.
+
+At epoch zero, by contrast, retaining $R_0$ already determines $b_P$,
+so this additional conditional information count is one. Information
+needed after discarding earlier rows must not be charged a second time
+while those rows or their readable archives remain in the base. $\square$
+

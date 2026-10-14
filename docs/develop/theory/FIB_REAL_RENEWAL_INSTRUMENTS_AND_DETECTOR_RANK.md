@@ -560,3 +560,814 @@ Proof. In (5.7), adjacent ones give an internal gap $g_i=0$ and hence the zero f
 The visible Fibonacci support in Theorem 7.1 agrees with [Chapter 41, Theorem 41.1](FIB_LEGAL_EDGE_LOAD_PRODUCT_UPPER_EDGE_FIELD_STABILITY_AND_PHASE_CUT_RANK.md#41-the-common-fibonacci-legal-language-and-the-resource-boundary). It does not identify these probabilities with a product-activity measure or the native five-state AURIC source. It supplies no parent Hamiltonian, holonomy control, native preparation map or coherent square-root output state. The degree $n$ of the gap weight is not the observed window length $N$. Memory entropy, physical rebit equivalence, preparation resources, work and energy are not consequences of the matrix-coordinate equality. The precise output object established here consists of the actual classical cylinders (5.7)–(5.8) from the faithful invariant initialization, with a separate pure density after each tick.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. An exact quintic single-detector instrument in four dimensions
+
+**Definition 8.1 (Positive quintic constants and two real amplitudes).** All square roots in this section are the positive real square roots. Set
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\eta=\sqrt{\frac{\phi-\sqrt{\phi^2-4/5}}2},\qquad
+\lambda=\phi^2\eta,\qquad
+\alpha=\sqrt{\frac{5\lambda}{2}}. \tag{8.1}
+$$
+
+These are positive real algebraic constants: $\phi>1$, $0<\sqrt{\phi^2-4/5}<\phi$, and consequently $\eta,\lambda,\alpha>0$. They satisfy
+
+$$
+\phi^2=\phi+1,\qquad
+\eta^4-\phi\eta^2+\frac15=0,\qquad
+\lambda^2+\eta^2=3\lambda\eta. \tag{8.2}
+$$
+
+Define the real quadratic polynomials
+
+$$
+\begin{aligned}
+s(t)&=\alpha t(t-\eta),\\
+p(t)&=\sqrt5\left(t^2+(1-\lambda)t+\frac{1+\eta^2-\lambda}{2}\right)
+       =p_0+p_1t+p_2t^2,\\
+p_0&=\frac{\sqrt5}{2}(1+\eta^2-\lambda),\qquad
+p_1=\sqrt5(1-\lambda),\qquad p_2=\sqrt5.
+\end{aligned} \tag{8.3}
+$$
+
+**Theorem 8.2 (Quintic coefficient certificate).** For every real $t$ and every integer $k\ge0$,
+
+$$
+p(t)^2+s(t+1)^2-s(t)^2=(t+1)^5-t^5,\qquad
+k^5=s(k)^2+\sum_{t=0}^{k-1}p(t)^2. \tag{8.4}
+$$
+
+Proof. The relation $\phi^4-3\phi^2+1=0$ gives the last equality of (8.2). Expanding the left side of the first identity in (8.4), using $\alpha^2=5\lambda/2$ and $\lambda^2+\eta^2=3\lambda\eta$, gives the coefficients $5,10,10,5$ in degrees $4,3,2,1$, respectively. Its constant coefficient is
+
+$$
+\frac54(1+\eta^2-\lambda)^2+\frac{5\lambda}{2}(1-\eta)^2
+=1+\frac54\left(\eta^4-\phi\eta^2+\frac15\right). \tag{8.5}
+$$
+
+Thus, before applying the quartic relation for $\eta$, the complete residual is exactly
+
+$$
+p(t)^2+s(t+1)^2-s(t)^2-\big((t+1)^5-t^5\big)
+=\frac54\left(\eta^4-\phi\eta^2+\frac15\right). \tag{8.6}
+$$
+
+Equation (8.2) makes it zero. Summing the resulting forward-difference identity for $t=0,\ldots,k-1$ and using $s(0)=0$ proves the second identity. At $k=0$ both the empty sum and $s(0)^2$ vanish. $\square$
+
+**Definition 8.3 (Quintic raw memory and Newton correspondence).** On the ordered real coordinates $e_0,e_1,e_2,e_3$ inside $\mathbb C^4$, use target coordinates $e_0,e_1,e_2$ and source coordinate $x=e_3$. Put $f=e_0$, $F=ff^{\mathsf T}$ and
+
+$$
+A=\begin{pmatrix}
+1&1&0&\alpha(1-\eta)\\
+0&1&1&2\alpha\\
+0&0&1&0\\
+0&0&0&1
+\end{pmatrix},\qquad
+B=\begin{pmatrix}
+0&0&0&p_0\\
+0&0&0&p_1+p_2\\
+0&0&0&2p_2\\
+0&0&0&0
+\end{pmatrix}. \tag{8.7}
+$$
+
+In target-source blocks, $A=\left(\begin{smallmatrix}U&u\\0&1\end{smallmatrix}\right)$ and $B=\left(\begin{smallmatrix}0&v\\0&0\end{smallmatrix}\right)$, where $U=I_3+N$, $N_{01}=N_{12}=1$, all other entries of $N$ are zero, and
+
+$$
+u=(\alpha(1-\eta),2\alpha,0)^{\mathsf T},\qquad
+v=(p_0,p_1+p_2,2p_2)^{\mathsf T}. \tag{8.8}
+$$
+
+The coefficients are finite differences, with $\delta a(t)=a(t+1)-a(t)$:
+
+$$
+\begin{aligned}
+p(t)&=p_0+(p_1+p_2)\binom t1+2p_2\binom t2,\\
+\delta s(t)&=\alpha(1-\eta)+2\alpha\binom t1,\\
+s(k)&=\alpha(1-\eta)\binom k1+2\alpha\binom k2.
+\end{aligned} \tag{8.9}
+$$
+
+For any fixed $0<q<1$, the raw CP map is $\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T})$ on the full complex matrix algebra, with Kraus matrices $\sqrt q A,\sqrt q B$.
+
+**Theorem 8.4 (All quintic words, stability and full memory).** For the data (8.7), all integers $r,t,k\ge0$ satisfy
+
+$$
+f^{\mathsf T}A^kx=s(k),\qquad
+f^{\mathsf T}A^tBA^rx=p(t),\qquad BA^rB=0. \tag{8.10}
+$$
+
+For each $0<q<1$, the full superoperator has spectral radius $q$, its observability Gramian $Q$ is positive definite on $\mathbb C^4$, and the raw words from $x$ span $\mathbb C^4$. Moreover
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]&=q^kk^5\quad(k\ge0),\\
+Q&=\sum_{k\ge0}(\mathcal T_q^*)^k(F),\\
+z=x^{\mathsf T}Qx=Z_5(q)&=
+\frac{q(1+26q+66q^2+26q^3+q^4)}{(1-q)^6}>0.
+\end{aligned} \tag{8.11}
+$$
+
+Proof. The target component of $A^kx$ is $\sum_{j=0}^{k-1}U^ju$, and its source component is one. Since $e_0^{\mathsf T}U^j=(1,j,\binom j2)$, (8.9) gives $f^{\mathsf T}A^kx=\sum_{j<k}\delta s(j)=s(k)$. The matrix $B$ reads only the source component, so $BA^rx=(v,0)$, after which $A^t$ gives $(U^tv,0)$. Its first coordinate is $p(t)$ by (8.9). The image of $B$ is in the target, the target is preserved by $A$, and $B$ kills the target; hence $BA^rB=0$ as a matrix identity.
+
+For a word $w$ of length $k$ in the letters $A,B$, use the ordered product with the rightmost letter acting first. Expansion of the CP power gives $q^k\sum_{|w|=k}|f^{\mathsf T}wx|^2$. The single all-$A$ word contributes $s(k)^2$. Every word with exactly one $B$ has the unique form $A^tBA^{k-1-t}$, $0\le t<k$, and contributes $p(t)^2$ once. Every word with at least two $B$ letters contains a factor $BA^rB$ and is zero. Therefore the entire ordered-word sum is
+
+$$
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]
+=q^k\left(s(k)^2+\sum_{t=0}^{k-1}p(t)^2+0\right)=q^kk^5. \tag{8.12}
+$$
+
+There are no amplitude cross terms between different words. At $k=0$ the only word is the identity and $f^{\mathsf T}x=0$, so (8.12) also covers the empty word.
+
+The matrices $A,B$ are upper triangular, with diagonal entries respectively one and zero. Column vectorization represents $\mathcal T_q$ by $q(A\otimes A+B\otimes B)$, upper triangular on all sixteen complex matrix coordinates, with diagonal $q$. Thus $\operatorname{spec}(\mathcal T_q)=\{q\}$ and the Gramian converges for every $0<q<1$.
+
+To prove full observability, let $y=(y_T,y_s)\in\mathbb C^3\oplus\mathbb C$ obey $y^*Qy=0$. Formula (2.11), with positive weights $q^{|w|}$, forces $f^{\mathsf T}wy=0$ for every word. In particular $f^{\mathsf T}A^tBy=p(t)y_s=0$ for every natural $t$. The degree-two polynomial $p$ has leading coefficient $\sqrt5\ne0$, so some $t\in\{0,1,2\}$ has $p(t)\ne0$ and $y_s=0$. The all-$A$ rows then give $e_0^{\mathsf T}U^jy_T=0$ for $j=0,1,2$. Their coefficient matrix is
+
+$$
+\begin{pmatrix}1&0&0\\1&1&0\\1&2&1\end{pmatrix}, \tag{8.13}
+$$
+
+of determinant one. Thus $y_T=0$, establishing $Q>0$ on the whole complex memory, not just positivity on $x$.
+
+For reachability, $x,Bx,ABx,A^2Bx$ span the source and the target vectors $v,Uv,U^2v$. The latter span the same space as $v,Nv,N^2v$. Since $v_2=2p_2=2\sqrt5\ne0$, these three vectors are independent. This proves full real and complex reachability. Finally sum (8.12) over $k$ to obtain $z=Z_5(q)$; applying $(q\,d/dq)^5$ to $(1-q)^{-1}$ gives the rational expression in (8.11). Termwise differentiation is valid for $|q|<1$. $\square$
+
+**Theorem 8.5 (Completed quintic instrument and all stationary cylinders).** For every $0<q<1$, let $G=Q^{1/2}$ be the positive real symmetric square root of the faithful Gramian in (8.11), and define
+
+$$
+\begin{aligned}
+b&=Gx/\sqrt{Z_5(q)},&\tau&=bb^{\mathsf T},\\
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=bf^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T}.
+\end{aligned} \tag{8.14}
+$$
+
+These real matrices constitute a complete homogeneous CP instrument on $M_4(\mathbb C)$. The zero branch has Choi rank two, with Kraus matrix ranks $4$ and $1$; the tick branch has Choi rank one and its single Kraus matrix has rank one. Each positive-probability tick resets to the pure density $\tau$, and
+
+$$
+\begin{aligned}
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_4,\qquad \rho(\Phi)=q,\\
+\Psi(X)&=\tau\operatorname{Tr}(J^{\mathsf T}JX),\\
+\Psi\Phi^k(\tau)&=\gamma_k\tau,\qquad
+\gamma_k=\frac{k^5q^k}{Z_5(q)}\quad(k\ge0).
+\end{aligned} \tag{8.15}
+$$
+
+With $S_a=\sum_{j\ge a}\gamma_j$ and $\mu=\sum_{k\ge0}(k+1)\gamma_k=1+Z_6(q)/Z_5(q)$, the actual stationary initialization is
+
+$$
+\rho_*^{(5)}=\frac1\mu\sum_{a\ge0}\Phi^a(\tau)>0,\qquad
+\operatorname{Tr}\Phi^a(\tau)=S_a. \tag{8.16}
+$$
+
+For every $r\ge1$ and $a,b,g_1,\ldots,g_{r-1},N\ge0$, its actual binary cylinders are
+
+$$
+\begin{aligned}
+P(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i},\\
+P(0^N)&=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j.
+\end{aligned} \tag{8.17}
+$$
+
+Proof. The precise inputs to Theorem 2.1 are $d=4$, two raw Kraus matrices $K_A=\sqrt q A,K_B=\sqrt q B$, one detector column $f=e_0$, $F=ff^{\mathsf T}\ne0$, and raw reset vector $x=e_3\ne0$. Theorem 8.4 proves its full-superoperator stability premise and its full-memory Gramian premise. The theorem's $S,z,b$ correspond to $G,Z_5(q),b$ here. Real symmetric positivity gives an invertible real $G$, and $b^{\mathsf T}b=1$. In particular the Stein identity gives the full operator equality
+
+$$
+G^{-1}\big(qA^{\mathsf T}QA+qB^{\mathsf T}QB+F\big)G^{-1}=I_4. \tag{8.18}
+$$
+
+Its three terms are the three effects in (8.15). These are Kraus conjugations on the full complex algebra, so the CP and completeness assertions include complex inputs with nonreal coherences and every matrix amplification. They are not restricted to the real positive cone. Similarity by $X\mapsto GXG$ gives $\rho(\Phi)=q$, and (8.11) and Theorem 2.1 give the normalized gap law and reset formula for every $k$.
+
+The matrix $A$ is invertible and $B=|(v,0)\rangle\langle e_3|$ is nonzero of rank one with zero diagonal. Thus $A,B$ are complex-linearly independent; invertible similarity preserves their matrix ranks and independence. This proves the zero Choi rank and the individual Kraus ranks. Since $b,f$ are nonzero, $J$ is nonzero of rank one, giving the tick Choi rank one.
+
+For Theorem 5.1 the remaining premises are the exact law (1.1) with $n=5$ and full zero-word reachability from $b$. The latter follows from $L_wb=q^{|w|/2}Gwx/\sqrt{Z_5(q)}$ and the four spanning raw words of Theorem 8.4. The first moment is finite because $0<q<1$. Theorem 5.1 therefore gives (8.16)–(8.17), invariance under $\Phi+\Psi$, and faithfulness on all four dimensions. This invocation uses the actual ordered instrument probabilities (5.2). At $r=1$ the product is empty; at $N=0$ the all-zero formula equals one because $\sum_aS_a=\mu$. It includes every finite all-zero word and has $P(0^N)\to0$, with no extra all-zero stationary component.
+
+The raw source coordinate $x$ is not an asserted stationary initialization: the normalized pure reset is $b=Gx/\sqrt{Z_5(q)}$, whereas $\rho_*^{(5)}$ is faithful and mixed. In particular $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$ and $\operatorname{Tr}\Psi(\rho_*^{(5)})=1/\mu>0$. All three target coordinates and the source coordinate are counted in $D=4$. The two zero Kraus labels are summed within $\Phi$ and are not retained as a persistent record; the tick uses just $J$. No additional persistent classical or quantum register is used. $\square$
+
+## 9. An exact septic single-detector instrument in five dimensions
+
+**Definition 9.1 (A rationally isolated triple).** For real variables $\theta=(h,d,e)$ define
+
+$$
+\begin{aligned}
+b(\theta)&=\frac58-\frac92h^2-5hd,\qquad
+c(\theta)=3b(\theta)-\frac52-2d^2-4e,\\
+E_0(\theta)&=h^2c(\theta)^2+\frac{hd(1+4e)}8-\frac1{448},\\
+E_1(\theta)&=2b(\theta)c(\theta)+\frac38+d^2+2e+2e^2,\\
+E_2(\theta)&=b(\theta)^2-6h^2c(\theta)+hd(5+6e)-\frac3{16},\qquad
+E=(E_0,E_1,E_2)^{\mathsf T}.
+\end{aligned} \tag{9.1}
+$$
+
+The constants $h,d,e$ used below are specified exactly as the unique zero of $E$ in the closed rational box
+
+$$
+\mathcal B=\{\theta:\|\theta-\theta_c\|_\infty\le r\},\qquad
+\theta_c=\frac1{10^6}(10056,-1500211,2611067),\qquad
+r=\frac1{10^5}. \tag{9.2}
+$$
+
+Theorem 9.2 establishes that this definition is well posed. The center of the box is rational data for the certificate, not a claimed decimal value of the root. The letters $b,c$ in this section mean the scalar polynomials in (9.1); the normalized reset vector will be denoted $\xi$.
+
+**Theorem 9.2 (Exact existence, uniqueness in the box and nonsingularity).** The box (9.2) contains exactly one zero of $E$, and it lies in its interior. At that zero $DE$ is invertible and $h\ge10046/10^6>0$.
+
+Proof. Use the rational matrix
+
+$$
+C=\frac1{10000}
+\begin{pmatrix}
+5455&-1&212\\
+527345&472&65820\\
+-362244&964&-58667
+\end{pmatrix},\qquad
+\det C=-\frac{360250635779}{10^{12}}\ne0. \tag{9.3}
+$$
+
+The exact center residual after multiplication by $C$ is
+
+$$
+CE(\theta_c)=\frac1{273437500000000000000000000000000000000}
+\begin{pmatrix}
+-10243150448844572256019578919535\\
+5927470351553772870217603973935\\
+45079277342660805371643189024388
+\end{pmatrix},\qquad
+\|CE(\theta_c)\|_\infty<\frac1{5000000}. \tag{9.4}
+$$
+
+For a three-variable indeterminate $z$, put $H(z)=I_3-CDE(\theta_c+z)$ and define its finite weighted coefficient row sums by
+
+$$
+M_i=\sum_{j=1}^{3}\sum_{\alpha\in\mathbb N^3}
+\left|[z^\alpha]H_{ij}(z)\right|r^{|\alpha|},\qquad i=1,2,3. \tag{9.5}
+$$
+
+Every coefficient here is rational. Expansion of (9.1), with the derivative columns ordered as $h,d,e$, gives the following exact values and rational bounds:
+
+| Row $i$ | Exact value of $M_i$ | Strict upper bound |
+| --- | --- | --- |
+| $1$ | $\dfrac{390478499067873421120556048493}{62500000000000000000000000000000}$ | $1/100$ |
+| $2$ | $\dfrac{16183691879450395407223506946387}{62500000000000000000000000000000}$ | $27/100$ |
+| $3$ | $\dfrac{14227528846784773295138168796547}{78125000000000000000000000000000}$ | $19/100$ |
+
+These are finite rational identities and inequalities, obtained by substituting the rational center in $I_3-CDE$ and summing the absolute coefficients with weights $10^{-5|\alpha|}$. In particular, for every real $z$ with $\|z\|_\infty\le r$, the induced matrix infinity norm satisfies
+
+$$
+\|I_3-CDE(\theta_c+z)\|_\infty
+\le\max_iM_i<\frac{27}{100}. \tag{9.6}
+$$
+
+Let $T(\theta)=\theta-CE(\theta)$. Integrating its derivative along each segment in the convex box shows that $T$ is a contraction there with Lipschitz constant at most $27/100$. Equations (9.4)–(9.6) give, for every $\theta\in\mathcal B$,
+
+$$
+\|T(\theta)-\theta_c\|_\infty
+\le\|CE(\theta_c)\|_\infty+\frac{27}{100}\|\theta-\theta_c\|_\infty
+<\frac1{5000000}+\frac{27}{100}r
+=\frac{29}{10^7}<r. \tag{9.7}
+$$
+
+Thus $T$ maps the complete closed box into itself, and the contraction theorem gives exactly one fixed point there, in its interior. Because $C$ is invertible, fixed points are precisely zeros of $E$, proving both existence and uniqueness in this box. At any point of the box, (9.6) implies that $CDE$ is invertible by the Neumann series for $I_3-(I_3-CDE)$; therefore $DE$ is invertible at the zero. The $h$ interval in (9.2) gives its stated positive lower bound. This is an exact unique-zero specification; no global uniqueness outside $\mathcal B$ is asserted. $\square$
+
+**Theorem 9.3 (Septic polynomial identity and Newton coefficients).** At the constants of Definition 9.1, set $y=t+1/2$, evaluate $b=b(\theta),c=c(\theta)$, and take positive real square roots in
+
+$$
+p(t)=\sqrt7\big(y^3-3hy^2+by+hc\big),\qquad
+s(t)=\sqrt{7h}\,t(t^2+dt+e). \tag{9.8}
+$$
+
+Then for all real $t$ and all integers $k\ge0$,
+
+$$
+p(t)^2+s(t+1)^2-s(t)^2=(t+1)^7-t^7,\qquad
+k^7=s(k)^2+\sum_{t=0}^{k-1}p(t)^2. \tag{9.9}
+$$
+
+Writing $p(t)=\sum_{j=0}^3p_jt^j$ and $s(t)=s_1t+s_2t^2+s_3t^3$, their coefficients are
+
+$$
+\begin{aligned}
+p_3&=\sqrt7,&p_2&=\sqrt7\left(\frac32-3h\right),\\
+p_1&=\sqrt7\left(\frac34-3h+b\right),&
+p_0&=\sqrt7\left(\frac18-\frac{3h}{4}+\frac b2+hc\right),\\
+s_1&=\sqrt{7h}\,e,&s_2&=\sqrt{7h}\,d,&s_3&=\sqrt{7h}.
+\end{aligned} \tag{9.10}
+$$
+
+Proof. Before specializing $\theta$ to its zero, the definitions (9.1) give the exact symbolic residual, for any real $h>0,d,e$:
+
+$$
+p(t)^2+s(t+1)^2-s(t)^2-\big((t+1)^7-t^7\big)
+=7\big(E_2y^2+hE_1y+E_0\big). \tag{9.11}
+$$
+
+Indeed substitute $t=y-1/2$ into $7(y^3-3hy^2+by+hc)^2+7h\big((t+1)^2((t+1)^2+d(t+1)+e)^2-t^2(t^2+dt+e)^2\big)-((t+1)^7-t^7)$. The definitions of $b$ and $c$ cancel degrees $6,5,4,3$ in $y$, leaving coefficients $7E_2,7hE_1,7E_0$ in degrees $2,1,0$. This proves (9.11) by polynomial expansion over the rational coefficient ring. At the zero, all three residual coefficients vanish. Since $s(0)=0$, summation gives (9.9), including $k=0$ with the empty sum. Expanding (9.8) gives (9.10). In particular both amplitudes have degree three and their leading coefficients are nonzero.
+
+For the matrix correspondence below, the explicit Newton expansions are
+
+$$
+\begin{aligned}
+p(t)&=p_0+(p_1+p_2+p_3)\binom t1
+ +(2p_2+6p_3)\binom t2+6p_3\binom t3,\\
+\delta s(t)&=(s_1+s_2+s_3)+(2s_2+6s_3)\binom t1+6s_3\binom t2,\\
+s(k)&=(s_1+s_2+s_3)\binom k1+(2s_2+6s_3)\binom k2+6s_3\binom k3.
+\end{aligned} \tag{9.12}
+$$
+
+These identities follow from the finite-difference coefficients at zero; the last also follows by summing the second. They fix the shift orientation and every entry used in the next construction. $\square$
+
+**Definition 9.4 (Septic target and source matrices).** Use target coordinates $e_0,e_1,e_2,e_3$ and source coordinate $x=e_4$ on $\mathbb C^5$, with $f=e_0$, $F=ff^{\mathsf T}$. Let $N_{i,i+1}=1$ for $i=0,1,2$, all other entries of the $4\times4$ matrix $N$ be zero, and $U=I_4+N$. Define
+
+$$
+u=\begin{pmatrix}s_1+s_2+s_3\\2s_2+6s_3\\6s_3\\0\end{pmatrix},\qquad
+v=\begin{pmatrix}p_0\\p_1+p_2+p_3\\2p_2+6p_3\\6p_3\end{pmatrix},\qquad
+A=\begin{pmatrix}U&u\\0&1\end{pmatrix},\qquad
+B=\begin{pmatrix}0_{4\times4}&v\\0&0\end{pmatrix}. \tag{9.13}
+$$
+
+For each $0<q<1$, set $\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T})$ on $M_5(\mathbb C)$. Its two raw Kraus matrices are $\sqrt q A,\sqrt q B$; the source is part of the five-dimensional memory.
+
+**Theorem 9.5 (Every septic word and faithful full memory).** The matrices (9.13) obey, for all natural $k,t,r$,
+
+$$
+f^{\mathsf T}A^kx=s(k),\qquad
+f^{\mathsf T}A^tBA^rx=p(t),\qquad BA^rB=0. \tag{9.14}
+$$
+
+For every $0<q<1$, the full superoperator radius is $q$, the Gramian $Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F)$ is faithful on all five complex coordinates, and the zero-word reachable span from $x$ is the entire memory. Its observed weights and normalization are
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]&=q^kk^7\quad(k\ge0),\\
+z=x^{\mathsf T}Qx=Z_7(q)
+&=\frac{q(1+120q+1191q^2+2416q^3+1191q^4+120q^5+q^6)}{(1-q)^8}>0.
+\end{aligned} \tag{9.15}
+$$
+
+Proof. Finite binomial expansion gives $U^t=\sum_{j=0}^3\binom tjN^j$. Thus $e_0^{\mathsf T}U^tv=p(t)$ and $e_0^{\mathsf T}U^tu=\delta s(t)$ by the explicit coefficients (9.12). The source entry of $A^kx$ is one and its target entry is $\sum_{j<k}U^ju$, so its detector amplitude telescopes to $s(k)$. Also $BA^rx=(v,0)$, and $B$ kills the $A$-invariant target. This proves all three identities (9.14) without commuting $A$ and $B$.
+
+The ordered CP expansion has one all-$A$ word, with squared amplitude $s(k)^2$; exactly $k$ one-$B$ words $A^tBA^{k-1-t}$, one per $0\le t<k$, with squared amplitudes $p(t)^2$; and only zero contributions from words with two or more $B$ letters, by $BA^rB=0$. Consequently
+
+$$
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]
+=q^k\left(s(k)^2+\sum_{t=0}^{k-1}p(t)^2+0\right)=q^kk^7. \tag{9.16}
+$$
+
+This includes $k=0$, when the one-$B$ sum is empty and $f^{\mathsf T}x=s(0)=0$. Different ordered words are summed as separate probabilities, with no interference cross terms.
+
+Both raw matrices are upper triangular with respective diagonals one and zero. Therefore $q(A\otimes A+B\otimes B)$ is upper triangular on the entire $25$-dimensional complex matrix space with diagonal $q$, proving $\rho(\mathcal T_q)=q<1$ and norm convergence of $Q$.
+
+Suppose $y=(y_T,y_s)\in\mathbb C^4\oplus\mathbb C$ is invisible to the Gramian. The positive word expansion (2.11) gives $f^{\mathsf T}A^tBy=p(t)y_s=0$ for all $t\ge0$. Since $p_3=\sqrt7\ne0$, it cannot vanish at all four integers $0,1,2,3$, so $y_s=0$. The remaining all-$A$ rows at those four indices give the triangular binomial system
+
+$$
+\begin{pmatrix}
+1&0&0&0\\
+1&1&0&0\\
+1&2&1&0\\
+1&3&3&1
+\end{pmatrix}y_T=0. \tag{9.17}
+$$
+
+Its determinant is one, so $y_T=0$. Hence $Q>0$ on all of $\mathbb C^5$. For reachability, $x$ and $A^jBx=(U^jv,0)$ for $0\le j\le3$ span all five coordinates: the target vectors span $v,Nv,N^2v,N^3v$, which are independent since $v_3=6p_3=6\sqrt7\ne0$. This holds over both $\mathbb R$ and $\mathbb C$. Summing (9.16) gives $z=Z_7(q)$, and applying $(q\,d/dq)^7$ to $(1-q)^{-1}$ gives the displayed rational numerator. $\square$
+
+**Theorem 9.6 (Real septic instrument with a single pure resetting tick).** For each $0<q<1$, take the positive real symmetric square root $G=Q^{1/2}$ of the Gramian of Theorem 9.5, and set
+
+$$
+\begin{aligned}
+\xi&=Gx/\sqrt{Z_7(q)},&\tau&=\xi\xi^{\mathsf T},\\
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=\xi f^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T}.
+\end{aligned} \tag{9.18}
+$$
+
+This is a complete homogeneous CP instrument on the full algebra $M_5(\mathbb C)$ with real entries. It satisfies
+
+$$
+\begin{aligned}
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_5,\qquad \rho(\Phi)=q,\\
+\Psi(X)&=\tau\operatorname{Tr}(J^{\mathsf T}JX),\\
+\Psi\Phi^k(\tau)&=\gamma_k\tau,\qquad
+\gamma_k=\frac{k^7q^k}{Z_7(q)}\quad(k\ge0).
+\end{aligned} \tag{9.19}
+$$
+
+Its zero branch has Choi rank exactly two, with individual Kraus matrix ranks $5$ and $1$. Its single tick matrix has rank one and its tick Choi rank is exactly one. Every positive-probability tick has the same pure actual output $\tau$.
+
+Proof. In Theorem 2.1 take $d=5$, $K_A=\sqrt q A,K_B=\sqrt q B$, the single nonzero detector $f=e_0$, and nonzero raw reset $x=e_4$. Theorem 9.5 supplies $\rho(\mathcal T_q)=q<1$ and $Q>0$ on the entire memory; its $z$ is exactly $Z_7(q)$. The positive square root in Theorem 2.1 is $G$ and its normalized vector is $\xi$. The real positive-square-root conclusion applies to this real symmetric Gramian, including its complex Hermitian positivity. The Stein equation gives explicitly
+
+$$
+G^{-1}\big(qA^{\mathsf T}QA+qB^{\mathsf T}QB+F\big)G^{-1}=I_5,
+\qquad J^{\mathsf T}J=G^{-1}FG^{-1}, \tag{9.20}
+$$
+
+because $\xi^{\mathsf T}\xi=1$. Thus completeness is an operator equality for every complex input, including nonreal coherences. The displayed Kraus maps and their amplifications preserve positivity; no real-input restriction enters. Theorem 2.1, the similarity $X\mapsto GXG$, and (9.15) give (9.19), including properness and the zero probability at preceding-zero index $k=0$.
+
+The matrix $A$ is invertible, and $B=|(v,0)\rangle\langle e_4|$ is a nonzero rank-one strictly upper triangular matrix. They are linearly independent over $\mathbb C$. Scaling by $\sqrt q$ and conjugating by $G$ preserve their independence and matrix ranks, giving precisely two zero Kraus directions. Both factors of $J=\xi f^{\mathsf T}G^{-1}$ are nonzero, so its matrix rank and the tick Choi rank are one. Its outer-product form gives the actual reset identity in (9.19). $\square$
+
+**Theorem 9.7 (Full septic stationary interface and persistent memory count).** Define from the actual gap probabilities in (9.19)
+
+$$
+S_a=\sum_{j\ge a}\gamma_j,\qquad
+\mu=\sum_{k\ge0}(k+1)\gamma_k=1+\frac{Z_8(q)}{Z_7(q)},\qquad
+\rho_*^{(7)}=\frac1\mu\sum_{a\ge0}\Phi^a(\tau). \tag{9.21}
+$$
+
+Then $\rho_*^{(7)}>0$ is a real mixed invariant density, $\operatorname{Tr}\Phi^a(\tau)=S_a$, and the actual binary-word probabilities from this density are
+
+$$
+\begin{aligned}
+P(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i}\quad(r\ge1),\\
+P(0^N)&=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j\quad(N\ge0).
+\end{aligned} \tag{9.22}
+$$
+
+Here every boundary run and internal gap is a nonnegative integer; $r$ is the number of ones and $k$ in $\gamma_k$ is the number of preceding zeros, not the duration $k+1$. No persistent register beyond $\mathbb C^5$ is required.
+
+Proof. Theorem 5.1 requires a real completed Theorem 2.1 instrument, the exact law (1.1), and full zero-word reachability from its normalized reset. Theorem 9.6 establishes the first two premises with $n=7$. For the third, each completed word satisfies $L_w\xi=q^{|w|/2}Gwx/\sqrt{Z_7(q)}$. Since $q>0$ and $G$ is invertible, the five raw spanning vectors in Theorem 9.5 give a full completed span. The finite positive $Z_7(q)$ and finite $Z_8(q)$ give $0<\mu<\infty$. All hypotheses of Theorem 5.1 therefore hold and give (9.21)–(9.22) as the probabilities of the actual maps, with the state ordering in (5.2).
+
+In particular the series in (9.21) converges in norm, has trace $\mu$ before normalization, and is faithful by the full reachable span. Its invariance is that of $\Phi+\Psi$, not of the zero branch separately. Formula (9.22) at $r=1$ has an empty product; at $N=0$ it gives the empty-word probability one. It covers every finite all-zero cylinder and tends to zero as $N\to\infty$, so there is no hidden all-zero stationary component. Both boundary survival factors are retained, not replaced by internal gap probabilities.
+
+The raw source vector is $x=e_4$, the actual post-tick vector is $\xi=Gx/\sqrt{Z_7(q)}$, and the stationary initialization is the different density $\rho_*^{(7)}$. Faithfulness in dimension five makes the latter mixed; also $\operatorname{Tr}\Psi(\tau)=0$ whereas $\operatorname{Tr}\Psi(\rho_*^{(7)})=1/\mu>0$. The four target coordinates and the source coordinate are all included in $D=5$. Kraus indices are summed, with neither a stored zero-branch label nor an extra persistent reset or controller register. Any retained auxiliary affecting future steps would count as memory under Definition 1.2. $\square$
+
+**Theorem 9.8 (Scope of the two single-detector constructions).** The existence question of Definition 7.2 has affirmative instances at $n=5,D=4$ and $n=7,D=5$ for every $0<q<1$: both admit real fixed matrices with zero Choi rank two and a single rank-one resetting tick, realizing every cylinder (1.3). These dimension upper models require no finite-CP growth assumption. A dimension-optimality comparison for these models is conditional on the handwritten finite-CP growth hypothesis of Theorem 6.2 and its reachability and restricted-radius transfer.
+
+Proof. Theorems 8.5 and 9.6–9.7 establish the two complete instruments and their full stationary laws. The dimensions equal $D_5=4$ and $D_7=5$. Applying Theorem 6.2 under its stated growth hypothesis, with the actual posterior, reachable restriction and radius identification of (6.3)–(6.5), gives the corresponding conditional lower bounds. The upper constructions and their exact ranks do not use that input. Their support is the Fibonacci legal language by (8.17) and (9.22): $\gamma_0=0$, every $\gamma_k$ for $k\ge1$ is positive, and every boundary tail is positive. $\square$
+
+**Definition 9.9 (Remaining detector and interpretation boundaries).** Sections 8–9 address the two instances $n=5$ and $n=7$ of Definition 7.2. For odd $n\ge9$, existence of dimension $D_n$ real instruments with a single rank-one resetting tick remains unresolved by these constructions. The degree-two and degree-three pairs here provide no universal polynomial ansatz, no uniform existence theorem in the degree, and no higher-odd impossibility conclusion. Theorem 3.1 retains its all-odd upper construction with tick rank at most two.
+
+These exact constructions and their parameter correspondences are repository derivations; they make no worldwide novelty or priority claim. The completion and stationary mechanisms are the existing Theorems 2.1 and 5.1, applied with the premises proved above. General Lean proofs of these instruments, their Gramians and their full stationary interfaces remain unfinished. Finite-word horizon work does not certify the full finite-CP growth theorem or these all-index instruments, and supplies no unconditional dimension-minimum conclusion.
+
+The output object is the fixed classical renewal law (1.3), with the pure actual post-tick density distinguished from the mixed invariant initialization. No native five-state AURIC realization, physical real-Hilbert-space equivalence, finite-precision implementation, preparation map, coherent-output state, entropy, energy, work or control-cost conclusion follows. Exact real Kraus coordinates and the count of every persistent register have the meanings of Definitions 1.2 and 7.3.
+
+## 追加锚（本行以下为增补区）
+
+## 10. Uniform anchored telescoping squares
+
+**Theorem 10.1 (Strictly positive even-degree polynomials admit anchored telescoping squares).** Let $m\ge1$ be an integer and let $d\in\mathbb R[t]$ have degree exactly $2m$, with $d(t)>0$ for every real $t$. Then there exist real polynomials $p,s$ such that
+
+$$
+\begin{aligned}
+\deg p&=m,\qquad \deg s\le m,\qquad s(0)=0,\\
+d(t)&=p(t)^2+s(t+1)^2-s(t)^2\quad(t\in\mathbb R),\\
+\big([t^m]p\big)^2&=[t^{2m}]d>0.
+\end{aligned} \tag{10.1}
+$$
+
+Proof. Write $\delta=[t^{2m}]d$. Positivity on the whole real line and the even degree imply $\delta>0$. Give the coefficient space
+
+$$
+V_m=\{s\in\mathbb R[t]:\deg s\le m,\ s(0)=0\}
+\tag{10.2}
+$$
+
+its usual finite-dimensional real topology, and set
+
+$$
+c_0=0,\qquad c_j=\sum_{\ell=0}^{j-1}d(\ell),\qquad
+\mathcal K=\{s\in V_m:|s(j)|\le\sqrt{c_j},\ 1\le j\le m\}.
+\tag{10.3}
+$$
+
+Every $c_j$ for $j\ge1$ is strictly positive. Evaluation at $1,\ldots,m$ is a linear isomorphism from $V_m$ to $\mathbb R^m$: a polynomial in its kernel vanishes at the $m+1$ distinct points $0,1,\ldots,m$, so a polynomial of degree at most $m$ in that kernel is zero; the source and target both have dimension $m$. Thus $\mathcal K$ is the inverse image of the product of closed intervals $\prod_{j=1}^m[-\sqrt{c_j},\sqrt{c_j}]$ under a linear homeomorphism. It is nonempty, compact and convex, and contains the zero polynomial.
+
+For $s\in V_m$, write $s_m=[t^m]s$, allowing $s_m=0$, and define
+
+$$
+H_s(t)=d(t)+s(t)^2,\qquad
+\lambda_s=[t^{2m}]H_s=\delta+s_m^2\ge\delta>0.
+\tag{10.4}
+$$
+
+The polynomial $H_s$ has degree exactly $2m$, real coefficients, and no real zero. Complex conjugation pairs its roots with their multiplicities, so precisely $m$ roots lie in each open half-plane. Let the lower-half-plane roots, counted with multiplicity, be $\zeta_1,\ldots,\zeta_m$. Define
+
+$$
+\begin{aligned}
+b_s(z)&=\sqrt{\lambda_s}\prod_{j=1}^m(z-\zeta_j),\\
+b_s^{\#}(z)&=\overline{b_s(\overline z)},\qquad H_s=b_s b_s^{\#},\\
+a_s(z)&=b_s(z)\frac{\overline{b_s(-1)}}{|b_s(-1)|}.
+\end{aligned} \tag{10.5}
+$$
+
+The positive square root makes the leading coefficient of $b_s$ positive real. This fixes $b_s$ uniquely because its multiset of roots is the entire lower-half-plane multiset of $H_s$. The real point $-1$ is never a root: $|b_s(-1)|^2=H_s(-1)>0$. Hence the last line is defined without choosing a branch of an argument, and
+
+$$
+a_s(-1)=|b_s(-1)|>0,\qquad
+|a_s(t)|^2=H_s(t)\quad(t\in\mathbb R).
+\tag{10.6}
+$$
+
+The leading coefficient of $a_s$ need not be positive real; the positive-leading normalization belongs to $b_s$, while the real-value anchor belongs to $a_s$. The factorization ingredient is the scalar case of real-line polynomial spectral factorization, as in [Ephremidze, arXiv:1011.3777v1, Theorem 2, p. 2](https://arxiv.org/pdf/1011.3777v1), whose factor is nonsingular in the upper half-plane. Here it is also given directly by (10.5). The coefficient-continuity and anchor assertions needed below follow from the next argument.
+
+We prove continuity even at repeated roots. If $s_\nu\to s$ in coefficient space, then $H_{s_\nu}\to H_s$ coefficientwise and $\lambda_{s_\nu}\to\lambda_s\ge\delta$. On a sufficiently small coefficient neighborhood of $s$, the coefficients of the monic polynomials $H_{s'}/\lambda_{s'}$ are uniformly bounded. The Cauchy root bound therefore places all their roots in one fixed closed disk. More explicitly, if the absolute values of all nonleading coefficients are at most $M$, every root has modulus at most $1+M$.
+
+Take any subsequence of the $s_\nu$, and enumerate the $m$ lower roots arbitrarily at each of its indices. Compactness of the product of the root disks supplies a further subsequence on which this $m$-tuple converges. No continuity of the enumeration is assumed. Every limiting root is a root of $H_s$, by coefficient convergence and the defining root equation, and lies in the closed lower half-plane. Since $H_s$ has no real roots, every such limit lies in the open lower half-plane. Along this further subsequence the products defining $b_{s_\nu}$ converge coefficientwise to a polynomial $b$ of degree $m$ with positive leading coefficient $\sqrt{\lambda_s}$. Passing to the limit in $H_{s_\nu}=b_{s_\nu}b_{s_\nu}^{\#}$ gives $H_s=bb^{\#}$. The roots of $b$ are all lower, those of $b^{\#}$ all upper, so this identity assigns to $b$ exactly every lower root of $H_s$ with its full multiplicity. Uniqueness of the positive-leading lower factor gives $b=b_s$.
+
+Thus every subsequence has a further subsequence converging to $b_s$. In finite-dimensional coefficient space this implies $b_{s_\nu}\to b_s$: otherwise a subsequence staying a fixed positive distance from $b_s$ would contradict the further-subsequence conclusion. This proves continuity of $s\mapsto b_s$. Evaluation at $-1$, complex conjugation, modulus and division by a nonzero scalar are continuous, so (10.5) proves continuity of $s\mapsto a_s$. Root collisions within a half-plane cause no exception; multiplicities are retained by the product identity, and no continuously ordered individual roots are required.
+
+Define a continuous coefficient map
+
+$$
+\mathcal F(s)(t)=\operatorname{Im}a_s(t-1).
+\tag{10.7}
+$$
+
+Here real and imaginary parts are taken coefficientwise, equivalently by evaluating at real $t$. Its degree is at most $m$, and its value at zero vanishes by (10.6), so $\mathcal F(s)\in V_m$. For $s\in\mathcal K$ and $1\le j\le m$,
+
+$$
+\begin{aligned}
+|\mathcal F(s)(j)|^2
+&\le |a_s(j-1)|^2
+=d(j-1)+s(j-1)^2\\
+&\le d(j-1)+c_{j-1}=c_j.
+\end{aligned} \tag{10.8}
+$$
+
+At $j=1$ the last inequality uses $s(0)=0=c_0$; for $j\ge2$ it uses precisely the constraint at $j-1$ in (10.3). Consequently $\mathcal F$ maps $\mathcal K$ into itself. Brouwer's fixed-point theorem for a nonempty compact convex subset of a finite-dimensional real vector space gives $`s_*\in\mathcal K`$ with $`s_*=\mathcal F(s_*)`$.
+
+Set $`p(t)=\operatorname{Re}a_{s_*}(t)`$. The fixed-point identity at $t+1$ gives $`\operatorname{Im}a_{s_*}(t)=s_*(t+1)`$ for every real $t$. Hence
+
+$$
+a_{s_*}(t)=p(t)+i s_*(t+1),\qquad
+p(t)^2+s_*(t+1)^2=d(t)+s_*(t)^2.
+\tag{10.9}
+$$
+
+Both real polynomials have degree at most $m$, and $`s_*(0)=0`$. If $h$ is any polynomial of degree at most $2m$, the leading terms of $h(t+1)$ and $h(t)$ cancel, so $\deg(h(t+1)-h(t))\le2m-1$ whenever the difference is nonzero. Apply this to $`h=s_*^2`$. Comparison of degree $2m$ in (10.9) gives $([t^m]p)^2=\delta>0$, proving that $p$ has degree exactly $m$ and establishing (10.1). $\square$
+
+**Theorem 10.2 (Uniform odd-power identity independent of the geometric parameter).** For each integer $m\ge1$, put $n=2m+1$. There is a pair $p,s\in\mathbb R[t]$, depending only on $m$, for which
+
+$$
+\begin{aligned}
+\deg p&=m,\qquad \deg s\le m,\qquad s(0)=0,\qquad p_m^2=n,\\
+p(t)^2+s(t+1)^2-s(t)^2&=(t+1)^n-t^n\quad(t\in\mathbb R),\\
+k^n&=s(k)^2+\sum_{t=0}^{k-1}p(t)^2\quad(k\in\mathbb Z_{\ge0}),
+\end{aligned} \tag{10.10}
+$$
+
+where $p_m=[t^m]p$. The same pair can be used for every $0<q<1$.
+
+Proof. The polynomial
+
+$$
+d_m(t)=(t+1)^{2m+1}-t^{2m+1}
+=(2m+1)\int_t^{t+1}u^{2m}\,du
+\tag{10.11}
+$$
+
+is strictly positive for every real $t$: the integrand is continuous and nonnegative, and its only zero is $u=0$, so its integral on an interval of length one is positive. Its degree is $2m$ with leading coefficient $2m+1=n$. In Theorem 10.1 its evaluation bounds telescope to
+
+$$
+c_j=j^{2m+1},\qquad
+\mathcal K_m=\{s\in V_m:|s(j)|\le j^{m+1/2},\ 1\le j\le m\}.
+\tag{10.12}
+$$
+
+Applying that theorem gives the first two lines of (10.10). Summing the polynomial identity from $t=0$ to $t=k-1$ and using $s(0)=0$ gives the last line. At $k=0$ both $s(0)^2$ and the empty sum are zero. The construction of this pair contains no $q$, which proves the stated uniformity in that parameter. $\square$
+
+**Corollary 10.3 (Algebraic existence for rational polynomial data).** If the polynomial $d$ in Theorem 10.1 has rational coefficients, at least one pair $p,s$ satisfying (10.1) has real algebraic coefficients. In particular the pairs in Theorem 10.2 can be chosen real algebraic.
+
+Proof. Write $p(t)=\sum_{j=0}^m p_jt^j$ and $s(t)=\sum_{j=1}^m s_jt^j$. Equating all $2m+1$ coefficients of
+
+$$
+p(t)^2+s(t+1)^2-s(t)^2-d(t)=0
+\tag{10.13}
+$$
+
+is a finite system of polynomial equations over $\mathbb Q$ in $2m+1$ real variables. Theorem 10.1 proves that its existential formula is true over $\mathbb R$. The real algebraic numbers form a real closed subfield, and the transfer principle for real closed fields carries this rational existential formula to that subfield. Any resulting solution has $s(0)=0$ by its parametrization and $p_m^2=[t^{2m}]d>0$ by its top coefficient equation. It therefore has all the required degree properties. This is an existence assertion for rational $d$, not a claim that every solution is algebraic or that a solution is isolated or nonsingular. It supplies no sampling algorithm or coefficient-computation bound. For arbitrary real $q$ it asserts no algebraicity of the completed instrument entries below. $\square$
+
+## 11. Every higher odd degree with one real detector
+
+**Definition 11.1 (Uniform Newton lift).** Fix $m\ge2$, $n=2m+1\ge5$, and one pair from Theorem 10.2. On target coordinates $e_0,\ldots,e_m$ and source coordinate $e_{m+1}$, all counted in $\mathbb C^D$ with $D=m+2=D_n$, set
+
+$$
+\begin{aligned}
+\Delta h(t)&=h(t+1)-h(t),\qquad U=I_{m+1}+N,\\
+N_{j,j+1}&=1\quad(0\le j<m),\qquad N_{ij}=0\text{ otherwise},\\
+u_j&=\Delta^{j+1}s(0),\qquad v_j=\Delta^jp(0)\quad(0\le j\le m),\\
+A&=\begin{pmatrix}U&u\\0&1\end{pmatrix},\qquad
+B=\begin{pmatrix}0_{(m+1)\times(m+1)}&v\\0&0\end{pmatrix},\\
+x&=e_{m+1},\qquad f=e_0,\qquad F=ff^{\mathsf T}.
+\end{aligned} \tag{11.1}
+$$
+
+The entries are exact finite differences:
+
+$$
+\Delta^jh(0)=\sum_{\ell=0}^j(-1)^{j-\ell}\binom j\ell h(\ell),\qquad
+u_m=0,\qquad v_m=m!p_m\ne0.
+\tag{11.2}
+$$
+
+Here $f$ is a full-memory vector; on the target its row is $e_0^{\mathsf T}$. For $0<q<1$, define the raw CP map on the entire complex matrix algebra by
+
+$$
+\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T}).
+\tag{11.3}
+$$
+
+Its raw Kraus matrices are $\sqrt q A,\sqrt q B$. The polynomials and $A,B,x,f$ depend only on $m$ and the chosen pair; $q$ supplies the geometric Kraus scale and the subsequent Gramian completion. The raw map is not required to be trace nonincreasing.
+
+**Theorem 11.2 (Every word intensity, full complex stability and full memory).** The data (11.1) satisfy, for all nonnegative integers $k,t,r$,
+
+$$
+f^{\mathsf T}A^kx=s(k),\qquad
+f^{\mathsf T}A^tBA^rx=p(t),\qquad BA^rB=0.
+\tag{11.4}
+$$
+
+For every $0<q<1$,
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]&=q^kk^n\quad(k\ge0),\\
+\operatorname{spec}(\mathcal T_q)&=\{q\},\qquad \rho(\mathcal T_q)=q<1,\\
+Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F)&>0\quad\text{on }\mathbb C^D,\\
+z=x^{\mathsf T}Qx&=Z_n(q)\in(0,\infty).
+\end{aligned} \tag{11.5}
+$$
+
+The raw reachable span from $x$ is all of $\mathbb C^D$, already witnessed by $x,A^jBx$ for $0\le j\le m$.
+
+Proof. Newton's finite-difference identity and the finite binomial expansion of $U^t$ give
+
+$$
+\begin{aligned}
+p(t)&=\sum_{j=0}^m v_j\binom tj,
+&\Delta s(t)&=\sum_{j=0}^m u_j\binom tj,\\
+U^t&=\sum_{j=0}^m\binom tjN^j,
+&e_0^{\mathsf T}U^tv&=p(t),\quad e_0^{\mathsf T}U^tu=\Delta s(t).
+\end{aligned} \tag{11.6}
+$$
+
+The polynomial expansions hold for real $t$; the matrix-power expansion is used at nonnegative integer $t$. Formula (11.2) follows from these finite differences and the fact that the $m$th difference of a degree-$m$ polynomial is its leading coefficient times $m!$.
+
+The block power $A^k$ sends $x$ to $(\sum_{j=0}^{k-1}U^ju,1)$, with empty sum when $k=0$. Its first coordinate is $\sum_{j<k}\Delta s(j)=s(k)$ because $s(0)=0$. The source coordinate of $A^rx$ is one, so $BA^rx=(v,0)$, and $A^t$ then gives $(U^tv,0)$, proving the second identity in (11.4). The image of $B$ lies in the target, which $A$ preserves and $B$ annihilates. This proves the matrix identity $BA^rB=0$ without assuming commutation.
+
+For a raw word $w$ of length $k$ in $A,B$, take its displayed ordered product with the rightmost matrix acting first. The full CP expansion is
+
+$$
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]
+=q^k\sum_{|w|=k}|f^{\mathsf T}wx|^2
+=q^k\left(s(k)^2+\sum_{t=0}^{k-1}p(t)^2+0\right)
+=q^kk^n.
+\tag{11.7}
+$$
+
+Indeed the sole all-$A$ word contributes $s(k)^2$. There are exactly $k$ one-$B$ words, uniquely $A^tBA^{k-1-t}$ for $0\le t<k$, each contributing $p(t)^2$. Every word with two or more $B$ factors contains a factor $BA^rB$ and vanishes. Thus all words and their multiplicities have been accounted for. At $k=0$ the sole empty word is the identity and $f^{\mathsf T}x=s(0)=0$. Different Kraus words contribute separate squared amplitudes; there is no interference between their amplitudes.
+
+Both $A$ and $B$ are upper triangular, with diagonals identically one and zero, respectively. Since their entries are real, column vectorization represents $\mathcal T_q$ on the full $D^2$-dimensional complex matrix space by $q(A\otimes A+B\otimes B)$. This matrix is upper triangular with every diagonal entry equal to $q$, proving the full complex spectrum and radius in (11.5). Finite-dimensional stability gives norm convergence of the Gramian series. Its terms are real symmetric positive semidefinite matrices.
+
+For full Gramian faithfulness, let $y=(y_T,y_s)\in\mathbb C^{m+1}\oplus\mathbb C$ obey $`y^*Qy=0`$. The positive word expansion (2.11) reads
+
+$$
+y^*Qy=\sum_{k\ge0}q^k\sum_{|w|=k}|f^{\mathsf T}wy|^2.
+\tag{11.8}
+$$
+
+Every individual term must vanish. The rows $f^{\mathsf T}A^tB=p(t)e_{m+1}^{\mathsf T}$ therefore give $p(t)y_s=0$ for $0\le t\le m$. Since $p$ is a nonzero degree-$m$ polynomial, it cannot vanish at all these $m+1$ distinct integers. Hence $y_s=0$. The all-$A$ rows at $j=0,\ldots,m$ now give $e_0^{\mathsf T}U^jy_T=0$. Their coefficient matrix is
+
+$$
+\mathcal B_{j\ell}=\binom j\ell\quad(0\le j,\ell\le m),\qquad
+\det\mathcal B=1,
+\tag{11.9}
+$$
+
+because it is lower triangular with diagonal one. Thus $y_T=0$, proving $Q>0$ on every complex memory direction, not only on the reset vector.
+
+For reachability, $A^jBx=(U^jv,0)$ for $0\le j\le m$. The binomial change of basis in (11.6) shows that $v,Uv,\ldots,U^mv$ span the same target space as $v,Nv,\ldots,N^mv$. In reversed target-coordinate order the latter columns form a triangular matrix with nonzero diagonal $v_m$. They are linearly independent over both $\mathbb R$ and $\mathbb C$. Together with the source vector $x$ they span all $D$ coordinates. Finally sum (11.7) in $k$ to obtain $z=Z_n(q)$. The ratio test proves finiteness for $0<q<1$, and its term $k=1$ is $q>0$. $\square$
+
+**Theorem 11.3 (Uniform real instrument with one resetting detector).** For the data of Theorem 11.2 let $G=Q^{1/2}$ be the positive real symmetric square root, and define
+
+$$
+\begin{aligned}
+\xi&=Gx/\sqrt{Z_n(q)},&\tau&=\xi\xi^{\mathsf T},\\
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},
+&J&=\xi f^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T}.
+\end{aligned} \tag{11.10}
+$$
+
+They form a homogeneous complete CP instrument on all of $M_D(\mathbb C)$, with real entries, and satisfy
+
+$$
+\begin{aligned}
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_D,
+\qquad \rho(\Phi)=q,\\
+\Psi(X)&=\tau\operatorname{Tr}(J^{\mathsf T}JX),\\
+\Psi\Phi^k(\tau)&=\gamma_k\tau,\qquad
+\gamma_k=\frac{k^nq^k}{Z_n(q)}\quad(k\ge0).
+\end{aligned} \tag{11.11}
+$$
+
+The zero branch has Choi rank exactly two; the displayed zero Kraus matrix ranks are $D$ and one. The tick branch has Choi rank exactly one and one nonzero rank-one Kraus matrix. Every positive-probability tick has normalized actual output $\tau$, a fixed pure density.
+
+Proof. The parameter mapping into Theorem 2.1 is its dimension $d=D=m+2$, raw family $K_A=\sqrt q A,K_B=\sqrt q B$, sole detector column $f=e_0$, and raw reset $x=e_{m+1}$. Both vectors are nonzero, $F=ff^{\mathsf T}\ne0$, the raw family is finite, and Theorem 11.2 establishes the required full-algebra radius $q<1$ and faithful Gramian. Its normalization is exactly $z=Z_n(q)>0$. The square root called $S$ in that theorem is $G$ here, and its normalized vector $b$ is $\xi$. All raw entries are real. The real positive-square-root conclusion of Theorem 2.1 thus applies, and $\xi^{\mathsf T}\xi=x^{\mathsf T}Qx/z=1$.
+
+In particular the Stein identity and the effects are
+
+$$
+\begin{aligned}
+Q-qA^{\mathsf T}QA-qB^{\mathsf T}QB&=F,\\
+J^{\mathsf T}J&=G^{-1}FG^{-1},\\
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J
+&=G^{-1}\big(qA^{\mathsf T}QA+qB^{\mathsf T}QB+F\big)G^{-1}=I_D.
+\end{aligned} \tag{11.12}
+$$
+
+These are operator equalities on the complex memory. The displayed real Kraus matrices act by their usual complex adjoints, equal to their transposes; their tensor amplifications preserve positivity for arbitrary complex positive inputs. Completeness makes each branch trace nonincreasing on such inputs. No restriction to real input densities is used.
+
+Writing $\Gamma(X)=GXG$, one has $\Phi=\Gamma\mathcal T_q\Gamma^{-1}$, so $\rho(\Phi)=q$ and
+
+$$
+\Phi^k(\tau)=\frac{G\mathcal T_q^k(xx^{\mathsf T})G}{Z_n(q)}.
+\tag{11.13}
+$$
+
+Theorem 2.1 and (11.7) therefore give the actual law and properness $\sum_{k\ge0}\gamma_k=1$. The outer-product form of $J$ gives the reset identity for every input matrix, hence the operator form $\Psi\Phi^k(\tau)=\gamma_k\tau$. In particular $\gamma_0=0$; the index is the number of preceding zeros, without a shift to duration $k+1$.
+
+The matrix $A$ is invertible, while $B=|(v,0)\rangle\langle e_{m+1}|$ is nonzero, rank one and nilpotent. They are linearly independent over $\mathbb C$: a nonzero scalar multiple of $A$ is invertible and cannot equal $B$. Nonzero scaling and invertible similarity preserve their ranks and independence. The dimension of their completed Kraus span is therefore exactly two. Equivalently, the zero Choi matrix is a sum of the two outer products of their vectorizations and has rank two. Both factors of $J=\xi f^{\mathsf T}G^{-1}$ are nonzero, so $J$ has matrix rank one and its single-vectorization Choi matrix has rank one. This proves the stated ranks and the pure actual reset. $\square$
+
+**Theorem 11.4 (Faithful stationary initialization and every actual cylinder).** For the completed instrument of Theorem 11.3 define
+
+$$
+\begin{aligned}
+S_a&=\sum_{j\ge a}\gamma_j,\qquad
+\mu=\sum_{k\ge0}(k+1)\gamma_k
+=1+\frac{Z_{n+1}(q)}{Z_n(q)}<\infty,\\
+\rho_*&=\frac1\mu\sum_{a\ge0}\Phi^a(\tau).
+\end{aligned} \tag{11.14}
+$$
+
+Then $\operatorname{Tr}\Phi^a(\tau)=S_a$, and $`\rho_*`$ is a real faithful mixed density satisfying $`(\Phi+\Psi)(\rho_*)=\rho_*`$ and $`\rho_*\ne\tau`$. With the ordered word convention (5.2), every stationary cylinder equals
+
+$$
+\begin{aligned}
+P(0^a1\,0^{g_1}1\cdots0^{g_r}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^r\gamma_{g_i}\quad(r\ge0),\\
+P(0^N)&=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j\quad(N\ge0).
+\end{aligned} \tag{11.15}
+$$
+
+Here $r$ counts internal gaps, so the first word has $r+1$ ones; $a,b,g_i$ are nonnegative integers. At $r=0$ the word is $0^a1\,0^b$ and the product is empty. This reparametrizes the number of ones in (1.3) and (5.7), while leaving every gap index unchanged. There is no additional all-zero stationary component.
+
+Proof. To apply Theorem 5.1, Theorem 11.3 supplies a real completed Theorem 2.1 instrument with exactly the law (1.1) for $n=2m+1$. Its remaining full zero-word reachability premise follows as follows. For each raw word $w$, the corresponding completed word satisfies
+
+$$
+L_w\xi=\frac{q^{|w|/2}Gwx}{\sqrt{Z_n(q)}}.
+\tag{11.16}
+$$
+
+The raw spanning vectors $x,A^jBx$ of Theorem 11.2 are therefore carried to a full completed span, since $q>0$ and $G$ is invertible. The ratio test gives finite $Z_{n+1}(q)$, while $Z_n(q)>0$, verifying the finite-mean parameter in (11.14). Thus every premise of Theorem 5.1 is met on the full $D$-dimensional memory, with its reset vector $b$ identified with $\xi$.
+
+For explicit identification of the tails, put $h_a=\operatorname{Tr}\Phi^a(\tau)$. Completeness and (11.11) give $h_a-h_{a+1}=\gamma_a$. Stability gives $h_a\to0$, so $h_a=S_a$ by telescoping. The series $R=\sum_{a\ge0}\Phi^a(\tau)$ converges in norm, and
+
+$$
+\operatorname{Tr}R=\sum_{a\ge0}S_a=\mu,\qquad
+\Phi(R)=R-\tau,\qquad \Psi(R)=\tau.
+\tag{11.17}
+$$
+
+This proves normalization and invariance. For a complex vector $y$, the positive expansion $`y^*Ry=\sum_{a\ge0}\sum_{|w|=a}|y^*L_w\xi|^2`$ is zero only when $y$ is orthogonal to the full reachable span. Hence $R>0$, proving full complex faithfulness of $`\rho_*`$. Every term is real symmetric. Faithfulness in dimension $D\ge4$ makes $`\rho_*`$ mixed, whereas $\tau$ is pure.
+
+The actual conditioned state after an initial zero run and the first one is
+
+$$
+\Psi\Phi^a(\rho_*)
+=\frac1\mu\sum_{c\ge0}\Psi\Phi^{a+c}(\tau)
+=\frac{S_a}{\mu}\tau.
+\tag{11.18}
+$$
+
+Each of the $r$ following internal gaps and its tick multiplies this state by $\gamma_{g_i}$ and returns it to $\tau$. The terminal $b$ zeros contribute trace $S_b$. This gives the first formula in (11.15) as an actual ordered instrument probability. For a word with no ones, applying $\Phi^N$ directly to (11.14) gives the second formula. At $N=0$ it is one because $\sum_aS_a=\mu$; thus the empty word is included. These cases exhaust all finite binary words. Completeness and invariance supply the right and left consistency identities, respectively, as in Theorem 5.1.
+
+Finally $P(0^N)\le\mu^{-1}\sum_{j\ge N}(j+1)\gamma_j\to0$, excluding an extra all-zero component. The two initialization meanings are also distinguished by the actual readouts
+
+$$
+\operatorname{Tr}\Psi(\tau)=\gamma_0=0,\qquad
+\operatorname{Tr}\Psi(\rho_*)=\mu^{-1}>0.
+\tag{11.19}
+$$
+
+The invariant-instrument and ordered-word conventions agree with [Monras–Beige–Wiesner, arXiv:1002.2337v2, p. 12, equations (25)–(27)](https://arxiv.org/pdf/1002.2337v2). The specific renewal tails, boundary factors and pure-reset identities here are the consequences of Theorems 2.1 and 5.1 with the displayed parameter mapping. $\square$
+
+**Theorem 11.5 (Uniform affirmative single-detector upper construction).** For every odd $n\ge5$ and every $0<q<1$, Definition 7.2 has an affirmative mathematical realization on $D_n=(n+3)/2$ complex memory dimensions with real fixed Kraus entries, zero Choi rank two, one rank-one tick Kraus operator, a pure actual reset, and every stationary cylinder (1.3). This is an unconditional upper construction within Definition 1.2; it uses no finite-CP growth hypothesis.
+
+Proof. Write $n=2m+1$ with $m\ge2$. Theorem 10.2 supplies the pair at that $m$, Definition 11.1 supplies exactly $m+2=D_n$ raw coordinates, Theorems 11.2–11.3 give the complete stable instrument and its exact ranks, and Theorem 11.4 gives the full stationary law. The $m+1$ target coordinates and the source coordinate are all inside those $D_n$ dimensions. No zero Kraus label is retained: the two zero terms are summed inside $\Phi$. The single tick is the map with matrix $J$, whose actual normalized output is $\tau$. There is no retained auxiliary reset register, controller or correlated external input. The complex polynomial $a_s$ of the existence proof is an auxiliary mathematical factor and introduces no physical register or dimension doubling; the final displayed matrices are real on the same complex memory as Definition 1.2.
+
+This supplies the uniform target mentioned in Definition 9.9. Its phrase “by these constructions” concerns Sections 8–9 and their quintic and septic instances; the uniform conclusion here uses the separate anchored existence theorem. Since $\gamma_0=0$, $\gamma_k>0$ for $k\ge1$, and all boundary tails are positive, (11.15) also gives exactly the Fibonacci legal visible support as in Theorem 7.1. $\square$
+
+**Definition 11.6 (Mathematical and interpretation limits of the uniform construction).** Theorem 10.1 assumes strict positivity on the entire real line and exact even degree $2m$ with $m\ge1$. Its $m=1$ range includes a cubic specialization; Section 11 concerns $m\ge2$, and neither argument here extends its statement to $m=0$ or $n=1$. Brouwer supplies existence of a fixed point, with no assertion of uniqueness, nonsingularity, convergence of iterating $\mathcal F$, or efficient coefficient computation. Corollary 10.3 is restricted to rational polynomial data and existence of some algebraic pair.
+
+The anchored telescoping argument and its uniform detector application are a repository synthesis of standard complex polynomial factorization and root-continuity arguments, Brouwer's theorem, Newton finite differences, and the CP Gramian and stationary interfaces of Theorems 2.1 and 5.1. The cited scalar factorization does not supply the anchor or its continuity proof by attribution, and the stationary-instrument reference does not replace the renewal calculation. No worldwide novelty or priority claim is made.
+
+The upper construction has an ordinary mathematical proof. General Lean proofs of the anchored fixed-point theorem, the full uniform instruments, their Gramians and stationary interfaces remain unfinished. Existing finite-word and reachable positive-semidefinite applications do not certify full finite-CP growth or this uniform instrument family. A dimension-minimum comparison continues to require the handwritten finite-CP growth and reachable-restriction/radius inputs stated in Theorem 6.2; the present upper construction supplies no unconditional dimension-minimum conclusion.
+
+The output object remains the classical stationary renewal cylinders, with a faithful mixed invariant initialization distinct from the pure actual tick reset. Real coordinates are coordinates for ordinary CP maps on $M_D(\mathbb C)$, not a physical real-Hilbert-space equivalence. No native AURIC realization, preparation map, coherent-output state, finite-precision implementation, memory-entropy bound, energy, work or control-cost conclusion follows. The uniform real single-detector existence question is addressed at the ordinary mathematical level; the physical and full-kernel goals remain open.
+
+## 追加锚（本行以下为增补区）

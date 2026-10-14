@@ -1,0 +1,14 @@
+**Theorem 10.8 (exact full-fiber joint feasibility reduction).** Under
+Assumption 10.6, for every integer $r\ge1,q\ge0$,
+
+$$
+\mathsf{InvFeas}_*(r,q)\quad\Longleftrightarrow\quad
+\mathsf{RootFeas}_*(r,q).
+\tag{NBP.10.11}
+$$
+
+Both sides have the same supplement capacity and the same fresh
+invocation upper budget. The left side includes every finite actual
+origin, every legal finite address and every full-value-dependent
+acquired/exported supplement permitted by the contract.
+

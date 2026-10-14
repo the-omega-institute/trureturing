@@ -1,0 +1,46 @@
+**Theorem 5.2 (effective actual-family recursion).** The empty cut has
+$\mathcal B(\varnothing)=\{()\}$ and the root cut has
+$\mathcal B(\{\varepsilon\})=\{(0)\}$. For every nonempty prefix-free cut
+not containing the root, define
+
+$$
+v_\alpha(p)=2+w(p^-),\qquad v_\beta(p)=1+w(p^-).
+$$
+
+Then its exact recursion is the deduplicated set union
+
+$$
+\mathcal B(P)=
+\{v_\alpha,v_\beta\}\ \cup\
+\{a\boxtimes c:a\in\mathcal B(P_L),\ c\in\mathcal B(P_R)\}.
+\tag{NBP.5.2}
+$$
+
+It effectively computes a finite family of actual vectors.
+
+**Proof.** A source root is alpha, beta or a pair. For an atomic root
+the leaf-sector formula gives the two displayed vectors. If
+$u=\langle s,t\rangle$, its child roots are present at origin zero and
+
+$$
+b_u(Lq)=b_s(q),\qquad b_u(Rq)=b_t(q).
+\tag{NBP.5.3}
+$$
+
+No time shift is added. Conversely, actual witnesses $s,t$ for any two
+suffix vectors give their joint witness $\langle s,t\rangle$, so every
+joined vector is attained. An empty suffix cut carries no coordinate
+and has its one empty vector. The cases exhaust all native sources.
+
+Suffix cuts reduce the maximum nonzero address length. Induction on that
+length with the two base cases therefore proves finiteness and gives a
+terminating finite set construction using integer-vector equality for
+deduplication. Every entry in the construction has the actual witness
+just described. This neither selects nor acquires an unknown source.
+
+Cardinal addition would be false in general. At $P=\{LL\}$ the atomic
+beta vector is $(2)$, and the pair source $\langle\alpha,\alpha\rangle$
+has that same vector. In fact the family is $\{(0),(1),(2),(3)\}$:
+the pair alternatives give $0,1,2$, and the atomic alpha gives $3$.
+Thus $K_P=4$, whereas $K_{P_L}K_{P_R}+2=3\cdot1+2=5$. $\square$
+

@@ -66,6 +66,18 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
                     + "native retained-edge theorem supplies both cut exclusion and the converse. "
                     + "This arbitrary-edge equivalence is consumed by the full T/E graft surgery "
                     + "inventory, including its absence direction."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-circle-edge-endpoint"),
+                DeclarationHandle.Create(Prefix + "native_circle_edge_endpoint"),
+                H("Both Native Edge Endpoints Remain in Their Actual Circle"),
+                StatementSource.FromAuthor(EndpointFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every m, if e is a NativeCircleEdge(z,e), each actual configuration v "
+                    + "belonging to the undirected edge e lies in Circle(z). The native generators "
+                    + "a and b both reverse the actual tuple cycle: b is a whole reversal followed "
+                    + "by an oriented rotation. Circle is closed under either action. Undirected "
+                    + "edge membership selects one of these two actual endpoints. Complete T "
+                    + "deleted-edge classification consumes this endpoint property to identify "
+                    + "the unique circle owner of any alleged retained old cut."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "These are complete native D-circle pieces for switching constructions. Their membership "
                 + "equivalences cover every configuration in the independent circle domain, with no finite search. "
@@ -103,6 +115,15 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
         Formula domain = Call("Prod", Call("Fin", Add(m, D(1))), Call("Bool"));
         return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
             All("z", Call("Configuration", m), Call("Equiv", domain, Call("CircleDomain", z))))));
+    }
+
+    private static Formula EndpointFormula()
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), v = F.Id("v"), e = F.Id("e");
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m),
+            All("v", Call("Configuration", m), All("e", Call("Sym2Type", Call("Configuration", m)),
+                Implies(And(Call("NativeCircleEdge", z, e), Call("mem", v, e)),
+                    Call("Circle", z, v)))))));
     }
 
     private static Formula ComplementFormula(bool aCut)

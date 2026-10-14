@@ -1,0 +1,126 @@
+**Theorem 14.8 (one later row has a smaller ambiguity than one pre-menu code).**
+For a promised whole later row $Y$ at $S\in\mathcal M$, let
+$z_i=c(Y|_{w_i})-ib$. Without the retained code its compatible lag answers
+are exactly the integer interval
+
+$$
+\mathcal L(Y,S)=
+\left[\max\left(\lambda_0,\max_{i\in S}(z_i-H)\right),
+             \min_{i\in S}z_i\right]\cap\mathbb Z.
+\tag{NAR.14.17}
+$$
+
+Its size is at most $H+1$, and the maximum over promised entire rows is
+exactly $H+1$. Every individually fixed, preannounced $S$ has retained
+price $H+1$, as in Theorem 13.4, but a single code chosen before selection
+of $S$ can require strictly more. The Fano menu at $H\ge2$ does so.
+
+**Proof.** A compatible history with lag $h$ has selected ages
+$a_i=z_i-h\in\{0,\ldots,H\}$ and $h\ge\lambda_0$, yielding exactly
+the inequalities in (NAR.14.17). Conversely, for any integer satisfying
+them choose these ages on $S$ and any legal ages, for example zero, on
+$I\setminus S$. Keep all other original slots at age zero. This is an
+actual source (NAR.14.1); its later selected literal trees have precisely
+the received exponents. The promised row and (NAR.14.3), including the
+complete hidden partition, give equality of the entire row $Y$.
+This proves sufficiency for every integer in the interval, not only for
+a scalar projection of $Y$.
+
+For one selected index, $z_i-H\le h\le z_i$ contains $H+1$ integers;
+intersecting such intervals and the legal-lag half-line cannot add any.
+To attain all $H+1$, take selected normalized values constantly
+$H+\lambda_0$. For each
+$h\in\{\lambda_0,\ldots,H+\lambda_0\}$ assign selected ages
+$H+\lambda_0-h$, fixing other exposed ages to zero. These histories
+share one entire later row and have all $H+1$ distinct answers. The
+maximum is therefore exact; a nonuniform or near-origin row can have
+fewer answers. A preannounced fixed region permits retaining one of
+its ages; the same uniform-row witnesses force $H+1$ labels.
+
+In the Fano menu Theorem 14.6 requires at least $H+2$ labels from one
+encoder working for every possible future region, although no one
+later row has more than $H+1$ compatible lag answers. For $H=2$ this is
+a strict label gap, with no forced rounded-bit gap: three and four
+labels both fit in two fixed-width bits. At $H=3$ the four local answers
+fit in two bits, while at least five retained labels require at least
+three bits. The local numbering of answers is available after $S,Y$;
+it cannot replace a function of the initial row exported beforehand.
+This is the causal compatibility distinction of Transport--Memory
+Completion §8.4, with a new native menu obstruction.
+
+There is no conflict with
+`minimum_repair_labels_eq_chromatic_eq_fiber_diversity` in the supplied
+[DefectGraphMinimumColoring](../../../D5/S3/ConceptDynamics/Coding/DefectGraphMinimumColoring.lean).
+That statement uses a deterministic record and target on one finite
+state domain and allows a label depending on that full state. Here the
+later record is not a deterministic function of $a$ alone: it also
+varies with future $S$ and $\ell$. Enlarging the state to
+$(a,S,\ell)$ makes the readout deterministic, but the allowed label must
+still factor through $a$, by (NAR.14.6); the supplier does not impose
+that factorization. It would allow different labels for the same $a$
+under different future choices. Unbounded lags also exceed its finite
+domain premise, and restricting to a finite witness domain does not
+remove the factorization mismatch. Thus its unrestricted fiber formula
+does not give a causally available $(H+1)$-label encoder here.
+An internal observer must preserve distinctions across the allowed
+future regions before discarding its initial row. The maximum ambiguity
+of any later record alone does not determine that retained resource.
+$\square$
+
+**Mathematical citation 14.9 (reuse, literature and conclusion boundaries).**
+The native source and row suppliers are Definitions 1.1--1.2, with
+`literalRecord`, `canonicalRow_record_iff`, `legal_values_row` and
+`rowFiberEquiv`; the right-clock supplier is `right_clock_iterate` in
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean).
+Section 11 supplies the separated-age family and acquired-row factor;
+§13.3 supplies the entire-row collision criterion and effective decoder.
+For the uniform menu of all $k$-subsets, the packing and transversal
+numbers in Theorem 14.5 are $\lfloor r/k\rfloor$ and $r-k+1$, recovering
+§13.4. Pairwise intersection is then equivalent to $2k>r$, recovering
+§13.5. Section 12 instead concerns multiple acquired chronological rows;
+its connectedness criterion is not used to infer a pre-menu code.
+The generic coloring and causal local-versus-retained distinction belong
+to [Transport--Memory Completion §§8.2 and 8.4](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#82-标签恰须切开可能混淆的前缀).
+
+The Boolean predicate used inside Theorem 14.3 is a standard proper
+simple game, in the precise terminology of Valentiner--Volić,
+[*The topology of simple games*, arXiv:2503.12578v1,
+Definitions 2.1 and 2.6](https://arxiv.org/html/2503.12578v1).
+The finite single-interval packing/piercing step inside Theorem 14.5
+is literature-attested in Gyárfás--Lehel,
+[*A Helly-type problem in trees*, printed pp. 571--573 and reference [1]
+on p. 584](https://users.renyi.hu/~gyarfas/Cikkek/02_GyarfasLehel_AHellyTypeProblemInTrees.pdf).
+Their statement credits Hajnal--Surányi's 1958 paper; no independently
+inspected theorem from that original paper or from their multi-interval
+results is required. The displayed greedy argument verifies the discrete
+public-order hypotheses here. Proper-game terminology, finite coloring
+and interval duality are reused ingredients, not new inventions.
+
+Charpenay--Le Treust--Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definitions II.1 and IV.5](https://arxiv.org/html/2211.03649v2),
+uses differing function values at a common feasible side-information
+value to define the relevant conflict. Its source model is i.i.d., its
+objective is expected prefix-code length across asymptotic blocks, and
+its rate conclusions have additional support hypotheses. Those results
+do not furnish this exact adversarial single-row alphabet price. The
+finite coding bridge is already supplied by §13.3 and Transport §8.2;
+no external rate formula is transferred.
+
+The new native deductions are the arbitrary-menu overlap criterion,
+its acquired-row encoder and decoder, the exact tuple-retention price
+and its justified spatial cases, the empty-triple-intersection
+obstruction, and the Fano causal separation from whole-row ambiguity.
+They are repo-derived ordinary-theory results with stated reusable
+ingredients, without a worldwide originality or kernel-verification
+claim. General multilevel menu prices, a converse to Theorem 14.6 and
+the exact Fano ternary optimum remain undetermined here.
+
+These are finite-family retained-label and fixed-width representation
+statements. Acquired rows, truthful export/discard, actual continuity,
+stationary capture, permissions and lawful handoff remain premises.
+Recovery of an update count does not certify source identity or history,
+perform acquisition, grant native updates or price their execution.
+No all-source menu theorem, physical or total/peak memory bound,
+working-space optimum or physical-time recovery follows.
+

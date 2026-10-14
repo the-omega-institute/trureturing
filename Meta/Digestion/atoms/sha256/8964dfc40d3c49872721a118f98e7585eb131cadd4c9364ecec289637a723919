@@ -1,0 +1,44 @@
+**Definition 2.1 (supplied orbit coordinates).** Put
+
+$$
+T_0=\alpha,\quad T_1=\beta,\quad T_{j+2}=\langle T_{j+1},T_j\rangle,
+\qquad w(s)=\#_L(s)+2\#_R(s).
+$$
+
+Use [ARH, Theorems 4.2 and 5.2][ARH] with all of (AOF.1), not just the
+designated certificate. An incompatible certificate has empty fiber.
+Otherwise $m=n+w(p)$, and the exact computed result is
+
+$$
+U=\{T_k:k\in S\},\qquad
+S=S_0\cup\bigl(\{k\ge B\}\text{ if }\tau=1\bigr),
+\quad S_0\subseteq\{e,\ldots,B-1\},
+\tag{AOF.3}
+$$
+
+where $e=1$ if $n=0$ and $p$ ends in $L$, and $e=0$ otherwise.
+Here $B\ge e$ and $\tau\in\{0,1\}$ are effective. This is the supplied
+finite/cofinite representation; no assertion that $S$ is an interval is
+needed. The $T_k$ are pairwise distinct and $\rho^aT_k=T_{k+a}$.
+
+For clarity, the supplied compiler checks the following entire predicates.
+For a nonroot endpoint $(a,s)$, reach is exactly
+$k+a\ge w(s^-)+2$; root reach is automatic. Once both endpoints are
+reached, their equality is exactly $a-w(s)=b-w(t)$, and their disequality
+is the opposite comparison. A literal is eventually branch, with sufficient
+threshold $k\ge\max(0,w(s)+2-a)$. For complete $P$, above
+
+$$
+B_P=\max\bigl(\{0\}\cup\{w(p^-)+2:p\in P,\ p\ne\varepsilon\}\bigr)
+\tag{AOF.4}
+$$
+
+its row is the entire cut trie with holes at $P$ and partition by equal
+weights. It is compared with every component of $R$. For incomplete $P$,
+choose $r$ incomparable with every cut; at
+$k\ge w(r)+\operatorname{ht}(C)+2$ the surviving concrete subtree at $r$
+has height exceeding the old exterior $C$, so that old row is false.
+Below a common threshold, every complete old row, literal and guarded sign
+is evaluated exactly on its known finite candidate $T_k$. Repeated
+conditions are retained. These are the interfaces of ARH §5.
+

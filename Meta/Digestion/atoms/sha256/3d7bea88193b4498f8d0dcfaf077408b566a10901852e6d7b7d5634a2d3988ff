@@ -1,0 +1,46 @@
+**Proof, necessity.** Restrict any feasible acquired encoder and reader to
+the actual finite origins $u_0,\ldots,u_4$ of Proposition 9.3. For each
+used supplement value $s$, put
+$H_s=\{h:\sigma(u_h)=s\}$. The nonempty $H_s$ partition five indices
+into at most $r$ parts, even if $\sigma$ depends on every acquired current
+class value. All initial reader inputs are identical within one part.
+Its required rows $R_h$ are different, so it must distinguish all indices
+in that part using its native replies.
+
+At any chosen address, Proposition 9.4 supplies at most two possible
+replies on the witnesses. Encode its default reply by zero and its
+possible different reply by one, using zero alone in the constant case.
+Given the address, this bit reconstructs the entire native reply. At an
+adaptive history, the next address is determined by the common initial
+state and reconstructed previous replies, so the correspondence holds
+at every subsequent query, not only along a designated path. Histories
+with no realizing witness can be assigned constant zero questions.
+After the reader stops, pad the mathematical transcript to length $q$
+with constant zeros; these padding symbols are not native invocations.
+
+The resulting length-$q$ transcripts are injective on $H_s$. If two
+were identical, deterministic reconstruction would give the same native
+history and stopping decision for both. Early stopping adds no extra
+symbol: once that common history determines a stop, both candidates
+stop there with the same output. This contradicts the different rows.
+The argument accommodates absence and repeated invocations through the
+all-address bridge and counts every real invocation before padding.
+
+Apply the existing
+[BinaryProtocolDepthLowerBound](../../../D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.lean),
+`adaptive_binary_protocol_depth_lower_bound`, to the finite source type
+$H_s$, constant already-known concept, target $h\mapsto R_h$ and the
+adaptive binary transcript just constructed. Its worst fiber diversity
+is $|H_s|$, so it gives $\lceil\log_2|H_s|\rceil\le q$, equivalently
+$|H_s|\le2^q$. Summing over the nonempty parts yields
+
+$$
+5=\sum_s|H_s|\le |\{s:H_s\ne\varnothing\}|\,2^q\le r\,2^q.
+\tag{NBP.9.10}
+$$
+
+This uses the existing binary identification capacity, not a new generic
+counting theorem. The five witnesses are alternative fixed sources with
+their own truthful acquisition and export. No source changes during a
+reading run, and no equality of discarded acquisition records is assumed.
+

@@ -1,0 +1,30 @@
+**Proposition 12.8 (canonical boundary-density interpretation of the right
+clock).** Reuse [Boundary Geometry Continuation IV, Definition 113.3 and
+Theorems 113.4--113.5](https://github.com/the-omega-institute/trureturing/blob/30389d09d00d57c6887798af0c6aa3363c0240b8/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md).
+Let $\varphi=(1+\sqrt5)/2$, $\Omega=\{L,R\}^{\mathbb N}$ and let the
+Bernoulli probability satisfy $M([p])=\varphi^{-s(p)}$, with $s$ as in
+Definition 11.2. For each finite $u$, write $W(u)=a(u)+\varphi b(u)$
+for its alpha/beta leaf scale. On each original leaf cylinder $[p]$,
+with label $\ell_p=0$ for alpha and $1$ for beta, use the canonical
+locally constant representative
+
+$$
+f_u(\omega)=\frac{\varphi^{s(p)+\ell_p}}{W(u)}
+\quad(\omega\in[p]),\qquad \nu_u=f_u M.
+\tag{NAR.12.12}
+$$
+
+For every finite $u\in\mathcal T$ and every finite address $q$, reached
+or absent, the exact identity is
+
+$$
+\varphi^{J^c_q(u)}=W(u)f_u(qR^\infty).
+\tag{NAR.12.13}
+$$
+
+The locally constant representative is uniquely determined by the
+attained measure value $\nu_u$. Arbitrary almost-everywhere representatives
+and replacement of $J^c$ by $J^\nu$ do not satisfy this identity in general.
+It gives a semantic interpretation, without supplying the decoder an
+unacquired global measure, scale or point-evaluation oracle.
+

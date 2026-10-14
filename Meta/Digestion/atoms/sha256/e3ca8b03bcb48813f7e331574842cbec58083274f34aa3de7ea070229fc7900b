@@ -1,0 +1,20 @@
+**Proof.** Theorem 2.1 and the canonical renaming in Definition 2.2 prove
+(NAR.3.1). If $L_C$ is empty, the first next row is independent of the
+discarded old alpha label. In either case, its alpha label is known from
+the right births, so its conditional augmentation is also determined.
+Iteration proves sufficiency for every finite $n$ by induction.
+
+For necessity when $L_C$ is nonempty, choose one left birth $\ell$.
+For each old class $b$ compare $\ell$ with $p_b$ in the next partition.
+It is linked exactly when $A_P(u)=b$. Consequently two different class
+labels, or a class label and $\bot$, give different next partitions.
+If there are no old classes, both labels must be $\bot$ and this implication
+is vacuous. Equality of all future rows implies equality at $n=1$.
+These observations prove both equivalences. $\square$
+
+The generic greatest stable-core construction is supplied by
+[Atlas Stable Core Holonomy, Theorem 2.1 and Mathematical Citation 2.2](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md).
+Here (NAR.3.2) computes its row-level future distinction for this particular
+source, fixed cut and substitution. It does not identify that kernel with
+the kernel for all native queries or for a larger action menu.
+
