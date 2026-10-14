@@ -1,0 +1,101 @@
+**Theorem 2.1 (Faithful stable Gramian completion with several detector rows).** Let
+
+$$
+\mathcal T(X)=\sum_{\alpha=1}^{s}K_\alpha X K_\alpha^*,\qquad
+F=\sum_{i=1}^{\ell}f_if_i^*\ne0,
+\qquad F\ge0,\qquad \rho(\mathcal T)<1, \tag{2.1}
+$$
+
+on $M_d(\mathbb C)$, with a finite Kraus family and finitely many detector columns. The spectral radius is that of the complex linear superoperator on the full matrix algebra. Write $\mathcal T^*(Y)=\sum_\alpha K_\alpha^*YK_\alpha$ for its trace dual. Suppose
+
+$$
+Q=\sum_{k\ge0}(\mathcal T^*)^k(F)>0. \tag{2.2}
+$$
+
+For any nonzero raw reset vector $x$, define
+
+$$
+\begin{aligned}
+S&=Q^{1/2},& z&=x^*Qx,& b&=Sx/\sqrt z,& \tau&=bb^*,\\
+L_\alpha&=SK_\alpha S^{-1},&
+J_i&=bf_i^*S^{-1},&
+E&=S^{-1}FS^{-1}.
+\end{aligned} \tag{2.3}
+$$
+
+These operators form the complete instrument (1.4), with
+
+$$
+\Psi(X)=\tau\operatorname{Tr}(EX),\qquad
+\operatorname{rank}_{\rm Choi}\Psi=\operatorname{rank}F,\qquad
+\rho(\Phi)=\rho(\mathcal T)<1. \tag{2.4}
+$$
+
+Every positive-probability tick has normalized output $\tau$, a pure density, even when $F$ has rank greater than one. Its actual gap probabilities and survival probabilities are
+
+$$
+\begin{aligned}
+\gamma_k&=\operatorname{Tr}\Psi\Phi^k(\tau)
+=\frac{\operatorname{Tr}[F\mathcal T^k(xx^*)]}{z},\\
+\sum_{k\ge0}\gamma_k&=1,\qquad
+\operatorname{Tr}\Phi^a(\tau)=\sum_{k\ge a}\gamma_k.
+\end{aligned} \tag{2.5}
+$$
+
+If the raw matrices and vectors are real, so are $Q,S,b,L_\alpha,J_i$. The instrument is completely positive and complete for every complex positive input, including inputs with nonreal coherences.
+
+Proof. Choose $r$ with $\rho(\mathcal T)<r<1$. Finite-dimensional Jordan estimates bound powers of $\mathcal T$ and its dual by $Cr^k$ in any fixed matrix-space norm, after increasing $C$. Consequently (2.2) converges in norm and is a sum of positive operators. Shifting the convergent series gives
+
+$$
+Q-\mathcal T^*(Q)=F. \tag{2.6}
+$$
+
+It is the unique solution: if $H=\mathcal T^*(H)$, iteration and stability give $H=0$. Positivity alone would allow a singular solution. The strict positivity in (2.2) is needed to obtain invertible $S$, positive scalar $z$, and $\|b\|=1$.
+
+The normalized zero and tick effects satisfy
+
+$$
+\begin{aligned}
+\sum_\alpha L_\alpha^*L_\alpha
+&=S^{-1}\mathcal T^*(Q)S^{-1}=I-E,\\
+\sum_iJ_i^*J_i
+&=S^{-1}\Big(\sum_if_if_i^*\Big)S^{-1}=E,\\
+\sum_iJ_iXJ_i^*
+&=bb^*\sum_if_i^*S^{-1}XS^{-1}f_i
+=\tau\operatorname{Tr}(EX).
+\end{aligned} \tag{2.7}
+$$
+
+Thus $0\le E\le I$. Both branches are trace nonincreasing on positive inputs, their sum preserves trace, and a tick with nonzero probability resets to $\tau$. Each nonzero $J_i$ has matrix rank one; these operators need not be scalar multiples of one another. Indeed the map $g\mapsto bg^*S^{-1}$ is injective as a conjugate-linear map, because $b\ne0$ and $S$ is invertible. Hence the Kraus span has dimension $\dim\operatorname{span}\{f_i\}=\operatorname{rank}F$, proving the Choi-rank assertion. Equivalently, in the input-output Choi convention the tick Choi matrix is $E^{\mathsf T}\otimes\tau$, with rank $\operatorname{rank}E$.
+
+For $\Gamma(X)=SXS$, the invertible linear similarity
+
+$$
+\Phi=\Gamma\mathcal T\Gamma^{-1},\qquad
+\Phi^k(\tau)=\frac{S\mathcal T^k(xx^*)S}{z} \tag{2.8}
+$$
+
+proves stability and the first identity of (2.5). The scalar normalization is exactly
+
+$$
+z=x^*Qx=\sum_{k\ge0}\operatorname{Tr}[F\mathcal T^k(xx^*)]. \tag{2.9}
+$$
+
+No raw trace-contraction hypothesis was used. The completed branches, rather than the raw $K_\alpha$, are the instrument. If $s_a=\operatorname{Tr}\Phi^a(\tau)$, completeness gives $s_a-s_{a+1}=\gamma_a$. Stability gives $s_a\to0$, so telescoping yields the survival identity in (2.5). In particular a tick occurs eventually with probability one; there is no mass hidden at an infinite first gap.
+
+For the real assertion, each term of (2.2) is real symmetric. If a real symmetric matrix $Q$ is positive definite on real vectors, then for $y=u+iv$ with $u,v$ real,
+
+$$
+y^*Qy=u^{\mathsf T}Qu+v^{\mathsf T}Qv, \tag{2.10}
+$$
+
+because the imaginary cross terms cancel. This is positive for every nonzero complex $y$. The same identity with nonstrict inequalities gives the corresponding positive-semidefinite statement. Thus real faithfulness proves complex Hermitian faithfulness and invertibility. Real orthogonal spectral decomposition constructs the unique positive square root $S$ as a real symmetric matrix. Formula (2.3) is then real. Nevertheless every Kraus expression acts on all of $M_d(\mathbb C)$; its amplifications are sums of conjugations by $L_\alpha\otimes I$ or $J_i\otimes I$ and preserve positivity. Equation (2.7) is an operator identity, not a calculation restricted to real diagonal states. This proves complete positivity and trace completeness on the full complex input cone. $\square$
+
+Within this theorem, there is a useful exact observability test. For a word $w=(\alpha_1,\ldots,\alpha_k)$ set $K_w=K_{\alpha_k}\cdots K_{\alpha_1}$; the empty word is the identity. Expanding the CP power gives
+
+$$
+y^*Qy=\sum_{k\ge0}\sum_{|w|=k}\sum_i|f_i^*K_wy|^2. \tag{2.11}
+$$
+
+Thus $Q>0$ if and only if no nonzero memory vector is invisible to every word and every detector row. A positive value of $z$ for one reset vector does not by itself prove this full-memory condition. The constructions below establish it directly.
+

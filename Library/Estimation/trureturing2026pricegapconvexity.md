@@ -7425,3 +7425,146 @@ still has no supplied sign. The complete strict comparison below
 $R_0-\delta$ or the applicable $R_\eta-\delta$, all-integer Robin
 inequality and RH remain unproved. No literature-originality claim or
 new generic formal declaration is made.
+
+## Two sieve substitutions leave the finite prime test unpaid
+
+Retain FH1--FH4's literal weight, complete common horizon, all original
+full windows and every maximizing tie, including $\Theta=1$. The
+following are applications of published sieve hypotheses to that same
+weight. They neither reprove a sieve theorem nor establish FH4, a
+bilinear bound or RH. Write $U=\mathsf U_X$, $W=\mathsf W_X$, and put
+
+$$
+b=\min_tB(t),\qquad C=\max_tB(t),\qquad
+\Omega=\int_{t_0}^{t_m}B(t)^{-1/2}dt,\qquad
+S=\int_{t_0}^{t_m}\sqrt{B(t)}\log B(t)dt.
+$$
+
+The extrema may be enlarged over the original endpoint ties. The source
+already gives $b/\ell_X\to\infty$ and $\log C/\log U\to0$.
+Use MR1's existing variation and MR2's unchanged reference on $[0,U]$:
+$\operatorname{TV}(W)\le(1+a)\Omega$,
+$0\le W\le\Omega$ and $\int_0^UW=\mathsf P_X$.
+The constant extension down to zero retains the actual low-clock
+plateau. Classical bounded-variation rectangle quadrature then has
+error $O_a(\Omega)$ on every free divisor lattice and its interval
+restrictions. This is the existing free-integer interface; it is not
+an estimate for an arithmetic coefficient in the inner sum.
+
+### The whole-horizon growth hypothesis fails
+
+John Friedlander and Henryk Iwaniec, *Asymptotic sieve for primes*,
+Annals of Mathematics 148 (1998), 1041--1065,
+[arXiv:math/9811186v1](https://arxiv.org/pdf/math/9811186v1),
+version 1 November 1998, Theorem 2 on PDF p.19, explicitly assumes
+(1.4) on PDF p.1. With its notation replaced by $\mathcal A$, that
+condition is
+
+$$
+\mathcal A(x)\gg\mathcal A(\sqrt x)(\log x)^2,
+\qquad \mathcal A(y)=\sum_{n\le y}a_n.
+$$
+
+Consider the direct substitution $x=U$, $a_n=W(n)$ for $1\le n\le U$,
+and zero otherwise. Including $n=1$ changes no von Mangoldt sum.
+Quadrature and FH3's continuum reference give
+$\mathcal A(U)=\mathsf P_X+O_a(\Omega)$. Moreover
+
+$$
+\frac{\mathsf P_X}{S}
+\ge\log\frac{\log U}{\log C}-\frac1{\log U}\longrightarrow\infty,
+\qquad
+\frac{\Omega}{S}\le\frac1{b\log b}\longrightarrow0.
+$$
+
+Indeed the omitted term in the first inequality is
+$(1-a)\int\sqrt B\,dt/S\ge0$. Eventually $C<\sqrt U$, so on
+$[\sqrt U,U]$ the exact weight is $S[\lambda(r)-\lambda(U)]$.
+Consequently
+
+$$
+\begin{aligned}
+\mathcal A(U)-\mathcal A(\sqrt U)
+&=S\left[\log2-\frac{1-U^{-1/2}}{\log U}\right]+O_a(\Omega),\\
+\frac{\mathcal A(\sqrt U)}{\mathcal A(U)}&\longrightarrow1.
+\end{aligned}
+$$
+
+Thus no uniform positive constant makes (1.4) hold along this
+whole-horizon substitution. This rules out that direct application,
+not all uses of the asymptotic sieve. Localizing the weight to separate
+blocks can change the growth ratio; the theorem's distribution,
+coefficient-size and bilinear hypotheses, its absolute $M_XL_X$ error
+and any required uniformity over the moving family would still need
+proof. Neither this source's analytic proof nor its other hypotheses
+are certified here.
+
+### The paid divisor level gives no positive linear lower main term
+
+D. R. Heath-Brown, *Lectures on Sieves*,
+[arXiv:math/0209360v1](https://arxiv.org/pdf/math/0209360v1),
+version 25 September 2002, Corollary 5.1 on PDF p.36, records the
+Rosser--Iwaniec dimension-one lower sieve. In its notation
+$s=\log y/\log z$, and PDF p.27 defines $f(s)=0$ for $0<s\le2$.
+The corollary retains both the sieve asymptotic error and the sum of
+divisor remainders. The original Iwaniec theorem is cited through
+these authored lectures, without a new proof or Lean verification.
+Its pointwise sieve-weight inequalities extend to the nonnegative real
+weights $W(n)$ by finite linearity. For $\omega(p)=1$, the classical
+Mertens estimate
+$\sum_{w\le p<z}(\log p)/p=\log(z/w)+O(1)$ supplies the stated
+dimension-one density hypothesis.
+
+For example, the existing free-lattice variation bound pays the level
+
+$$
+D=\left\lfloor\frac{M_X\sqrt b}{(\log U)^2}\right\rfloor,
+\qquad
+\sum_{d<D}|r_d|\ll_a D\Omega
+\ll_a\frac{M_XL_X}{(\log U)^2}=o(M_XL_X)
+$$
+
+for the divisor remainders of $W$ restricted to any interval
+$(R,2R]\cap[1,U]$. Its continuum main term is the integral of that
+same restricted weight divided by $d$; the local density is $1/d$.
+This only reuses the elementary free-integer payment. Since
+$\log U=(\log X)^{O(1)}$ and
+
+$$
+\frac{\ell_X}{M_X^2}
+=\frac d8\frac{X^\eta}{\log X}\longrightarrow\infty,
+$$
+
+one has $D\to\infty$ and $D/b\to0$ on the original fixed-parameter
+source. Here $d$ in $\ell_X$ is the original source constant, distinct
+from the divisor index in the preceding sum.
+
+For $R\ge b$, take $y=D$ and $z=\sqrt{2R}+1$ in the lower sieve.
+Every surviving integer in the restricted interval is prime. The
+strict inequality $z>\sqrt{2R}$ matters because the source sieves by
+$p<z$; equality could leave the endpoint square when $\sqrt{2R}$ is
+prime. Nevertheless
+
+$$
+0<s=\frac{\log D}{\log z}<2,
+\qquad f(s)=0
+$$
+
+at this paid level. Hence the corollary has no positive lower main
+coefficient here. The weighted prime sum is not asserted to vanish,
+and neither its sieve asymptotic error nor a composite-removal cost
+at a smaller $z$ has been paid by this observation. For the exact
+prime-log weight $W(n)\log n$, the interval-restricted variation is
+$O_a(\Omega\log U)$. On each individual restricted block, the same $D$
+therefore pays its divisor remainder by
+$O_a(M_XL_X/\log U)=o(M_XL_X)$; $s$ and its zero lower main coefficient
+are unchanged. No $o(M_XL_X)$ sum of these per-block allowances over the
+full horizon is claimed. FP1--FP5's separate higher-prime-power payment
+is unchanged. Stronger divisor information or a different arithmetic
+argument is not excluded.
+
+These two parameter correspondences locate missing hypotheses for
+the actual FH test. They supply no replacement for the unchanged
+same-source signed comparison, BV/LC account or strict margin. The
+finite prime lower bound and RH remain unproved; no literature
+originality or kernel verification is claimed.

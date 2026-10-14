@@ -1,0 +1,27 @@
+**Theorem 9.7 (Full septic stationary interface and persistent memory count).** Define from the actual gap probabilities in (9.19)
+
+$$
+S_a=\sum_{j\ge a}\gamma_j,\qquad
+\mu=\sum_{k\ge0}(k+1)\gamma_k=1+\frac{Z_8(q)}{Z_7(q)},\qquad
+\rho_*^{(7)}=\frac1\mu\sum_{a\ge0}\Phi^a(\tau). \tag{9.21}
+$$
+
+Then $\rho_*^{(7)}>0$ is a real mixed invariant density, $\operatorname{Tr}\Phi^a(\tau)=S_a$, and the actual binary-word probabilities from this density are
+
+$$
+\begin{aligned}
+P(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i}\quad(r\ge1),\\
+P(0^N)&=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j\quad(N\ge0).
+\end{aligned} \tag{9.22}
+$$
+
+Here every boundary run and internal gap is a nonnegative integer; $r$ is the number of ones and $k$ in $\gamma_k$ is the number of preceding zeros, not the duration $k+1$. No persistent register beyond $\mathbb C^5$ is required.
+
+Proof. Theorem 5.1 requires a real completed Theorem 2.1 instrument, the exact law (1.1), and full zero-word reachability from its normalized reset. Theorem 9.6 establishes the first two premises with $n=7$. For the third, each completed word satisfies $L_w\xi=q^{|w|/2}Gwx/\sqrt{Z_7(q)}$. Since $q>0$ and $G$ is invertible, the five raw spanning vectors in Theorem 9.5 give a full completed span. The finite positive $Z_7(q)$ and finite $Z_8(q)$ give $0<\mu<\infty$. All hypotheses of Theorem 5.1 therefore hold and give (9.21)–(9.22) as the probabilities of the actual maps, with the state ordering in (5.2).
+
+In particular the series in (9.21) converges in norm, has trace $\mu$ before normalization, and is faithful by the full reachable span. Its invariance is that of $\Phi+\Psi$, not of the zero branch separately. Formula (9.22) at $r=1$ has an empty product; at $N=0$ it gives the empty-word probability one. It covers every finite all-zero cylinder and tends to zero as $N\to\infty$, so there is no hidden all-zero stationary component. Both boundary survival factors are retained, not replaced by internal gap probabilities.
+
+The raw source vector is $x=e_4$, the actual post-tick vector is $\xi=Gx/\sqrt{Z_7(q)}$, and the stationary initialization is the different density $\rho_*^{(7)}$. Faithfulness in dimension five makes the latter mixed; also $\operatorname{Tr}\Psi(\tau)=0$ whereas $\operatorname{Tr}\Psi(\rho_*^{(7)})=1/\mu>0$. The four target coordinates and the source coordinate are all included in $D=5$. Kraus indices are summed, with neither a stored zero-branch label nor an extra persistent reset or controller register. Any retained auxiliary affecting future steps would count as memory under Definition 1.2. $\square$
+
