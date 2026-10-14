@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e18a5223f21a6631b772c61155a1d26b02ef5763d2ba8e6b4f4df221d674a1c
+  normalized_sha256: sha256:7e18a5223f21a6631b772c61155a1d26b02ef5763d2ba8e6b4f4df221d674a1c
+cas_ref: sha256:7e18a5223f21a6631b772c61155a1d26b02ef5763d2ba8e6b4f4df221d674a1c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- 干预确实替换机制，而不是仅条件化于事件 \(X_I=x_I\)。：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 1e1af9dd0c0396e297ace4c266c001032dd0540e7d9aebc867185f7964f50b5d
+    next_atom_id: 5327af759d453ac3e95995e500bb889300bbc88fce8fae7d0d95c046debd716e
