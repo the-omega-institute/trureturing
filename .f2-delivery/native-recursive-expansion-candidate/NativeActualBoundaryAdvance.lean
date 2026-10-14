@@ -211,6 +211,177 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
   exact ⟨pieces, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
     hrawinv, hrawcuts, hrawcard, hboundary, hpairs, hrestoreNotDeleted'⟩
 
+/-- The primary old order restores the first Q zero cut of the same
+actual current joint partition. This is the other half of the simultaneous
+boundary step; its new endpoints are l1/r1 and its restoration occurs on
+the z side of the distinguished old path. Its same E/O template is earned
+from the actual mirrored update and literal index shift. -/
+theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk : 3 ≤ k)
+    (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (odd : Bool)
+    {base x ℓ z y ℓ₀ r₀ ℓ₁ r₁ : ParentVertex F A u hbase}
+    (c : (ParentGraph F A u hbase).Walk base base) (hc : c.IsHamiltonianCycle)
+    (d : (ParentGraph F A u hbase).Walk ℓ z)
+    (prefix : (ParentGraph F A u hbase).Walk x ℓ)
+    (old : (ParentGraph F A u hbase).Walk x y)
+    (holdPath : old.IsPath)
+    (hrouteNodup : (prefix.append d).support.Nodup)
+    (hrouteKeep : ∀ e ∈ (prefix.append d).edges, e ∈ old.edges)
+    (oldrest jointrest : List (Piece (ParentGraph F A u hbase)))
+    (holdNodup : (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup)
+    (holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
+      (d.support ++ jointrest.flatMap fun p => p.walk.support))
+    (K H : Finset (Sym2 (ParentVertex F A u hbase)))
+    (hdisjoint : Disjoint K H)
+    (restored deleted : List (Sym2 (ParentVertex F A u hbase)))
+    (hrestored : restored = (H.erase s(ℓ₀, r₀)).toList)
+    (hdeletedList : deleted = K.toList)
+    (hrestoreCut : s(ℓ₀, r₀) ∈ H)
+    (hdeleted : (deleted.map (Sym2.map Subtype.val)).toFinset =
+      markedCuts (nextFrame F A u hbase))
+    (holdEdges : (old.edges ++ oldrest.flatMap fun p => p.walk.edges).Perm
+      (d.edges ++ (jointrest.flatMap fun p => p.walk.edges) ++ restored))
+    (new₀ : (ParentGraph F A u hbase).Walk z ℓ₀)
+    (new₁ : (ParentGraph F A u hbase).Walk r₀ ℓ₁)
+    (new₂ : (ParentGraph F A u hbase).Walk r₁ ℓ)
+    (hcurrentSupport : c.support.tail.Perm
+      (new₀.support ++ new₁.support ++ new₂.support ++
+        jointrest.flatMap fun p => p.walk.support))
+    (hcurrentJoint : (new₀.edges ++ new₁.edges ++ new₂.edges ++
+        (jointrest.flatMap fun p => p.walk.edges)).Perm
+      (c.edges.filter fun e => decide (e ∉ K ∪ H)))
+    (hcurrentCuts : ∀ e ∈ K ∪ H, e ∈ c.edges)
+    (hx : x.val = leftPort F 0) (hy : y.val = leftPort F (k - 1))
+    (hℓ₁ : ℓ₁.val = leftPort (nextFrame F A u hbase) 0)
+    (hr₁ : r₁.val = rightPort (nextFrame F A u hbase) 0)
+    (hrestBoundary : ∀ p ∈ oldrest, ∃ a b : Port k,
+      p.start.val = specialPort F a ∧ p.finish.val = specialPort F b ∧
+        (if odd then oddBoundary k else evenBoundary k) (code a) (code b)) :
+    ∃ pieces : List (Piece (ParentGraph F A u hbase)),
+      (∀ p ∈ pieces, p.walk.IsPath) ∧
+      (∀ v, (pieces.flatMap fun p => p.walk.support).count v = 1) ∧
+      (pieces.flatMap fun p => p.walk.support).Perm c.support.tail ∧
+      (pieces.flatMap fun p => p.walk.edges).Perm
+        (c.edges.filter fun e => decide (e ∉ deleted.toFinset)) ∧
+      (∀ e, e ∈ (pieces.flatMap fun p => p.walk.edges) ↔
+        e ∈ c.edgeSet ∧ e ∉ deleted.toFinset) ∧
+      (∀ e ∈ deleted.toFinset, e ∈ c.edgeSet) ∧ pieces.length = deleted.toFinset.card ∧
+      (∀ e : Sym2 (Configuration m),
+        e ∈ (pieces.flatMap fun p => p.walk.edges).map (Sym2.map Subtype.val) ↔
+          e ∈ c.edges.map (Sym2.map Subtype.val) ∧
+            e ∉ markedCuts (nextFrame F A u hbase)) ∧
+      (∀ e ∈ markedCuts (nextFrame F A u hbase),
+        e ∈ c.edges.map (Sym2.map Subtype.val)) ∧
+      pieces.length = (markedCuts (nextFrame F A u hbase)).card ∧
+      (∀ p ∈ pieces, ∃ a b : Port (k + 1),
+        p.start.val = specialPort (nextFrame F A u hbase) a ∧
+        p.finish.val = specialPort (nextFrame F A u hbase) b ∧
+        (if odd then oddBoundary (k + 1) else evenBoundary (k + 1)) (code a) (code b)) ∧
+      endpointPairs pieces =
+        (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) ∪ {s(ℓ₁, y), s(r₁, x)} ∧
+      s(ℓ₀, r₀) ∉ deleted.toFinset := by
+  classical
+  obtain ⟨tail, hfactor, _⟩ :=
+    actual_rooted_path_is_prefix (prefix.append d)
+      (SimpleGraph.Walk.IsPath.mk' hrouteNodup) old holdPath hrouteKeep
+  have hold : old = prefix.append (d.append tail) := by
+    simpa only [SimpleGraph.Walk.append_assoc] using hfactor
+  obtain ⟨hcurrentEdges, hrestoreNotDeleted, _⟩ :=
+    actual_joint_half_cut_inventory c hc.isCycle
+      (new₀.edges ++ new₁.edges ++ new₂.edges ++
+        (jointrest.flatMap fun p => p.walk.edges)) K H hdisjoint
+      hcurrentJoint hcurrentCuts s(ℓ₀, r₀) hrestoreCut
+  rw [← hrestored, ← hdeletedList] at hcurrentEdges
+  have hrestore : (ParentGraph F A u hbase).Adj ℓ₀ r₀ :=
+    c.adj_of_mem_edges (hcurrentCuts _ (Finset.mem_union.mpr (Or.inr hrestoreCut)))
+  have hrestoreNotDeleted' : s(ℓ₀, r₀) ∉ deleted.toFinset := by
+    simpa only [hdeletedList, List.mem_toFinset, Finset.mem_toList] using hrestoreNotDeleted
+  obtain ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts,
+      hcard, hpairs, _, _⟩ :=
+    actual_single_order_first_cut_boundary_update c hc d prefix tail old hold oldrest jointrest
+      holdNodup holdSupport restored deleted holdEdges new₀ new₁ new₂ hrestore
+      hcurrentSupport hcurrentEdges
+  let pieces : List (Piece (ParentGraph F A u hbase)) :=
+    [⟨ℓ₁, y, boundary₀⟩, ⟨r₁, x, boundary₁⟩] ++ oldrest
+  let edgeVal : Sym2 (ParentVertex F A u hbase) → Sym2 (Configuration m) :=
+    Sym2.map Subtype.val
+  have heinj : Function.Injective edgeVal := Sym2.map.injective Subtype.val_injective
+  have hcutimage : deleted.toFinset.image edgeVal = markedCuts (nextFrame F A u hbase) := by
+    rw [← hdeleted]
+    ext e
+    simp only [edgeVal, Finset.mem_image, List.mem_toFinset, List.mem_map]
+  have hrawinv (e : Sym2 (Configuration m)) :
+      e ∈ (pieces.flatMap fun p => p.walk.edges).map edgeVal ↔
+        e ∈ c.edges.map edgeVal ∧ e ∉ markedCuts (nextFrame F A u hbase) := by
+    rw [← hcutimage]
+    exact mapped_complement_inventory edgeVal heinj _ c.edges deleted.toFinset
+      (by intro f; simpa only [SimpleGraph.Walk.mem_edgeSet] using hinv f) e
+  have hrawcuts (e : Sym2 (Configuration m)) (he : e ∈ markedCuts (nextFrame F A u hbase)) :
+      e ∈ c.edges.map edgeVal := by
+    rw [← hcutimage] at he
+    obtain ⟨f, hf, hfe⟩ := Finset.mem_image.mp he
+    exact List.mem_map.mpr ⟨f,
+      by simpa only [SimpleGraph.Walk.mem_edgeSet] using hcuts f hf, hfe⟩
+  have hrawcard : pieces.length = (markedCuts (nextFrame F A u hbase)).card := by
+    rw [← hcutimage, Finset.card_image_of_injective _ heinj]
+    exact hcard
+  have hxnext : x.val = leftPort (nextFrame F A u hbase) 1 :=
+    hx.trans (native_marked_index_shift hm F A u hbase 0).2.symm
+  have hynext : y.val = leftPort (nextFrame F A u hbase) k := by
+    have hs := (native_marked_index_shift hm F A u hbase (k - 1)).2
+    rw [show k - 1 + 1 = k by omega] at hs
+    exact hy.trans hs.symm
+  have hadvance (a b : RawPort) :
+      advance k (if odd then oddBoundary k else evenBoundary k) a b →
+        (if odd then oddBoundary (k + 1) else evenBoundary (k + 1)) a b := by
+    cases odd
+    · exact (advance_even_boundary k hk a b).mp
+    · exact (advance_odd_boundary k hk a b).mp
+  have hboundary (p : Piece (ParentGraph F A u hbase)) (hp : p ∈ pieces) :
+      ∃ a b : Port (k + 1),
+        p.start.val = specialPort (nextFrame F A u hbase) a ∧
+        p.finish.val = specialPort (nextFrame F A u hbase) b ∧
+        (if odd then oddBoundary (k + 1) else evenBoundary (k + 1)) (code a) (code b) := by
+    simp only [pieces, List.mem_append, List.mem_cons, List.mem_singleton] at hp
+    rcases hp with (rfl | rfl) | hp
+    · refine ⟨(0, 1), (⟨k, by omega⟩, 1), ?_, ?_, hadvance _ _ ?_⟩
+      · simpa only [specialPort, Fin.val_zero, Fin.val_one, Nat.one_ne_zero, if_false] using hℓ₁
+      · simpa only [specialPort, Fin.val_mk, Fin.val_one, Nat.one_ne_zero, if_false] using hynext
+      · exact Or.inr (Or.inl (Or.inl ⟨rfl, rfl⟩))
+    · refine ⟨(0, 0), (1, 1), ?_, ?_, hadvance _ _ ?_⟩
+      · simpa only [specialPort, Fin.val_zero, if_true] using hr₁
+      · simpa only [specialPort, Fin.val_one, Nat.one_ne_zero, if_false] using hxnext
+      · exact Or.inr (Or.inr (Or.inl ⟨rfl, rfl⟩))
+    · obtain ⟨a, b, hs, hf, hb⟩ := hrestBoundary p hp
+      have hnot : ¬ pair (code a) (code b) (k - 1, 1) (0, 1) := by
+        intro hpair
+        have hpx : x ∈ p.walk.support := by
+          rcases hpair with ⟨_, hb⟩ | ⟨ha, _⟩
+          · have hbi : b.1.val = 0 := congrArg Prod.fst hb
+            have hbs : b.2.val = 1 := congrArg Prod.snd hb
+            have hf' : p.finish = x := Subtype.ext (hf.trans (by
+              simpa only [specialPort, hbi, hbs, Nat.one_ne_zero, if_false] using hx.symm))
+            exact hf' ▸ p.walk.end_mem_support
+          · have hai : a.1.val = 0 := congrArg Prod.fst ha
+            have has : a.2.val = 1 := congrArg Prod.snd ha
+            have hs' : p.start = x := Subtype.ext (hs.trans (by
+              simpa only [specialPort, hai, has, Nat.one_ne_zero, if_false] using hx.symm))
+            exact hs' ▸ p.walk.start_mem_support
+        exact List.disjoint_left.mp (List.nodup_append'.mp holdNodup).2.2
+          old.start_mem_support (List.mem_flatMap.mpr ⟨p, hp, hpx⟩)
+      refine ⟨shiftPort a, shiftPort b,
+        hs.trans (shifted_special_port hm F A u hbase a).symm,
+        hf.trans (shifted_special_port hm F A u hbase b).symm, hadvance _ _ ?_⟩
+      apply Or.inl
+      simpa only [shiftPort, code, previousIndex, Fin.val_succ, Nat.add_sub_cancel] using
+        (show 0 < a.1.val + 1 ∧ 0 < b.1.val + 1 ∧
+          (if odd then oddBoundary k else evenBoundary k) (code a) (code b) ∧
+          ¬ pair (code a) (code b) (k - 1, 1) (0, 1) from
+          ⟨by omega, by omega, hb, hnot⟩)
+  exact ⟨pieces, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
+    hrawinv, hrawcuts, hrawcard, hboundary, hpairs, hrestoreNotDeleted'⟩
+
 #print axioms native_actual_even_odd_boundary_advance
+#print axioms native_actual_first_cut_even_odd_boundary_advance
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualBoundaryAdvance
