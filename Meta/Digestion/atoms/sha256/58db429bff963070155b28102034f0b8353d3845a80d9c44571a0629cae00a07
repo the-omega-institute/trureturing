@@ -1,0 +1,140 @@
+**Theorem 3.1 (Real odd-degree realization in $m+2$ dimensions).** For every $m\ge0$, $n=2m+1$ and $0<q<1$, there is a real instrument on $\mathbb C^{m+2}$ with actual gap probabilities (1.1), pure post-tick density $\tau$, zero-branch Choi rank exactly two, and tick-branch Choi rank at most two. Its raw observability Gramian is faithful on all $m+2$ coordinates, and its zero-word reachable span from $\tau$ is the full memory. At $m=0$ a single detector row suffices.
+
+Proof. First factor the positive forward difference
+
+$$
+\Delta_n(t)=(t+1)^n-t^n. \tag{3.1}
+$$
+
+For odd $n$, the function $t\mapsto t^n$ is strictly increasing on the real line. Therefore $\Delta_n(t)>0$ for every real $t$, and its degree is $2m$ with leading coefficient $n$. For $m>0$ it has no real roots. Real coefficients pair the complex roots, with multiplicity, into conjugate pairs. Choose one root $\zeta_j$ from each pair and set
+
+$$
+p(t)=\sqrt n\prod_{j=1}^{m}(t-\zeta_j),\qquad
+p(t)\overline{p(t)}=\Delta_n(t)\quad(t\in\mathbb R). \tag{3.2}
+$$
+
+This is precisely the factorization input of Chapter 37, (37.2). Write the coefficients of $p$ as real and imaginary parts to obtain real polynomials $a_1,a_2$ with
+
+$$
+p=a_1+ia_2,\qquad
+\Delta_n=a_1^2+a_2^2,\qquad
+\deg a_i\le m. \tag{3.3}
+$$
+
+The leading coefficient of $p$ is the real number $\sqrt n$, so $a_1$ has degree exactly $m$ and leading coefficient $\sqrt n$, while $a_2$ has degree at most $m-1$. For $m=0$ use $p=a_1=1$, $a_2=0$. Conjugate factorization and the two-square identity are classical algebraic steps inside this construction.
+
+On a real target space of dimension $m+1$, with basis $e_0,\ldots,e_m$, fix the forward nilpotent shift
+
+$$
+Je_j=e_{j+1}\ (0\le j<m),\qquad Je_m=0,\qquad U=I+J,\qquad v=e_0. \tag{3.4}
+$$
+
+This shift orientation is chosen so that the fixed input $v$ generates the Newton basis at the output. For each $i$ there is a unique real column $h_i$ such that
+
+$$
+a_i(t)=\sum_{r=0}^{m}(h_i)_r\binom tr,
+\qquad (h_i)_r=(\delta^ra_i)(0),\qquad
+\delta a(t)=a(t+1)-a(t). \tag{3.5}
+$$
+
+The binomial polynomials have different degrees and nonzero leading coefficients, so they form a basis. The coefficient formula follows by iterating $\delta\binom tr=\binom t{r-1}$ and evaluating at zero. The finite binomial expansion of $U^t$ now gives, for every natural $t$,
+
+$$
+U^tv=\sum_{r=0}^{m}\binom tr e_r,\qquad
+h_i^{\mathsf T}U^tv=a_i(t),\qquad
+(h_1)_m=m!\sqrt n\ne0. \tag{3.6}
+$$
+
+Add a single source coordinate $s$ orthogonal to the target. On the full dimension $D=m+2$, define the real raw data
+
+$$
+\begin{aligned}
+A&=\begin{pmatrix}U&0\\0&1\end{pmatrix},&
+B&=|(v,0)\rangle\langle s|,& x&=s,\\
+f_i&=(h_i,0),&
+H&=h_1h_1^{\mathsf T}+h_2h_2^{\mathsf T},&
+F&=\begin{pmatrix}H&0\\0&0\end{pmatrix},\\
+K_A&=\sqrt q\,A,&K_B&=\sqrt q\,B,&
+\mathcal T(X)&=q(AXA^{\mathsf T}+BXB^{\mathsf T}).
+\end{aligned} \tag{3.7}
+$$
+
+A zero detector column may be omitted. The source and all target coordinates belong to the memory. The two-square coefficients have been placed in the effect $F$, while the injection vector $v$ and both no-tick matrices are real and independent of a root choice.
+
+We compute the entire word sum, with its multiplicities. The relations $As=s$ and $BA^rB=0$ for every $r\ge0$ show that the all-$A$ word remains in the source and is invisible to $F$, whereas any word with two or more $B$ factors vanishes. For length $k\ge1$, every word with one $B$ has exactly the form $A^tBA^{k-1-t}$ for a unique $t\in\{0,\ldots,k-1\}$. Acting on $s$ it gives $(U^tv,0)$. Thus each position contributes once, and the separate word probabilities give
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F\mathcal T^k(ss^{\mathsf T})]
+&=q^k\sum_{t=0}^{k-1}\sum_{i=1}^{2}|h_i^{\mathsf T}U^tv|^2\\
+&=q^k\sum_{t=0}^{k-1}\big((t+1)^n-t^n\big)
+=q^kk^n.
+\end{aligned} \tag{3.8}
+$$
+
+For $k=0$, the source is invisible and the empty sum is zero, agreeing with $0^n$. There are no cross terms between different words or different detector rows: a CP sum adds their squared amplitudes. In particular $k$ is the preceding-zero count, not the duration $k+1$.
+
+For stability, decompose the full complex matrix algebra into target-target, target-source, source-target and source-source blocks. The $A$ contribution preserves these blocks, with diagonal superoperator actions $qUXU^{\mathsf T}$, $qUX$, $qXU^{\mathsf T}$ and $qX$, respectively. Each has only eigenvalue $q$, since $U$ is unipotent. The $B$ contribution sends only the source-source block to the target-target block, as $qX_{ss}vv^{\mathsf T}$. Ordering this one-way coupling makes the full superoperator block triangular. Consequently
+
+$$
+\operatorname{spec}(\mathcal T)=\{q\},\qquad \rho(\mathcal T)=q<1. \tag{3.9}
+$$
+
+This is the spectrum on all matrices, including off-diagonal coherences.
+
+The same word decomposition evaluates the full Gramian. An all-$A$ word contributes only a target-supported detector row; a one-$B$ word contributes only a source-supported row. Therefore no target-source cross block occurs, and
+
+$$
+Q=\begin{pmatrix}C&0\\0&Z_n(q)\end{pmatrix},\qquad
+C=\sum_{t\ge0}q^t(U^t)^{\mathsf T}HU^t. \tag{3.10}
+$$
+
+Its source entry is (3.8) summed over all $k$. To prove $C>0$, let $y$ be a real target vector with $y^{\mathsf T}Cy=0$. Every nonnegative summand then vanishes, so in particular $h_1^{\mathsf T}U^ty=0$ for every natural $t$. The polynomial identity
+
+$$
+h_1^{\mathsf T}U^ty
+=\sum_{r=0}^{m}\binom tr h_1^{\mathsf T}J^ry \tag{3.11}
+$$
+
+has infinitely many zeros, forcing all its binomial coefficients to vanish. The coefficient for $r=m$ is $(h_1)_m y_0$, hence $y_0=0$. The coefficient for $r=m-1$ then gives $(h_1)_m y_1=0$. Descending through $r=m-2,\ldots,0$ gives $y_2=\cdots=y_m=0$. This proves full target observability from the degree-$m$ coefficient; positivity of a scalar trace alone would not give it. Equation (2.10) extends the conclusion to complex vectors. Since $Z_n(q)>0$, (3.10) is faithful on the entire complex memory.
+
+Theorem 2.1 now applies with $z=Z_n(q)$. In these block coordinates the completed matrices can be written explicitly as
+
+$$
+\begin{aligned}
+\tau&=ss^{\mathsf T},\qquad b=s,\\
+L_A&=\sqrt q\begin{pmatrix}C^{1/2}UC^{-1/2}&0\\0&1\end{pmatrix},\\
+L_B&=\sqrt{q/Z_n(q)}\,|(C^{1/2}v,0)\rangle\langle s|,\\
+J_i&=|s\rangle\langle(C^{-1/2}h_i,0)|,\qquad
+E=\begin{pmatrix}C^{-1/2}HC^{-1/2}&0\\0&0\end{pmatrix}.
+\end{aligned} \tag{3.12}
+$$
+
+These are real matrices acting on the complex memory. As a direct normalization check on the blocks, the target and source entries of the Stein equation are
+
+$$
+C-qU^{\mathsf T}CU=H,\qquad
+(1-q)Z_n(q)=qv^{\mathsf T}Cv. \tag{3.13}
+$$
+
+They imply $\sum L^*L+\sum J^*J=I$ in (3.12), including the source diagonal. The common tick output is the same pure $ss^{\mathsf T}$ for all detector indices. Equation (3.8) and (2.5) give the normalized law and properness.
+
+The matrices $A$ and $B$ are linearly independent over $\mathbb C$: $A$ is invertible and block diagonal, whereas $B$ is a nonzero off-diagonal rank-one matrix. Multiplication by $\sqrt q$ and invertible similarity preserve independence. The zero Choi rank is exactly two. The effect has rank at most two, hence so does the tick Choi matrix; at $m=0$, $h_1=(1)$ and $h_2=0$, so the tick rank is one.
+
+Finally the raw reachable span contains $s$ and every $A^tBs=(U^tv,0)$. The vectors $v,Jv,\ldots,J^mv$ are the target basis, and the powers of $U$ span the same cyclic space because $J=U-I$. Thus all $m+2$ coordinates are reachable. Completed words satisfy $L_wb=SK_wx/\sqrt z$, so the invertible $S$ preserves full reachability.
+
+For the degree-one endpoint of this construction, the dimension is two, with one tick Kraus operator and two zero Kraus operators. In target-source order its exact matrices and invariant density are
+
+$$
+\begin{aligned}
+Q&=\operatorname{diag}\big((1-q)^{-1},q(1-q)^{-2}\big),\\
+L_A&=\sqrt q\,I_2,\qquad
+L_B=\sqrt{1-q}\,|e_0\rangle\langle s|,\qquad
+J=\sqrt{1-q}\,|s\rangle\langle e_0|,\\
+\tau&=|s\rangle\langle s|,\qquad \rho_*=I_2/2,\\
+\gamma_k&=k(1-q)^2q^{k-1}\quad(k\ge1),\qquad \gamma_0=0.
+\end{aligned} \tag{3.14}
+$$
+
+Here $U=1$, $v=h_1=1$, $C=(1-q)^{-1}$ and $Z_1(q)=q(1-q)^{-2}$, so (3.12) gives all three operators. Their effects sum to $qI_2+(1-q)|s\rangle\langle s|+(1-q)|e_0\rangle\langle e_0|=I_2$. On $I_2/2$ the zero contribution is $qI_2/2+(1-q)|e_0\rangle\langle e_0|/2$ and the tick contribution is $(1-q)|s\rangle\langle s|/2$, proving invariance. The gaps follow from (1.1). This is the real endpoint already displayed in Chapter 37, (37.5), included here to specify the degenerate one-effect interface of Theorem 3.1. $\square$
+
