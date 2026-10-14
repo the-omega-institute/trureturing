@@ -921,3 +921,700 @@ published owner.
 [MY]: https://arxiv.org/abs/2609.21936v1
 
 ## 追加锚（本行以下为增补区）
+
+## 8. The complete phase fiber and its entropy minimizers
+
+### 8.1. Actual vacuum rectangles determine cut-local phases
+
+**Definition 8.1 (Full-support phase fiber).** Keep the path law,
+tensor order and cut of §§1 and 4. Let $\chi:\Omega_G\to U(1)$
+be arbitrary, and put
+
+$$
+|\psi_\chi\rangle=\sum_S\sqrt{p(S)}\chi(S)|S\rangle.
+\tag{8.1}
+$$
+
+This entire fiber has the same complete occupation law. For an
+internally legal left word $\ell$ and right word $r$ with legal
+concatenation, define the canonical phase rectangle
+
+$$
+\mathfrak h_\chi(\ell,r)
+=\frac{\chi(\ell,r)\chi(0,0)}{\chi(\ell,0)\chi(0,r)}.
+\tag{8.2}
+$$
+
+All four entries are actual legal configurations and every
+denominator is a nonzero unit phase. A cut-local phase has
+the form $\chi(\ell,r)=a(\ell)b(r)$ on all legal
+concatenations, with $|a|=|b|=1$.
+
+**Theorem 8.2 (Exact minimum-entropy orbit in the phase fiber).**
+The reference Schmidt probability vector majorizes the vector
+of every $\psi_\chi$. Moreover, the following are equivalent:
+
+$$
+\begin{aligned}
+S(\psi_\chi)&=S(\psi_+),\\
+\mathfrak h_\chi(\ell,r)&=1
+\quad\text{for every legal concatenation},\\
+\chi(\ell,r)&=a(\ell)b(r)
+\quad\text{for cut-local unit phases}.
+\end{aligned}
+\tag{8.3}
+$$
+
+If any canonical rectangle is nontrivial, the majorization
+compares unequal spectra with a strictly smaller first
+partial sum, and the entropy inequality is strict. This
+does not mean every majorization partial sum is strict.
+
+Proof. Write $A_\chi(\ell,r)=A_+(\ell,r)\chi(\ell,r)$
+and $\rho_\chi=A_\chi A_\chi^\ast$. As in Theorem 5.1,
+$|\rho_\chi|\le\rho_+$ entrywise, and every entry of
+$\rho_+$ is positive because the right vacuum contributes.
+Perron comparison bounds the largest eigenvalue of
+$\rho_\chi$ by the largest reference eigenvalue. Since
+$\rho_+$ has rank two and both matrices have trace one,
+that single eigenvalue bound gives majorization.
+
+Suppose some rectangle $(\ell,r)$ in (8.2) is nontrivial.
+Consider the reduced entry between left rows $\ell$ and
+the left vacuum. The right vacuum and $r$ both contribute
+with positive amplitudes. Their phase ratios differ exactly
+by $\mathfrak h_\chi(\ell,r)$. Hence the triangle
+inequality in this entry is strict. The positive-reference
+Perron comparison is then strict, as proved in (5.4).
+The two spectra differ, and strict Schur concavity gives
+$S(\psi_\chi)>S(\psi_+)$.
+
+If instead every rectangle is one, set
+
+$$
+a(\ell)=\chi(\ell,0),\qquad
+b(r)=\frac{\chi(0,r)}{\chi(0,0)}.
+\tag{8.4}
+$$
+
+Equation (8.2) reconstructs $\chi(\ell,r)=a(\ell)b(r)$
+on every legal concatenation. Thus $A_\chi$ differs from
+$A_+$ by diagonal unitary matrices on its two sides and
+has exactly the same singular values. A cut-local phase
+also makes every rectangle one by cancellation. These
+facts prove all equivalences. $\square$
+
+This is a statement about the specified rank-two positive
+reference. A bound on the largest eigenvalue alone would
+not provide complete majorization for an arbitrary reference
+of larger rank. Complete classical probabilities determine
+the reference in (8.1), but do not determine its phase
+rectangles or the orbit in (8.3).
+
+### 8.2. Legal occupation phases give the complete hierarchy
+
+**Definition 8.3 (Multiplicative occupation coefficients).** For
+every legal marked set $I$, define
+
+$$
+\eta_\chi(I)=\prod_{T\subseteq I}
+\chi(T)^{(-1)^{|I|-|T|}}.
+\tag{8.5}
+$$
+
+Exponents are $1$ or $-1$ in $U(1)$. Every subset of $I$
+is legal, so this expression stays on the original carrier.
+It is the usual Boolean-interval Möbius inversion, used as
+an intermediate coordinate system for the phase fiber.
+
+**Theorem 8.4 (Cross-cut occupation coefficients classify entropy equality).**
+For every legal configuration $S$,
+
+$$
+\chi(S)=\prod_{I\subseteq S}\eta_\chi(I),
+\qquad
+\mathfrak h_\chi(\ell,r)
+=\prod_{\substack{I\subseteq\ell\cup r\\
+I\cap[1,k]\ne\varnothing\\I\cap[k+1,n]\ne\varnothing}}
+\eta_\chi(I).
+\tag{8.6}
+$$
+
+Consequently entropy equals the reference value if and only
+if every legal marked set meeting both sides has
+$\eta_\chi(I)=1$.
+
+Proof. Expand the first product using (8.5). The exponent
+of a fixed $\chi(T)$ is
+
+$$
+\sum_{T\subseteq I\subseteq S}(-1)^{|I|-|T|}
+=(1-1)^{|S\setminus T|}.
+\tag{8.7}
+$$
+
+It is one for $T=S$ and zero otherwise, proving
+reconstruction. Substitution into (8.2) cancels the global,
+left-only and right-only coefficients, leaving precisely
+the crossing product in (8.6).
+
+If all crossing coefficients are one, every rectangle is
+one. Conversely suppose all rectangles are one. Induct on
+the size of a legal crossing set $I$, evaluating its
+rectangle with all unmarked sites empty. Every proper
+crossing coefficient has already been shown to be one,
+so (8.6) forces $\eta_\chi(I)=1$. Theorem 8.2 proves
+the entropy criterion. $\square$
+
+There is no occupation coefficient for an illegal marked
+set. In particular the adjacent boundary pair does not
+create a phase coordinate. For a real phase polynomial
+$f(S)=\sum_I\theta_I\mathbf1_{\{I\subseteq S\}}$
+and $\chi=e^{if}$, the coefficients in (8.5) are
+$e^{i\theta_I}$ for its legal marked sets. This specifies
+phase coordinates modulo $2\pi$, without requiring a
+choice of logarithm for arbitrary $\chi$.
+
+## 9. Mirror pair phases attain the full Fibonacci cut rank
+
+### 9.1. One common matching on the full legal carrier
+
+**Definition 9.1 (Boundary-aligned mirror matching).** Put
+$m=\min\{k,n-k\}\ge1$. For $2\le h\le m$ let
+
+$$
+i_h=k+1-h,\qquad j_h=k+h,
+\qquad
+\chi_z(S)=\prod_{h=2}^m z_h^{s_{i_h}s_{j_h}},
+\quad |z_h|=1.
+\tag{9.1}
+$$
+
+The pairs have disjoint endpoints. The omitted $h=1$
+pair is the forbidden adjacent boundary pair. All other
+gates are diagonal and preserve the entire legal support.
+
+Index the $m$ near-cut positions on each side in opposite
+boundary-aligned orders, so index $m$ is each cut-boundary
+position. Internally legal near-cut patterns correspond
+to independent sets of the same path $P_m$. Let
+$\mathcal I_m$ be that family. For $i<m$ set
+$c_i=z_{m+1-i}-1$, and set $c_m=-1$. Define
+
+$$
+A=\{m\}\cup\{i<m:c_i\ne0\}.
+\tag{9.2}
+$$
+
+**Theorem 9.2 (Exact rank stratification by active mirror sites).**
+The Schmidt rank of $\psi_{\chi_z}$ at the original cut is
+
+$$
+\operatorname{rank}A_{\chi_z}
+=|\mathcal I(P_m[A])|
+=\prod_{R}F_{|R|+2},
+\tag{9.3}
+$$
+
+where $R$ ranges over the maximal nonempty runs of active
+sites in $A$, and $F_0=0,F_1=1$. If every supplied
+$z_h\ne1$, this equals $F_{m+2}$, the maximum possible
+rank at that cut.
+
+Proof. Group all internally legal words on each side by
+their near-cut $m$-site pattern. Each pattern has positive
+activity mass: setting all farther sites to zero realizes
+it. The normalized positive amplitude vectors of different
+patterns are orthonormal because their supports are disjoint.
+They retain every internally legal word, including those
+on the longer side. As in Theorem 4.3, the full coefficient
+matrix therefore has the same nonzero singular values as
+a square sector matrix with nonzero row and column factors.
+Its unweighted core is
+
+$$
+K_z(S,T)=(1-s_mt_m)
+\prod_{i<m}[1+c_is_it_i],\qquad S,T\in\mathcal I_m.
+\tag{9.4}
+$$
+
+Expand this finite product, writing $c_I=\prod_{i\in I}c_i$.
+Only subsets of $S\cap T$ occur, and all such subsets are
+legal. Thus
+
+$$
+K_z(S,T)=\sum_{I\subseteq S\cap T}c_I
+=(Z\operatorname{Diag}(c_I)Z^{\mathsf T})(S,T),
+\qquad Z_{S,I}=\mathbf1_{\{I\subseteq S\}}.
+\tag{9.5}
+$$
+
+The finite inclusion matrix $Z$ is unit triangular when
+independent sets are ordered by size, with an arbitrary
+order within each size. It is invertible. This standard
+incidence-matrix factorization is an intermediate ingredient;
+the actual sector construction places it on the full
+inhomogeneous legal phase carrier.
+
+Multiplication by the two invertible inclusion matrices
+and the nonzero activity factors preserves rank. Hence
+the rank is the number of nonzero diagonal entries $c_I$.
+Such entries are exactly the independent sets $I\subseteq A$.
+The induced graph $P_m[A]$ is the disjoint union of its
+active runs. A run of length $r$ has $F_{r+2}$ independent
+sets, from the recurrence that separates its empty and
+occupied final site. Independent sets of disjoint runs
+combine freely, proving the product in (9.3).
+
+If all phases are nontrivial, every site is active and
+the rank is $F_{m+2}$. The two full half-chain dimensions
+are $F_{k+2}$ and $F_{n-k+2}$, whose smaller value is
+$F_{m+2}$. This proves maximality. $\square$
+
+With no active pair only the boundary site remains active,
+so the rank is two. One pair adjacent inside each boundary
+leaves an active run of length two and gives rank three.
+One farther mirror pair leaves two isolated active sites
+and gives rank four. These recover the applicable branches
+of Theorem 4.4. The rule for several phases depends on
+active runs, not just the number of nontrivial gates.
+
+### 9.2. The determinant and the six-site rank-five witness
+
+**Corollary 9.3 (Core determinant).** Under Definition 9.1,
+
+$$
+\det K_z=\prod_{I\in\mathcal I_m}c_I.
+\tag{9.6}
+$$
+
+It is nonzero exactly when every $z_h\ne1$. Positive
+inhomogeneous activity factors cannot change this condition.
+
+Proof. In (9.5), $\det Z=1$, so determinant multiplicativity
+gives (9.6). Each singleton belongs to $\mathcal I_m$;
+therefore a zero coefficient $c_i$ makes the product zero,
+while nonzero coefficients make every $c_I$ nonzero.
+$\square$
+
+**Proposition 9.4 (Two mirror phases exceed the single-pair rank ceiling).**
+For $n=6,k=3$, give pairs $(2,5)$ and $(1,6)$ phases
+$z_2,z_3$. In the actual pattern order
+$\varnothing,\{1\},\{2\},\{3\},\{1,3\}$ the core is
+
+$$
+K_z=\begin{pmatrix}
+1&1&1&1&1\\
+1&z_3&1&1&z_3\\
+1&1&z_2&1&1\\
+1&1&1&0&0\\
+1&z_3&1&0&0
+\end{pmatrix},\qquad
+\det K_z=(z_3-1)^2(z_2-1).
+\tag{9.7}
+$$
+
+Both phases nontrivial give rank five on the full positive
+six-site support. A single pair phase has rank at most four
+by Theorem 4.4. At $z_2=z_3=-1$, the determinant is $-8$.
+
+Proof. The five actual three-site patterns give the listed
+matrix. Their inclusion matrix has rows
+$(1,0,0,0,0)$, $(1,1,0,0,0)$, $(1,0,1,0,0)$,
+$(1,0,0,1,0)$ and $(1,1,0,1,1)$. Its diagonal factor
+in (9.5) is
+$[1,z_3-1,z_2-1,-1,-(z_3-1)]$. Multiply these entries
+to obtain (9.7), and use the positive activity factors
+to transfer its rank to the actual state. $\square$
+
+The maximum rank $F_{m+2}$ is attained by $m-1$ supplied
+pair phases with disjoint endpoints. This is an exact
+representation statement. It does not assert physical
+availability of the long-range gates, their duration or
+an entropy lower bound proportional to $m$.
+
+## 10. Matching-phase energy and maximal rank at arbitrarily small energy
+
+**Theorem 10.1 (Exact energy for a disjoint phase matching).**
+On the same positive law and fixed parent, let $\mathcal M$
+be any matching of distinct mode pairs, and define
+$\chi(S)=\prod_{ij\in\mathcal M}z_{ij}^{s_is_j}$,
+with $|z_{ij}|=1$. The pairs need not be edges of the
+exclusion graph. Then
+
+$$
+\langle\psi_\chi,H\psi_\chi\rangle
+=\sum_{ij\in\mathcal M}|z_{ij}-1|^2
+\mu_{ij}(d_i+d_j).
+\tag{10.1}
+$$
+
+Proof. A deletion at site $i$ touches at most one phase
+factor, because the supplied pairs have disjoint endpoints.
+When its partner is occupied, the squared phase increment
+is $|z_{ij}-1|^2$; otherwise it is zero. All other factors
+have modulus one and disappear from the squared increment.
+Summing the occupied-endpoint form (6.2) proves (10.1).
+No independence between occupation events is assumed.
+$\square$
+
+Disjointness is material. If several pair phases share an
+endpoint, deleting it changes their product simultaneously;
+the squared increment then contains interference and is
+not the sum of the separate increments.
+
+**Proposition 10.2 (A full-support rank-five state with rational energy).**
+For the six-site example of Proposition 9.4, set every
+activity to one, every weight to $1/6$, and both phases
+to $-1$. There are 21 legal words, and
+
+$$
+\mu_{1,6}=\frac17,\qquad \mu_{2,5}=\frac1{21},\qquad
+\langle\psi_\chi,H\psi_\chi\rangle=\frac8{63}.
+\tag{10.2}
+$$
+
+All 21 original probabilities are unchanged and nonzero.
+Its cut rank is five. The two joint occupation events
+are mutually exclusive, so on this carrier
+
+$$
+\chi(S)=1-2s_1s_6-2s_2s_5.
+\tag{10.3}
+$$
+
+Proof. The independent-set count is $F_8=21$. Occupying
+both endpoints $1,6$ leaves the legal two-site interval
+$3,4$, which has three configurations. Occupying $2,5$
+forces all their neighbors empty and leaves only one
+configuration. Each deletion rate is $1/12$, so (10.1)
+gives $4(1/7+1/21)/6=8/63$. The joint events cannot
+coexist, because that would occupy both $1,2$ and both
+$5,6$. Expanding their two sign factors yields (10.3).
+Proposition 9.4 gives the rank. $\square$
+
+**Proposition 10.3 (No positive energy or entropy floor from maximal rank).**
+Fix $m\ge2$ and the mirror matching. With all phases
+nontrivial, its cut rank is maximal. If all activities
+are $\varepsilon>0$, that rank persists as
+$\varepsilon\downarrow0$, whereas the state tends to
+the vacuum, its entropy tends to zero and its associated
+reference-parent energy tends to zero. The activity limit
+varies that parent with the law. At fixed positive activities,
+letting every nontrivial $z_h\to1$ also keeps maximal
+rank before the limit, while energy tends to zero and
+entropy tends to the positive-reference value.
+
+Proof. Rank follows from Theorem 9.2 at every strictly
+positive parameter value. The vacuum and phase limits
+are norm limits of finite-dimensional coefficient matrices.
+Entropy is continuous. Every joint occupation probability
+tends to zero in the vacuum limit, and the factors
+$|z_h-1|^2$ tend to zero in the phase limit. Formula
+(10.1) proves both energy limits for fixed finite weights.
+$\square$
+
+The mirror rank formula, full phase-fiber entropy orbit
+and their fixed-parent energy consequences are deductions
+for this full-support model. Boolean Möbius inversion,
+unit-triangular inclusion matrices and determinant
+congruence are established intermediate ingredients,
+not new general principles. Classical occupation,
+quantum phase, matrix rank, entropy and dimensional
+physical energy retain their separate meanings.
+
+## 追加锚（本行以下为增补区）
+
+
+## 11. Purity loss quantitatively controls the phase orbit
+
+### 11.1. Complete legal rectangles give a nonnegative identity
+
+**Definition 11.1 (Anchored phase distance and purity deficit).**
+Use the full-support path law and a proper cut from Definition
+8.1. Entropies use natural logarithms. Put
+
+$$
+\begin{aligned}
+\mathcal W(\chi)
+&=\sum_{(\ell,r)\text{ legal}}p(\ell,r)
+|1-\mathfrak h_\chi(\ell,r)|^2,\\
+\Delta_2(\chi)
+&=\operatorname{Tr}(\rho_+^2)-\operatorname{Tr}(\rho_\chi^2).
+\end{aligned}
+\tag{11.1}
+$$
+
+The distance uses the actual complete occupation law, not
+a replacement law on phase coordinates. Write
+$a_{\ell r}=\sqrt{p(\ell,r)}$, extended by zero at illegal
+concatenations. For a rectangle with all four corners legal,
+set
+
+$$
+Q_{\ell\ell';rr'}
+=\chi(\ell,r)\overline{\chi(\ell',r)}
+\chi(\ell',r')\overline{\chi(\ell,r')}.
+\tag{11.2}
+$$
+
+**Theorem 11.2 (Vacuum rectangle stability bound).**
+For every full-support phase in Definition 8.1,
+
+$$
+S(\psi_\chi)-S(\psi_+)
+\ge\Delta_2(\chi)
+\ge 2p(\varnothing)\mathcal W(\chi)
+=\frac{2}{Z}\mathcal W(\chi).
+\tag{11.3}
+$$
+
+Moreover, using the canonical phases $a,b$ of (8.4),
+
+$$
+\mathcal W(\chi)
+=\bigl\|\psi_\chi-(D_a\otimes D_b)\psi_+\bigr\|^2.
+\tag{11.4}
+$$
+
+Proof. Expanding the two purities on the same carrier gives
+
+$$
+\Delta_2(\chi)
+=\frac12\sum_{\substack{\ell,\ell',r,r'\\\text{all four corners legal}}}
+a_{\ell r}a_{\ell'r}a_{\ell'r'}a_{\ell r'}
+|1-Q_{\ell\ell';rr'}|^2.
+\tag{11.5}
+$$
+
+Terms with an illegal corner have zero coefficient and can
+be omitted. For the other terms, the reference phase is
+one and the phase-dependent contribution is the real part
+of (11.2); the identity
+$|1-Q|^2=2(1-\operatorname{Re}Q)$ proves (11.5).
+Every summand is nonnegative. This expansion is the
+established four-amplitude purity or SWAP decomposition;
+the anchored estimate below specializes it to the actual
+positive hard-core law.
+
+For a legal nonvacuum pair $(\ell,r)$, retain the rectangle
+with the other left and right corners equal to the vacuum.
+Its coefficient satisfies
+
+$$
+a_{\ell r}a_{0r}a_{00}a_{\ell0}
+=p(\varnothing)p(\ell,r),
+\tag{11.6}
+$$
+
+because the law is the product of the occupied activities,
+restricted to legal configurations and divided by $Z$.
+The four ordered orientations of this rectangle contribute
+$2p(\varnothing)p(\ell,r)|1-\mathfrak h_\chi(\ell,r)|^2$.
+Distinct nonvacuum pairs select disjoint sets of orientations.
+If either side is vacuum, its anchored phase is one and its
+contribution to $\mathcal W$ is zero. Keeping precisely
+these terms of (11.5) proves the second inequality in
+(11.3).
+
+For the first inequality, the symmetric function
+
+$$
+q\longmapsto H(q)+\sum_jq_j^2
+\tag{11.7}
+$$
+
+is Schur-concave on each probability simplex. The usual
+Schur--Ostrowski differential criterion reduces this to,
+for $x>y>0$ with $x+y\le1$,
+
+$$
+\log(x/y)\ge\frac{2(x-y)}{x+y}\ge2(x-y).
+\tag{11.8}
+$$
+
+The first inequality follows by integrating $1/u$ between
+y and x, or by differentiating
+$\log t-2(t-1)/(t+1)$ for $t\ge1$; its derivative is
+$(t-1)^2/[t(t+1)^2]\ge0$. Boundary values follow by
+continuity with $0\log0=0$. Apply (11.7) to the
+majorization of Theorem 8.2. Rearranging gives
+$H(s_\chi)-H(s_+)\ge\sum_js_{+,j}^2-\sum_js_{\chi,j}^2$,
+which is the first inequality in (11.3).
+
+Finally, $\chi(\ell,r)=a(\ell)b(r)
+\mathfrak h_\chi(\ell,r)$ and $|a(\ell)b(r)|=1$.
+Squaring the coefficientwise difference of the two states
+proves (11.4). $\square$
+
+Thus a measured entropy excess at most $\delta$ implies
+squared distance at most $Z\delta/2$ from this canonical
+cut-local phase image. This is an explicit finite-model
+estimate. Its constant depends on the original partition
+function; it is not a bound uniform in chain length or
+activities, and it does not identify the closest image
+under all cut-local unitaries.
+
+Every occupation observable is constant throughout the
+phase fiber. A two-copy SWAP measurement on the selected
+subsystem could supply its purity, if that preparation and
+measurement capability were supplied. The law and phase
+notation alone supply neither copies nor a SWAP apparatus.
+The pure-state partial trace in (11.1) is also not an
+absolute-PPT claim about a mixed bipartite state under all
+global unitary conjugations.
+
+### 11.2. A positive rank-three reference reverses the entropy comparison
+
+**Proposition 11.3 (Larger reference rank invalidates phase entropy minimality).**
+Put $D_\delta=6+3\delta^2$ and define coefficient matrices
+
+$$
+B_\delta=\frac1{\sqrt{D_\delta}}
+\begin{pmatrix}
+\delta&1&1\\1&\delta&1\\1&1&\delta
+\end{pmatrix},\qquad
+A_\delta=\frac1{\sqrt{D_\delta}}
+\begin{pmatrix}
+\delta&1&-1\\-1&\delta&1\\1&-1&\delta
+\end{pmatrix}.
+\tag{11.9}
+$$
+
+For all sufficiently small $\delta>0$, the reference
+$B_\delta$ is strictly positive and has rank three,
+$|A_\delta|=B_\delta$ entrywise, and the phase-perturbed
+state has strictly smaller von Neumann entropy.
+
+Proof. Their squared singular-value lists are
+
+$$
+p_\delta=
+\frac{((2+\delta)^2,(1-\delta)^2,(1-\delta)^2)}{D_\delta},
+\qquad
+q_\delta=
+\frac{(3+\delta^2,3+\delta^2,\delta^2)}{D_\delta}.
+\tag{11.10}
+$$
+
+Indeed the unnormalized reference is
+$(\delta-1)I+\mathbf1\mathbf1^{\mathsf T}$. The other
+matrix is $\delta I$ plus a real skew-symmetric matrix
+whose square is $\mathbf1\mathbf1^{\mathsf T}-3I$.
+These give (11.10). At $\delta=0$,
+
+$$
+H(p_0)=\log3-\frac13\log2>\log2=H(q_0),
+\tag{11.11}
+$$
+
+where the strict inequality is equivalent to $3^3>2^4$.
+Finite-dimensional entropy is continuous, so the inequality
+persists for all sufficiently small positive $\delta$.
+At $0<\delta<1$, the reference eigenvalues $2+\delta$
+and $\delta-1$ are all nonzero, and every entry is
+positive. This proves the claimed full-support example.
+$\square$
+
+In this example the top reduced eigenvalue decreases, but
+for $0<\delta<1/2$ the second partial sum increases.
+Consequently the positive-matrix Perron bound survives while
+full majorization fails. The rank-two path reference in
+Theorems 8.2 and 11.2 is a substantive hypothesis.
+
+## 12. Exact resource bounds within the diagonal pair-phase model
+
+**Proposition 12.1 (Minimum number of cross-cut pair factors for maximal rank).**
+Let $m=\min\{k,n-k\}$. Restrict operations to occupation
+pair phases, allowing arbitrary cut-local diagonal phases.
+At least $m-1$ nontrivial cross-cut pair factors are needed
+to attain the maximal rank $F_{m+2}$. The mirror matching
+of Definition 9.1 attains this bound.
+
+Proof. On the smaller side, every nonboundary site must
+occur in a nontrivial cross-cut pair. If a site is missing,
+its singleton row and the vacuum row have exactly the same
+allowed right support and cross-cut phase function. The
+positive product amplitudes and any cut-local diagonal
+phase change them only by a nonzero row scalar, so they
+are proportional. They are distinct actual rows of the
+$F_{m+2}$-dimensional smaller-side space; hence full row
+rank is impossible. There are $m-1$ nonboundary sites,
+and a cross-cut pair meets only one of them. This proves
+the lower bound. Theorem 9.2 supplies attainment with
+$m-1$ nontrivial mirror factors. $\square$
+
+**Proposition 12.2 (Support diameter obstructs exact diagonal synthesis).**
+Suppose $m\ge2$. Within circuits made exclusively of diagonal occupation
+gates, a target with the outermost mirror phase $z_m\ne1$
+cannot be synthesized, even up to cut-local diagonal phases,
+by gates whose support diameters are all smaller than
+$2m-1$.
+
+Proof. A diagonal gate supported on a set $J$ has
+$\eta(I)=1$ whenever $I\nsubseteq J$. In (8.5), choose
+$i\in I\setminus J$ and pair each subset not containing
+i with its union with i. The gate values are equal and
+the exponents opposite. Multiplicative occupation
+coefficients multiply under composition. Therefore gates
+of the stipulated support cannot create the nontrivial
+coefficient on $I=\{i_m,j_m\}$, whose endpoints are
+$2m-1$ apart. Cut-local phases have no crossing
+coefficient by Theorem 8.4 and cannot repair this deficit.
+$\square$
+
+These bounds price only the stipulated diagonal operation
+class. They do not apply to general non-diagonal circuits,
+ancilla-assisted synthesis, routing, hardware controls or
+preparation work. Classical support, an exact phase target
+and physical acquisition remain different inputs.
+
+## 追加锚（本行以下为增补区）
+
+
+## 13. Predecessors and the scope of the phase continuation
+
+The multiplicative coordinates in §8 use ordinary incidence
+algebra on Boolean intervals. Rota, *On the Foundations of
+Combinatorial Theory I. Theory of Möbius Functions*,
+[DOI:10.1007/BF00531932](https://doi.org/10.1007/BF00531932),
+is the classical source of that framework. The restricted
+inclusion-matrix factorization in (9.5) belongs to established
+meet-matrix methods; Altınışık, Sagan and Tuğlu, *GCD
+Matrices, Posets, and Nonintersecting Paths*,
+[DOI:10.1080/03081080500054612](https://doi.org/10.1080/03081080500054612),
+provides a nearby general treatment. These are attribution
+boundaries for known ingredients. Equations (8.7) and (9.5)
+provide the complete finite calculations used here; the
+original Wilf and Lindström full texts are not treated as
+verified theorem inputs.
+
+Zhang, Grover and Vishwanath, *Entanglement Entropy of
+Critical Spin Liquids*,
+[arXiv:1102.0350v2](https://arxiv.org/abs/1102.0350v2),
+equations (2)–(3) and the following sign-trick decomposition,
+write purity using two-copy subsystem SWAP and separate
+amplitude and phase contributions. Grover and Fisher,
+*Entanglement and the Sign Structure of Quantum States*,
+[arXiv:1412.3534v1](https://arxiv.org/abs/1412.3534v1),
+equations (11)–(12), gives the related second-Rényi sign
+and modulus decomposition, explicitly discussing the
+complex-wavefunction continuation. These primary formulas
+supply the established four-amplitude framework of (11.5).
+They are not attributed the arbitrary-phase rank-two
+von Neumann equality theorem or the vacuum-weight bound
+(11.3).
+
+The full-support path application combines its unchanged
+legal Gibbs carrier, a rank-two positive reference, actual
+vacuum rectangles and incidence compression. The mirror
+construction also stays within the established class of
+matrix-product states enhanced by commuting pair phases
+cited in §7. The model-specific deductions are the complete
+entropy-minimizing orbit, the active-run Fibonacci rank
+stratification, the anchored purity estimate and the stated
+restricted diagonal resource bounds. No literature-priority
+claim is made for these deductions or their ingredients.
+The unrestricted spectral comparison remains unresolved.
+
+## 追加锚（本行以下为增补区）
