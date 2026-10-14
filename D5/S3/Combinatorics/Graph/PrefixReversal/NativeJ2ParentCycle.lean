@@ -20,6 +20,7 @@ namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeContactIteration
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
@@ -111,19 +112,24 @@ private theorem j2_half_endpoints {m : ℕ} (hm : 5 ≤ m)
     relabel F * port m (halfFinish false i) = specialPort F (j2HalfFinishPort i) ∧
     evenBoundary 2 (code (j2HalfStartPort i)) (code (j2HalfFinishPort i)) := by
   fin_cases i
-  all_goals
-    simp only [halfStart, halfFinish, j2HalfStartPort, j2HalfFinishPort,
-      port, Bool.false_eq_true, ↓reduceIte, specialPort,
-      Fin.val_zero, Fin.val_one, zero_ne_one, one_ne_zero]
-    constructor
-    · first
-      | exact (native_j2_frame_ports hm F _).1
-      | exact (native_j2_frame_ports hm F _).2
-    · constructor
-      · first
-        | exact (native_j2_frame_ports hm F _).1
-        | exact (native_j2_frame_ports hm F _).2
-      · norm_num [evenBoundary, pair, code]
+  · refine ⟨?_, ?_, ?_⟩
+    · change relabel F * NativeJ2Words.rightPort m 0 = rightPort F 0
+      exact (native_j2_frame_ports hm F 0).1
+    · change relabel F * NativeJ2Words.rightPort m 2 = rightPort F 2
+      exact (native_j2_frame_ports hm F 2).1
+    · norm_num [j2HalfStartPort, j2HalfFinishPort, evenBoundary, pair, code]
+  · refine ⟨?_, ?_, ?_⟩
+    · change relabel F * NativeJ2Words.leftPort m 0 = leftPort F 0
+      exact (native_j2_frame_ports hm F 0).2
+    · change relabel F * NativeJ2Words.leftPort m 1 = leftPort F 1
+      exact (native_j2_frame_ports hm F 1).2
+    · norm_num [j2HalfStartPort, j2HalfFinishPort, evenBoundary, pair, code]
+  · refine ⟨?_, ?_, ?_⟩
+    · change relabel F * NativeJ2Words.rightPort m 1 = rightPort F 1
+      exact (native_j2_frame_ports hm F 1).1
+    · change relabel F * NativeJ2Words.leftPort m 2 = leftPort F 2
+      exact (native_j2_frame_ports hm F 2).2
+    · norm_num [j2HalfStartPort, j2HalfFinishPort, evenBoundary, pair, code]
 
 /-- The Hamilton path is constructed from the native F2 cycle itself.
 The domain map is the identity on configurations; every sliced edge and
