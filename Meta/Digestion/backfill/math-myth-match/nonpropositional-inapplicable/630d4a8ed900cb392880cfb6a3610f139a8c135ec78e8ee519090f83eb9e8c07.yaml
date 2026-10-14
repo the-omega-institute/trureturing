@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:630d4a8ed900cb392880cfb6a3610f139a8c135ec78e8ee519090f83eb9e8c07
+  normalized_sha256: sha256:630d4a8ed900cb392880cfb6a3610f139a8c135ec78e8ee519090f83eb9e8c07
+cas_ref: sha256:630d4a8ed900cb392880cfb6a3610f139a8c135ec78e8ee519090f83eb9e8c07
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节 207. 理解也会改变问题：会通怎样扩大自己的询问范围：仅为章节题名，指示讨论主题；无独立命题陈述。
+    previous_atom_id: bc75e786d824f18b14274f519d064f2a05ffaeab80d285ed227a12df8435e2eb
+    next_atom_id: 104fdba29ea825cb4da577304ce5ae4e8809b283ee998648181d19c79cd55a50

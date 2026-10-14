@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0845ddde6379991fb4aa49845402b2ea3a4210b3cc0bdf5bbd963c0ca172f89e
+  normalized_sha256: sha256:0845ddde6379991fb4aa49845402b2ea3a4210b3cc0bdf5bbd963c0ca172f89e
+cas_ref: sha256:0845ddde6379991fb4aa49845402b2ea3a4210b3cc0bdf5bbd963c0ca172f89e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces the old Gram matrix, new self-pairing, cross-pairing vector and augmented block matrix before the separate gluing criterion.
+    previous_atom_id: 1b23f1c20c8c4db0933a812acb832689c7b839ccf6e132ff50c2ef143ecf905b
+    next_atom_id: c352d304105e02cbbcb0607e31a1e217adb85d4b344ba0d75c23ba4420dbf0e1

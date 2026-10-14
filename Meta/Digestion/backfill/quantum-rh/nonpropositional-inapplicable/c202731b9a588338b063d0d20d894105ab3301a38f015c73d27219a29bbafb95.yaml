@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c202731b9a588338b063d0d20d894105ab3301a38f015c73d27219a29bbafb95
+  normalized_sha256: sha256:c202731b9a588338b063d0d20d894105ab3301a38f015c73d27219a29bbafb95
+cas_ref: sha256:c202731b9a588338b063d0d20d894105ab3301a38f015c73d27219a29bbafb95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological caution to rule out an incorrect anchor before interpreting a negative computed entry; no new mathematical assertion.
+    previous_atom_id: d1314534d8c4b2f515a89ac02dba8af7e8cee6c5c1f735fd4aad04c8dc3de415
+    next_atom_id: e0657b437601f98bf108fb71f0bae7d493a1f4e00cfdd5ec35ff7832781696df

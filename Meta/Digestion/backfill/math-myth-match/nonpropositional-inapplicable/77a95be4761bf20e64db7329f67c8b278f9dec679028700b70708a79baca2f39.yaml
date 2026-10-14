@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:77a95be4761bf20e64db7329f67c8b278f9dec679028700b70708a79baca2f39
+  normalized_sha256: sha256:77a95be4761bf20e64db7329f67c8b278f9dec679028700b70708a79baca2f39
+cas_ref: sha256:77a95be4761bf20e64db7329f67c8b278f9dec679028700b70708a79baca2f39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 54.2（保证曾经经过目标，不等于能够确认当前达标）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: f3f161016988243c12dc6035774a350938cba0b7254a2ebee20eda7f31327dd2
+    next_atom_id: c85bc67fa8a2dbc3a1e0632d18a9e8e717fa12a82ccefa76345979298ee570f4
