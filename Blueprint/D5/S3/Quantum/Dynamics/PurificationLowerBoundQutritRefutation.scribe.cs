@@ -74,7 +74,10 @@ internal sealed class PurificationLowerBoundQutritRefutationDocument : IScribeDo
                     Paragraph(Text(
                         "Consequently C_K = 2(1-(88/91)^2) = 1074/8281 and C_S = 2(1-(20/21)^2) = 82/441. "
                             + "Thus C_K < C_S, with C_S-C_K = 4192/74529 > 0, contradicting the left inequality of equation (4)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("das-mori-2026-purification-lower-bound-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
