@@ -7160,3 +7160,143 @@ by DR1--DR5. The original signed upper comparison, all-integer Robin
 inequality and RH remain unproved. This application simplifies the
 actual selected-source account without asserting a new arithmetic
 supplier, an actual favorable sequence or kernel verification.
+
+
+## Monotone source variation bounds the complete gap baseline
+
+Keep PG1--PG3, PG9, PE2 and DR1--DR4 on the original full windows,
+all maximizing ties and the same common cofinal source, including
+$\Theta=1$. This is a `repo-derived` paper application of finite
+Stieltjes integration by parts and the classical opposite-monotonicity
+integral comparison. It gives a quantitative bound for the previously
+retained gap baseline; it asserts no new generic inequality, literature
+priority, arithmetic sign supplier or Lean/kernel result.
+
+Write $B(t)=\mathcal B_X(t)$, $A(t)=B(t)+t$,
+$s_B=\sqrt B\log B$, and set
+
+$$
+S(t)=\int_{t_0}^{t}s_{B(v)}\,dv,\qquad
+S_m=S(t_m),\qquad
+\mathsf L_X=\int_{t_0}^{t_m}\frac{t}{\sqrt{B(t)}}\,dt,
+\qquad c_{\rm win}=\frac{2t_m}{t_m+t_0}\le\frac43.
+$$
+
+Here $\mathsf L_X$ is a continuous readout of the existing source lag;
+it is not $L_X=t_m-t_0$ or the exact inventory credit $V_X^K$.
+N2 and CQ1 already give a nondecreasing finite step function $B$.
+Define the nonnegative complete gap baseline, before BL's clock split,
+
+$$
+\mathfrak B_X^{\rm all}
+=\sum_{t_0\le s<t_m}
+ sS(s)[\lambda(\alpha_s)-\lambda(\beta_s)].
+\tag{BV1}
+$$
+
+DR2 gives $0\le\mathfrak B_{X,H}\le\mathfrak B_X^{\rm all}$
+for every $H$. No actual gap, intermediate activation or higher layer
+is removed by this comparison. A switch at $t_0$ has $S(t_0)=0$;
+the original endpoint $A_m$ is the least-core terminal clock, with
+no switch at $t_m$ charged to BV1.
+
+### Use the same source price drops and retain both terminal debits
+
+Put $g(t)=\lambda(A(t))$. On each open branch, $A'(t)=1$, so
+$-g'(t)=k(A(t))$. At a switch $s$, its price drop is exactly
+$\lambda(\alpha_s)-\lambda(\beta_s)$. Use right limits in the
+Stieltjes measure at interior switches, retaining the terminal left
+trace $g(t_m)=g(t_m-)=\lambda(A_m)$; the values at the finitely many
+ties do not change any ordinary integral. Since $S$ is continuous, finite integration
+by parts with $tS(t)$ gives
+
+$$
+\mathfrak B_X^{\rm all}
+=\int_{t_0}^{t_m}[S(t)+ts_{B(t)}]\lambda(A(t))\,dt
+-t_mS_m\lambda(A_m)
+-\int_{t_0}^{t_m}tS(t)k(A(t))\,dt.
+\tag{BV2}
+$$
+
+The source remains the same actual inventory and selector. BV2 is
+finite Stieltjes accounting, rather than a new pressure identity.
+The terminal term uses the unchanged $A_m$; no extra terminal tie or
+favorable endpoint is chosen.
+
+Monotonicity of $B$ and $B>1$ imply
+$S(t)\le(t-t_0)s_{B(t)}$ and
+$s_{B(t)}\lambda(A(t))\le B(t)^{-1/2}$.
+Consequently the first integral in BV2 is at most
+$\int_{t_0}^{t_m}(2t-t_0)/\sqrt{B(t)}\,dt$.
+For the nonincreasing function $y(t)=B(t)^{-1/2}$, the existing
+opposite-monotonicity integral comparison gives
+
+$$
+\int_{t_0}^{t_m}ty(t)\,dt
+\le\frac{t_0+t_m}{2}\int_{t_0}^{t_m}y(t)\,dt.
+$$
+
+It follows, without any clock localization or bounded-credit premise,
+that
+
+$$
+\boxed{
+\mathfrak B_{X,H}
+\le\mathfrak B_X^{\rm all}
+\le c_{\rm win}\mathsf L_X
+-t_mS_m\lambda(A_m)-\mathsf C_X,
+\qquad
+\mathsf C_X=\int_{t_0}^{t_m}tS(t)k(A(t))\,dt\ge0.}
+\tag{BV3}
+$$
+
+The coefficient is at most $4/3$ because the original window has
+$t_m\le2\ell_X\le2t_0$. Its arithmetic attainability or sharpness
+on actual source windows is not asserted. The two debit terms are
+independently nonnegative and explicitly retained.
+
+### Consume the bound before splitting the high-clock baseline
+
+Use PE2 and DR1--DR4 directly with BV1, before the auxiliary $H_X$
+cut, and the unchanged paid FH1 remote tail. Every future complete-gap
+residual vanishes by DR1, the future selected visits cost at most
+$\widetilde\gamma_XV_X^K+4L_X$, and the interior $Q$ costs $O(L_X)$.
+Thus the existing original-head transfer gives
+
+$$
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le
+\frac{c_{\rm win}\mathsf L_X+\mathfrak T_X
+-t_mS_m\lambda(A_m)-\mathsf C_X}{M_XL_X}
+-(a-\epsilon-\widetilde\gamma_X)
+ \frac{V_X^K}{M_XL_X}
++O_\epsilon(M_X^{-1})+o(1),
+\quad \widetilde\gamma_X=\frac{800}{9}\rho_X.
+\tag{BV4}
+$$
+
+No high-clock part is dropped: the entire baseline was bounded at
+once in BV3, so BV4 does not add BL6's separate high-clock allowance.
+Keep the full original horizon, even when $\mathsf U_X$ is
+superpolynomial. The terminal debit combines with DR3 exactly as
+
+$$
+\mathfrak T_X-t_mS_m\lambda(A_m)
+=S_m\int_{A_m}^{\mathsf U_X}[E(w)-t_m]k(w)\,dw
+-t_mS_m\lambda(\mathsf U_X).
+\tag{BV5}
+$$
+
+Both the complete exterior and its finite terminal remainder remain.
+No sign is imposed on the anchored exterior in BV5, and no boundedness
+hypothesis is imposed on $\mathsf L_X/(M_XL_X)$. In particular,
+$\mathsf L_X$ is not silently replaced by $V_X^K$.
+The exact correction $\widetilde\gamma_XV_X^K/(M_XL_X)$ is retained.
+
+BV3 bounds a retained cost by a known source readout and terminal
+debits, while BV4--BV5 locate the remaining same-source arithmetic
+comparison. To contradict the existing JM4 or applicable JM7 lower
+margin, their complete normalized signed upper still has to lie below
+$R_0-\delta$ or $R_\eta-\delta$ for a fixed $\delta>0$ on the same
+common cofinal original-window sequence. This strict comparison,
+all-integer Robin inequality and RH remain unproved.
