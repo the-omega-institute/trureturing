@@ -189,7 +189,9 @@ internal sealed class UnentangledOddPrimeCommunicationDocument : IScribeDocument
         Formula attainment = Some("alpha", Encoding(), Some("beta", Encoding(), Some("M", Measurement(),
             And(StrategyCall("Valid", X("alpha"), X("beta"), X("M")),
                 Equal(StrategyCall("score", X("alpha"), X("beta"), X("M")), Bound())))));
-        return Equivalent(Local("claim"), All("d", Naturals(), All("hp", At(Qualified("Nat", "Prime"), X("d")),
-            ImpliesFormula(At(Qualified("Odd"), X("d")), And(And(fixedBound, mixtureBound), attainment)))));
+        return Equivalent(Local("claim"), All("d", Naturals(),
+            ImpliesFormula(At(Qualified("Nat", "Prime"), X("d")),
+                ImpliesFormula(At(Qualified("Odd"), X("d")),
+                    And(And(fixedBound, mixtureBound), attainment)))));
     }
 }
