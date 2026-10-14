@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4bd014285308617595ba16227fedcb50a0d5dba5b7bf0eaef82a66123b3fdcb5
+  normalized_sha256: sha256:4bd014285308617595ba16227fedcb50a0d5dba5b7bf0eaef82a66123b3fdcb5
+cas_ref: sha256:4bd014285308617595ba16227fedcb50a0d5dba5b7bf0eaef82a66123b3fdcb5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** If p^2|M and p divides a exactly once, every integer in the…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 7b3b62dfd6e9804fbf53eb9979cf803e45f95ad4351a90cf11ed66df6401645c
+    next_atom_id: 2005ecd1e0a169e78d5b9fcf4f0e0a001e211c38384d9283b96523563226b5ff
