@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089
+  normalized_sha256: sha256:93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089
+cas_ref: sha256:93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明（附下列原有编号条目）。**…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 5124472be02c76ac2f0d5bec3cc0d653fc17252154f1f6cf2366b1d74ff43c26
+    next_atom_id: 75edeedbc8b29d571096896c9863e92bef6af54e859460640f7086230c069f40
