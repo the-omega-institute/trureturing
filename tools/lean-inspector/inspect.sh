@@ -5,19 +5,21 @@ export LC_ALL=C
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY="" OUTPUT="" LOG_DIR=""
 CACHE_MISS_POLICY=reuse-or-build
+REGENERATE_REPORT_ARTIFACTS=0
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
 BUILD_PHASES=()
 ACTIVE_PHASE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --repository|--output|--log-dir|--cache-miss-policy)
+    --repository|--output|--log-dir|--cache-miss-policy|--regenerate-report-artifacts)
       [[ $# -ge 2 && -n "$2" ]] || { echo "inspect.sh: $1 requires a value" >&2; exit 2; }
       case "$1" in
         --repository) REPOSITORY="$2" ;;
         --output) OUTPUT="$2" ;;
         --log-dir) LOG_DIR="$2" ;;
         --cache-miss-policy) CACHE_MISS_POLICY="$2" ;;
+        --regenerate-report-artifacts) REGENERATE_REPORT_ARTIFACTS="$2" ;;
       esac
       shift 2 ;;
     *) echo "inspect.sh: unknown argument '$1'" >&2; exit 2 ;;
@@ -26,6 +28,11 @@ done
 case "$CACHE_MISS_POLICY" in
   reuse-or-build|fetch-or-fail|build) ;;
   *) echo 'inspect.sh: --cache-miss-policy requires reuse-or-build, fetch-or-fail or build' >&2; exit 2 ;;
+esac
+case "$REGENERATE_REPORT_ARTIFACTS" in
+  0) ;;
+  1) CACHE_MISS_POLICY=build ;;
+  *) echo 'inspect.sh: --regenerate-report-artifacts requires 0 or 1' >&2; exit 2 ;;
 esac
 [[ -n "$REPOSITORY" && -d "$REPOSITORY" && -n "$OUTPUT" ]] \
   || { echo 'inspect.sh: --repository ROOT --output FILE are required' >&2; exit 2; }
@@ -38,7 +45,7 @@ if [[ "${STRATALINT_INSPECTOR_SUPERVISED:-0}" != 1 ]]; then
   exec "$SCRIPT_DIR/../scripts/report/report-supervisor.sh" --role lean-producer --lean-slot -- \
     env STRATALINT_INSPECTOR_SUPERVISED=1 \
     "$SCRIPT_DIR/inspect.sh" --repository "$REPOSITORY" --output "$OUTPUT" --log-dir "$LOG_DIR" \
-    --cache-miss-policy "$CACHE_MISS_POLICY"
+    --cache-miss-policy "$CACHE_MISS_POLICY" --regenerate-report-artifacts "$REGENERATE_REPORT_ARTIFACTS"
 fi
 BUILD_WORK_FILE="${STRATALINT_LEAN_BUILD_WORK_FILE:-$REPOSITORY/build/lean-cache/build-work.json}"
 # Work facts live outside the restored project tree and start empty every call.
@@ -219,7 +226,12 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
+REPORT_COMMAND=()
+if [[ "$REGENERATE_REPORT_ARTIFACTS" == 1 ]]; then
+  # Ensure and the existing writer guard enclose cleanup and the native build.
+  REPORT_COMMAND=(python3 -B "$SCRIPT_DIR/native.py" regenerate "$REPOSITORY")
+fi
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 # Publication and seal share one canonical cache guard.
 run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
