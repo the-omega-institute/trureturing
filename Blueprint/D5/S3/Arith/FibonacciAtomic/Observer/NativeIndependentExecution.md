@@ -160,7 +160,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 erase removes writer events and counts each maximal update burst immediately preceding the next observer event. A legal returning word has no unassigned trailing update burst.
 
-**Theorem 1.14 (Native constraints realize every chronological schedule).**
+**Theorem 1.14 (Exact insertion of a finite independent burst).**
+
+$$\forall C: Type, (\forall delta: C \to \operatorname{Op}\left(C\right), (\forall k: Nat, (\forall c: C, (\forall U: Source, (\forall t: Word, (\forall b: C, ((\operatorname{Run}\left(delta, c, U, \operatorname{append}\left(\operatorname{replicate}\left(k, \operatorname{update}\left(\right)\right), t\right), b\right)) \iff (\operatorname{Run}\left(delta, c, \operatorname{iterate}\left(substitution, k, U\right), t, b\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.updates_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A burst of k genuine writer substitutions before the supplied suffix is equivalent to starting that same suffix at the kth iterate. All observer configurations, the complete suffix word and the whole returned configuration are preserved. The burst count is a mathematical annotation, not an observer input.
+
+**Theorem 1.15 (Native constraints realize every chronological schedule).**
 
 $$\forall C: Type, (\forall delta: C \to \operatorname{Op}\left(C\right), (\forall c: C, (\forall b: C, (\forall t: TimedWord, ((\operatorname{Skeleton}\left(delta, c, t, b\right)) \implies (\forall u: Source, (\forall e: Nat, (\forall i: Nat, (\forall eta: Nat \to Nat, (\forall x: Nat \to Source, ((\operatorname{Ordered}\left(e, i, \operatorname{map}\left(snd, t\right), eta\right)) \implies ((\operatorname{Holds}\left(u, eta, x, \operatorname{constraint}\left(i, \operatorname{map}\left(snd, t\right)\right)\right)) \iff (\operatorname{Run}\left(delta, c, \operatorname{iterate}\left(substitution, e, u\right), \operatorname{expand}\left(\operatorname{retime}\left(e, i, \operatorname{map}\left(snd, t\right), eta\right)\right), b\right))))))))))))))$$
 
@@ -172,7 +184,7 @@ $$\forall C: Type, (\forall delta: C \to \operatorname{Op}\left(C\right), (\fora
 
 Every finite source-blind skeleton and every supplied nondecreasing epoch vector satisfy this equivalence. Native formula satisfaction constructs an actual independent-writer execution by successive difference insertion. Conversely, the actual execution supplies every literal Read equation. Induction preserves the same original u, all adaptive local states, each materialized address and the exact whole terminal b. No liveness premise is used.
 
-**Theorem 1.15 (Exact active histories and all projections).**
+**Theorem 1.16 (Exact active histories and all projections).**
 
 $$\forall C: Type, (\forall delta: C \to \operatorname{Op}\left(C\right), (\forall c: C, (\forall b: C, (\forall u: Source, (\forall x: Nat \to Source, ((\forall t: TimedWord, (\operatorname{erase}\left(\operatorname{expand}\left(t\right)\right) = t)) \land (\forall h: Word, ((\operatorname{Run}\left(delta, c, u, h, b\right)) \iff (\exists t: TimedWord, (\exists eta: Nat \to Nat, ((\operatorname{Skeleton}\left(delta, c, t, b\right)) \land (\operatorname{Chronology}\left(0, 0, t, eta\right)) \land (\operatorname{Holds}\left(u, eta, x, \operatorname{constraint}\left(0, \operatorname{map}\left(snd, t\right)\right)\right)) \land (\operatorname{expand}\left(t\right) = h) \land (\operatorname{erase}\left(h\right) = t)))))) \land (\forall D: Type, (\forall pi: TimedWord \to D, (\forall d: D, ((\exists h: Word, ((\operatorname{Run}\left(delta, c, u, h, b\right)) \land (\operatorname{pi}\left(\operatorname{erase}\left(h\right)\right) = d))) \iff (\exists t: TimedWord, (\exists eta: Nat \to Nat, ((\operatorname{Skeleton}\left(delta, c, t, b\right)) \land (\operatorname{Chronology}\left(0, 0, t, eta\right)) \land (\operatorname{Holds}\left(u, eta, x, \operatorname{constraint}\left(0, \operatorname{map}\left(snd, t\right)\right)\right)) \land (\operatorname{pi}\left(t\right) = d))))))))))))))$$
 
@@ -184,7 +196,7 @@ $$\forall C: Type, (\forall delta: C \to \operatorname{Op}\left(C\right), (\fora
 
 Erasure after insertion recovers every burst annotated word. Every legal finite returning execution is exactly the expansion of a skeleton satisfying its native formula at chronological counts, and conversely. Equality retains placement relative to all local steps and Return. The final clause gives every projection pi of this recovered word: a constant projection gives the source fiber; selecting cumulative event counts at fixed or finitely specified roles gives the source and designated epoch relation. Different possible schedules are not assertions about the authenticated actual past.
 
-**Definition 1.16 (Finitely encoded microstep instructions).**
+**Definition 1.17 (Finitely encoded microstep instructions).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.Instruction`
 
@@ -196,7 +208,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 An instruction is a local successor control, a literal address with four successor controls, or Return. Every natural control encodes an entire accessible finite configuration, without a uniform size bound.
 
-**Definition 1.17 (Four acquired-reply successors).**
+**Definition 1.18 (Four acquired-reply successors).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.continuation`
 
@@ -208,7 +220,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 The four finite controls are selected in the order alpha, beta, branch and absent. This selection uses only the actual acquired reply.
 
-**Definition 1.18 (Operational meaning of finite instructions).**
+**Definition 1.19 (Operational meaning of finite instructions).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.instruction`
 
@@ -220,7 +232,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 Read instructions materialize their literal address and all four control successors; local instructions change control; Return preserves the whole terminal control.
 
-**Definition 1.19 (Finite recursive code for each microstep).**
+**Definition 1.20 (Finite recursive code for each microstep).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.EffectiveProgram`
 
@@ -232,7 +244,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 A program supplies finite partial-recursive code, its total instruction function and an all-control realization equation. One evaluation computes one observer microstep. Divergent sequences of local steps are not replaced by a total next-external-action oracle.
 
-**Definition 1.20 (Bounded recursive-code decoding).**
+**Definition 1.21 (Bounded recursive-code decoding).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.evalInstruction`
 
@@ -244,7 +256,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 A finite code evaluation either supplies a decoded finite instruction or yields no result at the supplied fuel. Increasing fuel eventually supplies the realized instruction at every individual control.
 
-**Definition 1.21 (The complete reply alphabet).**
+**Definition 1.22 (The complete reply alphabet).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.replies`
 
@@ -256,7 +268,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 The finite list contains alpha, beta, branch and absent, each once.
 
-**Definition 1.22 (Finite exploration with two bounds).**
+**Definition 1.23 (Finite exploration with two bounds).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.enumerate`
 
@@ -268,7 +280,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 The evaluator fuel bounds the recursive-code evaluation at each microstep, while depth bounds the number of observer events explored. Every Read explores all four continuations. Return emits the exact whole control. Every invocation is finite, including those exploring a branch that has infinitely many local steps.
 
-**Definition 1.23 (Zero-burst representation of an erased word).**
+**Definition 1.24 (Zero-burst representation of an erased word).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.untimed`
 
@@ -280,7 +292,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution
 
 untimed marks each observer event with a zero burst. These markers describe the source-blind skeleton; retime supplies the actual chronological writer bursts.
 
-**Theorem 1.24 (Code exploration and exact native execution).**
+**Theorem 1.25 (Code exploration and exact native execution).**
 
 $$\forall P: EffectiveProgram, (\forall c: Nat, (\forall b: Nat, (\forall w: \operatorname{List}\left(ObserverEvent\right), ((\exists fuel: Nat, (\exists n: Nat, ((w, b) \in \operatorname{enumerate}\left(\operatorname{code}\left(P\right), fuel, n, c\right)))) \iff ((\operatorname{Skeleton}\left(\operatorname{transition}\left(P\right), c, \operatorname{untimed}\left(w\right), b\right)) \land (\forall u: Source, (\forall eta: Nat \to Nat, (\forall x: Nat \to Source, ((\operatorname{Ordered}\left(0, 0, w, eta\right)) \implies ((\operatorname{Holds}\left(u, eta, x, \operatorname{constraint}\left(0, w\right)\right)) \iff (\operatorname{Run}\left(\operatorname{transition}\left(P\right), c, u, \operatorname{expand}\left(\operatorname{retime}\left(0, 0, w, eta\right)\right), b\right))))))))))))$$
 
@@ -324,4 +336,5 @@ No supplemental row or comparison assertion is attached to these constraints. Su
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.replies`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.retime`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.untimed`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.updates_iff`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeLiteralPathConstraints](NativeLiteralPathConstraints.md)

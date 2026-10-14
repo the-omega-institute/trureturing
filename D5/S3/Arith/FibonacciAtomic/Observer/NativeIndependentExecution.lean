@@ -99,7 +99,7 @@ private theorem chronology_exists (e i : Nat) (t : TimedWord) :
     intro n hn
     simp only [ζ, if_neg (show n ≠ i by omega)]
 
-private theorem updates_iff {C : Type} (δ : C → Op C) (k : Nat)
+theorem updates_iff {C : Type} (δ : C → Op C) (k : Nat)
     (c : C) (U : Source) (t : Word) (b : C) :
     Run δ c U (List.replicate k .update ++ t) b ↔
       Run δ c (substitution^[k] U) t b := by

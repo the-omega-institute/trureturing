@@ -240,4 +240,84 @@ noncomputable def effective_native_correspondence_registration :
   familyRecord := none
   options := #[]
 
+abbrev burstSignature : Signature where
+  Params := Nat
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Source
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def burstActual : Realization burstSignature :=
+  realize burstSignature (fun _ k U => substitution^[k] U) (fun i => nomatch i)
+
+def burstBad : Realization burstSignature :=
+  realize burstSignature (fun _ _ _ => .of true) (fun i => nomatch i)
+
+abbrev burstArena : Arena where
+  signature := burstSignature
+  Law R := ∀ {C : Type} (δ : C → Op C) (k : Nat) (c : C) (U : Source)
+    (t : Word) (b : C),
+    Run δ c U (List.replicate k .update ++ t) b ↔ Run δ c (R.readout () k U) t b
+
+private def probe : Nat → Op Nat
+  | 0 => .read [] (fun y => if y = .alpha then 1 else 2)
+  | _ => .ret
+
+private theorem burst_bad : ¬ burstArena.Law burstBad := by
+  intro h
+  have r : Run probe 0 (.of false) [.observer (.read [] .beta),.observer .ret] 2 :=
+    Run.read rfl rfl (Run.ret rfl)
+  have no := (@h Nat probe 0 0 (.of false) _ 2).mp r
+  cases no with
+  | read hop hy rest =>
+    change _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.Reply.alpha = .beta at hy
+    cases hy
+
+private theorem burst_dependence : ObservationalDependence burstSignature burstActual := by
+  intro i
+  refine ⟨0,.of true,.of false,?_⟩
+  simp [burstActual,realize]
+  intro h
+  cases h
+
+def burstProof : Registration burstArena (type_of% (@updates_iff)) where
+  actual := burstActual
+  bridge := Iff.rfl
+  variation := ⟨@updates_iff,burstBad,burst_bad⟩
+  sensitivity := ⟨fun i => ⟨burstBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,burst_bad⟩,fun i => nomatch i⟩
+  dependence := burst_dependence
+
+noncomputable def updates_iff_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeIndependentExecution.updates_iff)
+      (Realization burstSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeIndependentExecution.updates_iff
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeIndependentExecution.burstProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨burstArena⟩
+  objectArena := .source ⟨burstArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source burstArena ⟨burstProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize burstSignature (fun _ k U => substitution^[k] U) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeIndependentExecution
+    definition := none
+    coordinates := #[2]
+    readouts := #[{path := #["body","body","body","body","body","body","body","arg","fn","fn","arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeIndependentExecution

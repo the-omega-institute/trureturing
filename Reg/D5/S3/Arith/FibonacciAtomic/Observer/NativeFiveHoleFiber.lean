@@ -9,7 +9,8 @@ open D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution
 open D5.S3.Arith.FibonacciAtomic.Observer.NativeFiveHoleFiber
 open D5.S3.Arith.FibonacciAtomic.Observer.NativeFiveHoleCompiler
 open D5.S3.Arith.FibonacciAtomic.Observer.NativeFiveHoleJointChoice
-open D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder (literalRecord)
+open D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder (literalRecord HoleExterior)
+open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address)
 open D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -305,5 +306,31 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,1
 
 #print axioms proof
 end RawStratum
+
+abbrev rootSignature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := HoleExterior × Finset (Address × Address)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def rootActual : Realization rootSignature :=
+  realize rootSignature (fun _ _ u => literalRecord {[]} u) (fun i => nomatch i)
+
+abbrev rootArena : Arena where
+  signature := rootSignature
+  Law R := ∀ u : Source, R.readout () () u = rootLabel
+
+/-- The exact constant root readout cannot satisfy the observational dependence
+required by this template, even though its row equality holds for all sources. -/
+theorem root_registration_impossible :
+    ¬ Nonempty (Registration rootArena (type_of% (@root_record))) := by
+  rintro ⟨r⟩
+  obtain ⟨p,x,y,hxy⟩ := r.dependence ()
+  cases p
+  exact hxy ((r.variation.1 x).trans (r.variation.1 y).symm)
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFiveHoleFiber

@@ -18,7 +18,19 @@ Source is the finite free magma on the two native leaves. Addresses are Boolean 
 
 RootLabel is the complete one-hole row at the empty address. GuardedEqual requires presence at both supplied endpoints and equality of the entire transformed subtrees. All original literals and both positive copies concern the same finite source.
 
-**Theorem 1.2 (Every raw source has the full source shape).**
+**Theorem 1.2 (The complete root row is constant).**
+
+$$\forall u: Source, (\operatorname{literalRecord}\left(\operatorname{singleton}\left(\operatorname{nil}\left(\right)\right), u\right) = \operatorname{rootLabel}\left(\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleFiber.root_record` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every nonempty finite source is hidden by the root hole. Its literal exterior is the empty-address hole and its complete partition has one class. This equality keeps the entire row, including the partition, rather than only a point reply.
+
+**Theorem 1.3 (Every raw source has the full source shape).**
 
 $$\forall u: Source, ((\operatorname{Raw}\left(u\right)) \iff (\exists x, y, z: Source, (u = \operatorname{V}\left(x, y, z\right))))$$
 
@@ -30,7 +42,7 @@ $$\forall u: Source, ((\operatorname{Raw}\left(u\right)) \iff (\exists x, y, z: 
 
 The four branch replies extract the full outer skeleton. The alpha replies force branches in its last two holes. Transport at epoch one and the guarded copies identify their right children with the substitutions of y and z. Conversely every source of this shape satisfies the root row, every literal, both endpoint guards and both copied equalities. The parameterization covers the entire raw fiber.
 
-**Theorem 1.3 (All cut endpoints remain reached at every epoch).**
+**Theorem 1.4 (All cut endpoints remain reached at every epoch).**
 
 $$\forall a: Nat, (\forall x, y, z: Source, (\forall i: \operatorname{Fin}\left(5\right), (\operatorname{subtree}\left(\operatorname{position}\left(i\right), \operatorname{iterate}\left(\operatorname{substitution}\left(\right), a, \operatorname{V}\left(x, y, z\right)\right)\right) = \operatorname{some}\left(\operatorname{iterate}\left(\operatorname{substitution}\left(\right), a, \operatorname{hole}\left(x, y, z, i\right)\right)\right))))$$
 
@@ -42,7 +54,7 @@ $$\forall a: Nat, (\forall x, y, z: Source, (\forall i: \operatorname{Fin}\left(
 
 Original present transport applies at each already reached cut address. Arbitrary supplied natural epochs retain both guards of every negative record. The comparison is between entire transformed holes.
 
-**Definition 1.4 (All six class comparisons).**
+**Definition 1.5 (All six class comparisons).**
 
 $$\forall y, z: Source, ((\operatorname{Distinct}\left(y, z\right)) \iff ((y \neq z) \land ((y \neq \operatorname{F}\left(y\right)) \land ((y \neq \operatorname{F}\left(z\right)) \land ((z \neq \operatorname{F}\left(y\right)) \land ((z \neq \operatorname{F}\left(z\right)) \land (\operatorname{F}\left(y\right) \neq \operatorname{F}\left(z\right))))))))$$
 
@@ -54,7 +66,7 @@ $$\forall y, z: Source, ((\operatorname{Distinct}\left(y, z\right)) \iff ((y \ne
 
 Both labels contain the same complete four-branch exterior. The false label has partition blocks {L,RL}, {RRL}, {RRRL}, {RRRR}. The true label has blocks {L,RRRL}, {RL}, {RRL}, {RRRR}. Label compares every ordered pair in Q, including reflexive and reversed pairs.
 
-**Theorem 1.5 (The entire exterior and partition determine the parameters).**
+**Theorem 1.6 (The entire exterior and partition determine the parameters).**
 
 $$\forall s: Bool, (\forall x, y, z: Source, ((\operatorname{literalRecord}\left(\operatorname{Q}\left(\right), \operatorname{V}\left(x, y, z\right)\right) = \operatorname{label}\left(s\right)) \iff ((x = \operatorname{ite}\left(s, \operatorname{F}\left(y\right), y\right)) \land (\operatorname{Distinct}\left(y, z\right)))))$$
 
@@ -66,7 +78,7 @@ $$\forall s: Bool, (\forall x, y, z: Source, ((\operatorname{literalRecord}\left
 
 The forward direction extracts the repeated block and all six inequalities from the complete partition. The reverse checks every pair of holes and the whole exterior. No chosen representative narrows the fiber.
 
-**Theorem 1.6 (Exact membership in each original whole stratum).**
+**Theorem 1.7 (Exact membership in each original whole stratum).**
 
 $$\forall s: Bool, (\forall H: History, (\forall u: Source, ((\operatorname{Stratum}\left(s, H, u\right)) \iff (\exists y, z: Source, ((u = \operatorname{source}\left(s, y, z\right)) \land ((\operatorname{Distinct}\left(y, z\right)) \land (\operatorname{Protected}\left(H, \operatorname{source}\left(s, y, z\right)\right))))))))$$
 
@@ -86,4 +98,5 @@ History is any finite list of negative records between Q endpoints, at arbitrary
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleFiber.epoch_hole`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleFiber.raw_fiber_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleFiber.raw_stratum_iff`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleFiber.root_record`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns](NativeDepthPatterns.md)
