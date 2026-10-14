@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:10670ead60708dbb095f3ffd487bb8b3067db90d0f00f89d8fc0aeecf25e2e4e
+  normalized_sha256: sha256:10670ead60708dbb095f3ffd487bb8b3067db90d0f00f89d8fc0aeecf25e2e4e
+cas_ref: sha256:10670ead60708dbb095f3ffd487bb8b3067db90d0f00f89d8fc0aeecf25e2e4e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 模型约定或假设清单项：在上下文中规定对象、记号、允许操作或前置条件，不将这些条件断言为结论。
+    previous_atom_id: 8822d00f7b5aa59498ee6a7bbcc06c1759d93299ac19c22cb863fce7d6840289
+    next_atom_id: 4756eb3c7a2a64fba8f2fc8b3361270368a6e8be42aca0c85d6684ad7470eae5
