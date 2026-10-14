@@ -8,21 +8,19 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
 
+open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+open private filter_complement_of_nodup from
+  D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
+
 universe u
 variable {V : Type u} [DecidableEq V] {G : SimpleGraph V}
 
-/-- Restore precisely H and continue deleting precisely K. The chosen
-new opposite-order cut is isolated from H; all other restored cuts come
-from H.erase seam. Cycle simplicity and exact joint inventory supply the
-complete source edge permutation used by actual boundary restoration. -/
-theorem actual_joint_half_cut_inventory {base : V}
+private theorem actual_joint_split_cut_inventory {base : V}
     (c : G.Walk base base) (hc : c.IsCycle) (jointEdges : List (Sym2 V))
     (K H : Finset (Sym2 V)) (hdisjoint : Disjoint K H)
     (hjoint : jointEdges.Perm (c.edges.filter fun e => decide (e ∉ K ∪ H)))
-    (hcuts : ∀ e ∈ K ∪ H, e ∈ c.edges)
-    (seam : Sym2 V) (hseam : seam ∈ H) :
-    c.edges.Perm (jointEdges ++ (H.erase seam).toList ++ [seam] ++ K.toList) ∧
-      seam ∉ K ∧ Disjoint (H.erase seam) K := by
+    (hcuts : ∀ e ∈ K ∪ H, e ∈ c.edges) :
+    c.edges.Perm (jointEdges ++ H.toList ++ K.toList) := by
   classical
   have hpartition : c.edges.Perm
       ((c.edges.filter fun e => decide (e ∉ K ∪ H)) ++
@@ -49,6 +47,77 @@ theorem actual_joint_half_cut_inventory {base : V}
     intro e
     simp only [Finset.mem_toList, List.mem_append, Finset.mem_union]
     exact or_comm
+  simpa only [List.append_assoc] using
+    hpartition.trans (hjoint.symm.append (hremoved.trans hsplit))
+
+/-- Both inventories concern the same actual cycle. Restoring H from the
+joint partition earns the exact old single-order inventory, rather than
+assuming a pre-regrouped restoration certificate. -/
+theorem actual_restored_single_order_inventory {base : V}
+    (c : G.Walk base base) (hc : c.IsCycle)
+    (jointEdges singleEdges : List (Sym2 V))
+    (K H : Finset (Sym2 V)) (hdisjoint : Disjoint K H)
+    (hjoint : jointEdges.Perm (c.edges.filter fun e => decide (e ∉ K ∪ H)))
+    (hsingle : singleEdges.Perm (c.edges.filter fun e => decide (e ∉ K)))
+    (hcuts : ∀ e ∈ K ∪ H, e ∈ c.edges) :
+    singleEdges.Perm (jointEdges ++ H.toList) := by
+  classical
+  have hsource := actual_joint_split_cut_inventory c hc jointEdges K H
+    hdisjoint hjoint hcuts
+  have hsource' : c.edges.Perm ((jointEdges ++ H.toList) ++ K.toList) := by
+    simpa only [List.append_assoc] using hsource
+  have hn : ((jointEdges ++ H.toList) ++ K.toList).Nodup :=
+    hsource'.nodup_iff.mp hc.isTrail.edges_nodup
+  have hfiltered := List.Perm.filter (fun e => decide (e ∉ K)) hsource'
+  have hfilter : ((jointEdges ++ H.toList) ++ K.toList).filter
+      (fun e => decide (e ∉ K)) = jointEdges ++ H.toList := by
+    simpa only [Finset.toList_toFinset] using
+      filter_complement_of_nodup (jointEdges ++ H.toList) K.toList hn
+  rw [hfilter] at hfiltered
+  exact hsingle.trans hfiltered
+
+/-- The prior actual single-order and joint states both partition the
+same old cycle. Their verified inventories earn every old support and
+edge regrouping needed by the next boundary update. The single-order
+support is simple because its count is that of the Hamiltonian cycle. -/
+theorem actual_prior_single_order_partition_inventories {base : V}
+    (c : G.Walk base base) (hc : c.IsHamiltonianCycle)
+    (joint single : List (Piece G))
+    (K H : Finset (Sym2 V)) (hdisjoint : Disjoint K H)
+    (hjointSupport : (joint.flatMap fun p => p.walk.support).Perm c.support.tail)
+    (hsingleSupport : (single.flatMap fun p => p.walk.support).Perm c.support.tail)
+    (hjointEdges : (joint.flatMap fun p => p.walk.edges).Perm
+      (c.edges.filter fun e => decide (e ∉ K ∪ H)))
+    (hsingleEdges : (single.flatMap fun p => p.walk.edges).Perm
+      (c.edges.filter fun e => decide (e ∉ K)))
+    (hcuts : ∀ e ∈ K ∪ H, e ∈ c.edges) :
+    (single.flatMap fun p => p.walk.support).Nodup ∧
+    (single.flatMap fun p => p.walk.support).Perm
+      (joint.flatMap fun p => p.walk.support) ∧
+    (single.flatMap fun p => p.walk.edges).Perm
+      ((joint.flatMap fun p => p.walk.edges) ++ H.toList) := by
+  have hn : (single.flatMap fun p => p.walk.support).Nodup := by
+    apply List.nodup_iff_count_le_one.mpr
+    intro v
+    rw [hsingleSupport.count_eq v]
+    rw [(SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hc).2 v]
+  exact ⟨hn, hsingleSupport.trans hjointSupport.symm,
+    actual_restored_single_order_inventory c hc.isCycle _ _ K H hdisjoint
+      hjointEdges hsingleEdges hcuts⟩
+
+/-- Restore precisely H and continue deleting precisely K. The chosen
+new opposite-order cut is isolated from H; all other restored cuts come
+from H.erase seam. Cycle simplicity and exact joint inventory supply the
+complete source edge permutation used by actual boundary restoration. -/
+theorem actual_joint_half_cut_inventory {base : V}
+    (c : G.Walk base base) (hc : c.IsCycle) (jointEdges : List (Sym2 V))
+    (K H : Finset (Sym2 V)) (hdisjoint : Disjoint K H)
+    (hjoint : jointEdges.Perm (c.edges.filter fun e => decide (e ∉ K ∪ H)))
+    (hcuts : ∀ e ∈ K ∪ H, e ∈ c.edges)
+    (seam : Sym2 V) (hseam : seam ∈ H) :
+    c.edges.Perm (jointEdges ++ (H.erase seam).toList ++ [seam] ++ K.toList) ∧
+      seam ∉ K ∧ Disjoint (H.erase seam) K := by
+  classical
   have hseparate : H.toList.Perm ((H.erase seam).toList ++ [seam]) := by
     have hi : H.toList.Perm (seam :: (H.erase seam).toList) := by
       simpa only [Finset.insert_erase hseam] using
@@ -56,8 +125,9 @@ theorem actual_joint_half_cut_inventory {base : V}
     exact hi.trans (by
       simpa only [List.singleton_append] using
         List.perm_append_comm [seam] (H.erase seam).toList)
-  have hsource := hpartition.trans (hjoint.symm.append
-    (hremoved.trans (hsplit.trans (hseparate.append (List.Perm.refl K.toList)))))
+  have hsource := (actual_joint_split_cut_inventory c hc jointEdges K H
+    hdisjoint hjoint hcuts).trans
+    ((List.Perm.refl jointEdges).append (hseparate.append (List.Perm.refl K.toList)))
   refine ⟨?_, ?_, ?_⟩
   · simpa only [List.append_assoc] using hsource
   · intro hK
@@ -65,5 +135,7 @@ theorem actual_joint_half_cut_inventory {base : V}
   · exact hdisjoint.symm.mono_left (Finset.erase_subset _ _)
 
 #print axioms actual_joint_half_cut_inventory
+#print axioms actual_restored_single_order_inventory
+#print axioms actual_prior_single_order_partition_inventories
 
 end D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory

@@ -95,6 +95,117 @@ theorem actual_restored_partition_joint_prefix
     p.walk.start_mem_support hkeep
   exact actual_rooted_path_is_prefix q hq p.walk hpath hlocal
 
+/-- The primary boundary starts at the old distinguished joint piece.
+Both exact inventories refer to the same cycle, so retaining that whole
+joint piece and its literal initial position are earned together. -/
+theorem actual_restored_initial_joint_prefix
+    {base ℓ z y : V} (c : G.Walk base base)
+    (d : G.Walk ℓ z) (jointrest : List (Piece G))
+    (old : G.Walk ℓ y) (oldrest : List (Piece G))
+    (hnjoint : ((⟨ℓ, z, d⟩ :: jointrest).flatMap
+      fun p : Piece G => p.walk.support).Nodup)
+    (hnold : ((⟨ℓ, y, old⟩ :: oldrest).flatMap
+      fun p : Piece G => p.walk.support).Nodup)
+    (K H : Finset (Sym2 V))
+    (hjoint : ∀ e, e ∈ ((⟨ℓ, z, d⟩ :: jointrest).flatMap
+      fun p : Piece G => p.walk.edges) ↔ e ∈ c.edges ∧ e ∉ K ∪ H)
+    (hold : ∀ e, e ∈ ((⟨ℓ, y, old⟩ :: oldrest).flatMap
+      fun p : Piece G => p.walk.edges) ↔ e ∈ c.edges ∧ e ∉ K) :
+    d.support.Nodup ∧ (∀ e ∈ d.edges, e ∈ old.edges) ∧
+      ∃ tail : G.Walk z y, old = d.append tail ∧ tail.IsPath := by
+  have hnd : d.support.Nodup := by
+    change (d.support ++ jointrest.flatMap fun p => p.walk.support).Nodup at hnjoint
+    exact (List.nodup_append'.mp hnjoint).1
+  have hkeep : ∀ e ∈ d.edges, e ∈ ((⟨ℓ, y, old⟩ :: oldrest).flatMap
+      fun p : Piece G => p.walk.edges) := by
+    intro e he
+    have hj := (hjoint e).mp (List.mem_flatMap.mpr
+      ⟨⟨ℓ, z, d⟩, List.mem_cons_self, he⟩)
+    exact (hold e).mpr ⟨hj.1, fun hk => hj.2 (Finset.mem_union.mpr (Or.inl hk))⟩
+  have hlocal := actual_partition_rooted_walk_edges (⟨ℓ, y, old⟩ :: oldrest)
+    hnold ⟨ℓ, y, old⟩ List.mem_cons_self d old.start_mem_support hkeep
+  have holdPath : old.IsPath := SimpleGraph.Walk.IsPath.mk' (by
+    change (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup at hnold
+    exact (List.nodup_append'.mp hnold).1)
+  exact ⟨hnd, hlocal, actual_rooted_path_is_prefix d
+    (SimpleGraph.Walk.IsPath.mk' hnd) old holdPath hlocal⟩
+
+/-- The opposite-order rooted route is earned from two disjoint actual
+joint pieces and one restored marked edge. Its simplicity follows from
+the joint support partition. The same-cycle inventories put every route
+edge in the actual single-order partition; ownership at its start then
+forces it to be a prefix of that whole boundary path. No route-retention
+or route-factorization certificate is an input. -/
+theorem actual_restored_bridge_route_prefix
+    {base ℓ z r x y : V} (c : G.Walk base base)
+    (d : G.Walk ℓ z) (cross : G.Walk r x) (jointrest : List (Piece G))
+    (old : G.Walk x y) (oldrest : List (Piece G))
+    (hnjoint : ((⟨ℓ, z, d⟩ :: ⟨r, x, cross⟩ :: jointrest).flatMap
+      fun p : Piece G => p.walk.support).Nodup)
+    (hnold : ((⟨x, y, old⟩ :: oldrest).flatMap
+      fun p : Piece G => p.walk.support).Nodup)
+    (K H : Finset (Sym2 V)) (hdisjoint : Disjoint K H)
+    (hjoint : ∀ e, e ∈ ((⟨ℓ, z, d⟩ :: ⟨r, x, cross⟩ :: jointrest).flatMap
+      fun p : Piece G => p.walk.edges) ↔ e ∈ c.edges ∧ e ∉ K ∪ H)
+    (hold : ∀ e, e ∈ ((⟨x, y, old⟩ :: oldrest).flatMap
+      fun p : Piece G => p.walk.edges) ↔ e ∈ c.edges ∧ e ∉ K)
+    (hcuts : ∀ e ∈ K ∪ H, e ∈ c.edges) (hseam : s(r, ℓ) ∈ H) :
+    ∃ hrestore : G.Adj r ℓ,
+      let prefix := cross.reverse.concat hrestore
+      (prefix.append d).support.Nodup ∧
+      (∀ e ∈ (prefix.append d).edges, e ∈ old.edges) ∧
+      ∃ tail : G.Walk z y,
+        old = prefix.append (d.append tail) ∧ tail.IsPath := by
+  classical
+  have hrestore : G.Adj r ℓ :=
+    c.adj_of_mem_edges (hcuts _ (Finset.mem_union.mpr (Or.inr hseam)))
+  let prefix := cross.reverse.concat hrestore
+  let route := prefix.append d
+  have hroute : route = cross.reverse.append (d.cons hrestore) :=
+    SimpleGraph.Walk.concat_append cross.reverse hrestore d
+  have hpair : (d.support ++ cross.support).Nodup := by
+    change (d.support ++ cross.support ++ jointrest.flatMap fun p => p.walk.support).Nodup at hnjoint
+    have hn : ((d.support ++ cross.support) ++
+        jointrest.flatMap fun p => p.walk.support).Nodup := by
+      simpa only [List.append_assoc] using hnjoint
+    exact (List.nodup_append'.mp hn).1
+  have hsupport : route.support.Perm (d.support ++ cross.support) := by
+    rw [hroute]
+    apply List.perm_iff_count.mpr
+    intro v
+    simp only [SimpleGraph.Walk.support_append, SimpleGraph.Walk.support_reverse,
+      SimpleGraph.Walk.support_cons, List.tail_cons, List.count_append, List.count_reverse]
+    omega
+  have hnroute : route.support.Nodup := hsupport.nodup_iff.mpr hpair
+  have hseamNot : s(r, ℓ) ∉ K := fun he =>
+    Finset.disjoint_left.mp hdisjoint he hseam
+  have hkeep : ∀ e ∈ route.edges, e ∈ ((⟨x, y, old⟩ :: oldrest).flatMap
+      fun p : Piece G => p.walk.edges) := by
+    intro e he
+    rw [hroute] at he
+    simp only [SimpleGraph.Walk.edges_append, SimpleGraph.Walk.edges_reverse,
+      SimpleGraph.Walk.edges_cons, List.mem_append, List.mem_reverse, List.mem_cons] at he
+    apply (hold e).mpr
+    rcases he with he | (rfl | he)
+    · have hj := (hjoint e).mp (by
+        change e ∈ d.edges ++ cross.edges ++ jointrest.flatMap fun p => p.walk.edges
+        exact List.mem_append.mpr (Or.inr (List.mem_append.mpr (Or.inl he))))
+      exact ⟨hj.1, fun hk => hj.2 (Finset.mem_union.mpr (Or.inl hk))⟩
+    · exact ⟨hcuts _ (Finset.mem_union.mpr (Or.inr hseam)), hseamNot⟩
+    · have hj := (hjoint e).mp (by
+        change e ∈ d.edges ++ cross.edges ++ jointrest.flatMap fun p => p.walk.edges
+        exact List.mem_append.mpr (Or.inl he))
+      exact ⟨hj.1, fun hk => hj.2 (Finset.mem_union.mpr (Or.inl hk))⟩
+  have hlocal := actual_partition_rooted_walk_edges (⟨x, y, old⟩ :: oldrest)
+    hnold ⟨x, y, old⟩ List.mem_cons_self route old.start_mem_support hkeep
+  have holdPath : old.IsPath := SimpleGraph.Walk.IsPath.mk' (by
+    change (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup at hnold
+    exact (List.nodup_append'.mp hnold).1)
+  obtain ⟨tail, hfactor, htail⟩ := actual_rooted_path_is_prefix route
+    (SimpleGraph.Walk.IsPath.mk' hnroute) old holdPath hlocal
+  refine ⟨hrestore, hnroute, hlocal, tail, ?_, htail⟩
+  simpa only [route, SimpleGraph.Walk.append_assoc] using hfactor
+
 /-- In particular, the oriented cut just before an old joint path's
 finish occurs on the same forward single-order boundary path. Its actual
 position is earned from the forced joint suffix and literal recovery. -/
@@ -121,6 +232,8 @@ theorem actual_restored_joint_cut_position
 #print axioms actual_partition_rooted_walk_edges
 #print axioms actual_rooted_path_is_prefix
 #print axioms actual_restored_partition_joint_prefix
+#print axioms actual_restored_initial_joint_prefix
+#print axioms actual_restored_bridge_route_prefix
 #print axioms actual_restored_joint_cut_position
 
 end D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
