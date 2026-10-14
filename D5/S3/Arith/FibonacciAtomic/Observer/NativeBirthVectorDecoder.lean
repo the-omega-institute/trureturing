@@ -24,19 +24,23 @@ open NativeRankedNavigationCompiler (pathThreshold)
 abbrev LevelAddress (d : Nat) := {a : Address // a.length = d}
 abbrev LevelVector (d : Nat) := LevelAddress d → Nat
 
-/-- The least epoch code of an atomic root at a nonempty address. -/
+/-- The atomic code is the path threshold for alpha and its natural-number
+predecessor for beta. -/
 def atomicBirth (b : Bool) (a : Address) : Nat :=
   if b then pathThreshold a else pathThreshold a - 1
 
-/-- The native least-birth recursion. A pair root is already present, so its
-children contribute without an epoch shift. -/
+/-- The recursive address code: the root has code zero, an atomic source uses
+`atomicBirth`, and a pair selects a child without an epoch shift. The results
+below concern this code; they do not establish its interpretation as the least
+epoch of actual presence for the full source/address family. -/
 def birthAt : Address → Source → Nat
   | [], _ => 0
   | a, .of b => atomicBirth b a
   | false :: a, .mul l _ => birthAt a l
   | true :: a, .mul _ r => birthAt a r
 
-/-- Birth vectors retain every address at one complete depth. -/
+/-- Collect the recursively defined `birthAt` code at every address of one
+complete depth. -/
 def birthVector (d : Nat) (u : Source) : LevelVector d :=
   fun a => birthAt a.1 u
 
@@ -60,7 +64,11 @@ def tailAddress {d : Nat} (a : LevelAddress (d + 1)) : LevelAddress d :=
         omega
     | cons b t => simpa [h] using a.2⟩
 
-/-- A total decoder: malformed vectors are rejected with `none`. -/
+/-- A total recursive decoder, proved correct on `patternVector` images by
+`decodeBirth_patternVector`. At depth zero it returns `some ()` for every input;
+at positive depth it tests the rightmost sentinel and otherwise recurses on the
+two blocks. Acceptance does not certify that an arbitrary input is an image
+vector. -/
 def decodeBirth : (d : Nat) → LevelVector d → Option (Pattern d)
   | 0, _ => some ()
   | d + 1, x =>

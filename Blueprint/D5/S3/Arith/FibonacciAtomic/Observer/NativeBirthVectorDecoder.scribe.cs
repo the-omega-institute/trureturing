@@ -17,11 +17,20 @@ internal sealed class NativeBirthVectorDecoderDocument : IScribeDocumentDefiniti
         Blocks(
             Paragraph(Text("Address is the finite binary-word type and Source is the existing native source algebra. "
                 + "Pattern d is the finite original-prefix pattern at depth d. LevelAddress d contains exactly the "
-                + "addresses of length d, and a LevelVector d assigns a natural birth code to every such address. "
-                + "birthVector evaluates the least epoch at which each address is present in one source. "
-                + "patternVector is the corresponding code obtained from the decomposed original prefix. "
-                + "decodeBirth recursively tests the rightmost address for the alpha and beta sentinel codes, "
-                + "then splits the vector into its left and right blocks; malformed vectors return none.")),
+                + "addresses of length d, and a LevelVector d assigns a natural-number code to every such address. "
+                + "birthVector collects the recursively defined birthAt code: the empty address has code zero, "
+                + "an atomic source uses pathThreshold for alpha and its natural-number predecessor for beta, "
+                + "and a pair selects the child named by the first address bit without an epoch shift. "
+                + "patternVector is the corresponding code obtained from the decomposed original prefix.")),
+            Paragraph(Text("The statements below concern these recursive codes. Interpreting birthAt as the least "
+                + "epoch of actual presence over the full Source/address family requires a separate bridge to "
+                + "native subtree navigation under iterated substitution; the decomposition and decoder "
+                + "identities do not supply that bridge.")),
+            Paragraph(Text("decodeBirth tests the rightmost address for the alpha and beta sentinel codes at "
+                + "positive depth and otherwise recurses on the left and right blocks. Its proved guarantee is "
+                + "decodeBirth d (patternVector d p) = some p for every depth d and pattern p. Acceptance does "
+                + "not certify membership in the patternVector image: at depth zero every input returns some (), "
+                + "including a vector with nonzero entry, although every depth-zero pattern vector is zero.")),
             Describe.Lean(DescribeId.Create("birth-vector-decomposition"),
                 DeclarationHandle.Create(Prefix + "birthVector_decompose"), H("Native birth vectors are pattern vectors"),
                 StatementSource.FromAuthor(Seq(Forall, Sp, V("d"), Sp, InMacro, Sp, V("Nat"), Comma, Sp,
@@ -47,7 +56,7 @@ internal sealed class NativeBirthVectorDecoderDocument : IScribeDocumentDefiniti
                     + "the child pattern vectors. The induction hypothesis reconstructs both children and hence the "
                     + "pair pattern."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pattern-vector-bound"),
-                DeclarationHandle.Create(Prefix + "patternVector_bound"), H("Pattern-vector codes stay below the sentinels"),
+                DeclarationHandle.Create(Prefix + "patternVector_bound"), H("Pattern-vector codes are bounded by twice the depth"),
                 StatementSource.FromAuthor(Seq(Forall, Sp, V("d"), Sp, InMacro, Sp, V("Nat"), Comma, Sp,
                     Forall, Sp, V("p"), Sp, InMacro, Sp, Call("Pattern", V("d")), Comma, Sp,
                     Forall, Sp, V("a"), Sp, InMacro, Sp, Call("LevelAddress", V("d")), Comma, Sp,
