@@ -331,7 +331,8 @@ internal sealed partial class LeanSourceCatalog
         }
         else
         {
-            foreach (var dependency in ResolveTokenDependencies(declaration, declaration.SemanticTokens, respectBinders: true))
+            var dependencyTokens = declaration.SemanticTokens.RemoveAt(1);
+            foreach (var dependency in ResolveTokenDependencies(declaration, dependencyTokens, respectBinders: true))
                 yield return dependency;
         }
 
@@ -606,8 +607,6 @@ internal sealed partial class LeanSourceCatalog
             var name = tokens[nameIndex].Text;
             var fullName = name.StartsWith("_root_.", StringComparison.Ordinal)
                 ? name["_root_.".Length..]
-                : name.Contains('.', StringComparison.Ordinal)
-                ? name
                 : string.Join('.', scopeStack
                     .Select(static scope => scope.NamespaceName)
                     .Where(static namespaceName => namespaceName is not null)

@@ -200,6 +200,71 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Theory]
+    [InlineData("7", "8", true)]
+    [InlineData("9", "8", false)]
+    [InlineData("7", "9", true)]
+    public void MathlibReanchorQualifiesDottedDeclarationsInTheirNamespace(
+        string firstValue, string secondValue, bool authorized)
+    {
+        const string original = "namespace One\ndef Inner.value : Nat := 7\nend One\n"
+            + "namespace Two\ndef Inner.value : Nat := 8\nend Two\n";
+        var baseline = ModuleWithReport("A", original, "old value",
+            declarations: ["One.Inner.value"], kind: "def");
+        var candidate = baseline with
+        {
+            Source = original.Replace(":= 7", ":= " + firstValue, StringComparison.Ordinal)
+                .Replace(":= 8", ":= " + secondValue, StringComparison.Ordinal),
+            StatementMaterial = "new value",
+        };
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")], [candidate, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(authorized, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void MathlibReanchorTracksQualifiedDefinitionDependencies(bool unchanged)
+    {
+        const string original = "namespace Two\ndef Inner.value : Nat := 7\nend Two\n"
+            + "namespace One\ndef Inner.value : Nat := Two.Inner.value\nend One\n";
+        var baseline = ModuleWithReport("A", original, "old value",
+            declarations: ["One.Inner.value"], kind: "def");
+        var candidate = baseline with
+        {
+            Source = unchanged ? original : original.Replace("7", "8", StringComparison.Ordinal),
+            StatementMaterial = "new value",
+        };
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")], [candidate, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(unchanged, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void MathlibReanchorRetainsExplicitRootDeclarationNames(bool unchanged)
+    {
+        const string original = "namespace One\ndef _root_.value : Nat := 7\nend One\n";
+        var baseline = ModuleWithReport("A", original, "old value",
+            declarations: ["value"], kind: "def");
+        var candidate = baseline with
+        {
+            Source = unchanged ? original : original.Replace("7", "8", StringComparison.Ordinal),
+            StatementMaterial = "new value",
+        };
+        var result = ValidateMathlibReanchor(
+            [baseline, Module("B")], [candidate, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(unchanged, result.Authorized);
+    }
+
+    [Theory]
     [InlineData(true)]
     [InlineData(false)]
     public void MathlibReanchorRetainsAnonymousOnlyModuleSource(bool unchanged)
