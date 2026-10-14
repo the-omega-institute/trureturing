@@ -1,0 +1,20 @@
+- HALT0 and HALT1 have the respective fixed-bit Halt instructions.
+  ERROR and every invalid code read $\varepsilon$ and send every
+  raw reply to the canonical ERROR.
+
+These rules specify every typed reply, including replies outside
+actual supports. Every nonhalting intermediate instruction is an
+actual source primitive. The next-address rule is precisely preorder:
+a branch opens its left child; completion of a subtree finds the
+deepest ancestor whose right child is pending. Its pending ancestors
+are encoded by the $L$ positions of $p$, so no stack of subtrees is
+retained. This is a consumer of the published source-total traversal,
+not a claim that its full acquired-tree workspace has width $O(h)$.
+
+The common initial $z$ is root VALUE with zero fields for static or
+$T=0$, and canonical POLL for active $T\ge1$. Every actual transition
+in the preceding proof is one of these rows. The branch cutoff bounds
+every actual path by $h-1$; the counter bounds and the exact completion
+test follow from the pending-slot invariant. Trial resets and the
+possibly long path truncation remain to be implemented and charged.
+
