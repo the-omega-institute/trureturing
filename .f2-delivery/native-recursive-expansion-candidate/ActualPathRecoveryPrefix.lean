@@ -165,7 +165,7 @@ theorem actual_restored_bridge_route_prefix
   have hroute : route = cross.reverse.append (d.cons hrestore) :=
     SimpleGraph.Walk.concat_append cross.reverse hrestore d
   have hpair : (d.support ++ cross.support).Nodup := by
-    change (d.support ++ cross.support ++ jointrest.flatMap fun p => p.walk.support).Nodup at hnjoint
+    simp only [List.flatMap_cons] at hnjoint
     have hn : ((d.support ++ cross.support) ++
         jointrest.flatMap fun p => p.walk.support).Nodup := by
       simpa only [List.append_assoc] using hnjoint
@@ -189,12 +189,12 @@ theorem actual_restored_bridge_route_prefix
     apply (hold e).mpr
     rcases he with he | (rfl | he)
     · have hj := (hjoint e).mp (by
-        change e ∈ d.edges ++ cross.edges ++ jointrest.flatMap fun p => p.walk.edges
+        simp only [List.flatMap_cons]
         exact List.mem_append.mpr (Or.inr (List.mem_append.mpr (Or.inl he))))
       exact ⟨hj.1, fun hk => hj.2 (Finset.mem_union.mpr (Or.inl hk))⟩
     · exact ⟨hcuts _ (Finset.mem_union.mpr (Or.inr hseam)), hseamNot⟩
     · have hj := (hjoint e).mp (by
-        change e ∈ d.edges ++ cross.edges ++ jointrest.flatMap fun p => p.walk.edges
+        simp only [List.flatMap_cons]
         exact List.mem_append.mpr (Or.inl he))
       exact ⟨hj.1, fun hk => hj.2 (Finset.mem_union.mpr (Or.inl hk))⟩
   have hlocal := actual_partition_rooted_walk_edges (⟨x, y, old⟩ :: oldrest)

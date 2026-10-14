@@ -22,7 +22,7 @@ private theorem list_split_at_two_indices {α : Type u} (l : List α)
   have hmiddle := List.drop_take_append_drop l (i + 1) (j - (i + 1))
   have hs : i + 1 + (j - (i + 1)) = j := by omega
   rw [hs] at hmiddle
-  simp only [List.append_assoc, List.singleton_append, List.cons_append]
+  simp only [List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
   rw [← List.drop_eq_getElem_cons hj, List.cons_append, hmiddle,
     ← List.drop_eq_getElem_cons (lt_trans hij hj), List.take_append_drop]
 
@@ -32,7 +32,7 @@ private theorem filter_out_two_of_nodup {α : Type u} [DecidableEq α]
     (l₀ ++ [e₀] ++ l₁ ++ [e₁] ++ l₂).filter
         (fun e => decide (e ≠ e₀ ∧ e ≠ e₁)) = l₀ ++ l₁ ++ l₂ := by
   have hn' : (l₀ ++ e₀ :: (l₁ ++ e₁ :: l₂)).Nodup := by
-    simpa only [List.append_assoc, List.singleton_append, List.cons_append] using hn
+    simpa only [List.append_assoc, List.singleton_append, List.cons_append, List.nil_append] using hn
   have hs₀ := List.nodup_append'.mp hn'
   have ht₀ := List.nodup_cons.mp hs₀.2.1
   have hs₁ := List.nodup_append'.mp ht₀.2
