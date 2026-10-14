@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1bc1cadb00427070c696e9a2477ae43d59cbf79ec1a49717147f5ad2d1963279
+  normalized_sha256: sha256:1bc1cadb00427070c696e9a2477ae43d59cbf79ec1a49717147f5ad2d1963279
+cas_ref: sha256:1bc1cadb00427070c696e9a2477ae43d59cbf79ec1a49717147f5ad2d1963279
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 233. provenance 校准预算的最优分配 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 838b8056801a973e3fa149f3849a823fb2ce69787161e23d670901dc65c9dc3e
+    next_atom_id: f70e7239632e58f43afbb7f7a93438c142d756b2d6f3ef4003a95fc5c85addcf

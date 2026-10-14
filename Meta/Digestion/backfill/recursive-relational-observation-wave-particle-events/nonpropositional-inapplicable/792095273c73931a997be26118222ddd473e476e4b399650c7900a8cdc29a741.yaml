@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:792095273c73931a997be26118222ddd473e476e4b399650c7900a8cdc29a741
+  normalized_sha256: sha256:792095273c73931a997be26118222ddd473e476e4b399650c7900a8cdc29a741
+cas_ref: sha256:792095273c73931a997be26118222ddd473e476e4b399650c7900a8cdc29a741
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 16.1（二态投影监测）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: 4802d479363f3eeb4149ff1140c816cf5dd80281df3a464dd85f4d9e844c9e38
+    next_atom_id: 6c4694753c962c96bf49f5fc27059625807681c1bd461b3d0a151fc339d06b75

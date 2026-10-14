@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:546553e22f1251b52c6c7394764160c2559358fb0c5d9a5521e478cc51f6335f
+  normalized_sha256: sha256:546553e22f1251b52c6c7394764160c2559358fb0c5d9a5521e478cc51f6335f
+cas_ref: sha256:546553e22f1251b52c6c7394764160c2559358fb0c5d9a5521e478cc51f6335f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 83. 有限占据态把修复距离变成二次成本上界 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 6f904b89a5e84ae08bc1f866086cb77da34df8072dc51fd45154e77e3103603e
+    next_atom_id: 124782cf19eafcdf83566acda02bf8a73b52d2f55c738e45957c8de1b823f696
