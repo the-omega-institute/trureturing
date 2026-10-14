@@ -128,18 +128,18 @@ private theorem even_route_front_eq (s j : ℕ) (h : j ≤ 2 * s) :
   simp only [evenRoute, if_pos h]
 private theorem even_route_tail_eq (s j : ℕ) (h : 2 * s + 3 < j) :
     evenRoute s j = (j - (2 * s + 3), j % 2) := by
-  simp (disch := omega) only [evenRoute, if_pos, if_neg]
+  simp (disch := omega) only [evenRoute, if_pos, if_neg, if_true, if_false]
 private theorem even_route_mid0_eq (s : ℕ) : evenRoute s (2 * s) = (2 * s, 0) := by
   rw [even_route_front_eq s (2 * s) (by omega)]
   exact Prod.ext rfl (by omega)
 private theorem even_route_mid1_eq (s : ℕ) :
     evenRoute s (2 * s + 1) = (2 * s + 2, 0) := by
-  simp (disch := omega) only [evenRoute, if_pos, if_neg]
+  simp (disch := omega) only [evenRoute, if_pos, if_neg, if_true, if_false]
 private theorem even_route_mid2_eq (s : ℕ) :
     evenRoute s (2 * s + 2) = (2 * s + 1, 1) := by
-  simp (disch := omega) only [evenRoute, if_pos, if_neg]
+  simp (disch := omega) only [evenRoute, if_pos, if_neg, if_true, if_false]
 private theorem even_route_mid3_eq (s : ℕ) : evenRoute s (2 * s + 3) = (0, 1) := by
-  simp (disch := omega) only [evenRoute, if_pos, if_neg]
+  simp (disch := omega) only [evenRoute, if_pos, if_neg, if_true, if_false]
 private theorem even_route_mid4_eq (s : ℕ) : evenRoute s (2 * s + 4) = (1, 0) := by
   rw [even_route_tail_eq s (2 * s + 4) (by omega)]
   apply Prod.ext <;> omega
@@ -157,18 +157,18 @@ private theorem odd_route_front_eq (s j : ℕ) (h : j ≤ 2 * s) :
 private theorem odd_route_body_eq (s j : ℕ)
     (h : 2 * s + 3 < j) (h' : j < 4 * s + 4) :
     oddRoute s j = (j - (2 * s + 3), j % 2) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_mid0_eq (s : ℕ) : oddRoute s (2 * s) = (2 * s, 0) := by
   rw [odd_route_front_eq s (2 * s) (by omega)]
   exact Prod.ext rfl (by omega)
 private theorem odd_route_mid1_eq (s : ℕ) :
     oddRoute s (2 * s + 1) = (2 * s + 3, 0) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_mid2_eq (s : ℕ) :
     oddRoute s (2 * s + 2) = (2 * s + 2, 1) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_mid3_eq (s : ℕ) : oddRoute s (2 * s + 3) = (0, 1) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_mid4_eq (s : ℕ) : oddRoute s (2 * s + 4) = (1, 0) := by
   by_cases hs : s = 0
   · subst s
@@ -184,16 +184,16 @@ private theorem odd_route_pretail_eq (s : ℕ) :
     apply Prod.ext <;> omega
 private theorem odd_route_last0_eq (s : ℕ) :
     oddRoute s (4 * s + 4) = (2 * s + 1, 0) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_last1_eq (s : ℕ) :
     oddRoute s (4 * s + 5) = (2 * s + 2, 0) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_last2_eq (s : ℕ) :
     oddRoute s (4 * s + 6) = (2 * s + 1, 1) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_last3_eq (s : ℕ) :
     oddRoute s (4 * s + 7) = (2 * s + 3, 1) := by
-  simp (disch := omega) only [oddRoute, if_pos, if_neg]
+  simp (disch := omega) only [oddRoute, if_pos, if_neg, if_true, if_false]
 private theorem even_route_bound (s j : ℕ) (hj : j < 4 * s + 6) :
     (evenRoute s j).1 ≤ 2 * s + 2 ∧ (evenRoute s j).2 < 2 := by
   have hmod := Nat.mod_lt j (by decide : 0 < 2)
@@ -227,21 +227,21 @@ private theorem even_inverse_route (s j : ℕ) (hj : j < 4 * s + 6) :
   · rw [even_route_front_eq s j hf]
     have hp : j % 2 = 0 ∨ j % 2 = 1 := by omega
     rcases hp with hp | hp <;>
-      simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+      simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
   · by_cases hm : j ≤ 2 * s + 3
     · have hc : j = 2 * s + 1 ∨ j = 2 * s + 2 ∨ j = 2 * s + 3 := by omega
       rcases hc with rfl | rfl | rfl
       · rw [even_route_mid1_eq]
-        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
       · rw [even_route_mid2_eq]
-        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
       · rw [even_route_mid3_eq]
-        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
     · rw [even_route_tail_eq s j (by omega)]
       have hsum : j - (2 * s + 3) + (2 * s + 3) = j := by omega
       have hp : j % 2 = 0 ∨ j % 2 = 1 := by omega
       rcases hp with hp | hp <;>
-        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
           <;> omega
 private theorem even_route_inverse (s : ℕ) (p : RawPort)
     (hi : p.1 ≤ 2 * s + 2) (hb : p.2 < 2) :
@@ -253,32 +253,32 @@ private theorem even_route_inverse (s : ℕ) (p : RawPort)
   rcases hside with rfl | rfl
   · by_cases ht : i = 2 * s + 2
     · subst i
-      simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+      simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
         even_route_mid1_eq]
     · by_cases hp : i % 2 = 0
       · have hinv : evenInverse s (i, 0) = i := by
-          simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+          simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
         rw [hinv, even_route_front_eq s i (by omega)]
         exact Prod.ext rfl hp
       · have hinv : evenInverse s (i, 0) = i + 2 * s + 3 := by
-          simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+          simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
         rw [hinv, even_route_tail_eq s (i + 2 * s + 3) (by omega)]
         apply Prod.ext <;> omega
   · by_cases hz : i = 0
     · subst i
-      simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+      simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
         even_route_mid3_eq]
     · by_cases ht : i = 2 * s + 1
       · subst i
-        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+        simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
           even_route_mid2_eq]
       · by_cases hp : i % 2 = 1
         · have hinv : evenInverse s (i, 1) = i := by
-            simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+            simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
           rw [hinv, even_route_front_eq s i (by omega)]
           exact Prod.ext rfl hp
         · have hinv : evenInverse s (i, 1) = i + 2 * s + 3 := by
-            simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+            simp (disch := omega) only [evenInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
           rw [hinv, even_route_tail_eq s (i + 2 * s + 3) (by omega)]
           apply Prod.ext <;> omega
 private theorem odd_inverse_route (s j : ℕ) (hj : j < 4 * s + 8) :
@@ -288,34 +288,34 @@ private theorem odd_inverse_route (s j : ℕ) (hj : j < 4 * s + 8) :
   · rw [odd_route_front_eq s j hf]
     have hp : j % 2 = 0 ∨ j % 2 = 1 := by omega
     rcases hp with hp | hp <;>
-      simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+      simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
   · by_cases hm : j ≤ 2 * s + 3
     · have hc : j = 2 * s + 1 ∨ j = 2 * s + 2 ∨ j = 2 * s + 3 := by omega
       rcases hc with rfl | rfl | rfl
       · rw [odd_route_mid1_eq]
-        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
       · rw [odd_route_mid2_eq]
-        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
       · rw [odd_route_mid3_eq]
-        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
     · by_cases hb : j < 4 * s + 4
       · rw [odd_route_body_eq s j (by omega) hb]
         have hsum : j - (2 * s + 3) + (2 * s + 3) = j := by omega
         have hp : j % 2 = 0 ∨ j % 2 = 1 := by omega
         rcases hp with hp | hp <;>
-          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
             <;> omega
       · have hc : j = 4 * s + 4 ∨ j = 4 * s + 5 ∨ j = 4 * s + 6 ∨
             j = 4 * s + 7 := by omega
         rcases hc with rfl | rfl | rfl | rfl
         · rw [odd_route_last0_eq]
-          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
         · rw [odd_route_last1_eq]
-          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
         · rw [odd_route_last2_eq]
-          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
         · rw [odd_route_last3_eq]
-          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
 private theorem odd_route_inverse (s : ℕ) (p : RawPort)
     (hi : p.1 ≤ 2 * s + 3) (hb : p.2 < 2) :
     oddRoute s (oddInverse s p) = p := by
@@ -326,48 +326,48 @@ private theorem odd_route_inverse (s : ℕ) (p : RawPort)
   rcases hside with rfl | rfl
   · by_cases ht : i = 2 * s + 3
     · subst i
-      simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+      simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
         odd_route_mid1_eq]
     · by_cases ht' : i = 2 * s + 2
       · subst i
-        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
           odd_route_last1_eq]
       · by_cases ht'' : i = 2 * s + 1
         · subst i
-          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
             odd_route_last0_eq]
         · by_cases hp : i % 2 = 0
           · have hinv : oddInverse s (i, 0) = i := by
-              simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+              simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
             rw [hinv, odd_route_front_eq s i (by omega)]
             exact Prod.ext rfl hp
           · have hinv : oddInverse s (i, 0) = i + 2 * s + 3 := by
-              simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+              simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
             rw [hinv, odd_route_body_eq s (i + 2 * s + 3) (by omega) (by omega)]
             apply Prod.ext <;> omega
   · by_cases hz : i = 0
     · subst i
-      simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+      simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
         odd_route_mid3_eq]
     · by_cases ht : i = 2 * s + 3
       · subst i
-        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+        simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
           odd_route_last3_eq]
       · by_cases ht' : i = 2 * s + 2
         · subst i
-          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+          simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
             odd_route_mid2_eq]
         · by_cases ht'' : i = 2 * s + 1
           · subst i
-            simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg,
+            simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false,
               odd_route_last2_eq]
           · by_cases hp : i % 2 = 1
             · have hinv : oddInverse s (i, 1) = i := by
-                simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+                simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
               rw [hinv, odd_route_front_eq s i (by omega)]
               exact Prod.ext rfl hp
             · have hinv : oddInverse s (i, 1) = i + 2 * s + 3 := by
-                simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg]
+                simp (disch := omega) only [oddInverse, Prod.fst, Prod.snd, if_pos, if_neg, if_true, if_false]
               rw [hinv, odd_route_body_eq s (i + 2 * s + 3) (by omega) (by omega)]
               apply Prod.ext <;> omega
 private theorem seam_forward (k i : ℕ) (h : i < k) :
@@ -720,8 +720,8 @@ private theorem even_trace_finish (s : ℕ) (hne : evenTrace s ≠ []) :
   change code ((List.ofFn (evenEnumerate s)).getLast hne) = _
   rw [List.getLast_ofFn]
   change evenRoute s (4 * s + 6 - 1) = (2 * s + 2, 1)
-  simp (disch := omega) only [evenRoute, ↓reduceIte, Prod.mk.injEq]
-  omega
+  rw [show 4 * s + 6 - 1 = 4 * s + 5 by omega]
+  exact even_route_last1_eq s
 private theorem odd_trace_finish (s : ℕ) (hne : oddTrace s ≠ []) :
     (oddTrace s).getLast hne = (Fin.last (2 * s + 3), 1) := by
   unfold oddTrace at hne ⊢
@@ -729,8 +729,8 @@ private theorem odd_trace_finish (s : ℕ) (hne : oddTrace s ≠ []) :
   change code ((List.ofFn (oddEnumerate s)).getLast hne) = _
   rw [List.getLast_ofFn]
   change oddRoute s (4 * s + 8 - 1) = (2 * s + 3, 1)
-  simp (disch := omega) only [oddRoute, ↓reduceIte, Prod.mk.injEq]
-  omega
+  rw [show 4 * s + 8 - 1 = 4 * s + 7 by omega]
+  exact odd_route_last3_eq s
 /-- Every even boundary plus the actual internal seam pattern is a Hamilton
 path from R0 to Lk. The literal trace is retained for later piece expansion. -/
 theorem even_boundary_hamiltonian_path (s : ℕ) :
