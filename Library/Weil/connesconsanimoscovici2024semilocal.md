@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: The unsmoothed physical Euler-metric cross block is noncompact. The actual completion pays the archimedean reference trace and a uniform lower defect bound; its growing-place-set upper bound remains unresolved.
+claim: The unsmoothed physical Euler-metric cross block is noncompact. The actual completion pays the archimedean reference trace; a localized Hardy estimate pays the geometric defect under an additional prime-growth condition. The original growing-place-set upper and full arithmetic comparison remain unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -335,3 +335,166 @@ the same-test comparison with the complete arithmetic Weil form,
 including its pole, finite-prime and Gamma corrections. Equations
 (5)--(9) supply neither that comparison nor the original strict Robin
 upper; no Lean verification is asserted.
+
+## A localized Hardy estimate gives an explicit finite-place cost
+
+Keep the physical cutoff $\lambda=1$, the actual orthogonal projection
+$P_S$ of (2), and WT7's same nonnegative bumps
+$\psi_j(x)=\psi(2^jx)$. The following is a repo-derived application
+of the existing physical transport, Hardy commutator kernel and Gamma
+estimates. The generic projection ordering and commutator are reused;
+no literature-priority or Lean-verification claim is made.
+The new quantitative interface is
+
+$$
+\boxed{t_{S,j}\ll_\psi 1+j+C_S,\qquad
+C_S=\sum_{p\in S_{\rm fin}}\frac{\log p}{\sqrt p-1}.}
+\tag{10}
+$$
+
+The implied constant is independent of the finite prime set and $j$.
+This cost avoids the Euler condition-number product, but does not
+replace $\sqrt p-1$ by $p-1$.
+
+### Transport the actual subspace and keep the input weight
+
+Use the unitary plus-sign logarithmic Mellin coordinates on
+$L^2(\mathbb R,dt)$, so $D(a)$ is multiplication by $e^{it\log a}$.
+Let $\Pi$ be the image of the physical outside-cutoff projection,
+$H_+=\operatorname{ran}\Pi$ its upper Hardy space, and
+$H_-=\operatorname{ran}(I-\Pi)$. For $Jg(t)=g(-t)$, the physical
+even Fourier transform is $M_\rho J$, where
+
+$$
+\rho(t)=\pi^{-it}
+\frac{\Gamma(1/4+it/2)}{\Gamma(1/4-it/2)},\qquad
+\alpha_S(t)=\prod_{p\in S_{\rm fin}}
+(1-p^{-1/2}e^{it\log p}),\qquad
+W_S=\frac{\alpha_S}{\overline{\alpha_S}},\quad U_S=\rho W_S.
+$$
+
+These conventions are the reflected variable $t=-s$ of the source's
+unitary Mellin transform. The [owned archimedean source](connesconsani2021archimedean.md),
+Appendix D, Remark D.2 and Appendix E, equations (159)--(161),
+manuscript pp.52--53, supply the Hardy projection, Gamma ratio and
+Cauchy difference-quotient kernel. The semilocal source's equations
+(57)--(58) and Theorem 4.6 supply the actual $\alpha_S$ transport.
+
+For finite $S$, both $\alpha_S$ and its inverse preserve $H_+$,
+while $\overline{\alpha_S}$ and its inverse preserve $H_-$.
+Thus the Mellin image of the actual semilocal Sonin space is exactly
+
+$$
+\alpha_S(H_+\cap\rho H_-)=H_+\cap U_SH_-.
+\tag{11}
+$$
+
+Write $\widetilde P_S$ for its orthogonal projection. This is a
+unitary representation of (2), including its inverse compressed
+metric, rather than the oblique projection $APA^{-1}$.
+Set $\mathsf H_S=(I-\Pi)M_{\overline{U_S}}\Pi$. This contraction
+is isometric on the intersection (11), so
+$\widetilde P_S\le\mathsf H_S^*\mathsf H_S$.
+
+With $\widehat\psi(t)=\int\psi(x)e^{-itx}dx$, the actual integrated
+bump has multiplier
+$w_j(t)=2^{-j}\widehat\psi(2^{-j}t)\ge0$; evenness removes the
+Mellin sign change. The Cauchy commutator kernel gives
+
+$$
+\begin{aligned}
+t_{S,j}
+&=\operatorname{Tr}
+(M_{\sqrt{w_j}}\widetilde P_SM_{\sqrt{w_j}})
+\le\|\mathsf H_SM_{\sqrt{w_j}}\|_2^2\\
+&\le\|[M_{\overline{U_S}},\Pi]M_{\sqrt{w_j}}\|_2^2\\
+&=\frac1{4\pi^2}\int_{\mathbb R}\int_{\mathbb R}
+w_j(s)\frac{|U_S(t)-U_S(s)|^2}{(t-s)^2}\,dt\,ds.
+\end{aligned}
+\tag{12}
+$$
+
+Indeed $\mathsf H_S=(I-\Pi)[M_{\overline{U_S}},\Pi]$.
+There is no interchange of $\Pi$ with $M_{\sqrt{w_j}}$: the weight
+in the squared kernel is on its input variable $s$. The finite
+integral below justifies the localized Hilbert--Schmidt operator and
+then the positive trace comparison. One may first use compactly
+supported input vectors in the Cauchy kernel identity and extend by
+the resulting Hilbert--Schmidt bound. The full commutator need not
+be Hilbert--Schmidt; no unsmoothed dilation trace is used.
+
+### Bound the localized kernel before summing the actual coefficients
+
+Unimodularity gives
+$|U_S(t)-U_S(s)|^2\le2|\rho(t)-\rho(s)|^2+
+2|W_S(t)-W_S(s)|^2$. Logarithmic differentiation of the finite product
+gives $\|W_S'\|_\infty\le2C_S$. For a unimodular
+$L$-Lipschitz function $W$,
+
+$$
+\int_{\mathbb R}\frac{|W(s+h)-W(s)|^2}{h^2}\,dh
+\le\int_{\mathbb R}\min(L^2,4/h^2)\,dh=8L.
+$$
+
+For the Gamma ratio,
+$\rho'/\rho=i(\operatorname{Re}\operatorname{digamma}(1/4+it/2)-\log\pi)$.
+The standard [digamma asymptotic](https://dlmf.nist.gov/5.11.E2)
+and continuity on the remaining compact segment give
+$|\rho'(t)|\ll\log(3+|t|)$. On $|h|\le1$ use
+$L_s=C\log(3+|s|)$ and the amplitude cap together:
+
+$$
+\frac{|\rho(s+h)-\rho(s)|^2}{h^2}
+\le\min(L_s^2,4/h^2).
+$$
+
+Its integral is at most $8L_s$; the part $|h|>1$ is at most $8$.
+Consequently the full inner Gamma integral is
+$O(\log(3+|s|))$, with one logarithm. Since $\widehat\psi$ is
+nonnegative and Schwartz,
+
+$$
+\int w_j(t)dt=2\pi\psi(0),\qquad
+\int w_j(t)\log(3+|t|)dt\ll_\psi1+j.
+$$
+
+Substitution in (12) proves (10). All estimates use the actual fixed
+smooth frequency weight; no independent-prime or Bohr-mean
+orthogonality is assumed.
+
+Put $K_X=1+\log D_X$, with WT7's $D_X\ge2$.
+Splitting its coefficient bound
+$a_j\ll L_X\min(1,D_X2^{-j})$ at
+$\lceil\log_2D_X\rceil$ gives
+$\sum_j a_j\ll L_XK_X$, in addition to the already owned
+$\sum_j(1+j)a_j\ll L_XK_X^2$.
+The positive sum (9) therefore yields
+
+$$
+\boxed{T_S(X)\ll_\psi L_X(K_X^2+C_SK_X).}
+\tag{13}
+$$
+
+For $S_{\rm fin}\subseteq\{p:p\le V\}$, the
+[owned prime-count upper bound](../Arith/rosser1962approximate.md#global-prime-counts-and-the-classical-pnt-interface)
+gives $\vartheta(v)\ll v$. Partial summation and
+$(\sqrt p-1)^{-1}\ll p^{-1/2}$ give $C_S\ll\sqrt V$.
+Since $K_X\ll Y_X$ and $Y_X^2/M_X\to0$ are already paid, (8) and
+(13) pay the actual geometric defect whenever the additional condition
+
+$$
+\frac{C_SK_X}{M_X}\longrightarrow0
+\qquad\text{holds; sufficiently,}\qquad
+V=o\bigl((M_X/K_X)^2\bigr).
+\tag{14}
+$$
+
+In this restricted regime $\Delta_S(h_H)=o(M_XL_X)$ for the same
+$H_X=c_X-F_X$, original windows, ties and horizon. Restricting the
+place growth is an additional hypothesis on this geometric estimate;
+it is not a license to omit support-relevant primes from the original
+arithmetic form. The original allowance
+$\log V=O((\log X)^4)$ does not imply (14). Its weighted upper
+bound remains unproved, as does the separate full same-test arithmetic
+comparison. Equations (10)--(14) do not establish the original strict
+Robin upper or RH.
