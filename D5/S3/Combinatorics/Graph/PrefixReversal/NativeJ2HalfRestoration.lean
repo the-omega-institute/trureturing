@@ -1,6 +1,4 @@
-/- Restores precisely the opposite three actual cuts.
-   The barred B2^1 endpoint exception is kept in its original native indexing.
-   GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2HalfRestoration
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2HalfRestoration
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeJ2HalfRestoration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -8,6 +6,9 @@
    utility: none
    digest: Actual half-cut restoration earns both native B2 component tables. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
+
+/- Restore precisely the opposite three actual cuts. The barred B2^1 endpoint
+exception retains its original native indexing. -/
 
 set_option autoImplicit false
 
