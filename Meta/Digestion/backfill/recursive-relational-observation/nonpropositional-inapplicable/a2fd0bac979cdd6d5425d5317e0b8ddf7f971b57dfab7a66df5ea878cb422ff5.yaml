@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a2fd0bac979cdd6d5425d5317e0b8ddf7f971b57dfab7a66df5ea878cb422ff5
+  normalized_sha256: sha256:a2fd0bac979cdd6d5425d5317e0b8ddf7f971b57dfab7a66df5ea878cb422ff5
+cas_ref: sha256:a2fd0bac979cdd6d5425d5317e0b8ddf7f971b57dfab7a66df5ea878cb422ff5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 47.1（载体的穷尽分解与实际逆极限拓扑）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 3fac65606dcf1de9a26599eb6f0eb4f89b176fdc8c5567203bd000c97df5c0b3
+    next_atom_id: 4f516d6b5283b6c05481cf771504009674a6145cbbac62431dacfce2964d5807
