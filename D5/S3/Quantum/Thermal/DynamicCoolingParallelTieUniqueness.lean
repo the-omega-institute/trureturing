@@ -89,7 +89,9 @@ private theorem weighted_coordinate_sum {I A : Type*}
 
 private theorem q_adjacent (L j : ℕ) (P : ℝ) (hj : j < L)
     (hP0 : 0 < P) (hP1 : P < 1 / 2) : q L (j + 1) P < q L j P := by
-  have he : L - j = L - (j + 1) + 1 := by omega
+  have he : L - j = L - (j + 1) + 1 := by
+    simpa only [Nat.succ_eq_add_one, Nat.add_sub_cancel_left] using
+      (Nat.sub_add_sub_cancel (Nat.succ_le_of_lt hj) (Nat.le_succ j)).symm
   change P ^ (j + 1) * (1 - P) ^ (L - (j + 1)) < P ^ j * (1 - P) ^ (L - j)
   rw [he, pow_succ, pow_succ]
   have h1 : 0 < (1 - P) ^ (L - (j + 1)) := pow_pos (by linarith) _
@@ -105,9 +107,9 @@ private theorem q_lt_q (L i j : ℕ) (P : ℝ) (hij : i < j) (hj : j ≤ L)
 
 private theorem q_antitone (L i j : ℕ) (P : ℝ) (hij : i ≤ j) (hj : j ≤ L)
     (hP0 : 0 < P) (hP1 : P < 1 / 2) : q L j P ≤ q L i P := by
-  rcases hij.eq_or_lt with h | h
-  · rw [h]
-  · exact (q_lt_q L i j P h hj hP0 hP1).le
+  exact (strictAntiOn_Iic_of_succ_lt (ψ := fun j => q L j P)
+    (fun j hj => q_adjacent L j P hj hP0 hP1)).antitoneOn
+    (hij.trans hj) hj hij
 
 private theorem shell_gap (N M : ℕ) (hM : 2 ≤ M) (hNM : M + 2 ≤ N)
     (hne : (N, M) ≠ (6, 2)) :
@@ -164,7 +166,8 @@ private theorem threshold_sum_le {I : Type*} [Fintype I]
   have hp (j : I) : (if j ∈ H then lam j - c else 0) ≤ (lam j - c) * a j := by
     by_cases hj : j ∈ H
     · rw [if_pos hj]
-      nlinarith [hH j hj, ha1 j]
+      simpa only [mul_one] using
+        mul_le_mul_of_nonpos_left (ha1 j) (sub_nonpos.mpr (hH j hj))
     · rw [if_neg hj]
       exact mul_nonneg (sub_nonneg.mpr (hC j hj)) (ha0 j)
   have hs := sum_le_sum (fun j (_ : j ∈ univ) => hp j)
@@ -217,8 +220,7 @@ private theorem flip_bit {n : ℕ} (x : Fin n → Fin 2) (a : Fin n) :
 private theorem flip_weight {n : ℕ} (x : Fin n → Fin 2) :
     weight (flip x) = n - weight x := by
   have he : univ.filter (fun j => flip x j = 1) = univ.filter (fun j => x j ≠ 1) := by
-    ext j
-    simp only [mem_filter, mem_univ, true_and, flip_bit]
+    exact filter_congr (fun j _ => flip_bit x j)
   have h := card_filter_add_card_filter_not (s := univ) (fun j : Fin n => x j = 1)
   rw [card_univ, Fintype.card_fin] at h
   change weight x + _ = n at h
@@ -240,8 +242,8 @@ private theorem coolFn_involutive {n : ℕ} (a : Fin n) :
     Function.Involutive (coolFn a) := by
   intro x
   have he : ((flip x a = 1) ↔ flip x ∈ hotSet a) ↔ ((x a = 1) ↔ x ∈ hotSet a) := by
-    rw [flip_bit, flip_hot]
-    tauto
+    simpa only [flip_bit, flip_hot] using
+      (not_iff_not (a := x a = 1) (b := x ∈ hotSet a))
   by_cases h : ((x a = 1) ↔ x ∈ hotSet a)
   · have hf : coolFn a x = x := by rw [coolFn, if_pos h]
     rw [hf, hf]
@@ -296,11 +298,8 @@ private theorem diagonal_coherence {n : ℕ} (d : (Fin n → Fin 2) → ℂ) (a 
   apply sum_eq_zero
   intro x hx
   by_cases h : x a = 0
-  · rw [if_pos h, Matrix.diagonal_apply_ne]
-    intro he
-    have hh := congrFun he a
-    rw [Function.update_self, h] at hh
-    norm_num at hh
+  · rw [if_pos h, Matrix.diagonal_apply_ne _ (Function.ne_update_self_iff.mpr
+      (by simpa only [h] using Fin.zero_ne_one))]
   · rw [if_neg h]
 
 private theorem identity_feasible (N M : ℕ) (P : ℝ) : P ∈ feasible N M P := by
@@ -380,8 +379,7 @@ private theorem reflection_diagonal_update {I : Type*} [Fintype I] [DecidableEq 
     rw [sub_dotProduct, dotProduct_sub, dotProduct_sub, hu, hv, huv, hvu]
     norm_num
   have hR : R.transpose = R := by
-    change (Matrix.vecMulVec w w).transpose = _
-    rw [Matrix.transpose_vecMulVec]
+    exact Matrix.transpose_vecMulVec w w
   have hdw : Matrix.diagonal d *ᵥ w = a • u - b • v := by
     ext x
     simp only [Matrix.mulVec_diagonal, Pi.sub_apply, Pi.smul_apply,
@@ -401,8 +399,7 @@ private theorem reflection_diagonal_update {I : Type*} [Fintype I] [DecidableEq 
     simp only [smul_eq_mul]
     ring
   have hrr : R * R = Matrix.vecMulVec w ((2 : ℝ) • w) := by
-    change Matrix.vecMulVec w w * Matrix.vecMulVec w w = _
-    rw [Matrix.vecMulVec_mul_vecMulVec, hw]
+    simpa only [hw] using Matrix.vecMulVec_mul_vecMulVec w w w w
   have hrd : R * Matrix.diagonal d = Matrix.vecMulVec w (a • u - b • v) := by
     rw [Matrix.vecMulVec_mul, hwd]
   have hdr : Matrix.diagonal d * R = Matrix.vecMulVec (a • u - b • v) w := by
@@ -522,9 +519,8 @@ private theorem baseline_population (M n r : ℕ) (hn : 0 < n) (P : ℝ) (a : Fi
       (∑ z : Fin r → Fin 2, if y a ∈ hotSet (⟨0, hn⟩ : Fin n) then
         (∏ j, thermalWeight P (y j)) * thermalWeight P z else 0) =
       (if y a ∈ hotSet (⟨0, hn⟩ : Fin n) then 1 else 0) * ∏ j, thermalWeight P (y j) := by
-    by_cases h : y a ∈ hotSet (⟨0, hn⟩ : Fin n)
-    · simp only [h, if_true, one_mul, ← mul_sum, thermal_sum, mul_one]
-    · simp only [h, if_false, sum_const_zero, zero_mul]
+    simp only [sum_ite_irrel, ← mul_sum, thermal_sum, sum_const_zero, mul_one,
+      ite_mul, one_mul, zero_mul]
   change (∑ y : Fin M → Fin n → Fin 2, ∑ z : Fin r → Fin 2,
     if y a ∈ hotSet (⟨0, hn⟩ : Fin n) then
       (∏ j, thermalWeight P (y j)) * thermalWeight P z else 0) = _
@@ -551,10 +547,9 @@ private def hotString (n k : ℕ) : Fin n → Fin 2 := fun j => if j.val < k the
 private theorem hotString_weight (n k : ℕ) (hk : k ≤ n) : weight (hotString n k) = k := by
   have he : univ.filter (fun j : Fin n => hotString n k j = 1) =
       univ.filter (fun j : Fin n => j.val < k) := by
-    ext j
-    simp only [mem_filter, mem_univ, true_and]
-    change ((if j.val < k then (1 : Fin 2) else 0) = 1) ↔ j.val < k
-    split_ifs <;> norm_num <;> omega
+    exact filter_congr (fun j _ => by
+      simp only [hotString.eq_1, ite_eq_iff, Fin.zero_ne_one,
+        and_true, and_false, or_false])
   change (univ.filter _).card = k
   rw [he]
   rw [Fin.card_filter_val_lt, Nat.min_eq_right hk]
@@ -577,9 +572,9 @@ private theorem distinguished (M n r : ℕ) (hn : 0 < n) :
   have hw : weight h = (n + 1) / 2 := hotString_weight n _ (by omega)
   have hb : h a0 = 1 := by change (if 0 < (n + 1) / 2 then 1 else 0) = 1; rw [if_pos (by omega)]
   have hc : flip h a0 = 0 := by
-    rcases bit_cases (flip h a0) with hh | hh
-    · exact hh
-    · exact ((flip_bit h a0).mp hh hb).elim
+    change Equiv.swap (0 : Fin 2) 1 (h a0) = 0
+    rw [hb]
+    exact Equiv.swap_apply_right _ _
   have hz : weight (fun _ : Fin n => (0 : Fin 2)) = 0 := by
     simp only [weight, Fin.zero_ne_one, filter_false, card_empty]
   have hh : h ∈ hotSet a0 := by
@@ -679,28 +674,24 @@ private theorem support_data (N M : ℕ) (hM : 0 < M)
     norm_num at hb
   have hei (i : Fin M) : e i ∈ E := mem_image.mpr ⟨i, mem_univ _, rfl⟩
   have hs : s * s = 1 / (M : ℝ) := by
-    have hr := Real.sq_sqrt (show 0 ≤ (M : ℝ) by positivity)
-    have hmr : 0 < (M : ℝ) := by exact_mod_cast hM
-    have hsr : Real.sqrt (M : ℝ) ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr hmr)
     change (Real.sqrt (M : ℝ))⁻¹ * (Real.sqrt (M : ℝ))⁻¹ = _
-    field_simp
-    nlinarith
+    rw [← _root_.mul_inv_rev, Real.mul_self_sqrt (by positivity), one_div]
   have hup (x) : u x * u x = if x ∈ E then s * s else 0 := by
-    dsimp only [u]; split_ifs <;> ring
+    simpa only [u, mul_zero] using apply_ite₂ (fun a b : ℝ => a * b) (x ∈ E) s 0 s 0
   have hupdate (a : Fin M) (x : Fin N → Fin 2) (hx : x ∈ E) (ha : x (t a) = 0) :
       Function.update x (t a) 1 ∉ E := by
     obtain ⟨i, _, rfl⟩ := mem_image.mp hx
-    have hai : a ≠ i := by intro hh; subst a; rw [he, if_pos rfl] at ha; norm_num at ha
+    have hai : a ≠ i := (Ne.ite_eq_right_iff (Ne.symm Fin.zero_ne_one)).mp
+      (by simpa only [he] using ha)
     have hti : t i ≠ t a := by
-      intro hh
-      have hp := he i i
-      rw [hh, ha, if_pos rfl] at hp
-      norm_num at hp
+      apply ne_of_apply_ne (e i)
+      rw [he, he, if_pos rfl, if_neg hai]
+      exact Ne.symm Fin.zero_ne_one
     rintro hh
     obtain ⟨j, _, hj⟩ := mem_image.mp hh
     have hp := congrFun hj (t a)
     rw [Function.update_self, he] at hp
-    have hja : a = j := by by_contra hh; rw [if_neg hh] at hp; norm_num at hp
+    have hja : a = j := (Ne.ite_eq_left_iff (Ne.symm Fin.zero_ne_one)).mp hp
     subst j
     have hp := congrFun hj (t i)
     rw [Function.update_of_ne hti, he, he, if_pos rfl, if_neg (Ne.symm hai)] at hp
@@ -723,7 +714,7 @@ private theorem support_data (N M : ℕ) (hM : 0 < M)
     · intro x hx hxa
       by_cases hxE : x ∈ E
       · obtain ⟨i, _, rfl⟩ := mem_image.mp hxE
-        have hia : a ≠ i := by intro hh; subst i; exact hxa rfl
+        have hia : a ≠ i := Ne.symm (ne_of_apply_ne e hxa)
         simp only [he, if_neg hia, Fin.zero_ne_one, if_false]
       · simp only [u, if_neg hxE, zero_mul, ite_self]
     · simp only [mem_univ, not_true_eq_false, false_implies]
@@ -752,10 +743,7 @@ private theorem support_data (N M : ℕ) (hM : 0 < M)
     by_cases hh : x = v0
     · subst x
       have hn : Function.update v0 (t a) 1 ≠ v0 := by
-        intro hh
-        have hp := congrFun hh (t a)
-        rw [Function.update_self, hv0] at hp
-        norm_num at hp
+        exact Function.update_ne_self_iff.mpr (by rw [hv0]; exact Ne.symm Fin.zero_ne_one)
       simp only [v, if_neg hn, mul_zero, ite_self]
     · simp only [v, if_neg hh, zero_mul, ite_self]
 
@@ -766,15 +754,15 @@ private theorem real_feasible (N M : ℕ) (P g : ℝ)
     g ∈ feasible N M P := by
   let U := O.map Complex.ofRealHom
   have hs : star U = O.transpose.map Complex.ofRealHom := by
-    ext x y
-    simp only [U, Matrix.star_apply, Matrix.map_apply, Matrix.transpose_apply]
-    change star (O y x : ℂ) = (O y x : ℂ)
-    simp only [Complex.star_def, Complex.conj_ofReal]
+    simpa only [U, Matrix.star_eq_conjTranspose,
+      Matrix.conjTranspose_eq_transpose_of_trivial] using
+      (Matrix.conjTranspose_map (A := O) Complex.ofRealHom (by
+        intro x
+        simp only [star_trivial, Complex.ofRealHom_eq_coe, Complex.star_def,
+          Complex.conj_ofReal])).symm
   have hr : rho N P = (Matrix.diagonal (thermalWeight P)).map Complex.ofRealHom := by
-    ext x y
-    simp only [rho, Matrix.diagonal, Matrix.of_apply, Matrix.map_apply,
-      apply_ite, Complex.ofReal_zero, Complex.ofRealHom_eq_coe]
-    split_ifs <;> rfl
+    simpa only [rho, Complex.ofRealHom_eq_coe] using
+      (Matrix.diagonal_map (d := thermalWeight P) (map_zero Complex.ofRealHom)).symm
   refine ⟨U, Matrix.mem_unitaryGroup_iff.mpr ?_, ?_⟩
   · rw [hs, ← Matrix.map_mul, hO]
     exact Matrix.map_one _ rfl rfl
@@ -810,15 +798,11 @@ private theorem grouped_witness (M n r : ℕ) (hM : 0 < M) (hn : 0 < n) (P : ℝ
   obtain ⟨het, hvt, hew, hvw, hef, hvf⟩ := distinguished M n r hn
   obtain ⟨hu, hv, huv, hpu, hpv, hcu, hcv⟩ := support_data (n * M + r) M hM e v0 t het hvt
   have heig (i : Fin M) : d (e i) = a := by
-    have hh : B.symm (e i) = e i := by
-      apply B.injective
-      rw [Equiv.apply_symm_apply, hef]
+    have hh : B.symm (e i) = e i := B.symm_apply_eq.mpr (hef i).symm
     change thermalWeight P (B.symm (e i)) = a
     rw [hh, thermalWeight_eq_q, hew]
   have hveig : d v0 = b := by
-    have hh : B.symm v0 = v0 := by
-      apply B.injective
-      rw [Equiv.apply_symm_apply, hvf]
+    have hh : B.symm v0 = v0 := B.symm_apply_eq.mpr hvf.symm
     change thermalWeight P (B.symm v0) = b
     rw [hh, thermalWeight_eq_q, hvw]
   have hdu (x) : d x * u x = a * u x := by
@@ -842,13 +826,13 @@ private theorem grouped_witness (M n r : ℕ) (hM : 0 < M) (hn : 0 < n) (P : ℝ
   have hO : (S * Pmat) * (S * Pmat).transpose = 1 := by
     rw [Matrix.transpose_mul]
     calc S * Pmat * (Pmat.transpose * S.transpose) =
-        S * (Pmat * Pmat.transpose) * S.transpose := by noncomm_ring
+        S * (Pmat * Pmat.transpose) * S.transpose := by simp only [mul_assoc]
       _ = 1 := by rw [hP, mul_one]; exact hS.1
   have hA : (S * Pmat) * Matrix.diagonal (thermalWeight P) * (S * Pmat).transpose = A := by
     rw [Matrix.transpose_mul]
     calc S * Pmat * Matrix.diagonal (thermalWeight P) * (Pmat.transpose * S.transpose) =
         S * (Pmat * Matrix.diagonal (thermalWeight P) * Pmat.transpose) * S.transpose := by
-          noncomm_ring
+          simp only [mul_assoc]
       _ = A := by rw [perm_diagonal]; exact hS.2
   apply real_feasible (n * M + r) M P _ (S * Pmat) A hO hA
   intro α hα
@@ -882,18 +866,15 @@ private theorem grouped_witness (M n r : ℕ) (hM : 0 < M) (hn : 0 < n) (P : ℝ
     apply sum_eq_zero
     intro x hx
     by_cases hh : x (t j) = 0
-    · rw [if_pos hh, Matrix.diagonal_apply_ne]
-      intro he
-      have h := congrFun he (t j)
-      rw [Function.update_self, hh] at h
-      norm_num at h
+    · rw [if_pos hh, Matrix.diagonal_apply_ne _ (Function.ne_update_self_iff.mpr
+        (by simpa only [hh] using Fin.zero_ne_one))]
     · rw [if_neg hh]
 
 theorem result : claim := by
   intro N M hM hNM hne P hP0 hP1
-  have hMp : 0 < M := by omega
+  have hMp : 0 < M := lt_of_lt_of_le (by norm_num : 0 < (2 : ℕ)) hM
   have hn : 0 < N / M := (Nat.le_div_iff_mul_le hMp).2 (by omega)
-  have hNM' : M ≤ N := by omega
+  have hNM' : M ≤ N := (Nat.le_add_right M 2).trans hNM
   have hL : N / M * M + N % M = N := by
     simpa only [Nat.mul_comm] using Nat.div_add_mod N M
   have hw := grouped_witness M (N / M) (N % M) hMp hn P
