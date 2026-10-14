@@ -5,6 +5,7 @@
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2JointPaths
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2HalfPaths
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SelectedC
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 import D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 
 set_option autoImplicit false
@@ -24,6 +25,9 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2JointPaths
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2HalfPaths
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SelectedC
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
+open private raw_zero_coordinates relabel_anchor frame_selected_coordinates from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 open private markedCut_injective from
@@ -59,6 +63,23 @@ private theorem half_disjoint {m : ℕ} (hm : 5 ≤ m)
   have he := markedCut_injective hm (hi.symm.trans hj)
   exact Bool.noConfusion (congrArg Prod.snd he)
 
+private theorem seed_protected_pair {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) :
+    s(relabel F (Fin.last m), relabel F 0) =
+      s(protectedP F (by omega), protectedQ F (by omega)) := by
+  have hp : relabel F (Fin.last m) = anchor F 0 := by
+    have h := congrArg (fun z : Configuration m => z 0) (relabel_anchor F)
+    change relabel F (NativeJ2Words.rightPort m 0 0) = anchor F 0 at h
+    rw [(raw_zero_coordinates hm).1] at h
+    exact h
+  have hq : relabel F 0 = anchor F ⟨1, by omega⟩ := by
+    have h := congrArg (fun z : Configuration m => z ⟨1, by omega⟩) (relabel_anchor F)
+    change relabel F (NativeJ2Words.rightPort m 0 ⟨1, by omega⟩) =
+      anchor F ⟨1, by omega⟩ at h
+    rw [(raw_zero_coordinates hm).2] at h
+    exact h
+  simp only [protectedP, protectedQ, Nat.reduceSub, frame_selected_coordinates hm F,
+    List.getElem_cons_zero, List.getElem_cons_succ, hp, hq]
+
 /-- One actual cycle, all three literal partitions and all retained-edge
 invariants needed before constructing the exceptional third-order state. -/
 structure SeedFor {m : ℕ} (F : SupplyFrame m 2) where
@@ -84,7 +105,7 @@ structure SeedFor {m : ℕ} (F : SupplyFrame m 2) where
   keepsProtectedA : ∀ (x y : {v : Configuration m // FrameDomain F v}),
     y.val = x.val * a m →
     s(x.val (Fin.last m), y.val (Fin.last m)) ≠
-      s(relabel F (Fin.last m), relabel F 0) → s(x, y) ∈ walk.edges
+      s(protectedP F (by omega), protectedQ F (by omega)) → s(x, y) ∈ walk.edges
   keepsRemainingB : ∀ (x y : {v : Configuration m // FrameDomain F v}),
     y.val = x.val * b m → x.val (Fin.last m) ∉ F.selected.toFinset →
       s(x, y) ∈ walk.edges
@@ -120,7 +141,9 @@ private theorem seed_exists {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) :
     rw [joint_half_union, Finset.image_union]
   refine ⟨⟨_, _, hham, K, H, joint, primary, opposite, hjports, hpports, hoports,
     ⟨hham.isCycle, hd, ?_, ⟨hps, hpe, hpc⟩, ⟨hos, hoe, hoc⟩⟩,
-    hA, hB, native_j2_frame_c_selected hm F _ hframe⟩⟩
-  exact ⟨hjs, by simpa only [hu] using hje, by simpa only [hu] using hjc⟩
+    ?_, hB, native_j2_frame_c_selected hm F _ hframe⟩⟩
+  · exact ⟨hjs, by simpa only [hu] using hje, by simpa only [hu] using hjc⟩
+  · intro x y hxy hpair
+    exact hA x y hxy (by simpa only [seed_protected_pair hm F] using hpair)
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2Seed
