@@ -88,9 +88,10 @@ theorem actual_cycle_partition_inventory (E : Finset (Sym2 V)) {a : V}
       e ∈ w.edgeSet ∧ e ∉ E := by
     rw [he.mem_iff]
     simp only [List.mem_filter, decide_eq_true_eq, SimpleGraph.Walk.mem_edgeSet]
-  have hlength : (pieces.flatMap fun z => z.walk.support).length =
-      (pieces.flatMap fun z => z.walk.edges).length + pieces.length := by
-    induction pieces with
+  have pieceLength (ps : List (Piece G)) :
+      (ps.flatMap fun z => z.walk.support).length =
+        (ps.flatMap fun z => z.walk.edges).length + ps.length := by
+    induction ps with
     | nil => rfl
     | cons p ps ih =>
       simp only [List.flatMap_cons, List.length_append, List.length_cons,
@@ -111,6 +112,7 @@ theorem actual_cycle_partition_inventory (E : Finset (Sym2 V)) {a : V}
     simpa only [hwhole] using Finset.card_le_card hsubset
   have hsl := hs.length_eq
   have hel := he.length_eq
+  have hlength := pieceLength pieces
   simp only [List.length_tail, SimpleGraph.Walk.length_support] at hsl
   exact ⟨hcount, hedge, by omega⟩
 

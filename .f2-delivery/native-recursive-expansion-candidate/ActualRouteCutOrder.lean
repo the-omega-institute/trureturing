@@ -65,12 +65,14 @@ theorem actual_ordered_path_is_join {n : ℕ} {a b : V}
 private theorem route_piece_support_position (ps : List (Piece G))
     (r : ℕ) (hr : r < ps.length) (i : ℕ)
     (hi : i < (ps[r]'hr).walk.support.length) :
-    (ps.flatMap (fun z => z.walk.support))
-      [((ps.take r).flatMap (fun z => z.walk.support)).length + i]'(by
+    (ps.flatMap (fun z => z.walk.support))[((ps.take r).flatMap
+      (fun z => z.walk.support)).length + i]'(by
         have hsplit := List.take_append_drop r ps
         have hdrop := List.drop_eq_getElem_cons hr
-        rw [← hsplit, List.flatMap_append, hdrop, List.flatMap_cons,
-          List.length_append, List.length_append]
+        have hwhole := congrArg (fun zs : List (Piece G) =>
+          (zs.flatMap fun z => z.walk.support).length) hsplit
+        rw [List.flatMap_append, List.length_append, hdrop,
+          List.flatMap_cons, List.length_append] at hwhole
         omega) = (ps[r]'hr).walk.support[i]'hi := by
   have hsplit := List.take_append_drop r ps
   have hdrop := List.drop_eq_getElem_cons hr
@@ -133,12 +135,22 @@ theorem actual_joined_route_cut_order
         List.length_append, List.length_append, SimpleGraph.Walk.length_support]
       dsimp only [offset]
       omega
-    rw [q.getVert_eq_support_getElem (by
-      rw [SimpleGraph.Walk.length_support] at hlen; omega), hsupport]
-    rw [route_piece_support_position pieces t ht n (by
-        rw [SimpleGraph.Walk.length_support]; omega)]
-    exact ((pieces[t]'ht).walk.getVert_eq_support_getElem hn).symm
+    have hqbound : offset t + n ≤ q.length := by
+      rw [SimpleGraph.Walk.length_support] at hlen
+      omega
+    have he := route_piece_support_position pieces t ht n (by
+      rw [SimpleGraph.Walk.length_support]
+      omega)
+    have hget : q.support[offset t + n]'(by
+        rw [SimpleGraph.Walk.length_support]
+        omega) = (pieces[t]'ht).walk.support[n]'(by
+          rw [SimpleGraph.Walk.length_support]
+          omega) := by
+      simpa only [← hsupport, offset] using he
+    exact (q.getVert_eq_support_getElem hqbound).trans
+      (hget.trans ((pieces[t]'ht).walk.getVert_eq_support_getElem hn).symm)
   have hjlen : offset s + j + 1 < q.support.length := by
+    have hj' : j < (pieces[s]'hs).walk.length := hj
     rw [hsupport]
     have hsplit := List.take_append_drop s pieces
     have hdrop := List.drop_eq_getElem_cons hs
@@ -148,13 +160,15 @@ theorem actual_joined_route_cut_order
     omega
   rw [SimpleGraph.Walk.length_support] at hjlen
   refine ⟨offset r + i, offset s + j,
-    route_offsets_strict pieces hrs hs hi, by omega, ?_, ?_, ?_, ?_⟩
-  · exact (hposition r (lt_trans hrs hs) i (by omega)).trans hℓ₀
+    route_offsets_strict pieces hrs hs hi, ?_, ?_, ?_, ?_, ?_⟩
+  · change offset s + j < q.length
+    omega
+  · exact (hposition r (lt_trans hrs hs) i (Nat.le_of_lt hi)).trans hℓ₀
   · rw [Nat.add_assoc]
-    exact (hposition r (lt_trans hrs hs) (i + 1) (by omega)).trans hr₀
-  · exact (hposition s hs j (by omega)).trans hℓ₁
+    exact (hposition r (lt_trans hrs hs) (i + 1) (Nat.succ_le_of_lt hi)).trans hr₀
+  · exact (hposition s hs j (Nat.le_of_lt hj)).trans hℓ₁
   · rw [Nat.add_assoc]
-    exact (hposition s hs (j + 1) (by omega)).trans hr₁
+    exact (hposition s hs (j + 1) (Nat.succ_le_of_lt hj)).trans hr₁
 
 /-- Apply the already available two-cut slicing to the strict order earned
 above. These are the three actual Q fragments, retaining full support and

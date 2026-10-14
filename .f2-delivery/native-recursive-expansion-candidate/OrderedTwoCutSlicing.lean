@@ -23,7 +23,7 @@ private theorem list_split_at_two_indices {α : Type u} (l : List α)
   have hs : i + 1 + (j - (i + 1)) = j := by omega
   rw [hs] at hmiddle
   simp only [List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
-  rw [← List.drop_eq_getElem_cons hj, List.cons_append, hmiddle,
+  rw [← List.drop_eq_getElem_cons hj, hmiddle,
     ← List.drop_eq_getElem_cons (lt_trans hij hj), List.take_append_drop]
 
 private theorem filter_out_two_of_nodup {α : Type u} [DecidableEq α]

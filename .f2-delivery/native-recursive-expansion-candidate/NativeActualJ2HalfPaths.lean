@@ -129,8 +129,7 @@ theorem native_actual_j2_half_paths {m : ℕ} (hm : 5 ≤ m) (side : Bool)
   have hflatMap : (((List.ofFn pieces).flatMap fun p => p.walk.edges).map
       (Sym2.map Subtype.val)) = (List.ofFn fun i =>
         (pieces i).walk.edges.map (Sym2.map Subtype.val)).flatten := by
-    simp only [List.map_flatMap, List.flatMap, List.map_ofFn]
-    rfl
+    simpa only [List.map_flatMap, List.flatMap, List.map_ofFn, Function.comp_def]
   have hmember (l : List (Sym2 {x : Configuration m // D x}))
       (e : Sym2 {x : Configuration m // D x}) :
       Sym2.map Subtype.val e ∈ l.map (Sym2.map Subtype.val) ↔ e ∈ l := by
