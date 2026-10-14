@@ -666,11 +666,11 @@ private theorem sum_hypergeometricWeight_toReal_mul_pred {N K n : ℕ} (hK : K �
     have hnle : n ≤ 1 := by omega
     interval_cases n <;> norm_num [Finset.sum_range_succ, weight]
 
-private lemma weight_nonneg (N K n k : ℕ) : 0 ≤ weight N K n k := by
+lemma weight_nonneg (N K n k : ℕ) : 0 ≤ weight N K n k := by
   unfold weight
   positivity
 
-private lemma weight_eq_zero {N K n k : ℕ} (h : K < k ∨ N - K < n - k) :
+lemma weight_eq_zero {N K n k : ℕ} (h : K < k ∨ N - K < n - k) :
     weight N K n k = 0 := by
   rcases h with h | h <;> simp [weight, Nat.choose_eq_zero_of_lt h]
 
@@ -772,7 +772,7 @@ def sample (K k : ℕ) : ℝ := (k : ℝ) * ((K - k : ℕ) : ℝ) / (K : ℝ) ^ 
 def correction (ρ θ : ℝ) (K k : ℕ) : ℝ :=
   θ / (K : ℝ) ^ ρ + sample K k ^ (ρ / 2)
 
-private lemma sample_nonneg (K k : ℕ) : 0 ≤ sample K k := by
+lemma sample_nonneg (K k : ℕ) : 0 ≤ sample K k := by
   unfold sample
   positivity
 
