@@ -12,6 +12,7 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
         "Actual native circle complements and literal c edges construct a Hamilton cycle on the complete two-star T core union.",
         H("Splicing the Complete Native T Core"),
         Blocks(
+            CoordinateAPI("tau_bc_rotation", "The Core Swap Followed by bc Is One Rotation", "For m at least four, the literal swap of zero and the final position, followed by b*c, is finRotate(m+1). This coordinate identity is consumed by the actual J2 surviving-row proof.", false),
             CoordinateAPI("cutStart", "The Actual T Cut Start", "The T cut starts at its owner port, except that the identity core starts literally at the identity.", true),
             CoordinateAPI("cutGenerator", "The Actual T Cut Generator", "The two core cuts use a; each noncore cut uses b.", true),
             CoordinateAPI("native_cut_circle_iff", "T Cut Starts Have Their Declared Circle Owners", "For m at least four, the actual cut start and the independently indexed T anchor define the same complete circle domain.", false),
@@ -97,6 +98,9 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
         Formula and(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
         Formula body = selector switch
         {
+            "tau_bc_rotation" => Implies(Le(D(4), m),
+                Eq(Call("mul", Call("swap", D(0), m), Call("mul", Call("b", m), Call("c", m))),
+                    Call("finRotate", Call("add", m, D(1))))),
             "cutStart" => and(All("i", Call("Fin", m), Eq(Call("cutStart", li),
                 Call("ite", Eq(iv, Call("sub", m, D(1))), D(1), Call("tCircleAnchor", li)))),
                 All("j", Call("Fin", Call("sub", m, D(2))), Eq(Call("cutStart", rj), Call("tCircleAnchor", rj)))),
