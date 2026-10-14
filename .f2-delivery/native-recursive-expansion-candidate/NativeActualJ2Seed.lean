@@ -1,7 +1,10 @@
-/- UNCOMPILED same-cycle two-order k2 seed.
-   This is distinct from the k3 crossing-state shape: its six original
-   component endpoints and both literal restored-half tables are retained.
-   No all-order induction or next-state existence is assumed. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualJ2Seed
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualJ2Seed
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: One actual native seed cycle earns six joint paths, both literal restored halves, and all three retained-edge invariants. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2JointPaths
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2HalfPaths
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SelectedC
@@ -113,7 +116,10 @@ structure SeedFor {m : ℕ} (F : SupplyFrame m 2) where
     y.val = x.val * c m → s(x, y) ∈ walk.edges →
       x.val (Fin.last m) ∈ F.selected.toFinset
 
-private theorem seed_exists {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) :
+/-- Choose the raw native witness only once. Its same mapped cycle
+simultaneously earns all three actual partitions, their literal endpoints,
+and the protected-a, remaining-b and selected-c induction invariants. -/
+theorem native_actual_j2_seed {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) :
     Nonempty (SeedFor F) := by
   classical
   obtain ⟨rawBase, rawWalk, base, w, hraw, hinv, hbase, hmap,
@@ -147,5 +153,7 @@ private theorem seed_exists {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) :
     exact ⟨hjs, hje, hjc⟩
   · intro x y hxy hpair
     exact hA x y hxy (by simpa only [seed_protected_pair hm F] using hpair)
+
+#print axioms native_actual_j2_seed
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2Seed

@@ -24,7 +24,7 @@ open private childGap_bijective frame_base_not_reverse from
 
 private theorem next_full_perm {α : Type*} (S A : List α) (u v : α) :
     ((u :: S) ++ A ++ [v]).Perm (S ++ (A ++ [u]) ++ [v]) := by
-  simpa only [List.cons_append, List.append_assoc, List.singleton_append] using
+  simpa only [List.cons_append, List.append_assoc, List.singleton_append, List.nil_append] using
     (show ([u] ++ (S ++ A)).Perm ((S ++ A) ++ [u]) from
       List.perm_append_comm).append_right [v]
 
@@ -114,7 +114,8 @@ theorem native_q_index_zero_prefix {m k : ℕ} (hm : 3 ≤ m)
       ((native_anchored_supply_coordinates hm (outerFrame F A u hbase)).1 0).2.1,
       ((native_anchored_supply_coordinates hm (nextFrame F A u hbase)).1 0).1]
     simp only [outerFrame, nextFrame, List.rotate_zero, List.reverse_append,
-      List.reverse_reverse, List.reverse_cons, List.reverse_singleton, List.nil_append, List.singleton_append,
+      List.reverse_reverse, List.reverse_cons, List.reverse_singleton, List.reverse_nil,
+      List.nil_append, List.singleton_append,
       List.cons_append, List.append_assoc]
   · rfl
 
@@ -151,6 +152,8 @@ private theorem p_circle_eq {m k : ℕ} (F : SupplyFrame m k)
     (childGap F ⟨0, by simp only [hbase, List.length_append, List.length_singleton]; omega⟩).val =
       (childGap (outerFrame F A u hbase)
         ⟨A.length, by simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩).val := by
+  dsimp only [childGap, outerFrame, gapCircle, Fin.val_mk]
+  simp only [List.rotate_zero]
   change ((F.terminal :: F.base : List (Fin (m + 1))) : Cycle (Fin (m + 1))) =
     ((u :: (A ++ [F.terminal]).rotate A.length : List (Fin (m + 1))) : Cycle (Fin (m + 1)))
   rw [hbase, List.rotate_append_length_eq]
@@ -213,9 +216,8 @@ theorem native_new_marked_cut_domains {m k : ℕ} (hm : 3 ≤ m)
     have hs := native_marked_index_shift hm F A u hbase r.val
     have hr : r.val + 1 = i.val := by dsimp only [r]; omega
     rw [hr] at hs
-    obtain ⟨hR, hL⟩ :=
-      ⟨native_special_port_domain hm F hbase_len (r, 0),
-        native_special_port_domain hm F hbase_len (r, 1)⟩
+    have hR := native_special_port_domain hm F hbase_len (r, 0)
+    have hL := native_special_port_domain hm F hbase_len (r, 1)
     simp only [specialPort, Fin.val_zero, Fin.val_one, if_pos rfl,
       if_neg (by decide : ¬ (1 : Fin 2).val = 0)] at hR hL
     change Layer F.selected.toFinset _ _ at hR hL

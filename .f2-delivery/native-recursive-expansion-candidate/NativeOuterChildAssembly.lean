@@ -39,7 +39,9 @@ private def childLift {m k : ℕ} (F : SupplyFrame m k) (j : Fin F.base.length) 
 private theorem childLift_injective {m k : ℕ} (F : SupplyFrame m k)
     (j : Fin F.base.length) : Function.Injective (childLift F j) := by
   intro v w h
-  exact Subtype.ext (congrArg Subtype.val h)
+  have hv : v.val = w.val :=
+    congrArg (fun x : {x : Configuration m // ParentDomain F x} => x.val) h
+  exact Subtype.ext hv
 
 private def parentPiece {m k : ℕ} (F : SupplyFrame m k) (j : Fin F.base.length)
     (q : ActualChildPath F j) : Piece (domainGraph (ParentDomain F)) :=
@@ -84,18 +86,19 @@ theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
           (List.ofFn fun i : Fin (F.base.length - 1) =>
             pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩)).reverse := by
   classical
+  letI : BEq {x : Configuration m // ParentDomain F x} := instBEqOfDecidableEq
   let pieces (j : Fin F.base.length) := parentPiece F j (paths j)
   let p := pieces ⟨0, by omega⟩
   let ps := List.ofFn fun i : Fin (F.base.length - 1) =>
     pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩
   have hlist : p :: ps = List.ofFn pieces := by
     apply List.ext_getElem
-    · simp only [List.length_cons, List.length_ofFn]
+    · simp only [ps, List.length_cons, List.length_ofFn]
       omega
     · intro i hi hj
       cases i with
-      | zero => simp only [List.getElem_cons_zero, List.getElem_ofFn]; rfl
-      | succ i => simp only [List.getElem_cons_succ, List.getElem_ofFn]; rfl
+      | zero => simp only [p, List.getElem_cons_zero, List.getElem_ofFn]
+      | succ i => simp only [ps, List.getElem_cons_succ, List.getElem_ofFn]; rfl
   have hstart (j : Fin F.base.length) : (pieces j).start.val =
       rightPort F (childStartIndex F j) := (paths j).start_eq
   have hfinish (j : Fin F.base.length) : (pieces j).finish.val =
@@ -123,8 +126,7 @@ theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
     apply List.count_eq_one_of_mem hn
     obtain ⟨j, hj, _⟩ := (native_child_gap_partition F hB v.val).mp v.property
     let u : {x : Configuration m // ChildDomain (childGap F j) x} := ⟨v.val, hj⟩
-    have hu : u ∈ (paths j).piece.walk.support :=
-      List.count_pos_iff.mp (by rw [(paths j).hamiltonian u]; omega)
+    have hu : u ∈ (paths j).piece.walk.support := (paths j).hamiltonian.mem_support u
     apply List.mem_flatMap.mpr
     refine ⟨pieces j, List.mem_ofFn.mpr ⟨j, rfl⟩, ?_⟩
     rw [show (pieces j).walk.support =
@@ -133,19 +135,21 @@ theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
   have hlinked : Linked p ps := by
     apply linked_of_getElem
     intro i hi
-    rw [hlist, List.length_ofFn] at hi
-    rw [hlist]
+    simp only [hlist, List.length_ofFn] at hi
+    simp only [hlist]
     simp only [List.getElem_ofFn]
-    change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj _ _
+    change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
+      (pieces ⟨i, by omega⟩).finish.val (pieces ⟨i + 1, hi⟩).start.val
     rw [hfinish ⟨i, by omega⟩, hstart ⟨i + 1, hi⟩]
     simp only [childStartIndex, Fin.val_mk, if_neg (by omega : ¬ i + 1 = 0)]
     simpa only [Nat.add_assoc] using
       ((native_anchored_supply_coordinates hm F).1 (k + i)).2.2.2
   have hlast : finish p ps = (pieces ⟨F.base.length - 1, by omega⟩).finish := by
-    rw [finish_eq_last, hlist, List.getLast_ofFn]
+    simpa only [hlist, List.getLast_ofFn] using finish_eq_last p ps
   have hclose : (domainGraph (ParentDomain F)).Adj (finish p ps) p.start := by
     rw [hlast]
-    change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj _ _
+    change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
+      (pieces ⟨F.base.length - 1, by omega⟩).finish.val (pieces ⟨0, by omega⟩).start.val
     rw [hfinish, hstart]
     simp only [childStartIndex, Fin.val_mk, if_pos rfl]
     have hp := F.prefix_length
@@ -159,7 +163,7 @@ theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
     omega
   obtain ⟨c, hc, hs, he⟩ := exists_spliced_hamiltonian_cycle p ps hlinked hclose hfull hsize
   refine ⟨pieces, p.start, c, (fun _ => rfl), ?_, hc, ?_, ?_⟩
-  · simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl] using hstart ⟨0, by omega⟩
+  · simpa only [p, childStartIndex, Fin.val_mk, ↓reduceIte] using hstart ⟨0, by omega⟩
   · simpa only [hlist] using hs
   · simpa only [hlast, p, ps] using he
 
