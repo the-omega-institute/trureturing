@@ -22,7 +22,7 @@ private theorem list_split_at_two_indices {α : Type u} (l : List α)
   have hmiddle := List.drop_take_append_drop l (i + 1) (j - (i + 1))
   have hs : i + 1 + (j - (i + 1)) = j := by omega
   rw [hs] at hmiddle
-  simp only [List.singleton_append]
+  simp only [List.append_assoc, List.singleton_append]
   rw [← List.drop_eq_getElem_cons hj, hmiddle,
     ← List.drop_eq_getElem_cons (lt_trans hij hj), List.take_append_drop]
 
@@ -32,7 +32,7 @@ private theorem filter_out_two_of_nodup {α : Type u} [DecidableEq α]
     (l₀ ++ [e₀] ++ l₁ ++ [e₁] ++ l₂).filter
         (fun e => decide (e ≠ e₀ ∧ e ≠ e₁)) = l₀ ++ l₁ ++ l₂ := by
   have hn' : (l₀ ++ e₀ :: (l₁ ++ e₁ :: l₂)).Nodup := by
-    simpa only [List.singleton_append] using hn
+    simpa only [List.append_assoc, List.singleton_append] using hn
   have hs₀ := List.nodup_append'.mp hn'
   have ht₀ := List.nodup_cons.mp hs₀.2.1
   have hs₁ := List.nodup_append'.mp ht₀.2
@@ -68,7 +68,9 @@ private theorem filter_out_two_of_nodup {α : Type u} [DecidableEq α]
     intro e he
     simp only [decide_eq_true_eq]
     exact ⟨fun h => he₀₂ (h ▸ he), fun h => he₁₂ (h ▸ he)⟩
-  simp [List.filter_append, hf₀, hf₁, hf₂]
+  simp only [List.filter_append, List.filter_cons, List.filter_nil,
+    not_true_eq_false, false_and, and_false, decide_false, Bool.false_eq_true,
+    ↓reduceIte, List.append_nil, hf₀, hf₁, hf₂]
 
 variable {V : Type u} [DecidableEq V] {G : SimpleGraph V}
 
@@ -118,7 +120,7 @@ theorem exists_path_slicing_at_two_ordered_edges
       List.drop_take_append_drop p.support (i + 1) (j - (i + 1) + 1)
     have hs' : i + 1 + (j - (i + 1) + 1) = j + 1 := by omega
     rw [hs'] at hmiddle
-    rw [hmiddle, List.take_append_drop]
+    rw [List.append_assoc, hmiddle, List.take_append_drop]
   have hiE : i < p.edges.length := by
     simpa only [SimpleGraph.Walk.length_edges] using hi
   have hjE : j < p.edges.length := by

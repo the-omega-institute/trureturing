@@ -48,13 +48,14 @@ theorem actual_three_path_endpoint_update {ℓ z ℓ₀ r₀ ℓ₁ r₁ : V}
   have hnot := actual_distinguished_pair_absent_from_rest d rest hn
   have herase : (endpointPairs (⟨ℓ, z, d⟩ :: rest)).erase s(ℓ, z) =
       endpointPairs rest := by
+    simp only [endpointPairs, List.map_cons, List.toFinset_cons]
     change (insert s(ℓ, z) (endpointPairs rest)).erase s(ℓ, z) = endpointPairs rest
     exact Finset.erase_insert hnot
   rw [herase]
   ext e
   simp only [endpointPairs, List.map_append, List.map_cons, List.map_nil,
     List.toFinset_append, List.toFinset_cons, List.toFinset_nil,
-    Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.not_mem_empty,
+    Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty,
     or_false]
   tauto
 

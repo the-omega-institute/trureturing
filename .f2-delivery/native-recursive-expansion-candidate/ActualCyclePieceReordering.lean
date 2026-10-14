@@ -93,7 +93,7 @@ theorem actual_cycle_slices_reordered (E : Finset (Sym2 V)) {a : V}
   have hmem (i : Fin n) : old i ∈ pieces := List.get_mem _ _
   have hold : List.ofFn old = pieces := by
     rw [List.ofFn_congr hlen.symm old]
-    simpa only [old, Fin.cast_trans, Fin.cast_refl] using List.ofFn_get pieces
+    simpa only [old, Fin.cast_cast, Fin.cast_refl] using List.ofFn_get pieces
   let index (i : Fin n) : Fin n := Classical.choose (hmatch (old i) (hmem i))
   have hindex (i : Fin n) :
       s((old i).start, (old i).finish) = routeEdge route (index i) :=
@@ -131,7 +131,7 @@ theorem actual_cycle_slices_reordered (E : Finset (Sym2 V)) {a : V}
   let ordered (i : Fin n) : Piece G := Classical.choose (hex i)
   have hspec (i : Fin n) := Classical.choose_spec (hex i)
   have hrawperm : (List.ofFn raw).Perm pieces := by
-    simpa only [raw, Function.comp_def, hold] using σ.symm.ofFn_comp_perm old
+    simpa only [raw, Function.comp_def, hold] using Equiv.Perm.ofFn_comp_perm σ.symm old
   have hsperm : ((List.ofFn ordered).flatMap fun z => z.walk.support).Perm
       (pieces.flatMap fun z => z.walk.support) := by
     have hpoint : ((List.ofFn ordered).flatMap fun z => z.walk.support).Perm
@@ -166,7 +166,7 @@ private theorem linked_of_getElem (p : Piece G) (ps : List (Piece G))
   | nil => trivial
   | cons q qs ih =>
     refine ⟨?_, ih q ?_⟩
-    · simpa only [List.getElem_cons_zero, List.getElem_cons_succ] using
+    · simpa only [Nat.zero_add, List.getElem_cons_zero, List.getElem_cons_succ] using
         h 0 (by simp only [List.length_cons]; omega)
     · intro i hi
       simpa only [List.getElem_cons_succ, Nat.add_assoc] using
@@ -203,24 +203,31 @@ theorem actual_cycle_slices_joined (E : Finset (Sym2 V)) {a : V}
     actual_cycle_slices_reordered E w hw hE hcuts (n + 1) hcard route hmatch
   let p := ordered 0
   let ps := List.ofFn fun i : Fin n => ordered i.succ
-  have hlist : p :: ps = List.ofFn ordered := (List.ofFn_succ ordered).symm
+  have hlist : p :: ps = List.ofFn ordered := (List.ofFn_succ (f := ordered)).symm
   have hlink : Linked p ps := by
+    have hindexed : ∀ i (hi : i + 1 < (List.ofFn ordered).length),
+        G.Adj ((List.ofFn ordered)[i]'(by omega)).finish
+          ((List.ofFn ordered)[i + 1]'hi).start := by
+      intro i hi
+      simp only [List.length_ofFn] at hi
+      simp only [List.getElem_ofFn]
+      rw [(hend ⟨i, by omega⟩).2, (hend ⟨i + 1, hi⟩).1]
+      exact hlinks i hi
     apply linked_of_getElem
-    intro i hi
-    rw [hlist, List.length_ofFn] at hi
-    rw [hlist]
-    simp only [List.getElem_ofFn]
-    rw [(hend ⟨i, by omega⟩).2, (hend ⟨i + 1, hi⟩).1]
-    exact hlinks i hi
+    simpa only [hlist] using hindexed
   have hs : p.start = route ⟨0, by omega⟩ := (hend 0).1
   have hf : finish p ps = route ⟨2 * (n + 1) - 1, by omega⟩ := by
-    rw [finish_eq_last, hlist, List.getLast_ofFn]
-    have hlast : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by omega)
-    rw [hlast, (hend (Fin.last n)).2]
-    congr 1
-    apply Fin.ext
-    simp only [Fin.val_mk, Fin.val_last]
-    omega
+    rw [finish_eq_last]
+    have hlastList : ((List.ofFn ordered).getLast (by simp)).finish =
+        route ⟨2 * (n + 1) - 1, by omega⟩ := by
+      rw [List.getLast_ofFn]
+      have hlast : (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext (by omega)
+      rw [hlast, (hend (Fin.last n)).2]
+      congr 1
+      apply Fin.ext
+      simp only [Fin.val_mk, Fin.val_last]
+      omega
+    simpa only [hlist] using hlastList
   let q := (join p ps hlink).copy hs hf
   refine ⟨ordered, q, ?_, hend, ?_, ?_, hedges⟩
   · intro v

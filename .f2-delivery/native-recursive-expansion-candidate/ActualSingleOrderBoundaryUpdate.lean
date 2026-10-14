@@ -139,13 +139,14 @@ theorem actual_single_order_boundary_update
     have hnot := actual_distinguished_pair_absent_from_rest old oldrest holdNodup
     have herase : (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) =
         endpointPairs oldrest := by
+      simp only [endpointPairs, List.map_cons, List.toFinset_cons]
       change (insert s(x, y) (endpointPairs oldrest)).erase s(x, y) = endpointPairs oldrest
       exact Finset.erase_insert hnot
     rw [herase]
     ext e
     simp only [pieces, endpointPairs, List.map_append, List.map_cons, List.map_nil,
       List.toFinset_append, List.toFinset_cons, List.toFinset_nil,
-      Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.not_mem_empty, or_false]
+      Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty, or_false]
     tauto
   refine ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hfiltered.symm, ?_,
     hcuts, hcard, hpairs, rfl, rfl⟩
@@ -272,13 +273,14 @@ theorem actual_single_order_first_cut_boundary_update
     have hnot := actual_distinguished_pair_absent_from_rest old oldrest holdNodup
     have herase : (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) =
         endpointPairs oldrest := by
+      simp only [endpointPairs, List.map_cons, List.toFinset_cons]
       change (insert s(x, y) (endpointPairs oldrest)).erase s(x, y) = endpointPairs oldrest
       exact Finset.erase_insert hnot
     rw [herase]
     ext e
     simp only [pieces, endpointPairs, List.map_append, List.map_cons, List.map_nil,
       List.toFinset_append, List.toFinset_cons, List.toFinset_nil,
-      Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.not_mem_empty, or_false]
+      Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty, or_false]
     tauto
   refine ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hfiltered.symm, ?_,
     hcuts, hcard, hpairs, rfl, rfl⟩

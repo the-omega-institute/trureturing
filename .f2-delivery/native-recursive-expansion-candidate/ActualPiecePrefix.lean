@@ -47,6 +47,7 @@ theorem actual_two_retained_edges_force_prefix {a b x y : V}
   | nil => simp only [SimpleGraph.Walk.edges_nil, List.not_mem_nil] at hax
   | @cons a z b h₀ p =>
     have hxz : x = z := by simpa only [SimpleGraph.Walk.snd_cons] using hx
+    clear hx
     subst x
     have hfirst : s(z, y) ≠ s(a, z) := by
       intro he
@@ -62,6 +63,7 @@ theorem actual_two_retained_edges_force_prefix {a b x y : V}
     | nil => simp only [SimpleGraph.Walk.edges_nil, List.not_mem_nil] at heq
     | @cons z w b h₁ q =>
       have hyw : y = w := by simpa only [SimpleGraph.Walk.snd_cons] using hy
+      clear hy
       subst y
       exact ⟨h₀, h₁, q, rfl, hq.of_cons, rfl, rfl⟩
 
@@ -106,7 +108,7 @@ theorem actual_second_edge_cut_of_prefix {a b x y : V}
     simp only [first, SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_nil,
       List.filter_cons, hcut, ne_eq, not_false_eq_true, decide_true,
       not_true_eq_false, decide_false, ↓reduceIte, hf,
-      List.singleton_append]
+      List.singleton_append, Bool.false_eq_true]
 
 /-- Global retained-edge membership is enough to obtain both local edges,
 then the actual prefix, at a selected actual partition piece's start. -/
@@ -171,7 +173,10 @@ theorem actual_retained_suffix_cut_position {a b x y : V}
     have h : p.reverse.getVert 1 = x := by rw [heq]; rfl
     simpa only [SimpleGraph.Walk.getVert_reverse] using h
   have hsecond : p.getVert (p.length - 2) = y := by
-    have h : p.reverse.getVert 2 = y := by rw [heq]; rfl
+    have h : p.reverse.getVert 2 = y := by
+      rw [heq]
+      change q.getVert 0 = y
+      exact SimpleGraph.Walk.getVert_zero q
     simpa only [SimpleGraph.Walk.getVert_reverse] using h
   refine ⟨p.length - 2, by omega, hsecond, ?_⟩
   rw [show p.length - 2 + 1 = p.length - 1 by omega]
