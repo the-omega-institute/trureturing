@@ -27,6 +27,7 @@ theorem zeroCache_rowsCurrent (depth : ℕ) :
   | succ depth ih => exact EJMCachePacking.rowsCurrent_step _ ih _ _
 
 set_option maxHeartbeats 100000000 in
+-- Check both original packed numeric vectors by actual kernel reduction.
 set_option trace.profiler true in
 private theorem literal_encoded : literalPacked = EJMCachePacking.encode (zeroCache 18) := by
   decide +kernel
@@ -45,6 +46,7 @@ theorem packedZero_decode : decode packedZero = zeroPrefix 18 := by
   by_cases h : g.val < 18 <;> simp [packedZero, decode, zeroPrefix, h]
 
 set_option maxHeartbeats 1000000000 in
+-- Check the complete original finite suffix, retaining all four value branches.
 set_option trace.profiler true in
 theorem actual_packed_suffix :
     checkPacked EJMGlobalDAGData.nodes EJMCachePacking.step EJMCachePacking.lower

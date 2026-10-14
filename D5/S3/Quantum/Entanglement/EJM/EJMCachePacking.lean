@@ -104,6 +104,7 @@ theorem decodeState_encodeState {N : ℕ} (hpos : 0 < N) (hN : N ≤ 65536)
 structure PackedCache where
   triangle : ℕ
   singleton : ℕ
+  deriving DecidableEq
 
 def encode (cache : Cache) : PackedCache :=
   ⟨packWords 16 (fun k => encodeState (cache.triangle k).state),
