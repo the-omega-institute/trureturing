@@ -15,6 +15,18 @@ internal sealed class UpperBranchReductionDocument : IScribeDocumentDefinition
         "For every real p at least two, a finite family of compatible complex block columns admits nonnegative square-root weights supported on at most three original columns. The compression Gram matrix is unchanged and the Schatten p-norm does not decrease. Therefore the upper norm-compression inequality for one, two and three columns implies it for every finite number of columns.",
         H("Upper norm compression reduces to three block columns"),
         Blocks(
+            Node("expectation", "Expansion in an orthonormal eigenbasis", ExpectationFormula(),
+                "The real quadratic expectation is the eigenvalue-weighted sum of squared eigenvector coordinates.", "expectation_eq_eigenvalue_sum", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("diagonalpowers", "Diagonal power sums are bounded by spectral power sums", DiagonalPowerFormula(),
+                "For a positive linear map and q at least one, Jensen's inequality in each orthonormal coordinate bounds the diagonal power sum by the eigenvalue power sum.", "diagonal_power_le_eigenvalue_power", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("columngram", "Singular powers from the column Gram matrix", ColumnGramFormula(),
+                "For p positive, the Schatten power sum is the p/2 power sum of the eigenvalues of the column Gram matrix.", "schattenPow_eq_columnGram", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("powernonnegative", "Schatten power sums are nonnegative", OverMatrices(Le(D(0), Call("schattenPow", P, A))),
+                "Every singular-value power is nonnegative, hence so is their finite sum.", "schattenPow_nonneg", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("normnonnegative", "Schatten norms are nonnegative", OverMatrices(Le(D(0), Call("schattenNorm", P, A))),
+                "The real power of a nonnegative power sum is nonnegative.", "schattenNorm_nonneg", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("normpower", "The positive exponent recovers the power sum", NormPowerFormula(),
+                "For q positive, raising the Schatten norm to q returns its singular-value power sum.", "schattenNorm_rpow", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("power", "Singular-value power sum", PowerFormula(),
                 "Page 2 defines the Schatten norm by ‖A‖_p = (Tr(|A|^p))^(1/p). The finite trace power is the sum of powers of LinearMap.singularValues of Matrix.toEuclideanLin A. Only nonzero singular values occur in its Finsupp.support; at the exponents used below, omitted zero values contribute zero.", "schattenPow", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("norm", "Schatten norm", NormFormula(),
@@ -47,7 +59,13 @@ internal sealed class UpperBranchReductionDocument : IScribeDocumentDefinition
         var parts = owner.Split('.').Append(name).ToArray();
         Formula result = Seq(Operatorname, Grp(F.Id(parts[0])));
         foreach (var part in parts.Skip(1))
-            result = Seq(result, Dot, Operatorname, Grp(F.Id(part)));
+        {
+            var words = part.Split('_');
+            Formula qualifiedPart = F.Id(words[0]);
+            foreach (var word in words.Skip(1))
+                qualifiedPart = Seq(Grp(qualifiedPart), Underscore, Grp(F.Id(word)));
+            result = Seq(result, Dot, Operatorname, Grp(qualifiedPart));
+        }
         return result;
     }
     private static Formula QCall(string owner, string name, params Formula[] args) => App(Qualified(owner, name), args);
@@ -167,5 +185,49 @@ internal sealed class UpperBranchReductionDocument : IScribeDocumentDefinition
         small = All("K", TypeU(), Inst(Call("Fintype", k), Inst(Call("DecidableEq", k), small)));
         Formula target = WithBlocks(Le(Norm(Call("assemble", A, B)), Norm(Call("compression", P, A, B))));
         return Family(All("p", Real(), Imp(Le(D(2), P), Imp(small, target))), 3);
+    }
+
+    private static Formula Inner(Formula x, Formula y) => Call("inner", Complex(), x, y);
+    private static Formula Re(Formula x) => QCall("Complex", "re", x);
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(Sum, Seq(F.Id(name), Sp, Colon, Sp, type)), Sp, body);
+    private static Formula LinearMap(Formula e) => Call("LinearMap", Complex(), e, e);
+    private static Formula WithMap(Formula body)
+    {
+        Formula e = F.Id("E"), t = F.Id("T"), n = F.Id("n");
+        body = All("n", Seq(Mathbb, Grp(F.Id("N"))), All("hn", Eq(QCall("Module", "finrank", Complex(), e), n), body));
+        body = All("T", LinearMap(e), body);
+        body = Inst(Call("NormedAddCommGroup", e), Inst(Call("InnerProductSpace", Complex(), e), Inst(Call("FiniteDimensional", Complex(), e), body)));
+        return All("E", TypeU(), body);
+    }
+    private static Formula ExpectationFormula()
+    {
+        Formula t = F.Id("T"), h = F.Id("hT"), hn = F.Id("hn"), x = F.Id("x"), j = F.Id("j"), e = F.Id("E"), n = F.Id("n");
+        Formula term = Mul(Pow(new Formula.Norm(Inner(QCall("LinearMap.IsSymmetric", "eigenvectorBasis", h, hn, j), x)), D(2)),
+            QCall("LinearMap.IsSymmetric", "eigenvalues", h, hn, j));
+        Formula body = All("x", e, Eq(Re(Inner(x, App(t, x))), SumOver("j", Call("Fin", n), term)));
+        return WithMap(All("hT", QCall("LinearMap", "IsSymmetric", t), body));
+    }
+    private static Formula DiagonalPowerFormula()
+    {
+        Formula t = F.Id("T"), h = F.Id("hT"), hn = F.Id("hn"), b = F.Id("b"), q = F.Id("q"), i = F.Id("i"), j = F.Id("j"), n = F.Id("n");
+        Formula rhs = SumOver("j", Call("Fin", n), Pow(QCall("LinearMap.IsSymmetric", "eigenvalues", QCall("LinearMap.IsPositive", "isSymmetric", h), hn, j), q));
+        Formula lhs = SumOver("i", Call("Fin", n), Pow(Re(Inner(App(b, i), App(t, App(b, i)))), q));
+        Formula body = All("b", Call("OrthonormalBasis", Call("Fin", n), Complex(), F.Id("E")), All("q", Real(), Imp(Le(D(1), q), Le(lhs, rhs))));
+        return WithMap(All("hT", QCall("LinearMap", "IsPositive", t), body));
+    }
+    private static Formula ColumnGramFormula()
+    {
+        Formula i = F.Id("i"), n = F.Id("n"), gram = Mul(QCall("Matrix", "conjTranspose", A), A);
+        Formula proof = QCall("Matrix", "isHermitian_conjTranspose_mul_self", A);
+        Formula values = QCall("Matrix.IsHermitian", "eigenvalues", proof, i);
+        return OverMatrices(Imp(Lt(D(0), P), Eq(Call("schattenPow", P, A),
+            SumOver("i", n, Pow(values, new Formula.Fraction(P, D(2)))))));
+    }
+    private static Formula NormPowerFormula()
+    {
+        Formula n = F.Id("n"), q = F.Id("q");
+        Formula body = All("q", Real(), Imp(Lt(D(0), q), All("A", Mat(n, n), Eq(Pow(Call("schattenNorm", q, A), q), Call("schattenPow", q, A)))));
+        return All("n", TypeU(), Inst(Call("Fintype", n), Inst(Call("DecidableEq", n), body)));
     }
 }

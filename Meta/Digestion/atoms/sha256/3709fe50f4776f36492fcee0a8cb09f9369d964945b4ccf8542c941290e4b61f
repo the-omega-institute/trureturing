@@ -1,0 +1,45 @@
+**Definition 13.2 (the finite one-counter machines).** A configuration is
+$(q,c)$ with $c\in\mathbb N$. A transition tests $c=0$ or $c>0$, reads
+$L$, $R$ or $\varepsilon$, and changes $c$ by $-1$, $0$ or $+1$; a decrement
+is present only on a positive test. Give every explicit pair occurrence
+$e=\langle e_L,e_R\rangle$ a control $P_e$, and use controls
+$q_\alpha,q_\beta,O_\Omega$. For each occurrence $\rho^aX_i$, include
+$J_{d,i}$ for $0\le d\le a$, sharing a control whenever $(d,i)$ is the
+same. Add $A,V,B,H_\alpha,H_\beta,N$. The transition table is
+
+| control | test | read | destination | update |
+| --- | --- | --- | --- | --- |
+| $P_{\langle e_L,e_R\rangle}$ | either | $L$ | $q_{e_L}$ | $0$ |
+| $P_{\langle e_L,e_R\rangle}$ | either | $R$ | $q_{e_R}$ | $0$ |
+| $O_\Omega$ | either | $L$ or $R$ | $O_\Omega$ | $0$ |
+| $q_\alpha$ | either | $\varepsilon$ | $A$ | $0$ |
+| $q_\beta$ | either | $\varepsilon$ | $A$ | $+1$ |
+| $J_{d,i}$, $d>0$ | either | $\varepsilon$ | $J_{d-1,i}$ | $+1$ |
+| $J_{0,i}$ | either | $\varepsilon$ | $q_{E_i}$ | $0$ |
+| $A$ | $0$ | $\varepsilon$ | $H_\alpha$ | $0$ |
+| $A$ | $>0$ | $\varepsilon$ | $V$ | $-1$ |
+| $V$ | $0$ | $\varepsilon$ | $H_\beta$ | $0$ |
+| $V$ | $>0$ | $\varepsilon$ | $B$ | $-1$ |
+| $B$ | either | $L$ | $A$ | $+1$ |
+| $B$ | either | $R$ | $A$ | $0$ |
+| $H_\alpha,H_\beta$ | either | $L$ or $R$ | $N$ | $0$ |
+| $N$ | either | $L$ or $R$ | $N$ | $0$ |
+
+Here $q_{E_i}$ denotes the control for the normalized root
+$\langle E_i,F_i\rangle$ of the defining right side, and $q_O$ is the
+output-root control. The initial configuration is
+$(q_O,0)$. Stable controls are all $P_e$, $O_\Omega$, $B$,
+$H_\alpha,H_\beta,N$. The four accepting sets are
+
+$$
+F_\alpha=\{H_\alpha\},\quad F_\beta=\{H_\beta\},\quad
+F_{\mathsf{branch}}=\{P_e:e\text{ is a pair occurrence}\}\cup\{O_\Omega,B\},
+\quad F_{\mathsf{absent}}=\{N\}.
+\tag{SPC.52}
+$$
+
+For each reply $\tau$, write $M_{O,\tau}$ for this common transition
+system with initial state $(q_O,0)$ and accepting set $F_\tau$. Acceptance is
+finite-word final-state acceptance at any nonnegative counter. Epsilon moves
+consume no original address letter. Administrative controls are nonaccepting.
+

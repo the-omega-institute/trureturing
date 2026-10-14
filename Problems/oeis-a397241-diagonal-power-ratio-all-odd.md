@@ -1,6 +1,6 @@
 ---
 slug: oeis-a397241-diagonal-power-ratio-all-odd
-bibkey: hanna2026a397241
+bibkey: hanna2026a397241b
 doi: null
 url: https://oeis.org/A397241
 triage: theorem
@@ -21,7 +21,7 @@ The entry seeds are `a(0) = a(1) = 1`. Its first conjecture is:
 > Conjecture: all terms are odd.
 
 These NAME and COMMENT sentences are reproduced verbatim from the claim in
-`Library/Recurrence/hanna2026a397241.md`. The two further entry comments,
+`Library/Recurrence/hanna2026a397241b.md`. The two further entry comments,
 "Conjecture: a(n) == 2 (mod 3) for n > 2." and
 "Conjecture: a(n) == 3 (mod 4) for n > 2.", are not resolved by this dossier.
 This dossier records one claim, on `hanna_conjecture` only.

@@ -170,6 +170,10 @@ Lean statement: `D5/S3/Analytic/Fourier/XiThetaTransform.source_theta_normalized
 
 The real xi value at 1/2 is the integral of sourceThetaKernel and is strictly positive; sourceThetaDensity has integral one; every sourceThetaCoefficient k is strictly positive. The existing normalization theorem is applied with its constant-coefficient premise now proved.
 
+The Gaussian dominated even-moment series gives the exact all-jet application to this same normalized source. Put p=sourceThetaDensity, m=Re(xiReading(1/2))>0 and C=(sum thetaMajorant)/m. Continuity and |p(x)|<=C exp(-x^2) follow from the literal density and kernel bound. The Fourier identity at zero identifies xiReading(1/2) with the real number m; dividing the all-complex Fourier identity by this unchanged denominator therefore gives the normalized exponential integral.
+
+The complex cosine is half the sum of the two exponentials. Both normalized exponential integrals at w and -w are absolutely convergent, and the reflection xi(s)=xi(1-s) identifies their values. Thus integral p(x)cos(w*x) dx=xiReading(1/2+i*w)/xiReading(1/2) for every complex w. Taking w=sqrt(z) gives the literal xiSquareSource, globally including zero and branch-cut points. Its kth normalized jet is (-1)^k sourceThetaCoefficient(k). In particular the positive moment coefficients are not the unsigned Taylor coefficients in square coordinates. This source correspondence supplies no individual sourceCoupling sign or Jensen root-reality conclusion.
+
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Fourier/XiThetaTransform.integrable_tilted_gaussian`

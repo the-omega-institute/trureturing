@@ -234,6 +234,18 @@ $$\operatorname{QuantumMaxFlowBound.WidthTwo}$$
 
 Ordered positive dimension pairs in the cases specified by WidthTwo admit rational matrices attaining the outer cut, using square identities or two complementary identity submatrices; QuantumMaxFlowMinCut.claim_of_hypotheses applies these constructions in its square and mixed-ratio cases.
 
+**Theorem 1.20 (rank map algebraMap).**
+
+$$\forall (K L m n : Type) [Field K] [Field L] [Algebra K L] [Fintype m] [Fintype n] (A : Matrix m n K) , (A . map (algebraMap K L)) . rank = A . rank$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.rank_map_algebraMap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Extending coefficients along a field algebra map preserves matrix rank.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.BaseWitness`
@@ -249,6 +261,7 @@ Ordered positive dimension pairs in the cases specified by WidthTwo admit ration
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.cone_bounds`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.flow`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.rank_le_QMaxFlow`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.rank_map_algebraMap`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.rationalWitness_full_rank`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.rectId`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.threeSlices`

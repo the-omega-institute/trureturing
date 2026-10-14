@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4ae0fb3dbee56d08eb1662f09b9255c111dfe37fa0993c69517c825cdc50a7fd
+  normalized_sha256: sha256:4ae0fb3dbee56d08eb1662f09b9255c111dfe37fa0993c69517c825cdc50a7fd
+cas_ref: sha256:4ae0fb3dbee56d08eb1662f09b9255c111dfe37fa0993c69517c825cdc50a7fd
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/PrimeTimeCoverEquivalence.prime_time_budget_injective_iff_cover
+    target_statement_id: sha256:3941ab2bfdf20338ce30c472c90c559dc4591ed46cab3771e5801de59606ef04
+receipts:
+  unresolved_subitems: []

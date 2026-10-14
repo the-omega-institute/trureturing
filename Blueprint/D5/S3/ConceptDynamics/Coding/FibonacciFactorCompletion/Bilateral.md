@@ -1,8 +1,8 @@
-# Execution parsing and bilateral past states
+# Execution parsing, bilateral past states and return guards
 
 ## Abstract
 
-Positive Fibonacci return lists have unique execution-word and color-history decodings, while bilateral letter pasts determine a unique bounded state.
+Positive Fibonacci return lists have unique execution-word and color-history decodings. Bilateral letter pasts determine a unique bounded state, terminal-u words have unique positive-run decompositions, and independently occurring runs inherit their exact return guards.
 
 **Theorem 1.1 (Maximal complete runs and original history injection).**
 
@@ -30,7 +30,59 @@ The auxiliary letter maps are c: z maps to chi*z and u: z maps to A_H+rho*z, wit
 
 Matching-past stability gives continuity in the product of the discrete letter spaces. AuxiliaryLanguage forbids K+1 consecutive c letters and checks chi^(K-1)*d before a current c whose preceding K-1 letters are c. For K at least one and every real d, the all-u sequence belongs to this closed compact language. States commute with every integer shift, where shift(omega,j)(n)=omega(n+j), and membership is invariant under those shifts. This language is defined by the independent letter conditions and is not a completion image or an actual literal source.
 
+**Theorem 1.3 (Unique decomposition of arbitrary terminal-u words).**
+
+$$\forall w \in \operatorname{List}\left(CuLetter\right),\; \left(w = nil \lor \operatorname{getLastOption}\left(w\right) = \operatorname{some}\left(u\right)\right) \Rightarrow \left(\exists a \in Nat, xs \in \operatorname{List}\left(Return\right),\; w = \operatorname{append}\left(\operatorname{replicate}\left(a, u\right), \operatorname{executionWord}\left(xs\right)\right) \land \left(\forall ap \in Nat, xp \in \operatorname{List}\left(Return\right),\; w = \operatorname{append}\left(\operatorname{replicate}\left(ap, u\right), \operatorname{executionWord}\left(xp\right)\right) \Rightarrow \left(ap = a \land xp = xs\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.finite_run_decomposition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every finite c/u word that is empty or ends in u has exactly one decomposition into a leading u run and a positive complete return list. The leading run may be empty; the return list may be empty for an all-u word. The existence proof constructs the runs by induction on the literal letters; uniqueness directly reuses the complete execution parser. The displayed two-variable existential with equality of every alternative pair is the unique-existence statement on Nat times List Return. getLastOption denotes getLast?.
+
+**Theorem 1.4 (Independent occurrence guards on canonical complete runs).**
+
+$$\forall K \in Nat, d \in Real, omega \in Int \to CuLetter, i \in Int, xs \in \operatorname{List}\left(Return\right),\; \left(\operatorname{le}\left(1, K\right) \land \left(\operatorname{member}\left(omega, \operatorname{AuxiliaryLanguage}\left(K, d\right)\right) \land \left(\forall k \in \operatorname{Fin}\left(\operatorname{length}\left(\operatorname{executionWord}\left(xs\right)\right)\right),\; \left(\operatorname{lt}\left(\operatorname{add}\left(\operatorname{val}\left(k\right), 1\right), \operatorname{length}\left(\operatorname{executionWord}\left(xs\right)\right)\right) \lor \operatorname{getElem}\left(\operatorname{executionWord}\left(xs\right), k\right) = c\right) \Rightarrow \operatorname{apply}\left(omega, \operatorname{add}\left(i, \operatorname{castInt}\left(\operatorname{val}\left(k\right)\right)\right)\right) = \operatorname{getElem}\left(\operatorname{executionWord}\left(xs\right), k\right)\right)\right)\right) \Rightarrow \operatorname{GuardTrace}\left(K, d, false, high, xs, \operatorname{pastState}\left(omega, i\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.occurrence_run_guards` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The bilateral sequence independently belongs to AuxiliaryLanguage. Its letters agree with the prescribed complete execution word at every position except that the final u may have been appended as a terminal fill. All c letters must still agree. Each run inherits the cap from the original forbidden K+1 c letters. At a run of length K, the original state before its last c is chi^(K-1) times its run-start state, so the independent before-Kth-c guard yields the weak return guard. When another return follows, every intervening u is an original occurrence letter and the exact transition law aligns its next start. No state alignment is claimed across an appended terminal u.
+
+**Theorem 1.5 (Recursive guards at every execution split).**
+
+$$\forall K \in Nat, d \in Real, strict \in Bool, j \in Side, execution \in \operatorname{List}\left(Return\right), D \in Real,\; \operatorname{GuardTrace}\left(K, d, strict, j, execution, D\right) \Leftrightarrow \left(\forall before \in \operatorname{List}\left(Return\right), a \in Return, after \in \operatorname{List}\left(Return\right),\; execution = \operatorname{append}\left(before, \operatorname{cons}\left(a, after\right)\right) \Rightarrow \left(\operatorname{le}\left(\operatorname{r}\left(a\right), K\right) \land \left(\operatorname{r}\left(a\right) = K \Rightarrow \left(\left(strict = true \Rightarrow \operatorname{lt}\left(d, \operatorname{execute}\left(j, before, D\right)\right)\right) \land \left(strict = false \Rightarrow \operatorname{le}\left(d, \operatorname{execute}\left(j, before, D\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.uniform_guard_trace_iff_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural cap K, real threshold d, Boolean strictness, side, finite positive-return list and real initial state D, the recursive GuardTrace holds exactly when each split before ++ a :: after obeys a.r <= K and, when a.r = K, tests the state obtained by executing before from D. The test is d < state when strict is true and d <= state when strict is false; the displayed pair of implications states that Boolean conditional completely. Return carries positive natural r and m. No lower bound on K, restriction to an actual literal starting state, or bound on the list length is assumed. Induction aligns the tail's initial state with returnMap after its first return. This structural equivalence alone does not assert whole-record supply.
+
+**Theorem 1.6 (Exact active costs at every execution split).**
+
+$$\forall j \in Side, budget \in Real, execution \in \operatorname{List}\left(Return\right), D \in Real,\; \operatorname{StrictControl}\left(j, budget, execution, D\right) \Leftrightarrow \left(\forall before \in \operatorname{List}\left(Return\right), a \in Return, after \in \operatorname{List}\left(Return\right),\; execution = \operatorname{append}\left(before, \operatorname{cons}\left(a, after\right)\right) \Rightarrow \operatorname{lt}\left(\operatorname{subtract}\left(lam, \operatorname{multiply}\left(\operatorname{multiply}\left(\operatorname{power}\left(g, 2\right), \operatorname{power}\left(chi, \operatorname{r}\left(a\right)\right)\right), \operatorname{execute}\left(j, before, D\right)\right)\right), budget\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.exact_control_iff_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either side, every real budget and initial state, and every finite list of positive returns, StrictControl is equivalent to testing lam - g^2 * chi^(a.r) * execute(j,before,D) < budget at every split before ++ a :: after of the same execution. StrictControl recursively tests the current cost and continues at returnMap(j,a,D); execute follows that same return map. The constants are T2 = 1 - t and lam = T2 / 10, with the original Fibonacci t, g and chi. The empty list satisfies both sides. The proof uses unbounded list induction and imposes no actual-start, budget-interval or cap hypothesis. It proves no record-error, reset or rate assertion.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.bilateral_past_state`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.complete_execution_word_parser`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.exact_control_iff_split`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.finite_run_decomposition`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.occurrence_run_guards`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.uniform_guard_trace_iff_split`
