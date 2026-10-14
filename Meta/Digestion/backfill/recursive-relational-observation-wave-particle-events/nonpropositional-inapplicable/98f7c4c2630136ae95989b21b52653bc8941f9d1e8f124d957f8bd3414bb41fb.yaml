@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98f7c4c2630136ae95989b21b52653bc8941f9d1e8f124d957f8bd3414bb41fb
+  normalized_sha256: sha256:98f7c4c2630136ae95989b21b52653bc8941f9d1e8f124d957f8bd3414bb41fb
+cas_ref: sha256:98f7c4c2630136ae95989b21b52653bc8941f9d1e8f124d957f8bd3414bb41fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 38.1（最终输出与有限删失输出）仅规定记号、模型接口与条件输出的使用范围，不另提出性质命题。
+    previous_atom_id: fa8a76fa5f2549c0cb37daedba444a8040db190d2bede5b4b58a97fd45e1a0ef
+    next_atom_id: 60ac2756654cb867f01882eef52582feaa1b72f2249fb63cdebfac554c493f94

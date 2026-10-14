@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2bc8820702e1346ae09aa09d860de450129754d5ce860d41a066823f97789dc1
+  normalized_sha256: sha256:2bc8820702e1346ae09aa09d860de450129754d5ce860d41a066823f97789dc1
+cas_ref: sha256:2bc8820702e1346ae09aa09d860de450129754d5ce860d41a066823f97789dc1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 7.1（Choi 边界）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: fd1cb8006f334468eca6c699fd9b659f7e584c7f1a875c69150391ad03bf1a82
+    next_atom_id: ddc31bf4529f05eb689f5e2e1aaad92532a16687a6ef2cb75b1f39d090378898

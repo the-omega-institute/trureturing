@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9bae64ed9e7fdd4968476bab06634224681a156e2b6e24a6be0e755694becc0c
+  normalized_sha256: sha256:9bae64ed9e7fdd4968476bab06634224681a156e2b6e24a6be0e755694becc0c
+cas_ref: sha256:9bae64ed9e7fdd4968476bab06634224681a156e2b6e24a6be0e755694becc0c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义369.1　候选局域操作代数只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 63d28094568862e2d23db43f9d63a87abdb7db2bbdc2d43de926303539984b39
+    next_atom_id: a616b5349a7b9b2e1419345b3fc146f5739f04d7d34cc24ca40dd3e00d163c69

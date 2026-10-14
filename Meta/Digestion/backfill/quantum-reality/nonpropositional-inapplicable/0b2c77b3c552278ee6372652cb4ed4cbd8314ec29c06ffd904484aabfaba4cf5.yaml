@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b2c77b3c552278ee6372652cb4ed4cbd8314ec29c06ffd904484aabfaba4cf5
+  normalized_sha256: sha256:0b2c77b3c552278ee6372652cb4ed4cbd8314ec29c06ffd904484aabfaba4cf5
+cas_ref: sha256:0b2c77b3c552278ee6372652cb4ed4cbd8314ec29c06ffd904484aabfaba4cf5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 框架对应及工作范围清单：只给已有角色、名称分配本节含义或列出研究层次，不断言新的数学性质。
+    previous_atom_id: be3fc3691896778a072fe5954f2b52e458dd98235053429dec17ac4db710658f
+    next_atom_id: e86f61deadd0c6195e124142e647f81bb1d85bf6e76448bee1d9bcd38687a20f

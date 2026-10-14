@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ea318fcae37df5800c3ab28d8e5cc3fbdbebaf7007929876a0482ca8bc2f533
+  normalized_sha256: sha256:7ea318fcae37df5800c3ab28d8e5cc3fbdbebaf7007929876a0482ca8bc2f533
+cas_ref: sha256:7ea318fcae37df5800c3ab28d8e5cc3fbdbebaf7007929876a0482ca8bc2f533
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片段是既有定理的 2⇒1 证明方向，只构造解码并论证该方向，不另提出定理。
+    previous_atom_id: f8e286a0cafbc8cad3a5acd151d483e01f16794f4970eb6efbe09301e876b054
+    next_atom_id: c4d5d0525bf8889278ab5a11cf1428e463d3bfe653923c730113f5a6c76bd5a4
