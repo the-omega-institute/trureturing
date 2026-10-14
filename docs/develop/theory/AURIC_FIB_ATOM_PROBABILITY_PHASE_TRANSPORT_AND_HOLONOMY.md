@@ -1562,3 +1562,419 @@ The present proofs preserve their full-support domains, real-lift conditions
 and endpoint comparisons under the operations that have actually been defined.
 
 ## 追加锚（本行以下为增补区）
+
+## 4. Exact affine capacity of the fixed-base coherence menu
+
+Fix one full-support base point $b_{\mathrm{vis}}=(X,Y,Z)$, one
+$\kappa _0$ in the interior of its fiber, and the probability vector
+$p=p_{\kappa _0}$ in the mode order $(0,1,2,3,13)$. Prepare this same
+probability vector and the same initial phases before every history. The
+controls are exactly the admissible base/phase loops of Definition 3.1,
+including every integer winding. A readout is the ideal expectation, with no
+finite-sample or measurement-resource assertion.
+
+For an oriented edge $e=(i,j)$ in the menu of Theorem 3.12, put
+$a_e=2\sqrt{p_ip_j}$ and let $\delta_e^0$ be its fixed initial phase
+difference. The two readouts are
+
+$$
+y_e(h)=a_e\bigl(\cos(\delta_e^0+h_i-h_j),
+                 \sin(\delta_e^0+h_i-h_j)\bigr).
+\tag{4.1}
+$$
+
+The factor $2$ is part of the source convention: (4.1) is twice the real
+and imaginary parts of $\overline\psi_i\psi_j$, hence it is exactly the pair
+of ideal expectations in Theorem 3.12. In particular, the subsequent Gram
+coefficients use the doubled expectations and not the unscaled complex
+product.
+
+**Definition 4.1 (Task-relative affine capacity).** Let $\mathcal D_b$ be
+the set of all endpoint residual classes produced from this preparation by
+the legal loops, and let $y:\mathcal D_b\to\mathbb R^{10}$ concatenate the
+five pairs in (4.1). Define $\operatorname{cap}_{\mathrm{aff}}(b)$ to be the
+least $k$ for which there are an arbitrary encoder
+$z:\mathcal D_b\to\mathbb R^k$, a fixed vector $c\in\mathbb R^{10}$ and a
+fixed linear decoder $D:\mathbb R^k\to\mathbb R^{10}$ with
+
+$$
+y(h)=c+D z(h)\qquad(h\in\mathcal D_b).
+\tag{4.2}
+$$
+
+The encoder may be nonlinear. The decoder and its affine offset may not
+depend on the history, the current phase, or the future loop.
+
+The relation constraint in Definition 3.1 gives, for every residual lift,
+
+$$
+h_2=0,\qquad h_0-h_1-h_3+h_{13}=2\pi m.
+$$
+
+Consequently define the three edge characters
+
+$$
+\alpha=h_0-h_1,\qquad \beta=h_0,\qquad \gamma=h_0-h_3\pmod {2\pi}.
+\tag{4.3}
+$$
+
+The remaining edge differences are
+
+$$
+h_1-h_{13}=\gamma,\qquad h_3-h_{13}=\alpha.
+\tag{4.4}
+$$
+
+Thus the five-edge menu has only the three character pairs
+
+$$
+\{0\!-\!1,3\!-\!13\}\rightsquigarrow\alpha,\qquad
+\{0\!-\!2\}\rightsquigarrow\beta,\qquad
+\{0\!-\!3,1\!-\!13\}\rightsquigarrow\gamma.
+\tag{4.5}
+$$
+
+### 4.1 Response factorization and the fixed-loop operation contract
+
+For a circle character $\xi$, write
+
+$$
+q_\xi=(\sqrt2\cos\xi,\sqrt2\sin\xi)^{\mathsf T}.
+\tag{4.6}
+$$
+
+For every edge carrying $\xi$, its two coordinates are a fixed orthogonal
+rotation of $q_\xi$, multiplied by $a_e/\sqrt2$. If an edge carries
+$-\xi$, use the fixed reflection
+$J=\operatorname{diag}(1,-1)$ before that rotation. More explicitly, if
+$h_i-h_j=s_e\xi$ with $s_e\in\{+1,-1\}$, the corresponding two-by-two
+block of $D_b$ is
+$B_{e,\xi}=(a_e/\sqrt2)R_{\delta_e^0}J^{(1-s_e)/2}$, and all other
+blocks in that edge row are zero. At both walls the bottom edge block is the
+fixed column $a_e(\cos\delta_e^0,\sin\delta_e^0)^{\mathsf T}$ multiplying
+$\varepsilon$. Thus, in each symmetry regime, the ten outputs factor as
+
+$$
+y(h)=c_b+D_bq_b(h),
+\tag{4.7}
+$$
+
+where all entries of $D_b$ are fixed by $p$ and the initial phases. In
+generic position
+
+$$
+q_b=(q_\alpha,q_\beta,q_\gamma)\in\mathbb R^6,
+$$
+
+on a single wall $q_b=(q_\xi,q_\beta)\in\mathbb R^4$, where $\xi=\alpha$
+and $\gamma=\pm\alpha$, and at both walls
+
+$$
+q_b=(q_\beta,\varepsilon)\in\mathbb R^3,
+\qquad \varepsilon=(-1)^m.
+\tag{4.8}
+$$
+
+At both walls the four bottom-edge pairs are fixed vectors times
+$\varepsilon$, while the middle pair is the $q_\beta$ block; this is the
+meaning of the affine offset and decoder in (4.7).
+
+A prescribed later loop $\ell$ has residual increment $u$ and winding
+$m_u$. Concatenation adds residuals, so the same finite coordinates update
+by
+
+$$
+q_b(h+u)=T_b(u)q_b(h),
+\tag{4.9}
+$$
+
+where
+
+$$
+\begin{aligned}
+T_{\mathrm{gen}}(u)&=R_{u_\alpha}\oplus R_{u_\beta}\oplus R_{u_\gamma},\\
+T_{\mathrm{wall}}(u)&=R_{u_\xi}\oplus R_{u_\beta},\\
+T_{\mathrm{dbl}}(u)&=R_{u_\beta}\oplus[(-1)^{m_u}].
+\end{aligned}
+\tag{4.10}
+$$
+
+Here $R_t$ is the planar rotation through $t$, and the last scalar block
+multiplies the parity coordinate. The decoder known for the current task is
+$D_b$; the decoder for the prescribed future task is the explicitly updated
+$D_b[u]=D_bT_b(u)$. It is not required that one unchanged decoder serve
+all future outputs. For two prescribed loops $u,v$,
+
+$$
+T_b(v+u)=T_b(v)T_b(u),\qquad
+D_b[u][v]=D_bT_b(u)T_b(v)=D_bT_b(u+v),
+\tag{4.11}
+$$
+
+so the fixed-coordinate operation contract is closed under composition. The
+same statement applies to the fixed offset $c_b$; it is unchanged because
+all updates act on centered character coordinates.
+
+**Theorem 4.2 (Sharp affine capacity and the two symmetry walls).** Under
+the fixed-base, fixed-preparation and ideal-readout contract above,
+
+$$
+\operatorname{cap}_{\mathrm{aff}}(b)=
+\begin{cases}
+6,&X+Y\ne 1-Z\ \text{and }X\ne Y,\\
+4,&\text{exactly one of }X+Y=1-Z,\ X=Y\ \text{holds},\\
+3,&X+Y=1-Z\ \text{and }X=Y.
+\end{cases}
+\tag{4.12}
+$$
+
+In particular, the generic value is six, but it counts three character
+circles with two real quadratures each; it is not a spatial dimension.
+
+**Proof.** Theorem 3.3 and (4.3) identify the reachable character domains. In
+general position $\mathcal H_b\simeq\mathbb T^3$, and the six coordinates
+of $q_b$ have affine hull $\mathbb R^6$. Every edge block in (4.7) is
+nonzero and invertible on its character pair because $a_e>0$. Each of the
+three characters occurs on at least one edge, so $\operatorname{rank}D_b=6$.
+The repeated alpha and gamma edge blocks do give four output-coordinate
+relations: two for the pair $0\!-\!1,3\!-\!13$, and two for the pair
+$0\!-\!3,1\!-\!13$. Equivalently, $\dim\ker D_b^{\mathsf T}=10-6=4$.
+They are allowed in the rank argument; no independence of the ten output
+coordinates is asserted. Therefore the affine hull of the outputs has
+dimension six.
+
+If $X+Y=1-Z$, then $h_0=h_{13}$ and (4.3) gives $\gamma=-\alpha$; if
+$X=Y$, then $h_1=h_3$ and $\gamma=\alpha$. On either single wall,
+$q_b=(q_\xi,q_\beta)$ has affine hull $\mathbb R^4$, and every surviving
+character has a nonzero edge block, with a possible fixed reflection for the
+minus sign. Thus $\operatorname{rank}D_b=4$, including the expected
+six-dimensional coordinate kernel.
+
+At both walls, $2\alpha=2\pi m$, so the bottom character is the parity
+$\varepsilon=(-1)^m$, while $\beta$ remains a circle coordinate. The
+middle block is invertible and the bottom parity vector is nonzero, hence
+$\operatorname{rank}D_b=3$. The balanced domain
+$\mathbb T\times\mathbb Z_2$ has affine hull $\mathbb R^3$ in the
+coordinates $(q_\beta,\varepsilon)$. This proves the three lower bounds
+because an affine image of $\mathbb R^k$ has affine-hull dimension at most
+$k$, while (4.7) gives matching upper bounds. $\square$
+
+The identity components in Theorem 3.3 have real dimensions three, two and
+one in the generic, single-wall and double-wall regimes. Those group
+dimensions are not affine capacities. A phase coordinate can be a nonlinear
+angle, while the requested coherence expectations require its sine and cosine
+quadratures. The all-winding double-wall task therefore has two quadratures
+for the circle and one additional scalar for parity.
+
+### 4.2 The zero-winding double-wall source
+
+Restrict the double-wall source to loops with $m=0$. Then $\varepsilon=1$
+for every reachable endpoint, so the four bottom-edge pairs are fixed constants
+and the only varying character is $\beta$. After absorbing those constants
+into $c_b^0$, the same ten-coordinate readout factors as
+
+$$
+y(h)=c_b^0+D_b^0q_b^0(h),\qquad
+q_b^0=(\sqrt2\cos\beta,\sqrt2\sin\beta).
+\tag{4.13}
+$$
+
+**Proposition 4.3 (Zero-winding double-wall capacity).** For this restricted
+source, $\operatorname{cap}_{\mathrm{aff}}^0(b)=2$.
+
+**Proof.** The middle edge has $a_{0,2}>0$, so its two coordinates give an
+invertible two-dimensional block of $D_b^0$. The bottom coordinates are
+constant on the zero-winding domain. Thus $\operatorname{rank}D_b^0=2$,
+which is both the affine-hull lower bound and the dimension of (4.13). For a
+prescribed zero-winding future loop $u$, $m_u=0$ and
+
+$$
+q_b^0(h+u)=R_{u_\beta}q_b^0(h),\qquad
+D_b^0[u]=D_b^0R_{u_\beta}.
+\tag{4.14}
+$$
+
+The rotations compose, so this restricted decoder is closed under
+zero-winding controls. For every integer winding, odd winding flips parity
+and even winding preserves it. Odd winding leaves the $\varepsilon=1$
+endpoint component, while even winding preserves that component. The
+restriction $m=0$ is imposed on histories and controls: a nonzero even
+winding is outside this chosen class, although its endpoint can lie in the
+zero-winding reachable image. No closure claim for nonzero-winding controls
+is made here. $\square$
+
+## 5. The fixed-base response Gram and the triplet obstruction
+
+The metric statement below fixes the endpoint averaging law. Give the
+reachable compact group its normalized Haar measure, and in the double-wall
+case give the two parity components equal mass. This is an averaging
+convention for the ideal endpoint task; it is not a claim that a laboratory
+preparation samples loops with this law.
+
+For each surviving circle character $\xi$, use the normalized quadratures
+
+$$
+q_\xi=(\sqrt2\cos\xi,\sqrt2\sin\xi),
+\tag{5.1}
+$$
+
+so that $\mathbb E[q_\xi q_\xi^{\mathsf T}]=I_2$, and use
+$\mathbb E[\varepsilon^2]=1$ with $\mathbb E[\varepsilon]=0$ for balanced
+parity. No whitening of the ten outputs is performed. These are normalized
+latent coordinates for the stated Haar convention; the output covariance
+remains coordinate-dependent through the decoder.
+
+For a fixed initial phase $\delta$, an edge pair is
+
+$$
+a_e(\cos(\delta+\xi),\sin(\delta+\xi))
+ =\frac{a_e}{\sqrt2}R_\delta q_\xi.
+\tag{5.2}
+$$
+
+Let $D_b$ and $c_b$ be the response factorization in (4.7), and define
+
+$$
+\bar y=\mathbb E[y],\qquad
+C_{\mathrm{out}}=\mathbb E[(y-\bar y)(y-\bar y)^{\mathsf T}].
+\tag{5.3}
+$$
+
+Then
+
+$$
+C_{\mathrm{out}}=D_bD_b^{\mathsf T}\quad\text{and}\quad
+G_{\mathrm{lat}}=D_b^{\mathsf T}D_b.
+\tag{5.4}
+$$
+
+The first is the actual $10\times10$ output covariance. Its repeated-edge
+cross blocks are generally nonzero, and in generic position its nullity is
+four. The second is the latent decoder pullback Gram. The two matrices have
+exactly the same nonzero eigenvalues, including multiplicities, but they are
+not the same object.
+
+**Theorem 5.1 (Exact response Gram blocks for the actual menu).** In generic
+position, the latent pullback Gram in (5.4) is
+
+$$
+G_{\mathrm{lat}}
+ =\operatorname{diag}(\lambda_\alpha I_2,\lambda_\beta I_2,
+                       \lambda_\gamma I_2),
+\tag{5.5}
+$$
+
+where
+
+$$
+\lambda_\alpha=2(p_0p_1+p_3p_{13}),\qquad
+\lambda_\beta=2p_0p_2,\qquad
+\lambda_\gamma=2(p_0p_3+p_1p_{13}).
+\tag{5.6}
+$$
+
+For one symmetry wall the two blocks are
+
+$$
+\lambda_{\mathrm{bottom}}
+ =2(p_0+p_{13})(p_1+p_3),\qquad
+\lambda_{\mathrm{middle}}=2p_0p_2.
+\tag{5.7}
+$$
+
+At both walls the circle block is $2p_0p_2$ and the parity coordinate has
+scalar Gram coefficient
+
+$$
+\lambda_{\mathrm{parity}}
+ =4(p_0p_1+p_0p_3+p_1p_{13}+p_3p_{13}).
+\tag{5.8}
+$$
+
+The corresponding output covariance is always $C_{\mathrm{out}}=D_bD_b^{\mathsf T}$;
+its nonzero spectrum is the spectrum listed above, and its zero multiplicity
+is $10-6$, $10-4$, or $10-3$ in the three regimes. Under the
+zero-winding double-wall restriction, the bottom contribution is constant and
+is removed by centering, so the output covariance has rank two.
+
+**Proof.** Each edge block in (5.2) contributes
+$(a_e^2/2)I_2=2p_ip_jI_2$ to $D_b^{\mathsf T}D_b$. Distinct character
+blocks are orthogonal under normalized Haar, the standard character-orthogonality
+step in the Peter--Weyl theorem (Peter and Weyl, *Mathematische Annalen* 97
+(1927), 737--755, [doi:10.1007/BF01447892](https://doi.org/10.1007/BF01447892)),
+while repeated edges belonging to one character add in the same latent block.
+Equation (4.5) gives (5.6).
+On a single wall, the possible sign relation is implemented by the fixed
+reflection $J$, so all four bottom edges add to one block and give (5.7).
+At both walls the bottom response is a fixed vector times $\varepsilon$, and
+summing the four squared norms gives (5.8). Centering removes the constant
+$c_b$. Balanced parity has mean zero and variance one, so its random
+contribution remains in the centered response. Only in the restricted $m=0$
+task is parity deterministic, making its bottom contribution constant and
+removable by centering. The equality of the nonzero spectra of $D_bD_b^{\mathsf T}$
+and $D_b^{\mathsf T}D_b$ is the singular-value identity. No whitening or
+coordinate-independent metric is asserted. $\square$
+
+**Corollary 5.2 (An explicit anisotropic source witness).** The positive source
+
+$$
+p=(p_0,p_1,p_2,p_3,p_{13})=(1,2,3,4,5)/15
+\tag{5.9}
+$$
+
+is in the original fiber domain: it has
+
+$$
+(X,Y,Z)=(7/15,9/15,3/15),\qquad
+\kappa=5/15,
+\qquad \kappa_-=4/15<5/15<7/15=\kappa_+,
+\tag{5.10}
+$$
+
+and lies on neither symmetry wall. Its latent Gram eigenvalues are
+
+$$
+(\lambda_\alpha,\lambda_\beta,\lambda_\gamma)
+   =(44/225,\ 6/225,\ 28/225),
+\tag{5.11}
+$$
+
+all distinct. Therefore the nonzero spectrum of the actual ten-output
+covariance has multiplicities $2,2,2$, together with four zeros. A
+six-dimensional triplet response would have latent Gram of the form
+$A\otimes I_3$, whose nonzero eigenvalue multiplicities are multiples of
+three. The source witness cannot be orthogonally equivalent to such a triplet
+Gram, nor can padding by the four output null directions change its nonzero
+multiplicities. This is a source-realized obstruction to inferring triplet
+isotropy from the coherence menu. It supplies neither a physical spatial
+metric nor a native $SO(3)$ action.
+
+**Proof.** The domain inequalities and endpoint bounds are the displayed
+computations. Applying (5.6) gives
+
+$$
+2(2+20)/225=44/225,\qquad 2(3)/225=6/225,\qquad
+2(4+10)/225=28/225.
+$$
+
+The singular-value identity transfers these values from $G_{\mathrm{lat}}$ to
+$C_{\mathrm{out}}$, and orthogonal changes preserve multiplicities. $\square$
+
+The affine predictive terminology is compatible with the source-specific
+notion of a state represented by fixed linear readouts of future tests in
+Littman, Sutton and Singh, [*Predictive Representations of State*](https://proceedings.neurips.cc/paper/2001/hash/1e4d36177d71bbb3558e43af9577d70e-Abstract.html), NIPS 14
+(2001), pp. 1555--1561. The present theorem is narrower: its tests are the five
+specified coherence edges, its source is the fixed five-mode FIB fiber, its
+controls are Definition 3.1 loops, and its decoder is affine with fixed
+coefficients. No predictive-state result is used to infer a dimension here.
+
+This result leaves the physical bridge explicit. The coherence task has an
+exact affine capacity and an exact response spectrum under its stated endpoint
+law. A physical three-dimensional interpretation would still require a
+separate common rotation action, metric identification, and lawful control
+realization such as the additional interface hypotheses of Section 9 of
+[FIB harmonic-edge load](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md).
+Neither a torus, a character count, a response rank, nor the Gram calculation
+supplies those hypotheses.
+
+## 5.99 追加锚
