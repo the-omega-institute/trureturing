@@ -2557,3 +2557,1514 @@ No universal comparison, original separator, new quotient-region
 coverage or kernel verification is asserted here.
 
 ## 追加锚（本行以下为增补区）
+
+## 212. Coupled surplus carriers, equality-block moves and joint fixed-data minima
+
+**Definition 212.1 (Complete scores, actual measures and one budget).**
+Retain the source and acquisition contract of 210.1 and 211.14.
+For an integer $L\ge3$, let $\Omega_n\subseteq\{0,1\}^L$ contain
+all words with first zero $n$. Every word, including every multiple-zero
+word and $1^L$, remains in the domain. A score $y$ consists of independent
+nonnegative weights $A_w,C_w,P_w$ at each $w\ne1^L$ and $T\ge0$.
+At label $r\in\{0,\ldots,L\}$ its reward is
+
+$$
+g_y(w,r)=A_w\mathbf1_{r=0}+C_w\mathbf1_{r=n(w)}
+              +P_w\mathbf1_{r\in\{0,n(w)\}},\qquad
+ g_y(1^L,r)=T\mathbf1_{r=0}.
+\tag{212.1}
+$$
+
+Thus $P$ is the independent two-label event weight. For a cell $E$ put
+$m_y(E)=\max_{0\le r\le L}\sum_{w\in E}g_y(w,r)$.
+The full catalogs contain empty schedules, every singleton, and every
+pair $i<j$. The $N$ pair cells are $00,01,10,11$; the $O$ cells are
+$0=\{w_i=0\},10,11$. A label may be earlier than both queried addresses
+and need not be queried. Let $B_N^s,B_O^s$ be the sums of these cell
+maxima and $B_N,B_O$ their maxima over the respective complete catalogs.
+A tuple $(i,j;r_0,r_{10},r_{11})$ denotes a stopped table, and four
+output entries denote a full table in $00,01,10,11$ order.
+
+The anchor is the stopped table $R=(1,2;1,2,0)$, with full completion
+$(1,2;1,1,2,0)$. Write
+
+$$
+\begin{aligned}
+W_y&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(y)&=B_{\mathcal C}(y)-W_y\ge0
+                         \quad(\mathcal C=N,O),\\
+Q(y)&=(\beta,K),\qquad
+\beta_n=\sum_{\Omega_n}(C_w-A_w),\qquad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{212.2}
+$$
+
+All sums over zero words include zero coefficients. Static reversals
+only exchange cells and repetitions give singleton information; their
+actual requests still count. Every empty or singleton $N$ output
+function has a distinct-pair $N$ representation. Completing an $O$
+schedule gives an $N$ function. These representation facts do not
+embed a last-address singleton in a nonexistent later stopped pair.
+
+The complete event-demand vector $d(b,e)$ has the three independent
+entries $1-b_n-e,b_n-e,1-e$ at every $w\in\Omega_n$, and $1-e$
+at $1^L$. Negative singleton demands are retained. Use the existing
+hull and signed quotient coordinates of 198.5 and 199.1–199.4:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+ \quad b_2=b_3,\\
+ &(L+1)e\le\sum_{n=3}^Lb_n,
+ \quad b_1+\sum_{n=3}^Lb_n-(L+1)e\le1\},\\
+\alpha&=(1,1,0,\ldots,0),\qquad
+ F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke,\qquad
+ \sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+\tag{212.3}
+$$
+
+If $z_D$ is the full event-indicator vector of a table, set
+$r=z_R=d(\alpha,0)$, $h=d-r$ and $G_{\mathcal C}=(z_D-r)_D$.
+In particular $F_{Q(y)}=y\cdot h$. The domain of finite full-$N$
+configurations is
+
+$$
+H_N=\{b\in H_L:\exists\lambda\ge0,
+                         \ G_N\lambda\ge h(b)\}.
+\tag{212.4}
+$$
+
+As in 199.2, $q\in E_N$ means that one full score and one number satisfy
+
+$$
+V\ge0,\quad 0\le\theta\le1,\qquad
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(q-Q(V))\le\theta.
+\tag{212.5}
+$$
+
+For the same actual full configuration $\lambda$ at $b\in H_N$,
+with $M=\sum_D\lambda_D$, the existing weak-duality calculation gives
+$F_q(b)\le M\Delta_N(V)+\theta\le\max(1,M)$.
+The residual is signed; at $\theta=1$ the score $V$ can be nonzero
+with zero cost. No class, cell or pair has an additional budget.
+
+Every measure below is an actual finite measure on the indicated
+Boolean cube. Its coordinates are proof weights, not a distribution
+on source labels or an acquisition probability kernel. Unspecified
+weights are zero, coincident atoms add, $x_+=\max(x,0)$, and a maximum
+over an absent family of nonnegative entries contributes zero.
+
+### 212.1 Full-score surplus carriers and coupled moment boxes
+
+**Definition 212.2 (Retained rewards and projected surplus).**
+Let $y$ be an arbitrary complete score and $I=\{3,\ldots,L\}$.
+Put $\gamma_n=\sum_{\Omega_n}C_w$ for $n\in I$ and $W=W_y$.
+Delete exactly these late correct rows to obtain $Z$; all $A,P,T$
+and early correct rows stay at their actual words. Thus $W_Z=W$.
+For every label $r$, let $z_r(w)=g_Z(w,r)$ be its reward measure
+on the whole cube, including the positive word.
+
+For $n\in I$, let $\pi_n(v)=P_{1^{n-1}0v}$ on the full suffix
+cube $\{0,1\}^{\{n+1,\ldots,L\}}$, and put
+$p_n=|\pi_n|$, $\pi_{nj}=\pi_n\{v_j=0\}$.
+Let $\omega_{rn}$ be the suffix projection of
+$z_r|_{\{w_n=0\}}$. In particular
+$\omega_{nn}=\pi_n$ and $\omega_{0n}\ge\pi_n$ atomwise.
+Define the nonempty compact convex set
+
+$$
+\mathcal T_n=\left\{\tau\ge0:\sum_{r=0}^L\tau_r=1,
+ \quad\Omega_{\tau,n}:=\sum_r\tau_r\omega_{rn}\ge\pi_n\right\}.
+\tag{212.6}
+$$
+
+A permitted replacement chooses one $\tau_n\in\mathcal T_n$ and
+one actual suffix measure
+
+$$
+0\le\sigma_n\le\Omega_{\tau_n,n}-\pi_n,
+\qquad |\sigma_n|=\eta_n\ge0,
+\qquad c_{nj}=\sigma_n\{v_j=0\}.
+\tag{212.7}
+$$
+
+Set $C^V_{1^{n-1}0v}=\sigma_n(v)$ for every late class and retain
+$Z$ everywhere else. Write $k_n=p_n+\eta_n$ and
+$t_{nj}=\pi_{nj}+c_{nj}$ for the total reward of label $n$.
+These definitions specify one score $V$. Different labels may reuse
+the same carrier atoms: there is no additional constraint
+$\sum_n\sigma_n\le\omega$. Only one output label wins a terminal cell.
+The subtraction of the retained $\pi_n$ in (212.7) is compulsory.
+
+For $i<j$, put
+
+$$
+\begin{aligned}
+b_{ij}^{ab}&=\max_r z_r\{w_i=a,w_j=b\},\qquad
+ b_{ij}^0=\max_r z_r\{w_i=0\},\\
+a_{ij}&=b_{ij}^{00}+b_{ij}^{01},\qquad
+ \chi_{ij}=a_{ij}-b_{ij}^0\ge0,\\
+X_{ij}&=\max\left\{b_{ij}^{10},\ k_j\ (j\in I),\
+                     t_{nj}\ (n\in I,\ i<n<j)\right\},\\
+Y_{ij}&=\max\left\{b_{ij}^{11},\ k_n\ (n\in I,\ n>j),\
+                     k_n-t_{nj}\ (n\in I,\ i<n<j)\right\}.
+\end{aligned}
+\tag{212.8}
+$$
+
+All baseline maxima include every label. In particular a positive
+$\chi_{ij}$ is a retained split defect, not removable by selecting
+a different maximizer after merging the cells.
+
+**Theorem 212.3 (Exact full-score support and joint carrier-box criterion).**
+For every permitted replacement,
+
+$$
+\begin{aligned}
+B_N^{ij}(V)&=a_{ij}+X_{ij}+Y_{ij},\\
+B_O^{ij}(V)&=b_{ij}^0+X_{ij}+Y_{ij},\\
+\Delta_N(V)&=\max_{i<j}(a_{ij}+X_{ij}+Y_{ij}-W).
+\end{aligned}
+\tag{212.9}
+$$
+
+For completeness, put $b_i^a=\max_r z_r\{w_i=a\}$ and
+$b_\varnothing=\max_r|z_r|$. Both catalogs have the exact short supports
+
+$$
+B^\varnothing(V)=\max(b_\varnothing,\max_{n\in I}k_n),\qquad
+B^{(i)}(V)=b_i^0+\max(b_i^1,\max_{n\in I,\ n>i}k_n).
+\tag{212.10}
+$$
+
+Fix any $\eta_n\ge0$ and $d\ge0$. A replacement (212.7) with
+$\Delta_N(V)\le d$ exists if and only if there are common ceilings
+$u_{ij},v_{ij}$ for all $i<j$ such that
+
+$$
+\begin{gathered}
+u_{ij}\ge\max\{b_{ij}^{10},k_j\ (j\in I)\},\qquad
+v_{ij}\ge\max\{b_{ij}^{11},k_n\ (n\in I,n>j)\},\\
+a_{ij}+u_{ij}+v_{ij}\le W+d,
+\tag{212.11}
+\end{gathered}
+$$
+
+and the following moment-box conditions hold for each $n\in I$.
+For $j>n$ set
+
+$$
+\begin{aligned}
+\ell_{nj}&=\max\left(0,\max_{i<n}
+                     (k_n-v_{ij}-\pi_{nj})\right),\\
+h_{nj}&=\min\left(\eta_n,\min_{i<n}(u_{ij}-\pi_{nj})\right).
+\end{aligned}
+\tag{212.12}
+$$
+
+Require $\ell_{nj}\le h_{nj}$ and, for every real vector
+$\xi=(\xi_0,(\xi_j)_{j>n})$, require
+
+$$
+\begin{aligned}
+\xi_0\eta_n+\sum_{j>n}
+ \bigl((\xi_j)_+\ell_{nj}+\min(\xi_j,0)h_{nj}\bigr)
+ &\le\mathcal H_n(\xi),\\
+\mathcal H_n(\xi)
+ &=\max_{\tau\in\mathcal T_n}\sum_v
+ (\Omega_{\tau,n}(v)-\pi_n(v))
+ \left(\xi_0+\sum_{j>n}\xi_j\mathbf1_{v_j=0}\right)_+.
+\end{aligned}
+\tag{212.13}
+$$
+
+At $n=L$ there is only the mass coordinate $\xi_0$.
+The criterion concerns exactly the declared fixed-baseline replacement
+class, including zero capacities and all closed boundaries.
+
+For any resulting score define the signed prefixes
+
+$$
+R_k=\sum_{n=3}^k(\gamma_n-\eta_n),\qquad
+\Theta=\max\left(0,\max_{3\le k\le L}\frac{3R_k}{k+1}\right).
+\tag{212.14}
+$$
+
+Then $\sigma_H(Q(y)-Q(V))=\Theta$. If the common ceilings satisfy
+$d+\Theta\le1$, the same score with $\theta=\Theta$ is a certificate
+(212.5). No universal existence of affordable $\eta,d$ or ceilings
+is asserted.
+
+**Proof.** For a late class $n\le i$, the reward of its label after
+replacement is the reset of $\pi_n+\sigma_n$, not of $\sigma_n$
+alone. By (212.7), this whole measure is dominated by
+$\Omega_{\tau_n,n}$. When $n<i$, both queried bits are suffix bits
+and survive reset to $1^{n-1}0v$. When $n=i$, the first queried bit
+is already zero on the restricted donor. Therefore, on any applicable
+pair cell $E$,
+
+$$
+\text{reward of label }n\text{ in }V\text{ on }E
+ \le\sum_r\tau_{n,r}z_r(E\cap\{w_n=0\})
+ \le\max_r z_r(E).
+\tag{212.15}
+$$
+
+The same statement holds for the merged cell $w_i=0$.
+Classes $n>i$ never occupy that branch. Since adding correct rows to
+$Z$ only increases rewards, its maxima in $00,01,0$ remain exactly
+$b_{ij}^{00},b_{ij}^{01},b_{ij}^0$.
+
+For $i<n<j$ the total label-$n$ rewards in $10,11$ are exactly
+$t_{nj},k_n-t_{nj}$. Class $j$ contributes $k_j,0$ and every class
+$n>j$ contributes $0,k_n$. All other rewards are retained in the
+baseline maxima or bounded by (212.15). This exhausts the labels and
+proves the two pair identities, with their exact difference $\chi_{ij}$.
+For a singleton at $i$, classes $n\le i$ are bounded by the corresponding
+baseline cell maxima by the same restriction argument; those with
+$n>i$ contribute their whole totals in the positive cell. Label totals
+give the empty formula. Short $N$ functions refine into pairs, proving
+the last identity in (212.9); it is nonnegative because $R$ is available.
+Taking the maximum of (212.9)'s stopped expressions and (212.10) also
+gives the complete $O$ support without a short-schedule assumption.
+
+For fixed ceilings, $X_{ij}\le u_{ij}$ and $Y_{ij}\le v_{ij}$
+are equivalent to their baseline, queried and future lower bounds
+in (212.11) and, for every intermediate class,
+
+$$
+k_n-v_{ij}-\pi_{nj}\le c_{nj}\le u_{ij}-\pi_{nj}.
+\tag{212.16}
+$$
+
+Intersecting (212.16) over all $i<n$, with $0\le c_{nj}\le\eta_n$,
+gives exactly (212.12). This intersection must be used for one unary
+number, rather than different numbers for different first addresses.
+
+Let $\mathcal D_n$ be the mass/unary image of all pairs
+$(\tau,\sigma)$ satisfying $\tau\in\mathcal T_n$ and
+$0\le\sigma\le\Omega_{\tau,n}-\pi_n$. This is a compact convex
+polytope: the variables range in finite bounded closed polyhedra and
+the moment map is linear. This is the finite projection framework
+of Kaibel, [*Basic Polyhedral Theory*, arXiv:1001.2161v1,
+Theorem 8 and §1.6](https://arxiv.org/pdf/1001.2161v1), applied to
+suffix-atom capacities and their mass/unary map.
+For a fixed $\tau$, a linear functional is maximized by taking the
+full capacity at atoms with positive affine coefficient and zero at
+atoms with negative coefficient. Maximization over $\tau$ therefore
+gives precisely $\mathcal H_n$ as the support of $\mathcal D_n$.
+
+The desired box is
+$\mathcal B_n=\{\eta_n\}\times\prod_{j>n}[\ell_{nj},h_{nj}]$.
+The left side of (212.13) is its infimum in direction $\xi$.
+Intersection with $\mathcal D_n$ implies every cut. Conversely, if
+the two nonempty compact convex sets were disjoint, choose closest
+points $b\in\mathcal B_n,z\in\mathcal D_n$ and put $\xi=b-z$.
+Differentiating squared distance along segments in each set gives
+
+$$
+\inf_{x\in\mathcal B_n}\langle\xi,x\rangle
+ \ge\langle\xi,b\rangle
+ >\langle\xi,z\rangle
+ \ge\sup_{x\in\mathcal D_n}\langle\xi,x\rangle,
+$$
+
+contradicting (212.13). This is the classical finite convex separation
+step within this carrier argument. Thus the cuts supply an actual
+single suffix measure with every required moment, not only separately
+attainable marginals. Each class choice coexists with the others in
+its distinct first-zero class. The common table ceilings then prove
+$\Delta_N(V)\le d$. Conversely, any permitted score of that cost
+supplies the ceilings $X_{ij},Y_{ij}$ and its actual moment vectors,
+which satisfy every cut. This proves the equivalence.
+
+Only late correct totals changed, so $W_V=W$ and
+
+$$
+F_{Q(y)-Q(V)}(b,e)
+ =\sum_{n=3}^L(\gamma_n-\eta_n)(b_n-e).
+\tag{212.17}
+$$
+
+Use all four vertex families of the already established hull 198.5.
+The readings are zero at $o,p$, $R_k/(k-1)$ at $u_k$, and
+$3R_k/(k+1)$ at $v_k$. For $R_k\ge0$ the last reading dominates
+the $u_k$ reading because $k\ge3$; for $R_k<0$ both are below zero.
+Their maximum is (212.14), with no sign restriction on the residual.
+Combining this charge once with the complete score cost proves
+(212.5) by 199.3–199.4. $\square$
+
+The following are variants of the same mechanism. They do not give
+three different inclusion statements. If only a selected subset
+$J\subseteq I$ is replaced, retain the other correct rows in $Z$,
+restrict every changed-class index in (212.6)–(212.17) to $J$, and
+put $\gamma_n-\eta_n=0$ outside $J$. The proof is unchanged because
+all unchanged labels stay in the baseline maxima. A stronger sufficient
+carrier choice requires the full-word difference
+
+$$
+D_n=\sum_r\tau_{n,r}z_r-z_n\ge0\quad\text{at every word}
+\qquad(n\in J).
+\tag{212.18}
+$$
+
+Its restricted suffix projection is exactly
+$\Omega_{\tau_n,n}-\pi_n$. Thus a submeasure of that projected
+difference satisfies (212.7). Requiring (212.18) is stronger than
+requiring only nonnegativity of the projected surplus.
+
+A second useful specialization keeps $\eta_n=\gamma_n$ and uses
+original-input cell intervals. For every $n<j$ put
+
+$$
+H^0_{nj}=\min_{i<n}m_y(10;i,j),\qquad
+H^1_{nj}=\min_{i<n}m_y(11;i,j),\qquad
+k_n-H^1_{nj}\le t_{nj}\le H^0_{nj}.
+\tag{212.19}
+$$
+
+These bounds allow unary movement. In the moment test substitute
+$\ell_{nj}=\max(0,k_n-H^1_{nj}-\pi_{nj})$ and
+$h_{nj}=\min(\gamma_n,H^0_{nj}-\pi_{nj})$.
+The original correct moments show these intervals are nonempty,
+but need not belong to the surplus moment image.
+Whenever actual dominated measures meet them, the new stopped pair
+supports do not exceed the original ones: intermediate rewards obey
+(212.19), queried and future totals are unchanged, and $Z\le y$.
+The singleton comparison follows from (212.10), and empty support
+is unchanged because all label totals are unchanged.
+
+Consequently, with
+
+$$
+\overline B=\max\left\{
+ \max_{|s|\le1}B^s(y),\
+ \max_{i<j}\bigl(a_{ij}+m_y(10;i,j)+m_y(11;i,j)\bigr)\right\},
+\qquad\overline d=\max(0,\overline B-W),
+\tag{212.20}
+$$
+
+one has $\Delta_N(V)\le\overline d$ and
+$\Delta_O(V)\le\Delta_O(y)$, with zero quotient residual.
+If every $\chi_{ij}=0$, then $\overline d\le\Delta_O(y)$;
+a nonzero defect can also be paid by the global slack in (212.20).
+There is no need for each individual cell to decrease in the general
+criterion (212.11). For example, inequalities between two intermediate
+entries include differences $c_{nj}-c_{mj}$; when $n=m$ their
+complementary contributions sum to $k_n$ and cannot be charged twice.
+For an explicit sufficient measure, any admissible surplus of mass
+$M\ge\eta_n$ can be used at constant density $\eta_n/M$ if its
+moments obey the required box. At $M=\eta_n=0$ use zero; if
+$M=0<\eta_n$ that particular choice is impossible.
+
+**Proposition 212.4 (Actual full-row relocation and the fixed-baseline boundary).**
+The criterion permits changes excluded by exact unary matching, but
+its fixed-baseline class is not universally affordable on unit-$O$
+inputs.
+
+**Proof.** For a full-row instance at $L=5$, put
+
+$$
+P_{01001}=P_{01010}=P_{10001}=P_{10010}=1/2,\qquad
+A_{11100}=P_{11100}=1/4,\qquad C_{11000}=2,\qquad T=1.
+\tag{212.21}
+$$
+
+Keep all other coefficients zero. Retain every row except $C_3$ and
+replace it by $C^V_{11001}=C^V_{11010}=1$.
+The class-3 label-zero surplus has mass one at each suffix $01,10$,
+so these are actual permitted measures in the selected-class variant.
+Here $W=7/2$ and
+$Q(y)=Q(V)=((0,0,2,-1/4,0),11/2)$.
+The complete pair supports, with all labels included, are
+
+| Pairs | $B_N^s(y)$ | $B_O^s(y)$ | $B_N^s(V)$ | $B_O^s(V)$ |
+| --- | --- | --- | --- | --- |
+| $12$ | $4$ | $4$ | $4$ | $4$ |
+| $13,23$ | $9/2$ | $9/2$ | $9/2$ | $9/2$ |
+| $14,15,24,25$ | $9/2$ | $9/2$ | $7/2$ | $7/2$ |
+| $34,35$ | $9/2$ | $7/2$ | $7/2$ | $7/2$ |
+| $45$ | $5$ | $4$ | $7/2$ | $7/2$ |
+
+These entries follow directly from (212.1): the new $N$ maxima in
+these five rows are respectively
+$(0,1,1,2)$, $(1,0,2,3/2)$, $(1/2,1/2,1,3/2)$,
+$(1,1,1/2,1)$ and $(1/2,1,1,1)$.
+The empty support is $7/2$ for both scores; singleton supports are
+$(7/2,7/2,7/2,4,4)$ for $y$ and all $7/2$ for $V$.
+Thus the costs are $(3/2,1)$ before and $(1,1)$ after replacement.
+Exact unary matching would require mass two with zero moments $(2,2)$,
+whereas every mass-two measure on $\{01,10\}$ has sum of those
+moments two. All retained label carriers are supported there. The
+actual certificate is $(V,0)$; this example concerns the carrier
+route, not exclusion from other certificates.
+
+Retained pair subtraction cannot be omitted even at unit cost.
+At $L=4$, take $P_{1100}=C_{1100}=1$ and no other weights.
+Then $W=1$ and both complete costs are one. Deleting $C_3$ leaves
+$\pi_3=\omega_{03}=\delta_0$. Gross reward would incorrectly permit
+another unit $C_3$ and bound label 3's reward in pair-$34$ cell $00$
+by one, although that reward is two. The actual surplus is zero.
+
+Finally take the complete $L=3$ input
+
+$$
+A_{000}=A_{011}=C_{001}=C_{010}=1,
+\tag{212.22}
+$$
+
+all other weights zero. Its anchor is two, and
+$Q(y)=(0,0,0;4)$. Pair $23$ has full cell maxima $(1,1,1,1)$
+and stopped maxima $(1,1,1)$. Pairs $12,13$, all singletons and the
+empty schedule have support two. Hence
+$\Delta_N(y)=2$ and $\Delta_O(y)=1$.
+There is no late correct input, so $Z=y$. Every permitted replacement
+has $V\ge Z$ and the same anchor, forcing $\Delta_N(V)\ge2$
+for every $\eta$. Yet the unrestricted certificate $V=0,\theta=0$
+works because $F_{Q(y)}=-4e\le0$ on $H_L$.
+This distinguishes failure of the fixed-baseline method from failure
+of $E_N$ membership. $\square$
+
+### 212.2 Equality-block locality and the entire unary fiber
+
+**Definition 212.5 (One equality block and funded face moves).**
+Fix $L\ge5$, nonempty disjoint sets $U,V\subseteq\{4,\ldots,L\}$,
+$J=U\cup V$, $d=|J|$, and $K=\{4,\ldots,L\}\setminus J$.
+Let $\kappa$ be any probability measure on the full $K$-cube,
+including the one-point cube when $K$ is empty. Choose $c>0,t\ge c$.
+For a three-bit prefix $h$, let $w_{ab}^h(v)$ have prefix $h$,
+all $U$ bits equal to $a$, all $V$ bits equal to $b$, and $K$ bits $v$.
+Define the actual full score $Y$ by
+
+$$
+\begin{aligned}
+P_{w_{01}^{010}(v)}=P_{w_{10}^{010}(v)}
+ =P_{w_{01}^{100}(v)}=P_{w_{10}^{100}(v)}&=t\kappa(v)/2,\\
+C_{w_{00}^{110}(v)}=C_{w_{11}^{110}(v)}&=c\kappa(v),\qquad T=t,
+\end{aligned}
+\tag{212.23}
+$$
+
+with $A=0$ and all unspecified coefficients zero. In particular
+$W=3t$, $Q(Y)=(2c e_3,2c+3t)$, where $e_3$ here denotes a
+quotient coordinate vector. Let $\mathcal U(Y)$ consist of every
+nonnegative replacement of the class-3 correct measure that preserves
+its mass and every unary marginal, with all other score rows fixed.
+No joint-marginal or support restriction is imposed in $\mathcal U(Y)$.
+For such a replacement $C'$ define its moved mass by
+
+$$
+\operatorname{mov}(C',C)=\frac12\sum_{w\in\Omega_3}|C'_w-C_w|.
+\tag{212.24}
+$$
+
+A coordinate-face move is a signed change of this correct measure,
+supported on one face on which all coordinates outside a set $S$
+are fixed. It preserves mass and every unary marginal, and its addition
+to the current measure must be nonnegative. Its width is $|S|$,
+counting suffix coordinates only. A batch is funded when the sum of
+its atomwise withdrawals is bounded by the current measure. Finite
+batches and countable batches with that property are allowed; mass
+preservation makes the latter absolutely summable. This definition
+does not allow unfunded summands merely because their net sum would
+be feasible.
+
+**Theorem 212.6 (Exact intermediate cost, sharp moved mass and locality).**
+For $0\le x_v\le c\kappa(v)$, put $X=\sum_vx_v$.
+Replace the class-3 measure in each stratum by
+
+$$
+\begin{array}{c|rrrr}
+\text{word}&w_{00}^{110}(v)&w_{01}^{110}(v)&w_{10}^{110}(v)&w_{11}^{110}(v)\\\hline
+C^{Y_x}&c\kappa(v)-x_v&x_v&x_v&c\kappa(v)-x_v
+\end{array}
+\tag{212.25}
+$$
+
+and leave all other rows fixed. Then $Y_x\in\mathcal U(Y)$ and,
+with $\delta=(2c-t)_+$,
+
+$$
+\Delta_O(Y_x)=\delta,\qquad
+\Delta_N(Y_x)=\max(\delta,c-X).
+\tag{212.26}
+$$
+
+For every $D\ge0$, the least moved mass over the entire declared
+fiber, subject to $\Delta_N\le D$, is
+
+$$
+\min_{C'\in\mathcal U(Y),\ \Delta_N(C')\le D}
+ \operatorname{mov}(C',C)
+ =\begin{cases}
+ +\infty,&D<\delta,\\
+ 2(c-D)_+,&D\ge\delta.
+ \end{cases}
+\tag{212.27}
+$$
+
+The finite value is attained by (212.25) with
+$x_v=(c-D)_+\kappa(v)$.
+
+Starting at $Y$, every sequence of feasible face moves each omitting
+at least one coordinate of $J$ preserves support on
+$E_J=\{v:\text{all bits in }J\text{ agree}\}$ and has
+$\Delta_N\ge c$. The same holds after funded batches and under
+coordinatewise limits. If $\delta<c$, the least maximum face width
+that can lower cost below $c$ is exactly $d=|J|$: a successful path
+must contain a face including $J$, and width-$d$ moves suffice.
+Width is a locality constraint on proof-weight changes, not a number
+of requests, an address bound, a seed size or a runtime bound.
+
+**Proof.** The signed change in each stratum is
+$x_v(-1,1,1,-1)$. Its total and both block marginals vanish,
+and $K$ coordinates are fixed in that stratum. It therefore preserves
+all unary marginals, $Q$ and $W$. Nonnegativity is exactly the displayed
+donor bound. Distinct strata have disjoint donors; each stratum's one
+withdrawal repairs all pairs in $U\times V$ simultaneously.
+
+Here is the full schedule calculation. Write $z_j=1/2$ on $J$
+and $z_j=\kappa\{v_j=0\}$ on $K$. The excesses over $W=3t$ are
+
+| Schedule | $N$ excess | $O$ excess |
+| --- | --- | --- |
+| $12,13,23$ | $\delta$ | $\delta$ |
+| $(a,j)$, $a\in\{1,2\}$, $j\ge4$ | $z_j\delta$ | $z_j\delta$ |
+| $(3,j)$, $j\ge4$ | $0$ | $0$ |
+| Suffix pair crossing $U,V$ | $c-X$ | $0$ |
+| Every other suffix pair | $0$ | $0$ |
+| Empty and every singleton | $0$ | $0$ |
+
+To verify every label in this table, zero earns the pair stock in each
+cell and $t$ at the positive word; labels 1 and 2 earn subsets of that
+stock. The only other nonzero label is 3. At the three head pairs the
+support is $2t+\max(t,2c)$. At $(a,j)$ the first-zero contribution
+is $t$ and the remaining two maxima are
+
+$$
+z_j\max(t,2c),\qquad
+\max\{t(2-z_j),2c(1-z_j)\}=t(2-z_j),
+\tag{212.28}
+$$
+
+using $t\ge c$. Splitting the first-zero branch does not change its
+maximum sum, since it has only pair stock. This gives $z_j\delta$.
+At $(3,j)$, label-3 cell masses are $2cz_j,2c(1-z_j),0,0$;
+the corresponding pair masses are $2tz_j,2t(1-z_j),0,0$ and
+$T$ contributes $t$ to $11$. Zero dominates, as asserted.
+
+For a pair crossing $U,V$, the zero-label masses are $(0,t,t,t)$,
+including $T$ in the last entry. The correct-label masses are
+$(c-X,X,X,c-X)$. Since $0\le X\le c\le t$, the full maxima are
+
+$$
+(c-X,t,t,t),\qquad\text{and the stopped maxima are }(t,t,t).
+\tag{212.29}
+$$
+
+The merged correct reward is $c\le t$. On any noncrossing suffix
+pair, its correct projection is $c/t$ times its pair projection.
+For pairs within one block this follows from the two preserved block
+marginals in each stratum; for a block/$K$ pair it follows from those
+same stratum marginals; for a $K/K$ pair it follows from the preserved
+stratum total. This remains valid for nonuniform $\kappa$ and unequal
+$x_v$. Zero dominates these cells, with $T$ added in $11$.
+Early singleton maxima are $t,2t$, query-3 maxima are $2t,t$,
+and suffix singletons have maxima $2tz_j,2t(1-z_j)+t$.
+The empty maximum is $3t$. These statements include all legal labels;
+other labels have zero reward here rather than being removed from the
+catalog. The table proves (212.26).
+
+For an arbitrary member of $\mathcal U(Y)$, a head pair still forces
+cost at least $\delta$, because its class-3 total is $2c$.
+Fix $i\in U,j\in V$. Total mass $2c$ and the two zero marginals
+$c$ force the new correct pair table to be
+$(u,c-u,c-u,u)$ with $0\le u\le c$.
+With the unchanged stock its full support is exactly $3t+u$.
+Thus cost at most $D$ forces $u\le D$. Projection to these two
+coordinates contracts the $\ell^1$ distance: the triangle inequality
+bounds the absolute value of each projected signed sum by the sum of
+its absolute values. The original pair table is $(c,0,0,c)$,
+so its projected distance is $4(c-u)$. At least $2(c-D)$ mass
+must therefore move if $D<c$. For $D\ge c$ the zero lower bound
+is attained without change. For $\delta\le D<c$, (212.25) with
+$X=c-D$ has exactly moved mass $2X$ and complete cost $D$.
+These arguments prove the entire-fiber minimum, not just optimality
+among the displayed stratum changes.
+
+For locality, suppose the current measure is supported on $E_J$,
+and a face omits $j_0\in J$, fixed there to bit $b$.
+Every old positive atom on that face has every $J$ bit equal to $b$.
+For each movable $j\in J$, its opposite-bit mass on the face is zero.
+A move supported there and preserving the global mass and unaries
+preserves those face quantities as well. Nonnegativity forces the new
+opposite-bit mass to remain zero. A face of zero mass must remain empty.
+Thus no such move creates mass outside $E_J$.
+
+Induction proves the assertion for finite paths. In a funded batch
+each summand is individually feasible, since its negative part is
+bounded by the current measure. Each summand consequently vanishes
+outside $E_J$; their sum does too. In a countable funded batch,
+$\sum\|\text{move}\|_1$ is at most twice the current total mass,
+so the same conclusion follows by absolute convergence. Finally,
+nonnegative measures supported on $E_J$ with fixed unary data form a
+closed set in this finite-dimensional space. Coordinatewise limits
+retain the invariant. Every crossing pair then still has table
+$(c,0,0,c)$ and forces cost at least $c$, independently of any changes
+on $K$ or of monotonicity along the path.
+
+Conversely (212.25) consists of width-$d$ moves, one per nonzero $x_v$,
+with the $K$ bits fixed. If $\delta<c$, any $0<X\le c$ lowers the
+cost below $c$ until the head bound takes over. Taking
+$X=c-\delta$ reaches cost $\delta$. Every successful path must
+therefore use at least one face containing $J$, and the displayed
+moves attain this width. All endpoints $x_v=0,c\kappa(v)$,
+$t=c$, $t=2c$, zero carrier atoms and empty $K$ are included.
+$\square$
+
+For example, $L=6$, $U=\{4\}$, $V=\{5,6\}$, $c=2,t=3$
+and the one-point outside carrier give $W=9$ and costs $(2,1)$.
+The four nonzero pair rows are
+$P_{010011}=P_{010100}=P_{100011}=P_{100100}=3/2$,
+and the original correct rows are $C_{110000}=C_{110111}=2$.
+The choice $x=1$ makes the four correct rows
+$110000,110011,110100,110111$ all have mass one; it attains costs
+$(1,1)$ with the least moved mass two. For any prescribed width
+bound $k\ge2$, take $|J|=k+1$ with the same $c,t$ to obtain the
+corresponding unit-$O$ locality obstruction. Taking $t=2c$ gives a
+zero-$O$ input with arbitrary positive initial $N$ cost $c$.
+
+The full-relocation endpoint $X=c$ directly reuses 209.13:
+its new correct measure is $c/t$ times the actual pair carrier
+conditioned at address 3, preserves the original unaries, and has
+label zero as a common baseline maximizer. The four-word mechanism
+of 211.2 remains its existing supplier. The additional assertions
+here are the whole-fiber moved-mass optimum, its intermediate complete
+cost and the all-length locality invariant. Whenever $\delta\le1$,
+$X=(c-1)_+$ gives the single certificate $(Y_x,0)$; $X=c-\delta$
+compares at the original stopped cost. No failure of bounded-width
+moves excludes nonlocal changes, changes of unaries or other rows,
+or signed residual certificates.
+
+The mass/unary map is a nonnegative real-table fiber. For rational
+prescribed margins and a fixed positive integer $D$ clearing them,
+scaling by $D$ identifies the tables restricted to the
+$D^{-1}\mathbb Z_{\ge0}$ grid with an integer fiber in the terminology of
+Clarke and Kosta, [*Distance Reducing Markov Bases*,
+arXiv:2406.17730v1, Definition 2.2 and Propositions 2.3 and 7.2](https://arxiv.org/pdf/2406.17730v1).
+Their applicable moves require donor nonnegativity; their Graver-basis
+result reduces $\ell^1$ distance in integer fibers. Neither supplies
+a bounded coordinate width nor a decrease of the complete maximum
+$\Delta_N$. The real-weight support argument and the projected
+$\ell^1$ lower bound above supply those distinct conclusions here.
+
+### 212.3 Unequal star carriers at every terminal mass
+
+**Definition 212.7 (The full fixed-star class).** On
+$I=\{3,\ldots,L\}$ choose arbitrary real numbers
+$a_\varnothing,a_i,\gamma_i,t\ge0$ and let
+
+$$
+\nu=a_\varnothing\delta_{0^I}
+                 +\sum_{i\in I}a_i\delta_{x^{(i)}},\qquad
+x^{(i)}_j=\mathbf1_{j=i},\qquad
+S=a_\varnothing+\sum_{i\in I}a_i.
+\tag{212.30}
+$$
+
+Thus the positive-coordinate events are pairwise disjoint under the
+one actual measure $\nu$. Let $\mathcal A(\nu,\gamma,t)$ contain
+all scores with $A=0$, no early correct mass, $P$ supported in
+$\Omega_1\cup\Omega_2$, late projection
+$P_{00x}+P_{01x}+P_{10x}=\nu(x)$, correct totals $\gamma_i$
+and $T=t$. Every early allocation, including prefix $00$, and every
+correct suffix is permitted. The only restrictions on $\gamma,t$
+are nonnegativity: they can be unordered, exceed the carrier stock,
+and have arbitrarily many nonzero classes. All these scores have
+$W=S+t$ and $Q=(\gamma,\sum_i\gamma_i+S+t)$, with early
+quotient coordinates zero.
+
+**Theorem 212.8 (Nine-family simultaneous fixed-data minimum).**
+Let $B_*$ be the maximum of these nine families:
+
+$$
+\begin{array}{c|l|l}
+ &\text{entry}&\text{indices}\\\hline
+1&S+t&\text{none}\\
+2&S+\gamma_i&i\in I\\
+3&S/2+\gamma_i+a_i/2+t&i\in I\\
+4&S/2+\gamma_i+\gamma_j&i<j\text{ in }I\\
+5&\gamma_i+\gamma_j+t&i<j\text{ in }I\\
+6&S-a_i+\gamma_j+t&i<j\text{ in }I\\
+7&\gamma_i+\gamma_j+\gamma_k&i<j<k\text{ in }I\\
+8&S-a_i+\gamma_j+\gamma_k&i<j<k\text{ in }I\\
+9&\gamma_i+a_i+\gamma_k&i<j<k\text{ in }I.
+\end{array}
+\tag{212.31}
+$$
+
+Absent indexed families are omitted; in family 9 the intermediate
+index $j$ requires an actual address strictly between $i$ and $k$.
+Then
+
+$$
+\min_{y\in\mathcal A(\nu,\gamma,t)}B_N(y)
+ =\min_{y\in\mathcal A(\nu,\gamma,t)}B_O(y)=B_*.
+\tag{212.32}
+$$
+
+One score attains both minima simultaneously. It has balanced lifts
+$P^*_{01x}=P^*_{10x}=\nu(x)/2$, terminal mass $t$, and the existing
+threshold placement of 203.2: for each $n\in I$, send length measure
+on $[0,\gamma_n)$ to the word
+
+$$
+w^n_k(r)=1\ (k<n),\qquad w^n_n(r)=0,\qquad
+w^n_j(r)=\mathbf1_{r<a_j}\ (j>n).
+\tag{212.33}
+$$
+
+Put the length of each inverse image in its correct row and add
+coincident rows. The parameter correspondence to (203.10) is
+$a_{nj}=\nu\{x_n=0,x_j=1\}=a_j$ for $n<j$.
+This uses the same threshold constructor even when $t<\max\gamma$;
+the assertion here is its exact all-terminal fixed-data minimum.
+For every input in this class the resulting single score $V_*$ has
+
+$$
+Q(V_*)=Q(y),\qquad
+\Delta_N(V_*)=\Delta_O(V_*)=B_*-S-t\le\Delta_O(y).
+\tag{212.34}
+$$
+
+Every unit-$O$ input in the class consequently has certificate
+$(V_*,0)$.
+
+**Proof.** First take an arbitrary competitor, with its entire early
+allocation and arbitrary correct suffixes. Constant zero earns $S+t$,
+and the head table earns $S+\max(t,\max_i\gamma_i)$, supplying
+families 1 and 2. For each $i\in I$, the two legal stopped tables
+$(a,i;0,i,0)$, $a=1,2$, earn $S+t+\gamma_i-p_a$, where
+$p_a=P\{w_a=1,w_i=0\}$. Their pair-loss sets are disjoint on
+$\Omega_1\cup\Omega_2$, even in the presence of prefix $00$,
+and $p_1+p_2\le S-a_i$. The better table gives family 3.
+
+Write $P_a=\sum_{\Omega_a}P$, so $P_1+P_2=S$.
+For $i<j$, table $(a,i;a,i,j)$ collects at least
+$P_a+\gamma_i+\gamma_j$. Choosing $P_a\ge S/2$ gives family 4.
+The stopped tables $(i,j;i,j,0)$ and $(i,j;i,j,k)$ give families
+5 and 7. Their correct classes lie wholly in their respective
+stopped cells, independently of suffixes. Table $(i,j;0,j,0)$
+gives family 6 because the first cell contains pair mass $S-a_i$.
+For $i<j<k$, tables $(i,j;0,j,k)$ and $(i,j;i,0,k)$ give
+families 8 and 9, respectively: in the latter, pair cell $10$ has
+mass $a_i$. Any additional rewards are nonnegative. Thus each of
+the nine expressions is a lower bound from one complete legal table,
+and $B_O(y)\ge B_*$ throughout the fixed-data class.
+
+We bound the full support of (212.33), retaining every possible
+winning label. The head support is $S+\max(t,\max\gamma)$.
+At an early/late pair $(a,j)$ the early-zero cell maxima sum to
+$S/2$. The other two maxima are
+
+$$
+\begin{aligned}
+M_{10}&=\max\left\{(S-a_j)/2,\gamma_j,
+                         (\gamma_n-a_j)_+\ (n<j)\right\},\\
+M_{11}&=\max\left\{a_j/2+t,\gamma_n\ (n>j),
+                              \min(\gamma_n,a_j)\ (n<j)\right\}.
+\end{aligned}
+\tag{212.35}
+$$
+
+Every correct-class index here is late. If $M_{10}$ uses its pair
+baseline, $S/2+M_{10}+M_{11}$ is at most a family-1 or family-2
+entry. Otherwise let its winning class be $n\le j$, of reward
+$\gamma_n-\epsilon$, where $\epsilon=0$ for $n=j$ and
+$\epsilon=a_j$ for $n<j$. Against the final baseline the total
+is at most family 3 at $n$: for $n<j$, the correction
+$-a_j+a_j/2\le a_n/2$, and for $n=j$ it is equality.
+Against a different final correct class it is at most family 4,
+after ordering the two indices. Against the same class, the two
+complementary pieces sum to $\gamma_n$, so family 2 bounds it.
+This proves every early/late full-pair bound without independent
+allowances for its last two cells.
+
+For a late pair $i<j$, let $b=S-a_i-a_j\ge0$.
+The four full-label maxima are
+
+$$
+\begin{aligned}
+M_{00}&=\max\{b,(\gamma_i-a_j)_+,
+                (\gamma_n-\max(a_i,a_j))_+\ (n<i)\},\\
+M_{01}&=a_j,\\
+M_{10}&=\max\{a_i,\gamma_j,
+                (\gamma_n-a_j)_+\ (i<n<j)\},\\
+M_{11}&=\max\{t,\gamma_n\ (n>j),
+ \min(\gamma_n,a_i,a_j)\ (n<i),
+ \min(\gamma_n,a_j)\ (i<n<j)\}.
+\end{aligned}
+\tag{212.36}
+$$
+
+Indeed the zero-label pair projection is $(b,a_j,a_i,0)$, with
+$t$ added in $11$. Early labels earn subsets of it.
+For $n<i$, the threshold intervals give mass
+$(\gamma_n-\max(a_i,a_j))_+$ in $00$ and
+$\min(\gamma_n,a_i,a_j)$ in $11$; its off-diagonal interval
+lengths are bounded by $a_j$ in $01$ and by $a_i$ in $10$.
+For $n=i$ the only possible nonzero cells are $00,01$ with
+masses $(\gamma_i-a_j)_+,\min(\gamma_i,a_j)$.
+For $i<n<j$ they are the complementary $10,11$ entries;
+$n=j$ contributes only $\gamma_j$ in $10$ and $n>j$ only
+$\gamma_n$ in $11$. This proves (212.36) for all labels, including
+earlier unqueried ones.
+
+Choose the baseline on a tie in $00$ or $10$. When $00$ exceeds
+$b$, let its winner be $n\le i$, with reward $\gamma_n-h$,
+where $h=a_j$ if $n=i$ and $h=\max(a_i,a_j)$ if $n<i$.
+When $10$ exceeds $a_i$, let its winner be $q\in(i,j]$, with
+reward $\gamma_q-\epsilon$, where $\epsilon=0$ if $q=j$ and
+$\epsilon=a_j$ otherwise. A final winner is terminal, future
+$k>j$, earlier $k<i$, or intermediate $i<k<j$; $k=i,j$ is
+impossible there. There are four exhaustive cases.
+
+If neither cell gains, the support is $S+M_{11}$, bounded by
+families 1 and 2.
+
+If only $10$ gains, the support is
+$S-a_i+\gamma_q-\epsilon+M_{11}$.
+A terminal winner is bounded by family 6 at $(i,q)$; a future
+winner by family 8 at $(i,q,k)$.
+An earlier winner contributes at most $a_i$, giving family 2 at $q$.
+For an intermediate winner with $q<j$, its contribution is at most
+$a_j=\epsilon$, again giving family 2. If $q=j$, an intermediate
+winner $k$ instead gives family 8 at $(i,k,j)$.
+
+If only $00$ gains and $n=i$, the support is
+$\gamma_i+a_i+M_{11}$.
+For a terminal winner, $a_i\le S$ bounds this by family 3 at $i$;
+for a future winner use family 9 at $(i,j,k)$.
+Earlier or intermediate final rewards are at most $a_j$, so family 2
+bounds them. If instead $n<i$, the support is
+$\gamma_n+\min(a_i,a_j)+M_{11}$.
+Since $\min(a_i,a_j)\le S/2$, a terminal winner is bounded by
+family 3 at $n$, and a distinct correct winner by family 4.
+If the final winner is that same $n$, its $00,11$ pieces are
+parts of one measure. As $00$ gained, $\gamma_n>\max(a_i,a_j)$,
+and the support is $\gamma_n+2\min(a_i,a_j)\le\gamma_n+S$,
+bounded by family 2.
+
+If both cells gain, the support is
+
+$$
+\gamma_n+\gamma_q+M_{11}+a_j-h-\epsilon,
+\qquad a_j-h-\epsilon\le0.
+\tag{212.37}
+$$
+
+A terminal winner gives family 5 and a third distinct correct class
+gives family 7, after ordering the indices. If the final winner is
+$q$, then $q<j$; its $10,11$ pieces sum to $\gamma_q$ and
+$h\ge a_j$ leaves at most $\gamma_n+\gamma_q$.
+If the final winner is $n$, then $n<i$.
+When $q<j$, complementarity and $\epsilon=a_j$ give the same bound.
+When $q=j$, the remaining expression is
+
+$$
+\gamma_n+\gamma_j+a_j-\max(a_i,a_j)+\min(a_i,a_j)
+ \le\gamma_n+\gamma_j+S/2,
+$$
+
+since the last correction is at most $\min(a_i,a_j)\le S/2$.
+Family 4 bounds it. Thus repeated winners never receive two copies
+of the same correct mass.
+
+Every full pair is now at most $B_*$. Short $N$ rules refine into
+such pairs, so $B_N(V_*)\le B_*$. The stopped lower bound applies
+to this very score and $B_O(V_*)\le B_N(V_*)$, proving both
+attained minima. Totals give (212.34). The proof makes no divisions
+by masses, and includes $L=3$, $t=0$, zero classes, zero carrier,
+unequal tied thresholds and every closed endpoint. It asserts global
+catalog minima, not pair-by-pair equality or decrease. $\square$
+
+For a growing unequal instance, let $m=L-2\ge4$,
+$a_\varnothing=0$, $a_3=1$, $a_j=2$ for $j\ge4$,
+$\gamma_j=3$ and $t=2$. Balanced lifts with correct mass three at
+each sole-zero word give an input $Y$.
+Here $S=2m-1,W=S+2$. On a late pair the full maxima are
+$(S-a_i-a_j,3,3,3)$ and the stopped maxima are
+$(S-a_i,3,3)$; maximizing gives $S+6,S+5$.
+The head and early/late pairs have support at most $S+5$, as do
+short schedules by direct singleton marginals. Thus the costs are
+$(4,3)$. Constructor (212.33) puts mass two at each sole-zero word
+and mass one at $1^{j-1}0^{L-j+1}$ in class $j$, adding coincident
+rows at $j=L$. Formula (212.31) gives its two costs as three.
+Scaling all weights by $1/3$ gives an actual unit-$O$ input and a
+same-$Q$ certificate of cost one at every such length.
+
+For the original class 3, every suffix unary zero moment is zero.
+Its conditioned carrier has one suffix one per atom and at least
+two suffix zeros. The signed cut $1-\sum_{j>3}\mathbf1_{v_j=0}$
+has target mass three and positive-part carrier integral zero.
+Thus exact unary matching does not produce this comparison; the
+threshold attainer changes those unaries. This is a route distinction,
+not exclusion from the old signed or convex certificate set.
+At $t\ge\max\gamma$, the protected-terminal minimum is already
+203.2; the equal-pair specialization is already 209.3, including
+207.17's bounded subcase. Formula (212.31) supplies the unequal-star
+minimum for arbitrary terminal mass. Its carrier assumption excludes
+atoms with two late ones, and its input class excludes positive early
+correct mass, base rows and late pair rows. No reduction of general
+complete scores to this class is asserted.
+
+### 212.4 Graph coupling inside the complete score catalogs
+
+**Definition 212.9 (One graph stock and the full preserving fiber).**
+Let $r\ge1,m\ge2$, $L=r+m+2$,
+$I_c=\{3,\ldots,r+2\}$, $J=\{r+3,\ldots,L\}$ and
+$I=I_c\cup J$. Let $G=(J,E_G)$ be any finite simple graph.
+Choose $g>0$, $0\le\gamma_n\le g$ for $n\in I_c$, and $t\ge g$.
+For a set $Z$ of addresses, write $w(Z)$ for the full word with
+zero set exactly $Z$. On the late cube, identified by its zero sets,
+define the single measure
+
+$$
+\nu=2g\delta_\varnothing+2g\sum_{i\in I}\delta_{\{i\}}
+       +g\sum_{\{i,j\}\in\binom I2\setminus E_G}\delta_{\{i,j\}},
+\qquad
+S=|\nu|=g\left(2(|I|+1)+\binom{|I|}{2}-|E_G|\right).
+\tag{212.38}
+$$
+
+Graph edges are only between vertices of $J$; all pairs involving
+$I_c$ are included among the nonedges in this formula.
+Put $B=S+t$ and $\Gamma=\sum_{n\in I_c}\gamma_n$.
+For each $n\in I_c$ choose any actual measure $\mu_n$ on all
+subsets of $J$ of mass $\gamma_n$. Assemble the score $Y(\mu)$ by
+
+$$
+P_{w(\{1\}\cup Z)}=P_{w(\{2\}\cup Z)}=\nu(Z)/2,\qquad
+C_{w(\{n\}\cup Z)}=\mu_n(Z),\qquad A=0,\quad T=t.
+\tag{212.39}
+$$
+
+In the pair formula $Z\subseteq I$; in the correct formula
+$Z\subseteq J$. Thus every correct atom has first zero $n$.
+The quotient is $q=(\beta,\Gamma+B)$, with $\beta_n=\gamma_n$
+on $I_c$ and zero elsewhere, and $W_{Y(\mu)}=B$.
+
+For $0\le c_j\le\gamma$, define the common-coupling minimum
+
+$$
+\kappa_G(\gamma,c)=
+\min_{\substack{\mu\ge0,\ |\mu|=\gamma\\
+                       \mu\{Z:j\in Z\}=c_j\ (j\in J)}}
+       \max_{e\in E_G}\mu\{Z:e\subseteq Z\}.
+\tag{212.40}
+$$
+
+The maximum for an edgeless graph is zero. The domain is compact and
+nonempty: for $\gamma>0$ an independent product of Bernoulli variables
+with means $c_j/\gamma$, scaled by $\gamma$, is one feasible measure;
+for $\gamma=0$ every $c_j=0$ and only the zero measure is feasible.
+This product supplies nonemptiness, not a claim of optimality.
+
+Given $c_{nj}\in[0,\gamma_n]$, let $\mathcal F_G(c)$ contain all
+full nonnegative scores $V$ satisfying
+
+$$
+\begin{gathered}
+Q(V)=q,\qquad \sum_wP_w+T=B,\\
+\sum_{w:w_i=w_j=0}P_w=0\quad(\{i,j\}\in E_G),\qquad
+\sum_{w\in\Omega_n:w_j=0}C_w=c_{nj}
+                      \quad(n\in I_c,j\in J).
+\end{gathered}
+\tag{212.41}
+$$
+
+This fiber permits all full output rows. It does not fix $\nu$, the
+early pair allocation, individual pair rows, terminal mass, or other
+correct suffix coordinates. Its explicit invariants, rather than an
+implicit restriction to (212.39), define its competitor class.
+
+**Theorem 212.10 (Complete graph embedding and attained fiber minimum).**
+For the actual assembled score (212.39), every stopped schedule has
+support $B$. Every full schedule also has support $B$ except possibly
+graph-edge pairs, on which
+
+$$
+B_N^{ij}(Y(\mu))=B+\max_{n\in I_c}\mu_n\{Z:i,j\in Z\}
+                           \quad(\{i,j\}\in E_G).
+\tag{212.42}
+$$
+
+In particular $\Delta_O(Y(\mu))=0$ and
+$\Delta_N(Y(\mu))=\max_{n,e}\mu_n\{e\subseteq Z\}$.
+Over the larger full-score fiber (212.41), one score attains
+
+$$
+\min_{V\in\mathcal F_G(c)}\Delta_N(V)
+       =\max_{n\in I_c}\kappa_G(\gamma_n,c_n),
+\qquad \Delta_O(V)=0
+\quad\text{for that same attainer}.
+\tag{212.43}
+$$
+
+A zero-cost score in the fiber exists exactly when
+
+$$
+c_n/\gamma_n\in\operatorname{STAB}(G)
+   :=\operatorname{conv}\{\mathbf1_Z:Z\subseteq J
+                                  \text{ is independent in }G\}
+\quad\text{for every }\gamma_n>0;
+\tag{212.44}
+$$
+
+zero classes require $c_n=0$. A certificate of the form $(V,0)$ with
+$V$ in this fiber exists exactly when the maximum in (212.43) is at
+most one. The same criterion holds if any $\theta$ in (212.5) is
+allowed while retaining $Q(V)=q$.
+
+**Proof.** For every late pair $i<j$ the stock has
+$\nu_{01},\nu_{10},\nu_{11}\ge2g$.
+Its $00$ mass is zero on a graph edge and exactly $g$ on a nonedge.
+Each individual correct label contributes at most $\gamma_n\le g$
+to any cell; early label rewards are subsets of the zero-label pair
+reward. On a nonedge zero therefore dominates all four cells.
+On an edge, whose endpoints are both after every $n\in I_c$, the
+full maxima are precisely
+
+$$
+\left(\max_n\mu_n\{i,j\in Z\},\ \nu_{01},\ \nu_{10},\ \nu_{11}+t\right).
+\tag{212.45}
+$$
+
+The earlier unqueried correct labels are retained in its first maximum.
+For a stopped late pair, the merged first-zero stock
+$\nu_{00}+\nu_{01}\ge2g$ dominates every correct unary reward;
+the other two cells are also dominated by zero. Its support is $B$.
+
+At the head pair, the full maxima are $(0,S/2,S/2,t)$ and the
+stopped maxima $(S/2,S/2,t)$, using $t\ge g$.
+At an early/late pair $(a,j)$ the early-zero pieces sum to $S/2$.
+In $10$ the pair baseline is $\nu\{x_j=0\}/2\ge g$;
+in $11$ it is $(S-\nu\{x_j=0\})/2+t\ge g$.
+They dominate every correct label, so both supports are $B$.
+Every singleton has a full refinement at an early-containing pair
+of support $B$; the empty function refines into the head pair.
+Constant zero already earns $B$. Consequently all short supports
+are exactly $B$, also in $O$. This proves the complete identity,
+including pairs inside $I_c$ and pairs between $I_c,J$.
+
+For any full score, direct summation gives
+
+$$
+K-\sum_j\beta_j=2\sum_wA_w+\sum_wP_w+T.
+\tag{212.46}
+$$
+
+Inside (212.41), its left side is $B$ and its last two terms total
+$B$. Nonnegativity forces $A=0$. Thus the correct masses are precisely
+$\gamma_n$ in $I_c$, zero in all other classes, and $W_V=B$.
+Project the actual class-$n$ correct measure to $J$, obtaining
+$\sigma_n$ with the prescribed mass and all prescribed unaries.
+
+For $n\in I_c$ and an edge $e=\{i,j\}$, $i<j$, use the legal
+full table
+
+$$
+D_{n,e}=(i,j;n,0,0,0).
+\tag{212.47}
+$$
+
+Constant zero earns $B$. Changing its $00$ output to $n$ loses
+no pair mass by (212.41) and gains exactly $\sigma_n\{e\subseteq Z\}$.
+Thus every member of the full fiber has
+$\Delta_N(V)\ge\max_{n,e}\sigma_n\{e\subseteq Z\}
+\ge\max_n\kappa_G(\gamma_n,c_n)$.
+Compactness of each marginal polytope and continuity of its finite
+maximum supply minimizing measures $\mu_n$. Assemble all these
+minimizers with the same stock (212.38). The complete support identity
+proves equality in (212.43) and stopped cost zero for that very score.
+The cost is a maximum across classes, not their sum; there is no
+separate replenishment of the stock for different pairs or classes.
+
+A nonnegative measure has zero intersection on every graph edge
+exactly when all of its positive atoms are independent sets. Dividing
+by its positive mass gives exactly the convex combinations in
+(212.44), and every such combination gives an actual measure.
+This uses the classical stable-set polytope, as defined in
+Pulleyblank and Shepherd, [*Formulations for the Stable Set Polytope*,
+author-hosted manuscript, §1](https://bshepherd.ca/img/papers/wpclaw.pdf),
+with manuscript SHA-256
+`08515245032617db6c0627463db32cb5b6db035f8ce032cf8c620948f3b46a52`.
+Their incidence vector is $\mathbf1_Z$ here, and its convex coefficients
+are $\mu(Z)/\gamma$. The graph may be arbitrary; no graph-class
+algorithm or complexity bound from that paper is assumed.
+The score embedding and the full-fiber lower bound are (212.45)–(212.47).
+The zero-class and edgeless cases follow directly from the definitions.
+Finally exact quotient equality makes the residual zero, so allowing
+$\theta>0$ cannot improve the available score budget; $\theta=0$
+is sufficient whenever the displayed minimum is at most one.
+$\square$
+
+**Theorem 212.11 (Odd-cycle simultaneous attainers and full-output escape).**
+For the construction of 212.9, let $G=C_m$ with $m=2k+1\ge3$,
+and prescribe $c_{nj}=\gamma_n/2$. Then
+
+$$
+\kappa_{C_m}(\gamma_n,c_n)=\frac{\gamma_n}{2m},\qquad
+\min_{\mathcal F_{C_m}(c)}\Delta_N
+ =\frac{\gamma_*}{2m},\qquad
+\gamma_*:=\max_{n\in I_c}\gamma_n.
+\tag{212.48}
+$$
+
+All edge values and all unaries are attained by one measure per class,
+and these measures coexist with the single stock. Every proper edge
+subfamily nevertheless permits a simultaneous zero-cost repair on
+those selected pair schedules with the same unaries and stock.
+This last statement gives no zero-cost assertion on the omitted edges.
+The unit threshold $\gamma_*=2m$ is attained, including equality.
+
+More generally, for any graph in 212.9 and every full nonnegative
+score $V$ with $Q(V)=q$, drop all the other restrictions of (212.41).
+For $n\in I_c$, $U\subseteq J$, set
+
+$$
+A_n=\sum_{\Omega_n}A_w,\quad
+c^V_{nj}=\sum_{w\in\Omega_n:w_j=0}C_w,\quad
+Z_J(w)=\{j\in J:w_j=0\},\quad
+e_U(Z)=|E(G[U\cap Z])|.
+$$
+
+Writing $\alpha_U=\alpha(G[U])$ for the independence number, one has
+
+$$
+\sum_{j\in U}c^V_{nj}-\alpha_U\gamma_n
+ \le |E(G[U])|\Delta_N(V)+\alpha_U A_n
+               +\sum_{w\ne1^L}(A_w+P_w)e_U(Z_J(w)).
+\tag{212.49}
+$$
+
+In the odd-cycle case $U=J$, this reads
+
+$$
+\frac{\gamma_n}{2}\le m\Delta_N(V)+kA_n
+ +\sum_w(A_w+P_w)e_J(Z_J(w))
+ +\sum_{j\in J}\left(\frac{\gamma_n}{2}-c^V_{nj}\right).
+\tag{212.50}
+$$
+
+The last sum is signed unary drift. The stock term counts each
+actual atom with its number of induced edges; it is not an allocation
+of independent stocks to the edges.
+
+**Proof.** For any subset $Z$ of a graph, deleting at most one chosen
+endpoint for each induced edge leaves an independent set. Therefore
+$|Z\cap U|\le\alpha_U+e_U(Z)$.
+For $C_{2k+1}$ this gives $|Z|-k\le e_J(Z)$.
+Integrating against a measure of mass $\gamma$ with all unary masses
+$\gamma/2$ yields
+
+$$
+\sum_{e\in E(C_m)}\mu\{e\subseteq Z\}\ge\gamma/2.
+\tag{212.51}
+$$
+
+The largest of the $m$ edge masses is at least $\gamma/(2m)$.
+This is the classical independent-set/odd-cycle counting inequality,
+used here for the actual correct-class measure.
+
+Index the cycle by $0,\ldots,2k$ and put
+$Z_+=\{0,2,\ldots,2k\}$, $Z_-=J\setminus Z_+$.
+Give each of their $2m$ cyclic rotations mass $\gamma/(2m)$.
+Each complementary pair gives every unary mass $\gamma/(2m)$,
+so the sum has unaries $\gamma/2$ and total $\gamma$.
+Each rotation of $Z_+$ contains exactly one cycle edge, each rotation
+of $Z_-$ contains none, and every edge appears once among the former
+rotations. Thus every edge mass is exactly $\gamma/(2m)$.
+Use this same construction for each class and (212.43) proves (212.48).
+It also covers $\gamma=0$ by the zero measure.
+A proper subset of the cycle edges is bipartite; choose a bipartition
+of its vertices, including any isolated vertices, and put mass
+$\gamma/2$ on each of the two complementary color classes.
+This one measure has half unaries and no intersection on any selected
+edge. Formula (212.42) proves their simultaneous local repair.
+It also identifies why an omitted edge can retain positive cost.
+
+For the unrestricted output inequality, $\beta_1=\beta_2=0$
+implies $W_V=\sum_wA_w+\sum_wP_w+T$ even when $A$ is nonzero.
+The excess of the same legal table (212.47), with
+$E_e=\{w:w_i=w_j=0\}$, is exactly
+
+$$
+(z_{D_{n,e}}-r)\cdot V
+ =C_n(E_e)+P_n(E_e)-A(E_e)-P(E_e),
+\tag{212.52}
+$$
+
+where the subscript restricts to $\Omega_n$ and the unsubscripted
+measure sums over every zero word. The positive word is never in
+$E_e$. Since every table excess is at most $\Delta_N(V)$ and
+$P_n(E_e)\ge0$,
+
+$$
+C_n(E_e)\le\Delta_N(V)+A(E_e)+P(E_e).
+\tag{212.53}
+$$
+
+The actual class-$n$ correct measure has mass $\gamma_n+A_n$,
+because its quotient coordinate is $\gamma_n$.
+Integrate $|Z_J(w)\cap U|\le\alpha_U+e_U(Z_J(w))$ against
+this same measure and sum (212.53) over $E(G[U])$.
+Finite interchange of sums gives exactly
+$\sum_w(A_w+P_w)e_U(Z_J(w))$ for the stock incidence term.
+This proves (212.49), with its multiplicities and without changing
+any measure between edges. Substituting $|J|=m=2k+1$ and adding
+the signed drift to both sides gives (212.50).
+All zero masses, empty $U$, edgeless induced graphs, and closed cost
+endpoints are included. $\square$
+
+At half marginals, $X_j=\mathbf1_{j\in Z}$ under $\mu/\gamma$
+is a symmetric Bernoulli vector. Huber and Marić,
+[*Bernoulli Correlations and Cut Polytopes*, arXiv:1706.06182v2,
+Theorem 4 and §§4.1–4.2](https://arxiv.org/pdf/1706.06182v2),
+identify its jointly attainable agreement vectors with a switched
+cut polytope, using mixtures of complementary two-point laws.
+Here the agreement coordinate on an edge is
+$2\mu\{i,j\in Z\}/\gamma$, since its $00$ and $11$ probabilities
+are equal at half marginals. The rotation and bipartition measures
+above are concrete mixtures of that kind. This classical common-law
+mechanism does not make separately optimal edge couplings compatible;
+nor does its symmetric statement apply to arbitrary unequal marginals.
+For general $c$ the exact domain is the actual marginal polytope in
+(212.40), and (212.44) is the independent-set convex-hull criterion.
+
+For an explicit full input, take $L=8$, $I_c=\{3\}$,
+$J=\{4,5,6,7,8\}$, the cycle with edges
+$45,56,67,78,48$, and $\gamma_3=g=t=11$.
+The stock has mass 22 on the empty zero set and each singleton,
+and mass 11 on each nonedge pair of $I=\{3,\ldots,8\}$.
+Its balanced lifts specify all 34 positive pair rows and $S=264$.
+Choose $C_{11001010}=C_{11010101}=11/2$.
+Then $W=275$, $q=(11e_3,286)$ and every class-3 unary on $J$
+is $11/2$. Pair $48$ has full maxima
+$(11/2,55,55,165)$ and stopped maxima $(55,55,165)$.
+All other full pairs and all short schedules have support 275;
+all stopped schedules do as well. The input costs are $(11/2,0)$.
+The ten rotated alternating atoms, each of mass $11/10$, give
+complete costs $(11/10,0)$ and attain the full preserving-fiber
+minimum. For $\gamma_*>2m$, (212.50) shows how a unit-cost exact-$Q$
+output must pay by some combination of signed unary drift, base mass
+and edge-bearing stock; preserving them all cannot suffice.
+
+These graph obstructions do not prove $E_N$ nonmembership.
+For every quotient in 212.9, move each correct measure to
+$\mu_n=\gamma_n\delta_\varnothing$, keeping the same $\nu,t$.
+The resulting nonzero score $V_0$ has $Q(V_0)=q$ and, by the
+complete identity, $\Delta_N(V_0)=\Delta_O(V_0)=0$.
+It is directly the existing threshold score of 203.2: for each
+$n\in I_c$ and $j>n$, the stock atom $\{n\}$ alone gives
+$a_{nj}=\nu\{x_n=0,x_j=1\}\ge2g\ge\gamma_n$, so every
+threshold suffix bit is one. Its zero-cost certificate is allowed by
+199.5–199.6 and is included in the zero-$O$ endpoint of 203.3.
+Both $\theta=0$ and $\theta=1$ are permitted in (212.5).
+For every $b\in H_N$ and the same actual feasible full $\lambda$,
+
+$$
+F_q(b)=V_0\cdot h(b)\le V_0\cdot G_N\lambda\le0.
+\tag{212.54}
+$$
+
+Thus none of these quotients can satisfy the strict original-negative
+inequality $F_q(b)>M$ with $M\ge1$.
+The obstruction concerns the explicit unary/stock invariants, even
+for nonlinear choices of the full output score. Those invariants
+are not required by the unrestricted certificate definition.
+
+### 212.5 Suppliers, source correspondence and the remaining comparison
+
+**Definition 212.12 (Scope and original-source interface).**
+The substantive relations in this section are repository-derived:
+the full-score surplus and split-defect calculation with its coupled
+moment-box criterion; the equality-block invariant and whole-fiber
+moved-mass minimum; the unequal-star minimum for all terminal masses;
+and the graph embedding, attained full preserving-fiber minimum and
+unrestricted-output escape accounting. The three carrier variants
+in 212.1 are one mechanism. Restricted-method failures neither prove
+nonmembership in $E_N$ nor exclude the old convex, signed and nonzero
+zero-cost certificates.
+
+The supplier correspondences are specific. The signed hull and the
+complete alternative are
+[198.5 and 199.3–199.6](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md);
+(212.14) evaluates that hull rather than replacing it.
+The threshold constructor is
+[203.2–203.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md),
+with $a_{nj}=a_j$ in (212.33), and its $t\ge\max\gamma$ endpoint
+is directly reused. The equal-pair minimum and exact-unary matching
+belong to
+[209.3 and 209.12–209.15](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+The latter supplies the $X=c$ endpoint in 212.6; the safe four-word
+switch is 211.2. Full-fiber minima here impose exactly their displayed
+constraints, rather than inheriting extra pairwise or stock constraints
+from those suppliers. The conditional-moment and stock thresholds in
+210, and the fixed-menu and positive-linear-selector results in 211,
+retain their different domains. These comparisons are bounded to the
+named owner results and primary references, without an exhaustive
+novelty or worldwide-priority assertion.
+
+Kaibel's versioned finite polyhedral representation and projection
+results supply the classical geometry used inside the carrier proof;
+the box consists of actual suffix measures, not hypothetical independent
+moments. Clarke–Kosta's stated integer-fiber results provide the precise
+move-applicability comparison, not a real-score maximum theorem.
+Pulleyblank–Shepherd's author-hosted §1 supplies the classical
+independent-set convex hull. Huber–Marić's version 2 concerns symmetric
+Bernoulli agreement vectors, with the half-marginal correspondence
+given above. None of these classical results is a new standalone
+assertion of this section.
+
+Blackwell, [*Comparison of Experiments*, pp. 93–98, §§2–5](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf),
+provides the attainable-risk and common-kernel framework.
+A Boolean word is a state, a schedule supplies a transcript partition,
+and a label is an action in that comparison. Its common stochastic
+postprocessing requirement does not itself respect increasing first-zero
+stopping or the hard-two count. The decision-theoretic correspondence
+therefore supplies no missing acquisition conversion. In particular,
+separately feasible cells or edge marginals do not constitute one
+normalized common rule.
+
+Concretely the actual source and static answers remain
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+        \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+\tag{212.55}
+$$
+
+where $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ and $p_i$ are the
+increasing primes. Boundaries 35.2 supplies actual witnesses for every
+finite pattern on arbitrary finite addresses. Hence all Boolean words
+used above, including multiple-zero words, have the original meaning.
+The full output carrier is
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with each
+block a copy of $(0,1)$ and the disjoint-union Borel sigma algebra.
+The consumer returns unknown on $B_j$ and proposes $j$ on $P_j$;
+its original nonatomic targets remain those of Acquisition Resources
+73.1. The distinct marks $\theta_j=(B_1,1/(j+2))$ support the
+separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                    +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_j\longrightarrow0.
+\tag{212.56}
+$$
+
+Every sequence in (212.56) remains in the original comparison.
+Advice is zero, one source-independent seed fixes a deterministic
+rule common to all sources, and handoff is actually sourcewise almost
+surely finite. The resource is at most two actual requests, including
+repetitions and ignored replies. $N_2$ preselects its entire schedule
+and obtains the replies; $O_2$ preselects an increasing schedule and
+stops at its first queried zero or exhaustion. A queried zero need
+not be the actual first absence. Competitors retain arbitrary addresses
+and arbitrary outputs in the full carrier. The error remains uniform
+over all actual sources and all Borel events, with no source law,
+mean-request, address, depth or runtime surrogate.
+
+The finite measures and table maximizers in this section are dual
+scores. Only normalized probability-vector configurations satisfying
+all event rows can use
+[109.1 and 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md).
+For a degree-at-most-two probability-vector kernel
+$p_w=c+\sum_i\ell_iw_i+\sum_{i<j}Q^{\rm ker}_{ij}w_iw_j$,
+109.1 gives the stopped criterion
+
+$$
+c\ge H^{\rm ker}:=\sum_i
+ \left(\sum_{j>i}(-Q^{\rm ker}_{ij})_+-\ell_i\right)_+.
+\tag{212.57}
+$$
+
+Normalization makes its scalar schedule-mass bound redundant, as
+in 108.4; these are kernel coefficients, not the score quotient $Q$.
+Theorem 110.2 retains full-carrier, arbitrary-address necessity and
+exact closed-cap sufficiency. A normalized finite configuration is
+realized by a partition of one source-independent uniform seed selecting
+the entire schedule and terminal table before replies. Different
+configurations can use different partitions and their common refinement
+on that same seed, without requiring seedwise equal outputs.
+The actual execution asks at most two questions and hands off finitely.
+A support-maximizing table alone is not asserted cap-feasible.
+
+For $0<\varepsilon\le1$, at the actual active length
+$L_a=\max(\{j:a_j>\varepsilon\}\cup\{0\})$, every actual
+$n>L_a$ retains the exact tail identity supplied by 110.2:
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\}.
+\tag{212.58}
+$$
+
+Thus equality $a_n=\varepsilon$ is retained at a positive closed cap.
+Zero score masses and auxiliary $e=0$ hull vertices do not replace
+positive original tails. Small active lengths and cap one remain
+within the existing transport, and caps above one admit immediate
+base output.
+
+The universal inclusion remains unresolved:
+
+$$
+Q(y)\in E_N\quad\text{for every complete }y\ge0
+ \text{ with }\Delta_O(y)\le1\text{ and every }L\ge3.
+\tag{212.59}
+$$
+
+Its existing equivalent clipped comparison is
+$\rho_O(b)\le\max(1,\rho_N(b))$ for every $b\in H_N$.
+The original all-amplitude, all-positive-closed-cap question remains
+$\mathcal F_N(a,\varepsilon)\ne\varnothing\Rightarrow
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing$,
+with the all-word slice of 110.1 and normalized stopped region of
+109.1. Arbitrary base and late pair rows, unrestricted early credit,
+overlapping positive-event carriers, and unordered growing profiles
+outside the stated conditions still require a jointly affordable
+score and signed residual. The fixed-baseline equivalence does not
+supply that universal affordability; the explicit quartet rules out
+that promotion of this method.
+
+An original negative requires one actual complete unit-$O$ score $y$,
+a point in $H_N$, and the same actual full-$N$ configuration throughout:
+
+$$
+b\in H_N,\quad y\ge0,\quad\Delta_O(y)\le1,\qquad
+\lambda\ge0,\quad G_N\lambda\ge h(b),\quad
+M=\sum_D\lambda_D\ge1,\qquad F_{Q(y)}(b)>M.
+\tag{212.60}
+$$
+
+It also requires the owned original-source transport to an actual
+common-seed $N_2$ attainer and a uniform lower certificate against
+every full-carrier arbitrary-address $O_2$ competitor. A point in
+$H_L$ alone, or separately feasible cells using different configurations,
+does not meet (212.60). The graph quotients all have the zero-cost
+core (212.54), and the equality-block and star families have their
+explicit same-$Q$ certificates. These conclusions are structural
+relations and restricted-method boundaries, not original separators.
+The exact-law obstruction 112.2 still permits a different stopped
+law at the same cap.
+
+## 追加锚（本行以下为增补区）
