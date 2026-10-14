@@ -258,7 +258,7 @@ private theorem classes_card (n : Nat) (z : Fin (n + 1) → Source)
   rw [Nat.card_eq_fintype_card, Fintype.card_coe, names, Finset.card_image_of_injective _ inj]
   simp
 
-private theorem right_birth (q : Address) (v : Source)
+theorem right_birth (q : Address) (v : Source)
     (present : (subtree (q ++ [true]) (substitution v)).isSome) :
     subtree (q ++ [true]) v = none ↔
       subtree (q ++ [true]) (substitution v) = some (.of true) := by
