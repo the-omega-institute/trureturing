@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9b4dbf14eb95ad64759a5db7ace2985295f9dec6c4deeb6f6199399a08e5de4f
+  normalized_sha256: sha256:9b4dbf14eb95ad64759a5db7ace2985295f9dec6c4deeb6f6199399a08e5de4f
+cas_ref: sha256:9b4dbf14eb95ad64759a5db7ace2985295f9dec6c4deeb6f6199399a08e5de4f
+coverage_gids:
+  - gid: D5/S3/Observer/Reversal/QuadraticObservationClosure.quadratic_closure_iff
+    target_statement_id: sha256:f8b7409661afca348d5fdb45eb443190bed8ff86ac27bc9b5d533dd4fa4fa2fc
+receipts:
+  unresolved_subitems: []
