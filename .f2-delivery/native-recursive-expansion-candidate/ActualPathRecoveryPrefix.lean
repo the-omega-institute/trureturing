@@ -51,13 +51,13 @@ theorem actual_rooted_path_is_prefix {a b c : V}
     (q : G.Walk a b) (hq : q.IsPath) (p : G.Walk a c) (hp : p.IsPath)
     (hkeep : ∀ e ∈ q.edges, e ∈ p.edges) :
     ∃ tail : G.Walk b c, p = q.append tail ∧ tail.IsPath := by
-  revert hq
+  revert hq p
   induction q generalizing c with
   | nil =>
-    intro _
+    intro _ p hp _
     exact ⟨p, by simp only [SimpleGraph.Walk.nil_append], hp⟩
   | @cons a x b h q ih =>
-    intro hq
+    intro hq p hp hkeep
     have hhead : s(a, x) ∈ p.edges := hkeep _
       (by simp only [SimpleGraph.Walk.edges_cons, List.mem_cons]; exact Or.inl rfl)
     have hx : x = p.snd := hp.eq_snd_of_mem_edges hhead
