@@ -29,7 +29,7 @@ Invariant measures are a standard integrability property of discrete maps, and t
 
 Issue #16775 records the literature check before any Lean:
 - arXiv v1 is the only version; the journal text was not read (the publisher page did not return it, and Firecrawl had no credits), so its agreement with v1 is `ASSUMED-UNVERIFIED`;
-- Semantic Scholar lists 11 citing works; the full texts of the seven with arXiv identifiers cite the paper only in passing, and the other four were identified by title only; none addresses the conjecture;
+- Semantic Scholar lists 11 citing works; the full texts of the seven with arXiv identifiers cite the paper only in passing, and none of these seven addresses the conjecture; the other four were identified by title only, and their contents were not read;
 - the repository had no entry for the paper.
 
 `not-found-in-searched-scope`.
