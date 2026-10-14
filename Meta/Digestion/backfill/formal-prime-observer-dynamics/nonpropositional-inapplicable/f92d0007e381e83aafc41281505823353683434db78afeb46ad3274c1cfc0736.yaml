@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f92d0007e381e83aafc41281505823353683434db78afeb46ad3274c1cfc0736
+  normalized_sha256: sha256:f92d0007e381e83aafc41281505823353683434db78afeb46ad3274c1cfc0736
+cas_ref: sha256:f92d0007e381e83aafc41281505823353683434db78afeb46ad3274c1cfc0736
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：231. 素数衰减信号的 \(\alpha=\frac12\) 相变：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 6e430d1393b0e3745db58c2f671ce27d04b5d4de7c554ab85315be5a1b091261
+    next_atom_id: 5bab8f0210b8db8416c2ce2e8193587de49e032670bfd81aca90566a1b1347a7

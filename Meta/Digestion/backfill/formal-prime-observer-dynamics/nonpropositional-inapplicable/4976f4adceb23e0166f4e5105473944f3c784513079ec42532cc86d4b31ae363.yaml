@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4976f4adceb23e0166f4e5105473944f3c784513079ec42532cc86d4b31ae363
+  normalized_sha256: sha256:4976f4adceb23e0166f4e5105473944f3c784513079ec42532cc86d4b31ae363
+cas_ref: sha256:4976f4adceb23e0166f4e5105473944f3c784513079ec42532cc86d4b31ae363
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- 省略 \(p=2,3,5\) 边界；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 574a0e22d437d65bd325be40780b9a7525cb77361f2e9d0243c88f809a201b12
+    next_atom_id: 4f06fba38665deaff27c64b92c65fcb390149ad91ea01b146a75cbf6d17eecfb

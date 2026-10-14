@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:531a94ff3f826fd06f1f16ce5dbd5b60520ee006fa345658e77483f15cd9638f
+  normalized_sha256: sha256:531a94ff3f826fd06f1f16ce5dbd5b60520ee006fa345658e77483f15cd9638f
+cas_ref: sha256:531a94ff3f826fd06f1f16ce5dbd5b60520ee006fa345658e77483f15cd9638f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：33. 素数—时间预测超度量：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 466f518c747c152447998da9af48d2757e905cab08a1f0e789a5e675a80a66f5
+    next_atom_id: 4be3f887cbcea2d02bf863ebbef6720d79989c8e3ed0cc52320c36cb2647b456

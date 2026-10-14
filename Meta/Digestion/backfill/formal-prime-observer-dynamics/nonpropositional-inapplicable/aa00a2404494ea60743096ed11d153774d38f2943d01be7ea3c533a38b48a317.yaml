@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa00a2404494ea60743096ed11d153774d38f2943d01be7ea3c533a38b48a317
+  normalized_sha256: sha256:aa00a2404494ea60743096ed11d153774d38f2943d01be7ea3c533a38b48a317
+cas_ref: sha256:aa00a2404494ea60743096ed11d153774d38f2943d01be7ea3c533a38b48a317
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- 不同模数在重叠同余上相容；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 3615e0437e08dfbcd5a70764e9118e407d9ae6604391f8ff66e927727ae07f11
+    next_atom_id: c2561191d8ad4f60c795b3c86e45b833ece190dac935ee8a750869713da1453a

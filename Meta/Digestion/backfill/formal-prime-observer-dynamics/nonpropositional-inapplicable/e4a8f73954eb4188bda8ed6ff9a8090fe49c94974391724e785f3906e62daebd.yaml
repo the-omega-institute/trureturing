@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4a8f73954eb4188bda8ed6ff9a8090fe49c94974391724e785f3906e62daebd
+  normalized_sha256: sha256:e4a8f73954eb4188bda8ed6ff9a8090fe49c94974391724e785f3906e62daebd
+cas_ref: sha256:e4a8f73954eb4188bda8ed6ff9a8090fe49c94974391724e785f3906e62daebd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \kappa_p(x,y)：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 9419e03ea764d9d38f37cd7a885be033d3d01e6cc760683b6de1317e36cf4f18
+    next_atom_id: df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e

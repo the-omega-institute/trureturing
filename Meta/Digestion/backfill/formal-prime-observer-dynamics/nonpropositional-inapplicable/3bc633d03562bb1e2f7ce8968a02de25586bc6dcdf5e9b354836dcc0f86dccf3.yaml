@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3bc633d03562bb1e2f7ce8968a02de25586bc6dcdf5e9b354836dcc0f86dccf3
+  normalized_sha256: sha256:3bc633d03562bb1e2f7ce8968a02de25586bc6dcdf5e9b354836dcc0f86dccf3
+cas_ref: sha256:3bc633d03562bb1e2f7ce8968a02de25586bc6dcdf5e9b354836dcc0f86dccf3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 50.2（删除鲁棒性）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 58967ede6a5622f5cdf571002f765c973b1b10719f4314227590329fecea4236
+    next_atom_id: 8c1107c9166f42b0597f5ad5d6643df3dffd5be059721f4c51ae6b47d0ee49c7

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:917f4964a774dcfe8118fd67a508577952f9ec899042b34ea4fdd3c9eea5e807
+  normalized_sha256: sha256:917f4964a774dcfe8118fd67a508577952f9ec899042b34ea4fdd3c9eea5e807
+cas_ref: sha256:917f4964a774dcfe8118fd67a508577952f9ec899042b34ea4fdd3c9eea5e807
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：145. 第三阶段统一定理：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: a24b7db4074095b233f083cf9ebef30064098095d0fcb021e55fc532cf86c739
+    next_atom_id: 818e2f3014ed5d265b1447bbe951b7dab203f664eddd153e49e2fac1a9f1bbc1

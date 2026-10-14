@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09359e0ea5f7a484c8471f769651b8eebab4c68163f22a7e10cd62a476252347
+  normalized_sha256: sha256:09359e0ea5f7a484c8471f769651b8eebab4c68163f22a7e10cd62a476252347
+cas_ref: sha256:09359e0ea5f7a484c8471f769651b8eebab4c68163f22a7e10cd62a476252347
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：262. 随机化把条件 law 提升为干预 law：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 6da080a67df3ffbb7ef86be07c9fff838b663fcb04f8b4d6034727c952232c27
+    next_atom_id: 93c8066643697d53099c5d94571b9d1434a34bc01b5ffedd5b8d4917d2a03e7b

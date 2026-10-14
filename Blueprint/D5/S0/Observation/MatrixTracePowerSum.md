@@ -4,7 +4,19 @@
 
 Closed power traces for a two by two matrix from a supplied Vieta pair.
 
-**Theorem 1.1 (A supplied Vieta pair gives every power trace).**
+**Theorem 1.1 (The two-step recurrence for matrix power traces).**
+
+$$\begin{aligned}\forall (R: \operatorname{Type}), [\operatorname{CommRing}\left(R\right)],\\\forall (M: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), R\right)),\\\forall (n: \mathbb{N}),\\\operatorname{Matrix}.\operatorname{trace}(M^{n + 2}) = \operatorname{Matrix}.\operatorname{trace}(M) \cdot \operatorname{Matrix}.\operatorname{trace}(M^{n + 1}) - \operatorname{Matrix}.\operatorname{det}(M) \cdot \operatorname{Matrix}.\operatorname{trace}(M^{n})\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S0/Observation/MatrixTracePowerSum.trace_pow_add_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Over any commutative ring, the traces of powers of a two-by-two matrix satisfy a two-step recurrence whose coefficients are its trace and determinant.
+
+**Theorem 1.2 (A supplied Vieta pair gives every power trace).**
 
 $$\begin{aligned}\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)],\\\forall M: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), R\right),\\\forall a, b: R,\\\forall k: \mathbb{N},\\(\operatorname{tr}\left(M\right) = a + b \land \operatorname{det}\left(M\right) = a \cdot b) \Rightarrow \operatorname{tr}\left(M^{k}\right) = a^{k} + b^{k}.\end{aligned}$$
 
@@ -26,4 +38,5 @@ The frozen power_trace_characteristic_polynomial_saturation in this same directo
 
 ## References
 
+- Truth anchor: `D5/S0/Observation/MatrixTracePowerSum.trace_pow_add_two`
 - Truth anchor: `D5/S0/Observation/MatrixTracePowerSum.trace_pow_eq_add_pow`

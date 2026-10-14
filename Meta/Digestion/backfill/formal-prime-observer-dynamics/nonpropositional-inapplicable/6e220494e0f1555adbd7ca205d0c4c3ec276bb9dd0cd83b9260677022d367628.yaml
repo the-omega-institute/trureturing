@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e220494e0f1555adbd7ca205d0c4c3ec276bb9dd0cd83b9260677022d367628
+  normalized_sha256: sha256:6e220494e0f1555adbd7ca205d0c4c3ec276bb9dd0cd83b9260677022d367628
+cas_ref: sha256:6e220494e0f1555adbd7ca205d0c4c3ec276bb9dd0cd83b9260677022d367628
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \sum_p-\log(1-p^{-s})：\[：本片段仅论证相邻的既有陈述，不另行提出命题。
+    previous_atom_id: 4a2d3cea67911d4fbc343669952e6a4e73f414548fd6104547c2582394be5475
+    next_atom_id: aef7e36919f4444ff52e225624799fc7b2f126a9a1f0fe28acd85466ad58aa37
