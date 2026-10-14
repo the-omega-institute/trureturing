@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+import D5.S3.Entropy.Forgetting.CapacityMonotone
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -237,6 +238,33 @@ private theorem source_bridge (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
       (rhoE_posSemidef V).isHermitian 6 (choi_charpoly V)
     rw [outputEntropy]
     simpa only [rhoB_swap] using hs
+
+-- Merging a chosen eigenvalue against the remaining two outcomes.
+open D5.S3.Entropy.Forgetting.CapacityMonotone in
+private theorem entropy3_merge
+    (x : Fin 3 → ℝ) (hx : ∀ i, 0 ≤ x i)
+    (hs : (∑ i, x i) = 1) (i : Fin 3) :
+    h (1 - x i) ≤ entropy3 x := by
+  classical
+  let f : Fin 3 → Bool := fun j => decide (j = i)
+  have hf : Function.Surjective f := by
+    intro b
+    cases b with
+    | false =>
+      obtain ⟨j, hj⟩ := exists_ne i
+      exact ⟨j, by simp [f, hj]⟩
+    | true => exact ⟨i, by simp [f]⟩
+  have hm := (deterministic_forgetting_entropy_capacity_monotone x f ⟨hx, hs⟩ hf).1
+  have ht : pushforward f x true = x i := by
+    simp [pushforward, f, eq_comm]
+  have hb : pushforward f x false = 1 - x i := by
+    fin_cases i <;>
+      simp [pushforward, f,
+        Fin.sum_univ_three] <;> simp only [Fin.sum_univ_three] at hs <;> linarith
+  change Real.binEntropy (1 - x i) ≤ _
+  rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+  simpa only [D5.S3.Entropy.MaxEntropy.shannonEntropy, Fintype.sum_bool,
+    ht, hb, sub_sub_cancel, entropy3, add_comm] using hm
 
 -- Scalar monotonicity and the two capacity cuts.
 private theorem g_eq_binary (u : ℝ) :
