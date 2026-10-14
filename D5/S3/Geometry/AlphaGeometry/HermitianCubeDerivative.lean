@@ -361,7 +361,7 @@ lemma jordan_val {n : ℕ} (Y V : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fi
 
 def square {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) := ⟨Y.val^2,Y.property.pow 2⟩
 
-private lemma square_hasFDerivAt {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : HasFDerivAt square (jordan Y) Y := by
+lemma square_hasFDerivAt {n : ℕ} (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) : HasFDerivAt square (jordan Y) Y := by
   let v : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) →L[ℝ] (Matrix (Fin n) (Fin n) ℂ) := ((selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))).subtypeL
   have hp := ((selfAdjointPartL ℝ (Matrix (Fin n) (Fin n) ℂ))).hasFDerivAt.comp Y
     (((LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap).hasFDerivAt_of_bilinear (v.hasFDerivAt (x := Y)) (v.hasFDerivAt (x := Y)))
@@ -461,7 +461,7 @@ lemma regular_level_set_shape_operator {n : ℕ} (Y V : (selfAdjoint.submodule �
 
 set_option backward.isDefEq.respectTransparency false
 
-private lemma square_contDiff (n : ℕ) : ContDiff ℝ (⊤ : ℕ∞) (@square n) := by
+lemma square_contDiff (n : ℕ) : ContDiff ℝ (⊤ : ℕ∞) (@square n) := by
   have hv : ContDiff ℝ (⊤ : ℕ∞) (fun Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) => Y.val) := ((selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))).subtypeL.contDiff
   have hm : ContDiff ℝ (⊤ : ℕ∞) (fun p : (Matrix (Fin n) (Fin n) ℂ) × (Matrix (Fin n) (Fin n) ℂ) => (LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap p.1 p.2) :=
     ((LinearMap.mul ℝ (A := Matrix (Fin n) (Fin n) ℂ)).toContinuousBilinearMap).isBoundedBilinearMap.contDiff
@@ -553,7 +553,7 @@ def readoutEquiv (n : ℕ) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) 
     intro x
     exact ⟨⟨assemble x,assemble_hermitian x⟩,readout_assemble x⟩⟩
 
-private def diagonalH {n : ℕ} (y : Fin n → ℝ) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) :=
+def diagonalH {n : ℕ} (y : Fin n → ℝ) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) :=
   ⟨Matrix.diagonal (fun i => (y i : ℂ)),Matrix.isHermitian_diagonal_iff.mpr (fun i => by change star (y i : ℂ) = (y i : ℂ); simp)⟩
 
 private lemma readout_jordan_diagonal {n : ℕ} (y : Fin n → ℝ) (V : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) (p : Fin n × Fin n) :
@@ -567,7 +567,7 @@ private lemma readout_jordan_diagonal {n : ℕ} (y : Fin n → ℝ) (V : (selfAd
   change (if p.1 ≤ p.2 then _ else _) = (y p.1+y p.2)*(if p.1 ≤ p.2 then _ else _)
   split_ifs <;> ring
 
-private lemma diagonal_conjugated_jordan {n : ℕ} (y : Fin n → ℝ) :
+lemma diagonal_conjugated_jordan {n : ℕ} (y : Fin n → ℝ) :
     (readoutEquiv n).conj (jordan (diagonalH y)).toLinearMap =
       (Matrix.diagonal (fun p : Fin n × Fin n => y p.1+y p.2)).toLin' := by
   apply LinearMap.ext
@@ -605,7 +605,7 @@ private lemma trace_diagonal_jordan_square {n : ℕ} (y : Fin n → ℝ) :
     nsmul_eq_mul,← Finset.mul_sum,← Finset.sum_mul]
   ring
 
-private def hermitianConj {n : ℕ} (e : (Matrix (Fin n) (Fin n) ℂ) ≃⋆ₐ[ℂ] (Matrix (Fin n) (Fin n) ℂ)) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) ≃ₗ[ℝ] (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) :=
+def hermitianConj {n : ℕ} (e : (Matrix (Fin n) (Fin n) ℂ) ≃⋆ₐ[ℂ] (Matrix (Fin n) (Fin n) ℂ)) : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) ≃ₗ[ℝ] (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) :=
   (e.toAlgEquiv.toLinearEquiv.restrictScalars ℝ).ofSubmodules
     (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) (by
       ext A
@@ -623,7 +623,7 @@ private def hermitianConj {n : ℕ} (e : (Matrix (Fin n) (Fin n) ℂ) ≃⋆ₐ[
 private lemma hermitianConj_val {n : ℕ} (e : (Matrix (Fin n) (Fin n) ℂ) ≃⋆ₐ[ℂ] (Matrix (Fin n) (Fin n) ℂ)) (A : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) :
     (hermitianConj e A).val = e A.val := rfl
 
-private lemma jordan_conjugation {n : ℕ} (e : (Matrix (Fin n) (Fin n) ℂ) ≃⋆ₐ[ℂ] (Matrix (Fin n) (Fin n) ℂ)) (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) :
+lemma jordan_conjugation {n : ℕ} (e : (Matrix (Fin n) (Fin n) ℂ) ≃⋆ₐ[ℂ] (Matrix (Fin n) (Fin n) ℂ)) (Y : (selfAdjoint.submodule ℝ (Matrix (Fin n) (Fin n) ℂ))) :
     (hermitianConj e).conj (jordan Y).toLinearMap = (jordan (hermitianConj e Y)).toLinearMap := by
   apply LinearMap.ext
   intro V
