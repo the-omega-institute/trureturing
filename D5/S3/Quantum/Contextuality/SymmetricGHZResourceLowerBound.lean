@@ -71,8 +71,8 @@
      escape_witness: none;
      consumers: layerPolynomial_expand;
      Direct frozen dependencies: none.
-   choose_le_of_middle: proof_shape: content;
-     escape_witness: choose_le_of_middle;
+   choose_le_of_middle: proof_shape: bind-only;
+     escape_witness: none;
      consumers: finite_lower_bound;
      Direct frozen dependencies: none.
    choose_power_lower: proof_shape: bind-only;
