@@ -548,8 +548,7 @@ theorem result : Not claim := by
             Matrix.vecMulVec_mul, Matrix.trace_vecMulVec,
             Matrix.dotProduct_mulVec, dotProduct_comm]
         _ = _ := by
-          simp only [Matrix.kronecker]
-          rw [max_entangled_trace, Matrix.mul_one, Matrix.trace_transpose,
+          rw [Matrix.kronecker, max_entangled_trace, Matrix.mul_one, Matrix.trace_transpose,
             Fintype.card_fin]
     rw [hindex]
     change (dotProduct (star (maxEntangledVector (Fin d)))
