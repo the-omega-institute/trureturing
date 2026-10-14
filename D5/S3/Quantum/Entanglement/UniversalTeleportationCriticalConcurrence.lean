@@ -34,10 +34,13 @@ set_option linter.style.longLine false
 
 def psi (a : ℝ) (p : Fin 2 × Fin 2) : ℂ :=
   if p = (0, 0) then (Real.sqrt a : ℂ) else if p = (1, 1) then (Real.sqrt (1 - a) : ℂ) else 0
-def initial (a : ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := Matrix.vecMulVec (psi a) (star (psi a))
+def initial (a : ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+  D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity (psi a)
 def NonUnital {m : ℕ} (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) : Prop := ∑ k, K k * (K k)ᴴ ≠ 1
 def out {m : ℕ} (a : ℝ) (K : Fin m → Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-  ∑ k, ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K k) * initial a * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K k)ᴴ
+  let L : Fin m → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+    fun k => (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K k
+  D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus L L (initial a)
 def UsefulUQT (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : Prop :=
   ∃ (U V : Matrix (Fin 2) (Fin 2) ℂ) (t : ℝ),
     U ∈ Matrix.unitaryGroup (Fin 2) ℂ ∧ V ∈ Matrix.unitaryGroup (Fin 2) ℂ ∧ (1 / 3 : ℝ) < t ∧
@@ -143,13 +146,18 @@ private lemma out_state (a : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
     (out a K).PosSemidef ∧ trace (out a K) = 1 ∧
       partialTraceRight (out a K) = Matrix.diagonal ![(a : ℂ), 1 - (a : ℂ)] := by
   have hp : (out a K).PosSemidef := by
-    rw [out.eq_def]
+    simp only [out.eq_def,
+      D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus,
+      LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
     exact Matrix.posSemidef_sum _ fun k _ =>
       (Matrix.posSemidef_vecMulVec_self_star (psi a)).mul_mul_conjTranspose_same _
   have hm : partialTraceRight (out a K) = partialTraceRight (initial a) := by
     apply Matrix.ext_iff_trace_mul_right.mpr
     intro H
-    rw [← trace_mul_kron_one, ← trace_mul_kron_one, out.eq_def, Matrix.sum_mul,
+    rw [← trace_mul_kron_one, ← trace_mul_kron_one]
+    simp only [out.eq_def,
+      D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus,
+      LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk, Matrix.sum_mul,
       Matrix.trace_sum]
     have hsum : (∑ k, H ⊗ₖ ((K k)ᴴ * K k)) = H ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
       change (∑ k, (Matrix.kroneckerBilinear (R := ℂ) H) ((K k)ᴴ * K k)) =
@@ -430,9 +438,13 @@ private lemma damping_useful (a t γ : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
     simp [D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letterPhase,
       D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letterProduct,
       pauliMatrix.eq_1]
-  · funext i j
+  · simp only [out.eq_def,
+      D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus,
+      LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
+      initial.eq_def, D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity]
+    funext i j
     fin_cases i <;> fin_cases j <;>
-      simp only [corr.eq_def, out.eq_def, initial.eq_def, psi.eq_def, damping.eq_def,
+      simp only [corr.eq_def, psi.eq_def, damping.eq_def,
         pauli.eq_def, Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
         Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.vecMulVec_apply, Pi.star_apply, ← sq,
         Matrix.kronecker_apply, Matrix.add_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
