@@ -2825,3 +2825,73 @@ $p\ge2r-1$，而窗口中 $\log F_r\sim r\log\varphi$；因此对固定 $c<1$
 
 本节复用 Robin 的最小反例—超丰数缩减、Fibonacci 同余和 Segovia 的来源
 陈述；没有重做这些外部结果，未新增 Lean 声明。
+
+## 464. 素秩 Fibonacci 支撑的局部修复分层
+
+上一节的超丰数整除条件只给出 $F_r$ 与小素数库存互素。这里接入一个不同
+的近期局部结果：[Chuysurichay--Jaidee--Panraksa--Ward 的 Dold 文献卡](../../../Library/Arith/chuysurichay2026fibdold.md)
+的 Theorem 2.4 给出 Fibonacci 序列在每个素数 $p$ 处的精确修复因子。文献把
+入口秩记作 $\varphi(p)$；本节改写为 $z(p)$，以免与黄金比混淆。
+
+### 命题 464.1（素秩支撑的两类局部因子）
+
+设 $r>5$ 为素数，并定义
+
+$$
+\mathcal P_r^+=\{p:p\mid F_r,\ (5/p)=1\},
+\qquad
+\mathcal P_r^-=\{p:p\mid F_r,\ (5/p)=-1\},
+$$
+
+其中 $(5/p)$ 是 Legendre 符号。对每个 $p\mid F_r$，有
+
+$$
+\boxed{
+\operatorname{Fail}_p(F)=
+\begin{cases}
+1,&p\in\mathcal P_r^+,\\
+r,&p\in\mathcal P_r^-.
+\end{cases}}
+\tag{464.1}
+$$
+
+因此，所有 $F_r$ 支撑素数的局部修复因子之最小公倍数为
+
+$$
+\boxed{
+\operatorname{lcm}_{p\mid F_r}\operatorname{Fail}_p(F)
+=
+\begin{cases}
+1,&\mathcal P_r^-=\varnothing,\\
+r,&\mathcal P_r^-\ne\varnothing.
+\end{cases}}
+\tag{464.2}
+$$
+
+**证明。** 对 $p\mid F_r$，强整除性给出 $z(p)\mid r$。由于 $r>5$ 为素数，
+$p\ne2,5$ 且 $z(p)>1$，故 $z(p)=r$。标准的 Fibonacci 入口秩同余给出
+
+$$
+r\mid p-(5/p).
+$$
+
+若 $(5/p)=1$，则 $r\mid p-1$，于是
+$z(p)/\gcd(z(p),p-1)=1$。若 $(5/p)=-1$，则 $r\mid p+1$；因 $r$ 为奇素数，
+$\gcd(r,p-1)=1$，故该比值为 $r$。代入文献 Theorem 2.4 得（464.1），再取
+最小公倍数得（464.2）。证毕。 $\square$
+
+这里的分层可直接用模 $5$ 的支撑检查识别：$\mathcal P_r^+$ 中的素数都
+同余于 $\pm1\pmod5$，而 $\mathcal P_r^-$ 中的素数都同余于 $\pm2\pmod5$。
+例如 $F_7=13$ 给出一个 $r$ 级局部因子，而 $F_{11}=89$ 给出修复因子 $1$。
+若 $F_r\equiv\pm2\pmod5$，则 $\mathcal P_r^-$ 必非空，因为只由
+$\pm1\pmod5$ 的素数幂组成的乘积不可能同余于 $\pm2\pmod5$。
+
+命题 464.1 是一个新的素切面：它把同一 $F_r$ 的素支撑区分为“局部可直接
+实现”和“必须支付 $r$ 级修复”的两类。它仍不提供 $N_{r,g}=1+F_rg$ 的
+素数幂赋值，也不控制 $\sigma(N_{r,g})/N_{r,g}$ 的有符号 Robin 余量；因此
+不能把（464.2）当作 Robin 安全因子或 RH 证明。要让它推进 Robin，下一步必须
+证明这两类支撑在同一个候选 $N_{r,g}$ 的完整 Euler 库存中产生可组合的联合界，
+而不是只读取 $F_r$ 自身的局部标签。
+
+本节只组合近期的局部 Fibonacci 结果与已有入口秩同余，未重复 Dold、Robin 或
+CA/SA 的一般理论，也未新增 Lean 声明。
