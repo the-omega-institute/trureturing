@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.NumberTheory.Transcendental.Lindemann.AnalyticalPart
 
 open scoped Topology
 open MeasureTheory
@@ -66,57 +67,179 @@ private lemma moment_closed (a : ℝ) (ha : 0 < a) (m : ℕ) :
       ((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
         ((∑ t ∈ Finset.range (m + 1), (-a) ^ t / (t.factorial : ℝ)) -
           Real.exp (-a)) := by
-  induction m with
-  | zero =>
-    have hd (u : ℝ) : HasDerivAt (fun v : ℝ => Real.exp (a * (v - 1)))
-        (a * Real.exp (a * (u - 1))) u := by
-      convert (((hasDerivAt_id u).sub_const 1).const_mul a).exp using 1 <;>
-        first | rfl | (dsimp; ring)
-    have hi : IntervalIntegrable (fun u : ℝ => Real.exp (a * (u - 1))) volume 0 1 :=
-      (Real.continuous_exp.comp
-        (continuous_const.mul (continuous_id.sub continuous_const))).intervalIntegrable 0 1
-    have hf := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun u _ => hd u)
-      (hi.const_mul a)
-    rw [intervalIntegral.integral_const_mul] at hf
-    simpa using hf
-  | succ m ih =>
-    have hf := moment_succ a m
-    have hf0 : (m.factorial : ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero m
-    have haz := ha.ne'
-    have hmaz : (m : ℝ) + 1 ≠ 0 := by positivity
-    have hc : ((-1 : ℝ) / a) ^ m * (-a) ^ m = 1 := by
-      rw [← mul_pow]
-      field_simp (disch := first | assumption | positivity)
-      simp
-    have hp : ((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
-        ((-a) ^ (m + 1) / ((m + 1).factorial : ℝ)) = -a / ((m : ℝ) + 1) := by
-      rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
+  have h := LindemannWeierstrass.integral_exp_mul_eval
+    ((Polynomial.X : Polynomial ℂ) ^ m) (-(a : ℂ))
+  have hsum : Polynomial.sumIDeriv ((Polynomial.X : Polynomial ℂ) ^ m) =
+      ∑ k ∈ Finset.range (m + 1),
+        Polynomial.C (Nat.descFactorial m k : ℂ) * Polynomial.X ^ (m - k) := by
+    rw [Polynomial.sumIDeriv_apply_of_le (p := (Polynomial.X : Polynomial ℂ) ^ m) (n := m)
+      (by rw [Polynomial.natDegree_X_pow])]
+    simp_rw [Polynomial.iterate_derivative_X_pow_eq_C_mul]
+  have hsum_eval (z : ℂ) :
+      (∑ k ∈ Finset.range (m + 1), (Nat.descFactorial m k : ℂ) * z ^ (m - k)) =
+      ∑ t ∈ Finset.range (m + 1), (m.factorial : ℂ) * z ^ t / (t.factorial : ℂ) := by
+    rw [← Finset.sum_range_reflect (fun k => (Nat.descFactorial m k : ℂ) * z ^ (m - k)) (m + 1)]
+    apply Finset.sum_congr rfl
+    intro k hk
+    have hk_le : k ≤ m := by exact Nat.le_of_lt_succ (Finset.mem_range.mp hk)
+    have hfac := Nat.factorial_mul_descFactorial (n := m) (k := m - k) (by omega)
+    rw [Nat.sub_sub_self hk_le] at hfac
+    have hfac' : (m.factorial : ℂ) = (k.factorial : ℂ) * (Nat.descFactorial m (m-k) : ℂ) := by
+      exact_mod_cast hfac.symm
+    simp only [Nat.add_sub_cancel]
+    rw [Nat.sub_sub_self hk_le]
+    have hkfac : (k.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+    have hdesc : (Nat.descFactorial m (m - k) : ℂ) =
+        (m.factorial : ℂ) * (k.factorial : ℂ)⁻¹ := by
       calc
-        _ = (((-1 : ℝ) / a) ^ m * (-a) ^ m) * (-a / ((m : ℝ) + 1)) := by
-          field_simp (disch := first | assumption | positivity)
-        _ = _ := by rw [hc]; ring
-    have hdnext : ((-1 : ℝ) / a) ^ (m + 1) * ((m + 1).factorial : ℝ) =
-        -(((m : ℝ) + 1) / a) * (((-1 : ℝ) / a) ^ m * (m.factorial : ℝ)) := by
-      rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
-      ring
-    rw [Finset.sum_range_succ, hdnext]
+        (Nat.descFactorial m (m - k) : ℂ) =
+            ((k.factorial : ℂ)⁻¹ * (k.factorial : ℂ)) *
+              (Nat.descFactorial m (m - k) : ℂ) := by
+                rw [inv_mul_cancel₀ hkfac, one_mul]
+        _ = (k.factorial : ℂ)⁻¹ *
+              ((k.factorial : ℂ) * (Nat.descFactorial m (m-k) : ℂ)) := by ring
+        _ = (k.factorial : ℂ)⁻¹ * (m.factorial : ℂ) := by
+              rw [hfac']
+        _ = (m.factorial : ℂ) * (k.factorial : ℂ)⁻¹ := by ring
+    rw [div_eq_mul_inv, hdesc]
+    ring_nf
+  have hzero :
+      (∑ k ∈ Finset.range (m + 1), (Nat.descFactorial m k : ℂ) * (0 : ℂ) ^ (m - k)) =
+        (m.factorial : ℂ) := by
+    rw [Finset.sum_eq_single m]
+    · simp [Nat.descFactorial_self]
+    · intro b hb hne
+      have hbm : b < m := lt_of_le_of_ne (Nat.le_of_lt_succ (Finset.mem_range.mp hb)) hne
+      have hne0 : m - b ≠ 0 := Nat.sub_ne_zero_of_lt hbm
+      simp [zero_pow hne0]
+    · intro hm
+      exact (hm (Finset.mem_range.mpr (Nat.lt_succ_self m))).elim
+  have hint :
+      (∫ x in (0 : ℝ)..1, Complex.exp ((x : ℂ) * (a : ℂ)) *
+        (-((x : ℂ) * (a : ℂ))) ^ m) =
+        (-(a : ℂ)) ^ m *
+          (↑(∫ x in (0 : ℝ)..1, Real.exp (a * x) * x ^ m) : ℂ) := by
+    rw [← intervalIntegral.integral_ofReal]
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr
+    intro x hx
+    dsimp
+    rw [← Complex.ofReal_mul, ← Complex.ofReal_exp]
+    simp only [Complex.ofReal_mul, Complex.ofReal_pow]
+    ring_nf
+  have hI :
+      (∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) =
+        Real.exp (-a) * ∫ u in (0 : ℝ)..1, Real.exp (a * u) * u ^ m := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr
+    intro u hu
     calc
-      _ = 1 - ((m : ℝ) + 1) *
-          (∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) := hf
-      _ = 1 - (((m : ℝ) + 1) / a) *
-          (a * ∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) := by
-        field_simp (disch := first | assumption | positivity)
-      _ = 1 - (((m : ℝ) + 1) / a) *
-          (((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
-            ((∑ t ∈ Finset.range (m + 1), (-a) ^ t / (t.factorial : ℝ)) -
-              Real.exp (-a))) := by rw [ih]
+      u ^ m * Real.exp (a * (u - 1)) =
+          u ^ m * (Real.exp (-a) * Real.exp (a * u)) := by
+            rw [← Real.exp_add]
+            (congr 1; ring_nf)
+      _ = Real.exp (-a) * (Real.exp (a * u) * u ^ m) := by ring
+  rw [hsum] at h
+  simp only [smul_neg, Complex.real_smul, neg_neg, Polynomial.eval_pow, Polynomial.eval_X,
+    neg_mul, map_natCast, Polynomial.eval_finsetSum, Polynomial.eval_mul,
+    Polynomial.eval_natCast] at h
+  rw [hint, hsum_eval, hzero] at h
+  have hIcomplex :
+      (↑(∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) : ℂ) =
+        Complex.exp (-(a : ℂ)) *
+          (↑(∫ u in (0 : ℝ)..1, Real.exp (a * u) * u ^ m) : ℂ) := by
+    simpa only [Complex.ofReal_exp, Complex.ofReal_mul, Complex.ofReal_neg] using
+      congrArg (fun x : ℝ => (x : ℂ)) hI
+  have hfacsum :
+      (∑ t ∈ Finset.range (m + 1), (m.factorial : ℂ) * (-(a : ℂ)) ^ t /
+        (t.factorial : ℂ)) =
+        (m.factorial : ℂ) *
+          (∑ t ∈ Finset.range (m + 1), (-(a : ℂ)) ^ t / (t.factorial : ℂ)) := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro t ht
+    ring
+  have htrans :
+      -(a : ℂ) * ((-(a : ℂ)) ^ m *
+          (↑(∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) : ℂ)) =
+        -(m.factorial : ℂ) *
+            (∑ t ∈ Finset.range (m + 1), (-(a : ℂ)) ^ t / (t.factorial : ℂ)) +
+          (m.factorial : ℂ) * Complex.exp (-(a : ℂ)) := by
+    calc
+      _ = Complex.exp (-(a : ℂ)) *
+          (-(a : ℂ) * ((-(a : ℂ)) ^ m *
+            (↑(∫ u in (0 : ℝ)..1, Real.exp (a * u) * u ^ m) : ℂ))) := by
+              rw [hIcomplex]
+              ring
+      _ = Complex.exp (-(a : ℂ)) *
+          (-(Complex.exp (a : ℂ) *
+            ∑ t ∈ Finset.range (m + 1), (m.factorial : ℂ) * (-(a : ℂ)) ^ t /
+              (t.factorial : ℂ)) + (m.factorial : ℂ)) := by
+                congr 1
+                convert h using 1 ; ring
       _ = _ := by
-        have hp' : (((m : ℝ) + 1) / a) *
-            (((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
-              ((-a) ^ (m + 1) / ((m + 1).factorial : ℝ))) = -1 := by
-          rw [hp]
-          field_simp (disch := first | assumption | positivity)
-        linear_combination hp'
+        rw [hfacsum, Complex.exp_neg, mul_add]
+        have hexp : (Complex.exp (a : ℂ))⁻¹ * Complex.exp (a : ℂ) = 1 :=
+          inv_mul_cancel₀ (Complex.exp_ne_zero _)
+        have hcancel (q : ℂ) :
+            (Complex.exp (a : ℂ))⁻¹ * -(Complex.exp (a : ℂ) * q) = -q := by
+          calc
+            (Complex.exp (a : ℂ))⁻¹ * -(Complex.exp (a : ℂ) * q) =
+                -((Complex.exp (a : ℂ))⁻¹ * (Complex.exp (a : ℂ) * q)) := by ring
+            _ = -q := by rw [← mul_assoc, hexp, one_mul]
+        rw [show (Complex.exp (a : ℂ))⁻¹ *
+              -(Complex.exp (a : ℂ) * ((m.factorial : ℂ) *
+                ∑ i ∈ Finset.range (m + 1), (-(a : ℂ)) ^ i / (i.factorial : ℂ))) =
+            -((m.factorial : ℂ) *
+              ∑ i ∈ Finset.range (m + 1), (-(a : ℂ)) ^ i / (i.factorial : ℂ)) by
+                exact hcancel _]
+        rw [show (Complex.exp (a : ℂ))⁻¹ * (m.factorial : ℂ) =
+              (m.factorial : ℂ) * Complex.exp (-(a : ℂ)) by
+                rw [Complex.exp_neg]
+                ring]
+        rw [Finset.mul_sum]
+        simp only [Complex.exp_neg]
+        rw [← Finset.mul_sum]
+        ring
+  have hsumcast :
+      (↑(∑ t ∈ Finset.range (m + 1), (-a) ^ t / (t.factorial : ℝ)) : ℂ) =
+        ∑ t ∈ Finset.range (m + 1), (-(a : ℂ)) ^ t / (t.factorial : ℂ) := by
+    norm_cast
+  have htrans_real :
+      -a * ((-a) ^ m * ∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) =
+        -(m.factorial : ℝ) *
+            (∑ t ∈ Finset.range (m + 1), (-a) ^ t / (t.factorial : ℝ)) +
+          (m.factorial : ℝ) * Real.exp (-a) := by
+    have htr := htrans
+    rw [← hsumcast] at htr
+    rw [← Complex.ofReal_neg, ← Complex.ofReal_pow, ← Complex.ofReal_exp] at htr
+    push_cast at htr
+    exact_mod_cast htr
+  have hcoef : ((-1 : ℝ) / a) ^ m * (-a) ^ m = 1 := by
+    rw [← mul_pow, div_eq_mul_inv]
+    have hbase : (-1 : ℝ) * a⁻¹ * (-a) = 1 := by
+      calc
+        (-1 : ℝ) * a⁻¹ * (-a) = a⁻¹ * a := by ring
+        _ = 1 := inv_mul_cancel₀ ha.ne'
+    rw [hbase]
+    simp
+  have hmid :
+      (-a) ^ m * a * (∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) =
+        (m.factorial : ℝ) *
+          ((∑ t ∈ Finset.range (m + 1), (-a) ^ t / (t.factorial : ℝ)) -
+            Real.exp (-a)) := by
+    linear_combination -htrans_real
+  calc
+    a * (∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) =
+        (((-1 : ℝ) / a) ^ m * (-a) ^ m) *
+          (a * (∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1)))) := by
+            rw [hcoef, one_mul]
+    _ = ((-1 : ℝ) / a) ^ m *
+          ((-a) ^ m * a *
+            (∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1)))) := by ring
+    _ = ((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
+          ((∑ t ∈ Finset.range (m + 1), (-a) ^ t / (t.factorial : ℝ)) -
+            Real.exp (-a)) := by rw [hmid]; ring
 
 private noncomputable def r (u : ℝ) : ℝ := u * Real.exp (u - 1)
 private noncomputable def K (u : ℝ) : ℝ := 2 * (2 * u - 1) / (1 + u) ^ 4
