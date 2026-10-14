@@ -864,4 +864,123 @@ theorem initial_actual_batch_mass (S : Bool) (p q : unitInterval) (I J : ℕ) :
 
 end InitialBatch
 
+section CountClassification
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+
+private theorem batchTable_at_landmark (S : Bool) (h : History) (k : ℕ)
+    (hl : Legal σ h) (hn : h.length = D k + d k)
+    (i : Fin (D k+1)) (j : Fin (d k+1))
+    (hi : successCount false h = i.val) (hj : successCount true h = j.val)
+    (r : Option Bool) :
+    batchTable D d a hD hd hc (S,h) (encodeStage σ (D k+d k) r) =
+      fiberRow D d a hD.monotone hd.monotone hc k i j r := by
+  classical
+  have hk : ∃ l, h.length = D l+d l := ⟨k,hn⟩
+  have hN : StrictMono (fun k => D k+d k) := fun x y h => Nat.add_lt_add (hD h) (hd h)
+  have hf : Nat.find hk = k := hN.injective ((Nat.find_spec hk).symm.trans hn)
+  unfold batchTable
+  dsimp only
+  rw [if_pos hl, dif_pos hk, hf]
+  simp only [hi, hj, rowNat, dif_pos i.isLt, dif_pos j.isLt, hn]
+  have hinj : Function.Injective (encodeStage σ (D k+d k)) := by
+    intro r s h
+    cases r <;> cases s <;> simpa [encodeStage] using h
+  simp only [PMF.map_apply, hinj.eq_iff, tsum_ite_eq']
+
+/-- A count fiber at an actually reached landmark uses its prescribed row
+of the single table. This is joint mass classification, including zero incoming
+mass, without conditioning on a positive-probability count fiber. -/
+theorem actual_count_fiber_classification (S : Bool) (p q : unitInterval)
+    (k : ℕ) (i : Fin (D k+1)) (j : Fin (d k+1)) (r : Option Bool) :
+    rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+      ((D k+d k : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (D k+d k) ω) = (i.val,j.val) ∧
+      nativeAction π S p q (D k+d k) ω = encodeStage σ (D k+d k) r} =
+    rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+      ((D k+d k : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (D k+d k) ω) = (i.val,j.val)} *
+        fiberRow D d a hD.monotone hd.monotone hc k i j r := by
+  classical
+  let N := D k+d k
+  let table := batchTable D d a hD hd hc
+  let μ := rawLaw (rowLaw table)
+  let act := encodeStage σ N r
+  let C (π' : RowSeed → Bool → History → Action) (ω : RowSeed × Tape) :=
+    (nativeHistory π' S p q N ω).length = N ∧
+    sourceCount false (nativeHistory π' S p q N ω) = D k ∧
+    sourceCount true (nativeHistory π' S p q N ω) = d k ∧
+    successCount false (nativeHistory π' S p q N ω) = i.val ∧
+    successCount true (nativeHistory π' S p q N ω) = j.val
+  have heq : ∀ᵐ ω ∂μ,
+      nativeHistory π S p q N ω = nativeHistory tablePolicy S p q N ω ∧
+      nativeAction π S p q N ω = nativeAction tablePolicy S p q N ω := by
+    have h := (Measure.quasiMeasurePreserving_fst
+      (μ := rowLaw table) (ν := Measure.infinitePi (fun _ : ℕ => volume.restrict (Set.Icc (0 : ℝ) 1)))).ae
+      (supported_realization σ table).2
+    filter_upwards [h] with ω hω
+    exact ⟨(hω.2 S p q ω.2).1 N, (hω.2 S p q ω.2).2.1 N⟩
+  have hC (ω : RowSeed × Tape) :
+      ((N : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+        countPair (nativeHistory π S p q N ω) = (i.val,j.val)) ↔ C π ω := by
+    constructor
+    · rintro ⟨ht,hij⟩
+      have hs := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 k ht
+      exact ⟨(native_full_history_iff π S p q N ω).mpr ht, hs.1, hs.2,
+        congrArg Prod.fst hij, congrArg Prod.snd hij⟩
+    · rintro ⟨hlen,_,_,hi,hj⟩
+      exact ⟨(native_full_history_iff π S p q N ω).mp hlen, Prod.ext hi hj⟩
+  have hleft : μ {ω | (N : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q N ω) = (i.val,j.val) ∧
+      nativeAction π S p q N ω = act} =
+      μ {ω | C tablePolicy ω ∧ nativeAction tablePolicy S p q N ω = act} := by
+    apply measure_congr
+    filter_upwards [heq] with ω hω
+    apply propext
+    change (_ ∧ _ ∧ _) ↔ (_ ∧ _)
+    rw [← and_assoc, hC]
+    simp only [C, hω.1, hω.2]
+  have hright : μ {ω | (N : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q N ω) = (i.val,j.val)} = μ {ω | C tablePolicy ω} := by
+    apply measure_congr
+    filter_upwards [heq] with ω hω
+    apply propext
+    change (_ ∧ _) ↔ _
+    rw [hC]
+    simp only [C, hω.1]
+    rfl
+  change μ _ = μ _ * _
+  rw [hleft, hright]
+  have hagg := all_history_count_fiber_aggregation table S p q N (D k) (d k) i.val j.val act
+  have hreach := all_history_count_fiber_reach table S p q N (D k) (d k) i.val j.val
+  simp only [C, and_assoc]
+  rw [hagg, hreach, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro w hw
+  have hw' := (Finset.mem_filter.mp hw).2
+  have hwi : successCount false (List.ofFn w) = i.val := hw'.2.2.1
+  have hwj : successCount true (List.ofFn w) = j.val := hw'.2.2.2
+  by_cases hl : Legal σ (List.ofFn w)
+  · rw [batchTable_at_landmark D d a hD hd hc S (List.ofFn w) k hl
+      List.length_ofFn i j hwi hwj r]
+    ac_rfl
+  · have hz : historyPathWeight table S (List.ofFn w) * historyLikelihood p q (List.ofFn w) = 0 := by
+      rw [← actual_history_reach_law table S p q (List.ofFn w)]
+      apply measure_eq_zero_iff_ae_notMem.mpr
+      filter_upwards [heq] with ω hω
+      intro hh
+      have hg := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).1 N
+      have hw : nativeHistory tablePolicy S p q N ω = List.ofFn w := by
+        simpa only [reachedHistory, List.length_ofFn, Set.mem_ofPred_eq] using hh
+      rw [hω.1, hw] at hg
+      exact hl hg
+    calc
+      _ = (historyPathWeight table S (List.ofFn w) * historyLikelihood p q (List.ofFn w)) *
+          table (S,List.ofFn w) act := by ac_rfl
+      _ = _ := by rw [hz, zero_mul, zero_mul]
+
+end CountClassification
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinScheduledExecution
