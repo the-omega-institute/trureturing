@@ -182,14 +182,14 @@ coordinate/value update is introduced. -/
 def advance (fuel : ℕ) (q : PackedPartial) (i : Coord) (a : Value) : PackedPartial :=
   if 0 < fuel then append q a else q
 
-def checkPacked
+def checkPacked {Cache : Type}
     (nodes : ℕ → Fin EJMGlobalDAGData.Size → Node EJMGlobalDAGData.Size Coord Value
       EJMGlobalScoreSymmetry.Cut)
-    (step : EJMCacheState.Cache → Coord → Value → EJMCacheState.Cache)
-    (lower : EJMCacheState.Cache → ℤ)
+    (step : Cache → Coord → Value → Cache)
+    (lower : Cache → ℤ)
     (dominates : EJMGlobalScoreSymmetry.Cut → Partial Coord Value → Bool)
     (gap : ℤ) :
-    ℕ → Fin EJMGlobalDAGData.Size → EJMCacheState.Cache → PackedPartial → Bool
+    ℕ → Fin EJMGlobalDAGData.Size → Cache → PackedPartial → Bool
   | 0, _, _, _ => false
   | fuel + 1, index, cache, q =>
     match nodes (fuel + 1) index with
@@ -217,14 +217,15 @@ theorem actual_split_coordinate
   rw [Nat.mod_eq_of_lt hlt] at hcoord
   omega
 
-theorem checkPacked_eq_original
+theorem checkPacked_eq_original {Cache : Type}
+    (step : Cache → Coord → Value → Cache) (lower : Cache → ℤ)
     (fuel : ℕ) (index : Fin EJMGlobalDAGData.Size)
-    (cache : EJMCacheState.Cache) (q : PackedPartial)
+    (cache : Cache) (q : PackedPartial)
     (hwell : WellFormed q) (hinv : q.depth + fuel = 21) :
-    checkPacked EJMGlobalDAGData.nodes EJMCacheState.step EJMCacheState.lower
+    checkPacked EJMGlobalDAGData.nodes step lower
         EJMGlobalScoreSymmetry.dominates EJMPartialBoundData.scale
         fuel index cache q =
-      check EJMGlobalDAGData.nodes EJMCacheState.step EJMCacheState.lower
+      check EJMGlobalDAGData.nodes step lower
         EJMGlobalScoreSymmetry.dominates EJMPartialBoundData.scale
         fuel index cache (decode q) := by
   induction fuel generalizing index cache q with
@@ -250,13 +251,13 @@ theorem checkPacked_eq_original
           dsimp [append]
           omega
         have hchild (a : Value) :
-            checkPacked EJMGlobalDAGData.nodes EJMCacheState.step
-              EJMCacheState.lower EJMGlobalScoreSymmetry.dominates
-              EJMPartialBoundData.scale (fuel + 1) (children a) (EJMCacheState.step cache i a)
+            checkPacked EJMGlobalDAGData.nodes step
+              lower EJMGlobalScoreSymmetry.dominates
+              EJMPartialBoundData.scale (fuel + 1) (children a) (step cache i a)
               (advance (fuel + 1) q i a) =
-            check EJMGlobalDAGData.nodes EJMCacheState.step EJMCacheState.lower
+            check EJMGlobalDAGData.nodes step lower
               EJMGlobalScoreSymmetry.dominates EJMPartialBoundData.scale (fuel + 1)
-              (children a) (EJMCacheState.step cache i a)
+              (children a) (step cache i a)
               (Function.update (decode q) i (some a)) := by
           rw [show advance (fuel + 1) q i a = append q a by
             simp only [advance, Nat.zero_lt_succ, ↓reduceIte]]
@@ -283,7 +284,7 @@ theorem actual_checkPacked_eq_original :
     check EJMGlobalDAGData.nodes EJMCacheState.step EJMCacheState.lower
       EJMGlobalScoreSymmetry.dominates EJMPartialBoundData.scale
       21 EJMGlobalDAGData.root EJMCacheState.initial (decode actualPacked) := by
-  exact checkPacked_eq_original 21 EJMGlobalDAGData.root EJMCacheState.initial
+  exact checkPacked_eq_original EJMCacheState.step EJMCacheState.lower 21 EJMGlobalDAGData.root EJMCacheState.initial
     actualPacked actualPacked_wellFormed actualPacked_invariant
 
 theorem actual_checkPacked_eq_original_zero :

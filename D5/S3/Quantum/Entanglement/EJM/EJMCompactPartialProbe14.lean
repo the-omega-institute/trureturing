@@ -37,7 +37,7 @@ theorem actual_original_subtree :
     check EJMGlobalDAGData.nodes EJMCacheState.step EJMCacheState.lower
       EJMGlobalScoreSymmetry.dominates EJMPartialBoundData.scale
       7 (zeroPath 14) (zeroCache 14) (zeroPrefix 14) = true := by
-  have hEq := checkPacked_eq_original 7 (zeroPath 14) (zeroCache 14) packedZero
+  have hEq := checkPacked_eq_original EJMCacheState.step EJMCacheState.lower 7 (zeroPath 14) (zeroCache 14) packedZero
     packedZero_wellFormed (by decide)
   rw [packedZero_decode] at hEq
   exact (hEq ▸ actual_compact_subtree)

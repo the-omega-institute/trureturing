@@ -37,7 +37,7 @@ theorem actual_original_suffix :
     check EJMGlobalDAGData.nodes EJMCacheState.step EJMCacheState.lower
       EJMGlobalScoreSymmetry.dominates EJMPartialBoundData.scale
       3 (zeroPath 18) (zeroCache 18) (zeroPrefix 18) = true := by
-  have hEq := checkPacked_eq_original 3 (zeroPath 18) (zeroCache 18) packedZero
+  have hEq := checkPacked_eq_original EJMCacheState.step EJMCacheState.lower 3 (zeroPath 18) (zeroCache 18) packedZero
     packedZero_wellFormed (by decide)
   rw [packedZero_decode] at hEq
   exact (hEq ▸ actual_compact_suffix)
