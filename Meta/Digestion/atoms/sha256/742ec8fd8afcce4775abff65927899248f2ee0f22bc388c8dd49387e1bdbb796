@@ -1,0 +1,37 @@
+**References 8.2 (primary mathematical transfer).** S. Milius and L. S. Moss,
+*The Category Theoretic Solution of Recursive Program Schemes*,
+[arXiv:0904.2385v2, Theorems 7.5 and 7.15, §7.3][MM], is
+literature-attested guarded interpreted-recursion background. Its
+completely iterative algebra and contracting metric hypotheses matter.
+Here explicit native pairs provide the guard and fixed native powers are
+only nonexpanding. FJC/SFS supply the actual native proof. Neither that paper
+nor its abstract recursion theorem supplies (NIS.15), the original image
+filters, or finite signed acquired-source realization.
+
+K. Djelloul, T.-b.-h. Dao and T. Frühwirth,
+*Theory of Finite or Infinite Trees Revisited*,
+[arXiv:0706.4323v1, §§2–4][DDF], treats a constructor signature with
+infinitely many function symbols and a finiteness relation.
+Its constructor-tree decision results are literature-attested in that
+signature. Native pairing is a constructor, but interpreted $\rho$ obeys
+the two distinct leaf laws and distributes over pairing. Treating it as
+a fresh free constructor fails that correspondence; the paper is not an
+unrestricted native stopping supplier.
+
+A. M. Marshall, C. Meadows and P. Narendran,
+*On Unification Modulo One-Sided Distributivity: Algorithms, Variants and
+Asymmetry*, [arXiv:1503.06687v2, §§1, 5–6][MMN], treats elementary
+unification for the distributive equational theory, with a typed
+single-homomorphism subcase. Distribution suggests an analogy for
+decorated occurrence equations, but its signature and ground semantics do
+not include the native leaf images, completed contacts, full finite signed
+originals or the acquisition costs. No complexity or completeness theorem
+is transferred without those missing bridges.
+
+S. Ginsburg and E. H. Spanier,
+*Semigroups, Presburger Formulas, and Languages*, Pacific Journal of
+Mathematics 16(2), 285–296, [Theorems 1.2–1.3][GS], is
+literature-attested arithmetic background for effective Presburger decision
+and semilinear conversion as used by SFS. It applies after the proved native
+elimination, not to unknown native constraints before that elimination.
+

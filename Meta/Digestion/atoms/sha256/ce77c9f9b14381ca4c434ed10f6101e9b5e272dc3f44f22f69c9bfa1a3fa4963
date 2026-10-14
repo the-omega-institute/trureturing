@@ -1,0 +1,13 @@
+**Theorem 14.6 (an empty triple intersection costs an extra multilevel label).**
+If $H\ge2$ and $U,V,W\in\mathcal M$ satisfy
+$U\cap V\cap W=\varnothing$, then
+
+$$
+N_H(\mathcal M)\ge H+2.
+\tag{NAR.14.11}
+$$
+
+In particular, $H+1$-label sufficiency at $H\ge2$ requires every three
+menu members to intersect. This is a necessary condition, with no
+converse or general higher-intersection classification asserted.
+

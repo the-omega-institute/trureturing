@@ -1,0 +1,30 @@
+**Definition 8.2 (notation for the supplied actual queries).** Reuse the
+guarded navigation (ARH.4.3), the constructor table (AOF.8), shortest
+words (AOF.9) and [JRF, Definition 2.1][JRF]. Write $E$ for the root
+query, $P_t$ for a nonempty word of weight $t$ ending in $R$, and $S_t$
+for a word of weight $t-1$ ending in $L$, where $t\ge2$. Their actual
+response functions in the current-age coordinate are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\
+\hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t&n<t&n=t&n=t+1&n\ge t+2\\
+S_t&n<t&\text{never}&n=t&n\ge t+1.
+\end{array}
+\tag{AOF.24}
+$$
+
+For a nonempty word $p$, (ARH.4.3) requires
+$n\ge w(p^-)+2$, not just $n-w(p)\ge0$. The final edge converts that
+guard into the displayed $P$ or $S$ threshold, also at ages zero and
+one. Thus every actual word has one of these response functions. The
+supplied shortest representatives have length $\lceil t/2\rceil$:
+for $s\ge1$, use $R^s,LR^s$ for $P_{2s},P_{2s+1}$ and
+$R^{s-1}L,R^{s-1}LL$ for $S_{2s},S_{2s+1}$. Every power denotes the
+fully materialized finite word submitted to the port. There is no
+$P_1$: an $R$-ending word has weight at least two, while the weight-one
+word $L$ realizes $S_2$. This is supplier notation within the new
+contract, not a new navigation or shortest-word result.
+

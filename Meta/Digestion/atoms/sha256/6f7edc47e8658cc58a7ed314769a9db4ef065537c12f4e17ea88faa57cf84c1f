@@ -1,0 +1,9 @@
+**Theorem 9.3 (finite-domain and literal-length boundaries).** The
+simulation (AOF.28) need not preserve replies beyond its declared
+upper endpoint. Positive intervals of any fixed size $N\ge2$ retain
+the same optimal call price under translation while their necessary
+peak length is unbounded. Embedding the interval reader at a reached
+fixed slot prefix $w_0$ of length $D$ gives an upper bound $D+M(L,U)$
+for a nonsingleton, with the same $K(L,U)$ calls; a singleton submits
+no word. This embedding alone gives no whole-tree-reader lower bound.
+

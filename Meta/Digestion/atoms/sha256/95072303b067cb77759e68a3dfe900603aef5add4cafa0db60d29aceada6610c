@@ -1,0 +1,29 @@
+**Proof.** Apply Retained Literal Root Depth Theorem 2.2 simultaneously
+to the finitely many branch slots $(\theta,d)$. Prescribe intrinsic
+rank one in every slot, minimum leaf depth greater than $L$, and include
+all within-valuation different-branch-class negatives. Its explicit
+construction gives finite non-atomic image values, indeed it can make
+all slots pairwise distinct. Use one value at every repeated occurrence
+of the same class in each valuation, and the forced literals in the
+leaf slots. Proposition 10.2 puts every resulting filling in the
+original full image fiber. No cross-origin relation is required.
+Theorem 10.4 gives precisely $G_*(\theta)$ on each of these origins.
+
+Exterior traversal is independent of the filling until it first reaches
+a hole. If it enters one, native subtree descent is exactly
+$r_{t^\theta}(pw)=r_{x^\theta_d}(w)$. At an empty suffix this is the
+root type. A nonempty suffix at a literal leaf is absent. At a padded
+branch value, $|w|\le|v|\le L$ and the minimum leaf depth is greater
+than $L$, so its endpoint is a reached branch. If no hole is entered,
+the visible endpoint or earlier concrete blocking leaf in $C_*$
+determines the reply. These cases exhaust all finite addresses of the
+stated length, including root, absent addresses, extensions of leaves,
+and repeated-class cones. $\square$
+
+The representatives establish actual feasibility and a bounded-menu
+query correspondence. They do not reconstruct all sources as themselves.
+The root chart and the selected $u^\theta$ are therefore distinct from
+the exact source charts of Symbolic Feedback Synthesis Definition 3.1
+and Proposition 3.2, whose two directions reconstruct each actual
+source. No completed, infinite or rational tree is a source witness here.
+

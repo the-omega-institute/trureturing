@@ -1,0 +1,20 @@
+**Corollary 13.4 (zero calls, zero literal budget and edge cuts).**
+Put $m=|G_*[\Theta_*]|=|F[\mathcal U_*]|\ge1$. On either side of
+(NBP.13.3), if $q=0$ or if $\ell=0$, feasibility is exactly
+$r\ge m$ and $K\ge m$, with the other upper budget arbitrary.
+A constant whole target always admits $r=K=1,q=\ell=0$.
+Empty cuts, a root cut and zero reached classes have that target;
+blocked cuts retain their complete predecessor guards.
+
+**Proof.** The zero-call endpoint is Corollary 12.6: $m$ whole-output
+halts and $m$ initial codes are necessary and suffice, and their
+literal sum is zero. If $P$ does not contain the root, every reached
+occurrence has positive length. Thus every root invocation has
+positive price, and a zero literal sum forces zero calls on every
+attained input. The same endpoint applies by Theorem 13.2.
+If $P$ contains the root, prefix freedom gives $P=\{\varepsilon\}$;
+its predecessor target is constant by Corollary 10.10. The one-halt
+construction satisfies both zero budgets. Empty and entirely blocked
+cuts are the zero-class cases already covered. The guards and
+partitions are parts of the whole installed outputs. $\square$
+
