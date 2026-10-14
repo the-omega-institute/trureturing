@@ -75,6 +75,7 @@ theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
     ∃ pieces : Fin F.base.length → Piece (domainGraph (ParentDomain F)),
       ∃ base : {x : Configuration m // ParentDomain F x},
       ∃ c : (domainGraph (ParentDomain F)).Walk base base,
+      (∀ j, pieces j = parentPiece F j (paths j)) ∧
       base.val = rightPort F 0 ∧ c.IsHamiltonianCycle ∧
       c.support.tail = ((List.ofFn pieces).flatMap fun z => z.walk.support).reverse ∧
       c.edges = s(base, (pieces ⟨F.base.length - 1, by omega⟩).finish) ::
@@ -156,7 +157,7 @@ theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
     rw [hlist, List.length_ofFn] at h
     omega
   obtain ⟨c, hc, hs, he⟩ := exists_spliced_hamiltonian_cycle p ps hlinked hclose hfull hsize
-  refine ⟨pieces, p.start, c, ?_, hc, ?_, ?_⟩
+  refine ⟨pieces, p.start, c, (fun _ => rfl), ?_, hc, ?_, ?_⟩
   · simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl] using hstart ⟨0, by omega⟩
   · simpa only [hlist] using hs
   · simpa only [hlast, p, ps] using he

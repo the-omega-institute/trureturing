@@ -130,13 +130,17 @@ theorem native_p_parent_cut_prefix {m k : ℕ} (hm : 3 ≤ m)
     rw [hbase] at hp
     simp only [List.length_append, List.length_singleton] at hp ⊢
     omega
+  have hrot : (F.selected ++ (A ++ [F.terminal])).rotate (m - 1) =
+      F.terminal :: (F.selected ++ A) := by
+    rw [← List.append_assoc, ← hlength, List.rotate_append_length_eq]
+    rfl
   refine ⟨?_, rfl, (native_marked_index_shift hm F A u hbase 0).2.symm⟩
   apply tuple_ext
   rw [full_reverse_list, ((native_anchored_supply_coordinates hm F).1 0).2.1,
     ((native_anchored_supply_coordinates hm (outerFrame F A u hbase)).1 (m - 1)).1]
   simp only [outerFrame, hbase, List.rotate_zero, List.reverse_append,
     List.reverse_reverse, List.reverse_singleton, List.append_assoc]
-  rw [← hlength, List.rotate_append_length_eq]
+  rw [hrot]
   simp only [List.singleton_append, List.cons_append, List.append_assoc]
 
 private theorem p_circle_eq {m k : ℕ} (F : SupplyFrame m k)

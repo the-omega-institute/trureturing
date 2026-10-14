@@ -15,9 +15,12 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 open D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
 open private special_cuts_nonempty from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialChildAssembly
+open private parentPiece from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 
 private theorem ordinary_port_domain {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hB : 3 ≤ F.base.length) (j : Fin F.base.length) (hj : 0 < j.val) :
@@ -77,6 +80,58 @@ def OtherChildCycles {m k : ℕ} (hm : 3 ≤ m) (F : SupplyFrame m k)
       w.IsHamiltonianCycle ∧
         s(ordinaryRight hm F hB j hj, ordinaryLeft hm F hB j hj) ∈ w.edgeSet
 
+/-- Keep the actual chosen ordinary cycles and their complement inventories
+attached to the actual parent pieces. This witness supports subsequent J
+propagation on this very parent cycle rather than an unrelated existence. -/
+theorem recursive_cycle_from_special_with_inventory {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    (q : (domainGraph (SpecialDomain F hB)).Walk
+      (specialVertex hm F hB (0, 0)) (specialVertex hm F hB (Fin.last k, 1)))
+    (hq : q.IsHamiltonian) (hothers : OtherChildCycles hm F hB) :
+    ∃ paths : ∀ j : Fin F.base.length, ActualChildPath F j,
+      (paths ⟨0, by omega⟩).piece = (special_child_path hm F hB q hq).piece ∧
+      (∀ (j : Fin F.base.length) (hj : 0 < j.val),
+        ∃ a : {x : Configuration m // ChildDomain (childGap F j) x},
+          ∃ w : (domainGraph (ChildDomain (childGap F j))).Walk a a,
+          w.IsHamiltonianCycle ∧
+          s(ordinaryRight hm F hB j hj, ordinaryLeft hm F hB j hj) ∈ w.edgeSet ∧
+          ∀ e, e ∈ (paths j).piece.walk.edges ↔ e ∈ w.edges ∧
+            e ≠ s(ordinaryRight hm F hB j hj, ordinaryLeft hm F hB j hj)) ∧
+      ∃ pieces : Fin F.base.length → Piece (domainGraph (ParentDomain F)),
+      ∃ a : {x : Configuration m // ParentDomain F x},
+      ∃ c : (domainGraph (ParentDomain F)).Walk a a,
+      (∀ j, pieces j = parentPiece F j (paths j)) ∧
+      a.val = rightPort F 0 ∧ c.IsHamiltonianCycle ∧
+      c.support.tail = ((List.ofFn pieces).flatMap fun z => z.walk.support).reverse ∧
+      c.edges = s(a, (pieces ⟨F.base.length - 1, by omega⟩).finish) ::
+        (chainEdges (pieces ⟨0, by omega⟩)
+          (List.ofFn fun i : Fin (F.base.length - 1) =>
+            pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩)).reverse := by
+  classical
+  have hordinary (j : Fin F.base.length) (hj : 0 < j.val) :
+      ∃ p : ActualChildPath F j,
+        ∃ a : {x : Configuration m // ChildDomain (childGap F j) x},
+          ∃ w : (domainGraph (ChildDomain (childGap F j))).Walk a a,
+          w.IsHamiltonianCycle ∧
+          s(ordinaryRight hm F hB j hj, ordinaryLeft hm F hB j hj) ∈ w.edgeSet ∧
+          ∀ e, e ∈ p.piece.walk.edges ↔ e ∈ w.edges ∧
+            e ≠ s(ordinaryRight hm F hB j hj, ordinaryLeft hm F hB j hj) := by
+    obtain ⟨a, w, hw, hcut⟩ := hothers j hj
+    obtain ⟨p, hinv⟩ := ordinary_child_open hm F hB j hj w hw hcut
+    exact ⟨p, a, w, hw, hcut, hinv⟩
+  let zero : Fin F.base.length := ⟨0, by omega⟩
+  let paths (j : Fin F.base.length) : ActualChildPath F j :=
+    if hj : j = zero then hj.symm ▸ special_child_path hm F hB q hq
+    else Classical.choose (hordinary j (by
+      have hne : j.val ≠ 0 := fun he => hj (Fin.ext he)
+      omega))
+  refine ⟨paths, ?_, ?_, native_parent_cycle_of_child_paths hm F hB paths⟩
+  · simp only [paths, dif_pos rfl]
+    rfl
+  · intro j hj
+    have hne : j ≠ zero := fun he => by have hval := congrArg Fin.val he; dsimp [zero] at hval; omega
+    simpa only [paths, dif_neg hne] using Classical.choose_spec (hordinary j hj)
+
 private theorem recursive_cycle_from_special {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
     (q : (domainGraph (SpecialDomain F hB)).Walk
@@ -85,18 +140,8 @@ private theorem recursive_cycle_from_special {m k : ℕ} (hm : 3 ≤ m)
     ∃ a : {x : Configuration m // ParentDomain F x},
       ∃ c : (domainGraph (ParentDomain F)).Walk a a,
       a.val = rightPort F 0 ∧ c.IsHamiltonianCycle := by
-  classical
-  have hordinary (j : Fin F.base.length) (hj : 0 < j.val) : Nonempty (ActualChildPath F j) := by
-    obtain ⟨a, w, hw, hcut⟩ := hothers j hj
-    obtain ⟨p, _⟩ := ordinary_child_open hm F hB j hj w hw hcut
-    exact ⟨p⟩
-  let paths (j : Fin F.base.length) : ActualChildPath F j := by
-    by_cases hj : j.val = 0
-    · have he : j = ⟨0, by omega⟩ := Fin.ext hj
-      subst j
-      exact special_child_path hm F hB q hq
-    · exact Classical.choice (hordinary j (by omega))
-  obtain ⟨_, a, c, ha, hc, _, _⟩ := native_parent_cycle_of_child_paths hm F hB paths
+  obtain ⟨_, _, _, _, a, c, _, ha, hc, _, _⟩ :=
+    recursive_cycle_from_special_with_inventory hm F hB q hq hothers
   exact ⟨a, c, ha, hc⟩
 
 theorem native_recursive_even_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
@@ -135,5 +180,6 @@ theorem native_recursive_odd_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
 
 #print axioms native_recursive_even_cycle_step
 #print axioms native_recursive_odd_cycle_step
+#print axioms recursive_cycle_from_special_with_inventory
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
