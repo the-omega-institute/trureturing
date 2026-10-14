@@ -1494,3 +1494,612 @@ The following boundaries are part of the result's scope:
   robustness or task-transfer benefit without additional bridges.
 
 ## 10.99 追加锚
+
+# 11. Fixed-dimension uniform gaps and finite Hankel certificates
+
+The preceding volume fixes the full-open native contract. This section keeps
+that contract unchanged and makes the dimension quantifier explicit. In
+particular, every encoder, update matrix, decoder row, affine offset, and
+preparation may vary from one model to another.
+
+## 11.1 Capacity at a dimension bound
+
+Fix $0<Z<1$, put $r=1-Z$ and $H=r/2$, and write
+$$
+e_*=\sqrt{4ZH}=\sqrt{2Z(1-Z)}.
+$$
+For an integer $n\ge 0$, let $\mathfrak F_{\le n}(Z)$ be the class of all
+models of Definition 2.1 whose encoder dimension is some
+$d\in\{0,\ldots,n\}$. The preparation is arbitrary but fixed when a model
+is considered: $0<k_0<H$ and all preparation phases are allowed. The
+notation below suppresses this preparation because changing it only rotates
+the five output pairs by a fixed orthogonal map, while the command formulas
+in $(k,\alpha,\beta)$ are unchanged. The initial height changes a producing
+history, not the reachable current-ray domain.
+
+For $A\in\mathfrak F_{\le n}(Z)$ define
+$$
+\operatorname{err}(A)
+ =\sup_{x\in\mathcal M}\|q_A(x)-y(x)\|_2\in[0,+\infty],
+\qquad
+e_n^{\mathrm{aff}}(Z)
+ =\inf_{A\in\mathfrak F_{\le n}(Z)}\operatorname{err}(A),
+$$
+with the convention $\inf\varnothing=+\infty$. Define the finite-tolerance
+set
+$$
+\mathcal A_{\le n,Z}
+ =\{\varepsilon\in[0,\infty):
+       \exists A\in\mathfrak F_{\le n}(Z),\
+       \operatorname{err}(A)\le\varepsilon\}.
+$$
+The norm is the original Euclidean norm on all ten outputs. The class is
+nonempty and contains a finite-error model for every $n$: use the unique
+zero-dimensional encoder, its unique affine updates, and the constant zero
+decoder. Thus $e_n^{\mathrm{aff}}(Z)<\infty$. Models with infinite error
+cannot witness a finite tolerance.
+
+The set $\mathcal A_{\le n,Z}$ is upward closed and has infimum
+$e_n^{\mathrm{aff}}(Z)$. For every $\varepsilon>e_n^{\mathrm{aff}}(Z)$,
+the definition of an infimum supplies a model of error at most
+$\varepsilon$ (indeed, of error strictly below it). Its lower endpoint is
+in $\mathcal A_{\le n,Z}$ exactly when some model attains the infimum. These
+statements concern a fixed dimension bound and do not identify the endpoint
+for positive $n$ below the transition.
+
+**Theorem 11.1 (Uniform fixed-dimension gap).** For every $0<Z<2/3$ and
+every integer $n\ge0$, there is a number
+$\Gamma(n,Z)>0$ such that, for every allowed preparation and every
+$A\in\mathfrak F_{\le n}(Z)$,
+$$
+\operatorname{err}(A)^2\ge 4ZH+\Gamma(n,Z).
+\tag{11.1}
+$$
+Consequently
+$$
+e_n^{\mathrm{aff}}(Z)\ge
+\sqrt{4ZH+\Gamma(n,Z)}>e_*.
+\tag{11.2}
+$$
+The number $\Gamma(n,Z)$ is defined exactly in §11.4 below. It depends on
+$n$ and $Z$ only, not on any model parameter or preparation.
+
+**Proof.** A model with infinite error satisfies (11.1) trivially, so take a
+finite-error model whenever a residual is used. The preceding
+bounded-observable theorem and Proposition 4.1 apply to Definition 2.1 with
+both affine offsets present. They give a single scalar affine observable
+$g(k)$ and, with
+$$
+\Delta=\operatorname{err}(A)^2-4ZH\ge0,
+$$
+the residual
+$$
+\left|g(H-x)-2\sqrt{(H-x)x}\right|
+ \le\sqrt{Zx+\Delta/4}
+\qquad(0<x<H).
+\tag{11.3}
+$$
+The coefficient $\Delta/4$ is the coefficient from the fourfold first-pair
+metric in Proposition 4.1.
+
+Suppose, for contradiction, that $e_n^{\mathrm{aff}}(Z)=e_*$. Put
+$N=n+1$. For each integer $\ell\ge1$ set
+$$
+h_\ell=\frac{H}{\ell+1}.
+$$
+Since $\sqrt{4ZH+h_\ell^2}>e_*$, the infimum definition supplies a model
+$A_\ell\in\mathfrak F_{\le n}(Z)$ with finite error
+$\varepsilon_\ell<\sqrt{4ZH+h_\ell^2}$. For its residual $\Delta_\ell$,
+$$
+0\le\Delta_\ell\le h_\ell^2.
+\tag{11.4}
+$$
+All parameters of $A_\ell$ may depend on $\ell$.
+
+Let $g_\ell$ be the scalar from (11.3), and define, for $1\le j\le\ell$,
+$$
+u_j^{(\ell)}
+ =\frac{g_\ell(H-jh_\ell)}{\sqrt{h_\ell}}.
+$$
+The fixed preparation reaches $(H-h_\ell,0,0)$ by one phase-free
+probability leg. Repeating $P_{-h_\ell}$ at most $\ell-1$ times reaches all
+heights $H-jh_\ell$. The minimum is $h_\ell>0$, so every leg and every
+intermediate point is lawful. Applying (11.3) with $x=jh_\ell$ and using
+(11.4) gives
+$$
+\left|u_j^{(\ell)}
+      -2\sqrt{j(H-jh_\ell)}\right|
+ \le \sqrt{Zj+\frac{\Delta_\ell}{4h_\ell}}
+ \le \sqrt{Zj+\frac{h_\ell}{4}}.
+\tag{11.5}
+$$
+Hence, uniformly in $\ell$ and in the varying model,
+$$
+|u_j^{(\ell)}|
+ \le \left(2\sqrt H+\sqrt{Z+\frac H4}\right)\sqrt j.
+\tag{11.6}
+$$
+
+For the one-step command in $A_\ell$, let $T_\ell$ be its homogeneous
+update matrix and let $v_\ell$ be the homogeneous state at
+$(H-h_\ell,0,0)$. If $\lambda_\ell$ is the fixed homogeneous decoder row
+for $g_\ell$, exact intertwining gives
+$$
+u_j^{(\ell)}
+ =\lambda_\ell T_\ell^{\,j-1}v_\ell/\sqrt{h_\ell}.
+\tag{11.7}
+$$
+Therefore
+$$
+u_{p+q+1}^{(\ell)}
+ =(\lambda_\ell T_\ell^{\,p})
+   (T_\ell^{\,q}v_\ell/\sqrt{h_\ell})
+\tag{11.8}
+$$
+whenever $p+q+1\le\ell$. This factors every finite Hankel submatrix through
+$d_\ell+1\le N$ coordinates. It uses only the separately finite lawful
+chain; no common matrix, latent bound, ambient inverse, or infinite
+execution is assumed.
+
+For each fixed $j$, (11.6) places all defined scalars in a common compact
+interval. Successive scalar subsequences and a diagonal choice with
+indices eventually at least $j$ produce limits $u_j$ for every $j\ge1$.
+Since $h_\ell\to0$ and
+$0\le\Delta_\ell/h_\ell\le h_\ell\to0$, (11.5) yields
+$$
+(2\sqrt H-\sqrt Z)\sqrt j
+ \le u_j\le
+(2\sqrt H+\sqrt Z)\sqrt j.
+\tag{11.9}
+$$
+The lower coefficient is strictly positive because $Z<4H$.
+
+Fix any finite row and column sets in the array
+$(u_{p+q+1})_{p,q\ge0}$. For all sufficiently large diagonal indices the
+corresponding entries occur in (11.8), so every $(N+1)$-minor is zero.
+Determinants are finite polynomials in their scalar entries; taking the
+coordinatewise limit preserves those zero minors. Thus every finite Hankel
+submatrix of the limit has rank at most $N$.
+
+Apply Lemma 5.1 of the preceding volume to $b_j=u_{j+1}$. Its finite-rank
+hypothesis is exactly the conclusion of the preceding paragraph, and its
+square-root upper bound is (11.9). The lemma makes $(u_j)$ bounded, while
+the positive lower coefficient in (11.9) makes it unbounded. This
+contradiction proves $e_n^{\mathrm{aff}}(Z)>e_*$. The finite certificate in
+§11.4 turns this strict conclusion into the model-uniform number in
+(11.1). $\square$
+
+The quantifiers in Theorem 11.1 are stronger than the assertion that each
+individual finite model has error strictly above $e_*$. They allow the
+models, their dimensions, all affine parameters, and their decoders to
+vary with $\ell$, while the final rank bound is the common number $n+1$.
+They also remain compatible with
+$\inf_n e_n^{\mathrm{aff}}(Z)=e_*$.
+
+## 11.2 The finite Hankel relaxation
+
+Fix $N=n+1\ge1$. For an integer $m\ge0$ put $L_m=2m+1$. For
+$u=(u_1,\ldots,u_{L_m})\in\mathbb R^{L_m}$ define
+$$
+H_m(u)=(u_{p+q+1})_{0\le p,q\le m},
+\qquad
+\mathcal R_{N,m}
+ =\{u:\operatorname{rank}H_m(u)\le N\}.
+$$
+When the matrix is too small for an $(N+1)$-minor, the rank restriction is
+vacuous. Otherwise $\mathcal R_{N,m}$ is exactly the common zero set of
+all such minors, hence a closed finite-dimensional determinantal set.
+Define
+$$
+J_m(u)=\max_{1\le j\le L_m}
+ \frac{|u_j-\sqrt j|}{\sqrt j},
+\qquad
+d_{N,m}=\min_{u\in\mathcal R_{N,m}}J_m(u).
+\tag{11.10}
+$$
+
+**Lemma 11.2 (Existence, monotonicity, and limit).** For every fixed
+$N\ge1$, the minimum in (11.10) exists, the sequence $d_{N,m}$ is
+nondecreasing, and
+$$
+\lim_{m\to\infty}d_{N,m}=1.
+\tag{11.11}
+$$
+
+**Proof.** The zero vector belongs to $\mathcal R_{N,m}$ and has
+$J_m(0)=1$. The set
+$$
+K_m=\{u\in\mathcal R_{N,m}:J_m(u)\le1\}
+$$
+is nonempty and closed, and $J_m(u)\le1$ implies
+$0\le u_j\le2\sqrt j$ for every coordinate. Thus $K_m$ is compact and
+$J_m$ attains a minimum on it. Outside $K_m$ the objective is larger than
+one, so this is also the global minimum on $\mathcal R_{N,m}$ and
+$0\le d_{N,m}\le1$; the endpoint value $d_{N,m}=1$ is included.
+
+Truncating a feasible vector for $m+1$ to its first $2m+1$ coordinates
+takes the upper-left principal submatrix of $H_{m+1}$ and cannot increase
+the maximum in $J_m$. Applying this to a minimizer proves
+$d_{N,m}\le d_{N,m+1}$.
+
+Let $D=\lim_m d_{N,m}\le1$. If $D<1$, choose $D<\sigma<1$. A minimizer
+$u^{(m)}$ then obeys, on every defined coordinate,
+$$
+(1-\sigma)\sqrt j\le u_j^{(m)}
+ \le(1+\sigma)\sqrt j.
+\tag{11.12}
+$$
+A scalar diagonal subsequence gives an infinite sequence $u_j$ with the
+same bounds. Any finite submatrix of $(u_{p+q+1})$ is, for sufficiently
+large $m$, a submatrix of $H_m(u^{(m)})$; its $(N+1)$-minors therefore
+vanish in the limit. Lemma 5.1 applied to $u_{j+1}$ makes this sequence
+bounded, contradicting the positive lower bound in (11.12). Hence
+$D=1$. The finite prefixes are a relaxation only: no individual feasible
+finite prefix is asserted to extend to a native model or even to an infinite
+finite-rank realization. The infinite finite-rank sequence used in the
+contradiction is obtained by diagonal compactness. $\square$
+
+## 11.3 An exact implicit excess certificate
+
+Let $A\in\mathfrak F_{\le n}(Z)$ have finite error
+$\varepsilon=\operatorname{err}(A)$, and put
+$$
+\Delta=\varepsilon^2-4ZH\ge0,\qquad
+\rho_0=\sqrt{\frac{Z}{4H}}.
+$$
+Fix $m\ge0$, $L=2m+1$, and $0<h<H/L$, and set
+$$
+\eta_h=1-\sqrt{1-\frac{Lh}{H}}.
+$$
+Suppose
+$$
+d_{N,m}-\eta_h>\rho_0.
+\tag{11.13}
+$$
+Use the scalar $g$ from (11.3), and sample the lawful chain by
+$$
+v_j=\frac{g(H-jh)}{2\sqrt{Hh}},\qquad 1\le j\le L.
+$$
+The rank factorization (11.8), with one fixed model instead of the varying
+family, gives $v\in\mathcal R_{N,m}$. Dividing (11.3) by
+$2\sqrt{Hhj}$ gives
+$$
+\frac{\left|v_j-\sqrt j\sqrt{1-jh/H}\right|}{\sqrt j}
+ \le
+ \sqrt{\rho_0^2+\frac{\Delta}{16Hhj}}.
+\tag{11.14}
+$$
+Since $jh\le Lh$, $j\ge1$, and $\Delta\ge0$, the triangle inequality gives
+$$
+J_m(v)\le
+\eta_h+\sqrt{\rho_0^2+\frac{\Delta}{16Hh}}.
+\tag{11.15}
+$$
+By minimality, $d_{N,m}\le J_m(v)$. Under (11.13), both sides that are
+squared are nonnegative, and therefore
+$$
+\Delta\ge
+16Hh\left((d_{N,m}-\eta_h)^2-\rho_0^2\right)>0.
+\tag{11.16}
+$$
+This is a lower bound for every native model with dimension at most $n$.
+It is a necessary certificate only: no feasible finite Hankel prefix is
+claimed to be extendible to an infinite prefix or realizable by a native
+model.
+
+## 11.4 Canonical constants and the uniform number
+
+Assume $0<Z<4H$ and retain $N=n+1$. Then $\rho_0\in(0,1)$; define
+$$
+\eta=\frac{1-\rho_0}{4},
+\qquad
+\rho=\rho_0+2\eta=\frac{1+\rho_0}{2}.
+\tag{11.17}
+$$
+Thus $0<\eta<1/4$ and $\rho_0<\rho<1$. By Lemma 11.2 there is a finite
+index
+$$
+M=\min\{m\ge0:d_{N,m}\ge\rho\}.
+\tag{11.18}
+$$
+Set
+$$
+L=2M+1,\qquad
+h=\frac{H(2\eta-\eta^2)}{L}.
+\tag{11.19}
+$$
+Because $0<2\eta-\eta^2<1$, one has $0<h<H/L$, and
+$$
+\eta_h
+ =1-\sqrt{1-\frac{Lh}{H}}
+ =1-\sqrt{(1-\eta)^2}
+ =\eta.
+$$
+The canonical squared excess is
+$$
+\Gamma(n,Z)
+ =\frac{16H^2}{2M+1}(2\eta-\eta^2)
+   \left((\rho_0+\eta)^2-\rho_0^2\right).
+\tag{11.20}
+$$
+It is strictly positive because $H>0$, $2M+1>0$,
+$\eta(2-\eta)>0$, and
+$$
+(\rho_0+\eta)^2-\rho_0^2=\eta(2\rho_0+\eta)>0.
+$$
+Since $d_{N,M}-\eta\ge\rho-\eta=\rho_0+\eta>\rho_0$, (11.16) yields
+$$
+\operatorname{err}(A)^2-4ZH\ge\Gamma(n,Z)
+$$
+for every finite-error model in $\mathfrak F_{\le n}(Z)$. Infinite-error
+models satisfy the same inequality trivially. This proves (11.1).
+
+The corresponding additive gap in error, if desired, is
+$$
+\gamma(n,Z)
+ =\sqrt{4ZH+\Gamma(n,Z)}-\sqrt{4ZH}
+ =\frac{\Gamma(n,Z)}
+ {\sqrt{4ZH+\Gamma(n,Z)}+\sqrt{4ZH}}>0.
+\tag{11.21}
+$$
+The certificate is exact but implicit. Existence of $M$ is proved, while no
+effective upper bound on $M$, evaluated value of $d_{N,M}$, practical
+algorithm, native-realizability converse, matching capacity rate, or
+optimal-dimension theorem is asserted.
+
+## 11.5 Dimension zero, the transition, and guard recovery
+
+For $n=0$ the encoder has no coordinates and every decoder is a constant
+$c\in\mathbb R^{10}$. At each fixed height, the state obtained by replacing
+$(\alpha,\beta)$ with $(\alpha+\pi,\beta+\pi)$ has output $-y$. Hence
+$$
+\frac{\|c-y\|_2^2+\|c+y\|_2^2}{2}
+ =\|c\|_2^2+\|y\|_2^2.
+$$
+Taking the supremum proves that $c=0$ is optimal among constants and
+$$
+e_0^{\mathrm{aff}}(Z)^2
+ =\sup_{0<k<H}\left(16k(H-k)+4Zk\right).
+\tag{11.22}
+$$
+Writing
+$$
+f(k)=-16k^2+(16H+4Z)k
+$$
+shows that its vertex is $k_*=H/2+Z/8$. If $Z<4H$ this vertex is
+interior and
+$$
+e_0^{\mathrm{aff}}(Z)=\frac{4H+Z}{2}=1-\frac Z2,
+\qquad
+\left(e_0^{\mathrm{aff}}(Z)\right)^2-e_*^2
+ =\frac{(4H-Z)^2}{4}>0.
+\tag{11.23}
+$$
+The zero-dimensional infimum is attained by the zero constant decoder.
+
+If $Z\ge4H$ then for every interior $k$,
+$$
+f(k)=4ZH+4(H-k)(4k-Z)<4ZH,
+$$
+and its supremum is $4ZH$ as $k$ tends to $H$ through interior heights.
+At $Z=4H$ the difference is exactly $-16(H-k)^2$. Therefore, under
+literal Definition 2.1,
+$$
+e_n^{\mathrm{aff}}(Z)=e_*
+\quad\text{and}\quad
+\mathcal A_{\le n,Z}=[e_*,\infty)
+\qquad(2/3\le Z<1,\ n\ge0),
+\tag{11.24}
+$$
+with the zero-dimensional constant model already attaining the infimum.
+The supremum need not be realized by a lawful state.
+
+Consequently
+$$
+\mathcal A_{\le0,Z}
+ =[e_0^{\mathrm{aff}}(Z),\infty)
+\quad(0<Z<2/3),
+$$
+whereas for $Z\ge2/3$ the preceding display gives the endpoint for every
+dimension bound. For positive fixed $n$ below the transition, (11.1)
+proves a strict gap above $e_*$ but does not decide whether the infimum
+$e_n^{\mathrm{aff}}(Z)$ is attained at its own value.
+
+Guard recovery is a separate contract. Suppose the encoded state must
+decide, for every command, whether its native straight segment is lawful.
+A zero-dimensional encoder cannot do this: for $k_1<k_2$ choose
+$s=H-(k_1+k_2)/2$. Then
+$$
+0<k_1+s<H,\qquad k_2+s>H,
+$$
+although both states have the same singleton encoding. The
+guard-recoverable zero-dimensional class is therefore empty, with
+infimum $+\infty$ and no finite tolerance. For $n\ge1$, the height encoder
+$E(k,\alpha,\beta)=k$ has exact guards and finite error, so the subclass
+is nonempty. The lower gap and the finite certificate remain valid on this
+smaller class because it is a subclass of $\mathfrak F_{\le n}(Z)$.
+When $Z\ge2/3$, the height model attains $e_*$ in the guard-recoverable
+class for every $n\ge1$. These guard statements do not alter the literal
+dimension-zero conclusions above.
+
+## 11.6 Polynomial witnesses and the dimension limit
+
+For an integer $b\ge1$, the interior Bernstein construction already proved
+in §7 gives nodes and a polynomial
+$$
+\kappa_j=\frac{H(j+1)}{b+2},\qquad
+P_b(k)=\sum_{j=0}^b A(\kappa_j)
+ \binom bj(k/H)^j(1-k/H)^{b-j},
+$$
+where $A(k)=2\sqrt{k(H-k)}$. Its samples are all interior, and the
+finite moment identities give
+$$
+\sum_jw_j(\kappa_j-k)^2
+ =\frac{H^2}{(b+2)^2}\bigl(bt(1-t)+(1-2t)^2\bigr)
+ \le\frac{H^2}{4b},
+\qquad t=k/H.
+$$
+The square-root estimate for $A$ and two finite Cauchy--Schwarz
+inequalities therefore give
+$$
+|P_b(k)-A(k)|\le\sqrt2\,H b^{-1/4}
+\qquad(0<k<H).
+\tag{11.25}
+$$
+Writing $P_b(k)=\sum_{j=0}^b\pi_jk^j$ and storing
+$$
+K=k,\qquad f_j=k^jU(\alpha)\quad(0\le j\le b)
+$$
+uses exactly $1+2(b+1)=2b+3$ real coordinates. The fixed linear decoder
+$D(\sum_j\pi_jf_j,0)$ and the exact affine updates
+$$
+K'=K+s,\qquad
+f_j'=\sum_{h=0}^j\binom jh s^{j-h}f_h,
+\qquad
+f_j'=R_{t/2}f_j\quad\text{for a phase command}
+$$
+satisfy all real signed commands on their full lawful domains, including
+both affine offsets allowed by Definition 2.1. The preceding volume proves
+that the actual guard is exactly $0<K+s<H$, the phase guard is the whole
+image, and all finite prefixes and intermediate points remain encoded.
+Using the original output metric,
+$$
+e_n^{\mathrm{aff}}(Z)^2
+ \le4ZH+\frac{8H^2}{\sqrt b}
+\quad\text{whenever }2b+3\le n.
+\tag{11.26}
+$$
+In particular, for $n\ge5$ let
+$$
+b=\left\lfloor\frac{n-3}{2}\right\rfloor\ge1.
+$$
+Then
+$$
+e_n^{\mathrm{aff}}(Z)^2
+ \le4ZH+
+ \frac{8H^2}{\sqrt{\lfloor(n-3)/2\rfloor}}.
+\tag{11.27}
+$$
+Below the transition the zero decoder also supplies
+$e_n^{\mathrm{aff}}(Z)\le1-Z/2$ for every $n$ under the literal contract.
+In the guard-recoverable class, the same bound is supplied by the height
+encoder for every $n\ge1$.
+
+The classes $\mathfrak F_{\le n}(Z)$ are nested, so
+$e_{n+1}^{\mathrm{aff}}(Z)\le e_n^{\mathrm{aff}}(Z)$. The universal floor
+$e_n^{\mathrm{aff}}(Z)\ge e_*$ together with (11.26), with $b$ tending to
+infinity, gives
+$$
+\lim_{n\to\infty}e_n^{\mathrm{aff}}(Z)
+ =\inf_{n\ge0}e_n^{\mathrm{aff}}(Z)
+ =e_*.
+\tag{11.28}
+$$
+For $Z<2/3$, (11.1) still leaves a positive gap at every fixed dimension.
+Neither (11.26) nor the implicit certificate gives matching rates,
+attainment for a general positive fixed dimension, or an optimal dimension
+at a prescribed tolerance.
+
+## 11.7 Prescribed paths, all-times guards, and contract matching
+
+Consider the larger contract that additionally requires an affine update for
+each prescribed finite native path from §9. Let
+$$
+\rho_{\rm path}(\tau)=\int_0^\tau a_c(v)\,dv,\qquad
+\Delta_k=\rho_{\rm path}(T),\qquad
+L_\chi=\int_0^T b_c(\tau)\,d\tau,
+$$
+and
+$$
+C_{\rm path}=\int_0^T
+ \rho_{\rm path}(\tau)b_c(\tau)\,d\tau.
+$$
+For a lawful path the exact guard is
+$$
+0<k+\rho_{\rm path}(\tau)<H
+\quad\text{for every }\tau\in[0,T],
+\tag{11.29}
+$$
+equivalently
+$$
+k+\min_{[0,T]}\rho_{\rm path}>0,\qquad
+k+\max_{[0,T]}\rho_{\rm path}<H.
+$$
+Integrating the native equations gives the endpoint
+$$
+k'=k+\Delta_k,\qquad
+\alpha'=\alpha+\frac{L_\chi}{2},
+$$
+$$
+\beta'=\beta+
+ \left(\frac12-\frac kr\right)L_\chi-\frac{C_{\rm path}}r.
+\tag{11.30}
+$$
+The mixed term has this sign because the varying height contributes
+$-\rho_{\rm path}b_c/r$ to the phase integral.
+
+A model required to implement all such paths is a subclass of the
+straight-command class used in Theorem 11.1 and §11.3. Hence the same
+lower gap and certificate apply. Conversely, the polynomial witness has
+the exact affine path update
+$$
+K'=K+\Delta_k,\qquad
+f_j'=R_{L_\chi/2}
+ \sum_{h=0}^j\binom jh\Delta_k^{\,j-h}f_h,
+\tag{11.31}
+$$
+and the height witness has $K'=K+\Delta_k$. Substitution gives the exact
+encoding of the endpoint in (11.30); $C_{\rm path}$ is forgotten only in
+the permitted beta-independent encoder. At every intermediate time,
+replace $T$ by that time in the displayed integrals. The same identities
+therefore prove all prefixes and intermediate points, with the original
+uniform readout bound. Concatenating two paths gives
+$$
+(\Delta_1+\Delta_2,\,
+ L_1+L_2,\,
+ C_1+C_2+\Delta_1L_2),
+\tag{11.32}
+$$
+which agrees with successive application and introduces no extra stored
+history coordinate.
+
+Thus the classification, the dimension upper bound, and the finite
+certificate are unchanged when prescribed paths and their full all-times
+guards are added. The same comparison applies within the corresponding
+guard-recoverable subclasses. It does not identify the capacities of these
+different contracts with one another, and it does not replace an all-times
+guard by an endpoint check.
+
+## 11.8 Scope, source credit, and remaining boundaries
+
+This continuation extends the owning volume *Native FIB on the full open
+domain: affine approximation and finite attainment*. Its §§1--4 supply the
+native current-ray interface, original ten-output metric, bounded
+observable reduction, and scalar residual used above; §§5--9 supply the
+finite-rank growth lemma, polynomial witnesses, exact updates, and
+prescribed-path interface. The new synthesis is the varying-model
+fixed-dimension quantifier, the finite Hankel minima and their limit, and
+the exact implicit positive certificate. The classical ingredients are
+finite-dimensional linear algebra, translation characters, scalar diagonal
+subsequences, closed determinant equations, finite Hankel shift
+realizations, generalized eigenspaces, finite geometric sums and Cesaro
+cancellation, Bernstein moment identities, and finite Cauchy--Schwarz
+estimates. These ingredients are used here only within the unchanged
+native contract.
+
+The statements remain limited to $0<Z<1$ and the open support
+$0<k<H$. No endpoint or support-degenerate limit is included. Encoders are
+functions of current rays, and only bounded affine observables were shown
+to lose $\beta$; unbounded encoder coordinates and arbitrary encoder fibers
+remain unclassified. The exact capacity and its attainment for general
+positive fixed $n$ below $Z=2/3$ remain open. Effective bounds on the least
+certificate index $M$, evaluated finite minima, matching rates, and an
+optimal dimension characterization remain open. The original unrelated
+finite-hidden-$N$ alternative remains unresolved, with no identification
+between its objective or admissible realizations and Definition 2.1. The
+results make no claim about kernel verification, finite precision,
+robustness, physical implementation, efficient algorithms, training,
+machine-learning benefit, or worldwide priority. The guard-recoverable
+zero-dimensional exception is separate as stated in §11.5.
+
+## 11.99 追加锚
