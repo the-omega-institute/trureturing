@@ -442,8 +442,11 @@ cells. Registers containing a successor index are bit strings copied
 one bit at a time; equality, increment, comparison, offset calculation
 and bounded addition are bit loops with carry and loop state. ROM
 fetching, routine entry/return and instruction selection have counted
-PCs and heads. A local move can change the binary head encoding and
-PC in several coordinates. These are charged local instructions;
+PCs and heads. Each local instruction includes its finite-control
+continuation in the same paid occurrence. A local move can change the
+binary head encoding and PC in several coordinates; a local array write
+can change its one data cell and the counted stage bits together.
+These are charged local instructions;
 **local instructions have no one-bit write restriction**. The one-bit
 restriction below is imposed at actual source-response receipt.
 
@@ -475,7 +478,7 @@ $r$ specified in Definition 4.6, are the following thirty-two fields.
 | 18 | Receiver occupied length $a$ |
 | 19 | Sender head |
 | 20 | Mailbox head |
-| 21 | Receiver head |
+| 21 | Receiver head $q$ |
 | 22 | Copy loop index |
 | 23 | Clear loop index |
 | 24 | Bit-operation loop index |
@@ -491,9 +494,13 @@ $r$ specified in Definition 4.6, are the following thirty-two fields.
 Sixty-four Boolean fields contain five response flags; current ROM,
 work and transfer bits; carry, borrow and comparison bits; ownership,
 seal, armed, idle, stage and validity flags; and fixed finite-control
-scratch. Unused Boolean fields are also allocated. There is no
-additional vector, saved response, call stack, log or implicit
-interpreter control. A finite-control state is an encoding in these
+scratch. Two of the already allocated stage bits encode the receiver
+phase $\phi\in\{\mathsf{pre},\mathsf{ready},\mathsf{written},
+\mathsf{sealed}\}$ as $00,01,10,11$, respectively. These bits are
+reserved throughout a frame; bit-loop and return control use the listed
+PC, return and continuation slots. Unused Boolean fields are also
+allocated. There is no additional vector, saved response, call stack,
+log or implicit interpreter control. A finite-control state is an encoding in these
 fields, not an extra uncounted state. Each fixed routine is inlined or
 uses the listed return slots without recursive nesting.
 
@@ -525,6 +532,70 @@ seeks, length-copying, increments, permission control and loop tests
 are additional paid operations. Full arrays were allocated and zeroed;
 no allocation is hidden in a write. The core copy count is exactly
 $8d+4$, also for $d=0$.
+
+The receiver phase specifies the following cut convention for these
+same loops. At the common initial cut and on entry to each next macro
+frame it is $\mathsf{pre}$; the final local node transfer sets this
+phase together with entry to that frame. RESET and all sender/mailbox
+preparation keep it $\mathsf{pre}$, including partial clearing of an old
+payload or length. After the mailbox is sealed, its length copied and
+both copy heads homed, $a=q=0$ and the receiver loop enters
+$\mathsf{ready}$. The receiver head $q$ is the destination-cell index,
+including the one-past-end position $b$; the separate work head in slot 8
+performs all scans of the length bits. Within this loop:
+
+- In $\mathsf{ready}$, $a=q$. If $q<b$, the mailbox head is also $q$.
+  The read of that mailbox cell and all preparation for its write leave
+  $q,a,D,\phi$ fixed, while retaining its bit in the transfer field.
+- The receiver write stores that bit in $D_q$ and changes $\phi$ to
+  $\mathsf{written}$ in the same paid local occurrence. This write is
+  the letter arrival, even if it writes zero into a zero cell. The
+  receiver head stays at $q$ throughout the following length increment,
+  its carry/bit-index work, all routine returns and the mailbox move.
+- Increment $a$ from its old value $q$ by a least-significant-bit-first
+  carry scan. Clear successive one bits, then set the first zero bit
+  and clear the carry. Individual data-bit writes, work-head moves,
+  branches and returns remain paid steps. The routine must return with
+  $a=q+1$ before the mailbox moves one cell. The receiver's subsequent
+  one-cell move changes its head to $q+1$ and $\phi$ back to
+  $\mathsf{ready}$ together in that paid move. No other instruction
+  changes $q$ while the phase is $\mathsf{ready}$ or $\mathsf{written}$.
+- At $q=a=b$, the loop test permits the existing receiver seal occurrence,
+  which changes $\phi$ to $\mathsf{sealed}$. Acknowledgement, receiver
+  homing, operand checks, source receipt and local response continuation
+  keep this phase and $D,a$ fixed until entry to the next frame. An
+  empty payload goes directly from $\mathsf{ready}$ to this seal.
+
+Thus the phase changes use the already charged control transitions of
+the copy body, seal and node transfer. They add no core occurrence, array,
+slot or Boolean field. The detailed carry routine is part of the fixed
+program charged in $I_0$. All intermediate instructions preserve the
+phase, except the four specified transitions into $\mathsf{pre}$,
+$\mathsf{ready}$, $\mathsf{written}$ and $\mathsf{sealed}$. No transient
+PC, copied loop index or partially copied continuation is used as a
+substitute for these retained phase bits.
+
+For a complete counted configuration $c$, define the receiver projection
+
+$$
+\begin{aligned}
+k(c)&=\begin{cases}
+0&\phi=\mathsf{pre},\\
+q&\phi=\mathsf{ready},\quad 0\le q\le P,\\
+q+1&\phi=\mathsf{written},\quad 0\le q<P,\\
+a&\phi=\mathsf{sealed},\quad 0\le a\le P,\\
+0&\text{otherwise},
+\end{cases}\\
+\operatorname{received}(c)&=D[0:k(c)].
+\end{aligned}
+\tag{4.4a}
+$$
+
+The empty default makes this a function on every installed valuation;
+its arrival interpretation is asserted only on lawful executions. It
+uses receiver cells, its counted head, phase and length, never sender
+cells or the native row. It is a mathematical projection at a cut, not
+an additional readable source port or a free runtime decoding operation.
 
 Before ISSUE-READ the interpreter homes the receiver head, finishes
 all length and ownership checks by paid scans, sets the armed state,
@@ -702,8 +773,10 @@ give an autonomous serial refinement with the same original source
 family and all original observations. Its erasure is the entire macro
 trace of $C$, with the same common initialization, every root routing
 Read, every literal, raw reply and genuine source successor, termination
-and firstHalt. Its actual receipt is one-bit legal as in Proposition
-4.5. On a run with original counts $Q,U,A,P_{\rm run}$,
+and firstHalt. At every paid microstep cut of each Read frame, (4.4a)
+is exactly its actual arrived prefix. Its actual receipt is one-bit
+legal as in Proposition 4.5. On a run with original counts
+$Q,U,A,P_{\rm run}$,
 
 $$
 \begin{aligned}
@@ -782,10 +855,60 @@ bounds for the specified scan choices, not measured running times.
 
 Induct on the $d$ PUT nodes: after them $S[0:d]=p$, and all other sender
 cells remain reset. By PR57.D7's indexed copying induction, the sealed
-mailbox satisfies $B[0:b]=p$, $b=d$; the receiver's own write induction
-gives $a=d$ and $D[0:a]=p$. The receiver is unavailable until its seal.
-Hence (4.4), not a fresh unchanged lookup of the macro row, determines
-the committed original Read. All frames, including root-literal frames,
+mailbox satisfies $B[0:b]=p$, $b=d$. To cover every paid cut of the
+receiver loop, let $H_c$ be the word of actual receiver arrivals in the
+current frame up to cut $c$. This is proof notation, not another stored
+log. The strengthened indexed invariant is:
+
+- In $\mathsf{pre}$, $H_c=\varepsilon$; old cells and a partially reset
+  length are irrelevant to (4.4a).
+- In $\mathsf{ready}$, $|H_c|=q=a\le b$ and
+  $D[0:q]=H_c=B[0:q]$.
+- In $\mathsf{written}$, $|H_c|=q+1\le b$, the receiver head still
+  names the just-written cell, and $D[0:q+1]=H_c=B[0:q+1]$.
+  The length bits may be at any stage of the specified increment.
+- In $\mathsf{sealed}$, $|H_c|=a=b=d$ and $D[0:a]=H_c=p$;
+  receiver and work heads may be moving without altering that prefix.
+
+Initially and throughout RESET/preparation the first clause holds.
+The ready entry has $q=a=0$. In a ready iteration, only the receiver
+write appends a letter to $H_c$; it stores exactly the bit just read
+from $B_q$ and changes phase at that very cut, proving the written
+clause even when the stored bit does not change. Neither another data
+write to $D$ nor a new arrival is possible while written. All length
+bit writes, carry changes, work-head and mailbox moves, loop-index
+updates, tests and intermediate return/continuation copies therefore
+preserve that clause: they change neither $D[0:q+1]$, $q$ nor $\phi$.
+
+For termination and the stable length, suppose the old length is $q$
+and its first zero bit is at position $m$. Such a position exists below
+$r$ because $q<b\le P<2^r$, hence $q+1<2^r$. At the test of bit $j\le m$
+after clearing the $j$ lower one bits, the current numeric length is
+$q-(2^j-1)$. Clearing the next one bit changes it to
+$q-(2^{j+1}-1)$, also at the cut before the work-head move. At $j=m$,
+setting the zero bit gives $q-(2^m-1)+2^m=q+1$, including the cut before
+carry clearing. Seeking, bit tests, carry clearing and return steps do
+not alter that value. This proves the increment's endpoint for every
+legal $q$; it does not pretend that its intermediate numeric value is
+an occupied length. The invariant during those cuts instead uses the
+unchanged receiver head and written phase. After the mailbox move,
+the receiver move simultaneously advances $q$ and restores ready, so
+$q=a=|H_c|$ again. The last iteration reaches $q=b$, the seal establishes
+the sealed clause, and all homing/check/continuation steps preserve it.
+At the next frame entry the phase becomes pre and the new frame's
+arrival word is empty, even while old payload cells await RESET.
+This proves $\operatorname{received}(c)=H_c$ at every paid microstep
+cut of every lawful frame, including $d=0$ and $P=0$.
+
+At increment-complete cuts, including ready cuts and the completed
+seal, the ordinary view $D[0:a]$ agrees with this projection. It also
+agrees after RESET has finished and before the first receiver write,
+when $a=0$. During unfinished length increments or partial RESET it
+has no such guarantee. The receiver remains unavailable to the source
+until its seal; recovery as a projection does not enable a prefix
+Read. At that seal $a=d$ and $D[0:a]=p$. Hence (4.4), not a fresh
+unchanged lookup of the macro row, determines the committed original
+Read. All frames, including root-literal frames,
 terminate because their cell bounds and graph chains are finite.
 The two loop bodies contribute precisely $8d+4$; all other local work
 is included in (4.9). Each final receiver write is one actual letter
@@ -973,11 +1096,26 @@ joint physical apparatus including the source. ∎
 flat refinement, the following recoveries and failures refer to the
 same actual source and cut.
 
-At a partial delivery cut, receiver cells and occupied length recover
-exactly the arrived address prefix. The sender's sealed cells can
-recover the whole selected literal locally, but the receiver has no
-source reply for any prefix. At the completed receiver seal,
-$(D,a)$ recovers the whole committed literal. At actual source receipt,
+At every paid partial delivery cut, (4.4a) recovers exactly the arrived
+address prefix from the receiver cells and the already counted
+head/phase/length fields. The restricted view $(D,a)$ suffices after
+RESET has completed and before the first arrival, at ready cuts, after
+each length increment has returned and through the following head moves,
+and at sealed cuts. It need not suffice during an unfinished increment
+or partial RESET. In particular, on the $h=2,T=0$ all-$\alpha$ source,
+the first delivery of $L$ with $P=1$ has $(D,a)=([0],0)$ both just before
+and just after the receiver write. The prefix is respectively empty
+and $L$. The phase changes from ready to written, with $q=0$, so (4.4a)
+gives lengths zero and one at those very cuts. Arrival is the write,
+not the later increment or seal. At a carry such as $3\mapsto4$, the
+length may pass through $2$ and $0$, while $q=3$ and the written phase
+continue to decode four arrived letters. Complete configurations are
+different in the zero-write pair, so the nonrepetition bound is unaffected.
+
+The sender's sealed cells can recover the whole selected literal
+locally, but the receiver has no source reply for any prefix. At the
+completed receiver seal, $(D,a)$ recovers the whole committed literal.
+At actual source receipt,
 the one set flag recovers the actual one of four raw replies or the
 Update acknowledgement; together with the retained native row it
 selects its legal macro successor. Later cleanup may erase this flag
@@ -995,8 +1133,11 @@ clock; with larger cells it need not determine the entry clock or the
 unretained number of Updates. None is automatically the historical
 lag $t$.
 
-Proof. Receiver statements are the indexed copy invariants of Theorem
-4.7 and the definition of the one-hot flags. The clock statements use
+Proof. The phase-indexed invariant and carry argument of Theorem 4.7
+prove recovery through each write, length update, movement and
+continuation cut; the displayed pairs evaluate that decoder directly.
+At source receipt use the definition of the one-hot flags. The clock
+statements use
 `DelayedOriginalReadout.right_clock_iterate` and `right_clock_readout`
 and exactly SLHC §§11.4, 12.5. A finite right-ray profile is mutually
 recoverable with $\kappa(y)=2d+e$: it has branch before depth $d$,
@@ -1057,9 +1198,34 @@ A bound on one run's sum $A$ does not bound the number of prefixes of
 the installed menu. For example, add to a correct installation any
 number of unreachable rows whose fixed literals are distinct. Every
 actual run and its $A$ stay unchanged while the union of menu prefixes
-increases. For the particular complete tables here, $P$ and $W_*$
-separately bound that union by $1+W_*P$; that uses installed data,
-not a run statistic.
+increases. Write $\operatorname{Pref}(\mathcal A)$ for the union of
+prefixes of words in $\mathcal A$, with the empty word included. For
+the complete **native macro table** $C$, let $\mathcal M_{\rm nat}$ be
+its fixed Read literals, including unreachable native rows. Then
+
+$$
+|\operatorname{Pref}(\mathcal M_{\rm nat})|
+\le 1+\sum_{p\in\mathcal M_{\rm nat}}|p|
+\le 1+|\mathcal M_{\rm nat}|P
+\le 1+n_RP\le 1+W_*P.
+$$
+
+The same bound holds for any subset of those native literals, including
+the literals selected on lawful executions of the refinement. It uses
+the native installation, not a single run's $A$. The **totalized composite**
+menu of Definition 4.6 is instead $\mathcal M_{\rm comp}=\{L,R\}^{\le P}$.
+It is prefix-closed, so its separate exact count is
+
+$$
+|\operatorname{Pref}(\mathcal M_{\rm comp})|
+=|\mathcal M_{\rm comp}|=2^{P+1}-1.
+$$
+
+For the active table with $h=2,T=100$, (5.1) gives $k=12$, $B_0=104$,
+$W_*=4294967296$ and $P=53$. Thus the native bound is $227633266689$,
+whereas the composite prefix count is $18014398509481983$. These are
+different installed menus; the native bound is not a bound on the
+composite menu. At $P=0$ both prefix counts are one.
 
 The bounds proved here leave a genuine gap between the universal lower
 order $\Omega(h+\log(T+1))$ and the attained flat-allocation upper order
@@ -1074,8 +1240,11 @@ Proof. The first assertion is the supplier's equal-depth comb-cone
 union argument; a single supplied shape removes that union. The
 long-frame proof counts an actual chosen leaf depth, so persists for
 a known comb. Unreachable added rows prove the prefix counterexample;
-counting at most $P$ new nonempty prefixes per installed literal copy
-proves the stated installed upper bound. Finally Theorems 2.2 and 4.7
+counting at most $P$ nonempty prefixes per native Read literal proves
+the native bound. Definition 4.6 supplies every binary receiver word
+of every length up to $P$, giving the composite geometric sum; the
+phase convention imposes no restriction on those installed issue rows.
+Finally Theorems 2.2 and 4.7
 have precisely the two different allocation premises displayed above;
 neither supplies the missing compression/materialization construction
 or a matching impossibility proof. ∎
@@ -1092,7 +1261,7 @@ claim of worldwide originality or Lean kernel certification.
 | SLHC §§10–11, revision `f14a84e00297c51a63cec763f74f2a896c23c8f7` | All-shape parity tables, licensed delayed-image trials, complete native one-bit routing, active/static widths, exact active Update count, full installed table and source growth. These macro services remain conditional. |
 | SLHC §12, revision `5798b485e4a9343f8e446c666b8966ffd71cdb5a` | Theorem 12.3's same-run comb literal bounds and Update-expanded separating windows; Theorem 12.2's cell-table parameters when (5.2) is chosen. The receipt lower bounds consume its mathematical premises, not publication status. |
 | PH8.1, revision `3605ccfd6e273bf9d9bda2bc93009239cfdb961e` | Finite row format, sequential bit lookup, thirty-two counted integer slots, sixty-four flags, loader and simultaneous installation accounting. The parity graph has no stochastic track, sampled law, posterior, fair-bit call or synthetic source. Its four Read outcomes use counted flags and binary test nodes. PH's actual/synthetic and rendering slots are reassigned explicitly in Definition 4.3; extra payload arrays are added and charged. Its stochastic correctness or two-response source interface is not imported. |
-| PR57.D7 and L4, same revision | Two owned bit-copy loops, simultaneous sender/mailbox/destination allocation, seals, handoffs, and exactly $8d+4$ core occurrences after positioning. Here destination is the actual Read literal; no provenance archive, verification snapshot or source identity is obtained for free. The original PR57 ports and tapes allow growing records; this finite refinement reserves all $3P$ cells and counts every head instead. |
+| PR57.D7 and L4, same revision | Two owned bit-copy loops, simultaneous sender/mailbox/destination allocation, seals, handoffs, and exactly $8d+4$ core occurrences after positioning. Its indexed invariant supplies completed copy equality; Definition 4.4 and Theorem 4.7 specify the receiver head/phase projection through this consumer's length-bit updates and movements. Here destination is the actual Read literal; no provenance archive, verification snapshot or source identity is obtained for free. The original PR57 ports and tapes allow growing records; this finite refinement reserves all $3P$ cells and counts every head instead. |
 | PR57.T3, same revision | The proof method of one uniform simulator consuming an original response only at its complete release. Here release is atomic native response receipt; no partial source-response block is exposed. Only local transport labels/fees and the original four-valued reply are observed. PR57's ordered-tree coefficient Read, guarded updates, contexts and full visible physical-source schedules are different contracts. No conformance of those source implementations is asserted for this Read. |
 | `NativeSerialMachine.nativeStep`, `Run`, `replay_deterministic`, `operational_replay` | The source/reply/update chronology and source-blind local transition vocabulary. Its Read still takes an atomic whole address, and its proof configuration has epoch/source/trace components. Those components are not free finite observer memory. |
 | `NativeSerialEffective.OriginalState`, `original_code_service_simulation`, `effective_service_inclusion` | The existing effective simulation has numeric workspace and, on its original interface, certified epoch and acquired history. It supplies no finite width or autonomous literal-delivery bill. It is not substituted for the counted graph construction. |
