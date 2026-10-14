@@ -18,7 +18,8 @@ The inspected primary is
 with PDF SHA-256
 `64dd95754591cfd0c114516eccbef1efd577ed42ad7bd3f2c44ba4acff2dc6e2`.
 The definitions on printed p.2, Lemma 2, Theorem 2 on p.13 and its
-argument, and Corollaries 3–4 on pp.14–15 were inspected. The definitions
+argument, Corollaries 3–4 on pp.14–15, and Theorem 4 on pp.21–22
+were inspected. The definitions
 and quantitative statement were also read in page images. This is a
 preprint citation and applicability assessment, without a full proof
 audit, reproduction of its finite computations, or Lean verification.
@@ -74,3 +75,65 @@ giving $k\ge6$; this does not extend Wu's CA3 starting domain.
 A quantitative comparison on CA3 and the reduction to
 CA2 do not estimate the selected source's signed prime-error remainder.
 The source's finite tables and checks are cited rather than rerun.
+
+
+## The adjacent-CA allowance also excludes actual shifted contacts
+
+Theorem 4, equation (4.1), printed pp.21–22, assumes an actual
+CA3 source $n_i$, with $p$ the next prime after $P^+(n_i)$ and
+$10^8<p<\log n_i$. It also assumes the next classical transition
+$n_{i+1}=n_iq$ and $\epsilon_{i+1}=F(q,j)$, where
+
+$$
+F(q,j)=\frac{\log(1+(q+\cdots+q^j)^{-1})}{\log q}.
+$$
+
+Its stated upper comparison is
+
+$$
+\log\frac{G(n_{i+1})}{G(n_i)}
+<\frac{0.12646\log q}{p(\log p)^3}.
+$$
+
+This is another CA3 starting-domain comparison, not an estimate for
+an arbitrary pair of nonlinear envelope cores or their accumulated
+moving-price cost. Its proof and numerical ingredients have not been
+independently audited here.
+
+For the actual shifted contacts in
+[PG1](../Estimation/trureturing2026pricegapconvexity.md#real-parameter-active-cores-retain-the-actual-strict-inventory),
+keep $t>1$, $B=\log u$, $A=B+t$, $u=N_A^{\rm str}$ and
+$\lambda(w)=1/(w\log w)$. Let $p$ be the next prime after the
+largest prime factor of this same core $u$. Here $p$ is the next
+support prime and $t$ is the real source shift. At an original prime
+label $r$, $t=\log r$; the intervening real-parameter argument does
+not require such a label. PG1 makes $A$ a nonactivation clock, so the
+absent first layer satisfies $F(p,1)<\lambda(A)$.
+
+Reuse the existing
+[first-layer cutoff before AVB24](../ArithSums/nicolas2025comparison.md#last-label-uniform-constants-and-the-actual-stieltjes-representation):
+$r_{q_1(A),1}=\lambda(A)$ and $A-1<q_1(A)<A$.
+Since $r_{p,1}=F(p,1)$ is strictly decreasing with its prime argument,
+the same absent-layer condition gives $p>q_1(A)$. Hence
+
+$$
+p>A-1=B+t-1>B.
+$$
+
+This applies at every such actual contact, including every maximizing
+tie supplied by PG1 on the original windows. This extends the domain check to
+these shifted contacts without assuming they belong to Kalyabin's
+$U_1$. It excludes CA3, while it does not establish $P^+(u)<B$ or
+classify every contact as CA2.
+
+Consequently neither Theorem 2 nor Theorem 4 applies at these
+contacts through its CA3 starting hypothesis. A classical next-CA
+transition and its activation parameter are also not identified with
+a nonlinear switch or its nonactivation contact clock by PG1.
+The complete lag, anchored exterior and corrected credit in BV4–BV5
+remain together and unpaid at the required $M_XL_X$ scale.
+
+This is a paper applicability consequence of the existing inventory
+interface and first-layer cutoff. It supplies no new
+CA criterion, arithmetic sign, Lean/kernel result or literature
+priority claim, and does not repeat the source's CA proofs or tables.
