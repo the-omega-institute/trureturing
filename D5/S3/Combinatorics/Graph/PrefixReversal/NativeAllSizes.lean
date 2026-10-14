@@ -68,8 +68,8 @@ private theorem native_six_hamiltonian_cycle :
       ∃ c : (SimpleGraph.mulCayley ({a 5, b 5, c 5} : Set (Configuration 5))).Walk base base,
         c.IsHamiltonianCycle := by
   let F : SupplyFrame 5 2 := finalFrame 5
-  have hB : 3 ≤ F.base.length := by
-    rw [show F.base.length = 3 from final_base_length (by omega : 3 ≤ 5)]
+  have hB : 3 ≤ F.base.length := le_of_eq
+    (show 3 = F.base.length from (final_base_length (by omega : 3 ≤ 5)).symm)
   obtain ⟨base, w, _, hw⟩ := native_j2_parent_hamiltonian_cycle (by omega : 5 ≤ 5) F hB
   let iso : domainGraph (ParentDomain F) ≃g
       SimpleGraph.mulCayley ({a 5, b 5, c 5} : Set (Configuration 5)) :=

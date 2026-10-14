@@ -115,11 +115,13 @@ private theorem j2_half_endpoints {m : ℕ} (hm : 5 ≤ m)
       port, Bool.false_eq_true, ↓reduceIte, specialPort,
       Fin.val_zero, Fin.val_one, zero_ne_one, one_ne_zero]
     constructor
-    · exact (native_j2_frame_ports hm F _).1 <|>
-        exact (native_j2_frame_ports hm F _).2
+    · first
+      | exact (native_j2_frame_ports hm F _).1
+      | exact (native_j2_frame_ports hm F _).2
     · constructor
-      · exact (native_j2_frame_ports hm F _).1 <|>
-          exact (native_j2_frame_ports hm F _).2
+      · first
+        | exact (native_j2_frame_ports hm F _).1
+        | exact (native_j2_frame_ports hm F _).2
       · norm_num [evenBoundary, pair, code]
 
 /-- The Hamilton path is constructed from the native F2 cycle itself.
