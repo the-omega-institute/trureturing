@@ -434,6 +434,35 @@ theorem native_complement_edge_inventory {m : ℕ} (hm : 3 ≤ m)
   · intro hne
     exact hedge.resolve_left hne
 
+/-- Actual native a/b edges belonging to an independently specified circle. -/
+def NativeCircleEdge {m : ℕ} (z : Configuration m) (e : Sym2 (Configuration m)) : Prop :=
+  ∃ x h : Configuration m, Circle z x ∧ (h = a m ∨ h = b m) ∧ e = s(x, x * h)
+
+/-- An arbitrary undirected edge belongs to an actual complete native
+complement exactly when it is a native circle edge outside its literal cut. -/
+theorem native_complement_full_edge_inventory {m : ℕ} (hm : 3 ≤ m)
+    (z g : Configuration m) (hg : g = a m ∨ g = b m)
+    (w : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Walk z (z * g))
+    (hp : w.IsPath) (hl : w.length = 2 * (m + 1) - 1)
+    (hs : ∀ x, x ∈ w.support ↔ Circle z x) (e : Sym2 (Configuration m)) :
+    e ∈ w.edges ↔ NativeCircleEdge z e ∧ e ≠ s(z, z * g) := by
+  constructor
+  · intro he
+    obtain ⟨⟨x, y⟩, rfl⟩ := Sym2.mk_surjective e
+    have hx := (hs x).mp (w.fst_mem_support_of_mem_edges he)
+    rcases native_adj_neighbors x y (w.adj_of_mem_edges he) with hy | hy
+    · subst y
+      exact ⟨⟨x, a m, hx, Or.inl rfl, rfl⟩,
+        (native_complement_edge_inventory hm z g hg w hp hl hs x (a m) hx
+          (Or.inl rfl)).mp he⟩
+    · subst y
+      exact ⟨⟨x, b m, hx, Or.inr rfl, rfl⟩,
+        (native_complement_edge_inventory hm z g hg w hp hl hs x (b m) hx
+          (Or.inr rfl)).mp he⟩
+  · rintro ⟨⟨x, h, hx, hh, rfl⟩, hne⟩
+    exact (native_complement_edge_inventory hm z g hg w hp hl hs x h hx hh).mpr hne
+
 #print axioms native_complement_edge_inventory
+#print axioms native_complement_full_edge_inventory
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
