@@ -27,6 +27,36 @@ import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock11
 import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock12
 import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock13
 import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock14
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock15
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock16
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock17
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock18
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock19
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock20
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock21
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock22
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock23
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock24
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock25
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock26
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock27
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock28
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock29
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock30
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock31
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock32
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock33
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock34
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock35
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock36
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock37
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock38
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock39
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock40
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock41
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock42
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock43
+import D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock44
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -56,6 +86,36 @@ open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock11
 open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock12
 open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock13
 open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock14
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock15
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock16
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock17
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock18
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock19
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock20
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock21
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock22
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock23
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock24
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock25
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock26
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock27
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock28
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock29
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock30
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock31
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock32
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock33
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock34
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock35
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock36
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock37
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock38
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock39
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock40
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock41
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock42
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock43
+open D5.S3.Quantum.Entanglement.EJM.EJMGlobalSuffixProbeBlock44
 
 private theorem receipt2412 :
     check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
