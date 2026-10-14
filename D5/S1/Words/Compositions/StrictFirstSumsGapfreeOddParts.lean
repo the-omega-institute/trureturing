@@ -20,6 +20,7 @@ This explicit coupling can disappear when an upstream public API is available.
 The new content is the strict-row/complete-column-height characterization.
 The empty partition is included: these counts have constant term one,
 whereas the OEIS A053251 mock theta series has constant term zero.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16827
 -/
 
 namespace D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts
@@ -56,7 +57,7 @@ private theorem gapfree_implies_odd {m : Multiset ℕ} (hm : GapfreeOdd m) :
   rw [Nat.even_iff]
   omega
 
-private theorem rowLen_zero (d : YoungDiagram) (i : ℕ) (hi : d.colLen 0 ≤ i) :
+theorem rowLen_zero (d : YoungDiagram) (i : ℕ) (hi : d.colLen 0 ≤ i) :
     d.rowLen i = 0 := by
   have h : ¬ (i, 0) ∈ d := by rw [YoungDiagram.mem_iff_lt_colLen]; omega
   rw [YoungDiagram.mem_iff_lt_rowLen] at h

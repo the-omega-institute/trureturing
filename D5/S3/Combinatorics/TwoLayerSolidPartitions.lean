@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Proves W. Meeussen's 2025 conjecture in OEIS A381265: the two-layer solid partitions with first layer a plane partition of n and second layer a plane partition of 3 number 3(2 A000219(n) - A000990(n) - 2 A000041(n) + 1). -/
+   digest: Counts two-layer solid partitions with a second layer of size three. -/
 
 /-
 proof_shape: result: content
@@ -97,7 +97,7 @@ private def toYoung (n : ℕ) :
     simp
 
 /-- Young diagrams with `n` cells correspond to partitions of `n` (row lengths). -/
-private noncomputable def youngPartition (n : ℕ) :
+noncomputable def youngPartition (n : ℕ) :
     {μ : YoungDiagram // μ.cells.card = n} ≃ Nat.Partition n where
   toFun μ := ⟨μ.1.rowLens, fun hx => YoungDiagram.pos_of_mem_rowLens μ.1 _ hx, by
     rw [Multiset.sum_coe, rowLens_sum, μ.2]⟩

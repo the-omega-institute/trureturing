@@ -20,6 +20,12 @@ internal sealed class StrictFirstSumsGapfreeOddPartsDocument : IScribeDocumentDe
                 + "existing adjacent-sums function. Both combinatorial classes include the "
                 + "empty partition. The A053251 mock theta coefficient identity is not "
                 + "formalized here; its constant term is zero, whereas these counts start at one.")),
+            Describe.Lean(DescribeId.Create("a392707-rowlen-zero"),
+                DeclarationHandle.Create(Prefix + "rowLen_zero"), H("Rows beyond the diagram height"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("d"), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("YoungDiagram"))))), Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, F.Id("d"), Sp, Dot, Sp, Seq(Operatorname, Grp(F.Id("colLen"))), Sp, D(0), Sp, Le, Sp, F.Id("i"), Sp, To, Sp, F.Id("d"), Sp, Dot, Sp, Seq(Operatorname, Grp(F.Id("rowLen"))), Sp, F.Id("i"), Sp, F.Eq, Sp, D(0)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A row at or beyond the first-column height has length zero."))),
+                DescribeRole.Theorem),
             Node("IsStrictFirstSums", "Strict source predicate", PredicateFormula(),
                 "A positive list s is strictly increasing, and the existing firstSums "
                 + "applied to zero prepended to s gives y. This strengthens the sibling's "
@@ -56,6 +62,7 @@ internal sealed class StrictFirstSumsGapfreeOddPartsDocument : IScribeDocumentDe
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, claim);
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula Par(Formula value) => Seq(Open, value, Close);

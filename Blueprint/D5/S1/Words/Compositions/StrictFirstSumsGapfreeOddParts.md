@@ -6,7 +6,19 @@ Strict zero-prepended first sums correspond to gapfree odd partitions of the sam
 
 The formal target is the combinatorial bridge in OEIS A392707. Reversed partitions have their positive parts sorted increasingly. The zero-based alternating recurrence starts at zero and is inverted by the existing adjacent-sums function. Both combinatorial classes include the empty partition. The A053251 mock theta coefficient identity is not formalized here; its constant term is zero, whereas these counts start at one.
 
-**Definition 1.1 (Strict source predicate).**
+**Theorem 1.1 (Rows beyond the diagram height).**
+
+$$\forall (d : \operatorname{YoungDiagram}) (i : \mathbb{N}) , d . \operatorname{colLen} 0 \le i \to d . \operatorname{rowLen} i = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.rowLen_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A row at or beyond the first-column height has length zero.
+
+**Definition 1.2 (Strict source predicate).**
 
 $$\forall y: \operatorname{List}\left(\mathbb{N}\right), \operatorname{IsStrictFirstSums}\left(y\right) \iff (\exists s: \operatorname{List}\left(\mathbb{N}\right), \operatorname{Pairwise}\left((a, b \mapsto a < b), s\right) \land (\forall x: \mathbb{N}, x \in s \implies 0 < x) \land \operatorname{firstSums}\left(\operatorname{cons}\left(0, s\right)\right) = y)$$
 
@@ -20,7 +32,7 @@ $$\forall y: \operatorname{List}\left(\mathbb{N}\right), \operatorname{IsStrictF
 
 A positive list s is strictly increasing, and the existing firstSums applied to zero prepended to s gives y. This strengthens the sibling's weak predicate without redefining it or the adjacent-sums function.
 
-**Definition 1.2 (Exact odd support).**
+**Definition 1.3 (Exact odd support).**
 
 $$\forall m: \operatorname{Multiset}\left(\mathbb{N}\right), \operatorname{GapfreeOdd}\left(m\right) \iff (\exists k: \mathbb{N}, \forall x: \mathbb{N}, (x \in m \iff (\exists i: \mathbb{N}, i < k \land x = 2i+1)))$$
 
@@ -34,7 +46,7 @@ $$\forall m: \operatorname{Multiset}\left(\mathbb{N}\right), \operatorname{Gapfr
 
 The support equals the first k positive odd numbers. The equivalence in the formula requires both absence of other parts and presence of every listed part. The witness k=0 gives the empty multiset.
 
-**Theorem 1.3 (The weight-preserving restriction).**
+**Theorem 1.4 (The weight-preserving restriction).**
 
 $$\forall n: \mathbb{N}, \operatorname{card}\left(\operatorname{filter}\left((p \mapsto \operatorname{IsStrictFirstSums}\left(\operatorname{sort}\left(\operatorname{parts}\left(p\right), (a, b \mapsto a \le b)\right)\right)), (\operatorname{univ}\left(\right): \operatorname{Finset}\left(\operatorname{Partition}\left(n\right)\right))\right)\right) = \operatorname{card}\left(\operatorname{filter}\left((p \mapsto \operatorname{GapfreeOdd}\left(\operatorname{parts}\left(p\right)\right)), (\operatorname{univ}\left(\right): \operatorname{Finset}\left(\operatorname{Partition}\left(n\right)\right))\right)\right)$$
 
@@ -59,4 +71,5 @@ The sibling's auxiliaries are private in a legacy Lean module. A local elaborato
 - Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.GapfreeOdd`
 - Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.IsStrictFirstSums`
 - Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.card_strictFirstSums_eq_gapfreeOdd`
+- Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.rowLen_zero`
 - Dependency: [D5/S1/Words/Compositions/ZeroPrependedFirstSumsOddParts](ZeroPrependedFirstSumsOddParts.md)

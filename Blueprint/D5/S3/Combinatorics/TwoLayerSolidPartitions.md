@@ -4,7 +4,19 @@
 
 The two-layer solid partitions whose first layer is a plane partition of n and whose second layer is a plane partition of 3 number 3(2 A000219(n) - A000990(n) - 2 A000041(n) + 1), with A000219 the plane partitions, A000990 the plane partitions with at most two rows and A000041 the partitions of n, as conjectured by W. Meeussen for OEIS A381265.
 
-**Definition 1.1 (Plane partitions).**
+**Definition 1.1 (Young diagrams and integer partitions).**
+
+$$\begin{aligned}\forall (n : \mathbb{N}) , \operatorname{youngPartition} n : \{ d : \operatorname{YoungDiagram} // d . \operatorname{cells} . \operatorname{card} = n \} \equiv \operatorname{Nat} . \operatorname{Partition} n\\\forall (n : \mathbb{N}) (d : \{ \mu : \operatorname{YoungDiagram} // \mu . \operatorname{cells} . \operatorname{card} = n \}) , (\operatorname{youngPartition} n d) . \operatorname{parts} = (d . 1 . \operatorname{rowLens} : \operatorname{Multiset} \mathbb{N})\\\forall (n : \mathbb{N}) (p : \operatorname{Nat} . \operatorname{Partition} n) , ((\operatorname{youngPartition} n) . \operatorname{symm} p) . 1 = \operatorname{YoungDiagram} . \operatorname{ofRowLens} (p . \operatorname{parts} . \operatorname{sort} (\operatorname{fun} (a b : \mathbb{N}) \mapsto b \le a))\end{aligned}$$
+
+*Formalization.* `D5/S3/Combinatorics/TwoLayerSolidPartitions.youngPartition` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The forward map forms the partition whose parts are the row lengths of the diagram. Its positivity proof is YoungDiagram.pos_of_mem_rowLens, and rowLens_sum and the subtype's cardinality equation give the total n. The inverse sorts the parts in decreasing order and applies YoungDiagram.ofRowLens, with sortedness from Multiset.pairwise_sort. The inverse diagram has n cells by cellsOfRowLens_card and the partition's parts_sum. The two inverse laws follow from sorting the already sorted row lengths and YoungDiagram.rowLens_ofRowLens_eq_self. Proof fields are omitted from the displayed constructors.
+
+**Definition 1.2 (Plane partitions).**
 
 $$\operatorname{planeCount}\left(n\right) = \left|\{I \mid \operatorname{IsSolidPartition}\left(n, I\right)\}\right|$$
 
@@ -16,7 +28,7 @@ $$\operatorname{planeCount}\left(n\right) = \left|\{I \mid \operatorname{IsSolid
 
 A000219(n), the plane partitions of n read through their diagrams: the lower sets of n cells of the cube of the natural numbers (IsSolidPartition of SolidPartitionFirstColumn in dimension 3).
 
-**Definition 1.2 (Plane partitions with at most two rows).**
+**Definition 1.3 (Plane partitions with at most two rows).**
 
 $$\operatorname{twoRowCount}\left(n\right) = \left|\{I \mid \operatorname{IsSolidPartition}\left(n, I\right) \land \left(\forall c \in I,\; c_{0} \le 1\right)\}\right|$$
 
@@ -28,7 +40,7 @@ $$\operatorname{twoRowCount}\left(n\right) = \left|\{I \mid \operatorname{IsSoli
 
 A000990(n), the plane partitions of n whose cells all have first coordinate (row index) at most 1.
 
-**Definition 1.3 (The sequence A381265).**
+**Definition 1.4 (The sequence A381265).**
 
 $$\operatorname{a}\left(n\right) = \left|\{(P1, P2) \mid \operatorname{IsSolidPartition}\left(n, P1\right) \land \left(\operatorname{IsSolidPartition}\left(3, P2\right) \land P2 \subseteq P1\right)\}\right|$$
 
@@ -40,7 +52,7 @@ $$\operatorname{a}\left(n\right) = \left|\{(P1, P2) \mid \operatorname{IsSolidPa
 
 The pairs of a plane partition P1 of n (the first layer) and a plane partition P2 of 3 (the second layer) with P2 contained in P1, which are the two-layer solid partitions counted by the entry, whose data start a(3) = 6.
 
-**Definition 1.4 (Meeussen's conjecture).**
+**Definition 1.5 (Meeussen's conjecture).**
 
 $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; (\operatorname{a}\left(n\right): \mathbb{Z}) = 3 \cdot (2 \cdot (\operatorname{planeCount}\left(n\right): \mathbb{Z}) - (\operatorname{twoRowCount}\left(n\right): \mathbb{Z}) - 2 \cdot (\left|\operatorname{Partition}\left(n\right)\right|: \mathbb{Z}) + 1))$$
 
@@ -52,7 +64,7 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; (\operatorname{a}\left(n\ri
 
 For every n the count equals three times 2 A000219(n) - A000990(n) - 2 A000041(n) + 1, with A000041(n) the number of partitions of n; both sides vanish for n < 3.
 
-**Theorem 1.5 (Proof of the conjecture).**
+**Theorem 1.6 (Proof of the conjecture).**
 
 $$claim$$
 
@@ -77,5 +89,6 @@ The plane partitions of 3 are six: the three lines {0, e_k, 2 e_k} and the three
 - Truth anchor: `D5/S3/Combinatorics/TwoLayerSolidPartitions.planeCount`
 - Truth anchor: `D5/S3/Combinatorics/TwoLayerSolidPartitions.result`
 - Truth anchor: `D5/S3/Combinatorics/TwoLayerSolidPartitions.twoRowCount`
+- Truth anchor: `D5/S3/Combinatorics/TwoLayerSolidPartitions.youngPartition`
 - Dependency: [D5/S1/Words/Compositions/ZeroPrependedFirstSumsOddParts](../../S1/Words/Compositions/ZeroPrependedFirstSumsOddParts.md)
 - Dependency: [D5/S3/Combinatorics/SolidPartitionFirstColumn](SolidPartitionFirstColumn.md)
