@@ -1047,3 +1047,1341 @@ for that other problem. The broader machine-learning white-box objective
 retains its unsupplied acquisition, implementation and task-transfer bridges.
 
 ## 6.99 追加锚
+
+## 7. Sharp approximation with exact affine phase continuation
+
+### 7.1 The band contract and its native source
+
+**Definition 7.1 (Affine continuation with approximate original readout).**
+Keep Definition 1.1, including arbitrary fixed preparation phases and
+$k_0\in(0,H)$, and fix $0<a<b<H$. The current source is
+$\mathcal M_{ab}=[a,b]\times\mathbb T^2$ of actual rays, in the
+$(k,\alpha,\beta)$ coordinates of Lemma 1.2. Write $P_s=T_s$ for the
+straight probability command of Proposition 3.1. The two relative commands
+are
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),
+\qquad \operatorname{dom}P_s=\{(k,\alpha,\beta)\in\mathcal M_{ab}:a\le k+s\le b\},
+$$
+
+$$
+Q_t(k,\alpha,\beta)=
+ \left(k,\alpha+\frac t2,\beta+\left(\frac12-\frac kr\right)t\right),
+\qquad \operatorname{dom}Q_t=\mathcal M_{ab}.
+$$
+
+Here $s,t$ are real numbers. They prescribe respectively
+$(\dot k,\dot\chi)=(s,0)$ and $(0,t)$ on a unit interval. The angles are
+circle classes; the commanded increment $t$ is not reduced modulo
+$2\pi$. Every finite word whose successive guards hold is included, with
+no uniform bound on word length or total phase variation.
+
+For $\epsilon\ge0$, the contract asks for a finite integer $n\ge0$,
+an arbitrary function $E:\mathcal M_{ab}\to\mathbb R^n$, a fixed affine
+readout $c+D_*z$ into the original ten outputs of Definition 2.1, and,
+for every real $s,t$, fixed affine maps
+
+$$
+\mathcal U_s(z)=A_sz+b_s,\qquad
+\mathcal V_t(z)=C_tz+d_t
+$$
+
+such that
+
+$$
+\sup_{x\in\mathcal M_{ab}}\|c+D_*E(x)-y(x)\|_2\le\epsilon,
+$$
+
+$$
+E(P_sx)=\mathcal U_sE(x)\quad(x\in\operatorname{dom}P_s),
+\qquad
+E(Q_tx)=\mathcal V_tE(x)\quad(x\in\mathcal M_{ab}).
+$$
+
+The matrices and offsets may depend on the fixed source, band, preparation
+and prescribed command, but not on the current height, phases or producing
+history. Both readout and update offsets are allowed. No regularity,
+boundedness or injectivity of $E$ is assumed, nor any regularity in the
+command parameter or ambient matrix group law. Approximate outputs may be
+arbitrary vectors of $\mathbb R^{10}$. There is no external height
+selector choosing the update matrix.
+
+The contract starts from exact initialization at a band state. If the
+preparation lies outside the band, lawful original positive-fiber prefixes
+may first enter it; no band-confined history is asserted to start outside
+the band. Exact initialization and updates mean exact real arithmetic.
+
+**Proposition 7.2 (Full band reachability and actual relative commands).**
+The source in Definition 7.1 is precisely the full band of native current
+rays. If $k_0\in[a,b]$, all these rays have band-confined producing
+histories. Otherwise they have a phase-free positive-fiber entry followed
+by such a history. The displayed $P_s,Q_t$ are the actual original
+relative commands on this source.
+
+**Proof.** From Definition 1.1,
+
+$$
+I(k)=\frac2k+\frac2{H-k}=\frac r{k(H-k)},\qquad
+w_+(k)=\frac12-\frac kr,\qquad w_-(k)=-\frac kr.
+$$
+
+Consequently the phase increments, not the arbitrary preparation phases,
+satisfy $h=(u,v,0,v,u)$. Lemma 1.2 gives
+
+$$
+\alpha=u-v,\qquad\beta=u,\qquad
+u=\beta,\quad v=\beta-\alpha,\qquad
+d\alpha=\tfrac12d\chi,\quad
+d\beta=(\tfrac12-k/r)d\chi.
+$$
+
+The integer coordinate changes are inverse on $\mathbb T^2$.
+The positive middle amplitude $\sqrt Z$ fixes the common ray phase;
+the other positive amplitudes distinguish both circles. Thus these
+coordinates impose no extra parity quotient or closed-loop condition.
+Integrating along the two straight legs gives exactly $P_s,Q_t$.
+
+For the band version of Proposition 1.3, choose $k_*\in[a,b]$ and
+$k_1\in[a,b]$ with $k_1\ne k_*$. Take $k_*=k_0$ when preparation is
+in the band; otherwise reach $k_*$ by a probability leg at fixed $\chi$.
+For arbitrary target real representatives $u,v$, put
+
+$$
+L=2(u-v),\qquad
+u_L=(\tfrac12-k_*/r)L,\qquad v_L=-(k_*/r)L,
+\qquad q=u-u_L=v-v_L.
+$$
+
+The chronological rectangle
+$P_{k_1-k_*},Q_A,P_{k_*-k_1},Q_{-A}$ adds
+$-A(k_1-k_*)/r$ to both groups. Choose
+$A=-rq/(k_1-k_*)$, then execute $Q_L$ at $k_*$ and a probability leg
+to the desired $k\in[a,b]$. The endpoint increments are exactly $u,v$.
+Every probability segment after entry lies between band points, every
+phase leg has finite variation, and the whole history is finite.
+Conversely the native ODE preserves the displayed group equalities.
+This proves exact reachability, rather than density or closure of a
+reachable subset. Band endpoints remain strictly inside the positive
+fiber. $\square$
+
+**Lemma 7.3 (Original-output metric for the phase problem).** With the
+notation of Lemma 2.2,
+
+$$
+y(k,\alpha,\beta)=D(A(k)U(\alpha),B(k)U(\beta)),
+\qquad A(k)=2\sqrt{k(H-k)},\quad B(k)=2\sqrt{Zk},
+$$
+
+and
+
+$$
+\|D(v,w)\|_2^2=4\|v\|_2^2+\|w\|_2^2.
+$$
+
+The $02$ projection followed by $R_{-\delta_{02}}$, with its real
+plane identified isometrically with $\mathbb C$, is a norm-one map
+$\pi:\mathbb R^{10}\to\mathbb C$ satisfying
+$\pi y=B(k)e^{i\beta}$.
+
+**Proof.** The negative amplitude convention makes the doubled coherence
+pair $2\sqrt{p_ip_j}U(\delta_{ij}+h_i-h_j)$. The five increment
+differences in their original order are
+$\alpha,\beta,\alpha,-\alpha,-\alpha$. Thus the five blocks before the
+fixed preparation rotations are $(v,w,v,Jv,Jv)$, where
+$v=A(k)U(\alpha)$ and $w=B(k)U(\beta)$.
+Each of the four copies of $v$ contributes its squared norm;
+the preparation rotations and $J$ are orthogonal. The $02$ block is
+exactly the asserted complex response. All ten coordinates, their factor
+of two and their Euclidean metric are retained. $\square$
+
+### 7.2 A lower bound without encoder regularity
+
+**Theorem 7.4 (Native phase approximation floor).** Every model in
+Definition 7.1 satisfies
+
+$$
+\epsilon\ge B(b)=2\sqrt{Zb}.
+$$
+
+For this necessary bound, all probability-update requirements may be
+deleted. It even suffices to require one nonzero phase command $Q_{t_0}$
+on the full source, with its finite repetitions.
+
+**Proof.** Suppose $\epsilon<B(b)$ and take the actual reachable rays
+$x_k=(k,0,0)$ for $k\in[a,b]$. Put $e_j(k)=E_j(x_k)$ and
+
+$$
+W=\operatorname{span}_{\mathbb C}\{1,e_1,\ldots,e_n\}.
+$$
+
+After a fixed relative phase command $Q_t$, the decoded complex $02$
+prediction is
+
+$$
+f_t(k)=\pi\bigl(c+D_*(C_tE(x_k)+d_t)\bigr)\in W.
+$$
+
+The constant function absorbs both affine offsets. The true response is
+
+$$
+F_t(k)=B(k)e^{ic_0(k)t},\qquad c_0(k)=\frac12-\frac kr,
+$$
+
+so exact encoded continuation and the uniform original-output error imply
+
+$$
+|f_t(k)-F_t(k)|\le\epsilon,\qquad
+\|f_t\|_\infty\le B(b)+\epsilon.
+$$
+
+An encoder coordinate need not be bounded. Instead set
+
+$$
+W_{\rm bd}=\{f\in W:\sup_{k\in[a,b]}|f(k)|<\infty\}.
+$$
+
+This is a complex vector subspace of dimension at most $n+1$,
+with its genuine supremum norm, and it contains every $f_t$.
+
+Choose $q\in[a,b)$ with $B(q)>\epsilon$; this is possible by
+continuity and $B(b)>\epsilon$. Put
+
+$$
+T=\frac{2\pi r}{b-q},\qquad t_j=jT\quad(j=0,1,2,\ldots).
+$$
+
+For $j\ne l$, the interval of values of
+$(t_j-t_l)c_0(k)$ on $[q,b]$ has length $2\pi|j-l|$.
+Every closed interval of length at least $2\pi$ contains an odd multiple
+of $\pi$. At a corresponding height the two true responses are
+antipodal, giving
+
+$$
+\|f_{t_j}-f_{t_l}\|_\infty
+ \ge2(B(q)-\epsilon)>0.
+$$
+
+This is an infinite, uniformly separated family in a norm-bounded
+subset of the finite-dimensional space $W_{\rm bd}$.
+
+For completeness, total boundedness here requires no regularity of
+functions of $k$. If $v_1,\ldots,v_d$ is a basis of $W_{\rm bd}$,
+then
+
+$$
+N(\lambda)=\left\|\sum_{i=1}^d\lambda_i v_i\right\|_\infty
+$$
+
+is continuous on $\mathbb C^d$, because differences are at most
+$\sum_i|\lambda_i-\mu_i|\|v_i\|_\infty$.
+For $d>0$, it is positive on the Euclidean unit sphere by linear
+independence. The sphere is compact, so its minimum $\mu$ is positive.
+Homogeneity gives $N(\lambda)\ge\mu\|\lambda\|_2$. A bounded set in
+$W_{\rm bd}$ therefore has bounded coefficient vectors and lies in
+the continuous image of a compact coefficient ball. That image is
+compact and hence has a finite cover by balls of any positive radius.
+Balls of radius less than one third of the displayed separation contain
+at most one member of the separated family, a contradiction.
+For $d=0$ the space consists only of zero and cannot contain that
+separated family either.
+
+Each $Q_{t_j}$ is a separately finite lawful history; no infinite
+execution is used. To use just one nonzero $t_0$, choose a positive
+integer $M$ with
+
+$$
+M|t_0|(b-q)/r\ge2\pi
+$$
+
+and replace $Q_{t_j}$ by $jM$ repetitions of $Q_{t_0}$.
+Its native increment is $jMt_0$, and the corresponding iterate of one
+affine map is still affine. The predictions still lie in the same
+$W_{\rm bd}$ and have the same uniform bound. For distinct $j,l$,
+the frequency interval has length at least $2\pi$, giving the same
+contradiction. No group law on the ambient feature space, inverse
+matrix, or command-parameter continuity is needed. $\square$
+
+**Corollary 7.5 (Arbitrary producing-history features).** The same
+necessary floor holds if the finite encoder is a function of the entire
+producing history, the fixed affine readout is uniformly accurate on
+all allowed histories, and one state-independent affine append map
+implements each required phase command.
+
+**Proof.** If preparation is in the band, let $H_k$ be its phase-free
+probability prefix to $k$. Otherwise first use one phase-free
+positive-fiber entry to $k_*\in[a,b]$ and then the band probability
+prefix to $k$. These histories all have zero phase increments.
+Define $e_j(k)=E_j(H_k)$ and append the same $Q_t$ to every $H_k$.
+The actual response is again $B(k)e^{ic_0(k)t}$, while the affine
+append rule puts its prediction in
+$\operatorname{span}_{\mathbb C}\{1,e_1,\ldots,e_n\}$.
+The bounded-readout subspace, separated packing and norm argument
+of Theorem 7.4 apply verbatim. Iterated affine appending also gives
+the one-command version. No two histories with the same current
+ray are identified in this argument. The outside-band case explicitly
+uses initialization after lawful entry. $\square$
+
+### 7.3 An anchored polynomial attaining the floor
+
+**Lemma 7.6 (Explicit derivative approximation with endpoint slack).**
+Put
+
+$$
+\ell=b-a,\qquad g(k)=k(H-k),\qquad
+g_{\min}=\min\{g(a),g(b)\},\qquad
+K=\frac{H^2}{2g_{\min}^{3/2}},
+$$
+
+$$
+m=\max\left\{1,\left\lceil\frac{K^2(b-a)^3}{4Z}\right\rceil\right\},
+\qquad d=m+1,\qquad \zeta=\frac{K\ell}{2\sqrt m}.
+$$
+
+There is an explicitly specified polynomial $\Pi_m$ of degree at most
+$d$ such that
+
+$$
+\Pi_m(b)=A(b),\qquad
+|\Pi_m(k)-A(k)|\le\zeta(b-k)\quad(a\le k\le b),
+\qquad \zeta^2\ell\le Z.
+$$
+
+**Proof.** For $k=(1-t)a+tb$ with $0\le t\le1$, expansion gives
+
+$$
+g(k)=(1-t)g(a)+tg(b)+t(1-t)\ell^2\ge g_{\min}>0.
+$$
+
+Differentiating the explicit native radius, not an encoder, gives
+
+$$
+A'(k)=\frac{H-2k}{\sqrt{g(k)}},\qquad
+A''(k)=-\frac{H^2}{2g(k)^{3/2}}.
+$$
+
+Thus $A'$ is Lipschitz on the band with constant $K$.
+For $t=(k-a)/\ell$, define the Bernstein weights and polynomial
+
+$$
+w_j(t)=\binom mj t^j(1-t)^{m-j},\qquad
+\nu_j=A'(a+\ell j/m),\qquad
+\mathcal B_m(k)=\sum_{j=0}^m\nu_jw_j(t).
+$$
+
+At $t=0,1$ the weights mean polynomial evaluations. They are
+nonnegative and sum to one by the binomial theorem. Using
+$j\binom mj=m\binom{m-1}{j-1}$ gives
+$\sum_jj w_j=mt$. For $m\ge2$, using
+$j(j-1)\binom mj=m(m-1)\binom{m-2}{j-2}$ gives
+$\sum_jj(j-1)w_j=m(m-1)t^2$. For $m=1$ both sides of this last
+identity are zero. It follows that, in every allowed case,
+
+$$
+\sum_{j=0}^m j^2w_j=m(m-1)t^2+mt,\qquad
+\sum_{j=0}^m(j/m-t)^2w_j=\frac{t(1-t)}m.
+$$
+
+Lipschitz continuity and the finite Cauchy--Schwarz inequality give
+
+$$
+\begin{aligned}
+|\mathcal B_m(k)-A'(k)|
+&\le K\ell\sum_{j=0}^m w_j|j/m-t|\\
+&\le K\ell
+ \sqrt{\left(\sum_jw_j\right)
+             \left(\sum_jw_j(j/m-t)^2\right)}\\
+&=K\ell\sqrt{\frac{t(1-t)}m}\le\zeta.
+\end{aligned}
+$$
+
+At $t=0$ all weight is at $j=0$; at $t=1$ it is at $j=m$.
+Thus $\mathcal B_m(a)=A'(a)$ and $\mathcal B_m(b)=A'(b)$,
+without an ambiguous endpoint power convention. Define
+
+$$
+\Pi_m(k)=A(b)+\int_b^k\mathcal B_m(v)\,dv.
+$$
+
+It is a polynomial of degree at most $m+1$, anchored at $b$.
+The fundamental theorem of calculus yields
+
+$$
+|\Pi_m(k)-A(k)|
+ =\left|\int_b^k(\mathcal B_m(v)-A'(v))\,dv\right|
+ \le\zeta(b-k).
+$$
+
+The chosen integer $m$ satisfies
+$\zeta^2\ell=K^2\ell^3/(4m)\le Z$, including when $m=1$.
+
+Here are exact finite coefficients for the later fixed decoder.
+Write $\mathcal B_m(k)=\sum_{h=0}^m\gamma_hk^h$. Expanding the two
+finite binomials in
+
+$$
+\mathcal B_m(k)=\ell^{-m}\sum_{j=0}^m
+ \nu_j\binom mj(k-a)^j(b-k)^{m-j}
+$$
+
+gives
+
+$$
+\gamma_h=\ell^{-m}\sum_{j=0}^m\nu_j\binom mj
+ \sum_{\substack{u+v=h\\0\le u\le j\\0\le v\le m-j}}
+ \binom ju\binom{m-j}v(-a)^{j-u}b^{m-j-v}(-1)^v.
+$$
+
+Set
+
+$$
+\pi_0=A(b)-\sum_{h=0}^m\frac{\gamma_h b^{h+1}}{h+1},
+\qquad
+\pi_{h+1}=\frac{\gamma_h}{h+1}\quad(0\le h\le m).
+$$
+
+Then $\Pi_m(k)=\sum_{j=0}^d\pi_jk^j$.
+All samples and coefficients are fixed exact real constants determined
+by the band and source; zero leading coefficients are allowed.
+The anchored factor $b-k$, rather than merely a constant uniform
+polynomial error, supplies the slack needed at the sharp threshold.
+$\square$
+
+**Definition 7.7 (Finite equality encoding and fixed coefficient readout).**
+Using Lemma 7.6, set
+
+$$
+E_*(k,\alpha,\beta)=(\xi,\mathbf f_0,\ldots,\mathbf f_d),
+\qquad
+\xi=k,\qquad \mathbf f_j=k^jU(\alpha).
+$$
+
+The real dimension is $1+2(d+1)=2m+5$.
+For an arbitrary feature vector define
+
+$$
+M(z)=\sum_{j=0}^d\pi_j\mathbf f_j,\qquad
+L_*(z)=D(M(z),0).
+$$
+
+This is one fixed linear decoder, with zero affine offset and a zero
+column on $\xi$. It reads a fixed linear combination of stored
+features; it does not evaluate a polynomial nonlinearly on $\xi$.
+
+**Proposition 7.8 (Actual feature image, fibers and sharp error).**
+The exact encoded image is
+
+$$
+\mathscr S_*=
+ \left\{(\xi,\mathbf f_0,\ldots,\mathbf f_d):
+ a\le\xi\le b,\quad \|\mathbf f_0\|_2=1,\quad
+ \mathbf f_j=\xi^j\mathbf f_0\ (1\le j\le d)\right\}.
+$$
+
+The fibers of this particular encoder consist exactly of the full
+$\beta$ circle at fixed $(k,\alpha)$. Its uniform original-output
+error is exactly $2\sqrt{Zb}$.
+
+**Proof.** The equations hold for every encoded ray. Conversely
+$\mathbf f_0=U(\alpha)$ for a unique circle class, and $k=\xi$;
+Proposition 7.2 realizes these values with every $\beta$.
+This proves both the image characterization and the fiber statement.
+The encoder is bounded, since
+
+$$
+\|E_*(k,\alpha,\beta)\|_2^2
+ =k^2+\sum_{j=0}^d k^{2j}
+ \le b^2+\sum_{j=0}^d b^{2j}.
+$$
+
+This is a property of the construction, not a hypothesis in
+Theorem 7.4. On the source,
+$M(E_*(x))=\Pi_m(k)U(\alpha)$.
+By the original metric of Lemma 7.3,
+
+$$
+\begin{aligned}
+\|L_*E_*(x)-y(x)\|_2^2
+ &=4(\Pi_m(k)-A(k))^2+B(k)^2\\
+ &\le4\zeta^2(b-k)^2+4Zk\\
+ &\le4Z(b-k)+4Zk=4Zb.
+\end{aligned}
+$$
+
+The last inequality uses $0\le b-k\le\ell$ and $\zeta^2\ell\le Z$.
+At $k=b$, the first term is zero and the second is $4Zb$,
+for every $\alpha,\beta$. Thus the bound is attained, not merely
+approached.
+
+All omitted $\beta$ values remain distinct actual rays in the error
+supremum. Their $02$ outputs form a circle of radius $B(k)$ and
+diameter $2B(k)$; the decoder uses its center. The zero decoded
+$02$ pair is not an output of any positive-support native ray.
+Noninjective encoding and approximate outputs outside the native
+output image are permissions of Definition 7.1. Adding injectivity
+or physical realizability of every decoded vector would remove
+this upper witness, while preserving the necessary bound.
+$\square$
+
+**Proposition 7.9 (Exact affine operations and saturated guards).**
+For every real $s,t$, define ambient affine maps by
+
+$$
+\mathcal U_s:\quad
+ \xi'=\xi+s,\qquad
+ \mathbf f_j'=\sum_{h=0}^j\binom jh s^{j-h}\mathbf f_h
+ \quad(0\le j\le d),
+$$
+
+$$
+\mathcal V_t:\quad
+ \xi'=\xi,\qquad
+ \mathbf f_j'=R_{t/2}\mathbf f_j
+ \quad(0\le j\le d).
+$$
+
+Their exact source guards are respectively
+$\{z\in\mathscr S_*:a\le\xi+s\le b\}$ and all of $\mathscr S_*$.
+They intertwine $P_s,Q_t$ exactly and preserve $\mathscr S_*$
+whenever lawful.
+
+**Proof.** On an encoded state the binomial theorem gives
+
+$$
+\mathbf f_j'=(k+s)^jU(\alpha).
+$$
+
+Thus the first map is precisely $E_*(P_sx)$; its only affine
+offset is $s$ in the height coordinate. The second map gives
+$k^jU(\alpha+t/2)$, precisely $E_*(Q_tx)$.
+The true simultaneous change in $\beta$ under $Q_t$ is present
+in the native state and is invisible only because $E_*$ forgets it.
+
+A straight probability segment from a band point stays in $[a,b]$
+exactly when its endpoint does, by convexity. Every fixed-height
+phase leg stays in the band. These are exactly the stated guards,
+and they are constant on every encoder fiber. Thus they are
+saturated guards: all actual rays represented by one feature point
+agree on lawfulness. No ambiguity is introduced by forgetting
+$\beta$. Substitution in the image equations proves preservation.
+Zero commands, both signs, and both band endpoints are included.
+For $|s|>\ell$ the probability guard is empty; for $|s|=\ell$
+the appropriate endpoint-to-endpoint leg is included. The ambient
+formulas do not certify arbitrary off-image vectors as native states.
+$\square$
+
+**Proposition 7.10 (Native noncommutation and its quotient).**
+Whenever its probability legs are lawful, the chronological word
+$P_s,Q_t,P_{-s},Q_{-t}$ fixes $k,\alpha$ and changes $\beta$ by
+$-st/r$. This generally changes the actual ray, although its
+encoded action under $E_*$ is the identity.
+
+**Proof.** The two phase increments in $\alpha$ cancel. Those in
+$\beta$ sum to
+
+$$
+\left(\frac12-\frac{k+s}{r}\right)t
+ -\left(\frac12-\frac kr\right)t=-\frac{st}{r}.
+$$
+
+The positive $02$ radius makes this observable unless $st/r$ is
+a multiple of $2\pi$. It is not a common-phase gauge of the ray.
+The encoded binomial mixing commutes with the common planar
+rotation of all blocks, and $E_*$ forgets precisely the changed
+circle. Hence the commutator becomes the identity after encoding.
+This is an exact action on an allowed quotient, not commutation
+of the native controls. $\square$
+
+### 7.4 Every finite prefix and simultaneous controls
+
+**Theorem 7.11 (Sharp threshold and exact-real persistence).**
+Definition 7.1 has a finite solution if and only if
+
+$$
+\epsilon\ge\epsilon_*:=2\sqrt{Zb}.
+$$
+
+The encoding in Definition 7.7 attains equality and stays exactly
+encoded at every prefix and every intermediate time of all finite
+valid command histories, with the same output error independent
+of history length. The same sharp threshold holds if one also
+requires exact affine updates for every prescribed simultaneous
+native continuation satisfying the all-times band guard.
+
+**Proof.** Necessity is Theorem 7.4. Propositions 7.8 and 7.9 give
+existence at equality, and the same model satisfies any larger
+tolerance. Starting from $z_0=E_*(x_0)$, the exact next-command
+identity gives $z_{j+1}=E_*(x_{j+1})$ whenever
+$z_j=E_*(x_j)$ and the next guard holds. Induction gives every
+finite prefix. Applying the uniform current-state estimate at
+each such prefix proves the error assertion. During a straight
+leg the corresponding fractional command $P_{\tau s}$ or
+$Q_{\tau t}$, $0\le\tau\le1$, gives the exact intermediate
+encoding and the same bound.
+
+For the larger command family, prescribe the original control
+velocities on a finite interval $[0,T]$, in Definition 1.1's
+regularity class. With $\rho(0)=0$, write
+
+$$
+k(\tau)=k+\rho(\tau),\qquad
+b_c(\tau)=\dot\chi(\tau),\qquad
+\Delta=\rho(T),\qquad L=\int_0^T b_c(\tau)\,d\tau,\qquad
+C=\int_0^T\rho(\tau)b_c(\tau)\,d\tau.
+$$
+
+The function $\rho$ is continuous and bounded, while $b_c$ is
+integrable with finite absolute integral, so $C$ exists. Integration
+of the native equations, as in Theorem 3.2, gives
+
+$$
+k'=k+\Delta,\qquad
+\alpha'=\alpha+\frac L2,\qquad
+\beta'=\beta+\left(\frac12-\frac kr\right)L-\frac Cr.
+$$
+
+In particular the native mixed-integral term has not been discarded
+from the source. The exact encoded endpoint map is
+
+$$
+\xi'=\xi+\Delta,\qquad
+\mathbf f_j'=
+ R_{L/2}\sum_{h=0}^j\binom jh\Delta^{j-h}\mathbf f_h.
+$$
+
+Its coefficients depend on the prescribed relative path, not the
+starting state or history. The parameter $C$ disappears only after
+the allowed $\beta$ quotient. Its exact source guard is
+
+$$
+a\le\xi+\rho(\tau)\le b\quad(0\le\tau\le T),
+$$
+
+equivalently
+
+$$
+a\le\xi+\min_{[0,T]}\rho,\qquad
+\xi+\max_{[0,T]}\rho\le b.
+$$
+
+Compactness supplies these extrema. Endpoint lawfulness alone is
+insufficient for a general nonmonotone path. This guard is again
+constant on each encoder fiber. Substitution of the binomial
+identity and the native $\alpha'$ formula proves exact endpoint
+intertwining. Replacing $T$ by any intermediate time proves exact
+encoding and the error bound throughout the path. Finite
+concatenation follows by the same induction. The larger family
+contains the phase commands of Theorem 7.4, so its lower bound is
+unchanged.
+
+For the history-encoder contract of Corollary 7.5, encode each
+history by $E_*$ of its actual endpoint. These same identities
+give the affine append maps and equality construction.
+
+No approximate decoded output is substituted for an encoded
+state in these assertions. Only readout is approximated; exact
+initialization and exact real updates preserve the exact feature
+point. Thus the readout error does not accumulate. Every asserted
+execution has finite duration and finite variation; arbitrary
+finite length is not an infinite-execution or limiting-state
+claim. $\square$
+
+### 7.5 General fixed means and precise boundaries
+
+**Proposition 7.12 (A separate general-fixed-means necessary floor).**
+Fix $0<Z<1$, $r=1-Z$, and $0<X,Y<r$. In the general native
+fixed-mean fiber set
+
+$$
+p(k)=(r-X-Y+k,\ X-k,\ Z,\ Y-k,\ k),\qquad
+J=\bigl(\max\{0,X+Y-r\},\min\{X,Y\}\bigr),
+$$
+
+$$
+d=(1,-1,0,-1,1)^{\mathsf T},\qquad
+I(k)=\frac1{p_0(k)}+\frac1{p_1(k)}
+     +\frac1{p_3(k)}+\frac1k,\qquad
+w_s(k)=\frac{d_s}{p_s(k)I(k)}.
+$$
+
+Use the same native law, arbitrary fixed preparation, original ten
+outputs and their Euclidean norm. On any $[a,b]$ strictly inside
+$J$, an arbitrary finite encoder with fixed affine original-output
+readout and exact state-independent affine phase updates has
+uniform error necessarily
+
+$$
+\epsilon\ge 2\sqrt{Zp_0(b)}
+ =2\sqrt{Z(r-X-Y+b)}.
+$$
+
+The conclusion holds in every wall regime. It asserts neither
+sharpness nor equality attainment away from the double wall.
+
+**Proof.** The interval $J$ is nonempty: if $X+Y\le r$ its lower
+end is zero and its upper end is positive; otherwise
+$X+Y-r<X,Y$ because each mean is less than $r$.
+The displayed probabilities are positive and sum to one on $J$,
+and their derivative is the native tangent $d$.
+The coefficient $w_2=0$ fixes the middle phase; $d^{\mathsf T}w=1$
+and $p^{\mathsf T}w=0$ follow directly from the displayed sums.
+These are the actual native coefficients, with no substituted
+frequency family.
+
+For each $k\in[a,b]$, a phase-free probability prefix from the
+fixed preparation produces a zero-increment ray $x_k$. If needed,
+separate its positive-fiber entry from its band continuation.
+Applying $Q_t$ at that height adds $tw(k)$ to the phases.
+After removing the fixed $02$ preparation rotation, its actual
+response is
+
+$$
+F_t(k)=B_0(k)e^{iw_0(k)t},\qquad
+B_0(k)=2\sqrt{Z(r-X-Y+k)},\qquad
+w_0(k)=\frac1{p_0(k)I(k)}.
+$$
+
+The amplitude is positive and strictly increasing on the band.
+Only this reachable subset is needed; no extra independent phase
+controls or full-torus assertion is required here.
+
+To prove the needed frequency spread on every wall regime, put
+$S=X+Y$. Multiplication of $I$ by
+$p_0(X-k)(Y-k)k$ gives the positive polynomial on $J$
+
+$$
+\begin{aligned}
+\mathcal Q(k)
+ &=(X-k)(Y-k)(r-S+2k)+k(r-S+k)(S-2k)\\
+ &=XY(r-X-Y)+2XYk-rk^2.
+\end{aligned}
+$$
+
+Consequently
+
+$$
+w_0(k)=\frac{k(X-k)(Y-k)}{\mathcal Q(k)}.
+$$
+
+The denominator is nonzero on $J$. If this rational function
+were constant on any nonempty open subinterval, clearing its
+denominator would give a polynomial identity. The numerator has
+cubic coefficient one, whereas the denominator has degree at
+most two, so that identity is impossible. This argument also
+covers $X=Y$, $X+Y=r$, their intersection, and neither wall;
+cancellation of common factors cannot make the displayed
+polynomial identity possible. Thus $w_0$ is continuous and
+nonconstant on every positive-width subinterval. No support
+boundary is approached or executed for this conclusion.
+
+If $\epsilon<B_0(b)$, choose $q\in[a,b)$ with
+$B_0(q)>\epsilon$. The image $w_0([q,b])$ is a closed interval
+$[\omega_-,\omega_+]$ of positive width, by continuity,
+the intermediate value theorem and nonconstancy. Take
+$T=2\pi/(\omega_+-\omega_-)$. For distinct integers $j,l\ge0$,
+the image of $(j-l)Tw_0$ has length at least $2\pi$ and contains
+an odd multiple of $\pi$. At its preimage the true responses
+$F_{jT},F_{lT}$ differ by at least $2B_0(q)$.
+Both affine offsets are again absorbed by
+$\operatorname{span}_{\mathbb C}\{1,E_1(x_k),\ldots,E_n(x_k)\}$.
+Their predicted responses belong to its bounded subspace, have
+supremum norm at most $B_0(b)+\epsilon$, and are separated by
+at least $2(B_0(q)-\epsilon)$. The complete norm argument of
+Theorem 7.4 gives the contradiction.
+
+For one nonzero command $t_0$, choose an integer $M>0$ with
+$M|t_0|(\omega_+-\omega_-)\ge2\pi$ and use its $jM$ repetitions.
+For history encoders use the same canonical probability prefixes.
+These give the same proof without frequency monotonicity or
+encoder regularity. Only a one-pair lower bound has been proved;
+the double-wall upper construction is not transferred to this
+different source. $\square$
+
+**Proposition 7.13 (Collapsed band and full-open-domain necessity).**
+At a fixed height $a=b=k_*\in(0,H)$ there is an exact finite affine
+readout and affine phase-update model on the inherited full phase
+torus. In contrast, on the full open double-wall source
+$(0,H)\times\mathbb T^2$, the corresponding uniform approximate
+contract has the necessary condition
+$\epsilon\ge2\sqrt{ZH}$. No full-open-domain equality construction
+is asserted here.
+
+**Proof.** At the fixed height store the four response coordinates
+
+$$
+z=(A(k_*)U(\alpha),B(k_*)U(\beta)).
+$$
+
+The decoder is $D$, and $Q_t$ acts by the two fixed rotations
+$R_{t/2}$ and $R_{(1/2-k_*/r)t}$. Only $P_0$ has a nonempty
+probability guard; any band-confined simultaneous continuation has
+$\rho$ identically zero. This proves exactness, even on the full
+initialized torus, hence on any smaller phase subset generated by
+controls confined to that height from the start. It does not assert
+two-height reachability when there is only one height.
+
+Any single finite model on the full open source restricts to
+every positive closed band. Theorem 7.4 therefore gives
+$\epsilon\ge2\sqrt{Zb}$ for every $b<H$.
+Taking the real supremum gives $\epsilon\ge2\sqrt{ZH}$.
+This restriction argument executes no zero-support state.
+The constants and degree of Lemma 7.6 depend on the band, so they
+supply no single finite equality attainer on the open domain.
+$\square$
+
+Part B, specifically Theorem 5.8, still gives arbitrarily small
+positive error with exact affine probability updates on the same
+positive band and full phase source. Its operation menu omits the
+phase-update requirements responsible for Theorem 7.4. The exact
+finite nonlinear full-continuation model of Theorem 3.2 is also
+compatible. The sufficient dimension $2m+5$ is not an optimal
+dimension claim. Neither the lower bound nor its equality witness
+supplies finite precision, perturbed-initialization stability,
+physical output realizability, measurement acquisition or a
+learning guarantee.
+
+## 8. Decoder-free obstruction to lossless affine phase action
+
+### 8.1 A different contract on the same actual rays
+
+**Definition 8.1 (Lossless current-ray affine action).** Keep the fixed
+source, arbitrary preparation and positive-width band of Definition 7.1.
+For a finite integer $n\ge0$, a lossless current-ray encoding is an
+injective function $E:\mathcal M_{ab}\to\mathbb R^n$. The minimal
+affine-action requirement considered here is a single affine map
+
+$$
+F(z)=Az+c,\qquad E(Q_{4\pi}x)=F(E(x))
+ \quad\hbox{for every }x\in\mathcal M_{ab}.
+$$
+
+There is no decoder, no output requirement and no
+probability-update requirement in this minimal contract.
+No regularity of $E$, boundedness of its image, invertibility of $A$
+or ambient group law is assumed. The coefficients are fixed across
+all current heights and phases and all producing histories.
+
+The domain remains the full native reachable band of
+Proposition 7.2. Deleting update requirements does not restrict
+the original generation process to powers of one command from one
+initial height. The full-menu version would additionally require
+affine representatives of every $P_s$ on its lawful domain and
+every $Q_t$ on the whole band, with arbitrary offsets.
+It contains the minimal contract as a consequence.
+
+**Lemma 8.2 (Actual periods of the real command $4\pi$).**
+Let $T=Q_{4\pi}$ and $\rho=k/H\in(0,1)$.
+On actual rays, in $(k,u,v)$ coordinates,
+
+$$
+T(k,u,v)=(k,u-2\pi\rho,v-2\pi\rho).
+$$
+
+For every integer $j\ge1$,
+
+$$
+T^jx=x\quad\Longleftrightarrow\quad j\rho\in\mathbb Z.
+$$
+
+If $\rho=m/q$ is reduced, every ray at that height has least
+positive period $q$; irrational $\rho$ has no positive finite
+period. Every positive-width band contains rays with arbitrarily
+large prime least periods, at heights strictly inside the band.
+
+**Proof.** The native increments of $Q_{4\pi}$ in $u,v$ are
+
+$$
+4\pi\left(\frac12-\frac kr\right)=2\pi(1-\rho),
+\qquad -4\pi k/r=-2\pi\rho,
+$$
+
+because $r=2H$. On their two circles these equal the displayed
+common shift. Repeating gives $-2\pi j\rho$ on both circles.
+The positive middle amplitude fixes the common ray phase, and
+the positive bottom groups distinguish both circle values, by
+Lemma 1.2 and Proposition 1.3. Thus equality of rays is exactly
+$j\rho\in\mathbb Z$. Equivalently all bottom amplitudes acquire
+the same factor $e^{2\pi ij\rho}$ while the middle amplitude is
+unchanged, so the factor must be one. It is not a removable ray
+gauge. The period and irrationality conclusions follow immediately.
+
+Given any bound $B$, choose a prime $p>B$ so large that
+$p(b-a)/H>1$. Such primes exist: if all primes formed a finite
+list, any prime divisor of one plus their product would lie
+outside that list. The open interval
+$(pa/H,pb/H)$ has length greater than one, so contains an integer
+$m$ strictly between its endpoints. For example the least
+integer strictly greater than its left endpoint is at most one
+above it and hence below the right endpoint. Since $0<a<b<H$,
+we have $0<m<p$, so $m/p$ is reduced. The height $k=Hm/p$
+lies strictly inside the band and has exact period $p$.
+Proposition 7.2 makes each such ray an actual finitely reachable
+state from the fixed preparation. $\square$
+
+**Lemma 8.3 (Common exponent on affine periodic points).**
+Let $F:\mathbb R^n\to\mathbb R^n$ be any affine map in finite
+dimension, and let $S$ be any nonempty subset of its periodic
+points. There is one positive integer $N$ such that $F^N$
+fixes every point of $\operatorname{aff}(S)$, hence every point
+of $S$.
+
+**Proof.** Start with $z_0\in S$ and repeatedly select a point of
+$S$ outside the affine hull of those already selected, if one
+exists. Each selection increases affine dimension. After at
+most $n$ additions this gives $z_0,\ldots,z_d$ with
+$d\le n$ and affine hull equal to $\operatorname{aff}(S)$.
+Choose a positive period $m_i$ for each selected point and put
+$N=\prod_{i=0}^d m_i$. Then $F^N$ fixes each $z_i$.
+
+The offset causes no difficulty: if $F(z)=Az+c$, induction gives
+
+$$
+F^N(z)=A^Nz+\sum_{j=0}^{N-1}A^jc,
+$$
+
+so the iterate is affine. For any affine combination
+$z=\sum_i\lambda_i z_i$ with $\sum_i\lambda_i=1$,
+
+$$
+F^N(z)=\sum_i\lambda_i F^N(z_i)=\sum_i\lambda_i z_i=z.
+$$
+
+This proves the assertion. It includes singleton sets and
+$n=0$, and does not require $S$ to be affine, bounded, regular
+or invariant under $F$. No spectrum or ambient inverse is used.
+The exponent depends on the map and its periodic points; there
+is no bound solely in terms of dimension. For example, planar
+rotations through $2\pi/q$ have nonzero points of exact period
+$q$ for arbitrarily large $q$ as the map varies. $\square$
+
+**Theorem 8.4 (No finite lossless affine realization of $Q_{4\pi}$).**
+Definition 8.1 has no solution in any finite real dimension.
+Consequently its full native operation-menu version has no
+solution either.
+
+**Proof.** Suppose $E$ is injective and $F$ satisfies the
+full-domain one-step identity. Since $T$ is globally lawful,
+induction gives
+
+$$
+E(T^jx)=F^j(E(x))\quad(j=0,1,2,\ldots)
+$$
+
+for every current ray $x$. Put
+
+$$
+\mathcal M_{\rm rat}=
+ \{(k,\alpha,\beta)\in\mathcal M_{ab}:k/H\in\mathbb Q\},
+\qquad S=E(\mathcal M_{\rm rat}).
+$$
+
+This set is nonempty. For $x\in\mathcal M_{\rm rat}$, a finite
+native period $q$ implies
+$F^q(E(x))=E(T^qx)=E(x)$. Thus every point of $S$ is periodic.
+Lemma 8.3 supplies one $N\ge1$ fixing all of $S$.
+Choose an interior height of prime period $p>N$ by Lemma 8.2
+and a ray $x$ there. Then
+
+$$
+E(T^Nx)=F^N(E(x))=E(x).
+$$
+
+Injectivity forces $T^Nx=x$, contradicting least period $p>N$.
+Only finite histories have been used: a finite preparation of
+$x$ and finitely many repetitions of the real command $4\pi$.
+No probability-update matrix or decoder appears in the proof.
+
+Indeed the proof would already work if $E$ merely distinguished
+different points within each of these prime-period cycles.
+For a noninjective equivariant encoder, the same argument
+forces some distinct points on an appropriate such cycle to
+have equal encodings. It does not force an entire $\beta$
+circle to collapse, nor classify all possible encoder fibers.
+$\square$
+
+### 8.2 Original outputs and the distinction from approximation
+
+**Corollary 8.5 (Any deterministic exact current-output decoder).**
+There is no finite current-ray encoder with the affine
+$Q_{4\pi}$ identity and a deterministic decoder of its current
+encoded state that returns all original ten outputs exactly.
+The decoder may be arbitrarily nonlinear or irregular.
+
+**Proof.** The original output separates current rays, as in
+Proposition 2.3. Explicitly, remove the fixed preparation
+rotations from the $02$ and $01$ blocks to recover
+
+$$
+z_\beta=B(k)U(\beta),\qquad z_\alpha=A(k)U(\alpha).
+$$
+
+Then $k=\|z_\beta\|_2^2/(4Z)$, and positivity of both radii
+recovers the two circle classes by normalization. Finally
+$u=\beta$ and $v=\beta-\alpha$ recover the ray. This holds for
+arbitrary preparation; it chooses no global real-angle branch.
+
+If $\mathcal R(E(x))=y(x)$ with a single deterministic
+current-state decoder $\mathcal R$, equality of two encodings
+gives equality of outputs and hence equality of rays.
+Thus $E$ is injective, contradicting Theorem 8.4.
+The decoder is allowed fixed task parameters but not an
+additional current height or producing history input.
+$\square$
+
+The static affine-output capacity remains four by Proposition 2.3.
+It concerns readout without the affine continuation requirement.
+Approximate readout need not force injection, and approximate
+equivariance would not give the periodic equalities in Theorem 8.4.
+Theorem 7.4 supplies its own quantitative lower bound by a different
+argument. No approximation bound follows merely from the
+decoder-free period theorem, and the equality construction of
+Definition 7.7 is not lossless.
+
+### 8.3 Reduced phase menus and their exact exceptions
+
+**Proposition 8.6 (Every nonzero rational multiple of $4\pi$).**
+Replace $Q_{4\pi}$ in Definition 8.1 by $Q_t$ with
+$t/(4\pi)\in\mathbb Q\setminus\{0\}$. The same nonexistence
+conclusion holds, even when that is the sole required command.
+
+**Proof.** Write $t/(4\pi)=\ell_0/d_0$ with
+$\ell_0\in\mathbb Z\setminus\{0\}$ and $d_0$ a positive
+integer. If $F$ represents $Q_t$ on all of $\mathcal M_{ab}$,
+then $G=F^{d_0}$ represents $Q_{4\pi\ell_0}$ there.
+Every rational-height ray is periodic under this source action,
+so its encoded image is a nonempty set of periodic points of
+$G$. Lemma 8.3 supplies an exponent $N$ fixing that image.
+
+Choose an interior prime-period height $k/H=m/p$ as in
+Lemma 8.2 with $p>N$ and $p>|\ell_0|$. For
+$Q_{4\pi\ell_0}$, the common circle shift is
+$-2\pi\ell_0m/p$, whose least period is $p$ because $p$
+divides neither $\ell_0$ nor $m$. Equivariance gives
+$E(Q_{4\pi\ell_0}^Nx)=G^N(E(x))=E(x)$, contradicting
+injectivity. Negative $\ell_0$ is included; all repetitions
+are finite and lawful. Arbitrarily small nonzero rational
+steps therefore still have this obstruction. $\square$
+
+**Proposition 8.7 (One irrational step has an irregular two-coordinate
+realization).** Fix one $t$ with $t/(4\pi)$ irrational, retain
+the full actual-ray band, and require only $Q_t$ and its integer
+powers. In ordinary set theory with choice, there is an injective
+current-ray encoder into $\mathbb R^2$ for which every such power
+acts by an affine translation.
+
+**Proof.** A fixed point of a nonzero integer power $Q_t^j$
+would require the $\alpha$ shift $jt/2$ to be a multiple of
+$2\pi$, or $jt/(4\pi)\in\mathbb Z$. Irrationality forbids
+this. Thus the $\mathbb Z$-action generated by $Q_t$ is free
+on the whole band.
+
+Choose one representative $x_O$ from each orbit $O$. Distinct
+representatives can be assigned distinct real labels $\lambda_O$.
+Here is a cardinality justification: the full source embeds
+into $\mathbb R^5$ by
+$(k,u,v)\mapsto(k,\cos u,\sin u,\cos v,\sin v)$.
+There is an injection of $\mathbb R^5$ into $\mathbb R$.
+To see this directly, inject each real coordinate into $(0,1)$
+by $x\mapsto(1+x/(1+|x|))/2$, choose its binary expansion
+which is not eventually all ones, and interlace the five
+binary digit sequences. The resulting sequence is also not
+eventually all ones, so has an unambiguous such expansion;
+de-interlacing recovers all five coordinates. Restricting this
+injection to the chosen representatives gives the labels.
+Choice is used for the orbit transversal, with no claim of
+measurability or computability.
+
+Every ray has a unique expression $x=Q_t^j x_O$ for one
+orbit and one integer $j$. Define
+
+$$
+E_{\rm irr}(x)=(\lambda_O,j).
+$$
+
+The distinct labels and freeness make this function injective.
+For every integer $m$,
+
+$$
+E_{\rm irr}(Q_t^m x)=E_{\rm irr}(x)+(0,m).
+$$
+
+Thus all integer powers have fixed affine translations.
+Once the transversal is fixed, the integer $j$ is a function
+of the actual current ray, not an external clock or the
+length of a producing history. This construction gives no
+regularity, affine original-output decoder, probability
+updates, or simultaneous realization of additional irrational
+commands. It is a realization of exactly the reduced menu
+stated here. $\square$
+
+**Proposition 8.8 (Collapsed band and probability-only lossless action).**
+On an inherited full phase torus at one positive height $k_*$,
+all phase commands have an injective four-real-coordinate
+linear realization. On the full positive-width band,
+probability commands alone, together with $Q_0$, have an
+injective five-real-coordinate affine realization.
+
+**Proof.** At the collapsed band use
+
+$$
+E_{\rm tor}(u,v)=(U(u),U(v)).
+$$
+
+This is injective on $\mathbb T^2$, and $Q_t$ is represented
+by
+
+$$
+R_{(1/2-k_*/r)t}\oplus R_{-k_*t/r}.
+$$
+
+Both angles are fixed numbers for the prescribed command.
+Only the zero probability displacement has a nonempty band
+domain, and its map is the identity. The construction works
+on the full initialized torus or any subset reachable when
+generation is itself confined to that height. It does not
+identify those two generation domains. The exact affine
+readout construction at one height is separately given in
+Proposition 7.13.
+
+For the full band use
+
+$$
+E_0(k,u,v)=(k,U(u),U(v))\in\mathbb R^5.
+$$
+
+Equality of these coordinates gives equality of $k$ and both
+circle classes, hence of rays. For every $s$, the affine
+translation
+
+$$
+(\xi,\mathbf u,\mathbf v)\longmapsto
+ (\xi+s,\mathbf u,\mathbf v)
+$$
+
+represents $P_s$ exactly on $a\le\xi+s\le b$ in the actual
+image, and the identity represents $Q_0$.
+No output decoder was required in this probability-only
+contract. In particular this construction does not contradict
+the exact affine-readout obstruction in Corollary 4.5.
+$\square$
+
+**Proposition 8.9 (Finite nonlinear coordinates for the full menu).**
+The same $E_0$ gives a lossless finite current-state realization
+of every native command and every prescribed simultaneous
+continuation, with generally nonlinear updates.
+
+**Proof.** The actual image is
+$\{\xi\in[a,b],\|\mathbf u\|=\|\mathbf v\|=1\}$.
+The probability update is the translation of Proposition 8.8.
+A phase command acts by
+
+$$
+(\xi,\mathbf u,\mathbf v)\longmapsto
+ \left(\xi,
+ R_{(1/2-\xi/r)t}\mathbf u,\,
+ R_{-\xi t/r}\mathbf v\right).
+$$
+
+These functions use the stored current height, require no
+external selector and respect both phase circles. Their
+dependence on that height makes them generally nonlinear.
+For a prescribed simultaneous path with parameters and
+all-times guard as in Theorem 7.11, integration or
+$u=\beta,\ v=\beta-\alpha$ gives
+
+$$
+u'=u+\left(\frac12-\frac kr\right)L-\frac Cr,
+\qquad
+v'=v-\frac krL-\frac Cr.
+$$
+
+The exact feature update is therefore
+
+$$
+(\xi,\mathbf u,\mathbf v)\longmapsto
+ \left(\xi+\Delta,
+ R_{(1/2-\xi/r)L-C/r}\mathbf u,\,
+ R_{-\xi L/r-C/r}\mathbf v\right),
+$$
+
+under $a\le\xi+\rho(\tau)\le b$ for all times.
+It preserves the actual feature image whenever lawful.
+Substituting each intermediate upper time limit and composing
+finitely many such maps proves exact realization of every
+finite valid history. The four-coordinate response realization
+of Theorem 3.2 is another finite nonlinear model, with an exact
+linear original-output decoder. Neither model asserts affine
+full-menu dynamics. $\square$
+
+### 8.4 Ray quotients, lifts and execution quantifiers
+
+**Proposition 8.10 (Retained real lifts are a different affine source).**
+On the source $[a,b]\times\mathbb R^2$ retaining real increments
+$(u,v)$, the three coordinates $(k,u,v)$ have affine updates for
+all native $P_s,Q_t$ and prescribed simultaneous continuations.
+These coordinates do not define an encoder of actual current rays.
+
+**Proof.** Before reducing phases modulo $2\pi$, the exact formulas
+are
+
+$$
+P_s(k,u,v)=(k+s,u,v),
+$$
+
+$$
+Q_t(k,u,v)=
+ \left(k,\ u-\frac tr k+\frac t2,\ v-\frac tr k\right).
+$$
+
+For each fixed real command these are affine in the three
+coordinates. For a simultaneous path they become
+
+$$
+\left(k+\Delta,
+ u-\frac Lr k+\frac L2-\frac Cr,
+ v-\frac Lr k-\frac Cr\right),
+$$
+
+again affine, on the same all-times height guard.
+The positive-width reachability construction of Proposition 7.2
+realizes arbitrary real representatives as lifted increments,
+so these formulas do describe a possible retained-lift source.
+
+On actual rays, however, $(k,u+2\pi,v)$ and $(k,u,v)$ are the
+same point while their displayed three coordinates differ.
+Thus they are not a function of the ray quotient. Selecting
+wrapped representatives introduces state-dependent wrap
+changes; the displayed affine formulas on real lifts do not
+become affine formulas on those representatives.
+A producing-history encoder can retain lifts even when the
+current ray returns, and then it is a function of histories,
+not a lossless current-ray encoder in Definition 8.1.
+
+Theorem 8.4 cannot be transferred to arbitrary history encoders
+by asserting that a returned ray has a returned encoded history.
+Corollary 7.5 has a separate finite-function-space proof for
+history features with a fixed affine approximate readout.
+The retained-lift construction here supplies no such affine
+readout below that floor; its usual trigonometric decoding is
+nonlinear. These contracts are distinct. $\square$
+
+**Proposition 8.11 (Realification, zero dimension and support scope).**
+Theorem 8.4 also excludes finite complex affine lossless
+realizations. Its actual-ray conclusion uses full positive
+support and does not automatically extend to vanishing-support
+sources.
+
+**Proof.** A complex affine map on $\mathbb C^n$ becomes a real
+affine map on $\mathbb R^{2n}$ with linear part
+
+$$
+\begin{pmatrix}
+\operatorname{Re}A&-\operatorname{Im}A\\
+\operatorname{Im}A&\operatorname{Re}A
+\end{pmatrix}
+$$
+
+and offset $(\operatorname{Re}c,\operatorname{Im}c)$.
+Injection and the intertwining identity are preserved, so the
+real theorem applies. In real dimension zero the target is a
+singleton, while the stated source contains distinct rays;
+injectivity already fails. The common-exponent proof includes
+that dimension. An empty source would be vacuous and a singleton
+source could be encoded in dimension zero, but neither is the
+source here.
+
+Positivity of $Z$ fixes the common phase, and positivity of
+$k,H-k$ makes both grouped phases observable as ray coordinates.
+At $k=0$ or $k=H$ one group disappears, and its circle is no
+longer a ray coordinate. At $Z=0$, in the corresponding
+limiting bottom action the common bottom shift of $Q_{4\pi}$
+is a common phase of the remaining support and becomes
+ray-trivial. At $Z=1$ there is no positive interval $0<k<H$.
+These changes prevent treating those boundary tasks as instances
+of this proof. The approximation constants of Lemma 7.6 also
+require the positive interior band. $\square$
+
+All witness heights in Lemma 8.2 are strictly between $a$ and $b$.
+Thus the lossless obstruction also holds with open or half-open
+band conventions, using their corresponding interval guards.
+Probability maps have only partial native domains; an empty
+domain imposes no condition. No partial-domain identity is
+promoted to an ambient affine group law. The single obstructing
+phase command, in contrast, is globally lawful on the stated
+source.
+
+Every exponent, selected affine-spanning set, prime cycle and
+preparing history in the lossless proof is finite. Their sizes
+may depend on a proposed realization. A restriction on described
+execution budgets does not remove the algebraic implication
+
+$$
+E(Tx)=F(E(x))\ \hbox{on all of }\mathcal M_{ab}
+ \quad\Longrightarrow\quad
+E(T^jx)=F^j(E(x))\ \hbox{for every finite }j.
+$$
+
+Consequently a finite-horizon reformulation must change the
+domain or identities to which it applies; merely keeping the
+same full-domain one-step contract and declaring that only a
+bounded number of steps will be run does not evade Theorem 8.4.
+The same care applies to the repetition argument of Theorem 7.4.
+Neither theorem executes an infinite history or proves a
+finite-horizon realization for an altered contract.
+
+## 9. Mathematical contribution and unresolved boundaries
+
+The sharp approximation result combines classical finite
+function-space arguments, total boundedness in finite-dimensional
+normed spaces, Bernstein polynomial weights and moments, and
+finite polynomial closure under translation. Their needed
+forms are proved in §7. The source-specific result is the exact
+threshold $2\sqrt{Zb}$ for the original ten-output Euclidean
+task with both affine offsets, no encoder regularity assumption,
+the same relative commands at all heights, and all finite
+valid histories. Its equality witness uses the anchored
+derivative approximation, $2m+5$ explicit real features,
+saturated native guards and an allowed phase quotient.
+The separate general-fixed-means statement is a necessary
+one-pair bound with an explicitly nonconstant native rational
+frequency, not an off-wall sharpness theorem.
+
+The decoder-free result combines elementary periodic-orbit
+arithmetic with affine spanning and common multiples of finitely
+many periods. Its source-specific bridge is that the real
+native command $4\pi$ has unbounded prime periods on actual rays
+in every positive-width band, while one finite-dimensional
+affine map fixes all its periodic points after a common
+iterate. The minimal theorem needs neither a probability-update
+map nor a decoder. The rational-step obstruction, irrational-step
+choice construction and retained-lift affine model state which
+operation and source quantifiers matter. These uses of classical
+ingredients carry no claim of worldwide originality or formal
+verification.
+
+For Definition 7.1, phase and simultaneous-control continuation
+have the sharp finite approximation threshold proved in
+Theorem 7.11. Additional injectivity, native-output realizability,
+regularity, finite-precision or robustness requirements specify
+different problems; the equality witness does not solve them.
+The sufficient feature counts are not minimum dimensions.
+The lossless theorem neither determines approximate-action
+error bounds nor proves that every finite affine quotient must
+forget the entire $\beta$ circle. The band equality result
+does not provide a full-open-domain equality attainer, and the
+general-fixed-means lower bound does not provide its own
+matching upper construction.
+
+The original alternative of an attainer at some finite $N$
+versus a strict gap for every finite $N$ remains open.
+No identification of that objective and its admissible
+realizations with either contract here has been proved.
+Finite feature dimension and arbitrary finite execution length
+are not that optimization's finite-$N$ attainment, and neither
+affine obstruction is its strict-gap proof.
+Exact-real initialization, source access and ideal output
+functions are mathematical interfaces, without a supplied
+finite-measurement acquisition, training, implementation or
+task-transfer guarantee.
+
+## 9.99 追加锚
