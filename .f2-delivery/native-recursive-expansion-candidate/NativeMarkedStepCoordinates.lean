@@ -25,12 +25,14 @@ open private childGap_bijective frame_base_not_reverse from
 private theorem next_full_perm {α : Type*} (S A : List α) (u v : α) :
     ((u :: S) ++ A ++ [v]).Perm (S ++ (A ++ [u]) ++ [v]) := by
   simpa only [List.cons_append, List.append_assoc, List.singleton_append] using
-    (List.perm_append_comm [u] (S ++ A)).append_right [v]
+    (show ([u] ++ (S ++ A)).Perm ((S ++ A) ++ [u]) from
+      List.perm_append_comm).append_right [v]
 
 private theorem outer_full_perm {α : Type*} (S A : List α) (u v : α) :
     (S ++ (A ++ [v]) ++ [u]).Perm (S ++ (A ++ [u]) ++ [v]) := by
   simpa only [List.append_assoc] using
-    (List.perm_append_comm [v] [u]).append_left (S ++ A)
+    (show ([v] ++ [u]).Perm ([u] ++ [v]) from
+      List.perm_append_comm).append_left (S ++ A)
 
 /-- The new marked frame is (u,S,A;v). The two marked orders are obtained
 by applying this constructor to the two old orders in exchanged order. -/
@@ -39,11 +41,11 @@ def nextFrame {m k : ℕ} (F : SupplyFrame m k) (A : List (Fin (m + 1)))
   selected := u :: F.selected
   base := A
   terminal := F.terminal
-  selected_length := by simp only [List.length_cons, F.selected_length]; omega
+  selected_length := by simp only [List.length_cons, F.selected_length]
   prefix_length := by
     have hp := F.prefix_length
     rw [hbase] at hp
-    simp only [List.length_append, List.length_cons, List.length_singleton] at hp ⊢
+    simp only [List.length_append, List.length_cons, List.length_singleton, List.length_nil] at hp ⊢
     omega
   full_nodup := by
     apply (next_full_perm F.selected A u F.terminal).nodup_iff.mpr
@@ -112,7 +114,7 @@ theorem native_q_index_zero_prefix {m k : ℕ} (hm : 3 ≤ m)
       ((native_anchored_supply_coordinates hm (outerFrame F A u hbase)).1 0).2.1,
       ((native_anchored_supply_coordinates hm (nextFrame F A u hbase)).1 0).1]
     simp only [outerFrame, nextFrame, List.rotate_zero, List.reverse_append,
-      List.reverse_reverse, List.reverse_singleton, List.singleton_append,
+      List.reverse_reverse, List.reverse_cons, List.reverse_singleton, List.nil_append, List.singleton_append,
       List.cons_append, List.append_assoc]
   · rfl
 
@@ -141,7 +143,7 @@ theorem native_p_parent_cut_prefix {m k : ℕ} (hm : 3 ≤ m)
   simp only [outerFrame, hbase, List.rotate_zero, List.reverse_append,
     List.reverse_reverse, List.reverse_singleton, List.append_assoc]
   rw [hrot]
-  simp only [List.singleton_append, List.cons_append, List.append_assoc]
+  simp only [List.singleton_append, List.nil_append, List.cons_append, List.append_assoc]
 
 private theorem p_circle_eq {m k : ℕ} (F : SupplyFrame m k)
     (A : List (Fin (m + 1))) (u : Fin (m + 1))
@@ -149,8 +151,8 @@ private theorem p_circle_eq {m k : ℕ} (F : SupplyFrame m k)
     (childGap F ⟨0, by simp only [hbase, List.length_append, List.length_singleton]; omega⟩).val =
       (childGap (outerFrame F A u hbase)
         ⟨A.length, by simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩).val := by
-  change (F.terminal :: F.base : Cycle _) =
-    (u :: (A ++ [F.terminal]).rotate A.length : Cycle _)
+  change ((F.terminal :: F.base : List (Fin (m + 1))) : Cycle (Fin (m + 1))) =
+    ((u :: (A ++ [F.terminal]).rotate A.length : List (Fin (m + 1))) : Cycle (Fin (m + 1)))
   rw [hbase, List.rotate_append_length_eq]
   apply Cycle.coe_eq_coe.mpr
   simpa only [List.cons_append, List.singleton_append] using
@@ -191,13 +193,16 @@ theorem native_new_marked_cut_domains {m k : ℕ} (hm : 3 ≤ m)
   dsimp only
   by_cases hi : i.val = 0
   · simp only [hi, if_pos rfl]
+    let zero : Fin m := ⟨0, by omega⟩
     have hp := native_supply_cut_child_domain hm (outerFrame F A u hbase)
-      (by simp only [outerFrame, List.length_append, List.length_singleton]; omega) 0
+      (by simp only [outerFrame, List.length_append, List.length_singleton]; omega) zero
     have hg : supplyGap (outerFrame F A u hbase)
-        (by simp only [outerFrame, List.length_append, List.length_singleton]; omega) 0 = 0 := by
+        (by simp only [outerFrame, List.length_append, List.length_singleton]; omega) zero =
+          ⟨0, by simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩ := by
       apply Fin.ext
-      simp only [supplyGap, Fin.val_zero, Nat.zero_le, ↓reduceIte]
+      simp only [supplyGap, zero, Fin.val_mk, Nat.zero_le, ↓reduceIte]
     rw [hg] at hp
+    dsimp only [zero, Fin.val_mk] at hp
     have ha := layer_a _ _ hp.2
     rw [(native_q_index_zero_prefix hm F A u hbase).1] at ha
     exact ⟨ha, layer_b _ _ ha⟩

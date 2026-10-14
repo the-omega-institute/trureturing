@@ -83,7 +83,7 @@ theorem native_special_child_even_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
   have honce (p q : Port (2 * s + 2))
       (hb : evenBoundary (2 * s + 2) (code p) (code q)) :
       ∃! i : Fin (2 * s + 3), s(p, q) = routeEdge (evenPortRoute s) i := by
-    simpa only [routeEdge, evenPortRoute, evenBEdge] using even_boundary_edges_once s p q hb
+    simpa only [routeEdge, evenPortRoute, evenBEdge, Fin.cast_mk] using even_boundary_edges_once s p q hb
   have hseams (i : ℕ) (hi : i + 1 < 2 * s + 3) :
       internalSeam (2 * s + 2)
         (code (evenPortRoute s ⟨2 * i + 1, by omega⟩))
@@ -132,7 +132,7 @@ theorem native_special_child_odd_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
   have honce (p q : Port (2 * s + 3))
       (hb : oddBoundary (2 * s + 3) (code p) (code q)) :
       ∃! i : Fin (2 * s + 4), s(p, q) = routeEdge (oddPortRoute s) i := by
-    simpa only [routeEdge, oddPortRoute, oddBEdge] using odd_boundary_edges_once s p q hb
+    simpa only [routeEdge, oddPortRoute, oddBEdge, Fin.cast_mk] using odd_boundary_edges_once s p q hb
   have hseams (i : ℕ) (hi : i + 1 < 2 * s + 4) :
       internalSeam (2 * s + 3)
         (code (oddPortRoute s ⟨2 * i + 1, by omega⟩))

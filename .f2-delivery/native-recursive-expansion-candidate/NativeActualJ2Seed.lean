@@ -142,7 +142,9 @@ private theorem seed_exists {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2) :
   refine ⟨⟨_, _, hham, K, H, joint, primary, opposite, hjports, hpports, hoports,
     ⟨hham.isCycle, hd, ?_, ⟨hps, hpe, hpc⟩, ⟨hos, hoe, hoc⟩⟩,
     ?_, hB, native_j2_frame_c_selected hm F _ hframe⟩⟩
-  · exact ⟨hjs, by simpa only [hu] using hje, by simpa only [hu] using hjc⟩
+  · dsimp only [iso] at hu
+    rw [hu] at hje hjc
+    exact ⟨hjs, hje, hjc⟩
   · intro x y hxy hpair
     exact hA x y hxy (by simpa only [seed_protected_pair hm F] using hpair)
 
