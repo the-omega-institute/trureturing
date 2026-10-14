@@ -7833,9 +7833,9 @@ bounded normalized lag is used.
 
 Thus a prime-free local correction cannot both cancel these pole
 moments and satisfy the sufficient absolute allowance
-$\|c_X\|_1=o(M_XL_X)$. This does not force its full signed
-pole-minus-archimedean contribution to be large: cancellation between
-large terms remains possible and is not estimated here. An integrable
+$\|c_X\|_1=o(M_XL_X)$. For general corrections this does not force a large full signed
+pole-minus-archimedean contribution: cancellation between large terms
+remains outside this absolute-norm estimate. An integrable
 correction suffices for WT4; an explicit-formula application still
 requires its own smoothness and domain conditions.
 
@@ -7848,3 +7848,187 @@ support still violates that theorem's fixed support contract. WT4--WT5
 are a paper application boundary, without Lean verification or a new
 Robin upper estimate. The required signed comparison and RH remain
 unproved.
+
+## A smooth paid completion narrows the signed local-correction boundary
+
+Keep the same MR5 test $F=F_X$, full windows, all endpoint ties and
+common horizon $U$ from MT1--MT6. Put
+$C=B^{\rm end}_{\max,X}$, $Q=Q_X$, $Y=\mathsf Y_X$, $L=L_X$ and
+$D=2+\sqrt C/Q$. The following is an actual-source paper application;
+the smooth spectral factorization and small-support spectral floor are
+reused from the sources cited below. No generic positivity theorem,
+Lean verification or improvement of the original Robin upper is asserted.
+
+### Complete the actual test without losing smoothness
+
+MR1 and MR5 give $\|F\|_\infty+\|F\|_1+\|F'\|_1\ll L$.
+For the second derivative, use MT1 with weight $r^{3/2}$ rather than
+MT2's $r^2$. Its four terms cost respectively
+
+$$
+O_{\rho,a}(\sqrt B/Q),\qquad O_{\rho,a}(1),\qquad
+O_{\rho,a}(1),\qquad
+s_B\int_B^U O_\rho(v^{3/2}|k'(v)|)dv=O_\rho(1).
+$$
+
+The third term is the remote $U$ endpoint; it is retained. The final
+bound follows from MT1's displayed $k'$ and $s_B=\sqrt B\log B$,
+without a ceiling on $U/B$. In the additive coordinate,
+
+$$
+(r\partial_r)^2(\sqrt r\,w)
+=\tfrac14\sqrt r\,w+2r^{3/2}w'+r^{5/2}w''.
+$$
+
+Integrate with $dx=dr/r$, then against the actual residence. The fixed
+MR5 calibration contributes $O_\chi(L)$. Consequently
+
+$$
+\|F''\|_1\ll LD,\qquad
+|\widehat F(\xi)|\ll
+L\min(1,|\xi|^{-1},D|\xi|^{-2})\quad(\xi\ne0).
+\tag{WT6}
+$$
+
+Fix $0<\tau<\log2$. Choose a fixed nonnegative real even smooth $u$
+with sufficiently narrow compact support in $(-\tau/2,\tau/2)$.
+For $u^*(x)=\overline{u(-x)}$, put $\psi=u*u^*$. Then $\psi\ge0$,
+$\widehat\psi\ge0$, its support is compactly contained in
+$(-\tau,\tau)$, and the choice can ensure
+$\widehat\psi\ge m>0$ on $[-2,2]$.
+Let $I_0=[-2,2]$ and
+$I_j=\{\xi:2^j\le|\xi|\le2^{j+1}\}$ for $j\ge1$. Define
+
+$$
+a_j=m^{-1}2^j\sup_{\xi\in I_j}|\widehat F(\xi)|,
+\qquad c_X(x)=\sum_{j\ge0}a_j\psi(2^jx).
+\tag{WT7}
+$$
+
+These bands cover the real axis. At each frequency in $I_j$, the
+$j$th Fourier summand alone is at least $|\widehat F|$; every other
+summand is nonnegative. WT6 gives
+
+$$
+a_0\ll L,\qquad a_j\ll L\min(1,D2^{-j})\ (j\ge1),\qquad
+\sum_j2^{-j}a_j\ll L,\qquad
+\sum_j(1+j)a_j\ll L(1+\log D)^2.
+$$
+
+There is no smoothing after taking this majorant. For each fixed $X$,
+the actual $F$ is compact smooth, so for every $N$ one also has
+$a_j\ll_{X,N}2^{-j(N-1)}$. Taking $N>k+1$ proves uniform convergence
+of the $k$th derivative series for every $k$. All supports lie in one
+fixed compact subinterval of $(-\tau,\tau)$; hence
+$c_X\in C_c^\infty(-\tau,\tau)$ is real, even and nonnegative.
+The $L^1$ summability permits Fourier interchange and proves
+$\widehat c_X\ge|\widehat F|$. Thus both $c_X-F$ and $c_X+F$ are
+positive definite. No change to $F$ or its prime evaluations is needed.
+
+### Pay the full correction, including all complex zeros
+
+For an additive test $H$, use MT5's exact normalization
+
+$$
+G_H(s)=\int_{\mathbb R}H(x)e^{(s-1/2)x}dx,\qquad
+\mathcal P(H)=G_H(0)+G_H(1)
+=\int_{\mathbb R}2\cosh(x/2)H(x)dx,
+$$
+
+and $\mathscr W(H)=\mathcal P(H)+\mathcal A(H)-\Pi(H)$, where
+$\mathcal A(H)=-\mathcal W_{\mathbb R}(r^{-1/2}H(\log r))$
+and $\Pi$ is the complete finite-prime term. This is the full Weil
+functional, not the archimedean part alone.
+For $\psi_j(x)=\psi(2^jx)$, the full archimedean integral satisfies
+$|\mathcal A(\psi_j)|\ll_\tau1+j$: near zero use smooth evenness,
+between scales $2^{-j}$ and $1$ integrate the subtraction against
+$dx/x$, and retain its exponential tail beyond the support. The same
+bound holds for the absolute integral, so the weighted summability
+above justifies Fubini, including the $c_X(0)$ subtraction.
+Also $|\mathcal P(c_X)|\ll_\tau\|c_X\|_1\ll_\tau L$.
+
+For every nontrivial zero $\varrho=\beta+i\gamma$, two integrations
+by parts on the shrinking bump give, uniformly in $0\le\beta\le1$,
+
+$$
+|G_{\psi_j}(\varrho)|\ll_\tau
+\min(2^{-j},2^j/\gamma^2)\quad(\gamma\ne0).
+$$
+
+Use MT3's full multiplicity count and reciprocal-square tail, split at
+$\max(4,2^j)$, keeping both ordinate signs and all low zeros. They give
+$\sum_\varrho m_\varrho|G_{\psi_j}(\varrho)|\ll_\tau1+j$.
+Thus the correction's complete account is
+
+$$
+\boxed{
+|\mathcal P(c_X)|+|\mathcal A(c_X)|
++\sum_\varrho m_\varrho|G_{c_X}(\varrho)|
+\ll_\tau L(1+\log D)^2
+\ll_\tau LY^2=o(M_XL_X).}
+\tag{WT8}
+$$
+
+Its prime term is zero by $\tau<\log2$. Absolute convergence justifies
+all correction interchanges. The last two ways of accounting for the
+same explicit formula do not create two independent reserves.
+The final scale uses only $Q\ge1$, $C\le e^Y$ and the original
+$Y^2/M_X\to0$; no bounded clock ratio, changed window or restriction
+excluding $\Theta=1$ is introduced.
+
+### A restricted local replacement has a large signed debit
+
+Now fix $\tau$ sufficiently small that the existing
+[Suzuki small-window floor](../Weil/frankliebseiringer2006hardy.md#reuse-the-stronger-small-window-spectral-floor)
+has $\lambda^W_{\tau/2}>0$, in addition to $\tau<\log2$.
+Suppose a real even $c_X^\flat\in C_c^\infty(-\tau,\tau)$ satisfies
+
+$$
+c_X^\flat-F_X\text{ is positive definite},\qquad
+\widehat{c_X^\flat-F_X}(i/2)
+=\widehat{c_X^\flat-F_X}(-i/2)=0.
+\tag{WT9}
+$$
+
+No existence of such replacements is asserted. Their pole condition
+implies $\mathcal P(c_X^\flat)=\mathsf P_X^{\rm Weil}$.
+Set $Z=c_X^\flat+c_X$. This is compact smooth with the same small
+support, and it is positive definite since it is the sum of
+$c_X^\flat-F_X$ and $F_X+c_X$. Reuse the smooth Boas--Kac
+factorization in [Connes--Consani, Proposition 3.2, manuscript p.17](../Weil/connesconsani2021archimedean.md):
+$Z=v*v^*$ with smooth $v$ supported in $[-\tau/2,\tau/2]$.
+The factor may be complex and need not be even; Suzuki's stated domain
+covers it. Therefore
+$\mathscr W(Z)\ge\lambda^W_{\tau/2}\|v\|_2^2
+=\lambda^W_{\tau/2}Z(0)$.
+
+Positive definiteness gives $|Z(x)|\le Z(0)$. Separately, $c_X\ge0$
+gives $\mathcal P(Z)\ge\mathsf P_X^{\rm Weil}$. Together,
+
+$$
+\mathsf P_X^{\rm Weil}\le\mathcal P(Z)
+\le8\sinh(\tau/2)Z(0),\qquad
+\boxed{\mathscr W(c_X^\flat)\ge
+\frac{\lambda^W_{\tau/2}}{8\sinh(\tau/2)}
+\mathsf P_X^{\rm Weil}-O_\tau(L_XY^2).}
+\tag{WT10}
+$$
+
+WT4--WT5's actual-source comparison gives
+$\mathsf P_X^{\rm Weil}/(M_XL_X)\to\infty$. Consequently WT10
+forces $\mathscr W(c_X^\flat)/(M_XL_X)\to+\infty$ along any cofinal
+family satisfying WT9. Unlike the absolute-norm obstruction, this
+excludes even a signed $O(M_XL_X)$ upper allowance for this restricted
+class. The argument uses WT9's upper-oriented positive-definite
+comparison and vanishing pole moments; arbitrary local corrections and
+wider supports are not covered.
+
+WT7--WT8 do not supply those vanishing moments: their pole mass is
+only $O_\tau(L_X)$, whereas the actual test's pole mass is larger than
+$M_XL_X$. Moreover, $c_X-F_X$ retains the original growing support.
+Real-axis Fourier order does not determine the sign of the full Weil
+functional at the complex zero arguments. The missing same-source
+signed comparison on this growing-support test, and hence the original
+strict Robin upper and RH, remain unproved. This continuation retains
+an application of existing source results, not a literature-priority
+claim or a new formalized theorem.
