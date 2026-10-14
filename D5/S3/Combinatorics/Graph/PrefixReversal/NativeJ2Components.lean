@@ -16,6 +16,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Words
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeContactIteration
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingEdges
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SixthComponent
 open private actual_port_leaf from
