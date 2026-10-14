@@ -4,6 +4,8 @@
    against that same supplied w, including the literal barred exception. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
 import D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
+import D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
 
 set_option autoImplicit false
 
@@ -19,6 +21,10 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
+open D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
 open private half_adj_iff from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
 
@@ -146,6 +152,57 @@ theorem native_actual_j2_half_paths {m : ℕ} (hm : 5 ≤ m) (side : Bool)
   obtain ⟨_, _, _, hinv₀, _, hmarked⟩ := native_j2_hamiltonian_cycle_with_marked_edges hm
   exact (hinv _).mpr ((hinv₀ _).mp (hmarked (i, side)))
 
+/-- Transport the paths of the same supplied raw cycle to an arbitrary
+two-label frame. The original half table is mapped pointwise, preserving
+the barred indices. The same actual mapped cycle appears in both support
+and retained-edge conclusions, without choosing another witness. -/
+theorem native_actual_j2_frame_half_paths {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (side : Bool)
+    {rawBase : {v : Configuration m // F2Domain m v}}
+    (rawWalk : (domainGraph (F2Domain m)).Walk rawBase rawBase)
+    (hraw : rawWalk.IsHamiltonianCycle)
+    (hinv : ∀ e, e ∈ rawWalk.edges.map (Sym2.map Subtype.val) ↔
+      (F2NativeEdge m e ∧ ¬ F2DeletedEdge m e) ∨ F2Seam m e) :
+    let iso := frameDomainIso hm F
+    let w := rawWalk.map iso.toHom
+    let cuts := (actualHalfCuts (F2Domain m) side).image (Sym2.map iso.toHom)
+    ∃ pieces : Fin 3 → Piece (domainGraph (FrameDomain F)),
+      (∀ i, (pieces i).start.val = relabel F * port m (halfStart side i) ∧
+        (pieces i).finish.val = relabel F * port m (halfFinish side i)) ∧
+      w.IsHamiltonianCycle ∧
+      (∀ i, (pieces i).walk.IsPath) ∧
+      ((List.ofFn pieces).flatMap fun p => p.walk.support).Perm w.support.tail ∧
+      ((List.ofFn pieces).flatMap fun p => p.walk.edges).Perm
+        (w.edges.filter fun e => decide (e ∉ cuts)) ∧
+      (∀ e ∈ cuts, e ∈ w.edges) := by
+  classical
+  dsimp only
+  let iso := frameDomainIso hm F
+  obtain ⟨rawPieces, hend, _, _, _, hs, he, hc⟩ :=
+    native_actual_j2_half_paths hm side (F2Domain m) (fun _ => Iff.rfl) rawWalk hraw hinv
+  let pieces (i : Fin 3) := mapPiece iso.toHom (rawPieces i)
+  have hlist : List.ofFn pieces = (List.ofFn rawPieces).map (mapPiece iso.toHom) := by
+    rw [List.map_ofFn]
+    rfl
+  obtain ⟨_, hp, hs', he', hc'⟩ := actual_cycle_partition_map iso.toHom
+    iso.toEquiv.injective rawWalk hraw.isCycle (List.ofFn rawPieces)
+    (actualHalfCuts (F2Domain m) side) hs he hc
+  refine ⟨pieces, ?_,
+    SimpleGraph.Walk.IsHamiltonianCycle.map iso.toEquiv.bijective hraw,
+    ?_, ?_, ?_, hc'⟩
+  · intro i
+    change relabel F * (rawPieces i).start.val = _ ∧
+      relabel F * (rawPieces i).finish.val = _
+    rw [(hend i).1, (hend i).2]
+    exact ⟨rfl, rfl⟩
+  · intro i
+    apply hp (pieces i)
+    rw [← hlist]
+    exact List.mem_ofFn.mpr ⟨i, rfl⟩
+  · simpa only [hlist] using hs'
+  · simpa only [hlist] using he'
+
 #print axioms native_actual_j2_half_paths
+#print axioms native_actual_j2_frame_half_paths
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2HalfPaths
