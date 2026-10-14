@@ -1911,3 +1911,423 @@ established here; no new external open-problem settlement is
 claimed.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 17. Two-arm phase gluing gives bidirectional orbit stability
+
+**Definition 17.1 (The actual three-sector rectangle averages).**
+Partition the full internally legal half-chain words into
+$L_a,R_b$ by their cut-boundary occupations. Write the
+same original law as
+
+$$
+p(\ell,r)=p_{ab}\mu_a(\ell)\nu_b(r),\qquad
+\alpha=p_{00},\quad\beta=p_{01},\quad\zeta=p_{10},
+\quad\alpha+\beta+\zeta=1.
+\tag{17.1}
+$$
+
+All three masses are positive; the sector $11$ is absent.
+The measures $\mu_a,\nu_b$ are the normalized product
+weights on actual words with the specified boundary bit.
+They do not depend on the opposite boundary bit. Retain an
+arbitrary unit phase $\chi(\ell,r)$ on every legal pair,
+without requiring it to be constant within a sector.
+
+For four legal corners put
+
+$$
+Q(\ell,\ell';r,r')=
+\frac{\chi(\ell,r)\chi(\ell',r')}
+{\chi(\ell',r)\chi(\ell,r')}.
+\tag{17.2}
+$$
+
+Let $T_{ab}$ be the mean of $|1-Q|^2$ for two independent
+rows sampled from $\mu_a$ and two independent columns
+from $\nu_b$. Let $T_L$ sample row types $0,1$ and two
+columns from $\nu_0$; let $T_R$ sample two rows from
+$\mu_0$ and column types $0,1$. Every mean uses the
+original conditional laws in (17.1).
+
+**Theorem 17.2 (Three-sector orbit comparison).**
+For the purity deficit and cut-local diagonal orbit distance
+of §§11 and 14,
+
+$$
+C_{\rm cut}\,\delta_{\rm local}(\chi)
+\le\Delta_2(\chi)\le2\delta_{\rm local}(\chi),
+\qquad
+C_{\rm cut}=\frac12\max\{\alpha,\min(\beta,\zeta)\}.
+\tag{17.3}
+$$
+
+If $s_-$ is the smaller positive reference Schmidt
+probability, then
+
+$$
+s_-=rac{1-\sqrt{1-4\beta\zeta}}2,
+\qquad C_{\rm cut}\ge\frac{s_-}{2}.
+\tag{17.4}
+$$
+
+Consequently the entropy excess is at least
+$C_{\rm cut}\delta_{\rm local}$. No optimality of the
+constant is asserted.
+
+Proof. Sorting the full rectangle identity (11.5) by its
+boundary-bit types gives exactly
+
+$$
+\Delta_2=
+\frac{\alpha^2}{2}T_{00}
++\frac{\beta^2}{2}T_{01}
++\frac{\zeta^2}{2}T_{10}
++\alpha\zeta T_L+\alpha\beta T_R.
+\tag{17.5}
+$$
+
+Mixed row types have two orientations, as do mixed column
+types. A rectangle mixing both row and column types would
+contain a forbidden $11$ corner and is absent. The four
+amplitude product in each remaining sector equals the
+product of its conditional sampling weights and the
+corresponding sector masses. This proves (17.5) without
+compressing $\chi$ to sector constants.
+
+Theorem 14.2 already gives
+$\Delta_2\ge\alpha\delta_{\rm local}/2$.
+For a second construction sample independently
+
+$$
+u\sim\mu_0,\quad s\sim\mu_1,\quad
+v\sim\nu_0,\quad t\sim\nu_1,
+\qquad
+c=\frac{\chi(u,v)}{\chi(u,t)\chi(s,v)}.
+\tag{17.6}
+$$
+
+Define phases on all actual half-chain words by
+
+$$
+a(\ell)=
+\begin{cases}
+\chi(\ell,t),&\ell\in L_0,\\
+\chi(\ell,v)/(c\chi(s,v)),&\ell\in L_1,
+\end{cases}
+\qquad
+b(r)=
+\begin{cases}
+c\chi(s,r),&r\in R_0,\\
+\chi(u,r)/\chi(u,t),&r\in R_1.
+\end{cases}
+\tag{17.7}
+$$
+
+The $01$ and $10$ residuals are their same-sector
+rectangle phases. Their mean squared errors are
+$\beta T_{01}$ and $\zeta T_{10}$. On $00$ the residual
+factorizes as
+
+$$
+\frac{\chi(\ell,r)}{a(\ell)b(r)}
+=
+\frac{\chi(\ell,r)\chi(u,t)}
+{\chi(\ell,t)\chi(u,r)}
+\frac{\chi(u,r)\chi(s,v)}
+{\chi(u,v)\chi(s,r)}.
+\tag{17.8}
+$$
+
+These two factors are a $T_R$ rectangle and a $T_L$
+rectangle. They share sampled corners; independence of
+these factors is neither used nor asserted. For unit
+$q,q'$ the triangle inequality gives
+
+$$
+|1-qq'|^2\le2|1-q|^2+2|1-q'|^2.
+\tag{17.9}
+$$
+
+Each candidate gauge has error at least the orbit infimum.
+Average (17.7) over its finite anchor family to obtain
+
+$$
+\delta_{\rm local}
+\le\beta T_{01}+\zeta T_{10}
++2\alpha(T_L+T_R).
+\tag{17.10}
+$$
+
+Multiplying this right side by
+$\min(\beta,\zeta)/2$ and comparing each nonnegative
+term with (17.5) proves the second lower coefficient.
+Combining the two constructions proves the lower bound
+in (17.3).
+
+For the upper bound let $B_{\ell r}=\sqrt{p(\ell,r)}$
+and, for any candidate gauge, let
+$A_{\ell r}=B_{\ell r}\chi(\ell,r)/(a(\ell)b(r))$.
+Both matrices vanish on forbidden pairs. Use the established
+Schatten norm, as defined by Watrous,
+[*The Theory of Quantum Information*, §1.1.3,
+equations (1.165)–(1.167) and (1.173)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf).
+The function $F(M)=\|M\|_4^4=\operatorname{Tr}(MM^*)^2$
+is convex: norm convexity followed by convexity and
+monotonicity of the fourth power proves this. Its real
+directional derivative at $B$ gives
+
+$$
+F(B)-F(A)\le4\operatorname{Re}
+\langle BB^*B,B-A\rangle.
+\tag{17.11}
+$$
+
+The positive reference is the local isometric image of
+$B_0=\left(\begin{smallmatrix}\sqrt\alpha&\sqrt\beta\\
+\sqrt\zeta&0\end{smallmatrix}\right)$.
+On its three legal sectors direct multiplication gives
+
+$$
+\frac{(BB^*B)_{\ell r}}{B_{\ell r}}=
+\begin{cases}
+1,&00,\\
+\alpha+\beta,&01,\\
+\alpha+\zeta,&10.
+\end{cases}
+\tag{17.12}
+$$
+
+Every coefficient lies in $[0,1]$, and
+$|1-e|^2=2(1-\operatorname{Re}e)$ for a unit phase $e$.
+Thus (17.11) is at most twice this candidate gauge's
+weighted squared error. Its left side is $\Delta_2$,
+because row and column phase multiplication preserves
+purity. Take the infimum over all candidate gauges to get
+the upper bound in (17.3).
+
+Finally $s_-(1-s_-)=\beta\zeta$ and $s_-\le1/2$.
+For either $b=\beta$ or $b=\zeta$, the other mass is
+at most $1-b$, so $s_-(1-s_-)\le b(1-b)$.
+If $b<s_-$, both factors in
+$(s_--b)(1-s_--b)$ are positive, contradicting that
+inequality. Hence $\min(\beta,\zeta)\ge s_-$,
+proving (17.4). Apply Theorem 11.2 for the entropy
+consequence. $\square$
+
+The coefficient uses the realized law rather than a full
+vacuum probability. If the adjacent activities are bounded,
+Theorem 14.3 already supplies a size-independent lower
+bound. Alternatively a nondegenerate reference Schmidt
+probability controls it through (17.4). This is distance
+to diagonal row/column phases, not to the orbit under all
+local unitaries.
+
+**Proposition 17.3 (Full-support degeneration and inefficient vacuum anchoring).**
+On $P_3$ with the cut after site 2, choose
+$(\lambda_1,\lambda_2,\lambda_3)=(1,t^2,t)$,
+$t>0$, and $\chi(S)=(-1)^{s_1s_3}$. Then
+
+$$
+Z=t^2+2t+2,\quad
+\alpha=2/Z,\quad\beta=2t/Z,\quad\zeta=t^2/Z,
+\tag{17.13}
+$$
+
+and the exact orbit quantities are
+
+$$
+\Delta_2=2\alpha\beta,\qquad
+\delta_{\rm local}
+=2\left(\alpha+\beta-\sqrt{\alpha^2+\beta^2}\right),
+\qquad W=4t/Z.
+\tag{17.14}
+$$
+
+Every finite $t$ has full legal support, but
+
+$$
+\frac{\Delta_2}{\delta_{\rm local}}
+=\frac{\alpha+\beta+\sqrt{\alpha^2+\beta^2}}2
+\sim s_-\sim\frac2t\longrightarrow0,
+\qquad
+\frac{W}{\delta_{\rm local}}\sim t.
+\tag{17.15}
+$$
+
+Proof. The only nontrivial rectangle uses the two $L_0$
+rows and the two right words, giving $\Delta_2=8t/Z^2$.
+For the exact gauge optimization choose the relative column
+phase $e^{i\varphi}$. Optimizing each row phase separately
+gives overlap
+
+$$
+\zeta+\frac{|1+te^{i\varphi}|+|1-te^{i\varphi}|}{Z}.
+\tag{17.16}
+$$
+
+The sum is at most $2\sqrt{1+t^2}$ by the scalar
+Cauchy inequality, attained when $\cos\varphi=0$.
+The orbit distance is twice one minus the maximal overlap,
+which gives (17.14). The vacuum gauge differs only on
+$101$, proving the formula for $W$. Rationalizing the
+distance proves (17.15). Also
+$\Delta_2=2W/Z$ exactly. $\square$
+
+Thus activity or cut-spectrum degeneration cannot be removed
+from every positive lower comparison. The canonical vacuum
+bound can be attained even when its chosen gauge is
+arbitrarily worse than the closest diagonal local gauge.
+
+## 18. Extended mirror signs have extensive energy after every local phase gauge
+
+**Definition 18.1 (The actual parent energy on a phase orbit).**
+Retain the parent $H$ of Definition 1.2 and its occupied
+endpoint form (6.2). Put
+
+$$
+E_{\rm orb}(\chi)=\inf_{|a|=|b|=1}
+\sum_Sp(S)\sum_{i\in S}\frac{w_i}{1+\lambda_i}
+\left|\frac{\chi(S)}{a(\ell_S)b(r_S)}-
+\frac{\chi(S\setminus\{i\})}
+{a(\ell_{S\setminus\{i\}})b(r_{S\setminus\{i\}})}\right|^2.
+\tag{18.1}
+$$
+
+The infimum changes only the phase representative. It
+retains the original law, weighted parent and deletion
+clocks, and does not conjugate the parent with the phase.
+
+**Theorem 18.2 (Robust extensive mirror obstruction).**
+On $P_{2m}$, $m\ge2$, cut after site $m$. Assume
+$0<\ell_0\le\lambda_i\le M$ and $w_i>0$, and define
+
+$$
+\chi(S)=(-1)^{\sum_{h=2}^m s_{m+1-h}s_{m+h}},
+\qquad
+\eta=\frac{\ell_0}{(1+M)^2+\ell_0}.
+\tag{18.2}
+$$
+
+Then
+
+$$
+E_{\rm orb}(\chi)\ge
+\frac{4\eta^2}{1+M}
+\sum_{h=2}^m(w_{m+1-h}+w_{m+h}).
+\tag{18.3}
+$$
+
+In particular, for uniform activities and weights equal to
+one, with the actual deletion rates $d_i=1/2$,
+
+$$
+E_{\rm orb}(\chi)\ge\frac{4(m-1)}{25}.
+\tag{18.4}
+$$
+
+Proof. On any path segment with activities in the stated
+range, the occupation odds at a free site are its activity
+times the vacancy probabilities at the endpoints of the
+two adjacent segments. Each such endpoint vacancy is at
+least $1/(1+M)$; an absent segment contributes one.
+Thus its occupation probability $u$ satisfies
+
+$$
+\eta\le u\le\frac{M}{1+M},\qquad
+1-u\ge\frac1{1+M}\ge\eta.
+\tag{18.5}
+$$
+
+The same assertion holds if an end site is forced vacant,
+after deleting that site and considering the remaining
+segment. The final inequality follows from
+$\ell_0\le M$.
+
+Fix any complete left word containing a matching endpoint
+$i=m+1-h$, $h\ge2$, with partner $j=m+h$.
+Conditionally on that left word the right side is its
+original Gibbs path, with at most its first site forced
+vacant. The partner $j\ge m+2$ is free, so its conditional
+occupation probability satisfies (18.5).
+
+Deleting $i$ changes only its matched sign. For any chosen
+row and column gauge, the column gauge cancels in the
+phase increment, and the row-gauge ratio is one unit
+complex number fixed by the left word. For a Bernoulli
+occupation with parameter $u$, and every unit $z$,
+
+$$
+\mathbb E\left|(-1)^{s_j}-z\right|^2
+\ge\min_{|z'|=1}\mathbb E\left|(-1)^{s_j}-z'\right|^2
+=4\min(u,1-u)\ge4\eta.
+\tag{18.6}
+$$
+
+The unconditional probability that $i$ is occupied is at
+least $\eta$, and its actual deletion rate is at least
+$w_i/(1+M)$. Its energy contribution is therefore at
+least $4\eta^2w_i/(1+M)$ for every gauge. The symmetric
+argument applies to the right endpoint. All matching
+endpoints are distinct, so their nonnegative contributions
+add without counting an update twice. This proves (18.3)
+for every gauge and hence for the infimum. With
+$\ell_0=M=1$, $\eta=1/5$, giving (18.4). $\square$
+
+For the uniform family, $\alpha\ge1/3$ by Theorem 14.3,
+and $\beta,\zeta\ge1/5$ by (18.5). In particular the
+reference cut spectrum stays nondegenerate. Nevertheless
+$\delta_{\rm local}\le2$ and $\Delta_2\le1$, while
+(18.4) grows with $m$. Thus bounded activities, bounded
+actual update rates and a nondegenerate cut spectrum do not
+supply any size-independent constant C for either
+$E_{\rm orb}\le C\delta_{\rm local}$ or
+$E_{\rm orb}\le C\Delta_2$. Rescaling all weights changes
+the parent and the energy bound and must be stated explicitly.
+
+The established spectral comparison remains valid with its
+actual global scale. Write $\Omega_H=\|H\|=\Lambda$
+and retain the gap $\gamma$ of Definition 1.2. For any
+unit phase $f$, the simple zero eigenspace gives
+
+$$
+\gamma\left(1-|\mathbb E_pf|^2\right)
+\le\langle\Psi_f,H\Psi_f\rangle
+\le\Omega_H\left(1-|\mathbb E_pf|^2\right),
+\qquad\Omega_H\le\sum_iw_i.
+\tag{18.7}
+$$
+
+Overall phase is an allowed local gauge. Compactness of the
+finite phase tori gives the maximal absolute overlap
+$M_\chi=\max_{|a|=|b|=1}|\mathbb E_p[\chi/(ab)]|
+=1-\delta_{\rm local}/2$. Applying the lower
+bound to every gauge and the upper bound at a
+maximum-overlap gauge yields
+
+$$
+\gamma\left(\delta_{\rm local}-
+\frac{\delta_{\rm local}^2}{4}\right)
+\le E_{\rm orb}\le
+\Omega_H\left(\delta_{\rm local}-
+\frac{\delta_{\rm local}^2}{4}\right).
+\tag{18.8}
+$$
+
+This reuses the spectral theorem; it does not equate the
+energy and distance optimizers. Combining it with the new
+same-law estimate (17.3), and monotonicity of
+$x-x^2/4$ on $[0,2]$, gives
+
+$$
+\gamma\left(\frac{\Delta_2}{2}-\frac{\Delta_2^2}{16}\right)
+\le E_{\rm orb}\le\frac{\Omega_H}{C_{\rm cut}}\Delta_2.
+\tag{18.9}
+$$
+
+The global factor in this upper comparison cannot be
+replaced by only the cut activities and reference spectrum,
+as (18.4) proves. None of these parent expectations assigns
+a physical energy unit or the work of acquiring the phases.
+
+## 追加锚（本行以下为增补区）
