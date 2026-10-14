@@ -4,6 +4,42 @@
 
 Full-half-line squared erasure comparisons
 
+**Definition 1.1 (cellMass).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass`
+
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any measurable source, class and observation maps, cellMass(mu,q,w,b,a) is mu(q=a and w=b), in ENNReal. The actual quotient/MAP bridge uses this same joint cell, including null cells.
+
+**Theorem 1.2 (current map error).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original theta and radius, an actual finite-word classifier attains classError and maximizes each class/word cellMass. OriginalUnifilarQuotient.actual_map_pairs uses both conclusions directly. The original universal theorem remains its other live consumer.
+
+**Theorem 1.3 (error mass formula).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any probability measure, measurable finite class and observation maps, and classifier m, its disagreement mass is one minus the sum over observation b of cellMass(b,m(b)). The existing mapClassifier_optimal remains its live consumer.
+
 Fix a finite hidden alphabet H with measurable singletons and an arbitrary original Presentation theta. Use exactly OriginalLawTrimming.jointLaw(theta), denoted J, and its actual visible pushforward visibleLaw(theta), denoted P. Classes are OriginalFutureScreening.originalClass(theta,t), the existing future-profile quotient after the proved law-preserving positive-support trimming, extended measurably over original null states. No unifilarity, positive original stationary masses, ergodicity, reversibility, time reversal or exact synchronization is assumed.
 
 For a visible integer path z, before(z)(n)=z(-n-1) and after(z)(n)=z(n+1), for every natural n. exterior(z) is the pair of these complete sequences, omitting precisely coordinate zero. leftWord(r,z)(i)=z(-r+i) and rightWord(r,z)(i)=z(i+1), for i in Fin r, in chronological order. leftObservation is (leftWord,after), retaining the entire future after zero; rightObservation is (before,rightWord), retaining the entire past before zero. At r=0 both finite words are empty, while these entire opposite half-lines remain. Each one-sided observation omits one adjacent coordinate. No forced-zero radius-zero defect is claimed.
@@ -12,7 +48,7 @@ erasedBit(z) is the real indicator of z(0)=true. bitPredictor(mu,x,o)(e) is the 
 
 classError(theta,r) is the ENNReal infimum, over all finite-word classifiers m from (Fin r to Bool) to the trimmed future classes, of J(originalClass(theta,0) differs from m(leftWord(r))). A fixed ordering induced by Fintype.equivFin resolves MAP ties by selecting the first class maximizing the actual joint mass of class and word. Every word, including a zero-mass word, receives a class. The finite success partition proves actual MAP attainment of this infimum.
 
-**Theorem 1.1 (Universal comparisons on the selected original realization).**
+**Theorem 1.4 (Universal comparisons on the selected original realization).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.full_half_line_erasure_comparison`
 
@@ -34,6 +70,9 @@ All coordinate reconstruction arguments include Fin 0 and use the original emitt
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.full_half_line_erasure_comparison`
 - Dependency: [D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality](../../../ConceptDynamics/Prediction/ConditionalExpectationOptimality.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureScreening](OriginalFutureScreening.md)

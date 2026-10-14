@@ -105,7 +105,7 @@ def classError (θ : Presentation H) (r : ℕ) : ℝ≥0∞ :=
   ⨅ m : (Fin r → Bool) → FutureClass (PositiveSupportPresentation.trim θ).matrix,
     (jointLaw θ : Measure (PathSpace H)) {z | originalClass θ 0 z ≠ m (leftWord r z.2)}
 
-private def cellMass {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
+def cellMass {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
     [MeasurableSpace W] (μ : Measure Ω) (q : Ω → Q) (w : Ω → W) (b : W) (a : Q) :
     ℝ≥0∞ := μ ((q ⁻¹' {a}) ∩ (w ⁻¹' {b}))
 
@@ -131,7 +131,7 @@ private theorem mapClassifier_max {Ω Q W : Type*} [MeasurableSpace Ω] [Measura
   letI : LinearOrder Q := LinearOrder.lift' (Fintype.equivFin Q) (Fintype.equivFin Q).injective
   exact (Finset.mem_filter.mp (Finset.min'_mem _ (maximizers_nonempty (cellMass μ q w b)))).2 a
 
-private theorem error_mass_formula {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
+theorem error_mass_formula {Ω Q W : Type*} [MeasurableSpace Ω] [MeasurableSpace Q]
     [MeasurableSpace W] [MeasurableSingletonClass Q] [MeasurableSingletonClass W]
     [Fintype W] [Finite Q] (μ : Measure Ω) [IsProbabilityMeasure μ]
     (q : Ω → Q) (w : Ω → W) (hq : Measurable q) (hw : Measurable w) (m : W → Q) :
@@ -168,7 +168,7 @@ private theorem mapClassifier_optimal {Ω Q W : Type*} [MeasurableSpace Ω] [Mea
   rw [error_mass_formula μ q w hq hw,error_mass_formula μ q w hq hw]
   exact tsub_le_tsub_left (Finset.sum_le_sum fun b _ => mapClassifier_max μ q w b (m b)) 1
 
-private theorem current_map_error (θ : Presentation H) (r : ℕ) :
+theorem current_map_error (θ : Presentation H) (r : ℕ) :
     ∃ m : (Fin r → Bool) → FutureClass (PositiveSupportPresentation.trim θ).matrix,
       (jointLaw θ : Measure (PathSpace H)) {z | originalClass θ 0 z ≠ m (leftWord r z.2)} = classError θ r ∧
       ∀ w a, cellMass (jointLaw θ : Measure (PathSpace H)) (originalClass θ 0)
