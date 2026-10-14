@@ -164,7 +164,7 @@ namespace D5.S3.Analytic.Probability.BernoulliTriangularLimits
 open D5.S3.Analytic.Probability.UniformCDFConvergence
 def rowMean {m : ℕ} (p : Fin m → unitInterval) : ℝ := ∑ i, (p i:ℝ)
 
-def rowVariance {m : ℕ} (p : Fin m → unitInterval) : ℝ := ∑ i, bernoulliVariance (p i:ℝ)
+def rowVariance {m : ℕ} (p : Fin m → unitInterval) : ℝ := ∑ i, ((p i:ℝ) * (1 - (p i:ℝ)))
 open Polynomial Finset Filter Real MeasureTheory ProbabilityTheory
 open scoped BigOperators unitInterval
 
@@ -267,7 +267,7 @@ private lemma measurable_rowFourierCutoff {m : ℕ} (p : Fin m → ℝ) (V : ℝ
   · exact measurableSet_le continuous_abs.measurable measurable_const
 
 private lemma cutoff_bernoulli_gaussian_envelope {m : ℕ} (p : Fin m → ℝ) (V u : ℝ)
-    (hV : 0 < V) (hVeq : V = ∑ i, bernoulliVariance (p i)) :
+    (hV : 0 < V) (hVeq : V = ∑ i, (p i * (1 - p i))) :
     ‖rowFourierCutoff p V u‖ ≤ Real.exp (-2*u^2/Real.pi^2) := by
   simp only [rowFourierCutoff, Set.indicator_apply, Set.mem_ofPred_eq]
   split_ifs with hu
@@ -277,9 +277,9 @@ private lemma cutoff_bernoulli_gaussian_envelope {m : ℕ} (p : Fin m → ℝ) (
 
 private lemma rowFourierCutoff_tendsto {m : ℕ → ℕ} (p : ∀ n, Fin (m n) → ℝ) (V : ℕ → ℝ)
     (hvalid : ∀ᶠ n in atTop, (∀ i, 0 ≤ p n i ∧ p n i ≤ 1) ∧
-      V n = ∑ i, bernoulliVariance (p n i) ∧ 0 < V n)
+      V n = ∑ i, (p n i * (1 - p n i)) ∧ 0 < V n)
     (hV : Tendsto V atTop atTop)
-    (hVeq : ∀ n, V n = ∑ i, bernoulliVariance (p n i)) (u : ℝ) :
+    (hVeq : ∀ n, V n = ∑ i, (p n i * (1 - p n i))) (u : ℝ) :
     Tendsto (fun n => rowFourierCutoff (p n) (V n) u) atTop
       (𝓝 (Real.exp (-u^2/2):ℂ)) := by
   have hcf := centered_bernoulli_charFun_tendsto p V u hvalid hV hVeq
@@ -294,9 +294,9 @@ private lemma rowFourierCutoff_tendsto {m : ℕ → ℕ} (p : ∀ n, Fin (m n) �
 private lemma bernoulli_array_fourier_L1_gaussian_limit {m : ℕ → ℕ}
     (p : ∀ n, Fin (m n) → ℝ) (V : ℕ → ℝ)
     (hvalid : ∀ᶠ n in atTop, (∀ i, 0 ≤ p n i ∧ p n i ≤ 1) ∧
-      V n = ∑ i, bernoulliVariance (p n i) ∧ 0 < V n)
+      V n = ∑ i, (p n i * (1 - p n i)) ∧ 0 < V n)
     (hV : Tendsto V atTop atTop)
-    (hVeq : ∀ n, V n = ∑ i, bernoulliVariance (p n i)) :
+    (hVeq : ∀ n, V n = ∑ i, (p n i * (1 - p n i))) :
     Tendsto (fun n => ∫ u : ℝ,
       ‖rowFourierCutoff (p n) (V n) u - (Real.exp (-u^2/2):ℂ)‖) atTop (𝓝 0) := by
   have hboundInt : Integrable (fun u : ℝ =>
@@ -467,7 +467,7 @@ private lemma integrable_phase_mul {f : ℝ → ℂ} (hf : Integrable f) (t : �
     rw [norm_mul,phase_norm,mul_one])
 
 private lemma integrable_rowFourierCutoff {m : ℕ} (p : Fin m → ℝ) (V : ℝ)
-    (hV : 0<V) (hVeq : V=∑ i, bernoulliVariance (p i)) :
+    (hV : 0<V) (hVeq : V=∑ i, (p i * (1 - p i))) :
     Integrable (rowFourierCutoff p V) := by
   have hg : Integrable (fun u : ℝ => Real.exp (-2*u^2/Real.pi^2)) := by
     convert integrable_exp_neg_mul_sq (by positivity : 0<(2:ℝ)/Real.pi^2) using 1
@@ -525,7 +525,7 @@ lemma bernoulli_array_uniform_lattice_limit {m : ℕ → ℕ}
         (ProbabilityTheory.gaussianPDFReal 0 1) (((k:ℝ)-rowMean (p n))/Real.sqrt (rowVariance (p n)))| < ε := by
   have hvalid : ∀ᶠ n in atTop,
       (∀ i, 0≤(p n i:ℝ) ∧ (p n i:ℝ)≤1) ∧
-      rowVariance (p n)=∑ i, bernoulliVariance (p n i:ℝ) ∧ 0<rowVariance (p n) := by
+      rowVariance (p n)=∑ i, ((p n i:ℝ) * (1 - (p n i:ℝ))) ∧ 0<rowVariance (p n) := by
     filter_upwards [hV.eventually_gt_atTop 0] with n hn
     exact ⟨fun i => ⟨(p n i).2.1,(p n i).2.2⟩,rfl,hn⟩
   have hL1 := bernoulli_array_fourier_L1_gaussian_limit
@@ -742,8 +742,8 @@ private lemma mu_mul (f h : ℝ[X]) (hf : f.eval 1 ≠ 0) (hh : h.eval 1 ≠ 0) 
 private lemma mu_bernoulliPGF (p : ℝ) : mu (bernoulliPGF p) = p := by
   simp [mu,bernoulliPGF]
 
-private lemma sigmaSq_bernoulliPGF (p : ℝ) : sigmaSq (bernoulliPGF p) = bernoulliVariance p := by
-  simp [sigmaSq,mu,bernoulliPGF,bernoulliVariance]
+private lemma sigmaSq_bernoulliPGF (p : ℝ) : sigmaSq (bernoulliPGF p) = (p * (1 - p)) := by
+  simp [sigmaSq,mu,bernoulliPGF]
   ring
 
 private lemma bernoulli_product_eval_one {ι : Type*} (s : Finset ι) (p : ι → ℝ) :
@@ -761,7 +761,7 @@ private lemma bernoulli_product_mu {ι : Type*} (s : Finset ι) (p : ι → ℝ)
       (by rw [bernoulli_product_eval_one]; norm_num),mu_bernoulliPGF,ih]
 
 private lemma bernoulli_product_sigmaSq {ι : Type*} (s : Finset ι) (p : ι → ℝ) :
-    sigmaSq (∏ i ∈ s, bernoulliPGF (p i)) = ∑ i ∈ s, bernoulliVariance (p i) := by
+    sigmaSq (∏ i ∈ s, bernoulliPGF (p i)) = ∑ i ∈ s, (p i * (1 - p i)) := by
   classical
   induction s using Finset.induction_on with
   | empty => simp [sigmaSq,mu]

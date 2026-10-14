@@ -33,11 +33,9 @@
      consumers: bernoulli_array_uniform_gaussian_cdf.
    bernoulli_third_moment_bound: proof_shape: bind-only; escape_witness: none;
      consumers: centered_bernoulli_single_gaussian_error.
-   bernoulliVariance: proof_shape: bind-only; escape_witness: none;
-     consumers: rowVariance, cutoff_bernoulli_gaussian_envelope, rowFourierCutoff_tendsto, bernoulli_array_fourier_L1_gaussian_limit, integrable_rowFourierCutoff, bernoulli_array_uniform_lattice_limit, bernoulli_array_uniform_gaussian_cdf, sigmaSq_bernoulliPGF, bernoulli_product_sigmaSq, factorization_moments, bernoulliVariance_bounds, centered_bernoulli_product_error_of_single, centered_bernoulli_product_gaussian_error_of_single, centered_bernoulli_single_gaussian_error, centered_bernoulli_product_gaussian_error, centered_bernoulli_charFun_tendsto, bernoulli_char_norm_sq, centered_bernoulli_gaussian_envelope, centered_bernoulli_product_envelope, normalized_bernoulli_product_envelope.
    centeredBernoulli: proof_shape: bind-only; escape_witness: none;
      consumers: rowFourierCutoff, measurable_rowFourierCutoff, cutoff_bernoulli_gaussian_envelope, rowFourierCutoff_tendsto, centered_rowPhi, scaled_lattice_fourier_inversion, cutoff_lattice_fourier_inversion, standardizedRow_charFun, bernoulli_array_uniform_gaussian_cdf, centeredBernoulli_norm_le, centered_bernoulli_product_error_of_single, centered_bernoulli_product_gaussian_error_of_single, centered_bernoulli_single_gaussian_error, centered_bernoulli_charFun_tendsto, centeredBernoulli_eq_phase, centered_bernoulli_gaussian_envelope, centered_bernoulli_product_envelope, normalized_bernoulli_product_envelope.
-   bernoulliVariance_bounds: proof_shape: bind-only; escape_witness: none;
+   bernoulli_variance_bounds: proof_shape: bind-only; escape_witness: none;
      frozen_dependencies: F0, F1.
      consumers: centered_bernoulli_product_error_of_single, centered_bernoulli_single_gaussian_error.
    centeredBernoulli_norm_le: proof_shape: bind-only; escape_witness: none;
@@ -230,14 +228,12 @@ private lemma bernoulli_third_moment_bound (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p �
 open Finset Filter Real
 open scoped BigOperators
 
-def bernoulliVariance (p : ℝ) : ℝ := p*(1-p)
 def centeredBernoulli (p s : ℝ) : ℂ :=
   (1-p:ℝ)*Complex.exp ((-s*p:ℝ)*Complex.I) +
     (p:ℝ)*Complex.exp ((s*(1-p):ℝ)*Complex.I)
 
-private lemma bernoulliVariance_bounds (p : ℝ) (hp0 : 0≤p) (hp1 : p≤1) :
-    0 ≤ bernoulliVariance p ∧ bernoulliVariance p ≤ 1/4 := by
-  unfold bernoulliVariance
+private lemma bernoulli_variance_bounds (p : ℝ) (hp0 : 0≤p) (hp1 : p≤1) :
+    0 ≤ (p * (1 - p)) ∧ (p * (1 - p)) ≤ 1/4 := by
   let t : unitInterval := ⟨p, hp0, hp1⟩
   constructor
   · exact mul_nonneg hp0 (by linarith)
@@ -295,46 +291,46 @@ private lemma product_difference_norm {ι : Type*} (s : Finset ι) (f h : ι →
 private lemma centered_bernoulli_product_error_of_single {m : ℕ} (p : Fin m → ℝ)
     (hp : ∀ i, 0≤p i ∧ p i≤1) (s : ℝ)
     (hlocal : ∀ i, ‖centeredBernoulli (p i) s -
-      (Real.exp (-s^2*bernoulliVariance (p i)/2):ℂ)‖ ≤
-      bernoulliVariance (p i)*|s|^3/6 + bernoulliVariance (p i)^2*s^4/8) :
+      (Real.exp (-s^2*(p i * (1 - p i))/2):ℂ)‖ ≤
+      (p i * (1 - p i))*|s|^3/6 + (p i * (1 - p i))^2*s^4/8) :
     ‖(∏ i, centeredBernoulli (p i) s) -
-      (Real.exp (-s^2*(∑ i, bernoulliVariance (p i))/2):ℂ)‖ ≤
-      (∑ i, bernoulliVariance (p i))*|s|^3/6 +
-        (∑ i, bernoulliVariance (p i))*s^4/32 := by
-  have he : (Real.exp (-s^2*(∑ i, bernoulliVariance (p i))/2):ℂ) =
-      ∏ i, (Real.exp (-s^2*bernoulliVariance (p i)/2):ℂ) := by
+      (Real.exp (-s^2*(∑ i, (p i * (1 - p i)))/2):ℂ)‖ ≤
+      (∑ i, (p i * (1 - p i)))*|s|^3/6 +
+        (∑ i, (p i * (1 - p i)))*s^4/32 := by
+  have he : (Real.exp (-s^2*(∑ i, (p i * (1 - p i)))/2):ℂ) =
+      ∏ i, (Real.exp (-s^2*(p i * (1 - p i))/2):ℂ) := by
     rw [← Complex.ofReal_prod, ← Real.exp_sum]
     congr 2
     simp only [sum_div, mul_sum]
   rw [he]
   calc
     _ ≤ ∑ i, ‖centeredBernoulli (p i) s -
-        (Real.exp (-s^2*bernoulliVariance (p i)/2):ℂ)‖ :=
+        (Real.exp (-s^2*(p i * (1 - p i))/2):ℂ)‖ :=
       product_difference_norm univ _ _
         (fun i _ => centeredBernoulli_norm_le _ _ (hp i).1 (hp i).2)
-        (fun i _ => gaussian_factor_norm_le _ _ (bernoulliVariance_bounds _ (hp i).1 (hp i).2).1)
-    _ ≤ ∑ i, (bernoulliVariance (p i)*|s|^3/6 + bernoulliVariance (p i)*s^4/32) := by
+        (fun i _ => gaussian_factor_norm_le _ _ (bernoulli_variance_bounds _ (hp i).1 (hp i).2).1)
+    _ ≤ ∑ i, ((p i * (1 - p i))*|s|^3/6 + (p i * (1 - p i))*s^4/32) := by
       apply sum_le_sum
       intro i hi
-      have hb := bernoulliVariance_bounds (p i) (hp i).1 (hp i).2
+      have hb := bernoulli_variance_bounds (p i) (hp i).1 (hp i).2
       have hs : 0 ≤ s^4 := by positivity
-      have hsq : bernoulliVariance (p i)^2 ≤ bernoulliVariance (p i)/4 := by nlinarith
+      have hsq : (p i * (1 - p i))^2 ≤ (p i * (1 - p i))/4 := by nlinarith
       have hterm := mul_le_mul_of_nonneg_right hsq hs
       linarith [hlocal i]
     _ = _ := by simp only [sum_add_distrib, sum_div, sum_mul]
 
 private lemma centered_bernoulli_product_gaussian_error_of_single {m : ℕ} (p : Fin m → ℝ)
     (hp : ∀ i, 0≤p i ∧ p i≤1) (u : ℝ)
-    (hV : 0 < ∑ i, bernoulliVariance (p i))
-    (hlocal : ∀ i, ‖centeredBernoulli (p i) (u/√(∑ j, bernoulliVariance (p j))) -
-      (Real.exp (-(u/√(∑ j, bernoulliVariance (p j)))^2*bernoulliVariance (p i)/2):ℂ)‖ ≤
-      bernoulliVariance (p i)*|u/√(∑ j, bernoulliVariance (p j))|^3/6 +
-        bernoulliVariance (p i)^2*(u/√(∑ j, bernoulliVariance (p j)))^4/8) :
-    ‖(∏ i, centeredBernoulli (p i) (u/√(∑ j, bernoulliVariance (p j)))) -
+    (hV : 0 < ∑ i, (p i * (1 - p i)))
+    (hlocal : ∀ i, ‖centeredBernoulli (p i) (u/√(∑ j, (p j * (1 - p j)))) -
+      (Real.exp (-(u/√(∑ j, (p j * (1 - p j))))^2*(p i * (1 - p i))/2):ℂ)‖ ≤
+      (p i * (1 - p i))*|u/√(∑ j, (p j * (1 - p j)))|^3/6 +
+        (p i * (1 - p i))^2*(u/√(∑ j, (p j * (1 - p j))))^4/8) :
+    ‖(∏ i, centeredBernoulli (p i) (u/√(∑ j, (p j * (1 - p j))))) -
       (Real.exp (-u^2/2):ℂ)‖ ≤
-      |u|^3/(6*√(∑ j, bernoulliVariance (p j))) +
-        u^4/(32*(∑ j, bernoulliVariance (p j))) := by
-  let V := ∑ i, bernoulliVariance (p i)
+      |u|^3/(6*√(∑ j, (p j * (1 - p j)))) +
+        u^4/(32*(∑ j, (p j * (1 - p j)))) := by
+  let V := ∑ i, (p i * (1 - p i))
   have hVp : 0<V := hV
   have hs : 0<√V := Real.sqrt_pos.2 hVp
   have hsq : (√V)^2=V := Real.sq_sqrt hVp.le
@@ -526,24 +522,24 @@ open scoped BigOperators
 
 private lemma centered_bernoulli_single_gaussian_error (p s : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     ‖centeredBernoulli p s -
-      (Real.exp (-s^2 * bernoulliVariance p / 2) : ℂ)‖ ≤
-      bernoulliVariance p * |s|^3 / 6 + bernoulliVariance p ^ 2 * s^4 / 8 := by
-  have hv := bernoulliVariance_bounds p hp0 hp1
+      (Real.exp (-s^2 * (p * (1 - p)) / 2) : ℂ)‖ ≤
+      (p * (1 - p)) * |s|^3 / 6 + (p * (1 - p)) ^ 2 * s^4 / 8 := by
+  have hv := bernoulli_variance_bounds p hp0 hp1
   have hthird := bernoulli_third_moment_bound p hp0 hp1
   have ht1 := L4_Taylor3 (-s*p)
   have ht2 := L4_Taylor3 (s*(1-p))
   have hdecomp : centeredBernoulli p s -
-      (1 - bernoulliVariance p * s^2 / 2 : ℂ) =
+      (1 - (p * (1 - p)) * s^2 / 2 : ℂ) =
       (1-p : ℂ) * (Complex.exp ((-s*p : ℝ) * Complex.I) -
         (1 + ((-s*p : ℝ) : ℂ) * Complex.I - ((-s*p : ℝ) : ℂ)^2 / 2)) +
       (p : ℂ) * (Complex.exp ((s*(1-p) : ℝ) * Complex.I) -
         (1 + ((s*(1-p) : ℝ) : ℂ) * Complex.I - ((s*(1-p) : ℝ) : ℂ)^2 / 2)) := by
-    unfold centeredBernoulli bernoulliVariance
+    unfold centeredBernoulli
     push_cast
     ring
   have hrem : ‖centeredBernoulli p s -
-      (1 - bernoulliVariance p * s^2 / 2 : ℂ)‖ ≤
-      bernoulliVariance p * |s|^3 / 6 := by
+      (1 - (p * (1 - p)) * s^2 / 2 : ℂ)‖ ≤
+      (p * (1 - p)) * |s|^3 / 6 := by
     rw [hdecomp]
     calc
       _ ≤ ‖(1-p : ℂ) * (Complex.exp ((-s*p : ℝ) * Complex.I) -
@@ -567,44 +563,43 @@ private lemma centered_bernoulli_single_gaussian_error (p s : ℝ) (hp0 : 0 ≤ 
         have h1abs : |1-p| = 1-p := abs_of_nonneg (by linarith)
         rw [hpabs, h1abs]
         ring
-      _ ≤ bernoulliVariance p * |s|^3 / 6 := by
+      _ ≤ (p * (1 - p)) * |s|^3 / 6 := by
         have hh := mul_le_mul_of_nonneg_right hthird (by positivity : 0 ≤ |s|^3)
-        dsimp [bernoulliVariance]
         nlinarith [hh]
-  let x : ℝ := s^2 * bernoulliVariance p / 2
+  let x : ℝ := s^2 * (p * (1 - p)) / 2
   have hx : 0 ≤ x := by
-    dsimp [x, bernoulliVariance]
+    dsimp [x]
     positivity
   have hexp := L4_Exp2 x hx
   have hgauss : ‖(Real.exp (-x) : ℂ) - (1 - x : ℂ)‖ ≤ x^2/2 := by
     exact_mod_cast hexp
   calc
-    ‖centeredBernoulli p s - (Real.exp (-s^2 * bernoulliVariance p / 2) : ℂ)‖ ≤
-        ‖centeredBernoulli p s - (1 - bernoulliVariance p * s^2 / 2 : ℂ)‖ +
-          ‖(1 - bernoulliVariance p * s^2 / 2 : ℂ) -
-            (Real.exp (-s^2 * bernoulliVariance p / 2) : ℂ)‖ := by
+    ‖centeredBernoulli p s - (Real.exp (-s^2 * (p * (1 - p)) / 2) : ℂ)‖ ≤
+        ‖centeredBernoulli p s - (1 - (p * (1 - p)) * s^2 / 2 : ℂ)‖ +
+          ‖(1 - (p * (1 - p)) * s^2 / 2 : ℂ) -
+            (Real.exp (-s^2 * (p * (1 - p)) / 2) : ℂ)‖ := by
       calc
-        _ = ‖(centeredBernoulli p s - (1 - bernoulliVariance p * s^2 / 2 : ℂ)) +
-            ((1 - bernoulliVariance p * s^2 / 2 : ℂ) -
-              (Real.exp (-s^2 * bernoulliVariance p / 2) : ℂ))‖ := by
+        _ = ‖(centeredBernoulli p s - (1 - (p * (1 - p)) * s^2 / 2 : ℂ)) +
+            ((1 - (p * (1 - p)) * s^2 / 2 : ℂ) -
+              (Real.exp (-s^2 * (p * (1 - p)) / 2) : ℂ))‖ := by
           congr 1
           ring
         _ ≤ _ := norm_add_le _ _
-    _ ≤ bernoulliVariance p * |s|^3 / 6 + x^2/2 := by
+    _ ≤ (p * (1 - p)) * |s|^3 / 6 + x^2/2 := by
       apply add_le_add hrem
       rw [norm_sub_rev]
-      have hxeq : s^2 * bernoulliVariance p / 2 = x := by
+      have hxeq : s^2 * (p * (1 - p)) / 2 = x := by
         dsimp [x]
       calc
-        ‖(Real.exp (-s^2 * bernoulliVariance p / 2) : ℂ) -
-            (1 - bernoulliVariance p * s^2 / 2 : ℂ)‖ =
+        ‖(Real.exp (-s^2 * (p * (1 - p)) / 2) : ℂ) -
+            (1 - (p * (1 - p)) * s^2 / 2 : ℂ)‖ =
             ‖(Real.exp (-x) : ℂ) - (1 - x : ℂ)‖ := by
               congr 1
               rw [← hxeq]
               norm_num
               ring
         _ ≤ x^2/2 := hgauss
-    _ = bernoulliVariance p * |s|^3 / 6 + bernoulliVariance p ^ 2 * s^4 / 8 := by
+    _ = (p * (1 - p)) * |s|^3 / 6 + (p * (1 - p)) ^ 2 * s^4 / 8 := by
       dsimp [x]
       ring_nf
 open Polynomial Finset Filter Real MeasureTheory
@@ -612,24 +607,24 @@ open scoped BigOperators
 
 private lemma centered_bernoulli_product_gaussian_error {m : ℕ} (p : Fin m → ℝ)
     (hp : ∀ i, 0≤p i ∧ p i≤1) (u : ℝ)
-    (hV : 0 < ∑ i, bernoulliVariance (p i)) :
-    ‖(∏ i, centeredBernoulli (p i) (u/√(∑ j, bernoulliVariance (p j)))) -
+    (hV : 0 < ∑ i, (p i * (1 - p i))) :
+    ‖(∏ i, centeredBernoulli (p i) (u/√(∑ j, (p j * (1 - p j))))) -
       (Real.exp (-u^2/2):ℂ)‖ ≤
-      |u|^3/(6*√(∑ j, bernoulliVariance (p j))) +
-        u^4/(32*(∑ j, bernoulliVariance (p j))) := by
+      |u|^3/(6*√(∑ j, (p j * (1 - p j)))) +
+        u^4/(32*(∑ j, (p j * (1 - p j)))) := by
   apply centered_bernoulli_product_gaussian_error_of_single p hp u hV
   intro i
   exact centered_bernoulli_single_gaussian_error (p i)
-    (u/√(∑ j, bernoulliVariance (p j))) (hp i).1 (hp i).2
+    (u/√(∑ j, (p j * (1 - p j)))) (hp i).1 (hp i).2
 open Polynomial Finset Filter Real MeasureTheory Topology
 open scoped BigOperators
 
 lemma centered_bernoulli_charFun_tendsto {m : ℕ → ℕ} (p : ∀ n, Fin (m n) → ℝ)
     (V : ℕ → ℝ) (u : ℝ)
     (hvalid : ∀ᶠ n in atTop, (∀ i, 0 ≤ p n i ∧ p n i ≤ 1) ∧
-      V n = ∑ i, bernoulliVariance (p n i) ∧ 0 < V n)
+      V n = ∑ i, (p n i * (1 - p n i)) ∧ 0 < V n)
     (hV : Tendsto V atTop atTop)
-    (hVeq : ∀ n, V n = ∑ i, bernoulliVariance (p n i)) :
+    (hVeq : ∀ n, V n = ∑ i, (p n i * (1 - p n i))) :
     Tendsto (fun n => ∏ i, centeredBernoulli (p n i) (u / √(V n))) atTop
       (𝓝 (Real.exp (-u^2 / 2) : ℂ)) := by
   have hsqrt : Tendsto (fun n => √(V n)) atTop atTop :=
@@ -654,9 +649,9 @@ lemma centered_bernoulli_charFun_tendsto {m : ℕ → ℕ} (p : ∀ n, Fin (m n)
         (|u|^3 / (6 * √(V n))) + u^4 / (32 * V n) := by
     filter_upwards [hvalid] with n hn
     have hlocal : ∀ i, ‖centeredBernoulli (p n i) (u / √(V n)) -
-        (Real.exp (-(u / √(V n))^2 * bernoulliVariance (p n i) / 2) : ℂ)‖ ≤
-        bernoulliVariance (p n i) * |u / √(V n)|^3 / 6 +
-          bernoulliVariance (p n i)^2 * (u / √(V n))^4 / 8 := by
+        (Real.exp (-(u / √(V n))^2 * (p n i * (1 - p n i)) / 2) : ℂ)‖ ≤
+        (p n i * (1 - p n i)) * |u / √(V n)|^3 / 6 +
+          (p n i * (1 - p n i))^2 * (u / √(V n))^4 / 8 := by
       intro i
       exact centered_bernoulli_single_gaussian_error (p n i) (u / √(V n))
         (hn.1 i).1 (hn.1 i).2
@@ -689,7 +684,7 @@ lemma centeredBernoulli_eq_phase (p s : ℝ) :
 
 private lemma bernoulli_char_norm_sq (p s : ℝ) :
     ‖((1-p : ℝ):ℂ) + (p:ℝ)*Complex.exp ((s:ℂ)*Complex.I)‖^2 =
-      1-4*bernoulliVariance p * Real.sin (s/2)^2 := by
+      1-4*(p * (1 - p)) * Real.sin (s/2)^2 := by
   rw [← Complex.normSq_eq_norm_sq]
   simp only [Complex.exp_mul_I, Complex.normSq_apply, Complex.add_re, Complex.mul_re,
     Complex.add_im, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
@@ -702,39 +697,38 @@ private lemma bernoulli_char_norm_sq (p s : ℝ) :
   have hcos : Real.cos s = 1-2*Real.sin (s/2)^2 := by
     nlinarith [Real.sin_sq_add_cos_sq (s/2)]
   simp only [mul_zero,zero_mul,mul_one,add_zero,zero_add,sub_zero]
-  unfold bernoulliVariance
   calc
     _ = (1-p)^2 + 2*(1-p)*p*Real.cos s +
       p^2*(Real.sin s^2+Real.cos s^2) := by ring
     _ = _ := by rw [htrig,hcos]; ring
 
 private lemma centered_bernoulli_gaussian_envelope (p s : ℝ) :
-    ‖centeredBernoulli p s‖ ≤ Real.exp (-2*bernoulliVariance p * Real.sin (s/2)^2) := by
+    ‖centeredBernoulli p s‖ ≤ Real.exp (-2*(p * (1 - p)) * Real.sin (s/2)^2) := by
   rw [centeredBernoulli_eq_phase,norm_mul,Complex.norm_exp_ofReal_mul_I,one_mul]
   have hsq := bernoulli_char_norm_sq p s
-  have he := Real.add_one_le_exp (-4*bernoulliVariance p * Real.sin (s/2)^2)
-  have heq : Real.exp (-4*bernoulliVariance p * Real.sin (s/2)^2) =
-      Real.exp (-2*bernoulliVariance p * Real.sin (s/2)^2)^2 := by
+  have he := Real.add_one_le_exp (-4*(p * (1 - p)) * Real.sin (s/2)^2)
+  have heq : Real.exp (-4*(p * (1 - p)) * Real.sin (s/2)^2) =
+      Real.exp (-2*(p * (1 - p)) * Real.sin (s/2)^2)^2 := by
     rw [← Real.exp_nat_mul]
     congr 1
     norm_num
     ring
   rw [heq] at he
   nlinarith [norm_nonneg (((1-p : ℝ):ℂ)+(p:ℝ)*Complex.exp ((s:ℂ)*Complex.I)),
-    Real.exp_pos (-2*bernoulliVariance p * Real.sin (s/2)^2)]
+    Real.exp_pos (-2*(p * (1 - p)) * Real.sin (s/2)^2)]
 
 private lemma centered_bernoulli_product_envelope {m : ℕ} (p : Fin m → ℝ) (s : ℝ) :
     ‖∏ i, centeredBernoulli (p i) s‖ ≤
-      Real.exp (-2*(∑ i, bernoulliVariance (p i))*Real.sin (s/2)^2) := by
+      Real.exp (-2*(∑ i, (p i * (1 - p i)))*Real.sin (s/2)^2) := by
   rw [norm_prod]
   calc
-    _ ≤ ∏ i, Real.exp (-2*bernoulliVariance (p i)*Real.sin (s/2)^2) :=
+    _ ≤ ∏ i, Real.exp (-2*(p i * (1 - p i))*Real.sin (s/2)^2) :=
       prod_le_prod (by intro i hi; exact norm_nonneg _)
         (by intro i hi; exact centered_bernoulli_gaussian_envelope _ _)
     _ = _ := by rw [← Real.exp_sum]; congr 1; simp only [sum_mul,mul_sum]
 
 lemma normalized_bernoulli_product_envelope {m : ℕ} (p : Fin m → ℝ) (V u : ℝ)
-    (hV : 0 < V) (hVeq : V = ∑ i, bernoulliVariance (p i))
+    (hV : 0 < V) (hVeq : V = ∑ i, (p i * (1 - p i)))
     (hu : |u| ≤ Real.pi*Real.sqrt V) :
     ‖∏ i, centeredBernoulli (p i) (u/Real.sqrt V)‖ ≤
       Real.exp (-2*u^2/Real.pi^2) := by

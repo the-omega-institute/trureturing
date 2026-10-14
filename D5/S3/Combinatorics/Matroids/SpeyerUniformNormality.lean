@@ -11,7 +11,6 @@
    F0: D5/S3/Zeros/Endpoints/BernoulliBridgeVariance.bernoulli_bridge_variance sha256:acf3515171050627eccee903208eb3f1d603d5d3ff4cc74a94c0c95259871d6f
    F1: D5/S3/Zeros/Endpoints/BernoulliBridgeVariance.bernoulli_bridge_variance_le_quarter sha256:d26843918e966727ef778f8c78682791d54fdc06c6a8b7c77e5a9601dd05c43e
    F2: D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalCDF sha256:bedd42e0116dd2f043fdce1b697eb76e39eb075a733900543f5071ddb4405a7c
-   F3: D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalCDF_eq_setIntegral sha256:663289568c20c32557cc5911ec27be322630b95d53a618a86a78329c14a5de23
    F4: D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalPDF sha256:09ec747bd067dc23f72a70f43c419879f8a0a5eaceb77360e81137c6bcbaec5f
    F5: D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalPDF_eq_gaussianPDFReal sha256:58d494ec9f13bfb185d13aed064fce12d7eae49cef3f5b9932af21926e310c11
    Module escape_witness: monotone_cdf_pointwise_to_uniform (same-delivery content)
@@ -19,12 +18,12 @@
    Template gap: No divergent-rank-sequence realization or conjunction-of-limits readout is supplied.
    Four-slot evidence missing: source-specific arenas and observation/readout maps,
      exact reconstruction and realization bridges, E1–E8, variation and sensitivity.
-   claim retains the source Gaussian integral and density literally; result uses the
-   StatLean.HypothesisTesting owners through the integral and closed-form correspondences.
+   claim states CLT and LLT for the g-polynomial sequence; these predicates use the
+   frozen StatLean.HypothesisTesting standard Gaussian owners.
    claim: proof_shape: bind-only; escape_witness: none;
      consumers: statement/type consumers.
    result: proof_shape: content; escape_witness: monotone_cdf_pointwise_to_uniform;
-     frozen_dependencies: F0, F1, F2, F3, F4, F5.
+     frozen_dependencies: F0, F1, F2, F4, F5.
      consumers: statement/type consumers.
    g: proof_shape: bind-only; escape_witness: none;
      consumers: g_coeff_succ, g_coeff_zero, g_coeff_above, g_eq_X_mul_q, speyer_variance_bound, speyer_variance_bound_eighth, speyer_variance_eighth_unconditional, speyer_variance_tendsto, g_normalized_bernoulli_multiset, g_bernoulli_factorization, claim, result.
@@ -685,13 +684,7 @@ private lemma g_bernoulli_factorization (n d : ℕ) (hd : 2 ≤ d) (hn : 2*d ≤
 
 def claim : Prop := ∀ d : ℕ → ℕ,
   (∀ᶠ n in atTop, 1 ≤ d n ∧ d n ≤ n / 2) → Tendsto d atTop atTop →
-  (∀ ε > 0, ∀ᶠ n in atTop, ∀ t : ℝ,
-    |(∑ k ∈ (range ((g n (d n)).natDegree + 1)).filter
-       (fun k : ℕ => (k : ℝ) ≤ mu (g n (d n)) + t * sigma (g n (d n))),
-       prob (g n (d n)) k) - (√(2 * π))⁻¹ * ∫ x in Set.Iic t, exp (-x ^ 2 / 2)| < ε) ∧
-  (∀ ε > 0, ∀ᶠ n in atTop, ∀ t : ℝ,
-    |sigma (g n (d n)) * prob (g n (d n)) ⌊mu (g n (d n)) + t * sigma (g n (d n))⌋ -
-      (√(2 * π))⁻¹ * exp (-t ^ 2 / 2)| < ε)
+  CLT (fun n => g n (d n)) ∧ LLT (fun n => g n (d n))
 
 
 open Polynomial Finset Filter Real
@@ -716,17 +709,6 @@ theorem result : claim := by
     apply (speyer_variance_tendsto d hadm hd).congr'
     filter_upwards [hfac] with n hpgf
     exact (factorization_moments (p n) hpgf).2.2
-  have hlimits := bernoulli_polynomial_uniform_limits (fun n => g n (d n)) p hfac hV
-  have hcdf (t : ℝ) : StatLean.HypothesisTesting.stdNormalCDF t =
-      (√(2 * π))⁻¹ * ∫ x in Set.Iic t, exp (-x ^ 2 / 2) := by
-    rw [StatLean.HypothesisTesting.stdNormalCDF_eq_setIntegral]
-    simp only [StatLean.HypothesisTesting.stdNormalPDF, div_eq_inv_mul]
-    rw [integral_const_mul]
-  have hpdf (t : ℝ) : StatLean.HypothesisTesting.stdNormalPDF t =
-      (√(2 * π))⁻¹ * exp (-t ^ 2 / 2) := by
-    rw [StatLean.HypothesisTesting.stdNormalPDF, div_eq_inv_mul]
-  constructor
-  · simpa only [CLT, hcdf] using hlimits.1
-  · simpa only [LLT, hpdf] using hlimits.2
+  exact bernoulli_polynomial_uniform_limits (fun n => g n (d n)) p hfac hV
 
 end D5.S3.Combinatorics.Matroids.SpeyerUniformNormality

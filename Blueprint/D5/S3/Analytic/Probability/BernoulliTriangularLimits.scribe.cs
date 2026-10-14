@@ -22,7 +22,7 @@ internal sealed class BernoulliTriangularLimitsDocument : IScribeDocumentDefinit
                 DescribeId.Create("rowvariance"),
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowVariance"),
                 H("rowVariance"),
-                StatementSource.FromAuthor(Disp(All("m", Nat, All("p", new Formula.TypeArrow(Call("Fin", V("m")), Seq(Operatorname, Grp(V("unitInterval")))), Equal(Call("rowVariance", V("p")), Seq(new Formula.Subscript(Sum, Seq(V("i"), Colon, Sp, Call("Fin", V("m")))), Sp, Parenthesized(Call("bernoulliVariance", Parenthesized(Seq(new Formula.Apply(V("p"), [V("i")]), Colon, Sp, Real)))))))))),
+                StatementSource.FromAuthor(Disp(All("m", Nat, All("p", new Formula.TypeArrow(Call("Fin", V("m")), Seq(Operatorname, Grp(V("unitInterval")))), Equal(Call("rowVariance", V("p")), Seq(new Formula.Subscript(Sum, Seq(V("i"), Colon, Sp, Call("Fin", V("m")))), Sp, Parenthesized(Multiply(Parenthesized(Seq(new Formula.Apply(V("p"), [V("i")]), Colon, Sp, Real)), Parenthesized(Subtract(new Formula.Number(1), Parenthesized(Seq(new Formula.Apply(V("p"), [V("i")]), Colon, Sp, Real)))))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The sum of the Bernoulli variances."))),
                 DescribeRole.Definition),
@@ -87,7 +87,7 @@ internal sealed class BernoulliTriangularLimitsDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalCDF"),
                 H("StatLean.HypothesisTesting.stdNormalCDF"),
                 StatementSource.FromAuthor(Disp(All("t", Real, Equal(new Formula.Apply(StatLeanName("stdNormalCDF"), [V("t")]), new Formula.Apply(StatLeanName("normalCDF"), [D(0), D(1), V("t")]))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/statlean2026fourier")),
                 Blocks(Paragraph(Text("StatLean.HypothesisTesting.normalCDF(m,v,t) is (gaussianReal m v (Set.Iic t)).toReal. Its specialization at m=0 and v=1 is the source expression (1/√(2π))∫₋∞ᵗ exp(−x²/2) dx."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -95,7 +95,7 @@ internal sealed class BernoulliTriangularLimitsDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers.stdNormalPDF"),
                 H("StatLean.HypothesisTesting.stdNormalPDF"),
                 StatementSource.FromAuthor(Disp(All("t", Real, Equal(new Formula.Apply(StatLeanName("stdNormalPDF"), [V("t")]), new Formula.Fraction(Call("exp", new Formula.Negate(new Formula.Fraction(new Formula.Power(Parenthesized(V("t")), D(2)), D(2)))), new Formula.Apply(Qualified("Real", "sqrt"), [Multiply(D(2), Pi)])))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/statlean2026fourier")),
                 Blocks(Paragraph(Text("The density exp(−t²/2)/√(2π) equals the source expression (1/√(2π)) exp(−t²/2)."))),
                 DescribeRole.Definition),
             Describe.Lean(
