@@ -7300,3 +7300,128 @@ margin, their complete normalized signed upper still has to lie below
 $R_0-\delta$ or $R_\eta-\delta$ for a fixed $\delta>0$ on the same
 common cofinal original-window sequence. This strict comparison,
 all-integer Robin inequality and RH remain unproved.
+
+## An inventory lower count pays part of the lag without a clock ceiling
+
+Keep BV1--BV5's original full windows, every maximizing tie and the same
+common cofinal source, including $\Theta=1$. Reuse LO1 with
+$b_0=9/100$ and $\vartheta=21/40$, and retain
+$\rho_X=\sup_t t/B(t)\to0$. This is a `repo-derived` paper
+application of the existing count and an elementary scalar optimization,
+not a new prime theorem, generic inequality or Lean/kernel result.
+No upper bound on $B$, $\mathsf L_X/(M_XL_X)$ or
+$V_X^K/(M_XL_X)$ is imposed.
+
+### Optimize the existing incomplete-block allowance before integrating
+
+At the actual selected real clock, PG1 gives $A=B+t$, $K(A)=B$ and
+$\Delta(A)=K(A)-K(K(A))=B-K(B)\ge0$. LO1 gives
+
+$$
+t-\frac{\Delta(A)}{b_0}
+\le\min\{t,1+A^\vartheta\}.
+$$
+
+For positive $t,c$ and $\vartheta>1/2$, splitting at
+$b=(t/c)^{1/\vartheta}$ gives the elementary identity
+
+$$
+\sup_{b>0}\frac{\min\{t,cb^\vartheta\}}{\sqrt b}
+=c^{1/(2\vartheta)}t^{1-1/(2\vartheta)}.
+$$
+
+Use $A\le(1+\rho_X)B$ and
+$\min\{t,1+u\}\le1+\min\{t,u\}$. Since
+$1-1/(2\vartheta)=1/21$, the actual source therefore satisfies
+
+$$
+\frac{t-\Delta(A)/b_0}{\sqrt B}
+\le\frac1{\sqrt B}+\sqrt{1+\rho_X}\,t^{1/21}.
+\tag{LC1}
+$$
+
+Define the nonnegative explicit allowance
+
+$$
+\mathsf E_X^{\rm lag}
+=\sqrt{1+\rho_X}\,\frac{21}{22}
+ (t_m^{22/21}-t_0^{22/21})
++\int_{t_0}^{t_m}\frac{dt}{\sqrt{B(t)}}.
+$$
+
+The existing exact occupation identity for the visited set $D$ gives
+$V_X^K=\int_{t_0}^{t_m}\Delta(A(t))/\sqrt{B(t)}\,dt$.
+Integrating LC1 yields the ceiling-free, one-sided comparison
+
+$$
+\boxed{V_X^K\ge b_0
+ (\mathsf L_X-\mathsf E_X^{\rm lag}).}
+\tag{LC2}
+$$
+
+All higher and simultaneous layers remain in LO1's complete inventory.
+The estimate applies to every selected branch; finite tie values do not
+alter its occupation integrals. It neither identifies $V_X^K$ with
+$\mathsf L_X$ nor supplies a two-sided asymptotic.
+
+### Spend only the retained fraction of the same compensation
+
+Fix $0<\epsilon<a$ and enlarge the common start until
+$h_X=a-\epsilon-\widetilde\gamma_X>0$, with BV4's unchanged
+$\widetilde\gamma_X=(800/9)\rho_X$. Keep BV5's whole anchored exterior
+
+$$
+\mathsf T_X^\circ
+=S_m\int_{A_m}^{\mathsf U_X}[E(w)-t_m]k(w)\,dw
+-t_mS_m\lambda(\mathsf U_X).
+$$
+
+Let $\mathcal R_X$ denote BV4--BV5's normalized upper expression
+$(c_{\rm win}\mathsf L_X+\mathsf T_X^\circ-\mathsf C_X-h_XV_X^K)
+/(M_XL_X)$, before its already retained $O_\epsilon(M_X^{-1})+o(1)$.
+For every $z\in[0,1]$, spend the fraction $z$ of the same credit in
+LC2, leaving the rest unchanged. This gives
+
+$$
+\boxed{
+\mathcal R_X\le
+\frac{(c_{\rm win}-zb_0h_X)\mathsf L_X
+ +\mathsf T_X^\circ-\mathsf C_X-(1-z)h_XV_X^K}{M_XL_X}
++\frac{zb_0h_X\mathsf E_X^{\rm lag}}{M_XL_X}.}
+\tag{LC3}
+$$
+
+Thus the paid lag coefficient is exactly $zb_0h_X$, with the displayed
+error. The $\widetilde\gamma_X$ correction has not been discarded;
+without a bounded normalized credit it cannot be replaced by zero.
+No part of the exterior, terminal debit or remaining credit is omitted.
+
+### The original scale determines when this allowance is negligible
+
+The source floor, $t_m\le2\ell_X=(d/4)M_X\sqrt X$, and the uniform
+$B_{\min,X}\to\infty$ give
+
+$$
+\boxed{
+\frac{\mathsf E_X^{\rm lag}}{M_XL_X}
+\ll X^{(40\eta-19)/42}(\log X)^{-20/21}
+ +o(M_X^{-1}).}
+\tag{LC4}
+$$
+
+Indeed the first integral is at most
+$\sqrt{1+\rho_X}\,L_Xt_m^{1/21}$, while the second is at most
+$L_X/\sqrt{B_{\min,X}}$. Substitute the original
+$M_X=X^{1/2-\eta}\log X$ in $t_m^{1/21}/M_X$.
+Consequently the LC3 payment has $o(1)$ normalized error whenever
+$\eta\le19/40$, including equality and including $\Theta=1$.
+LC1--LC4 themselves retain every original $\eta<1/2$; above $19/40$
+the explicit allowance remains and is not declared negligible.
+
+This pays a quantitative fraction of BV4's lag by its actual
+second-iterate credit, without the global SI1 clock ceiling. The
+remaining lag coefficient is still positive, and the anchored exterior
+still has no supplied sign. The complete strict comparison below
+$R_0-\delta$ or the applicable $R_\eta-\delta$, all-integer Robin
+inequality and RH remain unproved. No literature-originality claim or
+new generic formal declaration is made.
