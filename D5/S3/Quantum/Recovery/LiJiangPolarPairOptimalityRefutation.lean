@@ -1,21 +1,17 @@
 /- GID: D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation
-   mirror-E: none(waiver:finite-algebraic-proof)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.claim; result=D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.result; claim=D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.claim
    digest: A feasible qubit rank-one encoder strictly improves the source polar pair. -/
-
-/- Stage-A judgement:
-   proof_shape: bind-only
-   escape_witness: none
-   admission_basis: open-problem-resolution
-   Direct frozen dependencies: none
--/
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.QuantumBounds.PeritoTsirelson
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
+import D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness
+import D5.S3.Quantum.Recovery.KrausCompletion
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
@@ -40,6 +36,7 @@ source noise, positive Gram root, polar columns and both fidelities from these d
 -/
 
 set_option backward.isDefEq.respectTransparency false
+set_option linter.style.longLine false
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -48,6 +45,7 @@ open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.QuantumBounds.PeritoTsirelson
+open D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation (discardMemory)
 
 namespace D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
 
@@ -83,13 +81,6 @@ def sourceE (d : ℕ) (p : ℝ) (ij : Fin d × Fin d) :
        (star (maxEntangledVector (Fin d))) -
      (Real.sqrt (lambda5 d p) : ℂ) • (sourceB d p ij).conjTranspose)
 
-def rightTrace (d : ℕ) : PhyslibLeaf.MatrixMap (Fin d × Fin d) (Fin d) ℂ where
-  toFun := partialTraceRight
-  map_add' := partialTraceRight_add
-  map_smul' z X := by
-    ext a b
-    simp [partialTraceRight, Finset.mul_sum]
-
 /-- Literal all-matrix Eq.23 action, without postselection normalization. -/
 def sourceNoise (d : ℕ) (p : ℝ) :
     PhyslibLeaf.MatrixMap (Fin d × Fin d) (Fin d × Fin d) ℂ where
@@ -107,9 +98,8 @@ def sourceNoise (d : ℕ) (p : ℝ) :
     ring
   map_smul' z X := by
     have htrace : partialTraceRight (z • (sourceQ d p * X * sourceQ d p)) =
-        z • partialTraceRight (sourceQ d p * X * sourceQ d p) := by
-      ext a b
-      simp [partialTraceRight, Finset.mul_sum]
+        z • partialTraceRight (sourceQ d p * X * sourceQ d p) :=
+      map_smul (discardMemory (d := d) (r := d)) z _
     ext a b
     simp [Matrix.trace_smul, htrace,
       Matrix.kroneckerMap_apply, Matrix.sum_apply, smul_eq_mul,
@@ -169,12 +159,13 @@ def claim : Prop :=
     (inputFirstChoi (matrixAction C)).rank ≤ 1 →
     entanglementFidelity d ((matrixAction D).comp
       ((sourceNoise d p).comp (matrixAction C))) ≤
-    entanglementFidelity d ((rightTrace d).comp ((sourceNoise d p).comp
+    entanglementFidelity d ((discardMemory (d := d) (r := d)).comp ((sourceNoise d p).comp
       (PhyslibLeaf.MatrixMap.of_kraus
         (fun _ : Unit => sourcePolar d p chi) (fun _ : Unit => sourcePolar d p chi))))
 
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
+-- The finite noise and composite Kraus sums require this elaboration budget.
 /-- The full source polar-pair dominance assertion fails. -/
 theorem result : Not claim := by
   classical
@@ -199,7 +190,6 @@ theorem result : Not claim := by
   have hQ : sourceQ 2 (9/13) =
     ((Real.sqrt 26)⁻¹ : ℂ) •
       A := by
-    have hl1 : lambda1 2 (9/13) = 17/26 := by norm_num [lambda1]
     have hl4 : lambda4 2 (9/13) = 12/13 := by norm_num [lambda4]
     have hl5 : lambda5 2 (9/13) = 1/13 := by norm_num [lambda5]
     have hs2 : Real.sqrt 2 ^ 2 = 2 := by norm_num
@@ -372,11 +362,16 @@ theorem result : Not claim := by
         (∑ ab : (Fin 2 × Fin 2) × (Fin 2 × Fin 2),
          Matrix.single ab.1 ab.2 1 * X * (Matrix.single ab.1 ab.2 (1:ℂ)).conjTranspose) =
          Matrix.trace X • 1 := by
-      ext ⟨a,b⟩ ⟨c,d⟩
-      fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-        simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
-          Matrix.sum_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
-          Matrix.trace, Matrix.diag_apply]
+      rw [Fintype.sum_prod_type]
+      have hrow (a : Fin 2 × Fin 2) :
+          (∑ b : Fin 2 × Fin 2, Matrix.single a b (1 : ℂ) * X *
+            (Matrix.single a b (1 : ℂ)).conjTranspose) =
+          Matrix.trace X • Matrix.single a a (1 : ℂ) := by
+        simpa [D5.S3.Quantum.Recovery.KrausCompletion.rowReset] using
+          D5.S3.Quantum.Recovery.KrausCompletion.row_reset_action a
+            (1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) X
+      simp_rw [hrow]
+      rw [← Finset.smul_sum, Matrix.sum_single_one]
     have hreset (X : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
         (∑ st : Fin 2 × Fin 2, R st * X * (R st).conjTranspose) =
         Matrix.kronecker (partialTraceRight (A*X*A)) (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
@@ -387,7 +382,6 @@ theorem result : Not claim := by
         simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single,
           Matrix.sum_apply, Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.one_apply,
           Matrix.kroneckerMap_apply, partialTraceRight]
-      all_goals ring
     have hs26 : (Real.sqrt 26 : ℂ)^2 = 26 := by norm_num [← Complex.ofReal_pow]
     have hs78 : (Real.sqrt 78 : ℂ)^2 = 78 := by norm_num [← Complex.ofReal_pow]
     have h26 : (Real.sqrt 26 : ℂ)⁻¹ * (Real.sqrt 26 : ℂ)⁻¹ = 1/26 := by
@@ -395,10 +389,8 @@ theorem result : Not claim := by
     have h78 : (Real.sqrt 78 : ℂ)⁻¹ * (Real.sqrt 78 : ℂ)⁻¹ = 1/78 := by
       rw [← mul_inv_rev, ← pow_two, hs78]; norm_num
     have hpartial (z : ℂ) (X : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
-        partialTraceRight (z • X) = z • partialTraceRight X := by
-      ext a b
-      simp [partialTraceRight]
-      ring
+        partialTraceRight (z • X) = z • partialTraceRight X :=
+      map_smul (discardMemory (d := 2) (r := 2)) z X
     apply LinearMap.ext
     intro X
     change (∑ r, K r * X * (K r).conjTranspose) = (sourceNoise 2 (9/13)) X
@@ -458,7 +450,7 @@ theorem result : Not claim := by
       apply Matrix.PosSemidef.nonneg
       apply Matrix.PosSemidef.diagonal
       intro i
-      fin_cases i <;> simp only [H, if_true, if_false]
+      fin_cases i
       all_goals apply Complex.zero_le_real.mpr
       all_goals positivity
     have hHsq : H * H = G := by
@@ -477,15 +469,11 @@ theorem result : Not claim := by
       fin_cases i <;> fin_cases j <;>
         norm_num [H, Hinv, Matrix.mul_apply, Matrix.diagonal_apply, Matrix.one_apply,
           Fin.sum_univ_two, hn10, hn26]
-      all_goals field_simp
-      all_goals ring
     have hright : H*Hinv=1 := by
       ext i j
       fin_cases i <;> fin_cases j <;>
         norm_num [H, Hinv, Matrix.mul_apply, Matrix.diagonal_apply, Matrix.one_apply,
           Fin.sum_univ_two, hn10, hn26]
-      all_goals field_simp
-      all_goals ring
     let P : Matrix (Fin 2 × Fin 2) (Fin 2) ℂ := Matrix.of
       (fun a b => if b=0 then (if a=(0,0) then ((3/Real.sqrt 10:ℝ):ℂ)
         else if a=(1,1) then ((-1/Real.sqrt 10:ℝ):ℂ) else 0)
@@ -498,7 +486,6 @@ theorem result : Not claim := by
           Matrix.smul_apply, Matrix.of_apply, Matrix.diagonal_apply,
           Fintype.sum_prod_type, Fin.sum_univ_two, hn10, hn26]
       all_goals field_simp
-      all_goals ring
     have hinv : H⁻¹ = Hinv := Matrix.inv_eq_left_inv hleft
     change sourcePolar 2 (9/13) chi = P
     change C * (CStarMatrix.ofMatrix.symm (CFC.sqrt (CStarMatrix.ofMatrix (C.conjTranspose*C))))⁻¹ = P
@@ -507,62 +494,67 @@ theorem result : Not claim := by
     rw [hinv, hfactor, Matrix.mul_assoc, hright, Matrix.mul_one]
 
   have hFidelity (d : ℕ) (hd : 0 < d) {k : Type} [Fintype k]
-    (L : k → Matrix (Fin d) (Fin d) ℂ) :
-    entanglementFidelity d (PhyslibLeaf.MatrixMap.of_kraus L L) =
-      (d : ℝ)⁻¹ ^ 2 * ∑ r, Complex.normSq (Matrix.trace (L r)) := by
-    classical
-    let c : ℂ := (Real.sqrt (d : ℝ))⁻¹
-    have hcstar : star c = c := by simp [c]
+      (L : k → Matrix (Fin d) (Fin d) ℂ) :
+      entanglementFidelity d (PhyslibLeaf.MatrixMap.of_kraus L L) =
+        (d : ℝ)⁻¹ ^ 2 * ∑ r, Complex.normSq (Matrix.trace (L r)) := by
     let : NeZero d := ⟨Nat.ne_of_gt hd⟩
-    have hcc : c*c = ((d : ℝ)⁻¹ : ℝ) := by
-      simpa [Matrix.single_kronecker_single, Matrix.transpose_single,
-        Matrix.trace_mul_single, maxEntangled, maxEntangledVector,
-        Fintype.card_fin, Matrix.vecMulVec, c] using
-        max_entangled_trace (Fin d) (Matrix.single 0 0 1) (Matrix.single 0 0 1)
-    let delta : Fin d × Fin d → ℂ := fun a => if a.1 = a.2 then 1 else 0
-    have hpsi : maxEntangledVector (Fin d) = c • delta := by
-      ext a
-      simp [maxEntangledVector, Fintype.card_fin, c, delta]
-    have hproj : maxEntangled (Fin d) =
-        (c*c) • Matrix.vecMulVec delta (star delta) := by
-      ext a b
-      simp [maxEntangled, hpsi, Matrix.vecMulVec, hcstar, Pi.star_apply, star_mul]
-      ring
-    have hmap : PhyslibLeaf.MatrixMap.kron (PhyslibLeaf.MatrixMap.of_kraus L L) LinearMap.id
-        (maxEntangled (Fin d)) =
-        (c*c) • PhyslibLeaf.MatrixMap.choi_matrix (PhyslibLeaf.MatrixMap.of_kraus L L) := by
-      rw [hproj, map_smul]
-      congr 1
-      exact (PhyslibLeaf.MatrixMap.choi_matrix_eq_map_proj _).symm
-    have hcontract (M : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
-        dotProduct (star (maxEntangledVector (Fin d)))
-          (M.mulVec (maxEntangledVector (Fin d))) =
-          (c*c) * ∑ a : Fin d, ∑ b : Fin d, M (a,a) (b,b) := by
-      simp [hpsi, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, delta,
-        hcstar, Finset.mul_sum, Finset.sum_mul, Pi.star_apply,
-        apply_ite, mul_assoc, mul_comm, mul_left_comm]
-    dsimp only [entanglementFidelity]
-    rw [hmap, hcontract]
-    simp only [Matrix.smul_apply, smul_eq_mul, ← Finset.mul_sum]
-    rw [hcc, PhyslibLeaf.MatrixMap.choi_of_kraus]
-    simp only [Matrix.sum_apply, Matrix.vecMulVec, Matrix.of_apply]
-    have hsum : (∑ a : Fin d, ∑ b : Fin d, ∑ r : k,
-        L r a a * star (L r b b)) =
-        ∑ r : k, Matrix.trace (L r) * star (Matrix.trace (L r)) := by
-      simp only [Matrix.trace, Matrix.diag_apply, star_sum, Finset.sum_mul, Finset.mul_sum]
+    let e := (Fintype.equivFin k).symm
+    let Lf := fun j => L (e j)
+    have hindex : PhyslibLeaf.MatrixMap.of_kraus L L =
+        PhyslibLeaf.MatrixMap.of_kraus Lf Lf := by
+      ext X a b
+      simpa only [PhyslibLeaf.MatrixMap.of_kraus, LinearMap.sum_apply,
+        LinearMap.coe_mk, AddHom.coe_mk, Matrix.sum_apply, Lf] using
+        (e.sum_comp (fun j => (L j * X * (L j).conjTranspose) a b)).symm
+    have htensor (X : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
+        PhyslibLeaf.MatrixMap.kron (PhyslibLeaf.MatrixMap.of_kraus Lf Lf) LinearMap.id X =
+          PhyslibLeaf.MatrixMap.of_kraus
+            (fun j => Matrix.kronecker (Lf j) (1 : Matrix (Fin d) (Fin d) ℂ))
+            (fun j => Matrix.kronecker (Lf j) (1 : Matrix (Fin d) (Fin d) ℂ)) X := by
+      ext ⟨a,b⟩ ⟨c,f⟩
+      rw [PhyslibLeaf.MatrixMap.kron_def]
+      simp only [PhyslibLeaf.MatrixMap.of_kraus, mul_assoc, Matrix.single, ite_and,
+        LinearMap.coe_sum, LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_apply,
+        Matrix.sum_apply, Matrix.mul_apply, Matrix.of_apply, Matrix.conjTranspose_apply,
+        RCLike.star_def, ite_mul, one_mul, zero_mul, Finset.sum_ite_irrel,
+        Finset.sum_ite_eq, Finset.mem_univ, ↓reduceIte, Finset.sum_const_zero,
+        apply_ite, mul_comm, LinearMap.id_coe, id_eq, Finset.mul_sum,
+        Finset.sum_ite_eq', Matrix.kronecker, Matrix.kroneckerMap_apply, Matrix.one_apply,
+        star_zero, mul_zero, Fintype.sum_prod_type, Finset.sum_mul, mul_left_comm]
+      simp only [starRingEnd_apply]
       calc
-        _ = ∑ a : Fin d, ∑ r : k, ∑ b : Fin d, L r a a * star (L r b b) := by
+        _ = ∑ x : Fin d, ∑ i : Fin (Fintype.card k), ∑ y : Fin d,
+            X (x,b) (y,f) * (Lf i a x * star (Lf i c y)) := by
           apply Finset.sum_congr rfl
-          intro a ha
+          intro x _
           rw [Finset.sum_comm]
-        _ = ∑ r : k, ∑ a : Fin d, ∑ b : Fin d, L r a a * star (L r b b) := by
-          rw [Finset.sum_comm]
+        _ = _ := by rw [Finset.sum_comm]
+    have hamplitude (j : Fin (Fintype.card k)) :
+        dotProduct (star (maxEntangledVector (Fin d)))
+          ((Matrix.kronecker (Lf j) (1 : Matrix (Fin d) (Fin d) ℂ)).mulVec
+            (maxEntangledVector (Fin d))) = Matrix.trace (Lf j) / (d : ℂ) := by
+      calc
+        _ = Matrix.trace (maxEntangled (Fin d) *
+            Matrix.kronecker (Lf j) (1 : Matrix (Fin d) (Fin d) ℂ)) := by
+          rw [maxEntangled, Matrix.vecMulVec_mul, Matrix.trace_vecMulVec,
+            Matrix.dotProduct_mulVec, dotProduct_comm]
         _ = _ := by
-          apply Finset.sum_congr rfl
-          intro r hr
-          rw [Finset.sum_comm]
-    rw [hsum]
-    simp [Complex.mul_conj, Finset.mul_sum, pow_two, mul_assoc]
+          simp only [Matrix.kronecker]
+          rw [max_entangled_trace, Matrix.mul_one, Matrix.trace_transpose,
+            Fintype.card_fin]
+    rw [hindex]
+    dsimp only [entanglementFidelity]
+    rw [htensor]
+    change (dotProduct (star (maxEntangledVector (Fin d)))
+      ((PhyslibLeaf.MatrixMap.of_kraus _ _
+        (D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
+          (maxEntangledVector (Fin d)))).mulVec (maxEntangledVector (Fin d)))).re = _
+    rw [D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness.kraus_survival]
+    simp_rw [hamplitude]
+    simp only [norm_div, Complex.norm_natCast, div_pow, ← Complex.normSq_eq_norm_sq]
+    dsimp only [Lf]
+    rw [← Finset.sum_div, e.sum_comp (fun j => Complex.normSq (Matrix.trace (L j)))]
+    simp [div_eq_mul_inv, inv_pow, mul_comm]
 
   have hEncoder {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (V : Matrix b a ℂ)
@@ -590,10 +582,10 @@ theorem result : Not claim := by
         (fun x : b×a => star (V x.1 x.2))
 
   have hRight (d : ℕ) (X : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
-      (rightTrace d) X = ∑ j, sourceD d j * X * (sourceD d j).conjTranspose := by
+      (discardMemory (d := d) (r := d)) X = ∑ j, sourceD d j * X * (sourceD d j).conjTranspose := by
     classical
     ext a b
-    simp [rightTrace, partialTraceRight, sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    simp [discardMemory, partialTraceRight, sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.sum_apply, Fintype.sum_prod_type, Finset.sum_ite_eq, ite_and, apply_ite]
 
   have hDcomplete (d : ℕ) : ∑ j, (sourceD d j).conjTranspose * sourceD d j = 1 := by
@@ -661,7 +653,7 @@ theorem result : Not claim := by
     change (PhyslibLeaf.MatrixMap.of_kraus K K) X = _
     rw [hNoise]
   obtain ⟨D, hDraw⟩ := finite_kraus_quantum_channel (sourceD 2) (hDcomplete 2)
-  have hD : matrixAction D.toCompletelyPositiveMap = rightTrace 2 := by
+  have hD : matrixAction D.toCompletelyPositiveMap = (discardMemory (d := 2) (r := 2)) := by
     apply LinearMap.ext
     intro X
     change CStarMatrix.ofMatrix.symm (D.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = _
@@ -672,18 +664,18 @@ theorem result : Not claim := by
     change (Matrix.trace (D.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))).re ≤ _
     rw [D.trace_preserving]
     exact le_rfl
-  have hRightMap : rightTrace 2 = PhyslibLeaf.MatrixMap.of_kraus (sourceD 2) (sourceD 2) := by
+  have hRightMap : (discardMemory (d := 2) (r := 2)) = PhyslibLeaf.MatrixMap.of_kraus (sourceD 2) (sourceD 2) := by
     apply LinearMap.ext
     intro X
     exact hRight 2 X
   have hObjective (x y : ℝ) (hxy : x^2+y^2=1) :
-      entanglementFidelity 2 ((rightTrace 2).comp ((sourceNoise 2 (9/13)).comp
+      entanglementFidelity 2 (((discardMemory (d := 2) (r := 2))).comp ((sourceNoise 2 (9/13)).comp
         (PhyslibLeaf.MatrixMap.of_kraus (fun _ : Unit => V x y) (fun _ : Unit => V x y)))) =
       (132*x^2+210*x+76*y^2-98*y+181)/832 := by
     obtain ⟨C,hC,hCTNI,hCRank⟩ := hEncoder (V x y) (hIsometry x y hxy)
     let S := D.comp (N.comp C)
     have hS : matrixAction S.toCompletelyPositiveMap =
-        (rightTrace 2).comp ((sourceNoise 2 (9/13)).comp
+        ((discardMemory (d := 2) (r := 2))).comp ((sourceNoise 2 (9/13)).comp
           (PhyslibLeaf.MatrixMap.of_kraus (fun _ : Unit => V x y) (fun _ : Unit => V x y))) := by
       dsimp only [S]
       rw [hComp, hComp, hD, hN, hC]
