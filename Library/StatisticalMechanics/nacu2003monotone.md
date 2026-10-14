@@ -3,6 +3,7 @@ bibkey: nacu2003monotone
 authors: Şerban Nacu
 year: 2003
 title: Glauber Dynamics On The Cycle Is Monotone
+doi: null
 url: https://arxiv.org/abs/math/0305056v1
 claim: A monotone finite Ising kernel has an increasing second-eigenvalue eigenfunction; the linear gap eigenfunction in the source additionally uses zero-field ferromagnetic cycle dynamics.
 strata_touched: []

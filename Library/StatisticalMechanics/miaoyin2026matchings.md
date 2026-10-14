@@ -3,6 +3,7 @@ bibkey: miaoyin2026matchings
 authors: Tianshun Miao; Yitong Yin
 year: 2026
 title: Sampling Matchings in Near-linear Time
+doi: null
 url: https://arxiv.org/abs/2609.21936v1
 claim: Unit-deletion insertion dynamics on a positive downward-closed law gives exact monomial covariance and energy matrices; low-degree approximation bounds additionally require field-dynamics spectral stability and an integrable rate.
 strata_touched: []
