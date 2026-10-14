@@ -41,7 +41,8 @@ internal sealed class CombLiteralInstallationBoundsDocument : IScribeDocumentDef
     {
         var n = Pow(D(2), Sub(V("h"), D(1)));
         if (isStatic) n = Mul(n, Call("div", Add(V("T"), D(3)), D(3)));
-        var words = Seq(OpenBrace, V("w"), Colon, Sp,
+        var words = Seq(
+            OpenBrace, V("w"), Colon, Sp,
             Arr(Call("Fin", V("width")), V("Bool")), Sp, Mid, Sp,
             Call("Adm", V("width"), V("w")), CloseBrace);
         var result = And(Le(n, Call("card", Call("queries", V("M")))),
@@ -50,25 +51,26 @@ internal sealed class CombLiteralInstallationBoundsDocument : IScribeDocumentDef
             All("width", V("Nat"), All("encode", Arr(V("E"), words),
                 Imp(Call("Injective", V("encode")), Le(Add(n, D(2)), Call("fib", Add(V("width"), D(2))))))));
         if (isStatic) result = Imp(Call("Static", V("M"), V("h"), V("T")), result);
-        return All("E", V("Type"), Seq(OpenBracket, Call("Fintype", V("E")), CloseBracket, Sp,
+        return All("E", V("Type"), Seq(
+            OpenBracket, Call("Fintype", V("E")), CloseBracket, Sp,
             All("M", Call("Controller", V("E")), All("h,T", V("Nat"),
                 Imp(Lt(D(0), V("h")), Imp(Call("Correct", V("M"), V("h"), V("T")), result))))));
     }
 
     private static Formula V(string n) => F.Id(n);
-    private static Formula Par(Formula f) => Seq(Open, f, Close);
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string n, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(n))), [.. args]);
     private static Formula All(string ns, Formula t, Formula b) => Seq(Forall, Sp,
-        Seq(ns.Split(',').Select((n, i) => i == 0 ? V(n) : Seq(Comma, Sp, V(n))).ToArray()), Colon, Sp, t, Comma, Sp, Par(b));
-    private static Formula And(params Formula[] fs) => Seq(fs.Select((f, i) => i == 0 ? Par(f) : Seq(Sp, Land, Sp, Par(f))).ToArray());
-    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
+        Seq(ns.Split(',').Select((n, i) => i == 0 ? V(n) : Seq(Comma, Sp, V(n))).ToArray()), Colon, Sp, t, Comma, Sp, Parenthesized(b));
+    private static Formula And(params Formula[] fs) => Seq(fs.Select((f, i) => i == 0 ? Parenthesized(f) : Seq(Sp, Land, Sp, Parenthesized(f))).ToArray());
+    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Le(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula Arr(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
     private static Formula Prod(Formula a, Formula b) => Seq(a, Sp, Times, Sp, b);
-    private static Formula Add(Formula a, Formula b) => Seq(Par(a), Sp, Plus, Sp, b);
+    private static Formula Add(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Plus, Sp, b);
     private static Formula Sub(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
-    private static Formula Mul(Formula a, Formula b) => Seq(Par(a), Sp, Times, Sp, Par(b));
+    private static Formula Mul(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Pow(Formula a, Formula b) => Seq(a, Caret, Grp(b));
 }

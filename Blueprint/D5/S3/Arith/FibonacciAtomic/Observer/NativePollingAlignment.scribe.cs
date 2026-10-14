@@ -30,7 +30,7 @@ internal sealed class NativePollingAlignmentDocument : IScribeDocumentDefinition
         var N = V("N");
         var clock = Call("rightClock", u);
         var bit = Call("decide", Eq(Call("mod", clock, D(2)), D(1)));
-        var count = Seq(D(2), Par(Seq(K, Sp, Minus, Sp,
+        var count = Seq(D(2), Parenthesized(Seq(K, Sp, Minus, Sp,
             Call("div", clock, D(2)))));
         return All("K", V("Nat"), All("u", V("Source"), Imp(
             Le(clock, Seq(D(2), K, Sp, Plus, Sp, D(1))),
@@ -40,15 +40,15 @@ internal sealed class NativePollingAlignmentDocument : IScribeDocumentDefinition
                 And(Eq(b, bit), Eq(N, count))))))));
     }
     private static Formula V(string n) => F.Id(n);
-    private static Formula Par(Formula f) => Seq(Open, f, Close);
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string n, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(n))), [.. args]);
     private static Formula And(params Formula[] fs) => Seq(fs.Select((f, i) =>
-        i == 0 ? Par(f) : Seq(Sp, Land, Sp, Par(f))).ToArray());
-    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
-    private static Formula IffOf(Formula a, Formula b) => Seq(Par(a), Sp, Iff, Sp, Par(b));
+        i == 0 ? Parenthesized(f) : Seq(Sp, Land, Sp, Parenthesized(f))).ToArray());
+    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
+    private static Formula IffOf(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Iff, Sp, Parenthesized(b));
     private static Formula Le(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula All(string n, Formula t, Formula b) =>
-        Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Par(b));
+        Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
 }

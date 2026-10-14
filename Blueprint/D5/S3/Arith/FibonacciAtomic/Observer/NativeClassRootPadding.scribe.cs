@@ -60,15 +60,15 @@ internal sealed class NativeClassRootPaddingDocument : IScribeDocumentDefinition
         _ => throw new System.ArgumentOutOfRangeException(nameof(n))
     };
     private static Formula V(string n) => F.Id(n);
-    private static Formula Par(Formula f) => Seq(Open,f,Close);
+    private static Formula Parenthesized(Formula f) => Seq(Open,f,Close);
     private static Formula Call(string n, params Formula[] a) => new Formula.Apply(Seq(Operatorname,Grp(V(n))),[.. a]);
     private static Formula Fn(Formula a, Formula b) => Seq(a,Sp,To,Sp,b);
     private static Formula EqOf(Formula a, Formula b) => Seq(a,Sp,Eq,Sp,b);
     private static Formula LeOf(Formula a, Formula b) => Seq(a,Sp,Leq,Sp,b);
-    private static Formula IffOf(Formula a, Formula b) => Seq(Par(a),Sp,Iff,Sp,Par(b));
-    private static Formula Imp(Formula a, Formula b) => Seq(Par(a),Sp,Implies,Sp,Par(b));
-    private static Formula NegOf(Formula a) => Seq(Neg,Sp,Par(a));
-    private static Formula And(params Formula[] a) => Seq(a.Select((x,i)=>i==0?Par(x):Seq(Sp,Land,Sp,Par(x))).ToArray());
-    private static Formula All(string n,Formula t,Formula b) => Seq(Forall,Sp,V(n),Colon,Sp,t,Comma,Sp,Par(b));
-    private static Formula Some(string n,Formula t,Formula b) => Seq(Exists,Sp,V(n),Colon,Sp,t,Comma,Sp,Par(b));
+    private static Formula IffOf(Formula a, Formula b) => Seq(Parenthesized(a),Sp,Iff,Sp,Parenthesized(b));
+    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a),Sp,Implies,Sp,Parenthesized(b));
+    private static Formula NegOf(Formula a) => Seq(Neg,Sp,Parenthesized(a));
+    private static Formula And(params Formula[] a) => Seq(a.Select((x,i)=>i==0?Parenthesized(x):Seq(Sp,Land,Sp,Parenthesized(x))).ToArray());
+    private static Formula All(string n,Formula t,Formula b) => Seq(Forall,Sp,V(n),Colon,Sp,t,Comma,Sp,Parenthesized(b));
+    private static Formula Some(string n,Formula t,Formula b) => Seq(Exists,Sp,V(n),Colon,Sp,t,Comma,Sp,Parenthesized(b));
 }

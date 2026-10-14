@@ -40,7 +40,8 @@ internal sealed class CrossFrameRankTwoMinimumDocument : IScribeDocumentDefiniti
             Node("coherence", "Six ordered off-diagonal entries", Scalar(All("C", Mat(3), Eq(Call("coherence", C), Seq(new Formula.Subscript(Max, Seq(I, Comma, Sp, J, Colon, Sp, FinThree, Comma, Sp, Ne(I,J))), Sp, new Formula.Norm(Call("entry", C,I,J)))))),
                 "The finite maximum uses nonnegative norms and is then coerced to the reals. All six ordered off-diagonal entries participate; no diagonal entry or assumed Hermitian symmetry is used."),
             Node("support", "Null-vector support", Scalar(All("u", Vector, Eq(Call("support", U),
-                Seq(OpenBrace, I, Colon, Sp, FinThree, Sp, Mid, Sp,
+                Seq(
+                    OpenBrace, I, Colon, Sp, FinThree, Sp, Mid, Sp,
                     Ne(Call("apply", U, I), D(0)), CloseBrace)))),
                 "This is the finite set of indices i with u(i) different from zero."),
             Node("weight", "Magnitudes away from one coordinate", Scalar(All("u", Vector, All("i", FinThree, Eq(Call("weight", U,I), Seq(new Formula.Subscript(Max, Seq(J, Colon, Sp, FinThree, Comma, Sp, Ne(J,I))), Sp, new Formula.Norm(Call("apply", U,J))))))),
@@ -68,7 +69,7 @@ internal sealed class CrossFrameRankTwoMinimumDocument : IScribeDocumentDefiniti
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
     private static Formula Call(string name, params Formula[] args) => args.Length == 0
         ? Seq(Operatorname, Sp, Grp(F.Id(name))) : new Formula.Apply(Seq(Operatorname,Sp,Grp(F.Id(name))),[..args]);
-    private static Formula Par(Formula x) => Seq(Open,x,Close);
+    private static Formula Parenthesized(Formula x) => Seq(Open,x,Close);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(name),type,body);
     private static Formula Ex(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(name),type,body);
     private static Formula Rel(Formula a, FormulaRelationOperator op, Formula b) => new Formula.Relation(a,op,b);
@@ -76,13 +77,14 @@ internal sealed class CrossFrameRankTwoMinimumDocument : IScribeDocumentDefiniti
     private static Formula Ne(Formula a, Formula b) => Rel(a,FormulaRelationOperator.NotEqual,b);
     private static Formula Le(Formula a, Formula b) => Rel(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula Lt(Formula a, Formula b) => Rel(a,FormulaRelationOperator.LessThan,b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a),FormulaLogicOperator.And,Par(b));
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a),FormulaLogicOperator.Implies,Par(b));
-    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a),FormulaLogicOperator.Iff,Par(b));
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.And,Parenthesized(b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Implies,Parenthesized(b));
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Iff,Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Subtract,b);
     private static Formula Sum(Formula x) => Seq(new Formula.Subscript(F.Sum,Seq(I,Colon,Sp,FinThree)),Sp,x);
-    private static Formula Scalar(Formula body) => All("K",Call("Type"),Seq(OpenBracket,Call("RCLike",K),CloseBracket,Sp,body));
+    private static Formula Scalar(Formula body) => All("K",Call("Type"),Seq(
+        OpenBracket,Call("RCLike",K),CloseBracket,Sp,body));
     private static Formula Hypotheses(Formula body) => Scalar(All("F",Mat(2),Imp(Eq(Call("rank",Frame),D(2)),
         All("u",Vector,Imp(Ne(U,D(0)),Imp(Eq(Call("mulVec",Frame,U),D(0)),body))))));
     private static Formula Parameterization() => Hypotheses(All("G",Mat(2),

@@ -19,9 +19,9 @@ internal sealed class CStarSmaleHigherOrderDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "sqrt3_sq"),
                 H("The embedded square root of three"),
                 StatementSource.FromAuthor(Disp(new Formula.Relation(
-                    new Formula.Power(Seq(Open,
+                    new Formula.Power(Parenthesized(Seq(
                         App(Qualified("Real", "sqrt"), D(3)),
-                        Colon, Sp, V("Complex"), Close), D(2)),
+                        Colon, Sp, V("Complex"))), D(2)),
                     FormulaRelationOperator.Equal, D(3)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The real square root of three, embedded in Complex, has square three. This identity determines the second coordinate of the root product."))),
@@ -60,7 +60,8 @@ internal sealed class CStarSmaleHigherOrderDocument : IScribeDocumentDefinition
     private static Formula Some(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Inst(Formula type, Formula body) =>
-        Seq(OpenBracket, type, CloseBracket, Comma, Sp, body);
+        Seq(
+            OpenBracket, type, CloseBracket, Comma, Sp, body);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula Real() => Seq(Mathbb, Grp(V("R")));
     private static Formula Implies(Formula left, Formula right) =>

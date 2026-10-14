@@ -136,20 +136,22 @@ internal sealed class CanonicalChannelDPIDocument : IScribeDocumentDefinition
                         + "library growth. It asserts no physical measurement implementation or computational resource bound."))),
                 DescribeRole.Theorem))));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
     private static Formula Call(string name, params Formula[] arguments)
     {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        var items = new List<Formula>();
         for (var index = 0; index < arguments.Length; index++)
         {
             if (index > 0) items.AddRange([Comma, Sp]);
             items.Add(arguments[index]);
         }
-        items.Add(Close);
-        return Seq([.. items]);
+        return Seq(Operatorname, Grp(F.Id(name)), Parenthesized(Seq([.. items])));
     }
 
     private static Formula Instance(string name, Formula type) =>
-        Seq(OpenBracket, Call(name, type), CloseBracket);
+        Seq(
+            OpenBracket, Call(name, type), CloseBracket);
 
     private static Formula TheoremFormula()
     {

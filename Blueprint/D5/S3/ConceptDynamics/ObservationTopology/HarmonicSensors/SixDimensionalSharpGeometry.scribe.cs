@@ -486,8 +486,10 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     + "energy and quantile bounds, design caps and asymptotic risk laws, are not established by this risk "
                     + "calculation; it does not claim completion of the parent problem.")))))));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
     private static Formula ActualEtaLimitFormula() => Disp(Call("Tendsto",
-        Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,
+        Seq(Parenthesized(Seq(Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")))),
             Sp, Mapsto, Sp, Frac, Grp(Call("actualEta", Varepsilon)),
             Grp(Sqrt, Grp(Varepsilon))),
         Call("nhdsWithin", Num(0), Call("Ioi", Num(0))),
@@ -495,7 +497,7 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
             Grp(Num(2), Sp, Cdot, Sp, Sqrt, Grp(Num(2)))))));
 
     private static Formula RankDefectGainLimitFormula() => Disp(Call("Tendsto",
-        Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,
+        Seq(Parenthesized(Seq(Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")))),
             Sp, Mapsto, Sp, Frac,
             Grp(Num(2), Sp, Minus, Sp, Call("actualRank", Varepsilon)),
             Grp(Call("lowerGain", Varepsilon))),
