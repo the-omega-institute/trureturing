@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:381c51d624423f81541c4d5263b22c7f94123a02f0df9d1c63d60b5fc55d9f09
+  normalized_sha256: sha256:381c51d624423f81541c4d5263b22c7f94123a02f0df9d1c63d60b5fc55d9f09
+cas_ref: sha256:381c51d624423f81541c4d5263b22c7f94123a02f0df9d1c63d60b5fc55d9f09
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「S5040.4 Exact information limit of the fixed modulus」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 2b2d9731a1ac772cd82b02ecb79de548ead2007de9777238a053e6dcb4c76e84
+    next_atom_id: ee7cbd42b249723169d3018a2ebccece2383577964c61b35456ac28dcd52c997

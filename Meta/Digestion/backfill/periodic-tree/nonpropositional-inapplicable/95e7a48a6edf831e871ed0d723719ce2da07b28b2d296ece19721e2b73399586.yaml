@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95e7a48a6edf831e871ed0d723719ce2da07b28b2d296ece19721e2b73399586
+  normalized_sha256: sha256:95e7a48a6edf831e871ed0d723719ce2da07b28b2d296ece19721e2b73399586
+cas_ref: sha256:95e7a48a6edf831e871ed0d723719ce2da07b28b2d296ece19721e2b73399586
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「T.3 奇数下标的迹恒等式」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 2f32b60cb31fe978c391873c0a73c15830933c4098a7a539df9a3f3db14dd49a
+    next_atom_id: 994474aac0e41d1ae6143f8c4e948ee3d13404dc1a2c31c50a34cf2113e5c2b0

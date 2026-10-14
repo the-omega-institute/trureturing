@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c95c40dd2f96fbc72ef6debbd675e06c40ae4660966f5a72d234536227d2775
+  normalized_sha256: sha256:7c95c40dd2f96fbc72ef6debbd675e06c40ae4660966f5a72d234536227d2775
+cas_ref: sha256:7c95c40dd2f96fbc72ef6debbd675e06c40ae4660966f5a72d234536227d2775
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「TR.11 粒子流与环面自同构的同痕障碍」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 384813c92b13d21bfcd0928da9f2f3ea4dcc0a909e769fdfe47d48115de54a4b
+    next_atom_id: 48577480ecea564585f547968268cc8259a4354947d48d99c095eae6efdb5cac
