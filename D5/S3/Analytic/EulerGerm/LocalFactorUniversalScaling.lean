@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Analytic/EulerGerm/LocalFactorUniversalScaling
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Scale every golden local factor universally, sharpen its second normalized tail, and classify the prime orbit window. -/
+   digest: Scale every golden local factor universally, sharpen its second normalized tail,
+   and classify the prime orbit window. -/
 
 import D5.S3.Analytic.EulerGerm.GoldenLocalFactor
 import D5.S3.Analytic.GermWindow.GermZeroCertificateReduction
@@ -692,6 +693,7 @@ theorem scaled_gc_orbit_window_iff (p : Nat.Primes) :
       exact hnot (Or.inr hp)
     have hp5 : 5 ≤ p.1 := by
       by_contra hlt
+      have hp2le : 2 ≤ p.1 := p.prop.two_le
       have hp4 : p.1 ≤ 4 := by omega
       have hcases : p.1 = 2 ∨ p.1 = 3 ∨ p.1 = 4 := by omega
       rcases hcases with h2 | h3 | h4

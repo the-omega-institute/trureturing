@@ -46,8 +46,38 @@ The leading deviation is the square of the phi-cubed mode. Its prime sum is summ
 
 This gives a sharper sufficient bound, improving one over phi to the fourth to one over twice phi cubed. It asserts no zero of any local factor.
 
+**Theorem 1.4 (The prime-three orbit straddles the window while prime five exits below it).**
+
+$$
+\frac{1}{2\varphi^3}<\operatorname{goldenCandidateOrbit}(3)<\frac{1}{\varphi^2}
+\quad\text{and}\quad
+\operatorname{goldenCandidateOrbit}(5)<\frac{1}{2\varphi^3}
+$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.gc_orbit_two_prime_straddle` (`✓ std3`). ∎
+
+*Commentary.*
+
+The prime-two candidate is transported through the universal prime scaling by the factor `log 2 / log p`. The proof uses strict logarithm monotonicity, rational bounds for the golden ratio, and `2^9 < 5^4`. It locates the scaled candidate; it does not assert that the transported point is a local-factor zero.
+
+**Theorem 1.5 (Prime channels in the scaled golden window).**
+
+$$
+\forall p\in\operatorname{Primes}(\mathbb N),\quad
+\left(\frac{1}{2\varphi^3}<\operatorname{goldenCandidateOrbit}(p)<\frac{1}{\varphi^2}\right)
+\iff p=2\ \lor\ p=3.
+$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.scaled_gc_orbit_window_iff` (`✓ std3`). ∎
+
+*Commentary.*
+
+For `p ≥ 5`, logarithm monotonicity reduces the upper estimate to the `p = 5` comparison. The theorem is a discrete orbit-window classification and supplies no Riemann-hypothesis conclusion by itself.
+
 ## References
 
 - Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.germLocalFactor_next_mode_expansion`
 - Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.germLocalFactor_prime_scaling`
 - Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.second_normalized_factor_deviation_norm_summable_sharp`
+- Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.gc_orbit_two_prime_straddle`
+- Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.scaled_gc_orbit_window_iff`
