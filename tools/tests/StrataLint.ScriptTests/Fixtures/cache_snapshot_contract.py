@@ -702,14 +702,14 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 self.assertEqual("pull-requests-do-not-publish-project-seeds", receipts["project"]["reason"])
                 self.assertEqual("true", ready["dependency_ready"])
 
-    def test_pr_dispatch_publishes_built_project_material_in_its_target_ref(self):
+    def test_pr_dispatch_never_publishes_candidate_to_ordinary_native_prefix(self):
         _, _, target = self.native_seed("project")
         self.env.update(GITHUB_EVENT_NAME="workflow_dispatch", GITHUB_REF="refs/heads/dev",
                         STRATALINT_CACHE_PR_SOURCE_VALIDATED="true",
                         STRATALINT_CACHE_SOURCE_REF="refs/pull/12/merge",
                         STRATALINT_CACHE_TARGET_REF="refs/heads/dev",
                         STRATALINT_CACHE_SOURCE_COMMIT="a" * 40, STRATALINT_CACHE_CHECKED_OUT_SHA="a" * 40)
-        for report, programs, expected in ((2, 0, "true"), (0, 3, "true"),
+        for report, programs, expected in ((2, 0, "false"), (0, 3, "false"),
                                            (0, 0, "false"), (None, None, "false")):
             with self.subTest(report=report, programs=programs):
                 self.work(report, programs)

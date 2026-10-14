@@ -34,6 +34,7 @@ on:
 permissions:
   contents: read
   actions: read
+  pull-requests: read
 
 jobs:
   unit:
@@ -68,6 +69,12 @@ jobs:
           global-json-file: global.json
           cache: true
           cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: inputs.lean == 'build'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
       - id: keys
         if: inputs.lean != 'none'
         env:
@@ -83,7 +90,7 @@ jobs:
       - if: inputs.lean != 'none'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -91,7 +98,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: inputs.lean == 'build' && steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && inputs.lean == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
