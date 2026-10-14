@@ -19,11 +19,10 @@ literature_attestation: self_cost is literature-attested by Section 4.1, Proposi
     Direct frozen dependencies: D5/S3/Quantum/Information/PartialTraceMutualInformation.isHermitian_kronecker [sha256:aaaef5099708fcb8dd0b7f84e781799b378231842fffd861c64b67bc0c621ff0], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft [sha256:68653a556c9228bbd8018884585aa56fe5fce5cd40b4a12a493f4aa319c78f5d], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight [sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77]
   D2_le_cost: proof_shape: bind-only; escape_witness: none; consumers: D2_le_bound_all, D2_rotate_le, diag_self_cost, endpoint_bound, pure_diag_D2
     Direct frozen dependencies: D5/S3/Quantum/Information/PartialTraceMutualInformation.isHermitian_kronecker [sha256:aaaef5099708fcb8dd0b7f84e781799b378231842fffd861c64b67bc0c621ff0], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft [sha256:68653a556c9228bbd8018884585aa56fe5fce5cd40b4a12a493f4aa319c78f5d], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight [sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77]
-  psd_entry_bound: proof_shape: bind-only; escape_witness: none; consumers: diag_overlap_le, pure_diag_coupling, state_entry_norm_le_one
-    Direct frozen dependencies: none
   state_diag_le_one: proof_shape: bind-only; escape_witness: none; consumers: state_entry_norm_le_one
     Direct frozen dependencies: none
   state_entry_norm_le_one: proof_shape: bind-only; escape_witness: none; consumers: cost_le_bound
+    Same-delivery owner dependency: D5/S3/Quantum/Matrix/CartesianVariance; declaration: D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound; declaration statement_id: sha256:029989c48264702a7ddb2f7963b30fbc3260f0c293862ce2cf6561a7a358a67e
     Direct frozen dependencies: none
   pauli_hermitian: proof_shape: bind-only; escape_witness: none; consumers: CW_midpoint_bound, D2_rotate_le, diag_self_cost, endpoint_bound, pure_diag_D2, result
     Direct frozen dependencies: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli [sha256:3758fca32bf974298628515ed91492adafcdff8dc216bac5d000b130b08b04fc], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X [sha256:c5a0ae88d76c4eaaa4b6fe8a43d173573dc140906b88c1033f4a61033ac6288e], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Y [sha256:35dc0190894fc92420f9611604a3030c3f0caed3c92ee732a2224b7a3343e92a], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z [sha256:13af366bc311e9f007d266b48686e5771e4117ded2ded1aa5085eff8b4b2ff69], D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.pauli_hermitian [sha256:9fed1f3f9e03300e2781ca25ae0d6440873c35552c9588efe7a35204f990652c]
@@ -56,6 +55,7 @@ literature_attestation: self_cost is literature-attested by Section 4.1, Proposi
   diagState_isState: proof_shape: bind-only; escape_witness: none; consumers: CW_endpoint_bound, diag_self_cost, midpoint_cross, midpoint_self_input, midpoint_self_output, plus_isState, pure_diag_D2, self_cost_spectral
     Direct frozen dependencies: D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.diagonalState [sha256:013cba828a03ee76551ea835a546d37fc9ec5e1fa7e7ece2b17cefe093a661e9]
   diag_overlap_le: proof_shape: bind-only; escape_witness: none; consumers: diag_self_cost
+    Same-delivery owner dependency: D5/S3/Quantum/Matrix/CartesianVariance; declaration: D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound; declaration statement_id: sha256:029989c48264702a7ddb2f7963b30fbc3260f0c293862ce2cf6561a7a358a67e
     Direct frozen dependencies: D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.diagonalState [sha256:013cba828a03ee76551ea835a546d37fc9ec5e1fa7e7ece2b17cefe093a661e9], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft [sha256:68653a556c9228bbd8018884585aa56fe5fce5cd40b4a12a493f4aa319c78f5d], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight [sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77]
   diag_self_cost: proof_shape: content; escape_witness: diag_self_cost; consumers: midpoint_self_input, midpoint_self_output, self_cost_spectral
     Direct frozen dependencies: D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.diagonalState [sha256:013cba828a03ee76551ea835a546d37fc9ec5e1fa7e7ece2b17cefe093a661e9], D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.pauli [sha256:679eb24de318cb22b41f0908ee5703cff91956515aa3e96f5c416b5f48a6f18d], D5/S3/Quantum/FiniteDimensional.QubitMatrix [sha256:e376bbe008ddbbc49fcf9763247304ed70ec54ac5cf49af3c6f7fb58fa626f30], D5/S3/Quantum/FiniteDimensional.qubitX [sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7], D5/S3/Quantum/FiniteDimensional.qubitZ [sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c], D5/S3/Quantum/Information/PartialTraceMutualInformation.isHermitian_kronecker [sha256:aaaef5099708fcb8dd0b7f84e781799b378231842fffd861c64b67bc0c621ff0], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft [sha256:68653a556c9228bbd8018884585aa56fe5fce5cd40b4a12a493f4aa319c78f5d], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft_kronecker [sha256:1fa42c02a50864971045c3c86abddd8fc906aca8723acb97552cdd92c7196b9d], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight [sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker [sha256:a0838f79000777eac14a35e86139cd9f264a8cd9569370843c5210242ee58673], D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceRight [sha256:2e0d10f59a41befee8bb5e380b1d8d7db7e14a2bbed6d47af5089807c0905813], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli [sha256:3758fca32bf974298628515ed91492adafcdff8dc216bac5d000b130b08b04fc], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X [sha256:c5a0ae88d76c4eaaa4b6fe8a43d173573dc140906b88c1033f4a61033ac6288e], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Y [sha256:35dc0190894fc92420f9611604a3030c3f0caed3c92ee732a2224b7a3343e92a], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z [sha256:13af366bc311e9f007d266b48686e5771e4117ded2ded1aa5085eff8b4b2ff69], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix.match_1 [sha256:7fc2e63389d1eab654dd837875a0c02ece045a699e8b31f1275e0c20980c3be9], D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.pauli_hermitian [sha256:9fed1f3f9e03300e2781ca25ae0d6440873c35552c9588efe7a35204f990652c], D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity [sha256:4ba4e6b5fd69f7af3d48c8ecc93d1d3efe0fbd32799aa8b021b502f76ad76988], D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3]
@@ -107,9 +107,11 @@ import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Matrix.CartesianVariance
 
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker
 open Matrix
+open D5.S3.Quantum.Matrix.CartesianVariance (psd_entry_bound)
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
 
 namespace D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
@@ -177,23 +179,6 @@ end D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 
 namespace D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 noncomputable section
-
-theorem psd_entry_bound {n : Type*} [Fintype n] [DecidableEq n]
-    {P : Matrix n n ℂ} (hp : P.PosSemidef) (i j : n) :
-    Complex.normSq (P i j) ≤ (P i i).re * (P j j).re := by
-  let e : Fin 2 → n := ![i,j]
-  have hd := (hp.submatrix e).det_nonneg
-  have hh := hp.1.apply j i
-  have hi := hp.diag_nonneg (i := i)
-  have hj := hp.diag_nonneg (i := j)
-  have hd' := hd.1
-  simp only [Matrix.det_fin_two, Matrix.submatrix_apply, e, Matrix.cons_val_zero,
-    Matrix.cons_val_one, Matrix.head_cons] at hd'
-  rw [← hh] at hd'
-  simp only [Complex.sub_re, Complex.zero_re, Complex.mul_re, Complex.star_def,
-    Complex.conj_re, Complex.conj_im, hi.2.symm, hj.2.symm] at hd'
-  simp only [Complex.normSq_apply]
-  nlinarith
 
 private theorem state_diag_le_one {n : Type*} [Fintype n] [DecidableEq n]
     {P : Matrix n n ℂ} (hp : P.PosSemidef) (ht : P.trace = 1) (i : n) :
