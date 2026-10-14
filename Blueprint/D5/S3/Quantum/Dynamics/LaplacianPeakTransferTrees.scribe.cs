@@ -16,6 +16,12 @@ internal sealed class LaplacianPeakTransferTreesDocument : IScribeDocumentDefini
         + "Transfer from the root to every hub attains the spectral entry bound at time pi.",
         H("Infinitely many non-star trees admit Laplacian peak state transfer"),
         Blocks(
+            Node("eig-dot-zero", "eig_dot_zero", "Distinct eigenvalues give orthogonal vectors", EigDotZeroFormula(),
+                "Let A be a real Hermitian matrix on a finite index type V, and let w satisfy A w = mu w. "
+                + "If the eigenvalue of the i-th vector in hA.eigenvectorBasis differs from mu, its dot product with w is zero. "
+                + "The conclusion includes the zero vector and does not require a graph Laplacian. "
+                + "It follows from the orthogonality of distinct eigenspaces of the symmetric Euclidean linear map defined by A.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Node("idempotent", "lapIdempotent", "Laplacian spectral idempotents", IdempotentFormula(),
                 "Section 3, p. 5: \"E_r is the idempotent projection onto the θ_r-eigenspace.\" "
                 + "The source writes M as the sum of θ_r E_r over its distinct eigenvalues. Here M is G.lapMatrix over the reals. "
@@ -101,6 +107,23 @@ internal sealed class LaplacianPeakTransferTreesDocument : IScribeDocumentDefini
     private static Formula Eigenvalue(Formula i) => Call(Member("hL", "eigenvalues"), i);
     private static Formula Eigenvector(Formula i) =>
         Call(Member("hL", "eigenvectorBasis"), i);
+
+    private static Formula EigDotZeroFormula()
+    {
+        Formula v = F.Id("V"), a = F.Id("A"), w = F.Id("w"), mu = F.Id("mu"), i = F.Id("i");
+        Formula vector = Call(Dotted("WithLp", "ofLp"), Call(Member("hA", "eigenvectorBasis"), i));
+        Formula eigenvector = Eqn(Call(Dotted("Matrix", "mulVec"), a, w), Call(Dotted("HSMul", "hSMul"), mu, w));
+        Formula distinct = new Formula.Relation(Call(Member("hA", "eigenvalues"), i), FormulaRelationOperator.NotEqual, mu);
+        Formula orthogonal = Eqn(Call("dotProduct", vector, w), D(0));
+        Formula conclusion = All("i", v, new Formula.Logic(distinct, FormulaLogicOperator.Implies, orthogonal));
+        return Disp(All("V", Named("Type"),
+            Seq(OpenBracket, Call("Fintype", v), CloseBracket, Comma, Sp,
+                OpenBracket, Call("DecidableEq", v), CloseBracket, Comma, Sp,
+                All("A", Call("Matrix", v, v, Real()),
+                    All("hA", Call(Dotted("Matrix", "IsHermitian"), a),
+                        All("w", Seq(v, Sp, Rightarrow, Sp, Real()),
+                            All("mu", Real(), new Formula.Logic(eigenvector, FormulaLogicOperator.Implies, conclusion))))))));
+    }
 
     private static Formula IdempotentFormula()
     {
