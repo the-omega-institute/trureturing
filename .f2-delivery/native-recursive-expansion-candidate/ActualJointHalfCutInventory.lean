@@ -79,9 +79,10 @@ theorem actual_restored_single_order_inventory {base : V}
 /-- The prior actual single-order and joint states both partition the
 same old cycle. Their verified inventories earn every old support and
 edge regrouping needed by the next boundary update. The single-order
-support is simple because its count is that of the Hamiltonian cycle. -/
+support is simple because it is a permutation of the actual cycle's
+nonrepeating tail, including after inclusion in a larger graph. -/
 theorem actual_prior_single_order_partition_inventories {base : V}
-    (c : G.Walk base base) (hc : c.IsHamiltonianCycle)
+    (c : G.Walk base base) (hc : c.IsCycle)
     (joint single : List (Piece G))
     (K H : Finset (Sym2 V)) (hdisjoint : Disjoint K H)
     (hjointSupport : (joint.flatMap fun p => p.walk.support).Perm c.support.tail)
@@ -96,13 +97,10 @@ theorem actual_prior_single_order_partition_inventories {base : V}
       (joint.flatMap fun p => p.walk.support) ∧
     (single.flatMap fun p => p.walk.edges).Perm
       ((joint.flatMap fun p => p.walk.edges) ++ H.toList) := by
-  have hn : (single.flatMap fun p => p.walk.support).Nodup := by
-    apply List.nodup_iff_count_le_one.mpr
-    intro v
-    rw [hsingleSupport.count_eq v]
-    rw [(SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hc).2 v]
+  have hn : (single.flatMap fun p => p.walk.support).Nodup :=
+    hsingleSupport.nodup_iff.mpr hc.support_nodup
   exact ⟨hn, hsingleSupport.trans hjointSupport.symm,
-    actual_restored_single_order_inventory c hc.isCycle _ _ K H hdisjoint
+    actual_restored_single_order_inventory c hc _ _ K H hdisjoint
       hjointEdges hsingleEdges hcuts⟩
 
 /-- Restore precisely H and continue deleting precisely K. The chosen

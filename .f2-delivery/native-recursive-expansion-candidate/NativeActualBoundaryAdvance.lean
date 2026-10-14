@@ -8,6 +8,7 @@ import D5.S3.Combinatorics.Graph.PrefixReversal.RecursiveBoundaryAdvance
 import D5.S3.Combinatorics.Graph.Walks.ActualSingleOrderBoundaryUpdate
 import D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
+import D5.S3.Combinatorics.Graph.Walks.ActualPriorBoundaryInputs
 
 set_option autoImplicit false
 
@@ -25,6 +26,7 @@ open D5.S3.Combinatorics.Graph.Walks.ActualJointEndpointPairs
 open D5.S3.Combinatorics.Graph.Walks.ActualSingleOrderBoundaryUpdate
 open D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
 open D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
+open D5.S3.Combinatorics.Graph.Walks.ActualPriorBoundaryInputs
 open private mapped_complement_inventory from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 
@@ -49,36 +51,45 @@ the two marked orders is the literal nextFrame indexing from the J step. -/
 theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk : 3 ≤ k)
     (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
     (hbase : F.base = A ++ [u]) (odd : Bool)
-    {base x ℓ z y ℓ₀ r₀ ℓ₁ r₁ : ParentVertex F A u hbase}
+    {base priorBase r x ℓ z y ℓ₀ r₀ ℓ₁ r₁ : ParentVertex F A u hbase}
     (c : (ParentGraph F A u hbase).Walk base base) (hc : c.IsHamiltonianCycle)
+    (prior : (ParentGraph F A u hbase).Walk priorBase priorBase) (hprior : prior.IsCycle)
     (d : (ParentGraph F A u hbase).Walk ℓ z)
-    (prefix : (ParentGraph F A u hbase).Walk x ℓ)
+    (cross : (ParentGraph F A u hbase).Walk r x)
     (old : (ParentGraph F A u hbase).Walk x y)
-    (holdPath : old.IsPath)
-    (hrouteNodup : (prefix.append d).support.Nodup)
-    (hrouteKeep : ∀ e ∈ (prefix.append d).edges, e ∈ old.edges)
-    (oldrest jointrest : List (Piece (ParentGraph F A u hbase)))
-    (holdNodup : (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup)
-    (holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
-      (d.support ++ jointrest.flatMap fun p => p.walk.support))
+    (oldrest jointtail : List (Piece (ParentGraph F A u hbase)))
+    (oldK oldH : Finset (Sym2 (ParentVertex F A u hbase)))
+    (holdDisjoint : Disjoint oldK oldH)
+    (hpriorJointSupport : ((⟨ℓ, z, d⟩ :: ⟨r, x, cross⟩ :: jointtail).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.support).Perm prior.support.tail)
+    (hpriorSingleSupport : ((⟨x, y, old⟩ :: oldrest).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.support).Perm prior.support.tail)
+    (hpriorJointEdges : ((⟨ℓ, z, d⟩ :: ⟨r, x, cross⟩ :: jointtail).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.edges).Perm
+      (prior.edges.filter fun e => decide (e ∉ oldK ∪ oldH)))
+    (hpriorSingleEdges : ((⟨x, y, old⟩ :: oldrest).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.edges).Perm
+      (prior.edges.filter fun e => decide (e ∉ oldK)))
+    (hpriorCuts : ∀ e ∈ oldK ∪ oldH, e ∈ prior.edges)
+    (hpriorSeam : s(r, ℓ) ∈ oldH)
     (K H : Finset (Sym2 (ParentVertex F A u hbase)))
     (hdisjoint : Disjoint K H)
+    (hpriorRestored : oldH.image (Sym2.map Subtype.val) =
+      (H.erase s(ℓ₁, r₁)).image (Sym2.map Subtype.val))
     (restored deleted : List (Sym2 (ParentVertex F A u hbase)))
     (hrestored : restored = (H.erase s(ℓ₁, r₁)).toList)
     (hdeletedList : deleted = K.toList)
     (hrestoreCut : s(ℓ₁, r₁) ∈ H)
     (hdeleted : (deleted.map (Sym2.map Subtype.val)).toFinset =
       markedCuts (nextFrame F A u hbase))
-    (holdEdges : (old.edges ++ oldrest.flatMap fun p => p.walk.edges).Perm
-      (d.edges ++ (jointrest.flatMap fun p => p.walk.edges) ++ restored))
     (new₀ : (ParentGraph F A u hbase).Walk z ℓ₀)
     (new₁ : (ParentGraph F A u hbase).Walk r₀ ℓ₁)
     (new₂ : (ParentGraph F A u hbase).Walk r₁ ℓ)
     (hcurrentSupport : c.support.tail.Perm
       (new₀.support ++ new₁.support ++ new₂.support ++
-        jointrest.flatMap fun p => p.walk.support))
+        (⟨r, x, cross⟩ :: jointtail).flatMap fun p => p.walk.support))
     (hcurrentJoint : (new₀.edges ++ new₁.edges ++ new₂.edges ++
-        (jointrest.flatMap fun p => p.walk.edges)).Perm
+        ((⟨r, x, cross⟩ :: jointtail).flatMap fun p => p.walk.edges)).Perm
       (c.edges.filter fun e => decide (e ∉ K ∪ H)))
     (hcurrentCuts : ∀ e ∈ K ∪ H, e ∈ c.edges)
     (hx : x.val = leftPort F 0) (hy : y.val = leftPort F (k - 1))
@@ -111,15 +122,27 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
         (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) ∪ {s(ℓ₀, y), s(r₀, x)} ∧
       s(ℓ₁, r₁) ∉ deleted.toFinset := by
   classical
-  obtain ⟨tail, hfactor, _⟩ :=
-    actual_rooted_path_is_prefix (prefix.append d)
-      (SimpleGraph.Walk.IsPath.mk' hrouteNodup) old holdPath hrouteKeep
-  have hold : old = prefix.append (d.append tail) := by
-    simpa only [SimpleGraph.Walk.append_assoc] using hfactor
+  obtain ⟨hpriorRestore, _, _, _, holdNodup, holdSupport', holdEdges', tail, hold, _⟩ :=
+    actual_prior_opposite_boundary_inputs prior hprior d cross jointtail old oldrest
+      oldK oldH holdDisjoint hpriorJointSupport hpriorSingleSupport
+      hpriorJointEdges hpriorSingleEdges hpriorCuts hpriorSeam
+  let prefix := cross.reverse.concat hpriorRestore
+  have holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
+      (d.support ++ (⟨r, x, cross⟩ :: jointtail).flatMap fun p => p.walk.support) := by
+    simpa only [List.flatMap_cons, List.append_assoc] using holdSupport'
+  have heinjPrior : Function.Injective (Sym2.map
+      (Subtype.val : ParentVertex F A u hbase → Configuration m)) :=
+    Sym2.map.injective Subtype.val_injective
+  have holdH : oldH = H.erase s(ℓ₁, r₁) := Finset.image_injective heinjPrior hpriorRestored
+  have holdEdges : (old.edges ++ oldrest.flatMap fun p => p.walk.edges).Perm
+      (d.edges ++ (⟨r, x, cross⟩ :: jointtail).flatMap
+        (fun p => p.walk.edges) ++ restored) := by
+    rw [holdH, ← hrestored] at holdEdges'
+    simpa only [List.flatMap_cons, List.append_assoc] using holdEdges'
   obtain ⟨hcurrentEdges, hrestoreNotDeleted, _⟩ :=
     actual_joint_half_cut_inventory c hc.isCycle
       (new₀.edges ++ new₁.edges ++ new₂.edges ++
-        (jointrest.flatMap fun p => p.walk.edges)) K H hdisjoint
+        ((⟨r, x, cross⟩ :: jointtail).flatMap fun p => p.walk.edges)) K H hdisjoint
       hcurrentJoint hcurrentCuts s(ℓ₁, r₁) hrestoreCut
   rw [← hrestored, ← hdeletedList] at hcurrentEdges
   have hrestore : (ParentGraph F A u hbase).Adj ℓ₁ r₁ :=
@@ -128,7 +151,7 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
     simpa only [hdeletedList, List.mem_toFinset, Finset.mem_toList] using hrestoreNotDeleted
   obtain ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts,
       hcard, hpairs, _, _⟩ :=
-    actual_single_order_boundary_update c hc d prefix tail old hold oldrest jointrest
+    actual_single_order_boundary_update c hc d prefix tail old hold oldrest (⟨r, x, cross⟩ :: jointtail)
       holdNodup holdSupport restored deleted holdEdges new₀ new₁ new₂ hrestore
       hcurrentSupport hcurrentEdges
   let pieces : List (Piece (ParentGraph F A u hbase)) :=
@@ -219,28 +242,35 @@ from the actual mirrored update and literal index shift. -/
 theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk : 3 ≤ k)
     (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
     (hbase : F.base = A ++ [u]) (odd : Bool)
-    {base x ℓ z y ℓ₀ r₀ ℓ₁ r₁ : ParentVertex F A u hbase}
+    {base priorBase ℓ z y ℓ₀ r₀ ℓ₁ r₁ : ParentVertex F A u hbase}
     (c : (ParentGraph F A u hbase).Walk base base) (hc : c.IsHamiltonianCycle)
+    (prior : (ParentGraph F A u hbase).Walk priorBase priorBase) (hprior : prior.IsCycle)
     (d : (ParentGraph F A u hbase).Walk ℓ z)
-    (prefix : (ParentGraph F A u hbase).Walk x ℓ)
-    (old : (ParentGraph F A u hbase).Walk x y)
-    (holdPath : old.IsPath)
-    (hrouteNodup : (prefix.append d).support.Nodup)
-    (hrouteKeep : ∀ e ∈ (prefix.append d).edges, e ∈ old.edges)
+    (old : (ParentGraph F A u hbase).Walk ℓ y)
     (oldrest jointrest : List (Piece (ParentGraph F A u hbase)))
-    (holdNodup : (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup)
-    (holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
-      (d.support ++ jointrest.flatMap fun p => p.walk.support))
+    (oldK oldH : Finset (Sym2 (ParentVertex F A u hbase)))
+    (holdDisjoint : Disjoint oldK oldH)
+    (hpriorJointSupport : ((⟨ℓ, z, d⟩ :: jointrest).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.support).Perm prior.support.tail)
+    (hpriorSingleSupport : ((⟨ℓ, y, old⟩ :: oldrest).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.support).Perm prior.support.tail)
+    (hpriorJointEdges : ((⟨ℓ, z, d⟩ :: jointrest).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.edges).Perm
+      (prior.edges.filter fun e => decide (e ∉ oldK ∪ oldH)))
+    (hpriorSingleEdges : ((⟨ℓ, y, old⟩ :: oldrest).flatMap
+      fun p : Piece (ParentGraph F A u hbase) => p.walk.edges).Perm
+      (prior.edges.filter fun e => decide (e ∉ oldK)))
+    (hpriorCuts : ∀ e ∈ oldK ∪ oldH, e ∈ prior.edges)
     (K H : Finset (Sym2 (ParentVertex F A u hbase)))
     (hdisjoint : Disjoint K H)
+    (hpriorRestored : oldH.image (Sym2.map Subtype.val) =
+      (H.erase s(ℓ₀, r₀)).image (Sym2.map Subtype.val))
     (restored deleted : List (Sym2 (ParentVertex F A u hbase)))
     (hrestored : restored = (H.erase s(ℓ₀, r₀)).toList)
     (hdeletedList : deleted = K.toList)
     (hrestoreCut : s(ℓ₀, r₀) ∈ H)
     (hdeleted : (deleted.map (Sym2.map Subtype.val)).toFinset =
       markedCuts (nextFrame F A u hbase))
-    (holdEdges : (old.edges ++ oldrest.flatMap fun p => p.walk.edges).Perm
-      (d.edges ++ (jointrest.flatMap fun p => p.walk.edges) ++ restored))
     (new₀ : (ParentGraph F A u hbase).Walk z ℓ₀)
     (new₁ : (ParentGraph F A u hbase).Walk r₀ ℓ₁)
     (new₂ : (ParentGraph F A u hbase).Walk r₁ ℓ)
@@ -251,7 +281,7 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
         (jointrest.flatMap fun p => p.walk.edges)).Perm
       (c.edges.filter fun e => decide (e ∉ K ∪ H)))
     (hcurrentCuts : ∀ e ∈ K ∪ H, e ∈ c.edges)
-    (hx : x.val = leftPort F 0) (hy : y.val = leftPort F (k - 1))
+    (hx : ℓ.val = leftPort F 0) (hy : y.val = leftPort F (k - 1))
     (hℓ₁ : ℓ₁.val = leftPort (nextFrame F A u hbase) 0)
     (hr₁ : r₁.val = rightPort (nextFrame F A u hbase) 0)
     (hrestBoundary : ∀ p ∈ oldrest, ∃ a b : Port k,
@@ -278,14 +308,25 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
         p.finish.val = specialPort (nextFrame F A u hbase) b ∧
         (if odd then oddBoundary (k + 1) else evenBoundary (k + 1)) (code a) (code b)) ∧
       endpointPairs pieces =
-        (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) ∪ {s(ℓ₁, y), s(r₁, x)} ∧
+        (endpointPairs (⟨ℓ, y, old⟩ :: oldrest)).erase s(ℓ, y) ∪ {s(ℓ₁, y), s(r₁, ℓ)} ∧
       s(ℓ₀, r₀) ∉ deleted.toFinset := by
   classical
-  obtain ⟨tail, hfactor, _⟩ :=
-    actual_rooted_path_is_prefix (prefix.append d)
-      (SimpleGraph.Walk.IsPath.mk' hrouteNodup) old holdPath hrouteKeep
+  obtain ⟨_, _, _, holdNodup, holdSupport, holdEdges', tail, hold', _⟩ :=
+    actual_prior_primary_boundary_inputs prior hprior d jointrest old oldrest
+      oldK oldH holdDisjoint hpriorJointSupport hpriorSingleSupport
+      hpriorJointEdges hpriorSingleEdges hpriorCuts
+  let prefix : (ParentGraph F A u hbase).Walk ℓ ℓ := .nil
   have hold : old = prefix.append (d.append tail) := by
-    simpa only [SimpleGraph.Walk.append_assoc] using hfactor
+    simpa only [prefix, SimpleGraph.Walk.nil_append] using hold'
+  have heinjPrior : Function.Injective (Sym2.map
+      (Subtype.val : ParentVertex F A u hbase → Configuration m)) :=
+    Sym2.map.injective Subtype.val_injective
+  have holdH : oldH = H.erase s(ℓ₀, r₀) := Finset.image_injective heinjPrior hpriorRestored
+  have holdEdges : (old.edges ++ oldrest.flatMap fun p => p.walk.edges).Perm
+      (d.edges ++ (jointrest).flatMap
+        (fun p => p.walk.edges) ++ restored) := by
+    rw [holdH, ← hrestored] at holdEdges'
+    simpa only [List.flatMap_cons, List.append_assoc] using holdEdges'
   obtain ⟨hcurrentEdges, hrestoreNotDeleted, _⟩ :=
     actual_joint_half_cut_inventory c hc.isCycle
       (new₀.edges ++ new₁.edges ++ new₂.edges ++
@@ -302,7 +343,7 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
       holdNodup holdSupport restored deleted holdEdges new₀ new₁ new₂ hrestore
       hcurrentSupport hcurrentEdges
   let pieces : List (Piece (ParentGraph F A u hbase)) :=
-    [⟨ℓ₁, y, boundary₀⟩, ⟨r₁, x, boundary₁⟩] ++ oldrest
+    [⟨ℓ₁, y, boundary₀⟩, ⟨r₁, ℓ, boundary₁⟩] ++ oldrest
   let edgeVal : Sym2 (ParentVertex F A u hbase) → Sym2 (Configuration m) :=
     Sym2.map Subtype.val
   have heinj : Function.Injective edgeVal := Sym2.map.injective Subtype.val_injective
@@ -325,7 +366,7 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
   have hrawcard : pieces.length = (markedCuts (nextFrame F A u hbase)).card := by
     rw [← hcutimage, Finset.card_image_of_injective _ heinj]
     exact hcard
-  have hxnext : x.val = leftPort (nextFrame F A u hbase) 1 :=
+  have hxnext : ℓ.val = leftPort (nextFrame F A u hbase) 1 :=
     hx.trans (native_marked_index_shift hm F A u hbase 0).2.symm
   have hynext : y.val = leftPort (nextFrame F A u hbase) k := by
     have hs := (native_marked_index_shift hm F A u hbase (k - 1)).2
@@ -355,16 +396,16 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
     · obtain ⟨a, b, hs, hf, hb⟩ := hrestBoundary p hp
       have hnot : ¬ pair (code a) (code b) (k - 1, 1) (0, 1) := by
         intro hpair
-        have hpx : x ∈ p.walk.support := by
+        have hpx : ℓ ∈ p.walk.support := by
           rcases hpair with ⟨_, hb⟩ | ⟨ha, _⟩
           · have hbi : b.1.val = 0 := congrArg Prod.fst hb
             have hbs : b.2.val = 1 := congrArg Prod.snd hb
-            have hf' : p.finish = x := Subtype.ext (hf.trans (by
+            have hf' : p.finish = ℓ := Subtype.ext (hf.trans (by
               simpa only [specialPort, hbi, hbs, Nat.one_ne_zero, if_false] using hx.symm))
             exact hf' ▸ p.walk.end_mem_support
           · have hai : a.1.val = 0 := congrArg Prod.fst ha
             have has : a.2.val = 1 := congrArg Prod.snd ha
-            have hs' : p.start = x := Subtype.ext (hs.trans (by
+            have hs' : p.start = ℓ := Subtype.ext (hs.trans (by
               simpa only [specialPort, hai, has, Nat.one_ne_zero, if_false] using hx.symm))
             exact hs' ▸ p.walk.start_mem_support
         exact List.disjoint_left.mp (List.nodup_append'.mp holdNodup).2.2
