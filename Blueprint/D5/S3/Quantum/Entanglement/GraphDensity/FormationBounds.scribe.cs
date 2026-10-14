@@ -12,6 +12,9 @@ internal sealed class FormationBoundsDocument : IScribeDocumentDefinition
         "Qubit entropy, convex concurrence cost and selective finite-ensemble formation bounds.",
         H("FormationBounds"),
         Blocks(
+            Describe.Lean(DescribeId.Create("qubit-det-bounds"), DeclarationHandle.Create(Module + "qubit_det_bounds"),
+                H("Qubit determinant bounds"), StatementSource.FromAuthor(QubitDetBounds()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a positive semidefinite two by two complex matrix of trace one, the real part of the determinant lies between zero and one quarter."))), DescribeRole.Theorem),
             Paragraph(Text("Scalar quotients are real unless a complex cast is displayed. Fin indices are zero based. Matrix, rankOneDensity, partialTraceRight and partialTransposeB denote the actual Lean operations. All entropy values are in bits.")),
             Describe.Lean(DescribeId.Create("ensemble"),
                 DeclarationHandle.Create(Module + "Ensemble"), H("Ensemble"),
@@ -165,6 +168,17 @@ internal sealed class FormationBoundsDocument : IScribeDocumentDefinition
     };
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner)), Dot, Named(name));
+    private static Formula QubitDetBounds()
+    {
+        Formula matrix = Call("Matrix", Call("Fin", D(2)), Call("Fin", D(2)), Seq(Mathbb, Sp, F.Id("C")));
+        Formula det = Apply(Qualified("Complex", "re"), Apply(Qualified("Matrix", "det"), Tau));
+        Formula bounds = new Formula.Logic(Parenthesized(new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, det)),
+            FormulaLogicOperator.And, Parenthesized(new Formula.Relation(det, FormulaRelationOperator.LessThanOrEqual, new Formula.Fraction(D(1), D(4)))));
+        Formula trace = new Formula.Relation(Apply(Qualified("Matrix", "trace"), Tau), FormulaRelationOperator.Equal, D(1));
+        return Disp(All(Tau, matrix, new Formula.Logic(Parenthesized(Apply(Qualified("Matrix", "PosSemidef"), Tau)),
+            FormulaLogicOperator.Implies, new Formula.Logic(Parenthesized(trace), FormulaLogicOperator.Implies, bounds))));
+    }
+
     private static Formula Named(string name) => name.Contains('_')
         ? Seq(Operatorname, Grp(F.Id(name.Split('_')[0])), Underscore, Grp(F.Id(name.Split('_')[1])))
         : Seq(Operatorname, Grp(F.Id(name)));

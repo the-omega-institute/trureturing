@@ -6,6 +6,9 @@
    utility: none
    digest: A Pauli channel with exactly three nonzero weights has a Bayesian inverse only at the maximally mixed state. -/
 
+/- Escape audit unfinished for channel_cptp:
+   https://github.com/the-omega-institute/trureturing/issues/16722 -/
+
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
@@ -99,7 +102,7 @@ private theorem channel_unital (p : Fin 4 → ℝ) (hs : ∑ μ, p μ = 1) :
   rw [← Finset.sum_smul, ← Complex.ofReal_sum, hs]
   simp
 
-private theorem channel_cptp (p : Fin 4 → ℝ) (hp : ∀ μ, 0 ≤ p μ)
+theorem channel_cptp (p : Fin 4 → ℝ) (hp : ∀ μ, 0 ≤ p μ)
     (hs : ∑ μ, p μ = 1) : IsCPTP (pauliChannel p) := by
   let K : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ := fun μ => (Real.sqrt (p μ) : ℂ) • sigma μ
   have hK : pauliChannel p = MatrixMap.of_kraus K K := by

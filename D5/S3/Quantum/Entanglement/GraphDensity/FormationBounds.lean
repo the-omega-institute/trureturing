@@ -99,10 +99,10 @@ Direct frozen dependencies (declaration statement_id):
     sha256:cc88c714292e1a1b7f96163a344340fa2144c8b2caffc5cb2196fb9df44fd3e5
   D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.partialTransposeB
     sha256:894491a0350c31f846bcfc59cbb3e13f12eb0801f6a00517db381f0dc0ecc393
-Information-escape registration is paused under CLAUDE.md §3.9 「信息逃逸登记暂缓」.
 MoreauYosidaFormationSelectiveLoccRefutation.E_F uses an ENNReal infimum,
 density-state ensembles and natural-log entropy; it is not this real bit-entropy sInf.
 The source expression uses eigenvalues and the literal partialTraceRight.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16722
 -/
 
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
@@ -355,7 +355,7 @@ theorem qubit_entropy_det (τ : Matrix (Fin 2) (Fin 2) ℂ)
     rw [entropy_formula]
     rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,show 1-b=a by linarith,add_comm]
 
-private theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
+theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
     (hτ : τ.PosSemidef) (ht : τ.trace = 1) : 0 ≤ τ.det.re ∧ τ.det.re ≤ 1/4 := by
   let a : ℝ := hτ.1.eigenvalues 0
   let b : ℝ := hτ.1.eigenvalues 1
