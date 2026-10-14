@@ -1978,3 +1978,282 @@ Neither a torus, a character count, a response rank, nor the Gram calculation
 supplies those hypotheses.
 
 ## 5.99 追加锚
+
+## 6. Full-support triplet locus and the native-operation boundary
+
+This appendix keeps the source, operation and metric contract of §§3–5
+unchanged. Thus $p=(p_0,p_1,p_2,p_3,p_{13})$ is positive with total mass one,
+the controls are exactly the full Definition 3.1 loops with every integer
+winding, the five readouts are the doubled coherence pairs of (4.1), and the
+endpoint average is normalized Haar with equal mass on the two components at
+the double wall. The Gram matrices below are the source pullback Gram or the
+actual ten-output covariance from (5.4); no whitening is introduced.
+
+### 6.1 The complete positive-spectrum classification
+
+Write
+
+$$
+\lambda_\alpha=2(p_0p_1+p_3p_{13}),\qquad
+\lambda_\beta=2p_0p_2,\qquad
+\lambda_\gamma=2(p_0p_3+p_1p_{13}).
+\tag{6.1}
+$$
+
+In generic position, Theorem 5.1 gives the active Gram
+$\operatorname{diag}(\lambda_\alpha I_2,\lambda_\beta I_2,
+\lambda_\gamma I_2)$. On one wall it gives two positive $2\times2$ blocks,
+and at both walls it gives a circle block with coefficient
+$\lambda_{\mathrm{circ}}=2p_0p_2$ and a parity coefficient
+
+$$
+\lambda_{\mathrm{par}}=4(p_0p_1+p_0p_3+p_1p_{13}+p_3p_{13}).
+\tag{6.2}
+$$
+
+**Theorem 6.1 (Triplet multiplicity locus).** For every positive source in
+the stated fiber, all positive eigenvalue multiplicities of the active Gram
+are divisible by three if and only if
+
+$$
+p=(a,b,8b,b,a),\qquad a,b>0,\qquad 2a+10b=1.
+\tag{6.3}
+$$
+
+On this locus the source is on both symmetry walls and
+
+$$
+G_{\mathrm{lat}}=16ab\,I_3=[16ab]\otimes I_3.
+\tag{6.4}
+$$
+
+Thus the active Gram is orthogonally equivalent to $A\otimes I_3$ with the
+one-dimensional positive multiplicity matrix $A=[16ab]$. If one embeds this
+active three-dimensional support into six coordinates, the padded expression
+$\operatorname{diag}(16ab,0)\otimes I_3$ is only a statement about
+multiplicities; it is not a six-dimensional source claim.
+
+**Proof.** In generic position all three coefficients in (6.1) are positive,
+and each has multiplicity two. If two coefficients coincide, the positive
+multiplicities are $4$ and $2$; if all three coincide, the only positive
+multiplicity is $6$. The latter alternative cannot occur in generic position,
+because
+
+$$
+\lambda_\alpha-\lambda_\gamma
+ =2(p_0-p_{13})(p_1-p_3).
+\tag{6.5}
+$$
+
+Equality would impose $p_0=p_{13}$ or $p_1=p_3$, which are respectively the
+walls $X+Y=1-Z$ and $X=Y$. Hence no generic source has the required positive
+multiplicities.
+
+On exactly one wall the active support has dimension four and consists of two
+positive blocks, each of multiplicity two. The only possible multiplicity
+patterns are therefore $(2,2)$ or $(4)$, neither of which is divisible by
+three. This conclusion uses the wall formula of Theorem 5.1 and does not
+continue a generic Haar formula through the wall.
+
+At both walls, $p_0=p_{13}$ and $p_1=p_3$. Put these common values equal to
+$a$ and $b$. The positive multiplicities are $2$ for the circle coefficient
+and $1$ for the parity coefficient, so divisibility by three is equivalent to
+their equality. Equations (6.2) give
+
+$$
+2a p_2=16ab.
+\tag{6.6}
+$$
+
+Since $a>0$, this is $p_2=8b$. Total mass one then gives
+$2a+10b=1$. Conversely, every positive pair satisfying (6.3) has both wall
+equalities, and (6.2) becomes $\lambda_{\mathrm{circ}}=
+\lambda_{\mathrm{par}}=16ab$, proving (6.4). The existing output covariance
+has the same positive spectrum by (5.4); its null directions do not alter any
+positive multiplicity. $\square$
+
+Adding the four, six or seven output null directions in the generic, single-
+wall or double-wall regimes changes only the multiplicity of the zero
+eigenvalue. It cannot repair a positive pattern $(2,2,2)$, $(4,2)$ or $(2,1)$.
+The classification is consequently a positive-spectrum statement and makes
+no claim about a physical spatial dimension. The compact-group identity
+dimensions $(3,2,1)$ and affine capacities $(6,4,3)$ proved in §§3–4 are
+different invariants from these eigenvalue multiplicities.
+
+### 6.2 A sharp generic six-dimensional separation
+
+The following comparison is restricted to generic position, where the active
+support is six-dimensional. Let $G$ denote the Gram in (5.5), let
+$x\le y\le z$ be the sorted values among
+$\lambda_\alpha,\lambda_\beta,\lambda_\gamma$, and define
+
+$$
+\mathcal T_6=\{Q(A\otimes I_3)Q^{\mathsf T}:Q\in O(6),\;
+ A=A^{\mathsf T}\succeq0\text{ is }2\times2\}.
+\tag{6.7}
+$$
+
+**Proposition 6.2 (Triplet distance and a source lower bound).** With the
+single Frobenius norm and the comparison class (6.7),
+
+$$
+\operatorname{dist}_F(G,\mathcal T_6)^2
+ =\frac23\bigl((y-x)^2+(z-y)^2\bigr).
+\tag{6.8}
+$$
+
+Every positive generic source also satisfies
+
+$$
+\operatorname{dist}_F(G,\mathcal T_6)
+ \ge \frac{2}{\sqrt3}\,\bigl|(p_0-p_{13})(p_1-p_3)\bigr|.
+\tag{6.9}
+$$
+
+The bound is sharp within the actual source domain. For
+
+$$
+p_*=(2,3,3,1,1)/10,
+\tag{6.10}
+$$
+
+one has $(X,Y,Z)=(2/5,1/5,3/10)$, $r=7/10$ and
+$0=\kappa_-<\kappa=1/10<\kappa_+=1/5$, so the source is full-support and
+generic. Its three block values are
+
+$$
+(\lambda_\alpha,\lambda_\beta,\lambda_\gamma)
+ = (7/50,3/25,1/10),
+$$
+
+so $x=1/10$, $y=3/25$, $z=7/50$, and both sides of (6.9) equal
+$1/(25\sqrt3)$.
+
+**Proof.** The eigenvalues of $G$ are
+$x,x,y,y,z,z$. By the finite-dimensional real-symmetric spectral matching
+theorem of Hoffman and Wielandt, the orthogonal minimization in (6.7) reduces
+to matching these ordered eigenvalues to two values, each repeated three
+times. The minimizing split is
+
+$$
+[x,x,y]\quad\text{and}\quad[y,z,z],
+$$
+
+whose least-square representatives are
+$\mu=(2x+y)/3$ and $\nu=(y+2z)/3$. They are nonnegative and satisfy
+$\mu\le\nu$, so they define an admissible PSD matrix $A$. The residual sum is
+
+$$
+2(x-\mu)^2+(y-\mu)^2+(y-\nu)^2+2(z-\nu)^2
+ =\frac23\bigl((y-x)^2+(z-y)^2\bigr),
+$$
+which proves (6.8). This is the standard spectral approximation ingredient,
+used here as classical mathematics rather than as a new source theorem.
+
+From (6.5), $|\lambda_\alpha-\lambda_\gamma|=
+2|(p_0-p_{13})(p_1-p_3)|$. Also,
+
+$$
+(y-x)^2+(z-y)^2\ge\frac12(z-x)^2
+ \ge\frac12(\lambda_\alpha-\lambda_\gamma)^2.
+$$
+
+Combining this with (6.8) yields (6.9). For (6.10), direct substitution gives
+$\lambda_\alpha=14/100$, $\lambda_\beta=12/100$ and
+$\lambda_\gamma=10/100$, with equal adjacent gaps $1/50$. Moreover
+$(p_0-p_{13})(p_1-p_3)=1/50$, so equality holds in both inequalities. The
+displayed fiber coordinates verify that this equality witness is an actual
+admissible source, not a freely chosen spectral triple. $\square$
+
+The comparison in Proposition 6.2 is only for the generic six-dimensional
+latent support. It does not provide a padded distance formula for the walls,
+assert that the comparator is source-realizable, or assign a physical error
+to any laboratory task. The citation used for the spectral matching step is
+A. J. Hoffman and H. Wielandt, “The variation of the spectrum of a normal
+matrix,” *Duke Mathematical Journal* 20(1) (1953), 37–39,
+[doi:10.1215/S0012-7094-53-02004-3](https://doi.org/10.1215/S0012-7094-53-02004-3).
+
+### 6.3 Isotropic metric without native rotational control
+
+Take the source-locus point
+
+$$
+p_{\mathrm{iso}}=(1,1,8,1,1)/12.
+\tag{6.11}
+$$
+
+It has $(X,Y,Z)=(1/6,1/6,2/3)$, $r=1/3$ and
+$0<\kappa=1/12<1/6$, and lies on both walls. The balanced-parity Haar
+convention of §5 gives
+
+$$
+G_{\mathrm{lat}}=\frac19 I_3.
+\tag{6.12}
+$$
+
+The three latent coordinates in (4.8) have the actual endpoint set
+
+$$
+\mathscr S=\{q(\beta,\varepsilon)=(\sqrt2\cos\beta,
+ \sqrt2\sin\beta,\varepsilon):\beta\in\mathbb T,
+ \varepsilon\in\{-1,1\}\},
+\tag{6.13}
+$$
+
+and the endpoint law is uniform in $\beta$ with the two parity values equally
+weighted. Equation (6.12) is therefore a metric symmetry of the pullback
+Gram, not an assertion that this law is $SO(3)$-invariant.
+
+There is nevertheless a full ambient orthogonal intertwining for the static
+decoder. Let $D_{\mathrm{iso}}$ be the centered $10\times3$ decoder in (4.7),
+so that $D_{\mathrm{iso}}^{\mathsf T}D_{\mathrm{iso}}=I_3/9$. It is injective.
+For each $Q\in SO(3)$ define on its image
+
+$$
+W_Q(D_{\mathrm{iso}}u)=D_{\mathrm{iso}}Qu,
+$$
+
+and define $W_Q$ to be the identity on the orthogonal complement of that
+image. The Gram identity makes this a well-defined orthogonal map, and the
+construction gives a representation with
+
+$$
+D_{\mathrm{iso}}Q=W_QD_{\mathrm{iso}}.
+\tag{6.14}
+$$
+
+Thus the finite static map does satisfy the intertwining form of (9.1) from
+[FIB harmonic-edge load](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md).
+What fails is the stronger source
+and operation statement that the reachable endpoint set and its law are
+preserved by every $Q$ and that every such $Q$ is generated by Definition 3.1
+controls.
+
+For an explicit failure, use the proper rotation
+
+$$
+Q_x(\pi/2)=
+\begin{pmatrix}1&0&0\\0&0&-1\\0&1&0\end{pmatrix}\in SO(3).
+\tag{6.15}
+$$
+
+The reachable point $q_0=(0,\sqrt2,1)$ is sent to
+$Q_x(\pi/2)q_0=(0,-1,\sqrt2)$, whose third coordinate is not a parity value;
+it is outside $\mathscr S$. Since $D_{\mathrm{iso}}$ is injective,
+$c+D_{\mathrm{iso}}Q_x(\pi/2)q_0$ is outside the actual decoded endpoint set
+$c+D_{\mathrm{iso}}\mathscr S$. Theorem 3.3 identifies the native endpoint
+group as $\mathbb T\times\mathbb Z_2$, so no lawful loop reaches it. The
+endpoint law also changes under this rotation: under the pushforward, the
+third coordinate is the continuous variable $\sqrt2\sin\beta$ rather than
+the almost-surely discrete variable $\varepsilon$. The update law (4.10),
+inherited from the diagonal/product operations in Theorem 3.8, cannot supply
+this mixing.
+
+This counterexample does not refute (9.1): (6.14) is precisely a static
+intertwining of a linear decoder. It shows that static linear equivariance,
+metric isotropy, endpoint-set and law invariance, and lawful control
+realization are four different requirements. No physical spatial dimension,
+metric transport, native $SO(3)$ action, or complete explanation of why three
+is forced follows from this appendix.
+
+## 6.99 追加锚
