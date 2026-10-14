@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2ParentWitnesses
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeJ2ParentWitnesses
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Preserve the same raw old P and outer Q suppliers in their actual parent cycle. -/
 /- Same-witness companion to the unconditional native J2 parent cycle.
    Preserve the actual raw supplier and all three partitions before
    opening any child or choosing the final parent. -/
@@ -293,7 +300,8 @@ theorem p_marked_child_map_bijective {m k : ℕ} (F : SupplyFrame m k)
     Function.Bijective (pMarkedChildMap F A u hbase hA) := by
   constructor
   · intro x y h
-    exact Subtype.ext (congrArg Subtype.val h)
+    have hv := congrArg Subtype.val h
+    exact Subtype.ext hv
   · intro y
     exact ⟨⟨y.val, (native_p_marked_domain_eq_child F A u hbase hA y.val).mpr y.property⟩,
       Subtype.ext rfl⟩
@@ -433,7 +441,8 @@ theorem native_j2_outer_parent_with_raw_p_q {m : ℕ} (hm : 5 ≤ m)
     recursive_cycle_from_specified_children_with_inventory (by omega : 3 ≤ m)
       O hBO special.path special.hamiltonian children
   have hlast : (⟨O.base.length - 1, by
-      have hb := hBO; omega⟩ : Fin O.base.length) = jP := by
+      simp only [O, outerFrame, List.length_append, List.length_singleton]
+      omega⟩ : Fin O.base.length) = jP := by
     apply Fin.ext
     simp only [O, outerFrame, List.length_append, List.length_singleton, jP, pChildIndex]
     omega
