@@ -413,8 +413,6 @@ end D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 namespace D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 
 noncomputable def phi : ℝ := 1 + t
-noncomputable def T2 : ℝ := 1 - t
-noncomputable def lam : ℝ := T2 / 10
 noncomputable def c0 : ℝ := 2 * t / 5
 inductive Label | L3 | L0 | L5 | L2 | L25
   deriving DecidableEq, Repr
@@ -498,9 +496,6 @@ noncomputable def sign : Side → ℝ | .high => 1 | .low => -1
 noncomputable def initial (j : Side) : Model → ℝ
   | .original => xSide j
   | .anchored => ySide j
-noncomputable def execute (j : Side) : List Return → ℝ → ℝ
-  | [], D => D
-  | a :: rest, D => execute j rest (returnMap j a D)
 
 def observationOffset : Model → ℕ | .original => 26 | .anchored => 52
 

@@ -183,12 +183,6 @@ theorem actual_complete_boundary_geometry (model : Model) (execution : List Retu
     simpa only [coordinate, List.drop_zero] using (paired_source_reconstruction j model (execution.take p)).2.2.2.1
 
 
-/-- Exact active costs, evaluated on one execution from its fixed literal tail. -/
-def StrictControl (j : Side) (b : ℝ) : List Return → ℝ → Prop
-  | [], _ => True
-  | a :: rest, D => lam - g ^ 2 * chi ^ a.r * D < b ∧
-      StrictControl j b rest (returnMap j a D)
-
 set_option maxHeartbeats 6000000 in
 -- The actual source proof includes every six-slot and twenty-slot normalization.
 /-- Above the nonactive-slot bound, the complete actual paired supply is
@@ -909,41 +903,6 @@ set_option maxHeartbeats 1000000
 open Filter Topology
 open scoped Topology
 
-/-- A consumed structural interface to the existing recursive guard. -/
-theorem uniform_guard_trace_iff_split
-    (K : ℕ) (d : ℝ) (strict : Bool) (j : Side)
-    (execution : List Return) (D : ℝ) :
-    GuardTrace K d strict j execution D ↔
-      ∀ (before : List Return) (a : Return) (after : List Return),
-        execution = before ++ a :: after →
-          a.r ≤ K ∧ (a.r = K →
-            if strict then d < execute j before D
-            else d ≤ execute j before D) := by
-  induction execution generalizing D with
-  | nil =>
-      constructor
-      · intro _ before a after hsplit
-        have hlen := congrArg List.length hsplit; simp only [List.length_nil, List.length_append, List.length_cons] at hlen; omega
-      · intro _
-        exact True.intro
-  | cons first rest ih =>
-      constructor
-      · rintro ⟨hcap, hguard, hrest⟩ before a after hsplit
-        cases before with
-        | nil =>
-            simp only [List.nil_append, List.cons.injEq] at hsplit
-            rcases hsplit with ⟨rfl, rfl⟩; exact ⟨hcap, hguard⟩
-        | cons first' before =>
-            simp only [List.cons_append, List.cons.injEq] at hsplit
-            rcases hsplit with ⟨rfl, hsplit⟩; simpa only [execute] using (ih (returnMap j first D)).mp hrest before a after hsplit
-      · intro h
-        have hfirst := h [] first rest rfl
-        refine ⟨hfirst.1, hfirst.2, (ih (returnMap j first D)).mpr ?_⟩
-        intro before a after hsplit
-        have hsplit' : first :: rest = (first :: before) ++ a :: after := by
-          simpa only [List.cons_append] using congrArg (List.cons first) hsplit
-        simpa only [execute] using h (first :: before) a after hsplit'
-
 /-- Budget enlargement keeps the identical error and literal-source witnesses. -/
 theorem uniform_closed_supply_mono
     (model : Model) (o : Ownership) (execution : List Return)
@@ -954,36 +913,5 @@ theorem uniform_closed_supply_mono
   rcases hsupply j with ⟨err, herr, hread, hzero, hfuture⟩
   refine ⟨err, ?_, hread, hzero, hfuture⟩
   intro p; exact (herr p).trans hbudget
-
-theorem exact_control_iff_split (j : Side) (budget : ℝ)
-    (execution : List Return) (D : ℝ) :
-    StrictControl j budget execution D ↔
-      ∀ (before : List Return) (a : Return) (after : List Return),
-        execution = before ++ a :: after →
-          lam - g ^ 2 * chi ^ a.r * execute j before D < budget := by
-  induction execution generalizing D with
-  | nil =>
-      constructor
-      · intro _ before a after hsplit
-        have hlen := congrArg List.length hsplit; simp only [List.length_nil, List.length_append, List.length_cons] at hlen; omega
-      · intro _
-        trivial
-  | cons first rest ih =>
-      constructor
-      · rintro ⟨hfirst, hrest⟩ before a after hsplit
-        cases before with
-        | nil =>
-            simp only [List.nil_append, List.cons.injEq] at hsplit
-            rcases hsplit with ⟨rfl, rfl⟩; exact hfirst
-        | cons first' before =>
-            simp only [List.cons_append, List.cons.injEq] at hsplit
-            rcases hsplit with ⟨rfl, hsplit⟩; simpa only [execute] using (ih (returnMap j first D)).mp hrest before a after hsplit
-      · intro h
-        refine ⟨h [] first rest rfl, (ih (returnMap j first D)).mpr ?_⟩
-        intro before a after hsplit
-        have hsplit' : first :: rest = (first :: before) ++ a :: after := by
-          simpa only [List.cons_append] using congrArg (List.cons first) hsplit
-        simpa only [execute] using h (first :: before) a after hsplit'
-
 
 end D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
