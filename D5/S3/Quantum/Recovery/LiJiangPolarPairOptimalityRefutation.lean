@@ -182,16 +182,17 @@ theorem result : Not claim := by
     Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ) (Matrix.single st.1 st.2 1) * A
   let K : ((Fin 2 × Fin 2) × (Fin 2 × Fin 2)) ⊕
       ((Fin 2 × Fin 2) ⊕ (Fin 2 × Fin 2)) →
-        Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := fun r =>
-    match r with
-    | .inl ab => (Real.sqrt 702 / 104 : ℂ) • Matrix.single ab.1 ab.2 1
-    | .inr (.inl st) => (Real.sqrt 245 / 104 : ℂ) • R st
-    | .inr (.inr ij) => (Real.sqrt 21 / 104 : ℂ) • T ij
+        Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+    Sum.elim
+      (fun ab => (Real.sqrt 702 / 104 : ℂ) • Matrix.single ab.1 ab.2 1)
+      (Sum.elim
+        (fun st => (Real.sqrt 245 / 104 : ℂ) • R st)
+        (fun ij => (Real.sqrt 21 / 104 : ℂ) • T ij))
   have hQ : sourceQ 2 (9/13) =
     ((Real.sqrt 26)⁻¹ : ℂ) •
       A := by
-    have hl4 : lambda4 2 (9/13) = 12/13 := by norm_num [lambda4]
-    have hl5 : lambda5 2 (9/13) = 1/13 := by norm_num [lambda5]
+    have hl4 : lambda4 2 (9/13) = 12/13 := by norm_num [lambda4.eq_1]
+    have hl5 : lambda5 2 (9/13) = 1/13 := by norm_num [lambda5.eq_1]
     have hs2 : Real.sqrt 2 ^ 2 = 2 := by norm_num
     have hs26 : Real.sqrt 26 ^ 2 = 26 := by norm_num
     have hn2 : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.2 (by norm_num))
@@ -222,18 +223,29 @@ theorem result : Not claim := by
       norm_num
     have hpi : maxEntangled (Fin 2) = Matrix.of (fun a b : Fin 2 × Fin 2 =>
         if a.1 = a.2 ∧ b.1 = b.2 then (1/2 : ℂ) else 0) := by
+      rw [@D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled.eq_1
+        (Fin 2) (Fin.fintype 2) (instDecidableEqFin 2)]
       ext ⟨a,b⟩ ⟨c,d⟩
-      fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-        norm_num [maxEntangled, maxEntangledVector, Fintype.card_fin, Matrix.vecMulVec,
-          ← Complex.ofReal_mul, hs2inv, Matrix.of_apply]
+      fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d
+      all_goals rw [Matrix.vecMulVec_apply, Matrix.of_apply]
+      all_goals rw [@D5.S3.QuantumBounds.PeritoTsirelson.maxEntangledVector.eq_1
+        (Fin 2) (Fin.fintype 2) (instDecidableEqFin 2)]
+      all_goals rw [Pi.star_apply]
+      all_goals rw [@D5.S3.QuantumBounds.PeritoTsirelson.maxEntangledVector.eq_1
+        (Fin 2) (Fin.fintype 2) (instDecidableEqFin 2)]
+      all_goals norm_num [Fintype.card_fin, Matrix.vecMulVec, hs2inv, Matrix.of_apply]
       all_goals rw [← mul_inv_rev, ← pow_two, hs2c]
       all_goals norm_num
     have hQform : sourceQ 2 (9/13) =
         (Real.sqrt 2 : ℂ) •
           ((Real.sqrt (4/13) : ℂ) • (1 - maxEntangled (Fin 2)) +
            (Real.sqrt (1/13) : ℂ) • maxEntangled (Fin 2)) := by
-      simp only [sourceQ, hl4, hl5]
-      norm_num only
+      have hratio : Real.sqrt (12 / 13 / (((2 : ℕ) : ℝ)^2 - 1)) = Real.sqrt (4 / 13) := by
+        congr 1; norm_num
+      have hratioC : (Real.sqrt (12 / 13 / (((2 : ℕ) : ℝ)^2 - 1)) : ℂ) =
+          (Real.sqrt (4 / 13) : ℂ) := by exact_mod_cast hratio
+      rw [sourceQ.eq_1, hl4, hl5, hratioC]
+      rfl
     rw [hQform, smul_add, smul_smul, smul_smul, hac, hbc, hpi]
     ext ⟨a,b⟩ ⟨c,d⟩
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
@@ -249,8 +261,8 @@ theorem result : Not claim := by
         (13 • Matrix.vecMulVec (fun a => if a=ij then (1:ℂ) else 0)
           (fun b : Fin 2 × Fin 2 => if b.1=b.2 then (1:ℂ) else 0) -
           (sourceD 2 ij.2).conjTranspose * sourceD 2 ij.1 * A.conjTranspose)) := by
-    have h4 : lambda4 2 (9/13) = 12/13 := by norm_num [lambda4]
-    have h5 : lambda5 2 (9/13) = 1/13 := by norm_num [lambda5]
+    have h4 : lambda4 2 (9/13) = 12/13 := by norm_num [lambda4.eq_1]
+    have h5 : lambda5 2 (9/13) = 1/13 := by norm_num [lambda5.eq_1]
     have hs2 : Real.sqrt 2 ^ 2 = 2 := by norm_num
     have hs26 : Real.sqrt 26 ^ 2 = 26 := by norm_num
     have hs78 : Real.sqrt 78 ^ 2 = 78 := by norm_num
@@ -277,8 +289,11 @@ theorem result : Not claim := by
     have hpsi : star (maxEntangledVector (Fin 2)) =
         ((Real.sqrt 2 : ℂ)⁻¹) • delta := by
       ext ⟨a,b⟩
-      fin_cases a <;> fin_cases b <;>
-        norm_num [maxEntangledVector, Fintype.card_fin, Pi.star_apply, delta, Complex.ofReal_inv]
+      fin_cases a <;> fin_cases b
+      all_goals rw [Pi.star_apply]
+      all_goals rw [@D5.S3.QuantumBounds.PeritoTsirelson.maxEntangledVector.eq_1
+        (Fin 2) (Fin.fintype 2) (instDecidableEqFin 2)]
+      all_goals norm_num [Fintype.card_fin, delta, Complex.ofReal_inv]
     have hvec (ij : Fin 2 × Fin 2) :
         Matrix.vecMulVec (fun a => if a=ij then (1:ℂ) else 0) (star (maxEntangledVector (Fin 2))) =
           ((Real.sqrt 2 : ℂ)⁻¹) • Matrix.vecMulVec (fun a => if a=ij then (1:ℂ) else 0) delta := by
@@ -291,7 +306,8 @@ theorem result : Not claim := by
     have hd2 : (Real.sqrt (12/13) : ℂ)⁻¹ * (Real.sqrt (1/13) : ℂ) * (Real.sqrt 26 : ℂ)⁻¹ =
         (Real.sqrt 78 : ℂ)⁻¹ * (1/2) := by rw [hbc]; ring
     intro ij
-    simp only [sourceE, h4, h5, hvec, sourceB, hQ, Matrix.conjTranspose_mul,
+    rw [sourceE.eq_1, h4, h5, hvec]
+    simp only [sourceB.eq_1, hQ, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_smul, Matrix.conjTranspose_conjTranspose,
       Complex.star_def, map_inv₀, Complex.conj_ofReal, Matrix.smul_mul,
       smul_sub, smul_smul, Matrix.mul_assoc]
@@ -306,7 +322,7 @@ theorem result : Not claim := by
         (490 : ℂ) • (A*A) + (21 : ℂ) • ∑ ij, (T ij).conjTranspose * T ij = (10816:ℂ) • 1 := by
       ext ⟨a,b⟩ ⟨c,d⟩
       fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-        norm_num [A, T, sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat,
+        norm_num [A, T, sourceD.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat,
           Matrix.vecMulVec, Matrix.single, Matrix.sum_apply, Fintype.sum_prod_type,
           Fin.sum_univ_two, Matrix.one_apply]
     have hreplace : (∑ ab : (Fin 2 × Fin 2) × (Fin 2 × Fin 2),
@@ -333,7 +349,7 @@ theorem result : Not claim := by
           _ = (Real.sqrt q : ℂ)^2 / (104:ℂ)^2 := by ring
           _ = _ := by rw [← Complex.ofReal_pow, Real.sq_sqrt hq]; norm_num
       rw [hcoeff]
-    simp only [K, Fintype.sum_sum_type]
+    simp only [K, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr]
     simp_rw [hscale 702 (by norm_num), hscale 245 (by norm_num), hscale 21 (by norm_num)]
     simp only [← Finset.smul_sum, hreplace, hreset, smul_smul]
     have h := congrArg ((10816:ℂ)⁻¹ • ·) hint
@@ -389,14 +405,14 @@ theorem result : Not claim := by
     apply LinearMap.ext
     intro X
     change (∑ r, K r * X * (K r).conjTranspose) = (sourceNoise 2 (9/13)) X
-    simp only [K, Fintype.sum_sum_type,
+    simp only [K, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
       hscale 702 (by norm_num), hscale 245 (by norm_num), hscale 21 (by norm_num),
       ← Finset.smul_sum, hreplace, hreset]
-    simp only [sourceNoise, hQ, hE, Matrix.conjTranspose_smul,
+    simp only [sourceNoise.eq_1, hQ, hE, Matrix.conjTranspose_smul,
       Complex.star_def, map_inv₀, Complex.conj_ofReal, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
       h26, h78, hpartial]
     ext a b
-    norm_num [lambda1, lambda2, lambda3, lambda4,
+    norm_num [lambda1.eq_1, lambda2.eq_1, lambda3.eq_1, lambda4.eq_1,
       Matrix.kroneckerMap_apply, Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul,
       Finset.mul_sum]
     ring
@@ -427,12 +443,12 @@ theorem result : Not claim := by
       congr 2
       ext ⟨a,b⟩ c
       fin_cases a <;> fin_cases b <;> fin_cases c <;>
-        norm_num [sourceD, Matrix.conjTranspose_apply, Matrix.of_apply]
+        norm_num [sourceD.eq_1, Matrix.conjTranspose_apply, Matrix.of_apply]
     have hG : C.conjTranspose * C = G := by
       rw [hC, hAdef]
       ext i j
       fin_cases i <;> fin_cases j <;>
-        norm_num [G, sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat,
+        norm_num [G, sourceD.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply, map_ofNat,
           Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.diagonal_apply,
           Matrix.smul_apply, Matrix.of_apply, ← Complex.ofReal_inv]
       all_goals field_simp
@@ -475,7 +491,7 @@ theorem result : Not claim := by
       rw [hC,hAdef]
       ext ⟨a,b⟩ c
       fin_cases a <;> fin_cases b <;> fin_cases c <;>
-        norm_num [P, H, sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        norm_num [P, H, sourceD.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply,
           Matrix.smul_apply, Matrix.of_apply, Matrix.diagonal_apply,
           Fintype.sum_prod_type, Fin.sum_univ_two, hn10, hn26]
       all_goals field_simp
@@ -528,25 +544,33 @@ theorem result : Not claim := by
       calc
         _ = Matrix.trace (maxEntangled (Fin d) *
             Matrix.kronecker (Lf j) (1 : Matrix (Fin d) (Fin d) ℂ)) := by
-          rw [maxEntangled, Matrix.vecMulVec_mul, Matrix.trace_vecMulVec,
+          rw [D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled.eq_1,
+            Matrix.vecMulVec_mul, Matrix.trace_vecMulVec,
             Matrix.dotProduct_mulVec, dotProduct_comm]
         _ = _ := by
           simp only [Matrix.kronecker]
           rw [max_entangled_trace, Matrix.mul_one, Matrix.trace_transpose,
             Fintype.card_fin]
     rw [hindex]
-    dsimp only [entanglementFidelity]
+    change (dotProduct (star (maxEntangledVector (Fin d)))
+      ((PhyslibLeaf.MatrixMap.kron (PhyslibLeaf.MatrixMap.of_kraus Lf Lf) LinearMap.id
+        (maxEntangled (Fin d))).mulVec (maxEntangledVector (Fin d)))).re = _
     rw [htensor]
     change (dotProduct (star (maxEntangledVector (Fin d)))
       ((PhyslibLeaf.MatrixMap.of_kraus _ _
         (D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
           (maxEntangledVector (Fin d)))).mulVec (maxEntangledVector (Fin d)))).re = _
     rw [D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness.kraus_survival]
-    simp_rw [hamplitude]
-    simp only [norm_div, Complex.norm_natCast, div_pow, ← Complex.normSq_eq_norm_sq]
-    dsimp only [Lf]
-    rw [← Finset.sum_div, e.sum_comp (fun j => Complex.normSq (Matrix.trace (L j)))]
-    simp [div_eq_mul_inv, inv_pow, mul_comm]
+    calc
+      _ = ∑ j, ‖Matrix.trace (Lf j) / (d : ℂ)‖ ^ 2 := by
+        apply Finset.sum_congr rfl
+        intro j hj
+        rw [hamplitude j]
+      _ = _ := by
+        simp only [norm_div, Complex.norm_natCast, div_pow, ← Complex.normSq_eq_norm_sq]
+        dsimp only [Lf]
+        rw [← Finset.sum_div, e.sum_comp (fun j => Complex.normSq (Matrix.trace (L j)))]
+        simp [div_eq_mul_inv, inv_pow, mul_comm]
   have hEncoder {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (V : Matrix b a ℂ)
     (hV : V.conjTranspose * V = 1) :
@@ -575,12 +599,13 @@ theorem result : Not claim := by
       (discardMemory (d := d) (r := d)) X = ∑ j, sourceD d j * X * (sourceD d j).conjTranspose := by
     classical
     ext a b
-    simp [discardMemory, partialTraceRight, sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    rw [D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation.discardMemory.eq_1]
+    simp [partialTraceRight, sourceD.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.sum_apply, Fintype.sum_prod_type, Finset.sum_ite_eq, ite_and, apply_ite]
   have hDcomplete (d : ℕ) : ∑ j, (sourceD d j).conjTranspose * sourceD d j = 1 := by
     classical
     ext ⟨a,b⟩ ⟨c,e⟩
-    simp [sourceD, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.sum_apply,
+    simp [sourceD.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.sum_apply,
       Matrix.one_apply, ite_and, apply_ite, eq_comm]
     by_cases hac : a=c <;> by_cases hbe : b=e <;> simp [hac,hbe]
   have hComp {a b c : Type} [Fintype a] [DecidableEq a]
@@ -622,7 +647,7 @@ theorem result : Not claim := by
     have hs245 : Real.sqrt 245 ^ 2 = 245 := by norm_num
     have hs21 : Real.sqrt 21 ^ 2 = 21 := by norm_num
     simp [Fintype.sum_sum_type, Fintype.sum_prod_type, Fin.sum_univ_two,
-      sourceD, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      sourceD.eq_1, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.of_apply, Matrix.smul_apply, Matrix.single, Matrix.vecMulVec,
       Matrix.kroneckerMap_apply, Matrix.one_apply, Complex.normSq_apply]
     ring_nf
