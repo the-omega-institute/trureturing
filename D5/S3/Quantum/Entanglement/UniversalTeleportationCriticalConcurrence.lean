@@ -6,8 +6,8 @@
    utility: none
    digest: The exact critical concurrence for universal teleportation through qubit channels. -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 
 set_option autoImplicit false
 noncomputable section
@@ -62,7 +62,9 @@ private lemma critical_constants :
   have hlow : 1 < Real.sqrt 3 := by
     simpa only [Real.sqrt_one] using
       Real.sqrt_lt_sqrt (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < 3)
-  have hhigh := D5.S3.Quantum.Information.SignedPauliSumNormRefutation.sqrt_three_lt_two
+  have hhigh : Real.sqrt 3 < 2 := by
+    rw [Real.sqrt_lt' (by norm_num)]
+    norm_num
   have hc := Real.sq_sqrt (show 0 ≤ 5 - 2 * Real.sqrt 3 by linarith)
   dsimp [rcrit, Cstar]
   constructor
@@ -148,10 +150,9 @@ private lemma out_state (a : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
     rw [← trace_mul_kron_one, ← trace_mul_kron_one, out.eq_def, Matrix.sum_mul,
       Matrix.trace_sum]
     have hsum : (∑ k, H ⊗ₖ ((K k)ᴴ * K k)) = H ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
-      ext p q
-      simp only [Matrix.sum_apply, Matrix.kroneckerMap_apply, ← Finset.mul_sum]
-      simpa only [Matrix.sum_apply] using
-        congrArg (fun B : Matrix (Fin 2) (Fin 2) ℂ => H p.1 q.1 * B p.2 q.2) hK
+      change (∑ k, (Matrix.kroneckerBilinear (R := ℂ) H) ((K k)ᴴ * K k)) =
+        (Matrix.kroneckerBilinear (R := ℂ) H) 1
+      rw [← map_sum, hK]
     calc
       _ = ∑ k, trace (initial a * (H ⊗ₖ ((K k)ᴴ * K k))) := by
         apply Finset.sum_congr rfl
@@ -192,13 +193,15 @@ private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
   obtain ⟨hp, htr, hm⟩ := out_state a (by linarith) ha1.le K hK
   have hUV := Matrix.kronecker_mem_unitary hU hV
   have ht : trace (localConj U V (out a K)) = 1 := by
-    exact (D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction.unitary_trace
-      (out a K) ⟨U ⊗ₖ V, hUV⟩).trans htr
+    have h := Matrix.trace_units_conj (Unitary.toUnits ⟨U ⊗ₖ V, hUV⟩) (out a K)
+    change trace ((U ⊗ₖ V) * out a K * star (U ⊗ₖ V)) = trace (out a K) at h
+    simpa only [localConj.eq_1, Matrix.star_eq_conjTranspose, htr] using h
   have hpos : (localConj U V (out a K)).PosSemidef := hp.mul_mul_conjTranspose_same _
   refine ⟨hpos, ht, ?_⟩
   let M := partialTraceRight (localConj U V (out a K))
   have hM : M = U * Matrix.diagonal ![(a : ℂ), 1 - (a : ℂ)] * Uᴴ := by
-    dsimp only [M, localConj]
+    dsimp only [M]
+    rw [localConj.eq_def]
     rw [D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.trace_local_right
       (out a K) U V (Matrix.mem_unitaryGroup_iff'.mp hV), hm]
   have htM : trace M = 1 := (trace_partialTraceRight _).trans ht
@@ -213,9 +216,17 @@ private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
     rw [hM]
     change trace ((U * D * Uᴴ) * (U * D * Uᴴ)) = _
     calc
-      _ = trace (D * D) :=
-        D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction.unitary_purity_trace
-          D ⟨U, hU⟩
+      _ = trace (U * (D * D) * Uᴴ) := by
+        have hu : Uᴴ * U = 1 := by
+          simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp hU
+        congr 1
+        calc
+          _ = U * D * (Uᴴ * U) * D * Uᴴ := by simp only [Matrix.mul_assoc]
+          _ = _ := by rw [hu, Matrix.mul_one]; simp only [Matrix.mul_assoc]
+      _ = trace (D * D) := by
+        have h := Matrix.trace_units_conj (Unitary.toUnits ⟨U, hU⟩) (D * D)
+        change trace (U * (D * D) * star U) = trace (D * D) at h
+        simpa only [Matrix.star_eq_conjTranspose] using h
       _ = _ := by
         simp [D, Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal, Fin.sum_univ_two]
         ring

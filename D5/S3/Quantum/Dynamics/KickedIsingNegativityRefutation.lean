@@ -174,7 +174,13 @@ theorem trace_conjugate_right {a b : Type} [Fintype a] [Fintype b]
   ext i j
   have htr : trace (V * (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) * Vᴴ) =
       trace (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) := by
-    rw [Matrix.trace_mul_comm, ← Matrix.mul_assoc, hV, Matrix.one_mul]
+    let W : Matrix.unitaryGroup b ℂ := ⟨V, Matrix.mem_unitaryGroup_iff'.mpr
+      (by simpa only [Matrix.star_eq_conjTranspose] using hV)⟩
+    have h := Matrix.trace_units_conj (Unitary.toUnits W)
+      (ρ.submatrix (fun k => (i,k)) (fun k => (j,k)))
+    change trace (V * (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) * star V) =
+      trace (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) at h
+    simpa only [Matrix.star_eq_conjTranspose] using h
   simpa [partialTraceRight, Matrix.trace, Matrix.mul_apply,
     Matrix.conjTranspose_kronecker, Matrix.one_apply, Fintype.sum_prod_type] using htr
 
