@@ -1,0 +1,80 @@
+**Theorem 5.4 (complete alternative on the recognized class).** For every
+$(I,B)\in\mathcal C_{\rm img}$,
+
+$$
+\forall h\in\mathbb N\ J_B(h)
+\quad\Longleftrightarrow\quad
+\exists\tau\ \exists\mathbf p\in G_\tau.
+\tag{NIS.18}
+$$
+
+A terminating mathematical procedure returns either a method producing
+legal finite original witnesses to $J_B(h)$ for every supplied $h$, or a
+finite $H$ with $\neg J_B(H)$. Every witness satisfies the entire original
+input and its exact complete row. Contacts, finite barriers and functional
+presentations are synthesized rather than assumed.
+
+Proof. All formulas in (NIS.17) are Presburger by Proposition 4.3,
+Theorem 4.4 and the owning symbolic negative projection. Presburger decision
+therefore determines whether any $G_\tau$ is nonempty. Choose one fixed
+$\mathbf p$ from a positive set before receiving any prefix depth.
+
+Compute the canonical original coordinates and the common whole completed
+source output $W$ through the exact forward and inverse reconstructions.
+For a requested $h$, prescribe the depth-$h$ prefix of every canonical
+infinite original residual; keep each finite original residual exactly fixed.
+Choose one joint $\mathbf w$ in (NIS.17) with every divergent entry at least
+$M_h=2h+2+\max(\{0\}\cup\{-c:\text{a divergent atom has offset }c\})$.
+Then every divergent atomic occurrence has actual rank at least $2h+2$
+and agrees through $h$ with $\Omega$.
+At those same ranks, $\Psi_{r,\tau}$ supplies feasibility of the entire
+negative list. [SLP, Lemma 2.1][SLP] produces one finite tuple with all
+prescribed infinite-coordinate prefixes and all of that source's negatives
+simultaneously. Its hypotheses apply to the original Cartesian chart
+coordinates, not to constrained shifted states. Repeated names use one
+filling. Different source copies can use different finite fillings, even when
+their completed coordinates coincide.
+
+Evaluate each original $\Theta_{r,b_r}$ with its actual ranks and filling.
+Nonexpansion makes every resulting source agree through $h$ with the one
+$W$. Both chart directions give its entire input, both reached guards for
+every sign, exterior, reached set and full partition. Cross-source completed
+equations need not hold as exact finite equations. Each finite original
+satisfies its own signed predicate exactly. Presburger witness selection,
+prefix computation and SLP construction terminate for the supplied $h$.
+
+Conversely suppose all $J_B(h)$ hold. Lift actual finite source tuples through
+the exact covers as themselves. A fixed chart tuple occurs at unbounded
+depths. For each of finitely many original ranks, pass to a subsequence on
+which it is constant or tends to infinity; retain all prior selections.
+Compactness gives a further convergent residual tuple. Finite-mode atoms
+remain fixed, divergent atoms tend to $\Omega$, and continuity plus increasing
+common prefixes makes the entire completed source outputs equal.
+
+The preliminary equivalences put this limit in one handled branch with fixed
+finite auxiliary parameters. A finite atomic alternative uses its actual
+limit rank; escape belongs to the separate $\Omega$ branch. Theorem 3.3 maps
+this same original completed valuation to the functional system with all
+its image filters. Choose the actual free-state saturation mode of this
+solution. Theorem 4.2 proves canonical image admissibility for that mode.
+It does not assert that the canonical solution equals the original limit.
+
+Every canonically finite original coordinate nevertheless equals the original
+limit coordinate, by Theorem 4.4. Isolation forces all such coordinates of
+the finite witness sequence eventually to be these exact values at once.
+Every divergent original rank exceeds any prescribed common $M$ sufficiently
+late. The original finite witnesses still satisfy all their full signed
+predicates and original rank policies, so they witness
+$\Phi_\tau(\mathbf p,\mathbf w)$ at that $M$. Hence the one fixed
+$\mathbf p$ belongs to $G_\tau$. No negative or partition was passed to a
+completion point; only actual finite witnesses and finite isolation were used.
+
+If all sets $G_\tau$ are empty, necessity proves failure of the all-depth
+statement. Now query $J_B(0),J_B(1),\ldots$ using the existing
+[NSF, Lemma 5.1 and Theorem 5.2][NSF] fixed-depth full-source decision:
+one source per row, all its original constraints, and a single common
+reply table. Every query terminates, and the proved failure ensures a first
+finite NO. Thus exclusion search terminates. Without exhaustive handling
+and the necessity proof, depth enumeration would not have this guarantee.
+$\square$
+

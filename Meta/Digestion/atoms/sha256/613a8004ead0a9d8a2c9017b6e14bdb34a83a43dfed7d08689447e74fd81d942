@@ -1,0 +1,86 @@
+**Corollary 9.6 (target cardinality does not transfer the forward law).**
+The cardinality $m=|F[\mathcal U_*]|=5$ does not by itself force
+$r(q+1)\ge m$ for predecessor-row recovery on a complete actual
+one-image current-row fiber. Here $r=1,q=3$ is feasible while
+$r(q+1)=4<5$.
+
+**Proof.** Proposition 9.3 proves the exact full-domain target count and
+Theorem 9.5 supplies the constant-supplement three-call reader on that
+same domain. On its actual witnesses, reading $LLL$ separates two
+origins from three, as Proposition 9.4 shows; it is not a
+singleton-or-constant question. On the full fiber the same query gives
+the legal three-label covers $\{0,1,2\}$ and $\{0,3,4\}$, followed by
+native right-root tests. The image constraint and retained left-class
+disequality are the reason these covers are valid.
+
+[Native Alpha Recut Memory, Theorem 9.4](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+retains its original hypotheses and conclusion. It starts with the
+unrestricted old-row fiber and asks for the next entire row after one
+update. Its Proposition 9.3 constructs updated witnesses on which every
+native address is singleton-or-constant. The present task starts with a
+fixed current row, restricts the current source to an actual image, and
+asks for its predecessor row. The repeated partners impose relations
+between the feasible alpha label and the other hidden values, so the
+forward witness bridge is not available for this inverse target.
+This counterexample concerns transfer of a cardinality-only law, not
+the validity of the forward theorem. $\square$
+
+**Mathematical citation 9.7 (suppliers and precise scope).** The native
+finite source, legal row fibers, equality/disequality convention and
+occurrence-sensitive inverse are the suppliers in Definitions 1.1--1.2,
+Theorems 2.2 and 3.2, and Transport--Memory Completion §22. The forward
+alpha-collision recurrence and its acquired extraction and two endpoint
+optima are supplied by Native Alpha Recut Memory §§2--7; its §9 supplies
+the separate forward joint frontier. None of those results is rederived
+as a generic theorem here. The ordinary source-specific deduction is the
+exhaustive repeated-partner image classification, the five actual finite
+realizations and their all-address binary bridge, and the matched
+encoder/reader strategies on the entire actual fiber.
+
+The classical finite-label and adaptive decision-tree methods are
+intermediate suppliers. The invocation/retention distinction and
+fixed-encoder caution are already explicit in
+[Word Retention and Geometric Reaccess §4](RECURSIVE_RELATIONAL_OBSERVATION_WORD_RETENTION_AND_GEOMETRIC_REACCESS.md).
+The binary depth lower bound used above is the cited existing
+`adaptive_binary_protocol_depth_lower_bound`, with its finite-domain
+hypotheses supplied by the actual five witnesses. General query geometry
+is a mature precedent: Robert Nowak, *The Geometry of Generalized Binary
+Search*, [arXiv:0910.4397v5](https://arxiv.org/abs/0910.4397v5), §V.A,
+printed p.14 / PDF p.15, contrasts disjoint-interval singleton testing
+and its linear query cost with richer dyadic tests and logarithmic
+identification. That passage motivates checking the actual permitted
+queries; it supplies neither a new native subset-query port nor the
+image constraints or numerical frontier of this example. Here the
+split is realized by an ordinary address in the unchanged four-reply
+native interface. These are source-specific ordinary deductions using
+known methods, with no claim of literature priority.
+
+The alphabet bound counts only exported supplemental values conditional
+on the already acquired row. It does not bound total controller states,
+programs, workspace, addresses, row/register storage, authentication,
+outputs or physical memory. With no fresh reading the five labels need
+three fixed-width supplemental bits; this is an alphabet representation
+count only. Producer acquisition, local term comparison, export, retained
+payload access, permissions and address transmission remain separate
+costs. Zero fresh calls do not imply zero acquisition or total work;
+three abstract calls do not imply a corresponding bound on physical
+time. No native-to-physical resource equivalence is supplied.
+
+Theorem 9.5 optimizes encoder and reader jointly. An encoder that is
+constant still has the three-call lower bound even if an alphabet of
+capacity five is available. Neither unused alphabet values nor balanced
+block cardinalities alone prove a fixed arbitrary encoder's performance.
+The witnesses used for necessity do not weaken the full-fiber contract;
+the strategies used for sufficiency cover every actual origin in it.
+Changed cuts, extra accessible data, later images, further updates,
+randomization and address-weighted prices require their own analysis.
+
+[Native Alpha Recut Memory §10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+has the distinct elapsed-update target from two acquired rows across
+possibly different cuts, with no supplied numeric update count. Its
+two endpoint rows are additional inputs for that separate target.
+They are not predecessor-query coverage and are not added to the inputs
+of Assumption 9.2. This appendix uses only the fixed complete current row,
+the expressly acquired/exported supplement and fresh stationary native
+replies after exactly one authenticated update.
+

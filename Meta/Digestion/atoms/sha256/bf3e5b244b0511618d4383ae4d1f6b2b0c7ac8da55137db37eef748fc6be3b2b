@@ -1,0 +1,16 @@
+**Theorem 13.2 (exact joint four-upper-budget correspondence).** Under
+the supplied premises of Definition 12.1, on every nonempty full actual
+fixed-row one-image fiber, for all the integers in Definition 13.1,
+
+$$
+\mathsf{MooreInvFeas}_*(r,K,q,\ell)
+\quad\Longleftrightarrow\quad
+\mathsf{MooreRootFeas}_{*,\lambda}(r,K,q,\ell).
+\tag{NBP.13.3}
+$$
+
+Necessity weakly decreases the four upper resources; sufficiency keeps
+the root table's installed states, initialization range, calls and
+literal sums on every actual origin. No prescribed-encoder or
+unchanged-native-trace assertion is part of the equivalence.
+

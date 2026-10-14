@@ -1,0 +1,127 @@
+**Definition 14.2 (terminal-latch convention and seven upper budgets).**
+Choose one finite reader alphabet
+$\mathcal K=Q\sqcup Z$ and exactly the shared stationary tables
+$\operatorname{addr}_R,\operatorname{next}_R,\operatorname{out}$
+of (NBP.12.1). Each running state has one fixed finite native word,
+each transition depends only on its actual reply, and each halt has
+one fixed whole predecessor-row output. There is no after-entry
+output decoder or auxiliary register.
+
+Choose a nonempty installed set of codes $S\subseteq\mathcal K$ and
+a disjoint preparation alphabet
+
+$$
+\mathcal B=V\sqcup\widehat S,\qquad
+\widehat S=\{\widehat s:s\in S\},
+\qquad b_0\in\mathcal B,
+\tag{NBP.14.1}
+$$
+
+with one common initial state $b_0$ and fixed tables
+
+$$
+\operatorname{addr}_P:V\longrightarrow\{L,R\}^*,
+\qquad
+\operatorname{next}_P:V\times\mathcal A\longrightarrow\mathcal B,
+\qquad
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+\tag{NBP.14.2}
+$$
+
+At $v\in V$, one actual native invocation at
+$\operatorname{addr}_P(v)$ supplies the reply for
+$\operatorname{next}_P$. A terminal state $\widehat s$ is an atomic
+latch holding the complete code $s$. It makes no native call.
+The last preparation transition replaces the running state by this
+latch; if $b_0$ is a latch its code is a common constant. The latch
+has no additional continuing preparation control. A fixed paid
+handoff transfers that actual code and enters precisely state $s$,
+with the preparation alphabet thereafter inaccessible.
+
+This convention counts the live preparation control and the code
+latch in one alphabet, rather than supplying a separate free code
+register. During preparation the whole mutable configuration is one
+member of $\mathcal B$; in a terminal configuration it includes the
+latched code. During reading it is one member of $\mathcal K$.
+The phase and terminal status are part of these disjoint tagged
+configurations, not an uncharged mutable phase bit. There is no
+simultaneously live preparation/latch pair hidden behind a state
+name: the terminal latch replaces preparation control. A realization
+that retains both independently must charge those joint configurations
+and is outside this convention unless separately related to it.
+The handoff's physical transient storage and control have their own
+service prices; their realization is not inferred from the abstract
+replacement operation.
+
+All installed members of $\mathcal B$ and $\mathcal K$ count,
+including unused running states, unused latches, unused halts and
+different halts with the same output. Preparation latches carry literal
+reader-state codes, so their transfer uses inclusion into $\mathcal K$,
+not a code-dependent decoder. Fixed addresses, all four transition
+entries, latch labels and whole-output entries are installed common
+table data. The two cardinality budgets below charge every installed
+state record; the representations of these tables, words and complete
+rows, installation work and local transition work have separate prices.
+These cardinalities are not a claim about total physical bits.
+
+For each actual $u$, the preparation must terminate at some
+$\widehat{\tau(u)}$. Its genuinely generated and actually exported
+code is $\tau(u)\in S$. Starting the reader at that code must terminate
+with $F(u)$. If $v_1,\ldots,v_a$ and $w_1,\ldots,w_b$ are the respective
+running-state visits of this same execution, put
+
+$$
+\begin{aligned}
+q_P(u)&=a,&
+\ell_P(u)&=\sum_{i=1}^{a}|\operatorname{addr}_P(v_i)|,\\
+q_R(u)&=b,&
+\ell_R(u)&=\sum_{j=1}^{b}|\operatorname{addr}_R(w_j)|.
+\end{aligned}
+\tag{NBP.14.3}
+$$
+
+Every invocation is charged, including a repeated word, absence,
+a word previously invoked in the other phase and the empty word.
+The empty word costs one call and zero literal letters.
+No caching discounts a later invocation. An immediate latch or halt
+has zero native calls and zero literal sum in its phase. The one
+actual handoff still occurs and is charged separately.
+
+For integers $r,H,K\ge1$ and $p,\ell_P,q,\ell_R\ge0$, write
+
+$$
+\mathbf b=(r,H,K,p,\ell_P,q,\ell_R).
+\tag{NBP.14.4}
+$$
+
+Let $\mathsf{PaidNative}_*(\mathbf b)$ mean joint existence of the
+two installed tables, common start and actual handoff just specified,
+under Assumption 14.1, such that
+
+$$
+\begin{gathered}
+|\tau[\mathcal U_*]|\le r,\qquad
+|\mathcal B|\le H,\qquad|\mathcal K|\le K,\\
+q_P(u)\le p,\quad\ell_P(u)\le\ell_P,\quad
+q_R(u)\le q,\quad\ell_R(u)\le\ell_R
+\qquad(u\in\mathcal U_*).
+\end{gathered}
+\tag{NBP.14.5}
+$$
+
+The scalar $\ell_P$ or $\ell_R$ on the right is the corresponding
+upper budget; the argumented symbol on the left is the per-source
+sum. The actual export range can be smaller than the installed
+latch set. Neither is a supplied coloring of unknown sources.
+The budgets concern a coupled execution: the reader's initial state
+is what this preparation actually generates on this same source.
+The installed tables and all seven upper bounds are chosen jointly.
+
+The terminal-latch convention is sufficient to express code-only
+stopping preparation without an independent surviving producer state.
+It does not assert that every physical preparer can attain that
+convention or that the two cardinalities combine by addition or
+maximum into physical memory. Table storage, fixed output storage,
+authentication, row acquisition, pre-cut permission, native service,
+export, isolation and entry retain their separately paid premises.
+

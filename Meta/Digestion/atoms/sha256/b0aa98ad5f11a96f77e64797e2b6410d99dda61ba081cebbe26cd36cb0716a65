@@ -1,0 +1,41 @@
+**Proof.** Proposition 10.2 computes the exact finite attained chart
+by (NBP.10.5), and Theorem 10.4 computes each entire $G_*(\theta)$.
+Write $Y=G_*[\Theta_*]$. Enumerate state sets
+$\{1,\ldots,n\}$ for $1\le n\le K$, all running/halting partitions,
+all coordinate maps $Q\to D$, all four-reply transitions into that
+same state set, all fixed halt-output maps $Z\to Y$, and all
+initial-state colorings $c:\Theta_*\to\{1,\ldots,n\}$ with image
+size at most $r$. These choices form a finite set. A nonempty input
+chart requires a halt on any successful run. If $D=\varnothing$,
+only partitions with no running states admit a coordinate map.
+
+For each candidate and each attained $\theta$, start at $c(\theta)$.
+If it is a halt, check its complete output. Otherwise query that
+state's coordinate, apply its reply transition and count one call.
+Accept this input only if the correct halt is reached after at most
+$q$ calls; a running state after the $q$th call fails. This is a finite
+check on every input, not a demand that the union graph be a DAG.
+All installed states are counted by $n$ whether visited or not. State
+sharing, converging edges, repeated coordinates, early halts and union
+cycles remain among the enumerated candidates.
+
+Any root table meeting the budgets is isomorphic to one of these
+finite labeled state sets. Every halt reached on an attained input
+has output in $Y$. Replace the output of each unused halt by any
+fixed member of $Y$; this changes neither the state count nor any
+actual run. Consequently restricting the enumerated output alphabet
+to $Y$ loses no feasible table. Conversely a passing candidate is
+exactly a witness to Definition 12.2. Theorem 12.4 proves that these
+candidates decide native joint feasibility and installs a passing one
+by actual native queries at the representatives $p_d$ and actual
+pre-cut export of its initial-state coloring.
+
+The finite enumeration is the consumer of the state-graph transfer,
+not its proof. Section 10's decision-tree criterion alone would not
+justify this state bound: unrolling a shared graph can duplicate
+states. Here Theorem 12.3 first makes the arbitrary finite native
+address menu replaceable on the same installed states, and Theorem
+12.4 then covers every actual origin. Only after that correspondence
+is established does finite shared-table enumeration decide the
+arbitrary-row three-budget question. $\square$
+
