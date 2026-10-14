@@ -68126,3 +68126,65 @@ G''(v)=e^{-(c+1)v}
 **来源。** 这里的非例外无界素数族分类是本仓推导（`repo-derived`）；
 指数函数求导、严格单调性、二阶积分估计与积分正测度判据为标准分析工具。
 例外直接引用 §439 的实际素数插入转折定理。
+
+## 441. 固定禁素集的最终尾部与固定秩 FIB 仿射族
+
+Robin 的“不含 $2,3,5$”结论已有 Assani--Chester--Paschal 的显式
+全域版本；本节不重证该特例。完整库存续卷 §461 记录一个不同的量词推进：
+对任意先固定的有限禁素集，互素整数在足够大规模后统一满足严格 Robin，
+并将它直接应用于固定秩的 $1+F_rg$。这不是对变化秩 FIB 来源的统一估计。
+
+**定理 441.1（固定有限禁素集的最终安全）。** 对每个固定 $m>1$，存在
+$N_m$，使
+
+$$
+n>N_m,\qquad \gcd(n,m)=1
+\quad\Longrightarrow\quad
+\frac{\sigma(n)}n<e^\gamma\log\log n.
+$$
+
+其证明按允许素数 $q_1<q_2<\cdots$ 排列。若 $k=\omega(n)$，则
+$n\ge Q_k=\prod_{j\le k}q_j$ 且
+
+$$
+\frac{\sigma(n)}n< A_k:=\prod_{j\le k}\frac{q_j}{q_j-1}.
+$$
+
+固定 $m$ 的缺失 Euler 因子给
+
+$$
+A_k\sim e^\gamma\left(\prod_{p\mid m}(1-p^{-1})\right)\log q_k,
+\qquad
+\log\log Q_k\sim\log q_k.
+$$
+
+括号内的常数严格小于 $1$，所以大 $k$ 由 Mertens 乘积支付严格余量；
+有界 $k$ 则由 $\log\log n\to\infty$ 支付。完整证明、量词和边界见
+[Robin 完整库存续卷 §461](FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_FULL_STOCK.md#461-固定禁素集的最终-robin-安全与固定秩-fib-仿射族)。
+
+**推论 441.2（固定秩 FIB 仿射尾部）。** 对每个固定 $r\ge3$，存在
+$G_r$，使所有 $g\ge G_r$ 的
+
+$$
+N_{r,g}=1+F_rg
+$$
+
+满足严格 Robin，因为 $N_{r,g}\equiv1\pmod{F_r}$。这把固定秩的
+$(r,g)$ 量词完成为
+
+$$
+\forall r\ge3\ \exists G_r\ \forall g\ge G_r,
+$$
+
+但没有给出
+
+$$
+\exists G\ \forall r,g\ge G
+$$
+
+这样的变化秩结论。后者仍需要控制禁素因子集合 $\operatorname{supp}(F_r)$
+随 $r$ 变化时的统一损失，不能从逐秩尾部交换量词。
+
+这是仓内新增的固定禁素集—FIB 应用综合；经典 Robin、Mertens、素数定理，
+以及 2025 年不含 $2,3,5$ 的特例均按已有文献库存复用。本文档未新增 Lean
+声明或冻结状态，不把该固定秩结论报告为 RH 证明。
