@@ -8,6 +8,10 @@ internal sealed class OriginalLawTrimmingDocument : IScribeDocumentDefinition
         "One original law through trimming and endpoint classification", H("One original law through trimming and endpoint classification"),
         Blocks(
             Paragraph(Text("Fix an arbitrary original Presentation theta. retainedLaw theta selects the stationary original integer-time law constructed by OriginalMarkedLaw.original_law for trim theta. jointLaw theta is its actual measurable inclusion pushforward, and visibleLaw theta is the actual Prod.snd pushforward of jointLaw. These definitions fix one common realization for all the conclusions. They do not choose separate output laws or assume defining cylinders.")),
+            Describe.Lean(DescribeId.Create("inclusion-measurable"),
+                DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalLawTrimming.inclusion_measurable"),
+                H("Measurable original inclusion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every original finite Presentation theta with measurable hidden singletons, includePath(theta) is measurable from retained hidden/output paths to original hidden/output paths. It applies subtype inclusion at every integer hidden coordinate and preserves every output coordinate. Actual complete future conditional measures and full-half-line screening use this same inclusion."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("same-law-trimming"),
                 DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalLawTrimming.same_law_trimming"),
                 H("Actual original and retained laws with trimmed endpoint masses"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

@@ -327,7 +327,7 @@ private theorem arrival_sum (θ : Presentation H) (i : H) :
   rw [← Finset.sum_add_distrib]
   simpa only [← mul_add, add_comm] using θ.stationary i
 
-private theorem cylinder_measurable (t : ℤ) (n : ℕ)
+theorem cylinder_measurable (t : ℤ) (n : ℕ)
     (h : Fin (n + 1) → H) (w : Fin n → Bool) :
     MeasurableSet (MarkedPredictiveQuotient.cylinder t n h w) := by
   simp only [MarkedPredictiveQuotient.cylinder, Set.ofPred_and, Set.ofPred_forall]
@@ -336,7 +336,7 @@ private theorem cylinder_measurable (t : ℤ) (n : ℕ)
     (MeasurableSet.iInter fun k => (measurableSet_singleton (w k)).preimage
       ((measurable_pi_apply _).comp measurable_snd))
 
-private theorem path_nonneg (θ : Presentation H) (n : ℕ)
+theorem path_nonneg (θ : Presentation H) (n : ℕ)
     (h : Fin (n + 1) → H) (w : Fin n → Bool) : 0 ≤ pathMass θ.matrix n h w :=
   Finset.prod_nonneg (fun k _ => θ.matrix_nonneg _ _ _)
 
@@ -469,7 +469,7 @@ private theorem raw_law (θ : Presentation H) :
 def visibleCylinder (t : ℤ) (n : ℕ) (w : Fin n → Bool) : Set (ℤ → Bool) :=
   {z | ∀ k, z (t + (k.val : ℤ)) = w k}
 
-private theorem sum_path_tails (θ : Presentation H) (n : ℕ) (i : H) (w : Fin n → Bool) :
+theorem sum_path_tails (θ : Presentation H) (n : ℕ) (i : H) (w : Fin n → Bool) :
     (∑ h : Fin n → H, pathMass θ.matrix n (Fin.cons i h) w) =
       futureMass θ.matrix i n w := by
   induction n generalizing i with

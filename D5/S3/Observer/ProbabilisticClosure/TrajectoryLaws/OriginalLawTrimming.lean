@@ -28,7 +28,7 @@ variable {H : Type u} [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass 
 def retainedLaw (θ : Presentation H) : ProbabilityMeasure (PathSpace (Positive θ)) :=
   Classical.choose (original_law (trim θ))
 
-private theorem inclusion_measurable (θ : Presentation H) : Measurable (includePath θ) := by
+theorem inclusion_measurable (θ : Presentation H) : Measurable (includePath θ) := by
   exact (measurable_pi_lambda _ fun t => measurable_subtype_coe.comp
     ((measurable_pi_apply t).comp measurable_fst)).prodMk measurable_snd
 
