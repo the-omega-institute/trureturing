@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:579c1a5ea71272ca4f73604aff6c406ed7e3a7f5a97f85494d669085273e7cda
+  normalized_sha256: sha256:579c1a5ea71272ca4f73604aff6c406ed7e3a7f5a97f85494d669085273e7cda
+cas_ref: sha256:579c1a5ea71272ca4f73604aff6c406ed7e3a7f5a97f85494d669085273e7cda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional scope boundary for Theorem 66.2: it lists the geometric realization obligations not asserted by the shared-domain Lorentz-frame and upper-half-space coordinate result. This receipt proves none of those excluded obligations.'
+    previous_atom_id: 85032fe71b260c4f1a21a06ba26e3e1e7d6a1fb104c3612ba9b0bae5e3bac57b
+    next_atom_id: 9c0edf4098856047687406065c0f06c901e4ac36447e8a8ad3ee59548595d1b7
