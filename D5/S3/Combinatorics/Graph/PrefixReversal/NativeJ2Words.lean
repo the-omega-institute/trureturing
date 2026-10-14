@@ -7,6 +7,7 @@
    digest: Five literal native J2 words have their actual independently specified ports. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSwitches
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeCoreSplicing
 
 set_option autoImplicit false
 
@@ -121,8 +122,118 @@ private theorem a_val (m : ℕ) (i : Fin (m + 1)) :
   simp only [Fin.val_rev]
   omega
 
+private theorem rotate_inverse_cycle (m k : ℕ) :
+    (finRotate (m + 1) ^ k)⁻¹ = finCycle (-(k : Fin (m + 1))) := by
+  apply inv_eq_of_mul_eq_one_right
+  rw [rotate_pow_eq_cycle, cycle_mul, add_neg_cancel, cycle_zero]
+
+private theorem a_rotate (m k : ℕ) :
+    a m * finRotate (m + 1) ^ k = (finRotate (m + 1) ^ k)⁻¹ * a m := by
+  rw [rotate_inverse_cycle, rotate_pow_eq_cycle, a_cycle]
+
+private theorem rotate_period (m : ℕ) : finRotate (m + 1) ^ (m + 1) = 1 := by
+  rw [rotate_pow_eq_cycle, show ((m + 1 : ℕ) : Fin (m + 1)) = 0 by simp,
+    cycle_zero]
+
+private theorem rotate_short_inverse {m : ℕ} (hm : 8 ≤ m) (k : ℕ) (hk : k ≤ m + 1) :
+    finRotate (m + 1) ^ (m + 1 - k) = (finRotate (m + 1) ^ k)⁻¹ := by
+  apply eq_inv_of_mul_eq_one_left
+  rw [← pow_add, Nat.sub_add_cancel hk, rotate_period]
+
+private theorem native_port_algebra {m : ℕ} (hm : 8 ≤ m) :
+    let R := finRotate (m + 1)
+    let T := Equiv.swap (0 : Fin (m + 1)) (Fin.last m)
+    let S := Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m)
+    b m * c m = T * R ∧
+      b m = R⁻¹ * a m ∧
+      c m = R⁻¹ * T * R⁻¹ * a m ∧
+      S = R⁻¹ * T * R ∧ S * T * S = T * S * T := by
+  classical
+  let R := finRotate (m + 1)
+  let T := Equiv.swap (0 : Fin (m + 1)) (Fin.last m)
+  let v : Fin (m + 1) := ⟨m - 1, by omega⟩
+  let S := Equiv.swap v (Fin.last m)
+  have hAT : a m * T = T * a m := by
+    dsimp [T]
+    rw [Equiv.mul_swap_eq_swap_mul]
+    simp only [a_apply, Fin.rev_zero, Fin.rev_last]
+    rw [Equiv.swap_comm]
+  have hAR : a m * R = R⁻¹ * a m := by
+    simpa only [pow_one] using a_rotate m 1
+  have hbc : b m * c m = T * R := by
+    have h := D5.S3.Combinatorics.Graph.PrefixReversal.NativeCoreSplicing.tau_bc_rotation
+      (by omega : 4 ≤ m)
+    calc
+      b m * c m = T * (T * (b m * c m)) := by simp [T]
+      _ = T * R := by rw [h]
+  have hb : b m = R⁻¹ * a m := by
+    rw [b_eq_cycle_a]
+    have h := rotate_inverse_cycle m 1
+    simpa only [pow_one, Nat.cast_one] using congrArg (· * a m) h.symm
+  have hc : c m = R⁻¹ * T * R⁻¹ * a m := by
+    calc
+      c m = b m * (b m * c m) := by rw [← mul_assoc, b_sq, one_mul]
+      _ = (R⁻¹ * a m) * (T * R) := by rw [hb, hbc]
+      _ = R⁻¹ * (a m * T) * R := by group
+      _ = R⁻¹ * (T * a m) * R := by rw [hAT]
+      _ = R⁻¹ * T * (a m * R) := by group
+      _ = R⁻¹ * T * R⁻¹ * a m := by rw [hAR]; group
+  have hRlast : R (Fin.last m) = 0 := finRotate_last
+  have hRv : R v = Fin.last m := by
+    rw [finRotate_of_lt (by omega : m - 1 < m)]
+    apply Fin.ext
+    simp only [Fin.val_last]
+    omega
+  have hR0 : R⁻¹ 0 = Fin.last m := by exact R.symm_apply_eq.mpr hRlast.symm
+  have hRq : R⁻¹ (Fin.last m) = v := by exact R.symm_apply_eq.mpr hRv.symm
+  have hS : S = R⁻¹ * T * R := by
+    calc
+      S = Equiv.swap (R⁻¹ 0) (R⁻¹ (Fin.last m)) := by rw [hR0, hRq, Equiv.swap_comm]
+      _ = R⁻¹ * T * (R⁻¹)⁻¹ := Equiv.swap_apply_apply _ _ _
+      _ = R⁻¹ * T * R := by rw [inv_inv]
+  have hv0 : v ≠ 0 := by
+    intro h
+    have hval := congrArg Fin.val h
+    simp only [v, Fin.val_zero] at hval
+    omega
+  have hvq : v ≠ Fin.last m := by
+    intro h
+    have hval := congrArg Fin.val h
+    simp only [v, Fin.val_last] at hval
+    omega
+  have h0q : (0 : Fin (m + 1)) ≠ Fin.last m := by
+    intro h
+    have hval := congrArg Fin.val h
+    simp only [Fin.val_zero, Fin.val_last] at hval
+    omega
+  have hbraid : S * T * S = T * S * T := by
+    calc
+      S * T * S = Equiv.swap (S 0) (S (Fin.last m)) := by
+        symm
+        simpa only [S, Equiv.swap_inv] using Equiv.swap_apply_apply S 0 (Fin.last m)
+      _ = Equiv.swap 0 v := by
+        rw [Equiv.swap_apply_of_ne_of_ne hv0.symm h0q, Equiv.swap_apply_right]
+      _ = Equiv.swap v 0 := Equiv.swap_comm _ _
+      _ = Equiv.swap (T v) (T (Fin.last m)) := by
+        rw [Equiv.swap_apply_of_ne_of_ne hv0 hvq, Equiv.swap_apply_right]
+      _ = T * S * T := by
+        simpa only [T, Equiv.swap_inv] using Equiv.swap_apply_apply T v (Fin.last m)
+  exact ⟨hbc, hb, hc, hS, hbraid⟩
+
+private theorem c_rotate_a {m : ℕ} (hm : 8 ≤ m) (k : ℕ) :
+    c m * finRotate (m + 1) ^ k * a m =
+      (finRotate (m + 1))⁻¹ * Equiv.swap (0 : Fin (m + 1)) (Fin.last m) *
+        (finRotate (m + 1))⁻¹ * (finRotate (m + 1) ^ k)⁻¹ := by
+  obtain ⟨_, _, hc, _, _⟩ := native_port_algebra hm
+  rw [hc]
+  calc
+    _ = (finRotate (m + 1))⁻¹ * Equiv.swap (0 : Fin (m + 1)) (Fin.last m) *
+        (finRotate (m + 1))⁻¹ * (a m * finRotate (m + 1) ^ k) * a m := by group
+    _ = _ := by rw [a_rotate]; simp only [mul_assoc, a_sq, mul_one]
+
 macro "solve_j2_coordinate" m:term : tactic => `(tactic| {
   simp only [wordStart, wordFinish, word, leftPort, rightPort, bar,
+    Fin.coe_ofNat_eq_mod, Nat.reduceMod,
     List.prod_append, List.prod_flatten, List.map_replicate, List.prod_replicate,
     List.prod_cons, List.prod_nil, mul_one, h_product, uWord_product,
     ab_eq_rotate, cb_long (by omega : 5 ≤ $m)]
@@ -141,10 +252,36 @@ macro "solve_j2_coordinate" m:term : tactic => `(tactic| {
     <;> omega
 })
 
-set_option maxHeartbeats 800000 in
 private theorem endpoint_0_large {m : ℕ} (hm : 8 ≤ m) :
     wordStart m 0 * (word m 0).prod = wordFinish m 0 := by
-  solve_j2_coordinate m
+  let R := finRotate (m + 1)
+  let T := Equiv.swap (0 : Fin (m + 1)) (Fin.last m)
+  let S := Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m)
+  obtain ⟨hbc, _, _, hS, _⟩ := native_port_algebra hm
+  have hrm : R ^ m = R⁻¹ := by
+    simpa only [show m + 1 - 1 = m by omega, pow_one] using
+      rotate_short_inverse hm 1 (by omega)
+  have hr2 : R ^ (m - 2) = (R ^ 3)⁻¹ := by
+    simpa only [show m + 1 - 3 = m - 2 by omega] using
+      rotate_short_inverse hm 3 (by omega)
+  have hr1 : R ^ (m - 1) = (R ^ 2)⁻¹ := by
+    simpa only [show m + 1 - 2 = m - 1 by omega] using
+      rotate_short_inverse hm 2 (by omega)
+  calc
+    _ = R ^ m * (a m * b m) * (c m * R ^ (m - 2) * a m) *
+        (c m * R ^ (m - 1) * a m) := by
+      simp only [wordStart, word, rightPort, Fin.coe_ofNat_eq_mod, Nat.reduceMod,
+        List.prod_append, List.prod_cons, List.prod_nil, mul_one, uWord_product]
+      group
+    _ = (c m * R ^ (m - 2) * a m) * (c m * R ^ (m - 1) * a m) := by
+      rw [ab_eq_rotate, hrm]
+      group
+    _ = (R⁻¹ * T * R⁻¹ * R ^ 3) * (R⁻¹ * T * R⁻¹ * R ^ 2) := by
+      rw [c_rotate_a hm, c_rotate_a hm, hr2, hr1, inv_inv, inv_inv]
+    _ = (R⁻¹ * T * R) * (T * R) := by group
+    _ = S * (b m * c m) := by rw [hbc, hS]
+    _ = wordFinish m 0 := by
+      simp only [wordFinish, rightPort, Fin.coe_ofNat_eq_mod, Nat.reduceMod]
 
 set_option maxHeartbeats 800000 in
 private theorem endpoint_1_large {m : ℕ} (hm : 8 ≤ m) :
@@ -156,10 +293,33 @@ private theorem endpoint_2_large {m : ℕ} (hm : 8 ≤ m) :
     wordStart m 2 * (word m 2).prod = wordFinish m 2 := by
   solve_j2_coordinate m
 
-set_option maxHeartbeats 800000 in
 private theorem endpoint_3_large {m : ℕ} (hm : 8 ≤ m) :
     wordStart m 3 * (word m 3).prod = wordFinish m 3 := by
-  solve_j2_coordinate m
+  let R := finRotate (m + 1)
+  let T := Equiv.swap (0 : Fin (m + 1)) (Fin.last m)
+  let S := Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m)
+  obtain ⟨hbc, hb, _, hS, hbraid⟩ := native_port_algebra hm
+  have hr2 : R ^ (m - 2) = (R ^ 3)⁻¹ := by
+    simpa only [show m + 1 - 3 = m - 2 by omega] using
+      rotate_short_inverse hm 3 (by omega)
+  calc
+    _ = S * (b m * c m) * b m * a m * (c m * R ^ (m - 2) * a m) := by
+      simp only [wordStart, word, leftPort, rightPort, Fin.coe_ofNat_eq_mod,
+        Nat.reduceMod, List.prod_append, List.prod_cons, List.prod_nil, mul_one,
+        uWord_product]
+      group
+    _ = S * T * (c m * R ^ (m - 2) * a m) := by
+      rw [hbc, hb]
+      simp only [mul_assoc, a_sq, mul_one]
+      group
+    _ = S * T * (R⁻¹ * T * R⁻¹ * R ^ 3) := by
+      rw [c_rotate_a hm, hr2, inv_inv]
+    _ = S * T * (R⁻¹ * T * R) * R := by group
+    _ = S * T * S * R := by rw [← hS]
+    _ = T * S * T * R := by rw [hbraid]
+    _ = T * (S * (b m * c m)) := by rw [hbc]; group
+    _ = wordFinish m 3 := by
+      simp only [wordFinish, rightPort, bar, Fin.coe_ofNat_eq_mod, Nat.reduceMod]
 
 set_option maxHeartbeats 800000 in
 private theorem endpoint_4_large {m : ℕ} (hm : 8 ≤ m) :

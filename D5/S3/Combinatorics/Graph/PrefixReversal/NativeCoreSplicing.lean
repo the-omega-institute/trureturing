@@ -52,8 +52,9 @@ private theorem half_endpoint {m : ℕ} (hm : 4 ≤ m) :
     mul_one, List.prod_flatten, List.map_replicate, List.prod_replicate, tau] using
     native_t_halfword_swap (by omega : 3 ≤ m)
 
-private theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
-    tau m * (b m * c m) = finRotate (m + 1) := by
+theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
+    Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (b m * c m) =
+      finRotate (m + 1) := by
   apply Equiv.ext
   intro i
   rw [Equiv.Perm.mul_apply, bc_apply (by omega : 2 ≤ m)]

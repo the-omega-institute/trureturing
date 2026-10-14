@@ -28,7 +28,10 @@ internal sealed class NativeJ2WordsDocument : IScribeDocumentDefinition
                 "For every m at least five and every i in Fin(5), wordStart(m,i) multiplied by the actual "
                 + "list product of word(m,i) equals wordFinish(m,i). The proof reuses uWord_product, "
                 + "computes H=b, obtains (cb)^(m-3)=(bc)^3 from the earned complete E identity (bc)^m=1, "
-                + "and checks every native Fin coordinate extensionally. No endpoint identity is assumed."),
+                + "and checks the remaining native Fin coordinates extensionally. The first and fourth "
+                + "words use the actual endpoint-swap/rotation identity, reversal conjugation and the "
+                + "three-label transposition braid; sizes five through seven use kernel decide. "
+                + "No endpoint identity is assumed."),
             Node("native-j2-word-lengths", "native_j2_word_lengths", "All Five Exact Literal Edge Counts",
                 LengthsFormula(),
                 "For every m at least five and every i in Fin(5), the actual list length is the independently "
