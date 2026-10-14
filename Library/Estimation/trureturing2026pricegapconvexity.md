@@ -4794,3 +4794,108 @@ under the unchanged residence weights; their positive jumps remain.
 No total-prime cancellation follows from a Fibonacci inclusion law or
 from the geometric conservation of a different observable. The original
 signed upper estimate, all-integer Robin inequality and RH remain unproved.
+
+## The natural finite prime test is outside the convolution-square class
+
+Use FH3's exact actual $\mathsf W_X$, including every retained local
+subtraction, and either paid common horizon. The normalization below
+reuses [Connes--Consani arXiv:2006.13771v1](https://arxiv.org/pdf/2006.13771v1),
+Appendix A, equations (144)--(146), and Appendix B, equation (149).
+The version agrees with the [existing source note](../Weil/connesconsani2021archimedean.md);
+its Theorem 6.11, not the introduction's differing imaginary-sign
+convention, is the adopted small-support comparison.
+This `repo-derived` application identifies a test-class obstruction for
+this particular actual finite weight. It is not a new Weil criterion,
+an exclusion of all possible positivity approaches or a Lean proof.
+
+### Match the prime-power functional in the unitary normalization
+
+Extend the same FH3 formula to real $r\ge1$ and set it to zero for
+$r>\mathsf U_X$. For $r\ge1$ define
+
+$$
+f_X(r)=\frac12\sqrt r\,\mathsf W_X(r),\qquad
+f_X(r^{-1})=f_X(r).
+\tag{WT1}
+$$
+
+This defines a real inversion-symmetric function supported in
+$[\mathsf U_X^{-1},\mathsf U_X]$. The source's half-density change
+of convention gives the unitary prime-local functional
+
+$$
+W_p(f)=(\log p)\sum_{k\ge1}p^{-k/2}
+\bigl(f(p^k)+f(p^{-k})\bigr).
+$$
+
+Thus the complete arithmetic part matches exactly:
+
+$$
+\boxed{\sum_pW_p(f_X)=
+\sum_{2\le n\le\mathsf U_X}\Lambda(n)\mathsf W_X(n).}
+\tag{WT2}
+$$
+
+Here only finite prime-power evaluations are taken. The nonsmooth
+$f_X$ is not declared admissible for the full archimedean distribution
+or the source trace theorem. Matching the finite-prime evaluations
+alone does not transport the pole or archimedean terms of an explicit
+formula, nor identify the continuum reference $\mathsf P_X$ with them.
+
+### Its original low-clock plateau violates a necessary positive-definite law
+
+Let $b_X$ be the least original active core clock, and write
+
+$$
+\mathsf Z_X=\int_{t_0}^{t_m}\mathcal B_X(t)^{-1/2}dt,
+\qquad
+m_X=(1-a)\mathsf Z_X
+-\frac{\mathsf A_X}{\mathsf U_X\log\mathsf U_X},
+\qquad
+\mathsf A_X=\int_{t_0}^{t_m}s_{\mathcal B_X(t)}dt.
+$$
+
+For $1\le r<b_X$, every indicator $r\le B$ equals one and every
+$\max(B,r)$ equals $B$. The actual finite weight is therefore
+$\mathsf W_X(r)=m_X$. Moreover,
+
+$$
+\frac{\mathsf A_X}{\mathsf U_X\log\mathsf U_X}
+\le\frac{e^{\mathsf Y_X}\mathsf Y_X}
+{\mathsf U_X\log\mathsf U_X}\mathsf Z_X
+=o(\mathsf Z_X).
+$$
+
+Indeed $s_B=(B\log B)B^{-1/2}$ and $\log B\le\mathsf Y_X$.
+Since the fixed $a<1$, $L_X>0$ and $\mathsf Z_X>0$, we have
+$m_X>0$ eventually. Also the original $b_X\to\infty$ gives $b_X>2$.
+Consequently
+
+$$
+\boxed{f_X(2)=\sqrt2\,f_X(1)>f_X(1)>0.}
+\tag{WT3}
+$$
+
+Any positive-definite function on the multiplicative group satisfies
+$|f(r)|\le f(1)$: the two-point Gram matrix for $1,r$ is positive
+semidefinite. In particular a convolution square $g*g^*$, with
+$g^*(r)=\overline{g(r^{-1})}$ and Haar measure $dr/r$, satisfies
+this necessary law by Cauchy--Schwarz. Equation WT3 violates it.
+Therefore the actual $f_X$ is not positive definite and cannot equal
+such a convolution square, even before imposing smoothness or Mellin
+vanishing. A smoothing preserving both its values at $1$ and $2$
+still fails the same necessary law.
+
+The adopted Connes--Consani Theorem 6.11 tests smooth $g*g^*$ with
+$\operatorname{supp}g\subset[2^{-1/2},2^{1/2}]$ and
+$\widehat g(-i/2)=0$, with the stated rank-one correction involving
+$|\widehat g(0)|^2$. The actual finite test lacks that convolution-square
+property and also has growing support. Nonnegative $\mathsf W_X$
+and a positive trace in another test class therefore do not supply FH4.
+
+This excludes direct substitution of WT1 into that theorem. A different
+test, a positive-definite completion or a one-sided approximation is
+not ruled out. Such a route still must pay its change in the actual
+prime pairing and retain the full pole and archimedean contributions
+at the original $M_XL_X$ scale. No such paid replacement is supplied
+here; FP5, the original signed estimate and RH remain unproved.
