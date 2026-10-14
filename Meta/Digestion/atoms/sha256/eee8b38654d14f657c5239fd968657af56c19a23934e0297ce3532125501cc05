@@ -1,0 +1,35 @@
+**Definition 10.1 (one all-shape task and two comparison classes).**
+For public integers $h\ge1$ and $T\ge0$, let $\mathcal G_h$ contain
+all finite full ordered binary trees with exactly $h$ leaves, each
+independently labelled $\alpha=0$ or $\beta=1$. The allowed histories
+are $(u,t)\in\mathcal G_h\times\{0,\ldots,T\}$, with current tree
+$\rho^t u$ and target $\pi(u)$, the XOR of the **original** labels.
+The substitution is $\rho\alpha=\beta$,
+$\rho\beta=\langle\beta,\alpha\rangle$, preserving pairing.
+Only $h,T$ are public. Shape, leaf addresses, entry lag, labels and
+original identity are not supplied; there are no spare known leaves,
+old records, reset, inverse, copy, whole-tree observation or timing port.
+Promise establishment and authentication remain separate services.
+
+Use the fully materialized literal Read, four raw replies,
+same-source genuine Update with constant acknowledgement, and fixed-bit
+Halt of Definitions 1.1–1.3. One fixed-length no-$11$ word is the
+entire mutable observer, including instruction and address selection,
+progress, phase, retained reply, parity and halts. Every primitive
+reply immediately selects a hold or one bit change and is discarded.
+One installed query word selects one fixed root-relative literal;
+one halt word selects one fixed output. Initialization is common to
+all allowed sources and entries. All installed words count, including
+unreachable ones. Root Reads used for routing are actual paid Reads.
+
+Let $\ell_{\rm act}^{\min}(h,T)$ minimize the complete width over
+correct terminating installations allowed to use genuine Updates;
+let $\ell_{\rm stat}^{\min}(h,T)$ minimize it over those executing
+zero actual Updates on every promised run. Unreachable Update rows
+do not make a static run active. The lower bounds also allow arbitrary
+deterministic finite internal work without source input, provided all
+mutable control remains in the counted word and each query still has
+its fixed literal. Every internal step in such a variant is an
+additional operation, not a native Read or Update. Section 11's
+attaining observers use no internal instructions or internal writes.
+
