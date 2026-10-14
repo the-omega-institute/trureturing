@@ -1,0 +1,12 @@
+**Problem 9.3 (broader mathematical residual).**
+
+The full adaptive domain has the countable representation and precise
+finite-representation obstruction above. Restricted selector classes,
+including automata-based selectors, may have stronger effective descriptions;
+no additional such family is proved here. NCE witness selection does not
+supply source-preserving finite parametrizations of all signed fibers.
+Optimal read, literal-address, workspace, inter-capture and final-retention
+tradeoffs remain separate. The broader RRO objective of mutual recovery
+of spatial cuts, internal time, boundary and memory remains open beyond
+these interfaces; this finite author result does not complete it.
+
