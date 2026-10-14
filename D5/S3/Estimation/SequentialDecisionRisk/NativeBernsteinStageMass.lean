@@ -523,4 +523,271 @@ theorem exact_same_execution_source_tail_events (S : Bool) (p q : unitInterval)
 
 end SourceCosts
 
+def sourceWeighted {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (source : Bool) (w : ℕ → ℝ≥0∞) (ω : Seed × Tape) : ℝ≥0∞ :=
+  ⨆ n : ℕ, w (sourceCount source (nativeHistory π S p q n ω))
+
+private theorem native_history_after_return {Seed : Type}
+    (π : Seed → Bool → History → Action) (S : Bool) (p q : unitInterval)
+    (ω : Seed × Tape) (n m : ℕ) (hnm : n ≤ m)
+    (ht : nativeCalls π S p q ω ≤ (n : WithTop ℕ)) :
+    nativeHistory π S p q m ω = nativeHistory π S p q n ω := by
+  obtain ⟨j,hj⟩ := WithTop.ne_top_iff_exists.mp (ne_top_of_le_ne_top (by simp) ht)
+  have hj := hj.symm
+  have hjn : j ≤ n := by
+    rw [hj] at ht
+    exact WithTop.coe_le_coe.mp ht
+  have hmem := hittingAfter_mem_set_of_ne_top
+    (u := nativeAction π S p q) (s := Set.range (fun c : Bool × Bool => (Sum.inr c : Action)))
+    (n := 0) (ω := ω) (show nativeCalls π S p q ω ≠ ⊤ by rw [hj]; simp)
+  change nativeAction π S p q (nativeCalls π S p q ω).untopA ω ∈ _ at hmem
+  rw [hj] at hmem
+  obtain ⟨cell,hcell⟩ := hmem
+  have hg := (acquired_history_geometry π S (sourceRead p q) ω).2.2 j cell hcell.symm
+  have hn' : nativeHistory π S p q n ω = nativeHistory π S p q j ω := by
+    simpa only [nativeHistory, Nat.add_sub_of_le hjn] using hg (n-j)
+  have hm' : nativeHistory π S p q m ω = nativeHistory π S p q j ω := by
+    simpa only [nativeHistory, Nat.add_sub_of_le (hjn.trans hnm)] using hg (m-j)
+  exact hm'.trans hn'.symm
+
+section WeightedMoments
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+local notation "μ" => rawLaw (rowLaw (batchTable D d a hD hd hc))
+
+private theorem actual_weight_step (S : Bool) (p q : unitInterval) (source : Bool)
+    (w : ℕ → ℝ≥0∞) (k : ℕ) (ω : RowSeed × Tape) :
+    w (sourceCount source (nativeHistory π S p q (D (k+1)+d (k+1)) ω)) -
+      w (sourceCount source (nativeHistory π S p q (D k+d k) ω)) =
+    if ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω then
+      w (if source then d (k+1) else D (k+1)) - w (if source then d k else D k) else 0 := by
+  have hn : D k+d k < D (k+1)+d (k+1) := Nat.add_lt_add
+    (hD (Nat.lt_succ_self k)) (hd (Nat.lt_succ_self k))
+  by_cases ht : ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω
+  · rw [if_pos ht]
+    have hnext := (actual_between_landmarks D d a hD hd hc S p q ω k
+      (D (k+1)+d (k+1)-1) (by omega) (by omega)).2.1
+    have hp : D (k+1)+d (k+1)-1+1 = D (k+1)+d (k+1) := by omega
+    have hreach : ((D (k+1)+d (k+1) : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω := by
+      simpa only [hp] using hnext.mpr ht
+    have h0 := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 k ht.le
+    have h1 := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 (k+1) hreach
+    cases source <;> simp only [h0.1,h0.2,h1.1,h1.2,Bool.false_eq_true,↓reduceIte]
+  · rw [if_neg ht, native_history_after_return π S p q ω (D k+d k) (D (k+1)+d (k+1)) hn.le
+      (le_of_not_gt ht), tsub_self]
+
+private theorem finite_actual_weight_telescope (S : Bool) (p q : unitInterval) (source : Bool)
+    (w : ℕ → ℝ≥0∞) (hw : Monotone w) (J : ℕ) (ω : RowSeed × Tape) :
+    w (sourceCount source (nativeHistory π S p q (D J+d J) ω)) =
+      w (if source then d 0 else D 0) + ∑ k ∈ Finset.range J,
+        if ((if source then d k else D k : ℕ) : WithTop ℕ) < sourceCalls π S p q source ω then
+          w (if source then d (k+1) else D (k+1)) - w (if source then d k else D k) else 0 := by
+  have htail (k : ℕ) :
+      (((if source then d k else D k : ℕ) : WithTop ℕ) < sourceCalls π S p q source ω) ↔
+      (((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω) := by
+    cases source
+    · exact (exact_same_execution_source_tail_events D d a hD hd hc S p q ω k).1
+    · exact (exact_same_execution_source_tail_events D d a hD hd hc S p q ω k).2
+  simp_rw [htail, ← actual_weight_step D d a hD hd hc S p q source w]
+  let V (k : ℕ) := w (sourceCount source (nativeHistory π S p q (D k+d k) ω))
+  have hm : Monotone V := by
+    intro i j hij
+    exact hw (sourceCount_prefix source ((acquired_history_geometry π S (sourceRead p q) ω).2.1
+      (D i+d i) (D j+d j) (Nat.add_le_add (hD.monotone hij) (hd.monotone hij))))
+  have htel (n : ℕ) : V 0 + ∑ k ∈ Finset.range n, (V (k+1)-V k) = V n := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [Finset.sum_range_succ, ← add_assoc, ih, add_tsub_cancel_of_le (hm (Nat.le_succ n))]
+  have h0 := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 0
+    (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.1
+  have he : V 0 = w (if source then d 0 else D 0) := by
+    cases source <;> simp only [V,h0.1,h0.2,Bool.false_eq_true,↓reduceIte]
+  exact (htel J).symm.trans (by rw [he])
+
+private theorem infinite_actual_weight_telescope (S : Bool) (p q : unitInterval) (source : Bool)
+    (w : ℕ → ℝ≥0∞) (hw : Monotone w) (ω : RowSeed × Tape) :
+    sourceWeighted π S p q source w ω = w (if source then d 0 else D 0) +
+      ∑' k : ℕ, if ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω then
+        w (if source then d (k+1) else D (k+1)) - w (if source then d k else D k) else 0 := by
+  have hcofinal : sourceWeighted π S p q source w ω =
+      ⨆ k : ℕ, w (sourceCount source (nativeHistory π S p q (D k+d k) ω)) := by
+    apply le_antisymm
+    · apply iSup_le
+      intro n
+      apply le_iSup_of_le n
+      exact hw (sourceCount_prefix source ((acquired_history_geometry π S (sourceRead p q) ω).2.1
+        n (D n+d n) ((hD.id_le n).trans (Nat.le_add_right _ _))))
+    · apply iSup_le
+      intro k
+      exact le_iSup (fun n : ℕ => w (sourceCount source (nativeHistory π S p q n ω))) (D k+d k)
+  rw [hcofinal, ENNReal.tsum_eq_iSup_nat, ENNReal.add_iSup]
+  apply iSup_congr
+  intro J
+  have ht := finite_actual_weight_telescope D d a hD hd hc S p q source w hw J ω
+  have he (k : ℕ) :
+      (((if source then d k else D k : ℕ) : WithTop ℕ) < sourceCalls π S p q source ω) ↔
+      (((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω) := by
+    cases source
+    · exact (exact_same_execution_source_tail_events D d a hD hd hc S p q ω k).1
+    · exact (exact_same_execution_source_tail_events D d a hD hd hc S p q ω k).2
+  simpa only [he] using ht
+
+/-- The source moment is the integral of powers of the supremum of actual
+acquired counts. Its tail sum is valid in extended nonnegative reals, whether
+finite or infinite. -/
+private theorem weighted_source_moment_sum (S : Bool) (p q : unitInterval)
+    (source : Bool) (s : ℝ) (hs : 0 ≤ s) :
+    (∫⁻ ω, sourceWeighted π S p q source (fun n => (n : ℝ≥0∞)^s) ω ∂μ) =
+      ((if source then d 0 else D 0 : ℕ) : ℝ≥0∞)^s +
+      ∑' k : ℕ, (((if source then d (k+1) else D (k+1) : ℕ) : ℝ≥0∞)^s -
+        ((if source then d k else D k : ℕ) : ℝ≥0∞)^s) *
+          bernsteinEval (D k) (d k) (residualCoefficients D d a k) p q := by
+  have := NativeBernoulliFactoryCriticalMoment.uniform_probability
+  let : IsProbabilityMeasure μ := by unfold rawLaw rowLaw; infer_instance
+  let w := fun n : ℕ => (n : ℝ≥0∞)^s
+  have hw : Monotone w := fun i j hij => ENNReal.rpow_le_rpow (by exact_mod_cast hij) hs
+  let E (k : ℕ) := {ω | ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω}
+  let c (k : ℕ) := w (if source then d (k+1) else D (k+1)) - w (if source then d k else D k)
+  have hE (k : ℕ) : MeasurableSet (E k) := (native_execution_measurable π
+    (supported_realization σ (batchTable D d a hD hd hc)).1 S p q).2.2 (D k+d k)
+  have hpoint (ω : RowSeed × Tape) : sourceWeighted π S p q source w ω =
+      w (if source then d 0 else D 0) + ∑' k : ℕ, (E k).indicator (fun _ => c k) ω := by
+    simpa only [Set.indicator, E, Set.mem_ofPred_eq, c] using
+      infinite_actual_weight_telescope D d a hD hd hc S p q source w hw ω
+  change (∫⁻ ω, sourceWeighted π S p q source w ω ∂μ) = _
+  simp_rw [hpoint]
+  rw [lintegral_add_left measurable_const, lintegral_const, measure_univ, mul_one,
+    lintegral_tsum (fun k => (measurable_const.indicator (hE k)).aemeasurable)]
+  congr 1
+  apply tsum_congr
+  intro k
+  rw [lintegral_indicator_const (hE k), actual_unresolved_mass D d a hD hd hc S p q k]
+
+end WeightedMoments
+
+def sourcePower {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (source : Bool) (s : ℝ) (ω : Seed × Tape) : ℝ≥0∞ :=
+  if sourceCalls π S p q source ω = ⊤ then ⊤ else
+    (((sourceCalls π S p q source ω).untopD 0 : ℕ) : ℝ≥0∞)^s
+
+section PowerBridge
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+local notation "μ" => rawLaw (rowLaw (batchTable D d a hD hd hc))
+
+private theorem source_power_is_actual_counter_power (S : Bool) (p q : unitInterval)
+    (source : Bool) (s : ℝ) (hs : 0 < s) (ω : RowSeed × Tape) :
+    sourceWeighted π S p q source (fun n => (n : ℝ≥0∞)^s) ω = sourcePower π S p q source s ω := by
+  have hcounters := actual_source_supremum_at_return D d a hD hd hc S p q ω
+  cases ht : nativeCalls π S p q ω with
+  | top =>
+    have hc' : sourceCalls π S p q source ω = ⊤ := by
+      cases source
+      · exact (hcounters.2 ht).1
+      · exact (hcounters.2 ht).2
+    simp only [sourcePower,hc',↓reduceIte]
+    apply top_unique
+    have hp : (⨆ n : ℕ, (n : ℝ≥0∞)^s) = ⊤ := by
+      have hh := (ENNReal.orderIsoRpow s hs).map_iSup (fun n : ℕ => (n : ℝ≥0∞))
+      simpa only [ENNReal.orderIsoRpow_apply, ENNReal.iSup_natCast,
+        ENNReal.top_rpow_of_pos hs] using hh.symm
+    rw [← hp]
+    apply iSup_le
+    intro n
+    have hcount := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 n
+      (by rw [ht]; exact le_top)
+    apply le_iSup_of_le (D n+d n)
+    apply ENNReal.rpow_le_rpow _ hs.le
+    apply Nat.cast_le.mpr
+    cases source
+    · rw [hcount.1]; exact hD.id_le n
+    · rw [hcount.2]; exact hd.id_le n
+  | coe n =>
+    obtain ⟨k,hk⟩ := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.2 n ht
+    have ht' : nativeCalls π S p q ω = ((D k+d k : ℕ) : WithTop ℕ) := by rw [ht, hk]; rfl
+    let M := if source then d k else D k
+    have hM : sourceCalls π S p q source ω = (M : WithTop ℕ) := by
+      cases source
+      · exact (hcounters.1 k ht').1
+      · exact (hcounters.1 k ht').2
+    simp only [sourcePower,hM,WithTop.natCast_ne_top,↓reduceIte,WithTop.untopD_natCast, Nat.cast_id]
+    apply le_antisymm
+    · apply iSup_le
+      intro m
+      have hh := le_iSup (fun m : ℕ =>
+        (sourceCount source (nativeHistory π S p q m ω) : WithTop ℕ)) m
+      change (sourceCount source (nativeHistory π S p q m ω) : WithTop ℕ) ≤
+        sourceCalls π S p q source ω at hh
+      rw [hM] at hh
+      exact ENNReal.rpow_le_rpow (Nat.cast_le.mpr (WithTop.coe_le_coe.mp hh)) hs.le
+    · have hcounts := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 k ht'.ge
+      have he : sourceCount source (nativeHistory π S p q (D k+d k) ω) = M := by
+        cases source
+        · exact hcounts.1
+        · exact hcounts.2
+      have hh := le_iSup (fun m : ℕ =>
+        (sourceCount source (nativeHistory π S p q m ω) : ℝ≥0∞)^s) (D k+d k)
+      rw [he] at hh
+      exact hh
+
+private theorem actual_single_layer_moment_lower_bound (S : Bool) (p q : unitInterval)
+    (source : Bool) (s : ℝ) (hs : 0 < s) (k : ℕ) :
+    ((if source then d (k+1) else D (k+1) : ℕ) : ℝ≥0∞)^s *
+      bernsteinEval (D k) (d k) (residualCoefficients D d a k) p q ≤
+      ∫⁻ ω, sourcePower π S p q source s ω ∂μ := by
+  let E := {ω | ((D k+d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω}
+  let c : ℝ≥0∞ := ((if source then d (k+1) else D (k+1) : ℕ) : ℝ≥0∞)^s
+  have hE : MeasurableSet E := (native_execution_measurable π
+    (supported_realization σ (batchTable D d a hD hd hc)).1 S p q).2.2 (D k+d k)
+  rw [← actual_unresolved_mass D d a hD hd hc S p q k]
+  change c * μ E ≤ _
+  rw [← lintegral_indicator_const hE c]
+  apply lintegral_mono
+  intro ω
+  by_cases ht : ω ∈ E
+  · rw [Set.indicator_of_mem ht, ← source_power_is_actual_counter_power D d a hD hd hc S p q source s hs ω]
+    have hn : D k+d k < D (k+1)+d (k+1) := Nat.add_lt_add
+      (hD (Nat.lt_succ_self k)) (hd (Nat.lt_succ_self k))
+    have hb := (actual_between_landmarks D d a hD hd hc S p q ω k
+      (D (k+1)+d (k+1)-1) (by omega) (by omega)).2.1
+    have hp : D (k+1)+d (k+1)-1+1 = D (k+1)+d (k+1) := by omega
+    have hreach : ((D (k+1)+d (k+1) : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω := by
+      simpa only [hp] using hb.mpr ht
+    have hcount := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.1 (k+1) hreach
+    have he : sourceCount source (nativeHistory π S p q (D (k+1)+d (k+1)) ω) =
+        if source then d (k+1) else D (k+1) := by
+      cases source
+      · exact hcount.1
+      · exact hcount.2
+    have hh := le_iSup (fun n : ℕ =>
+      (sourceCount source (nativeHistory π S p q n ω) : ℝ≥0∞)^s) (D (k+1)+d (k+1))
+    rw [he] at hh
+    exact hh
+  · rw [Set.indicator_of_notMem ht]
+    exact bot_le
+
+/-- The exact actual-counter moment has its extended tail-sum formula and
+simultaneously dominates every next-batch cost times the actual survivor mass. -/
+theorem actual_finite_and_infinite_moment_sums (S : Bool) (p q : unitInterval)
+    (source : Bool) (s : ℝ) (hs : 0 < s) :
+    (∫⁻ ω, sourcePower π S p q source s ω ∂μ) =
+      ((if source then d 0 else D 0 : ℕ) : ℝ≥0∞)^s +
+      ∑' k : ℕ, (((if source then d (k+1) else D (k+1) : ℕ) : ℝ≥0∞)^s -
+        ((if source then d k else D k : ℕ) : ℝ≥0∞)^s) *
+          bernsteinEval (D k) (d k) (residualCoefficients D d a k) p q ∧
+    ∀ k : ℕ, ((if source then d (k+1) else D (k+1) : ℕ) : ℝ≥0∞)^s *
+      bernsteinEval (D k) (d k) (residualCoefficients D d a k) p q ≤
+        ∫⁻ ω, sourcePower π S p q source s ω ∂μ := by
+  constructor
+  · have hh := weighted_source_moment_sum D d a hD hd hc S p q source s hs.le
+    simpa only [source_power_is_actual_counter_power D d a hD hd hc S p q source s hs] using hh
+  · exact actual_single_layer_moment_lower_bound D d a hD hd hc S p q source s hs
+
+end PowerBridge
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinStageMass
