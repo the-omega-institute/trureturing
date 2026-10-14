@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a398b0172b40758e20e31f0e0bb04541c89c7f4785e5af1af8c891d8f3a870a2
+  normalized_sha256: sha256:a398b0172b40758e20e31f0e0bb04541c89c7f4785e5af1af8c891d8f3a870a2
+cas_ref: sha256:a398b0172b40758e20e31f0e0bb04541c89c7f4785e5af1af8c891d8f3a870a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 327.1（同一损失、两个实际任务分布）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: fb8cec01093c2f8cb162511d2dd25f43d3d836f5e282210a9800c63dc9ac7446
+    next_atom_id: 35acd151329aed50bacf1de7b30284ae61b4f129169ecc71b91b5d2250bca745

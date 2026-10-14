@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:333e0f24958636750ec048935a309a28fb06e61acac46c51cb015478e039ef27
+  normalized_sha256: sha256:333e0f24958636750ec048935a309a28fb06e61acac46c51cb015478e039ef27
+cas_ref: sha256:333e0f24958636750ec048935a309a28fb06e61acac46c51cb015478e039ef27
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{ClassResidual}(R)：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 5ce2335ebe82cb610bef22f5f0a1344b2865b2e0ac44a5b98d66d177ff952470
+    next_atom_id: bab86ce6fb3577dce06e490b3bca7f6721558ece4e648ff9f63c6b206027452f

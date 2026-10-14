@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e7060c3a5951afe099d8d5a7bdfd7e1af5a583e98c0dd27dc77ce47bf603187
+  normalized_sha256: sha256:4e7060c3a5951afe099d8d5a7bdfd7e1af5a583e98c0dd27dc77ce47bf603187
+cas_ref: sha256:4e7060c3a5951afe099d8d5a7bdfd7e1af5a583e98c0dd27dc77ce47bf603187
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：284. Cross-world coupling 是新的余量层：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 133a1bba0b5bf7615e0c841dc48dc0fc45a74245e7749c16a1c842e8bf393c5e
+    next_atom_id: 09496c961e1d3c23e62a60446a80790791330f7b4d8234633408b4a70b5f7f7b

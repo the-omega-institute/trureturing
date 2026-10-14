@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:666aac96e0d6dfff1ad3069b81b171bd9051ac413fb738eea33d27415059a087
+  normalized_sha256: sha256:666aac96e0d6dfff1ad3069b81b171bd9051ac413fb738eea33d27415059a087
+cas_ref: sha256:666aac96e0d6dfff1ad3069b81b171bd9051ac413fb738eea33d27415059a087
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 219.1（无限 transcript Bayes 余量）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 73e0131ecfdefde55a5f8d63e3ece43aecc3ecb053ecddb8e04f3939b1e1d7c7
+    next_atom_id: f73439caea10286ddce1f1d2ef1f82439c5700234de1aaeeab08eb0fc82e0f6a

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:020379b5f533f145ec772c161b1d654b24851578a3d63b9cac4188defed5873e
+  normalized_sha256: sha256:020379b5f533f145ec772c161b1d654b24851578a3d63b9cac4188defed5873e
+cas_ref: sha256:020379b5f533f145ec772c161b1d654b24851578a3d63b9cac4188defed5873e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 3.1（模型投影）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 0537abf1e2591714e744d174938e1c97163144b7a71cfa4a3cc397ea11c00476
+    next_atom_id: f11c9f48ba022d63fdfeb37ff7811a24611de028f587128eb5fb006fff37c13b

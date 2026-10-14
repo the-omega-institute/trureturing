@@ -2374,3 +2374,670 @@ methods, with no claim of literature priority or uniformity in the
 starting state. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Causal knowledge and finite numerical issuance
+
+**Definition 20.1 (one target and the information ceiling).** Retain
+Definitions 2.1, 11.1 and 11.3, including $0<l<k<u<H$, $T>0$,
+arbitrary fixed preparation phases and arbitrary fixed $\lambda$.
+Thus the probabilities, negative phase convention, both $2\pi$ periods,
+fields $P,Q$, covariance $2I_2$ and original clock are unchanged.
+Write $Y_t=k+W^1_t$ and
+$\tau=\inf\{t\ge0:Y_t\notin(l,u)\}$. The target is the same jointly
+specified $(W^1,W^2,J^\lambda)$, not a newly sampled copy. Its natural
+completed filtration is $\mathcal F^W$. The enhancement is adapted to
+this filtration; giving its past does not give its future.
+
+On any probability space carrying this target, allow an initial random
+seed $U$, independent of the entire Brownian pair. Let $\mathcal F_t$
+be the usual augmentation of
+$\sigma(U,W^1_s,W^2_s:0\le s\le t)$. The issuer's knowledge may be any
+usual subfiltration $\mathcal K_t\subseteq\mathcal F_t$. Its issue and
+interruption times must be $\mathcal K$ stopping times, and its numerical
+choices at a time $\sigma$ must be $\mathcal K_\sigma$ measurable.
+The issuer knows the specified start, clock and its own previous
+commands. Additional independent randomization can be included in $U$.
+The maximal choice $\mathcal K=\mathcal F$ grants exact observation of
+the whole target past. A smaller observation interface restricts this
+class. No observation of $W$, of its enhancement, or of its death is
+supplied by N's command syntax itself: these are explicitly additional
+acquisition inputs. In particular $\tau$ is not initially supplied.
+
+Independence of $U$ leaves $W$ Brownian in $\mathcal F$. The classical
+strong Markov property therefore applies at its finite stopping times.
+One can also obtain this enlargement directly from its usual proof:
+future increments are independent of $\sigma(U,W_s:s\le t)$ at
+deterministic $t$, and approximation of a stopping time from above by
+dyadic stopping times, followed by path continuity, gives the same
+independent future Brownian path. The result used here is Mörters–Peres,
+*Brownian Motion*, the public draft dated May 25, 2008, Theorem 2.14,
+pp. 47–48 ([consulted text](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf)).
+This numbering refers to that draft, not to an unverified numbering in
+another edition. Multiplying its standard Brownian motion by $\sqrt2$
+gives the present covariance convention.
+
+**Definition 20.2 (the complete finite numerical-command class).** A
+policy in $\mathcal C_T$ has a sequence of active issue times
+$\sigma_0=0,\sigma_1,\ldots$, with unused times set to $\infty$.
+Distinct active times increase strictly; finitely many instructions at
+one instant may be collapsed, since zero elapsed time cannot move the
+state. At $\sigma_j$ the issuer chooses a zero-start numerical pair
+$\gamma_j=(a_j,b_j)$ of absolutely continuous functions of elapsed
+time on $[0,T]$. Measurability means measurability as a random element
+of $C([0,T];\mathbb R^2)$ with its uniform topology, taking values in
+the zero-start AC paths. This admits arbitrary AC
+profiles, including profiles with infinitely many internal bends; it
+does not restrict a command to a constant velocity or a single leg.
+A specified shorter duration is represented by constant continuation.
+
+Until interruption or its own height exit, the actual controls are
+exactly the issued numerical functions, translated from the controls
+already executed. Thus, on an active interval starting at $\sigma_j$,
+
+$$
+A_t=A_{\sigma_j}+a_j(t-\sigma_j),\qquad
+B_t=B_{\sigma_j}+b_j(t-\sigma_j).
+\tag{20.1}
+$$
+
+The next issue time may depend on all subsequently available observations;
+it need not be known at $\sigma_j$. An interruption with no replacement
+means the zero-increment hold, counted as a new segment in this
+representation. Resuming, restarting or changing a
+profile after a pause counts as another issuance of the resulting
+numerical segment. The joins in (20.1) are continuous. A command may
+be interrupted at a predictable time, at a target exit, or at any other
+admissible stopping time; the interruption itself changes neither height
+nor phase and declares no native death. A feedback instruction whose
+future numerical values still depend on future observations is not a
+numerical profile chosen at issuance, even if the instruction has a
+finite description.
+
+Set
+
+$$
+\tau^{\rm N}=\inf\{t\in[0,T]:k+A_t\notin(l,u)\},\qquad
+\inf\varnothing=\infty.
+\tag{20.2}
+$$
+
+At this actual own exit, hold both controls for the rest of $[0,T]$.
+Only then is the native killed observation sent to $\dagger$.
+The recursively executed controls are adapted and continuous, so
+their first exit is a stopping time; the automatic boundary hold
+needs no access to a future target value.
+There are almost surely finitely many active issuances up to
+$\tau^{\rm N}\wedge T$, with no deterministic bound on their number.
+This is finiteness of executions, not finiteness of distinct command
+strings. In particular it excludes infinitely many new issuances
+accumulating at the death endpoint, as well as earlier accumulation.
+Being finite on every compact interval strictly before death would be
+a weaker condition and is not substituted for this one.
+All pathwise execution requirements hold almost surely, on one event
+for the countable sequence of issued profiles.
+
+This class is the union over all seeds and all knowledge filtrations
+in Definition 20.1, all such adaptive issue/interruption rules and all
+such numerical profiles. No bound on variation, speed, quadratic cost,
+profile complexity, observation precision or observation rate is imposed.
+The finite issuance requirement is the declared operational meaning of
+executing finitely many numerical commands. N admits individual AC
+histories; it does not assert that every adapted random AC history has
+such a finite online issuance representation. Section 23 distinguishes
+these two classes inside the same original source.
+
+**Definition 20.3 (source legality, cutoff and the two lifetime records).**
+Every actually executed profile prefix must obey N's whole-height guard.
+There is no loss for the present killed task in prescribing a profile's
+constant continuation from its first hit of $l$ or $u$: the current
+native height and the entire numerical profile are known at issuance,
+so this cutoff is computed from the issued profile, not from future
+target data. It leaves every prefix before own death unchanged.
+Profiles already lawful on their full stated duration need no such
+replacement. The executed held controls satisfy
+
+$$
+J^{\rm N}_t=\int_0^t A_s\,dB_s,\qquad
+D_{A,B}=(-\min_{[0,T]}A,\ H-\max_{[0,T]}A),
+\tag{20.3}
+$$
+
+and their heights lie in $[l,u]\Subset(0,H)$. Consequently
+$k+\min A\ge l>0$ and $k+\max A\le u<H$. The actual native path is
+precisely (11.3), with $(a_n,b_n,J_n)$ replaced by
+$(A,B,J^{\rm N})$. This follows by N, Theorems 9.2–9.3, on each
+prefix and by its concatenation rule; the chronological cross terms
+are already included in the single integral in (20.3). Finite
+concatenation with continuous joins is AC. The original probabilities,
+arbitrary preparation rotations, signs and periods are therefore
+preserved, including at a killing boundary, which is interior to the
+original source. For a different promised starting interval
+$[k_-,k_+]$, the same realized numerical history is lawful exactly when
+$k_-+\min A>0$ and $k_++\max A<H$. Re-running a policy with another
+start is not the same numerical command and is not used to enlarge
+this domain.
+
+Write $\zeta^{\rm N}=\tau^{\rm N}$ for the native censored death record
+and retain $\zeta$ from (11.6): both take values in
+$[0,T]\sqcup\{\infty\}$, where $\infty$ means no death on this horizon.
+The horizon-only cutoffs are
+$S^{\rm N}=\tau^{\rm N}\wedge T$ and $S=\tau\wedge T$.
+A command interruption and these horizon cutoffs are not death marks.
+In particular $S^{\rm N}=T$ does not distinguish death exactly at $T$
+from survival beyond $T$, whereas $\zeta^{\rm N}$ does.
+
+## 21. Exact coupled death for finite numerical issuers
+
+**Theorem 21.1 (finite causal issuance misses target death).** For every
+choice of the fixed parameters in Definition 20.1, every allowed seed,
+every allowed knowledge filtration and every individual policy
+$C\in\mathcal C_T$,
+
+$$
+\mathbb P(\tau^{\rm N}=\tau\le T)=0,
+\qquad
+\mathbb P(\zeta^{\rm N}=\zeta)
+ =\mathbb P(\tau>T,\ \zeta^{\rm N}=\infty)
+ \le\mathbb P(\tau>T).
+\tag{21.1}
+$$
+
+The lifetime-only ceiling is sharp:
+
+$$
+\sup_{C\in\mathcal C_T}\mathbb P(\zeta^{\rm N}_C=\zeta)
+ =\mathbb P(\tau>T).
+\tag{21.2}
+$$
+
+There is positive probability of target death before $T$. These are
+issuer-by-issuer statements. For any countable family of admissible
+issuers on the same target coupling, one common probability-one event
+excludes exact death for every member on $\{\tau\le T\}$. No common
+exceptional set for the uncountable class of all issuers is asserted.
+
+Proof. Work at an issue time on
+$\{\sigma_j<T,\ \sigma_j<\tau^{\rm N}\}$, where the native
+height $x_j$ is in $(l,u)$. Define the
+nominal first-exit delay of the prescribed numerical height by
+
+$$
+d_j=\inf\{s\in[0,T-\sigma_j]:x_j+a_j(s)\notin(l,u)\},
+\qquad \inf\varnothing=\infty.
+\tag{21.3}
+$$
+
+Put $d_j=\infty$ off this alive-issuance event. All evaluations at
+$\sigma_j+d_j$ below are restricted to the displayed finite-delay
+event, so no value at an infinite time is used.
+It is $\mathcal F_{\sigma_j}$ measurable. Indeed $x_j$, $\sigma_j$
+and the entire continuous profile are measurable there; first hitting
+of the closed exterior is a Borel function of the continuous path and
+the prescribed horizon. This can be checked by taking the minimum of
+distance to the exterior on compact intervals, using rational times
+and continuity. Every finite $d_j$ is strictly positive, since
+$a_j(0)=0$ and $x_j$ is interior. Infinite $d_j$ cannot produce a death
+before the horizon in this segment.
+
+Conditional on $\mathcal F_{\sigma_j}$, the future path
+$W^1_{\sigma_j+s}-W^1_{\sigma_j}$ is a fresh covariance-$2$ Brownian
+motion. For any fixed positive $d$ and any fixed real $y$,
+$y+W^1_d$ has a Gaussian density and hence gives mass zero to
+$\{l,u\}$. Since $d_j$ and $Y_{\sigma_j}$ are known at issuance,
+the same conclusion applies at the random but already prescribed
+delay $d_j$:
+
+$$
+\mathbb P\bigl(
+ 0<d_j\le T-\sigma_j,\
+ Y_{\sigma_j+d_j}\in\{l,u\}
+ \mid\mathcal F_{\sigma_j}\bigr)=0.
+\tag{21.4}
+$$
+
+For precision, this conditioning integrates the jointly measurable
+evaluation map $(d,y,w)\mapsto y+w(d)$ against the independent future
+Wiener path law, with $d,y$ fixed by the conditioning. It does not
+treat $d_j$ as independent of the past or condition on a future
+interruption event. If an issue time is not finite everywhere, apply
+strong Markov to $\sigma_j\wedge T$ and restrict to
+$\{\sigma_j<T\}$. An issue at $T$ cannot move an interior state
+on the remaining zero-length interval.
+
+Now suppose $0<\tau^{\rm N}=\tau\le T$. Finiteness of the active
+issuances gives a last positive-duration executed segment with start
+$\sigma_j<\tau^{\rm N}$ and with no intervening interruption before
+$\tau^{\rm N}$. Its numerical profile agrees with the actual height
+through that endpoint, and its earlier prefixes are interior. Thus
+
+$$
+\tau^{\rm N}=\sigma_j+d_j.
+\tag{21.5}
+$$
+
+If the death coincides with a new issue or an interruption, continuity
+charges it to the segment ending there. A zero-start replacement
+cannot cause an instantaneous height change. A hold from an interior
+point cannot cause death at all. These observations also cover a
+death at $T$. On target death, continuity gives $Y_\tau\in\{l,u\}$,
+so (21.5) places the event in the probability-zero event (21.4) for
+some integer $j$. A countable union proves the first assertion of
+(21.1); no bound on the random command count was needed. Both
+lifetimes are strictly positive from the fixed interior start.
+
+Equality of death records either means equality of finite deaths or
+means both records are $\infty$. This proves the second assertion.
+The zero command $A=B=0$ is lawful, causal and never exits $I$, so it
+attains (21.2). It is a lifetime-only optimizer, with no native tube
+claim. Finally
+$\{Y_T>u\}\subseteq\{\tau<T\}$, and the former event has positive
+Gaussian probability. Proposition 4.5 supplies
+$\mathbb P(\tau=T)=0$ and almost sure finiteness of $\tau$.
+Intersecting the individual probability-one events over any countable
+family gives the stated family quantifier. $\square$
+
+**Proposition 21.2 (endpoints, predictability and the precise obstruction).**
+The obstruction in Theorem 21.1 is compatible with predictable target
+exit and does not apply to every adapted AC history. Its operative
+conditions are: a numerical continuation fixed by the information at
+issuance; a last segment starting strictly before an actual native
+death; continuous joins with death determined by height; and the
+conditional atomlessness in (21.4).
+
+Proof. Put $d_* =\min(k-l,u-k)>0$ and $e_n=d_*2^{-n}$, and define
+
+$$
+\theta_0=0,\qquad
+\theta_n=\inf\{t\ge0:\operatorname{dist}(Y_t,\mathbb R\setminus I)
+                         \le e_n\}\quad(n\ge1).
+\tag{21.6}
+$$
+
+These are stopping times in the full target filtration. Continuity
+and $\tau<\infty$ give
+$\theta_n<\theta_{n+1}<\tau$ and $\theta_n\uparrow\tau$ almost
+surely: a finite limit below $\tau$ would have distance both positive
+and at most every $e_n$. Thus they announce $\tau$. This is
+predictability, not total inaccessibility. It does not supply a
+positive exact residual delay at any finite announcement.
+
+The proof of Theorem 21.1 uses only the four stated conditions at a
+segment causing death. In particular a class with countably many
+segments also satisfies that proof whenever every death has such a
+last segment. Merely forbidding accumulation strictly before death
+does not guarantee a last segment at death. Section 23 supplies an
+AC counterexample at precisely that boundary. A continuously
+observation-dependent velocity need not have a future profile
+measurable at any earlier issue time, so the proof does not cover
+that class either.
+
+On the stated interior-start contract there is no death at zero, and
+target death exactly at $T$ is null. If the contract were changed to
+start at $l$ or $u$, both own exits could be zero, so the strict
+interior premise cannot be dropped. The theorem concerns $T>0$;
+at a zero horizon an interior start has no observed death. Equality
+of the horizon-only cutoffs has the same probability ceiling as
+(21.2), since on $\{\tau<T\}$ it requires exact native death.
+However its equality event also allows native death at $T$ on
+target survival. This is why the death-record equality in (21.1)
+is the stated exact contract.
+
+Finally there cannot be an issuer-uniform null event by this argument.
+For every deterministic $s\in(0,T]$, the command that moves linearly
+from $k$ to $l$ over time $s$ and then holds is causal and lawful.
+Every target path with death at some $s\le T$ matches one member
+of this uncountable family. Selecting that member using the realized
+future $\tau$ is not a causal issuer. Similarly, an independent
+initial seed $R$ with the target exit-time distribution can prescribe
+this ramp with duration $R$. It matches the marginal lifetime law
+but, by Theorem 21.1, not a positive-probability coupled death event.
+Giving the actual $\tau$ at time zero would break Definition 20.1's
+information condition and would permit the ramp with duration
+$\tau$ to match lifetime. Neither construction tracks the full native
+target. $\square$
+
+## 22. Isolated cemetery comparison on the original clock
+
+**Corollary 22.1 (uniform cemetery obstruction in the specified coupling).**
+Use exactly $E$ and its metric from Definition 4.1, with distance $2$
+from every alive point to $\dagger$. For $C\in\mathcal C_T$ let
+$q_C^\dagger$ be its actual killed native path, and compare it with
+the same target $q^{\lambda,\dagger}$ at the same clock times. Then
+
+$$
+\mathbb P\left(
+ \sup_{0\le t\le T}d_E(q_C^\dagger(t),q^{\lambda,\dagger}(t))=2
+ \right)\ge\mathbb P(\tau\le T)>0.
+\tag{22.1}
+$$
+
+For every countable sequence $C_n\in\mathcal C_T$, almost surely on
+$\{\tau\le T\}$ the displayed supremum equals $2$ for every $n$.
+Consequently such a sequence cannot converge uniformly in probability
+or almost surely to this coupled killed target. More generally the
+same conclusion holds for any same-clock uniform metric whose
+distance between cemetery and all alive points has a positive lower
+bound, with that bound replacing $2$ in the lower estimate.
+
+Proof. If the two censored death records differ, there is a time in
+$[0,T]$ when exactly one path is dead. This includes distinct finite
+deaths, a finite death versus survival, and a mismatch at $T$.
+The distance at that time is $2$, which is also the maximum possible
+distance in $E$. By Theorem 21.1 this happens almost surely on
+$\{\tau\le T\}$ for each issuer, and simultaneously for a countable
+family. The positive probability lower bound rules out convergence
+in probability; the common event of permanent distance $2$ also
+rules out almost sure convergence. The same argument uses only the
+positive alive-to-cemetery gap for the stated metric variant.
+
+This proof permits no clock change. It gives no obstruction to
+Skorokhod $J_1$ convergence, where a small time change can align nearby
+death times as in Theorem 4.2, and no obstruction to uniform convergence
+of continuously held paths in the ordinary native state space. Those
+contracts require their own path and lifetime estimates. It also
+does not assert failure for every possible coupling of marginal laws.
+$\square$
+
+## 23. Accumulating causal issuances with an AC native history
+
+**Theorem 23.1 (a lifetime-only boundary witness).** With exact continuous
+observation of the stopped target height available, there is a causal
+sequence of numerical native commands, countable and accumulating at
+$\tau$, whose executed history is absolutely continuous, has finite
+variation and obeys the original whole-height guard. Defined on
+$[0,\infty)$ and held after death, its uncensored own exit is exactly
+$\tau$; its restriction to $[0,T]$ therefore has
+$\zeta^{\rm N}=\zeta$ almost surely. Its $b$ control is identically
+zero. Thus absolute
+continuity and finite variation alone cannot replace finite issuance
+in Theorem 21.1. This witness also has almost surely finite quadratic
+control energy through death, by the separate estimate below.
+No expectation bound or deterministic energy budget is asserted.
+
+Proof. Use the announcing times $\theta_n$ of (21.6), which can be
+detected from the stopped height without any target continuation
+after death. Write
+
+$$
+d=k-l,\qquad v_n=d2^{-3n},\qquad h_n=T2^{-4n}.
+\tag{23.1}
+$$
+
+At $\theta_0=0$ start at native height $k=l+v_0$. If the current
+height at $\theta_n$ is $x_n$, issue the numerical profile
+
+$$
+x_n(s)=x_n-(x_n-l-v_{n+1})\min\{s/h_n,1\},
+\qquad b_n(s)=0,\qquad s\ge0.
+\tag{23.2}
+$$
+
+The relative height increment is $a_n(s)=x_n(s)-x_n$. At
+$\theta_{n+1}$ interrupt it continuously and issue the next profile.
+Inductively $x_n\ge l+v_n$, so every profile is nonincreasing and
+stays between its current value and the strictly interior level
+$l+v_{n+1}$. A finished ramp simply holds until the next announcement;
+that hold is already part of the issued profile. Each profile is
+piecewise linear and known at its issuance. There are finitely many
+issuances on every $[0,t]$ with $t<\tau$.
+In particular $x_n$ is measurable at $\theta_n$ by finite recursion,
+and (23.2) is a measurable choice of numerical AC profile there.
+Restricting this construction at $T$ uses no observations after $T$.
+
+It remains to prove that the actual native height tends to $l$ at
+$\tau$, rather than leaving a positive gap because too many ramps
+are interrupted early. The distance function in (21.6) is 1-Lipschitz.
+To move from its value $e_n$ to $e_{n+1}$ requires a target height
+displacement of at least $e_n/2$. Strong Markov at $\theta_n$ and
+the reflection bound for a covariance-$2$ Brownian motion give
+
+$$
+\begin{aligned}
+\mathbb P(\theta_{n+1}-\theta_n<h_n
+                 \mid\mathcal F_{\theta_n})
+&\le\mathbb P\left(\sup_{0\le s\le h_n}|W^1_s|
+                                      \ge e_n/2\right)\\
+&\le4\exp\{-e_n^2/(16h_n)\}
+ =4\exp\{-d_*^2 4^n/(16T)\}.
+\end{aligned}
+\tag{23.3}
+$$
+
+Here reflection bounds each one-sided maximum by twice a Gaussian
+tail, and a variance-$2h_n$ Gaussian has upper tail at $a>0$ at
+most $\exp(-a^2/(4h_n))$. This is the classical reflection principle
+(Mörters–Peres, the draft specified in Definition 20.1, Theorems
+2.16 and 2.18) with its variance scaled explicitly. The right side
+of (23.3) is summable. Borel–Cantelli, with no independence of these
+events required, shows that all sufficiently late ramps finish before
+the next announcement. Consequently
+$x_{n+1}=l+v_{n+1}$ for all sufficiently large $n$, and the native
+height tends to $l$ as $t\uparrow\tau$.
+
+Define its value at $\tau$ to be this limit and hold it afterwards.
+This is a continuous extension, not a height jump or a declaration
+of death. Before $\tau$ every executed piece has height strictly
+above $l$ and at most $k<u$; at $\tau$ its height is exactly $l$.
+Thus its own first exit is exactly $\tau$, including when this
+happens to coincide with the horizon. Its original native height
+always lies in $[l,k]\Subset(0,H)$, so (20.3) proves the whole-height
+guard; all source phases remain at their initial values and $J=0$.
+
+For completeness, let $f$ be the nonpositive derivative on each
+executed ramp and zero on each hold and after $\tau$. For $t<\tau$
+only finitely many intervals occur, so
+$x(t)=k+\int_0^t f(s)\,ds$. Monotonicity and the limit just proved
+give
+
+$$
+\int_0^\tau |f(s)|\,ds
+ =\sum_{n\ge0}(x_n-x_{n+1})=k-l=d.
+\tag{23.4}
+$$
+
+Passing to $t=\tau$ in this integral representation and extending by
+zero derivative proves absolute continuity on every finite horizon,
+including through the accumulation point. This excludes a hidden
+singular-variation contribution at death. It also proves total
+variation $d$ through death. Eventually consecutive ramps are both
+complete, so ramp $n$ then drops $7v_n/8$ over duration $h_n$ and has
+quadratic energy
+
+$$
+\frac{49v_n^2}{64h_n}=\frac{49d^2}{64T}\,4^{-n}.
+\tag{23.5}
+$$
+
+This tail is summable. Every earlier, possibly interrupted ramp has
+speed at most $d/h_n$ for at most $h_n$ time and thus energy at most
+$d^2/h_n<\infty$. There are almost surely only finitely many such
+earlier ramps. Therefore $\int_0^\tau |f(s)|^2\,ds<\infty$ almost
+surely, which also proves finite energy on $[0,T]$. This is an
+additional calculation, not an inference from AC or finite variation;
+it gives no expectation estimate for the random initial portion.
+The construction is defined
+almost surely, as are the Brownian target and its enhancement; its
+causal rules use only present announcements and previous commands.
+It uses infinitely many issuances when death occurs on the horizon,
+so it is outside $\mathcal C_T$ on an event of positive probability.
+
+The native endpoint is always the lower face, even if the target
+exits at the upper face, and its phases are fixed. This is exact
+lifetime attainment only, not an enhanced-path, exit-face or native
+tube construction. $\square$
+
+## 24. Finite causal approximation of lifetime alone
+
+**Theorem 24.1 (observed exit followed by actual native execution).**
+Assume the issuer may read the stopped target height
+$\bar Y_t=Y_{t\wedge\tau}$ at a deterministic mesh of step $\delta>0$.
+Exact real observations are meant; no future path, area or lifetime
+value is supplied. For every $\epsilon>0$ there is a policy with at
+most two numerical issuances, lawful in the original source, whose
+own exit on an extended clock is $\widehat\tau_{\delta,\epsilon}$
+satisfying almost surely
+
+$$
+\tau<\widehat\tau_{\delta,\epsilon}
+ \le\tau+\delta+\epsilon,
+\qquad
+\widehat\tau_{\delta,\epsilon}-\tau\ge\epsilon.
+\tag{24.1}
+$$
+
+Restricting this same execution to $[0,T]$ gives a member of
+$\mathcal C_T$. Its censored lifetime $\zeta_{\delta,\epsilon}^{\rm N}$
+converges almost surely to $\zeta$ as $\delta+\epsilon\to0$ along
+any deterministic sequence, in the topology where $\infty$ is an
+isolated no-death mark. Its horizon cutoff obeys
+
+$$
+0\le S_{\delta,\epsilon}^{\rm N}-S\le\delta+\epsilon.
+\tag{24.2}
+$$
+
+For the metric $d_\zeta(s,t)=\min(1,|s-t|)$ on finite lifetimes,
+$d_\zeta(s,\infty)=1$ for finite $s$, and $d_\zeta(\infty,\infty)=0$,
+one also has, when $\delta+\epsilon<1$,
+
+$$
+\mathbb P\left(
+d_\zeta(\zeta_{\delta,\epsilon}^{\rm N},\zeta)>
+       \delta+\epsilon\right)
+\le\mathbb P(T-\delta-\epsilon<\tau\le T).
+\tag{24.3}
+$$
+
+Proof. Issue the zero command at time zero. Let
+
+$$
+D_\delta=\min\{j\delta:j\ge1,
+                     \bar Y_{j\delta}\in\{l,u\}\}.
+\tag{24.4}
+$$
+
+Before death the stopped height is interior; at and after death it
+is a boundary value. Thus $D_\delta$ is a stopping time determined
+by the available mesh observations, and
+$\tau\le D_\delta\le\tau+\delta$ almost surely. At $D_\delta$
+issue the relative control
+
+$$
+a(s)=-(k-l)\min\{s/\epsilon,1\},\qquad b(s)=0.
+\tag{24.5}
+$$
+
+The native state is still at height $k$ then. The ramp stays in
+$(l,k]$ for $s<\epsilon$, reaches $l$ exactly at $s=\epsilon$,
+and holds thereafter. Its own exit is therefore
+$\widehat\tau_{\delta,\epsilon}=D_\delta+\epsilon$, proving
+(24.1). Observing a target boundary in (24.4) does not declare native
+death: the positive-duration ramp (24.5) is actually executed.
+Both joins are continuous. All executed heights lie in $[l,k]$,
+so the exact source guard follows from (20.3); phases and $J$ remain
+fixed. There are finitely many observations on $[0,T]$ and at most
+two issuances there. If the detected exit or the ramp's completion
+lies beyond $T$, the horizon records no native death. The extended
+clock only defines that possible later completion; no part of the
+command on $[0,T]$ is retimed or compressed.
+
+Taking minima with $T$ proves (24.2). If $\tau>T$, both censored
+records equal $\infty$. If $\tau<T$, then eventually
+$\delta+\epsilon<T-\tau$, so the native exit occurs before $T$
+and its finite record differs from $\tau$ by at most
+$\delta+\epsilon$. The remaining event $\tau=T$ is null by
+Proposition 4.5. This proves the almost sure convergence with the
+death mark retained. A mark mismatch can occur only on
+$\{T-\delta-\epsilon<\tau\le T\}$; otherwise the metric error is
+at most $\delta+\epsilon$, proving (24.3).
+
+This approximation requires the stated exact observations of the
+stopped height. Observing only an unstopped height at mesh times can
+miss a boundary excursion that has returned, so those data cannot
+be substituted in (24.4) without a different argument. No independent
+death flag is given to the native system. The construction uses the
+same target sample, but every finite-stage native death is strictly
+later than its target death. It neither simulates only a marginal
+lifetime law nor satisfies exact coupled lifetime. Its fixed phases
+and its hold at $k$ before detection supply no full held-path or
+chronological tube estimate. $\square$
+
+## 25. Supplier scope and remaining causal bridges
+
+**Definition 25.1 (attribution and limits of the native conclusions).**
+The source correspondence is N, Definitions 3.1 and 9.1, Theorems
+9.2–9.3 and Definition 10.1; O, Definitions 1.1–1.3; and G,
+Definition 4.1, at the fixed revision in Source convention 1.1.
+The whole-height guard is reused exactly, not replaced by an endpoint
+test. Brownian strong Markov, Gaussian densities, reflection and
+Borel–Cantelli are `literature-attested` suppliers used inside the
+native proofs. The finite-issuer obstruction with its interruption
+endpoints, its cemetery consequence and the two guarded lifetime
+constructions are `repo-derived` ordinary applications. No literature
+priority or new general strong Markov theorem is claimed.
+
+Lifshits–Setterqvist, *Energy of Taut Strings Accompanying Wiener
+Process*, [arXiv:1405.1651v1](https://arxiv.org/pdf/1405.1651v1), §4.2,
+interpolates between random knots using both endpoint values. A knot
+being a stopping time does not make that interpolation known at the
+previous knot. Its §5 instead studies an observation-dependent
+velocity $x'(t)=b(x(t)-W(t))$, a continuous feedback class. The
+numerical-profile assumption in Definition 20.2 is not a theorem
+excluding that class, and the scalar pursuit result does not supply
+native chronological tracking or exact native own death.
+
+Friz–Victoir, *Approximations of the Brownian rough path with
+applications to stochastic analysis*, Ann. IHP 41 (2005), 703–724,
+[primary text](https://www.numdam.org/item/AIHPB_2005__41_4_703_0.pdf),
+§5.1, Proposition 26 and Corollary 27 supply the enhanced polygonal
+approximation cited in §§10 and 19. A qualification is needed for
+using the literal displayed interpolation in Corollary 28, p. 718:
+with mesh $h=2^{-n}$ and $B_0=0$, that display is zero on $[0,h)$
+but has value $B_h$ at $h$. Thus it is not a continuous delayed
+polygonal path; its proof's description as a time-shift does not
+validate that literal display. None of the proofs in §§20–24 uses
+it. A continuous one-step delayed polygonal rule would instead be
+zero on $[0,h]$ and, for $j\ge1$ and $t\in[jh,(j+1)h]$, be
+
+$$
+B_{(j-1)h}+\frac{t-jh}{h}(B_{jh}-B_{(j-1)h}).
+\tag{25.1}
+$$
+
+The two cell endpoint values are $B_{(j-1)h}$ and $B_{jh}$; the
+next cell starts at the latter, and all its numerical data are
+known at $jh$. These elementary checks specify which continuous
+adapted interpolation is meant. Formula (25.1) alone makes no
+stopped-native enhancement, lifetime or tube assertion here.
+
+Friz–Oberhauser, *Non-standard approximations of the Itô-map*,
+[arXiv:0808.0337v1](https://arxiv.org/html/0808.0337v1), §1.2 explicitly
+distinguishes access to a Brownian path and its Lévy area from
+approximations using finitely many first-level observations. Its
+§2.1 Theorem 1 and §2.2.1 concern enhanced approximation and central
+perturbations. They do not supply the information-at-issuance premise
+or an exact native-death conclusion, and no general rough differential
+equation theorem is invoked in §§20–24.
+
+Theorem 18.1 and the attained offline cost powers in §19 retain their
+original information contract and are not contradicted by (21.1).
+The lower bounds in §§12–15 retain their stated approximation
+hypotheses, whether or not an approximating policy is causal. Neither
+the lifetime-only construction in §23 nor that in §24 satisfies those
+full tracking hypotheses. No conclusion here changes the known
+offline powers, proves optimal causal powers, or supplies a full
+native causal held tube or a $J_1$ approximation of the full killed
+state. Such questions require joint control/area estimates and their
+own original-clock cost analysis. General continuous feedback,
+other classes of accumulating issuances, optimal or expected costs
+of the lifetime-only boundary witness, and acquisition cost require
+separate analyses. Theorem 23.1 settles existence in its stated
+accumulating-issuance class; it does not classify continuous-feedback
+laws or other accumulation interfaces. The supplied comparison
+observations are not a physical
+source sensor or a cost-free physical implementation. Finally no
+statement selects $\lambda$, calibrates physical energy, or identifies
+the native ray dimension, bracket growth or volume exponent with
+three physical spatial directions.
+
+## 追加锚（本行以下为增补区）

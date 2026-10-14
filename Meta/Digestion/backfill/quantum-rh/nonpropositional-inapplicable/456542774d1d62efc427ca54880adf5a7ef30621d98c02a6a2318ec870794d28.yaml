@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:456542774d1d62efc427ca54880adf5a7ef30621d98c02a6a2318ec870794d28
+  normalized_sha256: sha256:456542774d1d62efc427ca54880adf5a7ef30621d98c02a6a2318ec870794d28
+cas_ref: sha256:456542774d1d62efc427ca54880adf5a7ef30621d98c02a6a2318ec870794d28
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research-task description for computational certification of a specified region.
+    previous_atom_id: a41059f6b9007b9d5bedc631116a56c41430628fea40078e2b818a1f673a8352
+    next_atom_id: c97f53ddf1db7cecac37ad923acff4d513d11bde5a3f76f8eb77f744865b0bb3
