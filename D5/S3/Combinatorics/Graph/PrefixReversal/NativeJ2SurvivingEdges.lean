@@ -156,7 +156,7 @@ private theorem j2_word0_chain {m : ℕ} (hm : 5 ≤ m) :
   have h := scanl_chain_append_at (survivingGraph m) (wordStart m 0) 1
     [a m, b m] _ (by simpa only [List.prod_cons, List.prod_nil, mul_one,
       ← mul_assoc] using j2_word0_first_seed hm) (j2_word0_initial_chain hm) htail
-  simpa only [word, Fin.val_mk, List.cons_append, List.nil_append,
+  simpa only [word, Fin.val_mk, Fin.coe_ofNat_eq_mod, Nat.reduceMod, List.cons_append, List.nil_append,
     List.append_assoc] using h
 
 private theorem j2_word1_chain {m : ℕ} (hm : 5 ≤ m) :
@@ -182,7 +182,7 @@ private theorem j2_word1_chain {m : ℕ} (hm : 5 ≤ m) :
     (by simpa only [List.prod_flatten, List.map_replicate, List.prod_replicate,
       List.prod_cons, List.prod_nil, mul_one] using j2_word1_seed hm)
     (j2_word1_initial_chain hm) hmiddle
-  simpa only [word, Fin.val_mk, repeatedCH, List.append_assoc] using h
+  simpa only [word, Fin.val_mk, Fin.coe_ofNat_eq_mod, Nat.reduceMod, repeatedCH, List.append_assoc] using h
 
 private theorem j2_word2_chain {m : ℕ} (hm : 5 ≤ m) :
     (List.scanl (· * ·) (wordStart m 2) (word m 2)).IsChain
@@ -208,7 +208,7 @@ private theorem j2_word2_chain {m : ℕ} (hm : 5 ≤ m) :
     [a m] (repeatedCH ++ [c m, a m, b m, a m])
     (by simpa only [List.prod_cons, List.prod_nil, mul_one, C] using j2_word2_seed hm)
     (j2_word2_initial_chain hm) hmiddle
-  simpa only [word, Fin.val_mk, repeatedCH, List.append_assoc] using h
+  simpa only [word, Fin.val_mk, Fin.coe_ofNat_eq_mod, Nat.reduceMod, repeatedCH, List.append_assoc] using h
 
 private theorem j2_word3_chain {m : ℕ} (hm : 5 ≤ m) :
     (List.scanl (· * ·) (wordStart m 3) (word m 3)).IsChain
@@ -223,7 +223,7 @@ private theorem j2_word3_chain {m : ℕ} (hm : 5 ≤ m) :
   have h := scanl_chain_append (survivingGraph m) (wordStart m 3)
     [a m] (c m :: uWord m (m - 2)) (j2_word3_initial_chain hm)
     (by simpa only [List.prod_cons, List.prod_nil, mul_one] using htail)
-  simpa only [word, Fin.val_mk, List.cons_append, List.nil_append] using h
+  simpa only [word, Fin.val_mk, Fin.coe_ofNat_eq_mod, Nat.reduceMod, List.cons_append, List.nil_append] using h
 
 private theorem j2_word4_chain {m : ℕ} (hm : 5 ≤ m) :
     (List.scanl (· * ·) (wordStart m 4) (word m 4)).IsChain
@@ -238,7 +238,7 @@ private theorem j2_word4_chain {m : ℕ} (hm : 5 ≤ m) :
   have h := scanl_chain_append (survivingGraph m) (wordStart m 4)
     [a m, b m] (c m :: uWord m (m - 1)) (j2_word4_initial_chain hm)
     (by simpa only [List.prod_cons, List.prod_nil, mul_one] using htail)
-  simpa only [word, Fin.val_mk, List.cons_append, List.nil_append] using h
+  simpa only [word, Fin.val_mk, Fin.coe_ofNat_eq_mod, Nat.reduceMod, List.cons_append, List.nil_append] using h
 
 private theorem actual_j2_word_chain {m : ℕ} (hm : 5 ≤ m) (i : Fin 5) :
     (List.scanl (· * ·) (wordStart m i) (word m i)).IsChain

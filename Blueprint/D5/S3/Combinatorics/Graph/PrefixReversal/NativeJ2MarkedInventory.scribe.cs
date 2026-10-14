@@ -79,14 +79,14 @@ internal sealed class NativeJ2MarkedInventoryDocument : IScribeDocumentDefinitio
     {
         Formula m = F.Id("m"), j = Call("sub", m, D(3));
         Formula c = Call("contactAnchor", j);
-        Formula Owner(int i, bool swapped) => Call("rightOwner", m,
+        Formula Owner(byte i, bool swapped) => Call("rightOwner", m,
             Call("Pair", D(i), Call(swapped ? "BoolTrue" : "BoolFalse")));
         Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
         return Scoped(And(Eq(Owner(0, false), D(1)),
             And(Eq(Owner(0, true), Call("Swap", D(0), m)),
             And(Eq(Owner(1, false), c), And(Eq(Owner(1, true), Call("lowerPort", j)),
             And(Eq(Owner(2, false), Call("gapAnchor", c, Call("sub", m, D(1)))),
-                Eq(Owner(2, true), Call("gapAnchor", c, Call("sub", m, D(2)))))))))));
+                Eq(Owner(2, true), Call("gapAnchor", c, Call("sub", m, D(2))))))))));
     }
 
     private static Formula PortDomainFormula()
