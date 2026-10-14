@@ -462,8 +462,9 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
   RawArtifacts.loadModule target state
   for utility in utilities do RawArtifacts.loadModule utility.claimModule.toName state
   let targetData ← (← state.get).getModule target
+  let hasFib := !statementOnly && targetData.constants.any FibApplications.isInput
   if !statementOnly && (RawArtifacts.hasTypedInputs targetData ||
-      targetData.constants.any FibApplications.isInput) then
+      hasFib) then
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state
   let store ← state.get
   RawArtifacts.checkBatchConstants base store seen
@@ -504,8 +505,9 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     (closedNegation (fun name => current.modules.find? name.toName)
       (current.constants.find?) input)
     cache writer counter utilities generatedNames binding input
-  let fib ← if statementOnly then pure Json.null else
+  let fib ← if hasFib then
     FibApplications.extract target data.constants current (digestBytes writer)
+    else pure Json.null
   let row := { row with
     fibApplications := fib
     informationRegistrationErrors := sortedUnique (row.informationRegistrationErrors ++ enrollmentErrors) }
