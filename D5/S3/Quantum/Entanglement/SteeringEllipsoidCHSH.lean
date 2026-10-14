@@ -7,6 +7,7 @@
    digest: CHSH nonlocality is sharply bounded by the steering-ellipsoid centre. -/
 
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Information.ActualPureQubitCostInfimum
 import D5.S3.Quantum.Information.ActualQubitChordObstruction
@@ -477,22 +478,22 @@ private lemma delta_le_centre (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace
     have he := delta_filter ρ (partialTraceLeft ρ)
     rw [hs, hd, Complex.normSq_zero, zero_mul] at he
     rw [he, hb]; norm_num
+
+theorem trace_pauli_kronecker_eq_corr (ρ : TwoQubit) (hρ : ρ.IsHermitian)
+    (i j : Fin 3) : trace (ρ * (pauli i ⊗ₖ pauli j)) = (corr ρ i j : ℂ) := by
+  exact Complex.ext (by rfl) (by
+    simpa only [Complex.ofReal_im] using
+      trace_hermitian_product_real
+        ρ (pauli i ⊗ₖ pauli j) hρ (isHermitian_kronecker
+          (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pauli_hermitian i)
+          (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pauli_hermitian j)))
+
 private lemma bell_trace_real_expansion (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     (a a' b b' : Fin 3 → ℝ) :
     trace (ρ * bell a a' b b') =
       ((a ⬝ᵥ (corr ρ *ᵥ (b + b')) + a' ⬝ᵥ (corr ρ *ᵥ (b - b')) : ℝ) : ℂ) := by
-  have hp (i : Fin 3) : (pauli i).IsHermitian := by
-    fin_cases i <;>
-      first | exact pauli_hermitian .X |
-        exact pauli_hermitian .Y |
-        exact pauli_hermitian .Z
-  have hc (i j : Fin 3) : trace (ρ * (pauli i ⊗ₖ pauli j)) = (corr ρ i j : ℂ) := by
-    exact Complex.ext (by rfl) (by
-      simpa only [Complex.ofReal_im] using
-        trace_hermitian_product_real
-          ρ (pauli i ⊗ₖ pauli j) hρ (isHermitian_kronecker (hp i) (hp j)))
   rw [bell_trace_expansion]
-  simp only [hc, ← Complex.ofReal_mul, ← Complex.ofReal_sum,
+  simp only [trace_pauli_kronecker_eq_corr ρ hρ, ← Complex.ofReal_mul, ← Complex.ofReal_sum,
     dotProduct, Matrix.mulVec, Fin.sum_univ_three, Pi.add_apply, Pi.sub_apply]
   congr 1
   ring
