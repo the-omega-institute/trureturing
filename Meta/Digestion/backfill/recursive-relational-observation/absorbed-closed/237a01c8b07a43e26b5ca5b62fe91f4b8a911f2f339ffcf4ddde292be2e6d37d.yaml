@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:237a01c8b07a43e26b5ca5b62fe91f4b8a911f2f339ffcf4ddde292be2e6d37d
+  normalized_sha256: sha256:237a01c8b07a43e26b5ca5b62fe91f4b8a911f2f339ffcf4ddde292be2e6d37d
+cas_ref: sha256:237a01c8b07a43e26b5ca5b62fe91f4b8a911f2f339ffcf4ddde292be2e6d37d
+coverage_gids:
+  - gid: D5/S1/Phase/MultivariateWeylRectangles.monomial_curve_equidistribution
+    target_statement_id: sha256:fd6039b62d5689d8bc066dc1f563f18bb713aa0fe4e6db814e974f7ebf0c1dec
+  - gid: D5/S1/Phase/MultivariateWeylRectangles.monomial_curve_visits
+    target_statement_id: sha256:a41a628d2d36cba14f68cfa42965523e3b9ff37c7004c660fb472ccebd95cdd0
+receipts:
+  unresolved_subitems: []
