@@ -158,7 +158,7 @@ private theorem p_circle_eq {m k : ℕ} (F : SupplyFrame m k)
     ((u :: (A ++ [F.terminal]).rotate A.length : List (Fin (m + 1))) : Cycle (Fin (m + 1)))
   rw [hbase, List.rotate_append_length_eq]
   apply Cycle.coe_eq_coe.mpr
-  simpa only [List.cons_append, List.singleton_append] using
+  simpa only [List.cons_append, List.singleton_append, List.nil_append] using
     List.isRotated_append (l := F.terminal :: A) (l' := [u])
 
 private theorem layer_a {m : ℕ} (S : Finset (Fin (m + 1)))

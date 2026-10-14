@@ -72,6 +72,7 @@ private theorem list_length_le_piece_support {V : Type*} {G : SimpleGraph V}
 /-- Actual full-child paths, arranged by the native supply order, form one
 real parent Hamilton cycle. Disjointness, full support, minimum size and all
 connections are proved from the independent domains and native c seams. -/
+set_option maxHeartbeats 800000 in
 theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
     (paths : ∀ j : Fin F.base.length, ActualChildPath F j) :
@@ -98,7 +99,7 @@ theorem native_parent_cycle_of_child_paths {m k : ℕ} (hm : 3 ≤ m)
     · intro i hi hj
       cases i with
       | zero => simp only [p, List.getElem_cons_zero, List.getElem_ofFn]
-      | succ i => simp only [ps, List.getElem_cons_succ, List.getElem_ofFn]; rfl
+      | succ i => simp only [ps, List.getElem_cons_succ, List.getElem_ofFn]
   have hstart (j : Fin F.base.length) : (pieces j).start.val =
       rightPort F (childStartIndex F j) := (paths j).start_eq
   have hfinish (j : Fin F.base.length) : (pieces j).finish.val =
