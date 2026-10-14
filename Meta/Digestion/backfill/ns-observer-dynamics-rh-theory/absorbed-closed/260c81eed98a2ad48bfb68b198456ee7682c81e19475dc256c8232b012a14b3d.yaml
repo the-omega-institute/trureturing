@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:260c81eed98a2ad48bfb68b198456ee7682c81e19475dc256c8232b012a14b3d
+  normalized_sha256: sha256:260c81eed98a2ad48bfb68b198456ee7682c81e19475dc256c8232b012a14b3d
+cas_ref: sha256:260c81eed98a2ad48bfb68b198456ee7682c81e19475dc256c8232b012a14b3d
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/MechanicalReadoutOrder.local_order_iff_decreasing_weights
+    target_statement_id: sha256:11aadd35f6b85336828d84b165fbeeaa864ee887c147903bedd58ba8f017e6fd
+receipts:
+  unresolved_subitems: []
