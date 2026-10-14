@@ -5,7 +5,3 @@ cas_ref: sha256:9c840544c95a9dc0ee8a872e555afcebad19d23715656c35d7c360704ccb0440
 coverage_gids: []
 receipts:
   unresolved_subitems: []
-  nonpropositional:
-    justification: Defines the prime-only version of the triangular weighted sum; no value or bound is asserted in this setup atom.
-    previous_atom_id: a9fe536f3fcf2f9e2577f8f095c8e5d2ef68079dcb00c6e32158d30efd1fd013
-    next_atom_id: 15f5cc9a6cd68576f1ebaac673ae4c667c83c34c8b65dcbda090b231e62157ca
