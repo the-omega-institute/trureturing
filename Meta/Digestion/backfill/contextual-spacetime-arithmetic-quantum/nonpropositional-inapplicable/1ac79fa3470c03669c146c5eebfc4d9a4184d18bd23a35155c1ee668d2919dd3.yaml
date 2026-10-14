@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ac79fa3470c03669c146c5eebfc4d9a4184d18bd23a35155c1ee668d2919dd3
+  normalized_sha256: sha256:1ac79fa3470c03669c146c5eebfc4d9a4184d18bd23a35155c1ee668d2919dd3
+cas_ref: sha256:1ac79fa3470c03669c146c5eebfc4d9a4184d18bd23a35155c1ee668d2919dd3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 263.1 只规定二维对易极值的允许类及辅助参数。
+    previous_atom_id: 8eeef44175f0c6a4713720f5b33a391b149265455b55cb04d5f6082ff2c0b50b
+    next_atom_id: 8665a68f3d835e9021817dbb5157ed3ce1fa3666876ac0ff0a663b553d0fd51e

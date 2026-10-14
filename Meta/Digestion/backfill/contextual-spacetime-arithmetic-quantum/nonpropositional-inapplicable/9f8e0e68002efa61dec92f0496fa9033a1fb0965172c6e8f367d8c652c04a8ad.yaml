@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f8e0e68002efa61dec92f0496fa9033a1fb0965172c6e8f367d8c652c04a8ad
+  normalized_sha256: sha256:9f8e0e68002efa61dec92f0496fa9033a1fb0965172c6e8f367d8c652c04a8ad
+cas_ref: sha256:9f8e0e68002efa61dec92f0496fa9033a1fb0965172c6e8f367d8c652c04a8ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 239.1 只指定随任务移动的内部窗口和对应代价记号。
+    previous_atom_id: a426fee28336e80e64439314adf85c4045f45c7befef0e9f38ee3977d7642211
+    next_atom_id: 976110a7331d4f43d05aac3f1ee9b73ae8a8501dccdd66a5b35983178b5294b9

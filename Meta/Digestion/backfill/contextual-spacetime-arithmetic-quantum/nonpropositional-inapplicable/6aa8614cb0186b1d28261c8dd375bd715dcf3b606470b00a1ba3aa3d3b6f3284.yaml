@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6aa8614cb0186b1d28261c8dd375bd715dcf3b606470b00a1ba3aa3d3b6f3284
+  normalized_sha256: sha256:6aa8614cb0186b1d28261c8dd375bd715dcf3b606470b00a1ba3aa3d3b6f3284
+cas_ref: sha256:6aa8614cb0186b1d28261c8dd375bd715dcf3b606470b00a1ba3aa3d3b6f3284
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 记号约定只规定有限操作词的施加顺序、空词及观察等价关系，不断言其性质。
+    previous_atom_id: c03810125b08e60dc0d6d3f0a1377996ae8b221811a47db8b495a7fa6b409ee8
+    next_atom_id: 541313264b54c79814b88d81051601a100700a0588dda18afdf7edd989bbae40
