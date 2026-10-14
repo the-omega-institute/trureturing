@@ -7,11 +7,12 @@
    digest: The termwise local-perception CHSH witness has sharp upper bound 2. -/
 
 import Mathlib.Analysis.Matrix.Order
+import D5.S3.Weil.ZetaLinear.RankTrace
 
 noncomputable section
 
 open Matrix
-open scoped Kronecker ComplexOrder MatrixOrder
+open scoped Kronecker ComplexOrder
 
 namespace D5.S3.QuantumBounds.LocalPerceptionCHSH
 
@@ -129,21 +130,14 @@ private theorem real_bound (a b : Fin 2 → ℝ) (C : Fin 2 → Fin 2 → ℝ)
     real_nonneg (fun x => u x * a x) (fun y => v y * b y)
       (fun x y => u x * v y * C x y) hau hbv hh
 
-private theorem probability_positive
-    (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
-    (E F : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.PosSemidef)
-    (hE : E.PosSemidef) (hF : F.PosSemidef) : 0 ≤ (trace (ρ * (E ⊗ₖ F))).re := by
-  obtain ⟨M, hM⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (hE.kronecker hF).nonneg
-  rw [hM, star_eq_conjTranspose, ← mul_assoc, trace_mul_cycle]
-  exact (Complex.nonneg_iff.mp (hρ.mul_mul_conjTranspose_same M).trace_nonneg).1
-
 private theorem table_positive
     (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (hρ : ρ.PosSemidef) (htr : trace ρ = 1)
     (A B : Matrix (Fin 2) (Fin 2) ℂ) (hA : IsDichotomic A) (hB : IsDichotomic B)
     (ε η : ℝ) (hε : ε = 1 ∨ ε = -1) (hη : η = 1 ∨ η = -1) :
     0 ≤ 1 + ε * meanA ρ A + η * meanB ρ B + ε * η * correl ρ A B := by
-  have hp := probability_positive ρ _ _ hρ
-    (effect_positive A hA ε hε) (effect_positive B hB η hη)
+  have hp := RHLinalg.trace_mul_nonneg_of_posSemidef hρ
+    ((effect_positive A hA ε hε).kronecker (effect_positive B hB η hη))
+  change 0 ≤ Complex.re _ at hp
   rw [probability_expansion ρ htr A B ε η] at hp
   linarith
 
