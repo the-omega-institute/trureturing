@@ -1,0 +1,25 @@
+**Theorem 214.8 (balanced three-late full-fiber minimum).** Let $L\ge5$, $c,g,B\ge0$, and
+
+$$
+q=(c,c,g,g,g,0,\ldots,0;2c+3g+B).
+$$
+
+Among all nonnegative full exact-$Q$ scores, including arbitrary $A$, early and late $P$, classwise cancellations, changed anchors, suffixes and all legal labels,
+
+$$
+\min\Delta_N=\min\Delta_O=
+D(c,g,B):=\max\left\{0,g-B,3g-2c-B,
+\frac{4g-5c-B}{3},\frac{4g-\frac92c-B}{4}\right\}.
+\tag{214.8}
+$$
+
+One score attains both minima. Equivalently, the least stock at allowance $d$ is
+
+$$
+\Phi_3(c,g,d)=\max\left\{0,g-d,3g-2c-d,4g-5c-3d,
+4g-\frac92c-4d\right\}.
+\tag{214.9}
+$$
+
+The theorem includes $c=0$, $g=0$, $B=0$, all ties and zero-cost cores. It covers only equal early credits and equal late totals at fixed addresses $3,4,5$.
+
