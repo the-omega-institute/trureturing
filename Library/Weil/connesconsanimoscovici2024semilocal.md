@@ -498,3 +498,72 @@ $\log V=O((\log X)^4)$ does not imply (14). Its weighted upper
 bound remains unproved, as does the separate full same-test arithmetic
 comparison. Equations (10)--(14) do not establish the original strict
 Robin upper or RH.
+
+### The squared-commutator majorant itself has a large prime cost
+
+There is a separate limitation of the last member of (12). For the
+actual all-primes family $S(V)=\{\infty\}\cup\{p:p\le V\}$, denote
+that finite squared-kernel integral by $\Xi_{V,j}$. Then for all
+sufficiently large $V$, uniformly in $j\ge0$,
+
+$$
+\boxed{\Xi_{V,j}\ge c_\psi 2^{-j}\frac{\sqrt V}{\log V}.}
+\tag{15}
+$$
+
+This is a lower bound on the localized full commutator majorant,
+not on $t_{S(V),j}$ or on its intermediate one-sided Hankel bound.
+
+To check (15), write $W_{S(V)}=e^{i\Theta_V}$ with a smooth phase
+on a neighborhood of zero. Put $r_p=p^{-1/2}$ and $\ell_p=\log p$.
+The actual product gives
+
+$$
+-\Theta_V'(s)=2\sum_{p\le V}\ell_p
+\frac{r_p\cos(s\ell_p)-r_p^2}
+{1-2r_p\cos(s\ell_p)+r_p^2}.
+$$
+
+For $|s|\le(4\log V)^{-1}$, every cosine is at least
+$\cos(1/4)>1/\sqrt2\ge r_p$. Thus every summand has the same
+positive sign, and its ratio is bounded below by a fixed positive
+constant times $r_p$. Reuse the
+[owned dyadic prime count](../Arith/rosser1962approximate.md#dyadic-prime-count-lower-bound):
+there are at least $3V/(10\log V)$ primes in $(V/2,V]$, each
+contributing at least $\log(V/2)/\sqrt V$ to
+$\sum\ell_p/\sqrt p$. Together with $C_{S(V)}\ll\sqrt V$ above,
+this proves
+
+$$
+c\sqrt V\le-\Theta_V'(s)\le C\sqrt V
+\qquad\bigl(|s|\le(4\log V)^{-1}\bigr)
+$$
+
+for fixed $c,C>0$ and sufficiently large $V$.
+The phase derivative of $\rho$ is bounded near zero, so the same
+two-sided bounds, after changing $c,C$, hold for minus the local
+phase derivative of $U_{S(V)}=\rho W_{S(V)}$.
+
+Choose a fixed $d>0$ with $2Cd<\pi/2$. For
+$|s|\le(8\log V)^{-1}$ and
+$d/\sqrt V\le h\le2d/\sqrt V$, the entire segment $[s,s+h]$
+lies in the preceding derivative range once $V$ is sufficiently large.
+The absolute phase increment lies in $[cd,2Cd]$, so
+$|U_{S(V)}(s+h)-U_{S(V)}(s)|^2$ is bounded below by a fixed
+positive constant. Also
+$w_j(s)\ge2^{-j}\widehat\psi(0)/2$ on this $s$ interval,
+uniformly in $j\ge0$ and sufficiently large $V$; here
+$\widehat\psi(0)>0$ and continuity suffice.
+Integrate just this rectangle in the nonnegative integral (12).
+Its $s$ length is $1/(4\log V)$ and
+$\int_{d/\sqrt V}^{2d/\sqrt V}h^{-2}dh=\sqrt V/(2d)$,
+which proves (15).
+
+Consequently this particular full-commutator majorant cannot have a
+uniform polynomial-in-$\log V$ cost, even for $j=0$ and the same
+fixed bump. Its upper bound (10) is not being contradicted: (15)
+places a smaller lower bound on the larger comparison object.
+Improving the actual projection estimate can still use information
+lost in $\widetilde P_S\le\mathsf H_S^*\mathsf H_S$ or in the
+second inequality of (12). No reversal of either inequality, lower
+bound on the true trace, or obstruction to RH follows.
