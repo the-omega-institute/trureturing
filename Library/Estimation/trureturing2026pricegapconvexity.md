@@ -4400,3 +4400,224 @@ The improvement is in the lower margin; the original signed upper
 estimate on a cofinal family and RH remain unproved. No new generic
 compactness, minimization, prime theorem or Lean declaration is
 introduced, and no literature-originality or kernel claim is made.
+
+## A common future horizon pays the complete remote remainder
+
+Keep CP1 and JM1--JM7's original conditional source, all endpoints,
+labels, maximizing ties and fixed $\Theta,\eta,d,\kappa,a$.
+Use CQ5's same actual continuous selector $\mathcal B_X(t)$ on
+$[t_0,t_m]$, $L_X=t_m-t_0$, $s_B=\sqrt B\log B$ and the original
+$M_X=X^{1/2-\eta}\log X$. No favorable window is selected here.
+This application consumes HC3, CQ5, VC1--VC2 and the scalar inverse
+already used in VC2; it introduces no new PNT or generic tail theorem.
+
+### One complete tail serves every original core
+
+Write the original absolute-coordinate kernel as
+
+$$
+k(u)=\frac{1+\log u}{u^2\log^2u},\qquad
+I_\psi(v)=\int_v^\infty(\psi(u)-u)k(u)\,du.
+$$
+
+Choose one deterministic ceiling $\mathsf Y_X\to\infty$ with
+$\log B\le\mathsf Y_X$ for every original endpoint and intervening
+active core. VC2 supplies
+$\mathsf Y_X=K(\log X)^{5/3}(\log\log X)^{1/3}$,
+with its stated fixed condition on $K$, including $\Theta=1$.
+When $\Theta<1$, SC2 and N2 instead permit the smaller choice
+$\mathsf Y_X=C\log X$, with any fixed $C>\eta/(1-\Theta)$
+and one common source start. Neither choice depends on a tie.
+
+Fix $H>0$ with
+
+$$
+D(3/5)^{1/5}H^{3/5}>1/2,
+\qquad
+\mathsf U_X=\exp\!\left[
+H\mathsf Y_X^{5/3}(\log\mathsf Y_X)^{1/3}\right].
+$$
+
+Then $\log\mathsf U_X/\mathsf Y_X\to\infty$, so this horizon
+eventually lies beyond every original core. The complete-integral
+PNT supplier recorded in VC1 bounds $|I_\psi(\mathsf U_X)|$ by
+$C_c\exp[-cV(\log\mathsf U_X)]$ for every fixed $0<c<D$.
+Choose such a fixed $c$ still satisfying
+$c(3/5)^{1/5}H^{3/5}>1/2$. The reused Ng (N5) scalar inverse
+then supplies a fixed $\epsilon_H>0$ and common start with
+$cV(\log\mathsf U_X)\ge(1/2+\epsilon_H)\mathsf Y_X$.
+Consequently
+
+$$
+\boxed{
+|I_\psi(\mathsf U_X)|
+\int_{t_0}^{t_m}s_{\mathcal B_X(t)}\,dt
+\le C_c\mathsf Y_Xe^{-\epsilon_H\mathsf Y_X}L_X
+=o(L_X)=o(M_XL_X).}
+\tag{FH1}
+$$
+
+This pays the complete tail from $\mathsf U_X$ to infinity,
+including every prime power. It does not discard the future interval
+between the actual selected clocks and this common horizon.
+The horizon's log scale is $O((\log X)^{5/3}(\log\log X)^{1/3})$
+under SC2, and
+$O((\log X)^{25/9}(\log\log X)^{8/9})$ under VC2 alone.
+These are sufficient asymptotic scales with existential common
+starts, not numerical cutoff, effective-computation or optimality claims.
+
+There is also a fully published-input alternative. CP1 already supplies
+
+$$
+|I_\psi(v)|\le
+4a_{\rm PNT}r_{\rm PNT}^{1/4}(\log v)^{-1/4}
+e^{-\sqrt{\log v/r_{\rm PNT}}}.
+$$
+
+Use its deterministic ceiling
+$\mathsf Y_X=r_{\rm PNT}(\eta\log X+C_d)^2$, fix
+$H_0>r_{\rm PNT}/4$, and instead choose
+$\mathsf U_X=\exp(H_0\mathsf Y_X^2)$. Evaluating that existing
+complete-integral bound at this horizon and using the same occupation
+bound gives
+
+$$
+|I_\psi(\mathsf U_X)|\int_{t_0}^{t_m}s_{\mathcal B_X(t)}\,dt
+\ll_{H_0}\mathsf Y_X^{1/2}
+\exp\!\left[-\left(\sqrt{H_0/r_{\rm PNT}}-\frac12\right)
+\mathsf Y_X\right]L_X=o(L_X).
+$$
+
+Its log horizon is $O((\log X)^4)$, including $\Theta=1$.
+With SC2's smaller ceiling it is $O((\log X)^2)$ for fixed
+$\Theta<1$. Thus paying a common complete tail does not require the
+newer Fiori--Jaskari preprint; that input supplies the smaller stated
+horizon. The remainder of the finite account applies to either chosen
+horizon. Neither complete analytic proof is independently re-audited.
+
+Define the complete finite-horizon response by
+
+$$
+\mathsf J_X^{\rm fin}=
+\int_{t_0}^{t_m}\left[
+s_{\mathcal B_X(t)}
+\int_{\mathcal B_X(t)}^{\mathsf U_X}E(u)k(u)\,du
+-\frac{aE(\mathcal B_X(t))}{\sqrt{\mathcal B_X(t)}}
+\right]dt,
+\qquad E(u)=u-\psi(u).
+$$
+
+The original local subtraction is unchanged. Splitting the same
+improper integral at $\mathsf U_X$ gives the exact remainder
+
+$$
+\boxed{
+\mathcal J_X-\mathsf J_X^{\rm fin}
+=-I_\psi(\mathsf U_X)
+\int_{t_0}^{t_m}s_{\mathcal B_X(t)}\,dt
+=o(L_X).}
+\tag{FH2}
+$$
+
+CQ5 and FH1 therefore make the original all-tie signed target
+and its finite-horizon version equivalent, with an arbitrarily
+small fixed loss of the strict constant $C_0<d(1-\kappa)/16$.
+Both retain one common cofinal sequence of original full windows.
+Neither estimate is established by the tail bound.
+
+### The finite account requires a lower bound for one actual prime-power test
+
+The same finite interval gives a direct arithmetic consumer. For
+$2\le n\le\mathsf U_X$ set
+
+$$
+\begin{aligned}
+\mathsf W_X(n)=\int_{t_0}^{t_m}\Bigg[
+&s_{\mathcal B_X(t)}
+\left\{\frac1{\max(\mathcal B_X(t),n)\log\max(\mathcal B_X(t),n)}
+-\frac1{\mathsf U_X\log\mathsf U_X}\right\}\\
+&-\frac a{\sqrt{\mathcal B_X(t)}}
+\mathbf1_{\{n\le\mathcal B_X(t)\}}\Bigg]dt,
+\end{aligned}
+$$
+
+and let the corresponding continuum reference be
+
+$$
+\mathsf P_X=
+\int_{t_0}^{t_m}\left[
+s_B\left(\log\log\mathsf U_X-\log\log B
++\frac1{\log B}-\frac1{\log\mathsf U_X}\right)
+-a\sqrt B\right]dt,
+\qquad B=\mathcal B_X(t).
+$$
+
+Reuse $k(u)=-\frac d{du}(1/(u\log u))$,
+$\int uk(u)\,du=\log\log u-1/\log u$ and the finite exact
+prime-power sum $\psi(u)=\sum_{n\le u}\Lambda(n)$. Exchanging
+only that finite sum and the finite integrals gives
+
+$$
+\boxed{
+\mathsf J_X^{\rm fin}
+=\mathsf P_X-
+\sum_{2\le n\le\mathsf U_X}\Lambda(n)\mathsf W_X(n).}
+\tag{FH3}
+$$
+
+All weights come from the same actual selector; no new probability
+law, free-centre average or smooth inverse replaces its residence.
+The weak $n\le B$ convention retains the local prime-power endpoints.
+Terms with $n>\mathsf U_X$ are paid by FH1 rather than silently omitted.
+
+These weights are nonnegative eventually. Pointwise in $t$, if $B<n$
+the local subtraction vanishes and the bracket in $\mathsf W_X(n)$
+is nonnegative. If $n\le B$, it equals
+
+$$
+\frac1{\sqrt B}\left[
+1-a-\frac{B\log B}{\mathsf U_X\log\mathsf U_X}\right]\ge0,
+$$
+
+since the ratio tends to zero uniformly for $\log B\le\mathsf Y_X$
+and the original fixed $a<5\kappa/8<1$. Thus the precise unpaid
+finite-source interface is
+
+$$
+\boxed{
+\sum_{2\le n\le\mathsf U_X}\Lambda(n)\mathsf W_X(n)
+\ge\mathsf P_X-C_0M_XL_X,
+\qquad C_0<d(1-\kappa)/16.}
+\tag{FH4}
+$$
+
+FH4 must hold on a common cofinal sequence of the original full
+windows, with the same retained source and constants. Weight
+nonnegativity alone supplies no comparison with $\mathsf P_X$.
+In particular these weights are not decreasing tests. Extend the same
+formula from integers $n$ to real $r\in[2,\mathsf U_X]$ and let
+$\nu_X$ be the actual occupation measure of $\mathcal B_X$.
+The integral term involving $\max(B,r)$ is continuous in $r$.
+At any core $B$ with positive residence, the retained local subtraction
+therefore gives the exact right jump
+
+$$
+\mathsf W_X(B+)-\mathsf W_X(B)
+=\frac{a\nu_X(\{B\})}{\sqrt B}>0.
+$$
+
+This is the original compensation, not a new freely chosen atom.
+Between the finitely many core clocks the same antiderivative gives
+$\mathsf W_X'(r)=-k(r)\int_{B<r}s_B\,d\nu_X(B)\le0$.
+Thus nonnegative weights still retain both continuous decrease and
+source-dependent positive jumps; a theorem for decreasing weights
+cannot be transferred by asserting only nonnegativity.
+The existing interval lower counts and fixed-anchor negative
+primitive do not provide that source-dependent comparison at the
+required scale; no independent signed supplier is asserted here.
+The common tail is controlled, while this finite arithmetic lower
+bound, the original signed upper estimate and RH remain unproved.
+FH1--FH4 are a project application and exact consumer of existing
+complete-integral PNT, inverse-scale and finite partial-summation
+inputs, without a new generic theorem, literature-priority claim,
+Lean declaration or kernel verification.
