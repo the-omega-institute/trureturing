@@ -58,7 +58,7 @@ The module defines both complexities as Σ_n n|⟨K_n, e^{−iLt}v̂⟩|² with 
 
 The canonical source is `D5/S3/Quantum/Dynamics/PurificationLowerBoundQutritRefutation.lean` (521 lines).
 - It defines `krylovVector`, `spreadComplexity`, `liouvillianMatrix`, `liouvillian`, `canonicalKet`, `operatorComplexity`, `purificationComplexity` and `claim`, and proves `result : ¬ claim` with the witness above.
-- It uses the frozen `CartesianVariance.vectorize` (the vectorization in both complexities), `CartesianVariance.matrix_pairing`, `CartesianVariance.vectorize_norm_sq`, `partialTraceRight`, `trace_partialTraceRight`, `rankOneDensity`, `diagonalState` and `ptrace2_pure` (through `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings`), with pinned Mathlib Gram–Schmidt (`InnerProductSpace.gramSchmidtNormed`), the operator exponential (`NormedSpace.exp`) and `Module.End.HasEigenvector.pow_apply`.
+- It uses the frozen `CartesianVariance.vectorize` (the vectorization in both complexities), `CartesianVariance.matrix_pairing`, `CartesianVariance.vectorize_norm_sq`, `partialTraceRight`, `trace_partialTraceRight`, `rankOneDensity`, `diagonalState`, `ptrace2_pure` and `RHLinalg.frobSq` (through `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings`), with pinned Mathlib Gram–Schmidt (`InnerProductSpace.gramSchmidtNormed`), the operator exponential (`NormedSpace.exp`) and `Module.End.HasEigenvector.pow_apply`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - `result` is the refutation result of a `refutes` utility, which CLAUDE.md §3.9 exempts from four-slot registration.
 
