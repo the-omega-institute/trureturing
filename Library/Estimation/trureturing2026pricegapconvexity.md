@@ -4899,3 +4899,237 @@ not ruled out. Such a route still must pay its change in the actual
 prime pairing and retain the full pole and archimedean contributions
 at the original $M_XL_X$ scale. No such paid replacement is supplied
 here; FP5, the original signed estimate and RH remain unproved.
+
+## Core-scale smoothing preserves the reference and pays the actual prime change
+
+Keep FH1--FH4, FP1--FP5 and WT1--WT3's original source, full windows,
+actual residence, endpoint ties and fixed parameters. The smoothing
+operation is ordinary convolution, as already used in the
+[project's smooth-window construction](../Weil/frankliebseiringer2006hardy.md#a-smooth-realization-of-the-physical-windows).
+No new convolution, bounded-variation or prime-distribution theorem is
+asserted. This `repo-derived` paper application estimates its arithmetic
+cost for the actual compensated weights and preserves their continuum
+reference. It supplies no signed lower bound or Lean verification.
+
+### Smooth each kernel while keeping the original residence
+
+Use either FH1 common horizon, so eventually $16<B<\mathsf U_X$
+for every original active clock. Let $b_X$ be the same all-tie least
+clock as FP2, and define one common auxiliary scale
+
+$$
+Q_X=\min\left\{\sqrt{M_X/\mathsf Y_X},\ b_X^{1/4}\right\}.
+$$
+
+With VC2's stated polylogarithmic $\mathsf Y_X$, both entries tend
+to infinity, while $Q_X\mathsf Y_X/M_X\to0$ and
+$Q_X/\sqrt{b_X}\le b_X^{-1/4}\to0$. These are consequences of
+the unchanged source and $\eta<1/2$, not new residence premises. Extend each FH3 single-core weight
+onto the whole real line by
+
+$$
+w_B(r)=
+\begin{cases}
+ s_B\left[\dfrac1{\max(B,r)\log\max(B,r)}
+ -\dfrac1{\mathsf U_X\log\mathsf U_X}\right]
+ -\dfrac a{\sqrt B}\mathbf1_{\{r\le B\}},&r\le\mathsf U_X,\\
+ 0,&r>\mathsf U_X.
+\end{cases}
+$$
+
+For negative $r$ the maximum is still the positive $B$. This weight
+is constant to the left of $B$, is nonnegative eventually by FH3,
+and vanishes continuously at $\mathsf U_X$. Its value at $B$ retains
+the original weak endpoint. Its total-variation measure is exactly
+
+$$
+d|Dw_B|(v)=\frac a{\sqrt B}\,\boldsymbol\delta_B(dv)
++s_B\mathbf1_{(B,\mathsf U_X)}(v)k(v)\,dv.
+\tag{MR1}
+$$
+
+Here the first term is the original positive right jump; the second
+is the absolute value of the original continuous decrease.
+There is no new endpoint atom at the common horizon.
+
+Choose one fixed nonnegative even $\rho\in C_c^\infty(-1,1)$
+with $\int\rho(z)dz=1$. Set $h_B=Q_X\sqrt B$ and
+
+$$
+\widetilde w_B(r)=\int_{-1}^1\rho(z)w_B(r-h_Bz)\,dz,
+\qquad
+\widetilde{\mathsf W}_X(r)=
+\int_{t_0}^{t_m}\widetilde w_{\mathcal B_X(t)}(r)\,dt.
+$$
+
+The actual selector has finitely many cores, so the latter integral
+is a finite residence-weighted sum of smooth functions. It is smooth,
+nonnegative, and zero for
+$r>\mathsf V_X:=\mathsf U_X+Q_X\sqrt{B^{\rm end}_{\max,X}}$.
+Here $B^{\rm end}_{\max,X}$ is CP1/VC2's existing maximum over
+all endpoint ties; N2 puts every intervening core below it. The
+outgoing-label-only $B_{\max,X}$ is not used for this support.
+Residence is not convolved or replaced by a new sampling law.
+The finite sums below include all new evaluations between
+$\mathsf U_X$ and $\mathsf V_X$.
+
+### The continuum reference is preserved exactly
+
+Let
+
+$$
+c_B=\frac{1-a}{\sqrt B}
+-\frac{s_B}{\mathsf U_X\log\mathsf U_X}
+$$
+
+be the original constant plateau. Since $h_B<B$ and
+$w_B(r)=c_B$ throughout $[-h_B,h_B]$, every $|q|\le h_B$
+satisfies
+
+$$
+\int_0^\infty w_B(r-q)dr
+=\int_0^\infty w_B(r)dr+q c_B.
+$$
+
+These integrals are finite on the half-line. The even mollifier has
+zero first moment, so convolution and finite integration give
+
+$$
+\boxed{
+\int_0^\infty\widetilde{\mathsf W}_X(r)dr
+=\int_0^\infty\mathsf W_X(r)dr=\mathsf P_X.}
+\tag{MR2}
+$$
+
+The last equality is the same finite Fubini account as FH3, with
+its full low-clock plateau. No continuum baseline is fitted after
+smoothing, and no prime below the least clock is dropped.
+
+### Charge the discrete arithmetic change to the original variation
+
+For $|q|\le h_B$, the variation measure in MR1 controls every
+$|w_B(n-q)-w_B(n)|$ by its mass on the closed interval between
+$n-q$ and $n$. Closed endpoints cover the retained weak value at $B$.
+A fixed $v$ is charged by at most $2h_B+1$ integers with
+$|n-v|\le h_B$, and all such $n\ge2$ have
+$\log n\le\log(v+h_B)$. Thus the elementary
+$0\le\Lambda(n)\le\log n$ gives
+
+$$
+\sum_{n\ge2}\Lambda(n)|w_B(n-q)-w_B(n)|
+\le(2h_B+1)\int_B^{\mathsf U_X}
+\log(v+h_B)\,d|Dw_B|(v).
+$$
+
+The integral includes the atom at $B$. The common start has $Q_X\ge1$ and $Q_X/\sqrt{b_X}<1/2$.
+For every $B\ge b_X$, $v\ge B$ therefore gives $h_B\le v/2$, $\log(v+h_B)\le2\log v$ and
+$(1+\log v)/\log v\le2$. Applying these directly to MR1 yields
+
+$$
+\begin{aligned}
+\int_B^{\mathsf U_X}\log(v+h_B)d|Dw_B|(v)
+&\le\frac{2a\log B}{\sqrt B}
+ +4s_B\int_B^{\mathsf U_X}\frac{dv}{v^2}\\
+&\le(2a+4)\frac{\log B}{\sqrt B}.
+\end{aligned}
+$$
+
+As $2h_B+1\le3Q_X\sqrt B$ and the original $a<1$, every shift,
+and then its nonnegative mollifier average, consequently has cost
+
+$$
+\sum_{n\ge2}\Lambda(n)
+|\widetilde w_B(n)-w_B(n)|\le18Q_X\log B.
+$$
+
+Integrating against the actual residence, using
+$\log B\le\mathsf Y_X$, proves the paid arithmetic comparison
+
+$$
+\boxed{
+\begin{aligned}
+\sum_{n\ge2}\Lambda(n)
+|\widetilde{\mathsf W}_X(n)-\mathsf W_X(n)|
+&\le18Q_X\mathsf Y_X L_X=o(M_XL_X),\\
+\sum_p(\log p)
+|\widetilde{\mathsf W}_X(p)-\mathsf W_X(p)|
+&\le18Q_X\mathsf Y_X L_X=o(M_XL_X).
+\end{aligned}}
+\tag{MR3}
+$$
+
+All sums are finite. The second inequality restricts the same
+nonnegative sum to first-power primes; it does not compare
+independent extrema. For the little-$o$ statement choose VC2's
+$\mathsf Y_X=K(\log X)^{5/3}(\log\log X)^{1/3}$,
+which includes $\Theta=1$. The original fixed $\eta<1/2$ gives
+$\mathsf Y_X/M_X\to0$. Neither a short-interval PNT, a new
+prime-counting start nor RH is used in this arithmetic cost.
+
+Combining MR2--MR3, FP5 is equivalent, with an arbitrarily small
+fixed loss of its strict constant on the same cofinal original
+windows, to
+
+$$
+\sum_{p\le\mathsf V_X}(\log p)\widetilde{\mathsf W}_X(p)
+\ge\mathsf P_X-C_0M_XL_X,
+\qquad C_0<d(1-\kappa)/16.
+\tag{MR4}
+$$
+
+MR4 is unproved. The smoothing radii exceed $\sqrt B$ by the common growing factor
+$Q_X$, while staying $o(B)$ uniformly. Their larger width is paid
+by MR3, without a bandlimit or Fourier-cancellation assertion.
+Smoothness does not imply a decreasing weight,
+a favorable prime sign, fixed testing complexity or control of its
+zero-frequency baseline. The difference estimate, rather than
+unpaid endpoint deletion, pays the changed prime evaluations.
+
+### A prime-free calibration gives a smooth compact multiplicative test
+
+The original plateau also persists after smoothing:
+$\widetilde{\mathsf W}_X(r)=m_X$ for
+$r\le b_X-Q_X\sqrt{b_X}$, with the same positive $m_X$ as WT3.
+At this fixed window, $B-Q_X\sqrt B$ increases for $B\ge b_X$,
+since its derivative is $1-Q_X/(2\sqrt B)>0$. The plateau endpoint
+tends to infinity because $Q_X/\sqrt{b_X}\to0$, so it eventually
+contains $[1,2]$.
+
+Take a fixed smooth even $0\le\chi\le1$, equal to one near zero
+and supported in $|x|<(\log2)/2$. Define
+
+$$
+F_X(x)=\frac12(1-\chi(x))e^{|x|/2}
+\widetilde{\mathsf W}_X(e^{|x|})
++\frac12\chi(x)m_X\cosh(x/2),
+\qquad \widetilde f_X(e^x)=F_X(x).
+\tag{MR5}
+$$
+
+The cutoff removes the cusp at $x=0$; away from zero the convolved
+weight is smooth. Hence $\widetilde f_X$ is real,
+inversion-symmetric and in $C_c^\infty(\mathbb R_+^*)$, with
+support inside $[\mathsf V_X^{-1},\mathsf V_X]$.
+No prime-power argument $|x|=k\log p\ge\log2$ lies in the
+calibration support. The finite arithmetic part therefore remains
+exactly
+
+$$
+\sum_pW_p(\widetilde f_X)=
+\sum_{n\ge2}\Lambda(n)\widetilde{\mathsf W}_X(n)
+$$
+
+in WT2's adopted unitary normalization. The calibration changes no
+prime evaluation; MR3 has already paid the convolution change.
+The resulting test is a smooth compact input for the cited full
+explicit-formula convention, with all pole and archimedean terms
+still required. They are not identified with $\mathsf P_X$ by this
+construction, and no Mellin vanishing condition is imposed.
+
+WT3's previously established obstruction still applies, since
+$\widetilde f_X(1)=m_X/2$ and
+$\widetilde f_X(2)=\sqrt2m_X/2$. Thus admissible regularity does
+not put this test into the convolution-square positivity class.
+The paid comparison opens a smooth-testing interface for the same
+arithmetic problem; the actual weighted first-prime lower bound,
+original signed upper estimate and RH remain unproved.
