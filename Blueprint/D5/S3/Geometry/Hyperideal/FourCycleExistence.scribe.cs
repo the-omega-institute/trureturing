@@ -49,6 +49,37 @@ internal sealed class FourCycleExistenceDocument : IScribeDocumentDefinition
                         + "The geometric interpretation of the cosine formula and the passage to "
                         + "a complete hyperbolic realization retain their separate hypotheses."))),
                 DescribeRole.Theorem),
+            Paragraph(Text("The same four-cycle box also permits an arbitrary prescribed raw "
+                + "curvature vector kappa:E -> Real with |kappa(e)|<eta for every global label, "
+                + "where eta is the exact positive FourCycleCurvature.margin. The incidence, "
+                + "colouring, fibre degrees, endpoints L(s), U(s), and occurrence-counted "
+                + "curvature K(s,x,e) are unchanged. Finiteness of E follows from the actual "
+                + "positive fibre degrees as above; no independent finite-edge or solution "
+                + "assumption is added.")),
+            Paragraph(Text("For normalized cube coordinates u, use the same affine box map "
+                + "X(u)_e=L(s,e)+(U(s,e)-L(s,e))*u_e and clamp the increment "
+                + "u_e+K(s,X(u),e)-kappa(e) to [0,1]. Positive radicands and nonzero "
+                + "denominators, polynomial and square-root continuity, continuous arccos, "
+                + "finite occurrence sums, and the continuous min/max clamp make this map "
+                + "continuous. On a lower face, "
+                + "K-kappa>=eta-kappa(e)>0; on an upper face, "
+                + "K-kappa<=-eta-kappa(e)<0. The two strict inequalities use the two sides "
+                + "of |kappa(e)|<eta. The existing cube fixed-point and clamp arguments "
+                + "therefore exclude every boundary coordinate and give K(s,X(u),e)=kappa(e) "
+                + "for every global label at one shared fixed point.")),
+            Paragraph(Text("Consequently one shared vector x lies strictly between the original "
+                + "lower and upper endpoints at every global label, every original local "
+                + "cosine remains strictly between -1 and 1, and every raw curvature equals "
+                + "its prescribed component. Repeated occurrences and repeated labels still "
+                + "read that same x. The admissible curvature bound eta is independent of "
+                + "the number of tetrahedra, while the original high-edge lower floor can "
+                + "depend on that number; this does not supply a uniform spectral bound.")),
+            Paragraph(Text("This is an application of the established analytic box and "
+                + "fixed-point machinery. Identifying x with cosh of native edge lengths, "
+                + "identifying the raw angle with the native dihedral angle, constructing "
+                + "paired face isometries, and proving edge and truncation-endpoint cone "
+                + "charts retain their separate geometric obligations. A nonzero prescribed "
+                + "raw defect is not by itself a constructed native cone metric.")),
             Paragraph(Text("For a finite nonempty block set T and a finite global label set E, "
                 + "let Q(t,i), i in Fin 4, read four coordinates from one vector ell:E -> Real. "
                 + "The native six local occurrences have labels "

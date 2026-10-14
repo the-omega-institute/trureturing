@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:036d79060636f3915c1a5d554135f839d471fa5e6ea41c472eab3236b46c3447
+  normalized_sha256: sha256:036d79060636f3915c1a5d554135f839d471fa5e6ea41c472eab3236b46c3447
+cas_ref: sha256:036d79060636f3915c1a5d554135f839d471fa5e6ea41c472eab3236b46c3447
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：160. 一对状态的素数分离谱：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 47bdda9600104ca3f9c7f01e54b1cb245c98fe155056fef29d32e8cf363960e6
+    next_atom_id: 31d6516fee0e27e9cdf1ad8366b0bcfb8fa0e2c712ca6702016f5b6ecccbb014

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5abcd4c8525b6f7923eac0fd596db03fcce1651b633b90b3f8f2729fa263d403
+  normalized_sha256: sha256:5abcd4c8525b6f7923eac0fd596db03fcce1651b633b90b3f8f2729fa263d403
+cas_ref: sha256:5abcd4c8525b6f7923eac0fd596db03fcce1651b633b90b3f8f2729fa263d403
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 18.1（判别式分裂观察者）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 33f148f4767d35225f816a653e1a65a4b340284d149feec0c589e3c0b072d04b
+    next_atom_id: 6346551d91048640773340b8cab9628ede3a97727f04664fa50d5c785f1a9ca3

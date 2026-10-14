@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1bb56017414c76c4bcca75e29710becb48433143dd238af431fffb79e3bff15e
+  normalized_sha256: sha256:1bb56017414c76c4bcca75e29710becb48433143dd238af431fffb79e3bff15e
+cas_ref: sha256:1bb56017414c76c4bcca75e29710becb48433143dd238af431fffb79e3bff15e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: First proof step of preceding energy-growth theorem one, bounding the explicit zero expansion.
+    previous_atom_id: e2dcacdcdd52f55bc815143232930b5658ec1948731d57296e924877b30a496b
+    next_atom_id: 6b35bdadbde463774ea7c2d7e68c20ee8daf68dcf992273c7c6e9fecc37e1ef8

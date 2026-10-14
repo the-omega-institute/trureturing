@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9fd69b2865f4937c6f7b0f2a36a47d371ad2674c9605afc051da176cf745c683
+  normalized_sha256: sha256:9fd69b2865f4937c6f7b0f2a36a47d371ad2674c9605afc051da176cf745c683
+cas_ref: sha256:9fd69b2865f4937c6f7b0f2a36a47d371ad2674c9605afc051da176cf745c683
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 399.3（两层近似须分别承担误差）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 49750027f25114aa4979fdbb182f8317dae6cc998acce6288b07e0cfdf08f522
+    next_atom_id: f58bfde78e9d8746382e901fcd70a31c5858a02445f1c2bd2de49e41e6ea5e50

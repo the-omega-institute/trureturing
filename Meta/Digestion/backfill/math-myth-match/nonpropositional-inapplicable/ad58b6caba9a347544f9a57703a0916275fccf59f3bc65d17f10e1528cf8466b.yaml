@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad58b6caba9a347544f9a57703a0916275fccf59f3bc65d17f10e1528cf8466b
+  normalized_sha256: sha256:ad58b6caba9a347544f9a57703a0916275fccf59f3bc65d17f10e1528cf8466b
+cas_ref: sha256:ad58b6caba9a347544f9a57703a0916275fccf59f3bc65d17f10e1528cf8466b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 200.1（把视角写成保留关系的局部记录）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 504357d825f8a639b29a3c04b9920b563fd1de21c543e3eb6b136e7147ad85b4
+    next_atom_id: bee26bc1939f7fb9cf3e6f57ee03d4da911873dda64627b4f2db2dcff76c1a13

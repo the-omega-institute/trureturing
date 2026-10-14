@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c913db328b7a1486ec27d89ca9039554af90ce6810d7bd13e3095bd488b79352
+  normalized_sha256: sha256:c913db328b7a1486ec27d89ca9039554af90ce6810d7bd13e3095bd488b79352
+cas_ref: sha256:c913db328b7a1486ec27d89ca9039554af90ce6810d7bd13e3095bd488b79352
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：260. 目标相对因果余量：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: b833714df1895ab58820148602749aff15bb0639b62924d580641fa9110ffc2c
+    next_atom_id: 145d9aa6818336bed91da5815d772e94514ec094339a84c8a5e1cefabd7d7a74

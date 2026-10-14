@@ -99,10 +99,10 @@ Direct frozen dependencies (declaration statement_id):
     sha256:cc88c714292e1a1b7f96163a344340fa2144c8b2caffc5cb2196fb9df44fd3e5
   D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.partialTransposeB
     sha256:894491a0350c31f846bcfc59cbb3e13f12eb0801f6a00517db381f0dc0ecc393
+Information-escape registration is paused under CLAUDE.md §3.9 「信息逃逸登记暂缓」.
 MoreauYosidaFormationSelectiveLoccRefutation.E_F uses an ENNReal infimum,
 density-state ensembles and natural-log entropy; it is not this real bit-entropy sInf.
 The source expression uses eigenvalues and the literal partialTraceRight.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16722
 -/
 
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
@@ -636,7 +636,7 @@ end D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Witness
 
 namespace D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Direct
 open D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Analytic D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Witness
-private theorem pure_det (ψ : ((Fin 2 × Fin 2) → ℂ)) : (partialTraceRight (rankOneDensity ψ)).det.re = (‖(Matrix.of (Function.curry ψ)).det‖)^2 := by
+theorem pure_det (ψ : ((Fin 2 × Fin 2) → ℂ)) : (partialTraceRight (rankOneDensity ψ)).det.re = (‖(Matrix.of (Function.curry ψ)).det‖)^2 := by
   rw [D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.marginal_amplitude,
     Matrix.det_mul, Matrix.det_conjTranspose]
   simp [Complex.mul_conj, Complex.normSq_eq_norm_sq, ← Complex.ofReal_pow]

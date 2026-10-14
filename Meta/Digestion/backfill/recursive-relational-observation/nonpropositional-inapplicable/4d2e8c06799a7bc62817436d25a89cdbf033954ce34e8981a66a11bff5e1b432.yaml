@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4d2e8c06799a7bc62817436d25a89cdbf033954ce34e8981a66a11bff5e1b432
+  normalized_sha256: sha256:4d2e8c06799a7bc62817436d25a89cdbf033954ce34e8981a66a11bff5e1b432
+cas_ref: sha256:4d2e8c06799a7bc62817436d25a89cdbf033954ce34e8981a66a11bff5e1b432
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 31.4（单位化的实际直积模型）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 1219cd7ef42d954cc6931dacb47414aa7e974527761b23938816303cbc70633a
+    next_atom_id: a3fbc4d5dc0688ff239a865b7064e5de94c6b5b42c872c1fc390c39bfbf290a3

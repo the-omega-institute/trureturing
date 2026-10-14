@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa3e7abdc549d765121bc38c89dae1327eab91451a81ad02c25bb92d510c94c2
+  normalized_sha256: sha256:aa3e7abdc549d765121bc38c89dae1327eab91451a81ad02c25bb92d510c94c2
+cas_ref: sha256:aa3e7abdc549d765121bc38c89dae1327eab91451a81ad02c25bb92d510c94c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Design-responsibility item specifying the observation projection and record of its fibers.
+    previous_atom_id: b5068a22f145ba35827231b3fb651ef2aa27aa090b4879b46b47917737a153bb
+    next_atom_id: 9952fe0839a7750239d2d5952bbdbb783cff8439d387dc84de369f061cd00511

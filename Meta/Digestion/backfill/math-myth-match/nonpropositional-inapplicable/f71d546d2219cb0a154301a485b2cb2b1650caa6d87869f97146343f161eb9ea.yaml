@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f71d546d2219cb0a154301a485b2cb2b1650caa6d87869f97146343f161eb9ea
+  normalized_sha256: sha256:f71d546d2219cb0a154301a485b2cb2b1650caa6d87869f97146343f161eb9ea
+cas_ref: sha256:f71d546d2219cb0a154301a485b2cb2b1650caa6d87869f97146343f161eb9ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节 74. “都在说一回事”：先确定相同的是哪一种关系：仅为章节题名，指示讨论主题；无独立命题陈述。
+    previous_atom_id: 1d0cec991ec0eff3a22a5bb7eb99a5628806f1bd410c07d7c70ca60f5c50e77b
+    next_atom_id: dbacd05ca1b4e6bf1b73ee90c4de769c6d817a34f128767ea001532b68ea448d

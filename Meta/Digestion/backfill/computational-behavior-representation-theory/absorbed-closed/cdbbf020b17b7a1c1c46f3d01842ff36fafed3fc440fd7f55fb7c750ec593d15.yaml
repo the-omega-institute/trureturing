@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cdbbf020b17b7a1c1c46f3d01842ff36fafed3fc440fd7f55fb7c750ec593d15
+  normalized_sha256: sha256:cdbbf020b17b7a1c1c46f3d01842ff36fafed3fc440fd7f55fb7c750ec593d15
+cas_ref: sha256:cdbbf020b17b7a1c1c46f3d01842ff36fafed3fc440fd7f55fb7c750ec593d15
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/PairwiseSignatureRefinement.pairwise_signature_termination
+    target_statement_id: sha256:205651336a494ca43df7ea9dfa2d67c4f93e2a81d27db0ae88347261197d1fcf
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f01a3abeb918d1b2dd77c13079fcd74f4b85b25209978f4c38746af969e6ea76
+  normalized_sha256: sha256:f01a3abeb918d1b2dd77c13079fcd74f4b85b25209978f4c38746af969e6ea76
+cas_ref: sha256:f01a3abeb918d1b2dd77c13079fcd74f4b85b25209978f4c38746af969e6ea76
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 31.6（解析 Wiener 代数及其零常数项理想）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 84557d1849e7fa406239781aaf850a2ccaf092a96b07bf16c3f3f70cd5066534
+    next_atom_id: 12787ea3ae6c5e00b6e74f42816f6870e232dfd2b45a996a9cec8a9f8dc3fb94

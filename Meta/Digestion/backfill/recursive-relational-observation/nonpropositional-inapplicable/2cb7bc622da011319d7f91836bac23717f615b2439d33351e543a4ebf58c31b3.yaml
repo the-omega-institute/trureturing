@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2cb7bc622da011319d7f91836bac23717f615b2439d33351e543a4ebf58c31b3
+  normalized_sha256: sha256:2cb7bc622da011319d7f91836bac23717f615b2439d33351e543a4ebf58c31b3
+cas_ref: sha256:2cb7bc622da011319d7f91836bac23717f615b2439d33351e543a4ebf58c31b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: (a) 生成全部中间公式不保证闭理论覆盖。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 6849a745c5a6966a3d4d4a93a0f02a022fb2a30e587eb0ef9c5889e48a2ff435
+    next_atom_id: ce299c76d040943f76e9324da1ac7b276c8ca4d0354cfdf98b74c7b71b24ab00

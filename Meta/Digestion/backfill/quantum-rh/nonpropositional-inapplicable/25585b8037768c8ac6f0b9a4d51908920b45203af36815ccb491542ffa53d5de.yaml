@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:25585b8037768c8ac6f0b9a4d51908920b45203af36815ccb491542ffa53d5de
+  normalized_sha256: sha256:25585b8037768c8ac6f0b9a4d51908920b45203af36815ccb491542ffa53d5de
+cas_ref: sha256:25585b8037768c8ac6f0b9a4d51908920b45203af36815ccb491542ffa53d5de
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof sketch of preceding exact instruction counts (25)-(26) by summing transfer and reset steps.
+    previous_atom_id: 59626bffd526d065fe29b4f63e40a4367886e380208787d0cf0fe4df9e169a9b
+    next_atom_id: 0cc1ba31ca492e3c023d0c2956323642224a427f5f662c5e3ac19d1d25a5e44c

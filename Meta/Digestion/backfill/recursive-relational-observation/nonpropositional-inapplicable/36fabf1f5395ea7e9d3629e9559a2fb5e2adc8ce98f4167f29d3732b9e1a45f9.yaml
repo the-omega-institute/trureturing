@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36fabf1f5395ea7e9d3629e9559a2fb5e2adc8ce98f4167f29d3732b9e1a45f9
+  normalized_sha256: sha256:36fabf1f5395ea7e9d3629e9559a2fb5e2adc8ce98f4167f29d3732b9e1a45f9
+cas_ref: sha256:36fabf1f5395ea7e9d3629e9559a2fb5e2adc8ce98f4167f29d3732b9e1a45f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 64.9（辅助矩形族上的乘积初始信息不使均值 Bellman 按坐标分解）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 705835e7df66bcecdeb92938e3a566e4972388f672b40661bb5697872fed2ddc
+    next_atom_id: 8248cba7d887a2d2d6760fdb32ae173e1047ec68eab1327dd65528067b953657

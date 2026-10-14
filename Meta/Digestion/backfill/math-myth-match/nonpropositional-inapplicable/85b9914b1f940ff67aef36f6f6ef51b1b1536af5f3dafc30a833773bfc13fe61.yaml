@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85b9914b1f940ff67aef36f6f6ef51b1b1536af5f3dafc30a833773bfc13fe61
+  normalized_sha256: sha256:85b9914b1f940ff67aef36f6f6ef51b1b1536af5f3dafc30a833773bfc13fe61
+cas_ref: sha256:85b9914b1f940ff67aef36f6f6ef51b1b1536af5f3dafc30a833773bfc13fe61
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 405.2（没有固定后缀长度，却有一坐标精确递推）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: f1e016a084d1a4cd8738367d4a5c4fa9d124ee2cfe7e0ce1a61a7a7d8c39a92e
+    next_atom_id: 0200c59d82435d9d8ba7f35632275831abb7030094ccf8129e4676d642da03b9

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84d55174383b32e068cb8cbd637413100b7d74a1b67de46f355b476bd2f6716f
+  normalized_sha256: sha256:84d55174383b32e068cb8cbd637413100b7d74a1b67de46f355b476bd2f6716f
+cas_ref: sha256:84d55174383b32e068cb8cbd637413100b7d74a1b67de46f355b476bd2f6716f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 386.1（同一个联合模型）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: e15b1296dfd2a577f42dcca762efdbf842b0b11a69fe500904c95fbca4037f5b
+    next_atom_id: 60ca4566c6892dc5cf07bcc07d60f79c89cec40964620ee7fade36c4e3149b71

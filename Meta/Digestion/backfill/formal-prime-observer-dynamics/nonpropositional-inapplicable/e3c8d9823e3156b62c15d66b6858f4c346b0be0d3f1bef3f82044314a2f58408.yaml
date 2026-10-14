@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3c8d9823e3156b62c15d66b6858f4c346b0be0d3f1bef3f82044314a2f58408
+  normalized_sha256: sha256:e3c8d9823e3156b62c15d66b6858f4c346b0be0d3f1bef3f82044314a2f58408
+cas_ref: sha256:e3c8d9823e3156b62c15d66b6858f4c346b0be0d3f1bef3f82044314a2f58408
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：272. Transportability 是跨环境目标因子化：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: c1e4ba69b9882ce1211361efbb28966e9d7377c3a7fcfd0d2d7085ccbf061904
+    next_atom_id: 883df0fc611deb4aee2c1789c35d7acc7b715512358dee80cb3d7fa468043a23

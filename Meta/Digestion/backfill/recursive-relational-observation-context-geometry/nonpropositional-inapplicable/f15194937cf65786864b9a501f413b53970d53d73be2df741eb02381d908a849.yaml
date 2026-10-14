@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f15194937cf65786864b9a501f413b53970d53d73be2df741eb02381d908a849
+  normalized_sha256: sha256:f15194937cf65786864b9a501f413b53970d53d73be2df741eb02381d908a849
+cas_ref: sha256:f15194937cf65786864b9a501f413b53970d53d73be2df741eb02381d908a849
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 16.4（同一锐例中的固定来源创新）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 8a5739760e7e7ef4448e492ca8d64ec73fe8aa2addd1e037570a5451338ea93f
+    next_atom_id: a8e9b1ad634490efb9a35435349ba735963af8eea4ce99f6c04e6c966456077a
