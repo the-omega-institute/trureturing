@@ -18,6 +18,7 @@ open scoped Matrix.Norms.L2Operator MatrixOrder ComplexOrder
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.PureState.PureStateHandshake
 open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
+open D5.S3.Quantum.Matrix.CartesianVariance
 
 namespace D5.S3.Quantum.Dynamics.PurificationLowerBoundQutritRefutation
 
@@ -30,31 +31,28 @@ noncomputable def spreadComplexity (L : E →L[ℂ] E) (v : E) (t : ℝ) : ℝ :
   ∑ n : Fin (Module.finrank ℂ E), (n.val : ℝ) *
     Complex.normSq (inner ℂ (krylovVector L v n.val)
       ((NormedSpace.exp ((-(t : ℂ) * Complex.I) • L)) ((‖v‖ : ℂ)⁻¹ • v)))
-noncomputable def ketVec (A : Matrix (Fin d) (Fin d) ℂ) :
-    EuclideanSpace ℂ (Fin d × Fin d) :=
-  WithLp.toLp 2 (Matrix.vec A.transpose)
 noncomputable def liouvillianMatrix (H : Matrix (Fin d) (Fin d) ℂ) :
     Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
   Matrix.kronecker H 1 - Matrix.kronecker 1 H.transpose
 noncomputable def liouvillian (H : Matrix (Fin d) (Fin d) ℂ) :
     EuclideanSpace ℂ (Fin d × Fin d) →L[ℂ] EuclideanSpace ℂ (Fin d × Fin d) :=
   Matrix.toEuclideanCLM (𝕜 := ℂ) (liouvillianMatrix H)
-noncomputable def canonicalKet (ρ : Matrix (Fin d) (Fin d) ℂ) := ketVec (CFC.sqrt ρ)
+noncomputable def canonicalKet (ρ : Matrix (Fin d) (Fin d) ℂ) := vectorize d (CFC.sqrt ρ)
 noncomputable def operatorComplexity (H ρ : Matrix (Fin d) (Fin d) ℂ) (t : ℝ) : ℝ :=
-  spreadComplexity (liouvillian H) (ketVec ρ) t
+  spreadComplexity (liouvillian H) (vectorize d ρ) t
 noncomputable def purificationComplexity (H ρ : Matrix (Fin d) (Fin d) ℂ) (t : ℝ) : ℝ :=
   spreadComplexity (liouvillian H) (canonicalKet ρ) t
 def claim : Prop := ∀ (d : ℕ) (ρ H : Matrix (Fin d) (Fin d) ℂ) (t : ℝ),
   ρ.PosDef → Matrix.trace ρ = 1 → H.IsHermitian → 0 ≤ t →
   purificationComplexity H ρ t ≤ operatorComplexity H ρ t
 
-private lemma ketVec_inner (A B : Matrix (Fin d) (Fin d) ℂ) :
-    inner ℂ (ketVec A) (ketVec B) = Matrix.trace (A.conjTranspose * B) := by
-  exact D5.S3.Quantum.Matrix.CartesianVariance.matrix_pairing A B
+private lemma vectorize_eq_toLp_vec (A : Matrix (Fin d) (Fin d) ℂ) :
+    vectorize d A = WithLp.toLp 2 (Matrix.vec A.transpose) := by
+  rfl
 
 private lemma liouvillian_ketVec (H A : Matrix (Fin d) (Fin d) ℂ) :
-    liouvillian H (ketVec A) = ketVec (H * A - A * H) := by
-  simp only [liouvillian.eq_1, ketVec.eq_1, Matrix.toEuclideanCLM_toLp,
+    liouvillian H (vectorize d A) = vectorize d (H * A - A * H) := by
+  simp only [liouvillian.eq_1, vectorize_eq_toLp_vec, Matrix.toEuclideanCLM_toLp,
     liouvillianMatrix.eq_1, Matrix.sub_mulVec]
   dsimp only [Matrix.kronecker]
   rw [Matrix.kronecker_mulVec_vec (1 : Matrix (Fin d) (Fin d) ℂ) A.transpose H,
@@ -64,7 +62,7 @@ private lemma liouvillian_ketVec (H A : Matrix (Fin d) (Fin d) ℂ) :
   rw [← Matrix.vec_sub]
 
 private lemma partialTraceRight_ketVec (A : Matrix (Fin d) (Fin d) ℂ) :
-    partialTraceRight (rankOneDensity (fun p => ketVec A p)) = A * A.conjTranspose := by
+    partialTraceRight (rankOneDensity (fun p => vectorize d A p)) = A * A.conjTranspose := by
   exact D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.ptrace2_pure A
 
 private lemma canonicalKet_norm (ρ : Matrix (Fin d) (Fin d) ℂ)
@@ -297,38 +295,37 @@ private lemma sqrt_rhoWitness : CFC.sqrt rhoWitness = ((Real.sqrt 21 : ℂ)⁻¹
     rw [heq]
     exact hp.nonneg
 
-private lemma rhoWitness_seed : (‖ketVec rhoWitness‖ : ℂ)⁻¹ • ketVec rhoWitness =
-    (Real.sqrt 273 : ℂ)⁻¹ • ketVec D := by
+private lemma rhoWitness_seed : (‖vectorize 3 rhoWitness‖ : ℂ)⁻¹ • vectorize 3 rhoWitness =
+    (Real.sqrt 273 : ℂ)⁻¹ • vectorize 3 D := by
   have hrho : rhoWitness = (1 / 21 : ℂ) • D := by
     ext i j
     fin_cases i <;> fin_cases j <;> norm_num [rhoWitness.eq_1, D.eq_1, diagonalState]
-  have hnormD : ‖ketVec D‖ = Real.sqrt 273 := by
-    have hi : ‖ketVec D‖ ^ 2 = 273 := by
-      change ‖D5.S3.Quantum.Matrix.CartesianVariance.vectorize 3 D‖ ^ 2 = 273
+  have hnormD : ‖vectorize 3 D‖ = Real.sqrt 273 := by
+    have hi : ‖vectorize 3 D‖ ^ 2 = 273 := by
       rw [D5.S3.Quantum.Matrix.CartesianVariance.vectorize_norm_sq]
       norm_num [RHLinalg.frobSq, D.eq_1, diagonalState, Matrix.trace, Matrix.mul_apply,
         Fin.sum_univ_succ, Matrix.conjTranspose_apply]
     exact ((Real.sqrt_eq_iff_eq_sq (by norm_num) (norm_nonneg _)).mpr hi.symm).symm
   rw [hrho]
-  change (‖(1 / 21 : ℂ) • ketVec D‖ : ℂ)⁻¹ • ((1 / 21 : ℂ) • ketVec D) = _
+  change (‖(1 / 21 : ℂ) • vectorize 3 D‖ : ℂ)⁻¹ • ((1 / 21 : ℂ) • vectorize 3 D) = _
   rw [norm_smul, hnormD]
   norm_num [smul_smul]
   congr 1
   ring
 
 private lemma purification_seed : (‖canonicalKet rhoWitness‖ : ℂ)⁻¹ •
-    canonicalKet rhoWitness = (Real.sqrt 21 : ℂ)⁻¹ • ketVec S := by
+    canonicalKet rhoWitness = (Real.sqrt 21 : ℂ)⁻¹ • vectorize 3 S := by
   rw [canonicalKet_norm rhoWitness rhoWitness_posDef.posSemidef rhoWitness_trace]
   norm_num only [Complex.ofReal_one, inv_one, one_smul]
   rw [canonicalKet, sqrt_rhoWitness]
   rfl
 
 private def qD : Fin 3 → EuclideanSpace ℂ (Fin 3 × Fin 3) :=
-  ![(Real.sqrt 273 : ℂ)⁻¹ • ketVec D, (Real.sqrt 2 : ℂ)⁻¹ • ketVec F,
-    (Real.sqrt 16289 : ℂ)⁻¹ • ketVec BD]
+  ![(Real.sqrt 273 : ℂ)⁻¹ • vectorize 3 D, (Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F,
+    (Real.sqrt 16289 : ℂ)⁻¹ • vectorize 3 BD]
 private def qS : Fin 3 → EuclideanSpace ℂ (Fin 3 × Fin 3) :=
-  ![(Real.sqrt 21 : ℂ)⁻¹ • ketVec S, (Real.sqrt 2 : ℂ)⁻¹ • ketVec F,
-    (Real.sqrt 861 : ℂ)⁻¹ • ketVec BS]
+  ![(Real.sqrt 21 : ℂ)⁻¹ • vectorize 3 S, (Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F,
+    (Real.sqrt 861 : ℂ)⁻¹ • vectorize 3 BS]
 private def b1D : ℝ := 3 * Real.sqrt 2 / Real.sqrt 273
 private def b2D : ℝ := Real.sqrt 2 * Real.sqrt 16289 / 91
 private def b1S : ℝ := Real.sqrt 2 / Real.sqrt 21
@@ -413,11 +410,11 @@ private lemma qD_orthonormal : Orthonormal ℂ qD := by
   apply orthonormal_iff_ite.mpr
   intro i j
   fin_cases i <;> fin_cases j <;>
-    simp only [show qD ⟨0, by decide⟩ = (Real.sqrt 273 : ℂ)⁻¹ • ketVec D from
+    simp only [show qD ⟨0, by decide⟩ = (Real.sqrt 273 : ℂ)⁻¹ • vectorize 3 D from
       by rw [qD.eq_1]; rfl,
-      show qD ⟨1, by decide⟩ = (Real.sqrt 2 : ℂ)⁻¹ • ketVec F from rfl,
-      show qD ⟨2, by decide⟩ = (Real.sqrt 16289 : ℂ)⁻¹ • ketVec BD from rfl] <;>
-    rw [inner_smul_left, inner_smul_right, ketVec_inner] <;>
+      show qD ⟨1, by decide⟩ = (Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F from rfl,
+      show qD ⟨2, by decide⟩ = (Real.sqrt 16289 : ℂ)⁻¹ • vectorize 3 BD from rfl] <;>
+    rw [inner_smul_left, inner_smul_right, matrix_pairing] <;>
     norm_num [D.eq_1, F.eq_1, BD.eq_1, diagonalState, Matrix.trace, Matrix.mul_apply,
       Matrix.vecMul, dotProduct, Matrix.diagonal_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_succ] <;>
@@ -427,11 +424,11 @@ private lemma qS_orthonormal : Orthonormal ℂ qS := by
   apply orthonormal_iff_ite.mpr
   intro i j
   fin_cases i <;> fin_cases j <;>
-    simp only [show qS ⟨0, by decide⟩ = (Real.sqrt 21 : ℂ)⁻¹ • ketVec S from
+    simp only [show qS ⟨0, by decide⟩ = (Real.sqrt 21 : ℂ)⁻¹ • vectorize 3 S from
       by rw [qS.eq_1]; rfl,
-      show qS ⟨1, by decide⟩ = (Real.sqrt 2 : ℂ)⁻¹ • ketVec F from rfl,
-      show qS ⟨2, by decide⟩ = (Real.sqrt 861 : ℂ)⁻¹ • ketVec BS from rfl] <;>
-    rw [inner_smul_left, inner_smul_right, ketVec_inner] <;>
+      show qS ⟨1, by decide⟩ = (Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F from rfl,
+      show qS ⟨2, by decide⟩ = (Real.sqrt 861 : ℂ)⁻¹ • vectorize 3 BS from rfl] <;>
+    rw [inner_smul_left, inner_smul_right, matrix_pairing] <;>
     norm_num [S.eq_1, F.eq_1, BS.eq_1, diagonalState, Matrix.trace, Matrix.mul_apply,
       Matrix.vecMul, dotProduct, Matrix.diagonal_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_succ] <;>
@@ -442,26 +439,26 @@ private lemma qD_recurrence :
     liouvillian hWitness (qD 1) = (b1D : ℂ) • qD 0 + (b2D : ℂ) • qD 2 ∧
     liouvillian hWitness (qD 2) = (b2D : ℂ) • qD 1 := by
   refine ⟨?_, ?_, ?_⟩
-  · change liouvillian hWitness ((Real.sqrt 273 : ℂ)⁻¹ • ketVec D) =
-      (b1D : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • ketVec F)
+  · change liouvillian hWitness ((Real.sqrt 273 : ℂ)⁻¹ • vectorize 3 D) =
+      (b1D : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F)
     rw [map_smul, liouvillian_ketVec, commutators.1]
     ext ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [qD, b1D.eq_1, ketVec, F.eq_1, Function.flip_def] <;> field_simp
-  · change liouvillian hWitness ((Real.sqrt 2 : ℂ)⁻¹ • ketVec F) =
-      (b1D : ℂ) • ((Real.sqrt 273 : ℂ)⁻¹ • ketVec D) +
-      (b2D : ℂ) • ((Real.sqrt 16289 : ℂ)⁻¹ • ketVec BD)
+      norm_num [qD, b1D.eq_1, vectorize_eq_toLp_vec, F.eq_1, Function.flip_def] <;> field_simp
+  · change liouvillian hWitness ((Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F) =
+      (b1D : ℂ) • ((Real.sqrt 273 : ℂ)⁻¹ • vectorize 3 D) +
+      (b2D : ℂ) • ((Real.sqrt 16289 : ℂ)⁻¹ • vectorize 3 BD)
     rw [map_smul, liouvillian_ketVec, commutators.2.2.1]
     ext ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [qD, b1D.eq_1, b2D.eq_1, ketVec, D.eq_1, BD.eq_1, diagonalState, Matrix.diagonal_apply] <;>
+      norm_num [qD, b1D.eq_1, b2D.eq_1, vectorize_eq_toLp_vec, D.eq_1, BD.eq_1, diagonalState, Matrix.diagonal_apply] <;>
       field_simp <;> norm_num [← Complex.ofReal_pow, Real.sq_sqrt]
-  · change liouvillian hWitness ((Real.sqrt 16289 : ℂ)⁻¹ • ketVec BD) =
-      (b2D : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • ketVec F)
+  · change liouvillian hWitness ((Real.sqrt 16289 : ℂ)⁻¹ • vectorize 3 BD) =
+      (b2D : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F)
     rw [map_smul, liouvillian_ketVec, commutators.2.2.2.1]
     ext ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [qD, b2D.eq_1, ketVec, F.eq_1, Function.flip_def] <;>
+      norm_num [qD, b2D.eq_1, vectorize_eq_toLp_vec, F.eq_1, Function.flip_def] <;>
       field_simp <;> norm_num [← Complex.ofReal_pow, Real.sq_sqrt]
 
 private lemma qS_recurrence :
@@ -469,31 +466,31 @@ private lemma qS_recurrence :
     liouvillian hWitness (qS 1) = (b1S : ℂ) • qS 0 + (b2S : ℂ) • qS 2 ∧
     liouvillian hWitness (qS 2) = (b2S : ℂ) • qS 1 := by
   refine ⟨?_, ?_, ?_⟩
-  · change liouvillian hWitness ((Real.sqrt 21 : ℂ)⁻¹ • ketVec S) =
-      (b1S : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • ketVec F)
+  · change liouvillian hWitness ((Real.sqrt 21 : ℂ)⁻¹ • vectorize 3 S) =
+      (b1S : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F)
     rw [map_smul, liouvillian_ketVec, commutators.2.1]
     ext ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [qS, b1S.eq_1, ketVec, F.eq_1, Function.flip_def] <;> field_simp
-  · change liouvillian hWitness ((Real.sqrt 2 : ℂ)⁻¹ • ketVec F) =
-      (b1S : ℂ) • ((Real.sqrt 21 : ℂ)⁻¹ • ketVec S) +
-      (b2S : ℂ) • ((Real.sqrt 861 : ℂ)⁻¹ • ketVec BS)
+      norm_num [qS, b1S.eq_1, vectorize_eq_toLp_vec, F.eq_1, Function.flip_def] <;> field_simp
+  · change liouvillian hWitness ((Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F) =
+      (b1S : ℂ) • ((Real.sqrt 21 : ℂ)⁻¹ • vectorize 3 S) +
+      (b2S : ℂ) • ((Real.sqrt 861 : ℂ)⁻¹ • vectorize 3 BS)
     rw [map_smul, liouvillian_ketVec, commutators.2.2.1]
     ext ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [qS, b1S.eq_1, b2S.eq_1, ketVec, S.eq_1, BS.eq_1, diagonalState, Matrix.diagonal_apply] <;>
+      norm_num [qS, b1S.eq_1, b2S.eq_1, vectorize_eq_toLp_vec, S.eq_1, BS.eq_1, diagonalState, Matrix.diagonal_apply] <;>
       field_simp <;> norm_num [← Complex.ofReal_pow, Real.sq_sqrt]
-  · change liouvillian hWitness ((Real.sqrt 861 : ℂ)⁻¹ • ketVec BS) =
-      (b2S : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • ketVec F)
+  · change liouvillian hWitness ((Real.sqrt 861 : ℂ)⁻¹ • vectorize 3 BS) =
+      (b2S : ℂ) • ((Real.sqrt 2 : ℂ)⁻¹ • vectorize 3 F)
     rw [map_smul, liouvillian_ketVec, commutators.2.2.2.2]
     ext ⟨i, j⟩
     fin_cases i <;> fin_cases j <;>
-      norm_num [qS, b2S.eq_1, ketVec, F.eq_1, Function.flip_def] <;>
+      norm_num [qS, b2S.eq_1, vectorize_eq_toLp_vec, F.eq_1, Function.flip_def] <;>
       field_simp <;> norm_num [← Complex.ofReal_pow, Real.sq_sqrt]
 
 private lemma operatorComplexity_witness :
     operatorComplexity hWitness rhoWitness (Real.pi / 2) = (1074 : ℝ) / 8281 := by
-  have h := spreadComplexity_three_step_pi_div_two (liouvillian hWitness) (ketVec rhoWitness)
+  have h := spreadComplexity_three_step_pi_div_two (liouvillian hWitness) (vectorize 3 rhoWitness)
     qD b1D b2D (by simp [finrank_euclideanSpace]) rhoWitness_seed qD_orthonormal
     (by dsimp [b1D]; positivity) (by dsimp [b2D]; positivity)
     qD_recurrence.1 qD_recurrence.2.1 qD_recurrence.2.2
