@@ -63,7 +63,8 @@ runs:
         else
           unset STRATALINT_LEAN_PRODUCER_DLL
         fi
-        make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+        source tools/scripts/lib/resource-observation-lib.sh
+        resource_observe_run_periodic make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
     - id: project_snapshot
       name: Prepare the project seed
       env:
