@@ -47,7 +47,10 @@ internal sealed class LocalPerceptionCHSHDocument : IScribeDocumentDefinition
                         "Relabeling either local outcome changes the signs of its mean and the corresponding correlators, preserving every product of the two means and the correlator. Thus the four means p, q, r, s may be taken in the interval from zero to one. The positivity inequalities give C00 at most one, C01 at most 1 - p + s, C10 at most 1 + q - r, and C11 at least q + s - 1. Multiplication by the nonnegative local means bounds the sum by G = pr + ps(1 - p + s) + qr(1 + q - r) + qs(1 - q - s).")),
                     Paragraph(Text(
                         "The polynomial identity 2 - G = ((1 - p)/2)(r + s² + (1 - s)²) + s(1 - p)² + ((1 - r)/2)(p + q² + (1 - q)²) + q(1 - r)² + (1 - q)(1 - s)(1 + q + s) expresses the difference as a sum of nonnegative terms. This proves the upper bound two. The state |00⟩⟨00| with σ_z at every setting has all means and correlators equal to one, so its termwise sum is two and attains the bound."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ray-2025-local-perception-chsh-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
