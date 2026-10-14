@@ -3117,8 +3117,15 @@ $$
 Consequently a width bound depending only on $h$ cannot uniformly
 coexist with native calls polynomial in $h+\log(T+1)$ over all $T$.
 The acquired coordinate in Theorem 12.2 is a current right-clock cell
-and its post-poll endpoint, not the original historical epoch or an
-omitted log. The final fixed output preserves only original parity.
+and its post-poll endpoint. For even $h\ge2$, $T\ge1$ and even
+$\Delta\ge2$, that endpoint determines both the entry clock $K$ and
+the actual post-entry Update count $U$ on the entire promised family
+if and only if
+$\Delta=2$ or $(h,T,\Delta)=(2,1,4)$.
+The pointwise recovery condition is (SLHC.12.24) below.
+Recovering these two coordinates does not imply recovery of the
+original historical epoch or an omitted log. The final fixed output
+preserves only original parity.
 
 Proof. ABT §§9.2–9.4 give identical current trees from all-$\beta$
 at lag zero and all-$\alpha$ at lag one on the same shape. For odd
@@ -3134,25 +3141,109 @@ the achieved worst-run Update count excludes the asserted uniform
 polynomial call bound. It does not exclude width $O(h)$ and polynomial
 calls on a restricted range such as $\log(T+1)=O(h)$.
 
-At the accepted poll the retained cell and its actual raw $\alpha/\beta$
-reply determine $\kappa(y)=B_j$ or $B_j+1$. For $\Delta=2$ this is
-already the entry clock $K$ and no Update intervenes. The existing
-right-clock law makes a finite tree's complete right-ray reply profile
-and its clock mutually recoverable: a clock $2d+e$ gives branch before
-$d$, the corresponding leaf at $d$, and absence afterwards. This is
-SLH §2's coordinate correspondence. Cell search alone gives only the
-cell, and for $\Delta>2$ the final endpoint does not recover the
-unretained number of Updates or the entry clock. The complete observer
-retains the cell only while needed and ultimately merges into its
-canonical parity Halt; it does not output the clock or a traversal log.
+At the accepted poll the retained cell and the counted $\alpha/\beta$
+response flag determine the endpoint $E=\kappa(y)=B_j$ or $B_j+1$;
+the raw reply itself is immediately discarded. The existing right-clock
+law makes a finite tree's complete right-ray reply profile and its clock
+mutually recoverable: a clock $2d+e$ gives branch before $d$, the
+corresponding leaf at $d$, and absence afterwards. This is SLH §2's
+coordinate correspondence.
+
+For the precise entry-clock boundary, the attained clock domain of
+Theorem 12.2 is
+$\mathcal K_{h,T}=[2,T+2h-1]\cap\mathbb Z$.
+Indeed the rightmost original leaf has depth $d\in\{1,\ldots,h-1\}$
+and label $e\in\{0,1\}$, giving $\kappa(u)=2d+e$.
+Every such depth is attained: start with a right comb of $d+1$ leaves
+and expand one of its left leaves to a full tree with $h-d$ leaves.
+Both rightmost labels are allowed independently. Thus $\kappa(u)$
+attains every integer from $2$ to $2h-1$, and adding every allowed
+$t\in\{0,\ldots,T\}$ gives exactly $\mathcal K_{h,T}$.
+
+Equation (SLHC.12.3) gives the endpoint map on this actual domain:
+for $j=\lfloor K/\Delta\rfloor$,
+
+$$
+E=f_\Delta(K)=\max(K,B_j),\qquad U=E-K,
+\qquad B_j=(j+1)\Delta-2.
+\tag{SLHC.12.23}
+$$
+
+The cell can be recovered from $E$ as $j=\lfloor E/\Delta\rfloor$,
+so different cells never share an endpoint. Within a cell the exact
+sets of possible entry clocks are
+
+$$
+\begin{aligned}
+f_\Delta^{-1}(\{B_j\})
+ &=\mathcal K_{h,T}\cap[j\Delta,B_j],\\
+f_\Delta^{-1}(\{B_j+1\})
+ &=\mathcal K_{h,T}\cap\{B_j+1\}.
+\end{aligned}
+\tag{SLHC.12.24}
+$$
+
+Intervals here contain integers only. At an attained endpoint, $K$
+is recoverable exactly when its displayed set is a singleton; the
+same condition is necessary and sufficient for recovering $U$, since
+$U=E-K$. In particular, the upper endpoint always gives $K=E,U=0$.
+At a lower endpoint the condition is precisely
+$\max(2,j\Delta)=\min(T+2h-1,B_j)$.
+Two distinct clocks in that interval give the same endpoint and
+different Update counts, and both are attained by promised histories.
+This concerns recovery from the endpoint, equivalently the cell and
+accepted reply, without a retained polling history.
+
+At $\Delta=2$ each lower interval has at most one integer, and
+$E=K,U=0$ on the entire domain. At $\Delta=4$, the first lower
+interval meets $\mathcal K_{h,T}$ only at $2$; the next contains both
+$4,5$ exactly when $T+2h-1\ge5$. Since $T+2h-1\ge4$, global
+recovery holds in this case exactly when $h=2,T=1$.
+For every even $\Delta\ge6$, the first lower interval already
+contains the attained clocks $2,3$, so global recovery fails.
+These cases prove the stated if and only if.
+
+For attained examples, at $h=2,T=1,\Delta=4$ the entire clock domain
+and its endpoints and Update counts are
+
+$$
+\begin{array}{c|ccc}
+K&2&3&4\\
+E&2&3&6\\
+U&0&0&2
+\end{array}
+$$
+
+The three columns are attained respectively by
+$(\langle\alpha,\alpha\rangle,0)$,
+$(\langle\beta,\beta\rangle,0)$ and
+$(\langle\beta,\beta\rangle,1)$.
+Thus the endpoint recovers both coordinates on this full promised
+domain, including at caps $v=2$ or $3$ under (SLHC.12.20).
+For comparison, at $h=2,T=2,\Delta=4$ take the same mixed original
+$u=\langle\alpha,\beta\rangle$ at entry lags $1,2$.
+Their entry clocks are $4,5$ and their Update counts are $2,1$;
+both reach $E=6$ and the same post-poll tree $\rho^3u$.
+This is an attained failure of endpoint recovery. Even in the first,
+globally recoverable example, the histories
+$(\langle\beta,\beta\rangle,0)$ and
+$(\langle\alpha,\alpha\rangle,1)$ have the same entry tree,
+$K=E=3$ and $U=0$, while their historical entry epochs differ.
+
+The complete observer retains the cell only while needed and
+ultimately merges into its canonical parity Halt; it does not output
+the clock, Update count or a traversal log.
 
 Even an acquired complete current tree and known original leaf count
 retain ABT's uniform adjacent-history doubletons. A new local Update
 counter would not separate their entry epochs. The trials determine
 a parity-correct representative on those fibers, not an authentic
-choice of the older history. At a mixed original the complete current
-tree has ABT's unique original history, but this controller's one-bit
-output is not that complete tree and does not provide its recovery.
+choice of the older history. At a mixed original, ABT makes the complete entry
+tree determine $(u,t)$ and the complete post-poll tree determine
+$(u,t+U)$. The latter need not determine $t$ without $U$, as the
+mixed-original collision above shows. This controller's one-bit
+output is neither of those complete trees and does not provide their
+recovery.
 A separately acquired, same-source historical record would retain
 ABT §9.3's own necessary and sufficient separation condition.
 
