@@ -730,6 +730,7 @@ jobs:
             D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelKilledPaths
             D5.S3.Quantum.Entanglement.FullySeparableExchangeObstruction
             D5.S3.Quantum.Hiai.GeometricTraceConvexity
+            D5.S3.Zeros.ObserverCriteria.StopLossWeakCurvature
           )
           make lean-report-scoped \
             LEAN_REPORT=.lake/build/stratalint/upgrade-compatibility-scoped-report.json \

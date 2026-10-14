@@ -153,13 +153,18 @@ def elabAdditiveCombination (tk : Syntax)
     match exp? with
     | some n =>
       if n.getNat = 1 then
-        `(tactic| (refine sub_eq_zero.mp
-          ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p)); case' a => $norm:tactic))
+        `(tactic| (
+          refine sub_eq_zero.mp ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p))
+          case' a => $norm:tactic))
       else
-        `(tactic| (refine sub_eq_zero.mp (eq_zero_of_pow_eq_zero (n := $n)
-          ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p))); case' a => $norm:tactic))
-    | _ => `(tactic| (refine sub_eq_zero.mp
-        ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p)); case' a => $norm:tactic))
+        `(tactic| (
+          refine sub_eq_zero.mp (eq_zero_of_pow_eq_zero (n := $n)
+            ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p)))
+          case' a => $norm:tactic))
+    | _ =>
+      `(tactic| (
+        refine sub_eq_zero.mp ((sub_eq_zero.mp ?a).trans (sub_eq_zero.mpr $p))
+        case' a => $norm:tactic))
 
 /--
 `additive_combination` attempts to simplify the target by creating a additive combination
