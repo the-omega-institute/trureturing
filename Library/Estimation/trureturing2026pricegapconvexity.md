@@ -3970,3 +3970,446 @@ PNT, full-height, inverse-scale and coefficient results. They establish
 no literature-priority claim, new generic theorem, Lean declaration or
 kernel verification. The original full-window signed comparison and RH
 remain unproved.
+
+## The preserved height and lag gains have a larger joint lower margin
+
+Keep CP1's original conditional source hypotheses, including
+$\Theta\in(1/2,1]$, the supplied $1-\Theta<\eta<1/2$, $d>0$,
+$0<\kappa<1$, and the original $0<a<5\kappa/8$. Every original
+full window, label, maximizing tie and outgoing weight is retained.
+Use the same $A=B+t$, $B=\log u$, $t=\log p$, strict actual core,
+and $M_X=X^{1/2-\eta}\log X$. This application consumes CR19,
+CR43--CR44 and HC1--HC3; it introduces no new height or prime-error
+supplier.
+
+### Combine both positive source terms before splitting by core size
+
+First fix any positive capacity coefficient $C$ with $aC<1$ for which
+one constant $H_C$ and a common source start supply
+$E(B)\le Ct+H_C\sqrt B$. CR18--CR19, at that same core and
+with their complete positive reserves retained, then give
+
+$$
+G_a(B)\ge
+\frac d2\sqrt B\log B\,X^{-\eta}
++(\chi_{p,u}-aC)\frac t{\sqrt B}-aH_C,
+\qquad \chi_{p,u}\longrightarrow1.
+\tag{JM1}
+$$
+
+The height and removal gain have not been counted as independent
+copies of the same contribution: JM1 is their single original CR19
+account, followed by the one-sided local error bound.
+Put $z=B/X$. Since $t\ge\ell_X=(d/8)X^{1-\eta}\log X$,
+division by $M_X$ yields
+
+$$
+\frac{G_a(B)}{M_X}\ge
+\frac d2\sqrt z\frac{\log B}{\log X}
++\frac d8\frac{\chi_{p,u}-aC}{\sqrt z}
+-\frac{aH_C}{M_X}.
+\tag{JM2}
+$$
+
+CR17 and $t\ge\ell_X$ imply $B/\ell_X\to\infty$ uniformly.
+Consequently $\log B/\log X\ge(1-\eta)/2$ beyond one common start.
+The second positive term in JM2 excludes $z\to0$ from any sequence
+with bounded normalized response, and the first excludes $z\to\infty$.
+On each fixed compact subinterval of $(0,\infty)$,
+$\log B/\log X=1+\log z/\log X\to1$ uniformly. Thus the ordinary
+arithmetic--geometric mean inequality, applied on that compact interval,
+gives the uniform lower limit $(d/2)\sqrt{1-aC}$.
+The two excluded tails have arbitrarily large lower bounds; they are
+not deleted source configurations. CR44 supplies this hypothesis for every fixed $C>8/5$. For each
+requested positive error, first choose such a fixed $C$ close enough
+to $8/5$ that $aC<1$ and the limiting margin loses less than half
+that error, and then choose one common source start. This gives
+
+$$
+\boxed{
+R_0:=\frac d2\sqrt{1-\frac85a},\qquad
+\forall\epsilon>0\quad
+G_a(B_i)\ge(R_0-\epsilon)M_X
+\quad\text{for every original label and tie eventually}.}
+\tag{JM3}
+$$
+
+The original restriction on $a$ makes the square root strictly positive.
+It also gives $R_0>(d/2)\sqrt{1-\kappa}>d(1-\kappa)/16$.
+There is no assumption $B\ge X$, no lag-to-square-root divergence
+requirement, and no additional $\Theta<1$ premise in JM1--JM3.
+The existing AM--GM inequality is reused; no new generic minimization
+theorem or attainability of the minimizing core ratio is claimed.
+
+All original weights are positive. HC2 and CQ5 therefore transport
+JM3, with an arbitrarily small fixed loss, to each original head for
+every admissible individual height assignment satisfying CR45 and
+to the same actual continuous integral:
+
+$$
+\mathcal G_{X,\mathcal T}\ge(R_0-\epsilon)M_XL_X,\qquad
+S_X(\boldsymbol T)\ge(R_0-\epsilon)M_XL_X,\qquad
+\mathcal J_X\ge(R_0-\epsilon)M_XL_X.
+\tag{JM4}
+$$
+
+These hold eventually on every qualifying full window, every allowed
+maximizing-tie assignment $\mathcal T$ and every admissible height
+assignment $\boldsymbol T$. The integral is CQ5's
+$\mathcal J_X=\int_{t_0}^{t_m}G_a(\mathcal B_X(t))\,dt$, distinct
+from the local layer work $J$ below. HC2's $O_a(L_X)$ and CQ5's
+$o(1)$ errors are below that scale. In particular, a same-source upper estimate with any fixed
+$C_0<R_0$ on a common cofinal sequence of original full windows
+would already contradict this RH-failure source. This pays a larger
+available lower margin; it does **not** supply that upper estimate,
+favorable windows, phase cancellation or the original signed target.
+Neither the target nor the RH completion criterion is replaced by
+the local bounds below.
+
+## Published uniform counts sharpen capacity at the actual lag scale
+
+Keep JM1--JM4's original source, all full windows and maximizing ties,
+and the original fixed $\eta,a$. For this additional application put
+$\Delta=1-\Theta>0$ and
+
+$$
+\omega=\frac{\Delta(1-\eta)}{\eta},\qquad
+\frac12<\omega\le\frac{17}{30}.
+\tag{LS1}
+$$
+
+When $\omega>17/30$, the stronger existing SI1--SI3 already give
+$D/t\to1$ and are reused instead. LS1 includes the boundary
+$\omega=17/30$ that SI1's strict condition does not cover. Write
+$D=K(A)-K(B)=B-K(B)$ and use the same complete actual layer
+measure $\mu$ on $[0,t)$, with work $J=\int r\,d\mu(r)$.
+The strict endpoint conventions and all simultaneous higher layers
+are unchanged. This local $J$ is distinct from CQ5's $\mathcal J_X$.
+
+### The source floor pays a fixed-exponent blocking allowance
+
+Fix $1/2<s<\omega$. SC2 and the unchanged source floor give
+
+$$
+\frac{B_{\max,X}^{s}}{\ell_X}
+\ll X^{s\eta/\Delta-(1-\eta)}
+(\log X)^{-1-s/\Delta}\longrightarrow0.
+\tag{LS2}
+$$
+
+In particular $(B^s+\sqrt B)/t\to0$ uniformly on every original
+label and tie. All auxiliary exponents and coefficients below are
+fixed before selecting one common source start.
+
+The [Iwaniec published count](../Scale/iwaniec1982bruntitchmarsh.md),
+Theorem 14 and the final paragraph on printed p.121, supplies, for
+every fixed $C>4/(1+s)$, an all-centre bound
+$\pi(x+x^s)-\pi(x)\le Cx^s/\log x$ beyond one start.
+For any fixed $c>4/(1+s)$ choose $4/(1+s)<C<c$.
+First-layer activations in $[B,B+z)$ still come from actual primes
+in $(B-1,B+z)$. Starting at $x_0=B-1$, take
+$x_{j+1}=x_j+x_j^s$ until these consecutive intervals cover that
+actual prefix. Since $0\le z\le t=o(B)$, all block endpoints are
+$B(1+o_X(1))$, and the last overhang is $O(B^s)$ uniformly in $z$.
+In each block the logarithmic prime weights multiply the count by
+at most $\log(x_j+x_j^s)$; their ratio to $\log x_j$ tends to one.
+The fixed slack from $C$ to $c$ absorbs that ratio.
+
+Summing the blocks and adding only CR40's already supplied complete
+higher-layer mass gives
+
+$$
+\boxed{\mu([0,z))\le cz+h_{s,c}(B),\qquad
+h_{s,c}(B)=O_{s,c}(B^s)+O(\sqrt B)=o_X(t),
+\quad 0\le z\le t.}
+\tag{LS3}
+$$
+
+The zero-length prefix is trivial. All incomplete blocks are paid,
+and no centre, original prime tag, tie or exceptional interval is
+discarded. This uses a stronger published count, rather than
+repeating the existing sieve proof. The published Section 6 states
+its results without proofs; that external proof is not independently
+audited here. For $s<1$ its $4/(1+s)$ coefficient is strictly smaller
+than the $2/s$ supplied by the recorded uniform Ramaré--Schlage-Puchta
+bound at the same blocking scale.
+
+### Consume the same two-cost calculation and BHP terminal envelope
+
+CR41 and the existing finite layer integration before CR42 now give
+
+$$
+\frac{(D-h_{s,c}(B))_+^2}{c}+(t-D)^2
+\le\mathfrak r_Bt^2,\qquad \mathfrak r_B\to1.
+$$
+
+The algebra only requires a positive capacity coefficient, not CR40's
+old $c>4$ supplier restriction. For each requested error, first fix
+$s<\omega$ sufficiently close to $\omega$, then fix
+$c>4/(1+s)$ sufficiently close to that threshold, and finally take
+one common start for the vanishing errors. The existing upper root
+$2c/(c+1)$ therefore yields
+
+$$
+\boxed{\frac Dt\le\frac8{5+\omega}+o_X(1).}
+\tag{LS4}
+$$
+
+This is uniformly below $8/5$ throughout LS1. If
+$21/40\le\omega\le17/30$, SC2 also pays ST1's BHP terminal
+allowance $e_B/t\to0$, including equality at $21/40$ by its negative
+logarithmic factor. LS3 and that existing lower terminal envelope
+constrain the same $\mu$. Consume ST1--ST2's already derived root
+
+$$
+\xi(c,b)=\frac{c+\sqrt{c(1-b)(c-b)}}{c+1-b},
+\qquad c>b,\quad0<b<1.
+$$
+
+The same fixed-coefficient/common-start order gives
+
+$$
+\boxed{\frac Dt\le
+\xi\!\left(\frac4{1+\omega},\frac9{100}\right)+o_X(1).}
+\tag{LS5}
+$$
+
+At $\omega=21/40$ its upper coefficient is approximately
+$1.43839661$, below ST3's $1.583011267$. These are formula values,
+not arithmetic attainability or sharpness claims.
+
+### A near-unit two-sided stock bound above the strict six-elevenths cut
+
+If $6/11<\omega\le17/30$, fix $s=6/11+\varepsilon<\omega$,
+with one sufficiently small positive fixed $\varepsilon$ allowed by
+the [Lou--Yao published Theorem 1](../Scale/louyao1992shortintervals.md),
+equation (1.14), printed p.3. Fix also $c>1.031$ and
+$0<b<0.969$. Backward blocks $x_{j+1}=x_j-x_j^s$ from the actual
+prefix's right endpoint cover $(B-1,B+z)$, at an overhang cost
+$O(B^s)$. Their upper counts and each prime's own logarithmic weight
+give $\mu([0,z))\le cz+h_B$, with
+$h_B=O_{s,c}(B^s)+O(\sqrt B)$.
+
+For the terminal part use only primes in $(B+z,A-1]$. Each such
+prime has its first-layer activation strictly inside $(B+z,A)$.
+Starting at $A-1$, retain the complete backward blocks lying in
+that prime interval; their uncovered length is $O(B^s)$, including
+the empty or shorter-than-one-block case. The fixed slack below
+$0.969$ absorbs the ratio of the smallest logarithmic prime weight
+to the block's $\log x$. Consequently the same complete measure has
+
+$$
+\mu([z,t))\ge b(t-z)-e_B,\qquad
+e_B=O_{s,b}(1+B^s)=o_X(t),\quad0\le z\le t.
+$$
+
+Higher layers are nonnegative for this lower bound and remain
+explicitly paid by the existing supplier in the upper bound.
+Neither envelope substitutes a separately optimized measure.
+Apply ST1--ST2 with these two allowances and then choose fixed
+$c\downarrow1.031$, $b\uparrow0.969$ to the requested precision.
+The same all-tie common-start conclusion is
+
+$$
+\boxed{0.969-o_X(1)\le\frac Dt
+\le q_{\rm LY}+o_X(1),\qquad
+q_{\rm LY}=\xi(1.031,0.969)\approx1.012725955.}
+\tag{LS6}
+$$
+
+The strict $\omega>6/11$ condition is retained: a moving theorem
+exponent or the unproved endpoint value $s=6/11$ is not used.
+The full external analytic proof and its numerical computations
+are not independently re-audited.
+
+For $11/20<\omega\le17/30$, the later
+[Lou--Yao Theorem 3](../Scale/louyao1993shortintervals.md), printed
+p.25, equations (1.20)--(1.21), supplies the stronger constants
+$b_{93}=0.99$ and $c_{93}=1.01$ for every fixed
+$11/20<s<\omega$. Reuse the preceding backward-block transfer and
+same-measure competitor root with these constants, without repeating
+its proof. Choosing fixed $b<b_{93}$ and $c>c_{93}$ to each requested
+precision gives
+
+$$
+0.99-o_X(1)\le\frac Dt
+\le q_{93}+o_X(1),\qquad
+q_{93}=\xi(1.01,0.99)\approx1.004130069.
+\tag{LS6a}
+$$
+
+The printed constants and strict $\omega>11/20$ endpoint
+are retained. The narrower later statement supplements LS6; it does
+not replace LS6 on $6/11<\omega\le11/20$.
+
+### Transfer the improved stock to the original local account and margin
+
+The selected published inputs supply the following usable coefficient;
+this is not a best-known or optimal-constant assertion:
+
+$$
+q(\omega)=
+\begin{cases}
+8/(5+\omega),&1/2<\omega<21/40,\\
+\xi(4/(1+\omega),9/100),&21/40\le\omega\le6/11,\\
+q_{\rm LY},&6/11<\omega\le11/20,\\
+q_{93},&11/20<\omega\le17/30.
+\end{cases}
+$$
+
+Reuse CR44's exact identities
+$E(B)=D+Q(B)$ and
+$\psi(A)-\psi(B)-t=D-t+Q(B)-Q(A)$, with the same
+$Q(x)=O(\sqrt x)$ and $A/B\to1$. For every fixed positive error,
+one common start gives
+
+$$
+\begin{aligned}
+E(B_i)&\le(q(\omega)+\epsilon)t_i+H_Q\sqrt{B_i},\\
+\sum_{i<m}\delta_i
+\frac{\psi(A_i)-\psi(B_i)-t_i}{\sqrt{B_i}}
+&\le(q(\omega)-1+\epsilon)V_X^{\rm lag}+O(L_X).
+\end{aligned}
+\tag{LS7}
+$$
+
+In the Lou--Yao region the lower side of LS6 also pays the absolute
+local error with coefficient $0.031+\epsilon$, plus $O(\sqrt B)$.
+The later LS6a input reduces this allowance to $0.01+\epsilon$
+in its stated narrower region. Both are fixed small relative
+allowances, not $o(t)$, and no estimate
+$V_X^{\rm lag}=O(M_XL_X)$ for the entire source is inferred.
+
+LS7 supplies JM1's capacity hypothesis for every fixed
+$C>q(\omega)$ with $aC<1$. Fix that $C$ to the requested precision
+before taking one common source start. JM1--JM4 then give the
+further actual-source margin
+
+$$
+\boxed{R_\omega=\frac d2\sqrt{1-aq(\omega)}>R_0,}
+\tag{LS8}
+$$
+
+in the same uniform $R_\omega-\epsilon$ sense, on every original
+full window, every tie and every admissible individual height
+assignment. The original $a<5\kappa/8$ also makes
+$\kappa-aq(\omega)>0$; inserting LS7 into CR46's existing joint
+compensation account improves its lag coefficient to
+$-(\kappa-aq(\omega)-\epsilon)$ with its existing $O_a(L_X)$
+allowance. That same gain is not counted again as a separate reserve.
+
+The full future average in HC3 remains. An upper bound for $E(B)$
+gives a lower bound for $-aE(B)$, so these local improvements
+strengthen the lower margin and paid compensation, rather than
+provide the missing upper estimate for $\mathcal J_X$.
+All original weights, terminal labels, parameters, masks and ties
+are retained. These are additional project applications of existing
+published counts, finite layer integration and competitor roots;
+no new generic theorem, Lean declaration, kernel verification,
+attainability or literature-originality claim is made. The original
+full signed upper estimate, complementary spectral contribution
+and RH remain unproved.
+
+## Compact localization improves the margin without a subunit zero supremum
+
+Keep JM1--JM4's complete original conditional source, including
+$\Theta=1$ when allowed. This application does not assert LS1 on the
+whole source. Instead put $\tau=1-\eta>1/2$ and use the displayed
+scalar coefficient $q(\tau)$ when $\tau\le17/30$. Define
+
+$$
+Q_\eta=
+\begin{cases}
+q(1-\eta),&1-\eta\le17/30,\\
+1,&1-\eta>17/30.
+\end{cases}
+\tag{JM5}
+$$
+
+Here $q$ means LS4--LS6a's explicit piecewise formula. The
+$q(\omega)$ **global stock assertion** still requires LS1; only
+its scalar formula and the already matched count suppliers are used
+below. No global $D/t\le Q_\eta+o(1)$ claim is made outside that
+scope.
+
+### The baseline coercive bound supplies the required localization
+
+Fix any finite level $K$. JM2 with a fixed $C>8/5$, $aC<1$,
+and its uniform positive coefficients implies that every original
+label satisfying $G_a(B)/M_X\le K$ has
+$z=B/X$ in one fixed compact interval $[r_K,R_K]\subset(0,\infty)$
+beyond a common source start. Both tails have lower bounds exceeding
+$K$. This is a necessary condition on a bounded response, not an
+assumption that every core is comparable to $X$ or a deletion of
+source configurations.
+
+On any such fixed compact interval the original floor itself gives
+
+$$
+\sup_{r_K\le B/X\le R_K}\frac{B^s}{t}
+\ll_{K,s}\frac{X^{s-(1-\eta)}}{\log X}\longrightarrow0
+\qquad(1/2<s\le1-\eta).
+\tag{JM6}
+$$
+
+The equality case in this scale calculation is paid by $1/\log X$.
+The Iwaniec transfer LS3 therefore applies there with the fixed
+exponent $s=1-\eta$. The BHP terminal allowance is negligible when
+$1-\eta\ge21/40$, including equality. For either Lou--Yao input,
+choose one fixed theorem exponent strictly above its stated lower
+cut and at most $1-\eta$, respecting the published upper cut.
+These choices are available exactly in the strict regions of
+the scalar formula. All block costs, strict endpoints and higher
+layers stay in the preceding actual-source transfers.
+
+If $1-\eta>17/30$, fix
+$17/30<r<\min(1-\eta,99/100)$. JM6 gives $t/B^r\to\infty$
+on the compact interval. Reuse SI2's partition into admitted
+Guth--Maynard intervals and its complete endpoint correction to
+obtain $D/t\to1$ there. That partition only requires this length
+condition and CR17's $t/B\to0$; SC2 and SI1 were its previous
+global suppliers, not hypotheses of the published count itself.
+The strict $1-\eta>17/30$ cut is retained.
+
+Thus for every fixed compact interval, every positive error has a
+common start with $E(B)\le(Q_\eta+\epsilon)t+H_Q\sqrt B$ for its
+original labels and ties. This extends a **localized** consumer;
+it does not extend SI1's global statement to $\Theta=1$.
+
+### A bounded-response contradiction transports the stronger lower margin
+
+All branches in JM5 have $Q_\eta<8/5$. Fix a positive requested
+error and a finite $K$ larger than the proposed margin. If a cofinal
+sequence of original labels violated the proposed uniform lower
+bound, its normalized responses would be bounded above by $K$.
+JM2 puts that sequence in $[r_K,R_K]$. First choose a fixed
+$C>Q_\eta$, sufficiently close to $Q_\eta$ that $aC<1$ and its
+margin loss is below the requested precision; then use the preceding
+localized estimate at one common start. JM1--JM2, with
+$\log B/\log X\to1$ uniformly on this compact interval, and the
+same existing AM--GM inequality contradict that violating sequence.
+Consequently
+
+$$
+\boxed{R_\eta=\frac d2\sqrt{1-aQ_\eta}>R_0,\qquad
+G_a(B_i)\ge(R_\eta-\epsilon)M_X}
+\tag{JM7}
+$$
+
+eventually for every original label and tie, without a $\Theta<1$
+premise. Positivity of all original weights and the unchanged
+HC2/CQ5 transfers give the same lower bound, multiplied by $L_X$,
+for $\mathcal G_{X,\mathcal T}$, every admissible
+$S_X(\boldsymbol T)$ and $\mathcal J_X$ on every original full
+window. No favorable subsequence of windows is constructed.
+
+For example, when the original $\eta<13/30$, the reused uniform
+interval asymptotic gives $Q_\eta=1$ and hence
+$R_\eta=(d/2)\sqrt{1-a}$, including $\Theta=1$ under the original
+conditional hypotheses. At $\eta=13/30$ the asymptotic branch is
+not asserted; the strictly admitted Lou--Yao branch remains.
+All strict supplier cuts and fixed-precision common starts are kept.
+The improvement is in the lower margin; the original signed upper
+estimate on a cofinal family and RH remain unproved. No new generic
+compactness, minimization, prime theorem or Lean declaration is
+introduced, and no literature-originality or kernel claim is made.
