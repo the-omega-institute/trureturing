@@ -6,6 +6,7 @@
    utility: none
    digest: Quesne's Kepler-Coulomb coefficient system has positive closed forms. -/
 
+import D5.S3.Constants.NewtonHankelRealRootCriterion
 import Mathlib.Tactic
 
 namespace D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
@@ -385,12 +386,11 @@ private theorem constants_positive {m : ℕ} (hm : 2 ≤ m) :
 
 private theorem shape_eval_pos {p : Polynomial ℝ} {n : ℕ} {L x : ℝ}
     (hp : Shape p n L) (hx : 0 ≤ x) : 0 < p.eval x := by
-  rw [coeff_expansion hp.1, Polynomial.eval_finsetSum]
-  simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
-  apply Finset.sum_pos'
-  · intro i _
-    exact mul_nonneg (shape_nonneg hp i) (pow_nonneg hx i)
-  · exact ⟨0, by simp, by simpa using hp.2.2 0 (Nat.zero_le _)⟩
+  apply D5.S3.Constants.NewtonHankelRealRootCriterion.eval_pos_of_positive_coefficients
+    (d := n) ?_ hx
+  exact ⟨Polynomial.natDegree_eq_of_le_of_coeff_ne_zero
+    (Polynomial.natDegree_le_iff_coeff_eq_zero.mpr hp.1)
+    (ne_of_gt (hp.2.2 n le_rfl)), hp.2.2⟩
 
 private theorem D_eval_pos (m : ℕ) {x : ℝ} (hx : 0 ≤ x) : 0 < (D m).eval x :=
   shape_eval_pos (D_shape m) hx
