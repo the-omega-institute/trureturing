@@ -777,3 +777,1169 @@ $$
 这些结论限于已声明的有限占位概率源及其数学消元。普通证明承担各全称命题；所列具体配置与有理数实例说明其适用方式和失败边界，不替代全称证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 67. 四角关系的规范椭圆与边缘比较
+
+**约定 C-67.1（五态、底面与两种比较）。** 沿用 C-59.4、C-60.2、C-61.3 的同一五模式次序
+
+$$
+\Sigma=(0,1,2,3,13)
+=\bigl(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]\bigr),
+$$
+
+对应占位词 $(000,100,010,001,101)$。设 $p_s>0$ 且 $\sum_s p_s=1$，定义
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,
+\qquad r=1-Z,\qquad\kappa=p_{13}.
+$$
+
+这里 $Y$ 始终是右端占位均值；经典 Yule's Y 另记作 $\rho_*$，不以同一个字母表示两个对象。已有的概率反演为
+
+$$
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+\tag{C67.1}
+$$
+
+底面表的行索引是左端，列索引是右端，各按 $0,1$ 排列：
+
+$$
+H=\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix},
+\qquad
+Q=\frac Hr
+=\mathcal L(B_L,B_R\mid B_C=0).
+\tag{C67.2}
+$$
+
+$H$ 的总质量是 $r$。复用 C-59.4 的四角残差，直接代入亦得
+
+$$
+\det H=(r-X-Y+\kappa)\kappa-(X-\kappa)(Y-\kappa)
+=r\kappa-XY.
+\tag{C67.3}
+$$
+
+“正矩阵”在以下各章只指四个元素严格正，不指对称或正定；$H$ 本身不是协方差矩阵。
+
+对任意这样的矩阵 $H=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$，另行声明比较规则
+
+$$
+H\sim\widetilde H
+\quad\Longleftrightarrow\quad
+\widetilde H=D_LHD_R,
+\qquad D_L,D_R\text{ 为正对角矩阵}.
+\tag{C67.4}
+$$
+
+允许总质量变化；若要概率表，可在重加权后再归一化。定义
+
+$$
+\Omega(H)=\frac{ad}{bc},\qquad J(H)=\log\Omega(H),
+\qquad\eta(H)=\frac18J(H).
+\tag{C67.5}
+$$
+
+式 (C67.4) 消去两端各自的权重偏好，一般改变边缘，不能作为固定 $(X,Y,Z)$ 纤维内的移动。对 C-60.2 的实际外部响应 $H_i$，局部底面表为
+
+$$
+H=\mathcal Z^{-1}\operatorname{diag}(1,\lambda_L)
+H_i\operatorname{diag}(1,\lambda_R).
+\tag{C67.6}
+$$
+
+因此 C-61.2 给出的同一个外部四角比恰是式 (C67.5) 的输入，$J(H)=\mathscr J_i$。这项对应固定外部时成立，不要求局部边缘固定。
+
+**命题 C-67.2（外部四角比的带标记、定面积椭圆表示）。** 对式 (C67.2) 的底面表，或任意四格正的边界响应，先取其正行列等价类中总质量一、两边缘均为 $(1/2,1/2)$ 的代表 $Q_*(H)$，再取这个代表的 $\pm1$ 协方差椭圆并将面积归一化为 $\pi$。所得椭圆在固定标记方向
+
+$$
+e_+=\frac1{\sqrt2}(1,1),\qquad
+ e_-=\frac1{\sqrt2}(1,-1)
+$$
+
+上的半轴分别为 $e^\eta,e^{-\eta}$。以 $z_+,z_-$ 表示这两个方向的坐标，其方程是
+
+$$
+e^{-2\eta}z_+^2+e^{2\eta}z_-^2=1.
+\tag{C67.7}
+$$
+
+这个带标记椭圆完整确定式 (C67.4) 的等价类。对于五态底面，它成为圆当且仅当两端在事件 $B_C=0$ 下条件独立。
+
+证明中的经典中间结果取自 Dirk Hasenclever、Markus Scholz，*Comparing measures of association in 2x2 probability tables*，[arXiv:1302.6161v1](https://arxiv.org/abs/1302.6161v1)，Proposition 1、§3.1 及 Proposition 4：正行列轨道由 odds ratio 分类，轨道有唯一平衡代表，Yule's Y 在该代表上等于 Pearson 相关。以下给出这些中间步骤在本底面表示中的全部参数计算；不另把经典分类或 Yule 公式立为新结论。
+
+首先，若 $D_L=\operatorname{diag}(l_0,l_1)$、$D_R=\operatorname{diag}(r_0,r_1)$，交叉乘积的分子和分母都乘 $l_0l_1r_0r_1$，所以 $\Omega$ 不变。反之，若 $\Omega(\widetilde H)=\Omega(H)$，令
+
+$$
+t_{ij}=\frac{\widetilde H_{ij}}{H_{ij}}>0.
+$$
+
+交叉比相等给 $t_{00}t_{11}=t_{01}t_{10}$。取
+
+$$
+D_L=\operatorname{diag}(t_{00},t_{10}),\qquad
+D_R=\operatorname{diag}(1,t_{01}/t_{00}),
+$$
+
+则 $D_LHD_R$ 的前三格等于 $\widetilde H$，第四格由该乘法等式也相等。故交叉比相等正好等价于正行列等价。
+
+总质量一且两个边缘均平衡的正表必为
+
+$$
+\begin{pmatrix}x&1/2-x\\1/2-x&x\end{pmatrix},\qquad0<x<1/2.
+$$
+
+其比值比为 $[x/(1/2-x)]^2$，故唯一解是
+
+$$
+x=\frac{\sqrt\Omega}{2(1+\sqrt\Omega)}.
+$$
+
+由已证轨道分类，它确在 $H$ 的轨道中。因此
+
+$$
+Q_*(H)=\frac14
+\begin{pmatrix}1+\rho_*&1-\rho_*\\1-\rho_*&1+\rho_*\end{pmatrix},
+\qquad
+\rho_*=\frac{\sqrt{ad}-\sqrt{bc}}{\sqrt{ad}+\sqrt{bc}}
+=\frac{\sqrt\Omega-1}{\sqrt\Omega+1}
+=\tanh\frac J4.
+\tag{C67.8}
+$$
+
+四格正给 $-1<\rho_*<1$。按 $s_0=1,s_1=-1$ 编码两端，平衡边缘给均值零、方差一；对角格的乘积编码为一，非对角格为负一，故交叉矩为 $\rho_*$。协方差矩阵于是为
+
+$$
+\Sigma_*=\begin{pmatrix}1&\rho_*\\\rho_*&1\end{pmatrix}.
+$$
+
+它的带标记特征向量为 $e_+,e_-$，相应特征值 $1+\rho_*,1-\rho_*$ 都正。协方差椭圆具体定义为 $\Sigma_*^{1/2}$ 对欧氏单位圆的像，原半轴为 $\sqrt{1+\rho_*}$、$\sqrt{1-\rho_*}$，面积为 $\pi\sqrt{1-\rho_*^2}$。把全部坐标除以 $(1-\rho_*^2)^{1/4}$，面积变为 $\pi$，带标记半轴成为
+
+$$
+\left(\frac{1+\rho_*}{1-\rho_*}\right)^{1/4},\qquad
+\left(\frac{1-\rho_*}{1+\rho_*}\right)^{1/4}.
+$$
+
+由式 (C67.8)，$(1+\rho_*)/(1-\rho_*)=\sqrt\Omega=e^{J/2}$，所以两半轴正是 $e^{J/8},e^{-J/8}$。这证明式 (C67.7)。带标记半轴恢复 $\eta$，继而恢复 $\Omega=e^{8\eta}$ 和整个轨道。
+
+最后，$\eta=0$ 等价于 $ad=bc$，即正表秩一。正表秩一时可写为两个正向量的外积，归一化后是两个概率向量的外积；反过来独立概率表显然秩一。用于 $Q=H/r$，这正是底面条件独立。结合式 (C67.3)，
+
+$$
+\operatorname{sgn}\eta=\operatorname{sgn}(\det H)
+=\operatorname{sgn}(r\kappa-XY).
+$$
+
+正号表示沿 $e_+$ 伸长，负号表示沿 $e_-$ 伸长。若允许旋转并忘掉方向标记，$\eta$ 与 $-\eta$ 给同一个无标记形状，只剩轴比 $e^{2|\eta|}$，不能再区分两种关联符号。证毕。
+
+**命题 C-67.3（Yule、条件 Pearson 与无条件 Pearson 的具体区分）。** 式 (C67.8) 的 $\rho_*$ 是 Yule's Y；Yule's Q 则为
+
+$$
+Q_{\rm Yule}=\frac{\Omega-1}{\Omega+1}=\tanh\frac J2.
+\tag{C67.9}
+$$
+
+对任意正表归一化得到的二元律，Pearson 系数是
+
+$$
+\operatorname{Corr}(B_L,B_R)
+=\frac{ad-bc}{\sqrt{(a+b)(c+d)(a+c)(b+d)}}.
+\tag{C67.10}
+$$
+
+它在平衡代表 $Q_*(H)$ 上等于 $\rho_*$，一般表上则不同；“在平衡代表上相等”不表示“只有平衡代表才能相等”。此外，五态律的底面条件 Pearson 和全五态的无条件 Pearson 也不同。
+
+证明。式 (C67.9) 是上述 Hasenclever–Scholz §3.1 的经典命名，代入 $\Omega=e^J$ 即给双曲正切式。令 $T=a+b+c+d$，二元律的两个占位均值为 $(c+d)/T$、$(b+d)/T$，交叉矩为 $d/T$。其协方差是 $(ad-bc)/T^2$，两个方差的乘积是 $(a+b)(c+d)(a+c)(b+d)/T^4$，所以式 (C67.10) 成立。将式 (C67.8) 代入即得 $\rho_*$。
+
+具体取偏置表
+
+$$
+Q_{\rm bias}=\frac1{16}\begin{pmatrix}9&1\\3&3\end{pmatrix}.
+$$
+
+它的两个占位均值为 $3/8,1/4$，协方差为 $3/32$，方差分别为 $15/64,3/16$，故
+
+$$
+\Omega=9,\qquad\rho_*=\frac12,\qquad
+\operatorname{Corr}_{Q_{\rm bias}}(B_L,B_R)
+=\frac{24}{\sqrt{10\cdot6\cdot12\cdot4}}
+=\frac1{\sqrt5}\ne\frac12.
+\tag{C67.11}
+$$
+
+此表可作为任意 $0<Z<1$ 下底面质量 $r=1-Z$ 的条件律，故确属当前五态模型的可用实例。另一方面，取
+
+$$
+Q_{\rm ind}=\frac1{15}\begin{pmatrix}2&3\\4&6\end{pmatrix}
+=\begin{pmatrix}1/3\\2/3\end{pmatrix}
+\begin{pmatrix}2/5&3/5\end{pmatrix}.
+$$
+
+两边缘均不平衡，但 $ad=bc$，所以 $\rho_*=0$ 且 Pearson 也为零。这已排除上述“只有”读法。
+
+最后取五态均匀律 $p_s=1/5$。此时 $r=4/5$、$X=Y=2/5$、$\kappa=1/5$，底面条件表四格均为 $1/4$，所以 $\eta=\rho_*=0$ 且条件 Pearson 为零。全五态律中 $B_LB_R$ 的均值是 $1/5$，协方差为 $1/5-4/25=1/25$，两个方差均为 $6/25$，无条件 Pearson 因而为 $1/6$。这就是 C-59.4 的 $\kappa-XY=\Delta+Z\kappa$ 与 $\Delta/r^2$ 的实际区别。证毕。
+
+## 68. 反向圆周、固定纤维与黄金参数
+
+**命题 C-68.1（四角椭圆的两个反向圆周分量）。** 在命题 C-67.2 的标记主轴平面中，以复数表示坐标 $z=z_++iz_-$。同一规范椭圆有参数式
+
+$$
+z(t)=e^\eta\cos t+i e^{-\eta}\sin t
+=\cosh\eta\,e^{it}+\sinh\eta\,e^{-it},
+\qquad t\in\mathbb R/2\pi\mathbb Z.
+\tag{C68.1}
+$$
+
+两个圆周分量具有相同频率、相反旋向，椭圆面积恒为 $\pi$。这个几何参数 $t$ 不是五态振幅的相位坐标。
+
+证明。展开右边，其实部系数是 $\cosh\eta+\sinh\eta=e^\eta$，虚部系数是 $\cosh\eta-\sinh\eta=e^{-\eta}$，所以等于左边。若 $\eta<0$，第二个实系数为负，可写成 $|\sinh\eta|e^{-it+i\pi}$；这只是该圆周分量多一个 $\pi$ 相位。若 $\eta=0$，第二分量为零，第一分量为单位圆。椭圆的两半轴之积为
+
+$$
+(\cosh\eta+\sinh\eta)(\cosh\eta-\sinh\eta)
+=\cosh^2\eta-\sinh^2\eta=1,
+$$
+
+故面积为 $\pi$。这里输入只有四角比和选择的平面标记，既没有指定五个复振幅，也没有把此处的两个圆周分量认作两个概率事件。证毕。
+
+**命题 C-68.2（固定可见纤维上的椭圆反演）。** 固定
+
+$$
+0<Z<1,\qquad r=1-Z,\qquad0<X<r,\quad0<Y<r.
+$$
+
+则五态全正的充要区间为
+
+$$
+\kappa_-<\kappa<\kappa_+,\qquad
+\kappa_-=max(0,X+Y-r),\quad\kappa_+=\min(X,Y).
+\tag{C68.2}
+$$
+
+在这个开区间上，带符号椭圆参数
+
+$$
+\eta(\kappa)=\frac18\log
+\frac{(r-X-Y+\kappa)\kappa}{(X-\kappa)(Y-\kappa)}
+\tag{C68.3}
+$$
+
+是到 $\mathbb R$ 的严格递增光滑双射，且
+
+$$
+\frac{d\eta}{d\kappa}=\frac{\mathcal I(\kappa)}8>0,
+\qquad
+\mathcal I(\kappa)=\frac1{p_0}+\frac1{p_1}
++\frac1{p_3}+\frac1{p_{13}}.
+\tag{C68.4}
+$$
+
+因此，已知 $(X,Y,Z)$ 和带标记椭圆即可恢复全部五概率；没有给定可见均值时，一个椭圆不能恢复五律。
+
+证明。这是 C-61.3 的完整纤维及四角坐标在 $J=8\eta$ 下的应用。由式 (C67.1)，四底角正恰要求 $\kappa>0$、$\kappa>X+Y-r$、$\kappa<X$、$\kappa<Y$，即式 (C68.2)。因为 $X,Y<r$，有 $X+Y-r<X,Y$，再用 $X,Y>0$ 得开区间非空。
+
+沿该纤维，四底角导数依次为 $1,-1,-1,1$。逐项对式 (C68.3) 求导，两个分母项的负号与概率导数的负号抵消，得到式 (C68.4)。趋近下端时，$p_0p_{13}\to0$，而 $p_1,p_3$ 各有正极限：若 $\kappa_-=0$，二者极限为 $X,Y$；若 $\kappa_-=X+Y-r$，极限为 $r-Y,r-X$。故 $\eta\to-\infty$，包括 $X+Y=r$ 时两个分子同时趋零的情形。趋近上端时，$p_1p_3\to0$，而 $p_{13}>0$、$p_0$ 的极限为 $r-\max(X,Y)>0$，所以 $\eta\to+\infty$，包括 $X=Y$ 的双零分母情形。连续性、严格单调性和介值定理给双射，导数非零给光滑局部反演，故反函数在全实轴上光滑。
+
+由反解 $\kappa$ 代回式 (C67.1) 恢复五律。若不固定可见均值，正行列重加权可改变底面边缘而保留同一个 $\eta$；还可改变底面总质量 $r$，同时补中位概率 $Z=1-r$。这两种变化均不由椭圆决定。对实际正活动环，反解后仍须满足 C-60.2 的来源关系；抽象纤维的双射没有断言任意外部矩阵和任意均值可由同一个指定环同时实现。证毕。
+
+**命题 C-68.3（单位剪切与规范椭圆的黄金参数对应）。** 令 $\varphi=(1+\sqrt5)/2$。单位剪切
+
+$$
+T=\begin{pmatrix}1&1\\0&1\end{pmatrix}
+$$
+
+把欧氏单位圆映为半轴 $\varphi,\varphi^{-1}$ 的椭圆。将其长轴对应到规范椭圆的 $e_+$ 标记时，该形状对应
+
+$$
+\eta=\log\varphi,\qquad
+\rho_*=\frac{\sqrt5}{3},\qquad\Omega=\varphi^8.
+\tag{C68.5}
+$$
+
+证明。线性像的半轴是奇异值。$T^{\mathsf T}T=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)$ 的特征多项式是 $u^2-3u+1$，两个根为 $(3\pm\sqrt5)/2=\varphi^{\pm2}$。平方根给 $\varphi,\varphi^{-1}$；行列式一也给像的面积 $\pi$。这是一个局部欧氏计算，不需要额外格点或概率来源。
+
+用式 (C67.7) 对应 $e^\eta=\varphi$，得到 $\eta=\log\varphi$、$\Omega=e^{8\eta}$。又由 $\varphi-\varphi^{-1}=1$ 和 $\varphi+\varphi^{-1}=\sqrt5$，有
+
+$$
+\varphi^2-\varphi^{-2}=\sqrt5,\qquad
+\varphi^2+\varphi^{-2}=3.
+$$
+
+所以 $\rho_*=\tanh(2\log\varphi)=(\varphi^2-\varphi^{-2})/(\varphi^2+\varphi^{-2})=\sqrt5/3$。反之用这个 $\rho_*$ 构造式 (C67.8) 的平衡表，再任选 $0<r<1$，取底面质量 $rQ_*$、中位质量 $1-r$，即有全正五律实现此形状。
+
+若把长轴对应到 $e_-$，则应取负的 $\eta$、负的 $\rho_*$ 和倒数 $\Omega$；无标记形状本身不选择符号。这个对应只说某一种四角关联具有黄金半轴，不说任意 FIB 五律必有该值，也不把剪切的坐标基、概率端点标签与某个格点来源自动识别。证毕。
+
+## 69. 有限边界权的拼接与并联椭圆
+
+**定义 C-69.1（含条件填充的有限响应）。** 取两个不同的二元端点 $a,b\in\{0,1\}$ 和一组有限内部变量 $u\in\mathcal U$。给定非负权 $f(a,u,b)$，它可以是活动与兼容因子的乘积，允许某些内部配置权为零。定义
+
+$$
+H_f(a,b)=\sum_{u\in\mathcal U}f(a,u,b).
+\tag{C69.1}
+$$
+
+以下要求四个条件总权均严格正，而非要求每个内部配置都正。外端活动先从 $f$ 中取出；要形成完整权时，分别乘一次 $\alpha_a>0$、$\gamma_b>0$。C-60.1 的 $H_i$ 和 C-64.1 的两端图块都是此定义的实际实例。C-60.2 证明外部路径任意端点条件下都有全零内部填充，因而满足四格正。
+
+并联时，两个块只共享外端，内部变量集合不交，条件于端点后的允许集合是 $\mathcal U_1\times\mathcal U_2$，完整内部权精确为 $f_1(a,u,b)f_2(a,v,b)$。这个条件排除了内部跨块耦合因子、额外共同内部变量和共同总量约束。串联时，两块仅共享一个二元接缝 $c$，各自内部集合不交；接缝的完整活动 $w_c>0$ 未计入任一块，固定 $c$ 后内部权精确为 $f_1(a,u,c)f_2(c,v,b)$。两种拼接都要求因子和变量来自同一实际对象。
+
+**命题 C-69.2（一次计权的拼接在椭圆坐标中的应用）。** 在定义 C-69.1 的条件下，不含外端活动的响应分别为
+
+$$
+H_\parallel=H_1\odot H_2,\qquad
+H_{\rm series}=H_1WH_2,
+\qquad W=\operatorname{diag}(w_0,w_1).
+\tag{C69.2}
+$$
+
+其中 $\odot$ 表示逐格乘积。对于并联，规范椭圆的参数满足
+
+$$
+J_\parallel=J_1+J_2,\qquad
+\eta_\parallel=\eta_1+\eta_2,\qquad
+\rho_{*,\parallel}=\frac{\rho_{*,1}+\rho_{*,2}}
+{1+\rho_{*,1}\rho_{*,2}}.
+\tag{C69.3}
+$$
+
+若使用同一对标记方向，面积保持伸缩
+
+$$
+S_\eta=\begin{pmatrix}e^\eta&0\\0&e^{-\eta}\end{pmatrix}
+$$
+
+满足 $S_{\eta_1}S_{\eta_2}=S_{\eta_1+\eta_2}$，给并联与几何伸缩复合的对应。
+
+证明。C-64.2 已给同源图块的两种消元式；这里把其有限和及计权条件写到一般条件填充上。固定 $a,b$，并联的总权为
+
+$$
+\sum_{u\in\mathcal U_1}\sum_{v\in\mathcal U_2}
+ f_1(a,u,b)f_2(a,v,b)
+=\left(\sum_u f_1(a,u,b)\right)
+ \left(\sum_v f_2(a,v,b)\right).
+$$
+
+这由有限和的分配律给出式 (C69.2) 第一式。归一化后，完整内部条件律为
+
+$$
+\frac{f_1(a,u,b)f_2(a,v,b)}{H_1(a,b)H_2(a,b)}
+=\frac{f_1(a,u,b)}{H_1(a,b)}
+ \frac{f_2(a,v,b)}{H_2(a,b)}.
+$$
+
+所以两块内部确在同一个端点条件下独立；它们无条件时可以通过共享端点相关。若有额外因子 $g(u,v)$，总权中须保留它，上面的分配律一般不再产生两个总权的乘积。
+
+串联先对同一个接缝取值 $c$ 分组，固定外端后总权恰为
+
+$$
+\begin{aligned}
+\sum_{c=0}^1\sum_u\sum_v
+ f_1(a,u,c)w_cf_2(c,v,b)
+&=\sum_{c=0}^1H_1(a,c)w_cH_2(c,b)\\
+&=(H_1WH_2)_{ab}.
+\end{aligned}
+$$
+
+接缝状态只求和一次，活动只乘一次。这不是两个独立接缝状态的求和。若取图块活动约定 $w_0=1,w_1=d$，即还原 C-64.2 的 $\operatorname{diag}(1,d)$。外端的完整活动在上述两式之外统一乘 $\alpha_a\gamma_b$，所以完整响应为 $D_\alpha H_{\rm composite}D_\gamma$；把同一个外端活动同时装入两块再相乘会多计一次，给不同的权。若某端活动已经存在于一块，应在另一块中排除，或先明确分配两个因子使其乘积恰为该活动。四个条件总权正使两个合成响应仍四格正。
+
+现在逐格乘法给
+
+$$
+\Omega(H_1\odot H_2)
+=\frac{(a_1a_2)(d_1d_2)}{(b_1b_2)(c_1c_2)}
+=\Omega(H_1)\Omega(H_2).
+$$
+
+取对数并除以八得到前两式；使用 $\rho_{*,k}=\tanh(2\eta_k)$ 及双曲正切加法公式得到第三式。分母严格正，因为两系数都在 $(-1,1)$ 内。对角矩阵逐项相乘给 $S$ 的公式。这里要求主轴标记一致；任意旋转后的两个伸缩矩阵不受此一参数加法支配。经典 sum-product 消元背景及在硬排斥图上的范围见 C-66.3 的 Peyrard 等引文；当前证明只使用有限非负权与严格正的条件总质量。证毕。
+
+**命题 C-69.3（正响应的精确抵消不删除路径）。** 取
+
+$$
+H_+=\begin{pmatrix}3&1\\1&3\end{pmatrix},\qquad
+H_-=\begin{pmatrix}1&3\\3&1\end{pmatrix}.
+$$
+
+它们的带标记伸缩参数互为相反数，而并联响应的规范椭圆是圆。
+
+证明。两比值比分别为 $9,1/9$，所以 $J_\pm=\pm\log9$、$\eta_\pm=\pm(\log9)/8$、$\rho_{*,\pm}=\pm1/2$。逐格相乘得
+
+$$
+H_+\odot H_-=\begin{pmatrix}3&3\\3&3\end{pmatrix}.
+$$
+
+它的比值比为一，故 $\eta=0$。两矩阵可直接作为没有内部变量的正端点因子；组合后每个权仍严格正。若要求实际有内部路径的图块，C-64.3–C-64.4 已供应连通六顶点例子：短路内部活动 $1/3$、长路两内部活动一，其响应分别为
+
+$$
+\begin{pmatrix}4/3&1\\1&1\end{pmatrix},\qquad
+\begin{pmatrix}3&2\\2&1\end{pmatrix},
+$$
+
+并联为 $\left(\begin{smallmatrix}4&2\\2&1\end{smallmatrix}\right)$。四角比 $(4/3)(3/4)=1$，同样给圆；该已知例子的完整五律为 $(4,2,4,2,1)/13$。这里消费其来源和计权，不另声称构造了新路径反例。两条路径仍在图中，每个配置仍有非负权；抵消的是带符号对数关联，并不是路径消失或复振幅干涉。证毕。
+
+## 70. 一般串联的偏置、完整递推与同形反例
+
+**定义 C-70.1（边界矩阵的对数坐标）。** 对 $H=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)>0$，取 $s_0=1,s_1=-1$，定义
+
+$$
+\begin{aligned}
+c_0(H)&=\tfrac14\log(abcd),&
+h_L(H)&=\tfrac14\log\frac{ab}{cd},\\
+h_R(H)&=\tfrac14\log\frac{ac}{bd},&
+j(H)&=\tfrac14\log\frac{ad}{bc}=2\eta(H).
+\end{aligned}
+\tag{C70.1}
+$$
+
+这些是经典二元对数线性坐标，亦与 C-7.7–C-7.8 的四角项一致；在以下一般串联中保留它们作为输入。它们满足唯一展开
+
+$$
+\log H_{ab}=c_0+h_Ls_a+h_Rs_b+j s_as_b.
+\tag{C70.2}
+$$
+
+此式中矩阵索引 $a,b$ 取 $0,1$；式 (C70.1) 的 $a,b,c,d$ 则是四个格值。为核对唯一性，将四个对数格值依次按符号模式 $(1,1,1,1)$、$(1,1,-1,-1)$、$(1,-1,1,-1)$、$(1,-1,-1,1)$ 求和并除以四，正好得到式 (C70.1)。四个符号模式两两正交、平方长度四，所以逆变换必为式 (C70.2)。这同时证明存在与唯一。
+
+乘整个矩阵以正数只平移 $c_0$。因此 $(\eta,h_L,h_R)$ 完整决定归一化的端点律及对端点概率比的响应；完整未归一化权还需 $c_0$。单独的 $\eta$ 只决定正行列轨道，不能恢复所有局部概率。
+
+**命题 C-70.2（保留接缝偏置的完整串联公式）。** 设两块具有式 (C70.2) 的坐标，写作 $c_k,h_L^{(k)},h_R^{(k)},j_k$，$k=1,2$。设正接缝权为 $W=\operatorname{diag}(w_0,w_1)$，定义
+
+$$
+\ell_w=\tfrac12\log(w_0w_1),\qquad
+h_w=\tfrac12\log(w_0/w_1),\qquad
+\beta=h_R^{(1)}+h_L^{(2)}+h_w.
+\tag{C70.3}
+$$
+
+对外端符号 $s,t\in\{1,-1\}$，置
+
+$$
+L_{st}=\log\cosh(\beta+j_1s+j_2t),\qquad
+C=c_1+c_2+\ell_w+\log2.
+$$
+
+则合成响应的每个格值及全部对数坐标为
+
+$$
+H_{\rm series}(s,t)
+=2e^{c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t}
+\cosh(\beta+j_1s+j_2t),
+\tag{C70.4}
+$$
+
+$$
+\begin{aligned}
+c_{\rm series}&=C+\tfrac14(L_{++}+L_{+-}+L_{-+}+L_{--}),\\
+h_{L,\rm series}&=h_L^{(1)}+\tfrac14(L_{++}+L_{+-}-L_{-+}-L_{--}),\\
+h_{R,\rm series}&=h_R^{(2)}+\tfrac14(L_{++}-L_{+-}+L_{-+}-L_{--}),\\
+j_{\rm series}&=\tfrac14(L_{++}-L_{+-}-L_{-+}+L_{--}),\qquad
+\eta_{\rm series}=j_{\rm series}/2.
+\end{aligned}
+\tag{C70.5}
+$$
+
+特别地，令
+
+$$
+P_\beta=\frac{\cosh(2\beta)+\cosh(2(j_1+j_2))}{2},\qquad
+R_\beta=\frac{\cosh(2\beta)+\cosh(2(j_1-j_2))}{2},
+\tag{C70.6}
+$$
+
+则
+
+$$
+\Omega_{\rm series}=\frac{P_\beta}{R_\beta},\qquad
+\rho_{*,\rm series}=\frac{\sqrt{P_\beta}-\sqrt{R_\beta}}
+{\sqrt{P_\beta}+\sqrt{R_\beta}}.
+\tag{C70.7}
+$$
+
+因此一般串联的椭圆还依赖 $\beta$，下一次串联则仍需式 (C70.5) 的两个输出偏置。
+
+证明。接缝符号记作 $u\in\{1,-1\}$。由于 $w_u=e^{\ell_w+h_wu}$，式 (C69.2) 的逐格和成为
+
+$$
+\begin{aligned}
+H_{\rm series}(s,t)
+&=\sum_{u=\pm1}
+\exp\bigl(c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t
++u(\beta+j_1s+j_2t)\bigr)\\
+&=2e^{c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t}
+\cosh(\beta+j_1s+j_2t).
+\end{aligned}
+$$
+
+这证明式 (C70.4)，且没有删除任何偏置或质量因子。对其对数应用式 (C70.1) 的四个正交投影即得式 (C70.5)。计算四角比时，公共倍数与外端线性偏置消去，剩下
+
+$$
+\frac{\cosh(\beta+j_1+j_2)\cosh(\beta-j_1-j_2)}
+{\cosh(\beta+j_1-j_2)\cosh(\beta-j_1+j_2)}.
+$$
+
+使用 $\cosh(x+y)\cosh(x-y)=[\cosh(2x)+\cosh(2y)]/2$ 得式 (C70.6)–(C70.7)。两项始终正。这个推导所用的二元消元是 C-64.2 的已知拼接，新增的椭圆读法保留了其中无法由 $\eta_1,\eta_2$ 独自确定的接缝信息。证毕。
+
+**命题 C-70.3（平衡接缝的精确乘法与退化范围）。** 在命题 C-70.2 的条件下，
+
+$$
+\beta=0\quad\Longrightarrow\quad
+\rho_{*,\rm series}=\rho_{*,1}\rho_{*,2}.
+\tag{C70.8}
+$$
+
+若 $j_1j_2\ne0$，该等式成立当且仅当 $\beta=0$；若 $j_1=0$ 或 $j_2=0$，两边对任何 $\beta$ 都等于零。对所有有限偏置都有
+
+$$
+|\rho_{*,\rm series}|\le|\rho_{*,1}|\,|\rho_{*,2}|,
+\tag{C70.9}
+$$
+
+在非退化且不平衡时严格小于。
+
+证明。先取 $\beta=0$。式 (C70.6) 给 $P_0=\cosh^2(j_1+j_2)$、$R_0=\cosh^2(j_1-j_2)$。双曲余弦正，故
+
+$$
+\begin{aligned}
+\rho_{*,\rm series}
+&=\frac{\cosh(j_1+j_2)-\cosh(j_1-j_2)}
+{\cosh(j_1+j_2)+\cosh(j_1-j_2)}\\
+&=\frac{2\sinh j_1\sinh j_2}{2\cosh j_1\cosh j_2}
+=\tanh j_1\tanh j_2
+=\rho_{*,1}\rho_{*,2}.
+\end{aligned}
+$$
+
+平衡条件在原坐标中恰为
+
+$$
+h_R^{(1)}+h_L^{(2)}+\tfrac12\log(w_0/w_1)=0;
+\tag{C70.10}
+$$
+
+它消掉实际接缝的总偏好，并不要求两个块的所有外端边缘都平衡。
+
+一般 $\beta$ 下，$P_\beta$ 和 $R_\beta$ 比 $P_0,R_0$ 都增加同一个非负数 $(\cosh2\beta-1)/2$，此数为零当且仅当 $\beta=0$。它们的差与 $\beta$ 无关：
+
+$$
+P_\beta-R_\beta=\sinh(2j_1)\sinh(2j_2).
+$$
+
+有理化式 (C70.7) 得
+
+$$
+\rho_{*,\rm series}
+=\frac{P_\beta-R_\beta}
+{(\sqrt{P_\beta}+\sqrt{R_\beta})^2}.
+\tag{C70.11}
+$$
+
+若 $j_1j_2\ne0$，分子非零且符号不变；$\beta\ne0$ 时分母严格增大，故绝对值严格减小。这证明上界、等号的必要性及带符号乘法的范围。若某个 $j_k=0$，它对应正秩一矩阵，$P_\beta=R_\beta$，合成也秩一，所以等式对任意偏置成立，不能在这个退化情形反推接缝平衡。证毕。
+
+作为平衡表示的同一中间计算，令
+
+$$
+K_\rho=\frac12\begin{pmatrix}1+\rho&1-\rho\\1-\rho&1+\rho\end{pmatrix},
+\qquad-1<\rho<1.
+$$
+
+它是平衡行随机矩阵，并等于 $2Q_*$。直接相乘时，对角格为 $[(1+\rho_1)(1+\rho_2)+(1-\rho_1)(1-\rho_2)]/4=(1+\rho_1\rho_2)/2$，非对角格为 $(1-\rho_1\rho_2)/2$，所以
+
+$$
+K_{\rho_1}K_{\rho_2}=K_{\rho_1\rho_2}.
+\tag{C70.12}
+$$
+
+这与式 (C70.8) 相符。它只给已指定平衡接缝的精确乘法，不把一般式 (C70.9) 的上界改为等式。
+
+**命题 C-70.4（同一椭圆不能独立预测串联）。** 取
+
+$$
+H=\begin{pmatrix}3&1\\1&3\end{pmatrix},\qquad
+D=\begin{pmatrix}3&0\\0&1\end{pmatrix},\qquad
+\widetilde H=HD=\begin{pmatrix}9&1\\3&3\end{pmatrix}.
+$$
+
+$H$ 与 $\widetilde H$ 具有同一个带标记规范椭圆，但 $H^2$ 与 $\widetilde HH$ 的规范椭圆不同。
+
+证明。正列重加权保持四角比，两表均为 $\Omega=9$、$\rho_*=1/2$。实际乘法却给
+
+$$
+H^2=\begin{pmatrix}10&6\\6&10\end{pmatrix},\qquad
+\widetilde HH=\begin{pmatrix}28&12\\12&12\end{pmatrix}.
+$$
+
+前者 $\Omega=25/9$、$\rho_*=(10-6)/(10+6)=1/4$；后者 $\Omega=7/3$，所以
+
+$$
+\rho_*(\widetilde HH)
+=\frac{\sqrt{21}-3}{\sqrt{21}+3}
+\approx0.208712153\ne\frac14.
+\tag{C70.13}
+$$
+
+若等于 $1/4$，交叉相乘会给 $3\sqrt{21}=15$，平方后 $21=25$，矛盾，故差别是精确的。$H$ 的左右偏置为零；$\widetilde H$ 的 $h_L=0$、$h_R=(\log3)/2$，两者 $j$ 相同。于是第二个乘积恰把原来可从单块等价类中消去的右权重 $D$ 放到了实际接缝，$\beta=(\log3)/2\ne0$。这也从式 (C70.9) 解释了严格缩小。正行列等价只回答孤立块的比较问题，没有允许在拼接后删除实际接缝活动。证毕。
+
+## 71. 椭圆轴比与边界对数响应的最佳收缩
+
+**定义 C-71.1（正射线上的边界响应）。** 输入为正向量 $v=(v_0,v_1)$，整体正倍数视为同一射线，用
+
+$$
+x=\log(v_0/v_1)\in\mathbb R
+$$
+
+表示其比例。对 $H=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)>0$，输出向量 $Hv$ 也正，定义输出比例函数
+
+$$
+F_H(x)=\log\frac{ae^x+b}{ce^x+d}.
+\tag{C71.1}
+$$
+
+两个输入正射线的 Hilbert 距离在二维恰为
+
+$$
+d_{\rm Hil}(u,v)
+=\log\frac{\max(u_0/v_0,u_1/v_1)}{\min(u_0/v_0,u_1/v_1)}
+=\left|\log\frac{u_0}{u_1}-\log\frac{v_0}{v_1}\right|.
+\tag{C71.2}
+$$
+
+这是正锥的射影距离，不是欧氏平面中任意两个向量的距离。
+
+**命题 C-71.2（四角椭圆的精确响应含义）。** 对命题 C-67.2 的规范椭圆，若无标记轴比为 $R_{\rm ell}=e^{2|\eta|}$，则该正边界块对对数比例的最小全局 Lipschitz 常数为
+
+$$
+\sup_{x\in\mathbb R}|F_H'(x)|
+=|\rho_*(H)|
+=\tanh(2|\eta(H)|)
+=\frac{R_{\rm ell}^2-1}{R_{\rm ell}^2+1}<1.
+\tag{C71.3}
+$$
+
+若 $ad\ne bc$，导数绝对值在唯一输入
+
+$$
+e^x=\sqrt{\frac{bd}{ac}}
+\tag{C71.4}
+$$
+
+达到最大；若 $ad=bc$，$F_H$ 恒定，最佳常数为零，所有输入都达到该值。
+
+证明中的收缩机制是经典 Birkhoff–Hilbert 正锥结果。Samuel N. Cohen、Eliana Fausti，*Hyperbolic contractivity and the Hilbert metric on probability measures*，[arXiv:2309.02413v2](https://arxiv.org/abs/2309.02413v2)，Theorem 2.4 明确署名 Birkhoff，Proposition 4.1 给非负矩阵的经典系数表达。此处将其二维精确值与已有四角椭圆轴比连接，完整的标量计算如下。
+
+求导得到
+
+$$
+F_H'(x)=\frac{(ad-bc)e^x}{(ae^x+b)(ce^x+d)}.
+\tag{C71.5}
+$$
+
+令 $z=e^x>0$，则导数绝对值为
+
+$$
+\frac{|ad-bc|}{acz+(ad+bc)+bd/z}.
+$$
+
+由
+
+$$
+acz+\frac{bd}{z}-2\sqrt{abcd}
+=\left(\sqrt{acz}-\sqrt{bd/z}\right)^2\ge0,
+$$
+
+分母在 $z=\sqrt{bd/(ac)}$ 取最小，且正格值保证这个输入有限而唯一。如果分子非零，这也给唯一最大导数。最大值为
+
+$$
+\begin{aligned}
+\frac{|ad-bc|}{ad+bc+2\sqrt{abcd}}
+&=\frac{|(\sqrt{ad}-\sqrt{bc})(\sqrt{ad}+\sqrt{bc})|}
+{(\sqrt{ad}+\sqrt{bc})^2}\\
+&=\frac{|\sqrt{ad}-\sqrt{bc}|}{\sqrt{ad}+\sqrt{bc}}
+=|\rho_*|.
+\end{aligned}
+$$
+
+若 $ad=bc$，两行正比例，$(ae^x+b)/(ce^x+d)=a/c=b/d$，所以 $F_H$ 恒定。两种情形下均得到显示的上确界。均值定理使它成为全局 Lipschitz 上界；反过来，任意全局 Lipschitz 常数必须不小于每一点差商的极限 $|F_H'(x)|$，所以它确是最小常数。这里的“达到”首先指导数；不要求两个不同有限输入间的差商也恰等于最大导数。
+
+式 (C67.8) 给 $|\rho_*|=\tanh(|J|/4)=\tanh(2|\eta|)$，再用 $R_{\rm ell}^2=e^{4|\eta|}$ 得式 (C71.3)。与经典直径式也可逐项对照：$F_H(-\infty)=\log(b/d)$，$F_H(+\infty)=\log(a/c)$，且导数符号恒定；所以输出正射线集合的 Hilbert 直径是
+
+$$
+\Delta(H)=\left|\log\frac{a/c}{b/d}\right|=|J(H)|.
+$$
+
+Birkhoff 的 $\tanh(\Delta/4)$ 因此正是当前系数，没有额外乘二或除二。证毕。
+
+**命题 C-71.3（串联上界与不能删除的输出偏置）。** 对定义 C-69.1 的正串联响应，有
+
+$$
+F_{H_1H_2}=F_{H_1}\circ F_{H_2},\qquad
+F_W(x)=x+\log(w_0/w_1),
+\tag{C71.6}
+$$
+
+以及
+
+$$
+|\rho_*(H_1WH_2)|
+\le|\rho_*(H_1)|\,|\rho_*(H_2)|.
+\tag{C71.7}
+$$
+
+这一界约束输入差异传递的幅度，仍不决定输出概率比的绝对位置。
+
+证明。对正向量 $v$，其右边先经 $H_2$ 得到正向量，再经 $H_1$ 得到 $H_1H_2v$。比例不依赖中间向量的整体倍数，所以先读 $F_{H_2}(x)$ 再读 $F_{H_1}$ 等于一次读乘积矩阵，证明第一式。对角矩阵把比值乘以 $w_0/w_1$，证明第二式。链式法则给
+
+$$
+\left|(F_{H_1}\circ F_W\circ F_{H_2})'(x)\right|
+\le\sup|F_{H_1}'|\,\sup|F_{H_2}'|,
+$$
+
+因为 $F_W'=1$。用命题 C-71.2 对整个正乘积矩阵识别左边的上确界，即得式 (C71.7)。这与命题 C-70.3 的直接偏置公式相符；不同输入位置的两个导数峰值一般不能同时达到，不能据两个单块的尖锐性直接声称乘积上界处处可达。
+
+例如左乘 $D_L=\operatorname{diag}(l_0,l_1)$ 给
+
+$$
+F_{D_LH}(x)=F_H(x)+\log(l_0/l_1),
+$$
+
+导数和规范椭圆不变，但每个输出对数比均移动。右乘正对角矩阵则平移输入位置。因此，若要继续拼接或恢复端点律，仍需 C-70.1 的两偏置。圆形的 $\eta=0$ 只意味着输出比例与输入比例无关，输出比例本身可以有任意有限偏好。证毕。
+
+## 72. Fibonacci 响应的两种椭圆与正射线遗忘
+
+**约定 C-72.1（组成矩阵与实际外部供应）。** 以 $F_0=0,F_1=1,F_{m+2}=F_{m+1}+F_m$ 定义 Fibonacci 数。沿用[《辛预测完成》§35.10](SYMPLECTIC_PREDICTIVE_COMPLETION.md#3510-原生守卫固定仿射分支与反辛符号)的两坐标线性部分，另取交换矩阵，写为
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+P=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A=PMP=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\tag{C72.1}
+$$
+
+只交换坐标得到 $A$，不识别概率标签与任意物理坐标。$A$ 也正是 C-60.1 的兼容矩阵 $J$；为避免与对数比 $J(H)$ 混淆，此处专用字母 $A$。定义 $H_m=A^m$，$m\ge2$。C-8.3、C-65.1 已给路径幂公式；在均匀正活动环的外部路径中，其实际参数为 $m=n-2$，因而该环供应使用 $m\ge3$。$m=2$ 则仍是有效的两边路径响应。
+
+**命题 C-72.2（同一个 Fibonacci 响应的规范形变量）。** 对 $m\ge2$，
+
+$$
+H_m=\begin{pmatrix}F_{m+1}&F_m\\F_m&F_{m-1}\end{pmatrix}>0,
+\qquad\det H_m=(-1)^m,
+\tag{C72.2}
+$$
+
+其带标记规范椭圆满足
+
+$$
+\eta_m=\frac18\log\left(1+\frac{(-1)^m}{F_m^2}\right),
+\qquad
+\rho_{*,m}=\frac{(-1)^m}
+{\left(\sqrt{F_m^2+(-1)^m}+F_m\right)^2}.
+\tag{C72.3}
+$$
+
+因而偶数层为正关联，奇数层为负关联，且 $\eta_m\to0$、$\rho_{*,m}\to0$，规范椭圆的无标记轴比趋于一。
+
+证明。这里消费上述路径供应的矩阵幂，参数索引可用递推逐项对照：$A^2=\left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)$；若式 (C72.2) 在 $m$ 成立，右乘 $A$ 给
+
+$$
+\begin{pmatrix}F_{m+1}+F_m&F_{m+1}\\F_m+F_{m-1}&F_m\end{pmatrix}
+=\begin{pmatrix}F_{m+2}&F_{m+1}\\F_{m+1}&F_m\end{pmatrix}.
+$$
+
+这也核定 $m$ 是边数。$m\ge2$ 时三个相关 Fibonacci 数均正；$m=1$ 的右下角为零，不在本正表椭圆定义域。行列式乘法及 $\det A=-1$ 给
+
+$$
+F_{m+1}F_{m-1}-F_m^2=(-1)^m,
+$$
+
+即这里所用的经典 Cassini 中间式。于是
+
+$$
+\Omega_m=\frac{F_{m+1}F_{m-1}}{F_m^2}
+=1+\frac{(-1)^m}{F_m^2}>0,
+$$
+
+代入式 (C67.5) 即得 $\eta_m$。而式 (C67.8) 给
+
+$$
+\rho_{*,m}=\frac{\sqrt{F_m^2+(-1)^m}-F_m}
+{\sqrt{F_m^2+(-1)^m}+F_m}.
+$$
+
+分子乘共轭并约去得到式 (C72.3)。奇数 $m\ge3$ 时 $F_m\ge2$，所以根号内严格正；偶数情形也显然正。符号由 $(-1)^m$ 给出。
+
+边界 $m=2$ 给 $\Omega_2=2$、$\eta_2=(\log2)/8$、$\rho_{*,2}=(\sqrt2-1)/(\sqrt2+1)=3-2\sqrt2$，没有除零。由递推及 $F_{m+2}\ge2F_m$（$m\ge2$），有 $F_m\to\infty$，所以式 (C72.3) 的对数趋零、分母趋无穷，得两个极限。无标记轴比是 $e^{2|\eta_m|}\to1$。进一步由 $\log(1+t)/t\to1$ 得
+
+$$
+\eta_m=\frac{(-1)^m}{8F_m^2}+O(F_m^{-4}),\qquad
+\rho_{*,m}=\frac{(-1)^m}{4F_m^2}+O(F_m^{-4}).
+\tag{C72.4}
+$$
+
+这些渐近式在当前整数序列上使用 $F_m\to\infty$，没有加入任何素性假设。证毕。
+
+**命题 C-72.3（直接线性像变扁而规范关联像变圆）。** 同一个 $H_m$ 直接作用于欧氏单位圆，其半轴为
+
+$$
+\varphi^m,\quad\varphi^{-m},\qquad
+\operatorname{Area}=\pi,\qquad
+R_{\rm direct}=\varphi^{2m}\longrightarrow\infty.
+\tag{C72.5}
+$$
+
+其规范关联椭圆则有
+
+$$
+R_{\rm intrinsic}=e^{2|\eta_m|}\longrightarrow1.
+\tag{C72.6}
+$$
+
+这两个极限分别描述欧氏方向伸缩和正边界输入比例敏感性，所用比较规则不同。
+
+证明。$A$ 为实对称矩阵，特征多项式 $t^2-t-1$ 的两个根为 $\varphi,-\varphi^{-1}$，有正交特征基。故 $H_m$ 的特征值为 $\varphi^m,(-1)^m\varphi^{-m}$。半轴必须取奇异值，即 $H_m^{\mathsf T}H_m$ 特征值的正平方根，因而为 $\varphi^m,\varphi^{-m}$；奇数层的负特征值表示在该特征方向上的反向，绝不表示负半轴。两半轴乘积一，所以面积为 $\pi$；或者由 $|\det H_m|=1$ 得同一结论。长短轴比给式 (C72.5)，式 (C72.6) 已由命题 C-72.2 得出。
+
+下表均为所列精确公式的十进制舍入值，用来比较两种像，不作为极限证明：
+
+| $m$ | $F_m$ | 直接线性像轴比 $\varphi^{2m}$ | 规范关联椭圆轴比 $e^{2|\eta_m|}$ |
+| ---: | ---: | ---: | ---: |
+| 3 | 2 | $17.9443$ | $1.07457$ |
+| 5 | 5 | $122.992$ | $1.01026$ |
+| 7 | 13 | $842.999$ | $1.00148$ |
+| 11 | 89 | $39603.0$ | $1.00003156$ |
+
+例如首行的规范轴比恰为 $(4/3)^{1/4}$；后面三个奇数层分别是 $(25/24)^{1/4}$、$(169/168)^{1/4}$、$(7921/7920)^{1/4}$。$F_5=5,F_7=13,F_{11}=89$ 为素数，但 $m=6$ 的合数项 $F_6=8$ 同样给 $\Omega_6=65/64$、$\eta_6=(\log(65/64))/8$，所以这些关系不是素性判据。证毕。
+
+**命题 C-72.4（正输入的归一化遗忘及有符号例外）。** 对固定正输入 $u,v$，有
+
+$$
+d_{\rm Hil}(H_mu,H_mv)
+\le |\rho_{*,m}|\,d_{\rm Hil}(u,v)\longrightarrow0.
+\tag{C72.7}
+$$
+
+将 $H_mv$ 按坐标和归一化后，所有固定正输入趋向同一个 Perron 概率向量
+
+$$
+\frac{(\varphi,1)}{\varphi+1}.
+\tag{C72.8}
+$$
+
+该结论不适用于任意有符号向量。
+
+证明。$m\ge2$ 时 $H_m$ 严格正，命题 C-71.2 给式 (C72.7)，命题 C-72.2 给系数趋零。为确定共同极限，取正交特征向量
+
+$$
+u_+=(\varphi,1),\qquad u_-=(1,-\varphi).
+$$
+
+任意 $v>0$ 可唯一写成 $v=\alpha u_++\gamma u_-$，其中
+
+$$
+\alpha=\frac{v\cdot u_+}{u_+\cdot u_+}>0.
+$$
+
+于是
+
+$$
+H_mv=\alpha\varphi^m u_++\gamma(-\varphi^{-1})^m u_-.
+$$
+
+除以 $\alpha\varphi^m$ 后，第二项的系数是 $(\gamma/\alpha)(-1)^m\varphi^{-2m}\to0$。正输入的输出始终正，坐标和归一化连续，得到式 (C72.8)。相反，对有符号向量 $v=u_-$，Perron 分量恰为零，$H_mv=(-\varphi^{-1})^m u_-$ 始终沿另一个特征射线，不能称为遗忘到正主方向；它也不在式 (C71.2) 的正锥度量域内。
+
+因此，直接椭圆越来越扁表示同一个线性算子的奇异值差异扩大；规范椭圆越来越圆表示它对正输入比例的最坏敏感性趋零。两者与主方向优势相容，但不能从后者推出任意有符号方向或任意原始长度均不可区分。证毕。
+
+## 73. 四角复比值、独立相位与条件底面
+
+**定义 C-73.1（明确指定的复振幅完成）。** 除五概率外，另给五个相位，采用《辛预测完成》§35 的约定
+
+$$
+\psi_s=\sqrt{p_s}e^{-i\theta_s},\qquad
+\sum_s|\psi_s|^2=1,\qquad
+\theta_s\in\mathbb R/2\pi\mathbb Z.
+\tag{C73.1}
+$$
+
+这是假设一个正交五模式复载体，不从经典概率唯一推出。隐藏角为
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi},
+$$
+
+四角复比值为
+
+$$
+\Xi=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}\in\mathbb C^\times.
+\tag{C73.2}
+$$
+
+全正性确保分母非零；此处 $\chi$ 是角，旧 C-13.3 用于复比值的同形字母改由 $\Xi$ 表示。
+
+**命题 C-73.2（规范椭圆与剩余相位的联合表示）。** 对定义 C-73.1，
+
+$$
+\Xi=e^{4\eta-i\chi},\qquad
+\eta=\frac14\log|\Xi|,\qquad
+\chi=-\arg\Xi\pmod{2\pi}.
+\tag{C73.3}
+$$
+
+所以同一带标记概率椭圆容许整个独立相位圆周。固定 $(X,Y,Z)$ 后，$\Xi$ 完整参数化概率与指定位置相位商的正内部；没有固定这些均值时，$\Xi$ 不恢复全部五振幅。
+
+证明。直接计算模与相位，
+
+$$
+|\Xi|=\sqrt{\frac{p_0p_{13}}{p_1p_3}}
+=e^{J/2}=e^{4\eta},\qquad
+\frac{\Xi}{|\Xi|}=e^{-i(\theta_0+\theta_{13}-\theta_1-\theta_3)}=e^{-i\chi}.
+$$
+
+这给式 (C73.3)。要核定“剩余”所指的精确等价关系，取共同相位及三个位置相位作用
+
+$$
+\theta_s\longmapsto\theta_s+\gamma_0+x_s\gamma_X+y_s\gamma_Y+z_s\gamma_Z,
+\tag{C73.4}
+$$
+
+其中占位函数在五模式上分别为
+
+$$
+x=(0,1,0,0,1),\quad y=(0,0,0,1,1),\quad z=(0,0,1,0,0).
+$$
+
+交替和 $(1,-1,0,-1,1)$ 与这四个函数正交，故保持 $\chi$。反过来，选 $\gamma_0=-\theta_0$，$\gamma_X=\theta_0-\theta_1$，$\gamma_Y=\theta_0-\theta_3$，$\gamma_Z=\theta_0-\theta_2$，则前四模式相位全部归零，最后相位恰为 $\chi$。所有式子在整周期环面上成立，所以没有残余有限覆盖，余角周期为 $2\pi$。这就是旧 C-13.2 的完整商结论在相反角约定下的应用。
+
+固定均值时，命题 C-68.2 使 $\eta$ 遍历全实轴，$\chi$ 可独立遍历圆周，因此 $(\eta,\chi)\mapsto e^{4\eta-i\chi}$ 双射到 $\mathbb C^\times$。旧相位约定 $c_s=\sqrt{p_s}e^{i\theta_s^{\rm old}}$ 对应 $\theta_s^{\rm old}=-\theta_s$，故 $\Phi_{\rm old}=-\chi$，旧实坐标 $u=\tfrac12\log\Omega=4\eta$。固定均值的商层面上这已完整；在原五振幅层面，它既忘掉位置相位标架，也不提供未知的三个可见均值。证毕。
+
+**命题 C-73.3（相同概率圆的两个不同底面相干结构）。** 按五模式顺序取
+
+$$
+|\Psi_+\rangle=\frac1{\sqrt5}(1,1,1,1,1),\qquad
+|\Psi_-\rangle=\frac1{\sqrt5}(1,1,1,1,-1).
+\tag{C73.5}
+$$
+
+它们具有相同五概率、相同规范圆，但 $\Xi_+=1$、$\Xi_-=-1$。条件于底面并明确识别四个模式为 $\mathbb C^2\otimes\mathbb C^2$ 的 $(00,01,10,11)$ 后，前者是乘积纯态，后者的两侧约化态均为 $I_2/2$。这个实例是原卷 C-12.3 的已知见证在椭圆—复比值坐标中的应用。
+
+证明。两向量均归一化，五个模平方均为 $1/5$。四角比为一，所以 $\eta=\rho_*=0$，而四角复乘积的符号直接给 $\Xi_+=1$、$\Xi_-=-1$；后一情形可取 $\theta_{13}=\pi$，其余为零，故 $\chi=\pi\bmod2\pi$。底面概率为 $r=4/5$。投影到底面并除以 $\sqrt r$，按行左端、列右端排列得到系数矩阵
+
+$$
+B_+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+B_-=\frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+\tag{C73.6}
+$$
+
+前者是 $(1,1)^{\mathsf T}/\sqrt2$ 与 $(1,1)/\sqrt2$ 的外积，秩一，对应 $|+\rangle\otimes|+\rangle$。后者行列式为 $-1/2$，秩二，且
+
+$$
+B_-B_-^\dagger=B_-^\dagger B_-=\frac12 I_2.
+$$
+
+对两因子纯态，系数矩阵秩一恰等价于可写成两个向量的张量积；约化态通过一侧指标求和得到上述矩阵乘积。Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2)，将二部纯态纠缠定义为任一约化态的以二为底的熵。此处 $B_+$ 的约化谱为 $(1,0)$，熵零；$B_-$ 的约化谱为 $(1/2,1/2)$，熵一，达到二元约化态的最大值：任意二元谱 $(t,1-t)$ 的熵 $-t\log_2t-(1-t)\log_2(1-t)$ 在 $0<t<1$ 的导数为 $\log_2((1-t)/t)$，在 $t=1/2$ 左正右负，端点连续值为零，故最大值为一。这里只使用该文的纯态定义，不调用其一般混态优化公式。
+
+同样的概率表还可给经典对角混合
+
+$$
+\rho_{\rm diag}=\frac14\sum_{a,b=0}^1
+|a\rangle\langle a|\otimes|b\rangle\langle b|,
+$$
+
+它显式为乘积态混合，因而可分。故概率圆本身既不供应相干，也不认证纠缠。上述张量积结构是在条件底面的四维空间上明确指定的；整个五模式空间维数为五，不能因此直接当作两个二元因子的张量积，也没有仅凭模式字典获得物理子系统。证毕。
+
+**命题 C-73.4（模与相位共同控制条件纯态行列式）。** 在定义 C-73.1 的全正域，把条件底面系数写为
+
+$$
+B=\frac1{\sqrt r}\begin{pmatrix}\psi_0&\psi_3\\\psi_1&\psi_{13}\end{pmatrix}.
+$$
+
+则
+
+$$
+\begin{aligned}
+r^2|\det B|^2
+&=(\sqrt{p_0p_{13}}-\sqrt{p_1p_3})^2
++4\sqrt{p_0p_1p_3p_{13}}\sin^2(\chi/2),\\
+\det B=0&\quad\Longleftrightarrow\quad\Xi=1
+\quad\Longleftrightarrow\quad\eta=0\ \text{且}\ \chi=0\pmod{2\pi}.
+\end{aligned}
+\tag{C73.7}
+$$
+
+证明。消费 C-12.2 的相位敏感行列式，在当前记号中可直接由
+
+$$
+r\det B=\psi_0\psi_{13}-\psi_1\psi_3
+=\psi_1\psi_3(\Xi-1)
+$$
+
+核对。令两复乘积的模分别为 $a=\sqrt{p_0p_{13}}$、$b=\sqrt{p_1p_3}$，它们的相对相位为 $-\chi$。故模平方为 $a^2+b^2-2ab\cos\chi=(a-b)^2+4ab\sin^2(\chi/2)$。正性给 $ab>0$，两非负项同时为零恰要求 $a=b$ 且 $\chi=0\bmod2\pi$。这证明全部等价。若底角为零，须直接用复乘积差，不定义零振幅的辐角或零分母的 $\Xi$。该式表明规范圆消除的只是第一项，独立相位项仍可非零；其适用载体仍是明确给定的条件两因子纯态。证毕。
+
+## 74. 实际固定矩相位商中的椭圆坐标与辛尺度
+
+**约定 C-74.1（来源、符号及尺度的完整对应）。** 本章只在 $0<Z<1$、$0<X,Y<r$、$\kappa_-<\kappa<\kappa_+$ 的全正内部使用几何。来源为[《辛预测完成》§35.3–§35.7](SYMPLECTIC_PREDICTIVE_COMPLETION.md#357-隐藏概率信息反相位与两倍尺度的关系度量)与原卷 [C-13、C-14](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#13-固定均值的五态相位商与复关系坐标)。它们均是另行指定复振幅之后的射影几何，不能由五概率自动唯一选出。
+
+为避免同名参数掩盖尺度，精确字典为
+
+$$
+\begin{gathered}
+\tau_{\rm SP}=J=\log\Omega,\qquad
+\eta_{\rm SP}=J/2=4\eta,\qquad
+\zeta_{\rm SP}=\Xi,\qquad I_{\rm SP}=\mathcal I,\\
+\theta_s^{\rm old}=-\theta_s,\qquad
+\Phi_{\rm old}=-\chi,\qquad
+u_{\rm old}=4\eta,\qquad
+ g_{\rm SP}=2g_{\rm old}.
+\end{gathered}
+\tag{C74.1}
+$$
+
+这里 $u_{\rm old}$ 指 C-13.3 的实对数模坐标。$\eta$ 始终是本椭圆半轴的对数，绝不能直接与 §35.7 的 $\eta_{\rm SP}$ 等同。两种角约定描述同一个复振幅，不是把状态另作复共轭。
+
+所选射影尺度在每条标准 $\mathbb{CP}^1$ 上辛面积为 $2\pi$。在全正归一化图上，来源的形式及度量为
+
+$$
+\omega=\sum_s d\theta_s\wedge dp_s,
+\qquad
+ g=\frac12\sum_s\frac{dp_s^2}{p_s}
++2\left[\sum_s p_s\,d\theta_s^2
+-\left(\sum_s p_s\,d\theta_s\right)^2\right].
+\tag{C74.2}
+$$
+
+共同相位先按射线识别，再固定三个矩值 $(X,Y,Z)$，最后除去三个位置相位的 $T^3$ 作用；只有这整个操作才给二维关系空间。底面条件化是另一种操作。
+
+**命题 C-74.2（实际约化形式与椭圆—相位换元）。** 在约定 C-74.1 的全正固定矩商中，$\chi$ 的周期为 $2\pi$，且
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+ g_{\rm red}=\frac{\mathcal I}{2}d\kappa^2
++\frac2{\mathcal I}d\chi^2.
+\tag{C74.3}
+$$
+
+改用椭圆参数 $\eta$ 后，
+
+$$
+\omega_{\rm red}=\frac8{\mathcal I}\,d\chi\wedge d\eta,\qquad
+ g_{\rm red}=\frac2{\mathcal I}
+\left(16\,d\eta^2+d\chi^2\right)
+=\frac2{\mathcal I}|d\log\Xi|^2.
+\tag{C74.4}
+$$
+
+最后一个复对数只在局部相位图取值；$\mathcal I$ 是随 $\kappa$、等价地随 $\eta$ 变化的正函数，不能删除。
+
+证明。§35.4–§35.5 已供应真正的固定矩约化，§35.7 已给所选两倍尺度的水平度量。为完整连接到本椭圆，先核定周期与符号。令
+
+$$
+\vartheta_X=\theta_1-\theta_0,\quad
+\vartheta_Y=\theta_3-\theta_0,\quad
+\vartheta_Z=\theta_2-\theta_0.
+$$
+
+其整数逆变换为
+
+$$
+\theta_1=\theta_0+\vartheta_X,\quad
+\theta_3=\theta_0+\vartheta_Y,\quad
+\theta_2=\theta_0+\vartheta_Z,\quad
+\theta_{13}=\theta_0+\vartheta_X+\vartheta_Y+\chi.
+$$
+
+正逆变换在整周期环面上互逆，故 $\chi$ 的周期恰为 $2\pi$。代入式 (C74.2)，共同角项因 $\sum_sdp_s=0$ 消失，余下
+
+$$
+\omega=d\vartheta_X\wedge dX+d\vartheta_Y\wedge dY
++d\vartheta_Z\wedge dZ+d\chi\wedge d\kappa.
+$$
+
+固定 $X,Y,Z$ 使前三项限制为零；沿三个位置角的轨道方向也为零，因而下降为式 (C74.3) 的二形式。这是限制后再取商，不是只固定三个数就丢掉三个相位方向。
+
+对度量，固定矩的概率切向量为
+
+$$
+dp_s=d_s\,d\kappa,\qquad d=(1,-1,0,-1,1),
+$$
+
+所以概率项为 $(\mathcal I/2)d\kappa^2$。相位方向取代表速度 $v_s$，先去共同相位使 $\sum p_sv_s=0$，固定隐藏角速度 $\sum d_sv_s=\dot\chi$。Cauchy–Schwarz 给
+
+$$
+\dot\chi^2
+=\left(\sum_s\frac{d_s}{\sqrt{p_s}}\sqrt{p_s}v_s\right)^2
+\le\mathcal I\sum_s p_sv_s^2.
+$$
+
+取
+
+$$
+v_s=\frac{d_s}{p_s\mathcal I}\dot\chi
+$$
+
+达到等号。它与共同相位及三个位置角方向都正交，因为对于 $f=1,x,y,z$ 均有
+
+$$
+\sum_s p_sv_sf_s=\frac{\dot\chi}{\mathcal I}\sum_s d_sf_s=0.
+$$
+
+所以它确是完整位置标架商中的最短水平代表，相位度量项为 $2\dot\chi^2/\mathcal I$。复振幅微分的概率—相位混合内积纯虚，实度量无交叉项，得到式 (C74.3) 第二式。这也逐项核定相对于 C-14.2 的两倍尺度。
+
+现在用命题 C-68.2 的 $d\eta=(\mathcal I/8)d\kappa$，即 $d\kappa=(8/\mathcal I)d\eta$。代入二形式与度量分别得到
+
+$$
+d\chi\wedge d\kappa=\frac8{\mathcal I}d\chi\wedge d\eta,\qquad
+\frac{\mathcal I}{2}\frac{64}{\mathcal I^2}d\eta^2
++\frac2{\mathcal I}d\chi^2
+=\frac2{\mathcal I}(16d\eta^2+d\chi^2).
+$$
+
+局部选择 $\chi$ 的实提升时，式 (C73.3) 给 $\log\Xi=4\eta-i\chi$ 加一个常数整倍 $2\pi i$，所以 $d\log\Xi=4d\eta-i\,d\chi$，其模平方为 $16d\eta^2+d\chi^2$。不同局部对数分支的微分相同，故度量本身良定义。证毕。
+
+**命题 C-74.3（变量系数、周期和闭端点的边界）。** 式 (C74.4) 不是常系数的全局 Darboux 坐标表达；$\log\Xi$ 不是全局单值函数。内部约化几何不要求所有闭端点光滑，且底面条件化不能替代此固定矩商。
+
+证明。$\mathcal I(\kappa)$ 由四个正仿射概率的倒数组成。在任一非退化纤维的任一端，至少一个底角概率趋零，故 $\mathcal I\to\infty$，而内部值有限，因而该函数不恒定。已经选定的 $\eta$ 不能在不改变坐标意义的情况下吸收式 (C74.4) 的系数。$(\chi,\kappa)$ 在局部实角图中给 Darboux 形式，但 $\chi$ 是圆周坐标，不是全局实数。绕固定 $\eta$ 的相位圆一次，$\Xi=e^{4\eta-i\chi}$ 绕原点一次，任一连续对数提升变化 $-2\pi i$，所以不存在全局单值复对数。
+
+所选面积尺度可直接在两个模式的射影直线上核定：内部坐标为一个概率 $p\in(0,1)$ 和一个相对角 $\theta\bmod2\pi$，二形式为 $d\theta\wedge dp$，相容定向下总面积为 $2\pi$。这说的是所选标准 $\mathbb{CP}^1$ 的尺度，不是每条固定矩约化曲面面积都为 $2\pi$。在非墙条件 $X\ne Y$、$X+Y\ne r$ 下，§35.5 的正则闭曲面面积是
+
+$$
+2\pi(\kappa_+-\kappa_-).
+$$
+
+本章的所有椭圆与换元公式只需全正开圆柱。即便闭纤维相位商拓扑为球面，也不能据此宣布标准光滑圆球度量。具体地，在距端点的概率参数 $t>0$ 下，若有 $m\in\{1,2\}$ 个底角同时消失，则 C-14.3 给 $\mathcal I=m/t+O(1)$；在本章两倍尺度中，径向距离和相位圆周长分别为
+
+$$
+\varrho(t)=\int_0^t\sqrt{\mathcal I(s)/2}\,ds
+=\sqrt{2mt}+O(t^{3/2}),\qquad
+\ell(t)=2\pi\sqrt{2/\mathcal I(t)}
+=2\pi\sqrt{2t/m}+O(t^{3/2}).
+$$
+
+其比值趋于 $2\pi/m$。单零端点给 $2\pi$，双零端点给 $\pi$；下端双零恰为 $X+Y=r$，上端双零恰为 $X=Y$。两倍度量同时乘两长度以 $\sqrt2$，不消除锥角。零概率处不使用本章的倒数或相位坐标。
+
+最后，条件于底面是把 $\psi$ 投影到四个底面模式，再除以 $\sqrt r$；它的目标为四维复载体的射线空间 $\mathbb{CP}^3$，之后才可另指定 $\mathbb C^2\otimes\mathbb C^2$ 解释。固定矩商则保留五模式概率关系，固定三个连续均值并商掉 $T^3$，正内部为二维实圆柱。这两个操作的域、等价关系、维数和输出都不同。§35.14 的事件投影降秩结论适用于前者；它不是五模式固定矩辛约化，也不由其条件两因子例子推断物理子系统。证毕。
+
+## 75. 四角椭圆应用的来源与适用对象
+
+**约定 C-75.1（经典中间结果的准确归属）。** 本组椭圆、拼接和相位应用使用以下来源，所引结论不作为新的独立经典定理发表。
+
+| 来源 | 本文实际消费的范围 |
+| --- | --- |
+| Dirk Hasenclever、Markus Scholz，*Comparing measures of association in 2x2 probability tables*，[arXiv:1302.6161v1](https://arxiv.org/abs/1302.6161v1)，Proposition 1、§3.1、Proposition 4 | 正二元概率表的行列重加权轨道及平衡代表；$\Omega$ 完整分类；Yule's Y 为 $(\sqrt\Omega-1)/(\sqrt\Omega+1)$，Yule's Q 为 $(\Omega-1)/(\Omega+1)$；Pearson 在对角对称平衡代表上与 Yule's Y 相等。用于 C-67 的协方差椭圆构造，不把均值 $Y$ 与 Yule's Y 混用，不将平衡充分条件误作所有相等情形的必要条件。 |
+| Samuel N. Cohen、Eliana Fausti，*Hyperbolic contractivity and the Hilbert metric on probability measures*，[arXiv:2309.02413v2](https://arxiv.org/abs/2309.02413v2)，Theorem 2.4、Proposition 4.1 | Theorem 2.4 的 Birkhoff 经典 Hilbert 收缩系数为 $\tanh(\Delta/4)$；Proposition 4.1 给非负矩阵系数的交叉比表达。当前矩阵四格严格正、二维直径为 $|J|$，C-71 连接此系数与规范椭圆轴比并保留完整标量证明。该文较强的双曲距离结果不被说成本章的新收缩原理。 |
+| William K. Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2) | 只用明确二部纯态的约化熵定义；在 C-73 的条件底面 $\mathbb C^2\otimes\mathbb C^2$ 上比较熵零与一。该文的一般混态纠缠形成公式不负责从经典概率供应相干、张量分解或物理子系统。 |
+| 原卷 C-12.2、C-12.3、C-13.2–C-14.3 | 四角相位敏感行列式、同概率的乘积与最大纠缠例子、整周期位置相位商及水平度量。C-73 明确复用 $B_\pm$，C-74 保留旧角到新角的负号及两倍度量尺度，不把这些例子与几何重新作为独立发现。 |
+| 本卷 C-60.1–C-61.3、C-64.1–C-65.2 | 实际外部条件总权进入五律，外端活动只计一次；固定均值的对数四角坐标；串并联与连通图抵消；均匀环外部 $A^{n-2}$ 的 Fibonacci 闭式。C-67、C-69、C-72 将这些已有供应连接到规范椭圆，所有来源、端点及条件事件保持相同。 |
+| 《辛预测完成》§35.3–§35.7、§35.14 | 明确振幅符号、$\mathbb{CP}^1$ 辛面积 $2\pi$ 的尺度、真正的固定矩 $T^3$ 约化、正内部度量、局部复对数与事件条件化的区别。精确参数字典为式 (C74.1)，椭圆换元为式 (C74.4)。 |
+
+**约定 C-75.2（由关系而非形状辨认对象）。** 当前普通数学应用的三条对应为
+
+$$
+\begin{aligned}
+\text{同源底面正表}
+&\longmapsto\Omega
+\longmapsto\eta=\tfrac18\log\Omega
+\longmapsto\text{带标记规范关联椭圆},\\
+\text{有限边界权及实际接缝}
+&\longmapsto H_1\odot H_2\ \text{或}\ H_1WH_2
+\longmapsto\text{相加或保留偏置的递推},\\
+\text{另给的五模式复振幅}
+&\longmapsto\Xi=e^{4\eta-i\chi}
+\longmapsto\text{规范椭圆模参数与周期相位}.
+\end{aligned}
+$$
+
+第一条中的圆表示底面条件独立，不表示无条件端点独立、没有外路或全部五概率已知。第二条中并联有 $\eta$ 加法，平衡串联有带符号 $\rho_*$ 乘法，一般串联需 $(\eta,h_L,h_R)$，完整质量还需 $c_0$；它们不能相互替换。第三条中 $\Xi$ 在固定均值及声明的相位商后才是完整坐标，不是全部原始振幅的编码。
+
+直接线性像的椭圆保留欧氏基及奇异值，规范关联椭圆保留行列比较及轴标签，约化几何还保留复振幅、位置相位作用和尺度。它们之间的对应均由上面的公式、假设和证明承担；相同外形本身不识别来源、操作或物理实现。经典公式在这里提供中间结构，源特定的综合应用不据此主张世界首创、原生操作实现或新的物理定律。
+
+## 追加锚（本行以下为增补区）
