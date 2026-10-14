@@ -212,7 +212,7 @@ private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
   rw [← blochVec_eq_bloch M (partialTraceRight_posSemidef hpos).isHermitian,
     EuclideanSpace.real_norm_sq_eq] at he
   dsimp only [M] at he
-  simp only [blochVec.eq_def, ← trace_mul_kron_one, ← blochA.eq_def] at he
+  simp only [blochVec.eq_def, ← trace_mul_kron_one] at he
   have hs : trace (M * M) = (a : ℂ) ^ 2 + (1 - (a : ℂ)) ^ 2 := by
     let D := Matrix.diagonal ![(a : ℂ), 1 - (a : ℂ)]
     rw [hM]
@@ -227,7 +227,7 @@ private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
         simp only [one_mul]
       _ = trace (D * D) := by
         rw [trace_mul_cycle]
-        simp only [← Matrix.star_eq_conjTranspose, Matrix.mem_unitaryGroup_iff'.mp hU, one_mul]
+        rw [← Matrix.star_eq_conjTranspose, Matrix.mem_unitaryGroup_iff'.mp hU, one_mul]
       _ = _ := by
         simp [D, Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal, Fin.sum_univ_two]
         ring
