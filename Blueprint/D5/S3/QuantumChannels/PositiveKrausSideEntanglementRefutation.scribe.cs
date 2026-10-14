@@ -25,14 +25,18 @@ internal sealed class PositiveKrausSideEntanglementRefutationDocument : IScribeD
                 AssessedProvenance.FromLiterature(Source)),
             Node("refutation", "result", "Refutation by positive tetrahedral Kraus operators", Disp(Seq(Neg, Sp, V("claim"))),
                 "For a=2 and a=3, use four Kraus operators (aI+sX+tY+uZ)/(2√(a²+3)), with (s,t,u)=(1,1,1),(1,−1,−1),(−1,1,−1),(−1,−1,1). X and Z are the qubit Pauli matrices and Y=Complex.I times XZ. A positive multiple of the identity plus a positive Gram matrix proves strict positive definiteness. The resulting channel sends A to ((a²−1)/(a²+3))A+(2/(a²+3))trace(A)I. Two nonnegative trace pairings bound every unassisted success probability by 47/84. The frozen Bell density is both input and effect for the assisted strategy, whose success probability is 33/56. The strict gap is 5/168. The paper's phase-damping result concerns its particular channel family and is unaffected by this counterexample to the general negative clause.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rexiti-memarzadeh-mancini-2022-positive-kraus-side-entanglement"),
+                    ResolutionKind.Refuted)))));
 
     private const string SourceQuote = "About the discrimination with side entanglement, it is worth observing the following: i) Side entanglement is very useful for Pauli channels [16]; ii) Side entanglement is partially useful for amplitude damping [6]; iii) Side entanglement is not useful for phase damping channel (present work). Then, we are led to conjecture that side entanglement is useful in channel discrimination if the Kraus operators of the channel admit a polar decomposition with non-trivial unitaries (i.e., not identities). Actually, if the Kraus operators are unitaries, then there is maximal benefit from side entanglement. In contrast, if all Kraus operators have simply the identity as unitary part in the polar decomposition, there is no benefit from side entanglement.";
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("rmm-" + id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula SuccessFormula(bool assisted)
     {

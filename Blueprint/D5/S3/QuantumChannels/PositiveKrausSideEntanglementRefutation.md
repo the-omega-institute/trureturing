@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/PositiveKrausSideEntanglementRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rexiti-memarzadeh-mancini-2022-positive-kraus-side-entanglement` (refuted) by `D5/S3/QuantumChannels/PositiveKrausSideEntanglementRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rexiti-memarzadeh-mancini-2022-positive-kraus-side-entanglement","declaration_gid":"D5/S3/QuantumChannels/PositiveKrausSideEntanglementRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Rexiti; L. Memarzadeh; S. Mancini (2022). *Discrimination of dephasing channels*. DOI: [10.1088/1751-8121/ac6d2c](https://doi.org/10.1088/1751-8121/ac6d2c). URL: <https://arxiv.org/abs/2201.00388>.
