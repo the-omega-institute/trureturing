@@ -92,7 +92,16 @@ run_phase() {
   printf 'LEAN_INSPECTOR_PHASE phase=%s status=started clock=shell-seconds start_seconds=%s\n' \
     "$phase" "$phase_started" >&2 || true
   ACTIVE_PHASE="$phase"
-  (cd "$REPOSITORY" && "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
+  local budget=()
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
+    case "$phase" in
+      # Native report/program commands are charged by the cache reader after
+      # its own lazy provisioning. These phases must not be charged twice.
+      toolchain|producer-restore|ensure|reuse|report|programs) ;;
+      *) budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --) ;;
+    esac
+  fi
+  (cd "$REPOSITORY" && ${budget[@]+"${budget[@]}"} "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
   ACTIVE_PHASE=""
   phase_finished="${SECONDS:-unavailable}"
   [[ "$phase_finished" =~ ^[0-9]+$ ]] || phase_finished=unavailable
@@ -159,13 +168,21 @@ require_lake() {
 # instead of refreshing the project through `dotnet run`.
 require_producer() {
   [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]] || return 0
+  local restore_args=()
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
+    run_phase producer-restore dotnet restore "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" --locked-mode
+    restore_args=(--no-restore)
+  fi
   run_phase producer-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
-    --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
+    ${restore_args[@]+"${restore_args[@]}"} --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
   local producer
   producer="$(tail -n 1 "$LOG_DIR/producer-build.stdout.log")"
   [[ "$producer" == /* && -f "$producer" ]] \
     || { echo 'inspect.sh: the producer build reported no existing absolute DLL' >&2; return 2; }
   export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 && -n "${GITHUB_ENV:-}" ]]; then
+    printf 'STRATALINT_LEAN_PRODUCER_DLL=%s\n' "$producer" >> "$GITHUB_ENV"
+  fi
 }
 # The local guard runs before provisioning or any selected program build.
 # Direct inspect callers retain reuse-or-build unless they select the local policy.
@@ -185,10 +202,12 @@ open_logs() {
 }
 reuse_report() {
   local status=0
+  local budget=()
+  [[ -z "${STRATALINT_CI_COMPUTE_BUDGET:-}" || "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" == 1 ]] || budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --)
   if [[ "$CACHE_MISS_POLICY" == build ]]; then
     status=3
   else
-    python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
+    ${budget[@]+"${budget[@]}"} python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
       --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" \
       --cache-miss-policy "$CACHE_MISS_POLICY" || status=$?
   fi

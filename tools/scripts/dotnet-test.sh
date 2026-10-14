@@ -3,6 +3,11 @@ set -euo pipefail
 
 SCRIPT_DIRECTORY="$(dirname "${BASH_SOURCE[0]}")"
 ROOT="$(cd "$SCRIPT_DIRECTORY/../.." && pwd -P)"
+restore_args=()
+[[ "${CI_DOTNET_PREPARED:-0}" != 1 ]] || restore_args=(--no-restore)
+# Only this CI entry's projects were restored. Test-created projects retain
+# their own restore behavior and execution/hang budgets.
+unset CI_DOTNET_PREPARED
 RESULTS_DIRECTORY="${TEST_RESULTS_DIRECTORY:-$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")}"
 mkdir -p "$RESULTS_DIRECTORY"
 completed=0
@@ -20,7 +25,7 @@ finish() {
 }
 trap 'finish "$?"' EXIT
 
-dotnet test "$@" --configuration Release --verbosity normal -p:RestoreLockedMode=true -nr:false \
+dotnet test "$@" ${restore_args[@]+"${restore_args[@]}"} --configuration Release --verbosity normal -p:RestoreLockedMode=true -nr:false \
   --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY"
 
 OWNER_ASSEMBLY_ARGS=()
@@ -36,7 +41,7 @@ done
 # The evidence tool uses only registered identities and the shared process runtime.
 # Build it here when the selected test project does not.
 dotnet build "$ROOT/tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" --configuration Release \
-  -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet
+  ${restore_args[@]+"${restore_args[@]}"} -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet
 
 owner_assemblies="$(dotnet run \
   --project "$ROOT/tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" \

@@ -19,6 +19,24 @@ import lean_pr_cache as producer
 
 
 class PrCacheContracts(CacheFixture, unittest.TestCase):
+    def test_slow_artifact_transfer_has_no_whole_artifact_deadline(self):
+        destination = self.root / "artifact.zip"
+        def transfer(command, *, stdout, check, timeout=None):
+            if timeout is not None and timeout < 601:
+                raise subprocess.TimeoutExpired(command, timeout)
+            self.assertTrue(check)
+            stdout.write(b"complete streamed artifact")
+        with mock.patch.object(producer.subprocess, "run", side_effect=transfer):
+            producer.download("owner/repository", 81, destination)
+        self.assertEqual(b"complete streamed artifact", destination.read_bytes())
+
+    def test_native_artifact_transfer_failure_propagates(self):
+        error = subprocess.CalledProcessError(23, ["gh", "api"])
+        with mock.patch.object(producer.subprocess, "run", side_effect=error):
+            with self.assertRaises(subprocess.CalledProcessError) as caught:
+                producer.download("owner/repository", 81, self.root / "artifact.zip")
+        self.assertIs(error, caught.exception)
+
     def setUp(self):
         super().setUp()
         self.git("init", "-q")
