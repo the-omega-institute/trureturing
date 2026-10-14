@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
+import D5.S0.Observation.MatrixTracePowerSum
 
 /-!
 For two-qubit coefficient matrices, the adjugate complement identity bounds the square
@@ -73,9 +74,14 @@ private theorem reducedDensity_trace (A : Matrix (Fin 2) (Fin 2) ℂ) :
 
 private theorem reducedDensity_det (A : Matrix (Fin 2) (Fin 2) ℂ) :
     (reducedDensity A).det.re = ‖A.det‖ ^ 2 := by
-  rw [reducedDensity, ptrace2_pure, Matrix.det_mul, Matrix.det_conjTranspose]
-  simp only [Complex.star_def, Complex.mul_conj, Complex.ofReal_re,
-    Complex.normSq_eq_norm_sq]
+  change (partialTraceRight
+    (D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
+      (Function.uncurry A))).det.re = ‖A.det‖ ^ 2
+  rw [D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Direct.pure_det]
+  have hmat : Matrix.of (Function.curry (Function.uncurry A)) = A := by
+    ext i j
+    rfl
+  rw [hmat]
 
 private theorem two_mul_norm_det_le_frobSq (C : Matrix (Fin 2) (Fin 2) ℂ) :
     2 * ‖C.det‖ ≤ RHLinalg.frobSq C := by
@@ -116,21 +122,21 @@ private theorem det_transitionAbs (T : Matrix (Fin 2) (Fin 2) ℂ) :
     ← Complex.ofReal_pow, Complex.ofReal_re, Real.sqrt_sq (norm_nonneg _)]
   rfl
 
-private theorem trace_sq_eq_trace_mul_self_add_two_det (M : Matrix (Fin 2) (Fin 2) ℂ) :
-    M.trace ^ 2 = (M * M).trace + 2 * M.det := by
-  simp only [Matrix.trace_fin_two, Matrix.det_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
-  ring
-
 private theorem transitionMass_sq (T : Matrix (Fin 2) (Fin 2) ℂ) :
     (CFC.sqrt (Tᴴ * T)).trace.re ^ 2 = RHLinalg.frobSq T + 2 * ‖T.det‖ := by
   have hr := (Complex.nonneg_iff.mp
     (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (Tᴴ * T))).trace_nonneg).2
-  have h := congrArg Complex.re (trace_sq_eq_trace_mul_self_add_two_det (CFC.sqrt (Tᴴ * T)))
+  have h := congrArg Complex.re
+    (D5.S0.Observation.MatrixTracePowerSum.trace_pow_add_two
+      (CFC.sqrt (Tᴴ * T)) 0)
+  simp only [Nat.zero_add, pow_two, pow_zero, pow_one, Matrix.trace_one] at h
   rw [CFC.sqrt_mul_sqrt_self _ (posSemidef_conjTranspose_mul_self T).nonneg,
     det_transitionAbs] at h
-  simpa only [pow_two, Complex.mul_re, Complex.add_re, Complex.ofReal_re,
-    Complex.ofReal_im, Complex.re_ofNat, Complex.im_ofNat, hr.symm, mul_zero, zero_mul, sub_zero,
-    RHLinalg.frobSq, RCLike.re_eq_complex_re] using h
+  norm_num [Complex.mul_re, Complex.sub_re, Complex.ofReal_re, Complex.ofReal_im,
+    Complex.re_ofNat, Complex.im_ofNat, hr.symm, RHLinalg.frobSq,
+    RCLike.re_eq_complex_re] at h
+  change (CFC.sqrt (Tᴴ * T)).trace.re ^ 2 = (Tᴴ * T).trace.re + 2 * ‖T.det‖
+  nlinarith [h]
 
 private theorem transitionMass_pos {T : Matrix (Fin 2) (Fin 2) ℂ} (hT : T ≠ 0) :
     0 < (CFC.sqrt (Tᴴ * T)).trace.re := by
@@ -203,21 +209,22 @@ private theorem qubit_entropy_parameter (R : Matrix (Fin 2) (Fin 2) ℂ)
     (hR : R.PosSemidef) (htr : R.trace = 1) :
     ∃ p : ℝ, p ∈ Set.Icc (1 / 2 : ℝ) 1 ∧ R.det.re = p * (1 - p) ∧
       spectralEntropy hR.isHermitian = Real.binEntropy p := by
-  have hnorm : ‖R.det‖ = R.det.re := by
-    exact congrArg Complex.re (Complex.norm_of_nonneg' hR.det_nonneg)
+  have hd :=
+    D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.qubit_det_bounds R hR htr
   have hpurity : 1 = RHLinalg.frobSq R + 2 * R.det.re := by
-    have h := congrArg Complex.re (trace_sq_eq_trace_mul_self_add_two_det R)
+    have h := congrArg Complex.re
+      (D5.S0.Observation.MatrixTracePowerSum.trace_pow_add_two R 0)
+    simp only [Nat.zero_add, pow_two, pow_zero, pow_one, Matrix.trace_one] at h
     rw [htr] at h
-    simpa only [one_pow, Complex.one_re, Complex.add_re, Complex.mul_re,
-      Complex.re_ofNat, Complex.im_ofNat, zero_mul, sub_zero,
-      RHLinalg.frobSq, RCLike.re_eq_complex_re, hR.isHermitian.eq] using h
+    norm_num [Complex.mul_re, Complex.sub_re, Complex.ofReal_re, Complex.ofReal_im,
+      Complex.re_ofNat, Complex.im_ofNat] at h
+    change 1 = (Rᴴ * R).trace.re + 2 * R.det.re
+    rw [hR.isHermitian.eq]
+    nlinarith [h]
   have hrad : 0 ≤ 1 - 4 * R.det.re := by
-    have h := two_mul_norm_det_le_frobSq R
-    rw [hnorm] at h
-    linarith
+    linarith [hd.2]
   have hsq := Real.sq_sqrt hrad
   have hs := Real.sqrt_nonneg (1 - 4 * R.det.re)
-  have hd := (Complex.nonneg_iff.mp hR.det_nonneg).1
   refine ⟨(1 + Real.sqrt (1 - 4 * R.det.re)) / 2, ?_, ?_, ?_⟩
   · constructor <;> nlinarith
   · nlinarith
