@@ -68199,12 +68199,18 @@ $$
 \le
 1-\prod_{p\mid F_r}\left(1-\frac1p\right)
 \le
-\frac{r\log\varphi}{(2r-1)\log(2r-1)}.
+C\frac{\log r}{r}.
 $$
 
-这只是禁素 Euler 因子的双边窗口：它不能交换 §441 的逐秩量词，也没有
+其中 $C>0$ 为绝对常数；上界使用的是主卷 §171 已登记的
+Luca--Mejía Huguet--Nicolae (2009)
+入口秩桶估计；它不是本仓重复证明的结果。这说明禁素 Euler 因子沿素秩
+确实趋于一，因而不能交换 §441 的逐秩量词，也没有
 给出 Robin 的全称证明。用仓内 §459 的有限 Mertens 误差时，若只采用左端
 的最坏余量，所需的相对误差必须压到不超过 $O(F_r^{-1})$；允许素数
 primorial、低 $\omega$ 分支与同一整数的完整素支撑仍须另行支付。详细证明
 和该路线的剩余义务见
 [Robin 完整库存续卷 §462](FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_FULL_STOCK.md#462-素秩-fibonacci-禁素因子的-euler-余量窗口)。
+更精确地，先固定 $r$ 再让允许素数 primorial 增长所得的 Robin 上包络，
+沿素数秩再取极限为 $1$；因此这条固定禁素因子路线不存在统一的固定比例
+安全余量。该结论只排除这一路线的量词交换，不是 Robin 反例。
