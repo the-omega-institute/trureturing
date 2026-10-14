@@ -22,7 +22,7 @@ Mixed states and POVMs cover private randomness and post-processing on either si
 
 ## Motivation
 
-The exact minimum turns the qualitative real–complex separation into a quantitative one. Any experiment that reaches average trace distance below 1/12 from the target certifies that the messages carry imaginarity, assuming a two-dimensional system.
+The exact minimum turns the qualitative real–complex separation into a quantitative one. Under the source's resource assumptions — a two-dimensional message, no shared randomness and no correlations between rounds — any experiment that reaches average trace distance below 1/12 from the target certifies that the messages carry imaginarity.
 
 ## Gap
 
@@ -93,11 +93,17 @@ Every other declaration is a definition used by a public statement or a compiler
 - The bound uses only that the four states lie in a three-dimensional real space and that the measurement is linear. It therefore holds for every real measurement, and indeed for every linear readout of the states, whatever Bob does.
 - The argument generalizes. Take n inputs, the target P(y|x) = (1 − δ_xy)/(n − 1), and states in a real space of dimension less than n; for example, n > d(d + 1)/2 real d-level states. Then Σ_x w_x P(y|x) = −w_y/(n − 1), and the same estimate gives d ≥ 1/(n(n − 1)), which is 1/12 at n = 4. Whether this bound is attained for n > 4 is not examined.
 
+- The no-shared-randomness assumption is essential. With a uniformly shared index over the partitions 01|23, 02|13 and 03|12:
+  - Alice sends a real basis state naming the part that contains her input.
+  - Bob outputs uniformly from the other part.
+  - Distinct x, y are separated in two of the three partitions, so P(y|x) = (2/3)(1/2) = 1/3 and P(x|x) = 0. Hence d = 0 with real (indeed classical) messages.
+
+  This construction was compiled in a review seat's scratch file; it is not formalized in the module.
+
 **Open.**
 - Whether 1/12 is the minimum for the source's other distances (for example the worst-case trace distance over inputs).
-- The minimum for rebit strategies when Alice and Bob share randomness, which the source excludes.
 
-**Effect on the paper.** The weak conjecture of §IV and Appendix D is a theorem: the rebit minimum is exactly 1/12, so any realized distance below 1/12 certifies imaginarity in this task.
+**Effect on the paper.** The weak conjecture of §IV and Appendix D is a theorem: the rebit minimum is exactly 1/12, so, without shared randomness or inter-round correlations, any realized distance below 1/12 certifies imaginarity in this task.
 
 ## ASSUMED-UNVERIFIED
 
