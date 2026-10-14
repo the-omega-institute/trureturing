@@ -565,3 +565,299 @@ theorem bilateral_past_state :
 
 
 end D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+
+namespace D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+
+noncomputable def returnMap (j : Side) (a : Return) (D : ℝ) : ℝ :=
+  hSide j - rho ^ a.m * (hSide j - chi ^ a.r * D)
+
+def GuardTrace (K : ℕ) (d : ℝ) (strict : Bool) (j : Side) :
+    List Return → ℝ → Prop
+  | [], _ => True
+  | a :: rest, D => a.r ≤ K ∧
+      (a.r = K → if strict then d < D else d ≤ D) ∧
+      GuardTrace K d strict j rest (returnMap j a D)
+
+end D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+
+set_option autoImplicit false
+
+namespace D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Completion
+
+open D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+
+set_option maxHeartbeats 1000000 in
+/-- Any finite binary word ending in u has a unique leading u run followed by
+positive complete c/u returns. The first and last runs may be truncated. -/
+theorem finite_run_decomposition (w : List CuLetter)
+    (hend : w = [] ∨ w.getLast? = some CuLetter.u) :
+    ∃! p : ℕ × List Return,
+      w = List.replicate p.1 CuLetter.u ++ executionWord p.2 := by
+  have existence (v : List CuLetter) (hv : v = [] ∨ v.getLast? = some CuLetter.u) :
+      ∃ a : ℕ, ∃ xs : List Return,
+        v = List.replicate a CuLetter.u ++ executionWord xs := by
+    induction v with
+    | nil => exact ⟨0, [], rfl⟩
+    | cons l v ih =>
+      cases v with
+      | nil =>
+        cases l
+        · simp at hv
+        · exact ⟨1, [], rfl⟩
+      | cons y v =>
+        have ht : (y :: v).getLast? = some CuLetter.u := by
+          simpa using hv
+        obtain ⟨a, xs, heq⟩ := ih (Or.inr ht)
+        cases l
+        · cases a with
+          | zero =>
+            cases xs with
+            | nil => simp [executionWord] at heq
+            | cons b xs =>
+              let b' : Return := ⟨b.m, b.r + 1, b.m_pos, by omega⟩
+              refine ⟨0, b' :: xs, ?_⟩
+              simp only [List.replicate_zero, List.nil_append] at heq ⊢
+              rw [heq]
+              simp [executionWord, b', List.replicate_succ]
+          | succ a =>
+            let b : Return := ⟨a + 1, 1, by omega, by decide⟩
+            refine ⟨0, b :: xs, ?_⟩
+            rw [heq]
+            simp [executionWord, b]
+        · refine ⟨a + 1, xs, ?_⟩
+          rw [heq]
+          simp [List.replicate_succ]
+  have first (a : ℕ) (xs : List Return) :
+      (List.replicate a CuLetter.u ++ executionWord xs).takeWhile isU =
+        List.replicate a CuLetter.u := by
+    have hxs : (executionWord xs).takeWhile isU = [] := by
+      cases xs with
+      | nil => rfl
+      | cons b xs =>
+        obtain ⟨r, hr⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt b.r_pos)
+        simp [executionWord, hr, List.replicate_succ, isU]
+    induction a with
+    | zero => simpa using hxs
+    | succ a ih => simp [List.replicate_succ, List.takeWhile_cons, isU, ih]
+  obtain ⟨a, xs, h⟩ := existence w hend
+  refine ⟨(a, xs), h, ?_⟩
+  rintro ⟨b, ys⟩ hy
+  have ha : b = a := by
+    have hh := congrArg (fun v : List CuLetter => (v.takeWhile isU).length) (hy.symm.trans h)
+    simpa only [first, List.length_replicate] using hh
+  have hxs : ys = xs := by
+    apply complete_execution_word_parser.2.2.1
+    rw [ha] at hy
+    exact List.append_cancel_left (hy.symm.trans h)
+  simp only [Prod.mk.injEq]
+  exact ⟨ha, hxs⟩
+
+
+set_option maxHeartbeats 1000000 in
+/-- An independently occurring complete word, with only its final u allowed to
+be a terminal fill, inherits the exact cap and before-Kth-c return guards. -/
+theorem occurrence_run_guards (K : ℕ) (d : ℝ) (hK : 1 ≤ K)
+    (ω : ℤ → CuLetter) (hω : ω ∈ AuxiliaryLanguage K d)
+    (i : ℤ) (xs : List Return)
+    (letters : ∀ k : Fin (executionWord xs).length,
+      (k.val + 1 < (executionWord xs).length ∨ (executionWord xs)[k.val] = .c) →
+      ω (i + (k : ℕ)) = (executionWord xs)[k.val]) :
+    GuardTrace K d false .high xs (pastState ω i) := by
+  rcases bilateral_past_state with ⟨_, _, _, _, transition, _⟩
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hs0 := Real.sqrt_nonneg (5 : ℝ)
+  have gp : 0 < g := by dsimp [g, t]; nlinarith
+  have cp : 0 < chi := pow_pos gp 20
+  have runC (j : ℤ) (n : ℕ)
+      (hc : ∀ k : Fin n, ω (j + (k : ℕ)) = .c) :
+      pastState ω (j + (n : ℤ)) = chi ^ n * pastState ω j := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      have hc0 : ∀ k : Fin n, ω (j + (k : ℕ)) = .c := fun k => hc ⟨k, by omega⟩
+      have idx : j + ((n + 1 : ℕ) : ℤ) = (j + (n : ℤ)) + 1 := by omega
+      rw [idx, transition, hc ⟨n, by omega⟩]
+      change chi * pastState ω (j + (n : ℤ)) = _
+      rw [ih hc0, pow_succ]; ring
+  have runU (j : ℤ) (n : ℕ)
+      (hu : ∀ k : Fin n, ω (j + (k : ℕ)) = .u) :
+      pastState ω (j + (n : ℤ)) = hSide .high -
+        rho ^ n * (hSide .high - pastState ω j) := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      have hu0 : ∀ k : Fin n, ω (j + (k : ℕ)) = .u := fun k => hu ⟨k, by omega⟩
+      have idx : j + ((n + 1 : ℕ) : ℤ) = (j + (n : ℤ)) + 1 := by omega
+      rw [idx, transition, hu ⟨n, by omega⟩]
+      change aSide .high + rho * pastState ω (j + (n : ℤ)) = _
+      rw [ih hu0, pow_succ]; dsimp [aSide]; ring
+  induction xs generalizing i with
+  | nil => trivial
+  | cons a xs ih =>
+    have len : (executionWord (a :: xs)).length = a.r + a.m + (executionWord xs).length := by
+      simp [executionWord]; omega
+    have cletters : ∀ k : Fin a.r, ω (i + (k : ℕ)) = .c := by
+      intro k
+      have atC : (executionWord (a :: xs))[k.val]'(by omega) = .c := by
+        simp (discharger := omega) [executionWord, List.append_assoc, List.getElem_append, k.isLt]
+      have hh := letters ⟨k, by omega⟩ (Or.inr atC)
+      exact hh.trans atC
+    have cap : a.r ≤ K := by
+      by_contra hn
+      exact hω.1 i (fun k => cletters ⟨k, by omega⟩)
+    have guard : a.r = K → d ≤ pastState ω i := by
+      intro hr
+      have atGuard : ∀ k : Fin K, ω (i + ((K - 1 : ℕ) : ℤ) - (k : ℕ)) = .c := by
+        intro k
+        have idx : i + ((K - 1 : ℕ) : ℤ) - (k : ℕ) =
+            i + ((K - 1 - k.val : ℕ) : ℤ) := by omega
+        rw [idx]; exact cletters ⟨K - 1 - k.val, by omega⟩
+      have hg := hω.2 (i + ((K - 1 : ℕ) : ℤ)) atGuard
+      have hc : ∀ k : Fin (K - 1), ω (i + (k : ℕ)) = .c :=
+        fun k => cletters ⟨k, by omega⟩
+      rw [runC i (K - 1) hc] at hg
+      exact (mul_le_mul_iff_right₀ (pow_pos cp (K - 1))).mp hg
+    refine ⟨cap, guard, ?_⟩
+    cases xs with
+    | nil => trivial
+    | cons b xs =>
+      have tailLen : 0 < (executionWord (b :: xs)).length := by
+        simp [executionWord]; have hb := b.r_pos; omega
+      have uletters : ∀ k : Fin a.m, ω (i + (a.r : ℤ) + (k : ℕ)) = .u := by
+        intro k
+        have hh := letters ⟨a.r + k, by omega⟩ (Or.inl (by change a.r + k.val + 1 < _; omega))
+        have idx : i + ((a.r + k.val : ℕ) : ℤ) = i + (a.r : ℤ) + (k : ℕ) := by omega
+        rw [idx] at hh
+        simpa (discharger := omega) [executionWord, List.append_assoc, List.getElem_append, k.isLt] using hh
+      have after := runU (i + a.r) a.m uletters
+      rw [runC i a.r cletters] at after
+      have returnState : pastState ω (i + ((a.r + a.m : ℕ) : ℤ)) =
+          returnMap .high a (pastState ω i) := by
+        simpa [returnMap, add_assoc, Nat.cast_add] using after
+      have tailLetters : ∀ k : Fin (executionWord (b :: xs)).length,
+          (k.val + 1 < (executionWord (b :: xs)).length ∨ (executionWord (b :: xs))[k.val] = .c) →
+          ω (i + ((a.r + a.m : ℕ) : ℤ) + (k : ℕ)) = (executionWord (b :: xs))[k.val] := by
+        intro k hk
+        have atTail : (executionWord (a :: b :: xs))[a.r + a.m + k.val]'(by omega) =
+            (executionWord (b :: xs))[k.val] := by
+          have hr : ¬ a.r + a.m + k.val < a.r := by omega
+          have hm : ¬ a.r + a.m + k.val - a.r < a.m := by omega
+          have sub : a.r + a.m + k.val - a.r - a.m = k.val := by omega
+          simp [executionWord, List.getElem_append, List.append_assoc, hr, hm, sub]
+        have hh := letters ⟨a.r + a.m + k, by omega⟩ (by
+          rcases hk with hk | hk
+          · exact Or.inl (by change a.r + a.m + k.val + 1 < _; omega)
+          · exact Or.inr (atTail.trans hk))
+        have idx : i + ((a.r + a.m + k.val : ℕ) : ℤ) =
+            i + ((a.r + a.m : ℕ) : ℤ) + (k : ℕ) := by omega
+        simp only [Fin.val_mk] at hh
+        rw [idx, atTail] at hh
+        exact hh
+      have hh := ih (i + ((a.r + a.m : ℕ) : ℤ)) tailLetters
+      rwa [returnState] at hh
+
+end D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Completion
+
+namespace D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+
+noncomputable def T2 : ℝ := 1 - t
+
+noncomputable def lam : ℝ := T2 / 10
+
+noncomputable def execute (j : Side) : List Return → ℝ → ℝ
+  | [], D => D
+  | a :: rest, D => execute j rest (returnMap j a D)
+
+end D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+
+namespace D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
+
+open D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+
+/-- Exact active costs, evaluated on one execution from its fixed literal tail. -/
+def StrictControl (j : Side) (b : ℝ) : List Return → ℝ → Prop
+  | [], _ => True
+  | a :: rest, D => lam - g ^ 2 * chi ^ a.r * D < b ∧
+      StrictControl j b rest (returnMap j a D)
+
+set_option maxHeartbeats 1000000
+open Filter Topology
+open scoped Topology
+
+/-- A consumed structural interface to the existing recursive guard. -/
+theorem uniform_guard_trace_iff_split
+    (K : ℕ) (d : ℝ) (strict : Bool) (j : Side)
+    (execution : List Return) (D : ℝ) :
+    GuardTrace K d strict j execution D ↔
+      ∀ (before : List Return) (a : Return) (after : List Return),
+        execution = before ++ a :: after →
+          a.r ≤ K ∧ (a.r = K →
+            if strict then d < execute j before D
+            else d ≤ execute j before D) := by
+  induction execution generalizing D with
+  | nil =>
+      constructor
+      · intro _ before a after hsplit
+        have hlen := congrArg List.length hsplit
+        simp only [List.length_nil, List.length_append, List.length_cons] at hlen
+        omega
+      · intro _
+        exact True.intro
+  | cons first rest ih =>
+      constructor
+      · rintro ⟨hcap, hguard, hrest⟩ before a after hsplit
+        cases before with
+        | nil =>
+            simp only [List.nil_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, rfl⟩
+            exact ⟨hcap, hguard⟩
+        | cons first' before =>
+            simp only [List.cons_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, hsplit⟩
+            simpa only [execute] using
+              (ih (returnMap j first D)).mp hrest before a after hsplit
+      · intro h
+        have hfirst := h [] first rest rfl
+        refine ⟨hfirst.1, hfirst.2, (ih (returnMap j first D)).mpr ?_⟩
+        intro before a after hsplit
+        have hsplit' : first :: rest = (first :: before) ++ a :: after := by
+          simpa only [List.cons_append] using congrArg (List.cons first) hsplit
+        simpa only [execute] using h (first :: before) a after hsplit'
+
+theorem exact_control_iff_split (j : Side) (budget : ℝ)
+    (execution : List Return) (D : ℝ) :
+    StrictControl j budget execution D ↔
+      ∀ (before : List Return) (a : Return) (after : List Return),
+        execution = before ++ a :: after →
+          lam - g ^ 2 * chi ^ a.r * execute j before D < budget := by
+  induction execution generalizing D with
+  | nil =>
+      constructor
+      · intro _ before a after hsplit
+        have hlen := congrArg List.length hsplit
+        simp only [List.length_nil, List.length_append, List.length_cons] at hlen
+        omega
+      · intro _
+        trivial
+  | cons first rest ih =>
+      constructor
+      · rintro ⟨hfirst, hrest⟩ before a after hsplit
+        cases before with
+        | nil =>
+            simp only [List.nil_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, rfl⟩
+            exact hfirst
+        | cons first' before =>
+            simp only [List.cons_append, List.cons.injEq] at hsplit
+            rcases hsplit with ⟨rfl, hsplit⟩
+            simpa only [execute] using
+              (ih (returnMap j first D)).mp hrest before a after hsplit
+      · intro h
+        refine ⟨h [] first rest rfl, (ih (returnMap j first D)).mpr ?_⟩
+        intro before a after hsplit
+        have hsplit' : first :: rest = (first :: before) ++ a :: after := by
+          simpa only [List.cons_append] using congrArg (List.cons first) hsplit
+        simpa only [execute] using h (first :: before) a after hsplit'
+
+end D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
