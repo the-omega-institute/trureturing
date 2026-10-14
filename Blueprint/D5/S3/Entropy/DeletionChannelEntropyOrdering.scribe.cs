@@ -28,7 +28,7 @@ internal sealed class DeletionChannelEntropyOrderingDocument : IScribeDocumentDe
             Describe.Lean(DescribeId.Create("deletion-channel-total-mass"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.pref"),
                 H("Total embedding mass"), StatementSource.FromAuthor(PrefFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The source's mu indexed by n and m is the binomial factor "
                     + "D5.S3.Arith.FibonacciAtomic.CommonPrediction.Capacity.pref(n,m). "
                     + "Equation (1), p. 4, gives this factor as C(n,m) times 2 to the power n minus m. "

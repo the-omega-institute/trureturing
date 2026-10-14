@@ -24,7 +24,7 @@ $$\forall (n: \mathbb{N}), \forall (m: \mathbb{N}), \operatorname{D5}.\operatorn
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.pref` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Arash Atashpendar, David Mestel, A. W. Roscoe, and Peter Y. A. Ryan (2018). *A Proof of Entropy Minimization for Outputs in Deletion Channels via Hidden Word Statistics*. URL: <https://arxiv.org/abs/1807.11609>.
 
 *Commentary.*
 
