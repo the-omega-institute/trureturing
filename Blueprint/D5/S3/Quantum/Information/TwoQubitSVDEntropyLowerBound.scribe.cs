@@ -49,12 +49,12 @@ internal sealed class TwoQubitSVDEntropyLowerBoundDocument : IScribeDocumentDefi
                     + "input entropies to coincide. The source's factor 1/<phi|psi> cancels "
                     + "in the SVD density matrix, so the nonzero reduced-transition "
                     + "condition also allows orthogonal input vectors. By definition, "
-                    + "the three matrix arguments displayed in the inequality are "
+                    + "the three matrices underlying the entropy proof arguments are "
                     + "reducedDensity A, reducedDensity B and "
                     + "svdDensity (reducedTransition A B). "
                     + "D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy "
                     + "uses natural logarithms and includes zero eigenvalues with zero "
-                    + "contribution. Its Hermitian proof arguments are not displayed.",
+                    + "contribution.",
                 AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
                 DescribeId.Create("two-qubit-svd-entropy-result"),
@@ -133,9 +133,44 @@ internal sealed class TwoQubitSVDEntropyLowerBoundDocument : IScribeDocumentDefi
     private static Formula PureCoupling(Formula matrix) => At(Qualified(
         "D5", "S3", "Quantum", "QuantumChannels", "QubitWassersteinCouplings",
         "pureCoupling"), matrix);
-    private static Formula SpectralEntropy(Formula matrix) => At(Qualified(
+    private static Formula SpectralEntropy(Formula hermitianProof) => At(Qualified(
         "D5", "S3", "Quantum", "Information", "PartialTraceMutualInformation",
-        "spectralEntropy"), matrix);
+        "spectralEntropy"), Parenthesized(hermitianProof));
+    private static Formula ProofName(params string[] names)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var name in names)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            var words = name.Split('_');
+            Formula suffix = X(words[^1]);
+            for (var i = words.Length - 2; i >= 0; --i)
+                suffix = Seq(X(words[i]), Underscore, Grp(suffix));
+            items.Add(suffix);
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+    private static Formula InputHermitianProof(Formula matrix) => At(
+        Qualified("Matrix", "PosSemidef", "isHermitian"), Parenthesized(At(
+            ProofName("D5", "S3", "Quantum", "Information", "PartialTraceMutualInformation",
+                "partialTraceRight_posSemidef"), Parenthesized(At(
+                    ProofName("D5", "S3", "Quantum", "QuantumChannels", "QubitWassersteinCouplings",
+                        "pureCoupling_psd"), matrix)))));
+    private static Formula SVDHermitianProof(Formula transition)
+    {
+        var positive = At(ProofName("Matrix", "nonneg_iff_posSemidef", "mp"),
+            Parenthesized(At(ProofName("CFC", "sqrt_nonneg"), Parenthesized(Multiply(
+                At(Qualified("Matrix", "conjTranspose"), transition), transition)))));
+        var realNonnegative = Seq(Parenthesized(At(
+            ProofName("Complex", "nonneg_iff", "mp"), Parenthesized(At(
+                ProofName("Matrix", "PosSemidef", "trace_nonneg"), Parenthesized(positive))))),
+            Dot, D(1));
+        var inverseNonnegative = At(ProofName("inv_nonneg", "mpr"),
+            Parenthesized(realNonnegative));
+        return At(Qualified("Matrix", "PosSemidef", "isHermitian"), Parenthesized(At(
+            Qualified("Matrix", "PosSemidef", "smul"),
+            Parenthesized(positive), Parenthesized(inverseNonnegative))));
+    }
     private static Formula SVDMatrix(Formula transition)
     {
         var absolute = At(Qualified("CFC", "sqrt"), Multiply(
@@ -162,9 +197,9 @@ internal sealed class TwoQubitSVDEntropyLowerBoundDocument : IScribeDocumentDefi
         var transition = LocalCall("reducedTransition", X("A"), X("B"));
         var bound = new Formula.Relation(
             At(Qualified("min"),
-                SpectralEntropy(PartialTraceRight(PureCoupling(X("A")))),
-                SpectralEntropy(PartialTraceRight(PureCoupling(X("B"))))),
-            FormulaRelationOperator.LessThanOrEqual, SpectralEntropy(SVDMatrix(transition)));
+                SpectralEntropy(InputHermitianProof(X("A"))),
+                SpectralEntropy(InputHermitianProof(X("B")))),
+            FormulaRelationOperator.LessThanOrEqual, SpectralEntropy(SVDHermitianProof(transition)));
         var statement = All("A", MatrixType(), All("B", MatrixType(),
             ImpliesFormula(Equal(At(Qualified("RHLinalg", "frobSq"), X("A")), D(1)),
                 ImpliesFormula(Equal(At(Qualified("RHLinalg", "frobSq"), X("B")), D(1)),

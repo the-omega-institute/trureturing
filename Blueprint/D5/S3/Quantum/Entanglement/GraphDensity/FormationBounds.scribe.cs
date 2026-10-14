@@ -167,15 +167,19 @@ internal sealed class FormationBoundsDocument : IScribeDocumentDefinition
     private static Formula QubitDetBoundsFormula()
     {
         Formula determinant = Apply(Qualified("Complex", "re"), Apply(Qualified("Matrix", "det"), Tau));
-        Formula hypotheses = Parenthesized(Seq(
-            Parenthesized(Apply(Qualified("Matrix", "PosSemidef"), Tau)), Sp, Land, Sp,
-            Parenthesized(Seq(Apply(Qualified("Matrix", "trace"), Tau), Sp, Eq, Sp, D(1)))));
-        Formula bounds = Seq(
-            Parenthesized(Seq(D(0), Sp, Le, Sp, determinant)), Sp, Land, Sp,
-            Parenthesized(Seq(determinant, Sp, Le, Sp, new Formula.Fraction(D(1), D(4)))));
+        Formula traceOne = new Formula.Relation(Apply(Qualified("Matrix", "trace"), Tau),
+            FormulaRelationOperator.Equal, D(1));
+        Formula bounds = new Formula.Logic(
+            Parenthesized(new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual,
+                determinant)), FormulaLogicOperator.And,
+            Parenthesized(new Formula.Relation(determinant, FormulaRelationOperator.LessThanOrEqual,
+                new Formula.Fraction(D(1), D(4)))));
+        Formula traceImpliesBounds = new Formula.Logic(Parenthesized(traceOne),
+            FormulaLogicOperator.Implies, Parenthesized(bounds));
         return Disp(All(Tau,
             Call("Matrix", Call("Fin", D(2)), Call("Fin", D(2)), Seq(Mathbb, Grp(F.Id("C")))),
-            Seq(hypotheses, Sp, Longrightarrow, Sp, bounds)));
+            new Formula.Logic(Parenthesized(Apply(Qualified("Matrix", "PosSemidef"), Tau)),
+                FormulaLogicOperator.Implies, Parenthesized(traceImpliesBounds))));
     }
 
     private static Formula PureDetFormula()
