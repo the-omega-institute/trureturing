@@ -1,0 +1,3 @@
+import D5.S3.Geometry.Hyperideal.NativeFlatMateThresholdTransient
+#print NativeFlatMateThresholdTransient
+#print axioms NativeFlatMateThresholdTransient
