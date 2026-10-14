@@ -3106,3 +3106,390 @@ occupation-law representation into a specified quantum
 preparation.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 24. Exact boundary compression of stationary-renewal coherent spectra
+
+**Definition 24.1 (One proper stationary renewal law).**
+Let the number of zeros between successive ones have law
+$\gamma=(\gamma_k)_{k\ge0}$, with
+
+$$
+\gamma_0=0,\qquad \gamma_k>0\ (k\ge1),\qquad
+\sum_{k\ge0}\gamma_k=1,\qquad
+\mu=\sum_{k\ge0}(k+1)\gamma_k<\infty.
+\tag{24.1}
+$$
+
+Use its proper stationary renewal version, without an
+additional all-zero stationary component. Write
+
+$$
+\nu=\mu^{-1},\qquad
+S_a=\sum_{k\ge a}\gamma_k,\qquad
+R_N=\sum_{k\ge N}(k-N+1)\gamma_k.
+\tag{24.2}
+$$
+
+Here $\nu$ is the stationary one-emission frequency.
+For a word w containing at least one one, let A and B be
+its initial and terminal zero counts, and let $g_h$ be
+its internal zero gaps. The stationary cylinder law is
+
+$$
+P(w)=\nu S_A S_B\prod_h\gamma_{g_h},\qquad
+P(0^N)=\nu R_N.
+\tag{24.3}
+$$
+
+The first formula follows by conditioning on the first
+and last renewal events, with independent intervening
+gaps. For the second, an interval of k zeros has
+$k-N+1$ possible placements of an all-zero N-window
+when $k\ge N$; multiply their stationary frequency
+by $\nu\gamma_k$ and sum. In particular $R_0=\mu$.
+These are one stationary law's actual cylinder
+probabilities, not separately fitted distributions.
+Assumptions (24.1) give positive probability to every
+legal finite word. The SNS of §22 has
+$\gamma_k=k/2^{k+1}$ and $\nu=1/4$.
+
+For integers $\ell,r\ge1$, let $A_{\ell,r}$ be the
+positive coherent coefficient matrix on complete legal
+left and right words of lengths $\ell$ and r:
+
+$$
+(A_{\ell,r})_{u,v}=\sqrt{P(uv)}.
+\tag{24.4}
+$$
+
+An illegal seam has coefficient zero. Its singular
+values are the Schmidt coefficients of the normalized
+finite-window state $\Psi_{\ell+r}(P)$.
+
+**Theorem 24.2 (The whole nonzero spectrum has a small boundary matrix).**
+Under Definition 24.1, all nonzero singular values of
+$A_{\ell,r}$, with multiplicities, equal those of
+the following $(\ell+1)\times(r+1)$ matrix:
+
+$$
+C_{\ell,r}=\sqrt\nu
+\begin{pmatrix}
+[\sqrt{\gamma_{i+j}}]_{0\le i<\ell,\,0\le j<r}
+ & [\sqrt{S_{i+r}}]_{0\le i<\ell}\\
+[\sqrt{S_{\ell+j}}]_{0\le j<r}
+ & \sqrt{R_{\ell+r}}
+\end{pmatrix}.
+\tag{24.5}
+$$
+
+In particular the squared singular values of (24.5)
+sum to one and give the entire nonzero cut spectrum,
+including its entropy, purity and Schmidt tails.
+
+Proof. Partition left words containing a one by their
+trailing zero count $i<\ell$. For such a word u define
+
+$$
+c_u=\nu S_{A(u)}\prod_{h\text{ internal in }u}\gamma_{g_h}.
+\tag{24.6}
+$$
+
+Partition right words containing a one by their leading
+zero count $j<r$, and define
+
+$$
+d_v=S_{B(v)}\prod_{h\text{ internal in }v}\gamma_{g_h}.
+\tag{24.7}
+$$
+
+Empty products are one. These factors are positive.
+The finite marginal probabilities are $P(u)=c_uS_i$
+and $P(v)=\nu S_jd_v$. The stationary event that a
+word ends in exactly i zeros after its last one has
+probability $\nu S_i$; summing over all earlier letters
+does not change that event. The reversed boundary event
+of exactly j initial zeros before a one has probability
+$\nu S_j$. Since all $S_i,S_j$ are positive, division
+gives the normalization identities
+
+$$
+\sum_{u:\,\text{trailing zeros}=i}c_u=\nu,\qquad
+\sum_{v:\,\text{leading zeros}=j}d_v=1.
+\tag{24.8}
+$$
+
+Define a left column $U_i$ on its i-th word class by
+$U_i(u)=\sqrt{c_u/\nu}$ and zero elsewhere. Add the
+column supported on the single word $0^\ell$.
+Define right columns $V_j(v)=\sqrt{d_v}$ on their
+j-th classes, plus the column supported on $0^r$.
+Their supports are disjoint and (24.8) normalizes
+each column. Thus $U^{\mathsf T}U=I$ and
+$V^{\mathsf T}V=I$.
+
+For two words containing ones, their adjacent boundary
+gaps concatenate to i+j, so (24.3) gives
+
+$$
+P(uv)=c_u\gamma_{i+j}d_v.
+\tag{24.9}
+$$
+
+The remaining cases are exactly
+
+$$
+P(u0^r)=c_uS_{i+r},\qquad
+P(0^\ell v)=\nu S_{\ell+j}d_v,\qquad
+P(0^{\ell+r})=\nu R_{\ell+r}.
+\tag{24.10}
+$$
+
+Taking positive square roots in (24.9)–(24.10)
+proves $A_{\ell,r}=UC_{\ell,r}V^{\mathsf T}$.
+Left and right multiplication by these isometries
+preserves all nonzero singular values. Normalization
+of the original cylinder law gives the final claims.
+The forbidden seam is included: $i=j=0$ has
+$\sqrt{\gamma_0}=0$. $\square$
+
+**Corollary 24.3 (The square-root gap Hankel controls exact coherent bond).**
+Let $H_{\ell,r}=[\sqrt{\gamma_{i+j}}]_{i<\ell,j<r}$.
+Then
+
+$$
+\operatorname{rank}H_{\ell,r}
+\le\operatorname{SR}_{\ell\,|\,r}\Psi_{\ell+r}(P)
+\le\operatorname{rank}H_{\ell,r}+2.
+\tag{24.11}
+$$
+
+Consequently the prescribed positive coherent embeddings
+have a uniform finite exact open-chain bond bound over
+all windows if and only if the infinite scalar Hankel
+matrix $[\sqrt{\gamma_{i+j}}]_{i,j\ge0}$ has finite rank.
+Equivalently, the shifted tails of the sequence
+$h_k=\sqrt{\gamma_k}$ span a finite-dimensional real
+vector space. This is also equivalent to a finite
+real linear realization of that same sequence.
+
+Proof. The top-left block of (24.5) gives the lower
+rank bound; appending one row and one column increases
+rank by at most two. If all finite Hankel blocks have
+rank at most R, the same bounds give all cut ranks
+at most R+2. Successive exact Schmidt decompositions
+then give, for each finite window, one exact MPS with
+that bond bound. Conversely a common exact bond bound
+bounds every such block rank by the lower inequality.
+
+For completeness, bounded finite-block rank is
+equivalent to finite tail-span dimension. If finitely
+many infinite tails are linearly independent, their
+restrictions to a sufficiently long initial coordinate
+segment remain independent. Indeed the kernels of
+these successive restrictions form a decreasing chain
+in their finite-dimensional coefficient space. Once
+the chain stabilizes its value is the intersection,
+which is zero. Any finite list of tail indices is
+contained in an initial column segment. Thus arbitrarily
+large independent lists would yield arbitrarily large
+finite block ranks. The reverse implication is immediate
+by restriction.
+
+The final equivalence is the existing realization
+theorem, not a new realization construction. In
+`D5/S3/Observer/Hankel/SequenceHankelRealization.lean`,
+apply `finite_tailSpace_iff_exists_realization` to
+$m_k=h_k\operatorname{id}_{\mathbb R}$.
+The scalar tails identify with its `tailSpace` because
+`dataTail m j a` is a times the shifted h-tail.
+Under the explicit finite-dimensional premise,
+`dataHankel_rank_eq_tailSpace` additionally identifies
+sufficiently large finite block ranks with this minimal
+dimension. $\square$
+
+This criterion concerns the sequence $\sqrt\gamma$.
+A finite classical renewal producer already gives a
+finite linear representation of $\gamma$, which need
+not give one of $\sqrt\gamma$: §22 supplies a fixed
+two-state counterexample. Finite linear realizations
+here may have signed coordinates and are not claimed
+to be stochastic generators or quantum instruments.
+Per-window open-chain MPS factorizations are not an
+assertion of one homogeneous tensor, a common infinite
+pure-state extension, or a physical preparation.
+
+The renewal cylinder law is standard; the isometric
+grouping is an explicit finite-window application of
+renewal factorization. The general tail-space realization
+result is reused from its existing owner. No literature
+priority or complete Lean formalization of Theorem 24.2
+is asserted.
+
+## 追加锚（本行以下为增补区）
+
+
+## 25. A simultaneous MPS approximation that preserves the legal-word constraint
+
+**Lemma 25.1 (An exact bond-two legal projector).**
+On n occupation bits let
+
+$$
+Q_n=\sum_{w\in B_n}|w\rangle\langle w|,
+\quad
+A_0=\begin{pmatrix}1&0\\1&0\end{pmatrix},\quad
+A_1=\begin{pmatrix}0&1\\0&0\end{pmatrix},\quad
+L=(1,0),\quad R=(1,1)^{\mathsf T}.
+\tag{25.1}
+$$
+
+Then $LA_{w_1}\cdots A_{w_n}R$ is one for a
+legal word and zero for an illegal word. Hence $Q_n$
+is a diagonal matrix-product operator of bond at most
+two. Applied to an MPS of bond at most D, it gives
+an MPS of bond at most 2D.
+
+Proof. Before rejection, the row state is $(1,0)$
+if the preceding bit is zero or absent, and $(0,1)$
+if it is one. A zero sends either row to $(1,0)$;
+a one sends the first to $(0,1)$ and the second to
+zero. Zero remains zero, and R accepts either
+unrejected row. This proves the indicator identity
+for every word length. The diagonal MPO uses these
+matrices with equal input/output bit labels. Its
+product with the MPS uses tensor-product virtual
+indices, of size at most 2D. $\square$
+
+**Theorem 25.2 (One normalized legal-support global approximant).**
+For the same fixed SNS law (22.1), let n be at least
+two and let D be a positive integer. Set
+
+$$
+e_{n,D}=\frac{(n-1)(D+2)}{2^D}.
+\tag{25.2}
+$$
+
+If $e_{n,D}<1$, there exists one normalized
+legal-support MPS $\widehat\Phi_{n,D}$ with bond
+at most 2D at every cut such that
+
+$$
+\|\Psi_n(P)-\widehat\Phi_{n,D}\|^2\le4e_{n,D}.
+\tag{25.3}
+$$
+
+The half trace-norm distance between their pure density
+matrices is at most $2\sqrt{e_{n,D}}$.
+For any $0<\epsilon<1$, one sufficient choice is
+
+$$
+D=\left\lceil2\log_2\!\left(
+\frac{8(n-1)}{\epsilon^2}\right)\right\rceil.
+\tag{25.4}
+$$
+
+It gives vector norm error and pure-state trace
+distance at most $\epsilon$, with global bond
+at most $2D=O(\log(n/\epsilon))$.
+
+Proof. The needed simultaneous truncation theorem is
+existing: [Verstraete–Cirac, *Matrix product states
+approximate ground states faithfully*,
+cond-mat/0505140v1, Lemma 1](https://arxiv.org/abs/cond-mat/0505140v1).
+For a normalized finite-chain state with ordered
+reduced eigenvalues $\mu_j^{[a]}$, it supplies one
+possibly subnormalized bond-D MPS $\Phi$ with
+
+$$
+\|\Psi-\Phi\|^2
+\le2\sum_{a=1}^{n-1}\sum_{j>D}\mu_j^{[a]},
+\qquad \|\Phi\|\le1.
+\tag{25.5}
+$$
+
+The norm assertion is also stated in its proof.
+Apply it to $\Psi_n(P)$ in the full qubit tensor
+space. Equation (23.3), with retained rank D, gives
+each tail at most $(D+2)/2^{D+1}$. Thus (25.5)
+has right side at most $e_{n,D}$.
+
+A generic truncation need not respect no11 support.
+Put $\chi=Q_n\Phi$. Lemma 25.1 bounds its bond by
+2D, while orthogonal projection and $Q_n\Psi_n=
+\Psi_n$ give
+
+$$
+\|\Psi_n-\chi\|\le\|\Psi_n-\Phi\|
+\le\sqrt{e_{n,D}}.
+\tag{25.6}
+$$
+
+If $e_{n,D}<1$, then $\|\chi\|\ge1-\sqrt{e_{n,D}}>0$.
+Normalize $\widehat\Phi_{n,D}=\chi/\|\chi\|$.
+The reverse triangle inequality gives
+
+$$
+\begin{aligned}
+\|\Psi_n-\widehat\Phi_{n,D}\|
+&\le\|\Psi_n-\chi\|+|1-\|\chi\||\\
+&\le2\|\Psi_n-\chi\|
+\le2\sqrt{e_{n,D}}.
+\end{aligned}
+\tag{25.7}
+$$
+
+Normalization does not increase bond or change support.
+For normalized pure vectors, half trace-norm distance
+is no larger than their vector norm difference, proving
+the asserted trace bound.
+
+For (25.4), D is at least six. The elementary integer
+inequality $D+2\le2^{D/2+1}$ holds for all $D\ge2$:
+it is equality at two, and the left side grows by a
+factor at most $5/4<\sqrt2$ per unit step. Therefore
+
+$$
+4e_{n,D}\le8(n-1)2^{-D/2}\le\epsilon^2<1.
+\tag{25.8}
+$$
+
+This also ensures the nonzero premise for normalization.
+Equations (25.3) and (25.8) prove the claimed accuracy.
+$\square$
+
+The theorem supplies a single globally accurate vector,
+using the sum of all cut tails. It does not select an
+independent best approximation at each cut. The extra
+factor two in bond explicitly enforces the original
+legal support, rather than assuming that unconstrained
+Schmidt truncations preserve it. The normalized state
+need not retain exact occupation probabilities,
+positive amplitudes, a stationary family across windows,
+or any specified preparation circuit. The full SNS
+positive coherent state still has unbounded exact rank
+by §22. Approximation and exact representation are
+different conclusions for this same fixed source.
+
+These results also respect the source/operation distinction
+in [Probability Phase Transport and Holonomy,
+§6.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md):
+a static isotropic Gram or a linear intertwining does
+not imply preservation of the reachable endpoint set,
+its law, or realization by native controls. Here (24.5)
+is a spectrum-preserving mathematical compression and
+(25.3) is an approximation-existence theorem; neither
+adds a native preparation operation. Similarly, the
+classical one-sided erasure/output-filter bounds and
+their explicit lumpability or root-summability premises
+in the other legal-edge volumes do not supply quantum
+Schmidt-tail bounds. The quantum tails used here come
+from the actual renewal row grouping in §23.
+
+The simultaneous truncation bound is attributed to
+Verstraete–Cirac, and the constraint projector is the
+explicit two-state no11 automaton. This application
+does not settle the original all-hidden-dimension
+harmonic-edge optimization or establish a new general
+MPS truncation theorem.
+
+## 追加锚（本行以下为增补区）
