@@ -47,25 +47,26 @@ def mixtureScore {d L : ℕ} [NeZero d] (q : Fin L → ℝ)
 private theorem tensor_trace {m n : ℕ} (A : Matrix (Fin m) (Fin m) ℂ)
     (B : Matrix (Fin n) (Fin n) ℂ) :
     Matrix.trace (tensor A B) = Matrix.trace A * Matrix.trace B := by
-  rw [← Matrix.trace_kronecker]
-  exact (Fintype.sum_equiv finProdFinEquiv _ _ (fun p => by simp [tensor,
-    Matrix.reindex_apply])).symm
+  rw [tensor.eq_1, ← Matrix.trace_kronecker]
+  exact (Fintype.sum_equiv finProdFinEquiv _ _
+    (fun p => by simp -congrConsts [Matrix.reindex_apply])).symm
 
 private theorem tensor_frobSq {m n : ℕ} (A : Matrix (Fin m) (Fin m) ℂ)
     (B : Matrix (Fin n) (Fin n) ℂ) :
     RHLinalg.frobSq (tensor A B) = RHLinalg.frobSq A * RHLinalg.frobSq B := by
-  simp only [frobSq_eq_sum]
+  simp -congrConsts only [frobSq_eq_sum]
   rw [← (finProdFinEquiv : Fin m × Fin n ≃ Fin (m * n)).sum_comp]
-  simp only [tensor, Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
-  simp_rw [← (finProdFinEquiv : Fin m × Fin n ≃ Fin (m * n)).sum_comp]
-  simp only [Equiv.symm_apply_apply, Fintype.sum_prod_type, Matrix.kronecker,
+  simp -congrConsts only [tensor, Matrix.reindex_apply, Matrix.submatrix_apply,
+    Equiv.symm_apply_apply]
+  simp_rw -congrConsts [← (finProdFinEquiv : Fin m × Fin n ≃ Fin (m * n)).sum_comp]
+  simp -congrConsts only [Equiv.symm_apply_apply, Fintype.sum_prod_type, Matrix.kronecker,
     Matrix.kroneckerMap_apply,
     Complex.normSq_mul]
   conv_lhs =>
     arg 2
     intro i
     rw [Finset.sum_comm]
-  simp only [← Finset.mul_sum, ← Finset.sum_mul]
+  simp -congrConsts only [← Finset.mul_sum, ← Finset.sum_mul]
 
 private theorem tensor_weighted_sum {m n : ℕ} {ι κ : Type*} [Fintype ι] [Fintype κ]
     (a : ι → ℂ) (b : κ → ℂ) (A : ι → Matrix (Fin m) (Fin m) ℂ)
@@ -78,12 +79,13 @@ private theorem tensor_weighted_sum {m n : ℕ} {ι κ : Type*} [Fintype ι] [Fi
       apply congrArg (Matrix.reindex finProdFinEquiv finProdFinEquiv)
       change Matrix.kroneckerBilinear (R := ℂ) (∑ i, a i • A i) (∑ j, b j • B j) = _
       rw [LinearMap.map_sum₂]
-      simp only [map_sum, map_smul, LinearMap.smul_apply, smul_smul]
-      simp only [mul_comm]
+      simp -congrConsts only [map_sum, map_smul, LinearMap.smul_apply, smul_smul]
+      simp -congrConsts only [mul_comm]
       rfl
     _ = _ := by
       ext p q
-      simp only [tensor, Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.sum_apply,
+      simp -congrConsts only [tensor, Matrix.reindex_apply, Matrix.submatrix_apply,
+        Matrix.sum_apply,
         Matrix.smul_apply]
 
 private theorem density_frobSq_le_one {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
@@ -93,8 +95,8 @@ private theorem density_frobSq_le_one {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ
     _ ≤ ∑ i, ∑ j, (ρ j j).re * (ρ i i).re :=
       Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ => psd_entry_bound hρ j i
     _ = (Matrix.trace ρ).re * (Matrix.trace ρ).re := by
-      simp [Matrix.trace, Finset.mul_sum, mul_comm]
-    _ = 1 := by simp [hTrace]
+      simp -congrConsts [Matrix.trace, Finset.mul_sum, mul_comm]
+    _ = 1 := by simp -congrConsts [hTrace]
 
 private theorem trace_tensor_le_energy {d : ℕ} (A B : Matrix (Fin d) (Fin d) ℂ)
     (C : Matrix (Fin (d * d)) (Fin (d * d)) ℂ)
@@ -110,7 +112,7 @@ private theorem trace_tensor_le_energy {d : ℕ} (A B : Matrix (Fin d) (Fin d) �
       (d : ℝ) ^ 2 * (RHLinalg.frobSq A * RHLinalg.frobSq B) := by
     calc
       _ ≤ Complex.normSq (Matrix.trace (tensor A B * C)) := by
-        simpa only [pow_two] using Complex.re_sq_le_normSq _
+        simpa -congrConsts only [pow_two] using Complex.re_sq_le_normSq _
       _ ≤ _ := hc.trans (by nlinarith [mul_le_mul_of_nonneg_left hC (mul_nonneg ha hb)])
   have hsum : 0 ≤ (d : ℝ) / 2 * (RHLinalg.frobSq A + RHLinalg.frobSq B) :=
     mul_nonneg (div_nonneg hd (by norm_num)) (add_nonneg ha hb)
@@ -124,7 +126,7 @@ private theorem povm_weighted_frobSq_le {n : ℕ} {ι : Type*} [Fintype ι]
   classical
   have hexp : RHLinalg.frobSq (∑ c, u c • P c) =
       ∑ c, ∑ b, (star (u c) * u b).re * (Matrix.trace (P c * P b)).re := by
-    simp only [RHLinalg.frobSq, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
+    simp -congrConsts only [RHLinalg.frobSq, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
       Matrix.sum_mul, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_sum,
       Matrix.trace_smul, RCLike.re_eq_complex_re, smul_eq_mul, Finset.mul_sum, Complex.re_sum]
     rw [Finset.sum_comm]
@@ -152,12 +154,13 @@ private theorem povm_weighted_frobSq_le {n : ℕ} {ι : Type*} [Fintype ι]
         calc
           _ ≤ ‖star (u c) * u b‖ := Complex.re_le_norm _
           _ = 1 := by rw [norm_mul, norm_star, hu c, hu b, one_mul]
-      simpa only [one_mul, RCLike.re_eq_complex_re] using mul_le_mul_of_nonneg_right hcoef
+      simpa -congrConsts only [one_mul, RCLike.re_eq_complex_re] using
+        mul_le_mul_of_nonneg_right hcoef
         (RHLinalg.trace_mul_nonneg_of_posSemidef (hP c) (hP b))
     _ = (Matrix.trace ((∑ c, P c) * (∑ b, P b))).re := by
-      simp only [Matrix.sum_mul, Matrix.mul_sum, Matrix.trace_sum, Complex.re_sum]
+      simp -congrConsts only [Matrix.sum_mul, Matrix.mul_sum, Matrix.trace_sum, Complex.re_sum]
       rw [Finset.sum_comm]
-    _ = n := by simp [hSum]
+    _ = n := by simp -congrConsts [hSum]
 
 private def frequency {d : ℕ} (s : ZMod d) (z : Option (ZMod d))
     (k : ZMod d) : ZMod d × ZMod d :=
@@ -180,7 +183,7 @@ private def measurementMode {d : ℕ} [NeZero d]
 
 private theorem char_sum {d : ℕ} [NeZero d] (t : ZMod d) :
     (∑ k : ZMod d, ZMod.stdAddChar (k * t)) = if t = 0 then (d : ℂ) else 0 := by
-  simpa only [ZMod.card, apply_ite, Nat.cast_zero] using
+  simpa -congrConsts only [ZMod.card, apply_ite, Nat.cast_zero] using
     AddChar.sum_mulShift t (ZMod.isPrimitive_stdAddChar d)
 
 private theorem delta_expansion {d : ℕ} [NeZero d] (c w : ZMod d) :
@@ -188,17 +191,18 @@ private theorem delta_expansion {d : ℕ} [NeZero d] (c w : ZMod d) :
       (d : ℂ)⁻¹ * ∑ k : ZMod d, ZMod.stdAddChar (k * (w - c)) := by
   rw [char_sum]
   by_cases h : c = w
-  · simp [h, NeZero.ne (d : ℂ)]
-  · simp [h, sub_eq_zero, Ne.symm h]
+  · simp -congrConsts [h, NeZero.ne (d : ℂ)]
+  · simp -congrConsts [h, sub_eq_zero, Ne.symm h]
 
 private theorem plane_char_sum {d : ℕ} [NeZero d] (x y : ZMod d × ZMod d) :
     (∑ u : ZMod d × ZMod d,
       ZMod.stdAddChar (u.1 * (x.1 - y.1) + u.2 * (x.2 - y.2))) =
       if x = y then (d : ℂ) ^ 2 else 0 := by
-  simp only [Fintype.sum_prod_type, AddChar.map_add_eq_mul, ← Finset.mul_sum, char_sum,
+  simp -congrConsts only [Fintype.sum_prod_type, AddChar.map_add_eq_mul, ← Finset.mul_sum,
+    char_sum,
     ← Finset.sum_mul, sub_eq_zero]
   by_cases h₁ : x.1 = y.1 <;> by_cases h₂ : x.2 = y.2 <;>
-    simp [h₁, h₂, Prod.ext_iff, pow_two]
+    simp -congrConsts [h₁, h₂, Prod.ext_iff, pow_two]
 
 private theorem scalar_parseval {d : ℕ} [NeZero d] (f : ZMod d × ZMod d → ℂ) :
     (∑ u : ZMod d × ZMod d, Complex.normSq
@@ -207,7 +211,7 @@ private theorem scalar_parseval {d : ℕ} [NeZero d] (f : ZMod d × ZMod d → �
   classical
   apply Complex.ofReal_injective
   push_cast
-  simp_rw [Complex.normSq_eq_conj_mul_self, map_sum, map_mul, Finset.sum_mul,
+  simp_rw -congrConsts [Complex.normSq_eq_conj_mul_self, map_sum, map_mul, Finset.sum_mul,
     Finset.mul_sum, ← AddChar.map_neg_eq_conj]
   calc
     _ = ∑ x : ZMod d × ZMod d, ∑ y : ZMod d × ZMod d,
@@ -226,27 +230,29 @@ private theorem scalar_parseval {d : ℕ} [NeZero d] (f : ZMod d × ZMod d → �
       rw [show u.1 * (y.1 - x.1) + u.2 * (y.2 - x.2) =
         -(u.1 * x.1 + u.2 * x.2) + (u.1 * y.1 + u.2 * y.2) by ring,
         AddChar.map_add_eq_mul]
-      simp only [neg_add, AddChar.map_add_eq_mul, Complex.star_def]
+      simp -congrConsts only [neg_add, AddChar.map_add_eq_mul, Complex.star_def]
       ring
-    _ = _ := by simp [plane_char_sum]
+    _ = _ := by simp -congrConsts [plane_char_sum]
 
 private theorem matrix_parseval {d n : ℕ} [NeZero d]
     (ρ : ZMod d × ZMod d → Matrix (Fin n) (Fin n) ℂ) :
     (∑ u : ZMod d × ZMod d, RHLinalg.frobSq (matrixFourier ρ u)) =
       (d : ℝ) ^ 2 * ∑ x : ZMod d × ZMod d, RHLinalg.frobSq (ρ x) := by
-  simp only [frobSq_eq_sum, matrixFourier, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
-  simp_rw [Finset.sum_comm (γ := ZMod d × ZMod d), scalar_parseval]
-  simp only [Finset.mul_sum]
+  simp -congrConsts only [frobSq_eq_sum, matrixFourier, Matrix.sum_apply, Matrix.smul_apply,
+    smul_eq_mul]
+  simp_rw -congrConsts [Finset.sum_comm (γ := ZMod d × ZMod d), scalar_parseval]
+  simp -congrConsts only [Finset.mul_sum]
 
 private theorem stateMode_eq_matrixFourier {d n : ℕ} [NeZero d]
     (ρ : ZMod d × ZMod d → Matrix (Fin n) (Fin n) ℂ)
     (s : ZMod d) (z : Option (ZMod d)) (k : ZMod d) :
     stateMode ρ s z k = matrixFourier ρ (frequency s z k) := by
-  unfold stateMode matrixFourier
+  rw [stateMode.eq_1, matrixFourier.eq_1]
   apply Finset.sum_congr rfl
   intro x _
   congr 2
-  cases z <;> simp only [phase, frequency, Option.elim_none, Option.elim_some] <;> ring
+  cases z <;> rw [phase.eq_1] <;>
+    simp -congrConsts only [frequency, Option.elim_none, Option.elim_some] <;> ring
 
 private theorem frequency_ne_zero {d : ℕ} [NeZero d] [Fact d.Prime]
     (s : ZMod d) (hs : s ≠ 0) (z : Option (ZMod d)) (k : ZMod d) (hk : k ≠ 0) :
@@ -269,7 +275,7 @@ private theorem frequency_bijective {d : ℕ} [NeZero d] [Fact d.Prime]
       cases w with
       | none =>
         have hkl := mul_left_cancel₀ hs (congrArg Prod.fst he)
-        simp_all
+        simp_all -congrConsts
       | some t => exact (hl (congrArg Prod.snd he).symm).elim
     | some t =>
       cases w with
@@ -289,14 +295,19 @@ private theorem frequency_bijective {d : ℕ} [NeZero d] [Fact d.Prime]
       refine ⟨(none, ⟨u.1.1 / s, div_ne_zero hu hs⟩), ?_⟩
       apply Subtype.ext
       apply Prod.ext
-      · dsimp [frequency]
-        field_simp [hs]
+      · dsimp only
+        rw [frequency.eq_1]
+        dsimp only [Option.elim_none]
+        field_simp (disch := assumption)
       · exact hv.symm
     · refine ⟨(some (-u.1.1 / (2 * s * u.1.2)), ⟨u.1.2, hv⟩), ?_⟩
       apply Subtype.ext
       apply Prod.ext
-      · dsimp [frequency]
-        field_simp [h2, hs, hv]
+      · dsimp only
+        rw [frequency.eq_1]
+        dsimp only [Option.elim_some]
+        field_simp (disch := solve | assumption | exact mul_ne_zero h2 hs |
+          exact mul_ne_zero (mul_ne_zero h2 hs) hv)
       · rfl
 
 private theorem sloped_parseval {d n : ℕ} [NeZero d] [Fact d.Prime]
@@ -318,13 +329,13 @@ private theorem sloped_parseval {d n : ℕ} [NeZero d] [Fact d.Prime]
         (fun p => congrArg RHLinalg.frobSq (stateMode_eq_matrixFourier ρ s p.1 p.2.1))
   rw [hreindex]
   have herase := Finset.sum_subtype (F := inferInstance) (Finset.univ.erase (0 : ZMod d × ZMod d))
-    (by simp : ∀ u, u ∈ Finset.univ.erase (0 : ZMod d × ZMod d) ↔ u ≠ 0)
+    (by simp -congrConsts : ∀ u, u ∈ Finset.univ.erase (0 : ZMod d × ZMod d) ↔ u ≠ 0)
     (fun u => RHLinalg.frobSq (matrixFourier ρ u))
   have hsplit := Finset.sum_erase_add Finset.univ
     (fun u => RHLinalg.frobSq (matrixFourier ρ u)) (Finset.mem_univ (0 : ZMod d × ZMod d))
   rw [herase, matrix_parseval] at hsplit
   have hzero : matrixFourier ρ (0 : ZMod d × ZMod d) = ∑ x, ρ x := by
-    simp [matrixFourier]
+    simp -congrConsts [matrixFourier]
   rw [hzero] at hsplit
   linarith
 
@@ -339,14 +350,14 @@ private theorem state_energy_le {d : ℕ} [NeZero d] [Fact d.Prime]
     calc
       _ ≤ ∑ x : ZMod d × ZMod d, (1 : ℝ) :=
         Finset.sum_le_sum fun x _ => density_frobSq_le_one (ρ x) (hρ x).1 (hρ x).2
-      _ = _ := by simp [ZMod.card, pow_two]
+      _ = _ := by simp -congrConsts [ZMod.card, pow_two]
   have htr : Matrix.trace (∑ x : ZMod d × ZMod d, ρ x) = (d : ℂ) ^ 2 := by
-    simp [Matrix.trace_sum, fun x => (hρ x).2, ZMod.card, pow_two]
+    simp -congrConsts [Matrix.trace_sum, fun x => (hρ x).2, ZMod.card, pow_two]
   have hc := trace_product_cauchy (∑ x : ZMod d × ZMod d, ρ x) (1 : Matrix (Fin d) (Fin d) ℂ)
   have hone : RHLinalg.frobSq (1 : Matrix (Fin d) (Fin d) ℂ) = d := by
-    simp [RHLinalg.frobSq]
+    simp -congrConsts [RHLinalg.frobSq]
   rw [Matrix.mul_one, htr, hone] at hc
-  simp only [map_pow, Complex.normSq_natCast] at hc
+  simp -congrConsts only [map_pow, Complex.normSq_natCast] at hc
   rw [sloped_parseval h2 s hs ρ]
   have hl : (d : ℝ) ^ 3 ≤ RHLinalg.frobSq (∑ x : ZMod d × ZMod d, ρ x) := by
     apply (mul_le_mul_iff_left₀ hd).mp
@@ -368,7 +379,7 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
       ∑ x : ZMod d × ZMod d, ∑ y : ZMod d × ZMod d, ∑ c : ZMod d,
         ZMod.stdAddChar (k * (win z x y - c)) *
           Matrix.trace (tensor (α x) (β y) * M z c) := by
-    simp only [stateMode, measurementMode, tensor_weighted_sum, Matrix.sum_mul,
+    simp -congrConsts only [stateMode, measurementMode, tensor_weighted_sum, Matrix.sum_mul,
       Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_sum,
       Matrix.trace_smul, smul_eq_mul, Finset.mul_sum]
     rw [Finset.sum_comm_cycle, Finset.sum_comm_cycle]
@@ -380,7 +391,7 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
     intro c _
     rw [show k * (win z x y - c) =
       k * phase 1 z x + k * phase (-1) z y + -(k * c) by unfold win; ring]
-    simp only [AddChar.map_add_eq_mul]
+    simp -congrConsts only [AddChar.map_add_eq_mul]
     ring
   have hxy (x y : ZMod d × ZMod d) (z : Option (ZMod d)) :
       Matrix.trace (tensor (α x) (β y) * M z (win z x y)) =
@@ -389,9 +400,9 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
           Matrix.trace (tensor (α x) (β y) * M z c) := by
     calc
       _ = ∑ c : ZMod d, (if c = win z x y then (1 : ℂ) else 0) *
-          Matrix.trace (tensor (α x) (β y) * M z c) := by simp
+          Matrix.trace (tensor (α x) (β y) * M z c) := by simp -congrConsts
       _ = _ := by
-        simp_rw [delta_expansion, mul_assoc, Finset.sum_mul, ← Finset.mul_sum]
+        simp_rw -congrConsts [delta_expansion, mul_assoc, Finset.sum_mul, ← Finset.mul_sum]
         congr 1
         rw [Finset.sum_comm]
   have hz (z : Option (ZMod d)) :
@@ -400,16 +411,16 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
       (d : ℂ)⁻¹ * ∑ k : ZMod d,
         Matrix.trace (tensor (stateMode α 1 z k) (stateMode β (-1) z k) *
           measurementMode M z k) := by
-    simp_rw [hxy, ← Finset.mul_sum, hmode]
+    simp_rw -congrConsts [hxy, ← Finset.mul_sum, hmode]
     congr 1
     exact Finset.sum_comm_cycle
   have hzero (z : Option (ZMod d)) :
       Matrix.trace (tensor (stateMode α 1 z 0) (stateMode β (-1) z 0) *
         measurementMode M z 0) = (d : ℂ) ^ 4 := by
-    simp only [stateMode, measurementMode, zero_mul, neg_zero, AddChar.map_zero_eq_one,
+    simp -congrConsts only [stateMode, measurementMode, zero_mul, neg_zero, AddChar.map_zero_eq_one,
       one_smul, h.2.2.2 z, Matrix.mul_one, tensor_trace, Matrix.trace_sum,
       fun x => (h.1 x).2, fun y => (h.2.1 y).2]
-    simp [ZMod.card, pow_succ, mul_assoc]
+    simp -congrConsts [ZMod.card, pow_succ, mul_assoc]
   have hsplit (z : Option (ZMod d)) :
       (∑ k : ZMod d, (Matrix.trace
         (tensor (stateMode α 1 z k) (stateMode β (-1) z k) * measurementMode M z k)).re) =
@@ -417,14 +428,15 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
         (tensor (stateMode α 1 z k.1) (stateMode β (-1) z k.1) *
           measurementMode M z k.1)).re := by
     have herase := Finset.sum_subtype (F := inferInstance) (Finset.univ.erase (0 : ZMod d))
-      (by simp : ∀ k, k ∈ Finset.univ.erase (0 : ZMod d) ↔ k ≠ 0)
+      (by simp -congrConsts : ∀ k, k ∈ Finset.univ.erase (0 : ZMod d) ↔ k ≠ 0)
       (fun k => (Matrix.trace (tensor (stateMode α 1 z k) (stateMode β (-1) z k) *
         measurementMode M z k)).re)
     have hh := Finset.sum_erase_add Finset.univ
       (fun k => (Matrix.trace (tensor (stateMode α 1 z k) (stateMode β (-1) z k) *
         measurementMode M z k)).re) (Finset.mem_univ (0 : ZMod d))
     rw [herase, hzero] at hh
-    simpa [← Complex.ofReal_natCast, ← Complex.ofReal_pow, add_comm] using hh.symm
+    rw [← Complex.ofReal_natCast, ← Complex.ofReal_pow, Complex.ofReal_re] at hh
+    linarith only [hh]
   have hreal (z : Option (ZMod d)) :
       (∑ x : ZMod d × ZMod d, ∑ y : ZMod d × ZMod d,
         (Matrix.trace (tensor (α x) (β y) * M z (win z x y))).re) =
@@ -433,19 +445,23 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
           measurementMode M z k.1)).re) := by
     rw [← hsplit]
     have hr := congrArg Complex.re (hz z)
-    simpa using hr
+    simpa -congrConsts using hr
   have horder : (∑ x : ZMod d × ZMod d, ∑ y : ZMod d × ZMod d,
       ∑ z : Option (ZMod d), (Matrix.trace (tensor (α x) (β y) * M z (win z x y))).re) =
       ∑ z : Option (ZMod d), ∑ x : ZMod d × ZMod d, ∑ y : ZMod d × ZMod d,
         (Matrix.trace (tensor (α x) (β y) * M z (win z x y))).re := by
     exact Finset.sum_comm_cycle
   rw [score, horder]
-  simp_rw [hreal, ← Finset.mul_sum, Finset.sum_add_distrib]
-  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_option, ZMod.card, nsmul_eq_mul,
+  simp_rw -congrConsts [hreal, ← Finset.mul_sum, Finset.sum_add_distrib]
+  simp -congrConsts only [Finset.sum_const, Finset.card_univ, Fintype.card_option, ZMod.card,
+    nsmul_eq_mul,
     Nat.cast_add, Nat.cast_one]
   have hd : (d : ℝ) ≠ 0 := NeZero.ne _
   have hd1 : (d : ℝ) + 1 ≠ 0 := by positivity
-  field_simp
+  generalize (∑ z : Option (ZMod d), ∑ k : {k : ZMod d // k ≠ 0},
+    (Matrix.trace (tensor (stateMode α 1 z k.1) (stateMode β (-1) z k.1) *
+      measurementMode M z k.1)).re) = t
+  field_simp (disch := positivity)
 
 private theorem fixed_score_le {d : ℕ} [NeZero d] [Fact d.Prime]
     (h2 : (2 : ZMod d) ≠ 0)
@@ -455,7 +471,8 @@ private theorem fixed_score_le {d : ℕ} [NeZero d] [Fact d.Prime]
   have hd : (0 : ℝ) < d := Nat.cast_pos.mpr (NeZero.pos d)
   have hm (z : Option (ZMod d)) (k : ZMod d) :
       RHLinalg.frobSq (measurementMode M z k) ≤ (d : ℝ) ^ 2 := by
-    simpa [measurementMode, pow_two] using povm_weighted_frobSq_le (M z)
+    rw [measurementMode.eq_1]
+    simpa -congrConsts [pow_two] using povm_weighted_frobSq_le (M z)
       (fun c => ZMod.stdAddChar (-(k * c))) (h.2.2.1 z) (h.2.2.2 z)
       (fun c => AddChar.norm_apply _ _)
   have ht : (∑ z : Option (ZMod d), ∑ k : {k : ZMod d // k ≠ 0},
@@ -473,7 +490,7 @@ private theorem fixed_score_le {d : ℕ} [NeZero d] [Fact d.Prime]
             RHLinalg.frobSq (stateMode α 1 z k.1)) +
            (∑ z : Option (ZMod d), ∑ k : {k : ZMod d // k ≠ 0},
             RHLinalg.frobSq (stateMode β (-1) z k.1))) := by
-        simp only [Finset.mul_sum, Finset.sum_add_distrib, mul_add]
+        simp -congrConsts only [Finset.mul_sum, Finset.sum_add_distrib, mul_add]
       _ ≤ _ := by
         have ha := state_energy_le h2 1 one_ne_zero α h.1
         have hb := state_energy_le h2 (-1) (neg_ne_zero.mpr one_ne_zero) β h.2.1
@@ -486,8 +503,9 @@ private theorem fixed_score_le {d : ℕ} [NeZero d] [Fact d.Prime]
   calc
     _ ≤ 1 / (d : ℝ) + (1 / ((d : ℝ) ^ 5 * ((d : ℝ) + 1))) *
         ((d : ℝ) * ((d : ℝ) ^ 4 - (d : ℝ) ^ 3)) := by
-      gcongr
-    _ = _ := by field_simp; ring
+      exact add_le_add (le_refl _) (mul_le_mul_of_nonneg_left ht
+        (show 0 ≤ 1 / ((d : ℝ) ^ 5 * ((d : ℝ) + 1)) by positivity))
+    _ = _ := by field_simp (disch := positivity); ring
 
 private theorem mixture_score_le {d L : ℕ} [NeZero d] [Fact d.Prime]
     (h2 : (2 : ZMod d) ≠ 0) (q : Fin L → ℝ)
@@ -525,11 +543,11 @@ private theorem classical_valid {d : ℕ} [NeZero d] :
     constructor
     · apply Matrix.posSemidef_diagonal_iff.mpr
       intro i
-      split_ifs <;> simp
+      by_cases hi : ZMod.finEquiv d i = x.1 <;> simp -congrConsts [hi]
     · change Matrix.trace (Matrix.diagonal (fun i : Fin d =>
         if ZMod.finEquiv d i = x.1 then (1 : ℂ) else 0)) = 1
       rw [Matrix.trace_diagonal]
-      simpa using (ZMod.finEquiv d).toEquiv.sum_comp
+      simpa -congrConsts using (ZMod.finEquiv d).toEquiv.sum_comp
         (fun c : ZMod d => if c = x.1 then (1 : ℂ) else 0)
   refine ⟨hstate, hstate, ?_, ?_⟩
   · intro z c
@@ -537,7 +555,7 @@ private theorem classical_valid {d : ℕ} [NeZero d] :
     | none =>
       apply Matrix.posSemidef_diagonal_iff.mpr
       intro p
-      split_ifs <;> simp
+      by_cases hi : differenceLabel p = c <;> simp -congrConsts [hi]
     | some t => exact Matrix.PosSemidef.one.smul (by positivity : 0 ≤ 1 / (d : ℝ))
   · intro z
     cases z with
@@ -545,14 +563,14 @@ private theorem classical_valid {d : ℕ} [NeZero d] :
       ext p q
       by_cases hpq : p = q
       · subst q
-        simp [classicalMeasurement, Matrix.sum_apply]
-      · simp [classicalMeasurement, Matrix.sum_apply, hpq]
+        simp -congrConsts [classicalMeasurement, Matrix.sum_apply]
+      · simp -congrConsts [classicalMeasurement, Matrix.sum_apply, hpq]
     | some t =>
       change (∑ _ : ZMod d, (1 / (d : ℝ)) •
         (1 : Matrix (Fin (d * d)) (Fin (d * d)) ℂ)) = 1
       rw [Finset.sum_const, Finset.card_univ, ZMod.card, ← Nat.cast_smul_eq_nsmul ℝ,
         smul_smul]
-      simp [NeZero.ne (d : ℝ)]
+      simp -congrConsts [NeZero.ne (d : ℝ)]
 
 private theorem classical_win_probability {d : ℕ} [NeZero d]
     (x y : ZMod d × ZMod d) (z : Option (ZMod d)) :
@@ -569,9 +587,9 @@ private theorem classical_win_probability {d : ℕ} [NeZero d]
           (if ZMod.finEquiv d ((finProdFinEquiv : Fin d × Fin d ≃ Fin (d * d)).symm p).2 =
               y.1 then (1 : ℂ) else 0)) := by
       unfold tensor classicalEncoding
-      simp only [Matrix.kronecker]
+      simp -congrConsts only [Matrix.kronecker]
       rw [Matrix.diagonal_kronecker_diagonal]
-      simpa only [Matrix.reindex_apply, Function.comp_def] using
+      simpa -congrConsts only [Matrix.reindex_apply, Function.comp_def] using
         (Matrix.submatrix_diagonal_equiv
           (fun p : Fin d × Fin d =>
             (if ZMod.finEquiv d p.1 = x.1 then (1 : ℂ) else 0) *
@@ -586,19 +604,24 @@ private theorem classical_win_probability {d : ℕ} [NeZero d]
       congr 1
       funext p
       dsimp [differenceLabel, win, phase]
-      split_ifs <;> simp_all [sub_eq_add_neg]
+      by_cases hpx : ZMod.finEquiv d
+        ((finProdFinEquiv : Fin d × Fin d ≃ Fin (d * d)).symm p).1 = x.1 <;>
+        by_cases hpy : ZMod.finEquiv d
+          ((finProdFinEquiv : Fin d × Fin d ≃ Fin (d * d)).symm p).2 = y.1 <;>
+        simp_all -congrConsts [sub_eq_add_neg]
     rw [hmul, tensor_trace, hx, hy]
-    simp
+    simp -congrConsts
   | some t =>
-    simp [classicalMeasurement, Matrix.trace_smul, tensor_trace, hx, hy]
+    rw [classicalMeasurement.eq_1]
+    simp -congrConsts [Matrix.trace_smul, tensor_trace, hx, hy]
 
 private theorem classical_score {d : ℕ} [NeZero d] :
     score (classicalEncoding (d := d)) classicalEncoding classicalMeasurement =
       2 / ((d : ℝ) + 1) := by
   unfold score
-  simp_rw [classical_win_probability]
-  simp [univ_option, Finset.sum_insertNone, ZMod.card, NeZero.ne (d : ℝ)]
-  field_simp [NeZero.ne (d : ℝ)]
+  simp_rw -congrConsts [classical_win_probability]
+  simp -congrConsts [univ_option, Finset.sum_insertNone, ZMod.card, NeZero.ne (d : ℝ)]
+  field_simp (disch := first | exact NeZero.ne (d : ℝ) | positivity)
   norm_num
 
 end D5.S3.QuantumBounds.UnentangledOddPrimeCommunication
