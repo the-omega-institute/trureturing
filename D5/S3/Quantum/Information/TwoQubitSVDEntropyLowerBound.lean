@@ -68,20 +68,11 @@ private theorem reducedTransition_eq_mul (A B : Matrix (Fin 2) (Fin 2) ℂ) :
 
 private theorem reducedDensity_trace (A : Matrix (Fin 2) (Fin 2) ℂ) :
     (reducedDensity A).trace = (RHLinalg.frobSq A : ℂ) := by
-  rw [reducedDensity, ptrace2_pure, Matrix.trace_mul_comm]
-  exact Complex.ext rfl
-    (Complex.nonneg_iff.mp (posSemidef_conjTranspose_mul_self A).trace_nonneg).2.symm
-
-private theorem reducedDensity_det (A : Matrix (Fin 2) (Fin 2) ℂ) :
-    (reducedDensity A).det.re = ‖A.det‖ ^ 2 := by
-  change (partialTraceRight
-    (D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
-      (Function.uncurry A))).det.re = ‖A.det‖ ^ 2
-  rw [D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Direct.pure_det]
-  have hmat : Matrix.of (Function.curry (Function.uncurry A)) = A := by
-    ext i j
-    rfl
-  rw [hmat]
+  rw [reducedDensity, pureCoupling,
+    D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.marginal_trace,
+    frobSq_eq_sum]
+  simp only [Fintype.sum_prod_type, Function.uncurry, ← Complex.normSq_eq_norm_sq]
+  rw [Finset.sum_comm]
 
 private theorem two_mul_norm_det_le_frobSq (C : Matrix (Fin 2) (Fin 2) ℂ) :
     2 * ‖C.det‖ ≤ RHLinalg.frobSq C := by
@@ -146,10 +137,7 @@ private theorem transitionMass_pos {T : Matrix (Fin 2) (Fin 2) ℂ} (hT : T ≠ 
   intro h
   have hz : (CFC.sqrt (Tᴴ * T)).trace = 0 := Complex.ext h.symm hr.2.symm
   have hd := hp.trace_eq_zero_iff.mp hz
-  have ht : Tᴴ * T = 0 := by
-    rw [← CFC.sqrt_mul_sqrt_self _ (posSemidef_conjTranspose_mul_self T).nonneg, hd,
-      zero_mul]
-  exact hT (Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp (by rw [ht, trace_zero]))
+  exact hT (CFC.abs_eq_zero_iff.mp hd)
 
 private theorem svdDensity_trace {T : Matrix (Fin 2) (Fin 2) ℂ} (hT : T ≠ 0) :
     (svdDensity T).trace = 1 := by
@@ -184,7 +172,11 @@ private theorem det_svdDensity_ge_min
     rw [transitionMass_sq, hdet, reducedTransition_eq_mul]
     simpa only [hA, hB, one_mul, mul_assoc] using
       frobSq_mul_conjTranspose_add_two_det_le A B
-  rw [svdDensity_det, hdet, reducedDensity_det, reducedDensity_det]
+  rw [svdDensity_det, hdet]
+  simp only [reducedDensity, pureCoupling,
+    D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Direct.pure_det]
+  rw [show Matrix.of (Function.curry (Function.uncurry A)) = A by ext i j; rfl,
+    show Matrix.of (Function.curry (Function.uncurry B)) = B by ext i j; rfl]
   apply le_trans _ (le_div_self (mul_nonneg (norm_nonneg _) (norm_nonneg _)) hpos hmass)
   rcases le_total ‖A.det‖ ‖B.det‖ with hab | hba
   · exact (min_le_left _ _).trans (by
@@ -211,16 +203,6 @@ private theorem qubit_entropy_parameter (R : Matrix (Fin 2) (Fin 2) ℂ)
       spectralEntropy hR.isHermitian = Real.binEntropy p := by
   have hd :=
     D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.qubit_det_bounds R hR htr
-  have hpurity : 1 = RHLinalg.frobSq R + 2 * R.det.re := by
-    have h := congrArg Complex.re
-      (D5.S0.Observation.MatrixTracePowerSum.trace_pow_add_two R 0)
-    simp only [Nat.zero_add, pow_two, pow_zero, pow_one, Matrix.trace_one] at h
-    rw [htr] at h
-    norm_num [Complex.mul_re, Complex.sub_re, Complex.ofReal_re, Complex.ofReal_im,
-      Complex.re_ofNat, Complex.im_ofNat] at h
-    change 1 = (Rᴴ * R).trace.re + 2 * R.det.re
-    rw [hR.isHermitian.eq]
-    nlinarith [h]
   have hrad : 0 ≤ 1 - 4 * R.det.re := by
     linarith [hd.2]
   have hsq := Real.sq_sqrt hrad
