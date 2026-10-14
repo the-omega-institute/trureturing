@@ -7,6 +7,7 @@ import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 import D5.S3.Combinatorics.Graph.PrefixReversal.RecursiveBoundaryAdvance
 import D5.S3.Combinatorics.Graph.Walks.ActualSingleOrderBoundaryUpdate
 import D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
+import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
 
 set_option autoImplicit false
 
@@ -23,6 +24,7 @@ open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.ActualJointEndpointPairs
 open D5.S3.Combinatorics.Graph.Walks.ActualSingleOrderBoundaryUpdate
 open D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
+open D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
 open private mapped_complement_inventory from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 
@@ -40,8 +42,8 @@ private theorem shifted_special_port {m k : ℕ} (hm : 3 ≤ m)
 
 /-- The old retained order may be either actual E or actual O. Its affected
 whole path is factored around d by previous joint-path recovery. The current
-source inventories are supplied by the already earned next joint update,
-with the restored and still-deleted marks explicitly separated. This
+joint filtered inventory is supplied by the already earned next joint update;
+its two actual cut groups earn the restored/kept edge separation. This
 constructs actual whole paths with the next same template; the exchange of
 the two marked orders is the literal nextFrame indexing from the J step. -/
 theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk : 3 ≤ k)
@@ -59,7 +61,12 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
     (holdNodup : (old.support ++ oldrest.flatMap fun p => p.walk.support).Nodup)
     (holdSupport : (old.support ++ oldrest.flatMap fun p => p.walk.support).Perm
       (d.support ++ jointrest.flatMap fun p => p.walk.support))
+    (K H : Finset (Sym2 (ParentVertex F A u hbase)))
+    (hdisjoint : Disjoint K H)
     (restored deleted : List (Sym2 (ParentVertex F A u hbase)))
+    (hrestored : restored = (H.erase s(ℓ₁, r₁)).toList)
+    (hdeletedList : deleted = K.toList)
+    (hrestoreCut : s(ℓ₁, r₁) ∈ H)
     (hdeleted : (deleted.map (Sym2.map Subtype.val)).toFinset =
       markedCuts (nextFrame F A u hbase))
     (holdEdges : (old.edges ++ oldrest.flatMap fun p => p.walk.edges).Perm
@@ -67,13 +74,13 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
     (new₀ : (ParentGraph F A u hbase).Walk z ℓ₀)
     (new₁ : (ParentGraph F A u hbase).Walk r₀ ℓ₁)
     (new₂ : (ParentGraph F A u hbase).Walk r₁ ℓ)
-    (hrestore : (ParentGraph F A u hbase).Adj ℓ₁ r₁)
     (hcurrentSupport : c.support.tail.Perm
       (new₀.support ++ new₁.support ++ new₂.support ++
         jointrest.flatMap fun p => p.walk.support))
-    (hcurrentEdges : c.edges.Perm
-      (new₀.edges ++ new₁.edges ++ new₂.edges ++
-        (jointrest.flatMap fun p => p.walk.edges) ++ restored ++ [s(ℓ₁, r₁)] ++ deleted))
+    (hcurrentJoint : (new₀.edges ++ new₁.edges ++ new₂.edges ++
+        (jointrest.flatMap fun p => p.walk.edges)).Perm
+      (c.edges.filter fun e => decide (e ∉ K ∪ H)))
+    (hcurrentCuts : ∀ e ∈ K ∪ H, e ∈ c.edges)
     (hx : x.val = leftPort F 0) (hy : y.val = leftPort F (k - 1))
     (hℓ₀ : ℓ₀.val = leftPort (nextFrame F A u hbase) 0)
     (hr₀ : r₀.val = rightPort (nextFrame F A u hbase) 0)
@@ -101,13 +108,24 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
         p.finish.val = specialPort (nextFrame F A u hbase) b ∧
         (if odd then oddBoundary (k + 1) else evenBoundary (k + 1)) (code a) (code b)) ∧
       endpointPairs pieces =
-        (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) ∪ {s(ℓ₀, y), s(r₀, x)} := by
+        (endpointPairs (⟨x, y, old⟩ :: oldrest)).erase s(x, y) ∪ {s(ℓ₀, y), s(r₀, x)} ∧
+      s(ℓ₁, r₁) ∉ deleted.toFinset := by
   classical
   obtain ⟨tail, hfactor, _⟩ :=
     actual_rooted_path_is_prefix (prefix.append d)
       (SimpleGraph.Walk.IsPath.mk' hrouteNodup) old holdPath hrouteKeep
   have hold : old = prefix.append (d.append tail) := by
     simpa only [SimpleGraph.Walk.append_assoc] using hfactor
+  obtain ⟨hcurrentEdges, hrestoreNotDeleted, _⟩ :=
+    actual_joint_half_cut_inventory c hc.isCycle
+      (new₀.edges ++ new₁.edges ++ new₂.edges ++
+        (jointrest.flatMap fun p => p.walk.edges)) K H hdisjoint
+      hcurrentJoint hcurrentCuts s(ℓ₁, r₁) hrestoreCut
+  rw [← hrestored, ← hdeletedList] at hcurrentEdges
+  have hrestore : (ParentGraph F A u hbase).Adj ℓ₁ r₁ :=
+    c.adj_of_mem_edges (hcurrentCuts _ (Finset.mem_union.mpr (Or.inr hrestoreCut)))
+  have hrestoreNotDeleted' : s(ℓ₁, r₁) ∉ deleted.toFinset := by
+    simpa only [hdeletedList, List.mem_toFinset, Finset.mem_toList] using hrestoreNotDeleted
   obtain ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts,
       hcard, hpairs, _, _⟩ :=
     actual_single_order_boundary_update c hc d prefix tail old hold oldrest jointrest
@@ -191,7 +209,7 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
           ¬ pair (code a) (code b) (k - 1, 1) (0, 1) from
           ⟨by omega, by omega, hb, hnot⟩)
   exact ⟨pieces, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
-    hrawinv, hrawcuts, hrawcard, hboundary, hpairs⟩
+    hrawinv, hrawcuts, hrawcard, hboundary, hpairs, hrestoreNotDeleted'⟩
 
 #print axioms native_actual_even_odd_boundary_advance
 
