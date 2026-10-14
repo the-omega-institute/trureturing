@@ -7,6 +7,7 @@
    digest: A total two-bank installation routes native replies by paid single-bit writes. -/
 
 import D5.S3.ObserverMemory.Algorithms.NativeExecutionTransport
+import D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition
 import Mathlib.Data.Finset.SymmDiff
 import Mathlib.Data.Finset.Sort
 
@@ -759,6 +760,71 @@ private theorem remaining_eq {T : Table k} {obs : Nat → Address → RawReply}
   obtain ⟨u, c, bit', other, final⟩ := Classical.choose_spec existsTrace
   exact congrArg List.length (execution_trace_unique other path final halt)
 
+private theorem execution_shift {T : Table k} {obs obs' : Nat → Address → RawReply}
+    {w v : Word k} {a b : Nat} {events : List Event}
+    (path : Execution T obs w a v b events) (c : Nat)
+    (responses : ∀ n p, obs (a + n) p = obs' (c + n) p) :
+    ∃ d, b = a + d ∧ Execution T obs' w c v (c + d) events := by
+  induction path generalizing c with
+  | refl => exact ⟨0, by omega, by simpa using Execution.refl _ _⟩
+  | @read w v a b p events hi hc tail ih =>
+      have reply : obs a p = obs' c p := by simpa using responses 0 p
+      obtain ⟨d, hd, rest⟩ := ih c responses
+      refine ⟨d, hd, ?_⟩
+      rw [reply] at rest hc ⊢
+      exact .read hi hc rest
+  | @update w v a b events hi hc tail ih =>
+      obtain ⟨d, hd, rest⟩ := ih (c + 1) (by
+        intro n p
+        simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using responses (n + 1) p)
+      refine ⟨d + 1, by omega, ?_⟩
+      convert Execution.update hi hc rest using 1
+      omega
+
+open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Reply readout)
+open D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+
+/-- The four raw native replies in the fixed flag order. -/
+def rawReply (r : Reply) : RawReply :=
+  match r with
+  | .alpha => 0 | .beta => 1 | .branch => 2 | .absent => 3
+
+/-- The original source field; only Update advances its substitution epoch. -/
+def actualObservation (y : Source) (n : Nat) (p : Address) : RawReply :=
+  rawReply (readout p ((substitution : Source → Source)^[n] y))
+
+/-- Rank evaluated from the actual current source, with no historical epoch. -/
+noncomputable def sourceRank (T : Table k) (y : Source) (w : Word k) : Nat :=
+  remaining T (actualObservation y) w 0
+
+private theorem remaining_current_source {T : Table k} {y : Source}
+    {w v : Word k} {a b : Nat} {events : List Event} {bit : Bool}
+    (path : Execution T (actualObservation y) w a v b events)
+    (halt : (installed T v).instruction = .halt bit) :
+    remaining T (actualObservation y) w a =
+      sourceRank T ((substitution : Source → Source)^[a] y) w := by
+  obtain ⟨d, hd, shifted⟩ := execution_shift path 0
+    (obs' := actualObservation ((substitution : Source → Source)^[a] y)) (by
+      intro n p
+      simp only [actualObservation, Nat.zero_add]
+      rw [← Function.iterate_add_apply, Nat.add_comm a n])
+  rw [remaining_eq path halt, sourceRank, remaining_eq shifted halt]
+
+/-- The rank is independent of which history and epoch represent the same
+actual source and observer word, whenever that configuration terminates. -/
+def SourceRankInvariant (T : Table k) : Prop :=
+  ∀ (y y' : Source) (w v u : Word k) (a b c d : Nat) (es fs : List Event) (bit bit' : Bool),
+    Execution T (actualObservation y) w a v b es →
+    (installed T v).instruction = .halt bit →
+    Execution T (actualObservation y') w c u d fs →
+    (installed T u).instruction = .halt bit' →
+    (substitution : Source → Source)^[a] y = (substitution : Source → Source)^[c] y' →
+    remaining T (actualObservation y) w a = remaining T (actualObservation y') w c
+
+private theorem source_rank_invariant (T : Table k) : SourceRankInvariant T := by
+  intro y y' w v u a b c d es fs bit bit' first halt second halt' same
+  rw [remaining_current_source first halt, remaining_current_source second halt', same]
+
 private theorem remaining_step {T : Table k} {obs : Nat → Address → RawReply}
     {w v u : Word k} {a b c : Nat} {event : Event} {events : List Event} {bit : Bool}
     (step : Execution T obs w a v b [event]) (tail : Execution T obs v b u c events)
@@ -798,7 +864,7 @@ theorem installed_halt {T : Table k} {obs : Nat → Address → RawReply}
       (∀ w v u : Word k, ∀ a' b' c' : Nat, ∀ e es bit',
         Execution T obs w a' v b' [e] → Execution T obs v b' u c' es →
         (installed T u).instruction = .halt bit' →
-        remaining T obs w a' = remaining T obs v b' + 1) := by
+        remaining T obs w a' = remaining T obs v b' + 1) ∧ SourceRankInvariant T := by
   refine ⟨installation_size, by omega, ?_, ?_, ?_⟩
   · intro s u r
     have h₁ := card_finset_fin_le u
@@ -812,7 +878,7 @@ theorem installed_halt {T : Table k} {obs : Nat → Address → RawReply}
     cases last <;> simp [ready, installed, halt]
   refine ⟨last, events, run, hi, ?_, by simpa [physicalInstruction] using hi,
     execution_physical run, ?_, remaining_eq run hi,
-    remaining_eq (.refl _ _) hi, ?_, ?_⟩
+    remaining_eq (.refl _ _) hi, ?_, ?_, source_rank_invariant T⟩
   · intro w c other final
     exact GuardedPhaseExecution.run_halt_unique other (execution_run run) final
       (by simp [wordProgram, hi])
