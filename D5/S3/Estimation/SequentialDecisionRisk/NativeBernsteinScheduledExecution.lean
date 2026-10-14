@@ -189,7 +189,7 @@ variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
 local notation "σ" => fixedSchedule D d hD hd
 local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
 
-private theorem safe_supported_actions (seed : RowSeed) (S : Bool) (h : History) :
+theorem safe_supported_actions (seed : RowSeed) (S : Bool) (h : History) :
     (∀ s, π seed S h = Sum.inl s → s = σ h.length) ∧
     (∀ cell, π seed S h = Sum.inr cell → ∃ k, h.length = D k + d k ∧ cell.1 = false) := by
   classical
@@ -278,7 +278,7 @@ variable {Seed : Type} [MeasurableSpace Seed]
   (π : Seed → Bool → History → Action) (S : Bool) (p q : unitInterval)
 
 omit [MeasurableSpace Seed] in
-private theorem native_history_call_step (n : ℕ) (ω : Seed × Tape) (s : Bool)
+theorem native_history_call_step (n : ℕ) (ω : Seed × Tape) (s : Bool)
     (ha : nativeAction π S p q n ω = .inl s) :
     nativeHistory π S p q (n + 1) ω = nativeHistory π S p q n ω ++
       [(s, sourceRead p q s n ω.2)] := by
@@ -286,7 +286,7 @@ private theorem native_history_call_step (n : ℕ) (ω : Seed × Tape) (s : Bool
   simp only [nativeHistory, acquiredHistory, ha]
 
 omit [MeasurableSpace Seed] in
-private theorem native_full_history_iff (n : ℕ) (ω : Seed × Tape) :
+theorem native_full_history_iff (n : ℕ) (ω : Seed × Tape) :
     (nativeHistory π S p q n ω).length = n ↔
       (n : WithTop ℕ) ≤ nativeCalls π S p q ω := by
   constructor
@@ -560,7 +560,7 @@ private theorem fixedSchedule_between (k n : ℕ) (hlo : D k + d k ≤ n)
     simpa only [block, List.getElem?_append, List.length_replicate,
       List.getElem?_replicate, if_neg hleft, if_pos hright, Option.some.injEq, if_neg hn] using he
 
-private theorem actual_between_landmarks (S : Bool) (p q : unitInterval) (ω : RowSeed × Tape)
+theorem actual_between_landmarks (S : Bool) (p q : unitInterval) (ω : RowSeed × Tape)
     (k n : ℕ) (hlo : D k + d k ≤ n) (hhi : n < D (k + 1) + d (k + 1)) :
     (((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ↔
       (n : WithTop ℕ) < nativeCalls π S p q ω) ∧
