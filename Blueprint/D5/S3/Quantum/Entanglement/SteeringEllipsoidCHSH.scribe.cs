@@ -8,6 +8,7 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.";
     private const string Companion = "D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction";
+    private const string SpinOwner = "D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/QuantumBounds/milne2014fullyentangledfraction");
 
@@ -15,12 +16,6 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
         "Every two-qubit density matrix with steering-ellipsoid centre of length c has CHSH nonlocality at most max(2 sqrt(2(1 - c)), 2). At every c in [0, 1] this is the supremum over states with that centre length, proving Conjecture 1 of Milne, Jennings, Jevtic and Rudolph.",
         H("The steering-ellipsoid CHSH bound"),
         Blocks(
-            Node("two-qubit", "Two-qubit matrices", TwoQubitFormula(),
-                "A two-qubit operator is a complex matrix indexed by pairs of qubit labels in Fin 2. The first label belongs to Alice and the second to Bob. TwoQubit abbreviates this matrix type and imposes no positivity or trace condition.",
-                "TwoQubit", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("spin", "Spin observables", SpinFormula(),
-                "Section II uses the spin observable u dot sigma. Its three Pauli matrices are D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli, indexed by Fin 3. Complex.ofReal embeds each real coordinate into the complex scalars; the centered dot is scalar multiplication of a matrix. This definition permits every real vector u.",
-                "spin", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("bell", "The CHSH operator", BellFormula(),
                 "Section II defines B = alpha dot sigma tensor (beta + beta prime) dot sigma + alpha prime dot sigma tensor (beta - beta prime) dot sigma. The displayed variables aPrime and bPrime denote the primed directions. Matrix.kronecker is Mathlib's Kronecker product, the alias of Matrix.kroneckerMap with multiplication of complex entries. The four vectors here are arbitrary; unit lengths are required in the value set.",
                 "bell", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -73,9 +68,6 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
 
-    private static Formula At(Formula function, params Formula[] arguments) =>
-        new Formula.Apply(function, [.. arguments]);
-
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
 
@@ -122,30 +114,14 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
         Call("Matrix", rows, columns, Complex());
     private static Formula TwoQubitType() => MatrixType(Pair(Fin(2), Fin(2)), Pair(Fin(2), Fin(2)));
 
-    private static Formula Pauli(Formula index) => QCall(Companion, "pauli", index);
     private static Formula Vlen(Formula vector) => QCall(Companion, "vlen", vector);
     private static Formula Centre(Formula rho) => QCall(Companion, "centre", rho);
     private static Formula Trace(Formula matrix) => QCall("Matrix", "trace", matrix);
     private static Formula Positive(Formula matrix) => QCall("Matrix", "PosSemidef", matrix);
     private static Formula Kron(Formula left, Formula right) => QCall("Matrix", "kronecker", left, right);
-    private static Formula Spin(Formula vector) => Call("spin", vector);
+    private static Formula Spin(Formula vector) => QCall(SpinOwner, "spin", vector);
     private static Formula Bell(Formula a, Formula aPrime, Formula b, Formula bPrime) =>
         Call("bell", a, aPrime, b, bPrime);
-    private static Formula SumOver(string name, Formula type, Formula body) =>
-        Seq(Sum, Underscore, Grp(Seq(F.Id(name), Colon, Sp, type)), Sp, Parenthesized(body));
-
-    private static Formula TwoQubitFormula() =>
-        EqTo(F.Id("TwoQubit"), TwoQubitType());
-
-    private static Formula SpinFormula()
-    {
-        var u = F.Id("u");
-        var i = F.Id("i");
-        return All("u", Direction(), EqTo(Call("spin", u),
-            SumOver("i", Fin(3),
-                Seq(QCall("Complex", "ofReal", At(u, i)), Sp, Cdot, Sp, Pauli(i)))));
-    }
-
     private static Formula BellFormula()
     {
         var a = F.Id("a");
