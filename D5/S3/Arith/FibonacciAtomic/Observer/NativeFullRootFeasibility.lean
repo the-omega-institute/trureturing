@@ -261,7 +261,7 @@ private theorem origin_values (P : CutSet) (hP : CutPrefixFree P) (t₀ : Source
   have fill := recover_fill P hP (canonicalRow P t₀) ⟨substitution u.val,u.property⟩
   exact ⟨⟨v,⟨u.val,fill.symm⟩⟩,fill.symm⟩
 
-private theorem actual_type (P : CutSet) (hP : CutPrefixFree P) (t₀ : Source)
+theorem actual_type (P : CutSet) (hP : CutPrefixFree P) (t₀ : Source)
     (v : ImageValues (canonicalRow P t₀)) : Admissible (canonicalRow P t₀) (types (canonicalRow P t₀) v.val.val) := by
   obtain ⟨u,hu⟩ := v.property
   have row : canonicalRow P (substitution u) = canonicalRow P t₀ := by
@@ -319,7 +319,7 @@ private theorem representative_reply (C : LiteralRow) (v : Classes C → Source)
   | of b => cases b <;> rfl
   | mul l r => rfl
 
-private theorem install_correct (C : LiteralRow) (fallback : LiteralRow)
+theorem install_correct (C : LiteralRow) (fallback : LiteralRow)
     (T : RootTree C LiteralRow) (v : Classes C → Source) :
     nativeRun (fun a => readout a (evaluateRow (extend C v) C)) (install C fallback T) =
       rootRun (types C v) T ∧ nativeDepth (install C fallback T) = rootDepth T := by
@@ -337,7 +337,7 @@ private theorem install_correct (C : LiteralRow) (fallback : LiteralRow)
             | exact congrArg (fun out : LiteralRow × Nat => (out.1,out.2+1)) ihB.1
       · simp [install,nativeDepth,rootDepth,ihA.2,ihB.2,ihE.2]
 
-private theorem dialogue_run (T : Dialogue LiteralRow) (t : Source) :
+theorem dialogue_run (T : Dialogue LiteralRow) (t : Source) :
     ∃ tr, Run controller T 0 t tr (nativeRun (fun a => readout a t) T).1 ∧
       Stationary tr ∧ (answers tr).length = (nativeRun (fun a => readout a t) T).2 := by
   induction T with
@@ -367,7 +367,7 @@ private theorem dialogue_run (T : Dialogue LiteralRow) (t : Source) :
       · cases hy : readout a t <;> simpa [nativeRun,answers,reads,hy] using
           congrArg (fun n : Nat => n+1) hc
 
-private theorem native_calls (T : Dialogue LiteralRow) (t : Source) :
+theorem native_calls (T : Dialogue LiteralRow) (t : Source) :
     (nativeRun (fun a => readout a t) T).2 ≤ nativeDepth T := by
   induction T with
   | stop o => exact Nat.le_refl 0
