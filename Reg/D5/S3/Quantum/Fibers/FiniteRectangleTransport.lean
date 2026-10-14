@@ -113,3 +113,98 @@ noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _
 
 end
 end Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport
+
+namespace Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.WeightCompatibility
+
+noncomputable section
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+def signature : Signature where
+  Params := Base
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => Vec
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun _ b k => phaseWeight b k) (fun e => nomatch e)
+
+def rejected : Realization signature := realize signature
+  (fun _ _ _ => (0 : Vec)) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (b : Base) (_hb : ValidBase b) (k : ℝ)
+    (_hk : k ∈ Set.Ioo (lower b) (upper b)),
+    R.readout () b k 2 = 0 ∧
+      R.readout () b k 0 - R.readout () b k 1 -
+      R.readout () b k 3 + R.readout () b k 4 = 1
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  have he := (h ((2/5 : ℝ),2/5,1/5) (by norm_num [ValidBase])
+    (1/5) (by norm_num [lower,upper])).2
+  norm_num [rejected, realize] at he
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨weight_compatible,rejected,rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,rfl,rejected_fails⟩
+      intro j hj
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
+    · intro i; exact nomatch i
+  dependence := by
+    intro i
+    refine ⟨((2/5 : ℝ),2/5,1/5),(1/5 : ℝ),(1/10 : ℝ),?_⟩
+    intro he
+    have hc := congrFun he 0
+    norm_num [actual,realize,phaseWeight,information,probability,direction,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_three, Matrix.cons_val_four, Matrix.vecHead, Matrix.vecTail] at hc
+
+noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@D5.S3.Quantum.Fibers.FiniteRectangleTransport.weight_compatible)
+    (type_of% (realize signature (fun _ b k => phaseWeight b k)
+      (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.WeightCompatibility.__information_unit,
+  realizationName := `Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.WeightCompatibility.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ b k => phaseWeight b k)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := (`D5.S3.Quantum.Fibers.FiniteRectangleTransport),
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 2,
+      functionOperand := false,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end
+end Reg.D5.S3.Quantum.Fibers.FiniteRectangleTransport.WeightCompatibility
