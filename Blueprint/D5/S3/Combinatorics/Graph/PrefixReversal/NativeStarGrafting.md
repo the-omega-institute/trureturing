@@ -1,0 +1,32 @@
+# Actual One-Contact Native E Grafting
+
+## Abstract
+
+An actual retained b-edge at one complete contact circle allows a whole deletion star to be grafted onto a Hamilton cycle.
+
+Configurations are permutations of Fin(m+1), and a, b, c reverse the first m+1, m, m-1 positions. SupplierStar(z) is the independently defined deletion star of the last label of z, with the remaining tuple circle fixed up to whole reversal. GraftDomain(U,z) is U union SupplierStar(z), and domainGraph(D) is the actual three-generator Cayley graph induced on D. OldVertices(U) and UnionVertices(U,z) denote the corresponding subtypes. liftOld(z,u) includes an old vertex into that union. The contact and all gap circles are specified independently of the chosen paths.
+
+**Theorem 1.1 (The Actual E Ring Enlarges the Cycle and Retains Every Uncut Old Edge).**
+
+$$\forall m \in \mathrm{Nat},\; 3 \le m \Rightarrow \left(\forall U \in \mathrm{Predicate}\left(\mathrm{Configuration}\left(m\right)\right),\; \forall base \in \mathrm{OldVertices}\left(U\right),\; \forall x \in \mathrm{OldVertices}\left(U\right),\; \forall y \in \mathrm{OldVertices}\left(U\right),\; \forall w \in \mathrm{Walk}\left(\mathrm{domainGraph}\left(U\right), base, base\right),\; \left(\mathrm{IsHamiltonianCycle}\left(w\right) \land \left(\mathrm{val}\left(y\right) = \mathrm{mul}\left(\mathrm{val}\left(x\right), \mathrm{b}\left(m\right)\right) \land \left(\mathrm{Sym2}\left(x, y\right) \in \mathrm{edges}\left(w\right) \land \left(\forall t \in \mathrm{Configuration}\left(m\right),\; \left(\mathrm{member}\left(t, U\right) \land \mathrm{SupplierStar}\left(\mathrm{val}\left(x\right), t\right)\right) \Leftrightarrow \mathrm{Circle}\left(\mathrm{val}\left(x\right), t\right)\right)\right)\right)\right) \Rightarrow \left(\exists start \in \mathrm{UnionVertices}\left(U, \mathrm{val}\left(x\right)\right),\; \mathrm{val}\left(start\right) = \mathrm{val}\left(x\right) \land \left(\exists q \in \mathrm{Walk}\left(\mathrm{domainGraph}\left(\mathrm{GraftDomain}\left(U, \mathrm{val}\left(x\right)\right)\right), start, start\right),\; \mathrm{IsHamiltonianCycle}\left(q\right) \land \left(\left(\forall u \in \mathrm{OldVertices}\left(U\right),\; \forall v \in \mathrm{OldVertices}\left(U\right),\; \left(\mathrm{Sym2}\left(u, v\right) \in \mathrm{edges}\left(w\right) \land \left(\neg \mathrm{Sym2}\left(u, v\right) = \mathrm{Sym2}\left(x, y\right)\right)\right) \Rightarrow \mathrm{Sym2}\left(\mathrm{liftOld}\left(\mathrm{val}\left(x\right), u\right), \mathrm{liftOld}\left(\mathrm{val}\left(x\right), v\right)\right) \in \mathrm{edges}\left(q\right)\right) \land \left(\forall i \in \mathrm{Fin}\left(m\right),\; \left(\neg \mathrm{val}\left(i\right) = 0\right) \Rightarrow \left(\forall u \in \mathrm{UnionVertices}\left(U, \mathrm{val}\left(x\right)\right),\; \forall v \in \mathrm{UnionVertices}\left(U, \mathrm{val}\left(x\right)\right),\; \forall g \in \mathrm{Configuration}\left(m\right),\; \left(\mathrm{Circle}\left(\mathrm{gapAnchor}\left(\mathrm{val}\left(x\right), i\right), \mathrm{val}\left(u\right)\right) \land \left(\left(g = \mathrm{a}\left(m\right) \lor g = \mathrm{b}\left(m\right)\right) \land \left(\mathrm{val}\left(v\right) = \mathrm{mul}\left(\mathrm{val}\left(u\right), g\right) \land \left(\neg \mathrm{Sym2}\left(\mathrm{val}\left(u\right), \mathrm{val}\left(v\right)\right) = \mathrm{Sym2}\left(\mathrm{gapAnchor}\left(\mathrm{val}\left(x\right), i\right), \mathrm{mul}\left(\mathrm{gapAnchor}\left(\mathrm{val}\left(x\right), i\right), \mathrm{b}\left(m\right)\right)\right)\right)\right)\right)\right) \Rightarrow \mathrm{Sym2}\left(u, v\right) \in \mathrm{edges}\left(q\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversal/NativeStarGrafting.native_one_contact_graft` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume m is at least three, w is an actual Hamilton cycle on an independent old domain U, x and y are old vertices with y=x*b, and their actual undirected edge occurs in w. Assume also that U meets SupplierStar(x) exactly in the complete circle Circle(x). Then there is an actual Hamilton cycle q on their full union, based at the configuration x. Every old edge other than {x,y} occurs in q. In each nonzero supplier gap, every native a/b edge other than that gap's actual b cut occurs in q. The retained edges belong to this same constructed cycle, including old c edges; the theorem does not choose unrelated witnesses.
+
+Open the supplied old cycle at its actual contact edge, rotate and reverse as needed, and use the resulting complete Hamilton path from x to y as gap zero. At each other gap z_i=x*(b*c)^i, use the existing complete native b-complement from z_i to z_i*b. Lift these actual walks to the union's induced graph. The independent star coordinate partition exhausts all added vertices. Its gap circles are disjoint, and the one-contact assumption excludes every nonzero gap from the old domain. Thus the full piece supports are disjoint and contain every union vertex exactly once.
+
+Each consecutive pair is joined by the actual generator c, since z_i*b*c=z_(i+1). The previously proved complete E trace earns (b*c)^m=1, so the final c edge returns to gap zero. PathRingSplicing constructs a genuine Hamilton cycle from these actual full paths and real connections. Opening the old cycle removes exactly its contact edge. The native complement inventory retains every other a/b edge in a new circle, and injective induced edge maps and the exact spliced edge list carry both inventories into q.
+
+The contact intersection and occurrence of the old b edge are explicit mathematical hypotheses. Concrete core and supplier families must earn them before applying this theorem. This result supplies an actual reusable enlargement step for all m at least three; full second-layer coverage, actual marked-path recombination, and the all-size recursive Hamiltonicity theorem remain separate obligations.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/NativeStarGrafting.native_one_contact_graft`
+- Dependency: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeCircleOwnership](NativeCircleOwnership.md)
+- Dependency: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeSwitches](NativeSwitches.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Walks/PathRingSplicing](../Walks/PathRingSplicing.md)
