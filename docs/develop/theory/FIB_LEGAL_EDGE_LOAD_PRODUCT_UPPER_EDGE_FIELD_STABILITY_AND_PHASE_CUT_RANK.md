@@ -3493,3 +3493,545 @@ harmonic-edge optimization or establish a new general
 MPS truncation theorem.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 26. Direct renewal truncation gives nonnegative legal MPS tensors
+
+**Theorem 26.1 (One positive global approximation by excluding long zero runs).**
+Use the proper stationary renewal law of Definition 24.1.
+For an integer $D\ge2$, let $E_{n,D}$ be the event that
+the complete length-n word contains no D consecutive zeros.
+Define
+
+$$
+|\Theta_{n,D}\rangle=
+\frac{\sum_{w\in E_{n,D}}\sqrt{P(w)}|w\rangle}
+ {\sqrt{P(E_{n,D})}}.
+\tag{26.1}
+$$
+
+This is well-defined and has an exact open-boundary MPS
+representation of bond at most D with nonnegative tensors.
+It retains no11 support. Moreover,
+
+$$
+\|\Psi_n(P)-\Theta_{n,D}\|^2
+\le2(n-D+1)_+\nu R_D.
+\tag{26.2}
+$$
+
+For the fixed SNS of §22 this becomes
+
+$$
+\|\Psi_n(P)-\Theta_{n,D}\|^2
+\le\frac{(n-D+1)_+(D+2)}{2^D}.
+\tag{26.3}
+$$
+
+Thus the logarithmic choice (25.4) is also sufficient
+for norm error at most $\epsilon$, now with bond at
+most D and nonnegative amplitudes and tensors.
+
+Proof. Full legal support assigns positive mass to an
+alternating word, so $P(E_{n,D})>0$. Use virtual states
+$a=0,\ldots,D-1$, initialized at zero. At site t,
+with $1\le t\le n$, take
+
+$$
+\begin{aligned}
+(T_t^0)_{a,b}&=\mathbf1_{\{b=a+1<D\}},\\
+(T_t^1)_{a,b}&=\mathbf1_{\{b=0\}}c_{t,a},\\
+c_{t,a}&=
+\begin{cases}
+\sqrt{\nu S_a},&a=t-1,\\
+\sqrt{\gamma_a},&a\ne t-1.
+\end{cases}
+\end{aligned}
+\tag{26.4}
+$$
+
+All tensors are nonnegative. A path that survives
+records the number of zeros since the last one, or
+the number of initial zeros if none has appeared.
+At the input to site t, a reachable state equals
+t-1 precisely when no one has yet appeared. Hence
+the first one supplies $\sqrt{\nu S_A}$, and
+later ones supply $\sqrt{\gamma_g}$ for their
+actual complete gaps. The zero transition kills
+a D-zero run. Two adjacent ones after the first
+are killed by $\gamma_0=0$.
+
+Use terminal vector
+
+$$
+f_n(a)=
+\begin{cases}
+\sqrt{\nu R_n},&a=n<D,\\
+\sqrt{S_a},&\text{otherwise}.
+\end{cases}
+\tag{26.5}
+$$
+
+Only an all-zero word can reach a=n. Its exceptional
+terminal value is therefore exactly its amplitude.
+For every other surviving word, the terminal value
+supplies its last survival factor. There is a unique
+virtual path for each word; (24.3) proves that its
+amplitude is $\mathbf1_{E_{n,D}}(w)\sqrt{P(w)}$.
+Divide the terminal vector by $\sqrt{P(E_{n,D})}$
+to obtain (26.1), without increasing bond.
+
+Let $\eta=P(E_{n,D}^c)$. There are
+$(n-D+1)_+$ possible starting positions of a D-zero
+run. Stationarity, the union bound and (24.3) give
+
+$$
+\eta\le(n-D+1)_+P(0^D)
+=(n-D+1)_+\nu R_D.
+\tag{26.6}
+$$
+
+The overlap of the two normalized positive vectors
+is $\sqrt{1-\eta}$. Thus their squared distance
+is $2(1-\sqrt{1-\eta})\le2\eta$, proving (26.2).
+For SNS, $P(0^D)=(D+2)/2^{D+1}$, which gives
+(26.3). This bound is at most one quarter of the
+right side of (25.3), for the same D, so (25.4)
+is sufficient as claimed. $\square$
+
+This construction directly supplies one vector for all
+cuts, without separate cut truncations or a subsequent
+support MPO. Its classical measurement law is exactly
+$P(\,\cdot\mid E_{n,D})$. For $n\ge D$ it removes
+some words that originally had positive mass; preserving
+legal support here does not mean retaining full legal
+support or the original probabilities. The tensors
+depend on site position through the first-event test
+and on n through the terminal boundary. No stationary
+family or native preparation is inferred.
+
+The underlying renewal factorization is standard and
+the construction is a direct application at the actual
+finite-window law. It makes no priority claim or new
+general truncation-theorem claim.
+
+## 追加锚（本行以下为增补区）
+
+
+## 27. A renewal family with exact classical dimension three and quantum dimension two
+
+**Definition 27.1 (The compared generating models).**
+A classical model is a finite, time-homogeneous,
+nonnegative edge-emission HMM with a stationary initial
+row and stochastic total transition. A quantum model
+is a finite-dimensional memory with a stationary density
+operator and time-homogeneous completely positive
+visible branch maps whose sum preserves trace. Finite
+word probabilities are obtained by composing the branch
+maps and taking the trace. External correlated memory
+or a time-dependent control schedule is not part of
+either comparison class. Quantum dimension counts the
+memory Hilbert dimension; classical dimension counts
+hidden states.
+
+**Theorem 27.2 (One proper law, with minima three and two).**
+Fix $0<r<1$ and put
+
+$$
+q=r^2,\qquad d=1-q,\qquad
+b=\sqrt{\frac d{1+q}},\qquad
+\psi=\frac{(r,1)^{\mathsf T}}{\sqrt{1+q}}.
+\tag{27.1}
+$$
+
+On a two-dimensional complex memory, use the real matrices
+
+$$
+A=\begin{pmatrix}r&d\\0&r\end{pmatrix},\qquad
+B=b\begin{pmatrix}r&-q\\1&-r\end{pmatrix},\qquad
+\mathcal E_0(\rho)=A\rho A^*,\quad
+\mathcal E_1(\rho)=B\rho B^*.
+\tag{27.2}
+$$
+
+They define a complete quantum instrument. After every
+positive-probability one-emission the memory resets to
+$|\psi\rangle\langle\psi|$. Its proper stationary
+visible law $P_q$ is renewal, with gap probabilities
+
+$$
+\gamma_0=0,\qquad
+\gamma_k=\frac{d^3}{1+q}k^2q^{k-1}\quad(k\ge1).
+\tag{27.3}
+$$
+
+For this same stationary output law, the minimum
+classical dimension in Definition 27.1 is exactly
+three, whereas the minimum quantum dimension is
+exactly two.
+
+Proof. Write $v=(r,1)^{\mathsf T}$ and
+$\ell=(1,-r)$, so $B=bv\ell$ and
+$\ell v=0$. Direct multiplication gives
+
+$$
+I-A^*A=d\ell^*\ell=B^*B,\qquad
+B\psi=0.
+\tag{27.4}
+$$
+
+Thus the two branch maps are completely positive
+and their sum preserves trace. B has range
+$\mathbb C\psi$, proving pure reset. The power
+formula for every $j\ge0$ is
+
+$$
+A^{j+1}=
+\begin{pmatrix}
+r^{j+1}&(j+1)d r^j\\0&r^{j+1}
+\end{pmatrix}.
+\tag{27.5}
+$$
+
+Consequently
+
+$$
+B A^{j+1}\psi=b(j+1)d r^j\psi.
+\tag{27.6}
+$$
+
+The squared norm gives (27.3), including k=0
+by (27.4). Since $A^n\to0$, telescoping the
+completeness identity proves $\sum_k\gamma_k=1$.
+All legal gaps are positive and their mean is finite.
+Geometric moment sums give
+
+$$
+\mu=\sum_{k\ge0}(k+1)\gamma_k
+=\frac{2(1+2q)}{1-q^2},\qquad \nu=\mu^{-1}.
+\tag{27.7}
+$$
+
+To exhibit the stationary initialization explicitly, put
+
+$$
+\rho_*=\nu\sum_{k\ge0}
+A^k|\psi\rangle\langle\psi|(A^*)^k.
+\tag{27.8}
+$$
+
+The series converges and is positive. The survival
+probability $\|A^k\psi\|^2=S_k$ follows by
+telescoping future click probabilities and using
+$A^n\to0$. Thus $\operatorname{Tr}\rho_*
+=\nu\sum_kS_k=1$. Shifting the sum and using
+(27.6) gives
+$\mathcal E_0(\rho_*)=\rho_*-\nu|\psi\rangle\langle\psi|$
+and $\mathcal E_1(\rho_*)=\nu|\psi\rangle\langle\psi|$.
+This proves stationarity. Reset, the gap law and
+vanishing infinite survival identify the actual law
+as the proper stationary renewal law (24.3).
+
+For a classical presentation, take
+
+$$
+M_0=\begin{pmatrix}q&d&0\\0&q&d\\0&0&q\end{pmatrix},\quad
+\alpha=\left(\frac{2q}{1+q},\frac d{1+q},0\right),\quad
+\beta=(0,0,d)^{\mathsf T},\quad M_1=\beta\alpha,
+\quad
+\lambda=\frac{(\alpha_1,1,1)}{\alpha_1+2}.
+\tag{27.9}
+$$
+
+The total matrix is stochastic, irreducible and
+aperiodic, and $\lambda$ is stationary. Also
+$\alpha\beta=0$, so $M_1^2=0$. Its rank-one
+one-emission resets to $\alpha$. The nilpotent
+upper shift in $M_0$ has order three, and its
+binomial power formula gives
+
+$$
+\alpha M_0^k\beta
+=\frac{d^3}{1+q}k^2q^{k-1}\quad(k\ge1),\qquad
+\alpha\beta=0.
+\tag{27.10}
+$$
+
+It therefore has the same proper stationary renewal
+law, rather than just the same one-time marginals.
+This supplies a classical dimension-three upper bound.
+
+For the lower bound, set $C=d^3/(1+q)>0$.
+The actual gap Hankel minor is
+
+$$
+\det[\gamma_{i+j}]_{i,j=0}^2
+=C^3\det\begin{pmatrix}
+0&1&4q\\1&4q&9q^2\\4q&9q^2&16q^3
+\end{pmatrix}
+=-8C^3q^3\ne0.
+\tag{27.11}
+$$
+
+Any h-state classical presentation of the same
+stationary law has, conditional on a one, a posterior
+row $a=\lambda M_1/P_q(1)$ and next-one column
+$c=M_1\mathbf1$. Its actual interevent probabilities
+are $\gamma_k=a M_0^k c$. The gap Hankel factors
+through the h-dimensional hidden space, so its rank
+is at most h. Equation (27.11) forces $h\ge3$;
+no rank-one assumption on that competing $M_1$ was
+used. This proves the classical minimum.
+
+Finally, a one-dimensional quantum memory has a unique
+density operator; each fixed branch map multiplies it
+by one scalar probability. Its output is iid.
+It cannot have both $P_q(1)>0$ and $P_q(11)=0$.
+The displayed quantum model supplies the matching
+dimension-two upper bound. $\square$
+
+For this family $\sqrt{\gamma_k}$ is a constant
+times $k r^{k-1}$, including its zero at k=0.
+Its scalar Hankel rank is two: it has a two-term
+separable expansion, and its $2\times2$ minor at
+indices zero and one has nonzero determinant.
+Corollary 24.3 therefore also bounds the exact
+positive coherent finite-window bond by four.
+The quantum generator, the pure finite-window
+embedding and its boundary factors remain distinct
+objects despite their shared gap sequence.
+
+The comparison is an exact dimension comparison
+for the specified generation task. It does not
+claim minimal stationary Shannon/von Neumann entropy,
+work advantage, robustness under error, preparation
+of the coherent output vector, or transport to
+the product-activity law and parent of §1.
+The quantum model may start in the mixed stationary
+state (27.8); after a recorded one its conditional
+trajectory is pure. No infinite jointly pure
+output state is asserted.
+
+Quantum stochastic generators and memory advantages
+are established literature, including
+[Elliott, *Memory compression and thermal efficiency
+of quantum implementations of non-deterministic
+hidden Markov models*, arXiv:2105.06285v2,
+§§II–III, equations (5)–(6)](https://arxiv.org/abs/2105.06285v2).
+The displayed operator family, matching stationary
+three-state presentation and all-presentation minor
+bound give the comparison here. No literature
+priority is claimed for this construction or for
+quantum/classical dimension separation in general.
+
+## 追加锚（本行以下为增补区）
+
+
+## 28. The SNS permits mixed finite memory but obstructs finite pure reset amplitudes
+
+**Proposition 28.1 (An explicit mixed-memory qubit instrument for the original SNS).**
+For matrix units $E_{ij}=|i\rangle\langle j|$ on
+two dimensions, set
+
+$$
+\begin{aligned}
+\mathcal F_0(\rho)&=\tfrac12
+\left(E_{00}\rho E_{00}+E_{10}\rho E_{01}
++E_{11}\rho E_{11}\right),\\
+\mathcal F_1(\rho)&=\tfrac12 E_{01}\rho E_{10}.
+\end{aligned}
+\tag{28.1}
+$$
+
+These are completely positive branches with a
+trace-preserving sum. Starting at $I/2$, their
+visible output is exactly the fixed stationary SNS
+law (22.1).
+
+Proof. The zero branch has Kraus operators
+$E_{00}/\sqrt2,E_{10}/\sqrt2,E_{11}/\sqrt2$;
+the one branch has $E_{01}/\sqrt2$. Their adjoint
+products sum to I. On a diagonal density with
+row weights $p=(p_0,p_1)$, direct multiplication gives
+
+$$
+\mathcal F_0(\operatorname{diag}p)
+=\operatorname{diag}(p_0/2,(p_0+p_1)/2),\qquad
+\mathcal F_1(\operatorname{diag}p)
+=\operatorname{diag}(p_1/2,0).
+\tag{28.2}
+$$
+
+These are exactly $pM_0$ and $pM_1$ from (22.1).
+Induction on complete words proves equality of every
+cylinder probability. The total branch sends any
+density to $I/2$, so this initialization is stationary.
+After a one the memory is $E_{00}$, whereas a
+following zero sends it to $I/2$, a mixed state.
+$\square$
+
+This standard classical-to-quantum Kraus embedding
+is a dimension-two generator of the law, even though
+the prescribed positive coherent output has unbounded
+exact rank. It supplies neither that coherent state
+nor a pure trajectory conditioned only on the visible
+labels. Elliott arXiv:2105.06285v2 §III explicitly
+explains the discarded auxiliary register needed to
+suppress interference in nonpredictive generators;
+its §V treats SNS. That paper's compressed encoding
+of its hidden states is different from the orthogonal
+embedding (28.1), and its entropic comparison is not
+a consequence of this embedding.
+
+**Lemma 28.2 (An odd polynomial geometric law has no finite scalar recurrence amplitude).**
+Let p be a real polynomial of odd degree m with
+positive leading coefficient, and let q be positive.
+There is no complex sequence $z_n$ satisfying an
+eventual finite constant-coefficient linear recurrence
+and
+
+$$
+|z_n|^2=p(n)q^n
+\quad\text{for all sufficiently large }n.
+\tag{28.3}
+$$
+
+Proof. The existing recurrence characterization is
+[Stanley, *Enumerative Combinatorics*, Volume 1,
+second-edition author draft, Theorem 4.1.1,
+equation (4.3), and Proposition 4.2.2](https://math.mit.edu/~rstan/ec/ec1.pdf).
+The theorem gives the exponential-polynomial form;
+the proposition permits a finite initial transient.
+After discarding that transient and zero terms, write
+
+$$
+z_n=\sum_j P_j(n)\lambda_j^n,
+\tag{28.4}
+$$
+
+with distinct nonzero $\lambda_j$ and nonzero
+polynomials $P_j$. The sequence is not eventually
+zero by (28.3). Let $\rho=\max_j|\lambda_j|>0$,
+and let e be the greatest polynomial degree among
+terms on that maximal radius. Dividing by
+$\rho^n n^e$ gives
+
+$$
+\frac{z_n}{\rho^n n^e}=T_n+o(1),\qquad
+T_n=\sum_{j\in J}a_j\omega_j^n,
+\quad |\omega_j|=1,
+\tag{28.5}
+$$
+
+where J selects the maximal-degree terms on that
+radius, the $a_j$ are their nonzero leading
+coefficients and the $\omega_j$ are distinct.
+Every smaller-radius polynomial term tends to zero
+after this division, as does each smaller-degree
+term on the same radius.
+
+The finite geometric sum proves, for $|\omega|=1$
+and $\omega\ne1$,
+$N^{-1}\sum_{n=0}^{N-1}\omega^n\to0$.
+Expand $|T_n|^2$ and apply that identity to each
+off-diagonal ratio. It follows that
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n=0}^{N-1}|T_n|^2
+=\sum_{j\in J}|a_j|^2>0.
+\tag{28.6}
+$$
+
+Both $T_n$ and the left side of (28.5) are bounded,
+and their difference tends to zero. Their squared
+moduli therefore have the same positive Cesàro
+limit. But (28.3) makes the latter sequence exactly
+
+$$
+\frac{p(n)}{n^{2e}}\left(\frac q{\rho^2}\right)^n
+\quad\text{for all large }n.
+\tag{28.7}
+$$
+
+If $q<\rho^2$, this tends to zero, contradicting
+the positive Cesàro limit. If $q>\rho^2$, it
+diverges, contradicting boundedness. For equality,
+the positive leading coefficient and odd m imply
+$m\ne2e$: the sequence either tends to zero or
+diverges. Both are again impossible. This proves
+the lemma without assuming a pointwise lower bound
+on an oscillatory sum. $\square$
+
+**Corollary 28.3 (The pure-reset restriction is substantive for SNS).**
+No finite-dimensional, time-homogeneous quantum
+instrument with one Kraus operator A for zero and
+one B for one can realize the SNS gap law if its
+one-emission resets the reachable conditional
+memory to one fixed unit vector $\psi$.
+
+Proof. Pure reset gives
+$BA^k\psi=z_k\psi$ for every k. Choose a fixed
+linear functional l with $l(\psi)=1$; then
+$z_k=l(BA^k\psi)$. Cayley–Hamilton gives a finite
+constant-coefficient recurrence for this scalar
+sequence. The actual next-one probability after
+k zeros is $\|BA^k\psi\|^2=|z_k|^2$.
+SNS would require $|z_k|^2=k/2^{k+1}$, violating
+Lemma 28.2 with $p(n)=n/2$ and $q=1/2$.
+$\square$
+
+Proposition 28.1 supplies a finite mixed-memory
+implementation outside that restriction. The even
+degree law (27.3) supplies a finite pure-reset
+implementation, so the restriction is not vacuous.
+Even degree is only a necessary condition in
+Lemma 28.2, not a sufficiency theorem for arbitrary
+polynomials or quantum completeness constraints.
+
+There is a separate, existing single-cut mechanism:
+$|\sqrt{x}+i\sqrt{y}|^2=x+y$, giving an additive
+probability matrix a complex amplitude matrix of
+rank at most two. See Glasser et al.,
+arXiv:1907.03741v2, supplementary Lemma 15 and
+its proof. The SNS boundary matrix (24.5) has
+this additive form after positive row and column
+scaling, with extended coordinates
+$x_i=i,x_*=\ell+1$ and $y_j=j,y_*=r+1$.
+In fact, put $u_i=2^{-i/2}$,
+$u_*=\sqrt2\,2^{-\ell/2}$ and similarly
+$v_j=2^{-j/2}$, $v_*=\sqrt2\,2^{-r/2}$.
+Then
+
+$$
+(C_{\ell,r})_{a,b}
+=\frac{u_av_b}{2\sqrt2}\sqrt{x_a+y_b},\qquad
+Q_{a,b}=\frac{u_av_b}{2\sqrt2}
+ (\sqrt{x_a}+i\sqrt{y_b}).
+\tag{28.8}
+$$
+
+Q has the same entry magnitudes and rank at most
+two by its two outer products. The submatrix at
+indices $0,*$ has nonzero determinant, so its
+rank is exactly two. Lifting Q by the disjoint
+word-class isometries of Theorem 24.2 preserves
+every complete-word coefficient magnitude: each
+word belongs to exactly one group on either side.
+This supplies phases of rank two at any separately
+selected cut, including its all-zero boundaries,
+for the same complete occupation law.
+This is not one common choice of
+phases for all cuts. Corollary 28.3 excludes only
+the stated finite homogeneous scalar reset model;
+it does not settle arbitrary site-dependent,
+non-reset or length-dependent global phase MPS.
+
+The standard recurrence and finite-geometric-sum
+ingredients, the classical Kraus embedding and the
+known additive complex square root are distinguished
+from the law-specific comparisons here. No physical
+realization, original-parent energy, all-dimensional
+harmonic-edge optimum, complete general Lean
+formalization or literature-priority claim follows.
+
+## 追加锚（本行以下为增补区）
