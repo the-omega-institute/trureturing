@@ -7568,3 +7568,149 @@ the actual FH test. They supply no replacement for the unchanged
 same-source signed comparison, BV/LC account or strict margin. The
 finite prime lower bound and RH remain unproved; no literature
 originality or kernel verification is claimed.
+
+## Stronger published counts increase the ceiling-free lag payment
+
+Retain BV4--BV5 and LC1--LC4's original source, complete horizon,
+all full windows and every maximizing tie. The count-to-inventory
+transfer below reuses LS6a's BHP lower envelope and SI2's admitted
+blocks; the scalar optimization and fractional-credit rule are
+exactly those already used in LC. The added consumer is a larger
+lag payment in the same upper account, rather than JM7's localized
+lower-margin calculation. This is a paper application of published
+results, without a new prime theorem, originality claim or Lean
+verification.
+
+### Retain the incomplete block until after scalar optimization
+
+Fix a lower coefficient $b_*>0$ and a block exponent
+$1/2<\vartheta<99/100$ admitted by one of these existing suppliers:
+
+| Published input | Fixed lower coefficient | Strict exponent condition |
+|---|---|---|
+| [BHP 1997, Theorem 3(I), $q=1$](../Scale/bakerharmanpintz1997goldbach.md) | $b_*<0.99$ | $\vartheta>11/20$ |
+| [Guth--Maynard, Corollary 1.3, arXiv:2405.20552v2](../Analytic/guthmaynard2024largevalues.md#the-short-interval-input) | $b_*<1$ | $\vartheta>17/30$ |
+
+The BHP statement requires one fixed sufficiently small positive
+$\varepsilon$. Choose it with $11/20+\varepsilon\le\vartheta$;
+blocks of length $x^\vartheta$ then satisfy its lower length bound
+and eventually its upper bound $x/\log x$. For Guth--Maynard take
+fixed $\varepsilon=\vartheta-17/30>0$ and forward block length
+$(2B)^\vartheta$. Its centres lie in $[B,2B]$, so this length is
+between the required $x^\vartheta$ and $x^{99/100}$ eventually.
+No upper restriction on the complete lag $t$ by either block-length
+ceiling is imposed.
+
+At any original selected real branch, retain only primes in
+$(B,A-1]$, where $A=B+t$. Their first-layer activation clocks obey
+$B<p<a_{p,1}<p+1\le A$, so all their $\log p$ masses belong to
+$\Delta(A)=K(A)-K(B)$. Strict endpoints and simultaneous higher
+layers are preserved; every higher-layer contribution is nonnegative.
+Complete backward BHP blocks, or forward Guth--Maynard blocks, cover
+this prime interval except for length $O(B^\vartheta)+O(1)$.
+All centres are $B(1+o_X(1))$. Each prime keeps its own logarithmic
+weight, and the fixed slack below $0.99$ or $1$ pays the conversion
+from the published count. The shorter-than-one-block case is covered
+by $\Delta(A)\ge0$. Thus one fixed $c=c_{\vartheta,b_*}\ge1$ and
+one common start give, on every original branch and tie,
+
+$$
+\Delta(A)\ge b_*[t-c(1+B^\vartheta)].
+\tag{LC5}
+$$
+
+The constant and start can depend on the fixed supplier parameters;
+they do not depend on an individual core or its size relative to $X$.
+No $\Theta<1$ premise or global core-clock ceiling enters LC5.
+
+Combine LC5 with $\Delta(A)\ge0$ before using LC1's scalar identity.
+With $p_\vartheta=1-1/(2\vartheta)>0$, it gives
+
+$$
+\frac{t-\Delta(A)/b_*}{\sqrt B}
+\le\frac{c}{\sqrt B}+c^{1/(2\vartheta)}t^{p_\vartheta}.
+$$
+
+Define the nonnegative allowance
+
+$$
+\mathsf E_X^{\vartheta,b_*}
+=\frac{c^{1/(2\vartheta)}}{1+p_\vartheta}
+ (t_m^{1+p_\vartheta}-t_0^{1+p_\vartheta})
++c\int_{t_0}^{t_m}\frac{dt}{\sqrt{B(t)}}.
+$$
+
+The same exact occupation identity used in LC2 yields
+
+$$
+\boxed{V_X^K\ge
+ b_*[\mathsf L_X-\mathsf E_X^{\vartheta,b_*}].}
+\tag{LC6}
+$$
+
+This is an additive allowance. It does not replace an uncontrolled
+$o(1)\mathsf L_X$ or assume that $V_X^K/(M_XL_X)$ is bounded.
+
+### The original scale pays the allowance on stricter parameter ranges
+
+Substitute the unchanged $t_m\le(d/4)M_X\sqrt X$ and
+$M_X=X^{1/2-\eta}\log X$ into the preceding allowance. Uniform
+$B_{\min,X}\to\infty$ gives
+
+$$
+\boxed{
+\frac{\mathsf E_X^{\vartheta,b_*}}{M_XL_X}
+\ll_{\vartheta,b_*,d}
+ X^{1/2-(1-\eta)/(2\vartheta)}
+ (\log X)^{-1/(2\vartheta)}+o(M_X^{-1}).}
+\tag{LC7}
+$$
+
+Consequently the allowance is $o(1)$ when the fixed exponent satisfies
+$\vartheta\le1-\eta$, including equality by the negative logarithmic
+power. Choose the fixed precision and exponent before taking the common
+source start. The available payments are:
+
+| Original supplied $\eta$ | Admissible fixed lower coefficient |
+|---|---|
+| $\eta<13/30$ | Any $0<b_*<1$ |
+| $13/30\le\eta<9/20$ | Any $0<b_*<0.99$ |
+| $9/20\le\eta\le19/40$ | LC1--LC4's existing $b_0=9/100$ |
+
+Every row retains the original $1-\Theta<\eta<1/2$, including
+$\Theta=1$ where allowed. The first two rows use only that same
+supplied $\eta$; they do not reselect an oscillation exponent.
+Neither $\eta=13/30$ in the Guth--Maynard branch nor $\eta=9/20$
+in the BHP 1997 branch passes its strict supplier cut. Coefficient
+$b_*=1$, coefficient $b_*=0.99$ in the BHP branch, a moving
+precision $b_*(X)$ and a numerical common start are not asserted.
+For $\eta>19/40$ the existing explicit allowances remain available
+but are not declared negligible.
+
+### Spend the stronger coefficient in the unchanged upper account
+
+Keep LC3's $h_X=a-\epsilon-(800/9)\rho_X>0$ and its complete
+$\mathsf T_X^\circ$, $\mathsf C_X$ and $\mathcal R_X$.
+For every fixed $z\in[0,1]$, apply LC6 to only the $z$ fraction of
+the same inventory credit. This gives
+
+$$
+\boxed{
+\mathcal R_X\le
+\frac{(c_{\rm win}-zb_*h_X)\mathsf L_X
+ +\mathsf T_X^\circ-\mathsf C_X-(1-z)h_XV_X^K}{M_XL_X}
++\frac{zb_*h_X\mathsf E_X^{\vartheta,b_*}}{M_XL_X}.}
+\tag{LC8}
+$$
+
+On the first two table ranges, the paid lag coefficient is therefore
+exactly $zb_*h_X$, with an $o(1)$ additive error from LC7. The
+$\rho_XV_X^K$ correction remains inside $h_X$; the unspent credit
+is still $(1-z)h_XV_X^K$. No credit is counted twice.
+
+Since $c_{\rm win}>1$, $b_*<1$ and $h_X<a<5/8$, the remaining
+lag coefficient stays greater than $1-a>0$. The full anchored
+exterior, its finite terminal remainder and the rest of the original
+joint comparison remain. A larger paid coefficient does not establish
+the strict upper bound below the same-source JM margin, all-integer
+Robin inequality or RH.
