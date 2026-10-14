@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:4def32c645637b0f4812470acdbbab10eae683e084a2dc18c292adb12ecba678
   normalized_sha256: sha256:4def32c645637b0f4812470acdbbab10eae683e084a2dc18c292adb12ecba678
 cas_ref: sha256:4def32c645637b0f4812470acdbbab10eae683e084a2dc18c292adb12ecba678
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramPolytope.cut_body_polytope
+    target_statement_id: sha256:0c4e2dbecd6b681e40a1d0e97063656934e1fe270bfebb3374f5131dcce167e0
 receipts:
   unresolved_subitems: []
   chain_atoms:
