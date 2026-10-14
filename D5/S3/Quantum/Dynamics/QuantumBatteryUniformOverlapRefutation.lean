@@ -236,7 +236,7 @@ private theorem vectorS_eigen : graphS.adjMatrix ℝ *ᵥ vectorS = (-18 : ℝ) 
         (if i = t.1.1.1 ∨ i = t.1.1.2 then (-1 / 9 : ℝ) else 0) =
           (-1 / 9) * (if i = t.1.1.1 ∨ i = t.1.1.2 then 1 else 0) := by
       intro t
-      split_ifs <;> ring
+      simp only [mul_ite, mul_one, mul_zero]
     rw [sum_congr rfl (fun t _ => h t), ← mul_sum, core_incidence]
     norm_num
   · rw [row_attached]
@@ -253,7 +253,7 @@ private theorem weighted_incidence (x : Fin 10 → ℝ) (y : Pair × Fin 27 → 
   calc
     _ = ∑ i, (if i = t.1.1.1 ∨ i = t.1.1.2 then x i else 0) * y t := by
       refine sum_congr rfl fun i _ => ?_
-      split_ifs <;> ring
+      simp only [mul_ite, ite_mul, mul_zero, zero_mul]
     _ = _ := by rw [← sum_mul, incident_sum]; ring
 
 private theorem quadratic_identity (x : Vert → ℝ) :
@@ -383,6 +383,7 @@ theorem result : ¬ claim := by
   rw [vector_sum, vector_norm] at hw
   have hb := h 1225 graph graph_nonempty
   have hs := Real.sqrt_nonneg (1224 : ℝ)
+  generalize wmin graph = w at hw hb
   norm_num (config := { congrConsts := false }) at hw hb
   linarith
 
