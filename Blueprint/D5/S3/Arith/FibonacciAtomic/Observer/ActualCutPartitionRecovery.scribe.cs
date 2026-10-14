@@ -55,6 +55,9 @@ internal sealed class ActualCutPartitionRecoveryDocument : IScribeDocumentDefini
                 "Each suffix section of a prefix-free public cut remains prefix-free."),
             Definition("prefixTrie", "Actual finite prefix trie",
                 "A depth bounded by the maximum public address length reaches every cut. Unused branches are concrete alpha leaves, and each cut is filled by a native finite source."),
+            Describe.Lean(DescribeId.Create("actualcutpartitionrecovery-prefixtrie-at"),
+                DeclarationHandle.Create(Prefix + "prefixTrie_at"), H("Actual subtree at a trie cut"), Statement("prefixTrie_at"),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The original trie lemma reaches a ++ r within the supplied depth, provided no strict prefix of r enters the cut. Its unchanged proof is directly consumed by OriginalVector.InterleavedWordRecovery.original_at. Choosing the entire level retains the complete source skeleton, including all unselected leaves."))), DescribeRole.Theorem),
             Theorem("uniform_trie_row", "Uniform old-row collision",
                 "Uniformly filling the same trie with any two sources gives the same complete old row: its exterior and its single equality class agree."),
             Theorem("coverage_failure_pair", "Uncovered-hole source pair",
@@ -91,6 +94,7 @@ internal sealed class ActualCutPartitionRecoveryDocument : IScribeDocumentDefini
 
     private static StatementSource Statement(string n) => n switch
     {
+        "prefixTrie_at" => StatementSource.FromAuthor(Disp(All("n", V("Nat"), All("P", V("CutSet"), All("a,r", V("Address"), All("f", Seq(V("Address"), Sp, To, Sp, V("Source")), Imp(And(Mem(Call("append", V("a"), V("r")), V("P")), Seq(Call("length", V("r")), Sp, Leq, Sp, V("n")), All("s", V("Address"), Imp(Call("IsPrefix", V("s"), V("r")), Imp(Seq(V("s"), Sp, Neq, Sp, V("r")), Seq(Neg, Sp, Mem(Call("append", V("a"), V("s")), V("P"))))))), EqOf(Call("subtree", V("r"), Call("prefixTrie", V("n"), V("P"), V("a"), V("f"))), Call("some", Call("f", Call("append", V("a"), V("r")))))))))))),
         "classValue_at" => StatementSource.FromAuthor(Disp(All("P", V("CutSet"), All("u", V("Source"), All("p", V("Address"), All("t", V("Source"), Imp(And(Call("CutPrefixFree", V("P")), Mem(V("p"), V("P")), EqOf(Call("subtree", V("p"), V("u")), Call("some", V("t")))), EqOf(Call("classValue", V("P"), V("u"), Call("classOrdinal", V("P"), V("u"), V("p"))), V("t"))))))))),
         _ => StatementSource.WithoutFormula()
     };

@@ -414,4 +414,76 @@ noncomputable def original_whole_row_implies_depth_and_image_registration : Lean
   options := #[]
 
 end
+abbrev uniqueSignature : Signature where
+  Params := Unit
+  State _ := Trace
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Trace
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def uniqueActual : Realization uniqueSignature :=
+  realize uniqueSignature (fun _ _ t => t) (fun e => nomatch e)
+def uniqueBad : Realization uniqueSignature :=
+  realize uniqueSignature (fun _ _ _ => []) (fun e => nomatch e)
+abbrev uniqueArena : Arena where
+  signature := uniqueSignature
+  Law R := ∀ {C : Type} {O : Type} {δ : C → Op C O}
+    {c : C} {e : Nat} {r : Source} {t s : Trace} {o p : O}
+    (_ : Run δ c e r t o) (_ : Run δ c e r s p),
+    R.readout () () t = s ∧ o = p
+
+private def uniqueProbe : Bool → Op Bool Unit
+  | true => .read [] (fun _ => false)
+  | false => .stop ()
+
+private theorem unique_bad : ¬ uniqueArena.Law uniqueBad := by
+  intro law
+  have run : Run uniqueProbe true 0 (.of true) [.read 0 [] .alpha] () :=
+    Run.read rfl rfl (Run.stop rfl)
+  have eq := (law run run).1
+  change ([] : Trace) = [.read 0 [] .alpha] at eq
+  cases eq
+
+def uniqueProof : Registration uniqueArena (type_of% (@run_unique)) where
+  actual := uniqueActual
+  bridge := Iff.rfl
+  variation := ⟨@run_unique,uniqueBad,unique_bad⟩
+  sensitivity := ⟨fun i => ⟨uniqueBad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,unique_bad⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    exact ⟨(),[],[.read 0 [] .alpha],by simp [uniqueActual,realize]⟩
+
+noncomputable def run_unique_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@run_unique) (Realization uniqueSignature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth.run_unique.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth.uniqueProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨uniqueArena⟩
+  objectArena := .source ⟨uniqueArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source uniqueArena ⟨uniqueProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize uniqueSignature uniqueActual.readout uniqueActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","fn","arg"],
+      stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth

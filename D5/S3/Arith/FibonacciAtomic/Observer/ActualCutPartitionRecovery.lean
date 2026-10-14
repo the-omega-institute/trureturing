@@ -392,7 +392,7 @@ def prefixTrie : Nat → CutSet → Address → (Address → Source) → Source
         .mul (prefixTrie n P (a ++ [false]) f) (prefixTrie n P (a ++ [true]) f)
       else .of true
 
-private theorem prefixTrie_at (n : Nat) (P : CutSet) (a r : Address)
+theorem prefixTrie_at (n : Nat) (P : CutSet) (a r : Address)
     (f : Address → Source) (hp : a ++ r ∈ P) (bound : r.length ≤ n)
     (avoid : ∀ s : Address, s.IsPrefix r → s ≠ r → a ++ s ∉ P) :
     subtree r (prefixTrie n P a f) = some (f (a ++ r)) := by
