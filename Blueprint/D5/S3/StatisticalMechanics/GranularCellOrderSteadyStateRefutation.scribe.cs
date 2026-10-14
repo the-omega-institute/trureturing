@@ -68,7 +68,10 @@ internal sealed class GranularCellOrderSteadyStateRefutationDocument : IScribeDo
                             + "flux over J 10 is zero. Thus the full right-hand side vanishes at both states. "
                             + "Their order-three fractions differ: X_3 = 3/16 and Y_3 = 6/17. "
                             + "These two physical stationary states refute the uniqueness assertion."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("myhill-blumenfeld-2023-granular-steady-state-uniqueness-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
