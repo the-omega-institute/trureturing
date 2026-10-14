@@ -26,6 +26,7 @@ proof_shape: Commutant.replicaSwap_apply: bind-only; consumer: CHaarConcatenatio
 escape_witness: Commutant.two_copy_commutant, via quarter phases and a Hadamard constraint.
 admission_basis: escape-witness
 Direct frozen dependencies: none; the upstream imports are pinned Mathlib.
+Escape audit unfinished for hadamard_unitary: https://github.com/the-omega-institute/trureturing/issues/16609.
 The finite Gram and coefficient identities are consumed normalization helpers. The new
 content is a universal commutant classification and the literal Haar-average reduction;
 no bounded enumeration, checker, numerical certificate or positive finite instance is retained.
@@ -82,7 +83,7 @@ end D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 namespace D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Hadamard
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def hadamard (a b : n) (t : ℂ) : Matrix n n ℂ :=
+def hadamard (a b : n) (t : ℂ) : Matrix n n ℂ :=
   1 + single a a (t-1) + single b b (-t-1) + single a b t + single b a t
 
 private theorem single_mul_rule (a b c d : n) (x y : ℂ) :
@@ -111,7 +112,7 @@ private theorem hadamard_square (a b : n) (hab : a≠b) (t : ℂ) (ht : 2*t^2=1)
   all_goals simp_all [Matrix.single_apply]
   all_goals ring_nf <;> norm_num [ht2]
 
-private theorem hadamard_unitary (a b : n) (hab : a≠b) (t : ℂ)
+theorem hadamard_unitary (a b : n) (hab : a≠b) (t : ℂ)
     (hreal : star t=t) (ht : 2*t^2=1) : hadamard a b t ∈ unitaryGroup n ℂ := by
   rw [mem_unitaryGroup_iff,star_eq_conjTranspose,(hadamard_hermitian a b t hreal).eq]
   exact hadamard_square a b hab t ht
