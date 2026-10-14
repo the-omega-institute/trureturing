@@ -1,0 +1,52 @@
+**Definition 14.1 (concrete records).** For a chart supplied by the complete
+native correspondence of [PDC, Theorem 5.2][PDC] and the joint signed support
+of [NAC, Definition 5.1 and Theorem 6.1][NAC], a record $d$ contains exactly:
+
+1. For each scalar coordinate, either an exact label $\overline n=q$ with
+   $q\in\mathbb N$ or an infinity label $\overline n=\infty$. The labels
+   denote $T_q$ and $\Omega$, respectively.
+2. A partition of residual coordinates into $F$ and $I$, an exact finite
+   native tree $f_t$ for every $t\in F$, and a finite nullary pair-guarded
+   system plus one output expression $O_t$ for every $t\in I$. Every such
+   expression satisfies Definition 13.1. An $I$ output contains $\Omega$ or
+   reaches a directed cycle in its defining dependency graph; this is the
+   supplied witness that its completed value is genuinely infinite.
+3. Shared systems occur once and are combined with independent systems only
+   after disjoint renaming. Repeated chart names keep one value. No record
+   asserts a point merely by naming an arbitrary completed tree.
+
+The record denotes
+$\operatorname{pt}(d)=(\mathbf t,\mathbf Z)$, with $t_a=T_{q_a}$ or $\Omega$
+according to its scalar label, $Z_t=f_t$ for $t\in F$, and
+$Z_t=\llbracket O_t\rrbracket$ for $t\in I$. Its effective prefix interface
+$\operatorname{Pref}_d(t,h)$ returns every reply through inclusive depth $h$,
+including root and absent replies: finite $f_t$ is evaluated directly, while
+an $I$ output uses the supplied guarded iteration, with $h+1$ pair-guarded
+iterations sufficient through depth $h$. This is an interface for supplied
+records, not a representation of arbitrary completion points.
+
+After all finite residuals are frozen, the chart's complete whole-negative
+list is retained in one predicate $\Gamma$ on the full Cartesian residual
+carrier. Positive, image and navigation conditions have already been
+eliminated by the cited chart suppliers. With $K$ the exact remaining
+Presburger condition, write
+
+$$
+\begin{aligned}
+S_f(\mathbf n)&\Longleftrightarrow
+ K(\mathbf n)\land\exists\mathbf w_I\in\mathcal T^I\;
+ \Gamma(\mathbf n,(f_t)_{t\in F},\mathbf w_I),\\
+\operatorname{Cof}(d)&\Longleftrightarrow
+ \forall b\in\mathbb N\;\exists\mathbf n\in\mathbb N^k\quad
+ S_f(\mathbf n)\land
+ \bigwedge_{a\notin J}n_a=q_a\land
+ \bigwedge_{a\in J}n_a\ge b,
+\end{aligned}
+\tag{SPC.56}
+$$
+
+where $J$ is the set of infinity-labelled scalars. One tuple of residuals
+satisfies all whole negatives at the same scalar vector. Empty products and
+conjunctions have their literal meanings; when $J$ is empty, cofinality is
+fixed-rank feasibility.
+

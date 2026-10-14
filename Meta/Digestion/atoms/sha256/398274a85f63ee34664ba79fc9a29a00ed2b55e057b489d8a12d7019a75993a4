@@ -1,0 +1,35 @@
+**Definition 9.1 (a bare-shift entire input and refinement).** Put
+$V(x,y,z)=\langle x,\langle y,z\rangle\rangle$.
+Take $P=\{\varepsilon\}$ with its complete one-hole old row,
+$Q=\{L,RL,RR\}$, $N=1$, and exactly
+
+$$
+\begin{aligned}
+H_0&=\{(0,\varepsilon,\mathsf{branch}),(0,R,\mathsf{branch})\},\\
+H_{\rm rel}
+ &=\{(1,L,0,RR,=),\ (0,L,0,RR,\ne)\}.
+\end{aligned}
+\tag{SPC.38}
+$$
+
+This is the bare shift $z=\rho x$, rather than the proper-context
+map $F$ of Definition 8.1.
+
+For a general complete acquired input and finite set $B$ of at least
+two distinct attained whole rows, retain the exact finite fibers $D_r$
+and write
+
+$$
+J_B(h)\iff
+\exists(u_r)_{r\in B}\in\prod_{r\in B}D_r
+              \quad\forall r,s\in B\ u_r\equiv_hu_s.
+\tag{SPC.39}
+$$
+
+A compact Hausdorff refinement consists of a compact Hausdorff space
+$Z$, a map $j:\mathcal T\to Z$, and a continuous
+$\pi:Z\to\widehat{\mathcal T}$ with $\pi(j(u))=u$.
+For each row take the closure of its entire jointly constrained
+realizations,
+$C_r=\overline{j(D_r)}^{\,Z}$.
+

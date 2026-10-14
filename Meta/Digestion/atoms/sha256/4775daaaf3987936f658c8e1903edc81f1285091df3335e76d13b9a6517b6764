@@ -1,0 +1,67 @@
+**Theorem 4.2 (unique contact and its rationality boundary).** For
+Definition 3.1's context and $a\ge1$ there is a unique completion tree
+$K$ with $K=C[\rho^a K]$. Put $L_C=\langle K,\langle K,K\rangle\rangle$.
+Then
+
+$$
+\overline{D_0}\cap\overline{D_1}=\{L_C\}.
+\tag{SPC.19}
+$$
+
+Both $K,L_C$ are non-rational in the native signature. With the same
+proper one-hole context and $a=0$, the unique fixed point is rational.
+
+Proof. Extend $\rho^a$ by retaining original branches and replacing
+each reached leaf by its finite native image, including along infinite
+branch paths. Original-prefix locality proves continuity. The proof of
+(SPC.9) applies in this completion too: a subtree without leaves has
+only branches, so satisfies the same lower bound. The common context
+gives at least $d$ levels of prefix gain.
+
+Consecutive iterates $F^t(s),F^{t+1}(s)$ of any finite seed agree below
+$td$. Transitivity along later consecutive iterates shows stabilization
+of every finite reply. The stable replies define a valid tree: root
+reachability, both children of a branch, and absence below a leaf each
+concern finitely many coordinates and hold in eventually matching
+finite trees. Continuity gives $F(K)=K$. Two fixed points, starting
+with vacuous agreement below zero, agree below $td$ after $t$
+applications of the same gain. They agree at every address and are equal.
+Every seed orbit therefore has this same limit.
+
+This is the ordinary guarded fixed-point argument. Interpreted recursive
+schemes and metric solutions are mature background [Milius–Moss,
+Theorems 7.5 and 7.15][MM]; no new general fixed-point theorem is claimed.
+
+A common closure point retains the outer skeleton; write its three
+subtrees $x,y,z$. From $D_0$ it inherits $x=y,z=F(y)$, and from
+$D_1$ it inherits $x=F(y),z=F(y)$. Whole-tree equality is closed:
+a discrepancy would occur at a finite address and contradict equal
+sufficiently close approximants. The graph of $F$ is closed by its
+continuity. Thus $y=F(y)$, so $x=y=z=K$. Conversely (SPC.18)
+converges on every finite prefix to $L_C$. This proves both inclusions
+of (SPC.19) without treating finite disequality as closed.
+
+Let $q$ be the sibling of the first edge of $w$. The side tree
+$g=C|_q$ is finite and nonempty. Branches on the hole path survive
+every fixed iterate. Distribution through $C$ proves by induction
+
+$$
+K|_{w^j}=\rho^{aj}K,\qquad K|_{w^jq}=\rho^{aj}g\quad(j\ge0).
+\tag{SPC.20}
+$$
+
+Indeed in $\rho^{aj}C[\rho^a K]$ the path $w$ stays intact, its
+hole becomes $\rho^{a(j+1)}K$, and its side at $q$ becomes
+$\rho^{aj}g$. These are expanded native subtrees, not trees carrying
+a unary $\rho$ label.
+
+Every leaf of $g$ expands to $T_{aj}$ or $T_{aj+1}$ under its
+original path. Thus $\mu(\rho^{aj}g)\ge\lfloor aj/2\rfloor\to\infty$.
+A finite set of finite trees has bounded minimum leaf depth.
+Equation (SPC.20) consequently supplies infinitely many distinct
+finite subtrees. Both $K$ and $L_C$ are non-rational.
+For $a=0$, the finite directed constructor graph of $C$, with its
+hole pointing back to its root, unfolds to the unique fixed point.
+Its finitely many vertices represent all subtree values, so that point
+is rational. The positive shift is essential. $\square$
+
