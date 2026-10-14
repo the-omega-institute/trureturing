@@ -75,7 +75,8 @@ internal sealed class NativeJ2ComponentsDocument : IScribeDocumentDefinition
         Formula table = values[5];
         for (byte index = 5; index > 0; index--)
             table = Call("IfThenElse", Eq(Call("FinValue", i), D((byte)(index - 1))), values[index - 1], table);
-        return Describe.Lean(DescribeId.Create("native-j2-" + selector),
+        return Describe.Lean(DescribeId.Create(finish
+                ? "native-j2-component-finish-port" : "native-j2-component-start-port"),
             DeclarationHandle.Create(Prefix + selector), H(title),
             StatementSource.FromAuthor(Disp(All("i", Call("Fin", D(6)), Eq(Call(selector, i), table)))),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))), DescribeRole.Definition);
