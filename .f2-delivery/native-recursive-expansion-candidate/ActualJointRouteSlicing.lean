@@ -30,6 +30,8 @@ theorem actual_joint_and_route_three_fragments
     (hjn : (joint.flatMap fun z => z.walk.support).Nodup)
     (jp : Piece G) (hjp : jp ∈ joint) (hjpath : jp.walk.IsPath)
     (p : Piece G) (ps : List (Piece G)) (hlink : Linked p ps)
+    (Λ : G.Walk p.start (finish p ps))
+    (hΛsupport : Λ.support = (p :: ps).flatMap fun z => z.walk.support)
     (hbn : ((p :: ps).flatMap fun z => z.walk.support).Nodup)
     (hbpath : ∀ z ∈ p :: ps, z.walk.IsPath)
     (hroot : jp.start = p.start)
@@ -46,10 +48,10 @@ theorem actual_joint_and_route_three_fragments
     ∃ q₀ : G.Walk p.start ℓ₀, ∃ q₁ : G.Walk r₀ ℓ₁,
       ∃ q₂ : G.Walk r₁ (finish p ps),
       q₀.IsPath ∧ q₁.IsPath ∧ q₂.IsPath ∧
-      q₀.support ++ q₁.support ++ q₂.support = (join p ps hlink).support ∧
+      q₀.support ++ q₁.support ++ q₂.support = Λ.support ∧
       q₀.edges ++ [s(ℓ₀, r₀)] ++ q₁.edges ++ [s(ℓ₁, r₁)] ++ q₂.edges =
-        (join p ps hlink).edges ∧
-      q₀.edges ++ q₁.edges ++ q₂.edges = (join p ps hlink).edges.filter
+        Λ.edges ∧
+      q₀.edges ++ q₁.edges ++ q₂.edges = Λ.edges.filter
         (fun e => decide (e ≠ s(ℓ₀, r₀) ∧ e ≠ s(ℓ₁, r₁))) := by
   have hja' : s(jp.finish, r₀) ∈ jp.walk.edges :=
     actual_partition_incident_edge_owner joint hjn jp hjp jp.walk.end_mem_support
@@ -84,6 +86,11 @@ theorem actual_joint_and_route_three_fragments
   have hpath : (join p ps hlink).IsPath := SimpleGraph.Walk.IsPath.mk' (by
     rw [join_support]
     exact hbn)
+  have hΛ : Λ = join p ps hlink := by
+    apply SimpleGraph.Walk.ext_support
+    rw [join_support]
+    exact hΛsupport
+  rw [hΛ]
   exact actual_joined_route_two_cut_slicing p ps hlink hpath hspos hs
     (by simpa only [List.getElem_cons_zero] using hi) hj
     (by simpa only [List.getElem_cons_zero] using hil)

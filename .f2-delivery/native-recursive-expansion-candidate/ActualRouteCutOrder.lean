@@ -4,6 +4,7 @@
    real oriented cuts; no final i<j certificate or next pairing is an input. -/
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 import D5.S3.Combinatorics.Graph.Walks.OrderedTwoCutSlicing
+import D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
 import Mathlib.Data.List.TakeDrop
 import Mathlib.Data.List.Infix
 
@@ -16,9 +17,44 @@ open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 open D5.S3.Combinatorics.Graph.Walks.OrderedTwoCutSlicing
 open private join join_support from
   D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
+open private linked_of_getElem finish_eq_last from
+  D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
 
 universe u
 variable {V : Type u} [DecidableEq V] {G : SimpleGraph V}
+
+/-- The actual full route returned by a boundary assembler is exactly
+the join of its actual ordered pieces. Native seam adjacency earns the
+Linked witness; literal support equality then earns equality of walks.
+This keeps subsequent two-cut slicing on the same supplied Q path. -/
+theorem actual_ordered_path_is_join {n : ℕ} {a b : V}
+    (ordered : Fin (n + 1) → Piece G) (q : G.Walk a b)
+    (hstart : (ordered 0).start = a) (hfinish : (ordered (Fin.last n)).finish = b)
+    (hseams : ∀ i (hi : i + 1 < n + 1),
+      G.Adj (ordered ⟨i, by omega⟩).finish (ordered ⟨i + 1, hi⟩).start)
+    (hsupport : q.support = (List.ofFn ordered).flatMap fun p => p.walk.support) :
+    ∃ hlink : Linked (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ),
+      ∃ hs : (ordered 0).start = a,
+      ∃ hf : finish (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) = b,
+        q = (join (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) hlink).copy hs hf := by
+  have hlist : ordered 0 :: (List.ofFn fun i : Fin n => ordered i.succ) = List.ofFn ordered :=
+    (List.ofFn_succ ordered).symm
+  have hlink : Linked (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) := by
+    apply linked_of_getElem
+    intro i hi
+    rw [hlist, List.length_ofFn] at hi
+    rw [hlist]
+    simp only [List.getElem_ofFn]
+    exact hseams i hi
+  have hf : finish (ordered 0) (List.ofFn fun i : Fin n => ordered i.succ) = b := by
+    rw [finish_eq_last, hlist, List.getLast_ofFn]
+    rw [show (⟨n + 1 - 1, by omega⟩ : Fin (n + 1)) = Fin.last n by
+      apply Fin.ext; simp only [Fin.val_mk, Fin.val_last]; omega]
+    exact hfinish
+  refine ⟨hlink, hstart, hf, ?_⟩
+  apply SimpleGraph.Walk.ext_support
+  rw [SimpleGraph.Walk.support_copy, join_support, hlist]
+  exact hsupport
 
 private theorem route_piece_support_position (ps : List (Piece G))
     (r : ℕ) (hr : r < ps.length) (i : ℕ)
@@ -144,5 +180,6 @@ theorem actual_joined_route_two_cut_slicing
 
 #print axioms actual_joined_route_cut_order
 #print axioms actual_joined_route_two_cut_slicing
+#print axioms actual_ordered_path_is_join
 
 end D5.S3.Combinatorics.Graph.Walks.ActualRouteCutOrder
