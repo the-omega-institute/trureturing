@@ -24,6 +24,18 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
                     "This is an actual support statement for the F2 supplier decomposition. It uses the literal "
                     + "rotation/reversal quotient and does not infer ownership from a chosen path."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("star-circle-partition"),
+                DeclarationHandle.Create(Prefix + "native_star_circle_partition"),
+                H("The Deletion Star Is Exactly Its Complete Insertion-Gap Circles"),
+                StatementSource.FromAuthor(StarPartitionFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For m at least three, deleting the last label of the supplier tuple defines "
+                    + "the whole star independently of any walk. A configuration belongs to that "
+                    + "star exactly when it belongs to one of the m complete native gap circles. "
+                    + "The existing star and circle coordinate equivalences prove both directions. "
+                    + "Together with gap disjointness this gives the support partition used when "
+                    + "grafting a new star onto an actual cycle through one contact circle."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("circle-neighbours"),
                 DeclarationHandle.Create(Prefix + "circle_neighbours"),
                 H("Circle Ownership Preserves the Unordered Cyclic Neighbours"),
@@ -75,6 +87,17 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
         return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
             All("z", Call("Configuration", m), All("i", Call("Fin", m), All("j", Call("Fin", m),
                     Implies(Not(Eq(i, j)), body)))))));
+    }
+
+    private static Formula StarPartitionFormula()
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), v = F.Id("v"), i = F.Id("i");
+        Formula star = Call("Star", Call("apply", z, Call("last", m)), Call("residualList", z), v);
+        Formula circles = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("i"),
+            Call("Fin", m), Call("Circle", Call("gapAnchor", z, i), v));
+        Formula body = new Formula.Logic(star, FormulaLogicOperator.Iff, circles);
+        return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
+            All("z", Call("Configuration", m), All("v", Call("Configuration", m), body)))));
     }
 
     private static Formula NeighbourFormula()
