@@ -1,4 +1,4 @@
-/- UNCOMPILED actual b-edge preservation for the recursive marked state.
+/- UNCOMPILED actual a/b-edge preservation for the recursive marked state.
    Every deleted supplier b edge has the supplier terminal. New marked
    b edges have another, remaining terminal, so no supplier cut can remove
    them. Actual child and parent joining retain these actual edges. -/
@@ -22,7 +22,7 @@ open private parentPiece childLift from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 open private finish_eq_last from
   D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
-open private layer_b from
+open private layer_a layer_b from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 
 private theorem right_port_terminal {m k : ℕ} (hm : 3 ≤ m)
@@ -181,11 +181,134 @@ theorem native_parent_cycle_keeps_remaining_b {m k : ℕ}
   exact native_parent_cycle_keeps_child_path_edges F hB paths pieces hpieces c hedges
     j x' y' he
 
+/-- Full reversal changes the terminal label of every actual tuple with
+at least two positions. This distinguishes an a edge from a b supplier cut. -/
+theorem native_a_changes_terminal {m : ℕ} (hm : 3 ≤ m) (x : Configuration m) :
+    (x * a m) (Fin.last m) ≠ x (Fin.last m) := by
+  intro he
+  have hi : (0 : Fin (m + 1)) = Fin.last m := x.injective (by
+    simpa only [Equiv.Perm.mul_apply, a_apply, Fin.rev_last] using he)
+  have hv := congrArg Fin.val hi
+  simp only [Fin.val_zero, Fin.val_last] at hv
+  omega
+
+/-- The statement is about undirected edges. Both endpoints of b have
+the same terminal; the two endpoints of a have different terminals. -/
+theorem native_a_edge_ne_b_edge {m : ℕ} (hm : 3 ≤ m)
+    (x y : Configuration m) : s(x, x * a m) ≠ s(y, y * b m) := by
+  intro he
+  rcases Sym2.eq_iff.mp he with ⟨hx, hy⟩ | ⟨hx, hy⟩
+  · have hxl := congrArg (fun z => z (Fin.last m)) hx
+    have hyl := congrArg (fun z => z (Fin.last m)) hy
+    simp only [Equiv.Perm.mul_apply, b_last] at hyl
+    exact native_a_changes_terminal hm x (hyl.trans hxl.symm)
+  · have hxl := congrArg (fun z => z (Fin.last m)) hx
+    have hyl := congrArg (fun z => z (Fin.last m)) hy
+    simp only [Equiv.Perm.mul_apply, b_last] at hxl
+    exact native_a_changes_terminal hm x (hyl.trans hxl.symm)
+
+/-- No actual a edge is a supplier b cut, independently of which protected
+terminal-label pair is used by the previous cycle's a invariant. -/
+theorem native_a_not_special_cut {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    (x y : {z : Configuration m // SpecialDomain F hB z})
+    (hy : y.val = x.val * a m) : s(x, y) ∉ specialCuts hm F hB := by
+  classical
+  intro he
+  obtain ⟨i, _, hi⟩ := Finset.mem_image.mp he
+  have h := congrArg (Sym2.map Subtype.val) hi
+  change s(rightPort F i.val, leftPort F i.val) = s(x.val, y.val) at h
+  rw [hy, leftPort] at h
+  exact native_a_edge_ne_b_edge hm x.val (rightPort F i.val) h.symm
+
+/-- Special joining retains every actual previous a edge: only b edges
+are opened, and literal chain inventory retains all remaining piece edges. -/
+theorem native_special_path_keeps_a {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    {base : {z : Configuration m // SpecialDomain F hB z}}
+    (w : (domainGraph (SpecialDomain F hB)).Walk base base)
+    (p : Piece (domainGraph (SpecialDomain F hB)))
+    (ps : List (Piece (domainGraph (SpecialDomain F hB))))
+    (hinv : ∀ e, e ∈ ((p :: ps).flatMap fun z => z.walk.edges) ↔
+      e ∈ w.edgeSet ∧ e ∉ specialCuts hm F hB)
+    {u v : {z : Configuration m // SpecialDomain F hB z}}
+    (q : (domainGraph (SpecialDomain F hB)).Walk u v)
+    (hedges : q.edges = chainEdges p ps)
+    (x y : {z : Configuration m // SpecialDomain F hB z})
+    (hy : y.val = x.val * a m) (he : s(x, y) ∈ w.edgeSet) :
+    s(x, y) ∈ q.edges := by
+  have hpieces := (hinv s(x, y)).mpr
+    ⟨he, native_a_not_special_cut hm F hB x y hy⟩
+  obtain ⟨z, hz, hez⟩ := List.mem_flatMap.mp hpieces
+  rw [hedges]
+  exact actual_chain_keeps_piece_edges p ps z hz s(x, y) hez
+
+/-- An ordinary opening also removes only its actual supplier b edge,
+so every previous a edge remains in the selected actual complement path. -/
+theorem native_other_path_keeps_a {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    (j : Fin F.base.length) (hj : 0 < j.val)
+    {base : {z : Configuration m // ChildDomain (childGap F j) z}}
+    (w : (domainGraph (ChildDomain (childGap F j))).Walk base base)
+    (q : ActualChildPath F j)
+    (hinv : ∀ e, e ∈ q.piece.walk.edges ↔ e ∈ w.edges ∧
+      e ≠ s(ordinaryRight hm F hB j hj, ordinaryLeft hm F hB j hj))
+    (x y : {z : Configuration m // ChildDomain (childGap F j) z})
+    (hy : y.val = x.val * a m) (he : s(x, y) ∈ w.edges) :
+    s(x, y) ∈ q.piece.walk.edges := by
+  apply (hinv s(x, y)).mpr
+  refine ⟨he, ?_⟩
+  intro h
+  have hv := congrArg (Sym2.map Subtype.val) h
+  change s(x.val, y.val) = s(rightPort F (k + j.val), leftPort F (k + j.val)) at hv
+  rw [hy, leftPort] at hv
+  exact native_a_edge_ne_b_edge hm x.val (rightPort F (k + j.val)) hv
+
+/-- The exact protected-a invariant is inherited on the same actual
+parent cycle. The guard excludes only the fixed p/q terminal-label pair;
+it does not assert that previous missing a edges have been restored. -/
+theorem native_parent_cycle_keeps_protected_a {m k : ℕ}
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    (p q : Fin (m + 1))
+    (paths : ∀ j : Fin F.base.length, ActualChildPath F j)
+    (hchild : ∀ (j : Fin F.base.length)
+      (x y : {z : Configuration m // ChildDomain (childGap F j) z}),
+      y.val = x.val * a m → s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(p, q) →
+        s(x, y) ∈ (paths j).piece.walk.edges)
+    (pieces : Fin F.base.length → Piece (domainGraph (ParentDomain F)))
+    (hpieces : ∀ j, pieces j = parentPiece F j (paths j))
+    {base : {z : Configuration m // ParentDomain F z}}
+    (c : (domainGraph (ParentDomain F)).Walk base base)
+    (hedges : c.edges = s(base, (pieces ⟨F.base.length - 1, by omega⟩).finish) ::
+      (chainEdges (pieces ⟨0, by omega⟩)
+        (List.ofFn fun i : Fin (F.base.length - 1) =>
+          pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩)).reverse)
+    (x y : {z : Configuration m // ParentDomain F z})
+    (hy : y.val = x.val * a m)
+    (hx : s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(p, q)) :
+    s(x.val, y.val) ∈ c.edges.map (Sym2.map Subtype.val) := by
+  classical
+  obtain ⟨j, hj, _⟩ := (native_child_gap_partition F hB x.val).mp x.property
+  have hychild : ChildDomain (childGap F j) y.val := by
+    rw [hy]
+    exact layer_a _ _ hj
+  let x' : {z : Configuration m // ChildDomain (childGap F j) z} := ⟨x.val, hj⟩
+  let y' : {z : Configuration m // ChildDomain (childGap F j) z} := ⟨y.val, hychild⟩
+  have he : s(x', y') ∈ (paths j).piece.walk.edges := hchild j x' y' hy hx
+  exact native_parent_cycle_keeps_child_path_edges F hB paths pieces hpieces c hedges
+    j x' y' he
+
 #print axioms native_b_edges_distinct_terminals
 #print axioms native_remaining_b_not_special_cut
 #print axioms native_special_path_keeps_remaining_b
 #print axioms native_other_path_keeps_remaining_b
 #print axioms native_parent_cycle_keeps_child_path_edges
 #print axioms native_parent_cycle_keeps_remaining_b
+#print axioms native_a_changes_terminal
+#print axioms native_a_edge_ne_b_edge
+#print axioms native_a_not_special_cut
+#print axioms native_special_path_keeps_a
+#print axioms native_other_path_keeps_a
+#print axioms native_parent_cycle_keeps_protected_a
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
