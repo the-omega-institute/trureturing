@@ -68,15 +68,13 @@ The four-slot escape audit is unfinished: [#15921](https://github.com/the-omega-
 ### What the settlement shows
 
 - **Kernel-checked:** normalization exists over every finite alphabet, by earliest insertion. Evidence: `PseudopalindromicNormalization.Generates.normalization_exists`; the consumed insertion chain is stated in Route.
-- **Kernel-checked:** the tail conditions imply a positive pure period. Evidence: the sufficiency direction of `GeneralizedPseudostandardPeriodicity.result`, using private `gap_bound`, `TailConditions.stable_gap`, `TailConditions.adjacent_product`, `TailConditions.perm_periodic`, `tail_sufficient_period` and `eventually_periodic_is_pure`. A constructed period is $g\operatorname{ord}(
-ho)$, without a least-period assertion.
+- **Kernel-checked:** the tail conditions imply a positive pure period. Evidence: the sufficiency direction of `GeneralizedPseudostandardPeriodicity.result`, using private `gap_bound`, `TailConditions.stable_gap`, `TailConditions.adjacent_product`, `TailConditions.perm_periodic`, `tail_sufficient_period` and `eventually_periodic_is_pure`. A constructed period is $g\operatorname{ord}(\rho)$, without a least-period assertion.
 - **Kernel-checked:** a positive pure period implies the tail conditions for a normalized directive of a word using every letter. Evidence: the necessity direction of `result`, using private `periodic_center_coset`, `Generates.periodic_stable_gap`, `Generates.periodic_conjugation` and `Generates.tail_necessary`.
 - **Proved in prose:** a strict lower bound for closure fails on a palindromic input. If $\vartheta(w)=w$, the input itself is a shortest fixed extension, so its closure has length $|w|$. **Kernel-checked:** the valid bound is $|w|\le|z|\le2|w|$ for `IsClosure θ w z`, by private `PseudopalindromicNormalization.closure_bounds`. The strict growth of generated stages is a separate statement, `Generates.strict_growth`, since a letter is appended before closure.
 - **Kernel-checked:** global reflection conjugation supplies the changing-antimorphism relation for every finite alphabet. Evidence: private `GeneralizedPseudostandardPeriodicity.reflection_conjugation` and `Generates.periodic_conjugation`, used by `result`; no ternary-specific identity is assumed.
 - **Computed:** the pinned finite screen has exactly the scope and readings stated in Evidence. It supplies finite checks only, including the observed least-period equality; it establishes no uniform least-period formula.
 - **ASSUMED-UNVERIFIED:** the ČVUT thesis was not readable through the recorded NyxID Firecrawl request, which returned HTTP 402. Evidence: the literature reading in #15626.
-- **Open:** the least-period formula $p=g\operatorname{ord}(
-ho)$ remains unproved here and is not part of `claim`.
+- **Open:** the least-period formula $p=g\operatorname{ord}(\rho)$ remains unproved here and is not part of `claim`.
 
 Normalization does not require surjectivity; the periodicity equivalence in `claim` uses it to express the source's $d$-ary condition. The arbitrary finite alphabet replaces the source's ternary restriction for this conjecture. No additional source theorem or neighboring conjecture is claimed as a separate settlement. Bounds on closure and strict growth apply as stated above; a stronger strict closure lower bound is false. An exact least-period characterization is a neighboring question and remains open.
 
