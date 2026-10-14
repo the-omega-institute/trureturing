@@ -87,7 +87,10 @@ internal sealed class TwoQubitSVDEntropyLowerBoundDocument : IScribeDocumentDefi
                             + "therefore gives the asserted entropy lower bound, including "
                             + "singular input states. This proves the two-qubit inequality "
                             + "proposed in Section 3.3 and Equation (3.38)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("parzygnat-takayanagi-taki-wei-2023-two-qubit-svd-entropy-lower-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration,
