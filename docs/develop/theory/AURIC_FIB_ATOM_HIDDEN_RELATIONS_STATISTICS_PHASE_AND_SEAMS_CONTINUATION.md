@@ -1943,3 +1943,996 @@ $$
 直接线性像的椭圆保留欧氏基及奇异值，规范关联椭圆保留行列比较及轴标签，约化几何还保留复振幅、位置相位作用和尺度。它们之间的对应均由上面的公式、假设和证明承担；相同外形本身不识别来源、操作或物理实现。经典公式在这里提供中间结构，源特定的综合应用不据此主张世界首创、原生操作实现或新的物理定律。
 
 ## 追加锚（本行以下为增补区）
+
+## 76. 椭圆读出、条件振幅与隐藏状态面的共同参数
+
+**约定 C-76.1（全正纤维与三个不同对象）。** 固定五模式次序
+
+$$
+\Sigma=(0,1,2,3,13)
+=\bigl(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]\bigr),
+$$
+
+占位词依次为 $(000,100,010,001,101)$。在正交五模式载体上另给归一化纯振幅
+
+$$
+\psi_s=\sqrt{p_s}e^{-i\theta_s},\qquad
+p_s>0,\qquad \sum_s p_s=1.
+$$
+
+取可见均值 $X=p_1+p_{13}$、$Y=p_3+p_{13}$、$Z=p_2$，令 $r=1-Z$、$\kappa=p_{13}$。以下均固定
+
+$$
+0<Z<1,\qquad 0<X,Y<r,\qquad
+\kappa_-<\kappa<\kappa_+,
+$$
+
+$$
+\kappa_-=\max(0,X+Y-r),\qquad
+\kappa_+=\min(X,Y).
+\tag{C76.1}
+$$
+
+C-67.1 的概率反解在这些条件下为
+
+$$
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+\tag{C76.2}
+$$
+
+四底角的正性分别等价于 $\kappa>X+Y-r$、$\kappa<X$、$\kappa<Y$、$\kappa>0$，所以式 (C76.1) 是完整全正区间。它确非空：若 $X+Y\le r$，下端零而上端正；若 $X+Y>r$，由 $X,Y<r$ 得 $X+Y-r<X,Y$。四底角总质量为 $r$，中模式概率为 $Z$。
+
+沿用 C-67、C-73 的带标记关联椭圆及复关系坐标：
+
+$$
+J=\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\eta=\frac J8,\qquad
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi},
+$$
+
+$$
+\Xi=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}
+=e^{4\eta-i\chi}.
+\tag{C76.3}
+$$
+
+概率关联椭圆在固定方向 $e_\pm=(1,\pm1)/\sqrt2$ 上的半轴为 $e^\eta,e^{-\eta}$，方程为
+
+$$
+e^{-2\eta}z_+^2+e^{2\eta}z_-^2=1.
+\tag{C76.4}
+$$
+
+这是 C-67.2 的平衡底面协方差、定面积读出，保留的是四角比及方向标记。$\eta=0$ 对应底面条件独立，未断言无条件端点独立。以下另定义条件振幅的谱椭圆，最后研究整个固定矩相位商的度量；三者的关系为
+
+| 对象 | 数学载体与所保留的信息 |
+| --- | --- |
+| 带标记概率关联椭圆 | 正底面表的行列重加权类；半轴保留 $\eta$ |
+| 条件底面振幅矩阵及其谱椭圆 | 明确指定的两因子纯态；同时依赖概率与相位 |
+| 隐藏状态面 | 五模式固定矩层再除去占位相位；坐标 $(\kappa,\chi)$ 连同指定度量 |
+
+共用参数不识别这些操作，也不自动供应物理子系统或距离。
+
+**定义 C-76.2（条件底面、精确基序与商不变量）。** 条件于底面事件 $s\ne2$，将四个模式识别为
+
+$$
+0\leftrightarrow |0\rangle_A|0\rangle_B,\quad
+1\leftrightarrow |1\rangle_A|0\rangle_B,\quad
+3\leftrightarrow |0\rangle_A|1\rangle_B,\quad
+13\leftrightarrow |1\rangle_A|1\rangle_B.
+\tag{C76.5}
+$$
+
+因此按张量积标准次序 $(00,01,10,11)$ 写的系数向量是
+$(\psi_0,\psi_3,\psi_1,\psi_{13})/\sqrt r$；它不同于删掉中模式后的原标签次序 $(0,1,3,13)$。行指标为 $A$、列指标为 $B$，二者均按 $0,1$ 排列，矩阵为
+
+$$
+\mathsf B=\frac1{\sqrt r}
+\begin{pmatrix}\psi_0&\psi_3\\ \psi_1&\psi_{13}\end{pmatrix},
+\qquad
+\operatorname{Tr}(\mathsf B\mathsf B^\dagger)=1,\qquad
+\mathcal C=2|\det\mathsf B|.
+\tag{C76.6}
+$$
+
+这里的 $\mathsf B$ 依赖代表元。具体地，C-73.4 的共同及占位相位作用
+$\theta_s\mapsto\theta_s+\gamma_0+x_s\gamma_X+y_s\gamma_Y+z_s\gamma_Z$
+使
+
+$$
+\mathsf B\longmapsto e^{-i\gamma_0}
+\begin{pmatrix}1&0\\0&e^{-i\gamma_X}\end{pmatrix}
+\mathsf B
+\begin{pmatrix}1&0\\0&e^{-i\gamma_Y}\end{pmatrix}.
+\tag{C76.7}
+$$
+
+底面上 $z_s=0$，故 $\gamma_Z$ 不出现。这是整体相位和左右对角酉变换；矩阵本身一般变化，但行列式模与奇异值不变。因此 $\mathcal C$ 及奇异值下降到声明的五模式相位商。这里允许的相位变换与 C-67.4 的正行列重加权不同：前者保留每个概率，后者一般改变概率。
+
+经典中间定义取自 Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2)、(6)–(8)。对归一化两因子纯态 $|\varphi\rangle$，其 concurrence 为
+$|\langle\varphi|(\sigma_y\otimes\sigma_y)|\overline\varphi\rangle|$。
+在式 (C76.5) 的标准基上代入 $\sigma_y|0\rangle=i|1\rangle$、
+$\sigma_y|1\rangle=-i|0\rangle$，得到 $2|\det\mathsf B|$，与原卷 C-12.2 一致。
+本处只消费纯态公式，不调用一般混态的优化结论。
+
+归一化也直接证明取值范围。设 $\lambda_1,\lambda_2$ 是正半定矩阵
+$\mathsf B\mathsf B^\dagger$ 的特征值，则
+
+$$
+\lambda_1,\lambda_2\ge0,\qquad \lambda_1+\lambda_2=1,\qquad
+\mathcal C^2=4\lambda_1\lambda_2
+=1-(\lambda_1-\lambda_2)^2.
+\tag{C76.8}
+$$
+
+故 $0\le\mathcal C\le1$。$\mathcal C=0$ 恰为非零矩阵 $\mathsf B$ 秩一，即条件纯态为乘积态；
+$\mathcal C=1$ 恰为两特征值均为 $1/2$，即两个 Schmidt 系数相等。
+约化态实际为 $\rho_A=\mathsf B\mathsf B^\dagger$、
+$\rho_B=\mathsf B^{\mathsf T}\overline{\mathsf B}$；后者与
+$\mathsf B^\dagger\mathsf B$ 互为转置，有相同谱。其纯态熵为
+$-\sum_j\lambda_j\log_2\lambda_j$，零谱项按连续值零处理。
+二元熵在 $\lambda_1=1/2$ 取最大值一：其内部导数为
+$\log_2((1-\lambda_1)/\lambda_1)$，在该点左正右负。这说明“最大纠缠”在此指声明的二元因子纯态，而非整个五维空间的无条件张量分解。
+
+## 77. 椭圆伸缩、相位平方和与完整谱读出
+
+**命题 C-77.1（同一全正纤维上的归一化平方和）。** 在 C-76 的条件下，令
+$\mathscr R=\sqrt{p_0p_1p_3p_{13}}>0$。则
+
+$$
+\mathcal C^2=
+\frac{16\mathscr R}{r^2}
+\left(\sinh^2(2\eta)+\sin^2\frac\chi2\right),
+\qquad
+\mathcal C=0\ \Longleftrightarrow\
+\eta=0,\ \chi=0\pmod{2\pi}.
+\tag{C77.1}
+$$
+
+这是 C-12.2、C-73.4 的相位敏感行列式在带标记椭圆坐标和纯态 concurrence 归一化中的应用。
+
+证明。令 $a=\sqrt{p_0p_{13}}$、$b=\sqrt{p_1p_3}$。实际复乘积差为
+
+$$
+r\det\mathsf B
+=e^{-i(\theta_1+\theta_3)}(ae^{-i\chi}-b).
+$$
+
+去掉共同相位后，
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=\frac4{r^2}|ae^{-i\chi}-b|^2,\\
+|ae^{-i\chi}-b|^2
+&=a^2+b^2-2ab\cos\chi
+=(a-b)^2+4ab\sin^2(\chi/2).
+\end{aligned}
+$$
+
+由 $a/b=e^{4\eta}$ 得
+$a=\sqrt{ab}\,e^{2\eta}$、$b=\sqrt{ab}\,e^{-2\eta}$，所以
+$a-b=2\sqrt{ab}\sinh(2\eta)$。再用 $ab=\mathscr R$ 即得全部系数。
+正性使前因子严格正，两平方同时零恰要求 $\eta=0$ 和 $\chi=0\bmod2\pi$。
+因而概率椭圆成为圆只消去幅度不平衡项，四角相位不闭合项仍可非零。证毕。
+
+**命题 C-77.2（同概率圆的连续相位族及三种谱图）。** 全五态纯振幅族
+
+$$
+\psi(\chi)=\frac1{\sqrt5}(1,1,1,1,e^{-i\chi})
+\tag{C77.2}
+$$
+
+满足 $p_s=1/5$、$X=Y=2/5$、$Z=1/5$、$r=4/5$、
+$\kappa=1/5$、$\eta=0$。它的概率关联图恒为圆，但条件底面矩阵和 concurrence 为
+
+$$
+\mathsf B(\chi)=\frac12\begin{pmatrix}1&1\\1&e^{-i\chi}\end{pmatrix},
+\qquad
+\mathcal C(\chi)=\left|\sin\frac\chi2\right|.
+\tag{C77.3}
+$$
+
+定义谱椭圆为两个半轴分别取 $\mathsf B$ 的奇异值 $s_+\ge s_-\ge0$ 的椭圆；
+允许 $s_-=0$ 时退化为线段。一般 C-76 条件纯态都有
+
+$$
+s_\pm^2=\frac{1\pm\sqrt{1-\mathcal C^2}}2.
+\tag{C77.4}
+$$
+
+证明。式 (C77.2) 直接给所有概率和矩。条件化除以 $\sqrt{4/5}$ 得式 (C77.3) 的矩阵；
+其行列式为 $(e^{-i\chi}-1)/4$，故 concurrence 为所列绝对正弦。
+对一般矩阵，$\mathsf B\mathsf B^\dagger$ 的迹为一、行列式为
+$|\det\mathsf B|^2=\mathcal C^2/4$，特征多项式为
+$\lambda^2-\lambda+\mathcal C^2/4$。求根给式 (C77.4)，取非负平方根即为奇异值。
+这一步是二阶正矩阵的经典谱计算，在这里连接同一概率椭圆上的相位族：
+
+| 隐藏相位 $\chi$ | 概率关联图 | $\mathcal C$ | $(s_+^2,s_-^2)$ | 谱半轴 $(s_+,s_-)$ 及图形 |
+| --- | --- | ---: | --- | --- |
+| $0$ | 圆，半轴 $(1,1)$ | $0$ | $(1,0)$ | $(1,0)$，线段 |
+| $\pi/2$ | 圆，半轴 $(1,1)$ | $1/\sqrt2$ | $((2+\sqrt2)/4,(2-\sqrt2)/4)$ | $(\sqrt{2+\sqrt2}/2,\sqrt{2-\sqrt2}/2)$，非退化椭圆 |
+| $\pi$ | 圆，半轴 $(1,1)$ | $1$ | $(1/2,1/2)$ | $(1/\sqrt2,1/\sqrt2)$，圆 |
+
+第一行和第三行复用 C-73.3 的两端见证，整族给它们之间的连续谱变化。
+概率圆表达标准化底面条件独立；谱圆表达两个 Schmidt 系数相等。
+前者的朝向在 $\eta=0$ 时不可辨，后者的谱仍随 $\chi$ 改变，故 $\chi$ 不能解释为概率圆的朝向。
+相同概率表另可供应可分的经典对角混合
+$\frac14\sum_{a,b}|ab\rangle\langle ab|$；纯相干制备是本命题的实质假设。证毕。
+
+## 78. 相位操作、两份联合投影与占位标签
+
+**命题 C-78.1（保持五概率的指定相位操作）。** 对实际五模式基施加
+
+$$
+U_\tau=\operatorname{diag}(1,1,1,1,e^{-i\omega\tau}),
+\qquad \omega\in\mathbb R.
+\tag{C78.1}
+$$
+
+则各概率、三个可见均值及 $\kappa$ 不变，而
+$\chi(\tau)=\chi(0)+\omega\tau\bmod2\pi$。
+对式 (C77.2) 中 $\chi(0)=0$ 的均匀初态，
+
+$$
+\mathcal C(\tau)=|\sin(\omega\tau/2)|.
+\tag{C78.2}
+$$
+
+证明。最后一个振幅乘 $e^{-i\omega\tau}$，在 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$ 的约定下
+正是 $\theta_{13}$ 增加 $\omega\tau$。模平方不变，四角交替和只增加同一项。
+代入式 (C77.3) 得 concurrence。与[《辛预测完成》§35.8](SYMPLECTIC_PREDICTIVE_COMPLETION.md#358-目标的四角差与隐藏角的-hamilton-响应)的精确对应为
+
+$$
+(f_0,f_1,f_2,f_3,f_{13})=(0,0,0,0,\omega),\quad
+H_f=\omega\kappa,\quad J_f=\omega,\quad
+\iota_{X_H}\omega_{\rm red}=dH.
+$$
+
+该约定下 $\omega_{\rm red}=d\chi\wedge d\kappa$，故
+$\dot\chi=\partial_\kappa H=\omega$、$\dot\kappa=-\partial_\chi H=0$。
+$\omega$ 在此为实参数，$\omega_{\rm red}$ 为二形式；$\tau$ 是操作参数，未自动指定为物理时间。
+式 (C78.2) 的正弦简式只对所述均匀初态成立，一般初态应将变化后的 $\chi$ 代入式 (C77.1)。证毕。
+
+**假设 C-78.2（实际同一纯态的两份资源与明确仪器）。** 独立制备两份相同的实际纯态
+$|\psi\rangle\otimes|\psi\rangle$，其中每份均满足 C-76，并另供下面的联合投影。
+“相同”指同一个纯态射线及同一占位相位参照，不能只要求两份有相同五概率、相同商坐标而允许不同局部重相位。
+此假设供应两份制备，不要求复制任意未知态。
+
+**命题 C-78.3（四项投影、总占位守恒与读出边界）。** 定义
+
+$$
+|\Omega\rangle=\frac12
+\bigl(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle\bigr),
+\qquad P=|\Omega\rangle\langle\Omega|.
+\tag{C78.3}
+$$
+
+则 $\|\Omega\|=1$，在假设 C-78.2 的输入上
+
+$$
+\langle\Omega|\psi\otimes\psi\rangle
+=\psi_0\psi_{13}-\psi_1\psi_3=r\det\mathsf B,\qquad
+\Pr(P)=\frac{r^2\mathcal C^2}{4}.
+\tag{C78.4}
+$$
+
+记单份占位算子为 $N_x,N_y,N_z$，对角元依次是
+$x=(0,1,0,0,1)$、$y=(0,0,0,1,1)$、$z=(0,0,1,0,0)$；
+两份总占位为 $N_a^{\rm tot}=N_a\otimes I+I\otimes N_a$。则
+
+$$
+[P,N_x^{\rm tot}]=[P,N_y^{\rm tot}]=[P,N_z^{\rm tot}]=0.
+\tag{C78.5}
+$$
+
+若仪器明确取投影 Lüders 的未归一化两分支
+
+$$
+\mathcal L_1(\sigma)=P\sigma P,\qquad
+\mathcal L_0(\sigma)=(I-P)\sigma(I-P),
+\tag{C78.6}
+$$
+
+则各分支不把一个总占位联合本征空间送入另一个，非选择性输出
+$\mathcal L_1(\sigma)+\mathcal L_0(\sigma)$ 保留完整总占位联合分布。
+后选择可以重加权这些标签，且单份一般不保留原固定均值纤维。
+
+证明。四个有序基向量两两正交，故四个系数模平方之和为一。
+取内积所得四项中，同号的两个乘积相等，系数 $1/2$ 抵消重复次数，得到式 (C78.4)。
+四个向量的总占位都是 $(1,1,0)$，所以
+$N_a^{\rm tot}|\Omega\rangle=\nu_a|\Omega\rangle$，其中 $\nu=(1,1,0)$。
+由自伴性，同样有 $\langle\Omega|N_a^{\rm tot}=\nu_a\langle\Omega|$，
+从而 $N_a^{\rm tot}P=PN_a^{\rm tot}=\nu_aP$。
+
+令 $Q_\nu$ 为任意总占位联合谱投影。它与 $P$、$I-P$ 对易；
+两分支 Kraus 算子均为块对角，故不会转移标签。
+对任意密度算子 $\sigma$，迹的循环性及 $P^2=P$ 给
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl(Q_\nu(\mathcal L_1+\mathcal L_0)(\sigma)\bigr)
+&=\operatorname{Tr}\bigl((PQ_\nu P+(I-P)Q_\nu(I-P))\sigma\bigr)\\
+&=\operatorname{Tr}(Q_\nu\sigma).
+\end{aligned}
+$$
+
+这是非选择性联合分布守恒。单一分支再除以成功概率会改变标签权重：
+成功分支仅含 $(1,1,0)$。特别地，若成功概率正，成功后态为 $P$，
+四项的另一份标签互异，取任一份的偏迹会消去全部交叉项，得到
+
+$$
+\operatorname{Tr}_2P=\operatorname{Tr}_1P
+=\frac14\bigl(|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|\bigr).
+$$
+
+每份的三个占位均值因而变为 $(1/2,1/2,0)$，与假设中的 $Z>0$ 已不同。
+因此“保留总占位标签”不等于两份各自留在原 $(X,Y,Z)$ 纤维。
+对易效果本身也不规定任意实现仪器的后态；上述结论使用了式 (C78.6) 的具体两分支。
+
+式 (C77.1) 表明此概率关于 $\chi\mapsto-\chi$ 为偶函数；
+它读取的是行列式模平方，不能恢复有向相位。均匀族中
+$\chi=\pi/2$ 与 $-\pi/2$ 的 $\Xi$ 不同而此概率相同；
+$\chi=0$ 与 $\pi$ 的概率则分别为零与 $4/25$。
+原卷 C-15.2 的两种带参照设置可分别读复交叉项的实部和虚部；
+这里的单个四项投影并不替代那套有向读出。证毕。
+
+数学引文与归一化对应。Aolita、Mintert，*Measuring multipartite concurrence with a single factorizable observable*，
+[arXiv:quant-ph/0608012v2](https://arxiv.org/abs/quant-ph/0608012v2)，式 (1)–(2)，给纯态两份表示
+$C_N^2=\langle\varphi|^{\otimes2}A|\varphi\rangle^{\otimes2}$。
+在两因子二元情形，其求和只剩两个反对称投影，$A=4P_-^A\otimes P_-^B$。
+准确的因子重排为
+
+$$
+R:\ |a,b\rangle\otimes|a',b'\rangle
+\longmapsto |a,a'\rangle\otimes|b,b'\rangle.
+$$
+
+设 $|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2$。
+按式 (C76.5) 展开得
+
+$$
+R|\Omega\rangle=|\varepsilon\rangle_{AA'}\otimes|\varepsilon\rangle_{BB'},
+\qquad RPR^\dagger=P_-^A\otimes P_-^B.
+\tag{C78.7}
+$$
+
+在两份已归一化条件底面态上，故 $\Pr(P)=\mathcal C^2/4$。
+原五态每份落在底面的概率为 $r$，两份独立给 $r^2$，恢复式 (C78.4)。
+这只在底面双副本子空间使用 $R$，不把整个五维空间写成两个二元因子。
+反对称投影的经典先例与本章投影归一化直接相符。
+
+Romero、López、Lastra、Solano、Retamal，*Direct measurement of concurrence for atomic two-qubit pure states*，
+[arXiv:quant-ph/0611016v1](https://arxiv.org/abs/quant-ph/0611016v1)，式 (2)–(5)，
+研究另一个包含局部操作、CNOT 和旋转的两份电路。其
+$A_-=c_1c_2-c_0c_3$、$P_{gggg}=|A_-|^2/2=\mathcal C^2/8$。
+它提供两份纯态 concurrence 测量的背景，不能把它的特定输出概率认作式 (C78.4)。
+这些文献及本章数学投影均不供应 FIB 原生仪器实现。
+
+## 79. 所选隐藏状态度量的曲率与固定底面质量的锐界
+
+**约定 C-79.1（实际约化供应与尺度字典）。** 在 C-76 的全正固定矩层上，采用
+[《辛预测完成》§35.5–35.7](SYMPLECTIC_PREDICTIVE_COMPLETION.md#355-固定可见均值后的真正辛约化)
+及 C-74 已指定的几何：归一化五振幅先按共同相位成为射线，再固定 $(X,Y,Z)$，
+最后除去占位 $T^3$ 作用。内部为
+$(\kappa_-,\kappa_+)\times(\mathbb R/2\pi\mathbb Z)$。
+令
+
+$$
+\mathcal I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+与旧 HiddenRelations 相位和尺度的对应，以及与《辛预测完成》的对数坐标对应，完整写为
+
+$$
+\theta_s^{\rm old}=-\theta_s,\qquad
+\Phi_{\rm old}=-\chi,\qquad g_{\rm SP}=2g_{\rm old},
+\qquad
+J=\tau_{\rm SP},\qquad \frac J2=\eta_{\rm SP}=4\eta.
+\tag{C79.1}
+$$
+
+同一振幅仍是 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$；角符号对应不对状态作额外复共轭。
+选定约化结构为
+
+$$
+g=g_{\rm SP,red}
+=\frac{\mathcal I}{2}\,d\kappa^2+\frac2{\mathcal I}\,d\chi^2,
+\qquad \omega_{\rm red}=d\chi\wedge d\kappa.
+\tag{C79.2}
+$$
+
+这里的 $2$ 固定在来源所选的标准射影直线辛面积 $2\pi$ 的尺度上。
+概率方向 $dp_s=(1,-1,0,-1,1)_s\,d\kappa$ 给第一系数；
+相位方向的最短水平代表 $v_s=d_s/(p_s\mathcal I)$ 给第二系数，完整最小化及占位正交性已由 C-74.2 供应。
+这不是五概率的唯一几何后果。将度量整体乘常数会反向缩放高斯曲率，故下面界值始终附带式 (C79.2)。
+
+**命题 C-79.2（四角信息控制的曲率表达）。** 令 $f=2/\mathcal I$，则
+
+$$
+g=\frac{d\kappa^2}{f(\kappa)}+f(\kappa)d\chi^2,\qquad
+\mathcal K=-\frac12 f''(\kappa)
+=\frac{\mathcal I\mathcal I''-2(\mathcal I')^2}{\mathcal I^3}.
+\tag{C79.3}
+$$
+
+证明。在内部引入径向弧长 $s$，$ds=d\kappa/\sqrt f$，并令
+$h(s)=\sqrt{f(\kappa(s))}$。于是 $g=ds^2+h(s)^2d\chi^2$。
+旋转对称度量的经典曲率公式在这里可由连接直接核定：
+非零 Christoffel 符号为
+$\Gamma^s_{\chi\chi}=-hh'$、
+$\Gamma^\chi_{s\chi}=\Gamma^\chi_{\chi s}=h'/h$，
+所以 $R_{s\chi s\chi}=-hh''$，除以度量行列式 $h^2$ 得
+$\mathcal K=-h''/h$。此处 $h'$ 为对 $s$ 求导。链式法则给
+
+$$
+\frac{dh}{ds}=\frac{f'}2,\qquad
+\frac{d^2h}{ds^2}=\frac{f''\sqrt f}{2}.
+$$
+
+故 $\mathcal K=-f''/2$。再由
+$f'=-2\mathcal I'/\mathcal I^2$、
+$f''=-2\mathcal I''/\mathcal I^2+4(\mathcal I')^2/\mathcal I^3$
+得到第二式。曲率计算使用整个度量，不能仅从某个椭圆外形或坐标中的双曲函数判断符号。证毕。
+
+**定理 C-79.3（固定 $r$ 的最佳正曲率下界及完整等号条件）。** 对每个满足 C-76 的内部点，
+
+$$
+\mathcal K\ge\frac2r>0.
+\tag{C79.4}
+$$
+
+在某个内部点取等号，当且仅当该固定均值纤维满足 $X=Y=r/2$；
+此时对全部内部 $\kappa$ 及全部 $\chi$ 均取等号。因此对每个固定 $r\in(0,1)$，
+$2/r$ 是跨越该 $r$ 下所有允许均值和内部状态的最佳下界。
+
+证明。以下求和仅遍历四底角，顺序为 $(0,1,3,13)$，置
+
+$$
+d=(1,-1,-1,1),\qquad
+A_2=\sum_s\frac{d_s}{p_s^2},\qquad
+A_3=\sum_s\frac1{p_s^3},\qquad
+\beta=\frac{A_2}{\mathcal I}.
+$$
+
+固定均值时 $p_s'=d_s$，所以
+$\mathcal I'=-A_2$、$\mathcal I''=2A_3$。
+将平方展开，不遗漏交叉项，得
+
+$$
+\begin{aligned}
+S&:=\sum_s\frac{(d_s-\beta p_s)^2}{p_s^3}\\
+&=A_3-2\beta A_2+\beta^2\mathcal I
+=A_3-\frac{A_2^2}{\mathcal I},\\
+\mathcal K&=\frac{2S}{\mathcal I^2}.
+\end{aligned}
+\tag{C79.5}
+$$
+
+令 $u_s=(d_s-\beta p_s)/p_s^{3/2}$、$v_s=d_s\sqrt{p_s}$。
+因 $\sum_s d_s=0$、$d_s^2=1$、$\sum_s p_s=r$，有
+
+$$
+\sum_su_sv_s
+=\sum_s\left(\frac1{p_s}-\beta d_s\right)=\mathcal I,
+\qquad
+\sum_su_s^2=S,\qquad \sum_sv_s^2=r.
+$$
+
+加权 Cauchy–Schwarz 因此给
+$\mathcal I^2\le Sr$，代入式 (C79.5) 得下界。
+这是对任意正参数的证明，未用有限样本替代不等式。
+
+等号恰要求 $u=cv$，且内积关系强制
+
+$$
+c=\frac{\mathcal I}{r}>0,\qquad
+d_s-\beta p_s=c\,d_s p_s^2.
+\tag{C79.6}
+$$
+
+对 $d_s=1$，正概率满足 $cp_s^2+\beta p_s-1=0$；
+对 $d_s=-1$，满足 $cp_s^2-\beta p_s-1=0$。
+两式的常数项均为 $-1$、首项系数 $c>0$，
+根的乘积为 $-1/c<0$，判别式 $\beta^2+4c>0$，
+所以各有且仅有一个正根，分别为
+
+$$
+\frac{-\beta+\sqrt{\beta^2+4c}}{2c},\qquad
+\frac{\beta+\sqrt{\beta^2+4c}}{2c}.
+$$
+
+同号的两个概率必须相等：
+$p_0=p_{13}$、$p_1=p_3$。由式 (C76.2)，它们依次等价于
+$X+Y=r$、$X=Y$，合起来恰为 $X=Y=r/2$。
+
+反之，若 $p_0=p_{13}=a$、$p_1=p_3=b$，则
+$a,b>0$、$r=2(a+b)$，
+
+$$
+\mathcal I=\frac2a+\frac2b,\qquad
+c=\frac{\mathcal I}{r}=\frac1{ab},\qquad
+\beta=\frac{2/a^2-2/b^2}{2/a+2/b}=\frac1a-\frac1b.
+$$
+
+于是 $1-\beta a=a/b=ca^2$、
+$-1-\beta b=-b/a=-cb^2$，确满足全部等号方程。
+在对称均值下 $a=\kappa$、$b=r/2-\kappa$，每个内部 $\kappa$ 都满足；
+度量与曲率又独立于 $\chi$。对每个固定 $r$ 可选此纤维取等，证明锐性。证毕。
+
+命题 C-79.2 与定理 C-79.3 的解释边界为：$\sinh,\cosh,\tanh$ 可以出现在概率伸缩及相关读数的参数化中，
+但函数形状不决定度量曲率。式 (C79.2) 所选状态面恰有严格正曲率。
+这里的最佳界是固定底面质量 $r=1-Z$ 的界，不能省去尺度与固定 $r$ 的量词。
+
+## 80. 零支撑端点的解析极坐标与锥形延伸
+
+**命题 C-80.1（端点多重数、有限径向距离与伸缩发散）。** 在完整区间两端，
+令 $m_-,m_+$ 为归零底角数，则
+
+$$
+m_-=2\ \Longleftrightarrow\ X+Y=r,\qquad
+m_+=2\ \Longleftrightarrow\ X=Y,
+\qquad m_\pm\in\{1,2\}.
+\tag{C80.1}
+$$
+
+若距所考察端点的向内概率差为 $\delta>0$、该端多重数为 $m$，则
+
+$$
+\mathcal I=\frac m\delta+O(1),\qquad
+f=\frac{2\delta}{m}+O(\delta^2),\qquad
+\rho(\delta):=\int_0^\delta\frac{du}{\sqrt{f(u)}}
+=\sqrt{2m\delta}+O(\delta^{3/2}).
+\tag{C80.2}
+$$
+
+这里 $f(u)$ 表示用该端向内坐标写的同一函数。相位圆周长
+$\ell=2\pi\sqrt f$ 满足 $\ell/\rho\to2\pi/m$。
+下端 $\eta\to-\infty$、上端 $\eta\to+\infty$，而两端均在有限径向距离。
+
+证明。下端若 $X+Y<r$，只有 $p_{13}=0$；若 $X+Y>r$，
+只有 $p_0=0$；若相等，则二者同时为零，其他底角为 $X,Y>0$。
+上端若 $X<Y$，只有 $p_1=0$；若 $Y<X$，只有 $p_3=0$；
+若相等则二者同时为零，余下底角为 $r-X,X>0$。
+严格条件 $0<X,Y<r$ 排除了第三个底角同时为零。
+
+每个归零概率在向内坐标中都恰为 $\delta$，其余概率在该端有正极限，
+所以其倒数之和为有界函数，给 $\mathcal I=m/\delta+O(1)$。
+倒数展开得到 $f$ 的首项。于是
+$f^{-1/2}=\sqrt{m/2}\,\delta^{-1/2}(1+O(\delta))$，
+积分给 $\rho$，特别是长度有限。圆周长为
+$2\pi\sqrt{2\delta/m}(1+O(\delta))$，与径向距离相除得 $2\pi/m$。
+下端 $p_0p_{13}\to0$ 而 $p_1p_3$ 有正极限；
+上端相反，故由 $\eta=J/8$ 得两个发散方向。
+概率关联椭圆长短轴比 $e^{2|\eta|}$ 因而无界，
+但这不是隐藏度量距离无界的证据。证毕。
+
+**定理 C-80.2（单零端点的真正光滑性与双零的半周商）。** 对式 (C79.2) 的每一端，
+径向坐标中的函数 $h(\rho)=\sqrt{f(\delta(\rho))}$ 有收敛的奇解析展开
+
+$$
+h(\rho)=\frac{\rho}{m}+\rho^3 H(\rho^2),
+\tag{C80.3}
+$$
+
+其中 $H$ 在零附近实解析。因此 $m=1$ 时该端可加为普通光滑点；
+$m=2$ 时角向双覆盖加端点后光滑，原度量是其旋转半周商，锥角为 $\pi$。
+仅由圆周长与半径之比趋于 $2\pi$ 不足以推出光滑性，本结论使用下述解析性证明。
+
+证明。其他非零概率是 $a_j+\epsilon_j\delta$，其中 $a_j>0$、
+$\epsilon_j=\pm1$，所以在足够小的实邻域内
+
+$$
+q(\delta):=\sum_{\text{非零底角 }j}\frac1{a_j+\epsilon_j\delta}
+\quad\hbox{实解析},\qquad
+f(\delta)=\frac{2\delta}{m+\delta q(\delta)}
+=\delta F(\delta),\quad F(0)=\frac2m>0.
+\tag{C80.4}
+$$
+
+这给 $f$ 在端点的有理解析延伸，不仅给渐近首项。
+令 $t=\sqrt\delta$，把径向积分改写为
+
+$$
+\rho(t)=\int_0^t\frac{2\,dv}{\sqrt{F(v^2)}}.
+\tag{C80.5}
+$$
+
+因 $F(0)>0$，选择正平方根后被积函数为偶解析函数；
+$\rho(t)$ 因而为奇解析函数，且
+$\rho'(0)=2/\sqrt{F(0)}=\sqrt{2m}>0$。
+实解析逆函数定理给局部解析逆 $t=t(\rho)$。
+由原函数的奇性和逆的唯一性，$t(-\rho)=-t(\rho)$，
+故 $t(\rho)$ 也奇解析，首项 $\rho/\sqrt{2m}$。
+于是
+
+$$
+h(\rho)=t(\rho)\sqrt{F(t(\rho)^2)}
+$$
+
+奇解析且首项为 $\rho/m$，其余奇次幂可写成式 (C80.3)。
+在穿孔端邻域内度量恰为 $d\rho^2+h(\rho)^2d\chi^2$。
+
+若 $m=1$，令 $x=\rho\cos\chi$、$y=\rho\sin\chi$。
+保留完整角向张量因子，恒等式为
+
+$$
+d\rho^2+h^2d\chi^2
+=dx^2+dy^2+
+\frac{h^2-\rho^2}{\rho^4}(x\,dy-y\,dx)^2.
+\tag{C80.6}
+$$
+
+由 $h=\rho+\rho^3H(\rho^2)$，
+$(h^2-\rho^2)/\rho^4=2H(\rho^2)+\rho^2H(\rho^2)^2$，
+它是 $\rho^2=x^2+y^2$ 的解析函数。
+右边所有张量系数都在 $(0,0)$ 解析延伸，原点值为欧氏内积，近邻仍正定。
+这证明真正的 Cartesian 光滑性，而非仅确认总角。
+
+若 $m=2$，取角向双覆盖，令 $\chi=2\phi$ 且 $\phi$ 周期为 $2\pi$。
+拉回度量为
+
+$$
+d\rho^2+(2h(\rho))^2d\phi^2,\qquad
+2h(\rho)=\rho+2\rho^3H(\rho^2).
+$$
+
+对 $2h$ 重复式 (C80.6) 的论证，覆盖面加原点后光滑且解析。
+覆盖变换 $\phi\mapsto\phi+\pi$ 是该旋转对称度量的等距半周旋转，
+在原点有固定点，商正好恢复 $\chi\bmod2\pi$ 的原穿孔度量。
+所以原端点是角 $\pi$ 的锥点；不是原角周期下的普通光滑点。证毕。
+
+由式 (C80.4)，$f''$ 在每端都有有限极限；内部又是正分母有理函数的导数。
+因此在固定纤维的闭区间上 $\mathcal K=-f''/2$ 有界。
+这项端点结论关于所选度量的延伸，不在零概率处继续使用 $1/p_s$、
+$\arg\psi_s$ 或 $\Xi$ 作为普通坐标。
+
+## 81. 完整 Cauchy 边界、球面拓扑与曲率缺角
+
+**定理 C-81.1（完备化恰加两个点）。** 赋予开圆柱
+$M=(\kappa_-,\kappa_+)\times S^1$ 以内在长度距离。
+式 (C79.2) 的 Cauchy 完备化在每一端恰加一点，没有其他度量边界；
+两端点不同。完备化紧致，拓扑同胚于 $S^2$。
+
+证明。置
+
+$$
+s(\kappa)=\int_{\kappa_-}^{\kappa}\frac{du}{\sqrt{f(u)}},
+\qquad
+T=\int_{\kappa_-}^{\kappa_+}\frac{du}{\sqrt{f(u)}}.
+\tag{C81.1}
+$$
+
+两端由命题 C-80.1 可积，内部连续正，故 $0<T<\infty$。
+在 $0<s<T$ 上写 $g=ds^2+h(s)^2d\chi^2$，
+其中 $h>0$，且 $h(s)\to0$ 于 $s\to0,T$。
+任意分段光滑曲线的长度至少为其 $s$ 坐标总变差，因此
+
+$$
+|s(p)-s(q)|\le d(p,q).
+\tag{C81.2}
+$$
+
+即 $s$ 是 $1$-Lipschitz。固定角的径向线段长度恰为 $|s(p)-s(q)|$。
+所以沿固定角趋向下端或上端的点列为 Cauchy 列，分别定义完备化点 $E_-,E_+$。
+
+在下端，将两个点 $(s,\chi)$、$(t,\chi')$ 先沿径向移到
+$0<u<\min(s,t)$，再沿该圆的较短弧相连，得到
+
+$$
+d((s,\chi),(t,\chi'))
+\le s+t-2u+\pi h(u).
+$$
+
+令 $u\downarrow0$，右侧趋于 $s+t$。
+特别地，任意 $s_n\to0$ 的点列都是 Cauchy，
+且所有这样的列彼此距离趋零，代表同一点 $E_-$。
+结合式 (C81.2) 及固定角径向列，准确地有
+$d((s,\chi),E_-)=s$。
+同理 $d((s,\chi),E_+)=T-s$。这是有限径向尾长和消失端圆周长共同给出的统一结论，
+没有要求角度序列收敛。
+
+现排除其他 Cauchy 边界。若 $(s_n,\chi_n)$ 为任意 Cauchy 列，
+式 (C81.2) 使 $s_n$ 收敛到某个 $s_*\in[0,T]$。
+若极限为两端之一，上段已处理。若 $0<s_*<T$，
+该列最终留在某个紧条带 $[\epsilon,T-\epsilon]\times S^1$。
+此条带上 $h$ 的最大值有限、最小值严格正，
+局部度量与普通圆柱度量互相有界比较，给相同局部拓扑。
+条带的产品紧致性给收敛子列；在小坐标邻域内用路径长度上界，
+该子列也按 $d$ 收敛到同一内部点。原列 Cauchy，故整列收敛到该点。
+若担心内在距离路径越过条带，式 (C81.2) 保证足够短路径不能穿越一个固定正宽度的径向间隔；
+所以此局部比较不会遗漏来自端部的捷径。
+
+两端间由延伸的 $1$-Lipschitz 坐标得 $d(E_-,E_+)\ge T$，
+固定角经线给反向不等式，故距离恰为 $T>0$，不能合并。
+每个 $\epsilon$ 端尾距相应端点不超过 $\epsilon$，中间条带紧致；
+因此完备化全有界且完备，故紧致。
+
+更具体地，连续映射 $[0,T]\times S^1\to\overline M$ 在内部取恒等，
+将两个端圆分别送到 $E_-,E_+$。端部连续性由刚证明的统一距离公式保证；
+除了同一端圆内的点，没有其他识别。
+它诱导紧 Hausdorff 空间间的连续双射
+
+$$
+([0,T]\times S^1)/(\{0\}\times S^1,\ \{T\}\times S^1)
+\ \longrightarrow\ \overline M,
+$$
+
+故为同胚。左边是圆周的悬挂，可由
+$(s,\chi)\mapsto(\sin(\pi s/T)\cos\chi,\sin(\pi s/T)\sin\chi,\cos(\pi s/T))$
+显式识别为球面。此证明补足原卷 C-13.3、C-14.3 在当前尺度下的全部内在度量边界论证。证毕。
+
+**定理 C-81.2（总面积、直接端斜率积分及全部缺角类型）。** 令
+$w=\kappa_+-\kappa_-=\min\{X,Y,r-X,r-Y\}>0$，则
+
+$$
+\operatorname{Area}(\overline M)=2\pi w,\qquad
+\int_M\mathcal K\,dA
+=2\pi\left(\frac1{m_-}+\frac1{m_+}\right).
+\tag{C81.3}
+$$
+
+两端总角为 $\alpha_\pm=2\pi/m_\pm$，缺角
+$D_\pm=2\pi-\alpha_\pm$，满足
+
+$$
+\int_M\mathcal K\,dA+D_-+D_+=4\pi.
+\tag{C81.4}
+$$
+
+证明。在 $(\kappa,\chi)$ 坐标中 $\det g=1$，故无向面积密度为
+$dA=d\kappa\,d\chi$，等于 $|\omega_{\rm red}|$；
+这里未把坐标次序的有向二形式 $d\kappa\wedge d\chi$ 与
+$d\chi\wedge d\kappa$ 误认同号。积分相位周期和区间宽度即得总面积。
+每个端尾面积随 $\delta$ 线性趋零，新增的两个点为零面积。
+宽度公式可直接分 $X+Y\le r$、$X+Y\ge r$：
+前者 $w=\min(X,Y)$，后者 $w=\min(r-X,r-Y)$，合并即四项最小值。
+
+式 (C80.4) 是解析展开，故可对端点求导，而非对不受控的渐近余项求导。
+下端向内坐标为 $\delta=\kappa-\kappa_-$，上端为 $\delta=\kappa_+-\kappa$，从而
+
+$$
+f'(\kappa_-)=\frac2{m_-},\qquad
+f'(\kappa_+)=-\frac2{m_+}.
+\tag{C81.5}
+$$
+
+$f''$ 在整个闭区间连续有界，故微积分基本定理和式 (C79.3) 给
+
+$$
+\begin{aligned}
+\int_M\mathcal K\,dA
+&=-\pi\int_{\kappa_-}^{\kappa_+}f''(\kappa)\,d\kappa\\
+&=-\pi\bigl(f'(\kappa_+)-f'(\kappa_-)\bigr)
+=2\pi\left(\frac1{m_-}+\frac1{m_+}\right).
+\end{aligned}
+$$
+
+加两个缺角得到式 (C81.4)。完整类型如下，其中一双零行包括两种端点次序：
+
+| 两端类型及条件 | 总面积 | 内部曲率积分 | 端点缺角总和 | 曲率加缺角 |
+| --- | ---: | ---: | ---: | ---: |
+| 单零、单零：$X+Y\ne r$ 且 $X\ne Y$ | $2\pi w$ | $4\pi$ | $0$ | $4\pi$ |
+| 一单零、一双零：$X+Y=r$ 与 $X=Y$ 恰一成立 | $2\pi w$ | $3\pi$ | $\pi$ | $4\pi$ |
+| 双零、双零：$X=Y=r/2$ | $\pi r$，此时 $w=r/2$ | $2\pi$ | $2\pi$ | $4\pi$ |
+
+这也核对锥度量 Gauss–Bonnet 公式，但拓扑和积分已分别直接证明。为精确应用
+Fang、Xu、Yang，*The Gauss-Bonnet formula of a conical metric on a compact Riemann surface*，
+[arXiv:1912.01187v3](https://arxiv.org/abs/1912.01187v3)，文首定义及 Theorem，
+还须核对其共形锥形和可积性条件。
+
+在每端取穿孔邻域的等温径向变量 $q>0$ 满足
+$dq/q=d\rho/h(\rho)$，并以 $z=q e^{i\chi}$ 作局部复坐标。
+式 (C80.3) 给
+
+$$
+\frac1{h(\rho)}=\frac m\rho+\rho A(\rho^2),\qquad
+q=c\,\rho^m e^{B(\rho^2)},\quad c>0,
+$$
+
+其中 $A,B$ 解析，可把 $B(0)$ 吸入 $c$。
+度量为
+
+$$
+g=\frac{h(\rho)^2}{q^2}|dz|^2
+=e^{2u(z)}|z|^{2\beta_{\rm cone}}|dz|^2,\qquad
+\beta_{\rm cone}=\frac1m-1.
+\tag{C81.6}
+$$
+
+确切地，
+$e^{2u}=h(\rho)^2/q^{2/m}$ 在 $\rho\to0$ 时趋于
+$1/(m^2c^{2/m})>0$，所以 $u$ 在端点连续，在穿孔处光滑。
+内部取相容等温图，两端分别取与定向相容的 $\chi$ 或 $-\chi$，
+获得紧球面上的 Riemann 曲面结构；符号选择不改变式 (C81.6)。
+锥指数为 $0$ 或 $-1/2$，都严格大于 $-1$。
+又因面积有限且 $\mathcal K$ 有界，$\int_M|\mathcal K|\,dA<\infty$。
+这满足所引定理的 $L^1$ 曲率条件，其
+$\int\mathcal K\,dA=2\pi(\chi_{\rm Euler}(S^2)+\sum\beta_{\rm cone})$
+正给式 (C81.4)。该文没有替本文证明四角概率的锐界、等号条件或完备化拓扑。证毕。
+
+## 82. 对称纤维的球面半周商与最大 concurrence
+
+**命题 C-82.1（常曲率对称纤维的完整球面表示）。** 取
+$X=Y=r/2$，令 $L=r/2>0$。则
+
+$$
+p_\kappa=(\kappa,L-\kappa,Z,L-\kappa,\kappa),
+\qquad 0<\kappa<L,
+$$
+
+$$
+\mathcal I=\frac2\kappa+\frac2{L-\kappa},\qquad
+f=\frac{\kappa(L-\kappa)}L.
+\tag{C82.1}
+$$
+
+换元
+
+$$
+\kappa=\frac L2(1-\cos\vartheta),\qquad 0<\vartheta<\pi
+\tag{C82.2}
+$$
+
+给
+
+$$
+g=L\left(d\vartheta^2+\frac14\sin^2\vartheta\,d\chi^2\right),
+\qquad \mathcal K=\frac1L=\frac2r.
+\tag{C82.3}
+$$
+
+完备化是半径 $\sqrt L$ 的圆球绕两极旋转半周所得的度量商，
+两个极点的锥角均为 $\pi$；极点距离恰为 $\pi\sqrt L$。
+概率关联圆的位置为整个赤道相位圆：
+
+$$
+\eta=0\ \Longleftrightarrow\ \kappa=L/2
+\ \Longleftrightarrow\ \vartheta=\pi/2,\qquad \chi\in S^1.
+\tag{C82.4}
+$$
+
+证明。将对称均值代入式 (C76.2)，得到概率。
+四倒数求和后取 $2/\mathcal I$，给式 (C82.1)。
+式 (C82.2) 中
+
+$$
+d\kappa=\frac L2\sin\vartheta\,d\vartheta,\qquad
+f=\frac L4\sin^2\vartheta,
+$$
+
+故 $d\kappa^2/f=L\,d\vartheta^2$，角向项如式 (C82.3)。
+对 $f=\kappa-\kappa^2/L$ 有 $-f''/2=1/L$。
+局部令 $\phi=\chi/2$，度量变成
+$L(d\vartheta^2+\sin^2\vartheta\,d\phi^2)$，
+是半径 $\sqrt L$ 的标准圆球度量。
+但原 $\chi$ 周期为 $2\pi$，所以这里 $\phi$ 周期只有 $\pi$。
+从 $\phi$ 周期为 $2\pi$ 的整圆球出发，识别 $\phi$ 和 $\phi+\pi$，
+便得到原内部度量；两极由定理 C-80.2 的半周商延伸，均有角 $\pi$。
+定理 C-81.1 排除其他完成点，所以这一局部表示确给整个完备化的度量商。
+
+任一连接两极的可求长路径在内部满足
+$ds\ge\sqrt L\,|d\vartheta|$。
+从第一极到第二极，连续 $\vartheta$ 的总变差至少为 $\pi$，
+因而长度至少 $\pi\sqrt L$；若路径经过极点，可先在
+$\epsilon\le\vartheta\le\pi-\epsilon$ 截取再令 $\epsilon\downarrow0$，
+仍得同一下界。固定 $\chi$ 的经线长度为
+$\int_0^\pi\sqrt L\,d\vartheta=\pi\sqrt L$，达到下界。
+这也与式 (C81.1) 的 $T$ 完全一致。
+
+最后，
+$p_0p_{13}/(p_1p_3)=\kappa^2/(L-\kappa)^2$，
+故 $\eta=\frac14\log(\kappa/(L-\kappa))$，
+零点恰为 $\kappa=L/2$，换元后即赤道。
+此时 $\chi$ 仍自由遍历整个 $2\pi$ 圆周，不能把一个概率圆读数当成唯一隐藏态。
+常曲率局部圆球与全局带两个锥点的半周商在这里各有明确含义。证毕。
+
+**定理 C-82.2（纤维层面的曲率取等与最大纠缠存在性）。** 固定 C-76 的
+$(X,Y,Z)$，以下三项等价：
+
+$$
+\begin{gathered}
+X=Y=r/2;\\
+\text{存在内部 }(\kappa,\chi)\text{ 使 }\mathcal K=2/r;\\
+\text{存在内部条件底面纯态使 }\mathcal C=1.
+\end{gathered}
+\tag{C82.5}
+$$
+
+在这条对称纤维上，$\chi=\pi\bmod2\pi$ 的每个内部 $\kappa$ 都有 $\mathcal C=1$；
+曲率则在全部内部点取等，包括 $\mathcal C=0$ 的点。
+
+证明。第一项与第二项的等价由定理 C-79.3 的完整等号条件给出。
+若 $\mathcal C=1$，式 (C76.8) 使
+$\mathsf B\mathsf B^\dagger=I_2/2$。
+由于 $\mathsf B$ 可逆，由
+$\mathsf B\mathsf B^\dagger=I_2/2$ 左乘 $\mathsf B^{-1}$ 再右乘 $\mathsf B$，
+得 $\mathsf B^\dagger\mathsf B=I_2/2$，因此另一侧约化态也为 $I_2/2$。
+两侧占位为一的概率分别是
+
+$$
+(\rho_A)_{11}=\frac{p_1+p_{13}}r=\frac Xr,\qquad
+(\rho_B)_{11}=\frac{p_3+p_{13}}r=\frac Yr.
+$$
+
+二者必须均为 $1/2$，故 $X=Y=r/2$。
+反之，在对称纤维中 $a=\kappa$、$b=L-\kappa$，
+选 $\chi=\pi$，行列式模为 $(a+b)/r=L/(2L)=1/2$，所以
+
+$$
+\mathcal C=\frac{2}{r}|-\kappa-(L-\kappa)|=1.
+$$
+
+每个内部 $\kappa$ 均可作此选择，且可由前四相位为零、最后相位为 $\pi$ 的实际五态代表实现。
+这证明存在性的反向及整条相位经线结论。证毕。
+
+**命题 C-82.3（球面坐标中的 concurrence 与唯一内部乘积点）。** 对称纤维上
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=\frac{(2\kappa-L)^2
++4\kappa(L-\kappa)\sin^2(\chi/2)}{L^2}\\
+&=1-\sin^2\vartheta\cos^2(\chi/2).
+\end{aligned}
+\tag{C82.6}
+$$
+
+在全正内部，唯一 $\mathcal C=0$ 的商状态为
+$(\vartheta,\chi)=(\pi/2,0\bmod2\pi)$；
+全部 $\mathcal C=1$ 的内部状态恰为 $\chi=\pi\bmod2\pi$。
+
+证明。在式 (C77.1) 的乘积差展开中代入
+$a=\kappa$、$b=L-\kappa$、$r=2L$，给第一行。
+由
+$2\kappa-L=-L\cos\vartheta$、
+$4\kappa(L-\kappa)=L^2\sin^2\vartheta$，
+第一行变为
+$\cos^2\vartheta+\sin^2\vartheta\sin^2(\chi/2)$，即第二行。
+要 $\mathcal C=0$，两个不超过一的非负因子
+$\sin^2\vartheta$、$\cos^2(\chi/2)$ 的乘积必须为一，
+故各自均为一，给唯一内部点。
+要 $\mathcal C=1$，两因子乘积为零；内部 $\sin\vartheta>0$，
+所以只能 $\cos(\chi/2)=0$，即所述整条经线。
+
+特别地，赤道上 $\chi=0$ 与 $\chi=\pi$ 同有 $\mathcal K=2/r$，
+而 concurrence 分别为零和一。这是“曲率在该点取等当且仅当该点最大纠缠”的反例；
+正确等价是定理 C-82.2 的纤维对称性与最大纠缠的存在性。
+沿 $\chi=\pi$ 改变内部 $\kappa$ 可以改变概率椭圆但保持最大 concurrence；
+沿赤道改变 $\chi$ 可以保持概率圆但改变 concurrence。
+这两个函数可以同在一个参数面上，却不能彼此替代。证毕。
+
+## 83. 经典中间结构、来源归属与适用界限
+
+**约定 C-83.1（本组综合推导的来源范围）。** 以下来源各承担所列数学中间结构；
+归一化、参数桥和新增结论的假设仍以对应条目为准。
+
+| 来源 | 实际使用的内容与边界 |
+| --- | --- |
+| 原卷 C-12.2–C-15.3；本续卷 C-67、C-68、C-73、C-74 | 四角相位行列式、同概率乘积与最大纠缠见证、全周期相位商、底面关联椭圆、水平最短度量及有限端点主项。本组保留这些供应的明确归属，连接到归一化 concurrence、固定质量锐曲率及完整解析完备化；并非重立上述先例。 |
+| [《辛预测完成》§35.5–35.9](SYMPLECTIC_PREDICTIVE_COMPLETION.md#355-固定可见均值后的真正辛约化) | 真正固定矩后再取 $T^3$ 商；§35.7 的反相位、两倍度量及对数坐标尺度；§35.8 的正号角速度。§35.9 的四次不变 Hamilton 函数可改变 $\kappa$，与 C-78.1 固定对角相位操作不同；本组没有从其非线性交换推得固定五阶线性仪器。 |
+| William K. Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2)、(6)–(8) | 归一化二元两因子纯态的约化熵、spin-flip concurrence 及二元谱关系。本文按式 (C76.5) 对应为 $2|\det\mathsf B|$；不借一般混态结论恢复未供应的相干或张量因子。 |
+| Leandro Aolita、Florian Mintert，*Measuring multipartite concurrence with a single factorizable observable*，[quant-ph/0608012v2](https://arxiv.org/abs/quant-ph/0608012v2)，式 (1)–(2) | 两份纯态及反对称子空间投影的经典关系；两二元因子时为 $4P_-^A\otimes P_-^B$。式 (C78.7) 明列重排，条件底面投影概率为 $\mathcal C^2/4$，五态无条件概率另乘 $r^2$。 |
+| G. Romero、C. E. López、F. Lastra、E. Solano、J. C. Retamal，*Direct measurement of concurrence for atomic two-qubit pure states*，[quant-ph/0611016v1](https://arxiv.org/abs/quant-ph/0611016v1)，式 (2)–(5) | 两份已供应纯态经特定电路后的 $P_{gggg}=\mathcal C^2/8$。仅作两份读出背景，不替代本文四项投影的归一化或 Lüders 后态合同。 |
+| Hanbing Fang、Bin Xu、Bairui Yang，*The Gauss-Bonnet formula of a conical metric on a compact Riemann surface*，[1912.01187v3](https://arxiv.org/abs/1912.01187v3)，文首锥度量定义及 Theorem | 紧 Riemann 曲面、锥指数大于 $-1$ 及相对于度量面积 $L^1$ 的曲率条件下的锥 Gauss–Bonnet。C-80、C-81 逐项给这些条件；它不是四概率曲率锐界、等号分类或本度量拓扑的来源。 |
+
+式 (C79.5)–(C79.6) 的四角加权平方和与等号分类、它们与
+式 (C82.5) 的纤维层面存在性等价，是在这里指定的五模式、矩约束及尺度下的综合推导。
+Schmidt 谱、Cauchy–Schwarz、旋转对称度量曲率、解析逆函数与锥 Gauss–Bonnet
+是经典中间工具；上述来源对应不作全局原创性主张。
+
+**约定 C-83.2（两种操作及解释范围）。** 底面条件化先投影到四维复子空间、再除以
+$\sqrt r$，输出为条件射线；之后才指定 $\mathbb C^2\otimes\mathbb C^2$ 的因子结构。
+五模式固定矩约化则从 $\mathbb{CP}^4$ 的矩层除去占位 $T^3$，
+输出二维实关系面。前者更改条件概率，后者识别相位轨道。
+二者的域、等价关系及输出不同，$\mathsf B$ 仍依赖代表，
+只有其 concurrence 与奇异值在所述相位商上不变。
+
+本组的有限距离、曲率与球面拓扑全部属于式 (C79.2) 的无量纲选定度量，
+concurrence 属于式 (C76.5) 的明确条件张量结构。
+改变度量尺度、改变因子划分、改用混态或撤掉同态两份制备条件，
+均须重新确定相应命题。这里不把曲率认作引力曲率，不将参数认作物理常数，
+不从形式投影的存在推出 FIB 原生测量或未知态克隆能力。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,12 @@
+# Native adaptive selection, exact source fibers and acquired stamp recovery
+
+This volume treats the possible common sources and histories of a fully
+specified returned boundary of an internal observer. The observer may choose
+cuts, addresses and comparisons from acquired data, retry, perform unbounded
+finite computation, and forget intermediate descriptions. The selection
+rule remains part of the interpretation of its output.
+
+These are ordinary mathematical arguments, not Lean kernel verification.
+New deductions are `repo-derived`. Source and literature boundaries are
+stated in Sections 2 and 10.
+
