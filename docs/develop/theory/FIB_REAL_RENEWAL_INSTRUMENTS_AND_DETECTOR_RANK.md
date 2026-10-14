@@ -1371,3 +1371,298 @@ The upper construction has an ordinary mathematical proof. General Lean proofs o
 The output object remains the classical stationary renewal cylinders, with a faithful mixed invariant initialization distinct from the pure actual tick reset. Real coordinates are coordinates for ordinary CP maps on $M_D(\mathbb C)$, not a physical real-Hilbert-space equivalence. No native AURIC realization, preparation map, coherent-output state, finite-precision implementation, memory-entropy bound, energy, work or control-cost conclusion follows. The uniform real single-detector existence question is addressed at the ordinary mathematical level; the physical and full-kernel goals remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Certified ninth-degree coefficient selection
+
+**Definition 12.1 (Monic amplitudes and a rational box).** Write $\Delta h(t)=h(t+1)-h(t)$. For $\theta=(a_0,a_1,a_2,a_3,b_1,b_2,b_3,b_4)\in\mathbb R^8$, put
+
+$$
+\begin{aligned}
+P_\theta(t)&=t^4+a_3t^3+a_2t^2+a_1t+a_0,&
+S_\theta(t)&=b_1t+b_2t^2+b_3t^3+b_4t^4,\\
+E_j(\theta)&=[t^j]\left(P_\theta^2+\Delta(S_\theta^2)
+-\frac{(t+1)^9-t^9}{9}\right),&&0\le j\le7.
+\end{aligned} \tag{12.1}
+$$
+
+The coefficient of degree eight in the residual is identically zero, and there are no higher coefficients. In particular $E=(E_0,\ldots,E_7)^{\mathsf T}=0$ is the complete polynomial equation. With $P_i=[t^i]P_\theta$, $S_i=[t^i]S_\theta$, so that $P_4=1$ and $S_0=0$, its explicit rational coefficient map is
+
+$$
+E_j(\theta)=
+\sum_{\substack{0\le r,s\le4\\r+s=j}}P_rP_s+
+\sum_{\substack{1\le r,s\le4\\r+s>j}}\binom{r+s}{j}S_rS_s
+-\frac19\binom9j. \tag{12.2}
+$$
+
+Define the rational center and radius by
+
+$$
+c=\frac1{10^{12}}
+\begin{pmatrix}
+30948152948\\
+-193917702707\\
+1376696052239\\
+-826799586982\\
+-359802936565\\
+1031351485193\\
+-1180309452555\\
+840654445504
+\end{pmatrix},
+\qquad r=\frac1{10^8},\qquad
+\mathcal B_9=\{\theta:\|\theta-c\|_\infty\le r\}. \tag{12.3}
+$$
+
+The constants $\theta_*$ below mean the unique zero of $E$ in $\mathcal B_9$, whose existence is proved next. The rational center is certificate data, not the exact zero.
+
+**Theorem 12.2 (Quantitative localization and nonsingularity throughout the box).** There is exactly one zero $\theta_*$ of $E$ in $\mathcal B_9$. It lies in its interior, and $DE(\theta)$ is invertible at every point of that box.
+
+Proof. The Jacobian has columns in the coordinate order of Definition 12.1 and coefficient rows in increasing degree $j=0,\ldots,7$. Extending $P_i$ by zero outside $0\le i\le4$, the Jacobian entries are
+
+$$
+\begin{aligned}
+\frac{\partial E_j}{\partial a_r}&=2P_{j-r} &&(0\le r\le3),\\
+\frac{\partial E_j}{\partial b_r}
+&=2\sum_{\substack{1\le s\le4\\r+s>j}}\binom{r+s}{j}S_s
+&&(1\le r\le4).
+\end{aligned} \tag{12.4}
+$$
+
+The only nonzero Hessian entries are
+
+$$
+\frac{\partial^2 E_j}{\partial a_r\partial a_s}
+=2\mathbf1_{\{r+s=j\}},\qquad
+\frac{\partial^2 E_j}{\partial b_r\partial b_s}
+=2\mathbf1_{\{r+s>j\}}\binom{r+s}{j};\qquad
+\frac{\partial^2 E_j}{\partial a_r\partial b_s}=0. \tag{12.5}
+$$
+
+Here each $a$ index ranges over $0,\ldots,3$ and each $b$ index over $1,\ldots,4$. Let $J_0=DE(c)$, $M=10^{12}J_0$, and $H_\ell=DE(e_\ell)-DE(0)$ for the $\ell$th coordinate unit vector, $1\le\ell\le8$. Thus $M$ and every $H_\ell$ are integer matrices defined entry by entry by (12.3)–(12.5). Exact elimination gives
+
+$$
+\begin{aligned}
+D:=\det M
+&=1609746256772333630243120555818415603867799240610475316946905877536454627003261283417598578868092928,\\
+\det J_0&=\frac{D}{10^{96}},\qquad 1609<\det J_0<1610,\\
+C&=J_0^{-1}=\frac{10^{12}}D\operatorname{adj}(M).
+\end{aligned} \tag{12.6}
+$$
+
+This defines $C$ exactly over $\mathbb Q$, without a rounded inverse. The center residual is
+
+$$
+E(c)=\frac{R}{9\cdot10^{24}},\qquad
+R=\begin{pmatrix}
+2749658638697\\
+17343986166144\\
+63810337611240\\
+88047066463386\\
+129434936347566\\
+72396013326066\\
+50235466044228\\
+9914818609152
+\end{pmatrix}. \tag{12.7}
+$$
+
+For the derivative tensor, put
+$\beta_i=\sum_{k=1}^8\sum_{\ell=1}^8|(CH_\ell)_{ik}|$.
+The following strict rational bounds specify all rows, not sampled values on the box:
+
+| Coordinate $i$ | $u_i$ with $\lvert(CE(c))_i\rvert<u_i/10^{15}$ | $v_i$ with $\beta_i<v_i$ |
+| --- | --- | --- |
+| $1$ | $268$ | $30$ |
+| $2$ | $202$ | $307$ |
+| $3$ | $398$ | $212$ |
+| $4$ | $336$ | $333$ |
+| $5$ | $73$ | $213$ |
+| $6$ | $214$ | $343$ |
+| $7$ | $18$ | $212$ |
+| $8$ | $132$ | $50$ |
+
+Here is an integer-arithmetic form of the certificate, including how to reproduce the inequalities. Compute $M$ from (12.4), its adjugate $A_M=\operatorname{adj}(M)$ by signed minors, and $H_\ell$ from (12.5). Substitution of the eight integers in (12.3) into (12.2) gives (12.7). The determinant and the table amount precisely to
+
+$$
+\begin{aligned}
+1609\cdot10^{96}&<D<1610\cdot10^{96},\\
+1000\,|(A_MR)_i|&<9D\,u_i,\\
+10^{12}\sum_{k=1}^8\sum_{\ell=1}^8|(A_MH_\ell)_{ik}|&<D\,v_i
+\qquad(1\le i\le8).
+\end{aligned} \tag{12.8}
+$$
+
+These finite integer inequalities follow by multiplication and comparison of the specified integers. For an elimination alternative to signed-minor expansion, start with $M$, previous pivot $d=1$, and update the lower-right submatrix at pivot $a=M_{kk}$ by
+$M_{ij}\leftarrow(aM_{ij}-M_{ik}M_{kj})/d$ for $i,j>k$, then set $d=a$ and eliminate the entries below that pivot. All divisions are exact; a row interchange changes the determinant sign. The final entry gives $D$. Rational Gauss–Jordan elimination of $[M\mid I_8]$ gives $M^{-1}$, and $A_M=DM^{-1}$ gives the same integer comparisons (12.8). Thus the certificate is reproducible from a fully specified coefficient map by finite exact arithmetic.
+
+In the vector maximum norm and its induced matrix norm, these comparisons give
+
+$$
+\begin{aligned}
+\alpha&:=\|CE(c)\|_\infty<\bar\alpha:=\frac{398}{10^{15}},\\
+\beta&:=\max_i\beta_i<343,\qquad
+L:=343r=\frac{343}{10^8}<1.
+\end{aligned} \tag{12.9}
+$$
+
+Since $E$ is quadratic, its derivative has the exact affine expansion
+$DE(c+h)=J_0+\sum_{\ell=1}^8h_\ell H_\ell$.
+Consequently for $\|h\|_\infty\le r$,
+
+$$
+\|I_8-CDE(c+h)\|_\infty
+\le\beta\|h\|_\infty\le L.
+\tag{12.10}
+$$
+
+Let $T(\theta)=\theta-CE(\theta)$. The segment integral of its derivative makes $T$ Lipschitz on the convex closed box with constant at most $L$. Its image lies strictly inside the box, since
+
+$$
+\begin{aligned}
+\|T(\theta)-c\|_\infty
+&\le\alpha+L\|\theta-c\|_\infty
+<\bar\alpha+Lr
+=\frac{4323}{10^{16}}<r,\\
+\frac{\bar\alpha}{1-L}&<\frac4{10^{13}}.
+\end{aligned} \tag{12.11}
+$$
+
+Banach's contraction theorem on this complete box gives a unique fixed point in its interior. Invertibility of $C$ makes the fixed points exactly the zeros of $E$. Moreover (12.10) makes $CDE(\theta)$ invertible by the Neumann series at every point of the box, so $DE(\theta)$ is invertible there. Uniqueness outside this box is not asserted. The fixed-point principle used here is the classical one of S. Banach, “Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales,” *Fundamenta Mathematicae* **3**, 133–181, [doi:10.4064/fm-3-1-133-181](https://doi.org/10.4064/fm-3-1-133-181); the particular coefficient map, box and rational inequalities are the certificate for this degree. $\square$
+
+**Theorem 12.3 (Exact rational selection, coefficient error and the uniform parameter match).** With $C,\bar\alpha,L$ as in (12.6) and (12.9), define for integers $N\ge0$
+
+$$
+\theta^{(0)}=c,\qquad
+\theta^{(N+1)}=\theta^{(N)}-CE(\theta^{(N)}),\qquad
+\varepsilon_N=\frac{\bar\alpha L^N}{1-L}.
+\tag{12.12}
+$$
+
+Every iterate is rational and lies in the interior of $\mathcal B_9$. Its distance to the unique zero of Theorem 12.2 obeys both
+
+$$
+\begin{aligned}
+\|\theta^{(N)}-\theta_*\|_\infty
+&<\varepsilon_N<\frac4{10^{13}}\left(\frac{343}{10^8}\right)^N,\\
+\|\theta^{(N)}-\theta_*\|_\infty
+&\le\frac{\|CE(\theta^{(N)})\|_\infty}{1-L}.
+\end{aligned} \tag{12.13}
+$$
+
+Set $p=3P_{\theta_*}$, $s=3S_{\theta_*}$ and $p^{(N)}=3P_{\theta^{(N)}}$, $s^{(N)}=3S_{\theta^{(N)}}$. For a polynomial $h$, let $\|h\|_{\mathrm{coef},\infty}=\max_j|[t^j]h|$. Then
+
+$$
+\begin{aligned}
+\max\{\|p^{(N)}-p\|_{\mathrm{coef},\infty},
+       \|s^{(N)}-s\|_{\mathrm{coef},\infty}\}
+&\le3\varepsilon_N,\\
+p_4=p^{(N)}_4&=3,\qquad s(0)=s^{(N)}(0)=0,\\
+p(t)^2+s(t+1)^2-s(t)^2&=(t+1)^9-t^9\quad(t\in\mathbb R).
+\end{aligned} \tag{12.14}
+$$
+
+Thus this exact limiting pair satisfies every polynomial hypothesis of (10.10) at $m=4,n=9$. In Definition 11.1 the parameter match is $D=6$, target $e_0,\ldots,e_4$, source $x=e_5$, detector $f=e_0$, $u_j=\Delta^{j+1}s(0)$ and $v_j=\Delta^jp(0)$ for $0\le j\le4$. In particular $u_4=0$ and $v_4=72$. Theorems 11.2–11.5 apply to this selected pair for each $0<q<1$; their full complex stability, faithful completion, exact branch ranks, actual pure reset and every stationary cylinder (11.15) are the existing uniform consumers.
+
+For the corresponding raw matrices $A,B$ in (11.1), form $u^{(N)},v^{(N)},A^{(N)},B^{(N)}$ by the same finite-difference formulas applied to $s^{(N)},p^{(N)}$. In the induced matrix maximum norm,
+
+$$
+\begin{aligned}
+\|A^{(N)}-A\|_\infty
+=\|u^{(N)}-u\|_\infty&\le126\varepsilon_N,\\
+\|B^{(N)}-B\|_\infty
+=\|v^{(N)}-v\|_\infty&\le24\varepsilon_N,\\
+u^{(N)}_4&=0,\qquad v^{(N)}_4=72.
+\end{aligned} \tag{12.15}
+$$
+
+For any prescribed rational coefficient tolerance $\eta>0$, a reproducible finite selection is the first integer $N\ge0$ for which $3\varepsilon_N\le\eta$, followed by the rational recursion (12.12). This selects the raw amplitude coefficients within $\eta$ of the specified exact pair. Replacing $3$ by $126$ gives the same guarantee for both raw matrices in (12.15). These are exact-arithmetic error certificates, with no bit-complexity bound.
+
+Proof. Theorem 12.2 gives a rational polynomial map $T$ taking the box to its interior with Lipschitz constant $L<1$, so the iterates have the stated location and rationality. Since
+$\|T(c)-c\|_\infty=\alpha<\bar\alpha$, successive differences satisfy
+$\|\theta^{(N+1)}-\theta^{(N)}\|_\infty\le L^N\alpha$.
+Summing the geometric tail proves convergence to $\theta_*$ and the first bound in (12.13), including the bound from (12.11). For any $y\in\mathcal B_9$,
+
+$$
+\|y-\theta_*\|_\infty
+\le\|y-T(y)\|_\infty+L\|y-\theta_*\|_\infty,
+\tag{12.16}
+$$
+
+which proves the second bound. Each number in this stopping rule and its residual bound is obtained from the rational data (12.2)–(12.9) by finitely many additions, multiplications, divisions and comparisons. Since $L^N\to0$, the stopping rule terminates for every $\eta>0$.
+
+Multiplication by three gives the coefficient estimate in (12.14). The zero of $E$ supplies the complete degree-eight identity by (12.1)–(12.2); multiplying it by nine gives the last line of (12.14). The degree of $p$ is four and $p_4^2=9$, while $s$ is anchored and has degree at most four. These are precisely the hypotheses used in the uniform Newton lift and its consumers; no identification with a particular fixed point of the spectral-factor map in Theorem 10.1 is required.
+
+For the raw-matrix estimates, write $\delta=\|\theta^{(N)}-\theta_*\|_\infty$. Applying the finite-difference formula (11.2) to the coefficient errors gives the following coordinatewise bounds in order $j=0,1,2,3,4$:
+
+$$
+\begin{aligned}
+|v^{(N)}_j-v_j|&\le\delta\,(3,9,24,18,0)_j,\\
+|u^{(N)}_j-u_j|&\le\delta\,(12,66,126,72,0)_j.
+\end{aligned} \tag{12.17}
+$$
+
+For example, the second and third forward differences at zero of a quartic $h(t)=\sum_{i=0}^4h_it^i$ are $2h_2+6h_3+14h_4$ and $6h_3+36h_4$. For $p$ the leading coefficient is fixed, whereas all four nonconstant coefficients of $s$ may vary. These give the multipliers in (12.17), and the fourth difference is $24h_4$. The fifth difference is zero. Only the final columns of $A$ and $B$ vary, so their maximum row-sum errors equal the maximum norms of the corresponding column errors. This proves (12.15). $\square$
+
+The bounds (12.13)–(12.17) are independent of $q$ and concern the exact rational selection of raw coefficients. For a finite iterate the full polynomial residual is exactly
+
+$$
+(p^{(N)}(t))^2+(s^{(N)}(t+1))^2-(s^{(N)}(t))^2
+-\big((t+1)^9-t^9\big)
+=9\sum_{j=0}^7E_j(\theta^{(N)})t^j.
+\tag{12.18}
+$$
+
+A coefficient approximation therefore does not assert the exact gap law unless this residual vanishes. The Gramian and final instrument in (11.5) and (11.10) depend on $q$ and on inversion and positive square roots of $Q$. The raw coefficient estimates supply no bound here on those operations, on final-instrument or stationary-cylinder probability sensitivity, or on a physical implementation with finite precision. Such estimates require additional conditioning and perturbation bounds. The convergent map in (12.12) is $T=I-CE$, not the spectral-factor map $\mathcal F$ of Theorem 10.1; no convergence assertion for that other iteration follows.
+
+**Proposition 12.4 (Positive squarefree input does not force an anchored coefficient Jacobian to be nonsingular).** On monic degree-two $P$ and anchored polynomials $S$ of degree at most two, let
+$H_2(P,S)=P^2+\Delta(S^2)$, with its degree-four leading coefficient fixed at one. There is a strictly positive, squarefree real polynomial $F$ and a solution with $S$ of degree exactly two at which the map from the four free coefficients to the four coefficients of degrees zero through three of $H_2$ has singular Jacobian. Explicitly, take
+
+$$
+P(t)=t^2+t+\frac13,\qquad
+S(t)=\frac{t(t-1)}{100},\qquad
+F(t)=P(t)^2+\frac{t^3}{2500}=H_2(P,S).
+\tag{12.19}
+$$
+
+Proof. Direct multiplication gives $\Delta(t^2(t-1)^2)=4t^3$. Also
+
+$$
+P(t)-\frac{1+t^2}{24}=\frac{23t^2+24t+7}{24}>0,
+\tag{12.20}
+$$
+
+because the numerator has positive leading coefficient and discriminant $24^2-4\cdot23\cdot7=-68$. For $x=|t|\ge0$, both $1+x^2\ge x$ and $1+x^2\ge x^2$, whence $|t|^3\le(1+t^2)^2$. Squaring the positive lower bound for $P$ gives
+
+$$
+F(t)\ge\left(\frac1{576}-\frac1{2500}\right)(1+t^2)^2
+=\frac{481}{360000}(1+t^2)^2>0.
+\tag{12.21}
+$$
+
+If $z$ were a repeated complex root of $F$, then $z\ne0$ since $F(0)=1/9$, and $P(z)\ne0$ by (12.19). Eliminating the cubic term between $F(z)=0$ and $F'(z)=0$ and dividing by $P(z)$ yields
+
+$$
+2zP'(z)-3P(z)=z^2-z-1=0.
+\tag{12.22}
+$$
+
+Both roots of this quadratic are real, contradicting strict positivity of $F$. Thus $F$ is squarefree over $\mathbb C$.
+
+The nonzero admissible tangent variation
+
+$$
+U(t)=-\frac t{25},\qquad V(t)=t^2+\frac t3
+\tag{12.23}
+$$
+
+has $\deg U\le1$, $\deg V\le2$ and $V(0)=0$. Since
+
+$$
+SV=\frac{t^4-\frac23t^3-\frac13t^2}{100},\qquad
+\Delta(SV)=\frac{t^3+t^2+t/3}{25}=\frac{tP(t)}{25},
+\tag{12.24}
+$$
+
+one has $DH_2(P,S)[U,V]=2(PU+\Delta(SV))=0$. The coefficient vector of this variation, in order $(P_0,P_1,S_1,S_2)$, is $(0,-1/25,1/3,1)$, so the coefficient Jacobian is singular. $\square$
+
+This example concerns one solution of one positive quartic input. Its cubic coefficient is $2+1/2500$, whereas that of $((t+1)^5-t^5)/5$ is two; it is not the normalized monomial-difference input. It proves neither singularity of every solution for its own input nor singularity of the ninth-degree zero in Theorem 12.2, and it gives no obstruction to the uniform existence theorem. Its computational consequence is that positivity and squarefreeness alone cannot replace the explicit derivative estimate (12.10) when certifying local coefficient selection. The certificate, its error transfer and this counterexample are repository mathematical derivations using the cited classical fixed-point principle and the existing uniform suppliers, without a claim of worldwide novelty.
+
+## 追加锚（本行以下为增补区）
