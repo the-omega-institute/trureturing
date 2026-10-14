@@ -6,9 +6,6 @@
    utility: none
    digest: Quesne's Kepler-Coulomb coefficient system has positive closed forms. -/
 
-import Mathlib.Algebra.Polynomial.Eval.Degree
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Tactic
 
 namespace D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
