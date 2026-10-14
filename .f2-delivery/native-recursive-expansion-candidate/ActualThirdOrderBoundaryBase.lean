@@ -159,7 +159,7 @@ theorem actual_third_order_boundary_base {base : V}
       List.flatMap_nil, List.append_nil, SimpleGraph.Walk.edges_append,
       SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_reverse,
       cut, Sym2.eq_swap, List.count_append, List.count_cons, List.count_nil,
-      List.count_reverse] at hH ⊢
+      List.count_reverse, beq_iff_eq] at hH ⊢
     omega
   have hsourceOpp : c.edges.Perm
       ((joint.flatMap fun z => z.walk.edges) ++ K.toList ++ H.toList) := by
@@ -178,7 +178,7 @@ theorem actual_third_order_boundary_base {base : V}
       List.flatMap_nil, List.append_nil, SimpleGraph.Walk.edges_append,
       SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_reverse,
       cut, Sym2.eq_swap, List.count_append, List.count_cons, List.count_nil,
-      List.count_reverse] at hK ⊢
+      List.count_reverse, beq_iff_eq] at hK ⊢
     omega
   refine ⟨primary₁, primary₂, opposite₀, opposite₂,
     ⟨hc.isCycle, hdisjoint, hjoint,
