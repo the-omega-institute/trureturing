@@ -12,6 +12,7 @@ namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualInductionState
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
@@ -28,6 +29,9 @@ structure StateFor {m k : ℕ} (F : SupplyFrame m k)
   sameSelected : oppositeFrame.selected.toFinset = F.selected.toFinset
   sameBase : oppositeFrame.base = F.base
   sameTerminal : oppositeFrame.terminal = F.terminal
+  sameProtectedPair :
+    s(protectedP oppositeFrame hk, protectedQ oppositeFrame hk) =
+      s(protectedP F hk, protectedQ F hk)
   primaryOdd : Bool
   oppositeOdd : Bool
   distinguishedOpposite : Bool
