@@ -63,7 +63,7 @@ internal sealed class RecursivePortBoundaryDocument : IScribeDocumentDefinition
 
     private static Formula PathFormula(bool odd)
     {
-        Formula s = F.Id("s"), k = Add(Mul(D(2), s), D(odd ? 3 : 2)), w = F.Id("w");
+        Formula s = F.Id("s"), k = Add(Mul(D(2), s), odd ? D(3) : D(2)), w = F.Id("w");
         Formula walk = Call("Walk", Call("boundaryGraph", k), Call("R", D(0)), Call("L", k));
         return Disp(All("s", Call("Nat"), Some("w", walk,
             And(Call("IsHamiltonian", w), Eq(Call("support", w), Call(odd ? "oddTrace" : "evenTrace", s))))));
@@ -71,9 +71,9 @@ internal sealed class RecursivePortBoundaryDocument : IScribeDocumentDefinition
 
     private static Formula EdgesFormula(bool odd)
     {
-        Formula s = F.Id("s"), k = Add(Mul(D(2), s), D(odd ? 3 : 2));
+        Formula s = F.Id("s"), k = Add(Mul(D(2), s), odd ? D(3) : D(2));
         Formula p = F.Id("p"), q = F.Id("q"), i = F.Id("i"), j = F.Id("j");
-        Formula index = Call("Fin", Add(Mul(D(2), s), D(odd ? 4 : 3)));
+        Formula index = Call("Fin", Add(Mul(D(2), s), odd ? D(4) : D(3)));
         Formula edge = Call("Sym2", p, q);
         Formula piece(Formula t) => Call(odd ? "oddBEdge" : "evenBEdge", s, t);
         Formula matching = Call(odd ? "oddBoundary" : "evenBoundary", k, Call("code", p), Call("code", q));
@@ -91,7 +91,6 @@ internal sealed class RecursivePortBoundaryDocument : IScribeDocumentDefinition
     private static Formula Some(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
     private static Formula Eq(Formula l, Formula r) => new Formula.Relation(l, FormulaRelationOperator.Equal, r);
-    private static Formula Le(Formula l, Formula r) => new Formula.Relation(l, FormulaRelationOperator.LessThanOrEqual, r);
     private static Formula And(Formula l, Formula r) => new Formula.Logic(l, FormulaLogicOperator.And, r);
     private static Formula Implies(Formula l, Formula r) => new Formula.Logic(l, FormulaLogicOperator.Implies, r);
     private static Formula Add(Formula l, Formula r) => new Formula.Binary(l, FormulaBinaryOperator.Add, r);
