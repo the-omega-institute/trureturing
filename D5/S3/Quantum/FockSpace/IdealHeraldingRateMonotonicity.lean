@@ -8,9 +8,6 @@
 
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Data.Rat.Cast.Order
-import Mathlib.Tactic
 
 open scoped Topology
 open MeasureTheory
@@ -28,7 +25,7 @@ private lemma p_eq_sum (n : ℕ) :
     p n = ((-1 : ℝ) / (n : ℝ)) ^ (n - 1) * ((n - 1).factorial : ℝ) *
       ∑ t ∈ Finset.range n, ((n : ℝ) - (t : ℝ)) * (-(n : ℝ)) ^ t /
         (t.factorial : ℝ) := by
-  simp only [p, pRat, Rat.cast_mul, Rat.cast_pow, Rat.cast_div, Rat.cast_neg,
+  simp only [p.eq_1, pRat.eq_1, Rat.cast_mul, Rat.cast_pow, Rat.cast_div, Rat.cast_neg,
     Rat.cast_one, Rat.cast_natCast, Rat.cast_sum, Rat.cast_sub]
 
 private lemma weighted_sum_shift (z : ℝ) (m : ℕ) :
@@ -40,7 +37,7 @@ private lemma weighted_sum_shift (z : ℝ) (m : ℕ) :
   intro t _
   rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
   have ht : (t : ℝ) + 1 ≠ 0 := by positivity
-  field_simp
+  field_simp (disch := first | assumption | positivity)
 
 private lemma moment_succ (a : ℝ) (m : ℕ) :
     a * (∫ u in (0 : ℝ)..1, u ^ (m + 1) * Real.exp (a * (u - 1))) =
@@ -89,14 +86,14 @@ private lemma moment_closed (a : ℝ) (ha : 0 < a) (m : ℕ) :
     have hmaz : (m : ℝ) + 1 ≠ 0 := by positivity
     have hc : ((-1 : ℝ) / a) ^ m * (-a) ^ m = 1 := by
       rw [← mul_pow]
-      field_simp
+      field_simp (disch := first | assumption | positivity)
       simp
     have hp : ((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
         ((-a) ^ (m + 1) / ((m + 1).factorial : ℝ)) = -a / ((m : ℝ) + 1) := by
       rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
       calc
         _ = (((-1 : ℝ) / a) ^ m * (-a) ^ m) * (-a / ((m : ℝ) + 1)) := by
-          field_simp
+          field_simp (disch := first | assumption | positivity)
         _ = _ := by rw [hc]; ring
     have hdnext : ((-1 : ℝ) / a) ^ (m + 1) * ((m + 1).factorial : ℝ) =
         -(((m : ℝ) + 1) / a) * (((-1 : ℝ) / a) ^ m * (m.factorial : ℝ)) := by
@@ -108,7 +105,7 @@ private lemma moment_closed (a : ℝ) (ha : 0 < a) (m : ℕ) :
           (∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) := hf
       _ = 1 - (((m : ℝ) + 1) / a) *
           (a * ∫ u in (0 : ℝ)..1, u ^ m * Real.exp (a * (u - 1))) := by
-        field_simp
+        field_simp (disch := first | assumption | positivity)
       _ = 1 - (((m : ℝ) + 1) / a) *
           (((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
             ((∑ t ∈ Finset.range (m + 1), (-a) ^ t / (t.factorial : ℝ)) -
@@ -118,7 +115,7 @@ private lemma moment_closed (a : ℝ) (ha : 0 < a) (m : ℕ) :
             (((-1 : ℝ) / a) ^ m * (m.factorial : ℝ) *
               ((-a) ^ (m + 1) / ((m + 1).factorial : ℝ))) = -1 := by
           rw [hp]
-          field_simp
+          field_simp (disch := first | assumption | positivity)
         linear_combination hp'
 
 private noncomputable def r (u : ℝ) : ℝ := u * Real.exp (u - 1)
@@ -144,13 +141,13 @@ private lemma p_split (n : ℕ) (hn : 1 ≤ n) :
   rw [Nat.sub_add_cancel hn] at hs
   have hc : ((-1 : ℝ) / n) ^ (n - 1) * (-(n : ℝ)) ^ (n - 1) = 1 := by
     rw [← mul_pow]
-    field_simp
+    field_simp (disch := first | assumption | positivity)
     simp
   have hl : d * ((-(n : ℝ)) ^ (n - 1) / ((n - 1).factorial : ℝ)) = 1 := by
     dsimp [d]
     calc
       _ = ((-1 : ℝ) / n) ^ (n - 1) * (-(n : ℝ)) ^ (n - 1) := by
-        field_simp
+        field_simp (disch := first | assumption | positivity)
       _ = 1 := hc
   have hsum : (∑ t ∈ Finset.range n,
       ((n : ℝ) - (t : ℝ)) * (-(n : ℝ)) ^ t / (t.factorial : ℝ)) =
@@ -227,13 +224,13 @@ private lemma primitive_deriv (n : ℕ) (hn : 1 ≤ n) (u : ℝ)
       ((((hasDerivAt_id u).sub_const 1).const_mul (n : ℝ)).exp) using 1
   all_goals try rfl
   dsimp only [Pi.add_apply, Pi.sub_apply, Pi.div_apply, Pi.mul_apply, Pi.pow_apply, id_eq]
-  simp only [K, r, mul_pow, ← Real.exp_nat_mul, hpow]
-  field_simp
+  simp only [K.eq_1, r.eq_1, mul_pow, ← Real.exp_nat_mul, hpow]
+  field_simp (disch := first | assumption | positivity)
   ring
 
 private lemma kernel_continuous (n : ℕ) :
     ContinuousOn (fun u : ℝ => K u * r u ^ n) (Set.Ici 0) := by
-  unfold K r
+  simp only [K.eq_1, r.eq_1]
   apply ContinuousOn.mul
   · apply ContinuousOn.div
     · fun_prop
@@ -282,7 +279,7 @@ private lemma main_gap_eq_integral (n : ℕ) (hn : 1 ≤ n) :
 
 private lemma r_bounds (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) :
     0 ≤ r u ∧ r u ≤ u := by
-  unfold r
+  simp only [r.eq_1]
   constructor
   · exact mul_nonneg hu.1 (Real.exp_nonneg _)
   · calc
@@ -305,7 +302,7 @@ private lemma gap_integrable (n : ℕ) (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
   · apply (kernel_continuous n).mono
     intro u hu
     exact le_trans (le_min ha hb) hu.1
-  · unfold r
+  · simp only [r.eq_1]
     fun_prop
 
 private lemma negative_piece_lower (n : ℕ) :
@@ -330,7 +327,7 @@ private lemma negative_piece_lower (n : ℕ) :
       have heupper : Real.exp (u - 1) ≤ Real.exp (-1 / 2 : ℝ) :=
         Real.exp_le_exp.mpr (by linarith [hu.2])
       have hru : r u ≤ Real.exp (-1 : ℝ) := by
-        unfold r
+        simp only [r.eq_1]
         calc
           u * Real.exp (u - 1) ≤ (1 / 2) * Real.exp (-1 / 2 : ℝ) :=
             mul_le_mul hu.2 heupper (Real.exp_nonneg _) (by norm_num)
@@ -371,7 +368,7 @@ private lemma window_pointwise_lower (n : ℕ) (hn : 4 ≤ n) (u : ℝ)
     nlinarith [hu.1]
   have hrec : (1 - 1 / (n : ℝ)) * (1 + ((n - 1 : ℕ) : ℝ)⁻¹) = 1 := by
     rw [hnm]
-    field_simp
+    field_simp (disch := first | assumption | positivity)
     ring
   have hp0 : 0 ≤ (1 - 1 / (n : ℝ)) ^ (n - 1) := pow_nonneg (by linarith) _
   have hp : (1 / 3 : ℝ) ≤ (1 - 1 / (n : ℝ)) ^ (n - 1) := by
@@ -395,12 +392,12 @@ private lemma window_pointwise_lower (n : ℕ) (hn : 4 ≤ n) (u : ℝ)
   have hexu : Real.exp (-1 : ℝ) ≤ Real.exp ((n : ℝ) * (u - 1)) := by
     apply Real.exp_le_exp.mpr
     have hmul := mul_le_mul_of_nonneg_left hu.1 hn0.le
-    field_simp at hmul
+    field_simp (disch := first | assumption | positivity) at hmul
     nlinarith
   have hru : (1 / 12 : ℝ) ≤ r u ^ n := by
     have huPow := pow_le_pow_left₀ (by linarith : 0 ≤ 1 - 1 / (n : ℝ)) hu.1 n
     have he := hex.trans hexu
-    unfold r
+    simp only [r.eq_1]
     rw [mul_pow, ← Real.exp_nat_mul]
     nlinarith [mul_nonneg (sub_nonneg.mpr (hvn.trans huPow)) (sub_nonneg.mpr he)]
   have hr := r_bounds u hu01
@@ -585,7 +582,7 @@ private lemma p_error_bound (n : ℕ) (hn : 16 ≤ n) :
   have htail : T n ≤ 1 / (n : ℝ) := by
     have hm := mul_le_mul_of_nonneg_left he0 (by positivity : 0 ≤ 2 * (n : ℝ))
     have hrat : 2 * (n : ℝ) * (1 / (512 * (n : ℝ) ^ 2)) ≤ 1 / (n : ℝ) := by
-      field_simp
+      field_simp (disch := first | assumption | positivity)
       nlinarith
     exact ht.2.trans (hm.trans hrat)
   have hmain := main_error_bound n (by omega)
