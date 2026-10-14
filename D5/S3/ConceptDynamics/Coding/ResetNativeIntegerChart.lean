@@ -775,7 +775,7 @@ def targetTimeUnit : (r : ℕ) → (Target r)ˣ
   | _ + 3 => ⟨Zsqrtd.sqrtd, -Zsqrtd.sqrtd,
       by simp [Zsqrtd.dmuld], by simp [Zsqrtd.dmuld]⟩
 
-private theorem targetTimeUnit_val (r : ℕ) :
+theorem targetTimeUnit_val (r : ℕ) :
     (targetTimeUnit r : Target r) = targetTime r := by
   rcases r with _ | _ | _ | r <;> rfl
 

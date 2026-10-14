@@ -264,7 +264,7 @@ private theorem coordinate_injective {m : ℕ} (hm : 3 ≤ m) (z : Configuration
   have hk := anchor_injective (by omega) z (mul_right_cancel he')
   subst l
   rfl
-private theorem cycle_mul {m : ℕ} (r s : Fin (m + 1)) : finCycle r * finCycle s = finCycle (r + s) := by
+theorem cycle_mul {m : ℕ} (r s : Fin (m + 1)) : finCycle r * finCycle s = finCycle (r + s) := by
   apply Equiv.ext
   intro i
   simp only [Equiv.Perm.mul_apply, finCycle_apply]
@@ -281,7 +281,7 @@ private theorem b_sq (m : ℕ) : b m * b m = 1 := by
   apply Equiv.ext
   intro i
   exact reverseIndex_involutive (L := m) (by omega) i
-private theorem a_cycle {m : ℕ} (r : Fin (m + 1)) : a m * finCycle r = finCycle (-r) * a m := by
+theorem a_cycle {m : ℕ} (r : Fin (m + 1)) : a m * finCycle r = finCycle (-r) * a m := by
   apply Equiv.ext
   intro i
   simp [Equiv.Perm.mul_apply, a_apply, Fin.rev_add, sub_eq_add_neg]
