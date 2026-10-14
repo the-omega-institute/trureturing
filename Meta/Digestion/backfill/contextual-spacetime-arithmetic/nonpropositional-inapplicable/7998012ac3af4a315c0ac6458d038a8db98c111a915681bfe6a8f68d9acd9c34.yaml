@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7998012ac3af4a315c0ac6458d038a8db98c111a915681bfe6a8f68d9acd9c34
+  normalized_sha256: sha256:7998012ac3af4a315c0ac6458d038a8db98c111a915681bfe6a8f68d9acd9c34
+cas_ref: sha256:7998012ac3af4a315c0ac6458d038a8db98c111a915681bfe6a8f68d9acd9c34
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述区域条件与正常形的等价。
+    previous_atom_id: 987a5d0ad28e8b10d7114bb2c8d2ab7d2b318f550caaf14576e94480c3abbefe
+    next_atom_id: 7b46468639485e6c276f69416a9ed408f1db2721dc3e5726b7aaaeecb9918d6d

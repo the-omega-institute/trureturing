@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b4cc7c0c6883e0d9bf8918c9c00c843aa32902668254c3c79e71f645fd7724b
+  normalized_sha256: sha256:4b4cc7c0c6883e0d9bf8918c9c00c843aa32902668254c3c79e71f645fd7724b
+cas_ref: sha256:4b4cc7c0c6883e0d9bf8918c9c00c843aa32902668254c3c79e71f645fd7724b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 179. 允许续接扩张会单调增加边界成本 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: ef9956d341a752d67926474be4a4ccfc9299f26742c6c57815ff4bfe5a236508
+    next_atom_id: 4a39fa1ba7398474ea7dc1c9a05267ac0a849aeefd22ab8a456b0c5435b30dde

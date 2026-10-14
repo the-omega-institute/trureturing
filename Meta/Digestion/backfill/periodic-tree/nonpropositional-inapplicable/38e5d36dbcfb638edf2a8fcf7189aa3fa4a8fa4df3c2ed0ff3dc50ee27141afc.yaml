@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38e5d36dbcfb638edf2a8fcf7189aa3fa4a8fa4df3c2ed0ff3dc50ee27141afc
+  normalized_sha256: sha256:38e5d36dbcfb638edf2a8fcf7189aa3fa4a8fa4df3c2ed0ff3dc50ee27141afc
+cas_ref: sha256:38e5d36dbcfb638edf2a8fcf7189aa3fa4a8fa4df3c2ed0ff3dc50ee27141afc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 写 $h=3^r w$，其中 $3\nmid w$。几何和  $$ \frac{4^w-1}{4-1}=1+4+\cdots…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: feb8e594381eebfc9e0d6975d34c26c804c9f033faa93df43a0365a18250e4b3
+    next_atom_id: b9d6f01da328f2f44258ddfbd1f31aad318c2f28ec3c38a32e16e45a448b3625

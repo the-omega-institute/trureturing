@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5dff6d5f598355b0e082d82b0f8e5d9ef80acd537cdb2819b3694d9dc82a979d
+  normalized_sha256: sha256:5dff6d5f598355b0e082d82b0f8e5d9ef80acd537cdb2819b3694d9dc82a979d
+cas_ref: sha256:5dff6d5f598355b0e082d82b0f8e5d9ef80acd537cdb2819b3694d9dc82a979d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 20.5（续接任务的最小闭合效果空间）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: b32a3438d14f6bead2fa8b46f16931919378c85b8aee5e262be548bce1d6fe32
+    next_atom_id: 30be4cf62da6353f2a5237b67af162cd1ef5d2916778c2dfe91c1447bfb9af81

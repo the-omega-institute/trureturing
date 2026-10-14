@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb1207edddcd871d53c8a9730f018d1151d4fb99194a72b9272172d72e3f92df
+  normalized_sha256: sha256:bb1207edddcd871d53c8a9730f018d1151d4fb99194a72b9272172d72e3f92df
+cas_ref: sha256:bb1207edddcd871d53c8a9730f018d1151d4fb99194a72b9272172d72e3f92df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 因为 $\varphi=1+\alpha$ 且 $m$ 为整数， $\lfloor m\varphi\rfloor=m+\l…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: ee804d1807448823d878d1b85ea312cbcbff5cd8378eb76532a2bd00879911c7
+    next_atom_id: e23ddf269944bd7d497b18bc8798fe5fd5fb0ba354c54cbcb086b8d7cd23bea9

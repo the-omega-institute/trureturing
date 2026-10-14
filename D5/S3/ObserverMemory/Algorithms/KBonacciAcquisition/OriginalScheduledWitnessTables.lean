@@ -116,7 +116,7 @@ def lowSchedule (L : ℕ) (xs : List ℕ) : List ℕ := xs.filter (fun i => i < 
 def lowReply {L : ℕ} (b : Fin L → Bool) (i : ℕ) : Bool :=
   if h : i < L then b ⟨i, h⟩ else false
 
-private theorem view_congr {A : Type*} (stop : Bool) (xs : List A) (q r : A → Bool)
+theorem view_congr {A : Type*} (stop : Bool) (xs : List A) (q r : A → Bool)
     (same : ∀ i ∈ xs, q i = r i) : view stop xs q = view stop xs r := by
   induction xs with
   | nil => rfl

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3dd24a1e3c072bafd359c6a8d64158e00cbdbc2bc9601a32d70f513f378c3196
+  normalized_sha256: sha256:3dd24a1e3c072bafd359c6a8d64158e00cbdbc2bc9601a32d70f513f378c3196
+cas_ref: sha256:3dd24a1e3c072bafd359c6a8d64158e00cbdbc2bc9601a32d70f513f378c3196
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 与本次仓库读取的对应仅引出源码分工表并注明引用快照，无数学陈述正文。
+    previous_atom_id: 4e4d52410fa5d2904d194f51dca705efcc7ec108bec422907b202e862ecce3e1
+    next_atom_id: 88739ea1396cf20189ab51d619864e14802aea678f8bd74f0d1e7af75ff552d0

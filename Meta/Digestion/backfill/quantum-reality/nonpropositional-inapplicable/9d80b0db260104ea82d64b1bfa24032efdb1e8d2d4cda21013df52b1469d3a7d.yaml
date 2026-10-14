@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d80b0db260104ea82d64b1bfa24032efdb1e8d2d4cda21013df52b1469d3a7d
+  normalized_sha256: sha256:9d80b0db260104ea82d64b1bfa24032efdb1e8d2d4cda21013df52b1469d3a7d
+cas_ref: sha256:9d80b0db260104ea82d64b1bfa24032efdb1e8d2d4cda21013df52b1469d3a7d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 21.1　共同二阶传播锥只引入对象、记号或适用条件；附文解释这些记号的范围，不另断言需证明的性质。
+    previous_atom_id: d9160d751fb4d877286439a38dc60609542f365f0bfa0ed511d86879d4cd7bd5
+    next_atom_id: 1c632d805d6f63578dc9baf8c0ba05d25c4df8c6ff94fdc772bdfaf4e639fa30

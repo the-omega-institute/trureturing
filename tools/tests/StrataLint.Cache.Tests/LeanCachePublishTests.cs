@@ -7,6 +7,17 @@ namespace StrataLint.Cache.Tests;
 public sealed class LeanCachePublishTests
 {
     [Fact]
+    public void PrPreparationActivatesOnlyForSourceHeadOrActualMerge()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = EngineeringProcess.Process(root, "python3", ["-B",
+            Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/pr_cache_contract.py")],
+            hangGuard: TestBudgets.LongWorkflowProcessHangGuard, maximumOutputBytes: 1024 * 1024);
+        Assert.True(result.Exit == 0, result.Text);
+    }
+
+    [Fact]
     public void ActionsSeedsValidateRestoreAndSnapshotMaterial()
     {
         if (OperatingSystem.IsWindows()) return;

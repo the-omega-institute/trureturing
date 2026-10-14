@@ -126,7 +126,7 @@ private theorem comb_tip (p s : Address) (b : Bool) (t : Nat) :
   | nil => rfl
   | cons d p ih => cases d <;> simpa only [comb, iterate_pair, List.cons_append, readout] using ih
 
-private theorem run_halt {E : Type} {M : Controller E} {u : Source}
+theorem run_halt {E : Type} {M : Controller E} {u : Source}
     {e f : E} {t : Nat} {qs : List (E × Nat)} {updates : Nat} {b : Bool}
     (run : Run M u e t qs updates f b) : M.instruction f = .stop b := by
   induction run with
@@ -135,7 +135,7 @@ private theorem run_halt {E : Type} {M : Controller E} {u : Source}
   | update _ _ ih => exact ih
   | internal _ _ ih => exact ih
 
-private theorem run_queries {E : Type} {M : Controller E} {u : Source}
+theorem run_queries {E : Type} {M : Controller E} {u : Source}
     {e f : E} {t : Nat} {qs : List (E × Nat)} {updates : Nat} {b : Bool}
     (run : Run M u e t qs updates f b) : ∀ z ∈ qs, IsQuery M z.1 := by
   induction run with
@@ -148,7 +148,7 @@ private theorem run_queries {E : Type} {M : Controller E} {u : Source}
   | update _ _ ih => exact ih
   | internal _ _ ih => exact ih
 
-private theorem run_replay {E : Type} {M : Controller E} {u v : Source}
+theorem run_replay {E : Type} {M : Controller E} {u v : Source}
     {e f : E} {t : Nat} {qs : List (E × Nat)} {updates : Nat} {b : Bool}
     (run : Run M u e t qs updates f b)
     (agree : ∀ z ∈ qs, readout (literal M z.1) (substitution^[z.2] u) =
@@ -246,7 +246,7 @@ private theorem two_halts {E : Type} [Fintype E] (M : Controller E)
       simp [halts, hb]
   simpa [ne] using Finset.card_le_card sub
 
-private theorem query_halt_card {E : Type} [Fintype E] (M : Controller E) :
+theorem query_halt_card {E : Type} [Fintype E] (M : Controller E) :
     (queries M).card + (halts M).card ≤ Fintype.card E := by
   classical
   have disjoint : Disjoint (queries M) (halts M) := by
@@ -392,7 +392,7 @@ def weight : Address → Nat
   | false :: p => weight p + 1
   | true :: p => weight p + 2
 
-private def atom (n : Nat) : Source := substitution^[n] (.of true)
+def atom (n : Nat) : Source := substitution^[n] (.of true)
 
 private theorem atom_pair (n : Nat) : atom (n + 2) = .mul (atom (n + 1)) (atom n) := by
   have relation := (SourceTransportCentralizer.source_transport_centralizer.1 (atom n)).mpr ⟨n,rfl⟩
@@ -427,7 +427,7 @@ private theorem atomic_extremes (p : Address) (n : Nat) :
               · exact ⟨fun h => (ih n).1 (by omega),
                   fun h => (ih n).2 (by omega)⟩
 
-private theorem adjacent_window (p : Address) (t : Nat)
+theorem adjacent_window (p : Address) (t : Nat)
     (different : readout p (atom t) ≠ readout p (atom (t + 1))) :
     weight p ≤ t + 1 ∧ t ≤ weight p + 1 := by
   constructor
@@ -438,7 +438,7 @@ private theorem adjacent_window (p : Address) (t : Nat)
     exact different (((atomic_extremes p t).2 (by omega)).trans
       ((atomic_extremes p (t + 1)).2 (by omega)).symm)
 
-private theorem static_epochs {E : Type} {M : Controller E} {u : Source}
+theorem static_epochs {E : Type} {M : Controller E} {u : Source}
     {e f : E} {t : Nat} {qs : List (E × Nat)} {updates : Nat} {b : Bool}
     (run : Run M u e t qs updates f b) (zero : updates = 0) :
     ∀ z ∈ qs, z.2 = t := by

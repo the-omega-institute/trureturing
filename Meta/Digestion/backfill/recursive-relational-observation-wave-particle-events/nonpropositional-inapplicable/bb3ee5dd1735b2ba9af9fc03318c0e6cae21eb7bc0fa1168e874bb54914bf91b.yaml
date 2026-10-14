@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb3ee5dd1735b2ba9af9fc03318c0e6cae21eb7bc0fa1168e874bb54914bf91b
+  normalized_sha256: sha256:bb3ee5dd1735b2ba9af9fc03318c0e6cae21eb7bc0fa1168e874bb54914bf91b
+cas_ref: sha256:bb3ee5dd1735b2ba9af9fc03318c0e6cae21eb7bc0fa1168e874bb54914bf91b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 205.1（事件树联合合同）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 3c8562b5d20ad5baa505716626382133454c71f242c35b8a0df33150c97f4bbe
+    next_atom_id: 1ae252f15c339e741a8efdf97aaed1956607d03649d071a097786b0ff6abb6bb

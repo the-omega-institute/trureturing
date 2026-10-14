@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d1288e132359fce28453cc742bb7bff3274bb7f9b39d2891aca06095d3cfcae5
+  normalized_sha256: sha256:d1288e132359fce28453cc742bb7bff3274bb7f9b39d2891aca06095d3cfcae5
+cas_ref: sha256:d1288e132359fce28453cc742bb7bff3274bb7f9b39d2891aca06095d3cfcae5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The prime ell is neither three nor five, so Fibonacci parit…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 2a1f6e538ae1a580c69bd51c4c05233e8e4f52d0d2e9033e81c381f81bb280b4
+    next_atom_id: d260df7a129302b96b7e2ac7608c2967efd3ac75a4dad8dc085fb147f2e9cde9

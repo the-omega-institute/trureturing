@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4572587ee852631a1216da2fcdfa4b9ee79a0232e4b2fd66487d34c8cccac659
+  normalized_sha256: sha256:4572587ee852631a1216da2fcdfa4b9ee79a0232e4b2fd66487d34c8cccac659
+cas_ref: sha256:4572587ee852631a1216da2fcdfa4b9ee79a0232e4b2fd66487d34c8cccac659
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「TR.13 Hilbert 空间的耗散管与二次李雅普诺夫证书」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 86cb524dc2fbc0c5c9a9e22d9db00250e1ec46a8695546affbfa6f5f13d10665
+    next_atom_id: 59a883af98ba3b2470d1dd17c73954baf9514035a6b745c32b5987bc6389f0a1

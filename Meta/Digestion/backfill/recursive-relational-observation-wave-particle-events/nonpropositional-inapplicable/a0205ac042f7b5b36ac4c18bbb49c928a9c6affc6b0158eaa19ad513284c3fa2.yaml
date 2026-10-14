@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a0205ac042f7b5b36ac4c18bbb49c928a9c6affc6b0158eaa19ad513284c3fa2
+  normalized_sha256: sha256:a0205ac042f7b5b36ac4c18bbb49c928a9c6affc6b0158eaa19ad513284c3fa2
+cas_ref: sha256:a0205ac042f7b5b36ac4c18bbb49c928a9c6affc6b0158eaa19ad513284c3fa2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 203. 集合化与事件条件化的交换律 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 0d4205a70e70ec6531e9a24a1282b441fb9123fad427dc7dff4b9e20bcc728c5
+    next_atom_id: 111da27919d00bb42c01a455c3b4b272f7ea3b6933b553632b5709f7b415756b

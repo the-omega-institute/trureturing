@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:daf4bda911d7d53c0043b8c3f61627baea8a7422bfc18e4f1d0e9b4938a842b6
+  normalized_sha256: sha256:daf4bda911d7d53c0043b8c3f61627baea8a7422bfc18e4f1d0e9b4938a842b6
+cas_ref: sha256:daf4bda911d7d53c0043b8c3f61627baea8a7422bfc18e4f1d0e9b4938a842b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 191.1　准静态联合能量与钟响应只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 6da6dd6b6b88aa83b094481d5deb229cf47033045af227672f4414957edc5fc0
+    next_atom_id: 2286f68ec8782897dd149b37a59a78587c722e12ad2812c6f804420c7fa284d5
