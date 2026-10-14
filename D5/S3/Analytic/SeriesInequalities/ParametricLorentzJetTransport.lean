@@ -543,12 +543,12 @@ theorem reference_center_mixed_scales {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞
 /-- A compact smooth profile supported strictly inside `(-1,1)`. -/
 def scaleBump (z : ℝ) : ℝ := expNegInvGlue (9/16-z^2)
 
-private lemma bump_smooth : ContDiff ℝ ∞ scaleBump :=
+lemma bump_smooth : ContDiff ℝ ∞ scaleBump :=
   expNegInvGlue.contDiff.comp (contDiff_const.sub (contDiff_id.pow 2))
 
-private lemma bump_nonneg (z : ℝ) : 0 ≤ scaleBump z := expNegInvGlue.nonneg _
+lemma bump_nonneg (z : ℝ) : 0 ≤ scaleBump z := expNegInvGlue.nonneg _
 
-private lemma bump_zero {z : ℝ} (h : z ≤ -1 ∨ 1 ≤ z) : scaleBump z = 0 := by
+lemma bump_zero {z : ℝ} (h : z ≤ -1 ∨ 1 ≤ z) : scaleBump z = 0 := by
   apply expNegInvGlue.zero_of_nonpos
   rcases h with h | h <;> nlinarith [sq_nonneg (z+1),sq_nonneg (z-1)]
 
@@ -565,13 +565,13 @@ private lemma bump_tail {z : ℝ} {K i : ℕ} (hz : z+1 < K) (hi : K ≤ i) :
   have : (K : ℝ) ≤ i := by exact_mod_cast hi
   linarith
 
-private lemma denominator_finite {z : ℝ} {K : ℕ} (hz : z+1 < K) :
+lemma denominator_finite {z : ℝ} {K : ℕ} (hz : z+1 < K) :
     scaleDenominator z = ∑ i ∈ range K, scaleBump (z-i) := by
   apply tsum_eq_sum
   intro i hi
   exact bump_tail hz (by simpa using hi)
 
-private lemma denominator_smooth (z : ℝ) : ContDiffAt ℝ ∞ scaleDenominator z := by
+lemma denominator_smooth (z : ℝ) : ContDiffAt ℝ ∞ scaleDenominator z := by
   obtain ⟨K,hK⟩ := exists_nat_gt (z+2)
   have he : scaleDenominator =ᶠ[𝓝 z] fun y => ∑ i ∈ range K, scaleBump (y-i) := by
     filter_upwards [Iio_mem_nhds (by linarith : z < (K : ℝ)-1)] with y hy
@@ -579,7 +579,7 @@ private lemma denominator_smooth (z : ℝ) : ContDiffAt ℝ ∞ scaleDenominator
   apply ContDiffAt.congr_of_eventuallyEq _ he
   exact (ContDiff.sum (fun i _ => bump_smooth.comp (contDiff_id.sub contDiff_const))).contDiffAt
 
-private lemma denominator_positive {z : ℝ} (hz : 0 ≤ z) : 0 < scaleDenominator z := by
+lemma denominator_positive {z : ℝ} (hz : 0 ≤ z) : 0 < scaleDenominator z := by
   obtain ⟨K,hK⟩ := exists_nat_gt (z+2)
   rw [denominator_finite (by linarith : z+1 < K)]
   let j := ⌊z+1/2⌋₊
@@ -600,14 +600,14 @@ def scaleCoordinate (xstar : ℝ) (b : ℕ) (x : ℝ) : ℝ :=
 def scaleWeight (xstar : ℝ) (b j : ℕ) (x : ℝ) : ℝ :=
   scaleBump (scaleCoordinate xstar b x-j)/scaleDenominator (scaleCoordinate xstar b x)
 
-private lemma coordinate_nonneg {xstar x : ℝ} {b : ℕ}
+lemma coordinate_nonneg {xstar x : ℝ} {b : ℕ}
     (hx : 0 < x) (hxx : x ≤ xstar) (hb : 1 < b) :
     0 ≤ scaleCoordinate xstar b x := by
   have hbR : (1 : ℝ) < b := by exact_mod_cast hb
   apply div_nonneg _ (Real.log_pos hbR).le
   exact mul_nonneg (by norm_num) (Real.log_nonneg ((le_div_iff₀ hx).mpr (by linarith)))
 
-private lemma weight_smooth {xstar x : ℝ} {b : ℕ}
+lemma weight_smooth {xstar x : ℝ} {b : ℕ}
     (hxstar : 0 < xstar) (hx : 0 < x) (hxx : x ≤ xstar) (hb : 1 < b) (j : ℕ) :
     ContDiffAt ℝ ∞ (scaleWeight xstar b j) x := by
   have hz : ContDiffAt ℝ ∞ (scaleCoordinate xstar b) x := by
@@ -617,7 +617,7 @@ private lemma weight_smooth {xstar x : ℝ} {b : ℕ}
     ((denominator_smooth _).comp x hz)
     (denominator_positive (coordinate_nonneg hx hxx hb)).ne')
 
-private lemma weight_mass {xstar x : ℝ} {b : ℕ}
+lemma weight_mass {xstar x : ℝ} {b : ℕ}
     (hx : 0 < x) (hxx : x ≤ xstar) (hb : 1 < b) (k : ℕ) :
     (∀ j, 0 ≤ scaleWeight xstar b j x) ∧
       ∑ j ∈ range (k+1), scaleWeight xstar b j x ≤ 1 := by
