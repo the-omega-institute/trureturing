@@ -45,14 +45,18 @@ theorem actual_opened_child_from_joint_partition
     (hₐ : G.Adj ℓ s) (h_b : G.Adj s t)
     (hd : d = (tail.cons h_b).cons hₐ)
     (rest : List (Piece G))
-    (hjn : ((⟨ℓ, z, d⟩ :: rest).flatMap fun p : Piece G => p.walk.support).Nodup)
+    (hjfull : ∀ v,
+      ((⟨ℓ, z, d⟩ :: rest).flatMap fun p : Piece G => p.walk.support).count v = 1)
     (hje : ∀ e, e ∈ ((⟨ℓ, z, d⟩ :: rest).flatMap fun p : Piece G => p.walk.edges) ↔
       e ∈ w.edges ∧ e ∉ E)
-    (q : G.Walk x y) (hq : q.IsPath)
+    (q : G.Walk x y) (hq : q.IsHamiltonian)
     (hopen : ∀ e, e ∈ q.edges ↔ e ∈ w.edges ∧ e ≠ s(s, t)) :
+    q.support.Perm (d.support ++ rest.flatMap fun p => p.walk.support) ∧
     q.edges.Perm ((rest.flatMap fun p => p.walk.edges) ++
       tail.edges ++ [s(ℓ, s)] ++ E.toList) := by
   classical
+  have hjn : ((⟨ℓ, z, d⟩ :: rest).flatMap fun p : Piece G => p.walk.support).Nodup :=
+    List.nodup_iff_count_le_one.mpr (fun v => by rw [hjfull v])
   let kept := s(ℓ, s) :: (tail.edges ++ rest.flatMap fun p => p.walk.edges)
   have hn := actual_partition_edges_nodup (⟨ℓ, z, d⟩ :: rest) hjn
   have hnold : (s(ℓ, s) :: s(s, t) ::
@@ -103,7 +107,7 @@ theorem actual_opened_child_from_joint_partition
   have hnall : (kept ++ E.toList).Nodup :=
     List.nodup_append'.mpr ⟨hnkept, E.nodup_toList, hdis⟩
   have hperm : q.edges.Perm (kept ++ E.toList) := by
-    apply (List.perm_ext_iff_of_nodup hq.isTrail.edges_nodup hnall).mpr
+    apply (List.perm_ext_iff_of_nodup hq.isPath.isTrail.edges_nodup hnall).mpr
     intro e
     rw [hopen e, List.mem_append, Finset.mem_toList, hk e, hje e]
     constructor
@@ -116,11 +120,15 @@ theorem actual_opened_child_from_joint_partition
       · refine ⟨hE e heE, ?_⟩
         intro he
         exact hcutE (he ▸ heE)
-  apply hperm.trans
-  apply List.perm_iff_count.mpr
-  intro e
-  simp only [kept, List.count_append, List.count_cons, List.count_nil]
-  omega
+  refine ⟨?_, hperm.trans ?_⟩
+  · apply List.perm_iff_count.mpr
+    intro v
+    rw [hq v]
+    simpa only [List.flatMap_cons] using (hjfull v).symm
+  · apply List.perm_iff_count.mpr
+    intro e
+    simp only [kept, List.count_append, List.count_cons, List.count_nil]
+    omega
 
 #print axioms actual_opened_child_from_joint_partition
 
