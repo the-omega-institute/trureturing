@@ -14,7 +14,12 @@ untrusted certificate data. The kernel checks it directly with the original
 global symmetry actions and cache transitions, without importing the large
 shared-shape table. Its twelve-coordinate prefix is the actual initial cache
 followed by twelve original updates. No native cache state is substituted.
-This module remains unverified until canonical make lean exits zero. -/
+The complete suffix is partitioned into 124 independently checked complete
+subtrees, each with at most 61 actual nodes, and 41 explicit four-child
+combinations. Every cache and partial event at a cut is the actual parent's
+step and update. These are computational staging points, not added premises.
+The complete 2,497-node input and final receipt are unchanged. This module
+remains unverified until canonical make lean exits zero. -/
 
 import D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
 import D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry
@@ -248,11 +253,2274 @@ def pilotCache : Cache :=
 def pilotPartial : Partial (Fin 20) (Fin 4) := fun g =>
   if h : g.val < 12 then some (pilotPrefix ⟨g.val, h⟩) else none
 
+private def cache0 : Cache := pilotCache
+private def partial0 : Partial (Fin 20) (Fin 4) := pilotPartial
+
+private def cache1 : Cache :=
+  step cache0 ⟨12, by decide⟩ 0
+private def partial1 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial0 ⟨12, by decide⟩ (some 0)
+
+private def cache2 : Cache :=
+  step cache0 ⟨12, by decide⟩ 1
+private def partial2 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial0 ⟨12, by decide⟩ (some 1)
+
+private def cache3 : Cache :=
+  step cache0 ⟨12, by decide⟩ 2
+private def partial3 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial0 ⟨12, by decide⟩ (some 2)
+
+private def cache4 : Cache :=
+  step cache3 ⟨13, by decide⟩ 0
+private def partial4 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial3 ⟨13, by decide⟩ (some 0)
+
+private def cache5 : Cache :=
+  step cache3 ⟨13, by decide⟩ 1
+private def partial5 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial3 ⟨13, by decide⟩ (some 1)
+
+private def cache6 : Cache :=
+  step cache5 ⟨14, by decide⟩ 0
+private def partial6 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial5 ⟨14, by decide⟩ (some 0)
+
+private def cache7 : Cache :=
+  step cache5 ⟨14, by decide⟩ 1
+private def partial7 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial5 ⟨14, by decide⟩ (some 1)
+
+private def cache8 : Cache :=
+  step cache7 ⟨15, by decide⟩ 0
+private def partial8 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial7 ⟨15, by decide⟩ (some 0)
+
+private def cache9 : Cache :=
+  step cache7 ⟨15, by decide⟩ 1
+private def partial9 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial7 ⟨15, by decide⟩ (some 1)
+
+private def cache10 : Cache :=
+  step cache9 ⟨16, by decide⟩ 0
+private def partial10 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial9 ⟨16, by decide⟩ (some 0)
+
+private def cache11 : Cache :=
+  step cache9 ⟨16, by decide⟩ 1
+private def partial11 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial9 ⟨16, by decide⟩ (some 1)
+
+private def cache12 : Cache :=
+  step cache9 ⟨16, by decide⟩ 2
+private def partial12 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial9 ⟨16, by decide⟩ (some 2)
+
+private def cache73 : Cache :=
+  step cache9 ⟨16, by decide⟩ 3
+private def partial73 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial9 ⟨16, by decide⟩ (some 3)
+
+private def cache134 : Cache :=
+  step cache7 ⟨15, by decide⟩ 2
+private def partial134 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial7 ⟨15, by decide⟩ (some 2)
+
+private def cache135 : Cache :=
+  step cache134 ⟨16, by decide⟩ 0
+private def partial135 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial134 ⟨16, by decide⟩ (some 0)
+
+private def cache136 : Cache :=
+  step cache134 ⟨16, by decide⟩ 1
+private def partial136 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial134 ⟨16, by decide⟩ (some 1)
+
+private def cache137 : Cache :=
+  step cache134 ⟨16, by decide⟩ 2
+private def partial137 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial134 ⟨16, by decide⟩ (some 2)
+
+private def cache194 : Cache :=
+  step cache134 ⟨16, by decide⟩ 3
+private def partial194 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial134 ⟨16, by decide⟩ (some 3)
+
+private def cache251 : Cache :=
+  step cache7 ⟨15, by decide⟩ 3
+private def partial251 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial7 ⟨15, by decide⟩ (some 3)
+
+private def cache252 : Cache :=
+  step cache251 ⟨16, by decide⟩ 0
+private def partial252 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial251 ⟨16, by decide⟩ (some 0)
+
+private def cache253 : Cache :=
+  step cache251 ⟨16, by decide⟩ 1
+private def partial253 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial251 ⟨16, by decide⟩ (some 1)
+
+private def cache254 : Cache :=
+  step cache251 ⟨16, by decide⟩ 2
+private def partial254 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial251 ⟨16, by decide⟩ (some 2)
+
+private def cache315 : Cache :=
+  step cache251 ⟨16, by decide⟩ 3
+private def partial315 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial251 ⟨16, by decide⟩ (some 3)
+
+private def cache376 : Cache :=
+  step cache5 ⟨14, by decide⟩ 2
+private def partial376 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial5 ⟨14, by decide⟩ (some 2)
+
+private def cache377 : Cache :=
+  step cache376 ⟨15, by decide⟩ 0
+private def partial377 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial376 ⟨15, by decide⟩ (some 0)
+
+private def cache378 : Cache :=
+  step cache376 ⟨15, by decide⟩ 1
+private def partial378 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial376 ⟨15, by decide⟩ (some 1)
+
+private def cache379 : Cache :=
+  step cache378 ⟨16, by decide⟩ 0
+private def partial379 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial378 ⟨16, by decide⟩ (some 0)
+
+private def cache380 : Cache :=
+  step cache378 ⟨16, by decide⟩ 1
+private def partial380 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial378 ⟨16, by decide⟩ (some 1)
+
+private def cache381 : Cache :=
+  step cache378 ⟨16, by decide⟩ 2
+private def partial381 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial378 ⟨16, by decide⟩ (some 2)
+
+private def cache406 : Cache :=
+  step cache378 ⟨16, by decide⟩ 3
+private def partial406 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial378 ⟨16, by decide⟩ (some 3)
+
+private def cache447 : Cache :=
+  step cache376 ⟨15, by decide⟩ 2
+private def partial447 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial376 ⟨15, by decide⟩ (some 2)
+
+private def cache448 : Cache :=
+  step cache447 ⟨16, by decide⟩ 0
+private def partial448 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial447 ⟨16, by decide⟩ (some 0)
+
+private def cache449 : Cache :=
+  step cache447 ⟨16, by decide⟩ 1
+private def partial449 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial447 ⟨16, by decide⟩ (some 1)
+
+private def cache450 : Cache :=
+  step cache447 ⟨16, by decide⟩ 2
+private def partial450 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial447 ⟨16, by decide⟩ (some 2)
+
+private def cache487 : Cache :=
+  step cache447 ⟨16, by decide⟩ 3
+private def partial487 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial447 ⟨16, by decide⟩ (some 3)
+
+private def cache528 : Cache :=
+  step cache376 ⟨15, by decide⟩ 3
+private def partial528 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial376 ⟨15, by decide⟩ (some 3)
+
+private def cache529 : Cache :=
+  step cache528 ⟨16, by decide⟩ 0
+private def partial529 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial528 ⟨16, by decide⟩ (some 0)
+
+private def cache530 : Cache :=
+  step cache528 ⟨16, by decide⟩ 1
+private def partial530 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial528 ⟨16, by decide⟩ (some 1)
+
+private def cache531 : Cache :=
+  step cache528 ⟨16, by decide⟩ 2
+private def partial531 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial528 ⟨16, by decide⟩ (some 2)
+
+private def cache572 : Cache :=
+  step cache528 ⟨16, by decide⟩ 3
+private def partial572 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial528 ⟨16, by decide⟩ (some 3)
+
+private def cache625 : Cache :=
+  step cache5 ⟨14, by decide⟩ 3
+private def partial625 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial5 ⟨14, by decide⟩ (some 3)
+
+private def cache626 : Cache :=
+  step cache625 ⟨15, by decide⟩ 0
+private def partial626 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial625 ⟨15, by decide⟩ (some 0)
+
+private def cache627 : Cache :=
+  step cache625 ⟨15, by decide⟩ 1
+private def partial627 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial625 ⟨15, by decide⟩ (some 1)
+
+private def cache628 : Cache :=
+  step cache627 ⟨16, by decide⟩ 0
+private def partial628 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial627 ⟨16, by decide⟩ (some 0)
+
+private def cache629 : Cache :=
+  step cache627 ⟨16, by decide⟩ 1
+private def partial629 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial627 ⟨16, by decide⟩ (some 1)
+
+private def cache630 : Cache :=
+  step cache627 ⟨16, by decide⟩ 2
+private def partial630 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial627 ⟨16, by decide⟩ (some 2)
+
+private def cache659 : Cache :=
+  step cache627 ⟨16, by decide⟩ 3
+private def partial659 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial627 ⟨16, by decide⟩ (some 3)
+
+private def cache692 : Cache :=
+  step cache625 ⟨15, by decide⟩ 2
+private def partial692 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial625 ⟨15, by decide⟩ (some 2)
+
+private def cache693 : Cache :=
+  step cache692 ⟨16, by decide⟩ 0
+private def partial693 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial692 ⟨16, by decide⟩ (some 0)
+
+private def cache694 : Cache :=
+  step cache692 ⟨16, by decide⟩ 1
+private def partial694 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial692 ⟨16, by decide⟩ (some 1)
+
+private def cache695 : Cache :=
+  step cache692 ⟨16, by decide⟩ 2
+private def partial695 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial692 ⟨16, by decide⟩ (some 2)
+
+private def cache744 : Cache :=
+  step cache692 ⟨16, by decide⟩ 3
+private def partial744 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial692 ⟨16, by decide⟩ (some 3)
+
+private def cache781 : Cache :=
+  step cache625 ⟨15, by decide⟩ 3
+private def partial781 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial625 ⟨15, by decide⟩ (some 3)
+
+private def cache782 : Cache :=
+  step cache781 ⟨16, by decide⟩ 0
+private def partial782 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial781 ⟨16, by decide⟩ (some 0)
+
+private def cache783 : Cache :=
+  step cache781 ⟨16, by decide⟩ 1
+private def partial783 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial781 ⟨16, by decide⟩ (some 1)
+
+private def cache784 : Cache :=
+  step cache781 ⟨16, by decide⟩ 2
+private def partial784 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial781 ⟨16, by decide⟩ (some 2)
+
+private def cache821 : Cache :=
+  step cache781 ⟨16, by decide⟩ 3
+private def partial821 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial781 ⟨16, by decide⟩ (some 3)
+
+private def cache858 : Cache :=
+  step cache3 ⟨13, by decide⟩ 2
+private def partial858 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial3 ⟨13, by decide⟩ (some 2)
+
+private def cache859 : Cache :=
+  step cache858 ⟨14, by decide⟩ 0
+private def partial859 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial858 ⟨14, by decide⟩ (some 0)
+
+private def cache860 : Cache :=
+  step cache859 ⟨15, by decide⟩ 0
+private def partial860 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial859 ⟨15, by decide⟩ (some 0)
+
+private def cache861 : Cache :=
+  step cache859 ⟨15, by decide⟩ 1
+private def partial861 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial859 ⟨15, by decide⟩ (some 1)
+
+private def cache862 : Cache :=
+  step cache859 ⟨15, by decide⟩ 2
+private def partial862 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial859 ⟨15, by decide⟩ (some 2)
+
+private def cache863 : Cache :=
+  step cache862 ⟨16, by decide⟩ 0
+private def partial863 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial862 ⟨16, by decide⟩ (some 0)
+
+private def cache864 : Cache :=
+  step cache862 ⟨16, by decide⟩ 1
+private def partial864 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial862 ⟨16, by decide⟩ (some 1)
+
+private def cache865 : Cache :=
+  step cache862 ⟨16, by decide⟩ 2
+private def partial865 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial862 ⟨16, by decide⟩ (some 2)
+
+private def cache906 : Cache :=
+  step cache862 ⟨16, by decide⟩ 3
+private def partial906 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial862 ⟨16, by decide⟩ (some 3)
+
+private def cache955 : Cache :=
+  step cache859 ⟨15, by decide⟩ 3
+private def partial955 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial859 ⟨15, by decide⟩ (some 3)
+
+private def cache956 : Cache :=
+  step cache955 ⟨16, by decide⟩ 0
+private def partial956 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial955 ⟨16, by decide⟩ (some 0)
+
+private def cache957 : Cache :=
+  step cache955 ⟨16, by decide⟩ 1
+private def partial957 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial955 ⟨16, by decide⟩ (some 1)
+
+private def cache958 : Cache :=
+  step cache955 ⟨16, by decide⟩ 2
+private def partial958 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial955 ⟨16, by decide⟩ (some 2)
+
+private def cache1003 : Cache :=
+  step cache955 ⟨16, by decide⟩ 3
+private def partial1003 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial955 ⟨16, by decide⟩ (some 3)
+
+private def cache1064 : Cache :=
+  step cache858 ⟨14, by decide⟩ 1
+private def partial1064 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial858 ⟨14, by decide⟩ (some 1)
+
+private def cache1065 : Cache :=
+  step cache1064 ⟨15, by decide⟩ 0
+private def partial1065 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1064 ⟨15, by decide⟩ (some 0)
+
+private def cache1066 : Cache :=
+  step cache1064 ⟨15, by decide⟩ 1
+private def partial1066 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1064 ⟨15, by decide⟩ (some 1)
+
+private def cache1067 : Cache :=
+  step cache1064 ⟨15, by decide⟩ 2
+private def partial1067 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1064 ⟨15, by decide⟩ (some 2)
+
+private def cache1068 : Cache :=
+  step cache1067 ⟨16, by decide⟩ 0
+private def partial1068 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1067 ⟨16, by decide⟩ (some 0)
+
+private def cache1069 : Cache :=
+  step cache1067 ⟨16, by decide⟩ 1
+private def partial1069 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1067 ⟨16, by decide⟩ (some 1)
+
+private def cache1070 : Cache :=
+  step cache1067 ⟨16, by decide⟩ 2
+private def partial1070 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1067 ⟨16, by decide⟩ (some 2)
+
+private def cache1091 : Cache :=
+  step cache1067 ⟨16, by decide⟩ 3
+private def partial1091 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1067 ⟨16, by decide⟩ (some 3)
+
+private def cache1136 : Cache :=
+  step cache1064 ⟨15, by decide⟩ 3
+private def partial1136 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1064 ⟨15, by decide⟩ (some 3)
+
+private def cache1137 : Cache :=
+  step cache1136 ⟨16, by decide⟩ 0
+private def partial1137 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1136 ⟨16, by decide⟩ (some 0)
+
+private def cache1138 : Cache :=
+  step cache1136 ⟨16, by decide⟩ 1
+private def partial1138 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1136 ⟨16, by decide⟩ (some 1)
+
+private def cache1139 : Cache :=
+  step cache1136 ⟨16, by decide⟩ 2
+private def partial1139 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1136 ⟨16, by decide⟩ (some 2)
+
+private def cache1168 : Cache :=
+  step cache1136 ⟨16, by decide⟩ 3
+private def partial1168 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1136 ⟨16, by decide⟩ (some 3)
+
+private def cache1209 : Cache :=
+  step cache858 ⟨14, by decide⟩ 2
+private def partial1209 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial858 ⟨14, by decide⟩ (some 2)
+
+private def cache1210 : Cache :=
+  step cache1209 ⟨15, by decide⟩ 0
+private def partial1210 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1209 ⟨15, by decide⟩ (some 0)
+
+private def cache1211 : Cache :=
+  step cache1209 ⟨15, by decide⟩ 1
+private def partial1211 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1209 ⟨15, by decide⟩ (some 1)
+
+private def cache1212 : Cache :=
+  step cache1209 ⟨15, by decide⟩ 2
+private def partial1212 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1209 ⟨15, by decide⟩ (some 2)
+
+private def cache1213 : Cache :=
+  step cache1212 ⟨16, by decide⟩ 0
+private def partial1213 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1212 ⟨16, by decide⟩ (some 0)
+
+private def cache1214 : Cache :=
+  step cache1212 ⟨16, by decide⟩ 1
+private def partial1214 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1212 ⟨16, by decide⟩ (some 1)
+
+private def cache1215 : Cache :=
+  step cache1212 ⟨16, by decide⟩ 2
+private def partial1215 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1212 ⟨16, by decide⟩ (some 2)
+
+private def cache1240 : Cache :=
+  step cache1212 ⟨16, by decide⟩ 3
+private def partial1240 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1212 ⟨16, by decide⟩ (some 3)
+
+private def cache1289 : Cache :=
+  step cache1209 ⟨15, by decide⟩ 3
+private def partial1289 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1209 ⟨15, by decide⟩ (some 3)
+
+private def cache1290 : Cache :=
+  step cache1289 ⟨16, by decide⟩ 0
+private def partial1290 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1289 ⟨16, by decide⟩ (some 0)
+
+private def cache1291 : Cache :=
+  step cache1289 ⟨16, by decide⟩ 1
+private def partial1291 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1289 ⟨16, by decide⟩ (some 1)
+
+private def cache1292 : Cache :=
+  step cache1289 ⟨16, by decide⟩ 2
+private def partial1292 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1289 ⟨16, by decide⟩ (some 2)
+
+private def cache1325 : Cache :=
+  step cache1289 ⟨16, by decide⟩ 3
+private def partial1325 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1289 ⟨16, by decide⟩ (some 3)
+
+private def cache1370 : Cache :=
+  step cache858 ⟨14, by decide⟩ 3
+private def partial1370 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial858 ⟨14, by decide⟩ (some 3)
+
+private def cache1371 : Cache :=
+  step cache1370 ⟨15, by decide⟩ 0
+private def partial1371 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1370 ⟨15, by decide⟩ (some 0)
+
+private def cache1372 : Cache :=
+  step cache1370 ⟨15, by decide⟩ 1
+private def partial1372 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1370 ⟨15, by decide⟩ (some 1)
+
+private def cache1373 : Cache :=
+  step cache1370 ⟨15, by decide⟩ 2
+private def partial1373 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1370 ⟨15, by decide⟩ (some 2)
+
+private def cache1374 : Cache :=
+  step cache1373 ⟨16, by decide⟩ 0
+private def partial1374 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1373 ⟨16, by decide⟩ (some 0)
+
+private def cache1375 : Cache :=
+  step cache1373 ⟨16, by decide⟩ 1
+private def partial1375 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1373 ⟨16, by decide⟩ (some 1)
+
+private def cache1376 : Cache :=
+  step cache1373 ⟨16, by decide⟩ 2
+private def partial1376 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1373 ⟨16, by decide⟩ (some 2)
+
+private def cache1401 : Cache :=
+  step cache1373 ⟨16, by decide⟩ 3
+private def partial1401 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1373 ⟨16, by decide⟩ (some 3)
+
+private def cache1438 : Cache :=
+  step cache1370 ⟨15, by decide⟩ 3
+private def partial1438 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1370 ⟨15, by decide⟩ (some 3)
+
+private def cache1439 : Cache :=
+  step cache1438 ⟨16, by decide⟩ 0
+private def partial1439 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1438 ⟨16, by decide⟩ (some 0)
+
+private def cache1440 : Cache :=
+  step cache1438 ⟨16, by decide⟩ 1
+private def partial1440 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1438 ⟨16, by decide⟩ (some 1)
+
+private def cache1441 : Cache :=
+  step cache1438 ⟨16, by decide⟩ 2
+private def partial1441 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1438 ⟨16, by decide⟩ (some 2)
+
+private def cache1466 : Cache :=
+  step cache1438 ⟨16, by decide⟩ 3
+private def partial1466 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1438 ⟨16, by decide⟩ (some 3)
+
+private def cache1507 : Cache :=
+  step cache3 ⟨13, by decide⟩ 3
+private def partial1507 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial3 ⟨13, by decide⟩ (some 3)
+
+private def cache1508 : Cache :=
+  step cache1507 ⟨14, by decide⟩ 0
+private def partial1508 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1507 ⟨14, by decide⟩ (some 0)
+
+private def cache1509 : Cache :=
+  step cache1508 ⟨15, by decide⟩ 0
+private def partial1509 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1508 ⟨15, by decide⟩ (some 0)
+
+private def cache1510 : Cache :=
+  step cache1508 ⟨15, by decide⟩ 1
+private def partial1510 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1508 ⟨15, by decide⟩ (some 1)
+
+private def cache1511 : Cache :=
+  step cache1508 ⟨15, by decide⟩ 2
+private def partial1511 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1508 ⟨15, by decide⟩ (some 2)
+
+private def cache1512 : Cache :=
+  step cache1508 ⟨15, by decide⟩ 3
+private def partial1512 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1508 ⟨15, by decide⟩ (some 3)
+
+private def cache1513 : Cache :=
+  step cache1512 ⟨16, by decide⟩ 0
+private def partial1513 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1512 ⟨16, by decide⟩ (some 0)
+
+private def cache1514 : Cache :=
+  step cache1512 ⟨16, by decide⟩ 1
+private def partial1514 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1512 ⟨16, by decide⟩ (some 1)
+
+private def cache1515 : Cache :=
+  step cache1512 ⟨16, by decide⟩ 2
+private def partial1515 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1512 ⟨16, by decide⟩ (some 2)
+
+private def cache1540 : Cache :=
+  step cache1512 ⟨16, by decide⟩ 3
+private def partial1540 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1512 ⟨16, by decide⟩ (some 3)
+
+private def cache1597 : Cache :=
+  step cache1507 ⟨14, by decide⟩ 1
+private def partial1597 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1507 ⟨14, by decide⟩ (some 1)
+
+private def cache1658 : Cache :=
+  step cache1507 ⟨14, by decide⟩ 2
+private def partial1658 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1507 ⟨14, by decide⟩ (some 2)
+
+private def cache1659 : Cache :=
+  step cache1658 ⟨15, by decide⟩ 0
+private def partial1659 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1658 ⟨15, by decide⟩ (some 0)
+
+private def cache1660 : Cache :=
+  step cache1658 ⟨15, by decide⟩ 1
+private def partial1660 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1658 ⟨15, by decide⟩ (some 1)
+
+private def cache1661 : Cache :=
+  step cache1658 ⟨15, by decide⟩ 2
+private def partial1661 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1658 ⟨15, by decide⟩ (some 2)
+
+private def cache1662 : Cache :=
+  step cache1658 ⟨15, by decide⟩ 3
+private def partial1662 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1658 ⟨15, by decide⟩ (some 3)
+
+private def cache1663 : Cache :=
+  step cache1662 ⟨16, by decide⟩ 0
+private def partial1663 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1662 ⟨16, by decide⟩ (some 0)
+
+private def cache1664 : Cache :=
+  step cache1662 ⟨16, by decide⟩ 1
+private def partial1664 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1662 ⟨16, by decide⟩ (some 1)
+
+private def cache1665 : Cache :=
+  step cache1662 ⟨16, by decide⟩ 2
+private def partial1665 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1662 ⟨16, by decide⟩ (some 2)
+
+private def cache1682 : Cache :=
+  step cache1662 ⟨16, by decide⟩ 3
+private def partial1682 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1662 ⟨16, by decide⟩ (some 3)
+
+private def cache1739 : Cache :=
+  step cache1507 ⟨14, by decide⟩ 3
+private def partial1739 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1507 ⟨14, by decide⟩ (some 3)
+
+private def cache1792 : Cache :=
+  step cache0 ⟨12, by decide⟩ 3
+private def partial1792 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial0 ⟨12, by decide⟩ (some 3)
+
+private def cache1793 : Cache :=
+  step cache1792 ⟨13, by decide⟩ 0
+private def partial1793 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1792 ⟨13, by decide⟩ (some 0)
+
+private def cache1794 : Cache :=
+  step cache1792 ⟨13, by decide⟩ 1
+private def partial1794 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1792 ⟨13, by decide⟩ (some 1)
+
+private def cache1795 : Cache :=
+  step cache1794 ⟨14, by decide⟩ 0
+private def partial1795 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1794 ⟨14, by decide⟩ (some 0)
+
+private def cache1796 : Cache :=
+  step cache1794 ⟨14, by decide⟩ 1
+private def partial1796 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1794 ⟨14, by decide⟩ (some 1)
+
+private def cache1797 : Cache :=
+  step cache1796 ⟨15, by decide⟩ 0
+private def partial1797 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1796 ⟨15, by decide⟩ (some 0)
+
+private def cache1798 : Cache :=
+  step cache1796 ⟨15, by decide⟩ 1
+private def partial1798 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1796 ⟨15, by decide⟩ (some 1)
+
+private def cache1803 : Cache :=
+  step cache1796 ⟨15, by decide⟩ 2
+private def partial1803 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1796 ⟨15, by decide⟩ (some 2)
+
+private def cache1864 : Cache :=
+  step cache1796 ⟨15, by decide⟩ 3
+private def partial1864 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1796 ⟨15, by decide⟩ (some 3)
+
+private def cache1909 : Cache :=
+  step cache1794 ⟨14, by decide⟩ 2
+private def partial1909 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1794 ⟨14, by decide⟩ (some 2)
+
+private def cache1910 : Cache :=
+  step cache1909 ⟨15, by decide⟩ 0
+private def partial1910 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1909 ⟨15, by decide⟩ (some 0)
+
+private def cache1911 : Cache :=
+  step cache1909 ⟨15, by decide⟩ 1
+private def partial1911 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1909 ⟨15, by decide⟩ (some 1)
+
+private def cache1952 : Cache :=
+  step cache1909 ⟨15, by decide⟩ 2
+private def partial1952 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1909 ⟨15, by decide⟩ (some 2)
+
+private def cache1997 : Cache :=
+  step cache1909 ⟨15, by decide⟩ 3
+private def partial1997 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1909 ⟨15, by decide⟩ (some 3)
+
+private def cache2038 : Cache :=
+  step cache1794 ⟨14, by decide⟩ 3
+private def partial2038 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1794 ⟨14, by decide⟩ (some 3)
+
+private def cache2039 : Cache :=
+  step cache2038 ⟨15, by decide⟩ 0
+private def partial2039 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2038 ⟨15, by decide⟩ (some 0)
+
+private def cache2040 : Cache :=
+  step cache2038 ⟨15, by decide⟩ 1
+private def partial2040 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2038 ⟨15, by decide⟩ (some 1)
+
+private def cache2081 : Cache :=
+  step cache2038 ⟨15, by decide⟩ 2
+private def partial2081 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2038 ⟨15, by decide⟩ (some 2)
+
+private def cache2130 : Cache :=
+  step cache2038 ⟨15, by decide⟩ 3
+private def partial2130 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2038 ⟨15, by decide⟩ (some 3)
+
+private def cache2159 : Cache :=
+  step cache1792 ⟨13, by decide⟩ 2
+private def partial2159 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1792 ⟨13, by decide⟩ (some 2)
+
+private def cache2160 : Cache :=
+  step cache2159 ⟨14, by decide⟩ 0
+private def partial2160 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2159 ⟨14, by decide⟩ (some 0)
+
+private def cache2161 : Cache :=
+  step cache2160 ⟨15, by decide⟩ 0
+private def partial2161 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2160 ⟨15, by decide⟩ (some 0)
+
+private def cache2162 : Cache :=
+  step cache2160 ⟨15, by decide⟩ 1
+private def partial2162 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2160 ⟨15, by decide⟩ (some 1)
+
+private def cache2163 : Cache :=
+  step cache2160 ⟨15, by decide⟩ 2
+private def partial2163 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2160 ⟨15, by decide⟩ (some 2)
+
+private def cache2204 : Cache :=
+  step cache2160 ⟨15, by decide⟩ 3
+private def partial2204 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2160 ⟨15, by decide⟩ (some 3)
+
+private def cache2249 : Cache :=
+  step cache2159 ⟨14, by decide⟩ 1
+private def partial2249 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2159 ⟨14, by decide⟩ (some 1)
+
+private def cache2306 : Cache :=
+  step cache2159 ⟨14, by decide⟩ 2
+private def partial2306 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2159 ⟨14, by decide⟩ (some 2)
+
+private def cache2367 : Cache :=
+  step cache2159 ⟨14, by decide⟩ 3
+private def partial2367 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2159 ⟨14, by decide⟩ (some 3)
+
+private def cache2412 : Cache :=
+  step cache1792 ⟨13, by decide⟩ 3
+private def partial2412 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial1792 ⟨13, by decide⟩ (some 3)
+
+private def cache2413 : Cache :=
+  step cache2412 ⟨14, by decide⟩ 0
+private def partial2413 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2412 ⟨14, by decide⟩ (some 0)
+
+private def cache2442 : Cache :=
+  step cache2412 ⟨14, by decide⟩ 1
+private def partial2442 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2412 ⟨14, by decide⟩ (some 1)
+
+private def cache2459 : Cache :=
+  step cache2412 ⟨14, by decide⟩ 2
+private def partial2459 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2412 ⟨14, by decide⟩ (some 2)
+
+private def cache2480 : Cache :=
+  step cache2412 ⟨14, by decide⟩ 3
+private def partial2480 : Partial (Fin 20) (Fin 4) :=
+  Function.update partial2412 ⟨14, by decide⟩ (some 3)
+
 set_option trace.profiler true in
+private theorem receipt2480 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2480, by decide⟩ cache2480 partial2480 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2459 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2459, by decide⟩ cache2459 partial2459 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2442 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2442, by decide⟩ cache2442 partial2442 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2413 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2413, by decide⟩ cache2413 partial2413 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2412 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨2412, by decide⟩ cache2412 partial2412 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 6
+      ((![2413,2442,2459,2480] : Fin 4 → Fin 2497) a)
+      (step cache2412 ⟨14, by decide⟩ a)
+      (Function.update partial2412 ⟨14, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt2413
+  · exact receipt2442
+  · exact receipt2459
+  · exact receipt2480
+
+set_option trace.profiler true in
+private theorem receipt2367 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2367, by decide⟩ cache2367 partial2367 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2306 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2306, by decide⟩ cache2306 partial2306 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2249 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2249, by decide⟩ cache2249 partial2249 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2204 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2204, by decide⟩ cache2204 partial2204 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2163 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2163, by decide⟩ cache2163 partial2163 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2162 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2162, by decide⟩ cache2162 partial2162 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2161 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2161, by decide⟩ cache2161 partial2161 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2160 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2160, by decide⟩ cache2160 partial2160 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![2161,2162,2163,2204] : Fin 4 → Fin 2497) a)
+      (step cache2160 ⟨15, by decide⟩ a)
+      (Function.update partial2160 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt2161
+  · exact receipt2162
+  · exact receipt2163
+  · exact receipt2204
+
+set_option trace.profiler true in
+private theorem receipt2159 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨2159, by decide⟩ cache2159 partial2159 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 6
+      ((![2160,2249,2306,2367] : Fin 4 → Fin 2497) a)
+      (step cache2159 ⟨14, by decide⟩ a)
+      (Function.update partial2159 ⟨14, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt2160
+  · exact receipt2249
+  · exact receipt2306
+  · exact receipt2367
+
+set_option trace.profiler true in
+private theorem receipt2130 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2130, by decide⟩ cache2130 partial2130 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2081 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2081, by decide⟩ cache2081 partial2081 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2040 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2040, by decide⟩ cache2040 partial2040 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2039 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨2039, by decide⟩ cache2039 partial2039 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt2038 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨2038, by decide⟩ cache2038 partial2038 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![2039,2040,2081,2130] : Fin 4 → Fin 2497) a)
+      (step cache2038 ⟨15, by decide⟩ a)
+      (Function.update partial2038 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt2039
+  · exact receipt2040
+  · exact receipt2081
+  · exact receipt2130
+
+set_option trace.profiler true in
+private theorem receipt1997 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1997, by decide⟩ cache1997 partial1997 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1952 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1952, by decide⟩ cache1952 partial1952 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1911 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1911, by decide⟩ cache1911 partial1911 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1910 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1910, by decide⟩ cache1910 partial1910 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1909 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1909, by decide⟩ cache1909 partial1909 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![1910,1911,1952,1997] : Fin 4 → Fin 2497) a)
+      (step cache1909 ⟨15, by decide⟩ a)
+      (Function.update partial1909 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1910
+  · exact receipt1911
+  · exact receipt1952
+  · exact receipt1997
+
+set_option trace.profiler true in
+private theorem receipt1864 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1864, by decide⟩ cache1864 partial1864 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1803 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1803, by decide⟩ cache1803 partial1803 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1798 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1798, by decide⟩ cache1798 partial1798 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1797 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1797, by decide⟩ cache1797 partial1797 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1796 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1796, by decide⟩ cache1796 partial1796 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![1797,1798,1803,1864] : Fin 4 → Fin 2497) a)
+      (step cache1796 ⟨15, by decide⟩ a)
+      (Function.update partial1796 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1797
+  · exact receipt1798
+  · exact receipt1803
+  · exact receipt1864
+
+set_option trace.profiler true in
+private theorem receipt1795 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1795, by decide⟩ cache1795 partial1795 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1794 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨1794, by decide⟩ cache1794 partial1794 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 6
+      ((![1795,1796,1909,2038] : Fin 4 → Fin 2497) a)
+      (step cache1794 ⟨14, by decide⟩ a)
+      (Function.update partial1794 ⟨14, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1795
+  · exact receipt1796
+  · exact receipt1909
+  · exact receipt2038
+
+set_option trace.profiler true in
+private theorem receipt1793 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨1793, by decide⟩ cache1793 partial1793 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1792 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 8 ⟨1792, by decide⟩ cache1792 partial1792 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 7
+      ((![1793,1794,2159,2412] : Fin 4 → Fin 2497) a)
+      (step cache1792 ⟨13, by decide⟩ a)
+      (Function.update partial1792 ⟨13, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1793
+  · exact receipt1794
+  · exact receipt2159
+  · exact receipt2412
+
+set_option trace.profiler true in
+private theorem receipt1739 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1739, by decide⟩ cache1739 partial1739 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1682 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1682, by decide⟩ cache1682 partial1682 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1665 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1665, by decide⟩ cache1665 partial1665 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1664 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1664, by decide⟩ cache1664 partial1664 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1663 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1663, by decide⟩ cache1663 partial1663 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1662 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1662, by decide⟩ cache1662 partial1662 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1663,1664,1665,1682] : Fin 4 → Fin 2497) a)
+      (step cache1662 ⟨16, by decide⟩ a)
+      (Function.update partial1662 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1663
+  · exact receipt1664
+  · exact receipt1665
+  · exact receipt1682
+
+set_option trace.profiler true in
+private theorem receipt1661 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1661, by decide⟩ cache1661 partial1661 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1660 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1660, by decide⟩ cache1660 partial1660 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1659 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1659, by decide⟩ cache1659 partial1659 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1658 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1658, by decide⟩ cache1658 partial1658 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![1659,1660,1661,1662] : Fin 4 → Fin 2497) a)
+      (step cache1658 ⟨15, by decide⟩ a)
+      (Function.update partial1658 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1659
+  · exact receipt1660
+  · exact receipt1661
+  · exact receipt1662
+
+set_option trace.profiler true in
+private theorem receipt1597 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1597, by decide⟩ cache1597 partial1597 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1540 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1540, by decide⟩ cache1540 partial1540 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1515 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1515, by decide⟩ cache1515 partial1515 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1514 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1514, by decide⟩ cache1514 partial1514 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1513 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1513, by decide⟩ cache1513 partial1513 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1512 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1512, by decide⟩ cache1512 partial1512 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1513,1514,1515,1540] : Fin 4 → Fin 2497) a)
+      (step cache1512 ⟨16, by decide⟩ a)
+      (Function.update partial1512 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1513
+  · exact receipt1514
+  · exact receipt1515
+  · exact receipt1540
+
+set_option trace.profiler true in
+private theorem receipt1511 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1511, by decide⟩ cache1511 partial1511 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1510 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1510, by decide⟩ cache1510 partial1510 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1509 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1509, by decide⟩ cache1509 partial1509 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1508 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1508, by decide⟩ cache1508 partial1508 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![1509,1510,1511,1512] : Fin 4 → Fin 2497) a)
+      (step cache1508 ⟨15, by decide⟩ a)
+      (Function.update partial1508 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1509
+  · exact receipt1510
+  · exact receipt1511
+  · exact receipt1512
+
+set_option trace.profiler true in
+private theorem receipt1507 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨1507, by decide⟩ cache1507 partial1507 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 6
+      ((![1508,1597,1658,1739] : Fin 4 → Fin 2497) a)
+      (step cache1507 ⟨14, by decide⟩ a)
+      (Function.update partial1507 ⟨14, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1508
+  · exact receipt1597
+  · exact receipt1658
+  · exact receipt1739
+
+set_option trace.profiler true in
+private theorem receipt1466 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1466, by decide⟩ cache1466 partial1466 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1441 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1441, by decide⟩ cache1441 partial1441 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1440 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1440, by decide⟩ cache1440 partial1440 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1439 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1439, by decide⟩ cache1439 partial1439 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1438 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1438, by decide⟩ cache1438 partial1438 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1439,1440,1441,1466] : Fin 4 → Fin 2497) a)
+      (step cache1438 ⟨16, by decide⟩ a)
+      (Function.update partial1438 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1439
+  · exact receipt1440
+  · exact receipt1441
+  · exact receipt1466
+
+set_option trace.profiler true in
+private theorem receipt1401 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1401, by decide⟩ cache1401 partial1401 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1376 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1376, by decide⟩ cache1376 partial1376 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1375 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1375, by decide⟩ cache1375 partial1375 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1374 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1374, by decide⟩ cache1374 partial1374 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1373 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1373, by decide⟩ cache1373 partial1373 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1374,1375,1376,1401] : Fin 4 → Fin 2497) a)
+      (step cache1373 ⟨16, by decide⟩ a)
+      (Function.update partial1373 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1374
+  · exact receipt1375
+  · exact receipt1376
+  · exact receipt1401
+
+set_option trace.profiler true in
+private theorem receipt1372 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1372, by decide⟩ cache1372 partial1372 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1371 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1371, by decide⟩ cache1371 partial1371 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1370 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1370, by decide⟩ cache1370 partial1370 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![1371,1372,1373,1438] : Fin 4 → Fin 2497) a)
+      (step cache1370 ⟨15, by decide⟩ a)
+      (Function.update partial1370 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1371
+  · exact receipt1372
+  · exact receipt1373
+  · exact receipt1438
+
+set_option trace.profiler true in
+private theorem receipt1325 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1325, by decide⟩ cache1325 partial1325 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1292 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1292, by decide⟩ cache1292 partial1292 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1291 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1291, by decide⟩ cache1291 partial1291 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1290 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1290, by decide⟩ cache1290 partial1290 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1289 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1289, by decide⟩ cache1289 partial1289 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1290,1291,1292,1325] : Fin 4 → Fin 2497) a)
+      (step cache1289 ⟨16, by decide⟩ a)
+      (Function.update partial1289 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1290
+  · exact receipt1291
+  · exact receipt1292
+  · exact receipt1325
+
+set_option trace.profiler true in
+private theorem receipt1240 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1240, by decide⟩ cache1240 partial1240 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1215 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1215, by decide⟩ cache1215 partial1215 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1214 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1214, by decide⟩ cache1214 partial1214 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1213 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1213, by decide⟩ cache1213 partial1213 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1212 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1212, by decide⟩ cache1212 partial1212 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1213,1214,1215,1240] : Fin 4 → Fin 2497) a)
+      (step cache1212 ⟨16, by decide⟩ a)
+      (Function.update partial1212 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1213
+  · exact receipt1214
+  · exact receipt1215
+  · exact receipt1240
+
+set_option trace.profiler true in
+private theorem receipt1211 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1211, by decide⟩ cache1211 partial1211 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1210 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1210, by decide⟩ cache1210 partial1210 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1209 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1209, by decide⟩ cache1209 partial1209 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![1210,1211,1212,1289] : Fin 4 → Fin 2497) a)
+      (step cache1209 ⟨15, by decide⟩ a)
+      (Function.update partial1209 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1210
+  · exact receipt1211
+  · exact receipt1212
+  · exact receipt1289
+
+set_option trace.profiler true in
+private theorem receipt1168 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1168, by decide⟩ cache1168 partial1168 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1139 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1139, by decide⟩ cache1139 partial1139 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1138 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1138, by decide⟩ cache1138 partial1138 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1137 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1137, by decide⟩ cache1137 partial1137 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1136 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1136, by decide⟩ cache1136 partial1136 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1137,1138,1139,1168] : Fin 4 → Fin 2497) a)
+      (step cache1136 ⟨16, by decide⟩ a)
+      (Function.update partial1136 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1137
+  · exact receipt1138
+  · exact receipt1139
+  · exact receipt1168
+
+set_option trace.profiler true in
+private theorem receipt1091 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1091, by decide⟩ cache1091 partial1091 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1070 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1070, by decide⟩ cache1070 partial1070 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1069 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1069, by decide⟩ cache1069 partial1069 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1068 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1068, by decide⟩ cache1068 partial1068 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1067 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1067, by decide⟩ cache1067 partial1067 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![1068,1069,1070,1091] : Fin 4 → Fin 2497) a)
+      (step cache1067 ⟨16, by decide⟩ a)
+      (Function.update partial1067 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1068
+  · exact receipt1069
+  · exact receipt1070
+  · exact receipt1091
+
+set_option trace.profiler true in
+private theorem receipt1066 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1066, by decide⟩ cache1066 partial1066 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1065 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨1065, by decide⟩ cache1065 partial1065 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1064 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨1064, by decide⟩ cache1064 partial1064 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![1065,1066,1067,1136] : Fin 4 → Fin 2497) a)
+      (step cache1064 ⟨15, by decide⟩ a)
+      (Function.update partial1064 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1065
+  · exact receipt1066
+  · exact receipt1067
+  · exact receipt1136
+
+set_option trace.profiler true in
+private theorem receipt1003 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨1003, by decide⟩ cache1003 partial1003 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt958 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨958, by decide⟩ cache958 partial958 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt957 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨957, by decide⟩ cache957 partial957 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt956 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨956, by decide⟩ cache956 partial956 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt955 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨955, by decide⟩ cache955 partial955 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![956,957,958,1003] : Fin 4 → Fin 2497) a)
+      (step cache955 ⟨16, by decide⟩ a)
+      (Function.update partial955 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt956
+  · exact receipt957
+  · exact receipt958
+  · exact receipt1003
+
+set_option trace.profiler true in
+private theorem receipt906 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨906, by decide⟩ cache906 partial906 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt865 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨865, by decide⟩ cache865 partial865 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt864 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨864, by decide⟩ cache864 partial864 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt863 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨863, by decide⟩ cache863 partial863 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt862 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨862, by decide⟩ cache862 partial862 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![863,864,865,906] : Fin 4 → Fin 2497) a)
+      (step cache862 ⟨16, by decide⟩ a)
+      (Function.update partial862 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt863
+  · exact receipt864
+  · exact receipt865
+  · exact receipt906
+
+set_option trace.profiler true in
+private theorem receipt861 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨861, by decide⟩ cache861 partial861 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt860 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨860, by decide⟩ cache860 partial860 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt859 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨859, by decide⟩ cache859 partial859 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![860,861,862,955] : Fin 4 → Fin 2497) a)
+      (step cache859 ⟨15, by decide⟩ a)
+      (Function.update partial859 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt860
+  · exact receipt861
+  · exact receipt862
+  · exact receipt955
+
+set_option trace.profiler true in
+private theorem receipt858 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨858, by decide⟩ cache858 partial858 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 6
+      ((![859,1064,1209,1370] : Fin 4 → Fin 2497) a)
+      (step cache858 ⟨14, by decide⟩ a)
+      (Function.update partial858 ⟨14, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt859
+  · exact receipt1064
+  · exact receipt1209
+  · exact receipt1370
+
+set_option trace.profiler true in
+private theorem receipt821 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨821, by decide⟩ cache821 partial821 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt784 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨784, by decide⟩ cache784 partial784 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt783 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨783, by decide⟩ cache783 partial783 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt782 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨782, by decide⟩ cache782 partial782 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt781 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨781, by decide⟩ cache781 partial781 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![782,783,784,821] : Fin 4 → Fin 2497) a)
+      (step cache781 ⟨16, by decide⟩ a)
+      (Function.update partial781 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt782
+  · exact receipt783
+  · exact receipt784
+  · exact receipt821
+
+set_option trace.profiler true in
+private theorem receipt744 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨744, by decide⟩ cache744 partial744 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt695 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨695, by decide⟩ cache695 partial695 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt694 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨694, by decide⟩ cache694 partial694 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt693 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨693, by decide⟩ cache693 partial693 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt692 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨692, by decide⟩ cache692 partial692 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![693,694,695,744] : Fin 4 → Fin 2497) a)
+      (step cache692 ⟨16, by decide⟩ a)
+      (Function.update partial692 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt693
+  · exact receipt694
+  · exact receipt695
+  · exact receipt744
+
+set_option trace.profiler true in
+private theorem receipt659 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨659, by decide⟩ cache659 partial659 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt630 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨630, by decide⟩ cache630 partial630 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt629 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨629, by decide⟩ cache629 partial629 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt628 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨628, by decide⟩ cache628 partial628 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt627 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨627, by decide⟩ cache627 partial627 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![628,629,630,659] : Fin 4 → Fin 2497) a)
+      (step cache627 ⟨16, by decide⟩ a)
+      (Function.update partial627 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt628
+  · exact receipt629
+  · exact receipt630
+  · exact receipt659
+
+set_option trace.profiler true in
+private theorem receipt626 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨626, by decide⟩ cache626 partial626 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt625 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨625, by decide⟩ cache625 partial625 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![626,627,692,781] : Fin 4 → Fin 2497) a)
+      (step cache625 ⟨15, by decide⟩ a)
+      (Function.update partial625 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt626
+  · exact receipt627
+  · exact receipt692
+  · exact receipt781
+
+set_option trace.profiler true in
+private theorem receipt572 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨572, by decide⟩ cache572 partial572 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt531 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨531, by decide⟩ cache531 partial531 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt530 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨530, by decide⟩ cache530 partial530 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt529 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨529, by decide⟩ cache529 partial529 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt528 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨528, by decide⟩ cache528 partial528 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![529,530,531,572] : Fin 4 → Fin 2497) a)
+      (step cache528 ⟨16, by decide⟩ a)
+      (Function.update partial528 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt529
+  · exact receipt530
+  · exact receipt531
+  · exact receipt572
+
+set_option trace.profiler true in
+private theorem receipt487 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨487, by decide⟩ cache487 partial487 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt450 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨450, by decide⟩ cache450 partial450 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt449 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨449, by decide⟩ cache449 partial449 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt448 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨448, by decide⟩ cache448 partial448 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt447 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨447, by decide⟩ cache447 partial447 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![448,449,450,487] : Fin 4 → Fin 2497) a)
+      (step cache447 ⟨16, by decide⟩ a)
+      (Function.update partial447 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt448
+  · exact receipt449
+  · exact receipt450
+  · exact receipt487
+
+set_option trace.profiler true in
+private theorem receipt406 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨406, by decide⟩ cache406 partial406 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt381 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨381, by decide⟩ cache381 partial381 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt380 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨380, by decide⟩ cache380 partial380 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt379 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨379, by decide⟩ cache379 partial379 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt378 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨378, by decide⟩ cache378 partial378 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![379,380,381,406] : Fin 4 → Fin 2497) a)
+      (step cache378 ⟨16, by decide⟩ a)
+      (Function.update partial378 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt379
+  · exact receipt380
+  · exact receipt381
+  · exact receipt406
+
+set_option trace.profiler true in
+private theorem receipt377 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨377, by decide⟩ cache377 partial377 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt376 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨376, by decide⟩ cache376 partial376 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![377,378,447,528] : Fin 4 → Fin 2497) a)
+      (step cache376 ⟨15, by decide⟩ a)
+      (Function.update partial376 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt377
+  · exact receipt378
+  · exact receipt447
+  · exact receipt528
+
+set_option trace.profiler true in
+private theorem receipt315 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨315, by decide⟩ cache315 partial315 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt254 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨254, by decide⟩ cache254 partial254 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt253 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨253, by decide⟩ cache253 partial253 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt252 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨252, by decide⟩ cache252 partial252 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt251 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨251, by decide⟩ cache251 partial251 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![252,253,254,315] : Fin 4 → Fin 2497) a)
+      (step cache251 ⟨16, by decide⟩ a)
+      (Function.update partial251 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt252
+  · exact receipt253
+  · exact receipt254
+  · exact receipt315
+
+set_option trace.profiler true in
+private theorem receipt194 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨194, by decide⟩ cache194 partial194 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt137 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨137, by decide⟩ cache137 partial137 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt136 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨136, by decide⟩ cache136 partial136 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt135 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨135, by decide⟩ cache135 partial135 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt134 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨134, by decide⟩ cache134 partial134 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![135,136,137,194] : Fin 4 → Fin 2497) a)
+      (step cache134 ⟨16, by decide⟩ a)
+      (Function.update partial134 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt135
+  · exact receipt136
+  · exact receipt137
+  · exact receipt194
+
+set_option trace.profiler true in
+private theorem receipt73 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨73, by decide⟩ cache73 partial73 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt12 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨12, by decide⟩ cache12 partial12 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt11 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨11, by decide⟩ cache11 partial11 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt10 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 4 ⟨10, by decide⟩ cache10 partial10 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt9 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨9, by decide⟩ cache9 partial9 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 4
+      ((![10,11,12,73] : Fin 4 → Fin 2497) a)
+      (step cache9 ⟨16, by decide⟩ a)
+      (Function.update partial9 ⟨16, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt10
+  · exact receipt11
+  · exact receipt12
+  · exact receipt73
+
+set_option trace.profiler true in
+private theorem receipt8 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 5 ⟨8, by decide⟩ cache8 partial8 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt7 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨7, by decide⟩ cache7 partial7 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 5
+      ((![8,9,134,251] : Fin 4 → Fin 2497) a)
+      (step cache7 ⟨15, by decide⟩ a)
+      (Function.update partial7 ⟨15, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt8
+  · exact receipt9
+  · exact receipt134
+  · exact receipt251
+
+set_option trace.profiler true in
+private theorem receipt6 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 6 ⟨6, by decide⟩ cache6 partial6 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt5 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨5, by decide⟩ cache5 partial5 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 6
+      ((![6,7,376,625] : Fin 4 → Fin 2497) a)
+      (step cache5 ⟨14, by decide⟩ a)
+      (Function.update partial5 ⟨14, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt6
+  · exact receipt7
+  · exact receipt376
+  · exact receipt625
+
+set_option trace.profiler true in
+private theorem receipt4 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 7 ⟨4, by decide⟩ cache4 partial4 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt3 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 8 ⟨3, by decide⟩ cache3 partial3 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 7
+      ((![4,5,858,1507] : Fin 4 → Fin 2497) a)
+      (step cache3 ⟨13, by decide⟩ a)
+      (Function.update partial3 ⟨13, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt4
+  · exact receipt5
+  · exact receipt858
+  · exact receipt1507
+
+set_option trace.profiler true in
+private theorem receipt2 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 8 ⟨2, by decide⟩ cache2 partial2 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt1 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 8 ⟨1, by decide⟩ cache1 partial1 = true := by
+  decide +kernel
+
+set_option trace.profiler true in
+private theorem receipt0 :
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
+      scale 9 ⟨0, by decide⟩ cache0 partial0 = true := by
+  change decide (∀ a : Fin 4,
+    check pilotNodes step lower EJMGlobalScoreSymmetry.dominates scale 8
+      ((![1,2,3,1792] : Fin 4 → Fin 2497) a)
+      (step cache0 ⟨12, by decide⟩ a)
+      (Function.update partial0 ⟨12, by decide⟩ (some a)) = true) = true
+  apply decide_eq_true
+  intro a
+  fin_cases a
+  · exact receipt1
+  · exact receipt2
+  · exact receipt3
+  · exact receipt1792
+
 private theorem pilot_suffix :
     check pilotNodes step lower EJMGlobalScoreSymmetry.dominates
-      scale 9 ⟨0, by decide⟩ pilotCache pilotPartial = true := by
-  decide +kernel
+      scale 9 ⟨0, by decide⟩ pilotCache pilotPartial = true :=
+  receipt0
 
 #print axioms pilot_suffix
 
