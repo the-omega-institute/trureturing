@@ -1987,3 +1987,641 @@ history. The general programme of mutually recovering spatial,
 temporal, boundary and memory descriptions remains open.
 
 ## 追加锚（本行以下为增补区）
+## 12. The native spatial quotient for arbitrary retained prediction codes
+
+**Definition 12.1 (known menu, complete export and supplied count).**
+Fix $D\ge1$, the actual initial family $\mathcal F_D$ and a public
+$P\subseteq A_D$ from Definition 11.1. Write
+
+$$
+ S=R^{-1}P:=\{q:Rq\in P\},\qquad
+ \mathcal H_P(t)(k)=V_P(\rho^k t),\qquad
+ H_P=\max\bigl(\{0\}\cup\{s(p):p\in P\}\bigr).
+\tag{AAR.56}
+$$
+
+Here $R^{-1}$ removes the first letter; it is not an inverse source
+operation. In particular $S$ may contain the empty word, although $P$
+never does. The requested output is the vector of four-valued replies,
+including absent, at the supplied count $k$. Repeated requests at the
+same count have the same required value. Nested addresses are allowed.
+
+An encoder may use a genuinely acquired initial tree $t$, or genuinely
+acquired sufficient data about it, before exporting an effective code
+$E(t)$ with finite attained alphabet. It exports before $k$ is supplied.
+The entire accessible source dependence at handoff is this code: every
+other accessible field is a fixed function of it and public $D,P$.
+Definition 1.3 applies to selectors, sample identities, operands,
+pointers, allocation distinctions, latches, transcripts, prior outputs
+and control as well as to explicitly named registers. Acquisition,
+local work, code installation, temporary storage, clearing and export
+have their separate costs from Definition 1.4. A semantic function of
+the initial tree is not a free source-aware table.
+
+The later decoder receives only $E(t)$, public $D,P$, and an authentic
+$k\ge0$ identifying the same-root, same-register continuation
+$\rho^k t$. It has no new Read or clock. Correctness is uniform over
+all $t\in\mathcal F_D$ and all such $k$. The optimum below counts
+attained retained code values, or their fixed-width binary names. It
+does not minimize the resources of obtaining or using those names.
+
+This is the arbitrary-encoder component of Open problem 11.12 for its
+specified initial family, declared menu and supplied counts. The
+fixed-public-ray optimization of Theorem 11.4 and Corollary 11.6 keeps
+its original interface. Unknown menus, acquisition of unknown lags,
+complete rows, hidden equality, full-source recovery and physical time
+remain different targets.
+
+**Definition 12.2 (a finite spatial statistic).** For a finite tree $u$
+and an address $q$, define two integers $b_q(u),c_q(u)$ by inspecting
+only the initial path toward $q$:
+
+$$
+ (b_q,c_q)(u)=
+ \begin{cases}
+ (0,0),&q\text{ is a branch of }u,\\
+ (2,1),&q\text{ is an alpha leaf of }u,\\
+ (1,0),&q\text{ is a beta leaf of }u,\\
+ (s(r)+2-e(u|_a),\ \mathbf1_{r\text{ ends with }R}),
+   &q=ar\text{ is absent, }a\text{ its blocking leaf},\ r\ne\varepsilon.
+ \end{cases}
+\tag{AAR.57}
+$$
+
+The root is always present, so the last case never applies to the empty
+address. Set
+
+$$
+ \Sigma_P(t)=\bigl((b_p(t),c_p(t))\bigr)_{p\in P}.
+\tag{AAR.58}
+$$
+
+The statistic records neither the identity of a blocking leaf nor its
+whole subtree. It retains its weighted distance only to the extent
+needed by the selected address, together with the alpha-stage flag.
+Its coordinates share one actual initial tree; their possible values
+are not postulated to be independently attainable.
+
+**Theorem 12.3 (spatial classification and the sharp finite horizon).**
+For every finite $u$, address $q$ and $k\ge0$, let $(b,c)=(b_q,c_q)(u)$.
+Then
+
+$$
+ \operatorname{readout}(q,\rho^k u)=
+ \begin{cases}
+ \mathrm{branch},&k\ge b,\\
+ \beta,&b\ge1,\ k=b-1,\\
+ \alpha,&c=1,\ k=b-2,\\
+ \mathrm{absent},&\text{otherwise}.
+ \end{cases}
+\tag{AAR.59}
+$$
+
+On attained inputs $c=1$ implies $b\ge2$, so the alpha case has a
+nonnegative count and is disjoint from the preceding cases. Consequently,
+for $t,t'\in\mathcal F_D$,
+
+$$
+ \Sigma_P(t)=\Sigma_P(t')
+ \quad\Longleftrightarrow\quad
+ \mathcal H_P(t)=\mathcal H_P(t')
+ \quad\Longleftrightarrow\quad
+ \forall\,0\le k<H_P,\ V_P(\rho^k t)=V_P(\rho^k t').
+\tag{AAR.60}
+$$
+
+Every target is branch for $k\ge H_P$, and $H_P\le2D$. For nonempty
+$P$, $H_P$ is the least uniform all-branch count on this family. Empty
+$P$ has one statistic and one trajectory, with $H_P=0$.
+
+Proof. Reuse the guarded atomic reply law of
+[Sparse Literal History Transport, Theorem 6.2 and (SLH.6.1)](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#6-原纪元右射线前缀的准确联合取得),
+also stated as the actual query table in
+[Acquired Orbit Resource Frontier, Definition 8.2](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md#8-stationary-interval-reading-with-a-zero-origin).
+For $T_n=\rho^n\alpha$ and nonempty $r$, an $R$-ending word gives
+absent for $n<s(r)$, alpha at $s(r)$, beta at $s(r)+1$ and branch
+thereafter. An $L$-ending word is absent also at $n=s(r)$, gives beta
+at $s(r)+1$, and is branch thereafter. The last-edge reachability
+guard is essential; an $L$-ending word does not acquire an alpha stage
+merely because the formal residual index is zero. At the root the
+three cases are alpha, beta and branch at indices $0,1,\ge2$.
+
+An originally present branch stays branch. At an original leaf, the
+supplied present-subtree transport gives $T_k$ or $T_{k+1}$ at that
+address. If $q=ar$ is initially absent, transport applies at its
+actually present blocking leaf $a$, giving $T_{k+e(u|_a)}$ there.
+Applying the guarded law to the nonempty suffix $r$ proves (AAR.59)
+and all four cases of (AAR.57). No subtree is transported from an
+originally absent address.
+
+The first count with branch reply is exactly $b$. The trajectory has
+an alpha reply exactly when $c=1$, then only at $b-2$. Thus the whole
+trajectory recovers both numbers, and (AAR.59) reconstructs it from
+them. Taking the joint vector proves both directions of the first
+equivalence in (AAR.60).
+
+For an arbitrary finite $u$ the same formula gives
+$b_q(u)\le s(q)+2$. In $t=\langle\alpha,v\rangle$, every target is
+$Rq$, and its trajectory is the trajectory at $q$ in $v$ by
+homomorphism. Hence
+
+$$
+ b_{Rq}(t)=b_q(v)\le s(q)+2=s(Rq).
+\tag{AAR.61}
+$$
+
+This proves the uniform horizon, including all future counts beyond
+the finite initial height bound. For $t_0=\langle\alpha,\alpha\rangle$
+one has $b_{Rq}(t_0)=s(q)+2$ for every $q$, including $q=\varepsilon$.
+Choose a target of maximum weight. Its reply at $H_P-1$ is beta, so
+no smaller uniform all-branch count works. This source belongs to
+every $\mathcal F_D$ in question. Since the tail from $H_P$ is fixed,
+agreement below $H_P$ is exactly agreement at all counts. Repetitions
+of a count add no distinction; repeating actual observations would
+still incur their own costs. $\square$
+
+**Theorem 12.4 (explicit factor of the canonical boundary data).**
+For $p\in P$, put
+
+$$
+ x_p=h_t(pR^\infty)=J^c_p(t),\qquad
+ y_p=h_t(aR^\infty)=J^c_a(t)\quad\text{when }p=aL.
+\tag{AAR.62}
+$$
+
+The ray $pR^\infty$ lies in $[pR]$, including when $p$ itself ends
+in $R$; $aR^\infty$ lies in the required parent-right cylinder.
+On the actual attained boundary/readout data, the following function
+is exactly (AAR.58):
+
+$$
+ \begin{aligned}
+ b_p&=\max(0,s(p)+2-x_p),\\
+ c_p&=\begin{cases}
+ \mathbf1_{b_p\ge2},&p\text{ ends with }R,\\
+ \mathbf1_{b_p\ge2\ \mathrm{and}\ y_p>x_p},&p=aL.
+ \end{cases}
+ \end{aligned}
+\tag{AAR.63}
+$$
+
+Any public witness rays in the respective cylinders of Lemma 11.3
+may replace the rays in (AAR.62); (AAR.63) still gives the same
+statistic. For the displayed rays, the function can also be applied
+to the canonical boundary-plus-scale representation by substituting
+
+$$
+ x_p=\log_\varphi\bigl(W(t)f_t(pR^\infty)\bigr),\qquad
+ y_p=\log_\varphi\bigl(W(t)f_t(aR^\infty)\bigr).
+\tag{AAR.64}
+$$
+
+Its attained image is in bijection with the selected complete future
+trajectory image, with the maps given by (AAR.59) and recovery of
+$(b_p,c_p)$ from the first branch and the presence of an alpha stage.
+These are mutually inverse on those images, not recovery of the full
+boundary representation from the task statistic.
+
+Proof. By Lemmas 11.2–11.3, a reply is branch precisely when
+$x_p+k\ge s(p)+2$, giving the first line of (AAR.63). For an
+$R$-ending word, alpha occurs precisely at
+$k=s(p)-x_p\ge0$, equivalent to $b_p\ge2$. For $p=aL$ the same
+candidate time is alpha precisely when
+$y_p+k>s(p)$, or $y_p>x_p$. This proves the second line as well. Lemma 11.3 gives the same
+argument for any allowed witness rays, proving the claimed independence
+of those choices. The exceptional equality case is concrete: a beta leaf at $a$ gives
+$x_p=y_p=s(p)$, hence $(b_p,c_p)=(2,0)$ and an initially absent $p$.
+An actual alpha at $p$ instead has $x_p=s(p)<y_p$, giving $(2,1)$.
+Thus the alpha/absent ambiguity is preserved rather than discarded.
+In fact, on this $L$-ending attained domain, $c_p=1$ can only mean
+an alpha at count zero.
+
+Equation (AAR.64) is exactly the canonical-density identity of
+[NAR, Proposition 12.8], with $q=p$ and $q=a$. The density is its
+canonical locally constant representative. Arbitrary almost-everywhere
+representatives do not support this point evaluation. The logarithms
+here return integer exponents on attained data; this semantic identity
+neither grants an unacquired measure oracle nor claims an effective
+point-evaluation algorithm for arbitrary real-number presentations.
+The finite acquired $J^c$ values implement (AAR.63) without that extra
+interface. Theorem 12.3 supplies the two inverse maps on attained
+images. A finite prefix through $H_P$ already suffices to compute
+both: take the first branch in that prefix and test for an alpha before
+it. $\square$
+
+**Definition 12.5 (menu geometry and a finite code grammar).** For a
+finite set $S$ of words, possibly containing $\varepsilon$, define
+
+$$
+ \begin{aligned}
+ S_L&=\{q:Lq\in S\},& S_R&=\{q:Rq\in S\},\\
+ \delta(S)&=\begin{cases}
+ 1,&S\ne\varnothing\text{ and every }q\in S
+                      \text{ starts with }L\text{ and has }|q|\ge2,\\
+ 0,&\text{otherwise}.
+ \end{cases}
+ \end{aligned}
+\tag{AAR.65}
+$$
+
+Define the positive integer $n(S)$ recursively by
+
+$$
+ n(\varnothing)=1,\qquad
+ n(S)=n(S_L)n(S_R)+2-\delta(S)\quad(S\ne\varnothing).
+\tag{AAR.66}
+$$
+
+This recursion uses only the finite prefix tree of the public menu.
+It is not a recursion over all possible sources. For nonempty $S$,
+put $J=n(S_L)n(S_R)$. The codes $0,\ldots,J-1$ are ordered branch
+pairs $i\,n(S_R)+j$. Code $J$ is alpha. Code $J+1$ is beta only
+when $\delta(S)=0$. When $\delta(S)=1$ the beta source uses the
+branch code whose left entry is the alpha code for $S_L$ and whose
+right entry is the sole empty-menu code. Thus beta is identified with
+one particular branch code, not given an additional name.
+
+More explicitly, define $e_S(u)$ by
+
+$$
+ \begin{aligned}
+ e_\varnothing(u)&=0,\\
+ e_S(\langle u_L,u_R\rangle)
+    &=e_{S_L}(u_L)n(S_R)+e_{S_R}(u_R),\\
+ e_S(\alpha)&=J,\\
+ e_S(\beta)&=\begin{cases}
+ J+1,&\delta(S)=0,\\
+ e_{S_L}(\alpha)n(S_R)+e_{S_R}(\alpha),&\delta(S)=1.
+ \end{cases}
+ \end{aligned}
+\tag{AAR.67}
+$$
+
+The last three lines apply when $S\ne\varnothing$. In the overlap
+case $S_R=\varnothing$, while $S_L$ is nonempty and does not contain
+$\varepsilon$. A canonical representative $r_S(i)$ is defined by
+reversing the branch-pair numbering, using $\alpha$ for the alpha
+code, $\beta$ for the separate beta code when present, and $\alpha$
+for the empty-menu code. All these are finite native trees.
+
+**Theorem 12.6 (exact joint count, joint realization and minimum alphabet).**
+For the entire source family and every public menu of Definition 12.1,
+the minimum attained alphabet size of a sufficient arbitrary retained
+code is
+
+$$
+ \boxed{\quad N(P,D)=n(R^{-1}P).\quad}
+\tag{AAR.68}
+$$
+
+The quantity is independent of a larger admissible $D$ for the same
+fixed menu. The code
+$E_P(\langle\alpha,v\rangle)=e_{R^{-1}P}(v)$ attains it effectively.
+Every one of its labels has a representative in $\mathcal F_D$, and
+different labels require different replies at some common count below
+$H_P$. For any finite effective $E$ on $\mathcal F_D$, the exact
+sufficiency criterion is
+
+$$
+ E(t)=E(t')\ \Longrightarrow\ \Sigma_P(t)=\Sigma_P(t')
+ \qquad(t,t'\in\mathcal F_D).
+\tag{AAR.69}
+$$
+
+In particular the optimum fixed-width binary naming cost is
+$\lceil\log_2 n(R^{-1}P)\rceil$, zero for the empty menu. No total
+storage, computation or acquisition optimum is asserted.
+
+Proof of the spatial count. For a general finite $S$, consider replies
+at its words on every iterate of an arbitrary finite initial subtree.
+Induction on the maximum word length proves that (AAR.67) identifies
+exactly equal such trajectories, has all $n(S)$ labels attained, and
+has representatives of height at most
+$1+\max\{|q|:q\in S\}$ when $S$ is nonempty. The empty-menu case
+has one label, represented by a height-zero alpha.
+
+For a branch source, a root query, if selected, is constantly branch.
+The other queries split exactly into the left and right suffix menus.
+Homomorphism evolves both children with the same supplied count.
+By the induction hypothesis, two branch sources therefore agree
+exactly when their two child codes agree. Conversely, every ordered
+pair of child codes is attained in the single actual tree obtained
+by pairing their representatives. Thus the branch sector has exactly
+$J=n(S_L)n(S_R)$ classes. This product is justified by a common
+native realization, not by multiplying separate coordinate optima.
+
+It remains to classify the two leaf sources and their possible overlap
+with that branch sector. For any address $q$, Theorem 12.3 gives the
+first branch times $s(q)+2$ on alpha and $s(q)+1$ on beta, including
+the root. These differ, so the two leaves have different trajectories
+whenever $S$ is nonempty. Alpha cannot agree with any branch source:
+a root query distinguishes them immediately; for a nonempty query
+$q=dr$, any initial branch has first branch time at most $s(r)+2$,
+by its child and (AAR.57), strictly less than alpha's $s(q)+2$.
+
+Beta also cannot agree with a branch if $\varepsilon\in S$, by the
+initial root reply, or if $L\in S$, since beta gives absent there
+initially and a branch has a present left child. If a selected word is
+$Rr$, beta's first branch time is $s(r)+3$, whereas a branch source's
+is at most $s(r)+2$. These observations exclude overlap whenever
+$\delta(S)=0$.
+
+If $\delta(S)=1$, every selected word is $Lr$ with $r\ne\varepsilon$.
+Reuse $T_{k+1}=\langle T_k,T_{k-1}\rangle$ for $k\ge1$. On the beta
+source, the reply at $Lr$ at count $k\ge1$ is the reply at $r$ in
+$T_k$. It is the same reply on the branch
+$\langle\alpha,\alpha\rangle$. At count zero both replies are
+absent, since $r$ is nonempty. Thus beta agrees with that actual
+branch at every selected word and count. The branch classes are
+already distinct by their child codes, so this is precisely one
+already counted class. It is the branch code specified in (AAR.67).
+There are no other leaf/branch overlaps. Adding the leaf classes
+therefore gives exactly $J+2-\delta(S)$.
+
+The representatives are constructed at this same induction step:
+use alpha, use beta only when it has a separate code, and pair every
+ordered pair of child representatives. For maximum menu length $d$,
+nonempty child menus have maximum length at most $d-1$, so their
+representatives have height at most $d$; empty children use alpha.
+Pairing has height at most $d+1$. This also covers $d=0$, when the
+only nonempty menu is $\{\varepsilon\}$ and the branch representative
+has height one. This proves attainment and the height assertion
+along with both directions of the classification. In particular
+$e_S(r_S(i))=i$ for every code.
+
+Now put $S=R^{-1}P$. For nonempty $P$, its maximum suffix length is
+at most $D-1$. Every representative $r_S(i)$ has height at most $D$,
+so $\langle\alpha,r_S(i)\rangle\in\mathcal F_D$. Homomorphism
+identifies the trajectories at $P$ in this paired source with those
+at $S$ in its right subtree. The classification and Theorem 12.3
+therefore identify exactly the same fibers for $E_P$, $\Sigma_P$ and
+$\mathcal H_P$. Their attained images are mutually recoverable:
+a code gives its representative and hence its statistic, while a
+statistic gives the unique representative code with that statistic.
+The finite grammar computes this inverse without enumerating all
+initial sources. Each pair of distinct representatives is separated
+before $H_P$. Both can be truthfully captured as stationary initial
+sources and then undergo that very same number of actual substitutions;
+the lower bound never switches source during a run.
+
+Proof of sufficiency and optimality. The general factor principle is
+already supplied by
+[`target_family_minimal_quotient`](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean):
+take source $X=\mathcal F_D$, index $(p,k)\in P\times\mathbb N$, and
+target $t\mapsto\operatorname{readout}(p,\rho^k t)$. Sufficiency
+forces the kernel of $E$ to refine the joint-target kernel. The native
+classification above identifies this latter kernel spatially, so it
+is exactly (AAR.69). It forces different code values on all the
+$n(S)$ representatives. This is the generic minimum-target argument
+with the newly calculated native image, not a new general quotient
+principle.
+
+Conversely, (AAR.69) makes the target constant on each attained
+$E$-fiber. Since $\mathcal F_D$ is a finite effectively generable
+family and $E$ is effective with finite labels, these factors can be
+made total computable: compute its finite attained code list and
+assign the common statistic to each label, with a fixed default on
+malformed inputs. This existence argument for arbitrary $E$ is not
+the count construction. The optimal $E_P$ already has (AAR.67):
+decode its index to $r_S(i)$, form its spatial statistic, and evaluate
+(AAR.59). It does not enumerate all sources. Empty $P$ uses the
+constant zero code and returns the empty vector. Finally a fixed-width
+$b$-bit region has at most $2^b$ names, and the consecutive integer
+codes have exactly the size in (AAR.68). This proves the binary-width
+claim. $\square$
+
+**Theorem 12.7 (literal, nested and disjoint consumers).** The recurrence
+has the following attained values, for every admissible $D$:
+
+| Public menu $P$ | Minimum labels | Canonical right-subtree representatives or count |
+| --- | ---: | --- |
+| $\varnothing$ | $1$ | $\alpha$ |
+| $\{R\}$ | $3$ | $\alpha,\beta,\langle\alpha,\alpha\rangle$ |
+| $\{RL\}$ | $5$ | $\alpha,\beta,\langle z,\alpha\rangle$ with $z\in\{\alpha,\beta,\langle\alpha,\alpha\rangle\}$ |
+| $\{RR\}$ | $5$ | $\alpha,\beta,\langle\alpha,z\rangle$ with the same three $z$ |
+| $\{RL,RR\}$ | $11$ | two leaves and all nine pairs of those three $z$ |
+| $\{R,RL\}$ | $5$ | the five representatives for $\{RL\}$ |
+| $\{RLL,RLR\}$ | $12$ | $\alpha$ and $\langle z,\alpha\rangle$ for all eleven representatives of $\{RL,RR\}$ |
+| $\{RLL,RLR,RR\}$ | $35$ | two leaves and $11\cdot3$ branch combinations |
+
+Every listed right subtree is used in the initial source
+$\langle\alpha,v\rangle$, not supplied as a hidden decoder operand.
+For a singleton $P=\{Rq\}$, let $m=|q|$ and let $\lambda(q)$ be
+the number of $L$ letters among the first $m-1$ letters of $q$, zero
+when $m\le1$. Then the general singleton value is
+
+$$
+ N(\{Rq\},D)=2m+3-\lambda(q).
+\tag{AAR.70}
+$$
+
+Proof. For $S=\{\varepsilon\}$, both child menus are empty and
+$\delta=0$, giving three codes. For $S=\{L\}$ or $\{R\}$ one child
+has those three codes and the other has one, giving five. For
+$S=\{L,R\}$ both have three, giving eleven. Adding $\varepsilon$
+to $\{L\}$ does not add child constraints or alter its zero overlap
+indicator, so the nested menu still has five. This equality is about
+complete future replies; a single current reply at $RL$ would not
+recover the same information.
+
+For $S=\{LL,LR\}$ the left suffix menu is $\{L,R\}$, the right
+one is empty, and $\delta=1$, giving $11+2-1=12$. In particular the
+initial right subtrees $\beta$ and $\langle\alpha,\alpha\rangle$
+are distinct but agree at both selected addresses at every count,
+by the overlap argument of Theorem 12.6. They are represented by
+one of the eleven branch combinations, not counted twice. At the
+shallower address $RL$ these same initial sources instead have
+$(b,c)=(2,0)$ and $(2,1)$: absent and alpha at zero, followed by
+beta and then branch in both. This verifies that the flag cannot be
+removed from the general spatial statistic.
+
+For $S=\{LL,LR,R\}$ both suffix menus are nonempty, with counts
+eleven and three; a right-starting target forces $\delta=0$, giving
+thirty-five. More generally, whenever both $S_L,S_R$ are nonempty,
+there are $n(S_L)n(S_R)$ jointly attained branch combinations and
+two further leaf classes. This explains why disjoint selected
+addresses do not justify multiplying their separate whole-source
+optima: for $\{RL,RR\}$ that multiplication would give $25$, whereas
+the actual common-source count is $11$.
+
+For the singleton formula, start at the terminal suffix menu
+$\{\varepsilon\}$ with value three and ascend its $m$ edges. Each
+step adds two, except that an $L$ edge with a nonempty remaining
+suffix has $\delta=1$ and adds only one. These are exactly the
+$\lambda(q)$ edges in (AAR.70). The representative construction of
+Theorem 12.6 supplies all claimed distinctions with the required
+height bounds. Thus $D=1$ has only the empty menu and $\{R\}$,
+with values one and three, respectively. $\square$
+
+**Theorem 12.8 (strict compression of a valid public ray table).**
+For $P=\{R\}$ the single ray $R^\infty$ satisfies Theorem 11.4.
+On $\mathcal F_D$ its attained raw scores are exactly
+
+$$
+ \{2,3,\ldots,2D+3\},\qquad N_{\{R^\infty\}}=2D+2.
+\tag{AAR.71}
+$$
+
+Their prediction classes are exactly the three cells
+$\{2\},\{3\},\{4,\ldots,2D+3\}$. They can be retained as three
+names, although losslessly retaining the whole ray score requires
+$2D+2$ names.
+
+Proof. The score is $2+c(v)$ for $t=\langle\alpha,v\rangle$.
+If the rightmost leaf of $v$ has depth $d\le D$ and label bit $e$,
+then $c(v)=2d+e$. Every $d\in\{0,\ldots,D\}$ and $e\in\{0,1\}$
+is attained by a right comb of depth $d$ with alpha side leaves and
+that terminal label. These are actual height-bounded right subtrees,
+so the scores are exactly the consecutive integers in (AAR.71).
+Equation (AAR.63) at $p=R$ reads $b=\max(0,4-x)$: score two
+means an initial alpha, three a beta, and every larger score a
+branch. These give three different trajectories, proving the stated
+compression. At $D=1$ the raw count is already four while the task
+count is three, although both happen to have two-bit fixed-width
+names. A smaller label alphabet need not even lower the rounded
+binary width in every instance. $\square$
+
+Corollary 11.6 minimizes the number of fixed public ray coordinates,
+not their attained joint alphabet. Equations (AAR.66)–(AAR.68)
+minimize an arbitrary complete retained alphabet for the declared
+prediction task. A ray chosen using the source has its identity in
+that alphabet unless it is already a function of the exported label.
+Its actual operand and acquisition still have their own prices. Thus
+(AAR.71) neither invalidates the ray theorem nor provides a free
+source-dependent sampling procedure.
+
+**Theorem 12.9 (paid acquisition and complete handoff).** Suppose a
+stationary initial $\mathcal F_D$ source is available for capture.
+For nonempty $P$ there is a native literal acquisition followed by
+export of exactly the code in Theorem 12.6. A sufficient full-tree
+acquisition has the explicit successful-capture bounds
+
+$$
+ T\le2^{D+1}+1,\qquad
+ A\le D\,2^{D+1}+3,\qquad Q\le D+1.
+\tag{AAR.72}
+$$
+
+Alternatively one may acquire a sufficient fixed public ray table by
+Proposition 11.8 and then compress it by Theorems 12.4 and 12.6,
+with that proposition's acquisition bounds. These are sufficient
+constructions, not claims of minimal acquisition cost.
+
+Proof. Read $L$ as alpha, then traverse the right subtree using full
+literal addresses from the root. Read each visited node once and
+visit both children precisely when the reply is branch. A branch
+reply at depth $D+1$, an unexpected absence, or an unsuccessful
+alpha guard rejects the capture. Finally reread $L$ as alpha. The
+existing equal-leaf rigidity supplier excludes every update between
+the two successful guards. The acquired right subtree is therefore
+one actual $v$ and the complete initial source is
+$\langle\alpha,v\rangle$ at the final guard. No snapshot or subtree
+port was used. The traversal has at most $2^{D+1}-1$ right-subtree
+nodes plus the two guards. At relative depth $j$ in that subtree it
+submits at most $2^j$ words of length $j+1$. Hence its total literal
+length is bounded by
+
+$$
+ 2+\sum_{j=0}^D(j+1)2^j=D\,2^{D+1}+3,
+$$
+
+proving (AAR.72). Acquisition buffers, the temporary tree, traversal
+state, local work and any failed attempt remain separately charged.
+This conditional capture does not promise an $\mathcal F_D$ version
+after an unprotected writer has already changed the initial left
+alpha. A failed guard supplies no source with the required premise.
+
+Compute (AAR.67) from this genuinely acquired tree. Use a fixed
+output-region identity with the public fixed width
+$\lceil\log_2 n(S)\rceil$, and clear or retract all other accessible
+source dependence before handoff. In particular discard the temporary
+tree, descriptors, selectors, reply latches, buffers, traversal and
+retry states, old outputs and distinguishing allocation metadata.
+The construction realizes Definition 12.1 when the host supports
+this complete export; an accessible surviving distinction enlarges
+the retained state. Inaccessible physical remnants still incur their
+storage cost. For the ray-table alternative, (AAR.63) computes the
+statistic; its unique code is found by the finite representative
+grammar of Definition 12.5, since Theorem 12.6 identifies exactly its
+fibers. Public codebooks, their construction and lookup work are not
+free resources. Empty $P$ needs only the constant code and empty
+output, so the task requires no source acquisition.
+
+After export, every supplied count is interpreted relative to that
+validated capture and its authentic continuation, even if the source
+advanced during encoding. The decoder may replace $k$ by
+$\min(k,H_P)$ for this task alone. Acquisition, authentication,
+transmission and representation of the supplied count are separate
+inputs and costs; the code does not provide them. The predicted
+values create no observation events at their addresses. A service
+requiring actual common-version receipts must acquire and validate
+those separately. $\square$
+
+**Mathematical citation 12.10 (reuse, attribution and recovery limits).**
+The substantive native assertions are (AAR.57)–(AAR.60), the concrete
+boundary factor (AAR.63), the unique leaf/branch overlap (AAR.65),
+and its exact joint count with height-bounded representatives. They
+are ordinary `repo-derived` deductions. Generic behavioral equivalence
+and minimum sufficient coding are reused; no new kernel verification
+or worldwide originality is claimed.
+
+The source correspondences are as follows. [NAR, §§11–12], especially
+its Proposition 12.8, supplies absence-safe $J^c$, unit advancement
+and the canonical density; it does not count this task's fibers.
+[READ] fixes the four replies and literal addresses, and [NDP]'s
+`original_present_transport` and `original_prefix_locality` supply
+same-source transport and finite-depth dependence. [DOR]'s
+`right_clock_iterate` and `right_clock_readout` fix the right-ray
+parameter meanings. The guarded atomic table, including its
+$L$-ending absence case, is reused from SLH Theorem 6.2 and AOF
+Definition 8.2. SLH §§6.2–6.3 optimize paid original right-prefix
+acquisition from a certified later version; AOF §§8–9 optimize calls
+and peak literal length for an unknown atomic age in a supplied
+interval. Neither objective is the retained-alphabet objective here.
+
+The static target-family supplier in Theorem 12.6 applies directly
+because $(p,k)$ is an index, requiring no endomap on $\mathcal F_D$.
+The existing
+[`canonical_minimal_realization`](../../../D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.lean)
+and
+[`predictive_memory_minimal_quotient`](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean)
+require an actual endomap and exact update/readout factorization.
+They can be interpreted on all finite native trees with update $\rho$
+and output $V_P$, before restricting initial captures. The original
+family $\mathcal F_D$ is not $\rho$-invariant: its initial left alpha
+already becomes beta after one update. Likewise the finite-carrier
+premise of
+[`finite_future_maximal_congruence`](../../../D5/S3/Observer/Separation/FiniteFutureCongruence.lean)
+cannot be supplied by pretending that $\rho:\mathcal F_D\to\mathcal F_D$.
+The native horizon in Theorem 12.3 instead directly proves which
+finite prefix determines the trajectory. Saturation concerns selected
+replies, not a bound on future-tree height or recovery of an unknown
+count. The horizon also makes the set of all suffixes of attained
+trajectories finite and shift-closed: each trajectory has at most
+$H_P+1$ different suffixes, and shifting a suffix produces another
+one. That is a lawful carrier for the finite congruence supplier,
+without regarding $\mathcal F_D$ as a source endomap carrier.
+
+The bounded primary-literature correspondences are these:
+
+| Primary statement | Object, assumption and objective correspondence |
+| --- | --- |
+| [Rabin and Scott, *Finite Automata and Their Decision Problems*, Theorem 2 and Corollary 2.1](https://www.cse.chalmers.se/~coquand/AUTOMATA/rs.pdf) | Equality under all continuation tests gives the least-state accepting automaton; the authors attribute this relation and corollary to Nerode. Continuation tests correspond here to supplied substitution counts and selected reply coordinates. Their tape languages and binary acceptance are not the native tree family, four-valued reply function or spatial recurrence (AAR.66). |
+| [Angluin, *Learning Regular Sets from Queries and Counterexamples*, §2.1 and Theorem 1](https://people.eecs.berkeley.edu/~dawnsong/teaching/s10/papers/angluin87.pdf) | Rows of a closed, consistent observation table represent candidate states and columns distinguishing experiments; a consistent inequivalent acceptor must have more states. Here a finite horizon yields complete distinguishing data for a specified native task. No membership/equivalence teacher is supplied, and no learning-time bound or acquisition algorithm is imported from that theorem. |
+| [Charpenay, Le Treust and Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, Definitions II.1 and IV.5, Theorem IV.8](https://arxiv.org/html/2211.03649v2) | With source $t$, side input $k$ and task $V_P(\rho^k t)$, different response vectors induce the analogous characteristic-graph separation. One can restrict side inputs to the finite horizon here. Their full-support response-vector grouping is background; their i.i.d. distribution, expected prefix-code length and asymptotic rate objective are not the finite worst-case number of retained names. Their theorem does not give the native overlap or height-bounded joint realizations. |
+
+Thus the minimum-target principle alone would leave the native question
+unanswered: it names a quotient without supplying (AAR.57), deciding
+its leaf/branch identifications, or constructing all of its joint
+classes. The additional spatial analysis supplies those missing facts.
+Its recoverability is exactly between the task statistic, its minimal
+names, and the selected complete future trajectory on their attained
+images. The canonical boundary and the acquired initial tree map to
+that statistic; they need not be recoverable from it. The twelve-class
+example already merges distinct trees, and Counterexample 11.9 retains its
+hidden-equality obstruction. Counts after saturation are also merged
+by the reply output. The rest of Open problem 11.12 and the broader
+space, time, boundary and memory programme have not been identified
+with this supplied-count prediction problem.
+
+## 追加锚（本行以下为增补区）
