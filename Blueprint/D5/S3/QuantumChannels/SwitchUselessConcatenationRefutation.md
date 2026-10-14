@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/SwitchUselessConcatenationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mitra-badhani-ghosh-2023-completely-useless-concatenation` (refuted) by `D5/S3/QuantumChannels/SwitchUselessConcatenationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mitra-badhani-ghosh-2023-completely-useless-concatenation","declaration_gid":"D5/S3/QuantumChannels/SwitchUselessConcatenationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Mitra; H. Badhani; S. Ghosh (2023). *Improvement in quantum communication using quantum switch*. DOI: [10.1088/1402-4896/acbcf7](https://doi.org/10.1088/1402-4896/acbcf7). URL: <https://arxiv.org/abs/2108.14001>.

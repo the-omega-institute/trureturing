@@ -36,13 +36,17 @@ internal sealed class SwitchUselessConcatenationRefutationDocument : IScribeDocu
                 DescribeRole.Definition, Lit()),
             Node("result", "Conjecture 1 is false", Disp(new Formula.Not(V("claim"))),
                 "At eta = 24/25, take dephasing axes z and (4/5,0,3/5), mixed with depolarization. The Kraus weights are 7/10, 1/10, 1/10 and 7/10. Six eight-term positive measure-and-prepare decompositions establish entanglement breaking of the factors and all their switch branches. For the concatenation's minus branch, the partial transpose of the unnormalized Choi matrix has quadratic value −2185891/39062500 at (−2,−1,−1,2). Every separable matrix has positive semidefinite partial transpose, so this branch is not entanglement breaking. No statement about classical capacity or perfect deterministic transmission follows.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mitra-badhani-ghosh-2023-completely-useless-concatenation"),
+                    ResolutionKind.Refuted)))));
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mbg-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
