@@ -96,6 +96,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/NoisyVoter/RepetitionVarianceLinear.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/benjamini-helman-tov-zhukovskii-2023-noisy-voter-repetition-variance` (proved) by `D5/S3/StatisticalMechanics/NoisyVoter/RepetitionVarianceLinear.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"benjamini-helman-tov-zhukovskii-2023-noisy-voter-repetition-variance","declaration_gid":"D5/S3/StatisticalMechanics/NoisyVoter/RepetitionVarianceLinear.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* I. Benjamini, H. Helman Tov and M. Zhukovskii (2023). *Global information from local observations of the noisy voter model on a graph*. DOI: [10.1214/23-AOP1637](https://doi.org/10.1214/23-AOP1637). URL: <https://arxiv.org/abs/2207.01224>.

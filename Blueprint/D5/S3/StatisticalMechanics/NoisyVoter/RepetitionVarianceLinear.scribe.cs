@@ -37,13 +37,17 @@ internal sealed class RepetitionVarianceLinearDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "A linear variance contribution at regularly spaced times", "result", ResultFormula(),
                 "A refresh at u followed by refreshes at every neighbour isolates one fair opinion. Only the repetition terms at r−d and r contain it. Centres r = k(d+1) do not differ by d. Flipping the isolated fair opinions yields orthogonal covariance projections. Requiring one additional refresh at r+d gives a cylinder of probability e^(degree(u)+2); the future fair opinion makes exactly half of this cylinder contribute. Summing gives Var(W) ≥ (e^(degree(u)+2)/2) floor(t/(d+1)), and this contradicts little-o along multiples of d+1. The floor uses natural-number division. The proof works directly with Measure.infinitePi, including infinite locally finite graphs.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("benjamini-helman-tov-zhukovskii-2023-noisy-voter-repetition-variance"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bhz-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
