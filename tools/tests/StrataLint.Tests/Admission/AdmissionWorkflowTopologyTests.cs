@@ -53,6 +53,8 @@ public sealed class AdmissionWorkflowTopologyTests
     [InlineData(".github/workflows/ci-Tests.yml", false)]
     [InlineData(".github/workflows/ci-tests-fixture.yaml", false)]
     [InlineData(".github/scripts/harness-gate.sh", false)]
+    [InlineData(".github/actions/lean-cache-produce/action.yml", true)]
+    [InlineData(".github/actions/unregistered/action.yml", false)]
     public void ControlPathRegistrationKeepsOnlyTheRequiredGateTransition(string value, bool accepted)
     {
         var policy = new RuleFixture().Build().Policy;
