@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/WellCoveredPowerCliqueProduct, mathlib/module/Mathlib.Combinatorics.SimpleGraph.CycleGraph]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.CycleGraph]
    utility: none
    digest: Shortest matching lifts control powers and distances of clique cycles with arbitrary twists. -/
 
