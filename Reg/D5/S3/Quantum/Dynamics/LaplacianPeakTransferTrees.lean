@@ -103,12 +103,12 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 #print axioms registration_1
 
 namespace EigenDotZero
-universe u
+universe u_1
 open Matrix
 
 /-- Observe the vector operand in the orthogonality conclusion. -/
 abbrev signature : Signature where
-  Params := Type u
+  Params := Type u_1
   State V := V → ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -117,23 +117,23 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ _ w => w) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => fun _ => 1) (fun e => nomatch e)
 
 /-- All hypotheses retain their original operands; only the final vector is observed. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law O := ∀ {V : Type u} [Fintype V] [DecidableEq V] {A : Matrix V V ℝ}
+  signature := signature.{u_1}
+  Law O := ∀ {V : Type u_1} [Fintype V] [DecidableEq V] {A : Matrix V V ℝ}
     (hA : A.IsHermitian) (w : V → ℝ) (mu : ℝ)
     (_hw : A *ᵥ w = mu • w) (i : V) (_hi : hA.eigenvalues i ≠ mu),
       ⇑(hA.eigenvectorBasis i) ⬝ᵥ O.readout () V w = 0
 
-theorem rejected_law : ¬ arena.{u}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  let V := ULift.{u} (Fin 1)
+  let V := ULift.{u_1} (Fin 1)
   let hA : (0 : Matrix V V ℝ).IsHermitian := Matrix.isHermitian_zero
   let i : V := default
   have he := h hA 0 (hA.eigenvalues i + 1) (by simp) i (by linarith)
@@ -147,13 +147,13 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   rw [← hs, hz] at hn
   norm_num at hn
 
-theorem dependence : ObservationalDependence signature.{u} actual := by
+theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨ULift.{u} (Fin 1), 0, (fun _ => 1), ?_⟩
+  refine ⟨ULift.{u_1} (Fin 1), 0, (fun _ => 1), ?_⟩
   intro h
   exact zero_ne_one (congrFun h (ULift.up 0))
 
-def source_registration : Registration arena.{u} (type_of% (@eig_dot_zero.{u})) where
+def source_registration : Registration arena.{u_1} (type_of% (@eig_dot_zero.{u_1})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨eig_dot_zero, rejected, rejected_law⟩
@@ -168,7 +168,7 @@ def source_registration : Registration arena.{u} (type_of% (@eig_dot_zero.{u})) 
   dependence := dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@eig_dot_zero.{u}) (Realization signature.{u}) Unit Unit := {
+    (@eig_dot_zero.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Dynamics.LaplacianPeakTransferTrees.EigenDotZero.unit
   realizationName :=
     `Reg.D5.S3.Quantum.Dynamics.LaplacianPeakTransferTrees.EigenDotZero.source_registration
@@ -181,7 +181,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ w => w) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
