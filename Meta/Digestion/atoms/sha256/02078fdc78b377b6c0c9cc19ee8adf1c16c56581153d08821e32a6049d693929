@@ -1,0 +1,30 @@
+**Definition 5.2 (whole case support).** Let $\mathbf p$ contain every
+finite-mode original rank and all fresh finite parameters from completed
+reduction. Let $\mathbf w$ contain the actual finite values of every
+divergent original rank, including invisible ones. In each chart substitute
+exactly its canonically finite original residuals $f_i(\mathbf p)$.
+Leave all other original residuals unrestricted finite variables.
+Lemma 5.1 computes the exact simultaneous feasibility predicate
+$\Psi_{r,\tau}(\mathbf p,\mathbf w)$ for that entire negative list. Put
+
+$$
+\begin{aligned}
+\Phi_\tau(\mathbf p,\mathbf w)
+ &=\Gamma_\tau(\mathbf p)\land
+ \bigwedge_{r\in B}
+ \left(P_{r,b_r}(\mathbf n_r(\mathbf p,\mathbf w))
+       \land\Psi_{r,\tau}(\mathbf p,\mathbf w)\right),\\
+G_\tau
+ &=\{\mathbf p:\forall M\in\mathbb N\ \exists\mathbf w\
+       \Phi_\tau(\mathbf p,\mathbf w)\land
+       \bigwedge_{j\ {\rm divergent}}w_j\ge M\}.
+\end{aligned}
+\tag{SFS.14}
+$$
+
+Here $\mathbf n_r$ restores that chart's original rank vector, keeping all
+sharing and incidence. There is one joint support, not a product of cofinal
+marginals. With no divergent coordinates, cofinality means feasibility of
+the singleton empty tuple. With no finite parameters, $G_\tau$ is either
+empty or its singleton empty tuple.
+

@@ -1,0 +1,26 @@
+**Definition 7.1 (closed defining subsystem).** A closed presentation has
+finitely many named states $X_1,\ldots,X_m$ and one supplied definition
+
+$$
+X_i=\langle E_i,F_i\rangle\qquad(1\le i\le m).
+\tag{SPC.21}
+$$
+
+Expressions have finite syntax built from finite native grounds,
+$\Omega$, ordered pairing and $\rho^kX_j$, with fixed numeral $k\ge0$.
+Powers on compound expressions can first be distributed and evaluated
+on grounds; $\rho^k\Omega=\Omega$. Every state occurrence is under the
+displayed pair guard. Explicitly supplied finite ground definitions may
+be inlined before (SPC.21); no unspecified root-link normalization is
+assumed. There are no unknown free tree values or uninstantiated ranks.
+Repeated occurrences of a state denote one whole value.
+
+The presentation may retain finitely many further positive equations
+$A_l(\mathbf X)=B_l(\mathbf X)$ and image filters
+$C_l(\mathbf X)\in L_{s_l}$, where
+$L_s=\rho^s[\widehat{\mathcal T}]$ and each $s_l$ is a fixed numeral.
+The equations selected for (SPC.21) form a defining subsystem, not a
+choice between alternative productions. They must define every variable
+of every retained expression. All other equations and filters are
+conjuncts on its single generated valuation.
+

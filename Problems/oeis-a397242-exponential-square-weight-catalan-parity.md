@@ -1,6 +1,6 @@
 ---
 slug: oeis-a397242-exponential-square-weight-catalan-parity
-bibkey: hanna2026a397242
+bibkey: hanna2026a397242b
 doi: null
 url: https://oeis.org/A397242
 triage: theorem
@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 OEIS A397242, Paul D. Hanna, Jun 19 2026, gives the following NAME and first
-COMMENT, quoted from `Library/Recurrence/hanna2026a397242.md`:
+COMMENT, quoted from `Library/Recurrence/hanna2026a397242b.md`:
 
 > O.g.f. satisfies A(x) = exp( x + Sum_{n>=2} (n^2-1) * a(n)*x^n / n^2 ).
 

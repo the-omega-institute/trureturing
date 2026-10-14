@@ -33,11 +33,11 @@ def coreGraph (m : ℕ) : SimpleGraph {v : Configuration m // CoreDomain m v} :=
   (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).induce
     {v | CoreDomain m v}
 
-private def cutStart {m : ℕ} : Fin m ⊕ Fin (m - 2) → Configuration m
+def cutStart {m : ℕ} : Fin m ⊕ Fin (m - 2) → Configuration m
   | .inl i => if i.val = m - 1 then 1 else tCircleAnchor (.inl i)
   | .inr j => tCircleAnchor (.inr j)
 
-private def cutGenerator {m : ℕ} : Fin m ⊕ Fin (m - 2) → Configuration m
+def cutGenerator {m : ℕ} : Fin m ⊕ Fin (m - 2) → Configuration m
   | .inl i => if m - 2 ≤ i.val then a m else b m
   | .inr _ => b m
 
@@ -113,7 +113,7 @@ private theorem circle_rotation {m : ℕ} (z : Configuration m) :
     by simpa only [pow_one] using rotate_pow_list z 1]
   exact List.IsRotated.symm ⟨1, rfl⟩
 
-private theorem cut_circle_iff {m : ℕ} (hm : 4 ≤ m)
+theorem native_cut_circle_iff {m : ℕ} (hm : 4 ≤ m)
     (p : Fin m ⊕ Fin (m - 2)) (v : Configuration m) :
     Circle (cutStart p) v ↔ Circle (tCircleAnchor p) v := by
   cases p with
@@ -207,7 +207,7 @@ private theorem exists_core_piece {m : ℕ} (hm : 4 ≤ m) (p : Fin m ⊕ Fin (m
     intro x hx
     have hc : Circle (cutStart p) x := hs x |>.mp (by
       simpa only [q, SimpleGraph.Walk.support_mapLe_eq_support] using hx)
-    exact circle_in_domain hm p x ((cut_circle_iff hm p x).mp hc)
+    exact circle_in_domain hm p x ((native_cut_circle_iff hm p x).mp hc)
   let r := q.induce {v | CoreDomain m v} hq
   have hrs : r.support.map Subtype.val = q.support := by
     have he := congrArg SimpleGraph.Walk.support (SimpleGraph.Walk.map_induce q hq)
@@ -236,13 +236,13 @@ private theorem exists_core_piece {m : ℕ} (hm : 4 ≤ m) (p : Fin m ⊕ Fin (m
         exact h ▸ hx
     rw [hmemb]
     simpa only [q, SimpleGraph.Walk.support_mapLe_eq_support] using
-      (hs v.val).trans (cut_circle_iff hm p v.val)
+      (hs v.val).trans (native_cut_circle_iff hm p v.val)
   · intro x y g hx hg hy hne
     have he : s(x.val, y.val) ∈ w.edges := by
       rw [hy]
       apply (native_complement_edge_inventory (by omega : 3 ≤ m)
         (cutStart p) (cutGenerator p) (cutGenerator_mem p) w hp hl hs
-        x.val g ((cut_circle_iff hm p x.val).mpr hx) hg).mpr
+        x.val g ((native_cut_circle_iff hm p x.val).mpr hx) hg).mpr
       simpa only [hy] using hne
     have hredges : r.edges.map (Sym2.map Subtype.val) = w.edges := by
       have heq := congrArg SimpleGraph.Walk.edges (SimpleGraph.Walk.map_induce q hq)

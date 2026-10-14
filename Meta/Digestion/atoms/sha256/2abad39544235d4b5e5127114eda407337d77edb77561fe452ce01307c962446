@@ -1,0 +1,40 @@
+**Lemma 6.3 (exact whole four-row image).** The image $A=R_Q(D)$ has exactly
+four rows. Each has reached set $Q$ and exterior
+
+$$
+C_Q=\langle\square_1,\langle\square_2,
+       \langle\square_3,\langle\square_4,
+                    \langle\square_5,\square_6\rangle\rangle\rangle\rangle\rangle.
+\tag{FFM.27}
+$$
+
+Its full partitions and entire strata are
+
+| Full row | Complete partition | Entire additional condition inside (FFM.24) |
+| --- | --- | --- |
+| $r_x$ | $\{\{1\},\{2,5,6\},\{3\},\{4\}\}$ | $z=x$ |
+| $r_F$ | $\{\{1\},\{2\},\{3,5,6\},\{4\}\}$ | $z=F(x)$ |
+| $r_G$ | $\{\{1\},\{2\},\{3\},\{4,5,6\}\}$ | $z=G(x)$ |
+| $r_o$ | $\{\{1\},\{2\},\{3\},\{4\},\{5,6\}\}$ | $z\notin\{a,x,F(x),G(x)\}$ |
+
+Every listed stratum is attained; no other full row is omitted.
+
+Proof. The tuple of whole subtrees at $Q$ is $(a,x,F(x),G(x),z,z)$, on the same
+original. The finite right-spine clock
+
+$$
+\kappa(\alpha)=0,\quad\kappa(\beta)=1,\quad
+\kappa(\langle s,t\rangle)=2+\kappa(t),\quad
+\kappa(\rho t)=\kappa(t)+1
+\tag{FFM.28}
+$$
+
+is [ARH, (ARH.4.2)][ARH]; its last identity follows by native structural induction.
+It gives $\kappa(F(x))=\kappa(G(x))=\kappa(x)+2$, separating $x$ from both.
+The retained negative separates $F(x)$ from $G(x)$. Both are branches and differ
+from leaf $a$; $x$ also does. Finally $z\ne a$. Hence the repeated $z$ either equals
+exactly one of the three distinct trees $x,F(x),G(x)$ or equals none. These four
+cases are exhaustive and give exactly the displayed full partitions. The
+reached set and exterior are fixed, proving both directions of the row-stratum
+representations. Attainment is supplied by Lemma 6.4. $\square$
+

@@ -4,7 +4,19 @@
 
 The original-edge code of a finite incoming lift is classified by unordered fiber ambiguity.
 
-**Theorem 1.1 (The specified code and the longest surviving ambiguity).**
+**Theorem 1.1 (Concatenation preserves the numbered word and incoming lift).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.concatenate_paths`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.concatenate_paths` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any natural matrix A, any state type Q and any incoming lift L, concatenate a length-d numbered path p from i to j with a length-b path q from j to k. There is a path r of length d+b from i to k whose complete numbered word is word(p) ++ word(q). For every state z over k, lifting r at z equals lifting p at the state obtained by lifting q at z. Induction on p gives q in the empty case and preserves the first numbered edge in the cons case. No finiteness of Q, essentiality or positive-length hypothesis is required. This is the existing proof-local supplier exposed at its unique owner and reused by the original BDR Proposition 3.4 derivation; it has no new mathematical-content credit.
+
+**Theorem 1.2 (The specified code and the longest surviving ambiguity).**
 
 $$\forall n \in Nat, Q \in Type,\; [\operatorname{Fintype}\left(Q\right)], \forall A \in \operatorname{CountMat}\left(n, n\right), L \in \operatorname{IncomingLift}\left(A, Q\right),\; 0 < n \Rightarrow \left(\left(\operatorname{Essential}\left(A\right) \land \operatorname{Essential}\left(\operatorname{ActualCountedLift}\left(L\right)\right)\right) \Rightarrow \left(\operatorname{NatCard}\left(\operatorname{PairVertices}\left(L\right)\right) = \operatorname{SumFiberChooseTwo}\left(L\right) \land \left(\left(\forall d \in Nat,\; \operatorname{NotForgets}\left(L, d\right) \Leftrightarrow \operatorname{PairWalk}\left(L, d\right)\right) \land \left(\left(\left(\operatorname{SumFiberChooseTwo}\left(L\right) = 0 \Rightarrow \operatorname{IsLeastForgets}\left(L, 0\right)\right) \land \left(\left(0 < \operatorname{SumFiberChooseTwo}\left(L\right) \land \operatorname{Acyclic}\left(\operatorname{PairGraph}\left(L\right)\right)\right) \Rightarrow \left(\exists ell \in Nat,\; \operatorname{GreatestPairWalkLength}\left(L, ell\right) \land \left(\operatorname{IsLeastForgets}\left(L, ell + 1\right) \land \left(\forall d \in Nat,\; d \le ell \Rightarrow \operatorname{NotForgets}\left(L, d\right)\right)\right)\right)\right)\right) \land \left(\exists pi \in \operatorname{Path}\left(\operatorname{ActualCountedLift}\left(L\right)\right) \to \operatorname{Path}\left(A\right),\; \left(pi = \operatorname{OriginalEdgeReadout}\left(L\right) \land \left(\operatorname{Continuous}\left(pi\right) \land \operatorname{ShiftCommutes}\left(pi, \operatorname{ActualCountedLift}\left(L\right), A\right)\right)\right) \land \left(\left(\left(\operatorname{Injective}\left(pi\right) \Leftrightarrow \operatorname{SpecifiedConjugacy}\left(pi\right)\right) \land \left(\left(\operatorname{SpecifiedConjugacy}\left(pi\right) \Leftrightarrow \left(\exists d \in Nat,\; \operatorname{Forgets}\left(L, d\right)\right)\right) \land \left(\left(\exists d \in Nat,\; \operatorname{Forgets}\left(L, d\right)\right) \Leftrightarrow \operatorname{Acyclic}\left(\operatorname{PairGraph}\left(L\right)\right)\right)\right)\right) \land \left(\left(\forall d \in Nat,\; \operatorname{Forgets}\left(L, d\right) \Rightarrow \operatorname{ContinuousInverseWithEdgeWindow}\left(pi, d\right)\right) \land \left(\left(\operatorname{NotFiniteForgetting}\left(L\right) \Rightarrow \left(\exists c \in Nat,\; 0 < c \land \left(c \le \operatorname{SumFiberChooseTwo}\left(L\right) \land \left(\exists x \in \operatorname{Path}\left(\operatorname{ActualCountedLift}\left(L\right)\right), y \in \operatorname{Path}\left(\operatorname{ActualCountedLift}\left(L\right)\right),\; \operatorname{Distinct}\left(x, y\right) \land \left(\operatorname{Apply}\left(pi, x\right) = \operatorname{Apply}\left(pi, y\right) \land \left(\operatorname{Periodic}\left(\operatorname{Apply}\left(pi, x\right), c\right) \land \left(\operatorname{Periodic}\left(x, 2 \cdot c\right) \land \operatorname{Periodic}\left(y, 2 \cdot c\right)\right)\right)\right)\right)\right)\right)\right) \land \left(\left(\operatorname{SpecifiedConjugacy}\left(pi\right) \Leftrightarrow \operatorname{NoCommonPeriodCollision}\left(pi, 2 \cdot \operatorname{SumFiberChooseTwo}\left(L\right)\right)\right) \land \left(\operatorname{SpecifiedConjugacy}\left(pi\right) \Leftrightarrow \operatorname{NoIndividuallyBoundedPeriodCollision}\left(pi, 2 \cdot \operatorname{SumFiberChooseTwo}\left(L\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -36,6 +48,7 @@ Consequently pi is a conjugacy exactly when no two distinct histories with the s
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.concatenate_paths`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.incoming_lift_ambiguity_criterion`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CommonNilpotencyForgettingBound](CommonNilpotencyForgettingBound.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting](CompatibleResponseForgetting.md)
