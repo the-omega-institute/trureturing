@@ -32,12 +32,16 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
                 AssessedProvenance.FromLiterature(Source)),
             Entry("refutation", "result", "A rotating replacement counterexample", Disp(Seq(Neg, Sp, V("claim"))),
                 "For real t put D = 1 + t² and P = [[1,t],[t,t²]]/D. The family Phi(t)(X) = (X + t² Matrix.trace(X) P)/D has four Kraus matrices I/D, tI/D, (t/D)[[1,0],[t,0]] and (t/D)[[0,1],[0,t]]. It starts at the identity and is non-unital at every positive time. Its unital part is the isotropic depolarization (X + t² Matrix.trace(X) I/2)/D. For 0 ≤ s ≤ t the intermediate depolarizing parameter is (1+s²)/(1+t²), in [0,1]. Its four Pauli weights are η + (1 − η)/4 and three copies of (1 − η)/4, so it is completely positive and trace preserving. The inverse of Phi(t) sends Y to DY − t² Matrix.trace(Y) P. Composing the derivative with this inverse gives L(Y) = −(2t/D)Y + Matrix.trace(Y) B, where B = [[2t,t²(t²+3)],[t²(t²+3),2t³(t²+2)]]/D³. In the order (0,0),(0,1),(1,0),(1,1), the vector [−2t(t²+3),−t²(t²+3)²,4,2t(t²+3)] has diagonal-coordinate sum zero and conditional Choi quadratic form −2t³(1+t²)(t²+4), strictly negative for t > 0. The replacement direction rotates while the contraction remains a divisible isotropic depolarization.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("utagi-banerjee-srikanth-2024-purely-nonunital-eternal-nonmarkovianity"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula UnitalFormula()
     {

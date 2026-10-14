@@ -88,6 +88,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/PurelyNonUnitalEternalNonMarkovianity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/utagi-banerjee-srikanth-2024-purely-nonunital-eternal-nonmarkovianity` (refuted) by `D5/S3/QuantumChannels/PurelyNonUnitalEternalNonMarkovianity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"utagi-banerjee-srikanth-2024-purely-nonunital-eternal-nonmarkovianity","declaration_gid":"D5/S3/QuantumChannels/PurelyNonUnitalEternalNonMarkovianity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shrikant Utagi and Subhashish Banerjee and R. Srikanth (2024). *On the eternal non-Markovianity of non-unital quantum channels*. DOI: [10.1142/S0219749923500399](https://doi.org/10.1142/S0219749923500399). URL: <https://arxiv.org/abs/2203.10625>.
