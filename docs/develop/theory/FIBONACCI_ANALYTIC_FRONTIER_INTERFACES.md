@@ -230,3 +230,37 @@ a<0.24986404,
 $$
 
 而 Liu v2 给出约 $a<0.2499484233$，原始 $7/8$ 给出 $a<1/4$。现有示例 $a=1/10$ 离三者都很远；这项改进没有打开新的 packet 分区，只精确量化了尚未支付的参数余量。
+
+## 448. Tenenbaum--Wang 的大 friable 成分计数
+
+Gérald Tenenbaum 与 Xiangyu Wang 的 [*On integers whose friable component is large*](../../../Library/Scale/tenenbaumwang2026largefriablecomponent.md)，arXiv:2609.37507v2（2026 年 10 月 11 日），给出一个与当前稀疏候选计数相邻、但量词不同的最新输入。令 $n_y$ 为 $n$ 的最大 $y$-光滑因子，
+
+$$
+\Theta(x,y,z)=\#\{n\le x:n_y>z\},
+\qquad v=\frac{\log z}{\log y}.
+$$
+
+其定理 1 在
+
+$$
+\max\{2,\log z\}\le y\le z\le x/2
+$$
+
+上一致给出
+
+$$
+\Theta(x,y,z)
+=x\exp\!\left(-v\log\!\bigl(v\log(3v)\bigr)+O(v)\right).
+$$
+
+这可以作为 FIB 稀疏层的候选供应商，但必须先对**同一个**
+
+$$
+N=uv=1+F_rg,
+\qquad v\mid C,
+\qquad Cu\equiv v\pmod {F_r}
+$$
+
+证明某个异常子族统一满足 $N_y>z$，并同时保留移动 Fibonacci 同余。无条件的全体整数计数不能推出指定剩余类中没有命中，也不能把不同候选的最优值合并。
+
+即使这个接口闭合，它最多改进候选数量或稀疏层的容量；它不估计同一 $N$ 的完整 prime-power 权重、$D^*(a)$ 或 signed Robin tail $H_a$。因此本来源已登记为可复用的外围估计与明确的接口义务，不重复已有光滑数分布工作，也不构成 Robin 不等式或 RH 证明。
