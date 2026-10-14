@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9a09bd18fa8dff82a70adc7226060cd838f483d5a2cefc6efbe301bd838b475e
+  normalized_sha256: sha256:9a09bd18fa8dff82a70adc7226060cd838f483d5a2cefc6efbe301bd838b475e
+cas_ref: sha256:9a09bd18fa8dff82a70adc7226060cd838f483d5a2cefc6efbe301bd838b475e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段只给动态闭包最小性声明的直接应用与空词回接论证。
+    previous_atom_id: 1e68c3e542c9503b115976052c4eee6e225a9c332866dae8dee4b8f5cd5e3616
+    next_atom_id: 40d6a44b097aaf2481f074ffb582ac239eb10b840f381d5a151b916b46a934bc

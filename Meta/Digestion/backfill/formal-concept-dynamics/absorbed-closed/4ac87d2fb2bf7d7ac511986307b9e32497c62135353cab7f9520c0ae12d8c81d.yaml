@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4ac87d2fb2bf7d7ac511986307b9e32497c62135353cab7f9520c0ae12d8c81d
+  normalized_sha256: sha256:4ac87d2fb2bf7d7ac511986307b9e32497c62135353cab7f9520c0ae12d8c81d
+cas_ref: sha256:4ac87d2fb2bf7d7ac511986307b9e32497c62135353cab7f9520c0ae12d8c81d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/SymmetricResponsibilityAllocation.symmetric_responsibility_is_uniform
+    target_statement_id: sha256:ca736a263fdb4472878c95010fd9416d4053fd4d7cc2fcc498dfb9307ed86b92
+receipts:
+  unresolved_subitems: []

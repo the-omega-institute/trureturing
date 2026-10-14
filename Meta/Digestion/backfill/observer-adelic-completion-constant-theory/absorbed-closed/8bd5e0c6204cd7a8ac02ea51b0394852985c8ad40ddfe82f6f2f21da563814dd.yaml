@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bd5e0c6204cd7a8ac02ea51b0394852985c8ad40ddfe82f6f2f21da563814dd
+  normalized_sha256: sha256:8bd5e0c6204cd7a8ac02ea51b0394852985c8ad40ddfe82f6f2f21da563814dd
+cas_ref: sha256:8bd5e0c6204cd7a8ac02ea51b0394852985c8ad40ddfe82f6f2f21da563814dd
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/GoldenBranchObserverDecomposition.golden_branch_observer_decomposition
+    target_statement_id: sha256:e80ca07b5a2995e34861e00eec04e09b8ee4807a876040dc4f8d536b3cd8c505
+  - gid: D5/S3/PrimeForms/GoldenEuler/ModFiveLocalEulerFactor.mod_five_local_observer_determinant
+    target_statement_id: sha256:46d8700097c38bc32e50277f5002965a145a1e8fa707509356c20188baf5fd42
+receipts:
+  unresolved_subitems: []

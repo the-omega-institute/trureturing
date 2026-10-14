@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:628785494a734641ee7f1da6d6b37ba63ab586240dff8e9a0855e01f8bb676ee
+  normalized_sha256: sha256:628785494a734641ee7f1da6d6b37ba63ab586240dff8e9a0855e01f8bb676ee
+cas_ref: sha256:628785494a734641ee7f1da6d6b37ba63ab586240dff8e9a0855e01f8bb676ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段是前述实数非零判据的证明续段，只论证尾部下界及代表相容性。
+    previous_atom_id: 37587073f995620470f37e305f1563f568c8b8a9dad01e9947c77701ebc1a986
+    next_atom_id: cfa8bee1d272840dcda924ccd0168f5e38a6e6f94df5902ffd840453ffe6b7b8

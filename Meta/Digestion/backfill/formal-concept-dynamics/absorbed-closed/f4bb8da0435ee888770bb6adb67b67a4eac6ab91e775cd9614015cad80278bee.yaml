@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f4bb8da0435ee888770bb6adb67b67a4eac6ab91e775cd9614015cad80278bee
+  normalized_sha256: sha256:f4bb8da0435ee888770bb6adb67b67a4eac6ab91e775cd9614015cad80278bee
+cas_ref: sha256:f4bb8da0435ee888770bb6adb67b67a4eac6ab91e775cd9614015cad80278bee
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeStateJoin.commitment_normative_state_join
+    target_statement_id: sha256:19372411fed45b756d1e107a4f523a4c668f34bee8bed9ff9635ae58ce2ea11e
+receipts:
+  unresolved_subitems: []

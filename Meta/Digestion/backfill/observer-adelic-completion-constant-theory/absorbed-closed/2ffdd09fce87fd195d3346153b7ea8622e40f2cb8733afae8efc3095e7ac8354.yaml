@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2ffdd09fce87fd195d3346153b7ea8622e40f2cb8733afae8efc3095e7ac8354
+  normalized_sha256: sha256:2ffdd09fce87fd195d3346153b7ea8622e40f2cb8733afae8efc3095e7ac8354
+cas_ref: sha256:2ffdd09fce87fd195d3346153b7ea8622e40f2cb8733afae8efc3095e7ac8354
+coverage_gids:
+  - gid: D5/S3/AnalyticClosure/LocalPrecisionUnit.local_precision_unit
+    target_statement_id: sha256:40e9d5ac477866cb596000297d8697ca0c938fa9599f640cefdbc9effa68a146
+receipts:
+  unresolved_subitems: []
