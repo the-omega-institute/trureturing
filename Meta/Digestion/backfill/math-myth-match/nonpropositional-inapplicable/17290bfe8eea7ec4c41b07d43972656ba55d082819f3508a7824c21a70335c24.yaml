@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17290bfe8eea7ec4c41b07d43972656ba55d082819f3508a7824c21a70335c24
+  normalized_sha256: sha256:17290bfe8eea7ec4c41b07d43972656ba55d082819f3508a7824c21a70335c24
+cas_ref: sha256:17290bfe8eea7ec4c41b07d43972656ba55d082819f3508a7824c21a70335c24
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 404.1（正概率延续的相容性）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 7527fa1298e615131375a59b6fca5ee8abbd4f791e748b60ace3a13352961780
+    next_atom_id: 92aa76dea7fb38842201c620863f0118d776ee6c02335a1c8c22ff92aaf687bb
