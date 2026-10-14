@@ -143,14 +143,17 @@ private theorem actual_surviving_path_partition {m : ℕ} (hm : 5 ≤ m) :
   let f : domainGraph (F2Domain m) →g
       SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m)) :=
     ⟨Subtype.val, fun h => h⟩
+  have hf : (f : {x : Configuration m // F2Domain m x} → Configuration m) =
+      Subtype.val := rfl
   have htransfer (z : {z // z ∈ pieces}) :
       ∀ e, e ∈ (z.val.walk.map f).edges → e ∈ (survivingGraph m).edgeSet := by
     intro e he
     have hmem : e ∈ (pieces.flatMap fun z => z.walk.edges).map
         (Sym2.map Subtype.val) := by
       rw [SimpleGraph.Walk.edges_map] at he
-      obtain ⟨e, he, rfl⟩ := List.mem_map.mp he
-      exact List.mem_map.mpr ⟨e, List.mem_flatMap.mpr ⟨z.val, z.property, he⟩, rfl⟩
+      obtain ⟨rawEdge, hraw, rfl⟩ := List.mem_map.mp he
+      exact List.mem_map.mpr
+        ⟨rawEdge, List.mem_flatMap.mpr ⟨z.val, z.property, hraw⟩, rfl⟩
     have hs := (hinventory e).mp hmem
     obtain ⟨⟨x, y⟩, rfl⟩ := Sym2.mk_surjective e
     change (survivingGraph m).Adj x y
@@ -166,26 +169,30 @@ private theorem actual_surviving_path_partition {m : ℕ} (hm : 5 ≤ m) :
     calc
       _ = pieces.attach.flatMap (fun z => z.val.walk.support.map Subtype.val) := by
         simp only [lifted, List.flatMap_map, lift, SimpleGraph.Walk.support_transfer,
-          SimpleGraph.Walk.support_map]
+          SimpleGraph.Walk.support_map, hf]
       _ = (pieces.attach.flatMap fun z => z.val.walk.support).map Subtype.val := by
         rw [List.map_flatMap]
-      _ = _ := by rw [← List.flatMap_map, List.attach_map_subtype_val]
+      _ = _ := by
+        rw [← List.flatMap_map Subtype.val (fun z => z.walk.support) pieces.attach,
+          List.attach_map_subtype_val]
   have he : (lifted.flatMap fun z => z.walk.edges) =
       (pieces.flatMap fun z => z.walk.edges).map (Sym2.map Subtype.val) := by
     calc
       _ = pieces.attach.flatMap (fun z => z.val.walk.edges.map (Sym2.map Subtype.val)) := by
         simp only [lifted, List.flatMap_map, lift, SimpleGraph.Walk.edges_transfer,
-          SimpleGraph.Walk.edges_map]
+          SimpleGraph.Walk.edges_map, hf]
       _ = (pieces.attach.flatMap fun z => z.val.walk.edges).map (Sym2.map Subtype.val) := by
         rw [List.map_flatMap]
-      _ = _ := by rw [← List.flatMap_map, List.attach_map_subtype_val]
+      _ = _ := by
+        rw [← List.flatMap_map Subtype.val (fun z => z.walk.edges) pieces.attach,
+          List.attach_map_subtype_val]
   have hn : (pieces.flatMap fun z => z.walk.support).Nodup :=
     List.nodup_iff_count_le_one.mpr (fun x => by rw [hcount x])
   refine ⟨lifted, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro z hz
     obtain ⟨z, _, rfl⟩ := List.mem_map.mp hz
     apply SimpleGraph.Walk.IsPath.mk'
-    simpa only [lift, SimpleGraph.Walk.support_transfer, SimpleGraph.Walk.support_map] using
+    simpa only [lift, SimpleGraph.Walk.support_transfer, SimpleGraph.Walk.support_map, hf] using
       (hpath z.val z.property).support_nodup.map Subtype.val_injective
   · rw [hs]
     exact hn.map Subtype.val_injective

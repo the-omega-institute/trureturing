@@ -12,7 +12,8 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.Walks.EdgeSlicingCutEndpoints
 
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
-open private Slicing Slicing.pieces cutWalk cutWalk_paths
+open private Slicing Slicing.finish Slicing.first Slicing.later Slicing.pieces
+  cutWalk cutWalk.eq_1 cutWalk.eq_2 cutWalk_paths
   cutWalk_support cutWalk_edges cutWalk_length
   from D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 
@@ -24,23 +25,23 @@ private def CutVertex {V : Type u} (E : Finset (Sym2 V)) (v : V) : Prop :=
 
 private theorem cutWalk_boundaries (E : Finset (Sym2 V)) {start finish : V}
     (p : G.Walk start finish) :
-    ((cutWalk E p).finish = finish ∨ CutVertex E (cutWalk E p).finish) ∧
-      ∀ z ∈ (cutWalk E p).later,
+    (Slicing.finish (cutWalk E p) = finish ∨ CutVertex E (Slicing.finish (cutWalk E p))) ∧
+      ∀ z ∈ Slicing.later (cutWalk E p),
         CutVertex E z.start ∧ (z.finish = finish ∨ CutVertex E z.finish) := by
   induction p with
   | nil =>
     refine ⟨Or.inl rfl, ?_⟩
-    simp only [cutWalk, List.not_mem_nil, false_implies, implies_true]
+    simp only [cutWalk.eq_1, List.not_mem_nil, false_implies, implies_true]
   | @cons a b c h p ih =>
     by_cases he : s(a, b) ∈ E
-    · rw [cutWalk, if_pos he]
+    · rw [cutWalk.eq_2, if_pos he]
       refine ⟨Or.inr ⟨s(a, b), he, Sym2.mem_mk_left _ _⟩, ?_⟩
       intro z hz
       simp only [List.mem_cons] at hz
       rcases hz with rfl | hz
       · exact ⟨⟨s(a, b), he, Sym2.mem_mk_right _ _⟩, ih.1⟩
       · exact ih.2 z hz
-    · rw [cutWalk, if_neg he]
+    · rw [cutWalk.eq_2, if_neg he]
       exact ih
 
 /-- Every actual sliced path starts and ends at actual cut-edge vertices.
@@ -61,7 +62,7 @@ theorem exists_cycle_edge_slicing_with_cut_endpoints [Fintype V]
   obtain ⟨e₀, he₀⟩ := hE
   obtain ⟨⟨x, y⟩, rfl⟩ := Sym2.mk_surjective e₀
   obtain ⟨q, hq, hqEdges⟩ := exists_open_cycle_at_edge p hp (hcuts _ he₀)
-  let pieces := (cutWalk E q).pieces
+  let pieces := Slicing.pieces (cutWalk E q)
   have hpaths : ∀ z ∈ pieces, z.walk.IsPath := by
     obtain ⟨hfirst, hlater⟩ := cutWalk_paths E q hq.isPath
     intro z hz
