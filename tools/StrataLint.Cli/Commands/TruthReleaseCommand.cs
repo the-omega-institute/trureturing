@@ -34,7 +34,7 @@ internal static class TruthReleaseCommand
                 () => repository.ReadRevisionProjection(identity.Revision, IsReleaseInput,
                     (path, hash) => contentHashes.Add(path, hash))));
             var report = RawLeanReportArtifact.ReadFile(
-                options.CandidateLeanReport, snapshot, out var rawLeanReportBytes);
+                options.CandidateLeanReport, snapshot, out var rawLeanReportBytes, validateMaterials: false);
             if (!TruthExportCommand.TryPrepareFrozenTruth(snapshot, report, out var prepared, out var rejection))
                 return new(2, string.Empty, $"TRUTH_RELEASE_REJECTED {rejection}\n");
 

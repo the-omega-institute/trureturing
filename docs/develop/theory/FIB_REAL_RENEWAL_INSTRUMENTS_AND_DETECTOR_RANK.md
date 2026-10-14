@@ -3884,3 +3884,322 @@ The external passages specified above support only these correspondences; no una
 This resolves the stated fixed-center portion of the unknown-$q$ boundary in Definition 19.5. Sharp composite constants, optimal expected stopping, optimal observer storage, efficient uniform preprocessing, and an efficient unknown-$q$ near-one acquisition rule remain unsettled here. The $s^{-21}$ mean describes only this deliberately small conditional statistic. The known-$q$ orders in (19.14) remain unchanged. Positive probabilities for every legal finite word also persist across arbitrary nuisance pairs, so Corollary 17.5's finite zero-error obstruction still applies; finite-confidence identification does not certify the model promise or exact probabilities. Producer dimension, physical precision, hidden-state comparison and thermodynamic resources retain their separate boundaries.
 
 ## 追加锚（本行以下为增补区）
+## 21. The joint delay boundary and its rank-one limiting consumer
+
+**Definition 21.1 (Fixed pair, normalizers and stationary laws).** Let $d_0,d_1$ be fixed globally nonnegative real polynomials, $d_0\ne0$. For $0<q<1$ and nonnegative integer gap counts, put
+
+$$
+P_i(k)=\sum_{t=0}^{k-1}d_i(t),\quad Z_i(q)=\sum_{k\ge0}q^kP_i(k),\quad
+\gamma_{i,q}(k)=\frac{q^kP_i(k)}{Z_i(q)}.
+$$
+
+Assume $P_0(0)=\cdots=P_0(h-1)=0$, $A=P_0(h)>0$ for an integer $h\ge2$, and $a=d_1(0)>0$. For $\varepsilon>0$ let $d_\varepsilon=d_0+\varepsilon d_1$, with the analogous symbols $P_\varepsilon,Z_\varepsilon,\gamma_{\varepsilon,q}$. Write
+
+$$
+R=\frac{Aq^{h-1}}{\varepsilon a},\qquad
+\alpha_R=\frac1{1+R},\qquad \beta_R=\frac R{1+R},\qquad
+\bar\gamma_R=\alpha_R\delta_1+\beta_R\delta_h.
+\tag{21.1}
+$$
+
+The equilibrium renewal law associated with a gap law $\gamma$ is written $\nu_\gamma$. Its interval mean and tails are
+
+$$
+\mu_\gamma=\sum_{k\ge0}(k+1)\gamma(k),\qquad S_\gamma(a)=\sum_{k\ge a}\gamma(k).
+\tag{21.2}
+$$
+
+For a word with at least one tick, the stationary cylinder convention is
+
+$$
+\nu_\gamma(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+=\frac{S_\gamma(a)S_\gamma(b)}{\mu_\gamma}
+ \prod_{j=1}^{r-1}\gamma(g_j),
+\tag{21.3}
+$$
+
+and
+
+$$
+\nu_\gamma(0^N)=\frac1{\mu_\gamma}
+ \sum_{k\ge N}(k-N+1)\gamma(k).
+\tag{21.4}
+$$
+
+Here an interval with gap count $k$ has length $k+1$; the factor $k+1$ in (21.4) is the stationary length bias. All word indices are nonnegative integers, the empty product is one, and $N=0$ denotes the empty word. This is the finite-mean discrete renewal convention of [Marzen–Crutchfield, *Informational and Causal Architecture of Discrete-Time Renewal Processes*, arXiv:1408.6876v2, Section II.A and Appendix A](https://arxiv.org/pdf/1408.6876v2): their zero-count law $F(k)$ and tail $w(a)$ are $\gamma(k)$ and $S_\gamma(a)$ here, and their count mean plus one is the interval mean $\mu_\gamma$.
+
+**Theorem 21.2 (Uniform first-hit scaling, stationary transfer and all cylinders).** For every integer $s\ge0$ there is a constant $C_s$, depending only on $(d_0,d_1)$, such that for $0<q\le\frac12$ and every $\varepsilon>0$,
+
+$$
+\sum_{k\ge0}(k+1)^s\left|\gamma_{\varepsilon,q}(k)-\bar\gamma_R(k)\right|\le C_s q.
+\tag{21.5}
+$$
+
+There is a constant $C$ such that, for every window length $W\ge1$,
+
+$$
+ d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon,q}}^{(W)},
+ \nu_{\bar\gamma_R}^{(W)}\right)\le\min\{1,CWq\}.
+\tag{21.6}
+$$
+
+The same $O(q)$ estimate holds for the stationary interval-and-phase law, its length marginal, the initial forward-wait law $S_\gamma(a)/\mu_\gamma$, and the means. In particular, for any $q_n\to0$, $\varepsilon_n>0$ and integers $W_n\ge1$ with $W_nq_n\to0$, (21.6) gives convergence in total variation to the moving $W_n$-window law at $R_n=Aq_n^{h-1}/(\varepsilon_na)$. Consequently, if $q_n,\varepsilon_n\downarrow0$ and $R_n\to R_0\in[0,\infty]$, then every fixed cylinder converges to the law in (21.3)–(21.4) with
+
+$$
+\bar S_R(a)=\alpha_R\mathbf 1_{a\le1}+\beta_R\mathbf 1_{a\le h},\qquad
+\bar\mu_R=2\alpha_R+(h+1)\beta_R
+=\frac{2+(h+1)R}{1+R}.
+\tag{21.7}
+$$
+
+At a stationary observation time the limiting interval type is length biased:
+
+$$
+\Pr(K^*=1)=\frac{2}{2+(h+1)R},\qquad
+\Pr(K^*=h)=\frac{(h+1)R}{2+(h+1)R}.
+\tag{21.8}
+$$
+
+For $N\ge0$ the limiting all-zero cylinder is
+
+$$
+\bar\nu_R(0^N)=\frac{\alpha_R(2-N)_++\beta_R(h+1-N)_+}{\bar\mu_R}.
+\tag{21.9}
+$$
+
+Proof. Polynomial growth gives, for fixed $s$, constants $B_s$ such that
+$P_i(k)\le B_s(k+1)^{B_s}$ after increasing $B_s$ if necessary. Since $P_0(h)=A$ and $P_1(1)=a$,
+
+$$
+Z_0(q)=Aq^hB_0(q),\qquad Z_1(q)=aqB_1(q),\qquad B_i(q)=1+O(q),
+\tag{21.10}
+$$
+
+where the $O(q)$ bounds hold together with every fixed polynomial moment: the terms after the first positive index are bounded by a polynomial times a geometric series. Therefore
+
+$$
+\sum_k(k+1)^s|\gamma_{0,q}(k)-\delta_h(k)|=O(q),\qquad
+\sum_k(k+1)^s|\gamma_{1,q}(k)-\delta_1(k)|=O(q).
+\tag{21.11}
+$$
+
+Moreover
+
+$$
+\gamma_{\varepsilon,q}=\widetilde\beta_R\gamma_{0,q}+(1-\widetilde\beta_R)\gamma_{1,q},\qquad
+\widetilde\beta_R=\frac{RB_0(q)}{RB_0(q)+B_1(q)}.
+\tag{21.12}
+$$
+
+The factors $B_i$ stay between two positive constants for $q\le\frac12$, and
+$|\widetilde\beta_R-\beta_R|\le Cq$ uniformly for $R\ge0$ (multiply the difference by the two denominators; the remaining factor is $R/(R+1)^2\le1/4$). Combining this with (21.11) proves (21.5).
+
+The stationary interval-and-phase law assigns mass $\gamma(k)/\mu_\gamma$ to each phase $0\le a\le k$. Its total variation distance is bounded by the $s=1$ case of (21.5), and $|\mu_{\gamma_{\varepsilon,q}}-\bar\mu_R|=O(q)$. Summing phases gives the same bound for the length marginal. The forward-wait law has masses $S_\gamma(a)/\mu_\gamma$; summing $|S_\gamma-S_{\bar\gamma_R}|$ costs at most the first moment in (21.5), and the normalizer difference costs the same amount. Couple the initial interval and phase maximally, then couple each subsequent gap maximally and independently. A length-$W$ word uses at most $W$ post-tick gap draws, so a union bound gives (21.6). This also proves the stated $W=o(q^{-1})$ limit.
+
+Equations (21.7)–(21.9) follow by inserting the two-point law into (21.2)–(21.4). The interval probabilities in (21.8) are $(k+1)\bar\gamma_R(k)/\bar\mu_R$, which proves the length-bias claim. At $R=0$ the limit is $\delta_1$; at $R=\infty$ read $(\alpha_R,\beta_R)=(0,1)$ and the limit is $\delta_h$. For the delayed square of Section 14, $h=m+1$, $A=(m!)^2$ and $a=1$, so $R=(m!)^2q^m/\varepsilon$: the three regimes $\varepsilon/q^m\to\infty$, $\varepsilon/q^m\to c\in(0,\infty)$ and $\varepsilon/q^m\to0$ give respectively $\delta_1$, $c\delta_1/(c+(m!)^2)+(m!)^2\delta_h/(c+(m!)^2)$, and $\delta_h$. $\square$
+
+**Theorem 21.3 (Exact four-window response and the boundary scale).** Put
+
+$$
+M_i(q)=\sum_{k\ge0}(k+1)q^kP_i(k),\qquad E=\{1010,0101\}.
+$$
+
+Then
+
+$$
+\nu_{\gamma_{\varepsilon,q}}^{(4)}(E)
+=\frac{2\varepsilon aq}{M_0(q)+\varepsilon M_1(q)},\qquad
+\left.\partial_\varepsilon\nu_{\gamma_{\varepsilon,q}}^{(4)}(E)\right|_{0+}
+=\frac{2aq}{M_0(q)}
+=\frac{2a}{(h+1)A}q^{-(h-1)}(1+O(q)).
+\tag{21.13}
+$$
+
+There is a constant $C$ such that
+
+$$
+\left|d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon,q}}^{(4)},
+\nu_{\gamma_{0,q}}^{(4)}\right)-\frac{2}{2+(h+1)R}\right|\le Cq.
+\tag{21.14}
+$$
+
+For every pair of sequences $q_n\in(0,1)$ and $\varepsilon_n>0$ with $q_n\to0$ and $\varepsilon_n\to0$, put $R_n=Aq_n^{h-1}/(\varepsilon_na)$. Then
+
+$$
+\left[\ \forall W\in\mathbb N_{\ge1},\quad
+ d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon_n,q_n}}^{(W)},
+ \nu_{\gamma_{0,q_n}}^{(W)}\right)\longrightarrow0\ \right]
+\quad\Longleftrightarrow\quad
+\frac{\varepsilon_n}{q_n^{h-1}}\longrightarrow0.
+\tag{21.15}
+$$
+
+For $0<R<\infty$, the endpoint mixture identity (21.16) for four-symbol marginals does not extend to a mixture of the whole stationary endpoint processes: their five-symbol cylinder $10101$ differs.
+
+Proof. By (21.3), each word in $E$ has probability $\gamma_{\varepsilon,q}(1)/\mu_{\gamma_{\varepsilon,q}}$; $P_\varepsilon(1)=\varepsilon a$ and $\mu_{\gamma_{\varepsilon,q}}=(M_0+\varepsilon M_1)/(Z_0+\varepsilon Z_1)$, giving (21.13). Also $M_0(q)=(h+1)Aq^h(1+O(q))$.
+
+Let $\nu_1$ and $\nu_h$ be the stationary periodic laws with deterministic gap counts $1$ and $h$. Formula (21.3)–(21.4), checked according to the number of ticks in a four-symbol word, gives
+
+$$
+\nu_{\bar\gamma_R}^{(4)}
+=\frac{2}{2+(h+1)R}\nu_1^{(4)}
+ +\frac{(h+1)R}{2+(h+1)R}\nu_h^{(4)}.
+\tag{21.16}
+$$
+
+Indeed $\nu_1^{(4)}$ is supported on $E$, while every word outside $E$ has the $\nu_h$ probability multiplied by $(h+1)R/[2+(h+1)R]$; this includes the all-zero word through (21.9). The supports of $\nu_1^{(4)}$ and $\nu_h^{(4)}$ are disjoint, so the distance in (21.16) from $\nu_h^{(4)}$ is exactly $2/[2+(h+1)R]$. Apply (21.6) to the perturbed law and (21.5) with $d_0$ to the boundary law to obtain (21.14).
+
+To prove the forward implication in (21.15), suppose $\varepsilon_n/q_n^{h-1}\to0$, so $R_n\to\infty$, and fix any $W\ge1$. The boundary estimate (21.11), with its first moment, gives
+$d_{\rm TV}(\nu_{\gamma_{0,q_n}}^{(W)},\nu_h^{(W)})\le C_0Wq_n$
+by the interval-and-phase and subsequent-gap coupling in the proof of Theorem 21.2. Each length-$W$ cylinder in (21.3)–(21.4) for $\bar\gamma_R$ is a finite product or sum of $\alpha_R,\beta_R$, divided by $\bar\mu_R\ge2$. Thus it is continuous at $(\alpha_R,\beta_R)=(0,1)$ and converges to the corresponding $\nu_h$ cylinder as $R\to\infty$. Since $\{0,1\}^W$ is finite, this is convergence in total variation. Together with the actual general-window bound (21.6), the triangle inequality gives
+
+$$
+\begin{aligned}
+ d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon_n,q_n}}^{(W)},
+ \nu_{\gamma_{0,q_n}}^{(W)}\right)
+ &\le (C+C_0)Wq_n+
+ d_{\rm TV}\!\left(\nu_{\bar\gamma_{R_n}}^{(W)},\nu_h^{(W)}\right)
+ \longrightarrow0.
+\end{aligned}
+$$
+
+Conversely, agreement on every fixed window includes $W=4$. Equation (21.14) then forces $2/[2+(h+1)R_n]\to0$, hence $R_n\to\infty$, which is equivalent to $\varepsilon_n/q_n^{h-1}\to0$ because $A,a>0$.
+
+For the asserted failure of process identification, (21.3) gives, when $0<R<\infty$,
+
+$$
+\bar\nu_R(10101)=\frac1{(1+R)[2+(h+1)R]},
+$$
+whereas the endpoint process mixture with the weights forced by (21.16) assigns $1/[2+(h+1)R]$ to this word: $\nu_1(10101)=1/2$ and $\nu_h(10101)=0$. The two quantities differ, proving the claim. $\square$
+
+**Proposition 21.4 (Noncommuting limits, endpoint exclusion and the varying-family counterexample).** For each fixed $\varepsilon>0$ and $W\ge4$,
+
+$$
+\sup_{0<q<1}d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon,q}}^{(W)},
+\nu_{\gamma_{0,q}}^{(W)}\right)=1,
+\tag{21.17}
+$$
+
+and the supremum is not attained at positive $q$. Four symbols are minimal for this supremum-one conclusion: as $q\downarrow0$ the three-window distance tends to $h/(h+1)<1$, because both endpoint laws give positive mass to $010$; as $q\uparrow1$ both three-window laws tend to $\delta_{000}$. For fixed positive $q$ the two laws are continuous in $\varepsilon$ at zero.
+
+Coefficientwise convergence of a varying perturbation is insufficient without a uniform envelope. Specifically, with
+
+$$
+ d_0(t)=t^2(t-1)^2,\qquad d_{1,\varepsilon}(t)=1+\varepsilon^{-3/4}t^2,\qquad q=\frac{\sqrt\varepsilon}{2},
+$$
+
+one has $h=3$, $A=4$, $a=1$, $R=1$, but $\gamma_{\varepsilon,q}\to\delta_2$ rather than $(\delta_1+\delta_3)/2$.
+
+Proof. Since $d_\varepsilon(0)>0$, the perturbed endpoint as $q\downarrow0$ is the deterministic gap-one law; the boundary endpoint is the deterministic gap-$h$ law. Their four-symbol supports are disjoint, proving (21.17) by the limit. At every positive $q$, both laws assign positive mass to $0^W$, so their distance is strictly below one. The fixed-$q$ continuity is immediate from the positive normalizers. For $W=3$, the endpoint supports share $010$ with boundary mass $1/(h+1)$, giving distance $h/(h+1)$; the $q\uparrow1$ limit follows from the diverging interval mean. Extending continuously to the two endpoints and using positivity in the interior gives a maximum below one for each fixed pair.
+
+For the varying family, the first three raw weights satisfy
+
+$$
+qP_\varepsilon(1)=\Theta(\varepsilon^{3/2}),\quad
+q^2P_\varepsilon(2)=\tfrac14\varepsilon^{5/4}+O(\varepsilon^2),\quad
+q^3P_\varepsilon(3)=\Theta(\varepsilon^{3/2}).
+$$
+For $k\ge3$, polynomial summation gives
+$P_\varepsilon(k)\le C(k+1)^5+C\varepsilon^{1/4}(k+1)^3+C\varepsilon(k+1)$, so
+$\sum_{k\ge3}q^kP_\varepsilon(k)=O(\varepsilon^{3/2})$. The $k=2$ term therefore dominates the normalizer, proving convergence to $\delta_2$. $\square$
+
+**Definition 21.5 (The limiting two-gap law).** Fix $h\ge2$ and $0\le\alpha<1$, put $\beta=1-\alpha>0$, and let
+
+$$
+\gamma^*(1)=\alpha,\qquad \gamma^*(h)=\beta,\qquad \gamma^*(k)=0\ (k\notin\{1,h\}),
+$$
+
+with $S^*(a)=\sum_{k\ge a}\gamma^*(k)$ and
+
+$$
+\mu^*=2\alpha+(h+1)\beta.
+\tag{21.18}
+$$
+
+**Theorem 21.6 (A complete rank-one instrument on $\mathbb C^{h+1}$).** On the orthonormal basis $e_0,\ldots,e_h$, set $x=e_0$, $f=e_h$, and define the real matrix $C$ by
+
+$$
+Ce_0=\sqrt\alpha\,e_h+\sqrt\beta\,e_1,
+\qquad Ce_j=e_{j+1}\ (1\le j<h),
+\qquad Ce_h=0.
+\tag{21.19}
+$$
+
+Then $C^{h+1}=0$, $|f^*C^kx|^2=\gamma^*(k)$ for every $k\ge0$, and the vectors $C^kx$ for $0\le k\le h$ span $\mathbb C^{h+1}$. The Gramian
+
+$$
+Q=\sum_{k=0}^{h}(C^*)^kff^*C^k
+$$
+
+is positive definite and $x^*Qx=1$. With $G=Q^{1/2}$, define
+
+$$
+\xi=Gx,\quad \tau=\xi\xi^*,\quad E=G^{-1}ff^*G^{-1},\quad
+L=GCG^{-1},\quad J=\xi f^*G^{-1},
+\tag{21.20}
+$$
+
+and $\Phi(X)=LXL^*$, $\Psi(X)=JXJ^*$. Then
+
+$$
+L^*L+J^*J=I,\qquad
+\Psi(X)=\tau\operatorname{Tr}(EX),\qquad
+\Psi\Phi^k(\tau)=\gamma^*(k)\tau.
+\tag{21.21}
+$$
+
+The series $R_0=\sum_{a=0}^{h}\Phi^a(\tau)$ is positive definite. Thus $\rho_*=R_0/\mu^*$ is a faithful mixed invariant density, and its cylinders are exactly (21.3)–(21.4) with $\gamma=\gamma^*$.
+
+Proof. The path in (21.19) gives $C^kx=\sqrt\beta e_k$ for $2\le k\le h$, while $Cx=\sqrt\alpha e_h+\sqrt\beta e_1$; hence the stated weights and nilpotence. The rows $f^*C^k$, $0\le k\le h$, force a vector in the kernel of $Q$ to have first coordinate zero from $k=h$, last coordinate zero from $k=0$, and then every intermediate coordinate from the remaining rows. Thus $Q>0$. The same path vectors span: $C^hx=\sqrt\beta e_h$ isolates $e_h$, and then $Cx$ isolates $e_1$; the other $C^kx$ give $e_k$.
+
+The finite Gramian identity $Q-C^*QC=ff^*$, the completion mechanism of Theorem 2.1, gives (21.21) after conjugation by $G^{-1}$. Since $x^*Qx=|f^*Cx|^2+|f^*C^hx|^2=\alpha+\beta=1$, $\xi$ is normalized. The reset formula follows from the outer product defining $J$. Reachability of the $C^kx$ gives positive definiteness of $R_0$, and telescoping gives $\operatorname{Tr}\Phi^a(\tau)=S^*(a)$ and $\operatorname{Tr}R_0=\mu^*$. More explicitly, $\Phi(R_0)=R_0-\tau$ and $\Psi(R_0)=\sum_k\gamma^*(k)\tau=\tau$, so $R_0/\mu^*$ is invariant. Applying $\Psi\Phi^a$ to this series gives the first factor $S^*(a)/\mu^*$, every later tick multiplies by $\gamma^*$ and resets to $\tau$, and a final zero run contributes $S^*(b)$. With no tick,
+$\operatorname{Tr}\Phi^N(\rho_*)=(\mu^*)^{-1}\sum_{a\ge0}S^*(N+a)=(\mu^*)^{-1}\sum_{k\ge N}(k-N+1)\gamma^*(k)$,
+which is (21.4). Thus (21.3) and (21.4) follow directly, including the empty word. The ordered CP word traces use the stationary convention of [Monras–Beige–Wiesner, *Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, equations (25)–(27)](https://arxiv.org/pdf/1002.2337v2). Here $\rho_*$ is the faithful mixed initialization and $\tau$ is the pure tick posterior. Every operator acts on the full complex matrix algebra; the real entries do not restrict the input states. $\square$
+
+**Theorem 21.8 (Exact limiting memory minimum and the endpoint compression).** Any finite homogeneous binary CP instrument on a complex memory, with any mixed initial density and with every persistent quantum, classical or controller register counted in that memory, that reproduces all stationary cylinders of $\gamma^*$ has dimension at least $h+1$. The instrument in Theorem 21.6 attains this bound and has no-tick Choi rank one and tick Choi rank one. Thus the limiting law has exact memory minimum $h+1$ and no-tick Choi minimum one.
+
+For $\alpha=1$ the law is $\delta_1$; it has the two-dimensional realization
+
+$$
+C=e_1e_0^*,\quad f=e_1,\quad x=e_0,\quad
+L=C,\quad J=e_0e_1^*,\quad \tau=e_0e_0^*,\quad \rho_*=\tfrac12I_2,
+\tag{21.22}
+$$
+
+with both Choi ranks one, and dimension and no-tick Choi rank are minimal.
+
+For the fixed-polynomial family of Definition 21.1, along every joint sequence with $q_n,\varepsilon_n\to0$ and $R_n\to R_0\in[0,\infty]$, the stationary output limit therefore has no-tick Choi minimum one and memory minimum $h+1$ when $R_0>0$, and memory minimum two when $R_0=0$. In contrast, at every finite $0<q<1$ and $\varepsilon>0$ its no-tick Choi minimum is two, as for every polynomial law of Definition 16.5. These minima use the full competitor class of Definition 16.5, with the target cylinders replaced by those of $\gamma^*$ for the limit; all persistent registers and retained records influencing later outputs are counted.
+
+Proof. In a competitor write its branches as $\widehat\Phi,\widehat\Psi$ and initial density $\widehat\rho$. The one-tick probability is $\nu=1/\mu^*>0$. Its actual post-tick state
+$\tau_0=\widehat\Psi(\widehat\rho)/\nu$ is a density, and the stationary cylinders give, without invariance or a reset assumption,
+
+$$
+\operatorname{Tr}\widehat\Phi^k(\tau_0)
+=\frac{\Pr(1,0^k)}{\Pr(1)}=S^*(k).
+\tag{21.23}
+$$
+
+For $0\le\alpha<1$, (21.23) gives positive survival $S^*(h)=\beta$ and extinction $S^*(h+1)=0$ from this actual posterior. The dimension step is the classical finite-termination mechanism: [Yu–Ying, *Reachability and Termination Analysis of Concurrent Quantum Programs*, arXiv:1206.1935v1, Theorem 5, proof (1), pp. 10–11](https://arxiv.org/pdf/1206.1935v1), proves termination within the Hilbert-space dimension, including mixed inputs, for the sequential program $F(X)=\mathcal E(M_1XM_1^*)$. Its program interface uses a CPTP step $\mathcal E$ after a continuation measurement. The following kernel argument supplies the CP statement needed here without requiring the no-tick branch itself to be trace preserving.
+
+Write $\widehat\Phi(X)=\sum_iK_iXK_i^*$ on $M_D(\mathbb C)$, put $H=h+1$, $Y_j=(\widehat\Phi^*)^j(I)$ and $V_j=\ker Y_j$. Positivity gives
+$x\in V_{j+1}$ if and only if every $K_ix$ belongs to $V_j$. Starting from $V_0=\{0\}$, this identity implies $V_j\subseteq V_{j+1}$ by induction, and equality at one step makes the chain constant thereafter. Also
+$\operatorname{Tr}\widehat\Phi^j(\tau_0)=\operatorname{Tr}(Y_j\tau_0)=0$
+is equivalent to $\operatorname{ran}\tau_0\subseteq V_j$: both operators are positive and the trace is $\|Y_j^{1/2}\tau_0^{1/2}\|_{\rm HS}^2$. Thus (21.23) puts the actual posterior support in $V_H$ but not in $V_{H-1}$. No earlier equality is possible, so
+
+$$
+0=\dim V_0<\dim V_1<\cdots<\dim V_H\le D,
+$$
+
+which proves $D\ge h+1$ for arbitrary mixed, noninvariant, nonreset competitors.
+
+The nilpotent-map formulation of this same intermediate step is [Bhat–Mallick, *Nilpotent Completely Positive Maps*, arXiv:1310.0591v1, Proposition 2.2 and Corollary 2.5](https://arxiv.org/pdf/1310.0591v1): a CP map is nilpotent of order at most the Hilbert-space dimension, provided it is nilpotent on the whole space in question. To verify that premise here, let
+$U=\operatorname{span}\{K_w\operatorname{ran}\tau_0: w\text{ a finite no-tick Kraus word}\}$,
+including the empty word. The equality
+$0=\operatorname{Tr}\widehat\Phi^H(\tau_0)=\sum_{|w|=H}\|K_w\tau_0^{1/2}\|_{\rm HS}^2$
+shows that every length-$H$ product kills $\operatorname{ran}\tau_0$, and consequently every longer product does too. Hence $U$ is invariant under all $K_i$, is spanned by words of length less than $H$, and every length-$H$ product kills $U$. The restricted CP map on $M(U)$, with Kraus operators $K_i|_U$, is therefore nilpotent; its order is exactly $H$ because $\widehat\Phi^{H-1}(\tau_0)\ne0$. The cited corollary applies on $U$, giving $H\le\dim U\le D$. The unused ambient no-tick map need not be nilpotent. Neither trace preservation nor a pure posterior is needed for this restriction argument.
+
+Theorem 21.6 gives the upper bound and has one nonzero no-tick Kraus operator and one rank-one globally resetting tick, so both Choi ranks are one. Both branches have positive output probability and therefore cannot have Choi rank zero. For $\alpha=1$, the same kernel argument uses $S^*(1)=1$ and $S^*(2)=0$, with $H=2$, giving dimension at least two. The matrices in (21.22) satisfy $L^*L+J^*J=I_2$, and direct iteration gives the deterministic gap count one, $R_0=I_2$ and the faithful mixed stationary density $\rho_*=I_2/2$. A positive no-tick probability forces Choi rank at least one, so the endpoint minima follow.
+
+Finally, $d_\varepsilon=d_0+\varepsilon d_1$ is a nonzero globally nonnegative polynomial for every $\varepsilon>0$. At each $0<q<1$, Theorem 16.9 applies with exactly the mixed-state competitor interface of Definition 16.5 and gives no-tick Choi minimum two. This reuses that theorem's positive-effect, mixed-seed recurrence parity obstruction, inherited from Theorem 6.3 and [Chapter 29, equations (29.3)–(29.6)](FIB_LEGAL_EDGE_LOAD_PRODUCT_UPPER_EDGE_FIELD_STABILITY_AND_PHASE_CUT_RANK.md#29-the-original-sns-needs-two-unresolved-no-tick-kraus-alternatives), together with the attaining construction of Theorems 16.7–16.8; it also applies to every other polynomial law of Definition 16.5. By Theorem 21.2 the joint output limit has $\alpha=1/(1+R_0)$, interpreted as zero at $R_0=\infty$. Applying the two cases above gives the stated limiting memory minima and no-tick Choi minimum one. The convergence used here is convergence of stationary classical finite-cylinder probabilities; the finite-parameter and limiting instruments are separate realizations of those laws. $\square$
+
+## 追加锚（本行以下为增补区）

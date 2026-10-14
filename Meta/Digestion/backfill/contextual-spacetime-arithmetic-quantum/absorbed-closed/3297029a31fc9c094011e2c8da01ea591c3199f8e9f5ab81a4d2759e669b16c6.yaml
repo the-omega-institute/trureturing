@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3297029a31fc9c094011e2c8da01ea591c3199f8e9f5ab81a4d2759e669b16c6
+  normalized_sha256: sha256:3297029a31fc9c094011e2c8da01ea591c3199f8e9f5ab81a4d2759e669b16c6
+cas_ref: sha256:3297029a31fc9c094011e2c8da01ea591c3199f8e9f5ab81a4d2759e669b16c6
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
+    target_statement_id: sha256:08c3e619c36fce57b183668a57e54b62279d32f9dc8fd7874458f5af7e0d8cbe
+receipts:
+  unresolved_subitems: []

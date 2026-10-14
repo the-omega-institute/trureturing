@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2900f4eac022adf2f748e69e9bfa85516bd50312697ac3ba8c2947de8c61e85f
+  normalized_sha256: sha256:2900f4eac022adf2f748e69e9bfa85516bd50312697ac3ba8c2947de8c61e85f
+cas_ref: sha256:2900f4eac022adf2f748e69e9bfa85516bd50312697ac3ba8c2947de8c61e85f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive_card
+    target_statement_id: sha256:82e0f0b6e27d98774dd9a6788cad29c628ef69b183945f0c94169c2324f2c988
+receipts:
+  unresolved_subitems: []
