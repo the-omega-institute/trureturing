@@ -149,3 +149,4 @@ The real measure of a singleton is its product weight.
 - Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.charFun_limit_uniform_gaussian_cdf`
 - Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.monotone_cdf_pointwise_to_uniform`
 - Truth anchor: `D5/S3/Analytic/Probability/UniformCDFConvergence.normalized_bernoulli_product_envelope`
+- Dependency: [D5/S3/Zeros/Endpoints/BernoulliBridgeVariance](../../Zeros/Endpoints/BernoulliBridgeVariance.md)
