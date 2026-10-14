@@ -257,7 +257,7 @@ def consumer_context(root):
 def download(repository, artifact_id, destination):
     with destination.open("wb") as stream:
         subprocess.run(["gh", "api", "repos/" + repository + "/actions/artifacts/" + str(artifact_id) + "/zip"],
-                       stdout=stream, check=True, timeout=600)
+                       stdout=stream, check=True)
 
 
 def validate_preparation(root, value, context, artifact):
