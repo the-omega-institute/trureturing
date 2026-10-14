@@ -257,7 +257,7 @@ private lemma flip_purity_homogeneous (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     linarith
   rw [vlen, Real.sq_sqrt (Finset.sum_nonneg fun i _ => sq_nonneg _)]
   simp only [flipped.eq_def, flipMatrix.eq_def, spin, sigma_succ, delta.eq_def,
-    corr, blochB, pauli,
+    corr.eq_def, blochB.eq_def, pauli.eq_def,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_2,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_3,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_4,
@@ -614,7 +614,7 @@ private lemma tight_readouts (t s : ℝ) (ht₁ : t ≤ 1)
   have hentry : tightState t s = R := by
     ext k l
     simp only [tightState.eq_def, Matrix.add_apply, Matrix.smul_apply,
-      vecMulVec_apply, Pi.star_apply, smul_eq_mul, tightVector.eq_def, ev]
+      vecMulVec_apply, Pi.star_apply, smul_eq_mul, tightVector.eq_def, ev.eq_def]
     rcases k with ⟨a,b⟩; rcases l with ⟨c,d⟩
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
       norm_num [R, Complex.star_def, Pi.single_apply, hxC, hyC]
@@ -624,9 +624,9 @@ private lemma tight_readouts (t s : ℝ) (ht₁ : t ≤ 1)
   all_goals try (funext i; fin_cases i)
   all_goals try (funext j; fin_cases j)
   all_goals
-    simp only [blochA, blochB, corr, Matrix.trace, Matrix.diag, Matrix.mul_apply,
-      Fintype.sum_prod_type, Fin.sum_univ_two, kronecker_apply]
-    norm_num [R, pauli,
+    simp only [blochA.eq_def, blochB.eq_def, corr.eq_def, Matrix.trace, Matrix.diag,
+      Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two, kronecker_apply]
+    norm_num [R, pauli.eq_def,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_2,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_3,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix.eq_4,
