@@ -6,6 +6,185 @@ namespace StrataLint.Tests;
 
 public sealed partial class FrozenLedgerTests
 {
+
+    [Theory]
+    [InlineData("namespace Wrong", "", "a_iff", "Wrong.a_iff")]
+    [InlineData("end N", "N", "N.a_iff", "a_iff")]
+    public void MathlibReanchorExtIffKeepsQuotedScopesOutOfItsName(
+        string quotedCommand, string scope, string realName, string falseName)
+    {
+        var source = (scope.Length == 0 ? "" : "namespace " + scope + "\n")
+            + "open Lean\ndef quoted : MacroM (TSyntax `command) := `(command|\n"
+            + quotedCommand + ")\n@[ext] theorem a (x y : Nat) (h : x = y) : x = y := h\n"
+            + (scope.Length == 0 ? "" : "end " + scope + "\n");
+        var realRoot = ModuleWithReport("A", source, "old actual ext iff", declarations: [realName]);
+        var accepted = ValidateMathlibReanchor([realRoot, Module("B")],
+            [realRoot with { StatementMaterial = "new actual ext iff" }, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+        Assert.True(accepted.Authorized);
+        var falseRoot = ModuleWithReport("A", source, "old false ext iff", declarations: [falseName]);
+        var rejected = ValidateMathlibReanchor([falseRoot, Module("B")],
+            [falseRoot with { StatementMaterial = "new false ext iff" }, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+        Assert.False(rejected.Authorized);
+    }
+
+    [Fact]
+    public void MathlibReanchorExtIffRefusesDeclarationsInsideCommandQuotations()
+    {
+        const string source = "open Lean\ndef quoted : MacroM (TSyntax `command) := `(command|\n"
+            + "  @[ext]\n  theorem a (x y : Nat) (h : x = y) : x = y := h)\n"
+            + "theorem real : True := by trivial\n";
+        var recorded = ImmutableArray.Create(new FrozenDeclaration("ns(n0,5:a_iff)", "theorem"));
+        var snapshot = Snapshot([TextFile(PathFor("A"), source)]);
+
+        Assert.Throws<LeanSourceExtractionException>(() => LeanSourceCatalog.Parse(snapshot)
+            .ExtractPropositionSource(RepoPathFor("A"), recorded));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MathlibReanchorExtIffRejectsVisibilityMismatch(bool privateParent)
+    {
+        var source = "namespace N\n@[ext] " + (privateParent ? "private " : "")
+            + "theorem a (x y : Nat) (h : x = y) : x = y := h\nend N\n";
+        const string privateKey = "ns(ns(nn(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S0),7:Carrier),1:A),0),1:N),5:a_iff)";
+        const string publicKey = "ns(ns(n0,1:N),5:a_iff)";
+        var recorded = ImmutableArray.Create(new FrozenDeclaration(privateParent ? publicKey : privateKey, "theorem"));
+        var snapshot = Snapshot([TextFile(PathFor("A"), source)]);
+
+        Assert.Throws<LeanSourceExtractionException>(() => LeanSourceCatalog.Parse(snapshot)
+            .ExtractPropositionSource(RepoPathFor("A"), recorded));
+    }
+
+    [Theory]
+    [InlineData("@[ext] ", "", "unchanged", true)]
+    [InlineData("@[ext]\n", "", "unchanged", true)]
+    [InlineData("@[ext] ", "N", "unchanged", true)]
+    [InlineData("@[ext]\n", "N", "unchanged", true)]
+    [InlineData("@[simp, ext] ", "N", "unchanged", true)]
+    [InlineData("@[simp]\n@[ext]\n", "N", "unchanged", true)]
+    [InlineData("@[ext] ", "N", "premise", false)]
+    [InlineData("@[ext]\n", "N", "result", false)]
+    [InlineData("@[ext] ", "N", "removed", false)]
+    [InlineData("@[ext] ", "N", "disabled", false)]
+    public void MathlibReanchorExtIffBindsTheAttributedParent(
+        string attribute, string scope, string mutation, bool authorized)
+    {
+        var source = (scope.Length == 0 ? "" : "namespace " + scope + "\n")
+            + attribute + "theorem a (x y : Nat) (h : x = y) : x = y := h\n"
+            + (scope.Length == 0 ? "" : "end " + scope + "\n");
+        var root = ModuleWithReport("A", source, "old ext iff",
+            declarations: [scope.Length == 0 ? "a_iff" : scope + ".a_iff"]);
+        var candidate = root with
+        {
+            Source = mutation switch
+            {
+                "premise" => source.Replace("(h : x = y)", "(h : True)", StringComparison.Ordinal),
+                "result" => source.Replace(": x = y := h", ": True := by trivial", StringComparison.Ordinal),
+                "removed" => source.Replace(attribute, "", StringComparison.Ordinal),
+                "disabled" => source.Replace("@[ext]", "@[ext (iff := false)]", StringComparison.Ordinal),
+                _ => source,
+            },
+            StatementMaterial = "new ext iff",
+        };
+        var result = ValidateMathlibReanchor([root, Module("B")], [candidate, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(authorized, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData(false, true)]
+    [InlineData(false, false)]
+    [InlineData(true, true)]
+    [InlineData(true, false)]
+    public void MathlibReanchorExtIffTracksTheParentsDefinitionClosure(bool transitive, bool unchanged)
+    {
+        var source = "import D5.S0.Carrier.B\n@[ext] theorem a (x y : Nat) "
+            + "(h : x = y) (hs : x = D5.S0.Carrier.seed) : x = y := h\n";
+        var root = ModuleWithReport("A", source, "old ext iff", declarations: ["a_iff"])
+            with { Imports = ["B"] };
+        var dependency = ModuleWithReport("B",
+            (transitive ? "import D5.S0.Carrier.C\n" : "")
+                + "namespace D5.S0.Carrier\ndef seed : Nat := " + (transitive ? "baseValue" : "7")
+                + "\nend D5.S0.Carrier\n", "seed", declarations: ["D5.S0.Carrier.seed"], kind: "def")
+            with { Imports = transitive ? ["C"] : [] };
+        var leaf = ModuleWithReport("C", "namespace D5.S0.Carrier\ndef baseValue : Nat := 7\n"
+            + "end D5.S0.Carrier\n", "base", declarations: ["D5.S0.Carrier.baseValue"], kind: "def");
+        var result = ValidateMathlibReanchor([root, dependency, leaf],
+            [root with { StatementMaterial = "new ext iff" }, dependency with
+            {
+                Source = transitive || unchanged ? dependency.Source
+                    : dependency.Source.Replace("7", "8", StringComparison.Ordinal),
+            }, leaf with
+            {
+                Source = !transitive || unchanged ? leaf.Source
+                    : leaf.Source.Replace("7", "8", StringComparison.Ordinal),
+            }], ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.Equal(unchanged, result.Authorized);
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("quoted")]
+    [InlineData("intervening-command")]
+    [InlineData("different-parent")]
+    [InlineData("disabled")]
+    [InlineData("wrong-namespace")]
+    [InlineData("trailing-segment")]
+    [InlineData("wrong-kind")]
+    public void MathlibReanchorExtIffRefusesUnboundRoots(string mutation)
+    {
+        const string declaration = "theorem a (x y : Nat) (h : x = y) : x = y := h\n";
+        var source = "namespace N\n" + (mutation switch
+        {
+            "missing" => "",
+            "quoted" => "def marker : String := \"ext\"\n",
+            "intervening-command" => "@[ext]\nset_option autoImplicit false\n",
+            "different-parent" => "@[ext] theorem b (x y : Nat) (h : x = y) : x = y := h\n",
+            "disabled" => "@[ext (iff := false)] ",
+            _ => "@[ext] ",
+        }) + declaration + "end N\n";
+        var root = ModuleWithReport("A", source, "old unbound ext iff", declarations: [mutation switch
+        {
+            "wrong-namespace" => "Other.a_iff",
+            "trailing-segment" => "N.a_iff.tail",
+            _ => "N.a_iff",
+        }], kind: mutation == "wrong-kind" ? "def" : "theorem");
+        var result = ValidateMathlibReanchor([root, Module("B")],
+            [root with { StatementMaterial = "new unbound ext iff" }, Module("B")],
+            ["A"], ReanchorEnvironment.PinUpgrade);
+
+        Assert.False(result.Authorized);
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void MathlibReanchorExtIffPreservesTypedPrivateModuleBinding(bool wrongModule, bool stringCounter)
+    {
+        const string source = "namespace N\n@[ext] private theorem a (x y : Nat) "
+            + "(h : x = y) : x = y := h\nend N\n";
+        const string module = "ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S0),7:Carrier),1:A)";
+        var prefix = wrongModule ? module.Replace("1:A", "1:B", StringComparison.Ordinal) : module;
+        prefix = stringCounter ? "ns(" + prefix + ",1:0)" : "nn(" + prefix + ",0)";
+        var recorded = ImmutableArray.Create(new FrozenDeclaration("ns(ns(" + prefix + ",1:N),5:a_iff)", "theorem"));
+        var snapshot = Snapshot([TextFile(PathFor("A"), source)]);
+        if (wrongModule || stringCounter)
+        {
+            Assert.Throws<LeanSourceExtractionException>(() => LeanSourceCatalog.Parse(snapshot)
+                .ExtractPropositionSource(RepoPathFor("A"), recorded));
+        }
+        else
+        {
+            Assert.NotEmpty(LeanSourceCatalog.Parse(snapshot).ExtractPropositionSource(RepoPathFor("A"), recorded));
+        }
+    }
     [Theory]
     [InlineData("unchanged", true)]
     [InlineData("fieldType", false)]

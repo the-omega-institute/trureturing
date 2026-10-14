@@ -15,6 +15,8 @@ internal sealed record LeanSourceDeclaration(
     ImmutableHashSet<string> CustomSyntaxLiterals)
 {
     internal bool IsAnonymousOnlySource { get; init; }
+    internal bool HasExtIffTheorem { get; init; }
+    internal bool IsPrivateDeclaration { get; init; }
     internal ImmutableHashSet<string> NamedGenerators { get; init; } = ImmutableHashSet<string>.Empty;
 }
 
@@ -256,6 +258,19 @@ internal sealed partial class LeanSourceCatalog
             .ToImmutableArray();
         if (matches.IsEmpty)
         {
+            var extParents = moduleDeclarations.Where(source => source.HasExtIffTheorem
+                && source.IsPrivateDeclaration == IsPrivateNameKey(recorded.DeclarationNameKey)
+                && HasSourceBoundName(source, recorded.DeclarationNameKey, [source.FullName + "_iff"]))
+                .ToImmutableArray();
+            if (!extParents.IsEmpty)
+            {
+                if (recorded.Kind != "theorem" || extParents.Length != 1)
+                    throw new LeanSourceExtractionException(
+                        $"Lean ext iff theorem source is inconsistent: {recorded.DeclarationNameKey}.");
+                var parent = extParents[0];
+                return parent with { FullName = parent.FullName + "_iff", Kind = "theorem" };
+            }
+
             if (IsCompilerGeneratedName(recordedSegments)
                 || HasNamedGenerator(moduleDeclarations[0], recorded.DeclarationNameKey)
                 || recordedSegments.Any(static segment => LeafName(segment).StartsWith("tactic", StringComparison.Ordinal))
@@ -525,6 +540,7 @@ internal sealed partial class LeanSourceCatalog
     {
         var tokens = LeanSourceTokenizer.Tokenize(file.Text);
         var commandStarts = FindCommandStarts(tokens);
+        var commandDepths = CommandDelimiterDepths(tokens, commandStarts);
         RejectIndentedDeclarations(tokens, commandStarts, file.Path);
         imports = ParseFileImports(file);
         customSyntax = LeanCustomSyntaxCatalog.ParseLiterals(
@@ -539,6 +555,7 @@ internal sealed partial class LeanSourceCatalog
         var scopeStack = new List<LeanSourceScope>();
         var namedGenerators = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var result = ImmutableArray.CreateBuilder<LeanSourceDeclaration>();
+        var pendingAttributes = ImmutableArray<LeanSourceToken>.Empty;
         for (var commandIndex = 0; commandIndex < commandStarts.Length; commandIndex++)
         {
             var start = commandStarts[commandIndex];
@@ -546,7 +563,19 @@ internal sealed partial class LeanSourceCatalog
                 ? commandStarts[commandIndex + 1]
                 : tokens.Length;
             var command = tokens[start].Text;
-            if (command is "@" or "public" or "noncomputable"
+            var kindIndex = FindDeclarationKind(tokens, start, end);
+            if (kindIndex < 0 && IsAttributePrefix(tokens[start..end]))
+            {
+                pendingAttributes = commandDepths[commandIndex] == 0
+                    ? pendingAttributes.AddRange(tokens[start..end])
+                    : ImmutableArray<LeanSourceToken>.Empty;
+                continue;
+            }
+            var attributes = kindIndex >= 0
+                ? pendingAttributes.AddRange(tokens[start..kindIndex])
+                : ImmutableArray<LeanSourceToken>.Empty;
+            pendingAttributes = ImmutableArray<LeanSourceToken>.Empty;
+            if (commandDepths[commandIndex] == 0 && command is "@" or "public" or "noncomputable"
                 && tokens[start..end].TakeWhile(token => token.Line == tokens[start].Line)
                     .Any(static token => token.Text == "section")
                 && FindDeclarationKind(tokens, start, end) < 0)
@@ -554,7 +583,7 @@ internal sealed partial class LeanSourceCatalog
                 scopeStack.Add(new LeanSourceScope(null));
                 continue;
             }
-            if (command == "namespace")
+            if (command == "namespace" && commandDepths[commandIndex] == 0)
             {
                 var namespaceName = ReadQualifiedName(tokens, start + 1, end);
                 if (namespaceName.Length == 0)
@@ -568,16 +597,16 @@ internal sealed partial class LeanSourceCatalog
                 continue;
             }
 
-            if (command == "section"
+            if (commandDepths[commandIndex] == 0 && (command == "section"
                 || command == "mutual"
                 || command == "noncomputable" && tokens[start..end].Any(static token =>
-                    token.Text == "section"))
+                    token.Text == "section")))
             {
                 scopeStack.Add(new LeanSourceScope(null));
                 continue;
             }
 
-            if (command == "end")
+            if (command == "end" && commandDepths[commandIndex] == 0)
             {
                 if (scopeStack.Count == 0)
                 {
@@ -594,7 +623,6 @@ internal sealed partial class LeanSourceCatalog
                 continue;
             }
 
-            var kindIndex = FindDeclarationKind(tokens, start, end);
             if (kindIndex < 0)
             {
                 var generatedName = NamedGeneratorName(tokens[start..end]);
@@ -631,7 +659,12 @@ internal sealed partial class LeanSourceCatalog
                 tokens[kindIndex..semanticEnd],
                 ambientTokens,
                 imports,
-                moduleCustomSyntax));
+                moduleCustomSyntax)
+            {
+                HasExtIffTheorem = commandDepths[commandIndex] == 0
+                    && ProofKinds.Contains(kind) && HasBareExtAttribute(attributes),
+                IsPrivateDeclaration = HasPrivateDeclarationModifier(attributes),
+            });
         }
 
         if (result.Count == 0)

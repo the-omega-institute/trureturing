@@ -449,7 +449,11 @@ internal sealed partial class LeanSourceCatalog
                 || leaf.EndsWith("_assoc", StringComparison.Ordinal);
         });
 
-    private static bool HasNamedGenerator(LeanSourceDeclaration source, string recordedKey)
+    private static bool HasNamedGenerator(LeanSourceDeclaration source, string recordedKey) =>
+        HasSourceBoundName(source, recordedKey, source.NamedGenerators);
+
+    private static bool HasSourceBoundName(
+        LeanSourceDeclaration source, string recordedKey, IEnumerable<string> generatedNames)
     {
         var name = DecodeNameKeySegments(recordedKey);
         if (name.IsEmpty) return false;
@@ -466,8 +470,87 @@ internal sealed partial class LeanSourceCatalog
         }
 
         return name.All(static segment => !segment.IsNumeric)
-            && source.NamedGenerators.Any(generated => FullNameSegments(generated)
+            && generatedNames.Any(generated => FullNameSegments(generated)
                 .SequenceEqual(name.Select(static segment => segment.Text)));
+    }
+
+    private static ImmutableArray<int> CommandDelimiterDepths(
+        ImmutableArray<LeanSourceToken> tokens, ImmutableArray<int> starts)
+    {
+        var depths = ImmutableArray.CreateBuilder<int>(starts.Length);
+        var depth = 0;
+        for (var index = 0; index < tokens.Length; index++)
+        {
+            if (depths.Count < starts.Length && starts[depths.Count] == index) depths.Add(depth);
+            depth += tokens[index].Text switch
+            {
+                "(" or "[" or "{" => 1,
+                ")" or "]" or "}" => -1,
+                _ => 0,
+            };
+        }
+        return depths.ToImmutable();
+    }
+
+    private static bool IsPrivateNameKey(string key)
+    {
+        var name = DecodeNameKeySegments(key);
+        return !name.IsEmpty && name[0] == ("_private", false);
+    }
+
+    private static bool HasPrivateDeclarationModifier(ImmutableArray<LeanSourceToken> tokens)
+    {
+        var depth = 0;
+        foreach (var token in tokens)
+        {
+            if (token.Text is "[" or "(" or "{") depth++;
+            else if (token.Text is "]" or ")" or "}") depth--;
+            else if (depth == 0 && token.Text == "private") return true;
+        }
+        return false;
+    }
+
+    private static bool IsAttributePrefix(ImmutableArray<LeanSourceToken> tokens)
+    {
+        var index = 0;
+        while (index + 1 < tokens.Length && tokens[index].Text == "@" && tokens[index + 1].Text == "[")
+        {
+            var depth = 1;
+            index += 2;
+            while (index < tokens.Length && depth > 0)
+            {
+                if (tokens[index].Text == "[") depth++;
+                else if (tokens[index].Text == "]") depth--;
+                index++;
+            }
+            if (depth != 0) return false;
+        }
+        return index > 0 && index == tokens.Length;
+    }
+
+    private static bool HasBareExtAttribute(ImmutableArray<LeanSourceToken> tokens)
+    {
+        for (var index = 0; index + 1 < tokens.Length; index++)
+        {
+            if (tokens[index].Text != "@" || tokens[index + 1].Text != "[") continue;
+            var depth = 1;
+            var itemStart = true;
+            for (index += 2; index < tokens.Length && depth > 0; index++)
+            {
+                var text = tokens[index].Text;
+                if (text is "[" or "(" or "{") depth++;
+                else if (text is "]" or ")" or "}") depth--;
+                else if (depth == 1 && text == ",") itemStart = true;
+                else if (depth == 1)
+                {
+                    if (itemStart && text == "ext" && index + 1 < tokens.Length
+                        && tokens[index + 1].Text is "," or "]") return true;
+                    itemStart = false;
+                }
+            }
+            index--;
+        }
+        return false;
     }
 
     private static string? NamedGeneratorName(ImmutableArray<LeanSourceToken> command)
