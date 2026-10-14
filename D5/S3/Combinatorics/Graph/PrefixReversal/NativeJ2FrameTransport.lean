@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeJ2FrameTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeRecursiveSupply, D5/S3/Combinatorics/Graph/PrefixReversal/NativeF2Coverage]
+   anchors: []
    utility: none
    digest: Arbitrary two-label supply frames earn the complete native F2 domain and literal indexed port identification by actual label relabelling. -/
 /- This earns the arbitrary-frame identification used by the k=2 recursive

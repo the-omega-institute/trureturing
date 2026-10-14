@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeRecursiveSupply
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeCircleOwnership, D5/S3/Combinatorics/Graph/PrefixReversal/NativeSwitches]
+   anchors: []
    utility: none
    digest: Explicit full label tuples encode every recursive supply port and its actual c-generator seams. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
