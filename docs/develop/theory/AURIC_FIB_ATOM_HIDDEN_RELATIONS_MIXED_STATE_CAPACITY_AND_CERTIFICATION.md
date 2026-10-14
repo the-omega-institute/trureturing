@@ -663,3 +663,91 @@ $$
 仍标为开放问题。
 
 ## 追加锚（本行以下为增补区）
+
+## 104. 二份 probe 的乘积分量与相干端口税
+
+### 104.1 从单份 probe 到二份 product probe
+
+令单份 Hilbert 空间为有限维 \(H\)，令 \(v_i\in H\) 是归一化 probe。若以
+
+$$
+i\sim j\quad\Longleftrightarrow\quad \langle v_i,v_j\rangle\neq0
+$$
+
+生成非正交图的连通分量 \(C,D\)，并记
+
+$$
+V_C=\operatorname{span}\{v_i:i\in C\},\qquad
+V_D=\operatorname{span}\{v_j:j\in D\},
+$$
+
+则二份 product probe
+
+$$
+w_{(i,j)}=v_i\otimes v_j\in H\otimes H
+$$
+
+的 \(C\times D\) 分量满足
+
+$$
+\operatorname{span}\{w_{(i,j)}:(i,j)\in C\times D\}
+=V_C\otimes V_D,
+$$
+
+从而
+
+$$
+\dim(V_C\otimes V_D)=\dim(V_C)\dim(V_D).
+\tag{C104.1}
+$$
+
+这里需要保留三个条件：probe 家族必须确实包含所有 \((i,j)\) 的笛卡尔提升；端口必须对同一个二份输入域 \(H\otimes H\) 工作；保持概率的量词必须是对所有二份密度态成立。若只给一份实际来源、一个固定效果或有限校准样本，(C104.1) 不能推出端口维数下界。
+
+归一化使每个 probe 与自身的内积非零，因此在 product 图中可以固定一个坐标、沿另一坐标的连通路径移动；这正是 \(C\times D\) 而不是更小的孤立子集成为分量的原因。维数乘法来自张量积的基，而不是来自 \(\Delta\) 的数值。
+
+### 104.2 五模式的两个边界
+
+取 AURIC 五态标签
+
+$$
+B=\{0,1,2,3,13\},\qquad H=\mathbb C^5.
+$$
+
+若 probe 菜单只有计算基投影
+
+$$
+\{P_s=|s\rangle\langle s|:s\in B\}
+$$
+
+及其 product 菜单 \(\{P_s\otimes P_t\}\)，每个非正交分量都是单例，因而最大的 product 分量维数为 \(1\)。在这个菜单上，二份概率可以由五乘五个经典 flag 保持；这不要求一个四维量子相干端口。
+
+加入相干 rank-one effect
+
+$$
+Q_{--}=|\Omega\rangle\langle\Omega|,\qquad
+|\Omega\rangle=\frac12\bigl(
+|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle\bigr)
+$$
+
+后，\(\Omega\) 与四个计算基 product vector 都有非零重叠。该连通分量由五个向量生成，但 \(\Omega\) 已在四个向量的张成内，所以其实际分量维数为 \(4\)。在一个对所有二份密度输入保持这些 probe 概率的有限 flagged port 模型中，product 菜单给出 \(q\ge1\)，而加入 \(Q_{--}\) 后给出 \(q\ge4\)；相应的正交嵌入达到 \(q=4\) 仍需在 Lean 中补齐。
+
+这两个数值不能压缩成 \(q=f(p_{13})\)。前者只测计算基的联合占据，后者测到四个标签之间的相干方向；相同的 \(p_{13}\) 可以对应不同的相干端口成本。
+
+### 104.3 与连接算子分层
+
+沿用 C-102 和 C-103，令
+
+$$
+\Delta=\Gamma-\rho\otimes\rho.
+$$
+
+二份 probe 的来源差异是
+
+$$
+\delta_{ij}=\operatorname{tr}\bigl((P_i\otimes P_j)\Delta\bigr),\qquad
+\delta_\Omega=\operatorname{tr}(Q_{--}\Delta).
+$$
+
+这些量说明来源是否偏离乘积来源；它们不改变 (C104.1) 的线性代数，也不单独证明纠缠。特别地，\(\Gamma\) 可以是可分离的经典对角来源而仍有非零 \(\delta_\Omega\) 或非零其它二份连接读数。要声称纠缠，仍须另加可分离集合、PPT 或其它纠缠判据；要声称端口下界，仍须给出二份端口的 CPTP 结构和全称保持合同。
+
+因此当前状态是：C-102/C-103 已把“来源连接”和“局部通道”分开；C-104 给出 product-component 维数乘法以及五模式 \(1\to4\) 的条件性候选；从该候选到当前 dev 中可冻结的 Lean 定理，还缺 Fin-5 标签映射、\(\Omega\) 的分量张成计算、有限 flagged port 的实例化和对应的来源敏感度恒等式。缺少这些桥接之前，不把 \(F[1,3]\) 叫作能量、纠缠或单份相干端口维数。
