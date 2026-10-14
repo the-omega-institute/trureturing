@@ -6,17 +6,29 @@
    utility: none
    digest: period desubstitution and bounded supplier -/
 
-/- proof_shape: extendedMu_period_lift: content; escape_witness: D5.S1.Words.Episturmian.BoundedPowers.extendedMu_period_lift
-   escape_witness: extendedMu_period_lift
+/- escape_witness: D5.S1.Words.Episturmian.BoundedPowers.extendedMu_period_lift
    admission_basis: escape-witness
    Declarations:
+   definition: imagePrefix; consumer: BoundedPowers.imagePrefix_add
+   proof_shape: imagePrefix_add: bind-only; consumer: BoundedPowers.morphicImage_segment
+   proof_shape: imagePrefix_succ: bind-only; consumer: BoundedPowers.powerChunk_exists
+   proof_shape: imagePrefix_length_ge: bind-only; consumer: BoundedPowers.powerChunks_cover
+   definition: PowerChunk; consumer: BoundedPowers.powerChunk_exists
+   proof_shape: powerChunk_exists: bind-only; consumer: BoundedPowers.cDelta_constant_run_cover
+   proof_shape: morphicImage_segment: bind-only; consumer: BoundedPowers.powerChunks_cover
+   proof_shape: periodOn_of_segment: bind-only; consumer: BoundedPowers.powerChunks_cover
+   proof_shape: powerChunks_cover: bind-only; consumer: BoundedPowers.cDelta_constant_run_cover
+   proof_shape: wordPrefix_mem_Lang: bind-only; consumer: BoundedPowers.language_prefix_occurrence
+   proof_shape: language_prefix_occurrence: bind-only; consumer: BoundedPowers.uniform_window_transfer
+   proof_shape: uniform_window_transfer: bind-only; consumer: BoundedPowers.arbitrarily_dense_powers_dio_top
+   proof_shape: arbitrarily_dense_powers_dio_top: bind-only; consumer: BoundedPowers.not_boundedPQ_dio_top
    definition: ConstantBlock; consumer: BoundedPowers.unboundedPQ_iff_long_blocks
    definition: RunStart; consumer: BoundedPowers.constant_block_at_run_start
    proof_shape: unboundedPQ_iff_long_blocks: bind-only; consumer: BoundedPowers.not_boundedPQ_dio_top
    proof_shape: constant_block_at_run_start: bind-only; consumer: BoundedPowers.not_boundedPQ_dio_top
-   proof_shape: cDelta_constant_run_cover: content; escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover; consumer: BoundedPowers.not_boundedPQ_dio_top
-   proof_shape: not_boundedPQ_dio_top: content; escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover; consumer: BoundedPowers.dio_finite_implies_boundedPQ
-   proof_shape: dio_finite_implies_boundedPQ: content; escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover; consumer: DiophantineExponentCriterion.result
+   proof_shape: cDelta_constant_run_cover: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.not_boundedPQ_dio_top
+   proof_shape: not_boundedPQ_dio_top: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.dio_finite_implies_boundedPQ
+   proof_shape: dio_finite_implies_boundedPQ: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: DiophantineExponentCriterion.result
    proof_shape: morphicImage_block_get: bind-only; consumer: BoundedPowers.morphicImage_block_position
    proof_shape: morphicImage_block_position: bind-only; consumer: BoundedPowers.morphic_periodic_factor_bound
    proof_shape: Hword_prefix_decode: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_suffix_decode; consumer: BoundedPowers.Hword_prefix_reflect
@@ -35,7 +47,6 @@
    proof_shape: morphicImage_extended_prefix: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.extendedMu_segment_occurrence
    proof_shape: imagePrefix_length_strictMono: bind-only; consumer: BoundedPowers.morphic_periodic_factor_bound
    proof_shape: extendedMu_segment_occurrence: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.morphic_periodic_factor_bound
-   proof_shape: mu_length_mono: bind-only; consumer: BoundedPowers.mu_length_increases_over_B
    proof_shape: mu_length_uniform_ratio: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_length_triangle; consumer: BoundedPowers.boundedPQ_image_scale
    proof_shape: central_succ_morphic: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.central_length_le_image_sum
    proof_shape: image_sum_step: bind-only; consumer: BoundedPowers.central_length_le_image_sum
@@ -45,27 +56,221 @@
    proof_shape: boundedPQ_image_scale: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.cDelta_periodic_factor_bound
    proof_shape: wordPrefix_subinterval: bind-only; consumer: BoundedPowers.morphic_periodic_factor_bound
    proof_shape: morphic_periodic_factor_bound: content; escape_witness: D5.S1.Words.Episturmian.BoundedPowers.extendedMu_period_lift; consumer: BoundedPowers.cDelta_periodic_factor_bound
-   proof_shape: cDelta_periodic_factor_bound: content; escape_witness: D5.S1.Words.Episturmian.PalindromicClosure.central_length_ge; consumer: BoundedPowers.boundedPQ_boundedPowers
+   proof_shape: cDelta_periodic_factor_bound: content; escape_witness: D5.S1.Words.Episturmian.BoundedPowers.extendedMu_period_lift; consumer: BoundedPowers.boundedPQ_boundedPowers
    definition: BoundedPowers; consumer: BoundedPowers.dio_finite_of_bounded_powers
    proof_shape: dio_finite_of_bounded_powers: bind-only; consumer: DiophantineExponentCriterion.result
    proof_shape: boundedPowers_of_language_eq: bind-only; consumer: DiophantineExponentCriterion.result
    proof_shape: fractionalPower_period: bind-only; consumer: BoundedPowers.boundedPQ_boundedPowers
-   proof_shape: boundedPQ_boundedPowers: content; escape_witness: D5.S1.Words.Episturmian.PalindromicClosure.central_length_ge; consumer: DiophantineExponentCriterion.result
-   Direct frozen dependencies (pre-existing): D5/S1/Words/AbelianBorders/AbelianBorderQuestionDefs; D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor; sha256:54f2f8a1cd3a83f896d4018ef9821e5aa1b6046bd757ec6a999734a691651d1c | D5/S1/Words/Powers/WordPower; D5.S1.Words.Powers.length_wordPower; sha256:debf5e4132f97f82101c3032c0cf4922d3f005aae64c4067de34e835705ee5bf | D5/S1/Words/Powers/WordPower; D5.S1.Words.Powers.wordPower; sha256:a6e228e7ee6ecdc474ee0b218a6a0c370496359d57e770a78cc40f1991acc416
+   proof_shape: boundedPQ_boundedPowers: content; escape_witness: D5.S1.Words.Episturmian.BoundedPowers.extendedMu_period_lift; consumer: DiophantineExponentCriterion.result
+   Direct frozen dependencies (pre-existing): D5/S1/Words/AbelianBorders/AbelianBorderQuestionDefs; D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor; sha256:54f2f8a1cd3a83f896d4018ef9821e5aa1b6046bd757ec6a999734a691651d1c | D5/S1/Words/Powers/WordPower; D5.S1.Words.Powers.length_wordPower; sha256:debf5e4132f97f82101c3032c0cf4922d3f005aae64c4067de34e835705ee5bf | D5/S1/Words/Powers/WordPower; D5.S1.Words.Powers.wordPower; sha256:a6e228e7ee6ecdc474ee0b218a6a0c370496359d57e770a78cc40f1991acc416 | D5/S1/Words/Powers/WordPower; D5.S1.Words.Powers.wordPower_period_getElem?; sha256:d9c6a06ea421449d240a7406ecf38761aeedd1293e31e9ba625eece0556d16cd
    Finite prefixes use the existing factor operator at start zero.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16158
 -/
 
-import D5.S1.Words.Episturmian.DensePowerWindow
+import D5.S1.Words.Episturmian.MorphicDecomposition
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S1.Words.Episturmian.BoundedPowers
-open D5.S1.Words.Episturmian.PalindromicClosure
 open D5.S1.Words.Episturmian.MorphicDecomposition
-open D5.S1.Words.Episturmian.DensePowerWindow
 variable {d : Nat}
+
+ def imagePrefix (s : Nat → Fin d) (f : Fin d → List (Fin d)) (k : Nat) : List (Fin d) :=
+   ((fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) s k).flatMap f
+
+ theorem imagePrefix_add (s : Nat → Fin d) (f : Fin d → List (Fin d)) (k j : Nat) :
+    imagePrefix s f (k+j) = imagePrefix s f k ++ imagePrefix (fun i => s (k+i)) f j := by
+  simp only [imagePrefix, wordPrefix_append, List.flatMap_append]
+
+ theorem imagePrefix_succ (s : Nat → Fin d) (f : Fin d → List (Fin d)) (k : Nat) :
+    imagePrefix s f (k+1) = imagePrefix s f k ++ f (s k) := by
+  rw [imagePrefix_add]
+  simp [imagePrefix, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]
+
+ theorem imagePrefix_length_ge (s : Nat → Fin d) (f : Fin d → List (Fin d))
+    (hpos : ∀ z, 0 < (f z).length) (k : Nat) : k ≤ (imagePrefix s f k).length := by
+  let L := (D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor s 0 k).map (fun z => (f z).length)
+  have hL : ∀ i ∈ L, 1 ≤ i := by
+    intro i hi
+    obtain ⟨z, hz, rfl⟩ := List.mem_map.mp hi
+    exact hpos z
+  have h := List.length_le_sum_of_one_le L hL
+  simpa [L, imagePrefix, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor,
+    List.length_flatMap, List.map_map, Function.comp_def] using h
+
+ structure PowerChunk (s : Nat → Fin d) (f : Fin d → List (Fin d))
+    (A : List (Fin d)) (a p : Nat) where
+   step : Nat
+   copies : Nat
+   sep : List (Fin d)
+   step_pos : 0 < step
+   copies_ge : a ≤ copies
+   sep_short : sep.length ≤ 2*A.length
+   image_eq : imagePrefix (fun j => s (p+j)) f step = (fun A a => D5.S1.Words.Powers.wordPower a A) A copies ++ sep
+
+ theorem powerChunk_exists (s : Nat → Fin d) (f : Fin d → List (Fin d))
+    (A : List (Fin d)) (B : Fin d → List (Fin d)) (x : Fin d) (a p : Nat)
+    (ha : 0 < a) (hfx : f x = A)
+    (hf : ∀ z, z ≠ x → f z = (fun A a => D5.S1.Words.Powers.wordPower a A) A a ++ B z)
+    (hB : ∀ z, (B z).length ≤ 2*A.length) :
+    Nonempty (PowerChunk s f A a p) := by
+  classical
+  by_cases hh : ∃ j, j < a ∧ s (p+j) ≠ x
+  · let j := Nat.find hh
+    have hj := Nat.find_spec hh
+    have hprev : ∀ i < j, s (p+i) = x := by
+      intro i hi
+      have hn := Nat.find_min hh hi
+      by_contra hne
+      exact hn ⟨by omega, hne⟩
+    have hp : imagePrefix (fun i => s (p+i)) f j = (fun A a => D5.S1.Words.Powers.wordPower a A) A j := by
+      simp only [imagePrefix, wordPrefix_constant _ x j hprev, List.flatMap_replicate, hfx, D5.S1.Words.Powers.wordPower]
+    refine ⟨⟨j+1, j+a, B (s (p+j)), by omega, by omega, hB _, ?_⟩⟩
+    rw [imagePrefix_succ, hp, hf _ hj.2, ← List.append_assoc, ← wordPower_add]
+  · have hp : ∀ j < a, s (p+j) = x := by
+      intro j hj
+      by_contra hne
+      exact hh ⟨j,hj,hne⟩
+    refine ⟨⟨a, a, [], ha, le_rfl, by simp, ?_⟩⟩
+    simp only [imagePrefix, wordPrefix_constant _ x a hp, List.flatMap_replicate, hfx,
+      D5.S1.Words.Powers.wordPower, List.append_nil]
+
+ theorem morphicImage_segment (s t : Nat → Fin d) (f : Fin d → List (Fin d))
+    (hi : MorphicImage s t f) (p step : Nat) (W S : List (Fin d))
+    (he : imagePrefix (fun j => s (p+j)) f step = W ++ S)
+    (j : Nat) (hj : j < W.length) :
+    t ((imagePrefix s f p).length+j) = W[j] := by
+  have h := hi (p+step)
+  change (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) t (imagePrefix s f (p+step)).length = imagePrefix s f (p+step) at h
+  rw [imagePrefix_add, he] at h
+  have hk : (imagePrefix s f p).length+j <
+      (imagePrefix s f p ++ (W++S)).length := by simp only [List.length_append]; omega
+  have hh := congrArg (fun l : List (Fin d) => l[(imagePrefix s f p).length+j]?) h
+  have hleft : (imagePrefix s f p).length ≤ (imagePrefix s f p).length+j := by omega
+  simp only [D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add, List.getElem?_map, List.getElem?_range, hk, if_true,
+    Option.map_some, List.getElem?_append_right hleft, Nat.add_sub_cancel_left,
+    List.getElem?_append_left hj, List.getElem?_eq_getElem hj] at hh
+  exact Option.some.inj hh
+
+ theorem periodOn_of_segment (t : Nat → Fin d) (W : List (Fin d)) (b q : Nat)
+    (hget : ∀ j (hj : j < W.length), t (b+j) = W[j]) (hper : List.HasPeriod W q) :
+    HasPeriodOn t q b (b+W.length) := by
+  intro i hi hie
+  have h0 : i-b < W.length := by omega
+  have h1 : i-b+q < W.length := by omega
+  have he : i = b+(i-b) := by omega
+  have hh := (List.hasPeriod_iff_getElem?.mp hper) (i-b) (by omega)
+  rw [List.getElem?_eq_getElem h0, List.getElem?_eq_getElem h1] at hh
+  rw [he, Nat.add_assoc, hget (i-b+q) h1, hget (i-b) h0]
+  exact (Option.some.inj hh).symm
+
+ theorem powerChunks_cover (s t : Nat → Fin d) (f : Fin d → List (Fin d))
+    (A : List (Fin d)) (a : Nat)
+    (hi : MorphicImage s t f) (hfpos : ∀ z, 0 < (f z).length)
+    (chunks : ∀ p, Nonempty (PowerChunk s f A a p)) :
+    Nonempty (PeriodicRunCover t A.length a) := by
+  classical
+  let chunk := fun p => Classical.choice (chunks p)
+  let p : Nat → Nat := Nat.rec 0 (fun _ prev => prev + (chunk prev).step)
+  have hp0 : p 0 = 0 := rfl
+  have hps : ∀ k, p (k+1) = p k + (chunk (p k)).step := by intro k; rfl
+  have hpk : ∀ k, k ≤ p k := by
+    intro k
+    induction k with
+    | zero => omega
+    | succ k ih => rw [hps]; have := (chunk (p k)).step_pos; omega
+  let beg := fun k => (imagePrefix s f (p k)).length
+  let ending := fun k => beg k + (chunk (p k)).copies*A.length
+  have hnext : ∀ k, beg (k+1) = ending k + (chunk (p k)).sep.length := by
+    intro k
+    dsimp [beg, ending]
+    rw [hps, imagePrefix_add, (chunk (p k)).image_eq]
+    simp only [List.length_append, D5.S1.Words.Powers.length_wordPower, Nat.add_assoc]
+  refine ⟨⟨beg, ending, ?_, ?_, ?_, ?_, ?_, ?_⟩⟩
+  · simp [beg, hp0, imagePrefix, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add]
+  · intro k
+    dsimp [ending]
+    have hh := Nat.mul_le_mul_right A.length (chunk (p k)).copies_ge
+    omega
+  · intro k
+    rw [hnext]
+    omega
+  · intro k
+    rw [hnext, Nat.add_sub_cancel_left]
+    exact (chunk (p k)).sep_short
+  · intro k
+    have hg := morphicImage_segment s t f hi (p k) (chunk (p k)).step
+      ((fun A a => D5.S1.Words.Powers.wordPower a A) A (chunk (p k)).copies) (chunk (p k)).sep (chunk (p k)).image_eq
+    have hh := periodOn_of_segment t ((fun A a => D5.S1.Words.Powers.wordPower a A) A (chunk (p k)).copies) (beg k) A.length
+      hg (wordPower_period A _)
+    simpa only [D5.S1.Words.Powers.length_wordPower, ending] using hh
+  · intro n
+    refine ⟨n+1, ?_⟩
+    have hh := imagePrefix_length_ge s f hfpos (p (n+1))
+    have hp := hpk (n+1)
+    dsimp [ending, beg]
+    omega
+
+theorem wordPrefix_mem_Lang (x : Nat → Fin d) (H : Nat) : (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) x H ∈ Lang x := by
+  refine ⟨0, ?_⟩
+  intro j
+  simp only [Nat.zero_add]
+  rcases j with ⟨j, hj⟩
+  simp [D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add, List.get_eq_getElem]
+
+theorem language_prefix_occurrence (t x : Nat → Fin d) (H : Nat)
+    (hlang : Lang t = Lang x) :
+    ∃ n, ∀ ell ≤ H, (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) t ell = (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) (fun j => x (n+j)) ell := by
+  have hm := wordPrefix_mem_Lang t H
+  rw [hlang] at hm
+  obtain ⟨n, hn⟩ := hm
+  refine ⟨n, ?_⟩
+  intro ell hell
+  apply List.map_congr_left
+  intro j hj
+  have hjell : j < ell := List.mem_range.mp hj
+  have hjH : j < H := by omega
+  have hget := hn ⟨j, by simpa [D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add] using hjH⟩
+  simpa [D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add, List.get_eq_getElem] using hget
+
+theorem uniform_window_transfer (t x : Nat → Fin d) (q a M : Nat)
+    (hlang : Lang t = Lang x) (hq : 0 < q) (hM : 2 ≤ M)
+    (ha : M*(M+3) ≤ a) (cover : PeriodicRunCover x q a) :
+    ∃ U V : List (Fin d), ∃ ell : Nat, ∃ hV : V ≠ [],
+      V.length = q ∧ V.length ≤ ell ∧ U.length ≤ (M+2)*q ∧
+      M*q ≤ U.length+ell ∧ U.length+ell ≤ (a+M+2)*q ∧
+      (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) t (U.length+ell) = U ++ fractionalPower V hV ell ∧
+      (M : Real) ≤ (U.length+ell : Real)/(U.length+V.length) := by
+  obtain ⟨n, hn⟩ := language_prefix_occurrence t x ((a+M+2)*q) hlang
+  obtain ⟨U, V, ell, hV, hvq, hvell, hu, hlow, hhigh, hword, hratio⟩ :=
+    uniform_finite_window x q a M n hq hM ha cover
+  exact ⟨U, V, ell, hV, hvq, hvell, hu, hlow, hhigh,
+    (hn _ hhigh).trans hword, hratio⟩
+
+theorem arbitrarily_dense_powers_dio_top (t x : Nat → Fin d)
+    (hlang : Lang t = Lang x)
+    (hdense : ∀ M : Nat, 2 ≤ M → ∃ q a : Nat, 0 < q ∧
+      M*(M+3) ≤ a ∧ Nonempty (PeriodicRunCover x q a)) : dio t = ⊤ := by
+  have hadm : ∀ rho : NNReal, DioAdmissible t rho := by
+    intro rho L
+    obtain ⟨m, hm⟩ := exists_nat_ge (rho : Real)
+    let M := m + L + 2
+    have hM : 2 ≤ M := by omega
+    obtain ⟨q, a, hq, ha, ⟨cover⟩⟩ := hdense M hM
+    obtain ⟨U, V, ell, hV, hvq, hvell, hu, hlow, hhigh, hword, hratio⟩ :=
+      uniform_window_transfer t x q a M hlang hq hM ha cover
+    refine ⟨U, V, ell, hV, hvell, ?_, hword, ?_⟩
+    · have hL : L ≤ M*q := by dsimp [M]; nlinarith
+      omega
+    · have hrho : (rho : Real) ≤ M := by
+        have hMM : m ≤ M := by omega
+        have hMMr : (m : Real) ≤ M := by exact_mod_cast hMM
+        linarith
+      exact hrho.trans hratio
+  apply ENNReal.eq_top_of_forall_nnreal_le
+  intro rho
+  exact le_iSup_of_le rho (le_iSup_of_le (hadm rho) le_rfl)
 
 def ConstantBlock (Delta : Nat → Fin d) (i a : Nat) : Prop :=
   ∀ j < a, Delta (i+j) = Delta i
@@ -118,7 +323,6 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
     have he : i+(n+j-i) = n+j := by omega
     rwa [he] at hh
 
-
  theorem cDelta_constant_run_cover (Delta : Nat → Fin d) (n a : Nat)
     (ha : 0 < a) (hstart : n = 0 ∨ Delta (n-1) ≠ Delta n)
     (hc : ∀ j < a, Delta (n+j) = Delta n) :
@@ -162,31 +366,8 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
  theorem morphicImage_block_get (s t : Nat → Fin d) (f : Fin d → List (Fin d))
     (hi : MorphicImage s t f) (k j : Nat) (hj : j < (f (s k)).length) :
     t ((imagePrefix s f k).length+j) = (f (s k))[j] := by
-  let L := (D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor s 0 (k+1)).map f
-  have hk : k < L.length := by simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]
-  have ht : L.take k = (D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor s 0 k).map f := by
-    simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add, ← List.map_take, List.take_range]
-  have hp : ((L.map List.length).take k).sum = (imagePrefix s f k).length := by
-    rw [← List.map_take, ht]
-    simp [imagePrefix, List.length_flatMap, List.map_map, Function.comp_def]
-  have hq : ((L.map List.length).take (k+1)).sum = L.flatten.length := by
-    rw [List.take_of_length_le (by simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]), List.length_flatten]
-  have hb := List.drop_take_succ_flatten_eq_getElem L k hk
-  rw [hp, hq, List.take_length] at hb
-  have hz : L[k] = f (s k) := by simp [L, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]
-  rw [hz] at hb
-  have hbound : (imagePrefix s f k).length+j < (imagePrefix s f (k+1)).length := by
-    rw [imagePrefix_succ, List.length_append]
-    omega
-  have he := hi (k+1)
-  change D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor t 0 (imagePrefix s f (k+1)).length = imagePrefix s f (k+1) at he
-  have hb' : (imagePrefix s f (k+1)).drop (imagePrefix s f k).length = f (s k) := by
-    simpa [L, imagePrefix, List.flatMap_def] using hb
-  rw [← he] at hb'
-  have hh := congrArg (fun xs : List (Fin d) => xs[j]?) hb'
-  simpa [D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, List.getElem?_drop, List.getElem?_map, List.getElem?_range,
-    hbound, List.getElem?_eq_getElem hj] using hh
-
+  apply morphicImage_segment s t f hi k 1 (f (s k)) [] _ j hj
+  simp [imagePrefix, D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor]
 
  theorem morphicImage_block_position (s t : Nat → Fin d) (f : Fin d → List (Fin d))
     (hi : MorphicImage s t f) (hpos : ∀ z, 0 < (f z).length) (n : Nat) :
@@ -278,7 +459,6 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
      rw [← hr,List.take_left]
    rw [hvtake]
    exact Hword_prefix_reflect x w (v++w) hpre
-
 
  noncomputable def extendedMu (Delta : Nat → Fin d) (n : Nat) (w : List (Fin d)) : List (Fin d) :=
    muWord Delta n w ++ central Delta n
@@ -373,8 +553,6 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
      change (Lword x (muWord tail n v)).length = p
      rw [heq,hlen0]
 
-
-
  theorem morphicImage_shift (s t : Nat → Fin d) (f : Fin d → List (Fin d))
     (hi : MorphicImage s t f) (k : Nat) :
     MorphicImage (fun j => s (k+j)) (fun j => t ((imagePrefix s f k).length+j)) f := by
@@ -441,23 +619,6 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
    rw [he]
    simpa only [extendedMu,List.length_append,muWord,imagePrefix] using hp
 
-
- theorem mu_length_mono (Delta : Nat → Fin d) (z : Fin d) {n m : Nat} (hnm : n ≤ m) :
-    (mu Delta n z).length ≤ (mu Delta m z).length := by
-   induction m with
-   | zero =>
-     have hn : n=0 := by omega
-     subst n
-     rfl
-   | succ m ih =>
-     by_cases hn : n ≤ m
-     · have hh := ih hn
-       rw [mu_length_step]
-       split_ifs <;> omega
-     · have hn : n=m+1 := by omega
-       subst n
-       rfl
-
  theorem mu_length_uniform_ratio (Delta : Nat → Fin d) (B : Nat)
     (hB : ∀ i, ∃ j < B, Delta (i+j) ≠ Delta i) (n : Nat) (u v : Fin d) :
     (mu Delta n u).length ≤ (B+2)*(mu Delta n v).length := by
@@ -521,7 +682,6 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
      rw [he,Finset.card_erase_of_mem (by simp)]
      simp
    simp [Finset.sum_ite,hcard]
-
 
  theorem central_length_le_image_sum (Delta : Nat → Fin d) (hd : 2 ≤ d) (n : Nat) :
     (central Delta n).length ≤ ∑ z : Fin d, (mu Delta n z).length := by
@@ -602,7 +762,6 @@ theorem unboundedPQ_iff_long_blocks (Delta : Nat → Fin d) :
    exact hs.trans hsum
 
 
-variable {d : Nat}
 
  theorem wordPrefix_subinterval (x : Nat → Fin d) (L a ell : Nat) (h : a+ell ≤ L) :
     (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) (fun j => x (a+j)) ell <:+: (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) x L := by
@@ -693,7 +852,7 @@ variable {d : Nat}
    nlinarith
 
 
-variable {d : Nat}
+
 def BoundedPowers (x : Nat → Fin d) : Prop :=
   ∃ C : NNReal, ∀ n (V : List (Fin d)) (hV : V ≠ []) (ell : Nat),
     V.length ≤ ell → (fun x n => D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor x 0 n) (fun j => x (n+j)) ell = fractionalPower V hV ell →
@@ -721,7 +880,6 @@ theorem dio_finite_of_bounded_powers (x : Nat → Fin d) (hb : BoundedPowers x) 
     exact_mod_cast hratio.trans (hratio2.trans hp)
   exact lt_of_le_of_lt hbound ENNReal.coe_lt_top
 
-
  theorem boundedPowers_of_language_eq (t x : Nat → Fin d)
     (hlang : Lang t = Lang x) (hb : BoundedPowers x) : BoundedPowers t := by
   obtain ⟨C, hC⟩ := hb
@@ -744,7 +902,6 @@ theorem dio_finite_of_bounded_powers (x : Nat → Fin d) (hb : BoundedPowers x) 
       simpa [W,D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Nat.zero_add,List.get_eq_getElem] using hh.symm
   exact hC m V hV ell hvell (hx.trans he)
 
-variable {d : Nat}
 
  theorem fractionalPower_period (V : List (Fin d)) (hV : V ≠ []) (ell : Nat) :
     List.HasPeriod (fractionalPower V hV ell) V.length := by

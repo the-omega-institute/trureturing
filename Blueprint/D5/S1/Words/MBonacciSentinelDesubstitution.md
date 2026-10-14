@@ -6,7 +6,7 @@ The actual m-bonacci word admits unique sentinel desubstitution and strict fully
 
 **Theorem 1.1 (Exact factor length).**
 
-$$\forall m \in \mathbb{N},\; \forall x \in Function\left(\mathbb{N}, Fin\left(m\right)\right),\; \forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; length\left(factor\left(x, i, n\right)\right) = n$$
+$$\forall m \in \mathbb{N},\; \forall x \in (\mathbb{N} \to Fin\left(m\right)),\; \forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; length\left(factor\left(x, i, n\right)\right) = n$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/MBonacciSentinelDesubstitution.factor_len` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ For every order m at least two, every k and every n less than the kth image leng
 
 **Theorem 1.5 (The exact letter of a factor).**
 
-$$\forall m \in \mathbb{N},\; \forall x \in Function\left(\mathbb{N}, Fin\left(m\right)\right),\; \forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall j \in \mathbb{N},\; j < n \Rightarrow getElem\left(factor\left(x, i, n\right), j\right) = x\left(i + j\right)$$
+$$\forall m \in \mathbb{N},\; \forall x \in (\mathbb{N} \to Fin\left(m\right)),\; \forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall j \in \mathbb{N},\; j < n \Rightarrow getElem\left(factor\left(x, i, n\right), j\right) = x\left(i + j\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/MBonacciSentinelDesubstitution.factor_get` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ For every m at least two and every natural q, some i satisfies boundary(i) at mo
 
 **Theorem 1.7 (Exact contiguous factor concatenation).**
 
-$$\forall m \in \mathbb{N},\; \forall x \in Function\left(\mathbb{N}, Fin\left(m\right)\right),\; \forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall t \in \mathbb{N},\; factor\left(x, i, n + t\right) = append\left(factor\left(x, i, n\right), factor\left(x, i + n, t\right)\right)$$
+$$\forall m \in \mathbb{N},\; \forall x \in (\mathbb{N} \to Fin\left(m\right)),\; \forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall t \in \mathbb{N},\; factor\left(x, i, n + t\right) = append\left(factor\left(x, i, n\right), factor\left(x, i + n, t\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/MBonacciSentinelDesubstitution.factor_add` (`✓ std3`). ∎
 

@@ -6,13 +6,12 @@
    utility: none
    digest: Peltomäki Conjecture 8.4 -/
 
-/- proof_shape: result: content; escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover
-   escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover
+/- escape_witness: D5.S1.Words.Episturmian.BoundedPowers.extendedMu_period_lift
    admission_basis: open-problem-resolution (#15858; Proved)
    Declarations:
-   proof_shape: result: content; escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover; consumer: none
+   proof_shape: result: content; escape_witness: D5.S1.Words.Episturmian.BoundedPowers.extendedMu_period_lift; consumer: none
    Direct frozen dependencies (pre-existing): none (pinned Mathlib and same-delivery declarations)
-   The claim expands the source aperiodicity predicate literally.
+   Finite prefixes use the existing factor operator at start zero.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16158
 -/
 
@@ -22,9 +21,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S1.Words.Episturmian.DiophantineExponentCriterion
-open D5.S1.Words.Episturmian.PalindromicClosure
 open D5.S1.Words.Episturmian.MorphicDecomposition
-open D5.S1.Words.Episturmian.DensePowerWindow
 open D5.S1.Words.Episturmian.BoundedPowers
 
  theorem result : claim := by

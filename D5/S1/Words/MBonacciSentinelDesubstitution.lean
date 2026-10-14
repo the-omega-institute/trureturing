@@ -7,12 +7,10 @@
    digest: Actual m-bonacci word, sentinel parsing and fully right-special descent. -/
 
 /- proof_shape: factor_len: bind-only
-   consumer: D5.S1.Words.Episturmian.DensePowerWindow.wordPrefix_length
+   consumer: D5.S1.Words.Episturmian.MorphicDecomposition.wordPrefix_length
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16158
 -/
 import D5.S1.Words.RankOneMorphismIterationBoundDefs
-import Mathlib.Data.List.Infix
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

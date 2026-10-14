@@ -7,7 +7,6 @@ doi: 10.1016/S0304-3975(99)00320-5
 url: https://doi.org/10.1016/S0304-3975(99)00320-5
 claim: The paper develops palindromic closure and central-word constructions for episturmian words.
 strata_touched:
-  - D5/S1/Words/Episturmian/PalindromicClosure
   - D5/S1/Words/Episturmian/MorphicDecomposition
 license: citation-only
 triage: anchor
