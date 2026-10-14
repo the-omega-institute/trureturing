@@ -1,7 +1,10 @@
-/- UNCOMPILED actual k2-to-k3 boundary initialization.
-   Consume the eight actual J3 paths obtained by the closed-parent J
-   update. Restore each opposite group of four actual b cuts explicitly.
-   Both four-path boundaries exhaust the same supplied current cycle. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualThirdOrderBoundaryBase
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualThirdOrderBoundaryBase
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Eight actual third-order joint paths restore both exhaustive four-path boundary partitions on the same Hamilton cycle. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 
 set_option autoImplicit false
