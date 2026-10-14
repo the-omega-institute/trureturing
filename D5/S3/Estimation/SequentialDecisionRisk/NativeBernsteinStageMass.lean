@@ -398,4 +398,41 @@ theorem actual_cumulative_output_mass (S : Bool) (p q : unitInterval) (e : Bool)
 
 end CumulativeOutputs
 
+section LimitLaw
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+local notation "μ" => rawLaw (rowLaw (batchTable D d a hD hd hc))
+
+/-- The actual eventual output law is the limit of the coefficient evaluations
+for the single table, including endpoint source rates. -/
+theorem actual_limit_output_mass (S : Bool) (p q : unitInterval) (e : Bool) (L : ℝ≥0∞)
+    (hlim : Filter.Tendsto (fun k => bernsteinEval (D k) (d k) (a k e) p q)
+      Filter.atTop (nhds L)) :
+    μ {ω | ∃ n : ℕ, nativeAction π S p q n ω = .inr (false,e)} = L := by
+  let E (k : ℕ) := {ω | nativeAction π S p q (D k+d k) ω = .inr (false,e)}
+  have hE : Monotone E := by
+    intro i j hij ω hω
+    exact native_action_freezes π S p q ω (D i+d i) (D j+d j)
+      (Nat.add_le_add (hD.monotone hij) (hd.monotone hij)) (false,e) hω
+  have he : {ω | ∃ n : ℕ, nativeAction π S p q n ω = .inr (false,e)} = ⋃ k, E k := by
+    ext ω
+    simp only [Set.mem_setOf_eq, Set.mem_iUnion]
+    constructor
+    · rintro ⟨n,hn⟩
+      exact ⟨n,native_action_freezes π S p q ω n (D n+d n)
+        ((hD.id_le n).trans (Nat.le_add_right _ _)) (false,e) hn⟩
+    · rintro ⟨k,hk⟩
+      exact ⟨D k+d k,hk⟩
+  have hm : Filter.Tendsto (μ ∘ E) Filter.atTop (nhds (μ (⋃ k, E k))) :=
+    tendsto_measure_iUnion_atTop hE
+  have hval : (μ ∘ E) = fun k => bernsteinEval (D k) (d k) (a k e) p q := by
+    funext k
+    exact actual_cumulative_output_mass D d a hD hd hc S p q e k
+  rw [he]
+  exact tendsto_nhds_unique (by simpa only [hval] using hm) hlim
+
+end LimitLaw
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinStageMass
