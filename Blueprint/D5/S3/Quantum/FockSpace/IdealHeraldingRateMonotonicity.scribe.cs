@@ -35,7 +35,10 @@ internal sealed class IdealHeraldingRateMonotonicityDocument : IScribeDocumentDe
                         "Set r(u) = u exp(u - 1) and K(u) = 2(2u - 1)/(1 + u)^4. A primitive gives A_n = 1/4 + integral from 0 to 1 of K(u) r(u)^n du. Thus A_n - A_(n + 1) is the integral of K(u) r(u)^n (1 - r(u)). Bounding its negative part on [0, 1/2] and its positive part on [1 - 1/n, 1 - 1/(2n)] yields p_n - p_(n + 1) >= 1/(512 n^2) - (4n + 3) exp(-n) for n >= 16. The right side is positive, since 512 n^2 (4n + 3) < exp(n) on this range.")),
                     Paragraph(Text(
                         "Exact rational evaluation gives p_n - p_(n + 1) > 0 for every n from 5 through 15, completing strict decrease for n >= 5. The kernel representation gives |A_n - 1/4| <= 2/(n + 1), and the tail bound gives |p_n - 1/4| <= 3/n for n >= 16. Squeezing this error to zero proves convergence to one quarter."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("saied-marshall-anand-rieffel-2025-heralding-rate-monotonicity"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
