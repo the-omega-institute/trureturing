@@ -6307,3 +6307,225 @@ phase balance is assigned to it. This application introduces
 neither an independent sample nor a favorable tie choice or a
 new subsequence. The original strict signed-head estimate,
 all-integer Robin inequality and RH remain unproved.
+
+## Actual activation counts pay a class of skipped-gap excursions
+
+Keep the original full source, all ties, clocks, windows and parameters
+from PG1--PG3, PE3--PE6 and VP1--VP5. This application pays the internal
+deviation on an explicitly classified family of actual skipped gaps.
+It retains their baseline, every unclassified gap and the entire exterior
+future through $\mathsf U_X$. It is a `repo-derived` paper application,
+not a new generic prime theorem, Lean result or proof of VP5 or RH.
+
+### Reuse the classical restriction on simultaneous threshold layers
+
+The [existing Erdős--Nicolas note](../ArithSums/erdosnicolas1975repartition.md#exact-zero-benefit-exceptions-use-at-most-four-branches)
+records Proposition 4(c)--(d) and its proof, printed pp.70--71.
+The classical six-exponentials argument excludes a common positive
+threshold for three distinct primes. Reuse that restriction for the
+actual inventory's threshold price $\lambda(\xi)$; do not infer that
+two cores at a nonlinear switch are adjacent CA integers.
+
+In the present parameters the actual $p$-layer reward is
+
+$$
+r_{p,j}=\frac1{\log p}
+\log\frac{p^{j+1}-1}{p(p^j-1)},
+\qquad \lambda(\xi)=r_{p,j}.
+$$
+
+The layers of one prime have strictly decreasing rewards. Thus at most
+two layers activate at one actual time. Also
+$r_{p,j}\le\log(1+1/p)/\log p<\lambda(p)$, so the decreasing
+price gives $p<\xi$. Retaining the full mass of every simultaneous
+activation therefore gives
+
+$$
+dK(\{\xi\})\le2\log\xi.
+\tag{AC1}
+$$
+
+For an original switch gap $G_s=(\alpha_s,\beta_s)$ let
+$h_s=\beta_s-\alpha_s$ and let $m_s$ count its distinct actual
+activation times. PG1's endpoint contacts and absence of activation
+atoms at the endpoints give
+
+$$
+h_s=K(\beta_s)-K(\alpha_s)
+\le2m_s\log\beta_s.
+\tag{AC2}
+$$
+
+The restriction AC1 is classical. AC2 uses it on the same actual
+inventory; $m_s$ is not uniformly bounded and the whole switch gap
+is not treated as one threshold event.
+
+### Classify actual gaps before comparing their primitives
+
+Choose $\upsilon_X>0$ with $2\upsilon_X<b_X^{1/4}$, where $b_X$
+is PE3's unchanged all-tie least core clock. Every gap endpoint is
+at least $b_X$. Define the family
+
+$$
+\mathscr G_X^{(\upsilon)}=
+\left\{G_s:
+m_s\log(2\alpha_s)\le\upsilon_X\alpha_s^{3/4}\right\}.
+\tag{AC3}
+$$
+
+This is a classification within each original window. It does not
+discard a window, select a favorable tie or impose a sign on $E$.
+If a classified gap had $\beta\ge2\alpha$, AC2 and monotonicity of
+$v/\log v$ for $v>e$ would give
+
+$$
+m_s\ge\frac{\beta}{4\log\beta}
+\ge\frac{\alpha}{2\log(2\alpha)},
+\qquad
+\upsilon_X\ge\frac{\alpha^{1/4}}2\ge\frac{b_X^{1/4}}2,
+$$
+
+a contradiction. Consequently, for every classified gap,
+
+$$
+\beta_s<2\alpha_s,
+\qquad h_s\le2\upsilon_X\alpha_s^{3/4}.
+\tag{AC4}
+$$
+
+Write $r_s(w)=w-s-K(w)$ on that gap. The original decomposition is
+$E(w)=s+Q(w)+r_s(w)$, with $Q=K-\psi$. Define only a comparison
+integrand,
+
+$$
+\widehat E_X^{(\upsilon)}(w)=E_X^\circ(w)
+-\sum_{G_s\in\mathscr G_X^{(\upsilon)}}
+\mathbf1_{G_s}(w)r_s(w).
+\tag{AC5}
+$$
+
+On a classified gap it equals $s+Q(w)$. On $D_X$ it is zero;
+everywhere else it is the unchanged $E_X^\circ$. In particular it
+preserves all unclassified gaps and both exterior portions that an
+ordinary center can see. It is not a modified prime-counting function.
+
+Form $\widehat P_{X,j}^{(\upsilon)}$,
+$\widehat e_{X,r,j}^{(\upsilon)}$ and
+$\widehat{\mathcal E}_X^{(\upsilon)}(\tau)$ by the original
+PE3--PE5 and VP definitions, replacing only the integrand by AC5.
+Keep the original centers, shell cap $L_{X,r}$, normalization $M_X$,
+horizon and the zero convention when $2^jx\ge\mathsf U_X$.
+These primitives are finite and continuous on each compact center
+shell: AC5 is locally bounded and has the original finite horizon.
+
+### Pay only the last unfinished classified gap
+
+Reuse the actual nonnegative PG2 pressure, with no new dominance
+assumption: $\mathscr P_s'=r_sk$, $\mathscr P_s\ge0$ and
+$\mathscr P_s(\alpha)=\mathscr P_s(\beta)=0$. Since $k$ decreases,
+integration by parts gives, for every $y\in[\alpha,\beta]$,
+
+$$
+\int_y^\beta r_s(w)dw
+=-\frac{\mathscr P_s(y)}{k(y)}
+-\int_y^\beta\mathscr P_s(w)(1/k(w))'dw\le0.
+$$
+
+Endpoint contact and monotonicity of $K$ also give
+$w-\beta\le r_s(w)\le w-\alpha$. For
+$\alpha\le y\le z\le\beta$, apply this pointwise bound and the
+preceding suffix inequality in the two directions:
+
+$$
+\int_y^z r_s(w)dw
+\le\frac12\min\{(z-\alpha)^2,(\beta-z)^2\}
+\le\frac{h_s^2}{8}.
+\tag{AC6}
+$$
+
+For any one interval $[u,v]$, its initial classified-gap suffix and
+every complete classified gap have nonpositive residual contribution.
+Only its final unfinished classified gap can leave a positive one.
+If both endpoints lie in the same gap, AC6 applies directly.
+Thus this bound is not summed over all gaps. For the original forward
+range $u\le v\le\min(2u,\mathsf U_X)$, that last gap has
+$\alpha_s<v\le2u$. AC4 and AC6 give
+
+$$
+u^{-3/2}\int_u^v
+\sum_{G_s\in\mathscr G_X^{(\upsilon)}}
+\mathbf1_{G_s}(w)r_s(w)dw
+\le\frac{h_s^2}{8u^{3/2}}
+\le\sqrt2\,\upsilon_X^2.
+$$
+
+If there is no unfinished classified gap, the left side is nonpositive.
+This comparison holds at each original endpoint $v$ before taking
+the same supremum. For every ordinary center $x\ge b_X$, including
+centers outside $D_X$, it follows that
+
+$$
+P_{X,j}^\circ(x)
+\le\widehat P_{X,j}^{(\upsilon)}(x)
++\sqrt2\,\upsilon_X^2.
+\tag{AC7}
+$$
+
+Move the normalized amplitude threshold by
+$\sqrt2\upsilon_X^2/M_X$ inside the same capped layer-cake
+consumer used in VP3. Each shell integral changes in this upper
+direction by at most $\sqrt2\upsilon_X^2L_{X,r}/M_X$.
+Since $\sum_rL_{X,r}=L_X$ and
+$\sum_{j<N_X}2^{-j/2}\le S=2+\sqrt2$, this gives, for all $\tau\ge0$,
+
+$$
+M_X\mathcal E_X^\circ(\tau)
+\le M_X\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
++(2+2\sqrt2)\upsilon_X^2L_X.
+\tag{AC8}
+$$
+
+AC8 is a one-sided occupation comparison, not a bound on the absolute
+difference. Its cost has no factor counting gaps, center shells or
+future shells.
+
+### Keep the same credit and all remaining future contributions
+
+One choice needing no extra arithmetic hypothesis is
+
+$$
+\upsilon_X=\min\{b_X^{1/8},M_X^{1/4}\}\longrightarrow\infty.
+\tag{AC9}
+$$
+
+The original $b_X,M_X\to\infty$ make its strict size condition
+eventually valid, and $\upsilon_X^2/M_X\le M_X^{-1/2}\to0$.
+Substitute AC8 once into VP4 to obtain
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&c_X\left[S\tau+
+\frac{\widehat{\mathcal E}_X^{(\upsilon)}(\tau)}{L_X}\right]\\
+&-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
++\omega_X
++\frac{(2+2\sqrt2)c_X\upsilon_X^2}{M_X}+o(1).
+\end{aligned}}
+\tag{AC10}
+$$
+
+The explicit added term tends to zero independently of the size of
+$V_X^K/(M_XL_X)$. The exact $c_X$ and the entire credit coefficient
+remain. All original full windows, maximizing ties and the full
+$\Theta\in(1/2,1]$ range are retained; no favorable subsequence is
+introduced.
+
+This partial payment covers only $r_s$ on AC3's classified gaps.
+No positive proportion or eventual coverage of all gaps is established.
+Even if every gap qualified, their $s+Q(w)$ baselines and the entire
+exterior future would remain in AC5. The missing sufficient estimate
+is still a strict joint upper comparison for this residual occupation
+and the same $V_X^K$ credit, leaving $C_*-\delta$ for fixed positive
+parameters on the original common cofinal sequence. That estimate,
+MT8, the all-integer Robin inequality and RH remain unproved.
