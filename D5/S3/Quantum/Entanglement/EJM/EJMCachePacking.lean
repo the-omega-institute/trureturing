@@ -3,7 +3,8 @@ numeric vectors retains all sixteen exact row indices and earned actions.
 Decoding restores every field of each indexed MirrorRow, including the full
 future-transition payload. Equality uses the original row-consistency
 invariant; neither row bounds nor global shapes substitute for future state.
-No compilation, performance result or global acceptance is claimed here. -/
+The representation equalities have compiled through the scoped Lean entry.
+No performance result or global acceptance is claimed here. -/
 
 import D5.S3.Quantum.Entanglement.EJM.EJMCacheState
 import D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
@@ -213,6 +214,7 @@ theorem check_decode {N : ℕ} {Sym : Type*}
     cases hn : nodes (fuel + 1) index with
     | bound =>
       simp only [D5.S0.Certificates.FiniteCachedSymmetryDAGReplay.check, hn, lower]
+      exact decide_eq_decide.mpr Iff.rfl
     | symmetry s =>
       simp only [D5.S0.Certificates.FiniteCachedSymmetryDAGReplay.check, hn]
     | split i children =>
@@ -225,6 +227,7 @@ theorem check_decode {N : ℕ} {Sym : Type*}
             (EJMCacheState.step (decode cache) i a) (Function.update p i (some a)) := by
         rw [ih, decode_step]
       simp only [children_eq]
+      exact decide_eq_decide.mpr Iff.rfl
 
 #print axioms decode_encode
 #print axioms decode_step

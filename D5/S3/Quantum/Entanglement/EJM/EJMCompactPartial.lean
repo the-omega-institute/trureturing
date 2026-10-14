@@ -1,6 +1,7 @@
 /- Prepared compact-partial candidate only.  The source partial assignment is
 represented by a prefix depth and one low-index-first base-4 Nat.  This file
-does not replace the original Function.update checker and is not compiled.
+has a compiled equality with the original Function.update checker; no full
+replay acceptance is asserted here.
 
 The important boundary is semantic: `decode` returns `none` at every unknown
 coordinate, and all four recursive values remain explicit in `checkPacked`.
@@ -160,7 +161,7 @@ theorem append_decode_update
       have hnew : g.val < (append q a).depth := by
         dsimp [append]
         omega
-      rw [Function.update_same, decode_known (append q a) g hnew]
+      rw [Function.update_self, decode_known (append q a) g hnew]
       congr 1
       apply Fin.ext
       change (q.digits + a.val * base ^ q.depth) / base ^ g.val % base = a.val
@@ -209,14 +210,12 @@ theorem actual_split_coordinate
     i.val + fuel + 1 = 21 := by
   unfold EJMGlobalDAGData.nodes at hnode
   split_ifs at hnode
-  · cases hnode
-  · cases hnode
-  · have hcoord : i.val = (21 - (fuel + 1)) % 20 := by
-      cases hnode
-      rfl
-    have hlt : 21 - (fuel + 1) < 20 := by omega
-    rw [Nat.mod_eq_of_lt hlt] at hcoord
-    omega
+  have hcoord : i.val = (21 - (fuel + 1)) % 20 := by
+    cases hnode
+    rfl
+  have hlt : 21 - (fuel + 1) < 20 := by omega
+  rw [Nat.mod_eq_of_lt hlt] at hcoord
+  omega
 
 theorem checkPacked_eq_original
     (fuel : ℕ) (index : Fin EJMGlobalDAGData.Size)
@@ -264,7 +263,7 @@ theorem checkPacked_eq_original
           rw [ih _ _ _ (hqnext a) (hnextinv a)]
           rw [append_decode_update q a i hwell (by simpa [hdepth])]
         simp only [hchild]
-        rfl
+        exact decide_eq_decide.mpr Iff.rfl
 
 def actualPacked : PackedPartial := ⟨0, 0⟩
 

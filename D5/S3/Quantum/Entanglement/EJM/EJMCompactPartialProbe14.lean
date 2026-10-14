@@ -3,15 +3,17 @@ stored as `(depth, digits)` with the complete actual zero-prefix context,
 the original cache, margin, nodes and all four recursive values. -/
 
 import D5.S3.Quantum.Entanglement.EJM.EJMCompactPartial
-import D5.S3.Quantum.Entanglement.EJM.EJMCacheProbe
+import D5.S3.Quantum.Entanglement.EJM.EJMCacheProbeContext
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option Elab.async false
 set_option maxRecDepth 100000
 
 namespace D5.S3.Quantum.Entanglement.EJM.EJMCompactPartialProbe14
 open D5.S3.Quantum.Entanglement.EJM.EJMCompactPartial
 open D5.S3.Quantum.Entanglement.EJM.EJMCacheProbe
+open D5.S0.Certificates.FiniteCachedSymmetryDAGReplay (check)
 
 def packedZero : PackedPartial := ⟨14, 0⟩
 
