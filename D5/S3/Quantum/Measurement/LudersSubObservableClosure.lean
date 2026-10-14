@@ -60,8 +60,6 @@
 
 import D5.S0.Diagonal.Lawvere.TypedEscapeNeedsPositivity
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.Complex.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
