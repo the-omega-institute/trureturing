@@ -1,0 +1,16 @@
+**Proposition 5.3 (deciding all finite parameters together).** Each
+$G_\tau$ is effectively Presburger and semilinear, with decidable
+emptiness. If nonempty, one can choose one fixed $\mathbf p_0\in G_\tau$
+and produce, for each supplied $M$, one joint $\mathbf w$ satisfying
+$\Phi_\tau$ and every lower bound.
+
+Proof. Lemma 5.1 makes $\Phi_\tau$ Presburger and (SFS.14) uses only
+first-order natural quantifiers and inequalities. [Ginsburg–Spanier,
+Theorems 1.2–1.3][GS] supplies decision and effective semilinear conversion.
+After nonemptiness is proved, enumerate natural tuples with decidable
+membership to obtain $\mathbf p_0$. For each $M$, enumerate $\mathbf w$
+and test its decidable finite formula; membership in $G_\tau$ ensures
+termination. These searches begin only after their existence is proved.
+Neither finite parameters nor their finite tree values are reselected
+after seeing a depth.
+
