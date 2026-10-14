@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c0654c20d4dee2e74181bace14616b2e584b09b0cd9ac2bd9cd75afb3a21af8
+  normalized_sha256: sha256:3c0654c20d4dee2e74181bace14616b2e584b09b0cd9ac2bd9cd75afb3a21af8
+cas_ref: sha256:3c0654c20d4dee2e74181bace14616b2e584b09b0cd9ac2bd9cd75afb3a21af8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 4.8（C-IRPT 的素数化解释层）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: c52f3eb5f524652041e1e14bba47fadbe48750ff68a181aa3b0d4a8848b1c18d
+    next_atom_id: ee73b739ceaee6d6afeea225be384d48ba5c2ec5484e763c583c28b48fde97c6
