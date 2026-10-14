@@ -443,8 +443,8 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                 Paragraph(Text(
                     "If J is empty, O and V are singletons, m_b=0 and D=0. The actual original P_b and flattened Q_b are the zero "
                     + "Dirac laws derived in C01/C02. Thus every original measurable classifier has risk 1/2, the constant rule "
-                    + "attains it, and the real infimum is 1/2. Zero weights, signed weights and any coincident means also fall "
-                    + "under the D=0 argument. Combining D=0 with D>0 (D is always a norm and nonnegative) proves for every "
+                    + "attains it, and the real infimum is 1/2. All-zero weights and any other design with coincident means are covered by the D=0 argument. "
+                    + "Arbitrary signed weights remain allowed in both branches, with the branch determined by D. Combining D=0 with D>0 (D is always a norm and nonnegative) proves for every "
                     + "admitted design that there exists a measurable deterministic delta_star on O attaining Phi(-D/(2sigma)), "
                     + "that this risk is no larger than that of any other measurable original classifier, and that the literal real "
                     + "sInf equals this value.")))),
