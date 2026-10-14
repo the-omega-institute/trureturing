@@ -237,7 +237,7 @@ Gérald Tenenbaum 与 Xiangyu Wang 的 [*On integers whose friable component is 
 
 $$
 \Theta(x,y,z)=\#\{n\le x:n_y>z\},
-\qquad v=\frac{\log z}{\log y}.
+\qquad \nu=\frac{\log z}{\log y}.
 $$
 
 其定理 1 在
@@ -250,20 +250,42 @@ $$
 
 $$
 \Theta(x,y,z)
-=x\exp\!\left(-v\log\!\bigl(v\log(3v)\bigr)+O(v)\right).
+=x\exp\!\left(-\nu\log\!\bigl(\nu\log(3\nu)\bigr)+O(\nu)\right).
 $$
 
-这可以作为 FIB 稀疏层的候选供应商，但必须先对**同一个**
+这条估计可以直接接到当前的同一候选。对
 
 $$
 N=uv=1+F_rg,
 \qquad v\mid C,
-\qquad Cu\equiv v\pmod {F_r}
+\qquad Cu\equiv v\pmod {F_r},
+\qquad E=\log(uv),
 $$
 
-证明某个异常子族统一满足 $N_y>z$，并同时保留移动 Fibonacci 同余。无条件的全体整数计数不能推出指定剩余类中没有命中，也不能把不同候选的最优值合并。
+令 $g_0=\gcd(N,C)=C/v$。若 $C$ 的所有素因子不超过 $y$，则 $g_0$ 是 $N$ 的 $y$-光滑因子，因此
 
-即使这个接口闭合，它最多改进候选数量或稀疏层的容量；它不估计同一 $N$ 的完整 prime-power 权重、$D^*(a)$ 或 signed Robin tail $H_a$。因此本来源已登记为可复用的外围估计与明确的接口义务，不重复已有光滑数分布工作，也不构成 Robin 不等式或 RH 证明。
+$$
+N_y\ge g_0=\frac Cv,
+\qquad E\le L\Longrightarrow N_y\ge Ce^{-L}.
+$$
+
+所以在
+
+$$
+\max\{2,\log(Ce^{-L})\}\le y\le Ce^{-L}\le x/2
+$$
+
+等参数条件成立时，原始窗口内的同一候选满足
+
+$$
+\#\{N\text{ in the window}:E\le L\}
+\le
+\min\left\{\tau(C),\Theta\left(x,y,Ce^{-L}\right)\right\}.
+$$
+
+左侧仍保留移动 Fibonacci 同余；这里没有把不同候选分别优化后拼接。这是本来源对当前稀疏层的真实新增接口。
+
+它仍只控制候选数量，不估计同一 $N$ 的完整 prime-power 权重、$D^*(a)$ 或 signed Robin tail $H_a$。因此它缩小了异常集合的计数问题，但没有关闭 Robin 的联合预算，也不构成 Robin 不等式或 RH 证明。
 
 ### 448.1 现有尺度下的条件性比较
 
@@ -278,14 +300,14 @@ $$
 并且 $C e^{-L}\le X_+/2$，可以形式上取 $y\asymp a$、$z=C e^{-L}$。此时
 
 $$
- v=\frac{\log z}{\log y}
+ \nu=\frac{\log z}{\log y}
  =\frac{a-L+O(a/\log a)}{\log a},
 $$
 
 从而
 
 $$
- v\log\!\bigl(v\log(3v)\bigr)
+ \nu\log\!\bigl(\nu\log(3\nu)\bigr)
  =a-L+O\!\left(\frac a{\log a}\right).
 $$
 
