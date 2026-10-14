@@ -18,7 +18,7 @@ Section V uses the vector sqrt(a)|00> + sqrt(1 - a)|11>. Alice is the first qubi
 
 **Definition 1.2 (The initial two-qubit operator).**
 
-$$\forall a \in \mathbb{R},\; \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{initial}\left(a\right) = \operatorname{Matrix}.\operatorname{vecMulVec}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{psi}\left(a\right), \operatorname{Star}.\operatorname{star}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{psi}\left(a\right)\right)\right)$$
+$$\forall a \in \mathbb{R},\; \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{initial}\left(a\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{PureState}.\operatorname{PureStateHandshake}.\operatorname{rankOneDensity}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{psi}\left(a\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.initial` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\forall a \in \mathbb{R},\; \operatorname{D5}.\operatorname{S3}.\operatorname{
 
 *Commentary.*
 
-The initial operator is the outer product |psi(a)><psi(a)|, expressed by Matrix.vecMulVec with the pointwise complex conjugate Star.star of the vector. For 0 <= a <= 1 this is a rank-one density matrix.
+The initial operator is D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity applied to psi(a), the outer product |psi(a)><psi(a)| with pointwise complex conjugation. For 0 <= a <= 1 this is a rank-one density matrix.
 
 **Definition 1.3 (Failure to preserve the identity).**
 
@@ -42,7 +42,7 @@ The Kraus family is non-unital when the sum of K_k K_k adjoint differs from the 
 
 **Definition 1.4 (Sending Bob's qubit through the channel).**
 
-$$\forall m \in \mathbb{N},\; \forall a \in \mathbb{R},\; \forall K \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{out}\left(a, K\right) = \sum_{k: \operatorname{Fin}\left(m\right)} (\operatorname{Matrix}.\operatorname{kronecker}\left((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), K\left(k\right)\right) \cdot \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{initial}\left(a\right) \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{Matrix}.\operatorname{kronecker}\left((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), K\left(k\right)\right)\right))$$
+$$\forall m \in \mathbb{N},\; \forall a \in \mathbb{R},\; \forall K \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{out}\left(a, K\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Foundation}.\operatorname{FiniteKrausChannel}.\operatorname{PhyslibLeaf}.\operatorname{MatrixMap}.\operatorname{of}_{kraus}\left((\lambda (k: \operatorname{Fin}\left(m\right)) \mapsto \operatorname{Matrix}.\operatorname{kronecker}\left((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), K\left(k\right)\right)), (\lambda (k: \operatorname{Fin}\left(m\right)) \mapsto \operatorname{Matrix}.\operatorname{kronecker}\left((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), K\left(k\right)\right)), \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{UniversalTeleportationCriticalConcurrence}.\operatorname{initial}\left(a\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.out` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$\forall m \in \mathbb{N},\; \forall a \in \mathbb{R},\; \forall K \in \operato
 
 *Commentary.*
 
-Bob's channel acts on the second tensor factor. The output is the sum of conjugations of the initial operator by the matrices I tensor K_k, with Matrix.kronecker denoting the tensor product of matrices.
+Bob's channel acts on the second tensor factor. D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus is applied to two copies of the family k maps to I tensor K_k and then to the initial operator. Its action is the sum of conjugations by that family, with Matrix.kronecker denoting the tensor product of matrices.
 
 **Definition 1.5 (Usefulness for universal quantum teleportation).**
 

@@ -50,13 +50,13 @@ The settlement would not hold if the module's channels were narrower than the so
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.lean` (554 lines).
+The canonical source is `D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.lean` (566 lines).
 - It defines `psi`, `initial`, `NonUnital`, `out`, `UsefulUQT`, `Cstar`, `conc` and `claim` (trace preservation is the frozen `SwitchUselessConcatenationRefutation.IsKrausChannel`), and proves `result : claim`: for 1/2 < a < 1, every channel making the final state useful for UQT has C > C_*, and for C > C_* some non-unital channel does.
 - Among its frozen dependencies are `pauli`, `blochA`, `blochB` and `corr` of `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction`, together with its `trace_conj_kron`; `trace_local_right` of `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation`; `trace_pauli_kronecker_eq_corr` of `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH`; `spin` of `D5/S3/QuantumChannels/PauliThreeWeightBayesianInverseUniqueness`; `matrix_energy` of `D5/S3/Quantum/Information/ActualPureQubitCostInfimum`; and Mathlib's `Matrix.trace_units_conj`, `inner_mul_inner_self_le` and positive-semidefinite trace lemmas.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registration in `Reg/D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.lean` reads out a ↦ conc a in the necessity clause of `claim`. Its rejected realization, the constant 0, fails at a = 3/4: the sufficiency clause gives a useful channel, and the rejected necessity clause would then force C_* < 0. It is `declared_validated`. The five owner theorems made public for this settlement (`trace_conjugate_left`, `trace_conjugate_right` and `trace_local_right` of `KickedIsingNegativityRefutation`, `trace_conj_kron` of `SteeringEllipsoidFullyEntangledFraction`, `trace_pauli_kronecker_eq_corr` of `SteeringEllipsoidCHSH`) are registered in their modules' `Reg/` mirrors, each `declared_validated`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.lean.json`, statement `sha256:14c706aec099741eaaee1efb0f51dc42c028e1fdc69357c1bc9dc131cf15d521`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/UniversalTeleportationCriticalConcurrence.lean.json`, statement `sha256:89d0bed6707b07a28b04ff5145937b897b5e2613dba18c61ef48614d20521b04`.
 
 Declaration statements:
 - `result`: `sha256:c7ce1d5c620f616cb4761b3dad6d8897d0429a368f3e9145ad9536c0dd742223`;
