@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:492ca64f82a5a9612353b9188cab0f402ff78e280d1da58833e078a4e168e926
   normalized_sha256: sha256:492ca64f82a5a9612353b9188cab0f402ff78e280d1da58833e078a4e168e926
 cas_ref: sha256:492ca64f82a5a9612353b9188cab0f402ff78e280d1da58833e078a4e168e926
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/HistorySensitiveOutcomeReductionObstruction.history_sensitive_evaluation_not_outcome_reducible
+    target_statement_id: sha256:44f91f7e9b71e71110e6d62e92051f01779ce6ba6aed300b612dd8ae441d63ee
 receipts:
   unresolved_subitems: []
   chain_atoms:
