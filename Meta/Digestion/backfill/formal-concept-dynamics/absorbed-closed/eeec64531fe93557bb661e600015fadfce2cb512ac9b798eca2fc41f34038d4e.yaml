@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:eeec64531fe93557bb661e600015fadfce2cb512ac9b798eca2fc41f34038d4e
+  normalized_sha256: sha256:eeec64531fe93557bb661e600015fadfce2cb512ac9b798eca2fc41f34038d4e
+cas_ref: sha256:eeec64531fe93557bb661e600015fadfce2cb512ac9b798eca2fc41f34038d4e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Communication/DiscussionCommonSourceUpperBound.discussion_common_source_upper_bound
+    target_statement_id: sha256:372c679d7ff7850a47c3f3555b3121af01df13a0f73b0e72618a997688a8459c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46111545161192191da06a7137f40c89bf96b203f11d8f7074f804672050c6f8
+  normalized_sha256: sha256:46111545161192191da06a7137f40c89bf96b203f11d8f7074f804672050c6f8
+cas_ref: sha256:46111545161192191da06a7137f40c89bf96b203f11d8f7074f804672050c6f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 264.1 只规定固定谱的曲线类与整函数子类及信息上确界。
+    previous_atom_id: f4f8933da790f9c728bfb1f0c1a8aafd0b283e174a75a94b432dce31d6329269
+    next_atom_id: 2274a712690d931f6f3773e27a157d6049aec8d5eb9cc3b32e378ccaebcbf2b2

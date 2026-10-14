@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ac41a0f10e5a0d4f9b04047df5303aaf9051b0c137ad4f200b9a01324d69caf9
+  normalized_sha256: sha256:ac41a0f10e5a0d4f9b04047df5303aaf9051b0c137ad4f200b9a01324d69caf9
+cas_ref: sha256:ac41a0f10e5a0d4f9b04047df5303aaf9051b0c137ad4f200b9a01324d69caf9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineRecoveryExactThreshold.deterministic_recovery_exact_threshold
+    target_statement_id: sha256:d085a7b51dfa7ceed5810d4ae996e461325bbb3012830f76d702314694399f9f
+receipts:
+  unresolved_subitems: []

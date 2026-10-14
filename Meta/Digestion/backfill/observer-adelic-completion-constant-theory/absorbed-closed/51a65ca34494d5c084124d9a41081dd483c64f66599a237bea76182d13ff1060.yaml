@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51a65ca34494d5c084124d9a41081dd483c64f66599a237bea76182d13ff1060
+  normalized_sha256: sha256:51a65ca34494d5c084124d9a41081dd483c64f66599a237bea76182d13ff1060
+cas_ref: sha256:51a65ca34494d5c084124d9a41081dd483c64f66599a237bea76182d13ff1060
+coverage_gids:
+  - gid: D5/S3/Analytic/Characterizations/GoldenDynamicalDeterminant.golden_dynamical_determinant
+    target_statement_id: sha256:e1cddc81ea40af775cf4a1e0cf76f80470a8d61997bb1f9c47a85d23acdd23be
+  - gid: D5/S3/Weil/ZetaLinear/OfflineZeroSpectralQuotient.offline_zero_spectral_quotient_coordinate
+    target_statement_id: sha256:74a84c519cfbd7996d6526875258110011dab5cfee8daa453c71c5ecda14d528
+receipts:
+  unresolved_subitems: []

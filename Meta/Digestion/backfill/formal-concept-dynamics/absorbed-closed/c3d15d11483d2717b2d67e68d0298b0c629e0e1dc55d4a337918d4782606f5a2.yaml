@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c3d15d11483d2717b2d67e68d0298b0c629e0e1dc55d4a337918d4782606f5a2
+  normalized_sha256: sha256:c3d15d11483d2717b2d67e68d0298b0c629e0e1dc55d4a337918d4782606f5a2
+cas_ref: sha256:c3d15d11483d2717b2d67e68d0298b0c629e0e1dc55d4a337918d4782606f5a2
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/TargetFamilyEssenceMonotonicity.multi_target_essence_sufficiency_and_monotonicity
+    target_statement_id: sha256:b8d70b53d3f71b980702457c56a6649413919d89c9f256ca9790c929f99ad329
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:11f8839e43924d1e368668596ba02f496ee5909ebefea5556723462209ceeee6
+  normalized_sha256: sha256:11f8839e43924d1e368668596ba02f496ee5909ebefea5556723462209ceeee6
+cas_ref: sha256:11f8839e43924d1e368668596ba02f496ee5909ebefea5556723462209ceeee6
+coverage_gids:
+  - gid: D5/S3/Observer/AgencySelf/AgencySelfUniversalMinimality.agency_self_universal_minimality
+    target_statement_id: sha256:8dbbfa9ea1397679f9c6f165fedf83129225b5aa376bbd1a3bc1bb72e22b7804
+receipts:
+  unresolved_subitems: []
