@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:6a31aed3109394554a09f0b9be3bc42426d2dd3a6fe6f2f5fc46240e2526f24f
   normalized_sha256: sha256:6a31aed3109394554a09f0b9be3bc42426d2dd3a6fe6f2f5fc46240e2526f24f
 cas_ref: sha256:6a31aed3109394554a09f0b9be3bc42426d2dd3a6fe6f2f5fc46240e2526f24f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.circuit_initialized_coefficients
+    target_statement_id: sha256:c12fa2d04d5c3558aa82dc82a90bf720307ea7bd5b132adcf2dbc57f7afb65d1
 receipts:
   unresolved_subitems: []
   chain_atoms:
