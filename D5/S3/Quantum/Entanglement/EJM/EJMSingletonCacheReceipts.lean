@@ -17,6 +17,9 @@ import D5.S3.Quantum.Entanglement.EJM.EJMSingletonCacheData
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 100000
+-- Async elaboration retained a measured 32 GiB heap for these finite proofs.
+-- Finish each unchanged kernel receipt before beginning the next one.
+set_option Elab.async false
 
 namespace D5.S3.Quantum.Entanglement.EJM.EJMSingletonCacheReceipts
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
