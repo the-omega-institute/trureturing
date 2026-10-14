@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: The unsmoothed physical Euler-metric cross block is noncompact. The actual completion pays the archimedean reference trace and a uniform lower defect bound; its growing-place-set upper bound remains unresolved.
+claim: The unsmoothed physical Euler-metric cross block is noncompact. The actual completion pays the archimedean reference trace; a localized Hardy estimate pays the geometric defect under an additional prime-growth condition. Both its full-commutator and one-sided Hankel majorants have a large all-primes cost; the original actual-projection upper and full arithmetic comparison remain unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -335,3 +335,373 @@ the same-test comparison with the complete arithmetic Weil form,
 including its pole, finite-prime and Gamma corrections. Equations
 (5)--(9) supply neither that comparison nor the original strict Robin
 upper; no Lean verification is asserted.
+
+## A localized Hardy estimate gives an explicit finite-place cost
+
+Keep the physical cutoff $\lambda=1$, the actual orthogonal projection
+$P_S$ of (2), and WT7's same nonnegative bumps
+$\psi_j(x)=\psi(2^jx)$. The following is a repo-derived application
+of the existing physical transport, Hardy commutator kernel and Gamma
+estimates. The generic projection ordering and commutator are reused;
+no literature-priority or Lean-verification claim is made.
+The new quantitative interface is
+
+$$
+\boxed{t_{S,j}\ll_\psi 1+j+C_S,\qquad
+C_S=\sum_{p\in S_{\rm fin}}\frac{\log p}{\sqrt p-1}.}
+\tag{10}
+$$
+
+The implied constant is independent of the finite prime set and $j$.
+This cost avoids the Euler condition-number product, but does not
+replace $\sqrt p-1$ by $p-1$.
+
+### Transport the actual subspace and keep the input weight
+
+Use the unitary plus-sign logarithmic Mellin coordinates on
+$L^2(\mathbb R,dt)$, so $D(a)$ is multiplication by $e^{it\log a}$.
+Let $\Pi$ be the image of the physical outside-cutoff projection,
+$H_+=\operatorname{ran}\Pi$ its upper Hardy space, and
+$H_-=\operatorname{ran}(I-\Pi)$. For $Jg(t)=g(-t)$, the physical
+even Fourier transform is $M_\rho J$, where
+
+$$
+\rho(t)=\pi^{-it}
+\frac{\Gamma(1/4+it/2)}{\Gamma(1/4-it/2)},\qquad
+\alpha_S(t)=\prod_{p\in S_{\rm fin}}
+(1-p^{-1/2}e^{it\log p}),\qquad
+W_S=\frac{\alpha_S}{\overline{\alpha_S}},\quad U_S=\rho W_S.
+$$
+
+These conventions are the reflected variable $t=-s$ of the source's
+unitary Mellin transform. The [owned archimedean source](connesconsani2021archimedean.md),
+Appendix D, Remark D.2 and Appendix E, equations (159)--(161),
+manuscript pp.52--53, supply the Hardy projection, Gamma ratio and
+Cauchy difference-quotient kernel. The semilocal source's equations
+(57)--(58) and Theorem 4.6 supply the actual $\alpha_S$ transport.
+
+For finite $S$, both $\alpha_S$ and its inverse preserve $H_+$,
+while $\overline{\alpha_S}$ and its inverse preserve $H_-$.
+Thus the Mellin image of the actual semilocal Sonin space is exactly
+
+$$
+\alpha_S(H_+\cap\rho H_-)=H_+\cap U_SH_-.
+\tag{11}
+$$
+
+Write $\widetilde P_S$ for its orthogonal projection. This is a
+unitary representation of (2), including its inverse compressed
+metric, rather than the oblique projection $APA^{-1}$.
+Set $\mathsf H_S=(I-\Pi)M_{\overline{U_S}}\Pi$. This contraction
+is isometric on the intersection (11), so
+$\widetilde P_S\le\mathsf H_S^*\mathsf H_S$.
+
+With $\widehat\psi(t)=\int\psi(x)e^{-itx}dx$, the actual integrated
+bump has multiplier
+$w_j(t)=2^{-j}\widehat\psi(2^{-j}t)\ge0$; evenness removes the
+Mellin sign change. The Cauchy commutator kernel gives
+
+$$
+\begin{aligned}
+t_{S,j}
+&=\operatorname{Tr}
+(M_{\sqrt{w_j}}\widetilde P_SM_{\sqrt{w_j}})
+\le\|\mathsf H_SM_{\sqrt{w_j}}\|_2^2\\
+&\le\|[M_{\overline{U_S}},\Pi]M_{\sqrt{w_j}}\|_2^2\\
+&=\frac1{4\pi^2}\int_{\mathbb R}\int_{\mathbb R}
+w_j(s)\frac{|U_S(t)-U_S(s)|^2}{(t-s)^2}\,dt\,ds.
+\end{aligned}
+\tag{12}
+$$
+
+Indeed $\mathsf H_S=(I-\Pi)[M_{\overline{U_S}},\Pi]$.
+There is no interchange of $\Pi$ with $M_{\sqrt{w_j}}$: the weight
+in the squared kernel is on its input variable $s$. The finite
+integral below justifies the localized Hilbert--Schmidt operator and
+then the positive trace comparison. One may first use compactly
+supported input vectors in the Cauchy kernel identity and extend by
+the resulting Hilbert--Schmidt bound. The full commutator need not
+be Hilbert--Schmidt; no unsmoothed dilation trace is used.
+
+### Bound the localized kernel before summing the actual coefficients
+
+Unimodularity gives
+$|U_S(t)-U_S(s)|^2\le2|\rho(t)-\rho(s)|^2+
+2|W_S(t)-W_S(s)|^2$. Logarithmic differentiation of the finite product
+gives $\|W_S'\|_\infty\le2C_S$. For a unimodular
+$L$-Lipschitz function $W$,
+
+$$
+\int_{\mathbb R}\frac{|W(s+h)-W(s)|^2}{h^2}\,dh
+\le\int_{\mathbb R}\min(L^2,4/h^2)\,dh=8L.
+$$
+
+For the Gamma ratio,
+$\rho'/\rho=i(\operatorname{Re}\operatorname{digamma}(1/4+it/2)-\log\pi)$.
+The standard [digamma asymptotic](https://dlmf.nist.gov/5.11.E2)
+and continuity on the remaining compact segment give
+$|\rho'(t)|\ll\log(3+|t|)$. On $|h|\le1$ use
+$L_s=C\log(3+|s|)$ and the amplitude cap together:
+
+$$
+\frac{|\rho(s+h)-\rho(s)|^2}{h^2}
+\le\min(L_s^2,4/h^2).
+$$
+
+Its integral is at most $8L_s$; the part $|h|>1$ is at most $8$.
+Consequently the full inner Gamma integral is
+$O(\log(3+|s|))$, with one logarithm. Since $\widehat\psi$ is
+nonnegative and Schwartz,
+
+$$
+\int w_j(t)dt=2\pi\psi(0),\qquad
+\int w_j(t)\log(3+|t|)dt\ll_\psi1+j.
+$$
+
+Substitution in (12) proves (10). All estimates use the actual fixed
+smooth frequency weight; no independent-prime or Bohr-mean
+orthogonality is assumed.
+
+Put $K_X=1+\log D_X$, with WT7's $D_X\ge2$.
+Splitting its coefficient bound
+$a_j\ll L_X\min(1,D_X2^{-j})$ at
+$\lceil\log_2D_X\rceil$ gives
+$\sum_j a_j\ll L_XK_X$, in addition to the already owned
+$\sum_j(1+j)a_j\ll L_XK_X^2$.
+The positive sum (9) therefore yields
+
+$$
+\boxed{T_S(X)\ll_\psi L_X(K_X^2+C_SK_X).}
+\tag{13}
+$$
+
+For $S_{\rm fin}\subseteq\{p:p\le V\}$, the
+[owned prime-count upper bound](../Arith/rosser1962approximate.md#global-prime-counts-and-the-classical-pnt-interface)
+gives $\vartheta(v)\ll v$. Partial summation and
+$(\sqrt p-1)^{-1}\ll p^{-1/2}$ give $C_S\ll\sqrt V$.
+Since $K_X\ll Y_X$ and $Y_X^2/M_X\to0$ are already paid, (8) and
+(13) pay the actual geometric defect whenever the additional condition
+
+$$
+\frac{C_SK_X}{M_X}\longrightarrow0
+\qquad\text{holds; sufficiently,}\qquad
+V=o\bigl((M_X/K_X)^2\bigr).
+\tag{14}
+$$
+
+In this restricted regime $\Delta_S(h_H)=o(M_XL_X)$ for the same
+$H_X=c_X-F_X$, original windows, ties and horizon. Restricting the
+place growth is an additional hypothesis on this geometric estimate;
+it is not a license to omit support-relevant primes from the original
+arithmetic form. The original allowance
+$\log V=O((\log X)^4)$ does not imply (14). Its weighted upper
+bound remains unproved, as does the separate full same-test arithmetic
+comparison. Equations (10)--(14) do not establish the original strict
+Robin upper or RH.
+
+### The squared-commutator majorant itself has a large prime cost
+
+There is a separate limitation of the last member of (12). For the
+actual all-primes family $S(V)=\{\infty\}\cup\{p:p\le V\}$, denote
+that finite squared-kernel integral by $\Xi_{V,j}$. Then for all
+sufficiently large $V$, uniformly in $j\ge0$,
+
+$$
+\boxed{\Xi_{V,j}\ge c_\psi 2^{-j}\frac{\sqrt V}{\log V}.}
+\tag{15}
+$$
+
+This is a lower bound on the localized full commutator majorant,
+not on $t_{S(V),j}$ or on its intermediate one-sided Hankel bound.
+
+To check (15), write $W_{S(V)}=e^{i\Theta_V}$ with a smooth phase
+on a neighborhood of zero. Put $r_p=p^{-1/2}$ and $\ell_p=\log p$.
+The actual product gives
+
+$$
+-\Theta_V'(s)=2\sum_{p\le V}\ell_p
+\frac{r_p\cos(s\ell_p)-r_p^2}
+{1-2r_p\cos(s\ell_p)+r_p^2}.
+$$
+
+For $|s|\le(4\log V)^{-1}$, every cosine is at least
+$\cos(1/4)>1/\sqrt2\ge r_p$. Thus every summand has the same
+positive sign, and its ratio is bounded below by a fixed positive
+constant times $r_p$. Reuse the
+[owned dyadic prime count](../Arith/rosser1962approximate.md#dyadic-prime-count-lower-bound):
+there are at least $3V/(10\log V)$ primes in $(V/2,V]$, each
+contributing at least $\log(V/2)/\sqrt V$ to
+$\sum\ell_p/\sqrt p$. Together with $C_{S(V)}\ll\sqrt V$ above,
+this proves
+
+$$
+c\sqrt V\le-\Theta_V'(s)\le C\sqrt V
+\qquad\bigl(|s|\le(4\log V)^{-1}\bigr)
+$$
+
+for fixed $c,C>0$ and sufficiently large $V$.
+The phase derivative of $\rho$ is bounded near zero, so the same
+two-sided bounds, after changing $c,C$, hold for minus the local
+phase derivative of $U_{S(V)}=\rho W_{S(V)}$.
+
+Choose a fixed $d>0$ with $2Cd<\pi/2$. For
+$|s|\le(8\log V)^{-1}$ and
+$d/\sqrt V\le h\le2d/\sqrt V$, the entire segment $[s,s+h]$
+lies in the preceding derivative range once $V$ is sufficiently large.
+The absolute phase increment lies in $[cd,2Cd]$, so
+$|U_{S(V)}(s+h)-U_{S(V)}(s)|^2$ is bounded below by a fixed
+positive constant. Also
+$w_j(s)\ge2^{-j}\widehat\psi(0)/2$ on this $s$ interval,
+uniformly in $j\ge0$ and sufficiently large $V$; here
+$\widehat\psi(0)>0$ and continuity suffice.
+Integrate just this rectangle in the nonnegative integral (12).
+Its $s$ length is $1/(4\log V)$ and
+$\int_{d/\sqrt V}^{2d/\sqrt V}h^{-2}dh=\sqrt V/(2d)$,
+which proves (15).
+
+Consequently this particular full-commutator majorant cannot have a
+uniform polynomial-in-$\log V$ cost, even for $j=0$ and the same
+fixed bump. Its upper bound (10) is not being contradicted: (15)
+places a smaller lower bound on the larger comparison object.
+Improving the actual projection estimate can still use information
+lost in $\widetilde P_S\le\mathsf H_S^*\mathsf H_S$ or in the
+second inequality of (12). No reversal of either inequality, lower
+bound on the true trace, or obstruction to RH follows.
+
+
+### The one-sided Hankel majorant retains the large cost
+
+Keeping the middle member of (12) also loses too much for a uniform
+polynomial-in-$\log V$ estimate. The following application uses the
+actual WT7 factor $\psi=u*u^*$ and the already obtained (15);
+the pair-of-projections algebra and Schwartz commutator theorem are
+reused. It is a repo-derived paper calculation, without a new generic
+operator theorem, literature-priority claim or Lean verification.
+
+For $v_j(t)=2^{-j/2}\widehat u(2^{-j}t)$, one has
+$|v_j|^2=w_j$. Multiplication by $v_j$ or by $\sqrt{w_j}$ gives
+the same squared Hilbert--Schmidt norm: the two multipliers differ
+by a measurable unitary multiplier. Write
+
+$$
+\begin{gathered}
+\mathsf G_S=\Pi M_{\overline{U_S}}(I-\Pi),\qquad
+D_S=\Pi-M_{U_S}\Pi M_{\overline{U_S}},\\
+B_{S,j}=\|\mathsf H_SM_{v_j}\|_2^2,\qquad
+B^{\rm op}_{S,j}=\|\mathsf G_SM_{v_j}\|_2^2.
+\end{gathered}
+$$
+
+Let $\Xi_{S,j}$ denote the last integral of (12) for a general
+finite $S$. The two off-diagonal blocks have orthogonal output
+ranges. Ordinary projection algebra gives
+
+$$
+\mathsf H_S^*\mathsf H_S+\mathsf G_S^*\mathsf G_S=D_S^2,
+\qquad
+\mathsf H_S^*\mathsf H_S-\mathsf G_S^*\mathsf G_S
+=\operatorname{diag}_{\Pi}(D_S),
+$$
+
+where $\operatorname{diag}_{\Pi}(T)=\Pi T\Pi+(I-\Pi)T(I-\Pi)$.
+In particular $B_{S,j}+B^{\rm op}_{S,j}=\Xi_{S,j}$.
+The weighted difference requires a localization correction; one
+cannot commute the multiplier past $\Pi$.
+
+The owned archimedean source, Appendix D, Lemma D.1, manuscript
+pp.51--52, makes $[\Pi,M_f]$ trace class for Schwartz $f$.
+For each fixed finite $S$, $U_S$ and all its derivatives have at
+most polynomial growth: finite Euler factors and their reciprocals
+have bounded derivatives, and the Gamma ratio has polynomial
+derivative bounds. Consequently $\overline{v_j}U_S$ is Schwartz.
+Put $V_j=M_{v_j}$. The exact decomposition
+
+$$
+V_j^*D_SV_j
+=[M_{\overline{v_j}},\Pi]M_{v_j}
+-[M_{\overline{v_j}U_S},\Pi]M_{\overline{U_S}v_j}
+$$
+
+therefore proves that the sandwich is trace class. These fixed-$S$
+trace-class assertions do not claim a uniform trace-norm bound in
+$S$. Its full localized difference-quotient kernel is Schwartz, so
+the diagonal trace formula, with the convention of (11)--(12), gives
+
+$$
+d_{S,j}:=\operatorname{Tr}(V_j^*D_SV_j)
+=\frac1{2\pi}\int_{\mathbb R}w_j(t)
+\frac{U_S'(t)}{iU_S(t)}\,dt.
+$$
+
+This is the reflected normalization of the source's Appendix E,
+equations (161)--(163), manuscript p.53. The plus sign can also be
+checked with $U(t)=e^{iat}$, $a>0$: then $D$ is the positive
+projection onto the logarithmic physical strip $[0,a)$.
+For the actual finite Euler product,
+
+$$
+\frac{W_S'(t)}{iW_S(t)}
+=-2\sum_{p\in S_{\rm fin}}\log p
+\sum_{k\ge1}p^{-k/2}\cos(kt\log p).
+$$
+
+The inner derivative series is absolutely uniformly convergent for
+each finite $S$. Every Euler term integrates to zero, since
+
+$$
+\int w_j(t)\cos(kt\log p)\,dt
+=2\pi\psi_j(k\log p)=0,
+\qquad k\log p\ge\log2>\tau2^{-j}.
+$$
+
+Thus $d_{S,j}=d_j$ is independent of $S$, with
+
+$$
+d_j=\frac1{2\pi}\int w_j(t)
+\bigl[\operatorname{Re}\operatorname{digamma}(1/4+it/2)
+-\log\pi\bigr]dt,\qquad |d_j|\ll_\psi1+j.
+$$
+
+This cancellation uses the actual prime-free bump, rather than an
+independent-prime average. To compare it with the weighted block
+difference, put $R=2\Pi-I$ and $C_j=[\Pi,V_j]$. Direct algebra gives
+
+$$
+V_j^*\operatorname{diag}_{\Pi}(D_S)V_j
+-\operatorname{diag}_{\Pi}(V_j^*D_SV_j)
+=C_j^*D_SRV_j+RV_j^*D_SC_j.
+$$
+
+All traces here are now legal. A difference of orthogonal
+projections has $\|D_S\|\le1$, so the trace error is at most
+$2\|v_j\|_\infty\|C_j\|_1$. Positive dilations commute with the
+Hardy projection, and hence
+$\|C_j\|_1=2^{-j/2}\|[\Pi,M_{\widehat u}]\|_1$ and
+$\|v_j\|_\infty=2^{-j/2}\|\widehat u\|_\infty$.
+Consequently, uniformly over finite $S$ and $j\ge0$,
+
+$$
+\boxed{2B_{S,j}=\Xi_{S,j}+d_j+e_{S,j},\qquad
+|e_{S,j}|\le C_u2^{-j}.}
+\tag{16}
+$$
+
+Combining (16) with the existing (15), for all sufficiently large
+$V$ and uniformly $j\ge0$, gives
+
+$$
+\boxed{B_{S(V),j}\ge
+c_\psi2^{-j}\frac{\sqrt V}{\log V}-C_{u,\psi}(1+j).}
+\tag{17}
+$$
+
+In particular $B_{S(V),0}\ge c_\psi\sqrt V/\log V-O_{u,\psi}(1)$.
+Thus a uniform polynomial-in-$\log V$ estimate for this one-sided
+majorant is also excluded. This does not lower-bound
+$t_{S(V),j}$: the true orthogonal projection retains only the
+singular-value-one subspace of $\mathsf H_S$, whereas
+$\mathsf H_S^*\mathsf H_S$ also charges fractional principal-angle
+channels. Nor is a lower bound on the actual completion sum asserted
+without a lower bound on its actual coefficients. The original
+growing-place-set projection estimate and full same-test arithmetic
+comparison remain unresolved; (16)--(17) do not prove or refute RH.
