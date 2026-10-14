@@ -13,6 +13,14 @@ internal sealed class CoherentCopyCorrelationTaxDocument : IScribeDocumentDefini
             + "mutual information into diagonal entropy and relative entropy of coherence.",
         H("Coherent Premeasurement and Correlation Tax"),
         Blocks(
+            CopyDefinition("copyIsometry", "The basis-copying isometry", CopyIsometryFormula(),
+                "The rectangular matrix sends basis vector i to the product basis vector (i,i).", DescribeRole.Definition),
+            CopyDefinition("copyIsometry_star_mul", "Basis copying is an isometry", CopyIsometryLaw(),
+                "The adjoint of the copying matrix followed by the copying matrix is the identity on the input space.", DescribeRole.Theorem),
+            CopyDefinition("copyMatrix", "Coherent matrix copying", CopyMatrixFormula(),
+                "Coherent copying conjugates the input matrix by the rectangular copying isometry.", DescribeRole.Definition),
+            CopyDefinition("copyMatrix_entry", "Entries of the copied matrix", CopyEntryFormula(),
+                "The copied matrix retains an input entry exactly between two correlated product-basis indices and is zero at every other pair.", DescribeRole.Theorem),
             Paragraph(Text(
                 "The copying isometry sends basis vector i to the joint basis vector (i,i). "
                     + "The joint state is V rho V*, including the input's off-diagonal entries. "
@@ -65,4 +73,67 @@ internal sealed class CoherentCopyCorrelationTaxDocument : IScribeDocumentDefini
     private static Formula MarginalFormula(string name) => Disp(Seq(
         Forall, Sp, Rho, Comma, Sp, Call(name, Call("coherentCopyState", Rho)), Sp, Eq, Sp,
         Call("basisPinchingState", Rho)));
+
+    private static DocumentBlock CopyDefinition(string name, string title, Formula formula,
+        string prose, DescribeRole role) => Describe.Lean(
+            DescribeId.Create("copying-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Module + name), H(title),
+            StatementSource.FromAuthor(formula), AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula CopyNamed(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula CopyApp(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula CopyCall(string name, params Formula[] args) => CopyApp(CopyNamed(name), args);
+    private static Formula CopyQualified(string owner, string name) => Seq(CopyNamed(owner), Dot, CopyNamed(name));
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula CopyAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, body);
+    private static Formula CopyEqual(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula CopyComplex() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula CopyPair() => Seq(F.Id("n"), Sp, Times, Sp, F.Id("n"));
+    private static Formula CopyMatrixType() => CopyCall("Matrix", F.Id("n"), F.Id("n"), CopyComplex());
+    private static Formula CopyProjection(Formula p, byte i) => Seq(p, Dot, D(i));
+    private static Formula CopyInstances(Formula body) => Seq(
+        OpenBracket, CopyCall("Fintype", F.Id("n")), CloseBracket, Sp,
+        OpenBracket, CopyCall("DecidableEq", F.Id("n")), CloseBracket, Comma, Sp, body);
+
+    private static Formula CopyIsometryFormula()
+    {
+        Formula p = F.Id("p"), i = F.Id("i");
+        Formula identity = CopyApp(Parenthesized(Seq(D(1), Colon, Sp, CopyMatrixType())), CopyProjection(p, 1), i);
+        Formula rhs = CopyCall("ite", CopyEqual(CopyProjection(p, 1), CopyProjection(p, 2)), identity, D(0));
+        return Disp(CopyAll("n", CopyNamed("Type"), Seq(
+            OpenBracket, CopyCall("DecidableEq", F.Id("n")), CloseBracket, Comma, Sp,
+            CopyAll("p", CopyPair(), CopyAll("i", F.Id("n"),
+                CopyEqual(CopyCall("copyIsometry", p, i), rhs))))));
+    }
+
+    private static Formula CopyIsometryLaw()
+    {
+        Formula v = Parenthesized(Seq(CopyNamed("copyIsometry"), Colon, Sp,
+            CopyCall("Matrix", CopyPair(), F.Id("n"), CopyComplex())));
+        return Disp(CopyAll("n", CopyNamed("Type"), CopyInstances(CopyEqual(
+            new Formula.Binary(CopyApp(CopyQualified("Matrix", "conjTranspose"), v), FormulaBinaryOperator.Multiply, v), D(1)))));
+    }
+
+    private static Formula CopyMatrixFormula()
+    {
+        Formula v = Parenthesized(Seq(CopyNamed("copyIsometry"), Colon, Sp,
+            CopyCall("Matrix", CopyPair(), F.Id("n"), CopyComplex())));
+        Formula rhs = new Formula.Binary(new Formula.Binary(v, FormulaBinaryOperator.Multiply, F.Id("M")),
+            FormulaBinaryOperator.Multiply, CopyApp(CopyQualified("Matrix", "conjTranspose"), v));
+        return Disp(CopyAll("n", CopyNamed("Type"), CopyInstances(CopyAll("M", CopyMatrixType(),
+            CopyEqual(CopyCall("copyMatrix", F.Id("M")), rhs)))));
+    }
+
+    private static Formula CopyEntryFormula()
+    {
+        Formula m = F.Id("M"), p = F.Id("p"), q = F.Id("q");
+        Formula rhs = CopyCall("ite", CopyEqual(CopyProjection(p, 1), CopyProjection(p, 2)),
+            CopyCall("ite", CopyEqual(CopyProjection(q, 1), CopyProjection(q, 2)),
+                CopyApp(m, CopyProjection(p, 1), CopyProjection(q, 1)), D(0)), D(0));
+        return Disp(CopyAll("n", CopyNamed("Type"), CopyInstances(CopyAll("M", CopyMatrixType(),
+            CopyAll("p", CopyPair(), CopyAll("q", CopyPair(), CopyEqual(CopyCall("copyMatrix", m, p, q), rhs)))))));
+    }
 }
