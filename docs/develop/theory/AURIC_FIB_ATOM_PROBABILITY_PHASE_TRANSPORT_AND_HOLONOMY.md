@@ -2257,3 +2257,360 @@ metric transport, native $SO(3)$ action, or complete explanation of why three
 is forced follows from this appendix.
 
 ## 6.99 追加锚
+
+## 7. Attained common-source error for a prescribed native loop
+
+**Definition 7.1 (Same-history comparison on the positive triplet locus).**
+Fix any source in the complete locus of Theorem 6.1,
+
+$$
+p=(a,b,8b,b,a),\qquad a,b>0,\qquad 2a+10b=1,
+\qquad \lambda=16ab>0.
+\tag{7.1}
+$$
+
+Keep the fixed initial phases and the five doubled coherence pairs of (4.1).
+Write $D=D_b$ and $c=c_b$ for the original decoder and offset in (4.7).
+Theorems 3.3 and 3.7 identify the endpoint group with
+$\mathbb T\times\mathbb Z_2$ and its coordinate image with the set
+$\mathscr S$ in (6.13). Give this group the normalized Haar law $\mu$ of
+§5: the angle is uniform and parity is independent and balanced. The random
+variable $h$ below is an endpoint residual class with this law; it is not a
+uniformly chosen integer winding or a prescribed distribution on loop paths.
+For $h=(\beta,\varepsilon)$, the supplied identities (4.7), (4.8), (5.1)
+and (6.4) are
+
+$$
+\begin{gathered}
+q(h)=(\sqrt2\cos\beta,\sqrt2\sin\beta,\varepsilon)^{\mathsf T},
+\qquad y(h)=c+Dq(h),\\
+\mathbb E_\mu q=0,\qquad
+\mathbb E_\mu[qq^{\mathsf T}]=I_3,\qquad
+D^{\mathsf T}D=\lambda I_3.
+\end{gathered}
+\tag{7.2}
+$$
+
+Let $\mathcal L_p$ consist of all Definition 3.1 loops based at this source,
+on a finite time interval with finite phase variation, including every
+integer winding. Write $u$ also for a loop's residual increment and $m_u$
+for its integer winding. Equations (4.9)–(4.11) give
+$q(h+u)=T(u)q(h)$, where
+
+$$
+T(u)=R_{\theta(u)}\oplus[\sigma(u)],\qquad
+\theta(u)=u_\beta\pmod{2\pi},\qquad \sigma(u)=(-1)^{m_u}.
+$$
+
+The exact native image is therefore the already established group
+$\mathcal N=\{R_\theta\oplus[\sigma]:\theta\in\mathbb T,
+\ \sigma\in\{-1,1\}\}$. A comparison target is a matrix $Q\in SO(3)$.
+Define
+
+$$
+\begin{aligned}
+y_Q(h)&=c+DQq(h),\\
+\mathcal E_p(u,Q)&=
+  \mathbb E_{h\sim\mu}\|y(h+u)-y_Q(h)\|_{\mathbb R^{10}}^2,\\
+\mathcal E_p^*(Q)&=\inf_{u\in\mathcal L_p}\mathcal E_p(u,Q).
+\end{aligned}
+\tag{7.3}
+$$
+
+Here one loop $u$ is fixed for all $h$. It may be selected using the fixed
+source and $Q$, but not using the input history. Both responses in (7.3)
+use the same $h$, and the norm is the original ten-output Euclidean norm.
+The matrix $Q$ is a comparison target, not an assumed available control;
+$y_Q(h)$ need not be a reachable output. No change of coupling, whitening,
+history-dependent feedback, sampling procedure or cost is part of this
+definition. The separate rotation and physical-interpretation hypotheses of
+§9 and common-source continuation factorization of §12 of
+[FIB harmonic-edge load](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md)
+are not supplied by (7.1)–(7.3). In particular, these definitions and the
+results below establish neither physical spatial dimension, native $SO(3)$
+control, nor a common-source map to all harmonic paths.
+
+**Proposition 7.2 (Paired responses identify the lawful action).** Under
+Definition 7.1 put $Y(h)=y(h)-c$ and $Y_u(h)=y(h+u)-c$. Their ordered
+common-history cross moment satisfies
+
+$$
+C_u:=\mathbb E_\mu[Y_u(h)Y(h)^{\mathsf T}]
+       =DT(u)D^{\mathsf T},\qquad
+T(u)=\lambda^{-2}D^{\mathsf T}C_uD.
+\tag{7.4}
+$$
+
+Thus $C_u$ determines the native endpoint action of a lawful loop, although
+it need not determine that loop's path or full integer winding. The analogous
+paired matrix of the comparison response is $C_Q=DQD^{\mathsf T}$, and
+$C_u=C_Q$ holds if and only if $T(u)=Q$. The same pairing gives
+
+$$
+\mathcal E_p(u,Q)
+ =\lambda\|T(u)-Q\|_F^2
+ =\lambda\bigl(6-2\operatorname{tr}(T(u)^{\mathsf T}Q)\bigr).
+\tag{7.5}
+$$
+
+For independent re-preparation, meaning two independent residual classes
+$h,h'\sim\mu$ while keeping $u$ fixed, the corresponding identities instead
+are
+
+$$
+\mathbb E[Y_u(h')Y(h)^{\mathsf T}]=0,\qquad
+\mathbb E\|y(h'+u)-y_Q(h)\|_{\mathbb R^{10}}^2=6\lambda.
+\tag{7.6}
+$$
+
+**Proof.** The supplied update law gives $Y_u(h)=DT(u)q(h)$. Substituting
+the common-history second moment in (7.2) proves the first equality of
+(7.4). Multiplication on the left by $D^{\mathsf T}$ and on the right by
+$D$ gives $\lambda^2T(u)$, proving recovery and, with $T(u)$ replaced by
+$Q$, the assertion about $C_Q$. For $M=T(u)-Q$, the same moment gives
+
+$$
+\mathbb E\|DMq(h)\|^2
+ =\operatorname{tr}(M^{\mathsf T}D^{\mathsf T}DM)
+ =\lambda\operatorname{tr}(M^{\mathsf T}M).
+$$
+
+Both $T(u)$ and $Q$ are orthogonal $3\times3$ matrices, so expansion gives
+(7.5), including odd-winding $T(u)$ of determinant $-1$. This conversion
+of a least-squares objective into trace maximization is the classical
+orthogonal Procrustes reduction; see J. Lawrence, J. Bernal and
+C. Witzgall, *A Purely Algebraic Justification of the Kabsch–Umeyama
+Algorithm*, [arXiv:1902.03138v6](https://arxiv.org/html/1902.03138v6), §1.
+Here the common-source law and the original decoder fix the trace pairing,
+and the optimization domain remains the restricted native image
+$\mathcal N$.
+
+For independent $h,h'$, the zero means in (7.2) imply
+$\mathbb E[q(h')q(h)^{\mathsf T}]=0$. Hence both the displayed independent
+cross moment and the cross term in the independent squared error vanish.
+Each of its two squared terms has expectation $3\lambda$, by (7.2) and
+orthogonality. This proves (7.6). These are identities for the specified
+joint laws, not instructions for acquiring paired data. $\square$
+
+**Theorem 7.3 (Attained optimal error over every lawful winding sector).**
+For every source (7.1) and every comparison target $Q\in SO(3)$, put
+$z=Q_{33}\in[-1,1]$. Then
+
+$$
+\boxed{\mathcal E_p^*(Q)=4\lambda\bigl(1-\max(z,0)\bigr).}
+\tag{7.7}
+$$
+
+The infimum is attained by an actual finite loop in $\mathcal L_p$, fixed
+independently of $h$. More precisely, for each integer $m$, with the same
+balanced input law $\mu$ and only the prescribed loop's winding fixed,
+
+$$
+\min_{u\in\mathcal L_p:\ m_u=m}\mathcal E_p(u,Q)
+ =\begin{cases}
+ 4\lambda(1-z),&m\text{ even},\\
+ 4\lambda,&m\text{ odd}.
+ \end{cases}
+\tag{7.8}
+$$
+
+If $z>-1$, a minimizing angle in each sector is uniquely determined modulo
+$2\pi$ by
+
+$$
+(\cos\theta_*,\sin\theta_*)
+ =\frac{(Q_{11}+Q_{22},\ Q_{21}-Q_{12})}{1+z}.
+\tag{7.9}
+$$
+
+If $z=-1$, every angle minimizes in each sector. For the unrestricted
+minimum, the loop has even winding when $z>0$, odd winding when $z<0$,
+and either parity when $z=0$. These conditions on angle and parity describe
+all minimizing native actions, and every one of them has a finite lawful
+loop representative. In particular, the endpoint values are
+
+$$
+\begin{array}{c|ccc}
+z&\text{minimum in each even sector}&
+  \text{minimum in each odd sector}&\mathcal E_p^*(Q)\\ \hline
+-1&8\lambda&4\lambda&4\lambda\\
+0&4\lambda&4\lambda&4\lambda\\
+1&0&4\lambda&0
+\end{array}
+\tag{7.10}
+$$
+
+Zero error occurs exactly for the proper native targets
+$Q=R_\theta\oplus[1]$.
+
+**Proof.** Proposition 7.2 reduces the error to a trace on the exact native
+image. Write $A=(Q_{ij})_{1\le i,j\le2}$ and put
+$x=Q_{11}+Q_{22}$, $v=Q_{21}-Q_{12}$. With the rotation convention of
+(4.10),
+
+$$
+\operatorname{tr}\bigl((R_\theta\oplus[\sigma])^{\mathsf T}Q\bigr)
+ =x\cos\theta+v\sin\theta+\sigma z.
+\tag{7.11}
+$$
+
+Orthogonality gives
+$\|A\|_F^2=2-(Q_{13}^2+Q_{23}^2)=1+z^2$.
+Since $Q^{-1}=Q^{\mathsf T}$ and $\det Q=1$, its $(3,3)$ cofactor gives
+$\det A=z$. Consequently
+
+$$
+x^2+v^2=\|A\|_F^2+2\det A=(1+z)^2.
+\tag{7.12}
+$$
+
+Because $1+z\ge0$, the maximum of
+$x\cos\theta+v\sin\theta$ is $1+z$. For $z>-1$ equality holds exactly
+at (7.9); for $z=-1$ both coefficients vanish and every angle attains it.
+With $\sigma=(-1)^m$, (7.5) therefore gives the sector value
+
+$$
+\lambda\bigl(6-2(1+z+\sigma z)\bigr)
+ =4\lambda-2\lambda(1+\sigma)z,
+$$
+
+which is (7.8) at the matrix level. Maximizing over both signs replaces
+$\sigma z$ by $|z|$, so the maximum trace is
+$1+z+|z|=1+2\max(z,0)$. This proves the lower bound in (7.7) and the
+listed necessary and sufficient conditions on a minimizing native action.
+
+To realize every such action without passing to a closure, apply the
+finite reachability of §§3.2–3.3 and the area formula of Theorem 3.7 as
+follows. For the fixed source (7.1),
+
+$$
+X=Y=a+b,\qquad Z=8b,\qquad r=2(a+b),\qquad
+\kappa_0=a\in(0,a+b).
+$$
+
+Choose once and for all the second interior height $\kappa_1=a/2$.
+For any desired integer $m$ and any real representative $\theta$ of a
+desired angle, concatenate the signed winding-$m$ fixed-height circles
+at $\kappa_0$ with one of the zero-winding rectangles of Theorem 2.6,
+using probability heights $\kappa_0,\kappa_1$ and phase height
+
+$$
+\alpha=
+\frac{r(\pi m-\theta)-2\pi m\kappa_0}{\kappa_1-\kappa_0}.
+\tag{7.13}
+$$
+
+The circle part has signed area $2\pi m\kappa_0$ and the rectangle has
+signed area $\alpha(\kappa_1-\kappa_0)$. The total area is therefore
+$r(\pi m-\theta)$, so Theorem 3.7 gives $u_\beta=\theta$ and winding
+$m$. The rectangle is understood as the same relative control path appended
+at the terminal phase lift of the circles. Its phase increment is zero,
+so it does not change $m$.
+
+All probability heights traversed lie between $a/2$ and $a$, a compact
+subinterval of the positive fiber $(0,a+b)$. The denominator in (7.13) is
+nonzero, its numerator is finite, and the concatenation has finitely many
+piecewise linear legs and finite phase variation. It begins and ends at
+the original source. Its parameters depend only on $p,m,\theta$, not on
+$h$. Thus it is a Definition 3.1 loop realizing the desired matrix exactly.
+Taking the minimizing angles and parities proves attainment in every
+sector and in (7.7), rather than merely approximation by lawful matrices.
+
+The table follows by substitution. Finally (7.7) is zero exactly when
+$z=1$. Orthogonality then forces the third row and column to be
+$(0,0,1)$, while the upper block is in $SO(2)$ because $\det Q=1$.
+Hence $Q=R_\theta\oplus[1]$, and the constructed even-winding loops
+realize it. $\square$
+
+**Corollary 7.4 (Complete endpoint-law symmetry can have positive native
+error).** Let $\nu=q_*\mu$ be the law on $\mathscr S$ under Definition 7.1.
+Its proper linear symmetry group equals the proper symmetry group of its
+support, and both are
+
+$$
+\{Q\in SO(3):Q_*\nu=\nu\}
+ =\{Q\in SO(3):Q\mathscr S=\mathscr S\}
+ =\{A\oplus[\det A]:A\in O(2)\}.
+\tag{7.14}
+$$
+
+Those with $\det A=1$ are native and have zero best error; those with
+$\det A=-1$ have best same-history error $4\lambda>0$. In particular,
+the proper comparison rotation
+
+$$
+Q_*=\operatorname{diag}(1,-1,-1)=Q_x(\pi)
+\tag{7.15}
+$$
+
+preserves the complete endpoint law and support, both before and after
+decoding by $c+Dq$, but satisfies
+
+$$
+\min_{u\in\mathcal L_p}\mathcal E_p(u,Q_*)=4\lambda>0.
+\tag{7.16}
+$$
+
+Every fixed lawful loop has the same single-endpoint output law as this
+comparison target. Its common-history paired response nevertheless differs
+from that of $Q_*$.
+
+**Proof.** The law $\nu$ has support exactly $\mathscr S$, because uniform
+angle gives positive measure to every nonempty circle arc and each parity
+has positive mass. A linear orthogonal map is a homeomorphism, so preserving
+$\nu$ implies preserving its support. Conversely suppose $Q\mathscr S=
+\mathscr S$ and write its third row as $(v_1,v_2,z)$. For a fixed parity
+$\varepsilon$, the third coordinate of $Qq(\beta,\varepsilon)$ is
+
+$$
+\sqrt2(v_1\cos\beta+v_2\sin\beta)+z\varepsilon\in\{-1,1\}
+\qquad(\beta\in\mathbb T).
+$$
+
+It is a continuous function on a connected circle with values in a
+two-point set, so it is constant. Its values at $0,\pi$ and at
+$\pi/2,3\pi/2$ force $v_1=v_2=0$. The third row has unit norm, giving
+$z=\pm1$; orthogonality then yields $Q=A\oplus[z]$ with $A\in O(2)$.
+The determinant-one condition gives $z=\det A$.
+Every such $A$ preserves uniform measure on the planar circle, and
+multiplication of parity by $\det A$ preserves balanced parity and its
+independence from the angle. Thus these matrices preserve the entire law,
+proving (7.14).
+
+When $\det A=1$, $A$ is a planar rotation and the target lies in
+$\mathcal N$. When $\det A=-1$, its planar reflection is not a native
+planar rotation. Applying Theorem 7.3 with $z=1$ or $z=-1$ proves the
+respective zero and $4\lambda$ errors. In (7.15) the action is explicitly
+$(\beta,\varepsilon)\mapsto(-\beta,-\varepsilon)$, so it preserves
+$\nu$ and $\mathscr S$. Pushing forward by $q\mapsto c+Dq$ proves
+equality of the complete ten-output laws and supports as well.
+
+Each native $R_\theta\oplus[\sigma]$ also preserves $\nu$, by angle
+translation and parity multiplication. Hence its single-endpoint law agrees
+with the target's. But $T(u)\ne Q_*$ for every lawful loop: the planar
+block of $T(u)$ has determinant $1$, whereas the planar block of $Q_*$
+has determinant $-1$. The recovery identity (7.4) therefore gives
+$C_u\ne C_{Q_*}$. This proves the paired-response distinction for the
+same source and the same history; (7.16) quantifies it in the stipulated
+metric. Independent re-preparation would instead give $6\lambda$ by
+(7.6). $\square$
+
+**Corollary 7.5 (The existing isotropic source).** For
+$p_{\mathrm{iso}}=(1,1,8,1,1)/12$ from (6.11), all statements above hold
+with $\lambda=1/9$. In particular,
+
+$$
+\mathcal E_{p_{\mathrm{iso}}}^*(Q)
+ =\frac49\bigl(1-\max(Q_{33},0)\bigr),\qquad
+\mathcal E_{p_{\mathrm{iso}}}^*(Q_*)=\frac49,
+$$
+
+whereas the independent re-preparation error is $2/3$ for every fixed loop
+and every proper comparison target. All these minima are attained under the
+original doubled-coherence and ten-output metric convention.
+
+**Proof.** Substitute $a=b=1/12$ into $16ab$, Theorem 7.3,
+Corollary 7.4 and (7.6). The finite loops constructed in the theorem remain
+inside this source's positive fiber. $\square$
+
+## 7.99 追加锚

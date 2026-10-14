@@ -5654,3 +5654,254 @@ remaining phase relation. No independent sampling law, positive-
 definite completion, infinite-family cancellation or RH conclusion
 is inferred. The original first-prime bound, full signed upper estimate,
 all-integer Robin inequality and RH remain unproved.
+
+
+## The joint height account forces complete-response occupation at the total clock
+
+Keep JM1--JM7's original RH-failure source, its fixed
+$1-\Theta<\eta<1/2$, $d>0$, $0<\kappa<1$ and
+$0<a<5\kappa/8$. Retain every original full window, prime label,
+maximizing tie and outgoing weight. The complete response remains
+
+$$
+G_a(x)=s_x\int_x^\infty E(v)k(v)dv-\frac{aE(x)}{\sqrt x},
+\qquad s_x=\sqrt x\log x,\quad E=x-\psi,
+\quad k(x)=\frac{1+\log x}{x^2\log^2x}.
+$$
+
+The improper integral and all prime powers are retained. The generic
+inputs are the already used finite centered-tail account, positive
+weight estimates, bounded-variation quadrature and AM--GM inequality.
+The new consumer is the same source's response at its total clock
+$A=B+t$, followed by its unweighted real-center occupation. This
+`repo-derived` paper application gives no upper estimate for the
+original signed head, no new prime theorem and no Lean verification.
+
+### Keep the local cancellation before bounding the past part
+
+At an original label, PG1 gives $K(A)=B$. Put
+
+$$
+q=\frac{s_B}{s_A},\qquad
+c=\frac{B\log B}{A\log A},\qquad
+\mathsf H(x)=s_x\int_x^\infty E(v)k(v)dv.
+$$
+
+For sufficiently large source clocks, $0<q,c\le1$. Splitting the
+same convergent integral, equivalently using the retained centered-tail
+account, gives exactly
+
+$$
+\begin{aligned}
+qG_a(A)
+&=\mathsf H(B)-s_B\int_B^A E(v)k(v)dv
+  -\frac{acE(A)}{\sqrt B},\\
+E(A)&=t+Q(A),\qquad Q=K-\psi.
+\end{aligned}
+\tag{AO1}
+$$
+
+Thus the local $E(B)$ contribution cancels before its capacity is
+estimated. No assumption about the size of the complete signed
+difference $G_a(B)-G_a(A)$ is made. CR19's unabridged height and
+removal gain supply
+
+$$
+\mathsf H(B)\ge
+\frac d2\sqrt B\log B\,X^{-\eta}
++\chi_{p,u}\frac t{\sqrt B},\qquad
+\chi_{p,u}\longrightarrow1
+$$
+
+uniformly in the original labels and ties. Both positive reserves
+belong to that single original account.
+
+Fix one capacity coefficient $C>8/5$. CR43--CR44 give, after one
+common start,
+
+$$
+D_B:=B-K(B)=K(A)-K(B)\le Ct+H_C\sqrt B,
+\qquad |Q(v)|\le H_Q\sqrt v.
+$$
+
+For every $v\in[B,A]$, monotonicity of the complete strict inventory
+gives $K(v)\ge K(B)$. CR17 permits $A\le2B$. Consequently
+
+$$
+E(v)=v-K(v)+Q(v)
+\le(C+1)t+(H_C+\sqrt2H_Q)\sqrt B.
+$$
+
+The original $k$ is positive and decreasing, and
+$s_Bk(B)\le2B^{-3/2}$. Therefore a fixed constant $C_*$ supplies
+the one-sided bound
+
+$$
+s_B\int_B^A E(v)k(v)dv
+\le C_*\frac tB\frac t{\sqrt B}+C_*\frac tB.
+\tag{AO2}
+$$
+
+Its direction is sufficient in AO1. The uniform $t/B\to0$ is
+consumed on this retained past contribution, without converting
+$o(V_X^{\rm lag})$ into $o(M_XL_X)$. Also
+$acQ(A)/\sqrt B\le a\sqrt2H_Q$. Combining AO1--AO2, for every
+fixed positive $\epsilon<1-a$, one common start gives
+
+$$
+qG_a(A)\ge
+\frac d2\sqrt B\log B\,X^{-\eta}
++(1-a-\epsilon)\frac t{\sqrt B}-C_a.
+\tag{AO3}
+$$
+
+All original choices are covered, including $\Theta=1$. The
+normalization has been retained with its sign: the right side is
+eventually positive uniformly, so $q\le1$ then permits
+$G_a(A)\ge qG_a(A)$. No signed upper bound is divided by an
+unpaid normalization factor.
+
+### The same coercive calculation gives a total-clock margin
+
+Set $M_X=X^{1/2-\eta}\log X$, $z=B/X$ and
+$\ell_X=(d/8)X^{1-\eta}\log X$. Since every original
+$t\ge\ell_X$, AO3 yields
+
+$$
+\frac{qG_a(A)}{M_X}\ge
+\frac d2\sqrt z\frac{\log B}{\log X}
++\frac d8\frac{1-a-\epsilon}{\sqrt z}
+-\frac{C_a}{M_X}.
+$$
+
+CR17 and the original floor give
+$\log B/\log X\ge(1-\eta)/2$ beyond one common start.
+The two positive terms exclude both $z\to0$ and $z\to\infty$
+from any sequence of bounded normalized responses. On the remaining
+fixed compact interval, $\log B/\log X\to1$ uniformly. Apply
+JM2--JM3's already used AM--GM calculation there, first fixing
+$\epsilon$ and then letting its fixed requested loss decrease.
+This proves the same-source total-clock conclusion
+
+$$
+\boxed{
+R_A:=\frac d2\sqrt{1-a},\qquad
+\forall\delta>0\quad
+G_a(A_i)\ge(R_A-\delta)M_X
+\quad\text{for every original label and tie eventually}.}
+\tag{AO4}
+$$
+
+It is a lower bound at $A_i$, with the full future integral and
+original compensation. It does not assert an $o(M_XL_X)$
+recentring difference or extend SI1's short-interval asymptotic.
+The equality of $R_A$ with JM7's scalar margin when
+$\eta<13/30$ does not identify their observations: AO4 concerns
+$G_a(A_i)$ and holds for the entire original range $\eta<1/2$.
+No attainment of the minimizing core ratio is asserted.
+
+### Apply the existing total-clock quadrature to a clipped response
+
+The already used complete-integral PNT estimate gives constants,
+independent of $X$, with
+
+$$
+\int_2^\infty |E(v)|k(v)dv<\infty,
+\qquad |E(v)|\le C_Ev\quad(v\ge2).
+$$
+
+On $[\ell_X,R_X]$, the ordinary derivative between prime-power
+atoms is
+
+$$
+G_a'(v)=s_v'\int_v^\infty E(r)k(r)dr
+-s_vE(v)k(v)-\frac a{\sqrt v}
++\frac{aE(v)}{2v^{3/2}},
+\qquad s_v'=\frac{\log v+2}{2\sqrt v}.
+$$
+
+Each actual von Mangoldt atom contributes the retained positive
+jump $a\Lambda(n)/\sqrt n$. The displayed density has absolute
+integral $O_a(\sqrt{R_X}\log(eR_X))$. The elementary bound
+$\Lambda(n)\le\log n$ gives
+$\sum_{n\le R_X}\Lambda(n)/\sqrt n
+\le2\sqrt{R_X}\log(eR_X)$. Thus the actual complete response has
+
+$$
+\operatorname{Var}_{[\ell_X,R_X]}G_a
+\le C_a\sqrt{R_X}\log(eR_X).
+\tag{AO5}
+$$
+
+No derivative of an infinite zero series or monotonicity of $G_a$
+is used.
+
+Fix $0<\tau<\tau'<R_A$, and define the bounded nonnegative readout
+
+$$
+F_X(v)=\min\left\{1,
+\frac{(\tau'M_X-G_a(v))_+}{(\tau'-\tau)M_X}\right\}.
+$$
+
+AO4 makes every original left-tag value $F_X(A_i)$ zero beyond a
+common start. Clipping is Lipschitz, so AO5 bounds its variation
+by $C_a\sqrt{R_X}\log(eR_X)/[(\tau'-\tau)M_X]$.
+Use the original least-core total clock $\mathcal A_X(t)$.
+Assign $F_X(A_i)$ at the finitely many original tie tags. N2's
+all-choice ordering leaves the tagged total-clock map nondecreasing;
+composition cannot increase the readout's variation. Its integral
+is unchanged by those finitely many assignments. The same Dragomir
+arbitrary-partition bound already used in PT9 therefore gives
+
+$$
+0\le\int_{t_0}^{t_m}F_X(\mathcal A_X(t))dt
+\le C_a\frac{\varepsilon_X^{\rm lab}
+\sqrt{R_X}\log(eR_X)}{(\tau'-\tau)M_X}
+=:\Delta_X=o(1/M_X).
+$$
+
+The unchanged label mesh is at most $e^{-5\ell_X/12}$ and
+$\log R_X=o(\ell_X)$, which pay the last rate. Every original
+outgoing weight, including the terminal one, is retained.
+
+Now reuse PT10 and PG9 exactly. For the canonical visited set
+$D_X=[\mathcal A_X(t_0),\mathcal A_X(t_m)]\setminus\bigcup_jG_j$,
+they give $\mathcal A_{X\#}dt=\mathbf1_{D_X}dv$ up to
+measure-zero endpoints and $|D_X|=L_X$. Since $F_X=1$ wherever
+$G_a\le\tau M_X$,
+
+$$
+\boxed{
+|D_X\cap\{G_a\le\tau M_X\}|\le\Delta_X,
+\qquad
+|D_X\cap\{G_a>\tau M_X\}|\ge L_X-\Delta_X.}
+\tag{AO6}
+$$
+
+In particular the full real-center superlevel set in the selected
+total-clock range has Lebesgue measure at least $L_X-o(1/M_X)$.
+This is the original source's complete-response occupation; it is
+not a replacement of its atomic $B$-occupation by Lebesgue measure.
+Nonnegative clipping uses PT10's visited-set restriction and requires
+no assigned sign for the skipped intervals.
+
+### The remaining supplier is a complete-response large-value estimate
+
+For a fixed $\tau<R_A$, an upper measure estimate below
+$(1-\zeta)L_X$, with any fixed $\zeta>0$, on a common cofinal
+sequence of these same original total-clock ranges would contradict
+AO6 and hence exclude that RH-failure source. Such an estimate is
+not supplied here. Its endpoints and threshold still come from the
+same original windows.
+
+Gafni--Tao's fixed-relative-error short-increment exceptional sets
+are different observations. AO6 supplies a complete-response
+superlevel requirement, not an inclusion in those short-increment
+sets, a shrinking-tolerance theorem or an unconditional upper bound
+for this new set. Fixed-anchor negative primitives and normal local
+increments do not determine this complete future response.
+The original signed upper estimate, MT8's actual-residence head,
+the all-integer Robin inequality and RH remain unproved.
+This application reuses its generic inequalities and existing
+total-clock occupation identity; no new generic theorem,
+literature-priority claim or kernel verification is made.
