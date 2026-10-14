@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Entropy.Forgetting.CapacityMonotone
+import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -267,6 +268,78 @@ private theorem entropy3_merge
   simpa only [D5.S3.Entropy.MaxEntropy.shannonEntropy, Fintype.sum_bool,
     ht, hb, sub_sub_cancel, entropy3.eq_1, add_comm] using hm
 
+-- Two-point spreading and scalar entropy bounds.
+private theorem negMulLog_pair_spread {l r p q : ℝ}
+    (hl : 0 ≤ l) (hp : p ∈ Set.Icc l r) (hq : q ∈ Set.Icc l r)
+    (hs : p + q = l + r) :
+    Real.negMulLog l + Real.negMulLog r ≤ Real.negMulLog p + Real.negMulLog q := by
+  rcases lt_or_eq_of_le (hp.1.trans hp.2) with hlr | hlr
+  · exact D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation.pair_entropy_le
+      hl hlr hp.1 hp.2 hs
+  · have hp' : p = l := by linarith [hp.1, hp.2]
+    have hq' : q = r := by linarith [hq.1, hq.2]
+    simp only [hp', hq', le_refl]
+
+private theorem entropy3_box
+    (x : Fin 3 → ℝ) (l m r : ℝ) (hl : 0 ≤ l)
+    (hlm : l ≤ m) (hx : ∀ i, x i ∈ Set.Icc l r)
+    (hs : (∑ i, x i) = l + m + r) :
+    Real.negMulLog l + Real.negMulLog m + Real.negMulLog r ≤ entropy3 x := by
+  simp only [Fin.sum_univ_three] at hs
+  simp only [entropy3, Fin.sum_univ_three]
+  by_cases h0 : x 0 ≤ m
+  · let t := l + m - x 0
+    have ht : t ∈ Set.Icc l m := by dsimp [t]; constructor <;> linarith [(hx 0).1]
+    have hfirst := negMulLog_pair_spread hl ⟨(hx 0).1, h0⟩ ht (by dsimp [t]; ring)
+    have hlast := negMulLog_pair_spread (l := t) (r := r) (le_trans hl ht.1)
+      (p := x 1) (q := x 2)
+      ⟨by dsimp [t]; linarith [(hx 2).2], (hx 1).2⟩
+      ⟨by dsimp [t]; linarith [(hx 1).2], (hx 2).2⟩
+      (by dsimp [t]; linarith)
+    linarith
+  · let t := m + r - x 0
+    have ht : t ∈ Set.Icc m r := by dsimp [t]; constructor <;> linarith [(hx 0).2]
+    have hfirst := negMulLog_pair_spread (le_trans hl hlm) ⟨le_of_not_ge h0, (hx 0).2⟩ ht
+      (by dsimp [t]; ring)
+    have hlast := negMulLog_pair_spread (l := l) (r := t) hl
+      (p := x 1) (q := x 2)
+      ⟨(hx 1).1, by dsimp [t]; linarith [(hx 2).1]⟩
+      ⟨(hx 2).1, by dsimp [t]; linarith [(hx 1).1]⟩
+      (by dsimp [t]; linarith)
+    linarith
+
+private theorem small_entropy_tail
+    (x : Fin 3 → ℝ) (hx : ∀ i, 0 ≤ x i) (hs : (∑ i, x i) = 1)
+    (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)) (hH : entropy3 x ≤ h a) :
+    ∃ i : Fin 3, (1 / 2 : ℝ) < x i ∧ 1 - x i ∈ Set.Icc 0 a := by
+  have hhalf : h a < h (1 / 2) :=
+    Real.binEntropy_strictMonoOn ⟨ha.1, by norm_num; linarith [ha.2]⟩
+      (by constructor <;> norm_num) (by linarith [ha.2])
+  have hi : ∃ i, (1 / 2 : ℝ) < x i := by
+    by_contra hn
+    push Not at hn
+    have hb := entropy3_box x 0 (1 / 2) (1 / 2) (by norm_num)
+      (by norm_num) (fun i => ⟨hx i, hn i⟩) (by norm_num; exact hs)
+    have hh : Real.negMulLog 0 + Real.negMulLog (1 / 2) + Real.negMulLog (1 / 2) =
+        h (1 / 2) := by
+      rw [h, Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
+      norm_num
+    rw [hh] at hb
+    linarith
+  obtain ⟨i, hi⟩ := hi
+  have hxi : x i ≤ 1 := by
+    rw [← hs]
+    exact Finset.single_le_sum (fun j _ => hx j) (Finset.mem_univ i)
+  have hu : 1 - x i ∈ Set.Icc 0 (2 : ℝ)⁻¹ := by constructor <;> norm_num <;> linarith
+  refine ⟨i, hi, sub_nonneg.mpr hxi, ?_⟩
+  by_contra hna
+  have hb := Real.binEntropy_strictMonoOn
+    ⟨ha.1, by norm_num; linarith [ha.2]⟩ hu (lt_of_not_ge hna)
+  have hm := entropy3_merge x hx hs i
+  change Real.binEntropy (1 - x i) ≤ entropy3 x at hm
+  change entropy3 x ≤ Real.binEntropy a at hH
+  linarith
+
 -- Scalar monotonicity and the two capacity cuts.
 private theorem g_eq_binary (u : ℝ) :
     g u = h (1 / 3) + (2 / 3 : ℝ) * h ((1 + 3 * u) / 2) := by
@@ -309,6 +382,30 @@ private theorem table_cuts (w : Matrix (Fin 3) (Fin 3) ℝ)
     intro k _
     exact Finset.single_le_sum (fun l _ => (hw k l).1) (Finset.mem_univ j)
   constructor <;> linarith [(hw i j).2]
+
+private theorem table_tradeoff
+    (w : Matrix (Fin 3) (Fin 3) ℝ)
+    (hw : ∀ i j, w i j ∈ Set.Icc 0 (1 / 3 : ℝ))
+    (hs : (∑ i, ∑ j, w i j) = 1) (a : ℝ)
+    (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ))
+    (hH : entropy3 (fun i => ∑ j, w i j) ≤ h a) :
+    g a ≤ entropy3 (fun j => ∑ i, w i j) := by
+  obtain ⟨i, _, hu⟩ := small_entropy_tail (fun i => ∑ j, w i j)
+    (fun i => Finset.sum_nonneg fun j _ => (hw i j).1) hs a ha hH
+  let u := 1 - ∑ j, w i j
+  have hui : u ∈ Set.Icc 0 (1 / 3 : ℝ) := ⟨hu.1, hu.2.trans ha.2⟩
+  have hc : ∀ j, (∑ k, w k j) ∈ Set.Icc (1 / 3 - u) (1 / 3 + u) := by
+    intro j
+    obtain ⟨hp, hm⟩ := table_cuts w hw hs i j
+    dsimp [u]
+    constructor <;> linarith
+  have hb := entropy3_box (fun j => ∑ i, w i j)
+    (1 / 3 - u) (1 / 3) (1 / 3 + u)
+    (by linarith [hui.2]) (by linarith [hui.1]) hc
+    (by rw [Finset.sum_comm, hs]; ring)
+  have hg := g_antitone hui ha hu.2
+  unfold g at hg ⊢
+  linarith
 
 -- The explicit isometry and its two diagonal marginals.
 private theorem attainer_admissible (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)) :
