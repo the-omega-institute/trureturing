@@ -8,7 +8,7 @@ internal sealed class FibonacciSuperAccessibilityDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Arith/Additive/FibonacciSuperAccessibility.";
     private static readonly LibraryNoteRef Landman =
-        LibraryNoteRef.Create("D5/L/Words/landman2023fibonaccisuperaccessibility");
+        LibraryNoteRef.Create("D5/L/Certificates/landman2023fibonaccisuperaccessibility");
     private static readonly LibraryNoteRef Wesley =
         LibraryNoteRef.Create("D5/L/Certificates/wesley2026fibonaccimodulus29");
 

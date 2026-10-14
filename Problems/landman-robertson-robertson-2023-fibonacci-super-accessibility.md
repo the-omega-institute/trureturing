@@ -16,7 +16,7 @@ Landman, Robertson and Robertson, *Ramsey properties for integer sequences with 
 
 > Is the set of Fibonacci numbers 2-super-accessible? We know it is 2-accessible but that it is not 2-large.
 
-The [source note](../Library/Words/landman2023fibonaccisuperaccessibility.md) gives the definitions and locators. The external named question and literal Lean conventions are in [#16039](https://github.com/the-omega-institute/trureturing/issues/16039).
+The [source note](../Library/Certificates/landman2023fibonaccisuperaccessibility.md) gives the definitions and locators. The external named question and literal Lean conventions are in [#16039](https://github.com/the-omega-institute/trureturing/issues/16039).
 
 ### Statement echo
 
