@@ -798,7 +798,7 @@ one-native-reply geometry. The
 declaration assumes a nonempty compact source, compatible continuous
 surjective finite discrete observations forming a fiber basis, and
 continuous finite readouts. It gives a sufficient finite observation
-level, also for bounded action words under continuous actions. It gives
+level, also for bounded-length action words over a finite action alphabet with continuous actions. It gives
 no effective native acquisition depth, memory-rate lower certificate
 or convergence modulus. These declaration correspondences confer no
 Lean certification on the ordinary proofs here.
