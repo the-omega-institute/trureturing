@@ -68,9 +68,9 @@ private theorem mod_two_cases {x n : ℕ} (_hn : 0 < n) (hx : x < 2 * n) :
   · rw [if_neg h, Nat.mod_eq_sub_mod (by omega : n ≤ x),
       Nat.mod_eq_of_lt (by omega : x - n < n)]
 
+set_option maxHeartbeats 800000 in
 /-- The six right ports are literal rotations in their actual native owners.
 The left ports are subsequently obtained across their actual b edges. -/
-set_option maxHeartbeats 800000 in
 private theorem right_owner_formula {m : ℕ} (hm : 5 ≤ m) (p : Fin 3 × Bool) :
     port m (p.1, p.2, false) =
       rightOwner hm p * finRotate (m + 1) ^ rightRotation m p := by
@@ -113,7 +113,7 @@ private theorem right_owner_domain {m : ℕ} (hm : 5 ≤ m)
     (p : Fin 3 × Bool) (v : Configuration m)
     (hv : Circle (rightOwner hm p) v) : F2Domain m v := by
   rcases p with ⟨r, t⟩
-  fin_cases r <;> cases t
+  fin_cases r <;> cases t <;> simp only [rightOwner, Fin.val_mk] at hv
   · apply Or.inl
     apply cut_circle_domain (by omega : 4 ≤ m) (.inl ⟨m - 1, by omega⟩) v
     simpa only [(first_a_cut (by omega : 4 ≤ m)).1] using hv
@@ -124,7 +124,7 @@ private theorem right_owner_domain {m : ℕ} (hm : 5 ≤ m)
     simpa only [gapAnchor, Fin.val_mk, pow_zero, mul_one] using hv
   · apply Or.inl
     apply cut_circle_domain (by omega : 4 ≤ m) (.inl ⟨m - 3, by omega⟩) v
-    simpa only [cutStart, Fin.val_mk, if_neg (by omega : m - 3 ≠ m - 1),
+    simpa only [NativeCoreSplicing.cutStart, Fin.val_mk, if_neg (by omega : m - 3 ≠ m - 1),
       tCircleAnchor, gapAnchor, lowerPort, contactIndex] using hv
   · exact gap_circle_domain hm (contactIndex hm) ⟨m - 1, by omega⟩ v hv
   · exact gap_circle_domain hm (contactIndex hm) ⟨m - 2, by omega⟩ v hv
