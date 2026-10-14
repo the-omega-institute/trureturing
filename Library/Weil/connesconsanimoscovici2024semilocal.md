@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: The actual all-primes orthogonal Sonin trace grows at least as sqrt(V)/log(V)^3 for a fixed bump. Existing Sonin and zero-free inputs supply actual concentrated trial subspaces. The original growing-place payment and full same-test arithmetic comparison remain unresolved.
+claim: The actual all-primes orthogonal Sonin trace grows at least as sqrt(V)/log(V)^3 for a fixed bump. On the original qualifying cofinal family, the unchanged full-support completion has a geometric defect exceeding the Robin budget scale. The complete same-test arithmetic comparison remains unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1012,10 +1012,170 @@ T_{S(V)}(c_X)\ge c_\psi\frac{\sqrt V}{(\log V)^3}
 \tag{24}
 $$
 
-The last identity uses $\psi\ge0$ and monotone integration. No
-uniform lower bound for these $X$-dependent coefficients sufficient
-to compare (24) with $M_XL_X$ is supplied. Nor does a large positive
-trace lower-bound the signed defect or the complete same-test Weil
-functional. The actual growing-place payment and separate full
-arithmetic comparison remain unresolved; RH and the original strict
+The last identity uses $\psi\ge0$ and monotone integration. The
+following actual-coefficient argument compares (24) with $M_XL_X$
+and separately bounds the signed geometric defect on the same test.
+A positive trace alone does not determine the complete same-test
+arithmetic Weil functional. That comparison and the original strict
 Robin upper remain unproved.
+
+
+## The unchanged full-support completion has a large geometric defect
+
+The actual WT7 coefficients also have a lower mass bound. It links
+(18) to the unchanged MR5 test and rules out the small geometric
+upper allowance for the all-primes-through-support choice. This is
+a repo-derived application of the preceding concentration estimate
+and the existing MR1, MR5 and WT7 definitions, with no new generic
+positivity theorem, literature-priority claim or Lean verification.
+Retain the original qualifying source-window hypotheses and their
+cofinal family; existence of that conditional family is not asserted.
+
+### Every actual core contributes a fixed positive integral mass
+
+Use the original $0<a<1$, least core $b_X$, endpoint-inclusive
+largest core $C_X=B^{\rm end}_{\max,X}$, horizon $U=\mathsf U_X$
+and smoothing $h_B=Q_X\sqrt B$. The existing estimates give
+$U/C_X\to\infty$ and $h_B/B\to0$ uniformly over all original
+cores, including ties. Thus, eventually,
+
+$$
+h_B\le B/8,\qquad
+c_B:=\frac{1-a}{\sqrt B}-\frac{s_B}{U\log U}
+\ge\frac{1-a}{2\sqrt B}
+\quad(b_X\le B\le C_X).
+$$
+
+MR1's nonnegative $w_B$ is constant with value $c_B$ to the left
+of $B$. Its same smoothing therefore satisfies
+$\widetilde w_B(r)=c_B$ on $[B/4,B/2]$. Because $b_X\to\infty$,
+this interval is outside MR5's calibration region $r<\sqrt2$.
+All residence weights remain the original ones. The actual $F_X$
+is nonnegative, and evenness, Tonelli and restriction of a
+nonnegative integral give
+
+$$
+\begin{aligned}
+\|F_X\|_1
+&\ge\int_{\sqrt2}^{\infty}r^{-1/2}
+\widetilde{\mathsf W}_X(r)dr\\
+&\ge\int_{t_0}^{t_m}c_{\mathcal B_X(t)}
+\int_{\mathcal B_X(t)/4}^{\mathcal B_X(t)/2}r^{-1/2}dr\,dt\\
+&\ge\frac{(\sqrt2-1)(1-a)}2L_X.
+\end{aligned}
+\tag{25}
+$$
+
+This does not choose a favorable core: the restriction is made
+inside the same nonnegative joint integral for each actual core.
+WT7's existing upper bound is $\|F_X\|_1\ll L_X$.
+Write $m_\psi>0$ for WT7's fixed spectral floor, avoiding confusion
+with the analytic zero order in (23). Since $0\in I_0$ and
+$F_X\ge0$, the triangle inequality is sharp at zero, so
+
+$$
+a_0=m_\psi^{-1}\|F_X\|_1\asymp L_X,
+\qquad
+\sum_{j\ge0}a_j2^{-j}\asymp L_X,
+\qquad \|c_X\|_1\asymp L_X.
+\tag{26}
+$$
+
+The upper estimates in (26) are reused from WT7, not inferred from
+a lower bound. Combining with (24) yields the actual completion
+estimate $T_{S(V)}(c_X)\gg L_X\sqrt V/(\log V)^3$.
+
+### The same actual positive test retains a spectral floor
+
+The fixed WT7 $u$ is a nonzero nonnegative smooth function. Strict
+triangle inequality on its support gives
+$|\widehat u(2)|<\widehat u(0)$: $e^{-2ix}$ cannot have a constant
+phase on a nonempty open interval where $u>0$. Hence
+
+$$
+m_\psi\le\widehat\psi(2)<\widehat\psi(0).
+$$
+
+Choose one fixed $\varepsilon>0$ and $\kappa_\psi>0$ such that
+$\widehat\psi(t)\ge(1+\kappa_\psi)m_\psi$ for
+$|t|\le\varepsilon$. WT7's other Fourier summands are
+nonnegative. For the same actual $H_X=c_X-F_X$,
+
+$$
+\widehat H_X(t)\ge
+a_0\widehat\psi(t)-|\widehat F_X(t)|
+\ge\kappa_\psi\|F_X\|_1\gg L_X
+\qquad(|t|\le\varepsilon),
+\tag{27}
+$$
+
+while $\widehat H_X\ge0$ on all of $\mathbb R$. No replacement
+test or extra smoothing has been introduced. Apply the preceding
+uniform concentration argument at this same fixed $\varepsilon$;
+(21) holds for every fixed positive choice. Positive projection
+order on its actual trial subspace gives
+
+$$
+\operatorname{Tr}(D_{S(V)}(h_{H_X})P_{S(V)})
+\gg L_X\frac{\sqrt V}{(\log V)^3}.
+$$
+
+Equation (7) already pays the archimedean trace by $O(L_XY_X^2)$.
+Thus the exact same-test defect (3), rather than merely its upper
+majorant in (8), satisfies
+
+$$
+\boxed{\Delta_{S(V)}(h_{H_X})
+\ge cL_X\frac{\sqrt V}{(\log V)^3}-C L_XY_X^2.}
+\tag{28}
+$$
+
+The constants and the $V$ threshold are independent of $X$ and
+its original windows; the existing estimates on $X$ apply beyond
+their one common start. All operators use the original orthogonal
+metric and actual test.
+
+### Compare with the actual unchanged full-support horizon
+
+Take exactly the MR1 support cutoff
+$V=\mathsf V_X=\mathsf U_X+Q_X\sqrt{C_X}$. Either prescribed FH1
+horizon, with its stated SC2 or VC2 ceiling, satisfies
+
+$$
+\mathsf V_X/\mathsf U_X\to1,\qquad
+\frac{\log\mathsf V_X}{\log X}\to\infty,\qquad
+Y_X=o(\log\mathsf V_X).
+$$
+
+Indeed its stated ceilings have $Y_X\gg\log X$, and the two
+horizons have $\log\mathsf U_X/Y_X\to\infty$. The small
+smoothing extension is $o(\mathsf U_X)$ by $Q_X/\sqrt{C_X}\to0$
+and $\mathsf U_X/C_X\to\infty$. These are lower-growth
+consequences of the prescribed horizons, not an inference from the
+upper estimate $\log\mathsf V_X=O((\log X)^4)$.
+Since $M_X=X^{1/2-\eta}\log X$, they imply
+
+$$
+\frac{\sqrt{\mathsf V_X}}
+{M_X(\log\mathsf V_X)^3}\to\infty,
+\qquad
+\frac{Y_X^2(\log\mathsf V_X)^3}{\sqrt{\mathsf V_X}}\to0.
+$$
+
+Consequently (28) gives
+
+$$
+\boxed{\frac{\Delta_{S(\mathsf V_X)}(h_{H_X})}
+{M_XL_X}\longrightarrow+\infty.}
+\tag{29}
+$$
+
+Thus a uniform $O(M_XL_X)$ upper allowance for this actual
+geometric defect fails for the unchanged completion and the full
+all-primes-through-support set. The result is stronger than the
+majorant obstructions (15)--(17): it uses the actual orthogonal
+projection, actual coefficients and actual $H_X$. It does not
+give the complete arithmetic Weil functional a sign. A different
+same-test comparison could retain a compensating correction, and
+a different completion or finite-place scheme is not covered by
+(29). The original strict Robin upper and RH remain unproved.
