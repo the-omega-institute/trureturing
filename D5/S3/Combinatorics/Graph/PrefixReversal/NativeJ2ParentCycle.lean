@@ -38,8 +38,8 @@ open D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
 private theorem j2_frame_special_domain {m : ℕ} (F : SupplyFrame m 2)
     (hB : 3 ≤ F.base.length) (x : Configuration m) :
     FrameDomain F x ↔ SpecialDomain F hB x := by
-  change Layer F.selected.toFinset (F.terminal :: F.base : Cycle _) x ↔
-    Layer F.selected.toFinset (F.terminal :: F.base.rotate 0 : Cycle _) x
+  change Layer F.selected.toFinset (F.terminal :: F.base : Cycle (Fin (m + 1))) x ↔
+    Layer F.selected.toFinset (F.terminal :: F.base.rotate 0 : Cycle (Fin (m + 1))) x
   rw [List.rotate_zero]
 
 private def j2SpecialMap {m : ℕ} (F : SupplyFrame m 2)
@@ -51,7 +51,8 @@ private theorem j2_special_map_bijective {m : ℕ} (F : SupplyFrame m 2)
     (hB : 3 ≤ F.base.length) : Function.Bijective (j2SpecialMap F hB) := by
   constructor
   · intro x y h
-    exact Subtype.ext (congrArg Subtype.val h)
+    have hv := congrArg Subtype.val h
+    exact Subtype.ext hv
   · intro y
     exact ⟨⟨y.val, (j2_frame_special_domain F hB y.val).mpr y.property⟩, Subtype.ext rfl⟩
 
