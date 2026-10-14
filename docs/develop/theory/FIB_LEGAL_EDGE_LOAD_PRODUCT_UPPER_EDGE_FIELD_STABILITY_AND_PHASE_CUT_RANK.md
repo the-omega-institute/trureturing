@@ -1809,8 +1809,28 @@ joint occupation phase supported only at $101$, its
 rectangle value is $e^{i\theta}$, so a nontrivial such gate
 is outside this endpoint control class. The phase family
 considered in §§4–14 is a representation of candidate
-states; this transport source does not supply all of its
-state-changing controls.
+states; closed-loop histories alone do not acquire this
+nontrivial rectangle.
+
+Definition 3.1 also permits open phase legs. At fixed
+probability, choose a phase-base increment $-\theta$;
+its lift has residual $h_s=-\theta w_s$, with
+$w_0-w_1-w_3+w_{13}=1$ and $w_2=0$. Under the source's
+negative convention its endpoint multiplier is
+$e^{i\theta w_s}$. Its crossing rectangle is therefore
+$e^{i\theta}$, exactly that of the joint gate. Their
+quotient has trivial crossing rectangle and is a product
+of position-local phases by the algebra of §3.8. Thus the
+declared fixed-probability open phase control acquires the
+same Schmidt spectra as the three-site joint gate, up to
+position-local phases. This applies at the symmetry walls
+as well: it does not require a closed loop that can cancel
+every local residue there. It identifies an admissible
+mathematical control already in the source, while physical
+preparation, implementation and calibrated energy remain
+separate requirements. No corresponding control on the
+full longer-chain mirror family is supplied by this
+five-mode construction.
 
 The same transport source, §4, establishes affine capacity
 6 in generic position for its five-edge ideal coherence
