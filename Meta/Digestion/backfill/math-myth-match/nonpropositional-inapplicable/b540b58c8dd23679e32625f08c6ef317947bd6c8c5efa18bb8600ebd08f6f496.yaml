@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b540b58c8dd23679e32625f08c6ef317947bd6c8c5efa18bb8600ebd08f6f496
+  normalized_sha256: sha256:b540b58c8dd23679e32625f08c6ef317947bd6c8c5efa18bb8600ebd08f6f496
+cas_ref: sha256:b540b58c8dd23679e32625f08c6ef317947bd6c8c5efa18bb8600ebd08f6f496
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 401.2（边缘误差的收缩预算）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 60bcc8d02e50b35b0604907474280eccdc8cb68c65e9184b0a7defecda688891
+    next_atom_id: 710de38dedb9be94ab0dea5cd3abd83ba6d4b582b5c670923ddef7eb478b8ec7

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:287c1e5efa86eb1a98109e46dff429b9d9ccc09eb0caca25206e3508452541e5
+  normalized_sha256: sha256:287c1e5efa86eb1a98109e46dff429b9d9ccc09eb0caca25206e3508452541e5
+cas_ref: sha256:287c1e5efa86eb1a98109e46dff429b9d9ccc09eb0caca25206e3508452541e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 765.1（允许偏置与偏移）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 6d72d63805bee9b2b9717ab92656853214875fa7e49fb013d10cecb8bdd252c0
+    next_atom_id: d30a660526ab2811e2b8808550d1c08d4888a835e04f4d5c05891c0333d77e10
