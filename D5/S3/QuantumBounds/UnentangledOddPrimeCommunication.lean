@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Weil.ZetaLinear.RankTrace
+import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
+import D5.S3.Fourier.FullBispectrumStability
+import D5.S3.Fourier.SparseGeneratorFamily
 
 noncomputable section
 open scoped BigOperators ComplexOrder
@@ -99,13 +102,10 @@ private theorem tensor_weighted_sum {m n : ℕ} {ι κ : Type*} [Fintype ι] [Fi
 
 private theorem density_frobSq_le_one {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
     (hρ : ρ.PosSemidef) (hTrace : Matrix.trace ρ = 1) : RHLinalg.frobSq ρ ≤ 1 := by
-  calc
-    _ = ∑ i, ∑ j, Complex.normSq (ρ j i) := frobSq_eq_sum ρ
-    _ ≤ ∑ i, ∑ j, (ρ j j).re * (ρ i i).re :=
-      Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ => psd_entry_bound hρ j i
-    _ = (Matrix.trace ρ).re * (Matrix.trace ρ).re := by
-      simp -congrConsts [Matrix.trace, Finset.mul_sum, mul_comm]
-    _ = 1 := by simp -congrConsts [hTrace]
+  unfold RHLinalg.frobSq
+  rw [hρ.isHermitian.eq]
+  simpa -congrConsts [hTrace] using
+    D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.psd_trace_sq ρ hρ
 
 private theorem trace_tensor_le_energy {d : ℕ} (A B : Matrix (Fin d) (Fin d) ℂ)
     (C : Matrix (Fin (d * d)) (Fin (d * d)) ℂ)
@@ -192,8 +192,8 @@ private def measurementMode {d : ℕ} [NeZero d]
 
 private theorem char_sum {d : ℕ} [NeZero d] (t : ZMod d) :
     (∑ k : ZMod d, ZMod.stdAddChar (k * t)) = if t = 0 then (d : ℂ) else 0 := by
-  simpa -congrConsts only [ZMod.card, apply_ite, Nat.cast_zero] using
-    AddChar.sum_mulShift t (ZMod.isPrimitive_stdAddChar d)
+  simpa -congrConsts only [mul_comm] using
+    D5.S3.Fourier.SparseGeneratorGapObstruction.char_sum t
 
 private theorem delta_expansion {d : ℕ} [NeZero d] (c w : ZMod d) :
     (if c = w then (1 : ℂ) else 0) =
@@ -218,30 +218,25 @@ private theorem scalar_parseval {d : ℕ} [NeZero d] (f : ZMod d × ZMod d → �
       (∑ x : ZMod d × ZMod d, ZMod.stdAddChar (u.1 * x.1 + u.2 * x.2) * f x)) =
       (d : ℝ) ^ 2 * ∑ x : ZMod d × ZMod d, Complex.normSq (f x) := by
   classical
-  apply Complex.ofReal_injective
-  push_cast
-  simp_rw -congrConsts [Complex.normSq_eq_conj_mul_self, map_sum, map_mul, Finset.sum_mul,
-    Finset.mul_sum, ← AddChar.map_neg_eq_conj]
-  calc
-    _ = ∑ x : ZMod d × ZMod d, ∑ y : ZMod d × ZMod d,
-        (∑ u : ZMod d × ZMod d,
-          ZMod.stdAddChar (u.1 * (y.1 - x.1) + u.2 * (y.2 - x.2))) *
-          (star (f x) * f y) := by
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro x _
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro y _
-      rw [Finset.sum_mul]
-      apply Finset.sum_congr rfl
-      intro u _
-      rw [show u.1 * (y.1 - x.1) + u.2 * (y.2 - x.2) =
-        -(u.1 * x.1 + u.2 * x.2) + (u.1 * y.1 + u.2 * y.2) by ring,
-        AddChar.map_add_eq_mul]
-      simp -congrConsts only [neg_add, AddChar.map_add_eq_mul, Complex.star_def]
-      ring
-    _ = _ := by simp -congrConsts [plane_char_sum]
+  have hparse (g : ZMod d → ℂ) :
+      (∑ u : ZMod d, Complex.normSq (∑ x : ZMod d, ZMod.stdAddChar (u * x) * g x)) =
+        (d : ℝ) * ∑ x : ZMod d, Complex.normSq (g x) := by
+    have hp := D5.S3.Fourier.FullBispectrumStability.cyclic_parseval g
+    rw [Fintype.expect_eq_sum_div_card, ZMod.card] at hp
+    have he := (eq_div_iff (NeZero.ne (d : ℝ))).mp hp
+    calc
+      _ = ∑ u : ZMod d, Complex.normSq (ZMod.dft g u) :=
+        Fintype.sum_equiv (Equiv.neg _) _ _ (fun u => by
+          simp -congrConsts only [Equiv.neg_apply, ZMod.dft_apply, mul_neg, neg_neg,
+            smul_eq_mul, mul_comm])
+      _ = _ := by simpa -congrConsts only [Complex.normSq_eq_norm_sq, mul_comm] using he.symm
+  simp_rw -congrConsts [Fintype.sum_prod_type, AddChar.map_add_eq_mul, mul_assoc,
+    ← Finset.mul_sum]
+  rw [Finset.sum_comm]
+  simp_rw -congrConsts [hparse, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  simp_rw -congrConsts [← Finset.mul_sum, hparse]
+  simp -congrConsts only [Finset.mul_sum, pow_two, mul_assoc]
 
 private theorem matrix_parseval {d n : ℕ} [NeZero d]
     (ρ : ZMod d × ZMod d → Matrix (Fin n) (Fin n) ℂ) :
