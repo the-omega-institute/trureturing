@@ -1005,3 +1005,233 @@ claim is made. These statements provide no Lean/kernel certification.
 [FIB51-II]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
 
 ## 追加锚（本行以下为增补区）
+
+## 53. Sharp installation bounds for saturated complete-successor controllers
+
+**Definition 53.1 (the strict saturated comparison).** Fix a controller
+of Definition 51.1 with $K=|Q|\ge2$, all states nonhalting, and
+$O_q=Q$, $\delta_q(o)=o$ for every $q,o\in Q$. Each state retains its
+fixed original instruction $I(q)$ and entire literal payload. Saturation
+concerns the designated typed rows, not the actual support of their replies.
+An installation consists of a nonempty finite set
+
+$$
+W\subseteq L_\ell
+=\{w\in\{0,1\}^\ell:w_jw_{j+1}=0\ (1\le j<\ell)\},
+\qquad \pi:W\twoheadrightarrow Q,\qquad M=|W|,
+$$
+
+where $\ell\ge1$ and $\pi$ is proof-side correspondence only. Every word
+is the entire mutable observer. Its fixed instruction is $I(\pi(w))$.
+A valid fixed static response table is a function
+$R:W\times Q\to W$ satisfying, at every installed word and every typed reply,
+
+$$
+\pi(R(w,o))=o,\qquad d_H(w,R(w,o))\le1.
+\tag{FIB.53.1}
+$$
+
+Unsupported replies and unreachable installed words are included. The
+conditional services are exactly those of Definition 51.1 and continuation
+II, Definition 45.1: the original primitive's transient reply selects hold
+or one legal bit flip immediately and is discarded, without an intervening
+instruction, further source observation or extra apparatus update. No decoded
+label, PC, syndrome, latch, stage or retained record exists outside the word.
+Initialization uses either the same actual common $q_0$ or the same genuinely
+acquired record $i$ and its original $c(i)$, paired with the same source and
+target; choose a word over that state. Such whole-word initialization is a
+separately supplied service, not an acquisition of $i$ or later access to it.
+The original source legality and all-action factorization remain premises.
+Acquisition, source promises, installation, initialization, selection, literal
+delivery, primitive execution and response writing retain their separate
+charges from §§51–52. No count here supplies these services physically.
+
+Write $G_W$ for the induced Hamming-distance-one graph on $W$, and put
+$N_W[w]=\{u\in W:d_H(u,w)\le1\}$. All neighborhoods below are installed
+neighborhoods, including their centers.
+
+**Proposition 53.2 (exact static-table existence).** For fixed $W$ and
+$\pi$ in Definition 53.1, a valid response table exists if and only if
+
+$$
+\pi(N_W[w])=Q\qquad\text{for every }w\in W.
+\tag{FIB.53.2}
+$$
+
+Proof. A valid table supplies $R(w,o)\in N_W[w]\cap\pi^{-1}(o)$ for
+each $o$, proving necessity. Conversely, fix an order on the finite set
+$W$. For each pair $(w,o)$ choose the first member of this nonempty
+intersection, choosing $w$ itself when $o=\pi(w)$. These choices give one
+fixed table satisfying (FIB.53.1), with hold on the same label and one flip
+on every different label. Coverage proves existence; a preselected table
+must still satisfy (FIB.53.1) row by row. In particular, coverage alone
+does not certify an arbitrary assignment of successors. $\square$
+
+Condition (FIB.53.2) says that the label classes form a domatic partition
+of $G_W$: each is a dominating set in the closed-neighborhood sense of
+Zelinka, *Domatic numbers of cube graphs*, pp. 117–119 [FIB53-ZELINKA].
+It does not require every label in the open neighborhood; the center supplies
+its own label.
+
+**Theorem 53.3 (installation bounds and equality rigidity).** Every valid
+installation of Definition 53.1 satisfies
+
+$$
+\ell\ge2K-3,\qquad M\ge2^{K-1}.
+\tag{FIB.53.3}
+$$
+
+Put $d=K-1$. If $\ell=2d-1$, the installed set is exactly the odd-coordinate
+cube
+
+$$
+W=\{x_1\,0\,x_2\,0\,\cdots\,0\,x_d:x\in\{0,1\}^d\}.
+\tag{FIB.53.4}
+$$
+
+If $M=2^d$, then $W$ is a coordinate $d$-cube in $\{0,1\}^\ell$:
+exactly $d$ coordinates vary independently and all others are fixed padding.
+The whole face must lie in $L_\ell$. Thus its free positions are pairwise
+nonadjacent, fixed positions adjacent to them are zero, and the remaining
+fixed bits obey the no-$11$ constraint.
+
+Proof. Proposition 53.2 gives $|N_W[w]|\ge K$, hence every vertex has
+degree at least $d$. Choose an installed word of maximum Hamming weight.
+Every installed neighbor decreases its weight, so its degree is at most
+its weight, which is at most $\lceil\ell/2\rceil$ for a no-$11$ word.
+Consequently $d\le\lceil\ell/2\rceil$ and $\ell\ge2d-1$.
+
+Suppose $\ell=2d-1$. The only no-$11$ word of weight $d$ has ones in
+positions $1,3,\ldots,2d-1$: fitting $d$ ones with a gap between each pair
+uses all $2d-1$ positions. Every word with an even-position one therefore
+has weight at most $d-1$. If any such word is installed, choose one of
+maximum weight among that subset. An upward installed neighbor would still
+have its even-position one and contradict maximality in the subset.
+Its degree is therefore at most $d-1$, a contradiction. Hence $W$ lies in
+the odd-coordinate $d$-cube. Degree at least $d$ now forces all $d$ cube
+neighbors of each installed word to be installed. Nonemptiness and the
+connectivity of the cube force all its vertices, proving (FIB.53.4).
+
+For the size bound, Simon's cube lemma is supplied by Ambainis–Vihrovs,
+*Size of Sets with Small Sensitivity: a Generalization of Simon's Lemma*,
+§3, Theorem 1 and Corollary 1, pp. 4–5 [FIB53-AV]. For the actual minimum
+degree $D$ it gives $M\ge2^D$, with equality only for a coordinate
+$D$-cube. There is no irreducibility premise in this result. Here $D\ge d$,
+so $M\ge2^D\ge2^d$; equality $M=2^d$ forces $D=d$ and a coordinate
+$d$-cube, with the stated padding restrictions imposed by $W\subseteq L_\ell$.
+
+For a direct proof of this classical step, induct on ambient dimension.
+For a nonempty induced cube subgraph of minimum degree at least $t$,
+the case $t=0$ has size at least one, with equality a singleton.
+For $t\ge1$, a constant coordinate
+can be deleted and induction applied unchanged. Otherwise split a varying
+coordinate into its two nonempty slices. Each slice loses at most one
+neighbor per vertex, so has minimum degree at least $t-1$ and, by
+induction, at least $2^{t-1}$ vertices. Equality in the summed bound
+forces both slices to be coordinate $(t-1)$-faces. Their internal degrees
+are exactly $t-1$, so every vertex must have its cross-slice mate. Their
+projections coincide, and adjoining the split coordinate gives a coordinate
+$t$-face. This proves both the bound and its equality assertion. $\square$
+
+**Corollary 53.4 (perfect label classes at either equality).** If either
+$\ell=2K-3$ or $M=2^{K-1}$ holds in a valid installation, then every label
+class $C_q=\pi^{-1}(q)$ is a perfect radius-one code inside the installed
+$(K-1)$-cube, and
+
+$$
+K|C_q|=2^{K-1},\qquad K\mid2^{K-1}.
+\tag{FIB.53.5}
+$$
+
+In particular $K$ is a power of two. Equality in the width bound also
+forces equality in the size bound; equality in size permits fixed padding.
+
+Proof. Theorem 53.3 makes $W$ a $d$-cube in either case. Each closed
+neighborhood has $d+1=K$ vertices and all $K$ labels, each exactly once.
+For each fixed $q$, every vertex of this cube is therefore within distance
+one of exactly one member of $C_q$. The radius-one balls centered at
+$C_q$ partition the installed cube and each contain $K$ vertices. Counting
+gives (FIB.53.5). Every prime divisor of $K$ must divide a power of two,
+so $K=2^r$ for an integer $r\ge1$. This is the domatic fullness/divisibility
+argument used for ordinary cubes by Zelinka, p. 117 [FIB53-ZELINKA], applied
+after the installation rigidity has been established. These are balls in
+$G_W$, not balls required to partition the whole Fibonacci graph
+$\Gamma_\ell$. The argument does not classify the labellings or require
+them to be linear. $\square$
+
+**Proposition 53.5 (degree alone is insufficient).** For $K=3$, the
+zero-interleaved square $W=\{000,001,100,101\}\subseteq L_3$ has minimum
+degree $2=K-1$ but admits no three-label closed-neighborhood coverage.
+
+Proof. Each closed neighborhood has three vertices. Coverage would put
+each label there exactly once. Counting occurrences of one fixed label
+over all four closed neighborhoods gives $3|C_q|=4$, since every vertex
+belongs to three such neighborhoods. This contradicts $3\nmid4$.
+Thus the degree consequence of Proposition 53.2 cannot replace its full
+coverage condition. $\square$
+
+**Theorem 53.6 (one common least pair and its universal boundary).** Fix
+the original controller, source contract and initialization of Definition
+53.1. Order installation pairs by
+$(\ell,M)\preceq(\ell',M')$ when $\ell\le\ell'$ and $M\le M'$.
+If $K=2^r$ with $r\ge1$, the attainable pairs have the common least element
+
+$$
+(\ell_*,M_*)=(2K-3,\,2^{K-1}).
+\tag{FIB.53.6}
+$$
+
+If $K$ is not a power of two, every valid installation instead satisfies
+$\ell\ge2K-2$ and $M>2^{K-1}$. A finite attainable upper pair remains
+
+$$
+r=\lceil\log_2K\rceil,\quad m=2^r-1,\qquad
+(\ell,M)=(2m-1,\,K\,2^{m-r}).
+\tag{FIB.53.7}
+$$
+
+Proof. Reuse the single installation of Theorem 51.2 on this same original
+controller. When $K=2^r$, its state labelling exhausts all syndromes, so
+(FIB.51.6) installs the entire zero-interleaved $m$-cube, with $m=K-1$.
+Its already specified typed response table obeys (FIB.53.1), and
+$K2^{m-r}=2^m=2^{K-1}$ while $2m-1=2K-3$. This one witness attains both
+bounds of Theorem 53.3 and is below every competing pair in the product
+order. For $K=2$ it is simply $W=\{0,1\}$ at width one. Initialization is
+the section (FIB.51.8) on the same actual common state or acquired record;
+its supplied service and charges remain in force. No separate coordinate
+minimizers or different-source runs have been combined. For nonpowers,
+Corollary 53.4 excludes either equality, and integrality gives the stated
+strict bounds. Theorem 51.2 with its unused syndrome fibers omitted gives
+(FIB.53.7). These arguments leave the exact minima for nonpowers unsettled.
+$\square$
+
+The attaining witness uses the classical Hamming check construction of
+*Matrix Hamming Codes*, §§9.1–9.3 [MIT-HAMMING], and the zero interleaving
+of Cabello–Eppstein–Klavžar, Proposition 3.1, p. 5 [FIB51-CEK], through
+Theorem 51.2. Simon's size/equality result, the domatic argument and these
+upper-bound ingredients are literature-attested. The saturated controller
+application, no-$11$ width rigidity and common-pair conclusion are
+repo-derived ordinary conditional mathematics, with no global novelty claim.
+
+At powers of two this is also a sharp universal-compiler worst-case pair:
+Theorem 51.2 supplies it for every $K$-state controller under its own
+state-corresponding all-row contract, while the saturated nonhalting subclass
+forces both coordinates. It is not a pointwise lower bound for every
+$K$-state table. For example, a nonhalting table whose every reply returns
+to its current state can use $K$ distinct unit words of length $K$, one per
+state, with every response holding. For $K\ge3$ its $M=K<2^{K-1}$.
+
+The lower-bound comparison excludes halts, supported-only or reachable-only
+row obligations, sparse parity controllers such as SLHC §13, and arbitrary
+trace-only implementations without the stipulated surjection. Nonhalting
+does not prove an action legal or a run infinite: an undefined original
+primitive stays undefined. The pair counts width and installed words only;
+it asserts no optimum for latency, energy, total cost or service availability,
+no uniqueness of a labelled optimum, no classification of perfect codes in
+the whole Fibonacci graph, and no termination, finite-profile or execution
+Pareto conclusion. Those claims require their separate original premises.
+
+[FIB53-AV]: https://eccc.weizmann.ac.il/report/2014/077/revision/2/download
+[FIB53-ZELINKA]: https://dml.cz/bitstream/handle/10338.dmlcz/129735/MathSlov_32-1982-2_2.pdf
+
+## 追加锚（本行以下为增补区）
