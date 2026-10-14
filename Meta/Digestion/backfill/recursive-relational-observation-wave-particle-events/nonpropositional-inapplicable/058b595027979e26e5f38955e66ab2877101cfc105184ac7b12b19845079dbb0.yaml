@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:058b595027979e26e5f38955e66ab2877101cfc105184ac7b12b19845079dbb0
+  normalized_sha256: sha256:058b595027979e26e5f38955e66ab2877101cfc105184ac7b12b19845079dbb0
+cas_ref: sha256:058b595027979e26e5f38955e66ab2877101cfc105184ac7b12b19845079dbb0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 5.1（双路径记录态）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: 7435917ea4e6e3747b5bc87195f4a80e46d87eadca02e4b7da5efe5f82e4e2be
+    next_atom_id: 4c1d0afd4107b575cde41fabdbe8c272f4c5f410648ff31820547a66684fc2d2

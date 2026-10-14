@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81f3095b08968481e729284137d169ee6dfbd48fc184e14bf6c27f7d2d604685
+  normalized_sha256: sha256:81f3095b08968481e729284137d169ee6dfbd48fc184e14bf6c27f7d2d604685
+cas_ref: sha256:81f3095b08968481e729284137d169ee6dfbd48fc184e14bf6c27f7d2d604685
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义238.1　两个不同的转动速率只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: fb71753a118c7338294fa78ddb838bcbb70249cb566ddca93f46eb5ab106d71e
+    next_atom_id: 22164300b941cacd5a3d343342d9e1a32f9567f4527130b8d9cc0fd89737b1a1

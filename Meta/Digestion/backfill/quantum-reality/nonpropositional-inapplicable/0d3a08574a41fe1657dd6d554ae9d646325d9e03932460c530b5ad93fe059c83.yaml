@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d3a08574a41fe1657dd6d554ae9d646325d9e03932460c530b5ad93fe059c83
+  normalized_sha256: sha256:0d3a08574a41fe1657dd6d554ae9d646325d9e03932460c530b5ad93fe059c83
+cas_ref: sha256:0d3a08574a41fe1657dd6d554ae9d646325d9e03932460c530b5ad93fe059c83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 202.1　无预设米秒的量子传播网络只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 573f18a48c32710e7c27b31b721d8a2c851db586768cc3b4f1838bc3cc3f6b47
+    next_atom_id: bb945fad46d1b9363f25a60373cdc8b01067f7538376f9bddc0002bf3a6060cd
