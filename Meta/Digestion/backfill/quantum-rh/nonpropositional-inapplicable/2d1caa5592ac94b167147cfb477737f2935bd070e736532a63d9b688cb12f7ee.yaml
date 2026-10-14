@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d1caa5592ac94b167147cfb477737f2935bd070e736532a63d9b688cb12f7ee
+  normalized_sha256: sha256:2d1caa5592ac94b167147cfb477737f2935bd070e736532a63d9b688cb12f7ee
+cas_ref: sha256:2d1caa5592ac94b167147cfb477737f2935bd070e736532a63d9b688cb12f7ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Clarifies the meanings of r, t and k and the modeling convention for discrete time; no arithmetic property is asserted.
+    previous_atom_id: a3b24ad590cf6effdcb6a80f683b44069a32496cde99df856cb6c599942c05a8
+    next_atom_id: 4e8fa49010a8433825b25754cf018cf57f3c3bc3a53cf067d1ec9f1e10dd6baa

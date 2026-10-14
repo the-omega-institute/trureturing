@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:709950b3adb3951dd0d7b766ef1d0ba3e799efacd4c536c95b9a57e1b1b031f4
+  normalized_sha256: sha256:709950b3adb3951dd0d7b766ef1d0ba3e799efacd4c536c95b9a57e1b1b031f4
+cas_ref: sha256:709950b3adb3951dd0d7b766ef1d0ba3e799efacd4c536c95b9a57e1b1b031f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 55.3 矩形条件恰好控制阈值分量。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: f20024ad4cbced170099c6d97dac142e134f152ded352451c0907ae3b6d54ae0
+    next_atom_id: 6260395e024fc43c2d4db30c31f9a81ddc56a2b8e925c3c1a2c8e806978d7935

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82a9cdbad098a9b9a96533e38af812000365957bb9475a2ab7d4084bf0bcf7c9
+  normalized_sha256: sha256:82a9cdbad098a9b9a96533e38af812000365957bb9475a2ab7d4084bf0bcf7c9
+cas_ref: sha256:82a9cdbad098a9b9a96533e38af812000365957bb9475a2ab7d4084bf0bcf7c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 466.1（拓扑不可区分）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 9c5023bedc72d0a80b0ccb7390404ddb538cded366a45fc6d91613dbda01ae0f
+    next_atom_id: 713d7965ae2dbd2d11968e2a95ad9e499aaf0b29742d6a5ab5fb6cfedf756a21

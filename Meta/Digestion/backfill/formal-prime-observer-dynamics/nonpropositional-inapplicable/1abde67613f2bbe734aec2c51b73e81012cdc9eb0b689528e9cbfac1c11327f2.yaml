@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1abde67613f2bbe734aec2c51b73e81012cdc9eb0b689528e9cbfac1c11327f2
+  normalized_sha256: sha256:1abde67613f2bbe734aec2c51b73e81012cdc9eb0b689528e9cbfac1c11327f2
+cas_ref: sha256:1abde67613f2bbe734aec2c51b73e81012cdc9eb0b689528e9cbfac1c11327f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 2.2（五级证明状态）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: a178fc484bbcd61bafc9e4dd0aca2860feee0217778c846cf2a1c796193f7ff0
+    next_atom_id: 9413c1efb7d791a4a0618066bc8df44e2216447a9dbb8a0e099910b3d1f1ab77

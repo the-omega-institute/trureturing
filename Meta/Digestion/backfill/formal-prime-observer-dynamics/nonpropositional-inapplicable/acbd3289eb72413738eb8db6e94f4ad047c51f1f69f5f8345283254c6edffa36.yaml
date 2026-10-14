@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:acbd3289eb72413738eb8db6e94f4ad047c51f1f69f5f8345283254c6edffa36
+  normalized_sha256: sha256:acbd3289eb72413738eb8db6e94f4ad047c51f1f69f5f8345283254c6edffa36
+cas_ref: sha256:acbd3289eb72413738eb8db6e94f4ad047c51f1f69f5f8345283254c6edffa36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \mathfrak P：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: cc80926563f3832539b16fa141c3282e9165b56b98df647838c244843e928817
+    next_atom_id: 2d15105c96a3cac0617af35a171294c5c75bfda0276e1bd8ad2f1e7f613c0935

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6a714e363f3339ce51f93d3542e78410797849c67eeaf73fecb306e904777b7
+  normalized_sha256: sha256:b6a714e363f3339ce51f93d3542e78410797849c67eeaf73fecb306e904777b7
+cas_ref: sha256:b6a714e363f3339ce51f93d3542e78410797849c67eeaf73fecb306e904777b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：模型 258.A（\(X\to Y\)）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: ea55e27f686da422f73608a3e5ff4d667963cc042640f9fa82a436c9f2839393
+    next_atom_id: d229d1e194172170fb52088c2a0fba156462813c2d44347f561ccf367fcb84d8

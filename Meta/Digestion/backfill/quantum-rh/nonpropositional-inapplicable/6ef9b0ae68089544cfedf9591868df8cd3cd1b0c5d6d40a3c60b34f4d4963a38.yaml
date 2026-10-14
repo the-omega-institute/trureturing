@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ef9b0ae68089544cfedf9591868df8cd3cd1b0c5d6d40a3c60b34f4d4963a38
+  normalized_sha256: sha256:6ef9b0ae68089544cfedf9591868df8cd3cd1b0c5d6d40a3c60b34f4d4963a38
+cas_ref: sha256:6ef9b0ae68089544cfedf9591868df8cd3cd1b0c5d6d40a3c60b34f4d4963a38
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节导引「四十一、这给“平坦是统计近似”一个比以前更精确的版本」只组织后续讨论或表格栏目，本 atom 不含独立数学命题；相邻条目的定理、公式及待证陈述不在本次结算范围内。
+    previous_atom_id: cd907064122fe76190e2c3528ce2a311ba43a9f518d06b9faa2354705e0e45b6
+    next_atom_id: a0633cc244138aea48eaec30116018075da07ab596fa16969817ba8b026fe290

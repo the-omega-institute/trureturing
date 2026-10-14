@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:486faf05dc00de540245e69546d701acaf28d78be5f228783519b25a1b759cb1
+  normalized_sha256: sha256:486faf05dc00de540245e69546d701acaf28d78be5f228783519b25a1b759cb1
+cas_ref: sha256:486faf05dc00de540245e69546d701acaf28d78be5f228783519b25a1b759cb1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只给出定理 L4 的指数增长率的证明及证明方法说明，不另立独立命题；其所证明的原陈述保留自身状态。
+    previous_atom_id: efc75726d17ed8663b268d9d47e0616c4b92a0383da0261cb7c4c6c7f3b819d2
+    next_atom_id: 0e8d9e20c8a7ec0e0820053dc56a9dae075722a110b78a0ecee60b5cb202f2d8

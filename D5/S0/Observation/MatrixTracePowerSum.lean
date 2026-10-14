@@ -91,7 +91,7 @@ private theorem pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
         rw [← pow_succ, mul_one]
 
 /-- The same shift, read off on traces. -/
-private theorem trace_pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
+theorem trace_pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
     Matrix.trace (M ^ (n + 2))
       = Matrix.trace M * Matrix.trace (M ^ (n + 1))
         - Matrix.det M * Matrix.trace (M ^ n) := by

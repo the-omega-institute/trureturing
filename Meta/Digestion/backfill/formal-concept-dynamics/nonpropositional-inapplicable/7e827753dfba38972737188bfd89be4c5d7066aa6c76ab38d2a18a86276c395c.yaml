@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e827753dfba38972737188bfd89be4c5d7066aa6c76ab38d2a18a86276c395c
+  normalized_sha256: sha256:7e827753dfba38972737188bfd89be4c5d7066aa6c76ab38d2a18a86276c395c
+cas_ref: sha256:7e827753dfba38972737188bfd89be4c5d7066aa6c76ab38d2a18a86276c395c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 316.1（区间持续存在）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 8bc904f80b4cd3c56e98398c933840b84b760ef3aa1266a1755306bce0baed77
+    next_atom_id: 43f028a7c381251e9d4c9a3d891e629e412f7440aaea49dd66e71260fd87fbec

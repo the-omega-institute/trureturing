@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3bf5a3a080ff94d034efa7320e30b8daa64b30d55f4f8b2d52f4e9e400e26700
+  normalized_sha256: sha256:3bf5a3a080ff94d034efa7320e30b8daa64b30d55f4f8b2d52f4e9e400e26700
+cas_ref: sha256:3bf5a3a080ff94d034efa7320e30b8daa64b30d55f4f8b2d52f4e9e400e26700
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第56节标题及导引介绍容量任务与后续结果安排，不给独立数学陈述。
+    previous_atom_id: c31a68e473a3ee9485d7afaf76de3e275bbe18a22ed7bf808885237d8a6e596f
+    next_atom_id: fc92782d87102b6613c089d11182e5b36dfa770371a205b2a463b7b96a2f42c2

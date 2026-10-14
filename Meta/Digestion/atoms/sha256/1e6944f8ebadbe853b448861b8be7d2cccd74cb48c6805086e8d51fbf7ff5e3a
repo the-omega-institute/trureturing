@@ -1,0 +1,29 @@
+**Definition 1.2 (effective observer and complete handoff).** Fix finite
+public parameters $a$ and one deterministic effective finite program $P$.
+Its initial accessible configuration $c_a$ is independent of $u$. Use a
+finite-string machine implementation: its next microstep is effectively
+computable from its accessible configuration, and is a local transition,
+a Read with four continuations, or Return. Address construction, allocation,
+comparison, arithmetic and cleanup expand into local microsteps. An
+unbounded local calculation is an unbounded sequence of such steps, not
+a total oracle for the next external action. Configurations have finite
+encodings, with no uniform length bound. Capture roles are fixed by the
+code or effectively checked finite-history annotations, not selected by
+a source oracle.
+
+At Return, $b$ denotes the entire accessible state, canonically encoded:
+rows, cuts, addresses, relation signs, references, stamps, code and control,
+all readable counters, lengths, capacities and allocation distinctions,
+outputs, transcripts, archives and permissions. Fixed public components
+need not be transmitted anew, but are fixed when comparing executions.
+An accessible archive or source-dependent timing field belongs to $b$.
+A complete access cut can revoke old descriptions; it cannot revoke the
+public rule by which $P$ selected $b$.
+
+Our cleaned constructions use the finite-sequence storage contract of
+[CWS, Definition 2.1][CWS] and [CAB, Definition 1.3][CAB]: fixed output-region
+identities, canonical extents determined by output bytes, paid clearing
+and retraction of nonoutput regions, and reset control and heads. There
+is no retained failure counter or earlier publication. This is an access
+contract, not a physical-erasure theorem for an arbitrary allocator.
+

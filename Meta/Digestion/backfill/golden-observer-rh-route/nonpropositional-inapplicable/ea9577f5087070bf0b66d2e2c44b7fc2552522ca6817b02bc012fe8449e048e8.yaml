@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea9577f5087070bf0b66d2e2c44b7fc2552522ca6817b02bc012fe8449e048e8
+  normalized_sha256: sha256:ea9577f5087070bf0b66d2e2c44b7fc2552522ca6817b02bc012fe8449e048e8
+cas_ref: sha256:ea9577f5087070bf0b66d2e2c44b7fc2552522ca6817b02bc012fe8449e048e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional section heading identifying W-4 and its intended module; the mathematical obligation is the separate following clause. The heading supplies no additional quantified assertion.
+    previous_atom_id: 802be1560e34f2fb80521b1aa74d9b252bbd40b344a35efa428e15a8e5d66dc1
+    next_atom_id: 4eda74717bda7e9b3ba34358956b6456986166410d1131dff12fa2d9f03614e5

@@ -1,0 +1,49 @@
+**Proposition 214.12 (exact projection endpoints).** In the single common Boolean projection cone defined by
+
+$$
+ m_i\ge2u (i\le5),\quad m_6\ge2v,\quad
+ D_{ik}\ge u\ (i<k\le5),\quad D_{i6}\ge v,
+\tag{214.14}
+$$
+
+one has $\min S=13u/4$ when $v=3u/4$ and $\min S=23u/7$ when $v=u$, with equality at the following measures. The displayed masses already include their factor $u$.
+
+For $v=3u/4$, put mass $u/4$ on each of
+
+$$
+001111,010111,011011,011101,011110,100111,101011,101101,101110,
+110010,110101,110110,111011.
+$$
+
+Then
+
+$$
+S=13u/4,\quad m=(2,2,2,9/4,5/2,9/4)u,
+$$
+
+all $D_{ik}=u$ for $i<k\le5$, and
+$(D_{16},D_{26},D_{36},D_{46},D_{56})=(1,1,3/4,3/4,3/4)u$.
+
+For $v=u$, put mass $2u/7$ on
+
+$$
+001111,010111,011011,011101,100111,101011,101101,110011,110101
+$$
+
+and mass $u/7$ on
+
+$$
+011110,101110,110110,111011,111101.
+$$
+
+Then
+
+$$
+S=23u/7,\quad m=(2,2,2,16/7,16/7,20/7)u,
+$$
+
+all high-high $D_{ik}=u$, and
+$(D_{16},D_{26},D_{36},D_{46},D_{56})=(8/7,8/7,8/7,1,1)u$.
+
+At $u=0$ one has $v=0$ and the zero measure attains zero. The inequalities from $P_4$ and $P_6$ prove the lower endpoints; the displayed moments verify feasibility and equality, so both are exact projection minima. All inequalities are closed and scaling by arbitrary $u\ge0$ preserves them.
+

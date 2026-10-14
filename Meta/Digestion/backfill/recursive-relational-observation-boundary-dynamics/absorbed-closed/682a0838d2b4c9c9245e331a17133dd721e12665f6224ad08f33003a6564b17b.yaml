@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:682a0838d2b4c9c9245e331a17133dd721e12665f6224ad08f33003a6564b17b
+  normalized_sha256: sha256:682a0838d2b4c9c9245e331a17133dd721e12665f6224ad08f33003a6564b17b
+cas_ref: sha256:682a0838d2b4c9c9245e331a17133dd721e12665f6224ad08f33003a6564b17b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_equivalent_iff_target_sufficient
+    target_statement_id: sha256:61105c511c35e592ba45a2269d48a65801e9f4d54896a623963828068a8bdd25
+  - gid: D5/S3/ConceptDynamics/Gluing/LocalDescentGlobalCompatibility.escaping_thread_not_in_global_image
+    target_statement_id: sha256:e039ceee8c1f176be205de14586feb5a40fbc6e16db481a1a893e677e71a7fa9
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.effective_descent_not_self_description_closure
+    target_statement_id: sha256:71367ee8897aa376b7eedc454d3a939668d78acce961c345a9a6cab46b6b26d5
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.state_faithfulness_not_self_description_closure
+    target_statement_id: sha256:555e58024279c2787e0ea9d26594d2581e2ffd05712d7121920acbd528690871
+  - gid: D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.readout_exactness_is_necessary
+    target_statement_id: sha256:995367d17eb0e99f8fba10c54970abc1068107b91f02582b599b48cb893441a2
+  - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
+    target_statement_id: sha256:0bcc081d79b8ed5df5e4001519237a530e9d3c80afaaa2684b17120fcbd4c8b1
+receipts:
+  unresolved_subitems: []

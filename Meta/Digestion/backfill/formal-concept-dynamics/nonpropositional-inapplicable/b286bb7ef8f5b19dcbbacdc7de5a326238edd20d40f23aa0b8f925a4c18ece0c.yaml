@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b286bb7ef8f5b19dcbbacdc7de5a326238edd20d40f23aa0b8f925a4c18ece0c
+  normalized_sha256: sha256:b286bb7ef8f5b19dcbbacdc7de5a326238edd20d40f23aa0b8f925a4c18ece0c
+cas_ref: sha256:b286bb7ef8f5b19dcbbacdc7de5a326238edd20d40f23aa0b8f925a4c18ece0c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 278.2（激励相容）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 010f16702a4f7ac3ff9dedee59b7eb21f0defb2687412004eb12ca10362619c3
+    next_atom_id: d0227052976f7216a040407e276642072c0c0b3989498777fdb8b261a2e66d49

@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:00235139adeccb63ff45d732fa430923acb906c0637d55f0330f400c4d2968be
+  normalized_sha256: sha256:00235139adeccb63ff45d732fa430923acb906c0637d55f0330f400c4d2968be
+cas_ref: sha256:00235139adeccb63ff45d732fa430923acb906c0637d55f0330f400c4d2968be
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.effective_descent_not_representation_surjectivity
+    target_statement_id: sha256:6121f59a735a0623a69a8b5afc82b7b2ccda886266fbc87f94dd0b9f12854306
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.effective_descent_not_self_description_closure
+    target_statement_id: sha256:71367ee8897aa376b7eedc454d3a939668d78acce961c345a9a6cab46b6b26d5
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.effective_descent_not_state_faithfulness
+    target_statement_id: sha256:6d3e5ef8b699f6f9397c7b41d7156a2967ddc5a0c794bd146edab71bc877c77f
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.representation_surjectivity_not_self_description_closure
+    target_statement_id: sha256:bb5870cbc7f190941eb2752733328f4be17e8235830ba65ab4aa30f1423b1224
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.state_faithfulness_not_representation_surjectivity
+    target_statement_id: sha256:652aca25ab0016f5beed79131ae7099d9a1a032aa382d6064aff1037f06cb7ca
+  - gid: D5/S3/ConceptDynamics/Representation/DiagonalEscapeNeedsTypeExtension.state_faithfulness_not_self_description_closure
+    target_statement_id: sha256:555e58024279c2787e0ea9d26594d2581e2ffd05712d7121920acbd528690871
+  - gid: D5/S3/ObserverMemory/ProObjects/NoTerminalSelfDescription.no_terminal_self_description
+    target_statement_id: sha256:d3b1789f9356f646434f0a971dcf039b9e58bb46c6aee74f9688217a686a1f0f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64bb9390e7d91d89815d2a6918bfb84c0a5c215acd95ecd27e5e99faa9303c5e
+  normalized_sha256: sha256:64bb9390e7d91d89815d2a6918bfb84c0a5c215acd95ecd27e5e99faa9303c5e
+cas_ref: sha256:64bb9390e7d91d89815d2a6918bfb84c0a5c215acd95ecd27e5e99faa9303c5e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“国家征收”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: e0ac670235978daf9bfd8d2c2a322674e49face85bb488746b2840fdff0fbdd5
+    next_atom_id: 2f4094e27bdf2b41d121dc4c6f6cce4dcc9783547c1ebe06778c2c1f3919570b

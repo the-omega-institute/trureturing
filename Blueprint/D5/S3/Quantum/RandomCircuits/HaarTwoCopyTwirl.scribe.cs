@@ -22,6 +22,12 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
         "The normalized two-copy Haar average is Hermitian and idempotent. Its action on two-site identity/swap vectors has coefficient q/(q squared + 1).",
         H("The two-copy Haar moment and its local rule"),
         Blocks(
+            Describe.Lean(DescribeId.Create("haar-hadamard"),DeclarationHandle.Create(Prefix+"hadamard"),H("A two-coordinate Hadamard matrix"),
+                StatementSource.FromAuthor(Disp(HadamardDefinition())),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(DefinitionDsl.Text("The matrix equals the identity off the selected coordinates and has entries t, t, t, and minus t on their two-by-two block when the coordinates are distinct."))),DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("haar-hadamard-unitary"),DeclarationHandle.Create(Prefix+"hadamard_unitary"),H("Unitarity of the Hadamard matrix"),
+                StatementSource.FromAuthor(Disp(HadamardUnitary())),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(DefinitionDsl.Text("For distinct coordinates, a real coefficient with twice its square equal to one gives a unitary Hadamard matrix."))),DescribeRole.Theorem),
             Node("compact","Compact unitary matrices",Generic(Call("CompactSpace",Unit(F.Id("n")))),"The unitary group is closed, and every matrix entry has norm at most one, so the finite-dimensional group is compact.","unitaryCompactSpace",DescribeRole.Definition),
             Node("measurable","The Borel measurable structure",Generic(Eqn(Call("unitaryMeasurableSpace",F.Id("n")),Call("borel",Unit(F.Id("n"))))),"The measurable sets are the Borel sets of the topology on unitary matrices.","unitaryMeasurableSpace",DescribeRole.Definition),
             Node("borel","Compatibility with the topology",Generic(Call("BorelSpace",Unit(F.Id("n")))),"The measurable structure is the Borel structure by definition.","unitaryBorelSpace",DescribeRole.Definition),
@@ -44,6 +50,21 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("swap","The swap vector is fixed",Fixed(D(1)),"The replica swap commutes with the two-copy unitary action, so the Haar expectation fixes it.","local_swap_fixed",DescribeRole.Theorem),
             Node("mixed","The exact mixed local rule",Mixed(),"Quarter phases force the two-copy commutant to have only identity and swap support. Permutations make its coefficients uniform; a two-coordinate Hadamard forces the remaining diagonal coefficient to be their sum. Haar invariance puts the image in this span. Hermitian pairing with the two fixed vectors then yields q/(q squared + 1) for each mixed input.","gate_mixed_rule",DescribeRole.Theorem)
         ),[]));
+    private static Formula HadamardDefinition()
+    {
+        Formula n=F.Id("n"),a=F.Id("a"),b=F.Id("b"),t=F.Id("t");
+        Formula body=Add(Add(Add(Add(D(1),QCall("Matrix","single",a,a,new Formula.Binary(t,FormulaBinaryOperator.Subtract,D(1)))),
+            QCall("Matrix","single",b,b,new Formula.Binary(new Formula.Negate(t),FormulaBinaryOperator.Subtract,D(1)))),QCall("Matrix","single",a,b,t)),QCall("Matrix","single",b,a,t));
+        return All("n",F.Id("Type"),Seq(OpenBracket,Call("DecidableEq",n),CloseBracket,Sp,
+            All("a",n,All("b",n,All("t",Complex(),Eqn(QCall("Hadamard","hadamard",a,b,t),body))))));
+    }
+    private static Formula HadamardUnitary()
+    {
+        Formula n=F.Id("n"),a=F.Id("a"),b=F.Id("b"),t=F.Id("t");
+        return Generic(All("a",n,All("b",n,Implies(Ne(a,b),All("t",Complex(),
+            Implies(Eqn(Star(t),t),Implies(Eqn(Mul(D(2),new Formula.Power(t,D(2))),D(1)),
+                Seq(QCall("Hadamard","hadamard",a,b,t),Sp,InMacro,Sp,Unit(n)))))))));
+    }
     private static Formula Literal()
     {
         Formula n=F.Id("n"),u=F.Id("U");

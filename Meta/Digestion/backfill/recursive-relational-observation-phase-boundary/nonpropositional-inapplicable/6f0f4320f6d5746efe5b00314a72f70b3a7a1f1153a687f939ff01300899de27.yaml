@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f0f4320f6d5746efe5b00314a72f70b3a7a1f1153a687f939ff01300899de27
+  normalized_sha256: sha256:6f0f4320f6d5746efe5b00314a72f70b3a7a1f1153a687f939ff01300899de27
+cas_ref: sha256:6f0f4320f6d5746efe5b00314a72f70b3a7a1f1153a687f939ff01300899de27
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段：该 atom 仅给出前述陈述的论证步骤，以证明完毕或证毕收束，不提出新的独立命题。
+    previous_atom_id: a9cf13e1fe2a7a17f635b27bc4ec3063e402ca42fc79f57d3f0ad6f614d111a9
+    next_atom_id: 79ab32f0e30cb882f86a32396a2f707c219aa28152860021d68618608dc64492

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15bae60e1870c7adc108c7d92288d1bad1131d60b03dadea639d47a86bdb1138
+  normalized_sha256: sha256:15bae60e1870c7adc108c7d92288d1bad1131d60b03dadea639d47a86bdb1138
+cas_ref: sha256:15bae60e1870c7adc108c7d92288d1bad1131d60b03dadea639d47a86bdb1138
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 83. 零误差概念修复的信息复杂度：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: ff26c8a0a8cd0579f0f194e0da343a67bbeef838f6078c67b30319c3d52c7b04
+    next_atom_id: eed21db2a888d8cec7fc81a14c64558b745848bc7f97146ce35b8d898188a2fc

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55f3c5fa4dc0c5af2347575bb94a2b7dd62a07e9d4ceb7cc4e667f9e2045c8b1
+  normalized_sha256: sha256:55f3c5fa4dc0c5af2347575bb94a2b7dd62a07e9d4ceb7cc4e667f9e2045c8b1
+cas_ref: sha256:55f3c5fa4dc0c5af2347575bb94a2b7dd62a07e9d4ceb7cc4e667f9e2045c8b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 扩张／遗忘：本段仅并列两种操作的记号，作为对照导引，不断言等价、最小性或其他性质。
+    previous_atom_id: 01ee9b92540692158c69144d2b5d081d9c90c43dc3c5490861a3bca8dda99020
+    next_atom_id: ca58dcf0e295fe3dbe7a59ba6095a88ec890faaac2c8aa534ff146bc98b5c4c4
