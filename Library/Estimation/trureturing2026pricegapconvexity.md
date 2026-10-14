@@ -5133,3 +5133,164 @@ not put this test into the convolution-square positivity class.
 The paid comparison opens a smooth-testing interface for the same
 arithmetic problem; the actual weighted first-prime lower bound,
 original signed upper estimate and RH remain unproved.
+
+## The paid smoothing retains the original fixed Mellin readout
+
+Keep MR1--MR5's actual kernels, common horizon, auxiliary factor,
+residence and endpoint ties. The following `repo-derived` paper
+application uses the [existing complete coefficient NH1](../ArithSums/nicolas2025comparison.md#absolute-full-weight-cost-at-a-fixed-negative-heat-time),
+ordinary Taylor's formula and MR1's exact variation. It introduces
+no new Mellin-transform or approximation theorem. Its consumer is
+the original compensated kernel after the paid arithmetic smoothing;
+it does not supply the signed first-prime bound or Lean verification.
+
+Fix $s=\sigma+i\gamma$ with $0<\sigma<1$ before taking $X\to\infty$.
+For each actual core define the one-sided coefficients
+
+$$
+H_B(s)=\int_0^\infty w_B(r)r^{s-1}\,dr,
+\qquad
+\widetilde H_B(s)=\int_0^\infty\widetilde w_B(r)r^{s-1}\,dr.
+$$
+
+Positive real powers use the real logarithm. These integrals are
+finite: the weight is bounded near zero and has finite upper support.
+They concern the arithmetic kernels, rather than the Fourier transform
+of MR5's calibrated symmetric multiplicative test.
+
+### The zero first moment pays a second-order coefficient change
+
+Let $Dw_B$ be the signed distributional derivative from MR1, so
+
+$$
+Dw_B=\frac a{\sqrt B}\boldsymbol\delta_B
+-s_B\mathbf1_{(B,\mathsf U_X)}k(v)\,dv.
+$$
+
+The retained weak value at $B$ is represented by
+$w_B(r)=-\int\mathbf1_{\{r\le v\}}Dw_B(v)$.
+Since $h_B<B/2$, every $v$ in this finite variation support has
+$v+h_Bz>0$. Finite Fubini consequently gives the exact difference
+
+$$
+\widetilde H_B(s)-H_B(s)
+=-\frac1s\int_B^{\mathsf U_X}
+\left[\int_{-1}^1\rho(z)(v+h_Bz)^s\,dz-v^s\right]Dw_B(v).
+\tag{MF1}
+$$
+
+The integral includes the original atom at $B$. Put
+$\mu_2=\int z^2\rho(z)dz\le1$. The even mollifier's zero first
+moment removes the linear Taylor term. For $|h_Bz|\le v/2$,
+$|(t^s)''|=|s(s-1)|t^{\sigma-2}$ supplies
+
+$$
+\frac1{|s|}
+\left|\int\rho(z)(v+h_Bz)^s dz-v^s\right|
+\le2^{1-\sigma}|s-1|\mu_2h_B^2v^{\sigma-2}.
+$$
+
+MR1 and $\log B>1$ also give
+
+$$
+\begin{aligned}
+\int_B^{\mathsf U_X}v^{\sigma-2}d|Dw_B|(v)
+&\le aB^{\sigma-5/2}
+ +2\sqrt B\int_B^\infty v^{\sigma-4}dv\\
+&=\left(a+\frac2{3-\sigma}\right)B^{\sigma-5/2}.
+\end{aligned}
+$$
+
+Here $\log B(1+\log v)/\log^2v\le2$ for $v\ge B$;
+no prime-error bound or free residence law is used. Thus
+
+$$
+\boxed{
+|\widetilde H_B(s)-H_B(s)|
+\le C_{s,a,\rho}Q_X^2B^{\sigma-3/2},
+\qquad
+C_{s,a,\rho}=2^{1-\sigma}|s-1|\mu_2
+\left(a+\frac2{3-\sigma}\right).}
+\tag{MF2}
+$$
+
+The normalized coefficient change is at most
+$C_{s,a,\rho}Q_X^2/B\le C_{s,a,\rho}b_X^{-1/2}\to0$,
+uniformly over every original core and tie. This is a fixed-$s$
+comparison, not a uniform estimate over an infinite zero family.
+
+### Retain the complete coefficient and the finite horizon correction
+
+Use NH1 with its lower endpoint equal to the core clock $B$ or
+the common horizon $\mathsf U_X$:
+
+$$
+F_A(s)=\frac{A^{s-1}}{s\log A}
++\int_A^\infty\frac{r^{s-2}}{\log r}\,dr
+=\frac{A^{s-1}}{s\log A}+E_1((1-s)\log A).
+$$
+
+The original finite cutoff and compensation give the exact application
+
+$$
+H_B(s)=s_B\bigl(F_B(s)-F_{\mathsf U_X}(s)\bigr)
+-\frac a{s}B^{s-1/2}.
+\tag{MF3}
+$$
+
+This reuses the complete NH1 coefficient; neither its plateau nor its
+tail is omitted. Set
+
+$$
+K_a(s)=\frac1{s(1-s)}-\frac a{s}
+=\frac{1-a+as}{s(1-s)},\qquad
+\mathsf R_X^{\rm hor}=\frac{\mathsf U_X}{B^{\rm end}_{\max,X}}\longrightarrow\infty.
+$$
+
+For clarity, the quantitative remainder uses only the positive-half-line
+NH1 integral. After $r=Bv$, the factor
+$\log B/(\log B+\log v)$ differs from one by at most
+$\log v/\log B$. The elementary integrals of
+$v^{\sigma-2}$ and $v^{\sigma-2}\log v$ on $[1,\infty)$ therefore give,
+for every original core,
+
+$$
+\left|B^{1/2-s}H_B(s)-K_a(s)\right|
+\le\frac1{(1-\sigma)^2\log b_X}
++\left(\frac1{1-\sigma}+\frac1{|s|}\right)(\mathsf R_X^{\rm hor})^{\sigma-1}.
+$$
+
+The second term retains both the missing complete tail beyond
+$\mathsf U_X$ and its finite constant cutoff. Combining with MF2,
+put
+
+$$
+\epsilon_X(s)=\frac1{(1-\sigma)^2\log b_X}
++\left(\frac1{1-\sigma}+\frac1{|s|}\right)(\mathsf R_X^{\rm hor})^{\sigma-1}
++C_{s,a,\rho}\frac{Q_X^2}{b_X}\longrightarrow0.
+$$
+
+Then the same actual residence satisfies
+
+$$
+\boxed{
+\left|\int_{t_0}^{t_m}\widetilde H_{\mathcal B_X(t)}(s)dt
+-K_a(s)\int_{t_0}^{t_m}\mathcal B_X(t)^{s-1/2}dt\right|
+\le\epsilon_X(s)\int_{t_0}^{t_m}\mathcal B_X(t)^{\sigma-1/2}dt.}
+\tag{MF4}
+$$
+
+Since $a<1$, the numerator of $K_a(s)$ has positive real part
+$1-a+a\sigma$; hence $K_a(s)\ne0$ throughout this fixed strip.
+The paid smoothing preserves each core's nonzero leading coefficient
+and leaves the original occupation's fixed Mellin readout in MF4.
+It does not make that readout small or determine its phase.
+
+The MF4 error is relative to the displayed occupation magnitude.
+That magnitude has not been bounded by $M_XL_X$, so MF4 is not an
+additional target-scale payment. No interchange with an infinite zero
+sum, zero-frequency cancellation, full pole/archimedean identification
+or bound uniform in growing $|\gamma|$ is asserted. MR3 pays the
+arithmetic change; suppression of high frequencies alone does not
+establish MR4. The actual original signed lower bound and RH remain
+unproved.
