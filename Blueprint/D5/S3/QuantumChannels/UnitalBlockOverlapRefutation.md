@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/UnitalBlockOverlapRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/girling-cirstoiu-jennings-2022-unital-block-overlap` (refuted) by `D5/S3/QuantumChannels/UnitalBlockOverlapRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"girling-cirstoiu-jennings-2022-unital-block-overlap","declaration_gid":"D5/S3/QuantumChannels/UnitalBlockOverlapRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Matthew Girling, Cristina Cîrstoiu, and David Jennings (2022). *Estimation of correlations and non-separability in quantum channels via unitarity benchmarking*. DOI: [10.1103/PhysRevResearch.4.023041](https://doi.org/10.1103/PhysRevResearch.4.023041). URL: <https://arxiv.org/abs/2104.04352>.
