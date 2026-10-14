@@ -805,7 +805,7 @@ private lemma tight_psd (t s : ℝ) (ht : 0 ≤ t) (hs : s ≤ 1) :
   exact ((posSemidef_vecMulVec_self_star _).smul hhalf).add
     ((posSemidef_vecMulVec_self_star _).smul hc)
 
-private lemma tight_readouts (t s : ℝ) (_ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
+private lemma tight_readouts (t s : ℝ) (ht₁ : t ≤ 1)
     (hs₀ : 0 ≤ s) (hs₁ : s ≤ 1) : trace (tightState t s) = 1 ∧
     blochA (tightState t s) = ![0, 0, t + (1 - t) * s] ∧
     blochB (tightState t s) = ![0, 0, s] ∧
@@ -850,7 +850,7 @@ private lemma tight_readouts (t s : ℝ) (_ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
 
 private lemma tight_centre (t s : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
     (hs₀ : 0 ≤ s) (hs₁ : s < 1) : vlen (centre (tightState t s)) = t := by
-  obtain ⟨_, ha, hb, hT⟩ := tight_readouts t s ht₀ ht₁ hs₀ hs₁.le
+  obtain ⟨_, ha, hb, hT⟩ := tight_readouts t s ht₁ hs₀ hs₁.le
   have hbl : vlen (blochB (tightState t s)) = s := by
     rw [hb, vlen]
     norm_num [Fin.sum_univ_succ, Real.sqrt_sq hs₀]
@@ -870,7 +870,7 @@ private lemma tight_z_setting (t s : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
   have hv : trace (tightState t s * bell ![0,0,1] ![0,0,1] ![0,0,1] ![0,0,1]) =
       ((2 * (1 - t + t * s) : ℝ) : ℂ) := by
     rw [bell_trace_real_expansion _ (tight_psd t s ht₀ hs₁).isHermitian,
-      (tight_readouts t s ht₀ ht₁ hs₀ hs₁).2.2.2]
+      (tight_readouts t s ht₁ hs₀ hs₁).2.2.2]
     norm_num [dotProduct, Matrix.mulVec, Fin.sum_univ_succ, diagonal]
     ring
   have hh := setting_le_chsh (tightState t s) ![0,0,1] ![0,0,1] ![0,0,1] ![0,0,1]
@@ -891,7 +891,7 @@ private lemma tight_low_setting (t : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1) :
         (![0,-1,0] : Fin 3 → ℝ) ⬝ᵥ ((corr (tightState t 0)) *ᵥ
         (![1 / Real.sqrt 2, 1 / Real.sqrt 2, 0] - ![1 / Real.sqrt 2, -(1 / Real.sqrt 2), 0]))) =
         2 * Real.sqrt (2 * (1 - t)) := by
-    rw [(tight_readouts t 0 ht₀ ht₁ (by norm_num) (by norm_num)).2.2.2]
+    rw [(tight_readouts t 0 ht₁ (by norm_num) (by norm_num)).2.2.2]
     norm_num [dotProduct, Matrix.mulVec, Fin.sum_univ_succ, diagonal]
     have hs : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
     field_simp (discharger := positivity)
@@ -918,7 +918,7 @@ theorem result : claim := by
       have hs : 1 ≤ Real.sqrt (2 * (1 - t)) := Real.one_le_sqrt.mpr (by linarith)
       linarith
     refine ⟨tightState t 0, tight_psd t 0 ht₀ (by norm_num),
-      (tight_readouts t 0 ht₀ ht₁ (by norm_num) (by norm_num)).1,
+      (tight_readouts t 0 ht₁ (by norm_num) (by norm_num)).1,
       tight_centre t 0 ht₀ ht₁ (by norm_num) (by norm_num), ?_⟩
     rw [hb]
     exact lt_of_lt_of_le (by linarith) (tight_low_setting t ht₀ ht₁)
@@ -929,10 +929,9 @@ theorem result : claim := by
     by_cases htend : t = 1
     · subst t
       refine ⟨tightState 1 1, tight_psd 1 1 (by norm_num) (by norm_num),
-        (tight_readouts 1 1 (by norm_num) (by norm_num) (by norm_num) (by norm_num)).1,
+        (tight_readouts 1 1 (by norm_num) (by norm_num) (by norm_num)).1,
         ?_, ?_⟩
-      · have hdata := tight_readouts 1 1 (by norm_num) (by norm_num)
-          (by norm_num) (by norm_num)
+      · have hdata := tight_readouts 1 1 (by norm_num) (by norm_num) (by norm_num)
         norm_num [centre, hdata.2.1, hdata.2.2.1, vlen, Fin.sum_univ_succ]
       · have he := tight_z_setting 1 1 (by norm_num) (by norm_num)
           (by norm_num) (by norm_num)
@@ -951,7 +950,7 @@ theorem result : claim := by
           linear_combination 2 * t * hprod
         exact (mul_pos_iff_of_pos_right hd).mp (by rw [hcert]; exact hgap) |> sub_pos.mp
       refine ⟨tightState t s, tight_psd t s ht₀ hs₁.le,
-        (tight_readouts t s ht₀ ht₁ hs₀ hs₁.le).1,
+        (tight_readouts t s ht₁ hs₀ hs₁.le).1,
         tight_centre t s ht₀ ht₁ hs₀ hs₁, ?_⟩
       rw [hb]
       exact he.trans_le (tight_z_setting t s ht₀ ht₁ hs₀ hs₁.le)
