@@ -67,6 +67,10 @@ theorem native_special_child_even_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
         (specialVertex hm F hB (0, 0))
         (specialVertex hm F hB (Fin.last (2 * s + 2), 1)),
       q.IsHamiltonian ∧
+      (∀ i, (ordered i).start = specialVertex hm F hB
+          (evenPortRoute s ⟨2 * i.val, by have hi := i.isLt; omega⟩) ∧
+        (ordered i).finish = specialVertex hm F hB
+          (evenPortRoute s ⟨2 * i.val + 1, by have hi := i.isLt; omega⟩)) ∧
       q.support = (List.ofFn ordered).flatMap (fun z => z.walk.support) ∧
       q.edges = chainEdges (ordered 0)
         (List.ofFn fun i : Fin (2 * s + 2) => ordered i.succ) ∧
@@ -83,12 +87,12 @@ theorem native_special_child_even_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     change internalSeam (2 * s + 2) (evenRoute s (2 * i + 1)) (evenRoute s (2 * (i + 1)))
     simpa only [show 2 * i + 1 + 1 = 2 * (i + 1) by omega] using
       even_route_seam_step s (2 * i + 1) (by omega) (by omega)
-  obtain ⟨ordered, q, hq, hs, he, hinv⟩ :=
+  obtain ⟨ordered, q, hq, hend, hs, he, hinv⟩ :=
     native_special_child_assembled hm F hB w hw hcuts
       (evenBoundary (2 * s + 2)) (evenPortRoute s) honce hpair hseams
   let q' := q.copy (congrArg (specialVertex hm F hB) (even_native_route_start s))
     (congrArg (specialVertex hm F hB) (even_native_route_finish s))
-  refine ⟨ordered, q', ?_, ?_, ?_, hinv⟩
+  refine ⟨ordered, q', ?_, hend, ?_, ?_, hinv⟩
   · intro x
     simpa only [q', SimpleGraph.Walk.support_copy] using hq x
   · simpa only [q', SimpleGraph.Walk.support_copy] using hs
@@ -109,6 +113,10 @@ theorem native_special_child_odd_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
         (specialVertex hm F hB (0, 0))
         (specialVertex hm F hB (Fin.last (2 * s + 3), 1)),
       q.IsHamiltonian ∧
+      (∀ i, (ordered i).start = specialVertex hm F hB
+          (oddPortRoute s ⟨2 * i.val, by have hi := i.isLt; omega⟩) ∧
+        (ordered i).finish = specialVertex hm F hB
+          (oddPortRoute s ⟨2 * i.val + 1, by have hi := i.isLt; omega⟩)) ∧
       q.support = (List.ofFn ordered).flatMap (fun z => z.walk.support) ∧
       q.edges = chainEdges (ordered 0)
         (List.ofFn fun i : Fin (2 * s + 3) => ordered i.succ) ∧
@@ -125,12 +133,12 @@ theorem native_special_child_odd_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     change internalSeam (2 * s + 3) (oddRoute s (2 * i + 1)) (oddRoute s (2 * (i + 1)))
     simpa only [show 2 * i + 1 + 1 = 2 * (i + 1) by omega] using
       odd_route_seam_step s (2 * i + 1) (by omega) (by omega)
-  obtain ⟨ordered, q, hq, hs, he, hinv⟩ :=
+  obtain ⟨ordered, q, hq, hend, hs, he, hinv⟩ :=
     native_special_child_assembled hm F hB w hw hcuts
       (oddBoundary (2 * s + 3)) (oddPortRoute s) honce hpair hseams
   let q' := q.copy (congrArg (specialVertex hm F hB) (odd_native_route_start s))
     (congrArg (specialVertex hm F hB) (odd_native_route_finish s))
-  refine ⟨ordered, q', ?_, ?_, ?_, hinv⟩
+  refine ⟨ordered, q', ?_, hend, ?_, ?_, hinv⟩
   · intro x
     simpa only [q', SimpleGraph.Walk.support_copy] using hq x
   · simpa only [q', SimpleGraph.Walk.support_copy] using hs

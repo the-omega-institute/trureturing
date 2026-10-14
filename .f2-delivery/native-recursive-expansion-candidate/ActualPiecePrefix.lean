@@ -152,10 +152,36 @@ theorem actual_piece_suffix_from_retained_inventory
   · simpa only [SimpleGraph.Walk.support_reverse] using hs
   · simpa only [SimpleGraph.Walk.edges_reverse] using he
 
+/-- The forced reversed prefix records the forward occurrence of its
+second edge. Its position is computed from the actual whole path length,
+rather than accepted as an edge-order certificate. -/
+theorem actual_retained_suffix_cut_position {a b x y : V}
+    (p : G.Walk a b) (hp : p.IsPath)
+    (hbx : s(b, x) ∈ p.edges) (hxy : s(x, y) ∈ p.edges) (hyb : y ≠ b) :
+    ∃ i : ℕ, i < p.length ∧ p.getVert i = y ∧ p.getVert (i + 1) = x := by
+  obtain ⟨h₀, h₁, q, heq, _, _, _⟩ := actual_two_retained_edges_force_prefix
+    p.reverse hp.reverse
+    (by simpa only [SimpleGraph.Walk.edges_reverse, List.mem_reverse] using hbx)
+    (by simpa only [SimpleGraph.Walk.edges_reverse, List.mem_reverse] using hxy) hyb
+  have hlength : 2 ≤ p.length := by
+    have he := congrArg SimpleGraph.Walk.length heq
+    simp only [SimpleGraph.Walk.length_reverse, SimpleGraph.Walk.length_cons] at he
+    omega
+  have hfirst : p.getVert (p.length - 1) = x := by
+    have h : p.reverse.getVert 1 = x := by rw [heq]; rfl
+    simpa only [SimpleGraph.Walk.getVert_reverse] using h
+  have hsecond : p.getVert (p.length - 2) = y := by
+    have h : p.reverse.getVert 2 = y := by rw [heq]; rfl
+    simpa only [SimpleGraph.Walk.getVert_reverse] using h
+  refine ⟨p.length - 2, by omega, hsecond, ?_⟩
+  rw [show p.length - 2 + 1 = p.length - 1 by omega]
+  exact hfirst
+
 #print axioms actual_partition_incident_edge_owner
 #print axioms actual_two_retained_edges_force_prefix
 #print axioms actual_second_edge_cut_of_prefix
 #print axioms actual_piece_prefix_from_retained_inventory
 #print axioms actual_piece_suffix_from_retained_inventory
+#print axioms actual_retained_suffix_cut_position
 
 end D5.S3.Combinatorics.Graph.Walks.ActualPiecePrefix

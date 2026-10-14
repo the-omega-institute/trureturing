@@ -127,6 +127,10 @@ theorem native_special_child_assembled {m k : ℕ} (hm : 3 ≤ m)
         (specialVertex hm F hB (route ⟨0, by omega⟩))
         (specialVertex hm F hB (route ⟨2 * (k + 1) - 1, by omega⟩)),
       q.IsHamiltonian ∧
+      (∀ i, (ordered i).start =
+        specialVertex hm F hB (route ⟨2 * i.val, by have hi := i.isLt; omega⟩) ∧
+        (ordered i).finish =
+        specialVertex hm F hB (route ⟨2 * i.val + 1, by have hi := i.isLt; omega⟩)) ∧
       q.support = (List.ofFn ordered).flatMap (fun z => z.walk.support) ∧
       q.edges = chainEdges (ordered 0) (List.ofFn fun i : Fin k => ordered i.succ) ∧
       ∀ e, e ∈ ((List.ofFn ordered).flatMap fun z => z.walk.edges) ↔
@@ -145,12 +149,12 @@ theorem native_special_child_assembled {m k : ℕ} (hm : 3 ≤ m)
     rw [hs', hf']
     simpa only [routeEdge, Sym2.map_mk, actualRoute] using
       congrArg (Sym2.map (specialVertex hm F hB)) hi
-  obtain ⟨ordered, q, hq, _, hs, he, hinv⟩ :=
+  obtain ⟨ordered, q, hq, hend, hs, he, hinv⟩ :=
     actual_cycle_slices_joined (specialCuts hm F hB) w hw
       (special_cuts_nonempty hm F hB) hcuts k (special_cuts_card hm F hB)
       actualRoute hmatch
       (fun i hi => native_internal_seam_adj hm F hB _ _ (hseams i hi))
-  exact ⟨ordered, q, hq, hs, he, hinv⟩
+  exact ⟨ordered, q, hq, hend, hs, he, hinv⟩
 
 #print axioms native_special_child_assembled
 

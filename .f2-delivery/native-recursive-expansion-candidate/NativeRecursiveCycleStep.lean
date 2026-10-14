@@ -158,7 +158,7 @@ theorem native_recursive_even_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     ∃ base : {x : Configuration m // ParentDomain F x},
       ∃ c : (domainGraph (ParentDomain F)).Walk base base,
       base.val = rightPort F 0 ∧ c.IsHamiltonianCycle := by
-  obtain ⟨_, q, hq, _, _, _⟩ := native_special_child_even_path hm s F hB w hw hcuts hpair
+  obtain ⟨_, q, hq, _, _, _, _⟩ := native_special_child_even_path hm s F hB w hw hcuts hpair
   exact recursive_cycle_from_special hm F hB q hq hothers
 
 theorem native_recursive_odd_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
@@ -175,7 +175,7 @@ theorem native_recursive_odd_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     ∃ base : {x : Configuration m // ParentDomain F x},
       ∃ c : (domainGraph (ParentDomain F)).Walk base base,
       base.val = rightPort F 0 ∧ c.IsHamiltonianCycle := by
-  obtain ⟨_, q, hq, _, _, _⟩ := native_special_child_odd_path hm s F hB w hw hcuts hpair
+  obtain ⟨_, q, hq, _, _, _, _⟩ := native_special_child_odd_path hm s F hB w hw hcuts hpair
   exact recursive_cycle_from_special hm F hB q hq hothers
 
 #print axioms native_recursive_even_cycle_step

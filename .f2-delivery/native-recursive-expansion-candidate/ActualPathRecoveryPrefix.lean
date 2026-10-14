@@ -95,8 +95,32 @@ theorem actual_restored_partition_joint_prefix
     p.walk.start_mem_support hkeep
   exact actual_rooted_path_is_prefix q hq p.walk hpath hlocal
 
+/-- In particular, the oriented cut just before an old joint path's
+finish occurs on the same forward single-order boundary path. Its actual
+position is earned from the forced joint suffix and literal recovery. -/
+theorem actual_restored_joint_cut_position
+    (pieces : List (Piece G))
+    (hn : (pieces.flatMap fun z => z.walk.support).Nodup)
+    (p : Piece G) (hp : p ∈ pieces) (hpath : p.walk.IsPath)
+    {b x y : V} (q : G.Walk p.start b) (hq : q.IsPath)
+    (hkeep : ∀ e ∈ q.edges, e ∈ pieces.flatMap (fun z => z.walk.edges))
+    (hbx : s(b, x) ∈ q.edges) (hxy : s(x, y) ∈ q.edges) (hyb : y ≠ b) :
+    ∃ i : ℕ, i < p.walk.length ∧
+      p.walk.getVert i = y ∧ p.walk.getVert (i + 1) = x := by
+  obtain ⟨tail, hpref, _⟩ := actual_restored_partition_joint_prefix
+    pieces hn p hp hpath q hq hkeep
+  obtain ⟨i, hi, hy, hx⟩ := actual_retained_suffix_cut_position q hq hbx hxy hyb
+  refine ⟨i, ?_, ?_, ?_⟩
+  · rw [hpref, SimpleGraph.Walk.length_append]
+    omega
+  · rw [hpref, SimpleGraph.Walk.getVert_append', if_pos (by omega)]
+    exact hy
+  · rw [hpref, SimpleGraph.Walk.getVert_append', if_pos (by omega)]
+    exact hx
+
 #print axioms actual_partition_rooted_walk_edges
 #print axioms actual_rooted_path_is_prefix
 #print axioms actual_restored_partition_joint_prefix
+#print axioms actual_restored_joint_cut_position
 
 end D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
