@@ -912,3 +912,746 @@ mathematical review. A finite increment of these results does not
 complete a continuous research objective.
 
 ## 追加锚（本行以下为增补区）
+## 11. Executed approximation classes on the original clock
+
+**Definition 11.1 (source and executed commands).** Retain Definitions
+2.1–2.2, the specified ray $q_0=(k,\alpha_0,\beta_0)$, arbitrary fixed
+preparation phases, $0<Z<1$, $r=1-Z$, $H=r/2$, and
+$0<l<k<u<H$. The probabilities remain $(k,H-k,Z,H-k,k)$ in mode order
+$(0,1,2,3,13)$, the amplitude convention remains
+$\psi_s=\sqrt{p_s}e^{-i\theta_s}$, and both native phase circles have
+period $2\pi$. Fix the original time interval $[0,T]$, with $T>0$.
+At each stage choose zero-start absolutely continuous or piecewise $C^1$
+comparison controls $(a_n^\circ,b_n^\circ)$ on this interval. Set
+
+$$
+\begin{aligned}
+\tau_n&=\inf\{t\in[0,T]:k+a_n^\circ(t)\notin(l,u)\},
+       &\inf\varnothing&=\infty,\\
+S_n&=\tau_n\wedge T,
+&a_n(t)&=a_n^\circ(t\wedge S_n),\qquad
+b_n(t)=b_n^\circ(t\wedge S_n),\\
+J_n(t)&=\int_0^t a_n\,db_n
+       =\int_0^{t\wedge S_n}a_n^\circ\,db_n^\circ.
+\end{aligned}
+\tag{11.1}
+$$
+
+Only $(a_n,b_n)$ is executed. It is an original command, with exact
+whole-height extrema domain
+
+$$
+D_n=(-\min_{[0,T]}a_n,\ H-\max_{[0,T]}a_n).
+\tag{11.2}
+$$
+
+At the specified start its height lies in $[l,u]\Subset(0,H)$, hence
+$k+\min a_n\ge l>0$ and $k+\max a_n\le u<H$. On a compact promise
+$[k_-,k_+]$, the very same numerical command is lawful exactly when
+$k_-+\min a_n>0$ and $k_++\max a_n<H$; its cutoff is not recomputed
+for another starting height. The comparison extension after $S_n$ is
+not required to be a source history. The class includes every original
+held command obtained this way, without a restriction to a mesh family,
+a sampling rule, causality, or a bound on its finite variation.
+Random commands, when used, are measurable choices of such commands;
+sampling, offline knowledge and conditioning are additional data. A law
+assumption below concerns their actual probability measure, without an
+implicit change of sampling weights.
+
+Choose common real initial representatives $\alpha_0,\beta_0$ and put
+$c_0=1/2-k/r$. The entire executed native state, with these real phase
+lifts before wrapping, is
+
+$$
+\bar q_n(t)=
+\left(k+a_n(t),\,
+ [\alpha_0+b_n(t)/2],\,
+ [\beta_0+c_0b_n(t)-J_n(t)/r]\right).
+\tag{11.3}
+$$
+
+Here brackets reduce modulo $2\pi$. This is Proposition 2.3 at every
+prefix, including the hold. It uses exactly
+$P=\partial_k$ and
+$Q=\tfrac12\partial_\alpha+(\tfrac12-k/r)\partial_\beta$.
+In particular, $J_n$ is the chronological integral of these same
+controls, not a separately chosen finite-stage coordinate. The censored
+lifetime is $\zeta_n=\tau_n\in[0,T]\sqcup\{\infty\}$, with
+$\infty$ an isolated no-death mark. The killed path equals $\bar q_n(t)$
+for $t<\zeta_n$ and $\dagger$ for $t\ge\zeta_n$, in the space $E$
+of Definition 4.1. Neither the boundary hold nor the cemetery jump is a
+new actuator or a reset.
+
+**Definition 11.2 (executed costs).** For the commands in Definition
+11.1 write
+
+$$
+\begin{aligned}
+V_n^a&=\operatorname{TV}_{[0,T]}(a_n)=\int_0^{S_n}|\dot a_n^\circ|\,dt,
+&V_n^b&=\mathsf V_{\chi,n}
+       =\operatorname{TV}_{[0,T]}(b_n)=\int_0^{S_n}|\dot b_n^\circ|\,dt,\\
+L_n&=\int_0^{S_n}\sqrt{(\dot a_n^\circ)^2+(\dot b_n^\circ)^2}\,dt,
+&E_n&=\int_0^{S_n}\bigl((\dot a_n^\circ)^2+(\dot b_n^\circ)^2\bigr)\,dt.
+\end{aligned}
+\tag{11.4}
+$$
+
+The energy is allowed to be $+\infty$ for an absolutely continuous
+command; finite piecewise linear commands have finite costs. Length and
+energy use the additional identity metric of N, (10.3), without a factor
+$1/2$ in energy. The original phase variation is N, (10.4), namely
+variation of $b$, not of the displayed coordinate $\alpha=b/2+\alpha_0$.
+A planned linear leg of duration $d$ and increment $(A,B)$, executed
+for a fraction $\theta$, contributes respectively
+$\theta|A|$, $\theta|B|$, $\theta\sqrt{A^2+B^2}$ and
+$\theta(A^2+B^2)/d$. Its velocity remains $(A,B)/d$ until cutoff.
+All later velocities are zero. Thus (11.4) charges neither an unexecuted
+extension, a sped-up replacement of the final partial leg, nor a
+cemetery jump. Direct integration, the triangle inequality in
+$\mathbb R^2$, and Cauchy–Schwarz give
+
+$$
+L_n\ge\sqrt{(V_n^a)^2+(V_n^b)^2},\qquad
+L_n^2\le S_n E_n\le T E_n.
+\tag{11.5}
+$$
+
+These are command costs on the declared clock. Acquisition, analytic
+amplitude preparation and physical energy require other definitions.
+
+**Assumption 11.3 (target and separate convergence contracts).** Let
+$W^1,W^2$ be independent Brownian motions starting at zero with
+$[W^i]_t=2t$ and $[W^1,W^2]_t=0$. For an arbitrary fixed
+$\lambda\in\mathbb R$, specify jointly
+
+$$
+\begin{aligned}
+J^\lambda_t&=\int_0^t W^1_s\,dW^2_s+\lambda t,\\
+\tau&=\inf\{t\ge0:k+W^1_t\notin(l,u)\},\qquad S=\tau\wedge T,\\
+\bar z^\lambda_t&=(W^1_{t\wedge S},W^2_{t\wedge S},J^\lambda_{t\wedge S}),
+\qquad
+\zeta=\begin{cases}\tau,&\tau\le T,\\\infty,&\tau>T.\end{cases}
+\end{aligned}
+\tag{11.6}
+$$
+
+The integral is in the joint Brownian filtration. The Brownian pair
+specifies an additional comparison law; each finite-stage executed
+command is still an original absolutely continuous history, with no
+physical Brownian input assumed. Define $\bar q^\lambda$
+from this triple by (11.3), and $q^{\lambda,\dagger}$ by its censored
+lifetime. Proposition 4.5 gives $S>0$ and $\mathbb P(\tau=T)=0$.
+This fixes covariance $2I_2\,dt$ before death and the same clock $T$;
+the held process has no new fluctuations after $S$.
+
+The qualitative held-law contract is
+
+$$
+(\bar q_n,\zeta_n)\ \Rightarrow\ (\bar q^\lambda,\zeta)
+\quad\hbox{in }C([0,T],[l,u]\times\mathbb T^2)
+             \times([0,T]\sqcup\{\infty\}),
+\tag{11.7}
+$$
+
+with uniform path topology. The separate cemetery-law contract is
+$q_n^\dagger\Rightarrow q^{\lambda,\dagger}$ in $D([0,T],E)$ with
+$J_1$ topology. Either may be imposed for the qualitative result below.
+A time homeomorphism in $J_1$ compares observations; it never changes a
+command's execution clock or its energy. Death information is retained
+in (11.7); held uniform convergence alone is not a death convention.
+
+For quantitative statements impose instead the following coupled
+pathwise contract. On a space carrying the specified target, the held
+triples $(a_n,b_n,J_n)$ converge uniformly to $\bar z^\lambda$ and
+$\zeta_n\to\zeta$. Let $\epsilon_n>0$ tend to zero, allowing random,
+nonmonotone errors and dependence on the entire target and on extra
+randomness. Fix positive constants $d_a,d_b$. For every rational
+$0<t<T$ with $t<S$, eventually
+
+$$
+t<S_n,\qquad
+\sup_{s\le t}|a_n(s)-W^1_s|\le d_a\epsilon_n,
+\qquad
+\sup_{s\le t}|b_n(s)-W^2_s|\le d_b\epsilon_n.
+\tag{11.8}
+$$
+
+The eventual index may depend on $t$ and the realization. A uniform
+control tube on all of $[0,T]$ around the held target, with these same
+radii, is sufficient for (11.8) together with the stated lifetime
+convergence. The full chronological and
+lifetime convergence remains part of this approximation class even
+though the lower bounds use only (11.8). No tube for an unexecuted
+comparison extension is assumed. The qualitative contracts do not
+include an error variable and do not assert this pathwise coupling.
+
+## 12. Universal executed floors at prescribed control accuracy
+
+**Theorem 12.1 (native executed floors with unequal radii).** There is
+one probability-one event determined by the target Brownian pair such
+that the following assertion holds for every realization in it: every
+sequence of Definition 11.1 satisfying the quantitative contract of
+Assumption 11.3, with any positive errors tending to zero, obeys
+
+$$
+\begin{aligned}
+\liminf_n\epsilon_n V_n^a&\ge S/d_a,&
+\liminf_n\epsilon_n V_n^b&\ge S/d_b,\\
+\liminf_n\epsilon_n L_n&\ge S\sqrt{d_a^{-2}+d_b^{-2}},&
+\liminf_n\epsilon_n^2 E_n&\ge
+ \frac{\pi^2 S}{6}(d_a^{-2}+d_b^{-2}).
+\end{aligned}
+\tag{12.1}
+$$
+
+The event is independent of the command sequence, its access to future
+information, the errors and $\lambda$. For random commands the assertion
+applies wherever their stated pathwise hypotheses hold. In particular
+it does not require taking an uncountable intersection of events indexed
+by approximation algorithms. It bounds all lawful executed prefixes in
+the declared class, rather than only the family of Section 5.
+
+Proof. We use three classical scalar suppliers inside this native
+argument. For a continuous real function $f$ on $[0,t]$, write
+
+$$
+\operatorname{TV}^{c}(f;[0,t])
+ =\sup_{0=t_0<\cdots<t_m=t}
+   \sum_{j=1}^m(|f(t_j)-f(t_{j-1})|-c)_+.
+\tag{12.2}
+$$
+
+Allowing partitions not containing the endpoints gives the same
+supremum, since adjoining endpoints cannot reduce it. If
+$\|h-f\|_{[0,t]}\le e$, each increment gives
+$|h(t_j)-h(t_{j-1})|\ge(|f(t_j)-f(t_{j-1})|-2e)_+$, whence
+
+$$
+\operatorname{TV}(h;[0,t])\ge\operatorname{TV}^{2e}(f;[0,t]).
+\tag{12.3}
+$$
+
+R. M. Łochowski and P. Miłoś, *On truncated variation, upward truncated
+variation and downward truncated variation for diffusions*,
+[arXiv:1109.0043v2](https://arxiv.org/html/1109.0043v2), Theorem 1
+and Remark 2, give, for a continuous semimartingale $X$, the almost
+sure uniform-in-time limit $c\operatorname{TV}^c(X;[0,t])\to[X]_t$
+as $c\downarrow0$. In particular, on one event for our two coordinates,
+
+$$
+\lim_{c\downarrow0}c\operatorname{TV}^c(W^i;[0,t])=2t
+\quad(0\le t\le T,\ i=1,2).
+\tag{12.4}
+$$
+
+The truncation is twice the approximation radius. For a stopped
+coordinate the quadratic variation is $2(t\wedge S)$; alternatively,
+(12.4) on rational intervals before $S$ supplies all the localization
+needed here.
+
+For the stronger energy estimate, let $B$ be standard variance-$t$
+Brownian motion and use the scalar free-terminal-end functional
+
+$$
+I_B(t,\rho)=\inf\left\{
+ \left(\int_0^t|\dot h|^2\,ds\right)^{1/2}:
+ h\in AC[0,t],\ h(0)=0,\ \|h-B\|_{[0,t]}\le\rho\right\}.
+\tag{12.5}
+$$
+
+Its initial value is fixed, and its terminal value is free. This is
+precisely the boundary condition needed for a restriction of a native
+command. M. Lifshits and E. Setterqvist, *Energy of Taut Strings
+Accompanying Wiener Process*,
+[arXiv:1405.1651v1](https://arxiv.org/html/1405.1651v1), Theorems
+1.1–1.2, prove the same constant $\mathcal C$ for free and pinned
+terminal ends, with $\rho I_B(t,\rho)/\sqrt t\to\mathcal C$ in every
+$L_q$ as $\rho/\sqrt t\to0$, and almost surely for fixed radius and
+long time. Their Proposition 2.2 and (2.17), for any median
+$m(t,\rho)$, also give
+
+$$
+\mathbb E|I_B(t,\rho)-m(t,\rho)|^2\le1.
+\tag{12.6}
+$$
+
+The Cameron–Martin Lipschitz constant behind this estimate is one,
+independent of $t$ and $\rho$.
+
+M. A. Lifshits and A. A. Podchishchailov, *Asymptotic distribution of
+the derivative of the taut string accompanying Wiener process*,
+[arXiv:2411.04690v2](https://arxiv.org/html/2411.04690v2), Theorem
+1.1, (4), (9) and §7.2, identify $\mathcal C^2=\pi^2/24$. Their
+parameter $w$ is the full strip width: their pinned string satisfies
+$|h-B|\le w/2$, and its quadratic energy per unit long time tends to
+$\pi^2/(6w^2)$. The quadratic function satisfies their power-growth
+hypothesis by taking any exponent greater than two. To check the
+normalization and the coefficient directly from their density, put
+$v=wx$. Then
+
+$$
+\begin{aligned}
+\int_{\mathbb R}x^2w\frac{wx\coth(wx)-1}{\sinh^2(wx)}\,dx
+ &=w^{-2}\int_{\mathbb R}
+       \frac{v^2(v\coth v-1)}{\sinh^2v}\,dv\\
+ &=\frac{w^{-2}}2\int_{\mathbb R}\frac{v^2}{\sinh^2v}\,dv
+  =\frac{\pi^2}{6w^2}.
+\end{aligned}
+\tag{12.7}
+$$
+
+For the integration by parts use
+$d(\operatorname{csch}^2v)=-2\coth v\operatorname{csch}^2v\,dv$.
+The boundary term $v^3\operatorname{csch}^2v$ vanishes at zero and
+at both infinities. On $v>0$,
+$\operatorname{csch}^2v=4\sum_{j\ge1}j e^{-2jv}$; termwise integration
+of the nonnegative terms gives
+$\int_0^\infty v^2\operatorname{csch}^2v\,dv
+=\sum_{j\ge1}j^{-2}=\pi^2/6$.
+Taking $w=2\rho$ yields $\pi^2/(24\rho^2)$.
+The equality of the pinned and free constants is supplied by
+Lifshits–Setterqvist; a pinned-end minimum alone would not be a lower
+bound for the free-end problem.
+
+Here is the fixed-time, all-radius step needed for native tracking.
+Fix $t>0$. The $L_q$ limit implies
+$\rho m(t,\rho)\to\mathcal C\sqrt t$: convergence in probability
+to a constant forces every median to converge to that constant after
+normalization. For $\rho_j=1/j$ and any $v>0$, (12.6) gives
+
+$$
+\sum_{j=1}^\infty
+\mathbb P\{\rho_j|I_B(t,\rho_j)-m(t,\rho_j)|>v\}
+\le v^{-2}\sum_{j=1}^\infty j^{-2}<\infty.
+\tag{12.8}
+$$
+
+Borel–Cantelli for positive rational $v$ proves
+$\rho_jI_B(t,\rho_j)\to\mathcal C\sqrt t$ almost surely.
+The function $I_B(t,\rho)$ is nonincreasing in $\rho$. For
+$\rho_{j+1}\le\rho\le\rho_j$,
+
+$$
+\frac{\rho_{j+1}}{\rho_j}\rho_jI_B(t,\rho_j)
+\le\rho I_B(t,\rho)
+\le\frac{\rho_j}{\rho_{j+1}}\rho_{j+1}I_B(t,\rho_{j+1}).
+\tag{12.9}
+$$
+
+Both ratios tend to one, proving the limit over all real radii
+$\rho\downarrow0$ on this same fixed-time event. Intersect these
+events for all positive rational $t<T$, and for both standard
+coordinates $W^i/\sqrt2$. This is a countable intersection. Amplitude
+scaling in (12.5) gives
+$I_{\sigma B}(t,e)=\sigma I_B(t,e/\sigma)$ for $\sigma>0$, hence,
+on the resulting event,
+
+$$
+\lim_{e\downarrow0}e^2 I_{W^i}(t,e)^2
+ =4\mathcal C^2t=\frac{\pi^2t}{6},
+\qquad t\in\mathbb Q\cap(0,T),\quad i=1,2.
+\tag{12.10}
+$$
+
+This uses the fourth power of the amplitude scale for squared energy,
+not its second power. Long-time almost sure convergence has not been
+substituted for a fixed-time assertion by an equality in law.
+
+Intersect (12.4), (12.10), Brownian continuity, continuity of the chosen
+Itô integral, and the probability-one lifetime properties of Proposition
+4.5. This defines the required target-only event. Fix one of its
+realizations and a rational $0<t<S$. For all large $n$, (11.8),
+(12.3) and (12.4) give
+
+$$
+\liminf_n\epsilon_n V_n^a\ge t/d_a,
+\qquad
+\liminf_n\epsilon_n V_n^b\ge t/d_b.
+\tag{12.11}
+$$
+
+The same actual restrictions $a_n|_{[0,t]}$ and $b_n|_{[0,t]}$
+are competitors for the free-end scalar problems with radii
+$d_a\epsilon_n,d_b\epsilon_n$. Therefore
+
+$$
+E_n\ge I_{W^1}(t,d_a\epsilon_n)^2
+          +I_{W^2}(t,d_b\epsilon_n)^2.
+\tag{12.12}
+$$
+
+They are restrictions of one jointly realized native history; no two
+separately optimized scalar paths have been spliced into a native
+history. Equation (12.10) proves the energy bound with $t$ in place
+of $S$. Equation (11.5) and (12.11) give the length bound. Finally
+take the supremum over rational $t<S$. Since $S>0$, this supremum
+is $S$, including when $S=T$. Every cost used up to $t$ is actually
+executed. No stopped path is declared to be an unstopped Brownian
+motion, and no cost is assigned after its own exit. $\square$
+
+**Corollary 12.2 (equal control tubes and expected costs).** With
+$d_a=d_b=1$, on the event of Theorem 12.1,
+
+$$
+\liminf_n\epsilon_n V_n^a\ge S,\qquad
+\liminf_n\epsilon_n\mathsf V_{\chi,n}\ge S,\qquad
+\liminf_n\epsilon_n L_n\ge\sqrt2S,\qquad
+\liminf_n\epsilon_n^2E_n\ge\frac{\pi^2S}{3}.
+\tag{12.13}
+$$
+
+Consequently all four costs tend to infinity on every such coupled
+realization. If the quantitative assumptions hold almost surely and
+$\epsilon_n$ are deterministic, then
+
+$$
+\begin{aligned}
+\liminf_n\epsilon_n\mathbb EV_n^a&\ge\mathbb ES,&
+\liminf_n\epsilon_n\mathbb EV_n^b&\ge\mathbb ES,\\
+\liminf_n\epsilon_n\mathbb EL_n&\ge\sqrt2\mathbb ES,&
+\liminf_n\epsilon_n^2\mathbb EE_n&\ge\pi^2\mathbb ES/3.
+\end{aligned}
+\tag{12.14}
+$$
+
+For random errors, the valid statements place the errors inside the
+expectations, for example
+$\liminf_n\mathbb E[\epsilon_n^2E_n]\ge\pi^2\mathbb ES/3$;
+there is no replacement of this expectation by
+$(\mathbb E\epsilon_n)^2\mathbb EE_n$ without further hypotheses.
+
+Proof. Specialize (12.1) and use $S>0$, $\epsilon_n\to0$.
+Fatou's lemma applies to each nonnegative normalized cost. The stopping
+coefficient is $\mathbb ES\in(0,T]$, not $T$ in general. The elementary
+variation/length bound $L_n^2\le TE_n$ gives the energy floor $2S^2/T$;
+using $L_n^2\le S_nE_n$ and $S_n\to S>0$ improves it to $2S$.
+Both are below the stronger coefficient $\pi^2S/3$ supplied by
+(12.12). $\square$
+
+## 13. Accuracy of complete wrapped native paths
+
+**Definition 13.1 (maximum-coordinate native path metric).** On the
+held cylinder declare
+
+$$
+\begin{aligned}
+d_{\max}((h,\alpha,\beta),(h',\alpha',\beta'))
+ &=\max\{|h-h'|,d_{\mathbb T}(\alpha,\alpha'),
+                   d_{\mathbb T}(\beta,\beta')\},\\
+d_{\mathbb T}([x],[y])&=\min_{j\in\mathbb Z}|x-y-2\pi j|,\\
+D_{\max}(q,q')&=\sup_{0\le t\le T}d_{\max}(q(t),q'(t)).
+\end{aligned}
+\tag{13.1}
+$$
+
+This is an additional, unweighted coordinate error metric, with angles
+measured in radians. It is not the horizontal path length (11.4).
+A native accuracy contract consists of
+$D_{\max}(\bar q_n,\bar q^\lambda)\le\eta_n\to0$ and
+$\zeta_n\to\zeta$ on the same coupling, with common fixed initial
+phase representatives. Errors $\eta_n>0$ may be random. The metric
+tracks the entire held path; the lifetime is retained separately.
+
+**Theorem 13.2 (wrapped-path transfer and native constants).** The
+contract of Definition 13.1 implies the quantitative contract of
+Assumption 11.3 with $\epsilon_n=\eta_n$, $d_a=1$, $d_b=2$.
+On the target-only event of Theorem 12.1 it therefore forces
+
+$$
+\begin{aligned}
+\liminf_n\eta_n V_n^a&\ge S,&
+\liminf_n\eta_n\mathsf V_{\chi,n}&\ge S/2,\\
+\liminf_n\eta_n L_n&\ge\frac{\sqrt5}{2}S,&
+\liminf_n\eta_n^2E_n&\ge\frac{5\pi^2}{24}S.
+\end{aligned}
+\tag{13.2}
+$$
+
+Proof. Eventually $\eta_n<\pi$. For either circle, the difference of
+the two continuous real lifts starts at zero. If its circle distance
+is at most $\eta_n$ throughout the connected interval $[0,T]$, that
+difference lies in the union of the disjoint closed intervals
+$[2\pi j-\eta_n,2\pi j+\eta_n]$. Continuity and its initial value
+force it to stay in the interval with $j=0$. Thus the two real phase
+differences are uniformly at most $\eta_n$, even if each path has
+many windings. Applying the exact inverse of (11.3) gives
+
+$$
+\begin{aligned}
+\|a_n-W^1_{\cdot\wedge S}\|_\infty&\le\eta_n,\\
+\|b_n-W^2_{\cdot\wedge S}\|_\infty&\le2\eta_n,\\
+\|J_n-J^\lambda_{\cdot\wedge S}\|_\infty
+ &\le r(1+2|c_0|)\eta_n.
+\end{aligned}
+\tag{13.3}
+$$
+
+This also proves the required full chronological convergence. Lifetime
+convergence makes each rational $t<S$ an executed pre-death interval
+for all sufficiently large $n$. Substitution in (12.1) gives (13.2).
+In particular, reusing the equal-control-tube constants for $\eta_n$
+would neglect the factor two in $b=2(\widetilde\alpha-\alpha_0)$.
+The phase lift uses the original $2\pi$ periods, not a doubled period.
+
+Conversely, on complete held triples, first-level errors $e_a,e_b$
+and chronological error $e_J$ imply
+
+$$
+D_{\max}(\bar q_n,\bar q^\lambda)
+\le\max\{e_a,e_b/2,|c_0|e_b+e_J/r\}.
+\tag{13.4}
+$$
+
+This follows from (11.3) and the Lipschitz circle projection. A small
+first-level error alone gives no bound on $e_J$. Thus the forward
+transfer does not omit the full-lift or lifetime obligations. $\square$
+
+## 14. A rate-free obstruction from full native law convergence
+
+**Theorem 14.1 (executed costs escape every bounded budget in law).**
+Suppose either qualitative contract in Assumption 11.3 holds for a
+sequence of Definition 11.1. Then, for every finite $M$,
+
+$$
+\mathbb P(V_n^a\le M)\to0,\qquad
+\mathbb P(\mathsf V_{\chi,n}\le M)\to0,\qquad
+\mathbb P(L_n\le M)\to0,\qquad
+\mathbb P(E_n\le M)\to0.
+\tag{14.1}
+$$
+
+Thus each cost diverges in probability and its laws are not tight on
+$[0,\infty)$. In the extended sense each expected cost tends to
+$+\infty$. This statement requires neither a tube radius nor any
+specified stage rate. It makes no almost-sure claim on an unspecified
+original coupling.
+
+Proof. First consider the held-law contract. Continuous lifting of a
+circle path with its fixed initial representative is continuous for
+uniform convergence: once two paths are uniformly closer than $\pi$,
+the connected-interval argument in Theorem 13.2 applies. Hence the
+inverse (2.6) is a continuous map on the held path space with fixed
+initial point. In particular
+
+$$
+a_n\Rightarrow W^1_{\cdot\wedge S},\qquad
+b_n\Rightarrow W^2_{\cdot\wedge S}
+\quad\hbox{in the uniform topology}.
+\tag{14.2}
+$$
+
+On a common probability-one Brownian event, each coordinate has infinite
+total variation on every rational interval $[0,t]$ with $t>0$.
+For example its dyadic squared-increment sums converge to $2t$ almost
+surely, while the largest increment tends to zero; finite total
+variation would force those squared sums to tend to zero. Countably
+many rational $t$ suffice. Since $S>0$, choose such a $t<S$.
+Both stopped coordinates therefore have infinite variation almost
+surely, even though they are constant after $S$.
+
+Total variation on continuous real paths is the supremum of continuous
+finite-partition sums. Its finite sublevel sets are closed. Portmanteau
+applied to (14.2) gives the first two limits in (14.1). No compactness
+of those sublevel sets is needed. Equation (11.5) gives the length
+and energy limits, since $L_n\ge V_n^b$ and
+$E_n\ge(V_n^b)^2/T$.
+
+For the cemetery-law contract use the Skorokhod representation theorem
+on the Polish space $D([0,T],E)$ to realize copies converging almost
+surely in $J_1$. This representation is only a proof of statements
+about the given marginal laws. Fix a limiting realization with $S>0$
+and infinite Brownian variation on all positive rational intervals.
+For a rational $0<t<S$, the limit is alive and continuous on a
+slightly longer interval. $J_1$ convergence, isolation of $\dagger$
+and uniform continuity there imply that the copied finite paths are
+eventually alive on $[0,t]$ and converge uniformly on this interval.
+Their real phase lifts from the common initial value therefore
+converge uniformly too. Finite-partition sums then show
+
+$$
+\liminf_n\operatorname{TV}_{[0,t]}(a_n)=+\infty,
+\qquad
+\liminf_n\operatorname{TV}_{[0,t]}(b_n)=+\infty
+\tag{14.3}
+$$
+
+for the copied controls recovered from these paths. These are lower
+bounds for the costs of the actual executed prefixes.
+More explicitly, for an actual killed path the phase cost is twice
+the supremum of
+$\sum_j d_{\mathbb T}(\alpha(t_j),\alpha(t_{j-1}))$ over rational
+pre-death partitions starting at zero. On each compact alive interval,
+continuity permits refinement until every real lifted increment has
+absolute value less than $\pi$; the circle distances then equal those
+absolute increments. This proves equality with $\operatorname{TV}(b)$,
+including windings. The height variation has the analogous partition
+formula with absolute height differences. These are measurable
+functions of the killed path. Continuity supplies the terminal value
+at a finite death by the left limit, and at $T$ by a limit from below
+when there is no death, so their suprema are the actual held variations.
+Each such functional has the
+same law for the copies as for the original commands. Thus (14.3)
+implies the first two limits of (14.1) in the original laws; (11.5)
+again handles length and energy. Nothing assigns variation or energy
+to the jump into $\dagger$. In particular one has not lifted a circle
+path through that jump or used a post-death comparison extension.
+
+For any nonnegative cost $C_n$ in (14.1),
+$\mathbb EC_n\ge M\mathbb P(C_n>M)$. Taking the lower limit and
+then $M\to\infty$ gives divergence of expectations. A uniformly
+bounded expected budget would also contradict (14.1) directly by
+Markov's inequality. No uniform integrability premise is needed for
+this lower-bound consequence. $\square$
+
+## 15. Exact boundaries of the resource conclusions
+
+**Proposition 15.1 (even a full terminal lift and lifetime do not force
+the tracking floors).** With additional offline access to
+$(W^1_S,W^2_S,J^\lambda_S,S,\zeta)$, there is a single original
+piecewise linear held command having exactly the target's terminal
+real lifted state and censored lifetime, and finite costs almost
+surely. Repeating this command at every stage refutes any inference
+of (12.13) or (13.2) from terminal accuracy alone, even if terminal
+chronology and death time are also exact.
+
+Proof. Put $A=W^1_S$, $B=W^2_S$, $C=J^\lambda_S$, and fix
+$0<d<u-k$. On $[0,S]$ give each of the following six legs duration
+$S/6$, with the displayed vertices in the control plane:
+
+$$
+(0,0),\ (d,0),\ (d,C/d),\ (0,C/d),\ (0,0),\ (0,B),\ (A,B).
+\tag{15.1}
+$$
+
+The rectangle has chronological integral $d(C/d)=C$. The phase leg
+at $a=0$ and the final height leg contribute zero to $\int a\,db$.
+Thus the terminal control triple is exactly $(A,B,C)$ on this same
+realization. Before the last leg, all heights lie in $[k,k+d]\Subset I$.
+On the last leg the height moves from $k$ toward $k+A\in[l,u]$.
+It first meets the killing boundary at $S$ exactly when $\zeta<\infty$;
+otherwise $S=T$ and it remains in $I$. Hold thereafter. Since $S>0$
+and $A,B,C$ are finite, all six original-velocity costs are finite.
+The whole-height guard holds strictly within $(0,H)$ throughout.
+The prescribed command has its ordinary domain (11.2); no operation
+is asserted outside it. For any positive tolerances tending to zero,
+the repeated command has zero terminal error while every normalized
+cost in (12.13) tends to zero. Its entire path is not asserted to
+track the target. Access to those terminal random variables is the
+explicit additional information used by this witness. $\square$
+
+**Proposition 15.2 (weak law does not force almost-sure cost divergence
+on the original coupling).** There are lawful sequences satisfying
+both qualitative contracts, and even convergence in probability of
+the coupled held paths and lifetimes, whose executed costs are zero
+infinitely often almost surely.
+
+Proof. Use the coupled finite dyadic family of Sections 5–6 for the
+fixed $\lambda$. Independently sample Bernoulli variables $D_n$ with
+$\mathbb P(D_n=1)=1/(n+1)$. At stage $n$, prescribe the zero command
+when $D_n=1$, and the dyadic command otherwise. Each choice is a
+complete original command starting from the same specified ray; there
+is no reset within a command. The zero command has $J=0$, no death,
+full native guard and zero costs. The probability of replacing the
+dyadic command tends to zero, so the new full held/lifetime and killed
+laws have the same limits: for any bounded test their expectation
+difference is at most twice its supremum norm divided by $n+1$.
+The same probability bound gives coupled convergence in probability.
+Independence and $\sum_n1/(n+1)=\infty$ give $D_n=1$ infinitely often
+almost surely. Hence almost-sure divergence of costs fails on this
+coupling, although Theorem 14.1 still applies. This witness changes
+neither the good samples' chronology nor their own death times.
+$\square$
+
+**Proposition 15.3 (no universal growth rate in the stage label).** For
+any deterministic positive sequence $R_n\to\infty$, there is a lawful
+full-native approximation sequence, with the clock still $T$ and the
+specified target $\lambda$, whose four executed costs are all
+$o(R_n)$ almost surely. It can retain almost-sure convergence of the
+held triples and censored lifetimes and $J_1$ convergence of the killed
+paths. Thus (12.1) is a rate in the declared accuracy, not in an
+unconstrained enumeration of stages.
+
+Proof. Let the dyadic family be indexed by $m$ and put
+$C_m=1+V_m^a+V_m^b+L_m+E_m$. Each $C_m$ is finite almost surely.
+Choose deterministic $K_m\ge1$ with
+$\mathbb P(C_m>K_m)\le2^{-m}$. Select strictly increasing integers
+$N_m$ such that $R_n\ge mK_m$ whenever $n\ge N_m$.
+For $N_m\le n<N_{m+1}$, use precisely stage $m$'s command and sample
+from the original coupling. Borel–Cantelli gives $C_m\le K_m$
+eventually almost surely, so $C_m/R_n\le1/m$ throughout all
+sufficiently late blocks. Since $m\to\infty$, the asserted cost and
+path limits follow. The finitely many initial labels can use the
+first command. Repetition changes an index, not the time parametrization
+of any executed command; partial segments and their costs are unchanged.
+No estimate relating this new label to its path error is implied.
+$\square$
+
+**Proposition 15.4 (random lifetime and the absence of a hard samplewise
+budget).** For any fixed $T>0$, one has $\mathbb P(S<T)>0$ and
+$\mathbb P(S=T)>0$, and $S$ has no deterministic positive lower bound.
+Moreover, at any fixed control tube radius $e>0$, no finite deterministic
+bound on phase variation, length or identity energy can accommodate
+all realizations satisfying the full held control tube around this
+Brownian target almost surely.
+
+Proof. A Brownian height can leave $I$ in any positive time with
+positive probability, since a sufficiently large Gaussian increment
+forces exit by continuity. Survival to $T$ has positive probability
+by the argument in Theorem 7.2. These facts prove the assertions about
+$S$. On the event $S=T$, a full tube implies
+$|b_n(T)-W^2_T|\le e$, and therefore
+
+$$
+V_n^b\ge(|W^2_T|-e)_+,\qquad L_n\ge V_n^b,
+\qquad E_n\ge(V_n^b)^2/T.
+\tag{15.2}
+$$
+
+The survival event depends only on $W^1$, and $W^2_T$ is an independent
+Gaussian with unbounded support. Every proposed finite deterministic
+budget is exceeded with positive probability. For the native metric
+radius $e<\pi$, replace $e$ by $2e$ in (15.2), by Theorem 13.2.
+This argument also rules out a time-independent hard budget, since it
+already rules one out on the specified fixed horizon. It does not
+assert that any finite-radius full-lift tracking class is nonempty.
+$\square$
+
+**Proposition 15.5 (what the first-level floors leave unselected).**
+The necessary bounds (12.1) and (13.2) apply with the same constants
+to every fixed area drift $\lambda$. They do not select a native law,
+prove full-lift attainment of a lower bound, or turn a scalar
+free-end optimizer into a full-native optimizer.
+
+Proof. The Brownian first-level pair, $S$, and the target-only event
+in Theorem 12.1 are common to all these drifts. Every scalar inequality
+used there holds for a restriction of any admitted native command,
+regardless of its chronological integral. The construction in Sections
+5–7 provides actual lawful approximating families for every fixed
+$\lambda$, with the distinct wrapped laws established in Theorem 7.2.
+Thus the resource inequalities cannot single out $\lambda=0$.
+
+The scalar minima in (12.12) relax both the common chronological
+constraint $J_n=\int a_n\,db_n$ and the requested accuracy of the
+full $\beta$ path and lifetime. Lower bounds for that larger feasible
+set imply lower bounds for the native set, but supply no command
+in the latter set attaining them. The classical scalar free-end
+optimizer may depend on the entire Brownian path. Its existence
+therefore gives no causal access rule, finite-bit sampler, or optimal
+causal native command. The explicit native families establish
+convergence, not a matching upper bound in the error variable of
+(12.13) or (13.2). No sharp full-native optimum follows.
+
+The costs and error metrics in these statements have the definitions
+(11.4) and (13.1). They add no calibration of physical energy or
+acquisition cost, and no preparation of an analytic amplitude. Their
+state is the original three-dimensional ray manifold with control
+rank two, bracket growth $(2,3)$ and declared local volume exponent
+four; the bottom-observation base remains two-dimensional. Those
+objects, task-dependent predictive memory, a number of stored
+coordinates and a number of physical spatial axes have different
+definitions. None is identified with another by a resource inequality.
+The statements fix the starting ray, horizon, killing interval and
+actual joint target law; they assert no uniform-in-start, all-Borel
+or heat-kernel approximation. $\square$
+
+## 追加锚（本行以下为增补区）
