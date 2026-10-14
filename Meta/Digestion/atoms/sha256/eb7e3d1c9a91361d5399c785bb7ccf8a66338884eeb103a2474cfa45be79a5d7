@@ -1,0 +1,29 @@
+**Definition 8.1 (the retained shift-copy input).** Fix a supplied
+integer $a\ge1$, put $S=\rho^a$, and define
+
+$$
+U_a(x,y)=\langle x,\langle y,Sy\rangle\rangle.
+\tag{NMF.8.1}
+$$
+
+The two occurrences of $y$ use the same whole finite native value.
+Take $P=\{\varepsilon\}$ with its complete one-hole old row, final
+epoch $N=a$, target cut $Q=\{L,RL,RR\}$ in that order, and exactly
+
+$$
+\begin{aligned}
+H_0=\{&(0,\varepsilon,\mathsf{branch}),
+       (0,R,\mathsf{branch}),\\
+      &(a,\varepsilon,\mathsf{branch}),
+       (a,R,\mathsf{branch})\},\\
+H_{\rm rel}=\{&(a,RL,0,RR,=),\
+              (0,RL,0,RR,\ne),\
+              (0,\varepsilon,0,L,\ne)\}.
+\end{aligned}
+\tag{NMF.8.2}
+$$
+
+There are no other records or image/rank conditions in this instance.
+Definition 1.1's paid-source and complete-state premise is retained.
+The off-task root/left comparison is part of the input.
+

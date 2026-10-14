@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Literal strict Euler inventories have uniform unconditional linear logarithmic growth. -/
+   digest: Strict Euler inventories have uniform square-root discrepancy from Chebyshev psi. -/
 
 import D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
@@ -225,6 +225,193 @@ theorem strict_inventory_chebyshev_bounds {t : ℝ} (ht : 2 ≤ t) {U : ℕ} (hU
   constructor <;> linarith
 
 #print axioms strict_inventory_chebyshev_bounds
+
+private theorem active_power_linear_cutoff {t : ℝ} (ht : 2 ≤ t) {U q k : ℕ}
+    (hstrict : ∀ q : ℕ, q.Prime →
+      U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q)
+    (hq : q.Prime) (hk : 1 ≤ k) (hka : k ≤ U.factorization q) :
+    (q : ℝ) ^ k < (k : ℝ) * t := by
+  have ht0 : 0 < t := by linarith
+  have hk1 : (1 : ℝ) ≤ k := by exact_mod_cast hk
+  have hbound := active_power_bound (by linarith) hstrict hq hk hka
+  by_contra hn
+  have hpow : (k : ℝ) * t ≤ (q : ℝ) ^ k := le_of_not_gt hn
+  have htx : t ≤ (q : ℝ) ^ k := calc
+    _ = 1 * t := by ring
+    _ ≤ (k : ℝ) * t := mul_le_mul_of_nonneg_right hk1 ht0.le
+    _ ≤ _ := hpow
+  have hlog : Real.log t ≤ (k : ℝ) * Real.log q := by
+    simpa only [Real.log_pow] using Real.log_le_log ht0 htx
+  have hreverse : t * Real.log t ≤ (q : ℝ) ^ k * Real.log q := calc
+    _ ≤ t * ((k : ℝ) * Real.log q) := mul_le_mul_of_nonneg_left hlog ht0.le
+    _ = ((k : ℝ) * t) * Real.log q := by ring
+    _ ≤ _ := mul_le_mul_of_nonneg_right hpow (Real.log_natCast_nonneg q)
+  linarith
+
+/-- The complete actual higher-layer mass has a finite square-root-scale envelope at
+the same real clock. Every actual valuation and the literal strict tie convention remain. -/
+theorem strict_inventory_higher_layer_bound {t : ℝ} (ht : 2 ≤ t) {U : ℕ} (hU : 0 < U)
+    (hstrict : ∀ q : ℕ, q.Prime →
+      U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) :
+    (∑ q ∈ U.primeFactors, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q) ≤
+      2 * θ (Real.sqrt (2 * t)) + 2 * (ψ t - θ t) := by
+  classical
+  let S := U.primeFactors.filter (fun q => 2 ≤ U.factorization q)
+  let M := ⌊t⌋₊
+  have ht0 : 0 < t := by linarith
+  have hSU : S ⊆ U.primeFactors := filter_subset _ _
+  have hsupport := (support_bounds (by linarith) hU hstrict).1
+  have hsub : S ⊆ Nat.primesLE M := by
+    intro q hqS
+    exact Nat.mem_primesLE.mpr ⟨
+      (Nat.le_floor_iff ht0.le).mpr (hsupport q (hSU hqS)).le,
+      Nat.prime_of_mem_primeFactors (hSU hqS)⟩
+  have hval (q : ℕ) (hqS : q ∈ S) :
+      U.factorization q - 1 ≤ 2 * Nat.log q M := by
+    have hq := Nat.prime_of_mem_primeFactors (hSU hqS)
+    have hqa : 2 ≤ U.factorization q := (mem_filter.mp hqS).2
+    let k := U.factorization q / 2
+    have hk : 1 ≤ k := by dsimp [k]; omega
+    have hka : 2 * k ≤ U.factorization q := by dsimp [k]; omega
+    have hactive := active_power_linear_cutoff ht hstrict hq (by omega : 1 ≤ 2 * k) hka
+    have hpoweq : (q : ℝ) ^ (2 * k) = ((q : ℝ) ^ k) ^ 2 := by
+      rw [Nat.mul_comm 2 k, pow_mul]
+    rw [hpoweq] at hactive
+    have hcoeff : (2 * k : ℕ) ≤ q ^ k :=
+      (Nat.mul_le_pow (by decide : (2 : ℕ) ≠ 1) k).trans
+        (Nat.pow_le_pow_left hq.two_le k)
+    have hcoeffR : ((2 * k : ℕ) : ℝ) ≤ (q : ℝ) ^ k := by exact_mod_cast hcoeff
+    have hcoeff0 : 0 ≤ ((2 * k : ℕ) : ℝ) := Nat.cast_nonneg _
+    have hqpow : (q : ℝ) ^ k < t := by
+      by_contra hn
+      have htx : t ≤ (q : ℝ) ^ k := le_of_not_gt hn
+      have hreverse : ((2 * k : ℕ) : ℝ) * t ≤ ((q : ℝ) ^ k) ^ 2 := calc
+        _ ≤ ((2 * k : ℕ) : ℝ) * (q : ℝ) ^ k :=
+          mul_le_mul_of_nonneg_left htx hcoeff0
+        _ ≤ (q : ℝ) ^ k * (q : ℝ) ^ k :=
+          mul_le_mul_of_nonneg_right hcoeffR (pow_nonneg (Nat.cast_nonneg q) k)
+        _ = _ := by ring
+      linarith
+    have hqpowNat : q ^ k ≤ M := by
+      apply (Nat.le_floor_iff ht0.le).mpr
+      exact_mod_cast hqpow.le
+    have hklog : k ≤ Nat.log q M := Nat.le_log_of_pow_le hq.one_lt hqpowNat
+    have hvalk : U.factorization q - 1 ≤ 2 * k := by dsimp [k]; omega
+    exact hvalk.trans (Nat.mul_le_mul_left 2 hklog)
+  have hsubroot : S ⊆ Nat.primesLE ⌊Real.sqrt (2 * t)⌋₊ := by
+    intro q hqS
+    have hq := Nat.prime_of_mem_primeFactors (hSU hqS)
+    have hqa : 2 ≤ U.factorization q := (mem_filter.mp hqS).2
+    have hpow := active_power_linear_cutoff ht hstrict hq (k := 2) (by norm_num) hqa
+    have hpow' : (q : ℝ) ^ 2 < 2 * t := by simpa using hpow
+    have hroot : (q : ℝ) < Real.sqrt (2 * t) :=
+      (Real.lt_sqrt (Nat.cast_nonneg q)).mpr hpow'
+    exact Nat.mem_primesLE.mpr ⟨
+      (Nat.le_floor_iff (Real.sqrt_nonneg _)).mpr hroot.le, hq⟩
+  have hcast (q : ℕ) (hq : q ∈ Nat.primesLE M) :
+      ((Nat.log q M - 1 : ℕ) : ℝ) = (Nat.log q M : ℝ) - 1 := by
+    obtain ⟨hqM, hqprime⟩ := Nat.mem_primesLE.mp hq
+    simpa only [Nat.cast_one] using Nat.cast_sub (Nat.log_pos hqprime.one_lt hqM)
+  have href :
+      (∑ q ∈ Nat.primesLE M, ((Nat.log q M - 1 : ℕ) : ℝ) * Real.log q) =
+        ψ t - θ t := calc
+    _ = ψ (M : ℝ) - θ (M : ℝ) := by
+      rw [Chebyshev.psi_eq_sum_mul_log_prime, Chebyshev.theta_eq_sum_primesLE_log,
+        ← sum_sub_distrib]
+      apply sum_congr rfl
+      intro q hq
+      rw [hcast q hq]
+      ring
+    _ = _ := by
+      rw [Chebyshev.psi_eq_psi_coe_floor t, Chebyshev.theta_eq_theta_coe_floor t]
+  have htail : (∑ q ∈ S, ((Nat.log q M - 1 : ℕ) : ℝ) * Real.log q) ≤ ψ t - θ t := by
+    rw [← href]
+    exact sum_le_sum_of_subset_of_nonneg hsub (fun q _ _ => by positivity)
+  have hfirst : (∑ q ∈ S, Real.log q) ≤ θ (Real.sqrt (2 * t)) := by
+    rw [Chebyshev.theta_eq_sum_primesLE]
+    exact sum_le_sum_of_subset_of_nonneg hsubroot (fun q _ _ => Real.log_natCast_nonneg q)
+  have hfilter :
+      (∑ q ∈ U.primeFactors, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q) =
+        ∑ q ∈ S, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q := by
+    dsimp [S]
+    rw [sum_filter]
+    apply sum_congr rfl
+    intro q hq
+    by_cases hq2 : 2 ≤ U.factorization q
+    · simp [hq2]
+    · have hz : U.factorization q - 1 = 0 := by omega
+      simp [hq2, hz]
+  calc
+    _ = ∑ q ∈ S, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q := hfilter
+    _ ≤ ∑ q ∈ S, 2 * (Nat.log q M : ℝ) * Real.log q := by
+      apply sum_le_sum
+      intro q hq
+      exact mul_le_mul_of_nonneg_right (by exact_mod_cast hval q hq)
+        (Real.log_natCast_nonneg q)
+    _ = 2 * (∑ q ∈ S, ((Nat.log q M - 1 : ℕ) : ℝ) * Real.log q) +
+        2 * (∑ q ∈ S, Real.log q) := by
+      rw [mul_sum, mul_sum, ← sum_add_distrib]
+      apply sum_congr rfl
+      intro q hq
+      rw [hcast q (hsub hq)]
+      ring
+    _ ≤ _ := by linarith
+
+#print axioms strict_inventory_higher_layer_bound
+
+/-- A single positive constant bounds the discrepancy from the weak Chebyshev psi
+function for every real clock at least two and every literal full strict inventory. -/
+theorem strict_inventory_sqrt_discrepancy :
+    ∃ C : ℝ, 0 < C ∧ ∀ t : ℝ, 2 ≤ t → ∀ U : ℕ, 0 < U →
+      (∀ q : ℕ, q.Prime →
+        U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q) →
+      |Real.log U - ψ t| ≤ C * Real.sqrt t := by
+  obtain ⟨c, hc⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
+  have hlog4 : 0 ≤ Real.log 4 := Real.log_nonneg (by norm_num)
+  let C : ℝ := 3 + 4 * Real.log 4 + |c|
+  have hC : 0 < C := by dsimp [C]; positivity
+  refine ⟨C, hC, ?_⟩
+  intro t ht U hU hstrict
+  have ht0 : 0 ≤ t := by linarith
+  have hfirst := first_layer_comparison ht hU hstrict
+  have hhigher := strict_inventory_higher_layer_bound ht hU hstrict
+  have hsplit : Real.log U = (∑ q ∈ U.primeFactors, Real.log q) +
+      ∑ q ∈ U.primeFactors, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q := by
+    rw [Real.log_nat_eq_sum_factorization, Finsupp.sum, Nat.support_factorization,
+      ← sum_add_distrib]
+    apply sum_congr rfl
+    intro q hq
+    have ha : 1 ≤ U.factorization q :=
+      (Nat.prime_of_mem_primeFactors hq).factorization_pos_of_dvd (by omega)
+        (Nat.dvd_of_mem_primeFactors hq)
+    rw [Nat.cast_sub ha]
+    ring
+  have hnonneg : 0 ≤ ∑ q ∈ U.primeFactors,
+      ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q :=
+    sum_nonneg fun q _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg q)
+  have htail : ψ t - θ t ≤ |c| * Real.sqrt t :=
+    (hc t).trans (mul_le_mul_of_nonneg_right (le_abs_self c) (Real.sqrt_nonneg t))
+  have hlog : Real.log t ≤ 2 * Real.sqrt t := by
+    have h := Real.log_le_self (Real.sqrt_nonneg t)
+    rw [Real.log_sqrt ht0] at h
+    linarith
+  have hroot : Real.sqrt (2 * t) ≤ 2 * Real.sqrt t := by
+    apply Real.sqrt_le_iff.mpr
+    refine ⟨by positivity, ?_⟩
+    nlinarith [Real.sq_sqrt ht0]
+  have htheta : θ (Real.sqrt (2 * t)) ≤ 2 * Real.log 4 * Real.sqrt t := calc
+    _ ≤ Real.log 4 * Real.sqrt (2 * t) :=
+      Chebyshev.theta_le_log4_mul_x (Real.sqrt_nonneg _)
+    _ ≤ Real.log 4 * (2 * Real.sqrt t) := mul_le_mul_of_nonneg_left hroot hlog4
+    _ = _ := by ring
+  have hlog4root : 0 ≤ Real.log 4 * Real.sqrt t :=
+    mul_nonneg hlog4 (Real.sqrt_nonneg t)
+  apply abs_le.mpr
+  dsimp [C]
+  constructor <;> nlinarith [Real.sqrt_nonneg t]
+
+#print axioms strict_inventory_sqrt_discrepancy
+
 
 /-- One threshold controls every positive natural integer satisfying the literal strict
 prime-count law. No Riemann-hypothesis premise enters the conclusion. -/

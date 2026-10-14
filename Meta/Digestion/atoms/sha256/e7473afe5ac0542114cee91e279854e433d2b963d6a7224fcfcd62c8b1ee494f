@@ -1,0 +1,30 @@
+**Theorem 6.4 (the source counterexample rules out two weaker transfers).**
+The original-source family in Theorem 4.2 satisfies both unbounded
+total $a$-count in its finite pruning language and unbounded
+maximum branch $a$-count. Its pruning language is not
+$\{a\}$-diagonal. Hence neither of those growth tests can replace
+the every-branch predicate in Theorems 6.2–6.3, even on actual
+entire signed-native row products.
+
+Proof. Its displayed actual tuples have total marker count
+$2^{n+2}$ and maximum branch count $n+2$. Every tuple in its
+entire product, not merely the displayed sequence, has a
+frontier path of count one at original $L$. Thus no pruning
+has all branches of count at least two. This disproves
+diagonality with its exact $n=2$ threshold while establishing
+both weaker unboundedness properties. All source hypotheses
+were proved in both directions in Theorem 4.2. $\square$
+
+[Badyl and Parys, *Extending the WMSO+U Logic With Quantification
+Over Tuples*, Theorem 2][BP] decides a supplied
+$\mathrm{WMSO}+U_{\rm tup}$ sentence on a supplied unrestricted
+recursion scheme. Its tuple quantifier in §3 requires one tuple
+of finite sets with simultaneous arbitrarily large cardinalities;
+its finite-output SUP construction in §4 counts labels. Theorem
+6.4 prevents equating those raw counts with the cost here. It
+does not preclude some separately proved encoding into that
+logic. No translation of the weak-cost sentence (NMF.25) into
+its unrestricted-scheme decision theorem is asserted. In
+particular that theorem does not remove the safety premise of
+the WCMSO supplier used above.
+

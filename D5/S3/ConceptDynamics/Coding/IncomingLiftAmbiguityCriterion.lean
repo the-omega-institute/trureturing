@@ -26,6 +26,30 @@ open D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 open D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
 open D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound
 
+/-- Faithful extraction of the existing proof-local concatenation supplier. -/
+theorem concatenate_paths {n : ℕ} {A : CountMat n n} {Q : Type}
+    (L : IncomingLift A Q) : ∀ {d : ℕ} {i j : Fin n} (p : FinitePath A d i j)
+    {b : ℕ} {k : Fin n} (q : FinitePath A b j k),
+    ∃ r : FinitePath A (d + b) i k,
+      pathWord r = pathWord p ++ pathWord q ∧
+      ∀ z : {z : Q // L.project z = k},
+        L.liftPath r z = L.liftPath p (L.liftPath q z) := by
+  intro d i j p
+  induction p with
+  | nil i =>
+      intro b k q
+      rw [Nat.zero_add]
+      exact ⟨q, rfl, fun _ => rfl⟩
+  | @cons d i j k a tail ih =>
+      intro b z q
+      obtain ⟨r, hw, hr⟩ := ih q
+      rw [show d + 1 + b = d + b + 1 by omega]
+      refine ⟨.cons a r, ?_, ?_⟩
+      · simp only [pathWord, List.cons_append, hw]
+      · intro w
+        dsimp only [IncomingLift.liftPath]
+        rw [hr]
+
 /-- The specified original-edge code, exact longest ambiguity, and bounded
     actual bilateral periodic collisions for a finite incoming lift. -/
 theorem incoming_lift_ambiguity_criterion {n : ℕ} (hn : 0 < n)
@@ -665,22 +689,8 @@ theorem incoming_lift_ambiguity_criterion {n : ℕ} (hn : 0 < n)
       ∃ r : FinitePath A (d + b) i k,
         pathWord r = pathWord p ++ pathWord q ∧
         ∀ z : {z : Q // L.project z = k},
-          L.liftPath r z = L.liftPath p (L.liftPath q z) := by
-    intro d i j p
-    induction p with
-    | nil i =>
-        intro b k q
-        rw [Nat.zero_add]
-        exact ⟨q, rfl, fun _ => rfl⟩
-    | @cons d i j k a tail ih =>
-        intro b z q
-        obtain ⟨r, hw, hr⟩ := ih q
-        rw [show d + 1 + b = d + b + 1 by omega]
-        refine ⟨.cons a r, ?_, ?_⟩
-        · simp only [pathWord, List.cons_append, hw]
-        · intro w
-          dsimp only [IncomingLift.liftPath]
-          rw [hr]
+          L.liftPath r z = L.liftPath p (L.liftPath q z) :=
+    @concatenate_paths n A Q L
   have actual_path_lift : ∀ {d : ℕ} {i j : Fin n} (p : FinitePath A d i j)
       (q : {q : Q // L.project q = j}),
       ∃ r : FinitePath C d (e (L.liftPath p q).val) (e q.val),

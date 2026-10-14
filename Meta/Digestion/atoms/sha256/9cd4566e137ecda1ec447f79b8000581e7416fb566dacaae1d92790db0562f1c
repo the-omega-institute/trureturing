@@ -1,0 +1,40 @@
+**Proof: lower and upper field bounds.** Suppose a finite field $E$ and a uniformly finite
+post-cut legal consumer recover $f_{\rm joint}$. The existing whole-image lower-bound
+argument behind Theorem 5.4 supplies a finite original prefix depth $H$ for this field and
+consumer: equal $E$-values together with equal $p_H$ force identical reachable current
+read transcripts. Apply the all-depth construction above at $h=H$. The eight distinct joint
+outputs must then have eight distinct field values, so $|E(D)|\ge8$. This invokes the
+existing finite-read locality and complete-field lower bound; it does not replace that result
+by a new counting lemma.
+
+For the matching upper bound, the existing paid ARH producer already acquires the complete
+original source before the cut. During that paid acquisition compute the complete row $f(u)$
+and the finite coordinate test (FFM.38), then retain
+
+$$
+ E(u)=(f(u),b(u))\in A\times\{0,1\}.
+$$
+
+The accessible state factors through $(I,E)$, and a post-cut consumer returns the pair and
+halts with zero new reads and zero updates. Thus $|E(D)|=8$, proving (FFM.40) for both
+static and serial services. The producer remains source-total on the unchanged D and retains
+all old inequalities, reached conditions, repeated names and exterior partitions. $\square$
+
+The eight values are an additional complete-field alphabet, not total memory, bit cost,
+physical capacity, preparation price or a dimension statement. Sourcewise traversal remains
+possible: the presence compiler of §10 reconstructs each finite source and then evaluates
+(FFM.38), but its calls and workspace are unbounded over the whole D. Conversely, $b$ alone
+cannot recover the row, since (FFM.43) realizes all four row values at either $b$-value; and
+row-only memory plus any fixed finite original prefix cannot recover $b$, by the paired
+construction above. A physical support/scale recovery would still require a separately paid
+carrier, calibration, separation and saturation bridge.
+
+The ancestor-area coordinate is supplied by the existing AncestorAreaInterval geometry and
+its complete-subtree theorem. The four-row optimum and its zero-error field semantics are
+supplied by FFM §§5--6 and [SJM, Theorem 2.2]. Zero-error source coding with decoder side
+information, as in Koulgi--Tuncel--Regunathan--Rose, *On Zero-Error Source Coding With
+Decoder Side Information* (IEEE TIT 49, 2003), is a classical analogy only; it does not
+supply (FFM.40). Loday's ordered leaf-gap coordinates in *Realization of the Stasheff
+polytope* (arXiv:math/0212126) are likewise background for the coordinate interpretation,
+not a replacement for the native six-hole proof.
+
