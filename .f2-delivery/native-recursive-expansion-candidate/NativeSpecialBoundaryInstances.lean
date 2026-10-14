@@ -1,4 +1,11 @@
-/- UNCOMPILED native E/O instances of the actual-piece assembler.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeSpecialBoundaryInstances
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeSpecialBoundaryInstances
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The even and odd actual endpoint relations instantiate complete native special-child Hamilton path assembly. -/
+/- native E/O instances of the actual-piece assembler.
    Consume the supplied actual pieces and exact inventories of that same
    prior cycle, rather than selecting new cycle slices. Whole-edge route
    enumeration and native c coordinates earn the ordered Hamilton path. -/

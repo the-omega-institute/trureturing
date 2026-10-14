@@ -1,4 +1,11 @@
-/- UNCOMPILED algebraic last step of the simultaneous boundary induction.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/RecursiveBoundaryAdvance
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/RecursiveBoundaryAdvance
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The explicit affected-path replacement propagates the exact even and odd endpoint relations. -/
+/- algebraic last step of the simultaneous boundary induction.
    This only proves (58.41)--(58.43) for the independently defined templates.
    Native J restoration must first earn this transformation on actual
    whole paths; no native realization or all-n induction is claimed here. -/

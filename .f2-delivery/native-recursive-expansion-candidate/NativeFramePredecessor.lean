@@ -1,4 +1,11 @@
-/- UNCOMPILED predecessor for the all-frame induction.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeFramePredecessor
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeFramePredecessor
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Every supplied next frame has a literal predecessor preserving both protected selected labels. -/
+/- predecessor for the all-frame induction.
    Move exactly the newly prepended selected label to the end of the
    predecessor base. Reapplying the native constructor returns the
    supplied frame, so induction is not restricted to generated frames. -/

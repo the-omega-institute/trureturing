@@ -1,4 +1,11 @@
-/- UNCOMPILED candidate, conditional on the previous actual child cycle,
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeSpecialChildAssembly
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeSpecialChildAssembly
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Complete actual cycle partitions and proved native seams construct Hamilton paths on the special child. -/
+/- candidate, conditional on the previous actual child cycle,
    its genuine b-cut membership, and its earned E/O slice endpoint law.
    Full special support and reordering are conclusions, never inputs.
    Install the Domains / ActualCyclePieceReordering candidates under the

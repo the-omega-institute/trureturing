@@ -1,4 +1,11 @@
-/- UNCOMPILED actual recursive cycle step.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeRecursiveCycleStep
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeRecursiveCycleStep
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Specified child cycles and literal supplier cuts construct the complete actual parent with attached inventories. -/
+/- actual recursive cycle step.
    Special coverage is earned by the real E/O slice assembly. Ordinary
    paths are real single-cut complements of previous child cycles. The
    full independent parent domain is earned by NativeOuterChildAssembly.

@@ -1,4 +1,11 @@
-/- UNCOMPILED exact native marked-frame domain interfaces.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedFrameDomains
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedFrameDomains
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Literal native domain identifications carry the same actual cycles, partitions and retained edges between recursive frames. -/
+/- exact native marked-frame domain interfaces.
    The current parent domain is exactly the next marked special domain.
    The prior P special domain is exactly the independently defined final
    outer child, so its actual walks lift to the same current parent.

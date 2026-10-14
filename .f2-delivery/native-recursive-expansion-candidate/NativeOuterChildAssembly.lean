@@ -1,4 +1,11 @@
-/- UNCOMPILED outer assembly candidate.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeOuterChildAssembly
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeOuterChildAssembly
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Independent native child Hamilton paths earn full parent coverage and one actual parent Hamilton cycle. -/
+/- outer assembly candidate.
    Child paths are actual previous-cycle constructions. Complete parent
    coverage is derived from native_child_gap_partition, not a premise. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialBoundaryInstances

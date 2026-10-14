@@ -1,4 +1,11 @@
-/- UNCOMPILED exact native cut-set bridge for the actual J update.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeJointMarkedCutShift
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeJointMarkedCutShift
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Every next marked cut group is its prior group together with its actual new zero edge. -/
+/- exact native cut-set bridge for the actual J update.
    Literal shifted native ports identify every positive next cut with an
    old P cut. The remaining two edges are precisely the two Q zero cuts.
    Both next marked orders exchange the previous orders as in Phi. -/

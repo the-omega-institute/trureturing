@@ -1,4 +1,11 @@
-/- UNCOMPILED candidate for the actual J(k+1) propagation.
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedStepCoordinates
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedStepCoordinates
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Literal full configurations determine shifted ports, new cut prefixes and exact independent child ownership. -/
+/- candidate for the actual J(k+1) propagation.
    Frames are made from the previous literal full label list. Positive new
    mark indices are the old P marks shifted by one; index zero is in Q.
    This proves the native tuple/domain part of that propagation, without
