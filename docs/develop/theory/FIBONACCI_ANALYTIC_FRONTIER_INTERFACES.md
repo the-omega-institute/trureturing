@@ -324,3 +324,95 @@ $$
 $$
 
 同阶。这里的三项附加条件尚未由 FIB/CA 接口证明；即使它们都成立，也只说明人口层没有新的渐近量级，仍未支付同一候选的 signed Robin tail。要取得实质推进，必须得到常数级改进并保留同余，或直接建立联合有符号估计。
+
+## 449. Fibonacci 尺度采样的零相位接口
+
+当前 FIB 几何真正能接到 Robin 显式公式的地方，是尺度采样，而不是把组成层的四相标签直接当成零点谱。取固定 $c>0$，使用 $F_0=0,F_1=1$ 的 Fibonacci 数列，并令
+
+$$
+x_r=cF_r.
+$$
+
+这里的 $x_r$ 是把 FIB 长度直接送入显式公式的解析采样尺度；实际候选的 Robin 时钟是 $A=\log(1+F_rg)$。当 $g$ 随窗口变化时，二者没有自动相等，必须另证 $g$ 的范围和同一来源桥。
+
+由
+
+$$
+F_r=\frac{\varphi^r-\psi^r}{\sqrt5},
+\qquad \psi=-\varphi^{-1},
+$$
+
+得到
+
+$$
+\log x_r=r\log\varphi+\log\frac c{\sqrt5}+O(\varphi^{-2r}).
+$$
+
+因此，对固定的非平凡零点 $\rho=\beta+i\gamma$，有
+
+$$
+x_r^{\rho-1}
+=\left(\frac c{\sqrt5}\right)^{\rho-1}
+  \varphi^{r(\rho-1)}
+  \left(1+O_\rho(\varphi^{-2r})\right).
+$$
+
+它的幅度和相位分别满足
+
+$$
+\left|x_r^{\rho-1}\right|
+\asymp_{c,\rho}x_r^{\beta-1},
+\qquad
+\arg x_r^{\rho-1}
+=\gamma r\log\varphi+O_{c,\rho}(1).
+$$
+
+Polak 的 signed-tail 分解以及 Broadbent--Fiori--Kadiri--Ng--Wilk 的显式公式都包含
+
+$$
+\frac{\log x+1}{\log^2x}
+\sum_\rho\frac{x^{\rho-1}}{\rho(\rho-1)}
+$$
+
+这一零项。故在 Fibonacci 尺度上，单个固定零的首项系数具有
+
+$$
+\text{幅度}\asymp
+\frac{x_r^{\beta-1}}{\log x_r},
+\qquad
+\text{相位步长}\approx\gamma\log\varphi.
+$$
+
+这给出一个精确的尺度比较：选定 CA 源所需的充分条件是
+
+$$
+I_\psi(A)\ge-
+\frac{D_{\rm lb}(A)}{\sqrt A\log A},
+$$
+
+而若存在 $\beta>1/2$ 的零，单个零的未抵消幅度相对于 $A^{-1/2}/\log A$ 多出因子 $A^{\beta-1/2}$。这只是显式公式中的单零尺度分析；其余零、积分项和共轭配对可能发生相消，所以它不能单独排除离线零，也不能单独证明 Robin。
+
+同样，组成层的四相操作
+
+$$
+C=MJ,
+\qquad
+C:(x_+,x_-)\longmapsto(\varphi x_-,\psi x_+)
+$$
+
+交换的是黄金双嵌入的扩张与收缩通道。它没有把实数尺度 $x_r$ 变成四个复尺度，也没有已证的映射
+
+$$
+C^k\longmapsto e^{ik\pi/2}
+$$
+
+作用于 $x^{\rho-1}$ 的零点相位。因此，四相闭包不能直接替代对
+$e^{i\gamma r\log\varphi}$ 的相位平均。
+
+要把这条接口推进成 RH 证明，至少还需一个同一实际来源上的桥接定理，满足以下之一：
+
+1. 证明 FIB/CA 选定尺度上的完整零和具有可控的正性或无抵消下界；
+2. 证明该尺度序列的相位平均保留全部零重数、积分项和 prime-power 修正，并给出 $A^{-1/2}/\log A$ 级的余项；
+3. 直接给出选定实际候选的 signed $I_\psi(A)$ 下界。
+
+当前文献和仓内接口均未提供这些条件。这个尺度采样关系因此是可复用的解析接口，不是 RH 证明或新的零点估计。
