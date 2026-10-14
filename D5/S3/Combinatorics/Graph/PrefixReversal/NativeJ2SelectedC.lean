@@ -12,6 +12,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SelectedC
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCoreSplicing
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarContacts
