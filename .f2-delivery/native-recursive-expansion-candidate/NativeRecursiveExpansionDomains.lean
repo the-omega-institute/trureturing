@@ -232,8 +232,10 @@ theorem native_supply_child_coordinates {m k : Nat} (hm : 3 ≤ m)
     rw [hc.2.1, erase_coe, List.filter_append, List.filter_reverse,
       frame_rotation_filter F hB i]
     simp only [List.filter_cons, List.filter_nil, ht, ↓reduceIte]
-    change _ = ((F.terminal :: F.base.rotate (supplyGap F hB i).val : List _) : Cycle _).reverse
-    rw [Cycle.reverse_coe, List.reverse_cons]
+    have hgap : (childGap F (supplyGap F hB i)).val =
+        ((F.terminal :: F.base.rotate (supplyGap F hB i).val : List (Fin (m + 1))) :
+          Cycle (Fin (m + 1))) := rfl
+    rw [hgap, Cycle.reverse_coe, List.reverse_cons]
 
 /-- In particular, both endpoints of every actual b cut have the computed
 full child domain. They are not assigned by an abstract skeleton edge. -/

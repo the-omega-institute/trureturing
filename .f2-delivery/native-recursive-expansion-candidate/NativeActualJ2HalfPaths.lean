@@ -94,11 +94,17 @@ theorem native_actual_j2_half_paths {m : ℕ} (hm : 5 ≤ m) (side : Bool)
   have hmap (i : Fin 3) : (pieces i).walk.map forget = (paths i).mapLe hsub := by
     exact SimpleGraph.Walk.map_induce _ _
   have hsmap (i : Fin 3) : (pieces i).walk.support.map Subtype.val = (paths i).support := by
-    rw [← SimpleGraph.Walk.support_map forget (pieces i).walk, hmap,
-      SimpleGraph.Walk.support_mapLe_eq_support]
+    calc
+      _ = ((pieces i).walk.map forget).support :=
+        (SimpleGraph.Walk.support_map forget (pieces i).walk).symm
+      _ = ((paths i).mapLe hsub).support := congrArg SimpleGraph.Walk.support (hmap i)
+      _ = _ := SimpleGraph.Walk.support_mapLe_eq_support _ _
   have hemap (i : Fin 3) : (pieces i).walk.edges.map (Sym2.map Subtype.val) = (paths i).edges := by
-    rw [← SimpleGraph.Walk.edges_map forget (pieces i).walk, hmap,
-      SimpleGraph.Walk.edges_mapLe_eq_edges]
+    calc
+      _ = ((pieces i).walk.map forget).edges :=
+        (SimpleGraph.Walk.edges_map forget (pieces i).walk).symm
+      _ = ((paths i).mapLe hsub).edges := congrArg SimpleGraph.Walk.edges (hmap i)
+      _ = _ := SimpleGraph.Walk.edges_mapLe_eq_edges _ _
   have hsupport (i : Fin 3) (v : {x : Configuration m // D x}) :
       v ∈ (pieces i).walk.support ↔ v.val ∈ (paths i).support := by
     rw [← hsmap]
@@ -129,7 +135,8 @@ theorem native_actual_j2_half_paths {m : ℕ} (hm : 5 ≤ m) (side : Bool)
   have hflatMap : (((List.ofFn pieces).flatMap fun p => p.walk.edges).map
       (Sym2.map Subtype.val)) = (List.ofFn fun i =>
         (pieces i).walk.edges.map (Sym2.map Subtype.val)).flatten := by
-    simpa only [List.map_flatMap, List.flatMap, List.map_ofFn, Function.comp_def]
+    simp only [List.map_flatMap, List.flatMap, List.map_ofFn, Function.comp_def,
+      List.map_flatten]
   have hmember (l : List (Sym2 {x : Configuration m // D x}))
       (e : Sym2 {x : Configuration m // D x}) :
       Sym2.map Subtype.val e ∈ l.map (Sym2.map Subtype.val) ↔ e ∈ l := by
@@ -198,8 +205,10 @@ theorem native_actual_j2_frame_half_paths {m : ℕ} (hm : 5 ≤ m)
     apply hp (pieces i)
     rw [← hlist]
     exact List.mem_ofFn.mpr ⟨i, rfl⟩
-  · simpa only [hlist] using hs'
-  · simpa only [hlist] using he'
+  · rw [hlist]
+    exact hs'
+  · rw [hlist]
+    exact he'
 
 #print axioms native_actual_j2_half_paths
 #print axioms native_actual_j2_frame_half_paths
