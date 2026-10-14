@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b152a1418f87bf883e5cb68a317ad56c1adf9f8cc0112284753f766a964e5b5a
+  normalized_sha256: sha256:b152a1418f87bf883e5cb68a317ad56c1adf9f8cc0112284753f766a964e5b5a
+cas_ref: sha256:b152a1418f87bf883e5cb68a317ad56c1adf9f8cc0112284753f766a964e5b5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional section heading identifying W-7 and its intended module; the mathematical obligation is the separate following clause. The heading supplies no additional quantified assertion.
+    previous_atom_id: 50efe63faadc8d63ac20917b713e0f057a8924d12d7a213aa81e88f2a06eb4d0
+    next_atom_id: 531887b4bf619ec93da7c6141121a093edc0580f1b2b49dbf4a2d2f2548ebbe5

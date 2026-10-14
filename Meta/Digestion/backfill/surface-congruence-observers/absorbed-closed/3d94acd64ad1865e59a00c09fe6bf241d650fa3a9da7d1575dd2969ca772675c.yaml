@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3d94acd64ad1865e59a00c09fe6bf241d650fa3a9da7d1575dd2969ca772675c
+  normalized_sha256: sha256:3d94acd64ad1865e59a00c09fe6bf241d650fa3a9da7d1575dd2969ca772675c
+cas_ref: sha256:3d94acd64ad1865e59a00c09fe6bf241d650fa3a9da7d1575dd2969ca772675c
+coverage_gids:
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.finite_characteristic_twist_detector
+    target_statement_id: sha256:02226ee0cffcac00458a7a7011a7182ac964141adc0633638b2e25b7d59d9214
+receipts:
+  unresolved_subitems: []

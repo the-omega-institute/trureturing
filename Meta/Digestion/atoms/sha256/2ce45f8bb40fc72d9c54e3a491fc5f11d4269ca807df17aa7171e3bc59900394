@@ -1,0 +1,16 @@
+**命题 8.1（what this recovery relation does and does not buy）。** The statements above separate the following coordinates.
+
+- The target spectrum is (RDR.4), with all naturals exactly in the leafless case and possible gaps in the anchored case.
+- Zero-read identifiability is (RDR.10). Sourcewise finite termination is available from complete representative-class traversal and finite parsing, but its call count depends on the actual finite values; it is not a uniform bound.
+- A call bound, maximum literal length, total literal length and number of phase-distinct addresses are separate quantities. Proposition 7.1 gives simultaneous lower growth without identifying calls with word length.
+- The conditional alphabet in Theorem 6.2 counts complete refined field
+  values conditional on $R$; it excludes the cost of $R$, installation,
+  handoff, physical storage, producer computation, encoding time and
+  lifetime retention. It is a task-relative message count, not a
+  physical-memory theorem. Internal $Q$ evaluation, state enumeration and
+  parsing are finite local computations and are separately charged.
+- $\nu$ and the retained row do not recover actual entrance, old event order, elapsed time, or arbitrary future native replies. A complete retained tree gives a stronger zero-read future interface, and retaining root $\nu$ or root $Q$ serves named root/context tasks under their own handoff contracts. None of these baselines is the new row-only criterion.
+- Every post-handoff read is a new call even if the producer queried the same address during full acquisition. A lower bound on phase-distinct addresses is not a lower bound on lifetime-new addresses.
+
+The equality producer owns the exterior, the complete partition and all declared handoff fields. The named root-depth task owns either the later paid reacquisition in Theorem 5.1 or the optional extra code in Theorem 6.2. No obligation to retain every class $Q$, every descendant depth, a full tree, or every future response is inferred.
+

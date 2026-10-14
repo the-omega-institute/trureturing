@@ -1,0 +1,19 @@
+**Definition 1.4 (record semantics without selection).** For a finite
+prefix-free cut $Q$, the complete row $R_Q(t)$ retains the literal exterior,
+every reached hole with its full address, blockers for absent cut words,
+and the complete equality/disequality partition of the hidden subtrees.
+The empty cut retains $t$; the root cut retains one constant hole and a
+singleton partition. A signed comparison requires both addressed operands
+to have been reached and actually acquired at their indicated events.
+An absent operand has a distinct invalid outcome, never a negative sign.
+
+Let $\mathcal D_b$ be the set of common-source/event tuples satisfying
+all displayed row, literal, signed-relation and explicit stamp predicates
+in $b$, with chronology. It uses one $u$ throughout. It includes explicit
+supplemental meanings but does not silently insert $P$'s discarded branch
+tests. Soundness gives the appropriate projection of
+$\mathcal J_{P,b}\subseteq\mathcal D_b$. Equality requires a converse:
+every candidate in $\mathcal D_b$ must lift to $P$ with exactly the whole
+state $b$. Constancy among histories already known to return $b$ does
+not prove this converse.
+

@@ -1,0 +1,19 @@
+**命题 7.2（genuinely acquired one-bit, one-read repair）。** Let
+$C=(\square,\beta)$ with one class and cut $P=\{L\}$ at the hole. Use
+the refined handoff of Definition 6.1: the same full-acquisition producer
+additionally computes and retains
+
+$$
+\eta=\mathbf 1_{I_1}(x),
+$$
+
+where $x$ fills the hole, and all source-dependent fields exposed to this
+consumer factor through $(R,\eta)$ with no hidden archive, length, timing
+or source label. The grammar
+$I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1)$ is a supplied finite image
+test. The code-assisted consumer returns $0$ when $\eta=0$; when
+$\eta=1$, it reads the absolute address $LR$ and returns $3$ exactly on
+reply $\alpha$, and $1$ otherwise. This is exact on the same actual row
+fiber, uses at most one new read of length $2$, and one bit is necessary
+for any uniformly bounded service on this row.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0af9927156f43e9b8742dbb965a90a1a5407d9ae8e6bee59bd62dbfafb3f4df4
+  normalized_sha256: sha256:0af9927156f43e9b8742dbb965a90a1a5407d9ae8e6bee59bd62dbfafb3f4df4
+cas_ref: sha256:0af9927156f43e9b8742dbb965a90a1a5407d9ae8e6bee59bd62dbfafb3f4df4
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/MechanicalSlopeSensitivity.local_slope_disagreement_law
+    target_statement_id: sha256:cd8771064a2ef41ff0a64b8419849ed8b69981f7bf5a40ebfe2d070a43075b25
+receipts:
+  unresolved_subitems: []
