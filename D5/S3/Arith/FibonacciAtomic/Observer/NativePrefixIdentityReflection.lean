@@ -32,7 +32,7 @@ def eval {ι : Type} (z : ι → Source) : MixedExpr ι → Source
   | .residual a i => substitution^[a] (z i)
   | .pair A B => .mul (eval z A) (eval z B)
 
-private def atomicRank : Source → Option Nat
+def atomicRank : Source → Option Nat
   | .of true => some 0
   | .of false => some 1
   | .mul s t =>
@@ -58,7 +58,7 @@ def gamma : Source → Nat
   | .mul s t =>
       if (atomicRank (.mul s t)).isSome then 0 else 1 + gamma s + gamma t
 
-private theorem gamma_positive (t : Source) : 0 < gamma t ↔ atomicRank t = none := by
+theorem gamma_positive (t : Source) : 0 < gamma t ↔ atomicRank t = none := by
   cases t with
   | of b => cases b <;> simp [gamma, atomicRank]
   | mul s t => cases h : atomicRank (.mul s t) <;> simp [gamma, ← FreeMagma.mul_eq, h]
