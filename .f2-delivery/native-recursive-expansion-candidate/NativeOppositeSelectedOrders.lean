@@ -6,6 +6,7 @@
    utility: none
    digest: The canonical opposite marked order exchanges only the final two protected labels and commutes with literal recursive frame constructors. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
 
 set_option autoImplicit false
 
@@ -112,6 +113,33 @@ theorem native_opposite_selected_involutive {m k : ℕ} (F : SupplyFrame m k)
   · rfl
   · rfl
 
+/-- At the exceptional second order the two protected labels are the
+whole selected list. The canonical exchange is exactly the existing
+J2 reverseSelected frame, with its original base and port indexing. -/
+theorem native_opposite_selected_two {m : ℕ} (F : SupplyFrame m 2) :
+    oppositeSelectedFrame F (by omega) =
+      D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport.reverseSelected F := by
+  obtain ⟨p, q, hs⟩ : ∃ p q, F.selected = [p, q] := by
+    have hlen := F.selected_length
+    cases h : F.selected with
+    | nil => simp [h] at hlen
+    | cons p rest =>
+      cases hr : rest with
+      | nil => simp [h, hr] at hlen
+      | cons q tail =>
+        have ht : tail = [] := List.length_eq_zero_iff.mp (by
+          simp only [h, hr, List.length_cons] at hlen
+          omega)
+        exact ⟨p, q, by rw [h, hr, ht]⟩
+  have hp : protectedP F (by omega) = p := by simp [protectedP, hs]
+  have hq : protectedQ F (by omega) = q := by simp [protectedQ, hs]
+  apply frame_ext
+  · change F.selected.map (Equiv.swap (protectedP F (by omega))
+      (protectedQ F (by omega))) = F.selected.reverse
+    simp [hs, hp, hq]
+  · rfl
+  · rfl
+
 private theorem opposite_prepend_selected {m k : ℕ} (F : SupplyFrame m k)
     (G : SupplyFrame m (k + 1)) (hk : 2 ≤ k) (u : Fin (m + 1))
     (hs : G.selected = u :: F.selected) :
@@ -158,6 +186,7 @@ theorem native_opposite_child_frame {m k : ℕ} (F : SupplyFrame m k) (hk : 2 �
 #print axioms native_opposite_protected_labels
 #print axioms native_opposite_selected_prefix
 #print axioms native_opposite_selected_involutive
+#print axioms native_opposite_selected_two
 #print axioms native_opposite_next_frame
 #print axioms native_opposite_outer_frame
 #print axioms native_opposite_child_frame
