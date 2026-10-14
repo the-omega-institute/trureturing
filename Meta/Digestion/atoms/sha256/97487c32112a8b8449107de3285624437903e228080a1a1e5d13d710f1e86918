@@ -1,0 +1,16 @@
+**Definition 3.2 (eligible decorated equations).** Before functionalization,
+require that all remaining completed equations admit an orientation
+
+$$
+\rho^{a_i}X_i=E_i(\mathbf p,\mathbf X),\qquad a_i\ge0,
+\tag{NIS.10}
+$$
+
+with at most one head definition for each state. Other states are free.
+In distributed syntax each occurrence $\rho^bX_j$ in equation $i$ creates
+an edge $i\to j$ of weight $a_i-b$. Retain parallel edges and repeated
+occurrences. Every directed occurrence cycle must have total weight at most
+zero. Optional additional filters $C(\mathbf p,\mathbf X)\in L_r$ are
+retained conjuncts. This is a condition on the completed equation relation,
+not a restriction on finite originals or on the pre-negative source chart.
+
