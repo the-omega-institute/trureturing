@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc307685dfcaed1c5a5c3e38f33e6fea8cef72019ee60564e1ed472546655df0
+  normalized_sha256: sha256:fc307685dfcaed1c5a5c3e38f33e6fea8cef72019ee60564e1ed472546655df0
+cas_ref: sha256:fc307685dfcaed1c5a5c3e38f33e6fea8cef72019ee60564e1ed472546655df0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 43.4（乘法满闭图及所有输入的共同尾部逼近）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 5e5ddca3a8e1dc52a46c2999eecbe3d25be134ad450bd1016777e445aa73d34b
+    next_atom_id: a22c7b3f0bda1cfc77f1641a44d5fc8a8f7432c5da7402c2cca8b20c69dcd095

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ec7447ccde15361f7aafd1c8eede8d0797e5ae6db702c88ed01183f26446d0b
+  normalized_sha256: sha256:7ec7447ccde15361f7aafd1c8eede8d0797e5ae6db702c88ed01183f26446d0b
+cas_ref: sha256:7ec7447ccde15361f7aafd1c8eede8d0797e5ae6db702c88ed01183f26446d0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 60.15（查询数与位运算费用分离）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: d34de7150f302236467a18d39a97f64d982de9eba634a97234bf1bfa2a9af848
+    next_atom_id: c0f4b89aefe0ff6496282fce40b908749f96ceca0dce822a8fc6594934aee56b

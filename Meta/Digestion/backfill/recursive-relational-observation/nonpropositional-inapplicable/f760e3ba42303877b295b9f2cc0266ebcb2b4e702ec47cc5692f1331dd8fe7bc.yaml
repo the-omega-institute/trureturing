@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f760e3ba42303877b295b9f2cc0266ebcb2b4e702ec47cc5692f1331dd8fe7bc
+  normalized_sha256: sha256:f760e3ba42303877b295b9f2cc0266ebcb2b4e702ec47cc5692f1331dd8fe7bc
+cas_ref: sha256:f760e3ba42303877b295b9f2cc0266ebcb2b4e702ec47cc5692f1331dd8fe7bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义52.15只引入边缘乘积与总和支撑条件集合，说明量词约定，不断言共同见证存在。
+    previous_atom_id: d5cc1b1afaeb64e249663efd2756dfeaaa22219d14ddf634b8a3d5988173e335
+    next_atom_id: ce1335890d2c87cb8c406f1cce773baca0e6a64c80cf6b7b02fa197502833b93

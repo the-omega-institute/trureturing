@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e5ff87f4360d6614b2e3087874b8afdea66245f56aaf6bdb4f71e00e8b0725dd
+  normalized_sha256: sha256:e5ff87f4360d6614b2e3087874b8afdea66245f56aaf6bdb4f71e00e8b0725dd
+cas_ref: sha256:e5ff87f4360d6614b2e3087874b8afdea66245f56aaf6bdb4f71e00e8b0725dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只引入联合剩余直方图 N_c(H) 的计数定义，不含未来等价定理的陈述。
+    previous_atom_id: dcfc197526a93241f65a5bdb548b15562def573d7e4941f551d021601547aa9a
+    next_atom_id: 3d5b1e554d4ed92a6ec35152891c0cbb945c5ba90d874eeef9ac9e2f0e1f0d05
