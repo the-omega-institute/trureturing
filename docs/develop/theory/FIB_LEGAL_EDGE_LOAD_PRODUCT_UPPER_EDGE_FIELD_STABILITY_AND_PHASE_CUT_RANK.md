@@ -4754,3 +4754,210 @@ Those are separate questions from the actual-law versus quantum-memory
 relation settled here.
 
 ## 追加锚（本行以下为增补区）
+
+## 35. Exact monomial-geometric laws and the memory comparison
+
+**Definition 35.1 (Fixed parameters and actual output).** Fix an integer $n\ge1$ and a real $0<q<1$ throughout each model. The index $k\ge0$ counts zeros preceding the next one, so the interevent duration is $k+1$. Define
+
+$$
+Z_n(q)=\sum_{k\ge0}k^nq^k,\qquad C_n(q)=Z_n(q)^{-1},\qquad \gamma_k=C_n(q)k^nq^k,\qquad D_n=\lceil n/2\rceil+1. \tag{35.1}
+$$
+
+The ratio test gives $0<Z_n(q)<\infty$ and convergence of every polynomially weighted version of this sum. Thus $\gamma_0=0$, $\gamma_k>0$ for $k\ge1$, and $\sum_k\gamma_k=1$. Use exactly the proper stationary renewal law of Definition 24.1, with $S_a$, $R_N$, $\mu$ and $\nu$ as in (24.2); in particular
+
+$$
+\mu=1+\frac{Z_{n+1}(q)}{Z_n(q)}<\infty,\qquad \nu=\mu^{-1}>0. \tag{35.2}
+$$
+
+**Definition 35.2 (Comparison class and evidence boundary).** Quantum memory is a complex Hilbert space of dimension $D$, with fixed finite Kraus families defining zero and one maps $\Phi,\Psi$ whose sum preserves trace. All persistent quantum and classical registers belong to this memory. Classical memory consists of $h$ states and fixed nonnegative row-transition matrices $T_0,T_1$ with stochastic sum. Each model has one initial density or probability row reproducing every finite cylinder of the specified stationary output. Competing hidden initial states need not be invariant, and competing one branches need not reset; mixed conditional quantum states and arbitrary Kraus multiplicities are allowed. These classes include Definition 27.1 and allow the lower-bound initializations of Theorem 29.1. There is no external correlated input or time-dependent controller. Kraus rank means the Choi rank of one CP branch, not the number of persistent states or visible outcomes.
+
+Theorems 36.1–39.1 construct fixed complete instruments and their invariant initializations. With the handwritten finite-CP growth input of Theorem 31.2, Theorem 40.1 gives the sharp quantum minimum $D_n$; the classical minimum is $n+1$. The zero-branch minimum is one for even $n$ and two for odd $n$, with one rank-one resetting tick in either construction. These are mathematical prose results: the general CP growth, Gramian completion and all-$n$ realization have unfinished general Lean implementations. An abstract filtered-power theorem alone does not prove the CP normalization, actual-law or stationary-cylinder interfaces used here.
+
+## 36. A faithful Gramian completes the actual renewal instrument
+
+**Theorem 36.1 (Stable raw data to a normalized reset law).** Let $\mathcal T(X)=\sum_{a=1}^sK_aXK_a^*$ act on $M_d(\mathbb C)$ with spectral radius $\rho(\mathcal T)<1$. Let $F=ff^*\ne0$ and $x\ne0$. Suppose the observability Gramian $Q$ below is positive definite. Set
+
+$$
+Q=\sum_{k\ge0}(\mathcal T^*)^k(F),\quad S=Q^{1/2},\quad z=x^*Qx,\quad b=\frac{Sx}{\sqrt z},\quad \tau=bb^*,\quad L_a=SK_aS^{-1},\quad L_{\rm tick}=bf^*S^{-1}. \tag{36.1}
+$$
+
+Here $\mathcal T^*$ is the trace-dual map, and operator stars are adjoints; $L_{\rm tick}$ denotes the tick and is separate from the zero family $\{L_a\}$. The maps $\Phi(X)=\sum_aL_aXL_a^*$ and $\Psi(X)=L_{\rm tick}XL_{\rm tick}^*$ form a trace-preserving two-outcome instrument, and every positive-probability tick resets to $\tau$. Their actual gap law from $\tau$ is
+
+$$
+\operatorname{Tr}\Psi(\Phi^k(\tau))=\frac{\operatorname{Tr}[F\mathcal T^k(xx^*)]}{z},\qquad k\ge0. \tag{36.2}
+$$
+
+In particular, if the numerator is $k^nq^k$ for every $k\ge0$, then $z=Z_n(q)$ and (36.2) is precisely (35.1), with no shift of $k$.
+
+Proof. For any $r$ strictly between $\rho(\mathcal T)$ and $1$, finite-dimensional Jordan theory bounds the powers of $\mathcal T$ and its dual by a constant times $r^k$. Hence the series in (36.1) converges in norm and consists of positive terms. Subtracting its shifted series gives $Q-\mathcal T^*(Q)=F$. It is the unique solution of this Stein equation, since a difference $H=\mathcal T^*(H)$ equals $(\mathcal T^*)^k(H)\to0$. Faithfulness gives invertible $S$ and $z>0$, and $\|b\|=1$. With $E=S^{-1}FS^{-1}$, direct multiplication yields
+
+$$
+\sum_aL_a^*L_a=S^{-1}\mathcal T^*(Q)S^{-1}=I-E,\qquad L_{\rm tick}^*L_{\rm tick}=E,\qquad \Psi(X)=\tau\operatorname{Tr}(EX). \tag{36.3}
+$$
+
+Thus $0\le E\le I$, completeness holds, and the normalized positive tick output is always $\tau$. The tick has exactly one nonzero rank-one Kraus operator. No trace contraction of the raw $K_a$ was assumed. It is the completed maps that are trace-nonincreasing branches.
+
+For $\Gamma(X)=SXS$, one has $\Phi=\Gamma\mathcal T\Gamma^{-1}$ and $\Phi^k(\tau)=S\mathcal T^k(xx^*)S/z$. Taking the trace against $E$ proves (36.2). Also $z=\sum_k\operatorname{Tr}[F\mathcal T^k(xx^*)]$, so the actual gaps sum to one; $\rho(\Phi)=\rho(\mathcal T)<1$ gives $\operatorname{Tr}\Phi^k(\tau)\to0$. Completeness consequently implies the actual survival identity $\operatorname{Tr}\Phi^k(\tau)=\sum_{j\ge k}\gamma_j$. This proves properness as well as normalization. $\square$
+
+The faithfulness condition has a concrete test used below: if $K_w$ denotes any finite ordered product of zero Kraus matrices, including the empty product, then $y^*Qy=\sum_{k\ge0}\sum_{|w|=k}|f^*K_wy|^2$. Thus $Q>0$ exactly when the only vector invisible to every such word is zero. This criterion retains the full proposed memory and supplies the hypotheses of the stable CP Stein similarity directly, rather than assuming a contraction or citing a similarity without its observability premise.
+
+## 37. Exact even amplitudes and odd forward-difference sums
+
+**Theorem 37.1 (Quantum upper construction for every degree).** For every pair $(n,q)$ in Definition 35.1, Theorem 36.1 produces (35.1) on $D_n$ dimensions, using one zero Kraus operator for even $n$ and exactly two for odd $n$. The zero-word reachable space from the reset density is the whole displayed memory.
+
+Proof for even $n=2m$, $m\ge1$. On the basis $e_0,\ldots,e_m$, let $Je_j=e_{j-1}$ for $j\ge1$, $Je_0=0$, $U=I+J$, $f=e_0$ and $K=\sqrt q\,U$. For Stirling numbers of the second kind write ${m\brace r}$, and choose $x_r=r!{m\brace r}$ for $0\le r\le m$. The classical Newton/Stirling binomial identity gives
+
+$$
+f^*U^kx=\sum_{r=0}^m\binom{k}{r}x_r=k^m,\qquad \operatorname{Tr}[F\mathcal T^k(xx^*)]=q^kk^{2m},\qquad \mathcal T(X)=KXK^*. \tag{37.1}
+$$
+
+Here $x_0=0$, $x_m=m!\ne0$, and $\binom{k}{r}=0$ for $r>k$; the formula includes $k=0$. All eigenvalues of $K$ equal $\sqrt q$, so all eigenvalues of its superoperator equal $q$ and $\rho(\mathcal T)=q<1$. If $f^*U^ky=0$ for all $k\ge0$, the polynomial $\sum_r\binom{k}{r}y_r$ vanishes identically, hence every $y_r=0$. This proves $Q>0$. Theorem 36.1 therefore gives the exact normalized law on $m+1=D_n$ dimensions. Its zero Kraus operator is invertible, so the branch is nonzero and has Kraus rank one. Finally $x_m\ne0$ makes $x,Jx,\ldots,J^mx$ independent; the powers of $U$ span the same cyclic space, and invertible $S$ preserves its dimension.
+
+Proof for odd $n=2m+1$, $m\ge0$. Consider the exact forward difference $\Delta_n(t)=(t+1)^n-t^n$. It is strictly positive for every real $t$, since $t\mapsto t^n$ is strictly increasing on the whole real line. It has degree $2m$ and leading coefficient $n$. For $m>0$, its roots are nonreal conjugate pairs, with multiplicities; choose one root from each pair. The classical conjugate-root factorization then gives
+
+$$
+\Delta_n(t)=n\prod_{j=1}^m(t-\zeta_j)(t-\overline{\zeta_j}),\qquad p(t)=\sqrt n\prod_{j=1}^m(t-\zeta_j),\qquad |p(t)|^2=\Delta_n(t)\quad(t\in\mathbb R). \tag{37.2}
+$$
+
+For $m=0$, take $p=1$ and empty products. The coefficients of $p$ may be complex. This is an exact factorization of the positive difference, not merely a choice of a polynomial with the same degree. On the target space $\mathbb C^{m+1}$ use $U=I+J$ as above, and let $v_r=(\Delta^rp)(0)$, where $\Delta p(t)=p(t+1)-p(t)$. The Newton expansion $p(t)=\sum_{r=0}^m\binom{t}{r}(\Delta^rp)(0)$ gives $e_0^*U^tv=p(t)$ for all natural $t$ and $v_m=m!\sqrt n\ne0$.
+
+Add one source coordinate $e_s$, so the full memory is $\mathbb C^{m+1}\oplus\mathbb Ce_s$ of dimension $m+2=D_n$. Set $x=e_s$, $f=(e_0,0)$ and
+
+$$
+K_A=\sqrt q\begin{pmatrix}U&0\\0&1\end{pmatrix},\qquad K_B=\sqrt q\,|(v,0)\rangle\langle e_s|,\qquad \mathcal T(X)=K_AXK_A^*+K_BXK_B^*. \tag{37.3}
+$$
+
+Since $K_B$ annihilates the target space, $K_BK_A^rK_B=0$ for every $r\ge0$. In a length-$k$ word acting on $e_s$, the all-$A$ word stays in the source and is invisible to $f$; every word with at least two $B$'s vanishes. A word with exactly one $B$ is $K_A^tK_BK_A^{k-1-t}$ for a unique $0\le t<k$, and sends $e_s$ to $q^{k/2}(U^tv,0)$. The CP sum uses the squared norm of each word amplitude separately. Consequently
+
+$$
+\operatorname{Tr}[F\mathcal T^k(e_se_s^*)]=q^k\sum_{t=0}^{k-1}|p(t)|^2=q^k\sum_{t=0}^{k-1}\big((t+1)^n-t^n\big)=q^kk^n\quad(k\ge0). \tag{37.4}
+$$
+
+For $k=0$ both the empty sum and the observed source amplitude are zero. Telescoping removes all lower-degree terms exactly; summing $t^{2m}$ instead would not give this monomial. The no-tick alternatives are unresolved CP alternatives, not coherently added amplitudes.
+
+For stability, decompose matrix space into target-target, target-source, source-target and source-source blocks. The $A$ part preserves each block and has, respectively, maps $qUXU^*$, $qUX$, $qXU^*$ and $qX$; every eigenvalue in these four diagonal superoperator blocks is $q$. The $B$ part sends only the source-source block to the target-target block, as $qX_{ss}vv^*$, and vanishes on the other three. Thus the full superoperator is block triangular with spectrum consisting only of $q$, proving $\rho(\mathcal T)=q<1$ and convergence of its Gramian.
+
+For faithfulness, if $y^*Qy=0$, the all-$A$ words first force $e_0^*U^ty_{\rm target}=0$ for all $t$, hence $y_{\rm target}=0$ by the same binomial-basis observability. The words $K_A^tK_B$ then force $y_s p(t)=0$ for every natural $t$. A nonzero polynomial cannot vanish at all these points, so $y_s=0$. Thus $Q>0$ on all $m+2$ coordinates, $z=Z_n(q)$ by (37.4), and Theorem 36.1 gives the required complete resetting instrument. The matrices $K_A$ and $K_B$ are linearly independent: the former is invertible and block diagonal, and the latter is nonzero of rank one in an off-diagonal block. Vectorizing Kraus matrices identifies Choi rank with their span dimension, so the zero branch has rank exactly two; invertible similarity preserves this independence. The reachable span contains $e_s$ and every $(U^tv,0)$; $v_m\ne0$ makes the latter span the full target space. Again similarity preserves reachability. $\square$
+
+**Theorem 37.2 (Low-degree parameter interfaces).** At $n=3$, one may take $p(t)=\sqrt3(t+1/2+i/\sqrt{12})$, giving $|p(t)|^2=3t^2+3t+1$ and $\sum_{t<k}|p(t)|^2=k^3$. At $n=1$, in target-source order, the completion has
+
+$$
+Q=\operatorname{diag}\big((1-q)^{-1},q(1-q)^{-2}\big),\quad L_A=\sqrt q\,I_2,\quad L_B=\sqrt{1-q}\,E_{ts},\quad L_{\rm tick}=\sqrt{1-q}\,E_{st},\quad \tau=E_{ss}. \tag{37.5}
+$$
+
+Proof. The first identity follows by multiplying the displayed conjugate linear factors. For the second, $U=(1)$ and $v=1$, so the word-Gramian diagonal entries are $\sum_kq^k$ and $\sum_kkq^k$, with zero off-diagonal entries. Substitution in (36.1) gives (37.5). Its invariant density is $I_2/2$, and the actual gaps are $k(1-q)^2q^{k-1}$ for $k\ge1$, with zero at $k=0$. At $q=1/2$, label $s=0,t=1$: this is exactly (29.7), and $\gamma_k=k/2^{k+1}$ is (22.2). More generally the $n=1$ law is the equal-parameter SNS law with the two source parameters both equal to $q$ in Marzen–Crutchfield, [arXiv:1408.6876v2, §V, Fig. 7, equation (15)](https://arxiv.org/abs/1408.6876v2). At $n=2$, $Z_2(q)=q(1+q)/(1-q)^3$, so (35.1) equals (27.3) with the exact identification $q=r^2$ of Chapter 33. This identifies the visible law, without asserting that the two chosen matrix coordinates are identical. $\square$
+
+## 38. A nonnegative classical ladder and its exact state minimum
+
+**Theorem 38.1 (Classical realization and pole lower bound).** The same actual gap law has a complete nonnegative classical realization on $n+1$ states, and no homogeneous finite classical model reproducing its full stationary output can use fewer states.
+
+Proof. Use row orientation and states $0,\ldots,n$. Let $J_{\rm f}$ have entries $(J_{\rm f})_{i,i+1}=1$ for $i<n$ and zero otherwise; thus a row advances one state by multiplication. Set
+
+$$
+T_0=qI+(1-q)J_{\rm f},\qquad \alpha_j=C_n(q){n\brace j}\,j!\frac{q^j}{(1-q)^{j+1}}\quad(1\le j\le n),\qquad \beta_{n-j}=\alpha_j,\quad\beta_n=0,\qquad T_1=(1-q)e_n\beta. \tag{38.1}
+$$
+
+Here $e_n$ is a column, and $\beta$ a row. Stirling coefficients are nonnegative (indeed positive for $1\le j\le n$). The classical identities $k^n=\sum_{j=1}^n{n\brace j}j!\binom{k}{j}$ and $\sum_{k\ge j}\binom{k}{j}q^k=q^j/(1-q)^{j+1}$ give $\sum_j\alpha_j=C_n(q)Z_n(q)=1$. The second identity follows by differentiating the geometric series $j$ times inside $|q|<1$. Every nonfinal row of $T_0$ sums to one, its final row sums to $q$, and $T_1$ fills precisely that final deficit. Thus $T_0+T_1$ is stochastic and nonnegative. For any probability row $r$, $rT_1=(1-q)r_n\beta$, so every positive-probability tick really resets to $\beta$.
+
+The binomial expansion of $T_0^k$ gives, including $k=0$,
+
+$$
+\beta T_0^kT_1\mathbf1=\sum_{j=1}^{\min(n,k)}\alpha_j\binom{k}{j}(1-q)^{j+1}q^{k-j}=C_n(q)k^nq^k. \tag{38.2}
+$$
+
+All eigenvalues of $T_0$ are $q$, so it is stable and eventually ticks almost surely. The invariant initialization and all cylinders follow in Theorem 39.1. This is an actual positive realization; no signed representation supplies its state upper bound.
+
+For the lower bound, the rational generating function is
+
+$$
+G(z)=\sum_{k\ge0}\gamma_kz^k=C_n(q)\sum_{j=1}^n{n\brace j}j!\frac{(qz)^j}{(1-qz)^{j+1}}. \tag{38.3}
+$$
+
+At $z=1/q$ it has a pole of exactly order $n+1$: multiply by $(1-qz)^{n+1}$ and evaluate there to obtain $C_n(q)n!>0$, since every term with $j<n$ vanishes. For an arbitrary competing $h$-state presentation with matrices $M_0,M_1$ and specified initial row $\lambda$, full cylinder equality and $P(1)=\nu>0$ give the actual posterior $a=\lambda M_1/\nu$, the column $c=M_1\mathbf1$, and $\gamma_k=aM_0^kc$. Hence $G(z)=a(I-zM_0)^{-1}c$ near zero. Its reduced denominator divides $\det(I-zM_0)$, of degree at most $h$. Equality as power series implies equality of these rational functions, whose pole of order $n+1$ forces $h\ge n+1$. No reset or invariant hidden row was imposed on the competitor. $\square$
+
+The Newton and Stirling identities used here and in Theorem 37.1 are classical finite-difference ingredients; see [DLMF §26.8, Stirling numbers](https://dlmf.nist.gov/26.8). They organize the positive ladder weights and the amplitude coordinates. The exact comparison concerns their use in the common actual renewal law, not an invention of these identities or of conjugate-root factorization.
+
+## 39. Invariant densities give every stationary cylinder
+
+**Theorem 39.1 (One actual stationary law in both constructions).** For the completed quantum construction set $\mathcal E_0=\Phi$, $\mathcal E_1=\Psi$ and
+
+$$
+R_0^{\rm op}=\sum_{a\ge0}\Phi^a(\tau),\qquad \rho_*=\mu^{-1}R_0^{\rm op},\qquad P(w_1\cdots w_N)=\operatorname{Tr}\big[\mathcal E_{w_N}\cdots\mathcal E_{w_1}(\rho_*)\big]. \tag{39.1}
+$$
+
+The superscript distinguishes this operator sum from the scalar $R_0$ in (24.2). Then $\rho_*$ is an invariant density, and for $r\ge1$, $A,B,g_1,\ldots,g_{r-1}\ge0$ one has
+
+$$
+\begin{aligned}
+P(0^A1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^B)&=\nu S_A S_B\prod_{i=1}^{r-1}\gamma_{g_i},\\
+P(0^N)&=\nu\sum_{j\ge N}(j-N+1)\gamma_j=\nu R_N\qquad(N\ge0).
+\end{aligned} \tag{39.2}
+$$
+
+For $r=1$ there are no internal gaps and the product is one. The classical construction with initial row $\pi=\mu^{-1}\sum_{a\ge0}\beta T_0^a$ has exactly these same cylinders, namely $P(w)=\pi T_{w_1}\cdots T_{w_N}\mathbf1$.
+
+Proof. Stability of $\Phi$ and $T_0$ gives norm convergence of both sums. By properness and completeness, $s_a=\operatorname{Tr}\Phi^a(\tau)$ satisfies $s_a-s_{a+1}=\gamma_a$ and $s_a\to0$, so $s_a=S_a$. Nonnegative summation gives $\operatorname{Tr}R_0^{\rm op}=\sum_aS_a=\sum_j(j+1)\gamma_j=\mu$. Actual reset strengthens the scalar gap identity to $\Psi\Phi^a(\tau)=\gamma_a\tau$. Shifting and summing therefore gives
+
+$$
+\Phi(R_0^{\rm op})=R_0^{\rm op}-\tau,\qquad \Psi(R_0^{\rm op})=\tau,\qquad (\Phi+\Psi)(\rho_*)=\rho_*,\qquad \Psi\Phi^A(\rho_*)=\nu S_A\tau. \tag{39.3}
+$$
+
+Apply the last identity at the first one, then the reset identity at each internal gap and the survival identity at the terminal $B$ zeros. This proves the first formula of (39.2). If there is no one, taking $\operatorname{Tr}\Phi^N(\rho_*)=\nu\sum_{a\ge0}S_{N+a}$ and exchanging nonnegative sums proves the second. It includes the empty word, because $R_0=\mu$. Right consistency follows from trace preservation; left consistency follows from invariance of $\rho_*$. These consistent cylinders consequently define a stationary process. Moreover $R_N\to0$, since it is bounded by the tail of the summable sequence $(j+1)\gamma_j$; there is no additional all-zero stationary component.
+
+In the classical construction, $\beta T_0^a\mathbf1=S_a$ and $\beta T_0^aT_1=\gamma_a\beta$. Hence $\pi\mathbf1=1$, $\pi T_0=\pi-\nu\beta$, $\pi T_1=\nu\beta$, and $\pi(T_0+T_1)=\pi$. The identical first-one, internal-gap and final-survival calculation proves all of (39.2). Thus the two models match complete stationary cylinders, not just the gap degree, one-time marginals or a reset-conditioned fragment. The quantum reachable span in Theorem 37.1 is full, so the positive sum $R_0^{\rm op}$ has full support; the invariant density is faithful. It differs from $\tau$: indeed $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$ whereas $\operatorname{Tr}\Psi(\rho_*)=\nu>0$. $\square$
+
+The invariant-state and ordered-cylinder conventions are those of Monras–Beige–Wiesner, [*Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, §4.3, equations (25)–(27)](https://arxiv.org/abs/1002.2337v2). The same PDF's equations (18)–(20) embed a classical generator into an HQMM of the same dimension. In the row orientation of (38.1), that embedding uses $\sqrt{(T_s)_{ij}}\,|j\rangle\langle i|$; the PDF uses column transitions, so its transition matrices are the transposes. It preserves diagonal-state cylinders on $n+1$ dimensions. That general embedding is a predecessor and convention check, while the smaller matrices of Chapter 37 and the explicit stationary sum above supply this exact dimension comparison.
+
+## 40. Actual tails force the sharp quantum dimension and Kraus parity
+
+**Theorem 40.1 (All-degree dimension bound with the finite-CP growth input).** Assume Theorem 31.2 for finite CP maps. Every quantum competitor in Definition 35.2 satisfies $D\ge\lceil n/2\rceil+1$. Together with Theorems 37.1 and 39.1 this gives the exact quantum minimum $D_n$, for every $n\ge1$ and $0<q<1$.
+
+Proof. Write its specified initial density as $\rho$ and its branches as $\widehat\Phi,\widehat\Psi$. Full cylinder equality supplies $\nu=\operatorname{Tr}\widehat\Psi(\rho)>0$ and the actual post-one density $\widehat\tau=\widehat\Psi(\rho)/\nu$. It may be mixed and need not be the post-one density on any other history. Nevertheless
+
+$$
+\operatorname{Tr}\widehat\Psi\widehat\Phi^k(\widehat\tau)=\frac{P(1\,0^k\,1)}{P(1)}=\gamma_k,\qquad \widehat S_k=\operatorname{Tr}\widehat\Phi^k(\widehat\tau)=\sum_{j\ge k}\gamma_j=q^kP_n(k). \tag{40.1}
+$$
+
+For the tail identity, completeness gives $\widehat S_k-\widehat S_{k+1}=\gamma_k$ and $\widehat S_0=1$; normalization of $\gamma$ forces $\widehat S_k\to0$. Thus properness is derived for this actual conditional state, rather than assumed for an unrelated pure vector. The tail polynomial is
+
+$$
+P_n(k)=C_n(q)\sum_{t\ge0}(k+t)^nq^t=C_n(q)\sum_{\ell=0}^n\binom n\ell k^{n-\ell}\sum_{t\ge0}t^\ell q^t,\qquad [k^n]P_n=\frac{C_n(q)}{1-q}>0. \tag{40.2}
+$$
+
+In the $\ell=0$ term, $t^0$ means $1$, including $t=0$. All these series converge. Thus $P_n$ has degree exactly $n$ for odd and even $n$ alike.
+
+Let $\mathcal H$ be the span of all zero Kraus words acting on $\operatorname{supp}\widehat\tau$, and let $d=\dim\mathcal H\le D$. The finite reachability argument in the proof of Theorem 32.2 uses no parity assumption: for some $N\le d-\operatorname{rank}\widehat\tau$, the positive operator $X=\sum_{j=0}^N\widehat\Phi^j(\widehat\tau)$ is faithful on $\mathcal H$, and $aI_{\mathcal H}\le X\le bI_{\mathcal H}$ for $0<a\le b$. For $T_k=(\widehat\Phi_{\mathcal H})^k$, the CP norm identity and positivity give
+
+$$
+a\|T_k\|\le\operatorname{Tr}T_k(X)\le bd\|T_k\|,\qquad \operatorname{Tr}T_k(X)=q^kP_X(k),\quad P_X(k)=\sum_{j=0}^Nq^jP_n(k+j),\quad [k^n]P_X=\frac{C_n(q)}{1-q}\sum_{j=0}^Nq^j>0. \tag{40.3}
+$$
+
+The norm is the induced operator norm on matrices, as in (32.8). Taking $k$th roots in this two-sided comparison proves $\rho(\widehat\Phi_{\mathcal H})=q$. Apply Theorem 31.2 on this reachable $d$-dimensional Hilbert space, not on an unused ambient spectral block. Equations (40.3) and (31.2) give $P_X(k)\le K'(1+k)^{2d-2}$ after cancelling $q^k$. Its positive leading coefficient and exact degree force $n\le2d-2$, hence $D\ge d\ge\lceil n/2\rceil+1$. This is the explicit arbitrary-degree extension of Chapter 32's even-degree consequence; it retains the finite-CP growth theorem as its mathematical dependency. $\square$
+
+**Theorem 40.2 (Sharp zero-branch Kraus rank for the actual law).** In the same arbitrary mixed, finite homogeneous competitor class, the minimum zero Kraus rank is one for even $n$ and two for odd $n$, attained simultaneously with $D_n$ in Chapter 37. This parity bound does not require Theorem 31.2.
+
+Proof. A zero branch of rank zero gives $\gamma_1=0$, contrary to (35.1), so every competitor has rank at least one. Suppose the zero branch has rank one, $\widehat\Phi(X)=AXA^*$. With the actual $\widehat\tau$ extracted in (40.1), let $F_1=\widehat\Psi^*(I)\ge0$. Then
+
+$$
+\gamma_k=\operatorname{Tr}[F_1A^k\widehat\tau(A^*)^k]=\|F_1^{1/2}A^k\widehat\tau^{1/2}\|_{\rm HS}^2=C_n(q)k^nq^k. \tag{40.4}
+$$
+
+Cayley–Hamilton makes the matrix-valued sequence inside the norm a finite constant-coefficient vector recurrence. The general recurrence argument (29.3)–(29.6) says that an eventual squared norm $p(k)q^k$, with $q>0$ and a nonzero polynomial of positive leading coefficient, has even polynomial degree. To specify its applicability, write the nonzero recurrence terms as $\sum_jP_j(k)\lambda_j^k$, take the largest occurring modulus $R$ and maximal degree $e$ there, and divide by $R^kk^e$. The remaining leading unit-phase sum has positive Cesàro squared norm $\sum_j\|a_j\|^2$; distinct phases have vanishing cross-term means. Boundedness and that positive mean force first $q=R^2$, then $\deg p=2e$. Here $p(k)=C_n(q)k^n$, so every odd $n$ contradicts rank one. This applies the general mechanism of Chapter 29 to the present actual mixed state and positive effect; Theorem 29.1's SNS statement by itself does not quantify over this whole family. Even $n$ has the nonzero single-zero-Kraus upper from Theorem 37.1, and odd $n$ has its linearly independent two-Kraus upper. Neither lower argument supposes a reset, a pure trajectory, nor a single tick Kraus in the competitor. $\square$
+
+## 41. The common Fibonacci legal language and the resource boundary
+
+**Theorem 41.1 (Exact legal-word relation and dimension savings).** The stationary law just constructed assigns positive probability to every finite binary word with no adjacent ones, and zero to every word containing adjacent ones. On this actual renewal family the sharp dimension comparison, with the finite-CP growth dependency of Theorem 40.1, is
+
+$$
+h_{\min}=n+1,\qquad D_{\min}=\lceil n/2\rceil+1,\qquad h_{\min}-D_{\min}=\lfloor n/2\rfloor. \tag{41.1}
+$$
+
+Thus $n=1$ has equal classical and quantum dimensions two, while every $n\ge2$ has a strict quantum dimension saving for the same complete stationary output. The minimum zero Kraus rank is separately the even/odd value of Theorem 40.2; the tick in each quantum upper construction has one rank-one Kraus operator.
+
+Proof. An internal zero gap of length zero contributes $\gamma_0=0$ in (39.2), excluding adjacent ones. Every legal word containing a one has positive boundary tails $S_A,S_B$ and positive internal gap factors; every all-zero word has $R_N>0$ because arbitrarily long gaps have positive probability. These are exactly the path-independent-set words of Convention 1.3, with no restriction on the unobserved outside symbols. For a length-$N$ window their number $b_N$ satisfies $b_N=b_{N-1}+b_{N-2}$, $b_0=1,b_1=2$: a word begins with zero followed by a legal $(N-1)$-word, or with one-zero followed by a legal $(N-2)$-word. Hence $b_N=F_{N+2}$ under $F_0=0,F_1=1$. This proves the Fibonacci legal-language relation. Equation (41.1) combines the achieved upper instruments with Theorems 38.1 and 40.1, and elementary even/odd arithmetic gives the saving. $\square$
+
+**Definition 41.2 (Scope of the comparison).** The target is exact generation of the homogeneous stationary renewal process (35.1), and its resource is persistent internal memory: $n+1$ classical states versus $D_n$ complex quantum dimensions, including the odd construction's source coordinate. All Kraus alternatives are fixed parts of the instrument. A dilation may use fresh uncorrelated auxiliaries discarded after each step; an auxiliary or classical record retained to affect later steps would instead be persistent memory and must be counted. No external clock or uncounted choice of a time-varying polynomial coefficient implements (37.4). The parameters may be arbitrary exact real or complex constants; no finite-precision, real-field or control-cost equivalence is asserted.
+
+The common legal language is a relation to FIB, not an identification of measures. The gap degree $n$ is not the path length $N$. These renewal probabilities do not automatically equal the product-activity law of Definition 1.1, the five-state AURIC source, or an earlier SNS law for $n>1$; the explicit identifications are the $n=1$ SNS and $n=2$ quadratic law in Theorem 37.2. Equality of legal support does not transport the parent Hamiltonian, holonomy controls or a native preparation map. The classical and quantum generators here produce actual classical output cylinders; they do not by themselves prepare the coherent square-root finite-window vectors of Chapter 24 or an infinite pure output state. Minimum memory entropy, thermodynamic work, energy, laboratory preparation and a predictive physical interface are separate questions. The sources cited in Chapters 37–39 provide the renewal context and classical mathematical ingredients; the exact construction and comparison are a derivation for this specified law, with no exhaustive literature search or worldwide priority claim.
+
+## 追加锚（本行以下为增补区）
