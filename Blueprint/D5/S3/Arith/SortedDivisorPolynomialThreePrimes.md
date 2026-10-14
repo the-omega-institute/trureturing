@@ -16,6 +16,8 @@ $$\exists n \in \mathbb{N}, 0 < n \land \operatorname{card}\left(\operatorname{p
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* T. D. Noe (2009). *OEIS A167857: Numbers whose divisors are represented by an integer polynomial*. URL: <https://oeis.org/A167857>.
+
 *Commentary.*
 
 Choose three increasing primes p, q, r, each congruent to 1 modulo 5040, using Nat.exists_prime_gt_modEq_one. Their product n is positive, has exactly three distinct prime factors and exactly eight positive divisors. Decomposition of a divisor of p*q*r into divisors of the three primes shows that every divisor is 1 modulo 5040.
@@ -24,7 +26,7 @@ Let d_i be entry i in the actual increasing sort of Nat.divisors n. For i=0,...,
 
 The sorted finset contains all positive divisors of this same n exactly once. The statement imposes no minimum n, degree bound, prescribed numerical candidate, divisor subset or input shift. Polynomial Int ensures integral coefficients; integer-valued rational interpolation alone would not establish this claim.
 
-Published source: The Online Encyclopedia of Integer Sequences, A167857, T. D. Noe, https://oeis.org/A167857, CC-BY-SA-4.0. The source asks: Are there terms with three distinct prime divisors? Preregistration: https://github.com/the-omega-institute/trureturing/issues/16601. The proof reuses pinned Mathlib suppliers and has proof_shape bind-only; admission_basis is open-problem-resolution. No new-method or priority claim is made.
+The source asks: Are there terms with three distinct prime divisors? The proof applies existing Mathlib results on primes in arithmetic progressions and Lagrange interpolation. No new-method or priority claim is made. Source license: CC-BY-SA-4.0.
 
 ## References
 

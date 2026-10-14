@@ -14,7 +14,8 @@ internal sealed class SortedDivisorPolynomialThreePrimesDocument : IScribeDocume
             DeclarationHandle.Create("D5/S3/Arith/SortedDivisorPolynomialThreePrimes.result"),
             H("A term with three distinct prime divisors exists"),
             StatementSource.FromAuthor(Statement()),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromRepo(
+                LibraryNoteRef.Create("D5/L/Factorization/noe2009a167857")),
             Blocks(
                 Paragraph(Text("Choose three increasing primes p, q, r, each congruent to 1 modulo 5040, "
                     + "using Nat.exists_prime_gt_modEq_one. Their product n is positive, has exactly three "
@@ -32,12 +33,10 @@ internal sealed class SortedDivisorPolynomialThreePrimesDocument : IScribeDocume
                     + "The statement imposes no minimum n, degree bound, prescribed numerical candidate, "
                     + "divisor subset or input shift. Polynomial Int ensures integral coefficients; "
                     + "integer-valued rational interpolation alone would not establish this claim.")),
-                Paragraph(Text("Published source: The Online Encyclopedia of Integer Sequences, A167857, "
-                    + "T. D. Noe, https://oeis.org/A167857, CC-BY-SA-4.0. The source asks: "
-                    + "Are there terms with three distinct prime divisors? Preregistration: "
-                    + "https://github.com/the-omega-institute/trureturing/issues/16601. "
-                    + "The proof reuses pinned Mathlib suppliers and has proof_shape bind-only; "
-                    + "admission_basis is open-problem-resolution. No new-method or priority claim is made."))),
+                Paragraph(Text("The source asks: Are there terms with three distinct prime divisors? "
+                    + "The proof applies existing Mathlib results on primes in arithmetic progressions "
+                    + "and Lagrange interpolation. No new-method or priority claim is made. "
+                    + "Source license: CC-BY-SA-4.0."))),
             DescribeRole.Theorem,
             new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("oeis-a167857-sorted-divisor-polynomial-three-primes"),
