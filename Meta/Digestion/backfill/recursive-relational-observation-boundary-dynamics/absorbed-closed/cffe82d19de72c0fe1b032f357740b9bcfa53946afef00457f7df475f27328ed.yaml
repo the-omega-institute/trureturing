@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:cffe82d19de72c0fe1b032f357740b9bcfa53946afef00457f7df475f27328ed
+  normalized_sha256: sha256:cffe82d19de72c0fe1b032f357740b9bcfa53946afef00457f7df475f27328ed
+cas_ref: sha256:cffe82d19de72c0fe1b032f357740b9bcfa53946afef00457f7df475f27328ed
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence.deterministic_interface_sixfold_equivalence
+    target_statement_id: sha256:dcd39aeb46b42e210fa91c3204ee59071a5b4e02a51218f3dda27d23039a5363
+  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_relation_eq_infinite_of_stable
+    target_statement_id: sha256:41829345e3221fc3ae1903accf0b81c2d1fac85a322e87846f3dfe3120f3a8bc
+  - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient
+    target_statement_id: sha256:e6bbd232d9f6aad61751436cb37d9ceee4fa624298ef9a7680a2eab2cae94dd4
+receipts:
+  unresolved_subitems: []
