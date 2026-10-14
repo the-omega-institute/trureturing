@@ -34,6 +34,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Palindromes/GeneralizedPseudostandardPeriodicity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/florian-dvorakova-2016-generalized-pseudostandard-periodicity` (proved) by `D5/S1/Words/Palindromes/GeneralizedPseudostandardPeriodicity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"florian-dvorakova-2016-generalized-pseudostandard-periodicity","declaration_gid":"D5/S1/Words/Palindromes/GeneralizedPseudostandardPeriodicity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Florian, Ľ. Dvořáková (2016). *On periodicity of generalized pseudostandard words*. DOI: [10.37236/4771](https://doi.org/10.37236/4771). URL: <https://arxiv.org/abs/1508.02020>.

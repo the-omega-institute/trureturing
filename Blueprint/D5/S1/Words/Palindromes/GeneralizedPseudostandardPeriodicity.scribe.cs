@@ -84,7 +84,10 @@ internal sealed class GeneralizedPseudostandardPeriodicityDocument : IScribeDocu
                 StatementSource.FromAuthor(Disp(Seq(V("claim")))),
                 AssessedProvenance.FromRepo(Note),
                 Blocks(Paragraph(Text("Every finite alphabet admits normalization, and a normalized directive of a word using every letter satisfies the two tail conditions exactly when the word has a positive pure period."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("florian-dvorakova-2016-generalized-pseudostandard-periodicity"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula V(string x) => F.Id(x);
