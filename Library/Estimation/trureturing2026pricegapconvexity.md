@@ -7714,3 +7714,68 @@ exterior, its finite terminal remainder and the rest of the original
 joint comparison remain. A larger paid coefficient does not establish
 the strict upper bound below the same-source JM margin, all-integer
 Robin inequality or RH.
+
+### A separately qualified preprint count branch
+
+The [adopted-supplier note](../Scale/bakerharmanpintz2001primegaps.md#a-newer-preprint-statement-and-the-adopted-supplier)
+already records Runbo Li's versioned preprint and the absence of an
+independent audit of its numerical sieve proof and integral certificates.
+If the lower counts in [arXiv:2308.04458v8, Theorem 2, printed p.2](https://arxiv.org/pdf/2308.04458v8)
+are taken as premises, the same LC5--LC8 consumer has the following
+additional parameter branches. These are supplier-relative consequences;
+they do not replace the established BHP/Guth--Maynard inputs above or
+certify the preprint's proof.
+
+| Fixed preprint parameter $s$ | Displayed lower constant $LB(s)>$ | Conservative fixed $b_*$ | Original supplied $\eta$ |
+|---|---|---|---|
+| $0.525$ | $0.249$ | $0<b_*<0.249$ | $\eta<0.475$ |
+| $0.524$ | $0.209$ | $0<b_*<0.209$ | $\eta<0.476$ |
+| $0.523$ | $0.169$ | $0<b_*<0.169$ | $\eta<0.477$ |
+| $0.522$ | $0.134$ | $0<b_*<0.134$ | $\eta<0.478$ |
+| $0.521$ | $0.075$ | $0<b_*<0.075$ | $\eta<0.479$ |
+| $0.520$ | $0.004$ | $0<b_*<0.004$ | $\eta<0.480$ |
+
+The source supplies counts at exponent $\vartheta=s+\delta$ for
+fixed sufficiently small $\delta>0$, at sufficiently large integer
+centres. First fix a table row and $b_*$, then choose such a fixed
+$\delta$ with $s+\delta\le1-\eta$. This is possible in the displayed
+strict $\eta$ range; no exact exponent $s$ is substituted into
+Theorem 2.
+
+Here the integer-centre restriction can be handled without assuming a
+new all-real count. Start at $n_0=\lfloor A-1\rfloor$ and use complete
+backward blocks with
+
+$$
+n_{j+1}=\lfloor n_j-n_j^\vartheta\rfloor\ge B.
+$$
+
+Since primes are integers,
+$\pi(n_j-n_j^\vartheta)=\pi(n_{j+1})$. Thus the source counts the
+disjoint prime blocks $(n_{j+1},n_j]$ exactly, with no missing or
+twice-counted endpoint prime. Their geometric lengths belong to
+$[n_j^\vartheta,n_j^\vartheta+1)$. The fixed slack below the displayed
+lower constant pays both this length rounding and the conversion to
+each prime's own $\log p$ mass: uniformly over these blocks,
+$\log(n_j-n_j^\vartheta)/\log n_j\to1$ and
+$n_j^\vartheta/(n_j-n_{j+1})\to1$.
+
+Discard only the final incomplete block and the less-than-two unit
+allowance between $n_0$ and $A$. They cost $O(1+B^\vartheta)$,
+because $A/B\to1$. Every retained prime still obeys
+$B<p<a_{p,1}<p+1\le A$. If no block fits, use $\Delta(A)\ge0$.
+Consequently LC5 holds with one fixed enlarged $c$ on every original
+branch and tie, and LC6--LC8 apply unchanged. LC7 makes its allowance
+$o(1)$ in each displayed range, without a core-clock ceiling or a
+bounded normalized lag or credit.
+
+Under this separately stated supplier premise, choosing
+$9/100<b_*<0.249$ in the first row increases the payment on
+$9/20\le\eta<19/40$, while the remaining rows
+provide positive payments beyond $19/40$ up to the strict cut
+$\eta<12/25$. The original $1-\Theta<\eta<1/2$ remains, including
+$\Theta=1$ where allowed. The established stronger counts already
+dominate these coefficients on their shorter ranges. All exterior and
+unspent-credit terms in LC8 remain, so neither this conditional branch
+nor the preprint count alone supplies the missing strict signed bound
+or a proof of RH.
