@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f242cf9473158af8175bdc821752d024facc6a7e74559b4126c0ee39858cade
+  normalized_sha256: sha256:8f242cf9473158af8175bdc821752d024facc6a7e74559b4126c0ee39858cade
+cas_ref: sha256:8f242cf9473158af8175bdc821752d024facc6a7e74559b4126c0ee39858cade
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 121.2　局域电路层只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 14045b7778a5dfefeb3ba0216511ef3b7023339c5a1149080b34c7db4cd05405
+    next_atom_id: c0d2c4f3efa64f58b77ec5a89a1f3abecb13b09230655cf7d3905e85242466e4

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c49276b23f5094f175df489fc8979143b78d81c5259329adcb59fb5b3471cf9e
+  normalized_sha256: sha256:c49276b23f5094f175df489fc8979143b78d81c5259329adcb59fb5b3471cf9e
+cas_ref: sha256:c49276b23f5094f175df489fc8979143b78d81c5259329adcb59fb5b3471cf9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节或表格导引，仅说明本节待讨论的主题、模型选择或栏目，不在正文另立数学断言。
+    previous_atom_id: 7634b0d14e809c4bbd4c967f7a270aa99f1b2beac45ad116ecb9c37cbc32cf8d
+    next_atom_id: a29327c4eed59f8ece322d3f21a4e07b27d53a9203e35b8ac217b54b3a67fe83
