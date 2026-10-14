@@ -208,9 +208,12 @@ theorem native_recursive_even_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     (F : SupplyFrame m (2 * s + 2)) (hB : 3 ≤ F.base.length)
     {a : {x : Configuration m // SpecialDomain F hB x}}
     (w : (domainGraph (SpecialDomain F hB)).Walk a a) (hw : w.IsHamiltonianCycle)
-    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edgeSet)
-    (hpair : ∀ z ∈ cyclePieces (specialCuts hm F hB) w hw
-        (special_cuts_nonempty hm F hB) hcuts,
+    (pieces : List (Piece (domainGraph (SpecialDomain F hB))))
+    (hs : (pieces.flatMap fun z => z.walk.support).Perm w.support.tail)
+    (he : (pieces.flatMap fun z => z.walk.edges).Perm
+      (w.edges.filter fun e => decide (e ∉ specialCuts hm F hB)))
+    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edges)
+    (hpair : ∀ z ∈ pieces,
       ∃ p q : Port (2 * s + 2), z.start.val = specialPort F p ∧
         z.finish.val = specialPort F q ∧
         evenBoundary (2 * s + 2) (code p) (code q))
@@ -218,16 +221,19 @@ theorem native_recursive_even_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     ∃ base : {x : Configuration m // ParentDomain F x},
       ∃ c : (domainGraph (ParentDomain F)).Walk base base,
       base.val = rightPort F 0 ∧ c.IsHamiltonianCycle := by
-  obtain ⟨_, q, hq, _, _, _, _⟩ := native_special_child_even_path hm s F hB w hw hcuts hpair
+  obtain ⟨_, q, hq, _, _, _, _⟩ := native_special_child_even_path hm s F hB w hw pieces hs he hcuts hpair
   exact recursive_cycle_from_special hm F hB q hq hothers
 
 theorem native_recursive_odd_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     (F : SupplyFrame m (2 * s + 3)) (hB : 3 ≤ F.base.length)
     {a : {x : Configuration m // SpecialDomain F hB x}}
     (w : (domainGraph (SpecialDomain F hB)).Walk a a) (hw : w.IsHamiltonianCycle)
-    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edgeSet)
-    (hpair : ∀ z ∈ cyclePieces (specialCuts hm F hB) w hw
-        (special_cuts_nonempty hm F hB) hcuts,
+    (pieces : List (Piece (domainGraph (SpecialDomain F hB))))
+    (hs : (pieces.flatMap fun z => z.walk.support).Perm w.support.tail)
+    (he : (pieces.flatMap fun z => z.walk.edges).Perm
+      (w.edges.filter fun e => decide (e ∉ specialCuts hm F hB)))
+    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edges)
+    (hpair : ∀ z ∈ pieces,
       ∃ p q : Port (2 * s + 3), z.start.val = specialPort F p ∧
         z.finish.val = specialPort F q ∧
         oddBoundary (2 * s + 3) (code p) (code q))
@@ -235,7 +241,7 @@ theorem native_recursive_odd_cycle_step {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     ∃ base : {x : Configuration m // ParentDomain F x},
       ∃ c : (domainGraph (ParentDomain F)).Walk base base,
       base.val = rightPort F 0 ∧ c.IsHamiltonianCycle := by
-  obtain ⟨_, q, hq, _, _, _, _⟩ := native_special_child_odd_path hm s F hB w hw hcuts hpair
+  obtain ⟨_, q, hq, _, _, _, _⟩ := native_special_child_odd_path hm s F hB w hw pieces hs he hcuts hpair
   exact recursive_cycle_from_special hm F hB q hq hothers
 
 #print axioms native_recursive_even_cycle_step

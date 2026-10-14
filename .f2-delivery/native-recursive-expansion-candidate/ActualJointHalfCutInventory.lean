@@ -119,13 +119,16 @@ theorem actual_joint_half_cut_inventory {base : V}
   have hseparate : H.toList.Perm ((H.erase seam).toList ++ [seam]) := by
     have hi : H.toList.Perm (seam :: (H.erase seam).toList) := by
       simpa only [Finset.insert_erase hseam] using
-        (Finset.toList_insert (Finset.not_mem_erase seam H))
-    exact hi.trans (by
-      simpa only [List.singleton_append] using
-        List.perm_append_comm [seam] (H.erase seam).toList)
+        (Finset.toList_insert (by simp : seam ∉ H.erase seam))
+    have hswap : ([seam] ++ (H.erase seam).toList).Perm
+        ((H.erase seam).toList ++ [seam]) := List.perm_append_comm
+    exact hi.trans (by simpa only [List.singleton_append] using hswap)
+  have hstep : (jointEdges ++ H.toList ++ K.toList).Perm
+      (jointEdges ++ (H.erase seam).toList ++ [seam] ++ K.toList) := by
+    simpa only [List.append_assoc] using
+      ((List.Perm.refl jointEdges).append (hseparate.append (List.Perm.refl K.toList)))
   have hsource := (actual_joint_split_cut_inventory c hc jointEdges K H
-    hdisjoint hjoint hcuts).trans
-    ((List.Perm.refl jointEdges).append (hseparate.append (List.Perm.refl K.toList)))
+    hdisjoint hjoint hcuts).trans hstep
   refine ⟨?_, ?_, ?_⟩
   · simpa only [List.append_assoc] using hsource
   · intro hK

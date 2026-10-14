@@ -77,7 +77,8 @@ theorem actual_single_order_boundary_update
     have hp := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support front.reverse)
     rw [SimpleGraph.Walk.support_reverse, List.count_reverse] at hp
     have hd := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support d)
-    simp only [List.count_append, List.count_cons] at hs hp hd ⊢
+    simp only [SimpleGraph.Walk.support_reverse, List.count_reverse,
+      List.count_append, List.count_cons] at hs hp hd ⊢
     omega
   have hsupport : (pieces.flatMap fun p => p.walk.support).Perm c.support.tail := by
     apply List.perm_iff_count.mpr
@@ -143,16 +144,16 @@ theorem actual_single_order_boundary_update
       change (insert s(x, y) (endpointPairs oldrest)).erase s(x, y) = endpointPairs oldrest
       exact Finset.erase_insert hnot
     rw [herase]
-    ext e
-    simp only [pieces, endpointPairs, List.map_append, List.map_cons, List.map_nil,
-      List.toFinset_append, List.toFinset_cons, List.toFinset_nil,
-      Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty, or_false]
-    tauto
+    change endpointPairs ([_, _] ++ oldrest) = endpointPairs oldrest ∪ {_ , _}
+    simp only [endpointPairs, List.map_append, List.map_cons, List.map_nil,
+      List.toFinset_append, List.toFinset_cons, List.toFinset_nil]
+    exact Finset.union_comm _ _
   refine ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hfiltered.symm, ?_,
     hcuts, hcard, hpairs, rfl, rfl⟩
   intro e
   rw [← hfiltered.mem_iff]
   simp only [List.mem_filter, decide_eq_true_eq, SimpleGraph.Walk.mem_edgeSet]
+  rfl
 
 /-- Restoring the first Q zero cut gives the other actual single-order
 boundary. The restored edge joins new₁.reverse to new₀.reverse on the z
@@ -210,7 +211,8 @@ theorem actual_single_order_first_cut_boundary_update
     have hp := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support front.reverse)
     rw [SimpleGraph.Walk.support_reverse, List.count_reverse] at hp
     have hd := congrArg (List.count v) (SimpleGraph.Walk.cons_tail_support d)
-    simp only [List.count_append, List.count_cons] at hs hp hd ⊢
+    simp only [SimpleGraph.Walk.support_reverse, List.count_reverse,
+      List.count_append, List.count_cons] at hs hp hd ⊢
     omega
   have hsupport : (pieces.flatMap fun p => p.walk.support).Perm c.support.tail := by
     apply List.perm_iff_count.mpr
@@ -277,16 +279,16 @@ theorem actual_single_order_first_cut_boundary_update
       change (insert s(x, y) (endpointPairs oldrest)).erase s(x, y) = endpointPairs oldrest
       exact Finset.erase_insert hnot
     rw [herase]
-    ext e
-    simp only [pieces, endpointPairs, List.map_append, List.map_cons, List.map_nil,
-      List.toFinset_append, List.toFinset_cons, List.toFinset_nil,
-      Finset.mem_union, Finset.mem_insert, Finset.mem_singleton, Finset.notMem_empty, or_false]
-    tauto
+    change endpointPairs ([_, _] ++ oldrest) = endpointPairs oldrest ∪ {_ , _}
+    simp only [endpointPairs, List.map_append, List.map_cons, List.map_nil,
+      List.toFinset_append, List.toFinset_cons, List.toFinset_nil]
+    exact Finset.union_comm _ _
   refine ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hfiltered.symm, ?_,
     hcuts, hcard, hpairs, rfl, rfl⟩
   intro e
   rw [← hfiltered.mem_iff]
   simp only [List.mem_filter, decide_eq_true_eq, SimpleGraph.Walk.mem_edgeSet]
+  rfl
 
 #print axioms actual_single_order_boundary_update
 #print axioms actual_single_order_first_cut_boundary_update

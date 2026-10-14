@@ -1,7 +1,7 @@
 /- UNCOMPILED native E/O instances of the actual-piece assembler.
-   The public RecursivePortBoundary whole-edge enumeration supplies
-   reordering; its internally proved seam recipe is realized by the
-   independently verified native c-generator coordinates. -/
+   Consume the supplied actual pieces and exact inventories of that same
+   prior cycle, rather than selecting new cycle slices. Whole-edge route
+   enumeration and native c coordinates earn the ordered Hamilton path. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialChildAssembly
 
 set_option autoImplicit false
@@ -56,9 +56,12 @@ theorem native_special_child_even_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     (F : SupplyFrame m (2 * s + 2)) (hB : 3 ≤ F.base.length)
     {a : {x : Configuration m // SpecialDomain F hB x}}
     (w : (domainGraph (SpecialDomain F hB)).Walk a a) (hw : w.IsHamiltonianCycle)
-    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edgeSet)
-    (hpair : ∀ z ∈ cyclePieces (specialCuts hm F hB) w hw
-        (special_cuts_nonempty hm F hB) hcuts,
+    (pieces : List (Piece (domainGraph (SpecialDomain F hB))))
+    (hs : (pieces.flatMap fun z => z.walk.support).Perm w.support.tail)
+    (he : (pieces.flatMap fun z => z.walk.edges).Perm
+      (w.edges.filter fun e => decide (e ∉ specialCuts hm F hB)))
+    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edges)
+    (hpair : ∀ z ∈ pieces,
       ∃ p q : Port (2 * s + 2), z.start.val = specialPort F p ∧
         z.finish.val = specialPort F q ∧
         evenBoundary (2 * s + 2) (code p) (code q)) :
@@ -88,7 +91,7 @@ theorem native_special_child_even_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     simpa only [show 2 * i + 1 + 1 = 2 * (i + 1) by omega] using
       even_route_seam_step s (2 * i + 1) (by omega) (by omega)
   obtain ⟨ordered, q, hq, hend, hs, he, hinv⟩ :=
-    native_special_child_assembled hm F hB w hw hcuts
+    native_special_child_from_actual_partition hm F hB w hw pieces hs he hcuts
       (evenBoundary (2 * s + 2)) (evenPortRoute s) honce hpair hseams
   let q' := q.copy (congrArg (specialVertex hm F hB) (even_native_route_start s))
     (congrArg (specialVertex hm F hB) (even_native_route_finish s))
@@ -102,9 +105,12 @@ theorem native_special_child_odd_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     (F : SupplyFrame m (2 * s + 3)) (hB : 3 ≤ F.base.length)
     {a : {x : Configuration m // SpecialDomain F hB x}}
     (w : (domainGraph (SpecialDomain F hB)).Walk a a) (hw : w.IsHamiltonianCycle)
-    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edgeSet)
-    (hpair : ∀ z ∈ cyclePieces (specialCuts hm F hB) w hw
-        (special_cuts_nonempty hm F hB) hcuts,
+    (pieces : List (Piece (domainGraph (SpecialDomain F hB))))
+    (hs : (pieces.flatMap fun z => z.walk.support).Perm w.support.tail)
+    (he : (pieces.flatMap fun z => z.walk.edges).Perm
+      (w.edges.filter fun e => decide (e ∉ specialCuts hm F hB)))
+    (hcuts : ∀ e ∈ specialCuts hm F hB, e ∈ w.edges)
+    (hpair : ∀ z ∈ pieces,
       ∃ p q : Port (2 * s + 3), z.start.val = specialPort F p ∧
         z.finish.val = specialPort F q ∧
         oddBoundary (2 * s + 3) (code p) (code q)) :
@@ -134,7 +140,7 @@ theorem native_special_child_odd_path {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     simpa only [show 2 * i + 1 + 1 = 2 * (i + 1) by omega] using
       odd_route_seam_step s (2 * i + 1) (by omega) (by omega)
   obtain ⟨ordered, q, hq, hend, hs, he, hinv⟩ :=
-    native_special_child_assembled hm F hB w hw hcuts
+    native_special_child_from_actual_partition hm F hB w hw pieces hs he hcuts
       (oddBoundary (2 * s + 3)) (oddPortRoute s) honce hpair hseams
   let q' := q.copy (congrArg (specialVertex hm F hB) (odd_native_route_start s))
     (congrArg (specialVertex hm F hB) (odd_native_route_finish s))
