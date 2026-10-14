@@ -2625,3 +2625,730 @@ space, time, boundary and memory programme have not been identified
 with this supplied-count prediction problem.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Exact native acquisition of one declared future literal
+
+**Definition 13.1 (source-blind stationary acquisition).** Fix public
+$D\ge1$ and $p\in A_D$, and write $n=|p|$. The initial source ranges over
+exactly Definition 11.1's family
+
+$$
+ \mathcal F_D=\{\langle\alpha,v\rangle:\operatorname{height}(v)\le D\},
+ \qquad p\text{ starts with }R,\qquad 1\le n\le D.
+\tag{AAR.73}
+$$
+
+Its shape and all nonpublic labels are unknown. During acquisition the
+one initial register is promised stationary. An encoder $\mathsf A$ is
+a deterministic effective procedure, with the same source-blind initial
+state on every member of this family. Public $D,p$ and the family promise
+are allowed. Its only source operation is an actual
+$\operatorname{Read}_t(w)$ for an arbitrary finite original-root word
+$w\in\{L,R\}^*$. All four replies have their meanings in Definition 1.1.
+There is no restriction to prefixes of $p$, no query-depth restriction,
+and no subtree, age, navigation, reset, source-identity or pre-acquired
+boundary input. No $\rho$ operation occurs during acquisition.
+
+The encoder must terminate for every $t\in\mathcal F_D$. Its complete
+accessible source dependence at handoff is $E_{\mathsf A}(t)$, including
+any surviving selector, operand, latch, buffer, transcript, control,
+length or allocation distinction. A single effective passive decoder
+must satisfy
+
+$$
+ \mathsf D(E_{\mathsf A}(t),D,p,k)
+       =\operatorname{readout}(p,\rho^k t)
+ \quad(t\in\mathcal F_D,\ k\in\mathbb N).
+\tag{AAR.74}
+$$
+
+Here $k$ is supplied authentically for the same root, register and initial
+version. It is supplied after acquisition and is not inferred by the
+code. The decoder makes no fresh source Read. The code need not identify
+the source, retain a lossless ray table, or use the minimum alphabet of
+§12. It must serve every supplied count, not just the current reply.
+
+Let $T_{\mathsf A}(t)$ count actual initial Reads, including constant,
+repeated and absent calls. Let $A_{\mathsf A}(t)$ and $Q_{\mathsf A}(t)$
+be their total submitted letters and peak word length, as in
+Definition 1.4. Put
+
+$$
+ C_D(p)=\min_{\mathsf A}\max_{t\in\mathcal F_D}T_{\mathsf A}(t),
+ \qquad
+ Q_D(p)=\min_{\mathsf A}\max_{t\in\mathcal F_D}Q_{\mathsf A}(t),
+\tag{AAR.75}
+$$
+
+where both minima range over all encoders satisfying this contract.
+These are separate objectives. Installation, local computation, working
+and retained memory, clearing, authentication and the representation of
+$k$ are separate resource coordinates. In particular, a public promise
+of stationarity is not a paid validation protocol. This contract concerns
+one address declared before acquisition. It supplies neither a later
+unknown menu nor an unknown lag.
+
+**Definition 13.2 (an acquired path descriptor and its predictive factor).**
+Let $p_i$ be the length-$i$ prefix of $p$, with $p_0=\varepsilon$.
+Write $\lambda_0=\alpha$, $\lambda_1=\beta$ and retain the weight $s$
+of (AAR.42). There are two kinds of path descriptor:
+
+- $B$: the address $p$ is initially branch;
+- $(j,e)$: the first leaf on the path toward $p$ is at $p_j$, with
+  actual label $\lambda_e$, where $1\le j\le n$ and $e\in\{0,1\}$.
+
+The root is known branch, so there is no candidate at index zero.
+Denote this mathematical descriptor by $\partial_p(t)$. Its existence
+is a property of $t$, not an acquisition operation. For a descriptor
+actually obtained from Reads, define
+
+$$
+ \Gamma_p(B)=(0,0),\qquad
+ \Gamma_p(j,e)=
+ \begin{cases}
+ (2-e,1-e),&j=n,\\
+ (s(r)+2-e,\mathbf1_{r\text{ ends with }R}),&p=p_jr,\ j<n.
+ \end{cases}
+\tag{AAR.76}
+$$
+
+**Proposition 13.3 (passive decoding and the distinction acquisition must
+resolve).** On the whole family (AAR.73),
+$\Gamma_p(\partial_p(t))=(b_p(t),c_p(t))$ from Definition 12.2.
+Consequently the effective decoder (AAR.59), applied to this pair and
+supplied $k$, satisfies (AAR.74). Different descriptors may have the same
+predictive factor; for each fixed leaf position, however, its two labels
+have different factors and different future trajectories.
+
+Proof. An initially present branch persists. At a reached leaf $p_j$,
+same-source present-subtree transport supplies $T_{k+e}=\rho^{k+e}\alpha$.
+At $j=n$ the root replies of this tree give the first case of (AAR.76).
+At $j<n$ the guarded atomic law of SLH §§35–38 applies to the nonempty
+suffix $r$. Its first branch count is $s(r)+2-e$; an alpha stage occurs
+exactly when the last letter is $R$. This is precisely (AAR.57)–(AAR.59).
+It does not transport a subtree from an absent address, and for a
+left-ending suffix it does not convert absence at a formal residual
+index zero into alpha.
+
+For $j=n$ the two initial replies are already different. For $j<n$ put
+$d=s(r)$. At the common count $k=d+1$, the source with label alpha at
+$p_j$ gives beta at $p$, while the source with label beta gives branch.
+Thus the label matters even when the target was absent on both sources.
+The collision between different positions is real: for $p=RLL$,
+$t=\langle\alpha,\beta\rangle$ has descriptor $(1,1)$, whereas
+$t'=\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ has descriptor
+$(2,0)$. Both give $(b,c)=(3,0)$ and the trajectory
+absent, absent, beta, branch, branch, $\ldots$. Both sources are actual
+members of every admissible $\mathcal F_D$ for this $p$. $\square$
+
+The arbitrary-code minimum is already supplied by Theorems 12.6–12.7.
+For $p=Rq$, it has $2n+1-\lambda(q)$ values, where $\lambda(q)$ counts
+left letters before the last letter of $q$. It is not necessary to
+reconstruct that quotient to acquire a sufficient code. The descriptor
+has $2n+1$ possible values and may over-refine it. After acquisition one
+may instead retain (AAR.76), or its minimum name from §12, with local
+encoding and complete clearing separately charged. Theorem 12.4 gives
+its factorization through sufficient acquired boundary coordinates.
+It does not supply those coordinates without Reads.
+
+**Theorem 13.4 (an attaining native acquisition).** There is a single
+source-blind encoder for each public $D,p$ satisfying (AAR.74) with
+
+$$
+ T\le h(n):=\lceil\log_2(n+1)\rceil,\qquad
+ A\le n h(n),\qquad Q\le n.
+\tag{AAR.77}
+$$
+
+It uses only actual literal Reads of prefixes of $p$ and terminates on
+every source in the full family, independently of its off-path shape.
+There is no separate initial target probe in this construction.
+
+Proof. Search the ordered candidate leaf positions $[1,n]$. At a
+nonempty remaining interval $[a,b]$, take
+$i=\lfloor(a+b)/2\rfloor$ and submit the whole word $p_i$.
+A label reply acquires $(i,e)$ and terminates. A branch reply excludes
+all leaf positions at or below $i$ and keeps $[i+1,b]$. An absent reply
+keeps $[a,i-1]$. Branch at $p_n$ terminates with $B$; equivalently,
+exhaustion of all leaf candidates leaves only $B$.
+
+To check the last rule, regard $B$ as an additional possible position
+$n+1$, always above the searched keys. Its prefix replies are all
+branch. An absent reply discards this possibility. On an actual source,
+a finite leaf index is never removed except by acquiring it. Therefore
+an empty interval on an actual run can only leave $B$. Every unacquired
+leaf candidate is a position in one interval. A nonterminal comparison
+leaves at most $\lfloor m/2\rfloor$ of the previous $m$ candidates.
+The ordinary successful-search bound is consequently
+
+$$
+ H(0)=0,\qquad H(m)\le1+H(\lfloor m/2\rfloor),\qquad
+ H(m)\le\lfloor\log_2m\rfloor+1
+       =\lceil\log_2(m+1)\rceil\quad(m\ge1).
+\tag{AAR.78}
+$$
+
+The one possible unsuccessful search is for $B$ beyond all keys; its
+path also obeys this height bound. Each query is a real finite literal
+of length at most $n$, giving the other bounds. The actual source stays
+fixed throughout, so all comparisons refer to its one boundary. No
+queried prefix is repeated. Leaf acquisition or branch certification,
+followed by Proposition 13.3, proves correctness for all future counts.
+
+One complete export is a fixed public encoding of $B$ and $(j,e)$ in
+$\lceil\log_2(2n+1)\rceil$ bits. Use a fixed output region and clear or
+retract all other accessible source-dependent state, including query
+control, operands, latches, histories and allocation distinctions.
+This is the complete-interface convention of Definitions 1.3 and 12.1;
+its storage, work and clearing costs are additional. Alternatively the
+whole finite acquisition record can be included in $E$, with its actual
+retention cost. Neither choice treats an accessible selector as free.
+The resulting decoder uses only this genuinely acquired code, public
+$p,D$, and the supplied count. $\square$
+
+The capacity calculation is the ordinary ordered successful search
+already used in CNA Theorem 17.1. Its use here starts directly on the
+$n$ possible leaf positions below the known root. SLH Theorem 36.1's
+initial target probe remains a valid construction for its stated
+interface; that extra probe is not intrinsic to Definition 13.1.
+
+**Lemma 13.5 (bounded-family actual-label necessity).** Every correct
+encoder of Definition 13.1 must, on each source whose descriptor is
+$(j,e)$, actually read $p_j$ before terminating. If $p$ is branch, its
+terminal record must contain either $(p,\mathrm{branch})$ or a nonabsent
+reply at a strict descendant of $p$.
+
+Proof. In the leaf case change only that actual leaf label, obtaining
+$t'$. It is still in $\mathcal F_D$: the left alpha, shape and height
+are unchanged, and $p_j$ starts with $R$. The replies of $t,t'$ are
+identical at every finite address except $p_j$. Their ancestors are the
+same branches, every strict descendant of that leaf is absent on both,
+and all other subtrees are identical. If the run on $t$ omitted $p_j$,
+determinism from the common initial state would give the identical
+queries, replies, local decisions, stopping time and complete retained
+state on $t'$. Proposition 13.3 gives different future replies at one
+common authentic count. One passive decoder on this identical input
+cannot be correct for both.
+
+For the branch case, suppose neither stated observation occurred.
+Replace the entire subtree at $p$ by alpha. This reduces height and
+preserves the prescribed initial left child, hence is still allowed.
+The query at $p$ never occurred; every queried strict descendant was
+absent and remains absent; every query elsewhere has the same reply.
+The identical-run argument now contradicts branch versus alpha at
+count zero. Both modifications compare two complete stationary
+executions; neither changes the source within an execution. These are
+the SLH Lemma 43.2 evidence arguments, with their required closure under
+leaf relabeling and subtree pruning checked inside (AAR.73). $\square$
+
+In particular, equal desired codes for two boundary positions do not
+waive label acquisition. In Proposition 13.3's collision the first
+source must be read at $R$ and the second at $RL$: flipping either
+actual leaf changes that source's future. Equality of compressed
+outputs allows erasure after acquisition, not a source-dependent
+initial choice of which information to ignore.
+
+**Definition 13.6 (a bounded native witness family).** For a finite word
+$a$ and a tree $u$, let $C_a[u]$ be the tree obtained by placing $u$ at
+$a$, making every strict ancestor of $a$ a branch, and placing alpha at
+each sibling not on this path. In particular $C_\varepsilon[u]=u$.
+Define the actual trees
+
+$$
+ t_{j,e}=C_{p_j}[\lambda_e]\quad(1\le j\le n,\ e\in\{0,1\}),
+ \qquad t_* = C_p[\langle\alpha,\alpha\rangle],\qquad
+ \mathcal K_p=\{t_{j,e}\}\cup\{t_*\}.
+\tag{AAR.79}
+$$
+
+Because $p$ starts with $R$, every one has initial left child alpha.
+The right-subtree heights are $j-1$ and $n$, respectively. Thus
+$\mathcal K_p\subseteq\mathcal F_D$ for every $D\ge n$, without
+padding above a submitted query. Their descriptors are exactly all
+$2n+1$ possibilities of Definition 13.2, all simultaneously realized
+in this same public family.
+
+**Lemma 13.7 (classification of every literal on the witness family).**
+For $1\le i\le n$, the prefix query $p_i$ has the following replies:
+
+| Source condition | Reply at $p_i$ |
+| --- | --- |
+| $j<i$ | absent |
+| $j=i$ | $\lambda_e$ |
+| $j>i$, or source $t_*$ | branch |
+
+All other finite words are exhausted by these cases:
+
+1. The empty word gives branch, $L$ gives alpha, and a strict extension
+   of $L$ gives absent on every witness.
+2. A word first diverging from $p$ at position $i$, $2\le i\le n$,
+   has the form $p_{i-1}\overline{p[i]}z$, where the bar exchanges $L,R$.
+   For $z=\varepsilon$ its reply is alpha when $j\ge i$ or on $t_*$,
+   and absent when $j<i$. For nonempty $z$ its reply is always absent.
+3. A strict extension $pz$ gives alpha exactly when its source is $t_*$
+   and $|z|=1$. In every other case it gives absent.
+
+Consequently a word can distinguish the two labels of at most one
+pair $\{t_{j,0},t_{j,1}\}$: it does so exactly when it equals $p_j$.
+After discarding that possible pair, all other intact pairs receive at
+most two different replies, each reply common to both labels of its
+pair. The statement includes arbitrarily deep, off-path, empty and
+repeated words.
+
+Proof. Before $p_j$ the constructed path consists of branches; at it
+there is the stated leaf, and below it all positions are absent. At a
+first divergence the sibling exists exactly when its parent was before
+the terminal leaf, namely $j\ge i$, and that sibling is alpha. Its own
+strict descendants are absent. The terminal witness instead continues
+the path through $p$ and has just two alpha children there. These facts
+give the table and the three cases by literal navigation in the actual
+trees. Every word is a prefix, first diverges, or strictly extends $p$;
+the initial left branch and the root account for the remaining cases.
+No property of an imagined comparison oracle is used. $\square$
+
+**Theorem 13.8 (exact all-native-address Read price).** For every admissible
+$D,p$,
+
+$$
+ \boxed{C_D(p)=\lceil\log_2(|p|+1)\rceil.}
+\tag{AAR.80}
+$$
+
+The lower bound holds against every deterministic adaptive encoder of
+Definition 13.1, with arbitrary finite word queries and arbitrary
+complete retained codes, including codes that merge boundary positions.
+It does not require the source shape to be known.
+
+Proof. Theorem 13.4 gives attainment on the entire family. For the lower
+bound restrict any proposed encoder to the $2n$ leaf witnesses in
+(AAR.79), keeping its real queries and control. At a common truthful
+transcript call a pair intact if both $t_{j,0}$ and $t_{j,1}$ remain
+consistent and $p_j$ has not been queried. Lemma 13.5 forbids termination
+while even one intact pair remains. Both sources of such a pair produce
+the same complete acquired state so far and require different future
+answers at a common count.
+
+With at most $h$ Reads remaining, at most $2^h-1$ intact pairs can be
+handled. This is induction on $h$, applied to any subset of the pairs
+consistent with a common transcript. At $h=0$ there can be no pair. At
+the next query, Lemma 13.7 allows at most one pair to be hit at its
+actual leaf. Every other pair remains intact and belongs wholly to one
+of at most two reply groups. Each group must be solvable in $h-1$
+Reads, so their total size is at most $2(2^{h-1}-1)$. Adding the possible
+hit pair gives $2^h-1$. A query with a constant reply, or one that does
+not hit a candidate, cannot increase this capacity.
+
+This induction is about actual source-consistent executions. At each
+node the candidate trees are fixed members of the initial family and
+realize the entire preceding transcript together, not separately chosen
+answers. A selected nonempty branch retains those actual witnesses.
+An early halt fails on a retained pair. Infinite local computation at a
+reachable node fails termination on a retained actual source. Otherwise
+the next Read or halt is common by determinism. Thus adaptivity, local
+work and arbitrary growing state introduce no extra source input.
+Since $\mathcal F_D$ is finite and every run terminates, each admissible
+encoder has a finite worst Read count. Applying the capacity induction
+at its common initial state yields $n\le2^h-1$, or
+$h\ge\lceil\log_2(n+1)\rceil$.
+
+In particular, the proof never assumes distinct future codes for all
+$n$ leaf positions. It uses the separate indispensable label pair at
+each position. The four replies supply two successful label outcomes
+at a hit and at most two continuations for the other pairs; treating
+them as four arbitrary equally powerful branches loses this constraint.
+CNA's successful-search capacity is reused, but its unbounded-padding
+realization is replaced by Lemma 13.7's fixed bounded witnesses.
+$\square$
+
+**Corollary 13.9 (exact peak and nonadaptive prices).** Under the same
+contract,
+
+$$
+ \boxed{Q_D(p)=|p|,}\qquad
+ \boxed{C_D^{\mathrm{nonadaptive}}(p)=|p|.}
+\tag{AAR.81}
+$$
+
+One common strategy attains both the call minimum (AAR.80) and the peak
+minimum. Nonadaptive here means a fixed source-independent ordered list
+of literal queries, optionally stopped when the acquired information
+already suffices; it does not allow reply-dependent address selection.
+
+Proof. The two actual sources $t_{n,0},t_{n,1}$ have different replies
+only at the literal $p$ and require different answers at $k=0$. Both
+executions must therefore eventually query that literal, of length $n$.
+This proves the peak bound even for strategies allowed arbitrarily many
+other queries. Theorem 13.4 attains it and the call optimum together.
+
+A fixed query list must contain every $p_j$, by the corresponding pair
+$t_{j,0},t_{j,1}$. Early stopping cannot remove this requirement on the
+run with that leaf. Consider the $p_j$ whose first occurrence in the
+list is latest; its leaf sources require at least $n$ calls. Conversely,
+query $p_1,\ldots,p_n$ in order, stopping at a leaf, or returning $B$
+after branch at $p_n$. This acquires the descriptor in at most $n$ actual
+Reads, with worst total letters $n(n+1)/2$ and peak $n$. $\square$
+
+**Proposition 13.10 (endpoints, guards and collisions).** The same
+acquisition result applies to left-ending, right-ending and mixed
+addresses, with the following concrete distinctions.
+
+| Public target | Calls from (AAR.80) | Actual semantic check |
+| --- | ---: | --- |
+| $R$, including $D=1$ | $1$ | $R$ itself gives alpha, beta or branch; these are the three complete future behaviors. |
+| $RL$ | $2$ | $\langle\alpha,\beta\rangle$ gives absent at zero, while $\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ gives alpha; both then give beta and branch. |
+| $RR$ | $2$ | From $\langle\alpha,\alpha\rangle$ the replies are absent, absent, alpha, beta, then branch; the right-ending suffix has an alpha stage. |
+| $RLL$ | $2$ | The distinct blockers in Proposition 13.3 have the same complete future; their respective labels must still be acquired. |
+| $RLR$ | $2$ | Those same sources have factor $(4,1)$, hence absent, absent, alpha, beta, then branch on this mixed path. |
+| $RLLL$ | $3$ | Four mandatory leaf positions exceed the two-call capacity $2^2-1$, although the predictive quotient merges some of their descriptors. |
+
+Proof. The call values substitute the displayed lengths into Theorem
+13.8. The replies follow from (AAR.76) and the guarded table (AAR.59).
+For $RLR$, the two descriptors are $(1,1)$ and $(2,0)$; their suffix
+weights are three and two, giving the same $(4,1)$. In the $D=1$ case,
+$v$ may be either leaf or any height-one branch; a single $R$ Read
+covers all of them, not only three representative sources. For every
+row with length $n$, (AAR.79) fits $D=n$ and hence every larger $D$.
+The upper algorithm never inspects off-path shape. Therefore arbitrary
+extra height slack does not alter either optimum. Along an absent
+target's nested prefixes there is exactly one first leaf, not several
+independent blockers; the comparison invariant searches that one
+actual boundary. $\square$
+
+## 14. Resource normalization and its pointwise boundary
+
+**Theorem 14.1 (projection-based normalization of worst resources).**
+Define the mathematical projection
+
+$$
+ \pi_p(t)=
+ \begin{cases}
+ t_{j,e},&\partial_p(t)=(j,e),\\
+ t_*,&\partial_p(t)=B.
+ \end{cases}
+\tag{AAR.82}
+$$
+
+For every encoder $\mathsf A$ in Definition 13.1 there is a prefix-only
+encoder $\mathsf B$, correct on the same full family, such that for each
+$t\in\mathcal F_D$ and each $c\in\{T,A,Q\}$,
+
+$$
+ c_{\mathsf B}(t)\le c_{\mathsf A}(\pi_p(t)),\qquad
+ \max_{t\in\mathcal F_D}c_{\mathsf B}(t)
+       \le\max_{t\in\mathcal F_D}c_{\mathsf A}(t).
+\tag{AAR.83}
+$$
+
+It may be chosen as an ordered successful-search tree on the $n$ leaf
+positions, with termination on either label at a hit and one additional
+all-branch outcome beyond the last key. These inequalities concern the
+three stated query resources, not local simulation work, installed code
+or memory. They do not assert $c_{\mathsf B}(t)\le c_{\mathsf A}(t)$
+for each unprojected source.
+
+Proof. The projection belongs to the same family and preserves the
+entire target trajectory by Proposition 13.3. Simulate the deterministic
+run of $\mathsf A$ on this one projected source, obtaining its necessary
+responses from actual prefix Reads on $t$. It is unnecessary to acquire
+the whole projection first. The all-word classification supplies each
+simulation step:
+
+- For $w=p_i$, actually query $p_i$ on $t$; its reply equals the
+  projected reply.
+- For the immediate divergent sibling $w=p_{i-1}\overline{p[i]}$,
+  $2\le i\le n$, query $p_{i-1}$. Its branch reply means the simulated
+  sibling reply is alpha; every other reply means absent. The query
+  length is $i-1$, one less than the simulated length $i$.
+- For $w=pL$ or $pR$, query $p$. Branch means the simulated reply is
+  alpha; every other reply means absent. Again the real word is shorter.
+- Every remaining case in Lemma 13.7 is a known constant on the
+  projected family and requires no actual query.
+
+Each real query is on the unchanged actual $t$. Its reply either is the
+projected reply or determines it by the stated map. Induction over the
+simulated execution therefore preserves exactly the run of
+$\mathsf A(\pi_p(t))$, including its control choices and termination.
+Each simulated Read costs at most one real Read and no more letters or
+peak length. Repeated known replies can be supplied from the already
+acquired local state; this describes a different strategy, not a refund
+of the original encoder's repeated calls. If a real prefix query hits a
+leaf, the simulator may immediately retain its descriptor and stop; if
+it obtains branch at $p$, it may stop with $B$. Such early termination
+can only decrease the three coordinates. If neither occurs, the finite
+correct simulated run must eventually supply sufficient evidence by
+Lemma 13.5. The correctness of its final code also follows directly
+from trajectory preservation. This proves the sourcewise inequality
+with $\pi_p(t)$, and membership of the projection proves the worst-case
+inequalities.
+
+After early termination at every actual hit, the only continuing prefix
+replies are absent and branch. They leave respectively a lower and an
+upper interval of still possible leaf positions. Queries outside that
+interval have a known nonterminal reply and can be omitted. Every
+remaining leaf position must occur as a query node on its path, by
+Lemma 13.5. Removing these known queries therefore leaves an ordered
+binary search tree containing exactly the keys $1,\ldots,n$. An empty
+upper interval may terminate with $B$ only on the rightmost path; other
+empty continuations are unattained. The descriptor determines every
+prefix reply, so the same tree is correct on all original sources, not
+just on the representatives. Its whole resource bounds follow from
+the preceding simulation and pruning. $\square$
+
+This normalization is sufficient for worst-case resource comparisons.
+The direct witness proof of Theorem 13.8 needs only Lemma 13.7 and label
+necessity; it does not depend on a universal simulation of off-path
+replies on the unprojected source.
+
+**Proposition 14.2 (no same-source pointwise prefix dominator).** For
+$D=4,p=RLLL$, there is a globally correct native encoder and a nine-source
+subfamily realizing every descriptor, on each of which it terminates
+within two Reads. No globally correct prefix-only encoder has Read
+count at most that encoder's count on every actual source.
+
+Proof. Use the eight witnesses $t_{j,e}$ of (AAR.79), modifying only the
+subtree at $RR$ when that address is present, and use the terminal
+branch witness. Choose the $RR$ subtree by the following table; all
+other off-path siblings remain alpha.
+
+| Descriptor | Subtree at $RR$ | First reply at $RR$ | Second literal |
+| --- | --- | --- | --- |
+| $(1,e)$, $e=0,1$ | absent | absent | $R$ |
+| $(2,e)$, $e=0,1$ | alpha | alpha | $RL$ |
+| $(3,e)$, $e=0,1$ | beta | beta | $RLL$ |
+| $(4,e)$, $e=0,1$ | $\langle\alpha,\alpha\rangle$ | branch | $RLLL$ |
+| $B$ | $\langle\alpha,\alpha\rangle$ | branch | $RLLL$ |
+
+These are nine concrete trees. In the first row $R$ itself is the leaf,
+so $RR$ is absent without any replacement. In all other rows $R$ is
+branch and $RR$ is an off-path sibling subtree. Their right-subtree
+heights are at most four, including the branch at $p$ in the last row.
+Thus the whole family has the same allowed root and height promise.
+The second query returns the true first-leaf label, or branch at $p$,
+so the table defines a two-call success on every one of these trees.
+
+For a globally correct extension, make these same two queries on every
+$t\in\mathcal F_4$, with the second chosen from the actual first reply.
+Return only if the second reply is a leaf on the path or branch at $p$;
+otherwise run the prefix acquisition of Theorem 13.4. All returns are
+justified by actual evidence, and the fallback is finite on every
+source. This is one common program, without a source name or a promise
+restricting its inputs to the nine witnesses.
+
+A prefix-only pointwise dominator would use at most two Reads on all
+nine. On prefixes these sources realize exactly the same replies as
+all the descriptors in $\mathcal K_p$; the off-path replacements cannot
+be seen. A two-call prefix tree would therefore have to hit all four
+possible leaf positions, each with its two possible labels. Its capacity
+is at most three by the proof of Theorem 13.8, a contradiction. Hence
+off-path correlations can improve selected actual runs. Theorem 14.1
+compares them with projected runs, which discard these correlations,
+and does not claim this false pointwise dominance. $\square$
+
+**Proposition 14.3 (a whole-strategy call/letter tradeoff).** For every
+admissible length-six target, the smallest worst total submitted letters
+among all native encoders using at most three Reads is exactly $14$.
+There is also an encoder with worst resource vector
+
+$$
+ (\max T,\max A,\max Q)=(4,12,6),
+\tag{AAR.84}
+$$
+
+whereas a three-call encoder attains $(3,14,6)$. These are complete
+strategies for the full source family. In particular, the call and peak
+optima do not specify a total-resource optimum.
+
+Proof. By Theorem 14.1, any three-call encoder has a prefix search tree
+with no larger worst letter total and height at most three. If its root
+key is $i$, the two remaining subtrees have height at most two and thus
+at most three keys each. With six keys, $i$ must be $3$ or $4$.
+If $i=3$, the right subtree on $4,5,6$ must have root $5$ and children
+$4,6$. Its key-six run submits lengths $3,5,6$, totaling $14$.
+If $i=4$, the subtree on $5,6$ queries both on one attained run,
+totaling $4+5+6=15$. Therefore every such whole native strategy has
+worst letter total at least $14$, including competitors that use
+nonprefix or deeper words.
+
+For attainment at three calls, choose root key $3$, with lower subtree
+root $1$ and its upper child $2$, and upper subtree root $5$ with
+children $4,6$. For four calls, choose root $5$, lower subtree root $3$
+with lower subtree $1$ followed upward by $2$ and upper child $4$,
+and upper child $6$ at the root. At a key $i$, submit $p_i$; terminate
+on either leaf label, descend left on absent and right on branch, and
+terminate with $B$ after branch at key $6$. The actual runs are:
+
+| First-leaf position, or terminal branch | Three-call strategy: submitted lengths | Four-call strategy: submitted lengths |
+| --- | --- | --- |
+| $1$ | $3,1$ | $5,3,1$ |
+| $2$ | $3,1,2$ | $5,3,1,2$ |
+| $3$ | $3$ | $5,3$ |
+| $4$ | $3,5,4$ | $5,3,4$ |
+| $5$ | $3,5$ | $5$ |
+| $6$ or $B$ | $3,5,6$ | $5,6$ |
+
+The first strategy has maximal sum $14$ and maximal call count three.
+The second has maximal sum $12$ on position four and maximal call
+count four on position two. Both have peak six. Every row has actual
+witnesses in (AAR.79), and every source has one of these descriptors,
+so these maxima are exact for the full strategies. The maxima need
+not occur on the same source. This proves the stated tradeoff without
+asserting a complete Pareto frontier or minimizing installation,
+workspace, arithmetic, clearing or physical latency. $\square$
+
+## 15. Acquired boundary meaning, suppliers and recovery limits
+
+**Proposition 15.1 (comparison with paid ray and full-source capture).**
+For the single target of Definition 13.1, the exact initial call and
+peak prices are (AAR.80)–(AAR.81). The sufficient acquisition bounds in
+Proposition 11.8 and Theorem 12.9 retain their stated contracts:
+
+| Acquired object and contract | Sufficient initial Reads | Peak submitted length |
+| --- | ---: | ---: |
+| Single-target code, promised stationary source, Theorem 13.4 | $h(n)$ | $n$ |
+| Fixed public ray table with the two equal-alpha guards of Proposition 11.8 | $|Q|(D+2)+2$ | $D+1$ |
+| Full initial right subtree with the two guards of Theorem 12.9 | $2^{D+1}+1$ | $D+1$ |
+
+For a single right-ending target Corollary 11.6 requires one ray; for a
+left-ending target it requires two. This is a count of retained ray
+coordinates under that interface, not a Read-count lower bound.
+
+Proof. The first line is already attained. The other two lines are the
+respective supplied bounds, with their guards included. For a
+right-ending target the required set $B(\{p\})$ is just $\{pR\}$.
+For $p=aL$ it is $\{pR,aR\}$, whose two cylinders are disjoint;
+Corollary 11.6 gives two. The ray construction finds actual leaves by
+successive prefixes and acquires their scores. The full-source
+construction visits the actual right-subtree nodes. They obtain richer
+objects than the task requires and have their separate capture
+validation costs. Neither is silently reinterpreted as an optimal
+single-target code acquisition.
+
+If one additionally wants the equal-alpha capture test for the prefix
+scheme, an actual $L$ Read before its body and another after it can be
+used. Conditional on both returning alpha, the supplied rigidity law
+excludes intervening updates and validates the one source. A successful
+such attempt uses at most $h(n)+2$ Reads and $nh(n)+2$ letters, with peak
+$n$. Failed attempts and retries remain paid, and this conditional
+statement promises neither a bounded number of retries nor continued
+membership of a source in $\mathcal F_D$ after it has advanced. The two
+extra guard calls belong to this added capture contract, not to the
+promised-stationarity minimum of Definition 13.1. $\square$
+
+**Mathematical citation 15.2 (exact supplier correspondence and the native
+gap).** The following are the sources and limits of the argument.
+
+| Published supplier | Exact use and nontransfer boundary |
+| --- | --- |
+| This volume, Definition 11.1, Proposition 11.8 and Open problem 11.12 | The root/height family is identical. The fixed-ray capture bounds are sufficient acquisition bounds, not the arbitrary-code call optimum. The declared single target and supplied count specialize the recovery task without changing its source domain. |
+| This volume, Theorems 12.3–12.7 and 12.9 | Reuse the exact predictive factor, its guarded future decoder, its boundary factorization and the arbitrary-code minimum. The sufficient full-source capture is not minimized there. The acquisition proof is not a new generic behavior quotient or a repeat of its joint code count. |
+| [Sparse Literal History Transport, §§35–38 and 43](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#35-达到切点上的任意地址未来任务) | Reuse the first-leaf future semantics, all-count passive decoding and actual-label evidence argument. Theorem 36.1 starts with a target probe; Theorem 37.2 gives a general four-way logarithmic lower bound and leaves exact minimax open. Lemma 43.2 and Theorem 43.5 concern evidence and terminal-record range. Lemma 13.5 checks the needed source modifications inside the bounded family; terminal-record cardinality alone does not give (AAR.80). |
+| [Concurrent Native Cut Acquisition, §§17–19](RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md#17-executing-an-ordered-cover-within-its-budget) | Reuse ordinary successful-search capacity $2^h-1$ and actual acquisition of the equality label. Its protected invocation-row recovery and later capture differ from this passive future-value task. Lemma 18.1 pads beyond all submitted addresses; those sources need not lie in $\mathcal F_D$. The bounded witness classification (AAR.79) is needed before the same capacity applies here. The comb formula in Corollary 19.2 alone does not discharge that obligation. |
+| [Literal Query Frontier, §§3–5](RECURSIVE_RELATIONAL_OBSERVATION_LITERAL_QUERY_FRONTIER.md#5-the-peak-projection-and-shortest-pair-separators), and [Acquired Orbit Resource Frontier, §§4–6](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md#6-a-signed-guard-sensitive-family-of-entire-rows) | Finite decision trees, same-history resource vectors and shortest-pair separators are existing methods. Their acquired entries, hidden clock slots or atomic orbit rows have different feasible query partitions. Their generic finite minimization is not a structural solution of (AAR.75); the new input is the native bounded all-word classification and its safe projection. |
+| [Atomic Generation Acquisition, §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) | Its adaptive and fixed passive threshold prices have the same numerical forms in (AA.40)–(AA.41). The objects are phase/tail candidates with an actual root archive and a different passive test interface. The constant-composition presentation of its replies does not identify the whole source family or unrestricted literal tests in (AAR.73). Numerical agreement is not an operation-preserving reduction. |
+| [NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean), `original_present_transport`, `original_prefix_locality` | The first declaration transports only a present subtree, here the actual first leaf. The second gives finite-depth dependence of future replies. Neither is a native acquisition lower bound or permission to use an unobserved boundary. The ordinary argument supplies the necessary bounded witnesses and their actual replies. |
+| [NativeLiteralPathConstraints](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeLiteralPathConstraints.lean), `compile_exact`, and [NativeIndependentExecution](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.lean), `native_history_correspondence`, `effective_native_correspondence` | These supply exact literal constraints and same-source execution correspondences, including absence and all four continuations. A run's source, control and chronology are joint inputs. They do not prove a Read optimum, and no new compilation or kernel-verification claim is attached to their source correspondence here. |
+
+The focused ordinary addition is the bounded all-native-address lower
+bound matched by acquisition, its exact peak price, and the valid
+resource normalization with its pointwise obstruction. These are
+`repo-derived` results. The capacity recurrence and decision-tree
+principles are reused. Their value for the recovery programme is to
+price obtaining an initial sufficient spatial distinction, not merely
+to name that distinction once available.
+
+**Mathematical citation 15.3 (primary search literature and correspondence
+limits).** Three relevant primary sources place the search methods at
+their proper scope.
+
+[Robert D. Nowak, *The Geometry of Generalized Binary Search*,
+§§I–II, Definition 1 and Lemma 1](https://arxiv.org/html/0910.4397v5)
+uses a finite class of distinct binary-valued hypotheses on a query
+space, with one fixed unknown hypothesis. Its noiseless decision-tree
+view and query-space partition by response vectors correspond to a
+stationary source and its literal reply functions. Its geometric and
+coherence assumptions support near-optimal logarithmic bounds for a
+greedy splitting procedure. Here tests have four replies, the target
+is a future-behavior class rather than source identification, and no
+such coherence hypothesis is imposed. Neither the binary information
+bound nor its noisy-query results yield the exact constant in (AAR.80).
+The native proof identifies why the two label replies terminate a hit
+rather than supplying four arbitrary continuing subdivisions.
+
+[Ferdinando Cicalese, Eduardo Laber and Aline Medeiros Saettler,
+*Diagnosis determination: decision trees optimizing simultaneously
+worst and expected testing cost*, §1's DFEP definition and decision-tree
+costs, §2's different-class pairs](https://proceedings.mlr.press/v32/cicalese14.pdf)
+provide a closer class-identification model. The correspondences are
+$S=\mathcal F_D$, classes equal to the trajectories at the declared $p$,
+and tests $w\mapsto\operatorname{readout}(w,t)$ with four outcomes.
+For a finite test presentation one can keep words through depth $D+1$;
+all deeper words are constant absent on initial sources and provide no
+class distinction. These finite tests separate distinct trees. Unit
+test costs give the Read objective; after removing the public constant
+root test, costs $|w|$ give the separate letter objective with positive
+costs. The paper also supplies a distribution and optimizes expected
+cost, and its algorithm gives logarithmic approximation guarantees.
+No distribution is supplied here and the objective is an exact worst
+count. Its general framework explains why objects in one target class
+may be merged, but does not provide the bounded native pair geometry
+or its exact acquisition cost. In particular it does not identify the
+minimum retained alphabet with the optimal test depth.
+
+[R. Bruno, R. De Prisco, A. De Santis and U. Vaccaro,
+*Bounds and Algorithms for Alphabetic Codes and Binary Search Trees*,
+§§I–II](https://arxiv.org/html/2407.16443v1)
+distinguish binary-result alphabetic searches from ternary comparisons
+in binary search trees. Their internal nodes represent successful
+searches at ordered keys, and external leaves represent gaps; the
+objective uses probabilities of successful and unsuccessful searches
+to minimize average cost. Our prefix test has the corresponding
+less/equal/greater geometry, with equality further returning its
+necessary alpha/beta label and only the final above-all-keys gap
+attained. This is the ordinary search-tree structure used in
+(AAR.78). No probability distribution, entropy-rate claim or
+average-cost bound is transferred. Submitted word lengths are the
+actual costs of native operands; Proposition 14.3 proves its particular
+worst-cost tradeoff directly.
+
+These inspected correspondences establish methodological reuse and
+its limits. They do not assert worldwide originality, a new general
+search capacity theorem, or an efficient algorithm for optimizing all
+other resource coordinates.
+
+**Proposition 15.4 (what is mutually recoverable, and what remains a
+different task).** The genuinely acquired statistic
+$\Gamma_p(\partial_p(t))$ and the complete supplied-count trajectory
+at $p$ determine one another on their attained images. A sufficient
+acquired boundary table or the acquired full source determines this
+statistic. The converse implications to a full source, a full boundary,
+an unknown lag or actual observation receipts do not follow.
+
+Proof. The mutual recovery is Theorems 12.3–12.4: the first branch
+count and alpha-stage flag recover the statistic, and (AAR.59) gives
+all replies. Proposition 13.3 exhibits different actual source trees
+with the same trajectory. Counterexample 11.9 gives the separate
+hidden-equality obstruction even with sufficient boundary samples.
+Every target here is branch by the supplied bound $s(p)\le2D$, so its
+reply cannot recover how far the authentic count has advanced beyond
+saturation. Before a new count or source observation is supplied, a
+passive program has identical input at two different later lags.
+Finally, calculating (AAR.74) performs no $\operatorname{Read}(p)$
+event on that later version. An actual receipt requires a separately
+paid observation; a common-version collection requires its own
+capture justification. $\square$
+
+Thus space enters as an actually probed original-root boundary,
+memory as a sufficient retained factor of that boundary, and time as
+the separately supplied count acting through the guarded decoder.
+The exact cost here is for acquiring the first factor on the precise
+stationary family. Multiple declared targets can share queries and
+joint source constraints; an unknown later menu changes which
+information must survive; an unknown count requires a new acquisition
+problem; complete rows retain equality information absent from a
+literal reply. Their general acquisition optima, the full resource
+frontier, and the broader mutual-recovery programme are not settled
+by the single-target price. All results in §§13–15 are ordinary
+mathematical arguments, with no new kernel certification or physical
+time law.
+
+## 追加锚（本行以下为增补区）
