@@ -21,13 +21,13 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
                 "Section V uses the vector sqrt(a)|00> + sqrt(1 - a)|11>. Alice is the first qubit and Bob the second. Its only nonzero coordinates for 0 < a < 1 are sqrt(a) at (0, 0) and sqrt(1 - a) at (1, 1), viewed as complex numbers. The definition is given for every real a using Real.sqrt.",
                 "psi", DescribeRole.Definition),
             Node("initial", "The initial two-qubit operator", InitialFormula(),
-                "The initial operator is the outer product |psi(a)><psi(a)|, expressed by Matrix.vecMulVec with the pointwise complex conjugate Star.star of the vector. For 0 <= a <= 1 this is a rank-one density matrix.",
+                "The initial operator is D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity applied to psi(a), the outer product |psi(a)><psi(a)| with pointwise complex conjugation. For 0 <= a <= 1 this is a rank-one density matrix.",
                 "initial", DescribeRole.Definition),
             Node("non-unital", "Failure to preserve the identity", NonUnitalFormula(),
                 "The Kraus family is non-unital when the sum of K_k K_k adjoint differs from the identity. Thus its action on the identity does not return the identity.",
                 "NonUnital", DescribeRole.Definition),
             Node("out", "Sending Bob's qubit through the channel", OutFormula(),
-                "Bob's channel acts on the second tensor factor. The output is the sum of conjugations of the initial operator by the matrices I tensor K_k, with Matrix.kronecker denoting the tensor product of matrices.",
+                "Bob's channel acts on the second tensor factor. D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus is applied to two copies of the family k maps to I tensor K_k and then to the initial operator. Its action is the sum of conjugations by that family, with Matrix.kronecker denoting the tensor product of matrices.",
                 "out", DescribeRole.Definition),
             Node("useful-uqt", "Usefulness for universal quantum teleportation", UsefulUQTFormula(),
                 "There are local unitaries U and V and a real t > 1/3 for which the conjugated operator has correlation matrix -t I, with zero off-diagonal entries. The correlation matrix is D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.corr, whose entries are the real parts of tr(rho (sigma_i tensor sigma_j)). For two-qubit states this is the source's Section II.C criterion |t11| = |t22| = |t33| > 1/3 in the canonical form of Section II.B, Eq. (3), with lambda_k = -1. The displayed definition permits any complex two-qubit operator rho.",
@@ -135,7 +135,7 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
         var a = F.Id("a");
         var vector = Local("psi", a);
         return All("a", Real(), Equal(Local("initial", a),
-            QCall("Matrix", "vecMulVec", vector, QCall("Star", "star", vector))));
+            QCall("D5.S3.Quantum.PureState.PureStateHandshake", "rankOneDensity", vector)));
     }
 
     private static Formula NonUnitalFormula()
@@ -154,8 +154,13 @@ internal sealed class UniversalTeleportationCriticalConcurrenceDocument : IScrib
         var a = F.Id("a");
         var k = F.Id("K");
         var action = Kron(Typed(D(1), QubitOperators()), At(k, F.Id("k")));
+        var family = Parenthesized(Seq(LambdaLower, Sp, Typed(F.Id("k"), Fin(m)),
+            Sp, Mapsto, Sp, action));
+        var supplier = Seq(Qualified("D5", "S3", "Quantum", "Foundation", "FiniteKrausChannel",
+            "PhyslibLeaf", "MatrixMap"), Dot, Operatorname, Grp(F.Id("of")),
+            Underscore, Grp(F.Id("kraus")));
         return All("m", Natural(), All("a", Real(), All("K", KrausFamily(m), Equal(Local("out", a, k),
-            SumOver("k", Fin(m), Conjugate(action, Local("initial", a)))))));
+            new Formula.Apply(supplier, [family, family, Local("initial", a)])))));
     }
 
     private static Formula UsefulUQTFormula()
