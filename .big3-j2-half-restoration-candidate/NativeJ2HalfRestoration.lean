@@ -80,7 +80,9 @@ private theorem actual_half_cycle_model {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
         p.IsCycle ∧
         (∀ x y, (halfGraph m side).Adj x y → p.toSubgraph.Adj x y) ∧
         (∀ x, x ∈ p.support ↔ F2Domain m x) ∧
-        ∀ q : Fin 3 × Bool, markedEdge m q ∈ p.edges := by
+        (∀ q : Fin 3 × Bool, markedEdge m q ∈ p.edges) ∧
+        ∀ e, e ∈ p.edges ↔
+          (F2NativeEdge m e ∧ ¬ F2DeletedEdge m e) ∨ F2Seam m e := by
   obtain ⟨base, w, hw, hinv, _, hmarked⟩ :=
     native_j2_hamiltonian_cycle_with_marked_edges hm
   let f : domainGraph (F2Domain m) →g
@@ -91,7 +93,7 @@ private theorem actual_half_cycle_model {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
   let p := w.map f
   have hedges : p.edges = w.edges.map (Sym2.map Subtype.val) := by
     exact SimpleGraph.Walk.edges_map f w
-  refine ⟨base.val, p, hw.isCycle.map Subtype.val_injective, ?_, ?_, ?_⟩
+  refine ⟨base.val, p, hw.isCycle.map Subtype.val_injective, ?_, ?_, ?_, ?_⟩
   · intro x y hxy
     apply SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges.mpr
     rw [hedges]
@@ -108,17 +110,20 @@ private theorem actual_half_cycle_model {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
   · intro q
     rw [hedges]
     exact hmarked q
+  · intro e
+    rw [hedges]
+    exact hinv e
 
 private theorem actual_half_degree {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
     ∀ x, ((halfGraph m side).neighborSet x).ncard ≤ 2 := by
-  obtain ⟨a, p, hp, hsub, _, _⟩ := actual_half_cycle_model hm side
+  obtain ⟨a, p, hp, hsub, _, _, _⟩ := actual_half_cycle_model hm side
   exact below_cycle_degree p hp hsub
 
 private theorem actual_half_leaf {m : ℕ} (hm : 5 ≤ m) (side : Bool)
     (i : Fin 3) (left : Bool) :
     ((halfGraph m side).neighborSet (port m (i, side, left))).Subsingleton := by
   classical
-  obtain ⟨a, p, hp, hsub, _, hmarked⟩ := actual_half_cycle_model hm side
+  obtain ⟨a, p, hp, hsub, _, hmarked, _⟩ := actual_half_cycle_model hm side
   let y := port m (i, side, !left)
   have he : s(port m (i, side, left), y) = markedEdge m (i, side) := by
     cases left
@@ -214,7 +219,8 @@ theorem native_j2_half_component_partition {m : ℕ} (hm : 5 ≤ m) (side : Bool
       (∀ i x y, (halfGraph m side).Adj x y ∧
         (halfGraph m side).Reachable (port m (halfStart side i)) x ↔
           s(x, y) ∈ (paths i).edges) ∧
-      ∀ x, F2Domain m x ↔ ∃! i, x ∈ (paths i).support := by
+      (∀ x, F2Domain m x ↔ ∃! i, x ∈ (paths i).support) ∧
+      ∀ e, e ∈ (List.ofFn fun i => (paths i).edges).flatten ↔ HalfEdge m side e := by
   classical
   obtain ⟨hpair, hbridge⟩ := half_reach_data hm side
   have hsig : ∀ i j : Fin 3,
@@ -249,7 +255,7 @@ theorem native_j2_half_component_partition {m : ℕ} (hm : 5 ≤ m) (side : Bool
     exact ⟨w, hp', hv, he⟩
   choose paths hpath hvertices hedges using hpaths
   obtain ⟨six, _, hsixvertices, _, hsixdomain⟩ := native_j2_six_component_partition hm
-  obtain ⟨a, p, hp, hsub, hdomain, _⟩ := actual_half_cycle_model hm side
+  obtain ⟨a, p, hp, hsub, hdomain, _, hinventory⟩ := actual_half_cycle_model hm side
   have hdomadj (x y : Configuration m) (hxy : (halfGraph m side).Adj x y) :
       F2Domain m y :=
     (hdomain y).mp (p.snd_mem_support_of_mem_edges
@@ -261,25 +267,45 @@ theorem native_j2_half_component_partition {m : ℕ} (hm : 5 ≤ m) (side : Bool
     induction w with
     | nil => exact fun h => h
     | @cons a b c h w ih => exact fun _ => ih (hdomadj a b h)
-  refine ⟨paths, hpath, hvertices, hedges, ?_⟩
-  intro x
+  have hcover : ∀ x, F2Domain m x ↔ ∃! i, x ∈ (paths i).support := by
+    intro x
+    constructor
+    · intro hx
+      obtain ⟨j, hxj, _⟩ := (hsixdomain x).mp hx
+      obtain ⟨i, hi⟩ := hbridge j
+      have hix := (hvertices i x).mpr
+        (hi.trans (((hsixvertices j x).mp hxj).mono (surviving_le_half m side)))
+      refine ⟨i, hix, ?_⟩
+      intro j hj
+      have hr := ((hvertices i x).mp hix).trans ((hvertices j x).mp hj).symm
+      have ha := actual_half_port_leaf hm side (halfStart side j) (hside j).1
+      rcases leaf_in_path_is_endpoint (paths i) (hpath i)
+          ((hvertices i _).mpr hr) ha with he | he
+      · exact hsig i j (Or.inl (native_j2_port_injective hm he))
+      · exact hsig i j (Or.inr (native_j2_port_injective hm he))
+    · rintro ⟨i, hi, _⟩
+      exact hpreserve _ x (native_j2_port_domain hm (halfStart side i))
+        ((hvertices i x).mp hi)
+
+  refine ⟨paths, hpath, hvertices, hedges, hcover, ?_⟩
+  intro e
+  refine Sym2.inductionOn e ?_
+  intro x y
   constructor
-  · intro hx
-    obtain ⟨j, hxj, _⟩ := (hsixdomain x).mp hx
-    obtain ⟨i, hi⟩ := hbridge j
-    have hix := (hvertices i x).mpr
-      (hi.trans (((hsixvertices j x).mp hxj).mono (surviving_le_half m side)))
-    refine ⟨i, hix, ?_⟩
-    intro j hj
-    have hr := ((hvertices i x).mp hix).trans ((hvertices j x).mp hj).symm
-    have ha := actual_half_port_leaf hm side (halfStart side j) (hside j).1
-    rcases leaf_in_path_is_endpoint (paths i) (hpath i)
-        ((hvertices i _).mpr hr) ha with he | he
-    · exact hsig i j (Or.inl (native_j2_port_injective hm he))
-    · exact hsig i j (Or.inr (native_j2_port_injective hm he))
-  · rintro ⟨i, hi, _⟩
-    exact hpreserve _ x (native_j2_port_domain hm (halfStart side i))
-      ((hvertices i x).mp hi)
+  · intro he
+    obtain ⟨es, hes, he⟩ := List.mem_flatten.mp he
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hes
+    exact ((half_adj_iff m side x y).mp ((hedges i x y).mpr he).1).1
+  · intro he
+    have horiginal : s(x, y) ∈ p.edges := (hinventory _).mpr he.1
+    have hsource := SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges.mpr horiginal
+    have hxy : (halfGraph m side).Adj x y :=
+      (half_adj_iff m side x y).mpr ⟨he, hsource.adj_sub.ne⟩
+    have hx : F2Domain m x :=
+      (hdomain x).mp (p.fst_mem_support_of_mem_edges horiginal)
+    obtain ⟨i, hi, _⟩ := (hcover x).mp hx
+    exact List.mem_flatten.mpr ⟨(paths i).edges, List.mem_ofFn.mpr ⟨i, rfl⟩,
+      (hedges i x y).mp ⟨hxy, (hvertices i x).mp hi⟩⟩
 
 #print axioms native_j2_half_component_partition
 

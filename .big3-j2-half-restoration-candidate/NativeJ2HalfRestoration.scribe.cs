@@ -27,7 +27,7 @@ internal sealed class NativeJ2HalfRestorationDocument : IScribeDocumentDefinitio
                 H("Both Actual Native Three-Component Partitions Exhaust F2 Exactly Once"),
                 StatementSource.FromAuthor(ComponentFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every m at least five and either side, three actual simple paths connect the independently specified starting and finishing ports. Each path exhausts its complete reachable component and contains every actual edge incident to it. A configuration belongs to F2Domain(m) exactly when it belongs to the support of a unique path.")),
+                    "For every m at least five and either side, three actual simple paths connect the independently specified starting and finishing ports. Each path exhausts its complete reachable component and contains every actual edge incident to it. A configuration belongs to F2Domain(m) exactly when it belongs to the support of a unique path. The flattened edge lists contain an edge exactly when it belongs to the independent HalfEdge(m,side) inventory; therefore they are the retained inventory of any original native F2 Hamilton witness with that same exact full inventory.")),
                     Paragraph(Text(
                     "The six-cut partition supplies six actual component walks. Actual marked-edge injectivity proves that each of the opposite three marked edges is restored, while the selected three cuts remain missing. Concatenating those earned reachability bridges gives the independent pairs R0 to R2, L0 to L1 and R1 to L2 for side false, and bar R0 to bar R1, bar L1 to bar R2 and bar L2 to bar L0 for side true.")),
                     Paragraph(Text(
@@ -104,8 +104,11 @@ internal sealed class NativeJ2HalfRestorationDocument : IScribeDocumentDefinitio
         Formula cover = All("x", Call("Configuration", m), Iff(Call("F2Domain", m, x), unique));
         Formula family = Call("DependentWalkFamily", Call("Fin", D(3)), graph,
             Call("HalfStartPortFamily", side), Call("HalfFinishPortFamily", side), m);
+        Formula e = F.Id("e");
+        Formula inventory = All("e", Call("Sym2", Call("Configuration", m)),
+            Iff(Call("Member", e, Call("FlattenWalkEdges", paths)), Call("HalfEdge", m, side, e)));
         Formula body = Some("paths", family,
-            And(All("i", Call("Fin", D(3)), Call("IsPath", Path(i))), And(vertices, And(edges, cover))));
+            And(All("i", Call("Fin", D(3)), Call("IsPath", Path(i))), And(vertices, And(edges, And(cover, inventory)))));
         return Disp(All("m", Call("Nat"), Implies(Le(D(5), m), All("side", Call("Bool"), body))));
     }
 
