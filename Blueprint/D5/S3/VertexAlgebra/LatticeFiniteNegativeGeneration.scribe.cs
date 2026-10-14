@@ -29,6 +29,15 @@ internal sealed class LatticeFiniteNegativeGenerationDocument : IScribeDocumentD
                 + "gives a statewise bound and hence a vertex operator. The charged "
                 + "fields F_beta are the actual exponential and polynomial-translation "
                 + "fields of Actual Lattice Creation Coefficients.")),
+            Paragraph(Text("The consumed actual_negative_single theorem is publicly addressable at its original owner for the charged adjoint closure. Its original nonnegative bilinear premise, telescope and proof remain unchanged. This source visibility repair carries zero new mathematical novelty.")),
+            Describe.Lean(
+                DescribeId.Create("latticefinitenegativegeneration-actual-negative-single"),
+                DeclarationHandle.Create(Prefix + "actual_negative_single"),
+                H("Original actual-field ground-state coefficient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original actualField coefficient on a charged ground state is reused directly, with its declared bilinear premise preserved."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticefinitenegativegeneration-bilinear-symmetric"),
                 DeclarationHandle.Create(Prefix + "bilinear_symmetric"),

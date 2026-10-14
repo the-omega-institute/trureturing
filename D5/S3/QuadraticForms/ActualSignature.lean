@@ -52,6 +52,43 @@ def Realizes : (n : ℕ) → Mat ℝ n → ℤ → Prop
 abbrev signature {V : Type*} [AddCommGroup V] [Module ℝ V] (Q : QuadraticForm ℝ V) : ℤ :=
   (sigPos Q : ℤ) - (sigNeg Q : ℤ)
 
+theorem signature_prod {V W : Type} [AddCommGroup V] [AddCommGroup W]
+    [Module ℝ V] [Module ℝ W] [FiniteDimensional ℝ V] [FiniteDimensional ℝ W]
+    (Q : QuadraticForm ℝ V) (R : QuadraticForm ℝ W) :
+    signature (Q.prod R) = signature Q + signature R := by
+  classical
+  obtain ⟨v,hv⟩ := Q.equivalent_weightedSumSquares
+  obtain ⟨w,hw⟩ := R.equivalent_weightedSumSquares
+  let e := LinearEquiv.sumArrowLequivProdArrow (Fin (Module.finrank ℝ V))
+    (Fin (Module.finrank ℝ W)) ℝ ℝ
+  have he : QuadraticMap.Equivalent (weightedSumSquares ℝ (Sum.elim v w))
+      ((weightedSumSquares ℝ v).prod (weightedSumSquares ℝ w)) := by
+    refine ⟨{ e with map_app' := ?_ }⟩
+    intro x
+    simp [e, QuadraticMap.prod_apply, weightedSumSquares_apply, Fintype.sum_sum_type,
+      LinearEquiv.sumArrowLequivProdArrow]
+  have h := (hv.prod hw).trans he.symm
+  have hc (p : Fin (Module.finrank ℝ V) ⊕ Fin (Module.finrank ℝ W) → Prop) :
+      {i | p i}.ncard = {i | p (.inl i)}.ncard + {i | p (.inr i)}.ncard := by
+    change Nat.card {i // p i} = Nat.card {i // p (.inl i)} + Nat.card {i // p (.inr i)}
+    rw [Nat.card_congr (Equiv.subtypeSum (p := p)), Nat.card_sum]
+  simp only [signature, h.sigPos_eq, h.sigNeg_eq, hv.sigPos_eq, hv.sigNeg_eq,
+    hw.sigPos_eq, hw.sigNeg_eq, sigPos_weightedSumSquares, sigNeg_weightedSumSquares]
+  rw [hc, hc]
+  simp only [Sum.elim_inl, Sum.elim_inr, Nat.cast_add]
+  ring
+
+theorem signature_hyperbolic (b : ℝ) :
+    signature ((2*b) • QuadraticMap.linMulLin
+      (LinearMap.fst ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ)) = 0 := by
+  let Q := (2*b) • QuadraticMap.linMulLin (LinearMap.fst ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ)
+  have he : QuadraticMap.Equivalent Q (-Q) := by
+    refine ⟨{ LinearEquiv.prodCongr (LinearEquiv.neg ℝ) (LinearEquiv.refl ℝ ℝ) with map_app' := ?_ }⟩
+    intro x
+    simp [Q]
+  change (sigPos Q : ℤ) - (sigNeg Q : ℤ) = 0
+  rw [he.sigPos_eq, sigPos_neg, sub_self]
+
 /-- The recursive polynomial pivot relation is exactly the actual matrix signature. -/
 theorem realizes_iff_signature (n : ℕ) (A : Mat ℝ n)
     (hs : ∀ r s, A r s = A s r) (z : ℤ) :
@@ -257,32 +294,6 @@ theorem realizes_iff_signature (n : ℕ) (A : Mat ℝ n)
       have h := he.trans hp
       rwa [hr] at h))
 
-  have signatureProd := (fun {V W : Type} [AddCommGroup V] [AddCommGroup W]
-      [Module ℝ V] [Module ℝ W] [FiniteDimensional ℝ V] [FiniteDimensional ℝ W]
-      (Q : QuadraticForm ℝ V) (R : QuadraticForm ℝ W) =>
-    (show signature (Q.prod R) = signature Q + signature R from by
-      classical
-      obtain ⟨v,hv⟩ := Q.equivalent_weightedSumSquares
-      obtain ⟨w,hw⟩ := R.equivalent_weightedSumSquares
-      let e := LinearEquiv.sumArrowLequivProdArrow (Fin (Module.finrank ℝ V))
-        (Fin (Module.finrank ℝ W)) ℝ ℝ
-      have he : QuadraticMap.Equivalent (weightedSumSquares ℝ (Sum.elim v w))
-          ((weightedSumSquares ℝ v).prod (weightedSumSquares ℝ w)) := by
-        refine ⟨{ e with map_app' := ?_ }⟩
-        intro x
-        simp [e, QuadraticMap.prod_apply, weightedSumSquares_apply, Fintype.sum_sum_type,
-          LinearEquiv.sumArrowLequivProdArrow]
-      have h := (hv.prod hw).trans he.symm
-      have hc (p : Fin (Module.finrank ℝ V) ⊕ Fin (Module.finrank ℝ W) → Prop) :
-          {i | p i}.ncard = {i | p (.inl i)}.ncard + {i | p (.inr i)}.ncard := by
-        change Nat.card {i // p i} = Nat.card {i // p (.inl i)} + Nat.card {i // p (.inr i)}
-        rw [Nat.card_congr (Equiv.subtypeSum (p := p)), Nat.card_sum]
-      simp only [signature, h.sigPos_eq, h.sigNeg_eq, hv.sigPos_eq, hv.sigNeg_eq,
-        hw.sigPos_eq, hw.sigNeg_eq, sigPos_weightedSumSquares, sigNeg_weightedSumSquares]
-      rw [hc, hc]
-      simp only [Sum.elim_inl, Sum.elim_inr, Nat.cast_add]
-      ring))
-
   have signatureScalar := (fun (a : ℝ) =>
     (show signature (a • QuadraticMap.linMulLin (LinearMap.id : ℝ →ₗ[ℝ] ℝ) LinearMap.id) =
         (if 0 < a then (1 : ℤ) else if a < 0 then -1 else 0) from by
@@ -300,16 +311,6 @@ theorem realizes_iff_signature (n : ℕ) (A : Mat ℝ n)
         simp [hp,hn]
       · by_cases hn : a < 0 <;> simp [hp,hn]))
 
-  have signatureHyperbolic := (fun (b : ℝ) =>
-    (show signature ((2*b) • QuadraticMap.linMulLin
-        (LinearMap.fst ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ)) = 0 from by
-      let Q := (2*b) • QuadraticMap.linMulLin (LinearMap.fst ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ)
-      have he : QuadraticMap.Equivalent Q (-Q) := by
-        refine ⟨{ LinearEquiv.prodCongr (LinearEquiv.neg ℝ) (LinearEquiv.refl ℝ ℝ) with map_app' := ?_ }⟩
-        intro x
-        simp [Q]
-      change (sigPos Q : ℤ) - (sigNeg Q : ℤ) = 0
-      rw [he.sigPos_eq, sigPos_neg, sub_self]))
   classical
   have hz (m : ℕ) (B : Mat ℝ m) (hB : ∀ i j, B i j = 0) :
       signature B.toQuadraticForm' = 0 := by
@@ -339,7 +340,7 @@ theorem realizes_iff_signature (n : ℕ) (A : Mat ℝ n)
         (if 0 < B i i then 1 else if B i i < 0 then -1 else 0) +
           signature (residualOne B i).toQuadraticForm' := by
     have he := matrixOne B hB i hi
-    have hp := signatureProd
+    have hp := signature_prod
       (B i i • QuadraticMap.linMulLin (LinearMap.id : ℝ →ₗ[ℝ] ℝ) LinearMap.id)
       (residualOne B i).toQuadraticForm'
     have hc := signatureScalar (B i i)
@@ -353,11 +354,11 @@ theorem realizes_iff_signature (n : ℕ) (A : Mat ℝ n)
       (i j) (hd : ∀ i, B i i = 0) (hi : B i (i.succAbove j) ≠ 0) :
       signature B.toQuadraticForm' = signature (residualTwo B i j).toQuadraticForm' := by
     have he := matrixTwo B hB i j (hd i) (hd _) hi
-    have hp := signatureProd
+    have hp := signature_prod
       ((2*B i (i.succAbove j)) • QuadraticMap.linMulLin
         (LinearMap.fst ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ))
       (residualTwo B i j).toQuadraticForm'
-    have hc := signatureHyperbolic (B i (i.succAbove j))
+    have hc := signature_hyperbolic (B i (i.succAbove j))
     calc
       _ = signature (((2*B i (i.succAbove j)) • QuadraticMap.linMulLin
           (LinearMap.fst ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ)).prod

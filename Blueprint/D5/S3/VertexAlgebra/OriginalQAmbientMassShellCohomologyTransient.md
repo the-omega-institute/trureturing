@@ -1,0 +1,29 @@
+# Actual charge-energy projection
+
+## Abstract
+
+Ambient charge-energy summands of the original critical bc-BRST cohomology
+
+The state space is the original lattice matter tensor full exterior bc-Fock space over the complex numbers, with arbitrary finite superpositions. Let T=M0+G0, let beta be a lattice charge and let level be any integer. Write a=chosenH(beta)+level-1. The sector E consists of the states fixed by the original charge projection and satisfying T v=a v. The spectral statements require both Gram inverse equations H*gram=gram*H=1. They do not require a positive signature, unitarity, finite occupation, or a global choice of null frame.
+
+Use the actual tensor basis indexed by a charge, a matter occupation monomial and a finite ghost occupation set. On this basis, T is diagonal with the actual total integral energy. The projection R keeps exactly those coefficients whose charge is beta and whose total energy, regarded as a complex scalar, is a. It removes all other coefficients. This is the existing finite-support basis partition projection, applied to the charge-energy tag, rather than an assumed spectral projector. Coefficient comparison with the original charge projection and the actual diagonal T proves range(R)=E. Consequently R squared is R and R fixes every state of E.
+
+The original Q has no matrix coefficient between distinct charge-energy tags: its charge preservation and original total-energy covariance supply this exact block law. The existing partition projection theorem therefore gives R Q=Q R on the full state space. Coincident energies in different charge sectors remain separated. All projection identities hold for arbitrary finite superpositions; no homogeneous representative is assumed.
+
+If v belongs to E and v=Q w for an arbitrary ambient state w, then Q(R w)=R(Q w)=R v=v, while R w belongs to E. Thus ambient boundary membership for a state of E is equivalent to boundary membership for the actual restricted Q on E. The converse uses the literal subtype inclusion. This statement does not replace the ambient witness hypothesis by a sector witness hypothesis.
+
+For rank 26 and both Gram inverses, Q squared is zero on the actual full state space. Define its true cohomology as ker(Q) divided by the image of Q into its kernel. The restricted sector has the same kernel/image quotient construction. Inclusion of E and the actual projection R induce well-defined maps on these quotients by the existing trueCohomologyMap. Their sector composite is the identity. The ambient composite is the quotient endomorphism induced by R. The sector inclusion is injective, and its image is exactly the range of this descended idempotent. LinearEquiv.ofLeftInverse and LinearEquiv.ofEq give a literal linear equivalence from the sector quotient to that ambient summand.
+
+The full-state quotient is also explicitly identified with OriginalBrstReassembly.absoluteCohomology. Its cycles are top intersect ker(Q); its boundaries have actual full-state Q witnesses. The cycle equivalence merely inserts or removes the top-membership proof, and the boundary images are proved to correspond before applying Submodule.Quotient.equiv. The sector quotient is therefore equivalent to the corresponding submodule of this actual absolute cohomology. No claim identifies the entire ambient cohomology with a single fixed-charge, fixed-energy sector.
+
+For the finite transfer, retain both frame inverse equations, a null direction with chosenP(beta,nullDirection) nonzero, distinct x and y axes, frame(x)=nullDirection, frame(y)=adaptedPartner(beta,nullDirection), and both dual-row identities against all rows. The cutoff remains N=2*level.toNat+2 for every integer level, including negative and zero values. The accepted original_energy_true_quotient_transfer is composed with the actual ambient-summand equivalence; its invariant-sector nilpotence, finite inverse, chain, retract and homotopy proofs are reused without a new unrestricted nilpotence claim.
+
+Off shell, a is nonzero. For an actual sector cycle v, the original physical Ward identity Q B0+B0 Q=T gives Q(B0 v)=a v. An explicit sector boundary preimage is R(a inverse times B0 v). Its Q image is v by commutation with R and the fixed-sector relation. Every class of the true sector quotient is therefore zero, and so is every class in its actual ambient summand. The finite-transfer equivalence carries the same conclusion to the true reduced quotient. This argument uses the original boundary operator, not a delta-only replacement.
+
+On shell, a is zero. The accepted actual transferred-differential computation Dtr(v)=a C0(P v) proves that the reduced differential on range(P) is literally zero. Its actual boundary submodule is bottom and every vector is a cycle. Submodule.quotEquivOfEqBot identifies this true reduced quotient with range(P). Composing its inverse with the original finite transfer and then the ambient-summand equivalence identifies range(P) with both the true sector Q quotient and the same actual ambient summand. Neither the zero differential nor its quotient identification is a hypothesis.
+
+The partition, quotient and finite-transfer constructions reuse their existing general suppliers; no separate novelty is claimed for those general constructions. These conclusions concern algebraic original-Q cohomology under the stated fixed-frame hypotheses. A globally selected nonzero-charge frame, the exceptional zero-charge dimensions, positive-metric no-ghost conclusions, and the further moonshine, CFT, anomaly, fusion, string-theory and AdS/CFT bridges are not supplied by this result.
+
+## References
+
+- Dependency: [D5/S3/VertexAlgebra/OriginalQTransferredMassShellTransient](OriginalQTransferredMassShellTransient.md)

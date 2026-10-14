@@ -1,5 +1,7 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Trureturing.Truth;
 
@@ -34,9 +36,20 @@ internal static class CanonicalStatementWriter
 
     internal static string DeclarationStatementId(RepoPath path, LeanDeclaration declaration) =>
         declaration.PrecomputedStatementId
-        ?? FrozenContentHash.Compute(
-            FrozenHashDomains.Statement,
-            WriteDeclaration(path, declaration).AsSpan());
+        ?? DeclarationStatementId(path, declaration, new StringReader(declaration.LoadTypeRepresentation()));
+
+    internal static string DeclarationStatementId(
+        RepoPath path,
+        LeanDeclaration declaration,
+        TextReader statementMaterial)
+    {
+        using var algorithm = SHA256.Create();
+        using var destination = new CryptoStream(Stream.Null, algorithm, CryptoStreamMode.Write, leaveOpen: true);
+        destination.Write(Encoding.UTF8.GetBytes(FrozenHashDomains.Statement));
+        WriteDeclaration(destination, path, declaration, statementMaterial);
+        destination.FlushFinalBlock();
+        return "sha256:" + Convert.ToHexStringLower(algorithm.Hash!);
+    }
 
     internal static ImmutableArray<byte> WriteModule(
         RepoPath path,
@@ -57,16 +70,41 @@ internal static class CanonicalStatementWriter
         return StructuredCanonicalWriter.WriteJson(material);
     }
 
-    private static ImmutableArray<byte> WriteDeclaration(RepoPath path, LeanDeclaration declaration)
+    internal static void WriteDeclaration(
+        Stream destination,
+        RepoPath path,
+        LeanDeclaration declaration,
+        TextReader statementMaterial)
     {
-        var material = JsonSerializer.SerializeToElement(new
+        destination.Write("{\"declaration_name_key\": "u8);
+        WriteString(destination, new StringReader(declaration.NameKey));
+        destination.Write(", \"kind\": "u8);
+        WriteString(destination, new StringReader(declaration.Kind));
+        destination.Write(", \"module_path\": "u8);
+        WriteString(destination, new StringReader(path.Value));
+        destination.Write(", \"schema\": \"declaration-statement-v1\", \"statement_material\": "u8);
+        WriteString(destination, statementMaterial);
+        destination.Write("}\n"u8);
+    }
+
+    private static void WriteString(Stream destination, TextReader value)
+    {
+        const int chunkSize = 16384;
+        var characters = new char[chunkSize + 1];
+        var carried = 0;
+        destination.Write("\""u8);
+        while (true)
         {
-            declaration_name_key = declaration.NameKey,
-            kind = declaration.Kind,
-            module_path = path.Value,
-            schema = "declaration-statement-v1",
-            statement_material = declaration.LoadTypeRepresentation(),
-        });
-        return StructuredCanonicalWriter.WriteJson(material);
+            var read = value.Read(characters.AsSpan(carried, chunkSize));
+            var count = carried + read;
+            if (count == 0) break;
+            carried = read > 0 && char.IsHighSurrogate(characters[count - 1]) ? 1 : 0;
+            var encoded = JsonEncodedText.Encode(
+                characters.AsSpan(0, count - carried), JavaScriptEncoder.UnsafeRelaxedJsonEscaping);
+            destination.Write(encoded.EncodedUtf8Bytes);
+            if (carried > 0) characters[0] = characters[count - 1];
+            if (read == 0) break;
+        }
+        destination.Write("\""u8);
     }
 }

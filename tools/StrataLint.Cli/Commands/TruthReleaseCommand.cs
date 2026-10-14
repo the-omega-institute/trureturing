@@ -37,9 +37,8 @@ internal static class TruthReleaseCommand
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevisionProjection(identity.Revision, IsReleaseInput,
                     (path, hash) => contentHashes.Add(path, hash))));
-            var rawLeanReportBytes = ImmutableArray.CreateRange(
-                File.ReadAllBytes(options.CandidateLeanReport));
-            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
+            var report = RawLeanReportArtifact.ReadFile(
+                options.CandidateLeanReport, snapshot, out var rawLeanReportBytes);
             var preparation = TruthExportCommand.PrepareStrictHistory(
                 repository,
                 snapshot,

@@ -1,0 +1,20 @@
+import D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection
+
+set_option autoImplicit false
+
+namespace Reg.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection
+
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_factor_selection
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_factor_selection
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_nativeWord_selection
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_nativeWord_selection
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_nativeCoefficients_selection
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_nativeCoefficients_selection
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_signedEnergyFiltration_vanishing
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_signedEnergyFiltration_vanishing
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_two_slot_cancellation
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_down_normalization
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_native_empty_normalization
+#check _root_.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection.F_c0_native_two_slot_normalization
+
+end Reg.D5.S3.VertexAlgebra.LatticeBcGhostAuxiliarySelection

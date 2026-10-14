@@ -319,7 +319,7 @@ private theorem rawL_normalSum_commutator (D : LatticeData)
           (congrArg (fun c : ℂ => c*(D.G i l : ℂ)) (LatticeHalfFockBoundary.term_sum m)))
   · simp [h]
 
-private theorem inverse_trace (D : LatticeData)
+theorem inverse_trace (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hHG : H * gramComplex D = 1) :
     ∑ i : Fin D.rank, ∑ l : Fin D.rank, H i l*(D.G i l : ℂ) = (D.rank : ℂ) := by
   have row (i : Fin D.rank) : ∑ l, H i l*(D.G i l : ℂ) = 1 := by
@@ -429,7 +429,7 @@ private theorem energy_sum (D : LatticeData) (d : Index D →₀ ℕ) :
   intro x hx
   ring
 
-private theorem L_zero_X_mul (D : LatticeData)
+theorem L_zero_X_mul (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (x : Index D) (p : Oscillator D) :

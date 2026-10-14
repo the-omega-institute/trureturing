@@ -1,0 +1,25 @@
+# Original-Q finite transfer
+
+## Abstract
+
+Finite transfer of the original critical bc-BRST operator
+
+Fix the original lattice matter tensor full exterior bc-Fock carrier. Require both Gram inverse equations H*gram=gram*H=1 and both frame inverse equations inverse*frame=frame*inverse=1. Choose a null direction with chosenP(beta,nullDirection) nonzero, distinct frame axes x and y, frame(x)=nullDirection, frame(y)=adaptedPartner(beta,nullDirection), and the two dual-row identities gramPair(frame(y),frame(row))=if row=x then 1 else 0 and gramPair(frame(x),frame(row))=if row=y then 1 else 0. The original-Q cohomology statements additionally require rank 26. No signature, positivity, unitarity or finite occupation hypothesis is imposed.
+
+For every integer level, use the actual charge-beta states satisfying (M0+G0)v=(chosenH(beta)+level-1)v. This is the original invariant energy-sector submodule, not a replacement Fock model. Q, delta, S and P preserve it by their actual original source identities. Its correction C=S*(Q-delta) satisfies C^N=0 for N=2*level.toNat+2. This operator nilpotence is asserted only on this invariant submodule, not on the unrestricted Fock space.
+
+The cutoff N is always even. Apply the existing Mathlib Even.neg_pow directly to the actual original Module.End expression, and use geom_sum_mul_neg and mul_neg_geom_sum. The exact finite sum I=sum(j<N)(-C)^j satisfies I*(1+C)v=v and (1+C)*I v=v for every state in the stated sector, including arbitrary finite superpositions and negative or zero levels.
+
+Write A=Q-delta. The actual strong contraction and the original critical Q^2=0 give (1+S*A)*Q=delta*(1+S*A)+P*A and Q*(1+A*S)=(1+A*S)*delta+A*P. Define f=I*P, g=P*(1-A*(I*S)), h=I*S and Dtr=P*A*I*P. On the actual invariant energy-sector, Q*f=f*Dtr, g*Q=Dtr*g, g*f=P, Q*h+h*Q=1-f*g and Dtr^2=0. On the actual range of P, the retract identity becomes the identity map.
+
+The quotient is the actual kernel of the restricted original Q divided by the image of that same Q into its kernel. The reduced quotient is the kernel of the actual Dtr restricted to range(P), divided by its actual boundary image. The maps f and g carry cycles and boundary witnesses to cycles and boundary witnesses. The standard Submodule.mapQ construction supplies well-defined quotient maps; arbitrary quotient representatives, not assumed representability, are used in the inverse proof. The homotopy Q*h+h*Q=1-f*g proves the remaining quotient inverse law.
+
+The surviving differential is computed from the actual operators: Dtr v=(chosenH(beta)+level-1)*C0(P v). The projector has only auxiliary degrees zero and one, given by the actual epsilon occupancy. The original A raises auxiliary degree by one or two, and S preserves it. Consequently every finite-sum term with j at least one is killed by the actual final P; this gives Dtr v=P*A*P v, not a vanishing differential. The positive projected image satisfies C0*B0=P on that image and is killed by C0. Applying the original Ward identity Q*B0+B0*Q=M0+G0 then fixes the displayed coefficient and its original minus-one ghost energy shift.
+
+Here the positive projected image in the preceding paragraph means projectedQ(v), the projected original-Q image used in that calculation. The precise proved equation is C0(projectedQ(v))=0. It does not assert that C0 annihilates every element of range(P); the on-shell formula for Dtr is not such a statement.
+
+When chosenH(beta)+level-1 is zero, the displayed differential vanishes on that energy-sector. No universal off-shell vanishing or nonvanishing is claimed. The computation uses the physical original B0 and C0 indexing and does not infer positivity or a unitary no-ghost theorem.
+
+These are algebraic applications of the actual quartet, termination, Ward and pinned Mathlib results; they carry no independent novelty claim for the generic homological perturbation lemma or its geometric inverse. The finite-transfer checks are transient proof evidence, not new standalone binding declarations or theorem Describes.
+
+The zero-charge branch and existence of a suitable nonzero-charge null frame remain separate obligations. This invariant-sector quotient construction does not by itself prove an identification with ambient full cohomology for unrestricted boundary witnesses or construct a global frame-dependent transfer across all sectors. The complete moonshine, VOA, CFT, anomaly, fusion, string-theory and AdS/CFT program remains open; this application does not supply those further bridges.

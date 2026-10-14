@@ -1,0 +1,14 @@
+import D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing
+
+set_option autoImplicit false
+
+namespace Reg.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing
+
+#check _root_.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing.energyReducedInclusion_c0_pairing
+#check _root_.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing.energyTransverseDownInput
+#check _root_.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing.TransverseDownIndex
+#check _root_.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing.energyTransverseDownCombination
+#check _root_.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing.transverseDownOscillator
+#check _root_.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing.energyReducedInclusion_transverse_down_normalization
+
+end Reg.D5.S3.VertexAlgebra.OriginalQEnergyInclusionPairing
