@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/FiniteAnnotatedSymmetryDAG
    mirror-E: none(waiver:finite-annotated-symmetry-dag)
-   anchors: [D5/S0/Certificates/FiniteSymmetryDAGReplay]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMStaticGlobalReplay.accepted_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData.root
    digest: Explicit partial contexts and checked child edges permit direct leaf certificates without replaying a recursive cache. -/
 
