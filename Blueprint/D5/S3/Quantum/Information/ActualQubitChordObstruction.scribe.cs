@@ -30,6 +30,16 @@ internal sealed class ActualQubitChordObstructionDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Module + "jointObservation"), H("The joint real observation"),
                 StatementSource.FromAuthor(ObservationFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A is jointObservation(G), a real linear map from Euclidean three-space to a pair of complex signal matrices. Both components are observations through the same processor. Let K be its kernel, Q the orthogonal complement of K, and P the orthogonal projection onto Q. P is a real orthogonal projection; no complete positivity of P is asserted."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("actual-qubit-det-bloch"),
+                DeclarationHandle.Create(Module + "det_bloch"), H("The determinant in Bloch coordinates"),
+                StatementSource.FromAuthor(DetBlochFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real Euclidean three-vector r, the determinant of blochMatrix(1,r) is the complex embedding of (1 minus the squared norm of r) divided by four. The identity holds without a bound on the norm."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-qubit-pure"),
+                DeclarationHandle.Create(Module + "pure"), H("Unit Bloch vectors give idempotent matrices"),
+                StatementSource.FromAuthor(PureFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real Euclidean three-vector r of norm one, blochMatrix(1,r) squared equals blochMatrix(1,r). This is the idempotence identity for a pure qubit state."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-two-probe-chord-and-qfi"),
                 DeclarationHandle.Create(Module + "actual_two_probe_chord_and_qfi"),
                 H("The physical affine chord, endpoint overlap, and pointwise QFI"),
@@ -48,6 +58,39 @@ internal sealed class ActualQubitChordObstructionDocument : IScribeDocumentDefin
 
     private static Formula Seq(params Formula[] xs) =>
         F.Seq(xs.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Sp, x }).ToArray());
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Qualified(params string[] parts)
+    {
+        Formula result = Seq(Operatorname, Grp(Id(parts[0])));
+        for (var i = 1; i < parts.Length; i++)
+            result = Seq(result, Dot, Operatorname, Grp(Id(parts[i])));
+        return result;
+    }
+    private static Formula QCall(string owner, string name, params Formula[] arguments) =>
+        new Formula.Apply(Qualified([.. owner.Split('.'), name]), [.. arguments]);
+    private static Formula BlochMatrix(Formula r) =>
+        QCall("D5.S3.Quantum.Information.ActualPureQubitCostInfimum", "blochMatrix", Num(1), r);
+    private static Formula EuclideanVectors() =>
+        new Formula.FunctionCall(FormulaIdentifier.Create("EuclideanSpace"),
+            [Real, new Formula.FunctionCall(FormulaIdentifier.Create("Fin"), [Num(3)])]);
+
+    private static Formula DetBlochFormula()
+    {
+        Formula r = Id("r");
+        Formula value = new Formula.Fraction(Subtract(Num(1), new Formula.Power(new Formula.Norm(r), Num(2))), Num(4));
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("r"), EuclideanVectors(),
+            Equal(QCall("Matrix", "det", BlochMatrix(r)), QCall("Complex", "ofReal", value))));
+    }
+
+    private static Formula PureFormula()
+    {
+        Formula r = Id("r"), matrix = BlochMatrix(r);
+        Formula hypothesis = Equal(new Formula.Norm(r), Num(1));
+        Formula conclusion = Equal(Multiply(matrix, matrix), matrix);
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("r"), EuclideanVectors(),
+            new Formula.Logic(Parenthesized(hypothesis), FormulaLogicOperator.Implies, Parenthesized(conclusion))));
+    }
+
     private static Formula RhoAt(Formula x) => Seq(Rho, Open, x, Close);
     private static Formula Id(string s) => F.Id(s);
     private static Formula Sub(string s, Formula i) => Seq(Id(s), Underscore, Grp(i));
