@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:890b6288ab2ca54822511d70ecbf0308b43957021c6c75fb599fb36e7e9850c8
+  normalized_sha256: sha256:890b6288ab2ca54822511d70ecbf0308b43957021c6c75fb599fb36e7e9850c8
+cas_ref: sha256:890b6288ab2ca54822511d70ecbf0308b43957021c6c75fb599fb36e7e9850c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（若预算未饱和而存在分数行,单行双向小扰动也排除极点;更强地,由于每个 \(\Delta_i>0\),任何有预算松弛且未全满的点都不是最优。…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: ec8af71a344bb3909d59f2da06e9395340b655f0557b53a988dce82538d1543f
+    next_atom_id: 3924962d955adc09759bdff6820fabd2510e5fde971981b219049a336923e595

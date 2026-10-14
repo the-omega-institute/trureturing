@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b37c247bedbb69c2801fab5ecc743801a4958b63152d4afbd2043f48909a7f3f
+  normalized_sha256: sha256:b37c247bedbb69c2801fab5ecc743801a4958b63152d4afbd2043f48909a7f3f
+cas_ref: sha256:b37c247bedbb69c2801fab5ecc743801a4958b63152d4afbd2043f48909a7f3f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 在 $\mathbb Z/(2)\times\mathbb Z/(2k)$ 中，乘以 $2k$ 后两个分量都为零。在 $\m…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 843fed5feec0b6bc0961fc26bef4214466d96a8c6aa44551b147530210235ef0
+    next_atom_id: 8850abcbc9eece5334a91140a03625362eb6164398ac05c3658fd5fbce34b17e

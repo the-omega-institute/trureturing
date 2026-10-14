@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da6f0ae518531aa9a9b4eaae84c8dcffde99e4b235fa0b10e3dbea8d5153d421
+  normalized_sha256: sha256:da6f0ae518531aa9a9b4eaae84c8dcffde99e4b235fa0b10e3dbea8d5153d421
+cas_ref: sha256:da6f0ae518531aa9a9b4eaae84c8dcffde99e4b235fa0b10e3dbea8d5153d421
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 再由 R1 与 R.5 中 $a,b$ 的定义，在整数矩阵中计算  $$ 1=\det Q^r =1+p(2b-a)+p^2…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 03869bb051332c6460c9e415d17c06720bf075278662b3394abc07a1c5ba9ec5
+    next_atom_id: 0773ef1300c58f34190bb08608af59bbb8936da631ce8dca3f6291b8e73b5370

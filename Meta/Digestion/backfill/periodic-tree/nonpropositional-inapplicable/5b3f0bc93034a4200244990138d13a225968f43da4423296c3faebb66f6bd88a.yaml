@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b3f0bc93034a4200244990138d13a225968f43da4423296c3faebb66f6bd88a
+  normalized_sha256: sha256:5b3f0bc93034a4200244990138d13a225968f43da4423296c3faebb66f6bd88a
+cas_ref: sha256:5b3f0bc93034a4200244990138d13a225968f43da4423296c3faebb66f6bd88a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明，充分性。** 若 $m=2\cdot3^k$ 且 $k\ge1$，则 JP4 与 JP7 给出  $$ \rho(m)=\oper…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 523c1c53ff6c4ecb31d08279cc456bfdd0561e77e3ea4d9252379771c7c02fca
+    next_atom_id: 5acc20e34b4c710e95ecc87c5058caa41028ca2debe641d0a0f33b3a7a76dc23
