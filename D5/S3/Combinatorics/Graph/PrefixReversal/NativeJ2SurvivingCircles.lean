@@ -27,6 +27,8 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2NativeInventory
 open Equiv Fin.NatCast
 open D5.S3.Combinatorics.Graph.Walks.LeafNonbacktrackingComponent
 
+open private first_a_cut second_a_cut from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2CutLabels
 
 open private surviving_adj_iff from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingModel

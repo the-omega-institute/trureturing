@@ -27,6 +27,8 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2NativeInventory
 open Equiv Fin.NatCast
 open D5.S3.Combinatorics.Graph.Walks.LeafNonbacktrackingComponent
 
+open private contactAnchor_val from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarContacts
 
 private def j2Contact {m : Nat} (hm : 5 ≤ m) : Fin (m - 2) :=
   ⟨m - 3, by omega⟩

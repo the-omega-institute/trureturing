@@ -36,8 +36,8 @@ internal sealed class NativeJ2FrameTransportDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(meaning))), DescribeRole.Theorem);
     private static Formula Rho() => Call("relabel", F.Id("F"));
     private static Formula Mul(Formula x, Formula y) => Call("Multiply", x, y);
-    private static Formula RawRight(Formula i) => Call("NativeJ2Words.rightPort", F.Id("m"), i);
-    private static Formula RawLeft(Formula i) => Call("NativeJ2Words.leftPort", F.Id("m"), i);
+    private static Formula RawRight(Formula i) => Call("NativeRightPort", F.Id("m"), i);
+    private static Formula RawLeft(Formula i) => Call("NativeLeftPort", F.Id("m"), i);
     private static Formula DomainFormula()
     {
         Formula m = F.Id("m"), x = F.Id("x"), frame = F.Id("F");
@@ -51,8 +51,8 @@ internal sealed class NativeJ2FrameTransportDocument : IScribeDocumentDefinition
     {
         Formula m = F.Id("m"), i = F.Id("i"), frame = F.Id("F");
         Formula supplied = barred ? Call("reverseSelected", frame) : frame;
-        Formula right = barred ? Call("NativeJ2Words.bar", RawRight(i)) : RawRight(i);
-        Formula left = barred ? Call("NativeJ2Words.bar", RawLeft(i)) : RawLeft(i);
+        Formula right = barred ? Call("NativeBar", RawRight(i)) : RawRight(i);
+        Formula left = barred ? Call("NativeBar", RawLeft(i)) : RawLeft(i);
         return Disp(All("m", Call("Nat"), Implies(Le(D(5), m),
             All("F", Call("SupplyFrame", m, D(2)), All("i", Call("Fin", D(3)),
                 And(Eq(Mul(Rho(), right), Call("rightPort", supplied, Call("FinValue", i))),

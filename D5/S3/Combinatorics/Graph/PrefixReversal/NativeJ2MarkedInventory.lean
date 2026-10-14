@@ -28,6 +28,11 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Words
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open Equiv Fin.NatCast
 
+open private contactAnchor_val from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarContacts
+open private first_a_cut second_a_cut from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2CutLabels
+
 private def contactIndex {m : ℕ} (hm : 5 ≤ m) : Fin (m - 2) :=
   ⟨m - 3, by omega⟩
 

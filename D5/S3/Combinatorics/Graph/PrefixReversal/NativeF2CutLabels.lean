@@ -23,12 +23,12 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarContacts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
 
-theorem first_a_cut {m : ℕ} (hm : 4 ≤ m) :
+private theorem first_a_cut {m : ℕ} (hm : 4 ≤ m) :
     NativeCoreSplicing.cutStart (.inl ⟨m - 1, by omega⟩ : Fin m ⊕ Fin (m - 2)) = 1 ∧
       cutGenerator (.inl ⟨m - 1, by omega⟩ : Fin m ⊕ Fin (m - 2)) = a m := by
   simp [NativeCoreSplicing.cutStart, cutGenerator, (by omega : m - 2 ≤ m - 1)]
 
-theorem second_a_cut {m : ℕ} (hm : 4 ≤ m) :
+private theorem second_a_cut {m : ℕ} (hm : 4 ≤ m) :
     NativeCoreSplicing.cutStart (.inl ⟨m - 2, by omega⟩ : Fin m ⊕ Fin (m - 2)) =
         Equiv.swap (0 : Fin (m + 1)) (Fin.last m) ∧
       cutGenerator (.inl ⟨m - 2, by omega⟩ : Fin m ⊕ Fin (m - 2)) = a m := by
