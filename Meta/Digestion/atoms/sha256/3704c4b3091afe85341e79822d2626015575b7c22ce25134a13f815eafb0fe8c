@@ -1,0 +1,20 @@
+**Theorem 13.4 (general finite-age bounds and matched endpoints).** For
+$H\ge0$ and $1\le k\le r$,
+
+$$
+(H+1)^{\lfloor r/k\rfloor}
+\ \le\ N_H(r,k)\ \le\ (H+1)^{r-k+1}.
+\tag{NAR.13.11}
+$$
+
+In particular,
+
+$$
+N_0(r,k)=1,\qquad N_H(r,1)=(H+1)^r,\qquad N_H(r,r)=H+1.
+\tag{NAR.13.12}
+$$
+
+If a single selected $k$-subset $S$ is known before encoding and is the
+only future cut, its exact retained-value price is $H+1$, irrespective
+of $k$. All these statements hold for either lag convention.
+

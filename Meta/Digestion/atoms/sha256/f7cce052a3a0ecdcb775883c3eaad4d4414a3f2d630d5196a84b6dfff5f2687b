@@ -1,0 +1,83 @@
+**Theorem 16.6 (uniform literal-address caps recover the zero-read obligation).**
+Fix any acquired encoder $e$. There exists a correct finite current
+recovery protocol and a finite $B$ such that every fresh query satisfies
+$|p|\le B$ on every promised input if and only if $e$ already separates
+every edge of the zero-read menu relation (NAR.16.7). No uniform bound
+on the number of those capped calls is needed for the necessity.
+
+More precisely, suppose $e(a)=e(b)$ and a conflict is witnessed by
+$S,d$ with $a_i-b_i=d\ne0$ for $i\in S$. Choose positive baseline lags
+$\ell_0,\ell'_0$ with $\ell'_0-\ell_0=d$, and define
+
+$$
+\mu=\min_{j\in I}\{jq+a_j+\ell_0,\ jq+b_j+\ell'_0\},
+\qquad M_K=K+\mu.
+\tag{NAR.16.17}
+$$
+
+For every integer $K\ge0$ with $M_K\ge2$, any correct recovery protocol
+for $e$, if one exists, must on these shifted histories issue a
+distinguishing native query of length at least
+
+$$
+D+\left\lfloor\frac{K+\mu}{2}\right\rfloor.
+\tag{NAR.16.18}
+$$
+
+This gives a linear address witness even when the encoder is otherwise
+feasible under Theorem 16.5. If the pair also collides as a whole current
+tree, recovery is impossible outright by Theorem 16.3.
+
+**Proof, common shifts preserve the whole later entry.** Choose
+$\ell_0=\max(1,1-d)$ and $\ell'_0=\ell_0+d$. At every common added
+$K$, (NAR.16.6) gives
+
+$$
+V_S(a,\ell_0+K)=V_S(b,\ell'_0+K).
+\tag{NAR.16.19}
+$$
+
+The proof includes the entire exterior and hidden partition, because
+separated original offset bands remain disjoint after the shift.
+The two codes and public inputs agree too, whereas required lag outputs
+remain distinct. The common later row can vary with $K$; equality is
+between the two histories at each $K$, not between different shifts.
+
+**Proof, shallow-prefix stabilization.** The least leaf depth $h(n)$ of
+$T_n$ satisfies $h(0)=h(1)=0$ and, from the recurrence,
+$h(n+2)=1+\min(h(n+1),h(n))$. Induction gives $h(n)=\lfloor n/2\rfloor$.
+Every word shorter than that least leaf depth reaches a branch: complete
+binary branching ensures the word is reached, and minimality excludes
+a leaf. In the whole tree (NAR.16.2), the complete skeleton contributes
+$D$ edges before a slot. Since all slot exponents in both shifted trees
+are at least $M_K$, every finite word with
+
+$$
+|p|<D+\lfloor M_K/2\rfloor
+\tag{NAR.16.20}
+$$
+
+has reply $\mathsf{branch}$ on both histories. Equivalently the common
+all-branch prefix includes depths through
+$D+\lfloor(M_K-2)/2\rfloor$. This assertion is about full replies,
+not only agreement of address presence. It applies to all words in that
+prefix, not only right rays.
+
+**Proof, adaptive induction and the converse.** Until a first differing
+reply the decoder histories are identical: equal entries and replies
+force equal local computations, next words and halt decisions. Correct
+finite recovery of different lags must eventually obtain a differing
+reply; otherwise the two halt outputs would agree. By (NAR.16.20) that
+first distinguishing word obeys (NAR.16.18). Repeated shallow requests,
+arbitrarily many finite capped requests, and unbounded local arithmetic
+cannot change the induction.
+
+For any alleged uniform cap $B$, choose $K$ so large that
+$D+\lfloor(K+\mu)/2\rfloor>B$. Every allowed request then has the same
+branch reply on the two entries, contradicting finite correctness.
+Thus a code merging any zero-read edge admits no uniform address cap.
+Conversely, if it separates all these edges, Reuse 16.2's finite
+zero-read candidate decoder already returns the lag. It makes no
+requests and has the vacuous address cap zero. This proves both
+directions for every fixed encoder. $\square$
+

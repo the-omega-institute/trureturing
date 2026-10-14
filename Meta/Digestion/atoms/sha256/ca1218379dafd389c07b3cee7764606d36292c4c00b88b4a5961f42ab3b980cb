@@ -1,0 +1,27 @@
+**Proof, four attained colors at equality.** Let $r=2k$, choose one public
+exposed index $i_*$ and assign four labels by
+
+$$
+C(a)=\begin{cases}
+0,&w(a)<k,\\
+1,&w(a)>k,\\
+2+a_{i_*},&w(a)=k.
+\end{cases}
+\tag{NAR.13.15}
+$$
+
+Two vectors with weight below $k$ cannot have $k$ positive or $k$
+negative binary differences: either direction would require one of them
+to have at least $k$ ones. Two vectors with weight above $k$ cannot be
+adjacent either: the smaller side in either directed edge would have at
+least $k$ zeros and hence weight at most $k$. For two weight-$k$ vectors,
+a conflict needs $k$ directed differences. Equal weights force $k$
+reverse differences too; there are only $2k$ positions. The vectors are
+therefore complementary and differ at $i_*$, so their labels differ.
+Different weight categories already have disjoint labels. The code is
+proper, and Theorem 13.3 supplies its effective decoder. All four labels
+occur: all zero, all one, and weight-$k$ vectors with either value at
+$i_*$. The two-disjoint-block clique has four members, giving the matched
+lower bound. In particular, ties cannot be resolved by one arbitrary
+majority bit at this boundary. $\square$
+

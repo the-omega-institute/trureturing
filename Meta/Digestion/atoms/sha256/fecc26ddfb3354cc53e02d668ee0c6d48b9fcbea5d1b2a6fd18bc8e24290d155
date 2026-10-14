@@ -1,0 +1,75 @@
+**Proposition 14.7 (strict paid-preparation example on the entire
+one-right-hole fiber).** Use exactly Proposition 13.5's cut
+$P=\{R\}$, current exterior
+$\langle\beta,\square_R\rangle$, singleton class $d$ and
+whole targets $Y_0,Y_1$. In the coordinate order of
+(NBP.14.4), both vectors
+
+$$
+(2,3,2,1,1,0,0)
+\qquad\text{and}\qquad
+(1,1,3,0,0,1,1)
+\tag{NBP.14.15}
+$$
+
+are feasible on its entire original fiber.
+Any vector with $p=q=0$ is infeasible there, regardless of
+$r,H,K$. Even if both call upper bounds are positive,
+$\ell_P=\ell_R=0$ is infeasible for arbitrary $r,H,K$.
+
+**Proof.** Reuse, without selecting a finite subfiber,
+the supplier's exact description
+
+$$
+\mathcal U_*=\{\beta\}\cup
+ \{\langle\alpha,z\rangle:z\in\mathcal T\},
+\qquad
+F(\beta)=Y_0,\quad
+F(\langle\alpha,z\rangle)=Y_1.
+\tag{NBP.14.16}
+$$
+
+The current reply at $R$ is alpha precisely on origin
+$\beta$; every paired origin gives beta or branch.
+These are Proposition 13.5's full-fiber conclusions,
+and $\lambda(d)=1$.
+
+For the first vector, install two reader halts $z_0,z_1$
+with whole outputs $Y_0,Y_1$. Install preparation states
+$v,\widehat{z_0},\widehat{z_1}$ and common start $v$.
+At $v$ actually query $R$, go to $\widehat{z_0}$ on
+alpha and to $\widehat{z_1}$ on beta or branch; assign
+the unattained absence edge either existing latch.
+Preparation has one call and literal sum one.
+Its two codes are both actually attained.
+The actual handoff enters the corresponding reader halt,
+which needs no call. All three preparation/latch states
+and both reader halts are installed and counted.
+
+For the second vector, use the supplier's three-state
+reader: a state $w$ querying $R$ and the two whole halts,
+with the same reply-to-target rule. The preparation is
+the single common latch $\widehat w$. Its code is constant
+and its native costs are zero. After the actual paid
+handoff the reader pays one call and one literal letter.
+This constructs each asserted vector on every source
+in (NBP.14.16).
+
+The whole target has two values, so Proposition 14.6
+excludes $p=q=0$ even if the export upper capacity is
+large. For the last claim, all invoked words in either
+phase must be empty. The current root reply is branch
+on the entire fiber. Common-start preparation therefore
+generates one code, and the reader from it follows one
+identical deterministic path on every origin. Its one
+output cannot equal both $Y_0$ and $Y_1$.
+No additional numerical frontier is needed.
+
+In contrast, Corollary 12.6 permits the acquired-value
+producer to export the correct one of two whole-output
+halt codes with zero reader calls. It does not assign
+zero cost to acquiring those values and does not provide
+a zero-query common-start preparation. Here the first
+vector explicitly pays the necessary discriminating
+preparation query. $\square$
+

@@ -1,0 +1,31 @@
+## 11. Exact scope and remaining boundary
+
+The ordinary theory established here is the semantic canonical fixed-shift
+code (Theorem 9.2), sound guarded graph transformations with full satisfying
+valuations (Proposition 9.5), the native all-solution obstruction (Proposition
+9.6), the guarded-cycle boundary (Proposition 9.7), exact complete-row chart
+obligations (Definition 10.1), and the direct joint-support implication
+(Proposition 10.3). The worklist measure proves only the conditional finite
+syntactic termination stated in Definition 9.4. Its unrestricted slot closure,
+guarded-tree arithmetic elimination, original-coordinate simultaneous
+completion, total global joint-support decision and exact finite-depth
+witness/exclusion interfaces remain open. The unrestricted all-depth
+equivalence and effective alternative in Open problem 7.3 require those
+bridges at their stated scopes. No recognized subclass, bounded-depth
+certificate or conditional criterion completes that target or replaces its
+original quantifiers.
+
+The fixed-power supplier [URR, Theorem 3.1 and Corollary 3.2][URR] and the newer
+`uniform_residual_reflection`/`simultaneous_completion` result at [URR2] are
+finite-list residual suppliers. They do not prove arbitrary positive
+multiple-definition completeness. The variable-exponent syntax $\rho^pZ$ with
+quantified $p$ is outside (NIS.32), and its source-faithful chart, rank
+admissibility, and support interface remain separate obligations. The paid
+same-register complete-access cut in NIS Assumption 1.4 is a premise of the
+consumer and supplies no empirical resource theorem.
+
+These are manuscript-level mathematical claims. They are not Lean truth
+claims, and the open bridges above are not converted into completion claims.
+
+[URR2]: https://github.com/the-omega-institute/trureturing/blob/c0d24fb522192e79c921df5bfed53306f7207903/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.lean
+

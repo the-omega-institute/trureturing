@@ -1,0 +1,6 @@
+**Theorem 8.2 (finite recovery on supplied records, with paid acquisition).**
+Under Assumptions 1.3 and 8.1, the corresponding predecessor or finite
+past-row recovery uses zero fresh native source queries after its inputs
+are acquired. The uniform code bound and exact conditional counts are
+supplementary information bounds, not total resource bounds.
+
