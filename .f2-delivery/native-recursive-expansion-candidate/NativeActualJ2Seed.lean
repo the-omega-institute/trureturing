@@ -65,9 +65,11 @@ structure SeedFor {m : ℕ} (F : SupplyFrame m 2) where
   base : {x : Configuration m // FrameDomain F x}
   walk : (domainGraph (FrameDomain F)).Walk base base
   hamiltonian : walk.IsHamiltonianCycle
-  K H : Finset (Sym2 {x : Configuration m // FrameDomain F x})
+  K : Finset (Sym2 {x : Configuration m // FrameDomain F x})
+  H : Finset (Sym2 {x : Configuration m // FrameDomain F x})
   joint : Fin 6 → Piece (domainGraph (FrameDomain F))
-  primary opposite : Fin 3 → Piece (domainGraph (FrameDomain F))
+  primary : Fin 3 → Piece (domainGraph (FrameDomain F))
+  opposite : Fin 3 → Piece (domainGraph (FrameDomain F))
   jointPorts : ∀ i,
     (joint i).start.val = relabel F * port m (componentStartPort i) ∧
       (joint i).finish.val = relabel F * port m (componentFinishPort i)

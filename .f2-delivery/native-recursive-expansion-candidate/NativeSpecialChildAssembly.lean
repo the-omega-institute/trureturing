@@ -4,6 +4,7 @@
    Install the Domains / ActualCyclePieceReordering candidates under the
    imported canonical names before compilation. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansionDomains
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 import D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 import D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
 

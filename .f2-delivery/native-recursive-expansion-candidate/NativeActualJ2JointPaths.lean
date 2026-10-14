@@ -1,6 +1,10 @@
-/- UNCOMPILED same-cycle native J2 joint-component consumer.
-   The six independently oriented literal components are lifted into the
-   supplied cycle domain, retaining exactly its edges minus six cuts. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualJ2JointPaths
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualJ2JointPaths
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The six literal joint components retain the complete support and exact uncut edge inventory of the same supplied native cycle. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
 import D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 import D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport

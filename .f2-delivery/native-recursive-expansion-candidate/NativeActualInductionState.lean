@@ -12,6 +12,7 @@ namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualInductionState
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
@@ -38,11 +39,16 @@ structure StateFor {m k : ℕ} (F : SupplyFrame m k)
   base : {x : Configuration m // SpecialDomain F hB x}
   walk : (domainGraph (SpecialDomain F hB)).Walk base base
   hamiltonian : walk.IsHamiltonianCycle
-  K H : Finset (Sym2 {x : Configuration m // SpecialDomain F hB x})
+  K : Finset (Sym2 {x : Configuration m // SpecialDomain F hB x})
+  H : Finset (Sym2 {x : Configuration m // SpecialDomain F hB x})
   primaryCuts : K.image (Sym2.map Subtype.val) = markedCuts F
   oppositeCuts : H.image (Sym2.map Subtype.val) = markedCuts oppositeFrame
-  left right otherLeft far primaryFar oppositeFar :
-    {x : Configuration m // SpecialDomain F hB x}
+  left : {x : Configuration m // SpecialDomain F hB x}
+  right : {x : Configuration m // SpecialDomain F hB x}
+  otherLeft : {x : Configuration m // SpecialDomain F hB x}
+  far : {x : Configuration m // SpecialDomain F hB x}
+  primaryFar : {x : Configuration m // SpecialDomain F hB x}
+  oppositeFar : {x : Configuration m // SpecialDomain F hB x}
   leftCoordinate : left.val = leftPort F 0
   rightCoordinate : right.val = rightPort F 0
   otherLeftCoordinate : otherLeft.val = leftPort oppositeFrame 0

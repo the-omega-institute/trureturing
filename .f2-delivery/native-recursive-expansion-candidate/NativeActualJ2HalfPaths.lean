@@ -1,7 +1,10 @@
-/- UNCOMPILED same-cycle native J2 half-restoration consumer.
-   Lift the fixed raw half-component paths into the independently defined
-   domain of a supplied prior F2 cycle. The retained inventory is stated
-   against that same supplied w, including the literal barred exception. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualJ2HalfPaths
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualJ2HalfPaths
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Both literal half partitions retain the complete support and exact uncut edge inventory of the same supplied native cycle. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
 import D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 import D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
