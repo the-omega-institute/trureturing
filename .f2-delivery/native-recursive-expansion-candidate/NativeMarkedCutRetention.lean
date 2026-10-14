@@ -17,6 +17,10 @@ open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 open D5.S3.Combinatorics.Graph.Walks.ActualRetainedEdges
 open private anchor_coordinates bc_terminal from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+open private parentPiece childLift from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
+open private finish_eq_last from
+  D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
 
 private theorem right_port_terminal {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (i : ℕ) : rightPort F i (Fin.last m) = F.terminal := by
@@ -93,9 +97,53 @@ theorem native_other_path_keeps_remaining_b {m k : ℕ} (hm : 3 ≤ m)
   exact native_b_edges_distinct_terminals x.val (rightPort F (k + j.val))
     (by rw [right_port_terminal hm F]; exact hx) hv
 
+/-- The actual outer cycle retains every actual edge of every lifted
+child path, expressed again in the original native configuration type.
+The child association and literal inventory are those returned by the
+strengthened native parent constructor. -/
+theorem native_parent_cycle_keeps_child_path_edges {m k : ℕ}
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    (paths : ∀ j : Fin F.base.length, ActualChildPath F j)
+    (pieces : Fin F.base.length → Piece (domainGraph (ParentDomain F)))
+    (hpieces : ∀ j, pieces j = parentPiece F j (paths j))
+    {base : {x : Configuration m // ParentDomain F x}}
+    (c : (domainGraph (ParentDomain F)).Walk base base)
+    (hedges : c.edges = s(base, (pieces ⟨F.base.length - 1, by omega⟩).finish) ::
+      (chainEdges (pieces ⟨0, by omega⟩)
+        (List.ofFn fun i : Fin (F.base.length - 1) =>
+          pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩)).reverse)
+    (j : Fin F.base.length)
+    (x y : {z : Configuration m // ChildDomain (childGap F j) z})
+    (he : s(x, y) ∈ (paths j).piece.walk.edges) :
+    s(x.val, y.val) ∈ c.edges.map (Sym2.map Subtype.val) := by
+  let p := pieces ⟨0, by omega⟩
+  let ps := List.ofFn fun i : Fin (F.base.length - 1) =>
+    pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩
+  have hlist : p :: ps = List.ofFn pieces := by
+    apply List.ext_getElem
+    · simp only [List.length_cons, List.length_ofFn]; omega
+    · intro i hi hj
+      cases i with
+      | zero => simp only [List.getElem_cons_zero, List.getElem_ofFn]; rfl
+      | succ i => simp only [List.getElem_cons_succ, List.getElem_ofFn]; rfl
+  have hfinish : finish p ps = (pieces ⟨F.base.length - 1, by omega⟩).finish := by
+    rw [finish_eq_last, hlist, List.getLast_ofFn]
+  have hclose : c.edges = s(base, finish p ps) :: (chainEdges p ps).reverse := by
+    simpa only [hfinish, p, ps] using hedges
+  have hemap : s(childLift F j x, childLift F j y) ∈ (pieces j).walk.edges := by
+    rw [hpieces j]
+    change _ ∈ ((paths j).piece.walk.map (childLift F j)).edges
+    rw [SimpleGraph.Walk.edges_map]
+    exact List.mem_map.mpr ⟨s(x, y), he, rfl⟩
+  have hz : pieces j ∈ p :: ps := by rw [hlist]; exact List.mem_ofFn.mpr ⟨j, rfl⟩
+  have hec := actual_closed_route_keeps_piece_edges p ps c hclose
+    (pieces j) hz s(childLift F j x, childLift F j y) hemap
+  exact List.mem_map.mpr ⟨s(childLift F j x, childLift F j y), hec, rfl⟩
+
 #print axioms native_b_edges_distinct_terminals
 #print axioms native_remaining_b_not_special_cut
 #print axioms native_special_path_keeps_remaining_b
 #print axioms native_other_path_keeps_remaining_b
+#print axioms native_parent_cycle_keeps_child_path_edges
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
