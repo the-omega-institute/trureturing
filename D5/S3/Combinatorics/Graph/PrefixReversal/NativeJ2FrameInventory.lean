@@ -15,6 +15,8 @@ namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
+open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeContactIteration
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2NativeInventory
@@ -143,7 +145,7 @@ theorem native_j2_frame_cycle_with_inventory {m : ℕ} (hm : 5 ≤ m)
   have rawDomain (x : {v : Configuration m // FrameDomain F v}) :
       F2Domain m (undoRelabel F x.val) := by
     apply (native_j2_frame_domain_iff hm F _).mp
-    simpa only [up_down] using x.property
+    simpa only [up_down, FrameDomain] using x.property
   have retained (x : {v : Configuration m // FrameDomain F v}) (g : Configuration m)
       (hg : g = a m ∨ g = b m)
       (hd : ¬ F2DeletedEdge m s(undoRelabel F x.val, undoRelabel F x.val * g)) :
