@@ -25,7 +25,7 @@ open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
 abbrev Coord := Fin 20
 abbrev Value := Fin 4
 
-def base : ℕ := 4
+abbrev base : ℕ := 4
 
 /-- A finite low-coordinate prefix.  `digits` stores digit `g` at the
 `base ^ g` place; the representation is deliberately a Nat, not a fixed
@@ -91,8 +91,12 @@ private theorem append_digit_old
   have hfour : base ∣ a.val * base ^ (q.depth - g.val) := by
     refine ⟨a.val * base ^ (q.depth - g.val - 1), ?_⟩
     have hs : q.depth - g.val = (q.depth - g.val - 1) + 1 := by omega
-    rw [hs, pow_succ]
-    simp only [base]
+    have hp : base ^ (q.depth - g.val) =
+        base ^ (q.depth - g.val - 1) * base := by
+      calc
+        _ = base ^ ((q.depth - g.val - 1) + 1) := congrArg (base ^ ·) hs
+        _ = _ := pow_succ _ _
+    rw [hp]
     ac_rfl
   rw [Nat.add_mod, Nat.mod_eq_zero_of_dvd hfour, add_zero, Nat.mod_mod]
 
@@ -129,7 +133,9 @@ theorem append_wellFormed (q : PackedPartial) (a : Value)
     have hd : q.digits ≤ base ^ q.depth - 1 := Nat.le_pred_of_lt hdigits
     have hsum : q.digits + a.val * base ^ q.depth < 4 * base ^ q.depth := by
       omega
-    simpa only [pow_base_succ, append, base, Nat.mul_comm] using hsum
+    change q.digits + a.val * base ^ q.depth < base ^ (q.depth + 1)
+    rw [pow_base_succ]
+    simpa only [base, Nat.mul_comm] using hsum
 
 theorem append_decode_update
     (q : PackedPartial) (a : Value) (g : Coord)
@@ -140,26 +146,30 @@ theorem append_decode_update
   · have hnew : j.val < (append q a).depth := by
       dsimp [append]
       omega
-    rw [decode_known (append q a) j hnew, decode_known q j hj]
-    rw [Function.update_of_ne]
-    · congr 1
-      apply Fin.ext
-      exact append_digit_old q a j hwell.2 hj
-    · intro hEq
+    have hne : j ≠ g := by
+      intro hEq
       have : j.val = q.depth := by simpa [hEq, hg]
       omega
+    rw [Function.update_of_ne hne, decode_known (append q a) j hnew,
+      decode_known q j hj]
+    congr 1
+    apply Fin.ext
+    exact append_digit_old q a j hwell.2 hj
   · by_cases hEq : j = g
     · subst j
       have hnew : g.val < (append q a).depth := by
         dsimp [append]
         omega
-      rw [decode_known (append q a) g hnew, decode_unknown q g]
-      simp only [Function.update_same]
+      rw [Function.update_same, decode_known (append q a) g hnew]
       congr 1
+      apply Fin.ext
+      change (q.digits + a.val * base ^ q.depth) / base ^ g.val % base = a.val
+      rw [hg]
       exact append_digit_at q a hwell.2
     · have hafter : (append q a).depth ≤ j.val := by
         dsimp [append]
         have hj' : q.depth ≤ j.val := Nat.le_of_not_gt hj
+        have hjg : j.val ≠ g.val := fun h => hEq (Fin.ext h)
         omega
       rw [decode_unknown (append q a) j hafter]
       rw [Function.update_of_ne hEq, decode_unknown q j (Nat.le_of_not_gt hj)]
@@ -169,7 +179,7 @@ positive-fuel split `advance` appends exactly the actual split value.  At the
 zero-fuel child the original checker is definitionally false, so no fake
 coordinate/value update is introduced. -/
 def advance (fuel : ℕ) (q : PackedPartial) (i : Coord) (a : Value) : PackedPartial :=
-  if h : 0 < fuel then append q a else q
+  if 0 < fuel then append q a else q
 
 def checkPacked
     (nodes : ℕ → Fin EJMGlobalDAGData.Size → Node EJMGlobalDAGData.Size Coord Value
@@ -198,7 +208,15 @@ theorem actual_split_coordinate
     (hnode : EJMGlobalDAGData.nodes (fuel + 1) index = .split i children) :
     i.val + fuel + 1 = 21 := by
   unfold EJMGlobalDAGData.nodes at hnode
-  split at hnode <;> simp_all <;> omega
+  split_ifs at hnode
+  · cases hnode
+  · cases hnode
+  · have hcoord : i.val = (21 - (fuel + 1)) % 20 := by
+      cases hnode
+      rfl
+    have hlt : 21 - (fuel + 1) < 20 := by omega
+    rw [Nat.mod_eq_of_lt hlt] at hcoord
+    omega
 
 theorem checkPacked_eq_original
     (fuel : ℕ) (index : Fin EJMGlobalDAGData.Size)
@@ -246,6 +264,7 @@ theorem checkPacked_eq_original
           rw [ih _ _ _ (hqnext a) (hnextinv a)]
           rw [append_decode_update q a i hwell (by simpa [hdepth])]
         simp only [hchild]
+        rfl
 
 def actualPacked : PackedPartial := ⟨0, 0⟩
 

@@ -7,7 +7,6 @@ No compilation, performance result or global acceptance is claimed here. -/
 
 import D5.S3.Quantum.Entanglement.EJM.EJMCacheState
 import D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
-import Mathlib.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
