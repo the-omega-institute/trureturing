@@ -14,6 +14,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
@@ -286,7 +287,7 @@ theorem native_j2_half_component_partition {m : ℕ} (hm : 5 ≤ m) (side : Bool
     · rintro ⟨i, hi, _⟩
       exact hpreserve _ x (native_j2_port_domain hm (halfStart side i))
         ((hvertices i x).mp hi)
-
+  -- The exact component inventory now yields the independent flattened inventory.
   refine ⟨paths, hpath, hvertices, hedges, hcover, ?_⟩
   intro e
   refine Sym2.inductionOn e ?_
