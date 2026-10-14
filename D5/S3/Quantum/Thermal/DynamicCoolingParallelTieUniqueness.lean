@@ -7,6 +7,8 @@
    digest: Global cooling strictly beats equal parallel groups except at (6,2). -/
 
 import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
+import D5.S3.Entropy.NamingWindow.SumProductUpdate
+import Mathlib.Order.Interval.Set.Monotone
 
 noncomputable section
 open Matrix Finset
@@ -42,9 +44,7 @@ private theorem weight_le {n : ℕ} (x : Fin n → Fin 2) : weight x ≤ n := by
   simpa only [Fintype.card_fin, card_univ] using card_filter_le univ (fun j => x j = 1)
 
 private theorem bit_cases (b : Fin 2) : b = 0 ∨ b = 1 := by
-  have := b.isLt
-  rcases b with ⟨b, hb⟩
-  rcases (show b = 0 ∨ b = 1 by omega) with h | h <;> subst b <;> simp
+  exact (Fin.forall_fin_two (p := fun b => b = 0 ∨ b = 1)).mpr ⟨Or.inl rfl, Or.inr rfl⟩ b
 
 private theorem thermalWeight_eq_q {n : ℕ} (P : ℝ) (x : Fin n → Fin 2) :
     thermalWeight P x = q n (weight x) P := by
@@ -78,17 +78,14 @@ private theorem weighted_coordinate_sum {I A : Type*}
     (w : A → ℝ) (hw : ∑ a, w a = 1) (i : I) (f : A → ℝ) :
     (∑ x : I → A, f (x i) * ∏ j, w (x j)) = ∑ a, f a * w a := by
   classical
-  have hp (x : I → A) : f (x i) * ∏ j, w (x j) =
-      ∏ j, (if j = i then f (x j) else 1) * w (x j) := by
-    rw [prod_mul_distrib]
-    simp only [prod_ite_eq', mem_univ, if_true]
-  simp_rw [hp]
-  rw [← Fintype.prod_sum (fun j a => (if j = i then f a else 1) * w a)]
-  have hs (j : I) : (∑ a, (if j = i then f a else 1) * w a) =
-      if j = i then ∑ a, f a * w a else 1 := by
-    by_cases h : j = i <;> simp only [h, if_true, if_false, one_mul, hw]
-  simp_rw [hs]
-  simp only [prod_ite_eq', mem_univ, if_true]
+  have h := D5.S3.Entropy.NamingWindow.SumProductUpdate.sum_prod_update
+    (fun _ a => w a) i (fun a => f a * w a)
+  simp only [hw, prod_const_one, one_mul] at h
+  convert h using 1
+  apply sum_congr rfl
+  intro x _
+  rw [← mul_prod_erase univ (fun j => w (x j)) (mem_univ i)]
+  ring
 
 private theorem q_adjacent (L j : ℕ) (P : ℝ) (hj : j < L)
     (hP0 : 0 < P) (hP1 : P < 1 / 2) : q L (j + 1) P < q L j P := by
@@ -102,13 +99,9 @@ private theorem q_adjacent (L j : ℕ) (P : ℝ) (hj : j < L)
 
 private theorem q_lt_q (L i j : ℕ) (P : ℝ) (hij : i < j) (hj : j ≤ L)
     (hP0 : 0 < P) (hP1 : P < 1 / 2) : q L j P < q L i P := by
-  induction j with
-  | zero => omega
-  | succ j ih =>
-    have hs := q_adjacent L j P (by omega) hP0 hP1
-    by_cases h : i = j
-    · subst i; exact hs
-    · exact hs.trans (ih (by omega) (by omega))
+  have hq : StrictAntiOn (fun j => q L j P) (Set.Iic L) :=
+    strictAntiOn_Iic_of_succ_lt (fun j hj => q_adjacent L j P hj hP0 hP1)
+  exact hq (hij.le.trans hj) hj hij
 
 private theorem q_antitone (L i j : ℕ) (P : ℝ) (hij : i ≤ j) (hj : j ≤ L)
     (hP0 : 0 < P) (hP1 : P < 1 / 2) : q L j P ≤ q L i P := by
@@ -501,12 +494,7 @@ private theorem perm_diagonal {I : Type*} [Fintype I] [DecidableEq I]
   rw [Matrix.transpose_permMatrix]
   change B.symm.toPEquiv.toMatrix * Matrix.diagonal d * B.toPEquiv.toMatrix = _
   rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
-  ext x y
-  simp only [Matrix.submatrix_apply, id_eq]
-  by_cases h : x = y
-  · subst y; simp only [Matrix.diagonal_apply_eq]
-  · rw [Matrix.diagonal_apply_ne _ h, Matrix.diagonal_apply_ne]
-    exact fun he => h (B.symm.injective he)
+  exact Matrix.submatrix_diagonal_equiv d B.symm
 
 private theorem baseline_population (M n r : ℕ) (hn : 0 < n) (P : ℝ) (a : Fin M) :
     rPop (Matrix.diagonal (fun x => thermalWeight P ((blockPerm M n r (⟨0, hn⟩ : Fin n)).symm x)))
