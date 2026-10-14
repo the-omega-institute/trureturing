@@ -64,7 +64,7 @@ private theorem ordinary_child_open {m k : ℕ} (hm : 3 ≤ m)
   · intro e
     simpa only [SimpleGraph.Walk.edges_reverse, List.mem_reverse] using hinv e
 
-private def special_child_path {m k : ℕ} (hm : 3 ≤ m)
+private noncomputable def special_child_path {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
     (q : (domainGraph (SpecialDomain F hB)).Walk
       (specialVertex hm F hB (0, 0)) (specialVertex hm F hB (Fin.last k, 1)))
@@ -139,7 +139,14 @@ theorem recursive_cycle_from_specified_children_with_inventory {m k : ℕ} (hm :
       have hval := congrArg Fin.val he
       dsimp only [zero] at hval
       omega
-    simpa only [paths, dif_neg hne] using Classical.choose_spec (hordinary j hj)
+    have hpaths : paths j = Classical.choose (hordinary j hj) := by
+      dsimp only [paths]
+      split
+      · rename_i he
+        exact (hne he).elim
+      · rfl
+    rw [hpaths]
+    exact Classical.choose_spec (hordinary j hj)
 
 /-- Keep the actual chosen ordinary cycles and their complement inventories
 attached to the actual parent pieces. This witness supports subsequent J
@@ -191,7 +198,14 @@ theorem recursive_cycle_from_special_with_inventory {m k : ℕ} (hm : 3 ≤ m)
     rfl
   · intro j hj
     have hne : j ≠ zero := fun he => by have hval := congrArg Fin.val he; dsimp [zero] at hval; omega
-    simpa only [paths, dif_neg hne] using Classical.choose_spec (hordinary j hj)
+    have hpaths : paths j = Classical.choose (hordinary j hj) := by
+      dsimp only [paths]
+      split
+      · rename_i he
+        exact (hne he).elim
+      · rfl
+    rw [hpaths]
+    exact Classical.choose_spec (hordinary j hj)
 
 private theorem recursive_cycle_from_special {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
