@@ -300,7 +300,7 @@ For admission, these template-evidence requirements apply only to A5.5's selecte
 
 The pinned `tools/lean-inspector` Lake package owns per-module complete row/material bundles and their aggregate under root `.lake/build/lean-inspector`. Native module report facets trace the report format identifier, source bytes, private/server/import/transitive compiler artifacts, each module's authoritative utility record and external claim artifact closure; registered configuration identity belongs to aggregation. The Inspector executable must compile successfully through native Lake dependencies, but its job trace and registered producer implementation bytes are not report regeneration dependencies. Lean/Python/C#/script or Inspector Lake implementation edits reuse valid module and aggregate artifacts. Contract edits rebuild and reassess affected Reg compiler closures; the same delivery migrates all uses and deletes old paths. Input membership uses the exact Contract.Discovery type heads and compiler owner rules, never module prefixes, path lists, source tokens or report-array contents. Discovery errors and illegal contracts are named failures, not empty membership. The small compiler input fact stores only type/owner/name projections and traces the compiler closure. Utility input is generated once per invocation. Current module membership determines aggregation, including removals. Native Lake trace and artifact reuse select misses. The Inspector asks Lake through its native `noBuild` artifact operation, preserves each module's input/output traces, and composes the selected work through a shared native job. Expected internal misses become continuations; other failures and a caller's actual `--no-build` propagate. Batching selected misses shares import work without a second invalidation engine or per-miss blocking promise wait. Ordinary root defaults and audit builds remain required. Like an olean, a module report artifact is validated completely once, when it is produced; an artifact that fails is not written. Reuse is decided by its Lake trace alone, which includes the module's and its claims' compiler artifacts, so a changed olean invalidates exactly the dependent reports; a traced or cache-restored artifact is not validated again. Aggregation concatenates the traced rows in registered order and moves their deflated materials unchanged. Publication of the aggregate and reuse under a matching receipt check the bundle envelope and input currency, not the rows.
 
-Local `make lean-report` selects `fetch-or-fail` through explicit arguments. A complete seed consists of the report, its four sidecars and the successful whole-report receipt. A missing, incomplete or unreadable seed, or a receipt whose `inputs.report_format` differs from the sole current report format, triggers production Release recovery with replacement of the private build. Recovery uses the existing resolved-mathlib/shared-platform partition and complete Release cache key. Check, restore and seed consumption hold the existing private-cache writer lock. If the restored canonical seed is still absent or incompatible, `LEAN_REPORT_CACHE_INCOMPATIBLE` exits with status 4 before any report extraction or selected program build. A matching format permits normal incremental work when registered inputs differ; it does not require whole-report receipt equality. `make lean-report REBUILD_REPORT_CACHE=1` skips whole-report reuse and explicitly permits the report build path. Ordinary required CI selects `LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail`. Independent manual/PR producers and Release publishers select `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`; that path does not perform Release recovery. Environment variables do not select an entry policy. Direct `inspect.sh` callers default to `reuse-or-build` and may select `--cache-miss-policy fetch-or-fail`. There is no semantic compatibility version or older-format adapter.
+本地 `make lean-report` 通过显式参数选择 `fetch-or-fail`。完整种子包含报告、四个 sidecar 和成功的整份报告收据。种子缺失、不完整、不可读或收据 `inputs.report_format` 不符时，进入既有受限恢复路径；具体范围见 A22：GitHub Actions 跳过生产 Release 下载，linked worktree 要求 warm-main/reseed，本地主检出才可从 Release 恢复私有 build。恢复沿既有 resolved-mathlib/shared-platform 分区与完整 Release cache key；检查、恢复和消费持有既有私有缓存写锁。规范种子仍缺失或不兼容时，`LEAN_REPORT_CACHE_INCOMPATIBLE` 以 exit 4 在报告提取或选定程序构建前失败。格式匹配允许注册输入变化后的正常增量，不要求整份收据输入相等。`make lean-report REBUILD_REPORT_CACHE=1` 绕过整份报告复用并允许报告构建，但仍可复用原生模块产物，不等于历史登记无缓存重评或强制 clean。普通 required CI 的报告入口显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail`；独立 manual/PR/自动 Actions producer 与 Release publisher 选择 `reuse-or-build`，后者不执行 Release recovery。环境变量不能替代入口显式策略。直接 `inspect.sh` 默认 `reuse-or-build`，可显式选 `--cache-miss-policy fetch-or-fail`。不存在判官语义兼容版本或旧格式适配器。
 
 Lean-cache publication invokes the existing current Inspector entry once before packing. The Inspector entry builds its selected program targets and the native `:report` facet in one invocation on a report miss; required input, build or complete report validation failure prevents publication, including when a run snapshot already exists. The root buildDir archive carries native Inspector artifacts and the canonical report/material/origin/attestation outputs. Publication retains the resolved mathlib/platform partition and run/attempt snapshots; restore accepts the newest snapshot of the same resolved mathlib from any partition in the host's shared seed family (macOS and Linux arm64, `SHARED_SEED_PLATFORMS` in `tools/scripts/worktree/lean_cache.py`), because Lake retraces the archive's native artifacts per platform and rebuilds them while reusing its `.olean`/`.ilean`/IR; Actions cache keys stay per platform. published draft state and transferred inventories remain validated. Compiler traces, utility inputs and the report format decide report reuse after restore. Optional transport failures cannot turn a required build or report failure into success.
 
@@ -308,7 +308,7 @@ Inspector privately stages, canonically validates and publishes raw-v3 rows, all
 
 The optional `report_execution` manifest declaration names the supported tools (`lake`, `lean`), their required registered identity file (`toolchain: "lean-toolchain"`), platform coordinates (`system`, `machine`) and explicit semantic environment variables. Report reuse binds the authored pin and those coordinates; it does not execute compiler version commands or require installed compiler binaries. Missing, changed or excluded pin registration cannot yield reusable evidence. CI restores optional project/dependency caches and installs the pinned toolchain as needed. Selected program builds and report misses still require the normal toolchain; if publication rejects a seed after planning, the normal entry obtains the missing toolchain and builds, retaining build failures. The normal Inspector entry first seals a `.reuse.json` sidecar after a successful native `:report` invocation with the Inspector default program targets or the caller-provided sorted JSON `STRATALINT_LEAN_BUILD_TARGETS` and complete publication. A receipt hit checks the bundle envelope and input coordinates on a private snapshot and republishes the report while separately fulfilling the selected program-build obligations. It binds the report format identifier, the declared report-module and configuration inventory with file modes, the execution environment and the five-file report; producer program files, including the Lean Inspector and audit library, are never part of this binding. Program compilation is an independent obligation selected by the Inspector default targets or the sorted JSON `STRATALINT_LEAN_BUILD_TARGETS` override: a receipt hit still builds those targets through Lake, and a miss builds them together with `:report` in one invocation. Empty target selection permits report reuse without restoring heavy Lean caches. Unscoped calls build the Inspector default program targets. A selected program build failure remains nonzero and removes the output reuse receipt. Reusing this successful invocation requires the report format and all bound inputs to remain identical, the private snapshot to match the receipt's bundle bytes, and its envelope and input coordinates to be current; the rows were validated when produced and are not validated again. An absent, old, damaged or mismatched receipt requests native Lake work; invalid registration and actual build/check failures remain failures. Producer implementation and judge rule changes do not prevent reuse and do not invalidate per-module artifacts. Contract interface changes require migration of every use and deletion of old paths in the same delivery; affected Reg compiler closures rebuild and are reassessed automatically. Hashing producer or judge program bytes into a reuse condition of a data product is prohibited. A per-module report artifact traces the module's own compiler closure, utility inputs and report format identifier; the Inspector executable is demanded and awaited without entering that trace. Judge fixes do not retrospectively reassess unchanged registrations; delta-only DTR does not consume unchanged registrations. A requested historical reassessment uses an explicit uncached complete report. Changes to extraction semantics, including declarations, statement identity or axiom closure, or to the report format update the format identifier, reject old reports through strict readers and re-extract every module.
 
-The current job restores optional dependency, project and toolchain caches as available, then builds the Lean report once. The report, materials and project build products travel together in the project build directory cache; current and delta consume that report, while each unit job owns its own test or proof result. Truth-release bundle verification is offline and does not select CI runs or download a report. There is no independent report cache/store, paused-producer/resume protocol, baseline adapter or delta/cohort planner. The `detect` job of `ci-current.yml` decides from the unit patterns written in that workflow which unit jobs run; Scribe current checks consume `Meta/ReportProducers/scribe-content.json` and never read base.
+A22 的报告路径在 current 中恢复可用的 dependency/project/toolchain 缓存，随后生产或复用一份聚合 Lean report；纯理论路径不使用 Lean report。报告、材料和项目编译产物随同一 project buildDir 运输，current/delta 消费聚合报告，各 unit job 分别承担自己的测试或反证结果。原生模块产物仍供报告生产和聚合复用，没有移除完整报告架构。truth-release bundle 离线验证不选择 CI run 或下载报告。没有独立报告 cache/store、暂停后续跑协议、baseline adapter 或 delta/cohort planner。`ci-current.yml` 的 detect 只按其单元模式选工；Scribe current 消费 `Meta/ReportProducers/scribe-content.json`，不读 base。
 
 
 **Compiled contract production and inputs.** Production report generation reads each requested module and its imported declarations from serialized compiler artifacts through `RawArtifacts.Store`. It does not initialize extensions, construct an Environment, invoke elaboration or Meta, or run a content-supplied driver. Typed inputs are identified by their compiled Contract type heads and owner facts; constructor trees and safe constant references are decoded as data. Values requiring evaluation, missing parts, unknown layouts and read failures receive named diagnostics and have no fallback path. Each row is computed from its own artifact data. The raw reader checks compiler header identity and constant-table structure; native Lake traces select the compiler dependencies.
@@ -409,7 +409,7 @@ Per-item JSONL has name/path/outcome/error and the confirmed recovery branch; fa
 
 **A22 CI 单元作业与 current/delta 契约**
 
-**入口与选工。** CI 是一个 workflow `ci-current.yml`，PR 与 push 各自触发。每个独立程序或测试项目是其中一个单元作业，作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 仅检出 `tools/scripts/workflow`），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按同一 workflow 中写明的单元白名单 `CI_UNITS` 一次判定各单元是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。检测校验并按白名单匹配完整改动路径列表，不设路径数量截断。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
+**入口与选工。** 普通检查由 workflow `ci-current.yml` 承担，PR 与 push 各自触发；独立缓存入口见本节缓存契约。每个独立程序或测试项目是其中一个单元作业，作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 仅检出 `tools/scripts/workflow`），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按同一 workflow 中写明的单元白名单 `CI_UNITS` 一次判定各单元是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。检测校验并按白名单匹配完整改动路径列表，不设路径数量截断。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
 
 PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触发 PR head，第一父 `B=M^1` 只作路径比较和 delta 的数据。push 核对 `HEAD=GITHUB_SHA=event.after`，按完整 `event.before→event.after` 端点差异判 hit；初始 push 的全零 before 使用当前树路径。schedule/dispatch 同样核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs；固定对象及显式网络 URL 仍可达，不宣称完全网络隔离。只执行候选代码，不 checkout、编译或执行 base 判官。
 
@@ -422,7 +422,7 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 | `make -C tools compile-proof PROOF=capability-proof` / `PROOF=banned-api-proof` | 构建并调用 `StrataLint.TestEvidence` 验证预期的编译拒绝及具名诊断，任意编译失败不替代反证；CLI 的同名入口复用该实现。 |
 | `make lean-report` | 经受保护的 Lean 缓存入口和原生 Lake 增量生产规范报告。 |
 | `check-current --candidate-lean-report FILE` | 当前树有效性；context 无 base 或 changes，可在根提交、无 remote 的仓库中独立运行。 |
-| `check-delta --protected-base <40-hex-sha> --candidate-lean-report FILE` | 读取固定 base 数据，验证跨树保护、分区、首次冻结、棘轮及候选测试拓扑；删除测试项目不因基线登记缺失而阻断。 |
+| `check-delta --protected-base <40-hex-sha> [--candidate-lean-report FILE]` | 读取固定 base 数据；无报告仅接受非空且完全位于 `docs/develop/theory/` 的变更，沿既有快照、FILEMAP、路径保护与 SL-003 理论文档容量检查。其它变更必须提供报告，验证跨树保护、分区、首次冻结、棘轮及候选测试拓扑；删除测试项目不因基线登记缺失而阻断。 |
 | `tools/scripts/workflow/scribe-content-checks.sh REPORT [SCRIBE_DLL] [PATHS_FILE]` | 调用 `content-check --report REPORT [--paths-from PATHS_FILE]`，在一个进程中加载一次显式报告，依次运行 `projections --check`、`describe-report --check` 与 `markdown-check`；保留各检查的输出与首个失败退出码。 |
 | `filemap-conform` | 独立核对当前 FILEMAP、路径、producer/verifier 与生成物契约。 |
 
@@ -436,7 +436,7 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 `Meta/ci-checks.json` 仅保留 SL-003/SL-015 的 materials 与 material_excludes，供现役规则材料谓词读取。`Meta/ReportProducers/scribe-content.json` 声明 statement projection 的项目根与 `lean-report-inputs.json` 中的 scope；非空 changes 使用显式登记及项目引用闭包决定谓词影响范围，null changes 仍完整验证。它不承担跨 workflow 计划或执行证据。
 
-**Workflow 与报告消费。** 测试项目、selftest、两类反证、FILEMAP 与 current 分属独立作业，`ci-unit.yml` 只提供 workflow_call 的公共执行步骤。current 作业在报告生产前恢复 judge，miss 时先构建 judge 并按原 key 保存成功的输出；可运行的 judge 输出 bundle 提供 Lean producer，否则报告入口保留独立 producer 构建。judge 构建失败不截断原本可达的报告生产，current 判卷仍跳过，非取消时的 Scribe/delta 保持可达且作业保持失败。随后串行生产一次 Lean report，再运行 check-current 与 Scribe；PR 命中 delta 白名单时运行 check-delta，普通 push 不运行 delta。唯一 required check 为 `required`，确切名称与 Actions app 绑定取自实际 ruleset 和真实运行。watcher 与 contribution queue 按配置的 required set 汇总固定 head 的红绿，不认证旧嵌套运行拓扑。保持 strict=false。
+**Workflow 与报告消费。** 测试项目、selftest、两类反证、FILEMAP 与 current 分属独立作业，`ci-unit.yml` 只提供 workflow_call 的公共执行步骤。current 作业在报告生产前恢复 judge，miss 时先构建 judge 并按原 key 保存成功的输出；可运行的 judge 输出 bundle 提供 Lean producer，否则报告入口保留独立 producer 构建。judge 构建失败不截断原本可达的报告生产，current 判卷仍跳过，非取消时的 Scribe/delta 保持可达且作业保持失败。纯理论变更在 current 作业内直接运行无报告的 check-delta：PR 使用事件 merge commit 的第一父，push 使用完整 event.before→event.after；入口须由真实 diff 确认全部路径属于理论目录。该路径不下载 Lean 缓存、不准备 Lean report、不运行全局 current 或 Scribe，仍执行已有文件/路径保护与 SL-003 的 5,000 行规则。无可读 base 的事件保留完整路径。其它变更随后串行生产一次 Lean report，再运行 check-current 与 Scribe；PR 命中 delta 白名单时运行 check-delta，普通非理论 push 不运行 delta。唯一 required check 为 `required`，确切名称与 Actions app 绑定取自实际 ruleset 和真实运行。watcher 与 contribution queue 按配置的 required set 汇总固定 head 的红绿，不认证旧嵌套运行拓扑。保持 strict=false。
 
 `StrataLint topology` 读取 remote default branch 固定提交的 `ci-current.yml`，检查其 dev pull_request 触发与 current 作业中的 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足 delta gate 契约。
 
@@ -446,7 +446,92 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰
 
 发布命令签发前对每个状态片执行与 SL-008 相同的当前树核对(A14.5)：对应模块存在且为 Closed，pin 等于当前 report 重算的模块陈述摘要，声明清单与当前 report 一致；任一不符即以 `TRUTH_RELEASE_REJECTED` 具名诊断拒绝签发，且不写出 bundle。truth export 的冻结字段按 A14.7 由状态表、当前 report 与源码 import 现算。签发不替代 Lean、Scribe、冻结来源或工件完整性的验证义务。
 
-**缓存与增量。** Lean 的 dependency/project/elan keys、restore 与 snapshot 可独立使用。显式 `Meta/ci-cache-paths.json` 限定 dependency 为 `.lake/packages`、project 为 `.lake/build`；project 同时保留 Lean 编译、Inspector 与原生报告材料，不建立独立 report 层。远端兼容分区取 resolved mathlib revision，二进制另按 OS/arch 隔离。project Actions key 使用唯一的 `lean-project-push-` 前缀，不恢复其它 project 前缀；所有读者使用同一生成规则。种子恢复步骤调用 `lean_actions.py restore`，只消费 Actions 恢复材料；未恢复有效 project 种子时令 `STRATALINT_ACTIONS_CACHE_SEEDED=0`，后续由规范构建入口处理。current 作业与普通 ci-unit 同为 30 分钟，使用 `fetch-or-fail`，不授权冷项目构建；缺失或不兼容种子保留长 producer 补救入口，格式相符的差量由 Lake 原生增量处理。project 种子由 dev/integration push 或已校验受保护 ref/SHA 的手动 producer 发布；独立 pull_request:labeled producer 也可在该 PR 的 merge-ref 私有空间发布，不供 base 分支或其它 PR 使用。普通 pull request required job 只恢复、不发布 project 种子并具名报告跳过。 手动、PR 标签和受保护 dev/integration push 的 360 分钟 producer 共用 `.github/actions/lean-cache-produce/action.yml`。长任务只构建报告、原生程序和测试所需编译产物并发布缓存，不执行测试套件；定时 120 分钟 Release publisher 独立保留。自动 push producer 在 current 结束后执行：current 已确认发布本次增量种子时跳过，否则自动运行同一核心，且不加入 required 检查集合。手动和自动 producer 使用分支 concurrency，`cancel-in-progress: false` 保留活动任务并合并 pending 请求；PR producer 保留其原有 PR concurrency。自动入口只接受受保护 dev/integration 的实际 push SHA，经既有 ci-entry 核对，不提升 PR 缓存、不声称不同 merge tree 等价。发布须报告生产成功且本次报告与程序目标的构建工作已知为正；push 在报告生产成功后、判卷开始前只尝试一次。生产者在恢复树之外记录本次 run/attempt 与报告、程序两类工作；缺失、畸形、陈旧或无法判定的记录禁写 project，并具名报告 unknown，不视为零工作；零工作另报跳过原因。project 的成功前置称为 `STRATALINT_REPORT_SUCCEEDED`，不预报检查成功。dependency 与 elan 仍在全部检查成功后按各自条件保存，PR 的这些缓存只供同一 PR 使用。缓存步骤不承载业务判词；缓存缺失、损坏或保存失败不撤销业务判词，正常生产失败仍阻断。缓存命中不等于当前检查通过。elan Actions key 使用唯一的 `elan-pinned-` 生成，不恢复其它 elan 前缀；miss 只由 `install-lean-toolchain.sh` 安装钉版工具链。保存点列出已安装工具链作为轻量收据，不删除恢复目录中的工具链。
+<a id="a22-ci-cache-flow"></a>
+**缓存角色与数据流。** 下表中的构建产物是检查的证据输入，缓存发布不签发准入结论。普通检查由 `ci-current.yml` 选工；缓存 producer 和 Release publisher 是独立入口。
+
+| 角色 | 责任与边界 |
+| --- | --- |
+| 短 CI | 准入与检查消费者；`current` 限时 30 分钟，`ci-unit.yml` 默认 30 分钟。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
+| 独立长 Actions producer | manual、PR label、自动 protected push 共用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，不执行测试套件。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
+| GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
+| GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
+
+```text
+source + selected path changes
+  +--> detect / CI_UNITS --> short current + selected unit checks --> required
+  |                          | theory-only nonempty delta: SL-003 / SL-015
+  |                          | report path: restore -> native increment -> consume
+  +--> PR label / manual ------------------------------------------+
+  +--> protected push -> after current: Lean needed + no usable seed
+                                                                  |
+                                              long Actions producer
+                                                                  |
+Actions Cache (visible ref) --restore--> local workspace <--native build
+                                          |
+  .lake/build: compiler artifacts + native per-module / aggregate report
+               + materials + sidecars + successful report receipt
+  .lake/packages: dependency artifacts; ~/.elan: pinned toolchain
+  judge cache: compiled .NET outputs (separate from report evidence)
+                                          |
+  project/dependency/elan --allowed save--> Actions Cache (writer ref)
+  judge outputs ----------allowed save--> Actions Cache (writer ref)
+  .lake/build --Release publication entry--> GitHub Release cache
+  GitHub Release cache --local fetch entry--> .lake/build
+  schedule --> own Release job: optional Actions restore -> report -> publish
+```
+
+每个 job 的本地 `.lake/build` 是编译、原生模块报告、聚合报告和材料共同的承载目录，跨 job 通过运输恢复，不是共享可变目录。`Meta/ci-cache-paths.json` 登记 project 为 `.lake/build`、dependency 为 `.lake/packages`；elan 与 judge 是辅助编译缓存，不是额外 report store。current 实际消费聚合报告，模块输出供原生生产与聚合复用。测试在普通 CI 的命中单元执行，长任务只编译其选定程序目标。
+
+**触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
+
+| 入口 / 触发 | 固定源码与读取范围 | 写入范围 | job 时限 |
+| --- | --- | --- | --- |
+| 普通 PR | merge candidate `M=GITHUB_SHA`，`B=M^1` 只作数据；project 先自身 merge ref，再 base branch | required job 不写 project；dependency、elan、judge 只写该 PR ref | current 30m；unit 默认 30m |
+| 普通 push | `HEAD=GITHUB_SHA=event.after`；完整 before/after delta；project 查自身 branch ref | dev/integration 可在报告成功后写 project 增量；辅助缓存各依自身条件 | current 30m；unit 默认 30m |
+| `pull_request:labeled`，标签 `lean-cache-produce` | 事件 merge SHA；同普通 PR 的可见种子；只读 contents/actions token | project 等写 `refs/pull/<number>/merge` 私有 scope，不提升为 dev/integration 种子 | 360m |
+| `workflow_dispatch` | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | 同一已校验 branch scope | 360m |
+| 自动 protected dev/integration push | current 结束后且未取消，`lean_required=true`、`project_seed_available!=true`；使用实际 push SHA | 同一 branch scope，复用长 Actions 核心 | 360m |
+| schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 120m |
+| 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
+
+每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；PR producer 按 PR concurrency，`cancel-in-progress: true`。
+
+纯理论免报告只接受真实 delta 非空、全部路径为 `docs/develop/theory/` 下理论文档且非删除输入已经读取的情况：PR base 为 `M^1`，push base 为固定 `event.before`，沿既有快照/FILEMAP 与 `ExecuteTheoryDelta` 执行 `SL-003`、`SL-015`。不恢复 Lean 缓存、不生产报告、不运行全局 current/Scribe、不触发自动 producer；其它命中单元照常运行。混合变更必须提供报告；空 delta 即使进入无报告入口也会拒绝，未读取的理论输入也拒绝，均不构成免检。无可读 before 的事件走完整报告选择，不用未知 delta 猜纯理论。
+
+**状态与决策。** 兼容种子须具有规范报告、四个 sidecar 与成功收据，并满足 A14.9 的格式和工件检查；格式相符不表示输入未变。
+
+| 已观测状态 | 必须执行的后续动作 / 结果 |
+| --- | --- |
+| 兼容种子，报告绑定输入未变 | 复用整份报告；选中的程序目标仍单独完成 Lake 增量构建义务，程序失败保持非零。 |
+| 兼容种子，源码/配置/utility 等报告输入变化 | 交给 native Lake traces 选择模块增量并聚合，复用行保留原来源；不加第二套 FIB 兼容扫描或迁移。 |
+| 种子缺失、不完整、不可读或格式不符 | 短报告入口使用既有 `fetch-or-fail` 恢复路径；恢复后仍无兼容种子，`LEAN_REPORT_CACHE_INCOMPATIBLE` 以底层 exit 4 在提取或选定程序构建前失败。make 可能返回 2，须保留原诊断。 |
+| 格式仍为 v3，但实际载荷被既有 consumer 拒绝 | 保留该 consumer 的真实错误及阶段；不能伪称 cache missing、静默兼容或自动迁移，也不为 FIB 新增探测器。 |
+| 短任务超时、编译失败或报告失败 | 保留实际失败阶段、退出/取消状态与诊断；独立 producer 是补救入口，不把本次失败转绿、不静默改为完整构建或抬预算。 |
+| 报告成功，当前工作收据中 report + programs 已知为正 | 有写入资格的 writer 可准备并保存 project 快照；普通 push 不等待准入判词。短 CI 保存/确认传输失败不改变检查结果。 |
+| 报告成功，工作已知为零 | `no-build-work`，不重复上传相同产物；已接受 Actions project 种子时可作为可用种子，避免自动长任务。独立 producer 的零上传成功也必须满足已接受种子。 |
+| 工作缺失、畸形、陈旧或未知 | `build-work-unknown`，禁写 project，未知不等于零；长 producer 无可用种子则失败。 |
+| 长 producer 新建种子 | 必须完成报告/程序生产并验证可用性，保存后核同 ref 的实际 cache key；不能仅凭 save 调用结束宣称已发布。 |
+| Release 发布 | 构建/内容校验失败保持硬失败；可选传输失败可返回 0 并给出 `failed`/`skipped`，清理失败记录 `prune_error`。新发布成功须 `published` 且远端 published 状态、manifest/资产清单已验证；exit 0 本身不足，`exists` 只表示已核对既存快照。 |
+
+`fetch-or-fail` 不扩大 Release 的使用范围：`lean_cache_release.fetch` 在 `GITHUB_ACTIONS=true` 时明确 `skipped`，CI 不下载生产 Release 种子，随后仍须通过兼容种子检查；本地主检出可走 Release recovery，linked worktree 依既有 warm-main/reseed 边界拒绝直接下载。恢复边界不授权短 CI 冷项目构建。需要 Lean/report 的自动 push 仅在已确认发布增量种子，或 Actions 种子已接受、报告成功且本次工作确为 `no-build-work` 时免去长 producer；不需要 Lean/report 时也不触发。cache hit、unknown work 或未核实的上传均不能替代这些条件。
+
+**写入权限与不可变快照。** project 写入前置是 `STRATALINT_REPORT_SUCCEEDED`、已知正的 report/program 工作和既有 writer 身份，不是全部检查绿。普通 push 在报告生产成功后、准入判卷开始前尝试一次；普通 PR required job 由 `project_publication` 返回 `pull-requests-do-not-publish-project-seeds`，只有显式 PR producer 可写其 project scope。普通 current 的 dependency/elan 在该作业检查成功后各按条件保存，不等待其它并行 job；judge 在自身编译成功后即可保存。辅助缓存写入也不能跨越 PR ref 边界。Actions save 为本次 run/attempt 创建新 project/dependency 快照，不修改旧 immutable key；零工作无需重复上传。短 CI 的可选运输与实际报告/编译/判卷成败分开，缓存不是真源。
+
+**键、格式及归属。** 以下标识分别承担各自契约，报告格式与容器/manifest 代际不得混用：
+
+| 标识 | 归属与复用边界 |
+| --- | --- |
+| `lean-project-push-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>` | Actions project 地址；`lean_actions.actions_keys` 单源生成，ref 另由 Actions scope 限定，只恢复此 project 前缀。 |
+| `lean-dependency-v4-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>`、`elan-pinned-<OS>-<arch>-<pin-sha256>` | 既有 dependency 和钉版 elan 运输键；elan miss 由 `install-lean-toolchain.sh` 安装，保存前列出工具链，不删恢复的工具链。 |
+| `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-<execution12>-<publication-id>` | Release buildDir 容器地址；前缀选候选后，manifest 必须匹配完整 `cache_key` 的报告格式和完整 execution SHA256 才下载构建归档。 |
+| `stratalint-raw-lean-report-v3` | `lean-report-selection.py:REPORT_FORMAT` 单源报告线格式；FIB 仅为原报告中的可选合同分析，不定义独立 `schema_version` 或独立缓存生命周期。 |
+| Release manifest `lean-release-seed-v4`、build-work `schema_version=1` | 前者管理运输资产与来源，后者是当前调用在恢复树之外的工作量控制证据；均不是 FIB 版本，不能随 FIB 字段清理删除。 |
+
+Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、归一化平台族与声明环境值；名字中的 12 位摘要不替代 manifest 全值校验。`publication-id` 是 `ci-<run>-<attempt>` 或 `local-<HEAD12>-<UTC>`，HEAD 只在这个唯一后缀中，不决定复用；报告模块/配置全集摘要与生产程序字节不进入 Release 名字。Actions 按 OS/arch 隔离；Release 跨平台共享仅限 A14.9 已声明的 arm64 族，原生产物仍由 Lake retrace。详细键生成与容器清单以 `lean_actions.py`、`lean_cache_release.py` 为源，不增设版本清单。
+
+报告、种子、收据等数据产物不得把 producer/judge 程序字节哈希作为复用条件；模块 trace、utility、格式与整份收据的输入边界依 A14.9。judge 编译缓存缓存的是程序自身，可哈希其实际构建输入与配方。显式历史登记无缓存重评是独立请求；`REBUILD_REPORT_CACHE=1` 只绕过整份 receipt，仍可复用原生模块产物，不保证重评全部历史登记或 full clean，也不承诺旧 same-v3 载荷自动迁移。
+
+调用依据：[普通 CI](../../../.github/workflows/ci-current.yml)、[unit](../../../.github/workflows/ci-unit.yml)、[长 Actions 核心](../../../.github/actions/lean-cache-produce/action.yml)、[标签/手动/定时入口](../../../.github/workflows/lean-cache-publish.yml)、[Actions 运输](../../../tools/scripts/worktree/lean_actions.py)、[Release 发布/取回](../../../tools/scripts/worktree/lean_cache_release.py)、[报告复用](../../../tools/lean-inspector/reuse.py)、[免报告理论检查](../../../tools/StrataLint.Engine/Rules/RuleCatalog.cs)。
 
 project 恢复在 current 与 Lean build 单元中先查读者可见的种子：pull_request 优先取自身 `refs/pull/<number>/merge`，该 ref 无合格种子时再取 `refs/heads/$GITHUB_BASE_REF`；push 取 `$GITHUB_REF`。`lean_actions.py keys` 使用可选的 `GH_TOKEN`、`GITHUB_REPOSITORY` 与 `GITHUB_API_URL`（默认 `https://api.github.com`），通过标准库 HTTP 请求完整分页的 Actions cache 列表，显式按 `created_at` 降序分页；每行的 cache `id` 须为互异正整数，重复、缺失或无效 id，或不同 id 的总数与 `total_count` 不符，均走具名不完整列表 fallback。只接纳 ref 精确相同、key 为当前 project restore prefix 加正十进制 run id 与 attempt 的条目，按数值 `(run id, attempt)` 取最大值，不使用列表顺序或时间字段。`project_restore_key` 是独立的恢复输出，`project_key` 仍是本次发布 key。查找未配置、请求失败、HTTP 错误、列表畸形或不完整、无合格条目时具名报告原因并请求本次 key，保留现有 prefix restore；偏好 key 被淘汰或不兼容时也经同一 prefix fallback 与既有恢复入口补齐。每次请求保留固定网络 timeout；整个可选查找由单个固定 10 秒 transport hang guard 限定，涵盖名称解析、连接、headers、body 及全部分页。查找在 daemon thread 中执行；guard 到期即放弃等待，以 `lookup-transport-hang-guard` 原因输出既有 fallback 收据并继续本次 key，不重试或轮询。daemon thread 不输出收据或 key。restore 收据同时给出 requested key 与实际 matched key。此偏好仅是性能启发式；run id 大小不证明 push 顺序、构建材料包含关系或有效性，查找与缓存命中均不承载检查成功或判词。
 
@@ -538,7 +623,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 `ci-current.yml` 的 `detect` 按文件内 `CI_UNITS` 判定命中单元。
 current、FILEMAP、selftest、编译反证与各测试项目分别运行；
 `required` 合取实际命中单元的成功与未命中单元的跳过。
-current 生产一份 Lean 报告供 check-current、Scribe 与适用的 PR check-delta 消费。
+current 的报告路径生产一份 Lean 报告供 check-current、Scribe 与适用的 PR check-delta 消费；纯理论路径依 A22 执行文件/容量检查。
 作业、缓存和退出契约见 A22；本节不维护第二份作业清单。
 
 ---

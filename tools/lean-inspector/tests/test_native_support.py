@@ -61,7 +61,7 @@ def transport_inspector(source):
         '  let enrollmentErrors : Array String := #[]\n') + source[end:]
     source = source.replace('RawArtifacts.sharedModules targets statementOnly',
         'RawArtifacts.sharedModules targets true')
-    start = source.index('  let fib ← if statementOnly')
+    start = source.index('  let fib ←')
     end = source.index('  let row := { row with', start)
     source = source[:start] + '  let fib := Json.null\n' + source[end:]
     return source
