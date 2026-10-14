@@ -450,7 +450,7 @@ lemma MellinOfSmooth1a {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
           by_contra hNZ
           exact hy (deltaSpikeSupport εpos hz.2.le suppν hNZ)
         simp [hDelta]
-    · apply Integrable.piecewise Smeas ?_ integrableOn_zero
+    · apply Integrable.piecewise Smeas.nullMeasurableSet ?_ integrableOn_zero
       simp only [IntegrableOn, Measure.restrict_restrict_of_subset SsubI]
       apply MeasureTheory.Integrable.mono_measure ?_
       · apply MeasureTheory.Measure.restrict_mono' SsubT.eventuallyLE le_rfl
