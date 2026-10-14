@@ -7,6 +7,7 @@
    digest: A triangulated complete graph refutes the least-energy uniform-overlap bound. -/
 
 import D5.S3.Quantum.Dynamics.AverageMixingTraceMaximum
+import D5.S3.Quantum.Dynamics.LaplacianPeakTransferTrees
 
 set_option linter.style.longLine false
 
@@ -39,19 +40,10 @@ private theorem overlap_bound {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel 
   let s := univ.filter (fun i => hA.eigenvalues i = lamMin G)
   have hc : ∀ i ∉ s, c i = 0 := by
     intro i hi
-    have hbi : b i ∈ Module.End.eigenspace (G.adjMatrix ℝ).toEuclideanLin
-        (hA.eigenvalues i) := by
-      rw [Module.End.mem_eigenspace_iff]
-      apply WithLp.ofLp_injective 2
-      exact hA.mulVec_eigenvectorBasis i
-    have hvi : WithLp.toLp 2 v ∈ Module.End.eigenspace (G.adjMatrix ℝ).toEuclideanLin
-        (lamMin G) := by
-      rw [Module.End.mem_eigenspace_iff]
-      apply WithLp.ofLp_injective 2
-      exact hv
-    exact (isSymmetric_toEuclideanLin_iff.mpr hA).orthogonalFamily_eigenspaces
-      (fun he => hi (mem_filter.mpr ⟨mem_univ i, he⟩)) ⟨b i, hbi⟩
-      ⟨WithLp.toLp 2 v, hvi⟩
+    simpa only [c, b, EuclideanSpace.inner_eq_star_dotProduct, WithLp.ofLp_toLp,
+      star_trivial, dotProduct_comm] using
+      D5.S3.Quantum.Dynamics.LaplacianPeakTransferTrees.eig_dot_zero hA v (lamMin G) hv i
+        (fun he => hi (mem_filter.mpr ⟨mem_univ i, he⟩))
   have hs : ∑ i ∈ s, a i * c i = ∑ j, v j := by
     calc
       _ = ∑ i, a i * c i := sum_subset (filter_subset _ _) (fun i _ hi => by
