@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0af324f78b1f445e50be60d3822e8c9ab9699d2beb9317e21d14d203abaf90f8
+  normalized_sha256: sha256:0af324f78b1f445e50be60d3822e8c9ab9699d2beb9317e21d14d203abaf90f8
+cas_ref: sha256:0af324f78b1f445e50be60d3822e8c9ab9699d2beb9317e21d14d203abaf90f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：\bigotimes_{p\in J}K_p(x,\cdot),：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 9bd468265deb390d76feb9bbcb4c8af679d2bb3b0bac5fb2abcc40528ca79cda
+    next_atom_id: 5305db4b22053835963cf4029f947353aef867c907bb2eabe191ad83ad7a9461
