@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c072510df86ff0ffc5abe551167504235c6f9da7ca1674a0c5b892fb43185665
+  normalized_sha256: sha256:c072510df86ff0ffc5abe551167504235c6f9da7ca1674a0c5b892fb43185665
+cas_ref: sha256:c072510df86ff0ffc5abe551167504235c6f9da7ca1674a0c5b892fb43185665
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义38.1只引入有限联合闭图、带位置标记的符号矩阵及空维约定，不断言闭图判据等性质。
+    previous_atom_id: 00ee2820e4f0d0ce291587b2371a818b72036d19be5efcae0b9a1d9ccf96e547
+    next_atom_id: 2f2ef27a89c2fde4f22a42eb1be6ce55b0f556e207c96e4d19a383ddd71510df
