@@ -4621,3 +4621,176 @@ FH1--FH4 are a project application and exact consumer of existing
 complete-integral PNT, inverse-scale and finite partial-summation
 inputs, without a new generic theorem, literature-priority claim,
 Lean declaration or kernel verification.
+
+## The original occupation pays all higher prime powers below its target scale
+
+Retain FH1--FH4's original source, full windows, actual selector,
+all endpoint ties and fixed $\Theta,\eta,d,\kappa,a$. Reuse the complete
+square-root comparison in [Nicolas (GPP2)](../ArithSums/nicolas2025comparison.md#uniform-full-tail-comparison)
+and its existing kernel moment (GPP4). Their analytic suppliers are
+[Dusart arXiv:1002.0442v1](https://arxiv.org/pdf/1002.0442v1),
+Lemma 3.3 and Theorem 5.2; their proofs and computations are not repeated.
+The new consumer is the original compensated selector, including its
+local subtraction, rather than GPP's mean-one dilation transport.
+This is a `repo-derived` paper application of those inputs, not a new
+prime-counting theorem, literature-priority claim or Lean verification.
+
+### Keep the actual square atoms and the same compensation
+
+Write
+
+$$
+\vartheta(u)=\sum_{p\le u}\log p,\qquad
+P_{\ge2}(u)=\psi(u)-\vartheta(u)
+=\sum_{\substack{k\ge2\\p^k\le u}}\log p,
+\qquad E_\vartheta(u)=u-\vartheta(u).
+$$
+
+These functions keep every actual weak endpoint; the core selector
+continues to come from the original full arithmetic envelope. Define
+$G_a^\vartheta(B)$ by replacing $E$ with $E_\vartheta$ in HC3's
+complete response, with the same $a$, and put
+
+$$
+\begin{aligned}
+\mathsf H_{\ge2}(B)&=
+ s_B\int_B^\infty P_{\ge2}(u)k(u)\,du
+ -\frac{aP_{\ge2}(B)}{\sqrt B},\\
+\mathcal J_X^\vartheta&=
+ \int_{t_0}^{t_m}G_a^\vartheta(\mathcal B_X(t))\,dt.
+\end{aligned}
+$$
+
+The exact split $E=E_\vartheta-P_{\ge2}$ gives
+
+$$
+G_a(B)=G_a^\vartheta(B)-\mathsf H_{\ge2}(B).
+\tag{FP1}
+$$
+
+In particular the local prime-power term is subtracted inside
+$\mathsf H_{\ge2}$; it is not counted a second time as extra reserve.
+No prime label, core, residence length or compensating parameter changes.
+
+### Reuse the uniform complete-tail comparison at every original clock
+
+For $B>(3594641)^2$, GPP2 supplies, uniformly for $u\ge B$,
+
+$$
+|P_{\ge2}(u)-\sqrt u|\le\epsilon(B)\sqrt u,
+\qquad
+\epsilon(B)=\frac4{5\log^2B}+\frac{89}{50}B^{-1/6}.
+$$
+
+This is precisely GPP2 with its lower endpoint $s=B$; its auxiliary
+$A$ may be set to $100B/99$. Use the already evaluated GPP4 moment
+
+$$
+2-\frac2{\log B}
+\le s_B\int_B^\infty\sqrt u\,k(u)\,du<2.
+$$
+
+Positivity of $k$ and the same comparison at $u=B$ consequently give
+
+$$
+\boxed{
+|\mathsf H_{\ge2}(B)-(2-a)|
+\le\frac2{\log B}+(2+a)\epsilon(B).}
+\tag{FP2}
+$$
+
+Let $b_X$ be the least core clock among the original active cores
+and endpoint ties. The existing all-tie endpoint bound and N2 give
+$b_X\to\infty$. The right side of FP2 decreases to zero uniformly
+for $B\ge b_X$. Integrating it against the actual residence, of
+mass exactly $L_X$, yields
+
+$$
+\boxed{
+\left|\mathcal J_X-\mathcal J_X^\vartheta+(2-a)L_X\right|
+\le\left[\frac2{\log b_X}+(2+a)\epsilon(b_X)\right]L_X
+=o(L_X).}
+\tag{FP3}
+$$
+
+Thus the complete higher-power response has the favorable sign
+$-(2-a)L_X+o(L_X)$ in the original account. This assertion is uniform
+on the original windows, including $\Theta=1$; it assumes no independent
+sampling law, transverse phase speed or mean-one property of residence.
+Because the original fixed $\eta<1/2$ gives $M_X\to\infty$,
+this entire contribution is $o(M_XL_X)$. It cannot alone cancel the
+positive original JM7 margin, which has order $M_XL_X$.
+
+### The same finite test loses only a paid higher-power contribution
+
+Use either common horizon already paid in FH1. Set
+$\mathsf A_X=\int s_{\mathcal B_X(t)}dt\le e^{\mathsf Y_X/2}\mathsf Y_XL_X$.
+The same GPP2--GPP4 bounds pay the complete higher-power tail by
+
+$$
+0\le\mathsf A_X\int_{\mathsf U_X}^\infty P_{\ge2}(u)k(u)\,du
+\le 2(1+\epsilon(b_X))
+\frac{\mathsf Y_X}{\log\mathsf U_X}
+\exp\left[\frac{\mathsf Y_X-\log\mathsf U_X}{2}\right]L_X
+=o(L_X).
+$$
+
+Here $\log\mathsf U_X/\mathsf Y_X\to\infty$ for either FH1 horizon.
+No complete future interval is omitted without this bound.
+FH1 together with this estimate also pays the common remote tail for
+$E_\vartheta=E+P_{\ge2}$.
+
+Retain exactly FH3's $\mathsf W_X$ and $\mathsf P_X$, and define
+
+$$
+\mathsf S_X^{(1)}=
+\sum_{p\le\mathsf U_X}(\log p)\mathsf W_X(p),\qquad
+\mathsf S_X^{(\ge2)}=
+\sum_{\substack{k\ge2\\p^k\le\mathsf U_X}}
+ (\log p)\mathsf W_X(p^k).
+$$
+
+Subtract FH3's finite identity from its identical $\vartheta$ version,
+or exchange the same finite prime-power sum once, to get
+
+$$
+\boxed{
+\begin{aligned}
+\mathsf S_X^{(\ge2)}&=
+ \int_{t_0}^{t_m}\mathsf H_{\ge2}(\mathcal B_X(t))dt
+ -\mathsf A_X\int_{\mathsf U_X}^\infty P_{\ge2}(u)k(u)\,du\\
+&=(2-a)L_X+o(L_X).
+\end{aligned}}
+\tag{FP4}
+$$
+
+Its weak cutoff convention includes $p^k=B$ and $p^k=\mathsf U_X$.
+In particular it is nonnegative eventually, also directly from FH3's
+nonnegative actual weights. All squares and every higher layer are
+retained, including powers below the least core clock.
+
+Accordingly FH4 is equivalent, with an arbitrarily small fixed loss
+of its strict constant, to the still-unproved first-power test
+
+$$
+\boxed{
+\mathsf S_X^{(1)}\ge\mathsf P_X-C_0M_XL_X,
+\qquad C_0<d(1-\kappa)/16.}
+\tag{FP5}
+$$
+
+For example FH4 with one fixed strict $C_0$ implies FP5 with any fixed
+$C_1$ satisfying $C_0<C_1<d(1-\kappa)/16$, eventually on that same
+cofinal sequence, because FP4 is $o(M_XL_X)$. Conversely FP5 implies
+FH4 with the same constant eventually, by the higher-power sum's
+nonnegativity. The analogous buffered equivalence for the complete
+continuous accounts follows from FP3 and CQ5. None selects a favorable
+sequence or establishes its required lower bound.
+
+This pays a full arithmetic component of the original finite test,
+rather than assigning it an assumed favorable sign. The outstanding
+obligation is a quantitative lower bound for actual first-power primes
+under the unchanged residence weights; their positive jumps remain.
+No total-prime cancellation follows from a Fibonacci inclusion law or
+from the geometric conservation of a different observable. The original
+signed upper estimate, all-integer Robin inequality and RH remain unproved.
