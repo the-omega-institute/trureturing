@@ -476,12 +476,16 @@ jobs:
             tools/scripts/worktree/lean-cache-run.sh
             tools/scripts/worktree/lean-cache-ensure.sh
             [tests-ci-entry]
+            tools/scripts/dotnet-test.sh
+            tools/scripts/workflow/ci_compute.py
             tools/scripts/workflow/ci-entry-test.sh
             tools/scripts/workflow/ci_detect.py
             tools/scripts/workflow/ci_required.py
             tools/scripts/workflow/test_ci_detect.py
+            tools/scripts/workflow/test_ci_compute.py
             tools/scripts/workflow/test_ci_required.py
             [tests-cli]
+            tools/scripts/workflow/ci_compute.py
             tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py
             tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_anchor_cases.py
             tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/mirror_fixture.py
@@ -1032,6 +1036,7 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-lean-report-script]
+            tools/scripts/workflow/ci_compute.py
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/scripts/workflow/judge-lean-producer.sh
@@ -1687,7 +1692,8 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 30
+    # Platform wall-clock cap, separate from the shared 30-minute compute allowance.
+    timeout-minutes: 360
     outputs:
       lean_required: ${{ steps.report_entry.outputs.hit }}
       project_seed_available: ${{ steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
@@ -1922,9 +1928,27 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Prepare judge and selected test dependencies
+        env:
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+          DECLARED_TESTS: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        run: |
+          if [[ "$JUDGE_HIT" != true ]]; then
+            dotnet restore tools/StrataLint.Cli/StrataLint.Cli.csproj --locked-mode
+          fi
+          if [[ "$DECLARED_TESTS" == true ]]; then
+            dotnet restore tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj --locked-mode
+            dotnet restore tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj --locked-mode
+          fi
+      - id: compute_budget
+        name: Initialize the shared compute allowance
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 30
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
-        run: dotnet build $JUDGE_BUILD_ARGS
+        run: python3 tools/scripts/workflow/ci_compute.py run -- dotnet build $JUDGE_BUILD_ARGS --no-restore
       # The judge outputs are a function of the keyed sources, so they are saved
       # as soon as the build succeeds.
       - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
@@ -1945,16 +1969,19 @@ jobs:
           else
             base="$CI_PUSH_BEFORE"
           fi
-          dotnet "$CLI" check-delta --protected-base "$base"
+          python3 tools/scripts/workflow/ci_compute.py run -- dotnet "$CLI" check-delta --protected-base "$base"
       - id: lean_report
         name: Build the Lean report
-        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
+          # This supervisor also encloses preparation; compute phases share the file above.
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: |
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
             export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+            echo "STRATALINT_LEAN_PRODUCER_DLL=$producer" >> "$GITHUB_ENV"
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
@@ -1970,8 +1997,9 @@ jobs:
       - name: Verify production source binding artifacts
         if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
         env:
+          CI_DOTNET_PREPARED: '1'
           FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
-        run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
+        run: python3 tools/scripts/workflow/ci_compute.py run -- make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -2004,17 +2032,17 @@ jobs:
         run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
         if: steps.report_entry.outputs.hit == 'true'
-        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
+        run: python3 tools/scripts/workflow/ci_compute.py run -- dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
       - name: Scribe content
         if: ${{ !cancelled() && steps.report_entry.outputs.hit == 'true' }}
         env:
           SCRIBE_PATHS: ${{ runner.temp }}/scribe-paths
-        run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
+        run: python3 tools/scripts/workflow/ci_compute.py run -- tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
       - name: Delta rules
         if: ${{ !cancelled() && steps.report_entry.outputs.hit == 'true' && steps.delta_entry.outputs.hit == 'true' }}
         run: |
           rc=0
-          dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
+          python3 tools/scripts/workflow/ci_compute.py run -- dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
           # Exit 3: protected-surface change (SL-022) with every content check passed.
           if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
           exit "$rc"
@@ -2206,7 +2234,7 @@ jobs:
     with:
       command: >-
         bash tools/scripts/workflow/ci-entry-test.sh &&
-        python3 -m unittest tools/scripts/workflow/test_ci_detect.py tools/scripts/workflow/test_ci_required.py
+        python3 -m unittest tools/scripts/workflow/test_ci_detect.py tools/scripts/workflow/test_ci_required.py tools/scripts/workflow/test_ci_compute.py
       dotnet: false
 
   tests-cli:
