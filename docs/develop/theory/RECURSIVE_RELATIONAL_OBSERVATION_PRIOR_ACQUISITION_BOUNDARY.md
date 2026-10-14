@@ -201,8 +201,9 @@ independently of $e$.
 **Proof.** If $RR$ is absent, $R$ is a leaf in a full tree and the second
 Read supplies its actual label. Otherwise $R$ is branch. On a representative
 $s_{j,e}$, (2.3) selects exactly the search tree containing key $j$, and
-the ordered prefix replies are absent below $j$, the actual label at $j$,
-and branch above $j$. The key depths in (2.5)--(2.7) give (2.8).
+the reply at a queried prefix $p_i$ is `branch` for $i<j$, the actual leaf
+label $\lambda_e$ for $i=j$, and `absent` for $i>j$. The key depths in
+(2.5)--(2.7) give (2.8).
 
 For an arbitrary source, a selected tree can only return on actual evidence.
 If it does not, the fallback is the all-source AAR13.4 search, so the same
@@ -740,7 +741,7 @@ The exact source/operation correspondence is also supplied by
 for one unchanged source, literal four-reply semantics, absence and present
 subtree transport. They do not certify the new ordinary optimization bounds.
 
-Three primary decision-tree sources give methodological correspondences:
+Four primary decision-tree sources give methodological correspondences:
 
 * Cicalese, Laber and Saettler, *Diagnosis determination: decision trees
   optimizing simultaneously worst and expected testing cost*, PMLR 32 (2014),
