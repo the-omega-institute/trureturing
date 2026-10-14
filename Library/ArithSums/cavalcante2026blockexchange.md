@@ -53,12 +53,12 @@ Using $k=92$ consecutive primes beginning at $M=7{,}608{,}793$ and the
 $\ell=47$ largest primes below
 
 $$
-B=29{,}582{,}000{,}000{,}000,
+P_*=29{,}582{,}000{,}000{,}000,
 $$
 
 the source checks both exchange inequalities after clearing denominators by
 exact integer arithmetic. It follows that every superabundant $n$ with
-$P^+(n)>B$ satisfies
+$P^+(n)>P_*$ satisfies
 
 $$
 \nu_p(n)\ge2\qquad(p\le7{,}608{,}793).
@@ -66,7 +66,7 @@ $$
 
 Vega's lower bound on the largest prime factor of a hypothetical least Robin
 counterexample among integers greater than 5040 places that source beyond
-$B$, so the same cutoff is a necessary condition for such a counterexample.
+$P_*$, so the same cutoff is a necessary condition for such a counterexample.
 The paper compares it with
 the earlier direct cutoff $5{,}438{,}903$ and with the collective-tail cutoff
 $233{,}911$.
@@ -117,6 +117,99 @@ $\lfloor(|I_r|-1)/M\rfloor+1$. In particular $|I_r|\le M$ leaves at most
 one candidate. The same source has $N_{r,g}\le1+V^2/5$, so $M\mid N_{r,g}$
 also requires $V^2\ge5(M-1)$. These exact integer conditions avoid treating
 rounded rank scales as certified boundaries.
+
+## Finite Fibonacci-rank exclusion mask
+
+The valuation conclusion supplies a finite necessary-condition filter for the
+Fibonacci candidate family. In this section set $B=7\,608\,793$, distinct
+from the largest-prime threshold $P_*$ above. Let $z(p)$ denote the least positive index with
+$p\mid F_{z(p)}$, and define
+
+$$
+R_B=\{r\ge7:r\text{ is prime and }z(p)=r\text{ for some prime }p\le B\}.
+$$
+
+The congruence itself is the $p\mid V$ branch already recorded in FIB §205.3;
+the new finite datum here is the cutoff-indexed set of prime ranks and its
+enumeration under the external valuation certificate.
+
+For every $r\in R_B$, choose such a witness $p$. Then $p\mid F_r$ gives
+
+$$
+1+F_rg\equiv1\pmod p,
+$$
+
+so $p\nmid1+F_rg$. Consequently no member of this rank class can satisfy
+the external necessary condition $p^2\mid N$ at every prime $p\le B$.
+Conditional on the block-exchange and least-counterexample hypotheses above,
+the implication is therefore
+
+$$
+r\in R_B
+\Longrightarrow
+1+F_rg\text{ is not the globally least Robin counterexample}
+$$
+
+for every integer $g$ for which the candidate is in the stated range. This
+does not rule out that an individual candidate violates Robin's inequality;
+it only removes it from the least-counterexample search under the external
+valuation certificate.
+
+The exact enumeration in the companion experiment
+[`research220-fib-rank-cutoff`](https://github.com/the-omega-institute/trureturing-experiments/tree/ad3e57ac/research220-fib-rank-cutoff)
+finds $25\,370$ distinct prime ranks in $R_B$ for
+$B=7\,608\,793$, with largest rank $3\,804\,397$. The output records a
+witness prime and witness count for each rank; it is a finite computation and
+does not assert that the complementary ranks are admissible or that the mask
+extends beyond this cutoff.
+For context, FIB §205.2 gives $p\ge2r-1$ for every prime divisor of
+$F_r$ when $r\ge7$ is prime, so this cutoff can reach no rank above
+$(B+1)/2=3\,804\,397$; the enumeration reaches that endpoint.
+
+The same argument has an all-rank form. Write
+
+$$
+P_B=\prod_{p\le B}p,
+\qquad
+\mathcal A_B=\{r\ge1:\gcd(F_r,P_B)=1\}.
+$$
+
+Under the same least-counterexample hypothesis, every candidate
+$N_{r,g}=1+F_rg$ must have $r\in\mathcal A_B$. Equivalently,
+
+$$
+r\in\mathcal A_B
+\iff
+z(p)\nmid r\quad\text{for every prime }p\le B.
+$$
+
+Thus the finite cutoff creates a rank sieve for the whole FIB address space;
+the set $R_B$ above is its prime-rank slice. For example, the witnesses
+$z(2)=3$, $z(3)=4$, and $z(5)=5$ already force
+$3\nmid r$, $4\nmid r$, and $5\nmid r$ for any such least-counterexample
+candidate. This is a necessary sieve only: membership in $\mathcal A_B$ does
+not establish Robin for $1+F_rg$.
+
+For the original multiplier window $g\in I_r$, the entire enumerated
+prime-rank mask lies below Axler's existing finite range. Indeed,
+$F_r<2^r$ gives
+
+$$
+\log(1+gF_r)<2r\le7\,608\,794
+\qquad(r\in R_B,\ g\in I_r).
+$$
+
+By contrast, with $K=999999476056$ from Axler's Lemma 2.3,
+
+$$
+\log N_K\ge K\log2>K/2=499999738028.
+$$
+
+Thus every such integer greater than 5040 already satisfies Robin by that
+lemma, independently of the block-exchange certificate. This comparison
+is for the enumerated prime ranks and the stated bounded window; it does
+not bound candidates with unrestricted $g$ or all composite ranks in
+$\mathcal A_B$.
 
 This is a parameter application of existing CRT and size comparisons,
 not a new estimate. Its low-rank scales are already inside the finite
