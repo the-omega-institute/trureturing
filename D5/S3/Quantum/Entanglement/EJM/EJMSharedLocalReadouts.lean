@@ -11,7 +11,9 @@ must be kernel checked before this checker is delivered. Complete global
 context acceptance remains required for the original score margin. -/
 
 import D5.S0.Certificates.FiniteSharedLocalBounds
-import D5.S3.Quantum.Entanglement.EJM.EJMCacheSoundness
+import D5.S3.Quantum.Entanglement.EJM.EJMTriangleCacheReceipts
+import D5.S3.Quantum.Entanglement.EJM.EJMSingletonCacheReceipts
+import D5.S3.Quantum.Entanglement.EJM.EJMLocalBoundAcceptance
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
