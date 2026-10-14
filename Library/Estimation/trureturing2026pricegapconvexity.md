@@ -5294,3 +5294,363 @@ or bound uniform in growing $|\gamma|$ is asserted. MR3 pays the
 arithmetic change; suppression of high frequencies alone does not
 establish MR4. The actual original signed lower bound and RH remain
 unproved.
+
+## The smooth arithmetic test pays a common spectral tail and its full reference correction
+
+Keep FH1--FH4, FP1--FP5, MR1--MR5 and MF1--MF4's original full
+windows, actual selector residence, endpoint ties and fixed parameters.
+The generic inputs are the existing full zero-count moments used in
+SR1 and [the complete reciprocal-square tail](../ArithSums/nicolas2025comparison.md#pay-the-discrepancy-over-all-actual-zeros),
+and [Connes--Consani arXiv:2006.13771v1](https://arxiv.org/pdf/2006.13771v1),
+Appendix B, equations (147)--(150), in WT2's adopted normalization.
+The source's linear explicit formula is used, with no convolution-square
+positivity or Mellin-vanishing hypothesis. No new zero-count, explicit-
+formula or transform-decay theorem is asserted. This `repo-derived`
+paper application pays those inputs for the actual smoothed arithmetic
+kernel, including its full pole and archimedean reference difference.
+It supplies no signed head bound or Lean verification.
+
+For this section put
+
+$$
+C=B^{\rm end}_{\max,X},\quad b=b_X,\quad U=\mathsf U_X,
+\quad Q=Q_X,\quad Y=\mathsf Y_X,\quad L=L_X,
+\qquad
+\mathsf H_X^{\rm hor}=1+\log\frac{\log U}{\log b}.
+$$
+
+Every original residence core belongs to $[b,C]$. Use one common start
+with $b>e^4$, $h_B=Q\sqrt B<B/2$ and the MR5 plateau containing $[1,2]$.
+Define the one-sided actual coefficient
+
+$$
+\mathfrak M_X(s)=\int_0^\infty
+\widetilde{\mathsf W}_X(r)r^{s-1}\,dr
+=\int_{t_0}^{t_m}\widetilde H_{\mathcal B_X(t)}(s)\,dt,
+\qquad \Re s>0.
+$$
+
+Finite Fubini gives the second equality. Constancy near zero and finite
+upper support make these integrals finite. The notation is distinct
+from the Mellin transform of the compact symmetric multiplicative test.
+
+### Keep the remote derivative endpoint in the actual two-derivative budget
+
+Write $\rho_h(x)=h^{-1}\rho(x/h)$. Differentiating MR1's signed
+variation once more after convolution gives exactly
+
+$$
+\begin{aligned}
+\widetilde w_B''(r)
+={}&\frac a{\sqrt B}\rho_{h_B}'(r-B)
+-s_Bk(B)\rho_{h_B}(r-B)\\
+&+s_Bk(U)\rho_{h_B}(r-U)
+-s_B\int_B^U k'(v)\rho_{h_B}(r-v)\,dv.
+\end{aligned}
+\tag{MT1}
+$$
+
+Although $Dw_B$ has no atom at $U$, the endpoint of its density
+contributes to this second derivative. The same $h_B$ appears at $B$,
+at $U$ and inside the $v$-integral; replacing it by $h_v$ would change
+MR1--MR3's actual kernel.
+
+For $v\ge B$, the convolution support has $r\le v+h_B\le3v/2$.
+Thus the four terms in MT1 have weighted absolute integrals
+$\int_0^\infty r^2|\cdot|dr$ bounded respectively by
+
+$$
+\frac{9a}{4}\|\rho'\|_1\frac BQ,
+\qquad \frac92\sqrt B,
+\qquad \frac92\sqrt B,
+\qquad \frac94s_B\int_B^U v^2|k'(v)|\,dv.
+$$
+
+Direct differentiation of the original $k$ gives
+
+$$
+-k'(v)=\frac1{v^3}
+\left(\frac2{\log v}+\frac3{\log^2v}+\frac2{\log^3v}\right),
+$$
+
+so its retained integral is at most
+$2\log(\log U/\log B)+4/\log B$. Integrating these inequalities
+against the same actual residence proves, with a fixed finite constant,
+
+$$
+\boxed{
+\mathsf D_{2,X}:=\int_0^\infty
+r^2|\widetilde{\mathsf W}_X''(r)|dr
+\le C_{\rho,a}L
+\left[\frac C Q+\sqrt C\,Y\,\mathsf H_X^{\rm hor}\right].}
+\tag{MT2}
+$$
+
+In particular the budget is logarithmic in $\log U$, rather than
+proportional to the remote support length $U$.
+
+### A common cutoff pays the complete absolute zero tail
+
+The ordinary integration-by-parts decay mechanism is the same one
+used by the [existing closed-strip two-jet estimate](../../D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.lean).
+Here it is applied to the displayed one-sided arithmetic coefficient.
+For $s=\sigma+i\gamma$, $0<\sigma<1$, twice integrating by parts gives
+
+$$
+\mathfrak M_X(s)=\frac1{s(s+1)}
+\int_0^\infty\widetilde{\mathsf W}_X''(r)r^{s+1}\,dr.
+$$
+
+The first boundary term vanishes at zero because $\sigma>0$;
+the derivative itself is zero near zero. Both upper boundary terms
+vanish by smooth compact upper support. All derivative support lies
+above $b/2>1$, so $r^{\sigma+1}\le r^2$ there. For every actual zero
+$\varrho=\beta+i\gamma$ with $|\gamma|>T\ge4$, MT2 and the existing
+multiplicity-weighted count consequently give
+
+$$
+\boxed{
+\sum_{|\gamma|>T}m_\varrho|\mathfrak M_X(\varrho)|
+\le C_{\rho,a}\frac{L\log(eT)}T
+\left[\frac C Q+\sqrt C\,Y\,\mathsf H_X^{\rm hor}\right].}
+\tag{MT3}
+$$
+
+The reused count is $N(T)\ll T\log(eT)$ and its complete consequence
+$\sum_{|\gamma|>T}m_\varrho/\gamma^2\ll\log(eT)/T$.
+Every actual multiplicity and both ordinate signs are retained. The
+finite zero set below the stated start remains in the head.
+
+Take the common, endpoint-inclusive cutoff
+
+$$
+\mathsf T_X=\frac C{Q^2}.
+$$
+
+Since $Q^2\le\sqrt b\le\sqrt C$, it has
+$\mathsf T_X\ge\sqrt C\to\infty$ and $\log\mathsf T_X\le Y$.
+Substitution in MT3 therefore proves
+
+$$
+\boxed{
+\sum_{|\gamma|>\mathsf T_X}m_\varrho
+|\mathfrak M_X(\varrho)|
+\le C_{\rho,a}L
+\left[QY+Y^2\mathsf H_X^{\rm hor}\right]
+=o(M_XL_X).}
+\tag{MT4}
+$$
+
+The first term is paid by MR3's $QY/M_X\to0$. Either FH1 common
+horizon has $\log U=O((\log X)^4)$, hence
+$\mathsf H_X^{\rm hor}=O(\log\log X)$. VC2's unchanged ceiling gives
+
+$$
+\frac{Y^2\mathsf H_X^{\rm hor}}{M_X}
+\ll X^{-(1/2-\eta)}
+(\log X)^{7/3}(\log\log X)^{5/3}\longrightarrow0.
+$$
+
+This covers $\Theta=1$ without DH1, a zero-density restriction or
+separation of $\mathsf T_X$ from zero ordinates. The cutoff splits an
+absolutely convergent zero sum; it is not a newly admissible CHJ height.
+It is not asserted shorter than earlier conditional masked-head cuts.
+
+### Use the full smooth explicit formula, retaining its reference difference
+
+Use exactly MR5's $\widetilde f_X$ and set
+
+$$
+g_X(r)=r^{-1/2}\widetilde f_X(r),\qquad
+G_X(s)=\int_0^\infty g_X(r)r^{s-1}dr,
+\qquad g_X^\sharp(r)=r^{-1}g_X(r^{-1})=g_X(r).
+$$
+
+This is a compact smooth multiplicative test. The prime-free calibration
+leaves $g_X(p^k)=\widetilde{\mathsf W}_X(p^k)/2$ and its sharp value
+the same. The cited Appendix B formula thus applies directly as
+
+$$
+\sum_{n\ge2}\Lambda(n)\widetilde{\mathsf W}_X(n)
+=\mathsf P_X^{\rm Weil}
+-\sum_\varrho m_\varrho G_X(\varrho)
+-\mathcal W_{\mathbb R}(g_X),
+\qquad
+\mathsf P_X^{\rm Weil}=G_X(0)+G_X(1).
+\tag{MT5}
+$$
+
+The zero sum is over all actual nontrivial zeros. No positivity theorem
+is substituted for this linear identity. Write $m=m_X$ and, on $r\ge1$,
+
+$$
+c_\chi(r)=\frac14\chi(\log r)(r^{-1}-1),\qquad
+ g_X(r)=\frac12\widetilde{\mathsf W}_X(r)+m c_\chi(r).
+$$
+
+The equality uses the actual plateau on the calibration interval. The
+sharp symmetry and MR2 give the exact pole reference
+
+$$
+\mathsf P_X^{\rm Weil}
+=\mathsf P_X-m
++\int_1^\infty\frac{\widetilde{\mathsf W}_X(r)}rdr
++2m\int_1^{\sqrt2}c_\chi(r)(1+r^{-1})dr.
+$$
+
+Its difference from $\mathsf P_X$ is controlled as follows. The original
+nonnegative weight is at most $B^{-1/2}$ everywhere. For $r\ge2B$,
+$r-h_B\ge3r/4$ gives
+$\widetilde w_B(r)\le(8/3)s_B/(r\log r)$. Consequently
+
+$$
+0\le m\le\frac L{\sqrt b},\qquad
+\int_1^\infty\frac{\widetilde w_B(r)}rdr
+\le\frac{\log(2B)+4/3}{\sqrt B},
+\qquad
+\int_1^\infty\frac{\widetilde{\mathsf W}_X(r)}rdr
+\ll L\frac{\log b}{\sqrt b}.
+$$
+
+The last step uses monotonic decrease of
+$(\log(2B)+4/3)/\sqrt B$ for $B\ge b>e^4$; the arithmetic weight
+itself is not declared decreasing. Thus
+$|\mathsf P_X^{\rm Weil}-\mathsf P_X|\ll_\chi L\log b/\sqrt b$.
+
+Keep the source's entire archimedean distribution, including its
+subtraction beyond the test's support:
+
+$$
+\mathcal W_{\mathbb R}(g_X)
+=(\log4\pi+\gamma_E)g_X(1)
++\int_1^\infty
+\frac{2g_X(r)-m/r}{r-r^{-1}}dr.
+$$
+
+On $[1,\sqrt2]$ the actual plateau makes the integrand exactly
+$m(1-\chi(\log r)/2)/(r+1)$, removing the apparent singularity.
+Above $\sqrt2$ its absolute value is at most
+$2\widetilde{\mathsf W}_X(r)/r+2m/r^2$. The latter term also pays
+its full range beyond the support. Hence
+$|\mathcal W_{\mathbb R}(g_X)|\ll_\chi L\log b/\sqrt b$.
+
+For $0<\Re s<1$, the exact passage to the one-sided coefficient is
+
+$$
+G_X(s)=\frac{\mathfrak M_X(s)+\mathfrak M_X(1-s)}2
++m r_\chi(s),
+$$
+
+where
+
+$$
+r_\chi(s)=\int_1^{\sqrt2}c_\chi(r)
+(r^{s-1}+r^{-s})dr
+-\frac12\left(\frac1s+\frac1{1-s}\right).
+$$
+
+Both endpoint values of $c_\chi$ vanish. Two integrations by parts
+on this fixed interval bound its Mellin integral by
+$O_\chi(|\gamma|^{-2})$ uniformly for $0\le\Re s\le1$ and
+$|\gamma|\ge1$. The rational pair is kept together as
+$1/[s(1-s)]$, with the same decay. The existing reciprocal-square
+zero count therefore gives an absolutely convergent calibration sum;
+its finite low-zero part is retained.
+
+MT2--MT3 give absolute convergence for the one-sided zero sums, allowing
+$\varrho\mapsto1-\varrho$ in the preceding identity. MT5 now yields
+
+$$
+\boxed{
+\mathsf P_X-\sum_{n\ge2}\Lambda(n)\widetilde{\mathsf W}_X(n)
+=\sum_\varrho m_\varrho\mathfrak M_X(\varrho)
++\mathsf E_X^{\rm Weil},}
+\tag{MT6}
+$$
+
+with the exact retained correction
+
+$$
+\mathsf E_X^{\rm Weil}
+=\mathsf P_X-\mathsf P_X^{\rm Weil}
++\mathcal W_{\mathbb R}(g_X)
++m_X\sum_\varrho m_\varrho r_\chi(\varrho),
+\qquad
+|\mathsf E_X^{\rm Weil}|\ll_\chi L\frac{\log b}{\sqrt b}=o(L_X).
+$$
+
+The poles are not defined equal to the continuum reference. The full
+pole, archimedean and calibration discrepancy is instead explicitly
+constructed and paid for this particular source.
+
+### The unchanged first-prime deficit leaves one signed right-half head
+
+Define
+
+$$
+\begin{aligned}
+D_X^{(1)}&=\mathsf P_X-
+ \sum_p(\log p)\mathsf W_X(p),\\
+Z_X^{\rm right}(\mathsf T_X)
+&=2\Re\sum_{\substack{0<\gamma\le\mathsf T_X\\\beta>1/2}}
+m_\varrho\int_{t_0}^{t_m}
+\widetilde H_{\mathcal B_X(t)}(\varrho)dt.
+\end{aligned}
+$$
+
+The original unsmoothed weights remain in $D_X^{(1)}$; MR3 pays their
+transport into the displayed smooth head. The same MF1 step-kernel
+representation gives, for $0<\beta\le1/2$,
+
+$$
+\begin{aligned}
+|\widetilde H_B(\varrho)|
+&\le\frac{2^{\beta}}{|\varrho|}
+\left[\frac a{\sqrt B}B^\beta
++s_B\int_B^U v^\beta k(v)dv\right]\\
+&\le\frac{\sqrt2(a+4)}{|\varrho|}B^{\beta-1/2}
+\le\frac{\sqrt2(a+4)}{|\varrho|}.
+\end{aligned}
+$$
+
+Applying the already used SR1 zero-count moment to the same submultiset
+pays that lower-half head by
+$O_a(L(1+\log^2\mathsf T_X))=O_a(LY^2)=o(M_XL_X)$.
+Conjugate pairing, MT4 and MT6 then retain precisely the right-half
+head above. FP4 contributes the same positive higher-prime-power debit
+$(2-a)L_X+o(L_X)$ when returning to first-power primes; it is charged
+once, not reused as a second reserve. Combining these paid accounts
+with MR3 gives
+
+$$
+\boxed{
+|D_X^{(1)}-Z_X^{\rm right}(\mathsf T_X)|
+\le C_{\rho,\chi,a}L
+\left[QY+Y^2\mathsf H_X^{\rm hor}+1+
+\frac{\log b}{\sqrt b}\right]+o(L_X)
+=o(M_XL_X).}
+\tag{MT7}
+$$
+
+All cores, phases and multiplicities in the head belong to the same
+original residence. Uniformity includes every original tie and
+$\Theta=1$. FP5's strict upper budget therefore transfers, with an
+arbitrarily small fixed margin loss on the same cofinal full windows,
+to the single requirement
+
+$$
+\boxed{
+Z_X^{\rm right}(\mathsf T_X)\le C_1M_XL_X,
+\qquad C_1<d(1-\kappa)/16.}
+\tag{MT8}
+$$
+
+MT8 is unproved. The tail and reference payments do not supply a
+favorable cofinal sequence or a sign for this growing head. Every fixed
+actual zero eventually belongs to the common cutoff. MF2's already
+established fixed-frequency comparison is reused; smoothness and
+high-frequency suppression do not pay the original residence's
+remaining phase relation. No independent sampling law, positive-
+definite completion, infinite-family cancellation or RH conclusion
+is inferred. The original first-prime bound, full signed upper estimate,
+all-integer Robin inequality and RH remain unproved.
