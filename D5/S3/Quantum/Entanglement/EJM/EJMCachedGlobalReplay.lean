@@ -21,7 +21,6 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Entanglement.EJM.EJMCachedGlobalReplay
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
-open D5.S0.Certificates (FiniteLex)
 open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2)
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData (scale)
 open D5.S3.Quantum.Entanglement.EJM.EJMCacheState
