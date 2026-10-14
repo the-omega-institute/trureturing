@@ -80,16 +80,18 @@ theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := (h 0 (by simp)).trans (blochVec_eq_bloch 0 (by simp)).symm
   have hc := congrArg (fun v : EuclideanSpace ℝ (Fin 3) => v 2) he
-  norm_num [rejected, realize, blochVec, Fin.isValue] at hc
+  change (1 : ℝ) = blochVec (0 : Matrix (Fin 2) (Fin 2) ℂ) 2 at hc
+  norm_num [blochVec] at hc
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, !![1, 0; 0, 0], ?_⟩
   intro he
   have hc := congrArg (fun v : Fin 3 → ℝ => v 2) he
-  norm_num [actual, realize, blochVec, pauli, pauliMatrix, qubitZ,
-    trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Fin.isValue,
-    Matrix.vecMul, dotProduct] at hc
+  have hpauli : pauli (2 : Fin 3) = !![1, 0; 0, -1] := by rfl
+  change blochVec (0 : Matrix (Fin 2) (Fin 2) ℂ) 2 = blochVec !![1, 0; 0, 0] 2 at hc
+  norm_num [blochVec, hpauli, trace_fin_two, Matrix.mul_apply,
+    Fin.sum_univ_two, Matrix.vecMul, dotProduct] at hc
 
 def source_registration : Registration arena (type_of% @blochVec_eq_bloch) where
   actual := actual
@@ -105,11 +107,11 @@ namespace AliceTrace
 
 /-- Observe the marginal trace paired with Alice's matrix coefficient. -/
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Matrix (Fin 2) (Fin 2) ℂ)
-    (fun _ => TwoQubit) (fun _ => ℂ)
+  Reg.Support.SingleDependentReadout.signature TwoQubit
+    (fun _ => Matrix (Fin 2) (Fin 2) ℂ) (fun _ => ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ A ρ => trace (partialTraceRight ρ * A)) (fun e => nomatch e)
+  realize signature (fun _ ρ A => trace (partialTraceRight ρ * A)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -117,7 +119,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (ρ : TwoQubit) (A : Matrix (Fin 2) (Fin 2) ℂ),
-    trace (ρ * (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))) = R.readout () A ρ
+    trace (ρ * (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))) = R.readout () ρ A
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -127,9 +129,9 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, 1, ?_⟩
-  change trace (partialTraceRight (0 : TwoQubit) * 1) ≠
+  change trace (partialTraceRight (1 : TwoQubit) * 0) ≠
     trace (partialTraceRight (1 : TwoQubit) * 1)
-  rw [mul_one, mul_one, trace_partialTraceRight, trace_partialTraceRight]
+  rw [mul_zero, trace_zero, mul_one, trace_partialTraceRight]
   norm_num [trace_one]
 
 def source_registration : Registration arena (type_of% @trace_mul_kron_one) where
@@ -146,11 +148,11 @@ namespace BobTrace
 
 /-- Observe the marginal trace paired with Bob's matrix coefficient. -/
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Matrix (Fin 2) (Fin 2) ℂ)
-    (fun _ => TwoQubit) (fun _ => ℂ)
+  Reg.Support.SingleDependentReadout.signature TwoQubit
+    (fun _ => Matrix (Fin 2) (Fin 2) ℂ) (fun _ => ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ B ρ => trace (partialTraceLeft ρ * B)) (fun e => nomatch e)
+  realize signature (fun _ ρ B => trace (partialTraceLeft ρ * B)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -158,7 +160,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (ρ : TwoQubit) (B : Matrix (Fin 2) (Fin 2) ℂ),
-    trace (ρ * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ B)) = R.readout () B ρ
+    trace (ρ * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ B)) = R.readout () ρ B
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -168,9 +170,9 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, 1, ?_⟩
-  change trace (partialTraceLeft (0 : TwoQubit) * 1) ≠
+  change trace (partialTraceLeft (1 : TwoQubit) * 0) ≠
     trace (partialTraceLeft (1 : TwoQubit) * 1)
-  rw [mul_one, mul_one, trace_partialTraceLeft, trace_partialTraceLeft]
+  rw [mul_zero, trace_zero, mul_one, trace_partialTraceLeft]
   norm_num [trace_one]
 
 def source_registration : Registration arena (type_of% @trace_mul_one_kron) where
@@ -233,7 +235,7 @@ abbrev signature : Signature :=
     (fun _ => Matrix (Fin 2) (Fin 2) ℂ) (fun _ => Matrix (Fin 2) (Fin 2) ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ Y X => X - Y) (fun e => nomatch e)
+  realize signature (fun _ X Y => X - Y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -241,7 +243,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ A X Y : Matrix (Fin 2) (Fin 2) ℂ,
-    A ⊗ₖ R.readout () Y X = A ⊗ₖ X - A ⊗ₖ Y
+    A ⊗ₖ R.readout () X Y = A ⊗ₖ X - A ⊗ₖ Y
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -252,7 +254,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨0, 0, 1, ?_⟩
-  change (0 : Matrix (Fin 2) (Fin 2) ℂ) - 0 ≠ 1 - 0
+  change (0 : Matrix (Fin 2) (Fin 2) ℂ) - 0 ≠ 0 - 1
   simp
 
 def source_registration : Registration arena (type_of% @kron_sub) where
@@ -465,7 +467,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ A ρ => trace (partialTraceRight ρ * A))
+  readout := some (realize signature (fun _ ρ A => trace (partialTraceRight ρ * A))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -474,10 +476,10 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -510,7 +512,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ B ρ => trace (partialTraceLeft ρ * B))
+  readout := some (realize signature (fun _ ρ B => trace (partialTraceLeft ρ * B))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -519,10 +521,10 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -599,7 +601,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ Y X => X - Y) (fun e => nomatch e))
+  readout := some (realize signature (fun _ X Y => X - Y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -607,10 +609,10 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
     definition := none
-    coordinates := #[2]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 1
+      stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
