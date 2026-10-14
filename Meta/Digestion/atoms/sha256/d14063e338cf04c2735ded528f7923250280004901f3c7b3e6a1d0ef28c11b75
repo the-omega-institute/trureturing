@@ -1,0 +1,34 @@
+**Theorem 13.3 (determinism, lawful updates and finite administration).**
+The machines of Definition 13.2 are classical deterministic one-counter
+machines with epsilon moves. For each control, input letter and counter test
+there is at most one transition; an epsilon rule excludes input rules at the
+same control and test. All reachable counters are nonnegative. From the
+initial configuration and after every consumed address letter, finite
+administration reaches exactly one stable head, and every stable head has
+both next-letter moves.
+
+**Proof.** The normalized syntax and the finite set of fixed remainders give
+finitely many controls. Every displayed update is a unit update. The only
+negative updates have explicit positive tests, so induction from counter zero
+proves nonnegativity. Pair and stable-head controls have only input rules;
+all other controls have exactly one epsilon rule for each test and no input
+rule. Shared $J_{d,i}$ controls therefore give one transition, not competing
+ones.
+
+At $J_{d,i}$, exactly $d$ increments reach $J_{0,i}$, whose zero-update
+step enters the normalized defining root. Pair guardedness makes that root a
+pair or a ground leaf, never another decorated-state root, so this chain
+cannot form an epsilon cycle. A ground leaf enters $A$ and reaches a stable
+head in at most two further tests. The $A$ and $V$ rules implement the two
+lawful decrements in (SPC.51); no arbitrary threshold or hidden restoration
+is present. A decorated occurrence with exponent $a$ uses at most $a+4$
+epsilon steps, independently of the entering counter.
+
+A pair and $O_\Omega$ are already stable. From $B$, an input enters $A$;
+from a stable leaf, either input enters $N$; from an explicit pair an input
+selects its child without changing the counter. Thus administration is finite
+at the root and after every letter. Stable controls have no epsilon rules
+and total $L,R$ moves, proving uniqueness of the terminal stable head. This
+is a finite-chain termination statement, not a native-description size or
+compact-input complexity bound. $\square$
+

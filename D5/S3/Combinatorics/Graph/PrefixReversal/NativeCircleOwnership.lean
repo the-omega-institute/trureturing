@@ -28,13 +28,13 @@ def nextLabel {m : ℕ} (z : Configuration m) (x : Fin (m + 1)) : Fin (m + 1) :=
 def prevLabel {m : ℕ} (z : Configuration m) (x : Fin (m + 1)) : Fin (m + 1) :=
   (List.ofFn z).prev x (tuple_mem z x)
 
-private theorem nextLabel_apply {m : ℕ} (z : Configuration m) (i : Fin (m + 1)) :
+theorem native_nextLabel_apply {m : ℕ} (z : Configuration m) (i : Fin (m + 1)) :
     nextLabel z (z i) = z ⟨(i.val + 1) % (m + 1), Nat.mod_lt _ (by omega)⟩ := by
   have h := List.next_getElem (List.ofFn z) (List.nodup_ofFn.mpr z.injective)
     i.val (by simpa using i.isLt)
   simpa only [nextLabel, List.getElem_ofFn, List.length_ofFn] using h
 
-private theorem prevLabel_apply {m : ℕ} (z : Configuration m) (i : Fin (m + 1)) :
+theorem native_prevLabel_apply {m : ℕ} (z : Configuration m) (i : Fin (m + 1)) :
     prevLabel z (z i) = z ⟨(i.val + m) % (m + 1), Nat.mod_lt _ (by omega)⟩ := by
   have h := List.prev_getElem (List.ofFn z) (List.nodup_ofFn.mpr z.injective)
     i.val (by simpa using i.isLt)
@@ -93,7 +93,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
 open Equiv
 open Fin.NatCast
 
-private theorem bc_pow_val {m : ℕ} (hm : 2 ≤ m) (k : ℕ) (i : Fin (m + 1)) :
+theorem native_bc_pow_val {m : ℕ} (hm : 2 ≤ m) (k : ℕ) (i : Fin (m + 1)) :
     (((b m * c m) ^ k) i).val =
       if i.val < m then (i.val + k) % m else i.val := by
   have hmpos : 0 < m := by omega
@@ -124,89 +124,89 @@ theorem native_circle_gap_disjoint {m : ℕ} (hm : 3 ≤ m) (z : Configuration m
   intro v hi hj
   exact hij (gap_circle_common hm z v i j hi hj)
 
-private def lowerPort {m : ℕ} (j : Fin (m - 2)) : Configuration m :=
+def lowerPort {m : ℕ} (j : Fin (m - 2)) : Configuration m :=
   a m * c m * (b m * c m) ^ j.val
 
-private def upperPort {m : ℕ} (j : Fin (m - 2)) : Configuration m :=
+def upperPort {m : ℕ} (j : Fin (m - 2)) : Configuration m :=
   Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * lowerPort j
 
-private theorem ac_apply_val {m : ℕ} (hm : 3 ≤ m) (i : Fin (m + 1)) :
+theorem native_ac_apply_val {m : ℕ} (hm : 3 ≤ m) (i : Fin (m + 1)) :
     ((a m * c m) i).val = if i.val < m - 1 then i.val + 2 else m - i.val := by
   change (a m (c m i)).val = _
   rw [a_apply]
   simp only [Fin.val_rev, c_apply]
   split <;> omega
 
-private theorem lowerPort_val {m : ℕ} (hm : 3 ≤ m) (j : Fin (m - 2))
+theorem native_lowerPort_val {m : ℕ} (hm : 3 ≤ m) (j : Fin (m - 2))
     (i : Fin (m + 1)) (hi : i.val < m) :
     (lowerPort j i).val = if (i.val + j.val) % m < m - 1 then
       (i.val + j.val) % m + 2 else m - (i.val + j.val) % m := by
   change (((a m * c m) (((b m * c m) ^ j.val) i))).val = _
-  rw [ac_apply_val hm, bc_pow_val (by omega : 2 ≤ m), if_pos hi]
+  rw [native_ac_apply_val hm, native_bc_pow_val (by omega : 2 ≤ m), if_pos hi]
 
-private theorem lower_m_position {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
+theorem native_lower_m_position {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     lowerPort j ⟨m - 2 - j.val, by have hj := j.isLt; omega⟩ = Fin.last m := by
   have hj := j.isLt
   apply Fin.ext
-  rw [lowerPort_val (by omega : 3 ≤ m) j _ (by simp only [Fin.val_mk]; omega)]
+  rw [native_lowerPort_val (by omega : 3 ≤ m) j _ (by simp only [Fin.val_mk]; omega)]
   simp only [Fin.val_mk, Fin.val_last,
     show m - 2 - j.val + j.val = m - 2 by omega,
     Nat.mod_eq_of_lt (by omega : m - 2 < m),
     if_pos (by omega : m - 2 < m - 1)]
   omega
 
-private theorem lower_next {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
+theorem native_lower_next {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     (nextLabel (lowerPort j) (Fin.last m)).val = 1 := by
   have hj := j.isLt
   let i : Fin (m + 1) := ⟨m - 2 - j.val, by omega⟩
-  have hn := nextLabel_apply (lowerPort j) i
-  rw [show lowerPort j i = Fin.last m from lower_m_position hm j] at hn
+  have hn := native_nextLabel_apply (lowerPort j) i
+  rw [show lowerPort j i = Fin.last m from native_lower_m_position hm j] at hn
   have hidx : (i.val + 1) % (m + 1) = m - 1 - j.val := by
     dsimp [i]
     rw [Nat.mod_eq_of_lt (by omega : m - 2 - j.val + 1 < m + 1)]
     omega
   rw [hn]
-  rw [lowerPort_val (by omega : 3 ≤ m) j _ (by simp only [Fin.val_mk, hidx]; omega)]
+  rw [native_lowerPort_val (by omega : 3 ≤ m) j _ (by simp only [Fin.val_mk, hidx]; omega)]
   simp only [Fin.val_mk, hidx, show m - 1 - j.val + j.val = m - 1 by omega,
     Nat.mod_eq_of_lt (by omega : m - 1 < m), lt_self_iff_false, if_false]
   omega
 
-private theorem lower_prev {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
+theorem native_lower_prev {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     (prevLabel (lowerPort j) (Fin.last m)).val = m - 1 := by
   have hj := j.isLt
   let i : Fin (m + 1) := ⟨m - 2 - j.val, by omega⟩
-  have hp := prevLabel_apply (lowerPort j) i
-  rw [show lowerPort j i = Fin.last m from lower_m_position hm j] at hp
+  have hp := native_prevLabel_apply (lowerPort j) i
+  rw [show lowerPort j i = Fin.last m from native_lower_m_position hm j] at hp
   have hidx : (i.val + m) % (m + 1) = m - 3 - j.val := by
     dsimp [i]
     rw [show m - 2 - j.val + m = (m - 3 - j.val) + (m + 1) by omega,
       Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
   rw [hp]
-  rw [lowerPort_val (by omega : 3 ≤ m) j _ (by simp only [Fin.val_mk, hidx]; omega)]
+  rw [native_lowerPort_val (by omega : 3 ≤ m) j _ (by simp only [Fin.val_mk, hidx]; omega)]
   simp only [Fin.val_mk, hidx, show m - 3 - j.val + j.val = m - 3 by omega,
     Nat.mod_eq_of_lt (by omega : m - 3 < m), if_pos (by omega : m - 3 < m - 1)]
   omega
 
-private theorem lower_last {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
+theorem native_lower_last {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     lowerPort j (Fin.last m) = 0 := by
   apply Fin.ext
   change (((a m * c m) (((b m * c m) ^ j.val) (Fin.last m)))).val = 0
-  rw [ac_apply_val (by omega : 3 ≤ m), bc_pow_val (by omega : 2 ≤ m)]
+  rw [native_ac_apply_val (by omega : 3 ≤ m), native_bc_pow_val (by omega : 2 ≤ m)]
   simp only [Fin.val_last, lt_self_iff_false, if_false,
     if_neg (by omega : ¬ m < m - 1), Nat.sub_self]
 
-private theorem upper_last {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
+theorem native_upper_last {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     upperPort j (Fin.last m) = Fin.last m := by
   change Equiv.swap (0 : Fin (m + 1)) (Fin.last m) (lowerPort j (Fin.last m)) = _
-  rw [lower_last hm j, Equiv.swap_apply_left]
+  rw [native_lower_last hm j, Equiv.swap_apply_left]
 
-private theorem upper_next {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
+theorem native_upper_next {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     (nextLabel (upperPort j) (Fin.last m)).val = j.val + 2 := by
   have hj := j.isLt
-  have hn := nextLabel_apply (upperPort j) (Fin.last m)
-  rw [upper_last hm j] at hn
+  have hn := native_nextLabel_apply (upperPort j) (Fin.last m)
+  rw [native_upper_last hm j] at hn
   have hz : (lowerPort j (0 : Fin (m + 1))).val = j.val + 2 := by
-    rw [lowerPort_val (by omega : 3 ≤ m) j _ (by simp; omega)]
+    rw [native_lowerPort_val (by omega : 3 ≤ m) j _ (by simp; omega)]
     simp only [Fin.val_zero, zero_add, Nat.mod_eq_of_lt (by omega : j.val < m),
       if_pos (by omega : j.val < m - 1)]
   have hz0 : lowerPort j (0 : Fin (m + 1)) ≠ 0 := by
@@ -230,11 +230,11 @@ private theorem upper_next {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
   rw [Equiv.swap_apply_of_ne_of_ne hz0 hzm]
   exact hz
 
-private theorem upper_prev {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
+theorem native_upper_prev {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     (prevLabel (upperPort j) (Fin.last m)).val = if j.val = 0 then 1 else j.val + 1 := by
   have hj := j.isLt
-  have hp := prevLabel_apply (upperPort j) (Fin.last m)
-  rw [upper_last hm j] at hp
+  have hp := native_prevLabel_apply (upperPort j) (Fin.last m)
+  rw [native_upper_last hm j] at hp
   let i : Fin (m + 1) := ⟨m - 1, by omega⟩
   have hidx : (⟨((Fin.last m).val + m) % (m + 1), Nat.mod_lt _ (by omega)⟩ :
       Fin (m + 1)) = i := by
@@ -243,7 +243,7 @@ private theorem upper_prev {m : ℕ} (hm : 4 ≤ m) (j : Fin (m - 2)) :
     rw [show m + m = (m - 1) + (m + 1) by omega,
       Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
   have hz : (lowerPort j i).val = if j.val = 0 then 1 else j.val + 1 := by
-    rw [lowerPort_val (by omega : 3 ≤ m) j i (by dsimp [i]; omega)]
+    rw [native_lowerPort_val (by omega : 3 ≤ m) j i (by dsimp [i]; omega)]
     dsimp only [i]
     by_cases hj0 : j.val = 0
     · simp only [hj0, Nat.add_zero, Nat.mod_eq_of_lt (by omega : m - 1 < m),
@@ -285,12 +285,12 @@ theorem native_t_cross_circle_disjoint {m : ℕ} (hm : 4 ≤ m)
   have hn := circle_neighbours (lowerPort i) (upperPort j) hc (Fin.last m)
   rcases hn with hn | hn
   · have he := congrArg Fin.val hn.1
-    rw [upper_next hm j, lower_next hm i] at he
+    rw [native_upper_next hm j, native_lower_next hm i] at he
     omega
   · have he1 := congrArg Fin.val hn.1
     have he2 := congrArg Fin.val hn.2
-    rw [upper_next hm j, lower_prev hm i] at he1
-    rw [upper_prev hm j, lower_next hm i] at he2
+    rw [native_upper_next hm j, native_lower_prev hm i] at he1
+    rw [native_upper_prev hm j, native_lower_next hm i] at he2
     split_ifs at he2 <;> omega
 
 #print axioms native_t_cross_circle_disjoint
@@ -340,7 +340,7 @@ private theorem lower_core_swap {m : ℕ} (hm : 4 ≤ m) :
   intro i
   apply Fin.ext
   change ((a m * c m) (((b m * c m) ^ (m - 2)) i)).val = _
-  rw [ac_apply_val (by omega : 3 ≤ m), bc_pow_val (by omega : 2 ≤ m)]
+  rw [native_ac_apply_val (by omega : 3 ≤ m), native_bc_pow_val (by omega : 2 ≤ m)]
   rw [Equiv.swap_apply_def]
   by_cases hi0 : i = 0
   · subst i
@@ -376,7 +376,7 @@ private theorem lower_core_rotation {m : ℕ} (hm : 4 ≤ m) :
   intro i
   apply Fin.ext
   change ((a m * c m) (((b m * c m) ^ (m - 1)) i)).val = _
-  rw [ac_apply_val (by omega : 3 ≤ m), bc_pow_val (by omega : 2 ≤ m),
+  rw [native_ac_apply_val (by omega : 3 ≤ m), native_bc_pow_val (by omega : 2 ≤ m),
     finRotate_apply]
   simp only [Fin.val_add, Fin.val_one', Nat.mod_eq_of_lt (by omega : 1 < m + 1)]
   by_cases hil : i = Fin.last m
@@ -520,7 +520,7 @@ private theorem upperPort_gap {m : ℕ} (j : Fin (m - 2)) :
       ⟨j.val, by have hj := j.isLt; omega⟩ := by
   simp only [upperPort, lowerPort, gapAnchor, mul_assoc]
 
-private theorem t_circle_owner_unique {m : ℕ} (hm : 4 ≤ m) (v : Configuration m)
+theorem native_t_circle_owner_unique {m : ℕ} (hm : 4 ≤ m) (v : Configuration m)
     (p q : Fin m ⊕ Fin (m - 2))
     (hp : Circle (tCircleAnchor p) v) (hq : Circle (tCircleAnchor q) v) : p = q := by
   cases p with
@@ -577,7 +577,7 @@ theorem native_t_circle_partition {m : ℕ} (hm : 4 ≤ m) (v : Configuration m)
             change Circle (gapAnchor (a m * c m) ⟨m - 2, by omega⟩) v
             rwa [lower_core_swap hm]
     obtain ⟨p, hp⟩ := hex
-    exact ⟨p, hp, fun q hq => t_circle_owner_unique hm v q p hq hp⟩
+    exact ⟨p, hp, fun q hq => native_t_circle_owner_unique hm v q p hq hp⟩
   · rintro ⟨p, hp, _⟩
     cases p with
     | inl i => exact Or.inl ⟨i, hp⟩

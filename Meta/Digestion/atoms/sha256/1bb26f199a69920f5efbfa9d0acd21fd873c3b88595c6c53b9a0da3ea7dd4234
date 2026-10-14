@@ -1,0 +1,94 @@
+**Theorem 10.2 (both entire-source and complete-row directions).** The entire
+acquired fiber of Definition 10.1 is
+
+$$
+D=\{U(x,y,z,w,s,t,v,c):(x,y,z,w,s,t,v,c)\in\mathcal T^8,
+\ \Delta(x,y,z,w,v)\}.
+\tag{SFS.34}
+$$
+
+Let $r_0,r_1$ have the entire numbered exterior
+$C[\square_1,\ldots,\square_{13}]$, reached set all $Q$, and partitions
+
+$$
+\begin{aligned}
+\pi_0={}&\{\{1\},\{2\},\{3\},\{4\},\{5,7\},\{6,8\},
+\{9\},\{10\},\{11,12\},\{13\}\},\\
+\pi_1={}&\{\{1\},\{2\},\{3\},\{4\},\{5,9\},\{6,10\},
+\{7\},\{8\},\{11\},\{12,13\}\}.
+\end{aligned}
+\tag{SFS.35}
+$$
+
+These are distinct attained full rows, and their entire strata are exactly
+
+$$
+\begin{aligned}
+\Theta_0(x,y,z,w,v)&=U(x,y,z,w,\rho x,\rho y,v,v),\\
+\Theta_1(x,y,z,w,v)&=U(x,y,z,w,A(y,z),B(x,w),v,H_x(v)),\\
+D_i&=\{\Theta_i(x,y,z,w,v):(x,y,z,w,v)\in\mathcal T^5,
+\ \Delta(x,y,z,w,v)\}\quad(i=0,1).
+\end{aligned}
+\tag{SFS.36}
+$$
+
+Each pre-negative carrier is the full Cartesian $\mathcal T^5$. Every source
+in these displays satisfies the entire acquired input; extracting its actual
+holes reconstructs that same source. Other attained rows remain in $D$.
+Neither entire stratum has a finite residual-free atomic-output-anchor cover
+of AAB/PAC type.
+
+Proof. The twelve spine branch literals expose exactly the comb's thirteen
+nonempty subtrees. Name the actual values at holes 1–6, 11 and 12 as
+$x,y,z,w,s,t,v,c$. Originally reached comb paths remain reached at epoch
+one. Hence the first two records in (SFS.33) force holes 7 and 8 to be
+$\rho x,\rho y$ by original-present transport. The branch literals at
+$q_9,q_{10}$ and their four child comparisons force holes 9 and 10 to be
+$A(y,z),B(x,w)$. The branch literals at $q_{13},q_{13}R$, the final
+$\alpha$ literal and the last two comparisons force hole 13 to be $H_x(v)$.
+All mixed-epoch endpoints are originally reached; none is obtained by
+navigating a replacement of an old leaf. The 45 negative records are exactly
+(SFS.32). This extracts and reconstructs every member of the original fiber.
+
+Conversely, every finite $U$ in (SFS.34) has the whole old root row, every
+listed branch and leaf reply, and all eight whole-subtree equalities at
+their stated epochs. Its original comb paths and the stated helper branches
+reach both endpoints of every sign. Its $\Delta$ verifies all 45 negatives.
+Thus (SFS.34) holds in both directions on the full original source domain.
+
+The ten base values (SFS.32) are distinct. Partition $\pi_0$ therefore forces
+exactly $s=\rho x,t=\rho y,c=v$; partition $\pi_1$ forces exactly
+$s=A(y,z),t=B(x,w),c=H_x(v)$. These assignments and $\Delta$ make all other
+classes distinct. Conversely, filling (SFS.36) under $\Delta$ gives exactly
+the stated partition. This checks all 78 unordered hole-pair bits, together
+with the complete exterior and all thirteen reached holes. Extracting the
+actual five base holes from any source in $D_i$ yields its valuation and
+reconstructs that same original as $\Theta_i$. No feasible section replaces
+an entire stratum.
+
+For attainment, define $b_0=\alpha$, $b_{m+1}=\langle b_m,\alpha\rangle$.
+Choose
+
+$$
+x=b_1,\qquad y=\rho^3b_1,\qquad z=\rho^6b_1,\qquad
+w=\rho^9b_1,\qquad v=b_m\quad(m\ge4).
+\tag{SFS.37}
+$$
+
+The URR mass and clock formulas give masses $1$ for the first six values
+$x,y,z,w,\rho x,\rho y$ and their respective clocks
+$2,5,8,11,3,6$. The pair values $A,B$ have mass $3$ and clocks $10,13$.
+The last two values $v,H_x(v)$ have masses $m,m+3$. Different mass groups
+and distinct clocks within a group distinguish all ten values. Thus
+$\Delta$ holds simultaneously, and both fillings attain their full rows.
+
+This same family makes source mass unbounded in each entire stratum, since
+$v=b_m$ is an original subtree and $\gamma(b_m)=m$. Every fixed
+residual-free template over finite grounds, atomic tokens and finitely many
+pairs has mass bounded by its ground masses, counted with occurrences, plus
+its pair count. The bound follows from $\gamma(T_n)=0$ and
+$\gamma(\langle a,b\rangle)\le1+\gamma(a)+\gamma(b)$, independently of
+all ranks or their correlations. A finite union has a finite bound and
+cannot cover either entire stratum. This applies the existing mass criterion
+of Theorem 6.3 to these whole strata.
+
