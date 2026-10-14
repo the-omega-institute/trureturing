@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: The unsmoothed physical Euler-metric cross block is noncompact. The actual completion pays the archimedean reference trace; a localized Hardy estimate pays the geometric defect under an additional prime-growth condition. The original growing-place-set upper and full arithmetic comparison remain unresolved.
+claim: The unsmoothed physical Euler-metric cross block is noncompact. The actual completion pays the archimedean reference trace; a localized Hardy estimate pays the geometric defect under an additional prime-growth condition. Both its full-commutator and one-sided Hankel majorants have a large all-primes cost; the original actual-projection upper and full arithmetic comparison remain unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -567,3 +567,141 @@ Improving the actual projection estimate can still use information
 lost in $\widetilde P_S\le\mathsf H_S^*\mathsf H_S$ or in the
 second inequality of (12). No reversal of either inequality, lower
 bound on the true trace, or obstruction to RH follows.
+
+
+### The one-sided Hankel majorant retains the large cost
+
+Keeping the middle member of (12) also loses too much for a uniform
+polynomial-in-$\log V$ estimate. The following application uses the
+actual WT7 factor $\psi=u*u^*$ and the already obtained (15);
+the pair-of-projections algebra and Schwartz commutator theorem are
+reused. It is a repo-derived paper calculation, without a new generic
+operator theorem, literature-priority claim or Lean verification.
+
+For $v_j(t)=2^{-j/2}\widehat u(2^{-j}t)$, one has
+$|v_j|^2=w_j$. Multiplication by $v_j$ or by $\sqrt{w_j}$ gives
+the same squared Hilbert--Schmidt norm: the two multipliers differ
+by a measurable unitary multiplier. Write
+
+$$
+\begin{gathered}
+\mathsf G_S=\Pi M_{\overline{U_S}}(I-\Pi),\qquad
+D_S=\Pi-M_{U_S}\Pi M_{\overline{U_S}},\\
+B_{S,j}=\|\mathsf H_SM_{v_j}\|_2^2,\qquad
+B^{\rm op}_{S,j}=\|\mathsf G_SM_{v_j}\|_2^2.
+\end{gathered}
+$$
+
+Let $\Xi_{S,j}$ denote the last integral of (12) for a general
+finite $S$. The two off-diagonal blocks have orthogonal output
+ranges. Ordinary projection algebra gives
+
+$$
+\mathsf H_S^*\mathsf H_S+\mathsf G_S^*\mathsf G_S=D_S^2,
+\qquad
+\mathsf H_S^*\mathsf H_S-\mathsf G_S^*\mathsf G_S
+=\operatorname{diag}_{\Pi}(D_S),
+$$
+
+where $\operatorname{diag}_{\Pi}(T)=\Pi T\Pi+(I-\Pi)T(I-\Pi)$.
+In particular $B_{S,j}+B^{\rm op}_{S,j}=\Xi_{S,j}$.
+The weighted difference requires a localization correction; one
+cannot commute the multiplier past $\Pi$.
+
+The owned archimedean source, Appendix D, Lemma D.1, manuscript
+pp.51--52, makes $[\Pi,M_f]$ trace class for Schwartz $f$.
+For each fixed finite $S$, $U_S$ and all its derivatives have at
+most polynomial growth: finite Euler factors and their reciprocals
+have bounded derivatives, and the Gamma ratio has polynomial
+derivative bounds. Consequently $\overline{v_j}U_S$ is Schwartz.
+Put $V_j=M_{v_j}$. The exact decomposition
+
+$$
+V_j^*D_SV_j
+=[M_{\overline{v_j}},\Pi]M_{v_j}
+-[M_{\overline{v_j}U_S},\Pi]M_{\overline{U_S}v_j}
+$$
+
+therefore proves that the sandwich is trace class. These fixed-$S$
+trace-class assertions do not claim a uniform trace-norm bound in
+$S$. Its full localized difference-quotient kernel is Schwartz, so
+the diagonal trace formula, with the convention of (11)--(12), gives
+
+$$
+d_{S,j}:=\operatorname{Tr}(V_j^*D_SV_j)
+=\frac1{2\pi}\int_{\mathbb R}w_j(t)
+\frac{U_S'(t)}{iU_S(t)}\,dt.
+$$
+
+This is the reflected normalization of the source's Appendix E,
+equations (161)--(163), manuscript p.53. The plus sign can also be
+checked with $U(t)=e^{iat}$, $a>0$: then $D$ is the positive
+projection onto the logarithmic physical strip $[0,a)$.
+For the actual finite Euler product,
+
+$$
+\frac{W_S'(t)}{iW_S(t)}
+=-2\sum_{p\in S_{\rm fin}}\log p
+\sum_{k\ge1}p^{-k/2}\cos(kt\log p).
+$$
+
+The inner derivative series is absolutely uniformly convergent for
+each finite $S$. Every Euler term integrates to zero, since
+
+$$
+\int w_j(t)\cos(kt\log p)\,dt
+=2\pi\psi_j(k\log p)=0,
+\qquad k\log p\ge\log2>\tau2^{-j}.
+$$
+
+Thus $d_{S,j}=d_j$ is independent of $S$, with
+
+$$
+d_j=\frac1{2\pi}\int w_j(t)
+\bigl[\operatorname{Re}\operatorname{digamma}(1/4+it/2)
+-\log\pi\bigr]dt,\qquad |d_j|\ll_\psi1+j.
+$$
+
+This cancellation uses the actual prime-free bump, rather than an
+independent-prime average. To compare it with the weighted block
+difference, put $R=2\Pi-I$ and $C_j=[\Pi,V_j]$. Direct algebra gives
+
+$$
+V_j^*\operatorname{diag}_{\Pi}(D_S)V_j
+-\operatorname{diag}_{\Pi}(V_j^*D_SV_j)
+=C_j^*D_SRV_j+RV_j^*D_SC_j.
+$$
+
+All traces here are now legal. A difference of orthogonal
+projections has $\|D_S\|\le1$, so the trace error is at most
+$2\|v_j\|_\infty\|C_j\|_1$. Positive dilations commute with the
+Hardy projection, and hence
+$\|C_j\|_1=2^{-j/2}\|[\Pi,M_{\widehat u}]\|_1$ and
+$\|v_j\|_\infty=2^{-j/2}\|\widehat u\|_\infty$.
+Consequently, uniformly over finite $S$ and $j\ge0$,
+
+$$
+\boxed{2B_{S,j}=\Xi_{S,j}+d_j+e_{S,j},\qquad
+|e_{S,j}|\le C_u2^{-j}.}
+\tag{16}
+$$
+
+Combining (16) with the existing (15), for all sufficiently large
+$V$ and uniformly $j\ge0$, gives
+
+$$
+\boxed{B_{S(V),j}\ge
+c_\psi2^{-j}\frac{\sqrt V}{\log V}-C_{u,\psi}(1+j).}
+\tag{17}
+$$
+
+In particular $B_{S(V),0}\ge c_\psi\sqrt V/\log V-O_{u,\psi}(1)$.
+Thus a uniform polynomial-in-$\log V$ estimate for this one-sided
+majorant is also excluded. This does not lower-bound
+$t_{S(V),j}$: the true orthogonal projection retains only the
+singular-value-one subspace of $\mathsf H_S$, whereas
+$\mathsf H_S^*\mathsf H_S$ also charges fractional principal-angle
+channels. Nor is a lower bound on the actual completion sum asserted
+without a lower bound on its actual coefficients. The original
+growing-place-set projection estimate and full same-test arithmetic
+comparison remain unresolved; (16)--(17) do not prove or refute RH.
