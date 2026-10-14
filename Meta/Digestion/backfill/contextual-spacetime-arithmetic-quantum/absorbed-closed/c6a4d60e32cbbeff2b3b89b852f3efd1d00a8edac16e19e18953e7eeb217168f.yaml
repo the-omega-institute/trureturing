@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c6a4d60e32cbbeff2b3b89b852f3efd1d00a8edac16e19e18953e7eeb217168f
+  normalized_sha256: sha256:c6a4d60e32cbbeff2b3b89b852f3efd1d00a8edac16e19e18953e7eeb217168f
+cas_ref: sha256:c6a4d60e32cbbeff2b3b89b852f3efd1d00a8edac16e19e18953e7eeb217168f
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/JointObserverVisibleResidual.joint_observer_visible_and_residual
+    target_statement_id: sha256:56f93c4454653f676c36aa77aa36b09f8fc76bdd96df10189b7c3e72a925b38f
+receipts:
+  unresolved_subitems: []

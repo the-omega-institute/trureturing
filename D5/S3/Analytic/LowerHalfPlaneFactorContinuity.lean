@@ -23,7 +23,7 @@ open scoped ComplexConjugate
 open D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation
   (monic_root_bound_by_coefficient_sum)
 
-private theorem root_tuple (p : ℂ[X]) (m : ℕ) (hp : p.Monic)
+theorem root_tuple (p : ℂ[X]) (m : ℕ) (hp : p.Monic)
     (hd : p.natDegree = m) :
     ∃ r : Fin m → ℂ, p = ∏ i, (X - C (r i)) := by
   classical
@@ -72,7 +72,7 @@ private theorem lower_factor_unique (p q : ℂ[X]) (hp : p.Monic) (hq : q.Monic)
   exact (Polynomial.eq_of_monic_of_dvd_of_natDegree_le hp hq
     ((lower_coprime_conjugate p q hlp hlq).dvd_of_dvd_mul_right hdvd) hd).symm
 
-private theorem continuous_product_coeff {A ι : Type*} [TopologicalSpace A]
+theorem continuous_product_coeff {A ι : Type*} [TopologicalSpace A]
     (s : Finset ι) (p : ι → A → ℂ[X])
     (hc : ∀ i ∈ s, ∀ k, Continuous (fun a => (p i a).coeff k)) :
     ∀ k, Continuous (fun a => (∏ i ∈ s, p i a).coeff k) := by
