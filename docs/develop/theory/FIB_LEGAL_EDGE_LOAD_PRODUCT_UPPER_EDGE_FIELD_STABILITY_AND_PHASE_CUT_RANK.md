@@ -1777,3 +1777,117 @@ Gibbs law with extra crossing interactions without a new
 proof of (14.6).
 
 ## 追加锚（本行以下为增补区）
+
+
+## 15. The five-mode closed-loop controls preserve the phase orbit
+
+The fixed-preparation transport source
+[AURIC probability, phase transport and holonomy](https://github.com/the-omega-institute/trureturing/blob/146d456b13542a1bd49e9278c162bf2588f183e1/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md),
+Definition 3.1 and §3.8, already supplies the endpoint
+position-locality result. Use its literal tensor order
+low, middle, high, identifying modes $0,1,2,3,13$ with
+$000,100,010,001,101$. Its negative-phase convention and
+closed-loop relation give
+
+$$
+h_0-h_1-h_3+h_{13}=2\pi m,\qquad
+\frac{e^{-ih_0}e^{-ih_{13}}}{e^{-ih_1}e^{-ih_3}}=1.
+\tag{15.1}
+$$
+
+Its endpoint unitary is therefore a restriction of a product
+of three position phase unitaries, up to one common phase.
+The source establishes that it preserves every Schmidt
+spectrum for bipartitions of these positions, comparing
+initial and final states at the same probability vector.
+Intervening probability legs are not asserted to preserve
+that spectrum.
+
+Thus the closed-loop histories belong to the entropy-neutral
+phase orbit of §8 under this tensor identification. For a
+joint occupation phase supported only at $101$, its
+rectangle value is $e^{i\theta}$, so a nontrivial such gate
+is outside this endpoint control class. The phase family
+considered in §§4–14 is a representation of candidate
+states; this transport source does not supply all of its
+state-changing controls.
+
+The same transport source, §4, establishes affine capacity
+6 in generic position for its five-edge ideal coherence
+menu. That number counts three circle characters through
+two real quadratures each. It can coexist with unchanged
+Schmidt spectra because fixed-reference coherence readings
+are not invariant under position-local phases. The source
+also establishes smaller capacities on its symmetry walls
+and an anisotropic realized response Gram; none supplies a
+spatial dimension, a triplet rotation action or the missing
+joint phase gate.
+
+For the three-site Gibbs specialization used here,
+$p_{13}/p_0=\lambda_1\lambda_3$ and
+$p_1/p_3=\lambda_1/\lambda_3$. The source walls
+$X+Y=1-Z$ and $X=Y$ become, respectively,
+$\lambda_1\lambda_3=1$ and $\lambda_1=\lambda_3$.
+Consequently the uniform-activity example is on both walls,
+rather than in the generic six-coordinate regime. This is
+a parameter correspondence to the existing source result,
+not a new capacity theorem.
+
+## 16. Dependent-part reduction already supplies qualitative entropy minimality
+
+Salvail, Schaffner and Sotáková,
+[*Quantifying the Leakage of Quantum Protocols for Classical
+Two-Party Cryptography*, arXiv:1501.01549v1](https://arxiv.org/abs/1501.01549v1),
+§4.1, Theorem 4.5 and its proof, supplies a precise predecessor
+for qualitative minimum entropy. For deterministic maps
+$L'=f(L),R'=g(R)$ satisfying
+
+$$
+L\leftrightarrow L'\leftrightarrow R,
+\qquad L\leftrightarrow R'\leftrightarrow R,
+\tag{16.1}
+$$
+
+minimum regular-embedding leakage for the full classical
+law is no smaller than that for the reduced law. In a
+regular embedding leakage is the reduced-state entropy
+minus the fixed classical mutual information; the proof
+also establishes that this mutual information is unchanged
+under (16.1).
+
+For the present path Gibbs law, the left and right boundary
+occupations are the dependent parts. Full words with the
+same boundary bit give the same opposite-side conditional
+law, and the two different bits give distinct conditional
+laws under strict positive support. Their joint law has
+only three positive sectors, $00,01,10$. Its bipartite
+support graph is a tree, so every phase on these three
+entries is removable by row and column phases. The positive
+full-word reference is a local isometric image of this
+positive two-by-two sector coefficient matrix.
+
+These correspondences instantiate the cited reduction:
+all reduced embeddings have the same entropy as the positive
+reduced reference, and that entropy equals the full positive
+reference entropy. Thus the source theorem already implies
+qualitative entropy minimality for the full-word phase
+family. The equality-orbit classification, full spectral
+majorization, mirror rank stratification and quantitative
+orbit estimates retain their separate deductions above.
+The general dependent-part principle and this qualitative
+consequence are not claimed as new results.
+
+The same primary source, §6, Conjecture 6.1, proposes
+canonical-embedding minimum leakage for every classical
+joint law, while explicitly warning that pairwise overlap
+ordering need not order entropy in dimension at least three.
+Proposition 11.3 maps to its stated general claim: the two
+coefficient matrices have identical classical probabilities,
+so their classical mutual information cancels in the leakage
+difference. This is a mathematical correspondence to the
+published formulation. The subsequent literature status of
+that conjecture and priority for its counterexamples are not
+established here; no new external open-problem settlement is
+claimed.
+
+## 追加锚（本行以下为增补区）
