@@ -161,6 +161,9 @@ $B=7\,608\,793$, with largest rank $3\,804\,397$. The output records a
 witness prime and witness count for each rank; it is a finite computation and
 does not assert that the complementary ranks are admissible or that the mask
 extends beyond this cutoff.
+For context, FIB §205.2 gives $p\ge2r-1$ for every prime divisor of
+$F_r$ when $r\ge7$ is prime, so this cutoff can reach no rank above
+$(B+1)/2=3\,804\,397$; the enumeration reaches that endpoint.
 
 This is a parameter application of existing CRT and size comparisons,
 not a new estimate. Its low-rank scales are already inside the finite
