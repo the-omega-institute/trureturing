@@ -116,7 +116,8 @@ theorem result : ¬ claim := by
   intro h
   have hbad := h ℚ 2 (by decide) char_hyp ({0, 1, 2} : Finset ℚ) size_hyp
   rw [pF_rat, a_card, sun_bound, sums_card] at hbad
-  omega
+  norm_num at hbad
+  exact (by decide : ¬ ((5 : ℕ∞) ≤ 4)) hbad
 
 
 end
