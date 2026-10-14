@@ -546,7 +546,7 @@ def scaleBump (z : ℝ) : ℝ := expNegInvGlue (9/16-z^2)
 lemma bump_smooth : ContDiff ℝ ∞ scaleBump :=
   expNegInvGlue.contDiff.comp (contDiff_const.sub (contDiff_id.pow 2))
 
-lemma bump_nonneg (z : ℝ) : 0 ≤ scaleBump z := expNegInvGlue.nonneg _
+private lemma bump_nonneg (z : ℝ) : 0 ≤ scaleBump z := expNegInvGlue.nonneg _
 
 lemma bump_zero {z : ℝ} (h : z ≤ -1 ∨ 1 ≤ z) : scaleBump z = 0 := by
   apply expNegInvGlue.zero_of_nonpos

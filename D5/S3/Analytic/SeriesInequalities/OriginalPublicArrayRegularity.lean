@@ -20,6 +20,19 @@ open ParametricLorentzJetTransport LogScalePartitionJets
 open OriginalRingEnvelopeScale ReferenceProfileMixedJets LorentzCoefficientRemainder
 open LorentzCommonGridStability LorentzLowDegreeCoefficientRemainder
 
+/-- Legality of the original corrected rings on the same fixed public grid. -/
+def RingEnvelopes (χ : ℝ → ℝ) (T β a d : ℝ) (r : ℕ) (ρ θ : ℝ)
+    (b N : ℕ) (D X : ℝ) : Prop :=
+  ∀ j x, 0 < x → x ≤ 1 → ringScale X b j/Real.sqrt b ≤ x →
+  let f := fun q : ℝ => (reference (cutoff χ β) (2/(5*T^β)) a d x q : ℂ)
+  let low := ringLower (N*b^j) b r ρ θ (D*(ringScale X b j)^(-ρ)) f
+  let upp := ringUpper (N*b^j) b r ρ θ (D*(ringScale X b j)^(-ρ)) f
+  ∀ k, (∀ t ≤ (N*b^j)*b^k+r, (9/20 : ℝ) ≤ low k t ∧
+    low k t ≤ upp k t ∧ upp k t ≤ 19/20) ∧
+    (∀ t ≤ (N*b^j)*b^(k+1)+r,
+      HNPCorrectionLiftAdvantage.lift ((N*b^j)*b^(k+1)+r) ((N*b^j)*b^k+r) t (low k) ≤ low (k+1) t ∧
+      upp (k+1) t ≤ HNPCorrectionLiftAdvantage.lift ((N*b^j)*b^(k+1)+r) ((N*b^j)*b^k+r) t (upp k))
+
 private lemma ring_scale_jet_bound {X x : ℝ} {b j : ℕ} (hX : 0 < X) (hx : 0 < x)
     (hb : 1 < b) (hz : |scaleCoordinate X b x-j| < 1) (m : ℕ) :
     (ringScale X b j)^(-(m : ℝ)) ≤ (Real.sqrt b)^(m : ℝ)*x^(-(m : ℝ)) := by
@@ -37,7 +50,8 @@ private lemma original_ring_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ χ)
     (hρ1 : ρ < (r : ℝ)+1) (hρ2 : 2 ≤ ρ) (hθ : 0 < θ) :
     ∃ B : ℕ, 16 ≤ B ∧ ∀ b : ℕ, B ≤ b →
       ∀ X : ℝ, 0 < X → X ≤ 1 → ∃ D : ℝ, 0 < D ∧
-      ∃ N : ℕ, 3*r+2 ≤ N ∧ ∀ m : ℕ, ∃ A : ℝ, 0 < A ∧
+      ∃ N : ℕ, 3*r+2 ≤ N ∧ RingEnvelopes χ T β a d r ρ θ b N D X ∧
+      ∀ m : ℕ, ∃ A : ℝ, 0 < A ∧
       ∀ j k t : ℕ, t ≤ (N*b^j)*b^k+r → ∀ x : ℝ, 0 < x → x ≤ X →
         |scaleCoordinate X b x-j| < 1 →
         (|iteratedDeriv m (fun y => ringLower (N*b^j) b r ρ θ
@@ -58,7 +72,7 @@ private lemma original_ring_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ χ)
   have hb0 : 0 < b := by omega
   obtain ⟨D,hD,N,hN,hring⟩ := hr b ((le_max_left _ _).trans hb) X hX
   have hN0 : 0 < N := by omega
-  refine ⟨D,hD,N,hN,?_⟩
+  refine ⟨D,hD,N,hN,hring,?_⟩
   intro m
   by_cases hm : m = 0
   · subst m
@@ -112,7 +126,7 @@ theorem reference_public_weighted_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
     (hρ1 : ρ < (r : ℝ)+1) (hρ2 : 2 ≤ ρ) (hθ : 0 < θ) :
     ∃ B : ℕ, 16 ≤ B ∧ ∀ b : ℕ, B ≤ b →
       ∀ X : ℝ, 0 < X → X ≤ 1 → ∃ D : ℝ, 0 < D ∧
-      ∃ N : ℕ, 3*r+2 ≤ N ∧ ∀ W : ℝ, ∀ m : ℕ,
+      ∃ N : ℕ, 3*r+2 ≤ N ∧ RingEnvelopes χ T β a d r ρ θ b N D X ∧ ∀ W : ℝ, ∀ m : ℕ,
       ∃ C : ℝ, 0 < C ∧ ∀ k t : ℕ, t ≤ N*b^k+r →
       ∀ x : ℝ, 0 < x → x ≤ X →
         (|iteratedDeriv m (fun y =>
@@ -125,8 +139,8 @@ theorem reference_public_weighted_jets {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
     a d r ρ θ hρ hρ1 hρ2 hθ
   refine ⟨B,hB,?_⟩
   intro b hBb X hX hX1
-  obtain ⟨D,hD,N,hN,hjets⟩ := hb b hBb X hX hX1
-  refine ⟨D,hD,N,hN,?_⟩
+  obtain ⟨D,hD,N,hN,hring,hjets⟩ := hb b hBb X hX hX1
+  refine ⟨D,hD,N,hN,hring,?_⟩
   intro W m
   have hb1 : 1 < b := by omega
   have hb0 : 0 < b := by omega
@@ -300,7 +314,7 @@ theorem reference_public_closed_holder {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
     (n : ℕ) (hn : (n : ℝ) < β) (hn1 : β < (n : ℝ)+1) :
     ∃ B : ℕ, 16 ≤ B ∧ ∀ b : ℕ, B ≤ b →
       ∀ X : ℝ, 0 < X → X ≤ 1 → ∃ D : ℝ, 0 < D ∧
-      ∃ N : ℕ, 3*r+2 ≤ N ∧ ∀ W : ℝ,
+      ∃ N : ℕ, 3*r+2 ≤ N ∧ RingEnvelopes χ T β a d r ρ θ b N D X ∧ ∀ W : ℝ,
       ∃ C : ℕ → ℝ, (∀ m, 0 < C m) ∧ ∃ H : ℝ≥0,
       ∀ k t : ℕ, t ≤ N*b^k+r → ∀ u : Bool,
       let f := if u then publicUpper (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D X W β k t
@@ -317,8 +331,8 @@ theorem reference_public_closed_holder {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
     a d r ρ θ hρ hρ1 hρ2 hθ
   refine ⟨B,hB,?_⟩
   intro b hBb X hX hX1
-  obtain ⟨D,hD,N,hN,hjets⟩ := hb b hBb X hX hX1
-  refine ⟨D,hD,N,hN,?_⟩
+  obtain ⟨D,hD,N,hN,hring,hjets⟩ := hb b hBb X hX hX1
+  refine ⟨D,hD,N,hN,hring,?_⟩
   intro W
   choose C hC hCb using hjets W
   let H : ℝ≥0 := ⟨max (C (n+1)) (C n*(1+2^(β-n))),
@@ -690,6 +704,8 @@ private lemma public_elevated_width_closed {φ : ℝ → ℝ} (hφ : ContDiff �
     (∀ m ≤ n, iteratedDeriv m g 0 = 0) ∧
     (∀ m x, 0 < x → x ≤ X → |iteratedDeriv m g x| ≤
       K m*x^(β-m)*(max 1 (((N*b^(k+1) : ℕ) : ℝ)*x^2))^(-ρ/2)) ∧
+    (∀ m ≤ n, ∀ x ∈ Set.Icc 0 X, |iteratedDeriv m g x| ≤
+      K m*((N*b^(k+1) : ℕ) : ℝ)^(((m : ℝ)-β)/2)) ∧
     HolderOnWith H ⟨β-n,by linarith⟩ (iteratedDeriv n g) (Set.Icc 0 X) := by
   have hβ : 0 < β := lt_of_le_of_lt (Nat.cast_nonneg n) hn
   have hρ : 0 ≤ ρ := hβ.le.trans hρβ
@@ -738,7 +754,23 @@ private lemma public_elevated_width_closed {φ : ℝ → ℝ} (hφ : ContDiff �
       (Real.rpow_le_one_of_one_le_of_nonpos (le_max_left _ _) (by linarith : -ρ/2 ≤ 0))
       (mul_nonneg (hK m).le (Real.rpow_pos_of_pos hx _).le)).trans_eq (mul_one _)
   have hh := closed_jets_holder hX hn hn1 K hK hgc hgs hbnd
-  exact ⟨hh.1,hh.2.1,he,hh.2.2.2⟩
+  refine ⟨hh.1,hh.2.1,he,?_,hh.2.2.2⟩
+  intro m hm x hx
+  have hNk : (0 : ℝ) < ((N*b^(k+1) : ℕ) : ℝ) := by
+    exact_mod_cast (show 0 < N*b^(k+1) by positivity)
+  rcases eq_or_lt_of_le hx.1 with heq | hxpos
+  · subst x
+    rw [hh.2.1 m hm,abs_zero]
+    exact mul_nonneg (hK m).le (Real.rpow_pos_of_pos hNk _).le
+  · have hp : 0 < β-(m : ℝ) := by
+      have : (m : ℝ) ≤ n := by exact_mod_cast hm
+      linarith
+    apply (he m x hxpos hx.2).trans
+    have hs := mul_le_mul_of_nonneg_left
+      (min_scale_global (ρ := ρ) hNk hx.1 hp
+        (by have := Nat.cast_nonneg (α := ℝ) m; linarith)) (hK m).le
+    rw [show -(β-(m : ℝ))/2 = ((m : ℝ)-β)/2 by ring] at hs
+    simpa only [mul_assoc] using hs
 
 set_option maxHeartbeats 600000 in
 private lemma public_increment_closed {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
@@ -831,7 +863,7 @@ theorem reference_public_regularity {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ �
     (hρβ : β ≤ ρ) (n : ℕ) (hn : (n : ℝ) < β) (hn1 : β < (n : ℝ)+1) :
     ∃ B : ℕ, 16 ≤ B ∧ ∀ b : ℕ, B ≤ b →
       ∀ X : ℝ, 0 < X → X ≤ 1 → ∃ D : ℝ, 0 < D ∧
-      ∃ N : ℕ, 3*r+2 ≤ N ∧ ∀ W : ℝ, 0 < W →
+      ∃ N : ℕ, 3*r+2 ≤ N ∧ RingEnvelopes χ T β a d r ρ θ b N D X ∧ ∀ W : ℝ, 0 < W →
       ∃ C : ℕ → ℝ, (∀ m, 0 < C m) ∧ ∃ H : ℝ≥0, ∃ c U : ℝ, 0 < c ∧ 0 < U ∧
       ∃ K : ℕ → ℝ, (∀ m, 0 < K m) ∧ ∃ HΓ : ℝ≥0,
       ∃ KE : ℕ → ℝ, (∀ m, 0 < KE m) ∧ ∃ HE HI : ℝ≥0,
@@ -864,6 +896,8 @@ theorem reference_public_regularity {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ �
        (∀ m ≤ n, iteratedDeriv m g 0 = 0) ∧
        (∀ m x, 0 < x → x ≤ X → |iteratedDeriv m g x| ≤
          KE m*x^(β-m)*(max 1 (((N*b^(k+1) : ℕ) : ℝ)*x^2))^(-ρ/2)) ∧
+       (∀ m ≤ n, ∀ x ∈ Set.Icc 0 X, |iteratedDeriv m g x| ≤
+         KE m*((N*b^(k+1) : ℕ) : ℝ)^(((m : ℝ)-β)/2)) ∧
        HolderOnWith HE ⟨β-n,by linarith⟩ (iteratedDeriv n g) (Set.Icc 0 X)) ∧
       (∀ k t, t ≤ N*b^(k+1)+r → ∀ u : Bool,
        let g := if u then fun y => HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t
@@ -878,8 +912,8 @@ theorem reference_public_regularity {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ �
     a d r ρ θ hρ hρ1 hρ2 hθ n hn hn1
   refine ⟨B,hB,?_⟩
   intro b hBb X hX hX1
-  obtain ⟨D,hD,N,hN,h⟩ := hb b hBb X hX hX1
-  refine ⟨D,hD,N,hN,?_⟩
+  obtain ⟨D,hD,N,hN,hring,h⟩ := hb b hBb X hX hX1
+  refine ⟨D,hD,N,hN,hring,?_⟩
   intro W hW
   obtain ⟨C,hC,H,h⟩ := h W
   obtain ⟨U,hU,hUb⟩ := public_width_min_scale (cutoff χ β) (2/(5*T^β)) a d r ρ θ
