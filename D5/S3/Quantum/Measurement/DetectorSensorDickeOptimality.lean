@@ -285,11 +285,8 @@ private theorem weight_le {n : ℕ} (x : Fin n → Bool) : (Finset.univ.filter (
   exact card_finset_fin_le _
 private theorem balanced_product_upper (n k : ℕ) (hk : k ≤ n) :     k * (n - k) ≤ n ^ 2 / 4 := by
   apply (Nat.le_div_iff_mul_le (by norm_num : 0 < 4)).mpr
-  have he : (n : ℤ) - k = (n - k : ℕ) := (Nat.cast_sub hk).symm
-  have hz := sq_nonneg ((n : ℤ) - 2 * k)
-  have hu : (k : ℤ) * ((n : ℤ) - k) * 4 ≤ (n : ℤ)^2 := by nlinarith
-  rw [he] at hu
-  exact_mod_cast hu
+  simpa only [Nat.add_sub_of_le hk, mul_assoc, mul_comm, mul_left_comm] using
+    (four_mul_le_sq_add k (n - k))
 private theorem weight_permWord {n : ℕ} (σ : Equiv.Perm (Fin n)) (x : Fin n → Bool) :     (Finset.univ.filter (fun j => ((Equiv.arrowCongr σ.symm (Equiv.refl Bool)) x) j = true)).card = (Finset.univ.filter (fun j => x j = true)).card := by
   apply Finset.card_equiv σ
   intro j
