@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d07aab9936697b4a49b1853bb0b4392c8150ff5d26ffb08a4100722215a3927d
+  normalized_sha256: sha256:d07aab9936697b4a49b1853bb0b4392c8150ff5d26ffb08a4100722215a3927d
+cas_ref: sha256:d07aab9936697b4a49b1853bb0b4392c8150ff5d26ffb08a4100722215a3927d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 395 节导言只限定后续近似恢复研究的接口、目标和边界，没有给出误差界或成功率结论。
+    previous_atom_id: c79b766ba8de12552fe87de974264cb967dcc3d1365a61b8d2120ad5695624f0
+    next_atom_id: f4f5dc9496fd028eaed7551b61f359c6ea09fd723ea2023acf814d62071d2817
