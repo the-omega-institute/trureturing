@@ -128,6 +128,10 @@ $$
 R_B=\{r\ge7:r\text{ is prime and }z(p)=r\text{ for some prime }p\le B\}.
 $$
 
+The congruence itself is the $p\mid V$ branch already recorded in FIB §205.3;
+the new finite datum here is the cutoff-indexed set of prime ranks and its
+enumeration under the external valuation certificate.
+
 For every $r\in R_B$, choose such a witness $p$. Then $p\mid F_r$ gives
 
 $$
