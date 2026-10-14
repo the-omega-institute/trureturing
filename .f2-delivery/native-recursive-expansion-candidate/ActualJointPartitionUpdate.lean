@@ -82,7 +82,8 @@ theorem actual_joint_partition_of_cycle_inventory
         e ∈ c.edgeSet ∧ e ∉ cuts) ∧
       (∀ e ∈ cuts, e ∈ c.edgeSet) ∧ pieces.length = cuts.card ∧
       new₀ = tail.reverse.append (q₀.cons hseam) ∧
-      new₁ = q₁ ∧ new₂ = (q₂.append chain).concat hₐ.symm := by
+      new₁ = q₁ ∧ new₂ = (q₂.append chain).concat hₐ.symm ∧
+      (s(ℓ₀, r₀) :: s(ℓ₁, r₁) :: deleted).Nodup := by
   classical
   have hccount : ∀ v, c.support.tail.count v = 1 :=
     (SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hc).2
@@ -144,7 +145,7 @@ theorem actual_joint_partition_of_cycle_inventory
     rw [hrcard]
     omega
   refine ⟨new₀, new₁, new₂, hpaths, hcount, hsupport, hfiltered.symm, ?_,
-    hcuts, hlength, he₀, he₁, he₂⟩
+    hcuts, hlength, he₀, he₁, he₂, hremoved⟩
   intro e
   rw [← hfiltered.mem_iff]
   simp only [List.mem_filter, decide_eq_true_eq, SimpleGraph.Walk.mem_edgeSet]

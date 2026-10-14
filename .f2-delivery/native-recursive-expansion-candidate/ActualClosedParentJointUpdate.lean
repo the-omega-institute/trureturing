@@ -68,7 +68,8 @@ theorem actual_closed_parent_joint_partition
           (endpointPairs (⟨ℓ, z, d⟩ :: rest)).erase s(ℓ, z) ∪
             {s(z, ℓ₀), s(r₀, ℓ₁), s(r₁, ℓ)} ∧
         new₀ = tail.reverse.append (q₀.cons hseam) ∧
-        new₁ = q₁ ∧ new₂ = (q₂.append chain).concat hₐ.symm := by
+        new₁ = q₁ ∧ new₂ = (q₂.append chain).concat hₐ.symm ∧
+        (s(ℓ₀, r₀) :: s(ℓ₁, r₁) :: deleted).Nodup := by
   obtain ⟨chain, hchain, hinterior, hs, he⟩ :=
     actual_closed_route_outer_chain ⟨a, b, Λ⟩ ⟨s, t, P⟩ others hlink c hbase hcs hce
   have hsparent : c.support.tail.Perm
@@ -104,12 +105,12 @@ theorem actual_closed_parent_joint_partition
   have hnjoint : (d.support ++ rest.flatMap fun p => p.walk.support).Nodup :=
     hPs.nodup_iff.mp hPnodup
   obtain ⟨new₀, new₁, new₂, hpaths, hcount, hsupport, hedges, hmem, hcuts,
-      hcard, he₀, he₁, he₂⟩ :=
+      hcard, he₀, he₁, he₂, hcutNodup⟩ :=
     actual_joint_partition_of_cycle_inventory c hc rest d tail hₐ h_b hd
     Λ q₀ q₁ q₂ hQs hQe chain hchain hseam deleted hsparent heparent
   exact ⟨chain, hinterior, new₀, new₁, new₂, hpaths, hcount, hsupport, hedges,
     hmem, hcuts, hcard, actual_three_path_endpoint_update d rest hnjoint new₀ new₁ new₂,
-    he₀, he₁, he₂⟩
+    he₀, he₁, he₂, hcutNodup⟩
 
 #print axioms actual_closed_parent_joint_partition
 

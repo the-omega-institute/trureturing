@@ -71,6 +71,7 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
     (hPe : P.edges.Perm ((rest.flatMap fun p => p.walk.edges) ++
       tail.edges ++ [s(ℓ, s)] ++ deleted))
     (hdeleted : (deleted.map (Sym2.map Subtype.val)).toFinset = markedCuts F₀ ∪ markedCuts F₁)
+    (holdDisjoint : Disjoint (markedCuts F₀) (markedCuts F₁))
     (Λ : (ParentGraph F₀ A u hbase₀).Walk a b)
     (q₀ : (ParentGraph F₀ A u hbase₀).Walk a ℓ₀)
     (q₁ : (ParentGraph F₀ A u hbase₀).Walk r₀ ℓ₁)
@@ -108,11 +109,14 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
       (endpointPairs pieces).image (Sym2.map Subtype.val) =
         ((endpointPairs (⟨ℓ, z, d⟩ :: rest)).image (Sym2.map Subtype.val)).erase s(ℓ.val, z.val) ∪
           {s(leftPort (if ε then N₀ else N₁) k, leftPort N₀ 0),
-            s(rightPort N₀ 0, leftPort N₁ 0), s(rightPort N₁ 0, leftPort N₁ 1)} := by
+            s(rightPort N₀ 0, leftPort N₁ 0), s(rightPort N₁ 0, leftPort N₁ 1)} ∧
+      Disjoint (markedCuts N₀) (markedCuts N₁) ∧
+      (markedCuts N₀).erase (markedCut N₀ 0) = markedCuts F₁ ∧
+      (markedCuts N₁).erase (markedCut N₁ 0) = markedCuts F₀ := by
   classical
   dsimp only
   obtain ⟨chain, _, new₀, new₁, new₂, hpaths, hcount, _, _, hinv, hcuts,
-      hcard, hpairs, _, _, _⟩ :=
+      hcard, hpairs, _, _, _, hcutNodup⟩ :=
     actual_closed_parent_joint_partition c hc d tail hₐ h_b hd rest P deleted hPs hPe
       Λ q₀ q₁ q₂ hQs hQe others hlink hbase hseam hcs hce
   let pieces : List (Piece (ParentGraph F₀ A u hbase₀)) :=
@@ -129,6 +133,49 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
     change s(ℓ₁.val, r₁.val) = s(_, _)
     rw [hℓ₁, hr₁]
     exact Sym2.eq_swap
+  have hrawCutNodup :
+      (markedCut (nextFrame F₁ A u hbase₁) 0 ::
+        markedCut (nextFrame F₀ A u hbase₀) 0 :: deleted.map edgeVal).Nodup := by
+    have h := (List.nodup_map_iff heinj).mpr hcutNodup
+    simpa only [List.map_cons, hzero₀, hzero₁] using h
+  have hn₀ := List.nodup_cons.mp hrawCutNodup
+  have hn₁ := List.nodup_cons.mp hn₀.2
+  have hzeroNe : markedCut (nextFrame F₁ A u hbase₁) 0 ≠
+      markedCut (nextFrame F₀ A u hbase₀) 0 := by
+    intro h
+    exact hn₀.1 (List.mem_cons.mpr (Or.inl h))
+  have hzero₀notOld : markedCut (nextFrame F₁ A u hbase₁) 0 ∉
+      markedCuts F₀ ∪ markedCuts F₁ := by
+    rw [← hdeleted]
+    intro h
+    exact hn₀.1 (List.mem_cons_of_mem _ (List.mem_toFinset.mp h))
+  have hzero₁notOld : markedCut (nextFrame F₀ A u hbase₀) 0 ∉
+      markedCuts F₀ ∪ markedCuts F₁ := by
+    rw [← hdeleted]
+    exact fun h => hn₁.1 (List.mem_toFinset.mp h)
+  have hnewDisjoint : Disjoint (markedCuts (nextFrame F₁ A u hbase₁))
+      (markedCuts (nextFrame F₀ A u hbase₀)) := by
+    rw [native_frame_marked_cuts_shift hm F₁ A u hbase₁,
+      native_frame_marked_cuts_shift hm F₀ A u hbase₀]
+    apply Finset.disjoint_left.mpr
+    intro e he₀ he₁
+    rcases Finset.mem_insert.mp he₀ with he₀ | he₀
+    · subst e
+      rcases Finset.mem_insert.mp he₁ with he₁ | he₁
+      · exact hzeroNe he₁
+      · exact hzero₀notOld (Finset.mem_union.mpr (Or.inl he₁))
+    · rcases Finset.mem_insert.mp he₁ with he₁ | he₁
+      · subst e
+        exact hzero₁notOld (Finset.mem_union.mpr (Or.inr he₀))
+      · exact Finset.disjoint_left.mp holdDisjoint he₁ he₀
+  have herase₀ : (markedCuts (nextFrame F₁ A u hbase₁)).erase
+      (markedCut (nextFrame F₁ A u hbase₁) 0) = markedCuts F₁ := by
+    rw [native_frame_marked_cuts_shift hm F₁ A u hbase₁]
+    exact Finset.erase_insert (fun h => hzero₀notOld (Finset.mem_union.mpr (Or.inr h)))
+  have herase₁ : (markedCuts (nextFrame F₀ A u hbase₀)).erase
+      (markedCut (nextFrame F₀ A u hbase₀) 0) = markedCuts F₀ := by
+    rw [native_frame_marked_cuts_shift hm F₀ A u hbase₀]
+    exact Finset.erase_insert (fun h => hzero₁notOld (Finset.mem_union.mpr (Or.inl h)))
   have hcutimage : cuts.image edgeVal =
       markedCuts (nextFrame F₁ A u hbase₁) ∪ markedCuts (nextFrame F₀ A u hbase₀) := by
     rw [native_joint_marked_cuts_shift hm F₀ F₁ A u hbase₀ hbase₁]
@@ -180,7 +227,8 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
       have hs := (native_marked_index_shift hm F₁ A u hbase₁ (k - 1)).2
       rw [hkindex] at hs
       exact hz.trans hs.symm
-  refine ⟨pieces, hpaths, hrawcount, hrawinv, hrawcuts, hrawcard, ?_⟩
+  refine ⟨pieces, hpaths, hrawcount, hrawinv, hrawcuts, hrawcard, ?_,
+    hnewDisjoint, herase₀, herase₁⟩
   have h := congrArg (Finset.image edgeVal) hpairs
   rw [Finset.image_union, Finset.image_erase heinj] at h
   simpa only [edgeVal, Finset.image_insert, Finset.image_singleton, Sym2.map_mk,
