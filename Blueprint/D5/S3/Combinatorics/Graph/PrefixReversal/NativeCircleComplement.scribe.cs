@@ -35,6 +35,22 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
                 + "a-edge, and prepend the actual b-edge from z to z*b. The support is z followed by the reverse "
                 + "of the H trace's tail. It is a permutation of the original complete simple support. Its endpoint "
                 + "is z*a, its length remains 2(m+1)-1, and simplicity again excludes the a-cut edge."),
+            Describe.Lean(DescribeId.Create("complement-edge-inventory"),
+                DeclarationHandle.Create(Prefix + "native_complement_edge_inventory"),
+                H("Every Other Native Edge Is Retained"),
+                StatementSource.FromAuthor(InventoryFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let g be a or b, and let w be an actual a/b path from z to z*g, of length "
+                    + "2(m+1)-1, whose support is exactly Circle(z). At every x in Circle(z), "
+                    + "and for either h=a or h=b, the edge from x to x*h occurs in w exactly when "
+                    + "it differs from the deleted endpoint edge from z to z*g. To prove this, "
+                    + "close the actual path with that endpoint edge. Every supported vertex has "
+                    + "two cycle neighbors, and the native a/b graph allows only x*a and x*b. "
+                    + "These are distinct, so equality of the finite neighbor cardinalities "
+                    + "forces both actual edges into the cycle. Removing its literal first edge "
+                    + "leaves precisely all other native edges in the complement. This earns the "
+                    + "retained b edges required at subsequent one-contact insertion suppliers."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "These are complete native D-circle pieces for switching constructions. Their membership "
                 + "equivalences cover every configuration in the independent circle domain, with no finite search. "
@@ -67,6 +83,28 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
             And(Call("IsPath", w), And(Eq(Call("length", w), Sub(Mul(D(2), Add(m, D(1))), D(1))),
                 And(Eq(Call("support", w), support), full))));
         return Disp(All("m", Call("Nat"), Implies(Le(D(3), m), All("z", Call("Configuration", m), conclusion))));
+    }
+
+    private static Formula InventoryFormula()
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), g = F.Id("g"), w = F.Id("w");
+        Formula x = F.Id("x"), h = F.Id("h"), config = Call("Configuration", m);
+        Formula gen(Formula v) => new Formula.Logic(Eq(v, Call("a", m)),
+            FormulaLogicOperator.Or, Eq(v, Call("b", m)));
+        Formula edge(Formula v, Formula k) => Call("Sym2", v, Call("rightMultiply", v, k));
+        Formula support = All("v", config,
+            new Formula.Logic(Call("mem", F.Id("v"), Call("support", w)),
+                FormulaLogicOperator.Iff, Call("Circle", z, F.Id("v"))));
+        Formula assumptions = And(gen(g), And(Call("IsPath", w),
+            And(Eq(Call("length", w), Sub(Mul(D(2), Add(m, D(1))), D(1))), support)));
+        Formula conclusion = All("x", config, All("h", config,
+            Implies(And(Call("Circle", z, x), gen(h)),
+                new Formula.Logic(Call("mem", edge(x, h), Call("edges", w)),
+                    FormulaLogicOperator.Iff, new Formula.Not(Eq(edge(x, h), edge(z, g)))))));
+        return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
+            All("z", config, All("g", config,
+                All("w", Call("Walk", Call("nativeABGraph", m), z,
+                    Call("rightMultiply", z, g)), Implies(assumptions, conclusion)))))));
     }
 
     private static Formula Call(string name, params Formula[] args) =>

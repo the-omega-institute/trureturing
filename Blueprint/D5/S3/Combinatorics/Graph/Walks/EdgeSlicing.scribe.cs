@@ -38,6 +38,17 @@ internal sealed class EdgeSlicingDocument : IScribeDocumentDefinition
                         + "Induction on the walk proves the support, edge-list and length identities, "
                         + "while the original path condition ensures every piece is a path."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("open-cycle-at-edge"),
+                DeclarationHandle.Create(Prefix + "exists_open_cycle_at_edge"),
+                H("Open an Actual Hamilton Cycle at Its Supplied Edge"),
+                StatementSource.FromAuthor(OpenFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A genuine undirected edge {x,y} of a Hamilton cycle can be removed to "
+                    + "produce an actual Hamilton path from y to x. Its undirected edges are exactly "
+                    + "the original cycle edges except {x,y}. Rotation and, when necessary, reversal "
+                    + "of the supplied cycle earn the endpoint orientation; no new path is assumed. "
+                    + "Keeping both endpoints in the walk type allows later actual seam splicing."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("cycle-edge-slicing"),
                 DeclarationHandle.Create(Prefix + "exists_cycle_edge_slicing"),
                 H("Exactly One Actual Path per Selected Hamilton Cycle Edge"),
@@ -79,6 +90,24 @@ internal sealed class EdgeSlicingDocument : IScribeDocumentDefinition
             All("G", Call("SimpleGraph", v), All("E", Call("Finset", Call("Sym2", v)),
                 All("start", v, All("finish", v, All("p", Call("Walk", g, start, finish),
                     Implies(Call("IsPath", p), conclusion)))))))));
+    }
+
+    private static Formula OpenFormula()
+    {
+        Formula v = F.Id("V"), g = F.Id("G"), p = F.Id("p"), q = F.Id("q");
+        Formula a = F.Id("a"), x = F.Id("x"), y = F.Id("y"), e = F.Id("e");
+        Formula cut = Call("Sym2", x, y);
+        Formula inventory = All("e", Call("Sym2", v),
+            Logic(Member(e, Call("edges", q)), FormulaLogicOperator.Iff,
+                And(Member(e, Call("edges", p)), new Formula.Not(Equal(e, cut)))));
+        Formula conclusion = Some("q", Call("Walk", g, y, x),
+            And(Call("IsHamiltonian", q), inventory));
+        return Disp(All("V", Call("Type"), Seq(
+            OpenBracket, Call("DecidableEq", v), CloseBracket, Sp,
+            All("G", Call("SimpleGraph", v), All("a", v, All("x", v, All("y", v,
+                All("p", Call("Walk", g, a, a), Implies(
+                    And(Call("IsHamiltonianCycle", p), Member(cut, Call("edgeSet", p))),
+                    conclusion)))))))));
     }
 
     private static Formula CycleFormula()

@@ -2548,9 +2548,457 @@ that the stated physical services have been constructed.
 
 ## 追加锚（本行以下为增补区）
 
-## 12. Bounded genuine Updates and binary-size native acquisition
+## 12. Supplied shape: Fibonacci capacity and the unknown-entry width leading coefficient
 
-**Definition 12.1 (the capped task and its resource coordinates).**
+This appendix refines the supplied-shape width orders in Proposition 10.5
+under Definition 9.1's contract. Its fixed public skeleton distinguishes
+this comparison from the unknown-shape tasks of §§10–11.
+
+**Definition 12.1 (width minima for the full unknown-entry task).**
+Fix Definition 9.1's public full ordered skeleton $S$, with even
+$h\ge2$ independently labelled leaves, and a finite integer $T\ge0$.
+Keep all $2^h$ assignments and all entry lags $0\le t\le T$, with
+source-independent deterministic initialization and no reference leaf.
+Let $`\ell_a^*(S,T)`$ be the least complete no-$11$ word length among
+correct controllers in that definition's comparison class, which allows
+adaptive genuine Updates. Let $`\ell_s^*(S,T)`$ be the corresponding
+least length with zero actual Updates on every promised run. The active
+class also allows zero-Update runs. Both classes retain the permitted
+finite deterministic internal work: all its mutable state is counted,
+it obtains no source input, and every query word selects one fixed,
+fully materialized literal. Each halt word has one fixed output.
+Every actual primitive reply immediately selects a hold or one legal
+bit change and is discarded. These minima concern word length alone,
+without minimizing the other resource coordinates.
+
+Use $K,M,d_i,D,A_S,c$ from (SLHC.24), and set
+
+$$
+d_F(n)=\min\{d\in\mathbb N_0:F_{d+2}\ge n\}\quad(n\ge1),
+\qquad r=\left\lceil\frac{T+1}{3}\right\rceil.
+\tag{SLHC.38}
+$$
+
+Thus $d_F$ inverts the capacity of the complete no-$11$ word space,
+not the size of a selected supported subgraph. The constructions below
+make both width minima well defined.
+
+**Theorem 12.2 (full-table native width at Fibonacci leading order).**
+Under Definition 12.1, the entire expanded active and static controllers
+of §§9.4–9.5 have faithful immediate encodings with respectively
+
+$$
+\begin{aligned}
+\ell_a&=d_F(h+1)+7,& |W_a|&=8h+8,\\
+\ell_s&=d_F(M+1)+7,& |W_s|&=8M+2.
+\end{aligned}
+\tag{SLHC.39}
+$$
+
+Each encoding is injective on every installed state, including those
+with empty actual support. It preserves the instruction, literal,
+successor on every typed response row, and fixed halt output of that
+state. On every same actual entry $E(x,t)$ it consequently preserves
+every primitive, raw reply, source successor, exact support, remaining
+primitive rank and first halt. Both constructions have zero internal
+instructions. The minima over the full comparison classes satisfy
+
+$$
+\begin{aligned}
+d_F(h+2)&\le\ell_a^*(S,T)
+ \le d_F(h+1)+7\le d_F(h+2)+7,\\
+d_F(hr+2)&\le\ell_s^*(S,T)
+ \le d_F(M+1)+7\le d_F(hr+2)+9.
+\end{aligned}
+\tag{SLHC.40}
+$$
+
+In particular, with $\varphi=(1+\sqrt5)/2$,
+
+$$
+\begin{aligned}
+\ell_a^*(S,T)&=\log_\varphi h+O(1),\\
+\ell_s^*(S,T)&=\log_\varphi\!\bigl(h(T+1)\bigr)+O(1).
+\end{aligned}
+\tag{SLHC.41}
+$$
+
+The constants are uniform over all these $h,T$ and all supplied
+skeletons, including unbalanced skeletons with their actual leaf depths.
+
+Proof. Use the mathematical state names $Q,B,C,V$ of (SLHC.32) and
+§9.5 for the already expanded tables. No two of these states are
+identified. Write $N=h$ for the active table and $N=M$ for the static
+table; the static table has no $V$ states. Set $d=d_F(N+1)$.
+
+The classical ingredient is a spanning path of $\Gamma_d$. It is
+supplied by Sandi Klavžar, *Structure of Fibonacci cubes: a survey*,
+Proposition 3.1, pp.5–6 of the [author manuscript][KLAVZAR-PATH],
+published in *Journal of Combinatorial Optimization* 25 (2013),
+505–522, [DOI 10.1007/s10878-011-9433-z][KLAVZAR-PATH-DOI].
+The survey attributes the construction to Cong, Zheng and Sharma
+(1993); that attribution is through the survey. The assertion used is
+a Hamilton path for every dimension, with consecutive words differing
+in one bit; no Hamilton cycle or prescribed endpoint is required.
+Since $F_{d+2}\ge N+1$, choose its first $N+1$ words
+$z_0,\ldots,z_N$. They are distinct members of $L_d$ and
+$d_H(z_i,z_{i+1})=1$ for $0\le i<N$. This path is an immutable
+choice in the installed table, not a runtime path generator.
+
+Order four latch coordinates as
+$(L_{0,0},L_{0,1},L_{1,0},L_{1,1})$, and denote their one-hot
+words by $e_{b,r}$, where $b,r\in\{0,1\}$. For a four-bit word
+$\lambda$, concatenate
+
+$$
+H(i,a,\lambda)=z_i\,0\,a\,0\,\lambda.
+\tag{SLHC.42}
+$$
+
+Define the images of all $Q,B,C$ states by
+
+$$
+\begin{aligned}
+\eta(Q(i,a))&=H(i,a,0000),
+ &&0\le i\le N,\quad a\in\{0,1\},\\
+\eta(B(i,a,b))&=H(i,a,e_{b,i\bmod2}),
+ &&0\le i<N,\quad a,b\in\{0,1\},\\
+\eta(C(i,b))&=H(i+1,b,e_{b,i\bmod2}),
+ &&0\le i<N,\quad b\in\{0,1\}.
+\end{aligned}
+\tag{SLHC.43}
+$$
+
+For the active table additionally set, for both $a=0,1$,
+
+$$
+\begin{aligned}
+\eta(V(a,01))&=H(0,a,0100),\\
+\eta(V(a,11))&=H(0,a,0101),\\
+\eta(V(a,10))&=H(0,a,0001).
+\end{aligned}
+\tag{SLHC.44}
+$$
+
+All these words have length $d+7$ and avoid $11$. Indeed, each
+$z_i$ avoids $11$, the two displayed zeros separate the accumulator
+from both its neighbors, and each used latch word is either empty,
+one-hot, or $0101$, which also avoids $11$.
+
+Here is injectivity on the whole installed set. Distinct $z_i$ separate
+distinct stages. At any fixed stage $j$, the $Q$ words have empty
+latch. A $B$ word there has latch index $r=j\bmod2$; a $C$ word
+there has index $r=(j-1)\bmod2$. Thus $B$ and $C$ cannot collide,
+even when their accumulator and latch value $b$ agree. Within each
+of these sets the remaining displayed parameters distinguish the words.
+At stage zero there is no $C$ word, and the $B$ words use only
+$r=0$. The two one-hot polling words in (SLHC.44) use $r=1$, so
+cannot collide with those $B$ words. The two-hot polling word is
+different from every $Q,B,C$ word and from both one-hot polling
+words. Its two choices of $a$ are distinct. No polling word occurs
+at any other stage. This covers the initial and final stages as well
+as the interior ones, including states unreachable from $Q(0,0)$.
+Therefore (SLHC.43) has $2(N+1)+4N+2N=8N+2$ words, and
+(SLHC.44) adds exactly six in the active case. Install exactly these
+images; all other ambient Fibonacci words have no instruction rows.
+
+For completeness the transported instruction tables are specified on
+every typed reply below. In the tables a state name means its full
+image under $\eta$, with no retained decoded state. Initialize at
+$\eta(Q(0,0))$ in either construction, independently of $x,t$.
+At $\eta(Q(N,a))$ the fixed instruction is $\mathsf{Halt}(a)$,
+and there are no primitive-response rows at a halt.
+
+At each nonhalt active $Q(i,a)$ execute the fixed literal
+$\mathsf{Read}(p_{i+1})$, $p_{i+1}=q_{i+1}R^K$. Its complete
+response table is
+
+| State range | $\alpha$ | $\beta$ | $\mathsf{branch}$ | $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- |
+| $Q(0,a)$ | $B(0,a,a)$ | $B(0,a,a\oplus1)$ | $Q(0,a)$ | $V(a,01)$ |
+| $Q(i,a)$, $1\le i<h$ | $B(i,a,a)$ | $B(i,a,a\oplus1)$ | $B(i,a,a)$ | $B(i,a,a\oplus1)$ |
+
+At static $Q(i,a)$, $0\le i<M$, execute entry $i+1$ of the
+literal list (SLHC.33). Its four rows are
+
+| State range | $\alpha$ | $\beta$ | $\mathsf{branch}$ | $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- |
+| $Q(i,a)$, $0\le i<M$ | $B(i,a,a)$ | $B(i,a,a\oplus1)$ | $B(i,a,a)$ | $B(i,a,a)$ |
+
+The common routing rows and the active polling rows are
+
+| State | Fixed native instruction | Successor on each declared reply |
+| --- | --- | --- |
+| $B(i,a,b)$, $a\ne b$ | $\mathsf{Read}(\varepsilon)$ | $B(i,b,b)$ for each of the four Read replies |
+| $B(i,b,b)$ | $\mathsf{Read}(\varepsilon)$ | $C(i,b)$ for each of the four Read replies |
+| $C(i,b)$ | $\mathsf{Read}(\varepsilon)$ | $Q(i+1,b)$ for each of the four Read replies |
+| $V(a,01)$ | $\mathsf{Update}$ | $V(a,11)$ on $\star$ |
+| $V(a,11)$ | $\mathsf{Update}$ | $V(a,10)$ on $\star$ |
+| $V(a,10)$ | $\mathsf{Read}(\varepsilon)$ | $Q(0,a)$ for each of the four Read replies |
+
+These are precisely §§9.4–9.5's expanded rows: the three routing
+cases are its accumulator correction, stage advance and latch clearing
+in that order. In particular, every $B$ advancing its stage has
+$i<N$, and $C(N-1,b)$ clears into the installed halt $Q(N,b)$.
+Every successor in these tables is installed. The actual root reply
+on this $h\ge2$ family is branch, but the other three root-response
+rows remain present and have their specified successors. The two
+pilot branch holds, including the row at $Q(0,1)$, also remain
+unchanged. No unsupported row is replaced by a different completion.
+
+Every nonhold response is an edge of the new Fibonacci cube. Each
+accepted data response adds one latch bit. The first routing case
+changes only $a$ to $b$; the second changes only the one differing
+coordinate of $z_i,z_{i+1}$, leaving its latch untouched; the third
+clears just that latch. For a polling retry, the four latch patterns
+are
+
+$$
+0000\ \longrightarrow\ 0100\ \longrightarrow\ 0101
+\ \longrightarrow\ 0001\ \longrightarrow\ 0000.
+\tag{SLHC.45}
+$$
+
+In order these four changes follow an absent data Read, an Update,
+another Update, and a paid root Read. The stage and accumulator stay
+fixed on this square. Each change is one bit and every intermediate
+word is legal. The active branch holds change zero bits. These are
+all typed rows, so the edge requirement is the full $G_{\rm all}$
+requirement of FIB §§45.4–45.5, not only its supported-edge version.
+Extra cube adjacencies supply no additional table transitions. The
+lookup table chooses the entire next instruction from the complete
+word; the immediate response service chooses the indicated successor
+and discards the raw reply. There is no internal instruction, free
+stage counter or separate polling phase register.
+
+To check the actual-source transport, denote the old table's instruction
+and response functions by $I_9,\delta_9$, and the new ones by
+$I_{12},\delta_{12}$. The displayed rows establish, at every installed
+nonhalt $v$ and every reply of its instruction's declared type,
+
+$$
+I_{12}(\eta(v))=I_9(v),\qquad
+\delta_{12}(\eta(v),o)=\eta(\delta_9(v,o)).
+\tag{SLHC.46}
+$$
+
+The first equality includes the literal itself and the instruction
+type, and holds also at each halt with its fixed output. Fix one
+original assignment and entry $(x,t)$. Initially both devices are
+exactly $E(x,t)$, with old control $Q(0,0)$ and new control
+$\eta(Q(0,0))$. If the devices agree at an event and the controls
+correspond by $\eta$, (SLHC.46) selects the identical primitive.
+The same device then gives the identical raw reply and device
+successor. Read leaves that device unchanged. Update applies $\rho$
+to that very device and gives its same constant acknowledgement;
+it is genuine by the clock identity used in §9.4. The second equality
+in (SLHC.46) gives the corresponding next control immediately.
+Induction proves equality of the entire actual primitive history and
+of the number of completed Updates at every event. It does not
+replace a source by another member of an observational fiber.
+
+For explicit support transport let $\mathcal C_v^{(9)}$ contain exactly
+the pairs $(\pi(x),E(x,t+j))$ attained at old state $v$ on a promised
+run, where $j$ is the number of actual post-entry Updates at that
+position. Let $\mathcal C_w^{(12)}$ be the corresponding definition
+for the new table. The induction, in both directions on the installed
+image, yields
+
+$$
+\mathcal C_{\eta(v)}^{(12)}=\mathcal C_v^{(9)}.
+\tag{SLHC.47}
+$$
+
+This also holds for empty supports; their installed words were not
+deleted. Sections 9.4–9.5 prove finite completion of each old run.
+On an old supported triple $(z,u,v)$ define $R_9(z,u,v)$ to be its
+deterministic number of remaining primitives to the first halt.
+It is well defined: the same current device and complete control have
+the same future, even if more than one history reaches them. It is
+finite on exact supports by those sections. Set
+
+$$
+R_{12}(z,u,\eta(v))=R_9(z,u,v).
+\tag{SLHC.48}
+$$
+
+Each actual primitive decreases this rank by exactly one. Initial
+coverage, legal actions and same-source successor closure follow from
+(SLHC.46)–(SLHC.47). Each halt retains its fixed payload, and only
+$Q(N,a)$ halts. Therefore the first halt occurs at exactly the old
+event and outputs the old correct bit $\pi(x)$; there is no earlier
+output or intervening halt. This supplies FIB §27.2's full support–rank
+certificate. It also gives the control equivalence and identity
+address map for the run-transport interface of §7.2, with
+$\operatorname{obs}_{x,t}(j,p)=r_{\rho^{t+j}u_x}(p)$ and $j$
+counting Updates only. Output correctness uses the fixed payload and
+§9's invariant; halt-endpoint uniqueness alone does not supply it.
+Neither $j$, the supports, nor the rank is an observer input.
+
+In particular the native readout and parity arguments of §§9.4–9.5
+apply without a new acquisition proof. The active table makes exactly
+$k=K-\lfloor(t+x_1)/2\rfloor$ polling retries and thereafter stays
+at epoch $\tau=t+2k$. Each accepted contribution is
+$(t\bmod2)\oplus x_i$. The static scan has exactly one leaf reply
+in each cone and the same contribution. Even $h$ cancels the common
+entry-parity term, giving the required original parity. These facts
+concern the same $x,t$ as in (SLHC.46); no source-independent
+normalization or acquired reference is added. Injectivity, word length
+and row legality now prove (SLHC.39) and the constructive sides of
+(SLHC.40).
+
+For the lower sides reuse §9.6's bounds (SLHC.26) on this exact
+comparison class. Its same-run leaf-flip witnesses require $h$
+distinct fixed-literal query words. Its static comparisons of
+$E(0^h,t)$ and $E(e_i,t)$ for each cone and each $0\le t\le T$
+require $r$ query words per cone, because one fixed suffix separates
+at most three adjacent atomic ranks. In both cases the two fixed
+outputs require two additional halt words. Those arguments explicitly
+allow arbitrary finite counted internal work; in the static case
+unused Update rows remain allowed. The capacity
+$|L_\ell|=F_{\ell+2}$ therefore gives
+$`d_F(h+2)\le\ell_a^*(S,T)`$ and
+$`d_F(hr+2)\le\ell_s^*(S,T)`$. No lower bound here is inferred
+from the two-valued target alone or from a restriction to the exhibited
+tables.
+
+Monotonicity of $d_F$ gives the last active inequality. For the static
+one, $r\ge1$ and $T+1\le3r$ imply
+$T\le3r-1\le4r-2$, hence $K+1\le2r$. Thus
+$M+1\le2hr+1\le2(hr+2)$. The Fibonacci recurrence gives
+
+$$
+F_{d+4}=2F_{d+2}+F_{d+1}\ge2F_{d+2},\qquad
+d_F(2n)\le d_F(n)+2.
+\tag{SLHC.49}
+$$
+
+Apply this with $n=hr+2$ to obtain the final $+9$ in (SLHC.40).
+For the leading coefficients, induction using
+$\varphi^2=\varphi+1$ gives
+$\varphi^d\le F_{d+2}\le\varphi^{d+1}$ for all $d\ge0$.
+Consequently
+$\log_\varphi n-1\le d_F(n)\le\lceil\log_\varphi n\rceil$.
+Together with $(T+1)/3\le r\le T+1$, these inequalities and
+(SLHC.40) prove (SLHC.41) with absolute additive constants. No
+leaf-depth term entered this width estimate. The classical spanning
+path is the cited ingredient; the full-table injection with the
+seven-bit control block and its native transport is the application
+proved here. $\square$
+
+**Corollary 12.3 (exact resources of the narrower installations).**
+For the encodings of Theorem 12.2, every per-source resource coordinate
+of Theorem 9.2 and §9.5 is retained, with the new word lengths in
+(SLHC.39) used for word storage. Specifically, set
+$A_s=(K+1)A_S+hK(K+1)/2$. Through the first halt on $(x,t)$,
+
+| Quantity | Active encoding | Static encoding |
+| --- | --- | --- |
+| Installed words | $8h+8$ | $8M+2$ |
+| Actual Reads | $3h+2k+c$ | $3M+c$ |
+| Actual Updates | $2k$ | $0$ |
+| Internal instructions and internal writes | $0$ | $0$ |
+| Response bit changes | $3h+4k+c$ | $3M+c$ |
+| Submitted address-length sum | $A_S+hK+k(d_1+K)$ | $A_s$ |
+| Maximum submitted literal length | $D+K$ | $D+K$ |
+| Typed successor entries | $32h+12$ | $32M$ |
+| Full word-key bits | $(8h+8)\ell_a$ | $(8M+2)\ell_s$ |
+| Full successor-word bits | $(32h+12)\ell_a$ | $32M\ell_s$ |
+| Fully inlined data-literal letters | $2(A_S+hK)$ | $2A_s$ |
+| Installed fixed halt-payload bits | $2$ | $2$ |
+
+The source peaks are exactly $L_x(\tau)$ and $L_x(t)$ leaves, where
+$\tau=t+2k$ and $L_x(v)=\sum_iF_{v+x_i+1}$. The worst peaks
+over the full promised family are
+
+$$
+\begin{aligned}
+\max_{x,\,0\le t\le T}L_x(\tau)
+ &=\begin{cases}
+h,&T=0,\\
+F_{2K+2}+(h-1)F_{2K+3},&T\ge1,
+\end{cases}\\
+\max_{x,\,0\le t\le T}L_x(t)&=hF_{T+2}.
+\end{aligned}
+\tag{SLHC.50}
+$$
+
+The literal node count is twice the corresponding leaf count minus
+one. All setup and execution services remain separately charged as in
+(SLHC.35).
+
+Proof. Theorem 12.2 transports each actual primitive and each fixed
+literal without adding or deleting a step. Its nonhold rows change
+exactly one bit, as did the old table; its two pilot holds still have
+zero changes and are unsupported on the promised family. Therefore
+§9.5's counts of $h+k$ active data Reads, $k$ polling-return root
+Reads and $2h+c$ routing root Reads transfer exactly. So do the
+$2k$ genuine Updates and the $3M+c$ static Reads. First halt is
+after $3h+4k+c$ active primitives or $3M+c$ static primitives.
+The address counts use $d_i=|q_i|$ and their actual sum and maximum,
+without replacing the supplied skeleton by a balanced one.
+
+The row bijection gives the same $8h+2$ active Read rows, four
+Update rows and two halt rows, and the same $8M$ static Read rows
+and two halt rows. Four successors per Read and one per Update give
+the stated typed-entry counts. Full keys and full successor words
+now each have the lengths (SLHC.39); multiplying by these unchanged
+row counts gives the displayed word-storage bills, before tags,
+framing or indexes. The data literals still occur twice each, while
+the empty root literals still require their representation, lookup
+and execution despite having zero letters. An explicitly shared
+immutable dictionary instead has $A_S+hK$ active or $A_s$ static
+address letters, plus separately paid references and framing. The
+two fixed halt payloads occupy two bits, of which a run outputs one.
+
+Equality of actual source histories gives the same peaks and extremizers
+as §9.5, proving (SLHC.50) without replacing them by the coarse bound
+$hF_{2K+3}$. In the active case the maxima of Reads, Updates, response
+changes and address sum are still respectively
+$4h+2K$, $2K$, $4h+4K$ and $A_S+hK+K(d_1+K)$, jointly
+attained at $t=0,x=1^h$. For $T\ge1$ the largest source peak
+instead occurs at $t=1,x=(0,1,\ldots,1)$; the former entry has
+peak $hF_{2K+2}$ and is not a joint maximizer of the source coordinate.
+The static Read and write maxima remain $3M+h$. Its source maximum
+occurs at $t=T,x=1^h$; it also attains these operation maxima when
+$T$ is even, whereas for odd $T$ the source and operation maxima
+are not jointly attained, exactly as in §9.5.
+
+The service decomposition (SLHC.35) still charges promise establishment,
+source preparation, compilation, installation, initialization, every
+lookup, literal delivery, native execution, response write and final
+output separately. The chosen $z_i$ are compiled constants; their
+existence supplies neither free compilation nor free lookup. Numerical
+tariffs for these services are not identified between implementations
+merely because the primitive histories agree. All retained $S,T$ data,
+dictionary indexes and fixed output representations retain their
+installation bills. A service needing a persistent cursor, decoded
+stage, accumulator or response buffer outside the counted word would
+require a different complete-state accounting. The source leaf and
+node counts describe literal occurrences, not a physical storage tariff.
+
+The constructive quantifiers remain
+$\forall S\ \forall T<\infty\ \exists C_{S,T}\ \forall x\ \forall t\le T$
+in the even-$h$ domain. The collision obstruction for odd $h,T\ge1$
+in §9.3 and the absence of one finite installation for unbounded lag
+in §9.7 retain their original scopes. Although $\ell_a$ is independent
+of $T$, its installed literals contain $R^K$ and therefore depend on
+the finite promise. The estimates (SLHC.40) determine the leading
+coefficients and additive intervals; they do not determine the exact
+integer minimum widths, minimum installed-state counts or optimal
+joint resource costs. The conditional ordinary mathematical result
+does not establish physical service availability, a total-cost or
+Pareto optimum, kernel certification or worldwide originality.
+$\square$
+
+[KLAVZAR-PATH]: https://www.fmf.uni-lj.si/~klavzar/preprints/FibonacciCubesRevised.pdf
+[KLAVZAR-PATH-DOI]: https://doi.org/10.1007/s10878-011-9433-z
+
+## 追加锚（本行以下为增补区）
+
+## 13. Bounded genuine Updates and binary-size native acquisition
+
+**Definition 13.1 (the capped task and its resource coordinates).**
 Retain exactly Definition 10.1's all-shape family $\mathcal G_h$,
 entry $\rho^t u$ with $0\le t\le T$, and original parity $\pi(u)$.
 The literal, response, complete-word and common-initialization contracts
@@ -2579,7 +3027,7 @@ fixed literal, and each Halt state one fixed bit. The native upper
 construction has $I=0$ and no internal writes. Thus allowing the larger
 class in a lower bound supplies no free internal work to the upper bound.
 
-**Theorem 12.2 (one clock-cell controller and its simultaneous bills).**
+**Theorem 13.2 (one clock-cell controller and its simultaneous bills).**
 Suppose $h\ge2$ is even and $T\ge1$. For any even integer $\Delta\ge2$
 put, with $\lambda(n)=\lceil\log_2 n\rceil$,
 
@@ -2592,7 +3040,7 @@ k&=h+3+\lambda(h)+2\lambda(h+1)+e+g,
 C_h&=(2h+1)(4h-2)=8h^2-2,
 &P&=h-1+J\Delta/2,&W_*&=2^{2k+8}.
 \end{aligned}
-\tag{SLHC.12.1}
+\tag{SLHC.13.1}
 $$
 
 There is one common complete controller $C_{h,T,\Delta}$ of width
@@ -2602,7 +3050,7 @@ actual promised run. Define only for the proof
 $$
 K=t+\kappa(u),\qquad j=\lfloor K/\Delta\rfloor,
 \qquad B_j=(j+1)\Delta-2.
-\tag{SLHC.12.2}
+\tag{SLHC.13.2}
 $$
 
 Then
@@ -2614,7 +3062,7 @@ Q+U&\le R\bigl(g+2U+1+C_h\bigr),\\
 A&\le P\bigl(g+U+1+C_h\bigr),\qquad P_{\rm run}\le P,\\
 \text{response bit changes}&=Q+U,\qquad I=0.
 \end{aligned}
-\tag{SLHC.12.3}
+\tag{SLHC.13.3}
 $$
 
 Every actual Update acts on the same current source and is genuine.
@@ -2625,7 +3073,7 @@ A bound on the distinct installed menu, including routing, is
 
 $$
 M\le 2J\bigl(1+(2h+1)(2^h-1)\bigr).
-\tag{SLHC.12.4}
+\tag{SLHC.13.4}
 $$
 
 The displayed installation has exactly $n_U=2J$ Update words,
@@ -2636,7 +3084,7 @@ one explicit padded table representation uses
 
 $$
 S_{\rm tab}=W_*(\ell+2+b_P+P+4b_\ell)
-\tag{SLHC.12.5}
+\tag{SLHC.13.5}
 $$
 
 bits, with $\ell$ further immutable initialization bits. It has
@@ -2651,10 +3099,10 @@ $$
 V(\tau)=2\bigl((h-b_\beta)F_{\tau+1}
                          +b_\beta F_{\tau+2}\bigr)-1
 \le 2hF_{T+\Delta}-1.
-\tag{SLHC.12.6}
+\tag{SLHC.13.6}
 $$
 
-The bounds in (SLHC.12.3)–(SLHC.12.6) hold together for this controller;
+The bounds in (SLHC.13.3)–(SLHC.13.6) hold together for this controller;
 no assertion that their separate maxima have a common attaining input
 is needed.
 
@@ -2663,7 +3111,7 @@ Proof. The source laws, decoder and traversal are those of SLH §§2, 6,
 search of the current right clock, followed by a bounded alignment.
 All comparisons specified below are actual literal Reads. Ordered
 halving is the classical method already used in SLH §§6, 36; see
-[Nowak, *The Geometry of Generalized Binary Search*, §I][SLHC12-NOWAK]
+[Nowak, *The Geometry of Generalized Binary Search*, §I][SLHC13-NOWAK]
 for its hypothesis-partition formulation. No generalized-search
 coherence theorem or free comparison oracle is assumed.
 
@@ -2676,7 +3124,7 @@ $[a,b]$, $a<b$, set $m=\lfloor(a+b+1)/2\rfloor$ and read
 
 $$
 R^{m\Delta/2}.
-\tag{SLHC.12.7}
+\tag{SLHC.13.7}
 $$
 
 By `right_clock_readout`, absence means $K<m\Delta$, and each of the
@@ -2705,7 +3153,7 @@ Set the installed candidate origin for this cell to
 $$
 N_0(j)=\max(0,B_j-2h+1),\qquad N=N_0(j)+r,
 \quad 0\le r\le2h.
-\tag{SLHC.12.8}
+\tag{SLHC.13.8}
 $$
 
 At the stationary post-poll source $y=\rho^\tau u$ the clock identity
@@ -2713,7 +3161,7 @@ and its acquired endpoint imply
 
 $$
 N_0(j)\le\tau\le B_j+1,\qquad \tau-N_0(j)\le2h.
-\tag{SLHC.12.9}
+\tag{SLHC.13.9}
 $$
 
 For the last inequality, if $B_j\ge2h-1$, subtract $B_j-2h+1$;
@@ -2724,10 +3172,10 @@ image witness
 
 $$
 v_N=\rho^{\tau-N}u,\qquad y=\rho^N v_N.
-\tag{SLHC.12.10}
+\tag{SLHC.13.10}
 $$
 
-The first witness follows from (SLHC.12.9). A licensed rejection
+The first witness follows from (SLHC.13.9). A licensed rejection
 implies $N<\tau$, since the trial at $N=\tau$ traverses $u$ and
 finishes. Therefore the next $N+1$ is also licensed. This induction,
 not finite compatibility of raw replies, precedes every later trial.
@@ -2735,7 +3183,7 @@ No trial goes beyond $\tau$, and at most $2h+1$ trials occur.
 
 For an explicit parameter correspondence to Lemma 11.3, its $y,h,\tau$
 are the actual post-poll source, the unchanged promised leaf count,
-and $t+U$; its $N$ is (SLHC.12.8). Its virtual address $p$ is the
+and $t+U$; its $N$ is (SLHC.13.8). Its virtual address $p$ is the
 counted preorder path below. At $N=0$ its Read is $p$. For $N>0$,
 its nonroot guard is $p^-R^{\lfloor N/2\rfloor+1}$ and its value
 Read is $pR^{\lceil N/2\rceil}$, with the exact guard and odd/even
@@ -2743,7 +3191,7 @@ reply table of (SLHC.11.5) and Lemma 11.3. At the root only the value
 Read occurs. Both Reads are executed and charged even when their
 literals coincide. The virtual node is reached because the traversal
 only descends from a decoded branch. A rejected guard or an even-offset
-absent value cannot occur on (SLHC.12.10); an odd-offset absent value
+absent value cannot occur on (SLHC.13.10); an odd-offset absent value
 is the valid virtual leaf $\alpha$.
 
 Each trial visits at most $2h-1$ nodes, at depths at most $h-1$,
@@ -2755,14 +3203,14 @@ $h$ gives equal parity in either case. This proves the target even
 when the representative's $N$ is outside the initial promise $[0,T]$.
 The original entry still lies in that promise. The wrong-image
 $\langle\alpha,\beta\rangle$, $t=0$, $N=1$ example of §11.7 violates
-(SLHC.12.10) and is never licensed by this construction.
+(SLHC.13.10) and is never licensed by this construction.
 
 It remains to specify the entire control and its complete realization.
 Extend Construction 11.5's intermediate fields in its stated bit order
 by a $g$-bit field $c$. Its old candidate field $j$ is here named $r$
 and has $e=\lambda(2h+1)$ bits. The other fields are exactly
 $p,s,b,l,a,\mu$, of widths $h-1,\lambda(h),\lambda(h+1),
-\lambda(h+1),1,3$. This is precisely the $k$ in (SLHC.12.1).
+\lambda(h+1),1,3$. This is precisely the $k$ in (SLHC.13.1).
 Use old mode codes 0 through 6 unchanged and code 7 for SEARCH.
 
 In SEARCH, $c$ identifies one of the $J-1$ internal search nodes in
@@ -2799,30 +3247,30 @@ This specifies all four responses of every Read and the sole constant
 acknowledgement of every Update. At $\Delta=2$ absence at POLL is
 unreachable; its installed Update successor is still legal.
 
-Denote this particular total finite table by $I_{12},\delta_{12}$.
+Denote this particular total finite table by $I_{13},\delta_{13}$.
 Use Construction 11.6 with the following exact row substitution:
 
 $$
 (k(e),I,\delta,z_{\rm init})
-\longmapsto(k,I_{12},\delta_{12},z_{12,\rm init}).
-\tag{SLHC.12.11}
+\longmapsto(k,I_{13},\delta_{13},z_{13,\rm init}).
+\tag{SLHC.13.11}
 $$
 
 The two banks each have $k$ bits, the same five flags encode the four
 Read replies and Update acknowledgement, and the same three phase bits
 follow (SLHC.11.10). The installed set is exactly
-$J_{\rm sep}(\{0,1\}^{2k+8})$, where $J_{\rm sep}$ is §11.6's
+$J_{\rm sep}(\{0,1\}^{2k+8})$, where $J_{\rm sep}$ is §11.5's
 zero-interleaving map; its use here is distinct from the integer $J$.
 The old table's ready phases 000 and 010 execute respectively
-$I_{12}(A)$ and $I_{12}(B')$. Their immediate responses set the one
+$I_{13}(A)$ and $I_{13}(B')$. Their immediate responses set the one
 typed flag. In the corresponding flagged filling rows the destination
-is respectively $\delta_{12}(A,r')$ or $\delta_{12}(B',r')$, where
+is respectively $\delta_{13}(A,r')$ or $\delta_{13}(B',r')$, where
 $r'$ denotes that flag's reply, not the candidate counter. Every other
 row of the phase/erase/clear/hold table is unchanged.
 
 These substitutions preserve each hypothesis used in the transfer
 proof: a ready destination bank is zero; its source bank and one typed
-flag remain fixed while the destination is filled; $\delta_{12}$ is a
+flag remain fixed while the destination is filled; $\delta_{13}$ is a
 fixed $k$-bit word on every typed input; and source instructions have
 only the same four replies or constant acknowledgement. Hence for
 one intermediate edge $z\to z'$ the two alternating transfer costs are
@@ -2831,7 +3279,7 @@ exactly
 $$
 c_{A\to B'}=|z|_1+|z'|_1+5,\qquad
 c_{B'\to A}=|z|_1+|z'|_1+7\le R.
-\tag{SLHC.12.12}
+\tag{SLHC.13.12}
 $$
 
 Here the first expression too is at most $R$. The initial primitive
@@ -2843,7 +3291,7 @@ in the installed set has its specified instruction and every typed
 row remains one-bit legal. This is the old explicit row proof applied
 to the specified table, rather than an inference from state capacity.
 The classical zero-interleaving map is the map in CEK Proposition 3.1,
-used exactly as in §11.6, without an isometric hypothesis on this
+used exactly as in §11.5, without an isometric hypothesis on this
 control graph.
 
 At each ready state the bank code and actual current tree agree with
@@ -2855,7 +3303,7 @@ Search intervals shrink, each absent poll's remaining clock gap decreases
 after its one Update, and licensed trials terminate by Lemma 11.3.
 The finite Hamming-distance transfers then give native termination.
 Only a ready canonical Halt outputs, with the established parity;
-there is no earlier output or extra state. As in §11.6, actual reachable
+there is no earlier output or extra state. As in §11.5, actual reachable
 $(\pi(u),y,w)$ supports and the deterministic remaining-call rank satisfy
 FIB §27.2. For the expanded logical table's transport through
 $J_{\rm sep}$, `run_transport_iff` uses the identity address map and
@@ -2873,11 +3321,11 @@ $H=s+2U+1+d_*$, the **exact same-run** native count is
 $$
 Q+U=\sum_{i=0}^{H-1}
  \bigl(|z_i|_1+|z_{i+1}|_1+5+2(i\bmod2)\bigr).
-\tag{SLHC.12.13}
+\tag{SLHC.13.13}
 $$
 
 Every summand includes its original intermediate primitive; its other
-operations are root Reads. This proves (SLHC.12.3)'s operation and
+operations are root Reads. This proves (SLHC.13.3)'s operation and
 bit-change bounds without conflating Reads with Updates.
 Search rays have length at most $(J-1)\Delta/2$ and polling rays at
 most $J\Delta/2-1$. Even in installed but unreachable trial rows,
@@ -2890,19 +3338,19 @@ bounds, while still charging every root Read in $Q$.
 There are at most $J-1$ search literals, $J$ polling literals, one
 routing literal, and at most two decoder literals for each of $J$
 cells, $2h+1$ candidate values and $2^h-1$ possible virtual paths.
-Their union gives (SLHC.12.4); overlaps can only reduce $M$.
+Their union gives (SLHC.13.4); overlaps can only reduce $M$.
 There is one canonical UPDATE bank code per cell, two canonical Halt
 codes overall, and two ready phases. Thus there are exactly $2J$
 Update words and four Halt words in the full installed set; all other
 words read. Using §11.6's padded representation with the new $k,\ell,P$
-gives (SLHC.12.5), including full word keys, opcodes, lengths, literal
+gives (SLHC.13.5), including full word keys, opcodes, lengths, literal
 payloads and four hold/flip slots. It does not posit a mutable address
 buffer. The installed integer constants and all expanded literals
 are common finite data; their construction, selection and delivery
 retain separate costs.
 
 Finally $\tau=t+U\le T+\Delta-2$, and the old exact original-cone
-Fibonacci count (SLHC.11.16) gives (SLHC.12.6). The source passes through
+Fibonacci count (SLHC.11.16) gives (SLHC.13.6). The source passes through
 exactly the versions at $t,t+1,\ldots,t+U$; source-preserving Reads
 and all routing steps add no versions. If a physical Update traverses
 its input tree, its input-node-volume bill is
@@ -2919,15 +3367,15 @@ cursor, latch or phase must include it in the complete word. Width,
 call counts, transmitted letters, table storage and source service
 are distinct coordinates. $\square$
 
-**Theorem 12.3 (adaptive separation windows and a same-run address bill).**
-In the positive regimes of Definition 12.1, every correct controller
+**Theorem 13.3 (adaptive separation windows and a same-run address bill).**
+In the positive regimes of Definition 13.1, every correct controller
 with at most $v$ genuine Updates on each promised run satisfies
 
 $$
 M\ge 2^{h-1}\left\lceil\frac{T+1}{v+3}\right\rceil,
 \qquad
 F_{\ell+2}\ge |W|\ge n_R+2\ge M+2.
-\tag{SLHC.12.14}
+\tag{SLHC.13.14}
 $$
 
 The menu bound also holds without a memory restriction, provided the
@@ -2940,11 +3388,11 @@ P_{\rm run}&\ge h-1+L_T,\\
 A&\ge\frac{(h-1)(h+2)}2+hL_T,
 \qquad L_T=\left\lceil\frac{\max(T-1,0)}2\right\rceil.
 \end{aligned}
-\tag{SLHC.12.15}
+\tag{SLHC.13.15}
 $$
 
 The latter bounds need no cap on Updates and hold in the larger
-source-free internal-work comparison of Definition 12.1.
+source-free internal-work comparison of Definition 13.1.
 
 Proof. Reuse Theorem 10.2's equal-depth comb witnesses. For each
 $p\in\{L,R\}^{h-1}$ use the $h$-leaf comb with tip $p$, all leaves
@@ -2967,7 +3415,7 @@ D_s&=\{w(s),w(s)+1\}&&\text{if }s\ne\varepsilon\text{ ends in }L,\\
 D_s&=\{w(s)-1,w(s),w(s)+1\}
  &&\text{if }s\ne\varepsilon\text{ ends in }R.
 \end{aligned}
-\tag{SLHC.12.16}
+\tag{SLHC.13.16}
 $$
 
 The left-ending law skips $\alpha$ because that zero-residual address
@@ -2978,7 +3426,7 @@ one installed literal can witness lie in
 
 $$
 \bigl(D_s-\{0,\ldots,v\}\bigr)\cap\{0,\ldots,T\}.
-\tag{SLHC.12.17}
+\tag{SLHC.13.17}
 $$
 
 Its cardinality is at most $v+3$. The subtraction is a union over
@@ -3004,51 +3452,51 @@ For the stronger address assertion take the all-$\alpha$ comb itself
 at entry $T$ and keep its one actual run fixed. For each of its leaves
 $q_i$, compare the original with only that leaf flipped. Its first
 separating Read on the fixed run is $q_i s_i$ at a common update count
-$a_i\ge0$. Equations (SLHC.12.16) imply
+$a_i\ge0$. Equations (SLHC.13.16) imply
 $T+a_i\le w(s_i)+1$, including the empty suffix. Since
 $w(s_i)\le2|s_i|$, every such suffix has length at least $L_T$.
 These are $h$ different Read occurrences on this same run, so their
 lengths may be summed. The comb's leaf depths are
 $1,2,\ldots,h-2,h-1,h-1$, with sum $(h-1)(h+2)/2$ and maximum
 $h-1$. At $h=1$ the singleton root instead has depth zero and the
-same sum formula is zero. This proves (SLHC.12.15). Additional
+same sum formula is zero. This proves (SLHC.13.15). Additional
 Updates can only increase the needed atomic index, and additional
 Reads add nonnegative letters. No combination of separately attained
 runs enters this argument. $\square$
 
-**Corollary 12.4 (binary-size static calls and the capped minimum width).**
+**Corollary 13.4 (binary-size static calls and the capped minimum width).**
 For even $h\ge2$, $T\ge1$, $v\ge0$, the original task has
 
 $$
 \ell_{\le v}^{\min}(h,T)
 =\Theta\!\left(h+\log_2\!\left(1+\frac{T+1}{v+1}\right)\right)
-\tag{SLHC.12.18}
+\tag{SLHC.13.18}
 $$
 
 with constants independent of all three parameters. Constants $1/4$
 and $64$ suffice for its lower and upper inequalities. This remains
 a matching order if the minimum permits the explicitly counted
-source-free internal steps of Definition 12.1.
+source-free internal steps of Definition 13.1.
 There is a zero-Update native controller with
 
 $$
 \ell=O(h+\log_2(T+1)),\qquad
 Q=O\bigl((h+\log_2(T+1))(h^2+\log_2(T+1))\bigr).
-\tag{SLHC.12.19}
+\tag{SLHC.13.19}
 $$
 
-All other costs for that same controller are (SLHC.12.3)–(SLHC.12.6)
+All other costs for that same controller are (SLHC.13.3)–(SLHC.13.6)
 at $\Delta=2$. For $T=0$ and every $h\ge1$, the direct traversal
 and complete table of Section 11 give $U=0$, width $O(h)$ and
 $Q=O(h^2)$; minimum width is $\Theta(h)$ for every cap $v$.
 
-Proof. Choose in Theorem 12.2
+Proof. Choose in Theorem 13.2
 
 $$
 \Delta=2\min\!\left(
  \left\lfloor\frac{v+2}{2}\right\rfloor,
  \left\lceil\frac{T+2h}{2}\right\rceil\right).
-\tag{SLHC.12.20}
+\tag{SLHC.13.20}
 $$
 
 Then $2\le\Delta$, $\Delta$ is even and $\Delta-2\le v$.
@@ -3060,7 +3508,7 @@ $x=(T+1)/(v+1)$,
 $$
 J\le1+\frac{T+2h}{v+1}\le2h(1+x),\qquad
  g\le h+1+\log_2(1+x).
-\tag{SLHC.12.21}
+\tag{SLHC.13.21}
 $$
 
 The same upper estimate on $g$ holds when $J=1$. For $h\ge2$,
@@ -3077,17 +3525,17 @@ $$
 \ge\max(1,x/3)\ge(1+x)/4.
 $$
 
-Put $X=h+\log_2(1+x)$. Theorem 12.3 yields $\ell\ge X-3$.
+Put $X=h+\log_2(1+x)$. Theorem 13.3 yields $\ell\ge X-3$.
 At least three installed words require $\ell\ge2$. If $X\ge4$,
 $X-3\ge X/4$; if $X<4$, use $\ell\ge2$.
 This proves the uniform lower constant, including the boundary caps.
 
-For $v=0$ or $v=1$, (SLHC.12.20) chooses $\Delta=2$.
+For $v=0$ or $v=1$, (SLHC.13.20) chooses $\Delta=2$.
 The acquired cell has $K\in\{B_j,B_j+1\}$ before any Update,
 so its very first poll accepts and $U=0$ on every run. Here
 $g=O(\log(h+T))$, $k=O(h+\log(T+1))$ and
-$H\le g+1+C_h$. Formula (SLHC.12.13), not just the binary-search
-comparison count, proves (SLHC.12.19).
+$H\le g+1+C_h$. Formula (SLHC.13.13), not just the binary-search
+comparison count, proves (SLHC.13.19).
 When $v\ge2\lceil(T+2h)/2\rceil-2$, the same formula chooses
 $J=1$: initialization is POLL, the actual Updates are still exactly
 $\max(0,\Delta-2-K)$, and the resulting width is $O(h)$ with
@@ -3098,11 +3546,11 @@ zero-offset direct traversal give the last assertion, including both
 labels at $h=1$. No historical fiber identification is needed there.
 The matching result concerns width only: it claims no optimal Reads,
 installed-state count, table bits, literal traffic or leading constants.
-In particular (SLHC.12.15) forces a worst-run
+In particular (SLHC.13.15) forces a worst-run
 $\Omega(hT+h^2)$ address bill for even $h\ge2$, $T\ge1$ even when
 the number of native calls is polynomial in $h+\log(T+1)$. $\square$
 
-**Proposition 12.5 (finite boundary and the recovered coordinate).**
+**Proposition 13.5 (finite boundary and the recovered coordinate).**
 For odd $h$ and $T\ge1$ the original task remains impossible. For
 fixed $h$ there is no single finite complete fixed-literal installation
 correct for all unbounded entry lags, even with adaptive Updates.
@@ -3111,18 +3559,18 @@ controllers over growing $T$ must obey
 
 $$
 v+3\ge\frac{2^{h-1}(T+1)}{F_{L+2}-2}.
-\tag{SLHC.12.22}
+\tag{SLHC.13.22}
 $$
 
 Consequently a width bound depending only on $h$ cannot uniformly
 coexist with native calls polynomial in $h+\log(T+1)$ over all $T$.
-The acquired coordinate in Theorem 12.2 is a current right-clock cell
+The acquired coordinate in Theorem 13.2 is a current right-clock cell
 and its post-poll endpoint. For even $h\ge2$, $T\ge1$ and even
 $\Delta\ge2$, that endpoint determines both the entry clock $K$ and
 the actual post-entry Update count $U$ on the entire promised family
 if and only if
 $\Delta=2$ or $(h,T,\Delta)=(2,1,4)$.
-The pointwise recovery condition is (SLHC.12.24) below.
+The pointwise recovery condition is (SLHC.13.24) below.
 Recovering these two coordinates does not imply recovery of the
 original historical epoch or an omitted log. The final fixed output
 preserves only original parity.
@@ -3131,11 +3579,11 @@ Proof. ABT §§9.2–9.4 give identical current trees from all-$\beta$
 at lag zero and all-$\alpha$ at lag one on the same shape. For odd
 $h$ their targets differ. Common initialization and every future native
 experiment preserve indistinguishability, so neither more memory nor
-Updates solve this case. For unbounded lags, Theorem 10.4's CAR/NRF
+Updates solve this case. For unbounded lags, Proposition 10.4's CAR/NRF
 permanent saturation applies to the entire installed menu. Alternatively,
-(SLHC.12.15) contradicts its finite maximum literal length on arbitrarily
-large $T$ in the even-$h$ regime. Equation (SLHC.12.22) follows directly
-from (SLHC.12.14). With $h,L$ fixed it requires $v=\Omega(T)$;
+(SLHC.13.15) contradicts its finite maximum literal length on arbitrarily
+large $T$ in the even-$h$ regime. Equation (SLHC.13.22) follows directly
+from (SLHC.13.14). With $h,L$ fixed it requires $v=\Omega(T)$;
 actual native calls dominate actual Updates. Applying the bound with
 the achieved worst-run Update count excludes the asserted uniform
 polynomial call bound. It does not exclude width $O(h)$ and polynomial
@@ -3150,7 +3598,7 @@ corresponding leaf at $d$, and absence afterwards. This is SLH §2's
 coordinate correspondence.
 
 For the precise entry-clock boundary, the attained clock domain of
-Theorem 12.2 is
+Theorem 13.2 is
 $\mathcal K_{h,T}=[2,T+2h-1]\cap\mathbb Z$.
 Indeed the rightmost original leaf has depth $d\in\{1,\ldots,h-1\}$
 and label $e\in\{0,1\}$, giving $\kappa(u)=2d+e$.
@@ -3160,13 +3608,13 @@ Both rightmost labels are allowed independently. Thus $\kappa(u)$
 attains every integer from $2$ to $2h-1$, and adding every allowed
 $t\in\{0,\ldots,T\}$ gives exactly $\mathcal K_{h,T}$.
 
-Equation (SLHC.12.3) gives the endpoint map on this actual domain:
+Equation (SLHC.13.3) gives the endpoint map on this actual domain:
 for $j=\lfloor K/\Delta\rfloor$,
 
 $$
 E=f_\Delta(K)=\max(K,B_j),\qquad U=E-K,
 \qquad B_j=(j+1)\Delta-2.
-\tag{SLHC.12.23}
+\tag{SLHC.13.23}
 $$
 
 The cell can be recovered from $E$ as $j=\lfloor E/\Delta\rfloor$,
@@ -3180,7 +3628,7 @@ f_\Delta^{-1}(\{B_j\})
 f_\Delta^{-1}(\{B_j+1\})
  &=\mathcal K_{h,T}\cap\{B_j+1\}.
 \end{aligned}
-\tag{SLHC.12.24}
+\tag{SLHC.13.24}
 $$
 
 Intervals here contain integers only. At an attained endpoint, $K$
@@ -3219,7 +3667,7 @@ $(\langle\alpha,\alpha\rangle,0)$,
 $(\langle\beta,\beta\rangle,0)$ and
 $(\langle\beta,\beta\rangle,1)$.
 Thus the endpoint recovers both coordinates on this full promised
-domain, including at caps $v=2$ or $3$ under (SLHC.12.20).
+domain, including at caps $v=2$ or $3$ under (SLHC.13.20).
 For comparison, at $h=2,T=2,\Delta=4$ take the same mixed original
 $u=\langle\alpha,\beta\rangle$ at entry lags $1,2$.
 Their entry clocks are $4,5$ and their Update counts are $2,1$;
@@ -3250,10 +3698,10 @@ ABT §9.3's own necessary and sufficient separation condition.
 The quantitative composition here links original address cones,
 actually advanced relative time, finite literal boundaries and complete
 task memory on one source family. Its input promises and conditional
-selection/delivery services are precisely those in Definition 12.1;
+selection/delivery services are precisely those in Definition 13.1;
 it asserts no physical spacetime identification. The shape-supplied
 comparison in §9 remains different: it installs one shape's cones,
-whereas (SLHC.12.14) uses the union over all unknown comb shapes.
+whereas (SLHC.13.14) uses the union over all unknown comb shapes.
 CAR §§11–13 and NRF/NPS retain their acquired-fiber, whole-row and
 physical-service hypotheses; their feasibility conclusions are not
 substituted for this parity construction. The `repo-derived` new
@@ -3272,6 +3720,6 @@ bits. The private `clock_step`, `original_query_bounds`, `traverse`
 and `production_reads` remain parts of those suppliers, not missing
 lemmas or new general results. $\square$
 
-[SLHC12-NOWAK]: https://arxiv.org/abs/0910.4397v5
+[SLHC13-NOWAK]: https://arxiv.org/abs/0910.4397v5
 
 ## 追加锚（本行以下为增补区）
