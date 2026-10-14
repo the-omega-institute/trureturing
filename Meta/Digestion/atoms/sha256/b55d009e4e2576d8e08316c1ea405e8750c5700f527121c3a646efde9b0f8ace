@@ -1,0 +1,91 @@
+**Theorem 11.4 (least triple failure is exactly three).** For
+$B=\{r_0,r_1,r_2\}$ in Definition 11.1,
+
+$$
+J_B(2),\qquad \neg J_B(3).
+\tag{SPC.11.14}
+$$
+
+Consequently the least inclusive failed depth is $H=3$.
+
+Proof. To witness depth two, set
+$y=\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ and take
+
+$$
+\bigl(U_*(y,y),\ U_*(F(y),y),\ U_*(G(y),y)\bigr)
+ \in D_0\times D_1\times D_2.
+\tag{SPC.11.15}
+$$
+
+Theorem 11.2 checks their entire retained histories and exact
+partitions. Their complete original reply tables through depth
+two are identical:
+
+| Original address | Common reply |
+| --- | --- |
+| $\varepsilon$ | $\mathsf{branch}$ |
+| $L$ | $\mathsf{branch}$ |
+| $R$ | $\mathsf{branch}$ |
+| $LL$ | $\alpha$ |
+| $LR$ | $\mathsf{branch}$ |
+| $RL$ | $\mathsf{branch}$ |
+| $RR$ | $\mathsf{branch}$ |
+
+For $LR$, the first source has the right child of $y$, a branch;
+the other two have $\rho y$ and $\rho^2y$, branches because $y$
+is a branch. The other six replies follow from the displayed
+skeleton and fixed alpha children. These seven addresses are
+all words of length at most two. Thus (SPC.11.15) is an actual
+simultaneous witness of $J_B(2)$.
+
+For the negative assertion, suppose an arbitrary tuple in the
+entire product agreed through depth three. By the converse
+direction of Theorem 11.2 it has the form
+
+$$
+u_0=U_*(y_0,y_0),\qquad
+u_1=U_*(F(y_1),y_1),\qquad
+u_2=U_*(G(y_2),y_2)
+\tag{SPC.11.16}
+$$
+
+for independent finite $y_0,y_1,y_2$. No equality between these
+parameters is assumed.
+
+The original $L$ and $LL$ replies of $u_1$ are respectively
+branch and alpha. Agreement forces $y_0$ to be a branch with
+left child alpha, because the entire $L$ subtree of $u_0$ is
+$y_0$. Hence the $RL$ and $RLL$ replies of $u_0$ are branch
+and alpha. Agreement at those two original addresses now forces
+$y_1,y_2$ to be branches, each with left child alpha.
+Write $y_i=\langle\alpha,b_i\rangle$ for $i=1,2$.
+
+The address $LRL$ is reached in both $u_1,u_2$: their $L$
+subtrees are branches, and their $LR$ subtrees are respectively
+$\rho y_1,\rho^2y_2$, also branches. Native distribution and
+the two alpha updates give
+
+$$
+\begin{aligned}
+u_1|_{LRL}&=\rho\alpha=\beta,
+&
+r_{u_1}(LRL)&=\beta,\\
+u_2|_{LRL}&=\rho^2\alpha=\langle\beta,\alpha\rangle,
+&
+r_{u_2}(LRL)&=\mathsf{branch}.
+\end{aligned}
+\tag{SPC.11.17}
+$$
+
+These different replies occur at an original address of length
+three, contradicting the assumed agreement. All subtree uses
+in this contradiction have their required branch ancestors;
+absence is never treated as a reached negative or omitted from
+the prefix table. The argument applies to every tuple
+(SPC.11.16), so $J_B(3)$ fails on the entire product.
+
+Inclusive-prefix agreement is monotone downward in depth.
+The depth-two witness therefore supplies depths zero and one.
+Failure at three excludes every greater depth. This proves
+the claimed least $H$. $\square$
+
