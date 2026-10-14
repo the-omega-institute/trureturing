@@ -173,7 +173,7 @@ private theorem native_port_algebra {m : ℕ} (hm : 8 ≤ m) :
   have hc : c m = R⁻¹ * T * R⁻¹ * a m := by
     calc
       c m = b m * (b m * c m) := by rw [← mul_assoc, b_sq, one_mul]
-      _ = (R⁻¹ * a m) * (T * R) := by rw [hb, hbc]
+      _ = (R⁻¹ * a m) * (T * R) := by rw [hbc, hb]
       _ = R⁻¹ * (a m * T) * R := by group
       _ = R⁻¹ * (T * a m) * R := by rw [hAT]
       _ = R⁻¹ * T * (a m * R) := by group
@@ -258,6 +258,8 @@ private theorem endpoint_0_large {m : ℕ} (hm : 8 ≤ m) :
   let T := Equiv.swap (0 : Fin (m + 1)) (Fin.last m)
   let S := Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m)
   obtain ⟨hbc, _, _, hS, _⟩ := native_port_algebra hm
+  change b m * c m = T * R at hbc
+  change S = R⁻¹ * T * R at hS
   have hrm : R ^ m = R⁻¹ := by
     simpa only [show m + 1 - 1 = m by omega, pow_one] using
       rotate_short_inverse hm 1 (by omega)
@@ -272,16 +274,18 @@ private theorem endpoint_0_large {m : ℕ} (hm : 8 ≤ m) :
         (c m * R ^ (m - 1) * a m) := by
       simp only [wordStart, word, rightPort, Fin.coe_ofNat_eq_mod, Nat.reduceMod,
         List.prod_append, List.prod_cons, List.prod_nil, mul_one, uWord_product]
+      simp only [R]
       group
     _ = (c m * R ^ (m - 2) * a m) * (c m * R ^ (m - 1) * a m) := by
       rw [ab_eq_rotate, hrm]
+      simp only [R]
       group
     _ = (R⁻¹ * T * R⁻¹ * R ^ 3) * (R⁻¹ * T * R⁻¹ * R ^ 2) := by
       rw [c_rotate_a hm, c_rotate_a hm, hr2, hr1, inv_inv, inv_inv]
     _ = (R⁻¹ * T * R) * (T * R) := by group
     _ = S * (b m * c m) := by rw [hbc, hS]
     _ = wordFinish m 0 := by
-      simp only [wordFinish, rightPort, Fin.coe_ofNat_eq_mod, Nat.reduceMod]
+      simp only [wordFinish, rightPort, Fin.coe_ofNat_eq_mod, Nat.reduceMod, S]
 
 set_option maxHeartbeats 800000 in
 private theorem endpoint_1_large {m : ℕ} (hm : 8 ≤ m) :
@@ -299,6 +303,10 @@ private theorem endpoint_3_large {m : ℕ} (hm : 8 ≤ m) :
   let T := Equiv.swap (0 : Fin (m + 1)) (Fin.last m)
   let S := Equiv.swap (⟨m - 1, by omega⟩ : Fin (m + 1)) (Fin.last m)
   obtain ⟨hbc, hb, _, hS, hbraid⟩ := native_port_algebra hm
+  change b m * c m = T * R at hbc
+  change b m = R⁻¹ * a m at hb
+  change S = R⁻¹ * T * R at hS
+  change S * T * S = T * S * T at hbraid
   have hr2 : R ^ (m - 2) = (R ^ 3)⁻¹ := by
     simpa only [show m + 1 - 3 = m - 2 by omega] using
       rotate_short_inverse hm 3 (by omega)
@@ -307,6 +315,7 @@ private theorem endpoint_3_large {m : ℕ} (hm : 8 ≤ m) :
       simp only [wordStart, word, leftPort, rightPort, Fin.coe_ofNat_eq_mod,
         Nat.reduceMod, List.prod_append, List.prod_cons, List.prod_nil, mul_one,
         uWord_product]
+      simp only [R, S]
       group
     _ = S * T * (c m * R ^ (m - 2) * a m) := by
       rw [hbc, hb]
@@ -314,12 +323,12 @@ private theorem endpoint_3_large {m : ℕ} (hm : 8 ≤ m) :
       group
     _ = S * T * (R⁻¹ * T * R⁻¹ * R ^ 3) := by
       rw [c_rotate_a hm, hr2, inv_inv]
-    _ = S * T * (R⁻¹ * T * R) * R := by group
+    _ = S * T * (R⁻¹ * T * R) * R := by group <;> simp only [zpow_two, mul_assoc]
     _ = S * T * S * R := by rw [← hS]
     _ = T * S * T * R := by rw [hbraid]
     _ = T * (S * (b m * c m)) := by rw [hbc]; group
     _ = wordFinish m 3 := by
-      simp only [wordFinish, rightPort, bar, Fin.coe_ofNat_eq_mod, Nat.reduceMod]
+      simp only [wordFinish, rightPort, bar, Fin.coe_ofNat_eq_mod, Nat.reduceMod, T, S]
 
 set_option maxHeartbeats 800000 in
 private theorem endpoint_4_large {m : ℕ} (hm : 8 ≤ m) :

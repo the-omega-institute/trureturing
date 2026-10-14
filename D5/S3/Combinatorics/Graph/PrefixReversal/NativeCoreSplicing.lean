@@ -67,7 +67,7 @@ theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
         apply Fin.ext
         simp [hil, show m - 1 + 1 = m by omega]
       rw [he]
-      simp only [tau, Equiv.swap_apply_left, finRotate_apply]
+      simp only [Equiv.swap_apply_left, finRotate_apply]
       apply Fin.ext
       simp only [Fin.val_last, Fin.val_add, Fin.val_one',
         Nat.mod_eq_of_lt (by omega : 1 < m + 1)]
@@ -89,15 +89,14 @@ theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
         have hv := congrArg Fin.val h
         simp only [Fin.val_last, hmod] at hv
         omega
-      rw [show tau m = Equiv.swap (0 : Fin (m + 1)) (Fin.last m) from rfl,
-        Equiv.swap_apply_of_ne_of_ne hn0 hnl, finRotate_apply]
+      rw [Equiv.swap_apply_of_ne_of_ne hn0 hnl, finRotate_apply]
       apply Fin.ext
       simp only [hmod, Fin.val_add, Fin.val_one',
         Nat.mod_eq_of_lt (by omega : 1 < m + 1),
         Nat.mod_eq_of_lt (by omega : i.val + 1 < m + 1)]
   · have he : i = Fin.last m := Fin.ext (by change i.val = m; have hb := i.isLt; omega)
     rw [dif_neg hi, he]
-    simp [tau, finRotate_apply]
+    simp [finRotate_apply]
 
 
 private theorem last_gap_rotation {m : ℕ} (hm : 4 ≤ m) :
@@ -105,7 +104,7 @@ private theorem last_gap_rotation {m : ℕ} (hm : 4 ≤ m) :
       finRotate (m + 1) := by
   change a m * c m * (b m * c m) ^ (m - 1) = _
   rw [show m - 1 = (m - 2) + 1 by omega, pow_succ,
-    ← mul_assoc, half_endpoint hm, tau_bc_rotation hm]
+    ← mul_assoc, half_endpoint hm, tau, tau_bc_rotation hm]
 
 private theorem circle_rotation {m : ℕ} (z : Configuration m) :
     configurationCycle (z * finRotate (m + 1)) = configurationCycle z := by

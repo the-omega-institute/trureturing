@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The twelve actual J2 ports are distinct, so the six marked b cuts have disjoint endpoints. -/
+   digest: Twelve actual J2 ports are distinct, so six marked b cuts have disjoint endpoints. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Words
 
 set_option autoImplicit false
@@ -43,22 +43,44 @@ private theorem mod_two_cases {x n : ℕ} (_hn : 0 < n) (hx : x < 2 * n) :
   · rw [if_neg h, Nat.mod_eq_sub_mod (by omega : n ≤ x),
       Nat.mod_eq_of_lt (by omega : x - n < n)]
 
-set_option maxHeartbeats 800000 in
+private def signature (m : ℕ) (z : Configuration m) : ℕ × ℕ × ℕ × ℕ :=
+  ((z 0).val, (z 1).val, (z 2).val, (z ⟨m - 1, by omega⟩).val)
+
+private def portSignature (m : ℕ) (p : Fin 3 × Bool × Bool) : ℕ × ℕ × ℕ × ℕ :=
+  match p.1.val, p.2.1, p.2.2 with
+  | 0, false, false => (m, 0, 1, m - 2)
+  | 0, false, true => (m - 2, m - 3, m - 4, m)
+  | 0, true, false => (0, m, 1, m - 2)
+  | 0, true, true => (m - 2, m - 3, m - 4, 0)
+  | 1, false, false => (0, 1, 2, m)
+  | 1, false, true => (m, m - 2, m - 3, 0)
+  | 1, true, false => (m, 1, 2, 0)
+  | 1, true, true => (0, m - 2, m - 3, m)
+  | _, false, false => (1, 2, 3, 0)
+  | _, false, true => (0, m, m - 2, 1)
+  | _, true, false => (1, 2, 3, m)
+  | _, true, true => (m, 0, m - 2, 1)
+
+set_option maxHeartbeats 600000 in
+private theorem signature_port {m : ℕ} (hm : 5 ≤ m) (p : Fin 3 × Bool × Bool) :
+    signature m (port m p) = portSignature m p := by
+  rcases p with ⟨i, t, u⟩
+  fin_cases i <;> cases t <;> cases u
+  all_goals
+    simp (disch := omega) [signature, portSignature, port, rightPort, leftPort, bar,
+      Equiv.Perm.mul_apply, swap_val, rotate_val, b_apply, c_apply, mod_two_cases,
+      Nat.mod_eq_of_lt, Fin.val_mk, Fin.val_last, Fin.val_zero]
+
 /-- All twelve actual port vertices are distinct at every J2 size. -/
 theorem native_j2_port_injective {m : ℕ} (hm : 5 ≤ m) :
     Function.Injective (port m) := by
   rintro ⟨i, t, u⟩ ⟨j, s, v⟩ he
+  have hs := congrArg (signature m) he
+  rw [signature_port hm, signature_port hm] at hs
   fin_cases i <;> fin_cases j <;> cases t <;> cases u <;> cases s <;> cases v
   all_goals first | rfl | skip
   all_goals
-    have h0 := congrArg (fun z : Configuration m => (z (0 : Fin (m + 1))).val) he
-    have h1 := congrArg (fun z : Configuration m => (z (1 : Fin (m + 1))).val) he
-    have h2 := congrArg (fun z : Configuration m => (z (2 : Fin (m + 1))).val) he
-    have hk := congrArg (fun z : Configuration m =>
-      (z ⟨m - 1, by omega⟩).val) he
-    simp (disch := omega) [port, rightPort, leftPort, bar, Equiv.Perm.mul_apply,
-      swap_val, rotate_val, b_apply, c_apply, if_pos, if_neg,
-      mod_two_cases, Nat.mod_eq_of_lt, Fin.val_mk, Fin.val_last, Fin.val_zero] at h0 h1 h2 hk
+    simp only [portSignature, Fin.val_mk, Prod.mk.injEq] at hs
     omega
 
 #print axioms native_j2_port_injective
