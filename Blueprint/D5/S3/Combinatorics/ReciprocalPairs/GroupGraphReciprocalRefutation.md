@@ -106,6 +106,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ReciprocalPairs/GroupGraphReciprocalRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/campbell-2020-group-graph-reciprocal-pairs` (refuted) by `D5/S3/Combinatorics/ReciprocalPairs/GroupGraphReciprocalRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"campbell-2020-group-graph-reciprocal-pairs","declaration_gid":"D5/S3/Combinatorics/ReciprocalPairs/GroupGraphReciprocalRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kirsty Campbell (2020). *Group-Graph Reciprocal Pairs*. DOI: [10.48550/arXiv.2005.13566](https://doi.org/10.48550/arXiv.2005.13566). URL: <https://arxiv.org/abs/2005.13566>.

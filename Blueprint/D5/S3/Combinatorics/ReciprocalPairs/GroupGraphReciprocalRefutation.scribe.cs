@@ -31,13 +31,15 @@ internal sealed class GroupGraphReciprocalRefutationDocument : IScribeDocumentDe
                 "Conjecture, page 3 (verbatim): \"Conjecture: Let (Γ, G) be an irreducible reciprocal pair. Then one of the following hold: 1. (Γ, G) is one of the two trivial cases: (a) Γ is a null graph and G is any group with no odd permutations, (b) Γ is the complete graph with n vertices and G = Sn. 2. Γ is a 4-cycle and G ≅ Aut(Γ). 3. Γ is a k-star and G is defined in Theorem 1.\" V is a finite vertex type, Gamma denotes Γ, and G is a finite subgroup of Equiv.Perm V. Automorphisms, positive-integer evaluations, irreducibility and the listed classes have exactly the meanings displayed above. The broader decomposition test and broader listed conclusion make claim a consequence of the source conjecture.", AssessedProvenance.FromLiterature(Campbell)),
             Node("result", "Refutation", Seq(Neg, Sp, Name("claim")),
                 "The graph 3K₂ ⊔ 2K₄ has fourteen vertices. The group permits all internal clique permutations, with S₃ acting on the three edges naturally and on the two four-cliques through its sign. It is reciprocal: nonproper colourings cancel under an edge transposition, while every permutation fixing a proper colouring has sign +1. Its two clique layers cannot generate the whole coupled group from subgroups supported on separate parts. Pairwise isomorphic parts would have equal even cardinalities, which is incompatible with fourteen vertices and between two and five parts. An edge and a nonedge exclude the two trivial graph classes, cardinality excludes the four-cycle, and the absence of a universal vertex excludes every k-star. The general cycle-polynomial and reciprocity background is Cameron–Semeraro (2018).",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Campbell, CameronSemeraro))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Campbell, CameronSemeraro),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("campbell-2020-group-graph-reciprocal-pairs"), ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Def(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
         Node(name, title, formula, prose, DescribeRole.Definition, provenance);
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("campbell-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Name(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Name(name), [.. args]);
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(Seq(Lex(owner), Dot, Lex(name))));
