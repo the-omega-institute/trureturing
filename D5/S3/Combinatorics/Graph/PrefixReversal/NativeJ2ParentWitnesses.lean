@@ -15,6 +15,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2EdgeClassification
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
@@ -43,6 +44,10 @@ open private parentPiece from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 open private special_child_path from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
+open private anchor_coordinates bc_terminal from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+open private frame_terminal_fresh from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansionDomains
 
 /-- The raw native cycle is retained as data, and all three mapped
 partitions in `seed` belong to its image, including their actual cuts. -/
@@ -204,8 +209,8 @@ theorem native_j2_ordinary_from_raw_seed {m : ℕ} (hm : 5 ≤ m)
     native_child_frame_specified_ordinary (by omega : 3 ≤ m) F hB j hj w hw hkeepB
   exact ⟨⟨C, hbase, hwalk⟩⟩
 
-/-- Full same-witness parent data: the special Q supplier, every
-ordinary supplier (including final P), their chosen actual openings,
+/-- Full same-witness parent data: the special supplier, every
+base-rotated ordinary supplier, their chosen actual openings,
 and the resulting parent with literal support and seam-chain inventory. -/
 structure ParentWitnessFor {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2)
     (hB : 3 ≤ F.base.length) where
@@ -235,8 +240,8 @@ structure ParentWitnessFor {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2)
       (List.ofFn fun i : Fin (F.base.length - 1) =>
         pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩)).reverse
 
-/-- Construct every supplier from native F2 once and keep the actual
-Q false-half assembly and P opening attached to this very parent. -/
+/-- Construct every supplier from native F2 once and keep its actual
+false-half assembly and every opening attached to this very parent. -/
 theorem native_j2_parent_with_raw_witnesses {m : ℕ} (hm : 5 ≤ m)
     (F : SupplyFrame m 2) (hB : 3 ≤ F.base.length) :
     Nonempty (ParentWitnessFor hm F hB) := by
@@ -254,9 +259,193 @@ theorem native_j2_parent_with_raw_witnesses {m : ℕ} (hm : 5 ≤ m)
   exact ⟨⟨Q, special, seeds, ordinary, paths, hspecial, hordinary,
     pieces, base, c, hpieces, hbase, hc, hs, he⟩⟩
 
+private theorem old_base_bound {m k : ℕ} (F : SupplyFrame m k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) : 3 ≤ F.base.length := by
+  simp only [hbase, List.length_append, List.length_singleton]
+  omega
+
+private theorem outer_base_bound {m k : ℕ} (F : SupplyFrame m k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) :
+    3 ≤ (outerFrame F A u hbase).base.length := by
+  simp only [outerFrame, List.length_append, List.length_singleton]
+  omega
+
+private def pChildIndex {m k : ℕ} (F : SupplyFrame m k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1)) (hbase : F.base = A ++ [u]) :
+    Fin (outerFrame F A u hbase).base.length :=
+  ⟨A.length, by simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩
+
+/-- Lift the actual old P frame to its final child domain without
+changing terminal or base inside the saved old witness. -/
+def pMarkedChildMap {m k : ℕ} (F : SupplyFrame m k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) :
+    domainGraph (SpecialDomain F (old_base_bound F A u hbase hA)) →g
+      domainGraph (ChildDomain (childGap (outerFrame F A u hbase) (pChildIndex F A u hbase))) :=
+  ⟨fun x => ⟨x.val, (native_p_marked_domain_eq_child F A u hbase hA x.val).mp x.property⟩,
+    fun h => h⟩
+
+theorem p_marked_child_map_bijective {m k : ℕ} (F : SupplyFrame m k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) :
+    Function.Bijective (pMarkedChildMap F A u hbase hA) := by
+  constructor
+  · intro x y h
+    exact Subtype.ext (congrArg Subtype.val h)
+  · intro y
+    exact ⟨⟨y.val, (native_p_marked_domain_eq_child F A u hbase hA y.val).mpr y.property⟩,
+      Subtype.ext rfl⟩
+
+/-- In contrast to a newly chosen base-rotated final-child seed, this
+specified child cycle is precisely the image of the retained old P seed. -/
+structure OldPCycleFor {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) (P : RawSeedFor hm F) where
+  cycle : SpecifiedOrdinaryCycle (by omega : 3 ≤ m) (outerFrame F A u hbase)
+    (outer_base_bound F A u hbase hA) (pChildIndex F A u hbase)
+    (by change 0 < A.length; omega)
+  mappedBase : cycle.base = pMarkedChildMap F A u hbase hA
+    (j2SpecialMap F (old_base_bound F A u hbase hA) P.seed.base)
+  mappedWalk : cycle.walk.copy mappedBase mappedBase =
+    (P.seed.walk.map (j2SpecialMap F (old_base_bound F A u hbase hA))).map
+      (pMarkedChildMap F A u hbase hA)
+
+theorem native_j2_old_p_specified_ordinary {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) (P : RawSeedFor hm F) :
+    Nonempty (OldPCycleFor hm F A u hbase hA P) := by
+  classical
+  let O := outerFrame F A u hbase
+  let hBO := outer_base_bound F A u hbase hA
+  let j := pChildIndex F A u hbase
+  have hj : 0 < j.val := by change 0 < A.length; omega
+  let lift := pMarkedChildMap F A u hbase hA
+  let w := P.seed.walk.map (j2SpecialMap F (old_base_bound F A u hbase hA))
+  have hw : w.IsHamiltonianCycle := SimpleGraph.Walk.IsHamiltonianCycle.map
+    (j2_special_map_bijective F _) P.seed.hamiltonian
+  let r := ordinaryRight (by omega : 3 ≤ m) O hBO j hj
+  let l := ordinaryLeft (by omega : 3 ≤ m) O hBO j hj
+  let r' : {v : Configuration m // SpecialDomain F (old_base_bound F A u hbase hA) v} :=
+    ⟨r.val, (native_p_marked_domain_eq_child F A u hbase hA r.val).mpr r.property⟩
+  let l' : {v : Configuration m // SpecialDomain F (old_base_bound F A u hbase hA) v} :=
+    ⟨l.val, (native_p_marked_domain_eq_child F A u hbase hA l.val).mpr l.property⟩
+  have hterminal : r'.val (Fin.last m) ∉ F.selected.toFinset := by
+    rw [show r'.val = rightPort O (2 + j.val) by rfl]
+    rw [rightPort, bc_terminal (by omega : 2 ≤ m), (anchor_coordinates O).2]
+    change O.terminal ∉ O.selected.toFinset
+    simp only [List.mem_toFinset]
+    exact fun h => frame_terminal_fresh O (List.mem_append.mpr (Or.inl h))
+  have hcut : s(r, l) ∈ (w.map lift).edgeSet := by
+    change s(r, l) ∈ (w.map lift).edges
+    rw [SimpleGraph.Walk.edges_map]
+    exact List.mem_map.mpr ⟨s(r', l'),
+      seed_special_keeps_remaining_b F _ P.seed r' l' rfl hterminal, rfl⟩
+  let C : SpecifiedOrdinaryCycle (by omega : 3 ≤ m) O hBO j hj :=
+    ⟨lift (j2SpecialMap F (old_base_bound F A u hbase hA) P.seed.base),
+      w.map lift, SimpleGraph.Walk.IsHamiltonianCycle.map
+      (p_marked_child_map_bijective F A u hbase hA) hw, hcut⟩
+  exact ⟨⟨C, rfl, rfl⟩⟩
+
+/-- The outer parent remembers the original P frame and its same
+cycle, rather than replacing it with a newly chosen final-child seed.
+The Q special path, every other child, and all final inventories are
+also retained. -/
+structure OuterParentWitnessFor {m : ℕ} (hm : 5 ≤ m) (F : SupplyFrame m 2)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) where
+  P : RawSeedFor hm F
+  Q : RawSeedFor hm (outerFrame F A u hbase)
+  special : SpecialPathFor hm (outerFrame F A u hbase)
+    (outer_base_bound F A u hbase hA) Q
+  oldP : OldPCycleFor hm F A u hbase hA P
+  otherSeeds : ∀ (j : Fin (outerFrame F A u hbase).base.length) (hj : 0 < j.val),
+    RawSeedFor hm (nativeChildFrame (outerFrame F A u hbase) j)
+  otherCycles : ∀ (j : Fin (outerFrame F A u hbase).base.length) (hj : 0 < j.val),
+    OrdinaryCycleFor hm (outerFrame F A u hbase) (outer_base_bound F A u hbase hA)
+      j hj (otherSeeds j hj)
+  children : ∀ (j : Fin (outerFrame F A u hbase).base.length) (hj : 0 < j.val),
+    SpecifiedOrdinaryCycle (by omega : 3 ≤ m) (outerFrame F A u hbase)
+      (outer_base_bound F A u hbase hA) j hj
+  oldPAttached : children (pChildIndex F A u hbase) (by change 0 < A.length; omega) =
+    oldP.cycle
+  otherAttached : ∀ j hj, j ≠ pChildIndex F A u hbase →
+    children j hj = (otherCycles j hj).cycle
+  paths : ∀ j : Fin (outerFrame F A u hbase).base.length,
+    ActualChildPath (outerFrame F A u hbase) j
+  specialPath : (paths ⟨0, by
+      simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩).piece =
+    (special_child_path (by omega : 3 ≤ m) (outerFrame F A u hbase)
+      (outer_base_bound F A u hbase hA) special.path special.hamiltonian).piece
+  ordinaryInventory : ∀ j hj, ∀ e,
+    e ∈ (paths j).piece.walk.edges ↔ e ∈ (children j hj).walk.edges ∧
+      e ≠ s(ordinaryRight (by omega : 3 ≤ m) (outerFrame F A u hbase)
+        (outer_base_bound F A u hbase hA) j hj,
+        ordinaryLeft (by omega : 3 ≤ m) (outerFrame F A u hbase)
+          (outer_base_bound F A u hbase hA) j hj)
+  pieces : Fin (outerFrame F A u hbase).base.length →
+    Piece (domainGraph (ParentDomain (outerFrame F A u hbase)))
+  base : {x : Configuration m // ParentDomain (outerFrame F A u hbase) x}
+  cycle : (domainGraph (ParentDomain (outerFrame F A u hbase))).Walk base base
+  childPieces : ∀ j, pieces j = parentPiece (outerFrame F A u hbase) j (paths j)
+  baseCoordinate : base.val = rightPort (outerFrame F A u hbase) 0
+  hamiltonian : cycle.IsHamiltonianCycle
+  support : cycle.support.tail =
+    ((List.ofFn pieces).flatMap fun z => z.walk.support).reverse
+  edges : cycle.edges = s(base, (pieces (pChildIndex F A u hbase)).finish) ::
+    (chainEdges (pieces ⟨0, by
+      simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩)
+      (List.ofFn fun i : Fin ((outerFrame F A u hbase).base.length - 1) =>
+        pieces ⟨i.val + 1, by
+          have hi := i.isLt
+          simp only [outerFrame, List.length_append, List.length_singleton] at hi ⊢
+          omega⟩)).reverse
+
+/-- Native F2 earns both real old P and outer Q suppliers. The final
+opening uses exactly the retained old P cycle and literal endpoint table;
+the same assembled parent retains its complete support and edge chain. -/
+theorem native_j2_outer_parent_with_raw_p_q {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) :
+    Nonempty (OuterParentWitnessFor hm F A u hbase hA) := by
+  classical
+  let O := outerFrame F A u hbase
+  let hBO := outer_base_bound F A u hbase hA
+  let jP := pChildIndex F A u hbase
+  have hjP : 0 < jP.val := by change 0 < A.length; omega
+  let P := Classical.choice (native_j2_raw_seed hm F)
+  let Q := Classical.choice (native_j2_raw_seed hm O)
+  let special := Classical.choice (native_j2_special_from_raw_seed hm O hBO Q)
+  let oldP := Classical.choice (native_j2_old_p_specified_ordinary hm F A u hbase hA P)
+  let seeds (j : Fin O.base.length) (hj : 0 < j.val) :=
+    Classical.choice (native_j2_raw_seed hm (nativeChildFrame O j))
+  let ordinary (j : Fin O.base.length) (hj : 0 < j.val) :=
+    Classical.choice (native_j2_ordinary_from_raw_seed hm O hBO j hj (seeds j hj))
+  let children (j : Fin O.base.length) (hj : 0 < j.val) :
+      SpecifiedOrdinaryCycle (by omega : 3 ≤ m) O hBO j hj :=
+    if he : j = jP then he.symm ▸ oldP.cycle else (ordinary j hj).cycle
+  have hp : children jP hjP = oldP.cycle := by simp only [children, dif_pos rfl]
+  have ho : ∀ j hj, j ≠ jP → children j hj = (ordinary j hj).cycle := by
+    intro j hj hne
+    simp only [children, dif_neg hne]
+  obtain ⟨paths, hspecial, hordinary, pieces, base, c, hpieces, hbase', hc, hs, he⟩ :=
+    recursive_cycle_from_specified_children_with_inventory (by omega : 3 ≤ m)
+      O hBO special.path special.hamiltonian children
+  have hlast : (⟨O.base.length - 1, by
+      have hb := hBO; omega⟩ : Fin O.base.length) = jP := by
+    apply Fin.ext
+    simp only [O, outerFrame, List.length_append, List.length_singleton, jP, pChildIndex]
+    omega
+  rw [hlast] at he
+  exact ⟨⟨P, Q, special, oldP, seeds, ordinary, children, hp, ho,
+    paths, hspecial, hordinary, pieces, base, c, hpieces, hbase', hc, hs, he⟩⟩
+
 #print axioms native_j2_raw_seed
 #print axioms native_j2_special_from_raw_seed
 #print axioms native_j2_ordinary_from_raw_seed
 #print axioms native_j2_parent_with_raw_witnesses
+#print axioms native_j2_old_p_specified_ordinary
+#print axioms native_j2_outer_parent_with_raw_p_q
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
