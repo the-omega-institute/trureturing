@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee7894b3bb812c5aae635e29f273315bcb6d58b8cbdd70984025cf234b5ec4b2
+  normalized_sha256: sha256:ee7894b3bb812c5aae635e29f273315bcb6d58b8cbdd70984025cf234b5ec4b2
+cas_ref: sha256:ee7894b3bb812c5aae635e29f273315bcb6d58b8cbdd70984025cf234b5ec4b2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof exposition for section 385.3. The mathematical statement is supplied by D5/S0/History/Spacetime/AllSetZeckendorfEncoding.enc_injective_and_left_inverse. The paragraph explains that same statement and its displayed substitutions or definitional consequences; it is not an independent theorem obligation. 任意 U⊆X、B⊆Enc[X] 的 Enc-image/Dec-image 互逆，包含全部子集及空集。 任意函数的 Enc∘f∘Dec 与 Dec∘g∘Enc 逐点互逆，无有限性、可定义性或非空假设。 语义幂集和函数空间按同一解码定义运输；Pack/El 复合逐成员用双逆化简。
+    previous_atom_id: 9e11926e5f76f2fbb64c7622a33dfa7681e5ba1db60279d2810bf70880c144e2
+    next_atom_id: 6ff9d4a32ba8be6e7e916e2a0790a0e342519b2dc98cd9b93e4043b03648e3f9

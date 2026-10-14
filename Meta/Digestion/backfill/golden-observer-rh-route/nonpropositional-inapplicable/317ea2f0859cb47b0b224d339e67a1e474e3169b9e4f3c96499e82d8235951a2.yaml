@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:317ea2f0859cb47b0b224d339e67a1e474e3169b9e4f3c96499e82d8235951a2
+  normalized_sha256: sha256:317ea2f0859cb47b0b224d339e67a1e474e3169b9e4f3c96499e82d8235951a2
+cas_ref: sha256:317ea2f0859cb47b0b224d339e67a1e474e3169b9e4f3c96499e82d8235951a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional scope and interpretation note for M3-a; it preserves the stated assumptions and exclusions or points back to the surrounding section. It does not assert RH, an inhabitant of ZeroData, or a new zero existence claim.
+    previous_atom_id: f37ac5e902b5446c27fd0b2dc5f4d75845406359de61fb3167a50fcc8d6bce57
+    next_atom_id: 7b23dd9dc39b51df6323855171a6a50ed9f530498f196e3e42df81d0bfffd290

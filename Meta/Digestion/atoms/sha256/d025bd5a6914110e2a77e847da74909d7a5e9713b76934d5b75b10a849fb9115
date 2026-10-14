@@ -1,0 +1,25 @@
+**Corollary 6.3 (no finite NCE compilation for all adaptive outputs).**
+There is no general effective translation of arbitrary $P,b$ into a finite
+NCE-language source-fiber representation whose concrete-source specialization
+decides membership exactly. The fixed fiber of Theorem 6.2 admits no single
+finite representation of that kind at all.
+
+Proof. Suppose a finite expression schema has one designated source slot
+$u$, finitely many existential tree and natural epoch variables, native
+constructors, affine nonnegative powers and affine guards as in NCE, and
+represents (NASF.11) exactly. The source slot is a proposed representation
+interface, not a free-tree-parameter theorem already supplied by NCE.
+Substitute the concrete term $E_e$ into it. This is now exactly [NCE,
+Definition 4.1][NCE], with all other trees existential. Theorem 4.2 eliminates
+those trees and Corollary 4.3 decides existence of the remaining natural
+parameters. That would decide (NASF.11), contradicting Theorem 6.2. The
+same holds for finite unions. This argument uses actual concrete-source
+substitution, not a supposed source-preserving parametrization by NCE's
+replaceable witnesses. $\square$
+
+The obstruction leaves intact the countable representation of Theorem 3.4,
+each individual branch decision, languages containing arbitrary program
+predicates, and restricted selector families proved separately. It rules
+out using the finite row/sign language as a universal finite solver for
+the full adaptive domain.
+

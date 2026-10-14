@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0156c4b5f62d236729df64b5ca82d9136f20dd9ec3e774a96dbd1690b12e24f9
+  normalized_sha256: sha256:0156c4b5f62d236729df64b5ca82d9136f20dd9ec3e774a96dbd1690b12e24f9
+cas_ref: sha256:0156c4b5f62d236729df64b5ca82d9136f20dd9ec3e774a96dbd1690b12e24f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 人格承诺变化：本项为主题、操作、组成或文献入口的列举片段，不单独提出性质结论。
+    previous_atom_id: 5b186e2548962c4a72686f7958ba32f365bd5e6abfe4451885f03e1e27b76ccf
+    next_atom_id: 2a5e8d1f29379e335966630d5139747bd5cc1f3daaf5e1f0a2550d85cb2fc85a

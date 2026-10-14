@@ -328,7 +328,7 @@ def FirstHalt {C : Type} (δ : C → Op C Bool) (c : C) (j : Nat)
     (u : Source) (n : Nat) (a : Bool) : Prop :=
   Remaining δ c j u n a ∧ ∀ k, k < n → ∀ b, ¬ Remaining δ c j u k b
 
-private theorem first_of_run {C : Type} (δ : C → Op C Bool)
+theorem first_of_run {C : Type} (δ : C → Op C Bool)
     {c : C} {j : Nat} {u : Source} {trace : Trace} {a : Bool}
     (run : NativeSerialMachine.Run δ c j u trace a) : FirstHalt δ c j u trace.length a := by
   refine ⟨⟨trace,run,rfl⟩, ?_⟩

@@ -1,0 +1,61 @@
+**Proof.** First consider the lower rows. The stopped schedule $(1,2)$, with output zero at a queried early zero whenever the corresponding early coefficient is negative and with the ordinary correct output otherwise, gives the anchor lower bound $\Delta_O\ge D$; its $N$ completion gives the same bound.
+
+In the positive-pivot branch, take any two-element subset $S\subseteq\{1,\ldots,n\}$, query it in increasing order, output at a first zero $i<n$ the label $i$ when $i\le2$ and $\beta_i\ge0$, and output $0$ otherwise; at a first zero at $n$ output $n$; on exhaustion output $0$ when $n\in S$ and $n$ otherwise. This is a legal stopped table, and it retains every label allowed by Definition 210.1. Average such tables under an arbitrary law on the two-element sets. Write
+$p_i=\Pr(i\in S)$ and $r=\min_i p_i$. The resulting detector outputs $n$ on every $\Omega_n$, outputs the designated early correct or base label on $\Omega_j$ with probability at least $p_j$ for $j<n$, has base probability $p_n$ on every $\Omega_j$ with $j>n$, has every independent pair probability at least $r$, and has positive-word base probability $p_n\ge r$.
+
+Put $k=r-1$. For $j<n$ define
+
+$$
+\xi_j=\begin{cases}
+p_j-r,&j\le2,\ \beta_j\ge0,\\
+-1-p_j+r,&j\le2,\ \beta_j<0,\\
+r-p_j,&j\ge3,
+\end{cases}
+$$
+
+and put $\xi_n=2-r$, $\xi_j=r-p_n$ for $j>n$. The detector's complete event vector dominates the anchor plus the coefficient vector of
+$\sum_j\xi_j\beta_j+kK$. On an early positive class the three required event thresholds are
+$(2r-p_j-1,p_j,r)$; on an early negative or later negative class they are
+$(p_j,2r-p_j-1,r)$ (with $p_n$ after the pivot); on $\Omega_n$ they are
+$(2r-2,1,r)$; and the terminal threshold is $r$. These are requirements on event probabilities, not nonnegative slacks; the actual probability minus its threshold is the slack. Since $2r-p_i-1\le0$, every independent $A,C,P$ row, including negative singleton rows and the pair row, is covered. Multiplying by an arbitrary nonnegative score gives
+
+$$
+\Delta_O(V)\ge D+g-H+\sum_i a_i p_i+B r,
+\qquad B=H-\sum_i a_i.
+\tag{214.2}
+$$
+
+Three concrete detector mixtures give the three sharp lower tests. Put weight one on the pair of the two largest entries of $a$; this gives
+$D+g-H+a_{[1]}+a_{[2]}$. Put equal weight on all pairs containing an index of largest mass and average over the remaining $n-1$ choices; this gives
+$D+g-H+[H+(n-2)a_{[1]}]/(n-1)$. Put equal weight on all $\binom n2$ pairs; this gives
+$D+g-H+2H/n$. Together with $D$, these are exactly $D_*$.
+
+For the matching score choose nonnegative $z_i\ge a_i$ with
+$\sum_i z_i=H$ and with the largest-two sum equal to $J$. Such a choice is obtained by water filling: choose $h\ge0$ with
+$z_i=\max(a_i,h)$ and the required sum (with the evident $h=0$ convention when $B=0$). If $h\le a_{[2]}$, the largest-two sum is $a_{[1]}+a_{[2]}$; if $a_{[2]}\le h\le a_{[1]}$, it is
+$[H+(n-2)a_{[1]}]/(n-1)$; and if $h\ge a_{[1]}$, it is $2H/n$. Conversely, every vector $z\ge a$ of sum $H$ has largest-two sum at least $a_{[1]}+a_{[2]}$ and at least the average pair sum $2H/n$. Pair the coordinate above the largest floor with the largest remaining coordinate: if that coordinate has value $x\ge a_{[1]}$, their sum is at least $x+(H-x)/(n-1)\ge[H+(n-2)a_{[1]}]/(n-1)$. Thus every vector obeys all three bounds and water filling is optimal.
+
+Write $w(Z)$ for the length-$L$ word whose zero set is $Z$. For each $i<n$ put
+$P_{w(\{i,n\})}=z_i-a_i$ and, on that word, put $C=\beta_i$ if $\beta_i\ge0$ and $A=-\beta_i$ if $\beta_i<0$. Put $C_{w(\{n\})}=g$, put $A_{w(\{j\})}=-\beta_j$ for $j>n$, and put $T=z_n-a_n$; all other coefficients are zero. The rows on coincident words add. Direct substitution gives $Q(V)=q$ and anchor $W_V=H-D$.
+
+For a full catalog cell, a guard $i<n$ can contribute at most $z_i$, while all post-pivot negative-base atoms together with the terminal atom contribute at most $z_n$. A table that collects no reward from the positive-pivot atom earns at most $H$. If it collects that atom, its cell is assigned label $n$, which collects no guard reward; only guards in other cells can contribute. A schedule isolating two guards earns at most $g+z_i+z_j$; one guard and the pivot earns at most $g+z_i+z_n$; a schedule using an address after the pivot can isolate only its own negative-base atom, at most $z_n$, and two such addresses recover at most $z_n$ beyond the pivot. These bounds use the maximum over every legal numerical label in each cell. Hence
+
+$$
+B_N(V),B_O(V)\le\max(H,g+J),
+$$
+
+while the pair of slots realizing $J$ gives a stopped table attaining the corresponding value: two guard slots use their maximizing guard labels and pivot label on exhaustion; a guard-pivot pair uses the guard label, pivot label on the $10$ cell, and zero on the $11$ cell. The modified anchor earns $H$. Thus equality holds and
+$\Delta_N(V)=\Delta_O(V)=D_*$ in the positive-pivot branch.
+
+If all late coordinates are nonpositive, instead put, for every $j$,
+
+$$
+ C_{w(\{j\})}=(\beta_j)_+,\qquad
+ A_{w(\{j\})}=(-\beta_j)_+,\qquad
+ P=0,\qquad T=K-\sum_j|\beta_j|.
+$$
+
+All these coefficients are nonnegative; every negative early and late coordinate is retained. The quotient is exactly $q$, and the anchor is
+$W_V=\sum_{j\le2}(\beta_j)_++\sum_{j\ge3}(-\beta_j)_++T=K-D$.
+The total of the pointwise maximum rewards is $K$, so every schedule in either full catalog has support at most $K$. The modified $(1,2)$ anchor collects every coefficient: it emits the appropriate correct or base label on the early singleton words and zero on every late singleton and the positive word. Its reward is $K$. Hence both supports equal $K$ and both excesses equal $D$. This also covers $K=0$, all zero coefficients, and all unused terminal stock, and completes (214.1). $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8d756c4385f9eeb76c00ae2350be7ffe25ce4c14acff014c764457ebd27feaa
+  normalized_sha256: sha256:f8d756c4385f9eeb76c00ae2350be7ffe25ce4c14acff014c764457ebd27feaa
+cas_ref: sha256:f8d756c4385f9eeb76c00ae2350be7ffe25ce4c14acff014c764457ebd27feaa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof exposition for section 404.1. The mathematical statement is supplied by D5/S0/History/Spacetime/AllSetZeckendorfEncoding.enc_injective_and_left_inverse. The paragraph explains that same statement and its displayed substitutions or definitional consequences; it is not an independent theorem obligation. 任意 f:D→Y 的共轭具有准确域 Enc[D] 及普通图；语义 Pack 逐边还原 G_f。 语义域、值域和求值分别还原 D、f[D]、f(x) 再编码；外部图自身另取 Enc(c)、Enc(f*(c))。 任意外部函数唯一拉回 Dec∘h∘Enc，含空域。
+    previous_atom_id: 6654ce7fb837ffffe93ed2895a070baca63b53f0665f9d77172ad7a62ca878c3
+    next_atom_id: 8a7a486556c95655a1d10379ec4e2420a33637256ecd2761a679cff6b0094d77
