@@ -40,4 +40,5 @@ The result consumes the genuine independently noisy six-qubit EJM law. It does n
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseRobustness.physical_score_expectation_le`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseRobustness.positive_score_physical_noise_box`
+- Dependency: [D5/S3/Quantum/Entanglement/EJMInflationScore](EJMInflationScore.md)
 - Dependency: [D5/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseBounds](ElegantJointMeasurementNoiseBounds.md)

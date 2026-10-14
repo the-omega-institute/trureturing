@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseRobustness
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseRobustness
    mirror-E: none(waiver:physical-noise-bound-consumer)
    anchors: []
