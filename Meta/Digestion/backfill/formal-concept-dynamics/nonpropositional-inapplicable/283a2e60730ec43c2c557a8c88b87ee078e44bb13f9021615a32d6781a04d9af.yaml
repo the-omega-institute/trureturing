@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:283a2e60730ec43c2c557a8c88b87ee078e44bb13f9021615a32d6781a04d9af
+  normalized_sha256: sha256:283a2e60730ec43c2c557a8c88b87ee078e44bb13f9021615a32d6781a04d9af
+cas_ref: sha256:283a2e60730ec43c2c557a8c88b87ee078e44bb13f9021615a32d6781a04d9af
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“目标盲度”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: ea9f104f7dacc07d6641bbaf8abaf6d74dca1f4f24273124196d3b1ccf28c8fa
+    next_atom_id: d0b78c80d0dc32e737213adf270254259009eb8832be2eb1d020a98bb8b41d32

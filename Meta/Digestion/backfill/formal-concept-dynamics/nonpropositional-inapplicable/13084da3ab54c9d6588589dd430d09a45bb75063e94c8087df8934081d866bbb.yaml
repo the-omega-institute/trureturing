@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:13084da3ab54c9d6588589dd430d09a45bb75063e94c8087df8934081d866bbb
+  normalized_sha256: sha256:13084da3ab54c9d6588589dd430d09a45bb75063e94c8087df8934081d866bbb
+cas_ref: sha256:13084da3ab54c9d6588589dd430d09a45bb75063e94c8087df8934081d866bbb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean`：行为商的普适性质：本项为主题、操作、组成或文献入口的列举片段，不单独提出性质结论。
+    previous_atom_id: 6a98ebb068d33b1b84552e1694e84d29768020538abbb7902b7f364008c2ca97
+    next_atom_id: 75acb18e625da2c94c347920f04ef6c134e8fb8cc003f5ae0da816d053f41838
