@@ -14,7 +14,7 @@ internal sealed class NativeJ2FrameInventoryDocument : IScribeDocumentDefinition
         Blocks(
             Node("frame-domain", "FrameDomain", "The Actual Independent Frame Layer",
                 Eq(Call("FrameDomain", Frame()), Call("Layer", Call("ToFinset", Call("Selected", Frame())),
-                    Call("CycleOfList", Call("Cons", Call("Terminal", Frame()), Call("Base", Frame())))),
+                    Call("CycleOfList", Call("Cons", Call("Terminal", Frame()), Call("Base", Frame()))))),
                 "FrameDomain(F) is precisely Layer(F.selected.toFinset, F.terminal :: F.base). The mapped target is this actual layer; it is never identified by definition with the raw F2Domain.", DescribeRole.Definition),
             Node("undo-relabel", "undoRelabel", "Undo the Earned Frame Relabelling",
                 Eq(Call("undoRelabel", Frame(), F.Id("x")),
@@ -22,7 +22,7 @@ internal sealed class NativeJ2FrameInventoryDocument : IScribeDocumentDefinition
                 "Undo is left multiplication by the inverse of the same relabel(F) used by frameDomainIso. Full native-edge, deleted-edge and seam inventories are evaluated on the two ambient endpoints after this undo map.", DescribeRole.Definition),
             Node("one-frame-cycle-inventory", "native_j2_frame_cycle_with_inventory", "The Same Actual Mapped Cycle Earns Every Required Inventory",
                 InventoryFormula(),
-                "For every m at least five and every SupplyFrame(m,2), choose the already proved canonical actual F2 Hamilton witness only once and map it by frameDomainIso. The theorem returns both raw and mapped witnesses, identifies the mapped base, and identifies the mapped walk by heterogeneous equality. This exact mapped walk is Hamiltonian, has the full raw native-minus-deleted plus seam inventory after undo relabelling, and contains the images of all six independently specified marked edges.\n\n"
+                "For every m at least five and every SupplyFrame(m,2), choose the already proved canonical actual F2 Hamilton witness only once and map it by frameDomainIso. The theorem returns both raw and mapped witnesses together with the raw Hamilton and full-inventory facts, identifies the mapped base, and identifies the mapped walk by heterogeneous equality. This exact mapped walk is Hamiltonian, has the full raw native-minus-deleted plus seam inventory after undo relabelling, and contains the images of all six independently specified marked edges.\n\n"
                 + "The same walk also earns the actual native a-edge inventory: for frame vertices x,y with y=x*a, the edge is retained whenever its terminal-label pair differs from {rho(m),rho(0)}. The complete raw a-cut classification shows that both deleted a edges have terminal pair {0,m}; mapping the labels gives exactly the excluded pair. For y=x*b, every edge whose starting terminal lies outside F.selected.toFinset is retained, since the raw b-cut classification permits terminal zero or m only. These facts are conclusions earned from the selected witness, not supplied inventory premises.\n\n"
                 + "The two labels p=rho(m), q=rho(0) are distinct and their set is exactly the two selected frame labels. In particular the a-edge claim does not allow p=q. The same graph isomorphism and raw witness remain available to transport the literal six slices and actual half-restoration paths before the exceptional k2 Q route. The theorem supplies a base witness and its inventories; the higher all-size recursive Hamilton closure remains a separate obligation. This combines existing F2 inventory, marked-edge and graph-map results with the complete native cut classifications.", DescribeRole.Theorem))));
 
@@ -46,10 +46,13 @@ internal sealed class NativeJ2FrameInventoryDocument : IScribeDocumentDefinition
             Implies(And(Eq(Call("Value", y), Call("Multiply", Call("Value", x), Call("b", m))),
                 Not(Call("Member", Call("LastLabel", x), selected))),
                 Call("Member", Call("Sym2Pair", x, y), Call("Edges", w)))));
-        Formula facts = And(Eq(F.Id("base"), Call("Apply", Call("frameDomainIso", m, Frame()), F.Id("rawBase"))),
+        Formula rawInventory = All("e", Call("Sym2", Call("Configuration", m)),
+            Iff(Call("Member", e, Call("AmbientEdges", F.Id("rawWalk"))),
+                Or(And(Call("F2NativeEdge", m, e), Not(Call("F2DeletedEdge", m, e))), Call("F2Seam", m, e))));
+        Formula facts = And(Call("IsHamiltonianCycle", F.Id("rawWalk")), And(rawInventory, And(Eq(F.Id("base"), Call("Apply", Call("frameDomainIso", m, Frame()), F.Id("rawBase"))),
             And(Call("HEq", w, Call("WalkMap", F.Id("rawWalk"), Call("frameDomainIso", m, Frame()))),
             And(Call("IsHamiltonianCycle", w), And(inventory, And(marks, And(hA, And(hB,
-                And(Ne(p, q), Eq(selected, Call("PairSet", p, q))))))))));
+                And(Ne(p, q), Eq(selected, Call("PairSet", p, q))))))))))));
         return Disp(All("m", Call("Nat"), Implies(Le(D(5), m), All("F", Call("SupplyFrame", m, D(2)),
             Exists("rawBase", Call("F2Vertex", m), Exists("rawWalk", Call("F2ClosedWalk", m, F.Id("rawBase")),
                 Exists("base", Call("FrameVertex", Frame()), Exists("w", Call("FrameClosedWalk", Frame(), F.Id("base")), facts))))))));

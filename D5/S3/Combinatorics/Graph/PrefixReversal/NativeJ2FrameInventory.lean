@@ -81,7 +81,9 @@ private theorem raw_a_cut_labels {m : ℕ} (hm : 5 ≤ m) (x : Configuration m)
     s(x (Fin.last m), (x * a m) (Fin.last m)) = s(0, Fin.last m) := by
   rcases (native_f2_a_cut_classification (by omega : 4 ≤ m) x).mp hd with he | he
   · have h := congrArg (Sym2.map (fun z : Configuration m => z (Fin.last m))) he
-    simpa [Sym2.map_mk, a_apply, Sym2.eq_swap] using h
+    have h' : s(x (Fin.last m), (x * a m) (Fin.last m)) = s(Fin.last m, 0) := by
+      simpa [Sym2.map_mk, a_apply] using h
+    exact h'.trans Sym2.eq_swap
   · have h := congrArg (Sym2.map (fun z : Configuration m => z (Fin.last m))) he
     simpa [Sym2.map_mk, a_apply] using h
 
@@ -102,6 +104,10 @@ theorem native_j2_frame_cycle_with_inventory {m : ℕ} (hm : 5 ≤ m)
       ∃ rawWalk : (domainGraph (F2Domain m)).Walk rawBase rawBase,
       ∃ base : {v : Configuration m // FrameDomain F v},
       ∃ w : (domainGraph (FrameDomain F)).Walk base base,
+        rawWalk.IsHamiltonianCycle ∧
+        (∀ e : Sym2 (Configuration m),
+          e ∈ rawWalk.edges.map (Sym2.map Subtype.val) ↔
+            (F2NativeEdge m e ∧ ¬ F2DeletedEdge m e) ∨ F2Seam m e) ∧
         base = frameDomainIso hm F rawBase ∧
         HEq w (rawWalk.map (frameDomainIso hm F).toHom) ∧
         w.IsHamiltonianCycle ∧
@@ -150,8 +156,8 @@ theorem native_j2_frame_cycle_with_inventory {m : ℕ} (hm : 5 ≤ m)
     rw [he]
     exact ⟨(native_f2_native_edge_catalog (by omega : 4 ≤ m) _).mpr
       ⟨undoRelabel F x.val, g, rawDomain x, hg, rfl⟩, hd⟩
-  refine ⟨rawBase, rawWalk, base, w, rfl, HEq.rfl,
-    hham.map iso.toEquiv.bijective, inventory, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨rawBase, rawWalk, base, w, hham, hinv, rfl, HEq.rfl,
+    SimpleGraph.Walk.IsHamiltonianCycle.map iso.toEquiv.bijective hham, inventory, ?_, ?_, ?_, ?_, ?_⟩
   · intro p
     apply (mapped_mem hm F rawWalk _).mpr
     rw [down_up_edge]
@@ -170,7 +176,7 @@ theorem native_j2_frame_cycle_with_inventory {m : ℕ} (hm : 5 ≤ m)
       change (relabel F * (undoRelabel F x.val * a m)) (Fin.last m) = _
       rw [← mul_assoc, up_down, ← hy]
     simp only [Sym2.map_mk, hx, hy'] at hmapped
-    exact hlabels (hmapped.trans (Sym2.eq_swap ..))
+    exact hlabels (hmapped.trans Sym2.eq_swap)
   · intro x y hy ht
     apply subtype_edge_mem (FrameDomain F) w x y
     rw [hy]
@@ -185,7 +191,11 @@ theorem native_j2_frame_cycle_with_inventory {m : ℕ} (hm : 5 ≤ m)
       refine ⟨(undoRelabel F x.val) (Fin.last m), ?_, ?_⟩
       · simp [hj]
       · exact congrArg (fun z : Configuration m => z (Fin.last m)) (up_down F x.val)
-  · exact (relabel F).injective.ne (by intro he; have h := congrArg Fin.val he; simp at h; omega)
+  · intro he
+    have hz := (relabel F).injective he
+    have hv := congrArg Fin.val hz
+    simp only [Fin.val_last, Fin.val_zero] at hv
+    omega
   · rw [← relabel_selected hm F]
     ext x
     simp [or_comm]
