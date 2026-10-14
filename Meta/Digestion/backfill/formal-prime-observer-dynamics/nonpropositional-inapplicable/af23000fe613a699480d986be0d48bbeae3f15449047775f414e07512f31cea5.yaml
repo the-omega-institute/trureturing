@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af23000fe613a699480d986be0d48bbeae3f15449047775f414e07512f31cea5
+  normalized_sha256: sha256:af23000fe613a699480d986be0d48bbeae3f15449047775f414e07512f31cea5
+cas_ref: sha256:af23000fe613a699480d986be0d48bbeae3f15449047775f414e07512f31cea5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 267.1（干预自然性）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: f3aa1584342d98cc4cf1e18f2a260ac66bcf80df59e6307ca5be427bcd9b7786
+    next_atom_id: 86d53822d069c0a3bc958f9acf6c3aef874e0af47261740afa7dbffa0ad6b259

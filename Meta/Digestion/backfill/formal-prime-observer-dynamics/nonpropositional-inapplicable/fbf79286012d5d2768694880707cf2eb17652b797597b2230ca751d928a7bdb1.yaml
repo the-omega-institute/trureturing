@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbf79286012d5d2768694880707cf2eb17652b797597b2230ca751d928a7bdb1
+  normalized_sha256: sha256:fbf79286012d5d2768694880707cf2eb17652b797597b2230ca751d928a7bdb1
+cas_ref: sha256:fbf79286012d5d2768694880707cf2eb17652b797597b2230ca751d928a7bdb1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：| \(\mathbb P\) | 素数类型：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: cf7e8baeb5fb8c2f2402ce164bf137827132c4e5415b253c80f14636348ce55c
+    next_atom_id: 757c83a9181dea85d64643d44e749a6577a16ae525ceb1ff2a069f913c743d22
