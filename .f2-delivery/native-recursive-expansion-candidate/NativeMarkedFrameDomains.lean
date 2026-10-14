@@ -146,6 +146,71 @@ theorem native_marked_orders_same_domain {m k : ℕ}
     rw [List.rotate_zero]
   rw [hc₀, hc₁, hselected, hbase, hterminal]
 
+/-- Reindex only the marked order, keeping every actual configuration.
+This lets two orders refer to one supplied cycle instead of independently
+choosing a cycle on each equal native domain. -/
+def markedOrderDomainMap {m k : ℕ}
+    (F₀ F₁ : SupplyFrame m k) (hB₀ : 3 ≤ F₀.base.length) (hB₁ : 3 ≤ F₁.base.length)
+    (hselected : F₀.selected.toFinset = F₁.selected.toFinset)
+    (hbase : F₀.base = F₁.base) (hterminal : F₀.terminal = F₁.terminal) :
+    domainGraph (SpecialDomain F₀ hB₀) →g domainGraph (SpecialDomain F₁ hB₁) :=
+  ⟨fun x => ⟨x.val,
+    (native_marked_orders_same_domain F₀ F₁ hB₀ hB₁ hselected hbase hterminal x.val).mp
+      x.property⟩, fun h => h⟩
+
+theorem marked_order_domain_map_bijective {m k : ℕ}
+    (F₀ F₁ : SupplyFrame m k) (hB₀ : 3 ≤ F₀.base.length) (hB₁ : 3 ≤ F₁.base.length)
+    (hselected : F₀.selected.toFinset = F₁.selected.toFinset)
+    (hbase : F₀.base = F₁.base) (hterminal : F₀.terminal = F₁.terminal) :
+    Function.Bijective
+      (markedOrderDomainMap F₀ F₁ hB₀ hB₁ hselected hbase hterminal) := by
+  constructor
+  · intro x y h
+    exact Subtype.ext (congrArg Subtype.val h)
+  · intro y
+    exact ⟨⟨y.val,
+      (native_marked_orders_same_domain F₀ F₁ hB₀ hB₁ hselected hbase hterminal y.val).mpr
+        y.property⟩, Subtype.ext rfl⟩
+
+/-- The two actual outer parents differ only in their selected order.
+Their entire native domains agree; base order is not reversed. -/
+theorem native_outer_orders_same_domain {m k : ℕ}
+    (F₀ F₁ : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase₀ : F₀.base = A ++ [u]) (hbase₁ : F₁.base = A ++ [u])
+    (hselected : F₀.selected.toFinset = F₁.selected.toFinset)
+    (hterminal : F₀.terminal = F₁.terminal) (x : Configuration m) :
+    ParentDomain (outerFrame F₀ A u hbase₀) x ↔
+      ParentDomain (outerFrame F₁ A u hbase₁) x := by
+  change Layer (insert u F₀.selected.toFinset) (A ++ [F₀.terminal] : Cycle _) x ↔
+    Layer (insert u F₁.selected.toFinset) (A ++ [F₁.terminal] : Cycle _) x
+  rw [hselected, hterminal]
+
+def parentOrderDomainMap {m k : ℕ}
+    (F₀ F₁ : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase₀ : F₀.base = A ++ [u]) (hbase₁ : F₁.base = A ++ [u])
+    (hselected : F₀.selected.toFinset = F₁.selected.toFinset)
+    (hterminal : F₀.terminal = F₁.terminal) :
+    domainGraph (ParentDomain (outerFrame F₀ A u hbase₀)) →g
+      domainGraph (ParentDomain (outerFrame F₁ A u hbase₁)) :=
+  ⟨fun x => ⟨x.val,
+    (native_outer_orders_same_domain F₀ F₁ A u hbase₀ hbase₁ hselected hterminal x.val).mp
+      x.property⟩, fun h => h⟩
+
+theorem parent_order_domain_map_bijective {m k : ℕ}
+    (F₀ F₁ : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase₀ : F₀.base = A ++ [u]) (hbase₁ : F₁.base = A ++ [u])
+    (hselected : F₀.selected.toFinset = F₁.selected.toFinset)
+    (hterminal : F₀.terminal = F₁.terminal) :
+    Function.Bijective
+      (parentOrderDomainMap F₀ F₁ A u hbase₀ hbase₁ hselected hterminal) := by
+  constructor
+  · intro x y h
+    exact Subtype.ext (congrArg Subtype.val h)
+  · intro y
+    exact ⟨⟨y.val,
+      (native_outer_orders_same_domain F₀ F₁ A u hbase₀ hbase₁ hselected hterminal y.val).mpr
+        y.property⟩, Subtype.ext rfl⟩
+
 /-- Literal circular rotation identifies the P old marked domain with
 the final outer child. This is equality of every vertex domain, rather
 than ownership only for the marked-port endpoints. -/
@@ -180,6 +245,76 @@ theorem native_next_marked_domain_eq_parent {m k : ℕ}
       List.isRotated_append (l := [F.terminal]) (l' := A)
   rw [hc, List.toFinset_cons, hcircle]
 
+/-- Carry the actual current parent into its next marked domain without
+changing any raw configuration, walk edge, or marked-order orientation. -/
+def parentNextMarkedMap {m k : ℕ}
+    (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) :
+    domainGraph (ParentDomain (outerFrame F A u hbase)) →g
+      domainGraph (SpecialDomain (nextFrame F A u hbase)
+        (by simpa only [nextFrame] using hA)) :=
+  ⟨fun x => ⟨x.val, (native_next_marked_domain_eq_parent F A u hbase hA x.val).mpr
+    x.property⟩, fun h => h⟩
+
+theorem parent_next_marked_map_bijective {m k : ℕ}
+    (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) :
+    Function.Bijective (parentNextMarkedMap F A u hbase hA) := by
+  constructor
+  · intro x y h
+    exact Subtype.ext (congrArg Subtype.val h)
+  · intro y
+    exact ⟨⟨y.val, (native_next_marked_domain_eq_parent F A u hbase hA y.val).mp
+      y.property⟩, Subtype.ext rfl⟩
+
+/-- The supplied actual parent cycle is the next induction cycle. Its
+protected-a and remaining-b edges descend to the independently specified
+next marked domain, with literal raw support and edge inventories. -/
+theorem native_same_parent_cycle_next_marked {m k : ℕ}
+    (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    {a₀ : {x : Configuration m // ParentDomain (outerFrame F A u hbase) x}}
+    (c : (domainGraph (ParentDomain (outerFrame F A u hbase))).Walk a₀ a₀)
+    (hc : c.IsHamiltonianCycle)
+    (hkeepA : ∀ (x y : {v : Configuration m // ParentDomain (outerFrame F A u hbase) v}),
+      y.val = x.val * a m → s(x, y) ∈ c.edges)
+    (hkeepB : ∀ (x y : {v : Configuration m // ParentDomain (outerFrame F A u hbase) v}),
+      y.val = x.val * b m → x.val (Fin.last m) ∉ insert u F.selected.toFinset →
+        s(x, y) ∈ c.edges) :
+    let N := nextFrame F A u hbase
+    let hN : 3 ≤ N.base.length := by simpa only [N, nextFrame] using hA
+    let lift := parentNextMarkedMap F A u hbase hA
+    let next := c.map lift
+    next.IsHamiltonianCycle ∧
+      next.support.map Subtype.val = c.support.map Subtype.val ∧
+      next.edges.map (Sym2.map Subtype.val) = c.edges.map (Sym2.map Subtype.val) ∧
+      (∀ (x y : {v : Configuration m // SpecialDomain N hN v}),
+        y.val = x.val * a m → s(x, y) ∈ next.edges) ∧
+      (∀ (x y : {v : Configuration m // SpecialDomain N hN v}),
+        y.val = x.val * b m → x.val (Fin.last m) ∉ N.selected.toFinset →
+          s(x, y) ∈ next.edges) := by
+  dsimp only
+  have hinverse (x : {v : Configuration m // SpecialDomain (nextFrame F A u hbase)
+      (by simpa only [nextFrame] using hA) v}) :
+      ParentDomain (outerFrame F A u hbase) x.val :=
+    (native_next_marked_domain_eq_parent F A u hbase hA x.val).mp x.property
+  refine ⟨SimpleGraph.Walk.IsHamiltonianCycle.map
+    (parent_next_marked_map_bijective F A u hbase hA) hc, ?_, ?_, ?_, ?_⟩
+  · simp only [SimpleGraph.Walk.support_map, List.map_map]
+    rfl
+  · simp only [SimpleGraph.Walk.edges_map, List.map_map, Sym2.map_map]
+    rfl
+  · intro x y hxy
+    rw [SimpleGraph.Walk.edges_map]
+    exact List.mem_map.mpr ⟨s(⟨x.val, hinverse x⟩, ⟨y.val, hinverse y⟩),
+      hkeepA _ _ hxy, rfl⟩
+  · intro x y hxy hterminal
+    rw [SimpleGraph.Walk.edges_map]
+    have hterminal' : x.val (Fin.last m) ∉ insert u F.selected.toFinset := by
+      simpa only [nextFrame, List.toFinset_cons] using hterminal
+    exact List.mem_map.mpr ⟨s(⟨x.val, hinverse x⟩, ⟨y.val, hinverse y⟩),
+      hkeepB _ _ hxy hterminal', rfl⟩
+
 /-- Inclusion of the whole prior P marked domain into the actual current
 parent. The map preserves each literal configuration and is injective,
 so mapping prior paths keeps their actual support and edge identities. -/
@@ -202,6 +337,7 @@ theorem p_marked_parent_lift_injective {m k : ℕ}
 #print axioms native_marked_orders_same_domain
 #print axioms native_p_marked_domain_eq_child
 #print axioms native_next_marked_domain_eq_parent
+#print axioms native_same_parent_cycle_next_marked
 #print axioms native_child_frame_domain
 #print axioms native_child_frame_specified_ordinary
 
