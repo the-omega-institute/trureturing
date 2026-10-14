@@ -3,6 +3,7 @@
    b edges have another, remaining terminal, so no supplier cut can remove
    them. Actual child and parent joining retain these actual edges. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 import D5.S3.Combinatorics.Graph.Walks.ActualRetainedEdges
 
 set_option autoImplicit false
@@ -21,6 +22,8 @@ open private parentPiece childLift from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 open private finish_eq_last from
   D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
+open private layer_b from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 
 private theorem right_port_terminal {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (i : ℕ) : rightPort F i (Fin.last m) = F.terminal := by
@@ -140,10 +143,49 @@ theorem native_parent_cycle_keeps_child_path_edges {m k : ℕ}
     (pieces j) hz s(childLift F j x, childLift F j y) hemap
   exact List.mem_map.mpr ⟨s(childLift F j x, childLift F j y), hec, rfl⟩
 
+/-- The independently defined child partition transfers the genuine
+remaining-label b invariant from actual retained child paths to the same
+actual parent cycle. Each b step stays in its unique child deletion layer.
+The new selected terminal is excluded by the parent residual-label guard. -/
+theorem native_parent_cycle_keeps_remaining_b {m k : ℕ}
+    (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
+    (paths : ∀ j : Fin F.base.length, ActualChildPath F j)
+    (hchild : ∀ (j : Fin F.base.length)
+      (x y : {z : Configuration m // ChildDomain (childGap F j) z}),
+      y.val = x.val * b m → x.val (Fin.last m) ∉ F.selected.toFinset →
+        x.val (Fin.last m) ≠ F.terminal → s(x, y) ∈ (paths j).piece.walk.edges)
+    (pieces : Fin F.base.length → Piece (domainGraph (ParentDomain F)))
+    (hpieces : ∀ j, pieces j = parentPiece F j (paths j))
+    {base : {z : Configuration m // ParentDomain F z}}
+    (c : (domainGraph (ParentDomain F)).Walk base base)
+    (hedges : c.edges = s(base, (pieces ⟨F.base.length - 1, by omega⟩).finish) ::
+      (chainEdges (pieces ⟨0, by omega⟩)
+        (List.ofFn fun i : Fin (F.base.length - 1) =>
+          pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩)).reverse)
+    (x y : {z : Configuration m // ParentDomain F z})
+    (hy : y.val = x.val * b m)
+    (hx : x.val (Fin.last m) ∉ insert F.terminal F.selected.toFinset) :
+    s(x.val, y.val) ∈ c.edges.map (Sym2.map Subtype.val) := by
+  classical
+  obtain ⟨j, hj, _⟩ := (native_child_gap_partition F hB x.val).mp x.property
+  have hychild : ChildDomain (childGap F j) y.val := by
+    rw [hy]
+    exact layer_b _ _ hj
+  let x' : {z : Configuration m // ChildDomain (childGap F j) z} := ⟨x.val, hj⟩
+  let y' : {z : Configuration m // ChildDomain (childGap F j) z} := ⟨y.val, hychild⟩
+  have hguards : x.val (Fin.last m) ≠ F.terminal ∧
+      x.val (Fin.last m) ∉ F.selected.toFinset := by
+    simpa only [Finset.mem_insert, not_or] using hx
+  have he : s(x', y') ∈ (paths j).piece.walk.edges :=
+    hchild j x' y' hy hguards.2 hguards.1
+  exact native_parent_cycle_keeps_child_path_edges F hB paths pieces hpieces c hedges
+    j x' y' he
+
 #print axioms native_b_edges_distinct_terminals
 #print axioms native_remaining_b_not_special_cut
 #print axioms native_special_path_keeps_remaining_b
 #print axioms native_other_path_keeps_remaining_b
 #print axioms native_parent_cycle_keeps_child_path_edges
+#print axioms native_parent_cycle_keeps_remaining_b
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
