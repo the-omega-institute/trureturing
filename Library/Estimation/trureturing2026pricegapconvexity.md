@@ -7779,3 +7779,72 @@ dominate these coefficients on their shorter ranges. All exterior and
 unspent-credit terms in LC8 remain, so neither this conditional branch
 nor the preprint count alone supplies the missing strict signed bound
 or a proof of RH.
+
+## Local pole cancellation exceeds the small absolute-norm allowance
+
+Retain WT1--WT3 and MR5's actual smoothed test, original full windows
+and every maximizing tie. Set $F_X(x)=\widetilde f_X(e^x)$ and use
+$\widehat F_X(z)=\int_{\mathbb R}F_X(x)e^{-izx}dx$. This is the same
+real even compact smooth test as MT5, which gives
+
+$$
+\widehat F_X(i/2)=\widehat F_X(-i/2)
+=\frac{\mathsf P_X^{\rm Weil}}2,\qquad
+\mathsf P_X^{\rm Weil}=\mathsf P_X
++O_\chi\!\left(L_X\frac{\log b_X}{\sqrt{b_X}}\right),
+$$
+
+where $b_X=\min_t\mathcal B_X(t)$. Fix $0<r_*<\log2$, and let
+$c_X\in L^1(\mathbb R)$ be real and even, supported in $[-r_*,r_*]$.
+It changes no prime-power evaluation of $F_X$. For either
+$\epsilon\in\{1,-1\}$, suppose $H_X=\epsilon F_X+c_X$ satisfies
+$\widehat H_X(i/2)=\widehat H_X(-i/2)=0$. Evenness then gives
+
+$$
+\int_{\mathbb R}c_X(x)\cosh(x/2)dx
+=-\epsilon\frac{\mathsf P_X^{\rm Weil}}2,\qquad
+\boxed{\|c_X\|_1\ge
+\frac{\mathsf P_X^{\rm Weil}}{2\cosh(r_*/2)}.}
+\tag{WT4}
+$$
+
+The inequality is the usual bounded-weight integral estimate; no new
+generic norm theorem is asserted. Its actual-source scale follows
+without redoing the continuum account. The
+[whole-horizon growth comparison](#the-whole-horizon-growth-hypothesis-fails)
+already supplies $\mathsf P_X/S_X\to\infty$ for
+$S_X=\int_{t_0}^{t_m}\sqrt{B(t)}\log B(t)dt$.
+Since $S_X\ge L_X\sqrt{b_X}\log b_X$, the displayed MT5 error is
+negligible relative to $\mathsf P_X$. Reuse CR17's
+$b_X/\ell_X\to\infty$ and the original scales:
+
+$$
+\frac{\sqrt{\ell_X}}{M_X}
+=\sqrt{\frac d8}\,
+\frac{X^{\eta/2}}{\sqrt{\log X}}\longrightarrow\infty,
+\qquad
+\boxed{\frac{\|c_X\|_1}{M_XL_X}\longrightarrow\infty.}
+\tag{WT5}
+$$
+
+Here the unchanged $1-\Theta<\eta<1/2$ and $\Theta\le1$ imply
+$\eta>0$, including $\Theta=1$. No upper bound on $b_X/X$ or
+bounded normalized lag is used.
+
+Thus a prime-free local correction cannot both cancel these pole
+moments and satisfy the sufficient absolute allowance
+$\|c_X\|_1=o(M_XL_X)$. This does not force its full signed
+pole-minus-archimedean contribution to be large: cancellation between
+large terms remains possible and is not estimated here. An integrable
+correction suffices for WT4; an explicit-formula application still
+requires its own smoothness and domain conditions.
+
+In the [adopted Connes--Consani theorem](../Weil/connesconsani2021archimedean.md),
+the vanishing condition is on the factor $g$. If $H=g*g^*$ and
+$\widehat g(-i/2)=0$, both pole moments of $H$ vanish; their vanishing
+alone supplies neither a factor nor positivity. Also a local correction
+leaves $\epsilon F_X$ unchanged outside $[-r_*,r_*]$, so its growing
+support still violates that theorem's fixed support contract. WT4--WT5
+are a paper application boundary, without Lean verification or a new
+Robin upper estimate. The required signed comparison and RH remain
+unproved.
