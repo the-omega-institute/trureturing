@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72561cd6e2a5223549d6cfc732092ea18d733068fbbfcd484ef597492c487951
+  normalized_sha256: sha256:72561cd6e2a5223549d6cfc732092ea18d733068fbbfcd484ef597492c487951
+cas_ref: sha256:72561cd6e2a5223549d6cfc732092ea18d733068fbbfcd484ef597492c487951
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 对素数集合 $t>5$ 使用 C. S. Franze, *Sifting Limits for the $\Lambda^…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 9149a8f1cda5733c6a2f6c0c168b8822baf773317ca959afe48e462c22ad41f9
+    next_atom_id: 32cc848bd29de90a891035a04de0614afb2354e45692599dd9cb7459fbd3fe65

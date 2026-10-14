@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:63e9462e7548328a48b1fde4560edd731c297638c3a43fe63b62dc1195f60a62
+  normalized_sha256: sha256:63e9462e7548328a48b1fde4560edd731c297638c3a43fe63b62dc1195f60a62
+cas_ref: sha256:63e9462e7548328a48b1fde4560edd731c297638c3a43fe63b62dc1195f60a62
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「9.7 加法截面的乘法不变性阻碍」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: f6c4bb7dc38e2bcd7febe43a78358c2a9a54e63a1723d6d91173a8be9ef48aeb
+    next_atom_id: eb1e73528e5e1bf908304506a038816dc5553db150944b1fc98a6e43d3b01d3e
