@@ -288,6 +288,7 @@ jobs:
           fi
           compatibility_roots=(
             D5.S3.Weil.ZetaPntBase.AdditiveCombination
+            D5.S0.Tower.NonPisot.GapCountInstances
           )
           make lean-report-scoped \
             LEAN_REPORT=.lake/build/stratalint/upgrade-compatibility-scoped-report.json \
