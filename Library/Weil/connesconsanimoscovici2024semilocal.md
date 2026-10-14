@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: Dual semilocal transport retains an explicit orthogonal metric trace defect. Its actual unsmoothed physical cross block is noncompact for every nonempty finite prime set; no signed smoothed-defect bound is supplied.
+claim: The unsmoothed physical Euler-metric cross block is noncompact. The actual completion pays the archimedean reference trace and a uniform lower defect bound; its growing-place-set upper bound remains unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -238,7 +238,100 @@ or any alternative joint estimate.
 For the [actual paid completion](../Estimation/trureturing2026pricegapconvexity.md#a-smooth-paid-completion-narrows-the-signed-local-correction-boundary),
 $h_X(a)=H_X(\log a)$ with $H_X=c_X-F_X$, each $X$ and finite $S_X$
 has the trace-class interface (3), even though its support grows.
-No uniform bound on $\Delta_{S_X}(h_X)$ is obtained. The full pole,
+No upper estimate for $\Delta_{S_X}(h_X)$ paying the original Robin
+margin is obtained. The full pole,
 finite-prime and archimedean comparison still requires a signed
 estimate on this same test; (3)--(4) do not supply the original strict
 Robin upper or a proof of RH.
+
+## The actual completion pays the archimedean reference trace
+
+Apply the [existing actual-test completion WT7--WT8](../Estimation/trureturing2026pricegapconvexity.md#a-smooth-paid-completion-narrows-the-signed-local-correction-boundary),
+with its unchanged windows, horizon, smoothing and all maximizing ties.
+Write $F=F_X$, $c=c_X$, $H=c-F$ and
+$h_G(a)=G(\log a)$. Its estimates give
+$\widehat c\ge|\widehat F|$, $\|c\|_1+\|F\|_1\ll_\tau L_X$ and
+$|\mathcal A(c)|\ll_\tau L_XY_X^2=o(M_XL_X)$; MT5 also gives
+$\mathcal A(F)=o(L_X)$.
+The following is a repo-derived quantitative application of those
+estimates and the source trace identity, not a new operator-order or
+positivity theorem.
+
+The archimedean source's equations (49)--(50), manuscript p.14,
+and the asymptotic on p.16 make $\delta(a)$ bounded on
+$\mathbb R_+^*$, including $a=1$ and the inverse tail. Equation (89),
+p.28, and Remark 4.6(i) give
+
+$$
+|\epsilon(a)|\le \|\delta\|_\infty+\sum_n\lambda(n)^2
+=:C_\epsilon<\infty.
+$$
+
+Here $\delta$ is the source's scalar trace-remainder function, not a
+Robin margin. The matrix coefficients in (89) have absolute value at
+most one by unitarity. Theorem 4.7, equations (83)--(84), therefore
+bounds its exact correction by
+
+$$
+|E_\infty(h_G)|\le C_\epsilon\|G\|_1.
+\tag{5}
+$$
+
+The source half-density convention is retained:
+$W_\infty(h_G)=-\mathcal W_{\mathbb R}(a^{-1/2}G(\log a))
+=\mathcal A(G)$; see Appendix A, equation (145).
+Equation (5) applies directly to the actual growing-support $H$ and
+gives $|E_\infty(h_H)|\ll_\tau L_X$.
+
+For every finite $S\ni\infty$, including the archimedean case, the
+common unitary scaling representation and the same Fourier majorant
+give
+
+$$
+0\le D_S(h_H)\le2D_S(h_c).
+\tag{6}
+$$
+
+Take traces of the positive compressions $P_SD_S(\cdot)P_S$;
+(3)'s fixed-$S$ trace-class justification applies. In particular,
+
+$$
+\boxed{0\le\operatorname{Tr}(D(h_H)P)
+=\mathcal A(c)-\mathcal A(F)+E_\infty(h_H)
+\ll_\tau L_XY_X^2=o(M_XL_X).}
+\tag{7}
+$$
+
+No small-support assertion for $H$ is used. Only the already
+constructed $c$ has fixed small support.
+Put $T_S(X)=\operatorname{Tr}(D_S(h_c)P_S)\ge0$.
+The same positive order and the exact joint defect (3) imply
+
+$$
+\boxed{-O_\tau(L_XY_X^2)\le\Delta_S(h_H)\le2T_S(X).}
+\tag{8}
+$$
+
+The lower-bound constant is independent of the finite prime set.
+The upper-bound quantity is not yet controlled as that set grows.
+In WT7's actual notation $c=\sum_{j\ge0}a_j\psi(2^j\cdot)$, all
+$a_j$ and all Fourier transforms of these bumps are nonnegative.
+Monotone convergence for positive compressed traces therefore gives
+
+$$
+T_S(X)=\sum_{j\ge0}a_jt_{S,j},\qquad
+t_{S,j}:=\operatorname{Tr}
+\bigl(D_S(h_{\psi(2^j\cdot)})P_S\bigr)\ge0.
+\tag{9}
+$$
+
+All these tests have support inside the same prime-free additive
+interval $(-\tau,\tau)$. A paid bound on the actual weighted sum in
+(9) would control this geometric defect on the unchanged
+large-support $H_X$. Bounds for each $j$ separately are only one
+possible sufficient route. No estimate for that sum uniformly along
+$S=S_X$ is supplied. Even such a geometric payment would still need
+the same-test comparison with the complete arithmetic Weil form,
+including its pole, finite-prime and Gamma corrections. Equations
+(5)--(9) supply neither that comparison nor the original strict Robin
+upper; no Lean verification is asserted.
