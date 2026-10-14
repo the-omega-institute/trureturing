@@ -25,12 +25,22 @@
 
    layer contains the literal Odd-cardinality parity expression; the proof uses
    SparseLiteralParityReadLowerBound.parity through parity_eq_owner.
+   Signs use Int.negOnePow at the integer-cast filtered cardinality.
    Threshold inputs use SingleRunDegrees.singleRun, and signed layer generating
    polynomials use LorentzLowDegreeCoefficientRemainder.populationGenerating.
    The definitions layer, csf, ComputesSym, qubits and claim express the source
    model, with no constant term in ComputesSym. Hamming weight uses hammingDist
    against the all-false input. The argument is symbolic and universally quantified.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16852
+
+   Definitions (direct consumers):
+   ComputesSym: consumers: claim, claim_of_finiteClaim, finite_lower_bound, middle_layer_obstruction, qubits_pos, result.
+   certificate: consumers: certificate_coeff, certificate_generating, certificate_layer, certificate_odd_pairing, certificate_signedLayer, certificate_sum, middle_layer_obstruction.
+   claim: consumers: claim_of_finiteClaim, result.
+   csf: consumers: ComputesSym, csf_weight, middle_layer_obstruction, qubits_pos.
+   layer: consumers: ComputesSym, certificate_layer, layer_signed, middle_layer_obstruction, qubits_pos.
+   qubits: consumers: claim, claim_of_finiteClaim, finite_lower_bound, qubits_pos.
+   signedLayer: consumers: certificate_layer, certificate_signedLayer, layerPolynomial_coeff, layer_signed, weightPolynomial_coeff.
 
    Declarations:
    certificate_coeff: proof_shape: bind-only;
@@ -130,11 +140,6 @@
 import D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound
 import D5.S1.Words.AssociatedMersenne.SingleRunDegrees
 import D5.S3.Analytic.SeriesInequalities.LorentzLowDegreeCoefficientRemainder
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Algebra.Polynomial.BigOperators
-import Mathlib.Tactic.LinearCombination
-import Mathlib.InformationTheory.Hamming
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -169,11 +174,8 @@ def claim : Prop := ∀ k : ℕ, 1 ≤ k → ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ,
 
 open Finset Polynomial
 
-private def character (S : Finset (Fin n)) (x : Fin n → Bool) : ℤ :=
-  (-1) ^ ((S.filter (fun l => x l = true)).card)
-
 private def signedLayer (n i : ℕ) (x : Fin n → Bool) : ℤ :=
-  ∑ S ∈ (univ : Finset (Finset (Fin n))).filter (fun S => S.card = i), character S x
+  ∑ S ∈ (univ : Finset (Finset (Fin n))).filter (fun S => S.card = i), (Int.negOnePow ((S.filter (fun l => x l = true)).card : ℤ) : ℤ)
 
 private theorem csf_weight (k : ℕ) (x : Fin n → Bool) :
     csf n k x = (Nat.choose (hammingDist x (fun _ => false)) k : ℤ) % 2 := by
@@ -192,8 +194,7 @@ private theorem parity_eq_owner {n : ℕ} (S : Finset (Fin n)) (x : Fin n → Bo
       (S.filter (fun l => x l = true)).card := by
     have he : ∀ l : Fin n, (decide (l ∈ S ∧ x l = true)).toNat =
         if l ∈ S ∧ x l = true then 1 else 0 := by
-      intro l
-      by_cases h : l ∈ S ∧ x l = true <;> simp [h]
+      exact fun l => apply_ite Bool.toNat (l ∈ S ∧ x l = true) true false
     simp only [he, sum_boole]
     apply congrArg Finset.card
     ext l
@@ -204,7 +205,7 @@ private theorem parity_eq_owner {n : ℕ} (S : Finset (Fin n)) (x : Fin n → Bo
   · simp [h, (Nat.odd_iff).not.mp h]
 
 private theorem parity_character (S : Finset (Fin n)) (x : Fin n → Bool) :
-    2 * (if Odd ((S.filter (fun l => x l = true)).card) then (1 : ℤ) else 0) = 1 - character S x := by
+    2 * (if Odd ((S.filter (fun l => x l = true)).card) then (1 : ℤ) else 0) = 1 - (Int.negOnePow ((S.filter (fun l => x l = true)).card : ℤ) : ℤ) := by
   rw [parity_eq_owner]
   cases hp : D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound.parity
       (fun l => decide (l ∈ S ∧ x l = true)) with
@@ -215,21 +216,20 @@ private theorem parity_character (S : Finset (Fin n)) (x : Fin n → Bool) :
       have h := parity_eq_owner S x
       rw [hp] at h
       simp [ho] at h
-    simp [character, he.neg_one_pow]
+    simp [Int.coe_negOnePow_natCast, he.neg_one_pow]
   | true =>
     have ho : Odd ((S.filter (fun l => x l = true)).card) := by
       by_contra hn
       have h := parity_eq_owner S x
       rw [hp] at h
       simp [hn] at h
-    simp [character, ho.neg_one_pow]
+    simp [Int.coe_negOnePow_natCast, ho.neg_one_pow]
 
 private theorem layer_signed (i : ℕ) (x : Fin n → Bool) :
     2 * layer n i x = (n.choose i : ℤ) - signedLayer n i x := by
   have h : ((univ : Finset (Fin n)).powersetCard i) =
       (univ : Finset (Finset (Fin n))).filter (fun S => S.card = i) := by
-    ext S
-    simp only [mem_powersetCard, subset_univ, true_and, mem_filter, mem_univ]
+    exact (Finset.univ_filter_card_eq (Fin n) i).symm
   have hc : ((univ : Finset (Finset (Fin n))).filter (fun S => S.card = i)).card =
       n.choose i := by rw [← h, card_powersetCard]; simp
   simp only [layer, signedLayer, mul_sum, parity_character, sum_sub_distrib, sum_const,
@@ -240,11 +240,11 @@ private theorem hammingDist_singleRun {w : ℕ} (hw : w ≤ n) : hammingDist (si
   rw [Fin.card_filter_val_lt, Nat.min_eq_right hw]
 
 private theorem character_prod (S : Finset (Fin n)) (x : Fin n → Bool) :
-    character S x = ∏ l ∈ S, (if x l = true then (-1 : ℤ) else 1) := by
-  simp [character, prod_ite]
+    (Int.negOnePow ((S.filter (fun l => x l = true)).card : ℤ) : ℤ) = ∏ l ∈ S, (if x l = true then (-1 : ℤ) else 1) := by
+  simp [Int.coe_negOnePow_natCast, prod_ite]
 
 private theorem layerPolynomial_expand (x : Fin n → Bool) :
-    populationGenerating n (fun l => if x l = true then (-1 : ℝ) else 1) = ∑ S : Finset (Fin n), C (character S x : ℂ) * X ^ S.card := by
+    populationGenerating n (fun l => if x l = true then (-1 : ℝ) else 1) = ∑ S : Finset (Fin n), C ((Int.negOnePow ((S.filter (fun l => x l = true)).card : ℤ) : ℤ) : ℂ) * X ^ S.card := by
   rw [populationGenerating, prod_one_add, powerset_univ]
   apply sum_congr rfl
   intro S _
@@ -386,7 +386,8 @@ private theorem middle_layer_obstruction {n k : ℕ} {T : Finset ℕ} {a : ℕ �
   let r := k - 2 * m
   have hm : 1 ≤ m := by dsimp [m]; omega
   have hkr : 2 * m + r = k := by dsimp [r, m]; omega
-  have hn : 2 * m + r ≤ n := by omega
+  have hn : 2 * m + r ≤ n := by
+    exact le_of_eq_of_le hkr hkn
   by_contra hmid
   have hout : ∀ j ∈ T, j < m ∨ n - m < j := by
     intro j hj
@@ -498,7 +499,8 @@ private theorem claim_of_finiteClaim (hf : ∀ n k : ℕ, 2 ≤ k → k ≤ n �
     refine ⟨1, by norm_num, 1, ?_⟩
     intro n hn T a h
     have hq : (1 : ℝ) ≤ qubits n T := by exact_mod_cast qubits_pos hn h
-    have hn' : (1 : ℝ) ≤ n := by exact_mod_cast hn
+    have hn' : (1 : ℝ) ≤ n := by
+      exact Nat.one_le_cast.mpr hn
     simp only [Nat.reduceDiv, Nat.cast_zero, zero_sub, zpow_neg_one, one_mul]
     exact (inv_le_one₀ (by positivity)).mpr hn' |>.trans hq
   · let m := k / 2

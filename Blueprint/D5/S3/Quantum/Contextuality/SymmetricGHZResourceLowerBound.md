@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Every symmetric integer lift of a complete symmetric Boolean function requires a middle binomial layer of parity measurements.
+For 2 ≤ k ≤ n, every symmetric integer lift of C^k_n requires a selected size j with k / 2 ≤ j and j ≤ n - k / 2.
 
 The input type is Fin n → Bool. Natural numbers start at zero. Annotations with ℤ or ℝ denote the corresponding casts of natural or integer values. Nat.div is natural-number division and Int.emod is the nonnegative remainder. The exponent in claim is an integer, so for k=1 it is −1. All local names below belong to D5.S3.Quantum.Contextuality.SymmetricGHZResourceLowerBound.
 
@@ -64,7 +64,7 @@ $$(\operatorname{D5.S3.Quantum.Contextuality.SymmetricGHZResourceLowerBound.clai
 
 *Commentary.*
 
-Section 4.2, Conjecture 2, p. 27: “The number of qubits in a GHZ state necessary for the deterministic evaluation of a complete symmetric function Cᵏ, of constant degree k, with an n bit input string and a symmetric measurement assignment, scales as Ω(n^{⌊k/2⌋−1}).” The positive constant c and threshold N may depend on k, and work uniformly for all larger input sizes, all selected size sets and all real coefficient functions.
+Section 4.2, Conjecture 2, p. 27: “The number of qubits in a GHZ state necessary for the deterministic evaluation of a complete symmetric function Cᵏ, of constant degree k, with an n bit input string and a symmetric measurement assignment, scales as Ω(n^{⌊k/2⌋−1}).” For each k≥1, the positive constant c and threshold N may depend on k, and work uniformly for all larger input sizes, all selected size sets and all real coefficient functions that satisfy ComputesSym.
 
 **Theorem 1.6 (The asymptotic lower bound).**
 
@@ -78,7 +78,7 @@ $$\operatorname{D5.S3.Quantum.Contextuality.SymmetricGHZResourceLowerBound.claim
 
 *Commentary.*
 
-Put m=⌊k/2⌋ and r=k−2m. The signed layer polynomial at Hamming weight w is (1−X)^w(1+X)^(n−w). The coefficients d_u=(−1)^(m−u) Nat.choose m u, at weights 2u+r, have sum zero. Their weighted sum of these polynomials is (−4)^m X^m (1−X)^r (1+X)^(n−2m−r). Its coefficients vanish below m and above n−m, so the same weighted sum annihilates every parity layer outside that interval. An integer lift of csf is even at all the earlier weights and odd at weight k; its weighted sum is therefore odd. Consequently some selected layer lies between m and n−m, and its cost is at least Nat.choose n m. This proves the finite bound for 2≤k≤n. The binomial lower estimate n^m/(2^m m!) gives the requested asymptotic bound with c=1/(2^m m!) and N=2k. For k=1 a nonempty layer gives at least one qubit, which bounds n^(−1) for n≥1.
+For 2≤k≤n, put m=⌊k/2⌋ and r=k−2m. The signed layer polynomial at Hamming weight w is (1−X)^w(1+X)^(n−w). The coefficients d_u=(−1)^(m−u) Nat.choose m u, for 0≤u≤m, at weights 2u+r, have sum zero. Their weighted sum of these polynomials is (−4)^m X^m (1−X)^r (1+X)^(n−2m−r). Its coefficients vanish below m and above n−m, so the same weighted sum annihilates every parity layer outside that interval. An integer lift of csf is even at all the earlier weights and odd at weight k; its weighted sum is therefore odd. Consequently some selected layer lies between m and n−m, and its cost is at least Nat.choose n m. This proves the finite bound for 2≤k≤n. For n≥2k, the binomial lower estimate n^m/(2^m m!) gives the requested asymptotic bound with c=1/(2^m m!) and N=2k. For k=1 and n≥1, a computing assignment has a nonempty selected size set, so it gives at least one qubit, which bounds n^(−1) for n≥1.
 
 ## References
 
