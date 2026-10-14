@@ -95,7 +95,11 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
     let N₀ := nextFrame F₁ A u hbase₁
     let N₁ := nextFrame F₀ A u hbase₀
     let E := markedCuts N₀ ∪ markedCuts N₁
-    ∃ pieces : List (Piece (ParentGraph F₀ A u hbase₀)),
+    ∃ new₀ : (ParentGraph F₀ A u hbase₀).Walk z ℓ₀,
+      ∃ new₁ : (ParentGraph F₀ A u hbase₀).Walk r₀ ℓ₁,
+      ∃ new₂ : (ParentGraph F₀ A u hbase₀).Walk r₁ ℓ,
+      let pieces : List (Piece (ParentGraph F₀ A u hbase₀)) :=
+        [⟨z, ℓ₀, new₀⟩, ⟨r₀, ℓ₁, new₁⟩, ⟨r₁, ℓ, new₂⟩] ++ rest
       (∀ p ∈ pieces, p.walk.IsPath) ∧
       (∀ x : Configuration m,
         (ParentDomain (outerFrame F₀ A u hbase₀) x →
@@ -112,10 +116,22 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
             s(rightPort N₀ 0, leftPort N₁ 0), s(rightPort N₁ 0, leftPort N₁ 1)} ∧
       Disjoint (markedCuts N₀) (markedCuts N₁) ∧
       (markedCuts N₀).erase (markedCut N₀ 0) = markedCuts F₁ ∧
-      (markedCuts N₁).erase (markedCut N₁ 0) = markedCuts F₀ := by
+      (markedCuts N₁).erase (markedCut N₁ 0) = markedCuts F₀ ∧
+      ∃ K H : Finset (Sym2 (ParentVertex F₀ A u hbase₀)),
+        Disjoint K H ∧
+        K.image (Sym2.map Subtype.val) = markedCuts N₀ ∧
+        H.image (Sym2.map Subtype.val) = markedCuts N₁ ∧
+        K ∪ H = (s(ℓ₀, r₀) :: s(ℓ₁, r₁) :: deleted).toFinset ∧
+        s(ℓ₀, r₀) ∈ K ∧ s(ℓ₁, r₁) ∈ H ∧
+        (K.erase s(ℓ₀, r₀)).image (Sym2.map Subtype.val) = markedCuts F₁ ∧
+        (H.erase s(ℓ₁, r₁)).image (Sym2.map Subtype.val) = markedCuts F₀ ∧
+        (pieces.flatMap fun p => p.walk.support).Perm c.support.tail ∧
+        (pieces.flatMap fun p => p.walk.edges).Perm
+          (c.edges.filter fun e => decide (e ∉ K ∪ H)) ∧
+        (∀ e ∈ K ∪ H, e ∈ c.edges) := by
   classical
   dsimp only
-  obtain ⟨chain, _, new₀, new₁, new₂, hpaths, hcount, _, _, hinv, hcuts,
+  obtain ⟨chain, _, new₀, new₁, new₂, hpaths, hcount, hsupport, hedges, hinv, hcuts,
       hcard, hpairs, _, _, _, hcutNodup⟩ :=
     actual_closed_parent_joint_partition c hc d tail hₐ h_b hd rest P deleted hPs hPe
       Λ q₀ q₁ q₂ hQs hQe others hlink hbase hseam hcs hce
@@ -182,6 +198,64 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
     rw [← hdeleted, ← hzero₀, ← hzero₁]
     ext e
     simp [cuts, edgeVal, Finset.mem_image, List.mem_map, or_and_right, exists_or]
+  let K := cuts.filter fun e => edgeVal e ∈ markedCuts (nextFrame F₁ A u hbase₁)
+  let H := cuts.filter fun e => edgeVal e ∈ markedCuts (nextFrame F₀ A u hbase₀)
+  have hKimage : K.image edgeVal = markedCuts (nextFrame F₁ A u hbase₁) := by
+    apply Finset.Subset.antisymm
+    · intro e he
+      obtain ⟨f, hf, hfe⟩ := Finset.mem_image.mp he
+      exact hfe ▸ (Finset.mem_filter.mp hf).2
+    · intro e he
+      have hcimage : e ∈ cuts.image edgeVal := by
+        rw [hcutimage]
+        exact Finset.mem_union.mpr (Or.inl he)
+      obtain ⟨f, hf, hfe⟩ := Finset.mem_image.mp hcimage
+      exact Finset.mem_image.mpr ⟨f, Finset.mem_filter.mpr ⟨hf, hfe.symm ▸ he⟩, hfe⟩
+  have hHimage : H.image edgeVal = markedCuts (nextFrame F₀ A u hbase₀) := by
+    apply Finset.Subset.antisymm
+    · intro e he
+      obtain ⟨f, hf, hfe⟩ := Finset.mem_image.mp he
+      exact hfe ▸ (Finset.mem_filter.mp hf).2
+    · intro e he
+      have hcimage : e ∈ cuts.image edgeVal := by
+        rw [hcutimage]
+        exact Finset.mem_union.mpr (Or.inr he)
+      obtain ⟨f, hf, hfe⟩ := Finset.mem_image.mp hcimage
+      exact Finset.mem_image.mpr ⟨f, Finset.mem_filter.mpr ⟨hf, hfe.symm ▸ he⟩, hfe⟩
+  have hgroupUnion : K ∪ H = cuts := by
+    ext e
+    constructor
+    · intro he
+      rcases Finset.mem_union.mp he with he | he
+      · exact (Finset.mem_filter.mp he).1
+      · exact (Finset.mem_filter.mp he).1
+    · intro he
+      have himage : edgeVal e ∈ cuts.image edgeVal := Finset.mem_image.mpr ⟨e, he, rfl⟩
+      rw [hcutimage] at himage
+      rcases Finset.mem_union.mp himage with hk | hh
+      · exact Finset.mem_union.mpr (Or.inl (Finset.mem_filter.mpr ⟨he, hk⟩))
+      · exact Finset.mem_union.mpr (Or.inr (Finset.mem_filter.mpr ⟨he, hh⟩))
+  have hgroupDisjoint : Disjoint K H := by
+    apply Finset.disjoint_left.mpr
+    intro e hk hh
+    exact Finset.disjoint_left.mp hnewDisjoint
+      (Finset.mem_filter.mp hk).2 (Finset.mem_filter.mp hh).2
+  have hzero₀mem : s(ℓ₀, r₀) ∈ K := by
+    apply Finset.mem_filter.mpr
+    refine ⟨by simp only [cuts, List.mem_toFinset, List.mem_cons]; exact Or.inl rfl, ?_⟩
+    rw [hzero₀, native_frame_marked_cuts_shift hm F₁ A u hbase₁]
+    exact Finset.mem_insert_self _ _
+  have hzero₁mem : s(ℓ₁, r₁) ∈ H := by
+    apply Finset.mem_filter.mpr
+    refine ⟨by simp only [cuts, List.mem_toFinset, List.mem_cons]; exact Or.inr (Or.inl rfl), ?_⟩
+    rw [hzero₁, native_frame_marked_cuts_shift hm F₀ A u hbase₀]
+    exact Finset.mem_insert_self _ _
+  have hKerase : (K.erase s(ℓ₀, r₀)).image edgeVal = markedCuts F₁ := by
+    rw [Finset.image_erase heinj, hKimage, hzero₀]
+    exact herase₀
+  have hHerase : (H.erase s(ℓ₁, r₁)).image edgeVal = markedCuts F₀ := by
+    rw [Finset.image_erase heinj, hHimage, hzero₁]
+    exact herase₁
   have hrawcount (x : Configuration m) :
       (ParentDomain (outerFrame F₀ A u hbase₀) x →
         ((pieces.flatMap fun p => p.walk.support).map Subtype.val).count x = 1) ∧
@@ -227,12 +301,17 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
       have hs := (native_marked_index_shift hm F₁ A u hbase₁ (k - 1)).2
       rw [hkindex] at hs
       exact hz.trans hs.symm
-  refine ⟨pieces, hpaths, hrawcount, hrawinv, hrawcuts, hrawcard, ?_,
-    hnewDisjoint, herase₀, herase₁⟩
-  have h := congrArg (Finset.image edgeVal) hpairs
-  rw [Finset.image_union, Finset.image_erase heinj] at h
-  simpa only [edgeVal, Finset.image_insert, Finset.image_singleton, Sym2.map_mk,
-    hℓ₀, hr₀, hℓ₁, hr₁, hℓnext, hznext] using h
+  refine ⟨new₀, new₁, new₂, hpaths, hrawcount, hrawinv, hrawcuts, hrawcard, ?_,
+    hnewDisjoint, herase₀, herase₁, K, H, hgroupDisjoint, hKimage, hHimage,
+    hgroupUnion, hzero₀mem, hzero₁mem, hKerase, hHerase, hsupport, ?_, ?_⟩
+  · have h := congrArg (Finset.image edgeVal) hpairs
+    rw [Finset.image_union, Finset.image_erase heinj] at h
+    simpa only [edgeVal, Finset.image_insert, Finset.image_singleton, Sym2.map_mk,
+      hℓ₀, hr₀, hℓ₁, hr₁, hℓnext, hznext] using h
+  · simpa only [hgroupUnion] using hedges
+  · intro e he
+    rw [hgroupUnion] at he
+    simpa only [SimpleGraph.Walk.mem_edgeSet] using hcuts e he
 
 #print axioms native_actual_closed_parent_joint_update
 
