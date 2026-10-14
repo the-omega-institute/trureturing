@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ca24447a523cd168f1cc3658111d99e15b64569e368e1e088fbe3e9a210dbe9
+  normalized_sha256: sha256:1ca24447a523cd168f1cc3658111d99e15b64569e368e1e088fbe3e9a210dbe9
+cas_ref: sha256:1ca24447a523cd168f1cc3658111d99e15b64569e368e1e088fbe3e9a210dbe9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 12.1（过程）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 2fb67a0a5742cbf4f52410528af33aa00f758d7c143fe42ee4fa78346a9d58e6
+    next_atom_id: c80078a86e211caa4bbc305ed544831a23c4d110d6d9e04530dea36ad5911107

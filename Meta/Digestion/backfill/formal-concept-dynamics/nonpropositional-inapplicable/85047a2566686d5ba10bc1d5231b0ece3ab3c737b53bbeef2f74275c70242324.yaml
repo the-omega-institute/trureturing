@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85047a2566686d5ba10bc1d5231b0ece3ab3c737b53bbeef2f74275c70242324
+  normalized_sha256: sha256:85047a2566686d5ba10bc1d5231b0ece3ab3c737b53bbeef2f74275c70242324
+cas_ref: sha256:85047a2566686d5ba10bc1d5231b0ece3ab3c737b53bbeef2f74275c70242324
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 172.2（双重合法性）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 7e4e13a3455f9fbb904a80a39f0cfedf9926aa5f3afad67c32461e0ae7216240
+    next_atom_id: 4a853053f1e347ac5f0bd65641537a16527b6b216e2502721996c56b17d34039
