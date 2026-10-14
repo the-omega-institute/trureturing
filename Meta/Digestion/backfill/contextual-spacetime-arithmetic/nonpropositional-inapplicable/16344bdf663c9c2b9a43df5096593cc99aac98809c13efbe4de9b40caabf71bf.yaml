@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16344bdf663c9c2b9a43df5096593cc99aac98809c13efbe4de9b40caabf71bf
+  normalized_sha256: sha256:16344bdf663c9c2b9a43df5096593cc99aac98809c13efbe4de9b40caabf71bf
+cas_ref: sha256:16344bdf663c9c2b9a43df5096593cc99aac98809c13efbe4de9b40caabf71bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述端点摘要的上下文充分性。
+    previous_atom_id: 18db23e6203e492d4407504245a6ecfffb5f9effbcfb01155eb5bc3a7e66d37e
+    next_atom_id: 725ae282be871cdd86dde9130f70ff6f305bf2c58100db8776752adfd64476cd

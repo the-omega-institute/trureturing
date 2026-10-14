@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4238397cd4eccfa911eb808d257757f95c74858f6554647f7e4ad44d14ab6f85
+  normalized_sha256: sha256:4238397cd4eccfa911eb808d257757f95c74858f6554647f7e4ad44d14ab6f85
+cas_ref: sha256:4238397cd4eccfa911eb808d257757f95c74858f6554647f7e4ad44d14ab6f85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述时钟条件与整数平移的等价，不另立命题。
+    previous_atom_id: f31ebd42d296551ea64b0c0f887374422776226e12996e56e3beaeb76c426e97
+    next_atom_id: 178e9e91355d52e22f1da0a39c07cb32dfff9637f7f3a88c920624cab15b17be

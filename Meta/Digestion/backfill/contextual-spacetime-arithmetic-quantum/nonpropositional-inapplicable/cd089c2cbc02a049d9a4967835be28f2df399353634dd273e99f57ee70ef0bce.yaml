@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd089c2cbc02a049d9a4967835be28f2df399353634dd273e99f57ee70ef0bce
+  normalized_sha256: sha256:cd089c2cbc02a049d9a4967835be28f2df399353634dd273e99f57ee70ef0bce
+cas_ref: sha256:cd089c2cbc02a049d9a4967835be28f2df399353634dd273e99f57ee70ef0bce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 215.1 只规定允许秩变化的同时尖锐准备及最小联合支持维数。
+    previous_atom_id: 832b9695a71280318e09d8983eafed5b5891ae8538c47cf3dd3a964f0ecfed1a
+    next_atom_id: 00dd88d3f93d4cc797da1a99e0e658515a5dc4abcb286420ed9a66896dc0dbec
