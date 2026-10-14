@@ -1,0 +1,32 @@
+**Proof.** At $H=0$ every acquired visible $z_i$ is already $\ell$.
+At $D=0$ nonempty selection forces $S=\{0\}$, and at $S=I$ the
+first-slot clock is displayed. Subtraction uses zero new Reads, while
+the identical-whole-current witnesses (NAR.16.9) still force $q$ labels.
+Those witnesses have positive lags, so apply to both conventions;
+$\lambda_0$ only adjusts the search lower endpoint.
+
+A common translation by $d$ changes the minimum age by $d$.
+Thus $e_{\min}$ separates every nonzero common translation and Theorem
+16.5 applies without a separate weaker search proof. All its labels are
+attained on constant profiles; (NAR.16.24) follows because
+$n_j-jq=\ell+a_j$.
+
+For the different domain retain the original offsets, set
+$a_{j_*}=0$ publicly, and choose a visible variable slot with
+$z=\ell+a_i$. Its current anchor exponent is $j_*q+\ell$, lying in
+
+$$
+[j_*q+\max(\lambda_0,z-H),\ j_*q+z].
+\tag{NAR.16.25}
+$$
+
+This has at most $q$ integers. Search it at literal words $w_{j_*}R^s$
+using the same native procedure, then subtract the known $j_*q$.
+No chosen-source fact was retained. The fixed anchor excludes nonzero
+common translations of all ages, so Theorem 16.3's $q$-history
+obstruction does not hold on this changed domain. If the anchor is
+hidden, querying it requires the explicitly enlarged current permission;
+its presence in a hidden partition alone does not provide its value.
+Read at an absent suffix or at a previously queried address remains a
+paid invocation under every one of these protocols. $\square$
+

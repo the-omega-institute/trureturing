@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a0dec7cc74f67159770619a154553c154fd3fdef119c7c3af2d6d357e303ece
+  normalized_sha256: sha256:8a0dec7cc74f67159770619a154553c154fd3fdef119c7c3af2d6d357e303ece
+cas_ref: sha256:8a0dec7cc74f67159770619a154553c154fd3fdef119c7c3af2d6d357e303ece
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.inductive_sufficiency_criterion
+    target_statement_id: sha256:49981877cb969dce6156ddac340f96a2165b4e6f4501cef48f86892c00ad4875
+  - gid: D5/S3/ConceptDynamics/TargetRisk/MaximumFactorCompatibleSubdomain.maximum_factor_compatible_subdomain
+    target_statement_id: sha256:47d7b15fb84474f2fd56c3775c085bf2140adf722c70e54263be41a0f0b3ecea
+receipts:
+  unresolved_subitems: []

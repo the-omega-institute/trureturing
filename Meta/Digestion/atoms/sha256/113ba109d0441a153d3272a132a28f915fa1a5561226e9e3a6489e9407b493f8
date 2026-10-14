@@ -1,0 +1,7 @@
+**Theorem 12.5 (sharp uniform recovery criterion).** For any fixed public
+cuts in Assumption 12.1, the whole vector $(n_i)$ is uniformly effectively
+recoverable if and only if $G$ is connected. For any fixed capture indices
+$a,b$, the signed difference $n_b-n_a$ is uniformly effectively recoverable
+if and only if $C(a)=C(b)$. In either negative case no single-valued rule,
+even without an effectiveness requirement, works on every promised input.
+

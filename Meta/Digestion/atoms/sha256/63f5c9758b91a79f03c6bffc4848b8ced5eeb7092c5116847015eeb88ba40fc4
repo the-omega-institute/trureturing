@@ -1,0 +1,13 @@
+**Theorem 9.2 (joint call and peak attainment).** Under Definition 8.1,
+singletons have $K(L,L)=M(L,L)=0$. For $L<U$,
+
+$$
+M(L,U)=\left\lfloor\frac{U-1}{2}\right\rfloor,
+\tag{AOF.29}
+$$
+
+and one finite reader simultaneously attains (AOF.26) and (AOF.29).
+For a nonsingleton interval, call budget $k$ and peak budget $d$ are
+jointly feasible precisely when $U\le2d+2$ and the appropriate
+capacity inequality of Theorem 8.3 holds.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ebbdf981fdd100abbc78e4744d97800c8f85d9de9c72e1d2a401b214fa358de2
+  normalized_sha256: sha256:ebbdf981fdd100abbc78e4744d97800c8f85d9de9c72e1d2a401b214fa358de2
+cas_ref: sha256:ebbdf981fdd100abbc78e4744d97800c8f85d9de9c72e1d2a401b214fa358de2
+coverage_gids:
+  - gid: D5/S3/Fourier/RepresentativeOrbitCoordinates.representative_fourier_coordinates
+    target_statement_id: sha256:3065db36d63fad4a497183400bbdac726f0a6caa435eadb99ee66b8936640a9e
+receipts:
+  unresolved_subitems: []

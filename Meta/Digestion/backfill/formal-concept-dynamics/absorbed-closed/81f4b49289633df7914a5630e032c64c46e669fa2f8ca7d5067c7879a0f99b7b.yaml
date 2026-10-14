@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:81f4b49289633df7914a5630e032c64c46e669fa2f8ca7d5067c7879a0f99b7b
+  normalized_sha256: sha256:81f4b49289633df7914a5630e032c64c46e669fa2f8ca7d5067c7879a0f99b7b
+cas_ref: sha256:81f4b49289633df7914a5630e032c64c46e669fa2f8ca7d5067c7879a0f99b7b
+coverage_gids:
+  - gid: D5/S1/FixedPoints/Reachability/SafetyDichotomy.reachability_safety_and_bad_path
+    target_statement_id: sha256:853668409c786461b76d639da0f884d166c8db1d78ed7a3cd6f313e465b76736
+receipts:
+  unresolved_subitems: []

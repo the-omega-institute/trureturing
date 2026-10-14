@@ -3723,3 +3723,360 @@ lemmas or new general results. $\square$
 [SLHC13-NOWAK]: https://arxiv.org/abs/0910.4397v5
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Unknown-shape parity with no added routing calls
+
+**Definition 14.1 (the entire intermediate table as the input).** Keep
+Definition 11.1's original domain: every ordered full $h$-leaf tree $u$,
+every independent original leaf assignment and every unknown entry
+$y=\rho^t u$, $0\le t\le T$. The target is the original $\pi(u)$.
+Public data are $h,T$ and the chosen static or active regime, not the
+shape, labels, actual entry lag, current clock or a reference leaf.
+The positive regimes are $T=0$ for every $h\ge1$, and finite $T\ge1$
+for even $h$. Initialization is common and source independent.
+
+Take $e,k=k(e),B,H,P,A_*$ exactly from (SLHC.11.1)–(SLHC.11.2).
+Thus $k=h+3+\lambda(h)+2\lambda(h+1)+e$, where
+$\lambda(n)=\lceil\log_2 n\rceil$, and the active constant is
+$B=2\lceil(T+2h)/2\rceil$. The three choices of $e$ are displayed
+in Corollary 14.3.
+The controller to be realized is **Construction 11.5 in §11.4**, with
+its entire state set
+
+$$
+Q_I=\{0,1\}^k,\qquad K_0=2^k.
+\tag{SLHC.14.1}
+$$
+
+Every bit pattern is installed. In particular this includes noncanonical
+halt-mode patterns, invalid padding, out-of-range counters and candidate
+indices, the unused mode code, and modes unavailable in the chosen regime.
+Their instructions are the specified Read$(\varepsilon)$ and each of their
+four responses goes to canonical ERROR. Canonical ERROR has that same
+instruction and four self-transitions. These are real typed completion
+rows, even though the promised runs never reach them.
+
+There are exactly two canonical halt states, HALT0 and HALT1, each with
+its own fixed output and no replies. Put $u_0=1$ for the active positive-$T$
+regime, and $u_0=0$ otherwise. There are exactly $u_0$ Update states, with
+one $\star$ successor each. All remaining $K_0-2-u_0$ patterns are Read
+states with four typed replies. The mode rules fix the instruction and
+successor from $z$ and the raw reply alone, including replies outside
+actual supports. No acquired input besides the original common setup is
+used. The original current tree is updated in place by each actual Update.
+
+The two-bank, flagged, paid-routing controller of Construction 11.6 is a
+different realization of this input table. Its inserted root Reads are not
+part of the trace specified here. The present realization uses the same
+conditional whole-word services of Definition 1.3 and does not add a new
+observation, internal instruction or response-retention service.
+
+**Theorem 14.2 (all-pattern redundant realization).** Define
+
+$$
+m_0=2^k-1,\qquad f_0=2^{2^k-1-k},\qquad
+M_0=2^{2^k-1},\qquad \ell_0=2^{k+1}-3.
+\tag{SLHC.14.2}
+$$
+
+There is a complete no-$11$ realization of Definition 14.1 with width
+$\ell_0$ and exactly $M_0$ installed words. Every one of the $2^k$
+intermediate bit patterns has exactly $f_0$ aliases. Its complete table has
+
+| Installed item | Exact count |
+| --- | --- |
+| Word keys and instruction rows | $M_0=2^kf_0$ |
+| Fixed Halt0 words | $f_0$ |
+| Fixed Halt1 words | $f_0$ |
+| Update words | $u_0f_0$ |
+| Read words | $(2^k-2-u_0)f_0$ |
+| Typed response entries | $(4\cdot2^k-8-3u_0)f_0$ |
+
+For every typed response at every installed word, including all aliases
+of invalid and error patterns, the response immediately holds or flips one
+legal bit, and its logical successor is exactly Construction 11.5's
+successor. For each original allowed $(u,t)$, every original instruction,
+literal, raw reply, current-tree successor and first fixed-bit Halt is
+preserved. In particular the result halts correctly with $\pi(u)$.
+All actual response steps on these promised runs flip exactly one bit;
+ERROR's typed self-loops hold.
+
+Proof. Apply [FIB continuation IV, Theorem 51.2][SLHC14-LIFT] to the
+whole $Q_I$, not merely its reachable part. Here the theorem's parameter
+$r$ is $k$. Label $z$ by the $k$-bit vector
+$a(z)=z\mathbin\oplus z_{\rm init}$, so the common initial word is
+$0^{\ell_0}$. All syndrome labels are used, and the installed set is
+exactly $J(\{0,1\}^{m_0})$. The theorem gives $f_0$ aliases per pattern,
+$2^kf_0=M_0$ words and width $2m_0-1=\ell_0$. No other ambient
+no-$11$ word is installed. Multiplying the complete input row counts of
+Definition 14.1 by $f_0$ gives the table above; the typed-entry count is
+four per Read plus one per Update, with none for Halt.
+
+The input table satisfies the theorem's genuine-controller premise:
+all instruction payloads are installed functions of $z$, each transition
+uses only $z$ and its actual typed response, and Read and Update are the
+original total native operations on the same tree. The common initial
+$z_{\rm init}$ was specified in Construction 11.5. Lemma 11.3 supplies
+the reached-node and certified-image invariant for every actual trial;
+Construction 11.4 supplies actual active alignment before those trials.
+Consequently every promised run follows the intended valid rows and
+terminates with the proved original parity. These are the hypotheses
+supplying success and termination; the redundant encoding supplies neither
+an image certificate nor an independent termination argument.
+
+Theorem 51.2 now transfers the complete typed table and exact execution.
+Every actual nonhalt transition changes its logical pattern: GUARD changes
+mode; POLL changes to UPDATE or initial VALUE; UPDATE changes to POLL;
+a VALUE branch changes path length or candidate index; a VALUE leaf changes
+the next path or enters a canonical halt. The path and candidate bounds
+exclude ERROR on those runs. The theorem's bit-change identity therefore
+gives one physical flip per actual primitive. It also copies the invalid
+root-Read-to-ERROR rows exactly, while ERROR's four self-transitions hold.
+There is no claim of successful termination from those unpromised entries.
+All syndrome labels and the projection in the theorem are proof-side table
+specifications, not an external decoder or runtime PC. $\square$
+
+**Corollary 14.3 (one controller's exact native resource witness).** For
+one fixed regime let $C^I_{h,T}$ denote the complete intermediate table
+and let $\widehat C_{h,T}$ be Theorem 14.2's realization. On each same
+allowed $(u,t)$,
+
+$$
+Q_{\widehat C}(u,t)=Q_I(u,t),\qquad
+U_{\widehat C}(u,t)=U_I(u,t),\qquad
+b_{\widehat C}(u,t)=Q_I(u,t)+U_I(u,t).
+\tag{SLHC.14.3}
+$$
+
+Every actual ordered literal and reply is unchanged. In particular,
+decoder guards and second Reads remain separate paid calls even when their
+addresses coincide. Polling includes every absent reply before an Update
+and the final $\alpha$ reply. All counts stop at first Halt.
+The following bounds hold simultaneously for this one realization in each
+row, with $P,A_*$ as in §11.1:
+
+| Original regime | Exact or bounded calls | Submitted literal bounds | Complete width and installed words |
+| --- | --- | --- | --- |
+| $T=0$, every $h$ | $Q=2h-1$, $U=0$ | $P=h-1$, $A\le(2h-1)(h-1)$ | $\ell_0$, $M_0$, with $e=0$ |
+| Static, even $h$, $T\ge1$ | $U=0$, $Q\le(T+1)(4h-2)=H$ | $P=h-1+\lceil T/2\rceil$, $A\le HP$ | $\ell_0$, $M_0$, with $e=\lambda(T+1)$ |
+| Active, even $h$, $T\ge1$ | $U=B-t-\kappa(u)$, $Q\le U+1+2h(4h-2)$ | $P=h-1+B/2$, $A\le(B+1)B/2+2h(4h-2)P$ | $\ell_0$, $M_0$, with $e=\lambda(2h)$ |
+
+Here $1\le U\le B$ in the active row, so $Q+U\le H$. To give the
+sourcewise quantities behind these uniform bounds, let $\mathcal N(u,t)$
+be the consecutive candidate offsets actually tried by the intermediate
+table up to its first successful trial. For candidate $N$, let
+$\mathcal P_N$ be its ordered list of visited virtual addresses, including
+the cutoff branch when that trial fails, and put
+
+$$
+v_N=|\mathcal P_N|,\qquad d_N=\sum_{p\in\mathcal P_N}|p|.
+$$
+
+These lists are proof-side descriptions of actual trials, not an additional
+archive available to the observer. The exact Read count and address-length
+sum of that trial are
+
+$$
+q_N=\begin{cases}v_N,&N=0,\\2v_N-1,&N>0,\end{cases}
+\qquad
+a_N=\begin{cases}d_N,&N=0,\\
+2d_N+Nv_N-\lfloor N/2\rfloor,&N>0.
+\end{cases}
+\tag{SLHC.14.4}
+$$
+
+In the static and zero-lag regimes,
+
+$$
+Q=\sum_{N\in\mathcal N(u,t)}q_N,\qquad
+A=\sum_{N\in\mathcal N(u,t)}a_N,\qquad U=0.
+\tag{SLHC.14.5}
+$$
+
+For active positive lag the exact quantities are
+
+$$
+\begin{aligned}
+U&=B-t-\kappa(u),\\
+Q&=U+1+\sum_{N\in\mathcal N(u,t)}q_N,\\
+A&=(U+1)B/2+\sum_{N\in\mathcal N(u,t)}a_N.
+\end{aligned}
+\tag{SLHC.14.6}
+$$
+
+Let $b_\beta$ count the original $\beta$ leaves and let $F_0=0,F_1=1$.
+The actual source node count at absolute epoch $s$ remains
+
+$$
+V_u(s)=2\bigl((h-b_\beta)F_{s+1}+b_\beta F_{s+2}\bigr)-1.
+\tag{SLHC.14.7}
+$$
+
+The exact node peaks on these same runs are $2h-1$ for $T=0$,
+$V_u(t)\le2hF_{T+2}-1$ for static entry, and
+$V_u(\tau)\le2hF_{B+2}-1$ for active entry, where
+$\tau=t+U=B-\kappa(u)$. The active source visits precisely the same
+successive versions with epochs $t,t+1,\ldots,\tau$ as the input table.
+The original target is still $\pi(u)$, not parity of an unrelated current
+representative.
+
+Proof. Equation (SLHC.14.3) and preservation of each ordered literal follow
+from Theorem 14.2. At positive $N$, every visited nonroot node has its
+accepted GUARD Read followed by its VALUE Read; the root has only VALUE.
+There are $v_N-1$ such guards, giving $2v_N-1$ Reads. Their total length
+is $d_N+(v_N-1)\lfloor N/2\rfloor$, since the guard at $p$ has length
+$|p^-|+\lfloor N/2\rfloor+1=|p|+\lfloor N/2\rfloor$.
+The values have total length $d_N+v_N\lceil N/2\rceil$. Adding proves
+(SLHC.14.4), with both occurrences charged when the literals coincide.
+At $N=0$ only the original virtual addresses are read.
+
+Construction 11.4 has exactly $U+1$ polls of length $B/2$ and exactly
+$U$ Updates, before the source becomes stationary for the trials. This
+gives (SLHC.14.5)–(SLHC.14.6). The inherited $v_N\le2h-1$,
+$|p|\le h-1$, at most $T+1$ static trials and at most $2h$ active
+trials give the stated uniform bounds from §11.6 without its routing
+factor. The direct $T=0$ traversal visits all $2h-1$ nodes once.
+Its exact address sum is the sum of their depths.
+
+The source versions are equal at every matched boundary. Formula
+(SLHC.11.16), with the same original leaf counts, gives (SLHC.14.7).
+Leaf count is nondecreasing under genuine Update, so the peak occurs at
+the final visited epoch, giving the displayed exact source peaks. The
+bounds for different coordinates need not be attained by one source;
+all nevertheless hold for the one controller on every admitted source.
+No coordinatewise optimization is used. $\square$
+
+**Definition 14.4 (full table, initialization and service prices).**
+Every installed Read literal, including those in unreachable rows, has
+length at most the regime's $P$. Indeed the valid patterns have $s<h$;
+static offsets satisfy $N\le T$ and active offsets $N\le B$. A VALUE
+literal has length $s+\lceil N/2\rceil$, and a GUARD literal has length
+$s+\lfloor N/2\rfloor$. POLL has length $B/2$, and invalid/ERROR
+literals are empty. Thus the same $P$ used for runs also bounds the
+whole installed menu.
+
+Use §11.6's explicit row format with the new width and row counts. Set
+
+$$
+g_0=\lambda(P+1),\qquad q_0=\lambda(\ell_0+1),\qquad
+S_0=M_0(\ell_0+2+g_0+P+4q_0).
+\tag{SLHC.14.8}
+$$
+
+There are $M_0$ fixed-size records, each containing its complete
+$\ell_0$-bit word key, a two-bit Read/Update/Halt0/Halt1 opcode, a
+$g_0$-bit length, $P$ padded address bits and four $q_0$-bit hold/flip
+slots. For Read, slots follow the fixed order
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$. Update uses the first
+slot for $\star$ and zero padding in the other three. Halt has four
+padding slots and no typed responses. Non-Read address fields are zero.
+A zero response index denotes hold, and any nonzero used index denotes
+one physical bit to flip, as in FIB IV Theorem 51.2. The exact number
+of meaningful typed slots is the table count in Theorem 14.2; it must
+not be confused with the $4M_0$ reserved slots in this representation.
+
+The array has exactly $S_0$ bits under this fixed format. The common
+initial word adds $\ell_0$ immutable bits; its being all zero does not
+remove the initialization service or its price. The two fixed outputs
+have $f_0$ installed rows apiece and are represented in the opcodes;
+there is no additional output-bit column to charge twice. If the old
+table's installed Read-literal sum is
+
+$$
+L_I=\sum_{z:\,I(z)\text{ is Read}(p_z)}|p_z|,
+$$
+
+the exact fully inlined unpadded address length is $f_0L_I$, and
+
+$$
+f_0L_I\le(2^k-2-u_0)f_0P.
+\tag{SLHC.14.9}
+$$
+
+The entire distinct installed literal union is unchanged. The addresses
+are already included in the $P$-bit fields of (SLHC.14.8). A shared
+literal dictionary would have a different bill with its references,
+framing and delivery separately counted; it is not used to reduce $S_0$.
+Any additional format descriptors, indexing structure or physical selector
+has its own installation cost. An explicit finite row specification does
+not bound physical table-generation time, delivery time or lookup energy.
+
+For the actual $n=Q_I(u,t)+U_I(u,t)$ calls, there are exactly $n+1$
+instruction selections, $Q_I(u,t)$ full literal deliveries, $n$ immediate
+response selections/writes and one fixed-bit output. There is one
+initialization. Following (SLHC.11.15) and FIB IV (FIB.52.3), the cost
+vector for this realization is
+
+$$
+\begin{aligned}
+C={}&C_{\rm promise/auth}+C_{\rm source/entry}
+ +C_{\rm compile/install}+C_{\rm init}\\
+ &+\sum_{j=0}^{n-1}\bigl(
+ C_{\rm select}(w_j)+C_{\rm deliver}(I(z_j))
+ +C_{\rm primitive}(I(z_j),y_j)
+ +C_{\rm response}(w_j,r_j)\bigr)\\
+ &+C_{\rm select}(w_n)+C_{\rm output}(\pi(u)).
+\end{aligned}
+\tag{SLHC.14.10}
+$$
+
+Update has no address payload. Initializing a whole word is not counted
+as one of the $n$ response flips. The growing source and any actual costs
+of materializing its versions are distinct from observer width, installed
+row bits and response writes. The conditional services must select and
+write using this single word and the transient current response; they
+cannot keep an external address cursor, decoded syndrome, phase, response
+buffer or PC. Their prices are not equalized between realizations merely
+because the native traces agree.
+
+**Corollary 14.5 (compatible resource alternatives and original boundaries).**
+For each positive regime of Definition 14.1, one explicit controller
+simultaneously witnesses the width, complete table, initialization and
+same-source event resources above. The two supplied realizations of the
+same intermediate table have these different upper resource points:
+
+| Realization | Complete word length | Installed words | Bound on actual native calls |
+| --- | --- | --- | --- |
+| Construction 11.6 with paid routing | $4k+15$ | $2^{2k+8}$ | $(2k+7)H$ |
+| Theorem 14.2 preserving the intermediate trace | $2^{k+1}-3$ | $2^{2^k-1}$ | $H$ |
+
+The second row has static $Q=O(h(T+1))$ and active
+$Q+U=O(T+h^2)$ under the displayed native-call bounds. Its width is
+exponential in $k$ and its installed-state count is doubly exponential
+in $k$. For active finite-$T$ entry, $e=\lambda(2h)$, so these two
+counts depend on $h$ alone, whereas the installed literal payload and
+source-growth bounds still depend on $T$. There is no assertion of a
+single installation for all lags.
+
+Proof. All coordinates in each row come from that row's one complete
+controller and its own execution proof. Construction 11.6 pays for added
+source-preserving root Reads. Theorem 14.2 preserves every call of
+Construction 11.5, so it has none of that routing overhead and bears the
+new alias/table bill instead. The formulas for $H$, together with
+$B=2\lceil(T+2h)/2\rceil$, give the two stated call orders. They do not
+compare physical selection tariffs or prove any lower bound on calls,
+width, installation or their joint cost.
+
+The successful-family quantifier remains (SLHC.11.17): for each finite
+$T$ in a positive regime there is a controller working on the whole
+unknown-shape original family. The odd-$h$, positive-lag collision
+obstruction and the unbounded-lag fixed-literal obstruction remain
+exactly those of §11.7 and §9.7. Redundant aliases provide neither a new
+source port nor an infinite literal menu, so they do not evade either
+supplier's hypotheses. The fixed public skeleton of §12 is absent here;
+its supplied-shape width minima are not substituted for this family's
+width or installation count. $\square$
+
+For fixed $h,T$ the original family is finite, so FIB II Corollary 47.2
+already gives an actual-history existence realization. The resource point
+here uses FIB IV's different bound in terms of the entire installed
+intermediate table and its all-typed-row correspondence. The parity
+algorithm, image licensing, alignment and source growth remain those of
+§11; the Hamming and zero-interleaving ingredients have the literature
+attribution in FIB IV Theorem 51.2. No Pareto or total
+physical-cost optimum, and no synthesis from a merely closed candidate
+family, follows from this construction.
+
+[SLHC14-LIFT]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#51-redundant-complete-words-with-the-original-call-trace
+
+## 追加锚（本行以下为增补区）

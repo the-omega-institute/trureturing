@@ -37,7 +37,9 @@ open D5.S3.Quantum.Tomography.ObserverDiagonalSeparation
 open D5.S3.Quantum.Tomography.CompleteContextTomography
 open D5.S3.Quantum.Tomography.RankOneContextCommutator
 
-private theorem complex_sqrt_two_sq : (Real.sqrt 2 : Complex) ^ 2 = 2 := by
+/- The four-slot escape audit of complex_sqrt_two_sq is unfinished:
+https://github.com/the-omega-institute/trureturing/issues/16616. -/
+theorem complex_sqrt_two_sq : (Real.sqrt 2 : Complex) ^ 2 = 2 := by
   rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : Real) ≤ 2)]
   norm_num
 
@@ -203,6 +205,5 @@ example :
   intro evaluation
   exact ⟨fun state => !(evaluation state state), hescape evaluation⟩
 
-#print axioms empirical_complete_reflexive_incomplete
 
 end D5.S3.Observer.Existence.EmpiricalReflexiveSeparation

@@ -1,0 +1,36 @@
+**Lemma 3.5 (termination and exhaustive completed representation).** The
+reducer terminates on every tuple/mode. If it has no OUTSIDE branch, it
+produces finitely many cases $\tau$, each a guard and functional system
+
+$$
+\mathscr G_\tau(\mathbf p):\quad X_i=E_i(\mathbf p,\mathbf X),
+\tag{SFS.11}
+$$
+
+with at most one definition per state, or a proved clash. Each original
+residual has a finite reconstruction expression. For fixed original
+finite-mode ranks, the completed common-output solution set is exactly the
+union of these reconstructed guarded solution sets over their fresh finite
+parameters. Both directions hold.
+
+Proof. A substitution, alias merge or homogeneous split removes a tree
+variable; no rule creates one. There are finitely many such steps per path.
+Between them pair decomposition and normalization consume finite syntax.
+An $\Omega$ decomposition removes a pair; cancellation removes powers.
+Variable-free equality has finitely many symbolic normal-code cases and
+enumerates no parameter values. Substitution can enlarge syntax, but occurs
+only finitely often. Modes, semantic splits and final orientations are
+finite. Hence recognition terminates, including OUTSIDE.
+
+Distribution and ordered-pair cancellation are native identities. Lemma 2.1
+justifies common-power cancellation and the $\Omega$ rules. A nonzero
+same-variable period, iterated, contradicts (SFS.6) if a leaf exists; thus
+$\Omega$ is its sole solution. PAC supplies exact variable-free equality.
+Theorem 2.3 supplies both directions and all finite values of each feedback
+split with its single unbounded natural parameter. Substitution restricts
+and reconstructs solutions; orientation changes no equation. Induction
+through these equivalences proves both directions. An actual completed
+solution chooses its true scalar and feedback alternatives; reconstruction
+of any guarded solution satisfies every original completed output equation.
+No sign or finite partition is imposed on a completed point.
+

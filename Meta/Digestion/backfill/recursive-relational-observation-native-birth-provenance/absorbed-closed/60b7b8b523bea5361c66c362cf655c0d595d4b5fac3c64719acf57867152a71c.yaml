@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:60b7b8b523bea5361c66c362cf655c0d595d4b5fac3c64719acf57867152a71c
+  normalized_sha256: sha256:60b7b8b523bea5361c66c362cf655c0d595d4b5fac3c64719acf57867152a71c
+cas_ref: sha256:60b7b8b523bea5361c66c362cf655c0d595d4b5fac3c64719acf57867152a71c
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootImage.class_root_chart
+    target_statement_id: sha256:a1c8dac68771fd7d99f082c3bea65a9878883332c2d45368373b7f5615eae5dc
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootImage.filling_image_iff
+    target_statement_id: sha256:2790189736d18032654930a2fa22a3f110d906daf2fe949cb3390e1e96f6b09a
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootImage.imageOriginEquiv
+    target_statement_id: sha256:6b84c206548055e668bd70b389d7ef7844f034ea426f3707ca55b8dec73f871d
+  - gid: D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.no_alpha
+    target_statement_id: sha256:7081b4d6a13eda4f1cb026d04cdd7c6258d63304b53679c1aa6264cd9f8c5a6a
+  - gid: D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.pair_image
+    target_statement_id: sha256:1514e19f0629b75c1c4a1889453c7209ec0486e0a7e7da197846ffacf57b5e8e
+receipts:
+  unresolved_subitems: []
