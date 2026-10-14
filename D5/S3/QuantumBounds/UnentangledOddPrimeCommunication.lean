@@ -425,7 +425,6 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
         measurementMode M z k)).re) (Finset.mem_univ (0 : ZMod d))
     rw [herase, hzero] at hh
     simpa [← Complex.ofReal_natCast, ← Complex.ofReal_pow, add_comm] using hh.symm
-
   have hreal (z : Option (ZMod d)) :
       (∑ x : ZMod d × ZMod d, ∑ y : ZMod d × ZMod d,
         (Matrix.trace (tensor (α x) (β y) * M z (win z x y))).re) =
@@ -447,7 +446,6 @@ private theorem score_fourier_expansion {d : ℕ} [NeZero d]
   have hd : (d : ℝ) ≠ 0 := NeZero.ne _
   have hd1 : (d : ℝ) + 1 ≠ 0 := by positivity
   field_simp
-  <;> ring
 
 private theorem fixed_score_le {d : ℕ} [NeZero d] [Fact d.Prime]
     (h2 : (2 : ZMod d) ≠ 0)
