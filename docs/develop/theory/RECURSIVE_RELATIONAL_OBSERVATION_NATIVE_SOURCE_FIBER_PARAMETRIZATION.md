@@ -10,9 +10,7 @@ or scalar inequalities; it retains neither an unevaluated native negative
 list nor a native common-source predicate as its admission test.
 
 The arguments are ordinary mathematical proofs, not new Lean kernel
-evidence. The reference-input and append-only conventions apply: after
-integration, corrections and extensions follow the terminal append anchor.
-The native construction is `repo-derived`. Its exact suppliers and the
+evidence. The native construction is `repo-derived`. Its exact suppliers and the
 restricted uses of primary literature are specified below. The persistent
 RRO objective of recovering space, time, boundary and memory from a minimal
 relational structure remains broader than this finite representation.
@@ -843,20 +841,6 @@ inclusion/equality and arbitrary tree-quantifier alternation are not
 established here. Existence, uniqueness, representation, universal
 invariance and actual acquisition are separate obligations.
 
-**Definition 7.4 (a bounded next mathematical check).** A finite next
-check can take exactly the four interfaces of Lemma 3.3: positive leaf
-alignment, every substituted primitive cherry, both kinds of negative
-certificate, and root-rank extraction. Its success criterion is both
-identities on the original named assignments, not only the existence of
-a decoded witness. The native families in Propositions 4.3, 6.2 and 6.4
-are explicit falsifiers: a lost blocked endpoint, a changed original
-residual, a forgotten lag, a missed boundary collapse, or a missed deep
-negative refutes the corresponding interface. The finite examples do
-not prove the general theorem. A subsequent formal treatment must prove
-these interfaces for arbitrary supplied shapes and then compose them
-with the exact common-source equations. It need not solve the broader
-acquisition problem to check this finite packet.
-
 ## 8. Source interfaces and literature scope
 
 **Convention 8.1 (exact repository interfaces).** The mathematical
@@ -873,17 +857,15 @@ interfaces have the following narrower meanings.
 | [NativeGroundSolutionSpace][GROUND] and [its Scribe][GROUNDS] | `Ext_sol`, `Ext_restriction`, `restriction_Ext`, `solutionEquiv` and `constrainedEquiv` retain every native free-constructor solution; the last keeps its arbitrary predicate pulled back along `Ext`. The grammar contains no interpreted unknown power of $\rho$. The present output does not use an arbitrary predicate as a solved domain. |
 | [SourceTransportCentralizer][CENTRAL] and [its Scribe][CENTRALS] | `source_transport_centralizer` supplies native iterate injectivity and an inverse on the actual image, with the two Boolean generators and ordered pairing. An image inverse is not a reset operation on a live register. |
 
-These interfaces are existing suppliers, not newly compiled evidence
-for the claims of this volume. In particular the present proof uses
-ABC's stated normal-code mathematics without claiming that reading
-adjacent Lean or Scribe sources compiles this new affine construction.
+The affine construction uses ABC's normal-code correspondence. The
+listed interfaces do not themselves establish Theorem 4.1.
 
 **Convention 8.2 (primary literature and its languages).** The following
 are `literature-attested` methodological suppliers or comparisons; the
 native assembly in Lemma 3.3, Theorem 4.1 and their applications is
 `repo-derived`, with no worldwide originality claim.
 
-| Primary source | Verified mathematical scope and use |
+| Primary source | Mathematical scope and use |
 | --- | --- |
 | Baader–Snyder, *Unification Theory*, Chapter 8, §2.2.4, pp. 450–452, Lemmas 2.2–2.4, Theorems 2.5–2.6 [BS] | Finite syntactic equations over free constructors have terminating solved-form transformation, an idempotent unifier, and factorization of every unifier. Used solely for the $c,f$ shape equations after collapse splitting. The chapter's §3 distinguishes complete sets modulo a specified equational theory; it does not identify this native interpreted theory with the free one. |
 | Comon–Lescanne, *Equational Problems and Disunification*, §§4.2, 5.2–5.3, Theorems 2–4 [CL] | Equations/disequations and first-order equational problems over specified term algebras, with solved forms and terminating transformations. The finite Herbrand term domain and rational-tree cases are distinguished. These are precedents for complete solution descriptions, not a transfer theorem for unknown powers of the native substitution or its normal subdomain. |
