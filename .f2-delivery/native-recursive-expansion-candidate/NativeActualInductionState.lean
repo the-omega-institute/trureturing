@@ -5,6 +5,7 @@
    Existence of this state is not assumed by an all-n conclusion. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOppositeSelectedOrders
 
 set_option autoImplicit false
 
@@ -17,6 +18,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeOppositeSelectedOrders
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 
@@ -27,6 +29,7 @@ base rotations and subsequent prepending cannot change their identities. -/
 structure StateFor {m k : ℕ} (F : SupplyFrame m k)
     (hk : 2 ≤ k) (hB : 3 ≤ F.base.length) where
   oppositeFrame : SupplyFrame m k
+  canonicalOpposite : oppositeFrame = oppositeSelectedFrame F hk
   sameSelected : oppositeFrame.selected.toFinset = F.selected.toFinset
   sameBase : oppositeFrame.base = F.base
   sameTerminal : oppositeFrame.terminal = F.terminal
