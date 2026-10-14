@@ -603,7 +603,8 @@ private theorem classical_win_probability {d : ℕ} [NeZero d]
       rw [Matrix.diagonal_mul_diagonal]
       congr 1
       funext p
-      dsimp [differenceLabel, win, phase]
+      rw [differenceLabel.eq_1]
+      simp -congrConsts only [win, phase, Option.elim_none, one_mul, neg_one_mul]
       by_cases hpx : ZMod.finEquiv d
         ((finProdFinEquiv : Fin d × Fin d ≃ Fin (d * d)).symm p).1 = x.1 <;>
         by_cases hpy : ZMod.finEquiv d
