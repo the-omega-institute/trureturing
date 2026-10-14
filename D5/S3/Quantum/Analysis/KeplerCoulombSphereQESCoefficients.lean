@@ -380,8 +380,10 @@ private theorem constants_positive {m : ℕ} (hm : 2 ≤ m) :
   rw [PositiveConstants.eq_1]
   constructor
   · intro j hj
+    rw [bValue.eq_1]
     exact (D_shape m).2.2 _ (Nat.sub_le _ _)
   · intro k hk j hj
+    rw [cValue.eq_1]
     exact div_pos ((B_shape hm hk).2.2 _ (Nat.sub_le _ _)) (F_pos (by omega))
 
 private theorem shape_eval_pos {p : Polynomial ℝ} {n : ℕ} {L x : ℝ}
@@ -684,6 +686,111 @@ private theorem system_unique {m : ℕ} {Q κ : ℝ} {a a' : ℕ → ℝ}
     · have hh : i = 2 * (i / 2) + 1 := by omega
       exact (congrArg a hh).trans ((h.2.2 _ (by omega)).trans
         ((h'.2.2 _ (by omega)).symm.trans (congrArg a' hh).symm))
+
+private theorem scale_power {n j : ℕ} {Q κ : ℝ} (hj : j ≤ n) (hκ : κ ≠ 0) :
+    κ ^ n * (Q ^ 2 / κ) ^ (n - j) = κ ^ j * Q ^ (2 * (n - j)) := by
+  have hp : κ ^ n = κ ^ j * κ ^ (n - j) := by
+    rw [← pow_add, Nat.add_sub_of_le hj]
+  rw [div_pow, ← pow_mul, hp]
+  field_simp
+
+private theorem series_rescale {p : Polynomial ℝ} {n : ℕ} {L Q κ : ℝ}
+    (hp : Shape p n L) (hκ : κ ≠ 0) :
+    series n (fun j => p.coeff (n - j) / L) Q κ =
+      κ ^ n * p.eval (Q ^ 2 / κ) / L := by
+  have hL : L ≠ 0 := by rw [← hp.2.1]; exact (hp.2.2 n (Nat.le_refl _)).ne'
+  have he : p.eval (Q ^ 2 / κ) =
+      ∑ i ∈ Finset.range (n + 1), p.coeff i * (Q ^ 2 / κ) ^ i := by
+    conv_lhs => rw [coeff_expansion hp.1, Polynomial.eval_finsetSum]
+    simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
+  have hr : (∑ j ∈ Finset.range (n + 1), p.coeff (n - j) * (Q ^ 2 / κ) ^ (n - j)) =
+      p.eval (Q ^ 2 / κ) := by
+    rw [he]
+    simpa only [Nat.add_sub_cancel] using
+      Finset.sum_range_reflect (fun i => p.coeff i * (Q ^ 2 / κ) ^ i) (n + 1)
+  calc
+    series n (fun j => p.coeff (n - j) / L) Q κ =
+        ∑ j ∈ Finset.range (n + 1), p.coeff (n - j) / L * κ ^ j * Q ^ (2 * (n - j)) := by
+      rw [sum_range_head, series.eq_1]
+      simp only [Nat.sub_zero, hp.2.1, div_self hL, pow_zero, one_mul]
+    _ = ∑ j ∈ Finset.range (n + 1), κ ^ n *
+        (p.coeff (n - j) * (Q ^ 2 / κ) ^ (n - j)) / L := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      rw [show κ ^ n * (p.coeff (n - j) * (Q ^ 2 / κ) ^ (n - j)) =
+        p.coeff (n - j) * (κ ^ n * (Q ^ 2 / κ) ^ (n - j)) by ring,
+        scale_power (by simp only [Finset.mem_range] at hj; omega) hκ]
+      ring
+    _ = κ ^ n * p.eval (Q ^ 2 / κ) / L := by
+      rw [← Finset.sum_div, ← Finset.mul_sum, hr]
+
+private theorem delta_rescale (m : ℕ) {Q κ : ℝ} (hκ : κ ≠ 0) :
+    delta (m / 2) (bValue m) Q κ = κ ^ (m / 2) * (D m).eval (Q ^ 2 / κ) := by
+  rw [delta.eq_1]
+  change series (m / 2) (fun j => (D m).coeff (m / 2 - j)) Q κ = _
+  simpa only [div_one] using
+    (series_rescale (Q := Q) (D_shape m) hκ)
+
+private theorem P_rescale (m n : ℕ) {Q κ : ℝ} (hκ : κ ≠ 0) :
+    κ ^ n * (basePoly m n).eval (Q ^ 2 / κ) =
+      ∏ r ∈ Finset.range n, (Q ^ 2 + (((2 * r + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ) := by
+  induction n with
+  | zero => simp only [basePoly.eq_1, Finset.range_zero, Finset.prod_empty,
+      Polynomial.eval_one, pow_zero, mul_one]
+  | succ n ih =>
+    rw [basePoly.eq_1, Finset.prod_range_succ, ← basePoly.eq_1, Polynomial.eval_mul,
+      Polynomial.eval_add, Polynomial.eval_X, Polynomial.eval_C,
+      Finset.prod_range_succ, pow_succ]
+    calc
+      _ = (κ ^ n * (basePoly m n).eval (Q ^ 2 / κ)) *
+          (Q ^ 2 + (((2 * n + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ) := by field_simp
+      _ = _ := by rw [ih]
+
+private theorem E_rescale {m k : ℕ} {Q κ : ℝ} (hk : k ≤ m / 2) (hκ : κ ≠ 0) :
+    κ ^ (m / 2) * (E m k).eval (Q ^ 2 / κ) = F m (2 * k) * κ ^ k *
+      ∏ r ∈ Finset.range (m / 2 - k),
+        (Q ^ 2 + (((2 * r + 1 + m % 2 : ℕ) : ℝ) ^ 2) * κ) := by
+  have hp : κ ^ (m / 2) = κ ^ k * κ ^ (m / 2 - k) := by
+    rw [← pow_add, Nat.add_sub_of_le hk]
+  rw [E.eq_1, Polynomial.eval_C_mul, P.eq_1]
+  calc
+    _ = F m (2 * k) * κ ^ k * (κ ^ (m / 2 - k) *
+        (basePoly m (m / 2 - k)).eval (Q ^ 2 / κ)) := by rw [hp]; ring
+    _ = _ := by rw [P_rescale m _ hκ]
+
+private theorem H_rescale {m k : ℕ} {Q κ : ℝ}
+    (hm : 2 ≤ m) (hk : k ≤ (m - 1) / 2) (hκ : κ ≠ 0) :
+    κ ^ (m / 2) * (H m k).eval (Q ^ 2 / κ) =
+      F m (2 * k + 1) * κ ^ k * Q ^ (2 * (1 - m % 2)) *
+        series ((m - 1) / 2 - k) (cValue m k) Q κ := by
+  have hf := (F_pos (m := m) (r := 2 * k + 1) (by omega)).ne'
+  have hs : series ((m - 1) / 2 - k) (cValue m k) Q κ =
+      κ ^ ((m - 1) / 2 - k) * (B m k).eval (Q ^ 2 / κ) / F m (2 * k + 1) := by
+    change series ((m - 1) / 2 - k)
+      (fun j => (B m k).coeff ((m - 1) / 2 - k - j) / F m (2 * k + 1)) Q κ = _
+    exact series_rescale (B_shape hm hk) hκ
+  rw [hs, B.eq_1]
+  by_cases he : m % 2 = 0
+  · have hn : (m - 1) / 2 - k = m / 2 - k - 1 := by omega
+    have hz : F m (2 * (m / 2) + 1) = 0 := by
+      rw [F_succ, show m - 2 * (m / 2) = 0 by omega, Nat.cast_zero, zero_mul]
+    have hp : κ ^ (m / 2) = κ ^ k * κ ^ (m / 2 - k - 1) * κ := by
+      rw [← pow_add, ← pow_succ]
+      congr 1
+      omega
+    rw [if_pos he, he, hn, H.eq_1, hz, Polynomial.C_0, zero_add,
+      Polynomial.eval_mul, Polynomial.eval_X, hp]
+    norm_num
+    field_simp
+  · have ho : m % 2 = 1 := by omega
+    have hn : (m - 1) / 2 - k = m / 2 - k := by omega
+    have hp : κ ^ (m / 2) = κ ^ k * κ ^ (m / 2 - k) := by
+      rw [← pow_add]
+      congr 1
+      omega
+    rw [if_neg he, ho, hn, hp]
+    norm_num
+    field_simp
 
 end
 end D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
