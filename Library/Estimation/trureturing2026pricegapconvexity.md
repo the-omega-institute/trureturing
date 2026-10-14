@@ -6529,3 +6529,213 @@ is still a strict joint upper comparison for this residual occupation
 and the same $V_X^K$ credit, leaving $C_*-\delta$ for fixed positive
 parameters on the original common cofinal sequence. That estimate,
 MT8, the all-integer Robin inequality and RH remain unproved.
+
+## The original source clock localizes skipped-gap baselines
+
+Retain AC1--AC10's complete original source and its classified family
+$\mathscr G_X^{(\upsilon)}$, with AC9's choice of $\upsilon_X$.
+This `repo-derived` paper application pays a specific remaining term:
+the source-time baseline of every actual gap above an auxiliary clock
+cutoff. Its input $s<t_m\le2\ell_X$ is the original full-window bound
+already used in VP2--VP3. The square-root $Q$ allowance and the
+ordinary-center capped-occupation perturbation argument are also
+reused. No new generic perturbation theorem, literature prime estimate
+or Lean result is asserted.
+
+### Localize the baseline without truncating the future horizon
+
+Let $\mathscr G_X$ contain all original skipped gaps and put
+$\mathfrak G_X=\bigcup_{G_s\in\mathscr G_X}G_s$. Keep the original
+$I_X,D_X,\mathsf U_X$ and $\widehat E_X^{(\upsilon)}$.
+For any $H>0$ define only a comparison integrand:
+
+$$
+E^{\rm loc}_{X,H}(w)=\widehat E_X^{(\upsilon)}(w)
+-\mathbf1_{\mathfrak G_X}(w)Q(w)
+-\sum_{G_s\in\mathscr G_X}
+ s\,\mathbf1_{G_s\cap[H,\infty)}(w).
+\tag{BL1}
+$$
+
+The actual gaps are disjoint. Thus, almost everywhere, BL1 is zero
+on $D_X$, is $s\mathbf1_{\{w<H\}}$ on a classified gap, is
+$s\mathbf1_{\{w<H\}}+r_s(w)$ on an unclassified gap, and is the
+original $E(w)$ outside $I_X$. It retains every unclassified residual
+and both exterior portions visible to an ordinary center. Neither
+$K$ nor $\psi$ nor an original clock is changed.
+
+Define $P^{\rm loc}_{X,H,j}$, $e^{\rm loc}_{X,H,r,j}$ and
+$\mathcal E^{\rm loc}_{X,H}(\tau)$ by PE3--PE5's exact formulas,
+replacing only the integrand by BL1. Their centers, endpoints, shell
+caps $L_{X,r}$, normalization $M_X$, future-shell weights, horizon
+and zero convention remain unchanged. The primitive is continuous
+on compact center shells even if $H$ cuts through a gap.
+
+### Pay the high-clock part at every ordinary center
+
+Put
+
+$$
+C_{1/2}=\frac23(2\sqrt2-1),\qquad
+h_{X,H}=\frac{t_m}{\sqrt H}+C_{1/2}H_Q.
+$$
+
+Beyond the existing common start for $|Q(w)|\le H_Q\sqrt w$,
+fix any ordinary center $x\ge b_X$, any future index $j$, and
+$u=2^jx<\mathsf U_X$. For every permitted endpoint
+$u\le v\le\min\{2u,\mathsf U_X\}$, disjointness and
+$0<s<t_m$ give
+
+$$
+\left|\int_u^v
+[\widehat E_X^{(\upsilon)}(w)-E^{\rm loc}_{X,H}(w)]dw\right|
+\le H_Q\int_u^{2u}\sqrt w\,dw
++t_m|[u,2u]\cap[H,\infty)|.
+\tag{BL2}
+$$
+
+The first integral is $C_{1/2}u^{3/2}$. For the second term,
+
+$$
+u^{-3/2}|[u,2u]\cap[H,\infty)|\le H^{-1/2}.
+$$
+
+Indeed for $u\ge H$ it is at most $u^{-1/2}$; for $u<H$, writing
+$z=u/H\in(0,1)$ reduces it to
+$(2z-1)_+/z^{3/2}\le1$. The latter follows from
+$z^{3/2}-2z+1\ge0$ on $[0,1]$: this expression decreases to zero
+there, since its derivative is $(3/2)\sqrt z-2<0$.
+
+Normalize BL2 and take the two suprema over the same endpoints.
+For every ordinary center, including centers outside $D_X$,
+
+$$
+\boxed{
+|\widehat P_{X,j}^{(\upsilon)}(x)-P^{\rm loc}_{X,H,j}(x)|
+\le h_{X,H}.}
+\tag{BL3}
+$$
+
+When $u\ge\mathsf U_X$ both readouts are zero. BL3 therefore also
+controls the unselected center measures in the occupation consumer.
+Apply the existing VP2--VP3 capped-superlevel perturbation argument:
+a threshold shift of $h_{X,H}/M_X$ changes each amplitude integral
+by at most $L_{X,r}h_{X,H}/M_X$, in either direction, for every
+$\tau\ge0$. Summing the unchanged weights and using
+$\sum_rL_{X,r}=L_X$ and $\sum_{j<N_X}2^{-j/2}\le S=2+\sqrt2$ gives
+
+$$
+\boxed{
+M_X|\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
+-\mathcal E^{\rm loc}_{X,H}(\tau)|
+\le S\left(\frac{t_m}{\sqrt H}+C_{1/2}H_Q\right)L_X.}
+\tag{BL4}
+$$
+
+No gap count, coverage fraction, selected-center density or upper
+bound on the lag credit appears. BL4 is an absolute comparison of
+these two occupation functionals; AC8's earlier removal of classified
+residuals remains a separate one-sided comparison.
+
+### Use the witness scale rather than a bound on the original clocks
+
+The unchanged normalization supplies
+
+$$
+t_m\le2\ell_X=\frac d4M_X\sqrt X.
+$$
+
+Consequently BL4 gives, uniformly in the original full windows,
+all maximizing ties and $\tau\ge0$,
+
+$$
+\frac{|\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
+-\mathcal E^{\rm loc}_{X,H}(\tau)|}{L_X}
+\le\frac{Sd}{4}\sqrt{\frac XH}
++\frac{SC_{1/2}H_Q}{M_X}.
+\tag{BL5}
+$$
+
+For $H=RX$ this bounds the first term by $Sd/(4\sqrt R)$.
+For the single deterministic choice
+
+$$
+H_X=X(\log X)^2,
+$$
+
+it instead gives
+
+$$
+\boxed{
+\frac{|\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
+-\mathcal E^{\rm loc}_{X,H_X}(\tau)|}{L_X}
+\le\frac{Sd}{4\log X}+\frac{SC_{1/2}H_Q}{M_X}=o(1).}
+\tag{BL6}
+$$
+
+This pays the high-clock source-time baselines of all actual gaps,
+including high-activation-complexity gaps. It does not bound their
+residuals. The estimate uses neither polynomial original clocks nor
+a horizon ending at $H_X$, and retains $\Theta=1$. It does not assert
+that any original clock lies below $H_X$. In particular, the entire
+exterior future and every unclassified residual above $H_X$ stay in
+BL1. The $Q$ allowance is already available independently; the
+additional payment is for the retained $s$-term above $H_X$.
+
+### Insert the payment in the unchanged joint account
+
+Apply BL4 once to AC10, keeping the exact $c_X$ and credit coefficient:
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&c_X\left[S\tau+
+\frac{\mathcal E^{\rm loc}_{X,H}(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}\\
+&+\omega_X+\frac{(2+2\sqrt2)c_X\upsilon_X^2}{M_X}
++\frac{c_XS}{M_X}\left(\frac{t_m}{\sqrt H}+C_{1/2}H_Q\right)
++o(1).
+\end{aligned}}
+\tag{BL7}
+$$
+
+For $H=H_X$ the newly displayed allowance is at most
+$c_XS[d/(4\log X)+C_{1/2}H_Q/M_X]\to0$.
+It introduces no new multiple of $V_X^K$; the potentially large
+$\gamma_XV_X^K/(M_XL_X)$ remains inside the original coefficient.
+No assumption $V_X^K=O(M_XL_X)$ is used. The absolute difference
+between the joint accounts formed from the two occupations is also
+bounded by this same allowance, even if their separate terms are large.
+Every comparison is uniform before choosing the original cofinal
+sequence, so no new sequence or favorable tie is introduced.
+
+At $H=H_X$, the remaining comparison integrand is exactly, almost
+everywhere,
+
+$$
+E^{\rm loc}_{X,H_X}(w)=\mathbf1_{I_X^c}(w)E(w)
++\sum_{G_s\in\mathscr G_X}s\mathbf1_{G_s\cap\{w<H_X\}}(w)
++\sum_{G_s\notin\mathscr G_X^{(\upsilon)}}\mathbf1_{G_s}(w)r_s(w).
+$$
+
+A sufficient supplier, still unproved, is that fixed
+$0<\epsilon<a$, $\tau>0$ and $\delta>0$ satisfy
+
+$$
+c_X\left[S\tau+
+\frac{\mathcal E^{\rm loc}_{X,H_X}(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
+\le C_*-\delta
+\tag{BL8}
+$$
+
+on one common cofinal sequence of the original qualifying full
+windows, retaining every original label and maximizing tie.
+BL6 gives no favorable occupation bound for the baseline below $H_X$,
+no estimate for the retained unclassified residuals and no signed
+bound for the exterior $E$. Near $w\asymp X$, even the baseline
+majorant $t_m/\sqrt w$ is of order $M_X$; the same localization bound
+does not pay that term with a vanishing allowance.
+The strict combined supplier BL8, MT8, the all-integer Robin inequality
+and RH remain unproved. This application has no Lean/kernel proof.
