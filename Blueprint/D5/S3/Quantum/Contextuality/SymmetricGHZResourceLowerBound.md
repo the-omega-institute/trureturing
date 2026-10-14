@@ -72,6 +72,10 @@ $$\operatorname{D5.S3.Quantum.Contextuality.SymmetricGHZResourceLowerBound.claim
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/SymmetricGHZResourceLowerBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/de-oliveira-barbosa-galvao-2024-symmetric-ghz-resource` (proved) by `D5/S3/Quantum/Contextuality/SymmetricGHZResourceLowerBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"de-oliveira-barbosa-galvao-2024-symmetric-ghz-resource","declaration_gid":"D5/S3/Quantum/Contextuality/SymmetricGHZResourceLowerBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Michael de Oliveira, Luís Soares Barbosa, Ernesto F. Galvão (2024). *Quantum advantage in temporally flat measurement-based quantum computation*. DOI: [10.22331/q-2024-04-09-1312](https://doi.org/10.22331/q-2024-04-09-1312). URL: <https://arxiv.org/abs/2212.03668>.
