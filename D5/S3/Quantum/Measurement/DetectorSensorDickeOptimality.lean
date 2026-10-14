@@ -61,8 +61,6 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 import D5.S3.Quantum.Entanglement.TriangleIndependentSourceNoise
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram
 import D5.S3.Weil.ZetaLinear.RankTrace
-import Mathlib.Data.Matrix.Basis
-import Mathlib.Algebra.BigOperators.Expect
 noncomputable section
 open Matrix
 open D5.S3.Quantum.Entanglement.TriangleIndependentSourceNoise

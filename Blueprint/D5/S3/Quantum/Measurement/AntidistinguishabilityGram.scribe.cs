@@ -70,7 +70,20 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text("A Gram certificate yields positive measurement effects through a finite Penrose inverse and a positive complementary projection. This implication applies to arbitrary finite vector families; normalization is not needed."))), DescribeRole.Theorem))));
 
     private static Formula Formula0() =>
-        Seq(Forall, Sp, Seq(OpenBrace, Seq(F.Id("n"), Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N")))), CloseBrace), Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("EuclideanSpace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))))), Sp, Comma, Sp, F.Id("IsAntidistinguishable"), Sp, Psi, Sp, Eq, Sp, Exists, Sp, F.Id("M"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, Parenthesized(Seq(F.Id("M"), Sp, F.Id("i"))), Sp, Dot, Sp, F.Id("PosSemidef"))), Sp, Land, Sp, Sum, Sp, F.Id("i"), Sp, Comma, Sp, F.Id("M"), Sp, F.Id("i"), Sp, Eq, Sp, D(1), Sp, Land, Sp, Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, F.Id("star"), Sp, Parenthesized(Seq(Psi, Sp, F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("d"), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, new Formula.Subscript(Cdot, F.Id("v")), Sp, Parenthesized(Seq(F.Id("M"), Sp, F.Id("i"), Sp, new Formula.Subscript(Times, F.Id("v")), Sp, Parenthesized(Seq(Psi, Sp, F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("d"), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("C"))))))), Sp, Eq, Sp, D(0));
+        Seq(Forall, Sp, Seq(OpenBrace, Seq(X("n"), Sp, X("d"), Sp, Colon, Sp, Naturals), CloseBrace), Sp,
+            Parenthesized(Seq(Psi, Sp, Colon, Sp, X("Fin"), Sp, X("n"), Sp, To, Sp,
+                X("EuclideanSpace"), Sp, C, Sp, Parenthesized(FinOf("d")))), Sp, Comma, Sp,
+            Eqn(App(X("IsAntidistinguishable"), Psi), Parenthesized(
+                Seq(Exists, Sp, Parenthesized(Seq(X("M"), Sp, Colon, Sp,
+                    new Formula.TypeArrow(FinOf("n"), Mat("d", "d")))), Sp, Comma, Sp,
+                    And(All("i", FinOf("n"), Property(App(X("M"), X("i")), "PosSemidef")),
+                        And(Eqn(Parenthesized(Seq(Sum, Sp, X("i"), Sp, Comma, Sp, App(X("M"), X("i")))), D(1)),
+                            All("i", FinOf("n"), Eqn(
+                                Seq(X("star"), Sp, Parenthesized(Seq(Psi, Sp, X("i"), Sp, Colon, Sp,
+                                        FinOf("d"), Sp, To, Sp, C)), Sp, new Formula.Subscript(Cdot, X("v")), Sp,
+                                    Parenthesized(Seq(App(X("M"), X("i")), Sp, new Formula.Subscript(Times, X("v")), Sp,
+                                        Parenthesized(Seq(Psi, Sp, X("i"), Sp, Colon, Sp, FinOf("d"), Sp, To, Sp, C))))),
+                                D(0)))))))));
 
     private static Formula Formula1() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, F.Id("cSq"), Sp, F.Id("n"), Sp, Eq, Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Minus, Sp, D(2))), Sp, Slash, Sp, Parenthesized(Seq(D(2), Sp, Cdot, Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Minus, Sp, D(1))))));
@@ -78,11 +91,20 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
     private static Formula Formula2() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, F.Id("delta"), Sp, F.Id("n"), Sp, Eq, Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Minus, Sp, D(9))), Sp, Slash, Sp, Parenthesized(Seq(D(1,6), Sp, Cdot, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Cdot, Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Minus, Sp, D(1))), Sp, Cdot, Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Minus, Sp, D(3))))));
 
-    private static Formula Formula3() =>
-        Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(F.Id("G"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Comma, Sp, F.Id("IsIncoherent"), Sp, F.Id("G"), Sp, Eq, Sp, Exists, Sp, F.Id("F"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, Parenthesized(Seq(F.Id("F"), Sp, F.Id("i"))), Sp, Dot, Sp, F.Id("PosSemidef"))), Sp, Land, Sp, Sum, Sp, F.Id("i"), Sp, Comma, Sp, F.Id("F"), Sp, F.Id("i"), Sp, Eq, Sp, F.Id("G"), Sp, Land, Sp, Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, F.Id("F"), Sp, F.Id("i"), Sp, F.Id("i"), Sp, F.Id("i"), Sp, Eq, Sp, D(0));
+    private static Formula Formula3() => All("n", Naturals, All("G", Mat("n", "n"),
+        Eqn(App(X("IsIncoherent"), X("G")), Parenthesized(
+            Seq(Exists, Sp, Parenthesized(Seq(X("F"), Sp, Colon, Sp,
+                new Formula.TypeArrow(FinOf("n"), Mat("n", "n")))), Sp, Comma, Sp,
+                And(All("i", FinOf("n"), Property(App(X("F"), X("i")), "PosSemidef")),
+                    And(Eqn(Parenthesized(SumF), X("G")),
+                        All("i", FinOf("n"), Eqn(App(X("F"), X("i"), X("i"), X("i")), D(0))))))))));
 
-    private static Formula Formula4() =>
-        Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(F.Id("Y"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Comma, Sp, F.Id("LocallyPsd"), Sp, F.Id("Y"), Sp, Eq, Sp, F.Id("Y"), Sp, Dot, Sp, F.Id("IsHermitian"), Sp, Land, Sp, Forall, Sp, Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("x"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Comma, Sp, F.Id("x"), Sp, F.Id("j"), Sp, Eq, Sp, D(0), Sp, To, Sp, D(0), Sp, Leq, Sp, F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("hermForm"), Sp, F.Id("Y"), Sp, F.Id("x"));
+    private static Formula Formula4() => All("n", Naturals, All("Y", Mat("n", "n"),
+        Eqn(App(X("LocallyPsd"), X("Y")), Parenthesized(
+            And(Property(X("Y"), "IsHermitian"), All("j", FinOf("n"),
+                All("x", new Formula.TypeArrow(FinOf("n"), C),
+                    Imp(Eqn(App(X("x"), X("j")), D(0)),
+                        Seq(D(0), Sp, Leq, Sp, X("RHLinalg"), Sp, Dot, Sp, X("hermForm"), Sp, X("Y"), Sp, X("x"))))))))));
 
     private static Formula Formula5() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Seq(OpenBrace, Seq(F.Id("A"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C")))), CloseBrace), Sp, Parenthesized(Seq(F.Id("hA"), Sp, Colon, Sp, F.Id("A"), Sp, Dot, Sp, F.Id("IsHermitian"))), Sp, Comma, Sp, F.Id("Antitone"), Sp, Parenthesized(Parenthesized(Seq(F.Id("fun"), Sp, F.Id("k"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, Mapsto, Sp, F.Id("hA"), Sp, Dot, Sp, F.Id("eigenvalues"), Sp, Parenthesized(Seq(Parenthesized(Seq(Parenthesized(Seq(F.Id("finCongr"), Sp, Parenthesized(Seq(F.Id("n"), Sp, Eq, Sp, F.Id("Fintype"), Sp, Dot, Sp, F.Id("card"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))))))), Sp, Dot, Sp, F.Id("trans"), Sp, F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("eigEquiv"))), Sp, F.Id("k")))))));
@@ -96,11 +118,17 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
     private static Formula Formula8() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("EuclideanSpace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(F.Id("Matrix"), Sp, Dot, Sp, F.Id("gram"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Psi))), Sp, Dot, Sp, F.Id("PosSemidef"));
 
-    private static Formula Formula9() =>
-        Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("EuclideanSpace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))))), Sp, Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, Vert, Sp, Psi, Sp, F.Id("i"), Sp, Vert, Sp, Eq, Sp, D(1))), Sp, To, Sp, Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, Parenthesized(Seq(F.Id("Matrix"), Sp, Dot, Sp, F.Id("gram"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Psi)), Sp, F.Id("i"), Sp, F.Id("i"), Sp, Eq, Sp, D(1));
+    private static Formula Formula9() => All("n", Naturals, All("d", Naturals,
+        Seq(Forall, Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, X("Fin"), Sp, X("n"), Sp, To, Sp, X("EuclideanSpace"), Sp, C, Sp, Parenthesized(FinOf("d")))), Sp, Comma, Sp,
+            Imp(All("i", FinOf("n"), Eqn(Seq(Vert, Sp, App(Psi, X("i")), Sp, Vert), D(1))),
+                All("i", FinOf("n"), Eqn(App(Parenthesized(Seq(X("Matrix"), Sp, Dot, Sp, X("gram"), Sp, C, Sp, Psi)),
+                    X("i"), X("i")), D(1)))))));
 
-    private static Formula Formula10() =>
-        Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Parenthesized(Seq(D(1), Sp, Leq, Sp, F.Id("n"))), Sp, To, Sp, Forall, Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("EuclideanSpace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))))), Sp, Comma, Sp, Parenthesized(Seq(F.Id("IsIncoherent"), Sp, Parenthesized(Parenthesized(Seq(F.Id("Matrix"), Sp, Dot, Sp, F.Id("gram"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Psi))))), Sp, To, Sp, F.Id("IsAntidistinguishable"), Sp, Psi);
+    private static Formula Formula10() => All("n", Naturals, All("d", Naturals,
+        Imp(Seq(D(1), Sp, Leq, Sp, X("n")),
+            Seq(Forall, Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, X("Fin"), Sp, X("n"), Sp, To, Sp, X("EuclideanSpace"), Sp, C, Sp, Parenthesized(FinOf("d")))), Sp, Comma, Sp,
+                Imp(App(X("IsIncoherent"), Parenthesized(Seq(X("Matrix"), Sp, Dot, Sp, X("gram"), Sp, C, Sp, Psi))),
+                    App(X("IsAntidistinguishable"), Psi))))));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula C => Seq(Mathbb, Grp(X("C")));
@@ -109,7 +137,7 @@ internal sealed class AntidistinguishabilityGramDocument : IScribeDocumentDefini
     private static Formula Mat(string rows, string cols) => Seq(X("Matrix"), Sp, Parenthesized(FinOf(rows)), Sp, Parenthesized(FinOf(cols)), Sp, C);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Parenthesized(Seq(X(name), Sp, Colon, Sp, type)), Sp, Comma, Sp, body);
-    private static Formula Imp(Formula h, Formula body) => Seq(Parenthesized(h), Sp, To, Sp, body);
+    private static Formula Imp(Formula h, Formula body) => Seq(Parenthesized(h), Sp, To, Sp, Parenthesized(body));
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Multiply(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
     private static Formula Property(Formula a, string name) => Seq(Parenthesized(a), Dot, Operatorname, Grp(X(name)));

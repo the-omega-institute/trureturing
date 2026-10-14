@@ -161,14 +161,10 @@ end
 section
 variable {n d : ℕ}
 
+open scoped MatrixOrder in
 theorem hermitian_projection_complement_psd (P : Matrix (Fin d) (Fin d) ℂ)
     (hP : P.IsHermitian) (hPP : P*P=P) : (1-P).PosSemidef := by
-  have he : (1-P)*(1-P)ᴴ = 1-P := by
-    rw [(Matrix.isHermitian_one.sub hP).eq]
-    simp only [Matrix.sub_mul, mul_sub, Matrix.one_mul, mul_one, hPP]
-    abel
-  rw [← he]
-  exact Matrix.posSemidef_self_mul_conjTranspose _
+  exact (show IsStarProjection P from ⟨hPP, hP.isSelfAdjoint⟩).one_sub_nonneg.posSemidef
 
 end
 

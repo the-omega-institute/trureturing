@@ -17,7 +17,7 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Leqn(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Conj(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
-    private static Formula Impl(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, b);
+    private static Formula Impl(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
     private static Formula Fn(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
@@ -75,7 +75,7 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
                     new Formula.Subscript(Times, V("v")), Sp, Call("fire", V("theta"), V("i"), V("psi"))))))))))))));
     private static Formula CountFormula(string name, Formula relation) => All("n", Nat, All("i", FinN, All("j", FinN, All("k", Nat,
         Eqn(Call(name, N, V("i"), V("j"), V("k")), Call(Q("Finset", "card"), Call(Q("Finset", "filter"),
-            LambdaOf("x", Word, Conj(Eqn(Weight(V("x")), V("k")), Seq(Call("x", V("i")), Sp, relation, Sp, Call("x", V("j"))))),
+            LambdaOf("x", Word, Parenthesized(Conj(Eqn(Weight(V("x")), V("k")), Seq(Call("x", V("i")), Sp, relation, Sp, Call("x", V("j")))))),
             Cast(Q("Finset", "univ"), Call("Finset", Word)))))))));
     private static Formula ThresholdFormula() => All("n", Nat, Eqn(Call("T", N),
         Seq(V("let"), Sp, V("q"), Sp, Colon, Sp, Nat, Sp, Eq, Sp, Call(Q("Nat", "div"), Parenthesized(Add(N, D(1))), D(2)), Sp, V("in"), Sp,
