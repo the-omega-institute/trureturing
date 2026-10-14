@@ -105,19 +105,6 @@ def manual_source_is_valid() -> bool:
     return source_commit == os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA", "")
 
 
-def pr_source_is_valid() -> bool:
-    """The PR source and the protected dispatch/cache scope are distinct."""
-    source = os.environ.get("STRATALINT_CACHE_SOURCE_COMMIT", "")
-    target = os.environ.get("STRATALINT_CACHE_TARGET_REF", "")
-    return (os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
-            and os.environ.get("STRATALINT_CACHE_PR_SOURCE_VALIDATED") == "true"
-            and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", os.environ.get("STRATALINT_CACHE_SOURCE_REF", "")) is not None
-            and re.fullmatch(r"refs/heads/(dev|integration-[A-Za-z0-9._/-]+)", target) is not None
-            and target == os.environ.get("GITHUB_REF")
-            and re.fullmatch(r"[0-9a-f]{40}", source) is not None and source != "0" * 40
-            and source == os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA"))
-
-
 def actions_keys(root: pathlib.Path) -> dict:
     revision = resolved_mathlib(root)
     system, machine = binary_platform()
@@ -128,7 +115,7 @@ def actions_keys(root: pathlib.Path) -> dict:
     event, ref = os.environ.get("GITHUB_EVENT_NAME"), os.environ.get("GITHUB_REF", "")
     push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
     pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
-    dispatch_writer = manual_source_is_valid() or pr_source_is_valid()
+    dispatch_writer = manual_source_is_valid()
     writer_allowed = (push_writer or pr_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
     result = {
         "mathlib_revision": revision, "os": system, "arch": machine,
@@ -389,7 +376,30 @@ def restore_native(root, keys, layer, key, outcome):
         return False
 
 
+def adoption_record(root):
+    """Invocation-local acceptance, outside every transported native path."""
+    path = root / "build/lean-cache/pr-adopted.json"
+    try:
+        if path.is_symlink():
+            return None
+        value = json.loads(path.read_text())
+        checkout = os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA", os.environ.get("GITHUB_SHA"))
+        if (value["run"] != os.environ.get("GITHUB_RUN_ID")
+                or value["attempt"] != os.environ.get("GITHUB_RUN_ATTEMPT")
+                or value["repository"] != str(root.resolve()) or value["checkout"] != checkout
+                or value["ref"] != os.environ.get("GITHUB_REF")
+                or type(value["artifact"]) is not int or value["artifact"] <= 0
+                or type(value["merged"]) is not bool):
+            return None
+        return value
+    except (OSError, ValueError, TypeError, KeyError):
+        return None
+
+
 def restore(root, keys, matched, layers=LAYERS, *, outcomes=None):
+    if adoption_record(root) is not None:
+        receipt("project", "preparation-retained", reason="validated PR artifact already adopted")
+        return
     seeded = False
     for layer in layers:
         accepted = restore_native(root, keys, layer, matched.get(layer, ""), (outcomes or {}).get(layer, "success"))
@@ -430,6 +440,9 @@ def project_publication(root):
     work = project_work(root)
     if work is None:
         return False, "build-work-unknown", work
+    adopted = adoption_record(root)
+    if adopted is not None and adopted["merged"]:
+        return True, "adopted-merged-preparation", work
     if work == 0:
         return False, "no-build-work", work
     return True, "built-project-artifacts", work
