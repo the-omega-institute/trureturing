@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef9adde76545b4058361d56218337439730c2de122178047e735e163cbc372f1
+  normalized_sha256: sha256:ef9adde76545b4058361d56218337439730c2de122178047e735e163cbc372f1
+cas_ref: sha256:ef9adde76545b4058361d56218337439730c2de122178047e735e163cbc372f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 固定 $n$ 后，输出是斜率为非零整数 $d$ 的仿射函数，故对 $k$ 单射。若联合读出相等，第一坐标先确定相同的 $n$…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: b88d1ebac3130ea36c274708d44c7218a4a854b8dfaff27eb075b60f752632e4
+    next_atom_id: 1381db63938e7a8fb4c1e133a7c43073a5ec5600a2a79113c3a1430665559430

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1eb022235c51ceb4ea107571d90e518b95e6c13723d5e60597e5c155c149343
+  normalized_sha256: sha256:a1eb022235c51ceb4ea107571d90e518b95e6c13723d5e60597e5c155c149343
+cas_ref: sha256:a1eb022235c51ceb4ea107571d90e518b95e6c13723d5e60597e5c155c149343
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明附引或书目定位（**包络依据。** [既有固定有理包络证据](../../reports/quantized-gh/actual-5040-fixed-box-0910.md#standalone…）只给出所用来源、定位和证据地位，不提出独立数学陈述。
+    previous_atom_id: 160cb196739b24aad53e5816bd2699cd4cb61aa71785f3d9489e78df3f86aef9
+    next_atom_id: 0602aeede6ca2288b2fe95b9a160cea597dc8f6f9440c5ebfc229c41a7dfc2ad

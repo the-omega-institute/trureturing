@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8805b6863fb35882ccb581620b96b5c59dccfcdef56173346b79667461cd991c
+  normalized_sha256: sha256:8805b6863fb35882ccb581620b96b5c59dccfcdef56173346b79667461cd991c
+cas_ref: sha256:8805b6863fb35882ccb581620b96b5c59dccfcdef56173346b79667461cd991c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 前两个基数由有限集合乘法原则得到。 令 $x_n=|X_n|$。按末位为 $0$ 或 $1$ 分拆合法字，得到 $x_n=x…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: e489828d3614ad7579c4905b74bebe8a1c747c04264f9adb57405f2fc2cd8149
+    next_atom_id: fb7f2cea426734a318c6bd602c72088eaaf709375755f8618d76a119201e65bd

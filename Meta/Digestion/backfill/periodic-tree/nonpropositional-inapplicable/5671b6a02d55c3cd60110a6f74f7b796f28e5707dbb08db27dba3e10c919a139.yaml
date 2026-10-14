@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5671b6a02d55c3cd60110a6f74f7b796f28e5707dbb08db27dba3e10c919a139
+  normalized_sha256: sha256:5671b6a02d55c3cd60110a6f74f7b796f28e5707dbb08db27dba3e10c919a139
+cas_ref: sha256:5671b6a02d55c3cd60110a6f74f7b796f28e5707dbb08db27dba3e10c919a139
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Every aligned prime has p=kq+1 for an even k>=2. GAW2 leave…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 5fb2dff5b22a8e07120b7ddc4d9190a8d4e7be3c62e2c055df41a3417f8390b0
+    next_atom_id: 0995b1338bb093f580053c59c426834185b637bc210acc3c2dba80833f5a5dc4
