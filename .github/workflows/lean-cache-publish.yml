@@ -7,7 +7,7 @@ permissions: {}
 
 jobs:
   compatibility-probe:
-    name: Verify the current dev quantum source composition
+    name: Verify upgraded clause and uniform probability APIs
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
@@ -83,9 +83,10 @@ jobs:
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
           compatibility_roots=(
-            D5.S3.Quantum.Dynamics.LaplacianPeakTransferTrees
-            D5.S3.Quantum.Dynamics.QuantumBatteryUniformOverlapRefutation
-            Reg.D5.S3.Quantum.Dynamics.LaplacianPeakTransferTrees
+            D5.S0.Computability.ClauseQueryPreprocessor
+            D5.S0.Computability.ConventionalClauseWords
+            D5.S0.Diagonal.Probability.EquivariantEscape
+            D5.S0.Tower.DBonacci.TerminalSampling
           )
           make lean-report-scoped \
             LEAN_REPORT=.lake/build/stratalint/upgrade-compatibility-scoped-report.json \
