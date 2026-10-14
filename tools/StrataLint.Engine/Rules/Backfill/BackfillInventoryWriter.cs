@@ -75,13 +75,18 @@ internal static class BackfillInventoryWriter
                 + "]");
         }
 
+        if (source.DefaultDispatch == DigestionDefaultDispatch.Excluded)
+            Line(builder, "default_dispatch = \"excluded\"");
+        else if (source.DefaultDispatch != DigestionDefaultDispatch.Eligible)
+            throw new InvalidOperationException("invalid default dispatch choice");
+
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
 
     internal static ImmutableArray<byte> WriteStatusAuthorityIdentity(
         DigestionLedgerSource source,
         DigestionLedgerEntry entry) =>
-        [.. WriteSourceMetadata(source with { AcknowledgedStale = [] }), .. WriteEntry(entry)];
+        [.. WriteSourceMetadata(source with { AcknowledgedStale = [], DefaultDispatch = DigestionDefaultDispatch.Eligible }), .. WriteEntry(entry)];
 
     private static DigestionLedgerEntry WithCanonicalGidOrder(DigestionLedgerEntry entry) =>
         entry with

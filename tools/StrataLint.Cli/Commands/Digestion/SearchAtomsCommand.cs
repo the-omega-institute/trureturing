@@ -11,13 +11,39 @@ internal static class SearchAtomsCommand
         try
         {
             var options = Parse(arguments);
-            var sourceIds = options.Sources.Any(static source => source.Contains('/'))
-                ? DigestionQuerySelection.ResolveSources(repository, options.Sources)
-                : options.Sources;
+            RawRepositorySnapshot? selectedMetadata = null;
+            string[] sourceIds;
+            if (options.DefaultDispatch)
+                (sourceIds, selectedMetadata) = DigestionQuerySelection.ResolveSourceSelection(repository, options.Sources);
+            else
+                sourceIds = options.Sources.Any(static source => source.Contains('/'))
+                    ? DigestionQuerySelection.ResolveSources(repository, options.Sources)
+                    : options.Sources;
             foreach (var source in sourceIds)
                 if (!RepoPath.TryCreate(source, out _) || source.Contains('/')) throw Usage();
-            var paths = repository.SearchCurrentPaths(sourceIds.Select(source =>
-                DigestionQuerySelection.Literal(BackfillInventoryLoader.RootPath + source)).ToArray());
+            var scope = options.AtomIds.Length == 0
+                ? sourceIds.Select(source => DigestionQuerySelection.Literal(BackfillInventoryLoader.RootPath + source)).ToArray()
+                : options.AtomIds.Select(id => $":(glob){BackfillInventoryLoader.RootPath}*/*/{id}.yaml").ToArray();
+            var paths = repository.SearchCurrentPaths(scope)
+                .Where(DigestionQuerySelection.IsAtomPath)
+                .Where(BackfillInventoryLoader.IsCanonicalPath)
+                .Where(path => DigestionNonpropositional.IsAtomId(Path.GetFileNameWithoutExtension(path)))
+                .Where(path => sourceIds.Length == 0 || sourceIds.Contains(DigestionQuerySelection.SourceId(path), StringComparer.Ordinal))
+                .Order(StringComparer.Ordinal).ToArray();
+            if (options.DefaultDispatch)
+            {
+                if (options.AtomIds.Length > 0 && paths.GroupBy(Path.GetFileNameWithoutExtension)
+                        .Any(group => group.Count() > 1))
+                    throw new FormatException("default dispatch atom selector is ambiguous");
+                var selected = sourceIds.Concat(paths.Select(DigestionQuerySelection.SourceId))
+                    .Distinct(StringComparer.Ordinal).ToArray();
+                var metadata = DigestionQuerySelection.ReadSourceMetadata(repository, selected);
+                _ = DigestionQuerySelection.Merge(selectedMetadata!, metadata.Raw);
+                var eligible = metadata.Document.RequireDigestionSources()
+                    .Where(source => source.DefaultDispatch == DigestionDefaultDispatch.Eligible)
+                    .Select(source => source.SourceId).ToHashSet(StringComparer.Ordinal);
+                paths = paths.Where(path => eligible.Contains(DigestionQuerySelection.SourceId(path))).ToArray();
+            }
             var output = new StringBuilder();
             foreach (var path in paths.Where(DigestionQuerySelection.IsAtomPath).Order(StringComparer.Ordinal)
                          .Where(BackfillInventoryLoader.IsCanonicalPath)
@@ -49,6 +75,8 @@ internal static class SearchAtomsCommand
     {
         var sources = new List<string>();
         var states = new List<string>();
+        var atomIds = new List<string>();
+        var defaultDispatch = false;
         string? text = null;
         var limit = 100;
         var hasLimit = false;
@@ -59,6 +87,8 @@ internal static class SearchAtomsCommand
             switch (arguments[index])
             {
                 case "--source": sources.Add(value); break;
+                case "--selection" when !defaultDispatch && value == "default-dispatch": defaultDispatch = true; break;
+                case "--atom-id" when DigestionNonpropositional.IsAtomId(value): atomIds.Add(value); break;
                 case "--state" when !value.Contains('/') && !value.Any(char.IsWhiteSpace): states.Add(value); break;
                 case "--text" when text is null: text = value; break;
                 case "--limit" when !hasLimit && int.TryParse(value, NumberStyles.None, CultureInfo.InvariantCulture, out limit) && limit > 0:
@@ -66,14 +96,15 @@ internal static class SearchAtomsCommand
                 default: throw Usage();
             }
         }
-        if (sources.Count == 0) throw Usage();
+        if (sources.Count == 0 && (!defaultDispatch || atomIds.Count == 0)
+            || atomIds.Count > 0 && !defaultDispatch) throw Usage();
         return new(sources.Distinct(StringComparer.Ordinal).ToArray(),
             states.Count == 0 ? ["residual-open", "residual-closed", "residual-tail", "partial-open", "partial-closed", "partial-tail"]
-                : states.ToArray(), text, limit);
+                : states.ToArray(), text, limit, defaultDispatch, atomIds.Distinct(StringComparer.Ordinal).ToArray());
     }
 
     private static FormatException Usage() => new(
-        "USAGE: StrataLint search-atoms --source SOURCE_ID_OR_PATH [--source ...] [--text LITERAL] [--state STATE ...] [--limit N]");
+        "USAGE: StrataLint search-atoms --source SOURCE_ID_OR_PATH [--source ...] [--text LITERAL] [--state STATE ...] [--limit N] [--selection default-dispatch [--atom-id ID ...]]; atom selectors require default-dispatch selection");
 
-    private sealed record Options(string[] Sources, string[] States, string? Text, int Limit);
+    private sealed record Options(string[] Sources, string[] States, string? Text, int Limit, bool DefaultDispatch, string[] AtomIds);
 }

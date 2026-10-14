@@ -3,3 +3,4 @@ path = "docs/develop/theory/GICT.md"
 atomizer = "gict-v1"
 genre_registry_check = "collected"
 unregistered_genres = []
+default_dispatch = "excluded"

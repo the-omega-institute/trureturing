@@ -62,7 +62,9 @@ Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --sh
 
 The target is either an open atom or, when the content has no atom, a statement source: a preregistered issue, a published source, or the dispatcher's brief, quoted verbatim.
 
-For an atom target, use `make search-atoms SOURCE=<source-id-or-path>` to find stored ATOM paths in the selected theory. Read a chosen ATOM and its context with:
+For automatic target selection, use `make search-atoms SOURCE=<source-id-or-path> SELECTION=default-dispatch`. This reads the current source-owned choice; a source with `default_dispatch = "excluded"` supplies no default candidates. Recheck cached candidates in this mode at emission, using CLI `search-atoms --selection default-dispatch --atom-id <id>` (repeat `--atom-id` for a batch). The source choice does not assert proof, coverage, nonpropositional status or readiness.
+
+For an explicitly requested source or atom target, use `make search-atoms SOURCE=<source-id-or-path>` to inspect stored ATOM paths, including opted-out sources. Explicit inspection, decompose, cover and deposit remain available; an active source can read and reuse children owned by an opted-out source. Read a chosen ATOM and its context with:
 
 ```sh
 make show-atom ATOM_ID=<id>

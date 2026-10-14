@@ -98,8 +98,13 @@ internal static partial class DigestionQuerySelection
     }
 
     internal static string[] ResolveSources(IRepositoryGateway repository, IReadOnlyList<string> selectors)
+        => ResolveSourceSelection(repository, selectors).Ids;
+
+    internal static (string[] Ids, RawRepositorySnapshot Raw) ResolveSourceSelection(
+        IRepositoryGateway repository, IReadOnlyList<string> selectors)
     {
         var result = new HashSet<string>(StringComparer.Ordinal);
+        var selectedRaw = RawRepositorySnapshot.Create([]);
         RawRepositorySnapshot? metadata = null;
         foreach (var selector in selectors)
         {
@@ -107,8 +112,10 @@ internal static partial class DigestionQuerySelection
             if (!selector.Contains('/'))
             {
                 var path = BackfillInventoryLoader.RootPath + selector + "/source.toml";
-                var selected = Load(repository.ReadCurrent([Literal(path)])).Document.RequireDigestionSources();
+                var loaded = Load(repository.ReadCurrent([Literal(path)]));
+                var selected = loaded.Document.RequireDigestionSources();
                 if (selected.Length != 1) throw new FormatException($"source selector is absent: {selector}");
+                selectedRaw = Merge(selectedRaw, loaded.Raw);
                 result.Add(selected[0].SourceId);
                 continue;
             }
@@ -116,9 +123,11 @@ internal static partial class DigestionQuerySelection
             var matches = metadata.Entries.Where(entry => entry.Path.EndsWith("/source.toml", StringComparison.Ordinal))
                 .Where(entry => MatchesSourcePath(entry, selector)).Select(entry => SourceId(entry.Path)).ToArray();
             if (matches.Length != 1) throw new FormatException($"source selector={selector} count={matches.Length}");
+            selectedRaw = Merge(selectedRaw, RawRepositorySnapshot.Create(metadata.Entries
+                .Where(entry => entry.Path == BackfillInventoryLoader.RootPath + matches[0] + "/source.toml")));
             result.Add(matches[0]);
         }
-        return result.Order(StringComparer.Ordinal).ToArray();
+        return (result.Order(StringComparer.Ordinal).ToArray(), selectedRaw);
     }
 
     internal static RawRepositorySnapshot FindSourceMetadata(IRepositoryGateway repository, IReadOnlyList<string> sourcePaths)
@@ -131,6 +140,26 @@ internal static partial class DigestionQuerySelection
             if (entry is not null && sourcePaths.Any(sourcePath => MatchesSourcePath(entry, sourcePath))) matches.Add(entry);
         }
         return RawRepositorySnapshot.Create(matches);
+    }
+
+    internal static (RawRepositorySnapshot Raw, BackfillInventoryDocument Document) ReadSourceMetadata(
+        IRepositoryGateway repository, IReadOnlyList<string> selectors)
+    {
+        if (selectors.Count == 0) return (RawRepositorySnapshot.Create([]), BackfillInventoryDocument.Create([], []));
+        var (ids, selectedRaw) = ResolveSourceSelection(repository, selectors);
+        var paths = ids.Select(id => Literal(BackfillInventoryLoader.RootPath + id + "/source.toml")).ToArray();
+        var loaded = Load(repository.ReadCurrent(paths));
+        if (!loaded.Document.RequireDigestionSources().Select(source => source.SourceId).Order(StringComparer.Ordinal)
+                .SequenceEqual(ids, StringComparer.Ordinal))
+            throw new FormatException("selected source metadata changed during selection");
+        // Membership is ordered by identity; byte comparison protects the selected
+        // metadata snapshot independently of the repository's path ordering.
+        _ = Merge(selectedRaw, loaded.Raw);
+        foreach (var selector in selectors)
+            if (loaded.Document.RequireDigestionSources().Count(source =>
+                    source.SourceId == selector || source.SourcePath == selector) != 1)
+                throw new FormatException($"source selector changed during selection: {selector}");
+        return (loaded.Raw, loaded.Document);
     }
 
     internal static bool MatchesSourcePath(RawRepositoryEntry entry, string path)

@@ -23,7 +23,8 @@ done | sort -u >> /tmp/pick_taken.txt
 sort -u -o /tmp/pick_taken.txt /tmp/pick_taken.txt
 export LC_ALL=C
 awk -F'\t' '($1=="CLEAN" || $1=="UNKNOWN") && $5 !~ /结论|总结|小结|目录|总纲/ && $3>=60 && $3<=140 {print $4"\t"$2"\t"$5}' "$POOL" \
-  | sort -t$'\t' -k2 -rn | cut -f1,3 > /tmp/pick_cand.txt
+  | sort -t$'\t' -k2 -rn | cut -f1,3 \
+  | python3 -B "$R/tools/scripts/agent/default_dispatch_filter.py" "$R" > /tmp/pick_cand.txt || exit $?
 n_taken=$(wc -l < /tmp/pick_taken.txt | tr -d ' ')
 out=0
 while IFS=$'\t' read -r a t; do

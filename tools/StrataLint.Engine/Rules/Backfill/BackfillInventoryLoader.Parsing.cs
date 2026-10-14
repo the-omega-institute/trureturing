@@ -109,6 +109,8 @@ internal static partial class BackfillInventoryLoader
             "unregistered_genres",
         };
 
+        if (fields.ContainsKey("default_dispatch")) keys.Add("default_dispatch");
+
         if (fields.ContainsKey("acknowledged_stale"))
         {
             keys.Add("acknowledged_stale");
@@ -142,7 +144,18 @@ internal static partial class BackfillInventoryLoader
             fields["atomizer"].Single(),
             fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
             projection,
-            []);
+            [],
+            ParseDefaultDispatch(fields));
+
+    private static DigestionDefaultDispatch ParseDefaultDispatch(
+        IReadOnlyDictionary<string, List<string>> fields)
+    {
+        if (!fields.TryGetValue("default_dispatch", out var values))
+            return DigestionDefaultDispatch.Eligible;
+        if (values.Count == 1 && values[0] == "excluded")
+            return DigestionDefaultDispatch.Excluded;
+        throw new FormatException("default_dispatch must be the quoted string excluded; eligibility uses omission");
+    }
 
     private static void RequireCanonicalSourceMetadata(
         string text,
