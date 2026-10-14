@@ -57,7 +57,7 @@ private theorem anchor_coordinates {m k : Nat} (F : SupplyFrame m k) :
     residualList (anchor F) = F.selected ++ F.base ∧
       anchor F (Fin.last m) = F.terminal := by
   have h := anchor_tuple F
-  rw [tuple_decompose, ← List.append_assoc] at h
+  rw [tuple_decompose] at h
   have hl : (residualList (anchor F)).length = (F.selected ++ F.base).length := by
     simp only [residualList, List.length_ofFn, F.prefix_length]
   obtain ⟨hp, ht⟩ := List.append_inj h hl
@@ -111,10 +111,12 @@ noncomputable def specialPort {m k : Nat} (F : SupplyFrame m k)
   if p.2.val = 0 then rightPort F p.1.val else leftPort F p.1.val
 
 private theorem c_ne_one {m : Nat} (hm : 3 ≤ m) : c m ≠ 1 := by
-  intro he
-  have hv := congrArg (fun z : Configuration m => (z (0 : Fin (m + 1))).val) he
-  simp only [c_apply, Fin.val_zero, Equiv.Perm.one_apply] at hv
-  rw [if_pos (by omega : 0 < m - 1)] at hv
+  intro h
+  have he : (c m (0 : Fin (m + 1))).val = m - 2 := by
+    rw [c_apply]
+    change (if 0 < m - 1 then m - 2 else 0) = m - 2
+    exact if_pos (by omega : 0 < m - 1)
+  have hz : (c m (0 : Fin (m + 1))).val = 0 := by rw [h]; rfl
   omega
 
 private theorem c_adj {m : Nat} (hm : 3 ≤ m) (x y : Configuration m)
