@@ -4178,69 +4178,57 @@ At $\omega=21/40$ its upper coefficient is approximately
 $1.43839661$, below ST3's $1.583011267$. These are formula values,
 not arithmetic attainability or sharpness claims.
 
-### A near-unit two-sided stock bound above the strict six-elevenths cut
+### Independent two-sided counts above the strict eleven-twentieths cut
 
-If $6/11<\omega\le17/30$, fix $s=6/11+\varepsilon<\omega$,
-with one sufficiently small positive fixed $\varepsilon$ allowed by
-the [Lou--Yao published Theorem 1](../Scale/louyao1992shortintervals.md),
-equation (1.14), printed p.3. Fix also $c>1.031$ and
-$0<b<0.969$. Backward blocks $x_{j+1}=x_j-x_j^s$ from the actual
-prefix's right endpoint cover $(B-1,B+z)$, at an overhang cost
-$O(B^s)$. Their upper counts and each prime's own logarithmic weight
-give $\mu([0,z))\le cz+h_B$, with
+If $11/20<\omega\le17/30$, fix one sufficiently small positive
+$\varepsilon$ with $s=11/20+\varepsilon<\omega$. The independent
+[Baker--Harman--Pintz Theorem 3(I)](../Scale/bakerharmanpintz1997goldbach.md),
+printed p.4, at $q=1$, supplies the constants $0.99$ and $1.01$
+for every sufficiently large centre and every length
+$x^s\le M\le x/\log x$. In particular $M=x^s$ is admitted.
+Fix also $c>1.01$ and $0<b<0.99$.
+
+Backward blocks $x_{j+1}=x_j-x_j^s$ from the actual prefix's
+right endpoint cover $(B-1,B+z)$ at an overhang cost $O(B^s)$.
+Their upper counts and each prime's own logarithmic weight give
+$\mu([0,z))\le cz+h_B$, with
 $h_B=O_{s,c}(B^s)+O(\sqrt B)$.
-
-For the terminal part use only primes in $(B+z,A-1]$. Each such
-prime has its first-layer activation strictly inside $(B+z,A)$.
-Starting at $A-1$, retain the complete backward blocks lying in
-that prime interval; their uncovered length is $O(B^s)$, including
-the empty or shorter-than-one-block case. The fixed slack below
-$0.969$ absorbs the ratio of the smallest logarithmic prime weight
-to the block's $\log x$. Consequently the same complete measure has
+For the terminal part retain only primes in $(B+z,A-1]$, whose
+first-layer activations lie strictly inside $(B+z,A)$. Complete
+backward blocks from $A-1$ leave uncovered length $O(B^s)$,
+including the empty or shorter-than-one-block case. The fixed slack
+below $0.99$ absorbs the ratio of the smallest logarithmic prime
+weight to the block's $\log x$. Thus the same complete measure has
 
 $$
 \mu([z,t))\ge b(t-z)-e_B,\qquad
 e_B=O_{s,b}(1+B^s)=o_X(t),\quad0\le z\le t.
 $$
 
-Higher layers are nonnegative for this lower bound and remain
-explicitly paid by the existing supplier in the upper bound.
-Neither envelope substitutes a separately optimized measure.
-Apply ST1--ST2 with these two allowances and then choose fixed
-$c\downarrow1.031$, $b\uparrow0.969$ to the requested precision.
-The same all-tie common-start conclusion is
+Higher layers are nonnegative in this lower estimate and remain
+paid in the upper estimate. Both envelopes concern the same actual
+measure. Reuse ST1--ST2's existing competitor root, first choosing
+fixed $c\downarrow1.01$ and $b\uparrow0.99$ to each requested
+precision and then one common source start. This gives
 
 $$
-\boxed{0.969-o_X(1)\le\frac Dt
-\le q_{\rm LY}+o_X(1),\qquad
-q_{\rm LY}=\xi(1.031,0.969)\approx1.012725955.}
-\tag{LS6}
-$$
-
-The strict $\omega>6/11$ condition is retained: a moving theorem
-exponent or the unproved endpoint value $s=6/11$ is not used.
-The full external analytic proof and its numerical computations
-are not independently re-audited.
-
-For $11/20<\omega\le17/30$, the later
-[Lou--Yao Theorem 3](../Scale/louyao1993shortintervals.md), printed
-p.25, equations (1.20)--(1.21), supplies the stronger constants
-$b_{93}=0.99$ and $c_{93}=1.01$ for every fixed
-$11/20<s<\omega$. Reuse the preceding backward-block transfer and
-same-measure competitor root with these constants, without repeating
-its proof. Choosing fixed $b<b_{93}$ and $c>c_{93}$ to each requested
-precision gives
-
-$$
-0.99-o_X(1)\le\frac Dt
-\le q_{93}+o_X(1),\qquad
-q_{93}=\xi(1.01,0.99)\approx1.004130069.
+\boxed{0.99-o_X(1)\le\frac Dt
+\le q_{\rm BHP}+o_X(1),\qquad
+q_{\rm BHP}=\xi(1.01,0.99)\approx1.004130069.}
 \tag{LS6a}
 $$
 
-The printed constants and strict $\omega>11/20$ endpoint
-are retained. The narrower later statement supplements LS6; it does
-not replace LS6 on $6/11<\omega\le11/20$.
+The strict $\omega>11/20$ condition, fixed epsilon and published
+length upper bound are retained. The full external analytic proof
+and its numerical estimates are not independently re-audited.
+BHP's printed p.4 also reports serious errors in Lou--Yao [19].
+Its bibliography reference has not been bound to a title and year
+from the inspected excerpt. Neither Lou--Yao 1992 nor Lou--Yao 1993
+is used as a supplier in the displayed coefficient below; their
+printed statements remain recorded in their respective citation
+notes, without a theorem-refutation claim. In particular the
+near-unit $6/11<\omega\le11/20$ coefficient is not asserted;
+LS5's independently supplied coefficient remains available there.
 
 ### Transfer the improved stock to the original local account and margin
 
@@ -4251,9 +4239,8 @@ $$
 q(\omega)=
 \begin{cases}
 8/(5+\omega),&1/2<\omega<21/40,\\
-\xi(4/(1+\omega),9/100),&21/40\le\omega\le6/11,\\
-q_{\rm LY},&6/11<\omega\le11/20,\\
-q_{93},&11/20<\omega\le17/30.
+\xi(4/(1+\omega),9/100),&21/40\le\omega\le11/20,\\
+q_{\rm BHP},&11/20<\omega\le17/30.
 \end{cases}
 $$
 
@@ -4273,11 +4260,10 @@ E(B_i)&\le(q(\omega)+\epsilon)t_i+H_Q\sqrt{B_i},\\
 \tag{LS7}
 $$
 
-In the Lou--Yao region the lower side of LS6 also pays the absolute
-local error with coefficient $0.031+\epsilon$, plus $O(\sqrt B)$.
-The later LS6a input reduces this allowance to $0.01+\epsilon$
-in its stated narrower region. Both are fixed small relative
-allowances, not $o(t)$, and no estimate
+In the strict BHP 1997 region the lower side of LS6a also pays
+the absolute local error with coefficient $0.01+\epsilon$, plus
+$O(\sqrt B)$. This is a fixed small relative allowance, not $o(t)$,
+and no estimate
 $V_X^{\rm lag}=O(M_XL_X)$ for the entire source is inferred.
 
 LS7 supplies JM1's capacity hypothesis for every fixed
@@ -4355,11 +4341,12 @@ $$
 The equality case in this scale calculation is paid by $1/\log X$.
 The Iwaniec transfer LS3 therefore applies there with the fixed
 exponent $s=1-\eta$. The BHP terminal allowance is negligible when
-$1-\eta\ge21/40$, including equality. For either Lou--Yao input,
-choose one fixed theorem exponent strictly above its stated lower
-cut and at most $1-\eta$, respecting the published upper cut.
-These choices are available exactly in the strict regions of
-the scalar formula. All block costs, strict endpoints and higher
+$1-\eta\ge21/40$, including equality. For the BHP 1997 input,
+choose one fixed sufficiently small
+positive $\varepsilon$ with $11/20<s=11/20+\varepsilon\le1-\eta$.
+Every block has $M=x^s\le x/\log x$ eventually. Such a choice is
+available precisely in its strict region of the scalar formula.
+All block costs, strict endpoints and higher
 layers stay in the preceding actual-source transfers.
 
 If $1-\eta>17/30$, fix
@@ -4407,7 +4394,7 @@ For example, when the original $\eta<13/30$, the reused uniform
 interval asymptotic gives $Q_\eta=1$ and hence
 $R_\eta=(d/2)\sqrt{1-a}$, including $\Theta=1$ under the original
 conditional hypotheses. At $\eta=13/30$ the asymptotic branch is
-not asserted; the strictly admitted Lou--Yao branch remains.
+not asserted; the strictly admitted BHP 1997 branch remains.
 All strict supplier cuts and fixed-precision common starts are kept.
 The improvement is in the lower margin; the original signed upper
 estimate on a cofinal family and RH remain unproved. No new generic
