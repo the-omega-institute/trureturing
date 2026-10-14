@@ -2816,3 +2816,293 @@ of these dimensionless expectations determines a physical
 energy unit.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 22. An irreducible two-state renewal source already has unbounded positive coherent rank
+
+**Definition 22.1 (A fixed equal-parameter simple nonunifilar source).**
+For the rest of this section fix permanently
+
+$$
+M_0=\frac12\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+M_1=\frac12\begin{pmatrix}0&0\\1&0\end{pmatrix},\qquad
+\lambda=(1/2,1/2),\qquad
+P(w)=\lambda M_w\mathbf1.
+\tag{22.1}
+$$
+
+This is the equal-parameter simple nonunifilar source
+(SNS). Its renewal law is an existing model: see
+[Marzen–Crutchfield, *Informational and Causal Architecture
+of Discrete-Time Renewal Processes*, arXiv:1408.6876,
+§V, Figure 7 and equation (15)](https://arxiv.org/abs/1408.6876).
+Equation (15) at the equal parameter $1/2$ gives the
+interevent zero-count probabilities below. The model and
+the general distinction between generating and predictive
+hidden states are not new here.
+
+The total transition matrix has every entry $1/2$.
+Thus it is stochastic, irreducible and aperiodic;
+$\lambda(M_0+M_1)=\lambda$ and $M_1^2=0$.
+The cylinder formula in (22.1) therefore defines one
+stationary law on the original no11 shift. All its
+parameters and hidden matrices are independent of length.
+As in (19.2), define the prescribed finite-window positive
+coherent state by
+$\Psi_n(P)=\sum_{w\in B_n}\sqrt{P(w)}|w\rangle$.
+No quantum marginal consistency is imposed on this family.
+
+**Lemma 22.2 (Actual word probabilities and the reset interface).**
+Write $M_1=\beta\alpha$ with
+$\beta=(0,1/2)^{\mathsf T}$ and $\alpha=(1,0)$.
+The zero-run transition powers and gap probabilities are
+
+$$
+M_0^k=2^{-k}\begin{pmatrix}1&k\\0&1\end{pmatrix},\qquad
+\gamma_k=\alpha M_0^k\beta=\frac{k}{2^{k+1}},
+\quad k\ge0.
+\tag{22.2}
+$$
+
+In particular $\gamma_0=0$, all $\gamma_k$ for $k\ge1$
+are positive and their sum is one. A one-emission resets
+the hidden state to $\alpha$, so these are the independent
+successive interevent zero-count probabilities. Moreover
+$P(0^n)=(n+2)/2^{n+1}\to0$; stationarity then excludes
+an infinite zero tail on either side. This is a proper
+stationary renewal law, with no adjacent ones.
+
+For any legal length-n word with at least one one, let
+A and B be the zero counts before its first and after
+its last one, and let $g_1,\ldots,g_{k-1}$ be the zero
+counts between its k ones. Then
+
+$$
+P(w)=\frac{(A+1)(B+1)\prod_{h=1}^{k-1}g_h}{2^{n+1}},
+\qquad
+P(0^n)=\frac{n+2}{2^{n+1}}.
+\tag{22.3}
+$$
+
+Thus every legal word has strictly positive probability.
+For complete half-words
+$u_i=0^{A_i}1\,0^{r_i}$ and
+$v_j=0^{s_j}1\,0^{B_j}$ of fixed respective lengths,
+the same original word probability factorizes as
+
+$$
+P(u_iv_j)=
+(\lambda M_0^{A_i}\beta)\,
+\gamma_{r_i+s_j}\,
+(\alpha M_0^{B_j}\mathbf1).
+\tag{22.4}
+$$
+
+Proof. Induction on k gives the power formula. After an
+emitted one, the rank-one factor $\beta\alpha$ leaves
+the normalized row $\alpha$. Repeated substitution gives
+the renewal gaps and, using
+
+$$
+\lambda M_0^A\beta=\frac{A+1}{2^{A+2}},\qquad
+\alpha M_0^B\mathbf1=\frac{B+1}{2^B},
+\tag{22.5}
+$$
+
+the exact formula (22.3). Its exponents add to n+1,
+including all one-emissions. Normalization and both
+cylinder consistencies already follow from the stochastic
+matrix and its stationary row. Twice substituting
+$M_1=\beta\alpha$ in the complete ordered word product
+gives (22.4), without aggregating words or changing the
+probability law. $\square$
+
+**Theorem 22.3 (Minimal classical hidden dimension does not bound positive coherent rank).**
+The single law (22.1) has minimal nonnegative classical
+edge-emission dimension two. For every $m\ge1$,
+
+$$
+\operatorname{SR}_{m+2\,|\,m+2}\Psi_{2m+4}(P)\ge m.
+\tag{22.6}
+$$
+
+Consequently even fixed minimal classical hidden dimension
+two, irreducibility, aperiodicity, renewal structure and
+full legal support do not bound the exact bond dimension
+of these prescribed positive coherent embeddings.
+
+Proof. Put $L=m+2$ and select actual complete half-words
+
+$$
+u_i=0^{L-1-i}1\,0^i,\qquad
+v_j=0^j1\,0^{L-1-j},\qquad 1\le i,j\le m.
+\tag{22.7}
+$$
+
+Each starts and ends in zero. Formula (22.3) gives
+
+$$
+P(u_iv_j)=\frac{(L-i)(L-j)(i+j)}{2^{2L+1}}.
+\tag{22.8}
+$$
+
+The corresponding positive coherent submatrix is
+
+$$
+2^{-(2L+1)/2}
+\operatorname{diag}(\sqrt{L-i})\,
+[\sqrt{i+j}]_{i,j=1}^m\,
+\operatorname{diag}(\sqrt{L-j}).
+\tag{22.9}
+$$
+
+All displayed diagonal factors are positive. Invoke the
+existing additive-kernel theorem of
+[Jain, *Hadamard powers of some positive matrices*,
+arXiv:1803.06803v1, Theorem 2.2, equation (2.3)](https://arxiv.org/abs/1803.06803v1).
+For two strictly increasing positive coordinate lists,
+$[(q_i+p_j)^r]$ is strictly sign regular, hence nonsingular,
+when $r\ge0$ avoids $0,\ldots,m-2$.
+Here $p_j=j$, $q_i=i$, $r=1/2$ satisfy those hypotheses;
+$m=1$ is immediate. Thus (22.9) has rank m and is an
+actual minor of the full coefficient matrix. This proves
+(22.6) and the exact MPS consequence.
+
+The two-state representation is (22.1). A one-state
+nonnegative stochastic edge-emission model has scalar
+$M_1\ge0$; the no11 condition forces $M_1^2=0$, hence
+$M_1=0$. It cannot give positive probability to the word
+one. Therefore no one-state presentation realizes P.
+$\square$
+
+A two-state visible first-order no11 Markov chain still
+has coherent rank exactly two at every proper cut, by
+Proposition 19.3. The SNS is a two-state generating model
+with a different predictive structure. Equality of minimal
+classical hidden dimensions therefore does not identify
+their coherent ranks. This strengthens the fixed-producer
+application of §19 without relying on reducibility or a
+latent branch kept forever. It remains an application of
+existing SNS and entrywise-power results, with no claim of
+literature priority, quantum memory advantage, preparation
+protocol or harmonic-edge optimality.
+
+## 追加锚（本行以下为增补区）
+
+
+## 23. The two-state renewal example has bounded entropy and exponential single-cut tails
+
+**Proposition 23.1 (The stationary age controls the coherent Schmidt tail).**
+For the same fixed law (22.1), let K be the number of
+zeros since the last one at the left endpoint of a cut.
+Its stationary age probabilities and tails are
+
+$$
+\Pr(K=k)=\frac{k+1}{2^{k+2}},\qquad
+\mathbb EK=2,\qquad
+\Pr(K\ge r)=\frac{r+2}{2^{r+1}},\quad k,r\ge0.
+\tag{23.1}
+$$
+
+For every finite length n and proper cut after $\ell$,
+the positive coherent cut entropy, in bits, obeys
+
+$$
+S(\rho_{n,\ell})\le H(\min(K,\ell))\le H(K)\le4.
+\tag{23.2}
+$$
+
+If $\sigma_1\ge\sigma_2\ge\cdots$ are its Schmidt
+coefficients, then, for every integer $r\ge1$,
+
+$$
+\sum_{j>r}\sigma_j^2\le\frac{r+2}{2^{r+1}}.
+\tag{23.3}
+$$
+
+These bounds concern every window and cut of one stationary
+law, with constants independent of both.
+
+Proof. The event $K=k$ is the actual cylinder
+$1\,0^k$ ending at the cut. By stationarity and (22.2),
+
+$$
+\Pr(K=k)=\lambda M_1M_0^k\mathbf1
+=\frac{k+1}{2^{k+2}}.
+\tag{23.4}
+$$
+
+The zero-tail limit in Lemma 22.2 ensures that K is finite
+almost surely. Summing the geometric series and its first
+two moments gives (23.1).
+
+Partition the actual left words by trailing zero count k,
+using k=$\ell$ for the unique all-zero left word. For a
+left word u containing a one and ending in k zeros,
+the reset gives $\lambda M_u=c_u\alpha M_0^k$, with
+$c_u>0$. Consequently all coefficient-matrix rows in
+one group are proportional with positive factors
+$\sqrt{c_u}$. Each group can be compressed to a single
+normalized left vector. Groups have disjoint computational
+supports, so these left vectors are orthonormal. The
+all-zero group is already one row.
+
+The diagonal probabilities of the left reduction in this
+orthonormal basis are exactly the group masses, namely the
+distribution of $K_\ell=\min(K,\ell)$, since summing
+squared row coefficients recovers the actual marginal.
+Dephasing in this finite orthonormal basis cannot decrease
+entropy, giving the first inequality of (23.2).
+Deterministic coarse-graining gives $H(K_\ell)\le H(K)$.
+Finally
+
+$$
+H(K)=\sum_{k\ge0}\frac{k+1}{2^{k+2}}
+\bigl(k+2-\log_2(k+1)\bigr)\le\mathbb EK+2=4.
+\tag{23.5}
+$$
+
+For (23.3), if $\ell\ge r$, retain only the r groups
+$k=0,\ldots,r-1$. The resulting coefficient matrix has
+rank at most r and discarded squared Frobenius norm
+$\Pr(K_\ell\ge r)=\Pr(K\ge r)$.
+The best rank-r singular-value truncation has no larger
+error, proving the bound. If $\ell<r$, the full matrix
+already has at most $\ell+1\le r$ such groups, so the
+Schmidt tail is zero. $\square$
+
+Equations (22.6) and (23.3) refer to the same positive
+coherent state. Exact rank grows, while a fixed cut's
+squared Schmidt tail decays exponentially with retained
+rank. This single-cut estimate alone does not identify
+one globally accurate MPS with that same fixed bond at
+every cut; a simultaneous approximation requires an
+additional truncation theorem and its length-dependent
+error accounting.
+
+The broader probability/tensor separation is also existing
+literature. [Glasser–Sweke–Pancotti–Eisert–Cirac,
+*Expressive power of tensor-network factorizations for
+probabilistic modeling, with applications from hidden
+Markov models to quantum machine learning*,
+arXiv:1907.03741v2, §3.1 (HMM correspondence), §4,
+Proposition 5 and supplementary
+Lemma 13](https://arxiv.org/abs/1907.03741v2) already
+construct nonnegative tensor families with nonnegative
+TT rank two and unbounded real Born rank, using prime
+matrices. Their real Born rank optimizes over sign choices;
+the present theorem treats the prescribed positive square
+root. Their general family does not by itself supply the
+same stationary no11 cylinder law or its boundary factors.
+Here those interfaces are (22.3)–(22.9), not a new general
+tensor-rank separation theorem.
+
+A classical nonnegative rank bound, a fixed positive-root
+rank, a rank minimized over real signs, a rank minimized
+over complex phases, mixed-state Schmidt number and a
+quantum instrument's memory cost remain different
+quantities. None of §§19–23 equates them, or turns an
+occupation-law representation into a specified quantum
+preparation.
+
+## 追加锚（本行以下为增补区）
