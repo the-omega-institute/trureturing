@@ -14,6 +14,7 @@ namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2Seed
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeContactIteration
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts

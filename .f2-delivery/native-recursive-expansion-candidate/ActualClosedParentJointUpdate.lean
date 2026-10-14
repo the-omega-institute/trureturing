@@ -100,8 +100,8 @@ theorem actual_closed_parent_joint_partition
     omega
   have hPnodup : P.support.Nodup :=
     (List.nodup_flatMap.mp hnsource).1 ⟨s, t, P⟩ (by
-      simp only [List.mem_cons, List.mem_append, List.mem_singleton]
-      exact Or.inr (Or.inr rfl))
+      exact List.mem_cons_of_mem _
+        (List.mem_append.mpr (Or.inr (by simp))))
   have hnjoint : (d.support ++ rest.flatMap fun p => p.walk.support).Nodup :=
     hPs.nodup_iff.mp hPnodup
   obtain ⟨new₀, new₁, new₂, hpaths, hcount, hsupport, hedges, hmem, hcuts,
