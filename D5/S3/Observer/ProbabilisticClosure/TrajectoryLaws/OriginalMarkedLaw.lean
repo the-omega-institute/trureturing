@@ -227,7 +227,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
       exact unpack_block (z 0) l i
     rw [he, ← Measure.map_map (f := levelProjection bond 1 l)
       (by fun_prop) (by
-        exact measurable_pi_lambda _ fun j =>
+        exact Measurable.of_eval fun j =>
           (measurable_pi_apply l).comp
             (measurable_subtype_coe.comp (measurable_pi_apply j))), hthread]
     change (((pLaw (2 * l)).toMeasure).map (fun w (_ : Fin 1) => w)).map
@@ -271,12 +271,12 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
       (hρ : ∀ l, (ρ : Measure (ℤ → S)).map
         (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) =
         (pLaw (2 * l)).toMeasure) : ρ = ν := by
-    have hu : ρ.map pack_measurable.aemeasurable = threadLaw := by
+    have hu : ρ.map pack = threadLaw := by
       apply unique_thread
       intro l
       change ((ρ : Measure (ℤ → S)).map pack).map (levelProjection bond 1 l) = _
       rw [Measure.map_map (by
-        exact measurable_pi_lambda _ fun j =>
+        exact Measurable.of_eval fun j =>
           (measurable_pi_apply l).comp
             (measurable_subtype_coe.comp (measurable_pi_apply j))) pack_measurable]
       have he : levelProjection bond 1 l ∘ pack =
@@ -295,7 +295,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
     exact ProbabilityMeasure.toMeasure_injective he
   have ν_shift (a : ℤ) : (ν : Measure (ℤ → S)).map (fun x t => x (a + t)) = ν := by
     have hm : Measurable (fun x : ℤ → S => fun t => x (a + t)) := by fun_prop
-    have hu := ν_unique (ν.map hm.aemeasurable) (fun l => by
+    have hu := ν_unique (ν.map (fun x t => x (a + t))) (fun l => by
       change ((ν : Measure (ℤ → S)).map (fun x t => x (a + t))).map _ = _
       rw [Measure.map_map (by fun_prop) hm]
       have he : (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) ∘
