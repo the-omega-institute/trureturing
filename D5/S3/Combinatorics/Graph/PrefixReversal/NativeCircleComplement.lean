@@ -463,6 +463,43 @@ theorem native_complement_full_edge_inventory {m : ℕ} (hm : 3 ≤ m)
     exact (native_complement_edge_inventory hm z g hg w hp hl hs x h hx hh).mpr hne
 
 #print axioms native_complement_edge_inventory
+private theorem circle_b_reversal {m : ℕ} (v : Configuration m) :
+    configurationCycle (v * b m) = (configurationCycle v).reverse := by
+  have hr : configurationCycle (v * a m * (a m * b m)) =
+      configurationCycle (v * a m) := by
+    rw [ab_eq_rotate]
+    apply Cycle.coe_eq_coe.mpr
+    rw [show List.ofFn (v * a m * finRotate (m + 1)) =
+      (List.ofFn (v * a m)).rotate 1 from by
+        simpa only [pow_one] using rotate_pow_list (v * a m) 1]
+    exact List.IsRotated.symm ⟨1, rfl⟩
+  have he : v * a m * (a m * b m) = v * b m := by
+    rw [mul_assoc, ← mul_assoc (a m), a_sq, one_mul]
+  rw [he, native_configurationCycle_reversal] at hr
+  exact hr
+
+private theorem circle_native_closed {m : ℕ} (z x g : Configuration m)
+    (hx : Circle z x) (hg : g = a m ∨ g = b m) : Circle z (x * g) := by
+  have hr : configurationCycle (x * g) = (configurationCycle x).reverse := by
+    rcases hg with rfl | rfl
+    · exact native_configurationCycle_reversal x
+    · exact circle_b_reversal x
+  rcases hx with hx | hx
+  · exact Or.inr (hr.trans (congrArg Cycle.reverse hx))
+  · exact Or.inl (by rw [hr, hx, Cycle.reverse_reverse])
+
+/-- Every endpoint of an actual native circle edge lies in its independently
+specified complete rotation/reversal circle. -/
+theorem native_circle_edge_endpoint {m : ℕ} (z v : Configuration m)
+    (e : Sym2 (Configuration m)) (he : NativeCircleEdge z e) (hv : v ∈ e) :
+    Circle z v := by
+  obtain ⟨x, g, hx, hg, rfl⟩ := he
+  rcases Sym2.mem_iff.mp hv with rfl | rfl
+  · exact hx
+  · exact circle_native_closed z x g hx hg
+
+
 #print axioms native_complement_full_edge_inventory
+#print axioms native_circle_edge_endpoint
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
