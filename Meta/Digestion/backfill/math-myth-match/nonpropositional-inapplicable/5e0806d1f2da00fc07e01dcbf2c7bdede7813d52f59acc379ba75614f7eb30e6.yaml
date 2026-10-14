@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e0806d1f2da00fc07e01dcbf2c7bdede7813d52f59acc379ba75614f7eb30e6
+  normalized_sha256: sha256:5e0806d1f2da00fc07e01dcbf2c7bdede7813d52f59acc379ba75614f7eb30e6
+cas_ref: sha256:5e0806d1f2da00fc07e01dcbf2c7bdede7813d52f59acc379ba75614f7eb30e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 791.1（相对面的行列式）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: b4b6ef91b908a860e26c32ff8c1a3c4e12c7698aa2bea50af42576ac297e2071
+    next_atom_id: 22cc18e1876d12a944d039e778b4f4840f36f887b663a20ed700da991719ecf4

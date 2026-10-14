@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:40aa13c0de3a6d6a4362ad647f99453da9f17c2946450fafed406399303c808a
+  normalized_sha256: sha256:40aa13c0de3a6d6a4362ad647f99453da9f17c2946450fafed406399303c808a
+cas_ref: sha256:40aa13c0de3a6d6a4362ad647f99453da9f17c2946450fafed406399303c808a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 13.1（行动账目的四个坐标）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 1b4e31f0e1671d0439fa7e6bf769652ed5a9d0b159705e0ffa08bc86e2924b49
+    next_atom_id: 5cb54989f6a13894234d6875f22cf86eb7675c8b51cbdc15e059a48ece699f74
