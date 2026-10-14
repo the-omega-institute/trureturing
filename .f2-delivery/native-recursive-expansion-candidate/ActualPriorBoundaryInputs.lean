@@ -1,8 +1,10 @@
-/- UNCOMPILED recovery of actual boundary inputs from one prior cycle.
-   The cycle may already be included in a larger parent graph; it need
-   not be Hamiltonian there. Its two actual prior partitions retain
-   their exact supports and cut inventories. These data earn the route
-   position, edge inclusion, and regrouped inventories for restoration. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualPriorBoundaryInputs
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualPriorBoundaryInputs
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Verified actual partitions of one prior cycle recover the literal route prefixes and regrouped inventories for boundary updates. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
 import D5.S3.Combinatorics.Graph.Walks.ActualPathRecoveryPrefix
 

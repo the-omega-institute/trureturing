@@ -1,7 +1,10 @@
-/- UNCOMPILED actual half-restoration cut inventory.
-   Split two disjoint actual marked-cut groups of the same source cycle.
-   The exact joint filtered inventory earns the source edge permutation;
-   it is not assumed as a final regrouped parent inventory. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualJointHalfCutInventory
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualJointHalfCutInventory
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The same actual source cycle earns exact restored-cut inventories for single-order and half-boundary reconstruction. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
 
 set_option autoImplicit false

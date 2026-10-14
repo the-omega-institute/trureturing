@@ -1,9 +1,10 @@
-/- UNCOMPILED actual single-order restoration step.
-   The affected old whole boundary path traverses the distinguished old
-   joint path. Replace that path by the three actual next joint paths,
-   restore the indicated new b edge, and earn two whole boundary paths.
-   Exact support and edge inventories imply simplicity and exhaustiveness;
-   no next endpoint pairing or next path partition is assumed. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualSingleOrderBoundaryUpdate
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualSingleOrderBoundaryUpdate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Literal replacement of the old joint path constructs complete single-order boundaries with exact actual inventories and endpoint updates. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
 import D5.S3.Combinatorics.Graph.Walks.ActualJointEndpointPairs
 

@@ -143,7 +143,7 @@ theorem actual_simultaneous_boundary_advance
     actual_single_order_boundary_update c hc d front tail₁ old₁ hfactor₁
       oppositerest remaining hn₁ hs₁' (H.erase s(ℓ₁, r₁)).toList K.toList he₁'
       new₀ new₁ new₂ hrestore₁ hcurrentSupport hsource₁
-  have hfactor₀' : old₀ = (G.Walk.nil : G.Walk ℓ ℓ).append (d.append tail₀) := by
+  have hfactor₀' : old₀ = (SimpleGraph.Walk.nil : G.Walk ℓ ℓ).append (d.append tail₀) := by
     simpa only [SimpleGraph.Walk.nil_append] using hfactor₀
   obtain ⟨opposite₀, opposite₁, _, _, hos, hoe, _, hoc, _, hop, hoformula, hoother⟩ :=
     actual_single_order_first_cut_boundary_update c hc d .nil tail₀ old₀ hfactor₀'
@@ -186,11 +186,12 @@ theorem actual_simultaneous_boundary_advance
     ⟨hc.isCycle, hdisjoint, hj, hp, ho⟩, ?_, hpp, hop, ?_,
       hrestore₀.symm, tail₀, tail₁, htail₀, htail₁, hpformula, ?_, ?_⟩
   · intro p hmem
-    simp only [List.mem_append] at hmem
-    rcases hmem with hmem | hmem | hmem
-    · exact path_of_support joint hj.support p hmem
-    · exact path_of_support primary hp.support p hmem
-    · exact path_of_support opposite ho.support p hmem
+    have hmem' : p ∈ (joint ++ primary) ++ opposite := hmem
+    rcases List.mem_append.mp hmem' with hfirst | hlast
+    · rcases List.mem_append.mp hfirst with hjoint | hprimary
+      · exact path_of_support joint hj.support p hjoint
+      · exact path_of_support primary hp.support p hprimary
+    · exact path_of_support opposite ho.support p hlast
   · simpa only [Sym2.eq_swap] using hzero₀
   · simpa only [SimpleGraph.Walk.concat_append, SimpleGraph.Walk.append_assoc] using hoformula
   · simpa only [SimpleGraph.Walk.reverse_nil, SimpleGraph.Walk.append_nil] using hoother
