@@ -85,7 +85,7 @@ Every other declaration is a definition used by a public statement or a compiler
 **Proved by `result`:** at D = (3, 3, 7) the maximally entangled class contains a state of length 9, so L_(3,3,7) ≤ 9 < 11 and the third clause of Conjecture III.4 fails.
 
 **Computed, not formalized** (orchestrator, NumPy and exact SymPy ranks, 15 October 2026):
-- The four invariants of random states reproduce the principal invariants of Table XII at every tested D, so the module's reading of the invariants matches the paper's.
+- The four invariants of random states reproduce the principal invariants of Table XII at every tested D, which corroborates the reading of Eqs. (A1)–(A6) used by the module.
 - At (3, 3, 9), the state with the nine 3 × 3 matrix units as its slices (length 9) has invariants (0, 0, 0, 0), as do random states, so L_(3,3,9) ≤ 9. Since n₃ = 0 forces the nine slices to be linearly independent, every state in the class has length at least 9. Hence L_(3,3,9) = 9, against the conjectured 13.
 - At (3, 3, 8), random supports find a class member of length 11 < 12.
 - At (3, 3, 5) and (3, 3, 6), random supports of length below the conjectured 9 and 10 find no class member.
