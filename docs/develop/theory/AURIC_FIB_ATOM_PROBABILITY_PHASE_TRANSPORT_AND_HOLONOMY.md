@@ -3287,3 +3287,781 @@ the unwrapped controller record nor supplies acquisition, memory or
 physical spatial-dimension bounds.
 
 ## 8.99 追加锚
+
+## 9. Common native continuations, chronological action and future response
+
+### 9.1 One relative command and its actual source domain
+
+**Definition 9.1 (Relative common-command convention).** Fix precisely the
+means, preparation and current source $\mathcal M_b$ of Definition 8.1 and
+Theorem 8.2. Write $J_b=(\ell_b,u_b)$ and $W_b=u_b-\ell_b>0$. A command
+$\gamma=(a,b):[0,T]\to\mathbb R^2$ starts at $(0,0)$ and is piecewise
+$C^1$ or absolutely continuous. Here $b(t)$ is a control increment,
+not the subscript denoting the fixed means. The two coordinates have
+finite variation; for absolutely continuous paths this follows from
+integrability of their derivatives on the compact interval. Set
+
+$$
+A_\gamma=a(T),\quad B_\gamma=b(T),\quad
+m_\gamma=\min_t a(t),\quad M_\gamma=\max_t a(t).
+\tag{9.1}
+$$
+
+For a current height $k$ and any actual current real relation lift
+$\chi_*$, this command means the original history
+
+$$
+\kappa(t)=k+a(t),\qquad \chi(t)=\chi_*+b(t),\qquad
+\theta(t)=\theta_*+\int_0^t w(k+a(s))\,db(s).
+\tag{9.2}
+$$
+
+It is admitted at that state exactly when $k+a(t)\in J_b$ for every
+$t$. Thus the common input is the pair of relative increments, or its
+prescribed velocities, and not an absolute path that assumes knowledge
+of $k$. The same numerical functions $a,b$ are used at every starting
+state. Formula (9.2) specifies a family of Definition 3.1 histories;
+it asserts no additional actuator, feedback measurement, reset or
+uniform resource bound. Its endpoint phase increment is denoted
+
+$$
+H_\gamma(k)=\int_0^T w(k+a(t))\,db(t).
+\tag{9.3}
+$$
+
+All integrals here are ordinary integrals against an absolutely
+continuous integrator, including the piecewise $C^1$ case. The
+bounded-variation signature used below describes these paths; it does
+not enlarge Definition 3.1 to all bounded-variation controls.
+
+**Theorem 9.2 (Exact partial operation, concatenation and reversal).**
+The lawful starting-height domain and the induced current-ray map are
+
+$$
+D_\gamma=(\ell_b-m_\gamma,\ u_b-M_\gamma),\qquad
+T_\gamma(k,[h])=(k+A_\gamma,[h+H_\gamma(k)]),
+\tag{9.4}
+$$
+
+where an interval with its left endpoint at least its right endpoint
+is empty. The source domain is $D_\gamma\times(U_b/\Lambda_b)$.
+It is nonempty exactly when $M_\gamma-m_\gamma<W_b$, and it is all
+of $\mathcal M_b$ exactly when $a$ is identically zero. A compact
+promised interval $[l,u]\subset J_b$ is lawful for every starting
+phase exactly when
+
+$$
+l+m_\gamma>\ell_b,\qquad u+M_\gamma<u_b.
+\tag{9.5}
+$$
+
+For an open promised interval $(l,u)\subset J_b$ the corresponding
+necessary and sufficient inequalities are non-strict. Endpoint
+membership alone, $k,k+A_\gamma\in J_b$, is in general weaker than
+lawfulness of the command.
+
+Run $\gamma$ first, then $\delta$, translating the second increment
+path by $(A_\gamma,B_\gamma)$ to concatenate them. Write this ordered
+path as $\gamma*\delta$. Then
+
+$$
+\begin{aligned}
+D_{\gamma*\delta}&=D_\gamma\cap(D_\delta-A_\gamma),\\
+H_{\gamma*\delta}(k)&=H_\gamma(k)+H_\delta(k+A_\gamma),\\
+T_{\gamma*\delta}&=T_\delta\circ T_\gamma
+\quad\hbox{on precisely this domain}.
+\end{aligned}
+\tag{9.6}
+$$
+
+Let $\bar\gamma(t)=(a(T-t)-A_\gamma,b(T-t)-B_\gamma)$.
+The reversed command has
+
+$$
+D_{\bar\gamma}=D_\gamma+A_\gamma,\qquad
+H_{\bar\gamma}(k)=-H_\gamma(k-A_\gamma),\qquad
+T_{\bar\gamma}=T_\gamma^{-1}.
+\tag{9.7}
+$$
+
+The maps are smooth bijections between their indicated open source
+and image domains. The same formulas hold on the real lift
+$J_b\times U_b$, before reducing phase increments modulo $\Lambda_b$.
+
+Proof. Since the extrema are attained, positivity along the whole path
+is equivalent to $k+m_\gamma>\ell_b$ and
+$k+M_\gamma<u_b$. Also $m_\gamma\le0\le M_\gamma$, because the path
+starts at zero. This proves all the interval assertions, including
+containment in $J_b$, the nonempty-domain criterion and (9.5).
+To contain every point of $J_b$ requires $m_\gamma=0=M_\gamma$;
+these extrema force $a\equiv0$. On an open promised interval equality
+at either excluded endpoint is allowed, which proves the non-strict
+version.
+
+For any admitted $k$, continuity keeps $k+a(t)$ in a compact positive
+subinterval. Consequently (9.3) exists and (9.2) obeys the original ODE
+almost everywhere, with the original initial state. Its phase derivative
+is exactly $w\dot\chi$, and its probability derivative is $d\dot\kappa$.
+Since $w\in U_b$ and $d^{\mathsf T}w=1$,
+
+$$
+H_\gamma(k)\in U_b,\qquad d^{\mathsf T}H_\gamma(k)=B_\gamma.
+\tag{9.8}
+$$
+
+Changing a phase representative by $\Lambda_b$ changes its endpoint
+by the same lattice vector. Changing $\chi_*$ by a real lift period
+does not change $db$ or the endpoint ray. Thus (9.4) is a well-defined
+map of the actual rays with arbitrary fixed preparation phases.
+Differentiation of (9.3) in $k$ is valid locally to every order: all
+relevant derivatives of $w$ are bounded on a common compact positive
+interval and the integrator has finite variation. This gives smoothness.
+
+The second path has starting height $k+A_\gamma$, so its additional
+lawfulness condition is exactly the intersection in (9.6). Splitting
+the phase integral at the join proves its addition law. Equivalently,
+its excursions are
+
+$$
+m_{\gamma*\delta}=\min(m_\gamma,A_\gamma+m_\delta),\qquad
+M_{\gamma*\delta}=\max(M_\gamma,A_\gamma+M_\delta).
+\tag{9.9}
+$$
+
+Reversal has extrema $m_\gamma-A_\gamma,M_\gamma-A_\gamma$ and
+negates the phase integral after shifting the starting height. This
+proves (9.7). Its domain is exactly the image-height interval of
+$T_\gamma$, so it proves the smooth inverse assertion too. The
+concatenation with the reverse is the identity on $D_\gamma$, which
+can be a proper subset of $J_b$; it is not an identity command lawful
+on the whole fiber. $\square$
+
+### 9.2 Ordered effects on the double wall
+
+**Theorem 9.3 (The chronological summary acts on the original source).**
+Assume $X=Y=r/2$. For the actual command in Definition 9.1 put
+
+$$
+K_\gamma=\int a\,db,\qquad
+\Omega_\gamma=\frac12\int(a\,db-b\,da)
+                  =K_\gamma-\frac12A_\gamma B_\gamma.
+\tag{9.10}
+$$
+
+The order convention is that the earlier coordinate is integrated
+first: the signature word $ab$ is
+$\int_{s<t}da(s)\,db(t)=K_\gamma$. On the double-wall real lift
+$(k,u,v)$ of (8.17), the exact endpoint formula is
+
+$$
+T_\gamma(k,u,v)=\left(
+ k+A_\gamma,
+ u+\frac{B_\gamma}{2}-\frac{kB_\gamma+K_\gamma}{r},
+ v-\frac{kB_\gamma+K_\gamma}{r}\right).
+\tag{9.11}
+$$
+
+Its domain remains (9.4). In particular the signed physical control
+integral is $\int\kappa\,d\chi=kB_\gamma+K_\gamma$, not just
+$K_\gamma$. The source correspondence uses increments from the
+unknown current height, not a substitution of an absolute path for
+a common command.
+
+The existing step-two chronological multiplication, in these coordinates,
+is
+
+$$
+(A,B,K)\star(A',B',K')
+ =(A+A',B+B',K+K'+AB'),
+\qquad
+(A,B,K)^{-1}=(-A,-B,AB-K).
+\tag{9.12}
+$$
+
+The matrix representative is
+$\left(\begin{smallmatrix}1&A&K\\0&1&B\\0&0&1\end{smallmatrix}\right)$.
+Thus (9.11) gives a right action of this real Heisenberg group on the
+unrestricted real coordinate space: first the unprimed command, then
+the primed one. On the positive source it gives only the partial
+operations whose actual excursions are lawful. On ray coordinates
+$u,v\bmod2\pi$, two such formulas agree on any common nonempty open
+height interval, for all phases, exactly when
+
+$$
+A=A',\qquad B=B',\qquad K-K'\in2\pi r\mathbb Z.
+\tag{9.13}
+$$
+
+On real lifts equality requires $K=K'$. Equality of formulas in
+(9.13) does not assert equality of lawful domains.
+
+For any compact promised interval $[l,u]\subset(0,r/2)$, a given real
+triple $(A,B,K)$ has a representing command lawful on every promised
+state if and only if $[l+A,u+A]\subset(0,r/2)$. Hence a triple has
+some nonempty lawful source domain if and only if $|A|<r/2$.
+The assertion permits finite but arbitrarily large phase variation;
+it is not a bound on execution cost. On the entire positive fiber
+one fixed lawful command must have $a\equiv0$, so it necessarily has
+$A=K=0$.
+
+Proof. Theorem 3.7 supplies the actual coefficients
+$w_+=1/2-k/r$ and $w_-=-k/r$. Substitute $k+a(t)$ and integrate
+against $db(t)$ to obtain (9.11); the state convention remains
+$\psi_s=\sqrt{p_s}e^{-i(\eta_s+h_s)}$. In particular the original
+$02$ output phase increases by the increment of $u$, with precisely
+the sign in (8.8).
+
+For provenance of the chronological operation, use
+[History records, Theorem 161.5](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)
+with its coordinate path $(x,y)=(a,b)$ and its signed area
+$A(q)=\Omega_\gamma$. Its earlier-later cross term is
+$(AB'-BA')/2$. The change of central coordinate
+$K=\Omega+AB/2$ gives (9.12). This is the same degree-two Chen
+supplier described by Chevyrev and Kormilitzin,
+[*A Primer on the Signature Method in Machine Learning*, §1.3.3](https://arxiv.org/html/1603.03788v2).
+Here its paths are the piecewise $C^1$ or absolutely continuous paths
+already admitted by Definition 3.1, and their permission to concatenate
+comes from (9.6). No general chronological identity supplies that domain.
+
+One can also check the correspondence directly: splitting $\int a\,db$
+at the join gives $K+K'+AB'$. In (9.11) the second command sees
+$k+A$, so its extra central term is exactly $AB'$. Integration by
+parts gives $\int a\,db+\int b\,da=AB$, proving (9.10) and the
+inverse in (9.12). These calculations fix both chronological order
+and area normalization.
+
+Equality of endpoint maps first forces $A=A'$ by their probability
+coordinate. On real lifts the difference between the two phase
+increments is $(B-B')/2$, so equality then forces $B=B'$ and $K=K'$.
+On rays, the increment difference of the $v$ coordinates is
+$-\{k(B-B')+(K-K')\}/r$. If it takes values in $2\pi\mathbb Z$
+on an open height interval, continuity makes it constant and its slope
+forces $B=B'$. Its remaining constant is a period exactly under
+(9.13); the $u$ condition then agrees. This proves the stated kernel
+without confusing equality at one height with equality on a source
+domain. Formula (9.11) exists algebraically for every real $k$;
+positive probabilities and lawful intermediate paths still require (9.4).
+
+For promised-domain realization, necessity follows from the final
+height. Conversely choose a nonzero $s$ small enough that
+$[l+s,u+s]\subset(0,r/2)$. Execute the rectangle with increment
+vertices
+
+$$
+(0,0),\ (s,0),\ (s,q),\ (0,q),\ (0,0),
+\qquad q=\frac{K-AB}{s},
+\tag{9.14}
+$$
+
+then a pure probability leg to $a=A$, then a phase leg to $b=B$.
+The rectangle has $K=sq$, the last two legs contribute $AB$, and
+both pieces have the required endpoints. All rectangle heights are
+lawful on the promise by convexity, as is the probability leg between
+$k$ and $k+A$. The finite number $q$ is allowed by Definition 3.1.
+This realizes the exact triple, with no limiting bracket construction.
+There is a compact interval of starting heights with both endpoints
+interior exactly when $|A|<r/2$. The full-domain assertion follows from
+Theorem 9.2. $\square$
+
+**Proposition 9.4 (Endpoint, signature and excursion information).**
+For the commands of Definition 9.1 the following distinctions hold.
+On the double wall, $(A,B,K,m,M)$ determines the entire lawful partial
+endpoint operation on real lifts; on rays $K$ may be reduced as in
+(9.13). The pair $(A,B)$ alone does not determine that operation even
+when the lawful domains agree. The complete ordered signature
+without $m,M$ does not determine the lawful domain, even though it
+determines endpoint effects at every starting state at which both
+compared commands are lawful. These latter two assertions concerning
+complete signatures hold in all four mean regimes.
+
+Proof. The first statement is exactly (9.4) and (9.11). To separate
+endpoint increments from order, compare the two paths
+
+$$
+(0,0)\to(s,0)\to(s,t),\qquad
+(0,0)\to(0,t)\to(s,t),\qquad 0<s<r/2.
+\tag{9.15}
+$$
+
+Both have $(A,B)=(s,t)$, $m=0$, $M=s$, and the same nonempty lawful
+domain $(0,r/2-s)$. Their $K$ values are $st$ and zero, respectively.
+Their real endpoint phase difference is $-st/r$ in each of $u,v$.
+Choose $st\notin2\pi r\mathbb Z$ for distinct rays and hence distinct
+original coherence outputs, by Theorem 8.4. The signs agree with the
+positive-$s$, positive-$t$ rectangle in (8.25).
+
+For the complete-signature statement, define $S_{i_1\cdots i_n}$ to
+be the integral of $dc_{i_1}(t_1)\cdots dc_{i_n}(t_n)$ over
+$t_1<\cdots<t_n$, where $(c_a,c_b)=(a,b)$. This is the usual
+bounded-variation signature, with the earlier-later convention of
+Theorem 9.3; only the admitted absolutely continuous paths are used.
+Suppose two such commands have equal complete signatures and are both
+lawful at $k$. Their $A,B$ agree at degree one. Repeated integration
+of $da$ gives
+
+$$
+\int a^n\,db=n!S_{\underbrace{a\cdots a}_{n}b},
+\qquad n\ge0.
+\tag{9.16}
+$$
+
+Indeed the iterated integral of $n$ copies of $da$ up to time $t$ is
+$a(t)^n/n!$, by induction using the derivative of $a^n$.
+Thus both paths give the same integral of every polynomial in $a$
+against $db$. Their combined $a$ ranges lie in one compact interval
+inside $J_b-k$. Each function $x\mapsto w_s(k+x)$ is continuous there.
+Polynomial uniform approximation, followed by the estimate
+
+$$
+\left|\int(f-P)(a)\,db\right|
+ \le \|f-P\|_\infty\operatorname{Var}(b),
+\tag{9.17}
+$$
+
+proves equality of their $H_\gamma(k)$, component by component.
+This supplies the source-specific endpoint implication directly from
+the signature coordinates; it does not require a path reconstruction
+or a convergence assertion about a Taylor series for $w$.
+
+To see the missing domain information, take the constant command and
+the command with $b\equiv0$ and probability excursion
+$0\to s\to0$, where $0<s<W_b$. Every signature word containing
+$b$ vanishes. Every remaining nonempty word has value $A^n/n!=0$.
+Both commands therefore have the identity complete signature and the
+identity endpoint formula. But their domains are respectively
+$J_b$ and $(\ell_b,u_b-s)$. Choose a starting height in
+$(u_b-s,u_b)$ to distinguish lawfulness, and one in
+$(\ell_b,u_b-s)$ to see that the excursion is an actual lawful history
+on a nonempty source domain. Their extrema distinguish the two domains
+exactly. This is a direct instance of the tree-like cancellation in
+Hambly and Lyons,
+[*Uniqueness for the signature of a path of bounded variation and the reduced path group*](https://arxiv.org/abs/math/0507536);
+that supplier does not preserve an external positivity guard under
+removal of a retraced excursion.
+
+Together with (9.4), equality of complete signatures and equality of
+$m,M$ therefore imply equality of lawful partial endpoint operations
+in every regime. Neither assertion reconstructs a parametrized history.
+Away from the double wall, the failure of signed area to specify even
+the real zero-winding phase endpoint is already exactly Theorem 3.5,
+with the explicit generic ray witness in Proposition 3.6; those results
+are retained with their original fixed starting height. $\square$
+
+### 9.3 The real Lie algebra of the actual native fields
+
+**Theorem 9.5 (Repeated-bracket classification for every allowed mean).**
+On $\mathcal M_b$ let $h_a$ be the increment coordinate of pole group
+$a$ from Theorem 3.2. The vector fields of the two original velocity
+inputs and their successive brackets are
+
+$$
+P=\partial_k,\qquad
+Q_n=\sum_{a=1}^g w_a^{(n)}(k)\partial_{h_a}\quad(n\ge0),
+\qquad Q=Q_0.
+\tag{9.18}
+$$
+
+Their generated real Lie algebra, meaning finite real linear
+combinations of vector fields and their brackets, is exactly
+
+$$
+\mathfrak l_b=\mathbb RP+\operatorname{span}_{\mathbb R}
+                   \{Q_n:n\ge0\},\qquad
+[P,Q_n]=Q_{n+1},\quad[Q_n,Q_j]=0.
+\tag{9.19}
+$$
+
+Its complete classification is
+
+| Fixed mean regime | Real vector-field Lie algebra | Pointwise tangent rank |
+| --- | --- | --- |
+| Neither wall | Countably infinite dimensional; $P,Q_0,Q_1,\ldots$ independent | $5$ |
+| $E_-$ only | Countably infinite dimensional; the same basis | $4$ |
+| $E_+$ only | Countably infinite dimensional; the same basis | $4$ |
+| Both walls | Three dimensional, with basis $P,Q_0,Q_1$ and $[P,Q_0]=Q_1$ central | $3$ |
+
+There are no further exceptional allowed values of $X,Y,Z$ in this
+classification. It concerns real constant coefficients, not a module
+allowing arbitrary coefficient functions. The three-dimensional case
+is the Heisenberg algebra realized by (9.11), not the rotation algebra.
+None of the ranks or algebra dimensions asserts globally available
+flows on the full positive source.
+
+Proof. Vertical coefficients depend only on $k$, so vertical fields
+commute and bracketing with $P$ differentiates their coefficients.
+Thus the right side of (9.19) is a Lie algebra containing $P,Q$ and
+every listed field is an iterated bracket. This proves the equality.
+To determine its dimension, let the distinct poles be $\lambda_a$,
+with signed multiplicities $c_a=m_a\varepsilon_a$ as in §3.3. Put
+
+$$
+F(k)=\prod_{a=1}^g(k-\lambda_a),\qquad
+N(k)=\sum_{a=1}^g c_a\prod_{j\ne a}(k-\lambda_j).
+\tag{9.20}
+$$
+
+The original positive information coefficient and grouped weight are
+
+$$
+I(k)=\sum_a\frac{c_a}{k-\lambda_a}=\frac{N(k)}{F(k)},\qquad
+w_a(k)=\frac{\prod_{j\ne a}(k-\lambda_j)}{N(k)}.
+\tag{9.21}
+$$
+
+This is a formula for one coordinate per pole group, not a sum of
+its equal components. The four signed modes give
+
+$$
+\sum_a c_a=0,\qquad
+\sum_a c_a\lambda_a=(X+Y-r)-X-Y=-r\ne0.
+\tag{9.22}
+$$
+
+Hence $N$ has degree exactly $g-2$, with leading coefficient $-r$.
+Furthermore
+
+$$
+N(\lambda_a)=c_a\prod_{j\ne a}(\lambda_a-\lambda_j)\ne0.
+\tag{9.23}
+$$
+
+Thus none of its roots can cancel a numerator in (9.21). The positivity
+of $I$ excludes roots in $J_b$. If $g>2$, $N$ is nonconstant and has
+a complex root, so every $w_a$ has a genuine pole. At a pole of order
+$q\ge1$, its $n$th derivative has pole order $q+n$ with nonzero leading
+coefficient. In a finite constant linear relation among
+$w_a,w_a',\ldots,w_a^{(n)}$, the largest derivative has the unique
+highest pole order and cannot cancel. A relation holding on the real
+interval would be a rational-function identity after clearing
+denominators, so this complex-pole argument applies. Therefore all
+$Q_n$ are linearly independent over $\mathbb R$ when $g>2$.
+The $\partial_k$ component then makes $P$ independent as well.
+
+The possible pole exceptions can also be enumerated explicitly.
+Before grouping, the numerator over the four mode factors is
+
+$$
+N_4(k)=-rk^2+2XYk+XY(r-X-Y),\qquad
+\operatorname{disc}(N_4)=4XY(r-X)(r-Y)>0.
+\tag{9.24}
+$$
+
+In the neither-wall regime its two distinct roots are
+$(XY\pm\sqrt{XY(r-X)(r-Y)})/r$, and (9.23) rules out any cancellation.
+On $E_-$ only the duplicated factor is $k$, and grouping gives
+$N(k)=-rk+2XY$. On $E_+$ only, writing $X=Y=x$, the duplicated
+factor is $k-x$, and grouping gives
+$N(k)=-rk+x(2x-r)$. Each is genuinely linear, and (9.23) still
+excludes cancellations. On both walls the grouped numerator is the
+nonzero constant $-r$. These cases exhaust the allowed same-sign
+collisions; opposite-sign collisions are excluded by the strict
+mean inequalities of Definition 2.1. In particular neither a choice
+of the positive middle mass nor a special interior height introduces
+an extra finite-dimensional case.
+
+When $g=2$, Theorem 3.7 gives affine $w$, so $Q_n=0$ for $n\ge2$.
+The determinant of $Q_0,Q_1$ in $(u,v)$ is $-1/(2r)\ne0$.
+Thus $P,Q_0,Q_1$ are a basis, with the central bracket asserted.
+Theorem 9.3 supplies its actual chronological representation and
+lawful histories. Its nonzero center and vanishing further brackets
+also distinguish it from $\mathfrak{so}(3)$.
+
+For pointwise rank in every regime, set $f_a(k)=1/(k-\lambda_a)$.
+At a fixed interior $k$, the matrix with columns $f^{(n)}(k)$,
+$0\le n<g$, has entries
+
+$$
+f_a^{(n)}(k)=(-1)^n n!\,(k-\lambda_a)^{-n-1}.
+\tag{9.25}
+$$
+
+Its determinant is nonzero: factor $1/(k-\lambda_a)$ from each row
+and $(-1)^n n!$ from column $n$, leaving the Vandermonde matrix in
+the distinct numbers $1/(k-\lambda_a)$. Multiplication by the
+nonzero scalar function $1/I$ changes this derivative-column matrix
+by a triangular column transformation with diagonal $1/I$.
+Consequently $w,w',\ldots,w^{(g-1)}$ also have independent values
+at every $k$. These supply all $g$ vertical tangent directions;
+$P$ adds the remaining one. This proves the stated ranks without
+identifying tangent rank with the dimension of the vector-field algebra.
+
+The phase flow of $Q$ is lawful for all finite times because it fixes
+$k$. The probability flow of $P$ is lawful only while $k+t\in J_b$.
+Even the central double-wall endpoint flow, though defined everywhere
+as a phase formula, requires an excursion for a nontrivial command
+of that central type. By Theorem 9.2 no such excursion command is
+lawful on the whole unknown-height fiber. Global flow existence as a
+mathematical vector field therefore does not remove the command-domain
+restriction. $\square$
+
+### 9.4 Nonlinear prediction and a shared affine encoder
+
+**Definition 9.6 (Future-output factorization on a common domain).**
+Fix a nonempty open interval $I\subset J_b$ and use the same realized
+source
+
+$$
+\mathcal D=I\times(U_b/\Lambda_b).
+\tag{9.26}
+$$
+
+It is a subset of the reachable domain in Theorem 8.2, with the same
+fixed preparation phases. A command is common legal on $\mathcal D$
+when $I\subset D_\gamma$. Its future response is the original
+$10$-component vector $y(T_\gamma x)$ from (8.8). A shared fixed affine
+factorization of dimension $n<\infty$ would consist of one function
+$z:\mathcal D\to\mathbb R^n$ and, for each such command, constants
+$c_\gamma\in\mathbb R^{10}$ and
+$L_\gamma:\mathbb R^n\to\mathbb R^{10}$ satisfying
+
+$$
+y(T_\gamma x)=c_\gamma+L_\gamma z(x)
+\quad\text{for every }x\in\mathcal D
+\text{ and every common legal }\gamma.
+\tag{9.27}
+$$
+
+The encoder is arbitrary: no linearity, continuity, measurability,
+injectivity or computability is assumed. The decoder and offset may
+depend on the continuation, fixed means and fixed preparation, but
+not on the hidden current state or its producing history. Common
+legal commands need not return into $\mathcal D$ for this terminal
+query. The phase-only subfamily used below does preserve $\mathcal D$,
+so the same lower bound applies if that preservation is required.
+A finite sequence is a command by concatenation on its actual domain.
+The all-future fixed affine capacity is the least such $n$, or
+$+\infty$ if no finite $n$ exists.
+
+**Theorem 9.7 (Exact nonlinear predictive state on the same rays).**
+Under the relative command convention, the current ray determines
+lawfulness and all future original outputs. Two actual prefixes with
+the same current ray admit exactly the same commands and give the
+same future outputs under each one. Conversely, equality of future
+outputs for all common legal commands, including the constant command,
+forces equality of their current rays. Thus the future observational
+quotient is exactly $\mathcal M_b$, of intrinsic dimension $g+1$.
+It has the global finite real state representation
+
+$$
+E(k,[h])=(k,(\cos h_a,\sin h_a)_{a=1}^g)\in\mathbb R^{1+2g},
+\tag{9.28}
+$$
+
+with nonlinear updates given by (9.4). The ten current outputs are
+another sufficient finite representation by Theorem 8.4. On the double
+wall the four real coordinates $z=(z_a,z_b)$ of (8.18) are already
+sufficient, with the following exact update for a command of summary
+$(A,B,K)$ on its lawful domain:
+
+$$
+\begin{aligned}
+k&=\frac{\|z_b\|^2}{4Z},\\
+z_a'&=
+\sqrt{\frac{(k+A)(r/2-k-A)}{k(r/2-k)}}\,
+ R_{B/2}z_a,\\
+z_b'&=\sqrt{\frac{k+A}{k}}\,
+ R_{B/2-(kB+K)/r}z_b.
+\end{aligned}
+\tag{9.29}
+$$
+
+These states do not reconstruct real phase lifts, integer winding or
+past path lawfulness from their endpoints.
+
+Proof. The command domain depends only on $k$, which is part of the
+current ray. Its phase integral (9.3) depends only on that height and
+the command, not on any previous history or chosen real phase
+representative. Therefore (9.4) yields identical rays and outputs
+from identical current rays. This also applies after every lawful
+concatenation by (9.6). The constant command is lawful everywhere;
+Theorem 8.4 then proves the converse from the unchanged current
+outputs. It also supplies the smooth inverse needed for the
+output-state representation, and Theorem 8.2 supplies the intrinsic
+dimension. Formula (9.28) records precisely $k$ and all grouped phase
+classes, so is globally injective and updates each circle by the
+rotation through $H_{\gamma,a}(k)$.
+
+For (9.29), (9.11) gives
+$\alpha'=\alpha+B/2$ and
+$\beta'=\beta+B/2-(kB+K)/r$. Substitute $k'=k+A$ and these angles
+into (8.18). All square roots and denominators are positive on the
+lawful domain. The fixed preparation phases are contained in the
+original decoder $O D_0$ of (8.19); none are set to zero by the update.
+The real representation has the same curved three-dimensional image
+(8.20), so its four coordinates do not assert intrinsic dimension four.
+
+For the last assertion, the prefixes of Proposition 8.3 with identical
+current rays and different lifted winding remain examples here.
+Appending the same command adds $B_\gamma$ to both relation lifts;
+it does not erase their difference. If winding is queried, the actual
+real lift is additional data. Likewise (9.4) predicts future
+lawfulness conditional on an actual current source state; it does
+not certify a proposed past path. $\square$
+
+**Theorem 9.8 (No finite shared affine encoder for all future outputs).**
+For every mean satisfying Definition 2.1, every fixed preparation
+phase vector, and every nonempty open interval $I\subset J_b$, there
+is no finite $n$ and no factorization (9.27). Nonexistence holds even
+when the continuation menu consists only of the universally lawful
+phase commands
+
+$$
+\gamma_t(s)=(0,ts),\qquad 0\le s\le1,\quad t\in\mathbb R.
+\tag{9.30}
+$$
+
+More precisely, for any $N$ distinct real values $t_1,\ldots,t_N$,
+the constant function and the $2N$ real future $02$ output functions
+for these commands are linearly independent on $\mathcal D$.
+Thus any shared affine encoder for just these $N$ future pairs
+already requires $n\ge2N$. No regularity of the encoder is required.
+
+Proof. The $02$ character is the increment of the pole group containing
+mode $0$, since $h_2=0$. For (9.30) the complex number whose real and
+imaginary parts are the two original doubled outputs is exactly
+
+$$
+Y_t(k,h)=2\sqrt{Zp_0(k)}\,
+ e^{i(\delta_{02}^0+h_0)}e^{itw_0(k)}.
+\tag{9.31}
+$$
+
+This uses the original negative state-phase convention:
+$\overline\psi_0\psi_2$ has positive phase
+$\delta_{02}^0+h_0+tw_0(k)$. The command fixes every current probability,
+is lawful for all of $J_b$ and every real $t$, and preserves
+$\mathcal D$ exactly. It is one original phase leg, with variation
+$|t|$; it assumes neither unknown-state feedback nor a new operation.
+
+The grouped expression (9.21) proves that $w_0$ is nonconstant on
+every nonempty open interval. Its numerator has degree $g-1$ and its
+denominator degree $g-2$, with nonzero leading coefficient $-r$.
+They have no common root by (9.23). A constant equality on an interval
+would imply a polynomial identity between these unequal degrees.
+This argument includes both individual walls and $g=2$, where
+$w_0=1/2-k/r$. The function is real analytic on $J_b$; hence every
+nonempty open interval contains a smaller one on which $w_0'$ is
+nonzero and $w_0$ ranges over an open real interval.
+
+Suppose real constants $c,a_j,b_j$ satisfy
+
+$$
+c+\sum_{j=1}^N\{a_j\operatorname{Re}Y_{t_j}
+                   +b_j\operatorname{Im}Y_{t_j}\}=0
+\quad\text{on }\mathcal D.
+\tag{9.32}
+$$
+
+At a fixed $k$, vary the phase coordinate $h_0$ over its full circle,
+which is independent in $U_b/\Lambda_b$ even when mode $0$ belongs
+to a multiple-mode group. The zeroth Fourier coefficient gives $c=0$.
+The first Fourier coefficient, after dividing by the nonzero factor
+$2\sqrt{Zp_0(k)}e^{i\delta_{02}^0}$, gives
+
+$$
+\sum_{j=1}^N(a_j-i b_j)e^{it_jw_0(k)}=0.
+\tag{9.33}
+$$
+
+On a smaller interval set $x=w_0(k)$. Differentiating this identity
+with respect to $x$ through orders $0,\ldots,N-1$ at any point $x_*$
+gives the matrix $((it_j)^q e^{it_jx_*})_{q,j}$. Its determinant is
+
+$$
+\left(\prod_j e^{it_jx_*}\right)
+ i^{N(N-1)/2}\prod_{j<l}(t_l-t_j)\ne0.
+\tag{9.34}
+$$
+
+Thus $a_j-i b_j=0$ for every $j$, proving the claimed real independence
+and including the constant. Arbitrary preparation only multiplies
+(9.33) by a fixed unit complex factor, so cannot change this conclusion.
+This proof works for any finite set of distinct $t_j$, even chosen
+inside one bounded open interval of phase increments.
+
+If (9.27) held, all scalar future outputs and the constant would lie
+in the real vector space of functions
+$\operatorname{span}_{\mathbb R}\{1,z_1,\ldots,z_n\}$, of dimension
+at most $n+1$. The independence just proved shows that these $N$ commands
+already require dimension at least $2N+1$. Therefore $n\ge2N$ for
+every $N$, an impossibility for finite $n$. This is a statement about
+functions on the same realized domain, so arbitrary nonlinear or
+discontinuous encoders and all continuation-dependent fixed offsets
+are still in scope.
+
+The observable-span viewpoint is the classical supplier, as in
+Brunton, Brunton, Proctor and Kutz,
+[*Koopman invariant subspaces and finite linear representations of nonlinear dynamical systems for control*, §2](https://arxiv.org/html/1510.03007v2),
+and [Observer closure, §7](OBSERVER_CLOSURE_SPECTRUM.md).
+Here the pullbacks are $f\mapsto f\circ T_{\gamma_t}$, the same source
+is (9.26), and the measured functions are the original pair (9.31).
+The general viewpoint alone does not supply the nonconstant native
+frequency, universal lawfulness, or the arbitrary-encoder obstruction;
+those are established above. No linear state-update assumption was
+used, so requiring fixed affine updates as well cannot evade the
+lower bound. $\square$
+
+### 9.5 The conditional three-dimensional state and the interface boundary
+
+**Corollary 9.9 (Distinct dimensions and retained restrictions).**
+Under Definitions 8.1 and 9.1, the double wall has a three-dimensional
+nonlinear sufficient current-ray state and a three-dimensional real
+native Lie algebra, but infinite all-future fixed affine capacity on
+every domain (9.26). Off that wall the native real Lie algebra is
+infinite dimensional even though the current-ray state remains finite
+dimensional. Neither conclusion changes the current capacities
+$10,6,4$ of Theorem 8.6, the closed-loop fixed-base capacities $6,4,3$
+of Theorem 4.2, or the zero-winding double-wall value $2$ of
+Proposition 4.3. Nor does it give a mean-selection law or a realization
+of physical spatial axes.
+
+Proof. Combine Theorems 9.5, 9.7 and 9.8 on their stated domains.
+For the current-output task only the constant continuation is queried;
+Theorem 8.6 therefore retains its finite factorization. In Theorem 9.8
+the starting height ranges over an open interval even though each
+witness continuation individually fixes that height. This differs
+from a task whose starting probability is fixed once and for all.
+At a single height the frequency $w_0(k)$ in (9.31) is constant,
+and its future pair lies in the span of the current sine and cosine.
+Thus the unbounded-span proof makes no assertion contradicting a
+fixed-probability endpoint capacity or closure.
+
+The original loop conditions further fix the terminal height and
+require an integral relation-phase winding; they define the smaller
+phase domains of Theorem 3.3. On the double wall a command that is
+itself a loop based at its current starting height has $A=0$ and
+$B=2\pi m$, with real phase integral $kB+K$. At the preparation
+height, substitution into (9.11) recovers exactly Theorem 3.7, including
+its parity and negative phase convention. For a preceding prefix with
+real relation increment $L_*$, the total increment instead is
+$L_*+B$; the command winding does not replace that history record.
+Actual zero winding still means the relevant real increment is zero,
+not merely an endpoint phase class. The finite capacities for the
+original restricted tasks are therefore preserved.
+
+The same-source requirement in the
+[observer interface, Hypothesis 10.1 and Theorem 10.2](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)
+includes a common linear realization, calibrated distance and all
+generator closure. The
+[harmonic interface, Definitions 9.1 and 12.1](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md)
+requires rotational intertwining and a shared linear response source,
+respectively. Theorem 9.8 excludes any finite realization of (9.27)
+for the present complete future menu, even with an arbitrary encoder;
+it does not negate those conditional interface theorems for their
+other declared tasks. The Heisenberg algebra and the partial action
+in Theorems 9.3 and 9.5 supply no free $SO(3)$ or $SU(2)$ rotations.
+Definition 3.1 keeps the means fixed and contains no rule selecting
+$X=Y=r/2$. A physical actuator realizing the relative commands, a
+method of acquiring exact expectations, a finite-memory or finite-bit
+implementation, and a mapping to spatial axes are additional bridges,
+not consequences of these source equations.
+
+The source-specific conclusions here concern the lawful family (9.2),
+its exact chronological action, the grouped-pole Lie classification,
+and the independent future responses (9.31). They consume the
+reachability and current observation results of §§3 and 8, and the
+classical chronological and observable-span suppliers at their cited
+entries; they assert no worldwide priority for those suppliers or for
+these ordinary mathematical deductions. $\square$
+
+## 9.99 追加锚
