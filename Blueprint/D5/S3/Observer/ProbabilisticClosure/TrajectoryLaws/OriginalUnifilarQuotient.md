@@ -8,7 +8,49 @@ Fix every original finite exact-real Presentation theta, with normalized nonnega
 
 Use exactly retainedLaw(theta), jointLaw(theta) and visibleLaw(theta) from OriginalLawTrimming. Write J=jointLaw(theta) and P=visibleLaw(theta). The actual Q(t)=originalClass(theta,t) is the quotient of positive-mass states by equality of their complete future output laws, identified by OriginalFutureScreening.same_law_future_screening with the existing all-finite-cylinder futureSetoid. Null original hidden states retain their same total measurable extension. No minimality among presentations is asserted.
 
-**Definition 1.1 (Class stationary row).**
+For any finite initial index set S, a nonnegative real mass a(i), an arbitrary endpoint map f:S to C and a maximizing endpoint m, grouping the initial masses by f gives the unnormalized endpoint decision problem. C need not be finite in grouped_map_pair_bound; all zero groups and MAP ties are allowed. These finite sum and square-root estimates require no unifilarity. actual_map_pairs applies them to the actual same-law endpoint cells; actual_geometric_classification uses their stationary coefficient bound.
+
+**Definition 1.1 (Unordered stationary pair coefficient).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.pairWeight`
+
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.pairWeight` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite S with decidable equality and real mass function pi, pairWeight(pi) is half the sum over all ordered distinct i,j of sqrt(pi(i)*pi(j)). There is no ordering built into the definition. pair_weight_bound proves that it equals the sum over i<j for every linear ordering on S.
+
+**Theorem 1.2 (Actual endpoint grouping discards merged pairs).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.grouped_map_pair_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.grouped_map_pair_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite S with decidable equality, every target C with decidable equality, every nonnegative a:S to real, every f:S to C and every m:C maximizing all grouped sums, sum_i a(i) minus sum_{f(i)=m} a(i) is at most half the ordered sum of sqrt(a(i)*a(j)) over pairs satisfying f(i) != f(j). Equivalently, for any ordering it is at most the unordered nonmerged-pair sum.
+
+For an initial i outside the maximizing endpoint, its mass is at most its own group mass and hence at most the maximizing group mass. The square of the sum of sqrt(a(i)*a(j)) over j in the maximizing group is at least a(i) times that group mass, using the finite nonnegative sum-of-squares inequality. Thus that sum dominates a(i). Summing the initial errors gives a star of cross-group pairs. The two orientations of that star are disjoint, symmetric and contained in the full nonmerged ordered pair sum. This proves the factor one half and omits every merged pair, including pairs with positive initial masses.
+
+**Theorem 1.3 (Stationary coefficient and cardinal bound).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.pair_weight_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.pair_weight_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite S with decidable equality and normalized nonnegative real pi, pairWeight(pi) is nonnegative and at most (card(S)-1)/2. For every linear ordering on S it equals sum_i sum_{j:i<j} sqrt(pi(i)*pi(j)).
+
+The ordered off-diagonal sum equals (sum_i sqrt(pi(i))) squared minus one. Finite Cauchy-Schwarz bounds that square by card(S). Splitting distinct ordered pairs by their two orderings proves equality with twice the unordered sum. The cardinal bound controls the coefficient in actual_geometric_classification. In a singleton class space D=0.
+
+**Definition 1.4 (Class stationary row).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.classWeight`
 
@@ -20,7 +62,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnif
 
 For a finite Presentation, classWeight(theta,a) sums the initial masses of all hidden i with classOf(matrix,i)=a. The actual quotient uses theta replaced by trim(theta), so pi(a)=classWeight(trim(theta),a).
 
-**Definition 1.2 (Weighted predictive successor kernel).**
+**Definition 1.5 (Weighted predictive successor kernel).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.classMatrix`
 
@@ -30,9 +72,9 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnif
 
 *Commentary.*
 
-For every finite binary matrix family M, classMatrix(M,x,a,b) is quotientMass(M,a,x) if b=quotientSuccessor(M,a,x), and zero otherwise. The mass is independent of a representative; for a positive mass its successor class is independent too. At zero mass the arbitrary successor has no contribution.
+For every finite binary matrix family M, classMatrix(M,x,a,b) is quotientMass(M,a,x) if b=quotientSuccessor(M,a,x), and zero otherwise. The mass is independent of a representative. When M is nonnegative and satisfies RowUnifilar, the successor class at a positive symbol mass is independent of the representative too. At zero mass the arbitrary successor has no contribution.
 
-**Definition 1.3 (Coordinatewise marked class pushforward).**
+**Definition 1.6 (Coordinatewise marked class pushforward).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.classPath`
 
@@ -44,7 +86,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnif
 
 For every M and every bilateral hidden/output path z, classPath(M,z) applies classOf(M) to every integer hidden coordinate and keeps every output coordinate. This map is used on the selected retained law.
 
-**Definition 1.4 (Pushforward of the same original J).**
+**Definition 1.7 (Pushforward of the same original J).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.markedLaw`
 
@@ -56,7 +98,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnif
 
 For every original theta with measurable hidden singletons, markedLaw(theta) is the measure pushforward of the selected jointLaw(theta) under z maps to ((t maps to originalClass(theta,t,z)),z.output). Its output marginal is the same visibleLaw(theta).
 
-**Theorem 1.5 (Every actual marked cylinder on one original law).**
+**Theorem 1.8 (Every actual marked cylinder on one original law).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.actual_marked_quotient`
 
@@ -72,7 +114,7 @@ The proof uses the original cylinder law of retainedLaw and takes the finite dis
 
 The actual pushforward is identified with retainedLaw mapped by classPath through the proved includePath equality and the actual inclusion pushforward J. This is an equality of measures, not a separately chosen quotient law. Commutation of the coordinatewise map with integer shifts transfers stationarity. The visible projection commutes with the same map and preserves each original output cylinder. These all-interval marked cylinder equalities give the marked Markov path law with the specified stationary row and symbol kernel.
 
-**Theorem 1.6 (Strict same-law current-class MAP allowance).**
+**Theorem 1.9 (Strict same-law current-class MAP allowance).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.actual_geometric_classification`
 
@@ -99,7 +141,9 @@ The original emitted-bit clock and radius zero are unchanged; r/ell is natural d
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.classMatrix`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.classPath`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.classWeight`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.grouped_map_pair_bound`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.markedLaw`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.pairWeight`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarQuotient.pair_weight_bound`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison](OriginalErasureComparison.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/UnifilarAffinityContraction](UnifilarAffinityContraction.md)
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/UnifilarMapDomination](UnifilarMapDomination.md)

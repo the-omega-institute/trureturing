@@ -19,7 +19,7 @@ open MeasureTheory Filter
 open scoped BigOperators Classical Topology
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws
 open MarkedPredictiveQuotient PositiveSupportPresentation OriginalLawTrimming
-open OriginalErasureComparison OriginalUnifilarQuotient UnifilarMapDomination
+open OriginalErasureComparison OriginalUnifilarQuotient
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalUnifilarErasureTail
 universe u
