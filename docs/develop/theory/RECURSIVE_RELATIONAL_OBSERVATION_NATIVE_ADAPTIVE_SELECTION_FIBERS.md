@@ -7,10 +7,8 @@ finite computation, and forget intermediate descriptions. The selection
 rule remains part of the interpretation of its output.
 
 These are ordinary mathematical arguments, not Lean kernel verification.
-The volume is reference input with `generic-v1` numbered claims. Incorporated
-bytes are preserved; extensions and corrections follow the final append
-anchor. New deductions are `repo-derived`. Source and literature boundaries
-are stated in Sections 2 and 10.
+New deductions are `repo-derived`. Source and literature boundaries are
+stated in Sections 2 and 10.
 
 ## 1. One source, one program and three different fibers
 
@@ -895,16 +893,7 @@ cases refute the indicated overclaims without an empirical batch:
 The missing conditions are selection, exact capture lag, reachedness and
 the separate Return event. None disputes truthful records at validation.
 
-**Problem 9.3 (bounded next check and broader residual).** A next independent
-check can instantiate both directions of Theorem 3.4 on one adaptive
-program that generates a nonconstant literal address, experiences one
-failed validation, and retains a reached negative comparison. Its bounded
-obligation is to write the path contexts and all event-count inequalities,
-then reconstruct every satisfying active word with the same whole
-boundary. Separately check Theorem 7.3's normalization with a nonzero
-prevalidation count and arbitrary postvalidation burst. These are bounded
-proof checks, not replacements for the arbitrary-program theorem or a
-request for a numerical survey.
+**Problem 9.3 (broader mathematical residual).**
 
 The full adaptive domain has the countable representation and precise
 finite-representation obstruction above. Restricted selector classes,
@@ -936,10 +925,13 @@ native skeleton-constraint compilation and reverse replay preserving all
 accessible state (Theorem 3.4); cleaned native selection counterexamples
 (Propositions 4.1–4.2); exact computably enumerable backward-closed support
 classification despite universal finite-interference liveness (Theorem 5.2);
-one fixed total producer with undecidable exact source/count fiber and
-the resulting finite-language obstruction (Theorem 6.2 and Corollary 6.3);
+one fixed total producer admitting an exact source/count characterization
+with undecidable source projection, and the resulting finite-language
+obstruction (Theorem 6.2 and Corollary 6.3);
 and terminal-stamp candidate decision preserving prevalidation restrictions
 while normalizing the postvalidation suffix (Theorem 7.3).
+For supplied source and counts, (NASF.12) is decidable by bounded simulation;
+undecidability concerns the source projection (NASF.11).
 
 Lemma 3.2 expands finite navigation only to discharge the native grammar
 correspondence. Traversal, complete-row acquisition, whole-tree comparison,
@@ -952,11 +944,10 @@ fixed total-producer undecidability or terminal-stamp decision proved here.
 This is a scoped repository comparison, not worldwide originality evidence.
 No `suspected-novel` claim is made.
 
-**References 10.3 (verification boundary).** New results have written proofs.
-Source inspection and reference correspondence are not fresh Lean evidence.
-No Lean compilation, digestion, experimental batch or independent review
-result is asserted. Conditional algorithms retain their correctness and
-liveness promises; the broad research residual is stated in Problem 9.3.
+**References 10.3 (proof status and scope).** New results have ordinary
+written proofs, not Lean kernel verification. Conditional algorithms retain
+their correctness and liveness promises; the broad research residual is
+stated in Problem 9.3.
 
 [ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
 [CNA]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md
