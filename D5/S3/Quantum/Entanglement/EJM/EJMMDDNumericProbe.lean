@@ -4,6 +4,7 @@ original-score theorem, or an independently deliverable numeric instance. -/
 import D5.S3.Quantum.Entanglement.EJM.EJMMDDData
 import D5.S3.Quantum.Entanglement.EJM.EJMCacheState
 import D5.S3.Quantum.Entanglement.EJM.EJMMDDPrefixSimulation
+import D5.S3.Quantum.Entanglement.EJM.EJMMDDCacheBridge
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,16 +17,31 @@ open D5.S0.Certificates.FiniteMDDCacheSimulation
 open D5.S3.Quantum.Entanglement.EJM.EJMMDDData
 open D5.S3.Quantum.Entanglement.EJM.EJMCacheState
 open D5.S3.Quantum.Entanglement.EJM.EJMMDDPrefixSimulation
+open D5.S3.Quantum.Entanglement.EJM.EJMMDDCacheBridge
+
+set_option trace.profiler true in
+private theorem triangle_ordering_probe : ∀ j : Fin 8,
+    checkOrderedAt triangleNodes triangleLevel
+      ⟨4582 + j.val, by have h := j.isLt; change 4582 + j.val < 76663; omega⟩ = true := by
+  decide +kernel
+#print axioms triangle_ordering_probe
+
+set_option trace.profiler true in
+private theorem singleton_ordering_probe : ∀ j : Fin 8,
+    checkOrderedAt singletonNodes singletonLevel
+      ⟨1192 + j.val, by have h := j.isLt; change 1192 + j.val < 19951; omega⟩ = true := by
+  decide +kernel
+#print axioms singleton_ordering_probe
 
 set_option trace.profiler true in
 private theorem triangle_indexed_prefixes : ∀ j : Fin 8,
-    trianglePrefixCheck ⟨j.val, by have h := j.isLt; omega⟩ = true := by
+    trianglePrefixCheck ⟨j.val, by have h := j.isLt; change j.val < 65536; omega⟩ = true := by
   decide +kernel
 #print axioms triangle_indexed_prefixes
 
 set_option trace.profiler true in
 private theorem singleton_indexed_prefixes : ∀ j : Fin 8,
-    singletonPrefixCheck ⟨j.val, by have h := j.isLt; omega⟩ = true := by
+    singletonPrefixCheck ⟨j.val, by have h := j.isLt; change j.val < 16384; omega⟩ = true := by
   decide +kernel
 #print axioms singleton_indexed_prefixes
 

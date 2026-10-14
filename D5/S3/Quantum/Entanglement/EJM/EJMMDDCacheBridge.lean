@@ -35,6 +35,38 @@ structure OrderedDiagram (n N : ℕ) where
   branch_child : ∀ index i children, nodes index = .branch i children →
     ∀ a, level (children a) = level index + 1
 
+/-- The ordering check reads all four actual literal children of a branch. -/
+def checkOrderedAt {n N : ℕ} (nodes : Fin N → Node N (Fin n) (Fin 4))
+    (level : Fin N → ℕ) (index : Fin N) : Bool :=
+  match nodes index with
+  | .leaf _ => true
+  | .branch i children => decide (level index < n ∧
+      i.val = n - 1 - level index ∧ ∀ a, level (children a) = level index + 1)
+
+private theorem checked_branch_laws {n N : ℕ}
+    (nodes : Fin N → Node N (Fin n) (Fin 4)) (level : Fin N → ℕ)
+    (accepted : ∀ index, checkOrderedAt nodes level index = true)
+    (index : Fin N) (i : Fin n) (children : Fin 4 → Fin N)
+    (branch : nodes index = .branch i children) :
+    level index < n ∧ i.val = n - 1 - level index ∧
+      ∀ a, level (children a) = level index + 1 := by
+  apply of_decide_eq_true
+  simpa only [checkOrderedAt, branch] using accepted index
+
+/-- Only a complete per-node ordering receipt constructs the ordered diagram
+consumed by actual-cache transport. Numerical checks may be split into blocks. -/
+def checked_ordered_diagram {n N : ℕ}
+    (nodes : Fin N → Node N (Fin n) (Fin 4)) (level : Fin N → ℕ)
+    (accepted : ∀ index, checkOrderedAt nodes level index = true) : OrderedDiagram n N where
+  nodes := nodes
+  level := level
+  branch_lt := fun index i children branch =>
+    (checked_branch_laws nodes level accepted index i children branch).1
+  branch_coordinate := fun index i children branch =>
+    (checked_branch_laws nodes level accepted index i children branch).2.1
+  branch_child := fun index i children branch =>
+    (checked_branch_laws nodes level accepted index i children branch).2.2
+
 /-- In reverse order, all lower numbered coordinates remain unknown. -/
 def ReversePrefix {n : ℕ} (depth : ℕ) (p : Partial (Fin n) (Fin 4)) : Prop :=
   ∀ i, i.val < n - depth → p i = none
@@ -137,6 +169,7 @@ theorem checked_singleton_diagram_lower {N : ℕ} (diagram : OrderedDiagram 9 N)
     cases impossible
 
 #print axioms triangle_diagram_step
+#print axioms checked_ordered_diagram
 #print axioms singleton_diagram_step
 #print axioms checked_triangle_diagram_lower
 #print axioms checked_singleton_diagram_lower
