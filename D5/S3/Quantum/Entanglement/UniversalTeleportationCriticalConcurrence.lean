@@ -6,14 +6,8 @@
    utility: none
    digest: The exact critical concurrence for universal teleportation through qubit channels. -/
 
-import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
-import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
-import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
-import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
-import D5.S3.Quantum.Information.ActualPureQubitCostInfimum
-import D5.S3.Quantum.Information.ActualQubitChordObstruction
-import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 set_option autoImplicit false
 noncomputable section
@@ -198,8 +192,8 @@ private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
   obtain ⟨hp, htr, hm⟩ := out_state a (by linarith) ha1.le K hK
   have hUV := Matrix.kronecker_mem_unitary hU hV
   have ht : trace (localConj U V (out a K)) = 1 := by
-    rw [localConj.eq_def, trace_mul_cycle]
-    rw [← Matrix.star_eq_conjTranspose, Matrix.mem_unitaryGroup_iff'.mp hUV, one_mul, htr]
+    exact (D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction.unitary_trace
+      (out a K) ⟨U ⊗ₖ V, hUV⟩).trans htr
   have hpos : (localConj U V (out a K)).PosSemidef := hp.mul_mul_conjTranspose_same _
   refine ⟨hpos, ht, ?_⟩
   let M := partialTraceRight (localConj U V (out a K))
@@ -219,16 +213,9 @@ private lemma output_frame (a : ℝ) (ha : (1 / 2 : ℝ) < a) (ha1 : a < 1)
     rw [hM]
     change trace ((U * D * Uᴴ) * (U * D * Uᴴ)) = _
     calc
-      _ = trace (U * (D * D) * Uᴴ) := by
-        congr 1
-        simp only [Matrix.mul_assoc]
-        rw [← Matrix.mul_assoc Uᴴ,
-          (show Uᴴ * U = 1 by simpa only [Matrix.star_eq_conjTranspose] using
-            Matrix.mem_unitaryGroup_iff'.mp hU)]
-        simp only [one_mul]
-      _ = trace (D * D) := by
-        rw [trace_mul_cycle]
-        rw [← Matrix.star_eq_conjTranspose, Matrix.mem_unitaryGroup_iff'.mp hU, one_mul]
+      _ = trace (D * D) :=
+        D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction.unitary_purity_trace
+          D ⟨U, hU⟩
       _ = _ := by
         simp [D, Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal, Fin.sum_univ_two]
         ring
