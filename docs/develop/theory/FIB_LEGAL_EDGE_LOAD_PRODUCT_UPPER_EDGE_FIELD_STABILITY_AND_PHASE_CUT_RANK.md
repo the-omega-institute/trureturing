@@ -1618,3 +1618,162 @@ claim is made for these deductions or their ingredients.
 The unrestricted spectral comparison remains unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 14. Boundary-vacancy anchors give stability independent of chain length
+
+### 14.1. Average actual anchors rather than one rare vacuum
+
+**Definition 14.1 (Boundary-vacant anchor sectors).** Keep the
+positive path law, proper cut and arbitrary phase of §§8
+and 11. Let $L_0$ be the internally legal left words with
+site k empty, and let $R_0$ be the internally legal right
+words with site $k+1$ empty. Put
+
+$$
+B_{00}=\Pr_p(s_k=s_{k+1}=0)>0.
+\tag{14.1}
+$$
+
+For $u\in L_0,v\in R_0$, all pairs $(\ell,v)$,
+$(u,r)$ and $(u,v)$ are legal for every internally legal
+$\ell,r$. Define
+
+$$
+\begin{aligned}
+\mathfrak h_{u,v}(\ell,r)
+&=\frac{\chi(\ell,r)\chi(u,v)}{\chi(\ell,v)\chi(u,r)},\\
+W_{u,v}
+&=\sum_{(\ell,r)\text{ legal}}
+p(\ell,r)|1-\mathfrak h_{u,v}(\ell,r)|^2,\\
+a_{u,v}(\ell)&=\chi(\ell,v),\qquad
+b_{u,v}(r)=\frac{\chi(u,r)}{\chi(u,v)}.
+\end{aligned}
+\tag{14.2}
+$$
+
+Every term and phase belongs to the original legal carrier.
+The anchor sectors retain all words with the stated boundary
+vacancies; they do not replace the Gibbs law by a law on
+sectors. Let
+
+$$
+\delta_{\mathrm{local}}(\chi)
+=\inf_{|a|=|b|=1}
+\bigl\|\psi_\chi-(D_a\otimes D_b)\psi_+\bigr\|^2,
+\tag{14.3}
+$$
+
+where a and b range over arbitrary phases on the actual
+internally legal half-chain words.
+
+**Theorem 14.2 (Common-law boundary-vacancy stability).**
+There is an actual anchor pair $u\in L_0,v\in R_0$ such
+that
+
+$$
+W_{u,v}\le\frac{2\Delta_2(\chi)}{B_{00}}.
+\tag{14.4}
+$$
+
+Consequently,
+
+$$
+S(\psi_\chi)-S(\psi_+)
+\ge\Delta_2(\chi)
+\ge\frac{B_{00}}2\delta_{\mathrm{local}}(\chi).
+\tag{14.5}
+$$
+
+Proof. Keep in (11.5) only ordered rectangles whose second
+left and right corners satisfy $\ell'=u\in L_0$ and
+$r'=v\in R_0$. For every legal $(\ell,r)$ all four
+corners are legal, and product activity weights give
+
+$$
+a_{\ell r}a_{ur}a_{uv}a_{\ell v}
+=p(\ell,r)p(u,v).
+\tag{14.6}
+$$
+
+Unlike the four-orientation vacuum estimate, this selection
+keeps exactly one ordered-position condition. It is a subset
+of the full nonnegative rectangle sum, even when other
+corners are themselves boundary-vacant. Therefore
+
+$$
+\Delta_2(\chi)
+\ge\frac12\sum_{u\in L_0,v\in R_0}p(u,v)W_{u,v}.
+\tag{14.7}
+$$
+
+These anchor weights sum to $B_{00}$. The minimum of the
+finite nonempty family $W_{u,v}$ is no larger than its
+weighted average. Hence some actual pair satisfies (14.4).
+Its phases in (14.2) give
+$W_{u,v}=\|\psi_\chi-(D_{a_{u,v}}\otimes D_{b_{u,v}})
+\psi_+\|^2$, by the same coefficientwise calculation as
+(11.4). The infimum in (14.3) is at most this distance.
+Rearranging (14.4) and applying Theorem 11.2 proves (14.5).
+$\square$
+
+The anchor probabilities, phase increments and reduced
+purity belong to the same actual state family and law.
+No independently attainable local optimum is treated as
+jointly attainable, and no anchor phase is inferred from
+occupation data. The existence of a good anchor does not
+supply a measurement procedure for finding it.
+
+### 14.2. The original conditional law controls the constant
+
+**Proposition 14.3 (A local activity bound for the anchor mass).**
+On the positive hard-core path law,
+
+$$
+B_{00}\ge\frac1{1+\lambda_k+\lambda_{k+1}}.
+\tag{14.8}
+$$
+
+In particular,
+
+$$
+\Delta_2(\chi)
+\ge\frac{\delta_{\mathrm{local}}(\chi)}
+{2(1+\lambda_k+\lambda_{k+1})}.
+\tag{14.9}
+$$
+
+If both cut activities are at most M, the coefficient is
+at least $1/[2(1+2M)]$, independent of n and of activities
+far from the cut.
+
+Proof. Condition on any outside word having positive
+probability. The two boundary sites allow only 00, 10 and
+01. Neighboring outside occupations may suppress 10 or
+01; they cannot suppress 00. The three relative weights
+are $1,\epsilon_L\lambda_k,\epsilon_R\lambda_{k+1}$,
+where each $\epsilon$ is zero or one according to actual
+outside compatibility. Thus
+
+$$
+\Pr(00\mid\text{outside word})
+=\frac1{1+\epsilon_L\lambda_k+
+\epsilon_R\lambda_{k+1}}
+\ge\frac1{1+\lambda_k+\lambda_{k+1}}.
+\tag{14.10}
+$$
+
+Average over the original outside-word law to get (14.8),
+and use (14.5) to obtain (14.9). $\square$
+
+The reference rank two is required for the entropy step
+in (14.5), while the weighted-anchor purity calculation
+uses the actual blockaded product amplitudes. The constant
+improves the full-vacuum factor $1/Z$ by summing an entire
+compatible anchor sector. It does not price the diagonal
+controls needed to realize the selected phases, give a
+spectral gap bound for the update parent, or extend to a
+Gibbs law with extra crossing interactions without a new
+proof of (14.6).
+
+## 追加锚（本行以下为增补区）
