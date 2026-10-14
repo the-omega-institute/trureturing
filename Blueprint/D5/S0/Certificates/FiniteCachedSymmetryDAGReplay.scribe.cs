@@ -7,23 +7,20 @@ internal sealed class FiniteCachedSymmetryDAGReplayDocument : IScribeDocumentDef
     private const string Prefix = "D5/S0/Certificates/FiniteCachedSymmetryDAGReplay.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exhaustive cached replay retains every actual context.",
-        H("Exhaustive cached replay retains every actual context."),
+        "Sound actual-context shared-DAG checking with a proved cache",
+        H("Sound actual-context shared-DAG checking with a proved cache"),
         Blocks(
-            Paragraph(Text("The same shared node index is evaluated with the complete actual partial assignment and its own cache. Every split checks every possible value. Bound leaves require a proved cache lower bound; symmetry leaves require an earned strict rank descent. A fuel-indexed invariant supplies only the positive-fuel transition obligations that an accepted replay can actually consume. Neither a producer assertion nor a node-only table is an acceptance premise. The complete concrete EJM consumer must establish all invariants and kernel-check the actual root replay.")),
-            Describe.Lean(DescribeId.Create("check"),
-                DeclarationHandle.Create(Prefix + "check"),
-                H("Replay all original value branches with actual state"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Zero fuel rejects. A bound checks the cache lower, a symmetry checks dominance on the same actual partial assignment, and every split updates both that assignment and its own cache."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("checked-forces-smaller-bad-event"),
-                DeclarationHandle.Create(Prefix + "checked_forces_smaller_bad_event"),
-                H("Every bad original event yields a smaller bad event"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Accepted replay and the actual cache invariant force either a contradiction at a bound or an earned strict descent. The split induction consumes a validity-preserving step only when its remaining fuel is positive."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("checked-global-lower-bound"),
-                DeclarationHandle.Create(Prefix + "checked_global_lower_bound"),
-                H("Complete acceptance proves the global lower bound"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Strong induction on the original event rank closes all possible bad events after full root acceptance and the initial actual-context invariant are proved. This theorem alone does not assert any concrete numerical certificate is accepted."))), DescribeRole.Theorem)))));
+            Paragraph(Text("Every split checks all values with the actual updated partial assignment and new cache; bound nodes check the cache lower and symmetry nodes check actual dominance. A fuel-indexed semantic cache invariant must be proved initially and across every successful split with positive remaining child fuel. Exhausted-fuel child checks reject directly and do not require irrelevant known-coordinate transitions. No node index alone transfers arithmetic or context correctness.")),
+            Node("check", "check", "Full actual-context cached Boolean replay",
+                "Fuel zero returns false. Bound, symmetry and split checks retain the same complete actual event semantics and every possible value branch.", DescribeRole.Definition),
+            Node("checked-forces-smaller-bad-event", "checked_forces_smaller_bad_event", "Every accepted bad event earns strict rank descent",
+                "Fuel induction uses the proved cache lower invariant at bounds, actual dominance at symmetry cuts and actual compatibility/update plus cache validity at each selected complete-event branch. An exhausted child is rejected before any unnecessary step premise is used.", DescribeRole.Theorem),
+            Node("checked-global-lower-bound", "checked_global_lower_bound", "Full accepted cached replay bounds every original event",
+                "Strong induction on the event's natural-number rank rules out any bad event using the previous descent theorem. Exact score invariance, complete actual acceptance and all semantic cache obligations are mandatory.", DescribeRole.Theorem))));
+
+    private static DocumentBlock Node(string id, string declaration, string title, string prose,
+        DescribeRole role) => Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), role);
 }

@@ -7,33 +7,24 @@ internal sealed class FiniteLocalRowCacheDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S0/Certificates/FiniteLocalRowCache.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Checked local row transitions preserve original assignments.",
-        H("Checked local row transitions preserve original assignments."),
+        "Exact local-row transition cache soundness",
+        H("Exact local-row transition cache soundness"),
         Blocks(
-            Paragraph(Text("The generic state retains a row index and a complete earned action. Its association predicate compares the full indexed row assignment with the action on the current actual partial assignment. The transition checker, update law, and composition law earn the new association; original row bounds and score invariance then give the actual event lower bound. The live EJM cache consumer must supply all those proofs and complete global acceptance.")),
-            Describe.Lean(DescribeId.Create("associated"),
-                DeclarationHandle.Create(Prefix + "Associated"),
-                H("Full original-row association"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The equality concerns the entire indexed row assignment and the actual partial-event function after its earned action."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("checktransition"),
-                DeclarationHandle.Create(Prefix + "checkTransition"),
-                H("Check the complete proposed original update"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Acceptance compares the next complete row assignment with the proposed next action on the original updated row assignment."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("step"),
-                DeclarationHandle.Create(Prefix + "step"),
-                H("Compose the new action with the old earned action"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The old action transports the original coordinate and outcome to the indexed row before the next transition is queried."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("checked-step-associated"),
-                DeclarationHandle.Create(Prefix + "checked_step_associated"),
-                H("Accepted transitions preserve the original actual-context association"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact assignment equality follows from the previous association, checked complete update, and proved update and composition laws."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("associated-lower-bound"),
-                DeclarationHandle.Create(Prefix + "associated_lower_bound"),
-                H("Original accepted row bounds apply to the actual event"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Compatibility and score invariance transport the checked indexed-row lower bound back to the original event."))), DescribeRole.Theorem)))));
+            Paragraph(Text("A state associates an original row assignment with an actual partial event through an earned symmetry action. The generic theorem checks an entire transition assignment, transports the actual coordinate fill through the previous action, and composes the new action with the old one. It supplies no concrete table acceptance and does not substitute a producer premise for the actual row checker.")),
+            Node("Associated", "Associated", "Whole-function row association",
+                "The original stored row assignment equals the actual partial action of the earned symmetry on the complete original partial event.", DescribeRole.Definition),
+            Node("checkTransition", "checkTransition", "Exact entire assignment transition check",
+                "The next row assignment must equal the actual next action applied to the original row assignment with this coordinate and value filled.", DescribeRole.Definition),
+            Node("step", "step", "Transport the real fill before a row transition",
+                "The old action determines the representative coordinate preimage and transformed value. The returned action is composed with the old earned action in the supplied proven order.", DescribeRole.Definition),
+            Node("checked-step-associated", "checked_step_associated", "A checked transition preserves the actual association",
+                "Actual update and composition laws, the old full association and the complete transition check establish the new full association after the original coordinate fill.", DescribeRole.Theorem),
+            Node("associated-lower-bound", "associated_lower_bound", "An accepted original row bounds the original compatible event",
+                "Complete actual row acceptance gives a bound on the transported compatible completion. Exact score invariance returns the same bound on the original completion.", DescribeRole.Theorem))));
+
+    private static DocumentBlock Node(string id, string declaration, string title, string prose,
+        DescribeRole role) => Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), role);
 }
