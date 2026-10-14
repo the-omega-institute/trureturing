@@ -18,7 +18,7 @@ The ambient map sends (x,v) to the actual pair (x,v) in B times C^n. Its image i
 
 The parameters n and r are arbitrary natural numbers; zero-dimensional fibers, zero ambient dimension, and an empty base are retained. There is no compactness, positivity of rank, nonempty base, global frame, or assumed bundle hypothesis. The result is a general geometric constructor. The actual Ephys and Fsyn application, the Theta tensor equivalence, positive trace-one sigma and decoder factorization, global transport, and integral Chern claims are separate open obligations.
 
-The proof uses the pinned Mathlib vector prebundle construction, finite-dimensional linear maps, matrix rank and Gram positivity, and smooth inversion. This is a source-level formalization of the classical local-frame construction; no literature novelty or resolution of the whole ST37 or issue 8340 is asserted.
+The proof uses the pinned Mathlib vector prebundle construction, finite-dimensional linear maps, matrix rank and Gram positivity, and smooth inversion. This is the classical local-frame construction.
 
 **Remark 1.1 (V).**
 
