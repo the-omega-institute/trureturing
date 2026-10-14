@@ -2385,3 +2385,1442 @@ finite-measurement acquisition, training, implementation or
 task-transfer guarantee.
 
 ## 9.99 追加锚
+
+## 10. Finite affine factors of native continuation
+
+The full native command menu determines an exact universal information
+loss even when the encoder is an arbitrary function. Every finite affine
+factor erases rational common turns. For each specified irrational common
+turn there is a four-real-coordinate factor that distinguishes it, using
+a complex field automorphism and choice. Continuous factors, and more
+generally factors bounded on each common-phase orbit, erase the whole
+common circle. The full difference circle remains available.
+
+The structural statement underlying these conclusions is an **abstract
+circle action by unipotent affine automorphisms** on the affine image
+hull. Unipotence refers to the homogenized matrices. Neither regular
+dependence on the circle parameter nor a Zariski-closed image is part of
+this statement. A proper infinite translation subgroup below shows why
+the latter property cannot be added in general.
+
+### 10.1 Actual rays, native commands and the factor contract
+
+**Definition 10.1 (Finite affine factor, without a readout).**
+Fix
+$0<Z<1$, $r=1-Z$, $H=r/2$ and $0<a<b<H$, and set
+$I=[a,b]$, $\ell=b-a$ and $\mathbb T=\mathbb R/(2\pi\mathbb Z)$.
+Keep one arbitrary fixed preparation with height $k_0\in(0,H)$
+and phases $\theta^{\rm in}$. The source is
+$\mathcal M_I=I\times\mathbb T^2$ of actual current rays, in
+coordinates $(k,u,v)$. Its commands, for every signed real $s,t$, are
+
+$$
+P_s(k,u,v)=(k+s,u,v),\qquad
+D_s=\{(k,u,v)\in\mathcal M_I:k+s\in I\},
+$$
+
+$$
+Q_t(k,u,v)=
+ \left(k,u+\left(\frac12-\frac kr\right)t,v-\frac kr t\right),
+\qquad \operatorname{dom}Q_t=\mathcal M_I.
+$$
+
+A finite affine factor consists of an arbitrary function
+$E:\mathcal M_I\to\mathbb R^n$, $0\le n<\infty$, and fixed
+affine maps, one for each command,
+
+$$
+\mathcal A_s(z)=L_s z+p_s,\qquad
+\mathcal B_t(z)=M_t z+q_t,
+$$
+
+satisfying
+
+$$
+E(P_sx)=\mathcal A_sE(x)\quad(x\in D_s),\qquad
+E(Q_tx)=\mathcal B_tE(x)\quad(x\in\mathcal M_I).
+$$
+
+The coefficients may depend on the command and the fixed task parameters,
+but not on the current state or its producing history. Both offsets are
+arbitrary. No decoder, injectivity, continuity, measurability, boundedness,
+computability, parameter regularity, ambient invertibility or ambient
+representation law is assumed. The case $n=0$ permits the constant
+factor into a singleton.
+
+The identities apply on the entire lawful source domains and therefore
+after every finite valid word, from every exactly encoded initial ray.
+For $|s|=\ell$ the probability domain is one endpoint slice; for
+$|s|>\ell$ it is empty. No condition is imposed on an off-domain ray
+or an arbitrary off-image feature vector. No requirement that guards be
+recoverable from an arbitrary factor is added. The explicit factors
+constructed below do retain height and hence have saturated guards.
+
+The common-turn maps used in the conclusions are
+
+$$
+C_c(k,u,v)=(k,u+c,v+c),\qquad c\in\mathbb T.
+$$
+
+They are defined on actual rays. They will be obtained from lawful
+rectangles, not postulated as extra independently available controls.
+A stronger version of the factor contract also asks for one affine
+update for every prescribed simultaneous native path on its entire
+all-times guard. All the universal identifications below hold for that
+version as well, and all the separating witnesses supplied below satisfy
+it directly.
+
+**Proposition 10.2 (Native source and finite reachability bridge).**
+Definition 10.1 has exactly the native probability, phase and ray
+interpretation of §§1 and 7, for arbitrary preparation. In particular
+every stated source point is exactly finitely reachable, including both
+band endpoints.
+
+**Proof.** In mode order $(0,1,2,3,13)$, the double-wall constraints
+are $p_2=Z$, $p_1+p_{13}=p_3+p_{13}=H$ and total mass one.
+Putting $p_{13}=k$ gives
+
+$$
+p(k)=(k,H-k,Z,H-k,k),\qquad
+d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+The sum is $2H+Z=1$, and positivity is precisely $0<k<H$.
+The declared native denominator and weights are
+
+$$
+I(k)=\frac2k+\frac2{H-k}=\frac r{k(H-k)},\qquad
+w(k)=\left(\frac12-\frac kr,-\frac kr,0,
+                  -\frac kr,\frac12-\frac kr\right).
+$$
+
+Thus $d^{\mathsf T}w=1$ and $p^{\mathsf T}w=0$ by direct
+substitution. Integrating $d\theta=w(k)\,d\chi$, starting with
+zero increments, gives $h=(u,v,0,v,u)$ and
+
+$$
+du=\left(\frac12-\frac kr\right)d\chi,\qquad
+dv=-\frac kr\,d\chi,\qquad d(u-v)=\frac12\,d\chi.
+$$
+
+These are equalities of increments, not equalities of the preparation
+phases. Set $\eta_j=\theta_j^{\rm in}-\theta_2^{\rm in}$.
+With the native negative-phase convention, a representative is
+
+$$
+\psi(k,u,v)=\left(
+ \sqrt{k}e^{-i(\eta_0+u)},
+ \sqrt{H-k}e^{-i(\eta_1+v)},
+ \sqrt Z,
+ \sqrt{H-k}e^{-i(\eta_3+v)},
+ \sqrt{k}e^{-i(\eta_{13}+u)}
+ \right).
+$$
+
+Equality of two such rays forces their scalar phase to be one because
+the middle entry is the same positive $\sqrt Z$. Moduli then force the
+same $k$, and positive group amplitudes force equality of $u$ and $v$
+independently modulo $2\pi$. These conditions also suffice. Ratios to
+the middle entry, followed by normalization and removal of the fixed
+$\eta_j$, recover the two unit phase pairs continuously and smoothly.
+The source therefore has exactly the band-times-two-circle topology,
+without a further finite quotient.
+
+A straight probability segment changes only $k$. Convexity of $I$
+makes its whole segment lawful exactly when its two endpoints belong
+to $I$. A phase leg of any finite real increment $t$ stays at its
+height and integrates to $Q_t$. In particular the command parameter
+$t$ is real; it is not itself reduced modulo a phase period.
+
+For $k,k+s\in I$, execute the four legs in chronological order
+$P_s,Q_t,P_{-s},Q_{-t}$. The two phase contributions give
+
+$$
+t\left[\left(\frac12-\frac{k+s}{r}\right)
+          -\left(\frac12-\frac kr\right)\right]
+ =-\frac{st}{r},\qquad
+t\left[-\frac{k+s}{r}+\frac kr\right]=-\frac{st}{r}.
+$$
+
+The resulting map is exactly $C_{-st/r}$, with height and total
+real relation increment unchanged. This is a finite rectangle identity,
+not an infinitesimal or limiting commutator formula.
+
+For reachability, take an entry height $h\in I$, equal to $k_0$ if
+$k_0\in I$. Otherwise first use a phase-free probability leg in
+$(0,H)$ from $k_0$ to $h$. Choose $h_1\in I$ different from $h$.
+For target representatives $U,V\in\mathbb R$ and target $k\in I$,
+put
+
+$$
+L=2(U-V),\quad
+U_0=\left(\frac12-\frac hr\right)L,\quad
+V_0=-\frac hr L,\quad
+c=U-U_0=V-V_0.
+$$
+
+First use the rectangle with $s=h_1-h$ and $t=-rc/s$ to add
+$(c,c)$ at $h$. Then execute $Q_L$ at $h$, and finally a
+probability leg from $h$ to $k$. The resulting increments are
+$(U,V)$. All legs are finite, every band probability segment joins
+two band points, and all phase variations are finite. Conversely the
+native equations preserve the increment groups already displayed.
+This proves exact reachability rather than density. If the entire
+producing history is required to stay in the band, the preparation
+must itself lie there.
+
+The coordinates $\alpha=u-v$ and $\beta=u$ used earlier are
+well-defined circle coordinates, with inverse $u=\beta$,
+$v=\beta-\alpha$. The real relation increment along a history is
+$2(u_{\rm lift}-v_{\rm lift})$; its current circle value is
+$2(u-v)$, up to the fixed preparation. It does not retain the
+history's real lift. A common turn fixes this difference but changes
+the bottom amplitudes relative to the positive middle amplitude.
+It is consequently not a global ray gauge. $\square$
+
+### 10.2 From local affine identities to an abstract unipotent action
+
+Write $\mathscr H=\operatorname{aff}E(\mathcal M_I)$.
+Two affine maps agreeing on a set agree on its affine hull:
+an affine combination $\sum_i\lambda_i z_i$, $\sum_i\lambda_i=1$,
+has image $\sum_i\lambda_i F(z_i)$. This elementary principle will
+be applied only after the relevant lawful set is shown to span.
+
+**Lemma 10.3 (Every open height strip spans).**
+For every nonempty open interval $J\subset(a,b)$,
+
+$$
+\operatorname{aff}E(J\times\mathbb T^2)=\mathscr H.
+$$
+
+This includes arbitrary unbounded encoder images and zero-dimensional
+affine hulls.
+
+**Proof.** Denote the hull on the left by $\mathscr H_J$.
+When $J,J+s\subset(a,b)$, the factor identity gives
+$\mathcal A_s\mathscr H_J=\mathscr H_{J+s}$.
+On $E(J\times\mathbb T^2)$ the composition
+$\mathcal A_{-s}\mathcal A_s$ is the identity, and the opposite
+composition is the identity on the translated strip. Extending
+these identities by affine combinations shows that the two hulls
+are affinely isomorphic. Their dimensions agree.
+
+Choose $J_0$ with the smallest possible hull dimension $d$.
+Such a minimum is achieved because all these dimensions are
+integers in $\{0,\ldots,n\}$. Shrink $J_0$ if necessary so that
+its closure is interior and its length is strictly less than
+$\ell$. The smaller hull is contained in the original one and
+has dimension at least the same minimum $d$, so its dimension
+is still $d$.
+
+All translates of $J_0$ with interior closure have dimension $d$.
+If two overlap, their intersection is a nonempty open interval.
+Its hull has dimension at least $d$ and is contained in both
+$d$-dimensional hulls. Thus the two hulls coincide. The permissible
+translation parameters form an interval; any two parameters can
+be joined by finitely many steps smaller than the length of
+$J_0$. Consecutive translates then overlap. All their hulls
+therefore equal one affine space $\mathscr H^\circ$.
+These translates cover $(a,b)$, so the interior image lies in
+$\mathscr H^\circ$. Every other open strip lies in this space
+and has dimension at least $d$; it too spans $\mathscr H^\circ$.
+
+Endpoints require an affine argument, since $E$ need not be
+continuous. Fix $h\in(a,b)$ and set $s=a-h$.
+Choose a nonempty open $J\subset(h,b)$. Both $J$ and $J+s$
+are interior, so the preceding identities give
+$\mathcal A_s\mathscr H^\circ=\mathscr H^\circ$.
+For all $u,v$,
+
+$$
+E(a,u,v)=\mathcal A_s E(h,u,v)\in\mathscr H^\circ.
+$$
+
+For the other endpoint set $s=b-h$ and take
+$J\subset(a,h)$, obtaining the same conclusion for $E(b,u,v)$.
+Hence $\mathscr H=\mathscr H^\circ$. No limit or norm bound
+was used. The argument with $d=0$ simply identifies nonempty
+singleton hulls at every step. $\square$
+
+**Lemma 10.4 (Inverses on the image hull).**
+If $|s|<\ell$, the restriction of $\mathcal A_s$ to
+$\mathscr H$ is an affine automorphism with inverse
+$\mathcal A_{-s}$. Every $\mathcal B_t$ restricts to an affine
+automorphism, and on $\mathscr H$,
+
+$$
+\mathcal B_t\mathcal B_h=\mathcal B_{t+h},\qquad
+\mathcal B_0=\operatorname{id},\qquad
+\mathcal B_t^{-1}=\mathcal B_{-t}.
+$$
+
+**Proof.** For $|s|<\ell$ choose an open $J$ with
+$J,J+s\subset(a,b)$. Lemma 10.3 makes both strip hulls equal
+to $\mathscr H$, so the restricted inverse identities in its
+proof apply on all of $\mathscr H$.
+The source maps $Q_t$ are global bijections with
+$Q_tQ_h=Q_{t+h}$ and $Q_{-t}=Q_t^{-1}$. Their encoder
+identities and affine spanning give the asserted restrictions
+and group law. These statements concern $\mathscr H$, not
+unused directions of $\mathbb R^n$. At $|s|=\ell$ the lawful
+slice need not span, and no restricted automorphism assertion
+about the supplied $\mathcal A_s$ is required. $\square$
+
+**Proposition 10.5 (Exact gluing of the common circle).**
+There is a unique abstract group homomorphism
+
+$$
+\mathcal R:\mathbb T\longrightarrow\operatorname{Aff}(\mathscr H)
+$$
+
+with $\mathcal R_c E(x)=E(C_cx)$ for all $x\in\mathcal M_I$.
+It commutes with every restricted $\mathcal B_t$ and every
+restricted $\mathcal A_s$ with $|s|<\ell$. For all such $s$
+and all real $t$,
+
+$$
+\mathcal B_{-t}\mathcal A_{-s}\mathcal B_t\mathcal A_s
+   =\mathcal R_{-st/r}\quad\hbox{on }\mathscr H.
+$$
+
+**Proof.** Fix $s_0$ with $0<s_0<\ell/2$. For each real
+representative $c$ and for $s=s_0,-s_0$, set $t=-rc/s$ and form
+the affine automorphism
+
+$$
+\mathcal R_c^{(s)}
+ =\mathcal B_{-t}\mathcal A_{-s}\mathcal B_t\mathcal A_s
+ \bigm|_{\mathscr H}.
+$$
+
+Proposition 10.2 and the factor identities imply
+$\mathcal R_c^{(s)}E(x)=E(C_cx)$ on $D_s$.
+The height domains for the two signs are $[a,b-s_0]$ and
+$[a+s_0,b]$. They cover $I$ and their intersection contains
+the nonempty open interval $(a+s_0,b-s_0)$.
+Its encoded image spans $\mathscr H$ by Lemma 10.3.
+Thus the two affine words agree on $\mathscr H$.
+Their common map, denoted $\mathcal R_c$, implements $C_c$
+on every source state, including endpoints.
+
+On the actual source, $C_{c+d}=C_cC_d$, $C_0$ is the identity
+and $C_{c+2\pi}=C_c$. Applying these identities to every encoded
+state and using affine spanning gives
+
+$$
+\mathcal R_{c+d}=\mathcal R_c\mathcal R_d,\qquad
+\mathcal R_0=\operatorname{id},\qquad
+\mathcal R_{c+2\pi}=\mathcal R_c.
+$$
+
+In particular the action descends to the actual circle and has
+inverse $\mathcal R_{-c}$. It is independent of the chosen
+rectangle and is unique by affine spanning.
+
+The common turn commutes with $Q_t$ on the whole source.
+It commutes with $P_s$ on $D_s$, and preserves that domain.
+These equalities imply commutation of the corresponding affine
+maps on $E(\mathcal M_I)$ or $E(D_s)$ respectively.
+For $|s|<\ell$, $D_s$ contains an open strip spanning
+$\mathscr H$. This proves the stated centrality. Applying
+the rectangle identity once more on such a strip proves the
+last formula for every short $s$, including $s=0$.
+No partial probability map has been made into a global source
+bijection. Only its affine restriction on the proven hull has
+an inverse. $\square$
+
+**Theorem 10.6 (Unipotence and rational common-turn erasure).**
+Every value of the abstract action in Proposition 10.5 is
+unipotent after homogenization. Consequently every finite
+affine factor satisfies
+
+$$
+E(C_{2\pi q}x)=E(x)
+ \quad(q\in\mathbb Q,\ x\in\mathcal M_I).
+$$
+
+**Proof.** Choose affine coordinates
+$\mathscr H\cong\mathbb R^d$ and put $N=d+1$.
+Represent an affine automorphism $z\mapsto Lz+b$ by
+
+$$
+\widehat F=
+\begin{pmatrix}L&b\\0&1\end{pmatrix}
+\quad\hbox{on }\mathbb R^{d+1},
+\qquad
+\widehat F\binom z1=\binom{F(z)}1.
+$$
+
+This faithful, multiplication-preserving construction retains
+both $p_s$ and $q_t$ after restriction. No offset has been
+removed by assuming a fixed point. Complexify the homogeneous
+space. Fix $c$ and an eigenvalue $\lambda$ of
+$\widehat{\mathcal R}_c$. Invertibility gives $\lambda\ne0$.
+Its generalized eigenspace
+
+$$
+V_\lambda=
+ \ker(\widehat{\mathcal R}_c-\lambda I_N)^N
+$$
+
+has dimension $m$ with $1\le m\le N$.
+Since $\mathcal R_c$ commutes with the short probability maps
+and all phase maps, their homogeneous matrices, and their
+inverses, preserve this kernel. Their restrictions are
+automorphisms of the same $V_\lambda$.
+
+Use the fixed $s_0$ above and $t=-rc/s_0$.
+The rectangle formula restricts to
+
+$$
+\widehat{\mathcal R}_c\bigm|_{V_\lambda}
+ =
+ \left(\widehat{\mathcal B}_{t}\bigm|_{V_\lambda}\right)^{-1}
+ \left(\widehat{\mathcal A}_{s_0}\bigm|_{V_\lambda}\right)^{-1}
+ \left(\widehat{\mathcal B}_{t}\bigm|_{V_\lambda}\right)
+ \left(\widehat{\mathcal A}_{s_0}\bigm|_{V_\lambda}\right).
+$$
+
+The determinant of this product is one. The restriction on the
+left is $\lambda I$ plus a nilpotent map, so its determinant
+is $\lambda^m$. Therefore $\lambda^m=1$.
+
+Let $q=N!$. Apply this eigenvalue conclusion to
+$\widehat{\mathcal R}_{c/q}$. Each of its eigenvalues has order
+dividing an integer between $1$ and $N$, hence dividing $q$.
+The abstract action law gives
+
+$$
+\widehat{\mathcal R}_c
+   =\left(\widehat{\mathcal R}_{c/q}\right)^q.
+$$
+
+Every eigenvalue of this power is one. For example, triangularize
+the one complex matrix by choosing an eigenvector and then
+inducting on the quotient dimension; its power has the powers
+of the diagonal entries. This requires no simultaneous
+triangularization of the action. The characteristic polynomial
+of $\widehat{\mathcal R}_c$ is consequently $(X-1)^N$, and
+Cayley--Hamilton gives
+$(\widehat{\mathcal R}_c-I_N)^N=0$.
+
+If $c/(2\pi)$ is rational, some integer $j>0$ has
+$jc\in2\pi\mathbb Z$. Periodicity and the action law give
+$\widehat{\mathcal R}_c^j=I_N$. Its minimal polynomial divides
+both $(X-1)^N$ and $X^j-1$. In characteristic zero the latter
+has a simple root at one, since its derivative there is $j$.
+The two polynomials have greatest common divisor $X-1$.
+Thus the minimal polynomial divides $X-1$ and
+$\widehat{\mathcal R}_c=I_N$. The required encoder identity
+follows.
+
+If $d=0$, $\mathscr H$ is a point and its homogeneous space
+has dimension one; the same conclusion is immediate.
+The proof supplies an abstract homomorphism from the underlying
+group of $\mathbb T$. It supplies no continuity, measurability
+or algebraic dependence on $c$, and no Zariski-closedness of
+its image. $\square$
+
+### 10.3 Four real coordinates with common-phase sensitivity
+
+The counterexamples in this subsection use ordinary set theory with
+choice. Their formulas are explicit once a field automorphism is fixed;
+the choice of that automorphism is not an effective construction.
+
+**Lemma 10.7 (The required complex-field extensions).**
+An isomorphism between countable subfields of $\mathbb C$ extends
+to an automorphism of $\mathbb C$. More generally, an isomorphism
+$K\to K'$ extends to an isomorphism between specified algebraic
+closures of $K$ and $K'$.
+
+**Proof.** First consider algebraic closures $\Omega,\Omega'$.
+Order the embeddings from intermediate fields
+$K\subset L\subset\Omega$ into $\Omega'$ extending the
+given isomorphism by extension of domain and map.
+The union of a chain is again such a field embedding.
+Zorn's lemma supplies a maximal one, $\varphi:L\to\Omega'$.
+If $z\in\Omega\setminus L$, it is algebraic over $L$.
+Transport its irreducible minimal polynomial by $\varphi$
+and choose a root in the algebraically closed $\Omega'$.
+The quotient description by the irreducible polynomial extends
+$\varphi$ to $L(z)$, a contradiction. Thus $L=\Omega$.
+
+The image of this embedding is algebraically closed: a polynomial
+over the image can be pulled back coefficient by coefficient to
+$\Omega$, a root found there, and the root mapped forward.
+The image contains $K'$, and every element of $\Omega'$ is
+algebraic over $K'$, hence over that image. An algebraically
+closed field has no proper algebraic extension, since every
+irreducible polynomial over it is linear. The embedding is
+therefore surjective. This proves the algebraic-closure assertion
+without a countability hypothesis.
+
+For countable $K,K'\subset\mathbb C$, choose transcendence
+bases $T,T'$ of $\mathbb C$ over them. Existence follows by
+the same maximality principle applied to algebraically independent
+sets; maximality means that the remaining extension is algebraic.
+For a basis of cardinality $\kappa$, its rational-function field
+has cardinality $\max(\aleph_0,\kappa)$: expressions use finitely
+many variables and coefficients. An algebraic extension of an
+infinite field has no greater cardinality than the field, since
+there are that many polynomials and each has finitely many roots.
+As $\mathbb C$ is uncountable and algebraic over $K(T)$, this
+forces $|T|=|\mathbb C|$, and likewise $|T'|=|\mathbb C|$.
+Choose a bijection $T\to T'$. Algebraic independence extends
+the original isomorphism to $K(T)\to K'(T')$ by substitution
+in rational functions. Both copies of $\mathbb C$ are algebraic
+closures of these fields. The first part now extends that map to
+an automorphism of $\mathbb C$. The uses of bases, a bijection
+and maximal embeddings all occur under choice. $\square$
+
+A concrete admissible starting isomorphism is
+
+$$
+\mathbb Q(\sqrt2)\longrightarrow\mathbb Q(\sqrt2),
+\qquad a+b\sqrt2\longmapsto a-b\sqrt2.
+$$
+
+The irrationality of $\sqrt2$ follows from the usual parity
+argument: a reduced equality $p^2=2q^2$ forces both $p$ and $q$
+even. The displayed map is consequently a field automorphism
+and Lemma 10.7 extends it to some
+$\sigma:\mathbb C\to\mathbb C$ with $\sigma(\sqrt2)=-\sqrt2$.
+
+It is essential to use a complex-field automorphism. Every
+automorphism of the real field preserves positive numbers
+because they are nonzero squares. It therefore preserves order.
+It fixes $\mathbb Q$, and rational numbers between two distinct
+real numbers show that an order-preserving map fixing
+$\mathbb Q$ must fix every real number. No nontrivial real-field
+automorphism can play the role of $\sigma$.
+A complex-field automorphism need not preserve the real subfield
+or commute with ordinary complex conjugation.
+
+**Proposition 10.8 (An actual-ray factor in four real coordinates).**
+Let $\sigma$ be any complex-field automorphism and define, for
+real $z$,
+
+$$
+f(z)=\operatorname{Re}\sigma(z)-z.
+$$
+
+Then $f$ is additive, vanishes on $\mathbb Q$, and is periodic
+with period one. Set $x=k/r$ and let
+$\nu=v/(2\pi)\in\mathbb R/\mathbb Z$. The formula
+
+$$
+E_\sigma(k,u,v)=
+ \left(x,\operatorname{Re}\sigma(x),
+           \operatorname{Im}\sigma(x),f(\nu)\right)
+ \in\mathbb R^4
+$$
+
+defines a finite affine factor on actual rays. Here $f(\nu)$
+means evaluation at any real representative. In shorthand write
+its coordinates as $(X,W,F)\in\mathbb R\times\mathbb C\times\mathbb R$.
+
+**Proof.** A field automorphism fixes the prime field $\mathbb Q$.
+Additivity of $\sigma$ and of real part gives additivity of $f$,
+and $f(q)=0$ for $q\in\mathbb Q$. In particular
+$f(z+m)=f(z)$ for all integers $m$.
+Changing the representative of $v$ by $2\pi m$ therefore
+does not change the encoding; changing $u$ has no effect at all.
+Proposition 10.2 identifies $k,u,v$ as actual ray coordinates
+relative to the fixed arbitrary preparation. Thus the encoder
+descends to the ray quotient without retaining a real phase lift.
+
+For a probability command set $\delta=s/r$. Use the affine map
+
+$$
+\mathcal A_s^\sigma(X,W,F)
+ =(X+\delta,W+\sigma(\delta),F).
+$$
+
+Its real linear part is the identity and its offset, in the
+four real coordinates, is
+
+$$
+(\delta,\operatorname{Re}\sigma(\delta),
+          \operatorname{Im}\sigma(\delta),0).
+$$
+
+On an encoded point, additivity of $\sigma$ gives exactly
+$E_\sigma(P_s(k,u,v))$ whenever $k+s\in I$.
+This includes both signs and the endpoint-to-endpoint commands.
+The same formula can be assigned when the source domain is empty.
+
+For a phase command set $\tau=t/(2\pi)$ and
+$\sigma(\tau)=A+iB$. Use the real linear map
+
+$$
+\mathcal B_t^\sigma(X,W,F)
+ =\bigl(X,W,F+\tau X-\operatorname{Re}(\sigma(\tau)W)\bigr).
+$$
+
+Its real matrix is
+
+$$
+\begin{pmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+\tau&-A&B&1
+\end{pmatrix},
+$$
+
+with zero offset. Under the actual $Q_t$, the normalized second
+group angle changes by $\nu'=\nu-x\tau$ modulo integers.
+Hence
+
+$$
+\begin{aligned}
+f(\nu')
+ &=f(\nu)-f(x\tau)\\
+ &=f(\nu)+x\tau-
+       \operatorname{Re}\bigl(\sigma(x)\sigma(\tau)\bigr),
+\end{aligned}
+$$
+
+which is precisely the proposed update. The first group angle
+also changes according to its native equation; it is only the
+encoder that ignores that angle. All coefficients are fixed by
+the prescribed command, and every $Q_t$ is represented on the
+full source. No assumption that $\sigma$ fixes $r$ or $\pi$
+has entered: $\sigma(s/r)$ and $\sigma(t/(2\pi))$ are applied
+to those real numbers as whole arguments.
+
+The exact encoded source image is
+
+$$
+\mathscr S_\sigma=
+ \{(X,\sigma(X),F):
+       a/r\le X\le b/r,\ F\in f(\mathbb R)\}.
+$$
+
+Indeed all encoded points have this form; conversely any such
+$F$ has a representative $\nu$ with $f(\nu)=F$, and full
+native reachability realizes its phase at any indicated height.
+On this image the exact probability guard is
+$a\le rX+s\le b$, while the phase guard is the whole image.
+They are constant on encoder fibers. The verified identities
+prove image preservation on these guards and, by induction,
+exact encoded continuation after every finite valid word.
+
+For a common turn the first three coordinates stay fixed and
+
+$$
+E_\sigma(C_c(k,u,v))-E_\sigma(k,u,v)
+ =(0,0,0,f(c/(2\pi))).
+$$
+
+For the specified $\sigma(\sqrt2)=-\sqrt2$,
+$f(\sqrt2)=-2\sqrt2\ne0$. Thus the rays
+$(k,0,0)$ and $(k,2\pi\sqrt2,2\pi\sqrt2)$ have different
+encodings for every $k\in I$. They are distinct actual rays,
+and the finite rectangle construction reaches one from the
+other. This refutes full common-circle invariance for arbitrary
+finite affine factors. $\square$
+
+**Proposition 10.9 (All prescribed simultaneous paths, with offsets).**
+The same four-coordinate factor has one exact affine update for
+every prescribed native relative path, on its full all-times
+band guard, and those updates compose for every finite valid
+concatenation.
+
+**Proof.** Prescribe a piecewise $C^1$ or absolutely continuous
+relative path on $[0,T]$, in the native regularity class, with
+
+$$
+k(h)=k+\rho(h),\quad \rho(0)=0,\qquad
+\chi(h)=\chi(0)+\gamma(h),\quad \gamma(0)=0.
+$$
+
+Set
+
+$$
+s=\rho(T),\qquad t=\gamma(T),\qquad
+J=\int_0^T\rho(h)\dot\gamma(h)\,dh.
+$$
+
+Continuity makes $\rho$ bounded on this finite compact interval;
+finite phase variation makes $\dot\gamma$ integrable.
+Thus the integral exists. The source guard is exactly
+
+$$
+k+\rho(h)\in I\quad\hbox{for every }h\in[0,T].
+$$
+
+Its endpoints alone do not replace this condition. Direct
+integration of the native equations yields
+
+$$
+k'=k+s,\qquad
+u'=u+\frac t2-\frac{kt}{r}-\frac Jr,\qquad
+v'=v-\frac{kt}{r}-\frac Jr.
+$$
+
+These are circle equalities induced by the integrated real
+increments. Put
+
+$$
+\delta=s/r,\qquad \tau=t/(2\pi),\qquad
+\eta=J/(2\pi r).
+$$
+
+Then $\nu'=\nu-x\tau-\eta$ modulo integers, so the required
+ambient affine map is
+
+$$
+(X,W,F)\longmapsto
+ \left(X+\delta,\ W+\sigma(\delta),\
+ F+\tau X-\operatorname{Re}(\sigma(\tau)W)-f(\eta)\right).
+$$
+
+Its offset is
+$(\delta,\operatorname{Re}\sigma(\delta),
+\operatorname{Im}\sigma(\delta),-f(\eta))$.
+Its linear last row is the same as in Proposition 10.8.
+Thus both probability and phase offsets are present where
+needed. The guard on $\mathscr S_\sigma$ is
+$rX+\rho(h)\in I$ for every $h$; empty and singleton guards
+are allowed. Applying $\sigma$ to the resulting scalar
+$\eta$ makes no interchange between a discontinuous field map
+and integration.
+
+For two concatenated relative paths, the displacement on the
+second part is $s_1+\rho_2$, hence
+
+$$
+s=s_1+s_2,\qquad t=t_1+t_2,\qquad
+J=J_1+J_2+s_1t_2.
+$$
+
+In normalized variables,
+$\eta=\eta_1+\eta_2+\delta_1\tau_2$.
+Composing the two displayed affine maps produces in the last
+coordinate the extra term
+
+$$
+\tau_2\delta_1-
+ \operatorname{Re}\bigl(\sigma(\tau_2)\sigma(\delta_1)\bigr)
+ =-f(\delta_1\tau_2).
+$$
+
+Additivity of $f$ gives exactly the combined offset
+$-f(\eta_1+\eta_2+\delta_1\tau_2)$.
+The guard is the first path's guard followed by the second
+path's guard at the actual new height. Induction gives all
+finite concatenations. Replacing $T$ by an intermediate time
+gives the same identity at every point of a prescribed path.
+No approximation by increasingly fine words, or limiting
+evaluation of the irregular encoder, is used. $\square$
+
+**Theorem 10.10 (A separate factor for each irrational common turn).**
+For every $c\in\mathbb T$ with $c/(2\pi)$ irrational modulo
+integers, there exists a factor $E_\sigma$ from Proposition
+10.8 that distinguishes $x$ from $C_cx$ for every source
+state $x$. It also satisfies Proposition 10.9.
+
+**Proof.** Choose a real representative $\xi=c/(2\pi)$.
+If $\xi$ is transcendental, substitution
+$\xi\mapsto\xi+1$ gives an isomorphism
+$\mathbb Q(\xi)\to\mathbb Q(\xi+1)$.
+These fields are countable, and Lemma 10.7 extends this
+isomorphism to $\sigma$ on $\mathbb C$.
+Then $f(\xi)=1$.
+
+If $\xi$ is algebraic irrational, let its irreducible polynomial
+over $\mathbb Q$ have degree $d>1$. Its roots are distinct
+in characteristic zero and their sum is rational.
+They cannot all have real part $\xi$: otherwise the real
+part of their sum would be $d\xi\in\mathbb Q$, contradicting
+irrationality. Choose a root $\zeta$ with
+$\operatorname{Re}\zeta\ne\xi$. The quotient construction by
+the same irreducible polynomial gives an isomorphism
+$\mathbb Q(\xi)\to\mathbb Q(\zeta)$ carrying $\xi$ to
+$\zeta$. Extend it by Lemma 10.7. Then
+$f(\xi)=\operatorname{Re}\zeta-\xi\ne0$.
+
+In either case the common-turn identity of Proposition 10.8
+proves distinction at every $x$. Changing the representative
+$\xi$ by an integer does not change $f(\xi)$.
+The quantifiers are “for each irrational turn, some factor.”
+They do not exhibit one finite factor that distinguishes all
+irrational common-turn cosets simultaneously. $\square$
+
+### 10.4 Exact universal identifications and added regularity
+
+**Proposition 10.11 (The retained difference circle).**
+The continuous three-real-coordinate map
+
+$$
+E_\Delta(k,u,v)=\bigl(k,\cos(u-v),\sin(u-v)\bigr)
+$$
+
+is a finite affine factor. It also has exact affine updates for
+every prescribed simultaneous native path. It separates every
+pair of different $(k,u-v)\in I\times\mathbb T$.
+
+**Proof.** With $\alpha=u-v$, a probability command adds
+$(s,0,0)$. A phase command fixes the height and rotates the
+last two coordinates by $R_{t/2}$, because
+$\alpha'=\alpha+t/2$. These are fixed affine maps for each
+command and hold on the full lawful domains.
+For the simultaneous path of Proposition 10.9 the $J$ and
+$kt$ terms cancel upon subtracting the phase equations.
+Thus its update is
+
+$$
+(K,z)\longmapsto(K+s,R_{t/2}z),
+\qquad z\in\mathbb R^2,
+$$
+
+with the all-times guard $K+\rho(h)\in I$.
+The actual image is $I$ times the unit circle; these guards
+are saturated and the formulas preserve the image whenever
+lawful. Equal unit phase pairs mean equal circle classes,
+so exactly $k$ and $\alpha$ are retained. Finite continuation
+follows from the one-step identities. In particular
+$\alpha=0$ and $\alpha=\pi$ remain distinct.
+Storing only $2\alpha$ would impose an additional identification
+that this contract does not force. Three is an attained
+coordinate count here, not a claimed minimum. $\square$
+
+**Theorem 10.12 (Intersection kernel and universal state equivalence).**
+For a finite affine factor define
+
+$$
+K_E=\{c\in\mathbb T:
+           E(C_cx)=E(x)\text{ for every }x\in\mathcal M_I\}.
+$$
+
+Then
+
+$$
+\bigcap_E K_E=2\pi\mathbb Q/(2\pi\mathbb Z).
+$$
+
+More fully, two source states have equal encodings under every
+finite affine factor if and only if they differ by a rational
+common turn:
+
+$$
+x\sim_{\rm all}x'
+\quad\Longleftrightarrow\quad
+x'=C_{2\pi q}x\text{ for some }q\in\mathbb Q.
+$$
+
+For continuous finite affine factors, the equivalence is instead
+
+$$
+(k,u,v)\sim_{\rm cont}(k',u',v')
+\quad\Longleftrightarrow\quad
+k=k'\ \hbox{and}\ u-v=u'-v'\ \hbox{in }\mathbb T.
+$$
+
+Every continuous factor has a continuous factorization
+
+$$
+E(k,u,v)=\overline E(k,u-v),\qquad
+\overline E:I\times\mathbb T\longrightarrow\mathbb R^n.
+$$
+
+All these assertions also hold when the class of factors is
+restricted to those supporting every prescribed simultaneous path.
+
+**Proof.** By affine spanning, $K_E$ is exactly the kernel of
+the abstract action $\mathcal R$ on $\mathscr H$.
+Theorem 10.6 puts every rational common turn in every $K_E$.
+Theorem 10.10 excludes every irrational common turn from at
+least one such kernel. This proves the intersection identity.
+
+Proposition 10.11 distinguishes two states when their heights
+or difference-circle values differ. If those two quantities
+agree, the two states have the form $x'=C_cx$ for a single
+$c\in\mathbb T$: the differences $u'-u$ and $v'-v$ agree.
+For rational $c/(2\pi)$ Theorem 10.6 erases this distinction
+for every factor. For irrational $c/(2\pi)$ Theorem 10.10
+gives a factor distinguishing these particular states.
+This proves the full arbitrary-factor equivalence.
+
+For continuous $E$, fix $x$ and a real representative $c$.
+Choose rational numbers $q_j$ such that $2\pi q_j\to c$.
+In the actual source topology,
+$C_{2\pi q_j}x\to C_cx$. Rational erasure and continuity yield
+
+$$
+E(C_cx)=\lim_j E(C_{2\pi q_j}x)=E(x).
+$$
+
+Only continuity along each common orbit is needed for this
+invariance statement. Full continuity of $E$ gives continuity
+of the quotient factor by the explicit section
+
+$$
+\overline E(k,\alpha)=E(k,\alpha,0).
+$$
+
+The input $\alpha$ here is a circle class; no continuous real
+argument branch is selected. Since
+$(k,u,v)=C_v(k,u-v,0)$, this section has the required
+factorization. Common invariance proves one direction of
+$\sim_{\rm cont}$, and the continuous witness $E_\Delta$
+proves the other.
+
+The universal erasure statements apply to the stronger path
+contract because it includes the pure commands. Both types of
+separating witnesses, $E_\sigma$ and $E_\Delta$, satisfy that
+stronger contract by Propositions 10.9 and 10.11. Thus the
+intersection and equivalence relations are unchanged.
+The continuous argument takes limits of already finitely
+reachable points; it executes no infinite history. $\square$
+
+**Theorem 10.13 (Bounded common orbits are exactly invariant orbits).**
+For any finite affine factor and any source state $x$, the set
+
+$$
+\{E(C_cx):c\in\mathbb T\}
+$$
+
+is bounded if and only if it is the singleton $\{E(x)\}$.
+Consequently boundedness on each common-phase orbit suffices
+for set-theoretic factorization through $(k,u-v)$, without
+a continuity hypothesis. Any common-phase sensitivity forces
+unbounded values along finite iterates of an affected turn.
+
+**Proof.** Use the homogeneous representation on
+$\mathbb R^{d+1}$ and write
+$\widehat{\mathcal R}_c=I+N_c$ with $N_c^N=0$.
+For $z=(E(x),1)$, interpreted in the chosen affine coordinates,
+and every integer $m\ge0$, the finite binomial identity gives
+
+$$
+\widehat{\mathcal R}_c^m z
+ =\sum_{j=0}^{N-1}\binom mj N_c^jz
+ =\bigl(E(C_{mc}x),1\bigr).
+$$
+
+If $N_cz\ne0$, choose the greatest $j\ge1$ with
+$N_c^jz\ne0$ and a real linear functional nonzero on that
+vector. Applied to the displayed sum, it gives a polynomial
+in $m$ of degree $j$ with nonzero leading coefficient,
+because $\binom mj$ has leading coefficient $1/j!$.
+The polynomial is unbounded on nonnegative integers.
+A bounded common orbit would give a bounded sequence of
+homogeneous vectors and hence a bounded value under every
+linear functional, a contradiction.
+
+Thus a bounded orbit forces $N_cz=0$ for each $c$, or
+$E(C_cx)=E(x)$ for each $c$. The converse is immediate.
+If every orbit is bounded, the section in Theorem 10.12
+defines the set-theoretic quotient factor. Its continuity
+does not follow from boundedness alone. If an affected
+$x,c$ has unequal encodings, the same polynomial argument
+gives unboundedness of the corresponding finite iterates.
+Each iterate is a finite valid sequence of finite rectangles;
+no infinite execution is required. $\square$
+
+### 10.5 Irregularity and the algebraic-group boundary
+
+**Proposition 10.14 (Choice, unboundedness and measure limitations).**
+For any $\sigma$ above with $f\ne0$, $f$ is unbounded on every
+nonempty real open interval. Its induced circle function is
+unbounded on every nonempty arc and is not measurable for
+completed Haar measure. The corresponding $E_\sigma$ is
+neither Borel measurable nor measurable for the usual completed
+product measure on $I\times\mathbb T^2$.
+
+These assertions use ordinary Lebesgue measure and its
+translation invariance and regularity, the corresponding
+completed circle measure, and the section theorem for finite
+product measures. In the usual representations of computable
+analysis, $E_\sigma$ is not a total computable function.
+
+**Proof.** Suppose an additive $f$ vanishing on $\mathbb Q$
+is bounded in absolute value by $M$ on an open interval.
+Differences of two points in that interval fill a neighborhood
+$(-\delta,\delta)$ of zero, on which $|f|\le2M$.
+Given $\epsilon>0$, choose an integer $m>0$ with
+$2M/m<\epsilon$, using any positive $m$ if $M=0$.
+For $|h|<\delta/m$, additivity gives
+
+$$
+|f(h)|=\frac{|f(mh)|}{m}\le\frac{2M}{m}.
+$$
+
+Thus $f$ is continuous at zero. Additivity then gives continuity
+everywhere, and density of $\mathbb Q$ forces $f=0$.
+The contrapositive proves unboundedness for nonzero $f$.
+Period one makes the same statement true on every circle arc.
+For every fixed $k,u,v$, the fourth coordinate of
+$E_\sigma(C_c(k,u,v))$ is $f(v/(2\pi)+c/(2\pi))$,
+so even an arbitrarily short open common-turn arc has unbounded
+image.
+
+Suppose now that $f$ were Lebesgue measurable.
+The measurable sets
+
+$$
+A_m=\{x\in[0,1]:|f(x)|\le m\},\qquad m=1,2,\ldots,
+$$
+
+cover $[0,1]$. At least one, $A$, has positive measure.
+Its measure is finite. We spell out the translation step.
+For any $\epsilon>0$, Lebesgue regularity provides a finite
+union $U$ of bounded intervals with
+$\mu(A\mathbin{\triangle}U)<\epsilon$.
+One obtains such a union by placing a compact inner
+approximation inside an open outer approximation and taking
+a finite interval cover of the compact set inside the open
+one. If $U$ uses $h_0$ intervals, translation invariance gives
+
+$$
+\mu(A\mathbin{\triangle}(A+h))
+ \le 2\mu(A\mathbin{\triangle}U)
+       +\mu(U\mathbin{\triangle}(U+h))
+ \le 2\epsilon+2h_0|h|.
+$$
+
+First choosing $\epsilon$ small and then $h$ small proves
+translation continuity of this symmetric-difference measure.
+Since $\mu(A+h)=\mu(A)>0$, it follows that
+$\mu(A\cap(A+h))>0$ for every sufficiently small $h$.
+In particular $h\in A-A$. If $A=A_m$, additivity now bounds
+$|f(h)|\le2m$ on a neighborhood of zero. The preceding
+argument forces $f=0$, a contradiction.
+
+Let $g:\mathbb T\to\mathbb R$ be
+$g(v)=f(v/(2\pi))$. Completed Haar measurability of $g$
+would give Lebesgue measurability of $f$ on $[0,1)$ using
+the usual fundamental-domain measure identification.
+Countably many integer translates and period one would make
+$f$ measurable on $\mathbb R$. Thus $g$ is not measurable.
+If $E_\sigma$ were Borel measurable, its restriction along
+the continuous circle map $v\mapsto(k_*,u_*,v)$ would make
+$g$ Borel measurable, again impossible.
+
+For completed product measure a null slice alone would not
+justify the same inference. Instead choose a Borel set
+$B\subset\mathbb R$ whose preimage $A=g^{-1}(B)$ is not
+Haar measurable. The preimage of $B$ under the fourth
+coordinate of $E_\sigma$ is exactly
+
+$$
+I\times\mathbb T\times A.
+$$
+
+If this cylinder were measurable for the completed product
+measure, the section theorem would make its $v$ section
+measurable for almost every $(k,u)$. Indeed a completed
+measurable set differs from a Borel representative by a
+subset of a product null set; the null-set section theorem
+and Borel sections give completed measurable sections
+almost everywhere. Every section of this cylinder is $A$,
+and the base $I\times\mathbb T$ has finite positive measure.
+This is a contradiction.
+
+In the standard real and circle representations by arbitrarily
+accurate approximations, total computability entails continuity.
+Thus the discontinuous $E_\sigma$ cannot be total computable
+in that model. This does not claim that each of its individual
+values is a noncomputable real, or exclude every possible
+oracle or alternative exact-real model.
+
+The coefficient assignments also use the irregular field map:
+$\sigma(s/r)$ and $\sigma(t/(2\pi))$ are not supplied by a
+continuous or measurable parameterization. For nonzero $f$,
+the real part of $\sigma$ on the real line is not Lebesgue
+measurable, since subtracting the identity would make $f$
+measurable. In particular the real phase coefficient
+$\operatorname{Re}\sigma(t/(2\pi))$ in these explicit maps
+is nonmeasurable. The factor contract allows this.
+All these limitations concern the constructed examples; no
+classification of every merely measurable factor is asserted.
+$\square$
+
+**Proposition 10.15 (The abstract image need not be an algebraic subgroup).**
+There is a choice of $\sigma$ in Proposition 10.8 for which
+the common-circle image on its affine hull is a proper infinite
+subgroup of a real translation line. Its Zariski closure is
+the whole line, so the image itself is not Zariski closed.
+
+**Proof.** Choose a transcendence basis $T_0$ of $\mathbb R$
+over $\mathbb Q$ and put $F_0=\mathbb Q(T_0)\subset\mathbb R$.
+The field $\mathbb R$ is algebraic over $F_0$, and
+$\mathbb C=\mathbb R(i)$ is therefore algebraic over $F_0$.
+Since $\mathbb C$ is algebraically closed, it is an algebraic
+closure of $F_0$.
+
+We need $\sqrt2\notin F_0$. Otherwise, using finitely many
+elements of $T_0$, write $\sqrt2=p(T)/q(T)$ for rational
+polynomials with $q(T)\ne0$. Algebraic independence would
+give the polynomial identity $p^2=2q^2$ over $\mathbb Q$.
+Choose a monomial order on these finitely many variables.
+The leading coefficient of a product is the product of its
+leading coefficients. Comparing the leading coefficients in
+this identity would make the square of a nonzero rational
+number equal to two, which is impossible. Thus $X^2-2$ is
+irreducible over $F_0$.
+
+The $F_0$-isomorphism of $F_0(\sqrt2)$ sending $\sqrt2$
+to $-\sqrt2$ extends, by the algebraic-closure part of
+Lemma 10.7, to an automorphism $\sigma$ of $\mathbb C$
+fixing $F_0$ pointwise. Here $\mathbb C$ is also an
+algebraic closure of $F_0(\sqrt2)$.
+Let $j$ be ordinary complex conjugation; it too fixes $F_0$.
+
+For any $x\in\mathbb R$, let $L\subset\mathbb C$ be the
+splitting field of its minimal polynomial over $F_0$.
+It is a finite normal separable extension: finitely many
+algebraic roots generate a finite extension, all roots are
+included, and characteristic zero gives separability.
+Both $\sigma$ and $j$ permute those roots and preserve $L$.
+Their restrictions generate a finite subgroup
+$G\subset\operatorname{Aut}(L/F_0)$, since every such
+automorphism is determined by its permutation of this finite
+generating root set. Because $x$ is real,
+
+$$
+f(x)=\frac{\sigma(x)+j\sigma(x)}2-x\in L.
+$$
+
+Define the finite orbit sum
+$T_G(y)=\sum_{g\in G}g(y)$ for $y\in L$.
+Right multiplication of $G$ by $\sigma|_L$ or by
+$(j\sigma)|_L$ permutes $G$. Hence
+
+$$
+T_G(f(x))
+ =\frac12\sum_{g\in G}g\sigma(x)
+   +\frac12\sum_{g\in G}gj\sigma(x)
+   -\sum_{g\in G}g(x)=0.
+$$
+
+This is the finite Galois orbit-sum, or trace, argument; no
+commutation of $\sigma$ with $j$ was assumed. If $f(x)=1$,
+the same sum would equal the positive integer $|G|$ in a
+characteristic-zero field. Therefore $1\notin f(\mathbb R)$.
+On the other hand $f(\sqrt2)=-2\sqrt2\ne0$.
+Additivity now makes $f(\mathbb R)$ a proper infinite
+additive subgroup of $\mathbb R$.
+
+For this $E_\sigma$, common turns act by the ambient translations
+
+$$
+(X,W,F)\longmapsto(X,W,F+f(c/(2\pi))).
+$$
+
+Their restriction to the affine image hull is the action
+$\mathcal R$ of Proposition 10.5, since both maps agree on
+every encoded state. At a fixed height, two attainable last
+coordinates differ by the nonzero value $f(\sqrt2)$.
+Thus the vertical coordinate direction belongs to the
+direction space of the affine hull. All real translations in
+that direction preserve the hull, and restriction to the hull
+is faithful on this translation line. As $c$ runs over
+$\mathbb T$, $c/(2\pi)$ runs over $\mathbb R/\mathbb Z$;
+period one gives exactly the parameter set $f(\mathbb R)$.
+
+In affine coordinates on the hull, the full translation line
+is an algebraic subgroup: its linear part is the identity and
+its translation vector lies on a fixed one-dimensional real
+subspace. A polynomial in the ambient matrix entries restricts
+to a polynomial in the line parameter. If it vanishes on the
+infinite set $f(\mathbb R)$, it vanishes on the whole line,
+since a nonzero one-variable polynomial has finitely many
+roots. The Zariski closure of the common-circle image is
+therefore the whole translation line, while the image omits
+the translation with parameter one. It is not Zariski closed.
+
+The matrices of all these translations are unipotent after
+homogenization, so this example is fully compatible with
+Theorem 10.6. It disproves the additional standard assertion
+that the image must itself be an algebraic subgroup; the
+abstract-action assertion is the precise structural result.
+$\square$
+
+### 10.6 Original coherence, reduced menus and source boundaries
+
+**Corollary 10.16 (An arbitrary decoder cannot recover original coherence).**
+No finite affine factor of Definition 10.1 can exactly decode
+the original full coherence menu by any deterministic decoder
+of its encoded current state, even an arbitrary nonlinear or
+irregular decoder. Every such factor also fails to be injective
+on actual rays.
+
+**Proof.** The common turn $\pi$ is rational and is therefore
+erased by Theorem 10.6. In the native negative-phase convention,
+the original $02$ pair is
+
+$$
+y_{02}(k,u,v)=
+ 2\sqrt{kZ}\bigl(\cos(\eta_0+u),\sin(\eta_0+u)\bigr).
+$$
+
+This follows directly from
+$\overline\psi_0\psi_2=\sqrt{kZ}e^{i(\eta_0+u)}$
+and the two Hermitian observables in Definition 2.1.
+Since $kZ>0$ throughout the source,
+
+$$
+y_{02}(C_\pi x)=-y_{02}(x)\ne y_{02}(x),
+\qquad E(C_\pi x)=E(x).
+$$
+
+A deterministic function of that one latent value cannot
+return both different pairs. Thus it cannot return the
+whole original output either. The two actual rays are
+distinct by Proposition 10.2, so injectivity also fails.
+No decoder hypothesis entered the classification proof.
+This supplies an explicit forced collision for the full
+menu; the one-command exact-decoding obstruction in §8
+has a separate proof and weaker update requirements.
+No approximation error bound is being inferred here.
+$\square$
+
+**Proposition 10.17 (Static four coordinates and affine continuation differ).**
+The exact static four-coordinate response of §2 and the
+four-coordinate factors of §10.3 solve different tasks.
+
+**Proof.** Set $\alpha=u-v$, $\beta=u$, and write the static
+response coordinates as
+
+$$
+z_\alpha=2\sqrt{k(H-k)}\,U(\alpha),\qquad
+z_\beta=2\sqrt{kZ}\,U(u).
+$$
+
+The five native increment differences in edge order are
+$\alpha,u,\alpha,-\alpha,-\alpha$.
+Thus the original output is the fixed linear image
+
+$$
+y=O(z_\alpha,z_\beta,z_\alpha,Jz_\alpha,Jz_\alpha),
+\qquad J=\operatorname{diag}(1,-1),
+$$
+
+where $O$ is the block diagonal matrix of the fixed preparation
+rotations. The first two blocks recover both pairs after
+undoing their rotations. This proves the exact static readout
+without an affine update claim.
+
+Under a probability command,
+
+$$
+z_\beta'=\sqrt{\frac{k+s}{k}}\,z_\beta.
+$$
+
+Take $0<|s|<\ell$, so there is an open interval of lawful
+starting heights. If an affine map on these four coordinates
+represented this command, its last two coordinates would have
+the form
+
+$$
+c+M z_\alpha+N z_\beta
+ =\sqrt{\frac{k+s}{k}}\,z_\beta
+$$
+
+at every such height and all phases. At a fixed height,
+$\alpha$ and $u$ range independently over their circles.
+Comparing opposite $\alpha$ at fixed $u$ forces $M=0$,
+since the positive-radius $\alpha$ circle spans its plane.
+Comparing opposite $u$ then forces $c=0$ and
+$N=\sqrt{(k+s)/k}\,I_2$.
+For two different lawful heights this is impossible:
+the square of the scalar is $1+s/k$, which is nonconstant
+when $s\ne0$. Thus these static coordinates already fail
+this one short nonzero affine probability update.
+
+The $E_\sigma$ coordinates instead obey all the affine
+continuation requirements, but cannot decode the same
+coherence by Corollary 10.16. Equality of coordinate counts
+does not identify the representations or their readout
+contracts. No coordinate optimality statement is added.
+$\square$
+
+**Proposition 10.18 (Why the command and support hypotheses matter).**
+The classification uses a positive-width interval of positive
+support and the full lawful real probability and phase
+commands. The following changes specify different problems.
+
+**Proof and examples.** For a fixed-height closed-loop
+endpoint task, initialize at a positive height $h$ and query
+only histories returning to that height with total relation
+increment $t=2\pi m$, $m\in\mathbb Z$.
+Then the actual endpoint difference is
+$\alpha=\pi m$ modulo $2\pi$, relative to the preparation.
+The endpoint states have coordinates
+$(h,u,v)$ with $\alpha=u-v\in\{0,\pi\}$.
+Every common phase at either parity is attainable by a
+finite two-height rectangle and a phase leg, provided a
+positive-width native interval is available to the producing
+loops.
+
+On this endpoint source use
+
+$$
+E_{\rm loop}(h,u,v)=
+ \bigl(\cos u,\sin u,\varepsilon\bigr),\qquad
+\varepsilon=e^{i(u-v)}\in\{1,-1\}.
+$$
+
+For a prescribed loop with total $t=2\pi m$, zero final
+probability displacement and mixed integral $J$, its native
+first-group increment is the fixed real number
+
+$$
+\gamma=\pi m-\frac{2\pi mh}{r}-\frac Jr.
+$$
+
+The endpoint update is the linear map
+
+$$
+(z,\varepsilon)\longmapsto
+ (R_\gamma z,(-1)^m\varepsilon).
+$$
+
+It retains common phase and both parity values. If all
+producing and continued loops have zero winding, then
+$\alpha=0$ and $U(u)$ alone gives the corresponding
+two-coordinate endpoint realization. These endpoint
+contracts do not require an affine representation of
+every intermediate $P_s$ and $Q_t$ state. Their updates
+therefore do not contradict Theorem 10.12.
+Likewise the reduced relation angle $2(u-v)$ is a different
+read quantity from the full retained difference circle
+$u-v$ on the actual source.
+
+If the band collapses to $a=b=k_*\in(0,H)$, there are no
+two-height rectangles. On the inherited full torus, the
+continuous map
+
+$$
+E_{\rm tor}(u,v)=(\cos u,\sin u,\cos v,\sin v)
+$$
+
+is injective and has phase update
+$R_{(1/2-k_*/r)t}\oplus R_{-k_*t/r}$.
+Only $P_0$ has a nonempty domain. Histories confined from
+the start to that one height can reach a smaller subset
+than this formal full torus; the example does not assert
+full singleton-band reachability.
+
+For probability commands alone on a positive-width band,
+$(k,U(u),U(v))$ is an injective continuous affine factor:
+$P_s$ just adds $s$ to the first coordinate. It supplies
+no full phase-update contract. More generally no
+classification of all reduced real command menus follows
+from the full-menu argument.
+
+For any nondegenerate interval $J\subset(0,H)$ with open,
+closed or half-open endpoint convention, the same factor
+classification applies with guard $k,k+s\in J$.
+To see this, put $a=\inf J$, $b=\sup J$ in the open-strip
+argument. All strip translates and overlaps are interior.
+Add the endpoint step of Lemma 10.3 only for endpoints
+actually in $J$. The two short-rectangle domains still
+cover $J$ with an open overlap. The affine, spectral and
+separating arguments then apply exactly as stated.
+This includes the full open positive fiber $(0,H)$;
+its excluded endpoints are never used as states.
+An extremal displacement has only an endpoint slice when
+both endpoints are included, and otherwise has empty
+domain. Such commands are never promoted to global source
+bijections.
+
+Support assumptions cannot be dropped by endpoint notation.
+At $k=0$ or $k=H$ one group has zero amplitude, so its
+phase circle is no longer recoverable from the ray.
+At $Z=0$ the common bottom phase becomes global phase
+on the remaining support. At $Z=1$ there is no positive
+height interval. The source quotient changes in these
+cases. Generic fixed means, a single wall, and these
+support boundaries have no factor classification proved
+by this appendix.
+
+Finally, a retained-lift source
+$I\times\mathbb R^2$ has different equality of states.
+There the three coordinates $(k,u,v)$ do have affine
+updates
+
+$$
+P_s(k,u,v)=(k+s,u,v),\qquad
+Q_t(k,u,v)=
+ \left(k,u-\frac tr k+\frac t2,v-\frac tr k\right),
+$$
+
+and the integrated path formulas of Proposition 10.9 are
+also affine in those coordinates. But $(k,u+2\pi,v)$
+and $(k,u,v)$ represent the same actual ray and different
+retained-lift coordinates. This is not a current-ray
+factor. In particular a history encoder may retain a
+different lift after a returned ray; the universal
+current-ray equivalences do not automatically apply to
+such history encoders. $\square$
+
+### 10.7 Contribution, finite execution and remaining questions
+
+The source-specific content here is the exact classification of
+universal identifications under the full native guarded affine
+factor contract. The common circle has the exact intersection
+kernel $2\pi\mathbb Q/(2\pi\mathbb Z)$ across arbitrary finite
+factors, while continuous factors have precisely the universal
+quotient $(k,u-v)$. Boundedness on each common orbit already
+forces the common-circle quotient. These conclusions combine
+the actual-ray preparation bridge, strip spanning, exact
+rectangle gluing, unipotent action and four-coordinate
+separating constructions. They do not classify every individual
+finite affine representation.
+
+The ingredients are classical: finite-dimensional affine
+spanning and homogenization, determinants on generalized
+eigenspaces, divisibility and characteristic-zero unipotence,
+transcendence bases and extension of algebraic-closure
+isomorphisms by Zorn's lemma, the regularity obstruction for
+nonlinear solutions of Cauchy's additive equation, the
+Steinhaus difference-set argument in its measure proof, and
+finite Galois orbit sums. Their required bridges are proved
+above. The use of these ingredients and their native
+composition does not assert worldwide novelty or an exhaustive
+literature comparison. These are ordinary handwritten
+mathematical proofs, not kernel-certified declarations.
+
+All source points, witness turns and command words used here
+have exact finite native realizations from the fixed
+preparation, with finite phase variation. The divisibility,
+finite-order and unbounded-orbit arguments quantify over
+arbitrarily long but individually finite words. They impose
+no uniform speed, duration, phase-height or variation budget,
+and perform no infinite-history execution. The unregularized
+counterexamples are evaluated directly; no continuity-based
+passage from approximate trajectories to their encodings
+is available. Exact initialization, exact reals and exact
+affine identities remain the contract.
+
+The existence or impossibility of a single finite factor
+separating all irrational common-turn cosets simultaneously
+is unresolved here. So are minimum coordinate dimensions,
+a general classification under mere measurability, and the
+other reduced command and support regimes not covered above.
+The nonmeasurability theorem describes the supplied
+choice-based examples; it is not a substitute for that
+general measurable classification.
+
+Finite real coordinate count supplies no finite-bit memory,
+finite-precision stability, robustness, finite-shot source
+acquisition, effective evaluation, physical implementation,
+training or actual machine-learning benefit. The pathological
+coefficients and choice dependence are part of the examples.
+No output-approximation construction or full-open approximation
+settlement is added by this classification.
+
+The unrelated original alternative of an attainer at some
+finite $N$ versus a strict gap for every finite $N$ remains
+unresolved. No bridge identifying that objective with this
+factor contract has been proved. The static results, the
+earlier band approximation results and the one-command
+lossless obstruction retain their own hypotheses and proof
+scope; they are not being restated as new solutions of that
+alternative.
+
+## 10.99 追加锚
