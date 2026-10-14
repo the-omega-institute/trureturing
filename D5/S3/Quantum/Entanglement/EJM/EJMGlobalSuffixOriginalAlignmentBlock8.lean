@@ -69,7 +69,11 @@ private theorem alignment1665 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock8.shape_4_108887]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1665 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))
+    · exact Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))
+    · exact Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 2 := by omega
     subst fuel left right
@@ -99,7 +103,11 @@ private theorem alignment1665 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock8.shape_3_108886]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1665 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 1 := by omega
     subst fuel left right
@@ -124,7 +132,11 @@ private theorem alignment1665 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock1.shape_2_92336]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1665 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 0 := by omega
     subst fuel left right
@@ -159,7 +171,11 @@ private theorem alignment1665 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock0.shape_2_92278]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1665 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (⟨rfl, rfl, rfl⟩))))))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 0 := by omega
     subst fuel left right
@@ -186,7 +202,7 @@ theorem originalReceipt1665 :
       scale 4 108887 cache1665 partial1665 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1665 alignment1665
-    4 1665 108887 cache1665 partial1665 (by unfold Related1665; decide +kernel)
+    4 1665 108887 cache1665 partial1665 (Or.inl (⟨rfl, rfl, rfl⟩))
     EJMGlobalSuffixProbeBlock8.receipt1665
 
 #print axioms originalReceipt1665
@@ -210,7 +226,7 @@ theorem originalReceipt1664 :
       scale 4 493 cache1664 partial1664 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1664 alignment1664
-    4 1664 493 cache1664 partial1664 (by unfold Related1664; decide +kernel)
+    4 1664 493 cache1664 partial1664 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock8.receipt1664
 
 #print axioms originalReceipt1664
@@ -234,7 +250,7 @@ theorem originalReceipt1663 :
       scale 4 493 cache1663 partial1663 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1663 alignment1663
-    4 1663 493 cache1663 partial1663 (by unfold Related1663; decide +kernel)
+    4 1663 493 cache1663 partial1663 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock8.receipt1663
 
 #print axioms originalReceipt1663
@@ -258,7 +274,7 @@ theorem originalReceipt1661 :
       scale 5 2894 cache1661 partial1661 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1661 alignment1661
-    5 1661 2894 cache1661 partial1661 (by unfold Related1661; decide +kernel)
+    5 1661 2894 cache1661 partial1661 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock8.receipt1661
 
 #print axioms originalReceipt1661
@@ -282,7 +298,7 @@ theorem originalReceipt1660 :
       scale 5 2894 cache1660 partial1660 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1660 alignment1660
-    5 1660 2894 cache1660 partial1660 (by unfold Related1660; decide +kernel)
+    5 1660 2894 cache1660 partial1660 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock8.receipt1660
 
 #print axioms originalReceipt1660
@@ -306,7 +322,7 @@ theorem originalReceipt1659 :
       scale 5 2894 cache1659 partial1659 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1659 alignment1659
-    5 1659 2894 cache1659 partial1659 (by unfold Related1659; decide +kernel)
+    5 1659 2894 cache1659 partial1659 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock8.receipt1659
 
 #print axioms originalReceipt1659

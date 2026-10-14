@@ -81,7 +81,11 @@ private theorem alignment1139 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock6.shape_4_161473]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1139 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))
+    · exact Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))
+    · exact Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 2 := by omega
     subst fuel left right
@@ -106,7 +110,11 @@ private theorem alignment1139 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock6.shape_3_108856]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1139 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 1 := by omega
     subst fuel left right
@@ -126,7 +134,11 @@ private theorem alignment1139 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock1.shape_2_92336]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1139 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 0 := by omega
     subst fuel left right
@@ -166,7 +178,11 @@ private theorem alignment1139 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock5.shape_2_94133]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1139 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 0 := by omega
     subst fuel left right
@@ -201,7 +217,11 @@ private theorem alignment1139 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock6.shape_3_129088]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1139 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (⟨rfl, rfl, rfl⟩))))))))))))))))))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 1 := by omega
     subst fuel left right
@@ -216,7 +236,11 @@ private theorem alignment1139 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock6.shape_2_94132]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1139 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 0 := by omega
     subst fuel left right
@@ -251,7 +275,11 @@ private theorem alignment1139 (fuel : ℕ) (left : Fin 2497)
     rw [leftShape, EJMGlobalSuffixAlignmentShapesBlock5.shape_2_94133]
     apply StepRelated.split
     intro a
-    fin_cases a <;> unfold Related1139 <;> decide +kernel
+    fin_cases a
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩))))))))))))))))))))))))))
+    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (⟨rfl, rfl, rfl⟩)))))))))))))))))))))))))))
   · rcases h with ⟨hf, hl, hr⟩
     have amount : fuel = 0 := by omega
     subst fuel left right
@@ -288,7 +316,7 @@ theorem originalReceipt1139 :
       scale 4 161473 cache1139 partial1139 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1139 alignment1139
-    4 1139 161473 cache1139 partial1139 (by unfold Related1139; decide +kernel)
+    4 1139 161473 cache1139 partial1139 (Or.inl (⟨rfl, rfl, rfl⟩))
     EJMGlobalSuffixProbeBlock20.receipt1139
 
 #print axioms originalReceipt1139
@@ -312,7 +340,7 @@ theorem originalReceipt1138 :
       scale 4 493 cache1138 partial1138 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1138 alignment1138
-    4 1138 493 cache1138 partial1138 (by unfold Related1138; decide +kernel)
+    4 1138 493 cache1138 partial1138 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock20.receipt1138
 
 #print axioms originalReceipt1138
@@ -336,7 +364,7 @@ theorem originalReceipt1137 :
       scale 4 493 cache1137 partial1137 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1137 alignment1137
-    4 1137 493 cache1137 partial1137 (by unfold Related1137; decide +kernel)
+    4 1137 493 cache1137 partial1137 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock20.receipt1137
 
 #print axioms originalReceipt1137

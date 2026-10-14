@@ -46,7 +46,7 @@ theorem originalReceipt6 :
       scale 6 971 cache6 partial6 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related6 alignment6
-    6 6 971 cache6 partial6 (by unfold Related6; decide +kernel)
+    6 6 971 cache6 partial6 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock44.receipt6
 
 #print axioms originalReceipt6
@@ -70,7 +70,7 @@ theorem originalReceipt4 :
       scale 7 970 cache4 partial4 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related4 alignment4
-    7 4 970 cache4 partial4 (by unfold Related4; decide +kernel)
+    7 4 970 cache4 partial4 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock44.receipt4
 
 #print axioms originalReceipt4
@@ -94,7 +94,7 @@ theorem originalReceipt2 :
       scale 8 969 cache2 partial2 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related2 alignment2
-    8 2 969 cache2 partial2 (by unfold Related2; decide +kernel)
+    8 2 969 cache2 partial2 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock44.receipt2
 
 #print axioms originalReceipt2
@@ -118,7 +118,7 @@ theorem originalReceipt1 :
       scale 8 969 cache1 partial1 = true := by
   exact checked_simulation pilotNodes EJMGlobalDAGData.nodes step lower
     EJMGlobalScoreSymmetry.dominates scale Related1 alignment1
-    8 1 969 cache1 partial1 (by unfold Related1; decide +kernel)
+    8 1 969 cache1 partial1 (⟨rfl, rfl, rfl⟩)
     EJMGlobalSuffixProbeBlock44.receipt1
 
 #print axioms originalReceipt1
