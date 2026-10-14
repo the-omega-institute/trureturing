@@ -2916,3 +2916,1385 @@ $$
 本节没有给出满足 $\lambda\ge0$、$G_N\lambda\ge h(b)$、$M=\sum_D\lambda_D\ge1$ 且 $F_{Q(y)}(b)>M$ 的完整 attained-$N$ 反证，也没有给出针对所有任意地址、完整载体 $O_2$ 竞争者的统一下证书。因此上述普遍比较、全 $L$ 任意族包含和原始 acquisition 结论继续开放。
 
 ## 追加锚（本行以下为增补区）
+
+## 205. Growing certificate support, retained early credit and simultaneous positive-cell completion
+
+**Definition 205.1 (One complete score and one budget).** Fix $L\ge3$.
+Use the complete event space of 198.1, 199.1 and 204.1: for every
+$w\in\{0,1\}^L\setminus\{1^L\}$ with first zero $n(w)=n$, a nonnegative
+score $V$ has three independent coefficients $A_w,C_w,P_w$, with demands
+$1-b_n-e,b_n-e,1-e$. The positive word has coefficient $T$ and demand
+$1-e$. Its reward at label $\ell$ is
+
+$$
+A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n}
+ +P_w\mathbf1_{\ell\in\{0,n\}},
+$$
+
+and only label zero earns $T$. All $3(2^L-1)+1$ rows remain, including
+negative singleton demands, zero-score rows and every multiple-zero word.
+Every cell permits every label $0,\ldots,L$, including unqueried and
+previous labels. The complete $N$ catalog has empty, singleton and
+preselected pair tables with cells $00,01,10,11$; the complete $O$
+catalog has increasing pairs with cells $0,10,11$. Static repetitions
+have singleton information and reversed $N$ schedules permute cells;
+this identification does not exempt any actual request from the count.
+Write
+
+$$
+\begin{aligned}
+R&=(1,2;1,2,0),&\alpha&=(1,1,0,\ldots,0;0),&r&=z_R=d(\alpha),\\
+h(b)&=d(b)-r,&G_C&=(z_D-r)_{D\in\mathcal D_C},&
+\Delta_C(V)&=\max_{D\in\mathcal D_C}V\cdot(z_D-r),\\
+\beta_n(V)&=\sum_{n(w)=n}(C_w-A_w),&
+K_V&=\sum_w(A_w+C_w+P_w)+T,&Q(V)&=(\beta(V);K_V),\\
+F_q(b)&=\sum_n\beta_n(b_n-\alpha_n)-Ke&&
+(q=(\beta;K),\ C=N,O).
+\end{aligned}
+\tag{205.1}
+$$
+
+In $R$, labels are listed in stopped-cell order. Its column in $G_C$
+is zero, so $\Delta_C\ge0$. For fixed addresses the support is the sum
+of the cell maxima over all labels; stopped cells are merged before
+maximization. The auxiliary domain and certificate set remain
+
+$$
+\begin{aligned}
+H_L=\{b:\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\},\\
+\sigma_H(q)&=\max_{b\in H_L}F_q(b),\qquad P_H=\{q:\sigma_H(q)\le0\},\\
+E_N&=\{q:\exists V\ge0,\ \exists\theta\in[0,1],\quad
+ \Delta_N(V)\le1-\theta,\quad\sigma_H(q-Q(V))\le\theta\}.
+\end{aligned}
+\tag{205.2}
+$$
+
+The residual may have either sign; $\theta=1$ allows nonzero zero-cost
+scores. We reuse 198.5's exact hull
+$H_L=\operatorname{conv}\{o,p,u_k,v_k:3\le k\le L\}$, where $o=0$,
+$p=(1,0,\ldots;0)$, $u_k$ has its first $k$ entries $1/(k-1)$ and all
+others, including $e$, zero, while $v_k$ has its first $k$ entries one
+and all remaining entries and $e$ equal to $e_k=(k-2)/(k+1)$.
+These auxiliary zero-cap endpoints are not original positive-tail models.
+
+For the input family only, require $A=0$ and pair support in first-zero
+classes 1 and 2, with arbitrary correct rows and $t=T\ge0$. Put
+
+$$
+\gamma_j=\sum_{n(w)=j}C_w,\quad E=\gamma_1+\gamma_2,\quad
+S=\sum_wP_w,\quad G=\sum_{j\ge3}\gamma_j,\quad
+W=E+S+t,\quad\mu=\max_{j\ge3}\gamma_j,\quad\delta=\Delta_O(y).
+\tag{205.3}
+$$
+
+Then $y\cdot r=W$ and $K_y=G+W$. A representative in (205.2) need not
+belong to this input family. Write $w(Z)$ for the word with zero set
+exactly $Z$. Every construction below sets unlisted coefficients to
+zero and adds coincident coefficients. Inactive bits in a constructed
+score are explicitly set to one; original words and competitors are
+never restricted by that convention.
+
+The use of a certificate is the existing single-budget argument of
+199.3--199.4. For the same complete $\lambda\ge0$ satisfying
+$G_N\lambda\ge h(b)$, with $M=\sum_D\lambda_D$, nonnegativity gives
+
+$$
+F_q(b)\le V\cdot h(b)+\theta
+ \le M\Delta_N(V)+\theta\le\max\{1,M\}.
+\tag{205.4}
+$$
+
+The following four groups calibrate, respectively, growing retained
+label support, early correct credit, positive cells of one common
+measure, and a conditional common terminal. Partial-row probability
+laws, separate component maxima and dual moment measures cannot replace
+the one complete allocation in (205.4).
+
+### 205.1 Growing support and the failure of additive component budgets
+
+**Theorem 205.2 (Correct-or-pair support).** Define
+
+$$
+J_{CP}(V)=\{j\ge3:\sum_{n(w)=j}(C_w+P_w)>0\}.
+$$
+
+All base rows, early correct and pair rows, and $T$ are unrestricted.
+For $m=L-2$, $1\le d<m$, set
+
+$$
+H_d=3(m+1)-2d,\qquad a=\frac{d+3}{H_d},\qquad
+ e=\frac d{H_d},\qquad b_1=\cdots=b_L=a.
+\tag{205.5}
+$$
+
+For every full $V\ge0$ with $|J_{CP}(V)|\le d$,
+
+$$
+b\in H_L,\qquad F_{Q(V)}(b)\le\Delta_O(V)\le\Delta_N(V).
+\tag{205.6}
+$$
+
+Consequently, for any finite decomposition
+$q=\sum_iQ(V_i)+q_{\rm res}$ with $|J_{CP}(V_i)|\le d$ and
+$\sigma_H(q_{\rm res})\le\theta$, $\theta\ge0$, its additive cost obeys
+
+$$
+F_q(b)\le\sum_i\Delta_C(V_i)+\theta\qquad(C=N\text{ or }O).
+\tag{205.7}
+$$
+
+**Proof.** Here $0\le e<a\le1$,
+$ma-(m+3)e=3(m-d)/H_d\ge0$ and
+$(m+1)a-(m+3)e=1$, proving membership in $H_L$.
+Pad $J_{CP}(V)$ to $J'$ of size $d$, and order
+$S_0=\{1,2\}\cup J'$ by actual address. Adjoin a final symbol $\ast$
+meaning output label zero. With probability $1-a$ output zero without
+requests. With probability $a$ choose uniformly a three-subset of
+$S_0\cup\{\ast\}$, query its two smallest labels increasingly, stop
+at the first queried zero, and otherwise output its largest label.
+The first two are always numerical. This is the whole-table rule of
+87.1, on these actual addresses, and uses at most two actual requests.
+
+If the actual first zero $n$ belongs to $S_0$, the output is $n$ exactly
+when $n$ was selected: all smaller selected addresses answer one; if
+$n$ is the unqueried final label it is then guessed. This argument
+allows every later zero pattern and every gap between addresses. Thus
+
+$$
+p_w(n)=\frac{3a}{d+3}=a-e\quad(n\in S_0),\qquad
+p_w(0)\ge1-a\quad\text{on every word}.
+$$
+
+The base demand $1-a-e$ is met everywhere; on retained classes the
+independent pair demand $1-e$ is met by adding these two probabilities.
+On $1^L$, zero is emitted precisely by the constant branch or a subset
+containing $\ast$, so $p_{1^L}(0)=1-e$. This one law satisfies all rows
+scored by $V$; only excluded late correct and pair rows are unasserted.
+Multiplying these simultaneous inequalities by the coefficients of $V$
+and subtracting the unit-mass anchor gives (205.6). For (205.7), apply
+that scalar inequality separately at the same $b$ and add the single
+residual bound. The partial-row laws for different $V_i$ need not be
+the same law and are not asserted to satisfy all rows jointly. $\square$
+
+**Theorem 205.3 (Correct-only support with arbitrary pair rows).** Define
+
+$$
+J_C(V)=\{j\ge3:\sum_{n(w)=j}C_w>0\}.
+$$
+
+Now all $A,P,T$ and early correct rows are unrestricted, including pair
+weight in every omitted late class. If $h\ge1$, $m=L-2\ge3h+2$, put
+
+$$
+D_h=m-2h+1,\qquad c_0=D_h^{-1},\qquad
+ b_i=(h+1)c_0,\quad e=hc_0.
+\tag{205.8}
+$$
+
+Every $V\ge0$ with $|J_C(V)|\le h$ satisfies (205.6) at this $b$.
+Every finite additive certificate of such scores satisfies (205.7),
+and every limit of their quotient sets with additive cost at most $B$
+satisfies $F_q(b)\le B$. The same statement holds at $h=0,m\ge2$.
+
+**Proof.** The two capacity expressions for $H_L$ are
+$(m-3h)c_0\ge0$ and $1$; its order conditions follow from $m\ge3h+2$.
+For $J=J_C(V)$ and $a=|J|\le h$, take the complete stopped mixture
+
+$$
+\Pi_J=c_0R+c_0\sum_{j\in J}\operatorname{Const}_j
+       +[1-(a+1)c_0]\operatorname{Const}_0.
+\tag{205.9}
+$$
+
+All weights are nonnegative and sum to one. On an early-first-zero
+word, the correct and base probabilities are respectively $c_0$ and
+$1-(a+1)c_0$. On a late-first-zero word they are $c_0\mathbf1_{n\in J}$
+and $1-ac_0$. At the positive word the base probability is $1-ac_0$.
+Thus every base row meets $1-(2h+1)c_0$, every independent pair row,
+even in an omitted late class, meets $1-ac_0\ge1-e$, and every retained
+correct row meets $c_0=b_n-e$. Only omitted correct rows lack a guarantee,
+and their $C$ coefficient is zero. Unit-mass weak duality proves the
+claim; addition at one fixed $b$ proves the finite bound. Continuity of
+$F_q(b)$ proves the bounded-cost closure assertion. With $h=0$ the same
+formulas use $J=\varnothing$ and remain valid. $\square$
+
+**Proposition 205.4 (Dense unit-cost inputs and unbounded additive cost).**
+For $m=L-2\ge2$, $\mu\ge2$, and any early correct score of total $E\ge0$,
+define a full score $Y_{\mu,E}$ by the following coefficients:
+
+$$
+\begin{aligned}
+C_{1^{j-1}0v}&=\mu/2^{L-j}\quad(j\ge3,\ v\in\{0,1\}^{L-j}),\\
+P_{01v}=P_{10v}&=2(\mu-1)/2^{L-2}\quad(v\in\{0,1\}^{L-2}),\\
+T&=\mu-1,\qquad A=0.
+\end{aligned}
+\tag{205.10}
+$$
+
+Add the stipulated early correct rows without changing these rows. Then
+
+$$
+W=E+5(\mu-1),\quad K=m\mu+W,\qquad
+\Delta_N(Y_{\mu,E})=\Delta_O(Y_{\mu,E})=1.
+\tag{205.11}
+$$
+
+The following certificate obstructions hold.
+
+* For every $d\ge1$ and $E\ge0$, take $m=2d$, $\mu=4E+3$.
+  At (205.5), $F_Y=8d/(4d+3)>1$. Every $E_N$ representative has
+  $|J_{CP}(V)|\ge d+1$, and every additive $d$-support certificate
+  costs at least $8d/(4d+3)$, equal to $8/5$ when $d=3$.
+* For $m\ge3$, $E=0$, $\mu=2$, use $d=m-2$ in (205.5). Then
+  $F_Y=(m+10)/(m+7)>1$, so every $E_N$ representative has
+  $|J_{CP}(V)|\ge m-1$. This lower bound is not asserted sharp.
+* In the correct-only convention take $\mu=z+2$, $z\ge0$. At (205.8),
+
+$$
+F_Y=1+\frac{m-3h-1+z(m-5h)-E(m-2h)}{m-2h+1}.
+\tag{205.12}
+$$
+
+  A positive numerator excludes every additive cost-one certificate
+  whose components all have at most $h$ late correct labels. At $E=z=0$
+  this forces at least $\lfloor(L-1)/3\rfloor$ late correct labels
+  in a single representative, and in at least one component of every
+  finite additive cost-one certificate. The $h=0$ endpoint is included.
+  For arbitrary $E$, $m=5h+1$, $z=E(3h+1)+1$, $h\ge1$, give
+  $F_Y-1=(2h+1)/(3h+2)>0$. For fixed $h$, $m>5h$, and $E$, the
+  required additive cost tends to infinity as $z\to\infty$, although
+  the assembled score has cost one.
+
+**Proof.** First set $E=0$ and write $r_f=2(\mu-1)$ for each early
+pair total. On a late pair $i<j$, each pair cell has mass $\mu-1$.
+Correct classes before $i$, at $i$, between $i,j$, at $j$, and after
+$j$ contribute at most, respectively, $\mu/4$ per cell,
+$\mu/2$ in each first-zero cell, $\mu/2$ in each early-one cell,
+$\mu$ in $10$, and $\mu$ in $11$. Since $\mu/2\le\mu-1$ and
+$\mu\le2(\mu-1)$, the four full-label maxima are bounded by
+
+$$
+(\mu-1,\ \mu-1,\ \mu,\ 2(\mu-1)).
+$$
+
+Early labels collect subsets of the pair baseline, so add no missing
+maximum. On an early/late pair, the early-zero cells have total pair
+reward $2(\mu-1)$ and no late correct rows; the $10$ maximum is at
+most $\mu$, and $11$ at most $2(\mu-1)$. On $(1,2)$ the maxima are
+$(0,2(\mu-1),2(\mu-1),\mu)$, attaining total $5(\mu-1)+1$.
+Constants and singletons embed in pairs. The stopped table
+$(1,2;1,2,j)$, for any late $j$, attains the same total. These are
+complete-catalog bounds, also explaining the reused fair-suffix
+membership of 198.2 and 203.6. Adding arbitrary early correct mass
+increases any table score by at most $E$, increases the anchor by exactly
+$E$, and increases this attaining stopped table by exactly $E$.
+This proves (205.11) without imposing a common suffix on the added rows.
+
+At a constant profile $b_i=a$,
+
+$$
+F_Y=m\mu(a-e)-5(\mu-1)e-E(1-a+e).
+\tag{205.13}
+$$
+
+For (205.5), put $H=3(m+1)-2d$. Then $a-e=3/H$ and
+$1-a+e=(H-3)/H=(3m-2d)/H$, so (205.13) becomes
+$[3m\mu-5d(\mu-1)-E(3m-2d)]/H$.
+For $m=2d$ and $\mu=4E+3$, the numerator is
+$6d(4E+3)-5d(4E+2)-4dE=8d$ and $H=4d+3$.
+This gives $8d/(4d+3)$ for every $E\ge0$.
+For the second substitution, $b_i=(m+1)/(m+7)$ and
+$e=(m-2)/(m+7)$, giving $(m+10)/(m+7)$.
+For (205.8), substituting $\mu=z+2$ gives (205.12). At $E=z=0$ choose
+$h=\lfloor(m+1)/3\rfloor-1$; then $m\ge3h+2$, including $h=0$ when
+needed. The arbitrary-$E$ substitution gives the stated positive gap;
+the coefficient of $z$ is positive when $m>5h$. Such decompositions
+exist, for example by separating every scored row when $h\ge1$; their
+component costs are finite at each parameter but have no uniform bound.
+Theorems 205.2--205.3 then contradict any indicated certificate of
+smaller cost.
+
+All these inputs have the unrestricted certificate $(V,\theta)=(Y,0)$.
+The obstruction is to a support or additive strategy, not to $E_N$.
+Appending ones to every scored word and setting each added $b_j=e$
+preserves both equations for $H$, (205.13), and the partial-row laws:
+appended correct demands are zero, and a new first zero has an old
+positive prefix, where the base probability is at least $1-e$, so its
+base and pair demands remain satisfied. Addresses are not compressed. The near-full bound concerns
+$C$ **or** $P$ support and cannot be transferred to $J_C$ with arbitrary
+late pair rows. $\square$
+
+### 205.2 An all-score early-credit inequality and its attained restriction
+
+**Theorem 205.5 (Retained early credit).** For every $L\ge4$ and every
+full nonnegative score $V$, define
+
+$$
+E_V=\sum_{n(w)\le2}C_w,\qquad B_V=\beta_3(V)+\beta_4(V),\qquad
+k_V=K_V-\sum_{n\ge5}\beta_n(V).
+$$
+
+Then, without any restriction on $A,P,T$ or later classes,
+
+$$
+4\Delta_N(V)\ge3B_V-k_V-3E_V.
+\tag{205.14}
+$$
+
+If $f_y=F_{Q(y)}(v_4)$ and $\theta\ge0$ bounds the one signed residual,
+then
+
+$$
+4\Delta_N(V)+\frac52\theta+3E_V
+ \ge\frac12B_V+\frac52f_y.
+\tag{205.15}
+$$
+
+In a unit certificate $B_V\le8+6E_V-5f_y$. For an input (205.3), write
+$B_y=\gamma_3+\gamma_4$ and
+$\mathcal J_y(V)=\Delta_N(V)+\max\{0,\sigma_H(Q(y)-Q(V))\}$.
+Then $f_y=(3B_y-2W)/5$ and
+
+$$
+B_V=B_y\quad\Longrightarrow\quad
+\mathcal J_y(V)\ge\max\left\{0,\frac{2B_y-W-3E_V}{4}\right\}.
+\tag{205.16}
+$$
+
+Thus early-free representatives retaining $B_y$ require $W\ge2B_y-4$
+for budget one. Neither restriction is part of the definition of $E_N$.
+
+**Proof.** Use these four complete $N$ tables, with labels in
+$00,01,10,11$ order:
+
+$$
+D_0=(1,2;0,0,0,4),\quad D_1=(1,3;0,0,3,0),\quad
+D_2=(2,3;2,0,3,0),\quad D_3=(3,4;0,0,4,0).
+\tag{205.17}
+$$
+
+Compare the coefficient of each independent row in
+$\sum_{i=0}^3(z_{D_i}-r)$ with its coefficient in $3B_V-k_V-3E_V$:
+
+| First-zero class or row | Four-table coefficients $(A,C,P)$ | Right-side coefficients $(A,C,P)$ |
+| --- | --- | --- |
+| 1 or 2 | at least $(0,-4,-1)$ | $(-1,-4,-1)$ |
+| 3 | $(-3,2,-1)$ | $(-4,2,-1)$ |
+| 4 | $(-2,2,0)$ | $(-4,2,-1)$ |
+| $n\ge5$ | $(-1,0,-1)$ | $(-2,0,-1)$ |
+| positive row $T$ | $-1$ | $-1$ |
+
+For the early pair coefficient, if bit 3 is zero, $D_0,D_3$ and the
+relevant early table output zero or the actual early first-zero label;
+if bit 3 is one, $D_0,D_1,D_2$ output zero. Thus at least three pair
+rewards occur for every suffix. Early base coefficients are nonnegative;
+early correct coefficients are at least $-4$. The remaining rows follow
+directly from (205.17), independent of all later bits. Each left
+coefficient dominates the right coefficient. Multiply by the nonnegative
+row weights and bound each table excess by $\Delta_N(V)$, proving
+(205.14).
+
+At $v_4$, the later entries and $e$ equal $2/5$, hence
+$F_{Q(V)}(v_4)=B_V-(2/5)k_V$. The residual inequality gives
+$k_V\le(5/2)(\theta-f_y+B_V)$; substitution proves (205.15).
+Since $4\Delta+(5/2)\theta\le4(\Delta+\theta)$, budget one gives
+its consequence. For $B_V=B_y$, the right side of (205.15) is
+$2B_y-W$, giving (205.16) with the same residual allowance. $\square$
+
+**Theorem 205.6 (Exact early-free cost on a chain family).** For
+$L\ge z\ge4$, $c,d\ge0$, define $Y(c,d,z)$ by correct weight $c$ at
+$w(\{1,\ldots,z\})$ and $w(\{2,\ldots,z\})$, weight $c+d$ at each
+$w(\{n,\ldots,z\})$, $3\le n\le z$, and $T=c$, with $A=P=0$.
+All bits after $z$ are one. Its complete $N/O$ excess is $2d$ if $z=4$
+and $3d$ if $z\ge5$. Every full $V\ge0$ with $E_V=0$ and
+$B_V=2(c+d)$ satisfies
+
+$$
+\mathcal J_{Y(c,d,z)}(V)\ge c/4+d.
+\tag{205.18}
+$$
+
+For $z=4$ and $c\ge8d$, this bound is the attained minimum over all such
+$V$, including arbitrary base and pair rows, arbitrary $K_V$, and any
+signed residual.
+
+**Proof.** The chain has at most three nonempty scored cells under any
+pair schedule, even after constant appended addresses are allowed.
+The three largest weights in $\{c,c,c+d,\ldots,c+d,T=c\}$ bound its
+support, as in 198.4. The stopped tables $(3,4;3,4,0)$ for $z=4$ and
+$(3,4;3,4,5)$ for $z\ge5$ attain respectively $3c+2d$ and $3c+3d$.
+The anchor is $3c$. Also $B_y=2(c+d)$, $W=3c$, $f_y=6d/5$;
+(205.16) proves (205.18).
+
+For the matching $z=4$ construction let $p=3c/4$ and $h=c+d$.
+For each $a=1,2$, put pair weight $p/2$ at each of
+$w(\{a,3\}),w(\{a,4\}),w(\{a,3,4\})$. Put correct weights
+
+$$
+C_{\{3\}}=p,\qquad C_{\{3,4\}}=h-p,\qquad
+C_{\{4\}}=h,\qquad T=p.
+\tag{205.19}
+$$
+
+Its early correct total is zero, its late totals are $h,h$, its pair
+mass is $3p$, its anchor is $4p=3c$, and $K_V=2h+4p=K_y$.
+The residual is exactly $-c(1-b_1)-c(1-b_2)$, nonpositive on $H$
+and zero at the $v_k$. Here $p\le h\le3p/2$ and $h-p\le p$;
+$h\le3p/2$ is exactly $c\ge8d$. The complete cell maxima are
+
+| Schedule | $N$ cell maxima | $O$ cell maxima |
+| --- | --- | --- |
+| $(1,2)$ | $(0,3p/2,3p/2,h)$ | $(3p/2,3p/2,h)$ |
+| $(a,3)$ or $(a,4)$ | $(p,p/2,h,3p/2)$ | $(3p/2,h,3p/2)$ |
+| $(3,4)$ | $(p,p,h,p)$ | $(2p,h,p)$ |
+
+Early labels never exceed the zero-label pair baseline; the only late
+labels with rewards are 3 and 4. For $(3,4)$ the correct rewards before
+maximization are $(h-p,p,h,0)$ and the pair masses are $(p,p,p,0)$,
+with $T=p$ in $11$. On early/3, the other late correct total $h$ in
+$11$ is covered by $3p/2$; on early/4 that reward is only $p$.
+All extra addresses are constant one, so constants and singletons
+are covered by these pairs. Both excesses equal $h-p=c/4+d$, attained
+by a stopped table, proving the minimum. This includes $c=8d$, $d=0$
+and $c=d=0$.
+
+In particular $Y(4,1/2,4)$ has unrestricted excess one and restricted
+minimum $3/2$. Retaining $B=9$ in a unit certificate requires
+$E_V\ge2/3$, whereas $E_V=0$ forces $B_V\le5$ by (205.15).
+For every $z\ge5$, $Y(4,1/3,z)$ has excess one and the restricted
+lower bound $4/3$; no matching minimum is asserted there. At $d=0$
+the input is zero-cost but the restriction costs at least $c/4$.
+Each input still has its unrestricted certificate $V=Y$. $\square$
+
+### 205.3 Positive pair cells and a common construction for arbitrary profiles
+
+**Definition 205.7 (Fixed projection and actual positive-cell capacity).**
+Let $J=\{j\ge3:\gamma_j>0\}$ be nonempty, in original address order.
+Fix one finite nonnegative measure $\nu$ on $\{0,1\}^J$, of mass $S$;
+for an input this is its actual pair projection
+$\nu(x)=\sum_{w:w|_J=x}P_w$. Define, with all indices in $J$,
+
+$$
+\begin{aligned}
+m_j&=\nu(x_j=0),&d_{ij}&=\nu(x_i=1,x_j=0)\quad(i<j),\\
+a_{nk}&=\nu(x_n=0,x_k=1)\quad(n<k),&a_{nn}&=0,\\
+\kappa&=\max\left\{0,\max_j(\gamma_j-m_j/2)_+,
+ \max_{i<j}\big[(\gamma_i-m_i)_++(\gamma_j-d_{ij})_+\big]\right\},\\
+\zeta&=\min\left(\{(S-m_j)/2:j\in J\}
+ \cup\{\nu(x_i=x_j=1):i<j\text{ in }J\}\right).
+\end{aligned}
+\tag{205.20}
+$$
+
+An empty pair-index family is omitted. $\zeta$ concerns the actual
+positive cells of this same projection; it is neither $\nu(1^J)$ nor
+an assumed removable common reserve. The fixed-data competitors below
+have $A=0$, $E=0$, early pair support, this projection $\nu$, these late
+totals, and specified $T=\tau$; their early splitting, correct suffixes
+and unprojected bits are arbitrary. Fixing the full late projection is
+a different family. One may instead declare a larger ordered projection
+containing zero-total coordinates, including all late coordinates, but
+must then retain those coordinates in every capacity and protection
+condition and in the construction; one cannot change projections within
+a minimum.
+
+**Theorem 205.8 (Protected positive cells and an exact fixed-data minimum).**
+If $\tau\ge0$ and $\tau+\zeta\ge\mu$, the following score $V$ has
+
+$$
+\Delta_N(V)=\Delta_O(V)=D=
+ \max\{\kappa,(\mu-\tau)_+\}.
+\tag{205.21}
+$$
+
+This is the attained minimum of each complete excess over the
+fixed-data family in Definition 205.7. Balance every $\nu(x)$ between
+the two early lifts $01x,10x$, each with weight $\nu(x)/2$, setting
+inactive late coordinates to one. In correct class $n\in J$, for
+$s\in[0,\gamma_n)$ use the word which is one before $n$, zero at $n$,
+and has later active bit $k$ equal to one exactly when $s<a_{nk}$.
+Its coefficient is the length of the set of such $s$ yielding that
+word. Set $T=\tau$ and all other rows zero. Thus finitely many threshold
+intervals specify every coefficient, including coincidences.
+
+For an $E=0$ input with $\zeta\ge(\mu-t)_+$, take $\tau=t$.
+Then $Q(V)=Q(y)$, anchors agree, and $D\le\delta$; if $\delta\le1$
+this supplies $(V,0)$ in (205.2), with no ordering restriction on
+$\gamma$ or bound on $|J|$.
+
+**Proof.** First consider any fixed-data competitor. The constant-zero
+score is $S+\tau$, also its anchor. For an early address $a=1,2$ and
+$j\in J$, changing just the stopped $10$ label to $j$ collects the
+whole correct class $j$ and loses pair mass
+$p_a=P(w_a=1,w_j=0)$. The two loss sets are disjoint on early pair
+support, even when early $00$ pair words are allowed, and
+$p_1+p_2\le m_j$. Hence some early/$j$ guard forces gain at least
+$(\gamma_j-m_j/2)_+$. For $i<j$, independently selecting zero or $i$
+in stopped cell $0$, and zero or $j$ in $10$, forces
+$(\gamma_i-m_i)_++(\gamma_j-d_{ij})_+$. These are two gains of one
+table. Finally $(1,2;1,2,n)$ for a largest correct class forces
+$(\mu-\tau)_+$. Thus every $O$ excess, and consequently every $N$
+excess, is at least $D$.
+
+For the constructed score, label zero earns the cell's full pair mass,
+plus $\tau$ in $11$. Early labels earn only pair subsets, inactive
+late labels earn zero, and each other label earns only its own correct
+class. We check all of them. On $(1,2)$ the exact gain is
+$(\mu-\tau)_+$. On early/$k$, the early-zero cells contain no late
+correct rows. In $10$, classes $n<k$, $n=k$, $n>k$ contribute respectively
+$(\gamma_n-a_{nk})_+$, $\gamma_k$, and zero. The inclusion
+$m_n\le m_k+a_{nk}$ gives
+
+$$
+[(\gamma_n-a_{nk})_+-m_k/2]_+
+ \le(\gamma_n-m_n/2)_+\le\kappa.
+\tag{205.22}
+$$
+
+If $\gamma_n\le a_{nk}$ the left side is zero; otherwise compare
+inside the positive part using $a_{nk}+m_k/2\ge m_n/2$.
+For $n=k$ use the unary term of $\kappa$.
+
+For a late pair $i<j$, write $p_{ab}=\nu(x_i=a,x_j=b)$.
+For $n\le i$ the correct reward in $01$ is
+
+$$
+[\min(\gamma_n,a_{nj})-\min(\gamma_n,a_{ni})]_+\le p_{01}.
+\tag{205.23}
+$$
+
+Indeed the unclipped difference of the two threshold masses is at most
+$\nu(x_n=0,x_i=0,x_j=1)$; clipping cannot increase its positive part.
+For $n<i$ the reversed clipped difference bounds the $10$ reward by
+$p_{10}$. At $n=i$ the $10$ reward is zero. Classes after $i$ do not
+appear in $01$. These statements include nonzero earlier-label rewards;
+they do not discard those labels.
+
+The only possible uncovered non-$11$ cells are therefore $00$ and
+$10$. A candidate $00$ label $n\le i$ has reward
+$(\gamma_n-h_n)_+$, where $h_n=\max(a_{ni},a_{nj})$.
+Since $m_n\le p_{00}+2h_n$,
+
+$$
+[(\gamma_n-h_n)_+-p_{00}]_+
+ \le(\gamma_n-m_n/2)_+\le\kappa.
+$$
+
+A positive $10$ maximizing label must be $i<r\le j$, with reward
+$(\gamma_r-a_{rj})_+$. The inclusion
+$d_{ir}\le p_{10}+a_{rj}$ gives its individual gain at most
+$(\gamma_r-d_{ir})_+\le\kappa$. If both cell gains are positive,
+choose the actual maximizing labels $n\le i<r\le j$. Only then remove
+the positive-part truncations. Their sum equals
+
+$$
+\gamma_n+\gamma_r-h_n-a_{rj}-m_j.
+$$
+
+For the same measure $\nu$, the event $x_n=0$ or $x_r=0$ is contained
+in the union of $x_j=0$, $(x_n=0,x_j=1)$ and $(x_r=0,x_j=1)$.
+Consequently
+
+$$
+\begin{aligned}
+m_n+d_{nr}&\le m_j+a_{nj}+a_{rj}\le m_j+h_n+a_{rj},\\
+g_{00}+g_{10}&\le\gamma_n+\gamma_r-(m_n+d_{nr})\\
+ &\le(\gamma_n-m_n)_++(\gamma_r-d_{nr})_+\le\kappa.
+\end{aligned}
+\tag{205.24}
+$$
+
+If only one gain is positive, use its individual bound; if neither
+is positive, their sum is zero. This is the non-$11$ union argument
+of 203.2, with both gains paid by one $\kappa$.
+
+The $11$ baseline is $\tau+(S-m_k)/2$ on early/$k$ and
+$\tau+p_{11}$ on late $i,j$. It is at least $\tau+\zeta\ge\mu$,
+so covers every correct label. Each of these schedules therefore
+spends at most $\kappa$, while $(1,2)$ spends the tail deficit; one
+takes their maximum, not their sum. Inactive coordinates are constant
+one on the constructed support. Queries involving them reduce to
+singleton or constant information; those information types embed in
+complete distinct pairs. Repetitions and reversed $N$ schedules add
+no further type. Hence the full $N$ upper bound is $D$. The preceding
+necessary $O$ bound applies to this construction as well, giving
+both equalities and the attained minima. The same proof retains
+zero-total coordinates when a larger projection was fixed.
+
+For the final assertion the fixed-data lower bounds applied to the
+original $E=0$ input give $D\le\delta$. The construction preserves
+all totals, $T$ and $K$, hence $Q$ and the anchor. $\square$
+
+**Corollary 205.9 (One exact signed charge with arbitrary early rows).**
+For an input (205.3) with nonempty $J$, put
+
+$$
+\pi=(\mu-t)_+,\qquad r_{\rm add}=(\pi-\zeta)_+,\qquad
+\tau=t+r_{\rm add},\qquad
+D=\max\{\kappa,\min(\pi,\zeta)\},\qquad
+\theta=\frac{L-2}{L+1}(r_{\rm add}-E)_+.
+\tag{205.25}
+$$
+
+The threshold score of 205.8 has both excesses exactly $D$ and exact
+nonnegative residual support $\theta$. Thus $D+\theta\le1$ supplies
+one certificate. If $J$ is empty, take only $T_V=W$, giving excess
+zero and a nonpositive residual.
+
+**Proof.** The definitions give $\tau+\zeta\ge\mu$ and
+$(\mu-\tau)_+=\min(\pi,\zeta)$, so 205.8 applies. Since
+$K_y-K_V=E-r_{\rm add}$, the residual is
+
+$$
+F_{Q(y)-Q(V)}(b)=-\gamma_1(1-b_1)-\gamma_2(1-b_2)
+                  +(r_{\rm add}-E)e.
+\tag{205.26}
+$$
+
+At $o,p,u_k,v_k$ its values are, respectively,
+
+$$
+-E,\quad-\gamma_2,\quad-\frac{E(k-2)}{k-1},\quad
+ (r_{\rm add}-E)\frac{k-2}{k+1}.
+$$
+
+The positive support is therefore exactly (205.25), by 198.5.
+Only one residual allowance is used and the $-Ee$ contribution occurs
+once. The actual stopped guards give $\pi\le\delta$ but generally
+only $\kappa\le\delta+E$, not $\kappa\le\delta$. Thus no automatic
+arbitrary-$E$ unit certificate follows without the stated test.
+The cases $r_{\rm add}=E$, $\theta=0,1$ and all capacity equalities
+are included. For empty $J$, $K_V=K_y=W$ and the residual consists
+only of the two nonpositive early terms.
+
+When $\zeta=0$, (205.26) is precisely the terminal-completion mechanism
+of 204.8, on the same projection; agreement with its full-projection
+statement requires fixing the full projection. Only the extension
+using positive-cell capacity is additional here. $\square$
+
+**Theorem 205.10 (Correlated common measure for arbitrary active profiles).**
+Let $m=|J|\ge4$, with arbitrary original addresses and arbitrary ordering
+of positive $\gamma_j$. Define
+
+$$
+c_m=4-\frac2{\lceil(m+1)/2\rceil},\qquad d\ge0,\qquad
+\mu>0,\quad\mu\ge2d,\qquad s=\mu-d.
+$$
+
+If
+
+$$
+W\ge\max\{(c_m+1)s,\ 3s+\mu\},
+\tag{205.27}
+$$
+
+one explicit score $V$ satisfies
+
+$$
+\Delta_N(V)=\Delta_O(V)=d,\quad V\cdot r=W,\quad K_V=K_y,
+\quad F_{Q(y)-Q(V)}=-\gamma_1(1-b_1)-\gamma_2(1-b_2)\le0.
+\tag{205.28}
+$$
+
+For $d\le1$ this is a unit certificate with $\theta=0$.
+This is a sufficient aggregate region, not an unrestricted stock minimum.
+
+**Proof.** On all $m$ active coordinates, with zero subset $Z\subseteq J$,
+use the following finite measure $\sigma$. If $m=2q-1$, put mass
+$2m/[q\binom mq]$ at each $q$-subset. If $m=2q$, put mass
+$2/\binom mq$ at each $q$-subset and
+$2q/[(q+1)\binom m{q+1}]$ at each $(q+1)$-subset. No terminal address
+is adjoined. These are the subset coefficients of 201.2, now on all
+active coordinates. A uniform $r$-subset contains a fixed coordinate
+with probability $r/m$, and contains one specified coordinate while
+excluding another with probability $r(m-r)/(m(m-1))$. Thus, for odd $m$,
+
+$$
+\sigma(2^J)=\frac{2m}{q}=c_m,\quad
+\sigma(j\in Z)=2,\quad
+\sigma(i\in Z,j\notin Z)=
+\frac{2m}{q}\frac{q(q-1)}{m(m-1)}=1.
+$$
+
+For even $m$, the total is $2+2q/(q+1)=c_m$, the marginal is
+$2(q/m)+[2q/(q+1)]((q+1)/m)=2$, and the directed moment is
+
+$$
+2\frac{q^2}{m(m-1)}+
+\frac{2q}{q+1}\frac{(q+1)(q-1)}{m(m-1)}=1.
+$$
+
+Set $\nu=s\sigma$. Every pair has cells
+$(s,s,s,(c_m-3)s)$, each zero marginal is $2s$, and each directed
+disagreement is $s$. Balanced early lifts have positive-cell mass
+$(c_m-2)s/2$. Since $c_m<4$, its minimum with the late positive
+cells is $\zeta=(c_m-3)s$. Set $\tau=W-c_ms$. Conditions (205.27)
+give $\tau\ge s$ and $\tau+\zeta\ge\mu$. Moreover
+$\gamma_j\le\mu=s+d\le2s$, so all $(\gamma_i-m_i)_+$ vanish,
+the maximum unary deficit is $\mu-s=d$, and every directed term is
+at most $d$. Thus $\kappa=d$ and $(\mu-\tau)_+\le d$.
+Theorem 205.8 proves the exact excess.
+
+For complete reproducibility, place $s\sigma(Z)/2$ at each pair word
+$w(\{a\}\cup Z)$, $a=1,2$. For each active $n$, place
+$\min(\gamma_n,s)$ at $w(\{n\})$ and $(\gamma_n-s)_+$ at
+$w(\{k\in J:k\ge n\})$ as correct weights; put $T=\tau$.
+These are exactly the threshold intervals because every $a_{nk}=s$.
+All other bits are one and coincident words add. Pair plus terminal
+mass is $W$, so $K$ and the anchor agree with the input and the residual
+is (205.28). This transfer of $E$ into $W$ is an alternative to (205.26);
+it has no additional $-Ee$ term. Cases $d=0$, $\mu=2d$ and equality
+in either stock bound are included. If $\mu=0$, the separate construction
+$T_V=W$ applies without division. When $\mu>2d$, both thresholds in
+(205.27) are strictly smaller than $5(\mu-d)$; this compares the
+displayed fair-suffix stock test on equal profiles, not every previous
+construction. $\square$
+
+**Proposition 205.11 (Pairwise positive cells without a positive atom).**
+For contiguous $J=\{3,\ldots,L\}$, $m\ge4$, take the construction of
+205.10 with $s=3$, all $\gamma_j=4$, $E=0$, $t=3$ and
+
+$$
+S=3c_m,\qquad B=W=3(c_m+1).
+\tag{205.29}
+$$
+
+Its complete excesses are one. It need not have any all-positive pair
+atom. In this family the entire fixed scaled-projection zero-core
+method, with pair measure $a\nu$, $T=3a$, $0\le a\le1$, no early
+correct or base rows, and extracted totals at most four, has best
+nonnegative residual support
+
+$$
+\min_{0\le a\le1}\max\left\{
+ \frac{m(4-3a)}{m+1},
+ \frac{m(12-B+(B-9)a)}{m+3},\ 0\right\}
+ =\frac{mB}{B(m+1)-6m}>1.
+\tag{205.30}
+$$
+
+Thus this method fails even though the joint positive-budget score
+itself succeeds.
+
+**Proof.** Here $\kappa=\pi=1$ and
+$\zeta=3(c_m-3)\ge1$, so 205.8 gives the asserted support. At $m=4$
+every two- or three-element zero subset has $\nu$ mass one. Hence
+$S=10$, $W=13$, $K=29$, and both full supports are 14. Every pair has
+positive-cell mass one, but no atom has all active bits one. The pair
+words are $w(\{a\}\cup Z)$ with weight $1/2$ for $a=1,2$ and
+$|Z|=2,3$; each correct class has weight three at its sole-zero word
+and weight one at its active absorbing suffix, with coincident weights
+added; $T=3$. This specifies the score without relying on totals alone.
+For general $m$ the coefficients are exactly those of 205.10.
+
+For a zero-cost core with the stipulated scaled data, the stopped
+$(1,2)$ guard forces each correct total to be at most $3a$.
+All these totals are simultaneously attainable: the scaled marginals
+are $6a$, directed capacities $3a$ and tail $3a$, so 204.2's box
+conditions hold. Increasing any extracted total lowers the residual
+pointwise, because $b_j-e\ge0$. Thus these maximal totals minimize the
+residual within the stated family. Write $r=4-3a$. At the hull vertices,
+$o,p$ give zero, and the two prefix values are
+
+$$
+\frac{(k-2)r}{k-1},\qquad
+\frac{(k-2)[3r-(1-a)B]}{k+1}.
+$$
+
+Their nonnegative maximum occurs at $k=L$, giving (205.30)'s two lines.
+The first decreases, the second increases since $B>9$, and their
+intersection is
+
+$$
+a=\frac{(B-8)m+B}{(B-6)m+B}\in[0,1].
+$$
+
+Substitution gives the stated minimum. It exceeds one because
+$6m>B$ for $m\ge4$ and $B<15$. At $m=4$, the intersection is $33/41$
+and the cost $52/41$.
+
+For clarity about overlap, this score fails the old sum test
+$\kappa+\pi=2$, the fair-suffix threshold $W\ge15$, and the
+terminal-product budget-one test: the latter has two simultaneous
+interior gains $2\mu(2\mu/u-1)_+$, requiring $u\ge64/9$ at $\mu=4$,
+and $\tau\ge3$, hence $W\ge155/9$. Write
+$\widehat c_m=4-2/\lceil m/2\rceil$ for the shared-terminal coefficient
+of 201. The 201 and 202.6 displayed bounds are
+$4\widehat c_m+3$ and $4+(7/2)\widehat c_m$, both larger than
+$3(c_m+1)$ (substitute $m=2q$ or $2q-1$). The unscaled 204.2
+capacities equal three and give $3m/(m+3)>1$; $V=0$ fails already
+at $u_L$, where $F_y=4m/(m+1)>1$. There are more than two positive
+classes, and the terminal-dominant condition $2\eta\le\mu+1$ of
+204.7 fails since $\eta=\mu=4$. Full-projection terminal completion
+204.8 spends $1+(L-2)/(L+1)>1$.
+These are comparisons with named tests and specified families, not
+separation from every consequence of earlier results. The construction
+and exact excess allow inactive gaps; the displayed prefix optima
+and comparisons here use the stated contiguous addresses. $\square$
+
+### 205.4 Conditional completion with a shared terminal
+
+**Theorem 205.12 (Exact conditional fixed-data minimum).** Let $J$ be a
+nonempty ordered set of active late addresses, $z=\max J$, and assume
+
+$$
+0<\gamma_i\le\gamma_j\quad(i<j\text{ in }J),\qquad
+\mu=\gamma_z,\qquad\nu(x_z=1)=0,\qquad m_j\ge2\gamma_j.
+\tag{205.31}
+$$
+
+Here $\nu$ is the actual fixed pair projection onto $J$. No condition
+is imposed on the original correct suffixes or on the early pair
+splitting, which may include $00$ words. Put
+$h_{ij}=\nu(x_i=x_j=1)$, and define
+
+$$
+\begin{aligned}
+d_*&=\max\left\{0,\max_{i<z}[\mu-(S-m_i)],
+                      \max_{i<j<z}[\gamma_j-d_{ij}]\right\},\\
+D(\tau)&=\max\left\{0,\mu-\tau,
+ \max_{j<z}\left[\mu-\frac{S-m_j}{2}-\tau\right],
+ \max_{i<z}[\mu-(S-m_i)],\right.\\
+ &\hspace{35mm}\left.
+ \max_{i<j<z}\big[(\gamma_j-d_{ij})_+
+                         +(\mu-h_{ij}-\tau)_+\big]\right\}
+ \qquad(\tau\ge0).
+\end{aligned}
+\tag{205.32}
+$$
+
+All indices belong to $J$, and empty maxima contribute no entry.
+Among all $A=E=0$ early-pair scores with the same $\nu$, late totals
+$\gamma$, and $T=\tau$, both complete excesses have attained minimum
+$D(\tau)$. Correct suffixes, early pair allocation and unprojected bits
+may vary in this minimization.
+
+An attainer $V_\tau$ balances $\nu(x)/2$ between early lifts $01,10$,
+setting inactive bits to one. For each $j\in J$ and each $x_j=0$, put
+correct coefficient
+
+$$
+\frac{\gamma_j}{m_j}\nu(x)
+\tag{205.33}
+$$
+
+at the word with bits before $j$ reset to one, bit $j$ zero, later
+active bits copied from $x$, and inactive bits one. Add coincident
+words and put $T=\tau$; all other rows vanish. Zero-total classes may
+be retained in the declared projection by omitting their correct
+coefficients, with no division by zero. In particular the formulas
+include reductions of the profile to zero.
+
+**Proof.** Positive $\gamma_j$ implies $m_j>0$, and every conditional
+density $\gamma_j/m_j$ is at most $1/2$. The constructed correct class
+has total $\gamma_j$ and first zero $j$. Every correct word has bit
+$z$ zero, because the actual measure is supported there. Label zero
+earns each cell's pair baseline and the terminal reward if present;
+early labels earn subsets of that baseline, and each late label earns
+only its own correct mass.
+
+Consider an active query pair $i<j$ and a correct class $n$.
+If $n<i$, both queried bits are copied from $x$, and its reward in
+any cell $c$ is at most
+$\nu(x_n=0,(x_i,x_j)=c)/2\le p_c/2$.
+If $n=i$, its reward in each $0b$ cell is at most $p_{0b}/2$ and
+it has no reward in the other cells. If $i<n<j$, it lies in $10$ or
+$11$, with each contribution at most $\gamma_n\le\gamma_j$.
+If $n=j$, all its mass $\gamma_j$ is in $10$. If $n>j$, all its
+mass is in $11$, bounded by $\mu$. This exhausts all late labels.
+
+On $(1,2)$ the gain is $(\mu-\tau)_+$. On early/$j$, $j<z$,
+the early-zero branch has no late correct reward. In $10$, earlier
+classes contribute at most $m_j/2$ by (205.33), class $j$ contributes
+$\gamma_j\le m_j/2$, and later classes contribute zero. In $11$,
+the terminal class $z$ supplies the entire $\mu$ and no label
+exceeds it. The exact gain is
+$(\mu-(S-m_j)/2-\tau)_+$.
+On early/$z$, every correct row lies in $10$, whose pair mass
+$S/2\ge\mu$ covers it, while $11$ contains only $\tau$; the gain
+is zero.
+
+For $i<j<z$, the $00$ and $01$ cells are covered by the conditional
+density bounds. In $10$, earlier classes are covered by $d_{ij}$,
+intervening classes have totals at most $\gamma_j$, and class $j$
+contributes all of $\gamma_j$. Its exact maximum is
+$\max(d_{ij},\gamma_j)$. In $11$, class $z$ contributes all of
+$\mu$, so the exact maximum is $\max(h_{ij}+\tau,\mu)$.
+The two gains must therefore be added, giving the last entry of
+(205.32). For $(i,z)$, $00$ is covered, $01$ is empty, $10$ has
+exact maximum $\max(S-m_i,\mu)$, and $11$ contains only $\tau$.
+Thus its gain is $(\mu-(S-m_i))_+$.
+
+These computations can be collected as follows; each entry includes
+all labels and is the excess over the common anchor $S+\tau$.
+
+| Query pair | Exact excess of the constructed score |
+| --- | --- |
+| $(1,2)$ | $(\mu-\tau)_+$ |
+| early/$j$, $j<z$ | $(\mu-(S-m_j)/2-\tau)_+$ |
+| early/$z$ | $0$ |
+| $i<j<z$ | $(\gamma_j-d_{ij})_++(\mu-h_{ij}-\tau)_+$ |
+| $(i,z)$ | $(\mu-(S-m_i))_+$ |
+
+In each split first-zero branch, label zero simultaneously maximizes
+both constituent cells. Merging them loses no score, so a stopped
+table attains every displayed maximum as well. Inactive bits are
+constant one and their schedules reduce to singleton or constant
+information. These embed in the pairs already bounded; repetition and
+reversal add no information type. This proves
+$\Delta_N(V_\tau)=\Delta_O(V_\tau)=D(\tau)$ over the full catalog.
+For one active class only the first entry remains, as asserted.
+
+It remains to prove that arbitrary fixed-data competitors cannot do
+better. The stopped table $(1,2;1,2,z)$ forces $(\mu-\tau)_+$.
+For early/$j$, start from constant zero and optionally output $z$ in
+$11$. The entire correct class $z$ lies there regardless of its suffix.
+The lost pair masses for early choices 1 and 2 have disjoint support
+and sum at most $S-m_j$. Averaging the two positive parts, using their
+convexity and monotonicity in lost mass, forces
+$(\mu-(S-m_j)/2-\tau)_+$. On a late pair $i<j<z$, independently
+choose zero or $j$ in $10$, and zero or $z$ in $11$, keeping label
+zero on the first branch. These two classes lie wholly in their
+respective cells for every correct suffix. Thus a single stopped
+table forces the sum of the two positive parts in (205.32).
+On $(i,z)$ it forces $(\mu-(S-m_i))_+$. All these comparisons use
+the same competitor's measure, and early $00$ words do not invalidate
+the disjointness inequalities. They prove $\Delta_O\ge D(\tau)$;
+$N$ contains the same output functions. The constructed upper bound
+therefore proves both attained minima. $\square$
+
+**Corollary 205.13 (Actual early-credit transfer and a joint zero core).**
+For every input satisfying (205.31), with arbitrary early correct rows,
+
+$$
+D(t+E)\le\max\{\delta,d_*\}.
+\tag{205.34}
+$$
+
+The representative $V=V_{t+E}$ has $K_V=K_y$, $V\cdot r=W$, and
+
+$$
+F_{Q(y)-Q(V)}=-\gamma_1(1-b_1)-\gamma_2(1-b_2),\qquad
+\sigma_H(Q(y)-Q(V))=0.
+\tag{205.35}
+$$
+
+Consequently $\delta\le1$ and the additional condition $d_*\le1$
+give a certificate $(V,0)$. At $E=0$, the actual input automatically
+forces $d_*\le\delta$, so every input in this structural class has a
+same-budget completion with exact quotient preservation.
+
+If $D(t+E)\le d$, set $\eta_j=(\gamma_j-d)_+$. Keeping the pair and
+$T$ coefficients of $V$, replace $\gamma$ by $\eta$ in (205.33).
+The result satisfies
+
+$$
+0\le Z\le V,\qquad \Delta_N(Z)=\Delta_O(Z)=0,
+\qquad U=V-Z\ge0,\qquad\Delta_N(Z+U)=D(t+E)\le d.
+\tag{205.36}
+$$
+
+The remainder is correct-only; no separate cost bound $\Delta_N(U)\le d$
+is implied.
+
+**Proof.** The original stopped $(1,2;1,2,z)$ table retains all early
+correct and pair rewards, so $\mu-t\le\delta$. For each other lower
+witness in 205.12, comparison with constant-zero reward $S+t$ gives
+its nonnegative gain at most $\delta+E$. In particular the early
+positive-cell deficit at $t$ is at most $\delta+E$; increasing the
+tail by $E$ reduces its positive part to at most $\delta$.
+For an interior pair write
+
+$$
+a=(\gamma_j-d_{ij})_+,\qquad b=\mu-h_{ij}-t.
+$$
+
+The original single-table lower bound is $a+b_+\le\delta+E$.
+After the one transfer, its gain is
+
+$$
+a+(b-E)_+=\max\{a,a+b_+-E\}\le\max\{d_*,\delta\}.
+\tag{205.37}
+$$
+
+The terminal-pair gains already belong to $d_*$. The $(1,2)$ term
+is at most $\delta$, so the maximum proves (205.34). When $E=0$,
+the same necessary guards force every directed deficit and every
+terminal-pair deficit in $d_*$ to be at most $\delta$. This gives
+the automatic assertion. When $E>0$, those guards give only bounds
+with $E$ present; $d_*\le1$ is not inferred from $\delta\le1$.
+
+The new pair mass is $S$ and $T=t+E$, so its anchor and $K$ are
+$W$ and $G+W$. This gives (205.35), whose supremum is zero at every
+$v_k$. Early credit has been transferred once; no further $-Ee$
+allowance is available in this residual.
+
+For (205.36), $\eta$ stays nondecreasing on the same declared $J$
+and its conditional densities remain at most $1/2$. Put
+$\mu_0=(\mu-d)_+$. The entries of $D(t+E)\le d$ imply
+
+$$
+\mu_0\le t+E,\quad \eta_j\le d_{ij}\ (i<j<z),\quad
+\mu_0\le S-m_i\ (i<z).
+$$
+
+Substitution into (205.32) for the reduced totals makes every entry
+zero: the positive-cell terms are already covered by $T\ge\mu_0$.
+Each correct coefficient in (205.33) is linear in its class total,
+so $Z\le V$, even after coincident rows are added. Zero $\eta$, zero
+budget, $t=0$, $m_j=2\gamma_j$ and all equalities are covered without
+dividing by a zero correct total. For empty $J$ use only $T_V=W$,
+as in 205.9. $\square$
+
+**Proposition 205.14 (All-length terminal family and precise overlap).**
+For contiguous $J=\{3,\ldots,L\}$, $m=L-2\ge6$, let
+
+$$
+\widehat c_m=4-\frac2{\lceil m/2\rceil},\qquad
+x>\max\{3,2/(4-\widehat c_m)\},\qquad \mu=x+1.
+\tag{205.38}
+$$
+
+On the $m-1$ interior labels $I=J\setminus\{z\}$ use the subset
+measure of 205.10 on that many coordinates, namely the explicit
+coefficients of 201.2, of mass $\widehat c_m$, zero marginals two
+and directed disagreements one. Adjoin terminal $z$ to every zero
+subset, multiply by $x$, and add mass two at the all-active-zero word.
+Call this single measure $\nu$. For every active class set
+$\gamma_j=\mu$ and $t=x$, and form the conditional score (205.33)
+with balanced lifts. Then
+
+$$
+S=\widehat c_m x+2,\qquad W=(\widehat c_m+1)x+2,\qquad
+D(t)=d_*=\Delta_N=\Delta_O=1.
+\tag{205.39}
+$$
+
+Every $E=0$ input with these fixed data is certified by this attainer;
+its own excess is at least one, and if at most one it equals one.
+Adding arbitrary early correct rows to the displayed attainer still
+gives a unit certificate by 205.13. The construction and structural
+statement permit active gaps; the following extraction and hull
+comparisons use the contiguous addresses just specified.
+
+Within the fixed scaled-projection zero-core family with projection
+$s\nu$, $T=sx$, $0\le s\le1$, $A=E=0$, and extracted totals at most
+$\mu$, no residual of support at most one is possible. The family also
+fails the named 201, 202.6, fair-suffix, terminal-product, unscaled
+extraction and terminal-completion tests below. It is not globally
+disjoint from 205.10 or from earlier sufficient families.
+
+**Proof.** The subset formulas prove, for interior $i<j$,
+
+$$
+m_j=2x+2=2\mu,\quad d_{ij}=x,\quad h_{ij}=(\widehat c_m-3)x,
+\quad m_z=S.
+\tag{205.40}
+$$
+
+Since $\widehat c_m\ge10/3$ and $x>3$, one has
+$(\widehat c_m-3)x>1$ and $S\ge2\mu$. Thus the half-density
+hypotheses hold. In (205.32), the interior $10$ deficit equals one,
+while the interior $11$ deficit is
+$[1-(\widehat c_m-3)x]_+=0$. The terminal-pair deficit is the same
+zero positive part; early/interior positive-cell deficits are
+$[1-(\widehat c_m-2)x/2]_+=0$, and $(1,2)$ gives one. These verify
+(205.39), including attainment over the full catalog.
+The actual score is fully specified by the subset atoms, their balanced
+lifts and formula (205.33); marginal totals alone are not its definition.
+For the added-early-row assertion, every table gains at most $E$ and
+the anchor gains exactly $E$, so its $\delta$ is at most one. Its
+data still have $d_*=1$, and (205.34) applies.
+
+In the scaled zero-core family, the $(1,2)$ guard forces every
+extracted total to be at most $sx$. All these totals are attainable:
+$m_j(s\nu)/2\ge sx$, every directed capacity is at least $sx$
+(including $d_{iz}=(\widehat c_m-2)sx$), and the tail is $sx$.
+By 204.2 these are the componentwise maximal totals, and they minimize
+the residual pointwise within this fixed family. Put $a=1-s$.
+The residual at $u_L$ and $v_L$ is respectively
+
+$$
+\frac{m(1+ax)}{m+1},\qquad
+\frac{m[3-a((\widehat c_m-2)x+2)]}{m+3}.
+$$
+
+For both to be at most one would require
+
+$$
+a\le\frac1{mx},\qquad
+ a\ge\frac{2m-3}{m((\widehat c_m-2)x+2)}.
+\tag{205.41}
+$$
+
+They are incompatible since $(2m-\widehat c_m-1)x>2$.
+Unscaled extraction is the endpoint $s=1$ and has support
+$3m/(m+3)>1$, using all hull vertices as in 205.11.
+This excludes the stipulated extraction method, not $E_N$.
+
+The named stock comparisons follow directly. The actual
+$\kappa=\pi=1$ makes their sum two. The strict condition
+$(4-\widehat c_m)x>2$ gives $W<5x$, below the fair-suffix budget-one
+threshold. For the terminal-product family, two interior gains force
+$u\ge4\mu^2/(2\mu+1)$ and $(1,2)$ forces $\tau\ge\mu-1=x$;
+thus
+
+$$
+W\ge\frac{8\mu^2}{2\mu+1}+\mu-1>5(\mu-1)=5x.
+$$
+
+The strict inequality follows by subtracting $4(\mu-1)$ from
+$8\mu^2/(2\mu+1)$, leaving $(4\mu+4)/(2\mu+1)>0$.
+The 201 bound is $(\widehat c_m+1)\mu-1$, exceeding $W$ by
+$\widehat c_m-2$. The 202.6 bound is
+$(\widehat c_m+1)\mu-\widehat c_m/2$, exceeding it by
+$\widehat c_m/2-1$. There are more than two active classes;
+204.7's terminal-dominant hypothesis fails because $2\mu>\mu+1$.
+The full-projection 204.8 test costs $1+(L-2)/(L+1)$.
+These comparisons do not exclude closures or other applications of
+those suppliers.
+
+Finally compare the two constructions in this section. If $m=2q\ge6$,
+205.10 uses $c_m=4-2/(q+1)$, whereas here
+$\widehat c_m=4-2/q$. Its first threshold at $d=1$, less this $W$, is
+
+$$
+(c_m+1)x-W=\frac{2x}{q(q+1)}-2.
+\tag{205.42}
+$$
+
+Thus $E=0$, $x>q(q+1)$ give a strict region below that threshold;
+at equality 205.10 applies at its closed endpoint. Its second
+threshold is $4\mu-3=4x+1$, already below $W$ since
+$W-(4x+1)=(\widehat c_m-3)x+1>0$. For odd $m$, the two coefficients
+coincide and this $W$ exceeds the first threshold by two, so the
+family overlaps 205.10. Added early mass raises $W$ by $E$; the
+strict even-count condition becomes
+$E<2x/[q(q+1)]-2$. At $m=6$, $\mu=5$, one obtains
+$S=46/3,t=4,W=58/3$ and both excesses one, but this example lies in
+the overlap. None of these comparisons establishes global disjointness.
+$\square$
+
+### 205.5 Reused cutoff, original transport and the remaining comparison
+
+**Definition 205.15 (Attribution and the cutoff application).** The
+support group 205.2--205.4 and early-credit group 205.5--205.6 are
+restrictions on methods for producing certificates; their displayed
+inputs already have unrestricted certificates. The positive-cell group
+205.8--205.11 and conditional-terminal group 205.12--205.14 give two
+sufficient regions with the stated overlap. Their minima, cores and
+worked families are consequences within those groups, not separately
+counted coverage families. These relations are repository-derived.
+The probability rule of 87.1, fair-suffix membership of 198.2/203.6,
+chain support of 198.4, signed hull of 198.5, complete alternatives
+and recession absorption of 199.3--199.6, guards of 200, subset blocks
+of 201.2, threshold union proof of 203.2, conditional densities of
+203.8, and fixed-projection extraction and terminal completion of
+204.2/204.8 retain their own attribution.
+
+The cutoff construction is another application of existing suppliers,
+not a fifth new group. Specifically, for $q\in[0,\mu]$, put
+$\eta_j=\min(\gamma_j,q)$, $r_j=(\gamma_j-q)_+$ and
+$\Lambda_q=\Lambda(\eta)$ as in 201.1. If $B=S+t\ge\Lambda_q$,
+retain the actual early correct rows, use the finite layer sum of
+201.2's blocks for $\eta$, and take $T=B-\Lambda_q$. Explicitly,
+for each layer of height $\Delta$ on $J_\ell$, let $z_\ell=\max J_\ell$;
+place correct weight $\Delta$ at each $w(\{j,z_\ell\})$, and pair
+weight $\Delta\nu_{J_\ell}(Z)/2$ at each
+$w(\{a,z_\ell\}\cup Z)$, $a=1,2$, with the coefficients (201.10).
+Then 201.3 gives
+
+$$
+\Delta_N(V_q)=(q-B+\Lambda_q)_+,\qquad
+\sigma_H(Q(y)-Q(V_q))=
+ s_q:=\max_{3\le k\le L}\frac{3\sum_{j=3}^kr_j}{k+1}.
+\tag{205.43}
+$$
+
+To verify the latter identity directly, the early quotient difference
+is zero and the residual $K$ is $\sum_jr_j$; $o,p$ give zero,
+$u_k$ gives $R_k/(k-1)$, and $v_k$ gives $3R_k/(k+1)$, which dominates
+for $k\ge3$. The exact support formula of 198.5 gives (205.43).
+Thus $(q-B+\Lambda_q)_++s_q\le1$ uses one budget.
+
+For an explicit overlap, take $L=5$, $q=14/3$, correct weight five at
+$w(\{3,5\}),w(\{4,5\}),w(\{5\})$, pair weight $q/2$ at each
+$w(\{a,3,5\}),w(\{a,4,5\}),w(\{a,3,4,5\})$, $a=1,2$, and $T=q$.
+Its anchor is $4q=56/3$. On $(3,4)$ the $N$ maxima are
+$(q,5,5,5)$ and the $O$ maxima $(2q,5,5)$, giving excesses one and
+$2/3$. On $(1,2)$ the excess is $1/3$; on early/interior and
+interior/terminal pairs it is at most $1/3$, and on early/terminal it
+is zero, by their pair baselines $q$ and $3q/2$. Constants and
+singletons embed in these pairs. Hence these are the complete excesses.
+Reducing each correct total to $q$ gives a zero core and residual
+$1/2$. Its actual extraction capacities in 204.2 are all $q$, so that
+method gives the identical core totals and residual. The full-profile
+201 threshold at allowance one is 19, but this cutoff example is not
+additional coverage beyond 204.2.
+
+The relevant external background has narrower conclusions. In
+Kaniewski, Lee and de Wolf, [*Query complexity in expectation*,
+Definition 8 and Theorem 9](https://arxiv.org/html/1411.7280v1), the
+output is a nonnegative scalar computed in expectation and the cost is
+the maximum depth among trees of positive mixture weight. Their literal
+sampler outputs total coefficient mass times an indicator; this does
+not give a common normalized vector kernel or increasing first-zero
+stopping. Kaibel's [*Basic Polyhedral Theory*, Theorems 4, 8 and
+10](https://arxiv.org/html/1001.2161v1) gives conic Caratheodory,
+point-plus-cone representation and recession for finite-dimensional
+polyhedra. The generator bound depends on ambient dimension, not a
+uniform number of late labels within each generator, and recession
+inclusion alone does not imply positive-slice inclusion.
+
+Šámal's [*Cubical coloring — fractional covering by cuts and semidefinite
+programming*, Lemma 2.1 and Corollary 2.2](https://arxiv.org/html/0911.2589v3)
+gives the reciprocal maximum-cut-density bound and equality for
+edge-transitive undirected graphs, including complete graphs. This is
+the cut-cover background for the reused subset coefficients; the
+specific directed cells and half-marginals still require the moment
+computations above. Proença, de Carli Silva, Sato and Tunçel's
+[*A Primal-Dual Extension of the Goemans–Williamson Algorithm for the
+Weighted Fractional Cut-Covering Problem*, Proposition
+8](https://arxiv.org/html/2311.15346v2) concerns nonnegative undirected
+edge weights and gauge duality, with an approximation framework; it
+does not supply the exact directed acquisition conversion. Leskelä's
+[*Stochastic relations of random variables and processes*, Theorem 2.5
+and Remark 2.7](https://arxiv.org/html/0806.3562v1) requires two fixed
+probability measures on Polish spaces, a closed relation and all
+qualifying-set Hall inequalities (finite-set tests in the countable
+case). Separately feasible partial-row laws do not verify those common
+coupling hypotheses. No exhaustive novelty or priority assertion, or
+unproved acquisition bridge from unrelated results, is made here.
+
+**Definition 205.16 (Original-source meaning and unresolved quantifiers).**
+Keep the original actual countable labeled source of 110.1:
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(r,g)=\mathbf1_{p_i\mid N(r,g)},\\
+F_0&=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r.
+\end{aligned}
+$$
+
+The prime replies are static. Every finite Boolean word, including
+multiple-zero words, has an actual source by Boundaries 35.2 as used
+in 110.2. Keep the full original disjoint-union Borel tape carrier
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with blocks copies
+of $(0,1)$, measurable marks $\theta_j=(B_1,1/(j+2))$, unchanged
+consumer and original nonatomic targets. The separately selected laws
+are, for every original sequence,
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+               +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_n\longrightarrow0.
+$$
+
+No condition on the dual $\gamma$ restricts this amplitude universe.
+There is zero advice, one source-independent common seed per class,
+actual sourcewise almost-sure finite handoff, and uniform TV over all
+actual sources and all Borel events. The hard count is at most two
+actual requests, including repetitions and obtained-but-ignored replies.
+$N$ preselects and obtains its entire schedule; $O$ preselects increasing
+addresses and stops at its first queried zero or exhaustion, using only
+the acquired transcript. Arbitrary addresses and full-carrier outputs
+remain admissible. These are exactly Definition 90.1's classes, without
+a source probability law, a mean-count substitution or an address cap.
+
+For $0<\varepsilon\le1$, let
+$L_a=\max(\{n:a_n>\varepsilon\}\cup\{0\})$. Reuse both directions
+of 110.2: finite $N$ feasibility is equivalent to original $N_2$
+feasibility at this exact closed cap, and feasibility in
+$\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}$ is equivalent to
+original $O_2$ feasibility. The finite system keeps, for every zero
+word of first zero $n$,
+
+$$
+p_w(0)\ge1-a_n-\varepsilon,\qquad
+p_w(n)\ge a_n-\varepsilon,\qquad
+p_w(0)+p_w(n)\ge1-\varepsilon,
+\qquad p_{1^{L_a}}(0)\ge1-\varepsilon.
+$$
+
+The positive row is a separate row; the pair row is not replaced by
+the singleton rows. A genuine finite probability allocation is realized
+by a fixed interval partition of one $U\sim\operatorname{Unif}[0,1)$
+selecting the entire table before any answer, followed by its actual
+class-appropriate requests and an original output mark. Two class
+allocations may use two partitions of the same $U$, with their common
+refinement; equal outputs at each seed are not required. The partial-row
+mixtures in Theorem 205.2 and (205.9) have this lawful whole-table realization,
+but their omitted-row guarantees do not constitute full acquisitions
+at a target cap. The dual scores, measures $\nu$, conditional densities
+and threshold interval lengths are deterministic coefficients, not
+acquisition probabilities, source laws or additional randomness.
+
+For necessity, 110.2 retains full-carrier arbitrary-address competitors:
+projection of output tapes contracts TV, a common seed event controls
+the preselected schedule tail, actual finite-pattern sources and finite
+execution cutoffs give approximate finite feasibility, and compactness
+of the same finite catalog simplex gives the closed endpoint. It does
+not preserve every original law. For sufficiency its finite tables give
+finite actual handoff, and at every actual $n>L_a$ the error is exactly
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\},
+$$
+
+including $a_n=\varepsilon$. All actual tails stay positive, monotone
+and vanishing. The finite positive word is tail bookkeeping, not an
+infinite all-positive source. Immediate base output handles $L_a=0$.
+The auxiliary $H_L$ is used only in the existing radial comparison
+range; an arbitrary original amplitude profile is not presumed to
+belong to it. The normalized stopped-kernel condition $c\ge H(p)$ remains 109.1's
+criterion, with the scalar budget supplied by normalization in 108.4;
+its coefficient vector is distinct from the auxiliary polytope $H_L$.
+
+What is calibrated in this section is the common realization of all
+cells, one joint support budget, the number of rewarded labels that
+must be retained as length grows, and the exact cost of eliminating
+early credit. Nondecreasing active profiles in (205.31) are a genuine
+restriction, whereas (205.27) permits arbitrary profile ordering.
+No fixed-label reduction, additive-budget reduction, all-positive-atom
+assumption or unconditional early deletion is established. The route
+falsifiers delimit those methods, and do not refute the original problem.
+
+The all-$L$ question remains: for every input (205.3) with arbitrary
+$E$, arbitrary late profile and arbitrary low $T$, does $\delta\le1$
+imply the existence of one $V\ge0$, $\theta\in[0,1]$ satisfying
+(205.2)? The union of the sufficient regions above is not proved
+exhaustive. More generally, the universal comparison
+
+$$
+\rho_O(b)\le\max\{1,\rho_N(b)\}\quad(b\in H_N),\qquad
+\rho_C(b)=\min_{\lambda\ge0,\ G_C\lambda\ge h(b)}\sum_D\lambda_D,
+\quad H_N=\{b\in H_L:\rho_N(b)<\infty\},
+$$
+
+and, for every original positive monotone vanishing sequence and every
+positive closed cap,
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing
+$$
+
+are unresolved here. A complete falsifier still requires a nonnegative
+input with $\Delta_O\le1$, one $b\in H_L$, and the same complete
+attained allocation $\lambda\ge0$ with $G_N\lambda\ge h(b)$,
+$M=\sum_D\lambda_D\ge1$, and $F_{Q(y)}(b)>M$, followed by the
+applicable original transport. It must give an actual common-seed
+$N_2$ attainer and a uniform lower certificate against every original
+full-carrier arbitrary-address $O_2$ competitor. No such falsifier is
+provided by a partial-row law, a support gap, a failed sufficient test,
+or the exact-law obstruction of 112.2, which permits another stopped
+law at the same cap.
+
+## 追加锚（本行以下为增补区）
