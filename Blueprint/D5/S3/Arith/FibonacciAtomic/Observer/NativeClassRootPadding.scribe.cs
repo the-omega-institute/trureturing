@@ -48,15 +48,15 @@ internal sealed class NativeClassRootPaddingDocument : IScribeDocumentDefinition
                     All("a", V("Address"), Imp(LeOf(Call("length", V("a")), V("L")),
                         EqOf(Call("readout", V("a"), Call("v", V("d"))), V("branch")))))))))),
         "padded_native_query_chart" => All("P", V("CutSet"), Imp(Call("CutPrefixFree", V("P")),
-            All("t0", V("Source"), All("L", V("Nat"), All("theta", Fn(Call("Classes", V("C")), Call("Option", V("Bool"))),
-                Imp(Call("Admissible", V("C"), V("theta")),
-                    Some("v", Call("ImageValues", V("C")), Some("u", Call("OriginFiber", V("P"), V("C")),
-                        And(EqOf(Call("rho", V("u")), Call("evaluateRow", Call("extend", V("C"), V("v")), V("C"))),
-                            EqOf(Call("types", V("C"), V("v")), V("theta")),
-                            Call("DeepValues", V("C"), V("L"), V("v")),
+            All("t0", V("Source"), All("L", V("Nat"), All("theta", Fn(Call("Classes", Call("canonicalRow", V("P"), V("t0"))), Call("Option", V("Bool"))),
+                Imp(Call("Admissible", Call("canonicalRow", V("P"), V("t0")), V("theta")),
+                    Some("v", Call("ImageValues", Call("canonicalRow", V("P"), V("t0"))), Some("u", Call("OriginFiber", V("P"), Call("canonicalRow", V("P"), V("t0"))),
+                        And(EqOf(Call("rho", V("u")), Call("evaluateRow", Call("extend", Call("canonicalRow", V("P"), V("t0")), V("v")), Call("canonicalRow", V("P"), V("t0")))),
+                            EqOf(Call("types", Call("canonicalRow", V("P"), V("t0")), V("v")), V("theta")),
+                            Call("DeepValues", Call("canonicalRow", V("P"), V("t0")), V("L"), V("v")),
                             All("a", V("Address"), Imp(LeOf(Call("length", V("a")), V("L")),
                                 EqOf(Call("readout", V("a"), Call("rho", V("u"))),
-                                    Call("queryReply", Call("typeExtend", V("C"), V("theta")), V("a"), V("C")))))))))))))),
+                                    Call("queryReply", Call("typeExtend", Call("canonicalRow", V("P"), V("t0")), V("theta")), V("a"), Call("canonicalRow", V("P"), V("t0"))))))))))))))),
         _ => throw new System.ArgumentOutOfRangeException(nameof(n))
     };
     private static Formula V(string n) => F.Id(n);
