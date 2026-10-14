@@ -2065,13 +2065,339 @@ These are handwritten mathematical arguments. A general Lean verification of the
 
 ## 追加锚（本行以下为增补区）
 
-## 15. Nonnegative anchored squares, exact delay and general real renewal instruments
+## 15. Polynomial residuals control actual stationary output
 
-**Definition 15.1 (Polynomial data and anchored pairs).** Let $d\in\mathbb R[t]$ be nonzero and globally nonnegative, of exact degree $2m$, where $m\ge0$, and write $\delta=[t^{2m}]d>0$. Put $\Delta v(t)=v(t+1)-v(t)$ and $\operatorname{fall}_j(t)=\prod_{i=0}^{j-1}(t-i)$, with $\operatorname{fall}_0=1$. A degree-bounded anchored pair for $d$ is a pair of real polynomials $p,s$ satisfying
+**Definition 15.1 (Anchored residual data and the actual comparison law).** Fix an integer $m\ge2$, put $n=2m+1$ and $D=m+2$, and take real polynomials $P,S$ with $P$ monic of degree $m$, $\deg S\le m$, and $S(0)=0$. Define
+
+$$
+\begin{aligned}
+e(t)&=P(t)^2+\Delta(S^2)(t)-\frac{\Delta(t^n)}n
+=\sum_{j=0}^{n-2}E_jt^j,\\
+H(k)&=k^n+n\sum_{t=0}^{k-1}e(t)
+=n\left(S(k)^2+\sum_{t=0}^{k-1}P(t)^2\right)
+\quad(k\in\mathbb Z_{\ge0}),\\
+Z_H(q)&=\sum_{k\ge0}H(k)q^k,\qquad
+\widehat\gamma_k=\frac{H(k)q^k}{Z_H(q)}\quad(0<q<1).
+\end{aligned} \tag{15.1}
+$$
+
+Empty sums are zero. The second expression for $H$ follows by telescoping and the anchor. The top coefficients of $P^2$ and $\Delta(t^n)/n$ are both one, while $\deg\Delta(S^2)\le2m-1$; thus $\deg e\le n-2$. Discrete antidifferentiation makes $H$ a monic polynomial of degree $n$ with $H(0)=0$. On the nonnegative integers it is nonnegative by the square expression, and it is positive for all $k\ge m+1$: a degree-$m$ monic polynomial cannot vanish at all of $0,\ldots,m$. Consequently $Z_H(q)$ is positive and finite, and $\widehat\gamma$ has every finite moment. No vanishing-residual hypothesis is included in this definition.
+
+The reference law remains $\gamma_k=k^nq^k/Z_n(q)$ from (1.1), with its full stationary law (1.3). Theorem 10.2 supplies its exact amplitude pair, changing the sign of $p$ if necessary to obtain $P=p/\sqrt n$ monic, and taking $S=s/\sqrt n$. That pair has $e=0$. General data in (15.1) instead specify their own exact law $\widehat\gamma$; comparison to the reference law is a further conclusion under a scalar envelope below.
+
+**Theorem 15.2 (Completion does not require the residual to vanish).** Every pair in Definition 15.1 and every $0<q<1$ yield a homogeneous complete real instrument on the full algebra $M_D(\mathbb C)$ whose exact actual gap law is $\widehat\gamma$. Its zero branch has Choi rank exactly two and its tick branch has one nonzero rank-one Kraus matrix. Every positive-probability tick resets to the same pure density. The observability Gramian is faithful and the zero-word reachable span is all of $\mathbb C^D$.
+
+Proof. Use the Newton lift (11.1) with
+
+$$
+p=\sqrt n P,\quad s=\sqrt n S,\quad
+u_j=\Delta^{j+1}s(0),\quad v_j=\Delta^jp(0),\quad
+u_m=0,\quad v_m=m!\sqrt n\ne0.
+\tag{15.2}
+$$
+
+Thus $A,B,x,f,F$ have exactly the block definitions of (11.1), and the raw map is $\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T})$. This uses the Newton algebra in the proof of Theorem 11.2, without importing that theorem's monomial-intensity conclusion. In detail, finite differences give $e_0^{\mathsf T}U^tv=p(t)$ and $e_0^{\mathsf T}U^tu=\Delta s(t)$. The block powers and anchor give
+
+$$
+f^{\mathsf T}A^kx=s(k),\qquad
+f^{\mathsf T}A^tBA^rx=p(t),\qquad BA^rB=0.
+\tag{15.3}
+$$
+
+Among words of length $k$, the all-$A$ word contributes $s(k)^2$, the $k$ one-$B$ words contribute $\sum_{t<k}p(t)^2$, and every word containing at least two $B$ factors vanishes. Hence the actual raw intensity is
+
+$$
+\operatorname{Tr}[F\mathcal T_q^k(xx^{\mathsf T})]
+=q^k\left(s(k)^2+\sum_{t<k}p(t)^2\right)=q^kH(k).
+\tag{15.4}
+$$
+
+This includes the empty word at $k=0$, with zero detector amplitude. As before, $A$ is upper triangular with unit diagonal and $B$ is upper triangular with zero diagonal. Thus the full complex superoperator matrix $q(A\otimes A+B\otimes B)$ has spectrum $\{q\}$ and is stable. Set $Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F)$.
+
+The faithfulness and reachability arguments of Theorem 11.2 require only $p_m\ne0$, not the polynomial identity (10.10). To check their exact premises, if $y=(y_T,y_s)$ has $y^*Qy=0$, every word detector amplitude vanishes. The rows $f^{\mathsf T}A^tB=p(t)e_{m+1}^{\mathsf T}$ for $0\le t\le m$ force $y_s=0$. The rows $e_0^{\mathsf T}U^j$ for $0\le j\le m$ then force $y_T=0$, since their binomial coefficient matrix has determinant one. This works for complex vectors and proves $Q>0$ on the full memory. Likewise $v_m\ne0$ makes $v,Nv,\ldots,N^mv$ a basis of the target; the invertible binomial change of basis makes $A^jBx=(U^jv,0)$, $0\le j\le m$, span that target. Including $x$ gives all $D$ dimensions.
+
+Now apply Theorem 2.1 with raw matrices $\sqrt qA,\sqrt qB$, detector $f$, reset $x$, and its actual normalization
+
+$$
+z=x^{\mathsf T}Qx=Z_H(q),\qquad G=Q^{1/2},\qquad
+\xi=Gx/\sqrt{Z_H(q)},\qquad \tau=\xi\xi^{\mathsf T}.
+\tag{15.5}
+$$
+
+All its hypotheses have been established. Its completed matrices and branches are
+
+$$
+\begin{aligned}
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=\xi f^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T},\\
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_D,&
+\rho(\Phi)&=q,&\Psi\Phi^k(\tau)&=\widehat\gamma_k\tau.
+\end{aligned} \tag{15.6}
+$$
+
+Theorem 2.1 supplies real matrices, full complex complete positivity, trace completeness and the actual pure reset. Invertible $A$ and nonzero rank-one nilpotent $B$ are linearly independent over $\mathbb C$; similarity and nonzero scaling preserve this independence. Thus the zero Choi rank is exactly two. Both factors of $J$ are nonzero, so its matrix rank and the tick Choi rank are one. For every raw word $w$, $L_w\xi=q^{|w|/2}Gwx/\sqrt{Z_H(q)}$, so the completed reachable span is also full.
+
+Exactly the target and source coordinates of (11.1) are used. The two zero Kraus contributions are summed inside $\Phi$; their labels do not survive. All matrices are fixed in time. There is no additional quantum or classical register, retained clock, correlated external input or controller. This proves the resource contract for the actual law in (15.1), regardless of whether $e$ vanishes. $\square$
+
+**Theorem 15.3 (Stationary completion and a parameter-uniform finite-window bound).** For the instrument of Theorem 15.2, put
+
+$$
+\widehat S_a=\sum_{k\ge a}\widehat\gamma_k,\qquad
+\widehat\mu=\sum_{k\ge0}(k+1)\widehat\gamma_k,\qquad
+\widehat\rho=\frac1{\widehat\mu}\sum_{a\ge0}\Phi^a(\tau).
+\tag{15.7}
+$$
+
+Then $\widehat\rho$ is a real faithful mixed invariant density, distinct from $\tau$. Every actual stationary cylinder is
+
+$$
+\begin{aligned}
+\mathsf P_H(0^a1\,0^{g_1}1\cdots0^{g_r}1\,0^b)
+&=\frac{\widehat S_a\widehat S_b}{\widehat\mu}
+\prod_{i=1}^r\widehat\gamma_{g_i}\quad(r\ge0),\\
+\mathsf P_H(0^W)&=\frac1{\widehat\mu}
+\sum_{k\ge W}(k-W+1)\widehat\gamma_k\quad(W\ge0).
+\end{aligned} \tag{15.8}
+$$
+
+There is no extra all-zero stationary component. Suppose in addition that explicit constants $0<\ell\le u$ satisfy
+
+$$
+\ell\le r(k):=\frac{H(k)}{k^n}\le u\quad(k\ge1),\qquad
+c_{\ell,u}=\frac{\sqrt u-\sqrt\ell}{\sqrt u+\sqrt\ell}.
+\tag{15.9}
+$$
+
+Let $\mathsf P_{H,W}$ and $\mathsf P_{n,W}$ be the probability distributions on $\{0,1\}^W$ for this actual stationary instrument and the exact reference (1.3), respectively. Total variation means half the $\ell^1$ distance. Uniformly over $0<q<1$,
+
+$$
+\begin{aligned}
+d_{\rm TV}(\widehat\gamma,\gamma)&\le c_{\ell,u},\\
+d_{\rm TV}(\widehat\lambda,\lambda)&\le c_{\ell,u},\qquad
+d_{\rm TV}(\widehat\alpha,\alpha)\le c_{\ell,u},\\
+d_{\rm TV}(\mathsf P_{H,W},\mathsf P_{n,W})
+&\le 1-(1-c_{\ell,u})^{\lceil W/2\rceil}
+\le\min\{1,\lceil W/2\rceil c_{\ell,u}\}\quad(W\ge0).
+\end{aligned} \tag{15.10}
+$$
+
+Here $\lambda$ and $\widehat\lambda$ are the stationary interval-and-position distributions, and $\alpha,\widehat\alpha$ their initial forward-wait marginals, defined explicitly by
+
+$$
+\lambda(k,a)=\frac{\gamma_k}{\mu},\qquad
+\widehat\lambda(k,a)=\frac{\widehat\gamma_k}{\widehat\mu}
+\quad(k\ge1,\ 0\le a\le k),\qquad
+\alpha_a=\frac{S_a}{\mu},\quad
+\widehat\alpha_a=\frac{\widehat S_a}{\widehat\mu}.
+\tag{15.11}
+$$
+
+In particular the length-biased interval marginals $(k+1)\gamma_k/\mu$ and $(k+1)\widehat\gamma_k/\widehat\mu$ also have total variation at most $c_{\ell,u}$. Every binary word, including an all-zero or empty word, has probability error bounded by the last line of (15.10).
+
+Proof. First extend the stationary supplier to its actual finite-mean law. Theorem 5.1 assumes (1.1), so it is not invoked unchanged for $\widehat\gamma$. Instead use its summation mechanism with the hypotheses just proved. By completeness, the survival traces satisfy
+$\operatorname{Tr}\Phi^a(\tau)-\operatorname{Tr}\Phi^{a+1}(\tau)=\widehat\gamma_a$; stability makes the traces tend to zero. Hence $\operatorname{Tr}\Phi^a(\tau)=\widehat S_a$. The norm-convergent positive series $R=\sum_{a\ge0}\Phi^a(\tau)$ therefore obeys
+
+$$
+\operatorname{Tr}R=\sum_{a\ge0}\widehat S_a=\widehat\mu<\infty,
+\qquad \Phi(R)=R-\tau,\qquad \Psi(R)=\tau.
+\tag{15.12}
+$$
+
+Tonelli justifies the trace identity and the finite mean follows from (15.1). Normalizing gives invariance. The Kraus-word expansion $y^*Ry=\sum_w|y^*L_w\xi|^2$, together with full reachability, proves $R>0$ for every nonzero complex $y$. All terms are real symmetric. Thus $\widehat\rho$ is faithful and mixed, and cannot equal the pure $\tau$.
+
+The first tick after $a$ visible zeros has unnormalized state
+$\Psi\Phi^a(\widehat\rho)=\widehat S_a\tau/\widehat\mu$.
+Each subsequent completed gap and tick multiplies by $\widehat\gamma_{g_i}$ and resets to $\tau$; the final zero run contributes $\widehat S_b$. This proves the first line of (15.8). Applying $\Phi^W$ to the defining stationary series proves its second line. At $W=0$ the result is one. Trace completeness and invariance give right and left consistency, so these are a stationary process's actual cylinders. Moreover
+$\mathsf P_H(0^W)\le\widehat\mu^{-1}\sum_{k\ge W}(k+1)\widehat\gamma_k\to0$, excluding an all-zero component. The tick rates at $\tau$ and $\widehat\rho$ are respectively zero and $1/\widehat\mu$.
+
+For the comparison, the following elementary change-of-density estimate is used inside the proof. If a probability measure $\pi$ is tilted by a scalar $r\in[\ell,u]$, with $a=\mathbb E_\pi r$, then for $\ell<u$ the chord bound for $|r-a|$ gives
+
+$$
+\begin{aligned}
+d_{\rm TV}\left(\frac{r\pi}{a},\pi\right)
+&=\frac{\mathbb E_\pi|r-a|}{2a}
+\le\frac{(u-a)(a-\ell)}{a(u-\ell)}\\
+&=\frac{u+\ell-a-u\ell/a}{u-\ell}
+\le\frac{u+\ell-2\sqrt{u\ell}}{u-\ell}
+=c_{\ell,u}.
+\end{aligned} \tag{15.13}
+$$
+
+The penultimate inequality is $a+u\ell/a\ge2\sqrt{u\ell}$. If $\ell=u$, the tilt is constant and the distance is zero. The gap law is precisely such a tilt of $\gamma$, with mean $a=Z_H/Z_n$.
+
+The stationary initialization requires a different normalization. Its interval-position law in (15.11) is normalized because $\sum_k(k+1)\gamma_k=\mu$. Writing $M_H=\sum_{k\ge1}(k+1)H(k)q^k$ and $M_n=\sum_{k\ge1}(k+1)k^nq^k$ gives
+
+$$
+\lambda(k,a)=\frac{k^nq^k}{M_n},\qquad
+\widehat\lambda(k,a)=\frac{H(k)q^k}{M_H}
+=\frac{r(k)}{\mathbb E_\lambda r(K)}\lambda(k,a).
+\tag{15.14}
+$$
+
+Thus the same bound (15.13) applies to the joint length-biased law, with no assumption that $\widehat\mu=\mu$. Its projections to $K$ and to the remaining wait $a$ cannot increase total variation; summing over $k\ge a$ gives exactly (15.11). This establishes both initialization bounds in (15.10), including length bias and all tail contributions.
+
+To pass to a whole window, the actual cylinder formula has the following scalar sampling representation: draw an initial wait $A$ with law $\alpha$, place $A$ zeros before the first one, and then draw independent gaps with law $\gamma$ after each one. The corresponding hatted representation has exactly (15.8). This is a representation of output probabilities; the instrument itself remains (15.6).
+
+For $W\ge1$, at most $B_W=\lceil W/2\rceil$ draws are needed: one initial wait and at most $B_W-1$ subsequent gaps. Indeed every post-tick gap has at least one zero. A gap draw can affect the window only after a tick in a position at most $W-2$; after a tick at position $W-1$ the remaining symbol is forced to be zero. Such draw-triggering ticks are separated by at least two positions and number at most $\lceil(W-2)/2\rceil=B_W-1$ (zero for $W=1,2$). One can therefore pre-draw $B_W-1$ independent gaps and use a deterministic truncation map to the length-$W$ word.
+
+For two countable distributions, match their common masses $\min\{p_i,p'_i\}$ first and couple the remaining masses arbitrarily. This gives a coupling with equality probability $1-d_{\rm TV}$. Apply it to the initial waits and independently to each of those gap pairs. Every pair agrees with probability at least $1-c_{\ell,u}$; consequently all needed draws agree with probability at least $(1-c_{\ell,u})^{B_W}$. Equal draws produce equal words. For any event, the difference of its two probabilities is at most the disagreement probability, which proves (15.10). The empty window is deterministic and has distance zero, as the same formula with exponent zero states. These couplings are a proof of a classical distribution bound, not retained registers, shared physical input, or a proposed simulation controller.
+
+The maximal-coupling and equilibrium-renewal ingredients are classical; see H. Thorisson, *Coupling, Stationarity, and Regeneration*, Springer (2000), [doi:10.1007/978-1-4612-1236-2](https://doi.org/10.1007/978-1-4612-1236-2). The calculations above supply their full specialization, including the two distinct normalizers and the window draw count, for the actual completed instrument. Under (15.9), $\widehat\gamma_0=0$ and every $\widehat\gamma_k$ for $k\ge1$ is positive. Formula (15.8) then gives exactly the no-adjacent-ones visible support, including positive boundary tails. $\square$
+
+**Theorem 15.4 (Two finite coefficient certificates for the scalar envelope).** For the residual coefficients in (15.1), define
+
+$$
+\epsilon_{\rm sum}=n\sum_{j=0}^{n-2}\frac{|E_j|}{j+1},\qquad
+\epsilon_{\rm bin}=n\max_{0\le j\le n-2}
+\frac{|E_j|}{\binom{n-1}{j}},\qquad
+\epsilon=\min\{\epsilon_{\rm sum},\epsilon_{\rm bin}\}.
+\tag{15.15}
+$$
+
+Then, for every integer $k\ge1$,
+
+$$
+\left|\frac{H(k)}{k^n}-1\right|\le\frac{\epsilon}{k}.
+\tag{15.16}
+$$
+
+In particular $\epsilon<1$ certifies (15.9) with $\ell=1-\epsilon$, $u=1+\epsilon$. If every $E_j\ge0$, it instead certifies $\ell=1$, $u=1+\epsilon$, without requiring $\epsilon<1$. These certificates require only finitely many exact coefficient operations; rational $P,S$ give rational certificates.
+
+Proof. For nonnegative integers $t$, the monomial $t^0$ means one, including at zero. Since $x^j$ is nondecreasing on $[0,\infty)$,
+
+$$
+\sum_{t=0}^{k-1}t^j\le\int_0^k x^j\,dx
+=\frac{k^{j+1}}{j+1}.
+\tag{15.17}
+$$
+
+Consequently $n|\sum_{t<k}e(t)|/k^n$ is at most
+$n\sum_j|E_j|k^{j+1-n}/(j+1)\le\epsilon_{\rm sum}/k$, because $j\le n-2$ and $k\ge1$. For the other bound put $b=\max_j|E_j|/\binom{n-1}{j}$. The binomial theorem gives, for every integer $t\ge0$,
+
+$$
+|e(t)|\le b\sum_{j=0}^{n-2}\binom{n-1}{j}t^j
+=b\big((t+1)^{n-1}-t^{n-1}\big).
+\tag{15.18}
+$$
+
+Summing telescopes to $bk^{n-1}$, and multiplication by $n/k^n$ gives $\epsilon_{\rm bin}/k$. Taking the better bound proves (15.16). Nonnegative coefficients give $e(t)\ge0$ at the integers used in (15.1), yielding the single-sided envelope. In the symmetric case the per-draw constant also satisfies the convenient estimate
+
+$$
+c_{1-\epsilon,1+\epsilon}
+=\frac{\epsilon}{1+\sqrt{1-\epsilon^2}}\le\epsilon
+\quad(0\le\epsilon<1).
+\tag{15.19}
+$$
+
+The theorem certifies a scalar law and then uses Theorems 15.2–15.3 to obtain actual stationary-output estimates. It is not an estimate for raw matrices substituted for a probability bound. $\square$
+
+**Theorem 15.5 (The rational ninth-degree center and every certified iterate are actual-output consumers).** For the center $c$ of (12.3), use $P=P_c,S=S_c$ from (12.1) and the actual instrument of Theorem 15.2. Define the exact rational number
+
+$$
+\delta_9=\frac{2749658638697}{10^{24}}.
+\tag{15.20}
+$$
+
+For every integer $k\ge1$,
+
+$$
+1\le\frac{H_c(k)}{k^9}\le1+\frac{\delta_9}{k}\le1+\delta_9.
+\tag{15.21}
+$$
+
+The constant endpoints $1$ and $1+\delta_9$ are optimal for this center over all positive integers: the lower endpoint is an infimum and the upper endpoint is attained at $k=1$. For all $0<q<1$ the center therefore produces a real complete $D=6$ instrument with the full resource contract, its own exact gap law $H_c(k)q^k/Z_{H_c}(q)$ and a faithful actual stationary initialization. Its stationary finite-window error is bounded by
+
+$$
+\begin{aligned}
+c_9&=\frac{\sqrt{1+\delta_9}-1}{\sqrt{1+\delta_9}+1}
+=\frac{\delta_9}{(\sqrt{1+\delta_9}+1)^2}
+<\frac{2749658638697}{4\cdot10^{24}},\\
+d_{\rm TV}(\mathsf P_{H_c,W},\mathsf P_{9,W})
+&\le1-(1-c_9)^{B_W}
+\le1-\left(1-\frac{2749658638697}{4\cdot10^{24}}\right)^{B_W}\\
+&\le\min\left\{1,\frac{2749658638697 B_W}{4\cdot10^{24}}\right\},
+\qquad B_W=\lceil W/2\rceil.
+\end{aligned} \tag{15.22}
+$$
+
+These are exact rational upper certificates as well as an exact radical bound. The same $c_9$ controls the gap, stationary length-biased interval, and initial-wait distances in (15.10). The center's actual law is distinct from the exact monomial law for every $0<q<1$.
+
+For the rational iterates $\theta^{(N)}$ of Theorem 12.3, retain its coefficient bound $\varepsilon_N=\bar\alpha L^N/(1-L)$ and set
+
+$$
+a_N=612\varepsilon_N
+=\frac{612\cdot398}{10^{15}(1-343/10^8)}
+\left(\frac{343}{10^8}\right)^N
+<\frac{2448}{10^{13}}\left(\frac{343}{10^8}\right)^N<1.
+\tag{15.23}
+$$
+
+Each finite iterate is a valid input to Theorem 15.2 and satisfies
+
+$$
+\begin{aligned}
+\left|\frac{H_N(k)}{k^9}-1\right|&\le\frac{a_N}{k}\quad(k\ge1),\\
+d_{\rm TV}(\mathsf P_{H_N,W},\mathsf P_{9,W})
+&\le1-\left(1-\frac{a_N}{1+\sqrt{1-a_N^2}}\right)^{B_W}
+\le\min\{1,612B_W\varepsilon_N\}.
+\end{aligned} \tag{15.24}
+$$
+
+Thus for any fixed finite $W$ and rational tolerance $\eta>0$, choosing the first $N\ge0$ with $612B_W\varepsilon_N\le\eta$ gives a terminating rational selection rule for an actual stationary window within $\eta$, simultaneously for every $0<q<1$. The empty window already has error zero.
+
+Proof. The coefficient formula (12.2) evaluated at the eight rational center entries gives (12.7). All eight displayed numerators $R_j$ there are strictly positive. The two certificates (15.15) evaluate exactly to
+
+$$
+\epsilon_{\rm sum}(c)
+=\frac{7075065748837739}{7\cdot10^{25}},\qquad
+\epsilon_{\rm bin}(c)
+=\frac1{10^{24}}\max_{0\le j\le7}\frac{R_j}{\binom8j}
+=\delta_9.
+\tag{15.25}
+$$
+
+For a fully integer comparison proving the last maximum, the nonnegative slack vector is
+
+$$
+\left(\binom8jR_0-R_j\right)_{j=0}^7
+=\begin{pmatrix}
+0\\4653282943432\\13180104272276\\65933817303646\\63041168361224\\81584870440966\\26754975839288\\12082450500424
+\end{pmatrix}.
+\tag{15.26}
+$$
+
+The first expression of (15.25) is the rational sum $10^{-24}\sum_{j=0}^7R_j/(j+1)$; it exceeds $\delta_9$ since all terms are positive and its first term is already $\delta_9$. Theorem 15.4 proves (15.21). At $k=1$, (15.1) gives $H_c(1)=1+9E_0(c)=1+\delta_9$. As $k\to\infty$, (15.16) gives $H_c(k)/k^9\to1$. These prove the two optimal endpoints. Theorem 15.3 now gives (15.22); the rational bound follows from $(\sqrt{1+\delta_9}+1)^2>4$ and the union bound. A normalized monomial gap law would require $H_c(k)/k^9$ to be constant for all $k\ge1$, because every $q^k$ is positive. Its different value at one and limiting value at infinity exclude this.
+
+For completeness the iterate transfer uses the entire box, not a statement that a finite iterate solves the polynomial identity. Throughout $\mathcal B_9$ all eight free coefficients have absolute value less than two; the fixed leading coefficient of $P$ is one. The Jacobian formula (12.4) therefore gives, for $0\le j\le7$,
+
+$$
+\sum_{i=1}^8\left|\frac{\partial E_j}{\partial\theta_i}(\theta)\right|
+\le68\binom8j\quad(\theta\in\mathcal B_9).
+\tag{15.27}
+$$
+
+Indeed the four $a$ columns contribute at most four when $j=0$ and at most sixteen otherwise, always at most $4\binom8j$. The four $b$ columns contain at most sixteen summands in total, each bounded by $4\binom8j$: for $r,s\in\{1,2,3,4\}$ with $r+s>j$, one has $\binom{r+s}{j}\le\binom8j$. Their total is at most $64\binom8j$. Integrating the derivative along the segment from $\theta_*$ to $\theta^{(N)}$, which stays in the convex box, and using $E(\theta_*)=0$ gives
+$|E_j(\theta^{(N)})|\le68\binom8j\varepsilon_N$.
+Thus $\epsilon_{\rm bin}(\theta^{(N)})\le9\cdot68\varepsilon_N=a_N$. Equations (15.16), (15.19) and (15.10) prove (15.24), and $L<1$ proves termination of the selection rule.
+
+The monic and anchored conditions are exact for the center, for every iterate, and for the limiting root. Their scaled Newton data have $p=3P$, $s=3S$, $u_4=0$, $v_4=72$, so the structural completion of Theorem 15.2 applies at each finite stage. At the limiting root, Theorem 12.3 gives $e=0$ and Theorems 11.2–11.5 supply the already established exact monomial instrument. At a finite stage only its explicitly computed residual determines whether the law is exact; neither coefficient convergence nor (15.24) asserts finite-stage residual vanishing. $\square$
+
+**Definition 15.6 (Scope of the output consequence).** Theorem 11.5 remains the exact all-degree existence supplier; Theorem 12.3 remains the rational ninth-degree coefficient supplier. The new consequence is the composition (15.1), (15.6), (15.8) and (15.10): a residual-controlled scalar law is produced by an actual complete instrument and compared after its own stationary initialization. The stationary-output sensitivity left unbounded after (12.18) is addressed here through this scalar identity. Estimates for inverses and square roots of Gramians remain separate questions; no uniform Gramian conditioning is assumed or concluded.
+
+The bounds concern each finite classical output window, with its stated dependence on $W$. They do not assert total-variation closeness of probability measures on infinite streams. They give no operator-, diamond-, state- or Kraus-distance estimate, no physical finite-precision implementation, and no preparation or control-cost bound. The coupling variables occur only in a comparison proof and do not change the instrument's memory accounting. The complete instrument uses exact matrix entries even when its input coefficients are rational; its Gramian and square root need not have rational entries. No bit-complexity or unconditional dimension-minimum conclusion follows. The results are ordinary paper mathematics, not a claim of Lean verification.
+
+The residual-to-output construction and the specified coefficient consumers are repository derivations using the prior Newton lift, faithful Gramian completion and anchored existence results, the cited classical renewal/coupling principles, and the fixed-point coefficient supplier of Section 12. No worldwide novelty claim is made.
+
+## 追加锚（本行以下为增补区）
+
+## 16. Nonnegative anchored squares, exact delay and general real renewal instruments
+
+**Definition 16.1 (Polynomial data and anchored pairs).** Let $d\in\mathbb R[t]$ be nonzero and globally nonnegative, of exact degree $2m$, where $m\ge0$, and write $\delta=[t^{2m}]d>0$. Put $\Delta v(t)=v(t+1)-v(t)$ and $\operatorname{fall}_j(t)=\prod_{i=0}^{j-1}(t-i)$, with $\operatorname{fall}_0=1$. A degree-bounded anchored pair for $d$ is a pair of real polynomials $p,s$ satisfying
 
 $$
 \deg p,\deg s\le m,\qquad s(0)=0,\qquad d=p^2+\Delta(s^2).
-\tag{15.1}
+\tag{16.1}
 $$
 
 The zero polynomial is permitted in a degree bound. Positive orientation means $[t^m]p=\sqrt\delta$. Define the discrete integral polynomial by
@@ -2079,12 +2405,12 @@ The zero polynomial is permitted in a degree bound. Positive orientation means $
 $$
 P(t)=\sum_{j=0}^{2m}\Delta^j d(0)\binom{t}{j+1},\qquad
 \binom{t}{j}=\frac{\operatorname{fall}_j(t)}{j!}.
-\tag{15.2}
+\tag{16.2}
 $$
 
 Throughout this section, a gap index is the number of zeros between successive ticks; the corresponding interevent duration is one larger. Adjoints are denoted by $\dagger$, and the star on a CP map denotes its trace dual. Real matrices act on the full complex matrix algebra, as in Definition 1.2.
 
-**Theorem 15.2 (Closure at real roots, with constants and the zero boundary).** Every $d$ of Definition 15.1 has a positively oriented anchored pair. For every degree-bounded anchored pair,
+**Theorem 16.2 (Closure at real roots, with constants and the zero boundary).** Every $d$ of Definition 16.1 has a positively oriented anchored pair. For every degree-bounded anchored pair,
 
 $$
 \begin{aligned}
@@ -2094,18 +2420,18 @@ $$
 P(k)&=s(k)^2+\sum_{j=0}^{k-1}p(j)^2
 =\sum_{j=0}^{k-1}d(j)\quad(k\ge0).
 \end{aligned}
-\tag{15.3}
+\tag{16.3}
 $$
 
 The identity at $k$ is for every nonnegative integer $k$. Here $P$ is the unique polynomial with the displayed difference and anchor. For a positive constant $d=c$, the degree-bounded pairs are exactly $(\sqrt c,0)$ and $(-\sqrt c,0)$; positive orientation selects the first. For $d=0$, the only polynomial pair with $s(0)=0$ and $p^2+\Delta(s^2)=0$, even without a prescribed degree bound, is $(0,0)$.
 
-Proof. The polynomials $\binom{t}{j}$ form a basis in each finite degree, since their leading coefficients are $1/j!$. The identity $\Delta\binom{t}{j+1}=\binom{t}{j}$ follows by subtracting the falling-factorial products, or by the binomial identity on infinitely many nonnegative integers. Successive differences at zero therefore recover the Newton coefficients: $d(t)=\sum_{j=0}^{2m}\Delta^j d(0)\binom{t}{j}$. This proves $\Delta P=d$ and $P(0)=0$. A nonconstant polynomial of degree $r$ and leading coefficient $a$ has forward difference of degree $r-1$ and leading coefficient $ra$; hence a polynomial with zero difference is constant. This proves uniqueness and the exact degree and leading coefficient in (15.3). Telescoping identifies its integer values with the sum of $d(j)$, which is nonnegative and nondecreasing in $k$.
+Proof. The polynomials $\binom{t}{j}$ form a basis in each finite degree, since their leading coefficients are $1/j!$. The identity $\Delta\binom{t}{j+1}=\binom{t}{j}$ follows by subtracting the falling-factorial products, or by the binomial identity on infinitely many nonnegative integers. Successive differences at zero therefore recover the Newton coefficients: $d(t)=\sum_{j=0}^{2m}\Delta^j d(0)\binom{t}{j}$. This proves $\Delta P=d$ and $P(0)=0$. A nonconstant polynomial of degree $r$ and leading coefficient $a$ has forward difference of degree $r-1$ and leading coefficient $ra$; hence a polynomial with zero difference is constant. This proves uniqueness and the exact degree and leading coefficient in (16.3). Telescoping identifies its integer values with the sum of $d(j)$, which is nonnegative and nondecreasing in $k$.
 
 For $m\ge1$, set $d_n=d+1/n$ for integers $n\ge1$. It is strictly positive on the entire real line, has degree $2m$ and retains leading coefficient $\delta$. Theorem 10.1 supplies real pairs $p_n,s_n$ of degrees at most $m$, with $s_n(0)=0$ and $d_n=p_n^2+\Delta(s_n^2)$. Replacing $p_n$ by its negative when necessary makes its leading coefficient exactly $\sqrt\delta$. Summation gives the exact nonnegative identity
 
 $$
 P(k)+\frac{k}{n}=s_n(k)^2+\sum_{j=0}^{k-1}p_n(j)^2\qquad(k\ge0).
-\tag{15.4}
+\tag{16.4}
 $$
 
 Let $M=\sqrt{P(m+1)+m+1}$. Taking $k=m+1$ bounds every $|p_n(j)|$ for $0\le j\le m$ by $M$. Taking $k=j$ and using $P(j)\le P(m+1)$ bounds every $|s_n(j)|$ at the same nodes by $M$. These bounds are simultaneous in $n$ and in the two polynomials. Explicitly, the fixed Lagrange polynomials
@@ -2113,22 +2439,22 @@ Let $M=\sqrt{P(m+1)+m+1}$. Taking $k=m+1$ bounds every $|p_n(j)|$ for $0\le j\le
 $$
 \ell_j(t)=\prod_{\substack{0\le i\le m\\i\ne j}}\frac{t-i}{j-i}
 \quad(0\le j\le m)
-\tag{15.5}
+\tag{16.5}
 $$
 
 satisfy $v(t)=\sum_{j=0}^m v(j)\ell_j(t)$ for every polynomial of degree at most $m$. Thus each coefficient of either $p_n$ or $s_n$ has absolute value at most $M\sum_{j=0}^m|[t^r]\ell_j|$. The combined coefficient sequence lies in a bounded subset of $\mathbb R^{2m+2}$. Finite-dimensional compactness gives one subsequence along which both polynomials converge coefficientwise, to $p,s$.
 
-Polynomial multiplication, translation and coefficient extraction are continuous in these finite-dimensional spaces. Passing along that common subsequence gives $d=p^2+\Delta(s^2)$, $s(0)=0$, $\deg s\le m$ and $[t^m]p=\sqrt\delta$. In particular $\deg p=m$. For any other degree-bounded pair, $\Delta(s^2)$ has degree at most $2m-1$ when nonzero, so comparison of degree $2m$ forces the same squared leading coefficient. Telescoping (15.1) proves the remaining identity in (15.3).
+Polynomial multiplication, translation and coefficient extraction are continuous in these finite-dimensional spaces. Passing along that common subsequence gives $d=p^2+\Delta(s^2)$, $s(0)=0$, $\deg s\le m$ and $[t^m]p=\sqrt\delta$. In particular $\deg p=m$. For any other degree-bounded pair, $\Delta(s^2)$ has degree at most $2m-1$ when nonzero, so comparison of degree $2m$ forces the same squared leading coefficient. Telescoping (16.1) proves the remaining identity in (16.3).
 
-For $m=0$, the anchor forces the constant $s$ to vanish, and $p^2=c$ gives exactly the two stated pairs; (15.2) is $P(t)=ct$. For $d=0$ and arbitrary polynomial degrees, telescoping gives $0=s(k)^2+\sum_{j<k}p(j)^2$ for every $k\ge0$. Every summand is nonnegative, so $s$ and $p$ each vanish at every nonnegative integer and are zero polynomials.
+For $m=0$, the anchor forces the constant $s$ to vanish, and $p^2=c$ gives exactly the two stated pairs; (16.2) is $P(t)=ct$. For $d=0$ and arbitrary polynomial degrees, telescoping gives $0=s(k)^2+\sum_{j<k}p(j)^2$ for every $k\ge0$. Every summand is nonnegative, so $s$ and $p$ each vanish at every nonnegative integer and are zero polynomials.
 
 No separation of the real zeros of $d$ was used, so repeated real zeros are included. This compactness proof supplies existence, not a continuous selection of pairs, uniqueness for general $d$, or convergence of a coefficient algorithm. The input Theorem 10.1 uses the scalar ingredient of [Ephremidze, *An Elementary Proof of the Polynomial Matrix Spectral Factorization Theorem*, arXiv:1011.3777v1, Theorem 2](https://arxiv.org/pdf/1011.3777v1): a polynomial matrix positive definite almost everywhere on the real line admits a polynomial factor nonsingular in the open upper half-plane, unique up to a constant right unitary multiplier. That result supplies neither the telescoping anchor nor a continuously chosen anchored pair at real roots. The argument here takes limits of the already anchored strictly positive pairs instead. $\square$
 
-**Theorem 15.3 (Exact delay, every-pair divisibility and maximal-delay rigidity).** For $d$ as above define
+**Theorem 16.3 (Exact delay, every-pair divisibility and maximal-delay rigidity).** For $d$ as above define
 
 $$
 h=1+\min\{j\in\mathbb Z_{\ge0}:d(j)>0\}.
-\tag{15.6}
+\tag{16.6}
 $$
 
 This minimum exists, $1\le h\le m+1$, and $P(k)=0$ exactly for $0\le k<h$, while $P(k)>0$ for every integer $k\ge h$. For each integer $h$ in that range the exact classification is
@@ -2137,7 +2463,7 @@ $$
 d(t)=\operatorname{fall}_{h-1}(t)^2r(t),\qquad
 r\ge0\text{ on }\mathbb R,\qquad
 \deg r=2(m-h+1),\qquad r(h-1)>0.
-\tag{15.7}
+\tag{16.7}
 $$
 
 Every allowed $h$ occurs at every fixed $m$. Every polynomial pair satisfying $s(0)=0$ and $d=p^2+\Delta(s^2)$, even without a degree bound, obeys
@@ -2145,31 +2471,31 @@ Every allowed $h$ occurs at every fixed $m$. Every polynomial pair satisfying $s
 $$
 \operatorname{fall}_{h-1}\mid p,\qquad
 \operatorname{fall}_h\mid s.
-\tag{15.8}
+\tag{16.8}
 $$
 
 In particular $h=m+1$ if and only if $d=c\operatorname{fall}_m^2$ for some $c>0$. In that case every degree-bounded anchored pair is $s=0$, $p=\pm\sqrt c\operatorname{fall}_m$.
 
-Proof. At a real zero $a$ write $d(t)=(t-a)^er(t)$ with $r(a)\ne0$. Continuity makes the sign of $r$ constant close to $a$. If $e$ were odd, the two sides of $a$ would give opposite signs for $d$, contrary to global nonnegativity. Thus each real zero has even multiplicity. A nonzero degree-$2m$ polynomial has at most $m$ distinct real zeros. Among the $m+1$ integers $0,\ldots,m$, some value of $d$ is therefore positive, proving existence and the bound on $h$. The sums in (15.3) are zero before $h$ and thereafter contain the strictly positive term $d(h-1)$; later zero values of $d$ cannot make $P$ zero again.
+Proof. At a real zero $a$ write $d(t)=(t-a)^er(t)$ with $r(a)\ne0$. Continuity makes the sign of $r$ constant close to $a$. If $e$ were odd, the two sides of $a$ would give opposite signs for $d$, contrary to global nonnegativity. Thus each real zero has even multiplicity. A nonzero degree-$2m$ polynomial has at most $m$ distinct real zeros. Among the $m+1$ integers $0,\ldots,m$, some value of $d$ is therefore positive, proving existence and the bound on $h$. The sums in (16.3) are zero before $h$ and thereafter contain the strictly positive term $d(h-1)$; later zero values of $d$ cannot make $P$ zero again.
 
-The prescribed zeros $0,\ldots,h-2$ each have multiplicity at least two, so their squared product divides $d$. Its quotient has the degree in (15.7); it is nonnegative away from those finitely many roots because the divisor is positive there, and nonnegative at the roots by continuity. Moreover $\operatorname{fall}_{h-1}(h-1)=(h-1)!\ne0$, so $d(h-1)>0$ is equivalent to $r(h-1)>0$. Conversely (15.7) makes the first $h-1$ values of $d$ zero and the next positive, proving the classification. For each $h\in\{1,\ldots,m+1\}$ the explicit example
+The prescribed zeros $0,\ldots,h-2$ each have multiplicity at least two, so their squared product divides $d$. Its quotient has the degree in (16.7); it is nonnegative away from those finitely many roots because the divisor is positive there, and nonnegative at the roots by continuity. Moreover $\operatorname{fall}_{h-1}(h-1)=(h-1)!\ne0$, so $d(h-1)>0$ is equivalent to $r(h-1)>0$. Conversely (16.7) makes the first $h-1$ values of $d$ zero and the next positive, proving the classification. For each $h\in\{1,\ldots,m+1\}$ the explicit example
 
 $$
 d(t)=\operatorname{fall}_{h-1}(t)^2
 \big(1+(t-h+1)^2\big)^{m-h+1}
-\tag{15.9}
+\tag{16.9}
 $$
 
 has degree $2m$, is globally nonnegative and satisfies exactly that classification.
 
-For any polynomial pair with the stated identity and anchor, telescoping gives $P(k)=s(k)^2+\sum_{j<k}p(j)^2$ without any degree assumption. Thus $P(k)=0$ for $0\le k<h$ forces $s(k)=0$ at all those points. At $k=h-1$, the same identity forces $p(j)=0$ for $0\le j<h-1$; when $h=1$ this is an empty list. Division by these distinct linear factors proves (15.8), including the case $s=0$. At $h=m+1$ the quotient $r$ in (15.7) is a positive constant $c$. For a degree-bounded pair, $s$, of degree at most $m$, has the $m+1$ distinct zeros $0,\ldots,m$, so $s=0$. Now $p^2=c\operatorname{fall}_m^2$ implies $(p-\sqrt c\operatorname{fall}_m)(p+\sqrt c\operatorname{fall}_m)=0$; the polynomial ring has no zero divisors, giving the two signs. Conversely this $d$ has precisely the stated first positive integer value. These arguments include $m=0,h=1$. $\square$
+For any polynomial pair with the stated identity and anchor, telescoping gives $P(k)=s(k)^2+\sum_{j<k}p(j)^2$ without any degree assumption. Thus $P(k)=0$ for $0\le k<h$ forces $s(k)=0$ at all those points. At $k=h-1$, the same identity forces $p(j)=0$ for $0\le j<h-1$; when $h=1$ this is an empty list. Division by these distinct linear factors proves (16.8), including the case $s=0$. At $h=m+1$ the quotient $r$ in (16.7) is a positive constant $c$. For a degree-bounded pair, $s$, of degree at most $m$, has the $m+1$ distinct zeros $0,\ldots,m$, so $s=0$. Now $p^2=c\operatorname{fall}_m^2$ implies $(p-\sqrt c\operatorname{fall}_m)(p+\sqrt c\operatorname{fall}_m)=0$; the polynomial ring has no zero divisors, giving the two signs. Conversely this $d$ has precisely the stated first positive integer value. These arguments include $m=0,h=1$. $\square$
 
-**Theorem 15.4 (Sharp positive-delay tradeoff for seed and detector ranks).** Let $H$ have finite complex dimension $D\ge0$, let $\mathcal T(X)=\sum_iK_iXK_i^\dagger$ have a finite, possibly empty Kraus family, and let $\tau,F\ge0$ have ranks $a,b$. Put $w_k=\operatorname{Tr}[F\mathcal T^k(\tau)]$. Suppose a first positive weight exists at an index $h\ge1$. Then
+**Theorem 16.4 (Sharp positive-delay tradeoff for seed and detector ranks).** Let $H$ have finite complex dimension $D\ge0$, let $\mathcal T(X)=\sum_iK_iXK_i^\dagger$ have a finite, possibly empty Kraus family, and let $\tau,F\ge0$ have ranks $a,b$. Put $w_k=\operatorname{Tr}[F\mathcal T^k(\tau)]$. Suppose a first positive weight exists at an index $h\ge1$. Then
 
 $$
 a,b\ge1,\qquad D\ge a+b,\qquad
 h\le D-a-b+1.
-\tag{15.10}
+\tag{16.10}
 $$
 
 This bound is sharp for raw CP detection for every $a,b,h\ge1$, in dimension $D=a+b+h-1$. It requires no normalization, trace contraction, completeness, stability or commutation. Its positive-delay hypothesis cannot be dropped.
@@ -2179,16 +2505,16 @@ Proof. Let $U=\operatorname{ran}\tau$ and $H_n=\operatorname{span}\{K_wU:|w|\le 
 $$
 H_0=U,\qquad H_{n+1}=H_n+\sum_iK_iH_n,\qquad
 \operatorname{ran}\Big(\sum_{k=0}^n\mathcal T^k(\tau)\Big)=H_n.
-\tag{15.11}
+\tag{16.11}
 $$
 
-For completeness, $\operatorname{ran}(MM^\dagger)=\operatorname{ran}M$ follows by taking orthogonal complements of $\ker(MM^\dagger)=\ker M^\dagger$. Use this with $M=K_w\tau^{1/2}$. The kernel of a finite sum of positive matrices is the intersection of their kernels, because its zero quadratic form forces each nonnegative quadratic form to be zero. The range of the sum is consequently the span of the ranges, proving the last equality in (15.11). Finally $\operatorname{Tr}(FX)=\|F^{1/2}X^{1/2}\|_{\rm HS}^2$ for $X\ge0$, so a zero trace is equivalent to $F$ annihilating $\operatorname{ran}X$.
+For completeness, $\operatorname{ran}(MM^\dagger)=\operatorname{ran}M$ follows by taking orthogonal complements of $\ker(MM^\dagger)=\ker M^\dagger$. Use this with $M=K_w\tau^{1/2}$. The kernel of a finite sum of positive matrices is the intersection of their kernels, because its zero quadratic form forces each nonnegative quadratic form to be zero. The range of the sum is consequently the span of the ranges, proving the last equality in (16.11). Finally $\operatorname{Tr}(FX)=\|F^{1/2}X^{1/2}\|_{\rm HS}^2$ for $X\ge0$, so a zero trace is equivalent to $F$ annihilating $\operatorname{ran}X$.
 
 The zero weights through $h-1$ give $H_{h-1}\subseteq\ker F$. If $H_{n+1}=H_n$ for any $0\le n<h-1$, every $K_i$ preserves $H_n$, hence every later reachable vector lies in $H_n\subseteq\ker F$. That would force $w_h=0$. Thus all $h-1$ successive inclusions from $H_0$ to $H_{h-1}$ are strict; for $h=1$ there are none. Therefore
 
 $$
 a+h-1\le\dim H_{h-1}\le D-b,
-\tag{15.12}
+\tag{16.12}
 $$
 
 which proves the bound. Nontrivial detection forces $a,b>0$, and $U\subseteq\ker F$ already gives $a+b\le D$.
@@ -2202,23 +2528,23 @@ Ke_j&=e_{j+1}\quad(0\le j<h),&Ke_h&=0,&Ku_i&=Kv_i=0,\\
 &F&=e_he_h^\dagger+\sum_{i=1}^{b-1}v_iv_i^\dagger,
 &\mathcal T(X)&=KXK^\dagger.
 \end{aligned}
-\tag{15.13}
+\tag{16.13}
 $$
 
 The space has dimension $(h+1)+(a-1)+(b-1)=a+b+h-1$, and the two projections have ranks $a,b$. At time zero their ranges are disjoint. For $1\le k\le h$, $K^k\tau(K^\dagger)^k=e_ke_k^\dagger$; for $k>h$ it is zero. Hence $w_h=1$ and every other $w_k=0$. This proves raw CP sharpness. It is not a normalized seed when $a>1$, and an effect and a raw zero map do not specify a complete binary instrument. Indeed here
 
 $$
 K^\dagger K+F=I-\sum_{i=1}^{a-1}u_iu_i^\dagger.
-\tag{15.14}
+\tag{16.14}
 $$
 
 Thus for $a>1$ even the necessary completeness identity with this fixed detector effect fails. No claim of complete-instrument sharpness for arbitrary ranks is part of this example.
 
-If $\tau=0$, $F=0$ or $D=0$, every weight vanishes and $h$ is undefined. An empty Kraus family gives zero weights for $k\ge1$, so cannot have positive delay. If either seed or detector has full rank and the other is nonzero, $w_0>0$, since a positive definite operator has strictly positive trace pairing with a nonzero positive operator. Finally $\tau=F=I_2$ has $h=0$ for any Kraus family, whereas the proposed right side of (15.10) would be $2-2-2+1=-1$. This explicitly excludes the $h=0$ extension.
+If $\tau=0$, $F=0$ or $D=0$, every weight vanishes and $h$ is undefined. An empty Kraus family gives zero weights for $k\ge1$, so cannot have positive delay. If either seed or detector has full rank and the other is nonzero, $w_0>0$, since a positive definite operator has strictly positive trace pairing with a nonzero positive operator. Finally $\tau=F=I_2$ has $h=0$ for any Kraus family, whereas the proposed right side of (16.10) would be $2-2-2+1=-1$. This explicitly excludes the $h=0$ extension.
 
-The support mechanism reuses Section 13. Its literature antecedents are [Yu–Ying, arXiv:1206.1935v1, Theorem 1](https://arxiv.org/pdf/1206.1935v1), for the reachable support of a finite-dimensional concurrent quantum program with trace-preserving CP program steps $\mathcal E_i$, a continuation measurement operator $M_1$, a density seed, $F_i(X)=\mathcal E_i(M_1XM_1^\dagger)$ and $F=\sum_iF_i$, and [Ying–Feng–Yu–Ying, arXiv:1304.0060v2, Lemma 1(2)](https://arxiv.org/pdf/1304.0060v2), for a finite-dimensional quantum Markov chain with a trace-preserving CP transition and a density seed. Both display a $D-1$ support horizon. The unrestricted raw CP assumptions, arbitrary positive seed, detector-kernel inequality (15.12) and sharpness witness above are supplied by the present argument, not attributed to those statements. $\square$
+The support mechanism reuses Section 13. Its literature antecedents are [Yu–Ying, arXiv:1206.1935v1, Theorem 1](https://arxiv.org/pdf/1206.1935v1), for the reachable support of a finite-dimensional concurrent quantum program with trace-preserving CP program steps $\mathcal E_i$, a continuation measurement operator $M_1$, a density seed, $F_i(X)=\mathcal E_i(M_1XM_1^\dagger)$ and $F=\sum_iF_i$, and [Ying–Feng–Yu–Ying, arXiv:1304.0060v2, Lemma 1(2)](https://arxiv.org/pdf/1304.0060v2), for a finite-dimensional quantum Markov chain with a trace-preserving CP transition and a density seed. Both display a $D-1$ support horizon. The unrestricted raw CP assumptions, arbitrary positive seed, detector-kernel inequality (16.12) and sharpness witness above are supplied by the present argument, not attributed to those statements. $\square$
 
-**Definition 15.5 (The general law and the full competitor interface).** For $d$ of Definition 15.1 and $0<q<1$, set
+**Definition 16.5 (The general law and the full competitor interface).** For $d$ of Definition 16.1 and $0<q<1$, set
 
 $$
 \begin{aligned}
@@ -2226,7 +2552,7 @@ Z&=\sum_{k\ge0}q^kP(k),&\gamma_k&=q^kP(k)/Z,\\
 S_a&=\sum_{j\ge a}\gamma_j,&
 \mu&=\sum_{k\ge0}(k+1)\gamma_k.
 \end{aligned}
-\tag{15.15}
+\tag{16.15}
 $$
 
 The normalizer, tails and mean in this section belong to this $d,q$, not to a monomial law specified elsewhere. The target cylinders are
@@ -2237,12 +2563,12 @@ $$
 &=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i}\quad(r\ge1),\\
 \mathbb P_{d,q}(0^N)&=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j\quad(N\ge0).
 \end{aligned}
-\tag{15.16}
+\tag{16.16}
 $$
 
-All indices are nonnegative integers, the internal product is one when $r=1$, and $N=0$ denotes the empty word. The theorems below prove normalization, consistency and realization. A competitor consists of fixed CP maps $\widehat\Phi,\widehat\Psi$ on $M_{D'}(\mathbb C)$ whose sum preserves trace, and a specified density $\widehat\rho$, such that the ordered instrument trace equals (15.16) for every finite word. Its matrices can be complex, its hidden state can be mixed and noninvariant, and its tick map can have arbitrary Kraus rank without a reset premise. Every persistent quantum or classical register, retained record and controller influencing later steps belongs to $D'$. There is no uncounted correlated input or time-dependent external control. The Kraus alternatives within each visible branch are summed, not retained as a further visible or persistent register.
+All indices are nonnegative integers, the internal product is one when $r=1$, and $N=0$ denotes the empty word. The theorems below prove normalization, consistency and realization. A competitor consists of fixed CP maps $\widehat\Phi,\widehat\Psi$ on $M_{D'}(\mathbb C)$ whose sum preserves trace, and a specified density $\widehat\rho$, such that the ordered instrument trace equals (16.16) for every finite word. Its matrices can be complex, its hidden state can be mixed and noninvariant, and its tick map can have arbitrary Kraus rank without a reset premise. Every persistent quantum or classical register, retained record and controller influencing later steps belongs to $D'$. There is no uncounted correlated input or time-dependent external control. The Kraus alternatives within each visible branch are summed, not retained as a further visible or persistent register.
 
-**Theorem 15.6 (Newton realization, stability, observability and reachability for every pair).** Choose any degree-bounded anchored pair for $d$. On $\mathbb C^{m+2}$ use target basis $e_0,\ldots,e_m$ and source basis vector $e_{\mathrm{src}}=e_{m+1}$. Define
+**Theorem 16.6 (Newton realization, stability, observability and reachability for every pair).** Choose any degree-bounded anchored pair for $d$. On $\mathbb C^{m+2}$ use target basis $e_0,\ldots,e_m$ and source basis vector $e_{\mathrm{src}}=e_{m+1}$. Define
 
 $$
 \begin{aligned}
@@ -2253,10 +2579,10 @@ B&=\begin{pmatrix}0&v\\0&0\end{pmatrix},\\
 x&=e_{\mathrm{src}},&f&=e_0,\qquad F_0=ff^{\mathsf T},\\
 \mathcal T_q(X)&=q(AXA^{\mathsf T}+BXB^{\mathsf T}).
 \end{aligned}
-\tag{15.17}
+\tag{16.17}
 $$
 
-The polynomial $s$ retains its meaning in (15.1). All unshown blocks of $B$ are zero. For all nonnegative integers $k,t,r$,
+The polynomial $s$ retains its meaning in (16.1). All unshown blocks of $B$ are zero. For all nonnegative integers $k,t,r$,
 
 $$
 \begin{aligned}
@@ -2266,7 +2592,7 @@ f^{\mathsf T}A^kx&=s(k),\qquad f^{\mathsf T}A^tBA^rx=p(t),\qquad BA^rB=0,\\
 \operatorname{spec}(\mathcal T_q)&=\{q\}\text{ on }M_{m+2}(\mathbb C),\\
 Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F_0)&>0,\qquad x^{\mathsf T}Qx=Z\in(0,\infty).
 \end{aligned}
-\tag{15.18}
+\tag{16.18}
 $$
 
 The raw reachable span from $x$ is all of $\mathbb C^{m+2}$, witnessed by $x,A^jBx$ for $0\le j\le m$. All moments of $\gamma$ are finite, $\gamma_k>0$ exactly for $k\ge h$, and
@@ -2275,17 +2601,17 @@ $$
 S_a=q^aH(a),\qquad
 H(t)=\frac1Z\sum_{r\ge0}q^rP(t+r),\qquad
 \deg H=2m+1,\quad [t^{2m+1}]H=\frac{\delta}{(2m+1)Z(1-q)}.
-\tag{15.19}
+\tag{16.19}
 $$
 
-Proof. Newton expansion as in (15.2) gives $p(t)=\sum_jv_j\binom tj$ and $\Delta s(t)=\sum_ju_j\binom tj$. At integer $t\ge0$, $U^t=\sum_{j=0}^m\binom tjN^j$, so the first target row applied to $U^tv$ is $p(t)$ and applied to $U^tu$ is $\Delta s(t)$. Since $\deg s\le m$ and $\deg p=m$, the last coefficients have precisely the values in (15.18). The block power sends $x$ to $(\sum_{j<k}U^ju,1)$, whose first coordinate is $s(k)-s(0)=s(k)$. Also $BA^rx=(v,0)$, giving the second word amplitude. The image of $B$ is in the target, which $A$ preserves and $B$ annihilates, so $BA^rB=0$.
+Proof. Newton expansion as in (16.2) gives $p(t)=\sum_jv_j\binom tj$ and $\Delta s(t)=\sum_ju_j\binom tj$. At integer $t\ge0$, $U^t=\sum_{j=0}^m\binom tjN^j$, so the first target row applied to $U^tv$ is $p(t)$ and applied to $U^tu$ is $\Delta s(t)$. Since $\deg s\le m$ and $\deg p=m$, the last coefficients have precisely the values in (16.18). The block power sends $x$ to $(\sum_{j<k}U^ju,1)$, whose first coordinate is $s(k)-s(0)=s(k)$. Also $BA^rx=(v,0)$, giving the second word amplitude. The image of $B$ is in the target, which $A$ preserves and $B$ annihilates, so $BA^rB=0$.
 
 With rightmost factors acting first, the sole all-$A$ word of length $k$ contributes $s(k)^2$. The exactly $k$ words with one $B$ are $A^tBA^{k-1-t}$ for $0\le t<k$, contributing $p(t)^2$. Every word with at least two $B$ factors is zero. Thus the complete Kraus-word sum is
 
 $$
 q^k\sum_{|w|=k}|f^{\mathsf T}wx|^2
 =q^k\left(s(k)^2+\sum_{t<k}p(t)^2\right)=q^kP(k).
-\tag{15.20}
+\tag{16.20}
 $$
 
 At $k=0$ the empty word contributes $s(0)^2=0$. Separate words contribute separate squared amplitudes, so no interference between different Kraus alternatives is being assumed.
@@ -2296,16 +2622,16 @@ For a complex vector $y=(y_T,y_{\mathrm{src}})$, positivity gives
 
 $$
 y^\dagger Qy=\sum_{k\ge0}q^k\sum_{|w|=k}|f^{\mathsf T}wy|^2.
-\tag{15.21}
+\tag{16.21}
 $$
 
 If this vanishes, every summand vanishes. The rows $f^{\mathsf T}A^tB=p(t)e_{\mathrm{src}}^{\mathsf T}$ force $y_{\mathrm{src}}=0$, since a nonzero degree-$m$ polynomial cannot vanish at every integer $0,\ldots,m$. The rows $f^{\mathsf T}A^j$ for $0\le j\le m$ then force $\sum_{\ell=0}^m\binom j\ell(y_T)_\ell=0$. This coefficient matrix is lower triangular with diagonal one, so $y_T=0$. Hence $Q$ is faithful on every complex memory direction. This detector observability is separate from reachability: the target parts of $A^jBx$ are $U^jv$, whose span equals that of $v,Nv,\ldots,N^mv$ by the same invertible binomial matrix. In reversed target-coordinate order the latter columns form a triangular matrix with diagonal $v_m\ne0$. They span the target, and $x$ supplies the remaining source direction.
 
-Summing (15.20) yields $x^{\mathsf T}Qx=Z$. The polynomial bound $0\le P(k)\le C(1+k)^{2m+1}$ and the ratio test give finiteness of $Z$ and of every moment sum; $P(h)>0$ gives strict positivity of $Z$. The support assertion follows from Theorem 15.3. For (15.19), expand each monomial of $P(t+r)$ in powers of $t$. Each coefficient is a finite linear combination of convergent sums $\sum_{r\ge0}r^jq^r$, with $r^0=1$ also at $r=0$. Thus $H$ is a polynomial, and its top coefficient is the top coefficient of $P$ times $1/(Z(1-q))>0$. Substitution $j=a+r$ in the tail sum proves the identity for $S_a$.
+Summing (16.20) yields $x^{\mathsf T}Qx=Z$. The polynomial bound $0\le P(k)\le C(1+k)^{2m+1}$ and the ratio test give finiteness of $Z$ and of every moment sum; $P(h)>0$ gives strict positivity of $Z$. The support assertion follows from Theorem 16.3. For (16.19), expand each monomial of $P(t+r)$ in powers of $t$. Each coefficient is a finite linear combination of convergent sums $\sum_{r\ge0}r^jq^r$, with $r^0=1$ also at $r=0$. Thus $H$ is a polynomial, and its top coefficient is the top coefficient of $P$ times $1/(Z(1-q))>0$. Substitution $j=a+r$ in the tail sum proves the identity for $S_a$.
 
 These are the Newton and word mechanisms of Section 11 with the actual polynomial $P$ replacing the monomial, and with $m=0$ included: then $N=0$, $u=0$ and $v_0=p\ne0$, so every step above still holds. $\square$
 
-**Theorem 15.7 (Complete real instrument and a single global resetting tick).** Let $G=Q^{1/2}$ and $D=m+2$, and define
+**Theorem 16.7 (Complete real instrument and a single global resetting tick).** Let $G=Q^{1/2}$ and $D=m+2$, and define
 
 $$
 \begin{aligned}
@@ -2314,7 +2640,7 @@ L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=\xi f^{\mathsf T}G^{-1},\\
 \Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
 \Psi(X)=JXJ^{\mathsf T}.
 \end{aligned}
-\tag{15.22}
+\tag{16.22}
 $$
 
 This is a complete homogeneous binary CP instrument on $M_D(\mathbb C)$ with real entries, no-tick Choi rank exactly two and tick Choi rank exactly one. The matrix ranks of $L_A,L_B,J$ are respectively $D,1,1$. On every input matrix, $\Psi(X)=\tau\operatorname{Tr}(EX)$; every positive-probability tick therefore has the same pure normalized output $\tau$. Moreover
@@ -2323,15 +2649,15 @@ $$
 \rho(\Phi)=q<1,\qquad
 \Psi\Phi^k(\tau)=\gamma_k\tau,\qquad
 \operatorname{Tr}\Phi^a(\tau)=S_a.
-\tag{15.23}
+\tag{16.23}
 $$
 
-Proof. The parameters of Theorem 2.1 are the raw family $\sqrt q A,\sqrt q B$, the single detector column $f$, the reset $x$, the dimension $D$ and the faithful Gramian $Q$ of Theorem 15.6. That theorem applies without any trace-contraction assumption on the raw map. More explicitly, shifting the norm-convergent series gives
+Proof. The parameters of Theorem 2.1 are the raw family $\sqrt q A,\sqrt q B$, the single detector column $f$, the reset $x$, the dimension $D$ and the faithful Gramian $Q$ of Theorem 16.6. That theorem applies without any trace-contraction assumption on the raw map. More explicitly, shifting the norm-convergent series gives
 
 $$
 Q-qA^{\mathsf T}QA-qB^{\mathsf T}QB=F_0,
 \qquad L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J=I.
-\tag{15.24}
+\tag{16.24}
 $$
 
 Real orthogonal diagonalization of $Q>0$ gives a real invertible positive square root $G$, and $\xi^{\mathsf T}\xi=x^{\mathsf T}Qx/Z=1$. Conjugation by $G^{-1}$ proves the second identity. These Kraus expressions are CP on all complex matrices: their ampliations are sums of conjugations by each Kraus matrix tensored with an identity. Completeness gives trace preservation of the sum and trace nonincrease of each positive branch, including on complex coherent inputs.
@@ -2340,36 +2666,36 @@ The invertible map $\Gamma(X)=GXG$ satisfies $\Phi=\Gamma\mathcal T_q\Gamma^{-1}
 
 $$
 \Phi^k(\tau)=\frac{G\mathcal T_q^k(xx^{\mathsf T})G}{Z}.
-\tag{15.25}
+\tag{16.25}
 $$
 
-This proves stability, while the outer-product formula for $J$ proves the global reset identity. Combining it with (15.20) proves the actual gap formula. The definition of $Z$ gives $\sum_k\gamma_k=1$. For $t_a=\operatorname{Tr}\Phi^a(\tau)$, completeness yields $t_a-t_{a+1}=\gamma_a$ and stability yields $t_a\to0$. Telescoping gives $t_a=S_a$, with no probability left at an infinite next gap.
+This proves stability, while the outer-product formula for $J$ proves the global reset identity. Combining it with (16.20) proves the actual gap formula. The definition of $Z$ gives $\sum_k\gamma_k=1$. For $t_a=\operatorname{Tr}\Phi^a(\tau)$, completeness yields $t_a-t_{a+1}=\gamma_a$ and stability yields $t_a\to0$. Telescoping gives $t_a=S_a$, with no probability left at an infinite next gap.
 
 Finally $A$ is invertible and $B=(v,0)e_{\mathrm{src}}^{\mathsf T}$ is nonzero of rank one. Since $D\ge2$, they are linearly independent over $\mathbb C$. Similarity and nonzero scaling preserve both independence and matrix ranks. The Choi matrix of $\Phi$ is the sum of the outer products of the vectorizations of $L_A,L_B$; the range of a sum of positive operators is the span of their ranges. Its rank is therefore two, and any Kraus representation must span that same Choi range. The two nonzero factors of $J$ make its matrix rank and its Choi rank one. This proves all stated rank distinctions. $\square$
 
-**Theorem 15.8 (Faithful stationary density, all tails and all cylinders).** For (15.22), the series
+**Theorem 16.8 (Faithful stationary density, all tails and all cylinders).** For (16.22), the series
 
 $$
 R_0=\sum_{a\ge0}\Phi^a(\tau),\qquad \rho_*=R_0/\mu
-\tag{15.26}
+\tag{16.26}
 $$
 
-defines a real faithful mixed density invariant under $\Phi+\Psi$. Its actual ordered-word traces give exactly (15.16), including the empty word, and define a proper stationary renewal law with tick rate $1/\mu$ and no all-zero stationary component. Its visible support consists exactly of finite words with at least $h$ zeros between successive ones. This is exactly the no-adjacent-one Fibonacci language if and only if $d(0)>0$.
+defines a real faithful mixed density invariant under $\Phi+\Psi$. Its actual ordered-word traces give exactly (16.16), including the empty word, and define a proper stationary renewal law with tick rate $1/\mu$ and no all-zero stationary component. Its visible support consists exactly of finite words with at least $h$ zeros between successive ones. This is exactly the no-adjacent-one Fibonacci language if and only if $d(0)>0$.
 
-Proof. Stability gives norm convergence of $R_0$. Nonnegative summation and (15.23) give
+Proof. Stability gives norm convergence of $R_0$. Nonnegative summation and (16.23) give
 
 $$
 \operatorname{Tr}R_0=\sum_{a\ge0}S_a
 =\sum_{j\ge0}(j+1)\gamma_j=\mu<\infty,\qquad
 \Phi(R_0)=R_0-\tau,\qquad \Psi(R_0)=\tau.
-\tag{15.27}
+\tag{16.27}
 $$
 
-Thus $\rho_*$ is normalized, invariant and has tick rate $1/\mu$. For each raw word $w$ in $A,B$, its completed word satisfies $L_w\xi=q^{|w|/2}Gwx/\sqrt Z$. Invertible $G$ and positive $q$ preserve the full reachable span of Theorem 15.6. For complex $y$,
+Thus $\rho_*$ is normalized, invariant and has tick rate $1/\mu$. For each raw word $w$ in $A,B$, its completed word satisfies $L_w\xi=q^{|w|/2}Gwx/\sqrt Z$. Invertible $G$ and positive $q$ preserve the full reachable span of Theorem 16.6. For complex $y$,
 
 $$
 y^\dagger R_0y=\sum_{a\ge0}\sum_{|w|=a}|y^\dagger L_w\xi|^2.
-\tag{15.28}
+\tag{16.28}
 $$
 
 Vanishing forces orthogonality to that full span, hence $y=0$. This proves faithfulness. The summands are real symmetric, and full rank in dimension $D\ge2$ makes $\rho_*$ mixed. Its tick probability $1/\mu>0$ differs from $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$, so it is distinct from the pure post-tick state.
@@ -2380,38 +2706,38 @@ $$
 \Psi\Phi^a(\rho_*)
 =\frac1\mu\sum_{c\ge0}\Psi\Phi^{a+c}(\tau)
 =\frac{S_a}{\mu}\tau.
-\tag{15.29}
+\tag{16.29}
 $$
 
-Each following gap $g_i$ and tick multiplies this density by $\gamma_{g_i}$ and returns it to $\tau$. The final $b$ zeros have trace $S_b$ from that reset. Taking the trace proves the first line of (15.16) for every number of ticks. With no tick, applying $\Phi^N$ directly to (15.26) gives
+Each following gap $g_i$ and tick multiplies this density by $\gamma_{g_i}$ and returns it to $\tau$. The final $b$ zeros have trace $S_b$ from that reset. Taking the trace proves the first line of (16.16) for every number of ticks. With no tick, applying $\Phi^N$ directly to (16.26) gives
 
 $$
 \operatorname{Tr}\Phi^N(\rho_*)
 =\frac1\mu\sum_{a\ge0}S_{N+a}
 =\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j.
-\tag{15.30}
+\tag{16.30}
 $$
 
-At $N=0$ this is one by (15.27). These cases exhaust all words. Summing the last symbol uses trace preservation and gives right consistency; summing the first uses invariance and gives left consistency. The finite-alphabet consistent cylinders consequently define a stationary process. After any positive-probability tick history the memory is $\tau$, so the joint law of any finite sequence of subsequent complete gaps is the product of their $\gamma$ values. Their normalization proves a proper next gap at each renewal. Also
+At $N=0$ this is one by (16.27). These cases exhaust all words. Summing the last symbol uses trace preservation and gives right consistency; summing the first uses invariance and gives left consistency. The finite-alphabet consistent cylinders consequently define a stationary process. After any positive-probability tick history the memory is $\tau$, so the joint law of any finite sequence of subsequent complete gaps is the product of their $\gamma$ values. Their normalization proves a proper next gap at each renewal. Also
 
 $$
 0\le\mathbb P_{d,q}(0^N)
 \le\frac1\mu\sum_{j\ge N}(j+1)\gamma_j\longrightarrow0,
-\tag{15.31}
+\tag{16.31}
 $$
 
 excluding an infinite all-zero future of positive probability and hence any all-zero stationary component.
 
-All $S_a$ and all finite all-zero cylinders are positive, since $\gamma_k>0$ for every $k\ge h$. The first cylinder formula is positive exactly when each internal gap is at least $h$. By (15.6), $h=1$ exactly when $d(0)>0$; if $h>1$, even the no-adjacent-one word $101$ has probability zero. This proves the exact support assertion.
+All $S_a$ and all finite all-zero cylinders are positive, since $\gamma_k>0$ for every $k\ge h$. The first cylinder formula is positive exactly when each internal gap is at least $h$. By (16.6), $h=1$ exactly when $d(0)>0$; if $h>1$, even the no-adjacent-one word $101$ has probability zero. This proves the exact support assertion.
 
-The stationary convention is that of [Monras–Beige–Wiesner, *Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, equations (25)–(27)](https://arxiv.org/pdf/1002.2337v2): a fixed point of the sum of the symbol operations supplies ordered trace probabilities. Equations (15.27)–(15.31) derive the new law's renewal factors, mean and boundary tails using the summation mechanism of Sections 5 and 14. The monomial hypotheses of Theorem 5.1 do not themselves quantify over Definition 15.5. $\square$
+The stationary convention is that of [Monras–Beige–Wiesner, *Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, equations (25)–(27)](https://arxiv.org/pdf/1002.2337v2): a fixed point of the sum of the symbol operations supplies ordered trace probabilities. Equations (16.27)–(16.31) derive the new law's renewal factors, mean and boundary tails using the summation mechanism of Sections 5 and 14. The monomial hypotheses of Theorem 5.1 do not themselves quantify over Definition 16.5. $\square$
 
-**Theorem 15.9 (Actual-posterior rank bounds and reused no-tick Choi minimum).** For the competitor class of Definition 15.5 the minimum possible no-tick Choi rank, across all finite complex memory dimensions, is exactly two. If a competitor has dimension $D'$, let $\tau_0$ be its actual posterior after the positive-probability first tick and let $F_1=\widehat\Psi^*(I)$. With $a=\operatorname{rank}\tau_0$ and $b=\operatorname{rank}F_1$,
+**Theorem 16.9 (Actual-posterior rank bounds and reused no-tick Choi minimum).** For the competitor class of Definition 16.5 the minimum possible no-tick Choi rank, across all finite complex memory dimensions, is exactly two. If a competitor has dimension $D'$, let $\tau_0$ be its actual posterior after the positive-probability first tick and let $F_1=\widehat\Psi^*(I)$. With $a=\operatorname{rank}\tau_0$ and $b=\operatorname{rank}F_1$,
 
 $$
 D'\ge h+a+b-1\ge h+1,
 \qquad h+1\le D_{\min}\le m+2.
-\tag{15.32}
+\tag{16.32}
 $$
 
 When $h=m+1$, equivalently $d=c\operatorname{fall}_m^2$, the memory minimum is $m+2$. Every competitor at that minimum has $a=b=1$, full primal and dual no-tick reachable spaces and a global pure resetting tick map with Choi rank one. Any invariant initialization of such a minimizer reproducing the law is faithful and mixed. These minimum-memory conclusions do not assert that every larger-dimensional competitor has a resetting tick.
@@ -2427,58 +2753,58 @@ $$
 &=\frac{\mathbb P_{d,q}(1\,0^k1)}{\mathbb P_{d,q}(1)}
 =\gamma_k=\frac{q^kP(k)}Z.
 \end{aligned}
-\tag{15.33}
+\tag{16.33}
 $$
 
-Here $\tau_0$ is a density, possibly mixed, and $F_1$ is a positive effect. This uses neither a common reset nor invariance of $\widehat\rho$. Finite-dimensional CP maps have finite Kraus representations by diagonalizing their positive Choi matrices. Theorem 15.4 therefore applies at the exact positive delay $h$, giving the first bound. The explicit complete instrument gives the upper bound. For the actual competitor survival $t_k=\operatorname{Tr}\widehat\Phi^k(\tau_0)$, completeness gives $t_0=1$ and $t_k-t_{k+1}=\gamma_k$; normalization of $\gamma$ gives $t_k=S_k\to0$. This identifies its actual tails without any assumption on an unused spectral block.
+Here $\tau_0$ is a density, possibly mixed, and $F_1$ is a positive effect. This uses neither a common reset nor invariance of $\widehat\rho$. Finite-dimensional CP maps have finite Kraus representations by diagonalizing their positive Choi matrices. Theorem 16.4 therefore applies at the exact positive delay $h$, giving the first bound. The explicit complete instrument gives the upper bound. For the actual competitor survival $t_k=\operatorname{Tr}\widehat\Phi^k(\tau_0)$, completeness gives $t_0=1$ and $t_k-t_{k+1}=\gamma_k$; normalization of $\gamma$ gives $t_k=S_k\to0$. This identifies its actual tails without any assumption on an unused spectral block.
 
-For the no-tick lower bound, rank zero would mean $\widehat\Phi=0$ and hence $\gamma_h=0$, contradicting $h\ge1$ and $\gamma_h>0$. Rank one would give $\widehat\Phi(X)=CXC^\dagger$ for some complex matrix $C$, so (15.33) becomes
+For the no-tick lower bound, rank zero would mean $\widehat\Phi=0$ and hence $\gamma_h=0$, contradicting $h\ge1$ and $\gamma_h>0$. Rank one would give $\widehat\Phi(X)=CXC^\dagger$ for some complex matrix $C$, so (16.33) becomes
 
 $$
 \left\|F_1^{1/2}C^k\tau_0^{1/2}\right\|_{\rm HS}^2
 =\frac{q^kP(k)}Z.
-\tag{15.34}
+\tag{16.34}
 $$
 
 This is the exact positive-effect, mixed-seed interface of the generic finite-vector-recurrence argument in [Chapter 29, equations (29.3)–(29.6), reused in Chapter 40, equation (40.4)](FIB_LEGAL_EDGE_LOAD_PRODUCT_UPPER_EDGE_FIELD_STABILITY_AND_PHASE_CUT_RANK.md#29-the-original-sns-needs-two-unresolved-no-tick-kraus-alternatives), and in Theorem 6.3 here. Its generic assertion is that an eventual nonzero squared norm of a finite constant-coefficient complex vector recurrence, equal to $q^k$ times a real polynomial with positive leading coefficient, has even polynomial degree. It is not restricted to the SNS or monomial conclusions of the named theorems.
 
 To give its full application, put $V_k=F_1^{1/2}C^k\tau_0^{1/2}$ in finite Hilbert–Schmidt space. Cayley–Hamilton gives a scalar constant-coefficient recurrence for every coordinate. After finitely many initial indices, its nonzero terms have the form $V_k=\sum_jR_j(k)\lambda_j^k$ with distinct nonzero $\lambda_j$ and nonzero vector polynomials $R_j$. This is the classical recurrence representation of [Stanley, *Enumerative Combinatorics*, Volume 1, Theorem 4.1.1 and Proposition 4.2.2](https://math.mit.edu/~rstan/ec/ec1.pdf): a rational generating series with denominator nonzero at zero gives exponential-polynomial coefficients outside a finite exceptional set. Theorem 4.1.1 requires a nonzero last recurrence coefficient; zero-root transients can be discarded, or handled by the exceptional-set proposition. Thus no invertibility of $C$ is required. Equivalently, on each nonzero Jordan block $\lambda I+N$, the finite expansion $\sum_j\binom{k}{j}\lambda^{k-j}N^j$ gives the same representation; zero Jordan blocks vanish eventually.
 
-The right side of (15.34) is positive for all $k\ge h$, so $V_k$ is not eventually zero. Choose the largest modulus $R>0$ of an occurring $\lambda_j$, and the largest vector-polynomial degree $e$ at that modulus. With leading vectors $a_j\ne0$ of those terms and distinct phases $\omega_j=\lambda_j/R$, one has
+The right side of (16.34) is positive for all $k\ge h$, so $V_k$ is not eventually zero. Choose the largest modulus $R>0$ of an occurring $\lambda_j$, and the largest vector-polynomial degree $e$ at that modulus. With leading vectors $a_j\ne0$ of those terms and distinct phases $\omega_j=\lambda_j/R$, one has
 
 $$
 \frac{V_k}{R^kk^e}=T_k+o(1),\qquad
 T_k=\sum_{j\in J}a_j\omega_j^k,\qquad
 \lim_{N\to\infty}\frac1N\sum_{k=1}^N\|T_k\|^2
 =\sum_{j\in J}\|a_j\|^2>0.
-\tag{15.35}
+\tag{16.35}
 $$
 
-Terms of smaller modulus or smaller degree vanish after this normalization. The mean identity follows by expansion: diagonal phase products equal one, and every off-diagonal average is $N^{-1}\sum_{k=1}^N\zeta^k\to0$ for a fixed $|\zeta|=1$, $\zeta\ne1$, by the finite geometric-sum formula. No orthogonality of leading vectors is needed. The normalized vectors are bounded and their squared norms have this same strictly positive Cesàro mean, since their difference from $T_k$ tends to zero. By (15.34) their squared norms equal
+Terms of smaller modulus or smaller degree vanish after this normalization. The mean identity follows by expansion: diagonal phase products equal one, and every off-diagonal average is $N^{-1}\sum_{k=1}^N\zeta^k\to0$ for a fixed $|\zeta|=1$, $\zeta\ne1$, by the finite geometric-sum formula. No orthogonality of leading vectors is needed. The normalized vectors are bounded and their squared norms have this same strictly positive Cesàro mean, since their difference from $T_k$ tends to zero. By (16.34) their squared norms equal
 
 $$
 \frac{P(k)}{Zk^{2e}}\left(\frac q{R^2}\right)^k.
-\tag{15.36}
+\tag{16.36}
 $$
 
-If $q<R^2$, this tends to zero; if $q>R^2$, it tends to infinity, contradicting respectively the positive mean or boundedness. Hence $q=R^2$. The same alternatives for polynomial growth then force $\deg P=2e$. But $\deg P=2m+1$ with positive leading coefficient, a contradiction. This reuses the existing parity proof with the new polynomial $P/Z$; no CP-growth estimate, pure hidden trajectory, hidden-source radius identification or tick-rank restriction enters. Theorem 15.7 attains rank two, proving its minimum over all finite competitor dimensions, independently of whether $m+2$ is minimum memory.
+If $q<R^2$, this tends to zero; if $q>R^2$, it tends to infinity, contradicting respectively the positive mean or boundedness. Hence $q=R^2$. The same alternatives for polynomial growth then force $\deg P=2e$. But $\deg P=2m+1$ with positive leading coefficient, a contradiction. This reuses the existing parity proof with the new polynomial $P/Z$; no CP-growth estimate, pure hidden trajectory, hidden-source radius identification or tick-rank restriction enters. Theorem 16.7 attains rank two, proving its minimum over all finite competitor dimensions, independently of whether $m+2$ is minimum memory.
 
-At maximal delay, (15.32) and the construction give $D_{\min}=m+2=h+1$. If a competitor has this dimension, its positive ranks obey $a+b\le2$, so $a=b=1$. The separate support bounds of Theorem 13.2 give $h\le r-a$ and $h\le r^\vee-b$, forcing $r=r^\vee=D'$. To spell out the actual-output consequence of Theorem 13.3, write $F_1=\lambda\eta\eta^\dagger$ for a unit $\eta$ and $\lambda>0$. In any tick Kraus representation $\widehat\Psi(X)=\sum_iJ_iXJ_i^\dagger$, the identity $\sum_i\|J_iy\|^2=y^\dagger F_1y=0$ for $y\perp\eta$ gives $J_i=v_i\eta^\dagger$. Thus $\widehat\Psi(X)=(\eta^\dagger X\eta)M$ with $M=\sum_iv_iv_i^\dagger$ and $\operatorname{Tr}M=\lambda$. The positive actual tick in (15.33) gives $\tau_0=M/\lambda$, so
+At maximal delay, (16.32) and the construction give $D_{\min}=m+2=h+1$. If a competitor has this dimension, its positive ranks obey $a+b\le2$, so $a=b=1$. The separate support bounds of Theorem 13.2 give $h\le r-a$ and $h\le r^\vee-b$, forcing $r=r^\vee=D'$. To spell out the actual-output consequence of Theorem 13.3, write $F_1=\lambda\eta\eta^\dagger$ for a unit $\eta$ and $\lambda>0$. In any tick Kraus representation $\widehat\Psi(X)=\sum_iJ_iXJ_i^\dagger$, the identity $\sum_i\|J_iy\|^2=y^\dagger F_1y=0$ for $y\perp\eta$ gives $J_i=v_i\eta^\dagger$. Thus $\widehat\Psi(X)=(\eta^\dagger X\eta)M$ with $M=\sum_iv_iv_i^\dagger$ and $\operatorname{Tr}M=\lambda$. The positive actual tick in (16.33) gives $\tau_0=M/\lambda$, so
 
 $$
 \widehat\Psi(X)=\tau_0\operatorname{Tr}(F_1X).
-\tag{15.37}
+\tag{16.37}
 $$
 
-Since $\tau_0$ has rank one, positivity forces all $v_i$ into its one-dimensional range. Hence all nonzero $J_i$ span a single rank-one direction, and tick Choi rank is one. If an invariant initialization $\sigma$ reproduces the law, it satisfies $\sigma=\widehat\Phi(\sigma)+\nu\tau_0$. Iterating $D'$ times gives $\sigma\ge\nu\sum_{j=0}^{D'-1}\widehat\Phi^j(\tau_0)>0$, where full reachability and the positive-sum range identity prove the strict inequality. Since $D'=m+2\ge2$, it is mixed. For $m\ge1$ this is the delayed-family minimum of Section 14 under positive scaling of $d$; the proof also supplies its constant endpoint $m=0$. For nonmaximal delay, (15.32) is the dimension conclusion asserted here; no general equality $D_{\min}=m+2$ is inferred. $\square$
+Since $\tau_0$ has rank one, positivity forces all $v_i$ into its one-dimensional range. Hence all nonzero $J_i$ span a single rank-one direction, and tick Choi rank is one. If an invariant initialization $\sigma$ reproduces the law, it satisfies $\sigma=\widehat\Phi(\sigma)+\nu\tau_0$. Iterating $D'$ times gives $\sigma\ge\nu\sum_{j=0}^{D'-1}\widehat\Phi^j(\tau_0)>0$, where full reachability and the positive-sum range identity prove the strict inequality. Since $D'=m+2\ge2$, it is mixed. For $m\ge1$ this is the delayed-family minimum of Section 14 under positive scaling of $d$; the proof also supplies its constant endpoint $m=0$. For nonmaximal delay, (16.32) is the dimension conclusion asserted here; no general equality $D_{\min}=m+2$ is inferred. $\square$
 
-**Proposition 15.10 (The constant endpoint, scaling and the nonnormalizable zero case).** For $d=c>0$ one has $m=0$, $h=1$, $P(k)=ck$ and
+**Proposition 16.10 (The constant endpoint, scaling and the nonnormalizable zero case).** For $d=c>0$ one has $m=0$, $h=1$, $P(k)=ck$ and
 
 $$
 Z=\frac{cq}{(1-q)^2},\qquad
 \gamma_0=0,\qquad \gamma_k=k(1-q)^2q^{k-1}\ (k\ge1),\qquad
 \mu=\frac2{1-q}.
-\tag{15.38}
+\tag{16.38}
 $$
 
 In basis $e_0,e_1$ a completed instrument is
@@ -2488,32 +2814,32 @@ L_A=\sqrt q I_2,\qquad
 L_B=\sqrt{1-q}\,e_0e_1^{\mathsf T},\qquad
 J=\sqrt{1-q}\,e_1e_0^{\mathsf T},\qquad
 \tau=e_1e_1^{\mathsf T},\quad \rho_*=I_2/2.
-\tag{15.39}
+\tag{16.39}
 $$
 
-Its dimension two and no-tick Choi rank two are both minimum in the full competitor class. For fixed $q$, positive scaling of any nonzero $d$ leaves the law unchanged; two such polynomials give the same law if and only if they are positive scalar multiples. The zero polynomial gives no normalized law of the form (15.15).
+Its dimension two and no-tick Choi rank two are both minimum in the full competitor class. For fixed $q$, positive scaling of any nonzero $d$ leaves the law unchanged; two such polynomials give the same law if and only if they are positive scalar multiples. The zero polynomial gives no normalized law of the form (16.15).
 
 Proof. The unique positively oriented constant pair is $p=\sqrt c,s=0$. Thus the raw matrices are $A=I_2$, $B=\sqrt c\,e_0e_1^{\mathsf T}$. The Gramian terms are $q^k(e_0e_0^{\mathsf T}+kc\,e_1e_1^{\mathsf T})$, giving
 
 $$
 Q=\operatorname{diag}\left(\frac1{1-q},\frac{cq}{(1-q)^2}\right).
-\tag{15.40}
+\tag{16.40}
 $$
 
-Here $\sum_{k\ge0}q^k=(1-q)^{-1}$, and multiplying $\sum_{k\ge1}kq^k$ by $1-q$ leaves $\sum_{k\ge1}q^k=q/(1-q)$, proving the stated second sum. Substituting (15.40) into (15.22) gives precisely (15.39). Its effects sum to $qI_2+(1-q)e_1e_1^{\mathsf T}+(1-q)e_0e_0^{\mathsf T}=I_2$. By induction, for $k\ge1$,
+Here $\sum_{k\ge0}q^k=(1-q)^{-1}$, and multiplying $\sum_{k\ge1}kq^k$ by $1-q$ leaves $\sum_{k\ge1}q^k=q/(1-q)$, proving the stated second sum. Substituting (16.40) into (16.22) gives precisely (16.39). Its effects sum to $qI_2+(1-q)e_1e_1^{\mathsf T}+(1-q)e_0e_0^{\mathsf T}=I_2$. By induction, for $k\ge1$,
 
 $$
 \Phi^k(\tau)=q^ke_1e_1^{\mathsf T}
 +k(1-q)q^{k-1}e_0e_0^{\mathsf T}.
-\tag{15.41}
+\tag{16.41}
 $$
 
-The step uses $\Phi(e_0e_0^{\mathsf T})=qe_0e_0^{\mathsf T}$ and $\Phi(e_1e_1^{\mathsf T})=qe_1e_1^{\mathsf T}+(1-q)e_0e_0^{\mathsf T}$. Applying the tick gives (15.38). Summing (15.41), together with the $k=0$ term, gives $R_0=I_2/(1-q)$, so its trace is $\mu=2/(1-q)$ and $\rho_*=I_2/2$. The minima and actual global tick reset at minimum follow from Theorem 15.9 with $h=m+1=1$.
+The step uses $\Phi(e_0e_0^{\mathsf T})=qe_0e_0^{\mathsf T}$ and $\Phi(e_1e_1^{\mathsf T})=qe_1e_1^{\mathsf T}+(1-q)e_0e_0^{\mathsf T}$. Applying the tick gives (16.38). Summing (16.41), together with the $k=0$ term, gives $R_0=I_2/(1-q)$, so its trace is $\mu=2/(1-q)$ and $\rho_*=I_2/2$. The minima and actual global tick reset at minimum follow from Theorem 16.9 with $h=m+1=1$.
 
-For general $d$, multiplication by $c>0$ multiplies its uniquely anchored integral $P$ and normalizer $Z$ by $c$, leaving $\gamma$, its tails, mean and every cylinder unchanged. Conversely, at fixed $q$, equality of the gap laws gives $P_1(k)/Z_1=P_2(k)/Z_2$ at all nonnegative integers. Polynomial identity then gives $P_1=(Z_1/Z_2)P_2$ and, by taking differences, $d_1=(Z_1/Z_2)d_2$, with positive ratio. Equality of stationary cylinders implies equality of these gaps through (15.33), so the same assertion holds for the full laws. Finally for $d=0$ its anchored integral is identically zero, its only anchored pair is $(0,0)$ by Theorem 15.2, and $Z=0$. There is no probability normalization by this zero denominator. $\square$
+For general $d$, multiplication by $c>0$ multiplies its uniquely anchored integral $P$ and normalizer $Z$ by $c$, leaving $\gamma$, its tails, mean and every cylinder unchanged. Conversely, at fixed $q$, equality of the gap laws gives $P_1(k)/Z_1=P_2(k)/Z_2$ at all nonnegative integers. Polynomial identity then gives $P_1=(Z_1/Z_2)P_2$ and, by taking differences, $d_1=(Z_1/Z_2)d_2$, with positive ratio. Equality of stationary cylinders implies equality of these gaps through (16.33), so the same assertion holds for the full laws. Finally for $d=0$ its anchored integral is identically zero, its only anchored pair is $(0,0)$ by Theorem 16.2, and $Z=0$. There is no probability normalization by this zero denominator. $\square$
 
-**Definition 15.11 (Scope of the polynomial extension).** The new polynomial class includes real-root boundary cases and arbitrary repeated real zeros under global nonnegativity. Existence of an anchored pair is the compactness consequence in Theorem 15.2, not an extension of a chosen half-plane factor across real roots. The exact delay and divisibility classification and the positive-delay detector tradeoff have the separate arguments in Theorems 15.3–15.4. Spectral factorization, polynomial interpolation and finite differences, finite-dimensional compactness, support reachability and recurrence representations are classical ingredients; the cited results have the conditions stated with their uses. The no-tick parity obstruction is explicitly the reused generic argument, and the Newton, Gramian and stationary interfaces are derived here for the actual law (15.15).
+**Definition 16.11 (Scope of the polynomial extension).** The new polynomial class includes real-root boundary cases and arbitrary repeated real zeros under global nonnegativity. Existence of an anchored pair is the compactness consequence in Theorem 16.2, not an extension of a chosen half-plane factor across real roots. The exact delay and divisibility classification and the positive-delay detector tradeoff have the separate arguments in Theorems 16.3–16.4. Spectral factorization, polynomial interpolation and finite differences, finite-dimensional compactness, support reachability and recurrence representations are classical ingredients; the cited results have the conditions stated with their uses. The no-tick parity obstruction is explicitly the reused generic argument, and the Newton, Gramian and stationary interfaces are derived here for the actual law (16.15).
 
-The resource is finite persistent complex memory dimension, and the output object is the classical stationary cylinder law. The construction establishes an upper bound $m+2$, while unconditional equality here is restricted to maximal delay. The positive-delay rank witness (15.13) proves raw CP sharpness, not complete-instrument sharpness for arbitrary seed and effect ranks. The original monomial memory minimum and the general finite-CP growth obligation are separate from this extension. A pure tick posterior is distinct from the faithful mixed stationary density; real Kraus entries do not change the complex input model. No native AURIC identification, coherent-output preparation, physical precision, entropy, energy, work or control-cost consequence is included.
+The resource is finite persistent complex memory dimension, and the output object is the classical stationary cylinder law. The construction establishes an upper bound $m+2$, while unconditional equality here is restricted to maximal delay. The positive-delay rank witness (16.13) proves raw CP sharpness, not complete-instrument sharpness for arbitrary seed and effect ranks. The original monomial memory minimum and the general finite-CP growth obligation are separate from this extension. A pure tick posterior is distinct from the faithful mixed stationary density; real Kraus entries do not change the complex input model. No native AURIC identification, coherent-output preparation, physical precision, entropy, energy, work or control-cost consequence is included.
 
 ## 追加锚（本行以下为增补区）

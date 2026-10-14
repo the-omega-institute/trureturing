@@ -130,7 +130,7 @@ private theorem trace_P8 : trace P8 = 4 := by
   change ∑ i, P8 i i = 4
   norm_num [P8, weight, Fin.sum_univ_succ]
 
-private def octVec : Fin 6 → Fin 2 → ℂ :=
+def octVec : Fin 6 → Fin 2 → ℂ :=
   ![![1,0],![0,1],![1,1],![1,-1],![1,Complex.I],![1,-Complex.I]]
 
 private def octScale : Fin 6 → ℝ := ![1,1,1/2,1/2,1/2,1/2]

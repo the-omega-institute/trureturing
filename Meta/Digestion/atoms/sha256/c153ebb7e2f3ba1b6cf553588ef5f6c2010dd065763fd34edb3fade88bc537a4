@@ -1,0 +1,30 @@
+**Theorem 10.2 (Uniform odd-power identity independent of the geometric parameter).** For each integer $m\ge1$, put $n=2m+1$. There is a pair $p,s\in\mathbb R[t]$, depending only on $m$, for which
+
+$$
+\begin{aligned}
+\deg p&=m,\qquad \deg s\le m,\qquad s(0)=0,\qquad p_m^2=n,\\
+p(t)^2+s(t+1)^2-s(t)^2&=(t+1)^n-t^n\quad(t\in\mathbb R),\\
+k^n&=s(k)^2+\sum_{t=0}^{k-1}p(t)^2\quad(k\in\mathbb Z_{\ge0}),
+\end{aligned} \tag{10.10}
+$$
+
+where $p_m=[t^m]p$. The same pair can be used for every $0<q<1$.
+
+Proof. The polynomial
+
+$$
+d_m(t)=(t+1)^{2m+1}-t^{2m+1}
+=(2m+1)\int_t^{t+1}u^{2m}\,du
+\tag{10.11}
+$$
+
+is strictly positive for every real $t$: the integrand is continuous and nonnegative, and its only zero is $u=0$, so its integral on an interval of length one is positive. Its degree is $2m$ with leading coefficient $2m+1=n$. In Theorem 10.1 its evaluation bounds telescope to
+
+$$
+c_j=j^{2m+1},\qquad
+\mathcal K_m=\{s\in V_m:|s(j)|\le j^{m+1/2},\ 1\le j\le m\}.
+\tag{10.12}
+$$
+
+Applying that theorem gives the first two lines of (10.10). Summing the polynomial identity from $t=0$ to $t=k-1$ and using $s(0)=0$ gives the last line. At $k=0$ both $s(0)^2$ and the empty sum are zero. The construction of this pair contains no $q$, which proves the stated uniformity in that parameter. $\square$
+
