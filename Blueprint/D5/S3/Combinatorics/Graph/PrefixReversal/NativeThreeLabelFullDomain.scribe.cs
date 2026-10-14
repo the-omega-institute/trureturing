@@ -37,7 +37,7 @@ internal sealed class NativeThreeLabelFullDomainDocument : IScribeDocumentDefini
         : Call("Cons", Call("Terminal", F.Id("frame")), Call("Base", F.Id("frame"))));
     private static Formula DomainFormula(bool parent) => Disp(All("m", Call("Nat"), All("k", Call("Nat"),
         All("frame", Call("SupplyFrame", F.Id("m"), F.Id("k")),
-            Implies(Eq(Call("Length", Call("Base", F.Id("frame"))), D(parent ? 3 : 2)),
+            Implies(Eq(Call("Length", Call("Base", F.Id("frame"))), parent ? D(3) : D(2)),
                 All("v", Call("Configuration", F.Id("m")),
                     Call("Layer", Selected(parent), Residual(parent), F.Id("v"))))))));
     private static Formula IsoFormula(bool parent) => Disp(Call("GraphIso",
