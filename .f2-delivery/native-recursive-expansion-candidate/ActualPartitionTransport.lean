@@ -57,7 +57,7 @@ private theorem map_filtered_complement {α : Type*} {β : Type*}
         not_true_eq_false, decide_false, Bool.false_eq_true, ↓reduceIte, ih]
     · have hfe : f e ∉ cuts.image f := fun h => he ((hmem e).mp h)
       simp only [List.filter_cons, List.map_cons, he, hfe, not_false_eq_true,
-        decide_true, Bool.true_eq_true, ↓reduceIte, ih]
+        decide_true, ↓reduceIte, ih]
 
 /-- The target partition is the image of these particular source pieces
 and this particular cycle. Injectivity, rather than a new partition

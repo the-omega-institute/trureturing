@@ -26,9 +26,9 @@ theorem advance_even_boundary (k : ℕ) (hk : 3 ≤ k) (p q : RawPort) :
     advance k (evenBoundary k) p q ↔ evenBoundary (k + 1) p q := by
   rcases p with ⟨i, s⟩
   rcases q with ⟨j, t⟩
-  simp only [advance, previousIndex, evenBoundary, ladder, pair,
-    Prod.fst, Prod.snd, Prod.mk.injEq]
-  omega
+  by_cases hs₀ : s = 0 <;> by_cases hs₁ : s = 1 <;>
+    by_cases ht₀ : t = 0 <;> by_cases ht₁ : t = 1 <;>
+    simp_all [advance, previousIndex, evenBoundary, ladder, pair] <;> omega
 
 /-- The odd template has the same update; k=3 retains its empty old
 ladder and gains precisely the new R0--L1 ladder edge at k=4. -/
@@ -37,9 +37,9 @@ theorem advance_odd_boundary (k : ℕ) (hk : 3 ≤ k) (p q : RawPort) :
     advance k (oddBoundary k) p q ↔ oddBoundary (k + 1) p q := by
   rcases p with ⟨i, s⟩
   rcases q with ⟨j, t⟩
-  simp only [advance, previousIndex, oddBoundary, ladder, pair,
-    Prod.fst, Prod.snd, Prod.mk.injEq]
-  omega
+  by_cases hs₀ : s = 0 <;> by_cases hs₁ : s = 1 <;>
+    by_cases ht₀ : t = 0 <;> by_cases ht₁ : t = 1 <;>
+    simp_all [advance, previousIndex, oddBoundary, ladder, pair] <;> omega
 
 #print axioms advance_even_boundary
 #print axioms advance_odd_boundary

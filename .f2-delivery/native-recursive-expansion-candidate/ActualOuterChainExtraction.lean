@@ -41,11 +41,12 @@ private theorem outsideChain_edges (p q : Piece G)
   | nil =>
     simp only [List.nil_append, chainEdges, outsideChain,
       SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_nil,
-      List.cons_append, List.nil_append]
+      List.cons_append, List.nil_append, List.append_assoc]
   | cons r rs ih =>
-    simp only [List.cons_append, chainEdges, outsideChain,
-      SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_append, ih,
-      List.cons_append, List.append_assoc]
+    change p.walk.edges ++ s(p.finish, r.start) :: chainEdges r (rs ++ [q]) = _
+    rw [ih r h.2]
+    simp only [outsideChain, SimpleGraph.Walk.edges_cons,
+      SimpleGraph.Walk.edges_append, List.cons_append, List.append_assoc]
 
 private theorem finish_append_last (p q : Piece G) (ps : List (Piece G)) :
     finish p (ps ++ [q]) = q.finish := by
@@ -92,8 +93,9 @@ theorem actual_closed_route_outer_chain
     rw [hcs, hinterior]
     have h₀ := List.reverse_perm
       ((p :: (ps ++ [q])).flatMap fun z => z.walk.support)
-    have h₁ := (List.perm_append_comm (ps.flatMap fun z => z.walk.support)
-      q.walk.support).append_left p.walk.support
+    have h₁ := (show ((ps.flatMap fun z => z.walk.support) ++ q.walk.support).Perm
+      (q.walk.support ++ (ps.flatMap fun z => z.walk.support)) from
+      List.perm_append_comm).append_left p.walk.support
     apply h₀.trans
     simpa only [List.flatMap_cons, List.flatMap_append, List.flatMap_nil,
       List.append_nil, List.append_assoc] using h₁

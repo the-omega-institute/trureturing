@@ -160,7 +160,7 @@ private theorem filter_rotate_join {α : Type} (p : α → Bool) (S B : List α)
   have hfS (L : List α) (hL : ∀ y ∈ L, y ∈ S) : L.filter p = [] := by
     apply List.filter_eq_nil_iff.mpr
     intro y hy
-    exact hS y (hL y hy)
+    simp only [hS y (hL y hy), Bool.false_eq_true, not_false_eq_true]
   have hfB (L : List α) (hL : ∀ y ∈ L, y ∈ B) : L.filter p = L := by
     apply List.filter_eq_self.mpr
     intro y hy
@@ -232,7 +232,8 @@ theorem native_supply_child_coordinates {m k : Nat} (hm : 3 ≤ m)
     rw [hc.2.1, erase_coe, List.filter_append, List.filter_reverse,
       frame_rotation_filter F hB i]
     simp only [List.filter_cons, List.filter_nil, ht, ↓reduceIte]
-    rfl
+    change _ = ((F.terminal :: F.base.rotate (supplyGap F hB i).val : List _) : Cycle _).reverse
+    rw [Cycle.reverse_coe, List.reverse_cons]
 
 /-- In particular, both endpoints of every actual b cut have the computed
 full child domain. They are not assigned by an abstract skeleton edge. -/
