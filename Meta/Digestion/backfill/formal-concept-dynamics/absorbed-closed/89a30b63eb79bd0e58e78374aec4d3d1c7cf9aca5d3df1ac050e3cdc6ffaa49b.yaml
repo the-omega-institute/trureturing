@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:89a30b63eb79bd0e58e78374aec4d3d1c7cf9aca5d3df1ac050e3cdc6ffaa49b
+  normalized_sha256: sha256:89a30b63eb79bd0e58e78374aec4d3d1c7cf9aca5d3df1ac050e3cdc6ffaa49b
+cas_ref: sha256:89a30b63eb79bd0e58e78374aec4d3d1c7cf9aca5d3df1ac050e3cdc6ffaa49b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/HistorySensitiveOutcomeReductionComplete.history_sensitive_evaluation_not_outcome_reducible_with_defect
+    target_statement_id: sha256:57a1c39f813c3cf52ce3e17ba5f71c750f6a2e1844f3a6f859eca0d910c7f9ec
+receipts:
+  unresolved_subitems: []

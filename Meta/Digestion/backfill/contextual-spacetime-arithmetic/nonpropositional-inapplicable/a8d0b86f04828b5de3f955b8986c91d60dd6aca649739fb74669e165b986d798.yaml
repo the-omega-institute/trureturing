@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8d0b86f04828b5de3f955b8986c91d60dd6aca649739fb74669e165b986d798
+  normalized_sha256: sha256:a8d0b86f04828b5de3f955b8986c91d60dd6aca649739fb74669e165b986d798
+cas_ref: sha256:a8d0b86f04828b5de3f955b8986c91d60dd6aca649739fb74669e165b986d798
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述卷积核、像必要条件及非零处唯一性。
+    previous_atom_id: 081e7cd41620bc5c9420a524813b681dbe4c9907d5cb552649c4ee75d6958c11
+    next_atom_id: 1ed167f9ea7aa62d01294ff0aafe00b49ba2f12eb6b287c886d1083f12aeb8aa

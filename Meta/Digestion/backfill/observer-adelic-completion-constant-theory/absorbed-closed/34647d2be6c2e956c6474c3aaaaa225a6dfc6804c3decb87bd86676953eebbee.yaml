@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:34647d2be6c2e956c6474c3aaaaa225a6dfc6804c3decb87bd86676953eebbee
+  normalized_sha256: sha256:34647d2be6c2e956c6474c3aaaaa225a6dfc6804c3decb87bd86676953eebbee
+cas_ref: sha256:34647d2be6c2e956c6474c3aaaaa225a6dfc6804c3decb87bd86676953eebbee
+coverage_gids:
+  - gid: D5/S3/Divergence/CauchyClosedForm.shifted_cauchy_kl_eq_horizon_free_energy
+    target_statement_id: sha256:a4a93a94240a5ca778c089891eca4c17921c5ce8028fb87e6d2b7ddfcb86bb64
+  - gid: D5/S3/Divergence/CauchyMeasureEntropy.cauchy_measure_relative_entropy
+    target_statement_id: sha256:34ee658360695d7cadcdcc889733d6e2e5091b9ef0cb38c7b47d63a3ab1d8959
+receipts:
+  unresolved_subitems: []

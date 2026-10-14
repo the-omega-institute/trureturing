@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b224d31718f7fef17e8f12d85f2987bafd523a2c85652a75b1161bee3ba8570a
+  normalized_sha256: sha256:b224d31718f7fef17e8f12d85f2987bafd523a2c85652a75b1161bee3ba8570a
+cas_ref: sha256:b224d31718f7fef17e8f12d85f2987bafd523a2c85652a75b1161bee3ba8570a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 29.1 只引入两步参数、辅助系数、仪器和退极化通道记号。
+    previous_atom_id: f5184bc9c6db82c0533746b3b7ad269448dd49a2415157074336464690aca378
+    next_atom_id: 46ed2c13a25873bb84669c2a3b9f24c76d63135ce4c22a49e9657a854c32cbdc

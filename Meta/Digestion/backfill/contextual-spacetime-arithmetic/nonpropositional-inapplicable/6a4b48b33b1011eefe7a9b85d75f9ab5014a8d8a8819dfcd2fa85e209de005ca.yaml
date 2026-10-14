@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a4b48b33b1011eefe7a9b85d75f9ab5014a8d8a8819dfcd2fa85e209de005ca
+  normalized_sha256: sha256:6a4b48b33b1011eefe7a9b85d75f9ab5014a8d8a8819dfcd2fa85e209de005ca
+cas_ref: sha256:6a4b48b33b1011eefe7a9b85d75f9ab5014a8d8a8819dfcd2fa85e209de005ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述定义扩展的保守性与相对一致性。
+    previous_atom_id: c1642e649225aca7f55fcced08528e340b920e2d31e89cd6e84655abda2b4b32
+    next_atom_id: c19c0848d7cdfe5b518008bbd9dfa736f360df4f6eb49b1eb987756c91cc6731

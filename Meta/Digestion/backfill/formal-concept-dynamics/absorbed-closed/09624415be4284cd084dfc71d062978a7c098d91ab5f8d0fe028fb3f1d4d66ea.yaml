@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:09624415be4284cd084dfc71d062978a7c098d91ab5f8d0fe028fb3f1d4d66ea
+  normalized_sha256: sha256:09624415be4284cd084dfc71d062978a7c098d91ab5f8d0fe028fb3f1d4d66ea
+cas_ref: sha256:09624415be4284cd084dfc71d062978a7c098d91ab5f8d0fe028fb3f1d4d66ea
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Contracts/FutureObligationIncompleteness.nonfaithful_interface_future_incomplete
+    target_statement_id: sha256:838980007bb9ee116a243cf6bb1fa3475b4424a0721d03a2f498150aecf3c882
+receipts:
+  unresolved_subitems: []

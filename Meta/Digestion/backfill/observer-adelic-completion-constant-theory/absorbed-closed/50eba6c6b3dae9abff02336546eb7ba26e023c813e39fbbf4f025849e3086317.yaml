@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:50eba6c6b3dae9abff02336546eb7ba26e023c813e39fbbf4f025849e3086317
+  normalized_sha256: sha256:50eba6c6b3dae9abff02336546eb7ba26e023c813e39fbbf4f025849e3086317
+cas_ref: sha256:50eba6c6b3dae9abff02336546eb7ba26e023c813e39fbbf4f025849e3086317
+coverage_gids:
+  - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevTransferTrace.chebyshev_slack_eq_transfer_discriminant
+    target_statement_id: sha256:fea8c85798c36de7b1684ae5ef7f44a1ae68b30e89b8d5f61312777bea4096e1
+  - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevTransferTrace.chebyshev_transfer_trace
+    target_statement_id: sha256:c80bbc75f06516df96e1b53ca66bec075ae663c0210b23dee6c199e7f9fe4fe2
+  - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevTransferTrace.free_transfer_power_discriminant
+    target_statement_id: sha256:9fd63c64c78921d078784c88932759a171c2e3b447b316272fdfc8ecf0241cd4
+receipts:
+  unresolved_subitems: []
