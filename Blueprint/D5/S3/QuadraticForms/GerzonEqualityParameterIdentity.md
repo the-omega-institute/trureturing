@@ -34,6 +34,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/greaves-iverson-jasper-mixon-2021-gerzon-equality-identity` (proved) by `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"greaves-iverson-jasper-mixon-2021-gerzon-equality-identity","declaration_gid":"D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gary R. W. Greaves, Joseph W. Iverson, John Jasper, Dustin G. Mixon (2021). *Frames over finite fields: Equiangular lines in orthogonal geometry*. DOI: [10.48550/arXiv.2012.13642](https://doi.org/10.48550/arXiv.2012.13642). URL: <https://arxiv.org/abs/2012.13642v2>.

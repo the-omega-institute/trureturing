@@ -60,7 +60,10 @@ internal sealed class GerzonEqualityParameterIdentityDocument : IScribeDocumentD
         AssessedProvenance provenance, string prose, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("greaves-iverson-jasper-mixon-2021-gerzon-equality-identity"),
+                ResolutionKind.Proved) : null);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
