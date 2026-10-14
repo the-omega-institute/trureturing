@@ -13,6 +13,9 @@ internal sealed class KvashchukMulticopyDesignRefutationDocument : IScribeDocume
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Seven qubit states with three copies outperform every minimal weighted design with the maximally mixed state appended.",
         H("Weighted multicopy designs need not be optimal"), Blocks(
+            Node("oct-vec", "Six qubit preparation vectors", "octVec", OctVecFormula(),
+                "The six vectors are the computational basis vectors and the two eigenvectors of each of the Pauli X and Y matrices. They are unnormalized; their squared norms are 1, 1, 2, 2, 2 and 2, respectively.",
+                AssessedProvenance.FromRepo()),
             Node("tensor-pow", "Tensor powers in digit coordinates", "tensorPow", TensorPowFormula(),
                 "The equivalence finFunctionFinEquiv identifies a function Fin k → Fin d with an index in Fin (d^k). Each matrix entry is the product of the k entries selected by the inverse equivalence. This gives tensor powers also when k=0, using the empty product.",
                 AssessedProvenance.FromRepo()),
@@ -63,6 +66,19 @@ internal sealed class KvashchukMulticopyDesignRefutationDocument : IScribeDocume
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula Vec(params Formula[] entries)
+    {
+        Formula result = Qualified("Matrix", "vecEmpty");
+        for (int i = entries.Length - 1; i >= 0; i--)
+            result = At(Qualified("Matrix", "vecCons"), entries[i], result);
+        return result;
+    }
+    private static Formula OctVecFormula() => Equal(Local("octVec"), Vec(
+        Vec(Typed(Num(1), Complexes()), Num(0)), Vec(Num(0), Num(1)),
+        Vec(Num(1), Num(1)), Vec(Num(1), new Formula.Negate(Num(1))),
+        Vec(Num(1), Qualified("Complex", "I")),
+        Vec(Num(1), new Formula.Negate(Qualified("Complex", "I")))));
 
     private static Formula TensorPowFormula() => Dimensions(All("A", Matrix(Fin(X("d"))),
         All("i", TensorIndex(), All("j", TensorIndex(), Equal(
