@@ -1,0 +1,106 @@
+**Theorem 12.3 (paid root recoding of an arbitrary installed native
+state graph).** Suppose $D\ne\varnothing$ and a table and normalized
+actual export witness $\mathsf{MooreInvFeas}_*(r,K,q)$. There are one
+actual origin $u^\theta\in\mathcal U_*$ for every
+$\theta\in\Theta_*$ and a root table with exactly the same installed
+state set, running/halting partition and halting outputs. Its coloring
+uses at most the original number of exported initial-state values.
+For each $\theta$, its entire state path and call count equal those of
+the native table on that one fixed $u^\theta$. In particular it
+witnesses $\mathsf{MooreRootFeas}_*(r,K,q)$, including shared states,
+converging transitions and unused installed states.
+
+**Proof.** The finite installed native table, rather than its execution
+histories, supplies the finite address menu. Put
+
+$$
+L=\max\bigl(\{0\}\cup
+             \{|\operatorname{addr}(a)|:a\in Q\}\bigr).
+\tag{NBP.12.4}
+$$
+
+This includes unused running states and all arbitrarily long words of
+this particular table. It restricts no allowed comparator and no actual
+source. Proposition 10.5 at this $L$ supplies simultaneously the actual
+finite valuations $x^\theta$, current images
+$t^\theta=\mathscr F_*(x^\theta)=\rho u^\theta$ and origins
+$u^\theta\in\mathcal U_*$. Their branch classes have minimum leaf
+depth greater than $L$, their repeated occurrences share their values,
+and every class disequality and exterior absence guard is retained.
+They realize every attained $\theta$, and
+$F(u^\theta)=G_*(\theta)$ by Theorem 10.4.
+
+For each installed native word $v$, traverse the complete fixed
+exterior. If it never enters a hole, its reply $b_v\in\mathcal A$
+is constant on every $t^\theta$. This includes the root when visible,
+concrete exterior constructors, blocked cut cones, and extensions of
+concrete leaves. If it first enters $p\in H$, write $v=pw$ and
+$d=[p]$. Proposition 10.5 gives the following single state-local
+response function on reached root replies:
+
+$$
+h_v(z)=
+\begin{cases}
+z,&w=\varepsilon,\\
+\mathsf{absent},&w\ne\varepsilon,\quad z\in\{\alpha,\beta\},\\
+\mathsf{branch},&w\ne\varepsilon,\quad z=\mathsf{branch}.
+\end{cases}
+\tag{NBP.12.5}
+$$
+
+Thus $r_{t^\theta}(v)=h_v(\theta(d))$. The same class name is used
+whichever occurrence cone is entered. At a nonempty suffix, both leaf
+roots give absence and every padded branch root gives a reached branch;
+no information from its deeper finite shape is used.
+
+Choose once a genuine $d_0\in D$. For a constant word, set
+$j_v=d_0$ and $h_v(z)=b_v$ for every $z\in\mathcal A$. For a word
+entering a hole, set $j_v=d$ and extend (NBP.12.5) arbitrarily to the
+unreachable argument $\mathsf{absent}$. Consequently every installed
+word, constant or variable, satisfies
+
+$$
+r_{t^\theta}(v)=h_v(\theta(j_v))
+\quad(\theta\in\Theta_*).
+\tag{NBP.12.6}
+$$
+
+Install the root table on the very same $Q\sqcup Z$ by
+
+$$
+\begin{aligned}
+\operatorname{coord}'(a)&=j_{\operatorname{addr}(a)},\\
+\operatorname{next}'(a,z)&=
+ \operatorname{next}\bigl(a,h_{\operatorname{addr}(a)}(z)\bigr),\\
+\operatorname{out}'&=\operatorname{out},\qquad
+c(\theta)=\tau(u^\theta).
+\end{aligned}
+\tag{NBP.12.7}
+$$
+
+The coloring is a finite table into the original installed states and
+$|c[\Theta_*]|\le|\tau[\mathcal U_*]|\le r$. It does not assert that
+$\tau$ is constant on the root-type fibers. Its declared value is the
+initial-state code itself, so initialization has no extra retained
+field or subsequent decoding phase.
+
+Fix $\theta$. Both executions start in $\tau(u^\theta)$. Whenever
+their common current state is running, (NBP.12.6) and (NBP.12.7) make
+the next states equal, with exactly one counted invocation on each
+side. At a constant word the root reader really queries $d_0$ and
+ignores its reply through the constant function $h_v$. That invocation
+is charged; it is neither an artificial native response nor a free
+transition. At a halting state the outputs agree. Induction along this
+one actual source's execution proves the asserted state path and call
+count equality, termination in at most $q$ calls, and whole output
+$F(u^\theta)=G_*(\theta)$.
+
+The recoding depends only on the installed state, not on which history
+reached it. Hence the same next-state rule applies when different
+sources converge at a state; repeated visits by different sources need
+no copies, and unused states remain installed and counted. No tree
+unrolling, cloned state, retained clock or new control phase occurs.
+The actual representatives establish necessity from a full-fiber
+native solution; they do not become a restriction of that solution's
+domain. $\square$
+

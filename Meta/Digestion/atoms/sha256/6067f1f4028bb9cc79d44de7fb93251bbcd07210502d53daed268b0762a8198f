@@ -1,0 +1,9 @@
+**Proposition 9.5 (sound guarded graph transformations).** For any branch
+graphs obtained by the equivalence-preserving transformations in Definition
+9.4, with all original slots and constraints retained, a native completed
+solution induces the matching root branch and a full satisfying graph
+valuation. Conversely, a full satisfying valuation, including every repeated
+definition, image constraint and native guard, reconstructs a solution of
+the retained positive presentation. Its restriction to the free-state nodes
+need not determine the full valuation without a further extension theorem.
+

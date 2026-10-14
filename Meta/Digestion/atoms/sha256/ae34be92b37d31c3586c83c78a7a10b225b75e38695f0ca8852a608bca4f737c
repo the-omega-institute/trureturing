@@ -1,0 +1,47 @@
+**Assumption 9.2 (acquired current data, actual export and complete cut).**
+Exactly one genuine authenticated $\rho$ update binds the one supplied
+origin $u$ to the current register $t=\rho u$. The complete current row
+is lawfully acquired on this stationary version. Before the complete
+access cut, a producer possesses genuinely acquired same-source,
+same-version finite data: either the lossless current tree $t$, or the
+current row and one acquired finite subtree value for each of its six
+classes. A supplement is computed from those data and actually exported
+with the row before their access is lost. Equality in the row is computed
+on acquired finite terms, as in Assumption 8.1; there is no hidden-value
+equality service.
+
+A separately supplied lawful entry allows a common deterministic reader
+to receive $P,R_*$, the exported supplement, and common source-independent
+controls. These determine its entire accessible initial state, from
+which the declared inputs are recoverable. Authentication certifies the
+same origin/register relationship and the single update without revealing
+which member of $\mathcal U_*$ is actual. No other source-dependent field
+is accessible: origin identity, predecessor data, alpha marker, acquired
+values, traces, caches, archives, pointers, control fields, acquisition
+order or counts, lengths, meters, timing and update packets add no
+undeclared distinction. A field determined by the retained payload adds
+no extra distinction; any further accessible field changes this contract.
+
+The same current register is stationary throughout fresh reading. Every
+finite address is legal, and its reply is precisely the native
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$ readout at that address.
+No further update is allowed. Every invocation counts, including repeats,
+absent-address calls and re-reads of addresses used in acquisition. The
+reader must terminate and return $F(u)$ for every $u\in\mathcal U_*$.
+
+These are supplied acquisition and access conditions, not consequences of
+a row identity. The finite producer of Theorem 8.2 can acquire $t$ using
+its native traversal, but its retained full trace does not automatically
+implement this narrower export or access cut. Actual export, lawful new
+entry, isolation from discarded fields and any entry after absorbing stop
+remain separate premises. No resume action is supplied by the stopped
+producer itself.
+
+For a supplement $\sigma$, let its conditional alphabet size be
+$|\sigma[\mathcal U_*]|$. For integers $r\ge1,q\ge0$, write
+$\mathsf{InvFeas}_*(r,q)$ when there exist an acquired/exported supplement
+with at most $r$ actual values and one reader whose fresh invocation count
+is at most $q$ on every origin in $\mathcal U_*$. Let
+$\mathsf Q_*(r)$ be the least such $q$. This is joint encoder/reader
+existence, not a performance guarantee for every $r$-value encoder.
+

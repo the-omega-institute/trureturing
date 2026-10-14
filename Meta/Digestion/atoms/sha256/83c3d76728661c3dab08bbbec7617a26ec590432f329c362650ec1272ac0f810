@@ -1,0 +1,58 @@
+**Proposition 12.7 (degenerate cuts and essential edge examples).** The
+preceding claims include $m=1$, $D=0$, empty, root and ray-covering cuts,
+early absence and equal epochs. A connected family need not have a ray
+visible in every capture, and disconnected families admit concrete
+strictly chronological whole-row collisions.
+
+**Proof.** For $m=1$ the graph is connected and the required vector is
+the known relative reference $(0)$, even for a root cut. Empty cuts
+have $S_i=W_D$ and expose full trees; a root or any ray-covering cut
+has $S_i=\varnothing$, hence is an isolated vertex. Such an isolated
+vertex prevents whole-vector uniform recovery when $m>1$, regardless
+of the particular row's reached guards. At $D=0$ every cut is empty
+or the root singleton; the empty-cut vertices form a clique and each
+root-cut vertex is isolated. This is exactly the same criterion.
+
+No early absence is removed from the positive theorem. For example,
+$P_0=\{L\}$ and $P_1=\{LL\}$ have a common visible depth-two cell
+$RL$. At $t=\beta$ it is absent, with $J^c_{RL}(\beta)=1$. After one
+update $T_2$ still blocks the full $RL$ address at its right alpha leaf,
+with $J^c_{RL}(T_2)=2$. The exterior factors recover lag one while
+retaining the literal reachedness information separately. Equal epochs
+give zero on each applicable edge; strict chronology is a strengthening
+of the negative witnesses, not a restriction of the decoder contract.
+
+For a family needing different edge directions take
+
+$$
+\begin{aligned}
+P_0&=\{RL,RR\},& S_0&=\{LL,LR\},\\
+P_1&=\{LL,RR\},& S_1&=\{LR,RL\},\\
+P_2&=\{LL,LR\},& S_2&=\{RL,RR\}.
+\end{aligned}
+\tag{NAR.12.10}
+$$
+
+The graph is the path $0$--$1$--$2$, with witnesses $LR$ and $RL$,
+while $S_0\cap S_1\cap S_2=\varnothing$. The first and third cuts
+alone have a covering union; the middle capture joins the two native
+differences and permits whole-vector recovery. Reordering the cuts as
+$P_0,P_2,P_1$ gives the path $0$--$2$--$1$. Its forest traversal uses
+$d_{21}=n_1-n_2$, which can be negative on chronological inputs.
+
+For a concrete disconnected collision put $P_0=\{R\}$,
+$P_1=\{L\}$ and
+
+$$
+X=\langle T_2,T_6\rangle,\qquad Y=\langle T_2,T_5\rangle.
+\tag{NAR.12.11}
+$$
+
+Capture $X$ at epochs $(0,2)$ and $Y$ at $(0,3)$. Both first rows have
+exterior $\langle T_2,\square_R\rangle$; both second rows have exterior
+$\langle\square_L,T_8\rangle$. Each row has its indicated reached
+singleton hole and its singleton partition. These are equal whole
+inputs with different positive lags on actual fixed-source histories.
+The general lemma supplies the additional simultaneous mixed-depth
+partition argument for arbitrary cut families. $\square$
+

@@ -1,0 +1,16 @@
+**Theorem 3.3 (augmented row, two rows and all future rows).** On realizable
+records there are effective recoveries
+
+$$
+S_P(u)
+\ \longleftrightarrow\
+\bigl(R_P(u),R_P(\rho u)\bigr)
+\ \longleftrightarrow\
+\bigl(n\longmapsto R_P(\rho^n u)\bigr),
+\tag{NAR.3.3}
+$$
+
+where the last expression is interpreted as Definition 3.2. The record
+recoveries are inverses on their actual images; recovery of a procedure
+is inverse up to agreement on every finite-epoch response.
+

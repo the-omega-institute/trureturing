@@ -1,0 +1,74 @@
+**Theorem 2.1 (native one-step collision classification).** For every
+$u\in\mathcal T$ and fixed finite prefix-free $P$, the next reached holes are
+
+$$
+I_P(\rho u)=O\sqcup L_C\sqcup D_C.
+\tag{NAR.2.1}
+$$
+
+The next concrete exterior $C^+=C_P(\rho u)$ is a finite function of $P,C$
+alone. Old hole $p$ has value $\rho z_{[p]}$; every hole in $L_C$ has value
+$\beta$ and every hole in $D_C$ has value $\alpha$. The complete next
+partition is given by the following exhaustive table, with symmetric cases
+understood.
+
+| Pair of next holes | Equality condition |
+| --- | --- |
+| Old $p$, old $q$ | $p\sim_\pi q$ |
+| Left birth, left birth | Always |
+| Right birth, right birth | Always |
+| Left birth, right birth | Never |
+| Old $p$, right birth | Never |
+| Old $p$, left birth | $A_P(u)=[p]$ |
+
+Moreover the alpha label of the next row is precisely
+
+$$
+A_P(\rho u)=
+\begin{cases}
+[D_C]_{\pi^+},&D_C\ne\varnothing,\\
+\bot,&D_C=\varnothing,
+\end{cases}
+\tag{NAR.2.2}
+$$
+
+where $[D_C]_{\pi^+}$ denotes the single canonically named next class
+containing all right births.
+
+**Proof.** Reuse [Transport--Memory Completion, Proposition 22.2,
+(RA.2205)--(RA.2207)](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md):
+old addresses persist with subtree $\rho(u|_p)$; the only new addresses are
+the two children of an old beta leaf; $\rho$ is injective and has no alpha
+leaf in its image. A beta leaf strictly inside an old hole cannot produce
+a public cut address, since that address would strictly extend another
+element of $P$. Thus every new reached public cut comes from a concrete
+beta leaf of $C$, giving exactly (NAR.2.1). The birth sets are disjoint from
+each other and from $O$, by their last letters and by the node-birth supplier.
+
+To compute $C^+$, leave old holes opaque, replace each concrete alpha leaf
+by beta, replace each concrete beta leaf at $a$ by
+$\langle\beta,\alpha\rangle$, and replace a new child by a hole exactly when
+its address lies in $P$. Keep all other brackets and concrete children.
+Prefix-freeness excludes any additional cut inside an opaque old hole or
+below a newly cut child. The supplier says no other address can become
+reached in one step. This finite construction therefore yields the actual
+exterior and every still-blocked cut guard.
+
+The supplied injectivity preserves precisely the old partition, including
+its disequalities. In addition to the supplied image exclusion,
+the native constructor equations immediately give
+
+$$
+\rho t\ne\alpha,\qquad
+\rho t=\beta\quad\Longleftrightarrow\quad t=\alpha.
+\tag{NAR.2.3}
+$$
+
+Indeed alpha maps to beta, beta maps to a branch, and a branch maps to a
+branch. The old values are exactly these images. Comparing them with the
+two literal birth values proves all six rows of the table. Each reached
+hole is in one of the three sets, so there is no unclassified pair.
+Only right births can have value alpha, which proves (NAR.2.2).
+The class named there is obtained from the computed partition and its
+least occurrence, rather than from a hidden subtree comparison. $\square$
+

@@ -6,7 +6,19 @@ Actual graph pieces with independent full support and real connecting edges spli
 
 Let G be a simple graph on a type V with decidable equality. A Piece(G) has a start, a finish and an actual G-walk between them. Choose a first piece p and a list ps of subsequent pieces. The list is Linked when each piece's finish is adjacent in G to the next piece's start. The function finish(p,ps) is the finish of the final piece. Write flatMapSupport(p,ps) for the concatenation of all full piece supports. The list chainEdges(p,ps) contains all original piece edges, in order, with exactly one actual connecting edge inserted between consecutive pieces.
 
-**Theorem 1.1 (One Actual Hamilton Cycle with Literal Inventories).**
+**Theorem 1.1 (Every Chain Edge Has an Actual Piece or Consecutive Seam Owner).**
+
+$$\forall V \in \mathrm{Type},\; \forall G \in \mathrm{SimpleGraph}\left(V\right),\; \forall p \in \mathrm{Piece}\left(G\right),\; \forall ps \in \mathrm{List}\left(\mathrm{Piece}\left(G\right)\right),\; \forall e \in \mathrm{Sym2Type}\left(V\right),\; e \in \mathrm{chainEdges}\left(p, ps\right) \Rightarrow \left(\left(\exists r \in \mathrm{Piece}\left(G\right),\; r \in \mathrm{cons}\left(p, ps\right) \land e \in \mathrm{edges}\left(\mathrm{walk}\left(r\right)\right)\right) \lor \left(\exists i \in \mathrm{Nat},\; \mathrm{add}\left(i, 1\right) < \mathrm{length}\left(\mathrm{cons}\left(p, ps\right)\right) \land e = \mathrm{Sym2}\left(\mathrm{finish}\left(\mathrm{get}\left(\mathrm{cons}\left(p, ps\right), i\right)\right), \mathrm{start}\left(\mathrm{get}\left(\mathrm{cons}\left(p, ps\right), \mathrm{add}\left(i, 1\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/PathRingSplicing.chain_edge_cases` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every edge in the literal chainEdges list belongs to an actual indexed piece or is the connection between two consecutive actual pieces. Recursive list membership earns the exhaustive classification, including the exact natural index and its successor bound. No support partition, adjacency or equality decision assumption is needed. The full native T/E surgery inventories consume this classification to prove that no additional edges occur.
+
+**Theorem 1.2 (One Actual Hamilton Cycle with Literal Inventories).**
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; \forall p \in \mathrm{Piece}\left(G\right),\; \forall ps \in \mathrm{List}\left(\mathrm{Piece}\left(G\right)\right),\; \left(\mathrm{Linked}\left(p, ps\right) \land \left(\mathrm{Adj}\left(G, \mathrm{finish}\left(p, ps\right), \mathrm{start}\left(p\right)\right) \land \left(\left(\forall v \in V,\; \mathrm{count}\left(v, \mathrm{flatMapSupport}\left(p, ps\right)\right) = 1\right) \land 3 \le \mathrm{length}\left(\mathrm{flatMapSupport}\left(p, ps\right)\right)\right)\right)\right) \Rightarrow \left(\exists c \in \mathrm{Walk}\left(G, \mathrm{start}\left(p\right), \mathrm{start}\left(p\right)\right),\; \mathrm{IsHamiltonianCycle}\left(c\right) \land \left(\mathrm{tail}\left(\mathrm{support}\left(c\right)\right) = \mathrm{reverse}\left(\mathrm{flatMapSupport}\left(p, ps\right)\right) \land \mathrm{edges}\left(c\right) = \mathrm{cons}\left(\mathrm{Sym2}\left(\mathrm{start}\left(p\right), \mathrm{finish}\left(p, ps\right)\right), \mathrm{reverse}\left(\mathrm{chainEdges}\left(p, ps\right)\right)\right)\right)\right)$$
 
@@ -24,5 +36,6 @@ For a native switching construction, the separate mathematical obligations are t
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/PathRingSplicing.chain_edge_cases`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/PathRingSplicing.exists_spliced_hamiltonian_cycle`
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/EdgeSlicing](EdgeSlicing.md)

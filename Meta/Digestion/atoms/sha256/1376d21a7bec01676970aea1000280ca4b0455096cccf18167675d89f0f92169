@@ -1,0 +1,31 @@
+**Theorem 8.3 (the zero boundary and exact native interval calls).** Put
+$N=U-L+1$ and reuse the positive ordered-search capacity of [SLH,
+Theorem 6.2][SLH], as applied in (AOF.17)--(AOF.19):
+
+$$
+C_k=3\cdot2^k-2\quad(k\ge0),\qquad
+A_0=1,\quad A_k=3\cdot2^k-3\quad(k\ge1).
+\tag{AOF.25}
+$$
+
+Under Definition 8.1, an interval is recoverable in at most $k$ actual
+calls exactly when $N\le C_k$ for $L\ge1$, or $N\le A_k$ for $L=0$.
+Consequently
+
+$$
+K(L,U)=
+\begin{cases}
+0,&N=1,\\
+K_+(N):=\left\lceil\log_2\dfrac{N+2}{3}\right\rceil,
+ &N\ge2,\ L\ge1,\\
+K_0(N):=\left\lceil\log_2\dfrac{N+3}{3}\right\rceil,
+ &N\ge2,\ L=0.
+\end{cases}
+\tag{AOF.26}
+$$
+
+Define $K_+(1)=K_0(1)=0$. There is a finite actual adaptive literal
+reader attaining this bound. Every smaller call budget has a failure
+witness consisting of two actual ages in the interval with the same
+complete reply transcript and different required outputs.
+

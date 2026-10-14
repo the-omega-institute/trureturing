@@ -1,0 +1,135 @@
+**Theorem 11.2 (entire fiber, exact reconstruction and every row).**
+The input of Definition 11.1 has exactly the entire original fiber
+
+$$
+D_*=\{U_*(x,y):x,y\in\mathcal T\}.
+\tag{SPC.11.4}
+$$
+
+Its complete target-row image consists of exactly four attained
+labels. All have reached set $Q$ and the entire exterior
+
+$$
+\langle\square_1,
+ \langle\square_2,\langle\square_3,\square_4\rangle\rangle\rangle.
+\tag{SPC.11.5}
+$$
+
+Their partitions and entire strata are
+
+$$
+\begin{aligned}
+r_0&:\{\{1,2\},\{3\},\{4\}\},&
+D_0&=\{U_*(y,y):y\in\mathcal T\},\\
+r_1&:\{\{1,3\},\{2\},\{4\}\},&
+D_1&=\{U_*(F(y),y):y\in\mathcal T\},\\
+r_2&:\{\{1,4\},\{2\},\{3\}\},&
+D_2&=\{U_*(G(y),y):y\in\mathcal T\},\\
+r_3&:\{\{1\},\{2\},\{3\},\{4\}\},&
+D_3&=\{U_*(x,y):x,y\in\mathcal T,\
+                    x\ne y,\ x\ne F(y),\ x\ne G(y)\}.
+\end{aligned}
+\tag{SPC.11.6}
+$$
+
+Every source in each right-hand set satisfies the complete original
+input and its stated row. Conversely every source satisfying that
+input and row is reconstructed as the same original source in that
+set, with its original whole values.
+
+Proof. The seven epoch-zero literals force precisely a decomposition
+
+$$
+u=\langle x,\langle y,
+        \langle\langle\alpha,z\rangle,
+               \langle\alpha,w\rangle\rangle\rangle\rangle
+\tag{SPC.11.7}
+$$
+
+with $x,y,z,w\in\mathcal T$. To see the entire direction, the branch
+literals at $\varepsilon,R,RR$ force the first three pairings.
+Those at $RRL,RRR$ force their two child pairings, and the literals
+at $RRLL,RRRL$ fix the displayed alpha leaves. Their other children
+are exactly $z,w$, without any extra restrictions. These values
+are the actual subtrees of the original $u$.
+
+All the strict original ancestors of $RL$ are branches.
+They survive every update, so
+
+$$
+(\rho u)|_{RL}=\rho y,\qquad
+(\rho^2u)|_{RL}=\rho^2y.
+\tag{SPC.11.8}
+$$
+
+The original addresses $RRLR,RRRR$ are reached by the displayed
+branch skeleton. Thus the two positive records, including their
+guards, force $z=\rho y$ and $w=\rho^2y$. The relation endpoint
+values after this substitution are exactly:
+
+| Retained record | First reached whole value | Second reached whole value |
+| --- | --- | --- |
+| $(1,RL,0,RRLR,=)$ | $\rho y$ | $\rho y$ |
+| $(2,RL,0,RRRR,=)$ | $\rho^2y$ | $\rho^2y$ |
+| $(0,RL,0,RRL,\ne)$ | $y$ | $F(y)$ |
+| $(0,RL,0,RRR,\ne)$ | $y$ | $G(y)$ |
+| $(0,RRL,0,RRR,\ne)$ | $F(y)$ | $G(y)$ |
+
+Every listed original endpoint is reached in (SPC.11.7), and the
+two nonzero-epoch endpoints remain reached by (SPC.11.8). Both
+guards are therefore established for every record on the whole
+displayed domain, before its sign is checked.
+
+The proper-context leaf-count argument (SPC.16), applied to
+$C[z]=\langle\alpha,z\rangle$ with shifts one and two, gives
+
+$$
+\ell(F(y))=1+\ell(\rho y)>\ell(y),\qquad
+\ell(G(y))=1+\ell(\rho^2y)>\ell(y).
+\tag{SPC.11.9}
+$$
+
+Thus the first two negatives hold for every finite $y$.
+For the third, use the existing finite right clock (SPC.43):
+
+$$
+c(\rho y)=c(y)+1,\qquad c(\rho^2y)=c(y)+2.
+$$
+
+These whole values differ. Free ordered pairing then gives
+$F(y)\ne G(y)$. The clock transport is the supplied
+[DelayedOriginalReadout, right_clock_iterate][CLOCK], equivalently
+[NativePrefixIdentityReflection, kappa_iterate][KAPPA];
+no new clock law is required.
+
+Consequently every $U_*(x,y)$ has the old root row, every literal
+in (SPC.11.3), both positive records, and all three finite negatives
+with their guards. Conversely (SPC.11.7)–(SPC.11.8) recover that
+very original source as $U_*(x,y)$. This proves (SPC.11.4) in both
+directions; no witness subset replaces its entire fiber.
+
+All four target holes are reached. Their values are
+$x,y,F(y),G(y)$, of which the last three are pairwise distinct.
+The first value can equal exactly one of those three or none.
+These are all and only the partitions in (SPC.11.6), with precisely
+the displayed conditions. The first three rows are attained for
+every finite $y$. For the all-singleton row take $x=\alpha,y=\beta$:
+the last two values are branches and the second is beta, all
+different from alpha. This proves attainment and exhausts the
+complete row image, including its concrete exterior.
+
+For actual acquisition the finite public schedule in
+[ARH, Proposition 2.1][ARH] uses precisely the coordinates of
+(SPC.11.3), the old root cut, and final epoch two. It acquires
+the epoch-zero literals and endpoint descriptions, then the
+epoch-one $RL$ description, then the epoch-two $RL$ description
+on the same register. The two later descriptions are compared
+with their previously acquired original counterparts before the
+stipulated complete cut. Every source in (SPC.11.4) gives the
+stated signs and replies, hence the same retained input under
+ARH Assumption 1.3. The converse source correspondence is that
+supplier's complete-state premise, instantiated with these
+coordinates. Paid acquisition is sourcewise finite; this
+argument supplies no uniform cost or free comparison port.
+$\square$
+

@@ -1,0 +1,50 @@
+**Definition 11.1 (one entire acquired four-hole input).** In the native
+algebra of Definition 1.1 put
+
+$$
+\begin{aligned}
+F(y)&=\langle\alpha,\rho y\rangle,\\
+G(y)&=\langle\alpha,\rho^2y\rangle,\\
+U_*(x,y)&=\langle x,\langle y,\langle F(y),G(y)\rangle\rangle\rangle.
+\end{aligned}
+\tag{SPC.11.1}
+$$
+
+Here $F$ is the proper-context map of Definition 8.1, and $G$ has
+the same context with shift two. All occurrences of $y$ within
+one source denote that same whole native value.
+
+Take $P=\{\varepsilon\}$ with its complete one-hole old row,
+authentic final epoch $N=2$, and the target cut
+
+$$
+Q=\{L,RL,RRL,RRR\},
+\tag{SPC.11.2}
+$$
+
+numbered in that order. Retain exactly
+
+$$
+\begin{aligned}
+H_0=\{&(0,\varepsilon,\mathsf{branch}),
+       (0,R,\mathsf{branch}),
+       (0,RR,\mathsf{branch}),\\
+      &(0,RRL,\mathsf{branch}),
+       (0,RRR,\mathsf{branch}),\\
+      &(0,RRLL,\alpha),(0,RRRL,\alpha)\},\\
+H_{\rm rel}=\{&
+ (1,RL,0,RRLR,=),\
+ (2,RL,0,RRRR,=),\\
+ &(0,RL,0,RRL,\ne),\
+ (0,RL,0,RRR,\ne),\
+ (0,RRL,0,RRR,\ne)\}.
+\end{aligned}
+\tag{SPC.11.3}
+$$
+
+There are no other constraints in this instance. The entire old
+row, all listed literal and signed records, both reached guards
+for every relation, and Definition 1.2's supplied paid-source
+complete-state contract are retained. Epochs zero, one and two
+refer to the same original register.
+
