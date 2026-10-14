@@ -98,7 +98,9 @@ private theorem joint_upper (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
   exact (Matrix.posSemidef_self_mul_conjTranspose _).smul (by norm_num : (0 : ℝ) ≤ 1 / 3)
 
 private theorem swap_swap (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
-    swap (swap V) = V := rfl
+    swap (swap V) = V := by
+  ext p i
+  simp only [swap.eq_1]
 
 private theorem swap_admissible (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
     (hV : admissible V) : admissible (swap V) := by
@@ -112,7 +114,7 @@ private theorem channelB_swap (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
     (R : Matrix (Fin 3) (Fin 3) ℂ) :
     channelB (swap V) R = partialTraceLeft (V * R * V.conjTranspose) := by
   ext i j
-  simp only [channelB, partialTraceLeft, partialTraceRight, Matrix.mul_apply,
+  simp only [channelB.eq_1, partialTraceLeft, partialTraceRight, Matrix.mul_apply,
     Matrix.conjTranspose_apply, swap]
 
 private theorem rhoB_swap (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
@@ -127,8 +129,8 @@ private def reshuffle (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
 private theorem choi_eq_scaled_gram (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     choi V = (1 / 3 : ℝ) • (reshuffle V * (reshuffle V).conjTranspose) := by
   ext p q
-  simp [choi, channelB, partialTraceRight, Matrix.mul_apply, Matrix.single,
-    Matrix.conjTranspose_apply, reshuffle, Matrix.smul_apply, Finset.mul_sum, ite_and, eq_comm]
+  simp [choi.eq_1, channelB, partialTraceRight, Matrix.mul_apply, Matrix.single,
+    Matrix.conjTranspose_apply, reshuffle.eq_1, Matrix.smul_apply, Finset.mul_sum, ite_and, eq_comm]
 
 private theorem choi_posSemidef (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     (choi V).PosSemidef := by
@@ -263,7 +265,7 @@ private theorem entropy3_merge
   change Real.binEntropy (1 - x i) ≤ _
   rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
   simpa only [D5.S3.Entropy.MaxEntropy.shannonEntropy, Fintype.sum_bool,
-    ht, hb, sub_sub_cancel, entropy3, add_comm] using hm
+    ht, hb, sub_sub_cancel, entropy3.eq_1, add_comm] using hm
 
 -- Scalar monotonicity and the two capacity cuts.
 private theorem g_eq_binary (u : ℝ) :
@@ -318,7 +320,7 @@ private theorem attainer_admissible (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ
   change (attainer a).conjTranspose * attainer a = 1
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [attainer, Matrix.single, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    simp [attainer.eq_1, Matrix.single, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fintype.sum_prod_type, Fin.sum_univ_three, ← pow_two, hs0, hs1, -Real.sqrt_mul]
 
 private theorem attainer_marginals (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)) :
@@ -330,7 +332,7 @@ private theorem attainer_marginals (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)
     exact_mod_cast Real.sq_sqrt (by linarith [ha.2] : 0 ≤ 1 - 3 * a)
   have hs1 : (Real.sqrt (3 * a) : ℂ) ^ 2 = (3 * a : ℝ) := by
     exact_mod_cast Real.sq_sqrt (by linarith [ha.1] : 0 ≤ 3 * a)
-  constructor <;> simp only [rhoB, rhoE] <;> rw [joint_eq_scaled_gram] <;> ext i j <;>
+  constructor <;> simp only [rhoB.eq_1, rhoE] <;> rw [joint_eq_scaled_gram] <;> ext i j <;>
     fin_cases i <;> fin_cases j <;>
     simp [partialTraceRight, partialTraceLeft, attainer, Matrix.single, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_three,
