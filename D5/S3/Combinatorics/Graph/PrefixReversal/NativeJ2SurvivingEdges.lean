@@ -308,6 +308,19 @@ private theorem actual_j2_word_full_component {m : ℕ} (hm : 5 ≤ m) (i : Fin 
       hsleaf hfleaf hnil hnb
   exact ⟨w, hp, hlength, hsupport, hvertices, hedges⟩
 
+/-- Every one of the five independently specified native words is an actual
+simple path exhausting its entire component of the actual six-cut F2 graph.
+Its literal trace, edge count, endpoints and full edge inventory are earned. -/
+theorem native_j2_word_full_component {m : ℕ} (hm : 5 ≤ m) (i : Fin 5) :
+    ∃ w : (survivingGraph m).Walk (wordStart m i) (wordFinish m i),
+      w.IsPath ∧ w.length = wordLength m i ∧
+        w.support = List.scanl (· * ·) (wordStart m i) (word m i) ∧
+        (∀ x, x ∈ w.support ↔ (survivingGraph m).Reachable (wordStart m i) x) ∧
+        ∀ x y, (survivingGraph m).Adj x y ∧
+          (survivingGraph m).Reachable (wordStart m i) x ↔ s(x, y) ∈ w.edges :=
+  actual_j2_word_full_component hm i (actual_j2_word_chain hm i)
+
+#print axioms native_j2_word_full_component
 #print axioms actual_j2_word_chain
 #print axioms j2_word0_initial_chain
 #print axioms j2_word1_initial_chain

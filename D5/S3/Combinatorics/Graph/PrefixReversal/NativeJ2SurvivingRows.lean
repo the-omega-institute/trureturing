@@ -624,8 +624,10 @@ private theorem j2_t_a_circle_a_survives {m : ℕ} (hm : 5 ≤ m) (i : Fin m)
   rw [hi] at he
   have hcoord : (⟨q, by omega⟩ : Fin (m + 1)) = 0 := by
     apply j2_positive_a_edge_injective hm z
-    simpa only [rotate_pow_eq_cycle, z, cycle_zero, mul_one,
-      Nat.mod_eq_of_lt (by omega : q < m + 1)] using he
+    have hqfin : (q : Fin (m + 1)) = ⟨q, by omega⟩ := by
+      apply Fin.ext
+      simp only [Fin.val_natCast, Nat.mod_eq_of_lt (by omega : q < m + 1), Fin.val_mk]
+    simpa only [rotate_pow_eq_cycle, z, hqfin, cycle_zero, mul_one] using he
   have hval := congrArg Fin.val hcoord
   simp only [Fin.val_mk, Fin.val_zero] at hval
   omega
@@ -650,7 +652,10 @@ private theorem j2_word1_initial_chain {m : ℕ} (hm : 5 ≤ m) :
         change ((finRotate (m + 1) ^ q) (Fin.last m)).val ≠ m - 1
         rw [hp]
         omega)
-    simpa only [one_mul, j2_rotation_b_predecessor 1 q (by omega)] using hb
+    have hpred : finRotate (m + 1) ^ q * b m =
+        finRotate (m + 1) ^ (q - 1) * a m := by
+      simpa only [one_mul] using j2_rotation_b_predecessor (1 : Configuration m) q (by omega)
+    simpa only [one_mul, hpred] using hb
 
 private theorem j2_t_initial_ab_chain {m : ℕ} (hm : 5 ≤ m) (i : Fin m)
     (hi : cutGenerator (.inl i : Fin m ⊕ Fin (m - 2)) = a m)

@@ -12,6 +12,16 @@ internal sealed class NativeJ2MarkedInventoryDocument : IScribeDocumentDefinitio
         "All twelve independently defined J2 ports are actual F2 vertices, and one actual F2 Hamilton witness contains all six marked b edges while retaining its exact full edge inventory.",
         H("Actual J2 Marked Edges in One F2 Hamilton Witness"),
         Blocks(
+            Describe.Lean(DescribeId.Create("native-j2-right-owner"),
+                DeclarationHandle.Create(Prefix + "rightOwner"),
+                H("The Six Actual Native Circle Owners"),
+                StatementSource.FromAuthor(RightOwnerFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let j=m-3 and let tau exchange labels zero and m. The six independently "
+                    + "specified right-port owners are identity, tau, contactAnchor(j), lowerPort(j), "
+                    + "gapAnchor(contactAnchor(j),m-1), and gapAnchor(contactAnchor(j),m-2), "
+                    + "indexed by the three port numbers and their label-swap bits. The actual "
+                    + "surviving circle rows consume these exact owners."))), DescribeRole.Definition),
             Node("native-j2-port-circle", "native_j2_port_circle", "Every Actual Port Has Its Specified Native Owner",
                 Scoped(All("p", PortIndex(), Call("Circle",
                     Call("rightOwner", F.Id("m"), Call("CutIndexOf", F.Id("p"))),
@@ -64,6 +74,20 @@ internal sealed class NativeJ2MarkedInventoryDocument : IScribeDocumentDefinitio
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + selector), H(title),
             StatementSource.FromAuthor(statement), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(proof))), DescribeRole.Theorem);
+
+    private static Formula RightOwnerFormula()
+    {
+        Formula m = F.Id("m"), j = Call("sub", m, D(3));
+        Formula c = Call("contactAnchor", j);
+        Formula Owner(int i, bool swapped) => Call("rightOwner", m,
+            Call("Pair", D(i), Call(swapped ? "BoolTrue" : "BoolFalse")));
+        Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+        return Scoped(And(Eq(Owner(0, false), D(1)),
+            And(Eq(Owner(0, true), Call("Swap", D(0), m)),
+            And(Eq(Owner(1, false), c), And(Eq(Owner(1, true), Call("lowerPort", j)),
+            And(Eq(Owner(2, false), Call("gapAnchor", c, Call("sub", m, D(1)))),
+                Eq(Owner(2, true), Call("gapAnchor", c, Call("sub", m, D(2)))))))))));
+    }
 
     private static Formula PortDomainFormula()
     {

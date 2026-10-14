@@ -367,4 +367,6 @@ private theorem literal_j2_letters {m : ℕ} (hm : 5 ≤ m) (i : Fin 5) :
       (letterShape_append sabc (hu (m - 1)) ca).1
 
 
+#print axioms actual_six_cut_slicing
+
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingEdges
