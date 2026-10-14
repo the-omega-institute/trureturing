@@ -2585,3 +2585,1569 @@ and general low-terminal coupling remain open. The original all-sequence positiv
 comparison is therefore unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 218. Unrestricted quotient optimizers and shared-budget operations
+
+The relations in this section concern complete scores or complete table
+allocations. Their conditions belong to the stated constructions and
+operations. They do not restrict the unrestricted certificate sought for
+an arbitrary input. The optimizing relation in §218.2, block operation in
+§218.3, affine reconstruction in §218.4, guard allocation in §218.5 and
+prefix operation in §218.6 have different domains and conclusions.
+
+### 218.1 Complete objects and one signed residual
+
+**Definition 218.1 (Full words, scores, configurations and demands).**
+Fix $L\ge3$. Write $B_L=\{0,1\}^L$, $w_+=1^L$,
+$\Omega=B_L\setminus\{w_+\}$ and
+$\Omega_n=\{w\in\Omega:n(w)=n\}$, where $n(w)$ is the first zero.
+Every multiple-zero word belongs to this domain. The word $w(Z)$ has
+zero set exactly $Z$. A full score y has independent $A_w,C_w,P_w,T\ge0$:
+
+$$
+g_y(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+ +P_w\mathbf1_{\ell\in\{0,n(w)\}},\qquad
+g_y(w_+,\ell)=T\mathbf1_{\ell=0}.
+$$
+
+The complete catalogs allow every label $0,\ldots,L$ on every cell,
+including earlier and unqueried labels. They contain empty and singleton
+schedules and every distinct pair $i<j$. An N pair has cells $00,01,10,11$;
+an increasing O pair has cells $0,10,11$. Write $(i,j;a,b,c,d)$ for
+an N table and $(i,j;a,c,d)$ for an O table. N reversals permute cells;
+repetitions give singleton information. These representation statements
+do not discount actual requests. Define
+
+$$
+\begin{aligned}
+B_{\mathcal C}(y)&=\max_{D\in\mathcal D_{\mathcal C}}
+ \sum_{w\in B_L}g_y(w,D(w)),\qquad \mathcal C=N,O,\\
+W_y&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(y)&=B_{\mathcal C}(y)-W_y,\\
+\beta_n(y)&=\sum_{\Omega_n}(C_w-A_w),\qquad
+K_y=\sum_w(A_w+C_w+P_w)+T,\qquad Q(y)=(\beta(y),K_y).
+\end{aligned}
+\tag{218.1}
+$$
+
+For each schedule this maximizes every cell over all labels.
+Unspecified coefficients in a displayed score vanish; coincident entries
+add. A zero coefficient deletes no word, label or event constraint.
+For class totals $A_n,C_n$, the existing stock identity is
+
+$$
+K_y-\sum_n|\beta_n(y)|
+ =2\sum_n\min(A_n,C_n)+\sum_wP_w+T\ge0.
+\tag{218.2}
+$$
+
+If $G=\sum(\beta_n)_+$ and $D=\sum(-\beta_n)_+$,
+literal stock $K-G$ equals absolute stock $K-G-D$ plus D.
+Neither stock is a probability budget. Put $Z_y=\sum A+\sum P+T$;
+then $W_y=Z_y+\beta_1+\beta_2$. The anchor
+$R=(1,2;1,2,0)$ gives $0\le\Delta_O\le\Delta_N$.
+Use the same auxiliary hull and signed reading as in 216.1:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,\\
+ &(L+1)e\le\sum_{n\ge3}b_n,\quad
+ b_1+\sum_{n\ge3}b_n-(L+1)e\le1\},\\
+\alpha&=(1,1,0,\ldots,0),\qquad
+F_{(\beta,K)}(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke,\\
+\sigma_{H_L}(q)&=\max_{H_L}F_q.
+\end{aligned}
+\tag{218.3}
+$$
+
+At every $w\in\Omega_n$, the independent base, correct and pair
+rows of $d(b,e)$ are $1-b_n-e$, $b_n-e$ and $1-e$; at $w_+$
+the base row is $1-e$. Negative singleton demands remain negative.
+Let $z_D$ be the complete event vector of table D, $r=z_R=d(\alpha,0)$,
+$h=d-r$ and $G_{\mathcal C}=(z_D-r)_{D\in\mathcal D_{\mathcal C}}$.
+A configuration is one nonnegative vector on whole tables, of mass
+$M=\sum_D\lambda_D$. Define
+
+$$
+\rho_{\mathcal C}(b,e)=\inf\{\textstyle\sum_D\lambda_D:
+ \lambda\ge0,\ G_{\mathcal C}\lambda\ge h(b,e)\},\qquad
+H_N=\{(b,e)\in H_L:\rho_N(b,e)<\infty\}.
+$$
+
+Its affine output vector is
+$f_w=(1-M)e_{R(w)}+\sum_D\lambda_De_{D(w)}$.
+For $M>1$ this may be signed and is not executed as a probability law.
+The score identity is $y\cdot h(b,e)=F_{Q(y)}(b,e)$.
+A single certificate for an actual full unit-O input y is
+
+$$
+V\ge0,\quad0\le\theta\le1,\quad
+\Delta_N(V)+\theta\le1,\quad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{218.4}
+$$
+
+For the same complete feasible $\lambda$ at the same $(b,e)\in H_N$,
+
+$$
+F_{Q(y)}(b,e)\le V\cdot h(b,e)+\theta
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max(1,M).
+\tag{218.5}
+$$
+
+The last step uses $M(1-\theta)+\theta\le\max(1,M)$.
+Every independent row is charged to this same allocation once.
+No clipping, separately optimized marginal or identification $H_L=H_N$
+is used. All coefficients, Q, baseline, unaries, support and terminal of V
+may change; at $\theta=1$, nonzero zero-cost V remain legal.
+The definitions, stock identity and weak-duality interface are suppliers,
+rather than separate new relations.
+
+### 218.2 A — an attained zero-absolute-stock minimum
+
+**Theorem 218.2 (Two preceding debts and arbitrary unequal positives).**
+Let $1\le r<s<L$, $d_r,d_s\ge0$ and $\gamma_n\ge0$ for $s<n\le L$.
+Prescribe $\beta_r=-d_r$, $\beta_s=-d_s$, $\beta_n=\gamma_n$ for $n>s$,
+and all other beta zero. Put
+
+$$
+D=d_r+d_s,\quad d_{\max}=\max(d_r,d_s),\quad
+G=\sum_{n>s}\gamma_n,\quad K_0=D+G,\quad
+W_0=d_r\mathbf1_{r\ge3}+d_s\mathbf1_{s\ge3}.
+$$
+
+Let $\mu\ge\eta\ge\zeta$ be the three largest late totals, padded with
+zeros if necessary, and set
+
+$$
+\Phi=\max\{D+\mu,\ d_{\max}+\mu+\eta,\ \mu+\eta+\zeta\},
+\qquad\psi=\Phi-W_0.
+\tag{218.6}
+$$
+
+Over all nonnegative full scores of quotient $(\beta,K_0)$,
+
+$$
+\min\Delta_N=\min\Delta_O=\psi.
+\tag{218.7}
+$$
+
+One score attains both. Competitors have arbitrary suffix placements,
+cancellations, pair and terminal coefficients, labels and schedules;
+their zero absolute stock forces the reduction below.
+The optimizing scope permits two positive debts and at least three
+arbitrarily unequal later positives, with arbitrary gaps and positions.
+The statement includes zero debts, missing positives, ties and all axes.
+
+**Proof.** Equation (218.2) forces $P=T=0$ and every
+$\min(A_n,C_n)=0$. Thus every competitor has A totals $d_r,d_s$
+in classes r,s and C totals $\gamma_n$ after s, with no other
+coefficients. Its W is $W_0$; its suffix placements remain unrestricted.
+
+Constant zero collects D. When a positive class exists,
+$(r,s;0,0,n)$ with a maximizing n collects $D+\mu$ on all words
+of the two debt classes and that positive class. For the two largest
+positive classes, order their indices $i<j$ and use $(a,i;0,i,j)$
+for the guard $a\in\{r,s\}$ of largest debt. This collects
+$d_{\max}+\mu+\eta$ independently of suffixes.
+For three positive classes, order the three largest indices $i<j<k$
+and use $(i,j;i,j,k)$. With fewer positives, the padded branch is
+dominated by preceding bounds; no fictitious address is queried.
+These are alternative whole-table tests, proving $B_O\ge\Phi$.
+
+For $a=r,s$, let $v_a$ be the length-s word whose only zero is a.
+Use the same two-atom late-suffix probability measure for both classes:
+
+$$
+A_{v_a0^{L-s}}=d_a/2,\qquad A_{v_a1^{L-s}}=d_a/2,\qquad
+C_{1^{n-1}0^{L-n+1}}=\gamma_n\ (n>s),\qquad P=T=0.
+\tag{218.8}
+$$
+
+These are score weights, not acquisition probabilities. Their Q and W
+are as required. Low addresses other than r,s are constantly one on the
+support. At pair r,s, the nonzero maxima in 01,10,11 are $d_r,d_s,\mu$.
+
+For guard a and $j>s$, let b be the other guard and put
+$x=\max_{s<n\le j}\gamma_n$, $z=\max_{n>j}\gamma_n$,
+with empty maxima zero. The a-zero cells contribute $d_a$ together;
+the other cells have zero rewards $d_b/2$ and correct maxima x,z.
+The exact full support is
+$d_a+\max(d_b/2,x)+\max(d_b/2,z)$.
+Both base choices give D. One gives at most
+$d_a+d_b/2+\mu\le D+\mu$; neither gives at most
+$d_a+\mu+\eta\le d_{\max}+\mu+\eta$.
+The maxima belong to disjoint positive-index blocks.
+
+For $s<i<j$, put $x=\max_{s<n\le i}\gamma_n$,
+$y_0=\max_{i<n\le j}\gamma_n$, $z=\max_{n>j}\gamma_n$.
+Cell 01 is empty, while zero masses in 00 and 11 are D/2 each.
+The support is $\max(D/2,x)+y_0+\max(D/2,z)$.
+Its both-base choice is at most $D+\mu$; one base choice is at most
+$D/2+\mu+\eta\le d_{\max}+\mu+\eta$; the no-base choice is at most
+$\mu+\eta+\zeta$. Every earlier or unqueried label is included.
+
+A pair with an inactive low coordinate has singleton information on this
+support. Empty and singleton information refine to distinct-pair
+information; reversals permute cells and repetitions remain singleton
+partitions. Thus the displayed types exhaust the full N support and give
+$B_N\le\Phi$. Containment of O in N and the lower bound give
+$B_N=B_O=\Phi$. Subtract $W_0$, including all zero and equality endpoints.
+$\square$
+
+For every actual full y of this quotient with $\Delta_O(y)\le1$,
+the unrestricted minimum forces $\psi\le1$, so (218.8) with $\theta=0$
+gives (218.4). The input need not itself have N cost $\psi$.
+For the same beta and any $K\ge K_0$, the same score gives residual
+$(0;K-K_0)$, reading $-(K-K_0)e\le0$ and support zero.
+It is a certificate if $\psi\le1$ is separately established.
+Unit-O feasibility at the larger K does not itself imply this bound.
+This consequence reuses signed residual arithmetic.
+
+At $L=7,r=1,s=2$, take debts $1/6,1/6$, late totals
+$\gamma_3=\gamma_4=\gamma_5=1/3$ and all other late totals zero.
+The complete input is
+
+$$
+A_{0111100}=A_{1011100}=1/6,\qquad
+C_{1101101}=C_{1110110}=C_{1111011}=1/3,
+\tag{218.9}
+$$
+
+with all other coefficients zero. Here $K_0=4/3,W_0=0$.
+N table $(6,7;0,3,4,5)$ collects $4/3$.
+An O table uses at most three labels; each of $0,3,4,5$ has total
+reward $1/3$. Hence $B_O\le1$, attained by $(3,4;3,4,5)$.
+The costs are $(4/3,1)$ in N,O order. Its repair has A mass $1/12$
+at $0100000,0111111,1000000,1011111$ and C mass $1/3$ at
+$1100000,1110000,1111000$. Both repair costs are one.
+The middle branch is necessary: debts $3/5,1/5$ and late totals
+$1/2,2/5,1/10$ give $\Phi=3/2$, above the other branches $13/10$ and one.
+A repaired input support gap is not a separator.
+
+Pairing all demands of an original cap-feasible finite comparison with
+(218.8) gives the necessary inequality
+
+$$
+\sum_{n>s}\gamma_na_n-d_ra_r-d_sa_s
+ \le\Phi-D+(D+G)\varepsilon.
+\tag{218.10}
+$$
+
+The demand reward is
+$D-d_ra_r-d_sa_s+\sum\gamma_na_n-(D+G)\varepsilon$ and support is $\Phi$.
+The owning horizon maps in §218.7 apply before this pairing if the score
+length differs from the active length. This is a necessary condition only.
+
+### 218.3 B — removal of one separated quadratic block
+
+**Theorem 218.3 (A same-mass operation with its exact constant test).**
+Let $\lambda=\kappa+\eta$ be one actual full N configuration of mass M,
+with $\eta$ of mass $s\in[0,M]$. Let
+$\mathcal A\subseteq\{1,\ldots,L\}$ and suppose $\eta_w$ outputs
+only $\mathcal A\cup\{0\}$ on every word.
+Put $r_w=(1-M)e_{R(w)}+\kappa_w$, so $f_w=r_w+\eta_w$.
+For each $a\in\mathcal A$ assume $J_a\subseteq\{a+1,\ldots,L\}$
+and $\eta_w(a)=v_a(w|_{J_a})$ on every word.
+On $\Omega_a$, assume $r_w(a)$ invariant under changes of the $J_a$ bits.
+These sets may overlap or be empty. Put $c_a=\min v_a$,
+$C=\sum_{a\in\mathcal A}c_a$.
+
+Replace $\eta$ by empty-table masses $c_a$ at a and $s-C$ at zero.
+The new configuration has exactly mass M; its base, pair and positive
+rows are pointwise no smaller, and every correct-class minimum
+$m_n(f)=\min_{\Omega_n}f_w(n)$ is unchanged. Thus every complete cap
+is preserved, including signed anchors, negative demands and endpoints.
+
+Without suffix dependence or invariance, retain a cap-feasible original
+$\lambda$, the same block support and fixed r. Define
+
+$$
+d_a=\max\{0,b_a-e-\min_{\Omega_a}r_w(a)\},\quad
+D=\sum_{a\in\mathcal A}d_a,\qquad d_n=0\ (n\notin\mathcal A).
+$$
+
+A constant nonnegative replacement of mass s exists exactly when
+
+$$
+\begin{gathered}
+D\le s,\\
+r_w(0)+s-D\ge1-b_n-e,\qquad
+r_w(0)+r_w(n)+s-D+d_n\ge1-e
+ \quad(w\in\Omega_n,\ 1\le n\le L),\\
+r_{w_+}(0)+s-D\ge1-e.
+\end{gathered}
+\tag{218.11}
+$$
+
+Then masses $d_a$ at a and $s-D$ at zero work.
+This iff concerns a constant replacement with r fixed, not arbitrary
+stopped feasibility or automatic existence of a suitable decomposition.
+
+**Proof.** Every $\eta_w$ is nonnegative with total mass s.
+For all a simultaneously $0\le c_a\le\eta_w(a)$, so $C\le s$.
+The base increase is $\sum_a(\eta_w(a)-c_a)$.
+On $\Omega_n$ with $n\in\mathcal A$, the pair increase is
+$\sum_{a\ne n}(\eta_w(a)-c_a)$; outside $\mathcal A$ it is the
+base increase. The positive base increases too, on the same allocation.
+
+All $J_a$ bits are free Cartesian factors of $\Omega_a$, strictly
+after its first zero. The remainder is invariant in that factor and the
+block coordinate depends only on it. Hence
+
+$$
+\min_{\Omega_a}(r_w(a)+\eta_w(a))
+ =\min_{\Omega_a}r_w(a)+c_a.
+$$
+
+This is the new correct minimum; other correct coordinates are unchanged.
+The anchor is constant on each first-zero class, so the argument includes
+$M>1$. Different labels need not attain their minima at the same word:
+their requirements are separate universal inequalities, while common
+normalization was proved first. All correct rows follow.
+The proof includes $s=0$, empty directions, zero weights, ties and exhaustion.
+
+For the constant test, mass at labels outside $\mathcal A$ may be moved
+to zero: r already meets their correct demands, since the original block
+supplied none. This improves affected base and pair rows.
+Write the constant masses as $t_a\ge0$ and $s-\sum_at_a$ at zero.
+Correct feasibility is exactly $t_a\ge d_a$.
+Replacing t by d increases the base and positive readings and each pair
+reading $r_w(0)+r_w(n)+s-\sum_{a\ne n}t_a$.
+Thus a feasible constant vector exists precisely when the least one d
+passes (218.11). Conversely these inequalities and the definition of d
+verify every row. The positive part enforces nonnegative replacement
+masses; it does not clip original demands. $\square$
+
+A stopped conclusion requires a remainder condition.
+The constructor catalog $W_N$ of Continuation VI 190.3 permits arbitrary
+empty outputs; singleton i permits $\{0,i\}$ on zero and
+$\{0,i+1,\ldots,L\}$ on one; pair $i<j$ permits $\{0,i\}$ on 00,01,
+$\{0,i+1,\ldots,j\}$ on 10 and
+$\{0\}\cup(\{i+1,\ldots,L\}\setminus\{j\})$ on 11.
+If $\kappa$ belongs to $W_N$, the replacement does too, and existing
+194.1 gives a same-mass $W_O$ allocation meeting the same cap.
+If $\kappa$ already belongs to the full O catalog, the new empty tables
+give an O allocation directly. Otherwise this is an N operation only.
+For the resulting stopped allocation $\mu$ and any full score y,
+
+$$
+F_{Q(y)}(b,e)\le y\cdot G_O\mu\le M\Delta_O(y).
+\tag{218.12}
+$$
+
+In particular $\rho_O(b,e)\le M$.
+The desired comparison at that point follows if a qualifying allocation
+has $M\le\max(1,\rho_N(b,e))$; existence at every point is unproved.
+The 194 conversion and direct weak-duality application are suppliers.
+
+For a genuinely quadratic block, choose $k\ge3$,
+$\mathcal A\subseteq\{1,\ldots,k\}$ and, for each a, an odd cycle
+of $r_a\ge3$ distinct addresses greater than k. Put edge weight
+$h_{a,t}\ge0$ on N table $(i,j;a,0,0,a)$, $i<j$.
+Cycles may share addresses. Their union has mass $s=\sum_{a,t}h_{a,t}$:
+
+$$
+\eta_w(a)=\sum_t h_{a,t}\mathbf1_{\text{edge t has equal endpoints}},
+\qquad c_a=\min_t h_{a,t}.
+$$
+
+Every binary odd cycle has an equal edge. Alternating on the complementary
+even path makes any chosen edge the only equal edge, proving the minimum
+for all real nonnegative weights. If $\kappa$ uses only addresses at most k,
+all invariance premises hold simultaneously, including shared cycles
+and zero edge weights. Neither output laws nor score quotients are preserved.
+
+There is an exact fixed-remainder obstruction.
+For $k\ge3$, $0<s\le1/3$, $L\ge2k$, put $j_a=k+a$ and let
+$a^+=a+1$ cyclically on $1,\ldots,k$. The block contains singleton
+$(j_a;a,a^+)$ of mass $s/k$ for each a. The remainder contains
+
+$$
+(a,j_a;0,a,0,0),\qquad(a^+,j_a;a^+,0,0,0)
+$$
+
+with mass $s/k$ each and empty-zero mass $1-3s$.
+This is one probability allocation: block mass s and remainder mass $1-s$.
+Every remainder table belongs to $W_N$.
+On $\Omega_a$, the edge a supplies complementary correct contributions
+$(s/k)(1-w_{j_a})$ and $(s/k)w_{j_a}$ from block and remainder.
+The preceding cyclic edge supplies $(s/k)w_{j_{a^-}}$ and
+$(s/k)(1-w_{j_{a^-}})$. Correct mass is therefore exactly $2s/k$.
+Take $a_n=1$ for $n\le k$ and
+
+$$
+e=1-2s/k,\qquad a_{k+r}=e\,2^{1-r}\quad(r\ge1).
+\tag{218.13}
+$$
+
+Early errors equal e, including the independent pair row.
+For every actual first zero beyond k, all first addresses in the remainder
+are positive, so it outputs zero; the block outputs in $1,\ldots,k$.
+Its exact TV is $\max(s,a_n)\le e$, including $a_{k+1}=e$ and
+multiple-zero words even when queried suffix addresses exceed the active prefix.
+
+On $\Omega_a$, the remainder correct reading is
+$(s/k)(w_{j_a}+1-w_{j_{a^-}})$, of minimum zero on freely varying
+distinct suffix bits. A constant substitute needs $2s/k$ at each label,
+a total $2s>s$. It cannot replace that block with r fixed.
+A different empty O law assigns $2s/k$ to each early label and $1-2s$
+to zero. Early errors are e; later errors are $\max(2s,a_n)\le e$,
+because $2s\le2/3<e$. At $k=3,s=1/3$, available block mass is $1/3$,
+required constant mass $2/3$, cap $7/9$, and alternative O masses are
+$(1/3,2/9,2/9,2/9)$. This is a local-operation failure, not an
+$H_N$ hard-region witness or original separator.
+The full catalog still contains $(3,4;1,0,0,0)$, correct at 0100.
+Preserving correct-class minima does not authorize pruning that label.
+
+### 218.4 C — one signed constant repair and the whole affine line
+
+**Theorem 218.4 (Exact joint test for a signed affine reconstruction).**
+Let p be a probability-vector kernel on all $B_L$, with labels
+$J=\{0,\ldots,L\}$ and degree at most two:
+
+$$
+p_w=c+\sum_i\ell_iw_i+\sum_{i<j}R_{ij}w_iw_j.
+$$
+
+The coordinate sum of c is one; those of $\ell_i,R_{ij}$ are zero.
+These kernel coefficients are different objects from the score quotient.
+Fix target amplitudes $a_n\in[0,1]$ and cap $\varepsilon\in[0,1]$.
+For every real t define, coordinatewise,
+
+$$
+\begin{aligned}
+H_t&=\sum_i\left(\sum_{j>i}(-tR_{ij})_+-t\ell_i\right)_+,
+ &D_j(t)&=H_t(j)-tc_j,\\
+s_{n,E}(t)&=\min_{w\in\Omega_n}t\,p_w(E),&&E\subseteq J,\\
+A_0(t)&=\max\left\{D_0(t),\,1-\varepsilon-tp_{w_+}(0),\,
+ \max_n[1-a_n-\varepsilon-s_{n,\{0\}}(t)]\right\},\\
+A_n(t)&=\max\{D_n(t),\,a_n-\varepsilon-s_{n,\{n\}}(t)\},&&n\ge1,\\
+B_n(t)&=1-\varepsilon-s_{n,\{0,n\}}(t).&&
+\end{aligned}
+\tag{218.14}
+$$
+
+These bounds may be negative. The pair minimum is a joint reading on one
+word, not the sum of separately minimized singleton readings.
+There exists a full stopped kernel $q_w=tp_w+z$, with one signed constant
+$z\in\mathbb R^{L+1}$, meeting every finite cap row, if and only if
+
+$$
+A_0(t)+\sum_{j=1}^LA_j(t)\le1-t,\qquad
+B_n(t)+\sum_{\substack{j\ge1\\j\ne n}}A_j(t)\le1-t
+ \quad(1\le n\le L).
+\tag{218.15}
+$$
+
+Neither $z\ge0$ nor $0\le t\le1$ is required. When feasible, one
+simultaneous choice is
+
+$$
+z_n=A_n(t)\quad(n\ge1),\qquad z_0=1-t-\sum_{n=1}^LA_n(t).
+\tag{218.16}
+$$
+
+The feasible set of real t is a closed interval, possibly empty or unbounded.
+
+**Proof.** Normalization requires $\sum_jz_j=1-t$.
+The nonconstant coefficients of q are $t\ell_i,tR_{ij}$ and its constant
+is $tc+z$. The constructive sufficiency of 109.1 applies when
+$tc+z\ge H_t$. Its equal-mass terminal-vector allocation depends on
+zero coordinate sums of nonconstant coefficients and total constant mass
+one. It constructs nonnegative terminal vectors of total schedule mass one,
+so it proves positivity of the signed candidate rather than presupposing it.
+The common scalar mass condition follows from that normalization.
+Consequently stopped membership is exactly $z\ge D(t)$ and normalization.
+
+On $\Omega_n$, all-word base, correct and pair demands become respectively
+
+$$
+z_0\ge1-a_n-\varepsilon-s_{n,\{0\}}(t),\qquad
+z_n\ge a_n-\varepsilon-s_{n,\{n\}}(t),\qquad
+z_0+z_n\ge B_n(t).
+$$
+
+The positive row is $z_0\ge1-\varepsilon-tp_{w_+}(0)$.
+Together these are precisely $z_j\ge A_j$, $z_0+z_n\ge B_n$
+and $\sum z=1-t$. Summing coordinate bounds gives the first cut in
+(218.15); adding each pair bound to all other numerical-coordinate bounds
+gives its n-th cut. Conversely (218.16) has the required total,
+the first cut gives $z_0\ge A_0$ and the n-th cut gives
+$z_0+z_n\ge B_n$. All other coordinate bounds are equalities.
+One vector satisfies all membership, base, correct, pair and positive rows.
+
+Every coordinate of $H_t$ is convex piecewise affine: a sum of positive
+parts minus a linear function is convex, and taking its positive part
+preserves convexity. Each s is a finite minimum of linear functions,
+hence concave piecewise affine. Thus $A_j,B_n$ and all left sides of
+(218.15) minus $1-t$ are convex piecewise affine. Their common nonpositive
+set in $\mathbb R$ is a closed interval. This proves the continuous claim,
+including $t=0$, signed translations and equality endpoints. $\square$
+
+For a same-$\lambda$ application, retain $(b,e)\in H_N$ and its one
+complete feasible $\lambda$ of mass M. Set $M_0=\max(1,M)$ and pad
+only its zero anchor column to mass $M_0$; denote this allocation
+$\widehat\lambda$. The normalized kernel
+
+$$
+p=\sum_D\frac{\widehat\lambda_D}{M_0}e_{D(w)},\qquad
+a=\alpha+(b-\alpha)/M_0,\qquad\varepsilon=e/M_0
+\tag{218.17}
+$$
+
+satisfies every demand because $G_N\widehat\lambda=G_N\lambda$.
+If (218.15) holds at some real t, let $\pi$ be the one normalized whole-O
+distribution supplied for q. Then $\lambda_O=M_0\pi$ has exactly mass
+$M_0$ and
+
+$$
+G_O\lambda_O=M_0(z_q-r)\ge M_0(d(a,\varepsilon)-r)=h(b,e).
+$$
+
+Thus $\rho_O(b,e)\le M_0$. There is no extra charge for the signed
+translation. This sufficient test is not proved automatic for every
+normalized N allocation. The radial normalization and 109.1 application
+are reused interfaces, not separate new content.
+
+**Proposition 218.5 (An attained optimum over every real affine repair).**
+Let $L\ge5$, $0<\gamma<1/3$. Reuse the 111.1–112.2 family:
+P selects uniformly a three-subset of $\{1,\ldots,L,\star\}$, with
+$\star$ last and interpreted as label zero. It queries the first two
+numerical members increasingly, emits the first queried zero, or the
+third selected label on exhaustion. Let
+$R_0=(4,5;1,2,2,1)$ be a full N table and put
+
+$$
+p=(1-\gamma)P+\gamma R_0,\qquad
+d=\frac{3(1-\gamma)}{L+1},\qquad\varepsilon=1-d.
+$$
+
+Against targets $e_n$ on $\Omega_n$ and $e_0$ on $w_+$, the minimum
+TV error over every stopped $q_w=tp_w+z$, all real t and all signed
+constant z with total $1-t$, is attained and equals
+
+$$
+E_{\rm line}=1-\max\left\{\frac d{1+2\gamma},
+ \frac{d+\gamma}{1+(L+1)\gamma}\right\}.
+\tag{218.18}
+$$
+
+The two candidates attaining the two branches are
+
+$$
+q^A=\frac{p+\gamma(e_1+e_2)}{1+2\gamma},\qquad
+q^B=\frac{p+\gamma\sum_{j=0}^Le_j}{1+(L+1)\gamma}.
+\tag{218.19}
+$$
+
+In particular
+
+$$
+E_{\rm line}-\varepsilon
+ =\min\left\{\frac{2\gamma d}{1+2\gamma},
+ \frac{\gamma(2-3\gamma)}{1+(L+1)\gamma}\right\}>0.
+\tag{218.20}
+$$
+
+This is a quantitative obstruction to this reconstruction family.
+It gives no original hard-region separator or new amplitude classification.
+
+**Proof.** On every word in $\Omega_n$, P emits n exactly when its
+subset contains n, with probability $3/(L+1)$; the all-positive base
+has the same probability. For $n\ge3$, $R_0$ never emits n.
+For $n=1$, unequal bits at 4,5 make $R_0$ avoid 1; for $n=2$,
+equal bits make it avoid 2. Hence
+$\min_{\Omega_n}p_w(n)=d$ for every n and $p_{w_+}(0)=d$.
+These are attained readings on actual finite words.
+
+For completeness, the kernel coefficient calculation is explicit.
+With $C=\binom{L+1}{3}$ and $k_j=L-j+1$,
+
+$$
+\begin{aligned}
+P_w(j)&=C^{-1}\left[
+ \binom{k_j}{2}(1-w_j)+k_j\sum_{i<j}w_i(1-w_j)
+ +\sum_{i<h<j}w_iw_h\right]\quad(j\ge1),\\
+P_w(0)&=C^{-1}\sum_{i<j}w_iw_j.
+\end{aligned}
+$$
+
+For label j the sole nonzero positive-part contribution to H(P) is
+$h_j(j)=\binom{k_j}{2}/C$; label zero has none. Thus $H(P)=c(P)$.
+The $R_0$ coordinates are
+$R_{0,w}(1)=1-w_4-w_5+2w_4w_5$ and
+$R_{0,w}(2)=w_4+w_5-2w_4w_5$.
+The first two P coordinates use only addresses 1,2, so these terms do
+not overlap their old coefficients. Label 1 adds $2\gamma$ to H and
+$\gamma$ to c; label 2 adds $\gamma$ to H and zero to c.
+No other coordinate changes. Therefore
+$H(p)-c(p)=\gamma(e_1+e_2)$ exactly.
+
+For $t>0$, stopped membership is precisely
+$z\ge t\gamma(e_1+e_2)$ with $\sum z=1-t$.
+Thus z is nonnegative and $t\le1/(1+2\gamma)$.
+Set $s=(1-t)/t$, $v=z/t$. Then
+$s\ge2\gamma$, $\sum v=s$, $v_1,v_2\ge\gamma$ and all other
+coordinates are nonnegative. The exact error is
+$1-(d+\min_jv_j)/(1+s)$, including the positive coordinate.
+
+For fixed s, the largest common floor $m=\min_jv_j$ is characterized
+by $2\max(\gamma,m)+(L-1)m\le s$. It is attained by allocating
+the two mandatory floors and distributing the rest. Its value is
+
+$$
+m=\begin{cases}
+(s-2\gamma)/(L-1),&2\gamma\le s\le(L+1)\gamma,\\
+s/(L+1),&s\ge(L+1)\gamma.
+\end{cases}
+$$
+
+On the first interval $(d+m)/(1+s)$ has constant derivative sign.
+On the second it decreases since $d>1/(L+1)$.
+The maximum is therefore at $s=2\gamma$ or $(L+1)\gamma$,
+giving (218.19) and (218.18).
+
+For $t\le0$, choose for each label its attained d-reading, using $w_+$
+for zero. The least q reading among these $L+1$ tests is at most
+
+$$
+\frac{t(L+1)d+1-t}{L+1}\le\frac1{L+1}.
+$$
+
+So error is at least $L/(L+1)$, strictly worse than $q^A$, because
+$d/(1+2\gamma)>1/(L+1)$ when $\gamma<1/3$.
+All negative t and signed translations are thus included.
+For pure targets TV is one minus the correct probability; positivity
+then also meets the retained negative base and independent pair rows.
+Both endpoint kernels satisfy the constructive stopped conditions, so
+their normalized whole-table realizations exist at equality.
+Subtract $\varepsilon$ to obtain (218.20). $\square$
+
+At $L=5,\gamma=1/5$, the original error is $3/5$ and the best affine
+error is $5/7$, a gap $4/35$, attained by $q^A$.
+The different stopped law P meets the original cap.
+Moreover the plateau point is outside $H_L$:
+$(L+1)\varepsilon=L-2+3\gamma>L-2=\sum_{n\ge3}a_n$.
+The example defeats automatic affordability of the entire affine line,
+not the unrestricted comparison.
+
+Choose actual tails $a_{L+r}=\varepsilon2^{1-r}$, $r\ge1$, while
+$a_1=\cdots=a_L=1$. The original p tail error is exactly
+$\max(1-p_{w_+}(0),a_n)=\varepsilon$, including $a_{L+1}=\varepsilon$.
+For $q^A$ the positive-word zero probability is $d/(1+2\gamma)$;
+for $q^B$ it is $(d+\gamma)/(1+(L+1)\gamma)$.
+Each equals that candidate's attained finite success floor. Thus its
+positive-word error is its finite worst error. Both errors exceed
+$\varepsilon$, and every $a_n\le\varepsilon$ beyond L, so the exact
+max-tail identity gives that same candidate error at every actual tail,
+including $a_{L+1}=\varepsilon$. At the better branch the uniform
+original error is exactly $E_{\rm line}$.
+
+The lower bound also concerns original stopped rules in the explicitly
+restricted affine family whose full-carrier laws are
+$t\nu_x^p+\eta$, with one fixed signed measure $\eta$ independent of x.
+Project every other tape to zero while fixing marks $0,\ldots,L$.
+The law becomes $tp_w+z$, depending only on the low word.
+The class-preserving extraction in 110.2, with this fixed low-word law,
+approximates that law and takes a limit in the finite stopped simplex;
+it therefore preserves the law in this restricted extraction.
+Sources with increasingly late first zero supply the positive-word
+bound as the target tail vanishes. Projection cannot increase TV.
+This proves the affine-family lower bound for arbitrary addresses and
+full-carrier outputs within that family. It imposes no affine restriction
+on the unrestricted original competitors.
+
+### 218.5 D — separate reserve columns with one guard allocation
+
+**Theorem 218.6 (Joint intervals and an unrestricted attained minimum).**
+Let disjoint finite sets I,J satisfy $1,2\in I$, $k=|I|\ge3$,
+$m=|J|\ge3$ and $\max I<\min J\le L$.
+Take $\gamma_j>0$ for $j\in J$ and define
+
+$$
+G=\sum_J\gamma_j,\quad\mu=\max_J\gamma_j,\quad
+\mu_{-j}=\max_{h\in J\setminus\{j\}}\gamma_h,\quad
+\eta=\min_{j\in J}\left(1-\frac{\mu_{-j}}{G-\gamma_j}\right).
+$$
+
+The denominators are positive and $\eta>0$.
+Let $c\ge0$, $S=G+c$, $s_i\ge0$ with $\sum_Is_i=S$,
+$0\le\xi_i\le s_i$, and $E=\xi_1+\xi_2$.
+Require simultaneously
+
+$$
+\begin{gathered}
+s_i+s_h\le S-\mu\quad(i\ne h\text{ in }I),\\
+l_i=\max\left(0,\frac{s_i-c}{G-\mu}\right)
+ \le u_i=\min\left(\eta,\frac{s_i}{G}\right),\qquad
+\sum_Il_i\le1\le\sum_Iu_i.
+\end{gathered}
+\tag{218.21}
+$$
+
+For $\beta_i=-\xi_i$ on I, $\beta_j=\gamma_j$ on J,
+zero elsewhere, and $K=G+S$, one full score with $T=0$ attains
+
+$$
+\min_{Q(V)=(\beta,K)}\Delta_N(V)
+ =\min_{Q(V)=(\beta,K)}\Delta_O(V)=E.
+\tag{218.22}
+$$
+
+These minima range over all full competitors, with arbitrary support,
+cancellations, pair stock, terminal, unaries, baselines and labels.
+The interval conditions are necessary and sufficient only inside the
+constructor below with its fixed row totals s. They are sufficient for
+the unrestricted minimum, not a global necessary criterion.
+
+**Proof.** Choose one vector $\chi$ with $l_i\le\chi_i\le u_i$,
+$\sum\chi_i=1$. An explicit choice, if $\sum u>\sum l$, is
+
+$$
+\chi_i=l_i+a(u_i-l_i),\qquad
+a=\frac{1-\sum l}{\sum u-\sum l}.
+$$
+
+If the denominator is zero, the assumptions force $\sum l=1$;
+take $\chi=l$. Set $t_i=s_i-G\chi_i$.
+The interval inequalities give $t_i\ge0$, $\chi_i\le\eta$,
+$\mu\chi_i+t_i=s_i-(G-\mu)\chi_i\le c$ and $\sum t_i=c$.
+
+Initially put P mass $\chi_i\gamma_j$ at $w(\{i,j\})$ for each
+$i\in I,j\in J$, P mass $t_i$ at $w(\{i\}\cup J)$, and
+C mass $\gamma_j$ at $w(\{j\})$. All A and T are initially zero.
+In guard class i convert fraction $\xi_i/s_i$ of every P atom to A
+on the same word. If $s_i=0$, then $\xi_i=0$ and no division is used.
+Every guard atom has first zero at its guard by the address ordering.
+Conversion leaves the zero reward measure $U=A+P$ unchanged and
+only decreases guard numerical rewards, which are subsets of U.
+Positive labels receive C only. This is one measure with row total $s_i$,
+single-positive column total $\gamma_j$, and all-positive reserve total c.
+
+For two guards i,h, the U cell masses are
+$(0,s_i,s_h,S-s_i-s_h)$; all C atoms are in 11 and their largest
+numerical reward is $\mu$. The guard-pair condition protects that cell.
+For guard i and positive j, in guard/positive order the U cell masses are
+
+$$
+\begin{aligned}
+(&\chi_i\gamma_j+t_i,\ \chi_i(G-\gamma_j),\\
+ &(1-\chi_i)\gamma_j+c-t_i,\ (1-\chi_i)(G-\gamma_j)).
+\end{aligned}
+\tag{218.23}
+$$
+
+Label j has C reward $\gamma_j$ in 10.
+Protecting it for every j is equivalent to $\mu\chi_i+t_i\le c$.
+Other positive labels in 11 have maximum $\mu_{-j}$; protecting all
+of them is exactly $\chi_i\le\eta$.
+Cells with guard bit zero have only guard rewards already dominated by U.
+
+For positive pair j,h, U has cells
+$(c,\gamma_j,\gamma_h,G-\gamma_j-\gamma_h)$.
+Their numerical C rewards are respectively zero, $\gamma_j,\gamma_h$
+and each remaining $\gamma_a$, bounded by the final block sum.
+Thus zero dominates every label in every full cell.
+Inactive bits are one on the support, their numerical labels earn zero,
+and their queries coarsen active pair information. Empty and singleton
+partitions refine to pairs. Every full N support is S; constant zero
+attains S in O, so $B_N=B_O=S$.
+
+The same measure has A total $\sum\xi_i$, P total $S-\sum\xi_i$,
+C total G, T zero, exact quotient as specified and $W=S-E$.
+Both costs are E. For every full competitor of that quotient,
+$W=Z-E$ and constant zero earns Z, giving $\Delta_N,\Delta_O\ge E$.
+This proves the unrestricted minimum.
+
+Conversely, inside this constructor, $\Delta_N=E$ means $B_N=S$.
+Zero already contributes total S on every schedule, so no cell can exceed
+its zero reward. Guard-pair, mixed 10 and mixed 11 cells force exactly
+the three dominance inequalities just listed. With $t_i=s_i-G\chi_i\ge0$
+and $\sum\chi=1$, these are $l_i\le\chi_i\le u_i$ and the
+guard-pair conditions. The interval-sum criterion is equivalent to the
+existence of this one vector by the explicit interpolation.
+It makes no necessity assertion for other full scores. $\square$
+
+A concentrated-debt region has a closed explicit allocation.
+Let $J\subseteq\{4,\ldots,L\}$ have at least four entries,
+arbitrary $\gamma_j>0$ with $G\ge3\mu$, and set
+$I=\{1,2,3\}$, $c=\mu/2$, $S=G+\mu/2$.
+If
+
+$$
+0\le\xi_i\le G/2,\qquad
+\sum_{i=1}^3\max(\mu,\xi_i)\le G+\mu/2,
+\tag{218.24}
+$$
+
+then the unrestricted minima at $K=2G+\mu/2$ are $\xi_1+\xi_2$.
+To construct the rows, set $d_i=\max(\mu,\xi_i)$, $U_0=G/2$.
+The interval filling $d_i\le s_i\le U_0$, $\sum s_i=S$ exists since
+$\sum d_i\le S\le3U_0$. If $3U_0>\sum d_i$, take
+
+$$
+s_i=d_i+\frac{S-\sum d}{3U_0-\sum d}(U_0-d_i);
+$$
+
+otherwise set $s=d$. Put
+$\chi_i=(s_i-\mu/2)/(G-\mu)$ and $t_i=\mu/2-\mu\chi_i$.
+Since $G-\gamma_j\ge2\mu\ge2\mu_{-j}$, $\eta\ge1/2$.
+The row bounds give $0\le\chi_i\le1/2$, $t_i\ge0$,
+$\sum\chi=1$, $\sum t=\mu/2$ and $\mu\chi_i+t_i=c$.
+Also $s_i+s_h=S-s_r\le S-\mu$. These are all joint conditions.
+This includes zero debts, exhausted conversions and equality endpoints.
+The three-positive degeneration with $G\ge3\mu$ forces equal positives;
+it is the existing equal-triple overlap, not another new relation.
+
+Here is a complete unequal four-positive repair at $L=7$:
+$J=\{4,5,6,7\}$, $\gamma=(1,1,3/4,1/2)$, $G=13/4$, $\mu=1$,
+$c=1/2$, $S=15/4$, $s=(17/16,17/16,13/8)$,
+$\chi=(1/4,1/4,1/2)$, $t=(1/4,1/4,0)$ and
+$\xi=(1,0,13/8)$.
+For each $j\in J$, at $w(\{1,j\})$ put
+A=$4\gamma_j/17$, P=$\gamma_j/68$;
+at $w(\{2,j\})$ put P=$\gamma_j/4$;
+at $w(\{3,j\})$ put A=$\gamma_j/2$.
+At $w(\{1\}\cup J)$ put A=$4/17$, P=$1/68$;
+at $w(\{2\}\cup J)$ put P=$1/4$.
+Put C=$\gamma_j$ at each $w(\{j\})$ and all other coefficients zero.
+Its totals and quotient are
+
+$$
+A=21/8,\quad P=9/8,\quad C=13/4,\quad T=0,\quad
+Q=(-1,0,-13/8,1,1,3/4,1/2;7),\quad W=11/4.
+\tag{218.25}
+$$
+
+Both supports are $15/4$, both costs one.
+Absolute stock is $9/8$, while literal stock is $15/4$;
+the one guard measure spends the latter and leaves exactly the former as P.
+
+For $0\le u\le1$, move C mass u from $w(\{4\})$ to $w(\{4,5\})$.
+The full input $Y_u$ has the same Q,W and
+
+$$
+\Delta_O(Y_u)=1,\qquad\Delta_N(Y_u)=1+(u-1/2)_+.
+\tag{218.26}
+$$
+
+Only pairs involving 5 change. At pair 45, old U cells are
+$(1/2,1,1,5/4)$; moved label 4 supplies u in 00 and $1-u$ in 01.
+The N support rises by $(u-1/2)_+$.
+O merges 00,01, whose baseline $3/2$ covers total correct mass one.
+At guard/5, the receiving 10 baseline is
+$\gamma_5+(\mu-\gamma_5)\chi_i=1$, covering u;
+the other affected cell loses label-4 reward.
+At positive pair $5,h$, $h\ne4$, the receiving cell has baseline
+$\gamma_5=1$, again covering u. An inactive query coarsens a singleton.
+All other pairs are unchanged. Constant zero continues to attain $15/4$,
+proving both formulas throughout the closed interval.
+At $u=1$ an actual unit-O input of N cost $3/2$ is repaired to one.
+
+For every actual full unit-O input in (218.22), the unrestricted lower
+bound forces $E\le1$. The constructed V has exact Q and gives (218.4)
+with $\theta=0$, against the same full $\lambda$ in (218.5).
+For other signed targets the sufficient residual test is
+$E+\max(0,\sigma_{H_L}(q-Q(V)))\le1$; it is not automatic.
+The necessary original amplitude inequality from this score is
+
+$$
+\sum_{j\in J}\gamma_ja_j
+ \le\sum_{i\in I}\xi_ia_i+(G+S)\varepsilon.
+\tag{218.27}
+$$
+
+At the example it is
+$a_4+a_5+(3/4)a_6+(1/2)a_7\le a_1+(13/8)a_3+7\varepsilon$.
+This follows by full demand pairing and the support $W+E$,
+with the owning prefix transport of §218.7. It is necessary only.
+
+### 218.6 E — actual-score prefix erasure and a signed lift
+
+**Definition 218.7 (Projection and embedding of full scores).**
+For $L\ge m\ge3$, define $z=\mathcal E_m(y)$ as follows.
+At each nonpositive prefix $v\in B_m\setminus\{1^m\}$, sum A,C,P
+separately over every suffix of v. At its positive prefix put
+
+$$
+T_z=T_y+\sum_{n(w)>m}(A_w+P_w).
+$$
+
+Discard only the tail C coefficients. Write
+$A_>=\sum_{n(w)>m}A_w$, $C_>=\sum_{n(w)>m}C_w$ and
+$S_k=\sum_{j=m+1}^k\beta_j(y)$ for $m<k\le L$.
+Empty tail sums are zero. The embedding $\iota_m(V)$ appends ones to
+every nonterminal scored m-word, keeps its terminal at $1^L$, and gives
+the extra numerical labels zero score. These are operations on deterministic
+dual weights, not input-source distributions or acquisition kernels.
+
+**Theorem 218.8 (Exact residual and a dimension-preserving budget lift).**
+For every full y and $L\ge m\ge3$,
+
+$$
+\begin{aligned}
+W_z&=W_y,\qquad Q(z)=(\beta_1,\ldots,\beta_m;K_y-C_>),\\
+\Delta_{\mathcal C}(z)&\le\Delta_{\mathcal C}(y),\qquad
+\Delta_{\mathcal C}(\iota_m(V))=\Delta_{\mathcal C}(V)
+ \quad(\mathcal C=N,O),\\
+\Theta_m(y)&:=\sigma_{H_L}(Q(y)-Q(\iota_m(z)))\\
+ &=\max\left\{0,\ \max_{k>m}\frac{S_k}{k-1},\
+ \max_{k>m}\frac{3S_k-(k-2)A_>}{k+1}\right\}.
+\end{aligned}
+\tag{218.28}
+$$
+
+When $m=L$, omit the empty maxima. In particular $\Theta_m(y)=0$
+if and only if every cumulative tail sum $S_k\le0$.
+
+Suppose those cumulative inequalities hold. For any full m-score V,
+any $\theta\ge0$ with
+$\sigma_{H_m}(Q(z)-Q(V))\le\theta$, and the sufficient mass condition
+$K_V\le K_z+A_>$, one has
+
+$$
+\sigma_{H_L}(Q(y)-Q(\iota_m(V)))\le\theta.
+\tag{218.29}
+$$
+
+Thus $\Delta_N(V)+\theta\le1$ gives one original-length certificate
+with the same cost and residual budget. The mass condition restricts this
+lift only, not the unrestricted universal problem.
+Alternatively an exact-Q prefix replacement V has exact extra charge
+$\Theta_m(y)$, so $\Delta_N(V)+\Theta_m(y)\le1$ suffices without
+the cumulative-sign assumption, including the endpoints.
+
+**Proof.** Any complete m-table viewed as an L-table asks the same low
+addresses and emits the same labels through m. Its y reward equals its
+z reward exactly. At a prefix containing a zero this follows by summing
+suffix coefficients. At a positive prefix, output zero earns A+P or T;
+a numerical label through m earns nothing from first-zero classes beyond m.
+This proves the Q,W identities and $B_{\mathcal C}(z)\le B_{\mathcal C}(y)$.
+It uses a subset of the full input catalog for a support lower bound and
+does not prune any input label.
+
+On $\iota_m(V)$, every added bit is one on the score support and added
+labels have zero reward. Every high-address table reduces to a legal low
+empty, singleton or pair table. In O high addresses follow low ones:
+a low zero stops first, and otherwise the constant high continuation folds
+into exhaustion. Conversely every low table embeds.
+Thus both supports and W, and therefore both costs, are preserved exactly.
+
+Use the complete hull supplier 198.5 with vertices
+
+$$
+\begin{aligned}
+o&=(0,\ldots,0;0),\qquad p=(1,0,\ldots,0;0),\\
+u_k&=(1/(k-1),\ldots,1/(k-1),0,\ldots,0;0),\\
+v_k&=(1,\ldots,1,e_k,\ldots,e_k;e_k),\qquad
+e_k=(k-2)/(k+1),\quad3\le k\le L,
+\end{aligned}
+$$
+
+where the first k entries are the displayed repeated value.
+They generate $H_L$; their generation and convex support are reused.
+The erased residual has zero early beta, original tail beta, and
+K-coordinate $C_>$. Its readings at o,p and $u_k$ with $k\le m$
+are zero, at $v_k$ with $k\le m$ are $-e_kA_>$, and at high vertices are
+
+$$
+F_{\rm res}(u_k)=S_k/(k-1),\qquad
+F_{\rm res}(v_k)=\frac{3S_k-(k-2)A_>}{k+1}.
+$$
+
+Here $\sum_{j>m}\beta_j=C_>-A_>$ accounts for the complete actual tail.
+Taking their maximum proves (218.28). If every $S_k\le0$, every reading
+is nonpositive and o attains zero; a positive $S_k$ is detected by its
+own $u_k$. No hull vertex is asserted to be an original positive-tail law.
+
+For the general lift, put $r_i=\beta_i(y)-\beta_i(V)$ for $i\le m$,
+$E=r_1+r_2$, $R_1=\sum_{i\le m}r_i$ and $\kappa=K_z-K_V$.
+At o,p and $u_k$, $k\le m$, the full residual readings equal their
+lower-dimensional readings. In particular $F(o)=-E$, which need not
+vanish. At low $v_k$ the reading is the lower reading minus $e_kA_>$.
+For $k>m$, the u reading is
+
+$$
+\frac{R_1+S_k}{k-1}-E
+ \le\frac{R_1}{k-1}-E
+ =\frac{m-1}{k-1}F_{\rm low}(u_m)
+  +\left(1-\frac{m-1}{k-1}\right)F_{\rm low}(o)\le\theta.
+$$
+
+The high v reading is
+
+$$
+R_1-E+\frac{3S_k-(k-2)(\kappa+A_>)}{k+1}.
+$$
+
+Since $S_k\le0$, $\kappa+A_>\ge0$ and $e_k\ge e_m$, it is at most
+$R_1-E-e_m(\kappa+A_>)\le R_1-E-e_m\kappa=F_{\rm low}(v_m)\le\theta$.
+All vertices are covered. This proves (218.29) using the same V,
+without the false assertion that projection of $H_L$ into its first
+m amplitudes and e lies in $H_m$. Cost preservation supplies the same
+single budget. In the exact-Q case the residual is precisely the erased
+one already computed. $\square$
+
+**Corollary 218.9 (Every input in the cumulative-nonpositive-tail cone).**
+For every $L\ge3$, every full $y\ge0$ and every $d\ge0$, if
+
+$$
+\Delta_O(y)\le d,\qquad
+\sum_{j=4}^k\beta_j(y)\le0\quad(4\le k\le L),
+\tag{218.30}
+$$
+
+then one unrestricted full $V\ge0$ has
+$\Delta_N(V)\le d$ and $\sigma_{H_L}(Q(y)-Q(V))=0$.
+There are no restrictions on early signs, A/C cancellations, P placements,
+terminal mass, suffix correlations or the number and sizes of positive
+tail coordinates. At unit d this is (218.4) with $\theta=0$.
+At $d=0$ it includes nonzero zero-cost replacements.
+
+**Proof and exact supplier substitution.**
+Set $z=\mathcal E_3(y)$. Its quotient satisfies $K_z\ge\sum_{i\le3}|\beta_i|$
+because z is a full nonnegative score. The signed one-pivot theorem 214.2
+applies at the exact parameters $L=n=3$, $(c_1,c_2,g)=(\beta_1,\beta_2,\beta_3)$,
+$K=K_z$. It constructs one full $V_3$ with $Q(V_3)=Q(z)$ and
+
+$$
+\Delta_N(V_3)=\min_{Q(U)=Q(z)}\Delta_O(U)
+ \le\Delta_O(z)\le\Delta_O(y)\le d.
+$$
+
+For explicit reconstruction when $g>0$, put
+$D=(-c_1)_++(-c_2)_+$, $H=K_z-g$, $a_1=|c_1|$, $a_2=|c_2|$,
+$a_3=0$ and
+
+$$
+J=\max\{a_1+a_2,\ (H+\max(a_1,a_2))/2,\ 2H/3\}.
+$$
+
+Choose the supplier's water-filled $z_i=\max(a_i,h)$ with sum H;
+at $H=\sum a_i$ use h=0. This finite monotone piecewise-linear equation
+has a solution, including H=0. Put P=$z_i-a_i$ at $w(\{i,3\})$
+for i=1,2, with C=$c_i$ there when $c_i\ge0$ and A=$-c_i$ otherwise;
+put C=g at $w(\{3\})$ and T=$z_3$.
+The complete pair supports are $H+(g-z_i)_+$ for the omitted slot i;
+their maximum is $H+(g-H+J)_+$, and
+$W=H-D$. The supplier proves its unrestricted O lower match,
+so both minima equal $D+(g-H+J)_+$.
+When $g\le0$, use sole-zero C masses $(c_i)_+$ and A masses
+$(-c_i)_+$ at i=1,2, A=$-g$ at 3, and
+T=$K_z-|c_1|-|c_2|-|g|$. Both costs are D.
+These formulas identify the actual reused score, not a new one-pivot proof.
+
+Embed $V=\iota_3(V_3)$. Its cost is the same.
+Condition (218.30) and (218.28) give residual support zero,
+which proves the corollary for every real nonnegative input and every L,
+including empty tails and equality. $\square$
+
+Only the total tail sign is insufficient for this operation.
+For $L\ge m+2$, put C=t>0 at the sole-zero $(m+1)$ word and
+A=t at the sole-zero $(m+2)$ word, all other coefficients zero.
+Its total tail beta is zero and both complete costs are t.
+But $S_{m+1}=t$ and the erased residual at $u_{m+1}$ is $t/m>0$.
+For $0<t\le1$ this is an actual unit-O score.
+It refutes the weakened erasure test only, not unrestricted certificates
+or the N/O comparison. Deleting an arbitrary zero-net middle coordinate
+remains subject to the counterexample in 216.4.
+
+Here is a complete changed-Q example with $L=8$ and $T_y=0$.
+Start with P=2 at each of $\{1,3,8\},\{2,3,8\}$, C=$1/2$ at
+$\{1,3,8\}$, C=3 at $\{3,8\}$ and A=2 at $\{8\}$.
+For every $a=1,2,3,4$, put P masses $2,3/2,2$ at
+$\{a,5,6,7,8\},\{a,6,7,8\},\{a,7,8\}$ respectively.
+Put C masses $4,2,6,6$ at
+$\{5,6,7,8\},\{5,7,8\},\{6,7,8\},\{7,8\}$,
+and A=18 at $\{4,8\}$. Zero sets mean the actual words w(Z);
+coincident contributions add and every other coefficient vanishes. Then
+
+$$
+Q(y)=(1/2,0,3,-18,6,6,6,-2;135/2),\qquad W_y=93/2.
+\tag{218.31}
+$$
+
+Its cumulative tail sums are $-18,-12,-6,0,-2$.
+Both complete supports can be checked without treating separate optima as
+a joint score. Before adding the common last zero, this actual measure is
+a three-coordinate core plus twice a seven-coordinate core.
+The first core has P=2 at $\{1,3\},\{2,3\}$, C=$1/2$ at
+$\{1,3\}$, C=3 at $\{3\}$ and T=2.
+Its W is $13/2$, both largest supports $15/2$, and both costs one.
+
+The second core has, for each guard $a\le4$, P masses $1,3/4,1$
+at $\{a,5,6,7\},\{a,6,7\},\{a,7\}$; C5 masses 2,1 at
+$\{5,6,7\},\{5,7\}$; C6=3 at $\{6,7\}$; C7=3 at $\{7\}$;
+and A4=9 at $\{4\}$. Before A4, guard/guard and guard/pivot supports
+are 11: zero reserves dominate each correct reward three, with guard/6
+receiving reserves $21/4$ and 3 covering the moved C5 pieces.
+Pair 56 has full maxima $(4,1,3,4)$ and stopped maxima $(4,3,4)$;
+pairs 57 and 67 have support 11. Inactive queries coarsen these types.
+A4 raises W and every support by at most nine and raises constant zero
+and the attaining pair by nine. Hence the second core has O cost zero
+and N cost one.
+
+Support subadditivity on the actual sum gives O cost at most one.
+Table $(1,3;1,3,0)$ attains $W+1$, proving O cost one.
+For a complete direct upper check, the following table gives the
+support for every possible schedule on the literal eight-coordinate score.
+Each entry sums the maximum over all nine labels in every cell, using
+independent A,C,P coefficients. The listed pair types are disjoint and
+exhaust all 28 pairs.
+
+| Schedule | Full N support | Stopped O support |
+| --- | --- | --- |
+| Empty | 46 | 46 |
+| Singleton 1 | $93/2$ | $93/2$ |
+| Every other singleton | 46 | 46 |
+| Pair $(1,3)$ | $95/2$ | $95/2$ |
+| Pair $(2,3)$ | 47 | 47 |
+| Pair $(1,j)$, $j\in\{2,4,5,6,7,8\}$ | $93/2$ | $93/2$ |
+| Pair $(5,6)$ | 48 | 46 |
+| Every remaining pair | 46 | 46 |
+
+These values follow by adding the printed coefficients for each cell
+and comparing all labels; for instance pair 56 has full cell maxima
+$(8,2,6,32)$ in 00,01,10,11 order. Its stopped zero cell has maximum 8,
+so its stopped support is $8+6+32=46$. The other rows already include
+all larger, earlier and unqueried labels. Query 8 is constant on the
+score support and its label has no numerical reward, so its schedules
+also have the displayed values. This finite exhaustive calculation proves
+the exact bounds for this literal example. Consequently
+
+$$
+\Delta_N(y)=3/2,\qquad\Delta_O(y)=1.
+$$
+
+The projected quotient is $Q(\mathcal E_3y)=(1/2,0,3;99/2)$.
+An explicit embedded replacement has C=$1/2$, P=15 at $\{1,3\}$,
+P=$31/2$ at $\{2,3\}$, C=3 at $\{3\}$ and T=$31/2$,
+all other bits one. Its K is $99/2$, W is $93/2$ and both costs zero.
+For the input $A_>=20$, $C_>=18$, so (218.28) gives exact residual zero.
+It is one nonzero changed-Q certificate with $\theta=0$.
+At the auxiliary $u_3$, $F_{Q(y)}=5/4$, excluding V=0 with
+$\theta\le1$. This does not make $u_3$ an $H_N$ witness:
+the nonzero zero-cost replacement has the same positive reading there,
+incompatible with any full feasible $\lambda$ by (218.5).
+Neither this example nor its input score gap is a negative separator.
+
+### 218.7 Original source, whole tables and exact closed tails
+
+The arithmetic and acquisition suppliers remain
+[Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows),
+[Acquisition Resources 73.1 and 90.1–90.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md),
+[Continuation 109.1 and 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md)
+and [Continuation IX 207.20](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+Here are the explicit object and resource correspondences used by this
+section. Their reuse supplies no additional mathematical increment.
+
+The actual labeled source is
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,\
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+F_0&=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+N(r,g)&=1+F_rg,\quad q_i(x)=\mathbf1_{p_i\mid N(x)},\quad
+n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+\tag{218.32}
+$$
+
+where $p_1<p_2<\cdots$ are the primes. Source observations are static
+divisibility replies. No source prior, label, N value, first-zero index
+or extra observation is provided to an acquisition. Every actual integer
+has finite prime support; a positive finite word does not posit an
+infinite all-positive source.
+
+For any finite set of addresses, the entry-rank supplier in 35.2 permits
+a prime r larger than their Fibonacci entry ranks, so $F_r$ is invertible
+modulo every indicated prime. Impose $g=-F_r^{-1}$ modulo each
+positive-answer prime and $g=0$ modulo each negative-answer prime.
+The Chinese remainder theorem gives one residue modulo their product.
+Choose r large enough that the original g window contains a full interval
+of that modulus; its least representative above the lower endpoint
+is still below the upper endpoint. This supplies every finite pattern
+on arbitrary finite addresses, including all multiple-zero words and
+a prescribed zero after a positive prefix. The witnesses are fixed
+before seeds. This is the existing window construction, with no
+random choice of source or new entry-rank claim.
+
+The full original Borel tape carrier and consumer are
+
+$$
+\Theta=\bigsqcup_{j\ge1}B_j\ \sqcup\ \bigsqcup_{j\ge1}P_j,
+\qquad B_j\cong(0,1),\quad P_j\cong(0,1).
+$$
+
+The consumer returns unknown on every $B_j$ and proposes j on $P_j$.
+Its original nonatomic target remains the family specified in
+[Source-Correlated Laws 67.5](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#67-original-target-proportional-containment-and-unavoidable-nonatomic-ranges):
+with its fixed $h_0\in(0,1)$, $\pi_j$ uniform on $P_j$,
+
+$$
+t(x)=\sum_{i\ge1}3^{-i}q_i(x),\quad
+Z_t=\int_0^1e^{tu}\,du,\quad
+\nu_x(du)=\frac{e^{t(x)u}}{Z_{t(x)}}\,du\text{ on }B_{n(x)},\quad
+\mu_x=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}.
+$$
+
+Here $\Omega(x)$ is the number of distinct prime divisors of $N(x)$,
+as in that owning target specification. The integral normalization also
+handles $t=0$ without division by zero. Component labels on a tape
+supply no source observation.
+
+Separately selected marks $\theta_j=(B_1,1/(j+2))$, $j\ge0$,
+give, for every sequence $1\ge a_1\ge a_2\ge\cdots>0$ tending to zero,
+the selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                 +a_{n(x)}\delta_{\theta_{n(x)}}.
+\tag{218.33}
+$$
+
+The comparison concerns these marked laws. They do not replace $\mu_x$,
+alter the consumer or claim an atomic approximation of its nonatomic
+target. Numerical labels in a finite table mean actual original marks.
+All Borel output events, including events outside the selected marks,
+remain allowed for original competitors.
+
+A normalized finite table distribution is implemented by one
+source-independent $U\sim\mathrm{Unif}[0,1)$. Its fixed interval partition
+selects the entire schedule and every possible output before any reply.
+N obtains the full preselected schedule. O uses an increasing preselected
+schedule and stops at its first queried zero or exhaustion.
+The N completion of an O table uses the same U, table and schedule,
+acquires later scheduled replies and ignores them when O would stop.
+Empty, singleton and pair tables make at most two actual requests and
+hand off finitely on every source and seed. Repeated requests and ignored
+replies remain charged by Definition 90.1. This is zero advice and one
+inherited seed, with no resetting, conditioning or discarded failures.
+Different reconstructed distributions may use different partitions of
+the same U, or their finite common refinement; their outputs need not agree
+seed by seed. Score weights, quadratic block masses and guard measures
+are never executed as source sampling laws.
+
+For a concrete full configuration, take $H=7$ or 8 and use the four
+quarter intervals of this one U to choose respectively
+
+$$
+(1,2;1,2,0),\quad(1,2;1,2,3),\quad
+(1,3;1,3,0),\quad(2,3;2,3,0).
+\tag{218.34}
+$$
+
+Each is an O table of mass $1/4$. Their N completions have the four
+outputs $(a,a,c,d)$ for an O table $(i,j;a,c,d)$. Thus this is one
+complete $\lambda$ of mass one in either representation, with identical
+laws on every word. It is feasible at
+
+$$
+b^\star=v_3=(1,1,1,1/4,\ldots,1/4;1/4)\in H_H.
+$$
+
+The hull equalities are
+$\sum_{j\ge3}b^\star_j=(H+1)/4=(H+1)e$ and
+$b^\star_1+\sum_{j\ge3}b^\star_j-(H+1)e=1$.
+On every first-zero-1 or first-zero-2 word the correct reading is $3/4$,
+the base is zero or $1/4$, and the pair is $3/4$ or one.
+The negative base demand $-1/4$ is retained.
+Class 3 has base, correct, pair readings $(1/4,3/4,1)$;
+each later class has $(3/4,0,3/4)$; and the positive base is $3/4$.
+Consequently every base, correct, independent pair and positive row
+holds on the entire Boolean cube, with every multiple-zero suffix.
+This establishes $b^\star\in H_N$ using the same full $\lambda$.
+
+Extend the actual amplitudes by
+$a_1=a_2=a_3=1$, $a_4=\cdots=a_H=1/4$ and
+$a_{H+r}=2^{-r}/4$ for $r\ge1$.
+Their active length at the closed cap $1/4$ is 3.
+For every actual first zero beyond 3 the law in (218.34) is its positive
+low-word law, with zero mass at that actual new label and base mass $3/4$.
+For any probability p supported on labels through a finite prefix and
+any actual new label n, the reused exact identity is
+
+$$
+\operatorname{TV}\left(\sum_jp(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p(0),a_n\}.
+\tag{218.35}
+$$
+
+Indeed the absolute masses at zero, the old nonzero marks and the new
+mark sum to $|a_n-(1-p(0))|+(1-p(0))+a_n$.
+Halving gives this identity; it concerns all Borel events.
+Every actual tail error of (218.34) is therefore exactly $1/4$,
+including $a_4=\cdots=a_H=1/4$.
+Early errors also equal $1/4$, so N and O attain the uniform closed cap.
+
+These same laws give an actual common-budget diagnostic for the
+printed scores. At $b^\star$, the A quotient in (218.9) reads $1/6$,
+the D quotient in (218.25) reads $-41/16$, and the E input in
+(218.31) reads $-115/8$. For E, its single changed-Q V has
+$\Delta_N(V)=0$, $\theta=0$, and residual support zero;
+at this same point $F_{Q(V)}=-75/8$ and
+$F_{Q(y)-Q(V)}=-5$. Thus its one-budget inequality is
+$-115/8=-75/8-5\le0\le M=1$.
+No separately optimized row, new seed or second residual allowance is used.
+These are explicit diagnostic pairings, not negative separators.
+
+For a possibly signed affine allocation of mass M, the existing radial
+filling chooses $0\le\tau\le1/\max(1,M)$ and executes probabilities
+$\tau\lambda_D$ together with anchor mass $1-\tau M$.
+After B's stopped conversion use $\tau\mu_D$ and the same anchor filling.
+The event vector is $r+\tau G_{\mathcal C}\lambda$, so feasibility gives
+the full target rows at
+$a'=\alpha+\tau(b-\alpha)$ and $\varepsilon'=\tau e$.
+This is one budget, not execution of a signed vector.
+If b denotes a whole positive nonincreasing vanishing sequence and
+$\tau>0$, its first two amplitudes become
+$1-\tau(1-b_i)$ and all later amplitudes become $\tau b_i$;
+the entire actual tail is scaled too.
+At $\tau=0$, zero later amplitudes, or zero auxiliary cap,
+no positive original-tail attainment is asserted.
+
+Theorem 109.1 is a criterion for normalized probability-vector kernels;
+it does not convert an arbitrary score or signed affine vector into a law.
+The exact original class-feasibility bridge remains Theorem 110.2.
+Its necessity allows arbitrary addresses and full-carrier outputs:
+a measurable projection fixes the low marks and sends other tapes to zero;
+countability of the actual source gives one conull seed event of finite
+handoff and hard count; the maximum address of the entire preselected
+schedule has a vanishing probability tail. Actual finite-word witnesses
+are fixed before seeds, and sourcewise finite handoff gives a transition
+cutoff for each finite family. Same-class finite simulations approximate
+all low-word laws, and compactness of one finite catalog simplex yields
+one common allocation at the exact closed cap. It imposes no uniform
+runtime or address bound. Its sufficiency executes the whole finite
+table law and applies (218.35) on every actual positive tail.
+The affine-family extraction in §218.4 additionally retains its fixed
+projected low-word law; unrestricted necessity asserts feasibility,
+not preservation of every arbitrary competitor's law.
+The alternative stopped cap law in 112.2 remains available.
+
+For a score horizon H different from the actual active length
+$L_a=\max(\{n:a_n>\varepsilon\}\cup\{0\})$, use the existing
+207.20 correspondence. If $H<L_a$, fix the extra finite replies to zero
+and project labels above H to zero in the transported representation.
+The same low-word base, correct, pair and positive rows survive.
+This is a finite algebraic comparison restriction. It is not an uncounted
+source observation or a full cap attainer on omitted active tails.
+One can instead retain the full active horizon.
+If $H>L_a$, extend the kernel by ignoring new coordinates and retaining
+its labels through $L_a$. All old first-zero rows are unchanged for every
+later pattern; a new first zero has $a_n\le\varepsilon$ and the old
+positive-word law. Its zero mass is at least $1-\varepsilon$, and
+(218.35) proves the exact closed-tail bound. This includes $L_a=0$
+and $a_n=\varepsilon$. At $H=L_a$ no adjustment is needed.
+Auxiliary hull endpoints with $e=0$ are not relabeled original positive
+closed-cap realizations.
+
+Finally, for any full score Y of length H, demand pairing with one
+normalized configuration of cost bound c gives
+
+$$
+\sum_{j\le H}\beta_j(Y)(a_j-\alpha_j)-K_Y\varepsilon\le c.
+\tag{218.36}
+$$
+
+The target event reward is $W_Y+F_{Q(Y)}(a,\varepsilon)$ and the
+complete support is $W_Y+c$. This proves (218.10) and (218.27)
+at either original class's cap by the owning horizon maps.
+For every E cone input, its same-budget certificate bounds
+$F_{Q(y)}(b,e)$ on $H_N$ by (218.5), rather than assuming
+$(a,\varepsilon)\in H_H$. At $\varepsilon\ge1$,
+$K_Y\ge\sum|\beta_j|$ and $a_j,\alpha_j\in[0,1]$ make
+(218.36) automatic with $c\ge0$.
+These score inequalities are necessary conditions only; no sufficient
+original cap classification follows.
+
+The catalog regression remains literal: at 0100 the N table
+$(3,4;1,0,0,0)$ gives base, correct and pair readings $(0,1,1)$.
+Changing its earlier unqueried label 1 to zero gives $(1,0,1)$.
+The constructions in this section use dominance on their own supports,
+and the erasure proof compares a subset of tables to the original maximum.
+Neither operation prunes labels from an arbitrary input catalog.
+The original source $(r,g)=(19,436)$ gives $N=1822917$ and replies
+0100, so the diagnostic is not an unrealizable finite word.
+
+### 218.8 Owning relations, suppliers and bounded literature overlap
+
+The new scopes are the unrestricted minimum in 218.2, the separated
+block operation with its fixed-remainder test in 218.3, the full real
+affine repair relation and its quantitative optimum in 218.4–218.5,
+the separate single-positive/all-positive guard allocation in 218.6,
+and the actual-score erasure with signed cross-dimensional lift in
+Theorem 218.8 and Corollary 218.9. Their examples, necessary inequalities, degenerations and
+direct certificate applications are consequences of those scopes.
+
+A's constructed measure also admits a common nonhomogeneous Markov
+description: return the early path to one before the second guard,
+split into constant late-zero and late-one paths equally after s,
+and use absorbing transitions afterwards. Its N/O equality alone is
+therefore already within 198.2. The additional relation is the exact
+minimum over every full score of its quotient, with arbitrary input
+suffix placement, and the automatic affordability at zero absolute stock.
+Correct-only and one-debt top-three degenerations reuse 198.4 and the
+owning sparse cores; they add no separate content.
+
+B's complete catalog conversion is 194.1, and its weak-duality pairing,
+normalization and elementary simultaneous inequality elimination are
+suppliers. A helpful block decomposition for every feasible configuration
+has not been shown. C uses the normalized criterion 109.1; its
+same-allocation radial application and elementary elimination are not
+separate new statements. Its quantitative whole-line optimum changes the
+scope of the fixed-law obstruction in 112: every real t and signed
+constant translation is optimized. The different O cap attainer survives,
+and the displayed plateau violates the hull inequality, so the example
+provides no $H_N$ hard-region advance.
+
+D allows different guard distributions for the single-positive columns
+and the all-positive reserve, while sharing their row totals and stock.
+This strictly exceeds the common-proportion constructor 217.5 at the
+printed four-positive quotient. To see the precise constructor distinction,
+allow its prefix columns $p_j\ge\gamma_j$, reserves
+$c_{\rm old},d_{\rm old}\ge0$, terminal $T\ge0$ and common guard shares.
+Its total guard stock is
+$S_{\rm old}=\sum p_j+c_{\rm old}+d_{\rm old}=15/4-T\ge G$.
+At a positive coordinate of coefficient one, its mixed cell forces
+$\alpha_3\le1-1/(p_j+c_{\rm old})$.
+The other columns total at least $G-1$, hence
+$p_j+c_{\rm old}\le1+S_{\rm old}-G$ and its third-guard
+conversion capacity is bounded by
+
+$$
+\alpha_3S_{\rm old}
+ \le\frac{S_{\rm old}(S_{\rm old}-G)}
+             {1+S_{\rm old}-G}
+ \le\frac54<\frac{13}{8}.
+$$
+
+The last function is increasing for $S_{\rm old}\ge G=13/4$,
+and $S_{\rm old}\le15/4$. In the new construction
+$\chi_3=1/2$ but $t_3=0$, so no common-proportion ceiling applies.
+The old uniform three-guard capacity $S/3=5/4$ likewise cannot cover
+that debt. Three-positive 217 scopes do not reclassify this four-positive
+example. This comparison excludes these named constructors only;
+it does not exclude every convex combination or signed residual assembly
+of old results.
+
+E reuses the hull/support supplier 198.5, generic weak duality in
+199.3–199.4, and the entire three-coordinate minimum 214.2.
+That minimum, its water filling and its direct application carry zero
+new-content credit here. The new relation is projection of the actual
+full score, exact signed residual accounting and a lift that preserves
+the single cost budget, including the nonzero anchor reading $F(o)$.
+It covers every input in its cumulative-tail cone without fixing its
+suffix, terminal, cancellations, number of positives or reserve ratios.
+Its example's component mechanisms remain diagnostic suppliers.
+Terminal erasure under this cumulative test does not invalidate the
+zero-net middle-deletion counterexample in 216.4.
+
+The shared zero relation among the 216 scopes remains counted once.
+Within 217, C's equal-profile relation is F at $k=3$, B's equal-profile
+zero endpoint is F's plateau endpoint, and D's equal-triple core overlaps A;
+none is recounted here. The sole-zero containment diagnostic remains
+within Acquisition Resources 91 and 94 and supplies no additional theorem.
+Signed stock, full support/lower detectors, CRT witnesses,
+same-seed completion, closed-cap transport and radial normalization
+are all reused. No exhaustive exclusion of old convex or polar
+assemblies, literature-absence claim or worldwide priority is asserted.
+
+The following primary-source mapping is bounded to the stated versions
+and passages. It records the conditions relevant to transfer, not a
+claim of a fresh exhaustive bibliographic search.
+
+| Source and version | Applicable relation and transfer boundary |
+| --- | --- |
+| [Blackwell, *Comparison of Experiments*, §§2–5, pp. 93–102](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf) | Full words correspond to states, transcript cells to observations and labels to actions; attainable loss vectors concern one common procedure. The general framework does not construct increasing first-zero stopping with two actual requests. No unrestricted garbling converse is inferred from a dichotomy result. |
+| [Kaniewski–Lee–de Wolf, 1411.7280v1, Definition 8 and Theorem 9](https://arxiv.org/pdf/1411.7280v1) | Scalar nonnegative computation in expectation equals nonnegative literal degree under worst-path query cost. Scalar leaf values may exceed one; this does not normalize a probability-vector schedule or realize the stopped catalog. |
+| [Embrechts–Hofert–Wang, 1606.08212v1, Definition 2.2 and Theorem 2.2](https://arxiv.org/pdf/1606.08212v1) | Bernoulli second-moment compatibility is the convex hull of Boolean outer products under one joint law. Separate pair marginals or a PSD relaxation are insufficient. Our score measures are explicit joint measures, not automatically affordable acquisition laws. |
+| [Zaev, 1404.4962v1, Problem 1.3, Theorem 2.1 and Remark 2.4](https://arxiv.org/pdf/1404.4962v1) | Polish factors, prescribed marginals, a linear subspace $W\subseteq C_L(\mu)$ and cost in $C_L(\mu)$ are retained. Constrained-transport duality allows an empty feasible set; it does not establish our joint allocation's nonemptiness or resource budget. |
+| [Bertschinger–Rauh, 1401.3146v1, Example 18](https://arxiv.org/pdf/1401.3146v1) | Zonotope containment has a unique nonnegative representing matrix with row sums 2,2,2,0, which is not stochastic. This is a normalization boundary, without an original-source separator embedding. |
+| [Angel–Spinka, 1903.00632v2, Theorems 1–2](https://arxiv.org/pdf/1903.00632v2) | Pairwise optimal coupling does not imply simultaneous pairwise optimality. The joint mismatch bound $2\operatorname{TV}/(1+\operatorname{TV})$ assumes domination by one common sigma-finite measure. Neither theorem supplies a hard-two resource-preserving coupling or a source distribution. |
+| [Chen, 2502.06530v1](https://arxiv.org/pdf/2502.06530v1) and [2502.06530v2](https://arxiv.org/pdf/2502.06530v2), Theorem 3, Definition 7 and Corollary 3 | These are distinct versions. The binary-action comparison extends to finite actions under binary-decomposability of the value function. No such decomposition preserving the complete simultaneous schedule budget is established here. |
+| [Yang–Yang, 2603.11448v1, §2 and Theorem 1](https://arxiv.org/pdf/2603.11448v1) | The versioned PDF assumes compact Polish X, a convex cone of bounded upper-semicontinuous tests containing constants, a sup-norm-closed continuous part, decreasing continuous approximation from above and bounded decreasing-limit closure. Under this setup min-closure, affine values, order-preserving couplings and the trapezoid graph property are equivalent. No corresponding cone, min-closure or hard-two acquisition correspondence is proved here. |
+| [Kaibel, 1001.2161v1, Theorems 1(ii), 7, 8 and 10](https://arxiv.org/pdf/1001.2161v1) | Finite-dimensional Farkas alternatives, polyhedral/cone representations and recession systems supply the existing 199 alternative. They are generic suppliers and grant no new score construction or new resource theorem. |
+
+The Yang–Yang v1 citation is anchored to its versioned PDF, with SHA256
+1748332276759372cdb7f0efc61842c799484facf67a4388de4d03171e7df624.
+A differently dated HTML rendering is not identified with the entire v1
+manuscript. The relevant primitives and theorem have the stated scope;
+neither they nor the distinct Chen versions close the missing acquisition
+correspondence. The ordinary proofs here do not depend on an imported
+universal hard-two theorem from any listed source.
+
+### 218.9 Finite verification and evidence limits
+
+The exact rational arithmetic program
+/Users/auricstudio/trureturing-experiments/author218/check.py
+and result data exact_results.json retain useful score reconstruction,
+catalog maximization, coefficient and source-witness checks.
+They evaluate the literal independent A,C,P,T tables over every label in
+every empty, singleton and pair cell. The A checks include zero debts,
+gaps, ties and padded positive profiles; B includes overlapping weighted
+odd cycles and cyclic fixed-remainder failures; C includes both endpoint
+kernels, all-word multilinear coefficients and signed t cases with
+exact primal constructions or violated budget cuts. D includes unequal
+and nonadjacent positives, zero rows, exhausted conversions and the full
+closed relocation interval at rational parameters. E includes all printed
+schedule supports, all prefix projections of its example, changed-Q
+residuals and general lifts with signed low residuals, nonzero anchor
+readings and negative low K differences.
+
+The probability checks use one complete quarter-table allocation over
+all seven- and eight-bit words, retain base, correct, independent pair
+and positive rows, compare its N completion and verify exact closed
+tails. The arithmetic checks construct all 256 eight-bit original
+patterns with ninth reply zero at Fibonacci index 101,
+$F_{101}=573147844013817084101$ and modulus 223092870;
+their g representatives lie in the original window.
+The source 0100 regression and whole-table resource correspondence are
+also retained explicitly above.
+
+These finite exact checks can detect a transcription error or refute
+a printed literal example. They do not prove an all-real-parameter
+statement, infer universal feasibility from a sample, certify every
+external version or supply independent acceptance of this source.
+The parameter assertions rest on the ordinary proofs and the named
+owning suppliers. No Lean/kernel verification, compilation, admission,
+ingestion, coverage, freezing, CI or publication is claimed.
+
+### 218.10 The unchanged universal obligation
+
+For every length $L\ge3$ and every actual full $y\ge0$ with
+$\Delta_O(y)\le1$, the remaining positive obligation is to find
+one unrestricted full $V\ge0$ and one $\theta\in[0,1]$ satisfying
+(218.4). No anchor, unary, support, terminal, quotient or exact-Q retention
+constraint may be imposed on that universal search. A–E prove it only
+where their own stated premises supply that certificate or conversion.
+The all-input cumulative-nonpositive-tail cone is one such region;
+a general mixed-sign cumulative tail, general correlated block,
+or failure of the displayed affine or guard constructor remains uncovered
+by these relations.
+
+A genuine negative alternative still requires one actual
+$b\in H_N$, the same full feasible $\lambda\ge0$ with
+$G_N\lambda\ge h(b)$ and $M=\sum\lambda\ge1$, and an actual
+unit-O input y with strict $F_{Q(y)}(b)>M$.
+That single realization must retain every independent row and the
+original source, full carrier, common seed, arbitrary-address necessity,
+hard-two count, actual finite handoff, all multiple-zero words,
+positive vanishing amplitudes, actual tails and exact closed-cap bridge.
+No such witness is supplied here.
+
+An infeasible fixed-remainder substitution, an unaffordable full affine
+line, a constructor interval failure, a hull point outside $H_N$,
+separately attainable marginals, an input N/O support gap or a separately
+charged residual is not this separator. The existing alternative O laws
+remain valid. The original all-sequence positive-closed-cap implication
+$\mathcal F_N(a,\varepsilon)\ne\varnothing
+\Rightarrow\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing$
+is unresolved, and this finite ordinary-theory delivery does not satisfy
+the whole goal.
+
+## 追加锚（本行以下为增补区）
