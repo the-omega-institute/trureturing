@@ -35,8 +35,8 @@ def arena : Arena where
   Law R := ∀ (n d : ℕ) (hn : 3 ≤ n) (ho : Odd n) (_hd : 1 ≤ d)
     (F : Type u) [Field F] [Finite F] [CharP F 2]
     (ζ : F) (hζ : IsPrimitiveRoot ζ n),
-    letI : NeZero n := ⟨by omega⟩
-    letI : Algebra (ZMod 2) F := ZMod.algebra F 2
+    let : NeZero n := ⟨by omega⟩
+    let : Algebra (ZMod 2) F := ZMod.algebra F 2
     let G := Fin d → ZMod n
     let p : Equiv.Perm G := Equiv.piCongrRight
       (fun _ => (ZMod.unitOfCoprime 2 (Nat.coprime_two_left.mpr ho)).mulLeft)
