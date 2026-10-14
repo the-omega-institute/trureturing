@@ -7,7 +7,6 @@
    digest: Qutrit complementary map entropies have a sharp lower frontier. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import D5.S3.Entropy.Forgetting.CapacityMonotone
 
 set_option autoImplicit false
