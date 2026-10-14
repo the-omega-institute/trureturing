@@ -1,0 +1,44 @@
+**Theorem 3.3 (augmented row, two rows and all future rows).** On realizable
+records there are effective recoveries
+
+$$
+S_P(u)
+\ \longleftrightarrow\
+\bigl(R_P(u),R_P(\rho u)\bigr)
+\ \longleftrightarrow\
+\bigl(n\longmapsto R_P(\rho^n u)\bigr),
+\tag{NAR.3.3}
+$$
+
+where the last expression is interpreted as Definition 3.2. The record
+recoveries are inverses on their actual images; recovery of a procedure
+is inverse up to agreement on every finite-epoch response.
+
+**Proof.** From $S_P(u)$ project $R_P(u)$ and perform one finite update to
+obtain $R_P(\rho u)$. Conversely, suppose the ordered pair of rows is
+realized by one source. Compute $L_C$ from its first exterior. If it is
+empty, return $(R,*)$. Otherwise take the least left-birth address $\ell$.
+In the second complete partition inspect its equality links with the old
+representatives $p_b$, whose addresses remain reached. Return the unique
+linked class $b$ if there is one, and $\bot$ if there is none.
+Theorem 2.1 proves uniqueness, truth and completeness of this test.
+There is no query to an unknown value in this reverse map: its inputs
+already contain the partition. For $k=0$ the empty test returns $\bot$.
+
+From an augmented record supply the procedure that, on input $n$, applies
+$\operatorname{Step}_P$ exactly $n$ times and projects the resulting row.
+Every intermediate record is realized by $\rho^j u$, by (NAR.3.1).
+Each finite operation terminates, and induction proves the requested
+response. From any correct future-row procedure, request only epochs
+zero and one and use the preceding reverse map. These requests evaluate
+the given representation; they are not native source reads.
+Starting with either realized finite record, the compositions return that
+same record. Starting with a response procedure, the regenerated procedure
+returns the same row for each $n$; no claim of equal code follows.
+
+This argument establishes the infinite universal statement by finite
+induction and supplies one finite response description. It does not
+replace that description by an already executed infinite archive.
+Nor does it recover the source, a predecessor record, arbitrary queries,
+or events of an execution. $\square$
+

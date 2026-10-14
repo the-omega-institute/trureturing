@@ -1,0 +1,20 @@
+**Theorem 2.2 (exact predecessor-row recovery).** For every finite native
+source $v$ and every fixed finite prefix-free cut $P$, there is a finite
+partial record decoder $\operatorname{Back}_P$ satisfying
+
+$$
+\operatorname{Back}_P\bigl(R_P(\rho v),H_P(v)\bigr)=R_P(v).
+\tag{NBP.2.2}
+$$
+
+For any two actual sources $v,w$ with the same current row,
+
+$$
+R_P(v)=R_P(w)\quad\Longleftrightarrow\quad H_P(v)=H_P(w)
+\quad\text{if }R_P(\rho v)=R_P(\rho w).
+\tag{NBP.2.3}
+$$
+
+Its domain here is actual transition data. Agreement with an arbitrary
+alleged row and set is not a certificate of physical provenance.
+

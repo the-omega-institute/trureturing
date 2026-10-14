@@ -1,0 +1,55 @@
+**Theorem 16.3 (whole-current equivalence and irrecoverable common origin).**
+Two histories in Assumption 16.1 have identical replies at every finite
+current address exactly when
+
+$$
+Y(a,\ell)=Y(b,\ell')
+\quad\Longleftrightarrow\quad
+ a_j+\ell=b_j+\ell'\quad(j\in I).
+\tag{NAR.16.8}
+$$
+
+Unequal-lag whole-current collisions are consequently exactly common
+nonzero translations $a-b=(\ell'-\ell)\mathbf1$ of all initial ages.
+Even arbitrary input-dependent finite adaptive all-address querying
+requires at least $q$ attained retained labels in (NAR.16.3).
+
+**Proof.** Complete four-valued Read separates finite ordered trees.
+At the root it separates $\alpha$, $\beta$ and branch. For two branches
+with unequal children, descend to an unequal child and continue by
+structural induction. The distinguishing child word, prefixed by $L$
+or $R$, is a finite original-root word. Equal trees have equal replies,
+including all absent-address replies. Hence all-address equality is
+literal tree equality, rather than equality of a coarser summary.
+
+At each reached original $w_j$, equality of the whole current trees
+forces equality of $T_{jq+a_j+\ell}$ and $T_{jq+b_j+\ell'}$.
+Applying $c(T_n)=n$ gives the right side of (NAR.16.8). Conversely those
+exponent equalities give the same filling in every slot of the same
+ordered skeleton, proving equality of the whole current trees.
+
+For $t=0,\ldots,H$, let $a^{(t)}=t\mathbf1$ and choose the positive
+lag $\ell_t=q-t$. Every one of these $q$ histories has the same WHOLE
+current tree
+
+$$
+Y(a^{(t)},\ell_t)=\mathcal B_D[(T_{jq+q})_{j\in I}].
+\tag{NAR.16.9}
+$$
+
+Fix any one $S\in\mathcal M$. Its full later row is also identical for
+all these histories. If two initial profiles received one code, the two
+decoders would have exactly the same entry. Equal entry and equal past
+reply history determine equal next addresses or equal halt decisions.
+The identical stationary current tree gives equal replies at the chosen
+addresses. Induction therefore gives equal adaptive histories and
+outputs, whenever they halt. Finite correctness would require different
+outputs $q-t$, a contradiction. The $q$ codes must be distinct.
+
+More generally, any nonzero common translation can be realized at
+positive lags: if $a-b=d\mathbf1$, take
+$\ell=\max(1,1-d)$ and $\ell'=\ell+d$. The same induction applies.
+These compare different histories at different lags. At a fixed $\ell$,
+(NAR.16.8) instead forces $a=b$; no fixed-epoch noninjectivity of
+$\rho$ is asserted. $\square$
+

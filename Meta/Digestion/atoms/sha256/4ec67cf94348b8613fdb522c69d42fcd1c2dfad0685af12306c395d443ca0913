@@ -1,0 +1,18 @@
+**Theorem 9.4 (attained joint conditional frontier).** Under Assumption 9.1,
+for every integer $r\ge1$ and $q\ge0$, if $L_C\ne\varnothing$ then
+
+$$
+\mathsf{Feas}_R(r,q)
+\quad\Longleftrightarrow\quad
+r(q+1)\ge k+1,
+\qquad
+\mathsf Q_R(r)=\left\lceil\frac{k+1}{r}\right\rceil-1.
+\tag{NAR.9.4}
+$$
+
+If $L_C=\varnothing$, a constant supplement and zero fresh invocations
+suffice, so $\mathsf{Feas}_R(r,q)$ holds for all these $r,q$ and
+$\mathsf Q_R(r)=0$. The nonempty-left-birth formula concerns the full
+original fiber and the first updated version, with arbitrary
+full-value-dependent supplements and arbitrary adaptive native queries.
+
