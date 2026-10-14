@@ -130,7 +130,31 @@ $$\forall m \in \mathrm{Nat},\; \mathrm{finCycle}\left(\mathrm{zeroFin}\left(m +
 
 The zero finCycle is the identity position permutation. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
 
-**Theorem 1.11 (Full reversal involution).**
+**Theorem 1.11 (Full cyclic indices add under multiplication).**
+
+$$\forall m \in \mathrm{Nat},\; \forall r \in \mathrm{Fin}\left(m + 1\right),\; \forall s \in \mathrm{Fin}\left(m + 1\right),\; \mathrm{finCycle}\left(r\right) \cdot \mathrm{finCycle}\left(s\right) = \mathrm{finCycle}\left(r + s\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.cycle_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplying the actual full cyclic position permutations at indices r and s gives the permutation at their sum. The literal J2 word endpoint proof consumes this identity. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.12 (Full reversal negates the cyclic index).**
+
+$$\forall m \in \mathrm{Nat},\; \forall r \in \mathrm{Fin}\left(m + 1\right),\; \mathrm{a}\left(m\right) \cdot \mathrm{finCycle}\left(r\right) = \mathrm{finCycle}\left(\mathrm{neg}\left(r\right)\right) \cdot \mathrm{a}\left(m\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_cycle` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Moving an actual full cyclic position permutation past the full reversal negates its finite index. The literal J2 word endpoint proof consumes this identity. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.13 (Full reversal involution).**
 
 $$\forall m \in \mathrm{Nat},\; \mathrm{a}\left(m\right) \cdot \mathrm{a}\left(m\right) = 1$$
 
@@ -142,7 +166,7 @@ $$\forall m \in \mathrm{Nat},\; \mathrm{a}\left(m\right) \cdot \mathrm{a}\left(m
 
 Two full native reversals have product identity. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
 
-**Theorem 1.12 (The native b reflection coordinate).**
+**Theorem 1.14 (The native b reflection coordinate).**
 
 $$\forall m \in \mathrm{Nat},\; \mathrm{b}\left(m\right) = \mathrm{finCycle}\left(\mathrm{negOneFin}\left(m + 1\right)\right) \cdot \mathrm{a}\left(m\right)$$
 
@@ -154,7 +178,7 @@ $$\forall m \in \mathrm{Nat},\; \mathrm{b}\left(m\right) = \mathrm{finCycle}\lef
 
 The b reversal is full cyclic index minus one followed by a. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
 
-**Theorem 1.13 (The last position is fixed by b).**
+**Theorem 1.15 (The last position is fixed by b).**
 
 $$\forall m \in \mathrm{Nat},\; \mathrm{apply}\left(\mathrm{b}\left(m\right), \mathrm{last}\left(m\right)\right) = \mathrm{last}\left(m\right)$$
 
@@ -166,7 +190,7 @@ $$\forall m \in \mathrm{Nat},\; \mathrm{apply}\left(\mathrm{b}\left(m\right), \m
 
 The actual b reversal fixes the final position. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
 
-**Theorem 1.14 (Literal native complementary length).**
+**Theorem 1.16 (Literal native complementary length).**
 
 $$\forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \mathrm{length}\left(\mathrm{uWord}\left(m, k\right)\right) = 2 \cdot k + 1$$
 
@@ -178,7 +202,7 @@ $$\forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \mathrm{length}\le
 
 The generator list U_k has exactly 2k+1 entries. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
 
-**Theorem 1.15 (Literal native complementary endpoint).**
+**Theorem 1.17 (Literal native complementary endpoint).**
 
 $$\forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \mathrm{prod}\left(\mathrm{uWord}\left(m, k\right)\right) = \mathrm{pow}\left(\mathrm{finRotate}\left(m + 1\right), k\right) \cdot \mathrm{a}\left(m\right)$$
 
@@ -190,7 +214,7 @@ $$\forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \mathrm{prod}\left
 
 The product of U_k is the kth full rotation followed by a. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
 
-**Theorem 1.16 (Short reversal involution).**
+**Theorem 1.18 (Short reversal involution).**
 
 $$\forall m \in \mathrm{Nat},\; \mathrm{c}\left(m\right) \cdot \mathrm{c}\left(m\right) = 1$$
 
@@ -202,7 +226,7 @@ $$\forall m \in \mathrm{Nat},\; \mathrm{c}\left(m\right) \cdot \mathrm{c}\left(m
 
 Two short native reversals have product identity. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
 
-**Theorem 1.17 (The Exact Hamiltonian Complement).**
+**Theorem 1.19 (The Exact Hamiltonian Complement).**
 
 $$\forall m \in \mathrm{Nat},\; (3 \le m) \Rightarrow (\forall t \in \mathrm{Fin}\left(m + 1\right),\; \forall W \in \mathrm{Cycle}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall v \in \mathrm{Configuration}\left(m\right),\; \forall j \in \mathrm{Fin}\left(m\right),\; (\mathrm{Star}\left(t, W, v\right) \land \mathrm{apply}\left(v, \mathrm{castSucc}\left(j\right)\right) = t) \Rightarrow (\mathrm{Star}\left(t, W, \mathrm{rightMultiply}\left(v, \mathrm{b}\left(m\right)\right)\right) \land \left(\exists w \in \mathrm{Walk}\left(\mathrm{deleteEdges}\left(\mathrm{starFactor}\left(t, W\right), \mathrm{singletonEdge}\left(v, \mathrm{rightMultiply}\left(v, \mathrm{b}\left(m\right)\right)\right)\right), v, \mathrm{rightMultiply}\left(v, \mathrm{b}\left(m\right)\right)\right),\; \mathrm{IsHamiltonian}\left(w\right) \land \left(\mathrm{length}\left(w\right) = 2 \cdot m \cdot \left(m + 1\right) - 1 \land \mathrm{map}\left(\mathrm{support}\left(w\right), \mathrm{underlyingConfiguration}\right) = \mathrm{scanl}\left(\mathrm{rightMultiply}, v, \mathrm{zWord}\left(m, \mathrm{val}\left(j\right)\right)\right)\right)\right)))$$
 
@@ -221,6 +245,7 @@ The result concerns one zero star and its retained factor. It does not connect d
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_apply`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_cycle`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_sq`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.ab_eq_rotate`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.b_apply`
@@ -229,6 +254,7 @@ The result concerns one zero star and its retained factor. It does not connect d
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.bc_apply`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.c_apply`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.c_sq`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.cycle_mul`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.cycle_zero`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.full_reverse_list`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.native_residual_nodup`
