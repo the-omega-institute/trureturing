@@ -6991,3 +6991,172 @@ baselines, remaining residuals and exterior $E$ still need a single
 joint arithmetic estimate against the original credit.
 The original strict signed upper, all-integer Robin inequality and RH
 remain unproved; this application has no Lean/kernel verification.
+
+
+## Direct actual-center integration pays every complete gap residual
+
+Keep the original full source, all ties and every qualifying full window
+from PE2, PG1--PG3, PG9 and JM1--JM7, including $\Theta=1$.
+This `repo-derived` paper application uses the actual selected centers
+before PE3's ordinary-center endpoint suprema. It pays all original
+gap residuals by their existing exact weighted cancellation, rather
+than assuming they belong to PA3's classified family. The remaining
+low-clock baseline and full upper exterior still require a joint
+estimate against the original credit. No new generic kernel identity,
+prime theorem, literature-priority claim or Lean result is asserted.
+
+Let $B(t)=\mathcal B_X(t)$, $A(t)=t+B(t)$,
+$s_B=\sqrt B\log B$, $k=-\lambda'$, and
+$\rho_X=\sup t/B\to0$, with PE2/VP1's same actual real-clock scope.
+Keep $I_X=[A_0,A_m]$, $D_X$ and the original actual gaps
+$G_s=(\alpha_s,\beta_s)$ from PG9, including switches at $t_0$
+and excluding switches at $t_m$. The canonical endpoint $A_m$ is
+unchanged. All endpoint tie tags have measure zero in source integration.
+The common FH1 horizon $\mathsf U_X$ remains beyond $A_m$.
+
+### Apply the existing gap equality before taking a primitive supremum
+
+At almost every selected source time $t$, all future actual gaps lie
+wholly above $A(t)$ and below $A_m$. PG2 gives, on every such gap,
+
+$$
+\int_{\alpha_s}^{\beta_s}r_s(w)k(w)dw
+=\mathscr P_s(\beta_s)-\mathscr P_s(\alpha_s)=0,
+\qquad r_s(w)=w-s-K(w).
+\tag{DR1}
+$$
+
+Earlier gaps lie below $A(t)$ and contribute nothing to its forward
+integral. Thus DR1 removes every gap residual from that actual signed
+integral, including gaps outside PA3. On $D_X$ the same original
+$E(w)$ equals $t(w)+Q(w)$; on $G_s$ it equals $s+Q(w)+r_s(w)$.
+No sign on $Q$ or on the upper exterior is added.
+
+For $H>0$, put $q_s=\min\{\beta_s,H\}$ and define the actual
+low-clock baseline exposure
+
+$$
+\begin{aligned}
+\mathfrak B_{X,H}
+&=\int_{t_0}^{t_m}s_{B(t)}
+ \sum_{\substack{t\le s<t_m\\\alpha_s<H}}
+ s[\lambda(\alpha_s)-\lambda(q_s)]dt\\
+&=\sum_{\substack{t_0\le s<t_m\\\alpha_s<H}}
+ s[\lambda(\alpha_s)-\lambda(q_s)]
+ \int_{t_0}^{s}s_{B(t)}dt\ge0.
+\end{aligned}
+\tag{DR2}
+$$
+
+The second expression is finite Fubini on the same source. When $H$
+cuts a gap, its partial price difference is retained. It does not
+truncate DR1's residual integration. No size estimate for DR2 follows
+from writing it as this sum.
+
+Retain the complete upper exterior in the signed quantity
+
+$$
+\mathfrak T_X=
+\left(\int_{t_0}^{t_m}s_{B(t)}dt\right)
+\int_{A_m}^{\mathsf U_X}E(w)k(w)dw.
+\tag{DR3}
+$$
+
+The entire interval $(A_m,\mathsf U_X)$, even for superpolynomial
+$\mathsf U_X$, is present. FH1 separately pays the remote tail beyond
+$\mathsf U_X$ at $o(L_X)$. There is no lower exterior in a forward
+integral starting at an actual $A(t)\in I_X$.
+
+### Pay future visits and the high-clock baseline in this direct account
+
+Reuse $|Q(w)|\le H_Q\sqrt w$ and GPP4's already evaluated positive
+kernel moment. Because $B\le A$, it gives
+
+$$
+s_B\int_A^{A_m}|Q(w)|k(w)dw\le2H_Q.
+$$
+
+For future visits to $D_X$, monotonicity of $k$ and
+$s_Bk(A)\le s_Bk(B)\le2B^{-3/2}$ give
+
+$$
+s_B\int_{D_X\cap[A,A_m]}t(w)k(w)dw
+\le\frac{2t_mL_X}{B^{3/2}}
+\le\frac{4t^2}{B^{3/2}}.
+$$
+
+The last inequality uses only the original full window:
+$L_X\le\ell_X\le t$ and $t_m\le2\ell_X\le2t$.
+Reuse exactly PE2's two cases. If $t\le B^{3/4}$ the last ratio is
+at most four; otherwise $\Delta(A)=B-K(B)\ge(9/200)t$.
+With the unchanged
+$V_X^K=\int_{D_X}\Delta(x)/\sqrt{K(x)}dx$, the original
+PT10/PG9 change of variables therefore gives
+
+$$
+\int_{t_0}^{t_m}s_{B(t)}
+ \int_{D_X\cap[A(t),A_m]}t(w)k(w)dw\,dt
+\le\frac{800}{9}\rho_XV_X^K+4L_X.
+\tag{DR4}
+$$
+
+For the remaining gap baseline above $H$, disjointness, $s<t_m$
+and $s_B\lambda(\max\{A,H\})\le1/\sqrt H$ give the uniform bound
+
+$$
+s_B\sum_{t\le s<t_m}s
+ \int_{G_s\cap[H,\infty)}k(w)dw
+\le\frac{t_m}{\sqrt H}.
+$$
+
+These payments involve neither a classified-gap coverage fraction nor
+a count of gaps or future shells. Set $H_X=X(\log X)^2$ as in BL6.
+Then $t_m\le(d/4)M_X\sqrt X$ pays this high-clock contribution by
+$[d/(4\log X)]M_XL_X$.
+
+### Keep the remaining signed exposure and exact credit together
+
+Apply PE2, DR1--DR4 and the paid FH1 tail once. Reuse the existing
+$\mathcal J_X-Z_X^{\rm right}(T_X)=o(M_XL_X)$ transfer. For each fixed
+$0<\epsilon<a$, put $\widetilde\gamma_X=(800/9)\rho_X\to0$.
+The resulting actual signed upper account is
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&\frac{\mathfrak B_{X,H_X}+\mathfrak T_X}{M_XL_X}
+ -(a-\epsilon-\widetilde\gamma_X)
+ \frac{V_X^K}{M_XL_X}\\
+&+\frac{d}{4\log X}+O_\epsilon(M_X^{-1})+o(1).
+\end{aligned}}
+\tag{DR5}
+$$
+
+This route branches at PE2, before the ordinary-center suprema and
+capped occupation. Consequently DR5 contains no $c_X$ multiplier;
+it does not replace $c_X$ by one or discard its credit correction in
+PA8. The direct coefficient $\widetilde\gamma_XV_X^K/(M_XL_X)$ is
+kept exactly; no bound on $V_X^K/(M_XL_X)$ is assumed.
+
+The all-gap residual payment in DR1 does not bound the ordinary-center
+occupation $\mathcal E_X^{\rm red}$. Those centers may cut a gap,
+where the complete weighted cancellation is unavailable. PA8 and its
+ordinary-center classified-residual account remain as separate estimates.
+
+The generic pressure and Stieltjes identities also remain existing
+results. In particular, for $\mathcal H(t)=V_X(t)+t\lambda(A(t))$,
+PG1 and the [existing pressure-margin definition](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#98-完整价格裕度的临界切片与严格自匹配归约)
+give $\mathcal H(t)=\gamma-\mathfrak D(A(t))$. Expressing DR2 or
+its unrestricted variant as an envelope variation therefore supplies
+no new positive reserve or quantitative upper bound.
+
+The unpaid requirement is a same-source strict joint upper estimate
+for DR5's first two terms below JM4's existing $R_0-\delta$, or the
+applicable JM7 $R_\eta-\delta$, for one fixed $\delta>0$ on a common
+cofinal sequence of the original full windows. Neither the positive
+low-clock baseline nor the signed full upper exterior has been paid
+by DR1--DR5. The original signed upper comparison, all-integer Robin
+inequality and RH remain unproved. This application simplifies the
+actual selected-source account without asserting a new arithmetic
+supplier, an actual favorable sequence or kernel verification.
