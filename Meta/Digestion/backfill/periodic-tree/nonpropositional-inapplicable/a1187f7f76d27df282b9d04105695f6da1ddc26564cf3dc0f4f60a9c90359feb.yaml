@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1187f7f76d27df282b9d04105695f6da1ddc26564cf3dc0f4f60a9c90359feb
+  normalized_sha256: sha256:a1187f7f76d27df282b9d04105695f6da1ddc26564cf3dc0f4f60a9c90359feb
+cas_ref: sha256:a1187f7f76d27df282b9d04105695f6da1ddc26564cf3dc0f4f60a9c90359feb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「9.9 三种截面性质的分离」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: b282896ae5f35c502451b73dcdf4fa2de097fb49d4647007ef53bc544e6d3ab4
+    next_atom_id: 53554f89e42297c6e81bfbf3e139142ec5924c4b963e6dfc36b5b441ed8dedb6

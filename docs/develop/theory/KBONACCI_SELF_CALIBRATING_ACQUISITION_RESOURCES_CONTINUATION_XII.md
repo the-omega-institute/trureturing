@@ -1376,3 +1376,1212 @@ universal implication and a genuine same-realization separator remain
 unresolved.
 
 ## 追加锚（本行以下为增补区）
+## 217. Joint-triple acquisition-resource relations
+
+The six relations below share one owning continuation and retain their distinct hypotheses.
+All constructions below use the full finite Boolean word set, every word and every
+label, one complete score, one stock and one common budget. They are ordinary
+results with the hypotheses displayed beside each formula. Their failure
+conditions are construction limits, never nonmembership in the original
+comparison.
+
+### 217.1 Shared notation and the single-budget certificate
+
+For $L\ge3$, let $\Omega={0,1}^L\setminus\{1^L\}$,
+$n(w)$ be the first zero, and $\Omega_j={w:n(w)=j}$. The word $w(Z)$ has
+zero set exactly $Z$; multiple-zero words are retained. A full score consists
+of independent $A_w,C_w,P_w,T\ge0$ and
+
+$$
+g_V(w,\ell)=A_w1_{\ell=0}+C_w1_{\ell=n(w)}+P_w1_{\ell\in\{0,n(w)\}},
+\qquad g_V(1^L,\ell)=T1_{\ell=0}.
+$$
+
+All labels $0,\ldots,L$ are maximized in every cell, including earlier and
+unqueried labels. A complete N pair has cells $00,01,10,11$; an increasing O
+pair has $0,10,11$ after merging $00,01$. Empty and singleton schedules are
+included. N reversals permute cells and repeated requests give singleton
+information, while still counting as actual requests. The O pair catalog uses
+distinct increasing addresses; its normalized information partitions do not
+grant a free repeated or ignored original request.
+For example at word 0100, the legal N table $(3,4;1,0,0,0)$ emits
+the earlier unqueried label 1 and has base/correct/pair readings $(0,1,1)$.
+Replacing that output by zero gives $(1,0,1)$ and loses the correct row.
+No such pruning is used. Donor-label domination below is proved only for
+each constructed score, while unrestricted inputs retain the full catalog.
+Write
+
+$$
+W=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\quad
+\Delta_C=B_C-W,\quad
+\beta_j=\sum_{\Omega_j}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T,
+$$
+
+where $C=N,O$ and $B_C$ is the complete catalog support. The quotient is
+$Q(V)=(\beta,K)$. The anchor is $R=(1,2;1,2,0)$, and $Q$ permits arbitrary
+cancellations, suffixes, terminal mass, early or late $P$, changed unaries and
+changed baselines. Every stated fixed-Q minimum ranges over all nonnegative
+full scores of that quotient, with no constructor-support restriction.
+Coefficients are dual proof weights, not source laws.
+
+The same hull and demand notation is used throughout:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):&1\ge b_1\ge\cdots\ge b_L\ge e\ge0, b_2=b_3,\\
+&(L+1)e\le\sum_{j\ge3}b_j,\quad b_1+\sum_{j\ge3}b_j-(L+1)e\le1\},\\
+F_q(b,e)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad \alpha=(1,1,0,\ldots,0),\\
+\sigma_H(q)&=\max_{H_L}F_q,
+\end{aligned}
+$$
+
+and $H_N$ consists of those $b\in H_L$ admitting one complete
+$\lambda\ge0$ with $G_N\lambda\ge h(b)$, where $h=d-r$ and $r$ is the full
+anchor event vector. In $h(b)$ and $F_q(b)$ the argument b denotes the
+entire hull point, including e. The matrix $G_N=(z_D-r)_D$ has a column for every complete N
+table D. Here $z_D$ records independently whether D emits zero, the word's
+first-zero label, or either label, together with its positive-word zero event.
+The demands at every zero word are $1-b_n-e$ for $A$,
+$b_n-e$ for $C$, and $1-e$ for $P$; the positive row is $1-e$. Negative
+singleton demands are never clipped. A single certificate is
+
+$$
+V\ge0,\quad 0\le\theta\le1,\quad
+\Delta_N(V)+\theta\le1,\quad
+\sigma_H(q-Q(V))\le\theta.
+\tag{217.1}
+$$
+
+For the same full feasible $\lambda$ of mass $M=\sum_D\lambda_D$, the
+identity $V\cdot h(b)=F_{Q(V)}(b)$ and nonnegativity give
+
+$$
+F_q(b)=V\cdot h(b)+F_{q-Q(V)}(b)
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max(1,M).
+$$
+
+The last inequality uses $(1-\theta)M+\theta\le\max(1,M)$.
+This applies to a conic $\lambda$ of any mass; it does not identify such a
+vector with a normalized acquisition law. No component of $h$ is replaced
+by its positive part. These are the existing full-event and signed-residual
+suppliers of Continuation VI 199.3–199.4. An exact-fiber minimizer yields
+an affordable certificate when the actual full unit-O input has $\Delta_O\le1$ (or a
+separately established cost bound at most one); $	heta=1$ may retain a nonzero
+zero-cost core.
+
+### 217.2 A — joint Boolean carrier and signed zero-terminal plateau
+
+Let $q=(\beta,K)$ satisfy $K\ge\sum_j|\beta_j|$. Let
+$J=\{j\ge3:\beta_j>0\}=\{j_1<\cdots<j_m\}$ be the entire positive
+late support, with $m\ge3$,
+let $G\subseteq\{1,\ldots,\min J-1\}$ have $k\ge3$ guards, and put
+$\gamma_i=\beta_{j_i}>0$, $\mu=\max_i\gamma_i$,
+$\xi_a=(-\beta_a)_+$, $D_G=\sum_{a\in G}\xi_a$,
+$D_e=(-\beta_1)_++(-\beta_2)_+$,
+$B=K-\sum_j|\beta_j|$, and $S=B+D_G$.
+Let
+$c_m=m(m+1)/\lfloor(m+1)^2/4\rfloor$ and
+$c_{m,k}=\max(c_m,3+1/(k-1))$. For every $\rho\ge0$ with
+
+$$
+S\ge c_{m,k}\rho,\qquad k\xi_a\le S\quad(a\in G),
+\tag{217.2}
+$$
+
+there is one full score with $Q(V)=q$, $T=0$ and
+
+$$
+\Delta_N(V)\le D_e+\sum_{i=1}^3(\gamma_{(i)}-\rho)_+,
+\tag{217.3}
+$$
+
+where $\gamma_{(1)},\gamma_{(2)},\gamma_{(3)}$ are the three largest positive
+late coefficients. Taking $\rho=S/c_{m,k}$ gives the displayed strongest bound;
+if $S\ge c_{m,k}\mu$, the unrestricted minima satisfy
+
+$$
+\min_{Q(V)=q}\Delta_N(V)=\min_{Q(V)=q}\Delta_O(V)=D_e.
+\tag{217.4}
+$$
+
+The lower bound is unconditional: replace the legal stopped anchor's output by
+zero on classes $j=1,2$ with $\beta_j<0$. This changes reward by
+$-\beta_j$ and leaves $P$ and every other class fixed, so every competitor has
+$\Delta_O\ge D_e$ and hence $\Delta_N\ge D_e$.
+
+For the upper bound, take one measure $\nu$ on $\{0,1\}^m$ of mass $S$ such
+that every zero marginal is at least $k\rho/(k-1)$, every directed $10$ cell
+has mass at least $\rho$, and every $11$ pair has mass at least $\rho$.
+Such a measure exists exactly when $S\ge c_{m,k}\rho$. Necessity follows by
+fixing a pair, which gives $S\ge(3+1/(k-1))\rho$, and by summing the directed
+and $11$ conditions:
+$\int z(m-z)\ge m(m-1)\rho$ and
+$\int z(z-1)\ge m(m-1)\rho$. Since
+$mz(m-z)+z(z-1)\le(m-1)\lfloor(m+1)^2/4\rfloor$, integration gives
+$S\ge c_m\rho$. Indeed adding m times the first summed inequality to the
+second gives $m(m-1)(m+1)\rho$ below the integrated quadratic upper bound.
+For attainment, if $m=2h-1$ put mass $c_m\rho$ uniformly
+on words with $h$ ones. If $m=2h$, put mass $2\rho$ uniformly on the $h$-one
+words and $2h\rho/(h+1)$ uniformly on the $(h+1)$-one words. Add the remaining
+mass at $0^m$. Counting incidences gives one marginal $2\rho$, zero marginal
+$S-2\rho$, and pair cells $(S-3\rho,\rho,\rho,\rho)$ in order
+$00,01,10,11$. Thus every directed $10$ or $01$ mass and every $11$ mass
+is $\rho$. To see the incidence count explicitly, both layer choices give
+$\int z=2m\rho$ and $\int z(z-1)=m(m-1)\rho$; permutation symmetry then
+gives the one and pair marginals. The extra zero atom changes only the 00
+cells and zero marginals. The guard inequality is exactly
+$S-2\rho\ge k\rho/(k-1)$. When $\rho=0$, use
+$\nu=S\delta_{0^m}$; all inequalities are closed. The equivalent scalar
+constant is $c_m=4-2/(\lfloor m/2\rfloor+1)$.
+
+For each guard $a$ and atom $x$ of $\nu$, let $w(a,x)$ have zero $a$, selected
+bits $x$, and all other bits one. Put $P_{w(a,x)}=\nu(x)/k$. Put
+$C_{w(\{j_i\})}=\gamma_i$ and initially $A=T=0$. The complete N cell maxima
+of this unsigned core are, in order $00,01,10,11$,
+
+$$
+0,\quad S/k,\quad S/k,\quad \max((k-2)S/k,\mu)
+$$
+
+for two guards;
+$((S-2\rho)/k,2\rho/k,\max((k-1)(S-2\rho)/k,\gamma_i),
+\max(2\rho(k-1)/k,\mu_{-i}))$ for a guard and $j_i$; and
+$(S-3\rho,\max(\rho,\gamma_i),\max(\rho,\gamma_j),
+\max(\rho,\mu_{-i,-j}))$ for two selected positives. Here
+$\mu_{-i}$ and $\mu_{-i,-j}$ omit the indicated coefficients. The conditions
+in (217.2) give $(k-2)S/k\ge\rho$,
+$(k-1)(S-2\rho)/k\ge\rho$ and $2\rho(k-1)/k\ge\rho$.
+Thus each competing correct reward can contribute no more than its
+$(\gamma_i-\rho)_+$ deficit. For a selected pair the excess is exactly
+the sum of the two queried deficits and the largest remaining deficit.
+Querying the two largest coefficients attains the sum of the three largest
+deficits; guard pairs and mixed pairs have no larger sum. Schedules involving
+inactive coordinates reduce to singleton or constant information on this
+unsigned core. Empty, singleton and repeated schedules are coarsenings of
+distinct-pair information, and O is contained in N. This bounds O without
+turning a last-address stopped singleton into an unavailable larger pair.
+
+For signed conversion, at guard $a$ set $A_{w(a,x)}=(\xi_a/S)\nu(x)$ and
+$P_{w(a,x)}=(1/k-\xi_a/S)\nu(x)$ (equivalently, convert fraction
+$k\xi_a/S$ of that guard's P mass) at the same words. Add sole-zero A
+mass $(-\beta_j)_+$ outside the guard set and add early positive C masses. The conversion is valid exactly under
+$k\xi_a\le S$, preserves every zero reward and decreases only guard labels.
+If $S=0$, (217.2) forces all guard $\xi_a=0$, and all guard coefficients
+are zero without division. An early guard conversion lowers W by $\xi_a$;
+a late guard conversion leaves W unchanged. A late sole-zero A addition or
+an early C addition raises W by its entire mass and raises any table reward
+by at most that mass, so cannot increase excess. Early A outside G costs at
+most its mass. This proves the early charge $D_e$ in (217.3), even with
+negative positions between or after positives and positive early credits.
+It spends the negative guard stock once. The resulting totals are
+$A=\sum(-\beta_j)_+$, $C=\sum(\beta_j)_+$, $P=B$, $T=0$, so the quotient is
+exact and (217.3) follows. At $\rho=\mu$ its upper bound matches the
+unrestricted modified-anchor lower bound, proving (217.4) against all full
+competitors, including arbitrary terminal mass and cancellations. The sharp
+iff concerns the displayed carrier protection conditions. Plateau entry is
+only sufficient for the unrestricted fiber; outside it (217.3) is an upper
+bound rather than a claimed minimum.
+
+A concrete unequal repair is $L=8$, $G=\{1,2,3\}$,
+$J=\{4,5,7\}$,
+$\beta=(-1/2,-1/2,-1,2,3/2,-1,1,-1)$ and $K=27/2$. Then
+$B=5,D_G=2,S=7,D_e=1$, and $c_{3,3}=7/2$. The measure has masses
+$\nu(000)=1$ and $\nu(011)=\nu(101)=\nu(110)=2$. The converted score has
+$A_{w(a,x)}=\nu(x)/14,P_{w(a,x)}=11\nu(x)/42$ for $a=1,2$,
+$A_{w(3,x)}=\nu(x)/7,P_{w(3,x)}=4\nu(x)/21$, plus
+$A_{w(\{6\})}=A_{w(\{8\})}=1$ and
+$C_{w(\{4\})}=2$, $C_{w(\{5\})}=3/2$, $C_{w(\{7\})}=1$.
+It has $W=8$ and $B_N=B_O=9$. Moving the C mass two at class 4 to
+$w(\{4,5\})$ preserves $Q,W$ and gives an input with
+$(\Delta_N,\Delta_O)=(2,1)$; the repaired score has both costs one. This
+illustrates score replacement, not an original separator. Its totals are
+$A=4$, $P=5$, $C=9/2$ and $T=0$. For the moved score, before the two
+late A additions, pair (4,5) has N maxima $(2,2,2,2)$, while its stopped
+maxima are $(3,2,2)$. At (5,7), the earlier unqueried label 4 earns two in
+01 and is covered by that cell's baseline two. At a guard/5 pair the
+receiving baseline is $(2/3)(7-4)=2$. The other pair types keep the bound.
+Both late A atoms lie in pair-(4,5) cell 11, giving final N maxima
+$(2,2,2,4)$ and support ten. They raise any O support by at most two;
+constant zero attains nine. The actual N table $(4,5;4,0,0,0)$ attains ten,
+and constant zero attains the repaired support nine. Those are support
+detectors, not claims of feasibility at an arbitrary selected cap.
+
+### 217.3 B — moving consecutive unequal-triple threshold
+
+Fix $k\ge3$, $L\ge k+3$, and consecutive pivots
+$n=k+1,m=k+2,\ell=k+3$. Let
+$u\ge v\ge w\ge a=u/(k-1)\ge0$, $G=u+v+w$, and
+$B_0=ka+v+w$. Assume $(k-2)B_0\ge ku$. For
+$\beta_n=u,\beta_m=v,\beta_\ell=w$ and all other beta zero, with
+$K=G+B$, $B\ge0$, the exact unrestricted zero-cost threshold is
+
+$$
+\min\Delta_N=\min\Delta_O=0\quad\Longleftrightarrow\quad B\ge B_0.
+\tag{217.5}
+$$
+
+Below threshold every full competitor has
+$\Delta_O\ge(B_0-B)/H$, $H=(2k-1)/(k-1)$; no exact positive-cost formula is
+claimed. More generally let every coordinate outside the three pivots have
+$\beta_j=-\xi_j$, $\xi_j\ge0$; take pivot $\xi_j=0$ in sums.
+Put $D=\sum\xi_j$, $E=\xi_1+\xi_2$, and absolute stock
+$B=K-G-D$. Put $s=B_0/k$ and
+$R_{\rm stock}=\sum_{j=1}^k(s-\xi_j)_+$. If $B\ge R_{\rm stock}$, one score with
+$T=0$ attains
+
+$$
+\min\Delta_N=\min\Delta_O=E.
+\tag{217.6}
+$$
+
+The stock $B$ in (217.6) is absolute; literal stock is $K-G=B+D$.
+
+Proof of (217.5): let $w_i(v)$ have sole guard zero i, pivot bits v and
+ones after $\ell$; $w_0(v)$ has all guards one and the same pivot bits
+and padding. The complete unsigned core is the following table, with every
+unlisted coefficient zero. Each guard has mass $s=B_0/k$.
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w_i(000)$ | $a/k$ | $0$ |
+| $w_i(011)$ | $u/k$ | $0$ |
+| $w_i(100)$ | $(v-a)/k$ | $0$ |
+| $w_i(101)$ | $a/k$ | $0$ |
+| $w_i(110)$ | $w/k$ | $0$ |
+| $w_0(000)$ | $0$ | $a$ |
+| $w_0(011)$ | $0$ | $u-a$ |
+| $w_0(100)$ | $0$ | $v$ |
+| $w_0(110)$ | $0$ | $w$ |
+
+The guard-indexed rows occur for every $1\le i\le k$. Initially A and T
+are zero. Zero dominates all guard labels pointwise.
+For two guards the 11 baseline is $(k-2)s\ge u$; for guard/n, guard/m,
+guard/ell the zero baselines are respectively
+$(u,(k-1)(v+w)/k)$,
+$((k-1)v+u)/k,(k-1)(u+w)/k$,
+and $((k-1)(v+w)/k,u)$, which dominate the corresponding correct labels.
+For the three pivot pairs, the zero-baseline vectors are
+$(a,u,v,w)$, $(a,u,v+w-a,a)$ and $(v,a,w,u)$. The corresponding class-n C vectors are
+$(a,u-a,0,0)$, $(a,u-a,0,0)$ and $(a,0,0,u-a)$; class-m vectors are
+$(0,0,v,0)$, $(0,0,v,0)$ and $(v,0,0,0)$; class-$\ell$ vectors are
+$(0,0,0,w)$, $(0,0,w,0)$ and $(0,0,w,0)$. Each is dominated because
+$v,w\ge a$. In the mixed pairs the competing correct maxima are
+$(u,v)$, $(v,\max(w,u-a))$ and $(v,u-a)$ respectively. The ordering
+and ratio hypotheses imply $(k-1)w\ge v$ and
+$(k-1)(u+w)/k\ge u-a$, so their baselines dominate too.
+Short schedules are coarsenings, and addresses after $\ell$ are constant on
+the core support. Hence every complete N support is $B_0$; cell merging
+preserves zero dominance and every O support is $B_0$ too. At larger unsigned
+stock B, add $B-B_0$ of sole-zero-1 P. This preserves zero dominance and
+proves sufficiency for every $B\ge B_0$ with T still zero.
+
+For necessity use stopped tables $S_j=(j,n;0,n,0)$ with weight $1/(k-1)$
+for $j\le k$ and $J=(n,m;0,m,\ell)$ with weight one. Their total is H.
+On a first-zero guard class let $z\ge1$ count all zero guard bits. If
+the n bit is zero, nonzero output weight is $(k-z)/(k-1)\le1$; if it
+is one, that weight is exactly one. No table emits the guard's first-zero
+label. In class n the correct weight is $k/(k-1)$; in classes m and
+$\ell$ it is one, and all pivot pair weights are H. After $\ell$ and on
+the positive word nonzero weight is one. There are no intervening classes
+between consecutive pivots. This checks every word, not only sole zeros.
+Subtracting $H$ times $Z$ from an arbitrary score, the independent A, C,
+P and positive rows give a lower reward $B_0-A_{out}-P_{out}-T$.
+Here I is the three pivot classes and out is its complement. Using
+$B+D=2A_I+2A_{out}-D+P_I+P_{out}+T$ gives
+$H(\Delta_O-E)\ge B_0-B-D+2A_I+(A_{out}-D)+P_I\ge B_0-B-D$, since
+$A_{out}\ge D$. Constant zero gives $\Delta_O\ge E$, hence (217.5) and the signed lower cut
+$\Delta_O\ge E+(B_0-B-D)_+/H$.
+This last cut remains valid for arbitrary nonnegative u,v,w without the
+constructor's amplitude cone. It uses literal stock $B+D=K-G$, rather
+than substituting absolute B into that stock identity.
+
+For signed construction, convert the fraction
+$\eta_j/s$ of each of the five P masses in guard $j$ to A,
+where $\eta_j=\min(\xi_j,s)$, add sole-zero A of mass $\xi_j-\eta_j$ at
+guard j, add $\xi_j$ of sole-zero A for every $j>\ell$, and put surplus
+$B-R_{\rm stock}$ into sole-zero-1 P. One score
+has $Z=B+D$, $W=B+D-E$ and every complete schedule support equal to $Z$,
+so both excesses are
+$E$. At $s=0$ all $\eta_j=0$ and no division occurs. This covers closed
+endpoints, zero terminal mass, every suffix and every numerical label.
+
+For $u=v=w=g$, replace the n C atoms by $C$ mass $g$ at pivot pattern 001
+and add early A one. The resulting $Y_g$ has
+$\Delta_O=1$ and $\Delta_N=1+(k-2)g/(k-1)$; restoring the C atoms gives
+one same-Q score with both costs one. At $k=4,g=3$, $Q=(-1,0,0,0,3,3,3;20)$,
+$W=10$, and $(B_O,B_N)=(11,13)$ versus the repaired $(11,11)$.
+Only N pairs (n,m) and (m,$\ell$) gain $g-a$ from that relocation.
+Their stopped first-zero cells merge and have baseline $g+a\ge g$;
+the guard and mixed-pair bounds persist. The early A adds at most one to
+every support and adds exactly one in an attaining late pair's 11 cell.
+This proves the whole $g\ge0$ amplitude family, including $g=0$.
+
+An unequal signed example takes $k=4,L=8$, $(u,v,w)=(3,2,1)$,
+$\xi=(3/4,1/4,2,1,0,0,0,3/2)$ and absolute $B=13/4$.
+Then $Q=(-3/4,-1/4,-2,-1,3,2,1,-3/2;59/4)$,
+$W=31/4$, $B_N=B_O=35/4$, and the attained minima are one.
+The guard condition is automatic for $k\ge4$, since $v,w\ge u/(k-1)$
+give $(k-2)B_0\ge(k^2-4)u/(k-1)\ge ku$; at $k=3$ it is exactly
+$v+w\ge3u/2$. The zero profile has $s=0$, $R_{\rm stock}=0$,
+and is handled by sole-zero additions without division. Neither the signed
+plateau condition nor the below-threshold lower cut is asserted to classify
+all signed fibers or their positive-cost minima.
+
+### 217.4 C — attained signed face with terminal and suffix extension
+
+Fix $L\ge6$, $a\ge b$, $a,b,c,\delta,t\ge0$, $\mu=\max(a,b,c)$, with
+
+$$
+\begin{gathered}
+a\ge3\delta,\quad 0\le t\le\min(a,b,c-\delta),\\
+3\max(b,c)\le2(b+c-\delta)+t,\quad
+3\max(a,c)\le2(a+c-\delta)+t,\\
+6\mu\le3a+2b+2c+\delta+4t,\quad
+3\mu+2t\le3a+2b+2c-2\delta.
+\end{gathered}
+\tag{217.7}
+$$
+
+Set
+$x=(a-3\delta)/6$, $y=a/3$, $z=b/3$, $v=(c-\delta-t)/3$,
+$s=x+y+z+v$, $B_{lit}=3s+t=(3a+2b+2c-5\delta)/2$.
+For $\xi_j\ge0$ outside $\{4,5,6\}$ require
+$\xi_i\le s$ for $i=1,2,3$ and $\sum_{j>6}\xi_j\le t$. Put
+$E=\xi_1+\xi_2$, $D=\sum\xi_j$,
+$\beta=(-\xi_1,-\xi_2,-\xi_3,a,b,c,-\xi_7,\ldots,-\xi_L)$ and
+$K=a+b+c+B_{lit}$. Its absolute stock is $B_{abs}=B_{lit}-D$;
+the donor and suffix capacities ensure $D\le B_{lit}$. Then
+
+$$
+\min_{Q(V)=(\beta,K)}\Delta_N(V)=\min_{Q(V)=(\beta,K)}\Delta_O(V)=E+\delta.
+\tag{217.8}
+$$
+
+On six core coordinates, let $w_i(v)$ have sole guard zero i and pivot
+bits v, and let $w_0(v)$ have all guards one. The initial measures are
+
+| Core word | P mass | C mass |
+|---|---:|---:|
+| $w_i(000)$ | $x$ | $0$ |
+| $w_i(010)$ | $y$ | $0$ |
+| $w_i(100)$ | $z$ | $0$ |
+| $w_i(110)$ | $v$ | $0$ |
+| $w_0(010)$ | $0$ | $a$ |
+| $w_0(100)$ | $0$ | $b$ |
+| $w_0(110)$ | $0$ | $c$ |
+
+The guard rows occur for each $i=1,2,3$, and unlisted A, C and P
+coefficients initially vanish. All three guard bits are one at the C atoms:
+$C_{111010}=a$, $C_{111100}=b$, $C_{111110}=c$. Their core zero sets
+are $\{4,6\}$, $\{5,6\}$, $\{6\}$ respectively. The core terminal
+mass is $t$. Convert fraction $\xi_i/s$ of every P row in guard class i
+to A at the same word. If $s=0$, its capacities force all three
+$\xi_i=0$ and no division or conversion is used.
+For $j>6$, use one common suffix law of masses $\xi_j/t$ on its sole-zero
+word and remaining mass on the all-one suffix; tensor every core measure with
+this same law, put A mass $\xi_j$ on the corresponding extended sole-zero
+word, and retain terminal mass $t-\sum_{j>6}\xi_j$. If $t=0$, all suffix
+negative masses vanish and only ones are appended. This common tensor is a
+single stock, not a second acquisition law. More explicitly, each
+nonterminal core atom at u with mass r becomes atoms $(u,v)$ of masses
+$r\nu(v)$. The old terminal zero reward $t\nu$ becomes A at core
+$1^6$ and each nonpositive suffix, with terminal coefficient
+$t\nu(1^{L-6})$. Thus every old numerical-label reward measure, including
+label zero, is tensored with the same $\nu$, and every new numerical-label
+reward is zero. K remains $a+b+c+B_{lit}$, W becomes $B_{lit}-E$, and
+the actual terminal coefficient is $t-\sum_{j>6}\xi_j$, possibly zero.
+
+For the unrestricted lower cut, $Z=\sum A+\sum P+T$ gives $W=Z-E$, hence
+$\Delta_O\ge E$. A single stopped mixture of $(1,4;0,4,0)$,
+$(2,4;0,4,0)$, $(3,4;0,4,0)$ (weight $1/5$ each) and $(4,5;0,5,6)$
+(weight $2/5$) has total weight one. Its class counts are at least
+$(3,0,3)$ on guard classes, $(2,3,5)$ on class 4, $(3,2,5)$ on classes 5,6,
+$(3,0,3)$ after 6 and $(3,0,3)$ on the positive word. Weighted accounting
+using $B_{lit}=2A_{tot}-D+P_{tot}+T$ gives
+$5(\Delta_O-E)\ge3a+2b+2c-2B_{lit}=5\delta$.
+For clarity the counts are for the unnormalized five copies of the mixture:
+the positive word needs only its zero count three. Writing I for pivot
+classes 4,5,6, the reward minus $5Z$ is at least
+$3a+2b+2c-2(A_{out}+P_{out}+T)$, and
+
+$$
+B_{lit}-(A_{out}+P_{out}+T)
+ =2A_I+(A_{out}-D)+P_I\ge0.
+$$
+
+This allows arbitrary cancellations and independent P atoms in competitors.
+The single stopped table $(4,5;4,5,6)$ also yields
+$\Delta_O\ge E+a+b+c-B_{lit}$, with nonnegative cancellation slack
+$(A_{tot}-D)+A_I$. Both cuts apply without a constructor support assumption.
+
+For the upper bound, before conversion the exact excesses for complete pair
+types are
+$\left(\mu-s-t\right)_+$ (two guards),
+$(a-2(x+y))_++(\max(b,c)-2(z+v)-t)_+$ (guard/4),
+$(b-2(x+z))_++(\max(a,c)-2(y+v)-t)_+$ (guard/5),
+$(\mu-2s)_+$ (guard/6),
+$(a-3y)_++(b-3z)_++(c-3v-t)_+$ (45),
+$(a-3(x+y))_++(\max(b,c)-3(z+v))_+$ (46), and
+$(b-3(x+z))_++(\max(a,c)-3(y+v))_+$ (56). The inequalities (217.7)
+make each at most $\delta$; all labels, including earlier label 4 in pair 56,
+are included. The first summands in guard/4 and guard/5 are respectively
+$\delta$ and $(\delta+(b-a)/3)_+\le\delta$; the reservoir inequalities
+cover their second summands. The last two inequalities bound two-guard and
+guard/6 excesses. Pair45 has excess exactly $\delta$. In pairs46 and56
+the first summands vanish, and the second summands are
+$(\delta+t-\min(b,c))_+$ and $(\delta+t-\min(a,c))_+$, at most $\delta$.
+Conversion leaves zero reward fixed and lowers donor labels. Tensoring with
+the common suffix law preserves every old/old support. An N old/new pair
+has exactly the old singleton support, and an N new/new pair exactly the
+old empty support, because the same nonnegative factor multiplies each
+label's reward in each suffix cell. No mixed schedule exceeds the old
+support. O is bounded by N, while the old stopped guard/4
+table attains $B_{lit}+\delta$, proving (217.8), including all equality cases.
+
+For the relocation family, move $0\le u\le\min(a,b)$ of C mass from
+the core word $111010$ to $111000$, retaining the same suffix law on
+every moved fiber. Thus core zero set $\{4,6\}$ becomes $\{4,5,6\}$;
+at suffix zero set Z the actual move is
+$w(\{4,6\}\cup Z)\longmapsto w(\{4,5,6\}\cup Z)$.
+Then $Q,W$ and $\Delta_O=E+\delta$ remain fixed,
+while
+$\Delta_N=E+\delta+(u-(a-3\delta)/2)_+$. At $L=7$ with
+$(a,b,c,\delta,t)=(3,5/2,3,1/2,1/2)$,
+$(\xi_1,\xi_2,\xi_3,\xi_7)=(1/4,1/4,1,1/2)$ and $u=1$, one has
+$\beta=(-1/4,-1/4,-1,3,5/2,3,-1/2)$, $K=69/4$, $B_{lit}=35/4$,
+$W=33/4$, and the moved score has $(\Delta_N,\Delta_O)=(5/4,1)$;
+moving it back gives the common minimum one. Here $D=2$,
+$B_{abs}=27/4$ and the actual terminal coefficient is zero: the common
+suffix law is concentrated on its sole zero at 7. The actual relocation is
+therefore $w(\{4,6,7\})\longmapsto w(\{4,5,6,7\})$ with mass one.
+The repaired supports are $37/4$ each; the moved supports are
+$(19/2,37/4)$.
+
+To verify the relocation formula on the whole closed domain, only pairs
+querying 5 change. At a guard/5 pair the inserted label-4 mass in the
+late-zero cell is at most b, already present as label 5; its other cell
+loses label-4 mass. Pair56 moves it into a cell already containing b, so
+that maximum does not rise. O pair45 merges the affected cells and is
+unchanged. N pair45 alone gains $(u-3x)_+$ in 00; its 01 reward stays
+under $3y=a$ and its existing 11 excess is $\delta$. The attaining stopped
+tables persist, proving both exact costs. The same suffix tensor proves the
+statement for every actual moved fiber, including $u=0$ and donor exhaustion.
+
+For the unsigned equal profile, every $L\ge6$ and $g,B\ge0$ gives
+
+$$
+\min\Delta_N=\min\Delta_O
+ =\max\{0,3g-B,(7g-2B)/5\},\qquad K=3g+B.
+$$
+
+This is the $k=3$ case of (217.14), counted once. Its lower cuts are the
+two just proved and the anchor. In the middle interval
+$8g/3\le B\le7g/2$, take $a=b=c=g$,
+$\delta=(7g-2B)/5$ and any $0\le t\le g-\delta$. They satisfy (217.7).
+For $0\le B\le8g/3$, convexly mix the entire $B=8g/3$ score with the
+C-only score on core patterns 010,100,110, keeping each C total g.
+The mixture coefficient is $3B/(8g)$ when $g>0$, and the resulting
+upper bound $3g-B$ matches the single-table lower cut. For $B\ge7g/2$,
+add terminal mass $B-7g/2$ to the zero-cost endpoint: each support rises
+by at most that mass and W by exactly it. At $g=0$ use $T=B$.
+This accounts for every branch, all closed endpoints and the freely allocated
+middle reservoir; it is not a second equal-profile classification.
+
+### 217.5 D — natural ownership: arbitrary guards and one joint share test
+
+Let disjoint finite address sets $I,J\subseteq\{1,\ldots,L\}$ satisfy
+$1,2\in I$, $|I|,|J|\ge3$. Put $k=|I|$, $j_0=\min J$, and set
+all beta coordinates outside $I\cup J$ to zero. Let $\gamma_j>0$ for $j\in J$,
+$\xi_i\ge0$ for $i\in I$, $\alpha_i\ge0$ with $\sum_I\alpha_i=1$, and
+$p_j,c,d,t\ge0$. The $\alpha_i$ here are donor shares, separate from the
+anchor-offset vector in 217.1. Put
+$G=\sum_J\gamma_j$, $P=\sum_Jp_j$, $S=P+c+d$,
+$E=\xi_1+\xi_2$, $D=\sum_I\xi_i$.
+For $U\subseteq I$, define
+$a_j(U)=\sum_{i\in I,\ i>j,\ i\notin U}\alpha_i$ and
+$f_j=1-a_j(\varnothing)$. If the following five conditions hold,
+
+$$
+\begin{aligned}
+\xi_i&\le\alpha_i[d+\sum_{j\in J,\ j>i}p_j+c1_{i<j_0}],\\
+f_jp_j&\ge\gamma_j,\\
+(1-\alpha_i)(p_r+c)-(p_r+c1_{r=j_0})a_r(\{i\})&\ge\gamma_r,\\
+(1-\alpha_i)(P-p_r+d)+t-p_ja_j(\{i\})&\ge\gamma_j,\\
+(1-\alpha_i-\alpha_h)S+t-(p_j+c1_{j=\min J})a_j(\{i,h\})&\ge\gamma_j,
+\end{aligned}
+\tag{217.9}
+$$
+
+The first line is for every $i\in I$, the second for every $j\in J$,
+the third for every $i\in I,r\in J$, the fourth for every $i\in I$ and
+distinct $j,r\in J$, and the fifth for distinct $i,h\in I$ and every
+$j\in J$. If these simultaneous conditions hold, then with $\beta_i=-\xi_i$, $\beta_j=\gamma_j$,
+$K=G+S+t$, one explicit score has
+
+$$
+\min_{Q(V)=q}\Delta_N(V)=\min_{Q(V)=q}\Delta_O(V)=E.
+\tag{217.10}
+$$
+
+The initial score is specified by the following rows; coincident words add.
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w(\{i,j\})$ | $\alpha_i p_j$ | $0$ |
+| $w(\{i\}\cup J)$ | $\alpha_i c$ | $0$ |
+| $w(\{i\})$ | $\alpha_i d$ | $0$ |
+| $w(\{j\})$ | $0$ | $\gamma_j$ |
+
+The indexed rows range over $i\in I,j\in J$, the middle two once per i,
+with initial A zero and $T=t$. The actual P mass of first-zero class i is
+$R_i=\alpha_i[d+\sum_{j\in J,\ j>i}p_j+c1_{i<j_0}]$.
+In that class convert fraction $\xi_i/R_i$ of each P atom to A at the
+same word. A row indexed by a donor i but whose first zero is a positive
+j belongs to class j and is not converted. If $R_i=0$, the first condition
+forces $\xi_i=0$ and no division or conversion occurs.
+The total donor mass remains one shared stock, and the quotient is exact with
+$W=S+t-E$. Its absolute stock is $S+t-D$, not literal $S+t=K-G$.
+
+Proof: before conversion, zero reward dominates every donor label pointwise.
+For a J/J pair at r,l the zero cells are $c,p_r,p_l,P-p_r-p_l+d+t$.
+Label r in 01 has P reward $p_ra_r(\varnothing)$ in addition to its
+correct atom; its remaining reserve is exactly $f_rp_r$, and likewise for l
+in 10. An unqueried j in 11 has reward
+$\gamma_j+p_ja_j(\varnothing)\le p_j$, which is included in the
+baseline. All P-only cells are dominated by zero. For a mixed i,r pair,
+in (guard bit, positive bit) order regardless of numerical address order,
+the four zero masses are
+$\alpha_i(p_r+c),\alpha_i(P-p_r+d),(1-\alpha_i)(p_r+c),
+(1-\alpha_i)(P-p_r+d)+t$. Label r in 10 has extra P reward
+$(p_r+c1_{r=j_0})a_r(\{i\})$; every other positive j in 11 has extra
+P reward $p_ja_j(\{i\})$. These subtractions are exactly the third and
+fourth reserves. For two guards, all correct atoms
+lie in 11 and the final inequality protects every positive label. Inactive
+coordinates reduce to singleton partitions; all labels remain present.
+In that 11 cell positive j has P reward
+$(p_j+c1_{j=j_0})a_j(\{i,h\})$, which the last inequality subtracts.
+Conversion leaves zero reward fixed and decreases only donor labels, so
+$B_N=B_O=S+t$ and (217.10) follows from the universal constant-zero lower
+bound $W=Z-E$. A failure of any positive-label reserve is exposed by
+its indicated pair cell; since zero's total is $S+t$, that failure raises
+the N support above $S+t$. Thus, after valid class conversions, the four
+reserve families are necessary and sufficient for this particular score
+to have $\Delta_N=E$. Its attainment proves the unrestricted minimum on
+the stated cone. The tests are only sufficient for unrestricted fiber
+attainment and are not necessary conditions on every possible score.
+
+If every guard precedes every positive, $p_j=\gamma_j$, and
+$S=G+c+d>0$, put
+$h=\min\{c/(\mu+c),\min_j[1-(\mu_{-j}-t)_+/(G-\gamma_j+d)]\}$,
+$v=1+(t-\mu)/S$, and $l_i=\xi_i/S$ for $i\in I$. Here
+$\mu=\max_{j\in J}\gamma_j$ and $\mu_{-j}=\max_{h\in J\setminus\{j\}}\gamma_h$.
+Write $l_{[1]}\ge l_{[2]}$ for the two largest values among all $l_i$,
+including ties. These ranks do not relabel physical addresses 1 and 2,
+which still define E. The joint share problem is feasible exactly when
+
+$$
+\sum_{i\in I}l_i\le1,\quad l_{[1]}\le h,\quad
+l_{[1]}+l_{[2]}\le v,\quad
+1\le\min\{kh,kv/2,(k-1)v-(k-2)l_{[1]}\}.
+\tag{217.11}
+$$
+
+This follows by reducing (217.9) to $\alpha_i\ge l_i$,
+$\alpha_i\le h$, $\alpha_i+\alpha_j\le v$, $\sum\alpha_i=1$;
+The first three tests say that the lower vector l is feasible before
+requiring total one. If $h\le v/2$, its maximum-total extension has all
+coordinates h. If $h>v/2$ and $l_{[1]}\le v/2$, use all coordinates
+$v/2$. Otherwise keep the coordinate with largest lower share at
+$l_{[1]}$ and put all others at $v-l_{[1]}$. The lower and pair tests
+make each of these vectors feasible in its stated case. Summing individual
+and pair constraints gives the first two total upper bounds. In the last
+case, fixing a coordinate at least $l_{[1]}$ gives the third upper bound.
+The corresponding constructed vector attains the minimum of all three.
+Interpolation between that vector and l reaches total one exactly under
+(217.11). The denominators in h are positive because at least three
+$\gamma_j$ are positive. This includes ties, zero lower shares and every
+closed cap, using one vector of shares on the actual physical addresses.
+
+A concrete family takes $I=\{1,2,3\}$, $J=\{4,5,6\}$,
+$\alpha_i=1/3$, $p_j=\gamma_j=g$, $c=g/2,d=t=0$ and
+$0\le\xi_i\le7g/6$. Put $A_{w(\{i,j\})}=2\xi_i/7$,
+$P_{w(\{i,j\})}=g/3-2\xi_i/7$,
+$A_{w(\{i,4,5,6\})}=\xi_i/7$,
+$P_{w(\{i,4,5,6\})}=g/6-\xi_i/7$, and C mass g at each pivot.
+Then $Q=(-\xi_1,-\xi_2,-\xi_3,g,g,g;13g/2)$ and both minima are
+$\xi_1+\xi_2$. For $0\le u\le g$, moving $u$ of class-4 C mass from $w(\{4\})$ to
+$w(\{4,5\})$ gives $\Delta_O=E$ and
+$\Delta_N=E+(u-g/2)_+$; at $g=4$, $\xi=(1,0,1)$, $u=4$ this is
+$Q=(-1,0,-1,4,4,4;26)$ with input costs $(3,1)$ and repaired costs $(1,1)$.
+Here the zero baselines in guard/guard, guard/positive and positive/positive
+pairs are respectively $(0,7g/6,7g/6,7g/6)$,
+$(g/2,2g/3,g,4g/3)$ and $(g/2,g,g,g)$. The moved label 4 remains covered
+in every pair other than full (4,5); that pair has maxima
+$(\max(g/2,u),g,g,g)$. Its stopped first cell has baseline $3g/2$ and
+correct mass g. These formulas prove the relocation on $0\le u\le g$.
+At the displayed unit input W is 13, supports are (16,14), and repaired
+supports are (14,14). At $g=0$, capacities force $\xi=0$ and the score is zero.
+
+For an interleaved instance, take $I=\{1,2,4,6,8\}$,
+$J=\{3,5,7\}$, all donor shares $1/5$, $\gamma=(2,3,1)$,
+$p=(5,5,5/4)$, $c=5,d=1,t=0$, and
+$\xi=(1/2,1/4,1/2,1/5,1/10)$ on I. The same first-zero conversion gives
+$\beta=(-1/2,-1/4,2,-1/2,3,-1/5,1,-1/10)$,
+$K=93/4$, $W=33/2$ and both costs $3/4$. This retains negative
+coordinates before, between and after positives, including ownership of
+P rewards on positive first-zero classes.
+
+### 217.6 E — common-chain multi-positive containment
+
+Let $q=(\beta,K)$ satisfy $K\ge\sum_i|\beta_i|$, and let
+$J=\{j\ge3:\beta_j>0\}=\{n_1<\cdots<n_r\}$ be the entire positive
+late support, with $r\ge3$,
+$n_1=k+1$ with $k\ge3$. Let $\gamma_t=\beta_{n_t}>0$,
+$\mu=\max_t\gamma_t$, $\xi_i=(-\beta_i)_+$,
+$D_0=\sum_{i\le k}\xi_i$, $D_1=\sum_{i>k}\xi_i$,
+$E=\xi_1+\xi_2$, $E_+=(\beta_1)_++(\beta_2)_+$,
+$B=K-\sum_i|\beta_i|$, $S=B+D_0$, and $\rho=(k-1)/k$.
+Suppose there are $c_t\ge0$ with $\sum_tc_t=S$, $c_t\ge\gamma_t$,
+
+$$
+\rho\sum_{t\le i}c_t\ge\max_{t\le i}\gamma_t,\quad
+\rho\sum_{t>i}c_t\ge\max_{t>i}\gamma_t\quad(1\le i<r),\quad
+(1-2/k)S\ge\mu,\quad \xi_a\le S/k\ (a\le k).
+\tag{217.12}
+$$
+
+Then one full score with $T=0$ has exact quotient and
+$\min\Delta_N=\min\Delta_O=E$ over all full competitors.
+Write $J_t=\{n_t,\ldots,n_r\}$. The unsigned core has rows
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w(\{a\}\cup J_t)$ | $c_t/k$ | $0$ |
+| $w(J_t)$ | $0$ | $\gamma_t$ |
+
+The first row occurs for each $1\le a\le k,1\le t\le r$, the second
+once per t. Initially A and T vanish. Convert any total $\xi_a$ of
+donor-a P to A at the same words; its total $S/k$ funds this conversion.
+For definiteness proportional conversion uses fraction $k\xi_a/S$ of
+each of that donor's atoms. Here $S>0$ follows from positive $\gamma_t$.
+Add sole-zero A of mass $\xi_i$ for each negative coordinate $i>k$,
+and early sole-zero C of mass $(\beta_a)_+$ for a=1,2. Unlisted rows
+vanish; no other positive late coordinate exists outside J.
+
+For the proof, a donor pair has zero cells $(0,S/k,S/k,(1-2/k)S)$;
+the last capacity protects all positive labels. A donor/positive pair at $n_i$
+has zero masses $(C_i/k,C_{>i}/k,\rho C_i,\rho C_{>i})$, where
+$C_i=\sum_{t\le i}c_t$; (217.12) protects every block maximum. A positive/positive
+pair at $n_i<n_j$ has an empty 01 cell and zero masses
+$\sum_{t\le i}c_t$, $\sum_{i<t\le j}c_t$ and $\sum_{t>j}c_t$ in
+00,10,11. Each block sum covers every earlier, intermediate and later
+label by $c_t\ge\gamma_t$. In the donor/positive case at i=r, the
+empty suffix maximum is zero and $\rho S\ge\mu$ follows from the
+donor-pair condition. Thus zero dominates all labels for every core full
+pair, including arbitrary numerical gaps; core-inactive coordinates are one
+and reduce to short partitions. Conversion leaves zero reward unchanged.
+For an old/new pair after an outside sole-zero A addition, its new-zero
+branch has only base reward, and its new-one branch contains the old core
+whose singleton zero reward already dominates every numerical label.
+For two new addresses, the old core lies in 11, where its empty zero
+reward dominates, while every other cell has only base additions. These
+cases cover negative positions before, between and after J and prove both
+supports $S+D_1$ before adding early C. Adding early C of total $E_+$ increases any schedule support by at most
+$E_+$ and W by exactly $E_+$. The modified early anchor attains the upper
+bound, so the two full supports are $S+D_1+E_+$ and
+$W=S+D_1-E+E_+$; their excess is E. The unrestricted lower bound is the modified early anchor, giving
+$\Delta_O\ge E$.
+Direct totals give $A=D_0+D_1$, $P=S-D_0=B$,
+$C=\sum_t\gamma_t+E_+$ and
+$K=S+D_1+\sum_t\gamma_t+E_+=\sum_i|\beta_i|+B$.
+
+For $r=3$, a sufficient explicit allocation is
+$c_1=\gamma_1/\rho$, $c_3=\gamma_3/\rho$ and
+$c_2=S-c_1-c_3$, provided
+
+$$
+S\ge\max\left\{\frac{\gamma_1+\gamma_3}{\rho}+
+\max\left(\gamma_2,\frac{\gamma_2-\min(\gamma_1,\gamma_3)}{\rho}\right),
+\frac{k\mu}{k-2}, k\max_{a\le k}\xi_a\right\}.
+\tag{217.13}
+$$
+
+For equal $\gamma_t=g$, the first stock term is
+$(3+2/(k-1))g$. This permits unequal and nonadjacent triples; it is a
+sufficient common-chain cone, not a sharp unrestricted threshold.
+The two outer cumulative constraints hold at equality for this allocation.
+The inner constraints say
+$c_2\ge(\gamma_2-\gamma_1)/\rho$ and
+$c_2\ge(\gamma_2-\gamma_3)/\rho$, as well as $c_2\ge\gamma_2$.
+Their simultaneous maximum is exactly the first stock term in (217.13).
+The other two terms fund donor-pair protection and every conversion.
+For equal g, the combined first and donor-pair terms reduce to
+$(3+2/(k-1))g$: at k=3 the first term is $4g$ and the donor-pair
+term is $3g$; for $k\ge4$ the first term also dominates $kg/(k-2)$.
+No necessity for unrestricted scores is inferred.
+
+At $L=8$, donors $a=1,2,3,4$, positives $5,6,7$, and one late negative at 8,
+put P masses $1,3/4,1$ respectively at
+$w(\{a,5,6,7\})$, $w(\{a,6,7\})$, $w(\{a,7\})$ for every donor.
+Convert the first P atom at a=1 entirely to A, and add $A_{w(\{8\})}=1$.
+Put C mass 3 at each of $w(\{5,6,7\})$, $w(\{6,7\})$, $w(\{7\})$.
+Then $Q=(-1,0,0,0,3,3,3,-1;21)$, absolute B=10, $S=11$,
+$W=11$ and both supports are 12. For $0\le u\le3$, move C mass u
+from $w(\{5,6,7\})$ to $w(\{5,7\})$. Q and W stay fixed and costs
+become $(1+u,1)$; u=1 is repaired from (2,1) to (1,1).
+Pair (5,6) has N maxima $(4,u,3,5)$ and O maxima $(4,3,5)$.
+At pair (6,7) the zero baselines 7 in 00 and 4 in 10 cover both pieces
+of label 5; donor/6 receiving baselines are $21/4$ and 3. At (6,8)
+the new-zero cell is base only and old singleton baselines 7 and 4 cover
+the move. All other schedules are unchanged or coarser. This proves the
+whole stated relocation interval with every label retained.
+The fair-suffix sufficient plateau of §215.2 requires absolute
+$B\ge4\mu$ and $B+D_l\ge5\mu$, whereas here $\mu=3,D_l=1$,
+$B=10$ and $B+D_l=11$. That particular test fails; no claim excludes
+all earlier signed or conic closures.
+
+### 217.7 F — equal adjacent triple piecewise attained minimum
+
+Let $k\ge3$, $L\ge k+3$, $n=k+1,m=k+2,\ell=k+3$,
+$g,R\ge0$, and $0\le\xi_i\le R/k$ for $1\le i\le k$. Set
+$\beta_i=-\xi_i$, $\beta_n=\beta_m=\beta_\ell=g$, other beta zero,
+$D=\sum_{i\le k}\xi_i$, $E=\xi_1+\xi_2$, and $K=3g+R$. With literal stock R
+and absolute stock $R-D$, the exact unrestricted minimum is
+
+$$
+\min\Delta_N=\min\Delta_O=E+\Phi_k(g,R),\quad
+\Phi_k(g,R)=\max\left(0,3g-R,\frac{(3k-2)g-(k-1)R}{2k-1}\right).
+\tag{217.14}
+$$
+
+For $g>0$, the breakpoints are $R_1=(3k-1)g/k$ and
+$R_0=(3k-2)g/(k-1)$: the branches are $3g-R$, the second affine term,
+and zero on the three successive closed intervals. The formula includes
+$g=0,R=0$, exhausted donor capacities and all ties.
+
+For any competitor, $Z=A_{tot}+P_{tot}+T$ gives $W=Z-E$ and hence
+$\Delta_O\ge E$. The stopped table $(n,m;n,m,\ell)$ gives
+$\Delta_O\ge E+3g-R$. The joint lower bundle assigns weight $1/(k-1)$
+to $(i,n;0,n,0)$ for each $i\le k$ and weight one to
+$(n,m;0,m,\ell)$. Its mass is $H=(2k-1)/(k-1)$; guard classes have
+nonzero output weight at most one, pivot classes have weights $k/(k-1),1,1$,
+and later/positive classes weight one. Subtracting $HZ$ gives
+$H(\Delta_O-E)\ge(k/(k-1)+2)g-R$, yielding the third branch.
+N dominates O, so these are common lower cuts. More explicitly, for every
+competitor $R=2A_{tot}-D+P_{tot}+T$ and $A_{tot}\ge D$.
+The single triple-output table has nonnegative slack
+$(A_{tot}-D)+A_J$, where J is the three pivot classes. In the weighted
+bundle, pivot pair weight is H and correct weights are $k/(k-1),1,1$.
+On a guard class with z zero guard bits its nonzero-output weight is
+$(k-z)/(k-1)$ if the n bit is zero and one otherwise, so it loses at
+most its A+P mass relative to constant zero. Every later class has the
+same loss bound and the positive row loses at most T. Therefore
+
+$$
+H(\Delta_O-E)\ge(k/(k-1)+2)g-R
+ +(A_{tot}-D)+A_J+P_J.
+$$
+
+Dropping only this nonnegative slack gives the third cut. This separates
+the A,C,P and positive rows, including every multiple-zero word and every
+cancellation in unrestricted competitors.
+
+For each guard $i\le k$, let $w_i(v)$ have sole guard zero i, pivot
+bits $v\in\{0,1\}^3$ and ones after $\ell$. Let $w_0(v)$ have all
+guards one, pivot bits v and the same one padding. Initially A and T vanish.
+Put C mass g at each of
+$w_0(000)$, $w_0(100)$ and $w_0(110)$: their zero sets are
+$\{n,m,\ell\}$, $\{m,\ell\}$ and $\{\ell\}$.
+Every branch below retains these same three C atoms. The complete initial
+nonterminal measures, in terms of the branch parameters, are
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w_i(000)$ | $x$ | $0$ |
+| $w_i(011)$ | $z$ | $0$ |
+| $w_i(101)$ | $y$ | $0$ |
+| $w_i(110)$ | $v_0$ | $0$ |
+| $w_0(000)$ | $0$ | $g$ |
+| $w_0(100)$ | $0$ | $g$ |
+| $w_0(110)$ | $0$ | $g$ |
+
+Each guard row occurs for all $i\le k$, $s=x+z+y+v_0$, and all
+unlisted coefficients vanish before the surplus additions below.
+
+For the middle branch put
+$d=((3k-2)g-(k-1)R)/(2k-1)$,
+$x=v_0=g/k$, $z=(g-kd)/(k(k-1))$, $y=(g-d)/k$ in the four pivot
+patterns $000,011,101,110$ on each guard. Their total is $R/k$ per guard.
+All complete pair supports are
+
+$$
+\begin{array}{c|l}
+GG&2s+\max((k-2)s,g)\\
+G n&s+\max((k-1)(x+z),g)+\max((k-1)(y+v_0),g)\\
+G m&s+\max((k-1)(x+y),g)+\max((k-1)(z+v_0),g)\\
+G\ell&s+\max((k-1)(x+v_0),g)+(k-1)(z+y)\\
+nm&\max(kx,g)+kz+\max(ky,g)+\max(kv_0,g)\\
+n\ell&\max(kx,g)+kz+\max(kv_0,g)+ky\\
+m\ell&\max(kx,g)+ky+\max(kv_0,g)+kz.
+\end{array}
+$$
+
+The guard/n, guard/m and nm supports equal $R+d$; guard/$\ell$,
+n$\ell$ and m$\ell$ supports equal R. For guard/guard, the needed
+inequality $(k-2)R/k\ge g-d$ is affine in d, with endpoint margins
+
+$$
+\frac{(2k^2-7k+4)g}{k(k-1)}\quad(d=0),\qquad
+\frac{2(k^2-3k+1)g}{k^2}\quad(d=g/k),
+$$
+
+both nonnegative for $k\ge3$. Also $(k-1)(2g-d)/k\ge g$ verifies
+the remaining maxima. Guard labels are pointwise subsets of zero reward;
+every possible winning label is among $0,n,m,\ell$. Short or repeated
+schedules are coarser, and after-$\ell$ queries are constant on the score
+support. Thus the complete N excess is at most d. The unrestricted O
+lower cut forces both excesses to equal d.
+
+At $R=0$ use only the three specified chain C atoms. For
+$0<R<R_1$, convexly mix the complete $R_1$ score with that C-only score
+in proportions $R/R_1$ and $1-R/R_1$. The C atoms agree, each guard has
+stock $R/k$, and support convexity gives $3g-R$, matched by the lower cut.
+Equivalently $x=v_0=R/(3k-1)$, $y=(k-1)R/[k(3k-1)]$, $z=0$.
+For $R\ge R_0$, use the $d=0$ score and add
+$(R-R_0)/k$ P at each $w_i(111)$. Every table gains at most the total
+surplus $R-R_0$ and W gains exactly it, so the cost remains zero.
+For $g=0$ put $R/k$ of P at each $w_i(111)$ and retain zero C masses.
+For $R>0$ convert fraction $k\xi_i/R$ of every donor
+P row to A; zero reward and all support maxima are unchanged, W drops by E,
+and the formula follows for the signed quotient. If $R=0$, all
+$\xi_i=0$ and no conversion or division is performed.
+
+The explicit unit input has $k=3,L=6,g=1,R=8/3$,
+$\xi=(1/3,1/3,2/3)$. The common score has $W=2$, $B_N=B_O=3$.
+Its guard P patterns are 000 with mass $1/3$, 101 with mass $2/9$,
+and 110 with mass $1/3$, converted to A in fractions $3/8,3/8,3/4$
+for guards 1,2,3. The C atoms remain $111000,111100,111110$, each
+with mass one. Both repaired and moved scores have
+$Q=(-1/3,-1/3,-2/3,1,1,1;17/3)$ and T=0.
+Move $1/3$ of C at $w(\{4,5,6\})$ to $w(\{4\})$, that is,
+$111000\longmapsto111011$, to obtain the same quotient
+with $(\Delta_N,\Delta_O)=(4/3,1)$; restoring it repairs both costs to one.
+For the moved score every empty and singleton support is $8/3$,
+guard/guard supports are $25/9$, guard/4 and guard/5 are 3, and
+guard/6 is $8/3$. Its remaining pair supports (N,O) are
+45:$(10/3,3)$, 46:$(3,8/3)$ and 56:$(3,3)$.
+In particular pair45 has full maxima $(1,1/3,1,1)$ and stopped
+maxima $(1,1,1)$. This includes all seven output labels and proves the
+exact unit-input gap. The g=0, R=0, breakpoint, tie and exhausted-capacity
+cases use the same closed formulas and the explicit no-division conventions.
+
+### 217.8 Original source, one-seed laws and owning transport
+
+The original countable labeled source is
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\qquad
+N(r,g)=1+F_rg,\qquad q_i(x)=1_{p_i\mid N(r,g)},
+$$
+
+where $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ and the $p_i$ are increasing
+primes. Each N has finite prime support, so $n(x)=\min\{i:q_i(x)=0\}$
+is finite. There is no prior over X. The CRT/window proof of
+[Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows)
+supplies every finite pattern on arbitrary finite prime addresses, with actual
+witnesses fixed before seeds. Thus every multiple-zero word is an actual
+source pattern; a positive finite word represents a tail source, not an
+infinite all-positive source. Source labels, N and n are not extra observations.
+For the earlier-label example, $(r,g)=(19,436)$ is an actual source with
+$N=1822917$ and first four prime replies 0100.
+
+For concrete witnesses on the first seven primes, use $r=47$,
+$F_{47}=2971215073$, $Q_0=9699690$, and prescribe a zero at 19.
+For each prescribed positive bit require $g=-F_{47}^{-1}\pmod p$;
+for each zero require $g=0\pmod p$. If c is the CRT residue, take
+$g=c+Q_0\lceil(297121508-c)/Q_0\rceil$. The window
+$[297121508,594243014]$ is longer than $Q_0$, so every representative
+lies in it. Words 0000000 and 1111111 give respectively
+$g=300690390,N=893415819074248471$ and
+$g=305860043,N=908775969990028140$; the latter's actual first zero is eight.
+On eight bits one can instead use $r=101$,
+$F_{101}=573147844013817084101$ and the first-nine-prime product
+$223092870$, prescribing zero at 23 and taking the least representative
+above $\lceil F_{101}/10\rceil$. The all-one eight-bit word gives
+$g=57314784401451390769$ and
+$N=32849845109808618286359388848718688063670$, with first zero nine.
+These finite witnesses corroborate source transcription; the arbitrary-address
+statement is supplied by 35.2, not by checking finitely many integers.
+
+The full original carrier is the disjoint-union Borel space
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, each block
+an interval copy of $(0,1)$. Its unchanged consumer returns unknown on
+$B_j$ and proposes j on $P_j$. The original nonatomic targets of
+Definition 213.22 remain
+$\mu_x=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, with fixed $h_0\in(0,1)$,
+$\Omega(x)$ the number of distinct prime divisors, $\pi_j$ uniform on
+$P_j$, and $\nu_x$ on $B_{n(x)}$ having density proportional to
+$\exp(t(x)u)$, $t(x)=\sum_i3^{-i}q_i(x)$. The distinct marks
+$\theta_j=(B_1,1/(j+2))$, $j\ge0$, support separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad 1\ge a_1\ge a_2\ge\cdots>0,\quad a_j\longrightarrow0.
+$$
+
+These laws do not replace the nonatomic originals. A finitely supported
+marked law has TV distance one from each $\mu_x$, as its finite Borel
+support has mass one under that law and zero under $\mu_x$. The companion
+caps below concern the selected marked laws. Original competitors still
+may output anywhere on the full carrier, not merely the marks.
+
+The resources are exactly Definition 90.1: zero advice, one source-independent
+common seed, sourcewise almost-sure finite handoff, uniform TV over every
+actual source and Borel event, and at most two actual requests. Repeated
+requests and requests with ignored replies count. N preselects its schedule
+and obtains all its replies; O preselects an increasing schedule and stops
+at its first queried zero or exhaustion. No source average, address, depth,
+runtime, mean count or adaptive second address replaces these conditions.
+Choose each finite whole table and every output label before replies by
+partitioning one $U\sim\mathrm{Uniform}[0,1)$ into its full-table weights.
+Its N completion uses the same U, schedule and output, acquiring both replies
+even when the second is ignored. All displayed finite rules hand off on
+every source and seed. Different finite partitions can use a common
+refinement of this same U. Score coefficients, carrier weights and suffix
+laws are deterministic proof measures, not additional acquisition seeds,
+source distributions or separately funded resource allowances.
+
+Here are the normalized common-law suppliers and their full row content.
+Reuse the four-table law (213.30), with weight $1/4$ on each of
+
+$$
+(1,2;1,2,0),\quad(1,2;1,2,3),\quad
+(1,3;1,3,0),\quad(2,3;2,3,0).
+$$
+
+At first-zero classes 1,2 the correct mass is $3/4$ and pair mass at
+least $3/4$; the base demand $-1/4$ is retained. At class 3 its
+(base,correct,pair) masses are $(1/4,3/4,1)$; after 3 they are
+$(3/4,0,3/4)$, and positive-word base is $3/4$. Thus one mass-one full
+$\lambda$ is feasible at
+$b^*=(1,1,1,1/4,\ldots,1/4;e=1/4)\in H_N$.
+For $a_1=a_2=a_3=1$, $a_4=\cdots=a_H=1/4$ and
+$a_{H+t}=2^{1-t}/4$ for $t\ge1$, both executions attain cap $1/4$.
+Every actual tail after 3 has error $\max(1/4,a_n)=1/4$, including
+the first tail equality. For the displayed C quotient,
+$F_q(b^*)=-53/16\le1$; this realized shared allocation is not a separator.
+
+The subset supplier 87.1 gives a second common law: select uniformly a
+three-subset $\{i<j<h\}$ of $\{1,\ldots,H,\star\}$, with star last.
+Query i then j, emitting i on the first zero, j on 10 and h on 11;
+star means output zero and is never queried. The N completion is
+$(i,j;i,i,j,h)$ on the identical seed. On every word of first zero n,
+output n occurs exactly when the selected subset contains n, so its
+probability is $3/(H+1)$ independently of later zeros. Positive-word
+base has that same probability. For $a_1=\cdots=a_H=1$,
+$\varepsilon=(H-2)/(H+1)$ and
+$a_{H+t}=\varepsilon2^{1-t}$, all base, correct, independent pair and
+positive rows hold, including negative base demands, and every actual tail
+has TV $\max(\varepsilon,a_n)=\varepsilon$.
+At H=6 this is one 35-table mass-one allocation at $v_6\in H_N$,
+with cap $4/7$; at the D example $F_q(v_6)=-27/7$.
+At H=8 it is one 84-table allocation at $v_8\in H_N$ with cap $2/3$;
+at the E example $F_q(v_8)=-6$. For these hull points,
+$(H+1)e=\sum_{j\ge3}b_j=H-2$ and
+$b_1+\sum_{j\ge3}b_j-(H+1)e=1$.
+These are common full allocations, not independently selected event optima.
+
+For the B/F lower bundle, normalization assigns probability $1/(2k-1)$
+to each $(i,n;0,n,0)$ and $(k-1)/(2k-1)$ to $(n,m;0,m,\ell)$.
+Put $\varepsilon_0=(k-1)/(2k-1)$,
+$a_1=\cdots=a_\ell=\varepsilon_0$ and
+$a_{\ell+t}=\varepsilon_0 2^{1-t}$ for $t\ge1$.
+On a guard first-zero word correct probability is zero and base probability
+at least $1-\varepsilon_0$, so TV is $\varepsilon_0$.
+At n, the base and correct probabilities are
+$(\varepsilon_0,1-\varepsilon_0)$ and TV is $1/(2k-1)$.
+At m and $\ell$ the selected targets are reproduced exactly.
+At every actual tail after $\ell$, the law is
+$(1-\varepsilon_0)\delta_{\theta_0}+\varepsilon_0\delta_{\theta_\ell}$
+and TV is $\max(\varepsilon_0,a_n)=\varepsilon_0$, including the first
+tail equality. Its all-positive finite base is $1-\varepsilon_0$.
+The word counts in the lower proof therefore give every independent cap
+row for one law, including multiple zeros. The C lower detector likewise
+has a one-seed realization with fifth weights $(1,1,1,2)/5$.
+These detector executions alone confer no arbitrary prescribed cap;
+the specific amplitude families just supplied establish their caps.
+
+The owning transport is
+[110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+It gives same-class feasibility at exact closed caps, not preservation of
+an arbitrary competitor's law. Its necessity projects full-carrier outputs,
+uses source countability for one conull handoff event, and controls the whole
+preselected schedule by the single event that its maximum address exceeds
+a cutoff. That event's seed probability vanishes. Actual finite low/fixed-high
+witnesses and the measurable finite-execution supplier then give one common
+catalog approximation; finite-simplex compactness retains the closed cap.
+This requires measurable source-independent scheduling and readout, lawful
+reachable reads and sourcewise conull finite handoff. The same-class
+scheduled-witness interface supplies replay under those hypotheses; it does
+not supply N-to-O conversion or arithmetic witnesses. Theorem 109.1 is
+separately the $c\ge H^{\rm ker}$ criterion for a normalized probability-vector
+kernel, not a condition on a dual quotient. The exact-law obstruction 112.2
+has another O law at the same cap and remains distinct from cap separation.
+
+For $0<\varepsilon\le1$, let the strict active length be
+$L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$, and let H be the
+horizon of a score above. Transport first supplies one normalized complete
+configuration at $L_a$. Use the existing prefix argument of Continuation
+VII 202.13, 207.20 and §215.7, with the following two directions.
+If $H<L_a$, restrict inputs to $(w,0,\ldots,0)$ and project labels above
+H to zero only in the finite comparison. A zero in w retains its target;
+a positive w has fixed next zero $H+1$, whose target projects to zero.
+Fold the fixed higher replies into each terminal table and delete their
+observations. At most two low preselected queries remain. In O all higher
+addresses follow the low ones: a low zero stops before them, and otherwise
+the fixed high continuation folds into exhaustion. This is a finite
+representation restriction, not a free source observation or an original
+cap attainer on removed active tails $H<n\le L_a$. Alternatively, pad the
+score to $L_a$ by constant-one suffixes.
+
+If $H>L_a$, extend the kernel by ignoring new coordinates and retaining
+its labels through $L_a$. Low first-zero rows remain unchanged for every
+later pattern. A new first zero n has $a_n\le\varepsilon$ and law equal
+to the old positive-word law $p_+$, with no mass at n. Since
+$p_+(0)\ge1-\varepsilon$, all its rows follow from the exact identity
+
+$$
+\operatorname{TV}(p_+,(1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n})
+ =\max\{1-p_+(0),a_n\}\le\varepsilon.
+$$
+
+The positive row stays unchanged. This includes $L_a=0$, every multiple-zero
+suffix and $a_n=\varepsilon$. At $H=L_a$ no change is needed. In the
+actual realization at $L_a$, every tail $n>L_a$ has exactly this max-tail
+error; the same holds after extension for $n>H$. A shorter restricted
+comparison is not substituted for that original full-tail realization.
+
+Finally pair all independent demands with the single score and this one
+normalized configuration. If its complete cost bound is c, the necessary
+original inequality for either N or O is
+
+$$
+\sum_{j\le H}\beta_j(a_j-\alpha_j)-K\varepsilon\le c.
+$$
+
+It uses no assertion that $(a,\varepsilon)$ belongs to the auxiliary hull.
+For A take $c=D_e+\sum_{i=1}^3(\gamma_{(i)}-\rho)_+$; for B,D,E on
+their plateaus take their stated early debt; for C take $E+\delta$; for
+F take $E+\Phi_k$. In particular A's numerical example yields
+$2a_4+(3/2)a_5+a_7\le(a_1+a_2)/2+a_3+a_6+a_8+(27/2)\varepsilon$.
+B and D give $\sum\beta_ja_j\le K\varepsilon$; C gives
+$a a_4+b a_5+c a_6-\sum\xi_ja_j\le\delta+K\varepsilon$;
+E gives $\sum\beta_ja_j\le E_++K\varepsilon$, including
+$3(a_5+a_6+a_7)\le a_1+a_8+21\varepsilon$ in its example;
+F gives $g(a_n+a_m+a_\ell)-\sum_{i\le k}\xi_i a_i
+\le\Phi_k+(3g+R)\varepsilon$.
+For $\varepsilon\ge1$ the general inequality follows directly from
+$a_j\in[0,1]$ and $K\ge\sum|\beta_j|$. All these inequalities are
+necessary only, retaining arbitrary addresses, all Borel events and the
+entire actual positive tail; none is a sufficient original cap classification.
+
+### 217.9 Deduplication, source limits and retained boundaries
+
+The common definitions, hull, lower-bound method, Markov/full-allocation
+correspondence, CRT source witnesses and 110.2 transport are counted once in
+217.1 and 217.8. A is the sharp joint Boolean carrier threshold and signed
+zero-terminal plateau; B is the moving consecutive unequal-triple threshold
+and lower cut; C is the attained unequal triple with terminal reservoir,
+suffix tensor and relocation face; D is arbitrary-position first-zero
+ownership and its exact joint share criterion; E is the common-chain
+multi-positive capacity cone; F is the equal adjacent-triple piecewise exact
+minimum. The equal-profile $k=3$ instance of C is the F triple face, and the
+equal-profile zero-cost threshold of B is the F plateau endpoint; those are one relation each.
+D's equal-triple core and example overlap A's core and are counted once.
+Shared lower bounds, stock identities, hull tests, Markov comparisons, source
+transport and the separate zero relation are suppliers rather than separate
+relations. The sole-zero core is the owning Continuation VII 202.2 result.
+Randomized-expectation terminology is only contextual to Definition 8 of
+Kaniewski–Lee–de Wolf, arXiv:1411.7280v1; it supplies no normalized common
+budget here.
+
+Every theorem above keeps its own limits. A sufficient constructor condition
+is not necessary for arbitrary exact-Q scores. A failed constructor, an
+$H_L$ point without $H_N$, a fixed-law obstruction, a separately charged
+coordinate optimum, or a score cost gap does not produce the original
+separator. A genuine negative result still requires one actual $b\in H_N$, the
+same complete feasible $\lambda$ with mass $M\ge1$, an actual unit-O input
+with $F_Q(b)>M$, and the original source/full-carrier/common-seed/tail bridge.
+The positive obligation remains one unrestricted $V$ and signed residual for
+every actual unit-O input. The correspondence and overlap claims are bounded to the named sources and
+regions; they grant no universal-completion or literary-priority conclusion.
+
+### 217.10 Comparison sources and finite verification scope
+
+The finite decision comparison uses Blackwell's *Comparison of Experiments*,
+sections 2–5: words are states, transcript cells are observations, and numerical
+labels are actions. A common stochastic postprocessing kernel is the relevant
+joint object. That framework does not itself preserve increasing stopping or
+the hard two-request resource. Bernoulli compatibility in
+[Embrechts–Hofert–Wang, Theorem 2.2](https://arxiv.org/abs/1606.08212v1)
+identifies second moments with the convex hull of Boolean outer products;
+when $S>0$, A's $\nu/S$ is one such joint law. The explicit carrier proof
+still supplies its protection mass, not independent pair optima.
+[Zaev, Problem 1.3 and Theorem 2.1](https://arxiv.org/abs/1404.4962v1)
+concern one coupling with prescribed marginals and additional linear
+constraints under their stated admissibility conditions. Their duality does
+not establish nonemptiness of our stock cone. The finite Farkas tools in
+[Kaibel](https://arxiv.org/abs/1001.2161v1) are already part of the owning
+199.3–199.4 alternative; they do not supply a new measure here.
+
+[Bertschinger–Rauh, Example 18](https://arxiv.org/abs/1401.3146v1)
+gives a boundary to separate attainability: its nonnegative representing
+matrix has row sums 2,2,2,0 and fails to be stochastic despite zonotope
+containment. It is a method boundary, not an embedded original separator.
+[Kaniewski–Lee–de Wolf, Definition 8 and Theorem 9](https://arxiv.org/abs/1411.7280v1)
+characterize scalar nonnegative expectation query complexity by nonnegative
+literal degree; that scalar representation does not provide our normalized
+probability-vector kernel, common schedule masses or stopped catalog.
+[Chen, Theorem 3, Definition 7 and Corollary 3](https://arxiv.org/abs/2502.06530v1)
+require binary decomposability for their finite-action extension. No such
+decomposition preserving this acquisition budget is established.
+The ordered-measure min-closure hypotheses of
+[Yang–Yang, Theorem 1](https://arxiv.org/abs/2603.11448v1), and the
+past-conditional measurability condition with prescribed marginals of
+[Backhoff et al., Definition 2.1](https://arxiv.org/abs/1606.04062v1),
+also lack a proved hard-two acquisition correspondence here. These references
+locate usable structures and limits; none supplies the unresolved universal
+implication or a worldwide-priority conclusion.
+
+The independent rational program `check_printed.py` and its result data
+`results.json` belong to the private experiment directory
+`/Users/auricstudio/trureturing-experiments/repair217`.
+Its score reconstructions read the printed word/mass tables, example
+coefficients and relocation maps, then maximize over all output labels and
+all empty, singleton and pair cells. Parameter checks include signed class
+ownership, complete positive support, ranked share bounds, stock branches,
+zero coefficients, terminal exhaustion, unequal and nonadjacent examples.
+Probability checks keep the base, correct, independent pair and positive
+rows, multiple-zero words, repeated and ignored request accounting, the
+normalized common laws and exact tail endpoints. Arithmetic checks evaluate
+actual CRT representatives in the Fibonacci windows. Finite exact evaluations
+can corroborate or refute transcription and examples; the all-real-parameter,
+all-address and all-sequence assertions depend on the ordinary proofs and the
+owning suppliers, not extrapolation from these checks.
+
+### 217.11 Remaining original obligation
+
+For every full $y\ge0$ with $\Delta_O(y)\le1$, one still needs a single
+unrestricted $V\ge0$ and $\theta\in[0,1]$ satisfying (217.1), or one genuine
+same-realization separator with the full $b,\lambda,y$ evidence. The
+finite relations above establish no universal implication from
+$\Delta_O(y)\le1$ to their capacity cones. Outside their union, general
+unequal and nonadjacent profiles, four or more unrestricted positives,
+profiles beginning at 3, concentrated low stock, arbitrary signed residuals
+and general low-terminal coupling remain open. The original all-sequence positive-closed-cap hard-two
+comparison is therefore unresolved.
+
+## 追加锚（本行以下为增补区）

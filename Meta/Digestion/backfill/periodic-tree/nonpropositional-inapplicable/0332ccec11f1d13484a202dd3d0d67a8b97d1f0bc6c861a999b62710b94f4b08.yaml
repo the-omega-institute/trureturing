@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0332ccec11f1d13484a202dd3d0d67a8b97d1f0bc6c861a999b62710b94f4b08
+  normalized_sha256: sha256:0332ccec11f1d13484a202dd3d0d67a8b97d1f0bc6c861a999b62710b94f4b08
+cas_ref: sha256:0332ccec11f1d13484a202dd3d0d67a8b97d1f0bc6c861a999b62710b94f4b08
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 若 $e=T_L(m)$ 且 $m\ne0$，取 $k=\lfloor m\alpha\rfloor$ 及 $h=B_Lm+…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 26095a86d403447e114eec11a917f583945662bc4d424edab769d114d3ef0bbb
+    next_atom_id: e780f5842260fd4135f68b030ef9f545f1e22e2dc08cd78998f1e59e526748a8

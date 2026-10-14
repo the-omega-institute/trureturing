@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4794ec8dda1a7d3952e5ccd3725271206e9d9a6393a84f5ca55f6cc81fe37a7
+  normalized_sha256: sha256:c4794ec8dda1a7d3952e5ccd3725271206e9d9a6393a84f5ca55f6cc81fe37a7
+cas_ref: sha256:c4794ec8dda1a7d3952e5ccd3725271206e9d9a6393a84f5ca55f6cc81fe37a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The right side has the Fibonacci initial values modulo five…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 78e39ea8ce11c6d24273f33352abe1adf66d2b52a46b06897e2bfd04b45c8caf
+    next_atom_id: 893c58e6b5fb468751c1d05983d4f7afc194259e4c867ac8884bf9cfe894478d

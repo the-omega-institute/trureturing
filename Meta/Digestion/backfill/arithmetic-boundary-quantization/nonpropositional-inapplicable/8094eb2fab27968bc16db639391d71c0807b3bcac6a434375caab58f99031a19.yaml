@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8094eb2fab27968bc16db639391d71c0807b3bcac6a434375caab58f99031a19
+  normalized_sha256: sha256:8094eb2fab27968bc16db639391d71c0807b3bcac6a434375caab58f99031a19
+cas_ref: sha256:8094eb2fab27968bc16db639391d71c0807b3bcac6a434375caab58f99031a19
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（故每个固定支撑 \(t_i<H_0\),而 \(\mu+v\le H_0\);正性已由 24.8 保证。用 24.6 在参考矩 \(V_0\) 的多项式 \(P_0\) 及其 \(…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 2adf5d40184525566767dc313fc431b5cd93e9ae2b030f781420cd7135a593ab
+    next_atom_id: c41d5296a9a081128085deba5e41d87a5437afc1193c8011f9db39a2fbfa08dd
