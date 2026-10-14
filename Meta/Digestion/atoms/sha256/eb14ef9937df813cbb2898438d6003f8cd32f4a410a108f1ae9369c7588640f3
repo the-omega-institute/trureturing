@@ -1,0 +1,40 @@
+**Example 213.5 (A masked intercept and a nonunique minimum).**
+At $L=5$ take
+
+$$
+P_{01101}=P_{01111}=P_{10101}=P_{10111}=1/4,\qquad
+C_{11000}=C_{11110}=1/2,\qquad A=T=0.
+$$
+
+This is 213.3 with $J=\{3,4,5\}$, carrier mass $1/2$ each at
+$101,111$, and profile $(1/2,0,1/2)$. It has $W=1$ and
+$\Delta_N=\Delta_O=\kappa=d_0=1$, but $\tau=1/2$ and $d_1=3/4$.
+To see the last value without identifying hidden affine intercepts,
+force a nonzero label in each schedule's positive cell. On a late pair
+its best positive-cell reward is $\max(r_{ij},p_{11}/2)$, since either
+early label receives $p_{11}/2$; on an early/late pair the extra constant
+piece is $u_j$, which is at most $\mu\le\tau$. Thus, with precisely
+the definitions (213.3), the restricted maximum is
+
+$$
+d_1=\max\bigl(\tau,\max_{i<j}(x_{ij}+y_{ij}-p_{11}/2)\bigr).
+\tag{213.8}
+$$
+
+Each additional piece is at most $x_{ij}+y_{ij}\le\kappa$.
+For this example pair $45$ has maxima $(1/2,1/2,1/2,1/2)$;
+forcing its positive output nonzero replaces the last by $1/4$.
+The legal table $(4,5;3,0,5,1)$ earns $7/4$, proving the claimed
+$d_1$ after subtracting $W$; (213.8) bounds every other schedule.
+The stopped maxima on $35$ are $(1/2,1/2,1)$, attaining cost one;
+on $45$ they are $(1/2,1/2,1/2)$. Every pair has N support at most
+two by (213.4), proving both full costs.
+This is an actual unit example with a dominated intercept different from
+$\tau$; no earlier label was removed.
+
+Separately, take $V_0=0$ and $q=(0,\ldots,0;1)$. Then
+$\Delta_N(V_t)=0$ and
+$\chi_q(t)=\eta_L(t-1)_+$, since $v_L$ attains $e=\eta_L$.
+Every $t\in[0,1]$ minimizes the objective; its canonical least minimizer
+is zero. Both endpoint phenomena are consistent with 213.2–213.4.
+

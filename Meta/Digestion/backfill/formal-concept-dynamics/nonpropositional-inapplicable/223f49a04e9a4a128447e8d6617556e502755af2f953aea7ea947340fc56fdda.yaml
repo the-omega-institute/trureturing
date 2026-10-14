@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:223f49a04e9a4a128447e8d6617556e502755af2f953aea7ea947340fc56fdda
+  normalized_sha256: sha256:223f49a04e9a4a128447e8d6617556e502755af2f953aea7ea947340fc56fdda
+cas_ref: sha256:223f49a04e9a4a128447e8d6617556e502755af2f953aea7ea947340fc56fdda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第一人称优势：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 00aa0ae509c1341ee5c5a357bb2a3899445f7697d01a5079a095611e95999358
+    next_atom_id: ca0155a8421b5acbf2ce8dec0aadde23116f010e31d02794780871dfd4197870

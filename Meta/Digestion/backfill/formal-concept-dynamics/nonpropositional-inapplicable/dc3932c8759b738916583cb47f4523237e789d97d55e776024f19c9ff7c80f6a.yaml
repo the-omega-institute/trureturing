@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dc3932c8759b738916583cb47f4523237e789d97d55e776024f19c9ff7c80f6a
+  normalized_sha256: sha256:dc3932c8759b738916583cb47f4523237e789d97d55e776024f19c9ff7c80f6a
+cas_ref: sha256:dc3932c8759b738916583cb47f4523237e789d97d55e776024f19c9ff7c80f6a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 15.1（截面）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 401370b90d9f8449d8274f3b5774984fab0c9376c9c38f0dbf079d5f0ad7c694
+    next_atom_id: 0f4f2ce9823f5d2716b6230b246578d7f5d5a474452427680e592bbbfe39314d

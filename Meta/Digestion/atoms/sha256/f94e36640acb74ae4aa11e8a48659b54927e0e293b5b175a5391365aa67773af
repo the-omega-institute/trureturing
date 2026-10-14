@@ -1,0 +1,9 @@
+**定理 3.1（leafless/unbounded and anchored/bounded alternatives）。** If $C$ has no concrete $\alpha$ or $\beta$ leaf, then $\Sigma_R=\mathbb N_0$. If $q$ is a concrete leaf of $C$ at address length $d$ and label $\lambda$, put
+
+$$
+K_q=2d+\mathbf 1_{\lambda=\beta},\qquad K=\min_q K_q.
+\tag{RDR.5}
+$$
+
+Then $\Sigma_R$ is nonempty and $\Sigma_R\subseteq\{0,\ldots,K\}$. The finite spectrum can have gaps.
+

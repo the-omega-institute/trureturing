@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e4e13a3455f9fbb904a80a39f0cfedf9926aa5f3afad67c32461e0ae7216240
+  normalized_sha256: sha256:7e4e13a3455f9fbb904a80a39f0cfedf9926aa5f3afad67c32461e0ae7216240
+cas_ref: sha256:7e4e13a3455f9fbb904a80a39f0cfedf9926aa5f3afad67c32461e0ae7216240
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 172.1（前置合法性）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 3c87854e87ab3cf3864ffc7ca9bc3588e55b44e73444c615ca89afc7568f67ca
+    next_atom_id: 85047a2566686d5ba10bc1d5231b0ece3ab3c737b53bbeef2f74275c70242324

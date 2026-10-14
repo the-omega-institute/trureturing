@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aae2055cdc303396a9db272cef0b18b5c640fb906d53c3c82d11d6ce905b1e64
+  normalized_sha256: sha256:aae2055cdc303396a9db272cef0b18b5c640fb906d53c3c82d11d6ce905b1e64
+cas_ref: sha256:aae2055cdc303396a9db272cef0b18b5c640fb906d53c3c82d11d6ce905b1e64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 52. 宗教哲学的非循环纪律：本项只作篇章导引，介绍主题、组织范围或固定参数，没有定理或性质断言。
+    previous_atom_id: 73a3a27dab9a14b3c6ed9cdd4d027d0ffb248d19c69d0c4ee3c4745af726ede6
+    next_atom_id: f040eb6a87601618db246b3e33b74cf292ef75690d9b59bfd0050eddb59db39b
