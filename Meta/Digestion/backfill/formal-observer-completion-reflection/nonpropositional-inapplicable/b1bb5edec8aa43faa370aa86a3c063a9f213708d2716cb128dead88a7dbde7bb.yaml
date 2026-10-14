@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b1bb5edec8aa43faa370aa86a3c063a9f213708d2716cb128dead88a7dbde7bb
+  normalized_sha256: sha256:b1bb5edec8aa43faa370aa86a3c063a9f213708d2716cb128dead88a7dbde7bb
+cas_ref: sha256:b1bb5edec8aa43faa370aa86a3c063a9f213708d2716cb128dead88a7dbde7bb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 单独术语或清单标签，不陈述可真可假的事实。
+    previous_atom_id: ea81395a26e3c02fff9b6b2fa607f6c8d98c24e991987e269b8e8fb7c7199351
+    next_atom_id: 37faaebe6e7f4255125c796f7adcdbcc5f42befb03a2c3467f122217b58c21c4
