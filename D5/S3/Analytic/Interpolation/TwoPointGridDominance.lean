@@ -105,7 +105,7 @@ theorem two_actual_corners_lower_mem {c d t u M₀ M₁ : ℝ}
     rcases hy₁ with rfl | rfl <;> rcases hy₂ with rfl | rfl <;>
     first | exact hxy rfl | linarith
 
-private theorem logValue_strictMono : StrictMonoOn logValue (Ioi 0) := by
+theorem logValue_strictMono : StrictMonoOn logValue (Ioi 0) := by
   intro x hx y hy hxy
   apply Real.log_lt_log
   · exact sub_pos.mpr (by simpa using Real.exp_lt_exp.mpr (neg_neg_of_pos hx))
@@ -121,7 +121,7 @@ private theorem psiTwo_mono_mean {m n V : ℝ} (hmn : m ≤ n)
     have hn : 0 < n + Real.sqrt (V / 2) := by linarith [Real.sqrt_nonneg (V / 2)]
     exact logValue_strictMono.monotoneOn hm hn (by linarith)
 
-private theorem logValue_strictConcave : StrictConcaveOn ℝ (Ioi 0) logValue := by
+theorem logValue_strictConcave : StrictConcaveOn ℝ (Ioi 0) logValue := by
   have hlog := LogOneSubExpDerivatives.log_one_sub_exp_derivatives
   apply strictConcaveOn_of_deriv2_neg (convex_Ioi 0) hlog.1.continuousOn
   intro x hx

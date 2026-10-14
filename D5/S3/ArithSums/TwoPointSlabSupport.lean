@@ -63,7 +63,7 @@ theorem pair_distance_spec {α : Type*} [PseudoMetricSpace α]
       exact (min_le_right _ _).trans (by simpa [dist_comm] using
         (Metric.infDist_le_dist_of_mem (x := d) hy))
 
-private theorem corner_iff_choice {ι : Type*} (c h x : ι → ℝ) :
+theorem corner_iff_choice {ι : Type*} (c h x : ι → ℝ) :
     IsCorner c (fun i => c i + h i) x ↔
       ∃ e : ι → Bool, x = fun i => c i + if e i then h i else 0 := by
   classical
