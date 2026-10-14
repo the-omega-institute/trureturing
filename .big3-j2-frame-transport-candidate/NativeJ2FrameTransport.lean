@@ -83,9 +83,14 @@ private theorem frame_selected_coordinates {m : ℕ} (hm : 5 ≤ m)
   have hp := congrArg (fun l : List (Fin (m + 1)) => l[0]?) ht
   have hq := congrArg (fun l : List (Fin (m + 1)) => l[1]?) ht
   have hp' : anchor F 0 = p := by
-    simpa only [List.getElem?_ofFn, dif_pos (by omega : 0 < m + 1),
-      hs, List.cons_append, List.nil_append, List.getElem?_cons_zero,
-      Option.some.injEq] using hp
+    have hp'' : anchor F ⟨0, by omega⟩ = p := by
+      simpa only [List.getElem?_ofFn, dif_pos (by omega : 0 < m + 1),
+        hs, List.cons_append, List.nil_append, List.getElem?_cons_zero,
+        Option.some.injEq] using hp
+    have hz : (⟨0, by omega⟩ : Fin (m + 1)) = 0 := by
+      apply Fin.ext
+      simp
+    simpa only [hz] using hp
   have hq' : anchor F ⟨1, by omega⟩ = q := by
     simpa only [List.getElem?_ofFn, dif_pos (by omega : 1 < m + 1),
       hs, List.cons_append, List.nil_append, List.getElem?_cons_succ,
