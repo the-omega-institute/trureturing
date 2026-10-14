@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/OrderedTwoCutSlicing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Walks/EdgeSlicing]
+   anchors: []
    utility: none
    digest: Two ordered actual path edges determine three endpoint-typed paths with the literal full support and exactly the retained edges. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
