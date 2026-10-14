@@ -32,14 +32,18 @@ internal sealed class LudersSubObservableClosureDocument : IScribeDocumentDefini
             Node("result", "An unsharp qubit image violates (S3)",
                 Disp(new Formula.Not(F.Id("claim"))),
                 "Take K_0 = diag(4/5, 3/5), K_1 = diag(3/5, 4/5), E = (1/400)[[151, 50], [50, 151]] and A x = K x * E * K x. Writing Pplus = Matrix.vecMulVec (1, 1) (star (1, 1)) and Pminus = Matrix.vecMulVec (1, −1) (star (1, −1)), E = (201/800) Pplus + (101/800) Pminus and 1 − E = (199/800) Pplus + (299/800) Pminus show that E is an effect. Each doubled outcome is positive semidefinite; the complement of their total is (1/400) Pplus + (97/400) Pminus. Hence A + A is a sub-observable. If A + A had an effect preimage, its outcome 0 and invertibility of K_0 would force the preimage E + E. The quadratic form of 1 − (E + E) on (1, 1) is −1/100, contradicting positivity. Thus (S3) fails. The summed map contracts off-diagonal entries by 24/25, while the individual invertible outcome fixes the preimage. Example 3's closure for projection effects survives, and no assertion about every unsharp instrument follows.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gudder-2023-sob-effect-algebra-luders"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("gudder-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] arguments) =>
