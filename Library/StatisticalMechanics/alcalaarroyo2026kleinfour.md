@@ -32,3 +32,19 @@ with all cellular automata in the existing local-rule vocabulary.
 This entry cites the published structural formalization. It makes no
 originality claim for that theorem and asserts no fixed monoid cardinality,
 shortest-word bound or lazy-only sufficiency criterion.
+
+## Verified locator
+
+DOI: 10.5281/zenodo.23280244 (Zenodo metadata identifies the MIT-licensed
+v1.1.0 supplementary software).
+
+Source: https://github.com/the-omega-institute/klein-four-lazy-ca-supplement/tree/fae47ad9dbbd4cbc1462a058dffe6ad4c2e416f1
+
+The structural membership equivalence is `KleinFour.membership_iff` in
+`KleinFour/Main.lean`. Its generator and composition invariant is proved
+in `KleinFour/Closure.lean`; the nonmerging and merging factorizations are
+in `KleinFour/Factorization.lean` (`nonmerge_mem`, `merge_factor` and
+`criterion_implies_membership`). These locations refer to the pinned
+public source for binary configurations over the Klein four-group. This
+locator excludes cardinality computations, lazy-only tables, shortest-word
+claims and later package versions.
