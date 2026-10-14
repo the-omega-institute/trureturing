@@ -12,6 +12,7 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
         "Deleting any retained b-edge from an independently defined zero star gives a Hamiltonian path with the exact complementary word Z_j.",
         H("Zero-Star Prefix-Reversal Complements"),
         Blocks(
+            CoordinateAPI("native_residual_nodup", "The Supplier Residual Has No Repeated Labels", "Deleting the last position from an actual permutation tuple leaves a list without repeated labels. Concrete supplier-star separation consumes this fact.", false),
             Paragraph(Text(
                 "A configuration is a permutation v of the positions Fin(m+1); v(i) is the label at position i. "
                 + "Right multiplication acts on positions: (v g)(i)=v(g(i)). The generators a, b and c reverse "
@@ -36,12 +37,29 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
                 + "to O(k,r), a b-edge joins O(k,r) to E(k,r+1) for r less than m, and a c-edge joins "
                 + "O(k,m) to E(k+1,0), with k read modulo m. Thus the literal circular word is (Hc)^m, "
                 + "where U_k=(ab)^k a and H=U_m. There are exactly 2m(m+1) configurations.")),
+            Api("a_apply", "Full reversal on positions", "The full reversal sends every native position to its Fin reversal."),
+            Api("b_apply", "Prefix reversal on positions", "The m-prefix reversal reverses positions below m and fixes the last position."),
+            Api("c_apply", "Short prefix reversal on positions", "The (m-1)-prefix reversal reverses positions below m-1 and fixes the final two positions."),
+            Api("ab_eq_rotate", "Full rotation from two reversals", "The actual product ab rotates all m+1 positions by one."),
+            Api("bc_apply", "Prefix rotation from two reversals", "For m at least two, bc rotates the first m positions by one and fixes the last position."),
+            Api("full_reverse_list", "Actual tuple reversal", "Right multiplication by a reverses the full actual configuration tuple."),
+            Api("rotate_pow_list", "Actual tuple rotations", "Every power of the full rotation produces the corresponding literal tuple rotation."),
+            Api("rotate_pow_eq_cycle", "Full rotation power coordinates", "Natural powers of the full rotation equal finCycle at the corresponding finite cyclic index."),
+            Api("cycle_zero", "Zero full rotation", "The zero finCycle is the identity position permutation."),
+            Api("cycle_mul", "Full cyclic indices add under multiplication", "Multiplying the actual full cyclic position permutations at indices r and s gives the permutation at their sum. The literal J2 word endpoint proof consumes this identity."),
+            Api("a_cycle", "Full reversal negates the cyclic index", "Moving an actual full cyclic position permutation past the full reversal negates its finite index. The literal J2 word endpoint proof consumes this identity."),
+            Api("a_sq", "Full reversal involution", "Two full native reversals have product identity."),
+            Api("b_eq_cycle_a", "The native b reflection coordinate", "The b reversal is full cyclic index minus one followed by a."),
+            Api("b_last", "The last position is fixed by b", "The actual b reversal fixes the final position."),
+            Api("uWord_length", "Literal native complementary length", "The generator list U_k has exactly 2k+1 entries."),
+            Api("uWord_product", "Literal native complementary endpoint", "The product of U_k is the kth full rotation followed by a."),
+            Api("c_sq", "Short reversal involution", "Two short native reversals have product identity."),
             Describe.Lean(DescribeId.Create("b-edge-complement"),
                 DeclarationHandle.Create(Prefix + "zeroStar_b_complement_hamiltonian"),
                 H("The Exact Hamiltonian Complement"),
                 StatementSource.FromAuthor(ComplementFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every m at least six, every marked label t, every residual circle W, and every v in Star(t,W), "
+                    "For every m at least three, every marked label t, every residual circle W, and every v in Star(t,W), "
                     + "suppose t occurs at position j with j in Fin(m). Then vb is also in Star(t,W). After deleting "
                     + "the undirected edge between v and vb from the induced factor, there is a Hamiltonian walk "
                     + "from v to vb of length 2m(m+1)-1. Its configuration support is exactly the successive right "
@@ -60,6 +78,70 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
                 "The result concerns one zero star and its retained factor. It does not connect distinct stars "
                 + "or assert a Hamiltonian cycle on all permutations.")))));
 
+    private static Formula CoordinateFormula(string selector)
+    {
+        if (selector != "native_residual_nodup") throw new System.ArgumentOutOfRangeException(nameof(selector));
+        Formula m = F.Id("m"), z = F.Id("z");
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m),
+            Call("Nodup", Call("residualList", z)))));
+    }
+
+    private static DocumentBlock CoordinateAPI(string selector, string title, string meaning, bool definition) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(CoordinateFormula(selector)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
+            definition ? DescribeRole.Definition : DescribeRole.Theorem);
+
+    private static DocumentBlock Api(string selector, string title, string meaning) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title),
+            StatementSource.FromAuthor(ApiFormula(selector)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(meaning + " This existing proof is exposed for live reuse by native switching polygons and complete native circle complements."))),
+            DescribeRole.Theorem);
+
+    private static Formula ApiFormula(string selector)
+    {
+        Formula m = F.Id("m"), i = F.Id("i"), v = F.Id("v"), k = F.Id("k");
+        Formula n = Add(m, D(1)), iv = Call("val", i);
+        Formula a = Call("a", m), b = Call("b", m), c = Call("c", m), r = Call("finRotate", n);
+        Formula body = selector switch
+        {
+            "a_apply" => All("i", Call("Fin", n), Eq(Call("apply", a, i), Call("rev", i))),
+            "b_apply" => All("i", Call("Fin", n), Eq(Call("val", Call("apply", b, i)),
+                Call("ite", Lt(iv, m), Sub(Sub(m, D(1)), iv), iv))),
+            "c_apply" => All("i", Call("Fin", n), Eq(Call("val", Call("apply", c, i)),
+                Call("ite", Lt(iv, Sub(m, D(1))), Sub(Sub(m, D(2)), iv), iv))),
+            "ab_eq_rotate" => Eq(Mul(a, b), r),
+            "bc_apply" => Implies(Le(D(2), m), All("i", Call("Fin", n),
+                Eq(Call("apply", Mul(b, c), i), Call("ite", Lt(iv, m),
+                    Call("mkFin", Call("mod", Add(iv, D(1)), m), n), i)))),
+            "full_reverse_list" => All("v", Call("Configuration", m),
+                Eq(Call("ofFn", Mul(v, a)), Call("reverse", Call("ofFn", v)))),
+            "rotate_pow_list" => All("v", Call("Configuration", m), All("k", Call("Nat"),
+                Eq(Call("ofFn", Mul(v, Call("pow", r, k))), Call("rotate", Call("ofFn", v), k)))),
+            "rotate_pow_eq_cycle" => All("k", Call("Nat"),
+                Eq(Call("pow", r, k), Call("finCycle", Call("natCast", k, n)))),
+            "cycle_zero" => Eq(Call("finCycle", Call("zeroFin", n)), D(1)),
+            "cycle_mul" => All("r", Call("Fin", n), All("s", Call("Fin", n),
+                Eq(Mul(Call("finCycle", F.Id("r")), Call("finCycle", F.Id("s"))),
+                    Call("finCycle", Add(F.Id("r"), F.Id("s")))))),
+            "a_cycle" => All("r", Call("Fin", n),
+                Eq(Mul(a, Call("finCycle", F.Id("r"))),
+                    Mul(Call("finCycle", Call("neg", F.Id("r"))), a))),
+            "a_sq" => Eq(Mul(a, a), D(1)),
+            "b_eq_cycle_a" => Eq(b, Mul(Call("finCycle", Call("negOneFin", n)), a)),
+            "b_last" => Eq(Call("apply", b, Call("last", m)), Call("last", m)),
+            "uWord_length" => All("k", Call("Nat"), Eq(Call("length", Call("uWord", m, k)), Add(Mul(D(2), k), D(1)))),
+            "uWord_product" => All("k", Call("Nat"), Eq(Call("prod", Call("uWord", m, k)), Mul(Call("pow", r, k), a))),
+            "c_sq" => Eq(Mul(c, c), D(1)),
+            _ => throw new System.ArgumentOutOfRangeException(nameof(selector))
+        };
+        return Disp(All("m", Call("Nat"), body));
+    }
+
+    private static Formula Lt(Formula l, Formula r) =>
+        new Formula.Relation(l, FormulaRelationOperator.LessThan, r);
+
     private static Formula ComplementFormula()
     {
         Formula m = F.Id("m"), t = F.Id("t"), residual = F.Id("W"), v = F.Id("v"), j = F.Id("j");
@@ -74,7 +156,7 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
             Call("scanl", Call("rightMultiply"), v, Call("zWord", m, Call("val", j))));
         Formula conclusion = And(Call("Star", t, residual, vb),
             Exists("w", Call("Walk", graph, v, vb), And(Call("IsHamiltonian", w), And(length, trace))));
-        return Disp(All("m", Call("Nat"), Implies(Le(D(6), m),
+        return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
             All("t", Call("Fin", n), All("W", Call("Cycle", Call("Fin", n)),
                 All("v", Call("Configuration", m), All("j", Call("Fin", m),
                     Implies(And(star, position), conclusion))))))));

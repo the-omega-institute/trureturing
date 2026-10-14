@@ -1,0 +1,25 @@
+**Proposition 7.1 (canonical admission is incomplete).** Existing attained
+inputs with all-depth joint finite witnesses can fail both generated frame tests.
+In particular the prescribed row pair in [SPC, Definitions 3.1 and 4.1 and
+Theorem 4.2][SPC] cannot be admitted by this recognizer. OUTSIDE is neither an
+unrestricted exclusion result nor an undecidability statement.
+
+Proof. SPC's exact attained family uses a proper finite one-hole context $C$,
+a positive fixed shift $a$, and $F(y)=C[\rho^a y]$. Its prescribed exact strata
+have a unique common closure point
+$L_C=\langle K,\langle K,K\rangle\rangle$ with $K=C[\rho^a K]$.
+Its actual finite approximants satisfy every record and the two distinct full
+rows at every depth. The supplier proves non-rationality: along repetitions of
+the hole address, side trees are $\rho^{aj}g$ for a fixed nonempty finite ground
+$g$, and their minimum depths tend to infinity. These are infinitely many
+distinct finite subtrees. Bare $\rho$ is not used as a contraction; the context's
+proper hole supplies the guard.
+
+If either frame were admitted for that pair, Theorem 4.2 and its actual all-depth
+witnesses would supply some $K_{\eta,\mathbf f}$ in both exact strata's closures.
+But that point is rational by Definition 3.2 and the common point is uniquely
+non-rational, a contradiction. Thus admission is not universal. This argument
+uses the published exact supplier family, not a pending source or a limit
+partition carrying finite signs. It refutes only universal admission by this
+contact language. $\square$
+

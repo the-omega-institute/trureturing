@@ -4,11 +4,12 @@ title: Strict advantage of complex quantum theory in a communication task
 authors: Thomas J. Elliott
 year: 2025
 url: https://arxiv.org/abs/2505.16523v2
-claim: A four-input communication task admits a complex-qubit strategy but no real-qubit strategy; non-real Bargmann invariants witness the ensemble's basis-independent imaginarity.
-strata_touched: []
+claim: A four-input communication task admits a complex-qubit strategy but no real-qubit strategy; non-real Bargmann invariants witness the ensemble's basis-independent imaginarity. Appendix D shows that a rebit strategy reaches average trace distance d = 1/12 from the target distribution and weakly conjectures that 1/12 is the minimum.
+strata_touched:
+  - D5/S3/QuantumBounds/RebitExclusionDistance
 license: citation-only
 triage: anchor
-doi: null
+doi: 10.1103/PhysRevA.111.062401
 ---
 
 # Complex dimension advantage and relational witnesses
@@ -43,6 +44,23 @@ and applications*, New Journal of Physics **26**, 013053 (2024), and set
 imaginarity witnesses to Fernandes et al., arXiv:2403.15066. These pointers
 do not substitute for inspecting the source when using a stronger
 realification or measurement theorem.
+
+## Verified locator
+
+DOI: 10.1103/PhysRevA.111.062401 (Phys. Rev. A 111, 062401, from Crossref metadata; the journal full text was not read).
+Primary version read: https://arxiv.org/abs/2505.16523v2 (the latest arXiv version).
+Source: https://arxiv.org/pdf/2505.16523v2 (text read from the PDF):
+- §II and §III.A, the task;
+- §IV, the robustness question;
+- Appendix D, "Bounding the distance for rebit strategies".
+
+## The rebit distance
+
+§III.A: "X = Y = {0, 1, 2, 3} … The target distribution for the game is P(Y|X) = (1 − δ_XY)/3".
+
+§IV: "For the trace distance, this would be d = (1/|X|) Σ_{x∈X} (1/2) Σ_{y∈Y} |P(y|x) − P̃(y|x)|, where P and P̃ are the target and realised distributions respectively. … Through an explicit construction we show that d = 1/12 is achievable for a rebit strategy. … Based on a rudimentary attempt at optimisation, we weakly conjecture that this is the optimal rebit strategy according to the average trace distance".
+
+Appendix D: "Through a rudimentary search over rebit strategies with gradient descent and Bayesian optimisation approaches, we were unable to find a rebit strategy with smaller error than this. … We therefore only weakly conjecture that d = 1/12 the the minimum distance for a rebit strategy."
 
 This note paraphrases the cited result and scope. No article PDF, figure
 or extended excerpt is redistributed.

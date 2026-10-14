@@ -1,0 +1,14 @@
+**Definition 3.1 (finite-frontier mass).** For any real $q>0$ and
+any nonempty finite tuple define
+
+$$
+W_q(\mathbf u)=\sum_{p\in\Delta(\mathbf u)}q^{|p|}.
+\tag{NMF.7}
+$$
+
+The empty frontier has mass zero. All masses are finite, and are
+rational when $q$ is rational. The strict discount criterion fixes
+a rational $q$ with $0<q<1/2$. The discount is per original edge,
+independently of the number of inserted branching nodes or of any
+source-presentation size.
+

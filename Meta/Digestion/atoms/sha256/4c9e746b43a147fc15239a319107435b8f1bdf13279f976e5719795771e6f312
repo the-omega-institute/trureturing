@@ -1,0 +1,135 @@
+**Proposition 15.9 (a six-region, thirty-one-source native consumer).**
+At $D=3$ write $W_3=\{w_0,\ldots,w_7\}$ in the original lexicographic
+order $LLL,LLR,LRL,LRR,RLL,RLR,RRL,RRR$. Take
+$P=\{w_6,w_7\}$, $I=\{0,\ldots,5\}$, $H=5$ and $q=6$. The actual
+source family is
+
+$$
+X_a=\mathcal B_3[T_{a_0},T_{6+a_1},T_{12+a_2},T_{18+a_3},
+                 T_{24+a_4},T_{30+a_5},T_{36},T_{42}],
+\qquad a\in\{0,\ldots,5\}^{6}.
+\tag{NAR.15.14}
+$$
+
+Let $\mathcal M=\{S_h:0\le h\le5\}$, where $S_h=I\setminus\{h\}$,
+so $Q_{S_h}=\{w_h,w_6,w_7\}$. The $q=t=6$ certificate of (NAR.15.8)
+gives $31$ distinct actual sources and $195$ distinct named native conflict
+edges. Under either lag convention,
+
+$$
+7\le N_5(6,5)\le36.
+\tag{NAR.15.15}
+$$
+
+No exact alphabet size beyond these bounds is asserted.
+
+**Proof.** The six co-singletons are $5$-wise intersecting, since any at
+most five exclude at most five positions, but their sixfold intersection
+is empty. Index abstract coordinates by $1,\ldots,6$ and let abstract
+region $i+1$ denote $S_i$. The only member missing original position $i$
+is $S_i$, so the replication choice is $g(i)=i+1$ and
+$\phi(x)_i=x_{i+1}$. This identifies the six abstract ages with the six
+original exposed ages. The $6+5\cdot5=31$ distinct profiles in (NAR.15.8) therefore
+give $31$ distinct sources in (NAR.15.14), with the two other ages fixed at
+zero and the original offsets $0,6,12,18,24,30,36,42$ unchanged.
+
+The named edges consist of $\binom62=15$ constant-clique edges,
+$5\binom52=50$ within-column edges, $4\cdot5\cdot4=80$
+unequal-index edges between consecutive columns, and $2\cdot5\cdot5=50$
+endpoint-to-constant edges. These four families are disjoint: they join,
+respectively, two constants, two vertices in one column, two vertices in
+successive columns, or a constant and a vertex in one of the two distinct
+endpoint columns. Thus their total is $195$. The identities in Theorem
+15.5 supply a nonzero displacement on the co-singleton outside the
+exceptional coordinate for each edge.
+
+Every depth-three slot is reached in each history. At every lag the eight
+exponent intervals of length at most five are disjoint. Therefore all three
+hidden values at $Q_{S_h}$ are pairwise unequal, and the complete hidden
+partition is discrete, including the two fixed original slots. Applying
+Theorem 15.4's lags gives equal complete later rows on each named edge;
+with $\lambda_0=1$ those witnesses have $1\le\ell,\ell'\le6$ and work
+under either lag convention. Initial acquisition displays the six variable
+subtrees and computes their ages by (NAR.14.6). Theorem 15.5 rules out
+six retained labels for this genuine future-menu task, proving the lower
+bound.
+
+For the upper bound retain the acquired ages at two distinct public
+exposed positions, for example $(a_0,a_1)$. Every five-position region
+contains at least one of them; use its later normalized value minus its
+retained age. All $6^2=36$ tuples occur, so this is a proper $36$-label
+encoder, also the transversal bound of Theorem 14.5. Its export precedes
+the future region choice. Thus (NAR.15.15) follows.
+
+The fixed-width representation price satisfies only
+$3\le\lceil\log_2N_5(6,5)\rceil\le6$. Increasing the forced alphabet
+from six to at least seven does not force a fourth bit, since both six and
+seven labels fit in three bits. Label and fixed-width bit counts exclude
+acquisition, source storage, decoder controls, parsing, arithmetic width,
+workspace, transmission and physical time. $\square$
+
+**Mathematical citation 15.10 (correspondence and boundaries).** The native
+clock, literal-row and full hidden-partition suppliers are
+right_clock_iterate in
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean),
+canonicalRow_record_iff in
+[ActualCutPartitionDecoder](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean),
+and legal_values_row/rowFiberEquiv in
+[NativeCutFibers](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean).
+Sections 13 and 14 supply the separated-age family, acquired-row factor,
+complete-row collision and finite decoder reused above. Witsenhausen's
+*The zero-error side information problem and chromatic numbers* (1976), and
+Charpenay--Le Treust--Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*](https://arxiv.org/html/2211.03649v2), are the mature
+zero-error coding correspondence; their stochastic, asymptotic or unrestricted
+side-information hypotheses are not imported.
+
+The longest-path coloring mechanism is the classical direction of Roy,
+[*Nombre chromatique et plus longs chemins d'un graphe* (1967),
+Theorems 1--2](https://www.numdam.org/item/M2AN_1967__1_5_129_0.pdf), with the
+finite directed formulation also recorded by Fujita--Kitaev--Sato--Tong,
+arXiv:2102.08432, Theorems 3--4. The use here is the explicit native rank
+(NAR.15.2), not a claim that one directed cycle lower-bounds an arbitrary
+chromatic number. Freixas--Kurz, arXiv:1711.06611, supplies the Nakamura
+empty-intersection parameter analogy for simple games; it does not identify
+the native age alphabet with their alternatives.
+
+For the clique-chain correspondence use Briceño--Bulatov--Dalmau--Larose,
+[*Dismantlability, connectedness, and mixing in relational structures*,
+arXiv:1901.04398v3, §2.4 and Lemma 2.9](https://arxiv.org/html/1901.04398v3).
+Their reflexive recoloring graph $C(G,K)$ joins two homomorphisms differing
+at at most one source vertex. Their link graph $L(G,K)$ instead imposes
+all mixed-tuple constraints, and Lemma 2.9 identifies homomorphisms from a
+link product $\mathbb L_\ell\times G$ with length-$\ell$ walks in $L(G,K)$.
+For $t\ge3$ set $G=K_{q-1}$, $K=K_q$, $\ell=t-2$, and map source vertex
+$u$ at link position $j-1$ to the color of $V_{u,j}$. Within-column
+injectivity is exactly the homomorphism condition into loopless $K_q$;
+the mixed constraints are exactly the unequal-index exclusions in
+(NAR.15.9). The one-spare invariant in Theorem 15.5 proves directly, for
+these particular complete graphs, that each such link step changes at most
+one position. The two forced endpoint maps differ at every one of the
+$q-1$ positions, so no walk of the stated length exists. At $t=2$ the
+endpoint contradiction is separate; no length-zero version of the cited
+lemma is assumed. No mixing, dismantlability, connectivity or general
+recoloring-diameter theorem is used.
+
+The native minimum-alphabet classification, direct rank formula,
+missing-region transfer and six-region consumer are repo-derived ordinary
+deductions from the stated suppliers and explicit proofs. The literature
+above supplies the coding, rank and link/recoloring correspondences as
+intermediate methods, not an asserted published native memory theorem.
+There is no worldwide novelty or Lean/kernel-verification claim.
+
+These statements concern the entire stated finite independent-age family,
+the public finite nonempty future menu, a code exported before its member
+and the lag are chosen, and exactly one complete later row. They recover
+lag without asserting source reconstruction, all-source coverage, acquisition
+legality, a physical memory or time optimum, or an acquisition/authentication
+optimum. Rank paths compare alternative profiles and are not actual
+$\rho$ histories. The minimal-$q$ regime is classified for every $q$.
+The classification does not determine the price for a general menu above
+$q$; in particular, the exact value of $N_5(6,5)$ within (NAR.15.15)
+remains undetermined. The exact prices and sharper bounds of sections 13
+and 14 retain their stated scope.
+

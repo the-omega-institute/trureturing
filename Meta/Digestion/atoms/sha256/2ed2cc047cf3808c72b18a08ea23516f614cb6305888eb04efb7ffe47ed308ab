@@ -1,0 +1,10 @@
+**Example 4.5 (a necessary finite exception).** The system
+$Z=\langle F,\alpha\rangle$ with $Z\in L_1$ has a solution, although giving
+its free state $F$ the value $\Omega$ fails. The only possible parse is the
+terminal $T_2=\langle\beta,\alpha\rangle$: a pair of two $L_1$ members
+cannot have right child $\alpha$. Thus $F=\beta$, $Z=T_2$.
+This is one of the bounded exceptional modes. Omitting the filter would
+admit invalid values; using only the unsaturated $\Omega$ test would reject
+a valid value. This finite native diagnostic is not a counterexample to
+the unrestricted acquired-input stopping problem.
+

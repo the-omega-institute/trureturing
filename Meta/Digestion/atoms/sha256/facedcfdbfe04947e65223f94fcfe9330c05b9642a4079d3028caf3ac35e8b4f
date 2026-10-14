@@ -1,0 +1,9 @@
+### 来源分层
+
+[S] Rafik Sahbi, *Sub-quorum colorings of graphs*, arXiv:2609.25128v1, Definition 2.2, Proposition 5.2, Lemma 5.4. https://arxiv.org/html/2609.25128v1
+
+[G] `the-omega-institute/subquorum-colorings`, `develop/grid-beta-uniform-2026-09-27.md`, commit `0a19e1f63ac903bd7074d5a783a164a597c1f19f`, Sections 1-13. 特别是第 11 节的残余构造和局部容量引理是第 7 节的输入。
+
+[Z] Thomas Zaslavsky, *Glossary of Signed and Gain Graphs and Allied Areas*, 本人维护的术语说明，条目 oriented/unoriented incidence matrix、signed-graph incidence。https://people.math.binghamton.edu/zaslav/Bsg/glossary.html 。用于核对换号及关联矩阵约定，不声称该页面已经给出本卷的网格缺额或距离界。
+
+第 3、5、9 节中的基础群和整数关联事实是经典结构，本卷给出自足证明以固定接口；第 4、6、7、8 节是本次从实际残余问题推导的端口理论与应用，不据此宣称全球首次发现。

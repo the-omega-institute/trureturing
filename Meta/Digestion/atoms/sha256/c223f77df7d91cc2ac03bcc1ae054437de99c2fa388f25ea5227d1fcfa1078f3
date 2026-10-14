@@ -1,0 +1,18 @@
+**Proof, adaptive induction and the converse.** Until a first differing
+reply the decoder histories are identical: equal entries and replies
+force equal local computations, next words and halt decisions. Correct
+finite recovery of different lags must eventually obtain a differing
+reply; otherwise the two halt outputs would agree. By (NAR.16.20) that
+first distinguishing word obeys (NAR.16.18). Repeated shallow requests,
+arbitrarily many finite capped requests, and unbounded local arithmetic
+cannot change the induction.
+
+For any alleged uniform cap $B$, choose $K$ so large that
+$D+\lfloor(K+\mu)/2\rfloor>B$. Every allowed request then has the same
+branch reply on the two entries, contradicting finite correctness.
+Thus a code merging any zero-read edge admits no uniform address cap.
+Conversely, if it separates all these edges, Reuse 16.2's finite
+zero-read candidate decoder already returns the lag. It makes no
+requests and has the vacuous address cap zero. This proves both
+directions for every fixed encoder. $\square$
+
