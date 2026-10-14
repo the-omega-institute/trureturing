@@ -17,6 +17,9 @@ import D5.S3.Quantum.Entanglement.EJM.EJMTriangleCacheData
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 100000
+-- Each finite kernel receipt needs a large transient heap. Complete them
+-- sequentially instead of retaining the heaps of all forty-two async proofs.
+set_option Elab.async false
 
 namespace D5.S3.Quantum.Entanglement.EJM.EJMTriangleCacheReceipts
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
