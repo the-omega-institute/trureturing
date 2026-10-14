@@ -108,6 +108,10 @@ $$\neg\operatorname{claim}\left(\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/FibonacciSuperAccessibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/landman-robertson-robertson-2023-fibonacci-super-accessibility` (refuted) by `D5/S3/Arith/Additive/FibonacciSuperAccessibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"landman-robertson-robertson-2023-fibonacci-super-accessibility","declaration_gid":"D5/S3/Arith/Additive/FibonacciSuperAccessibility.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bruce M. Landman, Aaron Robertson, Quinn Robertson (2023). *Ramsey properties for integer sequences with restricted gaps*. DOI: [10.2140/moscow.2023.12.181](https://doi.org/10.2140/moscow.2023.12.181). URL: <https://math.colgate.edu/~aaron/pap/moreDoAFinal.pdf>.

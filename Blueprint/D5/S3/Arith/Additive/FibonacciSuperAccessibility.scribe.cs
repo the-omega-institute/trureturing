@@ -42,14 +42,18 @@ internal sealed class FibonacciSuperAccessibilityDocument : IScribeDocumentDefin
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "Refutation of 2-super-accessibility", "result", Disp(Seq(Neg, Call("claim"))),
                 "The two avoidance theorems contradict the two alternatives in SuperAccessible 2 fibSet for the displayed coloring, proving the negation of the published question.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Landman))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Landman),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("landman-robertson-robertson-2023-fibonacci-super-accessibility"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula SetN() => Call("Set", N());
