@@ -4790,3 +4790,150 @@ in general. $\square$
 [AB38]: https://stacks.math.columbia.edu/tag/090U
 
 ## 追加锚（本行以下为增补区）
+
+## 39. Separator completeness for common-copy occupancy observations
+
+**Definition 39.1 (A shared induced separator and its attainable histograms).**
+Let $H$ be a finite simple graph with $q$ vertices, and let
+$G_1,\ldots,G_b$, $b\ge1$, be finite simple graphs whose pairwise
+vertex intersections are exactly $V(H)$. Each induces exactly $H$
+there. Their private vertex sets are disjoint. The union graph $G$
+has precisely the union of their edge sets, with no extra cross edges.
+Write $\Sigma_H=\operatorname{Ind}(H)$, including the empty set.
+A realization of local totals $c^{(a)}$ in degree $m\ge0$ is an
+array of $m$ independent sets of $G_a$, with occupancy $c^{(a)}_v$
+at each vertex $v$. All branches use the same number $m$ of rows.
+For such an array define the separator histogram
+
+$$
+h_J=\#\{r:I_r\cap V(H)=J\},\qquad J\in\Sigma_H.
+\tag{39.1}
+$$
+
+Its entries are nonnegative integers satisfying
+
+$$
+\sum_{J\in\Sigma_H}h_J=m,\qquad
+c_v=\sum_{J\ni v}h_J\quad(v\in V(H)).
+\tag{39.2}
+$$
+
+Thus one-point separator totals are a projection of the full
+histogram. For specified local totals put
+
+$$
+\mathcal B_a(m,c^{(a)})=
+\{h:\text{some local realization of }c^{(a)}\text{ has histogram }h\}.
+\tag{39.3}
+$$
+
+This set ranges over every realization of those totals. It is not
+the histogram of one arbitrarily chosen array. Unless otherwise
+stated the local totals are realizable and agree on $V(H)$.
+A global realization asks for one array of independent sets of $G$
+with all those restrictions; it does not ask to recover a supplied
+ordered array. This is the occupancy observation of Definition 28.1
+on an overlapping family of graphs.
+
+**Theorem 39.2 (The separator criterion and its universal first-moment boundary).**
+In Definition 39.1, a global realization exists exactly when
+
+$$
+\bigcap_{a=1}^{b}\mathcal B_a(m,c^{(a)})\ne\varnothing.
+\tag{39.4}
+$$
+
+For a fixed $H$ and any fixed $b\ge2$, the following universal
+property holds if and only if $H$ is complete: for every family
+$G_1,\ldots,G_b$ of the stated kind, every $m\ge0$, and every
+family of realizable local totals agreeing on $H$, a global
+realization exists. Equivalently the same characterization holds
+when one quantifies over all finite families with $b\ge2$.
+
+Proof. Restrict a global array to each branch. Its separator
+histogram is the same in every restriction, proving necessity
+in (39.4). Conversely choose $h$ in the intersection and choose,
+on each branch, a realization producing this $h$. Partition each
+array into blocks indexed by $J\in\Sigma_H$. Each $J$ block
+has $h_J$ rows on every branch. Match these rows in any order
+within each block and take their rowwise unions. All copies of
+the separator agree. Every edge of $G$ belongs to some branch,
+where that row is independent, so the union is independent.
+Its private and shared occupancies are the required ones. This
+proves sufficiency for all $b$, not only two.
+
+If $H$ is the complete graph on $q$ vertices, its legal patterns
+are just $\varnothing$ and the $q$ singletons. Every realization
+has the uniquely determined histogram
+
+$$
+h_{\{v\}}=c_v,\qquad
+h_{\varnothing}=m-\sum_{v\in V(H)}c_v.
+\tag{39.5}
+$$
+
+Local realizability ensures the last entry is nonnegative.
+Matching one-point totals therefore makes all the nonempty sets
+$\mathcal B_a$ contain this same unique histogram, proving the
+universal property. This is the elementary row-level clique
+gluing underlying Matsuda–Ohsugi–Shibata, *Toric rings and ideals
+of stable set polytopes*, [Proposition 1.3][MOS39]; the present observation
+also specifies the existential quantifier over local arrays.
+
+If $H$ is not complete, choose distinct nonadjacent vertices
+$a_0,b_0$ of $H$. On the left add one private vertex $x$ and the
+edges $a_0-x-b_0$; on the right add private vertices $y,z$ and the
+edges $a_0-y-z-b_0$. Add no other private edges. Retain all original
+edges of $H$, so both induced separators are exactly $H$.
+Take $m=2$, occupancy one at $a_0,b_0,x,y,z$ wherever present, and
+zero at every other vertex of $H$. On the left the two rows,
+in the order $(a_0,x,b_0)$, can be $101$ and $010$; on the right,
+in the order $(a_0,y,z,b_0)$, they can be $1010$ and $0101$.
+All added separator coordinates are zero in both arrays.
+
+Every edge in either path joins two vertices of occupancy one.
+Their occupied row sets are disjoint singleton subsets of two
+rows, hence are complements. Along the length-two left path,
+$a_0$ and $b_0$ must occupy the same row. Along the length-three
+right path, they must occupy opposite rows. Thus all left
+histograms have $h_{\{a_0,b_0\}}=1$, and all right histograms have
+$h_{\{a_0,b_0\}}=0$. Their intersection is empty despite identical
+one-point totals. Equivalently the five occupied vertices form
+the odd cycle $a_0-x-b_0-z-y-a_0$ and cannot be colored by two rows.
+For any prescribed $b>2$, take the extra branches to be copies
+of $H$ itself, with the same separator vertices and totals; each
+is locally realizable, and the first two branches still obstruct
+the intersection. This proves the converse with its full
+universal quantifiers. $\square$
+
+**Proposition 39.3 (Degenerate boundaries and the two gluing questions).**
+The criterion (39.4) includes $b=1$, $m=0$, and the empty
+separator. These cases do not extend the universal converse to
+$b=1$ or to a test restricted to degree zero. Compatible
+prescribed histograms and compatible total fibres are distinct
+questions even for the same graphs.
+
+Proof. For $b=1$, (39.4) says precisely that the supplied local
+totals are realizable, regardless of $H$. For $m=0$, realizability
+forces every total and histogram entry to be zero; the empty
+array is global for every $H$. If $q=0$, the separator has only
+the empty pattern and $h_{\varnothing}=m$; arbitrary local arrays
+can be aligned. The empty graph on zero vertices is complete
+under the pairwise adjacency convention, consistently with
+Theorem 39.2. A noncomplete separator can also have compatible
+particular totals, for example all-zero occupancies in any
+degree; its failure is failure of the universal guarantee.
+
+For prescribed local arrays, row permutations align their
+separator patterns exactly when their full histograms agree.
+For totals alone one may choose another array in each fibre,
+and the correct condition is the intersection (39.4). Neither
+criterion identifies an unknown original array. The joint
+coordinate and quantitative mismatch for the three-position
+separator are developed in §40 of the
+[same-subject continuation](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS_CONTINUATION_2.md),
+followed there by the shared-edge canonical application. $\square$
+
+[MOS39]: https://arxiv.org/html/1603.01850v1
+
+## 追加锚（本行以下为增补区）
