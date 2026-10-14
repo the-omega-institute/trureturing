@@ -73,8 +73,6 @@ internal sealed class EdgeSlicingCutEndpointsDocument : IScribeDocumentDefinitio
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Member(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.MemberOf, right);
-    private static Formula Add(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula And(Formula left, Formula right) => Logic(left, FormulaLogicOperator.And, right);
     private static Formula Implies(Formula left, Formula right) => Logic(left, FormulaLogicOperator.Implies, right);
     private static Formula Logic(Formula left, FormulaLogicOperator op, Formula right) =>
