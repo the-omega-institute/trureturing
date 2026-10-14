@@ -641,6 +641,55 @@ Thus the subpolynomial conclusion uses an existing CA threshold and a
 standard prime-counting estimate; it does not assume an unproved bound on
 $\log C$.
 
+### A sparse-exception reduction for the signed budget
+
+The two estimates above combine into a useful quantifier split. Fix $M>0$
+and take $a$ large enough that
+$\sqrt{48M}\,a^{3/4}<6a$. Define
+
+$$
+L_M(a)=32\sqrt a+\sqrt{48M}\,a^{3/4}.
+$$
+
+For a candidate satisfying $E_a(N)>L_M(a)$, monotonicity of $H_a$ gives
+
+$$
+\frac{H_a((E_a(N)-32\sqrt a)_+)}{a\log a}
+>\frac{M}{\sqrt a\log a}.
+$$
+
+Therefore (TC.5) implies the pointwise implication
+
+$$
+\boxed{
+I_\psi(a)+D^*(a)+\frac{M}{\sqrt a\log a}>R(a,w)
+\ \Longrightarrow
+\Delta_{\log}(N)>0
+}
+\tag{TC.10}
+$$
+
+for every original-window candidate with $E_a(N)>L_M(a)$. The candidates
+where this implication does not apply satisfy $E_a(N)\le L_M(a)$ and are
+bounded in number by (TC.8)--(TC.9):
+
+$$
+\boxed{
+\#\{N\text{ in the window}:E_a(N)\le L_M(a)\}
+\le \tau(C)=F_r^{o(1)}.
+}
+\tag{TC.11}
+$$
+
+Thus a proof of the signed inequality in (TC.10), together with a direct
+certificate for the exceptional set in (TC.11), would settle the complete
+Fibonacci window at that rank. This is a genuine reduction of the joint
+quantifiers: the signed input is needed uniformly for the bulk, while the
+remaining exact arithmetic work is subpolynomial. Neither ingredient is
+currently available, and the reduction concerns this Fibonacci family only;
+it is not a reduction of all integers to the family and therefore is not by
+itself a proof of RH.
+
 The conclusion only sparsifies the candidates left by the benefit bound.
 Each surviving pair still has to satisfy the window and the complete signed
 tail in (TC.5), and (TC.8) supplies neither a positive Robin margin nor a
