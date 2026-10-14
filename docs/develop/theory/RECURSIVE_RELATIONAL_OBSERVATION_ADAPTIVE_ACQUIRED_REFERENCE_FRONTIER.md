@@ -1464,3 +1464,526 @@ boundary and memory descriptions open, with their existing source
 and operation boundaries intact.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Finite ray memory and exact literal reply recovery
+
+This section asks which finitely many acquired boundary coordinates
+retain enough distinctions to predict a declared menu of literal reply
+values. The menu can contain nested addresses. Its output is a vector
+of values at one specified version, not a complete cut row and not a
+list of observation events. The finite source restriction below makes
+an exact necessity statement possible, while the sufficient decoding
+rule works on every finite native tree.
+
+**Definition 11.1 (finite initial family and complete retained input).**
+Use the actual trees, substitution, four-valued literal port and resource
+convention of Definitions 1.1–1.4. Give leaves height zero and give a
+branch height one plus the maximum child height. Fix public $D\ge1$ and
+
+$$
+\begin{aligned}
+\mathcal F_D
+ &=\{\langle\alpha,v\rangle:\operatorname{height}
+          (\langle\alpha,v\rangle)\le D+1\},\\
+A_D&=\{p\in\{L,R\}^*:1\le |p|\le D,
+                          \ p\text{ starts with }R\},\qquad P\subseteq A_D.
+\end{aligned}
+\tag{AAR.41}
+$$
+
+The set $P$ is a finite public menu, possibly empty; its words, if any,
+are nonempty. No prefix-free assumption is imposed on it. The known
+phase-sensitive source minimum is $m(t)=2$ for every $t\in\mathcal F_D$:
+the actual leaf $L$ is alpha, and every other leaf has depth at least
+one. This is $m$ from Definition 3.1, not the weighted minimum from
+Definition 3.5.
+
+Let $\Omega=\{L,R\}^{\mathbb N}$, let $[b]$ denote the rays beginning
+with $b$, and let $Q$ be a finite public set of distinct eventually-right
+rays. Write each $\omega\in Q$ by a fixed finite descriptor
+$q_\omega$ with $\omega=q_\omega R^\infty$. Different descriptors of
+the same ray do not count as different samples. For any finite tree $u$,
+there is one actual leaf $a$ on $\omega$; set
+
+$$
+ h_u(\omega)=s(a)+e(u|_a),\qquad
+ s(a)=\#_L(a)+2\#_R(a),\qquad e(\alpha)=0,\quad e(\beta)=1,
+ \qquad Z_Q(u)=(h_u(\omega))_{\omega\in Q}.
+\tag{AAR.42}
+$$
+
+The ordered table $Z_Q(t)$ has been truthfully acquired at a first
+capture $v$, with $t=U_v\in\mathcal F_D$. After handoff the entire
+accessible source-dependent retained state is exactly this table, or a
+fixed lossless encoding of it. All other accessible state is a fixed
+function of the table and public $D,P,Q$. This includes outputs,
+control, buffers, lengths, capacities, allocation identities, logs and
+pointers as in Definition 1.3; an extra source-bearing distinction
+changes the interface. The table centered by the known constant two,
+$Z_Q(t)-2\mathbf1$, is an equivalent encoding, not extra memory.
+
+The passive consumer receives an exact nonnegative update count $k$
+for a specified authentic continuation $U_w=\rho^k t$ on the same root
+and register. The requested value is
+
+$$
+ V_P(U_w)=\bigl(\operatorname{readout}(p,U_w)\bigr)_{p\in P}.
+\tag{AAR.43}
+$$
+
+This consumer gets no fresh Read, source name, hidden subtree, global
+boundary object, clock or history log. The genuine-history premise
+authenticates the meaning of the supplied count; the table does not
+authenticate that premise. Acquisition of an unknown count is a separate
+paid operation in Proposition 11.8 below. Public menus and descriptors
+are source-independent but their installation and use still cost bytes.
+
+**Lemma 11.2 (the supplied advancing boundary coordinate).** For every
+finite $u$, every eventually-right $\omega=qR^\infty$ and every $k\ge0$,
+
+$$
+ h_u(\omega)=J^c_q(u),\qquad
+ h_{\rho^k u}(\omega)=h_u(\omega)+k,\qquad
+ \varphi^{h_u(\omega)}=W(u)f_u(\omega).
+\tag{AAR.44}
+$$
+
+Here $J^c$ is the absence-safe right-clock coordinate, and $f_u$ is the
+canonical locally constant density, not an arbitrary almost-everywhere
+representative. These are precisely [NAR, Theorem 11.3 and Proposition
+12.8] and §9, with their existing boundary and scale suppliers.
+
+Proof of the parameter correspondence. If navigation toward $q$ stops
+at a blocking leaf $a$, the longest-reached-prefix rule gives
+$J^c_q(u)=s(a)+e(u|_a)$. Otherwise the leaf on the ray is $qR^r$, and
+the right-clock recurrence gives $c(u|_q)=2r+e(u|_{qR^r})$.
+Both cases give (AAR.42), including a descriptor ending at a leaf or
+strictly beyond one. The supplied advancement and canonical-density
+identities now have exactly the displayed parameters. Thus a descriptor
+never has to be reached for its table entry to make sense. This reuse
+does not supply a boundary point-evaluation port. $\square$
+
+**Lemma 11.3 (the left-child obstruction and its precise test).** Fix
+any finite native tree $u$ and any nonempty address $p$. Choose any
+ray $\omega\in[pR]$ and put $x=h_u(\omega)$ and $s=s(p)$.
+If $p=aL$, also choose any $\eta\in[aR]$ and put $y=h_u(\eta)$.
+The exact literal reply is
+
+$$
+\operatorname{readout}(p,u)=
+\begin{cases}
+\mathrm{absent},&x<s,\\
+\mathrm{absent},&x=s,\ p=aL,\ y=s,\\
+\alpha,&x=s,\ p\text{ ends with }R,\\
+\alpha,&x=s,\ p=aL,\ y>s,\\
+\beta,&x=s+1,\\
+\mathrm{branch},&x\ge s+2.
+\end{cases}
+\tag{AAR.45}
+$$
+
+The listed cases exhaust all attained inputs. In particular sampling
+inside $[p]$ without the additional right step is not the stated test.
+
+Proof. If $p$ is a leaf, its whole cylinder has score $s$ for alpha
+and $s+1$ for beta. If $p$ is a branch, a ray in $[pR]$ reaches a leaf
+strictly below its right child, or at that child. Its score is at least
+$s+2$, regardless of all other branches or labels.
+
+If $p$ is absent, its unique blocking leaf $b$ is a strict prefix of
+$p$ and of $\omega$. Write $p=br$ with $r\ne\varepsilon$ and let its
+label bit be $e_b$. Then
+
+$$
+ x=s(b)+e_b,\qquad s(p)-x=s(r)-e_b\ge0.
+\tag{AAR.46}
+$$
+
+Equality holds exactly when $r=L$ and $e_b=1$, since every letter has
+positive weight and only the one-letter word $L$ has weight one.
+Thus the sole absent case with $x=s(p)$ is a beta at the parent $a$
+of a left child $p=aL$. Every ray in $[aR]$ then has the same score
+$s(a)+1=s(p)$. In contrast, if $p=aL$ is an actual alpha, $a$ is a
+branch and every ray in $[aR]$ has score at least
+$s(a)+2=s(p)+1$. This proves the additional test and all cases in
+(AAR.45). It also shows that the answer is independent of which rays
+in the required cylinders were selected. $\square$
+
+**Theorem 11.4 (necessary and sufficient finite sampling geometry).**
+Under Definition 11.1, the following are equivalent:
+
+1. There is one total computable decoder $\mathsf D_{P,Q}$ such that
+   for every $t\in\mathcal F_D$ and every $k\in\mathbb N$,
+   $\mathsf D_{P,Q}(Z_Q(t),k)=V_P(\rho^k t)$.
+2. There is a single-valued decoder with that property, without an
+   effectiveness requirement.
+3. The public rays satisfy
+
+$$
+\begin{aligned}
+&Q\cap[pR]\ne\varnothing &&\text{for every }p\in P,\\
+&Q\cap[aR]\ne\varnothing &&\text{for every }aL\in P.
+\end{aligned}
+\tag{AAR.47}
+$$
+
+The necessity is for uniform correctness at all counts, including zero;
+it is not a claim that these samples are necessary at every fixed late
+epoch. The source height bound applies at the first capture, not to
+its future iterates.
+
+Proof of sufficiency. Select one public ray in each required cylinder,
+using the fixed order of $Q$. Compute $x=Z_Q(t)_\omega+k$ and, when
+needed, $y=Z_Q(t)_\eta+k$. Lemma 11.2 identifies these with the
+coordinates of the actual current tree $\rho^k t$. Apply Lemma 11.3
+for each target. The arithmetic and public selections are finite.
+Define arbitrary default outputs on malformed inputs to make the
+decoder total. Its correctness is asserted on the promised inputs.
+The argument works for every finite initial tree; $\mathcal F_D$
+is needed below to witness necessity within the specified family.
+
+Proof of necessity. Define an actual one-hole path context recursively
+by
+
+$$
+ C_\varepsilon[z]=z,\qquad
+ C_{Lb}[z]=\langle C_b[z],\alpha\rangle,\qquad
+ C_{Rb}[z]=\langle\alpha,C_b[z]\rangle.
+\tag{AAR.48}
+$$
+
+For a nonempty word $b$ beginning with $R$, consider
+
+$$
+ u_b=C_b[\beta],\qquad
+ v_b=C_b[\langle\alpha,\alpha\rangle].
+\tag{AAR.49}
+$$
+
+These are concrete finite sources with the same off-path leaves and
+initial left child alpha. Their heights are $|b|$ and $|b|+1$.
+Their entire ray profiles agree outside $[bR]$. Indeed rays outside
+$[b]$ encounter an unchanged leaf; on $[bL]$ both profiles equal
+$s(b)+1$; on $[bR]$ their values are respectively $s(b)+1$ and
+$s(b)+2$. This is an exact description of the differing set, not
+just an equality of chosen summary numbers.
+
+If the first condition in (AAR.47) fails for $p$, put $b=p$.
+Both sources belong to $\mathcal F_D$, their whole retained tables
+agree, and at count zero their replies at $p$ are beta and branch.
+If the second condition fails for $p=aL$, put $b=a$. Since $p$
+begins with $R$, $a$ is nonempty and begins with $R$. Both heights
+are at most $|p|\le D$, so both sources again belong to
+$\mathcal F_D$. Their retained tables agree but their replies at
+$p$ are absent and alpha. In both cases their known minimum is two,
+all public data and the supplied count zero coincide, and the complete
+accessible entry state coincides by Definition 11.1. Each is a valid
+constant initial history. A single-valued decoder cannot give both
+answers. Their translated tables also agree at every common future
+count, although the zero-count difference already proves failure of
+the required uniform task. This proves both necessary conditions.
+Computability implies single-valuedness, completing the equivalence.
+$\square$
+
+**Example 11.5 (two distinct failures in small native sources).** The
+following collisions instantiate both missing distinctions. Every
+entry refers to an actual finite tree and its whole indicated table.
+
+| Target and sampled ray | Two sources | Common sampled score | Different target replies at zero |
+| --- | --- | --- | --- |
+| $p=R$, $Q=\{RLR^\infty\}$ | $\langle\alpha,\beta\rangle$, $\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ | $3$ | beta, branch |
+| $p=RL$, $Q=\{RLR^\infty\}$ | the same two sources | $3$ | absent, alpha |
+
+The first row uses $D=1$ and misses $[RR]$. The second uses $D=2$:
+its ray does hit $[RLR]$, but it misses the required parent-right
+cylinder $[RR]$. Thus a test retaining only the first line of
+(AAR.47) is false even when the sampled ray lies strictly inside
+the target's right cylinder. Adding $R^\infty$ supplies the second
+row's missing distinction: the two scores there are three and four.
+
+**Corollary 11.6 (attained minimum number of rays).** Define the finite
+set of required words and its prefix-maximal members by
+
+$$
+\begin{aligned}
+ B(P)&=\{pR:p\in P\}\cup\{aR:aL\in P\},\\
+ B_{\max}(P)&=\{b\in B(P):\nexists c\in B(P)
+                                      \text{ with }b\prec c\}.
+\end{aligned}
+\tag{AAR.50}
+$$
+
+Among all fixed public eventually-right sampling sets that solve
+Theorem 11.4, the exact minimum cardinality is $|B_{\max}(P)|$.
+It is attained by $Q=\{bR^\infty:b\in B_{\max}(P)\}$.
+For the full depth menu $P=A_D$, this minimum is $2^{D-1}$.
+For an empty menu it is zero.
+
+Proof. Two binary cylinders either are disjoint or one contains the
+other. Distinct prefix-maximal words in (AAR.50) are incomparable,
+so one ray cannot hit two of their cylinders. Theorem 11.4 therefore
+requires at least their number. Every required word is a prefix of
+some prefix-maximal member, by finiteness. One ray through each of
+those members hits every required cylinder, proving attainment.
+For $P=A_D$, every required word begins with $R$, ends with $R$ and
+has length at most $D+1$. Every one of length at most $D$ has its
+strict extension $bR$ in $B(P)$. The maximal words are consequently
+exactly the length-$(D+1)$ words beginning and ending with $R$,
+of which there are $2^{D-1}$. The empty case is vacuous. $\square$
+
+This optimum counts distinct retained ray coordinates under the fixed
+sampling interface. It is not a lower bound on the number of arbitrary
+encoded registers, retained bits, native queries, installed literal
+bytes or peak workspace. Shared prefixes can save acquisition queries;
+coordinates can be encoded jointly; a single ray can have several
+finite descriptors. None of those changes the cylinder count proved
+here.
+
+**Proposition 11.7 (translation, restriction and the task-relative boundary).**
+For a table $z$, put $\tau_k z=z+k\mathbf1$, and let $d_{P,Q}$ be the
+rule (AAR.45) on current table values. On all attained inputs satisfying
+(AAR.47),
+
+$$
+\begin{aligned}
+\mathsf D_{P,Q}(Z_Q(t),k)&=d_{P,Q}(\tau_k Z_Q(t)),\\
+d_{P,Q}(\tau_h\tau_k Z_Q(t))&=V_P(\rho^{k+h}t),\\
+\tau_h\tau_k z&=\tau_{h+k}z.
+\end{aligned}
+\tag{AAR.51}
+$$
+
+If $P'\subseteq P$ and $Q'\subseteq Q$ still satisfies (AAR.47) for
+$P'$, then, with the ordinary coordinate restrictions,
+
+$$
+ \operatorname{res}_{P'}d_{P,Q}(\tau_k Z_Q(t))
+ =d_{P',Q'}\bigl(\tau_k\operatorname{res}_{Q'} Z_Q(t)\bigr).
+\tag{AAR.52}
+$$
+
+Proof. Equation (AAR.44) gives $Z_Q(\rho^k t)=\tau_k Z_Q(t)$;
+addition of actual update counts composes the same-source continuation.
+Lemma 11.3 identifies both sides of (AAR.52) with the same actual
+replies. Coordinate restriction commutes with adding $k$. These facts
+prove the statements, including independence of the public witness-ray
+choices. A rebased table is associated with its actual capture; a future
+increment must be counted from that capture. Discarding the old count
+discards its old time origin. $\square$
+
+The compatibility does not put a well-defined update operation on every
+selected-reply vector alone. For example, at $P=\{RL\}$ the sources
+$\langle\alpha,\alpha\rangle$ and $\langle\alpha,\beta\rangle$
+both give absent initially. After one update their replies at $RL$
+are respectively absent and beta. The sufficient table retains a
+distinction that this selected-reply vector discards. Nor does one
+recovered vector recover its table or the count. For $t\in\mathcal F_D$
+and $k\ge2D$, §3 gives
+$\mu(\rho^k t)=1+\lfloor k/2\rfloor>D$; hence every target in $A_D$
+is branch at every such count. All those different epochs give the
+same selected replies. The table-to-reply recovery is task-relative,
+not an equivalence of all spatial, temporal and memory descriptions.
+
+**Proposition 11.8 (actual acquisition and an unknown-lag consumer).**
+A finite ray table can be acquired by native literal Reads on a
+stationary first source in $\mathcal F_D$. A valid equal-alpha guard at
+$L$ can certify the common version. Subsequently, the same acquired
+initial alpha at $L$ permits a paid native service to acquire an unknown
+lag $k_w$ and then compute $V_P(U_w)$ under (AAR.47), even with finite
+interference in that later service.
+
+Proof and costs. To acquire one table entry, submit successive complete
+prefixes of its public ray from the root until a leaf reply is actually
+obtained. Use its actual address and label in (AAR.42). There is no
+infinite operand or navigation port. On a stationary first tree of
+height at most $D+1$, this takes at most $D+2$ Reads per ray, each
+operand of length at most $D+1$. Read $L$ as alpha before the table
+body and reread $L$ as alpha afterwards. The supplied leaf-rigidity
+law excludes every update between these two observations. The final
+Read is a joint validation of the acquired entries and the initial
+anchor. Without prefix sharing, the successful stationary procedure
+has the explicit bounds
+
+$$
+ T\le |Q|(D+2)+2,\qquad
+ A\le |Q|\frac{(D+1)(D+2)}2+2,\qquad Q_{\mathrm{operand}}\le D+1.
+\tag{AAR.53}
+$$
+
+All submitted literals, local work, table storage, guards and failed
+attempts are charged separately as in §5. Export entries in public order
+into fixed regions with canonical extents determined by the encoded
+table. Clear and retract the acquired leaf descriptors, reply latches,
+operand buffers, temporary counters and nonpublic control state before
+handoff. This realizes the complete interface of Definition 11.1 only
+when the host exposes no additional acquisition transcript or allocation
+distinction; inaccessible residual storage still has its storage cost.
+The conditional procedure
+does not guarantee capturing an $\mathcal F_D$ version after an
+unprotected writer has already changed its left alpha. Failure of a
+guard supplies no table with the stated initial-family premise.
+
+For the later service submit $L,LR,LR^2,\ldots$, extending only after
+a branch reply, until an actual leaf with label bit $f$ is acquired at
+$LR^j$. Let that event be $w$. Present-subtree transport gives
+$U_w|_L=T_{k_w}$, because the validated initial subtree at $L$ was
+alpha. Proposition 2.3, or the exact right-clock readout supplier,
+therefore gives
+
+$$
+ k_w=2j+f.
+\tag{AAR.54}
+$$
+
+Branch persistence excludes absence along this expanding search.
+After finitely many updates the final finite tree has finite right
+depth, so under the fairness convention the search reaches a leaf.
+Earlier search steps and local calculations may have been interleaved
+with updates. The formula concerns their actual terminal leaf Read,
+not invocation or Return. Its query list has exactly $j+1$ Reads,
+total literal length $(j+1)(j+2)/2$ and maximum length $j+1$.
+For a quiescent lag $k$, $j=\lfloor k/2\rfloor$; none of these prices
+is uniformly bounded over unknown lags.
+
+Use this acquired $k_w$ in Theorem 11.4 with the original retained
+table. It computes the menu values of the one actual version $U_w$,
+even if the source advances during computation. Formula (AAR.54)
+reuses the already acquired local calibration of §2; the new consumer
+is the finite spatial-reply decoder, not a new clock-subtraction law.
+The family promise and the first actual guard make $L$ a legitimate
+known reference; a mere promise $m(t)=2$ on arbitrary sources would
+not identify that address. $\square$
+
+Computing a value in (AAR.43) creates no $\operatorname{Read}(p)$ event
+at $w$. A later submission of $p$ is a new paid event and may occur on
+a different version. If the task requires actual observations of the
+menu at one common version, it must acquire and validate that separate
+body, for example by an unchanged acquired leaf guard with charged
+retries. Theorems about paid transcripts or complete rows cannot count
+these predictions as acquired replies. Likewise, without a supplied
+count or a new source observation, even a fully known initial tree
+cannot distinguish a later quiescent lag zero from lag one: the entire
+passive input before that observation is identical.
+
+**Counterexample 11.9 (same sufficient memory, different hidden equality).**
+Set
+
+$$
+\begin{aligned}
+ X&=\langle\alpha,\alpha\rangle,&
+ Y&=\langle\beta,\alpha\rangle,\\
+ t&=\langle\alpha,\langle X,X\rangle\rangle,&
+ t'&=\langle\alpha,\langle Y,X\rangle\rangle,\\
+ D&=2,&P&=\{RL,RR\},\qquad
+ Q=\{RLR^\infty,RRR^\infty\}.
+\end{aligned}
+\tag{AAR.55}
+$$
+
+Both sources lie in $\mathcal F_2$ and have $m=2$. The rays hit
+$[RLR]$, $[RRR]$ and the left target's required $[RR]$, so (AAR.47)
+holds. Both initial tables, in the displayed order, are $(5,6)$:
+the relevant leaves are the alpha at $RLR$ and the alpha at $RRR$.
+Both selected replies are branch at every update count. Nevertheless
+the complete $P$ rows have different partitions at every common count.
+
+Proof. At count zero both row exteriors are exactly
+$\langle\alpha,\langle\square_{RL},\square_{RR}\rangle\rangle$.
+In $t$ the hidden values are equal, while in $t'$ they are $Y$ and
+$X$ and hence unequal. At count $k$, present-subtree transport gives
+equal hidden values $\rho^k X,\rho^k X$ in the first source and
+$\rho^k Y,\rho^k X$ in the second. Their left children are
+$T_{k+1}$ and $T_k$; the supplied right clock gives their distinct
+values $k+1$ and $k$. The hidden values therefore remain unequal.
+The common exterior now has the same concrete $T_k$ at $L$ and the
+same two holes. The table values in both sources are $(5+k,6+k)$
+by (AAR.44). Even the paid calibration in Proposition 11.8 has the
+same left subtree on both histories, so adding that acquired count
+does not resolve the hidden equality. Thus neither the complete row
+nor the full source is a function of these inputs. $\square$
+
+Full-menu reply recovery also need not recover the source. In (AAR.55)
+add $R$ to $P$; the same two rays attain Corollary 11.6's optimum for
+$A_2$, yet the sources and partitions still differ. This obstruction
+concerns finite sampled coordinates, not the full boundary-plus-scale
+representation of Boundary Geometry Continuation IV, Theorem 113.5.
+That already established injective representation has a richer input.
+
+**Proposition 11.10 (finite initial storage and the count boundary).**
+For fixed $D,P,Q$, every initial entry on $\mathcal F_D$ belongs to
+$\{1,\ldots,2D+3\}$. Therefore the number $N_Q$ of attained initial
+tables is finite and at most $(2D+3)^{|Q|}$, and lossless table storage
+admits a fixed-width binary code of
+$\lceil\log_2 N_Q\rceil$ bits. This is an attainable finite-family
+bound for storing this table, not an arbitrary-encoder optimum for
+the selected-reply task.
+
+Proof. Every original leaf has depth between one and $D+1$;
+$1\le s(a)+e\le2(D+1)+1$. There are finitely many trees in
+$\mathcal F_D$, which can be generated by finite recursion on their
+height, and the ray entries are computable on each. Enumerate the
+distinct tables to obtain the stated code. A lossless fixed-width
+encoding of $N_Q$ different tables requires at least that many code
+values, giving the width for this particular lossless-storage task.
+No claim that the reply consumer distinguishes all these tables is
+needed or made. $\square$
+
+For nonempty $Q$, the exact rebased tables
+$\tau_k Z_Q(t)$ are pairwise distinct as $k$ grows. Retaining them
+losslessly for $0\le k\le K$, even for one fixed initial tree,
+requires at least $K+1$ code values. An exact materialized binary
+count likewise grows with its value. If the count is supplied anew
+as public task input, its acquisition, transmission and working
+representation are separate from the bounded initial table; it is
+not a free bounded cell. This does not impose an unbounded-storage
+lower bound on every reply-only service: after $2D$ updates all
+selected replies are branch, so a service concerned only with these
+values can deliberately forget further increments. Exact unbounded
+time recovery and saturated reply prediction are different tasks.
+
+**Mathematical citation 11.11 (suppliers, literature and scope).** The
+native additions here are the exact right-cylinder sampling criterion,
+its left-child beta-versus-absence obstruction, the finite native
+collision contexts and the attained laminar-cylinder ray count. Their
+proofs are ordinary `repo-derived` mathematics. The following suppliers
+fix their parameter meanings and their nontransfer boundaries.
+
+| Supplier | Correspondence and limit |
+| --- | --- |
+| [NAR], §§11–12, especially (NAR.11.3), (NAR.11.6) and Proposition 12.8 | $h_u(qR^\infty)=J^c_q(u)$ with the actual blocking-leaf convention; canonical density interpretation and unit advancement are reused. Finite sampling geometry and (AAR.45) are the additional recovery interface. |
+| §§2–3, 6, 9–10 of this volume | Local leaf calibration, $m$ advancement, native operand costs, complete retained-state accounting and arbitrary-encoding distinctions. The count supplied to Theorem 11.4 differs from §10's unknown-lag input; Corollary 11.6 is not §10's all-encoder frontier. |
+| [READ], `readout`, `source_foundation` | The actual four replies use alpha = `true`, beta = `false`, left address bit = `false`, right = `true`. The general leaf-determination and off-leaf facts do not prove the new beta-to-branch profile collision; (AAR.49) checks that collision directly. |
+| [DOR], `rightClock`, `right_clock_iterate`, `right_clock_readout` | The right-spine phase and the intervals for actual right-spine replies supply (AAR.54). An arbitrary ray in $[pR]$ need not be the right spine at $p$, and an absent left child has the extra case proved in Lemma 11.3. The epoch-supplied original-read service is a different consumer. |
+| [NDP], `original_present_transport`, `original_prefix_locality` | Same-source evolution at a reached leaf and finite-depth response dependence. Originally absent positions are handled by (AAR.46), not by assuming they have a transported subtree. |
+| [ACPD], `cutExterior`, `actualPartition`, `literalRecord`, `canonicalRow_record_iff` | The counterexample compares entire literal exteriors and the hidden equality partition. Selected constructor replies do not provide that partition. |
+| [Native Cross-Epoch Relations, §6](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md#6-exactly-which-relative-times-the-input-determines) | Its consistent complete-record support tests and common-source constraints concern richer input. An acquired count used here is not inferred from an unacquired cross-row equality or from graph connectivity. |
+| [Boundary Geometry Continuation IV, §113](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#113-the-original-tree-boundary-kernel-acquired-scale-and-initial-cut-rows) | Full canonical measure plus scale is already injective. (AAR.44) samples its logarithmic scaled density; the finite samples do not supply its full value, scale or acquisition for free. |
+
+The elementary same-input/different-output argument is a zero-error
+separation principle. Related primary literature is
+[Charpenay, Le Treust and Roumy, *Optimal Zero-Error Coding for Computing
+under Pairwise Shared Side Information*, arXiv:2211.03649v2,
+Definitions II.1 and IV.5, Theorem IV.8](https://arxiv.org/html/2211.03649v2).
+Their characteristic graph joins sources separated by a compatible
+query, and their full-support result groups vectors of task responses.
+Those are useful correspondences to a declared recovery target. Their
+rate theorem uses i.i.d. blocks, a distribution and expected prefix-code
+length; none is a hypothesis here. No asymptotic coding theorem supplies
+the geometric cylinders, the actual sources (AAR.49), or a sharp
+arbitrary-encoder bit price for this task. The finite-cylinder count
+uses the elementary laminar prefix structure, with its proof above.
+Neither it nor the reuse of boundary coordinates claims worldwide
+originality, new Lean verification or a physical spacetime law.
+
+**Open problem 11.12 (remaining recovery obligations).** The criterion
+settles a fixed public ray table and a finite literal-value menu on
+$\mathcal F_D$, uniformly over supplied authentic counts. It does not
+settle the all-source optimum over arbitrary retained encodings,
+source-dependent ray selection with charged selection information,
+unknown future menus, complete-row acquisition costs, or the recovery
+of all hidden equality and full source structure. Exact clock and
+boundary relations still require genuine acquisition and a common
+history. The general programme of mutually recovering spatial,
+temporal, boundary and memory descriptions remains open.
+
+## 追加锚（本行以下为增补区）
