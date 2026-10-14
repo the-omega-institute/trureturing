@@ -38,7 +38,10 @@ internal sealed class RebitExclusionDistanceDocument : IScribeDocumentDefinition
                         "The triangle inequality bounds the absolute value of each coefficient divided by three by the largest absolute coefficient times the total error in the corresponding output column. A nonzero coefficient family with sum zero has L1 norm at least twice its largest absolute coefficient. Summing the column estimates therefore gives total absolute error at least two thirds, and the factors one fourth and one half give average trace distance at least one twelfth.")),
                     Paragraph(Text(
                         "An explicit strategy with square root of three attains the bound. Its first three input rows equal the target rows, while its fourth row repeats the third. The total absolute error is two thirds, so the average trace distance is one twelfth. This realizes the construction in Appendix D as a real positive-operator-valued measurement and proves the conjectured minimum."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("elliott-2025-rebit-minimum-distance"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
