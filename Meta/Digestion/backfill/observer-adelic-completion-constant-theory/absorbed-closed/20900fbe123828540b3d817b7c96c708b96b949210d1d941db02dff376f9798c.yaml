@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:20900fbe123828540b3d817b7c96c708b96b949210d1d941db02dff376f9798c
+  normalized_sha256: sha256:20900fbe123828540b3d817b7c96c708b96b949210d1d941db02dff376f9798c
+cas_ref: sha256:20900fbe123828540b3d817b7c96c708b96b949210d1d941db02dff376f9798c
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/GoldenLorentzUpdate.golden_lorentz_update
+    target_statement_id: sha256:42d4a852d0ee276007ede94f7aa34caa1c2129cea200a56acfefbdefcf31e06e
+receipts:
+  unresolved_subitems: []
