@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6bd320536819ceb28544a077ed561abbda07efb12a03634c813b25656a382a9
+  normalized_sha256: sha256:b6bd320536819ceb28544a077ed561abbda07efb12a03634c813b25656a382a9
+cas_ref: sha256:b6bd320536819ceb28544a077ed561abbda07efb12a03634c813b25656a382a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 158.1　有限可逆平衡碰撞生成元只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 90a0583f5d923d48d49b527869696cfdf2c4d19364f26825f4926e2086d0ec4e
+    next_atom_id: c08e7ae1aa1880fa7bb83fcba062192873fa451dd4ae9913070f83b06957d7d4
