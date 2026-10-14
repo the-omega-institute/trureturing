@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac60ee50ca9face4b44cf343b909bc56ec04870f7359ff5482c7a2f286cbdf29
+  normalized_sha256: sha256:ac60ee50ca9face4b44cf343b909bc56ec04870f7359ff5482c7a2f286cbdf29
+cas_ref: sha256:ac60ee50ca9face4b44cf343b909bc56ec04870f7359ff5482c7a2f286cbdf29
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** R17 给出其 $p^j$ 次幂为 $1$。若 $j>0$，R17 对 $j-1$ 给出的差恰只有深度 $s+j-1$，所以…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 84134e637de1ad269a515fd404f0757dbecd893c6017e29ea80ceae204777939
+    next_atom_id: 62ece7918bbac8a461fce1a1604ddd6cdf951dd7a39e8ff335f0d2c139b7619c
