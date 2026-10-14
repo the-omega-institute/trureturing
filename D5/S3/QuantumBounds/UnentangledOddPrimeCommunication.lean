@@ -44,6 +44,14 @@ def mixtureScore {d L : ℕ} [NeZero d] (q : Fin L → ℝ)
     (M : Fin L → Option (ZMod d) → ZMod d → Matrix (Fin (d * d)) (Fin (d * d)) ℂ) : ℝ :=
   ∑ l : Fin L, q l * score (α l) (β l) (M l)
 
+def claim : Prop :=
+  ∀ (d : ℕ) (hp : d.Prime), Odd d →
+    letI : NeZero d := ⟨hp.ne_zero⟩
+    ((∀ α β M, Valid (d := d) α β M → score (d := d) α β M ≤ 2 / ((d : ℝ) + 1)) ∧
+     (∀ (L : ℕ) (q : Fin L → ℝ) α β M, (∀ l, 0 ≤ q l) → ∑ l, q l = 1 →
+        (∀ l, Valid (d := d) (α l) (β l) (M l)) → mixtureScore (d := d) q α β M ≤ 2 / ((d : ℝ) + 1))) ∧
+    (∃ α β M, Valid (d := d) α β M ∧ score (d := d) α β M = 2 / ((d : ℝ) + 1))
+
 private theorem tensor_trace {m n : ℕ} (A : Matrix (Fin m) (Fin m) ℂ)
     (B : Matrix (Fin n) (Fin n) ℂ) :
     Matrix.trace (tensor A B) = Matrix.trace A * Matrix.trace B := by
@@ -624,5 +632,19 @@ private theorem classical_score {d : ℕ} [NeZero d] :
   simp -congrConsts [univ_option, Finset.sum_insertNone, ZMod.card, NeZero.ne (d : ℝ)]
   field_simp (disch := first | exact NeZero.ne (d : ℝ) | positivity)
   norm_num
+
+theorem result : claim := by
+  intro d hp hodd
+  let : NeZero d := ⟨hp.ne_zero⟩
+  let : Fact d.Prime := ⟨hp⟩
+  have h2 : (2 : ZMod d) ≠ 0 := by
+    intro he
+    have hdiv : d ∣ 2 := (CharP.cast_eq_zero_iff (ZMod d) d 2).mp (by simpa using he)
+    have hd : d = 2 := (Nat.dvd_prime Nat.prime_two).mp hdiv |>.resolve_left hp.ne_one
+    subst d
+    norm_num at hodd
+  exact ⟨⟨fun α β M h => fixed_score_le h2 α β M h,
+    fun L q α β M hq hsum hv => mixture_score_le h2 q α β M hq hsum hv⟩,
+    ⟨classicalEncoding, classicalEncoding, classicalMeasurement, classical_valid, classical_score⟩⟩
 
 end D5.S3.QuantumBounds.UnentangledOddPrimeCommunication
