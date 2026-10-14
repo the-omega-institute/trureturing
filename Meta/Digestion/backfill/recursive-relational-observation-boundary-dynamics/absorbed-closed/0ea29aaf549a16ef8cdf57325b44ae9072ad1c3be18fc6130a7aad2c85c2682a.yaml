@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:0ea29aaf549a16ef8cdf57325b44ae9072ad1c3be18fc6130a7aad2c85c2682a
   normalized_sha256: sha256:0ea29aaf549a16ef8cdf57325b44ae9072ad1c3be18fc6130a7aad2c85c2682a
 cas_ref: sha256:0ea29aaf549a16ef8cdf57325b44ae9072ad1c3be18fc6130a7aad2c85c2682a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient
+    target_statement_id: sha256:e6bbd232d9f6aad61751436cb37d9ceee4fa624298ef9a7680a2eab2cae94dd4
 receipts:
   unresolved_subitems: []
   chain_atoms:
