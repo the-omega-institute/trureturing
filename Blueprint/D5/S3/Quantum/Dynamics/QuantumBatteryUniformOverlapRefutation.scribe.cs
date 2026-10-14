@@ -49,7 +49,10 @@ internal sealed class QuantumBatteryUniformOverlapRefutationDocument : IScribeDo
                             + "Since v lies in the least eigenspace, Cauchy-Schwarz bounds its uniform overlap "
                             + "from below by (-125)^2/25 = 625. "
                             + "But 625 > 1225/2 - sqrt(1224), contradicting Conjecture 1."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sarkis-prosniak-nigro-tkatchenko-2026-uniform-overlap-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
