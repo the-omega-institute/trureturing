@@ -49,7 +49,7 @@ private theorem small_run {a b : Bool} {qs : List (Option Bool × Nat)}
   | update row tail => simp [small] at row
   | internal row tail => simp [small] at row
 
-private theorem small_correct : Correct small 1 0 := by
+theorem small_correct : Correct small 1 0 := by
   intro u hu t ht
   have tz : t = 0 := by omega
   subst t
@@ -67,7 +67,7 @@ private theorem small_correct : Correct small 1 0 := by
     simp only [FreeMagma.length] at hu
     omega
 
-private theorem small_static : Static small 1 0 := by
+theorem small_static : Static small 1 0 := by
   intro u hu t ht qs updates f b run
   have tz : t = 0 := by omega
   subst t
@@ -79,7 +79,7 @@ private theorem small_static : Static small 1 0 := by
     simp only [FreeMagma.length] at hu
     omega
 
-private theorem small_queries : (queries small).card = 1 := by
+theorem small_queries : (queries small).card = 1 := by
   classical
   have eq : queries small = {none} := by
     ext e
