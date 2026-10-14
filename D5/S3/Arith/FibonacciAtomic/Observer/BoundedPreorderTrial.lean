@@ -10,6 +10,11 @@ import D5.S3.Arith.FibonacciAtomic.Observer.NativeFullSourceProducer
 import D5.S3.Arith.FibonacciAtomic.Observer.DelayedOriginalReadout
 import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.NativeRotationDepthGap
 
+/-! The trial bounds are symbolic over arbitrary source sizes and epochs.
+They do not enumerate a bounded family or certify a fixed finite instance.
+The source-indexed traversal is proof data; decoder execution is on the
+stationary current source. Reduced trial control requires a separate realization. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
