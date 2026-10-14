@@ -49,7 +49,10 @@ internal sealed class GeneralDyneSteadyStateOptimalityDocument : IScribeDocument
                         "With v = sqrt(det S), c = sqrt(1-r squared), h = S(0,1), and T = (1+r) S(0,0) + (1-r) S(1,1), two determinant identities express the product of the quadratic factors Fplus and Fminus as the sum of a nonnegative correlation term, a nonnegative drift-weighted imbalance term, and (det M minus one) det R. Positivity of W gives nu T <= 2 det S, while T >= 2 c v, hence v >= nu c. For positive r, Fplus = (v minus nu c) squared + (nu minus one) c (v minus nu c) + nu r squared is strictly positive. Consequently Fminus is nonnegative and v is at least vStar.")),
                     Paragraph(Text(
                         "At zero pump the matrix equation forces S = nu I for every physical stationary solution. For all stable pumps, the diagonal covariance with entries c vStar/(1+r) and c vStar/(1-r) is physical and solves the stationary equation at optMeas; its determinant square root is vStar. These arguments include mixed measurement covariances and zero bath occupation. They establish the global value and an aligned attainer, without classifying all equality cases."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kua-serafini-genoni-2025-general-dyne-optimality"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(

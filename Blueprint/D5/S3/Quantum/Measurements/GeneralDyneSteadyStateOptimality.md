@@ -108,6 +108,10 @@ $$\forall kappa \in \mathbb{R},\; \forall chi \in \mathbb{R},\; \forall nth \in 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kua-serafini-genoni-2025-general-dyne-optimality` (proved) by `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kua-serafini-genoni-2025-general-dyne-optimality","declaration_gid":"D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. H. Kua; A. Serafini; M. G. Genoni (2025). *Daemonic ergotropy of Gaussian quantum states and the role of measurement-induced purification via general-dyne detection*. DOI: [10.1088/2058-9565/ae2200](https://doi.org/10.1088/2058-9565/ae2200). URL: <https://arxiv.org/abs/2506.22288>.
