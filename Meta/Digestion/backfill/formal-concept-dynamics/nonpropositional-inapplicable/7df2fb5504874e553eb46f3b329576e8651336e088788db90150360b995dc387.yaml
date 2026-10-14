@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7df2fb5504874e553eb46f3b329576e8651336e088788db90150360b995dc387
+  normalized_sha256: sha256:7df2fb5504874e553eb46f3b329576e8651336e088788db90150360b995dc387
+cas_ref: sha256:7df2fb5504874e553eb46f3b329576e8651336e088788db90150360b995dc387
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 476.1（环境不变规律）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 05bf6a95d05d34bf526bbe32665b2780b92c5dcde686cb93e0f7e9cec7426760
+    next_atom_id: 8fbcbed040ad9c6d5728844eaefb7700c4f2d736ce4dc5ac8d686efdb0bf9062

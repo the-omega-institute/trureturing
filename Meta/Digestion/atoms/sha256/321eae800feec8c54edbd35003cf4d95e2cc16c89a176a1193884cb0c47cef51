@@ -1,0 +1,15 @@
+**定理 2.2（全等式、全不等式下的 class-summary correspondence）。** A tuple $((a_b,e_b))_{b\in B}\in(\mathbb N_0\times\{0,1\})^B$ is realized by pairwise distinct class trees exactly when
+
+$$
+ b\ne c,\ e_b=e_c=1\ \Longrightarrow\ a_b\ne a_c.
+\tag{RDR.3}
+$$
+
+Consequently the exact attainable root-depth spectrum is
+
+$$
+\Sigma_R=\{\nu(u):u\in U_R\}
+ =\{\operatorname{first}(E_C((a_b,e_b)_b)):\text{(RDR.3) holds}\}.
+\tag{RDR.4}
+$$
+

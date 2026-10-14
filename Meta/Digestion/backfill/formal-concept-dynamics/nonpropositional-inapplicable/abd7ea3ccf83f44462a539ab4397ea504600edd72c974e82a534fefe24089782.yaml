@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:abd7ea3ccf83f44462a539ab4397ea504600edd72c974e82a534fefe24089782
+  normalized_sha256: sha256:abd7ea3ccf83f44462a539ab4397ea504600edd72c974e82a534fefe24089782
+cas_ref: sha256:abd7ea3ccf83f44462a539ab4397ea504600edd72c974e82a534fefe24089782
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 444.1（区分）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 1a8dc32c1a2249dcc7ae41dbf4d11a03a17115b7a39bf3e489b21e0ef0e42d0d
+    next_atom_id: d4a40e54f793864718b1f7a8c5a69d2f4da9a28b6e1e219be99ebb4e003380aa

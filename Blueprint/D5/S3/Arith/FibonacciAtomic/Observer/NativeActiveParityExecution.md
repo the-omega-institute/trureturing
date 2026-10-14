@@ -28,9 +28,35 @@ Induction over the remaining stages uses the concrete data Read and the two or t
 
 The pilot branch hold has no promised support under the rank bound, and no off-promise termination is asserted. Chi is not a parity decoder for arbitrary saturated branches or arbitrarily deep absent addresses. This result establishes the entire expanded symbolic table's actual-source execution. Its realization as one injective immediate binary word with no adjacent ones remains a separate obligation, together with all encoding edges, width and installed-word counts for arbitrary h and the complete primitive, address and bit-change bills. No mutable-width or physical execution-service claim follows from this statement.
 
+**Theorem 1.2 (Literal readout on an original cone).**
+
+$$\forall h: Nat, (\forall C: \operatorname{Chart}\left(h\right), (\forall x: \operatorname{Fin}\left(h\right) \to Bool, (\forall t: Nat, (\forall j: Nat, (\forall i: \operatorname{Fin}\left(h\right), (\forall p: Address, (\operatorname{observations}\left(C, t, x, j, \operatorname{append}\left(\operatorname{address}\left(C, i\right), p\right)\right) = \operatorname{readout}\left(p, \operatorname{atom}\left(t + j + \operatorname{bit}\left(\operatorname{x}\left(i\right)\right)\right)\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.cone_read` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any supplied Chart with h independently indexed original leaves, any label assignment, entry lag t, post-entry update epoch j, original index i and arbitrary literal suffix p, the physical readout at address(i) followed by p equals the readout of p on the atom of rank t+j+bit(x(i)). The atom on the right is the actual original cone of that source at epoch j. This identity imposes no alignment-window premise and is used for the static scan as well as the active alignment. The label convention remains atom(bit(x(i))), with alpha equal to of(true) and beta equal to of(false).
+
+**Theorem 1.3 (Common Boolean offset in a finite parity).**
+
+$$\forall x: Nat \to Bool, (\forall b: Bool, (\forall n: Nat, (\operatorname{parity}\left(\operatorname{shift}\left(b, x\right), n\right) = \operatorname{xor}\left(\operatorname{and}\left(\operatorname{decide}\left(\operatorname{mod}\left(n, 2\right) = 1\right), b\right), \operatorname{parity}\left(x, n\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.shifted_parity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Write shift(b,x)(i)=b XOR x(i). The XOR of its first n entries is the original prefix XOR, with one additional b exactly when n is odd. Even n cancels the common offset; a false offset vanishes for every n. This identity is used after deriving the actual scheduled contributions.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.cone_read`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.native_active_parity_execution`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.shifted_parity`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers](NativeCutFibers.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns](NativeDepthPatterns.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativePollingAlignment](NativePollingAlignment.md)

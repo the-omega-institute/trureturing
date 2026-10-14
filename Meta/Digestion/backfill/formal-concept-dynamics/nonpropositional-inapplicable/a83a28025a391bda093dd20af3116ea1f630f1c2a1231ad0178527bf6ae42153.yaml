@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a83a28025a391bda093dd20af3116ea1f630f1c2a1231ad0178527bf6ae42153
+  normalized_sha256: sha256:a83a28025a391bda093dd20af3116ea1f630f1c2a1231ad0178527bf6ae42153
+cas_ref: sha256:a83a28025a391bda093dd20af3116ea1f630f1c2a1231ad0178527bf6ae42153
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“仪器”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: ddc5c6ad6ee2fb4660bdc1acd9c76c32f09e9f3571b5d7fb9fbdeb21ad7e933b
+    next_atom_id: 616ba11a728bd048b0257ebb6fd6fae51f994707162bd7532245155e9e48c13d

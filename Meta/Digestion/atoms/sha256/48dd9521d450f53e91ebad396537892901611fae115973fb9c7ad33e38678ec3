@@ -1,0 +1,4 @@
+**Corollary 214.3 (one exact certificate and its boundary).** If an actual unit-$O$ input has a quotient in the cone of Theorem 214.2, the single score above has $Q(V)=Q(y)$, $\Delta_N(V)=D_*\le\Delta_O(y)\le1$, and the residual is zero. Thus the certificate uses one common score and $\theta=0$. For every complete feasible $\lambda$ for the same $b\in H_N$, of mass $M$, the existing weak-duality row gives
+$F_{Q(y)}(b)\le M\Delta_N(V)\le M\le\max(1,M)$; no $H_L$ point is substituted for the original $H_N$ witness. A detector mixture itself has actual tail error
+$\max(1-p_n,a_m)$ at a later first absence $m$, by the closed-tail identity supplied with Theorem 110.2; it is not asserted to attain every arbitrary cap. The nonnegative one-late specialization is Theorem 213.18, so the new content is the signed early cone and the aggregate post-pivot negative stock.
+

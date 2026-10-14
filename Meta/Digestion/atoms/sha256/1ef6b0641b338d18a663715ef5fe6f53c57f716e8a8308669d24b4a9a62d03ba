@@ -1,0 +1,50 @@
+**Theorem 213.2 (Canonical least terminal minimizer).**
+For every full nonnegative skeleton $V_0$ with $T=0$ and every signed
+$q$, let $V_t=V_0+t e_T$ for $t\ge0$. Over the complete $N$ catalog put
+
+$$
+d_0=\max_{D(1^L)=0}V_0\cdot(z_D-r),\qquad
+d_1=\max_{D(1^L)\ne0}V_0\cdot(z_D-r),\qquad
+t_*=(d_1-d_0)_+,
+$$
+
+and $\chi_q(t)=\max(0,\sigma_H(q-Q(V_t)))$.
+Both catalog subsets are nonempty, $d_0\ge0$, and
+
+$$
+\Delta_N(V_t)=\max(d_0,d_1-t),\qquad
+\min_{t\ge0}\{\Delta_N(V_t)+\chi_q(t)\}=d_0+\chi_q(t_*).
+\tag{213.2}
+$$
+
+The displayed $t_*$ is the least minimizer, not necessarily the unique
+one. For $0\le s<t\le t_*$ the objective decreases by at least
+$3(t-s)/(L+1)$; on $[t_*,\infty)$ it is nondecreasing.
+Consequently $q\in E_N$ if and only if some full $T=0$ skeleton satisfies
+$d_0+\chi_q(t_*)\le1$. This leaves every A/C/P coordinate free.
+
+**Proof.** If $D(1^L)=0$, adding $t$ increases both its reward and the
+anchor by $t$; otherwise only the anchor increases. The two maxima give
+the first identity, and the anchor itself gives $d_0\ge0$.
+The quotient changes by $(0,\ldots,0;t)$, hence every residual reading
+increases by $te$. On $H_L$,
+
+$$
+0\le e\le\eta_L:=\frac{L-2}{L+1}<1,\qquad
+0\le\chi_q(t)-\chi_q(s)\le\eta_L(t-s)\quad(s\le t).
+$$
+
+The first bound follows from $(L+1)e\le\sum_{j\ge3}b_j\le L-2$;
+the second follows by maximizing affine readings and zero. No sign
+condition on the residual was used. Below $t_*$ the cost decreases
+with slope one, proving the strict quantitative decrease. Above it
+the cost is constant and the residual is nondecreasing. This also
+handles $d_1\le d_0$, when $t_*=0$.
+
+An existing certificate $(V_t,\theta)$ has $\chi_q(t)\le\theta$.
+Replacing it by $(V_{t_*},\chi_q(t_*))$ cannot increase the sum in
+(213.1). Since $d_0\ge0$, its new residual charge belongs to $[0,1]$.
+Conversely any skeleton satisfying the stated inequality is such a
+certificate. Both terms use the same budget. No existence of a suitable
+skeleton for every unit-$O$ input is inferred. $\square$
+

@@ -1,0 +1,59 @@
+**Proposition 4.2 (selection recovers a lag that the same signs do not).**
+A universally live producer can return a completely cleaned pair of root
+rows and a negative root comparison that determines capture lag exactly
+one, although those record predicates alone admit every positive lag.
+
+Proof. Perform two consecutive RA$\ell$ captures with empty cuts,
+retaining paid full descriptions $t_0,t_1$ and stamps $k_0,k_1$ until
+both validations $v_0,v_1$. If $k_1-k_0=1$, select root cuts for both
+final rows. Otherwise select a root cut for the first and an empty cut
+for the second. In either case compute the actual signed comparison of
+the reached roots from their paid descriptions. These are ARH-legal
+endpoints; on the designated branch they are also NCE holes. Return
+only the selected cuts, rows, sign and canonical common state, revoking
+descriptions, stamps and intermediate controls. For the alternative
+empty second cut its literal whole tree remains part of that output.
+
+Let $b$ be two root rows with negative sign. CAB gives
+$k_1-k_0=e_{v_1}-e_{v_0}$ on every returning history, so $b$ forces lag
+one. Positive lag makes roots different because $\ell$ strictly advances.
+Every source admits this branch: keep the first capture quiescent, apply
+one update before the second, then keep it quiescent. The two captures
+and finite subsequent computations terminate under every progressing
+finite-interference schedule.
+
+For a finite paired-history falsifier use invocation alpha. Quiescent
+first capture gives $t_0=\alpha$. One intervening update gives
+$t_1=\beta$ and output $b$; two give
+$t_1=\langle\beta,\alpha\rangle$ and the alternative empty second cut.
+The candidate $(\alpha,0,2)$ satisfies both root rows and the negative
+comparison, but no execution with those counts returns $b$. Every
+positive lag satisfies the record predicates on alpha. Thus truthful
+records alone do not establish the converse. The cut pattern and known
+selection rule already retain the exact-lag restriction. $\square$
+
+For explicit raw Read witnesses in Proposition 4.2, suppress only the
+finite local steps needed to construct operands and descriptions. The
+first empty-cut capture on alpha has Read list
+$(\varepsilon,\alpha),(\varepsilon,\alpha),(\varepsilon,\alpha)$:
+guard, exterior body, validation. With one intervening update, the second
+list is the same three root Reads with beta replies. With two updates,
+the second list is
+
+$$
+(\varepsilon,\mathsf{branch}),\ (L,\beta),(\varepsilon,\mathsf{branch}),\ (L,\beta),\ (R,\alpha),\ (L,\beta).
+$$
+
+The first two Reads find the guard; the next three acquire the literal
+empty-cut exterior; the last validates. The left stamp is respectively
+one or two. Actual comparison of the two acquired descriptions, cut
+selection, clearing and the separate Return finish each history. Their
+full microstep expansions are legal with the writer halted outside the
+indicated burst. Thus this pair uses six versus nine total Reads, with
+all literal operands explicitly materialized; these are hand-derived
+finite witnesses, not an empirical batch.
+
+These are actual finite native histories, with no disconnected advice
+worlds. Short signs do not pay for the comparisons. Erased data were
+acquired, used and cleaned before handoff.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d84c64545fdbcd543d979ff06b1df0c26634dc87ad5f86ca2cae7955a98d009
+  normalized_sha256: sha256:9d84c64545fdbcd543d979ff06b1df0c26634dc87ad5f86ca2cae7955a98d009
+cas_ref: sha256:9d84c64545fdbcd543d979ff06b1df0c26634dc87ad5f86ca2cae7955a98d009
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 141. 多目标的规范共同本质：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 67f5b2af7ca605c500e019a07c60be065d407b7d06a09b2a67ad5e1a3ded0bee
+    next_atom_id: 2331190720a9168195f074a7f3175e2ba682fb2edf0a77271d4d47148cee5f99
