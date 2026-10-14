@@ -1,0 +1,32 @@
+**Lemma 2.1 (completed native interfaces).** The extended $\rho$ is injective
+on $\widehat{\mathcal T}$ and has unique preimage $\Omega$ at $\Omega$.
+Infinite branches persist. If $X$ has a leaf and $\mu(X)$ is its least leaf
+depth, then
+
+$$
+\mu(\rho^n X)\ge\mu(X)+\lfloor n/2\rfloor.
+\tag{SFS.6}
+$$
+
+A fixed power has a leaf exactly when its input does. In particular
+$n\ge2h+2$ implies $T_n\equiv_h\Omega$.
+
+Proof. No image has an $\alpha$ root. A $\beta$-root image comes only from
+$\alpha$. An image pair whose right child has $\alpha$ root comes only from
+the input leaf $\beta$: an original pair would have its right child in the
+image of $\rho$. Every other paired image has paired input, and equality
+cancels to equality of child images. Induction on each requested original
+prefix depth recovers equal inputs from equal outputs. This proves completed
+injectivity without a free-unary assumption.
+
+Both $\rho^2\alpha=\langle\beta,\alpha\rangle$ and
+$\rho^2\beta=\langle\langle\beta,\alpha\rangle,\beta\rangle$ have minimum
+leaf depth at least one. Original branches persist, each old leaf is replaced
+by a nonempty finite tree, and every new leaf descends from an old leaf.
+Two updates therefore increase least leaf depth by at least one; one update
+never decreases it. Iteration proves (SFS.6). A persistent infinite branch
+prevents a finite image. The leafless tree is fixed and injectivity gives its
+unique preimage. Apply the depth bound to $\alpha$ for the last assertion.
+These are the completion interfaces used in [PAC, Lemma 3.2][PAC] and
+[FJC, Theorem 3.1][FJC]; [NLC, Lemma 3.1][NLC] supplies atomic depth.
+

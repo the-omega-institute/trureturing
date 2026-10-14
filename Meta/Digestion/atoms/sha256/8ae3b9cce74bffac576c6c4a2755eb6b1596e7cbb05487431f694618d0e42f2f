@@ -1,0 +1,23 @@
+**Theorem 8.5 (all-depth finite witnesses in the entire three-row
+product).** Put $B=(r_0,r_1,r_2)$ for Definition 8.1.
+Then $J_B(h)$ holds for every inclusive depth $h$.
+For the perfect trees $A_n$ from the proof of Theorem 4.1,
+the actual triple $\mathbf v_{A_n}$ of (NMF.8.13) satisfies
+
+$$
+d(\mathbf v_{A_n})=n+1,\qquad
+W_q(\mathbf v_{A_n})=q(2q)^n\quad(q>0).
+\tag{NMF.8.16}
+$$
+
+Proof. The reused perfect-tree calculation gives
+$\operatorname{Leaf}(A_n)=\{w:|w|=n\}$.
+Equation (NMF.8.14) thus identifies the entire first-disagreement
+frontier as $\{Lw:|w|=n\}$. It has $2^n$ points, all at depth
+$n+1$, proving both equalities. At requested depth $h$ choose
+$n=h$. Theorem 2.2 gives agreement of all four original replies
+through $h$, and Theorem 8.2 gives all three exact row labels and
+every finite guarded history. These witnesses may change with $h$.
+Restricting a triple to its first two coordinates also witnesses
+every depth in the entire pair product. $\square$
+
