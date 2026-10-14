@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2ParentCycle
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeJ2ParentCycle
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual native two-label witnesses construct an unconditional full parent Hamilton cycle. -/
 /- UNCOMPILED unconditional two-selected-label parent construction.
    The special path uses the literal false-half pieces of one native F2
    cycle. Each other child uses its own native frame cycle and earned

@@ -8,6 +8,7 @@
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeThreeLabelFullDomain
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFourBase
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFiveBase
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
 
 set_option autoImplicit false
 
@@ -18,6 +19,8 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeThreeLabelFullDomain
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
 
 private def finalPrefix (m : ℕ) : List (Fin (m + 1)) :=
   List.ofFn (Fin.castSucc : Fin m → Fin (m + 1))
@@ -57,5 +60,21 @@ private noncomputable def finalParentIso {m : ℕ} (hm : 3 ≤ m) :
       ((finalFrame m).base : Cycle (Fin (m + 1)))) ≃g
       SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m)) :=
   fullParentDomainIso (finalFrame m) (final_base_length hm)
+
+/- UNCOMPILED new boundary consumer of the unconditional J2 construction.
+   No all-size result is claimed until the all-k induction is earned. -/
+private theorem native_six_hamiltonian_cycle :
+    ∃ base : Configuration 5,
+      ∃ c : (SimpleGraph.mulCayley ({a 5, b 5, c 5} : Set (Configuration 5))).Walk base base,
+        c.IsHamiltonianCycle := by
+  let F : SupplyFrame 5 2 := finalFrame 5
+  have hB : 3 ≤ F.base.length := by
+    rw [show F.base.length = 3 from final_base_length (by omega : 3 ≤ 5)]
+  obtain ⟨base, w, _, hw⟩ := native_j2_parent_hamiltonian_cycle (by omega : 5 ≤ 5) F hB
+  let iso : domainGraph (ParentDomain F) ≃g
+      SimpleGraph.mulCayley ({a 5, b 5, c 5} : Set (Configuration 5)) :=
+    finalParentIso (by omega : 3 ≤ 5)
+  exact ⟨iso base, w.map iso.toHom,
+    SimpleGraph.Walk.IsHamiltonianCycle.map iso.toEquiv.bijective hw⟩
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeAllSizes
