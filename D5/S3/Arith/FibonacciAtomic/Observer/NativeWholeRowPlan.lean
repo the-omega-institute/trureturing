@@ -431,7 +431,7 @@ private theorem representative_label (C : LiteralRow) (b : Classes C) :
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem representative_subtree (C : LiteralRow) (v : Classes C → Source)
+theorem representative_subtree (C : LiteralRow) (v : Classes C → Source)
     (b : Classes C) :
     subtree (representative C b) (evaluateRow (NativeCutFibers.extend C v) C) = some (v b) := by
   have label := representative_label C b
