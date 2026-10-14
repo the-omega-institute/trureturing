@@ -28,8 +28,10 @@ cast_vec_cons, cast_vec_empty; proof_shape: bind-only; escape_witness: none; con
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 
 set_option autoImplicit false
+set_option linter.style.longLine false
+-- The declaration statements retain their literal mathematical interfaces.
+set_option linter.style.whitespace false
 set_option Elab.async false
-set_option maxHeartbeats 18000000
 set_option maxRecDepth 16384
 open Matrix
 open scoped ComplexOrder
@@ -50,6 +52,9 @@ theorem castMat_diagonal {I : Type} [DecidableEq I] (d : I → ℚ) :
     castMat (diagonal d)=diagonal (fun i => (d i : ℝ)) := by
   ext i j
   by_cases h : i=j <;> simp [castMat, diagonal,h]
+-- The finite and decidable instances are part of this interface.
+set_option linter.unusedDecidableInType false in
+set_option linter.unusedFintypeInType false in
 theorem psd_of_rat_ldl {I J : Type} [Fintype J] [DecidableEq J]
     [Fintype I] [DecidableEq I]
     (A : Matrix I I ℚ) (L : Matrix I J ℚ) (d : J → ℚ)
@@ -70,6 +75,9 @@ theorem castIntMat_diagonal {I : Type} [DecidableEq I] (d : I → ℤ) :
     castIntMat (diagonal d)=diagonal (fun i => (d i : ℝ)) := by
   ext i j
   by_cases h : i=j <;> simp [castIntMat,diagonal,h]
+-- The finite and decidable instances are part of this interface.
+set_option linter.unusedDecidableInType false in
+set_option linter.unusedFintypeInType false in
 theorem psd_of_int_scaled_ldl {I J : Type} [Fintype J] [DecidableEq J]
     [Fintype I] [DecidableEq I]
     (A : Matrix I I ℚ) (AI : Matrix I I ℤ) (L : Matrix I J ℤ) (d : J → ℤ)
@@ -123,8 +131,6 @@ theorem bell_mem_unitaryGroup : bell ∈ unitaryGroup (Fin 3 × Fin 3) ℂ := by
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, bell, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_three, Fin.reduceEq, Fin.reduceFinMk, Fin.reduceLT, c_star, c_square]
-  all_goals simp only [show (starRingEnd ℂ) (Real.sqrt 2 : ℂ)⁻¹ = (Real.sqrt 2 : ℂ)⁻¹ by simp, c_square]
-  all_goals norm_num
 
 private noncomputable def extendedBell (k : ℕ) : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ :=
   (fromBlocks bell 0 0 (1 : Matrix (Fin 3 × Fin k) (Fin 3 × Fin k) ℂ)).submatrix
@@ -145,6 +151,31 @@ noncomputable def permutationU {I : Type} [Fintype I] [DecidableEq I]
     ← Matrix.permMatrix_mul]
   simp⟩
 
+theorem unitary_trace {I : Type} [Fintype I] [DecidableEq I]
+    (M : Matrix I I ℂ) (V : unitaryGroup I ℂ) :
+    ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ).trace=M.trace := by
+  have hv : (V : Matrix I I ℂ)ᴴ*(V : Matrix I I ℂ)=1 := by
+    simpa only [Matrix.star_eq_conjTranspose] using Unitary.coe_star_mul_self V
+  rw [Matrix.trace_mul_comm]
+  simp only [← Matrix.mul_assoc,hv,one_mul]
+
+theorem unitary_purity_trace {I : Type} [Fintype I] [DecidableEq I]
+    (M : Matrix I I ℂ) (V : unitaryGroup I ℂ) :
+    (((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ)*
+      ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ)).trace=(M*M).trace := by
+  have hv : (V : Matrix I I ℂ)ᴴ*(V : Matrix I I ℂ)=1 := by
+    simpa only [Matrix.star_eq_conjTranspose] using Unitary.coe_star_mul_self V
+  have he : ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ)*
+      ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ) =
+        (V : Matrix I I ℂ)*(M*M)*(V : Matrix I I ℂ)ᴴ := by
+    calc
+      _ = (V : Matrix I I ℂ)*M*((V : Matrix I I ℂ)ᴴ*V)*M*(V : Matrix I I ℂ)ᴴ := by
+        simp only [Matrix.mul_assoc]
+      _ = _ := by rw [hv,mul_one]; simp only [Matrix.mul_assoc]
+  rw [he, unitary_trace]
+
+set_option maxHeartbeats 18000000 in
+-- The extended Bell certificates use symbolic finite-index matrix expansions.
 theorem spectral_reduction (k : ℕ)
     (rho : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)
     (hrho : rho.PosSemidef) (htrace : rho.trace = 1) (happt : APPT rho) :
@@ -183,7 +214,7 @@ theorem spectral_reduction (k : ℕ)
     all_goals norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, pack, bell, diagonal, KC1, Matrix.of_apply,
       Fin.reduceEq, Fin.reduceFinMk, Fin.reduceLT, c_star, c_square, Complex.ofReal_sub]
     all_goals ring_nf
-    all_goals norm_num [pow_two, c_square] <;> ring
+    all_goals (norm_num [pow_two, c_square]; ring)
 
   have appt_conjugate {A B : Type} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
       {M : Matrix (A × B) (A × B) ℂ} (h : APPT M) (V : unitaryGroup (A × B) ℂ) :
@@ -235,8 +266,7 @@ theorem spectral_reduction (k : ℕ)
     simp only [Matrix.submatrix_apply, partialTranspose, extendedBell, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fintype.sum_prod_type, Fintype.sum_sum_type]
     simp [Equiv.prodSumDistrib, packExtended, Equiv.prodSumDistrib, Equiv.sumProdDistrib,
-      Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁,
-      Matrix.fromBlocks_apply₂₂, diagonal, Matrix.submatrix_apply]
+      Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, diagonal]
 
   have necessary_K1_extended (k : ℕ) (l : Fin 9 → ℝ) (mid : Fin 3 × Fin k → ℂ)
       (h : APPT (diagonal (packExtended k l mid))) : (KC1 l).PosSemidef := by
@@ -244,7 +274,9 @@ theorem spectral_reduction (k : ℕ)
     change ((partialTranspose (extendedBell k * diagonal (packExtended k l mid) * (extendedBell k)ᴴ)).submatrix _ _).PosSemidef at hp
     rw [extended_principal] at hp
     have hscale := hp.smul (show (0 : ℂ) ≤ 2 by norm_num)
-    convert hscale using 1 <;> ext i j <;> simp
+    convert hscale using 1
+    ext i j
+    simp
 
 
   have extended_swap_pack (k : ℕ) (l : Fin 9 → ℝ) (mid : Fin 3 × Fin k → ℂ) :
@@ -335,7 +367,7 @@ theorem spectral_reduction (k : ℕ)
           ((V : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)*packedFin k l mid*
             (V : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)ᴴ)*
           (star V : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)ᴴ=packedFin k l mid := by
-        simp only [Unitary.coe_star,Matrix.star_eq_conjTranspose,conjTranspose_conjTranspose]
+        simp only [Matrix.star_eq_conjTranspose,conjTranspose_conjTranspose]
         calc
           _ = ((V : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)ᴴ*V)*packedFin k l mid*
               ((V : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)ᴴ*V) := by simp only [Matrix.mul_assoc]
@@ -410,7 +442,7 @@ theorem spectral_reduction (k : ℕ)
     have heq : (star V : Matrix (A × B) (A × B) ℂ)*
         ((V : Matrix (A × B) (A × B) ℂ)*M*(V : Matrix (A × B) (A × B) ℂ)ᴴ)*
         (star V : Matrix (A × B) (A × B) ℂ)ᴴ=M := by
-      simp only [Unitary.coe_star, Matrix.star_eq_conjTranspose, conjTranspose_conjTranspose]
+      simp only [Matrix.star_eq_conjTranspose, conjTranspose_conjTranspose]
       calc
         _ = ((V : Matrix (A × B) (A × B) ℂ)ᴴ*V)*M*((V : Matrix (A × B) (A × B) ℂ)ᴴ*V) := by
           simp only [Matrix.mul_assoc]
@@ -418,23 +450,6 @@ theorem spectral_reduction (k : ℕ)
     simp only [Unitary.coe_star] at h'
     rw [heq] at h'
     exact h'
-
-  have unitary_purity_trace {I : Type} [Fintype I] [DecidableEq I]
-      (M : Matrix I I ℂ) (V : unitaryGroup I ℂ) :
-      (((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ)*
-        ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ)).trace=(M*M).trace := by
-    have hv : (V : Matrix I I ℂ)ᴴ*(V : Matrix I I ℂ)=1 := by
-      simpa only [Matrix.star_eq_conjTranspose] using Unitary.coe_star_mul_self V
-    have he : ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ)*
-        ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ) =
-          (V : Matrix I I ℂ)*(M*M)*(V : Matrix I I ℂ)ᴴ := by
-      calc
-        _ = (V : Matrix I I ℂ)*M*((V : Matrix I I ℂ)ᴴ*V)*M*(V : Matrix I I ℂ)ᴴ := by
-          simp only [Matrix.mul_assoc]
-        _ = _ := by rw [hv,mul_one]; simp only [Matrix.mul_assoc]
-    rw [he, Matrix.trace_mul_comm]
-    simp only [← Matrix.mul_assoc,hv,one_mul]
-
 
   have permutation_conjugate {I : Type} [Fintype I] [DecidableEq I]
       (e : Equiv.Perm I) (M : Matrix I I ℂ) :
@@ -444,14 +459,6 @@ theorem spectral_reduction (k : ℕ)
     change e.toPEquiv.toMatrix*M*(e⁻¹).toPEquiv.toMatrix=M.submatrix e e
     rw [PEquiv.toMatrix_toPEquiv_mul,PEquiv.mul_toMatrix_toPEquiv]
     rfl
-
-  have unitary_trace {I : Type} [Fintype I] [DecidableEq I]
-      (M : Matrix I I ℂ) (V : unitaryGroup I ℂ) :
-      ((V : Matrix I I ℂ)*M*(V : Matrix I I ℂ)ᴴ).trace=M.trace := by
-    have hv : (V : Matrix I I ℂ)ᴴ*(V : Matrix I I ℂ)=1 := by
-      simpa only [Matrix.star_eq_conjTranspose] using Unitary.coe_star_mul_self V
-    rw [Matrix.trace_mul_comm]
-    simp only [← Matrix.mul_assoc,hv,one_mul]
 
   have packed_trace (k : ℕ) (l : Fin (3*(3+k)) → ℝ) :
       (diagonal (fun q => (l (fullPackingEquiv k q) : ℂ))).trace=
@@ -484,7 +491,7 @@ theorem spectral_reduction (k : ℕ)
     rw [permutation_conjugate,Matrix.submatrix_diagonal_equiv]
     congr 1
     funext q
-    simp [D,P,e,l,Matrix.IsHermitian.eigenvalues,f]
+    simp [e,l,Matrix.IsHermitian.eigenvalues,f]
   have hd : APPT D := by
     rw [hspec] at happt
     exact appt_unconjugate D H.eigenvectorUnitary happt

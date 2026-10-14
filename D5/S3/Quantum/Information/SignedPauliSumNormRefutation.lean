@@ -24,6 +24,7 @@ import D5.S3.Quantum.Measurement.HoggarSicSumNegativity
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option linter.style.longLine false
 
 namespace D5.S3.Quantum.Information.SignedPauliSumNormRefutation
 
