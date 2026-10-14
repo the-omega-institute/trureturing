@@ -406,4 +406,129 @@ theorem actual_one_call_count_recursion
 
 end OneCall
 
+
+section BetweenLandmarks
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+
+private theorem fixedSchedule_between (k n : ℕ) (hlo : D k + d k ≤ n)
+    (hhi : n < D (k + 1) + d (k + 1)) :
+    σ n = if n < D (k + 1) + d k then false else true := by
+  have hlen := (stageWord_geometry D d hD hd).1 k
+  have he : some (σ n) = (stageWord D d (k + 1))[n]? := by
+    simpa only [fixedSchedule, List.getElem?_ofFn, dif_pos hhi] using congrArg
+      (fun l : List Bool => l[n]?)
+      (Classical.choose_spec (construct_fixed_block_schedule D d hD hd) (k + 1))
+  rw [stageWord_succ, List.getElem?_append_right (by rw [hlen]; exact hlo)] at he
+  rw [hlen] at he
+  have hDk : D k ≤ D (k + 1) := hD.monotone (Nat.le_succ k)
+  have hdk : d k ≤ d (k + 1) := hd.monotone (Nat.le_succ k)
+  by_cases hn : n < D (k + 1) + d k
+  · have hleft : n - (D k + d k) < D (k + 1) - D k := by omega
+    simpa only [block, List.getElem?_append, List.length_replicate,
+      List.getElem?_replicate, if_pos hleft, Option.some.injEq, if_pos hn] using he
+  · have hleft : ¬ n - (D k + d k) < D (k + 1) - D k := by omega
+    have hright : n - (D k + d k) - (D (k + 1) - D k) < d (k + 1) - d k := by omega
+    simpa only [block, List.getElem?_append, List.length_replicate,
+      List.getElem?_replicate, if_neg hleft, if_pos hright, Option.some.injEq, if_neg hn] using he
+
+private theorem actual_between_landmarks (S : Bool) (p q : unitInterval) (ω : RowSeed × Tape)
+    (k n : ℕ) (hlo : D k + d k ≤ n) (hhi : n < D (k + 1) + d (k + 1)) :
+    (((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ↔
+      (n : WithTop ℕ) < nativeCalls π S p q ω) ∧
+    (((n + 1 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ↔
+      ((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω) ∧
+    (((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω →
+      nativeAction π S p q n ω = .inl (if n < D (k + 1) + d k then false else true)) := by
+  have hN : StrictMono (fun k => D k + d k) := fun k l hkl => Nat.add_lt_add (hD hkl) (hd hkl)
+  have hsurv : ((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ↔
+      (n : WithTop ℕ) < nativeCalls π S p q ω := by
+    constructor
+    · intro ht
+      cases hτ : nativeCalls π S p q ω with
+      | top => exact WithTop.coe_lt_top n
+      | coe m =>
+        obtain ⟨l, hl⟩ := (actual_schedule_and_return_landmarks D d a hD hd hc S p q ω).2.2.2 m hτ
+        rw [hτ] at ht
+        have hkl : k < l := hN.lt_iff_lt.mp (by
+          simpa only [hl, Nat.cast_id] using WithTop.coe_lt_coe.mp ht)
+        have hnm : n < m := by rw [hl]; exact hhi.trans_le (hN.monotone (by omega))
+        exact WithTop.coe_lt_coe.mpr hnm
+    · exact fun ht => (WithTop.coe_le_coe.mpr hlo).trans_lt ht
+  have hnext : ((n + 1 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ↔
+      (n : WithTop ℕ) < nativeCalls π S p q ω := by
+    cases hτ : nativeCalls π S p q ω with
+    | top => simp
+    | coe m =>
+      rw [← WithTop.coe_natCast, ← WithTop.coe_natCast]
+      simp only [WithTop.coe_le_coe, WithTop.coe_lt_coe, Nat.cast_id, Nat.succ_le_iff]
+  refine ⟨hsurv, hnext.trans hsurv.symm, fun ht => ?_⟩
+  have hlt := hsurv.mp ht
+  obtain ⟨source, ha⟩ := call_before_return π S (sourceRead p q) ω n hlt
+  have hlen := acquired_history_length_before_return π S (sourceRead p q) ω n hlt.le
+  have hs := (safe_supported_actions D d a hD hd hc ω.1 S
+    (acquiredHistory π S (sourceRead p q) n ω)).1 source ha
+  rw [hlen, fixedSchedule_between D d hD hd k n hlo hhi] at hs
+  change nativeAction π S p q n ω = .inl source at ha
+  simpa only [hs] using ha
+
+/-- Within the two actual call blocks, every count transition uses the same
+boundary-survival event; only the scheduled source receives a Bernoulli increment. -/
+theorem actual_between_landmark_count_recursion (S : Bool) (p q : unitInterval)
+    (k n I J : ℕ) (hlo : D k + d k ≤ n) (hhi : n < D (k + 1) + d (k + 1)) :
+    let s := if n < D (k + 1) + d k then false else true
+    rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+      ((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (n + 1) ω) = (I, J)} =
+    ∑ b : Bool, ∑ i : Fin (n + 1), ∑ j : Fin (n + 1),
+      if (I, J) = incrementCounts s b (i.val, j.val) then
+        rawLaw (rowLaw (batchTable D d a hD hd hc)) {ω |
+          ((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ∧
+          countPair (nativeHistory π S p q n ω) = (i.val, j.val)} *
+            bernoulliMass (if s then q else p) b
+      else 0 := by
+  classical
+  dsimp only
+  let s := if n < D (k + 1) + d k then false else true
+  let : IsProbabilityMeasure (rowLaw (batchTable D d a hD hd hc)) := by
+    unfold rowLaw
+    infer_instance
+  have hb (ω : RowSeed × Tape) := actual_between_landmarks D d a hD hd hc S p q ω k n hlo hhi
+  have hleft : {ω | ((n + 1 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+      countPair (nativeHistory π S p q (n + 1) ω) = (I, J)} =
+      {ω | ((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ∧
+        countPair (nativeHistory π S p q (n + 1) ω) = (I, J)} := by
+    ext ω
+    exact and_congr_left (fun _ => (hb ω).2.1)
+  have he (s' : Bool) (i j : Fin (n + 1)) :
+      {ω | (n : WithTop ℕ) < nativeCalls π S p q ω ∧
+        countPair (nativeHistory π S p q n ω) = (i.val, j.val) ∧
+        nativeAction π S p q n ω = .inl s'} =
+      if s' = s then {ω | ((D k + d k : ℕ) : WithTop ℕ) < nativeCalls π S p q ω ∧
+        countPair (nativeHistory π S p q n ω) = (i.val, j.val)} else ∅ := by
+    split_ifs with hs
+    · subst s'
+      ext ω
+      constructor
+      · exact fun h => ⟨(hb ω).1.mpr h.1, h.2.1⟩
+      · exact fun h => ⟨(hb ω).1.mp h.1, h.2, (hb ω).2.2 h.1⟩
+    · apply Set.eq_empty_iff_forall_notMem.mpr
+      intro ω hω
+      exact hs (Sum.inl.inj (hω.2.2.symm.trans ((hb ω).2.2 ((hb ω).1.mpr hω.1))))
+  have hrec := actual_one_call_count_recursion π S p q
+    (supported_realization σ (batchTable D d a hD hd hc)).1
+    (rowLaw (batchTable D d a hD hd hc)) n I J
+  rw [hleft] at hrec
+  rw [hrec]
+  rw [Finset.sum_eq_single s]
+  · simp only [he, ↓reduceIte]
+    rfl
+  · intro s' _ hs
+    simp only [he, if_neg hs, measure_empty, zero_mul, ite_self, Finset.sum_const_zero]
+  · simp
+
+end BetweenLandmarks
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinScheduledExecution
