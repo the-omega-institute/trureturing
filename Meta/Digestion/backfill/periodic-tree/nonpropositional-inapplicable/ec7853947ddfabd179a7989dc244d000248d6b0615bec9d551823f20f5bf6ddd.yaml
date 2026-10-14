@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec7853947ddfabd179a7989dc244d000248d6b0615bec9d551823f20f5bf6ddd
+  normalized_sha256: sha256:ec7853947ddfabd179a7989dc244d000248d6b0615bec9d551823f20f5bf6ddd
+cas_ref: sha256:ec7853947ddfabd179a7989dc244d000248d6b0615bec9d551823f20f5bf6ddd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「S5040.3 Every Fibonacci power-layer sequence modulo 5040」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: fb2e1fff9f70cf5b5fa9b6e48f8c6448aeea36ddb44004d2e0f0c49a19d70bdd
+    next_atom_id: f688c3799e070f1bcfd0e7a3631ba9475daea86157571688e687fac4288c1010

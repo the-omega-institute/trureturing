@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f709ee47d0284b4767ddb9279e48dbe1477c1720019fb9fd129dc83d3cbb9a8
+  normalized_sha256: sha256:9f709ee47d0284b4767ddb9279e48dbe1477c1720019fb9fd129dc83d3cbb9a8
+cas_ref: sha256:9f709ee47d0284b4767ddb9279e48dbe1477c1720019fb9fd129dc83d3cbb9a8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「EMWS.1 线性形式与四维分布」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: de4e1981df48c31bf9b73f2b13a4e09664673e6facccc44ccfada9cd9acb6b79
+    next_atom_id: d861c29e6c33b9b21f582e31757f9c197a91d6acced11e34d91caa6123c03684
