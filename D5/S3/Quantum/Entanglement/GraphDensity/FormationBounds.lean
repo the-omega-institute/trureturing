@@ -355,7 +355,7 @@ theorem qubit_entropy_det (τ : Matrix (Fin 2) (Fin 2) ℂ)
     rw [entropy_formula]
     rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,show 1-b=a by linarith,add_comm]
 
-private theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
+theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
     (hτ : τ.PosSemidef) (ht : τ.trace = 1) : 0 ≤ τ.det.re ∧ τ.det.re ≤ 1/4 := by
   let a : ℝ := hτ.1.eigenvalues 0
   let b : ℝ := hτ.1.eigenvalues 1
@@ -636,7 +636,7 @@ end D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Witness
 
 namespace D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Direct
 open D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Analytic D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Witness
-private theorem pure_det (ψ : ((Fin 2 × Fin 2) → ℂ)) : (partialTraceRight (rankOneDensity ψ)).det.re = (‖(Matrix.of (Function.curry ψ)).det‖)^2 := by
+theorem pure_det (ψ : ((Fin 2 × Fin 2) → ℂ)) : (partialTraceRight (rankOneDensity ψ)).det.re = (‖(Matrix.of (Function.curry ψ)).det‖)^2 := by
   rw [D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.marginal_amplitude,
     Matrix.det_mul, Matrix.det_conjTranspose]
   simp [Complex.mul_conj, Complex.normSq_eq_norm_sq, ← Complex.ofReal_pow]

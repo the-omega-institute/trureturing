@@ -13,6 +13,16 @@ internal sealed class FormationBoundsDocument : IScribeDocumentDefinition
         H("FormationBounds"),
         Blocks(
             Paragraph(Text("Scalar quotients are real unless a complex cast is displayed. Fin indices are zero based. Matrix, rankOneDensity, partialTraceRight and partialTransposeB denote the actual Lean operations. All entropy values are in bits.")),
+            Describe.Lean(DescribeId.Create("qubit-det-bounds"),
+                DeclarationHandle.Create(Module + "qubit_det_bounds"), H("Determinant bounds for a qubit density matrix"),
+                StatementSource.FromAuthor(QubitDetBoundsFormula()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/braunstein2006laplaciandensity")),
+                Blocks(Paragraph(Text("A positive semidefinite two-by-two complex matrix with trace one has real determinant between zero and one quarter. Its two nonnegative eigenvalues sum to one, and their product is the determinant."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("direct-pure-det"),
+                DeclarationHandle.Create(Module + "pure_det"), H("Direct.pure_det"),
+                StatementSource.FromAuthor(PureDetFormula()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/braunstein2006laplaciandensity")),
+                Blocks(Paragraph(Text("For any two-qubit amplitude vector, the real determinant of the left marginal of its rank-one density matrix equals the squared norm of the determinant of the amplitude matrix. The identity holds for arbitrary complex amplitudes."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ensemble"),
                 DeclarationHandle.Create(Module + "Ensemble"), H("Ensemble"),
                 StatementSource.FromAuthor(Disp(All(F.Id("p"), Seq(Mathbb, Sp, F.Id("N")), All(F.Id("q"), Seq(Mathbb, Sp, F.Id("N")), All(Rho, Call("Matrix", Seq(Parenthesized(Call("Fin", F.Id("p"))), Times, Sp, Parenthesized(Call("Fin", F.Id("q")))), Seq(Parenthesized(Call("Fin", F.Id("p"))), Times, Sp, Parenthesized(Call("Fin", F.Id("q")))), Seq(Mathbb, Sp, F.Id("C"))), Seq(Call("Ensemble", Rho), Eq, Seq(OpenBrace, F.Id("N"), Colon, Seq(Mathbb, Sp, F.Id("N")), Semi, F.Id("weight"), Colon, Seq(Call("Fin", F.Id("N")), To, Sp, Seq(Mathbb, Sp, F.Id("R"))), Semi, Seq(Operatorname, Grp(F.Id("nonneg"))), Colon, All(F.Id("i"), Call("Fin", F.Id("N")), Seq(D(0), Le, Sp, Apply(F.Id("weight"), F.Id("i")))), Semi, Named("le_one"), Colon, All(F.Id("i"), Call("Fin", F.Id("N")), Seq(Apply(F.Id("weight"), F.Id("i")), Le, Sp, D(1))), Semi, Seq(Operatorname, Grp(F.Id("total"))), Colon, Seq(SumOver(F.Id("i"), Call("Fin", F.Id("N")), Apply(F.Id("weight"), F.Id("i"))), Eq, D(1)), Semi, Psi, Colon, Seq(Call("Fin", F.Id("N")), To, Sp, Seq(Seq(Parenthesized(Call("Fin", F.Id("p"))), Times, Sp, Parenthesized(Call("Fin", F.Id("q")))), To, Sp, Seq(Mathbb, Sp, F.Id("C")))), Semi, Seq(Operatorname, Grp(F.Id("unit"))), Colon, All(F.Id("i"), Call("Fin", F.Id("N")), Seq(SumOver(F.Id("x"), Seq(Parenthesized(Call("Fin", F.Id("p"))), Times, Sp, Parenthesized(Call("Fin", F.Id("q")))), Seq(Vert, Sp, Apply(Apply(Psi, F.Id("i")), F.Id("x")), Vert, Caret, D(2))), Eq, D(1))), Semi, Seq(Operatorname, Grp(F.Id("average"))), Colon, Seq(SumOver(F.Id("i"), Call("Fin", F.Id("N")), Seq(Parenthesized(Seq(Apply(F.Id("weight"), F.Id("i")), Colon, Seq(Mathbb, Sp, F.Id("C")))), Cdot, Sp, Call("rankOneDensity", Apply(Psi, F.Id("i"))))), Eq, Rho), CloseBrace))))))),
@@ -153,6 +163,40 @@ internal sealed class FormationBoundsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(All(Rho, Call("Matrix", Seq(Parenthesized(Call("Fin", D(2))), Times, Sp, Parenthesized(Call("Fin", D(2)))), Seq(Parenthesized(Call("Fin", D(2))), Times, Sp, Parenthesized(Call("Fin", D(2)))), Seq(Mathbb, Sp, F.Id("C"))), All(F.Id("w"), Seq(Seq(Parenthesized(Call("Fin", D(2))), Times, Sp, Parenthesized(Call("Fin", D(2)))), To, Sp, Seq(Mathbb, Sp, F.Id("C"))), Seq(Parenthesized(Seq(Parenthesized(Call("Nonempty", Call("Ensemble", Rho))), Land, Sp, Parenthesized(Seq(SumOver(F.Id("x"), Seq(Parenthesized(Call("Fin", D(2))), Times, Sp, Parenthesized(Call("Fin", D(2)))), Seq(Vert, Sp, Apply(F.Id("w"), F.Id("x")), Vert, Caret, D(2))), Eq, D(1))))), Longrightarrow, Sp, Seq(Apply(Qualified("Analytic", "f"), Seq(D(2), Cdot, Sp, Apply(Qualified("Witness", "W"), F.Id("w"), Rho))), Le, Sp, Apply(Seq(F.Id("E"), Underscore, F.Id("F")), Rho))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/braunstein2006laplaciandensity")),
                 Blocks(Paragraph(Text("The new formation lower bound combines the determinant readout estimate with the convex concurrence function."))), DescribeRole.Theorem))));
+
+    private static Formula QubitDetBoundsFormula()
+    {
+        Formula determinant = Apply(Qualified("Complex", "re"), Apply(Qualified("Matrix", "det"), Tau));
+        Formula traceOne = new Formula.Relation(Apply(Qualified("Matrix", "trace"), Tau),
+            FormulaRelationOperator.Equal, D(1));
+        Formula bounds = new Formula.Logic(
+            Parenthesized(new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual,
+                determinant)), FormulaLogicOperator.And,
+            Parenthesized(new Formula.Relation(determinant, FormulaRelationOperator.LessThanOrEqual,
+                new Formula.Fraction(D(1), D(4)))));
+        Formula traceImpliesBounds = new Formula.Logic(Parenthesized(traceOne),
+            FormulaLogicOperator.Implies, Parenthesized(bounds));
+        return Disp(All(Tau,
+            Call("Matrix", Call("Fin", D(2)), Call("Fin", D(2)), Seq(Mathbb, Grp(F.Id("C")))),
+            new Formula.Logic(Parenthesized(Apply(Qualified("Matrix", "PosSemidef"), Tau)),
+                FormulaLogicOperator.Implies, Parenthesized(traceImpliesBounds))));
+    }
+
+    private static Formula PureDetFormula()
+    {
+        Formula marginal = Apply(
+            Seq(Qualified("D5", "S3"), Dot, Qualified("Quantum", "Information"), Dot,
+                Qualified("PartialTraceMutualInformation", "partialTraceRight")),
+            Apply(Seq(Qualified("D5", "S3"), Dot, Qualified("Quantum", "PureState"), Dot,
+                Qualified("PureStateHandshake", "rankOneDensity")), Psi));
+        Formula amplitude = Apply(Qualified("Matrix", "of"), Apply(Qualified("Function", "curry"), Psi));
+        Formula determinant = Apply(Qualified("Matrix", "det"), amplitude);
+        return Disp(All(Psi,
+            Seq(Parenthesized(Seq(Parenthesized(Call("Fin", D(2))), Sp, Times, Sp,
+                Parenthesized(Call("Fin", D(2))))), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("C")))),
+            Seq(Apply(Qualified("Complex", "re"), Apply(Qualified("Matrix", "det"), marginal)),
+                Sp, Eq, Sp, new Formula.Power(new Formula.Norm(determinant), D(2)))));
+    }
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Apply(Formula function, params Formula[] arguments) =>
