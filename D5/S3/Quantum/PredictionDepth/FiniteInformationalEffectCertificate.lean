@@ -134,7 +134,7 @@ theorem finite_informational_effect_certificate
       (congrFun hreadout i)
   have hcompleteSpan :
       Submodule.span ℝ (Set.range centeredEffects) = ⊤ :=
-    ((informational_completeness_four_way d centeredEffects).out 0 3).mp
+    ((informational_completeness_four_way d centeredEffects).out 1 4).mp
       hcenteredComplete
   obtain ⟨basisEffects, hbasisMem, hbasisSpan, _hbasisIndependent⟩ :=
     Submodule.exists_fun_fin_finrank_span_eq ℝ (Set.range centeredEffects)
@@ -166,7 +166,7 @@ theorem finite_informational_effect_certificate
           (CStarMatrix.ofMatrix.symm rho.1 *
             (centeredEffects i.1).1.1)).re) :=
     ((informational_completeness_four_way d
-      (fun i : selected => centeredEffects i.1)).out 3 0).mp hselectedSpan
+      (fun i : selected => centeredEffects i.1)).out 4 1).mp hselectedSpan
   refine ⟨selected, hselectedCard, hselectedSpan, ?_⟩
   intro rho sigma hreadout
   apply hselectedCenteredComplete

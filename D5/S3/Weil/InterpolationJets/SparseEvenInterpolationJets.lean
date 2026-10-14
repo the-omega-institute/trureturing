@@ -79,7 +79,7 @@ theorem squaredExceptionPolynomial_lower (w : κ → ℂ) (u : ℂ) (tau : ℝ)
   simp only [squaredExceptionPolynomial, eval_prod, eval_sub, eval_X, eval_C, norm_prod]
   calc
     _ = ∏ _n : κ, tau := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => htau.le) (fun n _ => hgap n)
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => htau.le) (fun n _ => hgap n)
 
 /-- The annihilator norm on the unit disk costs only its radius and degree. -/
 theorem squaredExceptionPolynomial_unit_disk (w : κ → ℂ) (Y : ℝ)
@@ -89,7 +89,7 @@ theorem squaredExceptionPolynomial_unit_disk (w : κ → ℂ) (Y : ℝ)
   simp only [squaredExceptionPolynomial, eval_prod, eval_sub, eval_X, eval_C, norm_prod]
   calc
     _ ≤ ∏ _n : κ, (1 + Y ^ 2) := by
-      apply Finset.prod_le_prod (fun _ _ => norm_nonneg _)
+      apply Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _)
       intro n _
       have hn : ‖w n‖ ^ 2 ≤ Y ^ 2 := by nlinarith [hw n, norm_nonneg (w n)]
       exact (norm_sub_le u (w n ^ 2)).trans

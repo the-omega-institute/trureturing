@@ -74,7 +74,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
         (nu : Measure ℂ) = (mu : Measure K).map ((↑) : K → ℂ) ∧
         (∫ x : ℂ, ∫ y : ℂ, dist x y ^ r ∂(nu : Measure ℂ) ∂(nu : Measure ℂ)) =
           energy r K mu := by
-      let nu : ProbabilityMeasure ℂ := mu.map hemb.measurable.aemeasurable
+      let nu : ProbabilityMeasure ℂ := mu.map ((↑) : K → ℂ)
       refine ⟨nu, ?_, rfl, ?_⟩
       · rw [ProbabilityMeasure.toMeasure_map, Measure.map_apply hemb.measurable hK.compl]
         simp

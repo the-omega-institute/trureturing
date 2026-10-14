@@ -85,7 +85,7 @@ theorem result :
         Nat.prime_of_mem_primeFactors hpn, hmp⟩
     have padded : (∏ p ∈ t, (1 - (p : ℝ)⁻¹)⁻¹) ≤
         ∏ p ∈ u, (1 - (p : ℝ)⁻¹)⁻¹ := by
-      exact Finset.prod_le_prod_of_subset_of_one_le hsub
+      exact Finset.prod_le_prod_of_subset_of_one_le₀ hsub
         (fun p hp => (eulerpos p (Nat.prime_of_mem_primeFactors
           (mem_filter.mp (mem_filter.mp hp).1).1)).le)
         (fun p hp _ => eulerone p (mem_filter.mp hp).2.1)
@@ -155,10 +155,10 @@ theorem result :
             (D5.S3.Weil.GronwallUpperEnvelope.large_prime_count_le hn hX2) (by positivity)
         _ = _ := by simp only [div_eq_mul_inv, mul_inv_rev]; ring
     dsimp [highWeight]
-    refine ⟨Finset.one_le_prod (fun p hp => (factor p
+    refine ⟨Finset.one_le_prod₀ (fun p hp => (factor p
       (Nat.prime_of_mem_primeFactors (mem_filter.mp hp).1) _).1), ?_⟩
     calc
-      _ ≤ ∏ p ∈ s, (1 - (p : ℝ)⁻¹)⁻¹ := Finset.prod_le_prod
+      _ ≤ ∏ p ∈ s, (1 - (p : ℝ)⁻¹)⁻¹ := Finset.prod_le_prod₀
         (fun p hp => zero_le_one.trans (factor p
           (Nat.prime_of_mem_primeFactors (mem_filter.mp hp).1) _).1)
         (fun p hp => (factor p (Nat.prime_of_mem_primeFactors (mem_filter.mp hp).1) _).2)

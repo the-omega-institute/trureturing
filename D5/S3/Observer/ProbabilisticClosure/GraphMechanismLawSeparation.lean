@@ -4,20 +4,24 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: One graph has distinct mechanisms; opposite graphs share one Bool PMF. -/
-/- Library-search audit trail (2026-08-25):
+/- Library dependencies:
    * The repository's `ObservationInterventionSeparation` supplies the exact two-node
      `CausalDirection`, `DeterministicBoolSCM`, `Obs`, and opposite-direction models used here.
    * FPOD 268.1 was read at commit `84ba75047`. Its `CausallyIndependent` predicate concerns
      crosswise recombination of two mechanism readouts; it states neither graph equality nor
      equality of observational laws, so its conclusions cannot imply either witness below.
-   * Pinned Mathlib supplies `PMF.uniformOfFintype` and `PMF.map`. `SimpleGraph` is undirected,
+   * The imported finite-uniform PMF and Mathlib's `PMF.map` supply the laws.
+     `SimpleGraph` is undirected,
      while `Quiver` supplies arrows but no matching SCM/law theorem; neither is imported.
    * Searches in D5 and pinned Mathlib found no theorem combining both required separations.
      There is no prime parameter, and primality is not used.
 -/
 
 import D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -30,7 +34,7 @@ open D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation
 
 /-- The explicit fair exogenous law used by both observational models. -/
 def fairNoise : PMF Bool :=
-  PMF.uniformOfFintype Bool
+  uniformPmf Bool
 
 /-- The observational law is the pushforward of the fair Boolean noise by `Obs`. -/
 def observationalLaw (model : DeterministicBoolSCM) : PMF (Bool × Bool) :=

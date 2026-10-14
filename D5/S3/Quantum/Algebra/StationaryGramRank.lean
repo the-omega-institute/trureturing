@@ -103,11 +103,11 @@ private theorem lowering_mem_kernel (a : sigma → ℕ)
     lowering a i u ∈ LinearMap.ker B.mulVecLin := by
   classical
   have hz : star u ⬝ᵥ (B *ᵥ u) = 0 :=
-    (hB.dotProduct_mulVec_zero_iff u).mpr hker
+    (hB.dotProduct_mulVec_zero_iff (x := u)).mpr hker
   rw [recurrence_quadratic_identity a B hrec u hu] at hz
   have hi := (Finset.sum_eq_zero_iff_of_nonneg
     (fun j (_ : j ∈ Finset.univ) => hB.dotProduct_mulVec_nonneg (lowering a j u))).mp hz
-  exact (hB.dotProduct_mulVec_zero_iff _).mp (hi i (Finset.mem_univ i))
+  exact (hB.dotProduct_mulVec_zero_iff (x := _)).mp (hi i (Finset.mem_univ i))
 
 
 private def boxEquiv (a : sigma → ℕ) : TailBox a ≃ {d : sigma →₀ ℕ | ∀ i, d i ≤ a i} where

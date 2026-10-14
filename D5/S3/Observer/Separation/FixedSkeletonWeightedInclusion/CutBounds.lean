@@ -602,7 +602,7 @@ theorem productOn_subtype (P : I → Prop) (τ : I → ℝ) :
 private theorem productOn_mono (A B : I → Prop) (τ : I → ℝ)
     (hτ : ∀ i, 1 ≤ τ i) (h : ∀ i, A i → B i) : productOn A τ ≤ productOn B τ := by
   classical
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro i _; split_ifs <;> linarith [hτ i]
   · intro i _
     by_cases ha : A i

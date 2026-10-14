@@ -565,7 +565,7 @@ private theorem serial_states (z : Runtime) (ω : ℕ → Letter)
       | delivered => simp [packetOperation,finiteOperation,hc,packetStates,hq]
 
 private theorem packet_states_measurable (z : Runtime) : Measurable (packetStates z) := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   induction n with
   | zero => exact measurable_const

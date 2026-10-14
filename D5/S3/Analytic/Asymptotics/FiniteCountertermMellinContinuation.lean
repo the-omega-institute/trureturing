@@ -130,7 +130,7 @@ theorem finite_counterterm_mellin_continuation
     (hmellinDiff.analyticOnNhd hU).meromorphicOn
   have hpoleMeromorphic : MeromorphicOn poleSum U := by
     apply MeromorphicOn.fun_sum
-    intro j
+    intro j _
     change MeromorphicOn (fun s : ℂ => a j / (s - (alpha j.castSucc : ℂ))) U
     intro z _
     exact (MeromorphicAt.const (a j) z).div

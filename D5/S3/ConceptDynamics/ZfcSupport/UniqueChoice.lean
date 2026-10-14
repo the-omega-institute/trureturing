@@ -2,12 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/ZfcSupport/UniqueChoice
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Logic.IsEmpty.Basic]
+   anchors: [mathlib/module/Mathlib.Basic.IsEmpty.Basic]
    utility: none
    digest: Unique existence determines a chosen value and its defining predicate. -/
 module
 
-public import Mathlib.Logic.IsEmpty.Basic
+public import Mathlib.Basic.IsEmpty.Basic
 
 /- Source: FormalizedFormalLogic/Foundation@30a16ffa93d79d73ab4d02427fa00f50e039bf29
    Foundation/Vorspiel/ExistsUnique.lean, original lines 1-50.

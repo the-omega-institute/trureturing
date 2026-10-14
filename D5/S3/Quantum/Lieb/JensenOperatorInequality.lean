@@ -199,7 +199,7 @@ private lemma blockDiagonal_le_left_wrap {A0 A1 B0 B1 : L ℋ}
     exact hsub ▸ sub_nonneg.mpr h
   have hpos :
       (blockDiagonal (ℋ := ℋ) (B0 - A0) (B1 - A1)).IsPositive :=
-    (ContinuousLinearMap.nonneg_iff_isPositive _).1 hnonneg
+    (ContinuousLinearMap.nonneg_iff_isPositive (f := _)).1 hnonneg
   have hleftPos : (B0 - A0).IsPositive := by
     rw [ContinuousLinearMap.isPositive_iff_complex]
     intro x
@@ -207,7 +207,7 @@ private lemma blockDiagonal_le_left_wrap {A0 A1 B0 B1 : L ℋ}
       (ContinuousLinearMap.isPositive_iff_complex
         (blockDiagonal (ℋ := ℋ) (B0 - A0) (B1 - A1))).1 hpos (hsumIncl ℋ 0 x)
     simpa [blockDiagonal, hsumProj, hsumIncl, hsumEquiv, PiLp.inner_apply] using hx
-  exact sub_nonneg.mp ((ContinuousLinearMap.nonneg_iff_isPositive _).2 hleftPos)
+  exact sub_nonneg.mp ((ContinuousLinearMap.nonneg_iff_isPositive (f := _)).2 hleftPos)
 
 -- Theorem 2.5.2 `(iv) → (v)`.
 set_option maxHeartbeats 3000000 in

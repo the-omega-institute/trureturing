@@ -37,7 +37,7 @@ theorem reverse_word_run (w : List Bool) :
     have present : ∀ i : Fin n, variableName i.val ∈ Conventional.occurrences S := by
       intro i
       apply List.mem_flatMap.mpr
-      refine ⟨[(variableName i.val,true),(variableName i.val,false)],?_,by simp⟩
+      refine ⟨(Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)]),?_,by simp⟩
       apply List.mem_append_right
       exact List.mem_map.mpr ⟨i,by simp,rfl⟩
     let naming : Fin n → Conventional.Appearing S := fun i => ⟨variableName i.val,present i⟩
@@ -51,13 +51,15 @@ theorem reverse_word_run (w : List Bool) :
       obtain ⟨clause,member,occurs⟩ := List.mem_flatMap.mp name.property
       rcases List.mem_append.mp member with member | member
       · obtain ⟨source,sourceMember,rfl⟩ := List.mem_map.mp member
+        simp only [Std.Sat.CNF.Clause.literals_ofLiterals] at occurs
         obtain ⟨literal,literalMember,equal⟩ := List.mem_map.mp occurs
         obtain ⟨original,originalMember,rfl⟩ := List.mem_map.mp literalMember
         refine ⟨original.1,?_⟩
         apply Subtype.ext
         exact equal
       · obtain ⟨i,_,rfl⟩ := List.mem_map.mp member
-        simp only [List.map_cons,List.map_nil,List.mem_cons,List.not_mem_nil,or_false] at occurs
+        simp only [Std.Sat.CNF.Clause.literals_ofLiterals,List.map_cons,List.map_nil,
+          List.mem_cons,List.not_mem_nil,or_false] at occurs
         refine ⟨i,?_⟩
         apply Subtype.ext
         rcases occurs with equal | equal <;> exact equal.symm
@@ -73,9 +75,9 @@ theorem reverse_word_run (w : List Bool) :
       rw [names.symm_apply_apply]
     have split : ∀ r : Conventional.Name → Bool,
         S.all (fun c => Std.Sat.CNF.Clause.eval r c) =
-          (F.all (fun c => Std.Sat.CNF.Clause.eval r (c.map renamedLiteral)) &&
+          (F.all (fun c => Std.Sat.CNF.Clause.eval r (renamedClause c)) &&
             (List.finRange n).all (fun i => Std.Sat.CNF.Clause.eval r
-              [(variableName i.val,true),(variableName i.val,false)])) := by
+              (Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)]))) := by
       intro r
       dsimp only [S,saturatedFormula,renamedLiteral]
       simp only [List.all_append,List.all_map,Function.comp_def]
@@ -84,29 +86,30 @@ theorem reverse_word_run (w : List Bool) :
         Conventional.evaluate S (assignments a) = (unaryStandard F).eval a := by
       intro a
       have clause : ∀ c : Std.Sat.CNF.Clause (Fin n),
-          Std.Sat.CNF.Clause.eval (Conventional.extendAssignment S (assignments a)) (c.map renamedLiteral) = c.eval a := by
+          Std.Sat.CNF.Clause.eval (Conventional.extendAssignment S (assignments a)) (renamedClause c) = c.eval a := by
         intro c
-        simp only [Std.Sat.CNF.Clause.eval,List.any_map]
+        simp only [Std.Sat.CNF.Clause.eval,renamedClause,
+          Std.Sat.CNF.Clause.literals_ofLiterals,List.any_map]
         apply List.any_congr rfl
         intro literal
         simp [renamedLiteral,values a literal.1]
       have taut : ∀ i : Fin n,
           Std.Sat.CNF.Clause.eval (Conventional.extendAssignment S (assignments a))
-            [(variableName i.val,true),(variableName i.val,false)] = true := by
+            (Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)]) = true := by
         intro i
         simp [Std.Sat.CNF.Clause.eval,values a i]
       change S.all (fun c => Std.Sat.CNF.Clause.eval
         (Conventional.extendAssignment S (assignments a)) c) = (unaryStandard F).eval a
       rw [split]
       have main : F.all (fun c => Std.Sat.CNF.Clause.eval
-          (Conventional.extendAssignment S (assignments a)) (c.map renamedLiteral)) =
+          (Conventional.extendAssignment S (assignments a)) (renamedClause c)) =
           (unaryStandard F).eval a := by
         simp only [unaryStandard,Std.Sat.CNF.eval,List.all_toArray]
         exact List.all_congr rfl clause
       rw [main]
       have allTaut : (List.finRange n).all (fun i =>
           Std.Sat.CNF.Clause.eval (Conventional.extendAssignment S (assignments a))
-            [(variableName i.val,true),(variableName i.val,false)]) = true := by
+            (Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)])) = true := by
         apply List.all_eq_true.mpr
         intro i _
         exact taut i
@@ -148,22 +151,24 @@ theorem reverse_word_run (w : List Bool) :
         List.length_flatMap,List.map_const,List.sum_replicate]
       omega
     have clause : ∀ c : Std.Sat.CNF.Clause (Fin n),
-        (Conventional.clauseWord (c.map (fun l => (variableName l.1.val,l.2)))).length ≤
+        (Conventional.clauseWord (Std.Sat.CNF.Clause.ofLiterals (c.literals.map (fun l => (variableName l.1.val,l.2))))).length ≤
           2*(unaryClause c).length := by
       intro c
-      have terms : (c.flatMap (fun l => Conventional.literalWord (variableName l.1.val,l.2))).length ≤
-          2*(c.flatMap unaryLiteral).length := by
-        induction c with
+      have terms : (c.literals.flatMap (fun l => Conventional.literalWord (variableName l.1.val,l.2))).length ≤
+          2*(c.literals.flatMap unaryLiteral).length := by
+        generalize c.literals = literals
+        induction literals with
         | nil => simp
         | cons l c ih =>
           have h := literal l
           simp only [List.flatMap_cons,List.length_append] at *
           omega
-      simp only [Conventional.clauseWord,unaryClause,List.flatMap_map,List.length_append,
+      simp only [Conventional.clauseWord,Std.Sat.CNF.Clause.literals_ofLiterals,
+        unaryClause,List.flatMap_map,List.length_append,
         List.length_cons,List.length_nil]
       omega
     have main : (F.flatMap (fun c => Conventional.clauseWord
-        (c.map (fun l => (variableName l.1.val,l.2))))).length ≤ 2*body := by
+        (Std.Sat.CNF.Clause.ofLiterals (c.literals.map (fun l => (variableName l.1.val,l.2)))))).length ≤ 2*body := by
       dsimp [body]
       induction F with
       | nil => simp
@@ -173,7 +178,7 @@ theorem reverse_word_run (w : List Bool) :
         omega
     have saturation : ∀ indices : List (Fin n),
         (indices.flatMap (fun i => Conventional.clauseWord
-          [(variableName i.val,true),(variableName i.val,false)])).length ≤
+          (Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)]))).length ≤
             indices.length*(4*n+12) := by
       intro indices
       induction indices with
@@ -181,7 +186,7 @@ theorem reverse_word_run (w : List Bool) :
       | cons i indices ih =>
         have less := i.isLt
         have head : (Conventional.clauseWord
-            [(variableName i.val,true),(variableName i.val,false)]).length = 4*i.val+16 := by
+            (Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)])).length = 4*i.val+16 := by
           simp [Conventional.clauseWord,Conventional.literalWord,Conventional.nameWord,
             variableName,List.length_flatMap,List.map_const,List.sum_replicate]
           omega
@@ -200,8 +205,9 @@ theorem reverse_word_run (w : List Bool) :
     have clockClause : ∀ c : Std.Sat.CNF.Clause (Fin n),
         queryClauseClock c ≤ n+2*(unaryClause c).length := by
       intro c
-      have terms : (c.map (fun l => l.1.val+4)).sum = (c.flatMap unaryLiteral).length := by
-        induction c with
+      have terms : (c.literals.map (fun l => l.1.val+4)).sum = (c.literals.flatMap unaryLiteral).length := by
+        generalize c.literals = literals
+        induction literals with
         | nil => simp
         | cons l c ih =>
           simp only [List.map_cons,List.sum_cons,List.flatMap_cons,List.length_append,
@@ -255,10 +261,10 @@ theorem reverse_word_run (w : List Bool) :
         Conventional.readName (Conventional.nameWord v ++ tail) = some (v,tail) := by
       intro v tail canonical
       simp [Conventional.readName,bits,canonical]
-    have clause : ∀ (c : Std.Sat.CNF.Clause Conventional.Name) (budget : Nat) (tail : List Bool),
+    have clauseLists : ∀ (c : List (Conventional.Name × Bool)) (budget : Nat) (tail : List Bool),
         c.length ≤ budget → (∀ l ∈ c, l.1.head? = some true) →
         Conventional.readClause budget (c.flatMap Conventional.literalWord ++ [true,false] ++ tail) =
-          some (c,tail) := by
+          some (.ofLiterals c,tail) := by
       intro c
       induction c with
       | nil =>
@@ -281,9 +287,18 @@ theorem reverse_word_run (w : List Bool) :
             List.cons_append,List.nil_append,Conventional.readClause,nr]
           change (Conventional.readClause budget
             (c.flatMap Conventional.literalWord ++ true::false::tail)).bind
-              (fun result => some (l::result.1,result.2)) = some (l::c,tail)
+              (fun result => some (Std.Sat.CNF.Clause.ofLiterals (l::result.1.literals),result.2)) =
+                some (.ofLiterals (l::c),tail)
           rw [cr]
-          rfl
+          simp
+    have clause : ∀ (c : Std.Sat.CNF.Clause Conventional.Name) (budget : Nat) (tail : List Bool),
+        c.length ≤ budget → (∀ l ∈ c, l.1.head? = some true) →
+        Conventional.readClause budget (c.literals.flatMap Conventional.literalWord ++ [true,false] ++ tail) =
+          some (c,tail) := by
+      intro c budget tail bounded canonical
+      simpa only [Std.Sat.CNF.Clause.ofLiterals_literals] using
+        clauseLists c.literals budget tail bounded
+          (fun l member => canonical l (Std.Sat.CNF.Clause.mem_literals_iff.mp member))
     have body : ∀ (G : Conventional.Formula) (fuel : Nat),
         G.length < fuel → (∀ c ∈ G, c.length ≤ 3) →
         (∀ c ∈ G, ∀ l ∈ c, l.1.head? = some true) →
@@ -317,17 +332,20 @@ theorem reverse_word_run (w : List Bool) :
       intro c member
       rcases List.mem_append.mp member with member | member
       · obtain ⟨original,h,rfl⟩ := List.mem_map.mp member
-        simpa using width original h
+        simpa [Std.Sat.CNF.Clause.length] using width original h
       · obtain ⟨i,_,rfl⟩ := List.mem_map.mp member
-        simp
+        simp [Std.Sat.CNF.Clause.length]
     have canonical : ∀ c ∈ saturatedFormula F, ∀ l ∈ c, l.1.head? = some true := by
       intro c member l occurs
       rcases List.mem_append.mp member with member | member
       · obtain ⟨original,_,rfl⟩ := List.mem_map.mp member
+        simp only [← Std.Sat.CNF.Clause.mem_literals_iff,
+          Std.Sat.CNF.Clause.literals_ofLiterals] at occurs
         obtain ⟨literal,_,rfl⟩ := List.mem_map.mp occurs
         rfl
       · obtain ⟨i,_,rfl⟩ := List.mem_map.mp member
-        simp only [List.mem_cons,List.not_mem_nil,or_false] at occurs
+        simp only [← Std.Sat.CNF.Clause.mem_literals_iff,
+          Std.Sat.CNF.Clause.literals_ofLiterals,List.mem_cons,List.not_mem_nil,or_false] at occurs
         rcases occurs with rfl | rfl <;> rfl
     have size : (saturatedFormula F).length ≤
         (Conventional.formulaWord (saturatedFormula F)).length := by
@@ -358,7 +376,7 @@ theorem reverse_word_run (w : List Bool) :
       (convertedWord w).length ≤ 4*w.length^2+14*w.length+6 := by
     cases read : ClauseCodec.readWord false w with
     | none =>
-      have prepared : preparedFormula w = ⟨0,([[]] : UnaryFormula 0)⟩ := by
+      have prepared : preparedFormula w = ⟨0,([.empty] : UnaryFormula 0)⟩ := by
         unfold preparedFormula
         rw [read]
         rfl

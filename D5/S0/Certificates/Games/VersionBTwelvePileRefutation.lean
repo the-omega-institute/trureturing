@@ -144,12 +144,130 @@ private def marked (s : Position) : Bool := losingBits.testBit (rank s)
 private def check (s : Position) : Bool :=
   marked s == (successors s).all (fun t => !marked t)
 
+private theorem certificate_checked_0 :
+    ∀ (b : Fin (13-0)) (c : Fin (13-0-b.val))
+      (d : Fin (13-0-b.val-c.val)) (e : Fin (13-0-b.val-c.val-d.val))
+      (f : Fin (13-0-b.val-c.val-d.val-e.val)),
+      check ⟨0,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_1 :
+    ∀ (b : Fin (13-1)) (c : Fin (13-1-b.val))
+      (d : Fin (13-1-b.val-c.val)) (e : Fin (13-1-b.val-c.val-d.val))
+      (f : Fin (13-1-b.val-c.val-d.val-e.val)),
+      check ⟨1,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_2 :
+    ∀ (b : Fin (13-2)) (c : Fin (13-2-b.val))
+      (d : Fin (13-2-b.val-c.val)) (e : Fin (13-2-b.val-c.val-d.val))
+      (f : Fin (13-2-b.val-c.val-d.val-e.val)),
+      check ⟨2,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_3 :
+    ∀ (b : Fin (13-3)) (c : Fin (13-3-b.val))
+      (d : Fin (13-3-b.val-c.val)) (e : Fin (13-3-b.val-c.val-d.val))
+      (f : Fin (13-3-b.val-c.val-d.val-e.val)),
+      check ⟨3,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_4 :
+    ∀ (b : Fin (13-4)) (c : Fin (13-4-b.val))
+      (d : Fin (13-4-b.val-c.val)) (e : Fin (13-4-b.val-c.val-d.val))
+      (f : Fin (13-4-b.val-c.val-d.val-e.val)),
+      check ⟨4,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_5 :
+    ∀ (b : Fin (13-5)) (c : Fin (13-5-b.val))
+      (d : Fin (13-5-b.val-c.val)) (e : Fin (13-5-b.val-c.val-d.val))
+      (f : Fin (13-5-b.val-c.val-d.val-e.val)),
+      check ⟨5,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_6 :
+    ∀ (b : Fin (13-6)) (c : Fin (13-6-b.val))
+      (d : Fin (13-6-b.val-c.val)) (e : Fin (13-6-b.val-c.val-d.val))
+      (f : Fin (13-6-b.val-c.val-d.val-e.val)),
+      check ⟨6,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_7 :
+    ∀ (b : Fin (13-7)) (c : Fin (13-7-b.val))
+      (d : Fin (13-7-b.val-c.val)) (e : Fin (13-7-b.val-c.val-d.val))
+      (f : Fin (13-7-b.val-c.val-d.val-e.val)),
+      check ⟨7,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_8 :
+    ∀ (b : Fin (13-8)) (c : Fin (13-8-b.val))
+      (d : Fin (13-8-b.val-c.val)) (e : Fin (13-8-b.val-c.val-d.val))
+      (f : Fin (13-8-b.val-c.val-d.val-e.val)),
+      check ⟨8,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_9 :
+    ∀ (b : Fin (13-9)) (c : Fin (13-9-b.val))
+      (d : Fin (13-9-b.val-c.val)) (e : Fin (13-9-b.val-c.val-d.val))
+      (f : Fin (13-9-b.val-c.val-d.val-e.val)),
+      check ⟨9,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_10 :
+    ∀ (b : Fin (13-10)) (c : Fin (13-10-b.val))
+      (d : Fin (13-10-b.val-c.val)) (e : Fin (13-10-b.val-c.val-d.val))
+      (f : Fin (13-10-b.val-c.val-d.val-e.val)),
+      check ⟨10,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_11 :
+    ∀ (b : Fin (13-11)) (c : Fin (13-11-b.val))
+      (d : Fin (13-11-b.val-c.val)) (e : Fin (13-11-b.val-c.val-d.val))
+      (f : Fin (13-11-b.val-c.val-d.val-e.val)),
+      check ⟨11,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
+private theorem certificate_checked_12 :
+    ∀ (b : Fin (13-12)) (c : Fin (13-12-b.val))
+      (d : Fin (13-12-b.val-c.val)) (e : Fin (13-12-b.val-c.val-d.val))
+      (f : Fin (13-12-b.val-c.val-d.val-e.val)),
+      check ⟨12,b.val,c.val,d.val,e.val,f.val⟩ = true := by
+  intro b
+  fin_cases b <;> decide +kernel
+
 private theorem certificate_checked :
     ∀ (a : Fin 13) (b : Fin (13-a.val)) (c : Fin (13-a.val-b.val))
       (d : Fin (13-a.val-b.val-c.val)) (e : Fin (13-a.val-b.val-c.val-d.val))
       (f : Fin (13-a.val-b.val-c.val-d.val-e.val)),
       check ⟨a.val,b.val,c.val,d.val,e.val,f.val⟩ = true := by
-  decide +kernel
+  intro a
+  fin_cases a
+  · exact certificate_checked_0
+  · exact certificate_checked_1
+  · exact certificate_checked_2
+  · exact certificate_checked_3
+  · exact certificate_checked_4
+  · exact certificate_checked_5
+  · exact certificate_checked_6
+  · exact certificate_checked_7
+  · exact certificate_checked_8
+  · exact certificate_checked_9
+  · exact certificate_checked_10
+  · exact certificate_checked_11
+  · exact certificate_checked_12
 
 private theorem certificate_recurrence (s : Position) (hs : pileCount s ≤ 12) :
     marked s = true ↔ ∀ t, Move s t → marked t ≠ true := by

@@ -111,10 +111,10 @@ theorem golden_modular_metric_criterion (delta gamma : Real) :
     dsimp [unitaryDefect]
     rw [htrace, hforwardNorm, hbackwardNorm]
   constructor
-  · tfae_have 1 → 2 := (hthree.out 0 1).mp
-    tfae_have 2 → 1 := (hthree.out 1 0).mp
-    tfae_have 1 → 3 := (hthree.out 0 2).mp
-    tfae_have 3 → 1 := (hthree.out 2 0).mp
+  · tfae_have 1 → 2 := (hthree.out 1 2).mp
+    tfae_have 2 → 1 := (hthree.out 2 1).mp
+    tfae_have 1 → 3 := (hthree.out 1 3).mp
+    tfae_have 3 → 1 := (hthree.out 3 1).mp
     tfae_have 1 → 4 := by
       intro hdelta
       rw [hdefect, hdelta]
@@ -148,7 +148,7 @@ theorem golden_modular_metric_criterion (delta gamma : Real) :
       simpa [criticalLineMirror, hzero] using xi_reading_one_sub_conj rho
     · intro hmetric
       apply hdelta
-      exact (hthree.out 2 0).mp hmetric
+      exact (hthree.out 3 1).mp hmetric
 
 #print axioms golden_modular_metric_criterion
 

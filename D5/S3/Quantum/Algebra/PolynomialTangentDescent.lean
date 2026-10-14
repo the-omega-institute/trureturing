@@ -34,8 +34,8 @@ private theorem notMem_vars_of_pderiv_eq_zero
   have hai' : a i ≠ 0 := Finsupp.mem_support_iff.mp hai
   let d : sigma →₀ ℕ := a - Finsupp.single i 1
   -- A derivative coefficient has one possible preimage exponent.
-  have hc := congrArg (coeff (a - Finsupp.single i 1)) h
-  rw [coeff_pderiv, Finsupp.sub_add_single_one_cancel hai', coeff_zero] at hc
+  have hc := congrArg ((fun p => AddMonoidAlgebra.coeff p (a - Finsupp.single i 1))) h
+  rw [coeff_pderiv, Finsupp.sub_add_single_one_cancel hai', MvPolynomial.coeff_zero] at hc
   have hn : (d i : K) + 1 ≠ 0 := by
     exact_mod_cast Nat.succ_ne_zero (d i)
   exact (mem_support_iff.mp ha) ((mul_eq_zero.mp hc).resolve_right hn)

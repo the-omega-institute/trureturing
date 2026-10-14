@@ -36,6 +36,7 @@ theorem guarded_ranking_terminates
     forall trajectory : Nat -> X,
       exists n, Not (guard (trajectory n) ∧
         step (trajectory n) (trajectory (n + 1))) := by
+  letI : WellFounded less := IsWellFounded.wf (α := W) (r := less)
   intro trajectory
   obtain ⟨n, notDecreasing⟩ :=
     WellFounded.not_rel_apply_succ (r := less) (rank ∘ trajectory)
@@ -60,6 +61,7 @@ example :
     forall trajectory : Nat -> Nat,
       exists n, Not (0 < trajectory n ∧
         trajectory (n + 1) + 1 = trajectory n) := by
+  letI : IsWellFounded Nat (· < ·) := ⟨Nat.lt_wfRel.wf⟩
   apply guarded_ranking_terminates
     (guard := fun x : Nat => 0 < x)
     (step := fun x y => y + 1 = x)

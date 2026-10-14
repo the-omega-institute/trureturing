@@ -20,4 +20,6 @@ fi
 # producer receives it only as an explicit argument, never from the environment.
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+# Exact worktree selection requires an absent target .lake and fails without fallback.
+[[ -z "${STRATALINT_LEAN_CACHE_DONOR_WORKTREE:-}" ]] || donor+=(--donor-worktree "$STRATALINT_LEAN_CACHE_DONOR_WORKTREE")
 exec "${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"}

@@ -17,16 +17,16 @@ namespace PredictiveThermodynamic.BinaryNames
 open Turing StateTransition
 
 def denseFormula (F : Conventional.Formula) : UnaryFormula (Conventional.dictionary F).length :=
-  F.attach.map fun c => c.val.attach.map fun literal =>
+  F.attach.map fun c => .ofLiterals (c.val.literals.attach.map fun literal =>
     (⟨(Conventional.dictionary F).idxOf literal.val.1, by
       apply List.idxOf_lt_length_iff.mpr
       apply List.mem_dedup.mpr
       exact List.mem_flatMap.mpr ⟨c.val, c.property,
-        List.mem_map.mpr ⟨literal.val, literal.property, rfl⟩⟩⟩, literal.val.2)
+        List.mem_map.mpr ⟨literal.val, literal.property, rfl⟩⟩⟩, literal.val.2))
 
 def densePrepared (w : List Bool) : Σ n, UnaryFormula n :=
   match Conventional.readWord w with
-  | none => ⟨0,[[]]⟩
+  | none => ⟨0,[.empty]⟩
   | some F => ⟨(Conventional.dictionary F).length,denseFormula F⟩
 
 def denseOutput (w : List Bool) : List Bool := sourceWord (densePrepared w).2
@@ -65,39 +65,47 @@ theorem dense_word_run (w : List Bool) :
     let assignments : (Fin dictionary.length → Bool) ≃ (Conventional.Appearing F → Bool) :=
       Equiv.arrowCongr names (Equiv.refl Bool)
     let source : List (Std.Sat.CNF.Clause (Conventional.Appearing F)) :=
-      F.attach.map fun c => c.val.attach.map fun literal =>
+      F.attach.map fun c => .ofLiterals (c.val.literals.attach.map fun literal =>
         (⟨literal.val.1, List.mem_flatMap.mpr ⟨c.val,c.property,
-          List.mem_map.mpr ⟨literal.val,literal.property,rfl⟩⟩⟩,literal.val.2)
+          List.mem_map.mpr ⟨literal.val,literal.property,rfl⟩⟩⟩,literal.val.2))
     let standard : Std.Sat.CNF (Conventional.Appearing F) := ⟨source.toArray⟩
     have relabelled : Std.Sat.CNF.relabel names.symm standard =
         unaryStandard (denseFormula F) := by
       have lists : source.map (Std.Sat.CNF.Clause.relabel names.symm) = denseFormula F := by
-        simp [source,denseFormula,Std.Sat.CNF.Clause.relabel,List.map_map,
-          names,dictionary,Conventional.dictionary,Equiv.trans,Equiv.subtypeEquivRight,
-          Equiv.subtypeEquiv,List.Nodup.getEquiv]
-        all_goals
-          intro c _ name
-          constructor <;> intro
-          all_goals
-            dsimp only [List.idxOf]
-            congr 1
-            funext x
-            apply Bool.eq_iff_iff.mpr
-            simp only [beq_iff_eq]
+        simp only [source,denseFormula,List.map_map,Function.comp_apply]
+        apply List.map_congr_left
+        intro c _
+        apply Std.Sat.CNF.Clause.ext
+        simp only [Std.Sat.CNF.Clause.literals_relabel,
+          Std.Sat.CNF.Clause.literals_ofLiterals,List.map_map,Function.comp_apply]
+        apply List.map_congr_left
+        intro literal _
+        apply Prod.ext
+        · apply Fin.ext
+          simp only [names,Equiv.symm_trans_apply,Equiv.subtypeEquivRight_symm_apply,
+            List.Nodup.getEquiv,Equiv.coe_fn_symm_mk]
+          dsimp only [List.idxOf]
+          change dictionary.findIdx _ = dictionary.findIdx _
+          apply congrArg (fun test : Conventional.Name → Bool => dictionary.findIdx test)
+          funext x
+          apply Bool.eq_iff_iff.mpr
+          simp only [beq_iff_eq]
+        · rfl
       have arrays := congrArg (fun clauses : List (Std.Sat.CNF.Clause (Fin dictionary.length)) =>
         (⟨clauses.toArray⟩ : Std.Sat.CNF (Fin dictionary.length))) lists
       simpa only [Std.Sat.CNF.relabel,standard,unaryStandard,List.map_toArray] using arrays
     have listArray : ∀ a, standard.eval a = Conventional.evaluate F a := by
       intro a
       have clauseEval : ∀ c : {c // c ∈ F},
-          Std.Sat.CNF.Clause.eval a (c.val.attach.map fun literal =>
+          Std.Sat.CNF.Clause.eval a (.ofLiterals (c.val.literals.attach.map fun literal =>
             (⟨literal.val.1, List.mem_flatMap.mpr ⟨c.val,c.property,
               List.mem_map.mpr ⟨literal.val,literal.property,rfl⟩⟩⟩,
-              literal.val.2)) =
+              literal.val.2))) =
             c.val.eval (Conventional.extendAssignment F a) := by
         intro c
         rw [Bool.eq_iff_iff]
-        simp only [Std.Sat.CNF.Clause.eval,List.any_map,List.any_eq_true]
+        simp only [Std.Sat.CNF.Clause.eval,Std.Sat.CNF.Clause.literals_ofLiterals,
+          List.any_map,List.any_eq_true]
         constructor
         · rintro ⟨literal,_,sat⟩
           refine ⟨literal.val,literal.property,?_⟩
@@ -180,10 +188,12 @@ theorem dense_word_run (w : List Bool) :
           List.length_reverse, mass] at ih ⊢
         omega
     have literalSize : ∀ c : Std.Sat.CNF.Clause Conventional.Name,
-        (c.flatMap Conventional.literalWord).length =
-          2*mass (c.map Prod.fst)+4*c.length := by
+        (c.literals.flatMap Conventional.literalWord).length =
+          2*mass (c.literals.map Prod.fst)+4*c.length := by
       intro c
-      induction c with
+      change _ = _ + 4*c.literals.length
+      generalize c.literals = literals
+      induction literals with
       | nil => simp [mass]
       | cons literal c ih =>
         simp [Conventional.literalWord,Conventional.nameWord,List.length_flatMap,
@@ -199,7 +209,7 @@ theorem dense_word_run (w : List Bool) :
       | cons c f ih =>
         have h := literalSize c
         simp [Conventional.formulaWord,Conventional.clauseWord,Conventional.occurrences,
-          mass,List.map_append,List.sum_append] at ih h ⊢
+          Std.Sat.CNF.Clause.length,mass,List.map_append,List.sum_append] at ih h ⊢
         omega
     have indexLe : ∀ ns : List Conventional.Name, indices ns ≤ ns.length*d.length := by
       intro ns
@@ -211,9 +221,11 @@ theorem dense_word_run (w : List Bool) :
         dsimp [d] at one
         nlinarith
     have denseLiterals : ∀ c : Std.Sat.CNF.Clause Conventional.Name,
-        (c.flatMap (denseLiteralWord d)).length = indices (c.map Prod.fst)+4*c.length := by
+        (c.literals.flatMap (denseLiteralWord d)).length = indices (c.literals.map Prod.fst)+4*c.length := by
       intro c
-      induction c with
+      change _ = _ + 4*c.literals.length
+      generalize c.literals = literals
+      induction literals with
       | nil => simp [indices]
       | cons literal c ih =>
         simp [denseLiteralWord,indices,d,ih]
@@ -230,17 +242,21 @@ theorem dense_word_run (w : List Bool) :
         | nil => simp [denseBodyWord,Conventional.occurrences,indices]
         | cons c f ih =>
           have hc := denseLiterals c
-          simp [denseBodyWord,denseClauseWord,Conventional.occurrences,indices,
+          simp [denseBodyWord,denseClauseWord,Conventional.occurrences,Std.Sat.CNF.Clause.length,indices,
             List.map_append,List.sum_append] at ih hc ⊢
           omega
       simp [denseRawWord,bodySize f,Nat.add_assoc]
     have literalClock : ∀ c : Std.Sat.CNF.Clause Conventional.Name,
-        (c.map (denseLiteralClock d)).sum =
-          (2*mass (c.map Prod.fst)+12*c.length)*d.length+
-            4*c.length*(dictionaryStream d).length+4*mass (c.map Prod.fst)+
-            indices (c.map Prod.fst)+11*c.length := by
+        (c.literals.map (denseLiteralClock d)).sum =
+          (2*mass (c.literals.map Prod.fst)+12*c.length)*d.length+
+            4*c.length*(dictionaryStream d).length+4*mass (c.literals.map Prod.fst)+
+            indices (c.literals.map Prod.fst)+11*c.length := by
       intro c
-      induction c with
+      change _ = (2*mass (c.literals.map Prod.fst)+12*c.literals.length)*d.length+
+        4*c.literals.length*(dictionaryStream d).length+4*mass (c.literals.map Prod.fst)+
+        indices (c.literals.map Prod.fst)+11*c.literals.length
+      generalize c.literals = literals
+      induction literals with
       | nil => simp [mass,indices]
       | cons literal c ih =>
         simp only [List.map_cons,List.sum_cons,List.length_cons,mass,indices] at ih ⊢
@@ -260,7 +276,7 @@ theorem dense_word_run (w : List Bool) :
         have hc := literalClock c
         simp only [List.map_cons,List.sum_cons,denseClauseClock,
           Conventional.occurrences,List.flatMap_cons,List.length_append,
-          List.length_map,List.length_cons,mass,List.map_append,List.sum_append,
+          List.length_map,List.length_cons,Std.Sat.CNF.Clause.length,mass,List.map_append,List.sum_append,
           indices] at ih hc ⊢
         nlinarith
     have hL := size F
@@ -303,21 +319,22 @@ theorem dense_word_run (w : List Bool) :
       denseRawWord (Conventional.dictionary F) F = sourceWord (denseFormula F) := by
     intro F
     simp [sourceWord,denseRawWord,denseBodyWord,denseClauseWord,denseLiteralWord,
-      denseFormula,unaryClause,unaryLiteral,List.flatMap_map,List.attach_map_val,
+      denseFormula,unaryClause,unaryLiteral,Std.Sat.CNF.Clause.literals_ofLiterals,
+      List.flatMap_map,List.attach_map_val,
       List.flatMap_append,List.append_assoc,List.map_map,Function.comp_def]
     apply List.flatMap_congr
     intro c _
     simp [denseClauseWord,denseLiteralWord]
-    change c.flatMap (denseLiteralWord (Conventional.dictionary F)) =
-      c.attach.flatMap (fun a => denseLiteralWord (Conventional.dictionary F) a.val)
+    change c.literals.flatMap (denseLiteralWord (Conventional.dictionary F)) =
+      c.literals.attach.flatMap (fun a => denseLiteralWord (Conventional.dictionary F) a.val)
     symm
     simpa only [List.unattach_attach] using
-      (List.flatMap_subtype (l := c.attach)
+      (List.flatMap_subtype (l := c.literals.attach)
         (f := fun a => denseLiteralWord (Conventional.dictionary F) a.val)
         (g := denseLiteralWord (Conventional.dictionary F)) (fun _ _ => rfl))
   cases read : Conventional.readWord w with
   | none =>
-    have preparedEq : densePrepared w = ⟨0,([[]] : UnaryFormula 0)⟩ := by
+    have preparedEq : densePrepared w = ⟨0,([.empty] : UnaryFormula 0)⟩ := by
       unfold densePrepared
       rw [read]
     have outputEq : denseOutput w = dummySource := by
@@ -326,9 +343,9 @@ theorem dense_word_run (w : List Bool) :
       rfl
     rw [outputEq,preparedEq]
     have fallbackCheck : ClauseCodec.readWord false dummySource =
-        some ⟨0,([[]] : UnaryFormula 0)⟩ := rfl
+        some ⟨0,([.empty] : UnaryFormula 0)⟩ := rfl
     have fallbackSound := (ClauseCodec.codec_exact false dummySource 0
-      ([[]] : UnaryFormula 0)).mp fallbackCheck
+      ([.empty] : UnaryFormula 0)).mp fallbackCheck
     have run := Classical.choice (operational w)
     have bounded : Nonempty (EvalsToInTime denseMachine.step (initList denseMachine w)
         (some (haltList denseMachine dummySource)) (80*(w.length+1)^2)) := by
@@ -339,13 +356,13 @@ theorem dense_word_run (w : List Bool) :
         simp only [denseRunClock,read] at bound
         nlinarith
     refine ⟨bounded,?_,?_,?_,?_⟩
-    · simp only [dummySource,sourceWord,unaryClause,List.replicate_zero,
+    · simp only [dummySource,sourceWord,unaryClause,Std.Sat.CNF.Clause.literals_empty,List.replicate_zero,
         List.nil_append,List.flatMap_cons,List.flatMap_nil,List.append_nil,
         List.length_cons,List.length_nil,List.length_append]
       omega
     · simpa [denseOutput,preparedEq,read,dummySource] using fallbackCheck
     · simpa [preparedEq,read] using fallbackSound.2
-    · have zero : unaryCount ([[]] : UnaryFormula 0) = 0 := by
+    · have zero : unaryCount ([.empty] : UnaryFormula 0) = 0 := by
         simp [unaryCount,unaryStandard,Std.Sat.CNF.eval,Std.Sat.CNF.Clause.eval]
       simpa [preparedEq,read,Conventional.rawCount] using zero
   | some F =>
@@ -360,7 +377,7 @@ theorem dense_word_run (w : List Bool) :
     have widthDense : ∀ c ∈ denseFormula F, c.length ≤ 3 := by
       intro c member
       obtain ⟨source,_,rfl⟩ := List.mem_map.mp member
-      simpa using width source.val source.property
+      simpa [Std.Sat.CNF.Clause.length] using width source.val source.property
     have sourceEq : ClauseCodec.encodeWord false (denseFormula F) =
         sourceWord (denseFormula F) := by
       have general : ∀ (n : Nat) (G : UnaryFormula n),

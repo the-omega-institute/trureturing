@@ -200,6 +200,34 @@ public sealed class RawLeanReportArtifactTests
     }
 
     [Fact]
+    public void StatementIdentityPreservesEscapingAcrossStringChunks()
+    {
+        var value = new string('a', 65535) + "🌍\b\f\r\n\t\\\"<>&\u2028\u2029";
+        var declaration = new LeanDeclaration("probe", "theorem", value, []);
+        var expected = Trureturing.Truth.StructuredCanonicalWriter.WriteJson(
+            System.Text.Json.JsonSerializer.SerializeToElement(new
+            {
+                declaration_name_key = "probe",
+                kind = "theorem",
+                module_path = "Trureturing.lean",
+                schema = "declaration-statement-v1",
+                statement_material = value,
+            }));
+
+        Assert.Equal(FrozenContentHash.Compute(FrozenHashDomains.Statement, expected.AsSpan()),
+            CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown("Trureturing.lean"), declaration));
+    }
+
+    [Fact]
+    public void StatementIdentitySupportsMaterialBeyondSingleJsonStringLimit()
+    {
+        var declaration = new LeanDeclaration("probe", "theorem", new string('x', 134217728), []);
+
+        Assert.Equal("sha256:83714a491db201c9df4f16c82c0fcbeda982b868c3c3d58da56b2a672fe073da",
+            CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown("Trureturing.lean"), declaration));
+    }
+
+    [Fact]
     public void WriterIsByteStableAndUsesTheStructuredCanonicalJsonShape()
     {
         var snapshot = Snapshot();

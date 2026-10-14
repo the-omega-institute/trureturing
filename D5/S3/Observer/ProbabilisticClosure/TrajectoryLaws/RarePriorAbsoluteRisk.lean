@@ -26,8 +26,9 @@ open D5.S3.Estimation.DataProcessing.MeasurableTotalVariationTriangle
 def lawfulTail (s : ActivePhase) (z : Runtime) : Measure (ValidTail s) :=
   (pathLaw z).map fun p => NativeObserverJointLaw.validStopped s (fun n => (p n).2)
 private theorem lawfulTail_probability (s : ActivePhase) (z : Runtime) :
-    IsProbabilityMeasure (lawfulTail s z) :=
-  Measure.isProbabilityMeasure_map ((NativeObserverJointLaw.validStopped_measurable s).comp (by fun_prop)).aemeasurable
+    IsProbabilityMeasure (lawfulTail s z) := by
+  unfold lawfulTail
+  infer_instance
 private theorem lawfulTail_reconstruction (s : ActivePhase) (z : Runtime)
     (c : AcquiredNativeState) (hf : z.fields = c.source.finiteFields)
     (hs : c.source.finiteFields.control = .fourth (.active s)) :
@@ -207,7 +208,7 @@ private theorem ordinary_stream (z : Runtime) (hm : z.mode = .ordinary) :
   let μ := (pathLaw z).map rawPath
   let ν := rawReadLaw ordinaryRate
   have hmeas : Measurable rawPath := by unfold rawPath; fun_prop
-  haveI : IsProbabilityMeasure μ := Measure.isProbabilityMeasure_map hmeas.aemeasurable
+  haveI : IsProbabilityMeasure μ := inferInstance
   have he (n : ℕ) : μ.map (fun p (i : Fin (n+1)) => p i.val) =
       ν.map (fun p (i : Fin (n+1)) => p i.val) := by
     apply Measure.ext_of_singleton
@@ -284,7 +285,8 @@ def rawLaw (s : ActivePhase) (z : Runtime) : Measure RawTail :=
 private theorem rawLaw_probability (s : ActivePhase) (z : Runtime) :
     IsProbabilityMeasure (rawLaw s z) := by
   haveI := lawfulTail_probability s z
-  exact Measure.isProbabilityMeasure_map measurable_subtype_coe.aemeasurable
+  unfold rawLaw
+  exact inferInstance
 private theorem rawLaw_finite (s : ActivePhase) (z : Runtime) (w : List Letter) :
     rawLaw s z {some w} =
       if ∃ b, WordFamily s b w then pathLaw z (rawPath ⁻¹' prefixCylinder w) else 0 := by
@@ -333,10 +335,10 @@ private theorem special_probability :
     IsProbabilityMeasure specialBetaLaw ∧ IsProbabilityMeasure specialPLaw := by
   haveI := ConstantSuspensionSeparator.endpoint_probability .p ordinaryRate
   haveI : IsProbabilityMeasure ((explicitStoppedWordLaw .p ordinaryRate).map (prefixRaw 0)) :=
-    Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    inferInstance
   haveI : IsProbabilityMeasure
       ((explicitStoppedWordLaw .p ordinaryRate).map (prefixRaw 1 ∘ prefixRaw 0)) :=
-    Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    inferInstance
   constructor <;> constructor <;>
     norm_num [specialBetaLaw,specialPLaw,Measure.add_apply,Measure.smul_apply,smul_eq_mul,
       ← ENNReal.ofReal_add]
@@ -473,7 +475,7 @@ private theorem raw_beta_step (z : Runtime) :
   haveI := rawLaw_probability .beta z
   haveI := rawLaw_probability .p (readAdvance z 0)
   haveI : IsProbabilityMeasure ((rawLaw .p (readAdvance z 0)).map (prefixRaw 0)) :=
-    Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    inferInstance
   haveI : IsProbabilityMeasure
       (betaMass (emissionParameter z) • Measure.dirac (some [1])+
         alphaMass (emissionParameter z) • (rawLaw .p (readAdvance z 0)).map (prefixRaw 0)) := by
@@ -519,7 +521,7 @@ private theorem raw_p_step (z : Runtime) :
   haveI := rawLaw_probability .p z
   haveI := rawLaw_probability .beta (readAdvance z 1)
   haveI : IsProbabilityMeasure ((rawLaw .beta (readAdvance z 1)).map (prefixRaw 1)) :=
-    Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    inferInstance
   haveI : IsProbabilityMeasure
       (alphaMass (emissionParameter z) • Measure.dirac (some [0])+
         betaMass (emissionParameter z) • (rawLaw .beta (readAdvance z 1)).map (prefixRaw 1)) := by
@@ -586,8 +588,8 @@ private theorem special_p_tail (z : Runtime)
     simp [readAdvance,ha]
   rw [special_beta_tail _ hf he]
   unfold specialBetaLaw specialPLaw
-  rw [Measure.map_add _ _ (measurable_of_countable _),Measure.map_smul,
-    Measure.map_smul,Measure.map_dirac' (measurable_of_countable _) _,
+  rw [Measure.map_add _ _ (measurable_of_countable _),Measure.map_smul _ (measurable_of_countable _).aemeasurable,
+    Measure.map_smul _ (measurable_of_countable _).aemeasurable,Measure.map_dirac' (measurable_of_countable _) _,
     Measure.map_map (measurable_of_countable _) (measurable_of_countable _),
     smul_add,smul_smul,smul_smul]
   have hα : alphaMass (emissionParameter ⟨⟨.fourth (.active .p),r⟩,mon,.g⟩) =

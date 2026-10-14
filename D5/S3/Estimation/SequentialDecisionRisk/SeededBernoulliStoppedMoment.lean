@@ -166,7 +166,7 @@ private lemma like_uniform_bound (p₀ p : unitInterval) (i : ℕ)
     (ω : Seed × (ℕ → Bool)) : Like p₀ p i ω ≤ RatioBound p₀ ^ i := by
   calc
     _ ≤ ∏ _k ∈ range i, RatioBound p₀ := by
-      apply prod_le_prod (fun k _ => ratio_nonneg p₀ p (ω.2 k))
+      apply Finset.prod_le_prod₀ (fun k _ => ratio_nonneg p₀ p (ω.2 k))
       intro k _
       cases ω.2 k <;> simp only [Bool.false_eq_true, ↓reduceIte]
       · exact (div_le_div_of_nonneg_right (by linarith [p.2.1])

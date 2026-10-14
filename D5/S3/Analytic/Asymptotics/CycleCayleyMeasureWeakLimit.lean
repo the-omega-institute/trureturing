@@ -10,7 +10,8 @@
   cyclic phases through negative cotangent, and no weak-limit theorem for that sequence.
 * Body-shape searches found no existing D5 owner for the standard Cauchy CDF calculation, the
   negative-cotangent order bridge, the finite grid count, or the resulting interval masses.
-* Pinned Mathlib supplies `PMF.uniformOfFintype`, `PMF.map`, the Cauchy probability measure,
+* The imported finite-uniform PMF supplies the phase law. Pinned Mathlib supplies
+  `PMF.map`, the Cauchy probability measure,
   `integral_Iic_inv_one_add_sq`, `Fin.card_filter_val_lt`,
   `tendsto_nat_floor_mul_div_atTop`, and the probability-measure pi-system convergence theorem.
   These primitives are applied directly below.
@@ -20,8 +21,11 @@ import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.MeasureTheory.Measure.Portmanteau
 import Mathlib.Probability.CDF
 import Mathlib.Probability.Distributions.Cauchy
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Probability.ProbabilityMassFunction.Integrals
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 open Filter MeasureTheory Set
 open scoped ENNReal NNReal Topology Real
@@ -33,7 +37,7 @@ noncomputable section
 /-- The uniform empirical measure on the nontrivial cyclic Cayley phases for cycle size `n + 2`.
 The index shift makes every source size at least two occur exactly once. -/
 def cycleCayleyEmpiricalMeasure (n : ℕ) : ProbabilityMeasure ℝ :=
-  let phases : PMF (Fin (n + 1)) := PMF.uniformOfFintype (Fin (n + 1))
+  let phases : PMF (Fin (n + 1)) := uniformPmf (Fin (n + 1))
   let cayleyPhases := phases.map (fun j =>
     -Real.cot (Real.pi * (j.val + 1) / (n + 2)))
   ⟨cayleyPhases.toMeasure, inferInstance⟩
@@ -114,14 +118,14 @@ private theorem empirical_Iic (n : ℕ) (x : ℝ) :
       (Nat.floor (((Real.arctan x + Real.pi / 2) / Real.pi) * (n + 2)) : ℝ≥0∞) /
         (n + 1 : ℝ≥0∞) := by
   rw [show (cycleCayleyEmpiricalMeasure n : Measure ℝ) =
-      (PMF.uniformOfFintype (Fin (n + 1))).toMeasure.map
+      (uniformPmf (Fin (n + 1))).toMeasure.map
         (fun j => -Real.cot (Real.pi * (j.val + 1) / (n + 2))) by
     exact (PMF.toMeasure_map (f := fun j : Fin (n + 1) =>
       -Real.cot (Real.pi * (j.val + 1) / (n + 2))) _ Measurable.of_discrete).symm]
   rw [Measure.map_apply Measurable.of_discrete measurableSet_Iic,
     PMF.toMeasure_apply_fintype]
   simp only [Set.indicator, Set.mem_preimage, Set.mem_Iic,
-    PMF.uniformOfFintype_apply, Fintype.card_fin]
+    uniformPmf, PMF.ofFintype_apply, Fintype.card_fin]
   rw [← Finset.sum_filter]
   simp only [Finset.sum_const, nsmul_eq_mul]
   have hpoint (j : Fin (n + 1)) :
