@@ -32,8 +32,9 @@ namespace D5.S3.Topology.StoneCech.FreeUltrafilterCardinality
 
 private abbrev Code := ℕ × Finset (Finset ℕ)
 
-private noncomputable def trace (n : ℕ) (A : Set ℕ) : Finset ℕ :=
-  (Finset.range n).filter (fun k => k ∈ A)
+private noncomputable def trace (n : ℕ) (A : Set ℕ) : Finset ℕ := by
+  classical
+  exact (Finset.range n).filter (fun k => k ∈ A)
 
 private def family (A : Set ℕ) : Set Code := {x | trace x.1 A ∈ x.2}
 
@@ -92,7 +93,7 @@ private def natFamily (A : Set ℕ) : Set ℕ := (Encodable.encode' Code) '' fam
 
 private theorem nat_patterns_infinite (T : Set (Set ℕ)) (s : Finset (Set ℕ)) :
     (pattern natFamily T s).Infinite := by
-  have h := (code_patterns_infinite T s).image (Encodable.encode' Code).injective
+  have h := (code_patterns_infinite T s).image (Encodable.encode' Code).injective.injOn
   apply h.mono
   rintro _ ⟨x, hx, rfl⟩ A hA
   have hm : Encodable.encode' Code x ∈ natFamily A ↔ x ∈ family A :=
