@@ -157,23 +157,20 @@ private theorem xMin_eq_of_eq_diag2
     have hbu : b = u := by linarith [hsR]
     simp [a, b, hav', hbu, min_comm]
 
-private theorem diag2_posSemidef
-    (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
-    (diag2 u v).PosSemidef := by
-  rw [diag2, Matrix.posSemidef_diagonal_iff]
-  intro i
-  fin_cases i
-  · exact Complex.zero_le_real.mpr hu
-  · exact Complex.zero_le_real.mpr hv
-
 private theorem witness_isPOVM : IsPOVM witness := by
-  rw [witness.eq_1]
-  constructor
-  · intro i
-    fin_cases i <;> apply diag2_posSemidef <;> norm_num
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [diag2, Fin.sum_univ_succ] <;> norm_num
+  let p : Fin 4 → Fin 2 → ℝ :=
+    ![![12 / 40, 1 / 40], ![13 / 40, 1 / 40],
+      ![14 / 40, 1 / 40], ![1 / 40, 37 / 40]]
+  have h :=
+    D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.diagonal_povm
+      (d := 2) (Ω := Fin 4) p
+      (by intro a i; fin_cases a <;> fin_cases i <;> norm_num [p])
+      (by intro i; fin_cases i <;> norm_num [p, Fin.sum_univ_succ])
+  convert h using 1
+  congr 1
+  funext a
+  fin_cases a <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+    norm_num [witness, diag2, p]
 
 private theorem witness_norms :
     (fun i : Fin 4 => opNorm (witness i)) =

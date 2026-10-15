@@ -46,7 +46,7 @@ internal sealed class MitraUnsharpnessWhiteNoiseRefutationDocument : IScribeDocu
                 "Theorem 4, equation (60), defines Σ′₂ as the mean effect norm minus the normalized trace of X(A). The displayed real part is Complex.re. This definition places no positivity assumption on A.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("E", "Operator-norm unsharpness", EFormula(),
-                "Section IV.A, equation (47), gives the unsharpness as the operator norm of the identity minus the X-matrix.",
+                "Section IV.A, equation (44), gives the unsharpness as the operator norm of the identity minus the X-matrix.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("EPrime", "Normalized-trace unsharpness", EPrimeFormula(),
                 "Section IV.A, equation (48), gives the trace of (I/d)(I − X). Here d = 2, the factor 1/2 acts on the identity by real scalar multiplication, and Complex.re takes the real part of the trace of the matrix product.",
