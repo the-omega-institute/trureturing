@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:b59c9340e39a14fadb17326078a5e458c3db8a788ca87f9e3c5d8e31b60ae941
   normalized_sha256: sha256:b59c9340e39a14fadb17326078a5e458c3db8a788ca87f9e3c5d8e31b60ae941
 cas_ref: sha256:b59c9340e39a14fadb17326078a5e458c3db8a788ca87f9e3c5d8e31b60ae941
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/HomomorphismFilteredTripleCensus.fixed_family_structure
+    target_statement_id: sha256:3c5cd540a3d716640ff796b5edcfde516349c77c1a18e967517af7fc64ec661a
+  - gid: D5/S3/Factorization/HomomorphismFilteredTripleCensus.fixed_point_census
+    target_statement_id: sha256:17492a9c6070e74b8ecfd34a3e6cfa428d3419d40fd5abf38d24a9a49b79f058
 receipts:
   unresolved_subitems: []
   chain_atoms:
