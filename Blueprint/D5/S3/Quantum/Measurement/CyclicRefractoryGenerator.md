@@ -18,7 +18,7 @@ The residue set is finite and decidable. The real amplitudes at each residue hav
 
 In each block the free vector is (1,0), and the tail vector has coordinates (a(z),b(z)). The zero operator has rows (a(z),b(z)) and (0,0). The one operator in block z is the outer product of the tail vector at e(z) and the row (b(z),-a(z)); its output is shifted to residue e(z). These explicit operators are Kzero and Kone. The Boolean branchK chooses Kone for true and Kzero for false.
 
-A zero output sends either initial phase to the free vector at the same residue. A one output sends the free vector to the next residue's tail vector and annihilates the tail vector. The corresponding classical weights are 1-p(z), p(z), 1 and 0, with p(z)=b(z) squared.
+The zero branch maps the free vector to a(z) times that vector and maps the tail vector to the free vector. The one branch maps the free vector to b(z) times the next residue's tail vector and annihilates the tail vector. The corresponding classical weights are 1-p(z), p(z), 1 and 0, with p(z)=b(z) squared.
 
 The stateVec function selects the free vector for block coordinate zero and the tail vector for block coordinate one. The wordK recursion uses identity for the empty word and multiplies the remaining word operator on the left of its first branch. The independently defined classicalWordProbability recursion multiplies the first transition weight by the probability of the remaining word from the updated classical state.
 

@@ -30,9 +30,10 @@ internal sealed class CyclicRefractoryGeneratorDocument : IScribeDocumentDefinit
                     + "These explicit operators are Kzero and Kone. The Boolean branchK chooses "
                     + "Kone for true and Kzero for false.")),
                 Paragraph(Text(
-                    "A zero output sends either initial phase to the free vector at the same residue. "
-                    + "A one output sends the free vector to the next residue's tail vector and "
-                    + "annihilates the tail vector. The corresponding classical weights are "
+                    "The zero branch maps the free vector to a(z) times that vector and maps "
+                    + "the tail vector to the free vector. The one branch maps the free vector "
+                    + "to b(z) times the next residue's tail vector and annihilates the tail vector. "
+                    + "The corresponding classical weights are "
                     + "1-p(z), p(z), 1 and 0, with p(z)=b(z) squared.")),
                 Paragraph(Text(
                     "The stateVec function selects the free vector for block coordinate zero "
