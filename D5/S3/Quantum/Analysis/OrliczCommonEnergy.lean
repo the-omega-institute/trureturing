@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The genuine logarithmic Orlicz conjugate and its consumed common-energy tail route.
--/
+   digest: The genuine logarithmic Orlicz conjugate and its consumed common-energy tail route. -/
 
 /- These are infinite-family analytic existence and inequality statements. They
    do not certify a finite instance, enumerate a bounded domain, provide a
