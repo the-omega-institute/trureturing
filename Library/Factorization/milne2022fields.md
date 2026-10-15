@@ -14,6 +14,8 @@ triage: anchor
 
 # Classical multiquadratic square classes
 
+## Locator
+
 Theorem 5.30, Example 5.31(b), and Remark 5.32, printed pages 75–76,
 describe the Kummer correspondence, its degree and pairing, and rational
 square classes represented by signed products of distinct primes. The
