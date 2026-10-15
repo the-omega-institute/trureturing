@@ -39,7 +39,7 @@ private theorem inclusion_S (q : ℕ) :
     inclusion (S q) = ∑ k ∈ Finset.range q, (X : R[X]) ^ k := by
   simp only [S, map_sum, map_pow, inclusion_X]
 
-private theorem geometric (q : ℕ) : X ^ q - (X - 1) * S q = 1 := by
+theorem geometric (q : ℕ) : X ^ q - (X - 1) * S q = 1 := by
   rw [S, mul_geom_sum]
   ring
 
@@ -55,7 +55,7 @@ private theorem sign_certificate (q : ℕ) :
 private theorem fp_F (q : ℕ) : fp q (F q) = 0 :=
   Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span (by simp))
 
-private theorem sign_square (q : ℕ) : fp q (W q) * fp q (W q) = 1 := by
+theorem sign_square (q : ℕ) : fp q (W q) * fp q (W q) = 1 := by
   have h := congrArg (fp q) (sign_certificate q)
   simpa only [map_sub, map_pow, map_one, map_mul, fp_F, mul_zero, sub_eq_zero,
     pow_two] using h
