@@ -17,6 +17,9 @@ internal sealed record LeanSourceDeclaration(
     internal bool IsAnonymousOnlySource { get; init; }
     internal bool HasExtIffTheorem { get; init; }
     internal bool IsPrivateDeclaration { get; init; }
+    internal bool HasUnsafeOrMetaModifier { get; init; }
+    internal bool IsTopLevelDeclaration { get; init; }
+    internal ImmutableArray<RepositoryFile> ImportedInductionSources { get; init; }
     internal ImmutableHashSet<string> NamedGenerators { get; init; } = ImmutableHashSet<string>.Empty;
 }
 
@@ -63,11 +66,13 @@ internal sealed partial class LeanSourceCatalog
         ImmutableArray<LeanSourceDeclaration> declarations,
         ImmutableDictionary<string, ImmutableArray<string>> importsByModule,
         ImmutableDictionary<string, ImmutableHashSet<string>> customSyntaxByModule,
-        ImmutableDictionary<RepoPath, ImmutableArray<LeanSourceToken>> declarationFreeSources)
+        ImmutableDictionary<RepoPath, ImmutableArray<LeanSourceToken>> declarationFreeSources,
+        ImmutableDictionary<string, RepositoryFile> sourceModules)
     {
         this.declarations = declarations;
         this.importsByModule = importsByModule;
         this.declarationFreeSources = declarationFreeSources;
+        this.sourceModules = sourceModules;
         anonymousSourcesByModule = declarations
             .GroupBy(static declaration => ModuleName(declaration.Path), StringComparer.Ordinal)
             .Select(static group => group.First())
@@ -126,7 +131,9 @@ internal sealed partial class LeanSourceCatalog
             declarations.ToImmutable(),
             importsByModule.ToImmutable(),
             customSyntaxByModule.ToImmutable(),
-            declarationFreeSources.ToImmutable());
+            declarationFreeSources.ToImmutable(),
+            snapshot.Files.Values.Where(static file => LeanClosureValidator.IsManagedLean(file.Path.Value))
+                .ToImmutableDictionary(static file => ModuleName(file.Path), StringComparer.Ordinal));
     }
 
     internal static ImmutableArray<string> ParseFileImports(RepositoryFile file, bool includeImplicitInit = false)
@@ -207,6 +214,7 @@ internal sealed partial class LeanSourceCatalog
                 continue;
             }
 
+            if (!declaration.ImportedInductionSources.IsDefaultOrEmpty) continue;
             RejectCustomSyntaxDependency(declaration);
             foreach (var dependency in ResolveDependencies(declaration))
             {
@@ -228,6 +236,11 @@ internal sealed partial class LeanSourceCatalog
             .DistinctBy(static source => source.FullName, StringComparer.Ordinal)
             .OrderBy(static source => source.FullName, StringComparer.Ordinal))
         {
+            if (!root.ImportedInductionSources.IsDefaultOrEmpty)
+            {
+                AppendImportedInductionSource(output, root);
+                continue;
+            }
             AppendField(output, "root-kind", root.Kind);
             AppendField(output, "root-name", root.FullName);
             AppendTokens(output, root.AmbientTokens);
@@ -259,7 +272,7 @@ internal sealed partial class LeanSourceCatalog
         return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(output.ToString()));
     }
 
-    private static LeanSourceDeclaration ResolveRecordedDeclaration(
+    private LeanSourceDeclaration ResolveRecordedDeclaration(
         ImmutableArray<LeanSourceDeclaration> moduleDeclarations,
         FrozenDeclaration recorded)
     {
@@ -277,6 +290,10 @@ internal sealed partial class LeanSourceCatalog
             .ToImmutableArray();
         if (matches.IsEmpty)
         {
+            if (recordedSegments[^1] == "induct_unfolding"
+                && !HasNamedGenerator(moduleDeclarations[0], recorded.DeclarationNameKey))
+                return ResolveImportedFunctionInduction(moduleDeclarations[0], recorded, recordedSegments);
+
             var extParents = moduleDeclarations.Where(source => source.HasExtIffTheorem
                 && source.IsPrivateDeclaration == IsPrivateNameKey(recorded.DeclarationNameKey)
                 && HasSourceBoundName(source, recorded.DeclarationNameKey, [source.FullName + "_iff"]))
@@ -669,6 +686,9 @@ internal sealed partial class LeanSourceCatalog
                 HasExtIffTheorem = commandDepths[commandIndex] == 0
                     && ProofKinds.Contains(kind) && HasBareExtAttribute(attributes),
                 IsPrivateDeclaration = HasDeclarationModifier(attributes, "private"),
+                IsTopLevelDeclaration = commandDepths[commandIndex] == 0,
+                HasUnsafeOrMetaModifier = HasDeclarationModifier(attributes, "unsafe")
+                    || HasDeclarationModifier(attributes, "meta"),
             });
         }
 
