@@ -1014,3 +1014,680 @@ $q\ge4$ 通用端口定理的证明。
 物理制备、相位参照或联合测量实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 106. 完整联合人口纤维上的无族承诺认证与精确白噪声边界
+
+**定义 C-106.1（实际联合人口与两个观察纤维）。** 沿用 C-105.1 的 $B,H,f,e_s,Q,R_+$，
+以及 C-105.2 的 $S,T,\Psi,\Gamma_t$。所有密度算子均为
+$H^{(1)}\otimes H^{(2)}$ 上任意复矩阵 $\Gamma\succeq0$、$\operatorname{tr}\Gamma=1$；
+可分离性仍只相对于 $H^{(1)}\mid H^{(2)}$。
+定义同一实际状态的精确联合概率和两个二元设置的响应
+
+$$
+p_{su}(\Gamma)=\langle s,u|\Gamma|s,u\rangle,\qquad
+q(\Gamma)=\operatorname{tr}(Q\Gamma),\qquad
+p_R(\Gamma)=\operatorname{tr}(R_+\Gamma),
+\tag{C106.1}
+$$
+
+$$
+\begin{aligned}
+\mathfrak D&=\left\{\Gamma\succeq0:\operatorname{tr}\Gamma=1,\quad
+p_{su}(\Gamma)=\tfrac15\mathbf1_{\{u=f(s)\}}\quad\text{对所有 }s,u\in B\right\},\\
+\mathfrak F&=\{\Gamma\in\mathfrak D:q(\Gamma)=1/5\}.
+\end{aligned}
+\tag{C106.2}
+$$
+
+$\mathfrak F$ 是 C-105 原完整菜单在 $S$ 处的纤维；$\mathfrak D$ 只固定全部 $25$ 个
+联合基概率。它们都不要求 $\Gamma=\Gamma_t$、实矩阵、乘积来源或轮内独立。
+不同测量设置的期望须属于同一个实际状态；两个单份边缘相同不供应这个条件。
+
+**定理 C-106.2（该人口纤维唯一的 PPT 态与可分离态）。** 对每个 $\Gamma\in\mathfrak D$，
+
+$$
+\Gamma^{\mathsf T_2}\succeq0
+\quad\Longleftrightarrow\quad\Gamma=S
+\quad\Longleftrightarrow\quad\Gamma\text{ 可分离}.
+\tag{C106.3}
+$$
+
+因此同样的等价关系适用于包含原 $Q$ 约束的 $\mathfrak F$。
+
+证明。设 $\mathcal E=\operatorname{span}\{e_s:s\in B\}$。
+正半定复矩阵满足 $|\Gamma_{xy}|^2\le\Gamma_{xx}\Gamma_{yy}$；这是其二阶主子式的非负性。
+若 $x=|s,u\rangle$ 且 $u\ne f(s)$，人口合同给 $\Gamma_{xx}=0$，所以整行和整列均为零。
+从而不存在连接 $\mathcal E$ 与其正交补的隐蔽矩阵元，并且
+
+$$
+\Gamma=\sum_{s,a\in B}c_{sa}|e_s\rangle\langle e_a|,\qquad
+C=(c_{sa})\succeq0,\quad c_{ss}=1/5,\quad c_{as}=\overline{c_{sa}}.
+\tag{C106.4}
+$$
+
+这里保留全部复相位。局部置换将 $e_s$ 送到 $|s,s\rangle$，故这是已知的
+maximally correlated 结构；其定义见 Hiroshima–Hayashi，
+[quant-ph/0405107v2](https://arxiv.org/abs/quant-ph/0405107v2)，式 (1)。
+按 C-105.11 的第二份转置约定，
+
+$$
+\Gamma^{\mathsf T_2}
+=\sum_{s,a}c_{sa}|s,f(a)\rangle\langle a,f(s)|.
+\tag{C106.5}
+$$
+
+对每个无序对 $s\ne a$，子空间
+$\operatorname{span}\{|s,f(a)\rangle,|a,f(s)\rangle\}$ 上的块为
+
+$$
+\begin{pmatrix}0&c_{sa}\\\overline{c_{sa}}&0\end{pmatrix},
+\qquad\text{特征值 }+|c_{sa}|,-|c_{sa}|.
+\tag{C106.6}
+$$
+
+这十个二维块与五个 $e_s$ 上的单点块互相正交，合计维数 $20+5=25$。
+故 PPT 当且仅当全部非对角 $c_{sa}$ 为零，当且仅当 $\Gamma=S$。
+这个块谱是 Rains，*A semidefinite program for distillable entanglement*，
+[quant-ph/0008047v2](https://arxiv.org/abs/quant-ph/0008047v2)，§6 Lemma 6.3 的证明、
+式 (6.20)–(6.21) 的直接应用；这里的额外关系是实际联合人口强制进入该结构。
+$S=(1/5)\sum_s P_s\otimes P_{f(s)}$ 是产品态的凸组合。
+反向的“可分离推出 PPT”是 Peres，
+[quant-ph/9604005v2](https://arxiv.org/abs/quant-ph/9604005v2)，式 (3)–(6) 的必要条件。
+因此三者等价，且 C-105.4 给 $q(S)=1/5$。证毕。
+
+式 (C106.3) 使用完整人口纤维的结构，没有使用一般 $5\times5$ 系统的 PPT 充分性。
+其所需零概率是总体概率的精确零；有限次试验中某些格子计数为零，不能直接满足
+(C106.2)，也不能据此推出精确支撑压缩。
+
+**命题 C-106.3（联合人口解除 $R_+$ 的族承诺及等号处的复相干反例）。** 对任意
+$\Gamma\in\mathfrak D$，令 $c=c_{0,13}$，则
+
+$$
+p_R(\Gamma)=1/5+\operatorname{Re}c,\qquad
+p_R(\Gamma)\ne1/5\ \Longrightarrow\ \Gamma\text{ 非 PPT 且纠缠}.
+\tag{C106.7}
+$$
+
+该蕴含不需要 C-105.2 的 $\Gamma_t$ 承诺，亦不需要 $q=1/5$。
+即使另有原 $Q$ 约束，$p_R=1/5$ 仍不能认证可分离。
+
+证明。$R_+$ 的两个对角项各贡献 $1/10$，两个交叉项合计贡献
+$\operatorname{Re}c$。若响应不等于 $1/5$，则 $c\ne0$，由 (C106.6) 得非 PPT。
+为验证等号处的不完备性，取任意实数 $0<|\eta|\le1/5$，定义
+
+$$
+\widetilde\Gamma_\eta
+=S+i\eta\bigl(|e_0\rangle\langle e_{13}|
+              -|e_{13}\rangle\langle e_0|\bigr).
+\tag{C106.8}
+$$
+
+其 $e_0,e_{13}$ 块是 $\begin{pmatrix}1/5&i\eta\\-i\eta&1/5\end{pmatrix}$，
+特征值 $1/5\pm|\eta|$；其余三个匹配向量各有特征值 $1/5$，其余二十维为零。
+所以这是迹一正半定复密度算子，全部人口满足 (C106.2)。
+$\operatorname{Re}(i\eta)=0$ 给 $p_R(\widetilde\Gamma_\eta)=1/5$。
+$\Omega$ 在这些向量上的系数均为实数；特别其 $e_0,e_{13}$ 系数同为 $1/2$，
+故反对称的纯虚交叉项对 $Q$ 的贡献为
+$(i\eta-i\eta)/4=0$。因此
+
+$$
+q(\widetilde\Gamma_\eta)=1/5,\qquad
+\widetilde\Gamma_\eta\in\mathfrak F,\qquad
+\operatorname{spec}\left(
+\left.\widetilde\Gamma_\eta^{\mathsf T_2}\right|_{
+\operatorname{span}\{|0,0\rangle,|13,13\rangle\}}
+\right)=\{+|\eta|,-|\eta|\}.
+\tag{C106.9}
+$$
+
+它与 $S$ 在全部原菜单和新增 $R_+$ 上均不可区分，却仍纠缠。证毕。
+
+**命题 C-106.4（C-105 读口在有泄漏时的无承诺认证）。** 对任意复二份密度算子
+$\Gamma$，不施加人口纤维或状态族限制，记
+
+$$
+\begin{aligned}
+d_0&=p_{0,13}(\Gamma),&d_{13}&=p_{13,0}(\Gamma),\\
+x&=p_{0,0}(\Gamma),&y&=p_{13,13}(\Gamma),\\
+c&=\langle0,13|\Gamma|13,0\rangle,&
+g&=p_R(\Gamma)-\tfrac12(d_0+d_{13})=\operatorname{Re}c.
+\end{aligned}
+\tag{C106.10}
+$$
+
+所有 $d_0,d_{13},x,y$ 非负。PPT 必须满足
+
+$$
+|c|^2\le xy,\qquad |g|\le\sqrt{xy};\qquad
+|g|>\sqrt{xy}\ \Longrightarrow\ \Gamma\text{ 非 PPT 且纠缠}.
+\tag{C106.11}
+$$
+
+不违反这些不等式不能认证一般二份态可分离。
+
+证明。这里消费 Peres PPT 必要条件及正半定二阶主子式条件：
+$\Gamma^{\mathsf T_2}$ 在 $|0,0\rangle,|13,13\rangle$ 上的压缩恰为
+$\begin{pmatrix}x&c\\\overline c&y\end{pmatrix}$。
+若其正半定，行列式 $xy-|c|^2\ge0$。
+由 $|\operatorname{Re}c|\le|c|$ 与 $x,y\ge0$ 得所列读口界；违反它即可排除 PPT。
+这是已知正性判据在当前读口中的参数对应，不另立一般正性定理。
+对 $g$ 的正方向，还可使用线性算子
+
+$$
+W=\tfrac12(P_0\otimes P_0+P_{13}\otimes P_{13})
+  -R_++\tfrac12(P_0\otimes P_{13}+P_{13}\otimes P_0),
+\qquad \operatorname{tr}(W\Gamma)=\tfrac{x+y}{2}-g.
+\tag{C106.12}
+$$
+
+其期望等于 $z_-=(|0,0\rangle-|13,13\rangle)/\sqrt2$ 在部分转置下的二次型，
+故在所有 PPT 态上非负。算术–几何均值给 $\sqrt{xy}\le(x+y)/2$，
+所以根号界在不对称泄漏下至少与这一固定线性界一样强；在 $x=y$ 时二者相同。
+在 $\mathfrak D$ 上 $x=y=0$、$d_0=d_{13}=1/5$，恢复 (C106.7)，
+而不曾把一般来源换成 $\Gamma_t$。证毕。
+
+**定理 C-106.5（C-105 连续混态族的白噪声 PPT 与可分离精确阈值）。** 对所有实数
+$t,\epsilon\in[0,1]$，定义归一化密度算子
+
+$$
+\Gamma_{t,\epsilon}=(1-\epsilon)\Gamma_t+\epsilon I_{25}/25,
+\qquad \epsilon_*(t)=\frac{5t}{1+5t}.
+\tag{C106.13}
+$$
+
+则
+
+$$
+\Gamma_{t,\epsilon}\text{ 可分离}
+\quad\Longleftrightarrow\quad\Gamma_{t,\epsilon}^{\mathsf T_2}\succeq0
+\quad\Longleftrightarrow\quad\epsilon\ge\epsilon_*(t).
+\tag{C106.14}
+$$
+
+(C106.11) 的同一人口与 $R_+$ 见证恰好检测 $\epsilon<\epsilon_*(t)$ 的全部态。
+
+证明。C-105.3 已给 $\Gamma_t$ 的密度性，白噪声凸组合仍为密度算子。
+置
+
+$$
+a=\frac{(1-\epsilon)t}{5},\qquad \delta=\frac\epsilon{25},\qquad
+h=\frac{1-\epsilon}{5};\qquad a,\delta,h\ge0.
+\tag{C106.15}
+$$
+
+匹配基人口均为 $h+\delta$，其余二十格均为 $\delta$；
+四个底面匹配向量之间的非对角元为 $\pm a$，与 $e_2$ 相接者均为零。
+因此选定块和见证读数为
+
+$$
+\begin{aligned}
+\left.\Gamma_{t,\epsilon}^{\mathsf T_2}\right|_{
+\operatorname{span}\{|0,0\rangle,|13,13\rangle\}}
+ &=\begin{pmatrix}\delta&a\\a&\delta\end{pmatrix},\\
+d_0=d_{13}&=h+\delta,\quad x=y=\delta,\\
+p_R(\Gamma_{t,\epsilon})&=h+\delta+a,\quad g=a,\quad
+\operatorname{tr}(W\Gamma_{t,\epsilon})=\delta-a.
+\end{aligned}
+\tag{C106.16}
+$$
+
+故 $\delta<a$ 时 $z_-$ 给严格负二次型，而根号见证也恰好违反。
+其余四角对的部分转置块同样有特征值 $\delta\pm a$。
+完整块谱为五个 $h+\delta$、六个 $\delta+a$、六个 $\delta-a$ 和八个 $\delta$，
+因此 PPT 当且仅当 $\delta\ge a$。因 $1+5t>0$，
+
+$$
+\delta\ge a
+\quad\Longleftrightarrow\quad\epsilon\ge5(1-\epsilon)t
+\quad\Longleftrightarrow\quad\epsilon\ge\frac{5t}{1+5t}.
+\tag{C106.17}
+$$
+
+PPT 的这一计算还不足以证明可分离；下面给出实际的可分离上证书。
+第二份的底面投影记为 $P_{\mathrm b}=I_5-P_2$。由式 (C105.7) 的偏迹计算，
+$\operatorname{Tr}_1|\Psi\rangle\langle\Psi|=P_{\mathrm b}/4$。
+消费可分离锥的秩一加约化矩阵供应，得到
+
+$$
+C_\Psi=|\Psi\rangle\langle\Psi|+I_5\otimes(P_{\mathrm b}/4)
+\quad\text{可分离},\qquad
+\operatorname{tr}C_\Psi=1+5=6,\qquad \omega_\Psi=C_\Psi/6.
+\tag{C106.18}
+$$
+
+这里的供应也可由 Vidal–Tarrach 的纯态 random robustness 精确实例得到。
+$\Psi$ 在 $\mathbb C^5\otimes\operatorname{ran}P_{\mathrm b}\cong\mathbb C^5\otimes\mathbb C^4$
+中有四个 Schmidt 系数 $1/2$。原文
+[quant-ph/9806094](https://arxiv.org/abs/quant-ph/9806094)，印刷页 15 式 (41)、
+附录 B.2 式 (B.29)–(B.33)，采用
+$(|\Psi\rangle\langle\Psi|+sI_{n_1n_2}/(n_1n_2))/(1+s)$，
+且 $s=n_1n_2a_1a_2$。
+代入 $n_1=5,n_2=4,a_1=a_2=1/2$ 得 $s=5$，所以
+$(|\Psi\rangle\langle\Psi|+I_{20}/4)/6$ 明确可分离；
+将第二份四维空间局部等距嵌入 $H$ 即得 $\omega_\Psi$。
+这是对纯态 $\Psi$ 应用该定理，不是对混态 $\Gamma_t$ 直接套用纯态公式。
+
+令两个明确的产品密度态为
+$D_2=P_2\otimes P_2=|e_2\rangle\langle e_2|$、
+$J_2=(I_5/5)\otimes P_2$。当 $\delta\ge a$ 时，有实际凸分解
+
+$$
+\boxed{\quad
+\Gamma_{t,\epsilon}
+=(1-\epsilon)(1-t)S+aD_2+24a\,\omega_\Psi+5aJ_2
+                  +25(\delta-a)\frac{I_{25}}{25}.
+\quad}
+\tag{C106.19}
+$$
+
+验证等式：$24a\omega_\Psi=4a|\Psi\rangle\langle\Psi|+aI_5\otimes P_{\mathrm b}$，
+$5aJ_2=aI_5\otimes P_2$，二者的产品背景合为 $aI_{25}$；
+再加末项成为 $\delta I_{25}$。
+余下 $aD_2+4a|\Psi\rangle\langle\Psi|=(1-\epsilon)tT$，
+因而恢复 (C106.13)。五个权重均非负，而且
+
+$$
+(1-\epsilon)(1-t)+a+24a+5a+25(\delta-a)
+=(1-\epsilon)(1-t)+5a+\epsilon=1.
+\tag{C106.20}
+$$
+
+所有分量都可分离且归一化，故这是可分离上证书，而非 PPT 充分性的推断。
+结合 Peres 必要条件和 (C106.17) 得三重等价。
+
+在边界处 $\delta=a=t/[5(1+5t)]$，末项权重为零，其余权重依次为
+
+$$
+\frac{1-t}{1+5t},\qquad\frac{t}{5(1+5t)},\qquad
+\frac{24t}{5(1+5t)},\qquad\frac{t}{1+5t},
+\tag{C106.21}
+$$
+
+仍为和一的非负数。$t=0$ 时 $\epsilon_*=0$，整条噪声线是
+$(1-\epsilon)S+\epsilon I_{25}/25$，均可分离；$\epsilon=0,t>0$ 恢复 C-105 的非 PPT 态。
+$t=1$ 时阈值为 $5/6$，边界分解为
+$D_2/30+(4/5)\omega_\Psi+J_2/6$，三项权重和为一。
+$\epsilon=1$ 时 $a=0$，(C106.19) 只剩 $I_{25}/25$。
+故全部闭区间端点均已包含。证毕。
+
+(C106.19) 使本族的 PPT 阈值与可分离阈值相同；其已知供应为纯态 robustness 与可分离锥，
+当前结论是 C-105 混态族及实际读口的对应应用，不作原创性主张。
+若只观测到 (C106.16) 中的部分读数而没有整族承诺，违反见证仍能认证纠缠，
+不违反见证却不能借用本族的可分离分解。特别加噪后不沿用无泄漏的固定阈值 $p_R>1/5$。
+
+**命题 C-106.6（同一见证的局部 $X/Y$ 乘积期望对应）。** 在两份空间分别定义
+
+$$
+\begin{aligned}
+A&=|0\rangle\langle13|,&X_1&=A+A^\dagger,&Y_1&=-i(A-A^\dagger),\\
+B'&=|13\rangle\langle0|,&X_2&=B'+B'^\dagger,&Y_2&=-i(B'-B'^\dagger).
+\end{aligned}
+\tag{C106.22}
+$$
+
+对任意复密度 $\Gamma$ 和 (C106.10) 的同一个 $c$，有
+
+$$
+\begin{aligned}
+R_+&=\tfrac12(P_0\otimes P_{13}+P_{13}\otimes P_0)
+       +\tfrac14(X_1\otimes X_2-Y_1\otimes Y_2),\\
+\operatorname{Re}c&=\tfrac14\bigl(\langle X_1\otimes X_2\rangle_\Gamma
+                                  -\langle Y_1\otimes Y_2\rangle_\Gamma\bigr),\\
+\operatorname{Im}c&=-\tfrac14\bigl(\langle X_1\otimes Y_2\rangle_\Gamma
+                                   +\langle Y_1\otimes X_2\rangle_\Gamma\bigr).
+\end{aligned}
+\tag{C106.23}
+$$
+
+若各局部设置确实可用上述算子的全部谱效果，局部相位参照按 (C106.22) 对齐，
+且各设置采样同一实际稳定来源 $\Gamma$，则乘积结果的平均值可重建同一见证期望。
+这里要求的谱结果为 $-1,0,+1$，包含该两维子空间外的零结果；每个谱效果须是实际可用的测量效果。
+
+证明。$A\otimes B'=|e_0\rangle\langle e_{13}|$。
+展开 $X_1\otimes X_2-Y_1\otimes Y_2$ 得
+$2(A\otimes B'+A^\dagger\otimes B'^\dagger)$，
+展开 $X_1\otimes Y_2+Y_1\otimes X_2$ 得
+$-2i(A\otimes B'-A^\dagger\otimes B'^\dagger)$。
+而 $\operatorname{tr}((A\otimes B')\Gamma)=\overline c$，
+所以实部与虚部的符号如 (C106.23) 所列。
+$X_j,Y_j$ 在所选两维空间上为 Pauli 算子，在其正交补上为零。
+若 $E^{(1)}_\lambda,E^{(2)}_\mu$ 为实际可用的局部谱效果，
+联合结果概率为 $\operatorname{tr}((E^{(1)}_\lambda\otimes E^{(2)}_\mu)\Gamma)$，
+按 $\lambda\mu$ 加权求和恰为相应乘积算子的期望。
+这个恒等式不要求两份独立；它要求各设置的概率来自同一实际状态，
+否则不同来源的四个期望不能组合成某一个 $c$。证毕。
+
+期望的这种线性重建不等于 $R_+$ 二元投影仪器的选择后状态或扰动合同。
+谱效果的数学存在亦不证明 AURIC FIB 原生控制具备这些设置、相位对齐或物理实现。
+这些结论不改变每份底面 concurrence 的分割，也不把非零来源协方差直接当作纠缠。
+C-104 的全输入 flagged CPTP 编解码与通用端口维数合同仍须各自证明；
+局部乘积期望对应没有供应这些全称映射。
+
+## 追加锚（本行以下为增补区）
+
+## 107. 匹配人口纤维的完整线性认证与整态独立副本纯度
+
+**定义 C-107.1（同一人口纤维的实方向与固定读数）。** 沿用 C-106 的
+$B=(0,1,2,3,13)$、$f$、$e_s=|s,f(s)\rangle$、$\mathcal E$、$S$、
+$\mathfrak D$、$\mathfrak F$ 和 $Q$。令 $J:\mathbb C^5\to H^{(1)}\otimes H^{(2)}$
+为 $J|s\rangle=e_s$ 的等距嵌入，$J^\dagger J=I_5$。
+C-106.2 给每个 $\Gamma\in\mathfrak D$ 唯一的压缩
+$C=J^\dagger\Gamma J$，满足 $\Gamma=JCJ^\dagger$、$C\succeq0$、$C_{ss}=1/5$。
+定义实向量空间及实线性泛函
+
+$$
+\begin{aligned}
+V&=\{X\in M_5(\mathbb C):X=X^\dagger,\ X_{ss}=0\ (s\in B)\},\\
+\ell_Q(X)&=\operatorname{tr}(J^\dagger QJX),\qquad V_Q=\ker\ell_Q\subset V,\\
+\mathfrak D&=\{J(I_5/5+X)J^\dagger:X\in V,\ I_5/5+X\succeq0\},\\
+\mathfrak F&=\{J(I_5/5+X)J^\dagger:X\in V_Q,\ I_5/5+X\succeq0\}.
+\end{aligned}
+\tag{C107.1}
+$$
+
+Hermitian 算子的迹配对为实数。对任意有限固定 Hermitian 菜单
+$\mathcal A=(A_1,\ldots,A_m)$，每个 $A_j$ 作用在原来的 $25$ 维二体空间，设
+
+$$
+\begin{aligned}
+M_{\mathcal A}(\Gamma)&=(\operatorname{tr}(A_j\Gamma))_{j=1}^m,\\
+L_{\mathcal A}(X)&=(\operatorname{tr}(J^\dagger A_jJX))_{j=1}^m,\\
+M_{\mathcal A}(\Gamma)-M_{\mathcal A}(S)&=L_{\mathcal A}(X).
+\end{aligned}
+\tag{C107.2}
+$$
+
+这里的固定菜单独立于未知输入；所有读数是同一实际 $\Gamma$ 的精确总体期望。
+在 $\mathcal K=\mathfrak D$ 或 $\mathfrak F$ 上的“完整纠缠分类”指存在函数
+$d:M_{\mathcal A}(\mathcal K)\to\{0,1\}$，使对每个 $\Gamma\in\mathcal K$，
+$d(M_{\mathcal A}(\Gamma))=0$ 当且仅当 $\Gamma$ 对原分割
+$H^{(1)}\mid H^{(2)}$ 可分离。$d$ 可非线性；限制在于输入数据是固定单副本线性菜单。
+
+**定理 C-107.2（C-106 纤维上分类完备性恰为受限层析完备性）。** 对上述每个
+有限固定菜单，以下四个条件在 $\mathcal K=\mathfrak D$ 上等价：
+
+1. 菜单在 $\mathcal K$ 上完整分类纠缠。
+2. $\{\Gamma\in\mathcal K:M_{\mathcal A}(\Gamma)=M_{\mathcal A}(S)\}=\{S\}$。
+3. $\ker(L_{\mathcal A}|_V)=\{0\}$。
+4. $M_{\mathcal A}$ 在 $\mathcal K$ 上单射。
+
+在 $\mathcal K=\mathfrak F$ 上，完全相同的四条件等价，但第三条必须换成
+$\ker(L_{\mathcal A}|_{V_Q})=\{0\}$。
+
+证明。C-106.2 说明两个集合中唯一可分离态均为 $S$。
+所以分类函数存在当且仅当没有纠缠态与 $S$ 共用读数，即第一、二条等价。
+若受限核为零，式 (C107.2) 立即给第二条；任意两个状态之差均在相应方向空间中，
+因而也给第四条。第四条蕴含第二条，因为 $S$ 本身属于集合。
+
+反之，若 $0\ne X$ 属于相应受限核，令 $\|X\|_{\rm op}$ 为压缩空间上的算子范数。
+对任何实数 $\varepsilon$ 满足
+
+$$
+0<|\varepsilon|<\frac1{5\|X\|_{\rm op}},\qquad
+I_5/5+\varepsilon X\succeq
+(1/5-|\varepsilon|\|X\|_{\rm op})I_5\succ0,
+\tag{C107.3}
+$$
+
+$\Gamma_\varepsilon=J(I_5/5+\varepsilon X)J^\dagger$ 就是人口仍精确固定的密度态。
+在 $V_Q$ 情形，$\ell_Q(X)=0$ 又保持 $q=1/5$。
+它不等于 $S$，故按 C-106.2 纠缠；线性性给它与 $S$ 的所有菜单期望相同，
+违反第二条。这证明必要性。证毕。
+
+式 (C107.3) 的严格正性只在五维匹配支撑 $\mathcal E$ 内成立。
+$S$ 在整个 $25$ 维空间的秩为五；沿 $\mathcal E^\perp$ 增加任意方向并不合法。
+这里没有使用 $S$ 是全部二体密度态集合的内点，而是使用它是人口纤维在指定仿射空间中的相对内点。
+
+该核与差空间判据复用 Heinosaari–Mazzarella–Wolf，
+*Quantum Tomography under Prior Information*，
+[arXiv:1109.5478](https://arxiv.org/abs/1109.5478)，Proposition 2 及其后自伴期望的 Definition 2；
+其 Proposition 1 区分算子空间维数与 POVM 结果数。
+Carmeli–Heinosaari–Maniscalco–Schultz–Toigo，
+*Determining quantum coherence with minimal resources*，
+[arXiv:1708.05597v1](https://arxiv.org/abs/1708.05597v1)，Theorems 1–2，
+在完整正交基测量模型中用不可见扰动刻画相干检测，并由检测得到全部非对角元。
+本条应用的是 C-106 特定支撑内的唯一可分离点与固定人口，
+并把既知 $Q$ 的额外限制保留；没有将该文关于基测量的设置数结论移作任意菜单的结论。
+
+**推论 C-107.3（锐利的独立实统计量数）。** 以 (C107.2) 在相应方向空间上的秩
+计独立新增实统计量，$\mathfrak D$ 的完整分类恰需秩 $20$；
+在 $\mathfrak F$ 中已知原 $Q$ 约束时，新增菜单恰需在 $V_Q$ 上有秩 $19$。
+这两个数都可由抽象 Hermitian 菜单达到。
+
+证明。十个无序匹配对各有任意复数 $X_{sa}$，下三角由共轭确定，对角为零，故
+
+$$
+\dim_{\mathbb R}V=2\binom52=20.
+\tag{C107.4}
+$$
+
+令 $x_{sa}=\operatorname{Re}X_{sa}$，按 $s<a$ 的模式顺序，
+$J^\dagger\Omega=(1,-1,0,-1,1)^T/2$ 给
+
+$$
+\ell_Q(X)=\tfrac12(
+ x_{0,13}+x_{1,3}-x_{0,1}-x_{0,3}-x_{1,13}-x_{3,13}).
+\tag{C107.5}
+$$
+
+取 $X=|0\rangle\langle13|+|13\rangle\langle0|$ 即得 $\ell_Q(X)=1/2$，
+所以它确为非零实线性约束，$\dim_{\mathbb R}V_Q=19$。
+秩–零化度与 C-107.2 给必要性和充分性；列出 $m$ 个值只给秩不超过 $m$，
+重复、依赖或在纤维上恒定的期望不计新方向。
+
+具体地，设 $K_{sa}=|e_s\rangle\langle e_a|$。全部十对的两个 Hermitian 算子
+
+$$
+H^R_{sa}=K_{sa}+K_{sa}^\dagger,\qquad
+H^I_{sa}=i(K_{sa}-K_{sa}^\dagger)
+\tag{C107.6}
+$$
+
+在 $\Gamma=JCJ^\dagger$ 上的期望依次为
+$2\operatorname{Re}c_{sa}$、$2\operatorname{Im}c_{sa}$，因为
+$\operatorname{tr}(K_{sa}\Gamma)=c_{as}=\overline{c_{sa}}$。
+这二十个实坐标达到 (C107.4)。在 $\mathfrak F$ 上可删去
+$H^R_{0,13}$：保留其余十九坐标，由 (C107.5) 的零值恢复
+
+$$
+\operatorname{Re}c_{0,13}=
+\operatorname{Re}c_{0,1}+\operatorname{Re}c_{0,3}
++\operatorname{Re}c_{1,13}+\operatorname{Re}c_{3,13}
+-\operatorname{Re}c_{1,3}.
+\tag{C107.7}
+$$
+
+故十九也是可达下界；这里的人口与原 $Q$ 已给定，不计入新增预算。证毕。
+
+这些数计的是精确期望的独立实方向，既不是测量设置数，也不是试验次数。
+例如一个 $k$ 结果的归一化 POVM 完整概率律只有至多 $k-1$ 个独立差方向；
+若只用这一个 POVM 的完整律补足人口纤维，分别须有 $k\ge21$ 或 $k\ge20$。
+它可以只有一个设置。抽象达到性也不要求把每个坐标作为一个独立设置：
+取相应方向空间的一组 Hermitian 对偶代表 $B_1,\ldots,B_n$，
+在 $\mathcal E$ 上令 $E_j=I_5/(n+1)+\delta B_j$（$1\le j\le n$）、
+$E_{n+1}=I_5/(n+1)-\delta\sum_jB_j$，充分小的 $\delta>0$ 保证全部效果非负且和为 $I_5$。
+在 $\mathcal E^\perp$ 上把恒等效果并入最后一项，就得到原空间上 $n+1$ 结果的 POVM；
+在人口纤维上其完整律的秩为 $n$。这是上述 Proposition 1 的有限维正性构造的受限应用，
+不供应实际装置、有限样本精度或这些效果的原生可执行性。
+
+**命题 C-107.4（四模式菜单遗漏中模式的八个实方向）。** 令
+$\mathcal E_4=\operatorname{span}\{e_0,e_1,e_3,e_{13}\}$、$P_4$ 为其正交投影。
+即使给定全部满足 $A=P_4AP_4$ 的 Hermitian 观测，其在 $V$ 上的共同不可见方向仍恰为
+
+$$
+\mathcal N_2=\left\{
+\sum_{a\in\{0,1,3,13\}}
+\bigl(z_a|e_2\rangle\langle e_a|+
+\overline{z_a}|e_a\rangle\langle e_2|\bigr):z_a\in\mathbb C
+\right\},\qquad \dim_{\mathbb R}\mathcal N_2=8.
+\tag{C107.8}
+$$
+
+式中把方向经 $J$ 嵌回原空间。$\mathcal N_2\subset V_Q$，故加上原 $Q$ 仍不能消掉这八维。
+全体四模式观测在 $V$ 上秩为十二，在 $V_Q$ 上秩为十一。
+
+证明。与所有四模式 Hermitian 算子的迹配对为零，等价于
+$P_4XP_4=0$。零对角条件留下的仅是四条连接 $e_2$ 的复相干，给 (C107.8)；
+反向每一这样的方向显然不可见。$\Omega\in\mathcal E_4$ 给 $\ell_Q=0$。
+四模式内部六个复相干给十二实维，(C107.5) 是它们中一个非零约束；
+所以在 $V_Q$ 上只剩十一维可见，八维不可见。证毕。
+
+更具体地，任取 $z=(z_a)_{a\in\{0,1,3,13\}}\in\mathbb C^4$，令
+$Z_z$ 为 (C107.8) 中的矩阵，定义
+
+$$
+\Gamma_z=S+Z_z,\qquad
+\|z\|_2\le1/5.
+\tag{C107.9}
+$$
+
+$Z_z$ 在 $\mathcal E$ 上的特征值为 $+\|z\|_2,-\|z\|_2,0,0,0$：
+当 $z\ne0$ 时只须在 $e_2$ 与 $\sum_a\overline{z_a}e_a/\|z\|_2$ 张成的二维空间上取谱。
+因而 $\Gamma_z$ 在该支撑上谱为
+$1/5\pm\|z\|_2,1/5,1/5,1/5$，在其余二十维为零。
+它保持原全部二十五个人口、$q=1/5$ 和所有四模式期望；
+只要 $z\ne0$，C-106.2 就给纠缠。这是实在的合法反例族，包含边界 $\|z\|_2=1/5$；
+不只是忽略正性的线性核计数。其纯度为 $1/5+2\|z\|_2^2$。
+
+(C107.6) 的五模式达到性包含这四条连接，不能只检查原四角相位。
+如另外实际允许对每一对 $s<a$ 使用局部算子
+$D=|s\rangle\langle a|$、$F=|f(s)\rangle\langle f(a)|$，
+设 $X_D=D+D^\dagger$、$Y_D=-i(D-D^\dagger)$，$X_F,Y_F$ 同理，则
+
+$$
+\begin{aligned}
+\langle X_D\otimes X_F-Y_D\otimes Y_F\rangle_\Gamma
+ &=4\operatorname{Re}c_{sa},\\
+\langle X_D\otimes Y_F+Y_D\otimes X_F\rangle_\Gamma
+ &=-4\operatorname{Im}c_{sa}.
+\end{aligned}
+\tag{C107.10}
+$$
+
+这是 C-106.6 的同一个局部乘积展开，第二式的负号来自
+$\operatorname{tr}((D\otimes F)\Gamma)=\overline{c_{sa}}$。
+将这些期望解释为实验读数，须实际拥有各局部算子全部 $-1,0,+1$ 谱效果、
+按上述有序模式对齐的复相位参照，并使不同设置采样同一稳定来源 $\Gamma$。
+这些乘积观测不要求原 $H^{(1)}$ 与 $H^{(2)}$ 独立；目标正是它们可能纠缠的联合态。
+期望重建不等于投影仪器及其选择后状态等价，也不提供任何原生 FIB 控制。
+
+**定理 C-107.5（同一原二体态的纯度完整判据）。** 对每个
+$\Gamma=JCJ^\dagger\in\mathfrak D$，包括 $\mathfrak F$ 的全部复输入，
+
+$$
+\begin{aligned}
+\operatorname{tr}\Gamma^2
+ &=\operatorname{tr}C^2
+ =\tfrac15+2\sum_{s<a}|c_{sa}|^2,\\
+\Gamma\text{ 可分离}
+ &\Longleftrightarrow\operatorname{tr}\Gamma^2=1/5,\\
+\Gamma\text{ 纠缠}
+ &\Longleftrightarrow\operatorname{tr}\Gamma^2>1/5.
+\end{aligned}
+\tag{C107.11}
+$$
+
+证明。等距嵌入和迹循环性给首个等号。
+Hermitian 性给 $\operatorname{tr}C^2=\sum_{s,a}|c_{sa}|^2$，
+五个对角各贡献 $1/25$，十个非对角无序对各贡献两次。
+余项非负且同时为零当且仅当 $C=I_5/5$。
+最后使用 C-106.2，而不是把一般混态的“纯度大”误当一般纠缠充分条件。证毕。
+
+这里测的是原来整个 $H_5^{(1)}\otimes H_5^{(2)}$ 上 $\Gamma$ 的纯度，
+不是每份 $H_5$ 的纯度，也不是 C-94 的底面条件态纯度。
+完整单副本线性数据本身能由 (C107.11) 后处理计算纯度；
+单个二次函数完成此特殊分类，不反驳 C-107.3 对固定线性输入的下界。
+
+**定义 C-107.6（四个物理因子与整份交换）。** 将一份原二体系统重命名为
+$A\otimes B=H_5^{(1)}\otimes H_5^{(2)}$，为它准备第二份 $A'\otimes B'$。
+四因子顺序固定为 $A,B,A',B'$，每因子五维。
+$\Gamma$ 的纠缠始终指 $A\mid B$；两副本的分割是
+$(A\otimes B)\mid(A'\otimes B')$，两者不同。
+整份交换 $W$ 定义为
+
+$$
+W|a,b,a',b'\rangle=|a',b',a,b\rangle,
+\qquad W=W^\dagger,\quad W^2=I.
+\tag{C107.12}
+$$
+
+它同时交换 $A\leftrightarrow A'$、$B\leftrightarrow B'$，
+在重排为 $A,A',B,B'$ 后为 $F_{AA'}\otimes F_{BB'}$。
+$W$ 不等于原系统内部交换 $A\leftrightarrow B$，也不等于 C-106 的秩一 $Q$。
+
+**命题 C-107.7（实际独立整份副本的交换读数）。** 若单轮实际输入确为
+$\Gamma_{AB}\otimes\Gamma_{A'B'}$，两份在已对齐的模式识别下具有同一密度矩阵，
+并且允许测量 $W$ 的谱效果 $(I\pm W)/2$，则
+
+$$
+\begin{aligned}
+\langle W\rangle_{\Gamma\otimes\Gamma}
+ &=\operatorname{tr}(\Gamma^2),\\
+\Pr(+)&=\tfrac12(1+\operatorname{tr}\Gamma^2),\qquad
+\Pr(-)=\tfrac12(1-\operatorname{tr}\Gamma^2).
+\end{aligned}
+\tag{C107.13}
+$$
+
+因此在 $\mathfrak D$ 或 $\mathfrak F$ 的精确人口承诺下，
+$\langle W\rangle=1/5$ 当且仅当原 $A\mid B$ 可分离，
+$\langle W\rangle>1/5$ 当且仅当它纠缠。
+
+证明。对于原 $25$ 维空间上的任意矩阵 $G,H$，逐指标计算给
+
+$$
+\operatorname{tr}(W(G\otimes H))
+=\sum_{u,v}G_{vu}H_{uv}=\operatorname{tr}(GH).
+\tag{C107.14}
+$$
+
+在同一个实际输入上取 $G=H=\Gamma$，再对 $W$ 的两个谱效果取迹，得到 (C107.13)；
+C-107.5 完成分类。没有用单纯的 $\operatorname{tr}(G\otimes H)$ 乘法公式替代交换恒等式。证毕。
+
+这是 Ekert–Alves–Oi–Horodecki–Horodecki–Kwek，
+*Direct estimations of linear and nonlinear functionals of a quantum state*，
+[quant-ph/0203016v1](https://arxiv.org/abs/quant-ph/0203016v1)，式 (2)、(4) 的整态参数应用。
+Filip 的预印本 [quant-ph/0108119](https://arxiv.org/abs/quant-ph/0108119)，
+发表为 *Overlap and entanglement-witness measurements*，
+[Phys. Rev. A 65, 062320](https://doi.org/10.1103/PhysRevA.65.062320)，
+式 (12)–(15) 明确区分无相关输入的重叠与一般相关输入的交换读数。
+Brun，*Measuring polynomial functions of states*，
+[quant-ph/0401067](https://arxiv.org/abs/quant-ph/0401067)，将密度矩阵的多项式写为张量幂上的期望；
+该表示与制备、操作的实际可取得性是不同前提。
+C-94–C-101 已使用副本纯度和相关来源边界，本条把载体换回 C-106 的完整 $\Gamma$，
+并消费其特定人口纤维上的完整分类，而不另称交换测纯度为新结果。
+
+**命题 C-107.8（相同整份边缘的相关输入障碍）。** 在上述四因子空间上取
+
+$$
+\Xi=\tfrac15\sum_{s\in B}
+ |e_s\rangle\langle e_s|_{AB}\otimes
+ |e_s\rangle\langle e_s|_{A'B'}.
+\tag{C107.15}
+$$
+
+它是归一化正半定密度算子，两个整份边缘都恰为 $S$，但
+
+$$
+\operatorname{Tr}_{A'B'}\Xi=\operatorname{Tr}_{AB}\Xi=S,\qquad
+\operatorname{tr}(W\Xi)=1\ne1/5=\operatorname{tr}S^2.
+\tag{C107.16}
+$$
+
+证明。五个正交匹配向量各自归一化，偏迹逐项留下
+$(1/5)|e_s\rangle\langle e_s|$。每个 $e_s\otimes e_s$ 是 $W$ 的 $+1$ 特征向量，
+故交换期望为一。独立输入 $S\otimes S$ 则由 (C107.14) 给 $1/5$。
+所以相同边缘没有固定这个二副本联合期望。
+$\Xi$ 甚至是四个五维因子上的产品纯态凸组合；这里的差异不需要副本间纠缠。
+若把一错误归为边缘 $S$ 的纯度，再按 (C107.11) 分类，就会把可分离 $S$ 误判为纠缠。证毕。
+
+(C107.13) 的输入假设要求实际联合态为张量平方，不只是两边缘相等、同名来源、
+相同人口或共同未知参数。它的结论只规定单轮期望；任何跨轮估计还须相应的来源稳定性或条件统计假设。
+独立重新制备同一 $\Gamma$ 是制备合同，数学映射 $\Gamma\mapsto\Gamma\otimes\Gamma$
+不是从一份未知输入执行克隆的操作。
+一个整态交换期望与二十或十九个线性坐标的比较，不能推出设置、样本数或装置成本的节省。
+这些结论不建立自适应协议的一般下界、有限样本的无误完整分类、原生 FIB 实现、物理压缩或仪器等价。
+《递归关系观察：量子端口协变与认证前沿》§1 的独立 $\mathbb C^5$ 制备及等待、完整秩一仪器菜单
+明确不含来源副本和任意未来控制；它不供应本条的整态副本及交换谱测量权限。
+
+## 追加锚（本行以下为增补区）
