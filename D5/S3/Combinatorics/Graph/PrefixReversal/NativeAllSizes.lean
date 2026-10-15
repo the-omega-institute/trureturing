@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The canonical final supply frame has a literal three-label base. -/
+   digest: Native Hamilton cycles exist at every label count at least four. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeThreeLabelFullDomain
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFourBase
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFiveBase
@@ -68,8 +68,7 @@ private noncomputable def finalParentIso {m : ℕ} (hm : 3 ≤ m) :
       SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m)) :=
   fullParentDomainIso (finalFrame m) (final_base_length hm)
 
-/- The six-label boundary consumer uses the unconditional J2 construction.
-   No all-size result is claimed until the all-k induction is earned. -/
+/- The six-label boundary consumer uses the unconditional J2 construction. -/
 private theorem native_six_hamiltonian_cycle :
     ∃ base : Configuration 5,
       ∃ c : (SimpleGraph.mulCayley ({a 5, b 5, c 5} : Set (Configuration 5))).Walk base base,
@@ -85,9 +84,6 @@ private theorem native_six_hamiltonian_cycle :
     SimpleGraph.Walk.IsHamiltonianCycle.map iso.toEquiv.bijective hw⟩
 
 #print axioms native_six_hamiltonian_cycle
-
-/- Candidate all-size closure. The new declarations below await a real
-   kernel build of the complete strong-state induction and this module. -/
 
 /-- Final parent assembly only needs a genuine three-label base. It uses
 the special state and each rotated ordinary state at this same order;
@@ -122,18 +118,21 @@ private theorem native_larger_hamiltonian_cycle {m : ℕ} (hm : 6 ≤ m) :
     ∃ base : Configuration m,
       ∃ w : (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Walk
         base base, w.IsHamiltonianCycle := by
+  have hm3 : 3 ≤ m := by omega
+  have hk3 : 3 ≤ m - 3 := by omega
+  have hk2 : 2 ≤ m - 3 := by omega
   let F := finalFrame m
   have hB : 3 ≤ F.base.length := le_of_eq
-    (show 3 = F.base.length from (final_base_length (by omega : 3 ≤ m)).symm)
+    (show 3 = F.base.length from (final_base_length hm3).symm)
   have supplies (G : SupplyFrame m (m - 3)) (hG : 3 ≤ G.base.length) :
-      ∃ S : StateFor G (by omega) hG, S.primaryOdd = decide ((m - 3) % 2 = 1) := by
-    obtain ⟨S, hodd, _, _⟩ := native_actual_state_exists (by omega : 3 ≤ m - 3) G hG
+      ∃ S : StateFor G hk2 hG, S.primaryOdd = decide ((m - 3) % 2 = 1) := by
+    obtain ⟨S, hodd, _, _⟩ := native_actual_state_exists hk3 G hG
     exact ⟨S, hodd⟩
-  obtain ⟨base, w, _, hw⟩ := parent_from_state_family (by omega) (by omega)
+  obtain ⟨base, w, _, hw⟩ := parent_from_state_family hm3 hk2
     supplies F hB
   let iso : domainGraph (ParentDomain F) ≃g
       SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m)) :=
-    finalParentIso (by omega : 3 ≤ m)
+    finalParentIso hm3
   exact ⟨iso base, w.map iso.toHom,
     SimpleGraph.Walk.IsHamiltonianCycle.map iso.toEquiv.bijective hw⟩
 
