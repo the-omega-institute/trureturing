@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.Covering.Erdos203Lattice
 import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.ZMod.QuotientGroup
 import Mathlib.Algebra.Group.Subgroup.ZPowers.Lemmas
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
