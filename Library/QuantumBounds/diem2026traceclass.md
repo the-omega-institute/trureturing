@@ -16,6 +16,8 @@ strata_touched:
   - D5/S3/Quantum/Analysis/TraceClass/Banach
   - D5/S3/Quantum/Analysis/TraceClass/TraceAlgebra
   - D5/S3/Quantum/Analysis/TraceClass/Pairing
+  - D5/S3/Quantum/Analysis/TraceClass/ColumnSynthesis
+  - D5/S3/Quantum/Analysis/TraceClass/Compact
 license: Apache-2.0
 triage: anchor
 ---
@@ -71,3 +73,25 @@ positive trace pairing without a commutation hypothesis. The trace-class
 Banach carrier retains its trace norm; the continuous observable pairing uses
 the operator norm. These are standard analytic suppliers, not an originality
 claim about operator logarithms or spectral entropy.
+## Column synthesis and compactness
+
+The repository's `TraceClass/ColumnSynthesis` constructs the continuous operator
+with any square-summable family of basis columns. Its vector-series bound uses
+the attributed scalar Cauchy-Schwarz supplier and Mathlib Parseval. The same
+construction supplies both the weighted quadratic-reference operator and the
+residuals in `TraceClass/Compact`; it is not an additional Physlib transplant.
+
+For a finite subset F of the arbitrary basis index, the existing Schauder
+projection P_F has range equal to the finite span of the selected basis vectors.
+The approximant S composed with P_F is compact, and the actual operator-norm
+residual squared is bounded by the complement-subtype column square sum.
+Summability makes these tails converge to zero along all finite subsets,
+proving Hilbert-Schmidt compactness on arbitrary complete complex Hilbert spaces.
+The analytic trace-class square-root supplier and actual CFC square identity
+then prove positive trace-class compactness. The attributed bounded polar
+factorization extends compactness to general trace-class operators.
+
+This is a repository formal derivation of the standard finite-rank approximation
+argument, not a claim of a new compactness theorem in mathematics. It retains
+uncountable indices and zero kernel fibers and supplies no spectral-basis,
+unbounded-energy, heat-trace or common-Hamiltonian conclusion.
