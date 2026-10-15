@@ -396,7 +396,7 @@ def labelledRemainders (D : LatticeData) :
 def wordWeight (D : LatticeData) (word : List (Index D)) : ℕ :=
   (word.map (sourceWeight D)).sum
 
-private theorem labelledRemainders_size (D : LatticeData) (word : List (Index D))
+theorem labelledRemainders_size (D : LatticeData) (word : List (Index D))
     (entry : Index D × List (Index D)) (member : entry ∈ labelledRemainders D word) :
     entry.2.length + 1 = word.length ∧
       wordWeight D entry.2 + sourceWeight D entry.1 = wordWeight D word := by
@@ -577,7 +577,7 @@ theorem Corr_X_zero (D : LatticeData) (index : Index D) :
   rw [source, corrected, optionEquivLeft_X_some]
   rfl
 
-private theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
+theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
     wordWeight D (LatticeAllStateField.occurrences D exponent) =
       Finsupp.weight (sourceWeight D) exponent := by
   classical
