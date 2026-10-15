@@ -70,6 +70,22 @@ internal sealed class ResetNativeUnitNormalFormDocument : IScribeDocumentDefinit
                 + "these inverse transition powers coexist with forward time X. The proof reuses "
                 + "all corresponding clauses of native_presentation, including its actual coefficient law.",
                 DescribeRole.Theorem),
+            Paragraph(Text("For every q>0 let S be the actual groupAction(resetMatrix q)(ofAdd true) on "
+                + "Native(q)=DimensionGroup(resetMatrix q). The additive subgroups Kplus=ker(S-id) and "
+                + "Kminus=ker(S+id) consist exactly of the fixed and negated native vectors. nativeGluing "
+                + "maps their sum L to eigenLattice(q,1) plus eigenLattice(q,-1). The product coordinates "
+                + "of this sum are exactly (2a,2b), with arbitrary a in Plus(q) and b in Minus(q); these "
+                + "halves need not be compatible. This is also the conductor condition against every "
+                + "multiplier in Plus(q) times Minus(q). Put kappaNative=commonResidue composed with "
+                + "nativeGluing. Its kernel is L and it is surjective, so the additive quotient Q=Native(q)/L "
+                + "is identified with Common(q) by E([v])=kappaNative(v), and has cardinality 2^q. "
+                + "No multiplication is assigned to the original Native group.")),
+            Paragraph(Text("The literal native_gluing time and sign clauses give "
+                + "kappaNative(resetTheta q v)=[X]*kappaNative(v) for every v, where [X] is the value of "
+                + "commonTimeUnit(q). Every s in the actual Sign=Multiplicative Bool acts trivially on "
+                + "the residue. Its induced additive quotient map is exactly the identity. These are "
+                + "applications of ResetIntegralGluing's kernel and quotient results and the generic "
+                + "additive quotient APIs; they retain q=1 and every repeated-factor case.")),
             Entry("scalarUnit", "A genuine unit from an actual commuting equivalence",
                 All(Call("hasType", Call("scalarUnit", I("q"), I("hq"), I("A"), I("ht")), Call("Units", Q)),
                     B("q", I("Nat")), B("hq", Call("positive", I("q"))),
@@ -82,6 +98,24 @@ internal sealed class ResetNativeUnitNormalFormDocument : IScribeDocumentDefinit
                 + "through Phi, and recovers the given A on every vector. This is the already "
                 + "documented cyclic scalar argument, retained as a consumed helper.",
                 DescribeRole.Definition),
+            Paragraph(Text("For every integer-linear automorphism A of Native(q) commuting with the literal "
+                + "resetTheta q, set g0=nativeIntEquiv q hq 1 and cA=kappaNative(A(g0)). The existing "
+                + "scalarUnit and nativeAction identity give kappaNative(A(v))=cA*kappaNative(v) for every v. "
+                + "Map scalarUnit through the RingHom commonResidue composed with gluing to obtain a unit "
+                + "with value cA. Thus A preserves L and induces an additive automorphism dA on Q satisfying "
+                + "dA([v])=[A(v)] and E(dA(z))=cA*E(z) for every z. Its additive homomorphism is the generic "
+                + "QuotientAddGroup.map for A with this proved subgroup stability. The existing "
+                + "centralizingMap_scalar is reused for every such A; no general-q unit classification is asserted.")),
+            Paragraph(Text("Specialize to every h in the original ResetFullAut(q)=fullAutSubgroup(ResetGraph q), "
+                + "whose elements are homeomorphisms of History(ResetGraph q) commuting with the actual shift. "
+                + "rho_time gives the required centralizer premise. This yields a representation rhoBar on Q "
+                + "with rhoBar(h)([v])=[rho(q,hq,h)(v)] for every original h and v. Its scalar is the unit "
+                + "cH=kappaNative(rho(q,hq,h)(g0)); E(rhoBar(h)(z))=cH*E(z) for every z. The actual original "
+                + "unitShift(ResetGraph q) acts by resetTheta q on representatives and by commonTimeUnit(q) "
+                + "in Common(q). Multiplication by units on Common(q) is faithful, as evaluation at one shows. "
+                + "Conjugating that action through E and applying exact_common_time_order gives order q+1 "
+                + "for this induced original time action when q>=2, and order one when q=1. "
+                + "The application introduces no named Native theorem or additional hypothesis.")),
             Entry("native_normal_forms", "Every native centralizer and every original rho value",
                 And(All(Imp(Call("commutesWithForwardTime", Num(2), I("A")),
                     Unique("p", Parameters, Law(I("A"), I("p")), Law(I("A"), I("r")))),
@@ -104,10 +138,11 @@ internal sealed class ResetNativeUnitNormalFormDocument : IScribeDocumentDefinit
             Paragraph(Text("This is a repository synthesis; the integral reconstruction and coupled-unit "
                 + "classification supply the missing live content. The prior centralizer/scalar "
                 + "argument and native chart are reused at their owners. No literature novelty is "
-                + "claimed. The theorem bounds the actual rho image but does not prove that image "
-                + "is the whole ambient centralizer or exclude scalar minus sign. Such exclusion "
-                + "requires an additional original-beam positivity theorem and remains open. "
-                + "Uniform eigenlattices, conductor, additive cokernel and common-residue action "
-                + "consequences remain subsequent selected-package obligations.")))));
+                + "claimed. The theorem bounds the actual rho image. The uniform residue application "
+                + "asserts no lifting of every Common(q) unit to a native automorphism or to rho, no "
+                + "ambient surjectivity and no kernel splitting. ResetPerronBeamTrace.original_action_positive "
+                + "and rho_negative_bit give original-beam positivity and exclusion of a negative scalar bit "
+                + "for any supplied signed time/Sign expression when q>=2. Exact q=2 image exhaustion "
+                + "and lift elaboration are outside this uniform residue application.")))));
 
 }

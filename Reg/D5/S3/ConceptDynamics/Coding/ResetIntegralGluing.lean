@@ -369,3 +369,590 @@ def registration :
   options := #[] }
 end
 end Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.sign_idealsAudit
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit
+open Polynomial
+open _root_.D5.S3.ConceptDynamics.Coding.ResetSignIntegerCyclic
+open _root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+
+private def commonOneEval : Common 1 →+* ZMod 2 :=
+  AdjoinRoot.lift (RingHom.id (ZMod 2)) 1 (by norm_num [reduce, g, S])
+
+private theorem commonOne_zero_ne_one : (0 : Common 1) ≠ 1 := by
+  intro h
+  have he : (0 : ZMod 2) = 1 := by simpa using congrArg commonOneEval h
+  exact zero_ne_one he
+
+private theorem product_zero_ne_one : (0 : Plus 1 × Minus 1) ≠ 1 := by
+  intro h
+  apply commonOne_zero_ne_one
+  have he : rplus 1 (0 : Plus 1) = rplus 1 (1 : Plus 1) :=
+    congrArg (fun d : Plus 1 × Minus 1 => rplus 1 d.1) h
+  simpa only [map_zero, map_one] using he
+
+namespace component_residue_kernels
+abbrev signature : Signature where
+  Params := ℕ
+  State q := Plus q ⊕ Minus q
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := Common q
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ q z => Sum.elim (rplus q) (rminus q) z) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (q : ℕ) (hq : 0 < q),
+    (∀ a : Plus q, r.readout () q (Sum.inl a) = 0 ↔ ∃ a' : Plus q, a = 2 * a') ∧
+    (∀ b : Minus q, r.readout () q (Sum.inr b) = 0 ↔ ∃ b' : Minus q, b = 2 * b')
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  have he := ((h 1 (by decide)).1 0).mpr ⟨0, by simp⟩
+  change (1 : Common 1) = 0 at he
+  exact commonOne_zero_ne_one he.symm
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, Sum.inl 0, Sum.inl 1, ?_⟩
+  change rplus 1 0 ≠ rplus 1 1
+  simpa only [map_zero, map_one] using commonOne_zero_ne_one
+def evidence : Registration arena (∀ (q : ℕ) (hq : 0 < q),
+    (∀ a : Plus q, rplus q a = 0 ↔ ∃ a' : Plus q, a = 2 * a') ∧
+    (∀ b : Minus q, rminus q b = 0 ↔ ∃ b' : Minus q, b = 2 * b')) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.component_residue_kernels, bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.component_residue_kernels)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.component_residue_kernels.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.component_residue_kernels.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ q z => Sum.elim (rplus q) (rminus q) z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end component_residue_kernels
+
+namespace w_eigenlattices
+abbrev signature : Signature where
+  Params := ℕ
+  State q := Compatible q
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := Plus q × Minus q
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ _ z => z.val) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (q : ℕ) (hq : 0 < q) (z : Compatible q),
+    (z ∈ eigenLattice q 1 ↔ ∃ a : Plus q, r.readout () q z = (2 * a, 0)) ∧
+    (z ∈ eigenLattice q (-1) ↔ ∃ b : Minus q, r.readout () q z = (0, 2 * b))
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  obtain ⟨a, ha⟩ := (h 1 (by decide) 0).1.mp (zero_mem _)
+  have he : (1 : Minus 1) = 0 := congrArg Prod.snd ha
+  apply commonOne_zero_ne_one
+  simpa only [map_one, map_zero] using (congrArg (rminus 1) he).symm
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  change (0 : Plus 1 × Minus 1) ≠ 1
+  exact product_zero_ne_one
+def evidence : Registration arena (∀ (q : ℕ) (hq : 0 < q) (z : Compatible q),
+    (z ∈ eigenLattice q 1 ↔ ∃ a : Plus q, z.val = (2 * a, 0)) ∧
+    (z ∈ eigenLattice q (-1) ↔ ∃ b : Minus q, z.val = (0, 2 * b))) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.w_eigenlattices, bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.w_eigenlattices)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.w_eigenlattices.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.w_eigenlattices.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z.val) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end w_eigenlattices
+
+namespace eigenlattice_sum_even_product
+abbrev signature : Signature where
+  Params := ℕ
+  State q := Compatible q
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := Plus q × Minus q
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ _ z => z.val) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (q : ℕ) (hq : 0 < q) (z : Compatible q),
+    z ∈ eigenLattice q 1 ⊔ eigenLattice q (-1) ↔
+      ∃ a : Plus q, ∃ b : Minus q, r.readout () q z = (2 * a, 2 * b)
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  obtain ⟨a, b, hab⟩ := (h 1 (by decide) 0).mp (zero_mem _)
+  have he : rplus 1 (1 : Plus 1) = rplus 1 (2 * a) :=
+    congrArg (fun d : Plus 1 × Minus 1 => rplus 1 d.1) hab
+  have hz := ((component_residue_kernels 1 (by decide)).1 (2 * a)).mpr ⟨a, rfl⟩
+  apply commonOne_zero_ne_one
+  simpa only [map_one, hz] using he.symm
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  change (0 : Plus 1 × Minus 1) ≠ 1
+  exact product_zero_ne_one
+def evidence : Registration arena (∀ (q : ℕ) (hq : 0 < q) (z : Compatible q),
+    z ∈ eigenLattice q 1 ⊔ eigenLattice q (-1) ↔
+      ∃ a : Plus q, ∃ b : Minus q, z.val = (2 * a, 2 * b)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.eigenlattice_sum_even_product, bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.eigenlattice_sum_even_product)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.eigenlattice_sum_even_product.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.eigenlattice_sum_even_product.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z.val) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end eigenlattice_sum_even_product
+
+namespace pullback_conductor_even_product
+abbrev signature : Signature where
+  Params := ℕ
+  State q := Plus q × Minus q
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := Plus q × Minus q
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ _ d => d) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (q : ℕ) (hq : 0 < q) (d : Plus q × Minus q),
+    (∀ t : Plus q × Minus q, r.readout () q d * t ∈ (rplus q).pullback (rminus q)) ↔
+      ∃ e : Plus q × Minus q, d = 2 * e
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  obtain ⟨e, he⟩ := (h 1 (by decide) 1).mp (by
+    intro t
+    change rplus 1 ((0 : Plus 1 × Minus 1) * t).1 =
+      rminus 1 ((0 : Plus 1 × Minus 1) * t).2
+    simp)
+  have hh : rplus 1 (1 : Plus 1) = rplus 1 (2 * e.1) :=
+    congrArg (fun d : Plus 1 × Minus 1 => rplus 1 d.1) he
+  have hz := ((component_residue_kernels 1 (by decide)).1 (2 * e.1)).mpr ⟨e.1, rfl⟩
+  apply commonOne_zero_ne_one
+  simpa only [map_one, hz] using hh.symm
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨1, 0, 1, product_zero_ne_one⟩
+def evidence : Registration arena (∀ (q : ℕ) (hq : 0 < q) (d : Plus q × Minus q),
+    (∀ t : Plus q × Minus q, d * t ∈ (rplus q).pullback (rminus q)) ↔
+      ∃ e : Plus q × Minus q, d = 2 * e) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.pullback_conductor_even_product, bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.pullback_conductor_even_product)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.pullback_conductor_even_product.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.pullback_conductor_even_product.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ d => d) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end pullback_conductor_even_product
+
+namespace common_residue_surjective
+abbrev signature : Signature where
+  Params := ℕ
+  State q := Compatible q
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := Common q
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ q z => commonResidue q z) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ q : ℕ, Function.Surjective (r.readout () q)
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  obtain ⟨z, hz⟩ := h 1 (1 : Common 1)
+  change (0 : Common 1) = 1 at hz
+  exact commonOne_zero_ne_one hz
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  change commonResidue 1 0 ≠ commonResidue 1 1
+  simpa only [map_zero, map_one] using commonOne_zero_ne_one
+def evidence : Registration arena (∀ q : ℕ, Function.Surjective (commonResidue q)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.common_residue_surjective, bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.common_residue_surjective)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.common_residue_surjective.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.common_residue_surjective.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ q z => commonResidue q z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end common_residue_surjective
+
+namespace common_residue_kernel
+abbrev signature : Signature where
+  Params := ℕ
+  State q := Compatible q
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := Common q
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ q z => commonResidue q z) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (q : ℕ) (hq : 0 < q) (z : Compatible q),
+    r.readout () q z = 0 ↔ z ∈ eigenLattice q 1 ⊔ eigenLattice q (-1)
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  have he := (h 1 (by decide) 0).mpr (zero_mem _)
+  change (1 : Common 1) = 0 at he
+  exact commonOne_zero_ne_one he.symm
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  change commonResidue 1 0 ≠ commonResidue 1 1
+  simpa only [map_zero, map_one] using commonOne_zero_ne_one
+def evidence : Registration arena (∀ (q : ℕ) (hq : 0 < q),
+    (commonResidue q).toAddMonoidHom.ker = eigenLattice q 1 ⊔ eigenLattice q (-1)) where
+  actual := actual
+  bridge := by
+    constructor
+    · intro h q hq z
+      change z ∈ (commonResidue q).toAddMonoidHom.ker ↔ _
+      rw [h q hq]
+    · intro h q hq
+      ext z
+      exact h q hq z
+  variation := ⟨by
+    intro q hq z
+    change z ∈ (commonResidue q).toAddMonoidHom.ker ↔ _
+    rw [common_residue_kernel q hq], bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.common_residue_kernel)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.common_residue_kernel.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.common_residue_kernel.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ q z => commonResidue q z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end common_residue_kernel
+
+namespace common_residue_cardinality
+abbrev signature : Signature where
+  Params := ℕ
+  State q := Type
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ _ T => Nat.card T) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (q : ℕ) (hq : 0 < q),
+    r.readout () q (Common q) = 2 ^ q ∧
+    r.readout () q
+      (Compatible q ⧸ (eigenLattice q 1 ⊔ eigenLattice q (-1))) = 2 ^ q
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  have he := (h 1 (by decide)).1
+  norm_num [bad, realize] at he
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨1, Empty, Unit, by simp [actual, realize]⟩
+def evidence : Registration arena (∀ (q : ℕ) (hq : 0 < q),
+    Nat.card (Common q) = 2 ^ q ∧
+    Nat.card (Compatible q ⧸ (eigenLattice q 1 ⊔ eigenLattice q (-1))) = 2 ^ q) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.common_residue_cardinality, bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.common_residue_cardinality)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.common_residue_cardinality.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.common_residue_cardinality.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ T => Nat.card T) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end common_residue_cardinality
+
+namespace exact_common_time_order
+abbrev signature : Signature where
+  Params := ℕ
+  State q := (Common q)ˣ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ q := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+abbrev actual : Realization signature := realize signature (fun _ _ u => orderOf u) (fun e => nomatch e)
+abbrev bad : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law r := r.readout () 1 (commonTimeUnit 1) = 1 ∧
+    ∀ q : ℕ, 2 ≤ q → r.readout () q (commonTimeUnit q) = q + 1
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  have he := h.1
+  norm_num [bad, realize] at he
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨2, 1, commonTimeUnit 2, ?_⟩
+  change orderOf (1 : (Common 2)ˣ) ≠ orderOf (commonTimeUnit 2)
+  rw [orderOf_one, exact_common_time_order.2 2 (by decide)]
+  decide
+def evidence : Registration arena (orderOf (commonTimeUnit 1) = 1 ∧
+    ∀ q : ℕ, 2 ≤ q → orderOf (commonTimeUnit q) = q + 1) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.exact_common_time_order, bad, bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad, ?_, rfl, bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.exact_common_time_order)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.exact_common_time_order.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.exact_common_time_order.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ u => orderOf u) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end exact_common_time_order
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit

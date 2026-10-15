@@ -9,6 +9,9 @@ import D5.S3.ConceptDynamics.Coding.ResetSignIntegerCyclic
 import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.RingTheory.LocalRing.Pullback
 import Mathlib.Data.ZMod.Basic
+import Mathlib.GroupTheory.QuotientGroup.Basic
+import Mathlib.SetTheory.Cardinal.Finite
+import Mathlib.GroupTheory.OrderOfElement
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -375,5 +378,292 @@ theorem gluing_generators (q : ℕ) :
       RingHom.quotientKerEquivOfSurjective_apply_mk]
   · simp [reduce, g, S, Finset.sum_range_succ, Polynomial.map_sum]
     ring
+
+/-- Two vanishes by the original common-polynomial kernel calculation. -/
+private theorem common_two_zero (q : ℕ) : commonPolynomial q 2 = 0 := by
+  change (2 : ℤ[X]) ∈ RingHom.ker (commonPolynomial q)
+  rw [common_kernel]
+  exact Ideal.subset_span (by simp)
+
+/-- The two component residue kernels consist exactly of the even components. -/
+theorem component_residue_kernels (q : ℕ) (hq : 0 < q) :
+    (∀ a : Plus q, rplus q a = 0 ↔ ∃ a' : Plus q, a = 2 * a') ∧
+    (∀ b : Minus q, rminus q b = 0 ↔ ∃ b' : Minus q, b = 2 * b') := by
+  have hc : (2 : Common q) = 0 := by simpa using common_two_zero q
+  constructor
+  · intro a
+    constructor
+    · intro ha
+      have hr : reduce (a0 q a) = 0 := by rw [reduce_a0, ha, map_zero]
+      refine ⟨AdjoinRoot.mk (f q) (half (a0 q a)), ?_⟩
+      calc
+        a = AdjoinRoot.mk (f q) (a0 q a) := (AdjoinRoot.mk_leftInverse (f_monic q) a).symm
+        _ = AdjoinRoot.mk (f q) (2 * half (a0 q a)) :=
+          congrArg (AdjoinRoot.mk (f q)) (half_cancel _ hr)
+        _ = 2 * AdjoinRoot.mk (f q) (half (a0 q a)) := by rw [map_mul, map_ofNat]
+    · rintro ⟨a', rfl⟩
+      rw [map_mul, map_ofNat, hc, zero_mul]
+  · intro b
+    constructor
+    · intro hb
+      have hr : reduce (b0 q b) = 0 := by rw [reduce_b0, hb, map_zero]
+      refine ⟨AdjoinRoot.mk (g q) (half (b0 q b)), ?_⟩
+      calc
+        b = AdjoinRoot.mk (g q) (b0 q b) := (AdjoinRoot.mk_leftInverse (g_monic q) b).symm
+        _ = AdjoinRoot.mk (g q) (2 * half (b0 q b)) :=
+          congrArg (AdjoinRoot.mk (g q)) (half_cancel _ hr)
+        _ = 2 * AdjoinRoot.mk (g q) (half (b0 q b)) := by rw [map_mul, map_ofNat]
+    · rintro ⟨b', rfl⟩
+      rw [map_mul, map_ofNat, hc, zero_mul]
+
+/-- Monic integer polynomial quotients have no two-torsion. -/
+private theorem monic_quotient_two_torsion (p : ℤ[X]) (hp : p.Monic)
+    (a : AdjoinRoot p) (ha : (2 : AdjoinRoot p) * a = 0) : a = 0 := by
+  have hadd : a + a = 0 := by simpa only [two_mul] using ha
+  have hr : AdjoinRoot.modByMonicHom hp a = 0 :=
+    two_torsion _ (by
+      simpa only [two_zsmul, map_add, map_zero] using
+        congrArg (AdjoinRoot.modByMonicHom hp) hadd)
+  calc
+    a = AdjoinRoot.mk p (AdjoinRoot.modByMonicHom hp a) :=
+      (AdjoinRoot.mk_leftInverse hp a).symm
+    _ = 0 := by rw [hr, map_zero]
+
+/-- The additive eigenlattice of the literal original sign W. -/
+def eigenLattice (q : ℕ) (ε : ℤ) : AddSubgroup (Compatible q) where
+  carrier := {z | gluing q (fp q (W q)) * z = ε • z}
+  zero_mem' := by simp
+  add_mem' := by
+    intro z w hz hw
+    change gluing q (fp q (W q)) * (z + w) = ε • (z + w)
+    rw [mul_add, hz, hw, smul_add]
+  neg_mem' := by
+    intro z hz
+    change gluing q (fp q (W q)) * (-z) = ε • (-z)
+    rw [mul_neg, hz, smul_neg]
+
+/-- The sign eigenlattices are the even axes in the integral product. -/
+theorem w_eigenlattices (q : ℕ) (hq : 0 < q) (z : Compatible q) :
+    (z ∈ eigenLattice q 1 ↔ ∃ a : Plus q, z.val = (2 * a, 0)) ∧
+    (z ∈ eigenLattice q (-1) ↔ ∃ b : Minus q, z.val = (0, 2 * b)) := by
+  have hw := (gluing_generators q).2.1
+  constructor
+  · constructor
+    · intro hz
+      change gluing q (fp q (W q)) * z = (1 : ℤ) • z at hz
+      rw [one_smul] at hz
+      have hb : -z.val.2 = z.val.2 := by
+        have he := congrArg (fun t : Compatible q => t.val.2) hz
+        change (gluing q (fp q (W q))).val.2 * z.val.2 = z.val.2 at he
+        simpa only [congrArg Prod.snd hw, neg_one_mul] using he
+      have hb0 : z.val.2 = 0 := monic_quotient_two_torsion (g q) (g_monic q) _ (by
+        linear_combination -hb)
+      have ha0 : rplus q z.val.1 = 0 := by
+        rw [z.property, hb0, map_zero]
+      obtain ⟨a, ha⟩ := ((component_residue_kernels q hq).1 z.val.1).mp ha0
+      exact ⟨a, Prod.ext ha hb0⟩
+    · rintro ⟨a, ha⟩
+      change gluing q (fp q (W q)) * z = (1 : ℤ) • z
+      rw [one_smul]
+      apply Subtype.ext
+      change (gluing q (fp q (W q))).val * z.val = z.val
+      rw [hw, ha]
+      ext <;> simp
+  · constructor
+    · intro hz
+      change gluing q (fp q (W q)) * z = (-1 : ℤ) • z at hz
+      rw [neg_one_zsmul] at hz
+      have ha : z.val.1 = -z.val.1 := by
+        have he := congrArg (fun t : Compatible q => t.val.1) hz
+        change (gluing q (fp q (W q))).val.1 * z.val.1 = -z.val.1 at he
+        simpa only [congrArg Prod.fst hw, one_mul] using he
+      have ha0 : z.val.1 = 0 := monic_quotient_two_torsion (f q) (f_monic q) _ (by
+        linear_combination ha)
+      have hb0 : rminus q z.val.2 = 0 := by
+        rw [← z.property, ha0, map_zero]
+      obtain ⟨b, hb⟩ := ((component_residue_kernels q hq).2 z.val.2).mp hb0
+      exact ⟨b, Prod.ext ha0 hb⟩
+    · rintro ⟨b, hb⟩
+      change gluing q (fp q (W q)) * z = (-1 : ℤ) • z
+      rw [neg_one_zsmul]
+      apply Subtype.ext
+      change (gluing q (fp q (W q))).val * z.val = -z.val
+      rw [hw, hb]
+      ext <;> simp
+
+/-- The eigenlattice sum is twice the full product; the halves need not be compatible. -/
+theorem eigenlattice_sum_even_product (q : ℕ) (hq : 0 < q) (z : Compatible q) :
+    z ∈ eigenLattice q 1 ⊔ eigenLattice q (-1) ↔
+      ∃ a : Plus q, ∃ b : Minus q, z.val = (2 * a, 2 * b) := by
+  rw [AddSubgroup.mem_sup]
+  constructor
+  · rintro ⟨x, hx, y, hy, hxy⟩
+    obtain ⟨a, ha⟩ := ((w_eigenlattices q hq x).1).mp hx
+    obtain ⟨b, hb⟩ := ((w_eigenlattices q hq y).2).mp hy
+    refine ⟨a, b, ?_⟩
+    rw [← hxy]
+    change x.val + y.val = (2 * a, 2 * b)
+    rw [ha, hb]
+    ext <;> simp
+  · rintro ⟨a, b, hz⟩
+    have ha : rplus q (2 * a) = 0 :=
+      ((component_residue_kernels q hq).1 _).mpr ⟨a, rfl⟩
+    have hb : rminus q (2 * b) = 0 :=
+      ((component_residue_kernels q hq).2 _).mpr ⟨b, rfl⟩
+    let x : Compatible q := ⟨(2 * a, 0), by change rplus q (2 * a) = rminus q 0; simpa using ha⟩
+    let y : Compatible q := ⟨(0, 2 * b), by change rplus q 0 = rminus q (2 * b); simpa using hb.symm⟩
+    refine ⟨x, ((w_eigenlattices q hq x).1).mpr ⟨a, rfl⟩,
+      y, ((w_eigenlattices q hq y).2).mpr ⟨b, rfl⟩, ?_⟩
+    apply Subtype.ext
+    change (2 * a, 0) + (0, 2 * b) = z.val
+    rw [hz]
+    ext <;> simp
+
+/-- The conductor in the specified product overring is exactly twice that product. -/
+theorem pullback_conductor_even_product (q : ℕ) (hq : 0 < q)
+    (d : Plus q × Minus q) :
+    (∀ t : Plus q × Minus q, d * t ∈ (rplus q).pullback (rminus q)) ↔
+      ∃ e : Plus q × Minus q, d = 2 * e := by
+  constructor
+  · intro hd
+    have ha : rplus q d.1 = 0 := by
+      have he : rplus q (d.1 * 1) = rminus q (d.2 * 0) := hd (1, 0)
+      simpa using he
+    have hb : rminus q d.2 = 0 := by
+      have he : rplus q (d.1 * 0) = rminus q (d.2 * 1) := hd (0, 1)
+      simpa using he.symm
+    obtain ⟨a, ha⟩ := ((component_residue_kernels q hq).1 _).mp ha
+    obtain ⟨b, hb⟩ := ((component_residue_kernels q hq).2 _).mp hb
+    exact ⟨(a, b), Prod.ext ha hb⟩
+  · rintro ⟨e, rfl⟩ t
+    change rplus q ((2 * e.1) * t.1) = rminus q ((2 * e.2) * t.2)
+    have ha := ((component_residue_kernels q hq).1 (2 * (e.1 * t.1))).mpr
+      ⟨e.1 * t.1, rfl⟩
+    have hb := ((component_residue_kernels q hq).2 (2 * (e.2 * t.2))).mpr
+      ⟨e.2 * t.2, rfl⟩
+    simpa only [mul_assoc] using ha.trans hb.symm
+
+/-- The common residue of a compatible pair, equal to either component residue. -/
+def commonResidue (q : ℕ) : Compatible q →+* Common q :=
+  (rplus q).comp ((rplus q).pullbackFst (rminus q))
+
+/-- Coefficient lifts give every common residue without any native lifting assertion. -/
+theorem common_residue_surjective (q : ℕ) : Function.Surjective (commonResidue q) := by
+  intro c
+  obtain ⟨p, hp⟩ := common_surjective q c
+  refine ⟨gluing q (fp q p), ?_⟩
+  change commonPolynomial q p = c
+  exact hp
+
+/-- The common-residue additive kernel is the sum of the sign eigenlattices. -/
+theorem common_residue_kernel (q : ℕ) (hq : 0 < q) :
+    (commonResidue q).toAddMonoidHom.ker = eigenLattice q 1 ⊔ eigenLattice q (-1) := by
+  ext z
+  change rplus q z.val.1 = 0 ↔ z ∈ eigenLattice q 1 ⊔ eigenLattice q (-1)
+  rw [eigenlattice_sum_even_product q hq z]
+  constructor
+  · intro ha0
+    have hb0 : rminus q z.val.2 = 0 := z.property.symm.trans ha0
+    obtain ⟨a, ha⟩ := ((component_residue_kernels q hq).1 _).mp ha0
+    obtain ⟨b, hb⟩ := ((component_residue_kernels q hq).2 _).mp hb0
+    exact ⟨a, b, Prod.ext ha hb⟩
+  · rintro ⟨a, b, hz⟩
+    rw [congrArg Prod.fst hz]
+    exact ((component_residue_kernels q hq).1 _).mpr ⟨a, rfl⟩
+
+/-- The additive quotient by the actual eigenlattice sum is the common residue group. -/
+def commonResidueQuotientEquiv (q : ℕ) (hq : 0 < q) :
+    Compatible q ⧸ (eigenLattice q 1 ⊔ eigenLattice q (-1)) ≃+ Common q :=
+  (QuotientAddGroup.quotientAddEquivOfEq (common_residue_kernel q hq).symm).trans
+    (QuotientAddGroup.quotientKerEquivOfSurjective
+      (commonResidue q).toAddMonoidHom (common_residue_surjective q))
+
+/-- The common monic polynomial retains degree q after coefficient reduction. -/
+private theorem common_natDegree (q : ℕ) : (reduce (g q)).natDegree = q := by
+  have hg : (g q).degree = q :=
+    (degree_add_eq_left_of_degree_lt (by simpa using degree_S q)).trans (degree_X_pow q)
+  have hgn : (g q).natDegree = q := by
+    exact WithBot.coe_eq_coe.mp ((degree_eq_natDegree (g_monic q).ne_zero).symm.trans hg)
+  change ((g q).map (Int.castRingHom (ZMod 2))).natDegree = q
+  rw [(g_monic q).natDegree_map, hgn]
+
+/-- Both the common residue and the additive sign quotient have cardinality 2^q. -/
+theorem common_residue_cardinality (q : ℕ) (hq : 0 < q) :
+    Nat.card (Common q) = 2 ^ q ∧
+    Nat.card (Compatible q ⧸ (eigenLattice q 1 ⊔ eigenLattice q (-1))) = 2 ^ q := by
+  have hc : Nat.card (Common q) = 2 ^ q := by
+    calc
+      Nat.card (Common q) =
+          Nat.card (Fin (reduce (g q)).natDegree → ZMod 2) :=
+        Nat.card_congr (AdjoinRoot.powerBasis' (common_monic q)).basis.equivFun.toEquiv
+      _ = 2 ^ q := by rw [Nat.card_fun, Nat.card_zmod, Nat.card_fin, common_natDegree]
+  exact ⟨hc, (Nat.card_congr (commonResidueQuotientEquiv q hq).toEquiv).trans hc⟩
+
+/-- The geometric polynomial gives a forward-time period q+1. -/
+private theorem common_time_period (q : ℕ) :
+    AdjoinRoot.root (reduce (g q)) ^ (q + 1) = 1 := by
+  have hd : reduce (g q) ∣ (X : (ZMod 2)[X]) ^ (q + 1) - 1 := by
+    refine ⟨X - 1, ?_⟩
+    rw [(gluing_generators q).2.2.2.2]
+    exact (geom_sum_mul (X : (ZMod 2)[X]) (q + 1)).symm
+  have hm : AdjoinRoot.mk (reduce (g q)) ((X : (ZMod 2)[X]) ^ (q + 1) - 1) = 0 :=
+    AdjoinRoot.mk_eq_zero.mpr hd
+  rw [map_sub, map_pow, AdjoinRoot.mk_X, map_one] at hm
+  exact sub_eq_zero.mp hm
+
+/-- The common forward-time unit has value [X] and inverse [X]^q. -/
+def commonTimeUnit (q : ℕ) : (Common q)ˣ :=
+  Units.mkOfMulEqOne (AdjoinRoot.root (reduce (g q)))
+    (AdjoinRoot.root (reduce (g q)) ^ q) (by
+      rw [← pow_succ', common_time_period])
+
+/-- Forward time has exact common-residue order q+1 for q at least two, and order one at q=1. -/
+theorem exact_common_time_order :
+    orderOf (commonTimeUnit 1) = 1 ∧
+    ∀ q : ℕ, 2 ≤ q → orderOf (commonTimeUnit q) = q + 1 := by
+  constructor
+  · have hg1 : reduce (g 1) = (X : (ZMod 2)[X]) - 1 := by
+      simp [reduce, g, S, sub_eq_add_neg, CharTwo.neg_eq]
+    have hm : AdjoinRoot.root (reduce (g 1)) - 1 = 0 := by
+      have he : AdjoinRoot.mk (reduce (g 1)) ((X : (ZMod 2)[X]) - 1) = 0 := by
+        exact (congrArg (AdjoinRoot.mk (reduce (g 1))) hg1.symm).trans AdjoinRoot.mk_self
+      simpa only [map_sub, AdjoinRoot.mk_X, map_one] using he
+    have hu : commonTimeUnit 1 = 1 := by
+      apply Units.ext
+      change AdjoinRoot.root (reduce (g 1)) = 1
+      exact sub_eq_zero.mp hm
+    rw [hu, orderOf_one]
+  · intro q hq
+    apply (orderOf_eq_iff (by omega : 0 < q + 1)).mpr
+    constructor
+    · apply Units.ext
+      change AdjoinRoot.root (reduce (g q)) ^ (q + 1) = 1
+      exact common_time_period q
+    · intro m hm hmpos hpow
+      have hr : AdjoinRoot.root (reduce (g q)) ^ m = 1 :=
+        congrArg (fun u : (Common q)ˣ => (u : Common q)) hpow
+      have hd : reduce (g q) ∣ (X : (ZMod 2)[X]) ^ m - 1 := by
+        apply AdjoinRoot.mk_eq_zero.mp
+        rw [map_sub, map_pow, AdjoinRoot.mk_X, map_one, hr, sub_self]
+      have hmmonic : ((X : (ZMod 2)[X]) ^ m - 1).Monic := by
+        simpa only [Polynomial.C_1] using monic_X_pow_sub_C (1 : ZMod 2) hmpos.ne'
+      have hmd : ((X : (ZMod 2)[X]) ^ m - 1).natDegree = m := by
+        simpa only [Polynomial.C_1] using
+          (natDegree_X_pow_sub_C (n := m) (r := (1 : ZMod 2)))
+      have hle : q ≤ m := by
+        simpa only [common_natDegree, hmd] using natDegree_le_of_dvd hd hmmonic.ne_zero
+      have hmq : m = q := by omega
+      subst m
+      have he : (X : (ZMod 2)[X]) ^ q - 1 = reduce (g q) :=
+        eq_of_monic_of_dvd_of_natDegree_le (common_monic q) hmmonic hd
+          (by rw [hmd, common_natDegree])
+      have hcoef := congrArg (fun p : (ZMod 2)[X] => p.coeff 1) he
+      have hleft : ((X : (ZMod 2)[X]) ^ q - 1).coeff 1 = 0 := by
+        simp [Polynomial.coeff_X_pow, show 1 ≠ q by omega]
+      have hright : (reduce (g q)).coeff 1 = 1 := by
+        rw [(gluing_generators q).2.2.2.2]
+        simp [Polynomial.coeff_sum, Polynomial.coeff_X_pow, show 1 < q + 1 by omega]
+      rw [hleft, hright] at hcoef
+      exact zero_ne_one hcoef
 
 end D5.S3.ConceptDynamics.Coding.ResetIntegralGluing
