@@ -8,6 +8,8 @@ internal sealed class LogRegularizationDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual bounded logarithmic trace energies on positive trace-class contractions.",
         H("Positive trace pairing and logarithmic regularization"), Blocks(
+            Item("shift_strictlyPositive","Strict positivity of every positive shift",Call("PositiveShiftOfNonnegativeOperatorIsStrictlyPositive"),
+                "For every bounded nonnegative operator T and every positive real epsilon, T+epsilon I is strictly positive. The nonnegative-add rule and strict positivity of the positive scalar operator prove this directly. Shifted CFC logarithms therefore have no singular spectrum at zero."),
             Describe.Lean(DescribeId.Create("positive-analytic-trace-pairing"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/LogRegularization.tracePairing_nonneg"),
                 H("Noncommuting positive trace pairing"), StatementSource.FromAuthor(Positivity()),

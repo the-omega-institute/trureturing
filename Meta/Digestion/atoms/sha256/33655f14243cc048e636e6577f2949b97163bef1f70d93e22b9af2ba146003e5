@@ -1,0 +1,10 @@
+**Convention 6.3 (interface values and source dependence).** The
+$\sigma$ in (CBN.27) is an analytical summation variable. Giving its
+actual value to a reader would change the complete attained alphabet
+to $|\{(E(t),\sigma(t)):t\in\mathcal F_D\}|$, unless it is already
+a function of the code and public data. Acquiring it after the request
+must obey the original one-Read rule. Similarly the compiled relations,
+donor addresses and graph can be public codebook data selected by $E$;
+a further source-varying topology is retained information and must be
+included in the code. Nothing in (CBN.26) makes that information free.
+

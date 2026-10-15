@@ -405,7 +405,7 @@ end
 section
 variable {d : ℕ}
 variable {n : Type*} [Fintype n] [DecidableEq n]
-private lemma trace_rank_one (X : Matrix n n ℂ) (v : n → ℂ) :
+lemma trace_rank_one (X : Matrix n n ℂ) (v : n → ℂ) :
     (X * Matrix.vecMulVec v (star v)).trace = star v ⬝ᵥ (X *ᵥ v) := by
   rw [Matrix.mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_comm]
 private lemma psd_of_trace_pairing (X : Matrix n n ℂ) (hX : X.IsHermitian)
