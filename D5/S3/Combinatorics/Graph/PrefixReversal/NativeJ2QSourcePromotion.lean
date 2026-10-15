@@ -129,11 +129,11 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
     have hab := (Sym2.map.injective hbij.injective) (hae.trans hbe.symm)
     exact Finset.disjoint_left.mp W.Q.seed.partitions.disjoint ha (hab.symm ▸ hb)
   have hK : K.image (Sym2.map Subtype.val) = markedCuts O := by
-    rw [Finset.image_image]
-    exact (same_seed_marked_cut_images hm O W.Q).1
+    simpa only [K, Finset.image_image, Function.comp_def, Sym2.map_map] using
+      (same_seed_marked_cut_images hm O W.Q).1
   have hH : H.image (Sym2.map Subtype.val) = markedCuts B := by
-    rw [Finset.image_image]
-    exact (same_seed_marked_cut_images hm O W.Q).2
+    simpa only [H, Finset.image_image, Function.comp_def, Sym2.map_map] using
+      (same_seed_marked_cut_images hm O W.Q).2
   have hKS : K = specialCuts (by omega : 3 ≤ m) O hBO := by
     dsimp only [K]
     rw [W.Q.primaryCuts]
