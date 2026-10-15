@@ -243,10 +243,109 @@ private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     exact hswap3 x
   rw [hleft3]
 
+private theorem fullC_entry {M : ℕ} (j : Fin M) (s t : Assignment M) :
+    fullC j s t =
+      if t j = true ∧ s = Function.update t j false
+      then (-1 : ℂ) ^ prefixCount t j else 0 := by
+  classical
+  rw [fullC_entries]
+  by_cases h : t j = true ∧ s = Function.update t j false
+  · rw [if_pos h]
+    have he : (∏ i : Fin M, fermionWord j i (s i) (t i)) =
+        ∏ i : Fin M, if i < j ∧ t i = true then (-1 : ℂ) else 1 := by
+      apply Finset.prod_congr rfl
+      intro i _hi
+      rw [h.2]
+      by_cases hij : i < j
+      · have hne : i ≠ j := ne_of_lt hij
+        simp only [fermionWord, if_pos hij, Function.update_of_ne hne]
+        cases t i <;>
+          simp [hij, D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv,
+            Matrix.diagonal_apply]
+      · by_cases heq : i = j
+        · subst i
+          simp [fermionWord, Matrix.single, h.1]
+        · simp [fermionWord, hij, heq, Matrix.one_apply, Function.update_of_ne heq]
+    rw [he, ← Finset.prod_filter]
+    simp [prefixCount, Finset.prod_const]
+  · rw [if_neg h]
+    by_cases ht : t j = true
+    · have hs : s ≠ Function.update t j false := by tauto
+      have hx : ∃ i, s i ≠ Function.update t j false i := by
+        by_contra hh
+        push Not at hh
+        exact hs (funext hh)
+      obtain ⟨i, hi⟩ := hx
+      apply Finset.prod_eq_zero (Finset.mem_univ i)
+      by_cases heq : i = j
+      · subst i
+        simp only [Function.update_self] at hi
+        have hsi : s j = true := by cases hsj : s j <;> simp_all
+        simp [fermionWord, Matrix.single, hsi]
+      · have hst : s i ≠ t i := by simpa only [Function.update_of_ne heq] using hi
+        by_cases hij : i < j
+        · simp only [fermionWord, if_pos hij]
+          cases hsi : s i <;> cases hti : t i <;>
+            try { exfalso; apply hst; simp [hsi, hti] }
+          all_goals
+            simp [D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv,
+              Matrix.diagonal_apply, hsi, hti]
+        · simp [fermionWord, hij, heq, hst, Matrix.one_apply]
+    · apply Finset.prod_eq_zero (Finset.mem_univ j)
+      simp [fermionWord, Matrix.single, ht]
+
 private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s : Assignment M) :
     (fullC j *ᵥ f) s =
       if s j = false then (-1 : ℂ) ^ prefixCount s j * f (Function.update s j true) else 0 := by
-  sorry
+  classical
+  simp only [Matrix.mulVec, dotProduct]
+  rw [Finset.sum_eq_single (Function.update s j true)]
+  · rw [fullC_entry]
+    by_cases hs : s j = false
+    · rw [if_pos hs]
+      have hp : prefixCount (Function.update s j true) j = prefixCount s j := by
+        unfold prefixCount
+        congr 1
+        ext i
+        by_cases hij : i < j
+        · have hne : i ≠ j := ne_of_lt hij
+          simp [hij, Function.update_of_ne hne]
+        · simp [hij]
+      have hcond : (Function.update s j true) j = true ∧
+          s = Function.update (Function.update s j true) j false := by
+        simp [hs]
+      rw [if_pos hcond]
+      simp [hp]
+    · rw [if_neg hs]
+      have hcond : ¬((Function.update s j true) j = true ∧
+          s = Function.update (Function.update s j true) j false) := by
+        intro h
+        have := congrFun h.2 j
+        simp [h.1, hs] at this
+      rw [if_neg hcond]
+      simp
+  · intro b hb hne
+    rw [fullC_entry]
+    by_cases hs : s j = false
+    · have hfalse : ¬(b j = true ∧ s = Function.update b j false) := by
+        intro h
+        apply hne
+        funext i
+        by_cases hij : i = j
+        · subst i
+          simp [h.1]
+        · have hi := congrFun h.2 i
+          simp only [Function.update_of_ne hij] at hi
+          simp [Function.update_of_ne hij, hi]
+      simp [hfalse]
+    · have hfalse : s j = true := by cases hsj : s j <;> simp_all
+      have hfalse' : ¬(b j = true ∧ s = Function.update b j false) := by
+        intro h
+        have := congrFun h.2 j
+        simp [h.1, hfalse] at this
+      simp [hfalse']
+  · intro hmem
+    exact False.elim (hmem (Finset.mem_univ _))
 
 private def psiCode (x : Assignment 6) : Fin 64 :=
   finFunctionFinEquiv (fun j => if x j then (1 : Fin 2) else 0)
