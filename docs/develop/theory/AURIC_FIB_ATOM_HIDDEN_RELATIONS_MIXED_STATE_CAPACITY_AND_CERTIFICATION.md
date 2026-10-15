@@ -751,3 +751,266 @@ $$
 这些量说明来源是否偏离乘积来源；它们不改变 (C104.1) 的线性代数，也不单独证明纠缠。特别地，\(\Gamma\) 可以是可分离的经典对角来源而仍有非零 \(\delta_\Omega\) 或非零其它二份连接读数。要声称纠缠，仍须另加可分离集合、PPT 或其它纠缠判据；要声称端口下界，仍须给出二份端口的 CPTP 结构和全称保持合同。
 
 因此当前状态是：C-102/C-103 已把“来源连接”和“局部通道”分开；C-104 给出 product-component 维数乘法以及五模式 \(1\to4\) 的条件性候选；从该候选到当前 dev 中可冻结的 Lean 定理，还缺 Fin-5 标签映射、\(\Omega\) 的分量张成计算、有限 flagged port 的实例化和对应的来源敏感度恒等式。缺少这些桥接之前，不把 \(F[1,3]\) 叫作能量、纠缠或单份相干端口维数。
+## 105. 完整 product-plus-Omega 菜单中的纠缠盲纤维与参数读口
+
+**定义 C-105.1（两份分割、置换与分开执行的测量设置）。** 沿用 C-104 的正交标签
+$B=\{0,1,2,3,13\}$、$H=\mathbb C^5$、$P_s=|s\rangle\langle s|$，
+两份系统记作 $H^{(1)}\otimes H^{(2)}$。本章的可分离与纠缠一律相对于
+$H^{(1)}\mid H^{(2)}$；它与 C-94.2 在每一份底面内指定的
+$\mathbb C_A^2\mid\mathbb C_B^2$ 是不同分割。定义对合置换
+
+$$
+f(0)=13,\quad f(13)=0,\quad f(1)=3,\quad f(3)=1,\quad f(2)=2,
+\qquad e_s=|s,f(s)\rangle.
+\tag{C105.1}
+$$
+
+五个 $e_s$ 正交归一。令 $I_{25}$ 为二份空间的恒等算子，
+$Q=|\Omega\rangle\langle\Omega|$，其中 $\Omega$ 是 C-104.2 的向量。
+完整菜单 $\mathcal M$ 包含两个分别执行的设置：计算基 PVM
+$\{P_s\otimes P_u:s,u\in B\}$，以及二元 PVM $\{Q,I_{25}-Q\}$。
+对二份密度算子 $\Gamma$ 定义观察映射
+
+$$
+\mathcal O_{\mathcal M}(\Gamma)
+=\left(\bigl(\operatorname{tr}((P_s\otimes P_u)\Gamma)\bigr)_{s,u\in B},
+\operatorname{tr}(Q\Gamma)\right).
+\tag{C105.2}
+$$
+
+二元设置的补事件概率由 $1-\operatorname{tr}(Q\Gamma)$ 决定。
+这里的 $25$ 个基效果与 $Q$ 不组成一个 $26$ outcome POVM：前者之和已经是
+$I_{25}$，再加 $Q$ 得 $I_{25}+Q$。纤维指映射 (C105.2) 的逆像，
+比较的是同一二份状态在这些不同设置下的精确期望。
+
+**定义 C-105.2（承诺的连续混态族）。** 定义
+
+$$
+\begin{aligned}
+S&=\frac15\sum_{s\in B}|e_s\rangle\langle e_s|,\\
+|\Psi\rangle&=\frac12(e_0+e_{13}+e_1-e_3),\\
+T&=\frac45|\Psi\rangle\langle\Psi|+\frac15|e_2\rangle\langle e_2|,\\
+\Gamma_t&=(1-t)S+tT,\qquad t\in[0,1]\subset\mathbb R.
+\end{aligned}
+\tag{C105.3}
+$$
+
+承诺族包括固定的实际基、固定的置换、所列实系数及相位，只有 $t$ 可以变化。
+它不假定 $\Gamma_t=\rho\otimes\rho$，也不把相同边缘当作轮内独立。
+记四维空间
+
+$$
+V=\operatorname{span}\{e_0,e_{13},e_1,e_3\},\qquad
+P_V=\sum_{s\ne2}|e_s\rangle\langle e_s|,
+\qquad K=T-S=\frac45|\Psi\rangle\langle\Psi|-\frac15P_V.
+\tag{C105.4}
+$$
+
+$\Gamma_t=S+tK$。在 $V$ 的有序基 $(e_0,e_{13},e_1,e_3)$ 中，令
+$v=(1,1,1,-1)^{\mathsf T}$，则
+
+$$
+\left.\Gamma_t\right|_V=\frac15\bigl((1-t)I_4+t vv^\dagger\bigr),
+\qquad \langle e_2|\Gamma_t|e_2\rangle=\frac15;
+\tag{C105.5}
+$$
+
+$V$ 与 $e_2$ 之间以及这五维支撑之外的矩阵元全为零。
+
+**定理 C-105.3（密度性、相同边缘与底面质量）。** 对每个实数 $0\le t\le1$，
+$\Gamma_t$ 是密度算子，两个边缘均为 $\rho=I_5/5$。沿用 C-94.2 的底面识别，
+每份的底面质量与条件态，以及二份的底面联合质量分别为
+
+$$
+\begin{aligned}
+\operatorname{Tr}_2\Gamma_t&=\operatorname{Tr}_1\Gamma_t=I_5/5,\\
+r&=\operatorname{tr}(P_{\mathrm b}\rho)=4/5,\qquad
+\sigma=\frac{\iota^\dagger\rho\iota}{r}=I_4/4,\\
+r_{12}(\Gamma_t)&=\operatorname{tr}((P_{\mathrm b}\otimes P_{\mathrm b})\Gamma_t)=4/5.
+\end{aligned}
+\tag{C105.6}
+$$
+
+证明。$\|\Psi\|^2=4/4=1$，且 $\Psi\perp e_2$。
+$S$ 是五个单位向量投影的等权混合，$T$ 是两个单位向量投影的凸组合，
+故二者正半定、迹一；$0\le t\le1$ 保证 $\Gamma_t$ 同样如此。
+对于任意 $s,a\in B$，有
+
+$$
+\begin{aligned}
+\operatorname{Tr}_2(|e_s\rangle\langle e_a|)
+&=\langle f(a)|f(s)\rangle\,|s\rangle\langle a|,
+\\
+\operatorname{Tr}_1(|e_s\rangle\langle e_a|)
+&=\langle a|s\rangle\,|f(s)\rangle\langle f(a)|.
+\end{aligned}
+\tag{C105.7}
+$$
+
+$f$ 是置换，故两种偏迹都消去 $s\ne a$ 的交叉项。
+$S$ 的任一边缘为 $I_5/5$；$|\Psi\rangle\langle\Psi|$ 的任一边缘为
+$P_{\mathrm b}/4$，因此 $T$ 的任一边缘为
+$(4/5)(P_{\mathrm b}/4)+(1/5)|2\rangle\langle2|=I_5/5$。
+线性性给 $\Gamma_t$ 的两个边缘。将 $I_5/5$ 压缩到 C-94.2 的四维底面并除以
+$4/5$，得到 $I_4/4=(I_2/2)\otimes(I_2/2)$，所以每份的条件底面可分离。
+二份底面投影在 $V$ 上为恒等、在 $e_2$ 上为零。
+$S$ 的底面权重为四个 $1/5$ 之和，$T$ 的底面权重为 $4/5$，
+于是整族的 $r_{12}=4/5$。乘积边缘来源 $\rho\otimes\rho=I_{25}/25$ 才有
+$r_{12}=r^2=16/25$；本族达到 C-102.2 区间的上端 $r_{12}=r$。证毕。
+
+**定理 C-105.4（完整菜单的一条恒定纤维）。** 对每个实数 $0\le t\le1$ 以及
+全部 $s,u\in B$，有
+
+$$
+\operatorname{tr}((P_s\otimes P_u)\Gamma_t)
+=\begin{cases}1/5,&u=f(s),\\0,&u\ne f(s),\end{cases}
+\qquad \operatorname{tr}(Q\Gamma_t)=1/5.
+\tag{C105.8}
+$$
+
+因而 $\mathcal O_{\mathcal M}(\Gamma_t)=\mathcal O_{\mathcal M}(S)$，
+而相对于具有相同边缘的乘积来源，连接读数恒为
+
+$$
+\Delta_t=\Gamma_t-I_{25}/25,\qquad
+\operatorname{tr}(Q\Delta_t)=\frac15-\frac1{25}=\frac4{25}.
+\tag{C105.9}
+$$
+
+证明。$S$ 在五个 $e_s$ 上的对角元全为 $1/5$。
+$T$ 在四个底面 $e_s$ 上的对角元为 $(4/5)|1/2|^2=1/5$，
+在 $e_2$ 上也为 $1/5$，其余计算基对角元为零。
+凸组合给全部 $25$ 个基概率。写
+
+$$
+|\Omega\rangle=\frac12(e_0+e_{13}-e_1-e_3),\qquad
+\langle\Omega|\Psi\rangle=\frac{1+1-1+1}{4}=\frac12.
+\tag{C105.10}
+$$
+
+故 $\operatorname{tr}(QS)=(1/5)\sum_s|\langle\Omega|e_s\rangle|^2=1/5$，
+$\operatorname{tr}(QT)=(4/5)|1/2|^2=1/5$；$e_2$ 对两者的 $Q$ 读数均无贡献。
+迹的线性性给整个实区间上的恒等式。$Q$ 为归一化秩一投影，
+故 $\operatorname{tr}(QI_{25}/25)=1/25$，得到 (C105.9)。证毕。
+
+**定理 C-105.5（同一纤维中的可分离端点与连续纠缠族）。** $\Gamma_0=S$
+相对于 $H^{(1)}\mid H^{(2)}$ 可分离；每个 $0<t\le1$ 的 $\Gamma_t$
+相对于同一分割均纠缠。$t\mapsto\Gamma_t$ 连续且单射。
+
+证明。$S=(1/5)\sum_s P_s\otimes P_{f(s)}$ 是明确的产品密度算子凸组合，
+所以可分离。对第二份取计算基部分转置，约定
+
+$$
+(|a,b\rangle\langle c,d|)^{\mathsf T_2}
+=|a,d\rangle\langle c,b|.
+\tag{C105.11}
+$$
+
+由 (C105.3)，$\langle0,13|\Gamma_t|13,0\rangle=t/5$。
+$|0,0\rangle$ 与 $|13,13\rangle$ 在原计算基对角上均不匹配置换，
+故其对角元为零。部分转置的相应二阶压缩为
+
+$$
+\left.\Gamma_t^{\mathsf T_2}\right|_{\operatorname{span}\{|0,0\rangle,|13,13\rangle\}}
+=\begin{pmatrix}0&t/5\\t/5&0\end{pmatrix}.
+\tag{C105.12}
+$$
+
+令 $|z_-\rangle=(|0,0\rangle-|13,13\rangle)/\sqrt2$，则 $\|z_-\|=1$，
+
+$$
+\langle z_-|\Gamma_t^{\mathsf T_2}|z_-\rangle=-t/5<0\qquad(t>0).
+\tag{C105.13}
+$$
+
+可分离态的部分转置必正半定：对任意产品密度算子
+$A\otimes B$，其第二份部分转置是 $A\otimes B^{\mathsf T}\succeq0$，
+凸组合仍正半定。这是 Peres 的 PPT 必要条件，见
+Asher Peres，*Separability Criterion for Density Matrices*，
+[Phys. Rev. Lett. 77, 1413–1415 (1996)](https://doi.org/10.1103/PhysRevLett.77.1413)，
+[arXiv:quant-ph/9604005v2](https://arxiv.org/abs/quant-ph/9604005v2)，式 (3)–(6)
+（交换两份即可采用这里的第二份转置约定）。负期望直接排除可分离性；
+这里没有使用 PPT 在 $5\times5$ 上的充分性。
+$\Gamma_t=S+tK$ 是有限维仿射映射，因而连续；所列非对角元为 $t/5$，
+所以不同 $t$ 给不同状态。证毕。
+
+本构造的矩阵结构属于成熟的 maximally correlated 类型。
+具体地，局部置换酉 $U_f|s\rangle=|f(s)\rangle$ 满足
+$(I_5\otimes U_f)e_s=|s,s\rangle$，因此将 (C105.3) 变成
+$\sum_{s,a}c_{sa}(t)|s,s\rangle\langle a,a|$。
+这一类型的标准定义见 Tohya Hiroshima、Masahito Hayashi，
+*Finding a maximally correlated state: Simultaneous Schmidt decomposition of bipartite pure states*，
+[Phys. Rev. A 70, 030302(R) (2004)](https://doi.org/10.1103/PhysRevA.70.030302)，
+[arXiv:quant-ph/0405107v2](https://arxiv.org/abs/quant-ph/0405107v2)，式 (1)、(4)。
+这里复用该结构与 PPT 判据；本章的仓内综合是 (C105.3) 的特定符号选择同时保持
+C-104 的全部基概率和 $Q$ 读数，并给同一纤维的参数读口，不作原创性主张。
+
+**定理 C-105.6（承诺族内的精确参数识别与原四维支撑）。** 增加一个分别执行的
+二元设置 $\{R_+,I_{25}-R_+\}$，其中
+
+$$
+|r_+\rangle=\frac{e_0+e_{13}}{\sqrt2},\qquad
+R_+=|r_+\rangle\langle r_+|.
+\tag{C105.14}
+$$
+
+在定义 C-105.2 的承诺族内，其精确期望满足
+
+$$
+p_+(t)=\operatorname{tr}(R_+\Gamma_t)=\frac{1+t}{5},\qquad
+\frac15\le p_+(t)\le\frac25,\qquad t=5p_+(t)-1.
+\tag{C105.15}
+$$
+
+$R_+$ 的支撑包含于 $V$；将这个 rank-one probe 加入 C-104 的非正交图后，
+原来的四维连通分量仍为 $V$，没有扩大。
+
+证明。$r_+$ 归一化，故 $R_+$ 与其补算子组成合法二元 PVM。
+$S$ 给 $\operatorname{tr}(R_+S)=1/5$。
+$\langle r_+|\Psi\rangle=1/\sqrt2$ 且 $r_+\perp e_2$，
+所以 $\operatorname{tr}(R_+T)=(4/5)(1/2)=2/5$。
+凸组合给 (C105.15)，斜率 $1/5$ 严格为正，反解唯一确定 $t$。
+由于 $r_+\in V$，有 $P_VR_+P_V=R_+$。
+它与 $e_0,e_{13}$ 的内积均为 $1/\sqrt2$，与其它 $23$ 个计算基向量的内积为零，
+且 $\langle\Omega|r_+\rangle=1/\sqrt2$。
+因此它接到原四维分量，不接到其余基向量；旧四个基向量仍张成 $V$，
+加入一个已经属于 $V$ 的向量不增加维数。
+二元设置的补效果只给 $1-p_+(t)$，并非一个额外的 rank-one probe。证毕。
+
+**命题 C-105.7（识别、纠缠与端口结论的适用范围）。** 映射 (C105.2) 在二份密度态域上
+不能单独判定 $H^{(1)}\mid H^{(2)}$ 的可分离性；它的一个纤维包含 $S$ 和全部
+$\Gamma_t$，$0<t\le1$。加入 $R_+$ 后，(C105.15) 只在固定基、固定相位和固定矩阵族
+(C105.3) 的承诺下，从精确期望识别参数及其是否为零。它不是对任意二份输入的状态层析
+或通用纠缠判据，也不把有限样本频率当作精确期望。
+
+证明。定理 C-105.4 给相同完整菜单读数，定理 C-105.5 给不同可分离性；
+任何只依赖这些相同读数的判定函数都只能给同一个输出。
+本族给出一个纤维内的连续线段，不声称分类整个纤维。
+定理 C-105.6 的反解则使用了整个承诺族，而非仅使用相同边缘。
+例如族外的可分离态 $P_0\otimes P_{13}$ 也有
+$\operatorname{tr}(R_+(P_0\otimes P_{13}))=1/2>1/5$，
+故单独的阈值 $p_+>1/5$ 不是无承诺纠缠判据。证毕。
+
+C-77 的同概率纯相位族改变的是单份底面 concurrence；这里的单份条件底面
+始终为 $I_4/4$，而纠缠只发生在两份五维系统之间。
+C-78.3/C-91.2 的 $q_\Omega=r^2\mathcal C^2/4$ 需要同一实际纯态的独立两份
+或其指定的底面乘积块，不能用于 (C105.3) 的相关混态来源。
+(C105.9) 的非零连接既存在于可分离端点，也存在于纠缠族，因而本身不认证纠缠。
+C-100 的相同边缘反例与 C-102/C-103 的局部盲性供应这个区分，
+(C105.8) 进一步给出包含 $Q$ 的完整菜单仍然合并两类来源的显式连续纤维。
+
+$R_+$ 的支撑结论只属于当前 probe 图的线性代数。
+要连接 C-104 的条件性相干端口候选，仍须给出同一个 $H\otimes H$ 输入域、
+对所有二份密度输入保持概率的 CPTP 编码与解码，以及有限且固定的经典 flag 空间；
+承诺族内识别参数不能替代这些全称合同。
+量子压缩的文献框架见 Andreas Bluhm、Lukas Rauber、Michael M. Wolf，
+*Quantum compression relative to a set of measurements*，
+[Ann. Henri Poincaré 19, 1891 (2018)](https://doi.org/10.1007/s00023-018-0660-z)，
+[arXiv:1708.04898](https://arxiv.org/abs/1708.04898)。它是条件性压缩背景，
+不是本族纠缠的证据。C-104 所列标签映射、分量计算与有限 flagged CPTP
+实例化的形式桥接仍是独立的未证义务；本章的族内恒等式与支撑关系不能代替
+$q\ge4$ 通用端口定理的证明。
+(C105.3) 与 (C105.14) 给出数学状态和测量效果；它们本身不供应 AURIC 原生系统中的
+物理制备、相位参照或联合测量实现。
+
+## 追加锚（本行以下为增补区）
