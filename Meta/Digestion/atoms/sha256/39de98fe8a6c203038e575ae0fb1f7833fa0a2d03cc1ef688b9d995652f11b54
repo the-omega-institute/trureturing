@@ -1,0 +1,29 @@
+**Theorem 7.5 (Inherited exact signature radius and its law-only limitation).** Let $\rho^{\mathrm{sig}}_{k,j}$ be the least radius representing every normalized height-at-most-$k$ tree while preserving the complete Definition 7.1 signature, with target, node-slot positions, orientations, parities, ordered branches, labels and depths fixed. For $k\ge1$,
+
+$$
+\rho^{\mathrm{sig}}_{k,j}=2^{k+1}-1.
+\tag{7.10}
+$$
+
+Its lower-bound witness nevertheless has a radius-zero representative of its full $(u,H_j,O,D,N)$ law. This is Address Theorem 5.2, not a law-only exponential lower bound.
+
+Proof. Theorem 7.4 gives the signature upper bound. For the lower bound, use the complete binary read tree of depth $k$ and enumerate its $M=2^k-1$ read nodes $v_0,\ldots,v_{M-1}$. With $q=j$ and $\psi=1-j$ as in (3.1), give node $v_i$ address
+
+$$
+t_i=2(q+1+i)+\psi\qquad(0\le i<M).
+\tag{7.11}
+$$
+
+Return $a_0$ at every leaf. This is a lawful deterministic rule making exactly $k$ actual calls on every branch. In phase $\psi$, all potential edges together form a length-$M$ path on vertices $q+1,\ldots,q+M+1$, detached from the target $q$. In the other phase every node is a separator.
+
+For any assignment preserving this whole signature, let $b_i$ be the left endpoint of the phase-$\psi$ spin edge at $v_i$. The plus slot of $v_i$ equals the minus slot of $v_{i+1}$ in the original signature, so it forces
+
+$$
+b_{i+1}=b_i+1\qquad(0\le i<M-1).
+\tag{7.12}
+$$
+
+The occupied vertices are therefore exactly $[b_0,b_0+M]\cap\mathbb Z$. Target inequivalence forces $q$ outside this interval. If $b_0\ge q+1$, its last edge has actual address at least $2(q+M)+\psi=j+2M+1$. If $b_0+M\le q-1$, its first edge has address at most $2(q-M-1)+\psi=j-2M-1$. Thus radius at least $2M+1$ is necessary. For $M=1$ equation (7.12) is empty, but the single edge and target inequivalence give exactly the same alternatives. Reflections interchanging oriented slots and translations moving the target do not preserve this signature. This proves (7.10).
+
+For law alone, this input has $O=a_0,D=1,N=k$ constantly. Read the actual address $j$ exactly $k$ times, paying every occurrence, ignore all replies and return $a_0$. The replacement has radius zero and exactly the same full joint law with $H_j$ and every seed event. It preserves neither the potential slot geometry nor the acquired record. Consequently the exponential signature obstruction cannot be used as an exponential law-only obstruction. $\square$
+
