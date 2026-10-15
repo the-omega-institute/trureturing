@@ -308,7 +308,7 @@ def insertion (D : LatticeData) (charge : Charge D) (index : Index D) :
   LinearMap.mulLeft ℂ (X (some index) + singletonPolynomial D charge index) +
     (pairDerivation D index).toLinearMap
 
-private theorem pair_symmetric (D : LatticeData) (first second : Index D) :
+theorem pair_symmetric (D : LatticeData) (first second : Index D) :
     pairPolynomial D first second = pairPolynomial D second first := by
   unfold pairPolynomial
   congr 1
