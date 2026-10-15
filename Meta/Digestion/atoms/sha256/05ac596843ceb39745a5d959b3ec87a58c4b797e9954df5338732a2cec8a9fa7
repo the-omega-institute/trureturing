@@ -1,0 +1,30 @@
+**Proposition 2.4 (rank-free exact conversion obstruction).** When
+$A_{a,H}$ holds, the designated-coordinate set in (SFS.8) is not the
+projection of a finite union of FJC rank-free functional systems, even with
+finitely many auxiliary states. Such a system has at most one equation
+$X_i=E_i$ per state, finite grounds, fixed nonnegative powers and ordered
+pairs; other states are unrestricted. Projection must preserve the
+designated coordinate.
+
+Proof. Normalize one system by [FJC, Theorem 3.1][FJC]. Root-link paths
+lead to grounds, free states, positive-shift cycles or pair-guarded
+dependencies; zero-shift cycles collapse to free aliases. Positive cycles
+force $\Omega$ by (SFS.6). A pair-guarded cycle cannot have finite values:
+leaf count is nondecreasing under $\rho$, and a containing pair has a
+nonempty sibling, giving strict decrease around the cycle. A coordinate
+taking a finite value reaches neither kind of infinite cycle. Its
+reconstruction is consequently a finite expression in grounds and genuinely
+free states.
+
+If a free state occurs, give it a finite positive-mass value and give every
+other free state a finite value. The guarded solution construction extends
+these assignments. The designated coordinate is finite and of positive
+mass, since powers preserve that mass and containing pairs cannot remove it.
+This contradicts containment in $\{T_c:c\in\mathbb N\}\cup\{\Omega\}$.
+Otherwise the coordinate has one fixed finite ground value whenever finite.
+Each component contributes at most one $T_c$, so a finite union cannot cover
+all distinct $T_c$. This obstructs that exact representation only. It
+obstructs neither a different stopping method nor an existential productive
+contact certificate. The symbolic atomic parameter in §3 avoids this
+specific representation restriction.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9b2a2964b9d88df6aa3185a0dfaf620b794c52ed299f690478c70ceede8936f
+  normalized_sha256: sha256:c9b2a2964b9d88df6aa3185a0dfaf620b794c52ed299f690478c70ceede8936f
+cas_ref: sha256:c9b2a2964b9d88df6aa3185a0dfaf620b794c52ed299f690478c70ceede8936f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 前两组等式由二阶行列式、迹和矩阵乘法直接计算。由 $C_kP_k=P_kD_k$ 对 $n$ 归纳，得 $C_k^nP_k=…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 3b5bbde914e21c253c40a0e3aed48dd22121f20dfd6756e1bb139dede147bda4
+    next_atom_id: 6cb1ceff12022ca000c5356afdbc4f641f5fa991595dde3752f7a76eeb5188bc

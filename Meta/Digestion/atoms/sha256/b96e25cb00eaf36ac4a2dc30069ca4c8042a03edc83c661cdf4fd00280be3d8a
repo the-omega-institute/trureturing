@@ -1,0 +1,2 @@
+**Proposition 4.1 (Three values give masked ranks).** Let $n\ge3$ be odd, $\mathtt q\ge2$, let $\Gamma$ be a graph form of a $\mathtt q$-party pure qubit stabilizer state with colouring $\mathrm{col}$, and let $t\in G$. If $f_t$ takes at most three distinct values on the occupied parties, then $\operatorname{rank}_F(\Lambda_t\Gamma+\Gamma\Lambda_t)=r(\pi_t)$. Stance: suspected-novel (§8).
+

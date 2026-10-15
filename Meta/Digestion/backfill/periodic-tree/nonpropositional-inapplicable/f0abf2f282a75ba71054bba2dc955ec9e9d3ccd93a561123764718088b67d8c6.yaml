@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0abf2f282a75ba71054bba2dc955ec9e9d3ccd93a561123764718088b67d8c6
+  normalized_sha256: sha256:f0abf2f282a75ba71054bba2dc955ec9e9d3ccd93a561123764718088b67d8c6
+cas_ref: sha256:f0abf2f282a75ba71054bba2dc955ec9e9d3ccd93a561123764718088b67d8c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「TR.2 行列式为二的校准族」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: beda794232fe2398cd5cccf34c48baca9822f75acfef14812c071e650440a209
+    next_atom_id: 86228e55b1e7f54fe808ec80568335669a0e5616b19a2afe7018b64b62fb9bd4

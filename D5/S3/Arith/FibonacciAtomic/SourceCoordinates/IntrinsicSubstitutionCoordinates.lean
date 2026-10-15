@@ -173,7 +173,7 @@ private theorem iterate_pair (n : ℕ) (s t : Source) :
     (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
       substitution.map_mul) n s t
 
-private theorem pair_image (s t : Source) :
+theorem pair_image (s t : Source) :
     (∃ x : Source, substitution x = .mul s t) ↔
       (s = .of false ∧ t = .of true) ∨
       ((∃ x : Source, substitution x = s) ∧ (∃ y : Source, substitution y = t)) := by

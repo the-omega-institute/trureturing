@@ -7,6 +7,8 @@
    digest: QuantumMaxFlowBound for width-three bridge flow. -/
 
 /-
+proof_shape: rank_map_algebraMap: bind-only; consumer: AntidistinguishabilityOverlapNonTight.norm_square_gram_rank
+escape_witness: rank_map_algebraMap: none
 proof_shape: QMaxFlow_attained: bind-only; consumer: CastlingDeficit.concise_maximizer
 escape_witness: QMaxFlow_attained: none
 proof_shape: rank_le_QMaxFlow: bind-only; consumer: QuantumMaxFlowBound.rational_witness_lower_bound
@@ -33,6 +35,11 @@ Direct frozen dependencies: none on the implementation baseline.
 Utility: none; symbolic constructions and proofs for arbitrary dimensions,
 not bounded enumeration, a checker, numeric reduction, or a certified instance.
 Information-escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14762
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 import Mathlib.LinearAlgebra.Matrix.Rank
@@ -171,7 +178,7 @@ private theorem algebraMap_mem_span {K L ι m : Type*} [Field K] [Field L] [Alge
   rcases hy with ⟨j, rfl⟩
   exact Submodule.subset_span ⟨j, rfl⟩
 
-private theorem rank_map_algebraMap {K L m n : Type*} [Field K] [Field L] [Algebra K L]
+theorem rank_map_algebraMap {K L m n : Type*} [Field K] [Field L] [Algebra K L]
     [Fintype m] [Fintype n] (A : Matrix m n K) :
     (A.map (algebraMap K L)).rank = A.rank := by
   classical

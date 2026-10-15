@@ -88,7 +88,7 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (SimpleGraph (Fin 4))
+  escapeFrom := none
   sourceSelection := some {
     definition := none
     owner := `D5.S3.Combinatorics.Graph.Walks.FourVertexRank
@@ -102,6 +102,9 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+#print axioms registration
+#print axioms registration_contract
 end Matching
 end
 end Reg.D5.S3.Combinatorics.Graph.Walks.FourVertexRank

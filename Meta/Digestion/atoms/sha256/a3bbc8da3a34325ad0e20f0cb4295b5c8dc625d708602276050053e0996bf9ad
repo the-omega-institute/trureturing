@@ -1,0 +1,32 @@
+**References 10.3 (proof status and scope).** New results have ordinary
+written proofs, not Lean kernel verification. Conditional algorithms retain
+their correctness and liveness promises; the broad research residual is
+stated in Problem 9.3.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[CNA]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md
+[CWS]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_WORKSPACE.md
+[CAB]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_ACQUIRED_CLOCK_BRIDGES.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+[PG]: RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[CBU]: ../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean
+[CBU-S]: ../../../Blueprint/D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.scribe.cs
+[ACA]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.lean
+[ACA-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.scribe.cs
+[NSM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean
+[NSM-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.scribe.cs
+[NSE]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean
+[NSE-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.scribe.cs
+[NEP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveSourceProducer.lean
+[NEP-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveSourceProducer.scribe.cs
+[NSC]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSourceSelectorCode.lean
+[NSC-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSourceSelectorCode.scribe.cs
+[ISC]: ../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean
+[ISC-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.scribe.cs
+[KING]: https://research.ibm.com/publications/symbolic-execution-and-program-testing
+[KING-DOI]: https://doi.org/10.1145/360248.360252
+[EWD418]: https://www.cs.utexas.edu/~EWD/transcriptions/EWD04xx/EWD418.html
+[EWD472]: https://www.cs.utexas.edu/~EWD/transcriptions/EWD04xx/EWD472.html
+[TURING]: https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf
+

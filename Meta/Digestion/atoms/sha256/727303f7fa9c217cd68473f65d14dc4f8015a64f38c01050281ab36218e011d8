@@ -1,0 +1,30 @@
+**Definition 1.3 (conditional complete word).** For a fixed $h$, take a
+fixed length $\ell\ge1$ and
+
+$$
+L_\ell=\{w\in\{0,1\}^\ell:w_jw_{j+1}=0\ (1\le j<\ell)\}.
+$$
+
+The Fibonacci cube $\Gamma_\ell$ has vertex set $L_\ell$ and edges
+between words at Hamming distance one.
+
+An installed subset $W\subseteq L_\ell$ is the entire mutable observer
+state space. Every installed running or halt word counts in $|W|$,
+including any installed unreachable word. Ambient words outside $W$
+have no instruction rows. A fixed table maps each $w\in W$ to a literal
+Read, Update, or $\mathsf{Halt}(z)$ with a fixed full output $z$.
+For each primitive reply its response table immediately selects a word
+of $W$ at Hamming distance at most one from $w$, and discards the reply.
+There is no intermediate instruction or retained response.
+
+This is the conditional service of FIB §45.1. Initialization, immutable
+tables including output rows, instruction selection and address delivery,
+primitive execution, immediate response writing and output are separately
+supplied and charged. The only mutable observer field available to these
+services is $w$. In particular, a decoded node pointer, address buffer,
+program counter, phase, clock, epoch, history or response latch may not
+persist outside it. If such a field is needed, this complete-word claim
+does not describe that implementation. The evolving source is a distinct
+device with only Definition 1.1's observation ports, not a free observer
+register. Support sets, ranks and source labels in a proof are not ports.
+

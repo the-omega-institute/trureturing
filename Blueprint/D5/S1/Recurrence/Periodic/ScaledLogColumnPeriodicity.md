@@ -8,7 +8,19 @@ Seiichi Manyama's entries A383165 and A383166, dated April 18, 2025, give the sq
 
 All indices, columns, moduli, onsets and periods are natural numbers. The sequence a is integer-valued. Power series have rational coefficients: exp is PowerSeries.exp over the rationals, rescale(c,F) replaces X by cX, C embeds a rational constant, and logOf(H) is the formal logarithm of H, namely PowerSeries.log substituted at H-1. The function coeff(n,F) extracts a coefficient, mk forms a series from its coefficient function, factorial is Nat.factorial, and rat denotes a cast to the rationals. Every fraction displayed here is rational division. The function num returns the reduced rational numerator; residue(m,z) denotes the integer cast to ZMod m.
 
-**Definition 1.1 (The e.g.f. coefficient sequence).**
+**Theorem 1.1 (The formal logarithm derivative).**
+
+$$\operatorname{derivative}\left(\operatorname{log}\left(\mathbb{Q}\right)\right) \cdot (1 + X) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.log_derivative_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Over the rationals the formal derivative of log(1+X) is the inverse of 1+X; rescaling the geometric-series identity proves the displayed multiplication identity.
+
+**Definition 1.2 (The e.g.f. coefficient sequence).**
 
 $$\forall r, n: \mathbb{N}, \operatorname{a}\left(r, n\right) = \operatorname{num}\left(\operatorname{rat}\left(\operatorname{factorial}\left(n\right)\right) \cdot \operatorname{coeff}\left(n, \operatorname{C}\left(\frac{1}{\operatorname{rat}\left(\operatorname{factorial}\left(r\right)\right)}\right) \cdot (\operatorname{logOf}\left((1 + \operatorname{C}\left(\frac{1}{2}\right) \cdot (\operatorname{rescale}\left(2, exp\right) - 1))\right))^{r}\right)\right)$$
 
@@ -20,7 +32,7 @@ $$\forall r, n: \mathbb{N}, \operatorname{a}\left(r, n\right) = \operatorname{nu
 
 The definition extracts the factorial-scaled coefficient of log(1+(exp(2X)-1)/2)^r/r!. The integral differential bridge proves that this rational number has denominator one, so numerator extraction loses no information.
 
-**Theorem 1.2 (The defining scaled logarithm e.g.f.).**
+**Theorem 1.3 (The defining scaled logarithm e.g.f.).**
 
 $$\forall r: \mathbb{N}, \operatorname{mk}\left((n: \mathbb{N} \mapsto \frac{\operatorname{rat}\left(\operatorname{a}\left(r, n\right)\right)}{\operatorname{rat}\left(\operatorname{factorial}\left(n\right)\right)})\right) = \operatorname{C}\left(\frac{1}{\operatorname{rat}\left(\operatorname{factorial}\left(r\right)\right)}\right) \cdot (\operatorname{logOf}\left((1 + \operatorname{C}\left(\frac{1}{2}\right) \cdot (\operatorname{rescale}\left(2, exp\right) - 1))\right))^{r}$$
 
@@ -32,7 +44,7 @@ $$\forall r: \mathbb{N}, \operatorname{mk}\left((n: \mathbb{N} \mapsto \frac{\op
 
 Put H=(1+exp(2X))/2 and U=H inverse. Then H'=2H-1, U'=U squared minus 2U, and (log H)'=2-U. Differentiating B(r,j)=U^j (log H)^r/r! gives j B(r,j+1)-2j B(r,j), together with 2 B(r-1,j)-B(r-1,j+1) when r is positive. Its initial constant coefficient is one for r=0 and zero otherwise. Induction identifies the resulting integer recurrence with n! times coeff(n,B(r,j)). At j=0 this proves integrality and the displayed generating identity.
 
-**Theorem 1.3 (Eventual periodicity of every column).**
+**Theorem 1.4 (Eventual periodicity of every column).**
 
 $$\forall r, m: \mathbb{N}, (0 < m) \implies (\exists N, p: \mathbb{N}, ((0 < p) \land (\forall n: \mathbb{N}, (N \le n) \implies (\operatorname{residue}\left(m, \operatorname{a}\left(r, n + p\right)\right) = \operatorname{residue}\left(m, \operatorname{a}\left(r, n\right)\right)))))$$
 
@@ -44,7 +56,7 @@ $$\forall r, m: \mathbb{N}, (0 < m) \implies (\exists N, p: \mathbb{N}, ((0 < p)
 
 Modulo m the differential recurrence depends on j only through its residue. For fixed r, the values indexed by columns at most r and auxiliary indices below m form a finite state. Equal states have equal successors. The pigeonhole principle gives a repeated state, and induction propagates that equality to all later indices. The scaled coefficient bridge transfers the resulting positive period to a. Neither a specific onset nor a minimal period is asserted.
 
-**Theorem 1.4 (Bala's conjecture on A383165).**
+**Theorem 1.5 (Bala's conjecture on A383165).**
 
 $$\forall m: \mathbb{N}, (0 < m) \implies (\exists N, p: \mathbb{N}, ((0 < p) \land (\forall n: \mathbb{N}, (N \le n) \implies (\operatorname{residue}\left(m, \operatorname{a}\left(2, n + p\right)\right) = \operatorname{residue}\left(m, \operatorname{a}\left(2, n\right)\right)))))$$
 
@@ -60,7 +72,7 @@ $$\forall m: \mathbb{N}, (0 < m) \implies (\exists N, p: \mathbb{N}, ((0 < p) \l
 
 Specialize the general theorem to r=2. The proved generating equation identifies this column with the square divided by two in bala2026a383165, proving the conjecture for every positive modulus.
 
-**Theorem 1.5 (Bala's conjecture on A383166).**
+**Theorem 1.6 (Bala's conjecture on A383166).**
 
 $$\forall m: \mathbb{N}, (0 < m) \implies (\exists N, p: \mathbb{N}, ((0 < p) \land (\forall n: \mathbb{N}, (N \le n) \implies (\operatorname{residue}\left(m, \operatorname{a}\left(3, n + p\right)\right) = \operatorname{residue}\left(m, \operatorname{a}\left(3, n\right)\right)))))$$
 
@@ -83,3 +95,4 @@ Specialize the general theorem to r=3. The proved generating equation identifies
 - Truth anchor: `D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.bala_conjecture_a383166`
 - Truth anchor: `D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.coefficient_periodicity`
 - Truth anchor: `D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.generating_equation`
+- Truth anchor: `D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.log_derivative_mul`

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e
+  normalized_sha256: sha256:eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e
+cas_ref: sha256:eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释性注记（**32.21 定义（结论的适用范围）。** 本节仅比较两个上界,不是 RH 等价判据、Robin 证书、RH 进展、新 GH 定义。…）仅说明既有定义或结论的使用范围，不增加独立数学陈述。
+    previous_atom_id: c07111417e8ad2d06301f903a8c9fe4261018a9ea83abc084631dd513eb3ff38
+    next_atom_id: 1a18125637ad0db0198a9ae256eb9b16043066a9fd8c60dbd21fd86bebf55cc2

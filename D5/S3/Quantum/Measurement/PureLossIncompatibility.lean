@@ -272,7 +272,7 @@ private theorem dual_rankOne_inner (τ : Set.Icc (0 : ℝ) 1) (μ : ℂ) (u v : 
   simp only [InnerProductSpace.rankOne_apply, inner_smul_right]
   ring
 
-private theorem vacuum_tensor (v : H) : vacuumEmbedding v = tensor v (e 0) := by
+theorem vacuum_tensor (v : H) : vacuumEmbedding v = tensor v (e 0) := by
   apply lp.ext
   funext k
   change (lp.single (E := fun _ : ℕ => H) 2 0 v) k = (e 0 k) • v
@@ -353,7 +353,7 @@ private theorem vacuum_fock (n : ℕ) : vacuumEmbedding (e n) = fockPair n 0 := 
   rw [vacuum_tensor]
   rfl
 
-private theorem split_zero (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 0) = fockPair 0 0 := by
+theorem split_zero (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 0) = fockPair 0 0 := by
   unfold stinespring
   change (beamSplitter τ.1 τ.2).toLinearIsometry.toContinuousLinearMap
       (vacuumEmbedding (e 0)) = _
@@ -367,7 +367,7 @@ private theorem split_zero (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 0) = f
   unfold fockExpansion fockPair tensor
   simp [lp.single_apply, Pi.single_apply]
 
-private theorem split_one (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 1) =
+theorem split_one (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 1) =
     (Real.sqrt τ.1 : ℂ) • fockPair 1 0 +
       (Real.sqrt (1-τ.1) : ℂ) • fockPair 0 1 := by
   unfold stinespring
@@ -384,7 +384,7 @@ private theorem split_one (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 1) =
   simp [lp.single_apply, Pi.single_apply]
   ac_rfl
 
-private theorem split_zero_coord (τ : Set.Icc (0 : ℝ) 1) (k : ℕ) :
+theorem split_zero_coord (τ : Set.Icc (0 : ℝ) 1) (k : ℕ) :
     (stinespring τ (e 0)) k = if k = 0 then e 0 else 0 := by
   rw [split_zero]
   apply lp.ext
@@ -392,7 +392,7 @@ private theorem split_zero_coord (τ : Set.Icc (0 : ℝ) 1) (k : ℕ) :
   simp only [fockPair_apply]
   split_ifs <;> simp_all [e, lp.single_apply]
 
-private theorem split_one_coord (τ : Set.Icc (0 : ℝ) 1) (k : ℕ) :
+theorem split_one_coord (τ : Set.Icc (0 : ℝ) 1) (k : ℕ) :
     (stinespring τ (e 1)) k =
       if k = 0 then (Real.sqrt τ.1 : ℂ) • e 1
       else if k = 1 then (Real.sqrt (1 - τ.1) : ℂ) • e 0 else 0 := by

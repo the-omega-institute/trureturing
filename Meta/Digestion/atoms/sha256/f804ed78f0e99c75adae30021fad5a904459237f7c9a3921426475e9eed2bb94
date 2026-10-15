@@ -1,0 +1,19 @@
+Applying it to each $x_u$, the sum over $x$ becomes a sum over independent vectors $X^{O}=(X_u(t_O))_u\in K_O^N$, and $\Phi$ is a sum of terms each depending on the coordinates of one orbit, or of one orbit and its negative. The sum over $x$ is therefore a product of the following factors.
+
+*The orbit $\{0\}$.* Here $\lambda_u=1$ for all $u$, so $\varphi_0=0$, and the factor is $2^N=2^{N-\rho_0/2}$.
+
+*Paired orbits.* Let $O\ne-O$, with $t=t_O$, $K=K_O$, and take $-t$ as the representative of $-O$. Then $X=X(t)$ and $X'=X(-t)$ range independently over $K^N$, and the orbits $O$ and $-O$ contribute $\operatorname{Tr}_{K/\mathbb F_2}(\varphi_t+\varphi_{-t})$. Since $\lambda_u(-t)=\lambda_u^{-1}$,
+
+$$
+\varphi_t+\varphi_{-t}=\sum_{u\ne v}\Gamma_{uv}\,\frac{\lambda_u+\lambda_v}{\lambda_u}\,X_uX'_v=Y^{\mathsf T}M_tX',\qquad Y=\Lambda_t^{-1}X .
+$$
+
+As $X\mapsto\Lambda_t^{-1}X$ is a bijection of $K^N$ and the trace form of $K/\mathbb F_2$ is nondegenerate, $\sum_{Y,X'}(-1)^{\operatorname{Tr}(Y^{\mathsf T}M_tX')}=|K|^N\cdot\#\{Y:Y^{\mathsf T}M_t=0\}=|K|^{2N-\rho_t}$; here the entries of $M_t$ lie in $K$, because $\lambda_u^{2^k}=\lambda_u(2^kt)=\lambda_u$, and the rank over $K$ equals the rank over $F$ because rank is unchanged by field extension. The factor is $2^{2k(N-\rho_t/2)}$, a product over the $2k$ characters of $O\cup-O$.
+
+*Self-paired orbits.* Let $O=-O\ne\{0\}$ with $t=t_O$ and $K=K_O$. Then $-t=2^jt$ for some $0\le j<k$, and $j\ne0$ because $t\ne-t$ for $t\ne0$ when $n$ is odd; $2^{2j}t=t$ forces $k\mid2j$, so $k=2h$ with $j=h$. Let $L\subset K$ be the subfield with $2^h$ elements and $\bar z=z^{2^h}$ the conjugation of $K$ over $L$. Then $X(-t)=\overline{X(t)}$ and $\bar\lambda_u=\lambda_u(-t)=\lambda_u^{-1}$. The orbit contributes $\operatorname{Tr}_{K/\mathbb F_2}\varphi_t=\operatorname{Tr}_{L/\mathbb F_2}(\varphi_t+\bar\varphi_t)$, and with $X=X(t)$,
+
+$$
+\varphi_t+\bar\varphi_t=\sum_{u\ne v}\Gamma_{uv}\,\frac{\lambda_u+\lambda_v}{\lambda_u}\,X_u\bar X_v=X^{\mathsf T}B\bar X,\qquad B=\Lambda_t^{-1}M_t .
+$$
+
+The matrix $B$ is Hermitian, $\bar B^{\mathsf T}=B$, since $\overline{B_{vu}}=\Gamma_{uv}(\lambda_u^{-1}+\lambda_v^{-1})\lambda_v=B_{uv}$; its diagonal is zero and $\operatorname{rank}B=\rho_t$. 

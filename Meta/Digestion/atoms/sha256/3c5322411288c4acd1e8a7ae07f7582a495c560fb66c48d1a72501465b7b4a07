@@ -1,0 +1,44 @@
+**Definition 9.1 (fixed row and predecessor target).** Keep the original
+finite ordered sources, substitution, occurrence addresses and four-reply
+reading of Definition 1.1. Fix the complete cut
+$P=\{L,R\}^3$. Let $R_*=(C_*,\pi_*)$ have the perfect depth-three exterior
+with one occurrence hole at each $p\in P$. Its complete class partition is
+
+$$
+\pi_*=
+\bigl\{\{LLL,LRL\},\{LLR\},\{LRR\},
+       \{RLL,RRL\},\{RLR\},\{RRR\}\bigr\}.
+\tag{NBP.9.1}
+$$
+
+Call these six public classes $a,b_1,b_2,c,b_3,b_4$, respectively, as
+shorthand for their canonical first-occurrence names. These symbols are
+not acquired hidden values. All different classes assert disequality.
+For a tuple of actual finite class values $x$, write its filling as
+
+$$
+\mathscr S(x)=
+\left\langle
+ \left\langle\langle x_a,x_{b_1}\rangle,
+                  \langle x_a,x_{b_2}\rangle\right\rangle,
+ \left\langle\langle x_c,x_{b_3}\rangle,
+                  \langle x_c,x_{b_4}\rangle\right\rangle
+\right\rangle.
+\tag{NBP.9.2}
+$$
+
+The comparison domain and required answer are exactly
+
+$$
+\mathcal U_*=
+ \{u\in\mathcal T:R_P(\rho u)=R_*\},
+\qquad F(u)=R_P(u).
+\tag{NBP.9.3}
+$$
+
+Thus every actual finite origin compatible with the entire current row
+belongs to the domain. There is no additional family promise, source-size
+bound, chosen predecessor, or retained origin row. Put
+$q_1=LL,q_2=LR,q_3=RL,q_4=RR$; the sibling classes at $q_i$ are
+$(a,b_i)$ for $i=1,2$ and $(c,b_i)$ for $i=3,4$.
+

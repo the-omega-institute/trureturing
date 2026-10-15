@@ -1,0 +1,38 @@
+**Theorem 4.3 (finite fixed-completion boundary).** Every closure point
+of a finite union of fixed-residual sections is a finite original
+constructor context filled by finite trees and $\Omega$, and is
+therefore rational. No finite union of such sections inside $D_0$
+and finite union inside $D_1$ can jointly retain actual finite witnesses
+with arbitrarily long common prefixes for this prescribed pair.
+
+Proof. Choose finite members agreeing with a closure point through
+increasing depths. One of the finitely many sections occurs on an
+infinite subsequence. Successively select subsequences in each of its
+finitely many natural coordinates on which the coordinate is constant
+or tends to infinity. Either some value occurs infinitely often, or
+every finite initial set occurs only finitely often. This selection
+works for arbitrary $S$ and respects every relation encoded in $S$.
+
+Grounds and decorated fixed residuals stay finite. Constant ranks give
+fixed atoms; divergent ranks give $T_{n_i+c}\to\Omega$ by NLC Lemma
+3.1. Induction on the finite mixed template gives the stated context
+limit, equal to the chosen closure point. Its distinct subtrees come
+from finitely many context nodes, finitely many finite filling nodes,
+and the one value $\Omega$. It is rational. No sign was passed to
+the limit.
+
+Now suppose the two designated subfamilies provided pairs agreeing
+through depths tending to infinity. Select section indices on both
+sides, then constant-or-divergent subsequences for their coordinates
+together. The same argument gives rational limits on both sides.
+The unbounded agreements force the limits to be identical, and section
+membership puts that point in both closures. It must be the
+non-rational $L_C$ by (SPC.19), a contradiction.
+
+More generally (SPC.19) excludes any certificate for this pair whose
+soundness requires a rational native common closure point. Rationality
+is measured after expansion in $\{\alpha,\beta,\langle\ ,\ \rangle\}$.
+It excludes neither the finite interpreted equation $K=C[\rho^a K]$,
+the varying finite residual production (SPC.18), nor another proved
+encoding. $\square$
+

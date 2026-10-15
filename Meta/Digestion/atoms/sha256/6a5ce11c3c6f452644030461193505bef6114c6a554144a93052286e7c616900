@@ -1,0 +1,9 @@
+**Definition 3.6 (recognizable synthesis class).** Apply Proposition 3.2 and
+the reducer to every chart tuple and mode. The input $(I,B)$ belongs to
+$\mathcal C_{\rm fb}$ exactly when every branch is a proved clash or an
+accepted functional case. This is a decidable syntactic class of complete
+acquired inputs. No barrier list, contact or functional presentation is
+supplied: all required objects are synthesized from the input. Membership
+depends on the fixed finite extraction/reduction procedure. Failure means
+only that this procedure has not settled the original question.
+

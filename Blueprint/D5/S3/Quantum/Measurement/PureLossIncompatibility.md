@@ -78,7 +78,67 @@ $$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\operat
 
 First place the environment in the vacuum, then apply the full two-mode beam splitter. Subtype.val supplies the transmissivity and Subtype.property supplies its interval condition. The isometry is viewed as a continuous linear map.
 
-**Definition 1.7 (The dual pure-loss action on effects).**
+**Theorem 1.7 (The vacuum embedding is a tensor product).**
+
+$$\forall (v: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.H}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.vacuumEmbedding}\left(v\right) = \operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.tensor}\left(v, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(0\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PureLossIncompatibility.vacuum_tensor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Embedding a retained-mode vector in environment coordinate zero is exactly its tensor product with the environment vacuum.
+
+**Theorem 1.8 (Vacuum through the beam splitter).**
+
+$$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(0\right)\right) = \operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.fockPair}\left(0, 0\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The vacuum in both modes is fixed by the beam splitter for every transmissivity in the closed unit interval.
+
+**Theorem 1.9 (One photon through the beam splitter).**
+
+$$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(1\right)\right) = (\operatorname{Complex.ofReal}\left(\operatorname{Real.sqrt}\left(\operatorname{Subtype.val}\left(tau\right)\right)\right)) \cdot (\operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.fockPair}\left(1, 0\right)) + (\operatorname{Complex.ofReal}\left(\operatorname{Real.sqrt}\left(1 - \operatorname{Subtype.val}\left(tau\right)\right)\right)) \cdot (\operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.fockPair}\left(0, 1\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A single input photon has retained-mode amplitude sqrt(tau) and environment amplitude sqrt(1-tau), both viewed as complex scalars.
+
+**Theorem 1.10 (Environment slices of the vacuum output).**
+
+$$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\forall (k: \mathbb{N}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(0\right)\right)\left(k\right) = \operatorname{ite}\left(k = 0, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(0\right), 0\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_zero_coord` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The vacuum output has the retained vacuum in environment slice zero and the zero vector in every other slice.
+
+**Theorem 1.11 (Environment slices of the one-photon output).**
+
+$$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\forall (k: \mathbb{N}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(1\right)\right)\left(k\right) = \operatorname{ite}\left(k = 0, (\operatorname{Complex.ofReal}\left(\operatorname{Real.sqrt}\left(\operatorname{Subtype.val}\left(tau\right)\right)\right)) \cdot (\operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(1\right)), \operatorname{ite}\left(k = 1, (\operatorname{Complex.ofReal}\left(\operatorname{Real.sqrt}\left(1 - \operatorname{Subtype.val}\left(tau\right)\right)\right)) \cdot (\operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(0\right)), 0\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_one_coord` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Environment slice zero contains sqrt(tau) times the retained one-photon vector; slice one contains sqrt(1-tau) times the retained vacuum. Every higher environment slice vanishes.
+
+**Definition 1.12 (The dual pure-loss action on effects).**
 
 $$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\forall (M: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.dualLoss}\left(tau, M\right) = \operatorname{ContinuousLinearMap.comp}\left(\operatorname{ContinuousLinearMap.adjoint}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right)\right), \operatorname{ContinuousLinearMap.comp}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.amplify}\left(M\right), \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right)\right)\right)))$$
 
@@ -90,7 +150,7 @@ $$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\forall
 
 Pull the amplified operator back along the vacuum beam-splitter dilation. This operator satisfies the trace relation defining the loss dual and is its unique solution. ContinuousLinearMap.adjoint is the Hilbert-space adjoint, and ContinuousLinearMap.comp is composition.
 
-**Definition 1.8 (The defining trace relation of the loss dual).**
+**Definition 1.13 (The defining trace relation of the loss dual).**
 
 $$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\forall (M: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), (\forall (N: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), ((\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.IsLossDual}\left(tau, M, N\right)) \Leftrightarrow (\forall (psi: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.H}), (\operatorname{HasSum}\left(\lambda (n: \mathbb{N}) \mapsto (\operatorname{inner}\left(\mathbb{C}, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(n\right), \operatorname{ContinuousLinearMap.comp}\left(M, \operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.DisplacementCovariance.purePartialTrace}\left(\operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.beamSplitter}\left(\operatorname{Subtype.val}\left(tau\right), \operatorname{Subtype.property}\left(tau\right)\right)\left(\operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.tensor}\left(psi, \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(0\right)\right)\right)\right)\right)\left(\operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.e}\left(n\right)\right)\right)), \operatorname{inner}\left(\mathbb{C}, psi, N\left(psi\right)\right)\right))))))$$
 
@@ -102,7 +162,7 @@ $$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\forall
 
 For every pure input psi, apply beamSplitter to tensor psi (e 0) and discard the environment with purePartialTrace. The Fock-basis sum is the trace of M times this output state; HasSum requires convergence to the quadratic form of N. The frozen tensor convention places the environment in the outer sequence coordinate. The vectors e n form the retained-mode Fock basis. This is the source's dual relation on pure states, which determines the bounded operator uniquely.
 
-**Definition 1.9 (A binary positive operator-valued measurement).**
+**Definition 1.14 (A binary positive operator-valued measurement).**
 
 $$\forall (M: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), ((\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.IsBinaryPOVM}\left(M\right)) \Leftrightarrow ((\forall (b: \operatorname{Fin}\left(2\right)), (\operatorname{ContinuousLinearMap.IsPositive}\left(M\left(b\right)\right))) \land (M\left(0\right) + M\left(1\right) = (1: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}))))$$
 
@@ -114,7 +174,7 @@ $$\forall (M: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.M
 
 Both effects are positive and their sum is the identity. The outcomes are labelled zero and one. Positivity is ContinuousLinearMap.IsPositive.
 
-**Definition 1.10 (A parent with all binary-string marginals).**
+**Definition 1.15 (A parent with all binary-string marginals).**
 
 $$\forall (m: \mathbb{N}), (\forall (F: \operatorname{Fin}\left(m\right) \to \left(\operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}\right)), ((\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.HasParent}\left(F\right)) \Leftrightarrow (\exists (G: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right)) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), ((\forall (a: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right))), (\operatorname{ContinuousLinearMap.IsPositive}\left(G\left(a\right)\right))) \land ((\sum_{(a: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right)))} (G\left(a\right)) = (1: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op})) \land (\forall (j: \operatorname{Fin}\left(m\right)), (\forall (b: \operatorname{Fin}\left(2\right)), (\sum_{a \in \operatorname{Finset.filter}\left(\lambda (a: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right))) \mapsto (a\left(j\right) = b), (\operatorname{Finset.univ}: \operatorname{Finset}\left((\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right))\right))\right)} (G\left(a\right)) = F\left(j, b\right)))))))))$$
 
@@ -126,7 +186,7 @@ $$\forall (m: \mathbb{N}), (\forall (F: \operatorname{Fin}\left(m\right) \to \le
 
 The parent assigns a positive effect to every function from Fin m to Fin 2, and the effects sum to the identity. For each setting j and outcome b, sum over all strings whose j-th outcome is b. Equality with F(j,b) is the joint-measurability condition of Result 2 and Eq. (3). No outcome string is omitted.
 
-**Definition 1.11 (The admissible reciprocal transmissivity).**
+**Definition 1.16 (The admissible reciprocal transmissivity).**
 
 $$\forall (n: \mathbb{N}), (\forall (hn: 1 \le n), (\operatorname{Subtype.val}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.inverseTransmissivity}\left(n, hn\right)\right) = \frac{1}{(n: \mathbb{R})}))$$
 
@@ -138,7 +198,7 @@ $$\forall (n: \mathbb{N}), (\forall (hn: 1 \le n), (\operatorname{Subtype.val}\l
 
 For n at least one, the reciprocal real value belongs to the closed unit interval. The parameter hn expresses this lower bound on n.
 
-**Definition 1.12 (Incompatibility at reciprocal integer transmissivity).**
+**Definition 1.17 (Incompatibility at reciprocal integer transmissivity).**
 
 $$(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.claim}) \Leftrightarrow (\forall (n: \mathbb{N}), (\forall (hn: 1 \le n), (\exists (M: \operatorname{Fin}\left(n + 1\right) \to \left(\operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}\right)), ((\forall (j: \operatorname{Fin}\left(n + 1\right)), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.IsBinaryPOVM}\left(M\left(j\right)\right))) \land ((\exists (N: \operatorname{Fin}\left(n + 1\right) \to \left(\operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}\right)), (\forall (j: \operatorname{Fin}\left(n + 1\right)), (\forall (b: \operatorname{Fin}\left(2\right)), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.IsLossDual}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.inverseTransmissivity}\left(n, hn\right), M\left(j, b\right), N\left(j, b\right)\right))))) \land (\forall (N: \operatorname{Fin}\left(n + 1\right) \to \left(\operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}\right)), ((\forall (j: \operatorname{Fin}\left(n + 1\right)), (\forall (b: \operatorname{Fin}\left(2\right)), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.IsLossDual}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.inverseTransmissivity}\left(n, hn\right), M\left(j, b\right), N\left(j, b\right)\right)))) \Rightarrow \left(\neg (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.HasParent}\left(N\right))\right))))))))$$
 
@@ -150,7 +210,7 @@ $$(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.claim}) \Left
 
 Result 3 asserts the existence of n+1 measurements that remain incompatible at transmissivity 1/n. Their dual images exist by the defining trace relation. Every family satisfying that relation has no parent with the displayed marginals. Every natural n at least one is included, also n=1.
 
-**Theorem 1.13 (Incompatible binary measurements for every n).**
+**Theorem 1.18 (Incompatible binary measurements for every n).**
 
 $$\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.claim}$$
 
@@ -187,8 +247,13 @@ The quadratic-form bound for a common subeffect of settings i and j gives its lo
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.dualLoss`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.inverseTransmissivity`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.result`
+- Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_one`
+- Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_one_coord`
+- Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_zero`
+- Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.split_zero_coord`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.stinespring`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.vacuumEmbedding`
+- Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.vacuum_tensor`
 - Dependency: [D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation](../../Estimation/TransmissivityBetaPriorProbeRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation](../QuantumChannels/ConcealmentKernelNecessityRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/FockAttenuator/Attenuator](../QuantumChannels/FockAttenuator/Attenuator.md)

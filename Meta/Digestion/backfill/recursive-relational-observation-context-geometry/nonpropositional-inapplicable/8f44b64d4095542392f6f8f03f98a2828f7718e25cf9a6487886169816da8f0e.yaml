@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f44b64d4095542392f6f8f03f98a2828f7718e25cf9a6487886169816da8f0e
+  normalized_sha256: sha256:8f44b64d4095542392f6f8f03f98a2828f7718e25cf9a6487886169816da8f0e
+cas_ref: sha256:8f44b64d4095542392f6f8f03f98a2828f7718e25cf9a6487886169816da8f0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义11.16只规定允许tester族及其上确界距离的记号，不断言伪度量律或可实现性。
+    previous_atom_id: 0fea3db8bd201d8c8467e9164de226e53c536863647eb0d03e42b161fc4ac164
+    next_atom_id: c571fc9dcb237fdfdc438038fb7aefcab3e51a95d8d7c14fbf126b0b04f38df6

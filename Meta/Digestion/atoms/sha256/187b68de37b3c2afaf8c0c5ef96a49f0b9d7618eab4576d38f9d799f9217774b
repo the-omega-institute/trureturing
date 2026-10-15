@@ -1,0 +1,9 @@
+# k-bonacci 自校准获取资源续卷 XI：共同证书的正规形与达到的全评分极值
+
+This volume continues
+[Continuation X, §§210–212](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_X.md).
+It contains ordinary mathematical proofs, not Lean-kernel verification.
+Write $x_+=\max(x,0)$; empty sums are zero and every displayed weak
+inequality includes equality. Existing text is retained; further additions
+belong below an append anchor.
+

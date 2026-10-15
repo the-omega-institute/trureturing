@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ef9793c12b51e9161b3783f46f6b39c1b071270a60b5d3265ef8fbff2b69a0d
+  normalized_sha256: sha256:2ef9793c12b51e9161b3783f46f6b39c1b071270a60b5d3265ef8fbff2b69a0d
+cas_ref: sha256:2ef9793c12b51e9161b3783f46f6b39c1b071270a60b5d3265ef8fbff2b69a0d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional scope and interpretation note for M2-c; it preserves the stated assumptions and exclusions or points back to the surrounding section. It does not assert RH, an inhabitant of ZeroData, or a new zero existence claim.
+    previous_atom_id: 2f4d58875bf62a59556cadd16eee3a5e5d8aa795341931e383de49e9725533fc
+    next_atom_id: fb13518a2a559fa5f898720a445d7ccd53dfb74ab4f0c80ee4d2e8294357b553

@@ -1,0 +1,44 @@
+**Proof.** An address $v$ of length less than three is at a common skeleton
+branch, and has constant reply $\mathsf{branch}$. Every address of length
+at least three has a unique decomposition $v=pw$ with $p\in P$ and
+finite suffix $w$. Write $d=[p]_{\pi_*}$. Native descent into the actual
+filled hole gives the exact equality
+
+$$
+r_{t_h}(pw)=r_{x_d^{(h)}}(w).
+\tag{NBP.9.7}
+$$
+
+The possible subtree values in this equation are the following two fixed
+finite trees, with the stated sets of exceptional indices:
+
+| Class $d$ | Default subtree | Exceptional indices | Exceptional subtree |
+| --- | --- | --- | --- |
+| $a$ | $A$ | $1,2$ | $\beta$ |
+| $c$ | $C$ | $3,4$ | $\beta$ |
+| $b_j$ | $D_j$ | $j$ | $\alpha$ |
+
+For any $w$, applying the native four-reply reading to those two trees
+gives either one common value or two specified values. No condition
+that $w$ be reached is imposed: at a leaf every nonempty suffix gives
+absent, and at a branch the finite-tree descent determines the reply,
+including any later blocking leaf. All deep, absent and leaf-continuation
+cases are therefore included. Repeated class occurrences obey the same
+equation, but one address enters just one occurrence cone. Repeated
+invocations return the same stationary value and still count as calls.
+This covers every finite native address, with no equality, archive or
+timing query. In particular the empty-suffix query at $p=LLL$ returns
+beta on $h=1,2$ and branch on $h=0,3,4$, giving an actual two-versus-three
+split. $\square$
+
+For clarity, the full domain is not a binary-reply native system. At
+address $LLRR$, inside the right child of class $b_1$, choose respectively
+$x_{b_1}=\beta,E,\langle\beta,\beta\rangle,
+\langle\beta,E\rangle$. These are four different image values and give
+absent, alpha, beta and branch, respectively. Choose the five remaining
+class values to be mutually distinct higher orbit elements, different
+from those four trees. All six values are then images and Proposition 9.3
+puts all four fillings in the full actual fiber. The binary bridge is a
+lower-bound restriction to five realizations, not a restriction of the
+reader's native interface or of $\mathcal U_*$.
+

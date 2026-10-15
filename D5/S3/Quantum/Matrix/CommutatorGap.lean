@@ -22,7 +22,7 @@ proof_shape: blockNorm_domination: bind-only; consumer: block_frobenius_bound; e
 proof_shape: block_frobenius_bound: bind-only; consumer: translation_from_block; escape_witness: none
 proof_shape: translation_from_block: bind-only; consumer: translation_gap; escape_witness: none
 proof_shape: frobSq_unitary_right: bind-only; consumer: maximizing_block_frame, translation_gap, unitary_pencil_bound; escape_witness: none
-proof_shape: frobSq_unitary_left: bind-only; consumer: maximizing_block_frame, translation_gap; escape_witness: none
+proof_shape: frobSq_unitary_left: bind-only; consumer: maximizing_block_frame, translation_gap, AntidistinguishabilityOverlapNonTight.indexSpectral_frobSq; escape_witness: none
 proof_shape: opSq_le_frobSq: bind-only; consumer: projection_K_quadratic, projection_adjoint_bound; escape_witness: none
 proof_shape: commutator_norm_bound_of_pure: bind-only; consumer: maximizing_block_frame; escape_witness: none
 proof_shape: pure_first_variance: bind-only; consumer: maximizing_block_frame; escape_witness: none
@@ -48,7 +48,11 @@ Direct frozen dependencies:
   owner GID: D5/S3/Quantum/Algebra/GramUnitaryExtension; declaration: D5.S3.Quantum.Algebra.GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq
     declaration statement_id: sha256:accd04d85421c0847456ddb52626f272e79ea98e568dcf9dfeddc5035a1f2013
   Other lane imports are same-delivery prerequisites, not baseline-frozen dependencies.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 import D5.S3.Quantum.Matrix.CartesianVariance
@@ -238,7 +242,7 @@ theorem frobSq_unitary_right {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) (U : M
   change (Matrix.trace ((U : Matrix (Fin n) (Fin n) ℂ)ᴴ * (Aᴴ * A) * (U : Matrix (Fin n) (Fin n) ℂ))).re = (Matrix.trace (Aᴴ * A)).re at h
   simpa only [RHLinalg.frobSq, RCLike.re_eq_complex_re, Matrix.conjTranspose_mul, Matrix.mul_assoc] using h
 
-private theorem frobSq_unitary_left {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) (U : Matrix.unitaryGroup (Fin n) ℂ) :
+theorem frobSq_unitary_left {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) (U : Matrix.unitaryGroup (Fin n) ℂ) :
     RHLinalg.frobSq ((U : (Matrix (Fin n) (Fin n) ℂ))*A) = RHLinalg.frobSq A := by
   unfold RHLinalg.frobSq
   have hu : (U : (Matrix (Fin n) (Fin n) ℂ))ᴴ*(U : (Matrix (Fin n) (Fin n) ℂ)) = 1 := Unitary.star_mul_self_of_mem U.property
@@ -482,10 +486,5 @@ theorem translation_gap : (∀ n (A : (Matrix (Fin n) (Fin n) ℂ)) (c : ℂ), o
     rw [hf] at h
     exact h
 
-#print axioms blockNorm_domination
-#print axioms frobSq_unitary_right
-#print axioms opSq_le_frobSq
-#print axioms gap_nonnegative
-#print axioms translation_gap
 
 end D5.S3.Quantum.Matrix.CommutatorGap

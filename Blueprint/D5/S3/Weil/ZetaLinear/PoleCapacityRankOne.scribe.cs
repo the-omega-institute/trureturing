@@ -33,7 +33,8 @@ internal sealed class PoleCapacityRankOneDocument : IScribeDocumentDefinition
                             + "and the negative rank-one correction. Pinned Mathlib supplies "
                             + "the outer-product positivity and rank bound; repository searches "
                             + "found no theorem already stating both public clauses."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Publication0(), Publication1())));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
@@ -96,4 +97,22 @@ internal sealed class PoleCapacityRankOneDocument : IScribeDocumentDefinition
             ],
             Implies(assumptions, And(capacity, positiveConsequence)));
     }
+
+    private static DocumentBlock Publication0() =>
+        Describe.Lean(DescribeId.Create("publication-rank-hermnegpart-eq-negindex"),
+            DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/PoleCapacityRankOne.rank_hermNegPart_eq_negIndex"), H("rank hermNegPart eq negIndex"),
+            StatementSource.FromAuthor(Disp(PublicationFormula0())), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The negative spectral part has rank equal to the number of negative eigenvalues."))), DescribeRole.Theorem);
+    private static Formula PublicationFormula0() =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id("K"), Sp, F.Id("n"), Sp, Colon, Sp, F.Id("Type"))), Sp, Seq(OpenBracket, Seq(F.Id("RCLike"), Sp, F.Id("K")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("Fintype"), Sp, F.Id("n")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("DecidableEq"), Sp, F.Id("n")), CloseBracket), Sp, Parenthesized(Seq(F.Id("A"), Sp, Colon, Sp, F.Id("Matrix"), Sp, F.Id("n"), Sp, F.Id("n"), Sp, F.Id("K"))), Sp, Parenthesized(Seq(F.Id("hA"), Sp, Colon, Sp, F.Id("A"), Sp, Dot, Sp, F.Id("IsHermitian"))), Sp, Comma, Sp, Parenthesized(Seq(F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("hermNegPart"), Sp, F.Id("hA"))), Sp, Dot, Sp, F.Id("rank"), Sp, Eq, Sp, F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("negIndex"), Sp, F.Id("hA"));
+
+    private static DocumentBlock Publication1() =>
+        Describe.Lean(DescribeId.Create("publication-negdefon-range-hermnegpart"),
+            DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/PoleCapacityRankOne.negDefOn_range_hermNegPart"), H("negDefOn range hermNegPart"),
+            StatementSource.FromAuthor(Disp(PublicationFormula1())), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The negative of a Hermitian matrix is positive definite on the range of its negative spectral part."))), DescribeRole.Theorem);
+    private static Formula PublicationFormula1() =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id("K"), Sp, F.Id("n"), Sp, Colon, Sp, F.Id("Type"))), Sp, Seq(OpenBracket, Seq(F.Id("RCLike"), Sp, F.Id("K")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("Fintype"), Sp, F.Id("n")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("DecidableEq"), Sp, F.Id("n")), CloseBracket), Sp, Parenthesized(Seq(F.Id("A"), Sp, Colon, Sp, F.Id("Matrix"), Sp, F.Id("n"), Sp, F.Id("n"), Sp, F.Id("K"))), Sp, Parenthesized(Seq(F.Id("hA"), Sp, Colon, Sp, F.Id("A"), Sp, Dot, Sp, F.Id("IsHermitian"))), Sp, Comma, Sp, F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("PosDefOn"), Sp, Parenthesized(Seq(Minus, Sp, F.Id("A"))), Sp, Parenthesized(Seq(F.Id("LinearMap"), Sp, Dot, Sp, F.Id("range"), Sp, Parenthesized(Seq(F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("hermNegPart"), Sp, F.Id("hA"))), Sp, Dot, Sp, F.Id("mulVecLin"))));
+
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
 }

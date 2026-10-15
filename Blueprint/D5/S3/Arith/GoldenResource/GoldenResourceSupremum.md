@@ -4,7 +4,19 @@
 
 At positive prices the resource supremum equals the finite sum of positive layer gains.
 
-**Theorem 1.1 (The objective at the minimal-count configuration).**
+**Theorem 1.1 (Original prime-local telescoping identity).**
+
+$$\forall lambda \in \mathbb{R}, p \in \mathbb{N}, a \in \mathbb{N},\; Prime\left(p\right) \Rightarrow goldenPrimeLocalObjective\left(lambda, p, a\right) = \sum_{k\in Icc\left(1, a\right)} log\left(p\right) \cdot (goldenLayerMarginal\left(p, k\right) - lambda)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/GoldenResourceSupremum.local_eq_layer_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original generic private proof is exposed in place for ActualReservePrimeMask. For every real price, actual prime and natural exponent, the local objective is the sum over k in Icc 1 a of log p times (goldenLayerMarginal p k - lambda). Exponent zero gives an empty sum. This visibility change preserves the original statement and proof.
+
+**Theorem 1.2 (The objective at the minimal-count configuration).**
 
 $$\forall lambda \in \mathbb{R}, n \in \mathbb{N},\; \left(0 < lambda \land \left(1 \le n \land \left(\forall p \in \mathbb{N},\; factorization\left(n, p\right) = optimalLayerCount\left(lambda, p\right)\right)\right)\right) \Rightarrow goldenResourceObjective\left(lambda, n\right) = \sum_{(p,k)\in\{(p,k): \mathbb{N}\times\mathbb{N} \mid 1 \le k \land \left(Prime\left(p\right) \land lambda < goldenLayerMarginal\left(p, k\right)\right)\}} log\left(p\right) \cdot (goldenLayerMarginal\left(p, k\right) - lambda)$$
 
@@ -16,7 +28,7 @@ $$\forall lambda \in \mathbb{R}, n \in \mathbb{N},\; \left(0 < lambda \land \lef
 
 For a positive price and a positive integer realizing optimalLayerCount at every natural p, the objective equals the sum of log p times the net marginal over all strictly profitable prime-layer pairs. The frozen count specification supplies such an integer. The proof telescopes the public single-layer delta along each prime power, then regroups the finite active-pair set by prime. This is the value identity used by the supremum theorem.
 
-**Theorem 1.2 (The exact unconstrained optimal value).**
+**Theorem 1.3 (The exact unconstrained optimal value).**
 
 $$\forall lambda \in \mathbb{R},\; 0 < lambda \Rightarrow sSup\left(\{x: \mathbb{R} \mid \exists n \in \mathbb{N},\; 1 \le n \land goldenResourceObjective\left(lambda, n\right) = x\}\right) = \sum_{(p,k)\in\{(p,k): \mathbb{N}\times\mathbb{N} \mid 1 \le k \land \left(Prime\left(p\right) \land lambda < goldenLayerMarginal\left(p, k\right)\right)\}} log\left(p\right) \cdot (goldenLayerMarginal\left(p, k\right) - lambda)$$
 
@@ -38,7 +50,7 @@ The entire complement is retained. ReferencePrefixDominance gives u_p(a) <= H_p(
 
 The positive price lambda_x has an attained unrestricted optimizer by GoldenResourceOptimalLayerCount. Applying the preceding bound at that optimizer gives L(S) <= D(S) <= R(x), where R(x)=F(x)-Psi(x). For every positive integer the remaining optimizer deficit d_n(x)=Psi(x)-J_x(n) is nonnegative, and F(x)-J_x(n)=R(x)+d_n(x). This application pays an explicit actual reserve using the project's 5040 objective machinery; it is a combined application of existing results. In a Robin explicit-formula argument at x=log n, the signed condition I_psi(x)+R(x)+d_n(x)>0 is still required. The mask estimate controls neither the sign nor the size of I_psi, and does not justify dropping d_n. It proves no new Robin counterexample floor or full Riemann hypothesis.
 
-**Theorem 1.3 (Equality-price layers preserve the objective).**
+**Theorem 1.4 (Equality-price layers preserve the objective).**
 
 $$\forall lambda \in \mathbb{R}, n \in \mathbb{N}, p \in \mathbb{N},\; \left(1 \le n \land \left(Prime\left(p\right) \land goldenLayerMarginal\left(p, factorization\left(n, p\right) + 1\right) = lambda\right)\right) \Rightarrow goldenResourceObjective\left(lambda, n \cdot p\right) = goldenResourceObjective\left(lambda, n\right)$$
 
@@ -54,6 +66,7 @@ For every real price, positive integer n and prime p, if the next p-layer has ma
 
 - Truth anchor: `D5/S3/Arith/GoldenResource/GoldenResourceSupremum.golden_resource_objective_eq_of_layer_price`
 - Truth anchor: `D5/S3/Arith/GoldenResource/GoldenResourceSupremum.golden_resource_supremum_eq_positive_part_sum`
+- Truth anchor: `D5/S3/Arith/GoldenResource/GoldenResourceSupremum.local_eq_layer_sum`
 - Truth anchor: `D5/S3/Arith/GoldenResource/GoldenResourceSupremum.objective_at_optimal_eq_positive_part_sum`
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison](GoldenResource5040EndpointComparison.md)
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResourceOptimalLayerCount](GoldenResourceOptimalLayerCount.md)

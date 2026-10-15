@@ -15,6 +15,10 @@ internal sealed class GoldenCell5040SmallPrimeExclusionDocument : IScribeDocumen
                 + "old primes two, three, five and seven. Here every prime strictly between "
                 + "seven and forty seven is excluded from the index. This is a statement "
                 + "about all indices satisfying the two hypotheses, with no bound on the index.")),
+            Paragraph(Text("The proof first exposes the reusable kernel "
+                + "modEq_period_not_dvd: a period-one residue at a divisor contradicts a "
+                + "distinct target residue whenever the period divides the exponent. The "
+                + "5040 theorem consumes this kernel for each explicit small-prime period.")),
             Describe.Lean(
                 DescribeId.Create("cell-5040-small-prime-not-dvd"),
                 DeclarationHandle.Create("D5/S3/Arith/GoldenResource/GoldenCell5040SmallPrimeExclusion.modEq_2241_small_prime_not_dvd"),

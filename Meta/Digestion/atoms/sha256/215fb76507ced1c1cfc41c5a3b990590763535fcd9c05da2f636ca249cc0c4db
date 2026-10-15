@@ -1,0 +1,11 @@
+**Theorem 214.11 (directed six-coordinate stock envelope).** Every complete score in this slice with $\Delta_O\le d$ satisfies
+
+$$
+T\ge u,\qquad
+S\ge\max\left\{\frac{13u}{4},\frac{22u+v}{7}\right\},\qquad
+B\ge u+\max\left\{\frac{13u}{4},\frac{22u+v}{7}\right\}.
+\tag{214.12}
+$$
+
+This is a necessary projection statement. It is not a full-fiber minimum and does not assert that an endpoint lift is affordable at cost $d$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7eb23e386803f73e8f764d2a9a9f24f4556993fc55aabee454fc20533d1cf589
+  normalized_sha256: sha256:7eb23e386803f73e8f764d2a9a9f24f4556993fc55aabee454fc20533d1cf589
+cas_ref: sha256:7eb23e386803f73e8f764d2a9a9f24f4556993fc55aabee454fc20533d1cf589
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义49.12只定义允许参数族及其最小公倍数记号，不断言该值属于参数族。
+    previous_atom_id: 8ab49a9f0d29d5b6791051a4695308e703ee22022e043f8b5c00c062a819162a
+    next_atom_id: 55719d3a96d378acc590175160ed0543532ab709fb5358bc039ea094104293c5

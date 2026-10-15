@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a18e4c5728d9f20d876aedbb2da9fd1956b1eb12f380c4dc47dce423d7670b5
+  normalized_sha256: sha256:2a18e4c5728d9f20d876aedbb2da9fd1956b1eb12f380c4dc47dce423d7670b5
+cas_ref: sha256:2a18e4c5728d9f20d876aedbb2da9fd1956b1eb12f380c4dc47dce423d7670b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明。** 当 \(B<\sum_p\ell_p\) 且 \(\theta=0\) 时,该整数配置的预算为 \(T_1\),所以确在薄层内。全箱预算可行时,全上端点的预算至多 …）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 3e6db99ca272d525ad9bb5dbbaa7af7e45c3d970190ac0e55f161c20d0be17ed
+    next_atom_id: cc704299d4ed6dcd002f67b70ca03ad2abc2b2b60e7a109c8afe2d42527acb91

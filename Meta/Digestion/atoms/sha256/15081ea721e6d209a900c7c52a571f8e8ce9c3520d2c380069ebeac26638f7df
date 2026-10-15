@@ -1,0 +1,41 @@
+**Definition 4.3 (access and operation boundary).** The complete handoff used
+here has the meaning of
+[Sparse History Assumption 59.3 and Assumption 62.1](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+Every accessible source-dependent field is included in the retained
+input. Old acquired trees, representatives, traces, comparison tables,
+pointers, source-dependent control, lengths, meters and timing are absent
+as extra inputs unless explicitly retained and used to restrict the
+fiber. Source continuity does not reveal a source identity label.
+An inaccessible old archive can have existed without being an input.
+
+A literal row alone does not supply Assumption 4.1. Neither does citing
+[NativeEffectiveSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveSourceProducer.lean),
+`sourceName` or its semantic, non-effective `sourceDecoder`, establish
+that a recipient holds decoded acquired representative values.
+An actually acquired lossless name can carry information, but an effective
+access path from that representation to the required finite values is
+a separate premise. Theorem 4.2 uses actual producer-owned finite data,
+not that semantic inverse.
+
+The retention conclusion asserts a finite computation from those data and
+the consequence of exporting its result. It asserts no existing transition
+which automatically carries that marker out of the stopped producer.
+The original static `Policy` returns a query or Boolean answer and keeps
+one source fixed during `execute`. The stationary
+[NativeWholeRowService](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowService.lean)
+`controller` likewise selects queries or a row return.
+Neither receives an $\mathsf{ApplyRho}$ action from this theorem.
+The effective full-source selector's `selector_no_update` also excludes
+that action from its acquisition run.
+
+A physical serial interpretation separately assumes the
+[Sparse History contract 1.3, entry 25.1 and version contract 32.1](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md):
+a legal new entry when needed, actual same-register updates, authenticated
+versions, stationary read phases, and version-indexed raw evidence.
+[NativeSerialMachine](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean),
+`Op.applyRho`, `nativeStep` and `Run.update`, describe the separate
+serial operation. Algebraic iteration in §3 needs no execution premise.
+Actual updates, re-query access, entry and authentication require this
+separately supplied contract; a stopped acquisition is not resumed by
+a mathematical recurrence.
+

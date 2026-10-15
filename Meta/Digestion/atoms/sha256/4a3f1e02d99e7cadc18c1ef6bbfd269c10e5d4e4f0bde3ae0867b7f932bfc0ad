@@ -1,0 +1,18 @@
+**Definition 2.1 (frontier and minimum mismatch depth).** For any
+nonempty finite tuple $\mathbf u\in\mathcal T^m$, let
+$v_{\mathbf u}(p)=(r_{u_i}(p))_{i=1}^m$. A vector is constant when all
+its coordinates agree. Define
+
+$$
+\begin{aligned}
+\Delta(\mathbf u)=\{p:\;&v_{\mathbf u}(p)\text{ is nonconstant, and}\\
+&v_{\mathbf u}(q)\text{ is constant for every proper prefix }q\prec p\},\\
+d(\mathbf u)&=\min\{|p|:p\in\Delta(\mathbf u)\},
+\end{aligned}
+\tag{NMF.3}
+$$
+
+with $\min\varnothing=\infty$. An unequal tuple means that its
+components are not all identical. The definition does not assume
+that its trees have the same shape or height.
+

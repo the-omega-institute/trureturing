@@ -42,11 +42,23 @@ $$\forall mu:\operatorname{PMF}(PNat), (\forall h:\operatorname{List}(Operation)
 
 The countable stopped-word carrier makes its renderer measurable. The unchanged-depth conditional-tail identity gives the posterior word mixture. Composing its actual pushforward with the all-path renderer gives the residual transcript law. The original zero-mass noncompletion theorem applies at every depth and hence to arbitrary countable mixtures.
 
+**Theorem 1.4 (Every original p length atom).**
+
+$$\forall r:unitInterval, (\forall j:Nat, (\operatorname{mass}(\operatorname{map}(\operatorname{explicitStoppedWordLaw}(p,r),lengthProjection),\operatorname{some}(2*j+1))=\operatorname{alphaMass}(r)*\operatorname{power}(\operatorname{alphaMass}(r)*\operatorname{betaMass}(r),j)\land \operatorname{mass}(\operatorname{map}(\operatorname{explicitStoppedWordLaw}(p,r),lengthProjection),\operatorname{some}(2*j+2))=\operatorname{power}(\operatorname{betaMass}(r),2)*\operatorname{power}(\operatorname{alphaMass}(r)*\operatorname{betaMass}(r),j)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.p_kernel_atoms` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every natural index is included. The original stopped words have lengths 2j+1 and 2j+2; their Bernoulli word masses therefore give these exact singleton masses after the existing length projection. The two formulas apply to all closed-unit-interval parameters.
+
 lengthProjection counts only the remaining Read letters. The two p atoms have masses sum nu(k) r(k) xi(k)^j and sum nu(k) (1-r(k))^2 xi(k)^j. The beta atoms at one, 2j+2 and 2j+3 have masses 1-mean(nu), sum nu(k) r(k)^2 xi(k)^j and sum nu(k) r(k)(1-r(k))^2 xi(k)^j, for every natural j, where xi(k)=r(k)(1-r(k)). The first atom lies in [1/3,2/5] for p and [3/5,2/3] for beta, so it separates the phases.
 
 After phase separation, the odd p atoms or even beta atoms give all moments of eta(nu,e)=sum nu(k) r(k)^e dirac(xi(k)), with e=1 or e=2, on the compact interval [2/9,6/25]. Its total mass is at most one. The polynomial subalgebra separates this compact interval; MeasureTheory.ext_of_forall_mem_subalgebra_integral_eq_of_polish supplies finite-measure equality directly. Actual Fibonacci ratios and their xi values are injective, and positive finite singleton weights permit division to recover every posterior atom. No generic moment-determinacy claim or finite-support approximation is needed.
 
-**Theorem 1.4 (Phase and posterior determine both laws).**
+**Theorem 1.5 (Phase and posterior determine both laws).**
 
 $$\forall mu:\operatorname{PMF}(PNat), (\forall rho:\operatorname{PMF}(PNat), (\forall h:\operatorname{List}(Operation), (\forall g:\operatorname{List}(Operation), (\forall c:AcquiredNativeState, (\forall d:AcquiredNativeState, (\forall s:ActivePhase, (\forall t:ActivePhase, ((\operatorname{run}(h)=\operatorname{some}(c)\land \operatorname{run}(g)=\operatorname{some}(d)\land \operatorname{control}(c)=\operatorname{fourthActive}(s)\land \operatorname{control}(d)=\operatorname{fourthActive}(t)\land s=t\land \operatorname{posterior}(mu,h,c)=\operatorname{posterior}(rho,g,d))\Rightarrow(\operatorname{lengthLaw}(mu,h,c,s)=\operatorname{lengthLaw}(rho,g,d,t)\land \operatorname{transcriptLaw}(mu,h,c)=\operatorname{transcriptLaw}(rho,g,d))))))))))$$
 
@@ -58,7 +70,7 @@ $$\forall mu:\operatorname{PMF}(PNat), (\forall rho:\operatorname{PMF}(PNat), (\
 
 The posterior length mixture supplies the first equality. The residual transport identity supplies the second, using the common phase and posterior. This step concerns distributions of the same source-permitted residual object.
 
-**Theorem 1.5 (The three original law equivalences).**
+**Theorem 1.6 (The three original law equivalences).**
 
 $$\forall mu:\operatorname{PMF}(PNat), (\forall rho:\operatorname{PMF}(PNat), (\forall h:\operatorname{List}(Operation), (\forall g:\operatorname{List}(Operation), (\forall c:AcquiredNativeState, (\forall d:AcquiredNativeState, (\forall s:ActivePhase, (\forall t:ActivePhase, ((\operatorname{run}(h)=\operatorname{some}(c)\land \operatorname{run}(g)=\operatorname{some}(d)\land \operatorname{control}(c)=\operatorname{fourthActive}(s)\land \operatorname{control}(d)=\operatorname{fourthActive}(t))\Rightarrow((\operatorname{lengthLaw}(mu,h,c,s)=\operatorname{lengthLaw}(rho,g,d,t)\Leftrightarrow s=t\land \operatorname{posterior}(mu,h,c)=\operatorname{posterior}(rho,g,d))\land (\operatorname{lengthLaw}(mu,h,c,s)=\operatorname{lengthLaw}(rho,g,d,t)\Leftrightarrow \operatorname{transcriptLaw}(mu,h,c)=\operatorname{transcriptLaw}(rho,g,d))\land (\operatorname{transcriptLaw}(mu,h,c)=\operatorname{transcriptLaw}(rho,g,d)\Leftrightarrow s=t\land \operatorname{posterior}(mu,h,c)=\operatorname{posterior}(rho,g,d)))))))))))$$
 
@@ -75,6 +87,7 @@ Recovered depth means its conditional distribution, not zero-error identificatio
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.complete_original_recovery`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.p_kernel_atoms`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.posterior_phase_determine_both`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.residual_law_transport`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.residual_renderer_all_paths`

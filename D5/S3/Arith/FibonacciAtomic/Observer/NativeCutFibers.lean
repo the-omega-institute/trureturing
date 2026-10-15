@@ -41,7 +41,7 @@ private theorem labels_literal (P : CutSet) (root : Source) (a : Address) (t : S
   | mul l r ihl ihr =>
       by_cases ha : a ∈ P <;> simp [literalRow, labels, reachedHoles, ha, ihl, ihr, Finset.image_union]
 
-private theorem labels_canonical (P : CutSet) (u : Source) :
+theorem labels_canonical (P : CutSet) (u : Source) :
     labels (canonicalRow P u) = (orderedHoles P u).toFinset.image (classOrdinal P u) := by
   rw [canonicalRow, labels_literal]
   simp [orderedHoles]
@@ -158,7 +158,7 @@ def recover (P : CutSet) (hP : CutPrefixFree P) (C : LiteralRow) (u : RowFiber P
   let c' : Classes (canonicalRow P u.val) := ⟨c.val, by simpa only [u.property] using c.property⟩
   exact Subtype.ext (congrArg (fun z : Classes (canonicalRow P u.val) => z.val) (classValue_distinct P hP u.val (a₁ := b') (a₂ := c') eq))⟩
 
-private theorem recover_fill (P : CutSet) (hP : CutPrefixFree P) (C : LiteralRow)
+theorem recover_fill (P : CutSet) (hP : CutPrefixFree P) (C : LiteralRow)
     (u : RowFiber P C) : evaluateRow (extend C (recover P hP C u).val) C = u.val := by
   calc
     _ = evaluateRow (classValue P u.val) C := evaluate_congr C _ _ (by

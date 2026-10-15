@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6180c2ef907ad7c1915c2820eb2cd8734ae04965d6ec2e9158aae60353079152
+  normalized_sha256: sha256:6180c2ef907ad7c1915c2820eb2cd8734ae04965d6ec2e9158aae60353079152
+cas_ref: sha256:6180c2ef907ad7c1915c2820eb2cd8734ae04965d6ec2e9158aae60353079152
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只推导前述推送、拉回及增广公式，不另立命题。
+    previous_atom_id: ca294053fae9e2cd992f164b93b5a57298b3956018c18da39f58de6a6a00f7e3
+    next_atom_id: 939c7553625c67cea063018f623c03acb69122768e615625d69e5021553753f8

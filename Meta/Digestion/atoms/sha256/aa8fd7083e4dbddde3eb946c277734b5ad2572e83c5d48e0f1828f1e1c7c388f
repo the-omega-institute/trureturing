@@ -1,0 +1,43 @@
+**Proposition 10.3 (edge cuts, compatibility and authenticity).** Empty, root,
+nested and disjoint cuts retain the full criterion of Theorem 10.2. Its
+negative direction concerns universal decodability, not ambiguity of
+every particular row pair. Define the endpoint lag fiber by
+
+$$
+\Lambda_{P,Q}(A,B)=\{k\ge0:\exists t\in\mathcal T,
+                 \ R_P(t)=A,\ R_Q(\rho^k t)=B\}.
+\tag{NAR.10.13}
+$$
+
+For a gap pair this fiber has at most one element, computable from any
+chosen common $J_q$ whenever the fiber is inhabited. Nonnegative coordinate
+consistency alone does not establish inhabitation. Neither inhabitation
+nor a coordinate calculation authenticates a selected physical history.
+
+**Proof.** For $P=Q=\varnothing$ the common address is $\varepsilon$;
+the rows are full finite trees and their intrinsic-depth difference gives
+the lag. If either cut contains the root, its prefix freedom makes it the
+root singleton and the union covers; Theorem 10.2 applies, including $D=0$.
+For disjoint incomplete cuts $P=\{L\},Q=\{R\}$ the union covers, whereas
+$P=\{LL\},Q=\{RR\}$ leaves $LR$ uncovered. Nested union members cause no
+exception: $P=\{L\},Q=\{LL,LR\}$ leaves $R$ uncovered, even though its
+unreduced Kraft sum is one; $P=\{L\},Q=\{LL,R\}$ covers every ray.
+These statements follow directly by inspecting the finite cylinders.
+
+For a covering union take $P=Q=\{L,R\}$ and $A=B=R_P(\alpha)$.
+The first row forces $t=\alpha$. Its later versions are beta at one and
+branched at every epoch at least two, so this particular lag fiber is
+$\{0\}$. Likewise $(R_P(\alpha),R_P(\beta))$ has the singleton lag fiber
+$\{1\}$. Thus the universal obstruction does not assert instancewise
+ambiguity. These examples retain their early absent-cut guards.
+
+For a gap pair any member of (NAR.10.13) must equal (NAR.10.9), proving the
+at-most-one assertion. For a consistency counterexample take both cuts
+empty, $A=\alpha$ and $B=\langle\alpha,\alpha\rangle$ as full rows.
+Both intrinsic depths are zero, so the proposed lag zero is nonnegative,
+but the distinct trees are not related by that lag; no other lag can
+belong to the fiber. Hence the fiber is empty. Endpoint satisfiability
+is an existential mathematical condition. A real selected execution
+still needs the acquisition and continuity premises of Assumption 10.1.
+The coordinate is not their certificate. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "stabilizer-multientropy-odd-replica"
+path = "docs/develop/theory/STABILIZER_MULTIENTROPY_ODD_REPLICA.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

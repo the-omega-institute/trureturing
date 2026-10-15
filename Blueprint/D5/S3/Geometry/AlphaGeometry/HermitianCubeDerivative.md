@@ -4,6 +4,12 @@
 
 The smooth cube-root immersion and its Hermitian normal and operator traces.
 
+For any finite index type, let H be the real vector space of complex Hermitian matrices and let Omega consist of its positive definite matrices. The actual functional-calculus map R(A) = CFC.sqrt(A), lifted to H using its nonnegativity, is infinitely differentiable at every point of Omega. The matrix-valued map has the same regularity by the continuous linear inclusion of H. The differentiability order is the smooth order, not the analytic order.
+
+The square map has derivative jordan(Y), the operator V mapped to YV + VY, by square_hasFDerivAt, and is smooth by square_contDiff. The original diagonalH, hermitianConj, diagonal_conjugated_jordan and jordan_conjugation identify this operator in real coordinates with multiplication by the coefficients lambda(i) + lambda(j). Positive definiteness makes every coefficient positive, so the operator is injective and hence a continuous linear equivalence in finite dimension. At Y = R(A), CFC.sq_sqrt gives square(Y) = A. On the positive definite neighborhood of Y, CFC.sqrt_sq gives R(square(X)) = X. HasStrictFDerivAt.localInverse_unique identifies R with the same local inverse furnished by the inverse function theorem, whose smoothness follows from ContDiffAt.to_localInverse. This argument does not assume continuity of R.
+
+A fixed equivalence from the index type to Fin(cardinality) transports the self-adjoint subspaces by a real continuous linear equivalence. Reindexing preserves positive definiteness; CFC.sqrt_unique identifies the transported nonnegative square root with the actual root. The zero-dimensional space is included. Repeated positive eigenvalues cause no exception because the coefficients are sums, rather than differences, and the eigenbasis is chosen only at the fixed base point.
+
 **Definition 1.1 (alphaEmbed3).**
 
 $$\forall \{ n : \mathbb{N} \} (A : \operatorname{Matrix} (\operatorname{Fin} n) (\operatorname{Fin} n) \mathbb{C}) , \operatorname{alphaEmbed3} A = (3 : \mathbb{C}) \cdot \operatorname{CFC} . \operatorname{rpow} A (1 / 3 : \mathbb{R})$$

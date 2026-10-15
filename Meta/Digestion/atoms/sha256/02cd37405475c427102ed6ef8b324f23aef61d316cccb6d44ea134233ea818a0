@@ -1,0 +1,8 @@
+**Remark 6.1 (What is not addressed).** All statements concern normalized pure qubit stabilizer states, odd replica indices $n\ge3$ and the replica convention of Convention 2.2. The proof of Theorem 3.1 uses that $|G|$ is odd, both for the inversion formula and for the decomposition of $\mathbb F_2^G$ into Frobenius orbits; the volume makes no statement about even $n$, qudit stabilizer states, mixed states or non-stabilizer states. For characters with four or more values on the occupied parties, $\rho_t$ and $r(\pi_t)$ are not compared in general: Proposition 5.1 exhibits one state with $\rho_t>r(\pi_t)$, and no inequality between $\rho_t$ and $r(\pi_t)$, nor any sign of the total difference $\sum_{t\ne0}(\rho_t-r(\pi_t))$, is asserted for general states. No closed formula for this difference is given beyond the four-cycle.
+
+**Open question 6.2 (Even replica index).** Is there a rank formula of the type of Theorem 3.1 for even $n\ge4$ and $\mathtt q\ge3$, where $\mathbb F_2^G$ is not semisimple?
+
+**Open question 6.3 (Dependence on masked ranks).** For odd $n\ge5$ and $\mathtt q\ge4$, is $S_n^{(\mathtt q)}$ a function of the family $\big(r(\pi)\big)_{\pi\in\Pi(\mathtt q),\,|\pi|\ge2}$, that is, do two stabilizer states with the same masked ranks for all partitions have the same $S_n^{(\mathtt q)}$?
+
+**Open question 6.4 (The correction term).** For odd $n\ge5$ and $\mathtt q\ge4$, which stabilizer states and colourings satisfy $\sum_{t\ne0}\big(\rho_t-r(\pi_t)\big)=0$, and what determines the sign of this sum when it is nonzero?
+

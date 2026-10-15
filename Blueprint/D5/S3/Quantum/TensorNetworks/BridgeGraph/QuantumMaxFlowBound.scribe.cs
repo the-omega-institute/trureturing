@@ -128,7 +128,8 @@ internal sealed class QuantumMaxFlowBoundDocument : IScribeDocumentDefinition
                 H("widthTwo_proved"), StatementSource.FromAuthor(Disp(Statement19())),
                 AssessedProvenance.FromLiterature(Paper),
                 Blocks(Paragraph(Text("Ordered positive dimension pairs in the cases specified by WidthTwo admit rational matrices attaining the outer cut, using square identities or two complementary identity submatrices; QuantumMaxFlowMinCut.claim_of_hypotheses applies these constructions in its square and mixed-ratio cases."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Publication0())));
 
     private static Formula Statement0() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("K"), Sp, Colon, Sp, F.Id("Type"))), Sp, Seq(OpenBracket,
@@ -320,4 +321,12 @@ internal sealed class QuantumMaxFlowBoundDocument : IScribeDocumentDefinition
     private static Formula Statement19() =>
         Qualified(F.Id("QuantumMaxFlowBound"), Dot, F.Id("WidthTwo"));
 
+
+    private static DocumentBlock Publication0() =>
+        Describe.Lean(DescribeId.Create("publication-rank-map-algebramap"),
+            DeclarationHandle.Create("D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.rank_map_algebraMap"), H("rank map algebraMap"),
+            StatementSource.FromAuthor(Disp(PublicationFormula0())), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Extending coefficients along a field algebra map preserves matrix rank."))), DescribeRole.Theorem);
+    private static Formula PublicationFormula0() =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id("K"), Sp, F.Id("L"), Sp, F.Id("m"), Sp, F.Id("n"), Sp, Colon, Sp, F.Id("Type"))), Sp, Seq(OpenBracket, Seq(F.Id("Field"), Sp, F.Id("K")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("Field"), Sp, F.Id("L")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("Algebra"), Sp, F.Id("K"), Sp, F.Id("L")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("Fintype"), Sp, F.Id("m")), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("Fintype"), Sp, F.Id("n")), CloseBracket), Sp, Parenthesized(Seq(F.Id("A"), Sp, Colon, Sp, F.Id("Matrix"), Sp, F.Id("m"), Sp, F.Id("n"), Sp, F.Id("K"))), Sp, Comma, Sp, Parenthesized(Seq(F.Id("A"), Sp, Dot, Sp, F.Id("map"), Sp, Parenthesized(Seq(F.Id("algebraMap"), Sp, F.Id("K"), Sp, F.Id("L"))))), Sp, Dot, Sp, F.Id("rank"), Sp, Eq, Sp, F.Id("A"), Sp, Dot, Sp, F.Id("rank"));
 }

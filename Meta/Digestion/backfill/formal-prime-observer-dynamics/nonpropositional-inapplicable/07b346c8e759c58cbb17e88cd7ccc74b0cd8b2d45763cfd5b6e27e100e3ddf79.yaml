@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07b346c8e759c58cbb17e88cd7ccc74b0cd8b2d45763cfd5b6e27e100e3ddf79
+  normalized_sha256: sha256:07b346c8e759c58cbb17e88cd7ccc74b0cd8b2d45763cfd5b6e27e100e3ddf79
+cas_ref: sha256:07b346c8e759c58cbb17e88cd7ccc74b0cd8b2d45763cfd5b6e27e100e3ddf79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{SpecTr}_n(A)：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 7fdcb6bd4a50408ca87adadf35185c11f45c472f4fca2cc7f7ec13e325b41a80
+    next_atom_id: 26b038bca46cd8146fa9c410f2c3f6c5aa5882dfcba135be9500838cdb7c62bf

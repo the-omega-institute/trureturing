@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:048da7411f48a0b5fec48c3f549c2998984b31d2f64d18a5e73867a84abe5659
+  normalized_sha256: sha256:048da7411f48a0b5fec48c3f549c2998984b31d2f64d18a5e73867a84abe5659
+cas_ref: sha256:048da7411f48a0b5fec48c3f549c2998984b31d2f64d18a5e73867a84abe5659
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 64. 保留截断调用轮数，可以取得尖锐的样本指数 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: eb86621f01e15077e6a7e8ce2994ca2e2c7543f10867e2554d5e4a26c53a713c
+    next_atom_id: effe2843cb2f118abf31ad80eb8b0dfead27ab71d30851362cb0af6accba2049

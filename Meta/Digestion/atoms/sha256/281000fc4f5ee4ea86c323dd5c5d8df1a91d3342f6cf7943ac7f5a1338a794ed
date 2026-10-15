@@ -1,0 +1,28 @@
+**Definition 6.2 (exact family recurrences).** For a singleton or empty
+integer interval set $E_h(l,r)=E_\infty(l,r)=V_{x,y}(l,r)=0$. For $l<r$,
+set $E_0(l,r)=\infty$ and
+
+$$
+\begin{aligned}
+E_h(l,r)&=\min_{l-1\le t\le r-1}
+ \{C(t)+\max(E_{h-1}(l,t-1),E_{h-1}(t+2,r),0)\},\quad h\ge1,\\
+E_\infty(l,r)&=\min_{l-1\le t\le r-1}
+ \{C(t)+\max(E_\infty(l,t-1),E_\infty(t+2,r),0)\},\\
+V_{x,y}(l,r)&=\min_{l-1\le t\le r-1}
+ \{x+yC(t)+\max(V_{x,y}(l,t-1),V_{x,y}(t+2,r),0)\}.
+\end{aligned}
+\tag{AOF.20}
+$$
+
+Here $x,y\in\mathbb Q_{\ge0}$, and intervals outside $[l,r]$ in a child
+are understood as empty. Each nonempty child is strictly shorter.
+These are the exact minimum worst length with at most $h$ reads, the exact
+minimum worst length without a read constraint, and the exact same-run
+weighted price, respectively. This interpretation follows by the
+first-action induction in Theorem 5.1 and the exhaustive threshold
+correspondence in Theorem 6.1. The update weight is immaterial at its attained
+minimum zero. For the entire joint basis, retain the nondominated pairs
+$(h,E_h(a,b))$ for $0\le h\le b-a$ with finite $E_h$; remove any strict
+slack in $h$ by nondominance. This supplies a symbolic complete consumer
+for arbitrary $d$, not just a finite menu of examples.
+

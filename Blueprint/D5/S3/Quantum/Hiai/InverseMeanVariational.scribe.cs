@@ -22,6 +22,37 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
                     + "no faithful enrolled template supplies the full matrix telescope "
                     + "with rigid universe reconstruction and sensitivity evidence."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("norm-rpow-row-gram"),
+                DeclarationHandle.Create("D5/S3/Quantum/Hiai/InverseMeanVariational.norm_rpow_rowGram"),
+                H("Shared row Gram spectral trace"), StatementSource.FromAuthor(Gram(row: true)),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Divergence/zhang2020variational")),
+                Blocks(Paragraph(Text("The original row Gram proof is public at its source. "
+                    + "The inverse-mean variational formula and the actual TILDE midpoint "
+                    + "classification consume this same declaration directly. No proof is "
+                    + "copied and no generated private declaration name is used. Its faithful "
+                    + "full-telescope audit remains unfinished under "
+                    + "https://github.com/the-omega-institute/trureturing/issues/5214: the "
+                    + "observational-dependence proof's CFC.one_rpow rewrite did not match "
+                    + "the concrete CFC.rpow identity-matrix target. The failed attempt is "
+                    + "preserved outside accepted source and is not a validated registration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("holder-two-young"),
+                DeclarationHandle.Create("D5/S3/Quantum/Hiai/InverseMeanVariational.holder_two_young"),
+                H("Shared two-factor Holder and Young bound"), StatementSource.FromAuthor(Young()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Divergence/zhang2020variational")),
+                Blocks(Paragraph(Text("The original two-factor Schatten Holder and scalar "
+                    + "Young proof is public at its source for every r > 0. It is consumed "
+                    + "directly by both variational formulas. These are existing mathematical "
+                    + "suppliers, not additional originality claims. Its faithful full-telescope "
+                    + "audit attempt remains unfinished under "
+                    + "https://github.com/the-omega-institute/trureturing/issues/5214: the "
+                    + "observational-dependence proof reaches a deterministic whnf timeout "
+                    + "at 1000000 heartbeats, including after explicit CFC rewrites. The failed "
+                    + "attempt is preserved outside accepted source and is not a validated "
+                    + "registration."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("variational-bound-attainment"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Hiai/InverseMeanVariational.variational_bound_and_attainment"),
@@ -72,7 +103,7 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
         items.Add(Close);
         return Seq([.. items]);
     }
-    private static Formula Gram()
+    private static Formula Gram(bool row = false)
     {
         var d = F.Id("d"); var a = F.Id("A"); var r = F.Id("r");
         var matrix = Call("Matrix", d, d, Seq(Mathbb, Grp(F.Id("C"))));
@@ -83,7 +114,23 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
             a, Colon, Sp, matrix, Comma, Sp, r, Colon, Sp,
             Seq(Mathbb, Grp(F.Id("R"))), Comma, Sp, D(0), Lt, r, Implies, Esc,
             Call("rpow", Call("schattenNorm", a, r), r), Eq,
-            Call("tracePower", Frac(r, D(2)), Seq(Call("adjoint", a), a)));
+            Call("tracePower", Frac(r, D(2)),
+                row ? Seq(a, Call("adjoint", a)) : Seq(Call("adjoint", a), a)));
+    }
+    private static Formula Young()
+    {
+        var d = F.Id("d"); var u = F.Id("U"); var v = F.Id("V"); var r = F.Id("r");
+        var matrix = Call("Matrix", d, d, Seq(Mathbb, Grp(F.Id("C"))));
+        var twice = Seq(D(2), r);
+        Formula NormPower(Formula a, Formula q) => Call("rpow", Call("schattenNorm", a, q), q);
+        return Seq(Forall, Sp, F.Id("u"), Colon, Sp, Call("Level"), Comma, Esc,
+            d, Colon, Sp, Call("Type", F.Id("u")), Comma, Esc,
+            OpenBracket, Call("Fintype", d), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", d), CloseBracket, Comma, Esc,
+            u, Comma, Sp, v, Colon, Sp, matrix, Comma, Esc,
+            r, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Comma, Esc,
+            D(0), Lt, r, Implies, Esc,
+            D(2), NormPower(Seq(u, v), r), Minus, NormPower(v, twice), Le, NormPower(u, twice));
     }
     private static Formula Endpoint()
     {

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fad537aede96825c93bb93a743707b81bee132b30b6a32c009a0f86f750586d2
+  normalized_sha256: sha256:fad537aede96825c93bb93a743707b81bee132b30b6a32c009a0f86f750586d2
+cas_ref: sha256:fad537aede96825c93bb93a743707b81bee132b30b6a32c009a0f86f750586d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional section heading identifying W-14 and its intended module; the mathematical obligation is the separate following clause. The heading supplies no additional quantified assertion.
+    previous_atom_id: b4f42962650498981bcda7ec3534aa00fb10ff99d752db790bc5bda08c81d6a4
+    next_atom_id: ac87d0d55acff00230d12f566fb3c739adb467a3ed1b311734bc68aa473fbd3e

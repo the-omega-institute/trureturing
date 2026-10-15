@@ -69,7 +69,7 @@ private theorem mem_qNFinset {N : Nat} {q : Address} :
   · intro h
     refine Finset.mem_image.mpr ⟨⟨q, h⟩, Finset.mem_univ _, rfl⟩
 
-private theorem nodes_count (U : Source) : (nodes U).length = 2 * U.length - 1 := by
+theorem nodes_count (U : Source) : (nodes U).length = 2 * U.length - 1 := by
   induction U with
   | of b => cases b <;> decide
   | mul s t hs ht =>
