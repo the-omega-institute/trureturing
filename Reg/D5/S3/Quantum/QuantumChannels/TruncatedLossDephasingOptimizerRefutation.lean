@@ -49,7 +49,7 @@ def source_registration : Registration arena (type_of% @pair_entropy_le) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation.pair_entropy_le)
+      (@pair_entropy_le)
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation.unit
   realizationName :=
