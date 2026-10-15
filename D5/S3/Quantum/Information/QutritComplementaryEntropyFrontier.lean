@@ -22,7 +22,7 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation
 -- Channel and state definitions.
 def admissible
     (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) : Prop :=
-  V.conjTranspose * V = 1
+  D5.S3.Quantum.Foundation.FiniteTraceDistance.isometry V
 
 def swap
     (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
@@ -487,17 +487,13 @@ private theorem spectral_table
   let Z : Matrix (Fin 3) (Fin 3) ℂ := hE.eigenvectorUnitary
   have hU : U * U.conjTranspose = 1 := Unitary.coe_mul_star_self hB.eigenvectorUnitary
   have hZ : Z * Z.conjTranspose = 1 := Unitary.coe_mul_star_self hE.eigenvectorUnitary
-  have hU' : U.conjTranspose * U = 1 := Unitary.coe_star_mul_self hB.eigenvectorUnitary
-  have hZ' : Z.conjTranspose * Z = 1 := Unitary.coe_star_mul_self hE.eigenvectorUnitary
   let W := U ⊗ₖ Z
-  have hW : W * W.conjTranspose = 1 := by
-    dsimp [W]
-    rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, hU, hZ,
-      Matrix.one_kronecker_one]
-  have hW' : W.conjTranspose * W = 1 := by
-    dsimp [W]
-    rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, hU', hZ',
-      Matrix.one_kronecker_one]
+  have hW : W * W.conjTranspose = 1 :=
+    (Matrix.kronecker_mem_unitary hB.eigenvectorUnitary.property
+      hE.eigenvectorUnitary.property).2
+  have hW' : W.conjTranspose * W = 1 :=
+    (Matrix.kronecker_mem_unitary hB.eigenvectorUnitary.property
+      hE.eigenvectorUnitary.property).1
   let P := W.conjTranspose * joint V * W
   let w : Matrix (Fin 3) (Fin 3) ℝ := fun i j => (P (i, j) (i, j)).re
   have hp : P.PosSemidef := (joint_posSemidef V).conjTranspose_mul_mul_same W
