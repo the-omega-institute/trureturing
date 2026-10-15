@@ -273,10 +273,11 @@ internal static class DigestionAtomContextProjection
         void AddFresh(DigestionAtom atom, int start, int end)
         {
             var part = Subspan(atom, start, end);
-            // Old row CAS excludes its closing pipe and line ending. Those bytes
-            // remain table syntax, not a neighbor task with a new identity.
-            if (tables.Any(table => table.Start <= start && table.End >= end)
-                && part.RawBytes.All(static value => value is (byte)'|' or (byte)' ' or (byte)'\t' or (byte)'\r' or (byte)'\n'))
+            // A table row's closing pipe and the owner's following prose remain
+            // governing context. Neither is an exterior leaf with a new identity.
+            if (tables.Any(table => atom.StartByte <= table.Start && table.Start <= start && start <= table.End
+                && part.RawBytes.Take(Math.Min(end, table.End) - start)
+                    .All(static value => value is (byte)'|' or (byte)' ' or (byte)'\t' or (byte)'\r' or (byte)'\n')))
                 return;
             result.Add(part);
         }

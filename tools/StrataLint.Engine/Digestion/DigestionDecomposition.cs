@@ -95,7 +95,7 @@ internal static class DigestionDecomposition
         DigestionAtom parent, RepositorySnapshot? snapshot)
     {
         if (entry.Receipts.ChainAtoms.IsEmpty || snapshot is null) return null;
-        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(entry.Receipts.ChainAtoms.Length);
+        var segments = ImmutableArray.CreateBuilder<DigestionSegment>();
         var start = parent.StartByte;
         foreach (var childId in entry.Receipts.ChainAtoms)
         {
@@ -109,13 +109,40 @@ internal static class DigestionDecomposition
             var child = DigestionAtom.FromFrozenCas(blob.RawBytes);
             if (child.Fingerprints.RawSha256 != "sha256:" + childId)
                 throw new FormatException($"CHILD_CAS_MISMATCH atom_id={childId}");
-            if (child.RawBytes.Length > parent.EndByte - start)
+            if (child.RawBytes.Length > parent.RawBytes.Length)
                 throw new FormatException("clause plan children exceed parent bytes");
-            child = child with { StartByte = start, EndByte = start + child.RawBytes.Length, Context = parent.Context };
+            // Stored children retain their unique raw positions, including structural
+            // gaps that have no ledger identity. No current grammar chooses the chain.
+            var offset = UniqueSubspanStart(parent.RawBytes.AsSpan(), child.RawBytes.AsSpan());
+            if (offset < 0)
+                throw new FormatException("AMBIGUOUS clause plan child is not a unique parent sub-span");
+            var childStart = parent.StartByte + offset;
+            if (childStart < start)
+                throw new FormatException($"clause plan segment at byte {start} differs from its parent span");
+            if (childStart > start)
+                segments.Add(new DigestionSegment(DigestionSegmentKind.Structural,
+                    Slice(parent, start - parent.StartByte, offset)));
+            child = child with { StartByte = childStart, EndByte = childStart + child.RawBytes.Length, Context = parent.Context };
             segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, child));
             start = child.EndByte;
         }
-        return new DigestionClausePlan(parent, segments.MoveToImmutable()) { IsExplicit = true };
+        if (entry.Receipts.ChainAtoms.Length < 2)
+            throw new FormatException("clause plan has no proper claim decomposition");
+        if (start < parent.EndByte)
+            segments.Add(new DigestionSegment(DigestionSegmentKind.Structural,
+                Slice(parent, start - parent.StartByte, parent.RawBytes.Length)));
+        var gaps = segments.Where(static segment => segment.Kind == DigestionSegmentKind.Structural).ToArray();
+        if (gaps.Length > 0)
+        {
+            // Only whole canonical structural spans may be absent from chain_atoms.
+            // Truncated or omitted claims must not become structural by subtraction.
+            var structural = PlanClauses(parent)?.Segments
+                .Where(static segment => segment.Kind == DigestionSegmentKind.Structural).ToArray() ?? [];
+            if (gaps.Any(gap => !structural.Any(segment =>
+                segment.Atom.StartByte == gap.Atom.StartByte && segment.Atom.EndByte == gap.Atom.EndByte)))
+                throw new FormatException("clause plan segments do not tile parent with structural gaps");
+        }
+        return new DigestionClausePlan(parent, segments.ToImmutable()) { IsExplicit = true };
     }
 
     internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)

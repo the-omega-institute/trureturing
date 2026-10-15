@@ -136,6 +136,50 @@ public sealed class HistoricalWorkContextTests
         Assert.Contains("OCCURRENCE_MISSING", result.Error, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("\n", false)]
+    [InlineData("\r\n", false)]
+    [InlineData("\n", true)]
+    [InlineData("\r\n", true)]
+    public void HistoricalTableBoundaryNeighborsKeepStoredIdentityBytesAndLiveState(string newline, bool fullRow)
+    {
+        string N(string value) => value.Replace("\n", newline, StringComparison.Ordinal);
+        var header = N("## χ coordinates 😀\n\nDefinition: χ=z+xy.\n\nIts values are:\n\n| State | χ |\n|---|---:|\n");
+        var bareRows = new[] { "| $F[1]$ | $0$", "| $F[2]$ | $1$", "| $F[3]$ | $2$" };
+        var rows = bareRows.Select(row => fullRow ? row + "|" + newline : row).ToArray();
+        var next = N("## theorem 2.1\n\nExterior assertion γ.\n");
+        var text = header + string.Concat(bareRows.Select(row => row + "|" + newline))
+            + N("\nThe table supplies this section's coordinates.\n\n") + next;
+        var f = new DecomposeFixture(header, AtomizerRegistry.GenericId);
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Select(entry => entry.Path == "docs/probe.md"
+            ? RawRepositoryEntry.FromText(entry.Path, text) : entry));
+        foreach (var item in rows.Append(next)) f.Add(DecomposeFixture.Entry(item, AtomizerRegistry.GenericId), item);
+        foreach (var item in new[] { header, next })
+        {
+            var entry = f.Document.RequireDigestionEntries().Single(entry => entry.AtomId == Id(item));
+            f.Replace(entry with
+            {
+                Coverage = [new DigestionCoverageEdge("D5/S0/Carrier/Probe.exterior", null)],
+                ProjectedStatus = new(DigestionMigrationState.Partial, DigestionTruthState.Open),
+            });
+        }
+        var before = f.Current;
+        foreach (var (row, label, exterior) in new[] { (rows[0], "PREVIOUS", header), (rows[^1], "NEXT", next) })
+        {
+            var result = AtomContextCommand.Run(f.Gateway, ["--atom-id", Id(row)]);
+            Assert.True(result.Success, result.Error);
+            Assert.Contains($"{label} atom_id={Id(exterior)} state=partial-open\n", result.Output, StringComparison.Ordinal);
+            var interiorLabel = label == "PREVIOUS" ? "NEXT" : "PREVIOUS";
+            Assert.Contains($"{interiorLabel} atom_id={Id(rows[1])} state=residual-open\n", result.Output, StringComparison.Ordinal);
+            Assert.Contains($"BEGIN_{label}_TEXT\n" + exterior + $"END_{label}_TEXT", result.Output, StringComparison.Ordinal);
+            Assert.Contains("BEGIN_CURRENT_TEXT\n" + row + (fullRow ? "" : "\n") + "END_CURRENT_TEXT", result.Output, StringComparison.Ordinal);
+            Assert.Contains("WORK_CONTEXT relation=table-definition transient=true", result.Output, StringComparison.Ordinal);
+            Assert.Contains("Definition: χ=z+xy.", result.Output, StringComparison.Ordinal);
+            Assert.Same(before, f.Current);
+            Assert.Equal(0, f.Writes);
+        }
+    }
+
     private static DecomposeFixture Stored(string[] children)
     {
         var f = new DecomposeFixture(string.Concat(children), AtomizerRegistry.GenericId);

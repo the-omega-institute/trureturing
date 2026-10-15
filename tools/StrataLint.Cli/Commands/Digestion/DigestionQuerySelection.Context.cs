@@ -61,6 +61,19 @@ internal static partial class DigestionQuerySelection
             for (var index = 0; index < leaves.Length; index++)
             {
                 if (leaves[index].Start >= characterEnd || leaves[index].End <= characterStart) continue;
+                // A stored table header/definition ends where its first body row
+                // starts, even when the fresh owner now contains the entire table.
+                if (leaves[index] is MarkdownTableRow { IsHeader: false }
+                    && leaves[index].Start <= characterStart
+                    && MarkdigBlockAst.LineEnd(text, leaves[index].End) >= characterEnd)
+                {
+                    var first = index;
+                    while (first > 0 && leaves[first - 1] is MarkdownTableRow { IsHeader: false }) first--;
+                    var rowStart = MarkdownAstAtomizer.ByteOffset(text, leaves[first].Start);
+                    var owner = atomized.Claims.FirstOrDefault(atom => atom.StartByte < rowStart && atom.EndByte >= occurrenceEnd);
+                    if (owner is not null && owner.StartByte < occurrence)
+                        neighborIds.Add(DigestionFingerprint.Compute(sourceFile.RawBytes.AsSpan()[owner.StartByte..rowStart]).RawSha256[7..]);
+                }
                 for (var neighbor = Math.Max(0, index - 1); neighbor <= Math.Min(leaves.Length - 1, index + 1); neighbor++)
                 {
                     // A historical parent owns its interior. Only exterior or crossing
@@ -70,6 +83,11 @@ internal static partial class DigestionQuerySelection
                     var end = MarkdownAstAtomizer.ByteOffset(text, leaves[neighbor].End);
                     if (start >= occurrence && end <= occurrenceEnd) continue;
                     neighborIds.Add(DigestionFingerprint.Compute(sourceFile.RawBytes.AsSpan()[start..end]).RawSha256[7..]);
+                    if (neighbor != index && leaves[neighbor] is MarkdownTableRow)
+                    {
+                        var lineEnd = MarkdownAstAtomizer.ByteOffset(text, MarkdigBlockAst.LineEnd(text, leaves[neighbor].End));
+                        neighborIds.Add(DigestionFingerprint.Compute(sourceFile.RawBytes.AsSpan()[start..lineEnd]).RawSha256[7..]);
+                    }
                 }
             }
         }

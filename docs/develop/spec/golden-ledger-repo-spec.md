@@ -948,7 +948,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 **局部查询。**`show-atom --atom-id ID` 与 `atom-context --atom-id ID` 接受重复的 `--source SOURCE_ID_OR_PATH`；make 入口接受 `SOURCE=…`。先在当前工作树按路径和文件名搜索，只解析命中记录及其源 metadata。未指定源时 ID 搜索跨源，多个命中报 ambiguous；指定源时只在所选范围查找。搜索包含未提交记录，删除的记录不命中。无关账目、理论和 CAS 不进入查询快照，不做全账一致性检查；命中记录仍须可读取和解析。
 
-**邻居上下文查询。** `atom-context` 在所选 source 中从实际原始字节定位目标及其相关 roots、邻居和引用子链；fresh root 边界改变后，物理源中仍存在的旧 CAS fragment 仍可查询。已加载 historical CAS 的实际出现只作 transient span，引用链仍由 `DigestionDecomposition.Plan` 重建验证；不重放摄入、不扫描远处链、不保存位置或 context，不制造 receipt evidence。CURRENT 是目标完整 immutable CAS；PREVIOUS / NEXT 是目标整个子树外的最近叶项，保留 ID、stored state / `unregistered`、原文与 source-boundary sentinel。与 CURRENT 分开的 `WORK_CONTEXT relation=… transient=true` 展示实际 heading ancestry、enclosing claim scope、完整 governing list 或 table / definition scope；这些关系不替代邻居或结算收据。
+**邻居上下文查询。** `atom-context` 在所选 source 中从实际原始字节定位目标及其相关 roots、邻居和引用子链；fresh root 边界改变后，物理源中仍存在的旧 CAS fragment 仍可查询。已加载 historical CAS 的实际出现只作 transient span，引用链仍由 `DigestionDecomposition.Plan` 重建验证；不重放摄入、不扫描远处链、不保存位置或 context，不制造 receipt evidence。CURRENT 是目标完整 immutable CAS；PREVIOUS / NEXT 是目标整个子树外的最近叶项，保留 ID、stored state / `unregistered`、原文与 source-boundary sentinel。与 CURRENT 分开的 `WORK_CONTEXT relation=… transient=true` 展示实际 heading ancestry、enclosing claim scope、完整 governing list 或 table / definition scope；这些关系不替代邻居或结算收据。历史表格邻域按实际 row 与 definition/header 字节范围查找既有身份；closing pipe、换行和同一 fresh owner 内的表后散文保留为 governing context，不另造外侧叶项。
 
 重复物理出现按源字节顺序输出 1-based occurrence ordinal；单出现 `Resolve` 对重复仍报 `OCCURRENCE_AMBIGUOUS`，结算仍须显式选择出现。不输出全流位置或总数，不扩大到无关 source。missing source / occurrence、歧义 entry、损坏 CAS / chain 继续诚实 fail-closed。`show-atom` 只读目标 CAS。
 
@@ -958,7 +958,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 **范围搜索。**`search-atoms --source SOURCE_ID_OR_PATH` 接受重复的 `--source`，可用 `--state STATE`、`--text LITERAL` 和 `--limit N` 限制结果。必须明确源范围，默认查迁移轴为 residual 或 partial 的目录，默认最多返回 100 项。无关键词时只搜索当前标准账本路径，不读取或解析 YAML、不加载 Lean/CAS、不核验状态，不输出总数或账本摘要。关键词按大小写不敏感的原文子串匹配：沿所选标准账本路径的 ID 逐条读取 CAS 文本，匹配与输出达到上限即停止；不读取 YAML、源正文或 atomizer，不核验 CAS 指纹。命中不等于证明、就绪或一致性核验；AI 读取目标及上下文后决定处理方式。make 入口为 `make search-atoms SOURCE=… [TEXT=…] [STATE=…] [LIMIT=…]`。cover 失败由调用方修正 ATOM 后再次调用 cover。
 
-**Canonical CAS 分解。** `DigestionDecomposition.Plan` 是 emitted plans、CLI 分解、aligner、policy 与 context MaterializedStream 的唯一计划权威。输入为父 entry、不可变 CAS、登记的 atomizer 与请求范围 snapshot。已物化父的普通读取首先从 stored `chain_atoms` 的 CAS 顺序重建计划并校验；fresh grammar 不重释历史。原有 direct-child 身份、次序、字节和 receipts 不因生成规则改变而变化。
+**Canonical CAS 分解。** `DigestionDecomposition.Plan` 是 emitted plans、CLI 分解、aligner、policy 与 context MaterializedStream 的唯一计划权威。输入为父 entry、不可变 CAS、登记的 atomizer 与请求范围 snapshot。已物化父的普通读取首先从 stored `chain_atoms` 的 CAS 顺序重建计划并校验；fresh grammar 不重释历史。原有 direct-child 身份、次序、字节和 receipts 不因生成规则改变而变化。重建按 child CAS 的唯一父字节子区间定位，补回未物化的 structural 间隙；仅有间隙时复用 canonical structural spans 验证其完整边界，遗漏或截短的 claim 不得当作 structural。连续 stored chain 不重跑 AST。
 
 尚未物化的计划沿既有 Markdown AST 选择内部 section / claim 单位。编号 claim 复用既有 scoped-table / proof 归属；列表及嵌套列表保留 governing lead 和 enclosing item，表格保留完整 header、delimiter、rows 与列意义所在的 section / definition scope。依赖行不另作独立任务。代码、数学中的 apparent marker 不开新任务；作者、机构等 cosmetic bold front matter 不作为单独子句。没有通用 byte-size 阈值或 semantic readiness classifier。计划以 `{claim, structural}` 完整铺砌父区间；structural 段不物化为 child。所有计划继续检查完整无损铺砌、UTF-8、唯一 subspan、identity、顺序及 CAS 字节一致性。计划、位置与 transient context 不持久化。
 
