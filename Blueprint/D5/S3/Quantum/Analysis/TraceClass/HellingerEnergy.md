@@ -4,7 +4,49 @@
 
 A singular logarithmic energy bound for arbitrary noncommuting quantum states.
 
-**Theorem 1.1 (Entropy with a quantitative trace-norm reward).**
+**Theorem 1.1 (The actual spectral diagonal).**
+
+$$\operatorname{resolutiondiagonal}\left(FullSpectralResolutions\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.resolution_diagonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* George Androulakis and Tiju Cherian John (2023). *Quantum f-divergences via Nussbaum-Szkoła Distributions and Applications to f-divergence Inequalities*. DOI: [10.48550/arXiv.2308.02929](https://doi.org/10.48550/arXiv.2308.02929). URL: <https://arxiv.org/html/2308.02929>.
+
+*Commentary.*
+
+For every full actual resolution d of a positive trace-class contraction T and every vector v, the real series d(i)*norm(inner(v,d(i))) squared has the actual quadratic form Re inner(v,T v) as its sum. Square-root CFC eigenvector action and Parseval give genuine real summability. No trace normalization or finite entropy is required.
+
+**Theorem 1.2 (Entropy in every full resolution).**
+
+$$\operatorname{resolutionentropy}\left(FullSpectralResolutions\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.resolution_entropy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* George Androulakis and Tiju Cherian John (2023). *Quantum f-divergences via Nussbaum-Szkoła Distributions and Applications to f-divergence Inequalities*. DOI: [10.48550/arXiv.2308.02929](https://doi.org/10.48550/arXiv.2308.02929). URL: <https://arxiv.org/html/2308.02929>.
+
+*Commentary.*
+
+For every full actual resolution d of T, the nonnegative extended sum of -d(i) log(d(i)) equals spectralEntropy T. The generic spectral-energy identity and self energy prove the equality, including zero fibers and infinite entropy. No trace normalization is required.
+
+**Theorem 1.3 (The full extended cross double series).**
+
+$$\operatorname{resolutioncrossenergy}\left(FullSpectralResolutions\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.resolution_cross_energy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* George Androulakis and Tiju Cherian John (2023). *Quantum f-divergences via Nussbaum-Szkoła Distributions and Applications to f-divergence Inequalities*. DOI: [10.48550/arXiv.2308.02929](https://doi.org/10.48550/arXiv.2308.02929). URL: <https://arxiv.org/html/2308.02929>.
+
+*Commentary.*
+
+For arbitrary full resolutions d of rho and e of sigma, the double sum (ofReal(d(i))*singularLog(e(j)))*ofReal(norm(inner(e(j),d(i))) squared) equals spectralEnergy sigma rho. The diagonal identity followed by nonnegative double summation proves it. This identity retains arbitrary index sets, full zero eigenspaces, zero times infinity and infinite cross energy, without normalization or finite-energy assumptions. It supplies both the Hellinger bound and the finite signed logarithmic formula.
+
+**Theorem 1.4 (Entropy with a quantitative trace-norm reward).**
 
 $$\forall H \in CompleteComplexHilbertSpace, rho \in \operatorname{Reference}\left(H\right), sigma \in \operatorname{Reference}\left(H\right),\; \left(\operatorname{PositiveTraceOne}\left(rho\right) \land \operatorname{PositiveTraceOne}\left(sigma\right)\right) \Rightarrow \operatorname{add}\left(\operatorname{spectralEntropy}\left(rho\right), \operatorname{ofReal}\left(\operatorname{divide}\left(\operatorname{square}\left(\operatorname{traceNorm}\left(\operatorname{subtract}\left(rho, sigma\right)\right)\right), 4\right)\right)\right) \le \operatorname{spectralEnergy}\left(sigma, rho\right)$$
 
@@ -28,5 +70,8 @@ The spectral distribution viewpoint is the established Nussbaum-Szkola correspon
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.resolution_cross_energy`
+- Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.resolution_diagonal`
+- Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.resolution_entropy`
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.spectralEntropy_add_traceNorm_sq_le_energy`
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/SpectralEnergy](SpectralEnergy.md)

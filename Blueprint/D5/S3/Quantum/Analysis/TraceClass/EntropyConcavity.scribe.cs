@@ -8,6 +8,8 @@ internal sealed class EntropyConcavityDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Full weighted quantitative entropy concavity in the trace-class Banach space.",
         H("Extended entropy and real strong concavity"), Blocks(
+            Item("realEntropy_reference","Real entropy on its actual domain",Call("RealEntropyEqualsSpectralEntropyToRealOnReferences"),
+                "For every actual positive trace-class contraction rho, realEntropy of its underlying trace-class operator equals the real value of its actual spectral entropy. This is the domain restriction in the definition. Applications interpreting the value as finite entropy supply a separate finiteness premise."),
             Item("spectralEntropy_mixture","All weights, singular references and infinite entropy",Weighted(),
                 "For actual positive trace-one References rho and sigma, let a,b be nonnegative real numbers with a+b=1. mixture is the actual trace-class linear combination a rho+b sigma. Positivity and the trace calculation prove normalization, and density_le_one proves the contraction bound. No entropy identity or energy inequality is an assumed field.",
                 "Apply the Hellinger trace-norm energy bound to rho relative to the mixture and to sigma relative to the same mixture. Multiply by a and b and add in ENNReal. Actual nonnegative first-slot linearity and self energy identify the upper bound with the spectral entropy of the mixture.",
