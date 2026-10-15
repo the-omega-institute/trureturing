@@ -9,6 +9,8 @@ import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStatePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQBoundarySlicing
 
 set_option autoImplicit false
+-- The saved child-domain identities unfold across the dependent frame maps.
+set_option backward.isDefEq.respectTransparency.types false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateQPromotion
 

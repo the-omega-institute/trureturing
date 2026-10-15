@@ -329,16 +329,20 @@ theorem native_third_order_state_exists {m : ℕ} (F : SupplyFrame m 3)
   obtain ⟨W⟩ := native_j2_outer_parent_with_raw_p_q hm (reverseSelected P)
     F.base u hbase hB
   have h := native_j2_parent_third_order_state hm (reverseSelected P) F.base u hbase hB W
-  have hrev : reverseSelected (reverseSelected P) = P := by
-    rw [← native_opposite_selected_two (reverseSelected P), ← native_opposite_selected_two P]
-    exact native_opposite_selected_involutive P (by omega)
   have hframe : nextFrame (reverseSelected (reverseSelected P)) F.base u hbase = F := by
     calc
       _ = nextFrame P F.base u hbase := by
         cases P
         simp only [reverseSelected, nextFrame, List.reverse_reverse]
       _ = F := hnext
-  simpa only [hframe] using h
+  have transport (N : SupplyFrame m 3) (hNF : N = F) (hN : 3 ≤ N.base.length)
+      (hh : ∃ S : StateFor N (by omega) hN,
+        S.primaryOdd = true ∧ S.oppositeOdd = false ∧ S.distinguishedOpposite = false) :
+      ∃ S : StateFor F (by omega) hB,
+        S.primaryOdd = true ∧ S.oppositeOdd = false ∧ S.distinguishedOpposite = false := by
+    subst N
+    exact hh
+  exact transport _ hframe _ h
 
 #print axioms native_j2_parent_third_order_state
 #print axioms native_third_order_state_exists

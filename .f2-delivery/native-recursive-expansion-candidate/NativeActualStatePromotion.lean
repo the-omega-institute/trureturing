@@ -77,10 +77,10 @@ private theorem original_state_p_opening_inventory {m k : ℕ} (hm : 3 ≤ m) (h
   have hs : q.support.Perm W.oldP.walk.support.tail := by
     apply List.perm_iff_count.mpr
     intro x
-    change (W.paths j).piece.walk.support.count x = W.oldP.walk.support.tail.count x
-    rw [(W.paths j).hamiltonian x]
-    exact (SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp
-      W.oldP.hamiltonian).2 x |>.symm
+    simpa only [List.count_eq_countP, Bool.beq_eq_decide_eq] using
+      ((W.paths j).hamiltonian x).trans
+      ((SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp
+        W.oldP.hamiltonian).2 x).symm
   have he : q.edges.Perm (W.oldP.walk.edges.filter fun f => decide (f ≠ e)) := by
     apply (List.perm_ext_iff_of_nodup
       (W.paths j).hamiltonian.isPath.isTrail.edges_nodup
@@ -92,12 +92,12 @@ private theorem original_state_p_opening_inventory {m k : ℕ} (hm : 3 ≤ m) (h
       W.P.walk.support.map Subtype.val := by
     have h := congrArg (fun z => z.support.map Subtype.val) W.oldPWalk
     simpa only [SimpleGraph.Walk.support_copy, SimpleGraph.Walk.support_map,
-      List.map_map, Function.comp_def, pMarkedChildMap] using h
+      List.map_map, Function.comp_def, pMarkedChildMap, RelHom.coeFn_mk] using h
   have hrawEdges : W.oldP.walk.edges.map (Sym2.map Subtype.val) =
       W.P.walk.edges.map (Sym2.map Subtype.val) := by
     have h := congrArg (fun z => z.edges.map (Sym2.map Subtype.val)) W.oldPWalk
     simpa only [SimpleGraph.Walk.edges_copy, SimpleGraph.Walk.edges_map,
-      List.map_map, Function.comp_def, Sym2.map_map, pMarkedChildMap] using h
+      List.map_map, Function.comp_def, Sym2.map_map, pMarkedChildMap, RelHom.coeFn_mk] using h
   have htail : W.oldP.walk.support.tail.map Subtype.val =
       W.P.walk.support.tail.map Subtype.val := by
     simpa only [List.map_tail] using congrArg List.tail hrawSupport
