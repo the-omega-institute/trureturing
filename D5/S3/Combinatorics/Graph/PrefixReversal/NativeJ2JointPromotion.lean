@@ -156,17 +156,20 @@ private theorem same_p_parent_opening {m : ℕ} (hm : 5 ≤ m)
     dsimp only [P]
     rw [SimpleGraph.Walk.support_copy, W.childPieces j]
     simpa only [parentPiece, childLift, lift, rawPParentMap, pMarkedParentLift,
-      j2SpecialMap, RelHom.coeFn_mk, SimpleGraph.Walk.support_map,
+      j2SpecialMap, SimpleGraph.Hom.comp, RelHom.coeFn_mk, j, SimpleGraph.Walk.support_map,
       List.flatMap_map, mapPiece, List.map_append, List.map_map,
-      List.map_flatMap, Function.comp_def]
+      List.map_flatMap, Function.comp_def, List.flatMap_cons, List.flatMap_nil,
+      List.map_cons, List.map_nil, List.append_nil]
       using hPs
   · apply (List.map_perm_map_iff (Sym2.map.injective Subtype.val_injective)).mp
     dsimp only [P]
     rw [SimpleGraph.Walk.edges_copy, W.childPieces j]
     simpa only [parentPiece, childLift, lift, rawPParentMap, pMarkedParentLift,
-      j2SpecialMap, RelHom.coeFn_mk, SimpleGraph.Walk.edges_map, List.flatMap_map, mapPiece,
+      j2SpecialMap, SimpleGraph.Hom.comp, RelHom.coeFn_mk, j,
+      SimpleGraph.Walk.edges_map, List.flatMap_map, mapPiece,
       List.map_append, List.map_map, List.map_flatMap, List.map_cons, List.map_nil,
-      Sym2.map_map, Sym2.map_mk, Function.comp_def, List.append_assoc]
+      Sym2.map_map, Sym2.map_mk, Function.comp_def, List.append_assoc,
+      List.flatMap_cons, List.flatMap_nil, List.append_nil]
       using hPe
 
 /-- Retain the literal saved first and last openings while exposing the
@@ -293,12 +296,12 @@ theorem native_j2_same_parent_eight_piece_partition {m : ℕ} (hm : 5 ≤ m)
     same_parent_chain_inventory hm F A u hbase hA W q ⟨s, t, P⟩ hq hP
   have hQs' : (q₀.map qLift).support ++ (q₁.map qLift).support ++
       (q₂.map qLift).support = Λ.support := by
-    simpa only [SimpleGraph.Walk.support_map, List.map_append] using
+    simpa only [Λ, SimpleGraph.Walk.support_map, List.map_append] using
       congrArg (List.map qLift) hQs
   have hQe' : (q₀.map qLift).edges ++ [s(qLift ℓ₀, qLift r₀)] ++
       (q₁.map qLift).edges ++ [s(qLift ℓ₁, qLift r₁)] ++ (q₂.map qLift).edges =
       Λ.edges := by
-    simpa only [SimpleGraph.Walk.edges_map, List.map_append, List.map_cons,
+    simpa only [Λ, SimpleGraph.Walk.edges_map, List.map_append, List.map_cons,
       List.map_nil, Sym2.map_mk] using congrArg (List.map (Sym2.map qLift)) hQe
   obtain ⟨hKold, hHold⟩ := same_seed_marked_cut_images hm F W.P
   have hdeleted : (deleted.map (Sym2.map Subtype.val)).toFinset =
