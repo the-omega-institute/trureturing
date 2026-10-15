@@ -2560,3 +2560,420 @@ existing analytic tools, with no mathematical-priority claim or Lean
 certification. They control the errors in a full-residue representation;
 they do not prove the joint cancellation, the complete same-integer
 signed Robin bound, or RH.
+
+## A larger denominator cut for the actual joint linear functional
+
+Keep the original integer family of (I59), and put
+$\epsilon_N=e^{-c_\star\Omega}$ and
+$\Delta_\star=c_\star-2\lambda>0$. Reuse the complete reduced-frequency
+expansion (I17)--(I19), including all aliases in $b_{N,q}$, its uniform
+coefficient bound, and the finite first positive moment from
+[Weingartner's existing source note](../ArithSums/weingartner2010distribution.md).
+This application estimates a linear contribution to the original
+joint functional, rather than the entire residual norm.
+
+For an integer-grid function $f$, define
+$$
+\begin{aligned}
+\mathscr J_N(f)
+ &=\frac1L\left(\sum_{m=N}^{2N}k_{N,m}f(m)
+                   +e_{N,H}f(2N)\right),\\
+k_{N,m}&=\frac{A(m+\tfrac12)-\tfrac32B}{m(m+1)},&
+e_{N,H}&=\frac B{2N+1}-\frac A2.
+\end{aligned}
+\tag{I91}
+$$
+Thus $\mathscr J_N(R_N)=\mathcal A_{N,H}$ exactly, with both original
+endpoint contributions combined in their actual coefficient.
+Let $T_{N,\le D}$ consist of every frequency in (I18) whose reduced
+denominator is at most the integer $D$, where $2\le D\le N$.
+In particular its coefficient $b_{N,q}$ still contains every
+$qj\le N$, including $qj>D$; this is not a truncation of the original
+coefficient dictionary.
+
+The finite geometric sum and elementary sine bounds give
+$$
+\left|\sum_{m=u}^ve(mr/q)\right|\le\frac2{|1-e(r/q)|},\qquad
+\sum_{r=1}^{q-1}|1-e(r/q)|^{-2}\ll q^2,\qquad
+\sum_{r=1}^{q-1}|1-e(r/q)|^{-1}\ll q\log(2q).
+$$
+The already owned $|b_{N,q}|\le2q/[\varphi(q)L]$ and finite moment
+$\sum_{q\le D}q/\varphi(q)\ll D$ therefore imply
+$$
+\begin{aligned}
+\sup_{u\le v}\left|\sum_{m=u}^vT_{N,\le D}(m)\right|
+ &\ll\sum_{q\le D}|b_{N,q}|q\ll D^2/L,\\
+\sup_m|T_{N,\le D}(m)|
+ &\ll\sum_{q\le D}|b_{N,q}|\log(2q)
+ \ll D\log(2D)/L.
+\end{aligned}
+\tag{I92}
+$$
+Here $u,v$ are integers. Enlarging the numerator sums to all
+$1\le r<q$ only increases these positive majorants. The second
+finite moment $\sum q^2/\varphi(q)\ll D^2$ needed in the first
+row follows at once by multiplying the first moment bound by $D$;
+no new totient distribution theorem is used.
+
+For the continuous extension of the actual weight,
+$k_N(x)=[A(x+1/2)-3B/2]/[x(x+1)]$, differentiation gives
+$$
+\sup_{N\le x\le2N}|k_N(x)|+
+\int_N^{2N}|k_N'(x)|\,dx
+\ll\frac{|A|+|B|/N}{N}\ll\frac{h^2\epsilon_N}{N}.
+$$
+Discrete Abel summation with the first row of (I92), including both
+integer endpoints, controls the sum in (I91). For its last term use
+the actual relation $e_{N,H}\ll h^3\epsilon_N$ from (I75) and the
+point-value bound in (I92). Consequently, uniformly for $2\le D\le N$,
+$$
+|\mathscr J_N(T_{N,\le D})|
+\ll\frac{\epsilon_N}{L^2}
+\left(\frac{h^2D^2}{N}+h^3D\log(2D)\right).
+\tag{I93}
+$$
+The same $A,B$ are used in both terms; no independence or separate
+optimal choice is introduced. The second term retains the endpoint,
+and its additional factor $h$ uses the same-source relation (I75).
+
+Put $\kappa_\star=\min(c_\star/2,\Delta_\star)>0$. For any fixed
+$0\le\kappa\le\kappa_\star$, take
+$D_N(\kappa)=\lfloor(\sqrt N/h)e^{\kappa\Omega}\rfloor$.
+At the original bandwidth,
+$2\le D_N(\kappa)\le N$ eventually and
+$D_N(\kappa)\asymp N^{3/4}e^{(\kappa-\lambda)\Omega}$,
+since $\Omega=o(L)$. Substitution into (I93) gives
+$$
+|\mathscr J_N(T_{N,\le D_N(\kappa)})|
+\ll\frac{e^{-(c_\star-2\kappa)\Omega}}{L^2}
+   +\frac{e^{-(\Delta_\star-\kappa)\Omega}}L=o(1).
+\tag{I94}
+$$
+Both exponents are nonnegative throughout the stated closed range;
+even at its upper endpoint the logarithmic denominators tend to
+infinity. At $\kappa=0$ this recovers the smaller cut
+$\lfloor\sqrt N/h\rfloor$ and the exponentially decaying bound.
+The positive endpoint $\kappa_\star$ uses the remaining slack in
+the same inequality, rather than an additional distribution theorem.
+
+This is a pointwise-in-$N$ estimate for the complete frequency
+component. The norm cut (I21) alone does not even pay the
+$\kappa=0$ range: weighted Cauchy on the interior sum would give only
+$O(h^2\epsilon_N\sqrt{D(1+D^2/N)}/L^2)$, whose allowance there
+is of order $N^{1/8}e^{-(c_\star-\lambda/2)\Omega}/L^2$ and does
+not tend to zero. The improvement comes from summing the oscillation
+against the actual weight before taking its absolute value.
+
+For the remaining cut choose $D_N=D_N(\kappa_\star)$, retain the
+original constant $d_N$ from (I17), and put
+$T_{N,>D_N}=R_N-d_N-T_{N,\le D_N}$. Linearity and (I94) give
+$$
+\mathcal A_{N,H}
+=\mathscr J_N(d_N+T_{N,>D_N})
+ +O\left(\frac{e^{-(c_\star-2\kappa_\star)\Omega}}{L^2}
+        +\frac{e^{-(\Delta_\star-\kappa_\star)\Omega}}L\right).
+\tag{I95}
+$$
+The retained aliases now have $q>D_N$ and $j\le N/q<N/D_N$
+(up to the integer endpoint), but their joint coprimality and actual
+Mobius signs remain. This reduced-denominator cut is not a cut by
+prime size or the same as observing one modulus.
+
+The constant must remain coupled to those frequencies. Directly
+from (I64),
+$\mathfrak p_N(1)-N\mathfrak q_N(1)=\log2-3/4+O(N^{-1})$,
+whose limit is nonzero. Thus $A=B/N+O(h^3\epsilon_N)$ does not
+annihilate the constant channel. The still missing estimate is
+$\mathscr J_N(d_N+T_{N,>D_N})=o(1)$ with its actual coefficients
+and endpoint. This is a project application of the owned Fourier,
+coefficient and variation inputs, without a mathematical-priority
+claim or Lean certification. It does not supply the full joint
+bound, signed Robin inequality or RH.
+
+A different proposed supplier, vanishing unweighted critical-line
+mollifier error on the active height intervals, is ruled out by the
+[Radziwill source and exact parameter map](radziwill2012mollifying.md).
+That lower bound neither rules out the weighted Nyman--Beurling
+norm tending to zero nor supplies a sign for the retained functional
+in (I95).
+
+## Preserve primitive-numerator cancellation at the endpoint
+
+Keep the complete coefficients and actual functional of (I91).
+For an integer $m$ and $q\ge2$, set
+$$
+\mathcal S_q(m)=\{m/q\}-\frac{q-1}{2q},\qquad
+\Pi_q(m)=-\frac1q\sum_{\substack{1\le r<q\\(r,q)=1}}
+ \frac{e(mr/q)}{1-e(-r/q)},
+$$
+and put $\mathcal S_1=\Pi_1=0$. Grouping the already owned finite sawtooth
+expansion by reduced denominator and applying classical Mobius
+inversion gives
+$$
+q\mathcal S_q(m)=\sum_{d\mid q}d\Pi_d(m),\qquad
+\Pi_q(m)=\frac1q\sum_{d\mid q}\mu(q/d)d\mathcal S_d(m),\qquad
+|\Pi_q(m)|\le\frac{\sigma(q)}{2q}.
+\tag{I96}
+$$
+Indeed $|\mathcal S_d(m)|\le(d-1)/(2d)\le1/2$ on the integer grid.
+The first equality retains every reduced denominator of the original
+$q$-periodic response; inversion is applied to this finite divisor
+identity before taking an absolute value. This reuses standard
+Fourier grouping and Mobius inversion in the current application.
+
+The [existing finite positive-moment bound](../ArithSums/weingartner2010distribution.md#finite-bridge-and-precise-application)
+gives $\sum_{q\le D}(q/\varphi(q))^2\le DW(2)$, with the fixed
+finite Euler product $W(2)$ defined there. The same source already
+supplies $\sigma(q)/q\le q/\varphi(q)$, hence
+$$
+\sum_{q\le D}\frac{\sigma(q)}{\varphi(q)}
+\le\sum_{q\le D}\left(\frac q{\varphi(q)}\right)^2
+\le DW(2).
+$$
+No additional average-order estimate is needed.
+Since $T_{N,\le D}(m)=\sum_{2\le q\le D}b_{N,q}\Pi_q(m)$ with the
+same full aliases as in (I18), its owned coefficient bound and (I96)
+now give
+$$
+\begin{aligned}
+\sup_{m\in\mathbb Z}|T_{N,\le D}(m)|
+ &\le\frac1L\sum_{q\le D}\frac{\sigma(q)}{\varphi(q)}
+ \le\frac{DW(2)}L,\\
+|\mathscr J_N(T_{N,\le D})|
+ &\ll\frac{\epsilon_N}{L^2}
+ \left(\frac{h^2D^2}{N}+h^3D\right),\qquad 2\le D\le N.
+\end{aligned}
+\tag{I97}
+$$
+For the second row, the interior sum uses the unchanged interval-sum
+and variation bounds in (I92)--(I93). Its endpoint uses the first row
+of (I97) and the actual $e_{N,H}\ll h^3\epsilon_N$ from (I75).
+Thus the endpoint's factor $\log(2D)$ in the earlier bound is removed
+by retaining cancellation between primitive numerators of each $q$.
+
+With $\kappa_\star$ from (I94), fix any $0\le\eta<1$ and set
+$$
+\widehat D_N=
+\left\lfloor\frac{\sqrt N}{h}e^{\kappa_\star\Omega}L^\eta\right\rfloor,
+\qquad T_{N,>\widehat D_N}=R_N-d_N-T_{N,\le\widehat D_N}.
+$$
+For sufficiently large $N$, $2\le\widehat D_N\le N$ and
+$\widehat D_N\asymp N^{3/4}e^{(\kappa_\star-\lambda)\Omega}L^\eta$.
+Substituting this cut in (I97) and using linearity yields
+$$
+\mathcal A_{N,H}
+=\mathscr J_N(d_N+T_{N,>\widehat D_N})
++O\left(
+ e^{-(c_\star-2\kappa_\star)\Omega}L^{2\eta-2}
+ +e^{-(\Delta_\star-\kappa_\star)\Omega}L^{\eta-2}
+\right).
+\tag{I98}
+$$
+Both exponential factors are bounded by one, and both logarithmic
+powers tend to zero for each fixed $\eta<1$. No uniform convergence
+as $\eta\uparrow1$ is asserted. At $\eta=0$ the same cut as (I95)
+has a smaller endpoint allowance; every fixed $\eta>0$ also pays a
+larger complete frequency sector.
+
+The retained aliases have $q>\widehat D_N$ and $j<N/\widehat D_N$.
+Their actual signs, coprimality, endpoint and constant channel remain
+coupled. The still required estimate is
+$\mathscr J_N(d_N+T_{N,>\widehat D_N})=o(1)$. This is a refinement
+of the project application of existing arithmetic inputs, with no
+mathematical-priority claim or Lean certification. It supplies no
+complete same-integer signed Robin bound or RH proof.
+
+The uniform estimate (I97) also permits using its two allowances
+directly, without restricting the logarithmic gain to a fixed power.
+Define
+$$
+\mathfrak D_{\mathrm{int}}
+ =\frac{\sqrt N}{h}\epsilon_N^{-1/2}L,\qquad
+\mathfrak D_{\mathrm{end}}
+ =h^{-3}\epsilon_N^{-1}L^2,\qquad
+D_N^\circ=
+\left\lfloor
+\frac{\min(\mathfrak D_{\mathrm{int}},\mathfrak D_{\mathrm{end}})}{\log L}
+\right\rfloor.
+\tag{I99}
+$$
+The original parameter family has
+$h\asymp N^{-1/4}e^{\lambda\Omega}$, hence both allowances are
+$N^{3/4}e^{O(\Omega)}$ times a fixed logarithmic power. Since
+$\Omega=o(L)$, eventually $2\le D_N^\circ\le N$. Equation (I97)
+then reads
+$$
+\begin{aligned}
+|\mathscr J_N(T_{N,\le D_N^\circ})|
+ &\ll
+ \left(\frac{D_N^\circ}{\mathfrak D_{\mathrm{int}}}\right)^2
+ +\frac{D_N^\circ}{\mathfrak D_{\mathrm{end}}}
+ \ll\frac1{(\log L)^2}+\frac1{\log L}=o(1),\\
+\mathcal A_{N,H}
+ &=\mathscr J_N(d_N+T_{N,>D_N^\circ})
+   +O(1/\log L),\qquad
+T_{N,>D_N^\circ}=R_N-d_N-T_{N,\le D_N^\circ}.
+\end{aligned}
+\tag{I100}
+$$
+In the fixed regime $\Delta_\star\ge c_\star/2$, the interior
+allowance is eventually smaller and
+$D_N^\circ\asymp(\sqrt N/h)e^{c_\star\Omega/2}L/\log L$.
+In the fixed regime $\Delta_\star<c_\star/2$, the endpoint allowance
+is eventually smaller and
+$D_N^\circ\asymp(\sqrt N/h)e^{\Delta_\star\Omega}L^2/\log L$.
+These comparisons follow from
+$\mathfrak D_{\mathrm{end}}/\mathfrak D_{\mathrm{int}}
+\asymp e^{(\Delta_\star-c_\star/2)\Omega}L$;
+the equality case belongs to the first regime.
+Thus $D_N^\circ/\widehat D_N\to\infty$ for each fixed
+$0\le\eta<1$ in (I98). This deduction uses the uniform finite-$D$
+estimate (I97), rather than substituting a varying $\eta$ into its
+fixed-parameter consequence (I98).
+
+This is an optimization of the two existing error allowances,
+with no additional cancellation theorem or mathematical-priority
+claim. The original aliases, endpoint and constant are retained.
+The still missing estimate is
+$\mathscr J_N(d_N+T_{N,>D_N^\circ})=o(1)$; the larger paid sector
+does not settle that estimate, the signed Robin bound or RH.
+
+## Pay a complete top band of reduced denominators
+
+Reuse the all-start classical short-interval Mobius estimate in the
+[existing source contract](../Analytic/shortuniformity2026robininterfaces.md#a-stronger-error-on-longer-mobius-intervals).
+Use its same fixed $\theta_0=7/12+\eta$ from (I48), with
+$c_\star\le c_{\theta_0}$ as allowed by the original common-constant
+choice in (I54)--(I59). Keep that $c_\star$, $\lambda$ and $H$ fixed.
+No new Mobius distribution theorem is assumed or proved here.
+
+For any fixed $C>0$, let the integer $W$ satisfy
+$N^{3/4}e^{-C\Omega}\le W\le N^{3/4}e^{C\Omega}$, and put
+$T_{\mathrm{top},W}=\sum_{N-W<q\le N}b_{N,q}\Pi_q$.
+This band eventually has $q>N/2$, so its complete coefficients (I19)
+have exactly the alias $j=1$. Apply the already owned inversion (I96)
+and write $q=td$. Squarefreeness gives the exact finite identity
+$$
+T_{\mathrm{top},W}(m)
+=\frac1L\sum_{t\le N}\frac{\mu(t)^2}{t}
+ \sum_{\substack{(N-W)/t<d\le N/t\\(d,t)=1}}
+ \mu(d)\log\frac N{td}\,\mathcal S_d(m).
+\tag{I101}
+$$
+Indeed, on squarefree $q$, $\mu(q)\mu(q/d)=\mu(d)$;
+$\mu(t)^2$, $\mu(d)$ and $(d,t)=1$ retain precisely those terms.
+This is not a replacement of the original signs by absolute values.
+
+Set $K=\lceil\epsilon_N^{-2}\rceil$ and
+$U=\lceil\epsilon_N^{-4}\rceil$. For $t\le K$ put
+$x=(N-W)/t$, $y=W/t$, and let $\mathcal S(t)$ be the positive
+integers whose prime factors all divide $t$. The standard finite
+Euler-factor convolution is
+$$
+\mu(n)\mathbf1_{(n,t)=1}
+=\sum_{\substack{s\mid n\\s\in\mathcal S(t)}}\mu(n/s).
+$$
+For $s\le U$, the interval start $x/s=N\exp(O_C(\Omega))$ and
+its full length $y/s=N^{3/4}\exp(O_C(\Omega))$. Moreover
+$\Omega(x/s)=\Omega(N)+O_C(\Omega^2/L)=\Omega(N)+o(1)$.
+Apply the same $\theta_0$ supplier to prefixes of admissible length;
+shorter prefixes use the trivial bound. The fixed power surplus
+$3/4-\theta_0>0$ absorbs the latter in $y\epsilon_N/s$.
+Thus each such prefix is $O_C(y\epsilon_N/s)$, with the unchanged
+exponential constant.
+
+The tail $s>U$ must also be retained. Set
+$P_t=\prod_{p\mid t}(1-p^{-1/2})^{-1}$. Ordering the distinct prime
+factors and using $p_i\ge i+1$ gives
+$P_t\le\exp(O(\sqrt{\log(2t)}))=\exp(O(\sqrt\Omega))$ for $t\le K$.
+The convergent positive Euler product implies
+$$
+\sum_{\substack{s>U\\s\in\mathcal S(t)}}s^{-1}
+\le U^{-1/2}P_t,\qquad
+\#\{s\le N:s\in\mathcal S(t)\}\le\sqrt N P_t.
+$$
+An interval contains at most $y/s+1$ integers. Its total tail is
+therefore at most $yU^{-1/2}P_t+\sqrt N P_t=O_C(y\epsilon_N)$.
+Summing the small-$s$ bounds with
+$\sum_{s\in\mathcal S(t)}s^{-1}=t/\varphi(t)$ yields
+$$
+\sup_{0\le u\le y}
+\left|\sum_{\substack{x<d\le x+u\\(d,t)=1}}\mu(d)\right|
+\ll_C\frac t{\varphi(t)}\frac Wt\epsilon_N,
+\qquad t\le K.
+\tag{I102}
+$$
+This uses the mother theorem on all those starts; the three scalar
+bounds for $A,B,\delta_{N,H}$ alone would not imply (I102).
+
+For integer $N\le m\le2N$, the actual weight on $[x,x+y]$ is
+$$
+w_{t,m}(z)=\log\frac N{tz}
+\left(\frac{m+1/2}{z}-\lfloor m/z\rfloor-\frac12\right).
+$$
+At integer $z=d$ this equals the weight in (I101). Since
+$tW/N=o(1)$ for $t\le K$, there are only $O(1)$ floor jumps, each
+of size $O(W/N)$. On smooth pieces
+$|w_{t,m}'|\ll t/N+Wt^2/N^2$. Consequently
+$$
+\|w_{t,m}\|_\infty+\operatorname{Var}_{[x,x+y]}w_{t,m}\ll_C W/N.
+\tag{I103}
+$$
+The values at the actual integer thresholds are included. Abel
+summation with (I102) controls the $t\le K$ terms in (I101) by
+$O_C(W^2\epsilon_N/(NL))$, because the already owned first moment
+$\sum_{t\le X}t/\varphi(t)\ll X$ gives
+$\sum_t(t/\varphi(t))/t^2<\infty$ by dyadic summation.
+For $t>K$, use $|\mathcal S_d(m)|\le1/2$ on the integer grid:
+$$
+\frac W{NL}\sum_{K<t\le N}\frac1t\left(\frac Wt+1\right)
+\ll\frac{W^2}{NLK}+\frac WN
+\ll_C\frac{W^2\epsilon_N}{NL}.
+$$
+Here $K^{-1}\le\epsilon_N^2$ and $W\epsilon_N\gg L$.
+Thus the complete primitive band, including every coprime numerator,
+satisfies
+$$
+\max_{N\le m\le2N}|T_{\mathrm{top},W}(m)|
+\ll_C\frac{W^2\epsilon_N}{NL},\qquad
+|\mathscr J_N(T_{\mathrm{top},W})|
+\ll_C\frac{h^2W^2\epsilon_N^2}{NL^2}.
+\tag{I104}
+$$
+For the second bound use the actual coefficients in (I91):
+$\sum_{m=N}^{2N}|k_{N,m}|+|e_{N,H}|\ll h^2\epsilon_N$.
+The term $e_{N,H}T_{\mathrm{top},W}(2N)$ is included.
+
+Take
+$$
+W_N^\circ=\left\lfloor
+\frac{\sqrt N}{h\epsilon_N}\frac L{\log L}\right\rfloor,
+\qquad
+\mathcal R_N^\circ
+=d_N+\sum_{D_N^\circ<q\le N-W_N^\circ}b_{N,q}\Pi_q.
+\tag{I105}
+$$
+This width remains in the stated $N^{3/4}\exp(O(\Omega))$ family.
+Both $D_N^\circ$ and $W_N^\circ$ are $o(N)$, so the two deleted
+bands are disjoint eventually. Equations (I100) and (I104) give
+$$
+|\mathscr J_N(T_{\mathrm{top},W_N^\circ})|
+\ll(\log L)^{-2},\qquad
+\mathcal A_{N,H}=\mathscr J_N(\mathcal R_N^\circ)+O(1/\log L).
+\tag{I106}
+$$
+The width satisfies
+$W_N^\circ/H\asymp e^{\Delta_\star\Omega}L/\log L\to\infty$.
+A direct absolute-value estimate for the top band loses the extra
+$\epsilon_N$ in its pointwise bound, giving at this width an
+allowance $O(\epsilon_N^{-1}/(\log L)^2)$ that does not vanish.
+The coprime-prefix estimate is the quantitative gain used here.
+
+This is an application of existing short-interval and finite-moment
+inputs to a reduced-denominator band, distinct from the original-index
+band (I49). It makes no new-supplier, priority or Lean-certification
+claim. Every remaining coefficient still uses the original cutoff
+$N$ and its full alias list; $\mathcal R_N^\circ$ is not a residual
+reweighted at $N-W_N^\circ$. The constant and endpoint are retained.
+The estimate $\mathscr J_N(\mathcal R_N^\circ)=o(1)$ remains missing,
+as do the complete same-integer signed Robin bound and RH proof.
