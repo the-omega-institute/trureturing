@@ -81,12 +81,12 @@ def finiteAnalysis : Application (@finite_reading_has_fiber.{0}) where
     acquisition := .finite threeDomain threePresentation }
 
 abbrev constantDomain : Domain source.{0} :=
-  Domain.fiber source ⟨Bool, Unit, fun _ => ()⟩
+  Domain.fiber source ⟨Fin 3, Unit, fun _ => ()⟩
 
 abbrev constantPresentation : FinitePresentation plan constantDomain where
-  stateFintype := inferInstanceAs (Fintype Bool)
-  stateDecidableEq := inferInstanceAs (DecidableEq Bool)
-  enumeration := { states := [false, true], nodup := by decide, complete := by decide }
+  stateFintype := inferInstanceAs (Fintype (Fin 3))
+  stateDecidableEq := inferInstanceAs (DecidableEq (Fin 3))
+  enumeration := { states := [0, 1, 2], nodup := by decide, complete := by decide }
   values _ _ := .unit
   decode _ := fun v => match v with | .unit => some () | _ => none
   values_correct := by decide
