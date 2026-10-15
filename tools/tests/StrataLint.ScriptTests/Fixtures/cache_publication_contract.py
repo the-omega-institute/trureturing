@@ -148,4 +148,3 @@ class PublicationCases:
                 ready, _ = self.snapshot_result()
                 self.assertEqual(project, ready["project_ready"])
                 self.assertEqual(dependency, ready["dependency_ready"])
-
