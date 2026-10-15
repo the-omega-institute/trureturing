@@ -167,7 +167,6 @@ private theorem witness_isPOVM : IsPOVM witness := by
       (by intro a i; fin_cases a <;> fin_cases i <;> norm_num [p])
       (by intro i; fin_cases i <;> norm_num [p, Fin.sum_univ_succ])
   convert h using 1
-  congr 1
   funext a
   fin_cases a <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     norm_num [witness, diag2, p]
