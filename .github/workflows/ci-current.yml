@@ -220,7 +220,8 @@ jobs:
         env:
           JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
         run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
-      - if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.prefix.outputs.judge_ready == 'true' && steps.judge.outputs.cache-hit != 'true' }}
+      # Handoff only to a continuation that still consumes the judge.
+      - if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.prefix.outputs.continuation == 'true' && (needs.detect.outputs.report == 'true' || steps.prefix.outputs.source_status != 'accepted') && steps.prefix.outputs.judge_ready == 'true' && steps.judge.outputs.cache-hit != 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
@@ -290,6 +291,7 @@ jobs:
             tools/StrataLint.TestEvidence/packages.lock.json
             tools/Trureturing.Truth/packages.lock.json
       - id: judge
+        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -354,23 +356,14 @@ jobs:
           echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - id: current_prepare
         name: Prepare judge and selected test dependencies
+        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
         env:
           JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
         run: python3 tools/scripts/workflow/ci_checks.py current prepare
       - id: build_judge
         name: Build the judge
-        if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
+        if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
-      # The judge outputs are a function of the keyed sources, so they are saved
-      # as soon as the build succeeds.
-      - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            tools/StrataLint.Cli/bin/Release/net10.0
-            tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ needs.source.outputs.judge_key }}
       - name: Theory-only file and capacity checks
         if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
         env:
@@ -408,6 +401,16 @@ jobs:
       - name: Run the compiled audit checks
         if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
         run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
+      # A successful judge build can be published after ready diagnostics,
+      # independently of their verdicts or report validity.
+      - if: ${{ !cancelled() && steps.build_judge.outcome == 'success' && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ needs.source.outputs.judge_key }}
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
