@@ -926,33 +926,33 @@ eigenvalues about $-3.98\times10^{-6}$ and $-2.50\times10^{-11}$,
 respectively. These floating proposals do not pay scalar, far-feature
 or floating arithmetic errors and certify neither sign. In the latter
 case24 eigenvalues have computed absolute value at most $10^{-7}$.
-The outstanding task is a directed full-space consumer with the
-common-form error congruence, including these small directions.
+The directed obstructions below pay the common-form errors on complete
+retained directions and exclude these two specified sufficient families.
 The fixed-vector pilot does not prove full retained positivity, the
 original Robin tail, cofinal Weil positivity or RH. No new general
 residual theorem, originality or Lean-verification claim is made.
 
-### A directed obstruction to every trial in the fixed64-column family
+### Directed obstructions to two fixed-column families
 
 Keep the preceding common-form, exterior-domain and inverse-comparison
-premises, $N=1280$, and the archived diagonal $W$. Let $E$ select the
-actual exterior columns1281 through1344. This fixed family can be
-excluded without constructing another full1281-square Gram or
-recomputing the old eigensolver proposal.
+premises, $N=1280$, and the archived diagonal $W$. For $k=64$ or128,
+let $E$ select the actual exterior columns1281 through$1280+k$.
+Each fixed family can be excluded without constructing another
+full1281-square Gram or recomputing the old eigensolver proposal.
 
 Use the same $Z=H_NE$, $F=E^*H_NE$, $B=E^*C_N$ and the complete
 joint Gram $G=C_N^*WC_N$, $J=Z^*WC_N$, $L=Z^*WZ$. Put
-$K=L-F$ and $T=J-B$. The first64 weighted exterior rows already
+$K=L-F$ and $T=J-B$. The first$k$ weighted exterior rows already
 give the finite lower matrix
 
 $$
-K\succeq F^*W_{64}F-F\succeq40I.
+K\succeq F^*W_kF-F\succeq40I.
 $$
 
 Omitted rows of $Z^*WZ$ are positive semidefinite; FLINT encloses
-all64 eigenvalues of the displayed finite lower matrix above40.
-For the archived full1281-coordinate dyadic direction $v$ and a
-fixed64-coordinate dyadic trial $x$, reuse square completion:
+all$k$ eigenvalues of the corresponding finite lower matrix above40.
+Each case uses its own archived full1281-coordinate dyadic direction
+$v$ and fixed$k$-coordinate dyadic trial $x$. Reuse square completion:
 
 $$
 \begin{aligned}
@@ -963,22 +963,23 @@ v^*(A_N-G+T^*K^{-1}T)v
 \end{aligned}
 $$
 
-The [fixed-family experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/8ea4fdc8f84a2bf36fed9287e85984b16c3db7ce/docs/reports/weil-c27)
+The [fixed-family experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/394343e7a959876b74a00ac520034d3d62457893/docs/reports/weil-c27)
 supplies the complete middle rows, the existing far moment core
-extended through1344, and its recomputed quadratic and gradient
-operator allowances. Under the stated analytic premises, its directed
-upper bound is
+extended through the selected last column, and its recomputed
+quadratic and gradient operator allowances. Under the stated analytic
+premises, the directed upper bounds are:
 
-$$
-m(x)+\|r\|^2/40<-3.98\times10^{-6}.
-$$
+| Exterior columns $k$ | Upper bound for $m(x)+\|r\|^2/40$ | Approximate residual correction |
+|---|---:|---:|
+| 64 | $<-3.98\times10^{-6}$ | $1.67\times10^{-32}$ |
+| 128 | $<-2.49\times10^{-11}$ | $7.17\times10^{-34}$ |
 
 For every matrix trial $X$, completion of the same square gives
 $A_N-U(X)\preceq A_N-G+T^*K^{-1}T$. Thus no $X$ for this specified
 $E,W$ can make the sufficient lower target positive semidefinite.
 The trial error has already been paid; a more accurate solve or
-invertible coordinate change cannot repair this family. This does
-not determine the actual Schur sign, the128-column family or RH.
+invertible coordinate change cannot repair either specified family.
+This does not determine the actual Schur sign or RH.
 Changing the exterior space or inverse majorant has a separate
 obligation. The calculation reuses the existing residual identity,
 source data and library algorithms, without a new general theorem,
