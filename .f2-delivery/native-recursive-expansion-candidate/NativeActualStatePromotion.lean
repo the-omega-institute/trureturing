@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The actual P opening is recovered from the original retained P state and the same parent. -/
+   digest: Recover the original P opening on the same actual parent. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
@@ -25,8 +25,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
-open private OuterStateParentFor from
-  D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
 open private parentPiece from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 open private linked_of_getElem finish_eq_last from

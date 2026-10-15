@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The new joint partition uses the actual P opening, actual Q fragments and saved parent cycle. -/
+   digest: Earn both new cut inventories on the same actual parent. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateQPromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 
@@ -25,8 +25,7 @@ open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 open D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
 open D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
-open private OuterStateParentFor from
-  D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
 open private original_state_p_joint_split same_parent_chain from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStatePromotion
 open private same_state_q_three_fragments from
@@ -180,7 +179,7 @@ private theorem same_parent_chain_inventory {m k : ℕ} (hm : 3 ≤ m) (hk : 2 �
     exact h
 
 
-private structure CurrentJointFor {m k : ℕ} (hm : 3 ≤ m) (hk : 3 ≤ k)
+structure CurrentJointFor {m k : ℕ} (hm : 3 ≤ m) (hk : 3 ≤ k)
     (F : SupplyFrame m k) (A : List (Fin (m + 1))) (u : Fin (m + 1))
     (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
     (W : OuterStateParentFor hm F (by omega) A u hbase hA) where

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The same parent joint partition earns both restored orders and all retained edge invariants. -/
+   digest: Advance both actual orders and retained-edge invariants on one cycle. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateJointPromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFullStateTransport
 
@@ -26,10 +26,10 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
 open D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
-open private OuterStateParentFor state_parent_retention from
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
+open private state_parent_retention from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
-open private CurrentJointFor from
-  D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateJointPromotion
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateJointPromotion
 open private old_base_bound outer_base_bound from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 

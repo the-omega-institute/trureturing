@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Both new boundary cuts are sliced inside the special path already used by the parent. -/
+   digest: Slice the special path already used by the actual parent. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStatePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQBoundarySlicing
 
@@ -23,8 +23,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeOppositeSelectedOrders
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQBoundarySlicing
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
-open private OuterStateParentFor from
-  D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
 open private outer_base_bound from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 
@@ -91,7 +90,7 @@ private theorem same_state_q_three_fragments {m k : ℕ} (hm : 3 ≤ m) (hk : 3 
     apply Finset.image_injective (Sym2.map.injective Subtype.val_injective)
     rw [hK]
     simp only [specialCuts, Finset.image_image, markedCuts]
-    congr 1 <;> funext i <;> rfl
+    congr 1
   have hji (e) : e ∈ joint.flatMap (fun z => z.walk.edges) ↔
       e ∈ W.Q.walk.edges ∧ e ∉ W.Q.K ∪ W.Q.H := by
     rw [W.Q.partitions.joint_partition.edges.mem_iff]

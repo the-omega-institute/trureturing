@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The parent uses its original retained states, chosen child cycles and exact opening inventories throughout. -/
+   digest: Preserve the chosen old states and parent opening inventories. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualInductionState
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSelectedCInvariant
@@ -48,7 +48,7 @@ private theorem primary_actual_partition {m k : ℕ} (hm : 3 ≤ m)
   classical
   have hraw : (specialCuts hm F hB).image (Sym2.map Subtype.val) = markedCuts F := by
     simp only [specialCuts, Finset.image_image, markedCuts]
-    congr 1 <;> funext i <;> rfl
+    congr 1
   have hcuts : S.K = specialCuts hm F hB :=
     Finset.image_injective (Sym2.map.injective Subtype.val_injective)
       (S.primaryCuts.trans hraw.symm)
@@ -143,7 +143,7 @@ private theorem old_p_specified_from_state {m k : ℕ} (hm : 3 ≤ m)
 
 
 /-- All route data is attached to this particular state walk. -/
-private structure SpecialPathFromState {m k : ℕ} (hm : 3 ≤ m)
+structure SpecialPathFromState {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hk : 2 ≤ k) (hB : 3 ≤ F.base.length)
     (S : StateFor F hk hB) where
   route : Fin (2 * (k + 1)) → Port k
@@ -180,7 +180,7 @@ private theorem special_path_from_state {m k : ℕ} (hm : 3 ≤ m)
         simpa only [hrem, decide_true] using hodd)
     exact ⟨⟨oddPortRoute s, Or.inr ⟨s, rfl, HEq.rfl⟩, ordered, q, hq, hp, hs, hedges, hinv⟩⟩
 
-private structure OrdinaryFromState {m k : ℕ} (hm : 3 ≤ m)
+structure OrdinaryFromState {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hk : 2 ≤ k) (hB : 3 ≤ F.base.length)
     (j : Fin F.base.length) (hj : 0 < j.val)
     (S : StateFor (nativeChildFrame F j) hk
@@ -204,7 +204,7 @@ private theorem ordinary_from_state {m k : ℕ} (hm : 3 ≤ m)
 /-- Same-witness parent data for the arbitrary-k driver. Unlike an
 existence of an unrelated parent, every old state and its actual mapped
 cycle can be used by the later joint and two-order boundary update. -/
-private structure OuterStateParentFor {m k : ℕ} (hm : 3 ≤ m)
+structure OuterStateParentFor {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hk : 2 ≤ k)
     (A : List (Fin (m + 1))) (u : Fin (m + 1))
     (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) where
