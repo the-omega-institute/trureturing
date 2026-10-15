@@ -147,7 +147,7 @@ def mapEntropy
   spectralEntropy (choi_posSemidef V).isHermitian
 
 def entropy3 (x : Fin 3 → ℝ) : ℝ :=
-  ∑ i, Real.negMulLog (x i)
+  D5.S3.Entropy.MaxEntropy.shannonEntropy x
 
 def h (a : ℝ) : ℝ :=
   Real.binEntropy a
@@ -265,8 +265,8 @@ private theorem entropy3_merge
         Fin.sum_univ_three] <;> simp only [Fin.sum_univ_three] at hs <;> linarith
   change Real.binEntropy (1 - x i) ≤ _
   rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
-  simpa only [D5.S3.Entropy.MaxEntropy.shannonEntropy, Fintype.sum_bool,
-    ht, hb, sub_sub_cancel, entropy3.eq_1, add_comm] using hm
+  simpa only [entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy, Fintype.sum_bool,
+    ht, hb, sub_sub_cancel, add_comm] using hm
 
 -- Two-point spreading and scalar entropy bounds.
 private theorem negMulLog_pair_spread {l r p q : ℝ}
@@ -286,7 +286,7 @@ private theorem entropy3_box
     (hs : (∑ i, x i) = l + m + r) :
     Real.negMulLog l + Real.negMulLog m + Real.negMulLog r ≤ entropy3 x := by
   simp only [Fin.sum_univ_three] at hs
-  simp only [entropy3, Fin.sum_univ_three]
+  simp only [entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy, Fin.sum_univ_three]
   by_cases h0 : x 0 ≤ m
   · let t := l + m - x 0
     have ht : t ∈ Set.Icc l m := by dsimp [t]; constructor <;> linarith [(hx 0).1]
@@ -540,9 +540,10 @@ private theorem spectral_table
     have ht' := congrArg Complex.re ht
     simpa only [Matrix.trace, Fintype.sum_prod_type, Complex.re_sum, Complex.one_re,
       Matrix.diag_apply] using ht'
-  · simp only [hrow, entropy3, outputEntropy, spectralEntropy]
+  · simp only [hrow, entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy,
+      outputEntropy, spectralEntropy]
   · change entropy3 (fun j => ∑ i, w i j) = spectralEntropy _
-    simp only [hcol, entropy3, spectralEntropy, rhoB_swap]
+    simp only [hcol, entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy, spectralEntropy, rhoB_swap]
 
 private theorem output_tradeoff
     (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) (hV : admissible V)
