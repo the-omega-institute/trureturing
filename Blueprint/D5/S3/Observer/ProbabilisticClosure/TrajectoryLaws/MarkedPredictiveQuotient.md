@@ -4,7 +4,31 @@
 
 The defining integer-time hidden/output cylinders determine the actual final predictive-class masses of a row-unifilar presentation.
 
-**Theorem 1.1 (row eq).**
+**Theorem 1.1 (The original deterministic endpoint).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.trajectory_last`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.trajectory_last` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every state carrier, successor function, natural word length, initial state and Boolean word, the last state of trajectory is endpoint of that same word and successor function. The retained hidden-information application uses this exact identity after original unifilar path support reconstructs the positive hidden path.
+
+**Theorem 1.2 (Original and quotient trajectories have equal selected word weights).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.word_quotient`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.word_quotient` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite hidden alphabet, nonnegative row-unifilar binary marked matrix M, natural word length n, initial state i, Boolean word w and future class a, select the original word weight when its final hidden state belongs to a, and zero otherwise. This equals the quotient word weight selected when its final quotient state is a. Positive symbol mass gives the quotient-successor identity; a zero symbol mass makes both selected weights zero. The identity connects actual twelve-state endpoint events to their original deterministic paths.
+
+**Theorem 1.3 (row eq).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.row_eq`
 
@@ -16,7 +40,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredic
 
 For any nonnegative row-unifilar binary matrix family and every i,j,x, the entry is its symbol row sum when j is the selected successor and zero otherwise. OriginalUnifilarQuotient.row_group uses the exact original row identity.
 
-**Theorem 1.2 (future step).**
+**Theorem 1.4 (future step).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.future_step`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredic
 
 For every such family, state, symbol and word, a prefixed futureMass is the first symbol mass times the successor futureMass. OriginalUnifilarQuotient.word_class uses it.
 
-**Theorem 1.3 (quotient mass mk).**
+**Theorem 1.5 (quotient mass mk).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.quotient_mass_mk`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredic
 
 For every binary matrix family, state and symbol, quotientMass at classOf(i) equals symbolMass at i. It is used in the actual marked path and word bridges.
 
-**Theorem 1.4 (quotient successor mk).**
+**Theorem 1.6 (quotient successor mk).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.quotient_successor_mk`
 
@@ -52,7 +76,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredic
 
 For every nonnegative row-unifilar family and nonzero symbolMass at i, the quotient successor of classOf(i) equals the class of the original successor. The zero case carries no such unweighted claim. The actual marked path and word bridges use it.
 
-**Theorem 1.5 (path support).**
+**Theorem 1.7 (path support).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.path_support`
 
@@ -64,7 +88,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredic
 
 For every nonnegative row-unifilar family, word and hidden tail, pathMass from initial i is zero unless the path equals its selected trajectory; on that trajectory it is wordMass. The full actual marked pushforward consumes this identity.
 
-**Theorem 1.6 (trajectory first).**
+**Theorem 1.8 (trajectory first).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.trajectory_first`
 
@@ -84,7 +108,7 @@ wordMatrix multiplies the original matrices in emitted-word order, with the iden
 
 symbolMass sums the original M(x) row. successor chooses its unique positive entry, when one exists, and otherwise keeps the source state. Nonnegativity and row unifilarity give M(x)(i,j) equal to symbolMass(i,x) when j is this successor and zero otherwise. No division is used. Equal future classes have equal first-symbol masses; at a nonzero common mass, cancellation in every prefixed word cylinder gives equal successor classes. quotientMass and quotientSuccessor use representatives of these exact classes. Their mass is independent of the representative; their successor class is independent on every positive symbol. At a zero symbol, any representative-dependent successor has zero contribution. If C(i,a) is the indicator that classOf(i)=a and T(x)(a,b) is quotientMass(a,x) times the indicator that quotientSuccessor(a,x)=b, summing the original row formula gives M(x) C = C T(x) entry by entry, including zero symbol rows. This is the actual original matrix relation. The same prefixed-word recursion gives futureMass(i,n,w) equal to the quotient wordMass from classOf(i), including the empty word. Stochasticity gives the sum over the two symbol masses equal to one in every quotient class. Induction over word length then gives nonnegative quotient word masses summing to one. Thus these are the normalized original finite future-word distributions, even when a symbol or word has zero mass; OriginalFutureScreening supplies their identification with the complete future ProbabilityMeasure laws.
 
-**Theorem 1.7 (First transition of a marked path).**
+**Theorem 1.9 (First transition of a marked path).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.path_step`
 
@@ -96,7 +120,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredic
 
 For every finite hidden type, binary matrix family, natural n, hidden path of length n+2 and emitted word of length n+1, pathMass is the first marked transition times the pathMass of the two tails. OriginalMarkedLaw uses this identity to sum unrestricted hidden paths into the original matrix word product; no unifilarity is used in that summation.
 
-**Theorem 1.8 (Summing paths by their initial state).**
+**Theorem 1.10 (Summing paths by their initial state).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.sum_paths`
 
@@ -108,7 +132,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredic
 
 For every finite hidden type, natural n and real function on paths of length n+1, the sum over paths is the sum over their first state and length-n tail. The equivalence Fin.consEquiv supplies this identity. It is used both for unifilar endpoint masses and for the universal original visible-cylinder sums in OriginalMarkedLaw.
 
-**Theorem 1.9 (Joint word and final-class mass under the original law).**
+**Theorem 1.11 (Joint word and final-class mass under the original law).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.actual_endpoint_mass`
 
@@ -141,4 +165,6 @@ PositiveSupportPresentation.trim proves normalization, stationarity, stochastici
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.row_eq`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.sum_paths`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.trajectory_first`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.trajectory_last`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.word_quotient`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/UnifilarPairSurvival](UnifilarPairSurvival.md)

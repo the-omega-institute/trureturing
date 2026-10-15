@@ -1007,3 +1007,997 @@ or an increasing first-queried-zero stopped rule. None of those missing
 conditions is imported into (300.2) from that characterization.
 
 ## 追加锚（本行以下为增补区）
+
+## 304. Additional correct rows and one collective residual constraint
+
+All source, carrier, target, resource, event-row and complete-allocation
+conventions in 297 remain in force. In particular, the original nonatomic
+targets and consumer are those of 297.1; error statements here concern the
+separately selected marked laws (297.1). A finite profile need not be
+ordered or belong to $H_L$ unless explicitly stated. Scores are
+nonnegative event weights, whereas an allocation is the single vector
+$\lambda$ satisfying every row of $G_C\lambda\ge h(b,e)$.
+
+**Definition 304.1 (A sole-zero extension of the second-head score).**
+Fix $L\ge7$, an ordered skeleton
+$S=(1,2,j_1,\ldots,j_5)$ with $3\le j_1<\cdots<j_5\le L$,
+and any finite set $I\subseteq\{1,\ldots,L\}\setminus S$.
+Embed exactly the score $Y_2$ of 298.2 on $S$, with every nonskeleton
+bit equal to one on its scored words. For $k\in I$ let $w^{(k)}$
+have its sole zero at $k$, and, for arbitrary real $c_k\ge0$, set
+
+$$
+Y_c=Y_2+\sum_{k\in I}c_k C_{w^{(k)}}.
+\tag{304.1}
+$$
+
+Here $C_{w^{(k)}}$ is the correct event row of weight one, not a
+restriction on the output alphabet. Let $c_{[1]}\ge c_{[2]}\ge c_{[3]}$
+be the three largest weights, padded by zeros. Empty sums and maxima
+of nonnegative residuals are zero. The set $I$ may lie in gaps of $S$;
+it need not follow $j_5$.
+
+**Theorem 304.2 (Exact full support at every finite embedding).**
+For every such $L,S,I,c$, the complete supports and anchor are
+
+$$
+\begin{aligned}
+B_N(Y_c)=B_O(Y_c)
+ &=\max\{17,\ 16+c_{[1]}+c_{[2]},\
+                    c_{[1]}+c_{[2]}+c_{[3]}\},\\
+W_{Y_c}&=17,\\
+\Delta_N(Y_c)=\Delta_O(Y_c)
+ &=\max\{0,\ c_{[1]}+c_{[2]}-1,\
+                    c_{[1]}+c_{[2]}+c_{[3]}-17\}.
+\end{aligned}
+\tag{304.2}
+$$
+
+In particular zero excess is equivalent to $c_{[1]}+c_{[2]}\le1$.
+The formula also describes all positive-excess regimes.
+
+**Proof.** The reused 22 rows in 298.2 give constant-zero reward 16.
+Their singleton cell maxima, in skeleton order, are
+
+$$
+(6,10),\ (6,10),\ (7,9),\ (7,9),\ (8,8),\ (9,7),\ (12,4).
+\tag{304.3}
+$$
+
+These follow by the full-label addition rule (298.2). Every singleton
+support is 16. Every $11$ entry of the $Y_2$ pair certificate in 298.4
+is at least four. These are properties of that existing score, which
+also has full support 17 and is attained by $R$.
+
+Consider an arbitrary deterministic $N$ table with two distinct
+queries. If both queries are in $S$, all new words lie in its $11$
+cell. To earn any new correct reward its output there must be a label
+in $I$. That label earns no old reward, losing at least four from the
+old pair-cell maximum. Thus its total is at most $13+c_{[1]}$;
+if it earns no new reward, the total is at most 17. Both bounds are
+at most the maximum in (304.2).
+
+If exactly one queried coordinate is in $S$, old scored words supply
+only singleton information, with old reward at most 16. All new words
+have value one at the skeleton query, so occupy at most two cells of
+the pair. At most two distinct correct labels can be rewarded there,
+with total at most $c_{[1]}+c_{[2]}$.
+
+If neither query is in $S$, all old scored words lie in $11$.
+When that cell's output is outside $I$, its old reward is at most 16
+and at most two new correct rewards can occur in the other cells.
+When its output is in $I$, old reward is zero and at most three new
+correct rewards occur. Indeed, for sole-zero words the only possible
+cells are $01,10,11$; a fixed cell output rewards at most one of
+their distinct first-zero labels. This gives the last two branches
+of the maximum. Unscored outside coordinates are included in these
+cases. Constants and singleton or repeated schedules have coarser
+information and obey the same bounds; reversal just permutes cells.
+All labels, including earlier and unqueried ones, have been allowed.
+
+For attainment, $R$ earns 17 and earns zero on every added correct
+row. With at least two weights, query the addresses of two largest
+weights increasingly, emit the queried first address at its first
+zero, the second address at $10$, and zero at $11$. This stopped
+table earns $16+c_{[1]}+c_{[2]}$. For one weight the singleton
+$(k;k,0)$ earns $16+c_{[1]}$; for none this branch is 16 and
+does not exceed 17. With at least three weights, query any two of
+their three largest-weight addresses and emit the remaining label at
+$11$. The stopped table earns their sum and no old reward. For fewer
+than three weights that branch is dominated by the preceding branch.
+These are actual legal stopped schedules regardless of the gaps in
+$S$ or the order of addresses in $I$. Since $O\subseteq N$, the
+upper bounds and these stopped attainers give both support equalities.
+The anchor remains 17 because $R$ emits zero on every new word.
+Subtracting it proves the excess formula. Finally
+$c_{[1]}+c_{[2]}\le1$ implies
+$c_{[1]}+c_{[2]}+c_{[3]}\le3/2<17$, proving the zero-excess
+equivalence, including ties and zero coefficients. $\square$
+
+**Theorem 304.3 (Collective residuals of the same full allocation).**
+For any real finite profile $(b,e)$ and any one complete feasible
+$N$ allocation of any finite mass $M$, put
+
+$$
+s=1+40e-b_2-4b_{j_1}-5b_{j_2}-5b_{j_3}-5b_{j_4}-4b_{j_5}.
+\tag{304.4}
+$$
+
+Then, for every $c\ge0$ as in 304.1,
+
+$$
+\sum_{k\in I}c_k(b_k-e)\le s+
+ M\max\{0,c_{[1]}+c_{[2]}-1,c_{[1]}+c_{[2]}+c_{[3]}-17\}.
+\tag{304.5}
+$$
+
+Consequently
+
+$$
+s\ge\max\left\{\max_{k\in I}(b_k-e)_+,\
+                    \frac12\sum_{k\in I}(b_k-e)_+\right\}.
+\tag{304.6}
+$$
+
+The same conclusions hold for a complete $O$ allocation. For every
+entire sequence (297.1), every original rule in either class meeting
+any positive closed cap $e$, and every ordered skeleton, they hold
+with $b=a$ for every finite disjoint $I$. In particular
+
+$$
+s\ge\max\left\{(a_{j_5+1}-e)_+,\
+                 \frac12\sum_{k>j_5}(a_k-e)_+\right\}.
+\tag{304.7}
+$$
+
+No summability of $a$ is required.
+
+**Proof.** Equation (297.5) applied to this same given $\lambda$ and
+the single score $Y_c$ gives $F_{QY_c}\le M\Delta_N(Y_c)$.
+The old quotient contributes $-s$ and each added correct row
+contributes $c_k(b_k-e)$, proving (304.5). Taking $c=0$ gives
+$s\ge0$. A unit weight at one chosen coordinate gives each individual
+positive-residual bound. Giving weight $1/2$ exactly to the coordinates
+with $b_k>e$ gives the half-sum bound. Both choices have zero excess
+by 304.2. This clips only the chosen score coefficients, never any
+original demand. These are simultaneous necessary inequalities about
+the same profile and allocation, not an assertion that different
+extrema have a common attainer. Counted completion gives the $O$ case.
+
+For an original rule at $0<e\le1$, apply the exact closed-cap
+transport and prefix operations of 297.3 at
+$K=\max(S\cup I)$. A longer active representative is restricted by
+fixing higher replies to zero and projecting higher labels to zero;
+a shorter representative is extended by ignored inputs. At an added
+first zero its exact error is $\max\{1-p_+(0),a_n\}\le e$.
+Thus all three rows, including negative singleton demands and the
+independent union row, hold for one full representative. Apply
+(304.6) to it. When $e\ge1$ the residuals vanish, and
+$s\ge1+40-24=17$. Finally $a_k\to0$ makes the set
+$\{k:a_k>e\}$ finite. Choose its members beyond $j_5$ as $I$;
+monotonicity identifies the largest residual there with
+$(a_{j_5+1}-e)_+$. This proves (304.7) for every actual positive
+tail, including its closed ties. $\square$
+
+## 305. A six-late integer score and the saturated-head tail boundary
+
+**Definition 305.1 (An eight-coordinate score).**
+On coordinates $1,\ldots,8$ give exactly the following independent
+rows their integer weights. Every $A$ and every unlisted coefficient
+is zero; all corresponding constraints remain present.
+
+| Row | Word | Weight |
+| --- | --- | ---: |
+| P | 00110000 | 1 |
+| P | 00110010 | 3 |
+| P | 01001010 | 3 |
+| P | 01010001 | 3 |
+| P | 01010010 | 2 |
+| P | 01010100 | 1 |
+| P | 01011001 | 3 |
+| P | 01100001 | 1 |
+| P | 01100010 | 1 |
+| P | 01100100 | 4 |
+| P | 01101000 | 3 |
+| P | 10001000 | 3 |
+| P | 10001001 | 1 |
+| P | 10001010 | 1 |
+| P | 10010010 | 3 |
+| P | 10010100 | 3 |
+| P | 10011000 | 1 |
+| P | 10100001 | 6 |
+| P | 10101000 | 1 |
+| C | 10110000 | 4 |
+| C | 11000011 | 5 |
+| P | 11000100 | 4 |
+| C | 11001101 | 3 |
+| C | 11010000 | 7 |
+| C | 11011110 | 1 |
+| C | 11100000 | 12 |
+| C | 11100001 | 4 |
+| C | 11101000 | 4 |
+| C | 11110000 | 8 |
+| C | 11110101 | 8 |
+| C | 11110110 | 4 |
+| C | 11111000 | 16 |
+| C | 11111011 | 4 |
+| C | 11111100 | 16 |
+| C | 11111110 | 16 |
+| T | 11111111 | 16 |
+
+**Theorem 305.2 (Full support and the all-mass six-late cut).**
+This score $Z_6$ has
+
+$$
+\beta=(0,4,16,20,20,20,16,16),\quad K=176,\quad
+W=B_N=B_O=68,\quad\Delta_N=\Delta_O=0.
+\tag{305.1}
+$$
+
+For every $L\ge8$, every $3\le j_1<\cdots<j_6\le L$,
+every real finite profile and one complete feasible allocation in
+either class of any finite mass,
+
+$$
+b_2+4b_{j_1}+5b_{j_2}+5b_{j_3}+5b_{j_4}+4b_{j_5}+4b_{j_6}
+\le1+44e.
+\tag{305.2}
+$$
+
+Every original arbitrary-address, full-carrier competitor in either
+class satisfies the same bound with its actual amplitudes and every
+positive closed cap it meets. In particular
+
+$$
+44e_a(A)\ge
+a_2+4a_{j_1}+5a_{j_2}+5a_{j_3}+5a_{j_4}+4a_{j_5}+4a_{j_6}-1.
+\tag{305.3}
+$$
+
+**Proof.** Direct class summation gives the displayed $\beta$ and
+$K$. The union weights sum to 48, the early correct weight to four,
+and the positive weight is 16. Hence $R$ earns $48+4+16=68$.
+For completeness the following is the full pair-cell certificate.
+For each cell maximize the sum of its row rewards over all nine
+labels $0,\ldots,8$, exactly as in (298.2).
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| 12 | $(4,21,23,20)$ |
+| 13 | $(12,13,20,23)$ |
+| 14 | $(12,13,20,23)$ |
+| 15 | $(16,9,20,23)$ |
+| 16 | $(20,5,20,23)$ |
+| 17 | $(16,9,20,20)$ |
+| 18 | $(18,7,16,23)$ |
+| 23 | $(12,11,20,25)$ |
+| 24 | $(12,11,20,25)$ |
+| 25 | $(16,7,20,25)$ |
+| 26 | $(20,3,20,25)$ |
+| 27 | $(19,7,20,22)$ |
+| 28 | $(16,7,18,23)$ |
+| 34 | $(12,16,20,20)$ |
+| 35 | $(16,12,20,20)$ |
+| 36 | $(20,8,20,20)$ |
+| 37 | $(19,9,20,20)$ |
+| 38 | $(21,8,16,23)$ |
+| 45 | $(16,12,20,20)$ |
+| 46 | $(20,8,20,20)$ |
+| 47 | $(23,5,16,24)$ |
+| 48 | $(20,8,16,22)$ |
+| 56 | $(20,12,20,16)$ |
+| 57 | $(23,9,16,20)$ |
+| 58 | $(22,10,16,20)$ |
+| 67 | $(23,13,16,16)$ |
+| 68 | $(22,14,16,16)$ |
+| 78 | $(21,14,16,16)$ |
+
+Every vector sums to at most 68. Each unrestricted pair table chooses
+one output in each cell and is therefore bounded by that sum. Empty,
+singleton and repeated schedules coarsen pair information, reversal
+permutes cells, and a stopped table merges $00,01$. These operations
+cannot increase the sum of cell maxima. Since $R$ attains 68 in both
+classes, (305.1) follows for their entire catalogs.
+
+Embed the eight coordinates as $(1,2,j_1,\ldots,j_6)$ with all other
+scored bits one. A query outside the skeleton is constant on the scored
+support, and an outside label earns zero. Thus arbitrary queries give
+one of the displayed partitions or a coarsening. This proves the bound
+at every finite embedding, without removing any unscored event row.
+Pair this single nonnegative score with the same full allocation:
+$F_{QZ_6}\le M\Delta_N(Z_6)=0$. Its quotient is four times the
+left-minus-right expression in (305.2), proving that expression is
+nonpositive. The argument uses every original demand and permits every
+real profile and finite mass.
+
+For an original rule use 297.3 at prefix $j_6$, with its restriction
+or extension as needed, and apply (305.2) to its one normalized finite
+representative. At caps at least one the bound follows from
+$a_i\le1$, since the left side is at most 28. Applying the result
+at every positive cap above $e_a(A)$ and decreasing those caps to
+the error proves (305.3), also when that error is zero. $\square$
+
+**Theorem 305.3 (The precise tail condition on a saturated second head).**
+Let $\tau>0$ and take an entire positive nonincreasing vanishing
+sequence with
+
+$$
+a_2=1-11\tau,\quad (a_3,\ldots,a_7)=(13,10,9,8,6)\tau,
+\quad1\ge a_1\ge a_2.
+\tag{305.4}
+$$
+
+The tail is subject only to the sequence order, not initially to
+$a_8\le5\tau$. At the closed cap $5\tau$, feasibility in either
+original class is equivalent to
+
+$$
+a_1+7\tau\le1\quad\hbox{and}\quad a_8\le5\tau.
+\tag{305.5}
+$$
+
+In those feasible cases both optima are attained at $5\tau$. If
+$a_8>5\tau$, every original competitor in either class has error
+at least
+
+$$
+5\tau+\frac{a_8-5\tau}{11}>5\tau.
+\tag{305.6}
+$$
+
+**Proof.** Order gives $1-11\tau\ge13\tau$, hence
+$\tau\le1/24$. The first necessary relation of 299.1 gives
+$a_1+7\tau\le1$ at cap $5\tau$, regardless of the tail.
+The five weighted late terms in (305.2) sum to $211\tau$.
+With $j_a=a+2$, (305.2) at that cap becomes
+$a_2+11\tau+4(a_8-5\tau)\le1$, so (305.4) forces
+$a_8\le5\tau$. Conversely, under (305.5) all hypotheses of
+Theorem 300.1 hold. Its one common stopped law and counted completion
+attain $5\tau$; its old five-late lower bound proves optimality.
+At a general error $r$, (305.3) gives
+$44r\ge a_2+211\tau+4a_8-1=200\tau+4a_8$,
+which is exactly (305.6).
+
+For example, take $\tau=1/24$, $a_1=a_2=a_3=13/24$,
+$a_8=11/48$, the other late amplitudes as in (305.4), and
+$a_n=(5/24)2^{-(n-9)}$ for $n\ge9$. The closed tie
+$a_9=5/24$ is allowed. At the tested cap $5/24$ the six-late
+left-minus-right reading is $1/12$, and (305.6) gives $37/176$.
+This excludes that cap in both classes; it supplies no feasible $N$
+allocation there and therefore no separator. Attainment of the general
+larger-cap bound (305.6) is not asserted. $\square$
+
+## 306. A positive cap strip with two jointly filled heads
+
+**Theorem 306.1 (Exact closed-cap head projection on the strip).**
+For every real $\tau>0$ and $0\le\delta\le\tau/40$, put
+$e=5\tau+\delta$. Prescribe
+
+$$
+(a_3,\ldots,a_7)=(13,10,9,8,6)\tau,\qquad
+1\ge a_1\ge a_2\ge13\tau,
+\tag{306.1}
+$$
+
+and append any positive nonincreasing vanishing tail with $a_8\le e$.
+Then original $\mathcal N_2$ feasibility at this closed cap, original
+$\mathcal O_2$ feasibility there, and the conjunction
+
+$$
+a_1\le1-7\tau+17\delta,
+\qquad a_2\le1-11\tau+40\delta
+\tag{306.2}
+$$
+
+are equivalent. The following explicit single allocation realizes all
+feasible heads simultaneously.
+
+**Construction 306.2 (The raw core and one shared prefix).**
+Write $e_r$ for the label unit vector. In this table a row consists
+of one schedule, its mass $m$, and its three unnormalized terminal
+vectors $f,v,z$ for stopped cells $0,10,11$. Each of these vectors
+has the same mass $m$. A range in a row means a separate schedule
+for every indicated value. All undisplayed vector coordinates are zero.
+
+| Schedule | $m$ | $f$ | $v$ | $z$ |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | $8\tau-34\delta$ | $m e_1$ | $m e_2$ | $(4\tau-27\delta)e_0+(2\tau-23\delta)e_3+(\tau-3\delta)e_4+(\tau+5\delta)e_5+14\delta e_6$ |
+| $(h,3)$, $h=1,2$ | $3\tau+11\delta$ | $m e_0$ | $m e_3$ | $m e_0$ |
+| $(h,4)$, $h=1,2$ | $\tau-9\delta$ | $(\tau-38\delta)e_0+29\delta e_h$ | $m e_4$ | $m e_0$ |
+| $(h,5)$, $h=1,2$ | $4\delta$ | $m e_h$ | $m e_5$ | $m e_0$ |
+| $(h,6)$, $h=1,2$ | $4\delta$ | $m e_0$ | $m e_6$ | $m e_0$ |
+| $(3,4)$ | $2\tau+20\delta$ | $m e_0$ | $m e_4$ | $(\tau+16\delta)e_0+(\tau+4\delta)e_5$ |
+| $(3,5),(3,6),(4,5),(4,6)$ | $\tau-9\delta$ | $m e_0$ | $m e_j$ for schedule $(i,j)$ | $m e_0$ |
+| $(5,6)$ | $\tau-5\delta$ | $m e_0$ | $m e_6$ | $(\tau-9\delta)e_0+4\delta e_7$ |
+| $(6,7)$ | $\tau-5\delta$ | $m e_0$ | $m e_7$ | $m e_0$ |
+
+The sixteen schedule masses sum to $24\tau-40\delta$.
+Define
+
+$$
+\begin{gathered}
+\rho=1-24\tau+40\delta,\qquad T_0=4\tau-23\delta,\\
+u=\min\{a_1-13\tau,T_0\},\qquad
+q_1=a_1-13\tau-u,\qquad q_2=a_2-13\tau.
+\end{gathered}
+\tag{306.3}
+$$
+
+In the first cells of $(1,3),(1,4),(1,6)$, move the fraction
+$u/T_0$ of each label-zero mass to label 1. Their combined available
+zero mass is precisely $T_0$. Add just one more schedule $(1,2)$ of
+mass $\rho$, with terminal vectors
+
+$$
+(\rho-q_1)e_0+q_1e_1,\qquad
+(\rho-q_2)e_0+q_2e_2,\qquad \rho e_0.
+\tag{306.4}
+$$
+
+If $\rho=0$ omit this row. Within a positive row of mass $m$,
+one explicit complete-table coupling assigns to
+$O(i,j;r_0,r_{10},r_{11})$ mass
+
+$$
+\frac{f(r_0)v(r_{10})z(r_{11})}{m^2}.
+\tag{306.5}
+$$
+
+Summing over the other two labels recovers the required cell vector,
+and the sum over all three labels is $m$. Zero-mass rows are omitted.
+Thus these are full table weights with one total probability budget.
+Equivalently, on each row interval all three counterfactual labels
+can be fixed by quantile partitions of the same local seed coordinate.
+Neither description requires $q_1+q_2\le\rho$.
+
+**Proof of Theorem 306.1.** The two existing all-competitor cuts
+299.1 give, at the prescribed late amplitudes,
+
+$$
+a_1+92\tau\le1+17e,\qquad
+a_2+211\tau\le1+40e.
+\tag{306.6}
+$$
+
+These are exactly (306.2). Their original closed-cap necessity includes
+arbitrary addresses, full-carrier outputs and inactive selected addresses
+by 297.3. It does not require an active horizon exactly seven.
+
+Assume (306.2). Since $a_2\ge13\tau$, the second condition gives
+$\rho\ge a_2-13\tau\ge0$. Moreover $T_0>0$ and the first
+condition gives
+
+$$
+0\le a_1-13\tau\le T_0+\rho.
+$$
+
+Consequently $0\le u\le T_0$ and $0\le q_1,q_2\le\rho$
+individually. Every displayed raw entry is nonnegative throughout the
+strip; the smallest potentially limiting first-cell entry is
+$\tau-38\delta\ge\tau/20>0$. The other subtractions are
+nonnegative from $\delta\le\tau/40$. Directly adding the entries
+of each vector gives its schedule mass; adding those masses and $\rho$
+gives one. Moving label-zero mass preserves each schedule mass and
+nonnegativity. Formula (306.5) therefore gives a single full normalized
+allocation, including all zero-weight and $\rho=0$ endpoints.
+
+On every first-zero fibre the raw correct masses, in order $1,\ldots,7$,
+are
+
+$$
+(8\tau-\delta,\ 8\tau-\delta,\ 8\tau-\delta,\
+5\tau-\delta,\ 4\tau-\delta,\ 3\tau-\delta,\ \tau-\delta).
+\tag{306.7}
+$$
+
+For example class 1 receives $(8\tau-34\delta)+29\delta+4\delta$;
+class 2 receives the same amount. Class 3 receives twice
+$3\tau+11\delta$ plus $2\tau-23\delta$. Class 4 receives
+twice $\tau-9\delta$, then $2\tau+20\delta$, and
+$\tau-3\delta$. Class 5 receives $8\delta$,
+$\tau+5\delta$, $\tau+4\delta$ and twice
+$\tau-9\delta$. Classes 6 and 7 follow by adding their displayed
+second-cell and exhaustion entries. Earlier bits are one on each
+such fibre, so no later zero changes these totals. The moves in the
+three first cells act only in class 1, within $\{0,1\}$, and add
+$u$ there. The prefix row adds $q_1,q_2$ to classes 1 and 2.
+It follows that for the final law
+
+$$
+p_w(n)=a_n-e\qquad(w\in\Omega_n,\ 1\le n\le7).
+\tag{306.8}
+$$
+
+Here is a complete all-word bound on the mass $D_n$ outside $\{0,n\}$.
+It concerns the raw core; the head moves and prefix row add no such
+mass. Denote that core by $C(\tau,\delta)$ as a family of terminal
+vectors. At $(1,0)$ it is the core of 300.1 with first-cell correct
+mass in $(1,3),(1,4)$ moved to zero. These moves stay inside
+$\{0,1\}$ and occur only in class 1. Thus its wrong masses are
+exactly those already proved in (300.4)–(300.5), all at most five.
+This uses the existing all-suffix proof, not a claim about sole-zero
+words only.
+
+The other algebraic endpoint $C(40,1)$ need not itself be a normalized
+probability law. It is an explicit nonnegative family of equal-mass
+terminal vectors. Set $(h,s,t,u,v,z)=(w_2,w_3,w_4,w_5,w_6,w_7)$.
+Adding its row vectors gives the following exact wrong-mass polynomials:
+
+$$
+\begin{aligned}
+D_1={}&33+137h-131hs-31ht-4hu-4hv+162s-56st\\
+ &-31su-31sv+62t-31tu-31tv+35u-31uv+35v-35vz,\\
+D_2={}&170+31s-56st-31su-31sv+31t-31tu-31tv\\
+ &+31u-31uv+31v-35vz,\\
+D_3={}&174-31tu-31tv+27u-31uv+27v-35vz,\\
+D_4={}&194-4u-31uv-4v-35vz,\\
+D_5={}&178-35v-35vz,\qquad D_6=183,\qquad D_7=197.
+\end{aligned}
+\tag{306.9}
+$$
+
+For each row only coordinates after its first zero are free. The full
+Boolean maxima can be verified without a search assumption. Set $z=0$
+to maximize the first three expressions. For fixed $h,s,t$ in row 1,
+the remaining $u,v$ part is $A(u+v)-31uv$ with
+$A=35-4h-31(s+t)$; its maximum is
+$\max\{0,A,2A-31\}$. Row 2 has $A=31-31(s+t)$;
+row 3 has $A=27-31t$. Substitution gives every value in this table:
+
+| Class | Fixed suffix bits in order | Maximum over the other suffix bits |
+| --- | --- | --- |
+| 1 | $hst=000,001,010,011,100,101,110,111$ | $72,99,199,201,201,201,201,176$ |
+| 2 | $st=00,01,10,11$ | $201,201,201,176$ |
+| 3 | $t=0,1$ | $201,174$ |
+| 4 | $uv=00,01,10,11$ | $194,190,190,155$ |
+| 5 | $v=0,1$ | $178,143$ |
+| 6 | none | $183$ |
+| 7 | none | $197$ |
+
+Rows 4 and 5 follow directly by setting $z=0$; rows 6 and 7 are
+constant. Therefore $D_n\le201$ at this endpoint on every word.
+Every raw vector depends linearly on the parameters, with the exact
+identity
+
+$$
+C(\tau,\delta)=(\tau-40\delta)C(1,0)+\delta C(40,1).
+\tag{306.10}
+$$
+
+Both coefficients are nonnegative. Wrong mass is linear in these
+unnormalized vectors at each fixed word, so the two endpoint bounds
+give
+
+$$
+D_n\le5(\tau-40\delta)+201\delta=5\tau+\delta=e.
+\tag{306.11}
+$$
+
+This proves the entire real strip, not just rational parameter samples.
+Combining (306.8) with $D_n\le e$ verifies separately all three
+deficits in (297.3):
+
+$$
+a_n-p_w(n)=e,\quad
+1-a_n-p_w(0)=D_n-e\le0,\quad
+1-p_w(0)-p_w(n)=D_n\le e.
+\tag{306.12}
+$$
+
+Thus every zero-word TV is exactly $e$. Direct addition in the positive
+word gives nonbase mass
+$(2\tau-23\delta)+(\tau-3\delta)+(\tau+5\delta)
++14\delta+(\tau+4\delta)+4\delta=5\tau+\delta$.
+The head moves are inactive there and the prefix emits zero, so
+$p_+(0)=1-e$.
+
+Implement the full table weights (306.5) by half-open intervals of one
+source-independent uniform seed, fixing the whole schedule and every
+counterfactual label before replies. Execute that increasing schedule
+until its first queried zero or exhaustion and emit its actual original
+mark. Every source and seed hands off finitely, measurably, with zero
+advice and at most two actual requests. Its counted $N$ completion uses
+the same seed and source and has the identical output law. For every
+actual $n>7$, (297.2) gives exact error $\max\{e,a_n\}=e$,
+including $a_8=e$ and every permitted later positive tail. Since
+$a_7=6\tau>e$, actual active length at this cap is exactly seven.
+Finite-pattern actuality is supplied by 297.3. This proves original
+sufficiency and completes the equivalence. $\square$
+
+**Corollary 306.3 (Attained optima throughout the declared strip).**
+For the ordered heads and fixed late amplitudes (306.1), set
+
+$$
+d_* =\max\left\{0,\frac{a_1+7\tau-1}{17},\
+                       \frac{a_2+11\tau-1}{40}\right\}.
+\tag{306.13}
+$$
+
+If $d_*\le\tau/40$ and the entire positive nonincreasing vanishing
+tail satisfies $a_8\le5\tau+d_*$, both original marked-target
+optima are attained and equal $5\tau+d_*$. All positive closed
+caps in either class are feasible exactly when they are at least this
+value.
+
+**Proof.** Apply 306.1 with $\delta=d_*$. For every original $N$
+competitor, the reused five-late score 281.2 and the two head cuts give
+
+$$
+e_a(A)\ge\max\left\{5\tau,
+ \frac{a_1+92\tau-1}{17},
+ \frac{a_2+211\tau-1}{40}\right\}=5\tau+d_*.
+\tag{306.14}
+$$
+
+To justify the bound even if a proposed competitor has a different
+active horizon, apply 297.3 at every positive cap above its error,
+then use the one finite prefix representative for all three scores.
+Decrease those caps to its error; this also excludes zero error.
+Counted completion gives the same lower bound for $O$. The displayed
+law attains it, and that same law is feasible at every larger cap,
+regardless of the new cap's active horizon. $\square$
+
+**Proposition 306.4 (An attained normal-domain interval).**
+If $a_2=a_3=13\tau$ and (306.2) holds, the same finite profile
+belongs to $H_N$ at $L=7$ with this same mass-one allocation. In
+particular, for every
+
+$$
+\frac1{24}<\tau\le\frac1{23},\quad
+\delta=\frac{24\tau-1}{40},\quad
+13\tau\le a_1\le1-7\tau+17\delta,
+\tag{306.15}
+$$
+
+and every permitted tail $a_8\le5\tau+\delta$, the optima are
+attained at $5\tau+\delta$.
+
+**Proof.** The hull excess is
+$\sum_{n=3}^7a_n-8e=6\tau-8\delta>0$ and
+$a_1+6\tau-8\delta\le1-\tau+9\delta<1$.
+Order, $a_7>e$ and $a_2=a_3$ supply the other hull conditions;
+306.2 supplies one full feasible mass-one allocation. In (306.15),
+$\delta>0$ and $\delta\le\tau/40$ are equivalent to the stated
+interval, and the second expression in (306.13) involving $a_2$
+equals $\delta$. The first head bound makes its other expression
+at most $\delta$. Thus $d_*=\delta$, including $\tau=1/23$
+where $\rho=0$. The upper head interval is nonempty, since
+$1-20\tau+17\delta=(23-392\tau)/40>0$ there.
+This proves the asserted continuum. The endpoint $1/23$ is not a
+global upper bound on scales at other caps. $\square$
+
+## 307. A changing late-amplitude cone with an attained boundary
+
+**Theorem 307.1 (Exact joint heads at a prescribed cone cap).**
+Let $\tau,\sigma\ge0$, $\tau+\sigma>0$, and prescribe
+
+$$
+\begin{gathered}
+E=5\tau+17\sigma,\\
+(a_3,a_4,a_5,a_6,a_7)=
+(13\tau+46\sigma,10\tau+35\sigma,9\tau+29\sigma,
+ 8\tau+26\sigma,6\tau+20\sigma).
+\end{gathered}
+\tag{307.1}
+$$
+
+Take $1\ge a_1\ge a_2\ge a_3$ and any entire positive
+nonincreasing vanishing tail with $a_8\le E$. At the closed cap
+$E$, feasibility in either original class is equivalent to
+
+$$
+a_1+7\tau+23\sigma\le1,\qquad
+a_2+11\tau+34\sigma\le1.
+\tag{307.2}
+$$
+
+The allowed head domain is nonempty exactly when
+$24\tau+80\sigma\le1$. On that domain the construction below
+has uniform error exactly $E$. If at least one inequality in (307.2)
+is an equality, both original optima are attained and equal $E$;
+then every positive closed cap is feasible exactly when it is at least
+$E$. Head tightness here is a sufficient condition for this optimality
+conclusion. No converse is asserted.
+
+**Construction 307.2 (One sixteen-table core and one prefix).**
+Each row gives $O(i,j;u,v,z)$ and its mass $A\tau+B\sigma$.
+The outputs $u,v,z$ are on $0,10,11$, respectively.
+
+| $i$ | $j$ | $u$ | $v$ | $z$ | $A$ | $B$ |
+| --- | --- | --- | --- | --- | ---: | ---: |
+| 1 | 2 | 1 | 2 | 3 | 2 | 7 |
+| 1 | 2 | 1 | 2 | 4 | 1 | 4 |
+| 1 | 2 | 1 | 2 | 5 | 1 | 4 |
+| 1 | 3 | 1 | 3 | 0 | 3 | 11 |
+| 1 | 4 | 1 | 4 | 0 | 1 | 3 |
+| 2 | 3 | 0 | 3 | 0 | 3 | 8 |
+| 2 | 3 | 2 | 3 | 0 | 0 | 3 |
+| 2 | 4 | 0 | 4 | 0 | 1 | 3 |
+| 3 | 4 | 0 | 4 | 0 | 1 | 6 |
+| 3 | 4 | 0 | 4 | 5 | 1 | 2 |
+| 3 | 5 | 0 | 5 | 0 | 1 | 3 |
+| 3 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 4 | 5 | 0 | 5 | 0 | 1 | 3 |
+| 4 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 5 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 6 | 7 | 0 | 7 | 0 | 1 | 3 |
+
+Their masses sum to $20\tau+69\sigma$. Put
+
+$$
+\rho=1-20\tau-69\sigma,\qquad
+x_1=a_1-13\tau-46\sigma,\qquad
+x_2=a_2-9\tau-35\sigma.
+\tag{307.3}
+$$
+
+Use the remaining mass $\rho$ for a single prefix $(1,2)$ with
+terminal vectors
+
+$$
+(\rho-x_1)e_0+x_1e_1,\qquad
+(\rho-x_2)e_0+x_2e_2,\qquad \rho e_0.
+\tag{307.4}
+$$
+
+One local uniform coordinate $V$ fixes both counterfactual choices
+by $V<x_1/\rho$ and $V<x_2/\rho$ before replies. The two
+thresholds each lie in $[0,1]$; their sum need not be at most one.
+This is one schedule branch, whose mass is counted once.
+
+**Proof of Theorem 307.1.** The late sum is $46\tau+156\sigma$;
+its $Y_2$ weighted sum is $211\tau+714\sigma$. Substituting
+these and $E$ in the two existing head cuts (299.1) gives (307.2)
+exactly. Necessity is for every original competitor by their already
+proved arbitrary-address/full-carrier closed-cap interpretation.
+Since $a_2\ge13\tau+46\sigma$, the second head bound forces
+$24\tau+80\sigma\le1$. Conversely, if that scale bound holds,
+the choice $a_1=a_2=a_3$ satisfies the second head bound, and
+the first follows from $20\tau+69\sigma\le24\tau+80\sigma$.
+Thus the head domain is nonempty precisely as stated.
+
+Assume (307.2). Then
+
+$$
+\rho\ge4\tau+11\sigma>0,\qquad
+0\le x_1\le\rho,\qquad
+4\tau+11\sigma\le x_2\le\rho.
+\tag{307.5}
+$$
+
+The lower bounds use order; the upper bounds are exactly the two
+head inequalities after subtracting the core correct stocks. Every
+listed mass and every entry in (307.4) is nonnegative. The sixteen
+core masses and the single prefix mass total one. The common threshold
+construction, or formula (306.5) applied to (307.4), specifies full
+table weights with this same total.
+
+Direct addition on an entire first-zero fibre gives these core correct
+mass coefficients:
+
+$$
+\begin{array}{c|rrrrrrr}
+n&1&2&3&4&5&6&7\\\hline
+\tau\text{ coefficient}&8&4&8&5&4&3&1\\
+\sigma\text{ coefficient}&29&18&29&18&12&9&3
+\end{array}
+\tag{307.6}
+$$
+
+For instance the first three $(1,2)$ rows contribute $(4,15)$
+in the first two classes; $(1,3),(1,4)$ add $(4,14)$ in
+class 1, and $(2,3;2,3,0)$ adds $(0,3)$ in class 2.
+For classes $3,\ldots,7$, add rows with second output that class
+and rows with exhaustion output that class. Earlier bits are one,
+so these totals hold independently of every later bit. The prefix
+adds $x_1,x_2$ in the first two classes and zero correct mass in
+the others. Thus the final correct mass is
+
+$$
+c_n=p_w(n)=a_n-E\qquad(w\in\Omega_n,\ n\le7).
+\tag{307.7}
+$$
+
+We verify every independent union row by bounding wrong mass outside
+$\{0,n\}$. Set $(s,t,u,v,z)=(w_3,w_4,w_5,w_6,w_7)$ and put
+
+$$
+\begin{aligned}
+B&=2s(1-t)+st+(s+t)(2-u-v)+u(1-v)+v(1-z),\\
+G&=3(1-s)+(1-t),\\
+B'&=8s(1-t)+2st+3(s+t)(2-u-v)+3u(1-v)+3v(1-z),\\
+G'&=11(1-s)+3(1-t).
+\end{aligned}
+\tag{307.8}
+$$
+
+For the core the two coefficients of that wrong mass are as follows;
+the prefix has zero wrong mass in every class.
+
+| First zero | Coefficient of $\tau$ | Coefficient of $\sigma$ |
+| --- | --- | --- |
+| 1 | $B+w_2G$ | $B'+w_2G'+3(1-w_2)$ |
+| 2 | $B+G$ | $B'+G'$ |
+| 3 | $2+2(1-t)+t(2-u-v)+u(1-v)+v(1-z)$ | $8+6(1-t)+3t(2-u-v)+3u(1-v)+3v(1-z)$ |
+| 4 | $3+(1-u)+(1-v)+u(1-v)+v(1-z)$ | $11+3[(1-u)+(1-v)+u(1-v)+v(1-z)]$ |
+| 5 | $3+2(1-v)+v(1-z)$ | $11+6(1-v)+3v(1-z)$ |
+| 6 | $5$ | $17$ |
+| 7 | $5$ | $17$ |
+
+These expressions follow by evaluating each of the sixteen stopped
+tables on the indicated first-zero fibre and adding the masses whose
+output is neither zero nor its first-zero label. They retain every
+Boolean suffix. Their bounds can all be established explicitly.
+For $q=s+t$, the maximum of
+$q(2-u-v)+u(1-v)+v(1-z)$ is
+$\max\{2q,q+1,1\}$. For $st=00,01,10,11$ it is respectively
+$1,2,2,4$. Hence
+
+$$
+\begin{array}{c|rrrr}
+st&00&01&10&11\\\hline
+\max B&1&2&4&5\\
+G&4&3&1&0\\
+\max B'&3&6&14&14\\
+G'&14&11&3&0
+\end{array}
+\tag{307.9}
+$$
+
+This proves $B+G\le5$ and $B'+G'\le17$.
+In class 1, $w_2=1$ uses these bounds; $w_2=0$ uses
+$B\le5$ and $B'+3\le17$.
+For class 3, $t=0,1$ give $\tau$ bounds five and four and
+$\sigma$ bounds seventeen and fourteen, since
+$u(1-v)+v(1-z)\le1$ and
+$2-u-v+u(1-v)+v(1-z)=2-uv-vz\le2$.
+For class 4 the bracket equals $2-uv-vz\le2$.
+Class 5 is bounded by distinguishing $v=0,1$; classes 6 and 7
+are already constant. Every $\tau$ coefficient is therefore at
+most five and every $\sigma$ coefficient at most seventeen.
+For all real nonnegative parameters it follows that
+
+$$
+D_n\le5\tau+17\sigma=E.
+\tag{307.10}
+$$
+
+Combined with (307.7), the three distinct deficits are $E$,
+$D_n-E\le0$, and $D_n\le E$. Thus every zero-word TV equals
+$E$, without deriving the union constraint from the two singleton
+constraints. Negative singleton demands and zero entries remain in
+the full system. At the positive word the only nonzero-label outputs
+are the first three exhaustion rows and $(3,4;0,4,5)$.
+Their total is $(4\tau+15\sigma)+(\tau+2\sigma)=E$.
+The prefix emits zero, so $p_+(0)=1-E$.
+
+Partition one source-independent uniform seed into intervals of the
+core table masses and the one prefix interval, using its local
+coordinate for both thresholds in (307.4). This fixes the complete
+schedule and all counterfactual labels before replies. Execute only
+that increasing schedule on the actual source, stop at its first
+queried zero or exhaustion, and deliver the indicated original mark.
+The rule has zero advice, measurable finite handoff at every source
+and seed, and at most two actual requests. Its $N$ completion acquires
+the same whole schedule with the same seed and source, ignores replies
+past the reconstructed stop, and counts those actual requests. For
+every actual $n>7$, error is exactly $\max\{E,a_n\}=E$
+by (297.2). Since $a_7-E=\tau+3\sigma>0$, the active length
+is seven, including both axes and every tail tie $a_8=E$.
+All finite words are actual by 297.3. This proves original sufficiency.
+
+If the first head is tight, the all-competitor first-head cut gives
+$17e_a(A)\ge a_1+2\sum_{3}^7a_n-1=17E$.
+If the second is tight, its second-head counterpart gives
+$40e_a(A)\ge40E$. These inequalities hold at every original
+error by the prefix transport and limiting-cap argument used in
+306.14. Thus at either tight head no competitor in either class
+improves on $E$, which the one constructed law attains. The same
+law works at every larger cap. This proves the sufficient sharpness
+claim and does not prove that tightness is necessary. $\square$
+
+**Proposition 307.3 (The normal domain and a nonradial continuum).**
+Under (307.2), setting $a_2=a_3$ puts the finite profile in $H_N$
+with the same mass-one law. In particular let
+
+$$
+\begin{gathered}
+0<q\le1/80,\quad \sigma=q,\quad\tau=(1-80q)/24,\\
+a_2=a_3=13/24+8q/3,\quad a_4=5/12+5q/3,\\
+a_5=3/8-q,\quad a_6=1/3-2q/3,\quad a_7=1/4,\\
+13/24+8q/3\le a_1\le17/24+q/3.
+\end{gathered}
+\tag{307.11}
+$$
+
+With every permitted positive vanishing tail $a_8\le E$, both
+optima are attained at $E=5/24+q/3$, including $q=1/80$
+where $\tau=0$. The hull excess is identically $1/4$.
+
+**Proof.** In general the hull excess is
+
+$$
+\sum_{n=3}^7a_n-8E=6\tau+20\sigma>0,
+\qquad a_1+6\tau+20\sigma\le1-\tau-3\sigma<1.
+\tag{307.12}
+$$
+
+Together with order, $a_7>E$ and $a_2=a_3$, these are all hull
+conditions. The same full probability law supplies $H_N$ feasibility.
+Substituting $\tau=(1-80q)/24$ gives every amplitude and cap in
+(307.11). The scale bound is equality, so its second head is tight.
+Its first head bound is exactly the stated upper bound on $a_1$;
+the difference between its upper and lower bounds is $1/6-7q/3>0$.
+Also $6\tau+20q=1/4$ and $a_7=1/4$. Theorem 307.1 now proves
+the asserted optima and cap classification throughout this real interval.
+
+This cone changes shape: at $\sigma>0$,
+$a_3/E-13/5=9\sigma/(5E)>0$, whereas common radial scaling of
+the old ratio ray leaves that ratio unchanged. On the entire cone
+$2a_3+a_5+a_6+2a_7=11E$, so identity (299.2) makes the old
+$C$ reading exactly four times the $Y_2$ reading here. It gives
+no additional cut on this cone. At $\sigma=0$ the optimal old
+ray is already covered by 300.1; its optimality can hold with both
+heads strict. At $\sigma>0$ with both heads strict, the present
+theorem makes no optimality claim about $E$ and no classification at
+other caps. $\square$
+
+## 308. Applicability and the unrestricted remaining question
+
+The support extension in 304 applies to every finite set disjoint from
+its skeleton, including gap addresses, and its whole-tail consequence
+uses only finitely many positive residuals at each positive cap. Adding
+correct rows instead on later absorbing-chain words can give the same
+zero-excess quotient consequences. That choice of score representation
+does not add a second collective-residual relation. Where 305 applies,
+its coefficient four on a sixth late amplitude gives a stronger
+single-coordinate boundary bound than the coefficient one consequence
+of 304; the arbitrary-set and half-sum assertions in 304 remain distinct.
+
+The primal laws in 306 and 307 concern the contiguous seven-coordinate
+head and every declared actual tail. All-embedding necessity of their
+supporting scores does not imply a gapped primal construction, a
+classification of other active lengths, or a larger-cap classification
+outside the stated attained domains. The slices $\delta=0$ in 306
+and $\sigma=0$ in 307 reuse 300.1. The strip endpoint in 306 is
+a sufficient range for its displayed law, not a maximal feasible
+radius theorem. Failure of a particular continued law on one
+multiple-zero word would exclude that law only, not every stopped
+law at the same cap.
+
+All constructions use actual original marks, one source-independent
+seed and zero advice. Their stopped execution and counted completion
+share the same actual source and seed; no arbitrary starting $N$ law
+is required to be preserved. All original competitor addresses and
+Borel outputs remain in the necessary directions supplied by 110.2.
+The legal actual $0100$ example and earlier unqueried label 1 in
+303.2 remain within every complete catalog used here. None of these
+finite atomic laws estimates an original nonatomic target: their TV
+distance from each such target is one, as in 297.1.
+
+The mature comparison and scalar-query precedents have precisely the
+conditions and limitations in 303.3. A whole attainable vector must
+come from one rule. Scalar coefficient normalization followed by
+scalar output rescaling supplies no normalized vector law or stopped
+schedule in place of the explicit equal-mass constructions above.
+The existing source arithmetic, 109.1 stopped criterion, 110.2
+closed-cap transport, five-late lower score, and the old supporting
+scores are used at their stated scopes. No exhaustive novelty,
+historical nonderivability or priority assertion is made.
+
+The unrestricted original obligation is still (303.1), with its exact
+quantifier order: for every $L\ge3$ and every full unit-$O$ score
+there must be one unrestricted full $V\ge0$ and one
+$\theta\in[0,1]$ paying both the complete $N$ excess and the
+entire signed residual. Nonzero zero-cost $V$ at $\theta=1$
+remains allowed. The alternative separator still requires the same
+actual $b\in H_N$, one full feasible allocation of mass $M\ge1$,
+a strict reading above $M$, an original $N$ attainer and a uniform
+lower bound against every original $O$ competitor. The necessary
+relations 304–305 and the scoped common laws 306–307 establish neither
+alternative. Their excluded profiles lack a feasible $N$ allocation
+at the tested cap; their attainers belong to both classes. Every
+original all-sequence, common-seed, resource, full-row, target,
+positive-tail and closed-cap obligation in 303.1 therefore remains.
+
+## 追加锚（本行以下为增补区）
