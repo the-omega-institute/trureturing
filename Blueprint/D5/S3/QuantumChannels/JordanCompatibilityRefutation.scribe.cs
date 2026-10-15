@@ -99,7 +99,10 @@ internal sealed class JordanCompatibilityRefutationDocument : IScribeDocumentDef
                             + "Consequently the sum of the real parts of tr(HₛₜGₛₜ) is at least zero. "
                             + "The three moment identities make the same sum equal to 6 − 16/5 − 3 = −1/5, "
                             + "a contradiction. Thus these compatible channels are not Jordan compatible."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("girard-plavala-sikora-2021-jordan-compatibility-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
