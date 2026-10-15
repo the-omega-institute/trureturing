@@ -548,4 +548,39 @@ private theorem trace_sum_nonneg (A : A4)
   exact mul_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 4)
     (trace_gram_mul_re_nonneg (K s t) _ (G_possemidef A hT s t))
 
+private theorem trace_sum_value (A : A4)
+    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4)))
+    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) :
+    (∑ s : Fin 2, ∑ t : Fin 2, (Matrix.trace (H s t * G A s t)).re) = -(1 / 5 : ℝ) := by
+  have hm := G_moments A h1 h2
+  have hs : (∑ s : Fin 2, ∑ t : Fin 2, H s t * G A s t) =
+      (3 / 2 : ℝ) • (∑ s : Fin 2, ∑ t : Fin 2, G A s t) -
+      P * (∑ s : Fin 2, ∑ t : Fin 2, sign s • G A s t) -
+      Q * (∑ s : Fin 2, ∑ t : Fin 2, sign t • G A s t) := by
+    unfold H
+    simp only [sub_mul, Matrix.smul_mul, Matrix.one_mul, Finset.sum_sub_distrib,
+      ← Finset.smul_sum, Matrix.mul_sum, Matrix.mul_smul]
+  have hv : (∑ s : Fin 2, ∑ t : Fin 2, H s t * G A s t) =
+      (-(1 / 20) : ℝ) • (1 : M4) := by
+    rw [hs, hm.1, hm.2.1, hm.2.2, Matrix.mul_smul, Matrix.mul_smul,
+      pauli_facts.2.2.2.2.1, pauli_facts.2.2.2.2.2.1]
+    module
+  calc
+    _ = (Matrix.trace (∑ s : Fin 2, ∑ t : Fin 2, H s t * G A s t)).re := by
+      simp [Matrix.trace_sum]
+    _ = -(1 / 5 : ℝ) := by
+      rw [hv, Matrix.trace_smul, Matrix.trace_one, Complex.smul_re]
+      norm_num
+
+private theorem not_jordanCompatible : ¬ JordanCompatible Phi Psi := by
+  rintro ⟨A, _, h1, h2, hT⟩
+  have hn := trace_sum_nonneg A hT
+  rw [trace_sum_value A h1 h2] at hn
+  norm_num at hn
+
+theorem result : ¬ claim := by
+  intro h
+  exact not_jordanCompatible
+    (h 4 Phi Psi channels_cptp.1 channels_cptp.2 compatible_witness)
+
 end D5.S3.QuantumChannels.JordanCompatibilityRefutation
