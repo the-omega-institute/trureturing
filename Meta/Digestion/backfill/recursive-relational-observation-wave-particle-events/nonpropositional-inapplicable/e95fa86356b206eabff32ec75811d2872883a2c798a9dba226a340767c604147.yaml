@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e95fa86356b206eabff32ec75811d2872883a2c798a9dba226a340767c604147
+  normalized_sha256: sha256:e95fa86356b206eabff32ec75811d2872883a2c798a9dba226a340767c604147
+cas_ref: sha256:e95fa86356b206eabff32ec75811d2872883a2c798a9dba226a340767c604147
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 245.1（最坏目标直径值函数）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 787a04dd50e35da2e491fdc28ffa83e1fa75f6497b3e81ba19788d91103e150d
+    next_atom_id: 85294deae7e007005bb16e269f706fb981d90cd996b111163e65c7b934a51e52

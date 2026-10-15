@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cdf76d8188b5c08e79daca0967dab4ebc2d594b85fdc6b16e64dc8f573de75e8
+  normalized_sha256: sha256:cdf76d8188b5c08e79daca0967dab4ebc2d594b85fdc6b16e64dc8f573de75e8
+cas_ref: sha256:cdf76d8188b5c08e79daca0967dab4ebc2d594b85fdc6b16e64dc8f573de75e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 1.4的独立证明段，仅论证前项陈述及其适用范围，不提出新的独立命题；前项命题保留其原有结算义务。
+    previous_atom_id: 0e5987571f0298ff2f527b1ab7d0751662374f9de2025aa2252a9fa5cac900d6
+    next_atom_id: 176338a2f7f36685f2ac7c15ac2aa9ef269e44787ebc0f2fa1b5737973f6c4f1

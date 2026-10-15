@@ -14,8 +14,6 @@ noncomputable section
 open MeasureTheory
 open D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
-open private view_congr from
-  D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledRealization
 /-- Chronological actual paid requests, including repeated indices and the first zero. -/
 def acquired (stop : Bool) : List ℕ → (ℕ → Bool) → List (ℕ × Bool)

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b8d78bb9f98dded97024f69923e3288723154d1c039fb8b3b6582c0dccef838
+  normalized_sha256: sha256:1b8d78bb9f98dded97024f69923e3288723154d1c039fb8b3b6582c0dccef838
+cas_ref: sha256:1b8d78bb9f98dded97024f69923e3288723154d1c039fb8b3b6582c0dccef838
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 1.2 观察者、记忆与预测锚点：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: baf21dbbbc476576bafb954f227b7b3be8cfe517492d3a87f04aabab32fec069
+    next_atom_id: 0447752c1d8d664ac933a81f05849b423cefa6913842f031296bc94f1e69bbb4

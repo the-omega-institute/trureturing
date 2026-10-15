@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3431aaa7dcee74dee60b514028f457f0a60a9eff3e96cf0b71cdc0e877a4b289
+  normalized_sha256: sha256:3431aaa7dcee74dee60b514028f457f0a60a9eff3e96cf0b71cdc0e877a4b289
+cas_ref: sha256:3431aaa7dcee74dee60b514028f457f0a60a9eff3e96cf0b71cdc0e877a4b289
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第55节标题及导言仅说明比较任务、执行模型和整数基／素数的适用安排，不另立数学命题。
+    previous_atom_id: b4c65e616dfcb605cedddb3720e9af5207c253dd09359857ef12f6ac51f059d3
+    next_atom_id: d160706dcde6149a39d1a72c2481392b2ded585e9d5eff4026c64fb80b1606cb

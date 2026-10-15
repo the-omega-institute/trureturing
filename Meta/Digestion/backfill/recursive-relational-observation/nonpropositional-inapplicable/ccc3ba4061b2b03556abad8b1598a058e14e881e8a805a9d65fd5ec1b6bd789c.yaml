@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ccc3ba4061b2b03556abad8b1598a058e14e881e8a805a9d65fd5ec1b6bd789c
+  normalized_sha256: sha256:ccc3ba4061b2b03556abad8b1598a058e14e881e8a805a9d65fd5ec1b6bd789c
+cas_ref: sha256:ccc3ba4061b2b03556abad8b1598a058e14e881e8a805a9d65fd5ec1b6bd789c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 58.5 只规定稀疏证书的语法、整数解释和序列化方式，不断言算法总能产生成功证书。
+    previous_atom_id: e7d23ebdd9ff00f69eb04a89790f471327a29ee2cec37d41b0c91f410432a68a
+    next_atom_id: 7fbca08b57fa0ebe63b0de093c48839f72fee94f78235f5581328aa411660a66

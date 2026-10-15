@@ -11,6 +11,11 @@ internal sealed class NativeFiveHoleFiberDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(RawFormula())), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Source is the finite free magma on the two native leaves. Addresses are Boolean words, false for L and true for R. F(y) pairs alpha with the actual substitution of y. V(x,y,z) pairs x with the successive holes y, z, F(y), F(z). Q consists of L, RL, RRL, RRRL and RRRR.")),
                     Paragraph(Text("RootLabel is the complete one-hole row at the empty address. GuardedEqual requires presence at both supplied endpoints and equality of the entire transformed subtrees. All original literals and both positive copies concern the same finite source."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("five-hole-root-record"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleFiber.root_record"),
+                H("The complete root row is constant"),
+                StatementSource.FromAuthor(Disp(All("u",Source,EqOf(Call("literalRecord",Call("singleton",Call("nil")),V("u")),Call("rootLabel"))))),
+                AssessedProvenance.FromRepo(),Blocks(Paragraph(Text("Every nonempty finite source is hidden by the root hole. Its literal exterior is the empty-address hole and its complete partition has one class. This equality keeps the entire row, including the partition, rather than only a point reply."))),DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("five-hole-raw-fiber-iff"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleFiber.raw_fiber_iff"), H("Every raw source has the full source shape"),
                 StatementSource.FromAuthor(Disp(All("u",Source,IffOf(Call("Raw",V("u")),Some("x,y,z",Source,EqOf(V("u"),Call("V",V("x"),V("y"),V("z")))))))), AssessedProvenance.FromRepo(), Blocks(

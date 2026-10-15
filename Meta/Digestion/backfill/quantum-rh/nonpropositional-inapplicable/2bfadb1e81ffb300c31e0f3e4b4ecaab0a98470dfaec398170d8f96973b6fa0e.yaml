@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2bfadb1e81ffb300c31e0f3e4b4ecaab0a98470dfaec398170d8f96973b6fa0e
+  normalized_sha256: sha256:2bfadb1e81ffb300c31e0f3e4b4ecaab0a98470dfaec398170d8f96973b6fa0e
+cas_ref: sha256:2bfadb1e81ffb300c31e0f3e4b4ecaab0a98470dfaec398170d8f96973b6fa0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 1 只引入有限同余核的求和公式并解释 Möbius、Euler 记号；半正定性在下一 atom 单独陈述。
+    previous_atom_id: c7bb60a2b141dee6fc1c0334c9963cdf924b277073db772d7306a73d7af2d41f
+    next_atom_id: 3c4d2facb15a6abe92c4b47de85616dddb85285d33ca0a9e56dc760ea4176852

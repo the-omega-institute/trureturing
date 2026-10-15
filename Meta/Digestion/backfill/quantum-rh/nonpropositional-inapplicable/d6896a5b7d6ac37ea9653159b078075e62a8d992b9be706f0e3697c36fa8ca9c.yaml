@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6896a5b7d6ac37ea9653159b078075e62a8d992b9be706f0e3697c36fa8ca9c
+  normalized_sha256: sha256:d6896a5b7d6ac37ea9653159b078075e62a8d992b9be706f0e3697c36fa8ca9c
+cas_ref: sha256:d6896a5b7d6ac37ea9653159b078075e62a8d992b9be706f0e3697c36fa8ca9c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of the preceding theorem fourteen by cancellation of internal terms; formula (81) juxtaposes the two already stated growth inequalities.
+    previous_atom_id: 9907b45db0455394c6e8a00a5cd8ff4254b92dddb711777a18a6ab48d070c176
+    next_atom_id: ac8d50c6ccef84857f4f3fa551dc687af2d2ab5abc5acff14872db2f068dac25

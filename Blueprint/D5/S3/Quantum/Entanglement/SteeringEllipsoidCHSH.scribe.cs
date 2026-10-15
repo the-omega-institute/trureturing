@@ -31,6 +31,9 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
             Node("claim", "Conjecture 1", ClaimFormula(),
                 "Section V, Conjecture 1: Let rho be a general two-qubit state with its steering ellipsoid centred at c. The CHSH nonlocality is tightly bounded as beta(rho) <= max[2 sqrt(2(1 - c)), 2]. Here c is the Euclidean length of D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.centre. The first clause gives the inequality for every positive semidefinite matrix of trace one. The second expresses tightness as a supremum: for each t in [0, 1] and each epsilon > 0 there is a positive semidefinite trace-one matrix with centre length exactly t and CHSH value strictly greater than bound(t) - epsilon.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("trace-pauli-kronecker-eq-corr", "Pauli expectations equal the correlations", TracePauliKroneckerEqCorrFormula(),
+                "For every Hermitian complex two-qubit operator rho and every pair of Pauli indices i and j in Fin 3, the trace of rho times the corresponding Kronecker product equals its real correlation entry embedded in the complex numbers. Hermiticity makes this trace real.",
+                "trace_pauli_kronecker_eq_corr", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("milne-chsh-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The centre bound holds"), StatementSource.FromAuthor(Disp(ClaimBody())),
@@ -125,6 +128,15 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
     private static Formula Spin(Formula vector) => QCall(SpinOwner, "spin", vector);
     private static Formula Bell(Formula a, Formula aPrime, Formula b, Formula bPrime) =>
         Call("bell", a, aPrime, b, bPrime);
+    private static Formula TracePauliKroneckerEqCorrFormula()
+    {
+        Formula rho = F.Id("rho"), i = F.Id("i"), j = F.Id("j");
+        Formula observable = Kron(QCall(Companion, "pauli", i), QCall(Companion, "pauli", j));
+        Formula correlation = QCall("Complex", "ofReal", QCall(Companion, "corr", rho, i, j));
+        return All("rho", TwoQubitType(), Implies(QCall("Matrix", "IsHermitian", rho),
+            All("i", Fin(3), All("j", Fin(3), EqTo(Trace(Multiply(rho, observable)), correlation)))));
+    }
+
     private static Formula BellFormula()
     {
         var a = F.Id("a");

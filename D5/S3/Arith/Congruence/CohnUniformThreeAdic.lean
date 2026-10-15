@@ -439,7 +439,12 @@ theorem cohn_polynomial_ne_one (q : ℕ) (ξ : ℤ) (hq : 7 ≤ q)
   rw [hv] at hle
   omega
 
-#print axioms cohn_stationary_congruence
-#print axioms cohn_polynomial_ne_one
+
+
+namespace Exported
+set_option backward.privateInPublic true in
+export D5.S3.Arith.Congruence.CohnUniformThreeAdic (z sinePart polynomial_identification evalQuadratic)
+end Exported
 
 end D5.S3.Arith.Congruence.CohnUniformThreeAdic
+

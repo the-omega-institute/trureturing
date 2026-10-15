@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85c5348ae06eff1b68b5d5111e61cf15f41ef4c4e8435a6edad1dc41a7d21d41
+  normalized_sha256: sha256:85c5348ae06eff1b68b5d5111e61cf15f41ef4c4e8435a6edad1dc41a7d21d41
+cas_ref: sha256:85c5348ae06eff1b68b5d5111e61cf15f41ef4c4e8435a6edad1dc41a7d21d41
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** RP10 is independent of k. A difference t is a period if and…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: af0e8bdfbd60b448f83c03f7a28c18a1b285b6aef3e6470f2df410c7a2a440bc
+    next_atom_id: b722600b7f8d33a67bd9595f2bd69236e60ce68fcf0534f76b3c8f2046273f9f
