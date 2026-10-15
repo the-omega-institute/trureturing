@@ -2831,3 +2831,572 @@ the prescribed literal reader entry is acquired before that reading.
 [STBP]: https://doi.org/10.1006/jcss.1997.1530
 
 ## 追加锚（本行以下为增补区）
+
+## 29. Two paid scans for the same prescribed threshold entry
+
+**Definition 29.1 (unchanged native task and static notation).** Fix
+exactly the supplied $A=\{s_1<\cdots<s_n\}$, $n\ge3$, and
+$1\le k\le n$ of Definition 23.1. Throughout §§29–33 the function
+being prepared is literally $\sigma_{A,k}$ of (PCA.53) and (PCA.12),
+on the entire original unbounded $\mathcal U_*$. Retain the source
+algebra, update, actual inverse origins, complete current row and
+all five complete canonical predecessor rows of Definitions 1.1 and
+4.1 and Convention 23.2. In particular both occurrences of $a$ and
+both of $c$, every distinct-class disequality and every strict-prefix
+blocking guard are retained. The finite cube of Lemma 24.1 is not
+an upper-domain promise. Every original finite address remains legal,
+and all four native replies remain in the interface; the finite installed
+menu does not restrict that address universe.
+
+The reader remains Supplier application 4.3's fixed eight-state
+reader with its original complete entries $e_0,e_1$, entry map,
+three running states and five literal whole-row halts. Preparation
+must latch exactly $\widehat e_{\sigma_{A,k}(u)}$; the paid handoff
+enters exactly that complete original entry. The reader's separate
+bounds remain $K=8$, $q_R\le2$, $\ell_R\le6$. Neither its code
+nor its entries nor any of its four successors are design variables.
+
+For notation in finite tables put
+
+$$
+\chi(\mathsf{branch})=1,\qquad
+\chi(\alpha)=\chi(\beta)=\chi(\mathsf{absent})=0,
+\qquad a_i=LLLw_i=LLL L^{s_i}R.
+\tag{PCA.66}
+$$
+
+Thus $|a_i|=s_i+4$ and $\sum_i|a_i|=W_A$. Writing an edge
+using $\chi$ means installing its four specified successors; it
+provides no extra reply operation. On any actual filling the native
+occurrence identity gives $r_{t_u}(a_i)=r_{x_a}(w_i)$, including
+absence and continuations blocked by either leaf. For a branch image
+$B$, write $h(B)=\sum_i\chi(r_B(w_i))$ only as a mathematical
+quantity used in proofs. No acquired value, bit vector or value of
+$h(B)$ is an accessible preparation argument.
+
+**Theorem 29.2 (explicit repeated-query resource point).** Under the
+unchanged permissions and prices of Definition 29.1 and Convention
+23.2, every supplied $A$ and $k$ have a finite common-start preparer
+on all of $\mathcal U_*$ with
+
+$$
+\boxed{\ H=n(2\lceil\sqrt n\rceil+1)+4+r,\qquad
+p=2n+1,\qquad \ell=3+2W_A.\ }
+\tag{PCA.67}
+$$
+
+The displayed call and literal costs are the attained uniform maxima
+of this one construction, and $H$ is its exact installed cardinality,
+including every unreachable state and all $r$ mandated further
+latches. The only mutable preparation configuration is its current
+counted state.
+
+Proof. The two modular scans below are a native use of the classical
+modular-router and two-box exact-division method: see Sinha's
+[dissertation, Proposition 3.10, Definitions 3.14 and 3.17, and the
+exact-division attribution on printed p. 42][SINHA95]. The modular
+method is a credited supplier; the present assertion specifies and
+prices its original-entry native consumer.
+
+Let
+
+$$
+d=\lceil\sqrt n\rceil,\qquad e=d+1,\qquad
+c=(-k)\bmod d\in\{0,\ldots,d-1\},\qquad J=(k+c)/d.
+\tag{PCA.68}
+$$
+
+Here $J$ is an integer with $1\le J\le d$, since
+$1\le k\le n\le d^2$. Every $0\le h\le n$ satisfies
+
+$$
+0\le h+c\le d^2+d-1<de.
+\tag{PCA.69}
+$$
+
+Install distinct running states $D,T$ and, independently, all states
+
+$$
+U_{i,j}\quad(1\le i\le n, 0\le j<d),\qquad
+V_{i,z}\quad(1\le i\le n, 0\le z<e).
+\tag{PCA.70}
+$$
+
+Install the two original-entry latches and the $r$ mandated further
+latches. All states in (PCA.70) count even when they are unreachable
+from the common start. A modular remainder in the following formulas
+always names a fixed member of its displayed finite range.
+
+For $\varepsilon\in\{0,1\}$ define the following *table entries*,
+with $j'=(j+\varepsilon)\bmod d$ and
+$z'=(z+\varepsilon)\bmod e$:
+
+$$
+\begin{aligned}
+F_U(i,j,\varepsilon)&=
+\begin{cases}
+U_{i+1,j'},&i<n,\\
+V_{1,(c-j')\bmod e},&i=n,
+\end{cases}\\
+F_V(i,z,\varepsilon)&=
+\begin{cases}
+V_{i+1,z'},&i<n,\\
+\widehat e_1,&i=n\text{ and }(-z')\bmod e\ge J,\\
+\widehat e_0,&i=n\text{ and }(-z')\bmod e<J.
+\end{cases}
+\end{aligned}
+\tag{PCA.71}
+$$
+
+Start at $D$. Install precisely the following literals and all four
+successors at every running state.
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $U_{1,c}$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $U_{i,j}$ | $a_i$ | $F_U(i,j,0)$ | $F_U(i,j,0)$ | $F_U(i,j,1)$ | $F_U(i,j,0)$ |
+| $V_{i,z}$ | $a_i$ | $F_V(i,z,0)$ | $F_V(i,z,0)$ | $F_V(i,z,1)$ | $F_V(i,z,0)$ |
+
+Formulas (PCA.68)–(PCA.71) describe source-independent choices of
+literal successor names at installation. In particular the final
+comparison, modular remainders and first-to-second-scan connection
+are already reflected in those names. Execution has no modular
+arithmetic instruction, decoder, phase register, bit register,
+cursor, source copy, computed address, reset or silent connection
+step. The symbols $i,j,z$ distinguish separately installed states;
+there is no mutable tuple alongside the one current state. The
+$r$ further latches are installed but unreachable.
+
+First examine an arbitrary $u\in Z_{b_3}$, with arbitrary finite
+branch image $x_a=B$. The paid $D$ query returns beta. Put
+$\theta_i=\chi(r_B(w_i))$ and $h=\sum_i\theta_i$ only for this
+proof. Induction on the first scan shows that its state before
+reading $a_i$ is $U_{i,(c+\sum_{v<i}\theta_v)\bmod d}$. Thus its
+last paid edge selects the second scan's first state with residue
+$(c-j_*)\bmod e$, where $j_*=(h+c)\bmod d$.
+
+Each repeated query is on the same stationary current tree. It
+therefore has the same $\theta_i$ in the second scan, whatever the
+shape of $B$. Induction on that scan shows that its residue after
+its last reply is
+
+$$
+z_*=(c-j_*+h)\bmod e
+    =d\left\lfloor\frac{h+c}{d}\right\rfloor\bmod e.
+\tag{PCA.72}
+$$
+
+By (PCA.69), $v=\lfloor(h+c)/d\rfloor$ lies in
+$\{0,\ldots,e-1\}$. Since $d\equiv-1\pmod e$, (PCA.72)
+implies $(-z_*)\bmod e=v$. Consequently the installed final edge
+latches one exactly when
+
+$$
+v\ge J
+\quad\Longleftrightarrow\quad h+c\ge dJ=k+c
+\quad\Longleftrightarrow\quad h\ge k.
+\tag{PCA.73}
+$$
+
+This is exactly the prescribed code on $Z_{b_3}$. The proof used no
+comb shape, bound on tree size or distributional assumption. Both
+leaf labels and absent replies have been handled by the installed
+zero successors, not removed from the native alphabet.
+
+For completeness check all other members of the eleven-profile
+partition of Definition 4.1. Alpha at $b_3$ occurs exactly on
+$\Pi_3$ and selects $\widehat e_1$. Beta occurs exactly on
+$Z_{b_3}$, already proved. On the remaining branch-at-$b_3$
+profiles, alpha at $b_4$ occurs exactly on $\Pi_4$ and selects
+$\widehat e_1$ from $T$. Every other such profile, including
+$\Pi_1,\Pi_2$, every other $Z_d$ and $Z_*$, selects
+$\widehat e_0$. Class-root absence cannot occur on this complete
+cut but its successors are installed. Thus every actual finite
+origin in $\mathcal U_*$ reaches its literal prescribed entry.
+The fixed reader then returns the original whole $R_P(u)$, with
+its unchanged partition, repeated occurrences and blocking guards.
+
+Each execution on $Z_{b_3}$ visits $D$, all $n$ first-scan
+positions and all $n$ second-scan positions. Each such visit makes
+one paid invocation. Its costs are exactly $2n+1$ and $3+2W_A$.
+This fiber is nonempty by Definition 4.1, so these costs are
+attained by actual finite origins. Every other execution makes
+one or two root queries and costs at most two calls and six
+letters. Since $W_A\ge5n$ and $n\ge3$, these are smaller than
+the displayed scan costs. There are exactly $n(d+e)+2$ running
+states and $2+r$ latches. This proves all of (PCA.67). $\square$
+
+## 30. A strict central-threshold state saving and its execution price
+
+**Proposition 30.1 (a strict subgrid family of full resource points).**
+For every integer $t\ge5$, every supplied $A$ of cardinality
+$n=4t^2$, and the central threshold $k=2t^2$, compare the following
+two preparers for the *same* $\sigma_{A,k}$:
+
+$$
+\begin{aligned}
+\mathcal R_{\mathrm{grid}}
+ &=\bigl(k(n-k+1)+4+r, n+1, 3+W_A\bigr),\\
+\mathcal R_{\mathrm{two}}
+ &=\bigl(n(4t+1)+4+r, 2n+1, 3+2W_A\bigr).
+\end{aligned}
+\tag{PCA.74}
+$$
+
+Each row is one full attainable point with its own exact uniform
+execution maxima. The second row has strictly fewer installed
+states than the first. It has larger call and literal maxima, so
+the assertion is an installed-state improvement with additional
+paid execution, not a coordinatewise improvement of resource points.
+
+Proof. The first row is Theorem 26.1 and the second is Theorem 29.2,
+since $\lceil\sqrt{4t^2}\rceil=2t$. The difference of their
+installed cardinalities is
+
+$$
+\begin{aligned}
+k(n-k+1)-n(4t+1)
+ &=2t^2(2t^2+1)-4t^2(4t+1)\\
+ &=2t^2(2t^2-8t-1)>0.
+\end{aligned}
+\tag{PCA.75}
+$$
+
+For $t\ge5$, $2t^2-8t-1=2t(t-4)-1\ge9$.
+Also $2n+1>n+1$ and $3+2W_A>3+W_A$. Arbitrary finite sets of
+these cardinalities exist, for instance $A=\{1,\ldots,4t^2\}$,
+so this gives a nontrivial infinite central-threshold family on the
+original full source domain. At the enlarged execution budgets of
+$\mathcal R_{\mathrm{two}}$, both tables are allowed and the
+grid's installed count is strictly improvable. No grid-optimality
+premise is required. Neither this comparison nor either table pairs
+the smaller $H$ with the grid's execution minima. $\square$
+
+## 31. Counted modular chains for the prescribed native consumer
+
+**Assumption 31.1 (a supplied classical chain and its separation).**
+For the $n,k$ of Definition 29.1, supply a finite chain MA-program
+in Sinha's Definitions 3.14 and 3.17 [printed pp. 31–33][SINHA95].
+It has $b\ge1$ boxes with positive integer moduli
+$q_1,\ldots,q_b$ and size $S=\sum_{j=1}^b q_j$. Box $j$ has
+input and output positions $0,\ldots,q_j-1$. An integer $h$
+entering input $s$ leaves at output $(s+h)\bmod q_j$.
+Every output is either a sink or is connected by a supplied fixed
+map $M$ to an input of box $j+1$; the last box's outputs are sinks.
+The source is a supplied input $(j_0,s_0)$; it may be taken in
+box one, and unused preceding boxes, if any, still contribute to
+$S$ and $b$. In particular the box connections are acyclic.
+
+The chain separates $\{0,\ldots,k-1\}$ and
+$\{k,\ldots,n\}$: no sink receives an integer from both sets
+when routed from the supplied source. Label a sink zero or one
+according to the set reaching it; assign zero to sinks reached by
+neither set. This labeling is common table data depending on the
+supplied chain and $n,k$, never on the actual native source. A
+chain not satisfying this separation is not a premise of the
+following upper bound. The integer $h$, the chain inputs and its
+abstract routing operation are mathematical specification objects,
+not accessible native preparation ports.
+
+**Theorem 31.2 (fully paid native chain interface).** For every supplied
+chain of Assumption 31.1 there is, for the same $\sigma_{A,k}$ on
+all of $\mathcal U_*$, a finite preparer with
+
+$$
+\boxed{\ H=nS+4+r,\qquad p\le nb+1,\qquad
+                         \ell\le bW_A+3.\ }
+\tag{PCA.76}
+$$
+
+Here $H$ is the exact installed count of the specified construction;
+the other two expressions are uniform upper bounds, without an
+assertion that a native source traverses all boxes. Every box input,
+scan position, residue and connection is represented in its counted
+states or its fixed four-successor table. It has no additional
+mutable configuration.
+
+Proof. Sinha's Proposition 3.10 supplies the modular scan;
+Lemma 3.16 and Corollary 3.18 describe its classical Boolean
+branching-program connection. The following construction spells out
+and prices the native specialization, rather than treating those
+Boolean nodes or their interconnections as uncharged native services.
+
+For every box $j$, position $1\le i\le n$ and
+$0\le z<q_j$, install a distinct running state $C_{j,i,z}$ with
+literal $a_i$ of (PCA.66). Thus there are exactly $nS$ such
+states. The states $C_{j,1,s}$ are the representations of all input
+positions $s$ of box $j$: they are already in this count, not
+additional free input nodes. A state holds the current residue in
+its identity, not a separate register retaining the input value.
+
+Let $\Lambda(j,z)$ be the following fixed successor name for an
+abstract box output:
+
+$$
+\Lambda(j,z)=
+\begin{cases}
+\widehat e_v,&(j,z)\text{ is a sink with fixed label }v,\\
+C_{j+1,1,s},&M(j,z)=(j+1,s).
+\end{cases}
+\tag{PCA.77}
+$$
+
+For each $\varepsilon\in\{0,1\}$ define the installed names
+
+$$
+G(j,i,z,\varepsilon)=
+\begin{cases}
+C_{j,i+1,(z+\varepsilon)\bmod q_j},&i<n,\\
+\Lambda\bigl(j,(z+\varepsilon)\bmod q_j\bigr),&i=n.
+\end{cases}
+\tag{PCA.78}
+$$
+
+Install $D,T$, the two original-entry latches and all $r$ further
+mandated latches. Start at $D$ with the total four-successor table
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $C_{j_0,1,s_0}$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $C_{j,i,z}$ | $a_i$ | $G(j,i,z,0)$ | $G(j,i,z,0)$ | $G(j,i,z,1)$ | $G(j,i,z,0)$ |
+
+There is no separate running output node: the box's final paid
+query takes exactly the edge specified by (PCA.77). In the sink
+case it directly replaces the current running state by its original
+entry latch; all sinks with one label may use that same literal
+latch. In the connection case it directly replaces it by the
+counted first-position state of the next box with the prescribed
+input residue. Thus the abstract connection is included in an
+ordinary installed successor, with its table bytes separately
+priced. There is no silent native transition, extra latch per
+abstract sink, input latch, scan reset state, dispatch state,
+phase register or uncounted residue. Even modulus one has $n$
+installed running states whose $n$ visits are paid. All unreachable
+box states and the $r$ unused latches count.
+
+Fix any actual $u\in Z_{b_3}$ and put
+$\theta_i=\chi(r_{x_a}(w_i))$, $h=\sum_i\theta_i$, as proof
+notation only. For a scan entering box $j$ at $C_{j,1,s}$,
+induction gives the residue before position $i$ as
+$(s+\sum_{v<i}\theta_v)\bmod q_j$. The last query therefore
+takes precisely $\Lambda(j,(s+h)\bmod q_j)$. All subsequent
+scans read the same stationary native replies. Induction along the
+acyclic chain proves that the run reaches the sink label of the
+supplied chain on this same $h$, which is one exactly when $h\ge k$.
+This proves the required (PCA.53) for every finite branch image,
+including arbitrary sizes, shapes and absent selected nodes.
+
+The $D,T$ rows deal with all other profiles exactly as in Theorem
+29.2: $\Pi_3$ and $\Pi_4$ latch one and all other non-scan
+profiles latch zero. Thus correctness holds for every original
+finite inverse origin, with the same prescribed complete entries
+and the fixed whole-row reader. Separation has not been replaced
+by a promise on cube inputs: every integer $h$ arising on an
+arbitrary native source lies in $\{0,\ldots,n\}$, which is
+exactly the supplied chain's entire integer interval.
+
+If the chain on such an $h$ traverses $\nu(h)$ boxes, the native
+execution has exactly
+
+$$
+q_P(u)=1+n\nu(h),\qquad
+\ell_P(u)=3+W_A\nu(h),\qquad 1\le\nu(h)\le b.
+\tag{PCA.79}
+$$
+
+Every selected literal is submitted once per traversed box, at its
+full absolute length; repeated occurrences are charged again.
+Acyclicity bounds the number of traversed boxes by $b$. On the
+other profiles at most two calls and six letters are used, both
+dominated by $nb+1$ and $bW_A+3$ for $n\ge3$, $b\ge1$.
+Counting $nS$ scan states, the two running profile states and all
+$2+r$ latches proves (PCA.76). If a common running start is named
+in advance, label $D$ by that name. No source-dependent
+initialization is needed. $\square$
+
+## 32. The classical near-linear state supplier and the unresolved optima
+
+**Corollary 32.1 (uniform near-linear-polylog native state upper).**
+There are absolute constants $C,n_0$ such that for every $n\ge n_0$,
+every supplied $A$ of cardinality $n$, and every $1\le k\le n$,
+a preparer for the same original $\sigma_{A,k}$ on all of
+$\mathcal U_*$ has
+
+$$
+\begin{aligned}
+H&=nS_{n,k}+4+r,\\
+S_{n,k}&\le C\frac{\log^3 n}
+                      {\log\log n\,\log\log\log n},\\
+p&\le nb_{n,k}+1,\qquad
+\ell\le b_{n,k}W_A+3,\qquad b_{n,k}\le S_{n,k}.
+\end{aligned}
+\tag{PCA.80}
+$$
+
+The integers $S_{n,k},b_{n,k}$ refer to one and the same supplied
+chain for this $n,k$. In particular the native installed count is
+$O(n\log^3 n/(\log\log n\,\log\log\log n))+4+r$ uniformly in
+threshold. The implicit constant does not depend on $A,k$ or $r$.
+For smaller $n$, Theorem 29.2 supplies the explicit finite upper.
+
+Proof. Apply Sinha's [Theorem 3.29, printed p. 41][SINHA95], to the
+integer threshold problem on $I=\{0,\ldots,n\}$, of length
+$L=n+1$, with the $k$ smallest integers as its low set. Its
+high set is exactly $\{k,\ldots,n\}$. That theorem supplies
+a chain of size
+$O(\log^3 L/(\log\log L\,\log\log\log L))$ separating these
+sets, uniformly for the specified threshold and interval. Replacing
+$L=n+1$ by $n$ in this asymptotic bound changes only the absolute
+constant after increasing $n_0$.
+
+The uniformity used here is also explicit in that supplier's proof:
+Proposition 3.28 chooses the moduli using only interval length,
+Corollary 3.27 routes the unresolved integers into a shorter
+interval, and Theorem 3.29 recurses on that interval with the
+size estimate independent of the threshold. These are credited
+classical results, not newly asserted generic theorems. Supply
+one such chain to Theorem 31.2. Each modulus is a positive integer,
+so $b_{n,k}\le\sum_j q_j=S_{n,k}$. This gives every bound in
+(PCA.80) on one native table. It yields, if desired, the loose
+execution uppers $p\le nS_{n,k}+1$ and
+$\ell\le S_{n,k}W_A+3$; no smaller asymptotic scan count or
+execution optimum is inferred from the size theorem. $\square$
+
+**Definition 32.2 (two different installed-state minima).** For
+$2\le k\le n-1$, retain $H_{\min}(A,k;r)$ of Corollary 27.3,
+with no restriction on the finite uniform execution budgets. Let
+$H_{\mathrm{exec}}(A,k;r)$ be the least installed cardinality
+among preparers that simultaneously satisfy
+$p\le n+1$ and $\ell\le3+W_A$. Both minima exist as integers
+because Theorem 26.1 supplies such a finite table. They concern
+all of Convention 23.2's competitors, including repeated queries,
+shared states and cyclic union graphs with sourcewise termination.
+
+**Proposition 32.3 (retained lower bounds and distinct remaining gaps).**
+For every $2\le k\le n-1$,
+
+$$
+\begin{aligned}
+2n+2+r
+&\le H_{\min}(A,k;r)\\
+&\le\min\{k(n-k+1),\ n(2\lceil\sqrt n\rceil+1)\}+4+r,\\
+H_{\min}(A,k;r)
+&\le H_{\mathrm{exec}}(A,k;r)
+ \le k(n-k+1)+4+r.
+\end{aligned}
+\tag{PCA.81}
+$$
+
+When a separating chain of size $S$ is supplied, the first upper
+can additionally include $nS$ in that minimum. For sufficiently
+large $n$, Corollary 32.1 gives the corresponding uniform
+near-linear-polylog upper on $H_{\min}$. The independent minimum
+call and literal upper budgets remain exactly $n+1$ and $3+W_A$.
+For $k=2$ and $k=n-1$ both installed minima remain exactly
+$2n+2+r$, as in Theorem 27.1. For the remaining general interior
+thresholds $3\le k\le n-2$, neither an exact unrestricted
+$H_{\min}$ nor an exact $H_{\mathrm{exec}}$ is determined here.
+
+Proof. Reuse Theorem 25.1 for the unrestricted linear state lower
+and Theorem 25.2 and Corollary 27.3 for the exact independent
+execution minima. Theorems 26.1, 29.2 and, when applicable, 31.2
+give separate full attainable resource points; dropping execution
+constraints gives their respective uppers on $H_{\min}$. Only
+Theorem 26.1 is used for the upper at the simultaneous execution
+minima. Restricting competitors cannot lower the infimum of
+installed cardinalities, giving
+$H_{\min}\le H_{\mathrm{exec}}$. The exact two endpoint values
+are direct reuse of Theorem 27.1, including coincident endpoints
+when $n=3$. None of the new repeated-scan bounds is paired with
+another table's smaller execution costs. No ordered/read-once
+lower bound of Wegener or Bryant is imposed on the unrestricted
+competitors. Thus the stated inequalities leave precisely the two
+general state questions unresolved. $\square$
+
+## 33. Mathematical attribution and the supplied realization contract
+
+**Attribution 33.1 (suppliers and the native quantitative addition).**
+The modular routers, modular arithmetic programs, chain programs
+and their generic Boolean branching-program translations are
+literature-attested: Sinha, *Some Topics in Parallel Computation
+and Branching Programs*, Definitions 3.14 and 3.17, Proposition
+3.10, Lemma 3.16 and Corollary 3.18, printed pp. 28–33. The
+near-linear-polylog size supplier is his Theorem 3.29 and its proof,
+printed pp. 39–41, with Proposition 3.28 and Corollary 3.27 as
+its explicit prerequisites. His printed p. 42 credits the two-box
+exact-division paradigm underlying Lupanov's earlier majority
+construction. The present explicit two-scan table is an application
+of that classical paradigm, not a new generic threshold or
+branching-program result. The [citation-only source note][SINHANOTE]
+records this supplier scope. No theorem premise is taken from the
+uninspected journal full text associated with DOI
+10.1006/jcss.1997.1530.
+
+The source and permission correspondence for these deductions is
+NBP Definitions 1.1–1.2 and 9.1, Assumption 9.2, Proposition 9.3,
+the every-address occurrence identity (NBP.9.7), Proposition 15.2
+and Theorem 15.5; here it is fixed by Definitions 1.1, 4.1–4.2,
+Supplier application 4.3, Convention 23.2 and Definition 29.1. These
+supply the full original actual domain, unique finite inverse
+origins, all eleven profiles, both repeated partners, complete
+rows and the unchanged eight-state reader. Lemma 24.1 supplies
+actual lower-bound witnesses, and Theorems 25.1–25.2 and 27.1
+supply the reused lower and exact endpoint results.
+
+The additional native content is the explicit fully paid point
+(PCA.67), its strict central-threshold subgrid consequence
+(PCA.74)–(PCA.75), and the counted original-entry modular-chain
+interface (PCA.76) with its supplier consequence (PCA.80).
+The statements quantify over the entire original fiber and price
+all running states, original-entry latches, mandated additional
+latches and actual running visits. This is a repository-derived
+native quantitative deduction from the credited suppliers; no
+literature-wide priority claim is made.
+
+PCA Theorems 12.4 and 14.3 already give finite paid-task
+correspondences for a prescribed code under their hypotheses;
+NBP §§12–14 already give generic shared-graph correspondences
+with their own encoding permissions. Those correspondences are
+not reproved here and do not give the displayed quantitative
+points. [Finite-reader synthesis, §§11–12][FCS], explicitly
+separates selecting a new compatible code from generating an
+original prescribed code and supplies no budgeted preparation
+optimum. Its freely selected code is not substituted for
+$\sigma_{A,k}$ in any statement above.
+
+**Assumption 33.2 (unchanged services and separate prices).** All
+operational premises of Assumptions 1.2, 16.1 and 22.2 and Boundary
+28.2 remain supplied. The genuine origin/current-register binding,
+one authenticated update, acquisition and authentication of the
+complete current row and acquired code arguments, lawful pre-cut
+native permission, actual export, complete isolation, code-only
+handoff, faithful original complete entry and stationary native
+service are not obtained from existence of the tables above.
+They retain their separate permissions and prices.
+
+The only accessible preparation distinction is the current counted
+running or latch state. Every running visit submits its installed
+absolute literal and costs one invocation, including a repeated,
+constant, root or absent reply. All four successors are installed.
+There is no additional source copy, working register, counter,
+phase, cursor, decoder, reset, address calculation or unpriced
+output-to-input step. Source-independent table design may use
+$A,n,k$ and a supplied chain, and never the actual source.
+
+Installed table representation and connections, literal address
+bytes, original complete entry contents, whole-row output storage,
+initialization, local work, actual handoff and service/isolation
+storage retain their separate costs. The fixed reader's eight
+states and its fresh calls are a separate phase's resources;
+no preparer bound pays for them by omitting their costs. No total
+physical-memory, time or energy bound, arbitrary-code extractor,
+exact general state optimum or completion of the broader native
+relational-fiber problem follows from (PCA.67)–(PCA.81).
+
+[SINHA95]: https://dada.cs.washington.edu/research/tr/1995/08/UW-CSE-95-08-02.pdf
+[SINHANOTE]: ../../../Library/ConceptDynamics/sinha1995branching.md
+[FCS]: FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md
+
+## 追加锚（本行以下为增补区）

@@ -1109,3 +1109,588 @@ mathematical proofs, without a new Lean-verification or physical
 realization assertion.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Input-sector filters and the entire cyclic-witness zero face
+
+**Definition 8.1 (The specified filtered family).** Retain exactly
+Assumption 1.1, the scalar ports and error (1.2)–(1.3), the passive
+frame (1.4), and the complete atom cone (1.8). Let $W$ be the
+particular cyclic witness in (4.1). For three strictly positive real
+numbers $h_0,h_+,h_-$, set
+
+$$
+\begin{gathered}
+H=\sum_{i\in I}h_iR_i,\qquad
+W_H=(I\otimes H^{-1})W(I\otimes H^{-1}),\\
+\Psi_H(a,b)=(a\otimes b)^TW_H(a\otimes b)
+                =\Psi(a,H^{-1}b),\qquad a,b\in\mathbb R^5,\\
+a_*=(d+u_++u_-)/\sqrt3,\qquad
+b_h=\frac{h_0d+h_+u_++h_-u_-}{\sqrt{h_0^2+h_+^2+h_-^2}},\qquad
+q_i=\frac{h_i^2}{h_0^2+h_+^2+h_-^2},\\
+k_h=k(a_*,b_h),\quad k_{+0}=k(u_+,d),\quad
+k_{-+}=k(u_-,u_+),\quad k_{0-}=k(d,u_-),\\
+\mathcal E_H=\{x\in\mathcal K:\operatorname{tr}(W_HZ(x))=0\}.
+\end{gathered}
+\tag{8.1}
+$$
+
+Thus $q_i>0$ and $\sum_iq_i=1$. Here $H$ filters only the input
+factor of a mathematical witness; it is not an added future action.
+Taking $H=I$ gives $W$. Taking $H=C_\xi$ gives precisely $W'_\xi$
+of (4.3), and (4.12) is another member of this same family. No
+output filter, nonscalar within-sector filter or changed coefficient
+in $W$ is included in (8.1).
+
+For an arbitrary original channel, use the output-first unnormalized
+Choi matrix of its passive-frame channel,
+
+$$
+\begin{gathered}
+\widehat T(X)=D^\dagger T(DXD^\dagger)D,\qquad
+\Omega=5^{-1/2}\sum_{s\in\mathsf S}e_s\otimes e_s,\\
+\chi_T=(\widehat T\otimes\mathrm{id})(\Omega\Omega^\dagger),
+\qquad Z_T=5\chi_T.
+\end{gathered}
+\tag{8.2}
+$$
+
+This notation does not assume that $T$ is stationary or real.
+For a selected channel $\widehat T=S_x$, it agrees with $Z(x)$.
+The original-coordinate witness is transported by
+$D\otimes\overline D$ as in (4.9a); all trace pairings are unchanged.
+Theorem 4.2 proves global complex-product positivity of $W$.
+The real invertible input congruence proves it for every $W_H$.
+Consequently its pairing is nonnegative on every original scalar-port
+Choi matrix, including mixed complex preparations and effects.
+
+**Theorem 8.2 (Four generators and all three TP equations).** For every
+$H$ in (8.1), the entire selected zero face is
+
+$$
+\mathcal E_H=
+\operatorname{cone}\{k_h,k_{+0},k_{-+},k_{0-}\}.
+\tag{8.3}
+$$
+
+These four generators are linearly independent. Its full TP slice
+consists exactly of
+
+$$
+\begin{aligned}
+x_H(w)={}&wk_h+(1-wq_0)k_{+0}
+                  +(2-wq_+)k_{-+}+(2-wq_-)k_{0-},\\
+&w\ge0,\qquad wq_0\le1,\quad wq_+\le2,\quad wq_-\le2.
+\end{aligned}
+\tag{8.4}
+$$
+
+Every point in (8.4) is one legal fixed scalar port, with at most
+$100$ flags and whole-block CPTP decoders. This classifies this
+specified witness's zero face; it imposes no support restriction
+on competitors outside that face.
+
+Proof. First classify real zero products before filtering. By
+simultaneous sector rotations and an irrelevant overall sign of
+the preparation, a real unit preparation can be put in the canonical
+form $a(p)=\sqrt{p_0}d+\sqrt{p_+}u_++\sqrt{p_-}u_-$.
+These operations leave its atom coefficients unchanged when applied
+to both factors, as in QAP Theorem 2.2. For this preparation, the
+actual measurement quadratic form (4.7), in the ordered radial
+and tangent coordinates, has the exact block decomposition
+
+$$
+\Psi(a(p),b)=b_r^T\mathcal C(p)b_r
+             +(p_0+p_+)b_{t+}^2+(p_++p_-)b_{t-}^2.
+\tag{8.5}
+$$
+
+Here $b_r=(d^Tb,u_+^Tb,u_-^Tb)^T$,
+$b_{t\pm}=v_\pm^Tb$, and $\mathcal C(p)$ is exactly (4.8).
+Thus this calculation retains every tangent direction, as well
+as the full interior radial determinant.
+
+If all $p_i$ are positive, (4.9) and equality in AM–GM give
+
+$$
+\det\mathcal C(p)=0
+\quad\Longleftrightarrow\quad
+p_0^2p_+=p_+^2p_-=p_-^2p_0
+\quad\Longleftrightarrow\quad
+p_0=p_+=p_-=1/3.
+\tag{8.6}
+$$
+
+For the last equivalence, division is only by strictly positive
+populations; the three monomial equalities force their ratios to
+be one. Otherwise $\mathcal C(p)$ is positive definite: its
+diagonal and its three two-by-two principal minors listed after
+(4.8) are positive, and its determinant is positive. Both tangent
+coefficients in (8.5) are also positive. At the equal population,
+
+$$
+\mathcal C(p)=\tfrac13(3I_3-\mathbf1\mathbf1^T),\qquad
+\ker\mathcal C(p)=\mathbb R(1,1,1),
+\tag{8.7}
+$$
+
+while both tangent coefficients are $2/3$. Thus the only unit
+measurement projectors giving zero there are $bb^T=a(p)a(p)^T$.
+Undoing the simultaneous rotations gives $b=\pm a$, with each
+preparation population equal to $1/3$. Equivalently, in the
+Cauchy–Schwarz bounds preceding (4.8), equality forces all three
+sector inner products to saturate with one common sign. There is
+no independent relative-sign zero or omitted tangent zero.
+
+If exactly two populations are positive, the determinant in (4.9)
+is respectively $p_0^2p_+$, $p_+^2p_-$ or $p_-^2p_0$.
+It is strictly positive in each case, all diagonal entries and
+two-by-two minors of $\mathcal C(p)$ are positive, and the two
+tangent coefficients in (8.5) are positive. Thus there are no edge
+zero products. At a vertex, (8.5) gives exactly the following
+measurement kernels in the original five-dimensional space:
+
+$$
+\begin{array}{c|c}
+\text{preparation sector}&\text{whole measurement kernel}\\\hline
+V_0&V_-\\
+V_+&V_0\\
+V_-&V_+
+\end{array}.
+\tag{8.8}
+$$
+
+Directions within a displayed two-plane contribute the same disjoint
+sector atom: all six plane coefficients vanish and only its one
+population entry remains. These are $k_{0-},k_{+0},k_{-+}$.
+The interior zero products all give $k(a_*,a_*)$. This exhausts
+every nonzero real product; no boundary case uses division by a
+zero population.
+
+Filtering replaces the measurement vector by $H^{-1}b$. Since
+$H$ is invertible and scalar on each sector, (8.8) is unchanged.
+At an interior zero, $H^{-1}b$ is proportional to $a$; normalizing
+$b$ gives precisely $b_h$ after the same canonical rotations.
+Thus the four zero-atom coefficients are exactly those in (8.3).
+The witness is invariant under simultaneous orthogonal changes
+within each sector, and hence under the torus and reflection used
+in (1.8). Therefore
+
+$$
+\operatorname{tr}(W_HZ(k(a,b)))=\Psi_H(a,b).
+\tag{8.9}
+$$
+
+Every point of $\mathcal K$ is a finite nonnegative sum of unit
+atoms. Each summand in its witness pairing is nonnegative, so a
+zero sum uses only zero atoms. The preceding exhaustive analysis
+proves (8.3). The full-support generator has positive diagonal
+population entries; the other three have distinct disjoint sector
+entries and zero diagonal. This proves their linear independence.
+
+The full input marginal of a unit atom, with measurement population
+$q(b)$, is the supplied identity
+
+$$
+\operatorname{Tr}_{\rm out}Z(k(a,b))
+                  =\sum_i\frac{q_i(b)}{n_i}R_i.
+\tag{8.10}
+$$
+
+It is also immediate from (1.6), since each $F_{\nu a}$ is
+traceless. Write the four coefficients in (8.3) as
+$w,c_{+0},c_{-+},c_{0-}$. All three TP equations are exactly
+
+$$
+wq_0+c_{+0}=1,\qquad
+wq_++c_{-+}=2,\qquad
+wq_-+c_{0-}=2.
+\tag{8.11}
+$$
+
+Solving them, and imposing nonnegativity of every coefficient,
+gives (8.4) in both directions. Their total coefficient weight is
+$5$. Equation (8.10) proves the whole matrix marginal $I_5$
+before division by five, rather than just its trace.
+
+For explicit legality, label the four unit seed pairs in (8.1)
+by $r$ and their nonnegative coefficients in (8.4) by $c_r$;
+omit a seed with zero coefficient. All are radial. For
+$0\le k,l<5$ put $g_{kl}=G(2\pi k/5,2\pi l/5)$ and use
+
+$$
+\begin{gathered}
+B_{rkl}=\sqrt{c_r/25}\,(g_{kl}b_r)^TD^\dagger,
+\qquad R_{rkl}=Dg_{kl}a_r,\\
+\operatorname{Enc}(X)=(B_{rkl}XB_{rkl}^\dagger)_{rkl},\qquad
+\operatorname{Dec}_{rkl}(y)=R_{rkl}yR_{rkl}^\dagger.
+\end{gathered}
+\tag{8.12}
+$$
+
+The exact $25$-point radial quadrature of QAP Theorem 2.3,
+also used in (3.6), preserves the complete Choi matrix of each
+seed. Its elementary reason is Fourier support $|m|+|n|\le4$;
+the two five-point sums keep only $(m,n)=(0,0)$. Reflection is
+redundant for radial seeds. Thus (8.12) gives this same $S_{x_H(w)}$
+on every complex matrix. Equations (8.10)–(8.11) give
+$\sum_{rkl}B_{rkl}^\dagger B_{rkl}=I_5$; unit preparations give
+$R_{rkl}^\dagger R_{rkl}=1$. Rectangular sandwiches prove CP at
+every reference dimension. These identities prove encoder TP and
+each decoder's TP on its whole scalar block. Every nonzero composite
+Kraus matrix has rank one. The at-most-$100$ flags are fixed and
+consumed before the future protocol. $\square$
+
+## 9. A full-marginal event obstruction and a nonempty face
+
+**Theorem 9.1 (Survival on the selected filtered zero face).** Let
+$x=x_H(w)$ satisfy (8.4), and put
+
+$$
+n=\frac{1+1/\sqrt{17}}2,\qquad m=1-n,\qquad
+t_+=wq_+,\quad t_-=wq_-.
+\tag{9.1}
+$$
+
+Then $nm=4/17$, $0\le t_+,t_-\le2$, and its mode-$N$ survival
+for input $\Pi_N$ at actual wait zero is
+
+$$
+\begin{aligned}
+s_N(x)&:=\operatorname{tr}(\Pi_NS_x(\Pi_N))\\
+&=\frac{nm}{2}
+ +\left(\frac{n^2}{8}-\frac{nm}{6}\right)t_+
+ +\left(\frac{m^2}{8}+\frac{nm}{12}\right)t_-
+ +\frac{nm}{3}\sqrt{t_+t_-}
+\ \le\ \frac{25}{68}.
+\end{aligned}
+\tag{9.2}
+$$
+
+Consequently the physical port in (8.12) has $e(T_x)\ge43/68$.
+For $H=I$ the stronger statements are
+
+$$
+0\le w\le3,\qquad
+s_N(x_I(w))=\frac2{17}+\frac w{24}\le\frac{33}{136},\qquad
+e(T_x)\ge\frac{103}{136}.
+\tag{9.3}
+$$
+
+Proof. By (1.4),
+$e_N=\sqrt n\,u_++\sqrt m\,u_-$ and $R_0e_N=0$.
+For the full-support seed in (8.1), expand its joint-rotation
+survival integrand as
+
+$$
+\frac13(\sqrt n\cos\theta+\sqrt m\cos\phi)^2
+       (\sqrt{nq_+}\cos\theta+\sqrt{mq_-}\cos\phi)^2.
+\tag{9.4}
+$$
+
+The independent circle moments are
+$\langle\cos^2\theta\rangle=1/2$,
+$\langle\cos^4\theta\rangle=3/8$, and zero for the odd
+powers that occur. Both the integral and the exact finite quadrature
+therefore give the full-support seed survival
+
+$$
+D(q)=\frac{n^2q_+}{8}+\frac{m^2q_-}{8}
+ +\frac{nm(q_++q_-)}{12}
+ +\frac{nm}{3}\sqrt{q_+q_-}.
+\tag{9.5}
+$$
+
+Of the other three seeds, only $k_{-+}$ survives this test.
+Its value is $nm/4$, from two independent second moments.
+The seed $k_{+0}$ has zero measurement overlap with $e_N$;
+$k_{0-}$ has zero preparation overlap. The forced TP weights in
+(8.4) give $s_N=wD(q)+(2-wq_+)nm/4$, which is exactly (9.2).
+This uses common weights fixed by the whole marginal, not separate
+eventwise optima.
+
+All three variable terms in (9.2) are nondecreasing in
+$(t_+,t_-)\in[0,2]^2$. The only coefficient requiring a sign
+check is
+
+$$
+\frac{n^2}{8}-\frac{nm}{6}
+ =\frac{n(3n-4m)}{24}>0:
+\qquad n>4/7\quad\text{since }\sqrt{17}<7.
+\tag{9.6}
+$$
+
+The remaining coefficients are positive. Substituting the upper
+corner $(2,2)$ therefore gives
+
+$$
+s_N\le\frac{n^2+m^2}{4}+nm
+      =\frac14+\frac{nm}{2}=\frac{25}{68}.
+\tag{9.7}
+$$
+
+For the allowed physical input $\rho=\Pi_N$, actual wait $0$,
+the complete five-outcome rank-one read and Stop, the unreplaced
+law is concentrated at $N$. The replaced mode-$N$ probability is
+$s_N$, since $De_N=e_N$. The TV of these full histories is
+exactly $1-s_N\ge43/68$. In adjoint notation the same event
+difference is
+
+$$
+\operatorname{tr}\bigl(\Pi_N[\Pi_N-S_x^\dagger(\Pi_N)]\bigr)
+                       =1-s_N.
+\tag{9.8}
+$$
+
+Thus no state-map substitution for a non-self-adjoint channel's
+adjoint is used. This single legitimate protocol lower-bounds the
+original supremum over all complex inputs and all actual finite
+histories. It introduces no new instrument or reference measurement.
+
+For $H=I$, $q_i=1/3$ and (8.4) requires $w\le3$.
+Substitution in (9.2), using $n+m=1$, gives
+$s_N=nm/2+w/24=2/17+w/24$. Its maximum is $33/136$,
+whose complement proves (9.3). $\square$
+
+**Theorem 9.2 (Every complex scalar port annihilating this family).**
+Let $T$ be any original legal complex scalar port, with any finite
+flag presentation, and suppose that for one $H$ in (8.1),
+
+$$
+\operatorname{tr}(W_HZ_T)=0.
+\tag{9.9}
+$$
+
+Then $e(T)\ge43/68$. If $H=I$, then $e(T)\ge103/136$.
+No reality, stationarity, reflection, unitality, self-adjointness
+or pure decoding is required of the given presentation of $T$.
+
+Proof. The credited QRC replacement can be chosen to preserve this
+particular witness pairing. To see the needed additional property,
+let $\mathcal R(Y)=(Y+Y^T)/2$ in the passive frame. At the Choi
+level, separate realification of a scalar port applies
+$\mathcal R\otimes\mathcal R$. The matrix $W_H$ is invariant
+under transposition of either factor, because it lies in
+$\operatorname{Sym}_5(\mathbb R)\otimes
+\operatorname{Sym}_5(\mathbb R)$. Trace self-adjointness of those
+transposes therefore gives
+
+$$
+\operatorname{tr}\bigl(W_H(\mathcal R\otimes\mathcal R)(Z_T)\bigr)
+                    =\operatorname{tr}(W_HZ_T).
+\tag{9.10}
+$$
+
+QRC Theorem 2.2 proves CP and TP of this particular replacement
+by splitting actual complex rank-one factors into their real and
+imaginary parts. It contracts every original real-effect residual.
+It does not assert that $\mathcal R$ itself is CP. Arbitrary mixed
+decoder states and POVM effects admit the finite spectral refinement
+needed for those factors by the scalar-port correspondence in §1.
+
+Furthermore $W$ is invariant under simultaneous sector orthogonal
+transformations: each cross-sector sum $\mathcal Q_{ij}$ in (4.1)
+is independent of its orthonormal sector bases. Since $H$ commutes
+with those transformations, so is $W_H$. In particular for every
+walk-torus or specified reflection matrix $g$,
+
+$$
+(g\otimes g)^TW_H(g\otimes g)=W_H.
+\tag{9.11}
+$$
+
+Conjugating a channel's design by this real $g$ conjugates its
+output-first Choi matrix by $g\otimes g$. Thus the stationary
+average of QPC Theorem 3.3 and the reflection average of QRC
+Theorem 3.2 both preserve (9.9). Continuity preserves the pairing
+under their compact averages. QPC's recurrence argument proves
+exact invariance of the original error under each walk-design
+conjugation for nonnegative waits; convexity makes its average
+no worse. QRC proves the same no-worse assertion for the reflection
+of the stationary channel. These are transformations of port data,
+not additional future controls or readable random flags.
+
+Applying these operations gives one selected channel $S_x$ with
+$e(T_x)\le e(T)$ and $\operatorname{tr}(W_HZ(x))=0$.
+QRC's finite-product representation keeps this entire channel and
+its full TP marginal. Theorem 8.2 puts $x$ in (8.4), and
+Theorem 9.1 gives
+
+$$
+e(T)\ge e(T_x)\ge43/68,
+\tag{9.12}
+$$
+
+with $103/136$ in the identity-filter case. The explicit wait-zero
+test in Theorem 9.1 is a test of this legal no-worse representative;
+the argument does not assert that the given nonstationary channel
+has the same wait-zero survival. It suffices for its original error
+bound. The replacement may change the channel, consistently with
+the unchanged-channel obstructions in QPC §9. $\square$
+
+**Proposition 9.3 (A full-TP face example with positive weights).** Take
+
+$$
+\begin{gathered}
+H=\tfrac12R_0+R_++R_-,\qquad q=(1,4,4)/9,\qquad
+w=9/2,\qquad b_h=(d+2u_++2u_-)/3,\\
+x_0=\tfrac92k(a_*,b_h)+\tfrac12k(u_+,d).
+\end{gathered}
+\tag{9.13}
+$$
+
+Then $x_0\in\mathcal E_H$ has the full TP marginal and a fixed
+legal $50$-flag scalar realization. Its actual wait-zero full-read
+test on $\Pi_N$ has TV exactly $43/68$.
+
+Proof. The two positive seed weights in (9.13) contribute input
+population vectors $(1/2,2,2)$ and $(1/2,0,0)$. Their sum is
+$(1,2,2)$, proving every equation in (8.11) and hence the whole
+matrix marginal. Both seeds are zero atoms by Theorem 8.2, so
+$\operatorname{tr}(W_HZ(x_0))=0$. Formula (8.12) with these two
+seeds gives $25$ fixed flags per seed, with per-flag coefficients
+$9/50$ and $1/50$, respectively. It proves CP at every reference
+dimension, encoder TP, whole-scalar-block decoder TP and rank-one
+nonzero composite Kraus matrices. It is a finite port for the
+original source and consumes all flags before the actual protocol.
+
+Here $t_+=t_-=2$. Equations (9.2) and (9.7) give exactly
+$s_N(x_0)=25/68$, so the test in (9.8) has TV $43/68$.
+This demonstrates both a nonempty full-TP zero face and sharpness
+of this particular survival bound across the filter family.
+It does not evaluate $e(T_{x_0})$ or supply a competitive upper
+bound for $\varepsilon_1$. $\square$
+
+## 10. Exclusion of positive augmentations from a matching certificate
+
+**Theorem 10.1 (The defined filtered-witness route cannot match).**
+Take one normalized all-fifteen-event/three-TP tuple of QJM
+Convention 6.3, with real PSD $A_J^\pm$ satisfying
+$\sum_J\operatorname{tr}(A_J^++A_J^-)=1$, all three
+$y\in\mathbb R^3$, and its actual atom form $b^TB_y(a)b$.
+Suppose that for all real $a,b$ it has the form
+
+$$
+b^TB_y(a)b=\kappa\Psi_H(a,b)+Q(a,b),\qquad
+\kappa>0,\quad Q(a,b)\ge0\quad\text{for all }a,b,
+\tag{10.1}
+$$
+
+where $H$ is as in (8.1) and $Q$ is a real biquadratic product
+form. Then this tuple has no complementary legal port of error
+less than $43/68$. In particular it cannot match the original
+$\varepsilon_1$. For $H=I$, replace $43/68$ by $103/136$ in
+the complementary-port assertion. The conclusion allows arbitrary
+globally product-nonnegative augmentations, not only PSD matrix
+augmentations.
+
+Proof. Equation (10.1) is globally nonnegative. QJM's exact slack
+identity (6.5), with the same full TP marginal and signed event
+constraints, makes $c=\beta-\tau^Ty$ a lower bound on every
+selected feasible channel and, by the no-worse QRC replacement,
+on every original complex scalar port.
+
+Suppose an original legal $T$ matched it with $e(T)=c$.
+Its no-worse selected representative has error at most $c$ and
+the same universal lower forces equality. Decompose that selected
+channel into positive-weight unit atoms
+$x=\sum_fw_fk(a_f,b_f)$, with $M^T\tau=\tau$.
+Apply the supplied slack identity at $z=e(T_x)=c$. Each of the
+thirty signed event pairings is nonnegative, and so is each
+positive-weight atom slack. Their sum is zero. In particular,
+
+$$
+0=b_f^TB_y(a_f)b_f
+ =\kappa\Psi_H(a_f,b_f)+Q(a_f,b_f)
+\quad\Longrightarrow\quad\Psi_H(a_f,b_f)=0
+\qquad(w_f>0).
+\tag{10.2}
+$$
+
+Thus the same selected channel belongs to $\mathcal E_H$ and
+has the full TP weights (8.4). Theorem 9.1 implies
+$c=e(T_x)\ge43/68$, or $c\ge103/136$ for $H=I$.
+This proves the complementary-port assertion. Equivalently,
+nonnegative augmentation can only shrink the witness zero face;
+it cannot supply a missing competitive TP/event solution on it.
+
+The legal QSD Theorem 5.2 port already gives
+
+$$
+\varepsilon_1\le e_{\rm mix}
+ <\frac{52417600}{10^8}<\frac{43}{68}.
+\tag{10.3}
+$$
+
+Consequently no tuple satisfying (10.1) can be tight at the
+original value. This does not say such a normalized tuple is
+infeasible or cannot give a weaker necessary bound. All fifteen
+event constraints and all three marginal multipliers remain in
+the slack identity. One actual event suffices to obstruct their
+joint competitive attainment; adding the other fourteen cannot
+repair that obstruction. $\square$
+
+**Definition 10.2 (Attribution, scope and the remaining joint relation).**
+The positive map underlying (4.8) is the classical Choi map displayed
+in [Singh–Nechita, Example 7.5, equation (43), version 2](https://arxiv.org/html/2010.07898v2).
+Product zeros and their dual separable faces are mature ingredients;
+see [Ha–Kye, §2, version 1](https://arxiv.org/html/1108.0130v1).
+Their exposed-map results do not imply a normalized actual-event
+certificate here. The scalar-port correspondence is the credited
+[Horodecki–Shor–Ruskai, Theorem 4(A–D), version 2](https://arxiv.org/html/quant-ph/0302031v2),
+with its separate POVM/TP condition. The zero analysis, its forced
+common TP weights and the mode-$N$ test above are applications to
+this exact walk-sector representation, without a novelty claim.
+The QRC no-worse replacements, QAP finite quadrature and QJM slack
+identity retain their supplier status.
+
+The conditional inequality in Theorem 9.2 concerns only scalar
+ports satisfying (9.9) for the precisely specified positive
+input-sector-filter family. It is not a lower $43/68$ on all
+scalar ports or on $\varepsilon_1$. Theorem 10.1 excludes only
+the slack mechanism (10.1). Changes to the coefficients of the
+cyclic witness, general output filters, nonscalar within-sector
+filters, different positive forms, and corrections of indefinite
+sign remain outside that exclusion. No assertion that all globally
+positive witnesses or all normalized event tuples have this form
+is made. The nonempty TP face in Proposition 9.3 is not an
+event-preserving reduction of an optimizer, and its exact full
+worst-case error is not evaluated.
+
+The credited numerical frontier (7.3) is unchanged:
+$129931/250000\le\varepsilon_1\le e_{\rm mix}$, with the
+same strict QSD upper enclosure. A matching solution still requires
+one normalized tuple of all fifteen signed event multipliers and
+all three TP multipliers, global product-atom positivity including
+the interior cubic, and one legal common-positive-weight port on
+its kernel face satisfying those same TP and complementary event
+equations. Theorems 8.2–10.1 rule out one defined route to that
+joint solution; they do not provide the missing tuple or a new
+unrestricted endpoint.
+
+All claims use the independent $\mathbb C^5/K$ preparation of
+Assumption 1.1. The event uses input $\Pi_N$, actual nonnegative
+wait zero, a complete five-outcome rank-one read and Stop, with
+the full history retained. Design rotations and witness congruences
+add no future control, coarse-block instrument, source copy, side
+information or exposed flag. The fixed scalar encoders and whole-block
+CPTP decoders in (8.12) bound quantum dimension and finite flags;
+they do not bound coefficient synthesis, finite-precision robustness,
+acquisition, physical preparation, clock precision, transport or
+storage duration. The exact original optimum and optimal port,
+the $q=2,3,4$ values, native preparation and all-size cofinality,
+memory rates and complete all-view mutual recovery remain unresolved.
+These are ordinary mathematical proofs, without new Lean certification
+or a physical implementation claim.
+
+## 追加锚（本行以下为增补区）
+
+## 11. Local frontier qualification
+
+**Remark 11.1 (Scope of the unchanged frontier).** Definition 10.2's
+unchanged-frontier statement concerns only the local structural results
+of this volume and the supplier endpoints quoted there. The sharper
+current common bracket is supplied by [Joint Event Error Bounds, Theorem 6.1](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_JOINT_EVENT_ERROR_BOUNDS.md#6-the-common-bracket-and-the-nonmatching-boundary).
+The exact original optimum and a common complementary event-atom-TP
+tuple matching a legal attaining port remain open.
+
+## 追加锚（本行以下为增补区）
