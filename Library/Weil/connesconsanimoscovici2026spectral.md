@@ -932,6 +932,58 @@ The fixed-vector pilot does not prove full retained positivity, the
 original Robin tail, cofinal Weil positivity or RH. No new general
 residual theorem, originality or Lean-verification claim is made.
 
+### A directed obstruction to every trial in the fixed64-column family
+
+Keep the preceding common-form, exterior-domain and inverse-comparison
+premises, $N=1280$, and the archived diagonal $W$. Let $E$ select the
+actual exterior columns1281 through1344. This fixed family can be
+excluded without constructing another full1281-square Gram or
+recomputing the old eigensolver proposal.
+
+Use the same $Z=H_NE$, $F=E^*H_NE$, $B=E^*C_N$ and the complete
+joint Gram $G=C_N^*WC_N$, $J=Z^*WC_N$, $L=Z^*WZ$. Put
+$K=L-F$ and $T=J-B$. The first64 weighted exterior rows already
+give the finite lower matrix
+
+$$
+K\succeq F^*W_{64}F-F\succeq40I.
+$$
+
+Omitted rows of $Z^*WZ$ are positive semidefinite; FLINT encloses
+all64 eigenvalues of the displayed finite lower matrix above40.
+For the archived full1281-coordinate dyadic direction $v$ and a
+fixed64-coordinate dyadic trial $x$, reuse square completion:
+
+$$
+\begin{aligned}
+m(x)&=Q(v-Ex)-\|C_Nv-Zx\|_W^2,\\
+r&=Tv-Kx=Z^*W(C_Nv-Zx)-Bv+Fx,\\
+v^*(A_N-G+T^*K^{-1}T)v
+&=m(x)+r^*K^{-1}r\le m(x)+\|r\|^2/40.
+\end{aligned}
+$$
+
+The [fixed-family experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/8ea4fdc8f84a2bf36fed9287e85984b16c3db7ce/docs/reports/weil-c27)
+supplies the complete middle rows, the existing far moment core
+extended through1344, and its recomputed quadratic and gradient
+operator allowances. Under the stated analytic premises, its directed
+upper bound is
+
+$$
+m(x)+\|r\|^2/40<-3.98\times10^{-6}.
+$$
+
+For every matrix trial $X$, completion of the same square gives
+$A_N-U(X)\preceq A_N-G+T^*K^{-1}T$. Thus no $X$ for this specified
+$E,W$ can make the sufficient lower target positive semidefinite.
+The trial error has already been paid; a more accurate solve or
+invertible coordinate change cannot repair this family. This does
+not determine the actual Schur sign, the128-column family or RH.
+Changing the exterior space or inverse majorant has a separate
+obligation. The calculation reuses the existing residual identity,
+source data and library algorithms, without a new general theorem,
+originality claim or Lean verification.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
