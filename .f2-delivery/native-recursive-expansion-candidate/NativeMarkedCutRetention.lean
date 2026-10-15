@@ -1,7 +1,10 @@
-/- UNCOMPILED actual a/b-edge preservation for the recursive marked state.
-   Every deleted supplier b edge has the supplier terminal. New marked
-   b edges have another, remaining terminal, so no supplier cut can remove
-   them. Actual child and parent joining retain these actual edges. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedCutRetention
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedCutRetention
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Preserve Protected a and Remaining b Edges Through Native Recursion. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 import D5.S3.Combinatorics.Graph.Walks.ActualRetainedEdges
@@ -124,6 +127,7 @@ theorem native_parent_cycle_keeps_child_path_edges {m k : ℕ}
   let ps := List.ofFn fun i : Fin (F.base.length - 1) =>
     pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩
   have hlist : p :: ps = List.ofFn pieces := by
+    dsimp only [p, ps]
     apply List.ext_getElem
     · simp only [List.length_cons, List.length_ofFn]; omega
     · intro i hi hj
@@ -131,7 +135,16 @@ theorem native_parent_cycle_keeps_child_path_edges {m k : ℕ}
       | zero => simp only [List.getElem_cons_zero, List.getElem_ofFn]; rfl
       | succ i => simp only [List.getElem_cons_succ, List.getElem_ofFn]; rfl
   have hfinish : finish p ps = (pieces ⟨F.base.length - 1, by omega⟩).finish := by
-    rw [finish_eq_last, hlist, List.getLast_ofFn]
+    have hn : List.ofFn pieces ≠ [] := by
+      intro hn
+      have hlen := congrArg List.length hn
+      simp only [List.length_ofFn, List.length_nil] at hlen
+      omega
+    calc
+      finish p ps = ((p :: ps).getLast (by simp)).finish := finish_eq_last p ps
+      _ = ((List.ofFn pieces).getLast hn).finish :=
+        congrArg Piece.finish (List.getLast_congr (by simp) hn hlist)
+      _ = _ := by rw [List.getLast_ofFn]
   have hclose : c.edges = s(base, finish p ps) :: (chainEdges p ps).reverse := by
     simpa only [hfinish, p, ps] using hedges
   have hemap : s(childLift F j x, childLift F j y) ∈ (pieces j).walk.edges := by

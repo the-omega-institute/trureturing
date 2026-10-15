@@ -15,5 +15,5 @@ internal sealed class NativeJointMarkedCutShiftDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("For a supplied frame with base A followed by u, every positive cut in nextFrame is the same actual edge as a prior cut. The complete new group is the prior group with exactly its new zero edge inserted; no unlisted index is assumed."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("native-joint-marked-cuts-shift"), DeclarationHandle.Create(Prefix + "native_joint_marked_cuts_shift"),
                 H("Shift Both Marked Orders Together"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For two prior selected orders with the same remaining base A followed by u, the union of both next cut groups equals the union of both prior groups together with the two actual new zero edges. The next orders exchange the prior orders, preserving literal configurations."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("For two prior selected orders with the same remaining base A followed by u, the union of both next cut groups equals the union of both prior groups together with the two actual new zero edges. The next orders exchange the prior orders, preserving literal configurations."))), DescribeRole.Theorem))));
 }

@@ -45,5 +45,5 @@ internal sealed class NativeMarkedFrameDomainsDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text("A supplied parent Hamilton cycle with protected-a and remaining-b invariants maps to the next marked domain without changing any raw configuration, support entry or edge. Both retained-edge invariants hold on this exact mapped cycle; no replacement cycle is chosen."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("p-marked-parent-lift-injective"), DeclarationHandle.Create(Prefix + "p_marked_parent_lift_injective"),
                 H("Include the Complete Prior P State"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The configuration identity including the complete prior P marked domain into the actual current outer parent is injective, allowing actual prior walks and partitions to be mapped without identifying distinct vertices."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("The configuration identity including the complete prior P marked domain into the actual current outer parent is injective, allowing actual prior walks and partitions to be mapped without identifying distinct vertices."))), DescribeRole.Theorem))));
 }

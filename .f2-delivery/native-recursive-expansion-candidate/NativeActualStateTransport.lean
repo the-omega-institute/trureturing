@@ -1,7 +1,10 @@
-/- UNCOMPILED transport of actual native same-cycle partition states.
-   Prior P partitions can be included in the current parent graph, and
-   current parent partitions can be carried into the next marked domain.
-   Every raw walk, cut, and endpoint is preserved; no cycle is reselected. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateTransport
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Preserve Actual Native Partitions Under Identity Maps. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 import D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
 
@@ -113,7 +116,8 @@ theorem native_actual_parent_partition_next_marked {m k : ℕ}
   refine ⟨hnext, hp, ?_, hs, he, hkept, hrawSupport, hrawEdges, hrawCuts⟩
   intro v
   rw [hs.count_eq v]
-  exact (SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hnext).2 v
+  simpa only [List.count_eq_countP, Bool.beq_eq_decide_eq] using
+    (SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hnext).2 v
 
 #print axioms native_actual_identity_partition_transport
 #print axioms native_actual_parent_partition_next_marked

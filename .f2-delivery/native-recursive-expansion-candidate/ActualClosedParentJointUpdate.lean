@@ -1,8 +1,10 @@
-/- UNCOMPILED actual closed-parent J update.
-   Consume the real native parent constructor's literal child-route
-   inventories, the actual opened P joint inventory, and the exhaustive
-   actual Q slicing. The outside chain and complete next cut partition
-   are constructed, not supplied as parent-state certificates. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualClosedParentJointUpdate
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualClosedParentJointUpdate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Construct the Actual Joint Partition of a Closed Parent Cycle. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualOuterChainExtraction
 import D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
 import D5.S3.Combinatorics.Graph.Walks.ActualJointEndpointPairs

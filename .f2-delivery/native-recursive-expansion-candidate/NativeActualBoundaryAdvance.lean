@@ -1,8 +1,10 @@
-/- UNCOMPILED native actual E/O restoration interface.
-   Apply the actual two-path restoration to the same native parent cycle.
-   Old unaffected whole paths shift by one index; the affected actual
-   L0--L(k-1) whole path is replaced by L0--Lk and R0--L1. E/O boundary
-   laws are earned for the resulting exhaustive actual path partition. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualBoundaryAdvance
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualBoundaryAdvance
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Advance Actual Native Boundaries with Retained Route Identities. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 import D5.S3.Combinatorics.Graph.PrefixReversal.RecursiveBoundaryAdvance
 import D5.S3.Combinatorics.Graph.Walks.ActualSingleOrderBoundaryUpdate

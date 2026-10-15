@@ -1,7 +1,10 @@
-/- UNCOMPILED concrete E/O consumers for the same actual Q walk.
-   The actual native endpoint tables earn both the root and the later
-   L0 piece position. Native seam coordinates earn the Linked witness.
-   The prior state earns both Q cuts; slicing preserves the supplied Λ. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualQBoundarySlicing
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualQBoundarySlicing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Earn Two-Cut Q Slicing from Literal Even and Odd Routes. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQRouteSlicing
 import D5.S3.Combinatorics.Graph.Walks.ActualRouteCutOrder
 

@@ -1,9 +1,10 @@
-/- UNCOMPILED source inventory bridge for the actual P child.
-   A previous joint partition and the actual supplier-edge opening refer
-   to the same child cycle. Opening the supplier b deletes its actual
-   occurrence from the distinguished joint path; all old marked edges
-   are restored. This earns the full P inventory used by the parent J
-   update, without assuming that parent inventory or a next pairing. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualOpenedChildInventory
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualOpenedChildInventory
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Recover the Actual Opened P Child Inventory. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 import Mathlib.Data.List.Perm.Basic
 
@@ -60,7 +61,7 @@ theorem actual_opened_child_from_joint_partition
       ((⟨ℓ, z, d⟩ :: rest).flatMap fun p : Piece G => p.walk.edges) := by
     simp only [List.flatMap_cons, hd, SimpleGraph.Walk.edges_cons,
       List.cons_append, List.mem_cons]
-    exact Or.inr (Or.inl rfl)
+    exact Or.inr (Or.inl True.intro)
   have hcutE : s(s, t) ∉ E := (hje _).mp hcutjoint |>.2
   have hk (e : Sym2 V) : e ∈ kept ↔
       e ∈ ((⟨ℓ, z, d⟩ :: rest).flatMap fun p : Piece G => p.walk.edges) ∧

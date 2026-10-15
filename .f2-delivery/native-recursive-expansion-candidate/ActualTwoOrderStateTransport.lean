@@ -1,6 +1,10 @@
-/- UNCOMPILED transport of all three partitions of one actual cycle.
-   Injectivity preserves the two cut groups and all three exact source
-   inventories together. No target cycle or target partition is chosen. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualTwoOrderStateTransport
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualTwoOrderStateTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Map One Cycle and Both Marked Orders Together. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 import D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
 
