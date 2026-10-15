@@ -159,7 +159,7 @@ private def grundy_eq (p : Position) :
     grundy p = mex ((moves p).map grundy).toFinset := by
   rw [grundy, WellFounded.fix_eq]
   simp
-private def mex_unique (s : Finset ℕ) (n : ℕ)
+def mex_unique (s : Finset ℕ) (n : ℕ)
     (hn : n ∉ s) (hbelow : ∀ m < n, m ∈ s) : mex s = n := by
   obtain ⟨hmissing, hsmall⟩ := mex_spec s
   rcases lt_trichotomy (mex s) n with h | h | h

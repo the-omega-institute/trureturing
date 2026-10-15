@@ -4,7 +4,19 @@
 
 The native Divisor Nim moves give a four-lookback recurrence, exact zero phases, a four-letter odd alphabet and the actual fixed-follower forcing for every positive fixed multiset of greatest common divisor six.
 
-**Theorem 1.1 (Move reconstruction and zero-anchor dynamics).**
+**Theorem 1.1 (The actual singleton value).**
+
+Lean statement: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.singleton_grundy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.singleton_grundy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive natural n, the native Grundy value of the singleton multiset containing n is n. Every removal from one through n is legal, and the follower values are exactly zero through n minus one. The fixed-board recurrence and the general existence proof both use this fact when deletion leaves no fixed heap.
+
+**Theorem 1.2 (Move reconstruction and zero-anchor dynamics).**
 
 Lean statement: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.gcd_six_source_reduction`
 
@@ -28,7 +40,7 @@ For H bounding every fixed heap, sixTargetPeriod is twice the least common multi
 
 The parent tail follows by the finite transition argument below. It uses the finite transition projection, arbitrary-word closure and stabilization, and reconstruction of all actual values from the stabilized return state. The unrestricted equation (21) remains open.
 
-**Theorem 1.2 (The specified parent period after three returns).**
+**Theorem 1.3 (The specified parent period after three returns).**
 
 Lean statement: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.gcd_six_parent_tail`
 
@@ -54,4 +66,5 @@ The source-reduction information registration is validated. The parent informati
 
 - Truth anchor: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.gcd_six_parent_tail`
 - Truth anchor: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.gcd_six_source_reduction`
+- Truth anchor: `D5/S3/Combinatorics/Games/DivisorNimGcdSixSource.singleton_grundy`
 - Dependency: [D5/S3/Combinatorics/Games/DivisorNimBound](DivisorNimBound.md)
