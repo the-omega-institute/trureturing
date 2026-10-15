@@ -59,7 +59,10 @@ internal sealed class GTestThresholdPriorDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Q("claim"))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "On a word, the diagonal of PiG is the stabilizer cardinality divided by the subgroup cardinality. Commutation with the common tensor unitary removes U from the tested trace. The symmetric-group average is uniform on the word orbit; Burnside's lemma makes the sum of stabilizer cardinalities over the word orbit equal to O times the subgroup cardinality, giving trace O/M. A repeated normalized vector is fixed by every position permutation, so completeness is one. Substitution into the Bayesian success probability reduces the strict comparison and the equality comparison to linear inequalities and identities in p, with threshold O/(M+O)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("buhrman-grinko-verduyn-lunel-weggemans-2026-g-test-threshold-prior"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose,
