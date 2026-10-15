@@ -116,6 +116,18 @@ Bakalov-Kac, Twisted Modules over Lattice Vertex Algebras, arXiv math/0402315v1,
 
 These covariance laws supply the input required by the carrier-generic normalMinusOne_translation theorem and by a future all-charge state-field construction. They do not supply an all-state vertex algebra or Jacobi, the Monster realization, Moonshine, CFT, string theory or an AdS/CFT bridge.
 
+**Theorem 1.8 (Weighted Euler on every actual monomial).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.oscillatorEuler_monomial`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeSugawaraConformal.oscillatorEuler_monomial` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original oscillatorEuler derivation sends monomial(d,c) to the scalar sum_x (x.2+1)*d(x) times that same monomial. This supplier computes native oscillator degree, not total charged L0 energy; it supplies coefficient separation for actual Sugawara one-mode local nilpotence.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_conformal_generators`
@@ -123,6 +135,7 @@ These covariance laws supply the input required by the carrier-generic normalMin
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.actual_translation_generators`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.exponential_constant`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.neutral_translation_covariance`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.oscillatorEuler_monomial`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.sugawaraMode_zero_single`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraConformal.translated_smul`
 - Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraVirasoro](LatticeSugawaraVirasoro.md)

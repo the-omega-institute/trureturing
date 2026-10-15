@@ -1,0 +1,167 @@
+import D5.S3.VertexAlgebra.TemporaryNativeIndependent16
+import Mathlib.LinearAlgebra.TensorProduct.Basis
+import Mathlib.LinearAlgebra.Finsupp.VectorSpace
+import Mathlib.RingTheory.MvPolynomial.Basic
+import Mathlib.Algebra.BigOperators.Finprod
+import Mathlib.Algebra.FiniteSupport.Basic
+
+
+set_option autoImplicit false
+
+namespace D5.S3.VertexAlgebra.OriginalQQuartetSource
+
+open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
+  LatticeBcGhostBrstCharge BcGhostFockSupport
+open scoped BigOperators TensorProduct
+
+noncomputable section
+
+theorem dAtom_B_zero_anticommutes (D : LatticeData)
+    (longitudinal : Fin D.rank → ℂ) (mode : ℤ) :
+    dAtom D longitudinal mode * B D 0 + B D 0 * dAtom D longitudinal mode = 0 := by
+  by_cases zeroMode : mode = 0
+  · simp [dAtom, zeroMode]
+  have ghost : C D (-mode) * B D 0 + B D 0 * C D (-mode) = 0 := by
+    simpa [zeroMode] using C_B_anticommute D (-mode) 0
+  simp only [dAtom, if_neg zeroMode]
+  calc
+    _ = C D (-mode) * (O D longitudinal mode * B D 0) +
+        (B D 0 * C D (-mode)) * O D longitudinal mode := by noncomm_ring
+    _ = C D (-mode) * (B D 0 * O D longitudinal mode) +
+        (B D 0 * C D (-mode)) * O D longitudinal mode := by rw [O_B_commute]
+    _ = (C D (-mode) * B D 0 + B D 0 * C D (-mode)) * O D longitudinal mode := by noncomm_ring
+    _ = 0 := by rw [ghost, zero_mul]
+
+theorem rAtom_B_zero_anticommutes (D : LatticeData)
+    (nullDirection : Fin D.rank → ℂ) (mode : ℤ) :
+    rAtom D nullDirection mode * B D 0 + B D 0 * rAtom D nullDirection mode = 0 := by
+  by_cases zeroMode : mode = 0
+  · simp [rAtom, zeroMode]
+  have ghost := B_B_anticommute D mode 0
+  have product :
+      (O D nullDirection (-mode) * B D mode) * B D 0 +
+        B D 0 * (O D nullDirection (-mode) * B D mode) = 0 := by
+    calc
+      _ = O D nullDirection (-mode) * (B D mode * B D 0) +
+          (B D 0 * O D nullDirection (-mode)) * B D mode := by noncomm_ring
+      _ = O D nullDirection (-mode) * (B D mode * B D 0) +
+          (O D nullDirection (-mode) * B D 0) * B D mode := by rw [← O_B_commute]
+      _ = O D nullDirection (-mode) * (B D mode * B D 0 + B D 0 * B D mode) := by noncomm_ring
+      _ = 0 := by rw [ghost, mul_zero]
+  simp only [rAtom, if_neg zeroMode, smul_mul_assoc, mul_smul_comm, ← smul_add, product, smul_zero]
+
+theorem original_delta_B_zero_anticommutes (D : LatticeData)
+    (longitudinal : Fin D.rank → ℂ) (coefficient : ℂ) :
+    delta D longitudinal coefficient * B D 0 + B D 0 * delta D longitudinal coefficient = 0 := by
+  have summed : dSum D longitudinal * B D 0 + B D 0 * dSum D longitudinal = 0 := by
+    apply LinearMap.ext
+    intro state
+    have inputFinite := dAtom_finite D longitudinal state
+    have outputFinite := dAtom_finite D longitudinal (B D 0 state)
+    have imageFinite := inputFinite.fun_comp (map_zero (B D 0))
+    have mapped := (B D 0).toAddMonoidHom.map_finsum inputFinite
+    simp only [LinearMap.toAddMonoidHom_coe] at mapped
+    change (∑ᶠ mode : ℤ, dAtom D longitudinal mode (B D 0 state)) +
+      B D 0 (∑ᶠ mode : ℤ, dAtom D longitudinal mode state) = 0
+    rw [mapped, ← finsum_add_distrib outputFinite imageFinite]
+    calc
+      _ = ∑ᶠ mode : ℤ, (0 : State D) := by
+        apply finsum_congr
+        intro mode
+        have identity := congrArg (fun operator : Module.End ℂ (State D) => operator state)
+          (dAtom_B_zero_anticommutes D longitudinal mode)
+        simpa only [LinearMap.add_apply, Module.End.mul_apply, LinearMap.zero_apply] using identity
+      _ = 0 := finsum_zero
+  simp only [delta, smul_mul_assoc, mul_smul_comm, ← smul_add, summed, smul_zero]
+
+theorem original_R_B_zero_anticommutes (D : LatticeData)
+    (nullDirection : Fin D.rank → ℂ) (coefficient : ℂ) :
+    R D nullDirection coefficient * B D 0 + B D 0 * R D nullDirection coefficient = 0 := by
+  have summed : rSum D nullDirection * B D 0 + B D 0 * rSum D nullDirection = 0 := by
+    apply LinearMap.ext
+    intro state
+    have inputFinite := rAtom_finite D nullDirection state
+    have outputFinite := rAtom_finite D nullDirection (B D 0 state)
+    have imageFinite := inputFinite.fun_comp (map_zero (B D 0))
+    have mapped := (B D 0).toAddMonoidHom.map_finsum inputFinite
+    simp only [LinearMap.toAddMonoidHom_coe] at mapped
+    change (∑ᶠ mode : ℤ, rAtom D nullDirection mode (B D 0 state)) +
+      B D 0 (∑ᶠ mode : ℤ, rAtom D nullDirection mode state) = 0
+    rw [mapped, ← finsum_add_distrib outputFinite imageFinite]
+    calc
+      _ = ∑ᶠ mode : ℤ, (0 : State D) := by
+        apply finsum_congr
+        intro mode
+        have identity := congrArg (fun operator : Module.End ℂ (State D) => operator state)
+          (rAtom_B_zero_anticommutes D nullDirection mode)
+        simpa only [LinearMap.add_apply, Module.End.mul_apply, LinearMap.zero_apply] using identity
+      _ = 0 := finsum_zero
+  simp only [R, smul_mul_assoc, mul_smul_comm, ← smul_add, summed, smul_zero]
+
+
+section Contraction
+
+variable (D : LatticeData) (frame inverse : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+  (leftFrameInverse : inverse * frame = 1) (rightFrameInverse : frame * inverse = 1)
+  (xAxis yAxis : Fin D.rank) (distinct : xAxis ≠ yAxis)
+  (xDual : ∀ row, gramPair D (frame yAxis) (frame row) = if row = xAxis then 1 else 0)
+  (yDual : ∀ row, gramPair D (frame xAxis) (frame row) = if row = yAxis then 1 else 0)
+  (coefficient : ℂ) (nonzero : coefficient ≠ 0)
+
+local notation "originalK" => K D (frame xAxis) (frame yAxis) (Eq.trans (xDual xAxis) (if_pos (Eq.refl xAxis)))
+local notation "leading" => delta D (frame yAxis) coefficient
+local notation "nullHomotopy" => R D (frame xAxis) coefficient
+
+include distinct yDual nonzero in
+theorem original_delta_R_square_and_K_commute :
+    leading * leading = 0 ∧ nullHomotopy * nullHomotopy = 0 ∧
+      originalK * leading = leading * originalK ∧
+      originalK * nullHomotopy = nullHomotopy * originalK := by
+  have nullY : gramPair D (frame yAxis) (frame yAxis) = 0 := by
+    simpa [Ne.symm distinct] using xDual yAxis
+  have nullX : gramPair D (frame xAxis) (frame xAxis) = 0 := by
+    simpa [distinct] using yDual xAxis
+  have deltaSquare : leading * leading = 0 := by
+    simp only [delta, smul_mul_assoc, mul_smul_comm, smul_smul,
+      dSum_square D (frame yAxis) nullY, smul_zero]
+  have rSquare : nullHomotopy * nullHomotopy = 0 := by
+    simp only [R, smul_mul_assoc, mul_smul_comm, smul_smul,
+      rSum_square D (frame xAxis) nullX, smul_zero]
+  have anticommutator := delta_R_anticommutator D (frame xAxis) (frame yAxis)
+    (by simpa using xDual xAxis) coefficient nonzero
+  refine ⟨deltaSquare, rSquare, ?_, ?_⟩
+  · apply sub_eq_zero.mp
+    calc
+      _ = nullHomotopy * (leading * leading) - (leading * leading) * nullHomotopy := by
+        rw [← anticommutator]
+        noncomm_ring
+      _ = 0 := by rw [deltaSquare]; simp
+  · apply sub_eq_zero.mp
+    calc
+      _ = leading * (nullHomotopy * nullHomotopy) - (nullHomotopy * nullHomotopy) * leading := by
+        rw [← anticommutator]
+        noncomm_ring
+      _ = 0 := by rw [rSquare]; simp
+
+include coefficient nonzero in
+theorem original_K_B_zero_commutes : originalK * B D 0 = B D 0 * originalK := by
+  have deltaB := original_delta_B_zero_anticommutes D (frame yAxis) coefficient
+  have rB := original_R_B_zero_anticommutes D (frame xAxis) coefficient
+  have anticommutator := delta_R_anticommutator D (frame xAxis) (frame yAxis)
+    (by simpa using xDual xAxis) coefficient nonzero
+  apply sub_eq_zero.mp
+  calc
+    _ = leading * (nullHomotopy * B D 0 + B D 0 * nullHomotopy) -
+        (leading * B D 0 + B D 0 * leading) * nullHomotopy +
+        nullHomotopy * (leading * B D 0 + B D 0 * leading) -
+        (nullHomotopy * B D 0 + B D 0 * nullHomotopy) * leading := by
+      rw [← anticommutator]
+      noncomm_ring
+    _ = 0 := by rw [deltaB, rB]; simp
+
+
+end Contraction
+
+end
+
+end D5.S3.VertexAlgebra.OriginalQQuartetSource

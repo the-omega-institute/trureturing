@@ -198,5 +198,16 @@ internal sealed class LatticeSugawaraConformalDocument : IScribeDocumentDefiniti
                         + "They do not supply an all-state vertex algebra or "
                         + "Jacobi, the Monster realization, Moonshine, "
                         + "CFT, string theory or an AdS/CFT bridge."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("lattice-oscillator-euler-monomial"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeSugawaraConformal.oscillatorEuler_monomial"),
+                H("Weighted Euler on every actual monomial"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original oscillatorEuler derivation sends monomial(d,c) to "
+                    + "the scalar sum_x (x.2+1)*d(x) times that same monomial. "
+                    + "This supplier computes native oscillator degree, not total charged L0 energy; "
+                    + "it supplies coefficient separation for actual Sugawara one-mode local nilpotence."))),
                 DescribeRole.Theorem))));
 }

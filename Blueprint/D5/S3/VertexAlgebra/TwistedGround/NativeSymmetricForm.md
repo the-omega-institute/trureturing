@@ -1,0 +1,29 @@
+# Symmetric Bilinear Self-Duality of the Native Ground
+
+## Abstract
+
+The chosen native Leech ground has a nonzero invariant symmetric complex-bilinear form with both radicals zero.
+
+**Theorem 1.1 (Symmetric Bilinear Self-Duality of the Native Ground).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeSymmetricForm.chosen_native_symmetric_self_duality`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/NativeSymmetricForm.chosen_native_symmetric_self_duality` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The coordinate pairing is sum_t f(t)g(t), with no complex conjugation. Pulling it back along the proved original quotient intertwiner defines nativePairing on NativeGround itself. Bilinearity is part of its Lean bilinear-form type. Symmetry follows from commutativity of complex multiplication.
+
+Translation permutes the summands and each binary character has square one. The original actionScalar is also a sign of square one. Consequently the pairing is invariant under every original quotient element. The coordinate pairing has both zero radicals; the genuine linear equivalence transports both radicals to zero in the original native carrier.
+
+For any invariant bilinear form C, its comparison endomorphism T is characterized by B(Tu,v)=C(u,v). Invariance of both forms makes T commute with all actual charge operators. The completed nativeOperatorAlgebra scalar commutant then implies C is a scalar multiple of B. No Schur or Burnside assertion is assumed.
+
+For an integral charge a the square and reflection sign is epsilon(D,a,-a)=complexSign(q(reduceCharge(a)))=paritySign(bilinear(D,a,a)/2). The exact bilinear adjoint relation is B(U_a u,v)=epsilon(D,a,-a) B(u,U_{-a}v), using the original ground_action_product rather than a sign-free reflection identity. The projector product on the same original carrier produces the orbit that defines the pairing. The construction is a ground-representation result; it does not establish twisted Jacobi, full moonshine, a string theory or an AdS/CFT realization.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeSymmetricForm.chosen_native_symmetric_self_duality`
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockGroundProducts](../LatticeHalfFockGroundProducts.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/NativeOrbit](NativeOrbit.md)

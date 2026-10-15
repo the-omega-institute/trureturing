@@ -246,7 +246,7 @@ def oscillatorEuler (D : LatticeData) : Derivation ℂ (Oscillator D) (Oscillato
 def eulerMode (D : LatticeData) : Module.End ℂ (Carrier D) :=
   Finsupp.lsum ℂ (fun β => (Finsupp.lsingle β).comp (oscillatorEuler D).toLinearMap)
 
-@[simp] private theorem eulerMode_single (D : LatticeData) (β : Charge D) (p : Oscillator D) :
+@[simp] theorem eulerMode_single (D : LatticeData) (β : Charge D) (p : Oscillator D) :
     eulerMode D (Finsupp.single β p) = Finsupp.single β (oscillatorEuler D p) := by
   simp [eulerMode]
 

@@ -12,6 +12,16 @@ internal sealed class LatticeSugawaraVirasoroDocument : IScribeDocumentDefinitio
         "The actual quadratic modes satisfy all-integer Virasoro with central charge equal to lattice rank.",
         H("Actual All-Charge Sugawara Virasoro Law"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("lattice-euler-mode-single"),
+                DeclarationHandle.Create(Prefix + "eulerMode_single"),
+                H("Original Euler action in each charge sector"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original eulerMode sends single(beta,p) to single(beta,oscillatorEuler(p)). "
+                    + "Every integral charge sector is retained; no Gram inverse or positivity premise is required. "
+                    + "Together with the original monomial Euler supplier, this gives actual basis coefficient separation."))),
+                DescribeRole.Theorem),
             Paragraph(Text("Assume precisely H Gc=Gc H=1 on the complex Gram matrix of the existing even "
                 + "lattice. The current commutator implies that the Virasoro defect commutes with "
                 + "all currents. Restricting to each charge sector, inverse-Gram differentiation "

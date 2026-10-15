@@ -4,9 +4,21 @@
 
 The actual quadratic modes satisfy all-integer Virasoro with central charge equal to lattice rank.
 
+**Theorem 1.1 (Original Euler action in each charge sector).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.eulerMode_single`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.eulerMode_single` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original eulerMode sends single(beta,p) to single(beta,oscillatorEuler(p)). Every integral charge sector is retained; no Gram inverse or positivity premise is required. Together with the original monomial Euler supplier, this gives actual basis coefficient separation.
+
 Assume precisely H Gc=Gc H=1 on the complex Gram matrix of the existing even lattice. The current commutator implies that the Virasoro defect commutes with all currents. Restricting to each charge sector, inverse-Gram differentiation and polynomial induction make the commutant scalar. This directly uses the frozen private eq_constant_of_partials_zero of ConditionalPolynomialRigidity. Weighted Euler kills the off-diagonal defect; diagonal evaluation retains and cancels the charged boundaries before computing the inverse-Gram trace and cubic oscillator sum.
 
-**Theorem 1.1 (All-integer Virasoro with central charge equal to rank).**
+**Theorem 1.2 (All-integer Virasoro with central charge equal to rank).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.sugawaraMode_virasoro`
 
@@ -24,5 +36,6 @@ The charge-sensitive lattice conformal construction is classical: Bakalov-Kac, a
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.eulerMode_single`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeSugawaraVirasoro.sugawaraMode_virasoro`
 - Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraCurrents](LatticeSugawaraCurrents.md)
