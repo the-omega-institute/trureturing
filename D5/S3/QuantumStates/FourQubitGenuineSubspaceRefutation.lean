@@ -298,5 +298,134 @@ private lemma factorwise_apply (z : Original) (q : Config) :
   intro b _
   ac_rfl
 
+private lemma sqrt_product_eq
+    (a b t : ℝ)
+    (ha : 0 ≤ a)
+    (ht : 0 ≤ t)
+    (h : a * b = t * t) :
+    Real.sqrt a * Real.sqrt b = t := by
+  rw [← Real.sqrt_mul ha b, h, Real.sqrt_mul_self ht]
+
+private lemma weighted_roots (i : Fin 7) :
+    weight i * (Real.sqrt (lambdaStar i) : ℂ) =
+      (![3, 4, 3, 3, 3, 3, 3] : Fin 7 → ℂ) i
+    ∧
+    weight i * (Real.sqrt (1 - lambdaStar i) : ℂ) =
+      (![3, 3, 3, 3, 12, 3, 3] : Fin 7 → ℂ) i := by
+  have h2 := sqrt_product_eq 2 (1 / 2) 1 (by norm_num) (by norm_num) (by norm_num)
+  have h17 := sqrt_product_eq 17 (1 / 17) 1 (by norm_num) (by norm_num) (by norm_num)
+  have h17' := sqrt_product_eq 17 (1 - 1 / 17) 4
+    (by norm_num) (by norm_num) (by norm_num)
+  have h25 : Real.sqrt (25 : ℝ) = 5 := by
+    rw [show (25 : ℝ) = 5 * 5 by norm_num, Real.sqrt_mul_self (by norm_num)]
+  have h4 := sqrt_product_eq 25 (16 / 25) 4 (by norm_num) (by norm_num) (by norm_num)
+  have h3 := sqrt_product_eq 25 (1 - 16 / 25) 3
+    (by norm_num) (by norm_num) (by norm_num)
+  rw [h25] at h4 h3
+  have c2 : ((3 * Real.sqrt 2 : ℝ) : ℂ) * (Real.sqrt (1 / 2) : ℂ) = 3 := by
+    exact_mod_cast (show (3 * Real.sqrt 2) * Real.sqrt (1 / 2) = (3 : ℝ) by
+      rw [mul_assoc, h2, mul_one])
+  have c17 : ((3 * Real.sqrt 17 : ℝ) : ℂ) * (Real.sqrt (1 / 17) : ℂ) = 3 := by
+    exact_mod_cast (show (3 * Real.sqrt 17) * Real.sqrt (1 / 17) = (3 : ℝ) by
+      rw [mul_assoc, h17, mul_one])
+  have c17' : ((3 * Real.sqrt 17 : ℝ) : ℂ) * (Real.sqrt (1 - 1 / 17) : ℂ) = 12 := by
+    exact_mod_cast (show (3 * Real.sqrt 17) * Real.sqrt (1 - 1 / 17) = (12 : ℝ) by
+      rw [mul_assoc, h17']; norm_num)
+  have c4 : (5 : ℂ) * (Real.sqrt (16 / 25) : ℂ) = 4 := by exact_mod_cast h4
+  have c3 : (5 : ℂ) * (Real.sqrt (1 - 16 / 25) : ℂ) = 3 := by exact_mod_cast h3
+  have c2' : ((3 * Real.sqrt 2 : ℝ) : ℂ) * (Real.sqrt (1 - 1 / 2) : ℂ) = 3 := by
+    norm_num only [show (1 : ℝ) - 1 / 2 = 1 / 2 by norm_num]
+    exact c2
+  fin_cases i
+  · exact ⟨c2, c2'⟩
+  · exact ⟨c4, c3⟩
+  · exact ⟨c2, c2'⟩
+  · exact ⟨c2, c2'⟩
+  · exact ⟨c17, c17'⟩
+  · exact ⟨c2, c2'⟩
+  · exact ⟨c2, c2'⟩
+
+private lemma scaled35 (i : Fin 7) :
+    weight i • v35 lambdaStar i = integer35 i := by
+  have h := weighted_roots i
+  fin_cases i <;>
+    simp only [v35.eq_1, integer35.eq_1, Matrix.cons_val_zero', Matrix.cons_val_succ',
+      smul_add, smul_smul] at h ⊢ <;>
+    exact congrArg₂ (· + ·)
+      (congrArg (fun c : ℂ => c • _) h.1)
+      (congrArg (fun c : ℂ => c • _) h.2)
+
+private lemma x_eq_M :
+    x = fun p => M p.1 p.2 := by
+  rw [x.eq_1]
+  simp_rw [scaled35]
+  funext p
+  rcases p with ⟨a, b⟩
+  fin_cases a <;> fin_cases b <;>
+    norm_num [integer35.eq_1, M.eq_1, ket44.eq_1, Fin.sum_univ_succ,
+      Pi.single_apply, Fin.ext_iff, Matrix.cons_val_zero', Matrix.cons_val_succ',
+      Matrix.cons_val_two, Matrix.cons_val_three]
+
+private lemma factorwise_M :
+    factorwise (fun p => M p.1 p.2) = y := by
+  funext q
+  rw [factorwise_apply]
+  rcases q with ⟨a, b, c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+    norm_num [u6.eq_1, t3.eq_1, M.eq_1, y.eq_1, threeFactor.eq_1, Fin.sum_univ_succ,
+      Matrix.cons_val_two, Matrix.cons_val_three]
+
+private lemma y_eq_sum :
+    y =
+      ∑ i : Fin 7,
+        weight i • transformed lambdaStar i := by
+  calc
+    y = factorwise (fun p => M p.1 p.2) := factorwise_M.symm
+    _ = factorwise x := congrArg (fun z => factorwise z) x_eq_M.symm
+    _ = ∑ i : Fin 7, weight i • transformed lambdaStar i := by
+      simp only [x.eq_1, map_sum, map_smul, transformed.eq_1]
+
+private lemma y_mem :
+    y ∈ S lambdaStar := by
+  rw [y_eq_sum]
+  refine (S lambdaStar).sum_mem ?_
+  intro i _
+  exact (S lambdaStar).smul_mem (weight i)
+    (Submodule.subset_span ⟨i, rfl⟩)
+
+private lemma lambdaStar_valid :
+    ∀ i : Fin 7,
+      0 < lambdaStar i ∧ lambdaStar i < 1 := by
+  intro i
+  fin_cases i <;> norm_num [lambdaStar.eq_1]
+
+private lemma witnessCut_valid :
+    witnessCut.Nonempty ∧
+      witnessCut ≠ Finset.univ := by
+  decide
+
+private lemma y_product :
+    IsProductAcross witnessCut y := by
+  refine ⟨leftFactor, (fun _ => (1 : ℂ)), ?_⟩
+  intro q
+  change y q = y q * (1 : ℂ)
+  exact (mul_one (y q)).symm
+
+private lemma y_ne_zero :
+    y ≠ 0 := by
+  intro h
+  have h0 := congrFun h
+    ((0 : Bit), (0 : Bit), (0 : Bit), (0 : Bit))
+  norm_num [y.eq_1, threeFactor.eq_1] at h0
+
+/-- Antipin's universal conjecture fails at the displayed admissible parameter tuple. -/
+theorem result : ¬ claim := by
+  intro h
+  exact
+    (h lambdaStar lambdaStar_valid)
+      y y_mem y_ne_zero
+      witnessCut witnessCut_valid.1 witnessCut_valid.2
+      y_product
+
 end
 end D5.S3.QuantumStates.FourQubitGenuineSubspaceRefutation
