@@ -777,6 +777,81 @@ The far-input packet alone supplies none of those full compressed
 quantities. No successful repaired certificate, new general operator
 theorem, Lean verification or cofinal positivity is asserted.
 
+### Actual finite-column residual trial at the same retained cutoff
+
+A second application of the same source identity uses actual exterior
+Fourier columns as a finite-support trial for $H_N^{-1}C_N$. Keep
+$N=1280$, $M=32768$ and the existing positive diagonal majorant $W$:
+its exact dyadic weights satisfy $W_{mm}\ge h_m^{-1}$ through $M$,
+and equal the archived constant $D\ge h_{M+1}^{-1}$ beyond $M$.
+This application assumes the existing Fourier/form identification,
+the selected exterior Fourier vectors in $D(H_N)$ and the comparison
+$H_N^{-1}\preceq W$ on the same actual exterior operator.
+
+Let $E$ select exterior modes1281 through1284 and put
+$Z=H_NE$, $F=E^*H_NE$, $B=E^*C_N$. For the existing obstruction
+$v=-e_{1277}+2e_{1278}-e_{1280}$, supply the complete common Gram
+
+$$
+\begin{pmatrix}G&J^*\\J&L\end{pmatrix}
+=[C_Nv,Z]^*W[C_Nv,Z],\qquad K=L-F,\quad T=J-Bv.
+$$
+
+The source residual inequality, evaluated on a fixed dyadic trial $x$,
+then supplies the forcing-charge majorant
+
+$$
+\langle C_Nv,H_N^{-1}C_Nv\rangle
+\le U(x)=G-2\operatorname{Re}(x^*T)+x^*Kx.
+$$
+
+An exact optimizer is not required: FLINT proposes the finite solve,
+the trial is rounded to64-bit dyadics, and the whole residual is
+evaluated with directed balls. This keeps the actual selected
+diagonal and the signed cross terms of $C_Nv-H_NEx$.
+
+The experiment supplies only the31483 previously absent scalar pairs
+1285–32767 through the unchanged arithmetic oracle. The published
+1281,32768 and earlier witness rows1282–1284 are reused. All middle
+rows1281–32768 contribute to the Gram. Its infinite far part reuses
+all168 published moment intervals and the same112-feature mechanism;
+extending the feature columns through1284 requires recomputing the
+geometric and rounding amplification. The weighted far error has
+$\log_2\epsilon\simeq-524.0636624$. It is paid before the trial,
+with column norms $(\sqrt6,1,1,1,1)$, rather than reusing the former
+total allowance.
+
+Directed numerical intervals, conditional on the stated analytic
+inputs, enclose the following values:
+
+| Actual exterior trial | Debit expression $U(x)$, approximate | $\langle v,A_Nv\rangle-U(x)$, approximate |
+|---|---:|---:|
+| none | 50.9913204560 | -20.2883780129 |
+| 1281 | 36.3114689536 | -5.6085265105 |
+| 1281–1282 | 24.6961199103 | 6.0068225328 |
+| 1281–1284 | 18.9893075926 | 11.7136348505 |
+
+The existing retained value is30.70294244311003905… . Two actual
+columns repair this sufficient estimate on the specified vector.
+Its true Schur positivity already follows from G7 after1203; this
+is a test of a stronger estimate, not previously unknown positivity.
+The scalar and joint-Gram checks at1024 bits reproduce the archived
+scientific endpoints without regenerating the former table or moments.
+Programs, exact intervals, source/input hashes and reproduction commands
+are in the [experiment packet](https://github.com/the-omega-institute/trureturing-experiments/tree/76b876b2ce4d6f2d9c6e3cf73d8b3495ea8f9ec4/docs/reports/weil-c27).
+
+The full1281-dimensional retained midpoint test is more restrictive.
+Using64 and128 actual exterior columns gives computed minimum
+eigenvalues about $-3.98\times10^{-6}$ and $-2.50\times10^{-11}$,
+respectively. These floating proposals do not pay scalar, far-feature
+or floating arithmetic errors and certify neither sign. In the latter
+case24 eigenvalues have computed absolute value at most $10^{-7}$.
+The outstanding task is a directed full-space consumer with the
+common-form error congruence, including these small directions.
+The fixed-vector pilot does not prove full retained positivity, the
+original Robin tail, cofinal Weil positivity or RH. No new general
+residual theorem, originality or Lean-verification claim is made.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
