@@ -82,12 +82,12 @@ private theorem original_state_p_opening_inventory {m k : ℕ} (hm : 3 ≤ m) (h
       W.P.walk.support.map Subtype.val := by
     have h := congrArg (fun z => z.support.map Subtype.val) W.oldPWalk
     simpa only [SimpleGraph.Walk.support_copy, SimpleGraph.Walk.support_map,
-      List.map_map, Function.comp_def] using h
+      List.map_map, Function.comp_def, pMarkedChildMap] using h
   have hrawEdges : W.oldP.walk.edges.map (Sym2.map Subtype.val) =
       W.P.walk.edges.map (Sym2.map Subtype.val) := by
     have h := congrArg (fun z => z.edges.map (Sym2.map Subtype.val)) W.oldPWalk
     simpa only [SimpleGraph.Walk.edges_copy, SimpleGraph.Walk.edges_map,
-      List.map_map, Function.comp_def, Sym2.map_map] using h
+      List.map_map, Function.comp_def, Sym2.map_map, pMarkedChildMap] using h
   have htail : W.oldP.walk.support.tail.map Subtype.val =
       W.P.walk.support.tail.map Subtype.val := by
     simpa only [List.map_tail] using congrArg List.tail hrawSupport
