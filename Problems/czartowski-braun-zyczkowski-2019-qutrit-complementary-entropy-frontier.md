@@ -74,7 +74,7 @@ The canonical source is `D5/S3/Quantum/Information/QutritComplementaryEntropyFro
   - `pair_entropy_le` is registered in `Reg/D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.lean`.
   - `trace_local_left` is registered in `Reg/D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.lean`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/QutritComplementaryEntropyFrontier.lean.json`, statement `sha256:3babedb01ea184b3d99b3f1be765b78413d9651f3095f93552c03677ffd78c0d`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/QutritComplementaryEntropyFrontier.lean.json`, statement `sha256:bbcc1281708cedde222ffcb29ee857e5544cc6f26c7cb085a426dffa7f215515`.
 
 Declaration statements:
 - `result`: `sha256:ca976f7232fadf48c13e3a616377556e805cc911f4377abd022f735f7e08cbdd`;
