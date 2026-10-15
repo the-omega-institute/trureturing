@@ -3,7 +3,7 @@ Actual depth13/code4/index674 only. Source-sized cell bindings and
 structural broadcasts preserve all original 20 coordinates, four
 values, Int offsets and scale 6987435. No native source premise. -/
 import Mathlib.Data.Int.Basic
-import Mathlib.Data.Matrix.Notation
+import Mathlib.Data.Fin.VecNotation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
