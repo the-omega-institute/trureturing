@@ -2977,3 +2977,279 @@ $N$ and its full alias list; $\mathcal R_N^\circ$ is not a residual
 reweighted at $N-W_N^\circ$. The constant and endpoint are retained.
 The estimate $\mathscr J_N(\mathcal R_N^\circ)=o(1)$ remains missing,
 as do the complete same-integer signed Robin bound and RH proof.
+
+The [Bettin--Chandee applicability note](bettin2018trilinear.md)
+records the direct alias-split boundary and excludes the withdrawn
+stronger Kloosterman-fraction claim from the available suppliers.
+
+## A narrower numerator list for the interior linear functional
+
+The numerator cut (I28)--(I30) controls the weighted residual norm.
+Here use instead the bounded variation of the actual linear weight
+in (I91)--(I93). This is a direct application of the same geometric
+sum, sine and finite-moment inputs; it is not a new exponential-sum
+estimate. Keep $D_N^\circ,W_N^\circ,\mathcal R_N^\circ$ from
+(I99)--(I106), with every original coefficient and alias.
+
+Define the finite transform of the interior weight by
+$$
+\mathscr F_N(\theta)=\sum_{m=N}^{2N}k_{N,m}e(m\theta).
+$$
+The geometric sum and the already supplied bound on
+$\|k_N\|_\infty+\operatorname{Var}k_N$ give, by discrete Abel summation,
+$$
+|\mathscr F_N(\theta)|
+\ll\frac{h^2\epsilon_N}{N\|\theta\|},
+\qquad \theta\notin\mathbb Z.
+\tag{I107}
+$$
+This uses the actual closed integer interval and both its boundary
+values. It does not include the separate $e_{N,H}f(2N)$ term.
+
+Write $r^*=\min(r,q-r)$. For any integer $s\ge1$, consider only
+$D_N^\circ<q\le N-W_N^\circ$ and $r^*>s$. Using (I107),
+$|1-e(-r/q)|\ge4r^*/q$ and the already owned first positive moment,
+their complete contribution to the interior part of $\mathscr J_N$
+is bounded by
+$$
+\begin{aligned}
+\frac1L\sum_q\sum_{\substack{1\le r<q\\(r,q)=1\\r^*>s}}
+\left|\frac{b_{N,q}\mathscr F_N(r/q)}{q(1-e(-r/q))}\right|
+&\ll\frac{h^2\epsilon_N}{NL}
+ \sum_{q\le N}q|b_{N,q}|\sum_{r^*>s}\frac1{(r^*)^2}\\
+&\ll\frac{Nh^2\epsilon_N}{L^2s}.
+\end{aligned}
+\tag{I108}
+$$
+At most two numerators have any given $r^*$, so the inner tail is
+$O(1/s)$. The other factor follows from
+$\sum_{q\le N}q|b_{N,q}|\ll N^2/L$, exactly the finite-moment input
+of (I92). Coprimality is relaxed only in the positive allowance;
+the retained sum still has its actual coprime numerators.
+
+Choose the integer cutoff
+$$
+s_N^\circ=\left\lceil
+ \frac{Nh^2\epsilon_N\log L}{L^2}\right\rceil.
+\tag{I109}
+$$
+Its argument tends to infinity, and
+$$
+s_N^\circ\asymp
+ N^{1/2}e^{-\Delta_\star\Omega}\frac{\log L}{L^2},
+\qquad s_N^\circ=o(D_N^\circ).
+$$
+The allowance in (I108) is $O(1/\log L)$, matching the paid error
+in (I106).
+
+The remaining finite scalar is
+$$
+\begin{aligned}
+\mathcal C_N^\circ={}&d_N\mathscr F_N(0)\\
+&-\sum_{D_N^\circ<q\le N-W_N^\circ}
+ \ \sum_{\substack{1\le r<q\\(r,q)=1\\r^*\le s_N^\circ}}
+ \frac{b_{N,q}\mathscr F_N(r/q)}{q(1-e(-r/q))}\\
+&+e_{N,H}\mathcal R_N^\circ(2N),\\
+\mathcal A_{N,H}={}&\frac{\mathcal C_N^\circ}{L}
+ +O(1/\log L).
+\end{aligned}
+\tag{I110}
+$$
+The last line follows from (I106) and (I108). The interior sum has at
+most $2Ns_N^\circ$ frequency entries, of order at most
+$N^{3/2}e^{-\Delta_\star\Omega}\log L/L^2$. This is a bound on
+that list, not on the cost of computing its coefficients or on the
+complete endpoint. Conjugate pairing makes $\mathcal C_N^\circ$ real.
+
+The endpoint remains the full $e_{N,H}\mathcal R_N^\circ(2N)$,
+including its constant and every retained numerator. No high-numerator
+endpoint deletion is paid by (I107)--(I108). In particular this is a
+reduction of a linear functional, not replacement of the response by
+one frequency-truncated function at every evaluation port.
+
+The still missing estimate is $\mathcal C_N^\circ=o(L)$ for every
+sufficiently large original integer $N$ in the fixed family. The paid
+error makes this equivalent to $\mathcal A_{N,H}=o(1)$ within this
+reduction; neither estimate is established here. The comparison
+shrinks the internal list relative to (I30) at $m\asymp N$, where
+that norm cut retains numerators up to $N/L^b$, $0<b<2$. It supplies
+no new cancellation theorem, complete signed Robin bound, RH proof,
+mathematical-priority claim or Lean certification.
+
+## An angular cut that also pays the actual endpoint
+
+Retain the same original $N,H,A,B,e_{N,H}$ and coefficients. The
+following application strengthens the frequency reduction using
+integer sample locations, the primitive inversion (I96), geometric
+summation and the classical divisor bound. It also controls the
+actual endpoint; it does not estimate the remaining signed sum.
+
+For $V\ge2$, let $\Pi^{\rm far}_{q,V}$ denote the original primitive
+Fourier sum $\Pi_q$ restricted to $\|r/q\|\ge1/V$, and put
+$\Pi^{\rm near}_{q,V}=\Pi_q-\Pi^{\rm far}_{q,V}$. Define its
+nonprimitive counterpart
+$$
+S_{d,V}(m)=-\frac1d
+ \sum_{\substack{1\le r<d\\\|r/d\|\ge1/V}}
+ \frac{e(mr/d)}{1-e(-r/d)},\qquad S_{1,V}=0.
+$$
+The cutoff depends only on the frequency value and is unchanged by
+reduction. Therefore the same finite grouping and inversion as in
+(I96) give, for any $\mathcal I\subseteq\{2,\ldots,N\}$,
+$$
+\begin{aligned}
+\Pi^{\rm far}_{q,V}(m)
+ &=\sum_{d\mid q}\frac{\mu(q/d)}{q/d}S_{d,V}(m),\\
+T_{\mathcal I,V}(m)
+ :=\sum_{q\in\mathcal I}b_{N,q}\Pi^{\rm far}_{q,V}(m)
+ &=\sum_{d\le N}\gamma_{\mathcal I,N}(d)S_{d,V}(m),\\
+\gamma_{\mathcal I,N}(d)
+ &=\sum_{\substack{t\le N/d\\dt\in\mathcal I}}
+ \frac{\mu(t)}t b_{N,dt}.
+\end{aligned}
+\tag{I111}
+$$
+Every $b_{N,dt}$ here keeps all of its original aliases. By
+$dt/\varphi(dt)\le[d/\varphi(d)][t/\varphi(t)]$, the supplied
+coefficient bound and first moment imply, uniformly in $\mathcal I$,
+$$
+|\gamma_{\mathcal I,N}(d)|
+\ll\frac d{\varphi(d)}\frac{1+\log(N/d)}L
+\ll\frac d{\varphi(d)}\le\tau(d).
+\tag{I112}
+$$
+The harmonic weighted first moment follows by partial summation;
+$\tau$ is the ordinary divisor-count function. These are positive
+bounds on the exact regrouping, not replacement coefficients.
+
+A discrete primitive for the truncated nonprimitive response is
+$$
+\begin{aligned}
+P_{d,V}(m)&=\frac1{4d}
+ \sum_{\substack{1\le r<d\\\|r/d\|\ge1/V}}
+ \frac{e(mr/d)}{\sin^2(\pi r/d)},\qquad P_{1,V}=0,\\
+P_{\mathcal I,V}(m)&=\sum_{d\le N}
+ \gamma_{\mathcal I,N}(d)P_{d,V}(m),\\
+P_{\mathcal I,V}(m+1)-P_{\mathcal I,V}(m)
+ &=T_{\mathcal I,V}(m).
+\end{aligned}
+\tag{I113}
+$$
+Indeed $(e(x)-1)/(4\sin^2(\pi x))=-1/(1-e(-x))$ term by term.
+
+For integer $m$ and $d\nmid m$, put
+$j_d(m)=\min_{k\in\mathbb Z}|m-kd|$. It is a positive integer,
+at most $d/2$. On the central numerator interval the supremum plus
+total variation of the two coefficients in $S_{d,V}$ and $P_{d,V}$
+is respectively $O(V/d)$ and $O(V^2/d)$. Abel summation in $r$,
+using the geometric-sum bound $O(d/j_d(m))$, gives
+$$
+\begin{aligned}
+|S_{d,V}(m)|&\ll V/j_d(m),&
+|P_{d,V}(m)|&\ll V^2/j_d(m)&& (d\nmid m),\\
+|S_{d,V}(m)|&\le1/2,&
+|P_{d,V}(m)|&\ll V&& (d\mid m).
+\end{aligned}
+\tag{I114}
+$$
+For the second row the cutoff is symmetric under $r\mapsto d-r$,
+and $[1-e(-x)]^{-1}+[1-e(x)]^{-1}=1$, which gives the first bound
+also for a self-paired numerator. The sine bound gives the other:
+$d\sum_{r\ge\max(1,\lceil d/V\rceil)}r^{-2}\ll V$. Thus exact
+resonances are included without division by a zero distance.
+
+Write $\tau_3(n)=\sum_{d\mid n}\tau(d)\le\tau(n)^2$. Directly
+reuse the arbitrary-integer divisor bound in
+[Nicolas's existing source note](../ArithSums/nicolas1971repartition.md#objective-and-arbitrary-integer-decomposition),
+printed p.117, equations (6)--(8): for each fixed $0<\nu<1$, its
+fixed maximizing reference gives $\tau(n)\ll_\nu n^\nu$.
+No new divisor theorem is needed. If $j_d(m)=j>0$, then $d$ divides
+$m-j$ or $m+j$. Hence (I112)--(I114) give
+$$
+\begin{aligned}
+|T_{\mathcal I,V}(m)|
+ &\ll\tau_3(m)+V\sum_{1\le j\le N/2}
+  \frac{\tau_3(m-j)+\tau_3(m+j)}j,\\
+|P_{\mathcal I,V}(m)|
+ &\ll V\tau_3(m)+V^2\sum_{1\le j\le N/2}
+  \frac{\tau_3(m-j)+\tau_3(m+j)}j,\\
+\sup_{N\le m\le2N+1}|T_{\mathcal I,V}(m)|&\ll_\eta N^\eta V,\\
+\sup_{N\le m\le2N+1}|P_{\mathcal I,V}(m)|&\ll_\eta N^\eta V^2
+ \qquad(\eta>0\text{ fixed}).
+\end{aligned}
+\tag{I115}
+$$
+These suprema are over integers. All divisor arguments are positive
+and at most $3N$. To obtain the final two lines, choose $\nu$
+sufficiently small in the cited bound and absorb the harmonic
+logarithm into the remaining fixed $N^\eta$ allowance. The constants
+are independent of $V$ and $\mathcal I$.
+
+Apply the exact discrete integration-by-parts identity
+$$
+\begin{aligned}
+\sum_{m=N}^{2N}k_{N,m}T_{\mathcal I,V}(m)
+={}&k_{N,2N}P_{\mathcal I,V}(2N+1)
+ -k_{N,N}P_{\mathcal I,V}(N)\\
+&-\sum_{m=N+1}^{2N}(k_{N,m}-k_{N,m-1})P_{\mathcal I,V}(m).
+\end{aligned}
+$$
+The original weight variation and $|e_{N,H}|\ll h^3\epsilon_N$
+therefore pay both terms of the unchanged functional:
+$$
+|\mathscr J_N(T_{\mathcal I,V})|
+\ll_\eta\frac{N^\eta\epsilon_N}{L}
+ \left(\frac{h^2V^2}{N}+h^3V\right).
+\tag{I116}
+$$
+In particular the second allowance explicitly bounds
+$|e_{N,H}T_{\mathcal I,V}(2N)|/L$. The exact $2N+1$ primitive
+sample in integration by parts was included in (I115).
+
+For any fixed $0<\kappa<1/4$, set
+$$
+\begin{aligned}
+V_N&=\lfloor N^{3/4-\kappa}\rfloor,\\
+\mathcal R_{N,\kappa}^\sharp(m)
+ &=d_N+\sum_{D_N^\circ<q\le N-W_N^\circ}
+  b_{N,q}\Pi^{\rm near}_{q,V_N}(m).
+\end{aligned}
+$$
+Take $\eta=\kappa/4$ in (I116). Its two allowances are
+$N^{\eta-2\kappa}e^{-\Delta_\star\Omega}/L$ and
+$N^{\eta-\kappa}e^{(3\lambda-c_\star)\Omega}/L$.
+Since $\Omega=o(\log N)$, (I106) and (I116) imply
+$$
+\begin{aligned}
+|\mathscr J_N(T_{\mathcal I,V_N})|&\ll_\kappa N^{-\kappa/2},\\
+\mathcal A_{N,H}
+ &=\mathscr J_N(\mathcal R_{N,\kappa}^\sharp)
+  +O(1/\log L)+O_\kappa(N^{-\kappa/2}),\\
+\#\{\text{retained middle frequency entries}\}
+ &\ll N^2/V_N+N\ll N^{5/4+\kappa}.
+\end{aligned}
+\tag{I117}
+$$
+In the first line use the retained denominator set for
+$\mathcal I$. No condition $3\lambda<c_\star$ is added: a positive
+subpower exponential in the second allowance is paid by the fixed
+$N^{-\kappa}$ margin. Every retained numerator satisfies
+$r^*<q/V_N\ll N^{1/4+\kappa}$.
+
+Unlike the interior-only cut (I110), this reduction uses the same
+truncated response at every original evaluation, including the
+actual endpoint. The endpoint change is paid in (I116), rather than
+assumed harmless. The count concerns frequency entries only, not
+coefficient computation or overall arithmetic cost. The constant
+$d_N$ and all original aliases remain. In particular $q>N/2$ still
+has its actual $j=1$ alias, and $r=1,q-1$ remain in that sector.
+There is no newly created second long averaging variable.
+
+This is a repository application of existing finite Fourier,
+integer-divisor and weight-variation inputs, not a new Möbius
+cancellation theorem or a claim of mathematical priority. The
+argument needs fixed $\kappa>0$ and supplies no uniform
+$\kappa=0$ or varying-$\kappa$ endpoint. It has not been Lean
+compiled. The remaining same-integer estimate
+$\mathscr J_N(\mathcal R_{N,\kappa}^\sharp)=o(1)$, the complete
+signed Robin inequality and RH remain unresolved.
