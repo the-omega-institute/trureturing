@@ -213,12 +213,14 @@ internal static class DigestionAtomContextProjection
             // CAS plans use local offsets; emitted plans already use source offsets.
             // Proper subspans strictly shrink, so nested chains terminate without a depth cap.
             var offset = atom.StartByte - plan.Parent.StartByte;
-            foreach (var segment in plan.Segments.Reverse())
+            // Structural gaps are validated by Plan and displayed as work context.
+            // Only claims are neighbor leaves, as in a scoped fresh-source query.
+            foreach (var child in plan.Children.Reverse())
             {
-                pending.Push(segment.Atom with
+                pending.Push(child with
                 {
-                    StartByte = segment.Atom.StartByte + offset,
-                    EndByte = segment.Atom.EndByte + offset,
+                    StartByte = child.StartByte + offset,
+                    EndByte = child.EndByte + offset,
                 });
             }
         }
