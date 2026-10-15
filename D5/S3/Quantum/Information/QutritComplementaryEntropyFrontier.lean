@@ -100,6 +100,7 @@ private theorem joint_upper (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
 
 private theorem swap_swap (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     swap (swap V) = V := by
+  rw [swap.eq_1, swap.eq_1]
   rfl
 
 private theorem swap_admissible (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
@@ -285,7 +286,8 @@ private theorem entropy3_box
     (hs : (∑ i, x i) = l + m + r) :
     Real.negMulLog l + Real.negMulLog m + Real.negMulLog r ≤ entropy3 x := by
   simp only [Fin.sum_univ_three] at hs
-  simp only [entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy, Fin.sum_univ_three]
+  rw [entropy3.eq_1]
+  simp only [D5.S3.Entropy.MaxEntropy.shannonEntropy, Fin.sum_univ_three]
   by_cases h0 : x 0 ≤ m
   · let t := l + m - x 0
     have ht : t ∈ Set.Icc l m := by dsimp [t]; constructor <;> linarith [(hx 0).1]
