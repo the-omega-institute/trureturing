@@ -1,12 +1,6 @@
 # Recursive relational observation: native donor networks and repair cost
 
-> This reference source uses `generic-v1` and GitHub Markdown mathematics.
-> Published bytes are immutable; corrections and extensions follow the terminal
-> append anchor. Statements and proofs here are ordinary mathematics, without
-> Lean kernel certification. Repository suppliers are read at
-> `22f02d429d40d97f7c83a81d0481826ebadeb511`.
-
-## 1. The unchanged native task and the supplied recovery relation
+## 1. The native task and the temporal recovery relation
 
 **Definition 1.1 (actual source and literal observation).** Let
 
@@ -148,7 +142,7 @@ Let $K_d(n)$ and $Z_d(n)$ be the integral and fractional cover optima of
 $S_d^n$ over this entire family. Joint admissibility is downward closed on
 nonempty subsets and invariant under coordinate permutations.
 
-**Supplier 1.5 (every-word normalization, acquisition and rates).**
+**Convention 1.5 (cited normalization, acquisition and rate theorems).**
 [FMR, Lemma 2.2 and Theorems 2.3–2.5][FMR] preserve the full task by
 canonical completion: keep all constructors through depth $d-1$, and
 replace a branch at the cutoff by $C_0$. On $S_d$, a length-$d$ word
@@ -204,8 +198,8 @@ M_1(D)\ge\left\lceil(33/13)^{2^{D-3}}\right\rceil,
 \tag{NDR.9}
 $$
 
-These are credited ordinary suppliers. This volume changes neither
-endpoint and proves no effective lower convergence to the original rate.
+The bounds (NDR.9) leave effective lower convergence to the original rate
+unresolved.
 
 ## 2. Exact finite decoder networks and binary projection closure
 
@@ -438,7 +432,7 @@ $$
 
 Let $\tau$ exchange $1,4$ and fix $0,2,3$. The credited two-module
 relation is $B_* =\{(u_s,u_{\tau(s)}):0\le s\le4\}$.
-For explicit verification of its precise interface, the reply and factor
+For this interface, the reply and factor
 tables, with columns $0,1,2,3,4$, are
 
 $$
@@ -706,10 +700,10 @@ Independence of edge parameters is used to prove this statement about the
 constructed family; no independence assumption is made about replacement
 sets or general competitors. $\square$
 
-Forced donors alone would exclude one bounded-component enclosure. The
-next theorem is stronger: it bounds the intersection with every bounded-
-component replacement, even one with different equations and additional
-rows outside $B_G$.
+The forced-donor property excludes a bounded-component enclosure of
+$B_G$. Theorem 7.2 bounds its intersection with every bounded-component
+replacement, including different equations and additional rows outside
+$B_G$.
 
 ## 7. Exponential obstruction to bounded original-block repair
 
@@ -836,9 +830,9 @@ by $N$ is at least the stated positive constant. A cutoff
 $b=b(\epsilon)$ chosen before $N$ cannot make this uniform loss vanish
 as $\epsilon\to0$: arbitrarily large such $N$ remain. $\square$
 
-This is a falsifier of a proposed universal per-fiber repair theorem. It
-is not a proof that any particular existing algorithm makes that claim,
-nor a noncomputability or impossibility theorem for the native rate.
+Corollary 7.4 excludes uniform subexponential per-fiber repair at the fixed
+original-block interface. Noncomputability or impossibility of effective
+approximation of the native rate does not follow from that obstruction.
 
 ## 8. Paid attainment on the complete original source family
 
@@ -1022,13 +1016,13 @@ a proved approximation error. Neither is supplied here. Finite type
 computations in §3 compare finite quantities; NCE's sufficient weights
 cover all cycles but have no established completeness theorem.
 
-The new obstruction changes one proposed next step: finite component
-enumeration cannot be made complete by uniform subexponential per-fiber
-repair at the fixed original-block interface. A replacement approach
-must retain the shared relations through a lawful change of variables,
-or use a genuinely global certificate, and still prove all-competitor
-coverage and vanishing loss. Finite vocabulary, binary closure, graph
-existence and finite LP decidability alone do not prove that theorem.
+By Corollary 7.4, finite component enumeration cannot be made complete by
+uniform subexponential per-fiber repair at the fixed original-block
+interface. Lawful changes of variables that retain shared relations and
+global certificates are alternative possible mechanisms; all-competitor
+coverage and vanishing loss remain required. Finite vocabulary, binary
+closure, graph existence and finite LP decidability alone do not establish
+those properties.
 
 **Open problem 9.3 (finite memory and the wider programme).** The general
 exact $M_1(D)$, the credited unresolved $M_1(3)\in\{3,4\}$, sharp
@@ -1050,28 +1044,29 @@ Effective two-sided convergence, a complete lower hierarchy and
 closed-form exactness remain distinct claims, none proved by this volume.
 No native noncomputability conclusion follows either.
 
-## 10. Source correspondence, primary literature and attribution
+## 10. Mathematical conventions and cited hypotheses
 
-**Source correspondence 10.1 (inspected D5 hypotheses).** In
-[GenealogicalFiberTransport][D5G], `Source := FreeMagma Bool`, with
-`true` for alpha and `false` for beta, and `substitution` is the lifted
-map sending these to beta and pair(beta,alpha). In
-[ActualTreeReadoutAcquisition][D5A], `Address := List Bool`, false means
-$L$, true means $R$, and `Reply`/`readout` give all four replies at every
-finite literal. Its recognition problem is a different endpoint.
+**Convention 10.1 (source notation and hypotheses).** Repository citations
+refer to revision `22f02d429d40d97f7c83a81d0481826ebadeb511`.
+In [GenealogicalFiberTransport][D5G], the source is the free ordered magma
+on Boolean leaves, with `true` for alpha and `false` for beta, and
+`substitution` is the lifted map sending these to beta and
+pair(beta,alpha). In [ActualTreeReadoutAcquisition][D5A], addresses are
+finite Boolean lists: false means $L$, true means $R$, and
+`Reply`/`readout` give all four replies at every finite literal.
+Its recognition problem is a different endpoint.
 In [NativeDepthPatterns][D5N], `original_present_transport` assumes
 `subtree a u = some t`; the fixed actual occurrences in §8 meet precisely
 that presence hypothesis. `original_prefix_locality` assumes agreement
 of original replies through the requested word length and concludes
-all-count reply agreement. Neither declaration supplies a subtree input
-or a free navigation operation. These are source correspondences; no
-new compiled application or kernel certification is asserted here.
+all-count reply agreement. Neither hypothesis supplies a subtree input
+or a free navigation operation.
 
-The inspected `target_family_minimal_quotient` in
+The theorem `target_family_minimal_quotient` in
 [TargetFamilyMinimalQuotient][D5T] assumes passive factorization of every
 target through one readout and gives its joint-kernel quotient. That
 zero-later-Read endpoint does not characterize which single native reply
-can repair a fiber. The inspected
+can repair a fiber. The theorem
 `compact_observation_factorization` in [CompactObservationFactorization][D5C]
 assumes a nonempty compact topological source, finite discrete observation
 levels, continuous surjective compatible observation maps whose fibers
@@ -1088,7 +1083,7 @@ cut. Its full-row and terminal-latch hypotheses are not imported as a new
 late-target theorem. Neither source physically derives isolation or
 authentication.
 
-**Attribution 10.2 (ordinary suppliers and repository deductions).**
+**Convention 10.2 (attribution of the mathematical ingredients).**
 The five-state motif, its paired decoder and its paid-fiber discipline
 are credited to NCM §6. The all-joint cap in Lemma 4.3 is a specialization
 of NCE Theorem 2.2, whose original rate bound remains credited. FMR
@@ -1097,69 +1092,99 @@ rounding and regularized limits. MSS supplies the graph existence
 theorem. The twice-covered count is a standard entropy projection
 inequality, with the exact finite proof included.
 
-The repository-derived contribution is the exact decoder-template and
-binary-closure interface, its finite type/mass comparison, and the
-combination of actual-module conditioning with expansion and shared-label
-counting to obtain the all-replacement bound (NDR.29) and its faithful
-full-family consumer. These ordinary deductions assert no worldwide
-originality. No absence of a literature hit is used as a proof of novelty.
+Theorems 2.2 and 2.4 give the exact decoder-template and binary-closure
+interface; Theorem 3.2 and Proposition 3.3 give its finite type/mass
+relations. Theorem 7.2 combines actual-module conditioning, expansion and
+shared-label counting to obtain (NDR.29), with the full-family attainment
+of Theorem 8.1. These deductions use the cited ingredients with the
+hypotheses and boundaries stated in their proofs.
 
-**Literature interface 10.3 (precise hypotheses and failed transfers).**
-The following primary sources locate the mathematical relations used or
-considered. `literature-attested` marks their stated scope; `repo-derived`
-marks the deductions proved in this volume.
+**Convention 10.3 (literature correspondences and applicability).** The
+following primary citations specify the hypotheses for the corresponding
+relations and the missing hypotheses for their application to the native
+task.
 
 | Primary source | Exact correspondence and boundary |
 | --- | --- |
-| Adam W. Marcus, Daniel A. Spielman and Nikhil Srivastava, *Interlacing Families I: Bipartite Ramanujan Graphs of All Degrees*, Theorems 5.3 and 5.5, [arXiv:1304.4132][MSS] | `literature-attested`: existence of a signing with new eigenvalues bounded by $2\sqrt{d-1}$ and iterative bipartite Ramanujan two-lifts. Starting from $K_{4,4}$ gives the exact orders in Lemma 6.1. The rational cut-test selection and native application are derived here; no efficient graph-generation claim is imported. |
-| F. R. K. Chung, R. L. Graham, P. Frankl and J. B. Shearer, *Some intersection theorems for ordered sets and graphs*, J. Combin. Theory A **43**, 23–37, [DOI:10.1016/0097-3165(86)90019-1][CGFS] | `literature-attested`: the overlapping-projection entropy principle attributed to Shearer. Lemma 7.1 gives a self-contained proof of the exact twice-covered finite-alphabet instance needed here, including arbitrary correlations. |
-| Mokshay Madiman and Prasad Tetali, *Information Inequalities for Joint Distributions, with Interpretations and Applications*, Proposition I and §IV, [arXiv:0901.0044v2][MT] | `literature-attested`: for arbitrary jointly distributed discrete variables, joint entropy is at most the sum of subset entropies divided by their minimum covering degrees. Degree two gives exactly the inequality in Lemma 7.1. This accessible primary treatment identifies the upper bound as Shearer's lemma; neither its use nor the proof here assumes independent edge labels after conditioning. |
-| Martin Dyer and David Richerby, *An Effective Dichotomy for the Counting Constraint Satisfaction Problem*, finite-domain constraint-language setup, [arXiv:1003.3879v4][DR] | `literature-attested`: a finite language on a finite domain constrains arbitrarily large finite variable sets. §2 gives the actual native binary language. Finite-instance decidability or a complexity dichotomy is not effective approximation of an all-size regularized optimum. |
-| Tomasz Gogacz and Szymon Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, Theorem 1 and Corollary 1, [arXiv:1512.01808v1][GT] | `literature-attested`: a fixed schema's size exponent is characterized by the almost-entropic cone; submodularity gives an outer relaxation. A native witness gives $H(g_q(X_i)\mid r_a(X_j))=0$ on a common law. Here the schema, donors and length vary while the native maps and alphabets stay fixed. Their variable-database achievability does not prove completeness or a uniform error for this task. |
-| Jeroen Zuiddam, *The asymptotic spectrum of graphs and the Shannon capacity*, Theorem 1.1 and Definition 2.1, [arXiv:1807.00169v2][Z] | `literature-attested`: duality requires the graph semiring, disjoint union, strong product and cohomomorphism preorder. A native fiber is a constraint relation, not a pair-confusability graph. No cardinality-preserving semiring/product/preorder correspondence or effectively exhaustive native spectrum is established here. |
-| David de Boer, Pjotr Buys and Jeroen Zuiddam, *The asymptotic spectrum distance, graph limits, and the Shannon capacity*, §§1–3, [arXiv:2404.16763v2][DBZ] | `literature-attested`: a distance defined using the full graph spectrum and convergence/continuity results for fraction graphs. The native task has not been identified with those graphs or given an effective spectrum-distance estimate. Compact or dual existence alone supplies no native numerical modulus. |
-| Nicolas Charpenay, Maël Le Treust and Aline Roumy, *On the Linearization of Optimal Rates for Independent Zero-Error Source and Channel Problems*, §§II–III, [arXiv:2407.02281v2][CLR] | `literature-attested`: specified zero-error source/channel graph products and independence assumptions. Separate attainable marginal optima do not establish joint feasibility for correlated native fibers. The exact coordinate-type argument in §3 is proved directly, without assuming such a product identification. |
-| Shmuel Friedland, Per Håkan Lundow and Klas Markström, *The 1-vertex transfer matrix and accurate estimation of channel capacity*, Theorems 2.1 and 4.1, [arXiv:math-ph/0603001v2][FLM] | `literature-attested`: transfer estimates use specified lattice constraints and symmetry or a friendly-colour hypothesis. The finite native language imposes no such geometry, bounded window or width. The unbounded donor quantifier is not removed by a finite transfer ansatz. |
-| Anna Gál and Peter Bro Miltersen, *The Cell Probe Complexity of Succinct Data Structures*, [BRICS RS-03-44][GM] | `literature-attested`: preserved input plus an index gives the systematic-storage analogy. Native probes instead see a grammar-constrained constructor array, and the complete attained code, paid acquisition and all-count targets must be preserved. The systematic bit-probe results are not native rate theorems. |
-| Sumegha Garg, Songhua He, Yuanzhi Li, Periklis A. Papakonstantinou and Xin Yang, *Systematic Data Structure Lower Bounds via the Query-with-Sketch Model*, Definition 2.1, Lemma 2.5 and Theorem 1.1, [arXiv:2609.18024v1][GHLPY] | `literature-attested`: a sketch is supplied before probes of preserved input; their lifting theorem requires quantitative conditional answer min-entropy after every allowed partial assignment, with its stated good-input conditions. $E$ and a native reply match sketch/probe timing, but those entropy premises have not been proved for the native constrained reply array. Separate late targets cannot be replaced by one free vector-output request. |
-| Holger Boche and Christian Deppe, *Computability of the Zero-Error capacity with Kolmogorov Oracle*, Theorem 12 and Remark 38, [arXiv:2001.11442v3][BD] | `literature-attested`: a capacity/Fekete characterization alone is distinguished from effective computation. General examples or results about channel families are not a reduction proving noncomputability of this fixed native rate. |
-| Theorems 2.2, 2.4, 3.2 and 7.2, and their actual-source realization in §8 | `repo-derived`: the finite all-competitor carrier and exponential bounded-original-block repair obstruction. Their proofs and limits are given here; none supplies the still missing lower modulus (NDR.37). |
+| Adam W. Marcus, Daniel A. Spielman and Nikhil Srivastava, *Interlacing Families I: Bipartite Ramanujan Graphs of All Degrees*, Theorems 5.3 and 5.5, [arXiv:1304.4132][MSS] | Existence of a signing with new eigenvalues bounded by $2\sqrt{d-1}$ and iterative bipartite Ramanujan two-lifts. Starting from $K_{4,4}$ gives the exact orders in Lemma 6.1. Its rational cut-test selection is effective; an efficient graph-generation bound is not assumed. |
+| F. R. K. Chung, R. L. Graham, P. Frankl and J. B. Shearer, *Some intersection theorems for ordered sets and graphs*, J. Combin. Theory A **43**, 23–37, [DOI:10.1016/0097-3165(86)90019-1][CGFS] | The overlapping-projection entropy principle attributed to Shearer. Lemma 7.1 gives the exact twice-covered finite-alphabet instance, including arbitrary correlations. |
+| Mokshay Madiman and Prasad Tetali, *Information Inequalities for Joint Distributions, with Interpretations and Applications*, Proposition I and §IV, [arXiv:0901.0044v2][MT] | For arbitrary jointly distributed discrete variables, joint entropy is at most the sum of subset entropies divided by their minimum covering degrees. Degree two gives exactly the inequality in Lemma 7.1. This is Shearer's lemma; it requires no independence of edge labels after conditioning. |
+| Martin Dyer and David Richerby, *An Effective Dichotomy for the Counting Constraint Satisfaction Problem*, finite-domain constraint-language setup, [arXiv:1003.3879v4][DR] | A finite language on a finite domain constrains arbitrarily large finite variable sets. §2 gives the actual native binary language. Finite-instance decidability or a complexity dichotomy is not effective approximation of an all-size regularized optimum. |
+| Tomasz Gogacz and Szymon Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, Theorem 1 and Corollary 1, [arXiv:1512.01808v1][GT] | A fixed schema's size exponent is characterized by the almost-entropic cone; submodularity gives an outer relaxation. A native witness gives $H(g_q(X_i)\mid r_a(X_j))=0$ on a common law. Here the schema, donors and length vary while the native maps and alphabets stay fixed. Their variable-database achievability does not prove completeness or a uniform error for this task. |
+| Jeroen Zuiddam, *The asymptotic spectrum of graphs and the Shannon capacity*, Theorem 1.1 and Definition 2.1, [arXiv:1807.00169v2][Z] | Duality requires the graph semiring, disjoint union, strong product and cohomomorphism preorder. A native fiber is a constraint relation, not a pair-confusability graph. A cardinality-preserving semiring/product/preorder correspondence and an effectively exhaustive native spectrum remain unproved. |
+| David de Boer, Pjotr Buys and Jeroen Zuiddam, *The asymptotic spectrum distance, graph limits, and the Shannon capacity*, §§1–3, [arXiv:2404.16763v2][DBZ] | A distance defined using the full graph spectrum and convergence/continuity results for fraction graphs. An identification of the native task with those graphs and an effective spectrum-distance estimate remain unproved. Compact or dual existence alone supplies no native numerical modulus. |
+| Nicolas Charpenay, Maël Le Treust and Aline Roumy, *On the Linearization of Optimal Rates for Independent Zero-Error Source and Channel Problems*, §§II–III, [arXiv:2407.02281v2][CLR] | Specified zero-error source/channel graph products and independence assumptions. Separate attainable marginal optima do not establish joint feasibility for correlated native fibers. The coordinate-type argument in §3 assumes no such product identification. |
+| Shmuel Friedland, Per Håkan Lundow and Klas Markström, *The 1-vertex transfer matrix and accurate estimation of channel capacity*, Theorems 2.1 and 4.1, [arXiv:math-ph/0603001v2][FLM] | Transfer estimates use specified lattice constraints and symmetry or a friendly-colour hypothesis. The finite native language imposes no such geometry, bounded window or width. The unbounded donor quantifier is not removed by a finite transfer ansatz. |
+| Anna Gál and Peter Bro Miltersen, *The Cell Probe Complexity of Succinct Data Structures*, [BRICS RS-03-44][GM] | Preserved input plus an index gives the systematic-storage analogy. Native probes instead see a grammar-constrained constructor array, and the complete attained code, paid acquisition and all-count targets must be preserved. The systematic bit-probe results are not native rate theorems. |
+| Sumegha Garg, Songhua He, Yuanzhi Li, Periklis A. Papakonstantinou and Xin Yang, *Systematic Data Structure Lower Bounds via the Query-with-Sketch Model*, Definition 2.1, Lemma 2.5 and Theorem 1.1, [arXiv:2609.18024v1][GHLPY] | A sketch is supplied before probes of preserved input; their lifting theorem requires quantitative conditional answer min-entropy after every allowed partial assignment, with its stated good-input conditions. $E$ and a native reply match sketch/probe timing, but those entropy premises remain unproved for the native constrained reply array. Separate late targets cannot be replaced by one free vector-output request. |
+| Holger Boche and Christian Deppe, *Computability of the Zero-Error capacity with Kolmogorov Oracle*, Theorem 12 and Remark 38, [arXiv:2001.11442v3][BD] | A capacity/Fekete characterization alone is distinct from effective computation. General examples or results about channel families are not a reduction proving noncomputability of this fixed native rate. |
+| Theorems 2.2, 2.4, 3.2 and 7.2, and their actual-source realization in §8 | The finite all-competitor carrier and exponential bounded-original-block repair obstruction. Their stated hypotheses and conclusions leave the lower modulus (NDR.37) unresolved. |
 
-## 11. Finite exact verification boundary
+## 11. Finite consequences of the native interfaces
 
-**Verification 11.1 (bounded exact checks).** In-memory calculations from
-the recursive tree, reply and factor definitions reproduce all seven
-columns of (NDR.20)–(NDR.21), all fourteen coordinate-target witnesses on
-$B_*$, and failure of an own $LL$ witness for all 127 words of length at
-most six. Exhausting all 31 nonempty subsets of $P$ gives maximum locally
-admissible size four. Direct recursive substitution readouts agree with
-(NDR.4) on all five states, seven targets and counts $0,\ldots,10$,
-giving 385 checks. Longer words and arbitrary counts are justified by the
-proofs and credited suppliers, not extrapolation.
+**Corollary 11.1 (one-coordinate motif size).** Among the 31 nonempty
+subsets of $P$, the maximum size of a one-coordinate jointly admissible
+set is four. On the full $P$, none of the 127 words of length at most
+six determines the $LL$ factor; in fact no finite word does. The factor
+decoders on $B_*$ in Lemma 4.2 give the substitution readouts for both
+coordinates, all seven targets and every $k\ge0$.
 
-A three-vertex graph lift with four actual module ports, using public
-constant modules in unused ports, has 125 edge-assignment rows. All 93
-coordinate-target pairs satisfy their displayed witnesses. Its six
-edge-port $LL$ targets have exactly the opposite endpoint as a possible
-donor among all boundary experiments. For the base graph $K_{4,4}$,
-all 162 nonempty vertex subsets of size at most four satisfy (NDR.27);
-the minimum exact ratio $|\partial A|/|A|$ is two.
+**Proof.** There are $2^5-1=31$ nonempty subsets. Lemma 4.2 excludes
+$P$ itself. On $P\setminus\{u_0\}$ the reply at $RL$ takes the four
+distinct values absent, alpha, beta and branch, by (NDR.20). It therefore
+determines every target factor on this four-element set. There are
+$\sum_{l=0}^6 2^l=127$ words in the stated finite range, all included
+in the arbitrary-word exclusion of Lemma 4.2. The all-count assertion
+is (NDR.4) applied to that lemma's exact factor decoders. $\square$
 
-At the actual $N=8,D=8$ interface, eighteen edge assignments (the all-zero
-assignment, sixteen assignments changing one edge to label one, and the
-assignment $s_e=e\bmod5$ in the fixed edge order) give actual sources in
-$\mathcal F_8$. Their root-literal readers agree with direct substitution
-readouts for every one of the 255 legal targets and counts
-$0,\ldots,16$: 78,030 exact comparisons. The count and letter identities
-in (NDR.34) also hold by direct integer sums for $1\le D\le12$.
+**Proposition 11.2 (three-block paired-module relation).** Let the vertices
+of a triangle be $0,1,2$, with the cyclic orientation
+$0\to1\to2\to0$. Independently assign a label $s_e\in\{0,\ldots,4\}$
+to each of its three edges. At each vertex use the four-module form
+(NDR.26): put $u_{s_e}$ at port $LL$ for its outgoing edge,
+$u_{\tau(s_e)}$ at port $LR$ for its incoming edge, and $u_0$ at each
+of the other two ports. The resulting relation in $S_5^3$ has exactly
+$125$ tuples and is jointly admissible for all $93=3|W_5|$
+coordinate-target pairs. Each of its six nonconstant edge-port $LL$
+targets has exactly the opposite endpoint as its possible donor block,
+even when all finite native words are allowed.
 
-These checks substantiate finite premises and address translation. They
-do not enumerate the large graph fibers, every replacement set, general
-joint cover optima or an asymptotic convergence sequence. The all-$N$
-intersection theorem uses graph existence, donor-closed projection,
-actual-module conditioning, the credited all-joint entropy cap and the
-shared-variable proof. No experiment files, Lean/Blueprint compilation,
-digestion status or physical implementation claim is part of this source.
+**Proof.** Each module state recovers its edge label, so the parametrization
+is injective and has $5^3=125$ images. Targets above the module frontier
+are constantly branch, and targets in either fixed module are constant
+factors. In an edge module, use the paired witnesses of Lemma 4.2 at
+the corresponding actual port. They are parent words in $W_5$, since
+the port has length two and the suffix has length at most two. Thus all
+$3(1+2+4+8+16)=93$ parent coordinate-target pairs have witnesses.
+For each edge-port $LL$ target, vary that edge label while keeping the
+other two fixed. An experiment in an unrelated module is constant under
+this variation; an experiment in the target module cannot determine its
+$LL$ factor by Lemma 4.2. Every finite word enters at most one module.
+The mate's $RL$ reply does determine the factor, so precisely the other
+endpoint block can be its donor. $\square$
+
+**Proposition 11.3 (base graph and original-root specialization).** For
+$G=K_{4,4}$, the minimum of $|\partial A|/|A|$ over its 162 nonempty
+vertex subsets of size at most four is two. At the associated
+$N=8,D=8$ original-root interface of Theorem 8.1, all $5^{16}$ edge
+assignments yield distinct sources in $\mathcal F_8$. For each one,
+the specified reader returns the correct prediction on all 255 permitted
+targets and every authentic $k\ge0$, with at most one fresh Read of
+length at most eight. The source-blind preparation on every
+$t\in\mathcal F_8$ uses exactly 511 Reads and 4097 submitted letters,
+with maximum address length nine.
+
+**Proof.** A subset containing $l$ vertices in one bipartition and $r$
+in the other, with $a=l+r>0$, has
+$|\partial A|=4a-2lr$. Since $lr\le a^2/4$, for $a\le4$ its ratio
+is at least $4-a/2\ge2$. Equality holds for $l=r=2$. The number of
+subsets is $\binom81+\binom82+\binom83+\binom84=162$.
+There are sixteen edges, and $h=3$, so the remaining assertions follow
+from Proposition 6.3 and Theorem 8.1 with
+$|\mathcal P_8|=\sum_{l=0}^7 2^l=255$,
+$2^9-1=511$ and $8\cdot2^9+1=4097$.
+The exact sums in that theorem hold for every depth, and its factor
+identity (NDR.36) holds for every count. $\square$
 
 [FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
 [NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
