@@ -79,7 +79,8 @@ private theorem state_from_eight_paths {m : ℕ} (F : SupplyFrame m 3)
       y.val = x.val * b m → x.val (Fin.last m) ∉ F.selected.toFinset → s(x, y) ∈ w.edges)
     (hC : ∀ x : Configuration m, s(x, x * c m) ∈ w.edges.map (Sym2.map Subtype.val) →
       x (Fin.last m) ∈ F.selected.toFinset) :
-    ∃ S : StateFor F (by omega) hB, S.base = base ∧ HEq S.walk w := by
+    ∃ S : StateFor F (by omega) hB, S.base = base ∧ HEq S.walk w ∧
+      S.primaryOdd = true ∧ S.oppositeOdd = false ∧ S.distinguishedOpposite = false := by
   classical
   let B := oppositeSelectedFrame F (by omega)
   let p := jointPorts joint
@@ -190,7 +191,7 @@ private theorem state_from_eight_paths {m : ℕ} (F : SupplyFrame m 3)
     keepsProtectedA := hkeepA
     keepsRemainingB := hkeepB
     selectedC := hC }
-  exact ⟨S, rfl, HEq.rfl⟩
+  exact ⟨S, rfl, HEq.rfl, rfl, rfl, rfl⟩
 
 
 /-- The actual eight-piece partition and the earned retained edges of
@@ -199,8 +200,9 @@ theorem native_j2_parent_third_order_state {m : ℕ} (hm : 5 ≤ m)
     (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
     (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
     (W : OuterParentWitnessFor hm F A u hbase hA) :
-    Nonempty (StateFor (nextFrame (reverseSelected F) A u hbase) (by omega)
-      (by simpa only [nextFrame] using hA)) := by
+    ∃ S : StateFor (nextFrame (reverseSelected F) A u hbase) (by omega)
+        (by simpa only [nextFrame] using hA),
+      S.primaryOdd = true ∧ S.oppositeOdd = false ∧ S.distinguishedOpposite = false := by
   classical
   let B := reverseSelected F
   let N := nextFrame B A u hbase
@@ -300,8 +302,9 @@ theorem native_j2_parent_third_order_state {m : ℕ} (hm : 5 ≤ m)
     rw [SimpleGraph.Walk.edges_map, List.map_map, rawmap] at hx
     rw [hselected]
     exact hCkeep x hx
-  obtain ⟨S, _, _⟩ := state_from_eight_paths N hN w hw mapped K' H' hK' hH' hj' hends' hA' hB' hC'
-  exact ⟨S⟩
+  obtain ⟨S, _, _, hprimary, hopposite, hdistinguished⟩ :=
+    state_from_eight_paths N hN w hw mapped K' H' hK' hH' hj' hends' hA' hB' hC'
+  exact ⟨S, hprimary, hopposite, hdistinguished⟩
 
 /-- Every literal three-selected-label frame has a full strong actual
 state. A predecessor supplies its own native P/Q witnesses; the double
@@ -318,7 +321,8 @@ theorem native_third_order_state_exists {m : ℕ} (F : SupplyFrame m 3)
   have hrev : reverseSelected (reverseSelected P) = P := by
     rw [← native_opposite_selected_two (reverseSelected P), ← native_opposite_selected_two P]
     exact native_opposite_selected_involutive P (by omega)
-  simpa only [hrev, hnext] using h
+  obtain ⟨S, _⟩ := h
+  exact ⟨by simpa only [hrev, hnext] using S⟩
 
 #print axioms native_j2_parent_third_order_state
 #print axioms native_third_order_state_exists
