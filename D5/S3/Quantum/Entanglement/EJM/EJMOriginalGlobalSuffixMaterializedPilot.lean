@@ -19,15 +19,15 @@ open D5.S3.Quantum.Entanglement.EJM.EJMCacheSoundness (initial)
 open D5.S3.Quantum.Entanglement.EJM.EJMCacheMaterialization (checkSame checked_same)
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData (scale)
 
-private def prefix : Fin 15 → Fin 4 := ![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+private def prefixOutcomes : Fin 15 → Fin 4 := ![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 def computedCache : Cache :=
   (List.finRange 15).foldl
-    (fun cache i => step cache ⟨i.val, by have h := i.isLt; omega⟩ (prefix i))
+    (fun cache i => step cache ⟨i.val, by have h := i.isLt; omega⟩ (prefixOutcomes i))
     initial
 
 def partialEvent : Partial (Fin 20) (Fin 4) := fun g =>
-  if h : g.val < 15 then some (prefix ⟨g.val, h⟩) else none
+  if h : g.val < 15 then some (prefixOutcomes ⟨g.val, h⟩) else none
 
 /-- Every state and row payload is literal; no mirror lookup is left here. -/
 def literalCache : Cache := ⟨![
