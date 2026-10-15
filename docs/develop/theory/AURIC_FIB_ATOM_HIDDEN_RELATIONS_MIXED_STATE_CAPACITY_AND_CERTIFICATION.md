@@ -1691,3 +1691,328 @@ $\Xi$ 甚至是四个五维因子上的产品纯态凸组合；这里的差异�
 明确不含来源副本和任意未来控制；它不供应本条的整态副本及交换谱测量权限。
 
 ## 追加锚（本行以下为增补区）
+
+## 108. 实际局部行走菜单的匹配来源不可见纤维、锐利纯度与十四旗擦除
+
+**假设 C-108.1（原二体来源上的条件性局部菜单）。** 保留 C-106–C-107 的同一个
+$A\mid B=H^{(1)}\mid H^{(2)}$、$B=(0,1,2,3,13)$、
+$f(0)=13,f(13)=0,f(1)=3,f(3)=1,f(2)=2$、$e_s=|s,f(s)\rangle$、
+$J|s\rangle=e_s$、$S=JI_5J^\dagger/5$、$Q$ 和精确人口纤维 $\mathfrak D$。
+将两边各自的有序局部基按位置对应为
+
+$$
+\begin{array}{c|ccccc}
+\text{原标签}&0&1&2&3&13\\ \hline
+\text{行走标签}&N&2&3&5&25
+\end{array}.
+\tag{C108.1}
+$$
+
+每边使用《递归关系观察：量子测量相对边界》（下称 QMB）假设 1.1 的同一个
+$K$、$U(t)=e^{-itK}$、$t\ge0$ 和完整五结果秩一 Lüders 读数；
+允许 Stop。条件性双边合同允许局部作用 $U(t)\otimes I$、$I\otimes U(u)$、
+两边的完整局部读数，以及按已保留的双方经典记录选取后续局部动作。
+两边的非负等待可分别选择；局部 Stop 后不再对该边作用。
+每个策略有有限深度，所有有限深度都纳入比较。
+输入无关的随机控制资源、策略及其记录规则在比较的两个输入间相同。
+完整历史保留两边结果、动作及停止；事件分组仅是这些记录的经典后处理。
+记完整历史律为 $P_\Gamma^\pi$，所有这些策略组成 $\mathcal M_{\rm loc}$。
+
+这是对同一份可能相关的 $\Gamma_{AB}$ 的两个局部实例的访问假设，不要求
+$\Gamma_{AB}=\rho_A\otimes\rho_B$。它不从单系统任意 $\mathbb C^5$ 输入制备、
+原生树或其记忆合同推出；也不授予独立模式相位、任意酉、重置、源副本、
+交换仪器、量子旁信息或隐藏 Kraus 记录。
+不同设置的总体律均以同一矩阵 $\Gamma$ 为输入定义；若实际估计它们，来源跨设置
+具有这个共同矩阵是额外的制备要求，不能由相同局部边缘代替。
+
+**引理 C-108.2（被动匹配相位与全部有限历史的闭包）。** 在 (C108.1) 的顺序中令
+$D=\operatorname{diag}(1,i,i,i,1)$，$d_s=D_{ss}$，并令
+
+$$
+\eta_s=d_sd_{f(s)},\qquad
+(\eta_0,\eta_1,\eta_2,\eta_3,\eta_{13})=(1,-1,-1,-1,1),\qquad
+Z=\operatorname{diag}(\eta_s).
+\tag{C108.2}
+$$
+
+则 $(D\otimes D)J=JZ$。$\mathcal M_{\rm loc}$ 的每个确定控制完整分支的效果
+属于
+
+$$
+\left\{DH D^\dagger\otimes DL D^\dagger:
+             H,L\in\operatorname{Sym}_5(\mathbb R),\ H,L\succeq0\right\}.
+\tag{C108.3}
+$$
+
+全部历史事件和输入无关随机策略的效果属于这些乘积的非负和或积分。
+全部可用双边效果的实线性张成，在 $J$ 压缩后恰为
+$\operatorname{Sym}_5(\mathbb R)$；这里不声称每个张成成员本身是可执行效果。
+
+证明。逐项乘相位得到 $1\cdot1,i\cdot i,i\cdot i,i\cdot i,1\cdot1$，
+所以 (C108.2) 成立。QMB 定义 1.2 及《AURIC FIB 二阶关系完成》
+定理 65.2–65.3 给被动帧中的真实等待
+$O(t)=D^\dagger U(t)D$ 为实正交矩阵，完整读分支为实模式投影，
+且实际单边效果实张成恰为 $D\operatorname{Sym}_5(\mathbb R)D^\dagger$。
+这里复用其非负等待右导数张成证书，不把被动 $D$ 或导数作为控制。
+
+固定一条双方完整记录后，自适应策略指定的每个动作都已确定；不同因子的作用交换，
+该分支 Kraus 算子因而为 $M_h^A\otimes M_h^B$。
+将每边所有实际等待和读分支按原次序相乘，得
+$M_h^A=DL_h^AD^\dagger$、$M_h^B=DL_h^BD^\dagger$，其中 $L_h^A,L_h^B$ 为实矩阵。
+其效果即 (C108.3)，取 $H=(L_h^A)^TL_h^A$、$L=(L_h^B)^TL_h^B$。
+未读的一边也适用，空乘积为恒等。
+经典策略的分支权重只乘上输入无关非负系数；互斥记录求和给事件。
+对输入无关随机种子先固定种子作上述分支展开，再积分，给相同闭包。
+因此使用未归一化分支即可处理零概率记录，无须对零概率事件作条件化。
+
+对任意实对称 $H,L$，直接按匹配基计算
+
+$$
+\left[J^\dagger(DHD^\dagger\otimes DLD^\dagger)J\right]_{sa}
+=\eta_s\eta_a H_{sa}L_{f(s)f(a)}.
+\tag{C108.4}
+$$
+
+右边为实对称矩阵，给压缩张成的上界。
+另一方面菜单包含两个互不依赖地预选等待的一读后 Stop 协议，故其效果张成包含
+两个单边实际效果张成的张量积。
+令 $E_{sa}=|s\rangle\langle a|$。
+$H=E_{ss},L=E_{f(s)f(s)}$ 在 (C108.4) 给 $E_{ss}$；
+当 $s\ne a$，$H=E_{sa}+E_{as}$、
+$L=E_{f(s)f(a)}+E_{f(a)f(s)}$ 给
+$\eta_s\eta_a(E_{sa}+E_{as})$。
+每个 $H,L$ 都是单边实际效果的有限实线性组合，故这些乘积是实际乘积效果的有限实线性组合。
+它们张成全部实对称矩阵，给下界，并证明增加上述经典自适应不会增加压缩后的方向。证毕。
+
+**定理 C-108.3（原人口纤维上的双向全菜单等价与十维盲核）。** 对每个
+$\Gamma=JCJ^\dagger\in\mathfrak D$，下列条件等价：
+
+$$
+\begin{aligned}
+& P_\Gamma^\pi=P_S^\pi\quad\text{对每个 }\pi\in\mathcal M_{\rm loc};\\
+& \operatorname{Re}C=I_5/5;\\
+& C=I_5/5+iA,\qquad A\in M_5(\mathbb R),\quad A^T=-A,
+                    \quad I_5/5+iA\succeq0.
+\end{aligned}
+\tag{C108.5}
+$$
+
+在 C-107 的二十维零对角 Hermitian 方向空间 $V$ 上，此实际菜单的秩与核维数
+分别恰为 $10,10$，核为
+
+$$
+\mathcal N_{\rm loc}=i\operatorname{Skew}_5(\mathbb R).
+\tag{C108.6}
+$$
+
+所有满足 (C108.5) 的态都还属于原 $Q$ 纤维 $\mathfrak F$。
+在已知 $Q$ 的十九维 $V_Q$ 上，菜单的秩为九、核仍为十维。
+
+证明。引理 C-108.2 说明整个菜单在匹配支撑内的效果恰张成实对称矩阵。
+所以全部历史律相同，当且仅当 $C-I_5/5$ 与每个实对称矩阵的迹配对为零。
+必要性也可直接用 (C108.4) 的无序对代表：对应差读数为
+$2\eta_s\eta_a\operatorname{Re}c_{sa}$。
+所有 $\eta_s$ 非零，故全部十个实部必须消失；对角已由人口给定。
+反之，Hermitian 的 $C-I_5/5$ 若实部为零，恰能唯一写成 $iA$、$A$ 实反对称。
+对任意实对称 $H$，
+
+$$
+\operatorname{tr}(AH)=\operatorname{tr}((AH)^T)
+=\operatorname{tr}(H^TA^T)=-\operatorname{tr}(HA)
+=-\operatorname{tr}(AH)=0.
+\tag{C108.7}
+$$
+
+最后的零使用特征为零。故每个确定分支的差读数为零，非负和与积分仍为零，
+给全体随机自适应历史的充分性。正性没有被丢弃：它保留为 (C108.5) 的明确条件。
+这是 Heinosaari–Mazzarella–Wolf，
+[arXiv:1109.5478v1](https://arxiv.org/html/1109.5478v1)，Proposition 2
+的观察差空间判据在该匹配支撑上的应用。
+
+零对角 Hermitian 矩阵的十个无序对各有一个实部和一个虚部。
+菜单恰保留十个实部，十个虚部组成 (C108.6)；小范数的这些方向都可由正性内部
+$I_5/5$ 实现，所以这不是包含非法扰动的虚假维数。
+$J^\dagger QJ$ 是 C-107.3 已给的实对称矩阵，故 (C108.7) 使
+$q(\Gamma)=q(S)=1/5$。原 $\ell_Q$ 在十维实部空间上非零，
+已知它只消掉一个可见实方向，给 $V_Q$ 上的秩九与核十。证毕。
+
+**定理 C-108.4（不可见来源的锐利整态纯度包络）。** 对所有满足 (C108.5) 的态，
+
+$$
+\boxed{\qquad \frac15\le\operatorname{tr}(\Gamma^2)\le\frac9{25}.\qquad}
+\tag{C108.8}
+$$
+
+下界等号当且仅当 $\Gamma=S$。上界等号当且仅当 $iA$ 的谱为
+$\{1/5,1/5,0,-1/5,-1/5\}$（计重数）；此时 $C$ 和 $\Gamma$ 的秩都是三。
+除 $S$ 外，该不可见纤维的全部态对原来的 $A\mid B$ 分割纠缠。
+
+证明。$H=iA$ 为 Hermitian，且逐项共轭满足 $\overline H=-H$。
+若 $Hz=\lambda z$，$\lambda\in\mathbb R$，则
+$H\overline z=-\lambda\overline z$。
+共轭给 $\lambda$ 与 $-\lambda$ 特征空间之间的反线性双射，故重数相等。
+五维 Hermitian 谱定理因此允许把 $H$ 的全部谱写为
+$0,+a,-a,+b,-b$，其中 $a,b\ge0$，包括退化的 $a=0$ 或 $b=0$。
+$C=I_5/5+H\succeq0$ 当且仅当 $a,b\le1/5$。
+这里的谱配对由共轭与谱定理得到，不把一个额外的正交正规形当作新测量。
+等距嵌入给
+
+$$
+\operatorname{tr}(\Gamma^2)=\operatorname{tr}(C^2)
+=\frac15+2(a^2+b^2)
+\in\left[\frac15,\frac15+\frac4{25}\right].
+\tag{C108.9}
+$$
+
+下界等号迫使 $a=b=0$，Hermitian 性再给 $A=0$。
+上界等号迫使 $a=b=1/5$，此时 $C$ 的非零谱恰为 $2/5,2/5,1/5$。
+最后直接消费 C-106.2 的唯一可分离点结论，或 C-107.5 的同一整态纯度判据；
+并非对一般混态以纯度单独判纠缠。
+相应部分转置的已知块谱来源为 Rains，
+[quant-ph/0008047v2](https://arxiv.org/html/quant-ph/0008047v2)，
+§6 Lemma 6.3 的证明、式 (6.20)–(6.21)。证毕。
+
+**命题 C-108.5（同一人口及原 $Q$ 纤维内达到每个中间值）。** 在原标签中定义
+
+$$
+\begin{aligned}
+A_t&=\frac t5(E_{0,13}-E_{13,0}+E_{1,3}-E_{3,1}),\\
+C_t&=I_5/5+iA_t,\qquad \widehat\Gamma_t=JC_tJ^\dagger,
+                   \qquad 0\le t\le1.
+\end{aligned}
+\tag{C108.10}
+$$
+
+$\widehat\Gamma_t$ 的全部 $25$ 个人口和 $q=1/5$ 与 $S$ 相同，
+它与 $S$ 的所有 $\mathcal M_{\rm loc}$ 历史律相同，且
+
+$$
+\operatorname{spec}(C_t)=
+\left\{\frac{1+t}{5},\frac{1-t}{5},\frac{1+t}{5},\frac{1-t}{5},\frac15\right\},
+\qquad
+\operatorname{tr}(\widehat\Gamma_t^2)=\frac15+\frac{4t^2}{25}.
+\tag{C108.11}
+$$
+
+因此 (C108.8) 的每个值都达到；$t=1$ 是合法归一化的秩三上端点。
+
+证明。按 $(0,13)\mid(1,3)\mid(2)$ 分块，$C_t$ 是两个
+$\frac15\left(\begin{smallmatrix}1&it\\-it&1\end{smallmatrix}\right)$
+和单点 $1/5$ 的直和。
+两个二维块的特征向量分别为 $(1,-i)^T/\sqrt2$、$(1,i)^T/\sqrt2$，
+其特征值分别为 $(1+t)/5$、$(1-t)/5$；所以全闭区间上正半定且迹一。
+对角 $1/5$ 给原人口，定理 C-108.3 给全菜单等价及原 $Q$ 等价。
+平方谱求和给 (C108.11)。
+给定 $p\in[1/5,9/25]$，取 $t=\sqrt{25(p-1/5)/4}\in[0,1]$ 即得纯度 $p$。
+$t=1$ 时还可直接写正性证书
+
+$$
+C_1=\frac15\bigl(u_0u_0^\dagger+u_1u_1^\dagger+u_2u_2^\dagger\bigr),\qquad
+u_0=|0\rangle-i|13\rangle,\quad
+u_1=|1\rangle-i|3\rangle,\quad u_2=|2\rangle,
+\tag{C108.12}
+$$
+
+这三个向量非零且互相正交，其范数平方为 $2,2,1$，所以秩三、迹一。
+$t=0$ 是 $S$；任意 $t>0$ 由 C-108.4 给原分割的纠缠。证毕。
+
+**定理 C-108.6（同一相关来源被实际十四旗端口精确擦除）。** 固定
+《递归关系观察：达到的十四旗量子端口》（下称 QFA）定义 2.1 的实际数据：
+
+$$
+\begin{aligned}
+F_{14}&=\{(\mathrm A,k,\ell):0\le k,\ell<3\}
+       \sqcup\{(\mathrm B,k):0\le k<5\},\\
+c_{\mathrm A,k,\ell}&=10/27,\qquad c_{\mathrm B,k}=1/3,\qquad
+P_\nu=v_\nu v_\nu^T,\quad v_\nu\in\mathbb R^5,\quad \|v_\nu\|=1,\\
+\sum_{\nu\in F_{14}}c_\nu P_\nu&=I_5,\qquad
+R_\nu=DP_\nu D^\dagger,\quad E_\nu=c_\nu R_\nu,\\
+\widetilde T(X)&=\sum_{\nu\in F_{14}}\operatorname{tr}(E_\nu X)R_\nu
+=D\left[\sum_{\nu\in F_{14}}c_\nu P_\nu(D^\dagger XD)P_\nu\right]D^\dagger.
+\end{aligned}
+\tag{C108.13}
+$$
+
+$v_\nu$ 的三点、五点系数及两旋转平面取 QFA 式 (2.1)–(2.3) 的原值；
+归一化等式正是其引理 2.2，$\widetilde T$ 是其定理 2.3 的同一个固定全块 CPTP 端口，
+不是新优化的通道。
+对每个满足 (C108.5) 的同一份相关 $\Gamma$，有
+
+$$
+\boxed{\quad(\widetilde T\otimes\widetilde T)(\Gamma)
+              =(\widetilde T\otimes\widetilde T)(S).\quad}
+\tag{C108.14}
+$$
+
+共同输出可分离，而且对实际全部 $14\times14$ 个旗对，其联合编码概率逐项相同：
+
+$$
+\begin{aligned}
+p_{\nu\mu}
+&=\operatorname{tr}((E_\nu\otimes E_\mu)\Gamma)
+ =\frac{c_\nu c_\mu}{5}\sum_{s\in B}
+                      v_\nu(s)^2v_\mu(f(s))^2\ge0,\\
+(\widetilde T\otimes\widetilde T)(\Gamma)
+&=\sum_{\nu,\mu\in F_{14}}p_{\nu\mu}R_\nu\otimes R_\mu
+ =\frac15\sum_{s\in B}\widetilde T(\Pi_s)\otimes\widetilde T(\Pi_{f(s)}).
+\end{aligned}
+\tag{C108.15}
+$$
+
+证明。令 $r_s=v_\nu(s)v_\mu(f(s))\in\mathbb R$。
+被动坐标中的来源系数为 $ZCZ=I_5/5+iZAZ$，而 $ZAZ$ 仍实反对称。
+因而同一旗对的 Born 概率恰为
+
+$$
+c_\nu c_\mu\sum_{s,a}r_sr_a\eta_s\eta_a c_{sa}
+=c_\nu c_\mu\left[\frac15\sum_s r_s^2
+                  +i\sum_{s,a}r_sr_a\eta_s\eta_a A_{sa}\right]
+=\frac{c_\nu c_\mu}{5}\sum_s r_s^2.
+\tag{C108.16}
+$$
+
+末个双和中 $s=a$ 项为零，$(s,a)$ 与 $(a,s)$ 项相消。
+这个计算对九个 A 旗和五个 B 旗的每一对成立，不更换它们的向量、权重或旗数。
+由 (C108.13) 的归一化，
+
+$$
+\sum_{\nu,\mu}p_{\nu\mu}
+=\frac15\sum_s
+\left(\sum_\nu c_\nu v_\nu(s)^2\right)
+\left(\sum_\mu c_\mu v_\mu(f(s))^2\right)=1.
+\tag{C108.17}
+$$
+
+每个 $R_\nu$ 是归一化纯态，故 (C108.15) 是显式产品密度态凸分解，证明可分离。
+把其中的和先按 $s$ 展开，给 (C108.15) 的最后一式；直接对 $S$ 作用局部通道也得同式，
+于是 (C108.14) 成立。
+对相关 $\Gamma$ 使用的始终是联合概率
+$\operatorname{tr}((E_\nu\otimes E_\mu)\Gamma)$，没有把它换成边缘概率的乘积。
+秩一 Kraus 的 measure-and-prepare 与纠缠破坏性质是
+Horodecki–Shor–Ruskai，
+[quant-ph/0302031](https://arxiv.org/html/quant-ph/0302031)，式 (1)–(2)、Theorem 4(A–D)
+的已知对应；该一般性质本身不推出与 $S$ 的精确输出相等，后者由 (C108.16) 给出。证毕。
+
+**推论 C-108.7（保持实际历史与认证原来源所需关系的分离）。** 在假设 C-108.1
+及精确人口合同下，同一个全菜单等价类内同时存在唯一可分离态 $S$、
+所有 $t\in(0,1]$ 的纠缠态 $\widehat\Gamma_t$，以及整态纯度区间
+$[1/5,9/25]$ 的全部值。不存在仅以所有 $\mathcal M_{\rm loc}$ 完整历史律为输入的函数，
+能在该类内正确返回原 $A\mid B$ 可分离性或整态纯度。
+即使给出两个实际十四旗编码的完整联合旗律，仍没有这样的函数。
+
+证明。C-108.3 与 C-108.5 使这些态的全菜单律相同，C-108.15 使它们的全部联合旗律相同；
+而 $t=0$ 与任意 $t>0$ 的可分离性不同，$t$ 变化时纯度取遍上述非退化区间。
+同一输入的函数只能给同一值，故不可能同时正确。证毕。
+
+此推论比较的是同一原二体来源、指定实际局部操作和精确总体概率。
+C-107.7 的整态交换纯度读数仍另外要求实际输入
+$\Gamma_{AB}\otimes\Gamma_{A'B'}$ 及整份交换的谱仪器；
+本菜单及局部端口没有给出这四个因子或源副本独立性。
+(C108.14) 是该不可见纤维到一个通道纤维的包含，不刻画这个通道纤维的全部成员。
+QFA 定理 5.1 的 $\alpha$ 是这一个单系统端口在原单系统历史 TV 目标下的达到误差；
+这里没有把它变成相关双边输入的统一误差、diamond 距离、无约束 minimax 值，
+也没有优化该纤维的 negativity。
+C-108.3–C-108.7 是已述菜单张成、匹配来源和指定端口的联合应用推导，
+不将实反对称谱配对、交换测纯度或一般纠缠破坏定理作为新内容。
+
+## 追加锚（本行以下为增补区）
