@@ -32,6 +32,7 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 open D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
+open D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 open private pChildIndex old_base_bound outer_base_bound from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 open private j2SpecialMap from
