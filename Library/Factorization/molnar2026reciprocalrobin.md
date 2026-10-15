@@ -341,9 +341,13 @@ $$
 
 This selects one parameter per integer instead of testing every parameter
 at every integer. It does not establish the sign of that single test.
-The source's certified bounded interval $\kappa\le100000$ does not cover
-the unbounded schedule (D1). The loss, CA-band and diagonal arguments
-above were not located in the inspected Molnar v1 statement; they are
+The source's Theorem 4.9 already settles (D1)'s test on the entire range
+$5040<n\le\exp(100000^{2/3})$, by direct substitution since
+$k(n)\le100000$ there. No new integer enumeration is needed for this
+normalized initial range; it is not a new verified range for $Z(n)$.
+The bounded theorem does not cover the remaining unbounded schedule.
+The loss, CA-band and diagonal arguments above were not located in the
+inspected Molnar v1 statement; they are
 recorded here as combined applications of existing inputs, without a
 priority or Lean-verification claim.
 
