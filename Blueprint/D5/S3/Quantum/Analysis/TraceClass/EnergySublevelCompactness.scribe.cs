@@ -31,7 +31,7 @@ internal sealed class EnergySublevelCompactnessDocument : IScribeDocumentDefinit
         new(FormulaIdentifier.Create("T"), Call("Reference", Hh))], body);
     private static Formula Parameters(Formula body) => Reference(All([new(FormulaIdentifier.Create("M"), F.Id("Real"))], body));
     private static DocumentBlock Item(string name, string title, Formula formula, string text, DescribeRole role=DescribeRole.Theorem) =>
-        Describe.Lean(DescribeId.Create("singular-energy-sublevel-"+name.Replace('_','-')),
+        Describe.Lean(DescribeId.Create("singular-energy-sublevel-"+name.Replace('_','-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/EnergySublevelCompactness."+name), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), role);
     private static Formula All(Formula.BoundVariable[] xs, Formula body) => new Formula.BindMany(FormulaQuantifier.ForAll, [..xs], body);

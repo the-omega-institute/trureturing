@@ -47,12 +47,12 @@ internal sealed class FiniteCompressionDocument : IScribeDocumentDefinition
         new(FormulaIdentifier.Create("H"), F.Id("CompleteComplexHilbertSpace")), .. xs], body);
     private static Formula Basis(Formula body) => Hilbert([
         new(FormulaIdentifier.Create("w"), Call("Set", Hh)),
-        new(FormulaIdentifier.Create("b"), Call("HilbertBasis", W, Hh)),
+        new(FormulaIdentifier.Create("b"), Call("HilbertBasis", W, F.Id("Complex"), Hh)),
         new(FormulaIdentifier.Create("F"), Call("Finset", W))], body);
     private static Formula BasisState(Formula body) => Basis(All([
         new(FormulaIdentifier.Create("rho"), Call("TraceClass", Hh))], body));
     private static DocumentBlock Item(string name, string title, Formula formula, string text, DescribeRole role=DescribeRole.Theorem) =>
-        Describe.Lean(DescribeId.Create("finite-trace-compression-"+name.Replace('_','-')),
+        Describe.Lean(DescribeId.Create("finite-trace-compression-"+name.Replace('_','-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/FiniteCompression."+name), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), role);
     private static Formula All(Formula.BoundVariable[] xs, Formula body) => new Formula.BindMany(FormulaQuantifier.ForAll, [..xs], body);
