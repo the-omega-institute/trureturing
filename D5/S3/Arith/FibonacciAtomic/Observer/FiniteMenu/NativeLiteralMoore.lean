@@ -29,9 +29,8 @@ open NativeFullRootFeasibility (target actual_type native_full_root_feasibility)
 open NativeFiniteRootMinimax (chartList computedTarget finite_root_minimax)
 open NativeSixSourceMoore (Controller Run)
 open NativeSharedMooreSynthesis
-open private labels_witness from D5.S3.Arith.FibonacciAtomic.Observer.NativeWholeRowPlan
-open private skip_exact skip_retained skip_removed from
-  D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
+open NativeWholeRowService (labels_witness)
+open ActualObserverAbsorbingNormalization (skip_exact skip_retained skip_removed)
 
 universe u v
 
@@ -451,8 +450,6 @@ private theorem paid_price_le {Q : Type u} {H : Type v}
   | cons s tr ih =>
       simpa only [rootCost,nativeCost,List.map_cons,List.sum_cons] using Nat.add_le_add (per s) ih
 
-open private referenceValues referenceType from
-  D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
 
 /-- Exact joint upper-budget transfer on every original nonempty actual
 fiber. Necessity contracts first, then compares one truthful selected origin
@@ -518,8 +515,6 @@ theorem literal_moore_feasibility (P : CutSet) (hP : CutPrefixFree P)
   · exact root_literal_sufficient P hP u₀ r K q ell
 
 
-open private candidate_complete evaluate_reindex bounded_mem bounded_size from
-  D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
 
 /-- A finite per-input charge check on the original shared candidate universe. -/
 def literalCheck {C : LiteralRow} {a b : Nat} (A : Candidate C a b)
@@ -599,7 +594,7 @@ private theorem weighted_carrier_complete {C : LiteralRow} (θ₀ : Chart C)
 
 /-- The checked table itself installs shortest physical words and genuine
 acquired initial codes on every original actual origin. -/
-private theorem literal_candidate_sound (P : CutSet) (hP : CutPrefixFree P) (u₀ : Source)
+theorem literal_candidate_sound (P : CutSet) (hP : CutPrefixFree P) (u₀ : Source)
     (r K q ell a b : Nat)
     (A : Candidate (canonicalRow P (substitution u₀)) a b)
     (size : a+b ≤ K) (accepted : literalCheck A r q ell = true) :
@@ -659,10 +654,8 @@ theorem finite_literal_synthesis (P : CutSet) (hP : CutPrefixFree P)
     exact (List.find?_eq_none.mp none _ inList) accepted
 
 
-open private evaluate_exact evaluate_halt from
-  D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
 
-private theorem zero_call_literal (C : LiteralRow) (r K q ell : Nat)
+theorem zero_call_literal (C : LiteralRow) (r K q ell : Nat)
     (old : RootFeasible C r K 0) : RootLiteralFeasible C r K q ell := by
   rcases old with ⟨Q,H,fQ,fH,T,c,cap,states,correct⟩
   refine ⟨Q,H,fQ,fH,T,c,cap,states,?_⟩
