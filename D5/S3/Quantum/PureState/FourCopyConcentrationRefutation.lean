@@ -8,12 +8,14 @@
 
 import D5.S3.Quantum.QubitWitnesses
 import D5.S3.Quantum.Entanglement.QutritThresholdSharing
+import D5.S3.QuantumBounds.StatisticalStrengthMagicSquare
 
 set_option linter.style.longLine false
 
 open scoped BigOperators Matrix ComplexOrder ComplexConjugate
 open D5.S3.Quantum.FiniteDimensional (QubitMatrix)
 open D5.S3.Quantum.QubitWitnesses (bellCoefficients)
+open D5.S3.QuantumBounds.StatisticalStrengthMagicSquare (rationalSinglets)
 
 namespace D5.S3.Quantum.PureState.FourCopyConcentrationRefutation
 
@@ -61,14 +63,8 @@ def u (q : Q) : ℂ :=
   else if q = ((0, 1), (1, 0)) ∨ q = ((1, 0), (0, 1)) then -1 / 2
   else 0
 
-/-- The product of singlets on positions `(1, 3)` and `(2, 4)`. -/
-def w (q : Q) : ℂ :=
-  if q = ((0, 0), (1, 1)) ∨ q = ((1, 1), (0, 0)) then 1 / 2
-  else if q = ((0, 1), (1, 0)) ∨ q = ((1, 0), (0, 1)) then -1 / 2
-  else 0
-
 /-- The orthogonal second singlet-sector vector. -/
-def v (q : Q) : ℂ := (Real.sqrt 3 : ℂ)⁻¹ * (2 * w q - u q)
+def v (q : Q) : ℂ := (Real.sqrt 3 : ℂ)⁻¹ * (2 * rationalSinglets q - u q)
 
 /-- The two real singlet-sector bras form the local success operator. -/
 def K : Matrix (Fin 2) Q ℂ := fun i q => if i = 0 then u q else v q
@@ -85,7 +81,7 @@ private theorem output_K (C : QubitMatrix) :
     simp only [output.eq_1, K.eq_1, v.eq_1, ← Complex.ofReal_inv]
     generalize (Real.sqrt (3 : ℝ))⁻¹ = t
     fin_cases i <;> fin_cases j <;>
-      norm_num [amp4.eq_1, u.eq_1, w.eq_1, Fintype.sum_prod_type,
+      norm_num [amp4.eq_1, u.eq_1, rationalSinglets, Fintype.sum_prod_type,
         Fin.sum_univ_two, Matrix.det_fin_two] <;> ring
   have hn : ((Real.sqrt 3 : ℂ)⁻¹) ^ 2 = (1 / 3 : ℂ) := by
     simpa only [pow_two, one_div] using
@@ -102,7 +98,7 @@ private theorem K_coisometry : K * Kᴴ = (1 : QubitMatrix) := by
       ← Complex.ofReal_inv]
     generalize (Real.sqrt (3 : ℝ))⁻¹ = t
     fin_cases i <;> fin_cases j <;>
-      norm_num [u.eq_1, w.eq_1, Fintype.sum_prod_type, Fin.sum_univ_two,
+      norm_num [u.eq_1, rationalSinglets, Fintype.sum_prod_type, Fin.sum_univ_two,
         Complex.star_def, map_ofNat]
     all_goals ring
   have hn : ((Real.sqrt 3 : ℂ)⁻¹) ^ 2 = (1 / 3 : ℂ) := by
