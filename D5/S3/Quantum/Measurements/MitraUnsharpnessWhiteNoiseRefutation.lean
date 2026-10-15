@@ -9,6 +9,7 @@
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.LinearAlgebra.Matrix.PosDef
+import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 
 set_option linter.style.longLine false
 
@@ -18,13 +19,10 @@ namespace D5.S3.Quantum.Measurements.MitraUnsharpnessWhiteNoiseRefutation
 
 noncomputable section
 
+open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
+
 def opNorm (M : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
   ‖(Matrix.toEuclideanCLM (𝕜 := ℂ) (n := Fin 2)) M‖
-
-def IsPOVM {n : ℕ}
-    (A : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : Prop :=
-  (∀ i, (A i).PosSemidef) ∧
-  (∑ i, A i) = 1
 
 def X {n : ℕ}
     (A : Fin n → Matrix (Fin 2) (Fin 2) ℂ) :
