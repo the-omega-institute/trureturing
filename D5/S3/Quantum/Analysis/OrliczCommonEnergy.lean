@@ -271,7 +271,7 @@ def commonLevel (w : ℕ → ℕ) (s : ℕ → ℝ) (n : ℕ) : ℝ :=
 
 def scalarEnergy (H : ℕ → ℝ) (d : ℕ → ℝ) : ℝ := ∑' n, H n * d n
 
-private lemma summable_of_uniform_ennreal_tails
+lemma summable_of_uniform_ennreal_tails
     {X : Type*} (f : X → ℕ → ℝ) (hf : ∀ x n, 0 ≤ f x n)
     (hUT : ∀ ε : ℝ≥0, 0 < ε → ∃ N : ℕ, ∀ x,
       (∑' k, ENNReal.ofReal (f x (N + k))) ≤ (ε : ℝ≥0∞)) :
@@ -287,7 +287,7 @@ private lemma summable_of_uniform_ennreal_tails
 
 set_option maxHeartbeats 800000 in
 -- Budget the uniform approximation and the two infinite-series coercion transfers.
-private lemma continuous_of_uniform_ennreal_tails
+lemma continuous_of_uniform_ennreal_tails
     {X : Type*} [TopologicalSpace X] (f : X → ℕ → ℝ)
     (hf : ∀ x n, 0 ≤ f x n) (hc : ∀ n, Continuous (fun x => f x n))
     (hUT : ∀ ε : ℝ≥0, 0 < ε → ∃ N : ℕ, ∀ x,
