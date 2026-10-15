@@ -16,22 +16,35 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
-open private code_injective from
+open private code_injective even_inverse_route odd_inverse_route
+  even_route_mid3_eq odd_route_mid3_eq from
   D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 open private frame_k_lt_m from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialChildAssembly
 
 private theorem even_left_zero_route_position (s i : ℕ) (hi : i < 2 * s + 3) :
     evenRoute s (2 * i + 1) = (0, 1) ↔ i = s + 1 := by
-  have hm : (2 * i + 1) % 2 = 1 := by simp [Nat.add_mod, Nat.mul_mod]
-  unfold evenRoute
-  split_ifs <;> simp only [Prod.mk.injEq, hm] <;> omega
+  constructor
+  · intro h
+    have he := congrArg (evenInverse s) h
+    rw [even_inverse_route s _ (by omega)] at he
+    simp [evenInverse] at he
+    omega
+  · intro h
+    rw [show 2 * i + 1 = 2 * s + 3 by omega]
+    exact even_route_mid3_eq s
 
 private theorem odd_left_zero_route_position (s i : ℕ) (hi : i < 2 * s + 4) :
     oddRoute s (2 * i + 1) = (0, 1) ↔ i = s + 1 := by
-  have hm : (2 * i + 1) % 2 = 1 := by simp [Nat.add_mod, Nat.mul_mod]
-  unfold oddRoute
-  split_ifs <;> simp only [Prod.mk.injEq, hm] <;> omega
+  constructor
+  · intro h
+    have he := congrArg (oddInverse s) h
+    rw [odd_inverse_route s _ (by omega)] at he
+    simp [oddInverse] at he
+    omega
+  · intro h
+    rw [show 2 * i + 1 = 2 * s + 3 by omega]
+    exact odd_route_mid3_eq s
 
 /-- Actual even-route pieces have precisely one path finishing at L0,
 at position s+1. Thus it is later than the first rooted B path. -/

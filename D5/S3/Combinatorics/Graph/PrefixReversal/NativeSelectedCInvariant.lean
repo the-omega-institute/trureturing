@@ -123,7 +123,7 @@ seams; no predicate on a separately chosen cycle is substituted. -/
 theorem native_parent_cycle_c_labels {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hB : 3 ≤ F.base.length)
     (paths : ∀ j : Fin F.base.length, ActualChildPath F j)
-    (hchild : ∀ (j : Fin F.base.length) e ∈ (paths j).piece.walk.edges,
+    (hchild : ∀ (j : Fin F.base.length) (e), e ∈ (paths j).piece.walk.edges →
       ∀ x : Configuration m, Sym2.map Subtype.val e = s(x, x * c m) →
         x (Fin.last m) ∈ insert F.terminal F.selected.toFinset)
     (pieces : Fin F.base.length → Piece (domainGraph (ParentDomain F)))
@@ -147,8 +147,8 @@ theorem native_parent_cycle_c_labels {m k : ℕ} (hm : 3 ≤ m)
     · simp only [List.length_cons, List.length_ofFn]; omega
     · intro i hi hj
       cases i with
-      | zero => simp only [List.getElem_cons_zero, List.getElem_ofFn]; rfl
-      | succ i => simp only [List.getElem_cons_succ, List.getElem_ofFn]; rfl
+      | zero => simp only [List.getElem_cons_zero, List.getElem_ofFn]
+      | succ i => simp only [List.getElem_cons_succ, List.getElem_ofFn]
   have hfinish (j : Fin F.base.length) : (pieces j).finish.val (Fin.last m) =
       F.terminal := by
     rw [hpieces j]
@@ -176,9 +176,11 @@ theorem native_parent_cycle_c_labels {m k : ℕ} (hm : 3 ≤ m)
         rfl
       exact hchild j e' he' x (hraw.symm.trans ((congrArg (Sym2.map Subtype.val) hmap).trans hxe))
     · intro i hi
-      rw [hlist, List.length_ofFn] at hi
-      rw [hlist, List.getElem_ofFn]
-      rw [hfinish ⟨i, by omega⟩]
+      have hz : (p :: ps)[i] ∈ List.ofFn pieces := by
+        rw [← hlist]
+        exact List.getElem_mem (by omega)
+      obtain ⟨j, hj⟩ := List.mem_ofFn.mp hz
+      rw [← hj, hfinish j]
       exact Finset.mem_insert_self _ _
 
 #print axioms native_special_path_c_labels

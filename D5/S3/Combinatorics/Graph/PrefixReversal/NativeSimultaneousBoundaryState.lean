@@ -57,7 +57,7 @@ private theorem advanced_native_boundary_pairs {m k : ℕ} (hm : 3 ≤ m) (hk : 
     · exact (advance_even_boundary k hk a b).mp
     · exact (advance_odd_boundary k hk a b).mp
   intro p hp
-  simp only [List.mem_append, List.mem_cons, List.mem_singleton] at hp
+  simp only [List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at hp
   rcases hp with (rfl | rfl) | hp
   · refine ⟨(0, 1), (⟨k, by omega⟩, 1), ?_, ?_, hadvance _ _ ?_⟩
     · simpa only [specialPort, Fin.val_zero, Fin.val_one, Nat.one_ne_zero, if_false] using hℓ₀

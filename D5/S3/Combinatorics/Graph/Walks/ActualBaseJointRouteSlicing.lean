@@ -65,9 +65,14 @@ theorem actual_base_joint_route_three_fragments {base : V}
     w.adj_of_mem_edges (hcuts _ (Finset.mem_union.mpr (Or.inr hseam₂)))
   have hlinkTrip : Linked p₁ [p₂, p₃] := ⟨h₁₂, h₂₃, trivial⟩
   let trip : G.Walk p₁.start p₃.finish := join p₁ [p₂, p₃] hlinkTrip
+  have htripSupport : trip.support =
+      (p₁ :: p₂ :: p₃ :: []).flatMap (fun z => z.walk.support) :=
+    join_support p₁ [p₂, p₃] hlinkTrip
+  have htripEdges : trip.edges = chainEdges p₁ [p₂, p₃] :=
+    join_edges p₁ [p₂, p₃] hlinkTrip
   have hntrip : trip.support.Nodup := by
-    rw [join_support]
-    apply (List.nodup_append'.mp (show
+    rw [htripSupport]
+    exact (List.nodup_append'.mp (show
       (((p₁ :: p₂ :: p₃ :: []).flatMap fun z => z.walk.support) ++
         rest.flatMap fun z => z.walk.support).Nodup by
       simpa only [List.flatMap_cons, List.flatMap_nil, List.append_nil,
@@ -83,7 +88,7 @@ theorem actual_base_joint_route_three_fragments {base : V}
       e ∈ (p₀ :: ⟨p₁.start, p₃.finish, old⟩ :: p₄ :: []).flatMap
         (fun z : Piece G => z.walk.edges) := by
     intro e he
-    rw [join_edges] at he
+    rw [htripEdges] at he
     simp only [chainEdges, List.mem_append, List.mem_cons, List.mem_singleton,
       List.not_mem_nil, or_false] at he
     apply (hboundaryInventory e).mpr
@@ -103,15 +108,21 @@ theorem actual_base_joint_route_three_fragments {base : V}
     simpa only [oldPiece, htailNil, SimpleGraph.Walk.append_nil] using hold
   obtain ⟨h₀₁, h₃₄, _⟩ := hboundaryLink
   have hlinkFull : Linked p₀ [p₁, p₂, p₃, p₄] := ⟨h₀₁, h₁₂, h₂₃, h₃₄, trivial⟩
+  have hfullSupport : (join p₀ [p₁, p₂, p₃, p₄] hlinkFull).support =
+      (p₀ :: p₁ :: p₂ :: p₃ :: p₄ :: []).flatMap (fun z => z.walk.support) :=
+    join_support p₀ [p₁, p₂, p₃, p₄] hlinkFull
   have hΛjoin : Λ = join p₀ [p₁, p₂, p₃, p₄] hlinkFull := by
     apply SimpleGraph.Walk.ext_support
-    simp only [hΛsupport, holdTrip, trip, join_support, List.flatMap_cons,
-      List.flatMap_nil, List.append_nil, List.append_assoc]
+    rw [hΛsupport, holdTrip, htripSupport, hfullSupport]
+    simp only [List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc]
   have hfullPath : (join p₀ [p₁, p₂, p₃, p₄] hlinkFull).IsPath := by
-    have hnΛ : Λ.support.Nodup := by
-      simpa only [hΛsupport, List.flatMap_cons, List.flatMap_nil, List.append_nil,
-        List.append_assoc] using hbn
-    simpa only [hΛjoin] using SimpleGraph.Walk.IsPath.mk' hnΛ
+    apply SimpleGraph.Walk.IsPath.mk'
+    rw [hfullSupport]
+    have hbn' := hbn
+    simp only [List.flatMap_cons, List.flatMap_nil, List.append_nil] at hbn'
+    rw [holdTrip, htripSupport] at hbn'
+    simpa only [List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc]
+      using hbn'
   have hp₁ : p₁.walk.IsPath := SimpleGraph.Walk.IsPath.mk'
     ((List.nodup_flatMap.mp hjn).1 p₁ (by simp))
   have hp₃ : p₃.walk.IsPath := SimpleGraph.Walk.IsPath.mk'

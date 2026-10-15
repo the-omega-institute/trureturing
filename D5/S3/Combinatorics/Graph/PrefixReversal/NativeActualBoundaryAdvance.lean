@@ -40,9 +40,9 @@ private theorem shifted_special_port {m k : ℕ} (hm : 3 ≤ m)
     specialPort (nextFrame F A u hbase) (shiftPort p) = specialPort F p := by
   have hs := native_marked_index_shift hm F A u hbase p.1.val
   simp only [specialPort, shiftPort, Fin.val_succ]
-  split_ifs
-  · exact hs.1
-  · exact hs.2
+  split_ifs with h
+  · simpa only [h, if_pos] using hs.1
+  · simpa only [h, if_neg, if_false] using hs.2
 
 /-- The old retained order may be either actual E or actual O. Its affected
 whole path is factored around d by previous joint-path recovery. The current
@@ -200,7 +200,7 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
         p.start.val = specialPort (nextFrame F A u hbase) a ∧
         p.finish.val = specialPort (nextFrame F A u hbase) b ∧
         (if odd then oddBoundary (k + 1) else evenBoundary (k + 1)) (code a) (code b) := by
-    simp only [pieces, List.mem_append, List.mem_cons, List.mem_singleton] at hp
+    simp only [pieces, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at hp
     rcases hp with (rfl | rfl) | hp
     · refine ⟨(0, 1), (⟨k, by omega⟩, 1), ?_, ?_, hadvance _ _ ?_⟩
       · simpa only [specialPort, Fin.val_zero, Fin.val_one, Nat.one_ne_zero, if_false] using hℓ₀
@@ -236,8 +236,14 @@ theorem native_actual_even_odd_boundary_advance {m k : ℕ} (hm : 3 ≤ m) (hk :
           (if odd then oddBoundary k else evenBoundary k) (code a) (code b) ∧
           ¬ pair (code a) (code b) (k - 1, 1) (0, 1) from
           ⟨by omega, by omega, hb, hnot⟩)
-  exact ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
+  refine ⟨boundary₀, boundary₁, hpaths, ?_, hsupport, hedges, hinv, hcuts, hcard,
     hrawinv, hrawcuts, hrawcard, hboundary, hpairs, hrestoreNotDeleted'⟩
+  intro v
+  convert hcount v using 1
+  unfold List.count
+  apply List.countP_congr
+  intro x hx
+  simp only [beq_iff_eq]
 
 /-- The primary old order restores the first Q zero cut of the same
 actual current joint partition. This is the other half of the simultaneous
@@ -391,7 +397,7 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
         p.start.val = specialPort (nextFrame F A u hbase) a ∧
         p.finish.val = specialPort (nextFrame F A u hbase) b ∧
         (if odd then oddBoundary (k + 1) else evenBoundary (k + 1)) (code a) (code b) := by
-    simp only [pieces, List.mem_append, List.mem_cons, List.mem_singleton] at hp
+    simp only [pieces, List.mem_append, List.mem_cons, List.not_mem_nil, or_false] at hp
     rcases hp with (rfl | rfl) | hp
     · refine ⟨(0, 1), (⟨k, by omega⟩, 1), ?_, ?_, hadvance _ _ ?_⟩
       · simpa only [specialPort, Fin.val_zero, Fin.val_one, Nat.one_ne_zero, if_false] using hℓ₁
@@ -427,8 +433,14 @@ theorem native_actual_first_cut_even_odd_boundary_advance {m k : ℕ} (hm : 3 �
           (if odd then oddBoundary k else evenBoundary k) (code a) (code b) ∧
           ¬ pair (code a) (code b) (k - 1, 1) (0, 1) from
           ⟨by omega, by omega, hb, hnot⟩)
-  exact ⟨boundary₀, boundary₁, hpaths, hcount, hsupport, hedges, hinv, hcuts, hcard,
+  refine ⟨boundary₀, boundary₁, hpaths, ?_, hsupport, hedges, hinv, hcuts, hcard,
     hrawinv, hrawcuts, hrawcard, hboundary, hpairs, hrestoreNotDeleted'⟩
+  intro v
+  convert hcount v using 1
+  unfold List.count
+  apply List.countP_congr
+  intro x hx
+  simp only [beq_iff_eq]
 
 #print axioms native_actual_even_odd_boundary_advance
 #print axioms native_actual_first_cut_even_odd_boundary_advance

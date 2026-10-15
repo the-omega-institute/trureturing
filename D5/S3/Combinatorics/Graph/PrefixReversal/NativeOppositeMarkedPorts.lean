@@ -90,7 +90,7 @@ private theorem rotation_separation {m : ℕ} (hm : 3 ≤ m)
     apply Fin.ext
     simp only [native_bc_pow_val (by omega : 2 ≤ m)]
     split_ifs
-    · simp only [Nat.add_mod, show i%m = j%m from hij]
+    · exact Nat.ModEq.add_left x.val hij
     · rfl
   rw [hr] at he
   have ha : τ * A = A := mul_right_cancel he
@@ -126,7 +126,9 @@ private theorem reflection_separation {m : ℕ} (hm : 5 ≤ m)
     have hi : m-1-q.val+i ≡ l.val [MOD m] := by
       change (m-1-q.val+i)%m = l.val%m
       rw [Nat.mod_eq_of_lt hlm]
-      simpa only [native_bc_pow_val (by omega : 2 ≤ m), if_pos hbmlt, hbm] using congrArg Fin.val hqi
+      have hv := congrArg Fin.val hqi
+      rw [native_bc_pow_val (by omega : 2 ≤ m), if_pos hbmlt, hbm] at hv
+      exact hv
     have hadd := hj.add hi
     have hsum : q.val+j+(m-1-q.val+i) = m-1+(i+j) := by omega
     rw [hsum] at hadd

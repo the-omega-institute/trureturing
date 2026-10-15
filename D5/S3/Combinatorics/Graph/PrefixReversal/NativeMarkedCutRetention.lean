@@ -132,8 +132,8 @@ theorem native_parent_cycle_keeps_child_path_edges {m k : ℕ}
     · simp only [List.length_cons, List.length_ofFn]; omega
     · intro i hi hj
       cases i with
-      | zero => simp only [List.getElem_cons_zero, List.getElem_ofFn]; rfl
-      | succ i => simp only [List.getElem_cons_succ, List.getElem_ofFn]; rfl
+      | zero => simp only [List.getElem_cons_zero, List.getElem_ofFn]
+      | succ i => simp only [List.getElem_cons_succ, List.getElem_ofFn]
   have hfinish : finish p ps = (pieces ⟨F.base.length - 1, by omega⟩).finish := by
     have hn : List.ofFn pieces ≠ [] := by
       intro hn
