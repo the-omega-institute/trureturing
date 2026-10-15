@@ -1418,3 +1418,761 @@ convergence or Lean certification follows from these finite examples.
 [HLS]: https://arxiv.org/abs/1205.4356v2
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Whole-owner projection edges and finite native covers
+
+**Convention 11.1 (scope and fixed suppliers).** Sections 11–17 give
+ordinary mathematical cover-completion and counting results for the
+unchanged task of Definition 1.2. The native representation, canonical
+scan, and constant-composition capacity are the credited
+[RRN][RRNbase], [FMR][FMRbase], and [NPC][NPCbase] results at public
+revision `91170b89dfe9dd7eadc64d14d86d2157ed14abdf`. The abstract
+rational-lift and averaged-cover principles are mature results of
+[Vontobel][VontobelCOK], with the exact correspondence specified in
+§17. Completion below changes the finite network by taking a cover.
+It does not assert completion on its original base, an upper bound
+on individual covers, or an optimizer-cofinal native cap.
+
+**Definition 11.2 (whole-owner edge data).** Fix $d,n\ge1$ and any
+valid owned-seed network $\mathcal N$ of Definition 1.4, with all seed
+domains nonempty. Retain its actual owner ports, every prescribed
+table, constants, and arbitrary nonnegative whole-block weights
+$w_i:S_d\to[0,\infty)$. Order each seed tuple by a fixed public
+ordering. Let $O_i$ contain all seeds owned at block $i$. For each
+distinct outside owner $j\ne i$ whose seeds occur at block $i$, let
+$B_{ji}$ be the entire tuple of those seeds, counting each distinct
+seed once. Put
+
+$$
+\begin{aligned}
+E&=\{(j,i):j\ne i,\ B_{ji}\ne\varnothing\},\\
+I_i&=(B_{ji})_{(j,i)\in E},\qquad
+\operatorname{pr}_{ji}:\prod_{c\in O_j}T_c
+       \longrightarrow\prod_{c\in B_{ji}}T_c.
+\end{aligned}
+\tag{COK.59}
+$$
+
+There is one directed edge for an entire outside-owner group.
+Different groups may use overlapping projections of $O_j$; their
+shared coordinates remain the same variables. References to an own
+seed stay internal to its block. In particular $O_i,I_i$ are disjoint
+tuples whose union has at most $m_d=2^d-1$ seeds.
+
+Let $R_i$ consist of assignments $a=(o,b)$ to $(O_i,I_i)$ whose
+entire prescribed local factor vector reconstructs an actual
+$x_i(a)\in S_d$. Write
+
+$$
+R_i^+=\{a\in R_i:w_i(x_i(a))>0\}.
+\tag{COK.60}
+$$
+
+Thus neither actual-tree compatibility nor a weight zero is filled.
+No outside-owner-image condition is imposed in $R_i$ itself.
+It will follow on positive matching laws from actual owner tuples.
+
+**Definition 11.3 (joint matching polytope).** A collection of local
+probability laws $p=(p_i)$, with $p_i\in\Delta(R_i)$, is matching if
+for every $e=(j,i)\in E$ the following equality holds as a law of the
+whole tuple $B_{ji}$:
+
+$$
+\pi_e:=(B_{ji})_*p_i
+       =(\operatorname{pr}_{ji}O_j)_*p_j.
+\tag{COK.61}
+$$
+
+Let $\mathcal P(\mathcal N)$ be this polytope and let
+$\mathcal P^+(\mathcal N;\boldsymbol w)$ restrict $p_i$ to $R_i^+$.
+Both are finite rational polytopes, possibly empty. Their defining
+equations have integer coefficients even when the positive weights
+are real: the weights select only the finite support in (COK.60).
+Equality of separate seed marginals is not the matching condition.
+
+**Definition 11.4 (group-permutation cover).** For $m\ge1$, choose
+one permutation $\sigma_e\in\operatorname{Sym}([m])$ independently
+for every $e\in E$. The cover $\mathcal N^\sigma$ has blocks $(i,k)$,
+$k\in[m]$. Block $(i,k)$ owns a copy $c_k$ of each $c\in O_i$ at
+the copied actual owner port. Its own-seed references use these
+copies. If $e=(j,i)$, all occurrences of all seeds in $B_{ji}$ at
+$(i,k)$ use their copies owned together at $(j,\sigma_e(k))$.
+Every copied table and constant is unchanged, and block $(i,k)$
+receives the one whole weight $w_i$.
+
+Distinct copied seeds still have distinct actual owner ports and obey
+(COK.7). Hence [RRN, Theorem 5.2][RRNbase] translates every such
+cover back to a complete native template on $nm$ actual blocks,
+with one lift per actual tuple and exactly its original product
+weight. Here a cover describes a family of possible tuples; it is
+not an operation copying an unknown physical source.
+
+## 12. Constructive completion on covers and exact incidence
+
+**Theorem 12.1 (empirical finite-cover completion).** Let
+$p_i\in\Delta(R_i)$ be rational, and let $m$ be any common
+denominator, so every $mp_i(a)$ is an integer. Then $p$ satisfies
+(COK.61) if and only if some $m$-sheet group-permutation cover has
+one actual solution whose empirical local law on the copies of
+each $i$ is exactly $p_i$. Consequently matching is equivalent to
+empirical realization on some finite such cover. The assertion
+also holds on the positive supports $R_i^+$.
+
+Proof. Choose a list $a_{i,1},\ldots,a_{i,m}$ with empirical law
+$p_i$. At $e=(j,i)$ and for each whole group value $b$, matching
+says that the sets
+
+$$
+\{k:B_{ji}(a_{i,k})=b\},\qquad
+\{\ell:\operatorname{pr}_{ji}O_j(a_{j,\ell})=b\}
+\tag{COK.62}
+$$
+
+have equal cardinality. Match them bijectively, separately for each
+$b$, to obtain $\sigma_e$. Do this for every edge. At $(i,k)$,
+assign its owned seeds $O_i(a_{i,k})$. Every incoming group then
+equals the corresponding group of $a_{i,k}$ by (COK.62), including
+all repeated occurrences of its seeds. Thus all copied local
+configurations are the selected $a_{i,k}$ and are actual compatible
+blocks. Their owner replies give a unique actual tuple by RRN.
+Membership in $R_i^+$ additionally makes its product weight positive.
+
+Conversely, in any actual cover solution, $\sigma_e$ is a bijection
+between recipient copies and owner copies. Counting each whole group
+value at both ends gives (COK.61). Its empirical counts are exactly
+those of the asserted $p_i$. This proves necessity and sufficiency,
+without requiring independent owner coordinates or an acyclic graph.
+The matchings are finite effective constructions from rational lists.
+$\square$
+
+**Theorem 12.2 (identical local laws at every copy).** For rational
+$p_i\in\Delta(R_i)$, matching is also equivalent to the existence
+of a finite group-permutation cover and a probability law on its
+actual solutions such that every copy of $i$ has local marginal
+exactly $p_i$. If $m$ is a common denominator, a cover with $m!$
+sheets suffices. The law can have at most $m$ outcomes.
+
+Proof. Use the lists and permutations in Theorem 12.1. Compose
+permutations right to left. Index the sheets by
+$g\in\operatorname{Sym}([m])$ and wire the edge $e=(j,i)$ from
+$(i,g)$ to $(j,\sigma_e g)$. This is a bijection of the sheet set.
+For a uniformly chosen $h\in\operatorname{Sym}([m])$, prescribe
+at $(i,g)$ the local configuration
+
+$$
+a_{i,(gh)(1)}.
+\tag{COK.63}
+$$
+
+The owner at the other endpoint has configuration
+$a_{j,(\sigma_egh)(1)}$. The matching equation from the original
+lists holds at $k=(gh)(1)$, so every group agrees and every outcome
+is an actual solution. For fixed $g$, $(gh)(1)$ is uniform on
+$[m]$, giving exactly $p_i$. The outcome depends only on $h(1)$,
+so there are at most $m$ outcomes. Conversely equal copy marginals
+on an actual cover must give the same distribution at both ends of
+every shared group, which is precisely (COK.61). $\square$
+
+This construction provides prescribed local marginals on another
+network. It supplies no law on the unlifted base. Its global entropy
+is at most $\log_2m$; it need not be a Gibbs law or have the large
+solution multiplicity established by averaging in §13. Those two
+completion mechanisms must be distinguished when using COK.22.
+
+**Proposition 12.3 (prescribed incidence is preserved exactly).**
+For every group-permutation cover, a copied seed has exactly the
+prescribed block incidence of its base seed. In particular covers
+of a network in [SIR, Definition 2.2][SIRbase]'s
+$\mathfrak N_{d,L}(n)$ lie in $\mathfrak N_{d,L}(nm)$.
+The same assertion holds for the $m!$-sheet construction.
+
+Proof. Let $c$ be owned at $j$ and fix its owner copy $(j,\ell)$.
+It occurs in that block. For each other base block $i$ containing
+$c$, the whole edge $(j,i)$ routes it to exactly the recipient
+copy $k=\sigma_{ji}^{-1}(\ell)$. All of its occurrences in that
+recipient block stay together. It occurs in no other copies of $i$.
+Distinct base blocks give distinct copied blocks. Thus the incidence
+is one plus the number of distinct outside base recipients, exactly
+the original incidence. Assigned constant tables still count in this
+argument, as SIR requires. Internal repeated references add no block.
+For any sheet set and edge bijections, including left multiplication
+on $\operatorname{Sym}([m])$, the same inverse-bijection argument
+applies. $\square$
+
+## 13. Exact weighted cover counting and its averaged exponent
+
+**Definition 13.1 (type-restricted partition sum).** For rational
+$p\in\mathcal P^+(\mathcal N;\boldsymbol w)$ and an admissible
+denominator $m$, put
+
+$$
+\operatorname{Mult}(m,p)=\frac{m!}{\prod_a(mp(a))!}.
+\tag{COK.64}
+$$
+
+Let $Z_p(\mathcal N^\sigma;\boldsymbol w)$ sum the product weights
+of actual cover solutions whose empirical local law at copies of
+every $i$ is $p_i$. Let $\mathbb E_\sigma$ mean the average over
+the $(m!)^{|E|}$ independently uniformly permuted labeled full
+group edges. Different permutation tuples count separately even
+when the resulting native equations happen to coincide. The
+averaging is an analytical finite ensemble, not a randomized
+preparation on the unknown source.
+
+**Theorem 13.2 (whole-group weighted type identity).** With these
+definitions, exactly
+
+$$
+\mathbb E_\sigma Z_p(\mathcal N^\sigma;\boldsymbol w)
+=\frac{\prod_i\operatorname{Mult}(m,p_i)}
+       {\prod_{e\in E}\operatorname{Mult}(m,\pi_e)}
+ \prod_i\prod_{a\in\operatorname{supp}p_i}
+       w_i(x_i(a))^{mp_i(a)}.
+\tag{COK.65}
+$$
+
+Each denominator is the multinomial of one whole group law, not
+the product of its individual seed multinomials. Arbitrary zeros
+outside $R_i^+$ and arbitrary correlations within $w_i$ are allowed.
+
+Proof. There are $\operatorname{Mult}(m,p_i)$ labeled local lists
+of type $p_i$. Fix all the lists. For $e=(j,i)$, their edge counts
+match. The number of permutations matching every whole value $b$
+is $\prod_b(m\pi_e(b))!$, out of $m!$. The matching probability
+is therefore $1/\operatorname{Mult}(m,\pi_e)$. For these fixed
+lists, different edges choose their permutations independently,
+so these probabilities multiply. This independence is only between
+public edge permutations conditional on fixed lists; no source,
+seed, incoming group, or solution coordinates are assumed independent.
+
+If all edges match, assign each copied owner its value from its own
+local list. Incoming values agree by construction and every local
+configuration is actual. Conversely an actual seed assignment
+determines all local lists. Two edge-consistent list collections
+cannot produce the same actual tuple, because the tuple's actual
+owner replies recover every copied seed and hence every incoming
+entry. This proves a bijection, with no hidden multiplicity from
+noninjective nonowner tables. Each such list collection has the
+fixed weight on the right of (COK.65). Summing over the lists proves
+the identity. Every copied joint potential occurs exactly once.
+$\square$
+
+**Definition 13.3 (cover entropy and energy).** For any positive
+matching laws, define
+
+$$
+\begin{aligned}
+H_{\rm cov}(p)&=\sum_i H(p_i)-\sum_{e\in E}H(\pi_e),\\
+\mathcal B_{\mathcal N}(p;\boldsymbol w)
+ &=H_{\rm cov}(p)+\sum_i\mathbb E_{p_i}\log_2w_i(x_i),\\
+r(p)&=\sum_i|\operatorname{supp}p_i|,\qquad
+t(p)=\sum_{e\in E}|\operatorname{supp}\pi_e|.
+\end{aligned}
+\tag{COK.66}
+$$
+
+The first quantity can be negative. Log weights are evaluated only
+on their positive support, so the second is finite there.
+
+**Corollary 13.4 (explicit finite multiplier loss).** For rational
+matching laws and every admissible denominator $m$,
+
+$$
+\begin{aligned}
+m\mathcal B_{\mathcal N}(p;\boldsymbol w)-r(p)\log_2(m+1)
+&\le\log_2\mathbb E_\sigma Z_p(\mathcal N^\sigma;\boldsymbol w)\\
+&\le m\mathcal B_{\mathcal N}(p;\boldsymbol w)+t(p)\log_2(m+1).
+\end{aligned}
+\tag{COK.67}
+$$
+
+Proof. For a probability type on $s$ supported symbols, the finite
+method-of-types estimate used in [NPC, (NPC.19)][NPCbase] is
+
+$$
+(m+1)^{-s}2^{mH(p)}\le\operatorname{Mult}(m,p)\le2^{mH(p)}.
+\tag{COK.68}
+$$
+
+For completeness, under iid $p$ the type $mp$ is a modal type:
+comparing any type to it gives a product of factorial ratios at
+most one. There are at most $(m+1)^s$ types. Its probability is
+therefore at least $(m+1)^{-s}$ and at most one, while every word
+of this type has probability $2^{-mH(p)}$. This proves (COK.68).
+Apply its lower numerator and upper denominator bounds to (COK.65),
+then its upper numerator and lower denominator bounds for the other
+direction. The fixed energy term supplies (COK.67). $\square$
+
+**Theorem 13.5 (fixed-base averaged-cover pressure).** At this fixed
+base network and fixed nonnegative whole-block weights,
+
+$$
+\limsup_{m\to\infty}
+ \left(\mathbb E_\sigma Z(\mathcal N^\sigma;\boldsymbol w)\right)^{1/m}
+=2^{\max_{p\in\mathcal P^+(\mathcal N;\boldsymbol w)}
+          \mathcal B_{\mathcal N}(p;\boldsymbol w)}.
+\tag{COK.69}
+$$
+
+If the positive matching polytope is empty, both sides are zero,
+with the convention $\max\varnothing=-\infty$.
+
+Proof. A positive solution in any cover has a matching empirical
+type, so the empty case is immediate. Otherwise sum (COK.65) over
+all denominator-$m$ positive matching types. Set
+$r_0=\sum_i|R_i^+|$ and let $t_0$ be the sum of the finite group
+alphabet sizes. There are at most $(m+1)^{r_0}$ local type
+collections and $t(p)\le t_0$. The upper half of (COK.67) thus
+gives the upper bound in (COK.69) after taking $m$th roots.
+
+The positive matching polytope is a compact rational polytope.
+Its rational points are dense: its rational vertices span it,
+and rational convex coefficients approximate arbitrary convex
+coefficients. Entropy and the displayed log-weight energy are
+continuous on this fixed support. Approximate a maximizer by
+a rational matching $p$, take $m$ through multiples of its
+denominator, and apply the lower half of (COK.67). Let the
+approximation error tend to zero. This proves the reverse bound.
+Some sheet numbers can have no compatible type, which is why the
+statement uses a limsup. $\square$
+
+The normalization in (COK.69) is per sheet of this fixed $n$-block
+base. Per original block its logarithmic exponent is
+$\max\mathcal B_{\mathcal N}/n$. It is an averaged value over
+covers. No comparison with the partition value of the unlifted
+base, and no upper bound on every individual cover, follows.
+
+## 14. Native pressure and constant-composition consumers
+
+**Corollary 14.1 (correctly directed original pressure consequence).**
+Suppose $w_i=w\ne0$, and the base has prescribed incidence at most
+$L$, allowing $L=\infty$. Use the auxiliary
+$A_{d,L,N}(w)$ and $\beta_{d,L}(w)$ of
+[SIR, Definition 2.2][SIRbase]. For every rational positive matching
+$p$ and every admissible $m$,
+
+$$
+\begin{aligned}
+\frac1{nm}\log_2 A_{d,L,nm}(w)
+&\ge\frac{\mathcal B_{\mathcal N}(p;w)}n
+     -\frac{r(p)\log_2(m+1)}{nm},\\
+\log_2\beta_d(w)\ &\ge\log_2\beta_{d,L}(w)
+ \ge\frac{\mathcal B_{\mathcal N}(p;w)}n.
+\end{aligned}
+\tag{COK.70}
+$$
+
+Moreover $r(p)\le n4^{m_d}$, so the finite normalized loss is at
+most $4^{m_d}\log_2(m+1)/m$, uniformly in the size and topology
+of the base, for laws whose denominator divides $m$.
+
+Proof. Some permutation tuple has $Z_p$ at least its average.
+Its actual full solution mass is at least $Z_p$, and its incidence
+is still at most $L$ by Proposition 12.3. RRN's converse makes it
+a lawful competitor in the stated maximum. Corollary 13.4 proves
+the finite inequality. Take $m$ through denominator multiples and
+then the all-size supremum. At each local block there are at most
+$m_d$ seeds, each with at most four values, giving the support
+bound. No pressure normalization uses dyadic padding. $\square$
+
+For rational $w$ and rational $C>0$, a rational matching witness with
+$\mathcal B_{\mathcal N}(p;w)/n>\log_2 C$ therefore refutes the
+proposed universal cap $\beta_d(w)\le C$. More explicitly, choose
+a denominator multiple with the displayed finite loss below the
+strict gap. Some finite cover then has mass greater than $C^{nm}$.
+Finite exact enumeration of its permutations and actual tuples
+finds such a violating template. Computable log enclosures and the
+strict inequality suffice to find a large enough multiplier. This
+is a construction of counterexamples to undersized caps, not an
+NPC.8.1 upper certificate or a lower bound on $\sigma_d$.
+
+**Corollary 14.2 (actual native constant-composition sets).** Let
+$p\in\mathcal P(\mathcal N)$ be rational, use unit weights, and put
+
+$$
+\nu=\frac1n\sum_i(x_i)_*p_i\in\Delta(S_d).
+\tag{COK.71}
+$$
+
+The original constant-composition capacity of
+[NPC, Theorem 4.3][NPCbase] satisfies
+
+$$
+\alpha_d(\nu)\ge\max\{0,H_{\rm cov}(p)/n\}.
+\tag{COK.72}
+$$
+
+Proof. Every row counted in $Z_p$ has exactly
+$m\sum_i p_i\{a:x_i(a)=x\}=nm\nu(x)$ occurrences of each actual
+block state $x$. The row set is a subset of the complete native
+cover solution set, hence is admissible by the credited restriction
+closure. Some cover has at least
+$2^{mH_{\rm cov}(p)}(m+1)^{-r(p)}$ such distinct rows by (COK.67).
+Thus its type subset witnesses the original $a_{nm}(nm\nu)$ in
+(NPC.10). Pass through common denominator multiples in (NPC.12)
+to get the second entry in the maximum; $\alpha_d\ge0$ supplies
+the first. Actual owner replies ensure that rows were not counted
+with multiplicity. $\square$
+
+## 15. Exact nonnegative information charge relative to COK
+
+**Definition 15.1 (the matching-population COK functional).** At a
+positive matching law let $B_{i,1},\ldots,B_{i,k_i}$ be the whole
+incoming groups of block $i$. Define, using (COK.12),
+
+$$
+\begin{aligned}
+\mathcal U_{\mathcal N}(p;\boldsymbol w)
+ &=\sum_i\left[\sum_{A\subseteq[k_i]}\gamma_{k_i}(A)
+        H_{p_i}(O_i\mid B_{i,A})
+             +\mathbb E_{p_i}\log_2 w_i(x_i)\right],\\
+\operatorname{TC}_{p_i}(I_i)
+ &=\sum_{g=1}^{k_i}H_{p_i}(B_{i,g})-H_{p_i}(I_i),\\
+\mathcal I_{\rm cov}(p)
+ &=\sum_i\left[\operatorname{TC}_{p_i}(I_i)
+       +\sum_{A\subseteq[k_i]}\gamma_{k_i}(A)
+          I_{p_i}(O_i;B_{i,A^c}\mid B_{i,A})\right].
+\end{aligned}
+\tag{COK.73}
+$$
+
+Empty tuples have entropy zero, and their total correlation is zero.
+Each entropy or conditional information uses its displayed single
+local law $p_i$. Neither independence of incoming groups nor a
+common Gibbs law for these different $p_i$ is assumed.
+
+**Theorem 15.2 (exact COK-minus-cover information identity).** For
+every positive matching collection, rational or real,
+
+$$
+\mathcal U_{\mathcal N}(p;\boldsymbol w)
+ -\mathcal B_{\mathcal N}(p;\boldsymbol w)
+ =\mathcal I_{\rm cov}(p)\ge0.
+\tag{COK.74}
+$$
+
+For uniform $w$, each $p_i$ is a law on the corresponding
+$R_{\eta_i}(w)$ of Definition 2.3, and consequently
+
+$$
+\mathcal U_{\mathcal N}(p;w)/n\le\log_2\Omega_d(w).
+\tag{COK.75}
+$$
+
+Proof. Each edge entropy in $H_{\rm cov}$ is precisely the entropy
+of one incoming group. Also
+$H(p_i)=H_{p_i}(I_i)+H_{p_i}(O_i\mid I_i)$. Since
+$\sum_A\gamma_{k_i}(A)=1$, the local entropy difference is
+
+$$
+\begin{aligned}
+&\sum_A\gamma_{k_i}(A)H_{p_i}(O_i\mid B_{i,A})
+ -H(p_i)+\sum_gH_{p_i}(B_{i,g})\\
+&\qquad=\operatorname{TC}_{p_i}(I_i)
+   +\sum_A\gamma_{k_i}(A)
+       \left[H_{p_i}(O_i\mid B_{i,A})-H_{p_i}(O_i\mid I_i)\right]\\
+&\qquad=\operatorname{TC}_{p_i}(I_i)
+   +\sum_A\gamma_{k_i}(A)
+       I_{p_i}(O_i;B_{i,A^c}\mid B_{i,A}).
+\end{aligned}
+\tag{COK.76}
+$$
+
+Total correlation is nonnegative by entropy subadditivity;
+conditional mutual information is nonnegative as a conditional
+relative entropy. The energy terms cancel exactly, proving (COK.74).
+
+For (COK.75), take any positive incoming group value $b$ under
+$p_i$. Matching gives positive mass to that projection under
+$p_j$. Some supported local configuration of that same owner $j$
+therefore has the whole projection $b$. Its one actual reconstructed
+tree has positive $w$, and all its owned ports carry the full owner
+tables for those values. This supplies the single joint owner-image
+witness required for that group in Definition 2.3. The local tree
+of $i$ supplies its first condition. Thus the support of $p_i$
+lies in $R_{\eta_i}(w)$ and its local COK functional is at most
+$h_{\eta_i}(w)\le\log_2\Omega_d(w)$. Summing proves the claim.
+For heterogeneous weights the same reasoning uses the respective
+owner supports, as specified after Definition 2.3; it does not give
+a common $\Omega_d(w_i)$ bound using the wrong outside support.
+$\square$
+
+**Corollary 15.3 (conditional quantitative tightness).** Suppose
+$w\ne0$ is uniform and a rational positive matching population on
+$n$ blocks satisfies, for $\delta,\epsilon\ge0$,
+
+$$
+\mathcal U_{\mathcal N}(p;w)/n\ge\log_2\Omega_d(w)-\delta,
+\qquad \mathcal I_{\rm cov}(p)/n\le\epsilon.
+\tag{COK.77}
+$$
+
+Then
+
+$$
+0\le\log_2\Omega_d(w)-\log_2\beta_d(w)\le\delta+\epsilon.
+\tag{COK.78}
+$$
+
+At every admissible multiplier $m$, (COK.70) gives the same
+comparison with $\log_2 A_{d,L,nm}(w)/(nm)$, with the additional
+loss $r(p)\log_2(m+1)/(nm)$, when the base has incidence at most
+$L$.
+
+Proof. The identity gives
+$\mathcal B_{\mathcal N}/n\ge\log_2\Omega_d(w)-\delta-\epsilon$.
+Corollary 14.1 bounds native pressure below by this quantity.
+The existing all-size upper $\beta_d(w)\le\Omega_d(w)$ is
+Theorem 3.1. These are the two needed directions; neither is
+an individual-cover Bethe upper. The finite assertion follows
+from the first line of (COK.70). $\square$
+
+The charge $\mathcal I_{\rm cov}$ is the difference of these
+two population functionals. It is distinct from the common-Gibbs
+global loss $\Delta(P)$ in (COK.21), and from the local-to-joint
+defect $\mathcal L_\eta$ in (COK.32). The low-entropy law of
+Theorem 12.2 cannot be substituted into COK.22 as its Gibbs law.
+No existence of populations satisfying (COK.77) with small errors
+is asserted.
+
+## 16. Paid full-family realization of a constructed cover fiber
+
+**Theorem 16.1 (original-source implementation and complete alphabet).**
+Let $B\subseteq S_d^N$ be any nonempty actual solution set of a
+constructed group-permutation cover, or any nonempty subset of it,
+including the type-restricted rows of §13. Put
+
+$$
+H=\lceil\log_2N\rceil,\quad K=2^H,\quad D=d+H.
+\tag{COK.79}
+$$
+
+Pad its ordered tuples by $K-N$ fixed alpha blocks and insert
+them at the frontier of a perfect height-$H$ ordered scaffold
+in the right subtree. Let $\iota(B)\subseteq S_D$ be the resulting
+canonical trees. There is a jointly correct original preparation
+and reader on the entire variable-shape $\mathcal F_D$ with exactly
+
+$$
+|E[\mathcal F_D]|=|S_D|-|B|+1
+\tag{COK.80}
+$$
+
+attained complete names. It uses exactly $2^D-1$ preparation
+Reads, maximum submitted address length $D$, and
+$(D-1)2^D+1$ submitted letters. At every permitted later request
+it uses zero Reads or one actual original-root Read of length
+at most $D$, chosen before its reply and every authentic count.
+
+Proof. Ordered scaffold parsing is injective, so
+$|\iota(B)|=|B|$. Give precisely these canonical states one
+merged name and every other $S_D$ state its own name. All data,
+including a finite membership table, copied topology, permutations
+and target witnesses, are public source-independent installation.
+For rational type witnesses they can be generated by finite
+enumeration and exact checking; no unknown source is used in
+their generation.
+
+Before any request, on the actual stationary
+$t=\langle\alpha,v\rangle$, read every literal $Rq$ with
+$q\in W_D$, in a fixed public order, including absent replies.
+The acquired constructor array computes $\pi_D(v)$ and its
+assigned name by the credited FMR/RRN reconstruction. Every
+canonical state is attained by an actual source, giving precisely
+(COK.80). With fixed-width naming, public allocation and a padded
+finite selection schedule, export that complete name only. The
+declared paid handoff/isolation service removes access to the
+array, temporary selectors, buffers, control, transcripts and any
+other surviving source dependence, including accessible timing.
+Thus no extra source-dependent shape or topology descriptor
+escapes the alphabet count.
+
+After a public source-independent request $p=Rq$ arrives, a
+singleton name fixes the full requested factor and needs no Read.
+At the merged name, a target strictly above the frontier has
+constant branch factor. A padding target has its known alpha
+trajectory, including initially absent suffixes. Otherwise the
+target is $Ra_iq'$ with $|a_i|=H$ and $q'\in W_d$ at one
+actual cover block. Its witness is a constant or the table of
+one seed owned at an actual block $j$ and port $q_c\in W_d$.
+In the latter case make precisely the literal Read
+
+$$
+Ra_jq_c,\qquad |Ra_jq_c|\le1+H+d-1=D.
+\tag{COK.81}
+$$
+
+Its reply is that seed by the retained owner identity; the one
+target table returns the requested full factor. An entire group
+edge is analytical: this execution observes only its selected
+seed reply, not the group tuple. The query uses only the name,
+public $D,p$, and installed tables, before any count. All targets
+in $W_D$ belong to exactly these scaffold, padding or block cases.
+
+For every original variable shape assigned this name,
+canonicalization preserves both the queried reply and the
+requested factor. Actual frontier occurrences on the merged
+canonical fiber are present. Pairing homomorphism therefore gives
+the credited occurrence transport
+
+$$
+r_{\rho^kt}(Ra_iq')
+ =r_{\rho^k(t|_{Ra_i})}(q')\qquad(k\ge0).
+\tag{COK.82}
+$$
+
+The presence premise is exactly that of
+`original_present_transport`, inspected in
+[NativeDepthPatterns][D5N] at the same public pin. Subtree notation
+in (COK.82) is a mathematical identification, not a callable port.
+Alternatively full canonical factor preservation gives the same
+trajectory directly. Formula (COK.5) answers every subsequently
+supplied authentic $k\ge0$ with no further Reads. This proves
+correctness simultaneously for every actual source and request,
+without a source-dependent request, reset, equality, copying,
+free navigation, source identity, or supplied age.
+
+Finally there are $2^D-1$ scan words, with lengths summing to
+$\sum_{\ell=0}^{D-1}(\ell+1)2^\ell=(D-1)2^D+1$.
+This proves the resource claims. $\square$
+
+This is a deliberately nonoptimal attained code, not a replacement
+preserving an arbitrary competitor's alphabet or preparation cost.
+The weights and type laws are proof parameters, not observations
+supplied to the reader. The pressure calculation in §14 is on
+the original $N$ cover blocks before padding; (COK.80) does not
+identify padded pressure or optimal memory with the averaged
+cover value. Installation size and generation, preparation
+work/control and storage, address generation, post-request space,
+predictor size, count representation, entry, authentication,
+handoff/isolation and physical time remain separate resources.
+For the factor alone, the existing bound
+$\lceil\log_2(2D+1)\rceil+1$ bits suffices. The access services
+are premises, not inferred physical erasure operations.
+
+## 17. Attribution, finite exact readings and the remaining joint gap
+
+**Convention 17.1 (primary attribution and exact representation).**
+The following is a native specialization of mature graph-cover
+machinery, with the additional actual-owner, incidence, pressure
+and paid-query correspondences proved above.
+
+| Primary supplier | Exact use and limit |
+| --- | --- |
+| P. O. Vontobel, *Counting in Graph Covers: A Combinatorial Characterization of the Bethe Entropy Function*, version 2, Definition 19 and Lemma 20 [Vontobel][VontobelCOK] | Labeled covers independently permute full edges. Here one full edge alphabet is the whole tuple $\prod_{c\in B_{ji}}T_c$, with projections of the same actual $O_j$ at its owner. Several outgoing projections of $O_j$ are constrained at that vertex; they are not independent owner assignments. |
+| Vontobel, Theorem 25 and Lemma 29, same version | Rational local consistency is finite-cover lift-realizable; the exact average type count is the product of vertex multinomials divided by full-edge multinomials. Theorems 12.1 and 13.2 give the constructive native realization and count, retaining guards, actual compatibility and every whole-block weight once. |
+| Vontobel, Theorems 30 and 33, same version | Bethe entropy and partition values are exponents or limsups of averaged cover counts and masses. Theorem 13.5 uses precisely this averaged direction. It gives no domination of individual covers or comparison that would prove a universal native upper. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, Theorem 4.1 and Corollary 4.2 [Ruozzi][RuozziCOK] | The binary log-supermodular hypothesis is not supplied by arbitrary native joint weights and compatibility zeros. No such cover-domination theorem is transferred here. The credited [GCB][GCBbase] counterexamples to unrestricted upper substitutions retain their scope. |
+
+To express this correspondence as a normal factor graph, attach
+one function vertex to each actual block $i$ and one full edge
+with the above tuple alphabet to each $(j,i)$. Add a private
+dangling variable $a_i\in R_i$ at $i$. Its vertex function is
+$w_i(x_i(a_i))$ when every incoming full-edge value equals its
+group in $a_i$ and every outgoing value equals its projection
+of $O_i(a_i)$, and is zero otherwise. Distinct $a_i$ label
+distinct local configurations even if their nonowner tables have
+the same image. The dangling variable is a formal summation
+label, not a native observation.
+
+For any fixed edge permutations, satisfying normal-factor-graph
+assignments give exactly the edge-consistent local lists in the
+proof of Theorem 13.2. Those lists give a unique actual seed
+assignment, and actual owner replies give the inverse. Both
+directions preserve all weights and the number of original
+blocks. Private half-edges have no matching permutation and no
+denominator multinomial. This supplies the full-edge alphabet
+mapping required for the cited abstract count; forgetting the
+private configurations or splitting whole groups into independently
+permuted seeds would change it.
+
+The repository-derived content is this exact native specialization,
+the identical-copy-marginal completion, incidence preservation,
+the consumers (COK.70)–(COK.72), the information identity
+(COK.74), and the full-family realization (COK.80). The finite
+type bounds and entropy identities are mature ingredients. FMR
+and RRN retain credit for canonicalization, guards, actual
+converse templates and paid scans; NPC retains credit for
+$\alpha_d$ and semantic pressure completeness; SIR retains
+credit for its incidence reduction and conditional verifier
+transfer. The existing COK, GDB and SCP results supply respectively
+the cap envelope, global dependence boundaries and softening
+bounds. No transfer from a finite-reader synthesis or predecessor-
+row task is used. There is no new Lean certification, independent
+review assertion or worldwide originality claim.
+
+**Convention 17.2 (bounded exact counting readings).** The following
+finite readings test the count and grouping, without an empirical
+convergence claim or a new rate endpoint. In the credited native
+binary-slot three-cycle of [GCB, §§1–2][GCBbase], use four sheets
+and the uniform local pair type. Each owner list is balanced,
+giving six possibilities. For any two such lists, exactly sixteen
+of the twenty-four permutations realize the uniform ordered-pair
+type. The number of matching cover/configuration pairs is
+$6^3\,16^3=884736$ over $24^3=13824$ covers. Their exact
+average is $64=(24/6)^3$, as in (COK.65). With local whole-block
+matrix $\left(\begin{smallmatrix}1&2\\3&5\end{smallmatrix}\right)$,
+each local type has weight $30$, so the weighted average is
+$64\,30^3=1728000$.
+
+For a whole-group check, take two depth-two blocks, with the first
+owning both binary seeds at its actual $L,R$ ports and the second
+using both seeds at those ports; both roots are constant branch.
+Use the uniform four-pair local law at both blocks and four
+sheets. There is one full group edge with four labels. For each
+of its twenty-four permutations, exactly twenty-four actual
+solutions have the prescribed two local types. Thus the average
+is $24=24^2/24$; replacing the group denominator by two binary
+denominators would give the incorrect $24^2/6^2=16$. Giving both
+blocks the displayed matrix weights gives exact average
+$24\,30^2=21600$. Zeroing one of those four weights makes this
+particular full type's contribution zero; it does not make its
+zero row a positive matching law.
+
+The regular-cover construction can separately be checked on a
+three-block binary-slot cycle with uniform local pair laws and
+four-sheet lists: its twenty-four-sheet law has the prescribed
+local distribution at every copy, with at most four outcomes,
+and every copied seed retains incidence two. These bounded
+in-memory checks exercise the stated finite identities. The
+arbitrary-size assertions rely on the proofs in §§12–16.
+
+**Open problem 17.3 (what completion still leaves unproved).**
+The constructive completion relation is equality of whole incoming
+group laws with projections of the same actual owner tuple laws.
+Once it holds rationally, local realizability on some finite
+cover is no longer an existence gap. It still does not make
+independently selected local maximizers match, nor put their
+marginals on the unlifted base. In addition, the explicit charge
+$\mathcal I_{\rm cov}/n$ need not be small. The useful sufficient
+condition is (COK.77); no theorem here supplies such populations
+near minimizing native weights, uniformly in depth or across
+weight-support changes.
+
+Consequently COK.57's optimizer-cofinality, [GDB, Definition
+11.1][GDBbase]'s universal sound cofinal verifier and effective
+original length error remain unresolved. The finite multiplier
+error in (COK.67) controls cover counting for a prescribed
+rational population; it is not an error for $\log_2K_d(n)/n$,
+a finite cutoff for arbitrary native templates, or an algorithm
+evaluating the all-size pressure. Preserving bounded incidence
+does not add bounded width, mixing or positivity. The numerical
+rate endpoints are not restated or improved by this construction.
+General exact $M_1(D)$, sharp $\lambda$ and the full minimal-
+relations/internal-observer/mutual-recovery programme are not
+settled. The operational recovery proved here is the requested
+full temporal factor and its authentic-count trajectory from
+the complete name and at most one actual reply, under the paid
+services; it does not identify the whole hidden source, unseen
+history or age, or physical space and time.
+
+[RRNbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[FMRbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPCbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[SIRbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[GCBbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[GDBbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[VontobelCOK]: https://arxiv.org/html/1012.0065v2
+[RuozziCOK]: https://arxiv.org/html/1202.6035
+
+## 追加锚（本行以下为增补区）
