@@ -5,7 +5,7 @@ year: 2026
 title: Zeta Spectral Triples
 doi: 10.4171/elm/37/3
 url: https://arxiv.org/abs/2511.22755v1
-claim: The full bounded-support Weil operator has discrete lower-bounded spectrum, and an explicit auxiliary transform converges to Xi. Actual ground-state simplicity, evenness and comparison with that auxiliary function remain missing; the shifted spectral construction does not certify the original form's sign.
+claim: The full bounded-support Weil operator has discrete lower-bounded spectrum, and an explicit auxiliary transform converges to Xi. Applying existing form-core, Carleman and min-max results gives a conservative explicit error for the actual even Fourier sections. Positive finite certificates, cofinal positivity and the separate actual ground-state comparison remain missing.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -72,9 +72,173 @@ $$
 0\le m_{L,N}^+-m_L^+\le r(L,N),
 $$
 
-with a lower certificate for $m_{L,N}^+$ large enough to pay $r(L,N)$. Core density supplies no explicit $r$. This note obtains neither that estimate nor cofinal positivity. The two routes have different missing interfaces.
+with a lower certificate for $m_{L,N}^+$ large enough to pay $r(L,N)$. Core density alone supplies no explicit $r$. The application below supplies a conservative explicit error for this actual section; it supplies neither a positive retained certificate nor cofinal positivity. The separate ground-state route still lacks the weighted comparison above.
 
-An unbounded FIB support schedule selects a cofinal family of windows. It supplies none of the actual simplicity, evenness, normalization, weighted comparison or finite-section errors above. Existing generic cofinal and Schur results should be reused; new work must address the actual arithmetic operator. RH remains unproved.
+An unbounded FIB support schedule selects a cofinal family of windows. The explicit section error below applies at each selected half-width, but the schedule supplies none of the actual simplicity, evenness, normalization, weighted comparison or positive certificates. Existing generic cofinal and Schur results are reused. RH remains unproved.
+
+## An explicit error for the actual even Fourier sections
+
+Keep the same full complex Weil form, with $L>0$ and
+$I=(-L,L)$, as in the [source normalization](liu2026tailcompensation.md#source-normalization-and-support).
+Write $d=2L$, extend each test by zero outside $I$, and put
+
+$$
+A(t)=\Re\operatorname{digamma}(1/4+it/2)-\log\pi,
+\quad A_0=A(0),\quad
+k(s)=\frac{e^{-s/2}}{1-e^{-2s}}\quad(s>0).
+$$
+
+The Fourier basis is $e_n(x)=d^{-1/2}e^{2\pi inx/d}$.
+The primary's equations (2.6), (3.19)--(3.21) and Proposition 3.4
+identify this same zero-extension form core after $\lambda=e^L$
+and translation of $[0,2L]$ to $I$; the translated basis differs
+only by $(-1)^n$. The form-core theorem and generic bounded-perturbation
+and block min--max principles are reused. This `repo-derived` application
+is the following explicit comparison for the actual Gamma, pole and
+prime terms, not a new general spectral theorem or priority claim.
+No Lean certification is asserted.
+
+Earlier high-Fourier-complement coercivity and finite-to-infinite
+certification are attributed to Hiroyuki Yoshida,
+*On Hermitian Forms attached to Zeta Functions*, Advanced Studies in
+Pure Mathematics **21** (1992), 281–325,
+[DOI:10.2969/aspm/02110281](https://doi.org/10.2969/aspm/02110281),
+Lemma 3 on p.290 and §6 on pp.309–310, by the “Relation to existing
+work” subsection of the [pinned Liu manuscript](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/frozen-source/publication/manuscript.tex).
+This historical attribution is secondary: Yoshida's original lemma
+has not been inspected here. The exact overlap of Yoshida's Lemma 3
+with G1–G5 remains unsettled. The
+[existing quantitative tail and coupling application](../Fourier/montgomery1978largesieve.md)
+also remains available. G1–G5 record the particular periodic-Gamma
+comparison below, with no priority claim over these earlier methods.
+
+### Compare periodic and zero-extended Gamma energies
+
+Let $D_L$ be the diagonal selfadjoint operator with eigenvalues
+$A(\pi n/L)$ on $e_n$, and write $q_{D_L}$ for its closed form.
+The standard [digamma integral, DLMF 5.9.16](https://dlmf.nist.gov/5.9.E16), gives
+
+$$
+A(t)-A_0=2\int_0^\infty k(s)(1-\cos ts)\,ds.
+$$
+
+Consequently the zero-extended Gamma form is
+$Q_\Gamma(f)=A_0\|f\|_2^2+
+\int_0^\infty k(s)\|f-f(\cdot-s)\|_2^2ds$.
+For Fourier polynomials, compare this expression with the periodic
+translation energy, first with the same small-shift cutoff. Summing
+periodic correlations gives
+
+$$
+Q_\Gamma(f)=q_{D_L}(f)+\langle f,B_Lf\rangle,
+\qquad
+B_L(x,y)=\sum_{m\in\mathbb Z\setminus\{0\}}
+ k(|x-y+md|).
+\tag{G1}
+$$
+
+The comparison keeps the cancellation at zero; the divergent integral
+$\int_0^\infty k(s)ds$ is not extracted as a separate diagonal term.
+The displayed kernel specifies a bounded integral form, with its two
+endpoint singularities interpreted by the following existing estimate.
+
+Reuse [the actual Gamma boundary bound T40](desogus2026threegates.md#pay-the-gamma-singularity-at-the-common-boundary),
+$k(s)\le C_k/s$, $C_k=(1-e^{-2})^{-1}$, and the classical Carleman
+bound there. Endpoint coordinates turn each of the $m=1,-1$ terms
+into a kernel bounded by $C_k/(r+s)$, hence each has operator norm
+at most $\pi C_k$. For $|m|\ge2$,
+$|x-y+md|\ge(|m|-1)d$; their geometric row and column sums give
+
+$$
+\boxed{\|B_L\|\le C_\Gamma(d):=
+2\pi C_k+
+\frac{2d e^{-d/2}}{(1-e^{-d/2})(1-e^{-2d})}.}
+\tag{G2}
+$$
+
+The far-image series converges in operator norm. A positive pointwise
+kernel does not assert that $B_L$ is a positive operator.
+
+Both forms in G1 have the same Fourier-polynomial core: for the actual
+form use the cited Proposition 3.4, while for $q_{D_L}$ use its
+diagonal description. The bounded correction therefore extends G1
+to the actual closed form. Its domain is exactly
+
+$$
+\left\{f\in L^2(I):
+\sum_{n\in\mathbb Z}
+[A(\pi n/L)-A_0]|\langle e_n,f\rangle|^2<\infty\right\}.
+\tag{G3}
+$$
+
+On this form domain the notation is $q_{D_L}(f)$;
+$\langle f,D_Lf\rangle$ additionally requires the operator domain.
+The finite pole and prime terms are bounded, so they preserve this
+form domain and core.
+
+### Retain the full arithmetic perturbation in the error
+
+The combined true pole pair has norm at most $4\sinh L$.
+The complete paired prime translations have norm at most
+$2\sum_{2\le n<e^{2L}}\Lambda(n)/\sqrt n$; every higher prime power
+is included. The shift at $n=e^{2L}$, when present, is zero almost
+everywhere. Define the explicit finite constant
+
+$$
+K_L=C_\Gamma(2L)+4\sinh L+
+2\sum_{2\le n<e^{2L}}\frac{\Lambda(n)}{\sqrt n}.
+\tag{G4}
+$$
+
+Thus the actual closed form is $Q_L=q_{D_L}+\langle\cdot,V_L\cdot\rangle$
+with $V_L$ bounded selfadjoint and $\|V_L\|\le K_L$. Each component
+preserves reflection. Restrict to the complex even Hilbert space and
+its actual Fourier section
+$E_N^+=\operatorname{span}_{\mathbb C}
+\{e_0,(e_n+e_{-n})/\sqrt2:1\le n\le N\}$, $N\ge0$.
+Let $m_L^+$ and $m_{L,N}^+$ be the actual full and retained Rayleigh
+infima, respectively. No simplicity or assertion that the overall
+ground state is even is used.
+
+The standard digamma series and asymptotic make $A(t)$ increasing for
+$t\ge0$ and divergent to $+\infty$; see
+[DLMF 5.7.6](https://dlmf.nist.gov/5.7.E6) and
+[5.11.2](https://dlmf.nist.gov/5.11.E2).
+The true complementary floor is therefore
+$A(\pi(N+1)/L)-K_L$, the coupling norm is at most $K_L$, and the
+constant vector gives $m_{L,N}^+\le A_0+K_L$. Put
+$\delta=A(\pi(N+1)/L)-A_0-2K_L>0$. For the retained/tail
+form-domain decomposition $f=u+v$, the existing bounded-block
+min--max estimate specializes to
+
+$$
+Q_L(f)-m_{L,N}^+\|f\|^2
+\ge\delta\|v\|^2-2K_L\|u\|\|v\|
+\ge-\frac{K_L^2}{\delta}\|u\|^2.
+$$
+
+Taking Rayleigh infima, together with the variational upper bound, gives
+
+$$
+\boxed{0\le m_{L,N}^+-m_L^+
+\le r(L,N):=\frac{K_L^2}{A(\pi(N+1)/L)-A_0-2K_L},
+\quad A(\pi(N+1)/L)>A_0+2K_L.}
+\tag{G5}
+$$
+
+The denominator condition is explicit and holds eventually for each
+fixed $L$. Thus $r(L,N)\to0$ for fixed $L$, with logarithmically
+slow frequency decay. This conservative bound supplies no practical
+matrix size or lower certificate. For a certified retained lower
+bound $\underline m_{L,N}\le m_{L,N}^+$, it gives the actual bound
+$m_L^+\ge\underline m_{L,N}-r(L,N)$.
+
+G5 applies separately at the half-widths of the existing unbounded
+FIB support schedule. Cofinal positivity still requires retained
+positive certificates dominating these actual errors at those scales.
+The ground-state simplicity, parity and weighted-transform comparison
+needed by the separate spectral route are not supplied. The complete
+Robin comparison and RH remain unproved.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
