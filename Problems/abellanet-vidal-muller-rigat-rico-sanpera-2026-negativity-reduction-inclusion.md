@@ -66,7 +66,7 @@ The canonical source is `D5/S3/QuantumBounds/NegativityReductionInclusionRefutat
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registrations:
   - `result` is the designated refutation result and is exempt (CLAUDE.md §3.9).
-  - `copyMatrix_entry` and `partialTraceRight_copyMatrix` are registered in `Reg/D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean`. Both are `declared_unresolved`, with the judge reading `IE-C050 … rule=source.descriptor_actual`.
+  - `copyMatrix_entry` and `partialTraceRight_copyMatrix` are registered in `Reg/D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean`. Both are `declared_unresolved`, with the judge reading `IE-C050 … rule=source.state_binder`.
   - Their escape audit is incomplete; the gap is recorded in [#17475](https://github.com/the-omega-institute/trureturing/issues/17475).
 
 Frozen state: `Golden/Frozen/state/D5/S3/QuantumBounds/NegativityReductionInclusionRefutation.lean.json`, statement `sha256:100e696e85067b2a4a7a1088e41bba8e10a42ae720cb5a37264430476f43a9a7`.
