@@ -3196,3 +3196,183 @@ x=-A+\varepsilon/2,\qquad
 ```
 
 同时循环调制两行可将任意模式化为模式零；交换两行则将上端点化为另一行的下端点。因此同样适用于任一能量端点。本结论控制的是实际互补相位行的谱与自相关，不把它自动提升为共同无偏 completion 的 symmetry-affinity 下界；后者仍需保留完整共享相位和正交约束。
+
+## 44. 非 Fourier 双循环边上的完整低 affinity 反例
+
+第 18 节以整个 completion fibre 定义 `alpha_min(T)`，没有附加相位判别式非零的条件。下面给出一个非 Fourier 双循环边及其完整 completion，满足 `alpha_S=2/9`。因此，该边所在的闭分支不能使用“所有 completions 均有 `alpha_S>=1`”作为统一目标。第 18 节的条件蕴含仍然正确；本节修正的是下界目标的适用域。
+
+本例处于一个相位判别式为零的边界，不否定非零判别式内域的下界。所得 completion 本身又属于 Fourier 等价类，故第 11 节的文献排除仍可将其从假想 quartet 中移除。Diţă 六阶矩阵存在多个 completions 已是已知事实，见 Brierley–Weigert，*Constructing Mutually Unbiased Bases in Dimension Six*，[arXiv:0901.4051，§4.1](https://arxiv.org/abs/0901.4051)。本节不把 completion 的存在重新列为新结果，而给出当前三循环下的精确 affinity 及其对本卷目标的限制。
+
+### 44.1 固定边、三循环与 conference 规范
+
+使用一基索引，固定
+
+```math
+P=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},
+\qquad S=\operatorname{diag}(P,P).
+```
+
+取
+
+```math
+A=\begin{pmatrix}1&-1&1\\1&1&-1\\-1&1&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1&1&i\\i&1&1\\1&i&1\end{pmatrix},
+\qquad H=\begin{pmatrix}A&B\\B^\dagger&-A^\dagger\end{pmatrix},
+\qquad T=H/\sqrt6.
+```
+
+两条首行的自相关分别为 `-1,1`，Fourier 能量谱分别为 `(1,4,4)` 和 `(5,2,2)`。这是第 43 节 `delta=kappa g` 且 `g>0` 的实际相位等号例。第一行的循环相位比为 `(-1,-1,1)`，故其判别式为零；所有 Fourier 系数仍然非零。
+
+令
+
+```math
+R=\operatorname{diag}(-i,-i,-i,i,i,i),\qquad
+K=(e_6\ e_4\ e_5\ e_2\ e_3\ e_1),
+```
+
+以及
+
+```math
+C=\begin{pmatrix}I_3-J_3&2I_3-J_3\\2I_3-J_3&J_3-I_3\end{pmatrix}.
+```
+
+直接相乘得到
+
+```math
+RHK=I+iC,\qquad C=C^T,\qquad C^2=5I_6.
+```
+
+最后一个恒等式由 `J3²=3J3` 得到。因此
+
+```math
+T_c=RTK=(I+iC)/\sqrt6
+```
+
+是 flat unitary，原固定边 `T` 亦然。`R,K` 都与 `S` 交换。
+
+### 44.2 保持两组 flatness 的显式 completion
+
+**命题 44.1。** 上述固定边有完整 completion `W`，其每列相对 `S` 的三个 mode probabilities 是 `(1/9,4/9,4/9)` 的一个置换，并且
+
+```math
+\boxed{\alpha_S(W)=2/9.}
+```
+
+证明。定义实正交 signed permutation
+
+```math
+M=\begin{pmatrix}
+1&0&0&0&0&0\\
+0&0&0&0&1&0\\
+0&0&0&-1&0&0\\
+0&-1&0&0&0&0\\
+0&0&0&0&0&1\\
+0&0&1&0&0&0
+\end{pmatrix}.
+```
+
+有 `MCM^T=C`，故 `MTc=TcM`。一个直接验证是令 `E=diag(1,-1,-1,1,-1,-1)`；`ECE` 的第一行、列非对角元全为一，其余五点的正号边恰组成循环 `(2,4,3,6,5)`。该循环的置换矩阵 `Pr` 保持 `ECE`，且 `M=EPrE`。
+
+令 `omega=exp(2 pi i/3)`，并置
+
+```math
+q_k=(1,\omega^k,\omega^{2k}),\qquad
+(a_0,b_0)=(-2,-1),\quad(a_1,b_1)=(a_2,b_2)=(1,2),
+```
+
+```math
+t_k=\frac{1+ia_k}{\sqrt{1+a_k^2}},\qquad
+ t_0=\frac{1-2i}{\sqrt5},\quad t_1=t_2=\frac{1+i}{\sqrt2}.
+```
+
+令 `F0` 的六行是
+
+```math
+f_{k,\varepsilon}=\frac1{\sqrt6}(q_k,\varepsilon t_kq_k),
+\qquad k=0,1,2,\quad\varepsilon=\pm1.
+```
+
+不同 `k` 的正交来自三阶 Fourier 正交性；相同 `k` 的两行内积是 `(3-3)/6=0`。因此 `F0` unitary 且 flat。记 `Ac=I3-J3,Bc=2I3-J3`，有 `qk Ac=ak qk`、`qk Bc=bk qk`，故
+
+```math
+f_{k,\varepsilon}T_c
+=\frac16\bigl((1+ia_k+\varepsilon ib_kt_k)q_k,
+(ib_k+\varepsilon(1-ia_k)t_k)q_k\bigr).
+```
+
+由于 `ak²+bk²=5`，且
+
+```math
+(a_k-i)\overline{t_k}=-i\sqrt{1+a_k^2},
+```
+
+两个括号内系数的平方模均为六。因此 `F0 Tc` 也 flat。
+
+现在置
+
+```math
+F=F_0MR,\qquad W=F^\dagger.
+```
+
+`F` 是 flat unitary，并且
+
+```math
+FT=F_0MRT=F_0MT_cK^\dagger=F_0T_cMK^\dagger
+```
+
+仍然 flat。故 `W` 确实是同时无偏于 `I,T` 的完整正交基。特别地，对第 8 节的同一个 `Q,D`，令 `U=FQ^dagger`，就同时保留
+
+```math
+U\text{ unitary},\qquad UQ=F\text{ flat},\qquad UDQ=FT\text{ flat}.
+```
+
+下面计算 affinity。`R` 与 `S` 交换，所以只需计算 `F0 M` 的行期望。写 `w=omega^k`、`t=epsilon tk`，其对应未归一化行是
+
+```math
+(1,w,w^2,t,tw,tw^2)M=(1,-t,tw^2,-w^2,w,tw).
+```
+
+利用 `|t|=|w|=1,w³=1`，该行与 `S` 的二次型为
+
+```math
+-\overline t-w+tw^2-w+\overline t-tw^2=-2w.
+```
+
+因而
+
+```math
+(FSF^\dagger)_{(k,\varepsilon),(k,\varepsilon)}=-\omega^k/3.
+```
+
+由第 16 节的同一归一化，
+
+```math
+\alpha_S(W)=\frac13\sum_{k,\varepsilon}
+|(FSF^\dagger)_{(k,\varepsilon),(k,\varepsilon)}|^2
+=\frac13\cdot6\cdot\frac19=\frac29.
+```
+
+三阶 Fourier 反演还给出每行的 mode probabilities 为 `(1/9,4/9,4/9)` 的置换，每种位置出现两次。作为独立的归一化核对，
+
+```math
+\sum_{r,k}p_{rk}^2=6\frac{1+16+16}{81}=\frac{22}{9},\qquad
+\alpha_S(W)=\frac12\left(\frac{22}{9}-2\right)=\frac29.
+```
+
+命题得证。
+
+### 44.3 排除 Fourier 固定边与修正目标的范围
+
+对未归一化 Hadamard 矩阵定义交比集合
+
+```math
+\Lambda(G)=\{G_{ij}G_{k\ell}\overline{G_{i\ell}}\overline{G_{kj}}\}.
+```
+
+行列相位在交比中抵消，置换只重排指标，转置也不改变集合。由于 `H` 全部元素为四次单位根，其交比都在 `{1,-1,i,-i}` 中。另一方面，第 11 节 Fourier 两参数族的标准块代表包含完整的三阶 Fourier 子矩阵；其前两行、前两列的交比为 primitive cube root `omega`。转置族亦然。因此 `H` 与这两个 Fourier 族都不等价。本例是非 Fourier 双循环边，而不是 Fourier 中心的重述。
+
+每个 completion 行的 collision 是 `11/27`，故任选三行都构成实际共同无偏正交三元组，但其总 collision 为 `11/9<2`。这阻止把第 36、37 节的三元组目标无条件推广到全部非 Fourier 双循环边；不反驳那两节针对 `-1/5` 固定种子的目标，也不影响第 42 节在该种子邻域上的结论。
+
+按正负号排列 `F0` 的行后，它正是第 10、11 节的 Fourier 型块构造；`F=F0MR` 只再乘右单项式矩阵。因此这个低 affinity completion 仍是 Fourier 等价类的伴随，已由第 11 节的 quartet 文献归约排除。它说明“相对于指定 `S` 非 mode-local”不等于“已排除所有 Fourier-equivalent completions”：固定边自同构可以显著改变前一性质而保持后一等价类。
+
+所以，若继续以 affinity 攻击剩余 quartet fibre，必须明确限制 completion 等价类，排除整个已知 Fourier locus 及其固定边自同构轨道；仅去掉 mode-local 子集不够。非零判别式内域、以及去除已知排除类后的剩余 completion 下界均未由本例解决。第 17、18、31 节的条件预算与刚性论证保持有效；六维四 MUB 问题也未由本例解决。
