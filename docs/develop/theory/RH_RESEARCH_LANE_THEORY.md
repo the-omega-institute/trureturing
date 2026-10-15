@@ -6335,7 +6335,8 @@ RH
 
 利用闭式积分与有限最小频差，冻结统一时间窗口双边界。真源为
 `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity`；该有限
-接口只对平方系数能量成立，并不提供无限频率下界或 Weil 运输。
+接口现在同时覆盖实系数平方能量与复系数 `normSq` 能量，并不提供无限频率下界或
+Weil 运输。
 
 ### P1. `HolonomyToFixedScaleWeilTransport`
 
@@ -6367,6 +6368,7 @@ RH
 - pair-adapted clocks 下四倍 holonomy energy 的精确恢复；
 - ordered-time simplex scalar response 的闭式公式；
 - 有限非共振频率族在同一时间窗上的双边界与正 coercivity 常数；
+- 复 Fourier 系数的同一有限窗口双边界；
 - 零频差响应为零；
 - 非负窗口上的响应非负。
 

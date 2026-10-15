@@ -49,6 +49,27 @@ internal sealed class FiniteFrequencyOrderedSimplexCoercivityDocument
                 Blocks(Paragraph(Text(
                     "A horizon beyond the worst half-turn scale makes the lower constant "
                         + "strictly positive."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-complex-ordered-simplex-energy-lower-bound"),
+                DeclarationHandle.Create(
+                    Prefix + "finite_complex_ordered_simplex_energy_lower_bound"),
+                H("Complex-coefficient lower coercivity"),
+                StatementSource.FromAuthor(ComplexBoundFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The same finite lower bound applies to complex Fourier coefficients, "
+                        + "with squared modulus as the coefficient energy."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-complex-ordered-simplex-energy-upper-bound"),
+                DeclarationHandle.Create(
+                    Prefix + "finite_complex_ordered_simplex_energy_upper_bound"),
+                H("Complex-coefficient upper envelope"),
+                StatementSource.FromAuthor(ComplexUpperFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The horizon-squared upper envelope is unchanged for complex coefficients."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
@@ -91,6 +112,26 @@ internal sealed class FiniteFrequencyOrderedSimplexCoercivityDocument
             D(0), Sp, Lt, Sp,
             F.Id("horizon"), Caret, Grp(D(2)), Sp, Minus, Sp,
             D(4), Sp, Slash, Sp, F.Id("delta"), Caret, Grp(D(2))));
+
+    private static Formula ComplexBoundFormula() =>
+        Disp(Seq(
+            D(0), Sp, Lt, Sp, F.Id("delta"), Sp, Land, Sp,
+            Call(FormulaIdentifier.Create("gapFloor"), F.Id("delta"), F.Id("omega")),
+            Sp, Rightarrow, Sp,
+            Seq(Open, Square(F.Id("horizon")), Sp, Minus, Sp,
+                Frac, D(4), Sp, Slash, Sp, Square(F.Id("delta")), Close,
+                Sp, Times, Sp, Call(FormulaIdentifier.Create("sumNormSq"),
+                    F.Id("coefficient"))),
+            Sp, Leq, Sp,
+            Call(FormulaIdentifier.Create("EcomplexSimp"), F.Id("omega"),
+                F.Id("coefficient"), F.Id("horizon"))));
+
+    private static Formula ComplexUpperFormula() =>
+        Disp(Seq(
+            Call(FormulaIdentifier.Create("EcomplexSimp"), F.Id("omega"),
+                F.Id("coefficient"), F.Id("horizon")), Sp, Leq, Sp,
+            Square(F.Id("horizon")), Sp, Times, Sp,
+            Call(FormulaIdentifier.Create("sumNormSq"), F.Id("coefficient"))));
 
     private static Formula Square(Formula value) =>
         new Formula.Power(Seq(value), D(2));

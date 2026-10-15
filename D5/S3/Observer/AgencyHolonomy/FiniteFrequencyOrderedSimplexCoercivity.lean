@@ -39,6 +39,13 @@ noncomputable def finiteOrderedSimplexEnergy
     (gap coefficient : ι → ℝ) (horizon : ℝ) : ℝ :=
   ∑ i, orderedTimeSimplexKernelAverage (gap i) horizon * (coefficient i) ^ 2
 
+/-- The same ordered-simplex response for complex Fourier coefficients. -/
+noncomputable def finiteComplexOrderedSimplexEnergy
+    {ι : Type u} [Fintype ι]
+    (gap : ι → ℝ) (coefficient : ι → ℂ) (horizon : ℝ) : ℝ :=
+  ∑ i, orderedTimeSimplexKernelAverage (gap i) horizon *
+    Complex.normSq (coefficient i)
+
 private theorem gap_sq_pos
     (gap δ : ℝ) (hδ : 0 < δ) (hGap : δ ≤ |gap|) :
     0 < gap ^ 2 := by
@@ -150,6 +157,38 @@ theorem finite_ordered_simplex_energy_upper_bound
       (ordered_simplex_pointwise_upper (gap i) horizon δ hδ (hGap i))
       (sq_nonneg (coefficient i))
 
+/-- A finite nonresonant family has the same common-window lower bound for
+complex coefficients, with squared modulus as the coefficient energy. -/
+theorem finite_complex_ordered_simplex_energy_lower_bound
+    {ι : Type u} [Fintype ι]
+    (gap : ι → ℝ) (coefficient : ι → ℂ) (horizon δ : ℝ)
+    (hδ : 0 < δ) (hGap : ∀ i, δ ≤ |gap i|) :
+    (horizon ^ 2 - 4 / δ ^ 2) *
+        (∑ i, Complex.normSq (coefficient i)) ≤
+      finiteComplexOrderedSimplexEnergy gap coefficient horizon := by
+  classical
+  unfold finiteComplexOrderedSimplexEnergy
+  rw [Finset.mul_sum]
+  exact Finset.sum_le_sum fun i hi => by
+    exact mul_le_mul_of_nonneg_right
+      (ordered_simplex_pointwise_lower (gap i) horizon δ hδ (hGap i))
+      (Complex.normSq_nonneg _)
+
+/-- The complex-coefficient energy has the same horizon-squared upper envelope. -/
+theorem finite_complex_ordered_simplex_energy_upper_bound
+    {ι : Type u} [Fintype ι]
+    (gap : ι → ℝ) (coefficient : ι → ℂ) (horizon δ : ℝ)
+    (hδ : 0 < δ) (hGap : ∀ i, δ ≤ |gap i|) :
+    finiteComplexOrderedSimplexEnergy gap coefficient horizon ≤
+      horizon ^ 2 * (∑ i, Complex.normSq (coefficient i)) := by
+  classical
+  unfold finiteComplexOrderedSimplexEnergy
+  rw [Finset.mul_sum]
+  exact Finset.sum_le_sum fun i hi => by
+    exact mul_le_mul_of_nonneg_right
+      (ordered_simplex_pointwise_upper (gap i) horizon δ hδ (hGap i))
+      (Complex.normSq_nonneg _)
+
 /-- The lower coercivity constant is positive once the common horizon exceeds
 the worst half-turn scale. -/
 theorem ordered_simplex_coercivity_constant_pos
@@ -164,6 +203,8 @@ theorem ordered_simplex_coercivity_constant_pos
 
 #print axioms finite_ordered_simplex_energy_lower_bound
 #print axioms finite_ordered_simplex_energy_upper_bound
+#print axioms finite_complex_ordered_simplex_energy_lower_bound
+#print axioms finite_complex_ordered_simplex_energy_upper_bound
 #print axioms ordered_simplex_coercivity_constant_pos
 
 end D5.S3.Observer.AgencyHolonomy.FiniteFrequencyOrderedSimplexCoercivity

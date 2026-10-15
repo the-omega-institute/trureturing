@@ -42,8 +42,34 @@ $$2 / delta < horizon\Rightarrow 0 < horizon^{2} - 4 / delta^{2}$$
 
 A horizon beyond the worst half-turn scale makes the lower constant strictly positive.
 
+**Theorem 1.4 (Complex-coefficient lower coercivity).**
+
+$$0 < delta \land \operatorname{gapFloor}\left(delta, omega\right) \Rightarrow (horizon^{2} - \frac4 / delta^{2}) \times \operatorname{sumNormSq}\left(coefficient\right) \leq \operatorname{EcomplexSimp}\left(omega, coefficient, horizon\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_lower_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same finite lower bound applies to complex Fourier coefficients, with squared modulus as the coefficient energy.
+
+**Theorem 1.5 (Complex-coefficient upper envelope).**
+
+$$\operatorname{EcomplexSimp}\left(omega, coefficient, horizon\right) \leq horizon^{2} \times \operatorname{sumNormSq}\left(coefficient\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_upper_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The horizon-squared upper envelope is unchanged for complex coefficients.
+
 ## References
 
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_lower_bound`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_upper_bound`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_ordered_simplex_energy_lower_bound`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_ordered_simplex_energy_upper_bound`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.ordered_simplex_coercivity_constant_pos`
