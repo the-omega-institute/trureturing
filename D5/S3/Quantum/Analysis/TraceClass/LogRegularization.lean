@@ -185,6 +185,19 @@ private theorem logRegularization_eq_cfc {epsilon : ℝ} (he : 0 < epsilon)
   rw [← hid, ← cfc_comp' Real.log (fun x : ℝ => x + epsilon) T hlog
     (continuousOn_id.add continuousOn_const) hsa]
 
+/-- The bounded logarithmic observable acts by its scalar regularization on each
+actual eigenvector, including eigenvalue zero. -/
+theorem logRegularization_apply_eigenvector {epsilon : ℝ} (he : 0 < epsilon)
+    {T : H →L[ℂ] H} (hT : 0 ≤ T) (s : ℝ) (v : H)
+    (hv : T v = (s : ℂ) • v) :
+    logRegularization epsilon T v =
+      (Real.log (1 + epsilon) - Real.log (s + epsilon) : ℂ) • v := by
+  rw [logRegularization_eq_cfc he hT]
+  simpa only [Complex.ofReal_sub] using
+    cfc_apply_eigenvector T (.of_nonneg hT) s v hv
+      (fun x : ℝ => Real.log (1 + epsilon) - Real.log (x + epsilon))
+      (continuousOn_const.sub (continuousOn_log_shift he hT))
+
 /-- Decreasing a positive regularization parameter increases the actual operator.
 The comparison is made on the spectrum of the same positive contraction. -/
 theorem logRegularization_parameter_antitone {a b : ℝ} (ha : 0 < a) (hab : a ≤ b)

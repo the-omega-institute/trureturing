@@ -8,6 +8,9 @@ url: https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44
 claim: Real CFC logarithms are continuous on self-adjoint invertible operators and operator monotone on strictly positive operators.
 strata_touched:
   - D5/S3/Quantum/Analysis/TraceClass/LogRegularization
+  - D5/S3/Quantum/Analysis/TraceClass/SpectralEnergy
+  - D5/S3/Quantum/Analysis/TraceClass/KernelEnergy
+  - D5/S3/Quantum/Analysis/TraceClass/OrderedEnergy
 license: Apache-2.0
 triage: anchor
 ---
@@ -72,3 +75,63 @@ or inverse is used in this derivation.
 These are formal compositions of attributed standard CFC, Stone-Weierstrass,
 trace pairing and monotone-supremum suppliers, with no claim of mathematical
 priority for a spectral theorem or an entropy-continuity conjecture.
+
+
+## Singular spectral energy
+
+`TraceClass/Spectral.exists_nonneg_trace_spectral_data` supplies the actual full
+basis of every positive trace-class operator. Its arbitrary full index includes
+all zero eigenspaces. The analytic trace-class summability and basis-independent
+trace are attributed to Tom Ole Diem's Apache-2.0 Physlib, as detailed in
+`Library/QuantumBounds/diem2026traceclass.md`; no supplier proof is duplicated.
+
+`SpectralEnergy` defines ell(0)=infinity and ell(t)=ofReal(-log t) for nonzero t,
+and the actual nonnegative series of rho's basis diagonals times ell(s(i)).
+The genuine trace-class product B_e(T)rho has a summable unconditional diagonal.
+CFC eigenvector action evaluates it by the scalar regularized logarithm.
+Scalar monotone convergence, including zero and one, and arbitrary-index
+nonnegative sum/supremum interchange identify this series with the SAME
+regularizedSupremum. Choosing the full native basis defines spectralEnergy;
+the actual operator identity proves its basis independence.
+
+The separate entropy series is sum of ofReal(-s(i) log s(i)), with zero term at
+s(i)=0. The actual eigenvector equation identifies it with self energy. Positive
+trace-one rho satisfies rho<=I. If 0<w<=1 and w rho<=tau, noncommuting order,
+reference scaling and the trace mass one give
+E_tau(rho)<=S(rho)+ofReal(-log w). In particular, finite actual entropy gives
+finite dominated cross energy. Nonnegative two-term first-slot linearity
+includes zero coefficients and infinite energies; no countable first-slot
+identity is inferred from it. The energy is lower semicontinuous in the
+reference's genuine trace-norm topology.
+
+`KernelEnergy` uses the actual bounded orthogonal projection onto ker T. Its
+trace pairing with rho equals the unconditional sum of the zero-fiber diagonals.
+Positive kernel mass forces infinite energy. Finite energy annihilates every
+zero eigenvector under rho, since its positive diagonal is the squared norm of
+the action of sqrt(rho). Full basis density then gives rho kernelProjection(T)=0
+and ker T<=ker rho. Support inclusion alone is not asserted to imply finite energy.
+
+## Ordered increments
+
+For an actually strictly positive A and c>=0, scalar logarithm and genuine
+single-operator CFC prove
+log(A+cI)-log(A)=log(I+c Ring.inverse(A)).
+The suppliers are `cfc_comp'`, `cfc_ringInverse_id`,
+`CStarAlgebra.ringInverse_le_ringInverse`, and `CFC.log_le_log` in the pinned
+Mathlib revision. This is a composition of established functional-calculus and
+order results, with no claim of new logarithm or spectral theory.
+
+For 0<=P<=Q and 0<a<=b, actual inverse order applied to the a-shifts and the
+single-operator formula with c=b-a show R_b<=R_a, where
+R_e=log(Q+eI)-log(P+eI)>=0. No commutativity between P and Q is assumed.
+The nonnegative trace-pairing supremum F_(P,Q) is lower semicontinuous in rho's
+trace norm. The bounded identity B_e(P)=R_e+B_e(Q) and synchronized monotone
+suprema prove E_P(rho)=F_(P,Q)(rho)+E_Q(rho) globally in ENNReal.
+Both energies may be infinite. For P=Q, F is exactly zero even in that case;
+no unrestricted subtraction is used.
+
+These results supply singular operator energy and its ordered decomposition.
+They do not prove the original Shirokov local entropy-center construction,
+one common continuous reference energy or the full densely defined
+self-adjoint all-temperature Hamiltonian. The stronger complementary Orlicz
+premises do not replace the original finite continuous entropy hypothesis.
