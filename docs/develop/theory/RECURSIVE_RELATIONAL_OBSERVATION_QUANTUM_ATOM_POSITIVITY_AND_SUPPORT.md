@@ -2996,3 +2996,14 @@ proofs and explicit finite constructions, without a new Lean
 certification or a physical acquisition claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Local frontier qualification
+
+**Remark 15.1 (Scope of the quoted frontier).** The unchanged-frontier
+statement in Definition 14.3 concerns only this volume's local
+structural results and the supplier endpoints quoted there. The sharper
+current common bracket is given by [Joint Event Error Bounds, Theorem 6.1](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_JOINT_EVENT_ERROR_BOUNDS.md#6-the-common-bracket-and-the-nonmatching-boundary).
+The exact original optimum and a matching common complementary
+event-atom-TP tuple remain open.
+
+## 追加锚（本行以下为增补区）
