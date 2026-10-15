@@ -791,7 +791,7 @@ With validity as in Definition 6.3,
 
 $$
 \boxed{\displaystyle
-\lambda=\sup_{d\ge1}\ 
+\lambda=\sup_{d\ge1}
 \sup_{\substack{\mu\in\Delta(S_d)\cap\mathbb Q^{S_d},\ C\in\mathbb Q_{>0}\\
                          (\mu,C)\text{ valid}}}
 -2^{-d}\log_2C.}
