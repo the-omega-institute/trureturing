@@ -215,4 +215,5 @@ The attaining family has system spectrum (1/3 + a, 1/3 - a, 1/3) and environment
 - Truth anchor: `D5/S3/Quantum/Information/QutritComplementaryEntropyFrontier.swap`
 - Dependency: [D5/S3/Entropy/Forgetting/CapacityMonotone](../../Entropy/Forgetting/CapacityMonotone.md)
 - Dependency: [D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation](../Dynamics/KickedIsingNegativityRefutation.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation](../QuantumChannels/TruncatedLossDephasingOptimizerRefutation.md)

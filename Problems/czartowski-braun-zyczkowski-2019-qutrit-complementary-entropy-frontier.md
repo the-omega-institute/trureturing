@@ -63,9 +63,9 @@ The module quantifies over every isometry V : ℂ³ → ℂ³ ⊗ ℂ³, defines
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Information/QutritComplementaryEntropyFrontier.lean` (576 lines).
+The canonical source is `D5/S3/Quantum/Information/QutritComplementaryEntropyFrontier.lean` (586 lines).
 - It defines `admissible`, `swap`, `channelB`, `joint`, `rhoB`, `rhoE`, `choi`, `outputEntropy`, `mapEntropy`, `entropy3`, `h`, `g`, `attainer` and `claim`, and proves `result : claim`.
-- It uses the frozen `PartialTraceMutualInformation` partial traces and spectral entropy, and the frozen `CapacityMonotone.deterministic_forgetting_entropy_capacity_monotone`. It also uses two theorems made public for this settlement:
+- It uses the frozen `PartialTraceMutualInformation` partial traces and spectral entropy, and the frozen `CapacityMonotone.deterministic_forgetting_entropy_capacity_monotone`. The normalized Choi matrix is one third of `MatrixMap.choi_matrix` of the bundled Kraus map `MatrixMap.of_kraus`, with the pair indices exchanged. `of_kraus` is in the frozen `FiniteKrausChannel`, and `choi_matrix` in the unfrozen `FiniteKrausRepresentation`. It also uses two theorems made public for this settlement:
   - `TruncatedLossDephasingOptimizerRefutation.pair_entropy_le`, the two-point spreading inequality;
   - `KickedIsingNegativityRefutation.trace_local_left`, with the frozen `trace_local_right`, for the covariance.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
@@ -74,7 +74,7 @@ The canonical source is `D5/S3/Quantum/Information/QutritComplementaryEntropyFro
   - `pair_entropy_le` is registered in `Reg/D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.lean`.
   - `trace_local_left` is registered in `Reg/D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.lean`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/QutritComplementaryEntropyFrontier.lean.json`, statement `sha256:bbcc1281708cedde222ffcb29ee857e5544cc6f26c7cb085a426dffa7f215515`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/QutritComplementaryEntropyFrontier.lean.json`, statement `sha256:1051cd75aae340f720779b961870fa3ee99f5e3e3f94a963c028814f15f02578`.
 
 Declaration statements:
 - `result`: `sha256:ca976f7232fadf48c13e3a616377556e805cc911f4377abd022f735f7e08cbdd`;
