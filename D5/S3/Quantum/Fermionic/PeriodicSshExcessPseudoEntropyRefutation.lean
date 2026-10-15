@@ -12,12 +12,13 @@ import D5.S3.Quantum.Information.InputInformationBalance
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
+set_option maxRecDepth 1000000
 
 open scoped BigOperators Matrix ComplexOrder Matrix.Norms.L2Operator
 open Matrix Polynomial
 open PredictiveThermodynamic.Physical (Assignment)
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
-  (FullOperator fullC fullC_CAR fullC_mixed_anticomm_of_lt)
+  (FullOperator fullC fullC_CAR fullC_mixed_anticomm_of_lt fermionWord prefixCount)
 open D5.S3.Quantum.Fermionic.FockMajoranaCarrier (numberOperator numberOperator_eq_diagonal)
 open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (occupationCount)
 
@@ -240,6 +241,16 @@ private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     exact hswap3 x
   rw [hleft3]
 
+private theorem fullC_entries_local {M : ℕ} (j : Fin M) (s t : Assignment M) :
+    fullC j s t = ∏ k, fermionWord j k (s k) (t k) := by
+  simp [fullC, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.tensorOp,
+    Matrix.submatrix_apply]
+
+private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s : Assignment M) :
+    (fullC j *ᵥ f) s =
+      if s j = false then (-1 : ℂ) ^ prefixCount s j * f (Function.update s j true) else 0 := by
+  sorry
+
 private def psiCode (x : Assignment 6) : Fin 64 :=
   finFunctionFinEquiv (fun j => if x j then (1 : Fin 2) else 0)
 
@@ -248,6 +259,42 @@ private def psi58Int : Fin 64 → ℤ := ![0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 6, 
 
 private def psi38 : Assignment 6 → ℂ := fun x => (psi38Int (psiCode x) : ℂ)
 private def psi58 : Assignment 6 → ℂ := fun x => (psi58Int (psiCode x) : ℂ)
+
+private def psi38Z : Assignment 6 → ℤ := fun x => psi38Int (psiCode x)
+private def psi58Z : Assignment 6 → ℤ := fun x => psi58Int (psiCode x)
+
+private def modeInt (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ) : Assignment 6 → ℤ :=
+  fun x => ∑ j, l j * (if x j = false then (-1 : ℤ) ^ prefixCount x j *
+    f (Function.update x j true) else 0)
+
+private def modeCreateInt (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ) : Assignment 6 → ℤ :=
+  fun x => ∑ j, l j * (if x j = true then (-1 : ℤ) ^ prefixCount x j *
+    f (Function.update x j false) else 0)
+
+private def modes38Z : Fin 6 → Fin 6 → ℤ :=
+  ![![-1, 1, -1, 1, -1, 1], ![-3, 7, -5, -7, 8, 0],
+    ![-13, -7, 11, -7, 2, 14], ![-3, -7, -5, 7, 8, 0],
+    ![13, -7, -11, -7, -2, 14], ![1, 1, 1, 1, 1, 1]]
+private def modes58Z : Fin 6 → Fin 6 → ℤ :=
+  ![![-1, 1, -1, 1, -1, 1], ![-5, 7, -3, -7, 8, 0],
+    ![-11, -7, 13, -7, -2, 14], ![-5, -7, -3, 7, 8, 0],
+    ![11, -7, -13, -7, 2, 14], ![1, 1, 1, 1, 1, 1]]
+
+private theorem psi38_norm : ∑ x, psi38Z x ^ 2 = 3528 := by decide
+private theorem psi58_norm : ∑ x, psi58Z x ^ 2 = 392 := by decide
+private theorem psi38_overlap : ∑ x, psi58Z x * psi38Z x = 1152 := by decide
+
+set_option maxRecDepth 100000 in
+private theorem psi38_mode_kernel :
+    (∀ k : Fin 3, modeCreateInt (modes38Z ⟨k.val, by omega⟩) psi38Z = 0) ∧
+    (∀ k : Fin 3, modeInt (modes38Z ⟨k.val + 3, by omega⟩) psi38Z = 0) := by
+  constructor <;> intro k <;> fin_cases k <;> decide
+
+set_option maxRecDepth 100000 in
+private theorem psi58_mode_kernel :
+    (∀ k : Fin 3, modeCreateInt (modes58Z ⟨k.val, by omega⟩) psi58Z = 0) ∧
+    (∀ k : Fin 3, modeInt (modes58Z ⟨k.val + 3, by omega⟩) psi58Z = 0) := by
+  constructor <;> intro k <;> fin_cases k <;> decide
 
 end
 end D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
