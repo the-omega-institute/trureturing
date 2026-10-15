@@ -1,0 +1,14 @@
+**Theorem 11.3 (finite-vector sufficiency on every finite source).** Under
+Assumption 11.1, the finite vector
+
+$$
+Z_{P,D}(u)=\bigl(J^c_w(u)\bigr)_{w\in A_D(P)}
+\tag{NAR.11.4}
+$$
+
+in public lexicographic order factors effectively through $R_P(u)$ and
+is a sufficient code for every allowed later $Q$ and every $k\ge0$.
+The claim includes sources where some or all frontier addresses are
+initially absent; it requires no saturation, designated alpha origin
+or source-size bound.
+

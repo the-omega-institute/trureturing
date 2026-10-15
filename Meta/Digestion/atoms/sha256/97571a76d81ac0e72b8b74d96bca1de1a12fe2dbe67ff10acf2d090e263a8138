@@ -1,0 +1,17 @@
+**Definition 10.7 (finite class-root experiment feasibility).** The
+finite task has input $\theta\in\Theta_*$, whole-row target
+$G_*(\theta)$, and experiment menu $D$. Experiment $d$ returns
+$\theta(d)$ and costs one invocation; repetitions also cost one.
+Let $\mathsf{RootFeas}_*(r,q)$ mean that there exist a finite label
+set $S$ with $1\le|S|\le r$, a coloring $c:\Theta_*\to S$, and, for
+each used $s$, a finite deterministic experiment tree $E_s$ of depth
+at most $q$, such that $E_{c(\theta)}$ returns $G_*(\theta)$ for every
+$\theta\in\Theta_*$. Internal vertices ask one class $d\in D$,
+edges carry the three reached root replies, and leaves carry complete
+row outputs. Early halts are allowed. Impossible edges may halt
+arbitrarily. For zero classes only the no-query tree exists.
+
+This is a finite task, with at most $3^k$ inputs and $k$ experiments.
+It supplies neither an arbitrary subset query nor a class equality
+test. It is a task on root types, not an exact source chart.
+

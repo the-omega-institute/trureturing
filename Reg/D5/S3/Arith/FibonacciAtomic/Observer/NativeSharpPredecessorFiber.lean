@@ -1,3 +1,4 @@
+import D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber
 import Reg.Support.DependentFamily
@@ -101,3 +102,88 @@ noncomputable def native_sharp_predecessor_fiber_registration :
 #print axioms proof
 #print axioms native_sharp_predecessor_fiber_registration
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber
+
+noncomputable section
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber.FullRootSuppliers
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply readout)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionRecovery
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+abbrev birthSignature : Signature where
+  Params := Address
+  State p := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Option Source
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def birthActual : Realization birthSignature := realize birthSignature
+  (fun _ q t => subtree (q ++ [true]) t) (fun e => nomatch e)
+def birthBad : Realization birthSignature := realize birthSignature
+  (fun _ _ _ => none) (fun e => nomatch e)
+abbrev birthArena : Arena where
+  signature := birthSignature
+  Law R := ∀ (q : Address) (v : Source), (subtree (q ++ [true]) (substitution v)).isSome → (subtree (q ++ [true]) v = none ↔ R.readout () q (substitution v) = some (.of true))
+
+private theorem birthBadLaw : ¬ birthArena.Law birthBad := by
+  intro h
+  have eq := (h [] (.of false) rfl).mp rfl
+  change none = some (FreeMagma.of true) at eq
+  cases eq
+
+private theorem birthDependence : ObservationalDependence birthSignature birthActual := by
+  intro i
+  refine ⟨[],.mul (.of true) (.of true),.mul (.of false) (.of false),?_⟩
+  intro eq
+  change some (FreeMagma.of true) = some (FreeMagma.of false) at eq
+  cases eq
+
+def birthFamily : Registration birthArena (type_of% (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber.right_birth)) where
+  actual := birthActual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber.right_birth,birthBad,birthBadLaw⟩
+  sensitivity := ⟨fun i => ⟨birthBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,birthBadLaw⟩,fun i => nomatch i⟩
+  dependence := birthDependence
+
+def birthRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber.right_birth)
+    (type_of% (realize birthSignature birthActual.readout birthActual.anchor)) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber.right_birth.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber.FullRootSuppliers.birthFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨birthArena⟩
+  objectArena := .source ⟨birthArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source birthArena ⟨birthFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize birthSignature birthActual.readout birthActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","body","arg","fn","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms birthRegistration
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharpPredecessorFiber.FullRootSuppliers

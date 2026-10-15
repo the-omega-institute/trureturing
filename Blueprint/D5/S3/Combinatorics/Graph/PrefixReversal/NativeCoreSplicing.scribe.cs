@@ -12,6 +12,7 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
         "Actual native circle complements and literal c edges construct a Hamilton cycle on the complete two-star T core union.",
         H("Splicing the Complete Native T Core"),
         Blocks(
+            CoordinateAPI("tau_bc_rotation", "The Core Swap Followed by bc Is One Rotation", "For m at least four, the literal swap of zero and the final position, followed by b*c, is finRotate(m+1). This coordinate identity is consumed by the actual J2 surviving-row proof.", false),
             CoordinateAPI("cutStart", "The Actual T Cut Start", "The T cut starts at its owner port, except that the identity core starts literally at the identity.", true),
             CoordinateAPI("cutGenerator", "The Actual T Cut Generator", "The two core cuts use a; each noncore cut uses b.", true),
             CoordinateAPI("native_cut_circle_iff", "T Cut Starts Have Their Declared Circle Owners", "For m at least four, the actual cut start and the independently indexed T anchor define the same complete circle domain.", false),
@@ -24,11 +25,16 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
                 + "reversal. The graph coreGraph(m) is the full three-generator Cayley graph induced "
                 + "on this independently specified union. CoreDeletedEdge(m) is the literal set "
                 + "of old T cuts: one a edge at each core and one b edge at each noncore port. "
-                + "It is specified from those actual ports before any paths or cycle are chosen.")),
-            Describe.Lean(DescribeId.Create("native-core-hamiltonian-cycle"),
-                DeclarationHandle.Create(Prefix + "native_core_hamiltonian_cycle"),
-                H("One Actual Hamilton Cycle Covers the Whole Core Union"),
-                StatementSource.FromAuthor(CycleFormula()), AssessedProvenance.FromRepo(),
+                + "It is specified from those actual ports before any paths or cycle are chosen. "
+                + "CoreUncut(m,e) holds when an actual T owner contributes the native circle edge e "
+                + "and e differs from that owner's cut. TSeam(m,e) holds when e joins an owner's "
+                + "cut endpoint to that endpoint times c. Both predicates are independent of the "
+                + "constructed cycle. configurationEdges(w) means w.edges mapped through the "
+                + "underlying-configuration projection.")),
+            Describe.Lean(DescribeId.Create("native-core-full-edge-inventory"),
+                DeclarationHandle.Create(Prefix + "native_core_hamiltonian_cycle_with_full_inventory"),
+                H("One Actual Core Hamilton Cycle with Its Complete Edge Set"),
+                StatementSource.FromAuthor(CycleFormula(true)), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "There is a core vertex z whose actual configuration is the identity and a "
@@ -37,7 +43,10 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
                         + "whose configuration is exactly c(m), so the closing connection is a literal "
                         + "generator edge, rather than an endpoint pairing assumption. Every native "
                         + "a or b edge between core vertices is retained in the actual cycle whenever "
-                        + "its underlying configuration edge is outside CoreDeletedEdge(m).")),
+                        + "its underlying configuration edge is outside CoreDeletedEdge(m). Moreover, "
+                        + "for every arbitrary undirected configuration edge e, membership in "
+                        + "configurationEdges(w) is equivalent to CoreUncut(m,e) or TSeam(m,e). "
+                        + "This characterizes the complete edge set on the same actual cycle.")),
                     Paragraph(Text(
                         "The earned circle partition has Fin(m) plus Fin(m-2) owners. In T order, "
                         + "take the identity core, all lower noncore gaps, the tau core and all upper "
@@ -57,7 +66,22 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
                         + "in its owned circle. The induced-walk edge map and injective subtype map "
                         + "preserve that membership. Each piece edge occurs in the literal chainEdges "
                         + "list and therefore in the final reversed cycle edge list. This proves the "
-                        + "retained-edge assertion on the same actual Hamilton cycle."))),
+                        + "retained-edge assertion on the same actual Hamilton cycle. Exact native "
+                        + "complement equivalences characterize all raw piece edges. The exhaustive "
+                        + "chain_edge_cases theorem classifies every chain edge as a piece edge or "
+                        + "a consecutive c seam. The actual last piece owns the closing c seam. "
+                        + "Conversely, every owner occurs in the literal cut list, so all its uncut "
+                        + "piece edges and its actual c seam occur in this same cycle."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-core-hamiltonian-cycle"),
+                DeclarationHandle.Create(Prefix + "native_core_hamiltonian_cycle"),
+                H("The Established Core Cycle and Retention API"),
+                StatementSource.FromAuthor(CycleFormula(false)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original core Hamilton cycle API remains available with its complete "
+                    + "support, actual first c edge and retained native edges. It uses the same "
+                    + "construction above and projects these existing conclusions. Contact "
+                    + "iteration consumers retain their original witness structure."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "This theorem constructs the entire initial two-star core for every m at least four. "
@@ -74,6 +98,9 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
         Formula and(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
         Formula body = selector switch
         {
+            "tau_bc_rotation" => Implies(Le(D(4), m),
+                Eq(Call("mul", Call("swap", D(0), m), Call("mul", Call("b", m), Call("c", m))),
+                    Call("finRotate", Call("add", m, D(1))))),
             "cutStart" => and(All("i", Call("Fin", m), Eq(Call("cutStart", li),
                 Call("ite", Eq(iv, Call("sub", m, D(1))), D(1), Call("tCircleAnchor", li)))),
                 All("j", Call("Fin", Call("sub", m, D(2))), Eq(Call("cutStart", rj), Call("tCircleAnchor", rj)))),
@@ -95,7 +122,7 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
             definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
-    private static Formula CycleFormula()
+    private static Formula CycleFormula(bool withFullInventory)
     {
         Formula m = F.Id("m"), z = F.Id("z"), w = F.Id("w"), y = F.Id("y");
         Formula vertices = Call("CoreVertices", m);
@@ -112,8 +139,15 @@ internal sealed class NativeCoreSplicingDocument : IScribeDocumentDefinition
         Formula retained = All("x", vertices, All("y", vertices,
             All("g", Call("Configuration", m),
                 Implies(hypotheses, Call("mem", Call("Sym2", x, y), Call("edges", w))))));
+        Formula e = F.Id("e");
+        Formula full = All("e", Call("Sym2Type", Call("Configuration", m)),
+            new Formula.Logic(Call("mem", e, Call("configurationEdges", w)),
+                FormulaLogicOperator.Iff,
+                new Formula.Logic(Call("CoreUncut", m, e), FormulaLogicOperator.Or,
+                    Call("TSeam", m, e))));
         Formula cycle = Some("w", Call("Walk", Call("coreGraph", m), z, z),
-            And(Call("IsHamiltonianCycle", w), And(firstEdge, retained)));
+            And(Call("IsHamiltonianCycle", w),
+                And(firstEdge, withFullInventory ? And(retained, full) : retained)));
         return Disp(All("m", Call("Nat"), Implies(Le(D(4), m),
             Some("z", vertices, And(Eq(Call("val", z), D(1)), cycle)))));
     }

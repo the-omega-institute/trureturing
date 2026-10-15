@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:27960c23efd60588a98fcce9e75cda2908f7e1f18f14eef2b61dbf5959a2343d
+  normalized_sha256: sha256:27960c23efd60588a98fcce9e75cda2908f7e1f18f14eef2b61dbf5959a2343d
+cas_ref: sha256:27960c23efd60588a98fcce9e75cda2908f7e1f18f14eef2b61dbf5959a2343d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/GraphColoring/MultiTargetDefectGraphColoring.joint_target_defect_graph_and_minimum_labels
+    target_statement_id: sha256:25f589cbe3fced62ec894e692c8af7d1b75aeb7d822ba2dac851c0e5aecc1f6e
+receipts:
+  unresolved_subitems: []

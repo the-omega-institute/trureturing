@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09e46056901c595aaf8fff509c857b6466af1bb9405517eab4e3ff8311dfb5a9
+  normalized_sha256: sha256:09e46056901c595aaf8fff509c857b6466af1bb9405517eab4e3ff8311dfb5a9
+cas_ref: sha256:09e46056901c595aaf8fff509c857b6466af1bb9405517eab4e3ff8311dfb5a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：47. 因果 carry 与素数观察缺陷：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: b601c944fe171ec0359ee4db918792f09659ab9bb3ce9c27030d6c12a6354af0
+    next_atom_id: bd36d0d3d82e3149011c2762eae6e1655b3b185a78200c06b3a60a957b166a39

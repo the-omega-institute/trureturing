@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:61b61d6b26c485a3f975bc20952ed5b08e2a1774bc855211becc98312e29b84a
+  normalized_sha256: sha256:61b61d6b26c485a3f975bc20952ed5b08e2a1774bc855211becc98312e29b84a
+cas_ref: sha256:61b61d6b26c485a3f975bc20952ed5b08e2a1774bc855211becc98312e29b84a
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FiniteKrausReversibility.scalar_products_construct_left_inverse
+    target_statement_id: sha256:be0a414c2d451b9114a7c02afc4253b5a4f8b12af4a863d6f38bb48594303a31
+  - gid: D5/S3/Quantum/Recovery/KrausLeftInverseNecessity.left_inverse_error_products
+    target_statement_id: sha256:885f9eb85c1faa8155a59d0487833cc5a74ae09590f3549fc800807b36f64691
+  - gid: D5/S3/Quantum/Recovery/SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse
+    target_statement_id: sha256:4f699ad8ff3ac8f30df8ca4851b40ef148003dad6702790843f7fe04264dac2e
+  - gid: D5/S3/Quantum/Recovery/SpectralTransposeRecovery.spectral_transpose_candidate
+    target_statement_id: sha256:b2e01c8c6124f44d69a4d6095032794e3d47b57a69552026144ea564059da0a0
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 643077b25824997558be4b91aa66550a54dbf10abff0df09e8c9acc91affb744
+    - f10757680b7147254d990d4bb69a974954e72cf9ed860db2781b7de60a311b3a
+    - 9bd857df59d26ca64aa819f67c06f3b8a32c1e39e9caa59cd71157078fd7c68b

@@ -1,0 +1,17 @@
+**Corollary 3.5 (effective scope of an individual branch).** For a fixed
+$\tau$ and supplied concrete finite candidate $u_*$, the existence of
+$\mathbf e$ satisfying $C_\tau(u_*,\mathbf e)$ is decidable using NCE;
+its epoch support has the supplied finite affine description. The same
+holds if the source is existentially quantified. Neither assertion
+parametrizes every source by NCE's selected witness templates.
+
+Proof. Substitute the finite constructor term $u_*$ everywhere, or
+quantify the one shared $u$. Path contexts contain finite constructors
+and shared existential tree variables; each exponent is a natural
+coordinate $e_i$. Chronology is affine and absence is a finite disjunction.
+The result is literally [NCE, Definition 4.1][NCE], so Theorem 4.2 and
+Corollary 4.3 apply. A substituted $u_*$ is a ground term, not a free
+unknown tree parameter, and cannot change under witness replacement.
+Unbounded skeleton enumeration remains outside that finite grammar.
+$\square$
+

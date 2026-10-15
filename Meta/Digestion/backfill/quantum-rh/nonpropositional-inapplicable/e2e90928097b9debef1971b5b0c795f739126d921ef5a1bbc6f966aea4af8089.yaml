@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e2e90928097b9debef1971b5b0c795f739126d921ef5a1bbc6f966aea4af8089
+  normalized_sha256: sha256:e2e90928097b9debef1971b5b0c795f739126d921ef5a1bbc6f966aea4af8089
+cas_ref: sha256:e2e90928097b9debef1971b5b0c795f739126d921ef5a1bbc6f966aea4af8089
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Checklist item naming a symbolic verification target, with no formula or new mathematical assertion.
+    previous_atom_id: 0c477436ed97cb4414ee0c6fe637ff87b2cb2879ba451e2eebba51c8fcc31f60
+    next_atom_id: 06a204c840a8714666d251887dbb02003c040e9c6c20c53440cb01569c48e9b7

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e999b2005751783b7ff6358fc305fe903009e77e7ad4082284222b6988cc8663
+  normalized_sha256: sha256:e999b2005751783b7ff6358fc305fe903009e77e7ad4082284222b6988cc8663
+cas_ref: sha256:e999b2005751783b7ff6358fc305fe903009e77e7ad4082284222b6988cc8663
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义44.1只固定范数、有限维载体、伴随、余等距及谱区间参数约定，未提出待证结论。
+    previous_atom_id: 5228d05221283fb69505a79b24211173d1eded64b62cd2543e7f620492ffe110
+    next_atom_id: f3dca7a0de583c8e9391c9dea6d096193bb8527addbd3a943e1178233bc84c3a

@@ -277,5 +277,87 @@ noncomputable def native_square_arithmetic_registration :
   familyRecord := none
   options := #[] }
 
+
+abbrev timeUnitSignature : Signature where
+  Params := ℕ
+  State r := (Target r)ˣ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ r := Target r
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+abbrev timeUnitActual : Realization timeUnitSignature :=
+  realize timeUnitSignature (fun _ _ u => u.val) (fun e => nomatch e)
+
+abbrev timeUnitBad : Realization timeUnitSignature :=
+  realize timeUnitSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev timeUnitArena : Arena where
+  signature := timeUnitSignature
+  Law r := ∀ n : ℕ, r.readout () n (targetTimeUnit n) = targetTime n
+
+private theorem timeUnit_bad : ¬ timeUnitArena.Law timeUnitBad := by
+  intro h
+  have hh := h 2
+  change (0 : ZMod 5) = 3 at hh
+  exact (by decide : (0 : ZMod 5) ≠ 3) hh
+
+private theorem timeUnit_dependence : ObservationalDependence timeUnitSignature timeUnitActual := by
+  intro i
+  refine ⟨2, 1, targetTimeUnit 2, ?_⟩
+  change (1 : ZMod 5) ≠ 3
+  decide
+
+def timeUnitEvidence : Registration timeUnitArena
+    (∀ r : ℕ, (targetTimeUnit r : Target r) = targetTime r) where
+  actual := timeUnitActual
+  bridge := Iff.rfl
+  variation := ⟨targetTimeUnit_val, timeUnitBad, timeUnit_bad⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨timeUnitBad, ?_, rfl, timeUnit_bad⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := timeUnit_dependence
+
+noncomputable def targetTimeUnit_val_registration :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (_root_.D5.S3.ConceptDynamics.Coding.ResetNativeIntegerChart.targetTimeUnit_val)
+      (Realization timeUnitSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetNativeIntegerChart.timeUnit_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResetNativeIntegerChart.timeUnitEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨timeUnitArena⟩
+  objectArena := .source ⟨timeUnitArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source timeUnitArena ⟨timeUnitEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize timeUnitSignature (fun _ _ u => u.val) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.ResetNativeIntegerChart
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 end Reg.D5.S3.ConceptDynamics.Coding.ResetNativeIntegerChart

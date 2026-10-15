@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c7dc72aec53199f8e8c8a4c7211bb4cbd4360f2c1d73053cb58d0d1546d2d803
+  normalized_sha256: sha256:c7dc72aec53199f8e8c8a4c7211bb4cbd4360f2c1d73053cb58d0d1546d2d803
+cas_ref: sha256:c7dc72aec53199f8e8c8a4c7211bb4cbd4360f2c1d73053cb58d0d1546d2d803
+coverage_gids:
+  - gid: D5/S3/TotalVariation/ParryBilateralMixing.bilateral_parry_mixing
+    target_statement_id: sha256:d1b78688161abfec703e38bc22a53c1f5021de3941b9e39e532c50ba5abd49aa
+receipts:
+  unresolved_subitems: []

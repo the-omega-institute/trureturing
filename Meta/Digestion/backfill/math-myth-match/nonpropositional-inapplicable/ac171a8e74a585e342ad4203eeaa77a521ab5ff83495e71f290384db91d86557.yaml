@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac171a8e74a585e342ad4203eeaa77a521ab5ff83495e71f290384db91d86557
+  normalized_sha256: sha256:ac171a8e74a585e342ad4203eeaa77a521ab5ff83495e71f290384db91d86557
+cas_ref: sha256:ac171a8e74a585e342ad4203eeaa77a521ab5ff83495e71f290384db91d86557
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 420.1（行动的可接受集合）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: bd431192fe6e36f602f442c654bc45d18eb10d98d75781770401abb24bcb3760
+    next_atom_id: 2565a06cede2c32e58c546bc479d0cebe04df4ce57a491d959bb77ebcc77aa49

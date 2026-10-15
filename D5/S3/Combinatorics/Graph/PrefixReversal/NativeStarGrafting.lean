@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual one-contact E grafts enlarge Hamilton cycles while retaining uncut edges. -/
+   digest: Actual one-contact E grafts have complete old, new and seam edge inventories. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSwitches
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
@@ -35,6 +35,21 @@ def GraftDomain {m : ℕ} (U : Configuration m → Prop) (z v : Configuration m)
 def liftOld {m : ℕ} {U : Configuration m → Prop} (z : Configuration m)
     (v : {v : Configuration m // U v}) :
     {v : Configuration m // GraftDomain U z v} := ⟨v.val, Or.inl v.property⟩
+
+/-- Actual old-cycle edges outside the contact, specified before grafting. -/
+def OldUncut {m : ℕ} {U : Configuration m → Prop}
+    {base : {v : Configuration m // U v}} (w : (domainGraph U).Walk base base)
+    (x y : {v : Configuration m // U v}) (e : Sym2 (Configuration m)) : Prop :=
+  e ∈ w.edges.map (Sym2.map Subtype.val) ∧ e ≠ s(x.val, y.val)
+
+/-- The new gaps contribute exactly their uncut native circle edges. -/
+def NewUncut {m : ℕ} (z : Configuration m) (e : Sym2 (Configuration m)) : Prop :=
+  ∃ i : Fin m, i.val ≠ 0 ∧ NativeCircleEdge (gapAnchor z i) e ∧
+    e ≠ s(gapAnchor z i, gapAnchor z i * b m)
+
+/-- The literal E connections, including the final return, are actual c edges. -/
+def ESeam {m : ℕ} (z : Configuration m) (e : Sym2 (Configuration m)) : Prop :=
+  ∃ i : Fin m, e = s(gapAnchor z i * b m, gapAnchor z i * b m * c m)
 
 private def pieceDomain {m : ℕ} (U : Configuration m → Prop)
     (z : Configuration m) (i : Fin m) (v : Configuration m) : Prop :=
@@ -103,7 +118,11 @@ private theorem exists_new_piece {m : ℕ} (hm : 3 ≤ m)
       p.start.val = gapAnchor z i ∧ p.finish.val = gapAnchor z i * b m ∧
         p.walk.IsPath ∧ p.walk.length = 2 * (m + 1) - 1 ∧
           (∀ v, v ∈ p.walk.support ↔ Circle (gapAnchor z i) v.val) ∧
-          retainsNative z i p := by
+          retainsNative z i p ∧
+          (∀ e : Sym2 (Configuration m),
+            e ∈ p.walk.edges.map (Sym2.map Subtype.val) ↔
+              NativeCircleEdge (gapAnchor z i) e ∧
+                e ≠ s(gapAnchor z i, gapAnchor z i * b m)) := by
   obtain ⟨w, hp, hl, _, hs⟩ := native_b_complement hm (gapAnchor z i)
   let w' := w.mapLe (SimpleGraph.deleteEdges_le _)
   have hle : SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m)) ≤
@@ -123,7 +142,12 @@ private theorem exists_new_piece {m : ℕ} (hm : 3 ≤ m)
     have he := congrArg SimpleGraph.Walk.support (SimpleGraph.Walk.map_induce q hq)
     rw [SimpleGraph.Walk.support_map] at he
     exact he
-  refine ⟨⟨_, _, r⟩, rfl, rfl, ?_, ?_, ?_, ?_⟩
+  have hre : r.edges.map (Sym2.map Subtype.val) = w'.edges := by
+    have heq := congrArg SimpleGraph.Walk.edges (SimpleGraph.Walk.map_induce q hq)
+    rw [SimpleGraph.Walk.edges_map] at heq
+    change r.edges.map (Sym2.map Subtype.val) = q.edges at heq
+    simpa only [q, SimpleGraph.Walk.edges_mapLe_eq_edges] using heq
+  refine ⟨⟨_, _, r⟩, rfl, rfl, ?_, ?_, ?_, ?_, ?_⟩
   · apply SimpleGraph.Walk.IsPath.mk'
     have hmapped : (r.support.map Subtype.val).Nodup := by
       rw [hrs]
@@ -153,15 +177,16 @@ private theorem exists_new_piece {m : ℕ} (hm : 3 ≤ m)
         (by simpa only [w', SimpleGraph.Walk.support_mapLe_eq_support] using hs)
         x.val g hx hg).mpr
       simpa only [hy] using hne
-    have hre : r.edges.map (Sym2.map Subtype.val) = w'.edges := by
-      have heq := congrArg SimpleGraph.Walk.edges (SimpleGraph.Walk.map_induce q hq)
-      rw [SimpleGraph.Walk.edges_map] at heq
-      change r.edges.map (Sym2.map Subtype.val) = q.edges at heq
-      simpa only [q, SimpleGraph.Walk.edges_mapLe_eq_edges] using heq
     rw [← hre] at he
     obtain ⟨e, he, heq⟩ := List.mem_map.mp he
     have heq' : Sym2.map Subtype.val e = Sym2.map Subtype.val s(x, y) := heq
     exact (Sym2.map.injective Subtype.val_injective heq' : e = s(x, y)) ▸ he
+  · intro e
+    change e ∈ r.edges.map (Sym2.map Subtype.val) ↔ _
+    rw [hre]
+    exact native_complement_full_edge_inventory hm (gapAnchor z i) (b m) (Or.inr rfl)
+      w' (hp.mapLe _) (by simpa only [w', SimpleGraph.Walk.length_mapLe] using hl)
+      (by simpa only [w', SimpleGraph.Walk.support_mapLe_eq_support] using hs) e
 
 private def oldHom {m : ℕ} (U : Configuration m → Prop) (z : Configuration m) :
     domainGraph U →g domainGraph (GraftDomain U z) where
@@ -188,13 +213,15 @@ private theorem exists_old_piece {m : ℕ} (U : Configuration m → Prop)
     ∃ p : Piece (domainGraph (GraftDomain U x.val)),
       p.start.val = x.val ∧ p.finish.val = x.val * b m ∧ p.walk.IsPath ∧
         (∀ v, v ∈ p.walk.support ↔ U v.val) ∧ retainsOld w x y p ∧
-          3 ≤ p.walk.support.length := by
+          3 ≤ p.walk.support.length ∧
+          (∀ e : Sym2 (Configuration m),
+            e ∈ p.walk.edges.map (Sym2.map Subtype.val) ↔ OldUncut w x y e) := by
   classical
   let : Fintype {v : Configuration m // U v} := Fintype.ofFinite _
   obtain ⟨q, hq, hqe⟩ := exists_open_cycle_at_edge w hw he
   let r := q.reverse.map (oldHom U x.val)
   refine ⟨⟨_, _, r⟩, rfl, hy, hq.isPath.reverse.map (oldHom_injective U x.val),
-    ?_, ?_, ?_⟩
+    ?_, ?_, ?_, ?_⟩
   · intro v
     simp only [r, SimpleGraph.Walk.support_map, SimpleGraph.Walk.support_reverse,
       List.mem_map, List.mem_reverse]
@@ -214,6 +241,28 @@ private theorem exists_old_piece {m : ℕ} (U : Configuration m → Prop)
     rw [hw.length_eq] at hc
     simpa only [r, SimpleGraph.Walk.support_map, List.length_map,
       SimpleGraph.Walk.support_reverse, List.length_reverse, hq.length_support] using hc
+  · intro e
+    have hraw : r.edges.map (Sym2.map Subtype.val) =
+        (q.edges.map (Sym2.map Subtype.val)).reverse := by
+      simp only [r, SimpleGraph.Walk.edges_map, SimpleGraph.Walk.edges_reverse,
+        List.map_reverse, List.map_map, Function.comp_def, Sym2.map_map]
+      rfl
+    change e ∈ r.edges.map (Sym2.map Subtype.val) ↔ _
+    rw [hraw, List.mem_reverse]
+    constructor
+    · intro he
+      obtain ⟨d, hd, rfl⟩ := List.mem_map.mp he
+      obtain ⟨hdw, hdne⟩ := (hqe d).mp hd
+      refine ⟨List.mem_map.mpr ⟨d, hdw, rfl⟩, ?_⟩
+      intro h
+      exact hdne (Sym2.map.injective Subtype.val_injective h)
+    · rintro ⟨hew, hne⟩
+      obtain ⟨d, hd, hde⟩ := List.mem_map.mp hew
+      refine List.mem_map.mpr ⟨d, (hqe d).mpr ⟨hd, ?_⟩, hde⟩
+      intro h
+      apply hne
+      rw [← hde, h]
+      rfl
 
 private theorem exists_graft_piece {m : ℕ} (hm : 3 ≤ m)
     (U : Configuration m → Prop) {base : {v : Configuration m // U v}}
@@ -224,20 +273,28 @@ private theorem exists_graft_piece {m : ℕ} (hm : 3 ≤ m)
       p.start.val = gapAnchor x.val i ∧ p.finish.val = gapAnchor x.val i * b m ∧
         p.walk.IsPath ∧ (∀ v, v ∈ p.walk.support ↔ pieceDomain U x.val i v.val) ∧
           (i.val = 0 → retainsOld w x y p) ∧
-          (i.val ≠ 0 → retainsNative x.val i p) ∧ 3 ≤ p.walk.support.length := by
+          (i.val ≠ 0 → retainsNative x.val i p) ∧ 3 ≤ p.walk.support.length ∧
+          (∀ e : Sym2 (Configuration m), e ∈ p.walk.edges.map (Sym2.map Subtype.val) ↔
+            if i.val = 0 then OldUncut w x y e else
+              NativeCircleEdge (gapAnchor x.val i) e ∧
+                e ≠ s(gapAnchor x.val i, gapAnchor x.val i * b m)) := by
   by_cases hi : i.val = 0
-  · obtain ⟨p, hstart, hfinish, hp, hs, hr, hsize⟩ := exists_old_piece U w hw x y hy he
-    refine ⟨p, ?_, ?_, hp, ?_, fun _ => hr, fun h => (h hi).elim, hsize⟩
+  · obtain ⟨p, hstart, hfinish, hp, hs, hr, hsize, hinv⟩ := exists_old_piece U w hw x y hy he
+    refine ⟨p, ?_, ?_, hp, ?_, fun _ => hr, fun h => (h hi).elim, hsize, ?_⟩
     · simpa only [gapAnchor, hi, pow_zero, mul_one] using hstart
     · simpa only [gapAnchor, hi, pow_zero, mul_one] using hfinish
     · intro v
       simpa only [pieceDomain, if_pos hi] using hs v
-  · obtain ⟨p, hstart, hfinish, hp, hl, hs, hr⟩ := exists_new_piece hm U x.val i
-    refine ⟨p, hstart, hfinish, hp, ?_, fun h => (hi h).elim, fun _ => hr, ?_⟩
+    · intro e
+      simpa only [if_pos hi] using hinv e
+  · obtain ⟨p, hstart, hfinish, hp, hl, hs, hr, hinv⟩ := exists_new_piece hm U x.val i
+    refine ⟨p, hstart, hfinish, hp, ?_, fun h => (hi h).elim, fun _ => hr, ?_, ?_⟩
     · intro v
       simpa only [pieceDomain, if_neg hi] using hs v
     · have hs := SimpleGraph.Walk.length_support p.walk
       omega
+    · intro e
+      simpa only [if_neg hi] using hinv e
 
 private theorem c_ne_one {m : ℕ} (hm : 3 ≤ m) : c m ≠ 1 := by
   intro h
@@ -337,7 +394,8 @@ private theorem finish_of_getLast {V : Type*} {G : SimpleGraph V}
 /-- If an independent old domain meets a new supplier star in exactly one
 complete circle, its actual contact b-edge can be replaced by the complete E
 ring. The resulting actual Hamilton cycle retains every other old edge and
-every uncut native a/b edge in the new gap circles. -/
+every uncut native a/b edge in the new gap circles. Its complete edge set is
+exactly those old edges, the new uncut edges and the literal E c seams. -/
 theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
     (U : Configuration m → Prop) {base : {v : Configuration m // U v}}
     (w : (domainGraph U).Walk base base) (hw : w.IsHamiltonianCycle)
@@ -355,10 +413,13 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
               v.val = u.val * g →
               s(u.val, v.val) ≠ s(gapAnchor x.val i, gapAnchor x.val i * b m) →
               s(u, v) ∈ q.edges) ∧
-          ∀ i : Fin m,
+          (∀ i : Fin m,
             ∃ u v : {v : Configuration m // GraftDomain U x.val v},
               u.val = gapAnchor x.val i * b m ∧ v.val = u.val * c m ∧
-                s(u, v) ∈ q.edges := by
+                s(u, v) ∈ q.edges) ∧
+          ∀ e : Sym2 (Configuration m),
+            e ∈ q.edges.map (Sym2.map Subtype.val) ↔
+              OldUncut w x y e ∨ NewUncut x.val e ∨ ESeam x.val e := by
   classical
   let : BEq {v : Configuration m // GraftDomain U x.val v} := instBEqOfDecidableEq
   let f : Fin m → Piece (domainGraph (GraftDomain U x.val)) :=
@@ -367,7 +428,11 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
       (f i).finish.val = gapAnchor x.val i * b m ∧ (f i).walk.IsPath ∧
       (∀ v, v ∈ (f i).walk.support ↔ pieceDomain U x.val i v.val) ∧
       (i.val = 0 → retainsOld w x y (f i)) ∧
-      (i.val ≠ 0 → retainsNative x.val i (f i)) ∧ 3 ≤ (f i).walk.support.length :=
+      (i.val ≠ 0 → retainsNative x.val i (f i)) ∧ 3 ≤ (f i).walk.support.length ∧
+      (∀ e : Sym2 (Configuration m), e ∈ (f i).walk.edges.map (Sym2.map Subtype.val) ↔
+        if i.val = 0 then OldUncut w x y e else
+          NativeCircleEdge (gapAnchor x.val i) e ∧
+            e ≠ s(gapAnchor x.val i, gapAnchor x.val i * b m)) :=
     Classical.choose_spec (exists_graft_piece hm U w hw x y hy he i)
   let zero : Fin m := ⟨0, by omega⟩
   have hbc : (b m * c m) ^ m = 1 := by
@@ -431,7 +496,7 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
           ⟨f i, List.mem_ofFn.mpr ⟨i, rfl⟩, ((hf i).2.2.2.1 v).mpr hi⟩
         simpa only [hlist] using hv
     have hsize : 3 ≤ ((p :: ps).flatMap (fun p => p.walk.support)).length := by
-      have hs := (hf zero).2.2.2.2.2.2
+      have hs := (hf zero).2.2.2.2.2.2.1
       rw [← hpzero] at hs
       simp only [List.flatMap_cons, List.length_append]
       omega
@@ -440,26 +505,11 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
     have hstart : p.start.val = x.val := by
       rw [hpzero, (hf zero).1]
       simp only [gapAnchor, zero, pow_zero, mul_one]
-    refine ⟨p.start, hstart, q, hq, ?_, ?_, ?_⟩
-    · intro u v hew hne
-      have hr := (hf zero).2.2.2.2.1 rfl u v hew hne
-      rw [hqe]
-      apply List.mem_cons_of_mem
-      apply List.mem_reverse.mpr
-      apply piece_edges_in_chain p (f zero) ps
-      · rw [← hpzero]
-        exact List.mem_cons_self
-      · exact hr
-    · intro i hi u v g hu hg hv hne
-      have hr := (hf i).2.2.2.2.2.1 hi u v g hu hg hv hne
-      rw [hqe]
-      apply List.mem_cons_of_mem
-      apply List.mem_reverse.mpr
-      apply piece_edges_in_chain p (f i) ps
-      · rw [← hlist]
-        exact List.mem_ofFn.mpr ⟨i, rfl⟩
-      · exact hr
-    · intro i
+    have hseams : ∀ i : Fin m,
+        ∃ u v : {v : Configuration m // GraftDomain U x.val v},
+          u.val = gapAnchor x.val i * b m ∧ v.val = u.val * c m ∧
+            s(u, v) ∈ q.edges := by
+      intro i
       by_cases hi : i.val + 1 < m
       · let next : Fin m := ⟨i.val + 1, hi⟩
         have he : s((f i).finish, (f next).start) ∈ chainEdges p ps := by
@@ -490,6 +540,94 @@ theorem native_one_contact_graft {m : ℕ} (hm : 3 ≤ m)
         refine ⟨(f i).finish, p.start, (hf i).2.1, hc.symm, ?_⟩
         rw [hqe, hfinish]
         exact List.mem_cons.mpr (Or.inl Sym2.eq_swap)
+    have hpiece_in_q (i : Fin m) (e : Sym2 (Configuration m))
+        (he : e ∈ (f i).walk.edges.map (Sym2.map Subtype.val)) :
+        e ∈ q.edges.map (Sym2.map Subtype.val) := by
+      obtain ⟨d, hd, hde⟩ := List.mem_map.mp he
+      refine List.mem_map.mpr ⟨d, ?_, hde⟩
+      rw [hqe]
+      apply List.mem_cons_of_mem
+      apply List.mem_reverse.mpr
+      apply piece_edges_in_chain p (f i) ps
+      · rw [← hlist]
+        exact List.mem_ofFn.mpr ⟨i, rfl⟩
+      · exact hd
+    have hclass (d : Sym2 {v : Configuration m // GraftDomain U x.val v})
+        (hd : d ∈ chainEdges p ps) :
+        OldUncut w x y (Sym2.map Subtype.val d) ∨
+          NewUncut x.val (Sym2.map Subtype.val d) ∨
+            ESeam x.val (Sym2.map Subtype.val d) := by
+      rcases chain_edge_cases p ps d hd with ⟨r, hr, he⟩ | ⟨i, hi, he⟩
+      · rw [← hlist] at hr
+        obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hr
+        have hinv := ((hf i).2.2.2.2.2.2.2 (Sym2.map Subtype.val d)).mp
+          (List.mem_map.mpr ⟨d, he, rfl⟩)
+        by_cases hi : i.val = 0
+        · exact Or.inl (by simpa only [if_pos hi] using hinv)
+        · exact Or.inr (Or.inl ⟨i, hi, by simpa only [if_neg hi] using hinv⟩)
+      · have him : i + 1 < m := by
+          simpa only [← hlist, List.length_ofFn] using hi
+        let curr : Fin m := ⟨i, by omega⟩
+        let next : Fin m := ⟨i + 1, him⟩
+        have hgetcurr : (p :: ps)[i]'(by omega) = f curr := by
+          simp only [← hlist, List.getElem_ofFn, curr]
+        have hgetnext : (p :: ps)[i + 1]'hi = f next := by
+          simp only [← hlist, List.getElem_ofFn, next]
+        refine Or.inr (Or.inr ⟨curr, ?_⟩)
+        rw [he, hgetcurr, hgetnext, Sym2.map_mk, (hf curr).2.1, (hf next).1]
+        simp only [gapAnchor, curr, next, pow_succ, mul_assoc]
+    have hclosing : ESeam x.val (Sym2.map Subtype.val s(p.start, finish p ps)) := by
+      let last : Fin m := ⟨m - 1, by omega⟩
+      have hlast : (p :: ps).getLast? = some (f last) := by
+        rw [← hlist]
+        exact (ofFn_endpoints (by omega : 0 < m) f).2
+      have hfinish := finish_of_getLast p (f last) ps hlast
+      have hreturn : gapAnchor x.val last * b m * c m = x.val := by
+        simp only [gapAnchor, last, mul_assoc]
+        rw [← pow_succ, show m - 1 + 1 = m by omega, hbc, mul_one]
+      refine ⟨last, ?_⟩
+      rw [Sym2.map_mk, hstart, hfinish, (hf last).2.1, hreturn]
+      exact Sym2.eq_swap
+    refine ⟨p.start, hstart, q, hq, ?_, ?_, hseams, ?_⟩
+    · intro u v hew hne
+      have hr := (hf zero).2.2.2.2.1 rfl u v hew hne
+      rw [hqe]
+      apply List.mem_cons_of_mem
+      apply List.mem_reverse.mpr
+      apply piece_edges_in_chain p (f zero) ps
+      · rw [← hpzero]
+        exact List.mem_cons_self
+      · exact hr
+    · intro i hi u v g hu hg hv hne
+      have hr := (hf i).2.2.2.2.2.1 hi u v g hu hg hv hne
+      rw [hqe]
+      apply List.mem_cons_of_mem
+      apply List.mem_reverse.mpr
+      apply piece_edges_in_chain p (f i) ps
+      · rw [← hlist]
+        exact List.mem_ofFn.mpr ⟨i, rfl⟩
+      · exact hr
+    · intro e
+      constructor
+      · intro he
+        obtain ⟨d, hd, rfl⟩ := List.mem_map.mp he
+        rw [hqe, List.mem_cons, List.mem_reverse] at hd
+        rcases hd with hd | hd
+        · subst d
+          exact Or.inr (Or.inr hclosing)
+        · exact hclass d hd
+      · rintro (he | he | he)
+        · apply hpiece_in_q zero e
+          apply ((hf zero).2.2.2.2.2.2.2 e).mpr
+          simpa only [zero, Fin.val_mk, if_true] using he
+        · obtain ⟨i, hi, hn, hne⟩ := he
+          apply hpiece_in_q i e
+          apply ((hf i).2.2.2.2.2.2.2 e).mpr
+          simpa only [if_neg hi] using And.intro hn hne
+        · obtain ⟨i, rfl⟩ := he
+          obtain ⟨u, v, hu, hv, he⟩ := hseams i
+          refine List.mem_map.mpr ⟨s(u, v), he, ?_⟩
+          simp only [Sym2.map_mk, hv, hu]
 
 #print axioms native_one_contact_graft
 

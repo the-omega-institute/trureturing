@@ -1,0 +1,27 @@
+**Definition 1.1 (native values and prefixes).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+All values are nonempty finite free ordered trees. Repeated occurrences
+are retained. At every finite word $p$ over $\{L,R\}$, the original
+reply $r_u(p)$ is $\alpha,\beta,\mathsf{branch}$ or $\mathsf{absent}$.
+The root word is $\varepsilon$; strict descendants of leaves are absent.
+Put
+
+$$
+u\equiv_h v\iff\forall |p|\le h\quad r_u(p)=r_v(p),
+\qquad
+\delta(u,v)=\min\{|p|:r_u(p)\ne r_v(p)\},
+\tag{SPC.1}
+$$
+
+with $\delta(u,u)=\infty$. Thus inclusive agreement through $h$ means
+$\delta(u,v)>h$. The operation $\rho$ is interpreted, not a free unary
+constructor.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b869079e5c7f1d3ff472f546f950d8a4028559be1d6ca2ff9dd0adf681a36c40
+  normalized_sha256: sha256:b869079e5c7f1d3ff472f546f950d8a4028559be1d6ca2ff9dd0adf681a36c40
+cas_ref: sha256:b869079e5c7f1d3ff472f546f950d8a4028559be1d6ca2ff9dd0adf681a36c40
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「——量子观察者—关系时空理论第二百一十一至第二百二十节增订」仅作导航；正文除标题、空行及分隔线外无其他内容，不提出命题。
+    previous_atom_id: 289cc855c815ad8a2e3bc501e169887371f4031f26ecebfd7464c07bde014d55
+    next_atom_id: 63056d3d1cb9d085ee5fa5c1e96de260c647f5aef72d918953a4bfea48debce3

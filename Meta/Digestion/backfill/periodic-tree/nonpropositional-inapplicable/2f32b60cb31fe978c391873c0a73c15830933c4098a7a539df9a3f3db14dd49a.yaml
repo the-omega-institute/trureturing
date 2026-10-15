@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f32b60cb31fe978c391873c0a73c15830933c4098a7a539df9a3f3db14dd49a
+  normalized_sha256: sha256:2f32b60cb31fe978c391873c0a73c15830933c4098a7a539df9a3f3db14dd49a
+cas_ref: sha256:2f32b60cb31fe978c391873c0a73c15830933c4098a7a539df9a3f3db14dd49a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 导数为  $$ \mathcal P_p'(X)=pX^{p-1}(2X^p-1). $$  以 $Y=X^p$ 计算两个结…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 58efc04d2da18d6c575737f41becaef3bab3f6241931855277dba4bd6a3f4b30
+    next_atom_id: 95e7a48a6edf831e871ed0d723719ce2da07b28b2d296ece19721e2b73399586

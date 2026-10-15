@@ -1,0 +1,84 @@
+**Mathematical citation 16.10 (suppliers, prior coverage and remaining gap).**
+The native carriers and query interpretation are `Source` and
+`substitution` in
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+and `Address`, `Reply`, `readout` in
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+The acquired literal exterior and full hidden comparisons use
+`literalRecord` and `canonicalRow_record_iff` in
+[ActualCutPartitionDecoder](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean),
+including its `eraseClasses` and `eraseClasses_literal` interpretation.
+The right clock, physical `rights`, `right_clock_iterate` and exact
+`right_clock_readout` in
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean)
+are inspected at immutable
+[1ca0bc3ada92f404ee3e9e1d5c236c73310013cf](https://github.com/the-omega-institute/trureturing/tree/1ca0bc3ada92f404ee3e9e1d5c236c73310013cf).
+Its `clock_step` proof and the orbit recurrence in
+[ActualFibonacciSupportChain](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean)
+are supporting native suppliers. The support-chain result concerns
+presence agreement; the all-branch argument in Theorem 16.6 supplies
+the stronger full-reply statement needed here.
+
+Sections 11, 13.3 and Reuse 14.2 supply the acquired factors and full
+later-row collisions. Their zero-read graph bridge belongs to
+[Transport--Memory Completion §8.2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#82-标签恰须切开可能混淆的前缀).
+The present unit does not require section 15. No age value or unknown
+lag is supplied by the certified-epoch `original_decoder_service`:
+that theorem has a given epoch, whereas the present output is the epoch
+lag itself after discarding the original row.
+
+At the same immutable pin,
+[Native Birth Provenance §10](https://github.com/the-omega-institute/trureturing/blob/1ca0bc3ada92f404ee3e9e1d5c236c73310013cf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#10-exact-class-root-experiments-on-every-full-actual-one-image-fiber)
+uses bounded four-reply unrolling on a fixed complete current-row entry
+after one authenticated update. A bounded tree at that fixed entry has
+finitely many addresses. Here later acquired literal rows vary over
+unbounded lags; a bound on each decision depth yields no common maximum
+address across those entries, as Theorem 16.6 demonstrates.
+[Acquired Relation History §31](https://github.com/the-omega-institute/trureturing/blob/1ca0bc3ada92f404ee3e9e1d5c236c73310013cf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md#31-the-inherited-paid-consumer-and-the-retained-resource-boundary)
+already separates epoch-uniform raw calls from epoch-dependent word
+lengths under a certified-epoch original-row contract. That distinction
+is reused; it supplies no forgotten-origin or unknown-lag decoder.
+
+Charpenay--Le Treust--Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definition III.1 and Theorem III.4's
+proof outline](https://arxiv.org/html/2211.03649v2), defines characteristic
+edges by different target values at a common compatible side-information
+value. This is the mature separation principle, not a new general
+coloring theorem. Its probabilistic i.i.d. blocks, expected prefix-code
+lengths and asymptotic rate objective do not establish the present
+adversarial one-export alphabet price or native service costs.
+
+Buhrman--de Wolf, [*Complexity Measures and Decision Tree Complexity*,
+§3.1](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf), defines
+adaptive query depth as the number of queried input variables on a
+worst-case path. The native alphabet here has four replies and its tests
+are finite words. This standard decision-tree viewpoint does not price
+those words or grant hidden-subtree queries. Nowak,
+[*The Geometry of Generalized Binary Search*, arXiv:0910.4397v5,
+§V.A](https://arxiv.org/html/0910.4397v5), explicitly contrasts allowed
+point tests with stronger dyadic-subinterval tests. Its binary-valued
+hypothesis-space results are not transferred as a native halving oracle;
+(NAR.16.12)--(NAR.16.14) establish the actual permitted partitions.
+
+The coding and adaptive-query methods are literature-attested
+ingredients. The full-current translation classification, attained
+unknown-lag first-slot service, fixed-encoder feasibility construction
+and uniform literal-address obstruction are repo-derived ordinary
+mathematical deductions for Assumption 16.1. The compared owner, named
+D5 suppliers and primary literature provide no directly matching
+unknown-lag acquired-input service. This bounded comparison is not a
+worldwide novelty assertion, exhaustive absence certificate or new
+Lean/kernel verification.
+
+The exact intermediate retained-memory versus call curve, minimum raw
+calls for arbitrary encoders and menus, and joint address optimization
+remain undetermined here. A faithful next mathematical gap is to
+characterize which reply partitions of a finite compatible lag set are
+realizable by one literal current-address Read, together with their
+address lengths. Such a characterization would constrain joint encoder
+and query choices; it is not needed for the endpoint and obstruction
+proved above. Acquisition and authentication, all-native-source
+extensions, total or peak memory, physical time and execution remain
+outside these finite-family retained-reference results.
+

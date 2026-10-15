@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da3c5b01ae950f946254da005cc577336779c441ec784898ada79a732f09a5a1
+  normalized_sha256: sha256:da3c5b01ae950f946254da005cc577336779c441ec784898ada79a732f09a5a1
+cas_ref: sha256:da3c5b01ae950f946254da005cc577336779c441ec784898ada79a732f09a5a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 115.1 定义参考演化、实际与候选 Hamiltonian 以及初始条件，限定观察协议；无推导结论。
+    previous_atom_id: 7cc9eaee1df00e4cbdade0a00468eb85b2c32363e3b1f32825ae813d79256d0c
+    next_atom_id: cc3c2cf6b09128792b9ebb3560931bf34c6e40e543dfce80726ee4c946720d0d

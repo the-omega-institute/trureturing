@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ca23768aeebd26a8478eda20b01bbd854f86c0331f73fe1a6a1abeb421ddbe98
+  normalized_sha256: sha256:ca23768aeebd26a8478eda20b01bbd854f86c0331f73fe1a6a1abeb421ddbe98
+cas_ref: sha256:ca23768aeebd26a8478eda20b01bbd854f86c0331f73fe1a6a1abeb421ddbe98
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/FiniteGraphProbabilityLift.flip_invariant_positive_fiber_fair_bits
+    target_statement_id: sha256:de9853e2abe5e7c6b25fed361066cf8ac157942ac5062362572ba4f81292a876
+receipts:
+  unresolved_subitems: []

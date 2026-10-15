@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7f43c45358a10a38496fa16ac2052a53ac5c16c3e134663e5ad6e3a2ed5c4482
+  normalized_sha256: sha256:7f43c45358a10a38496fa16ac2052a53ac5c16c3e134663e5ad6e3a2ed5c4482
+cas_ref: sha256:7f43c45358a10a38496fa16ac2052a53ac5c16c3e134663e5ad6e3a2ed5c4482
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节 324. 求师与自行判断：引导关系需要保存什么：仅为章节题名，指示讨论主题；无独立命题陈述。
+    previous_atom_id: 47c54f9bbb40fe9c92f9441d8d1658f6e584bfe1ebe03ab9f336cb930be1b257
+    next_atom_id: de5f36479a4f2854b80eec7b8eb0922379de62210494f399d82dd882e45a0ea4

@@ -199,3 +199,173 @@ def chartRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms fillingRegistration
 #print axioms chartRegistration
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+
+noncomputable section
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.FullRootSuppliers
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply readout)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionRecovery
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+abbrev leafSignature : Signature where
+  Params := LiteralRow
+  State p := Nat → Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Source
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def leafActual : Realization leafSignature := realize leafSignature
+  (fun _ C f => evaluateRow f C) (fun e => nomatch e)
+def leafBad : Realization leafSignature := realize leafSignature
+  (fun _ _ _ => .of false) (fun e => nomatch e)
+abbrev leafArena : Arena where
+  signature := leafSignature
+  Law R := ∀ (C : LiteralRow) (f : Nat → Source) (b : Bool), R.readout () C f = .of b ↔ lit (fun n => rootType (f n)) b C
+
+private theorem leafBadLaw : ¬ leafArena.Law leafBad := by
+  intro h
+  have eq := (h (.of (.inl true)) (fun _ => .of true) true).mpr rfl
+  change FreeMagma.of false = FreeMagma.of true at eq
+  cases eq
+
+private theorem leafDependence : ObservationalDependence leafSignature leafActual := by
+  intro i
+  refine ⟨.of (.inr 0),(fun _ => .of true),(fun _ => .of false),?_⟩
+  intro eq
+  change FreeMagma.of true = FreeMagma.of false at eq
+  cases eq
+
+def leafFamily : Registration leafArena (type_of% (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.evaluate_leaf)) where
+  actual := leafActual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.evaluate_leaf,leafBad,leafBadLaw⟩
+  sensitivity := ⟨fun i => ⟨leafBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,leafBadLaw⟩,fun i => nomatch i⟩
+  dependence := leafDependence
+
+def leafRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.evaluate_leaf)
+    (type_of% (realize leafSignature leafActual.readout leafActual.anchor)) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.evaluate_leaf.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.FullRootSuppliers.leafFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨leafArena⟩
+  objectArena := .source ⟨leafArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source leafArena ⟨leafFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize leafSignature leafActual.readout leafActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","body","fn","arg","fn","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["fn","arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms leafRegistration
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.FullRootSuppliers
+
+noncomputable section
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.FullRootSuppliers
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply readout)
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionRecovery
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCutFibers
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+abbrev extensionSignature : Signature where
+  Params := LiteralRow
+  State p := Classes p → Option Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat → Option Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def extensionActual : Realization extensionSignature := realize extensionSignature
+  (fun _ C θ => typeExtend C θ) (fun e => nomatch e)
+def extensionBad : Realization extensionSignature := realize extensionSignature
+  (fun _ _ _ _ => some false) (fun e => nomatch e)
+abbrev extensionArena : Arena where
+  signature := extensionSignature
+  Law R := ∀ (C : LiteralRow) (v : Classes C → Source), (fun n => rootType (extend C v n)) = R.readout () C (types C v)
+
+private theorem extensionBadLaw : ¬ extensionArena.Law extensionBad := by
+  intro h
+  have eq := congrFun (h (.of (.inl true)) (fun d => False.elim (by simpa [labels] using d.property))) 0
+  change some true = some false at eq
+  cases eq
+
+private theorem extensionDependence : ObservationalDependence extensionSignature extensionActual := by
+  intro i
+  refine ⟨.of (.inr 0),(fun _ => some true),(fun _ => some false),?_⟩
+  intro eq
+  have h := congrFun eq 0
+  simp [extensionActual,realize,typeExtend,labels] at h
+
+def extensionFamily : Registration extensionArena (type_of% (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.root_extend)) where
+  actual := extensionActual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.root_extend,extensionBad,extensionBadLaw⟩
+  sensitivity := ⟨fun i => ⟨extensionBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,extensionBadLaw⟩,fun i => nomatch i⟩
+  dependence := extensionDependence
+
+def extensionRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.root_extend)
+    (type_of% (realize extensionSignature extensionActual.readout extensionActual.anchor)) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.root_extend.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.FullRootSuppliers.extensionFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨extensionArena⟩
+  objectArena := .source ⟨extensionArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source extensionArena ⟨extensionFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize extensionSignature extensionActual.readout extensionActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms extensionRegistration
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeClassRootImage.FullRootSuppliers

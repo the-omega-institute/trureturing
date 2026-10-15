@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c75beb647362d85203e0bcd53a987a948025a2e00ba135f1b346350cb73f7898
+  normalized_sha256: sha256:c75beb647362d85203e0bcd53a987a948025a2e00ba135f1b346350cb73f7898
+cas_ref: sha256:c75beb647362d85203e0bcd53a987a948025a2e00ba135f1b346350cb73f7898
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节 195. 多面之物与共同理解：从容纳差异到能够接合：仅为章节题名，指示讨论主题；无独立命题陈述。
+    previous_atom_id: e7634e424b45f011a80c72b048045310d6f1c48c2cb707ce10358765dd1c6fe2
+    next_atom_id: 3a029ac007834c84595a8d2d73056cacabc35a8d17b1103abdd8f0088d1742ca

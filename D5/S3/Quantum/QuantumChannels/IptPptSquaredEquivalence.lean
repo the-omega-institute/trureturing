@@ -12,6 +12,7 @@ result
   escape_witness: none
   admission_basis: open-problem-resolution (#15391; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15525
+Escape audit unfinished for prepare_eb: https://github.com/the-omega-institute/trureturing/issues/16693
 Direct frozen dependencies (declaration statement_id):
 D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
 D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive; sha256:39e2682fd93035c705a08181bb7fdfb77067eba43afcc98c200c30543b913ed4
@@ -264,12 +265,12 @@ private theorem weighted_psd (M : Matrix (Fin n) (Fin n) 𝕜)
   intro j _
   rw [weighted_rank]
   exact hP.conjTranspose_mul_mul_same _
-private def HasPrepare (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) : Prop :=
+def HasPrepare (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) : Prop :=
   ∃ (k : ℕ) (M : Fin k → Matrix (Fin n) (Fin n) 𝕜)
     (N : Fin k → Matrix (Fin m) (Fin m) 𝕜),
     (∀ j, (M j).PosSemidef ∧ (N j).PosSemidef) ∧
     ∀ A, Phi A = ∑ j, Matrix.trace (M j * A) • N j
-private theorem prepare_eb (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (hPhi : HasPrepare Phi) : IsEB Phi := by
+theorem prepare_eb (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (hPhi : HasPrepare Phi) : IsEB Phi := by
   obtain ⟨k, M, N, hMN, hPhi⟩ := hPhi
   intro r P hP
   have he : (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = ∑ j, (Matrix.kroneckerMap (· * ·)) (N j) (weighted (M j) P) := by

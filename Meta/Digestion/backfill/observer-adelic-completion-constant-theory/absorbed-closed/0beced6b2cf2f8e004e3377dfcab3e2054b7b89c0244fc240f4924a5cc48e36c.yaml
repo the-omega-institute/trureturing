@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0beced6b2cf2f8e004e3377dfcab3e2054b7b89c0244fc240f4924a5cc48e36c
+  normalized_sha256: sha256:0beced6b2cf2f8e004e3377dfcab3e2054b7b89c0244fc240f4924a5cc48e36c
+cas_ref: sha256:0beced6b2cf2f8e004e3377dfcab3e2054b7b89c0244fc240f4924a5cc48e36c
+coverage_gids:
+  - gid: D5/S3/Zeros/NormalJetFormula.normal_jet_formula
+    target_statement_id: sha256:078942e75c8e3015839a965647a403f7a30f5023c3e67cc53c67f61c9215bf7e
+receipts:
+  unresolved_subitems: []

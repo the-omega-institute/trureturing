@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ac4974f8c0a18aae6acc2f0d503aee2779c2b856919ad2fac2107ca1671e2e5
+  normalized_sha256: sha256:0ac4974f8c0a18aae6acc2f0d503aee2779c2b856919ad2fac2107ca1671e2e5
+cas_ref: sha256:0ac4974f8c0a18aae6acc2f0d503aee2779c2b856919ad2fac2107ca1671e2e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 经验结构主义：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: fca19cad8c5ce3f8d948139d5b360703a635ebb6314bc0471a83cec81d2614a3
+    next_atom_id: 2df71cacbf8cfaf729933caa3a51603a15bcccd1aaae67071653ac3db75904c3
