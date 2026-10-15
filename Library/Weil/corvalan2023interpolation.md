@@ -3569,3 +3569,147 @@ a square-root bound on the response itself. Nor does this invalidate
 (I118)--(I119), which also improve the band coefficients under their
 additional hypothesis. No new bound for the signed functional,
 complete Robin inequality or RH follows from this method obstruction.
+
+
+## An absolute contour estimate cannot relax the fixed half-plane threshold
+
+Keep the original family (I59), its exact coupled kernel (I65), and the
+additional fixed zero-free-half-plane premise of (I60):
+$1/2\le b<1$ and no zero of $\zeta$ in $\Re s>b$.
+Choose any fixed $b<\sigma,\tau<1$. There is a fixed compact real
+interval $I$ of positive length such that, for every sufficiently large
+original integer $N$, the finite absolute majorant satisfies
+$$
+\begin{aligned}
+\mathfrak B_N(\sigma,\tau;I)
+ &:={1\over L^2}\int_{1/(4h)}^{1/(2h)}\int_I
+ \left|\frac{N^{\sigma+\tau-1+i(t+y)}
+  \mathcal K_N(\sigma+it,\tau+iy)}
+ {\zeta(\sigma+it)\zeta(\tau+iy)}\right|\,dy\,dt\\
+ &\gg_{b,\sigma,\tau}{hN^{\sigma+\tau-1}\over L^2}.
+\end{aligned}
+\tag{I130}
+$$
+The interval and lower-bound constant depend only on fixed parameters.
+This measures the cost of taking absolute values inside the two contour
+integrals. It gives no lower bound on the signed functional. The
+application below reuses (I60), (I64), (I70) and the already owned
+expansion of $H_q$ at zero; no new classical mean-value theorem,
+mathematical-priority claim or Lean certification is asserted.
+
+### A nonzero part of the exact kernel survives at height comparable to 1/h
+
+Use $\Phi$ from (I67). The integral defining $H_q$ is holomorphic on
+$\Re v>0$. The expansion after (I88), uniform for $1\le q\le2$
+by (I70), gives
+$$
+\Phi(v)={\log2-3/4\over2v^2}+O(1)\qquad(v\longrightarrow0).
+\tag{I131}
+$$
+Here $\log2<3/4$, for example by the strict trapezoidal upper bound
+for the convex function $1/x$ on $[1,2]$. Thus $\Phi$ is not
+identically zero. The identity theorem implies that it cannot vanish
+on the entire line $\tau+i\mathbb R$. Choose $I$ about a nonzero point
+so that $|\Phi(\tau+iy)|$ is bounded below on $I$. The actual
+$|1/\zeta(\tau+iy)|$ also has a positive minimum there: the segment
+is compact, zero-free, and avoids the pole at one.
+
+Put $G(z)=\int_0^1r e^{-izr}\,dr$. For $u=\sigma+it$ with
+$1/4\le ht\le1/2$, substitute $x=1-hr$ into the original $W_a$.
+Uniformly on this growing-height rectangle,
+$-\log(1-hr)=hr+O(h^2)$,
+$(1-hr)^{\sigma-1}=1+O_\sigma(h)$ and
+$e^{it\log(1-hr)}=e^{-ihtr}(1+O(h))$. Consequently
+$$
+\begin{aligned}
+W_a(u)&=h^2G(ht)+O_\sigma(h^3),\\
+W_a(u-1)-W_a(u)
+ &=\int_a^1x^{u-2}(1-x)\log(1/x)\,dx=O_\sigma(h^3).
+\end{aligned}
+$$
+The second estimate holds for every real $t$. Reuse the fixed-compact
+relations from (I64)--(I67),
+$p_N(v)=O(1)$ and $p_N(v)-Nq_N(v)=\Phi(v)+O(1/N)$, to obtain
+$$
+\begin{aligned}
+\mathcal K_N(u,v)
+ &=W_a(u)[p_N(v)-Nq_N(v)]
+    +[W_a(u-1)-W_a(u)]p_N(v)\\
+ &=h^2G(ht)\Phi(v)+O(h^3+h^2/N).
+\end{aligned}
+\tag{I132}
+$$
+This calculation is uniform for $v=\tau+iy$, $y\in I$.
+It does not extend the compact-$u$ error term of (I67) to this height.
+Since $\Re G(z)\ge\cos(1/2)/2>0$ on $1/4\le z\le1/2$,
+(I132) gives $|\mathcal K_N(u,v)|\gg h^2$ throughout the rectangle
+for all sufficiently large $N$. Both original endpoint contributions
+remain in $p_N,q_N$.
+
+### Actual reciprocal-zeta mass supplies the full width of the rectangle
+
+The reciprocal growth bound in (I60), with exponent allowance $1/2$,
+is uniform for $\sigma\le\Re s\le2$ at large heights. The reciprocal
+is holomorphic on $\Re s>b$, with a removable zero at the pole of
+$\zeta$. Cauchy's theorem between the lines $\sigma$ and $2$ gives
+$$
+\int_T^{2T}{dt\over\zeta(\sigma+it)}
+ =\int_T^{2T}{dt\over\zeta(2+it)}+O_{b,\sigma}(T^{1/2})
+ =T+O_{b,\sigma}(T^{1/2}).
+\tag{I133}
+$$
+For the final equality directly apply the absolutely convergent
+Möbius Dirichlet series underlying (I62). Its $n=1$ term contributes
+$T$; the remaining integral is at most
+$2\sum_{n\ge2}n^{-2}/\log n<\infty$ in modulus. Thus
+$\int_T^{2T}|1/\zeta(\sigma+it)|\,dt\ge T/2$ eventually.
+Take $T=1/(4h)$. Combine this actual mass, the fixed-$v$ reciprocal
+minimum and (I132). Since the modulus of the outer $N$-power is
+$N^{\sigma+\tau-1}$, this proves (I130) for each sufficiently large
+original integer, without an average over $N$ or zero-residue assumptions.
+
+### The paid two-scale smoothing preserves the obstruction
+
+The same lower bound holds with the complete smoothed kernel
+$\widetilde{\mathcal K}_N$ of (I89) in place of $\mathcal K_N$:
+$$
+\widetilde{\mathfrak B}_N(\sigma,\tau;I)
+ \gg_{b,\sigma,\tau}{hN^{\sigma+\tau-1}\over L^2}.
+\tag{I134}
+$$
+Use exactly the already paid scales $\eta=H^{-1}$ and
+$\nu=N^{-1/2}$. Their bump multipliers satisfy
+$|F_\ell(s)-1|\le e^{\ell|s|}-1$ by positivity and unit mass of
+$\phi$. On this rectangle $\eta|u|=O(\eta/h)\to0$,
+$\eta|u-1|\to0$, and $\nu|v|\to0$, since
+$\eta/h=1/(Hh)\asymp N/H^2\to0$. Hence all three multipliers in
+(I89) tend uniformly to one here. The fixed-compact bounds also give
+$Nq_N(v)=O(1)$, so its exact formula and (I132) imply
+$\widetilde{\mathcal K}_N(u,v)-\mathcal K_N(u,v)=o(h^2)$
+uniformly. The same positive lower bound therefore survives.
+This uses the original smoothing scales and retains its actual scalar
+and endpoint accounting; it introduces no new contour-shift claim.
+
+### The limitation concerns taking absolute values on fixed lines
+
+At the original bandwidth, the lower-bound scale is
+$$
+{hN^{\sigma+\tau-1}\over L^2}
+ \asymp{N^{\sigma+\tau-5/4}e^{\lambda\Omega}\over L^2}.
+\tag{I135}
+$$
+For $\sigma+\tau\ge5/4$ this tends to infinity, including equality,
+because $\lambda>0$ and $\Omega/\log L\to\infty$. If $b\ge5/8$,
+every pair of fixed lines $b<\sigma,\tau<1$ has this problem;
+unequal fixed lines do not remove it. On equal lines the displayed
+power is the same as the allowance in (I119).
+
+Thus improving only an absolute bound for the growing-height coupled
+kernel cannot relax that fixed-line threshold, even after the already
+paid smoothing. An improved bound needs information beyond this absolute
+majorant, such as signed oscillation in $N^{i(t+y)}$ or cancellation
+with other parts of the exact functional. No necessity of $b<5/8$ for
+the signed functional is proved,
+and no conclusion about estimates on $N$-dependent lines is asserted.
+The original same-source joint upper bound, complete signed Robin
+estimate and RH remain unresolved.
