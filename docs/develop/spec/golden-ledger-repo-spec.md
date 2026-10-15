@@ -517,7 +517,7 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 120m |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
 
-每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
+每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: false`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
 
 纯理论免报告只接受真实 delta 非空、全部路径为 `docs/develop/theory/` 下理论文档且非删除输入已经读取的情况：PR base 为 `M^1`，push base 为固定 `event.before`，沿既有快照/FILEMAP 与 `ExecuteTheoryDelta` 执行 `SL-003`、`SL-015`。不恢复 Lean 缓存、不生产报告、不运行全局 current/Scribe、不触发自动 producer；其它命中单元照常运行。混合变更必须提供报告；空 delta 即使进入无报告入口也会拒绝，未读取的理论输入也拒绝，均不构成免检。无可读 before 的事件走完整报告选择，不用未知 delta 猜纯理论。
 
