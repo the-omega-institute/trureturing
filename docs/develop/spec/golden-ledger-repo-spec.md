@@ -451,7 +451,7 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰
 
 | 角色 | 责任与边界 |
 | --- | --- |
-| 短 CI | 准入与检查消费者；`current` 计算累计限时 120 分钟（2 小时），`ci-unit.yml` 默认同为 120 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
+| 短 CI | 准入与检查消费者；`current` 计算累计限时 30 分钟，`ci-unit.yml` 默认同为 30 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
 | 独立长 Actions producer | manual、PR label、自动 protected push 共用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，不执行测试套件。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
 | PR 合入前准备、合入时启用 | 标签 dispatch 到受保护目标 ref；长构建检出固定 PR merge candidate，仅上传 Actions artifact。源 PR 可显式取回；目标短 CI 在实际合并与事件检出相符时直接采用，不等待另一次发布作业。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
@@ -488,7 +488,7 @@ Actions Cache (visible ref) --restore--> job-local workspace <--eligible adoptio
   schedule --> own Release job: optional Actions restore -> report -> publish
 ```
 
-**短 CI 计时边界。** `current` 的准备与计算交错，`ci_compute.py` 只在该 job 的 `RUNNER_TEMP` 中保存一份剩余秒数，初次初始化后不得重置。各串行计算调用使用同一余额、单调时钟和 GNU `timeout`，累计计算阶段挂钟而非 CPU 核秒，不是每步各给 120 分钟；超时返回 124，TERM 后最多 5 秒清理宽限，必要时 KILL（退出 137）。余额文件缺失、损坏或并发占用直接失败；启动前先清零，异常中断不留下未扣费余额。普通命令失败保留原非零退出码与输出。此文件不是缓存、receipt、调度器或跨 job 状态。
+**短 CI 计时边界。** `current` 的准备与计算交错，`ci_compute.py` 只在该 job 的 `RUNNER_TEMP` 中保存一份剩余秒数，初次初始化后不得重置。各串行计算调用使用同一余额、单调时钟和 GNU `timeout`，累计计算阶段挂钟而非 CPU 核秒，不是每步各给 30 分钟；超时返回 124，TERM 后最多 5 秒清理宽限，必要时 KILL（退出 137）。余额文件缺失、损坏或并发占用直接失败；启动前先清零，异常中断不留下未扣费余额。普通命令失败保留原非零退出码与输出。此文件不是缓存、receipt、调度器或跨 job 状态。
 
 | 阶段 | 计算预算 |
 | --- | --- |
@@ -496,9 +496,9 @@ Actions Cache (visible ref) --restore--> job-local workspace <--eligible adoptio
 | judge / fallback Lean producer 的 .NET 编译，报告输入核对、复用判定、capture、prepare、publish，Lake 原生编译与报告生成 | 计入同一剩余余额 |
 | compiled audit 的实际编译及执行、所选 .NET 测试及 TRX 检查、current / delta / Scribe 规则 | 计入同一剩余余额；测试程序内部的夹具构建、restore、安装和挂起防护属于被测执行，保留原 guard，不属于 CI 工具准备 |
 
-`current` 在初始化余额前恢复 judge 与命中测试的 NuGet 依赖；编译 judge 使用 `--no-restore`。报告入口的 fallback producer 先独立 restore，再计费编译；工具链和 `ensure-cache` 是准备阶段。`with-cache-reader` 在原 writer guard 内完成自身嵌套准备后才给实际命令计费，保留冷构建拒绝、原失败与 guard 释放。报告外层 supervisor 在该普通 CI 调用中使用 360m 的准备/计算总上限，实际计算仍扣 120m 余额，其他调用和测试 guard 不改。报告 `reuse` 在 GitHub Actions 下不下载 Release：既有 Release fetch 与 freshness 分支在网络取回前跳过；本地 Release 的既有策略不变。缓存辅助工具的 bootstrap 属于准备；项目与报告编译不能搬到准备阶段。
+`current` 在初始化余额前恢复 judge 与命中测试的 NuGet 依赖；编译 judge 使用 `--no-restore`。报告入口的 fallback producer 先独立 restore，再计费编译；工具链和 `ensure-cache` 是准备阶段。`with-cache-reader` 在原 writer guard 内完成自身嵌套准备后才给实际命令计费，保留冷构建拒绝、原失败与 guard 释放。报告外层 supervisor 在该普通 CI 调用中使用 360m 的准备/计算总上限，实际计算仍扣 30m 余额，其他调用和测试 guard 不改。报告 `reuse` 在 GitHub Actions 下不下载 Release：既有 Release fetch 与 freshness 分支在网络取回前跳过；本地 Release 的既有策略不变。缓存辅助工具的 bootstrap 属于准备；项目与报告编译不能搬到准备阶段。
 
-`ci-unit` 按 project 或所声明锁文件闭包先 restore NuGet，再用一次 GNU `timeout` 调用包住所选 test/command，无需余额文件；`timeout-minutes` 输入为 1..360 的整数，默认 120；相应 canonical .NET 入口使用 `--no-restore`，测试新建项目保留自身 restore 行为。嵌套的计费入口继承外层测试计时，不重复扣费，也不暂停测试计时。普通缓存恢复不触发完整冷报告、扫描或迁移；缺失/不兼容仍由现有入口失败。纯理论路径只做适用文件/容量规则和所需 judge 准备、编译，不触发 Lean/toolchain/artifact 工作。
+`ci-unit` 按 project 或所声明锁文件闭包先 restore NuGet，再用一次 GNU `timeout` 调用包住所选 test/command，无需余额文件；`timeout-minutes` 输入为 1..360 的整数，默认 30；相应 canonical .NET 入口使用 `--no-restore`，测试新建项目保留自身 restore 行为。嵌套的计费入口继承外层测试计时，不重复扣费，也不暂停测试计时。普通缓存恢复不触发完整冷报告、扫描或迁移；缺失/不兼容仍由现有入口失败。纯理论路径只做适用文件/容量规则和所需 judge 准备、编译，不触发 Lean/toolchain/artifact 工作。
 
 PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，不设固定 600s 整包截止；控制面 API 超时保留。平台 360m 上限涵盖准备、计算、上传和清理，可能在准备阶段终止 job，不承诺无限下载时间；缓存 producer 的既有 360m 与定时 Release 的 120m 仍是各自独立 job 上限。
 
@@ -508,8 +508,8 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 
 | 入口 / 触发 | 固定源码与读取范围 | 写入范围 | 计算预算 / 平台 job 上限 |
 | --- | --- | --- | --- |
-| 普通 PR | merge candidate `M=GITHUB_SHA`，`B=M^1` 只作数据；先显式取同 PR/head/target 的准备；未取得时 project 先自身 merge ref，再 base branch | required job 不写 project；dependency、elan、judge 只写该 PR ref | current 累计计算 120m；unit 默认累计计算 120m；各 job 平台上限 360m |
-| 普通 push | `HEAD=GITHUB_SHA=event.after`；完整 before/after delta；匹配实际合入时先采用准备，否则 project 查自身 branch ref | dev/integration 可在报告成功后写 project 增量；辅助缓存各依自身条件 | current 累计计算 120m；unit 默认累计计算 120m；各 job 平台上限 360m |
+| 普通 PR | merge candidate `M=GITHUB_SHA`，`B=M^1` 只作数据；先显式取同 PR/head/target 的准备；未取得时 project 先自身 merge ref，再 base branch | required job 不写 project；dependency、elan、judge 只写该 PR ref | current 累计计算 30m；unit 默认累计计算 30m；各 job 平台上限 360m |
+| 普通 push | `HEAD=GITHUB_SHA=event.after`；完整 before/after delta；匹配实际合入时先采用准备，否则 project 查自身 branch ref | dev/integration 可在报告成功后写 project 增量；辅助缓存各依自身条件 | current 累计计算 30m；unit 默认累计计算 30m；各 job 平台上限 360m |
 | `pull_request:labeled`，标签 `lean-cache-produce` | 检出事件 `M`，校验 `M^1=B,M^2=H`；只读内容、可写 actions 的 dispatch job 固定事件 PR/run/attempt | 不编译、不下载或保存种子；自动向受保护目标 ref dispatch 并输出具体 producer run ID；dispatch 成功不代表生产成功 | 5m |
 | `workflow_dispatch`，`operation=build`（默认） | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | 同一已校验 branch scope | 360m |
 | `workflow_dispatch`，`operation=pr` | workflow/runtime 为受保护目标 ref 的固定提交 `T`；源码检出 `source_sha=M`，`pr_source` 绑定事件 PR/H/M/B/run/attempt/target；不要求 M 已合入 | 共享核心仅构建并严格校验；原生路径打包上传 Actions artifact，不保存普通 cache key；编译 job 的 contents/actions token 只读；完成确认 immutable artifact ID | 360m |
@@ -517,7 +517,12 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 120m |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
 
-每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
+本地已完成的 buildDir 可用 `make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_SOURCE_COMMIT=<完整SHA> LEAN_CACHE_PUBLISH_ONLY=1` 发布。该模式要求干净且已存在于本仓 GitHub 的固定提交，并验证当前完整报告与资产；`LEAN_CACHE_PUBLISH_ONLY=1` 禁止调用报告构建，缺失或陈旧报告直接失败。候选使用隔离的 verification Release 名称，不进入普通 production 查找或裁剪。`LEAN_CACHE_REPOSITORY` 可显式指定产物所在仓库目录。
+
+长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同选择一个本地候选种子。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
+
+
+每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: false`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
 
 纯理论免报告只接受真实 delta 非空、全部路径为 `docs/develop/theory/` 下理论文档且非删除输入已经读取的情况：PR base 为 `M^1`，push base 为固定 `event.before`，沿既有快照/FILEMAP 与 `ExecuteTheoryDelta` 执行 `SL-003`、`SL-015`。不恢复 Lean 缓存、不生产报告、不运行全局 current/Scribe、不触发自动 producer；其它命中单元照常运行。混合变更必须提供报告；空 delta 即使进入无报告入口也会拒绝，未读取的理论输入也拒绝，均不构成免检。无可读 before 的事件走完整报告选择，不用未知 delta 猜纯理论。
 
@@ -554,7 +559,7 @@ Actions artifact 名为 `lean-pr-preparation-<PR>-<H>`；这是精确发现地�
 
 `current` 的报告路径、`ci-unit` 的 `lean=build` 路径和共享长核心在普通 dependency/project restore 前尝试显式采用；纯理论和 `lean=none/toolchain` 不增加此工作。源 PR 仅可取自身仍 open 的相同 PR/H/target 准备，允许 event M 的基线已推进，随后仍须通过当前 head 的全部 required。目标 push 由实际 event.after/ref 与 checkout 相等，再从该 commit 的 PR 关联中确认唯一实际 merged PR、目标和 `merge_commit_sha=checkout=K`；手动 protected build 对固定 source checkout 作相同确认。K 与准备 M 分列，不要求 SHA 相同。未合并、关闭未合并、另一 PR、另一 head 或目标均不取得该准备的使用资格。多提交 push 中 checkout 不是该 PR 的实际 merge commit 时不选该准备；后续普通 target cache 复用沿原规则，不扫描历史候选。
 
-采用前先校验身份并在临时目录解包；拒绝重复、越界、未登记成员与逃逸链接。完成后替换 job 本地 native 目录，并在运输树之外写当前 run/attempt/checkout/artifact 的采用记录。普通 restore actions 跳过这两层，`lean_actions.restore` 也保留已采用材料。既有报告与程序消费者承担实际载荷校验与 Lake 增量；运输与 trace 不证明 producer/consumer 语义兼容，不加入 producer 程序字节指纹。若实际合并树、配置或源输入漂移，必要的原生增量仍须执行并计入 120m 计算预算；下载和准备不扣该预算，外层平台上限独立。
+采用前先校验身份并在临时目录解包；拒绝重复、越界、未登记成员与逃逸链接。完成后替换 job 本地 native 目录，并在运输树之外写当前 run/attempt/checkout/artifact 的采用记录。普通 restore actions 跳过这两层，`lean_actions.restore` 也保留已采用材料。既有报告与程序消费者承担实际载荷校验与 Lake 增量；运输与 trace 不证明 producer/consumer 语义兼容，不加入 producer 程序字节指纹。若实际合并树、配置或源输入漂移，必要的原生增量仍须执行并计入 30m 计算预算；下载和准备不扣该预算，外层平台上限独立。
 
 合并本身使匹配准备对该目标事件具备采用资格；不需第二个异步 publisher 完成，不强制重复完整冷编译。调度、API 可见性和下载仍有延迟。target 报告成功且工作量已知时，已验证采用可保存现有普通 project key，真实零工作也保留 `build_work=0`；无采用的普通零工作仍抑制上传。`project_seed_available` 只认可确认的普通发布，或普通缓存已接受且报告零工作；artifact 存在、已采用或 upload 成功均不单独抑制长 fallback。若短保存失败，长核心仍优先采用同一匹配准备，不能忽略它而冗余冷构建。
 
@@ -573,6 +578,8 @@ Actions artifact 名为 `lean-pr-preparation-<PR>-<H>`；这是精确发现地�
 Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、归一化平台族与声明环境值；名字中的 12 位摘要不替代 manifest 全值校验。`publication-id` 是 `ci-<run>-<attempt>` 或 `local-<HEAD12>-<UTC>`，HEAD 只在这个唯一后缀中，不决定复用；报告模块/配置全集摘要与生产程序字节不进入 Release 名字。Actions 按 OS/arch 隔离；Release 跨平台共享仅限 A14.9 已声明的 arm64 族，原生产物仍由 Lake retrace。详细键生成与容器清单以 `lean_actions.py`、`lean_cache_release.py` 为源，不增设版本清单。
 
 报告、种子、收据等数据产物不得把 producer/judge 程序字节哈希作为复用条件；模块 trace、utility、格式与整份收据的输入边界依 A14.9。judge 编译缓存缓存的是程序自身，可哈希其实际构建输入与配方。显式历史登记无缓存重评是独立请求；`REBUILD_REPORT_CACHE=1` 只绕过整份 receipt，仍可复用原生模块产物，不保证重评全部历史登记或 full clean，也不承诺旧 same-v3 载荷自动迁移。
+
+**长 producer 续跑。** 独立 Actions producer 使用检出源自身的 Lean/mathlib pin；受保护 integration 与 dev 均保留手动入口。每次构建片在 action 入口起算五小时内结束，为平台六小时上限内的保存和清理留出时间。构建失败或片到期可保存原生中间产物到独立 `lean-producer-resume-v1-` 命名空间；本次仍失败，未完成报告不得发布普通 project seed 或 PR 准备包。续跑按 repository、源 ref、依赖输入、mathlib pin、OS/架构及登记的执行环境隔离，不以整树或 producer 程序字节作为身份；变动源码由 Lake 判断增量有效性。受保护 runtime 内的已验证 PR 准备另绑定 source PR ref 与 target ref，不与目标分支 producer 或其他 PR 共用续跑身份，也不取得普通 project 写入资格。已接受完整 project seed 或已采用 PR 准备时跳过 partial 恢复。恢复记录只证明中间材料来源；最终必须重新完成报告、审计程序及严格 publication 验证，才允许发布。最终片新增编译工作为零时，只有本次已验证的续跑记录与完整成功标记共同满足，才可晋升完整 project seed。
 
 **显式报告工件重产。** 独立长 producer 的 `operation=build` 或 `operation=pr` 可显式选 `regenerate_report_artifacts=true`，默认关闭；采用对应操作的固定来源校验及同一 Actions 构建发布核心。等价本地入口为 `make lean-report REGENERATE_REPORT_ARTIFACTS=1`。此选项强制跳过整份 receipt 复用与 Release 恢复，完成既有 ensure/worktree 参与后，在 `lean-cache-run` 的缓存写锁内删除 `.lake/build/lean-inspector` 的生成状态（模块 ZIP、trace、pending/previous、聚合 ZIP 及报告输入投影），并在同一写锁内执行报告/选定程序的 Lake 构建。该次 Lake 进程设置 `LAKE_ARTIFACT_CACHE=false` 和 `LAKE_RESTORE_ARTIFACTS=false`，阻止内容寻址仓库按旧 trace 恢复已删除的报告。保留 `.lake/build/lib`、IR、程序编译产物、依赖及 toolchain，由 Lake 继续判定其编译有效性；不清空共享 artifact store，不修改 cache key 或报告格式。
 
