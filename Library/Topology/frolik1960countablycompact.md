@@ -78,8 +78,10 @@ implementation or to supply the later section-good selector or
 pairwise distinct projected cluster values. No new set-theoretic
 novelty is claimed.
 
-## Source locator
+## Verified locator
 
+DOI: 10.21136/cmj.1960.100417.
+URL: https://dml.cz/handle/10338.dmlcz/100417.
 Primary DOI: https://doi.org/10.21136/cmj.1960.100417.
 Stable primary handle: https://dml.cz/handle/10338.dmlcz/100417.
 The consulted passages are Lemma 2.8, printed pages 333–334 (PDF pages

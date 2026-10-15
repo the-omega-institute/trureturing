@@ -68,8 +68,10 @@ the actual set Y, and the original graph endpoint. Neither this note nor
 the generic theorem establishes original-problem completion, novelty,
 worldwide uniqueness, or official acceptance.
 
-## Source locator
+## Verified locator
 
+DOI: 10.2140/pjm.1975.57.403.
+URL: https://doi.org/10.2140/pjm.1975.57.403.
 Primary publisher DOI and URL: https://doi.org/10.2140/pjm.1975.57.403.
 The consulted passages are Theorem 2.12 and its preceding construction,
 printed pages 407–408, and Example 5.2, printed page 413.
