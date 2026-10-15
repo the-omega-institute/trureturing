@@ -73,9 +73,11 @@ private theorem strong_state_from_same_parent {m k : ℕ} (hm : 3 ≤ m) (hk : 3
     Finset.mem_image.mpr ⟨s(W.P.right, W.P.left), W.P.firstCut, rfl⟩
   have hℓ : (plift W.P.left).val = leftPort F 0 := W.P.leftCoordinate
   have hx : (plift W.P.otherLeft).val = leftPort B 0 := by
+    change W.P.otherLeft.val = leftPort B 0
     simpa only [W.P.canonicalOpposite] using W.P.otherLeftCoordinate
   have hy₀ : (plift W.P.primaryFar).val = leftPort F (k - 1) := W.P.primaryFarCoordinate
   have hy₁ : (plift W.P.oppositeFar).val = leftPort B (k - 1) := by
+    change W.P.oppositeFar.val = leftPort B (k - 1)
     simpa only [W.P.canonicalOpposite] using W.P.oppositeFarCoordinate
   have hb₀ : NativeBoundaryPairs F W.P.primaryOdd Subtype.val primaryrest := by
     intro p hmem
@@ -90,13 +92,16 @@ private theorem strong_state_from_same_parent {m k : ℕ} (hm : 3 ≤ m) (hk : 3
       hprior hfirst hℓ hx hy₀ hy₁ hb₀ hb₁ W.cycle W.hamiltonian
       J.new₀ J.new₁ J.new₂ J.K J.H J.disjoint J.partition
       J.zero₀ J.zero₁ J.erase₀ J.erase₁ J.left₀ J.right₀ J.left₁ J.right₁
-  let joint := ⟨J.ℓ₀, plift W.P.far, J.new₀.reverse⟩ ::
-    ⟨J.r₀, J.ℓ₁, J.new₁⟩ :: ⟨J.r₁, plift W.P.left, J.new₂⟩ ::
+  let jointTail : List (Piece (domainGraph (ParentDomain O))) :=
+    ⟨J.r₁, plift W.P.left, J.new₂⟩ ::
       ⟨plift W.P.right, plift W.P.otherLeft, cross⟩ :: jointrest
-  let primary := ⟨J.ℓ₀, plift W.P.oppositeFar, primary₀⟩ ::
+  let primaryTail : List (Piece (domainGraph (ParentDomain O))) :=
     ⟨J.r₀, plift W.P.otherLeft, primary₁⟩ :: oppositerest
-  let opposite := ⟨J.ℓ₁, plift W.P.primaryFar, opposite₀⟩ ::
+  let oppositeTail : List (Piece (domainGraph (ParentDomain O))) :=
     ⟨J.r₁, plift W.P.left, opposite₁⟩ :: primaryrest
+  let joint := ⟨J.ℓ₀, plift W.P.far, J.new₀.reverse⟩ :: ⟨J.r₀, J.ℓ₁, J.new₁⟩ :: jointTail
+  let primary := ⟨J.ℓ₀, plift W.P.oppositeFar, primary₀⟩ :: primaryTail
+  let opposite := ⟨J.ℓ₁, plift W.P.primaryFar, opposite₀⟩ :: oppositeTail
   have hselected : F.selected.toFinset = B.selected.toFinset := by
     have h := W.P.sameSelected
     rw [W.P.canonicalOpposite] at h
@@ -125,6 +130,7 @@ private theorem strong_state_from_same_parent {m k : ℕ} (hm : 3 ≤ m) (hk : 3
       (native_marked_index_shift hm B A u hbase (k - 1)).2.symm
   have hfar : (lift (plift W.P.far)).val =
       leftPort (if !W.P.distinguishedOpposite then N₁ else N₀) k := by
+    change W.P.far.val = _
     have h := W.P.farCoordinate
     rw [W.P.canonicalOpposite] at h
     cases hd : W.P.distinguishedOpposite
@@ -207,19 +213,20 @@ private theorem strong_state_from_same_parent {m k : ℕ} (hm : 3 ≤ m) (hk : 3
     rightCoordinate := J.right₀
     otherLeftCoordinate := J.left₁
     farCoordinate := by simpa only [Nat.add_sub_cancel] using hfar
-    primaryFarCoordinate := by simpa only [Nat.add_sub_cancel] using hy₁.trans hshift₁
-    oppositeFarCoordinate := by simpa only [Nat.add_sub_cancel] using hy₀.trans hshift₀
+    primaryFarCoordinate := by
+      simpa only [hval, Nat.add_sub_cancel] using hy₁.trans hshift₁
+    oppositeFarCoordinate := by
+      simpa only [hval, Nat.add_sub_cancel] using hy₀.trans hshift₀
     distinguished := J.new₀.reverse.map lift
     crossing := J.new₁.map lift
-    jointRest := (⟨J.r₁, plift W.P.left, J.new₂⟩ ::
-      ⟨plift W.P.right, plift W.P.otherLeft, cross⟩ :: jointrest).map (mapPiece lift)
+    jointRest := jointTail.map (mapPiece lift)
     primary := primary₀.map lift
-    primaryRest := (⟨J.r₀, plift W.P.otherLeft, primary₁⟩ :: oppositerest).map (mapPiece lift)
+    primaryRest := primaryTail.map (mapPiece lift)
     opposite := opposite₀.map lift
-    oppositeRest := (⟨J.r₁, plift W.P.left, opposite₁⟩ :: primaryrest).map (mapPiece lift)
-    partitions := hstate
-    primaryBoundary := hprimary
-    oppositeBoundary := hopposite
+    oppositeRest := oppositeTail.map (mapPiece lift)
+    partitions := by simpa only [joint, primary, opposite, List.map_cons, mapPiece] using hstate
+    primaryBoundary := by simpa only [primary, List.map_cons, mapPiece] using hprimary
+    oppositeBoundary := by simpa only [opposite, List.map_cons, mapPiece] using hopposite
     firstCut := Finset.mem_image.mpr ⟨s(J.r₀, J.ℓ₀), hseam, rfl⟩
     keepsProtectedA := hA'
     keepsRemainingB := hB'
