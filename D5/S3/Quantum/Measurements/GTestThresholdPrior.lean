@@ -167,8 +167,8 @@ private theorem psi_mulVec
 
 private theorem psi_adjoint (π : Equiv.Perm (Fin n)) :
     (psi (d := d) π).conjTranspose = psi (d := d) (π⁻¹) := by
-  change (((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) π)⁻¹).permMatrix ℂ).conjTranspose =
-    _
+  change (((MulAction.toPermHom (Equiv.Perm (Fin n))
+    (Word n d) π)⁻¹).permMatrix ℂ).conjTranspose = _
   rw [Matrix.conjTranspose_permMatrix]
   change _ = ((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) (π⁻¹))⁻¹).permMatrix ℂ
   rw [map_inv, inv_inv]
@@ -366,6 +366,69 @@ private theorem trace_eq_orbit_ratio (G : Subgroup (Equiv.Perm (Fin n)))
   rw [hcast]
   have hg : (Fintype.card G : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
   field_simp
+
+
+private theorem psi_repeat (π : Equiv.Perm (Fin n)) (φ : Fin d → ℂ) :
+    psi (d := d) π *ᵥ repeatKet n φ = repeatKet n φ := by
+  rw [psi_mulVec]
+  funext x
+  simp only [repeatKet.eq_1, word_smul_apply, inv_inv]
+  exact Equiv.prod_comp π (fun j => φ (x j))
+
+private theorem repeat_norm (φ : Fin d → ℂ) (hφ : UnitVector φ) :
+    (∑ x : Word n d, star (repeatKet n φ x) * repeatKet n φ x) = 1 := by
+  simp only [repeatKet.eq_1, star_prod, ← Finset.prod_mul_distrib]
+  rw [sum_product (fun _ i => star (φ i) * φ i)]
+  simp only [show (∑ i : Fin d, star (φ i) * φ i) = (1 : ℂ) from hφ,
+    Finset.prod_const_one]
+
+private theorem PiG_repeat (G : Subgroup (Equiv.Perm (Fin n))) (φ : Fin d → ℂ) :
+    PiG G *ᵥ repeatKet n φ = repeatKet n φ := by
+  unfold PiG
+  rw [Matrix.smul_mulVec, Matrix.sum_mulVec]
+  simp_rw [psi_repeat]
+  rw [Finset.sum_const, Finset.card_univ]
+  have hg : (Fintype.card G : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
+  rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hg, one_smul]
+
+private theorem completeness_trace (G : Subgroup (Equiv.Perm (Fin n)))
+    (φ : Fin d → ℂ) (hφ : UnitVector φ) :
+    Matrix.trace (PiG G * equalState n φ) = 1 := by
+  unfold equalState
+  rw [trace_mul_pure, PiG_repeat]
+  exact repeat_norm φ hφ
+
+private theorem linear_compare (m o p : ℝ) (hm : 0 < m) (ho : 0 ≤ o) :
+    ((p + (1 - p) * (1 - o / m) > 1 - p) ↔ p > o / (m + o)) ∧
+    ((p + (1 - p) * (1 - o / m) = 1 - p) ↔ p = o / (m + o)) := by
+  have hmo : 0 < m + o := add_pos_of_pos_of_nonneg hm ho
+  have hi : p + (1 - p) * (1 - o / m) - (1 - p) = ((m + o) * p - o) / m := by
+    field_simp
+    ring
+  constructor
+  · change ((1 - p < p + (1 - p) * (1 - o / m)) ↔ o / (m + o) < p)
+    rw [← sub_pos, hi, div_pos_iff_of_pos_right hm, div_lt_iff₀ hmo]
+    constructor <;> intro h <;> nlinarith
+  · rw [← sub_eq_zero, hi, div_eq_zero_iff, eq_div_iff (ne_of_gt hmo)]
+    simp only [ne_of_gt hm, or_false]
+    constructor <;> intro h <;> nlinarith
+
+theorem result : claim := by
+  intro n d G w U φ p _hn hφ _hp
+  have ht := trace_eq_orbit_ratio G w U
+  have hs : soundnessError G w U = (O G w : ℝ) / (M w : ℝ) := by
+    unfold soundnessError
+    rw [ht]
+    simp
+  have hc : completeness G φ = 1 := by
+    unfold completeness
+    rw [completeness_trace G φ hφ]
+    rfl
+  refine ⟨?_, ht⟩
+  unfold P_G P_T soundness
+  rw [hs, hc, mul_one]
+  exact linear_compare (M w : ℝ) (O G w : ℝ) p
+    (Nat.cast_pos.mpr (orbit_card_pos w)) (Nat.cast_nonneg _)
 
 
 end
