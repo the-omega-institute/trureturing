@@ -81,8 +81,8 @@ theorem testBit_pack_lane (width : ℕ) (positive : 0 < width) :
     | zero =>
       rw [pack, Nat.ofDigits_cons, Nat.add_comm,
         Nat.testBit_two_pow_mul_add _ headBound]
-      have low : width * 0 + (width - 1) < width := by omega
-      simp only [if_pos low, Nat.mul_zero, Nat.zero_add, List.getElem_cons_zero]
+      have low : width - 1 < width := by omega
+      simp only [Nat.mul_zero, Nat.zero_add, if_pos low, List.getElem_cons_zero]
     | succ i =>
       rw [pack, Nat.ofDigits_cons, Nat.add_comm,
         Nat.testBit_two_pow_mul_add _ headBound]
@@ -94,7 +94,7 @@ theorem testBit_pack_lane (width : ℕ) (positive : 0 < width) :
         rw [Nat.mul_succ]
         omega
       rw [if_neg high, shifted]
-      simpa only [List.getElem_cons_succ] using ih tailBound i (by
+      simpa only [pack, List.getElem_cons_succ] using ih tailBound i (by
         simpa only [List.length_cons, Nat.succ_lt_succ_iff] using inside)
 
 private theorem add_difference_lists (half : ℕ) (xs : List ℕ) :
@@ -179,11 +179,16 @@ theorem guard_le (width : ℕ) (positive : 0 < width) (xs ys : List ℕ)
     rw [same]
     exact Nat.two_pow_pred_lt_two_pow positive
   have markerBit : (mask width xs.length).testBit (width * i + (width - 1)) = true := by
-    simpa only [mask, List.getElem_replicate, Nat.testBit_two_pow_self] using
-      testBit_pack_lane width positive (List.replicate xs.length (2 ^ (width - 1)))
-        markerBound i (by simpa only [List.length_replicate] using xi)
+    change (pack width (List.replicate xs.length (2 ^ (width - 1)))).testBit
+      (width * i + (width - 1)) = true
+    rw [testBit_pack_lane width positive _ markerBound i
+      (by simpa only [List.length_replicate] using xi)]
+    simp only [List.getElem_replicate, Nat.testBit_two_pow_self]
   have packedBit : (pack width zs).testBit (width * i + (width - 1)) = true := by
     have bits := congrArg (fun n : ℕ => n.testBit (width * i + (width - 1))) guard
+    change ((pack width zs) &&& (mask width xs.length)).testBit
+      (width * i + (width - 1)) =
+        (mask width xs.length).testBit (width * i + (width - 1)) at bits
     simpa only [Nat.testBit_and, markerBit, Bool.and_true] using bits
   have digitBit : zs[i].testBit (width - 1) = true :=
     (testBit_pack_lane width positive zs zsBound i zi).symm.trans packedBit

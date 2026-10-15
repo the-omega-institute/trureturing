@@ -132,7 +132,7 @@ theorem valid_step_le (state : State Assignment) (operation : Elimination Assign
       simp only [next, State.value, List.map_cons, List.sum_cons, add_assoc]
     _ ≤ state.constant + (operation.bucket.map (fun f => f e)).sum +
           (operation.rest.map (fun f => f e)).sum :=
-      add_le_add_right (add_le_add_left (receipt e) state.constant) _
+      add_le_add (add_le_add le_rfl (receipt e)) le_rfl
     _ = state.value e := by
       simp only [State.value, sums, add_assoc]
 
@@ -159,7 +159,7 @@ private theorem terminal_le (state : State Assignment) (gap : ℤ)
     List.Forall₂.imp (fun _ _ lower => lower e) bounds
   have mapped : List.Forall₂ (· ≤ ·) minima (state.factors.map (fun f => f e)) :=
     List.forall₂_map_right_iff.mpr pointwise
-  exact threshold.trans (add_le_add_left mapped.sum_le_sum state.constant)
+  exact threshold.trans (add_le_add le_rfl mapped.sum_le_sum)
 
 /-- A complete valid program and terminal receipts imply the threshold for
 the original score. Initial factor coverage and score soundness stay explicit. -/
