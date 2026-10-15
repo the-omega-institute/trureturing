@@ -7,11 +7,6 @@
    digest: The G-test threshold prior is its orbit count divided by word count plus orbit count. -/
 
 import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 /-!
 The position action uses inverse permutations. The fixed-unitary twirl has the same tested
