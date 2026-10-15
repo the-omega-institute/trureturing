@@ -103,7 +103,8 @@ private theorem K_coisometry : K * Kᴴ = (1 : QubitMatrix) := by
     generalize (Real.sqrt (3 : ℝ))⁻¹ = t
     fin_cases i <;> fin_cases j <;>
       norm_num [u.eq_1, w.eq_1, Fintype.sum_prod_type, Fin.sum_univ_two,
-        Complex.star_def, map_ofNat] <;> ring
+        Complex.star_def, map_ofNat]
+    all_goals ring
   have hn : ((Real.sqrt 3 : ℂ)⁻¹) ^ 2 = (1 / 3 : ℂ) := by
     simpa only [pow_two, one_div] using
       D5.S3.Quantum.Entanglement.QutritThresholdSharing.normalization
