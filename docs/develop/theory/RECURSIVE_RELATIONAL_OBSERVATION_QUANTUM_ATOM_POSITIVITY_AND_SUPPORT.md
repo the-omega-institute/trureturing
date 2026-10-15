@@ -1101,3 +1101,791 @@ No such bound follows from the passive coordinate changes, finite
 quadrature or zero-wait performance attainment.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Interior cubic contact and the entire equality face
+
+**Definition 7.1 (A fixed positive form and its zero face).** Fix one
+triple $\mathfrak d=(C,y,\delta)$ of Definition 3.1 satisfying the
+global conditions of Theorem 3.2. All blocks, coefficients and kernels
+in this section refer to this same triple. Write
+$\Delta_2^\circ=\{p\in\Delta_2:p_0p_+p_->0\}$ and put
+
+$$
+\begin{gathered}
+\ell_{\mathfrak d}(M,\eta)
+=y^TM^T\tau-\langle C,M\rangle-\sum_\nu\delta_\nu\eta_\nu,\\
+\mathcal E_{\mathfrak d}
+=\{x\in\mathcal K:\ell_{\mathfrak d}(x)=0\},\qquad
+\mathcal E_{\mathfrak d,\partial}
+=\mathcal E_{\mathfrak d}\cap\mathcal K_\partial,\\
+\mathcal P_{\mathfrak d}
+=\{p\in\Delta_2^\circ:\mathscr F(p)=0\}.
+\end{gathered}
+\tag{7.1}
+$$
+
+For unit factors, (3.6) gives
+$\ell_{\mathfrak d}(k(a,b))=b^T\mathcal B_{\mathfrak d}(a)b$,
+since $\tau^Th(a)=1$. Thus $\ell_{\mathfrak d}$ is nonnegative
+on the whole cone, and $\mathcal E_{\mathfrak d}$ is its exposed
+zero face. The zero functional is allowed and gives the whole cone.
+No TP or event-multiplier realizability is assumed for an arbitrary
+$\mathfrak d$ here. In the application to Definition 5.1 both must
+be imposed separately.
+
+**Theorem 7.2 (Exact interior-zero alternatives for the radial cubic).**
+For the actual determinant $\mathscr F$ of (3.4), precisely one
+of the following alternatives holds:
+
+(a) $\mathcal P_{\mathfrak d}$ is empty.
+
+(b) $\mathcal P_{\mathfrak d}=\{p_*\}$ is a single point.
+
+(c) There are nonzero real homogeneous linear forms $l,m$ such that
+
+$$
+\mathscr F=l^2m,\qquad
+m(p)=m_0p_0+m_+p_++m_-p_-,\qquad m_i\ge0,\qquad
+\mathcal P_{\mathfrak d}=\{p\in\Delta_2^\circ:l(p)=0\}\ne\varnothing.
+\tag{7.2}
+$$
+
+(d) $\mathscr F$ is identically zero and
+$\mathcal P_{\mathfrak d}=\Delta_2^\circ$.
+
+If $\mathscr F$ is not identically zero, every interior zero has
+multiplicity exactly two on the affine plane $\sum_ip_i=1$.
+In case (b) the quadratic term there is positive definite; in
+case (c) it has rank one. In both cases the actual radial block
+has rank exactly two at every interior zero. More generally, an
+interior radial kernel of dimension at least two forces case (d).
+For any case, including (d), the exact pointwise radial rank is
+determined by its principal minors: a singular PSD block has rank
+two if some principal $2\times2$ minor is positive, rank one if
+all those minors vanish and some diagonal entry is positive, and
+rank zero if all diagonal entries vanish. The condition $uvw>0$
+ensures rank two at any singular interior block even in case (d).
+
+Proof. The cubic is homogeneous and nonnegative on the entire
+nonnegative orthant by Theorem 3.2 and homogeneity. First use only
+these two properties. Suppose distinct $p,q\in\Delta_2^\circ$
+are zeros. Restrict the cubic to their affine line. Nonnegativity
+holds on an open interval about each point, so each zero of a
+nonzero restriction has even multiplicity at least two. A polynomial
+of degree at most three cannot have both zeros. The restriction
+therefore vanishes identically.
+
+Homogeneity makes $\mathscr F$ vanish on the two-dimensional
+linear plane spanned by $p,q$. If $l$ is a linear equation of
+that plane, polynomial division gives $\mathscr F=lQ$, with
+$Q$ homogeneous quadratic. At each positive point of this plane,
+$l$ changes sign transversely inside the positive orthant. Unless
+$Q$ also vanishes there, $lQ$ changes sign. Thus $Q$ vanishes
+on an open subset of that plane, and division again gives $Q=lm$.
+Off the plane, $m=\mathscr F/l^2\ge0$ in the positive orthant;
+continuity extends this inequality to the plane and to the closed
+orthant. Evaluation on its coordinate rays gives $m_i\ge0$.
+If the cubic is nonzero, $m$ is nonzero and strictly positive at
+every positive point. Its interior zeros are therefore exactly the
+line section in (7.2). If the cubic vanishes on all of
+$\Delta_2^\circ$, it vanishes on an open set by homogeneity and
+is the zero polynomial. This proves the four exhaustive alternatives.
+
+At an interior zero $p_*$, restrict to the affine population plane
+and translate $p_*$ to zero. The resulting polynomial has zero
+constant and linear terms and can be written $Q_2+Q_3$, with
+$Q_j$ homogeneous of degree $j$. Here $Q_2\succeq0$ by local
+nonnegativity. If $Q_2=0$, the odd polynomial $Q_3$ is nonnegative
+in a neighborhood only if it vanishes, forcing the original cubic
+to vanish identically. If $Q_2$ has a null direction $v$, the
+restriction to that line is $s^3Q_3(v)$, which must also vanish.
+It then supplies a second nearby interior zero. Consequently the
+singleton case has positive-definite $Q_2$. Formula (7.2) gives
+the rank-one quadratic term $m(p_*)l(p_*+v)^2$ in case (c).
+This also proves the asserted exact multiplicities.
+
+The rank conclusion uses the actual matrix, rather than just an
+arbitrary nonnegative cubic. Its entries are smooth at positive
+populations. Suppose $\mathcal R(p_*)$ has rank one. Choose a
+constant orthonormal basis making its positive eigenvalue the first
+pivot. In a neighborhood in the affine population plane this pivot
+stays positive. Its $2\times2$ Schur complement $S(p)$ is PSD,
+is smooth, and satisfies $S(p_*)=0$. For every fixed real vector
+$v$, the nonnegative scalar $v^TS(p)v$ has a local minimum zero,
+so its first derivatives vanish. Polarization makes every first
+derivative of $S$ zero. Along any affine line through $p_*$,
+$S(p_*+sh)=O(s^2)$, hence
+
+$$
+\mathscr F(p_*+sh)
+=\text{(positive pivot)}\det S(p_*+sh)=O(s^4).
+\tag{7.3}
+$$
+
+This restriction is a polynomial of degree at most three and is
+therefore identically zero. Varying the line shows that the cubic
+vanishes on the affine plane, and homogeneity gives case (d).
+If the rank is zero, each nonnegative linear diagonal $A_i$ vanishes
+at a positive population. Its nonnegative coefficients must all
+vanish. PSD then forces every off-diagonal entry to vanish as well,
+and again $\mathscr F=0$. Thus every interior zero of a nonzero
+cubic has rank two. The principal-minor rank tests are the usual
+Gram-matrix rank tests for PSD matrices. Finally a rank-one PSD
+$3\times3$ matrix has nonnegative product of its three off-diagonal
+entries. Here that product is $-uvw\,p_0p_+p_-$, strictly negative
+when $uvw>0$ and $p\in\Delta_2^\circ$. This excludes ranks zero
+and one at a singular block and proves the last assertion. $\square$
+
+**Theorem 7.3 (Equality-face classification, including the exceptions).**
+With the preceding hypotheses the entire face is
+
+$$
+\mathcal E_{\mathfrak d}
+=\mathcal E_{\mathfrak d,\partial}
++\operatorname{cone}\{k(a(p),b):p\in\mathcal P_{\mathfrak d},\quad
+b\in\ker\mathcal R(p),\ \|b\|=1\},
+\tag{7.4}
+$$
+
+where radial vectors are embedded in $V_{\rm rad}$. In case (a)
+the second cone is $\{0\}$. In case (b), choose a unit generator
+$b_*$ of the one-dimensional kernel; then the second cone is the
+single ray $\mathbb R_{\ge0}k(a(p_*),b_*)$. If $b_*$ misses a
+sector, that ray already belongs to
+$\mathcal E_{\mathfrak d,\partial}$. In case (c), the radial
+generators range over exactly the line section in (7.2), with their
+rank-two kernel lines. In case (d), they range over all interior
+populations with the actual kernels, including the higher-dimensional
+kernels distinguished in Theorem 7.2. Neither exceptional case
+permits replacing that family by a single preparation population.
+
+For an explicit description of the boundary term, take every
+canonical split zero seed from Theorem 2.2 for which either factor
+misses a sector. Its radial part obeys
+$b\in\ker\mathcal R(p)$, and its tangent part obeys
+$b\in\ker\mathcal T(p)$. These seeds generate exactly
+$\mathcal E_{\mathfrak d,\partial}$, including vertices, edges,
+zero diagonal coefficients, vanishing couplings and all tangent
+kernels. A tangent measurement always misses the dark sector even
+when its preparation is interior.
+
+Proof. Decompose any point of the zero face into finitely many
+product generators and apply Theorem 2.2 without changing the point.
+Every resulting summand has nonnegative $\ell_{\mathfrak d}$;
+their sum is zero, so every positive-weight summand has zero pairing.
+For a PSD matrix a zero quadratic form is equivalent to membership
+in its kernel. Equation (3.8) therefore puts every split measurement
+in the stated radial or tangent kernel. Preparations on the boundary,
+measurements missing any sector, and all tangent measurements belong
+to the boundary term. Every remaining seed is radial with an interior
+preparation and $\det\mathcal R(p)=0$. This proves one inclusion
+in (7.4); every displayed generator has zero pairing, proving the
+reverse inclusion. Canonical rotations preserve sector populations,
+and splitting cannot fill a missing sector, which also proves the
+description of the boundary term. The alternatives and kernel
+dimensions now follow from Theorem 7.2; the two unit vectors on a
+kernel line differ by a sign and give the same product atom.
+$\square$
+
+**Proposition 7.4 (Genuine line and rank degeneracies in the actual form).**
+The exceptional cases cannot be discarded from arbitrary globally
+positive QAP forms. In particular, writing $s=p_0+p_++p_-$,
+the choices
+
+$$
+\begin{gathered}
+(A_0,A_+,A_-)=(s,s,p_0+p_+),\\
+(u,v,w,t)=(2,1,1,0),\qquad
+\mathcal T(p)=\operatorname{diag}(s,p_0+p_+)
+\end{gathered}
+\tag{7.5}
+$$
+
+are globally PSD and give $\mathscr F=s(p_0-p_+)^2$.
+An identically-zero cubic with rank-two interior blocks is given by
+
+$$
+\mathcal R(p)=\operatorname{diag}(\sqrt p)
+\begin{pmatrix}2&-1&-1\\-1&2&-1\\-1&-1&2\end{pmatrix}
+\operatorname{diag}(\sqrt p),\qquad
+\mathcal T(p)=\operatorname{diag}(2p_+,2p_-).
+\tag{7.7}
+$$
+
+Another allowed form has
+$\mathcal R(p)=\operatorname{diag}(s,0,0)$ and
+$\mathcal T(p)=0$; it has identically zero cubic and a
+two-dimensional radial kernel at every population in the simplex.
+The zero form gives the three-dimensional radial kernel.
+
+Proof. In (7.5), use $\delta_{2+}=\delta_{2-}=0$,
+$\delta_+=4$, $\delta_-=2$, and
+$\delta_\Delta=\delta_\Sigma=2$. Set $y=0$ and, for the
+displayed diagonals $A_j(p)=\sum_k\alpha_{jk}p_k$, take
+$C_{kj}=-\sqrt{n_kn_j}\alpha_{jk}$. This is exactly (3.2),
+so the example belongs to the actual fifteen-coefficient family.
+Writing $a_i=\sqrt{p_i}$, its radial quadratic form is
+
+$$
+b^T\mathcal R(p)b
+=\sum_{i<j}(a_ib_j-a_jb_i)^2+(a_0b_0-a_+b_+)^2.
+\tag{7.6}
+$$
+
+Expansion proves the claimed block entries and positivity;
+the tangent diagonal is nonnegative. Expansion of (3.4) gives
+$s(p_0-p_+)^2$. For (7.7), use $y=0$,
+$C=-\operatorname{diag}(2,4,4)$,
+$\delta_+=\delta_-=\delta_\Delta=\delta_\Sigma=2$ and
+$\delta_{2+}=\delta_{2-}=0$. The constant radial matrix is
+$3I-\mathbf1\mathbf1^T$, with eigenvalues $0,3,3$.
+Congruence by the invertible diagonal at an interior population
+gives rank two, and its determinant vanishes identically.
+For the rank-one example take all $\delta=0$,
+$y=0$, $C_{k0}=-\sqrt{n_k}$ and $C_{k+}=C_{k-}=0$.
+Equation (3.2) gives the stated blocks. All zero coefficients give
+the zero form. These examples concern positive atom forms; no
+realization of their coefficients by normalized positive event
+multipliers is asserted. $\square$
+
+## 8. Full TP feasibility of a zero face
+
+**Definition 8.1 (Zero-seed measurement populations).** Retain the same
+fixed positive form. Let $\mathcal Z_{\mathfrak d}$ contain all
+pairs $(p,b)$ with $p\in\Delta_2$, $b$ a real unit vector in
+$V_{\rm rad}$ or $V_{\rm tan}$, and
+$\mathcal B_{\mathfrak d}(a(p))b=0$. Define
+
+$$
+q(b)=(\|R_0b\|^2,\|R_+b\|^2,\|R_-b\|^2),\qquad
+\mathcal Q_{\mathfrak d}
+=\{q(b):(p,b)\in\mathcal Z_{\mathfrak d}\},\qquad
+q_{\rm TP}=\frac15(1,2,2).
+\tag{8.1}
+$$
+
+The convex hull of the empty set is empty. Both radial and tangent
+seeds, and all boundary populations, occur in this definition.
+
+**Theorem 8.2 (Exact full-marginal convex-hull criterion).** The zero
+face contains a TP point if and only if
+
+$$
+q_{\rm TP}\in\operatorname{conv}\mathcal Q_{\mathfrak d}.
+\tag{8.2}
+$$
+
+Whenever (8.2) holds, some TP point in that face is a sum of at
+most three canonical split seeds and has a fixed scalar-port
+realization with at most $75$ flags and whole-block CPTP decoders.
+This is a representative for face and TP feasibility. It need not
+equal any specified channel in the face, preserve that channel's
+event residuals or satisfy its event bounds. In particular it is
+not a three-seed or $75$-flag reduction of the original minimax.
+
+Proof. The input marginal of a unit canonical atom is the invariant
+measurement matrix
+
+$$
+\operatorname{Tr}_{\rm out} Z(k(a(p),b))
+=\sum_i\frac{q_i(b)}{n_i}R_i.
+\tag{8.3}
+$$
+
+This follows either by averaging $bb^T$ or by (1.9): its invariant
+coordinates are $h_i(b)=q_i(b)/\sqrt{n_i}$. Suppose a TP point
+of the face has a split zero-seed decomposition
+$x=\sum_jw_jk(a(p_j),b_j)$, omitting zero weights. By (8.3),
+its full TP equations are
+
+$$
+\sum_jw_jq_i(b_j)=n_i\quad(i=0,+,-).
+\tag{8.4}
+$$
+
+Summing gives $\sum_jw_j=5$, so (8.4) is precisely the convex
+representation $q_{\rm TP}=\sum_j(w_j/5)q(b_j)$.
+Conversely any finite convex representation
+$q_{\rm TP}=\sum_j\lambda_jq(b_j)$ supplies
+$x=5\sum_j\lambda_jk(a(p_j),b_j)$ in the zero face, and
+(8.3) proves its whole matrix marginal is $I_5$, not just that
+its trace is five.
+
+The points $q(b_j)$ lie in the affine two-dimensional simplex.
+The elementary affine-dependence proof of Carathéodory's theorem
+reduces any such convex representation to at most three points:
+with more than three positive weights, choose a nonzero affine
+dependence, whose coefficients sum to zero, and subtract a maximal
+nonnegative multiple until one weight vanishes. Repeat. This
+changes the chosen point $x$ in general, while preserving (8.4)
+and zero pairing.
+
+For $m\le3$ remaining seeds, apply exactly the $25$-point formula
+(2.8). With $g_{kl}$ as there, use per-flag coefficients
+$c_{jkl}=\lambda_j/5$, measurement vectors $g_{kl}b_j$ and
+preparation vectors $g_{kl}a(p_j)$. Their measurement sum is $I_5$
+by (8.3)–(8.4), and every preparation is unit. Formula (2.9)
+therefore gives a TP encoder and a CPTP decoder on each entire
+scalar block; each nonzero composite Kraus matrix has rank one.
+There are at most $25m\le75$ flags, all fixed and consumed in
+decoding. This proves precisely the asserted feasibility and resource
+statement. $\square$
+
+**Proposition 8.3 (A unique full-sector contact need not allow TP).**
+There is a globally positive form in the actual QAP family with
+exactly one zero preparation population, a radial kernel line with
+all measurement populations positive, and no TP point on its zero
+face. Take
+
+$$
+\begin{gathered}
+(A_0,A_+,A_-)=(s,s+p_+,s),\qquad
+(u,v,w,t)=(2,1,2,0),\qquad
+\mathcal T(p)=\operatorname{diag}(s+p_+,s),\\
+y=0,\qquad
+C=\begin{pmatrix}
+-1&-\sqrt2&-\sqrt2\\
+-\sqrt2&-4&-2\\
+-\sqrt2&-2&-2
+\end{pmatrix},\qquad
+(\delta_+,\delta_-,\delta_{2+},\delta_{2-},
+\delta_\Delta,\delta_\Sigma)=(4,2,0,0,4,4).
+\end{gathered}
+\tag{8.5}
+$$
+
+Proof. With $a_i=\sqrt{p_i}$ the radial form is
+
+$$
+\sum_{i<j}(a_ib_j-a_jb_i)^2
++(a_0b_0-a_+b_+)^2+(a_+b_+-a_-b_-)^2.
+\tag{8.6}
+$$
+
+Its expansion agrees with (8.5), proving PSD for every population,
+including the boundary. The tangent block is positive definite on
+the simplex. Zero in (8.6) forces $b$ proportional to the nonzero
+vector $a$. The last two squares then force
+$p_0=p_+=p_-=1/3$. At this population,
+
+$$
+\mathcal R(p_*)=\frac13
+\begin{pmatrix}3&-2&-1\\-2&4&-2\\-1&-2&3\end{pmatrix},
+\qquad \ker\mathcal R(p_*)=\mathbb R(1,1,1).
+\tag{8.7}
+$$
+
+Its first $2\times2$ principal minor is $8/9>0$, so its rank
+is two. There are no other zero seeds, even on the boundary.
+Consequently $\mathcal Q_{\mathfrak d}=\{(1,1,1)/3\}$, whose
+convex hull excludes $q_{\rm TP}$. Theorem 8.2 proves the failure
+of TP feasibility. As in Proposition 7.4, this is an atom-form
+example, with no assertion that its coefficients are those of a
+normalized event tuple. $\square$
+
+## 9. A complex obstruction to constant preparation populations
+
+**Definition 9.1 (The exact restricted representation class).** For a
+complex density matrix $\sigma$ in the passive frame let
+$p_i(\sigma)=\operatorname{tr}(R_i\sigma)$. Say that an original
+scalar port admits a constant-preparation-population realization if
+it has a finite representation
+
+$$
+\widehat T(X)=\sum_f\sigma_f\operatorname{tr}(M_fX),\qquad
+\sigma_f\succeq0,\quad\operatorname{tr}\sigma_f=1,\quad
+M_f\succeq0,\quad\sum_fM_f=I_5,\quad
+p(\sigma_f)=p\in\Delta_2\ \text{for every nonzero }M_f.
+\tag{9.1}
+$$
+
+Preparations and effects may be arbitrary complex matrices; the
+preparations may be mixed and the effects need not have rank one.
+This is a property of an admitted realization, not an assumption on
+all competitors and not merely a condition on $T(I_5/5)$.
+Pure preparations with one common population are included. Mixed
+preparations are not assumed to possess a pure-state refinement
+with that common population.
+
+**Theorem 9.2 (Uniform obstruction, including mixed complex decoders).**
+Every original complex scalar port admitting (9.1) satisfies
+
+$$
+e(T)\ge \frac{11}{20}+c_{\rm pop}>\frac{11}{20},\qquad
+c_{\rm pop}=\frac{21456}{9370805}.
+\tag{9.2}
+$$
+
+The same inequality covers pure and mixed decoders under their
+respective hypotheses in Definition 9.1. It is a lower bound for
+this restricted representation class, not a new unrestricted lower
+on $\varepsilon_1$.
+
+Proof. Use the weighted actual-time survival moment of
+[QEC, Proposition 2.2](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CLASSICAL_PORT_EXACT_CERTIFICATES.md).
+For clarity its normalizations and the coefficients used here are
+
+$$
+\begin{gathered}
+\chi_T=\frac15\sum_f\sigma_f\otimes M_f^T,\qquad
+\mathcal W=\lim_{H\to\infty}\frac1H\int_0^H
+\sum_sa_sQ_s(t)\otimes Q_s(t)\,dt,\qquad
+a=(9/4,3/4,5/4,3/4,0),\\
+\mathscr S(T)=\operatorname{tr}(\chi_T\mathcal W),\qquad
+e(T)\ge1-\mathscr S(T),\\
+\kappa_0=\frac18,\quad
+\kappa_+=\frac{331-3r}{2176},\quad
+\kappa_-=\frac{331+3r}{2176},\\
+b_{0+}=\frac{51+9r}{544},\quad
+b_{0-}=\frac{51-9r}{544},\quad b_{+-}=\frac{49}{272},
+\qquad r=\sqrt{17}.
+\end{gathered}
+\tag{9.3}
+$$
+
+All six coefficients are positive. The moment and survival comparison
+hold before any stationarity or real replacement. The comparison uses
+only allowed inputs $DQ_s(t)D^\dagger$, actual wait $t$, a full
+mode read and Stop: the unreplaced input yields $s$ with probability
+one, and the replaced survival probability is
+$\operatorname{tr}(Q_s(t)\widehat T(Q_s(t)))$.
+
+For real-sector projections $R_i$ and unit complex vectors $a,c$,
+put $p_i=\|R_ia\|^2$, $q_i=\|R_ic\|^2$. QEC's moment expansion
+gives the following upper bound on its complex product expectation:
+
+$$
+\begin{aligned}
+\langle a\otimes c,\mathcal W(a\otimes c)\rangle
+\le{}&\sum_i3\kappa_i p_iq_i\\
+&+\sum_{i<j}b_{ij}
+\left(p_iq_j+p_jq_i+4\sqrt{p_ip_jq_iq_j}\right).
+\end{aligned}
+\tag{9.4}
+$$
+
+Indeed the same-sector identity, swap and trace-projector terms
+have expectations $p_iq_i$, $|a_i^\dagger c_i|^2$ and
+$|a_i^Tc_i|^2$. Each of the last two is at most $p_iq_i$.
+For a pair of sectors, each of the cross swap and cross trace terms
+is at most $2\sqrt{p_ip_jq_iq_j}$ by Cauchy–Schwarz and taking
+real parts. The identity terms are $p_iq_j+p_jq_i$. This proves
+(9.4) with complex phases retained, rather than assuming real Kraus
+factors. Here $a_i=R_ia$, $c_i=R_ic$.
+
+Spectrally refine each $M_f$ and each $\sigma_f$ independently.
+The input factor of a product Choi term is the conjugate of a
+measurement eigenvector. Conjugation preserves its populations
+because the $R_i$ are real. If
+$\sigma_f=\sum_\alpha\lambda_{f\alpha}
+a_{f\alpha}a_{f\alpha}^\dagger$, its pure-state populations
+$p_{f\alpha}$ need not be constant, but satisfy
+
+$$
+\sum_\alpha\lambda_{f\alpha}p_{f\alpha,i}=p_i,\qquad
+\sum_\alpha\lambda_{f\alpha}
+\sqrt{p_{f\alpha,i}p_{f\alpha,j}}
+\le\sqrt{p_ip_j}.
+\tag{9.5}
+$$
+
+The inequality is Cauchy–Schwarz for the two nonnegative square-root
+sequences. Average (9.4) over this spectral refinement first.
+Its linear population terms use the first identity of (9.5), and
+its square-root terms use the second. Thus it is bounded by (9.4)
+with the stipulated common mixed-state population $p$ for every
+measurement eigenvector.
+
+The measurement eigenvectors have total normalized weight one,
+with weights equal to their effect eigenvalues divided by five.
+Their mean populations, by the same full TP sum $\sum_fM_f=I$,
+are exactly
+
+$$
+\overline q_i=\frac{\operatorname{tr}R_i}{5}
+=q_{{\rm TP},i},\qquad
+\overline{\sqrt{q_iq_j}}
+\le\sqrt{q_{{\rm TP},i}q_{{\rm TP},j}}.
+\tag{9.6}
+$$
+
+Averaging again in (9.4) proves
+$\mathscr S(T)\le x^TPx$, where $x_i=\sqrt{p_i}$,
+$\|x\|=1$, and the single real symmetric matrix is
+
+$$
+P=\begin{pmatrix}
+3/20&\sqrt2(51+9r)/1360&\sqrt2(51-9r)/1360\\
+\sqrt2(51+9r)/1360&(1487+9r)/5440&49/340\\
+\sqrt2(51-9r)/1360&49/340&(1487-9r)/5440
+\end{pmatrix}.
+\tag{9.7}
+$$
+
+For example its diagonal entries are
+$3\kappa_iq_{{\rm TP},i}+\sum_{j\ne i}b_{ij}q_{{\rm TP},j}$,
+and its off-diagonal entries are
+$2b_{ij}\sqrt{q_{{\rm TP},i}q_{{\rm TP},j}}$.
+These identities fix every normalization in (9.7).
+
+There is an exact positive-definiteness certificate. For
+$E=\operatorname{diag}(1/\sqrt2,1,1)$, put
+
+$$
+N=5440E\left(\frac9{20}I-P\right)E
+=\begin{pmatrix}
+816&-204-36r&-204+36r\\
+-204-36r&961-9r&-784\\
+-204+36r&-784&961+9r
+\end{pmatrix}.
+\tag{9.8}
+$$
+
+Its leading principal minors are
+$816$, $720528-22032r>610368$ (using $r<5$), and $93376512$.
+They are positive, so Sylvester's criterion gives $N\succ0$.
+Also $\operatorname{tr}N=2738$. If its positive eigenvalues
+are ordered increasingly, their product and sum give
+
+$$
+N\succeq\frac{\det N}{(\operatorname{tr}N)^2}I,\qquad
+\frac9{20}I-P
+\succeq\frac{93376512}{5440\cdot2738^2}I
+=c_{\rm pop}I.
+\tag{9.9}
+$$
+
+For the second inequality, conjugate by $E^{-1}$ and use
+$E^{-2}\succeq I$. Thus $\mathscr S(T)\le9/20-c_{\rm pop}$,
+and (9.3) proves (9.2). All arguments include zero populations and
+zero spectral eigenvalues, which are simply omitted rather than
+divided by. No symmetry, unitality, self-adjointness or purity of
+the original complex channel was used. $\square$
+
+**Theorem 9.3 (Finite actual tests for the restricted obstruction).**
+For any rational $0<\epsilon<1$, set
+
+$$
+h=\epsilon/48,\qquad
+n=\left\lceil153600/\epsilon^2\right\rceil,\qquad
+H=nh,\qquad \mathcal W_\epsilon=\{jh:0\le j\le n\}.
+\tag{9.10}
+$$
+
+For every channel of Definition 9.1 some test with
+$s\in\{N,2,3,5\}$ and $t\in\mathcal W_\epsilon$, input
+$DQ_s(t)D^\dagger$, actual wait $t$, a full mode read and Stop,
+has TV strictly greater than $11/20+c_{\rm pop}-\epsilon$.
+There are $4(n+1)$ alternatives, and
+$3200/\epsilon\le H\le3200/\epsilon+\epsilon/48$.
+In particular $\epsilon=c_{\rm pop}$ gives a finite family
+witnessing TV strictly above $11/20$.
+
+Proof. Apply the finite-Fourier and derivative estimates in QEC
+Theorem 2.6 to the improved mean-survival inequality (9.9).
+Those estimates hold for every complex CPTP channel: its normalized
+weighted survival has at most $40$ nonconstant Fourier frequencies,
+each with coefficient modulus at most one; their nonzero actual
+frequencies have modulus greater than $1/10$. Its finite forward
+mean differs from its limiting mean by less than $800/H$, and
+each mode survival has derivative modulus less than $12$.
+With (9.10) the mean error is less than $\epsilon/4$.
+Some positive-weight mode at a time in $[0,H]$ therefore has
+failure at least $11/20+c_{\rm pop}-\epsilon/4$.
+Moving to a grid point within $h$ loses at most $\epsilon/4$.
+The resulting TV is at least
+$11/20+c_{\rm pop}-\epsilon/2$, proving the strict stated
+threshold. The time bounds follow from the ceiling.
+
+This is a finite family of permitted alternative tests. It does
+not add independent torus controls or an input probability oracle,
+and does not bound physical preparation, clock precision or sample
+cost. The finite Fourier estimates are the credited QEC ingredient;
+their use here transports the restricted-class mean obstruction
+to finite original-menu waits. $\square$
+
+## 10. Boundary contact forced on every matching certificate
+
+**Theorem 10.1 (Necessary boundary preparation contact).** Take one
+normalized event/TP tuple of Definition 5.1 whose actual form is
+globally positive. Put $c=\beta-\tau^Ty$. If an original legal
+complex scalar port satisfies
+
+$$
+e(T)=c<\frac{11}{20}+c_{\rm pop},
+\tag{10.1}
+$$
+
+then there are $p\in\partial\Delta_2$ and a nonzero real
+measurement vector $b$ with
+
+$$
+\mathcal B_{C,y,\delta}(a(p))b=0.
+\tag{10.2}
+$$
+
+Consequently at least one of the fifteen nonnegative coefficient
+conditions in (3.5) is an equality, or one of its four square-root
+pair inequalities is saturated. This applies, in particular, to
+every such certificate matching the original $\varepsilon_1$ at
+the credited frontier. It conditions on a globally valid matching
+tuple; it does not assert that such a tuple exists. Nor does it
+assert positive primal weight at the boundary contact (10.2).
+
+Proof. Suppose instead that the matrix at every boundary preparation
+is positive definite. Its vertex tests make all fifteen $\alpha$
+and $\beta$ coefficients strictly positive. For an interior
+population, the tangent block decomposes as
+
+$$
+\mathcal T(p)
+=\mathcal T(0,p_+,p_-)
++p_0\operatorname{diag}(\beta_{+0},\beta_{-0})\succ0.
+\tag{10.3}
+$$
+
+The first term is PSD by global positivity and homogeneity, and
+the second is positive definite. Thus there are no tangent kernels
+anywhere in the simplex. Also $\mathscr F$ is strictly positive
+on the boundary. The identically-zero case of Theorem 7.2 is
+impossible. Its line case is impossible too: the closure of a
+nonempty interior line section meets the boundary, where continuity
+would give a zero. Hence there is at most one interior radial zero
+population $p_*$.
+
+Theorem 5.2 lower-bounds every original complex port by $c$.
+The credited no-worse replacement of Definition 1.5 sends the
+assumed $T$ to a selected real stationary reflected channel $S_x$
+with $e(S_x)\le c$. The same lower forces equality. Take a finite
+real-product representation of this same $x$ and apply (5.4)
+with $z=e(S_x)=c$. Every positive-weight atom has zero slack.
+Theorem 2.2 preserves the whole channel while splitting it into
+canonical zero seeds. Boundary preparations are impossible under
+the assumed strict boundary positivity; tangent seeds are impossible
+by (10.3). If no interior radial zero exists there can be no seeds,
+contradicting TP. Otherwise every remaining preparation has the one
+population $p_*$. The exact $25$-point realization in Theorem 2.3
+rotates these unit preparations within their sectors. It therefore
+realizes this same $S_x$ with pure decoders all having population
+$p_*$. Theorem 9.2 applies to that legitimate realization and gives
+$e(S_x)\ge11/20+c_{\rm pop}$, contradicting (10.1).
+Thus (10.2) holds.
+
+For the finite saturation consequence, suppose all fifteen
+coefficients were positive and all four pair inequalities strict.
+On a radial boundary face the row of the missing population
+decouples with positive diagonal; the other two-by-two block is
+positive definite by the strict binary inequality proved in
+(3.10)–(3.11). Vertices have positive diagonal matrices. The
+tangent block on $p_0=0$ is positive definite by its strict binary
+inequality, and on $p_0>0$ it is positive definite by (10.3).
+Every boundary matrix would be positive definite, contradicting
+(10.2). Global positivity already gives the non-strict versions,
+so at least one of these nineteen tests must be at equality.
+$\square$
+
+**Theorem 10.2 (Scope at the original numerical frontier).** Let
+$e_{\rm mix}=\lambda_{\rm mix}$ be the exact error in
+[QSD, Definition 5.1 and Theorem 5.2](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_SPLITTING_EVENTS_AND_DECODER_DESCENT.md).
+The credited endpoints remain
+
+$$
+\frac{129931}{250000}\le\varepsilon_1\le e_{\rm mix},\qquad
+\frac{52417598}{10^8}<e_{\rm mix}<\frac{52417600}{10^8}.
+\tag{10.4}
+$$
+
+No original optimizer admits a constant-preparation-population
+realization as in Definition 9.1. Every normalized globally positive
+event/TP certificate that matches $\varepsilon_1$ has boundary
+preparation contact and finite-test saturation as in Theorem 10.1.
+These restrictions do not determine an optimizer, its positive-weight
+boundary support or the value of $\varepsilon_1$.
+
+Proof. The lower in (10.4) is QJM Theorem 2.3; the upper is the
+legal twenty-seven-flag all-fifteen-event channel of QSD Theorem 5.2.
+Its exact error is less than $52417600/10^8<11/20$.
+Theorem 9.2 therefore excludes the stated realization for any port
+attaining $\varepsilon_1$, and Theorem 10.1 applies to every
+matching tuple. These uses do not reprove or improve either endpoint.
+The earlier upper $\lambda_Q$ in (6.1), and the QEC and QWS
+bounds, retain their stated validity.
+
+Boundary dual contact is a zero of a nonnegative product form.
+Complementarity requires each positive-weight primal atom to be a
+zero; it does not require every zero to be used. In particular
+(10.2) alone supplies neither a positive weight nor a TP marginal.
+Theorem 8.2 tests TP feasibility of the whole zero face, and its
+three-seed representative may change all event values. A matching
+port still has to satisfy the same fifteen residual inequalities,
+all three TP equations and the active signed eigenspace conditions
+in (5.3). QSD's necessary splitting-event activity remains an
+additional common-channel condition. No optimizer is restricted
+to the displayed examples, a specified number of orbits, real
+factors of its unchanged complex representation, unitality,
+self-adjointness or preparation equal to measurement. $\square$
+
+**Definition 10.3 (Attribution and unresolved mathematical resources).**
+The zero-face conclusions, their actual radial-cubic rank refinement,
+the full-marginal population test and the constant-population/boundary
+contact obstruction are repository-derived applications with the
+proofs above. Mature ingredients are nonnegative-polynomial contact,
+PSD kernels and Schur complements, Cauchy–Schwarz, affine
+Carathéodory reduction and finite Fourier quadrature. The product-zero
+and derivative framework is discussed by
+[Hansen–Hauge–Myrheim–Sollid, §3–3.2](https://arxiv.org/pdf/1305.2385v2),
+which also credits Lewenstein and collaborators for the preceding
+witness-zero analysis. It is not a theorem evaluating this minimax.
+[Vollbrecht–Werner, §II.2](https://arxiv.org/html/quant-ph/0010095v1)
+supplies the invariant-product convex-hull framework; the actual
+group and full marginal here remain those of QRC and §§1–3.
+[Fuchs–Sasaki, §3, equations (13)–(16)](https://arxiv.org/html/quant-ph/0302092v3)
+studies the related ensemble-survival optimization. Its objective
+is used here only through the actual-menu lower comparison (9.3).
+
+[Horodecki–Shor–Ruskai, Theorem 4(A–D), version 2](https://arxiv.org/html/quant-ph/0302031v2)
+has complex measure-and-prepare, separable-Choi and rank-one-Kraus
+equivalences; its TP version explicitly adds POVM/Kraus completeness.
+In (9.1)–(9.6) the normalization is $\sum_fM_f=I_5$ and Choi
+order is output first, with transposed input effect. Neither
+separability alone nor correct total trace replaces this marginal.
+The PCP/TCP factor matrices in
+[Singh–Nechita, Definitions 2.6–2.7 and Theorem 2.9, version 2](https://arxiv.org/html/2010.07898v2)
+are complex. Their local diagonal symmetry classes and Proposition
+6.7 do not provide a real-factor extraction, PPT sufficiency or a
+matching theorem for the present $1+2+2$ walk. The real factors used
+in §§7–8 and 10 arise from the credited QRC replacement, which may
+change an original complex channel, followed by the unchanged-channel
+normal form of Theorem 2.2. No worldwide originality is asserted for
+these applications or their elementary ingredients.
+
+All results use exactly Assumption 1.1, one fixed finite scalar port
+and all complex inputs and actual finite histories in (1.3).
+The at-most-$75$ flags quantify existence on a specified zero face
+with TP; the credited $225$ bound concerns realization of a specified
+selected channel. Neither counts total design, synthesis or physical
+resources. Exact coefficients, finite classical flags and whole-block
+CPTP maps do not bound coefficient acquisition, finite-precision
+robustness, physical preparation, clock precision, transport, storage
+duration or sample cost. The finite tests (9.10) specify alternative
+mathematical waits and inputs under the independent preparation
+hypothesis; they add no allowed future operation.
+
+The unresolved joint obligation remains to supply one actual
+normalized all-fifteen-event tuple with all three TP multipliers,
+prove its global atom positivity including the interior cubic,
+and realize a legal port on its kernel face that satisfies the
+same TP and complementary signed event equations at the same value.
+The equality-face classification covers the line, zero-polynomial
+and rank exceptions but does not choose which occurs in a matching
+tuple. Positive contact, TP feasibility and event feasibility remain
+distinct conditions. PPT-to-scalar exact extraction is not supplied;
+the QME marginal-preserving repair remains conditional on its stated
+same-problem exact certificates. The original complex optimum,
+legal matching attainment, the $q=2,3,4$ optima, native preparation
+and cofinality, and complete mutual recovery among space, time,
+boundary and memory remain unresolved. These are ordinary
+mathematical arguments, without an additional Lean-verification
+or physical-realization claim.
+
+## 追加锚（本行以下为增补区）
