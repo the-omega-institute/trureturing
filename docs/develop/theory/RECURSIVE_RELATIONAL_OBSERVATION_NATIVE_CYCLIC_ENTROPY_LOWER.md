@@ -934,8 +934,7 @@ heavy-target theorem and its weights and strict lower consequence
 are repository-derived ordinary deductions here, rather than
 renamings of those suppliers. No worldwide novelty claim is made.
 
-NCM is a published ordinary draft whose ordinary mathematical
-review is complete and whose final qualifier review remains pending.
+NCM supplies ordinary theory.
 Its depth-two lower is a credited comparison, and its attained
 cycle is credited context. Neither its lower proof nor a review
 judgment is a premise of Theorems 2.2, 4.3, 6.1 or 6.2.
