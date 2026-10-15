@@ -125,7 +125,10 @@ internal sealed class QutritComplementaryEntropyFrontierDocument : IScribeDocume
                             + "exchanging the factors gives the reflected point. "
                             + "Thus the entropy bounds are attained throughout the "
                             + "closed parameter interval."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("czartowski-braun-zyczkowski-2019-qutrit-complementary-entropy-frontier"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration,
