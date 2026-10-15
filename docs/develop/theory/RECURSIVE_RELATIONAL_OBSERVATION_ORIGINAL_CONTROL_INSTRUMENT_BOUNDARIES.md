@@ -1965,3 +1965,768 @@ them is asserted. These are ordinary proofs, without new Lean verification,
 a physical realization or completion of the continuing programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Source-height programmes for a complete horizontal instrument
+
+Sections 17–23 price one missing calibration relation: a retained,
+source-bound programme enabling the next common horizontal request and its
+complete canonical successor. They use the full live algebra $M_3$ for the
+sharp programming theorem. Section 21 separately supplies an obstruction
+on actually reachable original pure states. These are different test
+contracts; neither asserts acquisition of the required programme.
+
+**Definition 17.1 (one lawful request at two heights).** Fix the double wall
+of §4, with $0<Z<1$, $c=(1-Z)/2$, the same positive preparation convention
+and calibrated directions $U_+,U_-,e_2$. Write these directions as
+$|+\rangle,|-\rangle,|2\rangle$, and let $V$ be their span. Choose
+
+$$
+0<x_1<x_2<c,\qquad 0<d<c-x_2,\qquad 0<L<\infty,\qquad v=d/L.
+\tag{OC.55}
+$$
+
+The public request is the same relative control $(vt,0)$ on $[0,L]$.
+At source height $x_j$ its actual probability coordinate is
+$k_j(t)=x_j+vt$ and its real phase lift is constant at its own prior value.
+Its mathematical starting-height domain is $(0,c-d)$. This is the partial
+relative operation of the probability/phase supplier, §9.1; naming it does
+not supply a physical actuator or the unknown starting height.
+Both paths have strict positive support and belong to both original
+regularity alternatives. Their own support margins are positive, with no
+uniform margin imposed over subsequent requests. Composition uses the
+literal translated tail of `concatenate_original`, without revealing the
+old real phase. All signed prior winding sectors remain allowed.
+
+**Proposition 17.2 (the prescribed complete maps).** Define positive numbers
+
+$$
+a_j=\sqrt{\frac{x_j}{x_j+d}},\qquad
+b_j=\sqrt{\frac{x_j(c-x_j-d)}{(x_j+d)(c-x_j)}}.
+\tag{OC.56}
+$$
+
+On $M_3$ the canonical terminal success operator and its failure densities
+are exactly
+
+$$
+\begin{aligned}
+K_j&=\operatorname{diag}_{(+,-,2)}(1,b_j,a_j),\\
+f_j(t)&=\frac{v x_j}{(x_j+vt)^2},\qquad
+ g_j(t)=\frac{c}{c-x_j}f_j(t),\\
+\mathcal I_{j,2}(dt)(\rho)
+ &=f_j(t)|f\rangle\langle2|\rho|2\rangle\langle f|\,dt,\\
+\mathcal I_{j,i}(dt)(\rho)
+ &=\frac{g_j(t)}2|f\rangle\langle-|\rho|-\rangle\langle f|\,dt
+ \quad(i=1,3),\\
+\mathcal I_{j,i}(dt)&=0\quad(i=0,4).
+\end{aligned}
+\tag{OC.57}
+$$
+
+All five original mode names are retained; index $4$ still means mode $13$.
+The record is success with its unnormalized live output, or the exact first
+failure time $t\in(0,L]$, its original mode and absorbing $f$. Already
+stopped inputs retain their old first-failure archive and stopped status;
+they are not new successful trials.
+
+Proof. For an increasing horizontal path, (OC.15) gives
+$\lambda=v/k_j$ and $S_j(t)=x_j/k_j(t)$. Every transported phase
+increment is zero. In (OC.19), the plus-direction attenuation is one,
+the middle attenuation squared is $S_j$, and the minus attenuation
+squared is $S_j(c-k_j)/(c-x_j)$. Their terminal values are (OC.56).
+The middle rate times its attenuation is $f_j$; the minus rate is
+$v/k_j+v/(c-k_j)$, whose product with its attenuation is $g_j$.
+Each of the original modes $1,3$ has half the reduced minus strength,
+as in Quantum Carrier Minimum (QC.10). Modes $0,4$ have zero rate.
+Fixed preparation phases in the individual jump Kraus operators cancel
+in their CP maps. Direct integration gives
+
+$$
+\int_0^L f_j=1-a_j^2,\qquad
+\int_0^L g_j=1-b_j^2,
+\tag{OC.58}
+$$
+
+so adding all failure effects to $K_j^*K_j$ gives $I_V$.
+The absorbing completion is the one already specified in (OC.19b).
+These calculations specialize that supplier; they introduce no new
+survival optimum. $\square$
+
+**Definition 17.3 (pure source-height programme contract).** At height $x_j$
+the complete source-dependent input available to a common processor, apart
+from its data specimen, is a normalized pure programme $r_j$. Its calibrated
+pair is specified, and ket phases are chosen so that
+$\langle r_1,r_2\rangle=\mu\in[0,1]$. All accessible history-bearing
+assistance is included jointly in this programme: source-dependent
+installed descriptions, controller/clock states, accessible archive ports,
+ancillas, receiver shares of prior entanglement and any later-returned
+environment cannot be left outside the count.
+
+The fixed public description includes the pair $(x_1,x_2)$, $c,d,L$,
+the calibrated basis, clock convention and the common processor. Knowing
+the public pair does not reveal its actual index. A fixed mixed blank
+ancilla can be purified independently of that index. No other
+source-correlated input arrives. A reference/archive $R$ may be retained
+and acted on by identity; it is unavailable as programming assistance.
+If a selector or later gate accesses a history-bearing part of it, that
+part belongs in the accessible programme and the hypothesis must be
+checked again.
+
+For each $j$ the processor must give (OC.57) on every live density operator,
+including after tensoring with identity on arbitrary unchanged quantum
+references. Thus the tested input is $\rho_{VR}\otimes|r_j\rangle\langle r_j|$
+for every $\rho_{VR}$. This is complete-map testing on $M_3$, stronger than
+testing only the original correlated pure orbit. Accessible output
+programme states may change or be consumed. No programme return condition
+is imposed in the necessity assertion. Calibrated operations, permission,
+blank resources and the exact time/mode recorder are explicit ideal
+services, without a finite-hardware or acquisition assertion.
+
+## 18. The sharp exact-time programme-overlap threshold
+
+**Theorem 18.1 (two-height complete-instrument programming).** Under
+Definitions 17.1 and 17.3 put
+
+$$
+\begin{aligned}
+H&=\int_0^L\sqrt{f_1(t)f_2(t)}\,dt\\
+ &=\frac{\sqrt{x_1x_2}}{x_2-x_1}
+   \log\frac{(x_1+d)x_2}{(x_2+d)x_1},\\
+G&=\int_0^L\sqrt{g_1(t)g_2(t)}\,dt
+  =\frac{cH}{\sqrt{(c-x_1)(c-x_2)}},\\
+\mu_{\rm time}
+ &=\min\left\{\frac{H}{1-a_1a_2},
+               \frac{G}{1-b_1b_2}\right\}.
+\end{aligned}
+\tag{OC.59}
+$$
+
+Every displayed denominator is positive. One common processor implements
+the complete CP-valued measures (OC.57) exactly if and only if
+$\mu\leq\mu_{\rm time}$. When it exists, a processor can return the same
+$r_j$, unchanged and uncorrelated with the live specimen/reference on
+success. This is return on success only. Failure may consume or alter the
+programme and has only its absorbing successor.
+
+The theorem is equality of the entire terminal instrument with all Borel
+time events, original modes and unnormalized successors. It is not only
+an endpoint conversion or agreement of probabilities on one specimen.
+It does not add an accessible intermediate quantum slot, a hidden Kraus
+index, a physical continuous monitor or a finite exact timestamp memory.
+
+Proof: necessity. Dilate the common processor on
+$V\otimes\operatorname{span}\{r_1,r_2\}$, keeping all auxiliary residues
+in the proof, whether accessible or not. The success CP map at programme
+$r_j$ has one Kraus operator $K_j$. Consequently its successful dilation
+has the form
+
+$$
+W_{\mathsf s}(q\otimes r_j)=K_jq\otimes e_j,
+\qquad \|e_j\|=1\quad(q\in V).
+\tag{OC.60}
+$$
+
+For completeness, a Kraus representation of a rank-one CP map consists
+of scalar multiples of its one Kraus operator: its positive Choi matrix
+has one-dimensional range, and every positive summand has that range.
+Collecting the scalars gives the unit vector $e_j$. Thus (OC.60) is
+independent of the data $q$, not an assumption that the programme is
+returned.
+
+Input $|+\rangle\otimes r_j$ never fails and is unchanged on the data.
+Preservation of its cross inner product forces
+$\langle e_1,e_2\rangle=\mu$. For input $|2\rangle$, only failure mode
+$2$ has positive mass. In the time/mode dilation let its unit residual
+vectors be $u_{j,2}(t)$. Then isometry gives
+
+$$
+\mu=\mu a_1a_2+
+ \int_0^L\sqrt{f_1f_2}\,
+              \langle u_{1,2}(t),u_{2,2}(t)\rangle\,dt.
+\tag{OC.61}
+$$
+
+For input $|-\rangle$ the two separate marked modes give similarly
+
+$$
+\mu=\mu b_1b_2+
+ \frac12\sum_{i=1,3}\int_0^L\sqrt{g_1g_2}\,
+              \langle u_{1,i}(t),u_{2,i}(t)\rangle\,dt.
+\tag{OC.62}
+$$
+
+The unit-vector overlaps have modulus at most one. Equations (OC.61)–
+(OC.62) therefore imply
+$\mu(1-a_1a_2)\leq H$ and $\mu(1-b_1b_2)\leq G$.
+
+These identities do not assume a discrete orthonormal basis of exact
+times. A continuous-outcome dilation uses the multiplication PVM on
+$L^2((0,L],dt)$ with residual fibres. Here its density form also follows
+directly: the input span is finite dimensional, each compared basis-input
+measure is absolutely continuous, and positivity makes every cross-input
+measure vanish on a common null set. The finite Choi-valued measure then
+has a positive Radon–Nikodym density, with a measurable Kraus field obtained
+from its matrix square root. The prescribed rank-one densities force the
+unit residuals used in (OC.61)–(OC.62). Modes whose effect vanishes on the
+spanning inputs vanish on the entire input span. No physical environment
+read or coherent access to a classical mode is inferred.
+
+Proof: sufficiency. Assume both inequalities. Choose success residuals
+$e_j=r_j$, and for each failure mode choose a calibrated pair of unit
+vectors with constant overlaps
+
+$$
+\eta_2=\frac{\mu(1-a_1a_2)}H,\qquad
+\eta_1=\eta_3=\frac{\mu(1-b_1b_2)}G.
+\tag{OC.63}
+$$
+
+They are in $[0,1]$; each pair is realized in dimension two, for example
+by $(1,0)$ and $(\eta_i,\sqrt{1-\eta_i^2})$.
+Use mutually orthogonal success and failure-mode sectors. Assign the six
+input vectors $|\alpha\rangle\otimes r_j$, $\alpha\in\{+,-,2\}$,
+the following outputs. Their success components are
+$K_j|\alpha\rangle\otimes r_j$. The plus input has no failure component;
+the middle input has failure wavefunction
+$\sqrt{f_j(t)}u_{j,2}$ in mode $2$; the minus input has wavefunction
+$\sqrt{g_j(t)/2}u_{j,i}$ in each of modes $1,3$. Each failure component
+has specimen $f$.
+
+For fixed $j$ the three assigned vectors are orthonormal by (OC.58)
+and the disjoint mode supports. Between different $j$, their equal-sector
+inner products are $\mu$, by (OC.61)–(OC.63); unequal-sector products
+are zero. Their whole Gram matrix is therefore the input Gram matrix.
+This defines an isometry on the input span: every linear relation has
+zero input Gram norm and hence zero assigned-output norm. Extend it to
+a whole-domain channel by an orthogonal completion. Measuring the
+success/time/mode PVM and discarding only the unprescribed residual
+environment gives exactly (OC.57) on every matrix unit and hence every
+input with every unchanged reference. If failure residues are retained,
+they are additional actual records and their outputs are those just
+constructed; no claim returns $r_j$ there. Appending the fixed absorbing
+sector preserves its existing archive. With returned success residuals
+$r_j$, even the optional coherent extension $K_j\oplus1_f$ can be
+obtained by assigning $f\otimes r_j$ to its unchanged success sector.
+
+Finally substitute $u=vt$ into $H$. Partial fractions give
+$\int_0^d[(x_1+u)(x_2+u)]^{-1}du
+=(x_2-x_1)^{-1}\log((x_1+d)x_2/((x_2+d)x_1))$.
+The fixed multiplier defining $g_j$ gives $G$. This proves (OC.59)
+and the theorem. $\square$
+
+**Corollary 18.2 (what exact return contributes).** For this two-height
+terminal-instrument task, requiring the input pure programme unchanged
+and product with the specimen on success does not lower the feasible
+threshold. It supplies a usable quantum index for another conditional
+request; it supplies no classical knowledge of that index or certified
+height measurement.
+
+Proof. Necessity in Theorem 18.1 allowed arbitrary updates, whereas its
+attaining construction has exactly the required return. On any joint
+input the successful map is
+$K_j\rho_{VR}K_j^*\otimes|r_j\rangle\langle r_j|$.
+Thus the programme is actually available on that branch. $\square$
+
+## 19. Forgetting time strictly relaxes this programming task
+
+**Theorem 19.1 (sharp coarse threshold and strict separation).** Change
+only the required terminal output by forgetting failure time, retaining
+success, each original mode name, every unnormalized quantum successor
+and the absorbing branch. Under the same input and calibration contract,
+the sharp programme-overlap threshold becomes
+
+$$
+\mu_{\rm coarse}=\min\left\{
+ \frac{\sqrt{(1-a_1^2)(1-a_2^2)}}{1-a_1a_2},
+ \frac{\sqrt{(1-b_1^2)(1-b_2^2)}}{1-b_1b_2}\right\}.
+\tag{OC.64}
+$$
+
+For every parameter choice (OC.55),
+
+$$
+0<\mu_{\rm time}<\mu_{\rm coarse}<1.
+\tag{OC.65}
+$$
+
+This is a calibration-programme distinguishability separation. It is not
+the actual-event memory bound of Event Memory and Coarse Aliasing §4,
+and mode-only attainment is not an exact-time implementation.
+
+Proof. The necessity proof of Theorem 18.1 now has one residual vector
+per failure mode. Its middle cross contribution has modulus at most
+$\sqrt{(1-a_1^2)(1-a_2^2)}$. Summing the two separately marked half-strength
+minus modes gives $\sqrt{(1-b_1^2)(1-b_2^2)}$. Conversely choose their
+constant residual overlaps to match the two cross-inner-product deficits,
+as in (OC.63). The same six-vector Gram construction proves sufficiency
+and success return.
+
+For strictness, $f_1/f_2=(x_1/x_2)((x_2+vt)/(x_1+vt))^2$ is nonconstant
+on a positive-length interval. Hence $\sqrt{f_1},\sqrt{f_2}$ are not
+proportional in $L^2$, and Cauchy–Schwarz is strict:
+$H<\sqrt{(1-a_1^2)(1-a_2^2)}$. The same reasoning applies to $g_1,g_2$,
+which are positive constant multiples of the corresponding $f_j$.
+Both exact-time candidate bounds are strictly below their respective
+coarse bounds, so their minima have the same strict ordering. All are
+positive. Since $a_1\ne a_2$,
+
+$$
+(1-a_1a_2)^2-(1-a_1^2)(1-a_2^2)=(a_1-a_2)^2>0.
+$$
+
+The first coarse candidate is strictly below one, proving the last
+inequality in (OC.65). No assertion that $b_1\ne b_2$ is needed.
+$\square$
+
+**Example 19.2 (a rational separating programme overlap).** Take
+$c=1/4$, $Z=1/2$, $x_1=1/8$, $x_2=3/16$, $d=1/32$, and any common
+$L>0$. Then
+
+$$
+\begin{gathered}
+a_1^2=4/5,\quad a_2^2=6/7,\qquad
+b_1^2=3/5,\quad b_2^2=3/7,\\
+H=\sqrt6\log(15/14),\qquad G=4\sqrt3\log(15/14),\\
+\mu_{\rm time}=\min\left\{
+ \frac{\sqrt6\log(15/14)}{1-\sqrt{24/35}},
+ \frac{4\sqrt3\log(15/14)}{1-3/\sqrt{35}}\right\},\\
+\mu_{\rm coarse}=\min\left\{
+ \frac{1/\sqrt{35}}{1-\sqrt{24/35}},
+ \frac{\sqrt{8/35}}{1-3/\sqrt{35}}\right\}.
+\end{gathered}
+\tag{OC.66}
+$$
+
+The exact inequalities
+
+$$
+0.96974<\mu_{\rm time}<0.96976
+ <\frac{4849}{5000}<0.96994
+ <\mu_{\rm coarse}<0.96995
+\tag{OC.67}
+$$
+
+exhibit a two-dimensional pure programme pair usable for the coarse task
+and unusable for the timed task. The displayed decimals are finite rationals.
+One such pair is $r_1=(1,0)$ and
+$r_2=(4849/5000,\sqrt{1-(4849/5000)^2})$.
+
+To certify the numerical inequalities without treating floating point as
+proof, put $z=1/29$ and use
+
+$$
+2\sum_{n=0}^{15}\frac{z^{2n+1}}{2n+1}
+ <\log(15/14)
+ <2\sum_{n=0}^{15}\frac{z^{2n+1}}{2n+1}
+   +\frac{2z^{33}}{33(1-z^2)}.
+\tag{OC.68}
+$$
+
+This is the positive series for $\log((1+z)/(1-z))$ with its geometric
+tail bound. For each positive rational radicand $q$, set
+$N_q=\lfloor\sqrt{q\,10^{60}}\rfloor$. The rational endpoints
+$N_q/10^{30}$ and $(N_q+1)/10^{30}$ enclose $\sqrt q$, as checked by
+squaring. Substitution in (OC.66), with lower denominators used for upper
+bounds, gives (OC.67). Approximate threshold values are
+$0.9697492660$ and $0.9699416117$, respectively. The formulas and
+rational enclosures, rather than these rounded values, carry the example.
+
+## 20. Reusable programmes over the positive-height horizontal menu
+
+**Theorem 20.1 (orthogonality without an imposed return rule).** Suppose
+one initially retained source-height programme must enable every finite
+sequence of common positive horizontal requests that is legal at the
+compared actual heights. At each reached live cut require exact complete-map
+correctness on $M_3$, including every time/mode failure operation, with
+no fresh source-correlated assistance. Programmes may update arbitrarily,
+and all accessible controller, archive and installed source-dependent
+information is counted jointly as in Definition 17.3. Then programmes for
+any two distinct starting heights are orthogonal. The same necessity
+holds already for the mode-only task. For finite-dimensional mixed initial
+programmes, their supports must be orthogonal.
+
+The menu here has no common distance from either support wall. Every
+request used in the proof has positive duration and strict positive
+support. The result does not require an executed infinite experiment,
+a zero-support endpoint, or unchanged return on failure.
+
+Proof for pure programmes. Write $\Delta=x_2-x_1>0$ and suppose their
+initial overlap has modulus $\mu>0$, choosing its phase nonnegative.
+For any $0<\varepsilon<c-x_2$ first request the common upward shift
+
+$$
+D=c-\varepsilon-x_2>0.
+$$
+
+Use duration one, for definiteness. It is legal at both heights and has
+invertible successful operator. Its two new heights are
+$q_2=c-\varepsilon$ and $q_1=c-\Delta-\varepsilon$.
+The rank-one success argument (OC.60) and the lossless plus input force
+the two complete successful residual programmes to have overlap $\mu$,
+regardless of how they were updated. Include all inaccessible residues
+in a purification for this upper-bound argument; granting their access
+can only enlarge the class. The next actual processor acts by identity
+on unavailable residues.
+
+Each first success operator is invertible on $V$. Its normalized image
+therefore ranges over all pure data states as the initial pure data varies.
+Consequently correctness at this cut is the same full-$M_3$ requirement
+on the updated programmes, rather than correctness on just one image ray.
+The first request has strictly positive success on every nonzero input.
+
+Now request the common upward increment $d_\varepsilon=\varepsilon/2$,
+also over duration one. It is legal at both new heights. Let
+$B_j(\varepsilon)$ denote its squared minus attenuation:
+
+$$
+B_j(\varepsilon)=
+ \frac{q_j(c-q_j-\varepsilon/2)}
+ {(q_j+\varepsilon/2)(c-q_j)}.
+\tag{OC.69}
+$$
+
+As $\varepsilon\downarrow0$,
+$B_1(\varepsilon)\to1$ and $B_2(\varepsilon)\to1/2$.
+The coarse necessary condition from Theorem 19.1 is
+
+$$
+\mu\leq
+ \frac{\sqrt{(1-B_1(\varepsilon))(1-B_2(\varepsilon))}}
+ {1-\sqrt{B_1(\varepsilon)B_2(\varepsilon)}}.
+\tag{OC.70}
+$$
+
+Its numerator tends to zero and denominator to $1-1/\sqrt2>0$.
+For every fixed $\mu>0$ there is thus a strictly positive
+$\varepsilon<c-x_2$ violating (OC.70). This selects two finite requests;
+no limit is executed. If the first request itself cannot be programmed,
+it already contradicts the all-menu premise. Otherwise its live branch
+and the second request give the contradiction above. Original failures
+remain stopped and are never used to launch that second live operation.
+This proves the pure necessity.
+
+For mixed programmes, suppose their supports are not orthogonal. Choose
+positive-weight spectral eigenvectors $u,v$ with $\langle u,v\rangle\ne0$.
+Purify the two states in one auxiliary space, assigning the same auxiliary
+basis label to this chosen pair and mutually disjoint labels to all other
+terms. The two normalized purifications have nonzero overlap
+$\sqrt{\lambda_u\lambda_v}\langle u,v\rangle$.
+Extend every actual processor by identity on this unavailable purifying
+space. Its specimen instrument is unchanged because the programme
+marginals are unchanged. The pure-programme necessity just proved applies
+to these full purifications and yields a contradiction. This proof does
+not provide the observer any purification port. $\square$
+
+**Corollary 20.2 (the calibration-dimension price and conditional upper).**
+For $M$ possible distinct heights, exact reusable programming in Theorem
+20.1 needs programme Hilbert dimension at least $M$. For a finite algebra
+$\bigoplus_\alpha M_{d_\alpha}$ the total embedding dimension
+$\sum_\alpha d_\alpha$ must therefore be at least $M$.
+No one fixed finite programme dimension serves the entire positive-height
+continuum under this contract.
+
+For the horizontal submenu, $M$ orthogonal height labels attain the
+calibration-dimension count conditionally on the corresponding supplied
+calibrated canonical operations and recorders: control the correct
+instrument on that label and retain it on live success, updating the
+public height table by the known displacement. Failure stays absorbing.
+This is neither an acquisition protocol nor a total legality-rejection
+service, a total-memory optimum or a finite-hardware upper bound.
+
+Proof. Apply Theorem 20.1 to each pair of programme supports; $M$
+nonzero mutually orthogonal subspaces need dimension at least $M$.
+For the conditional upper, a controlled direct sum of the supplied
+instruments on orthogonal label sectors is a common complete instrument.
+On each lawful input sector it has precisely the prescribed CP maps.
+The label need not be measured. Public descriptions and all other
+records remain separately present. $\square$
+
+**Example 20.3 (a finite feasible first request and infeasible continuation).**
+Take the public pair $c=1/4$, $x_1=1/8$, $x_2=3/16$ and a pure
+programme pair of overlap $\mu=1/2$. Set $\varepsilon=1/1024$.
+The first common shift is $D=63/1024$, over duration one. Its terminal
+squared attenuations are
+
+$$
+(a_1^2,a_2^2)=(128/191,64/85),\qquad
+(b_1^2,b_2^2)=(65/191,1/85).
+$$
+
+Here $H=\sqrt6\log(191/170)$ and $G=4\sqrt3\log(191/170)$.
+The positive logarithm series gives $\log(191/170)>42/361$.
+Since $a_1a_2>2/3$, the middle candidate in (OC.59) exceeds
+$126\sqrt6/361>4/5$. The minus candidate exceeds
+$G>168\sqrt3/361>4/5$. The last two strict comparisons follow by
+squaring positive quantities. Thus $\mu_{\rm time}>4/5$, and the
+first complete timed instrument admits this supplied programme pair,
+even with unchanged return on success.
+
+At its live cut the heights are $q_1=191/1024$, $q_2=255/1024$.
+Request the common shift $1/2048$, again over duration one. Its squared
+minus attenuations are
+
+$$
+u=24639/24895,\qquad w=255/511.
+$$
+
+Direct rational comparison gives
+$(1-u)(1-w)<(29/400)^2$ and $uw<(71/100)^2$.
+Hence its necessary coarse candidate satisfies
+
+$$
+\frac{\sqrt{(1-u)(1-w)}}{1-\sqrt{uw}}<\frac14<\mu.
+$$
+
+Every implementation of the first request has successful residual
+overlap $1/2$, so no update can make the second complete instrument
+possible without fresh assistance. Both requests are strictly lawful;
+their smallest upper-wall distances are $1/1024$ and $1/2048$.
+All height, duration and request parameters here have finite rational
+descriptions. This is an exact conditional programming example, with
+the calibrated gates and recorders of Definition 17.3 still supplied.
+
+A common positive support margin would remove the particular near-wall
+sequence used in this proof. No necessity or sufficiency theorem for that
+restricted reusable menu is inferred. Nor does exact orthogonality imply
+a finite-noise distinguishability bound. Approximate outputs, finite time
+precision, bounded horizons and disturbed acquisitions require their own
+metrics and quantitative proofs. The degenerate $d=0$ request is an
+identity and imposes no such threshold. Zero duration permits this
+matching identity, not a nonzero instantaneous displacement.
+
+## 21. An actually reachable unresolved-height obstruction
+
+**Proposition 21.1 (same preparation, aligned live records, two heights).**
+Use $Z=1/2$, $c=1/4$, a fixed positive preparation at $a=1/8$, fixed
+calibrated $\theta$ and auxiliary height $u=1/16$. For every
+$\beta\in\mathbb R$ and every signed $m\in\mathbb Z$, prepend the
+unit fixed-height phase leg $2\pi m$, then the supplied four-unit
+rectangle at $u$ with phase height
+
+$$
+B=8\beta-4\pi m.
+\tag{OC.71}
+$$
+
+Append a unit zero-phase horizontal leg either to $x_1=1/8$ (waiting)
+or to $x_2=3/16$. These are actual six-unit original histories from the
+same preparation, in both regularity classes, with exact real residual
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$ and support at least $1/16$.
+Under the canonical instrument their live probabilities are $1/3$ and
+$2/9$, respectively, positive for every $\beta,m$.
+
+At a live cut let the sole acquired history-bearing classical record be
+the no-failure flag, aligned time six and their common source/preparation,
+reference and permission metadata. No generator identity, waveform log,
+height reading, parity helper or other correlated assistance is supplied
+to the next operation. The visible live records coincide; the live
+specimens are the distinct unknown families $\Psi_{x_j,\beta,m}$.
+This asserts neither equality of these specimens nor equality of the
+unconditional prior stopped laws. Every prior failure keeps its actual
+first event and absorbing $f$.
+
+Proof. Formula (OC.10a) at $a,u$ gives (OC.71) and its exact real lift.
+The common down/up rectangle has survival $(2/3)(1/2)=1/3$.
+Its phase legs contribute no survival charge. The final waiting leg
+contributes one, and the upward leg to $3/16$ contributes
+$(1/8)/(3/16)=2/3$. This proves the two live probabilities. The
+probability band is $[1/16,3/16]$ throughout. The phase variation is
+$2\pi|m|+2|8\beta-4\pi m|$, finite for each history; no uniform
+full-family variation bound is imposed. The horizontal tail has zero
+transported increment. The supplied chronological composition preserves
+the old prefix and all real lifts. $\square$
+
+**Theorem 21.2 (no common nonzero exact endpoint success).** At either
+live cut of Proposition 21.1 request the same relative increment
+$d=1/32$ over any common $L>0$, with zero relative phase.
+The request is legal at both heights: its domain is $(0,7/32)$, and
+all probabilities on the requested legs are at least $1/32$.
+With only the inputs just specified, any common CP success operation
+whose unnormalized outputs are
+$s_j(\beta,m)|\Psi_{x_j+d,\beta,m}\rangle
+\langle\Psi_{x_j+d,\beta,m}|$, with $s_j(\beta,m)\geq0$, for both
+heights and every $\beta,m$ must have $s_j\equiv0$.
+Every successful Kraus operator vanishes on $V$; the operation may still
+act nontrivially outside this live span.
+In particular the canonical complete law, whose known-height success
+probabilities are $4/5$ and $6/7$, cannot be implemented in this
+unresolved-record contract.
+
+Proof. Trace out any retained success auxiliary to obtain a common
+trace-nonincreasing CP operation on the specimen. All fixed auxiliary
+inputs, adaptive finite choices and accepted outcomes are incorporated
+in that operation. Apply the credited full-orbit rigidity (OC.11)
+separately at each height. Every successful Kraus operator $A_\ell$
+obeys
+$A_\ell|_V=\lambda_{\ell,j}D_{x_j,x_j+d}$.
+Its action on $e_2$ is independent of $j$, so
+$\lambda_{\ell,1}=\lambda_{\ell,2}=\lambda_\ell$.
+If $\lambda_\ell\ne0$, its action on $U_+$ would require
+$(x_1+d)/x_1=(x_2+d)/x_2$, which is false for $d>0$, $x_1\ne x_2$.
+The minus ratios $(c-x_j-d)/(c-x_j)$ disagree as well.
+Thus every $\lambda_\ell=0$ and every Kraus operator annihilates $V$.
+An adaptive finite acceptance protocol still induces this one CP
+acceptance operation, so it does not evade the contradiction. This does
+not authorize a post-failure retry. The canonical success values follow
+from (OC.12), or from $S_j(L)=x_j/(x_j+d)$ in (OC.57).
+Their strict positivity contradicts zero success. $\square$
+
+This is an original-orbit result, without arbitrary $M_3$ test
+preparations. Its auxiliary-input premise is narrower than Theorem 18.1:
+there is no source-height programme. Conversely the sharp overlap
+threshold and unrestricted-menu lower bound are not claimed merely from
+testing this original orbit with arbitrary phase/history-dependent
+assistance. A supplied correct height anchor, source index or calibrated
+sensor changes the premise and may remove this particular obstruction.
+
+## 22. Joint use, selection and resource boundaries
+
+**Proposition 22.1 (conditional finite use of the returned programme).**
+For a finite sequence of positive horizontal requests at a public pair
+of possible heights, suppose each request is legal at both current
+heights, its threshold (OC.59) holds, and the corresponding common
+calibrated processor is supplied. Starting from Definition 17.3, use the
+attaining processor at each live cut, retain every outcome and stop at
+first failure. This gives exactly the sequential canonical CP law on
+both source indices and every common specimen/reference input.
+The programme is returned on every live success. The public candidate
+pair updates by the selected displacement; the unknown actual index is
+never read into a classical controller.
+
+The same conclusion holds for a finite record-adapted policy when these
+premises hold at every reached live branch and each operation is selected
+only from actually retained records and matched controller inputs.
+It does not assert that the inequalities hold for every menu, that a
+missing processor can be synthesized from an overlap number, or that
+future unknown controls have been acquired.
+
+Proof. Theorem 18.1 gives each successful branch
+$\rho\mapsto K_j\rho K_j^*\otimes|r_j\rangle\langle r_j|$,
+including all reference correlations. Thus its actual successor is a
+valid input for the next supplied processor. Each failure CP measure is
+exact, with its mode/time archive and absorbing successor. Completeness
+and CP composition preserve these joint blocks; first-failure products
+and the all-success product exhaust the input effect. At a live policy
+cut the actual retained classical record selects the next public request.
+Apply the same branch map and integrate over the existing records.
+Finite induction proves the assertion, preserving source/epoch labels,
+clocks, reference, archives and every declared update input jointly.
+No matching of separate marginals is used. $\square$
+
+The selector has no free nondisturbing read of a nonorthogonal programme.
+If it measures the programme or accesses a source-sensitive spectator,
+that access needs its actual joint instrument, with its disturbance and
+outcomes retained. Definition 17.3 must then hold at the next live cut
+before another use of Theorem 18.1. Knowing an overlap number supplies
+neither the actual source index nor a compatible readout of it.
+
+A mathematical domain mismatch has no automatically observable rejection
+flag. These results use requests already legal on both members of the
+public pair. A known missing permission or known mismatch has only the
+interface's declared unexecuted rejection and controller update; an
+executed original failure instead has its actual time/mode and stopped
+successor. No total guard reading an unknown height is constructed.
+Already stopped specimens retain their first-failure record, and no
+positive original continuation is run from $f$.
+
+The programme resource in Theorem 18.1 is its occupied span, at most two
+dimensions for the pure pair. In Theorem 20.1 it is the total accessible
+height-bearing assistance, not merely one chosen helper marginal or
+the specimen's credited live dimension three. Corollary 20.2 counts
+$\sum d_\alpha$ for finite classical–quantum blocks, not their largest
+block alone. These counts neither minimize the full archive nor combine
+with another task's unassisted coding lower bound without a common
+factorization proof.
+
+The pair's public parameters, programme rays, basis calibration, source
+and preparation identity, cut/epoch descriptors, pending request,
+controller, reference, permissions and all selection/update inputs must
+have actual representations and costs. Rational $c,x_j,d,L$ and the
+algebraic programme in Example 19.2 have finite mathematical descriptions.
+Exact logarithms in their thresholds are specified by (OC.59), with
+certified intervals available by the series in (OC.68); exact operations
+and time-wavefunction amplitudes are still ideal calibrated services.
+An arbitrary exact real parameter or waveform is not thereby a finite
+bit string or an effective gate programme. Descriptions, verification,
+preparation/acquisition, arithmetic, gate precision, time alignment,
+clock/reference stability and physical hardware remain separate costs.
+
+Exact time is the measurable output of the ideal instrument. The $L^2$
+dilation uses no uncountable orthonormal time basis and establishes no
+finite-memory retention of an actual real event. Event Memory and Coarse
+Aliasing §§4, 6 already distinguish same-event preservation from
+known-programme law resampling. Theorem 19.1 changes the required output
+when it forgets time; its smaller calibration demand cannot be transferred
+to the original exact-time task. No approximate metric or error-accumulation
+claim follows from these exact thresholds. No unbounded execution is
+implemented by the assertion about all finite menus.
+
+## 23. Suppliers, literature attribution and the remaining joint gap
+
+Repository sources for §§17–22 are the committed public version at
+`773d4d43b91abd515be1059283d79dd6572fc174`. The following contribution
+map preserves their distinct source and assistance contracts.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| `D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean`, `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible`, `finite_rectangles_realize`, and its owning Blueprint/Scribe | Positive five-mode source and actual rectangles. The all-sector application in the Scribe supplies the fixed-height signed leg followed by the rectangle in Proposition 21.1; the rectangle Lean declaration alone is not credited with that whole application. |
+| `D5/S3/Quantum/Fibers/OriginalControlComposition.lean`, `OriginalControl`, `FiniteC1Control`, `concatenate_original`, and its owning Blueprint/Scribe | Both original regularity alternatives, arbitrary finite durations including zero, unchanged prefix, matching chronological interface, translated real tail and additive integrals. It supplies no actuator, sensor or unknown past input. |
+| This volume §§4–5.2, (OC.10)–(OC.12), (OC.19)–(OC.19b), and §§9–15 | Full unknown-phase/parity rigidity, canonical optimal stopped instrument, exact mode/time output, whole-law classification, actual witnesses and joint finite continuation are credited. Proposition 17.2 specializes the instrument; Theorem 21.2 consumes the existing rigidity. |
+| Quantum Carrier Minimum §§1.3, 2–3, 6 | Exact labelled $M_3$ carrier and absorbing sector, with supplied actual joint archives preserved. Its unassisted live coding lower bound has a different assistance premise from this source-height programming task. |
+| Instrument Stability §§2–5; Record Acquisition §§2–9, 11–12 | Conditional inverse and forward bounds, sampling obstructions and paid area/winding certificates are retained as suppliers. No new sample complexity or finite-noise estimate is claimed here. |
+| Sampled Instrument Certificates §§3, 7–8 | Its timed simultaneous tables and joint sensor premise can supply a restricted complete-operation approximation. Its exact return-height promise is an actual matching input. Theorem 21.2 tests a live cut lacking that anchor; it neither acquires the table nor replaces the sampler's full joint-law premise. |
+| Event Memory and Coarse Aliasing §§3–6 | Actual-event memory bounds, finite-bin CP aliases and known-programme law regeneration are distinct supplied results. Theorem 19.1 instead prices the height programme for implementing two complete instruments. |
+| Parity Record Transport §§3–9 | Calibrated pure parity helpers, consumable/returned-on-success endpoint gates and finite checkpoint recurrence are a separate additional operation class. The height programmes here must implement the prescribed canonical CP measures, not merely the pure-family endpoint target. Neither source constructs its helper. |
+| Probability/Phase Transport §9.1; Transport–Memory Completion §§2.9–2.12, 2.18 | The actual relative-command domain is used in §§17, 21. Common-port recovery still requires the same coherent source, aligned acquired readings, known nonzero amplitudes and known nonzero record overlap. A calibrated height programme is not that acquired interference service. |
+| Process Geometry §34, especially (PG.3400b-full), (PG.3400c); Atlas Stable Core Holonomy Theorem 6.3 | Actual joint source/epoch image, archives, domains/routes, references, permissions, and complete selection/update successors remain required. Proposition 22.1 retains them when supplied and matched. It does not construct the full actual image or its four individual recovery maps. |
+
+**Literature statement 23.1 (mature tools and precise exclusions).**
+Stinespring dilation, rank-one Choi rigidity, Gram isometries, positive
+matrix-valued Radon–Nikodym densities, strict Cauchy–Schwarz, spectral
+purification and finite CP composition are mature ingredients. The
+source-specific formulas (OC.59), (OC.64), their strict separation, the
+near-wall reusable-programme consequence and the actual unresolved-height
+application are `repo-derived` ordinary deductions. No worldwide priority
+or new Lean/kernel verification is claimed.
+
+| Primary source and version | Checked theorem scope and use |
+| --- | --- |
+| A. Chefles, R. Jozsa and A. Winter, [*On the existence of physical transformations between sets of quantum states*, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3, Eqs. (7)–(9) | `literature-attested`: finite pure-family conversion factors its Gram matrix through an environment Gram matrix; a complete finite probabilistic transformation sums the positive outcome contributions. Theorems 18.1 and 19.1 use this mature isometry method. The nonatomic calculation is proved directly in §18, rather than imported from their finite-outcome theorem. Discarded source-dependent environments are allowed by the paper; acquired programmes are not supplied. |
+| M. A. Nielsen and I. L. Chuang, [*Programmable quantum gate arrays*, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), stated Result and Eqs. (6)–(10) | `literature-attested`: distinct exact deterministic unitaries on arbitrary data require orthogonal pure programmes. The dissipative two-height instruments here have nonorthogonal feasible programmes, so that unitary theorem cannot prove our finite-pair or reusable-menu statement. |
+| L. Leppäjärvi and M. Sedlák, [*Incompatibility of quantum instruments*, 2212.11225v2](https://arxiv.org/html/2212.11225v2), Proposition 7 | For its finite-outcome, finite-dimensional instruments, compatibility is equivalent to obtaining the other instrument by postprocessing a complementary instrument. Its title is *Incompatibility of quantum instruments*. The proposition neither grants a complementary output port nor supplies an original-control calibration acquisition. No continuous-time threshold is imported from it. |
+| A. Muñoz-Moller, L. Leppäjärvi and T. Heinosaari, [*Adversarial Information Gain in Non-ideal Quantum Measurements*, 2602.20941v1](https://arxiv.org/html/2602.20941v1), Definition 1 and Proposition 1 | Its meter/instrument compatibility requires a joint instrument with both prescribed marginals; the characterization uses meters on a conjugate instrument's ancilla. This confirms the stronger joint-operation premise, without providing such access on the original source. Its qubit examples and numerical values are not transferred. |
+| M. Jing, M. Guo, L. Zhu, H. Yao and X. Wang, [*Programmable Open Quantum Systems*, 2512.08279v1](https://arxiv.org/html/2512.08279v1), programming-channel definition and Propositions 3–4 | The model retrieves a fixed-generator Lindbladian semigroup on arbitrary inputs from a time-varying analytic programme family. Its coherent-generator and spontaneous-emission exclusions concern that different programming contract. Theorems 18.1–20.1 concern source height, prescribed relative requests and marked failure instruments, so those semigroup conclusions are not transferred. |
+
+These primary comparisons locate applicable mature tools and distinguish
+nearby programming/compatibility tasks. They provide no directly sufficient
+joint acquired observer in these inspected sources. This bounded comparison
+is not an exhaustive literature search, a universal no-go or evidence of
+worldwide novelty.
+
+**Open boundary 23.2 (acquisition remains unsupplied).** No original-source
+procedure here acquires or certifies the required height programme while
+preserving the necessary joint specimen/archive/reference. Its calibrated
+rays, overlap, source binding, acquisition disturbance and implementation
+cost are conditional premises. Failed branches may retain useful stopped
+information, but cannot supply calibration for an unsupplied new live
+specimen. Return on success is not return on failure.
+
+The sharp thresholds and reusable orthogonality theorem require full-$M_3$
+complete-map correctness. A sharp resource theorem for arbitrary observers
+tested only on the original correlated pure family, with arbitrary
+phase/history-bearing assistance, is not established. Theorem 21.2 is the
+separate faithful obstruction under its explicit common-auxiliary premise.
+Common margins, approximate instruments, finite timing precision and
+unbounded future accuracy require further quantitative bridges.
+
+A supplied sampler, calibrated helper, exact height code, known probability
+law or static representation does not by itself close actual acquisition,
+retention, lawful selection, update and continuation on one joint source.
+The full space/time/boundary/memory recovery programme, native stationary
+$\alpha/\beta$ memory-rate/cofinality and the independent fixed-Hamiltonian
+quantum minimax retain their original goals. No source/action/resource
+transfer from PCA, KBONACCI, the C114 mixed-state source or the twisted-ground
+representation is asserted. These partial programming and realized-source
+obstructions complete none of those tasks.
+
+## 追加锚（本行以下为增补区）

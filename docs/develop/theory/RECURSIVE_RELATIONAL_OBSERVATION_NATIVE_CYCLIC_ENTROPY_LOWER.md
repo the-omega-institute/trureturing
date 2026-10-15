@@ -1058,3 +1058,680 @@ The strict lower leaves these sharp and broader objectives open.
 [D5-compact]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 8. A positive joint depth-three weight law
+
+**Definition 8.1 (joint child-category weights).** Retain exactly the
+source, substitution, observations, request menu and paid-export contract
+of §1. Write $A=\alpha$, $B=\beta$ and
+
+$$
+\mathcal G=\{\langle u,v\rangle:u,v\in S_1\},\qquad
+S_2=\{A,B\}\sqcup\mathcal G,\qquad |\mathcal G|=9.
+\tag{NCE.50}
+$$
+
+Let $c:S_2\to\{A,B,G\}$ send the two leaves to their respective
+symbols and every member of $\mathcal G$ to $G$. In this category order
+put
+
+$$
+M=\begin{pmatrix}
+281&1131&271\\
+1131&1437&237\\
+271&237&53
+\end{pmatrix},\qquad
+w_{\rm j}(A)=4947,\quad w_{\rm j}(B)=3264,\quad
+w_{\rm j}(\langle x,y\rangle)=M_{c(x),c(y)}.
+\tag{NCE.51}
+$$
+
+This notation is separate from the weights $w$ in (NCE.31). Every state
+of $S_3$ has positive $w_{\rm j}$ weight. For $e=(1,1,9)^{\mathsf T}$,
+
+$$
+W_{\rm j}:=w_{\rm j}(S_3)=4947+3264+e^{\mathsf T}Me
+=8211+17417=25628,\qquad
+C_{\rm j}:=9996,\qquad \mu_{\rm j}:=w_{\rm j}/25628.
+\tag{NCE.52}
+$$
+
+The branch table is a genuine joint child weight: its $A,B$ principal
+minor is $281\cdot1437-1131^2=-875364\ne0$. Thus it cannot have the
+form $u(c(x))v(c(y))$. Categories and weights are mathematical counting
+data. They are not retained descriptors, source observations or inputs to
+a reader. An entire original block receives its weight once.
+
+**Lemma 8.2 (five finite child count bounds).** For $U\subseteq S_2$
+write
+
+$$
+n(U)=(\mathbf1_{A\in U},\mathbf1_{B\in U},|U\cap\mathcal G|),\quad
+d_s(U)=|\Gamma_s(U)|\ (s=L,R),\quad
+k(U)=|\{r_u(\varepsilon):u\in U\}|.
+\tag{NCE.53}
+$$
+
+Here $k(U)$ counts attained root constructors, and is zero for empty
+$U$. A vector is dominated by a family if it is componentwise at most
+one member of that family. The following implications hold, with the
+families ordered exactly as displayed:
+
+$$
+\begin{aligned}
+\mathcal F_4&=((1,0,9),(0,1,9),(1,1,4)),\\
+\mathcal F_3&=((0,0,9),(1,0,4),(0,1,4),(1,1,1)),\\
+\mathcal F_{4A}&=((1,0,9),(1,1,4)),\\
+\mathcal F_X&=((1,1,0),(1,0,4),(0,1,1)),\\
+\mathcal F_Y&=((1,1,0),(1,0,1),(0,1,1),(0,0,4)).
+\end{aligned}
+\tag{NCE.54}
+$$
+
+| Hypothesis on the actual set $U$ | A family dominating $n(U)$ |
+| --- | --- |
+| $d_L(U),d_R(U)\le4$ | $\mathcal F_4$ |
+| $d_L(U),d_R(U)\le3$ | $\mathcal F_3$ |
+| $d_L(U\cup\{A\}),d_R(U\cup\{A\})\le4$ | $\mathcal F_{4A}$ |
+| $k(U)\le2$ and $d_L(U\cup\{A\}),d_R(U\cup\{A\})\le3$ | $\mathcal F_X$ |
+| $k(U)\le2$ and $d_L(U),d_R(U)\le2$ | $\mathcal F_Y$ |
+
+Proof. Let $\ell=|U\cap\{A,B\}|$, and let $p_L,p_R$ be the numbers
+of distinct symbols from $S_1$ appearing as the two children of members
+of $U\cap\mathcal G$. The exact table (NCE.26) gives
+
+$$
+d_s(U)=\ell+p_s,\qquad
+|U\cap\mathcal G|\le p_Lp_R,\qquad 0\le p_s\le3.
+\tag{NCE.55}
+$$
+
+For side ranges at most four, zero or one leaf permits at most nine
+branches; two leaves permit at most four. The zero-leaf vector is
+dominated by $(1,0,9)$. This gives $\mathcal F_4$. At range three,
+the branch bounds for zero, one and two leaves are respectively
+nine, four and one, giving $\mathcal F_3$.
+
+For the third row, if $B\notin U$, adjoining $A$ leaves at most nine
+branches, giving $(1,0,9)$. If $B\in U$, adjoining $A$ gives two
+leaves and at most four branches, giving $(1,1,4)$.
+
+For $\mathcal F_X$, if both leaves occur, the root-constructor bound
+excludes every branch. With only $A$ present, adjoining $A$ changes
+nothing and range three permits four branches. With only $B$ present,
+adjoining $A$ leaves only one branch symbol per side, hence one branch.
+With no leaves, adjoining $A$ permits four branches, whose count vector
+is dominated by $(1,0,4)$. These are all cases. For $\mathcal F_Y$,
+two leaves again exclude branches, a single leaf permits one branch,
+and no leaves permit four. The empty set satisfies each applicable
+bound. No locally admissible projection is assumed. $\square$
+
+**Lemma 8.3 (complete parent-leaf collision classification).** Let
+$P\subseteq S_3$ be range-feasible for all $q\in W_3$, with capacity
+four, and put
+
+$$
+T=\{(x,y):\langle x,y\rangle\in P\},\qquad
+X=\pi_L(T),\qquad Y=\pi_R(T).
+\tag{NCE.56}
+$$
+
+Then the following child count families apply:
+
+| $P\cap\{A,B\}$ | Family for $n(X)$ | Family for $n(Y)$ |
+| --- | --- | --- |
+| $\varnothing$ | $\mathcal F_4$ | $\mathcal F_4$ |
+| $\{A\}$ | $\mathcal F_3$ | $\mathcal F_3$ |
+| $\{B\}$ | $\mathcal F_{4A}$ | $\mathcal F_3$ |
+| $\{A,B\}$ | $\mathcal F_X$ | $\mathcal F_Y$ |
+
+Proof. At the four deep targets the parent-leaf factors, computed by
+(NCE.5), are
+
+$$
+\begin{array}{c|cccc}
+ &LL&LR&RL&RR\\\hline
+A&(4,0)&(5,1)&(5,0)&(6,1)\\
+B&(3,0)&(4,1)&(4,0)&(5,1).
+\end{array}
+\tag{NCE.57}
+$$
+
+For a branch these columns are respectively
+$\Gamma_L(x),\Gamma_R(x),\Gamma_L(y),\Gamma_R(y)$.
+The sets of possible child values are exactly $\mathcal V_L$ and
+$\mathcal V_R$ from (NCE.27). In $LL$ the parent $B$ factor equals
+$\Gamma_L(A)$ and no other child factor. In $LR$ it equals
+$\Gamma_R(A)$ and no other child factor. The parent $A$ values in
+these columns lie outside the respective child ranges. In $RL$ and
+$RR$, both parent-leaf values lie outside the respective child range,
+and they are distinct. This exhausts all parent-leaf versus child-factor
+collisions; equal blocking-leaf descriptions are not being substituted
+for equal temporal factors.
+
+With neither parent leaf, both side ranges of both projections are
+at most four. With only $A$, its extra value in each column reduces
+each child range to three. With only $B$, the left restrictions are
+exactly
+
+$$
+d_L(X\cup\{A\}),d_R(X\cup\{A\})\le4,
+\qquad d_L(Y),d_R(Y)\le3.
+\tag{NCE.58}
+$$
+
+The union with $A$ accounts also for the case in which the collision
+is not attained by $X$ itself.
+
+With both parent leaves, target $L$ adds $(3,0),(2,0)$ to
+$\Gamma_\varepsilon(X)$ and target $R$ adds $(4,1),(3,1)$ to
+$\Gamma_\varepsilon(Y)$. These are two distinct values outside the
+child root-factor set $\{(2,1),(1,0),(0,0)\}$. Consequently
+$k(X),k(Y)\le2$. At the deeper targets, removing the parent $A$ value
+on the left and the two parent values on the right gives
+
+$$
+d_L(X\cup\{A\}),d_R(X\cup\{A\})\le3,
+\qquad d_L(Y),d_R(Y)\le2.
+\tag{NCE.59}
+$$
+
+Lemma 8.2 now gives every row, including empty branch parts.
+These are necessary range conditions on the actual projections;
+there is no replacement of $T$ by an independently encoded pair.
+$\square$
+
+**Proposition 8.4 (exact bilinear mass tables).** For the weights
+(NCE.51), every range-feasible $P$ missing at least one parent leaf
+has $w_{\rm j}(P)\le9996$. If both parent leaves occur, its branch
+mass is at most $3980$.
+
+Proof. Because $M$ is entrywise nonnegative,
+
+$$
+\sum_{(x,y)\in T}M_{c(x),c(y)}
+\le n(X)^{\mathsf T}Mn(Y)
+\le u^{\mathsf T}Mv
+\tag{NCE.60}
+$$
+
+whenever $u,v$ dominate the respective count vectors. The first
+inequality enlarges a nonnegative sum to $X\times Y$. It makes no
+claim about admissibility of that product. The four complete finite
+tables below use the family orders of (NCE.54). Include the indicated
+parent-leaf weight in the first three tables:
+
+$$
+\left(u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_4,\ v\in\mathcal F_4}
+=\begin{pmatrix}
+9452&9996&8976\\
+9996&9996&9996\\
+8976&9996&8892
+\end{pmatrix},
+\tag{NCE.61}
+$$
+
+$$
+\left(4947+u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_3,\ v\in\mathcal F_3}
+=\begin{pmatrix}
+9240&9294&8988&9996\\
+9294&8244&8958&8874\\
+8988&8958&9128&9996\\
+9996&8874&9996&9996
+\end{pmatrix},
+\tag{NCE.62}
+$$
+
+$$
+\left(3264+u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_{4A},\ v\in\mathcal F_3}
+=\begin{pmatrix}
+9996&8976&9520&9996\\
+9744&8640&9660&9996
+\end{pmatrix},
+\tag{NCE.63}
+$$
+
+$$
+\left(u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_X,\ v\in\mathcal F_Y}
+=\begin{pmatrix}
+3980&1920&3076&2032\\
+3444&1848&2562&1932\\
+3076&1692&1964&1160
+\end{pmatrix}.
+\tag{NCE.64}
+$$
+
+Each entry is the displayed integer bilinear expression. Their maxima
+are respectively $9996,9996,9996,3980$. Lemma 8.3 and (NCE.60) prove
+the assertions for every such $P$. $\square$
+
+## 9. Exact pressure of the joint law at every length
+
+**Theorem 9.1 (heavy targets for the joint law).** Every range-feasible
+$P\subseteq S_3$ with $w_{\rm j}(P)>9996$ has a nonempty
+$q\in W_3$ which is not determined on $P$ by any own-coordinate
+experiment at any finite word, or by a constant experiment, and
+
+$$
+\sum_z w_{\rm j}(P\cap\Gamma_q^{-1}(z))^2
+\le4947^2+7244^2=76948345<99920016=9996^2.
+\tag{NCE.65}
+$$
+
+Proof. Proposition 8.4 forces $A,B\in P$. A branch has weight at
+most $1437$, the largest entry of $M$. If there were at most one,
+then $w_{\rm j}(P)\le4947+3264+1437=9648<9996$. Thus two distinct
+branches occur. By Lemma 3.2 some nonempty $q\in W_3$ separates
+them. The root experiment merges those branches. Every nonempty
+finite experiment merges $A$ and $B$, returning absent on both,
+whereas $\Gamma_q(A)\ne\Gamma_q(B)$. A constant experiment fails
+as well. This proves nonrecoverability for the entire original
+own-coordinate menu, including arbitrarily long off-target words.
+
+Lemma 3.2 also makes $A$ alone in its $\Gamma_q$ cell. That cell
+has weight $4947$. The other cells together have mass at most
+$3264+3980=7244$, by Proposition 8.4. Nonnegativity gives
+$\sum_j a_j^2\le(\sum_j a_j)^2$ for those other cell masses.
+This proves (NCE.65). $\square$
+
+**Theorem 9.2 (exact all-length mass and pressure).** For every
+$n\ge1$ and every jointly admissible $B_0\subseteq S_3^n$,
+
+$$
+\sum_{x\in B_0}\prod_{i=1}^n w_{\rm j}(x_i)\le9996^n.
+\tag{NCE.66}
+$$
+
+The maximum equals $9996^n$ at every length, including when the
+maximum is taken over full solution sets of complete native decoder
+templates. In the pressure notation of [NPC, Definition 5.1][NPCj],
+
+$$
+A_n(\mu_{\rm j})=\left(\frac{2499}{6407}\right)^n,
+\qquad \beta_3(\mu_{\rm j})=\frac{2499}{6407}.
+\tag{NCE.67}
+$$
+
+Proof of the upper. Apply Theorem 2.2 to the seven targets $W_3$,
+all native boundary replies and a constant experiment, with capacity
+$m=4$, weight $w_{\rm j}$ and cap $C_{\rm j}$. Theorem 9.1 proves
+its entire hypothesis, even for all finite own experiments.
+
+In particular the theorem uses the one Gibbs law proportional to
+$\prod_iw_{\rm j}(x_i)$ on this actual $B_0$. A heavy projection has
+an own-unrecoverable target determined by a distinct actual donor
+under that same law. The permutation average charges half its target
+entropy even around arbitrary cycles. Conditional Gibbs domination
+then uses exactly (NCE.65). Light projections use their total mass
+at most $C_{\rm j}$. No product law on a competing fiber, independent
+child code, separately chosen owner law or acyclic donor ordering is
+assumed. Every full block weight in (NCE.66) appears once.
+
+Proof of equality. Put
+
+$$
+H_B=\{B\}\cup\mathcal G,\qquad
+P_B=\{\langle x,y\rangle:x,y\in H_B\}\subset S_3.
+\tag{NCE.68}
+$$
+
+On $H_B$ the root reply determines its root factor. At side $s$,
+an absent reply identifies the known leaf $B$ and its fixed factor
+$\Gamma_s(B)$; a present reply on $\mathcal G$ identifies the
+constructor of that child and hence its factor among
+$(2,1),(1,0),(0,0)$. Thus every $W_2$ target on $H_B$ is determined
+by the literal at that same target. On $P_B$ the root factor is
+constant branch; at $sq$, $s\in\{L,R\}$, $q\in W_2$, use the
+single same-coordinate literal $sq$. These witnesses serve all
+seven targets. There are $|P_B|=10^2=100$ states and
+
+$$
+w_{\rm j}(P_B)=(0,1,9)M(0,1,9)^{\mathsf T}
+=1437+2\cdot9\cdot237+81\cdot53=9996.
+\tag{NCE.69}
+$$
+
+The products $P_B^n$ retain these own-coordinate witnesses and have
+mass $9996^n$. Extending their attained reply decoders arbitrarily
+to total tables gives a complete native template whose solution set
+contains $P_B^n$. The already proved upper bounds its mass by
+$9996^n$, so its mass is exactly that value. Since $w_{\rm j}$ is
+positive on every state, it has no additional solutions. This proves
+attainment in both families without a separate saturation assumption.
+Normalize by $W_{\rm j}^n$ and use
+$9996/25628=2499/6407$ to obtain (NCE.67). $\square$
+
+**Corollary 9.3 (the two finite envelopes at this particular law).**
+With $J_d$ and the conditional-owner envelope $\Omega_d$ defined in
+[COK, Definitions 2.5 and 5.1][COKj],
+
+$$
+J_3(\mu_{\rm j})=\Omega_3(\mu_{\rm j})
+=\beta_3(\mu_{\rm j})=\frac{2499}{6407}.
+\tag{NCE.70}
+$$
+
+Proof. Work first with $w_{\rm j}$. For a range-feasible $P$ of
+mass at most $9996$, the Euclidean norm of its joint hard-target cell
+masses is at most its total mass. For a heavier $P$, its hard vector
+contains the target selected in Theorem 9.1. Its joint cells refine
+that target's cells; splitting nonnegative masses cannot increase
+the sum of their squares. Equation (NCE.65) bounds the joint norm
+strictly below $9996$. It follows that $J_3(w_{\rm j})\le9996$.
+On $P_B$ all targets are easy, so its hard vector is empty and its
+one cell has mass $9996$. Hence $J_3(w_{\rm j})=9996$.
+The credited comparison
+$\beta_d\le\Omega_d\le J_d$ in COK Theorem 5.2, together with
+Theorem 9.2, forces equality for $\Omega_3$ as well. Homogeneity
+gives (NCE.70). This is equality at one fixed law, not optimization
+over laws or proof of a conditional certificate's boundary attainment.
+$\square$
+
+## 10. Strict lower bounds for the original complete attained alphabet
+
+**Theorem 10.1 (every original competitor and every depth).** Under
+Assumption 1.2, every jointly correct original preparation and reader
+satisfies, for every $D\ge3$,
+
+$$
+\boxed{\displaystyle
+|E[\mathcal F_D]|\ge
+ \left\lceil\left(\frac{6407}{2499}\right)^{2^{D-3}}\right\rceil.}
+\tag{NCE.71}
+$$
+
+Consequently
+
+$$
+\boxed{\displaystyle
+M_1(D)\ge
+ \left\lceil\left(\frac{6407}{2499}\right)^{2^{D-3}}\right\rceil,
+\qquad \sigma_3\ge\log_2\frac{6407}{2499},\qquad
+\lambda\ge\frac18\log_2\frac{6407}{2499}.}
+\tag{NCE.72}
+$$
+
+Proof. This uses the actual-scaffold restriction of Theorem 6.2,
+equivalently [NPC, Theorem 7.1][NPCj], with the new cap. Its original
+quantifiers can be checked directly. Set $h=D-3$, $n=2^h$, and fix a
+perfect ordered height-$h$ scaffold in the right subtree. Insert the
+actual $S_3$ trees at its frontier words $a_1,\ldots,a_n$, $|a_i|=h$.
+Each tuple gives a distinct actual $t_x=\langle A,v_x\rangle\in
+\mathcal F_D$. All these occurrences are present. For $q\in W_3$,
+
+$$
+p=Ra_iq\in\mathcal P_D,\qquad |p|=1+h+|q|\le D,
+\qquad r_{\rho^kt_x}(p)=\operatorname{Pred}(\Gamma_q(x_i),k).
+\tag{NCE.73}
+$$
+
+Restrict an arbitrary original complete export $E$ to this slice,
+keeping its values and all its fibers unchanged. Fix one attained
+name and one such request. The reader's zero-Read choice or entire
+query word is fixed before a reply and before every authentic count.
+Every finite original-root word is constant in the root/left wrapper
+or strictly above the scaffold frontier, or enters one uniquely fixed
+actual donor block with an arbitrary finite suffix. In $S_3$, a
+suffix of length at most two is a boundary experiment; at length
+three its reply is alpha exactly when its length-two parent is
+branch and absent otherwise; at greater length it is constant absent.
+Thus every query is a function of one boundary reply in that same
+donor block, or a constant. It need not query the target block.
+
+Equal selected boundary replies within this unchanged fiber produce
+equal actual replies and the same final predictor. Correctness for
+all later authentic $k$ makes the complete trajectories, and hence
+$\Gamma_q$, equal. Constant queries and zero-Read branches make
+that target constant. The restricted fiber is therefore an unrestricted
+jointly admissible subset of $S_3^n$ for every target simultaneously.
+This conclusion retains arbitrary cross-block correlations, different
+donors for different targets, off-target words and cycles.
+
+The mathematical product law $\mu_{\rm j}^{\otimes n}$ on the entire
+slice has total mass one. By Theorem 9.2 each restricted code fiber
+has mass at most $(2499/6407)^n$. They partition that slice, so
+there are at least $\lceil(6407/2499)^n\rceil$ of them, and the
+full original attained alphabet is at least this large. This proves
+(NCE.71); no rival preparation has been replaced or granted a free
+scan. The same mass argument for integral or fractional covers at
+every $n\ge1$ gives
+
+$$
+Z_3(n)\ge(6407/2499)^n,\qquad
+K_3(n)\ge\lceil(6407/2499)^n\rceil.
+\tag{NCE.74}
+$$
+
+Take the supplied limit for $\sigma_3$, and divide the original
+finite lower logarithm by $2^D=8n$ for the supplied limit $\lambda$.
+This proves (NCE.72). The product law is an analytical counting
+witness, not a source prior, acquired advice, imposed independence
+of competing fibers or a source-dependent request. $\square$
+
+**Corollary 10.2 (strict comparison and finite consequences).** The
+lower endpoint in (NCE.72) strictly exceeds that of Theorem 6.2:
+
+$$
+6407\cdot13-2499\cdot33=824>0,
+\qquad
+\frac18\log_2\frac{6407}{2499}
+>\frac18\log_2\frac{33}{13}.
+\tag{NCE.75}
+$$
+
+In particular the certified finite ceilings from (NCE.71) are
+$3,7,44,1867$ for $D=3,4,5,6$, respectively. The exact values are
+not asserted, except for the separately credited $M_1(3)=4$ from
+[D3, Theorem 2.3][D3j]. Combining with its paid rate upper
+(Theorem 4.1) gives the valid interval
+
+$$
+\frac18\log_2\frac{6407}{2499}\le\lambda<\frac3{16}.
+\tag{NCE.76}
+$$
+
+Proof. Strict monotonicity of the logarithm gives (NCE.75).
+For $n=1,2,4,8$, if $m=3,7,44,1867$ respectively, exact integer
+powering gives
+
+$$
+(m-1)2499^n<6407^n\le m2499^n.
+\tag{NCE.77}
+$$
+
+These are precisely the four ceiling assertions. D3 supplies its
+upper and its finite optimum independently of the chosen dual law.
+The numerical display
+$\frac18\log_2(6407/2499)\simeq0.16978726113469447$
+is explanatory; strictness and all finite conclusions use the exact
+rational expressions above. $\square$
+
+## 11. A paid full-family consumer of the pressure-attaining fiber
+
+**Proposition 11.1 (actual acquisition and exactly counted names).**
+For every $D=3+h$, $h\ge0$, put $n=2^h$, and let $Q_D\subseteq S_D$
+be the scaffold image of $P_B^n$ from (NCE.68) at the fixed perfect
+height-$h$ frontier. There is a jointly correct preparation and reader
+on the entire original $\mathcal F_D$ with exactly
+
+$$
+|E[\mathcal F_D]|=|S_D|-100^n+1
+\tag{NCE.78}
+$$
+
+attained complete names. Its one merged canonical fiber is precisely
+$Q_D$; all other canonical states have singleton names. On every
+original source it uses at most
+
+$$
+2^D-1\text{ preparation Reads},\qquad
+\max|\text{preparation literal}|=D,\qquad
+\text{preparation letters}=(D-1)2^D+1.
+\tag{NCE.79}
+$$
+
+Every late target uses zero Reads or one actual original-root Read
+of length at most $D$, chosen before every supplied count. This is
+a nonoptimal full-family realization of an equality fiber for the
+chosen law; it is not an attaining construction for $M_1(D)$.
+
+Proof. Scaffold parsing is injective and respects the defining
+recursion of $S_D$, so $Q_D$ has exactly $100^n$ states. Install a
+finite public table that assigns one name to $Q_D$ and a separate
+name to every other member of $S_D$. Before receiving any request,
+actually submit every literal $Rq$, $q\in W_D$, on the stationary
+source, including absent words. These paid replies compute the
+canonical state $\pi_D(v)$ of FMR Lemma 2.2. The table then computes
+its complete fixed-width name. FMR's canonicalization fixes $S_D$,
+so every stated name is attained on an actual source, proving
+(NCE.78). The fixed scan has $\sum_{\ell=0}^{D-1}2^\ell=2^D-1$
+words and $\sum_{\ell=0}^{D-1}(\ell+1)2^\ell=(D-1)2^D+1$
+letters, proving (NCE.79). All other accessible acquired dependence
+is isolated under Assumption 1.2 after selecting the name.
+
+At a singleton name the canonical state determines every requested
+factor, so the late reader uses zero Reads. At the merged name,
+write the request $p=Rq$. If $|q|<h$, its endpoint is in the fixed
+scaffold and is branch. Otherwise there is a unique decomposition
+$q=a_i r$, where $r\in W_3$. If $r=\varepsilon$, its endpoint is
+also branch, since every member of $P_B$ is branch. These cases
+have constant trajectories. For nonempty $r$, the local decoder in
+Theorem 9.2 obtains $\Gamma_r$ from the actual literal at $r$ in
+that block. Implement it by the one original-root word $Ra_i r=p$.
+The length is at most $D$. This is one fresh Read of the same actual
+stationary source; no artificial wrapper or subtree is an input.
+
+On the full inverse image $\pi_D^{-1}(Q_D)$, canonicalization
+preserves the selected boundary reply and requested temporal factor.
+The same reader therefore serves all original variable shapes
+assigned the merged name, including initially absent targets.
+(NCE.6) then answers every subsequently supplied authentic $k$.
+The fixed scaffold and finite decoder tables are public installed
+data. There is no acquired frontier selector, shape tag or joint
+weight table supplied as free advice. $\square$
+
+**Convention 11.2 (complete resource and recovery boundary).** The
+preparation in Proposition 11.1 is initially source-blind and depends
+only on public $D$ and installed tables; the later request is absent.
+A complete name includes every accessible surviving control, selector,
+buffer, length, allocation and timing distinction. Fixed-width storage
+and common finite control can be arranged, while the separately paid
+handoff and isolation service removes access to the scanned arrays,
+transcripts, intermediate names and other acquired dependence. This is
+exactly the service assumption of §1; it is not physical erasure proved
+from the tree equations.
+
+Finite table generation and installation, preparation work and temporary
+workspace, selection work, post-request workspace, address construction,
+final predictor size, authentic-count representation, lawful entry,
+isolation, continuity, authentication and physical time are separate
+resources. The factor $(b,c)$ alone has $0\le b\le2D$ and
+$c\in\{0,1\}$, so at most
+$\lceil\log_2(2D+1)\rceil+1$ bits suffice for that factor. No
+free total-efficiency conclusion is implied by the alphabet count.
+
+Under those services the boundary observer obtains exactly
+
+$$
+(E(t),D,p,\text{zero or one actual literal reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{NCE.80}
+$$
+
+The inverse reads the first branch count and whether an alpha stage
+occurs. It does not supply an unknown age, source identity, whole hidden
+source, free acquired reference, hidden history or physical space-time
+recovery. The source and menu remain those of Definition 1.1, with
+no reset, copying, navigation or equality action.
+
+## 12. Exact finite readings, attribution and the open bridge
+
+**Convention 12.1 (bounded exact readings).** The finite identities in
+§§8–11 admit integer and finite-tree checks without an asymptotic
+sample inference. Among all $2^{11}=2048$ subsets of $S_2$, the numbers
+satisfying the five hypotheses of Lemma 8.2, in their displayed order,
+are $1627,704,1206,193,112$. Their numbers of distinct category-count
+vectors are $35,22,30,13,10$. Each such vector is dominated by its
+stated family. Equations (NCE.61)–(NCE.64) give all $45$ bilinear
+entries, not selected maxima from an unreported search.
+
+For a bounded full-family example, the number of actual trees of
+height at most three is $1446$, obtained from
+$T_0=2$, $T_{j+1}=2+T_j^2$. Their canonical image is all $123$
+states of $S_3$. At $D=3$, Proposition 11.1 has $24$ attained names;
+$1369=37^2$ actual right subtrees have the merged name, since the
+canonical child lies in $H_B$ exactly when that actual child is not
+$A$. The seven own-literal decoder checks on those merged sources
+comprise $9583$ source/target pairs. Canonical reply and factor
+preservation hold on all $1446\cdot7=10122$ source/target pairs.
+Directly iterating the actual substitution for counts $0\le k\le6$
+checks $70854$ replies against (NCE.6). These are bounded readings;
+the all-count conclusion is supplied by Convention 1.3, and the
+all-length assertion is proved by Theorem 2.2 and Theorem 9.1.
+No finite template search, empirical convergence or optimality
+assertion replaces those proofs.
+
+**Convention 12.2 (credited suppliers and primary boundaries).** All
+repository supplier citations with suffix `j` below designate public
+revision `91170b89dfe9dd7eadc64d14d86d2157ed14abdf`. The mathematical
+content here is ordinary theory, without a claim of Lean certification,
+independent review or worldwide originality. The joint weight law,
+finite projection bounds, exact pressure for that law and strict
+original lower endpoint are `repo-derived` deductions.
+
+Theorem 2.2 owns the all-cyclic half-entropy rule. Lemma 3.2 and tables
+(NCE.26)–(NCE.27) own the separating factor and collision suppliers.
+AAR owns the exact factor/trajectory equivalence. FMR owns canonical
+all-word simulation, paid finite-cover implementation, actual scaffold
+restriction and rate existence; NPC owns unrestricted product pressure
+and its all-original-competitor consumer. Proposition 11.1 instantiates
+that paid mechanism with the explicit $100^n$-state equality fiber.
+COK owns the comparison used only in Corollary 9.3. D3 owns the exact
+finite value $M_1(3)=4$ and the upper $\lambda<3/16$. None of these
+suppliers is counted as a new general theorem here.
+
+| Primary source | Exact mathematical correspondence and transfer limit |
+| --- | --- |
+| Tomasz Gogacz and Szymon Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, [arXiv:1512.01808v1](https://arxiv.org/html/1512.01808v1), Theorem 1 and Corollary 1 | A native decoder equation makes its target a function of one reply under the same tuple law. Their theorem fixes a schema, query and functional dependencies and optimizes a closed entropic cone; the submodular relaxation is an upper bound. It supplies neither the particular joint law (NCE.51) nor a finite cutoff for varying native lengths and donors. |
+| Pascal O. Vontobel, *Counting in Graph Covers: A Combinatorial Characterization of the Bethe Entropy Function*, [arXiv:1012.0065v2](https://arxiv.org/html/1012.0065v2), Definition 32 and Theorem 33 | The degree-$M$ Bethe partition function is the $M$th root of the average Gibbs partition function over covers of one fixed normal factor graph; its limsup is that base graph's Bethe partition function. This is an average over a fixed graph's covers. It gives no universal upper bound for the maximum over all complete native networks, and no optimizer-cofinality is transferred. |
+
+Finite entropy, conditional Gibbs domination and permutation averaging
+are the mature machinery already proved in §2. The new numerical law
+does not strengthen their epistemic status. No differently scoped
+predecessor-row or finite-reader-synthesis theorem is used to infer
+an all-length cap or a preparation bound.
+
+**Open problem 12.3 (optimizer-cofinality and global completion).**
+The strict endpoint is a universal certificate at one fixed rational
+law and depth. It does not identify
+$\min_{\mu\in\Delta(S_3)}\beta_3(\mu)$, exact $\sigma_3$, sharp
+$\lambda$ or general exact $M_1(D)$. Even exact pressure at a chosen
+law, attained at every length, does not give covers attaining its dual
+lower bound.
+
+The remaining [COK, Open problem 9.3][COKj] and [GDB, Definition
+11.1][GDBj] obligation is a total sound cap verifier with accepted
+weight-optimized endpoints cofinal at every depth, or a uniform
+effective native length error sufficient for terminating two-sided
+approximation. The conditional-owner local-law completion and global
+entropy-loss questions remain open. [SCP, §§3–6][SCPj]'s uniform
+softening estimates compare semantic all-size quantities and do not
+evaluate them effectively. No length modulus, universal global-law
+completion, bounded-width or mixing premise follows from (NCE.67).
+The minimal-relations/internal-observer/mutual-recovery programme
+retains the original sources, operations, all-view recovery objective
+and separate resource obligations beyond this strict quantitative
+lower consequence.
+
+[NPCj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[COKj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[D3j]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[GDBj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[SCPj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOFT_CONSTRAINT_PRESSURE.md
+
+## 追加锚（本行以下为增补区）
