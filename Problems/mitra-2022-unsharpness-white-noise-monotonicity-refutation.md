@@ -75,7 +75,7 @@ Tier 1 conjecture of a 2022 paper, preregistered in issue #17118 before any Lean
 | --- | --- | --- | --- |
 | result | bind-only | none: after inlining, the POVM check, the diagonal operator norms, the X-matrix, its lowest eigenvalue and the strict inequality are instantiations of pinned Mathlib results followed by normalization | open-problem-resolution |
 
-Every other declaration is a definition used by a public statement or a compiler-generated proof on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
+Every other public declaration is a definition used by a public statement. The module's 10 private theorems are bind-only helpers consumed on the proof path of `result`, and its compiler-generated declarations also lie on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
 
 ### What the settlement shows
 
