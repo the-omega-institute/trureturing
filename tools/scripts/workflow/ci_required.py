@@ -62,6 +62,24 @@ def main():
         return 2
 
     problems = []
+    prerequisite = results.pop("source", None)
+    if "current" in hits:
+        if prerequisite is None:
+            problems.append("current source prerequisite is missing from needs")
+        elif hits["current"]:
+            outputs = needs["source"].get("outputs", {})
+            status = outputs.get("source_status") if isinstance(outputs, dict) else None
+            continuation = outputs.get("continuation") if isinstance(outputs, dict) else None
+            if prerequisite != "success" or status != "accepted" or continuation != "true":
+                problems.append(f"prerequisite source result={prerequisite} status={status!r} continuation={continuation!r}")
+            else:
+                print("CI_REQUIRED prerequisite=source result=success status=accepted")
+        elif prerequisite != "skipped":
+            problems.append(f"unhit current source prerequisite result={prerequisite}")
+        else:
+            print("CI_REQUIRED prerequisite=source status=not-applicable")
+    elif prerequisite is not None:
+        problems.append("source prerequisite has no current unit in HITS")
     for name in sorted(set(results) - set(hits)):
         problems.append(f"job {name} has no unit section in the detection specification")
     for name in sorted(set(hits) - set(results)):
@@ -76,7 +94,7 @@ def main():
         elif result == ("success" if hit else "skipped"):
             print(f"CI_REQUIRED {line}")
         else:
-            problems.append(line)
+            problems.append(line + (" status=blocked" if hit and result == "skipped" else ""))
     for problem in problems:
         print(f"CI_REQUIRED_RED {problem}")
     return 1 if problems else 0

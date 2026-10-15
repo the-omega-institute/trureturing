@@ -18,6 +18,29 @@ def needs(detect="success", hits=None, **results):
 
 
 class CiRequiredTests(unittest.TestCase):
+    def test_current_source_phase_is_required_and_cannot_turn_blocked_hits_green(self):
+        hits = {"current": True, "alpha": True}
+        value = needs(current="success", alpha="success")
+        self.assert_red(self.verdict(value, hits), "current source prerequisite is missing")
+        for state in ("failure", "cancelled", "skipped", "success"):
+            for status in ("rejected", "judge-failed", "infrastructure", None):
+                value["source"] = {"result": state, "outputs": {"source_status": status, "continuation": "true"}}
+                with self.subTest(state=state, status=status):
+                    self.assert_red(self.verdict(value, hits), "prerequisite source")
+        value["source"] = {"result": "success", "outputs": {"source_status": "accepted", "continuation": "true"}}
+        self.assertEqual(0, self.verdict(value, hits).returncode)
+        value["alpha"]["result"] = "skipped"
+        self.assert_red(self.verdict(value, hits), "unit=alpha hit=true result=skipped status=blocked")
+        del value["alpha"]
+        self.assert_red(self.verdict(value, hits), "unit alpha has no job in needs")
+
+    def test_unselected_current_does_not_gain_a_source_obligation(self):
+        hits = {"current": False, "alpha": True}
+        value = needs(current="skipped", alpha="success", source="skipped")
+        self.assertEqual(0, self.verdict(value, hits).returncode)
+        value["source"]["result"] = "success"
+        self.assert_red(self.verdict(value, hits), "unhit current source prerequisite")
+
     def verdict(self, needs_value, hits):
         env = {key: value for key, value in os.environ.items() if key not in ("NEEDS", "HITS")}
         env.update(NEEDS=needs_value if isinstance(needs_value, str) else json.dumps(needs_value),

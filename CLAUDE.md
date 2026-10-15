@@ -808,7 +808,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成�
 
 ### 8.16 CI 与判官的显式白名单权威
 
-CI 选工的唯一权威是 `Meta/ci-units.json` 的 `CI_UNITS` 与单元执行声明，本地 gate 和远程 `detect` 共享消费:每个单元一段,段名为其作业 id,`[*]` 段适用于全部单元;`*` 跨 `/`,`?` 匹配一个字符,`!` 排除。`ci_detect.py` 校验完整改动路径列表,不设路径数量截断,一次判定全部单元并输出命中表;单元作业以 `if:` 读取命中表,未命中即跳过。`required` 作业由 `ci_required.py` 核对检测成功、白名单段与作业一一对应、命中者成功、未命中者跳过。增删或改名单元须同时改白名单段、作业与 `required` 的 needs,不一致时 `required` 红。白名单不从工程登记、FILEMAP 或调用关系推导;工程依赖或测试读取的文件改变时,同一 PR 修改对应单元的白名单。
+CI 选工的唯一权威是 `Meta/ci-units.json` 的 `CI_UNITS` 与单元执行声明，本地 gate 和远程 `detect` 共享消费:每个单元一段,段名为其作业 id,`[*]` 段适用于全部单元;`*` 跨 `/`,`?` 匹配一个字符,`!` 排除。`ci_detect.py` 校验完整改动路径列表,不设路径数量截断,一次判定全部单元并输出命中表;单元作业以 `if:` 读取命中表,未命中即跳过。`required` 作业由 `ci_required.py` 核对检测成功、白名单段与单元作业一一对应、命中者成功、未命中者跳过；另直接核对仅属于已选 current 的 source 前置 phase。该 phase 不增 CI_UNITS 项，未选 current 时跳过；确定性源码拒绝阻止所守护的后继，bootstrap/input 失败与 blocked 保留原分类及有效 fallback，执行和累计预算依 SPEC A22。增删或改名单元须同时改白名单段、作业与 `required` 的 needs,不一致时 `required` 红。白名单不从工程登记、FILEMAP 或调用关系推导;工程依赖或测试读取的文件改变时,同一 PR 修改对应单元的白名单。
 
 FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式。工程登记管程序集、项目引用与测试归属;Lean/Lake 按原生依赖执行增量。SL-003/SL-015 的检查材料仍在 `Meta/ci-checks.json` 显式声明。不得重建跨 workflow 的分析、阶段计划、公共执行证据或 transport 体系。
 

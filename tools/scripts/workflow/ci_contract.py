@@ -76,7 +76,8 @@ def selection(data, paths, purpose):
 
 
 def git(root, *args):
-    result = subprocess.run(["git", "-C", str(root), *args], capture_output=True)
+    result = subprocess.run(["git", "-C", str(root), *args], capture_output=True,
+                            env=dict(os.environ, GIT_OPTIONAL_LOCKS="0"))
     if result.returncode:
         raise DetectError(result.stderr.decode(errors="replace").strip())
     return result.stdout
@@ -97,6 +98,18 @@ def changed_paths(root, base, head=None):
             paths.append(fields.pop(0).decode("utf-8"))
     if head is None:
         paths += [p.decode("utf-8") for p in git(root, "ls-files", "--others", "--exclude-standard", "-z").split(b"\0") if p]
+        # The comparison base can contain paths absent from the real index.
+        # Compare their actual entries too, without staging or writing objects.
+        wanted, baseline = set(paths), {}
+        for entry in git(root, "ls-tree", "-r", "-z", base).split(b"\0"):
+            if not entry:
+                continue
+            header, raw = entry.split(b"\t", 1)
+            path = raw.decode("utf-8")
+            if path in wanted:
+                mode, _, identity = header.split()
+                baseline[path] = (mode, bytes.fromhex(identity.decode("ascii")))
+        paths = [path for path in paths if candidate_entry(root / path) != baseline.get(path)]
     return list(dict.fromkeys(paths))
 
 
@@ -104,29 +117,37 @@ def write_paths(path, paths):
     path.write_bytes(b"".join(p.encode() + b"\0" for p in paths))
 
 
+def object_id(kind, content):
+    return hashlib.sha1(kind + b" " + str(len(content)).encode() + b"\0" + content).digest()
+
+
+def candidate_entry(path):
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        return None
+    if stat.S_ISLNK(info.st_mode):
+        mode, content = b"120000", os.readlink(path).encode()
+    elif stat.S_ISREG(info.st_mode):
+        mode, content = (b"100755" if info.st_mode & 0o111 else b"100644"), path.read_bytes()
+    else:
+        raise DetectError(f"unsupported candidate entry: {path}")
+    return mode, object_id(b"blob", content)
+
+
 def candidate_identity(root):
     """Git tree identity of actual bytes without writing objects, index or refs."""
     paths = set(git(root, "ls-files", "-z", "--cached", "--others", "--exclude-standard").split(b"\0")) - {b""}
     tree = {}
-    def object_id(kind, content):
-        return hashlib.sha1(kind + b" " + str(len(content)).encode() + b"\0" + content).digest()
     for raw in sorted(paths):
-        path = root / raw.decode("utf-8")
-        try:
-            info = path.lstat()
-        except FileNotFoundError:
+        entry = candidate_entry(root / raw.decode("utf-8"))
+        if entry is None:
             continue
-        if stat.S_ISLNK(info.st_mode):
-            mode, content = b"120000", os.readlink(path).encode()
-        elif stat.S_ISREG(info.st_mode):
-            mode, content = (b"100755" if info.st_mode & 0o111 else b"100644"), path.read_bytes()
-        else:
-            raise DetectError(f"unsupported candidate entry: {path}")
         node = tree
         parts = raw.split(b"/")
         for part in parts[:-1]:
             node = node.setdefault(part, {})
-        node[parts[-1]] = (mode, object_id(b"blob", content))
+        node[parts[-1]] = entry
     def tree_id(node):
         entries = []
         for name, value in sorted(node.items(), key=lambda pair: pair[0] + (b"/" if isinstance(pair[1], dict) else b"")):

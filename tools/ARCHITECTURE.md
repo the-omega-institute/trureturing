@@ -16,8 +16,10 @@ cutoff. The patterns are written, not derived from
 project registrations, FILEMAP or call graphs.
 
 Each test project, selftest, compile-fail proof, FILEMAP and current is one job
-that runs only when hit; jobs run in parallel and steps within a job may be
-serial. `ci-unit.yml` supplies the common checkout, candidate verification, .NET
+that runs only when hit. Selected current first runs its narrow source prerequisite
+in the native source job; completed source rejection blocks the selected fan-out.
+When current is unselected this phase is skipped. Independent selected jobs then
+run in parallel; steps within a job may be serial. `ci-unit.yml` supplies the common checkout, candidate verification, .NET
 and optional Lean cache steps; its unit id selects the declaration consumed by
 `ci_checks.py`, which runs the canonical project/test-evidence or command implementation. The current job produces one Lean report and
 runs `check-current`, Scribe, and (for pull requests) `check-delta` against the
@@ -39,7 +41,14 @@ revision and purpose without claiming execution. Local remotes persist; hosted e
 authentication, cache transport, publication and required results remain host obligations.
 Delta exit 3 is observable protected-only early feedback on both adapters, with no
 review authorization; other failures retain their exits. Each unit/current shares one
-1800-second compute allowance across its phases, excluding preparation.
+1800-second compute allowance across its phases, excluding preparation. The source
+job charges judge compilation and source execution to current and exports only the
+remaining allowance through ci_compute; the continuation cannot start a fresh budget.
+Bootstrap/input failures remain distinct from completed source rejection, preserving
+independently reachable report fallback. Required directly checks this prerequisite
+as well as every selected unit. Ready report validators run source evidence, Scribe,
+current, applicable delta and compiled audit before project publication; independent
+semantic rejection does not revoke valid report publication eligibility.
 `make test` remains the explicit lean-report plus check-current entry. A project-specific
 test is run with `make -C tools test TEST_PROJECT=...`; local success is early
 feedback and does not replace remote required checks.

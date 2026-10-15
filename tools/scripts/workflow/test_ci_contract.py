@@ -41,6 +41,8 @@ class ContractTests(unittest.TestCase):
         target.write_bytes(content)
 
     def parity(self, purpose="pull-request"):
+        index = (self.root / ".git/index").read_bytes()
+        refs = self.git("show-ref", "--head")
         paths = contract.changed_paths(self.root, self.base)
         data, revision = contract.load(self.root)
         expected = contract.selection(data, paths, purpose)
@@ -53,6 +55,8 @@ class ContractTests(unittest.TestCase):
         self.assertEqual({key: observed[key] for key in expected}, expected)
         self.assertEqual(observed["contract_revision"], revision)
         candidate = observed["candidate"]
+        self.assertEqual(index, (self.root / ".git/index").read_bytes())
+        self.assertEqual(refs, self.git("show-ref", "--head"))
         # Commit packaging is irrelevant to the bytes used for comparison.
         self.git("add", ".")
         self.git("commit", "--allow-empty", "-qm", "fixture candidate")
@@ -109,6 +113,50 @@ class ContractTests(unittest.TestCase):
         for name in ("D5/old name\nsource.lean", "D5/renamed\tfile.lean",
                      "docs/develop/theory/untracked\nname.md", "tools/scripts/workflow/ci_required.py"):
             self.assertIn(name, paths)
+        self.parity()
+
+    def test_comparison_base_contains_files_absent_from_current_index(self):
+        original = self.base
+        identical = "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.Source.cs"
+        changed = "D5/changed name\nsource.lean"
+        deleted = "docs/develop/theory/deleted name.md"
+        for path in (identical, changed, deleted):
+            self.put(path, b"comparison base bytes\n")
+        self.git("add", ".")
+        self.git("commit", "-qm", "comparison base additions")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        self.git("reset", "--mixed", "-q", original)
+        self.put(changed, b"actual changed bytes\n")
+        (self.root / deleted).unlink()
+        index = (self.root / ".git/index").read_bytes()
+        refs = self.git("show-ref", "--head")
+        self.assertEqual(set(contract.changed_paths(self.root, self.base)), {changed, deleted})
+        self.assertEqual(index, (self.root / ".git/index").read_bytes())
+        self.assertEqual(refs, self.git("show-ref", "--head"))
+        plan = self.parity()
+        self.assertFalse(plan["hits"]["tests-worktree-contract"])
+
+    @unittest.skipUnless(hasattr(os, "symlink"), "symlinks required")
+    def test_unindexed_base_files_keep_mode_and_symlink_differences(self):
+        original = self.base
+        mode = "D5/executable name\nsource.lean"
+        link = "D5/link name\nsource.lean"
+        same_link = "D5/unchanged link.lean"
+        changed_link = "D5/changed link.lean"
+        for path in (mode, link):
+            self.put(path, b"same file bytes\n")
+        (self.root / same_link).symlink_to("missing target")
+        (self.root / changed_link).symlink_to("original missing target")
+        self.git("add", ".")
+        self.git("commit", "-qm", "comparison base types")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        self.git("reset", "--mixed", "-q", original)
+        (self.root / mode).chmod(0o755)
+        (self.root / link).unlink()
+        (self.root / link).symlink_to("different missing target")
+        (self.root / changed_link).unlink()
+        (self.root / changed_link).symlink_to("new missing target")
+        self.assertEqual(set(contract.changed_paths(self.root, self.base)), {mode, link, changed_link})
         self.parity()
 
     def test_empty_changes_differ_from_unavailable_hosted_base(self):

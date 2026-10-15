@@ -56,27 +56,20 @@ jobs:
           CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_detect.py --contract --changed "$RUNNER_TEMP/changed-paths"
 
-  # Lean report, current-tree rules and Scribe checks; on pull requests also the
-  # delta rules against B = first parent of the event merge commit. The report is
-  # built once and consumed by both rule sets inside this one job.
-  current:
+  # A phase of selected current, not another CI_UNITS entry. Native Actions
+  # releases independent units after this narrow source prerequisite completes.
+  source:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    # Platform wall-clock cap, separate from the shared 30-minute compute allowance.
     timeout-minutes: 360
     outputs:
-      lean_required: ${{ needs.detect.outputs.report }}
-      unit: ${{ steps.checked.outputs.unit }}
-      project_seed_available: ${{ steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
+      source_status: ${{ steps.prefix.outputs.source_status }}
+      continuation: ${{ steps.prefix.outputs.continuation }}
+      judge_key: ${{ steps.judge_key.outputs.key }}
+      compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
     env:
-      # This job writes project seeds only on dev/integration pushes.
-      # Dependency and elan writes also use the PR's own merge-ref scope.
       CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
-      REPORT: .lake/build/stratalint/raw-lean-report.json
-      CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
-      SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
-      # The judge build recipe: the build step runs it and the judge cache key hashes it.
       CI_PUSH_BEFORE: ${{ github.event.before }}
     steps:
       - uses: actions/checkout@v5
@@ -216,6 +209,94 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
+      - id: compute_budget
+        name: Initialize the cumulative current compute allowance
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 30
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: prefix
+        name: Check the selected source prerequisite
+        env:
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+        run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
+      - if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.prefix.outputs.judge_ready == 'true' && steps.judge.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
+      - id: remainder
+        name: Carry the remaining current compute allowance
+        if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
+        run: python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
+
+  # Lean report, current-tree rules and Scribe checks; on pull requests also the
+  # delta rules against B = first parent of the event merge commit. The report is
+  # built once and consumed by both rule sets inside this one job.
+  current:
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
+    runs-on: ubuntu-24.04-arm
+    # Platform wall-clock cap, separate from the shared 30-minute compute allowance.
+    timeout-minutes: 360
+    outputs:
+      lean_required: ${{ needs.detect.outputs.report }}
+      unit: ${{ steps.checked.outputs.unit }}
+      project_seed_available: ${{ steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
+    env:
+      # This job writes project seeds only on dev/integration pushes.
+      # Dependency and elan writes also use the PR's own merge-ref scope.
+      CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
+      REPORT: .lake/build/stratalint/raw-lean-report.json
+      CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
+      SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
+      # The judge build recipe: the build step runs it and the judge cache key hashes it.
+      CI_PUSH_BEFORE: ${{ github.event.before }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Verify the candidate and list the changed paths
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+        run: bash tools/scripts/workflow/ci-entry.sh
+      # The judge cache key binds the resolved SDK, the build recipe and the
+      # paths and blob ids of the tracked judge compile inputs listed in
+      # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
+      # and its references, explicit copied/embedded runtime inputs, analyzer
+      # files and inherited build configuration). It is taken before anything is
+      # built; an exact hit skips the build.
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: |
+            tools/StrataLint.Cli/packages.lock.json
+            tools/StrataLint.Configuration/packages.lock.json
+            tools/StrataLint.Engine/packages.lock.json
+            tools/StrataLint.Engineering/packages.lock.json
+            tools/StrataLint.Runtime/packages.lock.json
+            tools/StrataLint.FileMap/packages.lock.json
+            tools/StrataLint.Lean/packages.lock.json
+            tools/StrataLint.Scribe/packages.lock.json
+            tools/StrataLint.TestEvidence/packages.lock.json
+            tools/Trureturing.Truth/packages.lock.json
+      - id: judge
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ needs.source.outputs.judge_key }}
       - id: prepared
         name: Adopt a matching PR preparation for this event
         if: needs.detect.outputs.report == 'true'
@@ -263,19 +344,22 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Prepare judge and selected test dependencies
+      - id: compute_budget
+        name: Resume the cumulative current compute allowance
+        env:
+          COMPUTE_REMAINING: ${{ needs.source.outputs.compute_remaining }}
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py resume-current "$budget" "$COMPUTE_REMAINING"
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: current_prepare
+        name: Prepare judge and selected test dependencies
         env:
           JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
         run: python3 tools/scripts/workflow/ci_checks.py current prepare
-      - id: compute_budget
-        name: Initialize the shared compute allowance
-        run: |
-          budget="$RUNNER_TEMP/current-compute-seconds"
-          python3 tools/scripts/workflow/ci_compute.py init "$budget" 30
-          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - id: build_judge
         name: Build the judge
-        if: steps.judge.outputs.cache-hit != 'true'
+        if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
       # The judge outputs are a function of the keyed sources, so they are saved
       # as soon as the build succeeds.
@@ -286,9 +370,9 @@ jobs:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ steps.judge_key.outputs.key }}
+          key: ${{ needs.source.outputs.judge_key }}
       - name: Theory-only file and capacity checks
-        if: needs.detect.outputs.report == 'false'
+        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
         env:
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
@@ -306,15 +390,24 @@ jobs:
             echo "::error title=Lean report failed::Inspect the preceding error. A missing compatible native seed requires the independent lean-cache-produce long job; wait for its successful exact-head production and retry."
           fi
           exit "$rc"
-      - name: Run the compiled audit checks
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
-        run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
       - name: Verify production source binding artifacts
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
         env:
           CI_DOTNET_PREPARED: '1'
           FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
         run: python3 tools/scripts/workflow/ci_checks.py current source-evidence
+      - name: Scribe content
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        run: python3 tools/scripts/workflow/ci_checks.py current scribe
+      - name: Current-tree rules
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-current
+      - name: Delta rules
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && needs.detect.outputs.delta == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - name: Run the compiled audit checks
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
+        run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -342,15 +435,6 @@ jobs:
           saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
           jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
             'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
-      - name: Current-tree rules
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current check-current
-      - name: Scribe content
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current scribe
-      - name: Delta rules
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && needs.detect.outputs.delta == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       # Dependency and elan caches follow successful checks.
       - id: snapshot
         if: ${{ success() && needs.detect.outputs.report == 'true' && env.CACHE_WRITES == 'true' }}
@@ -412,295 +496,295 @@ jobs:
         uses: ./.github/actions/lean-cache-produce
 
   banned-api-proof:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: banned-api-proof
 
   capability-proof:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['capability-proof']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: capability-proof
 
   filemap:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['filemap']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: filemap
 
   selftest:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['selftest']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['selftest'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: selftest
 
   tests-architecture:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-architecture']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-architecture'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-architecture
 
   tests-cache:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cache
 
   tests-cache-native:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-native']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-native'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cache-native
 
   tests-cache-release:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-release']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-release'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cache-release
 
   tests-ci-entry:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-ci-entry']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-ci-entry'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-ci-entry
 
   tests-cli:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cli']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cli
 
   tests-cli-integration:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cli-integration
 
   tests-configuration:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-configuration
 
   tests-cover-batch:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-cover-batch
 
   tests-declared-template:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-declared-template
 
   tests-digestion:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-digestion
 
   tests-engine:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-engine']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engine'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-engine
 
   tests-filemap:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-filemap']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-filemap
 
   tests-header-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-header-script
 
   tests-instruction-contract:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-instruction-contract
 
   tests-integration-mirror:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-integration-mirror
 
   tests-lean:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-lean
 
   tests-lean-cache-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-cache-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-cache-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-lean-cache-script
 
   tests-lean-report-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-lean-report-script
 
   tests-playbook-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-playbook-script
 
   tests-pr-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-pr-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-pr-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-pr-script
 
   tests-report-supervisor:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-report-supervisor
 
   tests-repository-configuration:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-configuration']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-configuration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-configuration
 
   tests-repository-contract:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-contract']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-contract
 
   tests-repository-filemap:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-filemap
 
   tests-repository-topology:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-topology']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-topology'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-repository-topology
 
   tests-resource-observation:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-resource-observation
 
   tests-rules:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-rules']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-rules'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-rules
 
   tests-scribe:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-scribe
 
   tests-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-script
 
   tests-source-atomizer:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-source-atomizer
 
   tests-engineering:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-engineering
 
   tests-runtime:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-runtime
 
   tests-test-evidence:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-test-evidence
 
   tests-truth:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-truth']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-truth
 
   tests-truth-release:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-truth-release']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth-release'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-truth-release
 
   tests-workflow-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-workflow-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-workflow-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-workflow-script
 
   tests-worktree-contract:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-worktree-contract']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-worktree-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-worktree-contract
@@ -709,7 +793,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

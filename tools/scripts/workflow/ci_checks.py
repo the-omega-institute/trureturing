@@ -1,5 +1,6 @@
 """Execute the declared CI units and current subchecks for hosted and local callers."""
 import argparse
+from dataclasses import dataclass
 import glob
 import json
 import os
@@ -66,14 +67,17 @@ def prepare_unit(unit):
     return 0
 
 
-def prepare_current(data, plan):
+def prepare_judge(data):
     if os.environ.get("JUDGE_HIT") != "true":
         code = execute("restore:judge", ["dotnet", "restore", data["current"]["judge_build_args"][0], "--locked-mode"], compute=False)
         if code:
             return code
-    if plan["source-evidence"]:
-        return prepare_unit(data["units"]["tests-declared-template"])
     return 0
+
+
+def prepare_current(data, plan):
+    judge = prepare_judge(data)
+    return judge or (prepare_unit(data["units"]["tests-declared-template"]) if plan["source-evidence"] else 0)
 
 
 def prepare_local_lean():
@@ -94,6 +98,23 @@ def unit_run(name, unit):
 
 def current_phase(phase, data, plan, base, paths):
     report = os.environ.get("LEAN_REPORT", REPORT)
+    if phase == "source":
+        if not plan["hits"]["current"]:
+            result(phase, "not-applicable")
+            return 0
+        if plan["theory"]:
+            return current_phase("check-delta", data, plan, base, paths)
+        if plan["delta"] and not base:
+            raise DetectError("selected source delta requires a readable protected base")
+        return execute(phase, ["dotnet", CLI, "check-source", "--current",
+                              *(["--protected-base", base] if plan["delta"] else [])])
+    if phase == "prerequisite":
+        prefix = current_prerequisite(data, plan, base, paths)
+        if os.environ.get("GITHUB_OUTPUT"):
+            with open(os.environ["GITHUB_OUTPUT"], "a") as stream:
+                stream.write(f"source_status={prefix.status}\ncontinuation={str(prefix.allowed).lower()}\n"
+                             f"judge_ready={str(prefix.judge_ready).lower()}\n")
+        return prefix.code
     if phase == "prepare":
         return prepare_current(data, plan)
     if phase == "build-judge":
@@ -149,23 +170,72 @@ def current_phase(phase, data, plan, base, paths):
     raise DetectError(f"unknown current phase: {phase}")
 
 
-def current_run(data, plan, base, paths):
-    # Fixed current pipeline, matching hosted prerequisites. Independent
-    # validators remain reachable after another validator rejects.
+# These validators consume the report/program outputs, not one another's verdicts.
+# The fixed ready order follows the measured 9s source-evidence, 15s Scribe,
+# 85s current and 426s compiled-audit phases. Delta has no comparable duration
+# in the supplied sample; keep its existing relation to current/Scribe.
+READY_PHASES = ("source-evidence", "scribe", "check-current", "check-delta", "compiled-audit")
+
+
+@dataclass(frozen=True)
+class Prerequisite:
+    code: int
+    status: str
+    judge_ready: bool
+
+    @property
+    def allowed(self):
+        return self.status in ("accepted", "judge-failed", "infrastructure", "not-applicable")
+
+
+def current_prerequisite(data, plan, base, paths):
+    if not plan["hits"]["current"]:
+        result("source", "not-applicable")
+        return Prerequisite(0, "not-applicable", False)
+    prepared = prepare_judge(data)
+    judge = prepared or (0 if os.environ.get("JUDGE_HIT") == "true" else
+                         current_phase("build-judge", data, plan, base, paths))
+    if judge:
+        result("source", "blocked")
+        if plan["theory"]:
+            result("check-delta", "blocked")
+        status = "timeout" if judge in (124, 137) else "cancelled" if judge in (130, 143) else "judge-failed"
+        return Prerequisite(judge, status, False)
+    code = current_phase("source", data, plan, base, paths)
+    status = ("accepted" if code == 0 else "rejected" if code == 1 else
+              "timeout" if code in (124, 137) else "cancelled" if code in (130, 143) else "infrastructure")
+    return Prerequisite(code, status, True)
+
+
+def applicable_phase(plan, phase):
+    return (plan[phase] if phase in ("compiled-audit", "source-evidence") else
+            plan["delta"] if phase == "check-delta" else plan["report"])
+
+
+def current_run(data, plan, base, paths, prefix=None):
+    prefix = prefix or current_prerequisite(data, plan, base, paths)
+    if not prefix.allowed:
+        for phase in ("lean-report", *READY_PHASES):
+            if phase == "check-delta" and plan["theory"]:
+                continue  # The theory delta is the source phase itself.
+            result(phase, "blocked" if applicable_phase(plan, phase) else "not-applicable")
+        return prefix.code
+    failures = [prefix.code]
+    if not plan["report"]:
+        return prefix.code
+    lean = prepare_local_lean()
     restore = prepare_current(data, plan)
-    if restore:
-        result("build-judge", "blocked")
-    judge = restore or current_phase("build-judge", data, plan, base, paths)
-    if plan["report"] and restore:
+    judge = 0 if prefix.judge_ready else prefix.code
+    # Judge bootstrap and selected test restore failures do not erase independently
+    # reachable report fallback. Lean preparation alone guards report inputs.
+    report = lean or current_phase("lean-report", data, plan, base, paths)
+    if lean:
         result("lean-report", "blocked")
-    report = (restore or current_phase("lean-report", data, plan, base, paths)) if plan["report"] else 0
-    failures = [judge, report]
-    for phase in ("compiled-audit", "source-evidence", "check-current", "scribe", "check-delta"):
-        applicable = (plan[phase] if phase in ("compiled-audit", "source-evidence") else
-                      plan["delta"] if phase == "check-delta" else plan["report"])
-        if not applicable:
+    failures += [lean, restore, report]
+    for phase in READY_PHASES:
+        if not applicable_phase(plan, phase):
             result(phase, "not-applicable")
-        elif judge or report:
+        elif judge or report or phase == "source-evidence" and restore:
             result(phase, "blocked")
         else:
             failures.append(current_phase(phase, data, plan, base, paths))
@@ -200,18 +270,21 @@ def local(args, data, revision):
         work = Path(directory)
         changed = work / "changed"
         write_paths(changed, paths)
+        blocked = False
         if plan["hits"]["current"]:
-            lean = prepare_local_lean() if plan["report"] else 0
-            if lean:
-                result("current", "blocked")
-                failures.append(lean)
-            else:
-                failures.append(with_budget(work / "current-budget", lambda: current_run(data, plan, base, changed)))
+            def run_current():
+                nonlocal blocked
+                prefix = current_prerequisite(data, plan, base, changed)
+                blocked = not prefix.allowed
+                return current_run(data, plan, base, changed, prefix)
+            code = with_budget(work / "current-budget", run_current)
+            result("current", "success" if code == 0 else "failure", code, code)
+            failures.append(code)
         for name, unit in data["units"].items():
             if not plan["hits"][name]:
                 result(name, "not-applicable")
                 continue
-            if failures and failures[-1] in (130, 143):
+            if blocked or failures and failures[-1] in (130, 143):
                 result(name, "blocked")
                 continue
             prepared = prepare_local_lean() if unit["lean"] != "none" else 0
