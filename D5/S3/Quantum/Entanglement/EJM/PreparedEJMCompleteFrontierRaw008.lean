@@ -1,6 +1,7 @@
 /- Generated prepared source. Not compiled or kernel accepted.
 All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTypes
+import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Root
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01137Root
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -457,12 +458,8 @@ theorem raw_cut_01087 : EJMOriginalReplayAssembly.Accepted 13 17539 ⟨42640, by
 theorem response_cut_01087 : CanonicalResponse ⟨13, 2, 0, 42640, 17539, 889, 16384⟩ :=
   response_of_raw ⟨13, 2, 0, 42640, 17539, 889, 16384⟩ (by decide) (by decide) raw_cut_01087
 
-theorem raw_cut_01088 : EJMOriginalReplayAssembly.Accepted 13 17540 ⟨42672, by decide⟩ := by
-  unfold EJMOriginalReplayAssembly.Accepted
-  decide +kernel
-
 theorem response_cut_01088 : CanonicalResponse ⟨13, 2, 0, 42672, 17540, 961, 16384⟩ :=
-  response_of_raw ⟨13, 2, 0, 42672, 17540, 961, 16384⟩ (by decide) (by decide) raw_cut_01088
+  response_of_semantic ⟨13, 2, 0, 42672, 17540, 961, 16384⟩ D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Root.actual_prefix_score_lower_bound
 
 theorem raw_cut_01089 : EJMOriginalReplayAssembly.Accepted 13 17541 ⟨42696, by decide⟩ := by
   unfold EJMOriginalReplayAssembly.Accepted
