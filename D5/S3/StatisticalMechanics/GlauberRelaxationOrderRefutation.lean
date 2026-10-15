@@ -205,9 +205,10 @@ private theorem glauber_log (q : ℝ) (hq : 0 < q) :
   have hq0 : q ≠ 0 := ne_of_gt hq
   have hq1 : q + 1 ≠ 0 := by positivity
   have hq2 : q^2 + 1 ≠ 0 := by positivity
+  rw [glauber.eq_1, edgeWeight.eq_1, Pq.eq_1]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [glauber.eq_1, edgeWeight.eq_1, gibbs_log q hq, adj4.eq_1, Pq.eq_1, Fin.sum_univ_succ] <;>
+    norm_num [gibbs_log q hq, adj4.eq_1, Fin.sum_univ_succ] <;>
     field_simp <;> ring
 
 private theorem Pq_stochastic (q : ℝ) (hq : 0 < q) :
@@ -337,7 +338,8 @@ private theorem P33_roots_sorted :
   · rw [Polynomial.roots_multiset_prod_X_sub_C, Multiset.coe_sort]
     apply List.mergeSort_eq_self
     obtain ⟨hs0, _, hs1⟩ := s_properties
-    refine List.Pairwise.cons ?_ (List.Pairwise.cons ?_ (List.Pairwise.cons ?_ (List.Pairwise.cons (by simp) .nil)))
+    refine List.Pairwise.cons ?_
+      (List.Pairwise.cons ?_ (List.Pairwise.cons ?_ (List.pairwise_singleton _ _)))
     · intro a ha
       simp only [List.mem_cons, List.not_mem_nil, or_false] at ha
       rcases ha with rfl | rfl | rfl <;> linarith
