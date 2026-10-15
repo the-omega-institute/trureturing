@@ -1,8 +1,9 @@
-/- UNCOMPILED full actual induction state for native recursive expansion.
+/- Kernel-checked full actual induction-state data for native recursive expansion.
    This is the strong data package required by the all-k construction.
    It keeps one supplied cycle, its joint and both restored partitions,
    literal distinguished ports and the three earned edge invariants.
-   Existence of this state is not assumed by an all-n conclusion. -/
+   The data structure compiles; state existence and its recursive construction
+   remain open and are not assumed by an all-n conclusion. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOppositeSelectedOrders
