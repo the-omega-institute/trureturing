@@ -143,6 +143,8 @@ private structure SpecialPathFromState {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hk : 2 ≤ k) (hB : 3 ≤ F.base.length)
     (S : StateFor F hk hB) where
   route : Fin (2 * (k + 1)) → Port k
+  routeSelection : (∃ s, k = 2 * s + 2 ∧ HEq route (evenPortRoute s)) ∨
+    (∃ s, k = 2 * s + 3 ∧ HEq route (oddPortRoute s))
   ordered : Fin (k + 1) → Piece (domainGraph (SpecialDomain F hB))
   path : (domainGraph (SpecialDomain F hB)).Walk
     (specialVertex hm F hB (0, 0)) (specialVertex hm F hB (Fin.last k, 1))
@@ -166,13 +168,13 @@ private theorem special_path_from_state {m k : ℕ} (hm : 3 ≤ m)
     obtain ⟨ordered, q, hq, hp, hs, hedges, hinv⟩ :=
       even_special_from_state hm s F hB S (by
         simpa only [he, Nat.zero_ne_one, decide_false] using hodd)
-    exact ⟨⟨evenPortRoute s, ordered, q, hq, hp, hs, hedges, hinv⟩⟩
+    exact ⟨⟨evenPortRoute s, Or.inl ⟨s, rfl, HEq.rfl⟩, ordered, q, hq, hp, hs, hedges, hinv⟩⟩
   · obtain ⟨s, rfl⟩ : ∃ s, k = 2 * s + 3 := ⟨(k - 3) / 2, by omega⟩
     have hrem : (2 * s + 3) % 2 = 1 := by omega
     obtain ⟨ordered, q, hq, hp, hs, hedges, hinv⟩ :=
       odd_special_from_state hm s F hB S (by
         simpa only [hrem, decide_true] using hodd)
-    exact ⟨⟨oddPortRoute s, ordered, q, hq, hp, hs, hedges, hinv⟩⟩
+    exact ⟨⟨oddPortRoute s, Or.inr ⟨s, rfl, HEq.rfl⟩, ordered, q, hq, hp, hs, hedges, hinv⟩⟩
 
 private structure OrdinaryFromState {m k : ℕ} (hm : 3 ≤ m)
     (F : SupplyFrame m k) (hk : 2 ≤ k) (hB : 3 ≤ F.base.length)
