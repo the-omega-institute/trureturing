@@ -6,9 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/MitraUnsharpnessWhiteNoiseRefutation.claim; result=D5/S3/Quantum/Measurements/MitraUnsharpnessWhiteNoiseRefutation.result; claim=D5/S3/Quantum/Measurements/MitraUnsharpnessWhiteNoiseRefutation.claim
    digest: A four-outcome diagonal qubit POVM refutes Mitra's white-noise conjecture. -/
 
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.LinearAlgebra.Matrix.PosDef
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 
 set_option linter.style.longLine false
