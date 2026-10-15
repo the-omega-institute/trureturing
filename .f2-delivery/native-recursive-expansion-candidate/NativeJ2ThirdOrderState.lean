@@ -13,6 +13,8 @@ import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOppositeMarkedPorts
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFramePredecessor
 
 set_option autoImplicit false
+-- The transported frame base proofs use definitional identities across selected-order exchange.
+set_option backward.isDefEq.respectTransparency.types false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ThirdOrderState
 
@@ -224,7 +226,8 @@ theorem native_j2_parent_third_order_state {m : ℕ} (hm : 5 ≤ m)
     exact native_opposite_selected_involutive F (by omega)
   have hcan : oppositeSelectedFrame N (by omega) = P := by
     change oppositeSelectedFrame (nextFrame B A u hbase) (by omega) = _
-    rw [native_opposite_next_frame B (by omega) A u hbase, hBopp]
+    rw [native_opposite_next_frame B (by omega) A u hbase]
+    simpa only [hBopp, P]
   have hpair : s(protectedP N (by omega), protectedQ N (by omega)) =
       s(protectedP F (by omega), protectedQ F (by omega)) := by
     have hnp := native_protected_labels_prepend B N (by omega) u rfl
@@ -249,13 +252,16 @@ theorem native_j2_parent_third_order_state {m : ℕ} (hm : 5 ≤ m)
     rw [Function.comp_apply, Sym2.map_map]
     rfl
   have hK' : K'.image (Sym2.map Subtype.val) = markedCuts N := by
-    rw [K', Finset.image_image, rawmap]
+    dsimp only [K']
+    rw [Finset.image_image, rawmap]
     exact hK
   have hH' : H'.image (Sym2.map Subtype.val) = markedCuts (oppositeSelectedFrame N (by omega)) := by
-    rw [H', Finset.image_image, rawmap, hcan]
+    dsimp only [H']
+    rw [Finset.image_image, rawmap, hcan]
     exact hH
   have hmapped : (List.ofFn joint).map (mapPiece lift) = List.ofFn mapped := by
-    simp only [List.map_ofFn, mapped]
+    rw [List.map_ofFn]
+    rfl
   obtain ⟨_, _, hs, he, hc⟩ := actual_cycle_partition_map lift hbij.injective
     W.cycle W.hamiltonian.isCycle (List.ofFn joint) (K ∪ H)
     hj.support hj.edges hj.cut_mem
