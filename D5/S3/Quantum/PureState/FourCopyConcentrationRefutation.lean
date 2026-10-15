@@ -76,6 +76,85 @@ def K : Matrix (Fin 2) Q ℂ := fun i q => if i = 0 then u q else v q
 /-- A normalized maximally entangled input whose Eq. (8) bound is zero. -/
 def C0 : QubitMatrix := !![(1 / 2 : ℂ), 1 / 2; -1 / 2, 1 / 2]
 
+/-- The singlet-sector success output is the determinant square times the Bell array. -/
+private theorem output_K (C : QubitMatrix) :
+    output K K C = C.det ^ 2 • bellCoefficients := by
+  have hpoly : output K K C =
+      !![C.det ^ 2, 0; 0, 3 * ((Real.sqrt 3 : ℂ)⁻¹) ^ 2 * C.det ^ 2] := by
+    funext i j
+    simp only [output.eq_1, K.eq_1, v.eq_1, ← Complex.ofReal_inv]
+    generalize (Real.sqrt (3 : ℝ))⁻¹ = t
+    fin_cases i <;> fin_cases j <;>
+      norm_num [amp4.eq_1, u.eq_1, w.eq_1, Fintype.sum_prod_type,
+        Fin.sum_univ_two, Matrix.det_fin_two] <;> ring
+  have hn : ((Real.sqrt 3 : ℂ)⁻¹) ^ 2 = (1 / 3 : ℂ) := by
+    simpa only [pow_two, one_div] using
+      D5.S3.Quantum.Entanglement.QutritThresholdSharing.normalization
+  rw [hpoly, hn]
+  funext i j
+  fin_cases i <;> fin_cases j <;> norm_num [bellCoefficients]
+
+/-- The rows of the local success operator are orthonormal. -/
+private theorem K_coisometry : K * Kᴴ = (1 : QubitMatrix) := by
+  have hpoly : K * Kᴴ = !![1, 0; 0, 3 * ((Real.sqrt 3 : ℂ)⁻¹) ^ 2] := by
+    funext i j
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, K.eq_1, v.eq_1,
+      ← Complex.ofReal_inv]
+    generalize (Real.sqrt (3 : ℝ))⁻¹ = t
+    fin_cases i <;> fin_cases j <;>
+      norm_num [u.eq_1, w.eq_1, Fintype.sum_prod_type, Fin.sum_univ_two,
+        Complex.star_def, map_ofNat] <;> ring
+  have hn : ((Real.sqrt 3 : ℂ)⁻¹) ^ 2 = (1 / 3 : ℂ) := by
+    simpa only [pow_two, one_div] using
+      D5.S3.Quantum.Entanglement.QutritThresholdSharing.normalization
+  rw [hpoly, hn]
+  funext i j
+  fin_cases i <;> fin_cases j <;> norm_num
+
+/-- The local success operator completes to a quantum instrument. -/
+private theorem K_contraction : (1 - Kᴴ * K).PosSemidef := by
+  have hp : (Kᴴ * K) * (Kᴴ * K) = Kᴴ * K := by
+    calc
+      (Kᴴ * K) * (Kᴴ * K) = Kᴴ * (K * Kᴴ) * K := by
+        simp only [Matrix.mul_assoc]
+      _ = Kᴴ * K := by rw [K_coisometry]; simp
+  have he : (1 - Kᴴ * K)ᴴ * (1 - Kᴴ * K) = 1 - Kᴴ * K := by
+    rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_one,
+      Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
+    calc
+      (1 - Kᴴ * K) * (1 - Kᴴ * K) =
+          1 - Kᴴ * K - Kᴴ * K + (Kᴴ * K) * (Kᴴ * K) := by noncomm_ring
+      _ = 1 - Kᴴ * K := by rw [hp]; abel
+  have hpos := Matrix.posSemidef_conjTranspose_mul_self (1 - Kᴴ * K)
+  rw [he] at hpos
+  exact hpos
+
+/-- The same fixed local instrument is conclusive for every normalized pure input. -/
+private theorem K_universal : universal K K := by
+  rw [universal.eq_1]
+  intro C _
+  simp [output_K, bellCoefficients]
+
+private theorem C0_normalized : normalized C0 := by
+  norm_num [normalized.eq_1, C0.eq_1, Fin.sum_univ_two, norm_div]
+
+private theorem C0_det : C0.det = (1 / 2 : ℂ) := by
+  norm_num [C0.eq_1, Matrix.det_fin_two]
+
+private theorem success_C0 : success K K C0 = (1 / 8 : ℝ) := by
+  norm_num [success.eq_1, output_K, C0_det, bellCoefficients, Fin.sum_univ_two, norm_div]
+
+private theorem B_C0 : B C0 = 0 := by
+  norm_num [B.eq_1, C0.eq_1, norm_mul, norm_pow, norm_div, map_ofNat]
+
+/-- A universal direct four-copy singlet-sector protocol exceeds the proposed bound. -/
+theorem result : ¬ claim := by
+  intro h
+  rw [claim.eq_1] at h
+  have hbad := h K K K_contraction K_contraction K_universal C0 C0_normalized
+  rw [success_C0, B_C0] at hbad
+  norm_num at hbad
+
 end
 
 end D5.S3.Quantum.PureState.FourCopyConcentrationRefutation
