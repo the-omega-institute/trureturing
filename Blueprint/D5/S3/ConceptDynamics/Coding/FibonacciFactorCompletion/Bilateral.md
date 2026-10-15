@@ -78,6 +78,18 @@ $$\forall j \in Side, budget \in Real, execution \in \operatorname{List}\left(Re
 
 For either side, every real budget and initial state, and every finite list of positive returns, StrictControl is equivalent to testing lam - g^2 * chi^(a.r) * execute(j,before,D) < budget at every split before ++ a :: after of the same execution. StrictControl recursively tests the current cost and continues at returnMap(j,a,D); execute follows that same return map. The constants are T2 = 1 - t and lam = T2 / 10, with the original Fibonacci t, g and chi. The empty list satisfies both sides. The proof uses unbounded list induction and imposes no actual-start, budget-interval or cap hypothesis. It proves no record-error, reset or rate assertion.
 
+## Exact equal-weight source-address application
+
+This application uses the original literal alphabet Label = {L3, L0, L5, L2, L25}. The fixed blocks are U = [L5,L0,L3,L0,L3,L3], V = [L0,L3,L3,L5,L0,L3], and C = [L5,L5,L3,L2,L2,L0,L3,L3,L3,L25,L5,L0,L0,L2,L2,L25,L3,L3,L0,L5]. For side high the block is U and for side low it is V. A positive return a=(m,r) contributes returnWord(j,a) = repeatWord(block(j),m) ++ repeatWord(C,r), with both m and r positive.
+
+The original stem is block(j) ++ C. The external word of an execution is (execution.reverse.map(returnWord(j))).flatten, so packet order is reversed while the literal order inside every repeated block is retained. The original model has empty anchor; the anchored model has anchor equal to the stem. Thus observedPrefix(j,model,execution) is the common stem followed by that external word and the model anchor. The finite source appends the finite tail block(j) ++ repeatWord(C,3) ++ exitPrefix(j), where exitPrefix(high) = [L5,L0] and exitPrefix(low) = [L0]. The source at p is the Label at that finite word position, with L0 as the eventual default outside the word.
+
+Encode c by C and u by block(j). The complete parser `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral` supplies the complete_execution_word_parser c^r u^m run decomposition, injectivity of executionWord, and equality of its 20/6 word weight with listWeight. The existing prefix-free decoder `D5/S0/Computability/Coding/PrefixFreeCode` (the uniquelyDecodable_of_isPrefixFree declaration) applies because C, U and V are nonempty and the displayed literal blocks form a prefix-free two-letter code for each side. The lawful monoid-power identity for repeatWord turns every repeated block into the corresponding flattened replicate, so the decoder sees exactly the reversed execution packets.
+
+Fix a common side j and a common model. For two executions xs and ys with equal listWeight, the parser and the block lengths give equal observed-prefix lengths. Equality of their actual source addresses therefore restricts to equality of the two finite observed prefixes at every position before the common tail; no observed-prefix equality is assumed. Cancelling the common stem and the equal model anchor leaves equality of the two external words. Prefix-free unique decoding gives equality of the reversed execution-letter words. Cancelling reversal and applying the complete execution parser then gives equality of the original Return lists. This is the Label source-address injection for both sides, both models, and arbitrary positive lists including the empty list.
+
+This Label-address application is separate from the preceding Color-history injection, whose observations use colorsD and colorsE. It makes no claim about an all-even dictionary, any count, or ActualPairSupply, and it asserts no resource, rate, optimality, or physical-realization property.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.bilateral_past_state`
@@ -86,3 +98,4 @@ For either side, every real budget and initial state, and every finite list of p
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.finite_run_decomposition`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.occurrence_run_guards`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.uniform_guard_trace_iff_split`
+- Narrative reference: [D5/S0/Computability/Coding/PrefixFreeCode](../../../../S0/Computability/Coding/PrefixFreeCode.md)
