@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc758b643c48893912783d676d18121a25fa3cd5bc13a7e406a3d75c1d068ad2
+  normalized_sha256: sha256:fc758b643c48893912783d676d18121a25fa3cd5bc13a7e406a3d75c1d068ad2
+cas_ref: sha256:fc758b643c48893912783d676d18121a25fa3cd5bc13a7e406a3d75c1d068ad2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 推论 10.11（恢复误差对后续任务的有效范围）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 561b8ef8c950449c00f7732e901e1f66e63504f3131523fda387c02f1ec47e56
+    next_atom_id: 86baa84d1ae79299a699018541e66b568af07892bae880a5533a63b6b3754c19

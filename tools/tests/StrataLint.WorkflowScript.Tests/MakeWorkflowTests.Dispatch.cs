@@ -76,10 +76,15 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
         Assert.DoesNotContain("run_phase report \"$LAKE\"", inspector, StringComparison.Ordinal);
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
-        Assert.Contains(
-            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" \"$LAKE\" \"${{workspace[@]}}\" build :report",
-            inspector,
-            StringComparison.Ordinal);
+        Assert.Contains("REPORT_COMMAND=()", inspector, StringComparison.Ordinal);
+        Assert.Contains("if [[ \"$REGENERATE_REPORT_ARTIFACTS\" == 1 ]]; then", inspector, StringComparison.Ordinal);
+        Assert.Contains("REPORT_COMMAND=(python3 -B \"$SCRIPT_DIR/native.py\" regenerate \"$REPOSITORY\")", inspector, StringComparison.Ordinal);
+        var reportPhase = Assert.Single(
+            inspector.Split('\n'),
+            static line => line.StartsWith("run_phase report ", StringComparison.Ordinal));
+        Assert.Equal(
+            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" ${{REPORT_COMMAND[@]+\"${{REPORT_COMMAND[@]}}\"}} \"$LAKE\" \"${{workspace[@]}}\" build :report \\",
+            reportPhase);
 
         int EnsureDependency(string target)
         {
@@ -441,7 +446,7 @@ public sealed partial class MakeWorkflowTests
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1]  Full repository report for CI or explicit full verification", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1 | REGENERATE_REPORT_ARTIFACTS=1]  Full report; regenerate explicitly discards generated reports while retaining compiled Lean", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report-scoped LEAN_TARGETS=", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);

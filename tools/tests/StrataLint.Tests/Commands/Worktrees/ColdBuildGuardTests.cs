@@ -384,6 +384,33 @@ public sealed partial class WorktreeCommandTests
         Assert.NotNull(released);
     }
 
+    [Theory]
+    [InlineData("30", 23)]
+    [InlineData("0", 124)]
+    public void ProductionLeafSharesCiComputeAllowanceAndReleasesWriter(string remaining, int expectedExit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        InitializeRepository(fixture.Reader);
+        StampCache(fixture.Reader);
+        var budget = Path.Combine(fixture.Reader, "compute-seconds");
+        File.WriteAllText(budget, remaining);
+        var helper = Path.Combine(fixture.Reader, "tools/scripts/workflow/ci_compute.py");
+        Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci_compute.py"), helper);
+        var marker = Path.Combine(fixture.Reader, "command-ran");
+        var result = TestProcessRunner.Run("/usr/bin/env",
+            ["STRATALINT_CI_COMPUTE_ACTIVE=0", "STRATALINT_CI_COMPUTE_BUDGET=" + budget,
+                "LAKE_BIN=" + fixture.Lake, "dotnet", typeof(LeanProgram).Assembly.Location,
+                "with-cache-reader", "--path", fixture.Reader, "--", "/bin/sh", "-c",
+                "printf ran > \"$1\"; exit 23", "compute-test", marker],
+            fixture.Reader, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+        Assert.Equal(expectedExit, result.ExitCode);
+        Assert.Equal(expectedExit == 23, File.Exists(marker));
+        using var released = LeanCacheWriterGuard.TryAcquire(Path.Combine(fixture.Reader, ".lake"));
+        Assert.NotNull(released);
+    }
+
     private static string AddColdGuardWorktree(string repositoryRoot, string name)
     {
         var target = Path.Combine(repositoryRoot, name);

@@ -4015,3 +4015,712 @@ C-89 的相同宽度而不同坐标度量、C-90 至 C-92 的质量与固定读�
 完整状态的分支质量和两份取得代价仍须保留。
 
 ## 追加锚（本行以下为增补区）
+
+## 94. 五模式混态、底面张量结构与完整双副本测量
+
+**定义 C-94.1（任意密度算子及固定均值的闭集合）。** 在 C-84.1 的正交五模式空间
+$\mathcal H_5=\operatorname{span}\{|0\rangle,|1\rangle,|2\rangle,|3\rangle,|13\rangle\}$ 上，
+取任意 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，令 $p_s=\langle s|\rho|s\rangle$。
+不要求 $\rho$ 纯，也不要求中模式与底面之间的矩阵元为零。沿用
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad
+r=1-Z,\qquad\kappa=p_{13}.
+\tag{C94.1}
+$$
+
+固定 $0<r<1$、$0<X,Y<r$。C-84.1–C-84.2 的概率反解及宽度在此仍为
+
+$$
+\begin{aligned}
+p&=(r-X-Y+\kappa,\ X-\kappa,\ 1-r,\ Y-\kappa,\ \kappa),\\
+\kappa_-&=\max(0,X+Y-r),\qquad\kappa_+=\min(X,Y),\\
+w&=\kappa_+-\kappa_-=\min\{X,Y,r-X,r-Y\},\\
+x&=X/r,\qquad y=Y/r,\qquad\nu=w/r=\min\{x,1-x,y,1-y\}.
+\end{aligned}
+\tag{C94.2}
+$$
+
+这里 $\mathfrak D(r,X,Y)$ 指满足这些固定均值的所有五维密度算子，
+允许 $\kappa\in[\kappa_-,\kappa_+]$ 变化并允许合法零对角元。
+这些式子只使用对角非负及迹一，因此适用于任意秩。
+完整混态另有非对角自由度；本集合不等于以 $(\kappa,\chi)$ 为坐标的纯态相位商。
+C-84.3 的 $\mathcal A=2\pi w$ 仍只属于那里指定尺度的纯振幅辛完成，
+不是本混态集合的面积或维数公式。
+
+**定义 C-94.2（条件底面及可分离性）。** 令
+
+$$
+P_{\mathrm b}=|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|.
+$$
+
+以等距嵌入 $\iota:\mathbb C_A^2\otimes\mathbb C_B^2\longrightarrow\mathcal H_5$ 指定
+
+$$
+\iota|00\rangle=|0\rangle,\quad
+\iota|10\rangle=|1\rangle,\quad
+\iota|01\rangle=|3\rangle,\quad
+\iota|11\rangle=|13\rangle.
+\tag{C94.3}
+$$
+
+于是 $\iota^\dagger\iota=I_4$、$\iota\iota^\dagger=P_{\mathrm b}$，定义
+
+$$
+\sigma=\frac{\iota^\dagger\rho\iota}{r},\qquad
+\iota\sigma\iota^\dagger=\frac{P_{\mathrm b}\rho P_{\mathrm b}}r,
+\qquad\sigma_A=\operatorname{Tr}_B\sigma,\quad
+\sigma_B=\operatorname{Tr}_A\sigma.
+\tag{C94.4}
+$$
+
+$\sigma$ 是正半定迹一算子，因为压缩保持正性且
+$\operatorname{Tr}(P_{\mathrm b}\rho)=r$。按标准张量基 $(00,01,10,11)$，
+其对角为 $(p_0,p_3,p_1,p_{13})/r$，并有
+
+$$
+(\sigma_A)_{ac}=\sum_b\sigma_{ab,cb},\qquad
+(\sigma_B)_{bd}=\sum_a\sigma_{ab,ad},\qquad
+\operatorname{diag}\sigma_A=(1-x,x),\quad
+\operatorname{diag}\sigma_B=(1-y,y).
+\tag{C94.5}
+$$
+
+本组“底面可分离”恰指存在有限分解
+
+$$
+\sigma=\sum_j t_j\alpha_j\otimes\beta_j,
+\qquad t_j\ge0,\quad\sum_jt_j=1,
+\tag{C94.6}
+$$
+
+其中 $\alpha_j,\beta_j$ 各为二阶密度算子。
+这一定义的对象是已指定的底面两因子；五维载体本身没有被识别为两个物理子系统。
+
+**假设 C-94.3（实际成对输入及读口）。** 一次完整试验实际接收
+$\rho\otimes\rho$，即同一密度算子的两份独立制备，并允许执行下述联合测量。
+相同的两个单份边缘不作为乘积输入的替代条件；也不假设未知态克隆。
+此处只规定单轮来源，跨轮独立同分布另在取得成本定理中规定。
+
+在 $\mathcal K=(\mathbb C_A^2\otimes\mathbb C_B^2)^{\otimes2}$ 上，写基向量为
+$|a,b,a',b'\rangle$，定义
+
+$$
+F_A|a,b,a',b'\rangle=|a',b,a,b'\rangle,\qquad
+F_B|a,b,a',b'\rangle=|a,b',a',b\rangle.
+\tag{C94.7}
+$$
+
+等价地，在重排
+$R|a,b,a',b'\rangle=|a,a'\rangle\otimes|b,b'\rangle$ 后，
+$F_A$ 是第一对因子的交换，$F_B$ 是第二对的交换。
+二者自伴、平方为恒等，且交换不同坐标所以彼此对易。
+令 $s,t\in\{+1,-1\}$，定义
+
+$$
+P_s^A=(I+sF_A)/2,\qquad P_t^B=(I+tF_B)/2,
+\qquad\Pi_{st}=P_s^AP_t^B.
+\tag{C94.8}
+$$
+
+它们满足 $\Pi_{st}^\dagger=\Pi_{st}=\Pi_{st}^2$；
+若符号对不同，至少一个因子的异号投影相乘为零，故四个投影正交，且
+$\sum_{s,t}\Pi_{st}=I_{16}$。令 $J=\iota\otimes\iota$，实际五维双副本测量的效果为
+
+$$
+Q_{st}=J\Pi_{st}J^\dagger,\qquad
+Q_{\mathrm f}=I_{25}-P_{\mathrm b}\otimes P_{\mathrm b}.
+\tag{C94.9}
+$$
+
+因 $J^\dagger J=I_{16}$，四个 $Q_{st}$ 仍是互相正交的正投影，
+其和为 $JJ^\dagger=P_{\mathrm b}\otimes P_{\mathrm b}$，与正投影 $Q_{\mathrm f}$ 相加为恒等。
+故这是包含底面选择失败在内的完整五结果测量。
+定义未条件化概率
+
+$$
+q_{st}=\operatorname{Tr}[Q_{st}(\rho\otimes\rho)],\qquad
+q_{\mathrm f}=\operatorname{Tr}[Q_{\mathrm f}(\rho\otimes\rho)].
+\tag{C94.10}
+$$
+
+这里的“失败”包括恰一份及两份都未进入底面的全部情况。
+
+**定理 C-94.4（五模式测量的压缩、四符号概率及纯度字典）。** 在假设 C-94.3 下，
+令 $\mathcal P=\operatorname{Tr}\sigma^2$、
+$\mathcal P_A=\operatorname{Tr}\sigma_A^2$、$\mathcal P_B=\operatorname{Tr}\sigma_B^2$。
+上述实际测量满足
+
+$$
+q_{st}=\frac{r^2}{4}(1+s\mathcal P_A+t\mathcal P_B+st\mathcal P),\qquad
+\sum_{s,t}q_{st}=r^2,\quad q_{\mathrm f}=1-r^2.
+\tag{C94.11}
+$$
+
+并且 C-91.2 的归一化向量
+
+$$
+|\Omega\rangle=\tfrac12(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle)
+\tag{C94.12}
+$$
+
+满足 $Q_{--}=|\Omega\rangle\langle\Omega|$，从而 $q_\Omega=q_{--}$。
+
+证明。首先按实际输入作双侧压缩：
+
+$$
+\begin{aligned}
+&(P_{\mathrm b}\otimes P_{\mathrm b})(\rho\otimes\rho)
+(P_{\mathrm b}\otimes P_{\mathrm b})\\
+&\hspace{12mm}=(P_{\mathrm b}\rho P_{\mathrm b})\otimes(P_{\mathrm b}\rho P_{\mathrm b})
+=r^2J(\sigma\otimes\sigma)J^\dagger.
+\end{aligned}
+\tag{C94.13}
+$$
+
+取迹给两份都在底面的概率 $r^2$，取各 $Q_{st}$ 的迹给
+$q_{st}=r^2\operatorname{Tr}[\Pi_{st}(\sigma\otimes\sigma)]$。
+这一步没有交换 $\rho$ 与 $P_{\mathrm b}$，所以没有假设
+$[\rho,P_{\mathrm b}]=0$；任意底面—中位相干都已被实际投影正确处理。
+
+二元交换的反对称空间是一维，由
+$|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2$ 张成。
+因此 $R\Pi_{--}R^\dagger$ 是
+$|\varepsilon\rangle_{AA'}\otimes|\varepsilon\rangle_{BB'}$ 的秩一投影。
+将其四项逆重排并用 $J$ 嵌入，依次得到
+$\tfrac12(|0,13\rangle-|3,1\rangle-|1,3\rangle+|13,0\rangle)$，正是 $\Omega$。
+四个不同有序基向量正交，所以其范数平方为 $4/4=1$。
+
+为展开每个交换迹，令矩阵元为 $\sigma_{ab,cd}$，所有指标遍历 $\{0,1\}$。
+按定义直接有
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F_A(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cb,ab}\sigma_{ad,cd}
+=\sum_{a,c}(\sigma_A)_{ca}(\sigma_A)_{ac}=\mathcal P_A,\\
+\operatorname{Tr}[F_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{ad,ab}\sigma_{cb,cd}
+=\sum_{b,d}(\sigma_B)_{db}(\sigma_B)_{bd}=\mathcal P_B,\\
+\operatorname{Tr}[F_AF_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cd,ab}\sigma_{ab,cd}=\mathcal P,\\
+\operatorname{Tr}(\sigma\otimes\sigma)&=1.
+\end{aligned}
+\tag{C94.14}
+$$
+
+$F_AF_B$ 在第三式中交换完整的两份底面。把
+$\Pi_{st}=(I+sF_A+tF_B+stF_AF_B)/4$ 代入即得
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac{r^2}4(1-\mathcal P_A-\mathcal P_B+\mathcal P),\\
+q_{-+}&=\tfrac{r^2}4(1-\mathcal P_A+\mathcal P_B-\mathcal P),\\
+q_{+-}&=\tfrac{r^2}4(1+\mathcal P_A-\mathcal P_B-\mathcal P),\\
+q_{++}&=\tfrac{r^2}4(1+\mathcal P_A+\mathcal P_B+\mathcal P).
+\end{aligned}
+\tag{C94.15}
+$$
+
+相加只余 $r^2$，其补数就是失败概率。证毕。
+
+本推导消费经典交换—纯度恒等式。Mintert–Buchleitner，
+*An observable entanglement measure for mixed quantum states*，
+[quant-ph/0605250v3](https://arxiv.org/abs/quant-ph/0605250v3)，式 (1)–(3)，
+分别给纯态 $4P_-^A\otimes P_-^B$、混态 concurrence 下界和整体—局部纯度差；
+这里的 $J$、五维效果及 $r^2$ 因子明确了这些中间结构在当前来源中的参数。
+
+**命题 C-94.5（纯态极限、经典混合和被遗漏的混合性）。** 若条件底面纯，
+写 $|\phi\rangle=\sum_{a,b}B_{ab}|ab\rangle$，$\operatorname{Tr}BB^\dagger=1$，
+则 $\mathcal P=1$，两约化谱相同，且
+
+$$
+\mathcal C(\phi)=2|\det B|,\qquad
+q_{--}=\frac{r^2\mathcal C(\phi)^2}{4},\qquad q_{-+}=q_{+-}=0.
+\tag{C94.16}
+$$
+
+对一般条件混态则只有
+
+$$
+q_{-+}+q_{+-}=\frac{r^2}{2}(1-\mathcal P),
+\tag{C94.17}
+$$
+
+不能用 $q_{--}=r^2\mathcal C^2/4$ 定义混态 concurrence。
+
+证明。纯态的约化矩阵为 $BB^\dagger$ 和 $B^{\mathsf T}\bar B$，
+其相同非零谱由奇异值给出；二阶迹一矩阵满足
+$\operatorname{Tr}\sigma_A^2=1-2\det\sigma_A=1-2|\det B|^2$。
+代入式 (C94.15) 即得纯态式，式 (C94.17) 则由两个异号式相加得到。
+为展示混态边界，取
+
+$$
+\sigma_{\rm cl}=\tfrac12|00\rangle\langle00|+\tfrac12|11\rangle\langle11|.
+\tag{C94.18}
+$$
+
+它是纯乘积态混合，故可分离；其整体及两个局部纯度都是 $1/2$。
+所以 $q_{--}=q_{-+}=q_{+-}=r^2/8$、$q_{++}=5r^2/8$。
+在任意 $r>0$ 时，$q_{--}$ 为正却无底面纠缠。
+经典混合和纯态不可分解性都能贡献同一事件，式 (C94.17) 保留了区分它们所需的一项信息。证毕。
+
+## 95. 固定可见均值的任意态容量与可分离容量
+
+**定理 C-95.1（两个固定均值的尖锐上限）。** 对定义 C-94.1 的闭集合，
+并在每个状态上使用假设 C-94.3 的实际同态乘积输入，有
+
+$$
+\max_{\rho\in\mathfrak D(r,X,Y)}q_\Omega=w(r-w),\qquad
+\max_{\substack{\rho\in\mathfrak D(r,X,Y)\\\sigma\ \text{separable}}}q_\Omega
+=\tfrac12w(r-w).
+\tag{C95.1}
+$$
+
+两个最大化都固定 $r,X,Y$，允许 $\kappa$ 变化；不是对任意预先固定的五个对角概率断言取等。
+
+证明。因为对易投影的乘积小于各因子，
+$0\preceq\Pi_{--}\preceq P_-^A$ 且 $\Pi_{--}\preceq P_-^B$。
+对 $\sigma\otimes\sigma\succeq0$ 取迹，并使用式 (C94.14)，得
+
+$$
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_A}{2},\qquad
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_B}{2}.
+\tag{C95.2}
+$$
+
+若 $\sigma_A=\left(\begin{smallmatrix}1-x&z_A\\\bar z_A&x\end{smallmatrix}\right)$，则
+$\mathcal P_A=(1-x)^2+x^2+2|z_A|^2\ge(1-x)^2+x^2$。
+同理 $\mathcal P_B\ge(1-y)^2+y^2$。于是
+
+$$
+\frac{q_\Omega}{r^2}\le\min\{x(1-x),y(1-y)\}=\nu(1-\nu).
+\tag{C95.3}
+$$
+
+最后的等号消费 C-84.2 的瓶颈恒等式：把每个边缘折到
+$\min(x,1-x),\min(y,1-y)\in[0,1/2]$，函数 $t(1-t)$ 在该区间递增，
+故最小值等于 $\nu(1-\nu)$。再乘 $r^2$ 就是 $w(r-w)$。
+
+对可分离态，把式 (C94.6) 中每个 $\alpha_j,\beta_j$ 各作正交谱分解，
+以原权重乘两个谱权重，得到归一化纯乘积向量的有限混合
+
+$$
+\sigma=\sum_j t_j|a_j\rangle\langle a_j|\otimes|b_j\rangle\langle b_j|.
+\tag{C95.4}
+$$
+
+约化后分别是 $\sum_jt_j|a_j\rangle\langle a_j|$ 和
+$\sum_jt_j|b_j\rangle\langle b_j|$，从而
+
+$$
+\begin{aligned}
+\mathcal P&=\sum_{j,k}t_jt_k|\langle a_j|a_k\rangle|^2|\langle b_j|b_k\rangle|^2,\\
+\mathcal P_A&=\sum_{j,k}t_jt_k|\langle a_j|a_k\rangle|^2,\qquad
+\mathcal P_B=\sum_{j,k}t_jt_k|\langle b_j|b_k\rangle|^2.
+\end{aligned}
+\tag{C95.5}
+$$
+
+每个重叠模平方在 $[0,1]$ 内，权重非负，逐项比较证明
+$\mathcal P\le\mathcal P_A$ 及 $\mathcal P\le\mathcal P_B$。
+在式 (C94.15) 中分别用 $\mathcal P\le\mathcal P_B$ 和
+$\mathcal P\le\mathcal P_A$，得
+
+$$
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_A}{4}\le\frac{x(1-x)}2,
+\qquad
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_B}{4}\le\frac{y(1-y)}2.
+\tag{C95.6}
+$$
+
+同一最小量恒等式给因子 $1/2$ 的上界。这一步是经典可分离态纯度比较在本固定边缘问题中的应用；
+以下构造同时承担两个上界的可达性。
+
+用 C-85.2 的标签置换 $L,R,S$，其参数作用仍为
+
+$$
+L:(X,Y,\kappa)\mapsto(r-X,Y,Y-\kappa),\quad
+R:(X,Y,\kappa)\mapsto(X,r-Y,X-\kappa),\quad
+S:(X,Y,\kappa)\mapsto(Y,X,\kappa).
+\tag{C95.7}
+$$
+
+选择实现四项最小值的因子为 $A$，必要时翻转该因子的零一标签，即可安排
+$x=\nu$、$\nu\le y\le1-\nu$。这些置换保留 $r,w$、可分离性及 $q_{--}$：
+在两份上同时作同一局部置换时，交换投影与之对易；交换 $A,B$ 也保留 $--$。
+逆置换把任何构造送回原均值。这是坐标重标记，不是增加原生控制。
+
+先设 $0<\nu<1/2$，令
+
+$$
+u=\frac{y-\nu}{1-2\nu}\in[0,1],\qquad
+|b_0\rangle=\sqrt{1-u}|0\rangle+\sqrt u|1\rangle,\quad
+|b_1\rangle=\sqrt u|0\rangle-\sqrt{1-u}|1\rangle.
+\tag{C95.8}
+$$
+
+二者范数一、内积零。置 $|e_0\rangle=|0\rangle|b_0\rangle$、
+$|e_1\rangle=|1\rangle|b_1\rangle$，它们为正交纯乘积向量，定义
+
+$$
+\sigma_0=(1-\nu)|e_0\rangle\langle e_0|+\nu|e_1\rangle\langle e_1|,
+\qquad
+|\Phi\rangle=\sqrt{1-\nu}|e_0\rangle+\sqrt\nu|e_1\rangle.
+\tag{C95.9}
+$$
+
+两态的 $A$ 约化态都为 $\operatorname{diag}(1-\nu,\nu)$。
+$B$ 约化态都为 $(1-\nu)|b_0\rangle\langle b_0|+\nu|b_1\rangle\langle b_1|$，
+其占位均值为 $(1-\nu)u+\nu(1-u)=\nu+(1-2\nu)u=y$。
+纯态中两个交叉项的任一侧偏迹均零：一侧用 $\langle b_1|b_0\rangle=0$，
+另一侧用 $\langle1|0\rangle=0$。所以两态具有相同所需边缘，且
+
+$$
+\mathcal P_A=\mathcal P_B=(1-\nu)^2+\nu^2,\qquad
+\mathcal P(\sigma_0)=(1-\nu)^2+\nu^2,\quad
+\mathcal P(|\Phi\rangle\langle\Phi|)=1.
+\tag{C95.10}
+$$
+
+代入式 (C94.15)，分别给
+$q_\Omega(\sigma_0)=r^2\nu(1-\nu)/2$ 和
+$q_\Omega(\Phi)=r^2\nu(1-\nu)$。
+
+当 $\nu=1/2$ 时，原边缘必为 $x=y=1/2$。
+另取任意二元正交归一基 $b_0,b_1$，仍按式 (C95.9) 定义，
+两个边缘均为 $I_2/2$。这不使用分母为零的式 (C95.8)，
+并分别给 $q_\Omega=r^2/8,r^2/4$。
+
+最后，对上述任一条件态 $\sigma$，五维实现为
+
+$$
+\rho[\sigma]=(1-r)|2\rangle\langle2|+r\iota\sigma\iota^\dagger.
+\tag{C95.11}
+$$
+
+两个正块支撑正交、迹之和为一；其底面质量与均值是所规定的 $r,X,Y$。
+对纯条件态还可取完整纯态
+$|\psi\rangle=\sqrt{1-r}|2\rangle+\sqrt r\,\iota|\Phi\rangle$，
+它有相同底面压缩，却有底面—中位相干；两种实现的四符号概率相同。
+逆置换后构造对每个原标签下的闭均值纤维均成立，故两个上界都是最大值。证毕。
+
+**命题 C-95.2（固定对角约束与精确阈值的边界）。** 固定五个对角概率时，
+式 (C95.1) 的两个数仍为上界，但任意态上界不必能达到。例如
+
+$$
+r=\tfrac12,\quad X=\tfrac1{10},\quad Y=\tfrac15,\quad\kappa=0
+\tag{C95.12}
+$$
+
+给标准底面基序 $(00,01,10,11)$ 的归一化对角 $(2/5,2/5,1/5,0)$
+（原底角序 $(0,1,3,13)$ 则为 $(2/5,1/5,2/5,0)$），且固定此对角时
+
+$$
+\max q_\Omega=\frac1{50}<\frac1{25}=w(r-w).
+\tag{C95.13}
+$$
+
+证明。正半定性给 $|\sigma_{ij}|^2\le\sigma_{ii}\sigma_{jj}$，
+故 $11$ 对角为零迫使其整行整列为零。
+$\Omega$ 的含 $11$ 两项于是对压缩后的输入没有贡献，另外两项给
+
+$$
+\frac{q_\Omega}{r^2}=\frac12\bigl(\sigma_{10,10}\sigma_{01,01}
++|\sigma_{10,01}|^2\bigr)
+\le\sigma_{10,10}\sigma_{01,01}=\frac2{25}.
+$$
+
+条件纯态 $\sqrt{2/5}|00\rangle+\sqrt{2/5}|01\rangle+
+\sqrt{1/5}|10\rangle$ 达等，乘 $r^2=1/4$ 得 $1/50$。
+此处 $w=1/10$，故宽度上界为 $1/25$。证毕。
+
+对任何允许状态，精确人口概率若满足
+$q_\Omega>\tfrac12w(r-w)$，则由 C-95.1 排除底面可分离。
+逆命题不成立，见 C-97.2；一次或若干次有限事件也不等于已经知道精确概率超过阈值。
+有限数据的风险控制使用 C-98 的单独合同。
+
+## 96. 同一完整对角上的相干插值与凸屋顶 concurrence
+
+**定义 C-96.1（固定正交乘积基的相干族）。** 固定 C-95.1 构造中的
+$\nu,b_0,b_1,e_0,e_1$；非中心时用式 (C95.8)，中心时固定任意正交基。
+对 $0\le\gamma\le1$，定义
+
+$$
+\begin{aligned}
+\sigma_\gamma={}&(1-\nu)|e_0\rangle\langle e_0|+\nu|e_1\rangle\langle e_1|\\
+&+\gamma\sqrt{\nu(1-\nu)}
+\bigl(|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|\bigr),\\
+\rho_\gamma={}&(1-r)|2\rangle\langle2|+r\iota\sigma_\gamma\iota^\dagger.
+\end{aligned}
+\tag{C96.1}
+$$
+
+**定理 C-96.2（固定对角的完整插值读数）。** 这些算子都是密度算子，
+所有五个对角概率与两个约化态均不依赖 $\gamma$。
+置 $a=\nu(1-\nu)$、$h=r^2a=w(r-w)$，则
+
+$$
+\mathcal P_A=\mathcal P_B=1-2a,\qquad
+\mathcal P=1-2a(1-\gamma^2),
+\tag{C96.2}
+$$
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac h2(1+\gamma^2),&
+q_{-+}=q_{+-}&=\tfrac h2(1-\gamma^2),\\
+q_{++}&=r^2-\tfrac h2(3-\gamma^2),&
+q_{\mathrm f}&=1-r^2.
+\end{aligned}
+\tag{C96.3}
+$$
+
+证明。在 $e_0,e_1$ 的支撑子空间中，矩阵是
+
+$$
+\begin{pmatrix}1-\nu&\gamma\sqrt a\\\gamma\sqrt a&\nu\end{pmatrix}.
+\tag{C96.4}
+$$
+
+其迹一、对角正、行列式 $a(1-\gamma^2)\ge0$，所以正半定；
+正交补上为零。$0\le\gamma<1$ 时秩二，$\gamma=1$ 时为 $|\Phi\rangle\langle\Phi|$。
+$\rho_\gamma$ 的正性和归一化由式 (C95.11) 得到。
+由于 $e_0,e_1$ 的 $A$ 基标签不同，它们交叉项在每个计算基向量上的对角元为零。
+非中心分支中，完整五概率明确为
+
+$$
+(p_0,p_1,p_2,p_3,p_{13})=
+\bigl(r(1-\nu)(1-u),\ r\nu u,\ 1-r,\ r(1-\nu)u,\ r\nu(1-u)\bigr).
+\tag{C96.5}
+$$
+
+其 $X=r\nu$、$Y=r[\nu+(1-2\nu)u]$，
+$\kappa=r\nu(1-u)$ 均固定。中心的 $b_0,b_1$ 可写成同样模平方参数
+$u=|\langle1|b_0\rangle|^2$，式 (C96.5) 仍成立。
+两个交叉项在任一侧的偏迹为零，理由与 C-95.1 相同，故
+
+$$
+\sigma_A=(1-\nu)|0\rangle\langle0|+\nu|1\rangle\langle1|,
+\quad
+\sigma_B=(1-\nu)|b_0\rangle\langle b_0|+\nu|b_1\rangle\langle b_1|.
+\tag{C96.6}
+$$
+
+正交性给两个局部纯度 $1-2a$。把式 (C96.4) 平方取迹，得到
+$(1-\nu)^2+\nu^2+2\gamma^2a=1-2a(1-\gamma^2)$。
+将三项纯度代入式 (C94.15)，逐项化简给式 (C96.3)；四项之和恰为 $r^2$。证毕。
+
+**定理 C-96.3（该族的凸屋顶精确值）。** 采用标准两二元因子 concurrence 的凸屋顶定义
+
+$$
+\mathcal C(\sigma)=\inf_{\sigma=\sum_jt_j|\phi_j\rangle\langle\phi_j|}
+\sum_jt_j\,2|\det B_j|,
+\quad t_j\ge0,\quad\sum_jt_j=1,\quad\|\phi_j\|=1,
+\tag{C96.7}
+$$
+
+其中 $B_j$ 是 $\phi_j$ 的标准 $2\times2$ 系数矩阵。则
+
+$$
+\mathcal C(\sigma_\gamma)=2\gamma\sqrt{\nu(1-\nu)},\qquad
+\mathcal C(\sigma_\gamma)^2=\frac8{r^2}
+\left(q_\Omega-\tfrac12w(r-w)\right).
+\tag{C96.8}
+$$
+
+定义及一般两量子位凸屋顶的经典来源为 Wootters，
+*Entanglement of Formation of an Arbitrary State of Two Qubits*，
+[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7)、(10)、(19)–(22)
+及等 concurrence 分解的证明。此处对所给支撑另给上下界一致的直接计算，
+不把一般混态事件概率等同于 concurrence。
+
+证明。先以局部酉换基把 $b_0,b_1$ 送到 $|0\rangle,|1\rangle$，
+于是 $e_0,e_1$ 送到 $00,11$。
+纯态系数矩阵在局部酉下变为 $UBV^{\mathsf T}$，其行列式模不变；
+该变换双射地对应所有纯态分解，所以凸屋顶也不变。
+
+对任意分解及任意位于 $\operatorname{span}\{00,11\}$ 正交补内的 $v$，有
+
+$$
+0=\langle v|\sigma_\gamma|v\rangle
+=\sum_jt_j|\langle v|\phi_j\rangle|^2.
+\tag{C96.9}
+$$
+
+每项非负；取正交补的一组基，说明每个 $t_j>0$ 的纯成分都在该二维空间内。
+因此写成 $a_j|00\rangle+b_j|11\rangle$，$|a_j|^2+|b_j|^2=1$，
+纯态 concurrence 恰为 $2|a_jb_j|$。
+这个论证也适用于 $\gamma=1$ 的更小实际支撑。
+用交叉矩阵元及三角不等式，任意分解满足
+
+$$
+\sum_jt_j\,2|a_jb_j|
+\ge2\left|\sum_jt_ja_j\bar b_j\right|
+=2|(\sigma_\gamma)_{00,11}|=2\gamma\sqrt a.
+\tag{C96.10}
+$$
+
+另一方面，下面是含实际归一化纯成分的分解：
+
+$$
+\sigma_\gamma=
+\gamma|\Phi\rangle\langle\Phi|
++(1-\gamma)(1-\nu)|e_0\rangle\langle e_0|
++(1-\gamma)\nu|e_1\rangle\langle e_1|.
+\tag{C96.11}
+$$
+
+三个权重非负且和为一，展开给式 (C96.1)；两个 $e_i$ 是乘积态，
+而 $\Phi$ 的 concurrence 为 $2\sqrt a$。
+所以此分解的平均值是 $2\gamma\sqrt a$，达到下界。
+由式 (C96.3) 的 $q_{--}-h/2=h\gamma^2/2$ 得第二式。证毕。
+
+$\gamma=0$ 可分离，$\gamma>0$ 时任何纯乘积分解都会有零平均 concurrence，
+与式 (C96.10) 矛盾，所以条件态纠缠。
+$\gamma$ 描述密度矩阵中相干项的保留量；$\gamma<1$ 时的混态
+不具有一个由纯振幅唯一决定的 $\chi$。不同纯态分解也不能被指定为唯一隐藏纯相位。
+
+**命题 C-96.4（全五概率均匀且规范概率圆不变的家族）。** 取
+
+$$
+r=\frac45,\quad\nu=\frac12,\quad
+|b_0\rangle=|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},\quad
+|b_1\rangle=|-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt2}.
+\tag{C96.12}
+$$
+
+则式 (C96.1) 给所有 $\gamma$ 下 $p_s=1/5$，
+$X=Y=2/5$、$\kappa=1/5$、$w=2/5$、$h=4/25$，且
+
+| $\gamma$ | 底面可分离 | $\mathcal C$ | $q_{--}$ | $q_{-+}$ | $q_{+-}$ | $q_{++}$ | $q_{\mathrm f}$ |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| $0$ | 是 | $0$ | $2/25$ | $2/25$ | $2/25$ | $2/5$ | $9/25$ |
+| $1/2$ | 否 | $1/2$ | $1/10$ | $3/50$ | $3/50$ | $21/50$ | $9/25$ |
+| $1$ | 否 | $1$ | $4/25$ | $0$ | $0$ | $12/25$ | $9/25$ |
+
+证明。每个底角条件概率为 $1/4$，乘 $4/5$ 后为 $1/5$，
+中模式同为 $1/5$；其余参数由定义计算。
+式 (C96.8) 在 $\nu=1/2$ 给 $\mathcal C=\gamma$，
+表中全部事件由式 (C96.3) 逐项代入。
+
+这里的“概率圆”准确消费 C-67.2、C-76.1、C-84.3 的规范定义：
+对底面正表 $H=\left(\begin{smallmatrix}p_0&p_3\\p_1&p_{13}\end{smallmatrix}\right)$
+作正行列平衡后取面积 $\pi$ 的带标记协方差椭圆，
+
+$$
+\eta=\frac18\log\frac{p_0p_{13}}{p_1p_3}=0,\qquad
+ e^{-2\eta}z_+^2+e^{2\eta}z_-^2=1.
+\tag{C96.13}
+$$
+
+所以该规范椭圆始终是单位圆。
+它不是全五态占位变量 $(B_L,B_R)$ 的无条件协方差椭圆：后者满足
+$\mathbb E B_L=\mathbb E B_R=2/5$、$\mathbb E B_LB_R=1/5$，故
+
+$$
+\operatorname{Cov}(B_L,B_R)=
+\begin{pmatrix}6/25&1/25\\1/25&6/25\end{pmatrix}.
+\tag{C96.14}
+$$
+
+特征值 $7/25,1/5$ 不等，那个椭圆并非圆。
+因此相同的五个顶点权重、隐藏高度和规范概率圆，仍容许表中不同的混态联合结构。证毕。
+
+## 97. 双事件纯度差、保留率与不完备的纠缠见证
+
+**命题 C-97.1（固定对照的纯度差与条件比例）。** 在实际独立同态双副本合同下，
+
+$$
+q_{--}-q_{-+}=\frac{r^2}{2}(\mathcal P-\mathcal P_B),\qquad
+q_{--}-q_{+-}=\frac{r^2}{2}(\mathcal P-\mathcal P_A).
+\tag{C97.1}
+$$
+
+若任一差严格为正，底面条件态纠缠。预先选择比较 $--$ 与 $-+$，其保留率为
+
+$$
+H_A:=q_{--}+q_{-+}=\frac{r^2}{2}(1-\mathcal P_A).
+\tag{C97.2}
+$$
+
+当且仅当 $H_A>0$ 才定义
+
+$$
+\theta=\frac{q_{--}}{H_A}.
+\tag{C97.3}
+$$
+
+可分离态在此域中满足 $\theta\le1/2$，而 C-96 的家族满足
+$H_A=h=w(r-w)>0$、$\theta=(1+\gamma^2)/2$。
+
+证明。式 (C94.15) 相减分别消去 $\mathcal P_A$ 和 $\mathcal P_B$，
+得到式 (C97.1) 的准确因子次序；相加给式 (C97.2)。
+对可分离态，式 (C95.5) 给 $\mathcal P\le\mathcal P_A,\mathcal P_B$，
+所以两个差都不正；逆否即给充分见证。
+当分母正时，$\theta\le1/2$ 等价于 $q_{--}\le q_{-+}$。
+两项中的 $r^2$ 消去，但保留事件自身的发生率仍是 $H_A$。
+对 C-96 家族，式 (C96.3) 相加并相除就给声明的值。
+若 $H_A=0$，两项非负且和为零，所以均为零，$\theta$ 未定义。
+$w>0$ 并不排除这个分支：条件纯乘积态 $|+\rangle_A|+\rangle_B$
+有 $x=y=1/2$、$w=r/2>0$，但 $\mathcal P_A=1$，故 $H_A=0$。证毕。
+
+式 (C97.1) 的机制是经典 Mintert–Buchleitner 见证，非新的普适纠缠判据。
+其 [quant-ph/0605250v3](https://arxiv.org/abs/quant-ph/0605250v3) 式 (2)–(3)
+在本参数中还给
+
+$$
+\mathcal C(\sigma)^2\ge\frac4{r^2}
+\max\{0,q_{--}-q_{-+},q_{--}-q_{+-}\}.
+\tag{C97.4}
+$$
+
+文中的 $4P_-^A(P_-^B-P_+^B)$ 对应 $4(q_{--}-q_{-+})/r^2$，
+$4(P_-^A-P_+^A)P_-^B$ 对应另一个差。
+C-96 家族的两个差均为 $h\gamma^2$，式 (C96.8) 表明其饱和这个经典下界。
+相消未知质量只简化比例的判定，不消去获得一个保留事件之前支付的完整试验。
+
+**命题 C-97.2（负部分转置而两个见证均不通过）。** 在声明的两因子中取
+
+$$
+|\Phi^+\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\qquad
+\sigma_{\rm iso}=\frac12|\Phi^+\rangle\langle\Phi^+|+\frac18 I_4.
+\tag{C97.5}
+$$
+
+它纠缠，却满足
+
+$$
+\lambda_{\min}(\sigma_{\rm iso}^{T_B})=-\frac18,\qquad
+\frac{q_{--}}{r^2}=\frac7{64},\qquad
+\frac{q_{-+}}{r^2}=\frac{q_{+-}}{r^2}=\frac9{64},\qquad
+\frac{q_{++}}{r^2}=\frac{39}{64}.
+\tag{C97.6}
+$$
+
+证明。以 $T_B$ 表示在 $B$ 计算基的转置。
+$|\Phi^+\rangle\langle\Phi^+|$ 的部分转置为完整两因子交换算子 $F/2$，
+故 $\sigma_{\rm iso}^{T_B}=F/4+I_4/8$。
+$F$ 在三维对称空间为 $+1$、一维反对称空间为 $-1$，
+所以谱为 $3/8,3/8,3/8,-1/8$。
+可分离态必为正部分转置：每项 $\alpha_j\otimes\beta_j$ 转成
+$\alpha_j\otimes\beta_j^{\mathsf T}\succeq0$，因为转置保持正性，
+其非负凸组合仍正。负特征值因此排除可分离；这里只用必要性，不需要 PPT 充分性。
+
+$\sigma_{\rm iso}$ 本身在 $\Phi^+$ 方向的特征值是 $5/8$，另外三个为 $1/8$，
+故 $\mathcal P=(25+3)/64=7/16$。两个约化态均为 $I_2/2$，
+$\mathcal P_A=\mathcal P_B=1/2$。代入式 (C94.15) 给全部四项。
+此态 $x=y=1/2$，所以 $\tfrac12w(r-w)=r^2/8=8r^2/64$，
+单事件容量见证也不通过；双事件差则严格为负。
+五维实现用式 (C95.11) 即可。证毕。
+
+因此未超过容量阈值、未出现正纯度差或有限记录未越界，均不能反推可分离。
+经典可分离混合的正事件、这里的见证漏检和 C-100 的相关副本，是三种不同边界。
+
+
+**约定 C-97.3（对照概率与有限记录的连接）。** 使用同一五维测量及预先固定对照的
+[续卷 C-98–C-101](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md#98-全部成对试验上的随时有效认证)
+给条件乘积来源的全时间风险界、固定 iid 相干族的付费停止成本，以及相同单份边缘的相关配对反例。
+
+## 追加锚（本行以下为增补区）

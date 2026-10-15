@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d91569b1747b51e9187cd5224f0a2dcf0e73c2b757636c4ecdac56f5b98aee5
+  normalized_sha256: sha256:2d91569b1747b51e9187cd5224f0a2dcf0e73c2b757636c4ecdac56f5b98aee5
+cas_ref: sha256:2d91569b1747b51e9187cd5224f0a2dcf0e73c2b757636c4ecdac56f5b98aee5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：211. 独立乘积实验的精确分解：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 966a6705493c096df4980226fb1272dae19b060f923c5fbe9206412a879132f6
+    next_atom_id: 19263516d8161999451e4b9fabdacf4507c13423a75d374bbe9c0bcfe4fd4d8e

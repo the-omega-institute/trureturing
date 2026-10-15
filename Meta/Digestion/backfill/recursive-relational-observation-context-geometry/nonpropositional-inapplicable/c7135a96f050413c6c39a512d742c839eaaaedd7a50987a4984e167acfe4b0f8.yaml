@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c7135a96f050413c6c39a512d742c839eaaaedd7a50987a4984e167acfe4b0f8
+  normalized_sha256: sha256:c7135a96f050413c6c39a512d742c839eaaaedd7a50987a4984e167acfe4b0f8
+cas_ref: sha256:c7135a96f050413c6c39a512d742c839eaaaedd7a50987a4984e167acfe4b0f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 11.2（Choi 重建与完全正、迹条件）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 8576afd0abd20b8f08ccd45a8e7f8750439aa6ec27509e50fbe873b941d4c2c4
+    next_atom_id: 61985ecade7d94490cfeba4d14bcf7db6f518bbd18236b7a12870fdfda3c4a2f

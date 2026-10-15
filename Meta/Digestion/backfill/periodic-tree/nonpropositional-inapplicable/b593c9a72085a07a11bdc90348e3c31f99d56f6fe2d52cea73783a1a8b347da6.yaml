@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b593c9a72085a07a11bdc90348e3c31f99d56f6fe2d52cea73783a1a8b347da6
+  normalized_sha256: sha256:b593c9a72085a07a11bdc90348e3c31f99d56f6fe2d52cea73783a1a8b347da6
+cas_ref: sha256:b593c9a72085a07a11bdc90348e3c31f99d56f6fe2d52cea73783a1a8b347da6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** Jacobsthal 数列由），没有另行断言这些对象的性质。
+    previous_atom_id: 68d0b6d19f48e1cb3ef1f06e1600f9af19360f4f46d00c7530ef5ba0448e735e
+    next_atom_id: e91ad63dcfe18fb28e0edbcdcd6966ae74a3d2a46353a938141fd1109c4bc0f4

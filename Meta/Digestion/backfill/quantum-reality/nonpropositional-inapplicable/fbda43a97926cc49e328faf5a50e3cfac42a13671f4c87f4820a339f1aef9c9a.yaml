@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbda43a97926cc49e328faf5a50e3cfac42a13671f4c87f4820a339f1aef9c9a
+  normalized_sha256: sha256:fbda43a97926cc49e328faf5a50e3cfac42a13671f4c87f4820a339f1aef9c9a
+cas_ref: sha256:fbda43a97926cc49e328faf5a50e3cfac42a13671f4c87f4820a339f1aef9c9a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「——量子观察者—关系时空理论第三百六十一至第三百七十节增订」仅作导航；正文除标题、空行及分隔线外无其他内容，不提出命题。
+    previous_atom_id: 670f9a699ebb3a1c8ee8b6aeaf2df706eed1d0418f79946f4cb54f279ebd9ad8
+    next_atom_id: 09d7759711faeed633f6aa8e655e7ad51ca076d84e75a1098b60543d4439129f

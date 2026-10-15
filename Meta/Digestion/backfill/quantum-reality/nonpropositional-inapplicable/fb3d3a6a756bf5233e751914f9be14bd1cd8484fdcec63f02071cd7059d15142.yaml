@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fb3d3a6a756bf5233e751914f9be14bd1cd8484fdcec63f02071cd7059d15142
+  normalized_sha256: sha256:fb3d3a6a756bf5233e751914f9be14bd1cd8484fdcec63f02071cd7059d15142
+cas_ref: sha256:fb3d3a6a756bf5233e751914f9be14bd1cd8484fdcec63f02071cd7059d15142
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 346 节开头片段只指定三个编码态、保留与消去的分割及带失谐参数的 Hamiltonian；未陈述极点或演化性质。
+    previous_atom_id: d38b6a16f0dce65518632a86a0d0b5a5bdffdb250bab8db1451fe6df55e998db
+    next_atom_id: 329cf79743c149932c0ad924a2bc38dc1c1c272ae760eb2da2f5c44d5adf56d1

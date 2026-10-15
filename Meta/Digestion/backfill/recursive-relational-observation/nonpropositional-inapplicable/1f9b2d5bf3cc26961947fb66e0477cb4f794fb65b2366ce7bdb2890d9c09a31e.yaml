@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f9b2d5bf3cc26961947fb66e0477cb4f794fb65b2366ce7bdb2890d9c09a31e
+  normalized_sha256: sha256:1f9b2d5bf3cc26961947fb66e0477cb4f794fb65b2366ce7bdb2890d9c09a31e
+cas_ref: sha256:1f9b2d5bf3cc26961947fb66e0477cb4f794fb65b2366ce7bdb2890d9c09a31e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 140.3 只规定单步状态映射与合法输入条件，精确续接恒等式由后项定理承担。
+    previous_atom_id: 45d8a4ae894818a09246e677f8e3f16da42cb78076d70952f2de29347012f7ed
+    next_atom_id: fea83566d51fe8adeeab7509b69f98e81d77cb68eef868790c5cad5614f6e513
