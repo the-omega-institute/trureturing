@@ -705,8 +705,9 @@ $$
 $$
 
 Every decoder is total into $\Gamma_q(S_3)$: each specified output
-is attained by one of the displayed motif states. Let $\Theta_m$
-be the product of $m\ge1$ such templates, on $n=2m$ blocks.
+is attained in $S_3$. In particular,
+$\Gamma_R(\langle\alpha,\beta\rangle)=(1,0)$.
+Let $\Theta_m$ be the product of $m\ge1$ such templates, on $n=2m$ blocks.
 
 **Lemma 7.2 (the actual common-law witness).** Put
 $\tau=(1\ 4)$, fixing $0,2,3$. On $P^2$ the paired template has
