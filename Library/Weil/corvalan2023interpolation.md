@@ -1799,3 +1799,143 @@ The actual joint main term $\mathcal A_{N,H}$, the same-integer
 signed Robin estimate, and RH remain unresolved. This is a scoped
 application of the cited analytic inputs, without a mathematical
 priority claim or Lean certification.
+
+## A coupled Perron kernel for the unpaid joint main term
+
+Retain the actual $A,B,P_0,P_1,r$ and $\mathcal A_{N,H}$ of (I56),
+and the bandwidth and common constant of (I58)--(I59). Reuse the
+Mellin kernel $H_q$ of (I15). Symmetric Mellin/Perron inversion is
+used only at a fixed integer $N$ here; no zero-sum or contour-shift
+estimate is assumed. This applies the classical inversion interface
+to the jointly realized functional, rather than replacing its
+coefficients or centering its local moments.
+
+Put
+$$
+a=\frac{Q+1/2}{N},\qquad h=1-a=\frac{H-1/2}{N},\qquad
+W_a(s)=\int_a^1x^{s-1}\log(1/x)\,dx
+=\frac{1-a^s(1+s\log(1/a))}{s^2},
+$$
+with the removable value at zero. Write
+$\mathscr P_s F=(2\pi i)^{-1}\lim_{T\to\infty}
+\int_{c-iT}^{c+iT}F(s)\,ds$ for a fixed $c>1$.
+The exact band inversion is
+$$
+B=\mathscr P_s\frac{N^sW_a(s)}{\zeta(s)},\qquad
+A=\mathscr P_s\frac{N^{s-1}W_a(s-1)}{\zeta(s)}.
+\tag{I62}
+$$
+The half-integer lower cut selects exactly $Q<n\le N$; the upper
+weight is zero. Thus no lower-boundary half weight or changed
+cutoff is hidden in this formula.
+
+The residual inversion needs an additional integer-jump term. Set
+$$
+J_m=\sum_{\substack{n\mid m\\n\le N}}b_n
+=\Lambda(m)-\mathbf1_{m>N}\mu(m)\log(N/m).
+$$
+The equality holds throughout $N\le m\le2N$, including both
+endpoints: any omitted divisor must be $m$ itself. Then
+$$
+LR_N(m)=L-\frac{J_m}{2}
++\mathscr P_s\frac{N^sH_{m/N}(s)}{\zeta(s)}.
+\tag{I63}
+$$
+Indeed, invert $\log v\{qv\}$ supported on $v\ge1$ and use the
+absolutely convergent Dirichlet series on $\Re s=c$. At $n\mid m$
+the fractional part jumps down by one, so symmetric inversion
+returns its two-sided average and must be corrected by $-b_n/2$.
+The factor $\log(N/N)=0$ removes a separate upper-cutoff jump.
+For fixed $N$ these inversion limits follow from local bounded
+variation and integrability in logarithmic coordinates.
+
+For any function specified on the actual grid $m/N$, define
+$$
+\begin{aligned}
+\mathfrak p_N(f)&=
+\sum_{m=N}^{2N}w_m(m+\tfrac12)f(m/N)-\tfrac12f(2),\\
+\mathfrak q_N(f)&=
+\tfrac32\sum_{m=N}^{2N}w_mf(m/N)-\frac{f(2)}{2N+1},\\
+p_N(v)&=\mathfrak p_N(H_\bullet(v)),\qquad
+q_N(v)=\mathfrak q_N(H_\bullet(v)).
+\end{aligned}
+\tag{I64}
+$$
+Let $Z(m/N)=1-J_m/(2L)$ and set
+$$
+\begin{aligned}
+\mathcal K_N(u,v)&=W_a(u-1)p_N(v)-NW_a(u)q_N(v),\\
+E_{\rm grid}&=\frac{A\mathfrak p_N(Z)-B\mathfrak q_N(Z)}L.
+\end{aligned}
+$$
+Substitution into (I56) gives the exact jointly signed expression
+$$
+\mathcal A_{N,H}=E_{\rm grid}
++\frac1{L^2}\mathscr P_u\mathscr P_v
+\frac{N^{u+v-1}\mathcal K_N(u,v)}{\zeta(u)\zeta(v)}.
+\tag{I65}
+$$
+Here the double symbol means the rectangular limit with independent
+heights $T_u,T_v\to\infty$. Each finite double integral separates
+into products of one-variable integrals from (I62)--(I64), whose
+limits exist for this fixed $N$. This proves that rectangular limit,
+without asserting absolute convergence, exchanging $N\to\infty$
+with it, or authorizing a spectral contour shift. Both actual
+$H_2$ endpoint terms remain present in $p_N$ and $q_N$.
+
+There is a paid part of (I65). Since $J_m=O(L)$,
+$\|Z\|_\infty=O(1)$, $\|\mathfrak p_N\|=O(1)$ and
+$\|\mathfrak q_N\|=O(N^{-1})$. Reuse the short-interval bounds
+underlying (I58), namely
+$|A|\ll H^2N^{-2}e^{-c_\star\Omega}$ and
+$|B|\ll H^2N^{-1}e^{-c_\star\Omega}$. They give
+$$
+E_{\rm grid}\ll
+\frac{H^2}{N^2L}e^{-c_\star\Omega}=o(1).
+\tag{I66}
+$$
+This pays the integer-jump and constant terms; it does not pay the
+remaining double integral or replace $Z$ by a local mean.
+
+The low-frequency kernel has an explicit calibration. Put
+$$
+\Phi(v)=\int_1^2\frac{q-3/2}{q^2}H_q(v)\,dq.
+$$
+Uniformly for $u$ in a fixed compact subset of $\mathbb C$ and $v$
+in a fixed compact subset of $\Re v>0$, including any fixed order
+of mixed derivatives, Taylor expansion and Riemann summation give
+$$
+\mathcal K_N(u,v)=\frac{h^2}{2}\Phi(v)
++O_{u,v}(h^3+h^2/N).
+\tag{I67}
+$$
+In particular $p_N(v)-Nq_N(v)=\Phi(v)+O_v(1/N)$. Its endpoint
+coefficient is $-1/2+N/(2N+1)=O(1/N)$, so this leading cancellation
+has not deleted the endpoint from the exact formula.
+
+For fixed simple nontrivial zeros $\rho,\sigma$, the corresponding
+ordered double residue of the meromorphic integrand in (I65), with
+the factor $L^{-2}$ included, is consequently
+$$
+\frac{H^2N^{\rho+\sigma-3}}{2L^2}
+\left(\frac{\Phi(\sigma)}{\zeta'(\rho)\zeta'(\sigma)}+o(1)\right).
+\tag{I68}
+$$
+This is a calculation for that fixed pair, not an asymptotic for
+$\mathcal A_{N,H}$ and not an assumption that all zeros are simple.
+At a conjugate pair its displayed prefactor has scale
+$N^{2\Re\rho-3/2}e^{2\lambda\Omega}/L^2$. The coefficient may vanish,
+other residues may cancel, and no spectral remainder has been paid.
+Thus existence of a zero with real part greater than $1/2$ alone
+does not turn this calculation into an obstruction to
+$\mathcal A_{N,H}=o(1)$.
+
+The missing uniformity is visible already in
+$|W_a(\sigma+it)|\ll_\sigma\min(h^2,h/(1+|t|))$, from integration
+by parts. The compact-set expansion (I67) cannot be inserted over
+an entire Perron line; heights of order $1/h\asymp N/H$ and beyond
+need their own reciprocal-zeta and joint cancellation estimates.
+Equations (I62)--(I68) supply the actual coupled kernel and a paid
+grid error, without a bound for that double integral, a new RH
+criterion, a same-integer signed Robin estimate, a mathematical
+priority claim or Lean certification.
