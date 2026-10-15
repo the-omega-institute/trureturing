@@ -7,6 +7,7 @@
    digest: Exact spectra of symmetric two-qubit entanglement witnesses. -/
 
 import Mathlib
+import D5.S3.Zeros.PochhammerDeformation.QuadraticRadii
 
 set_option linter.style.longLine false
 
@@ -86,10 +87,15 @@ private theorem coherent_iff_null (x : Fin 3 → ℂ) :
 private theorem quadratic_pair (a b d : ℂ) (ha : a ≠ 0) :
     ∃ r s : ℂ, a * r ^ 2 + 2 * b * r + d = 0 ∧
       a * s ^ 2 + 2 * b * s + d = 0 ∧ a * r * s = d := by
-  obtain ⟨t, ht⟩ := IsAlgClosed.exists_pow_nat_eq (b ^ 2 - a * d) (by norm_num : 0 < 2)
-  refine ⟨(-b + t) / a, (-b - t) / a, ?_, ?_, ?_⟩
-  all_goals field_simp (disch := exact ha)
-  all_goals first | linear_combination ht | linear_combination -ht
+  obtain ⟨r, s, _, hf⟩ :=
+    D5.S3.Zeros.PochhammerDeformation.QuadraticRadii.quadratic_factors a (2*b) d ha
+  refine ⟨r, s, ?_, ?_, ?_⟩
+  · have hh := congrArg (fun f : Polynomial ℂ => f.eval r) hf
+    simpa using hh
+  · have hh := congrArg (fun f : Polynomial ℂ => f.eval s) hf
+    simpa using hh
+  · have hh := congrArg (fun f : Polynomial ℂ => f.coeff 0) hf
+    simpa [mul_assoc] using hh.symm
 
 private theorem two_root_bound (a b d : ℂ) (ha : a ≠ 0) (c L : ℝ) (hc : 0 < c)
     (h : ∀ z : ℂ, a * z ^ 2 + 2 * b * z + d = 0 → c * Complex.normSq z ≤ L) :
