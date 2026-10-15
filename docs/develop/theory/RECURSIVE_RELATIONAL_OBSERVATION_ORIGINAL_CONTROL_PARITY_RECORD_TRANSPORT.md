@@ -996,3 +996,772 @@ task remain active. Neither the exact span identity of
 a sensor or a cross-model source/action/resource bridge here.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Equal-support mixed assistance and the exact survivor update
+
+The source throughout §§12–15 is Definition 2.1 and (PR.3)–(PR.7), with
+one common preparation and calibrated reference. In particular
+$0<Z<1$, $c=(1-Z)/2$, $V=\operatorname{span}\{U_+,U_-,e_2\}$, and
+
+$$
+\psi_{x,\beta,m}=\sqrt Z e_2+e^{-i\beta}
+ \bigl(\sqrt{2x}U_++(-1)^m\sqrt{2(c-x)}U_-\bigr),
+\quad 0<x<c,\quad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{PR.34}
+$$
+
+Every quantified state has the actual five-unit history of Proposition 2.2,
+with real residual (PR.5), including every negative winding. Horizontal
+continuation means Convention 2.3, on the same specimen and real chronology.
+These sections select that consumer within the original menu; they do not
+restrict the whole original task without loss. The source regularity still
+allows either original alternative and arbitrary finite durations, including
+zero for a matching identity. No common bound on past phase variation is added.
+
+**Definition 12.1 (mixed assistance and available ports).** At a cut of
+height $k$, supply calibrated finite-dimensional density operators
+$\tau_+,\tau_-$ and the accessible joint input
+
+$$
+|\psi_{k,\beta,m}\rangle\langle\psi_{k,\beta,m}|
+ \otimes\tau_\epsilon,\qquad \epsilon=(-1)^m.
+\tag{PR.35}
+$$
+
+The helper states are independent of $\beta$ and of the winding within
+parity. They include **all accessible history-bearing assistance jointly**:
+quantum memory, classical archives and source-bearing programmes, receiver
+shares, clock latches, calibration tokens and every input read by a guard,
+selector or update. Independent ancillary inputs can be absorbed into the
+common operation. An additional accessible purification, noise flag,
+programme field or source callback changes this premise.
+
+Actual unread reference/archive fields are retained, with the operation
+acting by identity on them. They may be correlated with the mixed helper;
+they are unavailable to the continuation protocol. Giving them access later
+requires a new joint-input analysis. No equality of independently selected
+marginals is used. Conditional on a history, purity of the specimen alone
+makes its joint state with all these other fields a product with its pure
+specimen projector; the helper and unread fields need not be a product.
+
+The allowed implementation is the additional endpoint/checkpoint CP service
+of Definitions 3.2–3.3, with all its declared input/output registers and
+permission. Each accepted specimen must be exactly (PR.34) at its requested
+height. Retain actual success auxiliaries and all recorded suboutcomes.
+Executed failure has absorbing $f$, its flag and full actual residue.
+A known source/epoch/height/calibration/permission mismatch instead gives
+the unexecuted visible rejection of Definition 3.3, with no specimen
+successor or successful answer. There is no detector here for an unflagged
+promise violation, no reset or post-failure original retry. This service
+supplies neither canonical failure times/modes nor physical gates or sensors.
+
+**Theorem 12.2 (equal-support factorization and sharp one-cut value).**
+Fix $k,l\in(0,c)$ and (PR.35). Suppose
+$\operatorname{supp}\tau_+=\operatorname{supp}\tau_-=S$. Define the
+positive invertible operator on $V$
+
+$$
+D U_+=\sqrt{l/k}\,U_+,\qquad
+D U_-=\sqrt{(c-l)/(c-k)}\,U_-,\qquad De_2=e_2,
+\qquad s=\|D\|^{-2}=s_*(k,l).
+\tag{PR.36}
+$$
+
+For every common trace-nonincreasing CP success operation satisfying the
+exact target requirement for every $\beta,m$, its successful Stinespring
+contraction, with all actual auxiliaries and a proof environment included
+in $E$, restricts to
+
+$$
+B|_{V\otimes S}=D\otimes A,
+\qquad A:S\longrightarrow E,\qquad A^\dagger A\leq sI_S.
+\tag{PR.37}
+$$
+
+Consequently its success probability is phase independent and obeys
+
+$$
+p_\epsilon=\operatorname{tr}(A^\dagger A\tau_\epsilon)\leq s.
+\tag{PR.38}
+$$
+
+No common-probability hypothesis is required; zero success is allowed.
+The bound is attained simultaneously for both parities, leaving the helper
+and its unread correlations unchanged on success. All these statements are
+for exact targets.
+
+Proof. Spectrally decompose $\tau_\epsilon$ on $S$. Every eigenvalue
+there is positive. For fixed $\beta,\epsilon$, project each successful
+dilation vector onto the orthogonal complement of the required specimen
+ray. The squared norms, weighted by those positive eigenvalues, sum to
+zero, because the required specimen marginal is rank one or zero.
+Each projected vector therefore vanishes. By linearity, for **every**
+$u\in S$, $B(\psi_{k,\beta,m}\otimes u)$ lies in
+$\mathbb C\psi_{l,\beta,m}\otimes E$. The same $u$ is available for
+both parities, since both states are faithful on the same $S$.
+
+Fix $u$ and a bra on $E$. Projecting $B(\,\cdot\,\otimes u)$ onto that
+bra gives a linear specimen map which sends both full phase families into
+the corresponding target rays. After harmless scalar normalization it is
+a contraction. Instrument Boundaries Theorem 4.1, the credited
+successful-Kraus rigidity on the active span, says it is a scalar multiple
+of $D$. Applying this to a basis of $E$ shows that
+$B(v\otimes u)=Dv\otimes A(u)$ for every $v\in V$. The coefficients
+are linear in $u$, so $A$ is linear. This reuses the full-family rigidity;
+a single fixed-phase pair would not justify the conclusion.
+
+Contractivity on $V\otimes S$ yields
+$D^\dagger D\otimes A^\dagger A\leq I$. Evaluating on a unit
+eigenvector for the largest eigenvalue of $D^\dagger D$ gives
+$A^\dagger A\leq\|D\|^{-2}I$. Also
+$D\psi_{k,\beta,m}=\psi_{l,\beta,m}$ is normalized, proving (PR.38).
+Spectral vectors and the proof environment are proof devices, not supplied
+purification ports.
+
+For attainment use $B=\sqrt{s}D\otimes I_S$ on $V\otimes S$, extended
+by zero on its orthogonal complement. With
+$F=(I-B^\dagger B)^{1/2}$ the whole-domain isometry is
+
+$$
+\zeta\longmapsto(B\zeta)_{\mathsf s}
+       \oplus(f\otimes F\zeta)_{\mathsf f}.
+\tag{PR.39}
+$$
+
+Its two effects sum to identity. Keep the failure flag, residue and $f$;
+keep the actual helper on success. Tensoring with identity on unread fields
+gives their actual joint output, including correlations with the failure
+residue. This is an endpoint completion, not (OC.19b). $\square$
+
+**Corollary 12.3 (finite recorded CP update and its support invariant).**
+Under Theorem 12.2, let $r$ range over a finite set of successful recorded
+suboutcomes. There are common CP maps $\mathcal T_r$ on the helper such
+that the actual accessible output on record $r$ is
+
+$$
+|\psi_{l,\beta,m}\rangle\langle\psi_{l,\beta,m}|
+ \otimes\mathcal T_r(\tau_\epsilon),\qquad
+\sum_r\mathcal T_r^\dagger(I)\leq sI_S.
+\tag{PR.40}
+$$
+
+The output helper includes every actually accessible success register.
+There exist $0<a\leq b<\infty$ with
+$a\tau_-\leq\tau_+\leq b\tau_-$, and the same constants satisfy
+
+$$
+a\mathcal T_r(\tau_-)\leq\mathcal T_r(\tau_+)
+ \leq b\mathcal T_r(\tau_-).
+\tag{PR.41}
+$$
+
+Every nonzero recorded branch is thus nonzero for both parities and has
+equal updated supports. Its normalized states remain phase independent.
+If $t_{r,\epsilon}=\operatorname{tr}\mathcal T_r(\tau_\epsilon)>0$,
+the actual conditional helper is
+$\mathcal T_r(\tau_\epsilon)/t_{r,\epsilon}$; no normalized successor
+is assigned when that trace is zero.
+
+Proof. Apply (PR.37) to the success dilation with its recorded outcome
+projections, or to its Kraus components. After tracing only unavailable
+proof registers, write
+$\mathcal T_r(X)=\sum_j A_{rj}XA_{rj}^\dagger$.
+Stacking all successful components gives
+$\sum_{rj}A_{rj}^\dagger A_{rj}\leq sI$, which is (PR.40).
+Finite-dimensional positive definiteness on $S$ supplies $a,b$, for
+example the extreme eigenvalues of
+$\tau_-^{-1/2}\tau_+\tau_-^{-1/2}$. Positivity preserves their operator
+inequalities, proving (PR.41). Positive operators dominating positive
+multiples of one another have the same kernel and support. This proves the
+remaining assertions. For a joint helper/unread-reference state, the
+actual update is $\mathcal T_r\otimes\operatorname{id}$; no accessible
+purification or independent replacement of that joint state is inferred.
+$\square$
+
+**Theorem 12.4 (finite exact-checkpoint collapse with feedback).** Fix a
+finite public height programme $k_0,\ldots,k_L\in(0,c)$. Require the exact
+state $\psi_{k_j,\beta,m}$ at every successful checkpoint, for every
+initial $\beta\in\mathbb R,m\in\mathbb Z$. Start with equal-support
+assistance as in Theorem 12.2. Allow arbitrary finite quantum memory,
+finite recorded internal outcomes, common CP updates, and implementation
+choices using only the actually retained records. No new history-correlated
+input or newly accessible archive is supplied. Then, for each initial
+parity separately, the sharp probability of all checkpoints succeeding is
+
+$$
+S_L=\prod_{j=1}^L s_*(k_{j-1},k_j),\qquad S_0=1.
+\tag{PR.42}
+$$
+
+The same protocol attains both values, with complete absorbing failure.
+
+Proof. On a successful recorded branch, (PR.40) gives the exact next
+specimen and the actual common CP image of the old helper. Inductively
+(PR.41) keeps equal supports on every nonzero branch. Additional
+history-independent memory and intermediate processing can be included in
+that branch map. Applying (PR.40) to the next chosen implementation bounds
+its total conditional success by $s_*(k_{j-1},k_j)$ on either normalized
+helper state. Sum over actual branches and induct to obtain (PR.42).
+This includes parity-dependent branch probabilities; it never conditions
+on a branch possible for only one parity or divides by zero.
+
+For equality use the attaining filter (PR.39) at each cut and leave the
+helper untouched on success. Retain all first-failure labels and residues.
+The effects of the all-success product and all first-failure products
+sum to identity by repeated substitution of $B_j^\dagger B_j+F_j^\dagger
+F_j=I$. This is a complete stopped protocol on the original input, without
+retry or another specimen. $\square$
+
+This theorem fixes the requested checkpoints. It permits record-dependent
+implementations of them, not arbitrary record-dependent changes to the
+requested height programme. It is also different from a final-endpoint-only
+loop task: deleting intermediate checkpoints can make the endpoint identity
+succeed with probability one. No infinite protocol, approximate-target
+bound or general mixed-helper optimum is asserted.
+
+## 13. Actual classical reads: exclusive mass and a loss hidden by scalar diagnostics
+
+**Corollary 13.1 (finite acquired record and error-free mass).** Suppose a
+finite actually obtained classical record $Y$ has conditional laws
+$q_\epsilon(y)$ independent of $\beta$, leaves the specimen unchanged,
+and is all accessible history assistance. Its calibrated laws and label
+meaning are part of this input promise. Define
+
+$$
+a_\epsilon=\sum_{y:q_{-\epsilon}(y)=0}q_\epsilon(y).
+\tag{PR.43}
+$$
+
+For the fixed programme of Theorem 12.4, the sharp simultaneous survival
+pair is
+
+$$
+p_\epsilon=a_\epsilon+(1-a_\epsilon)S_L.
+\tag{PR.44}
+$$
+
+Attainment requires an executable certified distinction between exclusive
+and shared labels, and permission for the calibrated fixed-parity endpoint
+unitaries of Instrument Boundaries §4.2. Without those extra implementation
+premises, (PR.44) is an upper bound and an abstract attainable value in the
+added endpoint operation class.
+
+Proof. On a label with both probabilities positive, the one-dimensional
+helper promises both complete phase families. Theorem 12.4 bounds its
+all-checkpoint survival by $S_L$, regardless of their unequal likelihoods.
+An exclusive label has survival at most one. Integration gives the upper
+bound. Select the credited parity-specific unitary at every cut on an
+exclusive label, and the unassisted optimal filters on a shared label.
+The same label-based protocol attains both expressions and has the
+complete failure completion already described. Labels of zero probability
+for both inputs require no normalized branch. Observed zero counts do not
+certify a zero law probability or supply this decoder. $\square$
+
+**Proposition 13.2 (a helper read preserving three scalar diagnostics can
+lower exact original continuation).** Use the actual source (PR.26), zero
+fixed preparation phases and the **supplied**, source-bound pure helper
+
+$$
+\eta_+=\frac{(2,1)}{\sqrt5},\qquad
+\eta_-=\frac{(1,2)}{\sqrt5},\qquad \mu=4/5.
+\tag{PR.45}
+$$
+
+Grant an additional helper-only computational-basis read whose sole
+accessible helper output is its classical outcome. No coherent old-helper
+bypass, accessible measurement environment or error flag is supplied.
+The read channel is
+$\rho\mapsto\sum_{y=0}^1\langle y|\rho|y\rangle|y\rangle\langle y|$,
+tensored with identity on the specimen and actual unread fields. Thus its
+complete source-conditioned output, rather than just a marginal score,
+is specified. The resulting accessible helper states are
+
+$$
+\tau_+=\operatorname{diag}(4/5,1/5),\qquad
+\tau_-=\operatorname{diag}(1/5,4/5).
+\tag{PR.46}
+$$
+
+Before and after the read, helper-alone trace distance is $3/5$, root
+fidelity $\|\sqrt{\rho_+}\sqrt{\rho_-}\|_1$ is $4/5$, and optimal
+equal-prior parity guessing probability is $4/5$. Nevertheless:
+
+| Required successful cuts | Supplied coherent helper | Only the acquired basis bit |
+| --- | --- | --- |
+| $k_H\to k_L$ | $3/7$ | $2/7$ |
+| $k_H\to k_L\to k_H$ | $11/35$ | $1/7$ |
+| $n$ complete excursions, $n\geq0$ | $1/5+(4/5)7^{-n}$ | $7^{-n}$ |
+
+The coherent column is the credited pure-helper optimum of Theorems 5.1
+and 8.1, not a new pure-helper result. The classical column is the sharp
+equal-support consequence above. These columns compare endpoint/checkpoint
+services, not canonical exact-time/five-mode output equality.
+
+Proof. The pure-density difference already equals
+$\operatorname{diag}(3/5,-3/5)$; dephasing leaves it unchanged.
+Its positive part has trace $3/5$, giving the stated trace distance and
+optimal binary guessing value $(1+3/5)/2$. Pure-state root fidelity is
+the modulus of the ket overlap, $4/5$. For (PR.46) it is
+$2\sqrt{(4/5)(1/5)}=4/5$ as well.
+
+Here $u=2/3,v=-1/6$. Substitution in the credited (PR.14) gives outbound
+value $3/7$ at $\mu=4/5$; (PR.27) gives the excursion column. Both
+post-read states are faithful on $\mathbb C^2$, so Theorem 12.4 gives
+the other column using $s_*(k_H,k_L)=2/7$ and
+$s_*(k_L,k_H)=1/2$. For example the actual $m=0$ and $m=1$ histories
+at the same $\beta$ both yield bit zero, with probabilities $4/5$ and
+$1/5$. That bit does not certify which exact target is required. Their
+specimens are not asserted identical: Theorem 12.2 bounds every common
+converter with those specimens present. An unheralded wrong guess cannot
+be relabelled as an executed failure. $\square$
+
+**Proposition 13.3 (a permitted error-free read has a different live
+successor).** On the same supplied helper, grant instead the helper-only
+three-outcome POVM
+
+$$
+E_+=\frac19\begin{pmatrix}4&-2\\-2&1\end{pmatrix},\qquad
+E_-=\frac19\begin{pmatrix}1&-2\\-2&4\end{pmatrix},\qquad
+E_?=\frac19\begin{pmatrix}4&4\\4&4\end{pmatrix}.
+\tag{PR.47}
+$$
+
+Again retain only the helper outcome as accessible assistance, and keep
+the specimen unchanged. All three effects are positive and sum to identity.
+Their actual laws in order $(+,-,?)$ are
+
+$$
+q_+=(1/5,0,4/5),\qquad q_-=(0,1/5,4/5).
+\tag{PR.48}
+$$
+
+Thus (PR.44) gives $1/5+(4/5)S_L$. This attains the credited coherent
+helper values in Proposition 13.2 for the displayed outbound and excursion
+programmes. The helper is consumed; no unchanged-helper-on-success or
+on-failure contract is inferred.
+
+Proof. The first two matrices are outer products of $(2,-1)$ and
+$(1,-2)$ divided by nine; the third is four times the outer product of
+$(1,1)$ divided by nine. Their sum is $I_2$. Direct quadratic forms on
+(PR.45) give (PR.48). Each conclusive label selects its calibrated
+parity unitary. On $?$, both parities remain possible and the unassisted
+checkpoint filters are used. Corollary 13.1 now proves the value with
+complete subsequent failure. $\square$
+
+The outcome $?$ is live under this **additional helper-read permission**.
+It is neither a canonical specimen failure nor permission to retry a
+failed specimen. The mechanism is mature unambiguous discrimination of
+an already supplied pair. Neither this POVM nor the basis read constructs
+or acquires that initial pair from the original unknown specimen.
+
+**Corollary 13.4 (exact-target support discontinuity).** A supplied binary
+classical record with laws $(1-e,e)$ and $(e,1-e)$ has exactly the
+unassisted checkpoint optimum for every $0<e<1/2$, while at $e=0$ it
+allows deterministic parity-selected endpoint action. The two noisy laws
+approach their perfect-label laws in total variation by $e$.
+
+Proof. For every positive $e$ both labels are shared and $a_+=a_-=0$ in
+(PR.43). At zero the labels are exclusive and $a_+=a_-=1$.
+Apply (PR.44); the total-variation calculation is immediate. $\square$
+
+This is a discontinuity of an **exact conversion** task. It gives no
+nonzero-noise lower bound for approximate conversion and no error estimate
+for a canonical instrument. Scalar helper diagnostics in Proposition 13.2
+are not claimed to be sufficient statistics for the full joint experiment.
+
+## 14. Live calibration records and an uncalibrated orthogonal latch
+
+**Definition 14.1 (one joint source with a latent convention).** Fix distinct
+$k,l\in(0,c)$. In addition to (PR.34), the source has a classical
+convention $g\in\{0,1\}$ and emits
+
+$$
+Y=\pi(m)\mathbin{\oplus}g,\qquad \pi(m)=m\bmod2\in\{0,1\}.
+\tag{PR.49}
+$$
+
+The source parameter domain includes every $(g,\beta,m)$. This latch is an
+explicit added source output port: the source copies and XORs its classical
+programme-sector field. It is not a nondisturbing measurement of the
+unknown specimen's parity. The programme, $g$ and any source-sensitive
+callback are unavailable to the observer unless explicitly delivered.
+Granting the latch strengthens the following obstruction.
+
+A fixed acquisition stage, before the requested continuation, has live
+record $C$ in a standard Borel space $\mathcal C$. Its actual live
+accessible output measure for each source parameter is
+
+$$
+\mu_g(dz)\,
+ |\psi_{k,\beta,m}\rangle\langle\psi_{k,\beta,m}|
+ \otimes|\pi(m)\oplus g\rangle\langle\pi(m)\oplus g|,
+\qquad q_g=\mu_g(\mathcal C)\leq1.
+\tag{PR.50}
+$$
+
+The subprobability $\mu_g$ is independent of $\beta,m$. $C,Y$ include
+all accessible history-bearing assistance; no quantum calibration token,
+readable programme, additional correlated receiver/reference, timing
+side port or archive is omitted. Common history-independent ancillas are
+allowed. Other actual fields remain jointly present and unread. Every dead
+acquisition outcome retains its actual archive and absorbing $f$.
+
+After the stage one common finite adaptive endpoint protocol may use only
+$C,Y$ and common permitted metadata. Equivalently its accepted operations
+are a measurable kernel of trace-nonincreasing CP maps selected by the
+actual $(z,y)$. Every accepted specimen must be exactly
+$\psi_{l,\beta,m}$ for all $g,\beta,m$. A dead branch cannot produce an
+accepted live original successor. This contract specifies which ports are
+available at this stage; additional observations or interventions during
+acquisition are a different acquisition design.
+
+Put $\nu=\mu_0+\mu_1$ and choose Radon–Nikodym densities
+$f_g=d\mu_g/d\nu$. Define, up to $\nu$-null sets,
+
+$$
+O=\{f_0>0,f_1>0\},\qquad
+E_g=\{f_g>0,f_{1-g}=0\},\qquad e_g=\mu_g(E_g).
+\tag{PR.51}
+$$
+
+Here exclusivity is measure-theoretic, not a statement about topological
+supports. The laws and their exclusive sets are analytical objects; their
+definition gives the observer neither a law oracle nor an executable decoder.
+
+**Theorem 14.2 (live calibration-support price).** Under Definition 14.1,
+let $P_g(\beta,m)$ be the probability, including acquisition survival, of
+an accepted exact continuation. With $s=s_*(k,l)<1$,
+
+$$
+P_g(\beta,m)\leq s q_g+(1-s)e_g
+\quad\text{for every }g,\beta,m.
+\tag{PR.52}
+$$
+
+In particular any positive gain over $sq_g$ requires
+
+$$
+e_g\geq\frac{P_g(\beta,m)-sq_g}{1-s}.
+\tag{PR.53}
+$$
+
+Calibration obtained only on dead branches contributes no $e_g$.
+
+Proof. Fix a physical latch value $y$. On $O$ both conventions are
+possible, with opposite parities $\pi(m)=y\oplus g$, and each parity
+still allows every phase. The same acceptance map selected by $(z,y)$
+must therefore transform the full two-parity phase family exactly.
+Instrument Boundaries Theorem 4.1 bounds its acceptance probability by
+$s$, with arbitrary retained success auxiliaries included through their
+Kraus components. Unequal nonzero likelihoods for the conventions do not
+alter this exact bound. On $E_g$ acceptance is at most one.
+
+There is no uncountable-null-set assumption in that argument. For each
+$y,g$, first impose the purity/correctness condition on a countable dense
+set of phases and one signed winding of each needed parity. Positivity
+of the integrated output implies branchwise correctness almost everywhere
+for each such parameter. Take the common conull set of these countably
+many conditions. On $O$ the two restricted measures are mutually
+absolutely continuous, so this is a common conull set for both. At each
+remaining $z$ the selected finite-dimensional CP map is continuous in the
+specimen input; the dense phase conditions extend to the full circle.
+Thus rigidity applies on that one set and bounds all phases there.
+Other signed windings of the same parity have the identical input state
+and are not passed to the map. They inherit the same bound.
+
+For the actual input convention $g$, integrate against $\mu_g$.
+The overlap contributes at most $s(q_g-e_g)$, and the exclusive part at
+most $e_g$. Dead outcomes contribute zero by the absorbing-successor
+contract. This proves (PR.52) and rearrangement gives (PR.53).
+No failed specimen is replaced by a live one from another run. $\square$
+
+**Proposition 14.3 (the additional premises for sharpness).** If a certified
+executable decoder identifies $E_0,E_1$ up to null sets and calibrated
+parity-specific endpoint gates are permitted, the bound (PR.52) is
+simultaneously attainable for all parameters.
+
+Proof. On $E_g$, compute the parity from the actual latch $y\oplus g$
+and use its unitary. On $O$, use the unassisted attaining filter. Complete
+its failure with (PR.39). Integrating gives equality. $\square$
+
+Without that decoder, support exclusivity is a necessary resource relation,
+not an acquired certificate. Theorem 14.2 addresses classical calibration
+assistance exactly as specified. It is not an upper bound with uncounted
+quantum calibration assistance or an always-readable source convention.
+
+## 15. Source-realized calibration on absorbing failures
+
+**Definition 15.1 (time-separated canonical acquisition).** Set the actual
+rational source parameters to (PR.26), writing $H=1/4$, $L=1/8$ and
+$v=H-L=1/8$, with zero fixed preparation phases. Start at a live
+$\psi_{H,\beta,m}$ cut and emit (PR.49). For a public integer $n\geq1$,
+the source installs and executes a prescribed acquisition of duration $6n$.
+For $j=0,\ldots,n-1$, write $t=6j+s$, $0\leq s\leq6$, and set
+
+$$
+k_g(6j+s)=
+\begin{cases}
+H,&0\leq s\leq3g,\\
+H-v(s-3g),&3g\leq s\leq3g+1,\\
+L+v(s-3g-1),&3g+1\leq s\leq3g+2,\\
+H,&3g+2\leq s\leq6.
+\end{cases}
+\qquad \chi_g(t)=\chi_g(0).
+\tag{PR.54}
+$$
+
+Execute exactly the canonical instrument (OC.19)–(OC.19b), stopping at
+its first failure. Thus, with $p(x)=(x,c-x,Z,c-x,x)$,
+
+$$
+\begin{aligned}
+\lambda_g&=(k_g')_+/k_g+(-k_g')_+/(c-k_g),&
+S_g(t)&=e^{-\int_0^t\lambda_g},\\
+K_g(t)&=\operatorname{diag}_i
+ \sqrt{S_g(t)p_i(k_g(t))/p_i(H)},&
+\gamma_{g,i}&=\lambda_g-(\log p_i(k_g))',\\
+J_{g,i}(t)&=\sqrt{\gamma_{g,i}(t)}|f\rangle\langle i|K_g(t).
+\end{aligned}
+\tag{PR.55}
+$$
+
+There is no current phase increment, so the relative phase factors in
+$K_g$ are one. Actual failure output is $(\tau,i,f)$ with CP density
+$J_{g,i}(\tau)\rho J_{g,i}(\tau)^\dagger$; success retains the live
+specimen, latch and no-failure record. Tensor identity on actual unread
+reference/archive fields. All five mode names and exact timestamps remain.
+
+This is source-owned **programme execution**, under the already declared
+ideal canonical service, before the common continuation. It does not ask
+an observer to choose an unknown $g$-dependent waveform. The source has
+$g$ and its installed programme; the observer receives neither. During this
+prescribed acquisition there is no extra waveform/height read, intermediate
+specimen intervention, command-name leak or source callback. Such an added
+port could reveal $g$ on live branches and would change (PR.50). The
+one-bit latch and the source-owned schedule are explicit parts of the joint
+source, rather than secretly inferred services of the original transport law.
+
+**Theorem 15.2 (sharp post-acquisition curve).** For each $n\geq1$ and
+every $g,\beta,m$, Definition 15.1 has live mass $q_n=7^{-n}$ and
+probability
+
+$$
+R_n=1-7^{-n}
+\tag{PR.56}
+$$
+
+of acquiring a zero-error calibration of $g$ by its actual failure record.
+Every such calibrated specimen is already at absorbing $f$. On live
+branches $\mu_0=\mu_1=q_n\delta_{\mathrm{live}}$, so $e_0=e_1=0$.
+After this stage require the same one-unit phase-preserving height leg
+$H\to L$ on that same surviving specimen. Among all common exact
+endpoint CP acceptance protocols using the delivered archive and latch,
+the sharp unconditional success probability from the initial live cut is
+
+$$
+P_n=\frac27\,7^{-n}=\frac{2}{7^{n+1}}
+    =\frac27(1-R_n).
+\tag{PR.57}
+$$
+
+The canonical horizontal instrument attains it, with its own full failure
+time/mode law retained. This optimizes continuation after this **fixed
+acquisition stage**, not acquisition design or interventions during that
+stage.
+
+Proof. The credited monotone-leg factors are
+$s_*(H,L)=2/7$ and $s_*(L,H)=1/2$. On a whole zero-phase excursion,
+height returns to $H$ and diagonal probability ratios cancel. Hence its
+no-failure operator on **all five live modes** is $I_5/\sqrt7$.
+Waits give identity. Composition gives
+
+$$
+K_g(6n)=7^{-n/2}I_5,
+\qquad K_g(6n)^\dagger K_g(6n)
+ +\sum_i\int_0^{6n}J_{g,i}^\dagger J_{g,i}\,dt=I_5.
+\tag{PR.58}
+$$
+
+The second identity is the supplier's complete canonical normalization.
+Thus every initial joint specimen/reference state has the actual live
+output $q_n\rho$, not merely the same specimen marginal. In particular
+all original-family phases and signed sectors have live probability $q_n$.
+The live clock/no-failure trace, terminal height, public block count,
+permissions and metadata are common for both $g$. The emitted latch is
+retained separately as in (PR.50).
+
+Rates vanish on waits. Up to endpoints of zero measure, all first failures
+lie respectively in the disjoint sets
+
+$$
+A_0=\bigcup_{j=0}^{n-1}(6j,6j+2),\qquad
+A_1=\bigcup_{j=0}^{n-1}(6j+3,6j+5).
+\tag{PR.59}
+$$
+
+There are no failure atoms at the joins. The actual observed $\tau$
+therefore determines $g$ with zero error on each failed run. Keep its full
+$(\tau,i)$, rather than replacing it by this decoded bit. The calibration
+probability is the total failure mass $R_n$, and the live records give the
+identical measures stated. No dead record calibrates a surviving specimen
+in another run.
+
+Apply Theorem 14.2 at $k=H,l=L$, with $s=2/7$, $q_g=q_n$ and $e_g=0$.
+It bounds every allowed endpoint acceptance by (PR.57), including protocols
+that use the retained unknown specimen quantum mechanically. Append the
+canonical one-unit $H\to L$ instrument on a live branch to attain that
+value. It has exactly the original target on success and an absorbing
+first failure on the other branch. Old failures keep their old event and
+$f$ and never execute this new live leg. $\square$
+
+**Proposition 15.3 (actual prehistory, finite resources and earlier failures).**
+Every state quantified in Theorem 15.2 is reached from the same positive
+preparation by Proposition 2.2 with auxiliary height $a=L$. Its rectangle
+coefficient and phase variation are
+
+$$
+B_{\beta,m}=\frac{24}{5}\beta-\frac45\pi m,
+\qquad \operatorname{TV}(\chi)=2\pi|m|+2|B_{\beta,m}|.
+\tag{PR.60}
+$$
+
+The prehistory takes five units. The acquisition (PR.54) and final target
+leg satisfy both original regularity alternatives, strict support at least
+$1/20$, zero additional phase variation and speed at most $1/8$.
+Acquisition alone has height variation $n/4$, coordinate quadratic cost
+$\int(k_g')^2=n/32$, and a common BV-velocity bound
+$\operatorname{TV}(k_g')\leq n/2$, without artificial exterior jumps.
+The target leg adds one time unit and height variation $1/8$.
+If the five-unit preparation is itself implemented with the canonical
+stopped instrument, its live mass is $1/7$; retaining its failures too,
+the all-success probability from that earlier preparation is
+$2/7^{n+2}$.
+
+Proof. (PR.60) is the credited source map (PR.33), with all real lifts
+retained. Acquisition and target heights lie in $[1/8,1/4]$, where the
+smallest $x,c-x,Z$ is $1/20$. They are finite affine pieces and waits,
+joined continuously. Each loop travels distance $1/4$ at speed $1/8$
+for two time units, giving the variation and quadratic cost. At its
+velocity changes the total variation is at most
+$1/8+1/4+1/8=1/2$ per block; the initial moving leg for $g=0$ can
+only remove the first jump from this upper bound. The preparation has the
+same two nontrivial height legs as one loop, while phase-only legs add no
+hazard, so its survival is $1/7$. Its canonical failures remain separate
+absorbing branches. Conditional on surviving it, the specimen, no-failure
+record and terminal clock are precisely the live starting cut used above.
+Multiplication by that actual positive live mass proves the last value.
+$\square$
+
+The public rational schedule and repeat count have finite descriptions;
+$n$ needs $O(\log(n+1))$ bits in a loop programme. The source-side $g$
+and emitted latch each cost one classical bit. Source preparation also
+carries the actual integer/phase programme. Arbitrary real $\beta$ need
+not admit a finite effective encoding. The dense subfamily
+$\beta/\pi\in\mathbb Q$, $m\in\mathbb Z$ has finite symbolic
+programmes, with separately paid integer/rational bit lengths, and already
+forces the same bound by continuity of each common CP map. This observation
+does not replace the full real source theorem by a rational-source theorem.
+There is no uniform finite past variation or programme width for all histories.
+
+The calibrated clock, source-start alignment, reference, permissions,
+installed source executor, selector/update state and actual archives are
+separate resources. The exact continuous failure-time archive is the
+supplier's ideal recording resource, with no fixed finite-bit implementation
+claimed. An observer reading $g$, the installed schedule or any equivalent
+source-sensitive port would acquire extra live assistance and leave the
+obstruction's premises. The deliberately restricted delivered boundary
+here is not asserted to be a complete acquired observer.
+
+As $n\to\infty$, (PR.56) tends to one while (PR.57) tends to zero.
+This is a sequence of finite experiments with growing horizon and variation,
+not an executed infinite acquisition or a universal acquisition tradeoff.
+It proves that a high calibration probability in the complete output can
+coexist with zero calibration mass on its usable live branches.
+
+## 16. Sources, operation resources and remaining joint acquisition obligations
+
+**Source map 16.1 (credited results and precise uses).** Repository suppliers
+for §§12–15 are their committed public versions at
+`773d4d43b91abd515be1059283d79dd6572fc174`. Earlier sections retain their
+own stated readings. These references carry no fresh compilation claim.
+
+| Supplier | Use and boundary |
+| --- | --- |
+| `D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean` and its owning Scribe | `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible` and `finite_rectangles_realize` supply the positive source and actual rectangles. The Scribe's all-signed-sector application supplies the real lift synthesis; that whole ordinary application is not attributed to the rectangle declaration alone. |
+| `D5/S3/Quantum/Fibers/OriginalControlComposition.lean` and its owning Scribe | `OriginalControl`, `FiniteC1Control` and `concatenate_original` preserve both regularity alternatives, literal prefix, matching height, relatively translated real tail, finite/zero durations and additive continuous weighted integrals. No unknown old lift, sensor or actuator is delivered. |
+| Instrument Boundaries, Theorem 4.1, §§4.2–5.2, 9–15 | Successful-Kraus rigidity, unassisted $s_*$, fixed-parity rotations, checkpoint products and the complete canonical stopped law are reused. §§12–14 add the equal-support probabilistic/update and live-calibration deductions; §15 specializes canonical scalar loops, without claiming their factors or completeness as new principles. |
+| This volume §§4–8 | Pure-helper Gram feasibility, success-return versus consumable optima and the repeated-excursion value are credited. Proposition 13.2 compares those values with an actually specified read; it does not rederive the pure-helper frontier. |
+| Instrument Stability; Sampled Instrument Certificates | Marked TV and complete-reference metrics, strong sufficient error data and finite timed-sample certificates keep their exact regularity, sensor and joint-kernel premises. No approximate certificate is imported for the endpoint gates here. |
+| Event Memory and Coarse Aliasing; Quantum Carrier Minimum | Actual-event memory and exact-time/coarse-law distinctions remain. The live $M_3$ carrier correspondence preserves supplied correlated archives; its separate lower bound denies accessible assistance. Neither its minimum nor a full archive capacity is inferred for these assisted protocols. |
+| Record Acquisition | Finite-query obstructions and conditional area/winding certification are credited. An empirical calibration score does not certify the exclusive zero probabilities in (PR.43) or (PR.51). |
+| Transport–Memory Completion §§2.9–2.12/2.18 | Actual common coherent source/port, aligned acquired readings, known nonzero amplitudes and record overlap remain required. An orthogonal parity latch has a different consumer from interference, and an unknown overlap is not divided out. |
+| Process Geometry §34, PG.3400b-full/PG.3400c and PG.3402-run-next; Atlas Stable Core Holonomy Theorem 6.3 | One actual source/epoch image and joint acquisition, selection and success/failure update routes are required. Equal helper diagnostics or a static marginal record do not instantiate individual four-view recovery or its response-preserving update hypotheses. |
+
+**Literature statement 16.2 (mature mechanisms and checked scope).**
+
+| Primary source | Exact use and non-transfer |
+| --- | --- |
+| A. Chefles, R. Jozsa and A. Winter, [On the existence of physical transformations between sets of quantum states, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3; *International Journal of Quantum Information* 2(1), 11–21, DOI [10.1142/S0219749904000031](https://doi.org/10.1142/S0219749904000031) | `literature-attested`: finite pure-family transformations are governed by positive environment Gram factors and positive outcome contributions. The dilation can discard source-dependent environments. This mature framework, already credited in §10, supplies no acquired helper or calibration port. Our continuous-family input is handled by the credited rigidity and the explicit support argument, not by silently importing a finite-family acquisition theorem. |
+| T. Rudolph, R. W. Spekkens and P. S. Turner, [Unambiguous discrimination of mixed states, quant-ph/0303071v2](https://arxiv.org/html/quant-ph/0303071v2), support/kernel conditions and Eqs. (1)–(3); *Physical Review A* 68, 010301(R), DOI [10.1103/PhysRevA.68.010301](https://doi.org/10.1103/PhysRevA.68.010301) | `literature-attested`: an error-free conclusive effect annihilates the competing support; equal supports preclude such a conclusive label. Classical exclusive-mass reasoning and the unambiguous-read mechanism are mature. The stronger original-source probabilistic conversion factorization and its update application are proved in §§12–14. No general unequal-support mixed optimum is imported. |
+| [Classical Sufficiency in Quantum Statistical Experiments, arXiv:2609.29348v1](https://arxiv.org/html/2609.29348v1), abstract and prescribed-measurement/invariant-block formulation | A recent primary scope comparison: sufficiency is relative to a declared admissible measurement class, with classical decision postprocessing. It supplies no operation equality for this full original-source continuation or calibration acquisition. No theorem is transferred. |
+| [What Must a Quantum-Memory Decoder Know About Temporally Correlated Noise?, arXiv:2610.03545v1](https://arxiv.org/html/2610.03545v1), §III.1 | A recent primary scope comparison: its calibration analysis fixes a known common system/environment dilation and discusses independently prepared environment copies. Those copies and calibration experiments are absent from this absorbing original source. No cost, sensor or decoder theorem is transferred. |
+
+Positive-operator domination, spectral decomposition, Stinespring dilation,
+finite CP composition, Radon–Nikodym decomposition and purity of a convex
+positive sum are mature mathematics. The new exposition is `repo-derived`:
+Theorem 12.2 and Corollary 12.3, their exact finite continuation consequence,
+(PR.44), the actual diagnostic-preserving read comparison, the live-bound
+(PR.52), and the source-realized post-stage curve (PR.57). No worldwide
+priority or independent-review claim is made. The bounded primary-source
+comparisons identify no directly sufficient acquired original observer;
+that bounded finding establishes neither absence nor impossibility.
+
+**Resource boundary 16.3.** The supplied coherent helper in (PR.45) has
+occupied dimension two; the basis read retains two classical values and
+(PR.47) three. These are different accessible algebras and output ports,
+not equal hardware prices. The mixed upper bound allows arbitrary finite
+memory and counts all accessible joint assistance. An attaining one-cut
+endpoint completion can keep a failure residue of dimension at most six
+on the active $V\otimes\mathbb C^2$ input, or ten on its full five-mode
+extension. The flags and old archives are additional registers. At $L$
+fixed cuts the first-failure-or-all-success index has $L+1$ possibilities;
+any additional internal labels and payloads must also be retained and paid.
+
+The displayed rational/algebraic helper, POVMs and filters have finite
+exact mathematical descriptions. Preparing a source-bound helper,
+certifying its state/support and label convention, executing the calibrated
+reads and gates, timing, reference precision, arithmetic and programme
+storage are separate services/costs. No exact physical execution at finite
+precision follows. Theorem 12.2 leaves the helper unchanged on attaining
+success but imposes no unchanged return on failure. The helper reads consume
+it. Canonical failure retains its exact first time and original mode;
+endpoint failure instead retains its declared auxiliary residue and flag.
+Their output laws and permissions are kept distinct throughout.
+
+**Open boundary 16.4 (the remaining usable joint relation).** A useful
+acquisition route must actually retain a same-source live relation strong
+enough for the selected action: here coherent assistance surviving update,
+or certified error-free labels with their actual live/inconclusive
+successors. It must obtain source/epoch identity, clock/reference and
+calibration, retained archives, permissions and every programme/selector/
+update input that can affect the declared future. Those must coexist in
+one actual implementation, with all executed failure and unexecuted
+rejection branches. A supplied helper, support calculation or success
+probability does not acquire that relation. Theorem 15.2 rules out the
+displayed calibration-on-failure route as a replacement for it, not all
+other acquisition designs.
+
+General unequal-support or phase-dependent mixed helpers, newly readable
+archives, unknown support certification, approximate targets, arbitrary
+record-dependent requested menus, canonical all-prefix exact-time/five-mode
+implementation and unbounded execution are not settled here. The complete
+original class is not replaced by the double-wall examples or by finite
+resource promises. Full space/time/boundary/memory mutual recovery, native
+stationary $\alpha/\beta$ rate/cofinality and the separate fixed-Hamiltonian
+quantum minimax retain their original objectives. No source/action/resource
+bridge to the AURIC C114, twisted-ground, PCA or static arithmetic sources
+is asserted. These are ordinary mathematical proofs and explicit service
+boundaries, without new Lean verification, physical realization or completion
+of the continuing programme.
+
+## 追加锚（本行以下为增补区）

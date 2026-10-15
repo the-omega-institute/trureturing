@@ -28,7 +28,7 @@ open StandardBeamHomeomorphisms
 private local instance originalNativeIntModule (q : ℕ) : Module ℤ (Native q) :=
   AddCommGroup.toIntModule _
 
-private theorem rho_time (q : ℕ) (hq : 0 < q) (h : ResetFullAut q) (x : Native q) :
+theorem rho_time (q : ℕ) (hq : 0 < q) (h : ResetFullAut q) (x : Native q) :
     rho q hq h (resetTheta q x) = resetTheta q (rho q hq h x) := by
   have hc : h * unitShift (ResetGraph q) = unitShift (ResetGraph q) * h := by
     apply Subtype.ext
@@ -42,30 +42,42 @@ private theorem rho_time (q : ℕ) (hq : 0 < q) (h : ResetFullAut q) (x : Native
     LinearMap.congr_fun (rho_unitShift q hq) y
   simpa only [LinearEquiv.mul_apply, ht] using hx
 
-private def chartMap (q : ℕ) (hq : 0 < q) (h : ResetFullAut q) :
+/-- Transport any actual forward-time commuting integer-linear map into the cyclic chart. -/
+def centralizingMap (q : ℕ) (hq : 0 < q) (A : Native q →ₗ[ℤ] Native q)
+    (ht : ∀ x, A (resetTheta q x) = resetTheta q (A x)) :
     QF q →ₗ[ℤ[X]] QF q :=
   (LinearMap.ofAEval (resetTheta q)
-    ((nativeIntEquiv q hq).symm.toLinearMap.comp (rho q hq h).toLinearMap) (by
+    ((nativeIntEquiv q hq).symm.toLinearMap.comp A) (by
       intro x
-      change (nativeIntEquiv q hq).symm (rho q hq h (resetTheta q x)) =
-        (X : ℤ[X]) • (nativeIntEquiv q hq).symm (rho q hq h x)
-      rw [rho_time]
+      change (nativeIntEquiv q hq).symm (A (resetTheta q x)) =
+        (X : ℤ[X]) • (nativeIntEquiv q hq).symm (A x)
+      rw [ht]
       apply (nativeIntEquiv q hq).injective
       rw [LinearEquiv.apply_symm_apply]
       change _ = nativeIntEquiv q hq (fp q X * _)
       rw [(native_presentation q hq).2.1, LinearEquiv.apply_symm_apply])).comp
     (nativePolynomialEquiv q hq).toLinearMap
 
+/-- A commuting map is multiplication by its value at the actual cyclic generator. -/
+theorem centralizingMap_scalar (q : ℕ) (hq : 0 < q) (A : Native q →ₗ[ℤ] Native q)
+    (ht : ∀ x, A (resetTheta q x) = resetTheta q (A x)) (b : QF q) :
+    centralizingMap q hq A ht b = b * centralizingMap q hq A ht 1 := by
+  obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective b
+  have hs := (centralizingMap q hq A ht).map_smul p 1
+  change centralizingMap q hq A ht (fp q p * 1) = fp q p * centralizingMap q hq A ht 1 at hs
+  simpa only [fp, mul_one] using hs
+
+private def chartMap (q : ℕ) (hq : 0 < q) (h : ResetFullAut q) :
+    QF q →ₗ[ℤ[X]] QF q :=
+  centralizingMap q hq (rho q hq h).toLinearMap (rho_time q hq h)
+
 private theorem chartMap_apply (q : ℕ) (hq : 0 < q) (h : ResetFullAut q) (b : QF q) :
     chartMap q hq h b = (nativeIntEquiv q hq).symm
       (rho q hq h (nativeIntEquiv q hq b)) := rfl
 
 private theorem chartMap_scalar (q : ℕ) (hq : 0 < q) (h : ResetFullAut q) (b : QF q) :
-    chartMap q hq h b = b * chartMap q hq h 1 := by
-  obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective b
-  have hs := (chartMap q hq h).map_smul p 1
-  change chartMap q hq h (fp q p * 1) = fp q p * chartMap q hq h 1 at hs
-  simpa only [fp, mul_one] using hs
+    chartMap q hq h b = b * chartMap q hq h 1 :=
+  centralizingMap_scalar q hq (rho q hq h).toLinearMap (rho_time q hq h) b
 
 private theorem rho_commute (q : ℕ) (hq : 0 < q) (h g : ResetFullAut q) :
     Commute (rho q hq h) (rho q hq g) := by
