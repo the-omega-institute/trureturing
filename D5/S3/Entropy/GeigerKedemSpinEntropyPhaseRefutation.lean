@@ -174,13 +174,13 @@ private theorem logPoly_derivatives (s : ℝ) (hs : |s| ≤ 1) :
   let p3 : ℂ → ℂ := fun z => 24 * (s : ℂ) * z
   have hp (z : ℂ) : HasDerivAt (poly s) (p1 z) z := by
     convert! ((hasDerivAt_id z).const_add 3).add
-      (((hasDerivAt_id z).pow 4).const_mul (s : ℂ)) using 1 <;> (try dsimp only [poly, p1, id_eq]) <;> ring
+      (((hasDerivAt_id z).pow 4).const_mul (s : ℂ)) using 1; dsimp only [poly, p1, id_eq]; ring
   have hp1 (z : ℂ) : HasDerivAt p1 (p2 z) z := by
     convert! (((hasDerivAt_id z).pow 3).const_mul (4 * (s : ℂ))).const_add 1
-      using 1 <;> (try dsimp only [p1, p2, id_eq]) <;> ring
+      using 1; dsimp only [p1, p2, id_eq]; ring
   have hp2 (z : ℂ) : HasDerivAt p2 (p3 z) z := by
     convert! (((hasDerivAt_id z).pow 2).const_mul (12 * (s : ℂ)))
-      using 1 <;> (try dsimp only [p2, p3, id_eq]) <;> ring
+      using 1; dsimp only [p2, p3, id_eq]; ring
   have hp3 (z : ℂ) : HasDerivAt p3 (24 * (s : ℂ)) z := by
     simpa only [p3, id_eq, mul_one] using (hasDerivAt_id z).const_mul (24 * (s : ℂ))
   let d1 : ℂ → ℂ := fun z => p1 z * (Complex.log (poly s z) + 1)
@@ -196,16 +196,16 @@ private theorem logPoly_derivatives (s : ℝ) (hs : |s| ≤ 1) :
   have h1 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt (logPoly s) (d1 z) z := by
     convert! (hp z).mul (hl z hz) using 1
     try dsimp only [d1]
-    field_simp [hn z hz] <;> ring
+    field_simp [hn z hz]
   have h2 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt d1 (d2 z) z := by
     convert! (hp1 z).mul ((hl z hz).add_const 1) using 1
     try dsimp only [d2]
-    field_simp [hn z hz] <;> ring
+    field_simp [hn z hz]
   have h3 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt d2 (d3 z) z := by
     convert! ((hp2 z).mul ((hl z hz).add_const 1)).add
       (((hp1 z).pow 2).div (hp z) (hn z hz)) using 1
     try dsimp only [d3, Pi.pow_apply]
-    field_simp [hn z hz] <;> ring
+    field_simp [hn z hz]; ring
   have hzero : (0 : ℂ) ∈ ball 0 1 := by simp
   have e1 : Set.EqOn (deriv (logPoly s)) d1 (ball 0 1) := fun z hz => (h1 z hz).deriv
   have e2 : Set.EqOn (iteratedDeriv 2 (logPoly s)) d2 (ball 0 1) := by
@@ -232,5 +232,65 @@ private theorem logPoly_derivatives (s : ℝ) (hs : |s| ≤ 1) :
     change HasDerivAt d3 _ 0 at hd3
     rw [hd3.deriv]
     norm_num [p1, p2, p3, poly]
+
+private theorem poly_mass (s : ℝ) :
+    Real.circleAverage (fun z => Complex.normSq (poly s z)) 0 1 = 10 + s ^ 2 := by
+  have hd1 : deriv (poly s) 0 = 1 := by
+    have hp := ((hasDerivAt_id (0 : ℂ)).const_add 3).add
+      (((hasDerivAt_id (0 : ℂ)).pow 4).const_mul (s : ℂ))
+    change HasDerivAt (poly s) _ 0 at hp
+    simpa using hp.deriv
+  have hd4 : iteratedDeriv 4 (poly s) 0 = 24 * (s : ℂ) := by
+    have he : poly s = fun z : ℂ => 3 + (z + (s : ℂ) * z ^ 4) := by
+      funext z
+      simp only [poly]
+      ring
+    rw [he, iteratedDeriv_const_add (by norm_num),
+      iteratedDeriv_fun_add (by fun_prop) (by fun_prop),
+      iteratedDeriv_const_mul_field, iteratedDeriv_pow]
+    norm_num [iteratedDeriv_fun_id]
+    ring
+  have hc : Continuous (fun z => star (poly s z) * poly s z) := by
+    unfold poly
+    fun_prop
+  have hav := Complex.reCLM.circleAverage_comp_comm (c := (0 : ℂ))
+    (ContinuousOn.circleIntegrable (by norm_num : (0 : ℝ) ≤ 1) hc.continuousOn)
+  rw [weighted_circleAverage s (poly s) (poly_differentiable s).differentiableOn,
+    hd1, hd4] at hav
+  simp only [Function.comp_def, Complex.reCLM_apply, Complex.star_def,
+    ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re] at hav
+  convert! hav using 1
+  norm_num [poly, Complex.mul_re, Complex.mul_im]
+  ring
+
+private theorem normSq_mul_log (w : ℂ) :
+    Complex.normSq w * Real.log (Complex.normSq w) =
+      2 * (star w * (w * Complex.log w)).re := by
+  rw [← mul_assoc, Complex.star_def, ← Complex.normSq_eq_conj_mul_self]
+  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
+    Complex.log_re, Complex.normSq_eq_norm_sq, Real.log_pow]
+  ring
+
+private theorem poly_log_moment (s : ℝ) (hs : |s| ≤ 1) :
+    Real.circleAverage
+      (fun z => Complex.normSq (poly s z) * Real.log (Complex.normSq (poly s z))) 0 1 =
+      (20 + 2 * s ^ 2) * Real.log 3 + 2 * (1 + s ^ 2) + s / 162 := by
+  have hf := logPoly_differentiableOn s hs
+  have hc : ContinuousOn (fun z => star (poly s z) * logPoly s z) (sphere 0 1) := by
+    exact ((poly_differentiable s).continuous.continuousOn.star).mul
+      (hf.continuousOn.mono sphere_subset_closedBall)
+  have hav := Complex.reCLM.circleAverage_comp_comm (c := (0 : ℂ))
+    (ContinuousOn.circleIntegrable (by norm_num : (0 : ℝ) ≤ 1) hc)
+  rw [weighted_circleAverage s (logPoly s) hf,
+    (logPoly_derivatives s hs).1, (logPoly_derivatives s hs).2] at hav
+  simp only [Function.comp_def, Complex.reCLM_apply] at hav
+  have he : (fun z => Complex.normSq (poly s z) * Real.log (Complex.normSq (poly s z))) =
+      fun z => (2 : ℝ) • (star (poly s z) * logPoly s z).re := by
+    funext z
+    exact normSq_mul_log (poly s z)
+  rw [he, Real.circleAverage_fun_smul, hav]
+  norm_num [logPoly, poly, Complex.mul_re, Complex.mul_im, Complex.log_re,
+    smul_eq_mul]
+  ring
 
 end D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation
