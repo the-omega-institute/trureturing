@@ -52,12 +52,8 @@ private theorem split_coordinate (fuel : ℕ) (index : Fin EJMOriginalGlobalDAGD
     i.val = (21 - (fuel + 1)) % 20 := by
   unfold EJMOriginalGlobalDAGData.nodes at split
   dsimp only at split
-  split_ifs at split with bound symmetry coordinate
-  · cases split
-  · cases split
-  · cases split
-    simpa only [Nat.mod_mod] using congrArg (fun x : ℕ => x % 20) coordinate
-  · cases split
+  split_ifs at split with bound symmetry coordinate <;> cases split
+  simpa only [Nat.mod_mod] using congrArg (fun x : ℕ => x % 20) coordinate
 
 /-- Fuel zero rejects, so a successful split with remaining child fuel uses
 the exact next unknown global coordinate. No known-coordinate table is needed. -/
