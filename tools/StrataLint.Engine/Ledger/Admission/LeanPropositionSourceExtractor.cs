@@ -74,7 +74,7 @@ internal sealed partial class LeanSourceCatalog
             {
                 FullName = ModuleName(source.Path) + "._anonymous_instance_source",
                 Kind = "instance", IsProof = false, IsAnonymousOnlySource = true,
-                SemanticTokens = AnonymousInstanceCommands(source.AmbientTokens)
+                SemanticTokens = ImplicitInstanceCommands(source.AmbientTokens)
                     .SelectMany(static command => command).ToImmutableArray(),
             })
             .Where(static source => !source.SemanticTokens.IsEmpty)
@@ -289,7 +289,7 @@ internal sealed partial class LeanSourceCatalog
                 return parent with { FullName = parent.FullName + "_iff", Kind = "theorem" };
             }
 
-            if (IsCompilerGeneratedName(recordedSegments)
+            if (IsCompilerGeneratedName(recordedSegments, moduleDeclarations)
                 || HasNamedGenerator(moduleDeclarations[0], recorded.DeclarationNameKey)
                 || recordedSegments.Any(static segment => LeafName(segment).StartsWith("tactic", StringComparison.Ordinal))
                     && GeneratorCommands(moduleDeclarations[0].AmbientTokens).Any(static command =>
@@ -360,7 +360,7 @@ internal sealed partial class LeanSourceCatalog
 
         if (declaration.IsAnonymousOnlySource)
         {
-            foreach (var command in AnonymousInstanceCommands(declaration.AmbientTokens))
+            foreach (var command in ImplicitInstanceCommands(declaration.AmbientTokens))
                 foreach (var dependency in ResolveTokenDependencies(declaration, command, respectBinders: true))
                     yield return dependency;
         }
@@ -533,7 +533,7 @@ internal sealed partial class LeanSourceCatalog
         }
 
         RejectCustomSyntaxTokens(declaration, declaration.SemanticTokens);
-        foreach (var command in AnonymousInstanceCommands(declaration.AmbientTokens))
+        foreach (var command in ImplicitInstanceCommands(declaration.AmbientTokens))
             RejectCustomSyntaxTokens(declaration, command);
     }
 
@@ -687,7 +687,7 @@ internal sealed partial class LeanSourceCatalog
 
         if (result.Count == 0)
         {
-            var anonymousTokens = AnonymousInstanceCommands(ambientTokens)
+            var anonymousTokens = ImplicitInstanceCommands(ambientTokens)
                 .SelectMany(static command => command).ToImmutableArray();
             if (!anonymousTokens.IsEmpty)
             {
@@ -757,12 +757,13 @@ internal sealed partial class LeanSourceCatalog
             {
                 result.AddRange(tokens[start..end]);
             }
-            else if (tokens[start].Text == "set_option")
+            else if (tokens[start].Text is "set_option" or "include" or "omit")
             {
                 result.AddRange(tokens[start..FindDeclarationKind(tokens, start, end)]);
             }
         }
 
+        result.AddRange(AttributedInstanceCommands(tokens).SelectMany(static command => command));
         return result.ToImmutable();
     }
 
@@ -770,6 +771,34 @@ internal sealed partial class LeanSourceCatalog
         ImmutableArray<LeanSourceToken> tokens, int kindIndex, int end) =>
         kindIndex >= 0 && tokens[kindIndex].Text == "instance"
         && (kindIndex + 1 >= end || !IsIdentifier(tokens[kindIndex + 1].Text));
+
+    private static IEnumerable<ImmutableArray<LeanSourceToken>> ImplicitInstanceCommands(
+        ImmutableArray<LeanSourceToken> tokens) =>
+        AnonymousInstanceCommands(tokens).Concat(AttributedInstanceCommands(tokens));
+
+    private static IEnumerable<ImmutableArray<LeanSourceToken>> AttributedInstanceCommands(
+        ImmutableArray<LeanSourceToken> tokens)
+    {
+        var starts = FindCommandStarts(tokens);
+        var pending = ImmutableArray<LeanSourceToken>.Empty;
+        for (var index = 0; index < starts.Length; index++)
+        {
+            var start = starts[index];
+            var end = index + 1 < starts.Length ? starts[index + 1] : tokens.Length;
+            var kindIndex = FindDeclarationKind(tokens, start, end);
+            if (kindIndex < 0 && IsAttributePrefix(tokens[start..end]))
+            {
+                pending = pending.AddRange(tokens[start..end]);
+                continue;
+            }
+            var attributes = kindIndex >= 0 ? pending.AddRange(tokens[start..kindIndex])
+                : ImmutableArray<LeanSourceToken>.Empty;
+            pending = ImmutableArray<LeanSourceToken>.Empty;
+            if (kindIndex >= 0 && !IsAnonymousInstance(tokens, kindIndex, end)
+                && HasInstanceAttribute(attributes))
+                yield return attributes.AddRange(tokens[kindIndex..end]);
+        }
+    }
 
     private static IEnumerable<ImmutableArray<LeanSourceToken>> AnonymousInstanceCommands(
         ImmutableArray<LeanSourceToken> tokens)
@@ -810,16 +839,26 @@ internal sealed partial class LeanSourceCatalog
         }
 
         if (tokens[start].Text is not ("@" or "private" or "protected" or "noncomputable"
-            or "partial" or "unsafe" or "local" or "public" or "meta" or "set_option"))
+            or "partial" or "unsafe" or "local" or "public" or "meta" or "set_option" or "include" or "omit"))
         {
             return -1;
         }
 
+        var depth = 0;
+        var body = tokens[start].Text is not ("set_option" or "include" or "omit");
         for (var index = start + 1;
             index < end && tokens[index].Line == tokens[start].Line;
             index++)
         {
-            if (DeclarationKinds.Contains(tokens[index].Text))
+            var text = tokens[index].Text;
+            depth += text switch
+            {
+                "(" or "[" or "{" => 1,
+                ")" or "]" or "}" => -1,
+                _ => 0,
+            };
+            if (depth == 0 && text == "in") body = true;
+            if (depth == 0 && body && DeclarationKinds.Contains(text))
             {
                 return index;
             }

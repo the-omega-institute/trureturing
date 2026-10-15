@@ -434,13 +434,21 @@ internal sealed partial class LeanSourceCatalog
         return bytes == byteLength;
     }
 
-    private static bool IsCompilerGeneratedName(ImmutableArray<string> segments) =>
-        segments.Any(segment =>
+    private static bool IsCompilerGeneratedName(
+        ImmutableArray<string> segments, ImmutableArray<LeanSourceDeclaration> moduleDeclarations)
+    {
+        var hasInstanceGenerator = moduleDeclarations.Any(static declaration =>
+            declaration.IsAnonymousOnlySource
+            || declaration.Kind is "inductive" or "structure" or "class"
+            || declaration.SemanticTokens.Any(static token => token.Text == "deriving"))
+            || AnonymousInstanceCommands(moduleDeclarations[0].AmbientTokens).Any()
+            || GeneratorCommands(moduleDeclarations[0].AmbientTokens).Any();
+        return segments.Any(segment =>
         {
             var leaf = LeafName(segment);
             return segment.StartsWith("term", StringComparison.Ordinal)
                 || segment.StartsWith("_aux_", StringComparison.Ordinal)
-                || leaf.StartsWith("inst", StringComparison.Ordinal)
+                || hasInstanceGenerator && leaf.StartsWith("inst", StringComparison.Ordinal)
                 || leaf.StartsWith("_aux_", StringComparison.Ordinal)
                 || leaf.StartsWith("term", StringComparison.Ordinal)
                 || leaf.StartsWith("match_", StringComparison.Ordinal)
@@ -448,6 +456,7 @@ internal sealed partial class LeanSourceCatalog
                 || leaf is "congr_simp" or "splitter" or "eq_def"
                 || leaf.EndsWith("_assoc", StringComparison.Ordinal);
         });
+    }
 
     private static bool HasNamedGenerator(LeanSourceDeclaration source, string recordedKey) =>
         HasSourceBoundName(source, recordedKey, source.NamedGenerators);
@@ -528,7 +537,14 @@ internal sealed partial class LeanSourceCatalog
         return index > 0 && index == tokens.Length;
     }
 
-    private static bool HasBareExtAttribute(ImmutableArray<LeanSourceToken> tokens)
+    private static bool HasBareExtAttribute(ImmutableArray<LeanSourceToken> tokens) =>
+        HasDeclarationAttribute(tokens, "ext", requireBare: true);
+
+    private static bool HasInstanceAttribute(ImmutableArray<LeanSourceToken> tokens) =>
+        HasDeclarationAttribute(tokens, "instance", requireBare: false);
+
+    private static bool HasDeclarationAttribute(
+        ImmutableArray<LeanSourceToken> tokens, string name, bool requireBare)
     {
         for (var index = 0; index + 1 < tokens.Length; index++)
         {
@@ -543,8 +559,9 @@ internal sealed partial class LeanSourceCatalog
                 else if (depth == 1 && text == ",") itemStart = true;
                 else if (depth == 1)
                 {
-                    if (itemStart && text == "ext" && index + 1 < tokens.Length
-                        && tokens[index + 1].Text is "," or "]") return true;
+                    if (itemStart && text is "local" or "scoped") continue;
+                    if (itemStart && text == name && (!requireBare || index + 1 < tokens.Length
+                        && tokens[index + 1].Text is "," or "]")) return true;
                     itemStart = false;
                 }
             }
