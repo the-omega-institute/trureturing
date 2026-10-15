@@ -3,7 +3,7 @@ bibkey: feldmanwilce2026compactnesscliques
 authors: David V. Feldman and Alexander Wilce
 year: 2026
 title: A Note on Compactness and Clique Size
-doi: null
+doi: 10.48550/arXiv.2608.13320
 url: https://arxiv.org/abs/2608.13320
 claim: Question 1 asks for a countably compact T1 or Hausdorff space with an all-product closed orthogonality relation having finite but unbounded cliques; Section 4 gives a conditional finite-block construction.
 strata_touched:
@@ -27,6 +27,12 @@ https://arxiv.org/abs/2608.13320. Explicit inspected version:
 https://arxiv.org/abs/2608.13320v1. This note paraphrases the supplied
 primary text and does not reproduce its source or assert a journal
 publication or a reuse license for the manuscript.
+
+## Verified locator
+
+DOI: 10.48550/arXiv.2608.13320.
+URL: https://arxiv.org/abs/2608.13320.
+Explicit version: https://arxiv.org/abs/2608.13320v1.
 
 An orthogonality relation is symmetric, irreflexive and closed in the
 **entire** product $X^2$ (printed pages 1–2). Remark 1(ii), printed page 3,
