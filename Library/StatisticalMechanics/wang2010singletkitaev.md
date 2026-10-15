@@ -6,6 +6,7 @@ title: "Realization of the Exactly Solvable Kitaev Honeycomb Lattice Model in a 
 doi: 10.1103/PhysRevB.81.184416
 url: https://arxiv.org/abs/1001.0266v2
 claim: "Four-spin singlet pseudospins, their physical exchange/chirality representation, and exact or perturbative encoded Kitaev constructions."
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
