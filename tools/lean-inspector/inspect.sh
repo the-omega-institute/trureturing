@@ -5,19 +5,21 @@ export LC_ALL=C
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY="" OUTPUT="" LOG_DIR=""
 CACHE_MISS_POLICY=reuse-or-build
+REGENERATE_REPORT_ARTIFACTS=0
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
 BUILD_PHASES=()
 ACTIVE_PHASE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --repository|--output|--log-dir|--cache-miss-policy)
+    --repository|--output|--log-dir|--cache-miss-policy|--regenerate-report-artifacts)
       [[ $# -ge 2 && -n "$2" ]] || { echo "inspect.sh: $1 requires a value" >&2; exit 2; }
       case "$1" in
         --repository) REPOSITORY="$2" ;;
         --output) OUTPUT="$2" ;;
         --log-dir) LOG_DIR="$2" ;;
         --cache-miss-policy) CACHE_MISS_POLICY="$2" ;;
+        --regenerate-report-artifacts) REGENERATE_REPORT_ARTIFACTS="$2" ;;
       esac
       shift 2 ;;
     *) echo "inspect.sh: unknown argument '$1'" >&2; exit 2 ;;
@@ -26,6 +28,11 @@ done
 case "$CACHE_MISS_POLICY" in
   reuse-or-build|fetch-or-fail|build) ;;
   *) echo 'inspect.sh: --cache-miss-policy requires reuse-or-build, fetch-or-fail or build' >&2; exit 2 ;;
+esac
+case "$REGENERATE_REPORT_ARTIFACTS" in
+  0) ;;
+  1) CACHE_MISS_POLICY=build ;;
+  *) echo 'inspect.sh: --regenerate-report-artifacts requires 0 or 1' >&2; exit 2 ;;
 esac
 [[ -n "$REPOSITORY" && -d "$REPOSITORY" && -n "$OUTPUT" ]] \
   || { echo 'inspect.sh: --repository ROOT --output FILE are required' >&2; exit 2; }
@@ -38,7 +45,7 @@ if [[ "${STRATALINT_INSPECTOR_SUPERVISED:-0}" != 1 ]]; then
   exec "$SCRIPT_DIR/../scripts/report/report-supervisor.sh" --role lean-producer --lean-slot -- \
     env STRATALINT_INSPECTOR_SUPERVISED=1 \
     "$SCRIPT_DIR/inspect.sh" --repository "$REPOSITORY" --output "$OUTPUT" --log-dir "$LOG_DIR" \
-    --cache-miss-policy "$CACHE_MISS_POLICY"
+    --cache-miss-policy "$CACHE_MISS_POLICY" --regenerate-report-artifacts "$REGENERATE_REPORT_ARTIFACTS"
 fi
 BUILD_WORK_FILE="${STRATALINT_LEAN_BUILD_WORK_FILE:-$REPOSITORY/build/lean-cache/build-work.json}"
 # Work facts live outside the restored project tree and start empty every call.
@@ -85,7 +92,16 @@ run_phase() {
   printf 'LEAN_INSPECTOR_PHASE phase=%s status=started clock=shell-seconds start_seconds=%s\n' \
     "$phase" "$phase_started" >&2 || true
   ACTIVE_PHASE="$phase"
-  (cd "$REPOSITORY" && "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
+  local budget=()
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
+    case "$phase" in
+      # Native report/program commands are charged by the cache reader after
+      # its own lazy provisioning. These phases must not be charged twice.
+      toolchain|producer-restore|ensure|reuse|report|programs) ;;
+      *) budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --) ;;
+    esac
+  fi
+  (cd "$REPOSITORY" && ${budget[@]+"${budget[@]}"} "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
   ACTIVE_PHASE=""
   phase_finished="${SECONDS:-unavailable}"
   [[ "$phase_finished" =~ ^[0-9]+$ ]] || phase_finished=unavailable
@@ -152,13 +168,21 @@ require_lake() {
 # instead of refreshing the project through `dotnet run`.
 require_producer() {
   [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]] || return 0
+  local restore_args=()
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
+    run_phase producer-restore dotnet restore "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" --locked-mode
+    restore_args=(--no-restore)
+  fi
   run_phase producer-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
-    --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
+    ${restore_args[@]+"${restore_args[@]}"} --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
   local producer
   producer="$(tail -n 1 "$LOG_DIR/producer-build.stdout.log")"
   [[ "$producer" == /* && -f "$producer" ]] \
     || { echo 'inspect.sh: the producer build reported no existing absolute DLL' >&2; return 2; }
   export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 && -n "${GITHUB_ENV:-}" ]]; then
+    printf 'STRATALINT_LEAN_PRODUCER_DLL=%s\n' "$producer" >> "$GITHUB_ENV"
+  fi
 }
 # The local guard runs before provisioning or any selected program build.
 # Direct inspect callers retain reuse-or-build unless they select the local policy.
@@ -178,10 +202,12 @@ open_logs() {
 }
 reuse_report() {
   local status=0
+  local budget=()
+  [[ -z "${STRATALINT_CI_COMPUTE_BUDGET:-}" || "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" == 1 ]] || budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --)
   if [[ "$CACHE_MISS_POLICY" == build ]]; then
     status=3
   else
-    python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
+    ${budget[@]+"${budget[@]}"} python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
       --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" \
       --cache-miss-policy "$CACHE_MISS_POLICY" || status=$?
   fi
@@ -219,7 +245,12 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
+REPORT_COMMAND=()
+if [[ "$REGENERATE_REPORT_ARTIFACTS" == 1 ]]; then
+  # Ensure and the existing writer guard enclose cleanup and the native build.
+  REPORT_COMMAND=(python3 -B "$SCRIPT_DIR/native.py" regenerate "$REPOSITORY")
+fi
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 # Publication and seal share one canonical cache guard.
 run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \

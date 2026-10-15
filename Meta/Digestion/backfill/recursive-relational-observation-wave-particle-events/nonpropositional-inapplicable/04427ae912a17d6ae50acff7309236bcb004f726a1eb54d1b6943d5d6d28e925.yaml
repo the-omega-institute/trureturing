@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:04427ae912a17d6ae50acff7309236bcb004f726a1eb54d1b6943d5d6d28e925
+  normalized_sha256: sha256:04427ae912a17d6ae50acff7309236bcb004f726a1eb54d1b6943d5d6d28e925
+cas_ref: sha256:04427ae912a17d6ae50acff7309236bcb004f726a1eb54d1b6943d5d6d28e925
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 来源与边界 234.4 只说明文献或卷内条目的使用范围、工作主题与证据边界，不另提出数学命题。
+    previous_atom_id: 0f2d32822725342a4f3bc88cd5641c3eae2838376bebb7c1122066a48f25a0b4
+    next_atom_id: 794f68c1648624a934ae3faf2a3c21d826e6cb4e29a24250322196de808d0445

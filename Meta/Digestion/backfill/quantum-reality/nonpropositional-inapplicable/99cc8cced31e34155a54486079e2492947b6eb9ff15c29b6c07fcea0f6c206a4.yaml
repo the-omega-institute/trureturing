@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99cc8cced31e34155a54486079e2492947b6eb9ff15c29b6c07fcea0f6c206a4
+  normalized_sha256: sha256:99cc8cced31e34155a54486079e2492947b6eb9ff15c29b6c07fcea0f6c206a4
+cas_ref: sha256:99cc8cced31e34155a54486079e2492947b6eb9ff15c29b6c07fcea0f6c206a4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 104 节开头只固定采样方向、非零步长及各次实验共用同一初态的条件，未提出待证结论。
+    previous_atom_id: 60cddf5077f72187e9222ebabd85b3689baf172e34d8a3e704d50a4bedb2388c
+    next_atom_id: 1f6d67eb02583f92e37d099d537d40fc212716c9f81ab38bf00260790904ca9d

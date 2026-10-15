@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83227c10782446846d92cb4b1fd73de71f2d86536b41b7cd47d8bfe5bd39cccd
+  normalized_sha256: sha256:83227c10782446846d92cb4b1fd73de71f2d86536b41b7cd47d8bfe5bd39cccd
+cas_ref: sha256:83227c10782446846d92cb4b1fd73de71f2d86536b41b7cd47d8bfe5bd39cccd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 209.1（过滤上的信息值）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 673df105ecb6d05fcd920a33649b30ee703c2a4e77bb4a52c4ced151e3a2f94e
+    next_atom_id: 0393dafbf12cde03b588538c1d49dd2e414133a8f051fe22f4dd762b7c99f383

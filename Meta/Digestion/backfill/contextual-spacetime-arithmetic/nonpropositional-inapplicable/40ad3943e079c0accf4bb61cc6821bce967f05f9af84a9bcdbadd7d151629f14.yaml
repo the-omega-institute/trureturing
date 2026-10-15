@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:40ad3943e079c0accf4bb61cc6821bce967f05f9af84a9bcdbadd7d151629f14
+  normalized_sha256: sha256:40ad3943e079c0accf4bb61cc6821bce967f05f9af84a9bcdbadd7d151629f14
+cas_ref: sha256:40ad3943e079c0accf4bb61cc6821bce967f05f9af84a9bcdbadd7d151629f14
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只推导前述累积延迟及差分公式。
+    previous_atom_id: b584af07607f4930503a04838f5ef0a581b60e3b9c5ba81fec8ebc7fd9a35f12
+    next_atom_id: 6625d792cf99bab90feae08a8f66cebcff1468ce0a4bca490cd42b24d23b9f92

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2dc1680db255b3089cc7e638c115923f9c177874980fcfe5a82dd27bc1bbffe0
+  normalized_sha256: sha256:2dc1680db255b3089cc7e638c115923f9c177874980fcfe5a82dd27bc1bbffe0
+cas_ref: sha256:2dc1680db255b3089cc7e638c115923f9c177874980fcfe5a82dd27bc1bbffe0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 方法或记号约定（**定义（原包络方法）。** 在 \(2^{-160}\) 网格上逐运算向外取整,以 \(q=2^e t,1\le t<2\)…）只规定包络操作或加权和的记法，不另断言性质。
+    previous_atom_id: 93bf0eb4ae65675b2a6e8f61ae660edc12a6cd5c7749f90dd19de4f55535f317
+    next_atom_id: db3fb2d386fd4f4fa1439e37c633a6db2f935719ef867b63ac5095ad04cfb850

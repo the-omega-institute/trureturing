@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:181467ab7f6ca2f662a44555998a57410be43968f4c5d82c7777abc2ea5f4dc6
+  normalized_sha256: sha256:181467ab7f6ca2f662a44555998a57410be43968f4c5d82c7777abc2ea5f4dc6
+cas_ref: sha256:181467ab7f6ca2f662a44555998a57410be43968f4c5d82c7777abc2ea5f4dc6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅定义同一阶段序列的总变差选择接口 T 及误差承诺，不断言该全函数可有效取得。
+    previous_atom_id: c87c7d6027c70d5ce52fd963a776520cbb7b0acabb134072d1b461a3bf58a6a3
+    next_atom_id: 4c6727a5f55411b0298ec50c15087f6adbe0cfea60f6945d84de88aaaaf6b550

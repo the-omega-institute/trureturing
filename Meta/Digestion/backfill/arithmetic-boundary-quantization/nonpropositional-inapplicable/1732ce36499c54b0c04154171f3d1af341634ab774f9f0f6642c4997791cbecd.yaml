@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1732ce36499c54b0c04154171f3d1af341634ab774f9f0f6642c4997791cbecd
+  normalized_sha256: sha256:1732ce36499c54b0c04154171f3d1af341634ab774f9f0f6642c4997791cbecd
+cas_ref: sha256:1732ce36499c54b0c04154171f3d1af341634ab774f9f0f6642c4997791cbecd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（分母正,且 \(1-\theta'=(v-s)/(A+v)>0\)。两步都给目标的合法上界:…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: cdd3788b73dcef609cb6be2489be019563912fed6c3b380669162c5adb1708f1
+    next_atom_id: 4ed3a03b12ea2d3170e0a776e2371bfec2381cc0b35bb31a87b4c7da7436cd5e

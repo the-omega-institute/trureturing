@@ -156,5 +156,74 @@ def original : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@NativeFibonacci
 
 #print axioms scanEvidence
 #print axioms originalEvidence
+abbrev paritySumSignature : Signature where
+  Params := Nat
+  State _ := Nat → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def paritySumActual : Realization paritySumSignature :=
+  realize paritySumSignature (fun _ n x => parity x n) (fun e => nomatch e)
+def paritySumBad : Realization paritySumSignature :=
+  realize paritySumSignature (fun _ _ _ => false) (fun e => nomatch e)
+abbrev paritySumArena : Arena where
+  signature := paritySumSignature
+  Law R := ∀ (x : Nat → Bool) (n : Nat),
+    R.readout () n x = decide (((List.range n).map (fun i => bit (x i))).sum%2=1)
+private theorem parity_sum_bad : ¬ paritySumArena.Law paritySumBad := by
+  intro law
+  have no := law (fun _ => true) 1
+  change false = true at no
+  cases no
+
+def paritySumEvidence : Registration paritySumArena (type_of% (@parity_sum)) where
+  actual := paritySumActual
+  bridge := Iff.rfl
+  variation := ⟨@parity_sum,paritySumBad,parity_sum_bad⟩
+  sensitivity := ⟨fun i => ⟨paritySumBad,
+    fun j h => (h (Subsingleton.elim j i)).elim,rfl,parity_sum_bad⟩, fun e => nomatch e⟩
+  dependence := by
+    intro i
+    refine ⟨1,(fun _ => false),(fun _ => true),?_⟩
+    change false ≠ true
+    decide
+
+noncomputable def parity_sum_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciStaticScan.parity_sum) (Realization paritySumSignature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciStaticScan.parity_sum.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciStaticScan.paritySumEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨paritySumArena⟩
+  objectArena := .source ⟨paritySumArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source paritySumArena ⟨paritySumEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize paritySumSignature paritySumActual.readout paritySumActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciStaticScan
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body","body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn","arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciStaticScan

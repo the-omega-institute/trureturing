@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:904316cd410b8776f1294f311a75b030e5e0e99193bfc071a77ff9431e2b1dff
+  normalized_sha256: sha256:904316cd410b8776f1294f311a75b030e5e0e99193bfc071a77ff9431e2b1dff
+cas_ref: sha256:904316cd410b8776f1294f311a75b030e5e0e99193bfc071a77ff9431e2b1dff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 373.1 指定系统、参考资源、允许读数的守恒条件和乘积输入，仅限定测量任务而不推出性能结论。
+    previous_atom_id: 9feb1641c0bedb5d03ee30828d0c513c70f330038afb5d9e45e4e5e09fc8e245
+    next_atom_id: 6a055fb4b4805cd15270f5319391a27d74b6f9f675cbf3ee9c09e1b7ef35a2fe

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce14a22ed12e8a3a8b7c98849c982d1c735488353ebfbbac27f2921e9755d12e
+  normalized_sha256: sha256:ce14a22ed12e8a3a8b7c98849c982d1c735488353ebfbbac27f2921e9755d12e
+cas_ref: sha256:ce14a22ed12e8a3a8b7c98849c982d1c735488353ebfbbac27f2921e9755d12e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 4.1（单 Kraus 局域仪器）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: f8a7999ca20a0560c6f9b1eb53cf913faabbf7291d7b8b6b8b81e26504833d81
+    next_atom_id: fd65acd0d3eca99e6151024968aaafbc4bfe2335553887201e5fe29db26f0ccf

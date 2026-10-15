@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2af4f300a5ef7ceb364d765d070ccd9449fa1675aa299a0c2d7b57c63dbcc54
+  normalized_sha256: sha256:d2af4f300a5ef7ceb364d765d070ccd9449fa1675aa299a0c2d7b57c63dbcc54
+cas_ref: sha256:d2af4f300a5ef7ceb364d765d070ccd9449fa1675aa299a0c2d7b57c63dbcc54
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 255.2 的充分性证明第五步只完成解析化及原任务条件的验证，并以证毕结束。
+    previous_atom_id: 4d24864dcad38f3f40a360bb0d51fc5025982b9f998b4349b01524adffa9a080
+    next_atom_id: 1b72f933efbba72c3551bddaf7a0e27b400d3b48757e0a607309851448c7a267

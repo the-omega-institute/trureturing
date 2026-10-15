@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f1f5270493767d0b3a0e2e24520655c519620f723ab95f3a12824860bce94ea
+  normalized_sha256: sha256:9f1f5270493767d0b3a0e2e24520655c519620f723ab95f3a12824860bce94ea
+cas_ref: sha256:9f1f5270493767d0b3a0e2e24520655c519620f723ab95f3a12824860bce94ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 第 $L$ 层有符号区间的中心记为），没有另行断言这些对象的性质。
+    previous_atom_id: 84c31103a7a0efae62d0f124328f3a6a56ef65f4f7d37273e11293ab8e6ea0e2
+    next_atom_id: 227a8b29e0b0984fce53d62c73ae06e7c329ac9e14a7cc1526c2e0d39099b8ec

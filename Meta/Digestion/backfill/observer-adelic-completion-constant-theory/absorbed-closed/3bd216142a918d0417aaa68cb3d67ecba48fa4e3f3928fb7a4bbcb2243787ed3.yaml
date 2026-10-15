@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3bd216142a918d0417aaa68cb3d67ecba48fa4e3f3928fb7a4bbcb2243787ed3
+  normalized_sha256: sha256:3bd216142a918d0417aaa68cb3d67ecba48fa4e3f3928fb7a4bbcb2243787ed3
+cas_ref: sha256:3bd216142a918d0417aaa68cb3d67ecba48fa4e3f3928fb7a4bbcb2243787ed3
+coverage_gids:
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyMatrixPencil.finite_prony_matrix_pencil_charpoly
+    target_statement_id: sha256:801c93e0be7fa59f24bcb1840ecd00340b4ab11392add3341177a67c17b2c7eb
+receipts:
+  unresolved_subitems: []

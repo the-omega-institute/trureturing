@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1763ec4c909f3b2fd0dca958569cce0517f9004a0290a0e4df1dd72ff7cdeaf0
+  normalized_sha256: sha256:1763ec4c909f3b2fd0dca958569cce0517f9004a0290a0e4df1dd72ff7cdeaf0
+cas_ref: sha256:1763ec4c909f3b2fd0dca958569cce0517f9004a0290a0e4df1dd72ff7cdeaf0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 分别对 TR.5 的满射应用第一同构定理，并以其中的像核恒等式识别分母。…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 2d2b1e2effd6ae94f3c06e906756d11867ad28f9976a225bcccb032970c6d6ed
+    next_atom_id: 843fed5feec0b6bc0961fc26bef4214466d96a8c6aa44551b147530210235ef0

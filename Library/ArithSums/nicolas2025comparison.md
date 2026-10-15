@@ -360,7 +360,7 @@ $$
 
 where the sums run over the nontrivial zeta zeros with multiplicity and $\kappa_0(x)=\int_x^\infty\log(1-t^{-2})k(t)\,dt$. The proof uses absolute convergence after integration by parts to pass to the infinite endpoint. This is a signed formula; Proposition 13(ii) is a separate absolute-value estimate. Merely expressing the integral through zeros gives no needed one-sided bound at FIB-selected cutoffs. Equation (54) is also the partial-summation identity used above. The relevant statements and these proof steps were inspected; no complete proof audit or Lean verification of the preprint is claimed.
 
-Fiori–Jaskari, *Explicit bounds for the prime number theorem*, [arXiv:2609.23222v1](https://arxiv.org/abs/2609.23222v1), Theorem 1.1 and Table 1, state for $u\ge e^3$ that
+Fiori–Jaskari, *Explicit bounds for the prime number theorem*, [arXiv:2609.23222v2](https://arxiv.org/abs/2609.23222v2), Theorem 1.1 and Table 1, state for $u\ge e^3$ that
 
 $$
 \frac{|\psi(u)-u|}{u}

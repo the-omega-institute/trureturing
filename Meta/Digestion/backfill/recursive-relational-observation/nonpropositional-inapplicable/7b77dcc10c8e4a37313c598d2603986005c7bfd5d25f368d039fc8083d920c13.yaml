@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b77dcc10c8e4a37313c598d2603986005c7bfd5d25f368d039fc8083d920c13
+  normalized_sha256: sha256:7b77dcc10c8e4a37313c598d2603986005c7bfd5d25f368d039fc8083d920c13
+cas_ref: sha256:7b77dcc10c8e4a37313c598d2603986005c7bfd5d25f368d039fc8083d920c13
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 51.13 (两个边界输入的全部联合歧义与双重提升).的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 5800cb7598034290bc6a0cd00a8bf6689bf79c47ff19ad731e6709137bc7ec8b
+    next_atom_id: cc07b35afa710cedce622ce60e2583f4250a7748bb26a6efe5513acd90d0d108

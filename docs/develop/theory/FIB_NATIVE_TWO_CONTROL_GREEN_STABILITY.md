@@ -949,3 +949,1067 @@ heat, KLMN or compact-resolvent theorem is claimed as new, and no worldwide
 originality claim or physical realization follows from this composition.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Added phase cover and unchanged native histories
+
+**Definition 9.1 (native source and covering contract).** Retain Definition
+4.1, with $0<Z<1$, $r=1-Z$, $H=r/2$, $X=Y=H$ and probabilities
+$(k,H-k,Z,H-k,k)$ in the original mode order. Preparation phases remain
+arbitrary and fixed, and the amplitudes retain the negative phase
+convention. Write
+
+$$
+\widetilde\Omega=I\times\mathbb R^2,\qquad
+I=(l,u),\quad 0<l<k_o<u<H,\qquad
+\varpi(k,A,B)=(k,[A]_{2\pi},[B]_{2\pi}).
+\tag{9.1}
+$$
+
+Here $A,B$ denote real phase coordinates. This is additional
+covering structure over $\Omega=I\times\mathbb T^2$, not a replacement of
+its current-ray torus. The deck transformations are
+$(A,B)\mapsto(A+2\pi n,B+2\pi m)$, $(n,m)\in\mathbb Z^2$.
+The unimodular change in Definition 4.1 fixes these two actual periods.
+Lift the same fields, with the same notation,
+
+$$
+P=\partial_k,\qquad Q=\tfrac12\partial_A+
+c(k)\partial_B,\qquad c(k)=\tfrac12-k/r,\qquad
+d\widetilde\mu=dk\,dA\,dB.
+\tag{9.2}
+$$
+
+For an original numerical absolutely continuous or piecewise $C^1$
+command $(a,b)$ starting at zero, put $J_t=\int_0^t a\,db$.
+The exact lifted path from $(k,A_0,B_0)$ is
+
+$$
+(k+a_t,\ A_0+b_t/2,\
+ B_0+c(k)b_t-J_t/r).
+\tag{9.3}
+$$
+
+Its original whole-height guard remains $k+\min a>0$ and
+$k+\max a<H$. Requiring this path to remain in $I$ adds precisely
+$k+\min a>l$ and $k+\max a<u$. Neither endpoint membership nor taking a
+lift changes these extrema conditions. Formula (9.3) directly reuses
+[N, Theorems 9.2--9.3] and the full-path correspondence in
+[Native guarded lift limits and diffusion selection, §§2.2--2.4](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
+No new control, mean selector, phase reset or unrestricted rotation is
+included.
+
+**Definition 9.2 (one fixed free and attractive analytic realization).**
+Fix $\varepsilon>0$ and a lifted pole
+$o=(k_o,A_o,B_o)$. Let
+
+$$
+\begin{aligned}
+\widetilde T[f]&=\int_{\widetilde\Omega}
+  (\varepsilon^2|Pf|^2+|Qf|^2)\,d\widetilde\mu,\\
+\widetilde{\mathcal F}&=
+ \overline{C_c^\infty(\widetilde\Omega)}^{(\|\cdot\|_2^2+\widetilde T)^{1/2}},
+ \qquad \widetilde L=-(\varepsilon^2P^2+Q^2)_{F,\widetilde\Omega},\\
+\widetilde G_o(q)&=\int_0^\infty\widetilde p_t(o,q)\,dt,\qquad
+\widetilde V[f]=\int_{\widetilde\Omega}\widetilde G_o|f|^2\,d\widetilde\mu,
+ \qquad \widetilde q_g=\widetilde T-g\widetilde V .
+\end{aligned}
+\tag{9.4}
+$$
+
+The free operator is the operator represented by the closed free form:
+$f\in D(\widetilde L)$ exactly when $f\in\widetilde{\mathcal F}$ and
+$\widetilde T(f,v)=\langle F,v\rangle$ for some $F\in L^2$ and every
+$v\in\widetilde{\mathcal F}$, in which case $\widetilde Lf=F$.
+This specifies height Dirichlet killing and no phase boundary.
+The semigroup clock is $e^{-t\widetilde L}$, with control covariance
+$2\operatorname{diag}(\varepsilon^2,1)\,dt$. The field in (9.4) is the
+full unshifted Green field of this free operator, with unit source
+relative to $d\widetilde\mu$. No threshold shift is made in its definition.
+The closed horizontal form domain, rather than isotropic $H^1_0$, is used.
+
+## 10. Same-field noncompact Green stability and attained binding
+
+**Theorem 10.1 (native cover localization at every fixed positive
+covariance parameter).** In Definitions 9.1--9.2 let $C_H$ be the
+Lebesgue-normalized constant already supplied by (4.8), and set
+
+$$
+g_*=\frac{\varepsilon^2}{2rC_H},\qquad
+d=u-l,\qquad \lambda_D=\frac{\varepsilon^2\pi^2}{d^2}.
+\tag{10.1}
+$$
+
+The free form is closed and Markovian after closure, and
+$\widetilde T\ge\lambda_D\|\cdot\|_2^2$. Its killed heat law projects
+under $\varpi$ to precisely the periodic free law of Definition 4.1.
+For original phase representatives $q=(k,A,B)$,
+
+$$
+\begin{aligned}
+p_t^\Omega(\varpi o,\varpi q)
+ &=\sum_{(n,m)\in\mathbb Z^2}
+ \widetilde p_t(o,(k,A+2\pi n,B+2\pi m)),\\
+\Gamma_{\varepsilon,\varpi o}(\varpi q)
+ &=\sum_{(n,m)\in\mathbb Z^2}
+ \widetilde G_o(k,A+2\pi n,B+2\pi m).
+\end{aligned}
+\tag{10.2}
+$$
+
+The Green sum is interpreted as a nonnegative sum, including infinite
+values at projected poles. The cover field is positive, finite and smooth
+off $o$, integrable, bounded outside every relatively compact
+neighbourhood of $o$, and tends to zero uniformly in $k\in I$ as
+$|(A-A_o,B-B_o)|\to\infty$. It has unit source:
+
+$$
+\int_{\widetilde\Omega}\widetilde G_o\widetilde L\varphi\,
+ d\widetilde\mu=\varphi(o)\quad(\varphi\in C_c^\infty(\widetilde\Omega)).
+\tag{10.3}
+$$
+
+With $G_I$ exactly as in (6.1), its phase marginal and mass are
+
+$$
+\int_{\mathbb R^2}\widetilde G_o(k,A,B)\,dA\,dB
+ =\varepsilon^{-2}G_I(k_o,k),\qquad
+\int_{\widetilde\Omega}\widetilde G_o\,d\widetilde\mu
+ =\frac{(k_o-l)(u-k_o)}{2\varepsilon^2}.
+\tag{10.4}
+$$
+
+The marginal equality is an $L^1(I)$ identity with the nonnegative
+integral representative. For every $0<g<g_*$ the attractive form is closed
+on exactly $\widetilde{\mathcal F}$ and satisfies
+
+$$
+(1-g/g_*)\widetilde T[f]\le\widetilde q_g[f]\le\widetilde T[f].
+\tag{10.5}
+$$
+
+If $\widetilde H_g$ denotes its represented operator, then
+
+$$
+\begin{gathered}
+\inf\sigma_{\rm ess}(\widetilde L)
+ =\inf\sigma_{\rm ess}(\widetilde H_g)=\lambda_D,\\
+0<(1-g/g_*)\lambda_D\le
+E_g:=\inf_{\|f\|_2=1}\widetilde q_g[f]<\lambda_D.
+\end{gathered}
+\tag{10.6}
+$$
+
+There is a finite admissible test with Rayleigh quotient below
+$\lambda_D$. The bottom $E_g$ is attained by a normalized member of
+$D(\widetilde H_g)$ and is an isolated eigenvalue of finite multiplicity.
+Every normalized minimizing sequence has a subsequence converging in the
+free form norm. Thus the assertion includes absence of mass escape and
+concentration loss, while its absolute energy remains positive.
+
+Proof. Use (4.2) globally on the real cover:
+
+$$
+\xi=(k-k_o)/\varepsilon,\quad
+\eta=2(A-A_o),\quad
+\zeta=-r\{B-B_o-c(k_o)\eta\}/\varepsilon.
+\tag{10.7}
+$$
+
+This maps the cover onto the slab
+$D=((l-k_o)/\varepsilon,(u-k_o)/\varepsilon)\times\mathbb R^2$ in
+the group (4.5). Equations (4.3) hold globally:
+$\varepsilon P=U$, $Q=V$ and
+$d\widetilde\mu=j\,d\xi\,d\eta\,d\zeta$, $j=\varepsilon^2/(2r)$.
+The form is therefore exactly the constant-density Dirichlet restriction
+of $L_H$, with unchanged time, not a tangent approximation.
+Integration by parts proves closability as in Proposition 2.1; the
+contraction chain rule proves the Markov property. Height Poincaré on
+each real phase fiber proves the stated lower bound and passes to closure.
+
+The full-group heat and Green suppliers are [R, §2, (2.1), (2.6)--(2.7)].
+Killing that process on exit from $D$, and accounting for $j$, gives
+
+$$
+0\le\widetilde p_t(o,q)\le j^{-1}p_t^H(0,(\xi,\eta,\zeta)),
+\qquad
+0\le\widetilde G_o(q)\le j^{-1}G_H(\xi,\eta,\zeta).
+\tag{10.8}
+$$
+
+This is domination by earlier killing, with neither a reflection image
+formula nor any change to the attractive field. The bracket
+$[U,V]=\partial_\zeta$ and connected slab give interior hypoellipticity
+and strict heat positivity. In particular horizontal rectangles at
+interior heights generate central displacements, and height and $V$ legs
+connect all points without crossing a height face. Such finite paths can
+be traversed in any prescribed positive time. The usual positive
+Hörmander heat setting is [H, §3.1.2]; these fields are smooth, divergence
+free, bracket generating of step two, with zero drift and potential.
+
+Choose a proper continuous homogeneous norm $N$ on (4.5).
+The supplied smooth degree $-2$ kernel satisfies
+$G_H\le C_NN^{-2}$. For example one may use a constant multiple of
+$((\xi^2+\eta^2)^2+(2\zeta-\xi\eta)^2)^{1/4}$.
+As the two real phases diverge with $\xi$ in this bounded slab,
+$N\to\infty$ uniformly. Consequently (10.8) proves the claimed uniform
+tail bound and every global off-pole bound, including near the height
+faces. It also proves off-pole finiteness and local integrability at the
+pole; homogeneous dimension four makes $N^{-2}$ locally integrable.
+
+For the marginal and projection, the exact real process is
+
+$$
+dK_t=\sqrt2\varepsilon\,dW_t^1,\qquad
+dA_t=2^{-1/2}dW_t^2,\qquad
+dB_t=\sqrt2c(K_t)\,dW_t^2,
+\quad \tau=\inf\{t:K_t\notin I\}.
+\tag{10.9}
+$$
+
+The Brownian motions $W^1,W^2$ are independent. The Stratonovich and Itô formulas
+agree because $Qk=0$; the generator before killing is
+$\varepsilon^2P^2+Q^2$. Wrapping both real phases gives the same unique
+killed free diffusion as (6.4), including its lifetime. Integration of
+its real kernel over both phases is therefore the height Dirichlet heat
+kernel for $\varepsilon^2\partial_k^2$. Tonelli and the one-dimensional
+inverse computed in Proposition 6.1 prove (10.4), hence global
+integrability. Integration of
+$-\partial_t(e^{-t\widetilde L}\varphi)(o)$ proves (10.3): the initial
+value is $\varphi(o)$ and the terminal value is zero, since
+$\mathbb P_o(\tau>t)\to0$. Absolute interchange follows from (10.4) and
+bounded $\widetilde L\varphi$. Spatial hypoellipticity of (10.3) proves
+smoothness off $o$. Strict heat positivity proves $\widetilde G_o>0$.
+At $o$ the value is infinite: [H, Theorem 3.2] compares the slab and
+full-group kernels on an interior compact containing zero with error
+$O(t^N)$ for every $N$, whereas $p_t^H(0,0)=t^{-2}p_1^H(0,0)$.
+Both realizations here are selfadjoint contractions of the identical
+smooth expression and density, as required by that comparison theorem.
+
+Projection of (10.9) also proves the heat equality (10.2) as equality of
+densities. It holds pointwise for positive time: the full-group Schwartz
+heat bound in (10.8), also for general starting points, makes the lattice
+sum locally uniformly convergent; its continuous sum agrees with the
+periodic density almost everywhere and hence everywhere. Tonelli gives
+the Green equality. Ordinary continuous path lifting with fixed initial
+representatives, already used in the supplied full-path correspondence,
+is consistent with this law and with (9.3); it adds no Brownian history
+to the original numerical command class.
+
+For $f$ in the smooth compact core, zero extension of its image under
+(10.7) is a full-group test. Apply exactly (4.8), supplied by
+[R, Corollary 3.2], with $p=2$, $\alpha=1$, $Q_{\rm vol}=4$.
+The condition $0<1<4/2$ holds. Write $v$ for that zero extension.
+Keeping the factor $j$ gives
+
+$$
+\widetilde V[f]\le
+\int_{\mathbb R^3}G_H|v|^2\,d\xi\,d\eta\,d\zeta
+\le j^{-1}C_H\widetilde T[f]=g_*^{-1}\widetilde T[f].
+\tag{10.10}
+$$
+
+The Hardy estimate is unweighted; no horizontal-gradient factor is
+inserted. Apply (10.10) to differences of a free-core sequence. Its
+weighted $L^2$ limit agrees almost everywhere with its ordinary $L^2$
+limit, so every $f\in\widetilde{\mathcal F}$ has finite potential energy
+and (10.10) holds there. [T, Theorem 6.24 (KLMN)] now applies with relative
+bound $g/g_*<1$ and additive bound zero. It proves (10.5), closedness and
+equivalence of the attractive and free form norms on exactly the same
+domain. More explicitly,
+$f\in D(\widetilde H_g)$ exactly when $f\in\widetilde{\mathcal F}$ and
+$\widetilde q_g(f,v)=\langle F,v\rangle$ for some $F\in L^2$ and all
+$v\in\widetilde{\mathcal F}$, and then $\widetilde H_gf=F$.
+This is the operator domain used below; no point condition or different
+selfadjoint extension at the pole is imposed.
+
+We next verify the local compactness needed for the actual essential
+threshold. For any finite-measure set $E\subset\widetilde\Omega$ and
+$t>0$, symmetry, the semigroup identity and group domination give
+
+$$
+\|{\bf1}_E e^{-t\widetilde L}\|_{\rm HS}^2
+=\int_E\widetilde p_{2t}(q,q)\,d\widetilde\mu(q)
+\le j^{-1}p_{2t}^H(0,0)\,\widetilde\mu(E)<\infty.
+\tag{10.11}
+$$
+
+Thus the localized heat operator is compact. Apply
+[Lenz--Stollmann--Wingert, Theorem 1.3(iv)--(v)] to the nonnegative
+selfadjoint $\widetilde L$ and bounded multiplier $\mathbf1_E$.
+Restriction $\widetilde{\mathcal F}\to L^2(E)$ is compact. In particular
+this includes $E=I\times\{|s|\le R\}$, where
+$s=(A-A_o,B-B_o)$; the statement controls sequences
+approaching either height face as well as interior sequences.
+
+Choose smooth phase cutoffs $\chi_R,\vartheta_R$ with
+$\chi_R^2+\vartheta_R^2=1$, $\chi_R=1$ for $|s|\le R$,
+$\chi_R=0$ for $|s|\ge2R$, and horizontal squared derivative sum at most
+$C/R^2$. Such cutoffs are obtained as cosine and sine of a smooth radial
+transition; $P\chi_R=P\vartheta_R=0$ and $c(k)$ is bounded on $I$.
+Here $\widetilde G_o(k,s)$ abbreviates the field at $(k,A_o+s_1,B_o+s_2)$.
+Put $m_R=\sup_{k\in I,\ |s|\ge R}\widetilde G_o(k,s)$, so $m_R\to0$.
+The exact IMS identity (4.10), now with real phases and the same potential
+on both pieces, together with (10.5), yields
+
+$$
+\widetilde q_g[h]\ge
+(\lambda_D-gm_R)\|\vartheta_Rh\|_2^2
+-CR^{-2}\|h\|_2^2.
+\tag{10.12}
+$$
+
+The discarded interior form is nonnegative by (10.5), including its
+critical singularity. If $h_n$ is free-form bounded, weakly zero in $L^2$,
+and $\|h_n\|_2^2\to b$, (10.11) makes $\chi_Rh_n\to0$ strongly for fixed
+$R$. Taking the lower limit in (10.12), then $R\to\infty$, proves
+
+$$
+\liminf_n\widetilde q_g[h_n]\ge\lambda_Db.
+\tag{10.13}
+$$
+
+These arguments include $g=0$. If a spectral subspace below
+$\lambda_D-\delta$ were infinite dimensional, an orthonormal sequence
+in it would be free-form bounded by (10.5), weakly zero, and contradict
+(10.13). Hence every such spectral subspace is finite dimensional.
+
+For the opposite essential bound let
+$\phi(k)=\sqrt{2/d}\sin(\pi(k-l)/d)$ and take a real normalized
+$v\in C_c^\infty(\mathbb R^2)$. Products
+$f_R(k,s)=\phi(k)R^{-1}v(s/R)$ belong to
+$\widetilde{\mathcal F}$ by height and phase approximation, and satisfy
+
+$$
+\|f_R\|_2=1,\qquad
+\widetilde T[f_R]=\lambda_D+O(R^{-2}).
+\tag{10.14}
+$$
+
+Indeed the height contribution is exactly $\lambda_D$ and the remaining
+term is $\int_I\phi^2\int|(\tfrac12,c(k))\cdot\nabla(R^{-1}v(s/R))|^2$.
+Infinitely many disjoint phase translates of this fixed-size support
+have the same free energy. Their span has attractive Rayleigh quotient
+at most $\lambda_D+C/R^2$, since $\widetilde q_g\le\widetilde T$ and
+all cross forms between disjoint supports vanish. The form version of
+[T, Theorem 4.10] gives essential bottom at most this number. Letting
+$R\to\infty$, and combining with the preceding finite-dimensional
+spectral-subspace conclusion, proves both essential equalities in (10.6).
+This uses only local compactness, not compactness of the full critical
+Green multiplier or a Persson or extended-Kato premise.
+
+For a finite below-threshold witness fix $a>0$ and $R>a$. Let $v_R(s)$
+be one on $|s|\le a$, equal to $\log(R/|s|)/\log(R/a)$ for
+$a<|s|<R$, and zero outside. This compactly supported $H^1(\mathbb R^2)$
+function has $\int|\nabla v_R|^2=2\pi/\log(R/a)$. Put
+
+$$
+M=\int_I\phi(k)^2|(\tfrac12,c(k))|^2\,dk,\qquad
+W_a=\int_{I\times\{|s|\le a\}}\phi(k)^2\widetilde G_o\,d\widetilde\mu .
+\tag{10.15}
+$$
+
+Here $0<W_a<\infty$ by positivity and (10.4), and $M<\infty$.
+The same product approximation makes $F_R(k,s)=\phi(k)v_R(s)$
+admissible. It has finite nonzero norm, and (10.10) makes its potential
+finite. Directly in the original fields,
+
+$$
+\widetilde q_g[F_R]-\lambda_D\|F_R\|_2^2
+\le \frac{2\pi M}{\log(R/a)}-gW_a<0
+\quad\hbox{if }\log(R/a)>\frac{2\pi M}{gW_a}.
+\tag{10.16}
+$$
+
+Thus a finite $R$ suffices for each fixed $g>0$ in the strict form range.
+Core approximation and continuity in the equivalent form norm also give
+a smooth compactly supported witness with the same strict inequality.
+The logarithmic cutoff is the classical two-dimensional weak-binding
+mechanism, used here only after evaluating its energy and admissibility
+for the actual native fields and full $\widetilde G_o$.
+
+Finally let $f_n$ be any normalized minimizing sequence for $E_g$.
+The lower bound (10.5) gives free-form boundedness; extract a weak
+free-form limit $f$. For $h_n=f_n-f$, put $m=\|f\|_2^2\le1$.
+Weak convergence and continuity of the polarized forms give
+
+$$
+\|h_n\|_2^2\to1-m,\qquad
+\widetilde q_g[f_n]=\widetilde q_g[f]+\widetilde q_g[h_n]+o(1).
+\tag{10.17}
+$$
+
+By (10.13) and the definition of $E_g$,
+$E_g\ge E_gm+\lambda_D(1-m)$. Since (10.16) gives $E_g<\lambda_D$,
+necessarily $m=1$. Equation (10.17) then gives
+$\widetilde q_g[f]=E_g$ and $\widetilde q_g[h_n]\to0$; (10.5) implies
+strong convergence in the free form norm. Variation of this minimum
+gives $f\in D(\widetilde H_g)$ and $\widetilde H_gf=E_gf$.
+The finite-dimensional spectral-subspace conclusion makes this bottom
+isolated and of finite multiplicity. The remaining energy bounds are
+immediate from (10.5) and height Poincaré. $\square$
+
+## 11. Observation information, suppliers and limits of the increment
+
+**Proposition 11.1 (what the noncompact conclusion observes).** The
+covering law and localization of Theorem 10.1 retain the native
+current-observation distinction, and add no physical spatial directions
+or acquisition procedure.
+
+Proof. Every original present-ray observable pulls back to a
+$2\pi\mathbb Z^2$-invariant function. Distinct deck translates therefore
+give identical original current observations. A supplied entire continuous
+wrapped path and initial representatives determine its unique lift;
+for original numerical histories (9.3) computes that lift already.
+These assertions require path information, not just its terminal ray.
+Neither assertion provides an observer with freely acquired unwrapped
+phases. The analytic diffusion (10.9) remains additional stochastic
+structure, not an absolutely continuous native command.
+
+A nonzero periodic amplitude cannot belong to $L^2(\widetilde\Omega)$:
+its identical nonzero squared mass would repeat over infinitely many
+fundamental cells. The attained nonperiodic amplitude is consequently
+an analytic state on the added cover, not a prepared five-mode ray or an
+original current-ray observable. A single lifted source is also
+additional information: its positive field tends to zero at phase
+infinity and so is not deck invariant. Only the periodized sum (10.2)
+recovers the original torus source. In particular the single-source
+attractive operator does not descend as the original periodic attraction.
+The free law does descend, with exactly the same killing and clock.
+
+The strict range compares the attractive bottom with its own actual
+essential bottom, both for that single full field. It gives positive
+absolute energy and a strictly positive gap below $\lambda_D$, without
+a sharp coupling, gap asymptotic or estimate uniform as
+$\varepsilon\downarrow0$. The state dimension three, two primitive
+controls, two lifted phase directions, local homogeneous dimension four
+and physical axes remain different quantities. This conclusion supplies
+the specified noncompact analytic bridge to §§7.2--7.3; it selects no
+means or physical realization and completes no why-three claim.
+$\square$
+
+**Mathematical citation 11.2 (scope and exact supplier correspondence).**
+The native inputs [N, §§8--9],
+[Observation quotient, Definitions 1.1--1.3](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md),
+and the guarded-lift source cited in Definition 9.1 are used at immutable
+revision $\mathtt{8464cb20c1ef0954d4561a3d5c4855de289c0e5a}$.
+They supply the actual torus, arbitrary preparation, numerical histories,
+whole-height guards and distinction between current state and path.
+Definitions 4.1--4.2 supply the exact fields and normalization; Theorem
+5.1 supplies compact-domain stability, not the noncompact conclusion.
+
+| Primary supplier | Applied scope and remaining native work |
+| --- | --- |
+| [R] Ciatti--Cowling--Ricci, arXiv:1308.2373v1, §2 and Corollary 3.2 | The full-group unit-source heat integral and unweighted Hardy inequality are reused with $U,V$, Haar measure, $Q_{\rm vol}=4$, $p=2,\alpha=1$. The global slab map has density $j$, producing precisely $j^{-1}C_H=2rC_H/\varepsilon^2$. |
+| [H] Colin de Verdière--Hillairet--Trélat, DOI 10.5802/ahl.93, §3.1.2 and Theorem 3.2 | Smooth bracket-generating fields, zero drift and potential, identical local density and selfadjoint contraction realizations give the heat setting and local comparison. Domination, integrability and tails here also use the actual global slab and height law. |
+| [T] Teschl, 2009 edition, Theorems 6.24 and 4.10 | The verified relative form bound is $g/g_*<1$ with additive bound zero; KLMN preserves precisely $\widetilde{\mathcal F}$. Form min-max is used with the disjoint native product tests after the exterior lower bound is proved. |
+| Lenz--Stollmann--Wingert, *Compactness of Schrödinger semigroups*, [arXiv:0903.0280v2](https://arxiv.org/pdf/0903.0280v2), Theorem 1.3 | For bounded $\mathbf1_E$ and nonnegative selfadjoint $\widetilde L$, the verified localized Hilbert--Schmidt heat estimate gives compact restriction of the free form domain. It does not assert compactness of the full Green multiplier. |
+| Hoang--Hundertmark--Richter--Vugalter, *Quantitative bounds versus existence of weakly coupled bound states for Schrödinger type operators*, [arXiv:1610.09891v2](https://arxiv.org/pdf/1610.09891v2), Theorem 1.1 and Remarks 1.2 | These are established weak-binding context for scalar Fourier kinetic symbols, with relative form compactness among their hypotheses. Those hypotheses are not imported for the singular native multiplier. The actual height-mode trial and essential-threshold/no-escape estimates are (10.11)--(10.17). |
+
+These literature-attested intermediate facts are not separately proposed
+as new general theorems. The repo-derived application is their integrated
+same-source noncompact Green/domain/threshold/trial/no-escape
+correspondence. It neither substitutes a local singular model for the
+full field nor transfers compact-torus attainment. Bounded comparison
+with baseline D5, including private declarations, Blueprint, Library and
+mathlib revision $\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$
+did not identify this complete native contract; that comparison is not
+an absence proof or a literature-priority claim. All statements here are
+ordinary mathematics, without Lean or kernel certification.
+
+## 追加锚（本行以下为增补区）
+
+## 12. A fixed nearby source and its transverse current-ray task
+
+This section retains the native source [N] of Definition 1.1. Its question
+is the executed two-control cost of revealing one phase omitted by a
+specified observation. The inverse-gap lower mechanism is already
+[N, Theorem 3.11 and Proposition 10.2]; the quantitative addition is a
+matching full-circle construction with one common finite execution for
+variation, length and fixed-time energy. The Green classification in
+§§3--7 is a separate, already established result.
+
+**Definition 12.1 (immutable perturbation, actual periods and complete
+competitor class).** Fix
+
+$$
+0<Z<1,\qquad r=1-Z,\qquad H=r/2,\qquad
+I=(l,u),\quad 0<l<k_0<u<H,\qquad T>0,\quad 0<\chi<\pi.
+\tag{12.1}
+$$
+
+For each sufficiently small real $\kappa$, fix the original source means
+$X=Y=H+\kappa$. This parameter is immutable during a history. In the
+original mode order $(0,1,2,3,13)$ the probabilities are exactly
+
+$$
+p_\kappa(k)=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),
+\qquad
+J_\kappa=(\max(0,2\kappa),H+\kappa).
+\tag{12.2}
+$$
+
+For example, $|\kappa|<\min(l/4,(H-u)/2,H/4)$ ensures
+$[l,u]\subset J_\kappa$, admissible means and a common positive margin
+for all five probabilities. Impose the additional whole-path guard
+$k(t)=k_0+a(t)\in I$. Commands $a,b$ start at zero and are the original
+finite absolutely continuous or continuous finite piecewise $C^1$ real
+profiles on $[0,T]$. They obey, almost everywhere,
+
+$$
+dh_s=w_s(k)\,db,\qquad
+w_s(k)=\frac{d_s}{p_{\kappa,s}(k)\mathcal I_\kappa(k)},\qquad
+\mathcal I_\kappa(k)=\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}(k)^{-1},
+\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+\tag{12.3}
+$$
+
+Here $h_s(0)=0$ are actual increments relative to arbitrary fixed
+preparation phases. Representatives keep the negative convention
+$\psi_s=\sqrt{p_{\kappa,s}}e^{-i(\theta_s^{\rm in}+h_s)}$.
+The equalities $h_2=0$ and $h_1=h_3=:v$ constrain increments only.
+For $\kappa\ne0$, [N, Theorem 8.2] identifies the current leaf as
+$(k,[h_0],[h_{13}],[v])$, with independent actual $2\pi$ phase circles.
+Declare
+
+$$
+q=(k,[h_{13}],[v]),\qquad D=[h_0-h_{13}],\qquad
+\delta=h_0-h_{13}\in\mathbb R.
+\tag{12.4}
+$$
+
+The integer coordinate change
+$(h_0,h_{13},v)\mapsto(h_0-h_{13},h_{13},v)$ has determinant one.
+Thus $D$ has period $2\pi$, with no relation-angle doubling or finite
+quotient. The observation $q$ is declared for this task; it is not the
+complete native coherence readout. At $\kappa=0$, $\delta=0$ on every
+reachable history and $q$ parametrizes the three-coordinate current leaf.
+
+Let $\mathcal C_\kappa(T,\chi)$ contain **all** profiles just specified
+whose endpoints satisfy
+
+$$
+a(T)=0,\qquad
+h_{13}(T)=2\pi m,\qquad v(T)=2\pi n,\qquad
+\delta(T)=\chi+2\pi j,\qquad m,n,j\in\mathbb Z.
+\tag{12.5}
+$$
+
+There is no bound on winding or finite path complexity and no additional
+condition on $b(T)$. All infima below use this same complete class. Define
+actual executed costs
+
+$$
+\begin{aligned}
+\mathsf V(a,b)&=\operatorname{TV}(b)=\int_0^T|\dot b|\,dt,\\
+\mathsf L(a,b)&=\int_0^T\sqrt{\dot a^2+\dot b^2}\,dt,\\
+\mathsf E(a,b)&=\int_0^T(\dot a^2+\dot b^2)\,dt,
+\end{aligned}
+\qquad
+V_\kappa^\star=\inf_{\mathcal C_\kappa}\mathsf V,\quad
+L_\kappa^\star=\inf_{\mathcal C_\kappa}\mathsf L,\quad
+E_\kappa^\star=\inf_{\mathcal C_\kappa}\mathsf E.
+\tag{12.6}
+$$
+
+The identity energy is unhalved and may be infinite for an AC competitor.
+It is the declared mathematical command cost of [N, Definition 10.1],
+not a calibration of physical energy.
+
+**Calculation 12.2 (native coefficients and prefix charge).** Put
+$s_\kappa=H+\kappa$ and $\alpha_\kappa=\kappa s_\kappa/H$. Directly
+reducing the original information sum in (12.3) gives
+
+$$
+\begin{aligned}
+\mathcal I_\kappa(k)
+ &=\frac{2H(k-\alpha_\kappa)}{k(k-2\kappa)(s_\kappa-k)},\\
+A_\kappa(k):=w_{13}(k)
+ &=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-\alpha_\kappa)},\\
+B_\kappa(k):=w_1(k)=w_3(k)
+ &=-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},\\
+C_\kappa(k):=w_0(k)-w_{13}(k)
+ &=\kappa g_\kappa(k),\qquad
+ g_\kappa(k)=\frac{s_\kappa-k}{H(k-\alpha_\kappa)}.
+\end{aligned}
+\tag{12.7}
+$$
+
+These functions extend smoothly to $\kappa=0$ on a neighbourhood of
+$[l,u]$. In particular
+
+$$
+A_0(k)=\frac{H-k}{2H},\qquad B_0(k)=-\frac{k}{2H},\qquad
+ g_0(k)=\frac1k-\frac1H.
+\tag{12.8}
+$$
+
+For every sufficiently small $\kappa$ of either sign, $g_\kappa>0$ and
+
+$$
+g_\kappa'(k)=\frac{\alpha_\kappa-s_\kappa}
+ {H(k-\alpha_\kappa)^2}<0,\qquad
+M_\kappa:=\sup_{k\in I}g_\kappa(k)
+ =g_\kappa(l)=\frac{s_\kappa-l}{H(l-\alpha_\kappa)},\qquad
+M_0=\frac{H-l}{Hl}.
+\tag{12.9}
+$$
+
+The endpoint value at $l$ specifies a supremum; the height $l$ itself is
+not a legal control height. All these suprema are uniformly bounded for
+small $|\kappa|$ because the guard stays strictly inside the probability
+fiber.
+
+The source identity $d^{\mathsf T}w=1$ reads
+$C_\kappa+2A_\kappa-2B_\kappa=1$. Since all increments start at zero,
+every lawful prefix satisfies the real identity
+
+$$
+b(t)=\delta(t)+2h_{13}(t)-2v(t).
+\tag{12.10}
+$$
+
+Consequently (12.5) forces
+$b(T)=\chi+2\pi j+4\pi(m-n)$ and $[b(T)]=[\chi]$.
+These are closed-visible prefixes of [N, Definition 8.1], not base/phase
+loops with $[b(T)]=0$. Adding that loop condition would make this class
+empty. The pointwise reciprocal identity underlying [N, Theorem 3.11],
+$w_0-w_{13}=(X+Y-r)/(\mathcal I p_0p_{13})$, holds on these prefixes
+without any closing condition; (12.7) is its exact specialization with
+$X+Y-r=2\kappa$. Thus using it here does not import an unmet loop
+hypothesis.
+
+## 13. Sharp joint costs with all winding and travel charged
+
+**Theorem 13.1 (fixed-data transverse exposure envelope).** With all data
+in Definition 12.1 fixed, there exist $\kappa_*>0$ and a finite constant
+$K$, independent of the sign of $\kappa$, such that for
+$0<|\kappa|<\kappa_*$ the class $\mathcal C_\kappa(T,\chi)$ is nonempty.
+Set
+
+$$
+\mathcal B_\kappa=\frac{\chi}{|\kappa|M_\kappa},\qquad
+c=\frac{\chi}{M_0}=\frac{\chi Hl}{H-l}.
+\tag{13.1}
+$$
+
+The infima over the full class satisfy
+
+$$
+\mathcal B_\kappa\le V_\kappa^\star\le L_\kappa^\star
+ \le\mathcal B_\kappa+K,\qquad
+\frac{\mathcal B_\kappa^2}{T}\le E_\kappa^\star
+ \le\frac{(\mathcal B_\kappa+K)^2}{T}.
+\tag{13.2}
+$$
+
+One family of actual finite profiles in this same class provides every
+upper bound jointly, with $\operatorname{TV}(a)\le2(u-l)$. In particular,
+as $\kappa\to0$ through either sign,
+
+$$
+|\kappa|V_\kappa^\star\longrightarrow c,\qquad
+|\kappa|L_\kappa^\star\longrightarrow c,\qquad
+\kappa^2E_\kappa^\star\longrightarrow\frac{c^2}{T}.
+\tag{13.3}
+$$
+
+At $\kappa=0$ the prescribed nonzero-target class is empty. The family
+attains the circle targets exactly and saturates the three infima
+asymptotically. No assertion of a minimizing optimizer at fixed nonzero
+$\kappa$, or of an exact subleading correction to any infimum, is made.
+
+**Proof.** First let $(a,b)$ be any lawful competitor, with any integers
+in (12.5). Its real hidden lift obeys
+
+$$
+\chi\le|\chi+2\pi j|=|\delta(T)|
+ =\left|\kappa\int_0^T g_\kappa(k(t))\dot b(t)\,dt\right|
+ \le|\kappa|M_\kappa\mathsf V(a,b).
+\tag{13.4}
+$$
+
+The first inequality uses $0<\chi<\pi$, and hence covers every hidden
+winding. The last one holds for every guarded history, regardless of its
+visible windings, signs, reversals or complexity. The coefficients are
+bounded on the whole guard, so the weighted integrals are legitimate
+for the entire stated regularity class. Pointwise
+$|\dot b|\le\sqrt{\dot a^2+\dot b^2}$ and Cauchy--Schwarz give
+
+$$
+\mathsf V\le\mathsf L,\qquad \mathsf L^2\le T\mathsf E.
+\tag{13.5}
+$$
+
+The latter includes infinite energy. This proves all lower bounds in
+(13.2), using the existing inverse-gap and norm-comparison mechanism of
+[N, §§3.11,10.2], with the exact guarded coefficient $M_\kappa$.
+It does not restrict the class to zero real phase lifts.
+
+For the matching construction fix any three distinct heights
+$l<z_1<z_2<z_3<u$, independently of $\kappa$, and form the scaled moment
+matrix
+
+$$
+\mathsf R_\kappa=
+\begin{pmatrix}
+A_\kappa(z_1)&A_\kappa(z_2)&A_\kappa(z_3)\\
+B_\kappa(z_1)&B_\kappa(z_2)&B_\kappa(z_3)\\
+g_\kappa(z_1)&g_\kappa(z_2)&g_\kappa(z_3)
+\end{pmatrix}.
+\tag{13.6}
+$$
+
+At $\kappa=0$ its three row functions span $1,k,1/k$ by (12.8).
+A linear combination vanishing at $z_1,z_2,z_3$, multiplied by $k$,
+is a polynomial of degree at most two with three distinct roots. It is
+zero identically. Since $1,k,1/k$ are independent on $I$, the original
+combination is zero. Thus $\mathsf R_0$ is invertible. Continuity of
+its determinant and adjugate gives, after decreasing $\kappa_*$,
+
+$$
+\sup_{|\kappa|<\kappa_*}\|\mathsf R_\kappa^{-1}\|<\infty.
+\tag{13.7}
+$$
+
+This is a scaled correction matrix, not the four-height determinant of
+[N, Theorem 3.10], whose neither-wall assumption fails on $E_+$.
+
+Choose the legal principal-leg height and its real command increment as
+
+$$
+y_\kappa=l+\kappa^2,\qquad
+\beta_\kappa=\frac{\chi}{\kappa g_\kappa(y_\kappa)}.
+\tag{13.8}
+$$
+
+Shrink $\kappa_*$ further so that
+$l<y_\kappa<\min(k_0,z_1)$. For each fixed nonzero $\kappa$ this is a
+finite real increment, with its allowed negative sign when $\kappa<0$.
+A phase leg of increment $\beta_\kappa$ at this height produces hidden
+lift exactly $\chi$ and visible real increments
+$\beta_\kappa A_\kappa(y_\kappa)$ and
+$\beta_\kappa B_\kappa(y_\kappa)$.
+
+Choose integers $m_\kappa,n_\kappa$ nearest to these visible increments
+divided by $2\pi$, breaking a tie in either way. The wrapped residuals
+
+$$
+\begin{aligned}
+r_{1,\kappa}&=2\pi m_\kappa-
+ \beta_\kappa A_\kappa(y_\kappa),\\
+r_{2,\kappa}&=2\pi n_\kappa-
+ \beta_\kappa B_\kappa(y_\kappa)
+\end{aligned}
+\qquad\text{satisfy}\qquad |r_{1,\kappa}|,|r_{2,\kappa}|\le\pi.
+\tag{13.9}
+$$
+
+Solve the finite real system
+
+$$
+\begin{pmatrix}\gamma_{1,\kappa}\\\gamma_{2,\kappa}\\
+\gamma_{3,\kappa}\end{pmatrix}
+ =\mathsf R_\kappa^{-1}
+ \begin{pmatrix}r_{1,\kappa}\\r_{2,\kappa}\\0\end{pmatrix}.
+\tag{13.10}
+$$
+
+By (13.7) there is a constant $K_1$ such that
+$\sum_i|\gamma_{i,\kappa}|\le K_1$ for both small signs.
+Executing these three phase increments at the corresponding $z_i$
+corrects the visible lifts by exactly $(r_{1,\kappa},r_{2,\kappa})$.
+Its hidden increment is exactly
+$\kappa\sum_i g_\kappa(z_i)\gamma_{i,\kappa}=0$.
+The final hidden lift is therefore $\chi$, while both visible lifts
+are actual integer multiples of their original $2\pi$ periods.
+Large visible windings are used, rather than discarded. Rounding may be
+discontinuous as a function of the immutable parameter $\kappa$; no
+continuity in that parameter is required of a lawful individual history.
+
+Execute the following single control polygon, starting at $a=b=0$:
+move $k_0$ to $y_\kappa$ at fixed $b$; execute $\beta_\kappa$ there;
+move to $z_1$ and execute $\gamma_{1,\kappa}$; move to $z_2$ and execute
+$\gamma_{2,\kappa}$; move to $z_3$ and execute $\gamma_{3,\kappa}$;
+return to $k_0$ at fixed $b$. Every height move has $db=0$ and hence
+adds no phase; every phase move has constant height and the precise
+slope (12.3). Convexity of $I$ puts every connecting segment inside
+$I$. These are exactly the probability and phase legs of the native
+finite-realization supplier [N, Theorem 8.2], with arbitrary preparation
+phases restored by translation. No actuator, jump, reset or parameter
+motion is introduced. There are at most nine nonzero affine command
+legs. The endpoints satisfy (12.5) with $j=0$.
+
+Let $\mathsf V_\kappa^{\rm fam},\mathsf L_\kappa^{\rm fam},
+\mathsf E_\kappa^{\rm fam}$ denote this polygon's executed costs.
+Because every leg changes only one of $a,b$, literal accounting yields
+
+$$
+\begin{aligned}
+\mathsf V_\kappa^{\rm fam}
+ &=|\beta_\kappa|+\sum_{i=1}^3|\gamma_{i,\kappa}|,\\
+\operatorname{TV}(a_\kappa)
+ &=(k_0-y_\kappa)+(z_3-y_\kappa)+|z_3-k_0|\\
+ &=2\{\max(k_0,z_3)-y_\kappa\}<2(u-l),\\
+\mathsf L_\kappa^{\rm fam}
+ &=\mathsf V_\kappa^{\rm fam}+\operatorname{TV}(a_\kappa).
+\end{aligned}
+\tag{13.11}
+$$
+
+To execute this very polygon on the prescribed clock, discard only
+zero-increment legs. If its remaining leg lengths are $\ell_j>0$, assign
+leg $j$ the duration
+
+$$
+\tau_j=T\frac{\ell_j}{\mathsf L_\kappa^{\rm fam}}.
+\tag{13.12}
+$$
+
+All these durations are positive for each nonzero $\kappa$ and sum to
+exactly $T$. Traverse each leg affinely in its assigned time. This
+changes neither its transport integral nor its variation or length.
+The resulting commands are finite continuous piecewise affine numerical
+profiles, hence belong to the original regularity class. Each leg has
+speed $\mathsf L_\kappa^{\rm fam}/T$, and its unhalved energy is
+$\ell_j^2/\tau_j$. Consequently
+
+$$
+\mathsf E_\kappa^{\rm fam}
+ =\sum_j\frac{\ell_j^2}{\tau_j}
+ =\frac{(\mathsf L_\kappa^{\rm fam})^2}{T}.
+\tag{13.13}
+$$
+
+In particular all intermediate moves and their actual rates are charged.
+Their durations may tend to zero as $\kappa\to0$, but none is zero in
+any member of this family. There is no instantaneous-pulse execution
+and no extra time beyond $T$.
+
+Uniform smoothness and positivity of $g_\kappa$ near $l$ imply
+
+$$
+g_\kappa(y_\kappa)=M_\kappa+O(\kappa^2),\qquad
+|\beta_\kappa|=\frac{\chi}{|\kappa|M_\kappa}+O(|\kappa|).
+\tag{13.14}
+$$
+
+The constants depend only on the fixed data and chosen correction
+heights. Equations (13.7), (13.11) and (13.14) give
+$\mathsf V_\kappa^{\rm fam}\le\mathsf L_\kappa^{\rm fam}
+\le\mathcal B_\kappa+K$ with one fixed $K$.
+Equation (13.13) supplies the energy upper bound for the same family.
+This proves nonemptiness and (13.2). Since $M_\kappa\to M_0>0$,
+squeezing gives (13.3), for the family as well as for the three infima.
+At $\kappa=0$, (12.7) makes $\delta$ identically zero, proving emptiness
+there. Exact target attainment and asymptotic saturation have been
+proved; neither an infimum attained at fixed $\kappa$ nor an exact
+finite-$\kappa$ correction formula follows from this construction.
+$\square$
+
+## 14. Uniform finite resources, native visibility and exact factors
+
+**Proposition 14.1 (uniform hidden-phase suppression).** For every lawful
+history under the guard of Definition 12.1, without any endpoint
+condition, put
+$d_{\mathbb T}([x],0)=\inf_{j\in\mathbb Z}|x-2\pi j|$. Then
+
+$$
+\begin{aligned}
+\sup_{0\le t\le T}d_{\mathbb T}(D(t),0)
+ &\le\min\{\pi,|\kappa|M_\kappa\operatorname{TV}(b)\}\\
+ &\le\min\{\pi,|\kappa|M_\kappa\mathsf L\},\\
+\sup_{0\le t\le T}d_{\mathbb T}(D(t),0)
+ &\le\min\{\pi,|\kappa|M_\kappa\sqrt{T\mathsf E}\}.
+\end{aligned}
+\tag{14.1}
+$$
+
+Thus every fixed variation or length budget suppresses the hidden circle
+uniformly as $\kappa\to0$. More generally the same is true for variation
+or length $o(|\kappa|^{-1})$, and, at the fixed clock $T$, energy
+$o(\kappa^{-2})$. These statements are uniform over all guarded histories
+within the indicated resource envelope, not estimates with a separate
+history-dependent constant. Two same-preparation histories with the same
+retained observation and variation budgets at most $B$ have hidden
+circle separation at most
+$\min\{\pi,2|\kappa|M_\kappa B\}$.
+
+**Proof.** For every prefix, integrating (12.7) gives
+$|\delta(t)|\le|\kappa|M_\kappa\int_0^t|\dot b|$.
+Circle distance is at most both $\pi$ and the magnitude of any real lift.
+Taking the supremum and using (13.5) proves (14.1).
+The constants $M_\kappa$ are uniformly bounded by (12.9).
+The two-history assertion follows from the circle triangle inequality.
+This proof imposes no endpoint, winding or complexity restriction.
+For an arbitrary other finite duration $\tau$, the variation and length
+bounds are unchanged and the energy bound uses $\sqrt{\tau\mathsf E}$.
+A fixed energy budget alone, with no bounded duration, does not give the
+same suppression: stretching the target-attaining polygon to arbitrarily
+large duration decreases its energy while leaving its hidden endpoint
+unchanged. $\square$
+
+**Interpretation 14.2 (which task is approximated, and which escapes).**
+For a fixed source and preparation, the section $D=0$ assigns a current
+ray to each $q$: take $[h_0]=[h_{13}]$ and retain the other phases.
+It is an actual ray of the nearby leaf by [N, Theorem 8.2]; on the double
+wall it is the entire leaf. Compare a guarded history's ray with this
+section at its same $q$. In the common middle-fixed gauge their only
+different component is mode $0$, and their representative distance is
+
+$$
+2\sqrt{p_{\kappa,0}(k)}\left|\sin\frac{\delta}{2}\right|
+ \le\sqrt{p_{\kappa,0}(k)}\,d_{\mathbb T}(D,0).
+\tag{14.2}
+$$
+
+The uniform bound (14.1) therefore gives a precise finite-resolution
+meaning to this three-coordinate approximation. It does not assign a
+preparation cost to the section or identify it with a separately prepared
+$\kappa=0$ source. For two nearby-source rays with the same $q$, the
+corresponding bound uses their hidden circle separation. An ideal native
+coherence pair involving mode $0$ varies continuously with that same
+phase; the other coherence pairs are unchanged.
+
+Theorem 13.1 also specifies the escaped distinction. Compare its endpoint
+with the constant history in the same source and preparation. Their
+retained observations agree exactly, while only the mode-$0$ phase
+circle differs, by $\chi$. Since the positive middle component fixes the
+projective gauge, these are different original current rays.
+The unchanged doubled-coherence menu of [N, Theorem 8.4], specifically
+its $02$ block (8.8), distinguishes them by the Euclidean output distance
+
+$$
+\|y_{02}^{\rm fam}-y_{02}^{\rm const}\|
+ =4\sqrt{(k_0-2\kappa)Z}\sin(\chi/2)
+ \longrightarrow4\sqrt{k_0Z}\sin(\chi/2)>0.
+\tag{14.3}
+$$
+
+This holds for arbitrary fixed preparation phases with the original
+negative convention. It introduces no measurement or phase actuator.
+It concerns ideal expectations and supplies no exact finite-shot
+acquisition or discrimination guarantee. Exposing this fixed principal
+phase requires the inverse-gap variation/length and inverse-squared-gap
+fixed-time energy scales of Theorem 13.1; one common actual family
+suffices at those scales.
+
+For $q$-only future tasks, however, $q$ is an exact predictive factor at
+every fixed $\kappa$. Starting from height $k$ and applying any common
+lawful future command $(a_f,b_f)$, its update is precisely
+
+$$
+\begin{aligned}
+k_f(t)&=k+a_f(t),\\
+[h_{13,f}(t)]&=[h_{13}]+\left[\int_0^t
+ A_\kappa(k+a_f(s))\,db_f(s)\right],\\
+[v_f(t)]&=[v]+\left[\int_0^t
+ B_\kappa(k+a_f(s))\,db_f(s)\right].
+\end{aligned}
+\tag{14.4}
+$$
+
+Legality depends only on the height path. Thus equal $q$ gives equal
+$q$-responses and equal legal command domains, even when $D$ differs.
+The escape (14.3) refutes completeness for the full native readout,
+not closure for the declared $q$-only task. Likewise retaining the
+controller's circle $[b]$ changes the information comparison: (12.10)
+recovers
+
+$$
+D=[b]-2[h_{13}]+2[v].
+\tag{14.5}
+$$
+
+Discarding that record is part of the stated observation task. Neither
+its omission nor this reconstruction is a finite-memory-bit theorem or
+recovery of the producing control path.
+
+The finite-resource result gives an operational bridge between the
+exactly symmetric leaf and nearby-source descriptions at a specified
+resolution. It does not reduce the exact nearby current-ray dimension,
+or prove that exactly three coordinates are necessary at finite
+resolution. Its constants and limits fix $\chi,I,k_0,Z,T$; no uniform
+claim as $\chi\downarrow0$, as the guard meets a probability endpoint,
+or as the other fixed data vary is included. These are command budgets
+in an ideal mathematical source, not physical spatial axes, physical
+energy or a rule selecting the means.
+
+**Reuse 14.3 (the all-scale Green boundary).** For every nonzero
+$\kappa$ here, $X=Y$ but $X+Y\ne r$: this is exactly the single $E_+$
+wall. Definition 1.2 and [N, Theorem 10.3] already give current-ray
+dimension $4$, direct rank $2$, growth $(2,3,4)$ and $Q_{\rm vol}=7$.
+Theorem 3.1 already makes its point-Green quadratic energy unbounded
+below for every positive coupling, under the smooth positive
+common-operator hypotheses of Definition 1.3. At $\kappa=0$ the
+published strict stability regime is Theorem 5.1: the constant-density
+family $A_\varepsilon=\operatorname{diag}(\varepsilon^2,1)$ and
+$g=\gamma\varepsilon^2$, with
+$0<\gamma<(2rC_H)^{-1}$. Theorem 6.2 supplies its attained-negative
+subfamily. This is not a classification of all double-wall coefficients
+or couplings.
+
+These are reused all-scale results, not consequences newly proved by
+Theorem 13.1. A budget on executed two-control histories is not a spectral
+resource restriction on all analytic amplitudes in $L^2(\Omega,\mu)$.
+No map from those histories to a restricted analytic test domain has
+been supplied. In particular (14.1) neither rules out the concentrating
+tests in Theorem 3.1 nor repairs nearby all-scale Green stability.
+The operational robustness and exact all-scale nonrobustness have
+different quantified objects and coexist without a changed source,
+period, guard or analytic clock.
+
+## 15. Exact suppliers, quantitative increment and remaining endpoints
+
+**Mathematical citation 15.1 (native and library overlap).** The native
+sources below are used at the immutable published revision
+$\mathtt{bb47ab19d04f55319ce314609e191de72a191235}$. [N] is the source
+of Definition 1.1 and [L] denotes
+[Native guarded lift limits and diffusion selection](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
+The ordinary results in these volumes are mathematical premises, not
+physical certificates or claims of kernel verification for this appendix.
+
+| Supplier | Exact correspondence and retained boundary |
+| --- | --- |
+| [N, Definitions 3.1, 8.1 and 9.1; Theorems 3.2 and 8.2] | The same means, probabilities, two controls, full-path guard and arbitrary preparations give the actual prefix rays and independent $2\pi$ circles. Exact finite reachability supplies no uniform near-wall cost by itself. The present endpoint closes $q$, without imposing the base/phase-loop closing condition. |
+| [N, Theorems 3.10--3.11 and Proposition 10.2] | Reciprocal subtraction, circle-distance lower bounds, conditioning loss, and variation/length/energy comparisons are already supplied. The pointwise subtraction is verified for prefixes in Calculation 12.2. The four-height determinant is not applied on its excluded $E_+$ wall. |
+| [FiniteRectangleTransport](https://github.com/the-omega-institute/trureturing/blob/bb47ab19d04f55319ce314609e191de72a191235/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), `finite_rectangles_realize`, `weight_compatible`, and private `horizontal_leg`, `vertical_leg`, `polygon_admissible`, `rectangle_chain` bodies | Base $(X,Y,Z)$ and mode index $4=13$ reproduce (12.2)--(12.3), affine probability/phase legs and relation charge. The original unit-time rectangle realization, including negative increments, is reused as the leg model. It does not assert (13.3) or a fixed-$T$ optimum. No new Lean or duplicate realization theorem is supplied. |
+| [N, Theorem 8.4 and (8.8)] | The original doubled $02$ coherence pair gives (14.3), with positive $Z$, the same preparation, and no added readout or finite-shot claim. |
+| [L, Definition 2.1, Proposition 8.1 and Definition 11.2] | The same identity costs charge literal executed segments. For a full leg of increment $(\Delta a,\Delta b)$ and duration $\tau$, variation is $|\Delta b|$, length is $\sqrt{\Delta a^2+\Delta b^2}$ and unhalved energy is $(\Delta a^2+\Delta b^2)/\tau$. This supplies the accounting convention in (13.11)--(13.13), not the present torus-target optimization. |
+| Pinned Mathlib revision $\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$, [Bochner/Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/Bochner/Basic.lean) and [Integral/MeanInequalities](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/MeanInequalities.lean) | `norm_integral_le_integral_norm` and Hölder with exponents $2,2$ are the established integral inequalities used in (13.4)--(13.5). Their source availability is not a compiled application or a formal certificate for the ordinary proof. |
+| This volume, Definition 1.2, Theorems 3.1, 5.1 and 6.2, Proposition 7.2 and Definition 7.3 | The unchanged single-wall collapse and explicit double-wall stable family are exactly the facts reused in 14.3, with their actual operator conditions and unsettled thresholds. |
+
+**Mathematical citation 15.2 (primary literature and nontransfer).** The
+following directly available primary texts identify classical ingredients
+and hypotheses that cannot replace the native quantitative proof.
+
+| Primary reference | Supplied framework and exact limit of the correspondence |
+| --- | --- |
+| Y. de Castro and F. Gamboa, *Exact Reconstruction using Beurling Minimal Extrapolation*, [arXiv:1103.4951v2](https://arxiv.org/pdf/1103.4951v2), p.3, (GME) | Total-variation minimization of a signed measure under finitely many generalized moment constraints is classical. Here $\mu(E)=\int_{\{t:k(t)\in E\}}db(t)$ has $\|\mu\|_{\rm TV}\le\operatorname{TV}(b)$ and moments $(A_\kappa,B_\kappa,\kappa g_\kappa)$. Equality of this relaxed measure cost with executed fuel is not assumed: cancellations and height travel are separate, and (13.11)--(13.13) verify the actual finite witness. No reconstruction or measure-optimizer theorem is imported. |
+| F. Jean, *Control of Nonholonomic Systems and Sub-Riemannian Geometry*, [arXiv:1209.4387v2](https://arxiv.org/pdf/1209.4387v2), Theorem 2.2, p.12, and Theorem 3.5/Corollary 3.6, pp.29--30 | Chow reachability and privileged-coordinate Ball--Box estimates give fixed-structure accessibility and local distances. They do not provide a uniform sharp coefficient for a fixed transverse target as this source loses a reachable direction. Native finite synthesis is already supplied by [N]; (13.7) and the executed correction supply the missing uniform bound. |
+| G. Antonelli, E. Le Donne and S. Nicolussi Golo, *Lipschitz Carnot--Carathéodory structures and their limits*, [arXiv:2111.06789v1](https://arxiv.org/pdf/2111.06789v1), Definition 1.3 and Theorem 1.4, p.4 | Distance convergence requires an essentially nonholonomic limit structure. On the common four-coordinate ambient leaf the limit fields preserve $D$, so their flow endpoints lie in a codimension-one set and that hypothesis fails. Restricting instead to the three-coordinate limit leaf removes the prescribed transverse target. This theorem therefore supplies no shortcut to (13.3). |
+| P. Cannarsa, P. Martinez and J. Vancostenoble, *The cost of controlling strongly degenerate parabolic equations*, [arXiv:1801.01380v1](https://arxiv.org/pdf/1801.01380v1), abstract and §1.1 | Parameter-degenerate controllability costs can have exponential rates for parabolic boundary/distributed controls. Those PDE states, actuators, norms and null targets are not (12.2)--(12.6). The present inverse powers are derived from the native coefficients and cannot be presumed from degeneracy alone. |
+| R. Zeier and T. Schulte-Herbrüggen, *Symmetry Principles in Quantum Systems Theory*, [arXiv:1012.5256v3](https://arxiv.org/pdf/1012.5256v3), abstract and §§3,5 | Symmetry constrains Hamiltonian-system controllability. Hamiltonian operations in that framework are not the original probability-phase transport controls. No quantitative actuation-cost or symmetry-breaking theorem is transferred without that missing operation correspondence. |
+
+**Mathematical contribution 15.3 (the uncovered quantitative contract).**
+The matched native result is the bounded winding correction preserving
+an exact hidden lift, combined with an actual charged height tour and
+its fixed-clock execution, yielding the joint sharp limits (13.3).
+It is a repository-derived quantitative application. The inverse-gap
+floor, finite reachability, original observability, ordinary moment
+language and Green classification are reused and are not counted as
+new mathematics. Comparison with the cited public and private native
+bodies, their Blueprint applications, the pinned library sources and
+these primary control references supplies the overlap map above; it
+is not a semantic absence proof or a worldwide originality claim.
+
+The result closes the stated fixed-$\chi$, fixed-guard, fixed-clock
+asymptotic resource question for both signs, with no restriction of its
+full winding class. Existence of fixed-$\kappa$ minimizers, exact
+subleading or arithmetic corrections, joint limits with vanishing
+$\chi$ or changing guard, acquisition costs, physical calibration and a
+map to an analytic spectral resource restriction remain outside the
+proved endpoint. No claim of independent priors or model diversity
+underwrites the proof. The assertions in §§12--15 are ordinary proofs;
+no Lean/kernel status is claimed.
+
+## 追加锚（本行以下为增补区）

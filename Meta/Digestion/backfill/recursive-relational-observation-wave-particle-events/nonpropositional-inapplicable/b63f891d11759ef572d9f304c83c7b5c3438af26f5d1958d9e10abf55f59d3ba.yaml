@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b63f891d11759ef572d9f304c83c7b5c3438af26f5d1958d9e10abf55f59d3ba
+  normalized_sha256: sha256:b63f891d11759ef572d9f304c83c7b5c3438af26f5d1958d9e10abf55f59d3ba
+cas_ref: sha256:b63f891d11759ef572d9f304c83c7b5c3438af26f5d1958d9e10abf55f59d3ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 206. AHH：选择感知的全息边界 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: d6da75837dd5f497e12c55f1105f1f9b6ccd51da1556953718f172fcd77d6fb4
+    next_atom_id: 100283ad900eaa465ad70652112fc0c6d64d6bced117b2764ea1c47fa09482d8
