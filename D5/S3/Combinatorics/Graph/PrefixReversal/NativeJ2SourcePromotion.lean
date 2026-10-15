@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Earn literal old P joint prefixes and exact remaining inventories from the same saved supplier. -/
+   digest: Earn old P joint prefixes and exact inventories from the same saved supplier. -/
 /- Candidate source-promotion companion. This file has not yet been
    kernel checked and is not part of the narrow parent delivery.
    The goal is to derive the original P opening inventories from one
@@ -18,12 +18,16 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeContactIteration
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
@@ -32,7 +36,6 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2JointPaths
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
-open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
@@ -42,7 +45,7 @@ open private linked_of_getElem finish_eq_last from
   D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
 open private pChildIndex outer_base_bound old_base_bound from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
-open private j2_frame_special_domain from
+open private j2_frame_special_domain j2SpecialMap from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
 open private map_filtered_complement from
   D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
@@ -132,9 +135,9 @@ theorem native_j2_original_p_opening_inventory {m : ℕ} (hm : 5 ≤ m)
   have hs : q.support.Perm W.oldP.cycle.walk.support.tail := by
     apply List.perm_iff_count.mpr
     intro x
-    rw [(W.paths j).hamiltonian x]
-    exact (SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp
-      W.oldP.cycle.hamiltonian).2 x |>.symm
+    exact ((W.paths j).hamiltonian x).trans
+      ((SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp
+        W.oldP.cycle.hamiltonian).2 x).symm
   have he : q.edges.Perm (W.oldP.cycle.walk.edges.filter fun f => decide (f ≠ e)) := by
     apply (List.perm_ext_iff_of_nodup
       (W.paths j).hamiltonian.isPath.isTrail.edges_nodup
@@ -146,12 +149,12 @@ theorem native_j2_original_p_opening_inventory {m : ℕ} (hm : 5 ≤ m)
       W.P.seed.walk.support.map Subtype.val := by
     have h := congrArg (fun z => z.support.map Subtype.val) W.oldP.mappedWalk
     simpa only [SimpleGraph.Walk.support_copy, SimpleGraph.Walk.support_map,
-      List.map_map, Function.comp_def] using h
+      List.map_map, Function.comp_def, pMarkedChildMap, j2SpecialMap] using h
   have hrawEdges : W.oldP.cycle.walk.edges.map (Sym2.map Subtype.val) =
       W.P.seed.walk.edges.map (Sym2.map Subtype.val) := by
     have h := congrArg (fun z => z.edges.map (Sym2.map Subtype.val)) W.oldP.mappedWalk
     simpa only [SimpleGraph.Walk.edges_copy, SimpleGraph.Walk.edges_map,
-      List.map_map, Function.comp_def, Sym2.map_map] using h
+      List.map_map, Function.comp_def, Sym2.map_map, pMarkedChildMap, j2SpecialMap] using h
   have htail : W.oldP.cycle.walk.support.tail.map Subtype.val =
       W.P.seed.walk.support.tail.map Subtype.val := by
     simpa only [List.map_tail] using congrArg List.tail hrawSupport
@@ -246,8 +249,8 @@ theorem native_j2_original_p_joint_split {m : ℕ} (hm : 5 ≤ m)
       [W.P.seed.joint 0, W.P.seed.joint 1, W.P.seed.joint 2,
         W.P.seed.joint 3, W.P.seed.joint 4, W.P.seed.joint 5]
     exact List.Perm.swap _ _ _
-  have hps := hp.flatMap (fun p => p.walk.support)
-  have hpe := hp.flatMap (fun p => p.walk.edges)
+  have hps := hp.flatMap_right (fun p => p.walk.support)
+  have hpe := hp.flatMap_right (fun p => p.walk.edges)
   have hn : (d.support ++ rest.flatMap fun p => p.walk.support).Nodup := by
     exact hps.nodup_iff.mpr
       (W.P.seed.partitions.joint_partition.support.nodup_iff.mpr
@@ -357,7 +360,9 @@ private theorem same_parent_chain {m : ℕ} (hm : 5 ≤ m)
   have hlen : 3 ≤ O.base.length := outer_base_bound F A u hbase hA
   have hlist : p :: ps = List.ofFn W.pieces := by
     apply List.ext_getElem
-    · simp only [ps, List.length_cons, List.length_ofFn]; omega
+    · simp only [ps, List.length_cons, List.length_ofFn]
+      change O.base.length - 1 + 1 = O.base.length
+      omega
     · intro i hi hj
       cases i with
       | zero => simp only [p, List.getElem_cons_zero, List.getElem_ofFn]
@@ -374,12 +379,13 @@ private theorem same_parent_chain {m : ℕ} (hm : 5 ≤ m)
     apply Subtype.ext
     rw [W.baseCoordinate]
     symm
-    simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl] using
+    simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl, ite_true] using
       hstart ⟨0, by omega⟩
   have hlinked : Linked p ps := by
     apply linked_of_getElem
     intro i hi
     simp only [hlist, List.length_ofFn] at hi
+    change i + 1 < O.base.length at hi
     simp only [hlist, List.getElem_ofFn]
     change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
       (W.pieces ⟨i, by omega⟩).finish.val (W.pieces ⟨i + 1, hi⟩).start.val
@@ -393,15 +399,16 @@ private theorem same_parent_chain {m : ℕ} (hm : 5 ≤ m)
     simp only [O, outerFrame, List.length_append, List.length_singleton, pChildIndex]
     omega
   have hlast : finish p ps = (W.pieces (pChildIndex F A u hbase)).finish := by
-    have h := finish_eq_last p ps
-    simpa only [hlist, List.getLast_ofFn, hlastIndex] using h
+    rw [finish_eq_last, hlist, List.getLast_ofFn]
+    congr 1
+    exact hlastIndex
   refine ⟨hb, hlinked, hlast, ?_⟩
   rw [hb]
   change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
     (W.pieces (pChildIndex F A u hbase)).finish.val p.start.val
   rw [hfinish]
   have hpstart : p.start.val = rightPort O 0 := by
-    simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl] using
+    simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl, ite_true] using
       hstart ⟨0, by omega⟩
   rw [hpstart]
   have hp := O.prefix_length
