@@ -8,7 +8,7 @@
    digest: The unchanged all-mode source has a fixed-window signed derivative
      margin and an arbitrary-multiplicity retained-disk polynomial count. -/
 
-import D5.S3.Zeros.Jensen.JensenAnalyticCoefficientRemainder
+import D5.S3.Zeros.Jensen.JensenHermiteScaling
 import D5.S3.Zeros.Jensen.JensenDiskMultiplicityComparison
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Polynomial.Derivative
@@ -94,9 +94,6 @@ def sourcePolynomial (n : ℕ) : ℂ[X] :=
 
 def reflectedNode (n : ℕ) (t : ℝ) : ℝ :=
   (n : ℝ) / ((n + 1 : ℕ) : ℝ) / t
-
-def IsExactRealOrder (F : ℂ → ℂ) (c : ℝ) (m : ℕ) : Prop :=
-  iteratedDeriv m F c ≠ 0 ∧ ∀ k < m, iteratedDeriv k F c = 0
 
 def IsolatingDisk (F : ℂ → ℂ) (c : ℝ) (delta : ℝ) : Prop :=
   0 < delta ∧
@@ -382,15 +379,6 @@ private theorem signed_product_of_M_margin (n : ℕ) (hn : 1 ≤ n) (t : ℝ)
     exact sub_nonneg.mp (nonneg_of_mul_nonneg_left hscaled hden)
   · positivity
 
-/-- Function estimate, separately quantified over every order v, including zero.
-Its sourceH instance controls M; it makes no assertion that an actual node exists. -/
-def ScaledFunctionEstimate (F : ℂ → ℂ) (a : ℕ → ℂ) (t0 sigma : ℝ) (v : ℕ) : Prop :=
-  ∀ q : ℝ, 2 ≤ q → ∃ C : ℝ, 0 < C ∧ ∃ N : ℕ, ∀ n ≥ N, 1 ≤ n ∧
-    ∀ u : ℂ, ‖u‖ ≤ q →
-      ‖(coefficientPolynomial a n).eval ((t0 : ℂ) * (1 + u / (Real.sqrt n : ℂ))) /
-          (((t0 : ℂ) ^ v * iteratedDeriv v F t0 / (v.factorial : ℂ)) /
-            (Real.sqrt n : ℂ) ^ v) - aeval u (Polynomial.hermite v)‖ ≤ C / Real.sqrt n
-
 private theorem source_operator_error (n K b : ℕ) (hn : 1 ≤ n) (R : ℝ) (hR : 1 ≤ R)
     (z : ℂ) (hz : ‖z‖ ≤ R) :
     ‖iteratedDeriv b (fun w => (sourcePolynomial n).eval w -
@@ -401,62 +389,26 @@ private theorem source_operator_error (n K b : ℕ) (hn : 1 ≤ n) (R : ℝ) (hR
     analytic_coefficient_operator_error sourceA sourceF source_coefficients.2.2.2
       source_weighted_summable n K b hn R hR z hz
 
+private theorem sourceH_coefficients :
+    (∀ z, HasSum (fun j => sourceHA j * z ^ j) (sourceH z)) ∧
+    (∀ L R, 0 ≤ R → Summable (fun j => ‖sourceHA j‖ * (j : ℝ) ^ L * R ^ j)) := by
+  constructor
+  · intro z
+    simpa only [sourceHA, sourceH, loweredCoefficients] using
+      lowered_series sourceA sourceF source_coefficients.2.2.2 source_weighted_summable z
+  · intro L R hR
+    simpa only [sourceHA, loweredCoefficients] using
+      (lowered_weighted_data sourceA source_weighted_summable L R hR).1
+
 private theorem source_scaled_estimates (t0 sigma : ℝ) (ht0 : 0 < t0)
     (hs : 0 < sigma) (v : ℕ) :
     (IsExactRealOrder sourceF t0 v → ScaledFunctionEstimate sourceF sourceA t0 sigma v) ∧
     (IsExactRealOrder sourceH t0 v → ScaledFunctionEstimate sourceH sourceHA t0 sigma v) := by
-  have hsa := source_coefficients
-  have hweighted := source_weighted_summable
-  have hresidual := source_operator_error
-  have hidentity := elementary_falling_factorial
-  have htop := correctionCoeff_top
-  let K : ℕ := v / 2
-  let Rloc : ℝ := max 1 (t0 + sigma)
-  have hRloc : 1 ≤ Rloc := le_max_left _ _
-  -- For F=sourceF, source_operator_error supplies the actual remainder.
-  -- For F=sourceH the exact
-  -- coefficient is sourceHA; h^(r)=-4*z*f^(r+2)-(4*r+2)*f^(r+1).
-  -- REMAINING L2: real-parameter complex Taylor for k≤v, with integral
-  -- remainder B*|y|^(v-k+1)/(v-k+1)!, y=t0*u/sqrt(n).
-  -- REMAINING L3: sum the finite pairs (r,k), r≤K, k≤2*r. Their exponents
-  -- are 2*r-k; the top term uses htop and the Hermite explicit coefficient.
-  -- The remainder exponent 2*K+2-v is positive for both parities of v.
   constructor
-  · intro horder q hq
-    let B := weightedNorm sourceA (v + 1) Rloc
-    let cv := (t0 : ℂ) ^ v * iteratedDeriv v sourceF t0 / (v.factorial : ℂ)
-    let C : ℝ := 1 + 2 * weightedNorm sourceA (2 * K + 2) Rloc / ‖cv‖ +
-      ∑ r ∈ Finset.range (K + 1), ∑ k ∈ Finset.range (2 * r + 1),
-        correctionCoeff r k * (v.factorial : ℝ) * (3 / 2 : ℝ) ^ k *
-          (q ^ (v - k) * (1 + (k : ℝ) * q) +
-            B * t0 ^ (v + 1) * q ^ (v - k + 1) / ‖cv‖) /
-              ((v - k).factorial : ℝ)
-    have hB : 0 ≤ B := tsum_nonneg (fun j => by positivity)
-    have hcv : cv ≠ 0 := div_ne_zero
-      (mul_ne_zero (pow_ne_zero _ (Complex.ofReal_ne_zero.mpr ht0.ne')) horder.1)
-      (by exact_mod_cast Nat.factorial_ne_zero v)
-    have hC : 0 < C := by
-      have hsum : 0 ≤ ∑ r ∈ Finset.range (K + 1), ∑ k ∈ Finset.range (2 * r + 1),
-          correctionCoeff r k * (v.factorial : ℝ) * (3 / 2 : ℝ) ^ k *
-            (q ^ (v - k) * (1 + (k : ℝ) * q) +
-              B * t0 ^ (v + 1) * q ^ (v - k + 1) / ‖cv‖) /
-                ((v - k).factorial : ℝ) := by
-        apply Finset.sum_nonneg
-        intro r hr
-        apply Finset.sum_nonneg
-        intro k hk
-        have hck := correctionCoeff_nonneg r k
-        have hq0 : 0 ≤ q := (by norm_num : (0 : ℝ) ≤ 2).trans hq
-        positivity
-      dsimp [C]
-      positivity
-    -- REMAINING L2/L3: prove the normalized estimate using this finite C,
-    -- then choose N from the local segment and inverse-square-root constraints.
-    done
-  · intro horder q hq
-    -- The same finite construction is required for sourceHA with its own
-    -- derived weighted norms; it is used at v=m-2 (m≥2) and v=0 when m=1.
-    done
+  · exact hermite_scaled_estimate sourceA sourceF source_coefficients.2.2.2
+      source_weighted_summable t0 sigma ht0 hs v
+  · exact hermite_scaled_estimate sourceHA sourceH sourceH_coefficients.1
+      sourceH_coefficients.2 t0 sigma ht0 hs v
 
 private theorem sourceH_iterated (r : ℕ) (z : ℂ) :
     iteratedDeriv r sourceH z = -4 * z * iteratedDeriv (r + 2) sourceF z -
