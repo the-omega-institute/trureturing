@@ -3,6 +3,7 @@ bibkey: blancagalvinrandalltetali2012slowmixing
 authors: Antonio Blanca; David Galvin; Dana Randall; Prasad Tetali
 year: 2012
 title: Phase Coexistence and Slow Mixing for the Hard-Core Model on Z^2
+doi: null
 url: https://arxiv.org/abs/1211.6182v1
 claim: Cut conductance bounds the gap of hard-core Metropolis dynamics; the method transfers only after recomputing the flux for the actual carrier and transition rates.
 strata_touched: []

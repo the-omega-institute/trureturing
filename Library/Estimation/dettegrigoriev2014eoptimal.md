@@ -3,6 +3,7 @@ bibkey: dettegrigoriev2014eoptimal
 authors: Holger Dette; Yuri Grigoriev
 year: 2014
 title: E-optimal designs for second order response surface models
+doi: null
 url: https://arxiv.org/abs/1403.3805v1
 claim: E-optimality admits a positive semidefinite trace-one certificate supported on the minimum eigenspace, with equal sensitivity at supported design points.
 strata_touched: []
