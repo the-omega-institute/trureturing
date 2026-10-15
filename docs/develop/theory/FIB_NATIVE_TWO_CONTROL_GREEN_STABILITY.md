@@ -1417,3 +1417,1197 @@ an absence proof or a literature-priority claim. All statements here are
 ordinary mathematics, without Lean or kernel certification.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. A fixed nearby source and its transverse current-ray task
+
+This section retains the native source [N] of Definition 1.1. Its question
+is the executed two-control cost of revealing one phase omitted by a
+specified observation. The inverse-gap lower mechanism is already
+[N, Theorem 3.11 and Proposition 10.2]; the quantitative addition is a
+matching full-circle construction with one common finite execution for
+variation, length and fixed-time energy. The Green classification in
+§§3--7 is a separate, already established result.
+
+**Definition 12.1 (immutable perturbation, actual periods and complete
+competitor class).** Fix
+
+$$
+0<Z<1,\qquad r=1-Z,\qquad H=r/2,\qquad
+I=(l,u),\quad 0<l<k_0<u<H,\qquad T>0,\quad 0<\chi<\pi.
+\tag{12.1}
+$$
+
+For each sufficiently small real $\kappa$, fix the original source means
+$X=Y=H+\kappa$. This parameter is immutable during a history. In the
+original mode order $(0,1,2,3,13)$ the probabilities are exactly
+
+$$
+p_\kappa(k)=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),
+\qquad
+J_\kappa=(\max(0,2\kappa),H+\kappa).
+\tag{12.2}
+$$
+
+For example, $|\kappa|<\min(l/4,(H-u)/2,H/4)$ ensures
+$[l,u]\subset J_\kappa$, admissible means and a common positive margin
+for all five probabilities. Impose the additional whole-path guard
+$k(t)=k_0+a(t)\in I$. Commands $a,b$ start at zero and are the original
+finite absolutely continuous or continuous finite piecewise $C^1$ real
+profiles on $[0,T]$. They obey, almost everywhere,
+
+$$
+dh_s=w_s(k)\,db,\qquad
+w_s(k)=\frac{d_s}{p_{\kappa,s}(k)\mathcal I_\kappa(k)},\qquad
+\mathcal I_\kappa(k)=\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}(k)^{-1},
+\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+\tag{12.3}
+$$
+
+Here $h_s(0)=0$ are actual increments relative to arbitrary fixed
+preparation phases. Representatives keep the negative convention
+$\psi_s=\sqrt{p_{\kappa,s}}e^{-i(\theta_s^{\rm in}+h_s)}$.
+The equalities $h_2=0$ and $h_1=h_3=:v$ constrain increments only.
+For $\kappa\ne0$, [N, Theorem 8.2] identifies the current leaf as
+$(k,[h_0],[h_{13}],[v])$, with independent actual $2\pi$ phase circles.
+Declare
+
+$$
+q=(k,[h_{13}],[v]),\qquad D=[h_0-h_{13}],\qquad
+\delta=h_0-h_{13}\in\mathbb R.
+\tag{12.4}
+$$
+
+The integer coordinate change
+$(h_0,h_{13},v)\mapsto(h_0-h_{13},h_{13},v)$ has determinant one.
+Thus $D$ has period $2\pi$, with no relation-angle doubling or finite
+quotient. The observation $q$ is declared for this task; it is not the
+complete native coherence readout. At $\kappa=0$, $\delta=0$ on every
+reachable history and $q$ parametrizes the three-coordinate current leaf.
+
+Let $\mathcal C_\kappa(T,\chi)$ contain **all** profiles just specified
+whose endpoints satisfy
+
+$$
+a(T)=0,\qquad
+h_{13}(T)=2\pi m,\qquad v(T)=2\pi n,\qquad
+\delta(T)=\chi+2\pi j,\qquad m,n,j\in\mathbb Z.
+\tag{12.5}
+$$
+
+There is no bound on winding or finite path complexity and no additional
+condition on $b(T)$. All infima below use this same complete class. Define
+actual executed costs
+
+$$
+\begin{aligned}
+\mathsf V(a,b)&=\operatorname{TV}(b)=\int_0^T|\dot b|\,dt,\\
+\mathsf L(a,b)&=\int_0^T\sqrt{\dot a^2+\dot b^2}\,dt,\\
+\mathsf E(a,b)&=\int_0^T(\dot a^2+\dot b^2)\,dt,
+\end{aligned}
+\qquad
+V_\kappa^\star=\inf_{\mathcal C_\kappa}\mathsf V,\quad
+L_\kappa^\star=\inf_{\mathcal C_\kappa}\mathsf L,\quad
+E_\kappa^\star=\inf_{\mathcal C_\kappa}\mathsf E.
+\tag{12.6}
+$$
+
+The identity energy is unhalved and may be infinite for an AC competitor.
+It is the declared mathematical command cost of [N, Definition 10.1],
+not a calibration of physical energy.
+
+**Calculation 12.2 (native coefficients and prefix charge).** Put
+$s_\kappa=H+\kappa$ and $\alpha_\kappa=\kappa s_\kappa/H$. Directly
+reducing the original information sum in (12.3) gives
+
+$$
+\begin{aligned}
+\mathcal I_\kappa(k)
+ &=\frac{2H(k-\alpha_\kappa)}{k(k-2\kappa)(s_\kappa-k)},\\
+A_\kappa(k):=w_{13}(k)
+ &=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-\alpha_\kappa)},\\
+B_\kappa(k):=w_1(k)=w_3(k)
+ &=-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},\\
+C_\kappa(k):=w_0(k)-w_{13}(k)
+ &=\kappa g_\kappa(k),\qquad
+ g_\kappa(k)=\frac{s_\kappa-k}{H(k-\alpha_\kappa)}.
+\end{aligned}
+\tag{12.7}
+$$
+
+These functions extend smoothly to $\kappa=0$ on a neighbourhood of
+$[l,u]$. In particular
+
+$$
+A_0(k)=\frac{H-k}{2H},\qquad B_0(k)=-\frac{k}{2H},\qquad
+ g_0(k)=\frac1k-\frac1H.
+\tag{12.8}
+$$
+
+For every sufficiently small $\kappa$ of either sign, $g_\kappa>0$ and
+
+$$
+g_\kappa'(k)=\frac{\alpha_\kappa-s_\kappa}
+ {H(k-\alpha_\kappa)^2}<0,\qquad
+M_\kappa:=\sup_{k\in I}g_\kappa(k)
+ =g_\kappa(l)=\frac{s_\kappa-l}{H(l-\alpha_\kappa)},\qquad
+M_0=\frac{H-l}{Hl}.
+\tag{12.9}
+$$
+
+The endpoint value at $l$ specifies a supremum; the height $l$ itself is
+not a legal control height. All these suprema are uniformly bounded for
+small $|\kappa|$ because the guard stays strictly inside the probability
+fiber.
+
+The source identity $d^{\mathsf T}w=1$ reads
+$C_\kappa+2A_\kappa-2B_\kappa=1$. Since all increments start at zero,
+every lawful prefix satisfies the real identity
+
+$$
+b(t)=\delta(t)+2h_{13}(t)-2v(t).
+\tag{12.10}
+$$
+
+Consequently (12.5) forces
+$b(T)=\chi+2\pi j+4\pi(m-n)$ and $[b(T)]=[\chi]$.
+These are closed-visible prefixes of [N, Definition 8.1], not base/phase
+loops with $[b(T)]=0$. Adding that loop condition would make this class
+empty. The pointwise reciprocal identity underlying [N, Theorem 3.11],
+$w_0-w_{13}=(X+Y-r)/(\mathcal I p_0p_{13})$, holds on these prefixes
+without any closing condition; (12.7) is its exact specialization with
+$X+Y-r=2\kappa$. Thus using it here does not import an unmet loop
+hypothesis.
+
+## 13. Sharp joint costs with all winding and travel charged
+
+**Theorem 13.1 (fixed-data transverse exposure envelope).** With all data
+in Definition 12.1 fixed, there exist $\kappa_*>0$ and a finite constant
+$K$, independent of the sign of $\kappa$, such that for
+$0<|\kappa|<\kappa_*$ the class $\mathcal C_\kappa(T,\chi)$ is nonempty.
+Set
+
+$$
+\mathcal B_\kappa=\frac{\chi}{|\kappa|M_\kappa},\qquad
+c=\frac{\chi}{M_0}=\frac{\chi Hl}{H-l}.
+\tag{13.1}
+$$
+
+The infima over the full class satisfy
+
+$$
+\mathcal B_\kappa\le V_\kappa^\star\le L_\kappa^\star
+ \le\mathcal B_\kappa+K,\qquad
+\frac{\mathcal B_\kappa^2}{T}\le E_\kappa^\star
+ \le\frac{(\mathcal B_\kappa+K)^2}{T}.
+\tag{13.2}
+$$
+
+One family of actual finite profiles in this same class provides every
+upper bound jointly, with $\operatorname{TV}(a)\le2(u-l)$. In particular,
+as $\kappa\to0$ through either sign,
+
+$$
+|\kappa|V_\kappa^\star\longrightarrow c,\qquad
+|\kappa|L_\kappa^\star\longrightarrow c,\qquad
+\kappa^2E_\kappa^\star\longrightarrow\frac{c^2}{T}.
+\tag{13.3}
+$$
+
+At $\kappa=0$ the prescribed nonzero-target class is empty. The family
+attains the circle targets exactly and saturates the three infima
+asymptotically. No assertion of a minimizing optimizer at fixed nonzero
+$\kappa$, or of an exact subleading correction to any infimum, is made.
+
+**Proof.** First let $(a,b)$ be any lawful competitor, with any integers
+in (12.5). Its real hidden lift obeys
+
+$$
+\chi\le|\chi+2\pi j|=|\delta(T)|
+ =\left|\kappa\int_0^T g_\kappa(k(t))\dot b(t)\,dt\right|
+ \le|\kappa|M_\kappa\mathsf V(a,b).
+\tag{13.4}
+$$
+
+The first inequality uses $0<\chi<\pi$, and hence covers every hidden
+winding. The last one holds for every guarded history, regardless of its
+visible windings, signs, reversals or complexity. The coefficients are
+bounded on the whole guard, so the weighted integrals are legitimate
+for the entire stated regularity class. Pointwise
+$|\dot b|\le\sqrt{\dot a^2+\dot b^2}$ and Cauchy--Schwarz give
+
+$$
+\mathsf V\le\mathsf L,\qquad \mathsf L^2\le T\mathsf E.
+\tag{13.5}
+$$
+
+The latter includes infinite energy. This proves all lower bounds in
+(13.2), using the existing inverse-gap and norm-comparison mechanism of
+[N, §§3.11,10.2], with the exact guarded coefficient $M_\kappa$.
+It does not restrict the class to zero real phase lifts.
+
+For the matching construction fix any three distinct heights
+$l<z_1<z_2<z_3<u$, independently of $\kappa$, and form the scaled moment
+matrix
+
+$$
+\mathsf R_\kappa=
+\begin{pmatrix}
+A_\kappa(z_1)&A_\kappa(z_2)&A_\kappa(z_3)\\
+B_\kappa(z_1)&B_\kappa(z_2)&B_\kappa(z_3)\\
+g_\kappa(z_1)&g_\kappa(z_2)&g_\kappa(z_3)
+\end{pmatrix}.
+\tag{13.6}
+$$
+
+At $\kappa=0$ its three row functions span $1,k,1/k$ by (12.8).
+A linear combination vanishing at $z_1,z_2,z_3$, multiplied by $k$,
+is a polynomial of degree at most two with three distinct roots. It is
+zero identically. Since $1,k,1/k$ are independent on $I$, the original
+combination is zero. Thus $\mathsf R_0$ is invertible. Continuity of
+its determinant and adjugate gives, after decreasing $\kappa_*$,
+
+$$
+\sup_{|\kappa|<\kappa_*}\|\mathsf R_\kappa^{-1}\|<\infty.
+\tag{13.7}
+$$
+
+This is a scaled correction matrix, not the four-height determinant of
+[N, Theorem 3.10], whose neither-wall assumption fails on $E_+$.
+
+Choose the legal principal-leg height and its real command increment as
+
+$$
+y_\kappa=l+\kappa^2,\qquad
+\beta_\kappa=\frac{\chi}{\kappa g_\kappa(y_\kappa)}.
+\tag{13.8}
+$$
+
+Shrink $\kappa_*$ further so that
+$l<y_\kappa<\min(k_0,z_1)$. For each fixed nonzero $\kappa$ this is a
+finite real increment, with its allowed negative sign when $\kappa<0$.
+A phase leg of increment $\beta_\kappa$ at this height produces hidden
+lift exactly $\chi$ and visible real increments
+$\beta_\kappa A_\kappa(y_\kappa)$ and
+$\beta_\kappa B_\kappa(y_\kappa)$.
+
+Choose integers $m_\kappa,n_\kappa$ nearest to these visible increments
+divided by $2\pi$, breaking a tie in either way. The wrapped residuals
+
+$$
+\begin{aligned}
+r_{1,\kappa}&=2\pi m_\kappa-
+ \beta_\kappa A_\kappa(y_\kappa),\\
+r_{2,\kappa}&=2\pi n_\kappa-
+ \beta_\kappa B_\kappa(y_\kappa)
+\end{aligned}
+\qquad\text{satisfy}\qquad |r_{1,\kappa}|,|r_{2,\kappa}|\le\pi.
+\tag{13.9}
+$$
+
+Solve the finite real system
+
+$$
+\begin{pmatrix}\gamma_{1,\kappa}\\\gamma_{2,\kappa}\\
+\gamma_{3,\kappa}\end{pmatrix}
+ =\mathsf R_\kappa^{-1}
+ \begin{pmatrix}r_{1,\kappa}\\r_{2,\kappa}\\0\end{pmatrix}.
+\tag{13.10}
+$$
+
+By (13.7) there is a constant $K_1$ such that
+$\sum_i|\gamma_{i,\kappa}|\le K_1$ for both small signs.
+Executing these three phase increments at the corresponding $z_i$
+corrects the visible lifts by exactly $(r_{1,\kappa},r_{2,\kappa})$.
+Its hidden increment is exactly
+$\kappa\sum_i g_\kappa(z_i)\gamma_{i,\kappa}=0$.
+The final hidden lift is therefore $\chi$, while both visible lifts
+are actual integer multiples of their original $2\pi$ periods.
+Large visible windings are used, rather than discarded. Rounding may be
+discontinuous as a function of the immutable parameter $\kappa$; no
+continuity in that parameter is required of a lawful individual history.
+
+Execute the following single control polygon, starting at $a=b=0$:
+move $k_0$ to $y_\kappa$ at fixed $b$; execute $\beta_\kappa$ there;
+move to $z_1$ and execute $\gamma_{1,\kappa}$; move to $z_2$ and execute
+$\gamma_{2,\kappa}$; move to $z_3$ and execute $\gamma_{3,\kappa}$;
+return to $k_0$ at fixed $b$. Every height move has $db=0$ and hence
+adds no phase; every phase move has constant height and the precise
+slope (12.3). Convexity of $I$ puts every connecting segment inside
+$I$. These are exactly the probability and phase legs of the native
+finite-realization supplier [N, Theorem 8.2], with arbitrary preparation
+phases restored by translation. No actuator, jump, reset or parameter
+motion is introduced. There are at most nine nonzero affine command
+legs. The endpoints satisfy (12.5) with $j=0$.
+
+Let $\mathsf V_\kappa^{\rm fam},\mathsf L_\kappa^{\rm fam},
+\mathsf E_\kappa^{\rm fam}$ denote this polygon's executed costs.
+Because every leg changes only one of $a,b$, literal accounting yields
+
+$$
+\begin{aligned}
+\mathsf V_\kappa^{\rm fam}
+ &=|\beta_\kappa|+\sum_{i=1}^3|\gamma_{i,\kappa}|,\\
+\operatorname{TV}(a_\kappa)
+ &=(k_0-y_\kappa)+(z_3-y_\kappa)+|z_3-k_0|\\
+ &=2\{\max(k_0,z_3)-y_\kappa\}<2(u-l),\\
+\mathsf L_\kappa^{\rm fam}
+ &=\mathsf V_\kappa^{\rm fam}+\operatorname{TV}(a_\kappa).
+\end{aligned}
+\tag{13.11}
+$$
+
+To execute this very polygon on the prescribed clock, discard only
+zero-increment legs. If its remaining leg lengths are $\ell_j>0$, assign
+leg $j$ the duration
+
+$$
+\tau_j=T\frac{\ell_j}{\mathsf L_\kappa^{\rm fam}}.
+\tag{13.12}
+$$
+
+All these durations are positive for each nonzero $\kappa$ and sum to
+exactly $T$. Traverse each leg affinely in its assigned time. This
+changes neither its transport integral nor its variation or length.
+The resulting commands are finite continuous piecewise affine numerical
+profiles, hence belong to the original regularity class. Each leg has
+speed $\mathsf L_\kappa^{\rm fam}/T$, and its unhalved energy is
+$\ell_j^2/\tau_j$. Consequently
+
+$$
+\mathsf E_\kappa^{\rm fam}
+ =\sum_j\frac{\ell_j^2}{\tau_j}
+ =\frac{(\mathsf L_\kappa^{\rm fam})^2}{T}.
+\tag{13.13}
+$$
+
+In particular all intermediate moves and their actual rates are charged.
+Their durations may tend to zero as $\kappa\to0$, but none is zero in
+any member of this family. There is no instantaneous-pulse execution
+and no extra time beyond $T$.
+
+Uniform smoothness and positivity of $g_\kappa$ near $l$ imply
+
+$$
+g_\kappa(y_\kappa)=M_\kappa+O(\kappa^2),\qquad
+|\beta_\kappa|=\frac{\chi}{|\kappa|M_\kappa}+O(|\kappa|).
+\tag{13.14}
+$$
+
+The constants depend only on the fixed data and chosen correction
+heights. Equations (13.7), (13.11) and (13.14) give
+$\mathsf V_\kappa^{\rm fam}\le\mathsf L_\kappa^{\rm fam}
+\le\mathcal B_\kappa+K$ with one fixed $K$.
+Equation (13.13) supplies the energy upper bound for the same family.
+This proves nonemptiness and (13.2). Since $M_\kappa\to M_0>0$,
+squeezing gives (13.3), for the family as well as for the three infima.
+At $\kappa=0$, (12.7) makes $\delta$ identically zero, proving emptiness
+there. Exact target attainment and asymptotic saturation have been
+proved; neither an infimum attained at fixed $\kappa$ nor an exact
+finite-$\kappa$ correction formula follows from this construction.
+$\square$
+
+## 14. Uniform finite resources, native visibility and exact factors
+
+**Proposition 14.1 (uniform hidden-phase suppression).** For every lawful
+history under the guard of Definition 12.1, without any endpoint
+condition, put
+$d_{\mathbb T}([x],0)=\inf_{j\in\mathbb Z}|x-2\pi j|$. Then
+
+$$
+\begin{aligned}
+\sup_{0\le t\le T}d_{\mathbb T}(D(t),0)
+ &\le\min\{\pi,|\kappa|M_\kappa\operatorname{TV}(b)\}\\
+ &\le\min\{\pi,|\kappa|M_\kappa\mathsf L\},\\
+\sup_{0\le t\le T}d_{\mathbb T}(D(t),0)
+ &\le\min\{\pi,|\kappa|M_\kappa\sqrt{T\mathsf E}\}.
+\end{aligned}
+\tag{14.1}
+$$
+
+Thus every fixed variation or length budget suppresses the hidden circle
+uniformly as $\kappa\to0$. More generally the same is true for variation
+or length $o(|\kappa|^{-1})$, and, at the fixed clock $T$, energy
+$o(\kappa^{-2})$. These statements are uniform over all guarded histories
+within the indicated resource envelope, not estimates with a separate
+history-dependent constant. Two same-preparation histories with the same
+retained observation and variation budgets at most $B$ have hidden
+circle separation at most
+$\min\{\pi,2|\kappa|M_\kappa B\}$.
+
+**Proof.** For every prefix, integrating (12.7) gives
+$|\delta(t)|\le|\kappa|M_\kappa\int_0^t|\dot b|$.
+Circle distance is at most both $\pi$ and the magnitude of any real lift.
+Taking the supremum and using (13.5) proves (14.1).
+The constants $M_\kappa$ are uniformly bounded by (12.9).
+The two-history assertion follows from the circle triangle inequality.
+This proof imposes no endpoint, winding or complexity restriction.
+For an arbitrary other finite duration $\tau$, the variation and length
+bounds are unchanged and the energy bound uses $\sqrt{\tau\mathsf E}$.
+A fixed energy budget alone, with no bounded duration, does not give the
+same suppression: stretching the target-attaining polygon to arbitrarily
+large duration decreases its energy while leaving its hidden endpoint
+unchanged. $\square$
+
+**Interpretation 14.2 (which task is approximated, and which escapes).**
+For a fixed source and preparation, the section $D=0$ assigns a current
+ray to each $q$: take $[h_0]=[h_{13}]$ and retain the other phases.
+It is an actual ray of the nearby leaf by [N, Theorem 8.2]; on the double
+wall it is the entire leaf. Compare a guarded history's ray with this
+section at its same $q$. In the common middle-fixed gauge their only
+different component is mode $0$, and their representative distance is
+
+$$
+2\sqrt{p_{\kappa,0}(k)}\left|\sin\frac{\delta}{2}\right|
+ \le\sqrt{p_{\kappa,0}(k)}\,d_{\mathbb T}(D,0).
+\tag{14.2}
+$$
+
+The uniform bound (14.1) therefore gives a precise finite-resolution
+meaning to this three-coordinate approximation. It does not assign a
+preparation cost to the section or identify it with a separately prepared
+$\kappa=0$ source. For two nearby-source rays with the same $q$, the
+corresponding bound uses their hidden circle separation. An ideal native
+coherence pair involving mode $0$ varies continuously with that same
+phase; the other coherence pairs are unchanged.
+
+Theorem 13.1 also specifies the escaped distinction. Compare its endpoint
+with the constant history in the same source and preparation. Their
+retained observations agree exactly, while only the mode-$0$ phase
+circle differs, by $\chi$. Since the positive middle component fixes the
+projective gauge, these are different original current rays.
+The unchanged doubled-coherence menu of [N, Theorem 8.4], specifically
+its $02$ block (8.8), distinguishes them by the Euclidean output distance
+
+$$
+\|y_{02}^{\rm fam}-y_{02}^{\rm const}\|
+ =4\sqrt{(k_0-2\kappa)Z}\sin(\chi/2)
+ \longrightarrow4\sqrt{k_0Z}\sin(\chi/2)>0.
+\tag{14.3}
+$$
+
+This holds for arbitrary fixed preparation phases with the original
+negative convention. It introduces no measurement or phase actuator.
+It concerns ideal expectations and supplies no exact finite-shot
+acquisition or discrimination guarantee. Exposing this fixed principal
+phase requires the inverse-gap variation/length and inverse-squared-gap
+fixed-time energy scales of Theorem 13.1; one common actual family
+suffices at those scales.
+
+For $q$-only future tasks, however, $q$ is an exact predictive factor at
+every fixed $\kappa$. Starting from height $k$ and applying any common
+lawful future command $(a_f,b_f)$, its update is precisely
+
+$$
+\begin{aligned}
+k_f(t)&=k+a_f(t),\\
+[h_{13,f}(t)]&=[h_{13}]+\left[\int_0^t
+ A_\kappa(k+a_f(s))\,db_f(s)\right],\\
+[v_f(t)]&=[v]+\left[\int_0^t
+ B_\kappa(k+a_f(s))\,db_f(s)\right].
+\end{aligned}
+\tag{14.4}
+$$
+
+Legality depends only on the height path. Thus equal $q$ gives equal
+$q$-responses and equal legal command domains, even when $D$ differs.
+The escape (14.3) refutes completeness for the full native readout,
+not closure for the declared $q$-only task. Likewise retaining the
+controller's circle $[b]$ changes the information comparison: (12.10)
+recovers
+
+$$
+D=[b]-2[h_{13}]+2[v].
+\tag{14.5}
+$$
+
+Discarding that record is part of the stated observation task. Neither
+its omission nor this reconstruction is a finite-memory-bit theorem or
+recovery of the producing control path.
+
+The finite-resource result gives an operational bridge between the
+exactly symmetric leaf and nearby-source descriptions at a specified
+resolution. It does not reduce the exact nearby current-ray dimension,
+or prove that exactly three coordinates are necessary at finite
+resolution. Its constants and limits fix $\chi,I,k_0,Z,T$; no uniform
+claim as $\chi\downarrow0$, as the guard meets a probability endpoint,
+or as the other fixed data vary is included. These are command budgets
+in an ideal mathematical source, not physical spatial axes, physical
+energy or a rule selecting the means.
+
+**Reuse 14.3 (the all-scale Green boundary).** For every nonzero
+$\kappa$ here, $X=Y$ but $X+Y\ne r$: this is exactly the single $E_+$
+wall. Definition 1.2 and [N, Theorem 10.3] already give current-ray
+dimension $4$, direct rank $2$, growth $(2,3,4)$ and $Q_{\rm vol}=7$.
+Theorem 3.1 already makes its point-Green quadratic energy unbounded
+below for every positive coupling, under the smooth positive
+common-operator hypotheses of Definition 1.3. At $\kappa=0$ the
+published strict stability regime is Theorem 5.1: the constant-density
+family $A_\varepsilon=\operatorname{diag}(\varepsilon^2,1)$ and
+$g=\gamma\varepsilon^2$, with
+$0<\gamma<(2rC_H)^{-1}$. Theorem 6.2 supplies its attained-negative
+subfamily. This is not a classification of all double-wall coefficients
+or couplings.
+
+These are reused all-scale results, not consequences newly proved by
+Theorem 13.1. A budget on executed two-control histories is not a spectral
+resource restriction on all analytic amplitudes in $L^2(\Omega,\mu)$.
+No map from those histories to a restricted analytic test domain has
+been supplied. In particular (14.1) neither rules out the concentrating
+tests in Theorem 3.1 nor repairs nearby all-scale Green stability.
+The operational robustness and exact all-scale nonrobustness have
+different quantified objects and coexist without a changed source,
+period, guard or analytic clock.
+
+## 15. Exact suppliers, quantitative increment and remaining endpoints
+
+**Mathematical citation 15.1 (native and library overlap).** The native
+sources below are used at the immutable published revision
+$\mathtt{bb47ab19d04f55319ce314609e191de72a191235}$. [N] is the source
+of Definition 1.1 and [L] denotes
+[Native guarded lift limits and diffusion selection](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
+The ordinary results in these volumes are mathematical premises, not
+physical certificates or claims of kernel verification for this appendix.
+
+| Supplier | Exact correspondence and retained boundary |
+| --- | --- |
+| [N, Definitions 3.1, 8.1 and 9.1; Theorems 3.2 and 8.2] | The same means, probabilities, two controls, full-path guard and arbitrary preparations give the actual prefix rays and independent $2\pi$ circles. Exact finite reachability supplies no uniform near-wall cost by itself. The present endpoint closes $q$, without imposing the base/phase-loop closing condition. |
+| [N, Theorems 3.10--3.11 and Proposition 10.2] | Reciprocal subtraction, circle-distance lower bounds, conditioning loss, and variation/length/energy comparisons are already supplied. The pointwise subtraction is verified for prefixes in Calculation 12.2. The four-height determinant is not applied on its excluded $E_+$ wall. |
+| [FiniteRectangleTransport](https://github.com/the-omega-institute/trureturing/blob/bb47ab19d04f55319ce314609e191de72a191235/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), `finite_rectangles_realize`, `weight_compatible`, and private `horizontal_leg`, `vertical_leg`, `polygon_admissible`, `rectangle_chain` bodies | Base $(X,Y,Z)$ and mode index $4=13$ reproduce (12.2)--(12.3), affine probability/phase legs and relation charge. The original unit-time rectangle realization, including negative increments, is reused as the leg model. It does not assert (13.3) or a fixed-$T$ optimum. No new Lean or duplicate realization theorem is supplied. |
+| [N, Theorem 8.4 and (8.8)] | The original doubled $02$ coherence pair gives (14.3), with positive $Z$, the same preparation, and no added readout or finite-shot claim. |
+| [L, Definition 2.1, Proposition 8.1 and Definition 11.2] | The same identity costs charge literal executed segments. For a full leg of increment $(\Delta a,\Delta b)$ and duration $\tau$, variation is $|\Delta b|$, length is $\sqrt{\Delta a^2+\Delta b^2}$ and unhalved energy is $(\Delta a^2+\Delta b^2)/\tau$. This supplies the accounting convention in (13.11)--(13.13), not the present torus-target optimization. |
+| Pinned Mathlib revision $\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$, [Bochner/Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/Bochner/Basic.lean) and [Integral/MeanInequalities](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/MeanInequalities.lean) | `norm_integral_le_integral_norm` and Hölder with exponents $2,2$ are the established integral inequalities used in (13.4)--(13.5). Their source availability is not a compiled application or a formal certificate for the ordinary proof. |
+| This volume, Definition 1.2, Theorems 3.1, 5.1 and 6.2, Proposition 7.2 and Definition 7.3 | The unchanged single-wall collapse and explicit double-wall stable family are exactly the facts reused in 14.3, with their actual operator conditions and unsettled thresholds. |
+
+**Mathematical citation 15.2 (primary literature and nontransfer).** The
+following directly available primary texts identify classical ingredients
+and hypotheses that cannot replace the native quantitative proof.
+
+| Primary reference | Supplied framework and exact limit of the correspondence |
+| --- | --- |
+| Y. de Castro and F. Gamboa, *Exact Reconstruction using Beurling Minimal Extrapolation*, [arXiv:1103.4951v2](https://arxiv.org/pdf/1103.4951v2), p.3, (GME) | Total-variation minimization of a signed measure under finitely many generalized moment constraints is classical. Here $\mu(E)=\int_{\{t:k(t)\in E\}}db(t)$ has $\|\mu\|_{\rm TV}\le\operatorname{TV}(b)$ and moments $(A_\kappa,B_\kappa,\kappa g_\kappa)$. Equality of this relaxed measure cost with executed fuel is not assumed: cancellations and height travel are separate, and (13.11)--(13.13) verify the actual finite witness. No reconstruction or measure-optimizer theorem is imported. |
+| F. Jean, *Control of Nonholonomic Systems and Sub-Riemannian Geometry*, [arXiv:1209.4387v2](https://arxiv.org/pdf/1209.4387v2), Theorem 2.2, p.12, and Theorem 3.5/Corollary 3.6, pp.29--30 | Chow reachability and privileged-coordinate Ball--Box estimates give fixed-structure accessibility and local distances. They do not provide a uniform sharp coefficient for a fixed transverse target as this source loses a reachable direction. Native finite synthesis is already supplied by [N]; (13.7) and the executed correction supply the missing uniform bound. |
+| G. Antonelli, E. Le Donne and S. Nicolussi Golo, *Lipschitz Carnot--Carathéodory structures and their limits*, [arXiv:2111.06789v1](https://arxiv.org/pdf/2111.06789v1), Definition 1.3 and Theorem 1.4, p.4 | Distance convergence requires an essentially nonholonomic limit structure. On the common four-coordinate ambient leaf the limit fields preserve $D$, so their flow endpoints lie in a codimension-one set and that hypothesis fails. Restricting instead to the three-coordinate limit leaf removes the prescribed transverse target. This theorem therefore supplies no shortcut to (13.3). |
+| P. Cannarsa, P. Martinez and J. Vancostenoble, *The cost of controlling strongly degenerate parabolic equations*, [arXiv:1801.01380v1](https://arxiv.org/pdf/1801.01380v1), abstract and §1.1 | Parameter-degenerate controllability costs can have exponential rates for parabolic boundary/distributed controls. Those PDE states, actuators, norms and null targets are not (12.2)--(12.6). The present inverse powers are derived from the native coefficients and cannot be presumed from degeneracy alone. |
+| R. Zeier and T. Schulte-Herbrüggen, *Symmetry Principles in Quantum Systems Theory*, [arXiv:1012.5256v3](https://arxiv.org/pdf/1012.5256v3), abstract and §§3,5 | Symmetry constrains Hamiltonian-system controllability. Hamiltonian operations in that framework are not the original probability-phase transport controls. No quantitative actuation-cost or symmetry-breaking theorem is transferred without that missing operation correspondence. |
+
+**Mathematical contribution 15.3 (the uncovered quantitative contract).**
+The matched native result is the bounded winding correction preserving
+an exact hidden lift, combined with an actual charged height tour and
+its fixed-clock execution, yielding the joint sharp limits (13.3).
+It is a repository-derived quantitative application. The inverse-gap
+floor, finite reachability, original observability, ordinary moment
+language and Green classification are reused and are not counted as
+new mathematics. Comparison with the cited public and private native
+bodies, their Blueprint applications, the pinned library sources and
+these primary control references supplies the overlap map above; it
+is not a semantic absence proof or a worldwide originality claim.
+
+The result closes the stated fixed-$\chi$, fixed-guard, fixed-clock
+asymptotic resource question for both signs, with no restriction of its
+full winding class. Existence of fixed-$\kappa$ minimizers, exact
+subleading or arithmetic corrections, joint limits with vanishing
+$\chi$ or changing guard, acquisition costs, physical calibration and a
+map to an analytic spectral resource restriction remain outside the
+proved endpoint. No claim of independent priors or model diversity
+underwrites the proof. The assertions in §§12--15 are ordinary proofs;
+no Lean/kernel status is claimed.
+
+## 追加锚（本行以下为增补区）
+
+## 16. The fixed killed source and its actual transverse circle
+
+**Definition 16.1 (one source law and one lifetime event).** Fix
+
+$$
+0<Z<1,\quad r=1-Z,\quad H=r/2,\quad
+0<l<k_0<u<H,\quad I=(l,u),\quad
+\varepsilon>0,\quad 0<\chi<\pi.
+\tag{16.1}
+$$
+
+Choose once and for all
+
+$$
+0<\bar\kappa<\min\{l/4,(H-u)/2,H/4\}.
+\tag{16.2}
+$$
+
+For each $|\kappa|\le\bar\kappa$, the means $X=Y=H+\kappa$ are
+immutable during the history. Retain precisely (12.2)--(12.4): in original
+mode order $(0,1,2,3,13)$,
+
+$$
+p_\kappa(k)=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),\qquad
+w_s(k)=\frac{d_s}{p_{\kappa,s}(k)\mathcal I_\kappa(k)},\qquad
+d=(1,-1,0,-1,1)^{\mathsf T}.
+\tag{16.3}
+$$
+
+Here $\mathcal I_\kappa=\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}^{-1}$,
+with both equal-probability modes retained in the sum.
+All five probabilities have a common positive lower bound on
+$[-\bar\kappa,\bar\kappa]\times[l,u]$. Each phase has its actual
+$2\pi$ period. Fix arbitrary preparation phases and write
+$\psi_s(t)=\sqrt{p_{\kappa,s}(K_t)}
+e^{-i(\theta_s^{\rm in}+h_s(t))}$, with all increments initially zero.
+In particular $h_2=0$ and $h_1=h_3=v$ constrain increments, without
+equating preparation phases.
+
+Use Definition 1.3 with the original fields $P=\partial_k$, $Q_\kappa$,
+unnormalized angular measure $\rho=1$ and
+$A=\operatorname{diag}(\varepsilon^2,1)$. Equivalently, for independent
+standard Brownian motions $B^1,B^2$, use the single killed law
+
+$$
+\begin{aligned}
+K_0&=k_0,& dK_t&=\sqrt2\varepsilon\,dB_t^1,\\
+h_s(0)&=0,& dh_s(t)&=\sqrt2 w_s(K_t)\,dB_t^2,\\
+\tau_I&=\inf\{t\ge0:K_t\notin I\}.&&
+\end{aligned}
+\tag{16.4}
+$$
+
+The process is alive only for $t<\tau_I$, with Dirichlet killing at
+**both** $l$ and $u$. This is the published added analytic model, not a
+diffusion supplied by the bare finite-variation transport syntax.
+There is no mean actuator or independent phase driver.
+
+Retain the partial current observation and the preparation-relative target
+
+$$
+q_t=(K_t,[h_{13}(t)],[v(t)]),\qquad
+\delta_t=h_0(t)-h_{13}(t),\qquad D_t=[\delta_t].
+\tag{16.5}
+$$
+
+Thus $D_t$ subtracts the initial $0$--$13$ phase difference; it is not
+the absolute phase difference for an arbitrary preparation. Define
+
+$$
+\begin{aligned}
+\mathcal A_\kappa(\chi)
+ &=\{\exists\,0\le t<\tau_I:
+       d_{\mathbb T}(D_t,0)\ge\chi\},\\
+P_\kappa(\chi)&=\mathbb P(\mathcal A_\kappa(\chi)).
+\end{aligned}
+\tag{16.6}
+$$
+
+This probability concerns the whole actual lifetime under (16.4).
+No survival conditioning, restart or designed control family is used.
+
+**Proposition 16.2 (generator, coefficient and first circle excursion).**
+The Itô and Stratonovich versions of (16.4) agree. Their killed generator
+is exactly $-L_A=\varepsilon^2P^2+Q_\kappa^2$ on the smooth interior
+core, with the boundary and clock of Definition 1.3. Put
+
+$$
+\alpha_\kappa=\kappa+\kappa^2/H,\qquad
+b_\kappa(k)=\frac{H+\kappa-k}{H(k-\alpha_\kappa)},\qquad
+b_0(k)=\frac{H-k}{Hk}.
+\tag{16.7}
+$$
+
+Then $b_\kappa$ is smooth and strictly positive on the common closed
+parameter-height rectangle, and
+
+$$
+w_0-w_{13}=\kappa b_\kappa,\qquad
+\delta_t=\sqrt2\kappa\int_0^t b_\kappa(K_s)\,dB_s^2.
+\tag{16.8}
+$$
+
+For $\kappa\ne0$, (16.6) is exactly first hitting of either real level
+$\delta=\pm\chi$ before $\tau_I$. At $\kappa=0$ one has $\delta_t=0$
+for the entire lifetime, and $P_0(\chi)=0$.
+
+**Proof.** On the single-wall leaf the reduced field is
+$Q_\kappa=w_0\partial_{h_0}+w_{13}\partial_{h_{13}}+w_1\partial_v$.
+There is one $v$ coordinate, so its coefficient is $w_1$, not $2w_1$.
+Both $P$ and $Q_\kappa$ are divergence free for the stated unnormalized
+measure. Moreover $Q_\kappa k=0$ and every coefficient depends only on
+$k$. Hence the self-corrections $D_PP$ and $D_{Q_\kappa}Q_\kappa$
+vanish. The drivers are independent and the covariance diagonal, so
+there is no mixed correction. The generator of (16.4) is consequently
+$\varepsilon^2P^2+Q_\kappa^2$, with no extra drift. This verifies the
+common-operator correspondence, including the factor $\sqrt2$.
+
+Calculation 12.2 gives $w_0-w_{13}=\kappa g_\kappa$ with
+$g_\kappa=b_\kappa$ in (16.7). Equivalently, subtracting the two original
+reciprocals gives $2\kappa/(\mathcal I_\kappa k(k-2\kappa))$.
+The positive information sum and (16.2) ensure that its reduced
+denominator has no zero on the closed rectangle. Subtraction of the
+two stochastic integrals proves (16.8). The pair $(K,\delta)$ has
+interior generator
+
+$$
+\varepsilon^2\partial_k^2+
+\kappa^2b_\kappa(k)^2\partial_\delta^2.
+\tag{16.9}
+$$
+
+The integer phase change in (12.4) preserves the actual circle period.
+A continuous real lift starting at zero cannot reach circle distance
+$\chi<\pi$ without first hitting $+\chi$ or $-\chi$; either first hit
+has that circle distance. This proves the event identity, including
+all later windings. Equation (16.8) proves the exact zero assertion.
+Preparations cancel from increments and do not enter this law. $\square$
+
+## 17. Uniform full-lifetime probability and its spectral rate
+
+**Theorem 17.1 (native killed transverse reliability).** In Definition
+16.1 define the regular Dirichlet eigenvalue
+
+$$
+\lambda_1(\kappa)=\varepsilon^2
+\inf_{0\ne f\in H_0^1(I)}
+\frac{\displaystyle\int_I|f'(k)|^2\,dk}
+     {\displaystyle\int_I b_\kappa(k)^2|f(k)|^2\,dk}.
+\tag{17.1}
+$$
+
+It is positive and finite. More explicitly it is the smallest eigenvalue
+of
+
+$$
+-\varepsilon^2\phi''(k)
+ =\lambda b_\kappa(k)^2\phi(k),\qquad \phi(l)=\phi(u)=0.
+\tag{17.2}
+$$
+
+The following constants specify one uniform pair of bounds. Set
+
+$$
+\begin{aligned}
+L&=u-l,&
+m&=\min_{|\eta|\le\bar\kappa,\,k\in[l,u]} b_\eta(k)>0,&
+M&=\max_{|\eta|\le\bar\kappa,\,k\in[l,u]} b_\eta(k)<\infty,\\
+c_0&=\frac{\min\{k_0-l,u-k_0\}}{L},&
+\Lambda&=\frac{\varepsilon^2\pi^2}{L^2m^2},&
+C_0&=\max\left\{e^\Lambda,
+ \frac{LM}{\varepsilon\sqrt e}e^{\Lambda/2}\right\}.
+\end{aligned}
+\tag{17.3}
+$$
+
+For every $0<|\kappa|\le\bar\kappa$, through either sign,
+
+$$
+0<\frac{c_0}{\cosh(\chi\sqrt{\lambda_1(\kappa)}/|\kappa|)}
+\le P_\kappa(\chi)
+\le\frac{C_0}{\cosh(\chi\sqrt{\lambda_1(\kappa)}/|\kappa|)},
+\qquad P_\kappa(\chi)<1.
+\tag{17.4}
+$$
+
+To give matching bounds with a fixed limiting exponent, put
+
+$$
+\begin{aligned}
+B_*&=\max_{|\eta|\le\bar\kappa,\,k\in[l,u]}
+       |\partial_\eta\log b_\eta(k)^2|<\infty,\\
+J_*&=\tfrac12 B_*\sqrt{\lambda_1(0)}e^{B_*\bar\kappa/2},\\
+c_-&=c_0e^{-\chi J_*}>0,\qquad
+c_+=2C_0e^{\chi J_*}<\infty.
+\end{aligned}
+\tag{17.5}
+$$
+
+On the same fixed punctured neighborhood,
+
+$$
+c_-\exp\left(-\frac{\chi\sqrt{\lambda_1(0)}}{|\kappa|}\right)
+\le P_\kappa(\chi)\le
+c_+\exp\left(-\frac{\chi\sqrt{\lambda_1(0)}}{|\kappa|}\right).
+\tag{17.6}
+$$
+
+In particular the sharp scale is $\exp(-\text{constant}/|\kappa|)$ and
+
+$$
+\begin{aligned}
+\log P_\kappa(\chi)
+ &=-\frac{\chi\sqrt{\lambda_1(0)}}{|\kappa|}+O(1),\\
+\lim_{\kappa\to0^+}|\kappa|\log P_\kappa(\chi)
+ &=\lim_{\kappa\to0^-}|\kappa|\log P_\kappa(\chi)
+ =-\chi\sqrt{\lambda_1(0)}.
+\end{aligned}
+\tag{17.7}
+$$
+
+The $O(1)$ is uniform with all data (16.1)--(16.2) fixed: it lies between
+$\log c_-$ and $\log c_+$. No asymptotic prefactor, equality of the two
+signed probabilities, or uniformity as the other fixed data vary is asserted.
+
+**Proof.** All probability and spectral ingredients used below are
+classical; their source correspondence is specified in §19. The application
+uses the native coefficient (16.7) and the actual event (16.6).
+
+First condition on the entire height path. Since $B^2$ is independent of
+$B^1$, (16.8) is conditionally a centered Gaussian path with covariance
+$2\kappa^2\mathscr C_{t\wedge t'}$, where
+
+$$
+\mathscr C_t=\int_0^t b_\kappa(K_v)^2\,dv,
+\qquad \zeta_\kappa=\mathscr C_{\tau_I}.
+\tag{17.8}
+$$
+
+Consequently the joint law of height and transverse lift, up to height
+death, is exactly the joint law of
+$(K_t,\sqrt2\kappa W_{\mathscr C_t})$, where $W$ is a standard Brownian
+motion independent of the full height path. This follows by comparing
+the conditional Gaussian finite-dimensional distributions and using
+continuity. Independence here is proved from the two original drivers;
+it is not inferred merely from a martingale time-change theorem.
+
+The original height lifetime is positive and finite almost surely; indeed
+$\mathbb E\tau_I=(k_0-l)(u-k_0)/(2\varepsilon^2)$. Also
+$m^2\tau_I\le\zeta_\kappa\le M^2\tau_I$. Thus $\mathscr C$ is
+continuous and strictly increasing up to death and has finite positive
+terminal value. Write
+
+$$
+R=\chi/|\kappa|,\qquad
+T_R=\inf\{s\ge0:|\sqrt2 W_s|=R\},\qquad
+S_\kappa(s;k)=\mathbb P_k(\zeta_\kappa>s).
+\tag{17.9}
+$$
+
+Proposition 16.2 and the conditional path identity give the exact
+full-lifetime formula
+
+$$
+P_\kappa(\chi)=\mathbb P(T_R<\zeta_\kappa)
+             =\mathbb E[S_\kappa(T_R;k_0)].
+\tag{17.10}
+$$
+
+This is an equality for the original event, not a survival-conditioned
+law. Equality of the two exit times has probability zero: $T_R$ is
+atomless and independent of $\zeta_\kappa$. The strict lifetime convention
+therefore also agrees with the usual strip exit convention.
+
+For calculating $S_\kappa$, invert $\mathscr C$ before its terminal
+value. The time-changed height has generator
+$\varepsilon^2b_\kappa^{-2}\partial_k^2$, killed at both endpoints of
+$I$. Its positive Dirichlet operator $\mathscr H_\kappa$ is selfadjoint
+in the auxiliary space $L^2(I,b_\kappa^2dk)$, with form
+
+$$
+\mathfrak h_\kappa[f]=\varepsilon^2\int_I|f'|^2\,dk,
+\qquad D(\mathfrak h_\kappa)=H_0^1(I),\qquad
+S_\kappa(s;\cdot)=e^{-s\mathscr H_\kappa}1.
+\tag{17.11}
+$$
+
+For example, the generator follows by applying the original height
+martingale problem and $dt=ds/b_\kappa(K_t)^2$ before death. Integration
+by parts gives the displayed form and (17.2). Smooth positive bounded
+$b_\kappa$ makes this a regular weighted Sturm--Liouville problem.
+Its form has compact embedding and positive first eigenvalue. The
+one-dimensional Dirichlet Poincaré inequality and a sine test give
+
+$$
+\frac{\varepsilon^2\pi^2}{L^2M^2}
+\le\lambda_1(\kappa)\le\Lambda.
+\tag{17.12}
+$$
+
+This auxiliary time and speed measure are only variables in an exact
+calculation of (17.10). The source still uses analytic time $t$, density
+$\rho=1$, covariance $2A\,dt$, actual phase periods and the original
+height killing. No angular normalization or new clock is installed in it.
+
+We next bound the *unconditioned* survival function for every $s\ge0$.
+Let $\phi_\kappa$ be the positive first eigenfunction, normalized by
+$\max_{[l,u]}\phi_\kappa=1$. Its equation makes it concave. The chords
+from a maximum to the two zero endpoints imply
+$\phi_\kappa(k_0)\ge c_0$. Positivity preservation and $1\ge\phi_\kappa$
+therefore give
+
+$$
+S_\kappa(s;k_0)\ge
+e^{-s\lambda_1(\kappa)}\phi_\kappa(k_0)
+\ge c_0e^{-s\lambda_1(\kappa)}.
+\tag{17.13}
+$$
+
+For a uniform upper bound, let $\|\cdot\|_\kappa$ be the norm in
+$L^2(I,b_\kappa^2dk)$. For $f\in H_0^1(I)$,
+$|f(k_0)|\le\sqrt L\|f'\|_{L^2(dk)}$. The spectral theorem and
+$\sup_{x\ge0}\sqrt{x}e^{-x/2}=e^{-1/2}$ give
+
+$$
+|(e^{-\mathscr H_\kappa/2}g)(k_0)|
+\le\frac{\sqrt L}{\varepsilon}
+ \|\mathscr H_\kappa^{1/2}e^{-\mathscr H_\kappa/2}g\|_\kappa
+\le\frac{\sqrt L}{\varepsilon\sqrt e}\|g\|_\kappa.
+\tag{17.14}
+$$
+
+For $s\ge1$, apply (17.14) to
+$g=e^{-(s-1/2)\mathscr H_\kappa}1$, use
+$\|1\|_\kappa\le M\sqrt L$ and (17.12), and obtain
+$S_\kappa(s;k_0)\le
+(LM/(\varepsilon\sqrt e))e^{\Lambda/2}e^{-s\lambda_1(\kappa)}$.
+For $0\le s\le1$, the bound $S_\kappa\le1$ gives the other constant
+in (17.3). Together with (17.13), this proves the uniform, all-time estimate
+
+$$
+c_0e^{-s\lambda_1(\kappa)}\le S_\kappa(s;k_0)
+\le C_0e^{-s\lambda_1(\kappa)},\qquad s\ge0.
+\tag{17.15}
+$$
+
+It remains to integrate against the actual independent exit time in
+(17.10). The classical Brownian interval-exit Laplace transform, with
+generator $\partial_y^2$ rather than $\tfrac12\partial_y^2$, is
+
+$$
+\mathbb E[e^{-\lambda T_R}]
+ =\frac1{\cosh(R\sqrt\lambda)},\qquad \lambda>0.
+\tag{17.16}
+$$
+
+For completeness its boundary function is
+$F(y)=\cosh(\sqrt\lambda y)/\cosh(\sqrt\lambda R)$: it solves
+$F''=\lambda F$ and $F(\pm R)=1$. Applying Itô's formula to
+$e^{-\lambda(s\wedge T_R)}F(\sqrt2W_{s\wedge T_R})$ and taking
+$s\to\infty$ proves (17.16) by bounded convergence. This also fixes
+every factor in its exponent. Substitution of (17.15) into (17.10)
+now proves (17.4). In particular $P_\kappa>0$. For every $s>0$,
+$S_\kappa(s;k_0)<1$, since $\zeta_\kappa\le M^2\tau_I$ and the
+original Brownian height has positive probability to exit by $s/M^2$.
+As $T_R>0$ almost surely, (17.10) proves $P_\kappa<1$ too.
+
+Finally smoothness in (16.7) gives, pointwise on $[l,u]$,
+
+$$
+e^{-B_*|\kappa|}b_0^2\le b_\kappa^2\le e^{B_*|\kappa|}b_0^2.
+\tag{17.17}
+$$
+
+Applying the same two inequalities to every denominator in (17.1) yields
+$e^{-B_*|\kappa|}\lambda_1(0)\le\lambda_1(\kappa)
+\le e^{B_*|\kappa|}\lambda_1(0)$, and hence
+
+$$
+|\sqrt{\lambda_1(\kappa)}-\sqrt{\lambda_1(0)}|
+\le J_*|\kappa|.
+\tag{17.18}
+$$
+
+Use $e^{-x}\le1/\cosh x\le2e^{-x}$ for $x\ge0$ in (17.4), then
+(17.18), to obtain exactly (17.5)--(17.6). Taking logarithms proves
+(17.7). No eigenfunction-series remainder or prefactor expansion is
+assumed. $\square$
+
+**Specification 17.2 (the limiting scalar problem).** In particular
+
+$$
+\lambda_1(0)=\varepsilon^2
+\inf_{0\ne f\in H_0^1(I)}
+\frac{\int_I|f'|^2\,dk}
+ {\int_I ((H-k)/(Hk))^2|f|^2\,dk}.
+\tag{17.19}
+$$
+
+Equivalently, solve
+$-\varepsilon^2F_\lambda''=\lambda((H-k)/(Hk))^2F_\lambda$ with
+$F_\lambda(l)=0$, $F_\lambda'(l)=1$; $\lambda_1(0)$ is the smallest
+positive root of $F_\lambda(u)=0$. Regular Dirichlet oscillation theory
+gives this equivalence. The exponent depends on the whole fixed interval
+and this weight, not just its maximum at $l$. The initial height enters
+the matching constants, while the leading rate is the same for every
+fixed interior $k_0$. The dependence on $\varepsilon$ is explicit:
+$\sqrt{\lambda_1(0)}$ is $\varepsilon$ times the square root of the
+quotient infimum without $\varepsilon^2$.
+
+## 18. The same-history coherence task and the separate Green boundary
+
+**Proposition 18.1 (what the rare excursion measures).** At every alive
+time compare the actual ray with the section $\sigma_\kappa(q_t)$ of
+Interpretation 14.2, in the *same* nearby source and preparation. This
+section replaces $[h_0]$ by $[h_{13}]$, retaining $K,[h_{13}],[v]$ and
+each component's own preparation phase. Write $y_{02}(t)$ and
+$y_{02}^{\sigma}(t)$ for their original doubled $02$ coherence pairs.
+Then
+
+$$
+\begin{aligned}
+\|\psi(t)-\psi^{\sigma}(t)\|
+ &=2\sqrt{K_t-2\kappa}\,|\sin(\delta_t/2)|,\\
+\|y_{02}(t)-y_{02}^{\sigma}(t)\|
+ &=4\sqrt{(K_t-2\kappa)Z}\,|\sin(\delta_t/2)|.
+\end{aligned}
+\tag{18.1}
+$$
+
+The first equality uses the common middle-fixed representative gauge.
+In particular the lifetime event is exactly
+
+$$
+\mathcal A_\kappa(\chi)=
+\left\{\exists t<\tau_I:
+\frac{\|y_{02}(t)-y_{02}^{\sigma}(t)\|}
+ {4\sqrt{(K_t-2\kappa)Z}}\ge\sin(\chi/2)\right\}.
+\tag{18.2}
+$$
+
+On this event its first excursion time has output separation at least
+$4\sqrt{(l-2\bar\kappa)Z}\sin(\chi/2)>0$, independently of the sign
+and size of nonzero $\kappa$ in (16.2). On its complement the section
+approximates the actual representative and this coherence pair throughout
+the entire lifetime, with respective upper bounds
+$2\sqrt{u+2\bar\kappa}\sin(\chi/2)$ and
+$4\sqrt{(u+2\bar\kappa)Z}\sin(\chi/2)$.
+The probability of the exceptional event is exactly Theorem 17.1.
+
+Current $q$ and its complete ideal continuous history have different
+information. In fact, if the latter is supplied, let $H_{13}(t)$ be the
+unique continuous real lift of its $[h_{13}(t)]$ path starting at zero.
+For the law (16.4), almost surely,
+
+$$
+\delta_t=\int_0^t\frac{2\kappa}{K_s-2\kappa}\,dH_{13}(s),
+\qquad t<\tau_I.
+\tag{18.3}
+$$
+
+Thus hidden here means omitted by the specified *current* observation;
+it does not mean unrecoverable from a complete ideal $q$-history.
+
+**Proof.** Only the mode-$0$ component changes in the section comparison.
+Subtract its two complex amplitudes to obtain the first equality in
+(18.1). The original output (8.8) of [N, Theorem 8.4] has radius
+$2\sqrt{(K_t-2\kappa)Z}$ and angles differing by $\delta_t$; chord
+length gives the second equality for every fixed preparation. Since
+$|\sin(\delta/2)|=\sin(d_{\mathbb T}([\delta],0)/2)$ and this last
+sine is increasing on $[0,\pi]$, (18.2) follows. Continuity and the
+uniform positive height margins give the stated bounds. This comparison
+neither samples a second independent history nor prepares a symmetric
+source; it evaluates the section at the actual history's current $q$.
+
+For (18.3), Calculation 12.2 gives the exact ratio
+
+$$
+\frac{w_0(k)-w_{13}(k)}{w_{13}(k)}
+ =\frac{2\kappa}{k-2\kappa}.
+\tag{18.4}
+$$
+
+The denominator and $w_{13}$ are bounded away from zero on the closed
+rectangle. Associativity of stochastic integrals in (16.4) proves
+(18.3). Also $[K,H_{13}]=0$, so Itô and Stratonovich readings of this
+integral agree. Left-point stochastic sums along deterministic refining
+partitions converge locally uniformly in probability before death.
+A subsequence, chosen on a countable exhaustion by bounded stopped
+intervals, gives one almost-sure continuous version for all $t<\tau_I$.
+This is a measurable reconstruction from the ideal continuous observed
+paths, not ordinary finite-variation integration.
+
+The section comparison uses ideal expectations of an unchanged native
+coherence consumer. Neither (18.2) nor (18.3) supplies sensing, retention,
+sampling precision, finite-shot discrimination or decoding costs. No
+complete history or additional observation is granted by declaring
+current $q$. The result is a probability of one specified transverse
+approximation error, not a quotient error bound for every task or future
+operation. Brownian drivers are almost surely not the finite-variation
+commands of Definition 12.1; their deterministic inverse-gap cost bounds
+are not probabilities or finite execution costs for (16.4). $\square$
+
+**Reuse 18.2 (current dimension and all-scale instability).** For every
+nonzero $\kappa$ in (16.2), the fixed means lie on $E_+$ only.
+Definition 1.2, [N, Theorem 10.3] and Theorem 3.1 therefore give exactly
+current-ray dimension $4$, direct rank $2$, growth $(2,3,4)$,
+$Q_{\rm vol}=7$, and point-Green form unboundedness below for every
+positive coupling, for the very same positive smooth common operator.
+At $\kappa=0$ both walls hold: the leaf has three current coordinates,
+growth $(2,3)$ and $Q_{\rm vol}=4$. For its constant-density diagonal
+family, Theorem 5.1 supplies the explicitly strict stable window
+
+$$
+g=\gamma\varepsilon^2,\qquad
+0<\gamma<(2rC_H)^{-1},\qquad \varepsilon>0,
+\tag{18.5}
+$$
+
+where $C_H$ is the positive finite unweighted Heisenberg Green--Hardy
+constant in (4.8). This means a closed semibounded form with the original
+form domain; it does not assert a sharp threshold or settle its equality
+case. Theorem 6.2 supplies the separately stated attained-negative family.
+
+These assertions are reused, as in 14.3. The exponentially small
+$P_\kappa(\chi)$ concerns histories of a free killed process. Theorem 3.1
+quantifies over all analytic form tests on its cylinder. There is no
+supplied map restricting those tests by a path-excursion probability.
+Hence (17.6) neither removes the concentrating tests nor repairs nearby
+all-scale Green instability. Exact invariance at $\kappa=0$ and a small
+positive excursion probability at $\kappa\ne0$ also do not change the
+exact current-ray dimension, select the means, or identify physical axes.
+
+## 19. Exact mathematical suppliers and the native probability increment
+
+**Mathematical citation 19.1 (source and classical correspondence).**
+[N] and [L] have the immutable source meanings specified in 15.1.
+Definitions 1.3 and 4.1, Theorems 3.1, 5.1 and 6.2, and §§12--15 are
+used with their displayed assumptions. The following table distinguishes
+the classical ingredients from their native application.
+
+| Supplier | Exact input and scope of reuse |
+| --- | --- |
+| [N, Definitions 2.1, 3.1 and 8.1; Theorem 8.2]; this volume, Definition 12.1 and Calculation 12.2 | Fixed means, probabilities, negative amplitudes, arbitrary preparations, actual phase torus and the exact subtraction $w_0-w_{13}=\kappa b_\kappa$ are reused. Exact reachability and the inverse-gap cost theorems do not supply a random lifetime probability. |
+| [N, Definition 10.6 and Theorem 10.7]; this volume, Definition 1.3 and (6.4)--(6.5) | The added closed operator uses unnormalized density, covariance $2A\,dt$, one analytic clock, periodic actual phases and two absorbing height faces. Equation (16.4) specializes that framework; Proposition 16.2 verifies its zero correction for the nearby fields. No diffusion is derived from bare FIB syntax. |
+| [L, §§4,6--7] | Guarded lift limits, lifetime continuity and explicitly selected diffusion laws distinguish finite executed controls from a Brownian reference law. They justify keeping law selection explicit; their finite-horizon convergence statements are not substituted for (17.10). |
+| P. Mörters and Y. Peres, *Brownian Motion*, [author text](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf), §7.1 and §7.4, Theorems 7.42--7.43 and (4.3) | Stochastic integration, the killed heat representation and two-sided interval survival are literature-attested. Their standard Brownian generator is $\tfrac12\partial^2$; the transverse process here is $\sqrt2W$, with generator $\partial^2$. The interval is $(-R,R)$ with two absorbing endpoints. Its classical exit transform is (17.16), verified at this normalization within the native proof. Interval exit and separation of variables do not specify the native weight or an independent random lifetime by themselves. |
+| G. Teschl, *Ordinary Differential Equations and Dynamical Systems*, [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-ode/ode.pdf), §§5.3--5.5, Theorem 5.11 and Rayleigh--Ritz formula (5.76) | His regular expression $r^{-1}(-(pf')'+qf)$ is used with coefficient $p=\varepsilon^2$, potential $q=0$, weight $r=b_\kappa^2$ and Dirichlet conditions at $l,u$. These $p,q,r$ are Sturm--Liouville coefficients, not the native probabilities, retained observation or $1-Z$. This supplies the discrete spectrum, first eigenfunction and quotient (17.1). The auxiliary weighted measure is not a change of source density. |
+| Conditional Gaussian stochastic integrals; positive killed semigroups; the selfadjoint spectral theorem | These are literature-attested tools within the proof of Theorem 17.1, not additional general results of this volume. The conditional covariance and independence needed for the random lifetime are verified after (17.8); (17.13)--(17.15) supply the explicit uniform survival bounds, without conditioning on survival or using separately optimized marginals. |
+| [N, Theorem 8.4, (8.8)]; this volume, Interpretation 14.2 | The original doubled $02$ coherence pair gives (18.1)--(18.2) on the same history and preparation. Its use as an ideal mathematical consumer adds no measurement channel or acquisition theorem. |
+| This volume, Definition 1.2, Theorems 3.1 and 5.1, Reuse 14.3 | The single-wall collapse and strict double-wall window are reused with their actual operator hypotheses. They are not consequences of the small probability or classifications of physical space. |
+
+The repository's discrete first-passage/reflection application
+[PaddedTail](https://github.com/the-omega-institute/trureturing/blob/67f8765551564da4e4693e16708b84ca2aa882fd/D5/S3/Arith/Lattices/Klartag/Tail/PaddedTail.lean),
+`padded_increment_tail`, has a discrete Gaussian terminal variable and
+supplied first-passage inequalities. It is not an exact continuous strip
+exit theorem with the joint lifetime (17.8). The public and private
+finite-rectangle bodies cited in 15.1 supply deterministic transport,
+not this killed probability law. Neither application is duplicated here.
+
+The pinned Mathlib source
+$\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$,
+[BrownianMotion/Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/BrownianMotion/Basic.lean),
+supplies Brownian-process definitions and Gaussian/independence properties;
+[Process/HittingTime](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Process/HittingTime.lean)
+supplies discrete stopping-time results. The third-party
+[RemyDegenne/brownian-motion](https://github.com/RemyDegenne/brownian-motion/tree/0d5b6eb928e616d3b1f774ad7d233c167d9f42c9)
+at the displayed immutable revision supplies Brownian and Gaussian
+infrastructure. None of these identified declarations supplies the exact
+weighted, killed native application (16.6)--(17.7). This source-scope
+comparison is not a semantic absence proof for other declarations or
+literature, and no Lean application or kernel status is claimed.
+
+**Mathematical contribution 19.2 (application and retained boundaries).**
+The repository-derived increment is the native full-lifetime conclusion
+(17.4)--(17.7), with its exact coefficient and weight (16.7), (17.19),
+both-sign uniform constants, and the same-source consumer (18.2).
+It applies classical strip exit, Gaussian time change and regular
+Sturm--Liouville analysis; it does not claim any of those general tools
+as new. The necessary bridge preserves the original joint law, verifies
+the drift and clock, reduces the actual circle event before death, and
+controls the parameter-dependent rate uniformly. A deterministic
+inverse-gap cost, local heat exponent or finite-horizon estimate alone
+omits that bridge. The source correspondences above delimit the
+application without asserting worldwide originality or independent priors.
+
+Every probability in Theorem 17.1 is under the one specified killed
+source. Its high-probability three-coordinate approximation is relative
+to the section and the prescribed transverse resolution, over that
+finite random lifetime. It supplies no all-target factor theorem,
+physical stochastic realization, mean-selection rule, paid sensing or
+decoder, finite numerical recovery guarantee, or repair of all-scale
+analytic instability. A sharper prefactor or a joint limit changing
+$\chi,I,k_0,Z,\varepsilon$ would require additional uniform estimates.
+The assertions here are ordinary mathematical proofs.
+
+## 追加锚（本行以下为增补区）

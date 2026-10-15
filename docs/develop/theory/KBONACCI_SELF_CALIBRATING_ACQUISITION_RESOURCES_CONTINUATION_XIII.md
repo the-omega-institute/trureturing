@@ -1524,3 +1524,2283 @@ section are ordinary mathematics; none asserts Lean/kernel validation,
 physical sampling cost or universal affordability.
 
 ## 追加锚（本行以下为增补区）
+
+## 220. Joint score retractions, transfer cuts and queried-label funding
+
+The objects in this section are complete scores on one Boolean carrier
+or complete allocations of actual legal tables. Each assertion uses
+one common realization and one total budget. Four relations are studied:
+eligible-coordinate resets, pooled prefix-cell domination with a common
+coefficient total, arbitrary interior masks with their transfer residual,
+and queried-label gates funded by an actual joint block. Their hypotheses
+are sufficient conditions for the stated operations; none is imposed on
+the unrestricted comparison problem.
+
+### 220.1 Complete score and certificate interface
+
+**定义 220.1（Full words, rewards and supports）。** Fix $L\ge3$.
+Let $\mathcal B_L=\{0,1\}^L$, let $n(w)$ be the first zero of a
+nonpositive word, and put $\Omega_n=\{w:n(w)=n\}$.
+For every $w\ne1^L$ the three coefficients $A_w,C_w,P_w$ are
+independently nonnegative; $T\ge0$ is the terminal coefficient.
+The full reward is
+
+$$
+g_y(w,\ell)=A_w[\ell=0]+C_w[\ell=n(w)]
+ +P_w[\ell\in\{0,n(w)\}],\qquad
+ g_y(1^L,\ell)=T[\ell=0].
+$$
+
+All labels $0,\ldots,L$, including earlier and unqueried labels, are
+legal. The complete catalogs contain empty schedules, every singleton,
+and every pair $i<j$. A full $N$ pair has cells $00,01,10,11$;
+a stopped increasing $O$ pair has cells $0,10,11$, where the first cell
+is the union of $00$ and $01$. A table chooses an arbitrary legal output
+on each cell. Write $\Pi_C(S)$ for that partition and
+
+$$
+ B_C^S(y)=\sum_{H\in\Pi_C(S)}\max_{0\le\ell\le L}
+                   \sum_{w\in H}g_y(w,\ell),\qquad
+ B_C(y)=\max_S B_C^S(y),\quad C\in\{N,O\}.
+$$
+
+Reversing an $N$ pair permutes its information cells; repeating an
+address gives singleton information. These are support identities,
+not a discount on actual requests: repetitions and ignored replies
+still count in an execution.
+
+Use the quotient and baseline of 219.1:
+
+$$
+\begin{aligned}
+ W_y&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+ \beta_n&=\sum_{w\in\Omega_n}(C_w-A_w),\qquad
+ K=\sum_w(A_w+C_w+P_w)+T,\\
+ Q(y)&=(\beta,K),\qquad \Delta_C(y)=B_C(y)-W_y.
+\end{aligned}
+$$
+
+With $Z_0=\sum(A+P)+T$ one has $W=Z_0+\beta_1+\beta_2$.
+If $A_n,C_n$ denote class totals, the absolute spare stock is
+
+$$
+ K-\sum_n|\beta_n|=2\sum_n\min(A_n,C_n)+\sum_wP_w+T.
+$$
+
+These quantities are different: $K$ is the full coefficient total,
+$Z_0$ the zero-label reward, and the last expression the spare stock.
+Proof weights on words are not a probability distribution on sources.
+
+**定义 220.2（Independent event rows and one residual budget）。**
+Let $\alpha=(1,1,0,\ldots,0)$ and reuse the hull $H_L$ of 219.2:
+
+$$
+\begin{gathered}
+1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\qquad b_2=b_3,\\
+(L+1)e\le\sum_{n\ge3}b_n,\qquad
+b_1+\sum_{n\ge3}b_n-(L+1)e\le1.
+\end{gathered}
+$$
+
+For $q=(\beta,K)$ put
+$F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke$ and
+$\sigma_H(q)=\max_{H_L}F_q$.
+At every $w\in\Omega_n$ the demands on the three independent events
+$\{0\}$, $\{n\}$, $\{0,n\}$ are respectively
+
+$$
+ 1-b_n-e,\qquad b_n-e,\qquad1-e.
+$$
+
+At $1^L$ the base demand is $1-e$. Negative singleton demands remain.
+Let $R=O(1,2;1,2,0)$, let $z_D$ be the complete event vector of a table,
+$r=z_R$, $h(b,e)=d(b,e)-r$, and let $G_C$ contain every column
+$z_D-r$ of the full catalog. Membership of $H_N$ means membership of
+$H_L$ together with one actual complete $\lambda\ge0$ satisfying
+$G_N\lambda\ge h$. Put $M=\sum_D\lambda_D$ for that same witness.
+Hull membership alone does not supply it.
+
+The positive certificate for an actual $\Delta_O(y)\le1$ is one
+unrestricted full $V\ge0$ and $\theta\in[0,1]$ such that
+
+$$
+ \Delta_N(V)+\theta\le1,\qquad
+ \sigma_H(Q(y)-Q(V))\le\theta.\tag{220.1}
+$$
+
+No exact-$Q$, fixed-baseline, unary, suffix or terminal constraint is
+part of this search. Nonzero zero-cost $V$ is allowed at $\theta=1$.
+For the same $b\in H_N$ and same complete feasible $\lambda$,
+nonnegativity of $V$ gives the reused weak-duality calculation
+
+$$
+ F_{Q(V)}(b,e)=V\cdot h(b,e)
+ \le V\cdot G_N\lambda\le M\Delta_N(V).
+$$
+
+Adding one residual bounded by $\theta$ gives
+$F_{Q(y)}(b,e)\le M\Delta_N(V)+\theta\le\max(1,M)$.
+All independent rows enter this calculation with one allocation.
+
+### 220.2 Eligible coordinates and the original bad-pair graph
+
+**定义 220.3（Eligible-coordinate reset）。** Define
+
+$$
+ E(y)=\{a:\ C_w\le A_w\text{ for every }w\ne1^L
+                                  \text{ with }w_a=0\}.
+$$
+
+This is wordwise domination, stronger than a sign of $\beta_a$.
+For $I\subseteq E(y)$ let $f_I$ fix $1^L$, keep the first-zero bit
+$n(w)$ zero, set every other bit in $I$ to one, and keep all other bits.
+Push $A,C,P$ together by this same map, summing collisions, and keep $T$.
+The resulting score is $\rho_Iy$. For fixed $I$ this is a linear map;
+choosing $E(y)$ depends on the input.
+
+**定理 220.4（Fixed-schedule contraction and exact edge criterion）。**
+For every full nonnegative $y$ and every $I\subseteq E(y)$,
+$\rho_I$ is idempotent and preserves $Q,W$. For each fixed schedule
+$S$ and each $C=N,O$,
+
+$$
+ B_C^S(\rho_Iy)\le B_C^S(y).
+$$
+
+Every cell-label reading of a schedule avoiding $I$ is unchanged.
+Every pair touching $I$ has equal $N$ and $O$ supports after the reset.
+Consequently
+
+$$
+ B_N(\rho_Iy)=\max\left(B_O(\rho_Iy),
+       \max_{i<j,\ i,j\notin I}B_N^{ij}(y)\right),\tag{220.2}
+$$
+
+where the empty outside maximum may be zero.
+If $d\ge0$ and $\Delta_O(y)\le d$, then
+
+$$
+ \Delta_N(\rho_Iy)\le d
+ \quad\Longleftrightarrow\quad
+ B_N^{ij}(y)\le W_y+d\text{ for every pair disjoint from }I.
+ \tag{220.3}
+$$
+
+Thus $I$ must cover every edge of the graph of original pairs
+$B_N^{ij}(y)>W_y+d$. Some eligible reset is affordable precisely when
+no such edge lies wholly outside $E(y)$; the maximal reset then works.
+At $d=1$ it supplies $(V,\theta)=(\rho_{E(y)}y,0)$ in (220.1).
+A failed edge criterion rules out these resets at that budget only.
+
+**证明。** First-zero preservation follows because the earlier bits
+were already one and the first zero is kept. All first-zero class totals
+and $T$ therefore persist, proving $Q,W$ preservation. The reset bits
+already have their final values, proving idempotence.
+
+Put $U(w)=A_w+P_w$ on zero words and $U(1^L)=T$.
+For a numerical label $\ell\ge1$ the surplus above label zero is
+
+$$
+ s_\ell(w)=g_y(w,\ell)-U(w)=
+ \begin{cases}
+ C_w-A_w,&n(w)=\ell,\\
+ -(A_w+P_w),&n(w)\ne\ell,
+ \end{cases}
+ \qquad s_\ell(1^L)=-T.
+$$
+
+For any partition $\Pi$ its support is
+
+$$
+ \sum_wU(w)+\sum_{H\in\Pi}
+          \max\left(0,\max_{\ell\ge1}\sum_{w\in H}s_\ell(w)\right).
+ \tag{220.4}
+$$
+
+On the zero face of an eligible coordinate every surplus is
+nonpositive. Reset one eligible $a$, except when $n(w)=a$.
+A schedule avoiding $a$ preserves its observation cell and the
+first-zero label, so each reward reading is identical. In an $N$
+schedule querying $a$, the moved vectors leave the corresponding
+$a=0$ cell and enter its $a=1$ cell with the other reply fixed.
+The source cell is zero-dominated before and after: all remaining
+surpluses there are nonpositive. The destination receives only
+nonpositive surpluses, so its maximum surplus cannot increase.
+The total $U$ is unchanged, and (220.4) proves contraction.
+
+For $O$ with $a$ first, the source is the stopped zero cell and the
+destinations are its positive cells. If $a$ is second, the already
+stopped first-zero cell is unchanged and the same argument applies to
+the two first-positive cells. It applies to singleton and empty
+partitions as well. No numerical label has been pruned.
+
+Eligibility survives earlier resets: an output word with an unreset
+coordinate $b=0$ receives only old words with $b=0$, so the sums of
+$C-A$ there remain nonpositive. The coordinates of $I$ can therefore
+be reset successively. These commuting first-zero-preserving word maps
+compose to $f_I$, proving simultaneous contraction and exact reading
+preservation away from $I$.
+
+Afterward $w_a=0$ implies $n(w)=a$ for every $a\in I$.
+For a pair $i<j$, if $i\in I$ its $00,01$ cells are each
+zero-dominated: their only possibly rewarded numerical label is $i$
+and $C\le A$. Their maxima add to the maximum of the merged stopped
+cell. If $j\in I$, the $00$ cell is empty, since $w_j=0$ forces
+$n=j$ and hence $w_i=1$. In either case $N=O$ on this pair.
+All other $N$ entries are pairs avoiding $I$, whose original readings
+persist. This proves (220.2). Since the repaired $O$ support is at most
+$W_y+d$, (220.2) proves both directions of (220.3). A subset of $E$
+covers all bad edges if and only if $E$ does. $\square$
+
+**推论 220.5（Bounded eligibility saturation）。** Starting at $y_0=y$,
+set $y_{t+1}=\rho_{E(y_t)}y_t$. Eligibility is monotone along these
+resets. Stop when it no longer enlarges, in at most $L+1$ reset stages.
+Write $E_*$ for the terminal set and $V$ for the terminal score.
+Then $Q,W$ are unchanged, each fixed support is nonincreasing, pairs
+touching $E_*$ have $N=O$, and every pair outside $E_*$ retains its
+original $y$ readings. For $\Delta_O(y)\le d$, the saturated reset
+is affordable exactly when $E_*$ covers every original bad edge.
+
+**证明。** Each already eligible coordinate's zero face receives only
+old words on that face; its $C-A$ sums remain nonpositive.
+Each strict enlargement adds a coordinate. If no enlargement occurs,
+idempotence leaves the score fixed at the next reset. The maps commute,
+so the final score resets their union $E_*$ except at the first zero.
+Apply the touched-pair argument and outside reading equality from
+220.4 to that union. The graph is the original graph, not a sequence
+of separately chosen intermediate graphs. $\square$
+
+Single-pass failure does not rule out saturation. Saturation failure
+still does not rule out any unrestricted $(V,\theta)$.
+
+**例 220.6（Interleaved reset and its existing quotient coverage）。**
+For $3<j<k<r<s\le L$, $a\ge1$, $g>0$, $h\ge0$, write $w(Z)$ for
+the word with exactly zero set $Z$. All unlisted coefficients vanish;
+coincident contributions add. Start with
+
+$$
+\begin{array}{c|ccc}
+ Z&A&C&P\\\hline
+ \{3,j,k,r\}&a&0&0\\
+ \{3,j,k\}&0&a&0\\
+ \{j,k\}&0&1&0\\
+ \{j\}&0&0&a-1\\
+ \{r\}&h&0&0
+\end{array}
+$$
+
+Add the existing equal-triple zero core on guards $1,2,3$ and
+$J=\{j,k,s\}$: $P=g/3$ at every $w(\{i,q\})$, $P=g/6$ at
+$w(\{i\}\cup J)$, and $C=g$ at each $w(\{q\})$.
+Take $T=0$. The complete score has
+
+$$
+\begin{gathered}
+ \beta_j=1+g,\quad\beta_k=g,\quad\beta_r=-h,\quad\beta_s=g,\\
+ K=3a+13g/2+h,\quad W=2a-1+7g/2+h,\\
+ K-\sum|\beta|=3a-1+7g/2.
+\end{gathered}
+$$
+
+There is cancellation at class three, pair mass, positive stock and
+an eligible negative coordinate between positive coordinates.
+For the base without $A_h$, forgetting $r$ makes the $A=a$ and
+$C=a$ words have the same observed bits and class three. Their joint
+largest reward is $a$; the other rows have largest rewards $1$ and
+$a-1$. Thus every schedule avoiding $r$ is bounded by $2a$;
+after resetting $r$ this holds for every schedule.
+
+Every original stopped pair involving $r$ has the same bound.
+For $(3,r)$ its merged zero branch contributes at most $a$ and the
+other base rows at most $a$. For $(j,r)$ all four base rows are in
+the merged branch, with maximum $2a-1$. For $(k,r)$ that branch
+contributes $a$ and the other branch $a-1$. Any other first address
+below $r$ is one on these base words, so $r$ separates the $A=a$
+word from rows of joint maximum $a$. When $r$ is first, its zero
+branch contributes $a$, and its positive branch has all later bits
+one and maximum $a$. Short schedules are coarser. The stopped table
+$O(3,j;3,j,0)$ attains $2a$.
+
+For the core the zero-label vectors in $N$ cell order are
+$(0,7g/6,7g/6,7g/6)$ for two guards,
+$(g/2,2g/3,g,4g/3)$ for guard/positive, and
+$(g/2,g,g,g)$ for two positives. Early-label rewards are subsets
+of the zero reward; each positive reward $g$ lies in a cell with
+at least $g$ of zero reserve. Unused addresses are constantly one.
+Thus zero attains all cell maxima and both supports are $7g/2$.
+The same $O(3,j;3,j,0)$ attains that support.
+
+The extra $A_h$ has support and baseline $h$. Subadditivity and
+this common attaining table give $\Delta_O(y)=1$.
+Every $N$ pair avoiding $r$ has support at most $W+1$.
+Every word with $C>A$ has $r=1$, so $r\in E(y)$.
+Theorem 220.4 gives repaired $N$ cost at most one; the attaining
+stopped table survives and both repaired costs equal one.
+The original $N(3,r;0,3,0,j)$ collects
+$3a+h+13g/6$, with excess $a+1-4g/3$.
+Thus $a>4g/3$ gives a strict improvement of the actual input score.
+No formula for the original maximum at every parameter is asserted.
+
+At $L=7$, $(j,k,r,s)=(4,5,6,7)$ and $(a,g,h)=(2,1/2,1/2)$,
+
+$$
+ \beta=(0,0,0,3/2,1/2,-1/2,1/2),\quad K=39/4,\quad W=21/4.
+$$
+
+Here $E(y)=\{1,2,6\}$, the original costs are $(7/3,1)$, and
+$\rho_{\{6\}}y$ has costs $(1,1)$. Pair $(3,6)$ has original cell
+maxima $(2,31/12,1/2,5/2)$, whose sum is $91/12$.
+
+This example contributes no additional certificate-covered quotient.
+Its whole quotient family already has an exact-$Q$ zero-cost score.
+Indeed its base quotient has $\beta_j=1$, $\beta_r=-h$,
+$K=3a+h$. In the existing one-pivot formula XI 214.2 put
+$H=3a+h-1$. Its protection quantity is
+
+$$
+ J=\max\left(h,\frac{H+(j-2)h}{j-1},\frac{2H}{j}\right).
+$$
+
+Since $H-h=3a-1\ge2$ and $j\ge4$, each displayed term is at most
+$H-1$. Formula 214.2 therefore gives minimum zero. Adding the
+same old zero-cost core gives one exact-$Q$ zero-cost representative
+of the entire displayed family. The structural reset, edge criterion
+and bounded saturation in 220.4–220.5 are the content of this unit;
+the family illustrates their operation.
+
+### 220.3 Pooled prefix domination and one common coefficient total
+
+**定义 220.7（Joint suffix measures and the domination cone）。**
+Choose $1\le k<L$ and $m=L-k$. For words with $n(w)\le k$ reset
+all prefix bits except the first zero to one, preserving the entire
+suffix $v\in\{0,1\}^m$. Push $A,C,P$ by that same map and sum
+collisions. Tail words and $T$ remain fixed. Call the map $\rho_k$.
+It is linear, idempotent and preserves $Q,W$.
+
+On the pooled score let $u_i(v)=A+P$, $h_i(v)=C+P$ at the word
+with sole prefix zero $i\le k$ and suffix $v$. On all-prefix-one
+words let $z(v)=A+P$, with $z(1^m)=T$. For each $j>k$, let
+$r_j(v)=C+P$ on its tail first-zero class, zero elsewhere, including
+at $1^m$. All these are measures on the same suffix cube. Set
+
+$$
+\begin{gathered}
+ U=\sum_{i\le k}u_i,\quad s_i=|u_i|,\quad S=\sum_i s_i,
+ \quad Z=|z|,\quad R(H)=\max_{j>k}r_j(H),\\
+ d_i=s_i-|h_i|=-\beta_i,\quad D=\sum_i d_i,
+ \quad E=-\beta_1-\beta_2.
+\end{gathered}
+$$
+
+The cone $\mathcal D_k$ consists of inputs whose pooled measures obey
+both families of inequalities:
+
+$$
+\begin{aligned}
+ \mathrm{D1}:&\quad h_i(H_{a,t})\le u_i(H_{a,t})
+       &&(i\le k,\ a>k,\ t=0,1),\\
+ \mathrm{D2}:&\quad h_i(H)\le(U+z)(H)
+       &&(i\le k,\ H\text{ any four-cell suffix pair cell}).
+\end{aligned}\tag{220.5}
+$$
+
+Here $H_{a,t}=\{v:v_a=t\}$; full address subscripts are retained.
+For $m=1$ D2 is empty. D1 gives $0\le d_i\le s_i$.
+For $k\ge2$, $E=d_1+d_2$; for $k=1$, $\beta_2$ is unrestricted
+and $E$ can be negative. There is no pointwise $C\le A$ hypothesis.
+Tail signs, interleavings, cancellations, $P$ and $T$ are unrestricted.
+The conditions must be checked before discarding any $h_i$ or overlap
+data.
+
+**引理 220.8（Exact prefix-label inactivity and contraction）。**
+D1–D2 are equivalent to each prefix numerical label being dominated
+by zero in every legal pooled query cell. For $y\in\mathcal D_k$,
+each fixed complete $N$ or $O$ schedule satisfies
+$B_C^S(\rho_ky)\le B_C^S(y)$.
+
+**证明。** Necessity uses the mixed $N$ cell $w_i=0,v_a=t$,
+which contains only donor $i$, and the four suffix-pair cells.
+For sufficiency sum D1 over $t$ to get $|h_i|\le s_i$.
+Empty and suffix-singleton cells are dominated. In a prefix singleton
+or prefix pair, donor $i$ is on its own zero side or in $11$, and
+its total numerical reward is at most $s_i$. In a mixed pair, donor
+$i$ on the zero side satisfies D1; every other donor $\ell$ on the
+one side has $h_\ell(H)\le u_\ell(H)\le(U-u_i+z)(H)$.
+D2 covers suffix pairs. Every stopped cell is an $N$ cell or a
+union of them, so summing the same inequalities covers $O$.
+This proves equivalence without changing the output catalog.
+
+Now reduce temporarily to labels zero and $j>k$. The old full
+support bounds this reduced support, whereas on the pooled score they
+are equal by the proved domination. For the reduced labels a partition
+has support equal to its total zero reward plus
+
+$$
+ \sum_H\bigl(\max_{j>k}r_j(H)-\operatorname{base}(H)\bigr)_+.
+$$
+
+With no prefix query, each reading is unchanged. With one prefix
+query, all tail numerical mass lies on its one side. Moved zero mass
+exits a tail-reward-free zero side and enters the one side, with suffix
+replies unchanged. The former surplus is zero and the latter can only
+decrease. In a mixed stopped pair the prefix is first and its zero
+side is the stopped cell. With two prefix queries, tail numerical
+mass lies entirely in $11$; its zero mass can only increase, since
+all donors other than the two queried first-zero classes move toward
+$11$. Other cells have no tail numerical reward. This exhausts all
+fixed schedules, including shorter ones, and proves contraction.
+It is a score operation, not a source garbling or a free query.
+$\square$
+
+**定理 220.9（Exact common-$K$ reconstruction）。**
+Retain one tuple $(u_i,z,r_j,d_i,K)$ with the stated nonnegative
+first-zero-supported measures and $0\le d_i\le s_i$.
+Its prefix quotient is $\beta_i=-d_i$, and its tail quotient is
+$\beta_j=|r_j|-z(\Omega_j)$. Define
+
+$$
+\begin{aligned}
+ K_{\rm lo}&=S+z(1^m)+\sum_{v\ne1^m}\max(z(v),r_{n(v)}(v)),\\
+ K_{\rm hi}&=2S-D+z(1^m)+\sum_{v\ne1^m}(z(v)+r_{n(v)}(v)).
+\end{aligned}\tag{220.6}
+$$
+
+Here $n(v)$ is its full tail label. A canonical score in $\mathcal D_k$
+realizes these retained data if and only if
+$K_{\rm lo}\le K\le K_{\rm hi}$. The entire score is reconstructed
+using one scalar $t=(K-K_{\rm lo})/(K_{\rm hi}-K_{\rm lo})$ if the
+interval has positive width, and $t=0$ otherwise. For $s_i>0$ set
+
+$$
+\begin{aligned}
+ C_i(v)&=t(s_i-d_i)u_i(v)/s_i,\\
+ A_i(v)&=C_i(v)+d_i u_i(v)/s_i,\\
+ P_i(v)&=u_i(v)-A_i(v).
+\end{aligned}\tag{220.7}
+$$
+
+If $s_i=0$, $d_i=0$ and all three coefficients are zero.
+At a tail zero word set
+
+$$
+ P(v)=(1-t)\min(z(v),r_{n(v)}(v)),\quad
+ A(v)=z(v)-P(v),\quad C(v)=r_{n(v)}(v)-P(v),
+ \qquad T=z(1^m).\tag{220.8}
+$$
+
+Applied after pooling an input in $\mathcal D_k$, this construction
+defines a generally nonlinear idempotent map $J_k$ preserving $Q,W$.
+Every fixed support of $J_ky$ equals that of $\rho_ky$ and is at
+most its original value.
+
+**证明。** For a donor, $u=A+P$ and $|A|-|C|=d$.
+Its total coefficient cost is $s+|C|$, with
+$0\le|C|\le s-d$: pooled inactivity gives $|C+P|\le s$.
+At a tail word the same $P$ contributes to $z=A+P$ and $r=C+P$,
+so $0\le P\le\min(z,r)$. Its cost $z+r-P$ ranges from
+$\max(z,r)$ to $z+r$. The terminal cost is $z(1^m)$.
+Summing gives exactly (220.6), with $P$ paid once.
+
+Conversely (220.7)–(220.8) are nonnegative and preserve all retained
+measures and quotient entries. Their cost is
+$K_{\rm lo}+t(K_{\rm hi}-K_{\rm lo})=K$.
+For a donor the new $h_i=(1-d_i/s_i)u_i\le u_i$ pointwise,
+so D1–D2 hold. Zero donors and zero interval width have the stated
+unique formulas; both endpoints use the same scalar on all words.
+All-ones donor suffixes and multiple-zero words remain included.
+
+For an actual input the interval is feasible by necessity. On the
+pooled input and reconstructed score prefix labels are inactive and
+all zero and tail measures coincide. Each fixed support therefore
+coincides. Also $W=S+Z-E$ is unchanged. Reextracting the tuple gives
+the same $K$ and the same $t$, proving $J_k^2=J_k$.
+$\square$
+
+**定理 220.10（Complete costs and cone-restricted joint feasibility）。**
+Let $\Psi_C$ be the maximum of zero and these expressions, omitting
+pair types that do not exist:
+
+$$
+\begin{aligned}
+ &\bigl(R(\{0,1\}^m)-(S-s_i-s_h+Z)\bigr)_+
+                   &&(i<h\le k),\\
+ &\sum_{t=0,1}\bigl(R(H_{a,t})-(U-u_i+z)(H_{a,t})\bigr)_+
+                   &&(i\le k<a),\\
+ &\sum_{H\in\Pi_C(a,b)}\bigl(R(H)-(U+z)(H)\bigr)_+
+                   &&(k<a<b\le L).
+\end{aligned}\tag{220.9}
+$$
+
+The suffix $\Pi_N$ has four cells and $\Pi_O$ its actual three
+stopped cells. On a pooled score satisfying D1–D2, and on its
+canonical reconstruction,
+
+$$
+ B_C=S+Z+\Psi_C,\qquad \Delta_C=E+\Psi_C.\tag{220.10}
+$$
+
+For fixed $q=(\beta,K)$, a full score in $\mathcal D_k$ of cost at
+most $b$ exists if and only if one tuple satisfies all quotient
+equations, $0\le d_i\le s_i$, the common interval (220.6), and
+$E+\Psi_C\le b$. This is simultaneous finite convex feasibility.
+When the fiber is nonempty both class minima are attained separately;
+no equality of the two minima or common minimizer is asserted.
+
+**证明。** After prefix domination only zero and tail numerical
+rewards matter. In a prefix pair only $11$ has tail numerical reward,
+with zero mass $S-s_i-s_h+Z$. In a mixed pair the prefix-zero side
+contributes $s_i$ and the one side has zero measure $U-u_i+z$.
+This gives the same mixed expression for $N$ and $O$. A suffix pair
+has exactly the four or three cells displayed. These yield (220.9).
+
+Empty schedules are bounded by refinement. For $k\ge2$ a prefix
+singleton is bounded by a prefix pair. For $k=1$ any mixed pair
+refines that singleton. A suffix singleton is bounded by the mixed
+expression at the same suffix address, since
+$U-u_i+z\le U+z$. Thus shorter schedules are included, also when
+$m=1$. The identity $W=S+Z+\beta_1+\beta_2$ proves (220.10),
+including the possibly negative $k=1$ offset. Cost nonnegativity
+follows independently from the legal anchor.
+
+For necessity pool a feasible input; 220.8 does not increase cost.
+Retain its one tuple and apply 220.9. Conversely reconstruct that
+tuple once. This proves the equivalence. Maximum reward and positive
+part are convex in the common measures; $K_{\rm lo}$ is convex and
+$K_{\rm hi}$ linear, giving the finite convex relation.
+At fixed $K$ the original coefficient fiber is a closed subset of
+the compact nonnegative simplex of total $K$, and the costs are
+continuous maxima over a finite catalog. Each minimum is therefore
+attained. These are cone-restricted assertions, not unrestricted
+full-fiber necessity statements. $\square$
+
+After verifying D1–D2, the $h_i$ and pointwise overlap variables are
+unnecessary for costs and quotient feasibility. For $N_s=2^m$ the
+retained measure entries number
+$(k+2)N_s-1$: $kN_s$ donor entries, $N_s$ zero-tail entries and
+$N_s-1$ tail numerical entries. At fixed $Q$, $d_i,K$ are parameters.
+For $L=8,k=3$ this is $159$ rather than the $766$ original
+$A,C,P,T$ entries. It is a normal-form bound, not a global minimum
+dimension or a computation-time claim. The common suffix allocation
+and common $K$ interval cannot be discarded.
+
+**例 220.11（Nonpointwise domination and failure of automatic affordability）。**
+At $L=4,k=2$ the complete nonzero rows, in $(A,C,P)$ order, are
+
+| Word | $A$ | $C$ | $P$ |
+| --- | --- | --- | --- |
+| 0000 | 0 | 1 | 0 |
+| 0001 | 1 | 0 | 0 |
+| 0010 | 1 | 0 | 0 |
+| 0011 | 0 | 1 | 0 |
+| 1000 | 1 | 0 | 0 |
+| 1011 | 1 | 0 | 0 |
+| 1100 | 0 | 2 | 0 |
+| 1110 | 0 | 2 | 0 |
+
+Take $T=1/3$. All unspecified rows vanish. Here
+$\beta=(0,-2,2,2)$, $K=31/3$, $W=7/3$.
+The complete $(B_N,B_O)$ supports are $(8,8)$ before pooling and
+$(19/3,6)$ after it. The retained common interval is
+$[25/3,31/3]$. Donor one's singleton marginals agree, and donor
+two's zero mass covers its suffix $00,11$ excess in D2.
+Thus D1–D2 hold although $C>A$ at $0000$ and $0011$.
+
+Scaling the original by $3/17$ gives an actual unit-$O$ score.
+Its canonical reconstruction has $N$ cost $12/17$, the same $Q$,
+and residual zero. However $x=(3/11)\rho_ky$ itself is unit $O$
+and $\Delta_N(J_kx)=12/11>1$. The operation alone is not automatically
+affordable, even inside $\mathcal D_k$. This says nothing against
+a different allocation or residual certificate for $x$.
+
+**例 220.12（Stock, cancellation and signed interleaved tail）。**
+At $L=8,k=3$ take the following full nonzero rows and $T=0$:
+
+| Word | $A$ | $C$ | $P$ |
+| --- | --- | --- | --- |
+| 00001001 | 1/2 | 1/6 | 0 |
+| 00011001 | 1/3 | 0 | 0 |
+| 00011101 | 1/3 | 0 | 0 |
+| 10001001 | 1/3 | 0 | 1/4 |
+| 10011001 | 1/3 | 0 | 0 |
+| 10011101 | 1/3 | 0 | 0 |
+| 11001001 | 1/3 | 0 | 0 |
+| 11011001 | 1/3 | 0 | 0 |
+| 11011101 | 1/3 | 0 | 0 |
+| 11101001 | 0 | 1 | 0 |
+| 11110111 | 1/2 | 0 | 0 |
+| 11111001 | 0 | 1 | 0 |
+| 11111011 | 1/5 | 1/5 | 1/3 |
+| 11111101 | 0 | 1 | 0 |
+| 11111110 | 1/4 | 0 | 0 |
+
+Then
+
+$$
+ \beta=(-1,-1,-1,1,-1/2,1,1,-1/4),\quad
+ K=121/15,\quad W=27/10,\quad K-\sum|\beta|=79/60.
+$$
+
+D1–D2 hold. Both costs are $13/4$ before pooling and $13/6$
+afterward. Scaling by $4/13$ gives unit $O$ and a same-$Q$ canonical
+score of $N$ cost $2/3$. Early and late pair mass, cancellation,
+negative tail coordinates and zero terminal mass are all present.
+
+**反例 220.13（Nonpositive totals cannot replace cell domination）。**
+At $L=5,k=3$ use $P=T=0$ and the following rows:
+
+| Word | $A$ | $C$ | $P$ |
+| --- | --- | --- | --- |
+| 01110 | 1 | 0 | 0 |
+| 10001 | 0 | 3 | 0 |
+| 10011 | 1 | 0 | 0 |
+| 10111 | 2 | 0 | 0 |
+| 11000 | 1 | 0 | 0 |
+| 11010 | 1 | 0 | 0 |
+| 11011 | 0 | 2 | 0 |
+
+Here $\beta=(-1,0,0,0,0)$, $K=11$, $W=5$.
+Pooling moves $C=3$ from $10001$ to $10101$ and $A=1$ from
+$10011$ to $10111$. D1 fails for donor two at suffix address
+four, reply zero: $h_2=3>u_2=0$. The complete support catalog is
+
+| Schedule | $N$ before | $N$ after | $O$ before | $O$ after |
+| --- | --- | --- | --- | --- |
+| empty | 6 | 6 | 6 | 6 |
+| 1 | 6 | 6 | 6 | 6 |
+| 2 | 6 | 6 | 6 | 6 |
+| 3 | 6 | 6 | 6 | 6 |
+| 4 | 8 | 8 | 8 | 8 |
+| 5 | 6 | 6 | 6 | 6 |
+| 1,2 | 6 | 6 | 6 | 6 |
+| 1,3 | 6 | 6 | 6 | 6 |
+| 1,4 | 8 | 8 | 8 | 8 |
+| 1,5 | 6 | 6 | 6 | 6 |
+| 2,3 | 8 | 6 | 6 | 6 |
+| 2,4 | 9 | 9 | 6 | 6 |
+| 2,5 | 8 | 8 | 8 | 8 |
+| 3,4 | 8 | 10 | 6 | 9 |
+| 3,5 | 8 | 8 | 6 | 6 |
+| 4,5 | 9 | 9 | 8 | 8 |
+
+Thus $B_N:9\to10$ and $B_O:8\to9$. A sign-only hypothesis
+cannot justify either pooling or dropping prefix numerical rewards.
+This is a counterexample to that weakening, not an original separation.
+
+### 220.4 Interior masks and the exact transfer residual
+
+**定义 220.14（Interior erasure without renumbering）。** For any
+$E\subseteq\{3,\ldots,L\}$ let $f_E$ set exactly these bits to one,
+without changing the addresses. Put $k_E(w)=n(f_E(w))$, or $\infty$
+if the image is $1^L$. Define $z=\mathcal T_Ey$ as follows.
+If the original first zero is retained, push $A,C,P$ separately to
+$f_E(w)$. If it is erased, discard $C_w$ and route $A_w+P_w$ as
+$A$ to the new first-zero word, or as $T$ if terminal. Keep original
+$T$ and add coincident contributions. The ambient $L$ addresses,
+all words, labels and independent event rows remain. This transforms
+proof weights, not sources or acquisition probability laws.
+
+**定理 220.15（Commuting contractions and cumulative transfer cuts）。**
+For every full nonnegative $y$ and any masks $D,E\subseteq\{3,\ldots,L\}$,
+$\mathcal T_E$ is positive linear and idempotent, and
+
+$$
+ \mathcal T_D\mathcal T_E=\mathcal T_{D\cup E},\quad
+ W_z=W_y,\quad K_z=K_y-C_E,\quad B_C(z)\le B_C(y)
+ \quad(C=N,O),\tag{220.11}
+$$
+
+where $C_E=\sum_{n(w)\in E}C_w$. Hence both costs are nonincreasing.
+For $\gamma=\beta(y)-\beta(z)$, the first two entries vanish;
+at erased $j$, $\gamma_j=\beta_j(y)$, and at retained late $k$,
+
+$$
+ \gamma_k=\sum_{n(w)\in E,\ k_E(w)=k}(A_w+P_w).
+$$
+
+For every $3\le t\le L$ let $R_t=\sum_{j\le t}\gamma_j$.
+The exact transfer identity is
+
+$$
+ R_t=\sum_{n(w)\in E,\ n(w)\le t}C_w
+   +\sum_{n(w)\in E,\ k_E(w)\le t}P_w
+   -\sum_{n(w)\in E,\ n(w)\le t<k_E(w)}A_w.\tag{220.12}
+$$
+
+Infinity never satisfies $k_E(w)\le t$. The one final residual is
+
+$$
+\begin{aligned}
+ \Theta_E&=\sigma_H(Q(y)-Q(z))\\
+ &=\max\left(0,\max_{3\le t\le L}\frac{R_t}{t-1},
+       \max_{3\le t\le L}
+       \frac{3R_t+(t-2)(R_L-C_E)}{t+1}\right).
+\end{aligned}\tag{220.13}
+$$
+
+In particular $\Theta_E=0$ if and only if every $R_t\le0$.
+These are exact zero-charge cuts for this operation, not conditions
+necessary for an unrestricted certificate.
+
+**证明。** Retained first-zero classes keep their coefficient types.
+An erased late $A$ becomes late $A$ or terminal mass, contributing the
+same baseline and total cost. An erased $P$ does the same. Erased late
+$C$ had no baseline and is the only discarded cost. This proves the
+$W,K$ identities. Subtracting the class totals gives $\gamma$.
+In its cumulative sum, an erased $A$ cancels once it arrives, remains
+negative while crossing the cut, and an erased $P$ contributes only
+on finite arrival. Discarded $C$ contributes at its old address.
+This proves (220.12), including terminal arrivals.
+
+For support contraction, every erased bit is one on the image support,
+and an output label in $E$ earns zero. Replace such an output in a
+new table by zero; rewards cannot decrease. Fix replies to erased
+requests to one and delete those requests. The remaining empty,
+singleton or pair table is legal in the same catalog. In $O$ the
+remaining schedule is increasing and stops at its first queried zero.
+For an original retained first zero the rewards agree, since its
+label and all remaining queried bits agree. For an erased first zero
+the remaining outputs exclude its old label, so its old reward is
+exactly $(A+P)[\ell=0]$, equal to the transformed reward. The discarded
+$C$ earns nothing. The terminal word agrees as well. Thus each new
+table reward is at most the reward of an original legal table.
+Maximizing proves the two support contractions without restricting
+any earlier or unqueried retained output.
+
+For composition the final bit word is $f_{D\cup E}(w)$.
+Original $C$ survives precisely when its original first zero survives
+both masks. Original $P$ becomes base precisely when that zero is
+erased, and then follows subsequent retained first zeros to the final
+word or terminal. Original $A$ follows the same route. These
+coefficientwise observations prove composition, commutation and
+idempotence, also for overlapping masks.
+
+Reuse the full hull vertices of VI 198.5:
+$o=0$, $p=(1,0,\ldots;0)$,
+$u_t=(1/(t-1)\text{ on the first }t,0\text{ later};0)$, and
+$v_t=(1\text{ on the first }t,e_t\text{ later};e_t)$ with
+$e_t=(t-2)/(t+1)$, $3\le t\le L$.
+The early residuals vanish, so $o,p$ read zero.
+The other readings are $R_t/(t-1)$ and
+$[3R_t+(t-2)(R_L-C_E)]/(t+1)$, proving (220.13).
+Zero charge forces every $R_t\le0$ through $u_t$.
+Conversely these inequalities give $R_L-C_E\le0$ since $C_E\ge0$,
+so all displayed readings are nonpositive. This proves sufficiency
+and all closed equality cases. $\square$
+
+**推论 220.16（One-pivot landing with the same final budget）。**
+Suppose an actual full $y$ has $\Delta_O(y)\le1$ and a mask $E$
+lands in a quotient $Q(z)$ with at most one positive late coordinate.
+The existing signed one-pivot minimum XI 214.2 gives one full $V$
+with $Q(V)=Q(z)$ attaining both unrestricted exact-$Q(z)$ minima,
+with common value $d_*(Q(z))$. If every $R_t\le0$, then $(V,0)$
+satisfies (220.1). With positive charge it supplies a certificate
+precisely when this chosen score and residual obey
+
+$$
+ d_*(Q(z))+\Theta_E\le1.\tag{220.14}
+$$
+
+**证明。** Any full score has $K\ge\sum|\beta|$, so the supplier's
+stock hypothesis holds for $z$. Its attaining score satisfies
+$d_*\le\Delta_O(z)\le\Delta_O(y)\le1$. Its exact quotient leaves
+residual $\Theta_E$. At zero charge this proves (220.1); at positive
+charge the additional inequality (220.14) is required. For the same
+$b\in H_N$ and same feasible $\lambda$,
+
+$$
+ F_{Q(y)}(b,e)\le M d_*+\Theta_E\le\max(1,M).
+$$
+
+The latter conclusion uses (220.14), not unit $O$ alone.
+For a union of masks compute its final residual once; separately
+optimized per-coordinate residuals are not separate budgets.
+$\square$
+
+The one-pivot minimum and its water filling are reused suppliers.
+Terminal masks are the existing operation of XII 218.8–218.9;
+they add no separate scope here. No proof establishes an affordable
+landing mask for every unit-$O$ input.
+
+**例 220.17（A full zero-terminal input and explicit zero-cost landing）。**
+For every $L\ge10$ and $\rho\ge0$, take
+
+$$
+\begin{array}{c|ccc}
+ Z&A&C&P\\\hline
+ \{3,9,10\}&1/2&0&\rho\\
+ \{4,9,10\}&1/3&0&0\\
+ \{5,9,10\}&1/6&0&0\\
+ \{6,9\}&0&1/2&0\\
+ \{7,10\}&0&1/2&0\\
+ \{8\}&0&1/3&0
+\end{array}
+$$
+
+All other coefficients and $T$ vanish. Then
+
+$$
+\begin{gathered}
+ \beta=(0,0,-1/2,-1/3,-1/6,1/2,1/2,1/3,0,\ldots),\\
+ K=7/3+\rho,\quad W=1+\rho,\quad K-\sum|\beta|=\rho.
+\end{gathered}
+$$
+
+The full $N(9,10;0,6,7,8)$ collects all $7/3+\rho$ coefficient
+mass. In any stopped table output three can be replaced pointwise by
+zero without loss, since it earns only the pair mass. The remaining
+useful labels $0,6,7,8$ have total rewards
+$1+\rho,1/2,1/2,1/3$. A stopped table has at most three cells;
+any three label totals sum to at most $2+\rho$.
+The table $O(6,7;6,7,0)$ attains it. Therefore the complete costs
+are $\Delta_N=4/3$, $\Delta_O=1$.
+
+Erase $E=\{3,\ldots,L\}\setminus\{6\}$.
+The result has $C=1/2$ at $w(\{6\})$ and $T=1+\rho$.
+The discarded $C_E=5/6$, and the complete cuts are
+
+$$
+ R_3=-1/2,\quad R_4=-5/6,\quad R_5=R_6=-1,
+ \quad R_7=-1/2,\quad R_t=-1/6\ (t\ge8).
+$$
+
+Thus $\Theta_E=0$. An explicit final score, with $H=1+\rho$, is
+$P=H/6$ at $w(\{i,6\})$ for $i=1,\ldots,5$,
+$T=H/6$, and $C=1/2$ at $w(\{6\})$.
+It has the landing quotient, $W=H$ and both supports $H$.
+Indeed a cell containing the pivot correct atom has zero reserve at
+least $4H/6$: two guards exclude at most two of the five pair atoms;
+a guard and pivot leave four; pivot and an inactive coordinate leave
+five. Short schedules leave at least as much. Since $4H/6\ge1/2$,
+label six cannot beat zero. Guard labels are pointwise dominated by
+zero and all other labels earn nothing. This covers every schedule
+and earlier or unqueried output. Thus $(V,0)$ is one certificate.
+No exclusion of all older exact-$Q$ or convex/polar constructions is
+claimed for this example.
+
+**反例 220.18（Arrived pair mass is essential）。** At $L=5$ put only
+$P=1$ at $w(\{4,5\})$ and erase $E=\{4\}$.
+Although old $\beta_4=0$, the pair mass becomes $A=1$ at
+$w(\{5\})$, so the residual has $\gamma_5=1$ and $C_E=0$.
+Formula (220.13) gives $\Theta_E=1$, attained at $v_5$.
+Both scores themselves have zero query cost. Thus a zero old net
+coordinate does not make interior erasure free, and dropping the
+arrived-$P$ term in (220.12) gives a false accounting rule.
+This is an operation counterexample, not a separation of the original
+classes.
+
+### 220.5 An actual joint block funding queried-label gates
+
+**定义 220.19（Fixed remainder, zero-face funding and singleton gates）。**
+Take one full feasible allocation $\lambda=\kappa+\eta$ with masses
+$M-s$ and $s$. Suppose $\eta$ outputs only $\mathcal A\cup\{0\}$,
+where $\mathcal A\subseteq\{1,\ldots,L\}$. For its actual wordwise
+output measures write
+
+$$
+ r_w=(1-M)e_{R(w)}+\kappa_w,\qquad
+ \delta_a=\max\left(0,b_a-e-\min_{w\in\Omega_a}r_w(a)\right),
+ \quad \zeta_a=\min_{w:w_a=0}\eta_w(a).
+ \tag{220.15}
+$$
+
+The remainder may be signed. The maximum with zero makes a gate mass
+nonnegative; it does not clip an original event demand.
+The stopped singleton $O(a;a,0)$ queries $a$, outputs $a$ on zero
+and zero on one. All minima in (220.15) use the same actual block and
+fixed remainder.
+
+**定理 220.20（Same-block gate retraction and its exact operational scope）。**
+If $\delta_a\le\zeta_a$ for every $a\in\mathcal A$, replace the
+entire $\eta$ by $\delta_a$ units of each gate $O(a;a,0)$ and
+$s-\sum_a\delta_a$ units of empty output zero. Keep $\kappa$.
+The new allocation has exactly mass $M$ and satisfies every original
+event row. Base and independent pair rows improve pointwise;
+correct rows remain feasible but need not improve pointwise.
+If $\kappa$ is already $O$, the result is an $O$ witness.
+If $\kappa$ belongs to the existing $W_N$ catalog of VI 190.2,
+VI 194.1 then supplies a same-mass $O$ witness.
+For arbitrary $\kappa$ this is only a feasible $N$ surgery.
+
+The inequalities are necessary as well as sufficient for this specified
+fixed-remainder singleton replacement whose positive output coordinates
+are componentwise dominated by the old block. They are not necessary
+for general $O$ feasibility or arbitrary surgery.
+
+**证明。** Define $q_w(a)=\delta_a[w_a=0]$.
+It is at most $\eta_w(a)$ on the zero face by hypothesis and off
+that face by nonnegativity. Choose a single word with every bit in
+$\mathcal A$ zero. At this word the bounds coexist, giving
+$\sum_a\delta_a\le\sum_a\eta_w(a)\le s$.
+Thus the empty-zero mass is nonnegative and the common block is funded.
+
+Now $q_w(0)=s-\sum_aq_w(a)$, whereas
+$\eta_w(0)=s-\sum_a\eta_w(a)$.
+Their difference is $\sum_a(\eta_w(a)-q_w(a))\ge0$,
+proving every base row, including the positive word.
+For each first-zero label $n$ independently,
+
+$$
+ q_w(0)+q_w(n)
+ =s-\sum_{a\ne n}q_w(a)
+ \ge s-\sum_{a\ne n}\eta_w(a)
+ =\eta_w(0)+\eta_w(n).
+$$
+
+For $n\notin\mathcal A$ the numerical coordinates are zero in both
+blocks. This proves the pair rows separately, without replacing them
+by a sum of separately minimized singleton bounds.
+On $\Omega_a$, the new correct coordinate is $r_w(a)+\delta_a$,
+whose minimum is at least $b_a-e$. Outside $\mathcal A$ the old
+block supplied no correct mass, so the unchanged remainder already
+satisfies its correct demand. This covers negative demands as well.
+Adding the same remainder proves all rows even if it is signed.
+
+For necessity a candidate gate mass $t_a$ must be at least
+$\delta_a$ to meet the correct demand and at most $\zeta_a$ to be
+componentwise dominated on the zero face. This gives exactly the
+stated criterion. The construction treats empty $\mathcal A$,
+zero masses, ties and closed endpoints with the same inequalities.
+For $W_N$ invoke VI 194.1 after this replacement; that supplier
+preserves mass, improves base/pair coordinates and correct-class
+lower envelopes, without asserting pointwise correct dominance.
+$\square$
+
+For precision, $W_N$ allows every empty output; singleton $i$ uses
+$\{0,i\}$ on zero and $\{0,i+1,\ldots,L\}$ on one.
+Its pair $i<j$ allows $\{0,i\}$ on $00,01$,
+$\{0,i+1,\ldots,j\}$ on $10$, and
+$\{0\}\cup(\{i+1,\ldots,L\}\setminus\{j\})$ on $11$.
+$W_O$ additionally shares the first two outputs. These are sufficient
+witness catalogs, never restrictions on full competitors.
+
+Whenever this operation yields an $O$ witness $\mu$ of the same mass,
+for every full nonnegative score
+
+$$
+ F_{Q(y)}(b,e)=y\cdot h(b,e)
+ \le\sum_D\mu_D\,y\cdot(z_D-r)\le M\Delta_O(y).
+ \tag{220.16}
+$$
+
+Thus at this same point an actual unit-$O$ score cannot give
+$F_{Q(y)}>M$. No proof supplies a qualifying decomposition at every
+point or constructs an unrestricted $(V,\theta)$ for every input.
+
+**例 220.21（Four distinct labels and a joint Hamming block）。**
+Take four pairwise distinct labels $a_{00},a_{01},a_{10},a_{11}$,
+each strictly before suffix addresses $i<j$, $L\ge j$, and $h\ge0$.
+One table $N(i,j;a_{00},a_{01},a_{10},a_{11})$ has mass $h$.
+For each label with code $(u,v)$ add two mass-$h$ donors, one for
+$(a_{uv},i)$ and code bit $u$, one for $(a_{uv},j)$ and bit $v$:
+for bit zero use $N(a_{uv},k;0,a_{uv},0,0)$;
+for bit one use $N(a_{uv},k;a_{uv},0,0,0)$.
+These nine actual tables form one block $\eta$ of mass $9h$.
+Distinctness is essential to the following coordinate identity.
+
+For every word on the zero face of $a_{uv}$, with
+$p=(w_i,w_j)$,
+
+$$
+ \eta_w(a_{uv})=h\bigl([p=(u,v)]+d_H(p,(u,v))\bigr).
+ \tag{220.17}
+$$
+
+At Hamming distances zero, one and two this is $h,h,2h$.
+The code table contributes only at its code; the two donors each
+contribute on the corresponding mismatch. Thus each zero-face minimum
+is $h$, including on the actual first-zero class. With $w_{a_{uv}}=1$
+the donors give zero; choosing a different suffix code gives zero
+also from the code table. Its global coordinate minimum is zero.
+It therefore is not a global suffix-only block.
+
+If all actual remainder deficits are at most $h$, replace all nine
+tables together. At equal deficits $h$, four gates of mass $h$ and
+empty zero of mass $5h$ suffice. At a word with all four proposed
+labels zero the four lower masses coexist and are paid once.
+Theorem 220.20 supplies every row and resource conclusion. This is
+not a separately normalized replacement of the code table alone.
+
+**例 220.22（A compensated occurrence inside the actual $H_N$）。**
+At $L=6$ use code labels $1,2,3,4$, suffix addresses $5,6$, and
+$h=1/25$. Set
+
+$$
+ (b_1,\ldots,b_6;e)
+ =(12/25,12/25,12/25,21/50,21/50,9/25;6/25).
+ \tag{220.18}
+$$
+
+The nine-table block is that of 220.21. The fixed stopped remainder
+$\kappa$ is the following complete allocation of mass $3/5$:
+
+| Table | Weight |
+| --- | --- |
+| $O(1,2;0,2,3)$ | 2/25 |
+| $O(1,2;1,2,3)$ | 1/50 |
+| $O(1,2;1,2,4)$ | 3/50 |
+| $O(1,3;1,3,0)$ | 3/50 |
+| $O(1,4;1,4,0)$ | 1/50 |
+| $O(2,3;0,3,0)$ | 1/50 |
+| $O(2,3;0,3,4)$ | 1/50 |
+| $O(2,4;0,4,0)$ | 1/25 |
+| $O(3,5;0,5,0)$ | 1/10 |
+| $O(4,5;0,5,0)$ | 3/50 |
+| $O(4,5;0,5,6)$ | 1/50 |
+| $O(4,6;0,6,0)$ | 1/50 |
+| $O(5,6;0,6,0)$ | 2/25 |
+
+Then $\lambda=\kappa+\eta$ has mass $24/25$ and its affine
+anchor fill is $R/25$, producing one probability law $p_N$.
+Equivalently add $R/25$ to $\lambda$ to obtain one feasible mass-one
+configuration; its $G$ column is zero. Replace the whole block by
+four gates of mass $1/25$ and empty zero of mass $1/5$, giving one
+stopped law $p_O$ with the same total mass and anchor fill.
+
+All hull coordinates are nonincreasing and positive, $b_2=b_3$,
+and $b_6\ge e$. The tail sum is $42/25=7e$; the other hull
+expression equals $12/25\le1$. Feasibility is supplied by the full
+$3(2^6-1)+1=190$ independent rows, not inferred from this hull check.
+The rowwise class minima of the two actual laws are
+
+| First zero | $N$ base | $N$ correct | $N$ pair | $O$ base | $O$ correct | $O$ pair |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 13/25 | 6/25 | 19/25 | 13/25 | 6/25 | 19/25 |
+| 2 | 12/25 | 6/25 | 19/25 | 13/25 | 6/25 | 19/25 |
+| 3 | 13/25 | 6/25 | 19/25 | 13/25 | 6/25 | 19/25 |
+| 4 | 27/50 | 9/50 | 19/25 | 31/50 | 9/50 | 4/5 |
+| 5 | 29/50 | 9/50 | 19/25 | 31/50 | 9/50 | 4/5 |
+| 6 | 33/50 | 3/25 | 39/50 | 7/10 | 3/25 | 41/50 |
+
+Positive base is $19/25$ for $N$ and $4/5$ for $O$.
+Compare each row with $1-b_n-e$, $b_n-e$, $1-e$.
+These are minima over all words in each class of these same laws;
+the minimizing words need not coincide. In particular class-two
+pair minimum $19/25$ is not the sum $12/25+6/25$ of independent
+singleton minima.
+
+For a direct formula put $x_j=w_j$. The gated base polynomial is
+
+$$
+\begin{aligned}
+50p_O(w,0)={}&32-2x_1-2x_2-3x_3-3x_4-4x_5\\
+ &+2x_1x_2+3x_1x_3+x_1x_4+x_2x_3+2x_2x_4\\
+ &+5x_3x_5+3x_4x_5+x_4x_6+4x_5x_6.
+\end{aligned}\tag{220.19}
+$$
+
+Write $\sigma_1=00,\sigma_2=01,\sigma_3=10,\sigma_4=11$ and
+
+$$
+ D(w)=1+\sum_{a\le4:\ w_a=0}
+                   (d_H((x_5,x_6),\sigma_a)-1)\ge0.
+$$
+
+For a fixed two-bit word only its matching code contributes $-1$;
+the other terms are zero or one, proving the displayed inequality.
+The listed allocations give
+
+$$
+\begin{gathered}
+ p_N(w,0)=p_O(w,0)-D(w)/25,\\
+ p_O(w,n)=b_n-e\quad(w\in\Omega_n),\\
+ p_N(w,n)=p_O(w,n)+[\,(x_5,x_6)=\overline{\sigma_n}\,]/25
+                   \quad(n\le4),
+\end{gathered}\tag{220.20}
+$$
+
+and the correct coordinates coincide for $n=5,6$.
+The polynomial follows by summing the thirteen stopped tables and
+four gates; the Hamming identity gives the base difference and the
+extra correct coordinate. Evaluating the remaining Boolean variables
+in each first-zero class gives the displayed class minima, proving
+all 190 rows with the independent pair event retained.
+
+For the entire nine-table block all four actual deficits and all four
+zero-face minima are exactly $1/25$. If the eight donors are kept in
+the remainder and only the code table is replaced by constants,
+each of four labels requires $1/25$: $4/25$ is required from a block
+of mass $1/25$. If the whole block is replaced by its least-demand
+constants, the remaining constant-zero mass is $5/25$.
+At the positive word the unchanged remainder contributes $11/25$,
+so base becomes $16/25<19/25$. Gates instead give base $20/25$.
+These are obstructions to those local constant operations at this
+actual feasible point. The two actual laws both satisfy the cap;
+there is no original $N/O$ separator here.
+
+**推论 220.23（Positive vanishing marked-law family with attained closed cap）。**
+For every $0<t\le1$, multiply all six amplitudes in (220.18) and
+its cap by $t$. Mix each of the padded $N$ and gated $O$ laws with
+empty zero of mass $1-t$. Each is one mass-one law and one complete
+allocation. Use the original marked amplitude sequence
+
+$$
+ a_n(t)=
+ \begin{cases}
+ t b_n,&n\le6,\\
+ (6t/25)2^{-(n-7)},&n\ge7.
+ \end{cases}
+ \qquad \varepsilon(t)=6t/25.\tag{220.21}
+$$
+
+This sequence is positive, nonincreasing and vanishes. Both classes
+have actual hard-two acquisitions satisfying the closed cap on every
+source, with equality at an actual first-zero-seven source.
+
+**证明。** The hull tail equality scales and the other expression
+is $12t/25\le1$. Mixing with all-base mass $1-t$ scales each correct
+row by $t$, sends base to $1-t+t p(0)$ and pair to $1-t+t p(\{0,n\})$.
+Thus all finite cap demands remain satisfied by the same allocation.
+The scaled code-only deficit is $4t/25>t/25$; whole-block constants
+still miss the positive row by $3t/25$.
+On the finite positive word $N$ base is $1-6t/25$ and $O$ base is
+$1-t/5$. At each actual $n>6$, the exact marked-law errors are
+
+$$
+ \max(6t/25,a_n(t))\quad\text{and}\quad
+ \max(t/5,a_n(t)),\tag{220.22}
+$$
+
+respectively. Since $a_7(t)=\varepsilon(t)$ and the later terms
+halve, both satisfy the cap and both attain it at first zero seven.
+The actual-source and same-seed construction below realizes these
+finite laws on the unchanged carrier. This proves a family of
+attainers, not a sharp universal cost or full amplitude classification.
+The algebraic $t=0$ degeneration is not in this positive family.
+$\square$
+
+### 220.6 Original sources, actual requests and closed-tail correspondence
+
+**约定 220.24（Unchanged source and full tape carrier）。** Reuse the
+source of Boundaries 35.2 and the resource contract of 90.1.
+With $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$, it is
+
+$$
+ X=\{(r,z):r\text{ prime},\ z\in\mathbb Z,
+          \lceil F_r/10\rceil\le z\le\lfloor F_r/5\rfloor\},
+ \quad N_x=1+F_rz,\quad q_i(x)=[p_i\mid N_x].
+$$
+
+Replies are static. Every source has finite prime support and a finite
+first absence. For every finite set of prime addresses, 35.2's entry-rank,
+CRT and Fibonacci-window construction gives every prescribed pattern.
+Choose a sufficiently large prime $r$ with $F_r$ coprime to the finite
+prime product and a window longer than that product. The residue of $z$
+is $-F_r^{-1}$ for a desired positive answer and zero for a desired
+zero answer. Select an integer in the allowed window in that CRT class.
+The resulting source witnesses are fixed before the seed. The finite
+positive word represents actual later first zeros; it is not an
+infinite all-positive source. No probability measure on $X$ is used.
+
+The tape carrier is the original full Borel disjoint union of interval
+copies $B_j,P_j$ of $(0,1)$. The unchanged consumer reports unknown on
+$B_j$ and proposes $j$ on $P_j$. The original nonatomic family remains
+
+$$
+ \mu_x=(1-h_0)\nu_x+h_0\pi_{\omega(N_x)},\qquad0<h_0<1,
+ \quad t(x)=\sum_i3^{-i}q_i(x),
+$$
+
+where $\nu_x$ has normalized density proportional to $\exp(t(x)u)$
+on $B_{n(x)}$ and $\pi_j$ is uniform on $P_j$.
+Distinct original marks $\theta_j=(B_1,1/(j+2))$ define the separately
+selected targets
+
+$$
+ \lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                        +a_{n(x)}\delta_{\theta_{n(x)}}.
+$$
+
+Here $1\ge a_1\ge a_2\ge\cdots>0$ and $a_n\to0$.
+A finite marked law has TV one from each original nonatomic target;
+these selected targets do not replace $\mu_x$. Competitors retain
+arbitrary full-carrier outputs. All score resets and masks act only
+on proof weights; they do not change any source bit, tape, target or
+acquired transcript.
+
+**约定 220.25（One seed and a hard count of actual requests）。**
+One source-independent uniform $U\in[0,1)$ chooses the whole finite
+table and schedule before any reply, using fixed intervals of the
+normalized weights. $N$ obtains its complete preselected schedule.
+$O$ follows its increasing preselected schedule and stops at the first
+queried zero or exhaustion. Each output is the indicated original mark,
+followed by the unchanged consumer. A common refinement of two interval
+partitions permits two laws on the same $U$; it is not another seed.
+Every finite rule has measurable finite handoff at every source and seed.
+The hard bound is two actual requests, including ignored or repeated
+requests. Zero advice, arbitrary addresses, sourcewise almost-sure
+finite handoff and uniform all-source/all-Borel TV remain in force.
+No runtime, mean count, query depth proxy, source index, prior, restart
+or adaptive second-address replacement supplies this contract.
+
+The nine tables of 220.21 are actual $N$ pairs. The four gates are
+actual singleton $O$ tables. The thirteen tables of 220.22 are actual
+increasing stopped pairs. The padded mass-one laws are therefore
+realized directly with the same source-independent seed. The request
+deletion in the mask proof compares legal finite tables and never
+provides an uncounted probe on a source.
+
+A cone allocation of mass $M$ has affine vector
+$(1-M)e_R+\sum\lambda_De_D$, which can be signed when $M>1$.
+It cannot then be executed as a probability law. Reuse the radial
+filling of VI 196.1: execute weights $\tau\lambda_D$ and anchor
+mass $1-\tau M$ only for
+
+$$
+ 0\le\tau\le1/\max(1,M).
+$$
+
+The identity is $r+\tau G\lambda\ge r+\tau h$
+with amplitudes $\alpha+\tau(b-\alpha)$ and cap $\tau e$.
+Transport to a positive vanishing sequence additionally requires all
+its amplitude, order and actual-tail conditions; this affine identity
+alone supplies no such sequence. The concrete family 220.23 already
+has one padded mass-one law and needs no extra funding.
+
+**约定 220.26（Full-row transport and exact actual tails）。**
+The suppliers 109.1, 110.1–110.2 and IX 207.20 are reused at their
+stated scopes. The degree-two stopped-kernel criterion 109.1 is for
+probability-vector kernels with $c\ge H$ and a common schedule-mass
+budget, not arbitrary scores. Exact closed-cap transport 110.2 retains
+arbitrary-address and full-carrier competitors in both directions.
+Its necessity uses measurable projection, countability to choose one
+common conull finite-handoff seed event over sources, vanishing tails
+of the maximum address of the same whole preselected schedule, actual
+finite witnesses, finite-execution cutoffs and finite-catalog compactness.
+Its sufficiency executes one normalized complete allocation satisfying
+all independent base, correct, pair and positive rows.
+
+If the actual output law $p_x$ is supported on
+$\{\theta_0,\ldots,\theta_H\}$ and the actual first zero is
+$n=n(x)>H$, its exact marked-law error is
+
+$$
+ \operatorname{TV}(p_x,\lambda_x^a)
+                   =\max(1-p_x(0),a_n).\tag{220.23}
+$$
+
+The two laws can overlap only at $\theta_0$, so their total common
+mass is $\min(p_x(0),1-a_n)$; its complement gives (220.23).
+Thus this tail error is at most $\varepsilon$ exactly when
+$p_x(0)\ge1-\varepsilon$ and $a_n\le\varepsilon$.
+Finite output support alone does not identify the laws at different
+actual sources with the same low prefix.
+
+A sufficient additional hypothesis for a common tail law is execution
+of one finite probability-vector kernel $P$ on $\{0,1\}^H$: its
+source-independent seed selects the whole schedule and table, all
+observed coordinates lie in $\{1,\ldots,H\}$, and its output uses
+only that seed and the acquired replies. Then
+$p_x=P(q_1(x),\ldots,q_H(x))$. Every actual $n(x)>H$ has low word
+$1^H$; for the same seed the executed low transcripts and outputs
+therefore agree on all these sources. Hence
+$p_x=P(1^H)=p_{1^H}$ and (220.23) becomes
+$\max(1-p_{1^H}(0),a_n)$ under this additional hypothesis.
+Here $1^H$ denotes a finite input word, not an infinite all-positive
+source. In particular the laws in 220.23 observe only addresses
+$1,\ldots,6$, so this substitution at $H=6$ yields (220.22).
+The low-coordinate hypothesis qualifies this substitution only;
+the original arbitrary-address/full-carrier competitors retain the
+entire scope of 90.1 and 110.2.
+
+The equality case $a_n=\varepsilon$ is retained. The active length
+is the strict threshold $L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$.
+No chosen address is assumed at most $L_a$. The two horizon orderings
+use 207.20: extend a shorter active representation with actual tail
+rows when its amplitudes are at most the cap; restrict a longer
+representation and project surplus labels when making a shorter
+comparison. A restricted kernel is not thereby an original attainer
+on removed active tails. Neither score operation extends this supplier.
+
+The earlier-output regression remains literal. At $0100$,
+$N(3,4;1,0,0,0)$ outputs the earlier unqueried label one.
+Its base/correct/pair event readings are $(0,1,1)$; replacing this
+output by zero gives $(1,0,1)$. The original source $(19,436)$ has
+$N=1822917$ and realizes that four-bit pattern. Labels are not pruned
+to queried or later labels in the full catalog.
+
+**例 220.27（Reused normalized companions and their exact row scopes）。**
+The four stopped tables
+
+$$
+ O(1,2;1,2,0),\quad O(1,2;1,2,3),\quad
+ O(1,3;1,3,0),\quad O(2,3;2,3,0)
+$$
+
+with weights $1/4$ form one old law. Its $N$ completions use the same
+seed and acquire the whole pair, counting any ignored reply.
+At first zero one or two correct mass is at least $3/4$ and pair
+mass at least $3/4$. At three base/correct/pair are $(1/4,3/4,1)$;
+after three they are $(3/4,0,3/4)$; positive base is $3/4$.
+Thus at finite horizon $H\ge3$ it supplies every independent row
+for $b_1=b_2=b_3=1$, $b_4=\cdots=b_H=e=1/4$, including negative
+base demands. At $H=7$ this is $382$ rows and one mass-one $H_N$
+witness. For the exact score in 220.6, $F_Q(b,e)=-31/16$, so it is
+not a separator. Extend with $a_4=\cdots=a_8=1/4$ and
+$a_n=2^{-(n-8)}/4$ for $n\ge9$. Its actual tail error beyond the
+seven-address demonstration horizon is $1/4$, including $a_8=e$.
+The active length is three, distinct from that horizon.
+
+At $H=10$ the same law verifies all $3070$ rows. A different reused
+extension is $a_1=a_2=a_3=1$ and
+$a_n=2^{-(n-4)}/4$ for $n\ge4$. It attains cap $1/4$ with
+actual error $\max(1/4,a_n)=1/4$ for every $n\ge4$.
+The constant late finite $b$ used for the row check is not this decaying
+tail. These laws supply correspondence checks for 220.17 and do not
+add amplitude coverage.
+
+For 220.11–220.13 a second reused companion gives mass $1/4$ each
+to empty zero, empty zero, $O(1,2;1,2,0)$ and $O(3,4;1,4,0)$.
+With $a=(4/5,3/4,1/2,1/4)$ and $a_n=1/(n+1)$ for $n\ge5$,
+all sixteen words satisfy the three TV rows at cap $11/20$, with
+maximum exactly $11/20$. The strict active length is two while the
+rule lawfully uses addresses three and four. Positive base is one,
+so every actual $n>4$ has exact error $a_n$. At $0100$ its second
+pair outputs earlier unqueried one: $O$ uses one actual request and
+its $N$ completion two. Every one of the sixteen patterns is an actual
+source by the CRT construction at $r=47$, $F_{47}=2971215073$,
+using prime probes $2,3,5,7$; prescribed replies at $11,13$ can be
+included in that same finite construction. This is a reused normalized
+law, separate from the proof-weight score reconstruction.
+
+For the family 220.6, applying its repaired cost-one score to any
+normalized original cap-feasible rule gives the necessary inequality
+
+$$
+ (1+g)a_j+g a_k-h a_r+g a_s
+            \le1+(3a+13g/2+h)\varepsilon.\tag{220.24}
+$$
+
+It is necessary only. No sufficient amplitude classification is implied.
+For 220.23 the explicit new finite allocation instead gives the two
+actual laws directly. A first-zero-seven source exists before the seed
+by the same CRT/window supplier. Explicitly $(r,z)=(47,297421613)$
+has $N=883703579581572750$ and replies $1111110$ at primes
+$2,3,5,7,11,13,17$. The integer $z$ lies in the prescribed Fibonacci
+window. This source is fixed for the whole scaled family before $U$
+is chosen. Formula (220.22) proves the attained closed endpoint on
+that actual source, not just on a formal terminal word.
+
+### 220.7 Reuse, intersections and excluded increments
+
+The eligible-prefix instance common to 220.4 and 220.8 is counted once.
+B's cellwise pooled condition is broader in a different direction:
+220.11 has $C>A$ at two words on a prefix zero face and thus fails A's
+wordwise eligibility. Conversely A can reset an interior eligible
+coordinate six after positive coordinate four, as in 220.6; a prefix
+cone extending through that positive coordinate cannot satisfy D1,
+which forces every prefix $\beta_i\le0$. The two operations therefore
+have separate stated domains, with their shared contraction counted
+once. The least-stock specialization with $u=A$, $h=z=0$, $r=C$
+and $K_{\rm lo}=K_{\rm hi}=D+G$ is already 219.5–219.6.
+It supplies no separate increment.
+
+The terminal-mask specialization of 220.15 is already 218.8–218.9.
+The arbitrary interior operation adds the arrival/crossing cuts of
+(220.12), whose pair-only counterexample 220.18 prevents a
+terminal-tail accounting rule from being used unchanged inside a mask.
+The old hull, one-pivot, donor, finite-flow, stock, normalization,
+weak-duality and source-transport results are reused without additional
+credit. The gate result is conditional on an actual joint block and
+fixed remainder; its four-distinct-label block is not the old
+suffix-separated global-minimum operation of 218.3.
+
+For explicit reuse, the equal-triple interleaved-debt assembly has
+$4\le p<d<r<u\le L$, $J=\{p,r,u\}$ and $g>0$, $s,t\ge0$.
+Its coefficients are $P=g/3$ at $w(\{i,j\})$ for
+$i=1,2,3$, $j\in J$, and $P=g/3$ at $w(\{i\}\cup J)$,
+$C=g$ at each $w(\{j\})$, together with $A=s$ at $w(\{d\})$
+and $C=t$ at $w(\{3\})$. The core is the existing equal-triple
+core with $P=g/6$ at the triple words plus another $P=g/6$ there.
+It has zero cost. Adding the two elementary rows bounds the support
+by $4g+s+t$; singleton three outputs three on zero and zero on one
+and attains it. Thus $P_{\rm total}=4g$, $K=7g+s+t$, $W=4g+s$,
+$\beta_3=t$, $\beta_j=g$ for $j\in J$, $\beta_d=-s$,
+and both costs are $t$. This entire family is old supplier assembly,
+with zero additional credit, including $(L,J,d,g,s,t)=(7,\{4,6,7\},5,1,1,1)$.
+Interleaving alone does not turn its elementary addition into new coverage.
+
+The direct per-pair merge/slack formulas are support identities,
+not another structural result. An expression $P_{1^L}>0$ is outside
+220.1's domain. It is neither silently relabeled as $T$ nor used to
+repair an excluded witness. The consecutive profile already discussed
+in 219.10 is also omitted as an increment: its actual terminal is
+$2t+u$ and its value seven is a sum of schedule cell maxima, not the
+value of every cell. No extra theorem is attached to that profile.
+
+The scoped constructions and proofs here are `repo-derived` ordinary
+mathematics. They do not assert worldwide priority or exclusion from
+all old convex, signed-residual or polar consequences. Their examples
+are full-score improvements or local operation obstructions, not
+strict original-source separation witnesses.
+
+The primary mappings in 219.10 retain their stated versions and
+hypotheses. Blackwell's risk-set comparison requires one common
+randomized decision rule; it does not realize a stopped hard-two
+schedule. Chen's binary comparison extends to finite actions only
+under binary decomposability of the whole value function. Yang–Yang's
+versioned v1 compact-Polish and min-closed-test-cone hypotheses have
+not been identified with the present legal-table cone. Zaev's constrained
+coupling duality allows an empty feasible set. Gale's finite real-capacity
+flow theorem supplies deterministic allocation under its balance and
+cut hypotheses, not a query budget. Embrechts–Hofert–Wang's Boolean
+compatibility and Angel–Spinka's simultaneous-coupling boundaries
+require one joint law; separate compatible margins or pairwise optima
+are insufficient. Bertschinger–Rauh's nonstochastic factor illustrates
+missing common normalization, not our original separator.
+These literature-attested statements are reference frames, not missing
+premises for a universal conversion. No inaccessible or metadata-only
+citation is used as a theorem premise; no identity between different
+PDF/HTML versions is assumed. The complete ordinary proofs above
+are the evidence for the four scoped relations.
+
+### 220.8 The unrestricted comparison remains open
+
+The positive obligation remains: for every $L\ge3$ and every actual
+full $y\ge0$ with $\Delta_O(y)\le1$, produce one unrestricted full
+$V\ge0$ and $\theta\in[0,1]$ satisfying (220.1).
+There is no universal eligibility cover, cone-placement theorem,
+affordable landing mask or qualifying actual block decomposition here.
+Exact-$Q$, baseline, unary, terminal, suffix and constructor preservation
+are not restrictions on the original obligation.
+
+A negative alternative still requires the same actual $(b,e)\in H_N$,
+the same full feasible $\lambda\ge0$, $G_N\lambda\ge h(b,e)$,
+$M=\sum\lambda\ge1$, and an actual unit-$O$ score $y$ with
+$F_{Q(y)}(b,e)>M$. It must then supply the original full-carrier,
+arbitrary-address, common-seed, hard-two-actual-request, all-source,
+all-Borel, actual-tail and closed-cap transport with a uniform lower
+certificate against every original stopped competitor. A failed reset,
+fixed constructor, local constant replacement, exact-law requirement,
+hull-only point or final-total-only tail test does not meet it.
+
+Consequently the original implication for every positive nonincreasing
+vanishing amplitude sequence and every positive closed cap,
+
+$$
+ \mathcal F_N(a,\varepsilon)\ne\varnothing
+ \quad\Longrightarrow\quad
+ \mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing,
+$$
+
+remains open. The four relations retain all independent event rows,
+actual constructions, zero and weak-equality endpoints, and their
+stated resource correspondence. They are ordinary mathematical proofs;
+no Lean/kernel validation, ingestion, coverage, freeze, physical sampling
+cost or universal affordability follows from them or from a finite
+rational check.
+
+## 追加锚（本行以下为增补区）
+
+## 221. 同一候选余项上的三候选收集与端点图联合替换
+
+### 221.1 完整事件、候选余项与两条条件关系
+
+本节的两条独立条件关系记为 A 与 B。两者均在同一个预先固定的候选余项上检验，允许重新选择所替换块的完整表及其日程。A 用一个共同的至多三候选收集律；B 用最小正确缺额、端点图及全部逐字容量。B 内的模包络网络构造与零边单点情形分别记为 C 与 D；它们不另构成第三、第四个独立区域。固定余项、端点类及模包络只限制这些充分操作，原始完整停止类仍允许任意合法标签、较早未查询猜测与耗尽猜测。
+
+**定义 221.1（完整有限目录与独立帽行）。** 固定整数 $L\ge3$，令 $B_L=\{0,1\}^L$，$J_L=\{0,\ldots,L\}$，$\Omega_n=\{w:w_1=\cdots=w_{n-1}=1,w_n=0\}$。非全正字的首零为 $n(w)$。记 $E_a$ 为恒输出标签 $a$ 的空表；单日程表 $O(i;a,b)$ 按回答 $0,1$ 输出 $a,b$。对 $i<j$，
+
+$$
+N(i,j;a,b,c,d),\qquad O(i,j;a,c,d)
+$$
+
+分别按四胞 $00,01,10,11$ 与停止胞 $0,10,11$ 输出所列标签。所有标签均可取 $J_L$ 中任一元素，空表、单表及所有双日程均保留。一个停止表的 $N$ 完成式把首停止胞复制到 $00,01$，取得完整日程的两个回答。信息分区中的重复或反序归一不减免实际请求数。
+
+在 $w\in\Omega_n$ 上，三条独立事件行 $\{0\},\{n\},\{0,n\}$ 的需求为
+
+$$
+1-b_n-e,\qquad b_n-e,\qquad1-e;
+$$
+
+全正字的 $\{0\}$ 需求为 $1-e$。负单点需求也保留；两条单点下界不能代替并集行。整个有限问题有 $3(2^L-1)+1$ 行。
+
+令 $d(b,e)$ 为此需求向量，$z_D$ 为完整表 $D$ 的事件指示向量，取
+
+$$
+R=O(1,2;1,2,0),\quad \alpha=(1,1,0,\ldots,0;0),\quad
+r=z_R=d(\alpha),\quad h=d(b,e)-r,\quad
+G_C=(z_D-r)_{D\in\mathcal D_C}.
+$$
+
+完整非负配置 $\lambda$ 的质量为 $M=\sum_D\lambda_D$，其仿射字向量是
+
+$$
+f_w=(1-M)\mathbf e_{R(w)}+\sum_D\lambda_D\mathbf e_{D(w)}.
+$$
+
+$G_C\lambda\ge h$ 等价于 $f$ 满足上述每一行。$M>1$ 时 $f$ 可有负坐标，不能直接抽样。
+
+使用原有硬域
+
+$$
+\begin{aligned}
+H_L=\{(b,e):{}&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+\quad b_2=b_3,\\
+&(L+1)e\le\sum_{n=3}^L b_n,
+\quad b_1+\sum_{n=3}^L b_n-(L+1)e\le1\}.
+\end{aligned}
+$$
+
+$H_N$ 还要求一个实际完整非负 $N$ 配置满足 $G_N\lambda\ge h$。单独的 $H_L$ 成员身份不是该见证。
+
+**定义 221.2（同一个候选余项）。** 固定一个可行 $\lambda$、质量 $M$，选定非负子配置 $\kappa$，质量 $M-S$，定义
+
+$$
+\rho_w=(1-M)\mathbf e_{R(w)}+\kappa_w,
+\qquad \kappa_w=\sum_D\kappa_D\mathbf e_{D(w)}.
+$$
+
+替换块的质量固定为 $S\ge0$，候选正标签集为 $A\subseteq\{1,\ldots,L\}$。A 与 B 的比较必须保持这同一 $\rho,M,S,A$；不能用不同余项上的成功冒充同余项比较。A 可对任一候选 $\kappa$ 重新优化，但必须另验 $n\notin A$ 的全部正确行。B、C、D 使用一个实际分解 $\lambda=\kappa+\eta$，其中 $\eta$ 的质量是 $S$，输出仅在 $A\cup\{0\}$。这种分解使集外正确行自动由原可行性给出。
+
+当 $\kappa$ 已由完整停止表组成，替换后是 $O$ 配置；任意完整 $N$ 余项一般只能得到 $N$ 手术。另一个可用分支是整个替换后配置属于定义 190.2 的 $W_N$，此时才能调用 194.1 的同质量转换。该分支的单表零胞标签在 $\{0,i\}$，正胞在 $\{0,i+1,\ldots,L\}$；双表 $i<j$ 的 $00,01$ 标签在 $\{0,i\}$，$10$ 在 $\{0,i+1,\ldots,j\}$，$11$ 在 $\{0\}\cup(\{i+1,\ldots,L\}\setminus\{j\})$，空表仍任意标签。A 收集器与 B 端点表均属于 $W_O\subset W_N$。194.1 对整个配置保持质量、逐字不降低基点与并集、各首零类正确下包络及全正基点；它不声称逐字正确支配或原律保持。故其结论恰足以保留这些帽行。没有对任意完整 $N$ 余项的转换推断。
+
+**定义 221.3（完整得分与同实现的条件后果）。** 每个非全正字有独立非负得分 $A_w,C_w,P_w$，全正字有 $T\ge0$，其奖励为
+
+$$
+g_y(w,\ell)=A_w[\ell=0]+C_w[\ell=n(w)]+P_w[\ell\in\{0,n(w)\}],
+\quad g_y(1^L,\ell)=T[\ell=0].
+$$
+
+这里的 $A_w$ 是得分，与候选标签集 $A$ 有别。令
+
+$$
+\begin{aligned}
+W(y)&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+B_C(y)&=\max_{D\in\mathcal D_C}\sum_w g_y(w,D(w)),\quad
+\Delta_C(y)=B_C(y)-W(y),\\
+\beta_n&=\sum_{\Omega_n}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T,\quad Q(y)=(\beta,K),\\
+F_{Q(y)}(b,e)&=\sum_n\beta_n(b_n-\alpha_n)-Ke.
+\end{aligned}
+$$
+
+这些是证明权重，不能当作概率预算。若上述同一候选得到质量恰为 $M$ 的可行完整停止配置 $\mu$，则每个完整 $y\ge0$ 在同一 $(b,e)$ 上满足
+
+$$
+F_{Q(y)}(b,e)=y\cdot h\le y\cdot G_O\mu
+\le M\Delta_O(y).
+$$
+
+因此单位停止得分有 $F_{Q(y)}(b,e)\le M\le\max(1,M)$。该条件结论使用原来那个完整 $\lambda$ 与质量，所有行各用一次；一个非最优的大 $M$ 不证明最优截断预算上的比较。
+
+### 221.2 条件关系 A：共同基点与三候选收集
+
+**定义 221.4（收集器及同余项缺额）。** 对非空 $F\subseteq A$，$|F|\le3$，定义 $C_F$：一个候选时直接输出它；两个候选 $a<b$ 时查询 $a$，零时输出 $a$，正时猜 $b$；三个候选 $a<b<c$ 时用 $O(a,b;a,b,c)$。每张表的所有标签与日程在回答前选定。它总输出数值标签，且在每个 $\Omega_a$ 上恰当且仅当 $a\in F$ 时输出 $a$。
+
+对非空 $A$，集外正确行要求 $\rho_w(n)\ge b_n-e$，$w\in\Omega_n,n\notin A$。定义
+
+$$
+\begin{aligned}
+\ell=\max\bigl(&0,\ 1-e-\rho_{1^L}(0),
+\max_{n,w\in\Omega_n}(1-b_n-e-\rho_w(0)),\\
+&\max_{n\notin A,w\in\Omega_n}(1-e-\rho_w(0)-\rho_w(n))\bigr),\\
+u_a&=\max\{0,b_a-e-\min_{\Omega_a}\rho_w(a)\},\\
+v_a&=1-e-\min_{\Omega_a}(\rho_w(0)+\rho_w(a)),\quad
+\delta_a(c)=\max\{u_a,v_a-c\}.
+\end{aligned}
+$$
+
+空指标最大值从 $\ell$ 中省略。并集缺额直接取并集读数的最小值，不能拼接两条单点的独立极小值。
+
+**定理 221.5（A 的恰好共同质量判据）。** 固定上述同一余项及集外正确行。质量 $S$ 的替换由 $cE_0$ 和一个质量 $s=S-c$ 的共同收集器混合组成。存在这样的替换满足每条帽行，当且仅当
+
+$$
+c\ge\ell,\quad0\le c\le S,\quad
+\delta_a(c)\le S-c\ (a\in A),\quad
+\sum_{a\in A}\delta_a(c)\le3(S-c).
+$$
+
+令 $U=\max_a u_a$，$C=S-U$，则存在某个 $c$ 的等价有限测试为
+
+$$
+\ell\le C,\quad v_a\le S\ (a\in A),\quad
+\min_{c\in[\ell,C]}\Phi(c)\le3S,
+\qquad \Phi(c)=3c+\sum_a\max(u_a,v_a-c).
+$$
+
+只须比较 $\ell,C$ 及区间内的折点 $v_a-u_a$。若 $A=\varnothing$，精确分支是 $c=S$ 且 $\rho+SE_0$ 直接满足全部帽行。
+
+**证明。** 写共同表质量为 $t_F\ge0$、$\sum_Ft_F=s$，令 $g_a=\sum_{F\ni a}t_F$。首零 $a$ 前的候选位均为正，故收集器在 $\Omega_a$ 上输出 $a$ 的质量恒为 $g_a$；基点在所有字上恒为 $c$，集外正确质量为零。因此基点、全正基点及集外并集行等价于 $c\ge\ell$；集内正确、并集分别要求 $g_a\ge u_a$、$g_a\ge v_a-c$。全部帽行恰等价于 $g_a\ge\delta_a(c)$ 及已声明的集外条件。
+
+同一个 $t_F$ 给出 $0\le g_a\le s$ 与 $\sum_ag_a=\sum_F|F|t_F\le3s$，所以这些不等式必要。不能要求 $\sum_ag_a=s$：同一张表在互斥首零类上可同时服务三个标签。
+
+反向，$s=0$ 时缺额全零，仅取 $c=S$。$s>0$ 时，若 $\sum\delta_a\ge s$ 就取 $g=\delta$；若小于 $s$，在每坐标的剩余容量 $s-\delta_a$ 中增加质量，直到 $\sum g_a=s$。$A$ 非空保证总剩余容量至少 $s-\sum\delta_a$。于是
+
+$$
+g\ge\delta,\quad0\le g_a\le s,\quad s\le\sum g_a\le3s.
+$$
+
+使用已有截断立方体几何：$\{x\in[0,1]^A:1\le\sum x_a\le3\}$ 的顶点均为非空至多三元集合的指示向量。其直接证明是，两个分数坐标可作反向微扰；只有一个分数坐标而和约束不活跃时可单独微扰，活跃时该坐标由整数和与其余整数坐标决定，也必为整数。故不存在分数顶点。有限有界多面体由其顶点凸生成。对 $x=g/s$ 取一个有限凸表示 $x=\sum_F\pi_F\mathbf1_F$，令 $t_F=s\pi_F$，加 $cE_0$。这给一个真正的非负质量 $S$ 完整停止块，所有行由同一混合满足。
+
+最后，$\delta_a(c)\le S-c$ 等价于 $u_a+c\le S$ 且 $v_a\le S$。全部坐标给 $c\le S-U$；求和约束恰为 $\Phi(c)\le3S$。$\Phi$ 在折点间仿射，在闭区间上必于端点或折点取得最小值；平段、折点重合、零缺额与闭等号均包含。上述论证仅对替换块使用非负质量，故有符号 $\rho$ 也无例外。$\square$
+
+**例 221.6（A 成功而同余项 B 失败的全部有限行）。** 取 $L=6$，
+
+$$
+b=(103/200,103/200,103/200,423/1000,189/500,329/1000),\quad e=47/200,
+\quad M=1,\quad S=1/25,\quad A=\{1,2,3,4\}.
+$$
+
+余项 $\rho=\kappa$ 的全部 25 张停止表如下；最后一列为质量乘 $1000$。原块是 $\eta=(1/25)N(5,6;1,2,3,4)$。
+
+| 日程 | 停止输出 | $1000\kappa_D$ |
+| --- | --- | ---: |
+| $6$ | $0,1$ | 30 |
+| $1,2$ | $0,0,3$ | 33 |
+| $1,2$ | $0,2,4$ | 42 |
+| $1,2$ | $0,2,5$ | 4 |
+| $1,2$ | $1,2,0$ | 155 |
+| $1,3$ | $0,3,0$ | 6 |
+| $1,3$ | $1,3,0$ | 95 |
+| $1,4$ | $0,4,0$ | 30 |
+| $1,5$ | $0,3,0$ | 19 |
+| $1,6$ | $0,2,3$ | 30 |
+| $2,3$ | $0,1,0$ | 10 |
+| $2,3$ | $0,3,0$ | 112 |
+| $2,3$ | $2,3,0$ | 4 |
+| $2,4$ | $2,4,0$ | 45 |
+| $2,5$ | $0,3,0$ | 11 |
+| $2,5$ | $0,5,0$ | 23 |
+| $3,4$ | $0,0,5$ | 26 |
+| $3,4$ | $0,4,0$ | 71 |
+| $3,5$ | $0,5,0$ | 45 |
+| $3,6$ | $0,6,0$ | 30 |
+| $4,5$ | $0,5,0$ | 45 |
+| $4,6$ | $0,6,0$ | 30 |
+| $5,6$ | $0,1,0$ | 30 |
+| $5,6$ | $0,6,0$ | 4 |
+| $5,6$ | $0,6,2$ | 30 |
+
+质量和为 $24/25$。在同一余项上，
+
+$$
+\ell=0,\quad u=v=(3/100,3/100,3/100,0),\quad c=1/100,\quad s=3/100.
+$$
+
+故 $\sum\delta=9/100=3s$，$\Phi(c)=3/25=3S$，取
+
+$$
+q=(1/100)E_0+(3/100)O(1,2;1,2,3).
+$$
+
+以下每个三元组是整个 $\Omega_n$ 上基点、正确、独立并集的各自最小值。它们可由所列同一完整配置对剩余布尔位逐一消元得出；不同最小值的达到字不要求相同。
+
+| $n$ | 需求 | 原 $N$ 最小值 | 新 $O$ 最小值 |
+| ---: | --- | --- | --- |
+| 1 | $(1/4,7/25,153/200)$ | $(19/40,7/25,153/200)$ | $(97/200,7/25,31/40)$ |
+| 2 | $(1/4,7/25,153/200)$ | $(97/200,7/25,153/200)$ | $(99/200,7/25,31/40)$ |
+| 3 | $(1/4,7/25,153/200)$ | $(233/500,7/25,769/1000)$ | $(119/250,7/25,31/40)$ |
+| 4 | $(171/500,47/250,153/200)$ | $(577/1000,47/250,153/200)$ | $(587/1000,47/250,31/40)$ |
+| 5 | $(387/1000,143/1000,153/200)$ | $(311/500,143/1000,153/200)$ | $(79/125,143/1000,31/40)$ |
+| 6 | $(109/250,47/500,153/200)$ | $(701/1000,47/500,159/200)$ | $(711/1000,47/500,161/200)$ |
+
+全正基点分别为 $153/200,31/40$，需求 $153/200$。每张表在一个字只访问一胞，因此所列表质量的有限和直接定义全部 64 字的概率；固定首零前缀后，对每个剩余位使用 $\min_{x\in\{0,1\}}f=\min(f|_{x=0},f|_{x=1})$，得到表中精确界。比较需求验证两律各全部 190 行。另有 $\sum_{n=3}^6b_n=329/200=7e$，上侧式等于 $103/200\le1$，其余次序条件成立；原完整质量一 $\lambda=\kappa+\eta$ 因而实际证明 $H_N$ 成员身份。
+
+在这完全相同的 $\rho,S,A$ 上，B 的端点块只能使正确度和至多 $2S=2/25$，而必需三条度的和为 $9/100>2/25$，所以 B 失败。仅单点门需要 $9/100>S$；原代码块的四个整零面最小值全为零。三候选收集利用互斥首零类共享一张表的质量，并只发出两次实际请求。
+
+原律的 109.1 常数向量为 $(661/1000,29/100,49/1000,0,0,0,0)$，其核阈值为 $(301/500,27/100,59/1000,0,0,0,0)$。标签 2 的常数比阈值少 $1/100$，所以原律本身不是停止核；上面的另一停止律满足同一帽。这只是精确律边界。
+
+### 221.3 条件关系 B：最小正确度与端点图全部容量
+
+**定义 221.7（端点类）。** 取实际分解 $\lambda=\kappa+\eta$，块质量记为 $s=S$，令
+
+$$
+\delta_i=\max\{0,b_i-e-\min_{\Omega_i}\rho_w(i)\}\ (i\in A),\qquad
+\delta_i=0\ (i\notin A).
+$$
+
+端点替换块由空表 $E_0$、单点门 $O(i;i,0)$，以及双表 $O(i,j;a,b,0)$ 组成，其中 $i<j$，$a\in\{0,i\}$、$b\in\{0,j\}$，正输出只在 $A$。耗尽输出必须为零是本构造的限制；它不是原始 $O$ 类的限制。
+
+取有向边 $x_{ij}\ge0$，$i<j$，若 $j\notin A$ 则边为零。定义
+
+$$
+\begin{aligned}
+I_i&=\sum_{h<i}x_{hi},\quad r_i=\delta_i-I_i,\quad O_i=\sum_{j>i}x_{ij},\\
+m(x)&=\sum_i\max(r_i,O_i)=\sum_i\delta_i-\sum_i\min(r_i,O_i),\\
+Z(w)&=\{i:w_i=0\},\quad
+\Psi_x(Z)=\sum_{i\in Z}\delta_i-\sum_{i<j,\ i,j\in Z}x_{ij}.
+\end{aligned}
+$$
+
+此处 $r_i$ 是图剩余度，与锚事件向量 $r$ 有别。在 $w\in\Omega_n$ 设
+
+$$
+c_w=\min\{\rho_w(0)+s-1+b_n+e,
+\ \rho_w(0)+\rho_w(n)+s-1+e+\delta_n\}.
+$$
+
+**定理 221.8（B 的精确联合判据及完整表构造）。** 在同一固定余项上，存在质量恰为 $s$ 的端点替换满足全部帽行，当且仅当一个共同的 $x$ 满足
+
+$$
+I_i\le\delta_i\ (1\le i\le L),\quad m(x)\le s,\quad
+\Psi_x(Z(w))\le c_w\quad(w\ne1^L),
+$$
+
+同时满足集外正确行及 $\rho_{1^L}(0)+s\ge1-e$。实际分解已使后两条件成立，但它们仍是字面约束。所得块的字向量为
+
+$$
+q_w(a)=[a\in Z(w)]\left(\delta_a-\sum_{i<a,\ i\in Z(w)}x_{ia}\right),
+\qquad q_w(0)=s-\Psi_x(Z(w)).
+$$
+
+在每个 $\Omega_a$ 上 $q_w(a)=\delta_a$。全部行由同一个 $x$ 和同一完整配置满足；给定图的最小非空日程质量为 $m(x)$。
+
+**证明。** 先证明可以把任何端点可行块的正确度减到 $\delta$。令 $u_i$ 为单点正输出质量，$p_{ij}$ 为双表首零胞输出 $i$ 的质量，$x_{ij}$ 为次零胞输出 $j$ 的质量，$t_{ij}$ 为双日程共同质量。正确度在整个 $\Omega_i$ 恒为
+
+$$
+d_i=u_i+\sum_{j>i}p_{ij}+\sum_{h<i}x_{hi}\ge\delta_i,
+\qquad t_{ij}\ge\max(p_{ij},x_{ij}).
+$$
+
+$d_i>0$ 时，在每个发出 $i$ 的胞中以固定比例 $1-\delta_i/d_i$ 把该输出改成零。它可通过回答前分割完整表质量实现，所有胞的分割用一个有限共同细分。移走正确 $i$ 保持 $\{0,i\}$，移走错误 $i$ 改善其首零并集，所有基点改善，而正确需求仍满足。$d_i=0$ 时 $\delta_i=0$，无需操作。故端点可行性等价于存在正确度恰为 $\delta$ 的块，质量与日程合法性保持。
+
+对精确度块，$I_i\le\delta_i$ 且 $r_i=u_i+\sum_{j>i}p_{ij}$。在字 $w$ 上，标签 $a$ 的首胞与单点贡献在 $w_a=0$ 时可用，次胞 $x_{ia}$ 还要求 $w_i=1$。这给所述 $q_w(a)$；求和给正质量 $\Psi_x(Z)$ 与基点 $s-\Psi_x(Z)$。首零 $a$ 前所有位为正，所以其正确度恰为 $\delta_a$。
+
+非空质量至少为
+
+$$
+\begin{aligned}
+\sum_i u_i+\sum_{i<j}\max(p_{ij},x_{ij})
+&=\sum_i\delta_i-\sum_{i<j}\min(p_{ij},x_{ij})\\
+&\ge\sum_i\delta_i-\sum_i\min(r_i,O_i)=m(x).
+\end{aligned}
+$$
+
+这里一张双表的两个正胞共用 $t_{ij}$，没有把两胞质量相加当成共同预算。代入两条原始基点、并集需求，恰得 $\Psi_x\le c_w$。全正字的所有端点表输出零，集外没有正度，这给其余必要条件。
+
+反向，若 $O_i>0$，取
+
+$$
+p_{ij}=\frac{\min(r_i,O_i)}{O_i}x_{ij},\qquad u_i=(r_i-O_i)_+;
+$$
+
+若 $O_i=0$，取所有 $p_{ij}=0,u_i=r_i$。这样 $0\le p_{ij}\le x_{ij}$，$u_i+\sum_jp_{ij}=r_i$。加入质量 $p_{ij}$ 的 $O(i,j;i,j,0)$、质量 $x_{ij}-p_{ij}$ 的 $O(i,j;0,j,0)$、质量 $u_i$ 的 $O(i;i,0)$。非空总质量为
+
+$$
+\sum_iO_i+\sum_i(r_i-O_i)_+=\sum_i\max(r_i,O_i)=m(x).
+$$
+
+加质量 $s-m(x)$ 的 $E_0$。所有质量非负；$i\notin A$ 时 $r_i=0$，只可作零输出守卫。所得有限表配置有给定字公式，集内正确需求由最小缺额满足，集外正确由原分解满足，两条独立其他事件由 $c_w$ 满足，全正行也满足。添加同一 $\rho$ 即完成充分性。
+
+$m(x)$ 的标量等式与已有 109.1 一致：归一块时 $c(a)=H(a)=r_a/s$，$c(0)=1-\sum r_i/s$，$H(0)=\sum(O_i-r_i)_+/s$，所以 $c\ge H$ 恰为 $s\ge m(x)$。该质量恒等式不另计内容。新条件关系是最小度薄化、同余项全部容量与完整块重建的结合。$s=0$、零分母、零度与闭等号均由所述分支包含。$\square$
+
+**注记 221.9（一个有限凸系统）。** 固定余项后 $\delta$ 固定。引入 $t_i\ge\delta_i-I_i$、$t_i\ge O_i$、$\sum_it_i\le s$，其余 $I_i\le\delta_i$ 与每字 $\Psi_x\le c_w$ 全部线性。这是同一图的一次有限可行性问题，不是分别优化每行或每个日程。没有声称全部字的分离可在多项式时间完成。
+
+**例 221.10（B 成功而同余项 A 失败）。** 取
+
+$$
+L=6,\quad b=(12/25,12/25,12/25,21/50,21/50,9/25),\quad e=6/25,
+\quad M=s=1,\quad\rho=\kappa=0,\quad A=\{1,\ldots,6\}.
+$$
+
+原完整 $N$ 见证由以下全部 23 张表组成，质量列精确列出。$O$ 表可取其同日程 $N$ 完成式。
+
+| 完整表 | 质量 |
+| --- | ---: |
+| $O(1,2;0,2,3)$ | $2/25$ |
+| $O(1,2;1,2,3)$ | $1/50$ |
+| $O(1,2;1,2,4)$ | $3/50$ |
+| $O(1,3;1,3,0)$ | $3/50$ |
+| $O(1,4;1,4,0)$ | $1/50$ |
+| $O(2,3;0,3,0)$ | $1/50$ |
+| $O(2,3;0,3,4)$ | $1/50$ |
+| $O(2,4;0,4,0)$ | $1/25$ |
+| $O(3,5;0,5,0)$ | $1/10$ |
+| $O(4,5;0,5,0)$ | $3/50$ |
+| $O(4,5;0,5,6)$ | $1/50$ |
+| $O(4,6;0,6,0)$ | $1/50$ |
+| $O(5,6;0,6,0)$ | $2/25$ |
+| $N(5,6;1,2,3,4)$ | $1/25$ |
+| $N(1,5;0,1,0,0)$ | $1/25$ |
+| $N(1,6;0,1,0,0)$ | $1/25$ |
+| $N(2,5;0,2,0,0)$ | $1/25$ |
+| $N(2,6;2,0,0,0)$ | $1/25$ |
+| $N(3,5;3,0,0,0)$ | $1/25$ |
+| $N(3,6;0,3,0,0)$ | $1/25$ |
+| $N(4,5;4,0,0,0)$ | $1/25$ |
+| $N(4,6;4,0,0,0)$ | $1/25$ |
+| $O(1,2;1,2,0)$ | $1/25$ |
+
+其 $\delta=(6/25,6/25,6/25,9/50,9/50,3/25)$，和为 $6/5$。同余项 A 的基点要求 $c\ge1-e=19/25$，所以数值容量 $3(1-c)\le18/25<6/5$，A 失败。B 取以下全部非零边；未列边为零。
+
+| $i,j$ | $x_{ij}$ |
+| --- | ---: |
+| $(1,2)$ | $3/25$ |
+| $(1,3)$ | $3/25$ |
+| $(1,4)$ | $3/50$ |
+| $(1,5)$ | $3/50$ |
+| $(2,3)$ | $3/25$ |
+| $(2,4)$ | $3/50$ |
+| $(2,5)$ | $3/50$ |
+| $(3,4)$ | $3/50$ |
+| $(3,5)$ | $3/50$ |
+| $(4,6)$ | $3/50$ |
+| $(5,6)$ | $3/50$ |
+
+入度为 $(0,3/25,6/25,9/50,9/50,3/25)$，出度为 $(9/25,6/25,3/25,3/50,3/50,0)$，节约 $\sum\min(r_i,O_i)=9/25$，故非空质量 $m=21/25$。定理的构造给完整停止配置：
+
+| 停止表 | 质量 |
+| --- | ---: |
+| $O(1,2;1,2,0)$ | $2/25$ |
+| $O(1,2;0,2,0)$ | $1/25$ |
+| $O(1,3;1,3,0)$ | $2/25$ |
+| $O(1,3;0,3,0)$ | $1/25$ |
+| $O(1,4;1,4,0)$ | $1/25$ |
+| $O(1,4;0,4,0)$ | $1/50$ |
+| $O(1,5;1,5,0)$ | $1/25$ |
+| $O(1,5;0,5,0)$ | $1/50$ |
+| $O(2,3;2,3,0)$ | $3/50$ |
+| $O(2,3;0,3,0)$ | $3/50$ |
+| $O(2,4;2,4,0)$ | $3/100$ |
+| $O(2,4;0,4,0)$ | $3/100$ |
+| $O(2,5;2,5,0)$ | $3/100$ |
+| $O(2,5;0,5,0)$ | $3/100$ |
+| $O(3,4;0,4,0)$ | $3/50$ |
+| $O(3,5;0,5,0)$ | $3/50$ |
+| $O(4,6;0,6,0)$ | $3/50$ |
+| $O(5,6;0,6,0)$ | $3/50$ |
+| $E_{0}$ | $4/25$ |
+
+为给全部字一个符号证明，令 $h_0=3/50$，$a=|Z\cap\{1,2,3\}|$，$c=|Z\cap\{4,5\}|$，$d=[6\in Z]$。直接代边得
+
+$$
+\Psi_x(Z)/h_0=a(5-a)+(3-a)c+(2-c)d.
+$$
+
+首零为 1、2、3 时 $a\ge1$；$a=1,2,3$ 的最大值各为 8。首零为 4 时 $a=0,c\ge1$，最大 6；为 5 时 $a=0,c=1$，最大 4；为 6 时 $a=c=0,d=1$，值 2。这给精确最大值 $(8,8,8,6,4,2)h_0\le b_n$。因为 $\delta_n=b_n-e$，基点 $1-\Psi_x\ge1-b_n\ge1-b_n-e$，并集 $1-\Psi_x+\delta_n\ge1-e$，正确度恰为 $\delta_n$；全正基点为一。这同时证明全部 190 行。
+
+| $n$ | 原 $N$ 的三行最小值 | 图 $O$ 的三行最小值 |
+| ---: | --- | --- |
+| 1 | $(13/25,6/25,19/25)$ | $(13/25,6/25,19/25)$ |
+| 2 | $(12/25,6/25,19/25)$ | $(13/25,6/25,19/25)$ |
+| 3 | $(13/25,6/25,19/25)$ | $(13/25,6/25,19/25)$ |
+| 4 | $(27/50,9/50,19/25)$ | $(16/25,9/50,41/50)$ |
+| 5 | $(29/50,9/50,19/25)$ | $(19/25,9/50,47/50)$ |
+| 6 | $(33/50,3/25,39/50)$ | $(22/25,3/25,1)$ |
+
+原、新全正基点分别为 $19/25,1$。次序成立，$\sum_{n=3}^6b_n=42/25=7e$，另一硬域式为 $12/25\le1$，原同一完整配置证明 $H_N$。
+
+原律在 $111100,111101,111111$ 的标签 2 概率分别为 $0,1/25,0$。每个停止表若查询 5，则前两字在该零位停止后不能区分；若不查询 5，后两字除该位外相同，不能区分。因此每张完整停止表及其非负混合均满足
+
+$$
+p_{111101}(2)\le p_{111100}(2)+p_{111111}(2).
+$$
+
+原律违反它，而上述另一停止律满足同一帽。这是原律不可保持的证明，不能当作原始帽分离。
+
+**例 221.11（端点类是真子类，耗尽猜测保持合法）。** 在同余项 $\rho=0,s=1$ 上取
+
+$$
+b=(1,1,1,1/4,1/4,1/4),\quad e=1/4.
+$$
+
+四张表 $O(1,2;1,2,0)$、$O(1,2;1,2,3)$、$O(1,3;1,3,0)$、$O(2,3;2,3,0)$ 各质量 $1/4$。首零 1、2 的正确及并集至少 $3/4$；首零 3 的基点、正确、并集是 $(1/4,3/4,1)$；首零 4、5、6 是 $(3/4,0,3/4)$；全正基点 $3/4$。前两类负基点需求 $-1/4$ 保留。因此全部 190 行成立，硬域尾和 $7/4=7e$，上式等于一。
+
+端点类的每张非空表最多贡献两个正确度，所以 $\sum\delta_i\le2s$ 必要。但前三条缺额和为 $9/4>2$，故 B 在此候选失败。合法耗尽猜测标签 3 承担了第三个候选。这个已知四表见证及其边界不提供原始分离或新的幅度分类。
+
+### 221.4 B 内的 C：整零面模包络与两族网络割
+
+**定义 221.12（同块的非负模下包络）。** 保持 221.7 的实际 $\lambda=\kappa+\eta$、同一 $\rho,s,\delta$。对每个正标签 $a$，在其整个零面要求
+
+$$
+\eta_w(a)\ge u_a+\sum_{i<a}c_{ia}w_i\qquad(w_a=0),
+\quad u_a\ge0,\quad c_{ia}\ge0.
+$$
+
+所有包络是同一个实际块的逐字界。全零字同时给出 $U=\sum_au_a\le s$。令
+
+$$
+R_0=s-U,\qquad d_a=(\delta_a-u_a)_+,
+\qquad C_i(J)=\sum_{a\in J,\ a>i}c_{ia},\quad d(J)=\sum_{a\in J}d_a.
+$$
+
+**定理 221.13（C 的完整模包络网络构造）。** 存在下述共同资金路由，当且仅当对每一个 $J\subseteq\{1,\ldots,L\}$，两族割均成立：
+
+$$
+\boxed{d(J)\le\sum_iC_i(J)},\qquad
+\boxed{d(J)\le R_0+\sum_i\min(u_i,C_i(J))}.
+$$
+
+路由由已资助边 $p_{ia}\ge0$ 与中性边 $n_{ia}\ge0$ 组成，满足
+
+$$
+p_{ia}+n_{ia}\le c_{ia},\quad
+\sum_{a>i}p_{ia}\le u_i,\quad
+\sum_{i<a}(p_{ia}+n_{ia})=d_a,\quad
+\sum_{i<a}n_{ia}\le R_0.
+$$
+
+最后一个求和遍历全部边。由它构造质量恰为 $s$ 的停止块：
+
+| 表 | 质量 |
+| --- | --- |
+| $O(i;i,0)$ | $u_i-\sum_{a>i}p_{ia}$ |
+| $O(i,a;i,a,0)$ | $p_{ia}$ |
+| $O(i,a;0,a,0)$ | $n_{ia}$ |
+| $E_0$ | $R_0-\sum_{i<a}n_{ia}$ |
+
+所有基点、首零并集及全正基点相对 $\eta$ 逐字不下降，正确行满足同余项需求。该块是 B 的端点类；按 221.8 薄化到 $\delta$ 后，它给 B 的同余项图见证，C 不另计独立关系。
+
+**证明。** 构造有限有向网络。源 $S_0$ 向供体 $i$ 的边容量为 $u_i$，向中性节点 $N_0$ 的边容量为 $R_0$；$N_0$ 向各供体有大但有限容量 $K_0$；供体 $i$ 向接收者 $a>i$ 的容量为 $c_{ia}$；接收者 $a$ 向汇 $T_0$ 的容量为 $d_a$。取
+
+$$
+D=\sum_ad_a,\qquad K_0=1+D+U+R_0+\sum_{i<a}c_{ia}>D.
+$$
+
+证明实容量最大流割结论时，不假定增广算法在有限步终止，也不使用整性。所有边流在有限闭区间，守恒与容量是闭条件，零流可行，故可行流集合是非空紧多面体；连续的流值有最大值。若最大流的剩余网络中源可达汇，取一条简单剩余路径，各正剩余容量的有限最小值严格正，沿它调整可严格增加流值，矛盾。因此汇不可达。令 $V$ 为剩余网络中源可达顶点集；从 $V$ 向外的原边饱和，从外向 $V$ 的原边零流，否则相应剩余边可达。把守恒式在 $V$ 上求和，最大流值恰等于该割容量。任何流值不超过任何割容量由同样的求和式成立。于是所有割容量至少 $D$ 当且仅当存在值 $D$ 的流。
+
+现逐一计算割。任何割若切到 $K_0$ 边，其容量大于 $D$，不成阻碍。其余割令 $J$ 为汇侧接收者集合；源侧接收者的汇边贡献 $D-d(J)$。若中性节点在源侧，所有供体也在源侧，否则切到 $K_0$ 边，故容量是
+
+$$
+D-d(J)+\sum_iC_i(J).
+$$
+
+若中性节点在汇侧，先支付 $R_0$，每个供体可独立在源侧付 $C_i(J)$ 或在汇侧付 $u_i$，最小容量是
+
+$$
+D-d(J)+R_0+\sum_i\min(u_i,C_i(J)).
+$$
+
+这两种恰穷尽不含大边的割，给所述两族，不可只保留总需求割。$J=\varnothing$、$D=0$、零容量与等号均包含。
+
+网络本身无环，值 $D$ 的流可作有限路径分解：在有正流的源汇路径上取最小边流，减去它，每次至少消掉一条正流边；剩余守恒且不可能有无环循环流。经直接源供体路径的质量记为 $p_{ia}$，经中性节点的记为 $n_{ia}$。全部接收者汇边饱和，遂得到所列共同路由不等式。反过来这些路径质量直接给值 $D$ 的合法流，所以路由判据是 iff。
+
+由表中质量构造块。非空与空总和为
+
+$$
+\sum_i\left(u_i-\sum_ap_{ia}\right)+\sum_{i<a}(p_{ia}+n_{ia})
++R_0-\sum_{i<a}n_{ia}=U+R_0=s.
+$$
+
+正标签 $a$ 的整个字函数是
+
+$$
+q_w(a)=(1-w_a)\left(u_a+\sum_{i<a}(p_{ia}+n_{ia})w_i\right).
+$$
+
+在零面它不超过所给 $\eta$ 包络，在正面是零而 $\eta\ge0$，故所有正坐标 $q_w(a)\le\eta_w(a)$。相同质量给
+
+$$
+q_w(0)-\eta_w(0)=\sum_a(\eta_w(a)-q_w(a))\ge0,
+$$
+
+而独立并集有
+
+$$
+q_w(0)+q_w(n)-\eta_w(0)-\eta_w(n)
+=\sum_{a\ne n}(\eta_w(a)-q_w(a))\ge0.
+$$
+
+首零 $a$ 前全部位正，所以 $q_w(a)=u_a+d_a\ge\delta_a$，加同一余项后正确需求成立。集外正确与全正行也保留。这分别证明每种事件，不拼接独立最小值。全部表属于端点类，用 221.8 的统一薄化降低多余正确度仍可行，得到一个 B 图。任意 $N$ 余项的结论仍只是 $N$ 手术；实际 $O$ 余项或整个 $W_N$ 分支才给 $O$。$\square$
+
+两族割在资金与边容量上承担不同义务。例如只有一条容量 $1$ 的边、$u_1=1,d_2=2,R_0=2$ 时第二族成立而第一族失败；容量 $2,u_1=0,d_2=1,R_0=0$ 时第一族成立而第二族失败。这些小网络说明不能删除其中一族，均不声称实际帽分离。
+
+**例 221.14（C 的七位实际块、全部 382 行及 128 个割子集）。** 取
+
+$$
+L=7,\quad h=1/100=5/500,\quad
+b=(240,240,240,211,194,194,153)/500,\quad e=124/500.
+$$
+
+令 $\sigma_2=00,\sigma_3=01,\sigma_4=10,\sigma_5=11$。$\eta$ 由九张质量均为 $h$ 的完整表组成：一张 $N(6,7;2,3,4,5)$；对每个 $a=2,3,4,5$ 和 $k=6,7$，若相应代码位为零用 $O(1,k;1,0,a)$，若为一用 $O(1,k;1,a,0)$。即八张停止供体加一张允许较早未查询标签的完整代码表。
+
+余项 $\rho=\kappa$ 的全部 17 张表为：
+
+| 停止表 | 质量 |
+| --- | ---: |
+| $O(1;1,0)$ | $1/250$ |
+| $O(1,2;1,2,0)$ | $24/125$ |
+| $O(1,3;1,3,0)$ | $13/125$ |
+| $O(1,4;1,4,0)$ | $23/500$ |
+| $O(2,3;0,3,0)$ | $59/500$ |
+| $O(2,4;2,4,0)$ | $3/100$ |
+| $O(2,4;0,4,0)$ | $3/100$ |
+| $O(2,5;0,5,0)$ | $7/500$ |
+| $O(2,6;0,6,0)$ | $1/500$ |
+| $O(3,4;0,4,0)$ | $29/500$ |
+| $O(3,5;0,5,0)$ | $29/500$ |
+| $O(3,6;0,6,0)$ | $23/500$ |
+| $O(4,5;0,5,0)$ | $29/500$ |
+| $O(4,6;0,6,0)$ | $23/500$ |
+| $O(5,6;0,6,0)$ | $23/500$ |
+| $O(5,7;0,7,0)$ | $3/250$ |
+| $O(6,7;0,7,0)$ | $23/500$ |
+
+$\kappa$ 质量 $455/500$，$\eta$ 质量 $45/500$，故原完整 $\lambda$ 质量一。令 $x_i=w_i,p=(x_6,x_7)$，直接逐胞相加得在每一个字上
+
+$$
+\eta_w(1)=8h(1-x_1),\quad
+\eta_w(a)=h([p=\sigma_a]+x_1d_H(p,\sigma_a))\ (2\le a\le5),\quad
+\eta_w(0)=4hx_1.
+$$
+
+$x_1=1$ 时括号值随汉明距离 $0,1,2$ 分别为 $1,1,2$；$x_1=0$ 可令某候选代码不匹配使该候选整零面最小值为零。取包络 $u_1=8h,c_{1a}=h$（$2\le a\le5$），其余 $u,c$ 零，$R_0=h$。同余项缺额是 $\delta_2=\cdots=\delta_5=h$，其余零。因此对任意 128 个子集 $J$，令 $k=|J\cap\{2,3,4,5\}|$，有
+
+$$
+d(J)=kh=\sum_iC_i(J),\qquad
+R_0+\sum_i\min(u_i,C_i(J))=h+kh.
+$$
+
+两族对每一子集都成立。可取四条已资助边 $p_{1a}=h$，中性边全零。替换为四张质量 $h$ 的 $O(1,a;1,a,0)$、质量 $4h$ 的 $O(1;1,0)$ 和质量 $h$ 的 $E_0$。其正度 1 为 $8h$，可在 B 内薄化到 $\delta_1=0$：把上述所有首胞标签 1 改为零，变成四张 $hO(1,a;0,a,0)$ 与 $5hE_0$。这也是同余项、同质量可行 B 块，证明 C 确实位于 B 内。
+
+为完整复核有限行，记 $k_a=500\kappa_w(a)$。所有正坐标多项式为
+
+$$
+\begin{aligned}
+k_1&=173(1-x_1),& k_2&=(1-x_2)(15+96x_1),\\
+k_3&=(1-x_3)(52x_1+59x_2),&
+k_4&=(1-x_4)(23x_1+30x_2+29x_3),\\
+k_5&=(1-x_5)(7x_2+29x_3+29x_4),&
+k_6&=(1-x_6)(x_2+23x_3+23x_4+23x_5),\\
+k_7&=(1-x_7)(6x_5+23x_6),& k_0&=455-\sum_{a=1}^7k_a.
+\end{aligned}
+$$
+
+原基点分子为 $455+20x_1-\sum k_a$。新块坐标为
+
+$$
+500q_1=40(1-x_1),\quad500q_a=5x_1(1-x_a)\ (2\le a\le5),\quad
+500q_0=5+20x_1+5x_1\sum_{a=2}^5x_a.
+$$
+
+基点增量分子 $5+5x_1\sum_{a=2}^5x_a\ge0$。固定每个首零前缀，对 $P=\sum k_a$ 从位 7 向后作有限布尔最大值比较，得精确最大值 $(292,215,194,142,112,76,29)$；$\kappa$ 的首零正确分子为 $(173,111,111,82,65,70,29)$。加代码及供体可逐项得到下面的独立行极小值，所有单位为 $1/500$。
+
+| $n$ | 需求基点 | 需求正确 | 需求并集 | 原 $N$ 三行最小值 | 新 $O$ 三行最小值 |
+| ---: | ---: | ---: | ---: | --- | --- |
+| 1 | 136 | 116 | 376 | $(163,213,376)$ | $(168,213,381)$ |
+| 2 | 136 | 116 | 376 | $(260,116,376)$ | $(270,116,386)$ |
+| 3 | 136 | 116 | 376 | $(281,116,397)$ | $(291,116,407)$ |
+| 4 | 165 | 87 | 376 | $(333,87,420)$ | $(348,87,435)$ |
+| 5 | 182 | 70 | 376 | $(363,70,433)$ | $(383,70,453)$ |
+| 6 | 182 | 70 | 376 | $(399,70,469)$ | $(424,70,494)$ |
+| 7 | 223 | 29 | 376 | $(446,29,475)$ | $(471,29,500)$ |
+
+全正基点分子分别为 $475,500$，需求 $376$。剩余位的精确 min/max 递推及上面全部表定义给各 382 行的有限代数证明；并集直接对基点与该字正确之和取最小值，绝不用独立最小值的和冒充它。$\sum_{a=3}^7b_a=992/500=8e$，上侧式 $240/500\le1$，次序与 $b_2=b_3$ 成立，原同一配置证明 $H_N$。
+
+整零面单点门判据在标签 2 至 5 上失败，却不妨碍共同包络路由。若把八个供体留在余项而只替换代码质量 $h$，在首零分别为 2、3、4、5 且后缀为其匹配代码的四个字上，各供体对应正确质量零，替换各须付 $h$。一张硬两请求停止表至多有三个输出标签，故这四个正确读数之和最多为该表质量的三倍，任何此种停止替换至少需 $4h/3>h$。这是固定代码操作的失败；共同重排九表块则成功。
+
+原核的标签 2 常数 $1/25$ 小于 109.1 阈值 $1/20$，标签 3 常数零小于阈值 $1/100$。原精确律不能停止表示；另一停止律满足同一帽。该核诊断不增加独立精确律障碍或幅度分类。
+
+**例 221.15（模包络不是一般停止可行性的必要条件）。** 在 $L=3$ 取 $b_1=b_2=b_3=1,e=1/4$，221.11 的四表各 $1/4$，全部 22 行可行。固定分解令 $\eta=(1/4)O(1,2;1,2,3)$，$\kappa$ 为另三张表。则 $\delta_3=1/4$，$\eta_w(3)=w_1w_2/4$。在整个 $w_3=0$ 面上，非负模包络 $u_3+c_{13}w_1+c_{23}w_2$ 分别测试 $00,10,01$ 强制三个系数全零。故 $J=\{3\}$ 的第一族割为 $1/4\le0$，失败。但原律本来已是完整停止律；该失败不能否定它或另一分解。
+
+### 221.5 B 内的 D：零边单点 iff 与帽内付费下降
+
+**定理 221.16（D 的完整零边判据）。** 在 221.7 的同一实际分解上，令所有 $x_{ij}=0$。存在质量 $s$ 的单点门与空零替换满足全部帽行，当且仅当集外正确需求、全正行 $\rho_{1^L}(0)+s\ge1-e$ 以及下列全部约束成立：
+
+$$
+\begin{aligned}
+\text{C0}:&\quad\sum_{a\in A}\delta_a\le s,\\
+\text{CB}:&\quad\sum_{a\in A\cap Z(w)}\delta_a
+\le s+\rho_w(0)-(1-b_n-e)&& (w\in\Omega_n),\\
+\text{CP}:&\quad\sum_{a\in A\cap Z(w)\setminus\{n\}}\delta_a
+\le s+\rho_w(0)+\rho_w(n)-(1-e)&& (w\in\Omega_n).
+\end{aligned}
+$$
+
+替换恰为 $\sum_a\delta_aO(a;a,0)+(s-\sum_a\delta_a)E_0$。这是 B 的 $x=0$，不另计独立关系。它不要求旧块正坐标被逐字支配。
+
+**证明。** 任一此类块的门质量 $t_a$ 在每个 $\Omega_a$ 贡献正确 $t_a$，所以 $t_a\ge\delta_a$ 必要。其基点是 $s-\sum_{a\in Z}t_a$，并集是 $s-\sum_{a\in Z\setminus\{n\}}t_a$，总门质量不超过 $s$。于是原事件行逐字给 C0、CB、CP 对 $t$ 的上界。它们都是对非负坐标和的上界，故把 $t$ 降为逐坐标最小 $\delta$ 仍成立；正确需求也仍成立。这证明所述条件必要。反向直接取这些最小门质量，空质量由 C0 非负，各帽行正是 CB、CP 与已声明正确、全正行，故充分。空 $A$、$s=0$、负原始正确需求、零缺额与闭等号都包括在同一证明中。
+
+在 B 的公式中，零边给 $m=\sum\delta$、$\Psi=\sum_{Z}\delta$；把第二容量式移去 $\delta_n$ 恰是 CP，故逐项等价。旧条件 $\delta_a\le\min_{w_a=0}\eta_w(a)$ 给逐字正坐标支配，因而足以推出这些帽行，却不是本 iff 的必要条件。$\square$
+
+若允许同时选择 $\kappa\le\lambda$，可直接用同一个完整表变量 $\kappa_D$ 与门变量 $t_a$ 写质量及全部仿射帽行，均为线性约束。固定 $\kappa$ 后最小度证明可消去多余 $t$。这一共同选择不能被各行独立的余项或独立优化的资金代替。
+
+**例 221.17（D 的六位实际见证、下降与独立并集行）。** 取
+
+$$
+L=6,\quad b=(11/21,11/21,11/21,65/126,65/126,4/9),\quad
+ e=2/7,\quad h=2/63=4/126,\quad A=\{1,2,3,4\}.
+$$
+
+全部 $\kappa$ 表如下，质量以 $1/126$ 为单位。
+
+| 停止日程 | 输出 $0,10,11$ | $126\kappa_D$ |
+| --- | --- | ---: |
+| $1,2$ | $1,2,0$ | 12 |
+| $1,2$ | $1,2,3$ | 6 |
+| $1,3$ | $0,3,0$ | 2 |
+| $1,3$ | $1,3,0$ | 6 |
+| $1,4$ | $1,4,0$ | 6 |
+| $2,3$ | $0,3,0$ | 8 |
+| $2,3$ | $0,3,5$ | 1 |
+| $2,3$ | $2,3,4$ | 3 |
+| $2,4$ | $0,4,0$ | 6 |
+| $2,5$ | $0,5,0$ | 3 |
+| $2,5$ | $2,5,0$ | 5 |
+| $3,4$ | $0,4,0$ | 6 |
+| $3,4$ | $0,4,5$ | 4 |
+| $3,5$ | $0,5,0$ | 4 |
+| $4,5$ | $0,5,0$ | 2 |
+| $4,5$ | $0,5,6$ | 10 |
+| $5,6$ | $0,6,0$ | 10 |
+
+其质量为 $94/126=47/63$。$\eta$ 为下面八张表，每张质量 $h$：
+
+| 完整表 | 质量 |
+| --- | --- |
+| $N(5,6;1,2,3,4)$ | $h$ |
+| $O(1;1,0)$ | $h$ |
+| $O(1,5;0,0,2)$ | $h$ |
+| $O(1,6;0,2,0)$ | $h$ |
+| $O(1,5;0,3,0)$ | $h$ |
+| $O(1,6;0,0,3)$ | $h$ |
+| $O(1,5;0,4,0)$ | $h$ |
+| $O(1,6;0,4,0)$ | $h$ |
+
+总质量 $M=1$，同余项 $\rho=\kappa$，块质量 $s=8h$。准确缺额 $\delta=(0,h,h,h,0,0)$，零边替换为三张各 $h$ 的 $O(2;2,0),O(3;3,0),O(4;4,0)$ 与 $5hE_0$。
+
+令 $x_i=w_i$，$Z_0(x)=126\kappa_w(0)$。逐胞相加给
+
+$$
+\begin{aligned}
+Z_0(x)={}&56-2x_1-18x_2-14x_3-12x_4-10x_5\\
+&+12x_1x_2+8x_1x_3+6x_1x_4+8x_2x_3+6x_2x_4+8x_2x_5\\
+&+6x_3x_4+4x_3x_5+2x_4x_5+10x_5x_6,\\
+126p_N(0)={}&Z_0(x)+4(6-3x_1+x_1x_5+x_1x_6),\\
+126p_O(0)={}&Z_0(x)+4(5+x_2+x_3+x_4).
+\end{aligned}
+$$
+
+$\kappa$ 的各首零正确分子为 $(30,26,26,25,29,20)$。原完整律正确分子分别为
+
+$$
+34+4(1-x_5)(1-x_6),\quad30+4x_5(1-x_6),\quad
+30+4(1-x_5)x_6,\quad29+4(1-x_5)(1-x_6),\quad29,\quad20;
+$$
+
+新律为 $(30,30,30,29,29,20)$。固定首零前缀，对基点多项式、正确多项式及其同字之和分别作有限布尔最小值递推，给下面全部事件极小值，单位为 $1/126$。
+
+| $n$ | 需求基点 | 需求正确 | 需求并集 | 原 $N$ 三行最小值 | 新 $O$ 三行最小值 |
+| ---: | ---: | ---: | ---: | --- | --- |
+| 1 | 24 | 30 | 90 | $(56,34,90)$ | $(60,30,90)$ |
+| 2 | 24 | 30 | 90 | $(56,30,90)$ | $(64,30,94)$ |
+| 3 | 24 | 30 | 90 | $(60,30,90)$ | $(70,30,100)$ |
+| 4 | 25 | 29 | 90 | $(62,29,95)$ | $(78,29,107)$ |
+| 5 | 25 | 29 | 90 | $(68,29,97)$ | $(88,29,117)$ |
+| 6 | 34 | 20 | 90 | $(76,20,96)$ | $(92,20,112)$ |
+
+全正基点分子是 $90,102$，需求 $90$。这给每律全部 190 行，而不是只给部分单点。尾和 $\sum_{n=3}^6b_n=2=7e$，上式 $11/21\le1$，次序条件满足；同一原完整 $\lambda$ 实际证明 $H_N$。表中界也证明零边 CB、CP 在同余项上逐字成立。
+
+旧块的整零面最小值在标签 1 至 4 为 $(h,0,0,0)$，所以旧的逐字正坐标支配测试不能满足标签 2、3、4 的正缺额。但 D 用帽内余量付款：在 $000000$ 上，基点从 $40/63$ 降至 $38/63$，并集 $\{0,1\}$ 从 $59/63$ 降至 $53/63$，均仍满足其原始需求。这些真实下降不能被说成事件支配。
+
+在 $001110$，用三个质量 $h$ 的恒标签 2、3、4 与 $5hE_0$ 替换整个块，独立并集只有 $41/63<45/63=1-e$；同一字的单点门替换并集为 $45/63$。这是一条独立并集反例行。并集约束不是由各自单点最小值拼成的。
+
+在 $100001$，首零 2、代码 $01$，$\kappa_w(2)=13/63$，两个对应错配供体均不贡献正确 2，代码恰提供 $h$，合计 $15/63=b_2-e$。只把代码改成零会缺 $h$，所以代码确实承担该原配置的正确需求；联合替换八表块才满足帽。
+
+原律的标签 1 核坐标是
+
+$$
+p_N(1)=(17/63)(1-x_1)+(2/63)(1-x_5)(1-x_6).
+$$
+
+其常数为 $19/63$，109.1 阈值为 $17/63+2/63+2/63=1/3$，故原精确律不是停止核。另一停止律已满足同一帽，没有原始停止分离。
+
+### 221.6 原始来源、同一随机种子与全部实际尾部
+
+**定义 221.18（原始来源、载体与分别声明的标记目标）。** 保持原始可数带标签来源
+
+$$
+X=\{(r,g):r\text{ 是素数},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},
+\quad N_x=1+F_rg,
+\quad q_i(x)=[p_i\mid N_x],
+$$
+
+其中 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$，$p_i$ 为第 $i$ 个素数。回答静态；每个实际整数素因子有限，故 $n(x)=\min\{i:q_i(x)=0\}$ 有限。没有给 $X$ 分布，也没有引入无限全正来源。
+
+原始带空间仍为 $B_j,P_j$ 各个 $(0,1)$ 副本的 Borel 不交并；消费者在 $B_j$ 输出 unknown，在 $P_j$ 提议 $j$。原始非原子族仍为
+
+$$
+\mu_x=(1-h_0)\nu_x+h_0\pi_{\omega(N_x)},\qquad0<h_0<1,
+$$
+
+其中 $\nu_x$ 在 $B_{n(x)}$ 上有归一化密度正比于 $\exp(t(x)u)$，$t(x)=\sum_i3^{-i}q_i(x)$，$\pi_j$ 在 $P_j$ 上均匀，$\omega(N_x)$ 为原始素因子计数参数。取原带上的不同点 $\theta_j=(B_1,1/(j+2))$，另行声明标记目标
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+$$
+
+有限标记律与每个原始非原子 $\mu_x$ 的 TV 为一：取其有限支持集，标记律质量一而非原子律质量零。因此上述具体标记帽见证不是原始非原子族的替换或其帽见证。完整竞争者仍可输出任意原始带。
+
+**命题 221.19（实际表执行与资源保真）。** 每个显示的质量一完整配置在原来源上由一个来源独立的 $U\in[0,1)$ 执行：用固定区间选择整个日程与所有胞输出，然后取得该日程的回答并交付相应原带点。$N$ 取得预选的整个日程；$O$ 预选递增日程并在首个被查询零或耗尽时停止。不同律可用同一 $U$ 的共同有限细分比较，不产生第二个随机资源。所有本节表在每个来源与种子上最多发出两次实际请求，无建议，且可测有限交付。
+
+**证明。** 有限非负质量和一给固定半开区间分割。区间决定的表及日程与回答无关；每张表的执行树只有零、一或两次请求。输出在预先选定有限集合，是静态回答的可测函数。停止表的 $N$ 完成式在共享首胞后仍取得第二回答，可以忽略它，但该请求仍计数；重复地址的请求也逐次计数。没有适应性第二地址、免费探测、来源先验、运行时间、地址大小、深度或平均次数替换硬两请求预算。$\square$
+
+35.2 的素数入列秩、CRT 与实际 Fibonacci 窗口证明保证每个有限位模式在任意有限地址上有实际来源实现，且同一模式阈值可统一取定。因此本节的全部有限字是在抽种子前选择的实际来源接口，而不是只在抽象虚构来源上验证。全正有限字代表那些实际首零更晚的来源。
+
+例如 $r=19,g=436,N_x=1822917$ 给低字 $0100$。$N(3,4;1,0,0,0)$ 在此字正确输出更早未查询的标签 1，事件读数为 $(0,1,1)$；把它修剪到零给 $(1,0,1)$，损失正确行。故完整原目录不能删除这种输出。本节原代码表也保留同样的合法较早猜测。
+
+另一个独立并集边界是 $p(0)=p(n)=1/4,a_n=1/2,e=1/4$：两条单点下界均达到，却只有并集 $1/2<3/4$，实际 TV 为 $1/2$。所以每个有限表格均单独保留并集行。
+
+**命题 221.20（实际律的尾部与低观察替换）。** 对支持在标记 $0,\ldots,H$ 的实际律 $p_x$ 和实际首零 $n(x)>H$，
+
+$$
+\operatorname{TV}(p_x,\lambda_x^a)
+=1-\min(p_x(0),1-a_{n(x)})
+=\max(1-p_x(0),a_{n(x)}).
+$$
+
+闭帽等价于 $p_x(0)\ge1-\varepsilon$ 且 $a_{n(x)}\le\varepsilon$。若另外执行一个来源独立种子选择的有限完整核，所有实际观察坐标均在 $1,\ldots,H$，输出仅依赖该种子及取得的回答，则有 $p_x=P(q_1(x),\ldots,q_H(x))$；这时才可在全部 $n(x)>H$ 来源上把它换成共同的 $P(1^H)$。
+
+**证明。** 首零标记 $n(x)$ 不在输出支持中，目标与实际律只能在标记零相交，其共同质量恰为上述最小值。另一个陈述固定同一个种子：同低字来源给相同的全部取得回答、停止路径和输出，因此有相同字核。有限输出支持本身不控制观察地址，不能证明后一替换。$\square$
+
+本节所有实际示例的观察地址均在其 $L$ 内，输出只依赖表、种子及回答，故额外假设已由列出的表实际满足。对 A、B、D 的 $L=6$ 例，取任意 $0<t\le1$，用 $t$ 倍原完整律加 $(1-t)E_0$，令
+
+$$
+a_n(t)=tb_n\ (n\le6),\qquad
+ a_n(t)=te\,2^{-(n-7)}\ (n\ge7),\qquad \varepsilon(t)=te.
+$$
+
+序列正、非增、趋零，$a_7=\varepsilon$ 是保留的闭等号；严格活跃长度为六。每个有限正确与基点需求随 $b,e$ 仿射变化，原三事件式加全基点律对应的三事件式，恰给新 $tb,te$ 的全部需求；原全基点律在零参数上的正确需求是零，不需要删除该行。硬域尾不等式仍等号，另一式随 $t$ 缩小，同一混合 $N$ 配置仍证明 $H_N$。
+
+| 例 | 实际 $n>6$ 的 $N$ 误差 | 实际 $n>6$ 的 $O$ 误差 | 正闭帽 |
+| --- | --- | --- | --- |
+| A，221.6 | $\max(47t/200,a_n(t))$ | $\max(9t/40,a_n(t))$ | $47t/200$ |
+| B，221.10 | $\max(6t/25,a_n(t))$ | $a_n(t)$ | $6t/25$ |
+| D，221.17 | $\max(2t/7,a_n(t))$ | $\max(4t/21,a_n(t))$ | $2t/7$ |
+
+这些公式来自全正基点，分别为原例的 $153/200,19/25,5/7$ 与新例的 $31/40,1,17/21$，再加全基点混合。对每个实际尾项都成立，$n=7$ 两类均达到其闭帽。例如 $r=47,g=297421613,F_{47}=2971215073,N_x=883703579581572750$ 的低七位为 $1111110$，实际首零正是七。连续径向族仅示范关系，已有的幅度族与运输不另计内容。
+
+C 的实际 $L=7$ 例取 $a_n=b_n$（$n\le7$），$a_n=(124/500)2^{-(n-8)}$（$n\ge8$），闭帽 $124/500$。观察只在低七位，故每个实际 $n>7$ 的原误差为 $\max(1/20,a_n)$，新停止误差为 $a_n$；$a_8=e$ 闭等号包含。前缀全部行已由 221.14 验证，正确 2 的最小值 $116/500$ 比目标 $240/500$ 少帽值 $124/500$，故实际首零 2 且后缀匹配代码的来源也达到该帽。薄化后的 B 律同样可行，其尾基点仍为一。此例不增加一个独立幅度分类。
+
+221.11 的四表律也可接 $a_1=a_2=a_3=1$、$a_n=2^{-(n-4)}/4$（$n\ge4$）及闭帽 $1/4$；全正基点 $3/4$，所有实际后期误差为 $\max(1/4,a_n)=1/4$。该既有见证的严格活跃长度为三，而有限展示可取六或其他更长地平线，两者不可混同。
+
+**注记 221.21（有符号锥与原运输边界）。** 对一般质量 $M$ 的可行锥配置，只有
+
+$$
+0\le\tau\le1/\max(1,M),\qquad
+\tau\mu_D\text{ 及 }(1-\tau M)R
+$$
+
+是合法概率填充。其事件向量为 $r+\tau G_O\mu\ge r+\tau h=d(\alpha+\tau(b-\alpha))$。径向参数的序列次序、正幅度、所有实际尾项仍须分别核对；$M>1$ 的原有符号仿射余项不被执行。本节实际表例质量均为一，已直接给出这些条件。
+
+109.1 是概率向量核的共同日程质量刻画，110.2 是两类在正闭帽下的原始全载体、任意地址运输，均按原证明复用。其必要方向保留可数来源上的共同余零有限交付事件、整个预选日程最大地址的尾概率控制、种子前固定的实际有限模式、有限执行截断与有限单纯形紧致性；不是把原始竞争者缩到展示的低地址。207.20 的两种地平线方向也保留：较短活跃表示可在实际尾幅度不超过帽时增加尾行；较长表示可为较短比较作限制及多余标签投影，但该限制本身不是被删去活跃尾上的原始见证。严格活跃长度定义为 $L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$，等帽尾不能删除；所查询地址从不被假定小于 $L_a$。
+
+### 221.7 复用范围与仍未解决的原始关系
+
+两条独立条件关系的数学范围是：A 的共同基点与三候选质量 iff，B 的最小正确度、端点图及全部同余项帽容量 iff。221.6 与 221.10 的相反同余项失败说明两种指定操作不能相互替代。C 的整零面模包络、实容量流、两族割和已资助/中性表是 B 内的充分构造；D 是 B 的零边情形并允许帽内付费事件下降。所有例仍各自同时有原始 $N$ 与另一 $O$ 可行律。
+
+截断子集立方体、三标签收集、109.1 标量质量恒等式、弱对偶、既有包络单点门、完整硬域、运输与已知四表见证均复用，不另计独立数学区域。220 的整零面支配门给 D 的一个充分子域；D 的 iff 允许本节列出的真实基点与并集下降，所以不能把它写成相对原块的全事件支配。旧 138 的掩码凸性与 220 的完整内掩码关系不增加本节信用。200.4–200.5 已覆盖整个单基点首零类得分域，该类的链正规形或再一个供应实例均为零重复信用。
+
+本节只采用上述 A/B 及 B 内 C/D；不包含其他候选的一元性必要条件、错误诊断数值或关于既有凸包的覆盖比较。没有声称新的世界范围优先权或排除所有旧凸、锥、极或有符号组合后果。外部有限多面体及实容量网络流方法是成熟工具；这里的具体帽行关系由完整普通证明承担，不用文献类比代替其前提。
+
+原始全域目标仍是 open：对每个 $L\ge3$ 和每个实际完整 $y\ge0$，若 $\Delta_O(y)\le1$，需构造一个不受额外限制的完整 $V\ge0$ 及 $\theta\in[0,1]$，使
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+$$
+
+其中 $\sigma_{H_L}(q)=\max_{(b,e)\in H_L}F_q(b,e)$。$V$ 可改变所有单点、基点、完整律、商、支持、后缀及终端；$\theta=1$ 时非零零成本 $V$ 仍合法。固定余项、保持商、端点或模包络不能被加入原目标的必要条件。
+
+负向替代必须在同一个实际 $(b,e)\in H_N$、同一个完整可行 $\lambda\ge0$、$G_N\lambda\ge h$、$M=\sum\lambda\ge1$ 上，给实际完整单位停止得分 $y$ 的严格不等式
+
+$$
+F_{Q(y)}(b,e)>M,
+$$
+
+再给原始共同种子 $N_2$ 见证与对每个完整载体、任意地址 $O_2$ 竞争者的统一下证书，并保留所有实际来源、Borel 事件、多零字、正趋零尾及正闭帽。端点、单点门、固定代码或模包络失败不满足这个负向条件；精确原律不可停止也不满足它。
+
+本节没有证明每个可负担原配置都能找到上述 $\kappa+\eta$ 分解或 A/B 候选，没有对全部单位停止输入提供同一预算证书，也没有原始严格分离。原始所有正非增趋零序列、所有正闭帽及严格活跃长度 $0,1,2$ 的小端分支均保持其原有义务。本节为普通理论成果，未作 Lean、编译、摄入、覆盖或冻结声明。
+
+## 追加锚（本行以下为增补区）
