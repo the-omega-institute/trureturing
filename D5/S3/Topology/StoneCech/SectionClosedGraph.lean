@@ -163,7 +163,7 @@ theorem isClosed_fibreGraph_adj (q : A → B) (Y : Set (Ultrafilter A))
       · obtain ⟨S, hS, hSinj⟩ := (hgood hx).2
         refine ⟨basic Y S, basic Y S, basic_isOpen Y S, basic_isOpen Y S,
           hS, ?_, ?_⟩
-        · exact hval ▸ hS
+        · simpa [hval] using hS
         · apply basic_prod_nonedge
           intro a ha b hb hab hq
           exact hab (hSinj ha hb hq)
@@ -262,7 +262,7 @@ theorem fibreGraph_clique_finite (q : A → B) (Y : Set (Ultrafilter A))
       rfl
     · apply Subtype.ext
       exact hxa.symm.trans (congrArg Subtype.val hzx).symm
-  · obtain ⟨c, d, hxc, hzd, _, hqcd⟩ := hK hx hz hzx.symm
+  · obtain ⟨c, d, hxc, hzd, _, hqcd⟩ := hK hx hz (Ne.symm hzx)
     have hca : c = a := Ultrafilter.pure_injective (hxc.symm.trans hxa)
     refine ⟨d, ?_, ?_⟩
     · change q d = q a
