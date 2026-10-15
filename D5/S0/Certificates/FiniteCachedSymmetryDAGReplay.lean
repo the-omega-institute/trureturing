@@ -40,6 +40,22 @@ def check
         check nodes step lower dominates gap fuel (children a)
           (step cache i a) (Function.update p i (some a)) = true)
 
+/-- Four independently checked actual child contexts assemble at their literal
+split. A shared shape alone supplies neither the node equality nor the child
+cache and partial assignment used in these premises. -/
+theorem checked_split
+    (nodes : ℕ → Fin N → Node N Coord Value Sym)
+    (step : Cache → Coord → Value → Cache) (lower : Cache → ℤ)
+    (dominates : Sym → Partial Coord Value → Bool) (gap : ℤ)
+    (fuel : ℕ) (index : Fin N) (cache : Cache) (p : Partial Coord Value)
+    (i : Coord) (children : Value → Fin N)
+    (node : nodes (fuel + 1) index = .split i children)
+    (branches : ∀ a, check nodes step lower dominates gap fuel (children a)
+      (step cache i a) (Function.update p i (some a)) = true) :
+    check nodes step lower dominates gap (fuel + 1) index cache p = true := by
+  simp only [check, node]
+  exact decide_eq_true branches
+
 /-- A finite prefix keeps the original bound and symmetry tests. At its
 frontier it passes the complete actual fuel, node, cache and partial event to
 the suffix receipt selector. No node shape or hash transfers acceptance. -/
@@ -201,5 +217,6 @@ theorem checked_global_lower_bound
 #print axioms checked_forces_smaller_bad_event
 #print axioms checked_global_lower_bound
 #print axioms checked_prefix_and_frontier
+#print axioms checked_split
 
 end D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
