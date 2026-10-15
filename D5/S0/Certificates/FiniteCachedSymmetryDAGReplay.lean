@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/FiniteCachedSymmetryDAGReplay
    mirror-E: none(waiver:finite-cached-certificate-replay)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMCachedGlobalReplay.accepted_prefix_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData.root
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMOriginalCachedGlobalReplay.accepted_prefix_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/EJMOriginalGlobalDAGData.root
    digest: Checked finite local transitions retain their actual-context association through exhaustive cached replay. -/
 
 /- Draft only: not compiled, not a canonical module and not a delivered
