@@ -1,0 +1,21 @@
+**Assumption 4.1 (truthful acquired producer data).** Before access to acquired
+values is cut, the actual producer still possesses either a lossless acquired
+tree $u$, or the row $R_P(u)$ together with one truthfully acquired finite
+subtree $z_b$ at a declared representative of every old class.
+The retained values belong to this same source and version. A merely
+feasible filling selected from (NAR.1.4) is not such data.
+Local traversal and equality of acquired finite terms are allowed
+computations; no equality oracle for unknown subtrees is supplied.
+
+The actual full-tree supplier is
+[NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean),
+`Control.deliver`, `sourceControl` and `native_source_producer`.
+Its terminal control carries the acquired tree and an empty continuation
+stack; its acquired values are built from truthful replies, while the
+register stays at epoch zero. This is the lossless source used in
+[Sparse History Definition 59.2](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md),
+before that definition's value-forgetting handoff.
+[ActualCutPartitionRecovery](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.lean),
+`classValue_at`, supplies the mathematical value correspondence when the
+source is available; it is not additional access after forgetting.
+

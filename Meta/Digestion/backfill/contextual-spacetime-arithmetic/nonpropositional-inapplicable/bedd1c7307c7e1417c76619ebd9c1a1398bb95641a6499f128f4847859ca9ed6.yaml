@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bedd1c7307c7e1417c76619ebd9c1a1398bb95641a6499f128f4847859ca9ed6
+  normalized_sha256: sha256:bedd1c7307c7e1417c76619ebd9c1a1398bb95641a6499f128f4847859ca9ed6
+cas_ref: sha256:bedd1c7307c7e1417c76619ebd9c1a1398bb95641a6499f128f4847859ca9ed6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述来源签名观察等价的两个方向。
+    previous_atom_id: 97332a136467ee4c358c3dcb28ea40065b2528ce0eb5db1f70d717ba904a1704
+    next_atom_id: e0664035a52e937cced686bd00a37363e5d6c0e35c7f11fe6af3ba5302aab0dc

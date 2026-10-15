@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:731504033f6ed6eb55738df1cc857d9718cfa620d9fc02d38158666dbf3349ae
+  normalized_sha256: sha256:731504033f6ed6eb55738df1cc857d9718cfa620d9fc02d38158666dbf3349ae
+cas_ref: sha256:731504033f6ed6eb55738df1cc857d9718cfa620d9fc02d38158666dbf3349ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of the preceding trial-division macro formula (7) by tracking counters and remainder.
+    previous_atom_id: 783d413d2f102a6149222de31f25d081389f7d601c08e27fec9e339cf2f22c4c
+    next_atom_id: 0ef8e4bf4f34408c047d86058d43e6f332edec371a491f44cded0c61b4e90046

@@ -373,7 +373,7 @@ private theorem posterior_length_law (μ : PMF Depth) (h : List Operation)
   rw [actual_length_projection,posterior_word_law μ h c hc]
   rfl
 
-private theorem p_kernel_atoms (r : unitInterval) (j : ℕ) :
+theorem p_kernel_atoms (r : unitInterval) (j : ℕ) :
     ((explicitStoppedWordLaw .p r).map lengthProjection) {some (2*j+1)} =
       alphaMass r*(alphaMass r*betaMass r)^j ∧
     ((explicitStoppedWordLaw .p r).map lengthProjection) {some (2*j+2)} =

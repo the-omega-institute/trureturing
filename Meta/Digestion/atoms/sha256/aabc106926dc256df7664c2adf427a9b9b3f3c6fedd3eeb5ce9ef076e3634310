@@ -1,0 +1,6 @@
+**Theorem 8.1 (current conditional augmentation need not recover its predecessor).**
+There is no function on realized current $S_P$ records which recovers
+their predecessor $S_P$, even when the current source is known to be one
+native substitution image. In particular it need not recover the
+predecessor row.
+

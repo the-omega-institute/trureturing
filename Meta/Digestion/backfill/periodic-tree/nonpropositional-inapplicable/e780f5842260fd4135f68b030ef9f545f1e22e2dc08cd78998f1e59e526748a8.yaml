@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e780f5842260fd4135f68b030ef9f545f1e22e2dc08cd78998f1e59e526748a8
+  normalized_sha256: sha256:e780f5842260fd4135f68b030ef9f545f1e22e2dc08cd78998f1e59e526748a8
+cas_ref: sha256:e780f5842260fd4135f68b030ef9f545f1e22e2dc08cd78998f1e59e526748a8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「8.3 任意分辨率的收缩与非周期性」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 0332ccec11f1d13484a202dd3d0d67a8b97d1f0bc6c861a999b62710b94f4b08
+    next_atom_id: fef34314101aa72ccda75cc7c034066b0f90079416d8b57c856c062aae2b8246

@@ -19,9 +19,22 @@ internal sealed class BranchLabeledMaximalFamilyDocument : IScribeDocumentDefini
         Sp, Land, Sp, Call("MADFamily", Call("range", V("M"))), Sp, Land, Sp,
         All("x", V("Branch")), Call("ConvergesOn", V("natValue"), Call("M", V("x")), Call("limitValue", V("x")))));
 
+    private static Formula FiniteUnionStatement => Disp(Seq(
+        All("alpha", V("Type")), All("u", Fn(V("alpha"), V("unitInterval"))),
+        All("F", Call("Set", Call("Set", V("alpha")))), All("r", V("unitInterval")),
+        Call("Finite", V("F")), Sp, Land, Sp,
+        Grp(Seq(All("A", Call("Set", V("alpha"))), V("A"), Sp, InMacro, Sp, V("F"),
+            Sp, Rightarrow, Sp, Call("ConvergesOn", V("u"), V("A"), V("r")))),
+        Sp, Rightarrow, Sp, Call("ConvergesOn", V("u"), Call("sUnion", V("F")), V("r"))));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Branch-labeled convergent maximal family on Nat.", H("Branch-labeled convergent maximal family on Nat"), Blocks(
             Paragraph(Text("Information audit is unfinished: the exact source scope and compiled Reg attempt do not establish validated raw source reconstruction. The concrete missing evidence for this theorem is tracked in https://github.com/the-omega-institute/trureturing/issues/16293. This does not add a mathematical assumption or claim a complete adaptive-refinement counterexample.")),
+            Describe.Lean(
+                DescribeId.Create("finite-sunion-converges"),
+                DeclarationHandle.Create("D5/S3/Topology/AlmostDisjoint/BranchLabeledMaximalFamily.finite_sUnion_converges"),
+                H("Finite unions converge to a common value"), StatementSource.FromAuthor(FiniteUnionStatement), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any carrier alpha, actual value map u, finite family F and common value r, convergence on every member implies convergence on their set union. The proof bounds the exceptional preimage of each neighborhood by the finite union of the memberwise finite exceptions. This is the original supplier, with identical statement, assumptions and proof, exposed at its owner for direct consumption by same-limit threshold-partitioner pairing. No duplicate proof or forwarding wrapper is added. Its exact Reg source telescope is checked, while faithful finite-family variation/raw source reconstruction remains unfinished under https://github.com/the-omega-institute/trureturing/issues/16293."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("exists-branch-labeled-mad"),
                 DeclarationHandle.Create("D5/S3/Topology/AlmostDisjoint/BranchLabeledMaximalFamily.exists_branch_labeled_mad"),

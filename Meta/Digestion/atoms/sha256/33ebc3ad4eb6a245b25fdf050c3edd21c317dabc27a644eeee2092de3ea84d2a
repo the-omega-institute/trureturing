@@ -1,0 +1,55 @@
+**Proof.** A ray is uncovered by $P$ exactly when its depth-$D$ prefix
+belongs to $A_D(P)$. Thus $r=0$ means $P$ covers every ray, and no union
+with $P$ is noncovering. The family then has no independent ages and one
+member; $(H+1)^0=1$ describes the vacuous minimum, with no available
+index to which the known-index comparison could apply. If $r>0$, the
+empty future cut is already allowed. At $D=0$, $P=\varnothing$ gives
+$r=1$ and the only allowed $Q$ is empty; the family is
+$\{T_a:0\le a\le H\}$ and its sharp price is $H+1$. The root first cut
+instead gives $r=0$. At $H=0$ every family has one source, including
+when several future indices are possible, and all the preceding proofs
+retain this case.
+
+To require strictly positive lags, replace (NAR.11.10) by
+
+$$
+R_{Q_i}(\rho^{H+1-a_i}X_a)=Y_i^+,
+\tag{NAR.11.16}
+$$
+
+where the visible slot is $T_{ib+H+1}$. Its lag is at least one.
+The same skeleton, reached guards and disjoint intervals give the same
+fixed discrete partition. The two lags still differ whenever $a_i$
+differs, so the exact lower counts and their attained upper codes are
+unchanged. Here $H$ bounds the initial variable ages, not the permitted
+lags of the decoder: the upper rules work for every lag.
+
+For any proposed finite alphabet of size $N$ and fixed $r>0$, choose
+$H$ so that $(H+1)^r>N$. That finite family is contained in the
+all-source domain and violates the proposed alphabet by Theorem 11.6,
+or by (NAR.11.16) under the positive-lag restriction. No bound on source
+size was imposed on that domain. Each individual vector is still finite.
+For example use the ordinary natural-number pairing
+
+$$
+\operatorname{pair}(x,y)=\frac{(x+y)(x+y+1)}2+y.
+\tag{NAR.11.17}
+$$
+
+For fixed $x+y=n$ its values are the disjoint consecutive interval from
+$n(n+1)/2$ to $n(n+1)/2+n$; these intervals partition the nonnegative
+integers. This proves an effective unique inverse. Starting with zero,
+pair successively with the $r$ coordinates and invert $r$ times; $r$ is
+public. This encodes every vector as one natural number. Thus the number
+of coordinates forces no register count. The integer's binary storage
+size is unbounded and is not a unit-cost infinite-precision resource.
+
+The finite-family optimum is a number of retained distinctions after
+actual encoding and export. It is not a global all-source optimal bit
+length, a uniform source-size bound, total acquisition memory or peak
+workspace optimum. Full-row acquisition, installed program storage,
+public-address representation, local calculation and comparison,
+permissions and actual continuation keep their separate prices. Native
+update count supplies no physical duration, space or energy law.
+$\square$
+

@@ -218,7 +218,8 @@ private theorem golden_prime_local_objective_diff {p : ℕ} (hp : p.Prime)
   field_simp [hpLog.ne']
   ring
 
-private theorem golden_prime_local_objective_unique_maximal_of_strict_threshold
+/-- Generic strict-threshold uniqueness, exposed for unrestricted reserve masks. -/
+theorem golden_prime_local_objective_unique_maximal_of_strict_threshold
     {p a : ℕ} (hp : p.Prime) (lambda : ℝ)
     (hupper : goldenLayerMarginal p (a + 1) < lambda)
     (hlower : a = 0 ∨ lambda < goldenLayerMarginal p a) :

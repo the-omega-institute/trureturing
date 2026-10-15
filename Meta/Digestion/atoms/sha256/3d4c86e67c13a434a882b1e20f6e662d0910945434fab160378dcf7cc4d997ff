@@ -1,0 +1,13 @@
+**证明。** Here the spectrum is $\{0,1,3\}$. If $x\notin I_1$, the
+pair has depth $0$. If $x\in I_1$, its only exceptional member with
+right child $\alpha$ is $T_2=(\beta,\alpha)$; the address $LR$ returns
+$\alpha$ exactly for $T_2$, while $x=\beta$ or a composite $I_1$ value
+returns $\mathsf{abs}$, $\beta$ or $\mathsf{br}$ and hence depth $1$.
+The finite state model gives $M_R=2$: the non-atomic pattern $*$ has
+possible depths $0$ and $1$, while each atomic pattern is single-valued.
+Theorem 6.2 proves the one-bit lower bound under the complete $(R,\eta)$
+handoff, and the displayed producer/consumer attains it. Retaining $\nu$
+itself would use three conditional values and zero reads; retaining root
+$Q$ supports the separate construction-context family but is stronger
+than this root-only field. $\square$
+

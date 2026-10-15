@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Nat.ModEq]
    utility: none
-   digest: Every residual prime divisor of a 5040 power-residue solution is at least 47. -/
+   digest: Generic period obstruction plus the 5040 residual-prime exclusion below 47. -/
 
 import Mathlib.Data.Nat.ModEq
 import Mathlib.Data.ZMod.Basic
@@ -17,12 +17,15 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.GoldenResource.GoldenCell5040SmallPrimeExclusion
 
-private theorem excluded_of_period {n p k : ℕ}
-    (hmod : Nat.ModEq n (3 ^ n) 2241)
-    (hperiod : Nat.ModEq p (3 ^ k) 1) (hk : k ∣ n)
-    (hbad : ¬ Nat.ModEq p 2241 1) : ¬ p ∣ n := by
+/-- A period-one residue at a divisor is incompatible with a distinct target
+residue in any power congruence.  This is the reusable obstruction behind the
+5040 residual-prime exclusion. -/
+theorem modEq_period_not_dvd {a r n p k : ℕ}
+    (hmod : Nat.ModEq n (a ^ n) r)
+    (hperiod : Nat.ModEq p (a ^ k) 1) (hk : k ∣ n)
+    (hbad : ¬ Nat.ModEq p r 1) : ¬ p ∣ n := by
   intro hd
-  have hpow : Nat.ModEq p (3 ^ n) 1 := by
+  have hpow : Nat.ModEq p (a ^ n) 1 := by
     obtain ⟨t, rfl⟩ := hk
     simpa only [pow_mul, one_pow] using hperiod.pow t
   exact hbad ((hmod.of_dvd hd).symm.trans hpow)
@@ -47,24 +50,24 @@ theorem modEq_2241_small_prime_not_dvd {n p : ℕ}
       p = 29 ∨ p = 31 ∨ p = 37 ∨ p = 41 ∨ p = 43 := by
     interval_cases p <;> norm_num at hp <;> decide
   rcases hcases with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 11 (3 ^ 5) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 11 (3 ^ 5) 1)
       ((by decide : 5 ∣ 5040).trans h5040) (by decide)
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 13 (3 ^ 3) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 13 (3 ^ 3) 1)
       ((by decide : 3 ∣ 5040).trans h5040) (by decide)
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 17 (3 ^ 16) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 17 (3 ^ 16) 1)
       ((by decide : 16 ∣ 5040).trans h5040) (by decide)
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 19 (3 ^ 18) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 19 (3 ^ 18) 1)
       ((by decide : 18 ∣ 5040).trans h5040) (by decide)
   · exact excluded_twenty_three hmod
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 29 (3 ^ 28) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 29 (3 ^ 28) 1)
       ((by decide : 28 ∣ 5040).trans h5040) (by decide)
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 31 (3 ^ 30) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 31 (3 ^ 30) 1)
       ((by decide : 30 ∣ 5040).trans h5040) (by decide)
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 37 (3 ^ 18) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 37 (3 ^ 18) 1)
       ((by decide : 18 ∣ 5040).trans h5040) (by decide)
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 41 (3 ^ 8) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 41 (3 ^ 8) 1)
       ((by decide : 8 ∣ 5040).trans h5040) (by decide)
-  · exact excluded_of_period hmod (by decide : Nat.ModEq 43 (3 ^ 42) 1)
+  · exact modEq_period_not_dvd hmod (by decide : Nat.ModEq 43 (3 ^ 42) 1)
       ((by decide : 42 ∣ 5040).trans h5040) (by decide)
 
 #print axioms modEq_2241_small_prime_not_dvd

@@ -42,6 +42,9 @@ internal sealed class StatisticalStrengthMagicSquareDocument : IScribeDocumentDe
                 "Under the four-nonzero-outcome measurement convention, each setting has four nonzero projectors. Each projector is self-adjoint and idempotent; distinct outcomes are orthogonal; their sum is the identity. star on matrices is conjugate transpose. The anonymous Fintype and DecidableEq brackets are Lean instance arguments, not new mathematical variables."),
             Definition("Experiment", "Two parties, four settings, four outcomes", ExperimentFormula(),
                 "The structure has exactly the fields alice and bob, both with type Fin 4 → Fin 4 → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) C. The first argument indexes a local setting and the second an outcome. Each party's operator acts jointly on its two qubits. Together with Valid, this is the source's 2×4×4 experiment type."),
+            Definition("square", "Peres–Mermin observable grid", SquareFormula(),
+                "The nine entries form the Peres–Mermin square. Matrix.kronecker acts on the two-qubit product indices; 1 is the single-qubit identity matrix.",
+                AssessedProvenance.FromRepo()),
             Definition("Valid", "Validity of all eight settings", ValidFormula(),
                 "Every Alice setting and every Bob setting satisfies IsPVM. In particular the four outcomes of every setting are nonzero."),
             Definition("ProductOperator", "Products of single-qubit operators", ProductOperatorFormula(),
@@ -72,10 +75,11 @@ internal sealed class StatisticalStrengthMagicSquareDocument : IScribeDocumentDe
                     ProblemSlugRef.Create("van-dam-gill-grunwald-2005-two-singlet-strength"),
                     ResolutionKind.Proved)))));
 
-    private static DocumentBlock.Describe Definition(string name, string heading, Formula formula, string prose) =>
+    private static DocumentBlock.Describe Definition(string name, string heading, Formula formula, string prose,
+        AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("vdgg-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            provenance ?? AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
@@ -227,6 +231,21 @@ internal sealed class StatisticalStrengthMagicSquareDocument : IScribeDocumentDe
     }
     private static Formula Party(string party, Formula e, params Formula[] args) =>
         Qualified("Experiment",party,[e,..args]);
+    private static Formula SquareFormula()
+    {
+        Formula z = Name("qubitZ"), x = Name("qubitX"),
+            y = Call("pauliMatrix", Seq(Name("Pauli"), Dot, Name("Y")));
+        Formula grid = Seq(
+            Begin, Grp(F.Id("bmatrix")),
+            Kronecker(z, D(1)), Amp, Kronecker(D(1), z), Amp, Kronecker(z, z), RowBreak,
+            Kronecker(D(1), x), Amp, Kronecker(x, D(1)), Amp, Kronecker(x, x), RowBreak,
+            Kronecker(z, x), Amp, Kronecker(x, z), Amp, Kronecker(y, y),
+            End, Grp(F.Id("bmatrix")));
+        return Disp(new Formula.Aligned([
+            Seq(Name("square"), Colon, Arrow(Fin(3), Arrow(Fin(3), Matrix(TwoQubits())))),
+            Equal(Name("square"), grid)]));
+    }
+    private static Formula Kronecker(Formula a, Formula b) => Qualified("Matrix", "kronecker", a, b);
     private static Formula ValidFormula()
     {
         Formula e=F.Id("e");

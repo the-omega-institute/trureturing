@@ -38,8 +38,47 @@ $$\forall n \in \mathbb{N},\; \forall s \in L,\; \forall c \in \mathbb{C},\; \fo
 
 For every finite decidable L, arbitrary relation R, real weights d and real delta, every n and start s, every complex c and every X in C(R,n,s), tau(c times X) equals c tau(X). Positivity, symmetry and the Perron equality are not needed for this scalar identity. The Artin and signed Markov proofs consume this scalar-linearity helper at its source owner. It follows from matrix-trace scalar linearity and finite-sum distribution; it is a consumed helper rather than new independent mathematical content.
 
+**Theorem 1.3 (Splitting an appended legal path).**
+
+Lean statement: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.split_append_coordinates`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.split_append_coordinates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite decidable L, relation R, natural n, endpoints s,t,u, edge R(t,u) and x in LegalPath(R,n,s,t), splitPath of append(x,u) is the sigma pair of the legal predecessor t and x. This is the original private proof exposed through a directly consumed alias, retaining its frozen private identity for the returning-block matrix-unit proof; it is a consumed helper and makes no independent mathematical claim.
+
+**Theorem 1.4 (Appending preserves path distinctions).**
+
+Lean statement: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.append_isInjective`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.append_isInjective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite decidable L, relation R, natural n, endpoints s,t,u and legal edge R(t,u), append from LegalPath(R,n,s,t) to LegalPath(R,n+1,s,u) is injective. The existing proof is exposed through a directly consumed alias and its frozen private identity is retained and consumed by the returning-block matrix-unit proof. No positivity, symmetry or Perron condition is needed.
+
+**Theorem 1.5 (The inclusion in literal append coordinates).**
+
+Lean statement: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.iota_append_entry`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.iota_append_entry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite decidable L, relation R, natural n, endpoints s,t,u, legal edge R(t,u), X in the full C(R,n,s), and x,y in LegalPath(R,n,s,t), the u-block entry of iota(X) at append(x,u),append(y,u) equals X(t)(x,y). This is the original private proof exposed through a directly consumed alias, retaining its frozen private identity and directly consumed by the new returning-block derivation. It is a helper, not an independent formalization gain.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.append_isInjective`
+- Truth anchor: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.iota_append_entry`
+- Truth anchor: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.split_append_coordinates`
 - Truth anchor: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.tau_smul`
 - Truth anchor: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.weighted_path_markov_trace`
 - Dependency: [D5/S3/Quantum/Algebra/WeightedLegalPathTemperleyLieb](../WeightedLegalPathTemperleyLieb.md)

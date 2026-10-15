@@ -566,3 +566,131 @@ This is a scoped comparison, without global novelty, hidden or six-state/support
 [LN]: https://arxiv.org/html/1304.7921v1 "Bas Lemmens and Roger Nussbaum, Birkhoff's version of Hilbert's metric and its applications in analysis"
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Fixed-target finite-past support and the zero-error stopping boundary
+
+**Definition 8.1 (Actual fixed target, information and returns).** Throughout this section fix exactly Definition 4.1's twelve-state parameter, its stationary joint law $J=J_\theta$ from (1.2), and its actual six-class quotient $Q_t=[H_t]$ from Proposition 4.2. The target is always $Q_0$. For integer radii $r\ge0$ put
+
+$$
+W_r=X_{-r:-1},\qquad
+\mathcal F_r=\sigma(W_r),\qquad
+\mathcal F_\infty=\sigma(X_j:j\le-1),\qquad
+\nu_r(a)=J(Q_0=a\mid\mathcal F_r).
+\tag{8.1}
+$$
+
+Here $W_0=\epsilon$, $\mathcal F_0$ is trivial, and the fields are completed under $J$. They increase with $r$ and generate $\mathcal F_\infty$ up to completion. Posterior vectors are probability-vector versions, chosen simultaneously for the countably many radii.
+
+Optional randomization means adjoining a seed $U$ independent of the entire joint process $\sigma(H_t,X_t:t\in\mathbb Z)$, with product law $J^U=J\otimes\mathcal L(U)$. Put $\mathcal G_r=\mathcal F_r\vee\sigma(U)$, completed under $J^U$; without a seed take $U$ constant. A stopped classifier consists of a discrete stopping time $\tau\in\mathbb N_0\cup\{\infty\}$ for $(\mathcal G_r)$ and a returned class $A$, with $\{\tau=r,A=a\}\in\mathcal G_r$ for every finite $r$ and every class $a$. Its zero-error condition is
+
+$$
+J^U(\tau<\infty,\ A\ne Q_0)=0.
+\tag{8.2}
+$$
+
+This permits abstention forever; an almost-surely finite classifier additionally requires $J^U(\tau<\infty)=1$. The fields in (8.1) specify mathematical information. Physical access to their coordinates requires an additional archive or access premise; these definitions supply neither an acquired archive, its resource cost, nor a deterministic $W_n$ transfer.
+
+**Theorem 8.2 (Exact support of every finite-past posterior).** For every $r\ge1$ and every word $w$ with $J(W_r=w)>0$,
+
+$$
+\operatorname{supp}\nu_r(\cdot\mid W_r=w)
+=\begin{cases}
+\{F_0,F_1,F_2\},&w_r=0,\\
+\{T_0,T_1,T_2\},&w_r=1.
+\end{cases}
+\tag{8.3}
+$$
+
+The symbols here are the quotient classes, with indices modulo three. At radius zero the support is all six classes. In particular no finite-radius posterior is Dirac on an event of positive probability.
+
+Proof. Reuse the actual marked quotient $T_x$ of Proposition 3.2 and its strictly positive stationary masses $\pi$ from Proposition 4.2. For a positive word the posterior is exactly
+
+$$
+\nu_r(a\mid W_r=w)
+=\frac{(\pi T_w)_a}{\pi T_w\mathbf1},\qquad
+\pi T_w\mathbf1=J(W_r=w)>0.
+$$
+
+By Proposition 4.2 these positive words are precisely the legal no11 words. The last transition in (4.1) makes their final phase free for a last zero and tail for a last one, irrespective of the initial phase. Thus no other phase can enter the support.
+
+Let $k(w)$ be the number of ones in $w$, reduced modulo three. From every initial free class $F_z$, every legal word has a positive path: a zero from a free class has probability $1-p_z>0$, a one has probability $p_z>0$, and the required zero after a one is certain. Each one increments the residue by one; each zero preserves it. For any desired final residue $b$, start in $F_{b-k(w)}$. Its positive stationary mass and positive path give strictly positive mass to the class of the prescribed final phase and residue $b$. This proves all three inclusions in (8.3). For $r=0$, $\nu_0=\pi$ has all six positive entries. Null words receive no quotient or division and affect none of these conclusions. $\square$
+
+**Theorem 8.3 (No positive-probability finite zero-error return).** For the fixed law and target of Definition 8.1, every stopped classifier, including one using the independent seed, satisfies
+
+$$
+J^U(\tau<\infty)>0
+\quad\Longrightarrow\quad
+J^U(\tau<\infty,\ A\ne Q_0)>0.
+\tag{8.4}
+$$
+
+More locally, if $E\in\mathcal G_r$ has positive probability for a finite $r$, any $\mathcal G_r$-measurable class choice on $E$ has positive error mass on $E$. Consequently an almost-surely finite zero-error stopped classifier does not exist.
+
+Proof. The elementary finite-target criterion underlying this application is as follows. For a fixed finite-valued target $Y$, an increasing discrete filtration $(\mathcal A_r)_{r\ge0}$, and probability-vector posterior versions $p_r(a)=\Pr(Y=a\mid\mathcal A_r)$, set
+
+$$
+D_r=\{\max_a p_r(a)=1\}.
+$$
+
+An almost-surely finite zero-error stopped classifier exists if and only if
+
+$$
+\Pr\left(\bigcup_{r\ge0}D_r\right)=1.
+$$
+
+The same equivalence holds after adjoining a seed independent of $\sigma(Y,\bigcup_r\mathcal A_r)$. This criterion is a conditional-probability intermediate step, not an extra synchronization assumption.
+
+To prove necessity, independence leaves the posterior unchanged after adjoining the seed. For each return event $E_{r,a}=\{\tau=r,A=a\}$, conditional expectation gives
+
+$$
+\Pr(E_{r,a},Y\ne a)
+=\mathbb E[\mathbf1_{E_{r,a}}(1-p_r(a))].
+$$
+
+Zero error forces this nonnegative integrand to vanish almost surely. Thus $E_{r,a}\subseteq D_r$ up to a null set. The countable union over radii and the finite union over labels contain $\{\tau<\infty\}$, proving necessity when that event has probability one. For sufficiency, take the first radius with $D_r$, and return the unique label with posterior one. The first-hit rule is a stopping time since $D_r\in\mathcal A_r$; it is finite almost surely by the displayed union condition. The same conditional-expectation identity on each return event proves zero error. A seed is unnecessary for this construction.
+
+In the present application, independence of $U$ from the whole joint law gives
+
+$$
+J^U(Q_0=a\mid\mathcal G_r)=\nu_r(a)
+\quad\text{almost surely}.
+$$
+
+Indeed the conditional-expectation identity holds on intersections of an $\mathcal F_r$ event and a seed event by independence, and extends to $\mathcal G_r$. Theorem 8.2 makes $1-\nu_r(a)>0$ almost surely for every class $a$ at every finite radius. Hence for any $\mathcal G_r$-measurable class choice $C$ and positive $E\in\mathcal G_r$,
+
+$$
+J^U(E,C\ne Q_0)
+=\mathbb E_{J^U}[\mathbf1_E(1-\nu_r(C))]>0.
+$$
+
+If the total return probability is positive, at least one finite-radius return event has positive probability, so this local statement proves (8.4). Equivalently, every $D_r$ in the fixed-target criterion is null here. Positivity of these integrals does not give a lower bound independent of the radius or return rule. $\square$
+
+**Corollary 8.4 (Vanishing error without a finite certificate, and synchronization scope).** Let $m_r(W_r)$ be the fixed-order MAP choices of (2.2). For the same fixed law,
+
+$$
+0<\epsilon_Q(r)\le\tfrac52\bar\rho^{\lfloor r/2\rfloor},\qquad
+\bar\rho=\sqrt{15}/4<1,\qquad
+\sum_{r\ge0}\epsilon_Q(r)<\infty,
+\tag{8.5}
+$$
+
+and
+
+$$
+J\bigl(\exists R<\infty\ \forall r\ge R:\ m_r(W_r)=Q_0\bigr)=1.
+\tag{8.6}
+$$
+
+The posterior vectors converge almost surely to the Dirac vector at $Q_0$, although no finite-radius posterior is Dirac. Over all almost-surely finite stopped classifiers in Definition 8.1, the infimum of error probability is zero and is not attained. The actual six-state quotient is nonexact in the sense of [Travers–Crutchfield, Exact Synchronization, Definitions 5–8][TCe].
+
+Proof. The strict positivity in (8.5) follows by integrating $1-\max_a\nu_r(a)>0$ from Theorem 8.2. Its upper bound and summability are the already proved Theorem 3.3 with the parameters of Proposition 4.3; (8.6) is the fixed-$Q_0$ eventual-correctness conclusion used in Theorem 4.4. That theorem also makes $Q_0$ measurable in $\mathcal F_\infty$, so bounded martingale convergence yields $\nu_r(a)\to\mathbf1_{\{Q_0=a\}}$ almost surely for each class $a$.
+
+A deterministic return at radius $r$ with label $m_r(W_r)$ is an almost-surely finite stopped classifier. Its error tends to zero by (8.5), proving the zero infimum. Theorem 8.3 excludes its attainment by any almost-surely finite stopped classifier, randomized or otherwise. At a fixed radius, independent randomization cannot improve the MAP error, since the conditional error of any class choice is at least $1-\max_a\nu_r(a)$. Thus there is no positive error floor uniform over finite radii or almost-surely finite return rules. The samplewise finite stabilization radius in (8.6) supplies no observable zero-error stopping certificate.
+
+For the synchronization statement, Propositions 3.2 and 4.2 give a strongly connected, stationary, row-unifilar quotient with probabilistically distinct states, satisfying [TCe, Definition 5][TCe]. The free classes $F_0,F_1$ have the same allowed finite-word language: all legal no11 words. On every common word their residues each increase by $k(w)$ modulo three, so they never reach the same class. This pair is neither topologically distinct nor path convergent. The exact characterization in [TCe, §IV.1 Theorem 3][TCe] therefore identifies this quotient as nonexact; (8.3) also directly shows that it has no synchronizing word. The distinction between exact and asymptotic synchronization is mature theory, as are the nonexact state-uncertainty estimates of [Travers–Crutchfield, Asymptotic Synchronization, §VI Theorem 1 and §VII.1 Proposition 3][TCa]. The exact support and stopped-classification consequences are elementary source-specific synthesis from (4.1).
+
+Stationarity identifies the distribution at each separate radius of $(Q_0,X_{-r:-1})$ with that of $(Q_r,X_{0:r-1})$. The nested past fields estimate one fixed target $Q_0$; forward filtering instead estimates the moving target $Q_r$. Equality of these separate distributions does not identify the refinements pathwise or transport a stopping rule. It also does not recover an initial forward F/T phase, whose overlapping future laws are retained in Theorem 4.4. Increasing mathematical past windows require the access premise of Definition 8.1 for a physical procedure.
+
+These conclusions concern exactly the fixed twelve-state law and its quotient, with no attainment premise. The supported-word guard is Theorem 5.1's law-level statement; the stopped-classification obstruction concerns this fixed actual quotient. The original finite-attainment and all-$N$ separation alternatives of Open Problem 6.1, and its general nonunifilar and uniform-rate residuals, remain unresolved by this fixed-target stopping result. $\square$
+
+## 追加锚（本行以下为增补区）

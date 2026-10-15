@@ -1,0 +1,98 @@
+**Theorem 8.2 (fixed-cut closure preserves neither arbitrary queries nor changed cuts).**
+Even in a left-birth geometry, two sources can have identical conditional
+augmentations and identical same-$P$ rows at every epoch, but different
+native raw replies and different rows for another cut at the next epoch.
+
+**Proof.** Take $P=\{LL,R\}$ and
+
+$$
+s=\langle\beta,\beta\rangle,\qquad
+t=\langle\beta,\langle\alpha,\alpha\rangle\rangle.
+\tag{NAR.8.2}
+$$
+
+Both old rows are $(\langle\beta,\square_R\rangle,\{\{R\}\})$.
+In both, the sole old class is not alpha, so the needed label is $\bot$.
+Theorem 3.1 gives all their same-$P$ future rows equal. However,
+
+$$
+r_{\rho s}(RR)=\alpha,\qquad r_{\rho t}(RR)=\beta.
+\tag{NAR.8.3}
+$$
+
+Indeed their right subtrees after one step are respectively
+$\langle\beta,\alpha\rangle$ and $\langle\beta,\beta\rangle$.
+For $Q=\{RL,RR\}$, the current exteriors are both
+
+$$
+\left\langle\langle\beta,\alpha\rangle,
+                  \langle\square_{RL},\square_{RR}\rangle\right\rangle,
+\tag{NAR.8.4}
+$$
+
+but the $Q$ holes are unequal for $s$ and equal for $t$.
+This is an actual native source pair with different changed-cut rows,
+not an arbitrary assignment to unrelated observations.
+Even the universally safe root cut has only one constant row for
+every source and epoch, while the actual root replies on $\rho\alpha$
+and $\rho\beta$ are beta and branch. Fixed-cut recovery is therefore
+strictly relative to its requested row family. $\square$
+
+The scope distinction agrees with
+[Sparse History §§64--65 and §§74--75](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md):
+their original-source recutting task is $R_Q(u)$, not automatic
+maintenance of the evolving $R_P(\rho u)$.
+[NativeSymbolicRecutting](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean),
+`symbolic_recut_exact`, supplies fieldwise symbolic recutting under
+its explicit depth and filling hypotheses; it is not a missing-marker
+acquisition theorem. The locality result
+[NativeAlphaSpineObservation](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeAlphaSpineObservation.lean),
+`native_alpha_spine_observation`, and the existence result
+[NativeFiveHoleJointChoice](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiveHoleJointChoice.lean),
+`joint_finite_choice`, retain their own scopes.
+The acquisition supplier
+[ActualPureAcquisitionCompiler](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.lean)
+likewise does not turn semantic filling existence into free retention
+or a supplemental-bit optimum.
+
+**Mathematical citation 8.3 (suppliers and literature).** Node birth, address and
+subtree transport, injectivity and image parsing are the §22 suppliers
+cited in Theorem 2.1. Complete acquired rows, their legal source fibers,
+joint history filtering, finite feasibility and actual handoff are the
+§§59--62 suppliers cited in §§1,4,5; the same-row obstruction is the
+published Proposition 65.3 cited in Theorem 6.3. General invariant-core
+and finite-fiber distinction principles are reused, not proposed as
+new abstract results. The repo-derived ordinary content here is the
+complete collision table, its conditional alpha recurrence and
+finite-epoch/two-row recovery, the specialized geometry equivalence,
+and the conditional supplemental and first-version call equalities.
+
+The relevant mature auxiliary-view context is
+[Liang--Li--Wang--Orlowska, “Making multiple views self-maintainable in a
+data warehouse”, *Data & Knowledge Engineering* 30 (1999), 121--134](https://doi.org/10.1016/S0169-023X(99)00009-9),
+§2.1 and Theorem 2
+([author text](https://users.cecs.anu.edu.au/~Weifa.Liang/papers/DKE99_30.pdf)).
+Its self-maintenance input includes the modification content $dR$;
+its minimality concerns removable auxiliary views and restrictions
+on retained tuples. It supplies literature-attested context for
+retaining auxiliary information. Direct transfer to this source would
+require a faithful tree/update representation without extra
+source-revealing notifications, and would still not identify conditional
+state cardinality with that paper's minimality criterion.
+Theorems 2.1--7.2 are justified directly on the native algebra and port.
+
+For equality and disequality of finite subtrees, the literature-attested
+background is
+[Barguñó--Creus--Godoy--Jacquemard--Vacher, “Decidable Classes of Tree
+Automata Mixing Local and Global Constraints Modulo Flat Theories”,
+arXiv:1302.6960v2](https://arxiv.org/abs/1302.6960v2),
+Definition 3.2, Theorem 5.22 and Corollaries 5.23--5.24.
+The ranked signature $\{\alpha:0,\beta:0,\mathrm{mul}:2\}$ with empty
+equational theory fits its tree setting. An exact history-language
+encoding is necessary for applying an emptiness theorem; the particular
+joint feasibility supplier is already cited in §5.
+Emptiness decidability supplies neither actual source values, a new
+query port, the alpha recurrence nor the fresh-call optimum.
+No generic automaton construction or worldwide originality conclusion
+is needed for the native proofs.
+

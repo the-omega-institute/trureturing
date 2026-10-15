@@ -1,0 +1,25 @@
+**Proposition 16.9 (degenerate cases, alternative memory and a different domain).**
+If $H=0$, one label and zero fresh calls suffice. If $D=0$, every
+nonempty $S$ contains the only slot and the first-slot protocol makes
+zero calls; for arbitrary $D$, the same holds when $S=I$. The exact
+$q$-label necessity still holds when $H>0$ in these visible-anchor cases.
+All conclusions above apply to positive and nonnegative lag conventions.
+
+The alternative code $e_{\min}(a)=\min_{j\in I}a_j$ is feasible and
+has $q$ attained labels. Theorem 16.5's construction followed by
+
+$$
+\ell=\min_{j\in I}(n_j-jq)-e_{\min}(a)
+\tag{NAR.16.24}
+$$
+
+gives a valid protocol with (NAR.16.15)'s sufficient call bound. The
+first-slot code has the stronger stated uniform guarantee of Theorem
+16.4; neither is asserted to dominate all other resource coordinates.
+
+A proper variable set $I'\subsetneq I$ with one public fixed-age-zero
+slot $j_*\notin I'$ is a different source domain. If a nonempty selected
+region lies in $I'$ and the same all-address current port is permitted,
+a constant retained code suffices with at most $\lfloor\log_2q\rfloor$
+fresh calls, irrespective of whether that anchor is displayed.
+

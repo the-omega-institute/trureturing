@@ -112,11 +112,24 @@ $$\forall n \in \mathbb{N}, A \in \operatorname{Matrix}\left(\operatorname{Fin}\
 
 A maximizing block frame controls the real comparison matrix by its two-by-two Frobenius norm. Unitary covariance transfers the estimate to A.
 
+**Theorem 1.10 (frobSq unitary left).**
+
+$$\forall (n : \mathbb{N}) (A : Matrix (Fin n) (Fin n) \mathbb{C}) (U : Matrix . unitaryGroup (Fin n) \mathbb{C}) , RHLinalg . frobSq ((U : Matrix (Fin n) (Fin n) \mathbb{C}) \cdot A) = RHLinalg . frobSq A$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CommutatorGap.frobSq_unitary_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Left multiplication by a unitary preserves the squared Frobenius norm.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.blockNorm_domination`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.commOperator`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.comparisonMatrix`
+- Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.frobSq_unitary_left`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.frobSq_unitary_right`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.gap`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.gap_nonnegative`

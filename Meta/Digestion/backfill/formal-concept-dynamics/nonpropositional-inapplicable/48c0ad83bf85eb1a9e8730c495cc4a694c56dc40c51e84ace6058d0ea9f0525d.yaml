@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:48c0ad83bf85eb1a9e8730c495cc4a694c56dc40c51e84ace6058d0ea9f0525d
+  normalized_sha256: sha256:48c0ad83bf85eb1a9e8730c495cc4a694c56dc40c51e84ace6058d0ea9f0525d
+cas_ref: sha256:48c0ad83bf85eb1a9e8730c495cc4a694c56dc40c51e84ace6058d0ea9f0525d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 534.3（记录、方向风险与目标推荐风险）：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: e5f0f2b97ff3009f38832718ff2d3af77b822ab3799a1ef3e5d8303c1445ba55
+    next_atom_id: 7b455a65efeac4b0953261484622dfcd09ec14bc0cc052107be6a1ace0977ab0

@@ -124,3 +124,88 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end
 end Reg.D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation
+
+namespace Reg.D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation.RootBound
+open _root_.D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit Polynomial
+noncomputable section
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (P : Polynomial ℂ) (hp : P.Monic) (z : ℂ) (hz : P.eval z = 0),
+    R.readout () () z ≤ (∑ i ∈ Finset.range P.natDegree, ‖P.coeff i‖)+1
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h X monic_X 0 (by simp)
+  norm_num [rejected,realize,Polynomial.coeff_X] at hh
+
+def registration : Registration arena
+    (type_of% (@monic_root_bound_by_coefficient_sum)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨monic_root_bound_by_coefficient_sum,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(),(0 : ℂ),(1 : ℂ),?_⟩
+    change ‖(0 : ℂ)‖ ≠ ‖(1 : ℂ)‖
+    norm_num
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@monic_root_bound_by_coefficient_sum)
+    (type_of% (realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation.monic_root_bound_by_coefficient_sum.audit
+  realizationName := `Reg.D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation.RootBound.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => ‖z‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+#print axioms registration
+#print axioms audit
+end
+end Reg.D5.S3.Zeros.Jensen.CompactSeparatedRealContinuation.RootBound

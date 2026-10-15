@@ -1,0 +1,35 @@
+**Definition 6.1 (seven-hole source).** Let $C[v_1,\ldots,v_7]$ be the
+right-comb context defined by $C_1[v_1]=v_1$ and
+$C_k[v_1,\ldots,v_k]=\langle v_1,C_{k-1}[v_2,\ldots,v_k]\rangle$,
+using $C=C_7$. Its hole addresses are $p_i=R^{i-1}L$ for $1\le i\le6$
+and $p_7=R^6$. Put
+
+$$
+\begin{aligned}
+F(a)&=\rho^2a,&G(a)&=\langle\rho a,a\rangle,\\
+H_a(y)&=\langle a,\langle\rho y,\alpha\rangle\rangle,\\
+U(a,b,y,c)&=C[a,b,F(a),G(a),y,c,H_a(y)].
+\end{aligned}
+\tag{SFS.16}
+$$
+
+Let $\Delta(a,y)$ be all ten pairwise negatives between the entire values
+$a,F(a),G(a),y,H_a(y)$. Take the root cut $P=\{\varepsilon\}$ and its
+attained full one-hole old row, $Q=\{p_1,\ldots,p_7\}$, and $N=2$.
+Retain epoch-zero branch literals at $R^j$ for $0\le j\le5$, at
+$p_4,p_7,p_7R$, and the epoch-zero $\alpha$ literal at $p_7RR$.
+The positive history is
+
+$$
+\begin{gathered}
+(0,p_3,2,p_1,=),\quad(0,p_4L,1,p_1,=),\quad(0,p_4R,0,p_1,=),\\
+(0,p_7L,0,p_1,=),\quad(0,p_7RL,1,p_5,=).
+\end{gathered}
+\tag{SFS.17}
+$$
+
+Retain all ten epoch-zero negative comparisons between distinct positions
+of $\{p_1,p_3,p_4,p_5,p_7\}$. Every sign requires both endpoints reached.
+There are no further constraints in this example; general inputs retain any
+additional constraints they contain.
+

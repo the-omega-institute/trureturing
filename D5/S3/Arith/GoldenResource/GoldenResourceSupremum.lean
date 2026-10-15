@@ -68,7 +68,8 @@ private theorem local_eq_prime_power (lambda : ℝ) {p : ℕ} (hp : p.Prime) (a 
         ((Nat.prime_of_mem_primeFactors hq).dvd_of_dvd_pow (Nat.dvd_of_mem_primeFactors hq))))]
   simp [hp.factorization_pow]
 
-private theorem local_eq_layer_sum (lambda : ℝ) {p : ℕ} (hp : p.Prime) (a : ℕ) :
+/-- The original telescoping identity, exposed for the actual reserve consumer. -/
+theorem local_eq_layer_sum (lambda : ℝ) {p : ℕ} (hp : p.Prime) (a : ℕ) :
     goldenPrimeLocalObjective lambda p a =
       ∑ k ∈ Icc 1 a, Real.log p * (goldenLayerMarginal p k - lambda) := by
   induction a with

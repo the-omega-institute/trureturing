@@ -9,14 +9,14 @@ internal sealed class DiagonalPowerRatioAllOddDocument : IScribeDocumentDefiniti
     private const string Prefix =
         "D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a397241");
+        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a397241b");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every coefficient of the normalized series in OEIS A397241 is odd.",
         H("Diagonal Power Ratios and Odd Coefficients"),
         Blocks(
             Paragraph(Text("The generating equation and oddness conjecture are recorded in "
-                + "hanna2026a397241. Write A for generatingSeries and P(r) for approximation(r). "
+                + "hanna2026a397241b. Write A for generatingSeries and P(r) for approximation(r). "
                 + "The coefficients a(n), the series A, the approximations P(r), and the "
                 + "comparison series B are over the integers. Indices and exponents are "
                 + "natural numbers. Multipliers such as n-1 are integer subtraction after "

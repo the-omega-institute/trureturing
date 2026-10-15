@@ -25,6 +25,10 @@ internal sealed class IntrinsicSubstitutionCoordinatesDocument : IScribeDocument
                 Blocks(Paragraph(Text("Each substituted leaf is beta or the pair (beta,alpha), "
                     + "and each substituted internal node remains an internal node. Thus alpha is absent from the image."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("intrinsic-pair-image"),
+                DeclarationHandle.Create(Prefix + "pair_image"), H("Exact Ordered Pair Image Grammar"),
+                StatementSource.FromAuthor(All("s", Tree, All("t", Tree, IffOf(Some("x", Tree, EqOf(R(D(1), V("x")), Call("pair", V("s"), V("t")))), Seq(Par(And(EqOf(V("s"), V("beta")), EqOf(V("t"), Alpha))), Sp, Lor, Sp, Par(And(Some("x", Tree, EqOf(R(D(1), V("x")), V("s"))), Some("y", Tree, EqOf(R(D(1), V("y")), V("t")))))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A substituted beta gives the special pair (beta,alpha). Every substituted compound gives a pair of substituted children. Conversely the alternatives have preimages beta and the ordered pair of the two child preimages."))), DescribeRole.Theorem),
             Definition("Primitive", "Primitive endpoint", All("p", Tree,
                 IffOf(Call("Primitive", V("p")), NegOf(Some("x", Tree,
                     EqOf(R(D(1), V("x")), V("p")))))),

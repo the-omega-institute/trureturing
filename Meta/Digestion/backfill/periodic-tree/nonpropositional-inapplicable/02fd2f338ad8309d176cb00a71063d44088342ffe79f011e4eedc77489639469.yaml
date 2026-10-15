@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02fd2f338ad8309d176cb00a71063d44088342ffe79f011e4eedc77489639469
+  normalized_sha256: sha256:02fd2f338ad8309d176cb00a71063d44088342ffe79f011e4eedc77489639469
+cas_ref: sha256:02fd2f338ad8309d176cb00a71063d44088342ffe79f011e4eedc77489639469
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 偶数轨道在到达不动点前每一步至少减半，且始终为正整数，故终止并至多经历 $\lfloor\log_2m\rfloor$ 步。…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: de99d5233d9af2391477d59ed4b7be49f768ba4ccad87ac2a69290bf4c7a322c
+    next_atom_id: 7ac77543036e5408b2862da698ba0fa26884e787d9d1b670e2e069e2159b74f5

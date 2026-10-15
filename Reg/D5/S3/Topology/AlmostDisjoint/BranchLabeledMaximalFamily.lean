@@ -107,4 +107,14 @@ noncomputable def registration :
   familyRecord := none
   options := #[]
 
+universe v
+
+/-- The original finite-union supplier is now exposed for direct consumption.
+Its whole source telescope is checked here; raw occurrence/sourceSelection and
+faithful variation of this finite-family arena remain unfinished under #16293.
+This exact scope check does not assert validated four-slot reconstruction. -/
+abbrev finiteUnionSourceScope := type_of% (@finite_sUnion_converges.{v})
+
+theorem finite_union_source_actual : finiteUnionSourceScope.{v} := @finite_sUnion_converges.{v}
+
 end Reg.D5.S3.Topology.AlmostDisjoint.BranchLabeledMaximalFamily

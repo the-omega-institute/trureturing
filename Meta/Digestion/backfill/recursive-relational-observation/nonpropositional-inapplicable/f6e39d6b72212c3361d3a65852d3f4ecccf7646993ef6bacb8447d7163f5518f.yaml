@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6e39d6b72212c3361d3a65852d3f4ecccf7646993ef6bacb8447d7163f5518f
+  normalized_sha256: sha256:f6e39d6b72212c3361d3a65852d3f4ecccf7646993ef6bacb8447d7163f5518f
+cas_ref: sha256:f6e39d6b72212c3361d3a65852d3f4ecccf7646993ef6bacb8447d7163f5518f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义137.6只引入低阶生成空间、空阶约定及未来唯一性的含义，不断言任何前缀具有该性质。
+    previous_atom_id: cab4d516afe9eb980fd27eef29019c8774e7943b4f11466ad01a4f662cfa69ec
+    next_atom_id: 9d509a86f92f68a47df7ad5b7b90d90027c4131a11acf4ad62f8431b21f0d9dd

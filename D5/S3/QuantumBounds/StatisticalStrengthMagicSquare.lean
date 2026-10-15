@@ -158,7 +158,7 @@ def born (e : Experiment) (x y a b : Fin 4) : ℂ :=
 def quantum (e : Experiment) : (Fin 4 → Fin 4 → Fin 4 → Fin 4 → NNReal) := fun x y a b =>
   Real.toNNReal (born e x y a b).re
 
-private def square : Fin 3 → Fin 3 → (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) := ![
+def square /- proof_shape: bind-only; consumer: aliceObservable, bobObservable -/ : Fin 3 → Fin 3 → (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) := ![
   ![qubitZ ⊗ₖ (1 : (Matrix (Fin 2) (Fin 2) ℂ)), (1 : (Matrix (Fin 2) (Fin 2) ℂ)) ⊗ₖ qubitZ, qubitZ ⊗ₖ qubitZ],
   ![(1 : (Matrix (Fin 2) (Fin 2) ℂ)) ⊗ₖ qubitX, qubitX ⊗ₖ (1 : (Matrix (Fin 2) (Fin 2) ℂ)), qubitX ⊗ₖ qubitX],
   ![qubitZ ⊗ₖ qubitX, qubitX ⊗ₖ qubitZ, pauliMatrix .Y ⊗ₖ pauliMatrix .Y]]

@@ -246,7 +246,7 @@ private theorem ordinary_tail (z : Runtime) (hm : z.mode = .ordinary) (s : Activ
   change (pathLaw z).map ((stoppedReadWord s) ∘ rawPath) = _
   rw [← Measure.map_map (measurable_stopped_read_word s) hr,ordinary_stream z hm]
   exact (actual_fourth_segment_stopped_word_law ordinaryRate s).2
-private theorem common_measure_tv {X : Type*} [MeasurableSpace X]
+theorem common_measure_tv {X : Type*} [MeasurableSpace X]
     (P Q C : Measure X) [IsProbabilityMeasure P] [IsProbabilityMeasure Q]
     [IsFiniteMeasure C] (hP : C ≤ P) (hQ : C ≤ Q) :
     measurableTotalVariation P Q ≤ 1-C Set.univ := by

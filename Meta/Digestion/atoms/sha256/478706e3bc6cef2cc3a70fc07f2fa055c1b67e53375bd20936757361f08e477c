@@ -1,0 +1,40 @@
+**Proof.** In a length-$d$ vector the coordinate $R^d$ distinguishes the
+three possible origin root constructors. Atomic alpha and beta have
+respective values $2d$ and $2d-1$. A paired origin has at that coordinate
+the right subtree's birth for $R^{d-1}$, which is at most $2d-2$ by the
+existing reachability bound. Thus the atomic vectors are separate from
+each other and from every paired vector.
+
+At $d=1$ the three vectors are $(2,2),(1,1),(0,0)$, exactly the three
+depth-zero prefixes alpha, beta and branch. For $d>1$, identify an
+atomic root by the distinguished coordinate and recover its entire
+prefix, including absence at descendants. In the paired case, split
+the vector into its left and right blocks. Apply induction to recover
+the two complete depth-$(d-2)$ child prefixes, and join them under a
+branch root. This recovers the depth-$(d-1)$ prefix. Conversely an
+atomic prefix determines its formula vector; a branch prefix determines
+both child blocks by induction and hence their joined vector. Every
+existing $\mathcal V_{d-1}$ prefix has a finite native source realization
+by the cited supplier. The two maps are therefore inverse on actual
+families, establishing the bijection. $\square$
+
+The numerical count is a consequence of this correspondence, using the
+already owned recurrence, not a new closed-prefix counting result.
+Sparse History (SLH.11.4) supplies
+
+$$
+v_0=3,\qquad v_r=2+v_{r-1}^2,\qquad v_r=|\mathcal V_r|.
+$$
+
+Consequently $K_{P_0}=1$, $K_{P_d}=v_{d-1}$ for $d\ge1$, and the same
+counts, reindexed, satisfy
+
+$$
+K_{P_d}=K_{P_{d-1}}^2+2\quad(d\ge1),\qquad
+K_{P_1}=3,\quad K_{P_2}=11,\quad K_{P_3}=123.
+\tag{NBP.5.6}
+$$
+
+The substantive transfer is (NBP.5.4): complete-level birth provenance
+preserves exactly this existing complete-prefix distinction.
+

@@ -1,0 +1,8 @@
+**Theorem 5.3 (extra history can remove the full-fiber cost).** Take
+$P=\{LL,R\}$, $C=\langle\beta,\square_R\rangle$, and its one-class
+partition. On its full row fiber $L_C=\{LL\}$, $k=1$ and both labels
+$[R],\bot$ are feasible. If the true old reply $(0,R,\mathsf{branch})$
+is also retained, the nonempty retained fiber has only label $\bot$.
+Its next whole row and all future same-$P$ rows need one supplemental
+state and zero new source queries.
+

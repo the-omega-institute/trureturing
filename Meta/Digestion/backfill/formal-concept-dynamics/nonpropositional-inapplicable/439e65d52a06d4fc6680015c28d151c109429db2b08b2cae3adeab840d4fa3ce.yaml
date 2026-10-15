@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:439e65d52a06d4fc6680015c28d151c109429db2b08b2cae3adeab840d4fa3ce
+  normalized_sha256: sha256:439e65d52a06d4fc6680015c28d151c109429db2b08b2cae3adeab840d4fa3ce
+cas_ref: sha256:439e65d52a06d4fc6680015c28d151c109429db2b08b2cae3adeab840d4fa3ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 205.2（来源割集）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: b8ba56d19ceb74f51068565c2e5d4683cdb1f82ce1ebf4aaded48bbc770e13de
+    next_atom_id: e78706cc5f9ce427f6a571fcb335f113bb18402c446c150c95c3d2ea792d762b

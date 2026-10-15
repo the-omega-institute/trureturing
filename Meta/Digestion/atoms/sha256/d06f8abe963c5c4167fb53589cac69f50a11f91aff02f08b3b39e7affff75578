@@ -1,0 +1,14 @@
+**Corollary 4.2 (Exact partition decomposition).** Let $n\ge3$ be odd and $\mathtt q\ge2$. For every normalized pure qubit stabilizer state, every graph form $\Gamma$ and every colouring,
+
+$$
+S_n^{(\mathtt q)}=\frac{\log2}{2(n-1)\,n^{\mathtt q-2}}\Bigg[\sum_{\pi\in\Pi_2(\mathtt q)}(n-1)\,r(\pi)+\sum_{\pi\in\Pi_3(\mathtt q)}(n-1)(n-2)\,r(\pi)+\sum_{t\in G:\ |\pi_t|\ge4}\rho_t\Bigg].
+$$
+
+Each term of the last sum with at most three values of $f_t$ on the occupied parties equals $r(\pi_t)$. If $\min(n,\mathtt q)\le3$, the last sum is empty and
+
+$$
+S_n^{(\mathtt q)}=\frac{\log2}{2\,n^{\mathtt q-2}}\Bigg[\sum_{\pi\in\Pi_2(\mathtt q)}r(\pi)+(n-2)\sum_{\pi\in\Pi_3(\mathtt q)}r(\pi)\Bigg].
+$$
+
+Stance: suspected-novel (§8) as a decomposition for odd $n\ge5$ together with $\mathtt q\ge4$; for $\min(n,\mathtt q)\le3$ it is not new: the values are literature-attested for $\mathtt q\le3$, the masked-rank form for $\mathtt q=3$ follows from Iizuka and Lin, Eq. (64), combined with GHZ extraction, and the case $n=3$ is repo-derived, as recorded in §8.
+

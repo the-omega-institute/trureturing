@@ -49,5 +49,20 @@ internal sealed class CompactSeparatedRealContinuationDocument : IScribeDocument
                     + "before this theorem applies. It proves no RH, global Robin "
                     + "inequality, node-sign law or source transmission estimate, and "
                     + "makes no claim of literature originality."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("monic-root-bound-by-coefficient-sum"),
+                DeclarationHandle.Create(
+                    "D5/S3/Zeros/Jensen/CompactSeparatedRealContinuation.monic_root_bound_by_coefficient_sum"),
+                H("The existing Cauchy root-bound helper is reusable"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a monic complex polynomial P and a root z, "
+                    + "the norm of z is at most one plus the sum of the norms of "
+                    + "coefficients below its natural degree. Mathlib's Cauchy root "
+                    + "bound is at most this coefficient sum because the maximum "
+                    + "lower-coefficient norm is bounded by their sum. This previously "
+                    + "private helper is exposed with the same statement and proof "
+                    + "for actual use by the root-projection properness theorem. "
+                    + "Its public visibility introduces no new mathematical content."))),
+                DescribeRole.Theorem))));
 }

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ebf040b624b9ef5019a9119e69ba0f1378ea7d6a371bfb8391a53552b947166
+  normalized_sha256: sha256:2ebf040b624b9ef5019a9119e69ba0f1378ea7d6a371bfb8391a53552b947166
+cas_ref: sha256:2ebf040b624b9ef5019a9119e69ba0f1378ea7d6a371bfb8391a53552b947166
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：206. Blackwell 序与决策风险：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 1c1a4ee87478881fcfd80e35dc98c9ab8d6ad9b4cc4db30a47cf6f4c5802dbcc
+    next_atom_id: 111f0ccd4e05084811191f3b109ca90bb8fd1cfb80f0696f3ce0127abbc205c0

@@ -47,7 +47,7 @@ private theorem flip_coordinates (x : Row) :
 def resetSquareDefect (q : ℕ) : Module.End ℤ (VertexModule Sign q) :=
   LinearMap.id + transition (resetMatrix q) ^ 2
 
-private theorem time_eq (n : ℕ) :
+theorem time_eq (n : ℕ) :
     (transition (resetMatrix (n + 1))).toAddMonoidHom = FiniteCompanionSquareDefect.time resetFlip n := by
   apply AddMonoidHom.ext
   intro v

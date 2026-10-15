@@ -6,6 +6,8 @@ The power residue excludes every additional prime below forty seven.
 
 Let the natural index be divisible by 5040 and satisfy the power congruence with residue 2241. The earlier exponent-window theorem fixes the old primes two, three, five and seven. Here every prime strictly between seven and forty seven is excluded from the index. This is a statement about all indices satisfying the two hypotheses, with no bound on the index.
 
+The proof first exposes the reusable kernel modEq_period_not_dvd: a period-one residue at a divisor contradicts a distinct target residue whenever the period divides the exponent. The 5040 theorem consumes this kernel for each explicit small-prime period.
+
 **Theorem 1.1 (No residual prime below forty seven).**
 
 $$\forall n, p \in \mathbb{N}, 5040 \mid n \land 3^{n} \equiv 2241 (\mathrm{mod} n) \land \operatorname{Prime}\left(p\right) \land 7 < p < 47 \implies \neg{p \mid n}$$

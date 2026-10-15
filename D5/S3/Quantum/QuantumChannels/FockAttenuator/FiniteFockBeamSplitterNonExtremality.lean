@@ -10,6 +10,8 @@ result:
   proof_shape: bind-only
   escape_witness: none
 admission_basis: open-problem-resolution (#14447; Refuted)
+Public helper:
+  fockPair_apply: proof_shape: bind-only; consumers: fockExpansion_apply.
 Private helpers (each consumed on the result path):
   sparse_trace: proof_shape: bind-only; consumers: trace_familyS, trace_familyH.
   sparse_psd: proof_shape: bind-only; consumers: perturb_psd.
@@ -18,7 +20,6 @@ Private helpers (each consumed on the result path):
   wigner_add: proof_shape: bind-only; consumers: end_wigner.
   wigner_sub: proof_shape: bind-only; consumers: end_wigner.
   wigner_smul: proof_shape: bind-only; consumers: end_wigner.
-  fockPair_apply: proof_shape: bind-only; consumers: fockExpansion_apply.
   balanced_fock: proof_shape: bind-only; consumers: balanced_input.
   balanced_input: proof_shape: bind-only; consumers: family_output.
   fockExpansion_apply: proof_shape: bind-only; consumers: family_output.
@@ -179,7 +180,7 @@ private lemma wigner_smul {K : ℕ} (t : ℝ) (M : Matrix (Fin (K+1)) (Fin (K+1)
     wigner (t • M) α = (t : ℂ) * wigner M α := by
   simp [wigner, Matrix.smul_apply, mul_assoc, Finset.mul_sum]
 
-private lemma fockPair_apply (m n p q : ℕ) :
+lemma fockPair_apply (m n p q : ℕ) :
     fockPair m n q p = if p = m ∧ q = n then (1:ℂ) else 0 := by
   simp [fockPair, tensor, lp.single_apply,
     Pi.single_apply]

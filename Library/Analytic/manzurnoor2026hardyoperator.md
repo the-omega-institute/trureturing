@@ -5,7 +5,7 @@ year: 2026
 title: A Hardy space operator acting on zeta-zeros
 doi: null
 url: https://arxiv.org/abs/2610.03568v1
-claim: The note constructs a bounded Hardy-space operator whose invariance on the Nyman--Beurling span is equivalent to RH, with a quantitative distance obstruction for an off-line zero; it does not prove the required invariance.
+claim: The note constructs a bounded Hardy-space operator whose invariance on the closed Nyman--Beurling span is equivalent to RH, with a quantitative distance obstruction for an off-line zero; it does not prove the required invariance.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -21,7 +21,8 @@ literature input, not a project formalization or an RH proof.
 ## The operator and equivalence
 
 Let $\mathcal N$ be the span of the Hardy functions associated with the
-integers $k\ge2$. For each nonzero real $\tau$, the source constructs a
+integers $k\ge2$, and write $\overline{\mathcal N}$ for its closure in $H^2$.
+For each nonzero real $\tau$, the source constructs a
 bounded invertible operator $T_\tau$ on $H^2$ whose adjoint transports the
 reproducing kernel $k_s$ to a scalar multiple of $k_{s-i\tau}$.
 
@@ -29,13 +30,13 @@ Theorem 5.1 states the equivalence
 
 $$
  RH
- \iff \mathcal N\text{ is }T_\tau\text{-invariant}
- \iff T_\tau h_k\in\mathcal N\text{ for some }k\ge2.
+ \iff \overline{\mathcal N}\text{ is }T_\tau\text{-invariant}
+ \iff T_\tau h_k\in\overline{\mathcal N}\text{ for some }k\ge2.
 $$
 
 If $\rho$ is a zero with $\Re\rho>1/2$ and $\zeta(\rho-i\tau)\ne0$,
 the source gives an explicit positive lower bound for
-$\operatorname{dist}(T_\tau h_k,\mathcal N)$. The contradiction under
+$\operatorname{dist}(T_\tau h_k,\overline{\mathcal N})$. The contradiction under
 invariance is an infinite vertical progression of zeros, excluded by a
 zero-density estimate.
 

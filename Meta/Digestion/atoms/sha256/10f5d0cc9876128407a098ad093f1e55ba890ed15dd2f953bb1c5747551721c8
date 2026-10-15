@@ -1,0 +1,19 @@
+**Definition 10.1 (the even substitution map).** Put
+
+$$
+E(u)=\rho^2u.
+$$
+
+The native equations give
+
+$$
+E(\alpha)=\langle\beta,\alpha\rangle,
+\qquad
+E(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\qquad
+E(\langle s_0,s_1\rangle)=\langle E(s_0),E(s_1)\rangle.
+\tag{NMF.10.1}
+$$
+
+Thus $E(u)$ is a branch for every finite nonempty native $u$.
+

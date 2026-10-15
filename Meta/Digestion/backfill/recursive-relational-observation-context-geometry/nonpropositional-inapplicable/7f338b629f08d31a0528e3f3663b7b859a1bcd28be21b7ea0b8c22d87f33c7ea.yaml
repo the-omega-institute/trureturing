@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7f338b629f08d31a0528e3f3663b7b859a1bcd28be21b7ea0b8c22d87f33c7ea
+  normalized_sha256: sha256:7f338b629f08d31a0528e3f3663b7b859a1bcd28be21b7ea0b8c22d87f33c7ea
+cas_ref: sha256:7f338b629f08d31a0528e3f3663b7b859a1bcd28be21b7ea0b8c22d87f33c7ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第46.5节标题及开场只规定A、h和共同立方体前提，并引出下项引理，不断言引理结论。
+    previous_atom_id: 2aa1d21b95a28d1ebb34f267b7a09383f6b2a9abb66a15ef241f7934e18d726a
+    next_atom_id: b1d96faee310df676ade3b8460c7e86fe10201264be733a585c0946a926b5824

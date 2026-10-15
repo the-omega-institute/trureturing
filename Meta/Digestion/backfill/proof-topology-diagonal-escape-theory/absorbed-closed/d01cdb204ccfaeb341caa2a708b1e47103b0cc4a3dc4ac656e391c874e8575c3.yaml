@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d01cdb204ccfaeb341caa2a708b1e47103b0cc4a3dc4ac656e391c874e8575c3
+  normalized_sha256: sha256:d01cdb204ccfaeb341caa2a708b1e47103b0cc4a3dc4ac656e391c874e8575c3
+cas_ref: sha256:d01cdb204ccfaeb341caa2a708b1e47103b0cc4a3dc4ac656e391c874e8575c3
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/BoundedPrimeHorizon.finite_horizon_kernel
+    target_statement_id: sha256:72ea377ef206e7d07c4d165914ded76fd768bf9c810947a73593b36dcc2de357
+  - gid: D5/S3/Factorization/Automata/BoundedPrimeHorizon.profile_classification
+    target_statement_id: sha256:433f4c5863fa8b71df303cf476f896d22d7b48574839e16aa0d33720c151f9cb
+receipts:
+  unresolved_subitems: []

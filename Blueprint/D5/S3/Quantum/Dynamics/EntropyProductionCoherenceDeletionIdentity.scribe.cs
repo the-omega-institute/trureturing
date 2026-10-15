@@ -13,6 +13,17 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
         H("Entropy Production by Coherence Deletion"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cfc-diagonal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.cfc_diagonal"),
+                H("Finite diagonal functional calculus"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real function f and every finite real diagonal, actual complex matrix CFC "
+                        + "applies f coordinatewise. The finite spectrum requires no global continuity assumption on "
+                        + "f. The existing logarithm diagonal theorem consumes this extracted proof, and the Petz "
+                        + "inverse-square-root coordinate argument also uses it. This is a shared organizing helper, "
+                        + "not a separate mathematical gain."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("diagonal-star-algebra-hom"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity."

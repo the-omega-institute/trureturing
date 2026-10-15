@@ -160,7 +160,8 @@ private theorem entropy_pushforward_injective_comp {X A B : Type*}
   rw [← pushforward_comp]
   exact entropy_pushforward_injective (pushforward f mass) g hg
 
-private theorem marginal_pushforward_pair {X A B : Type*}
+theorem marginal_pushforward_pair /- proof_shape: bind-only; consumers: firstReadoutMarginal_pushforward_coordinates,
+  D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.sum_joint_first -/ {X A B : Type*}
     [Fintype X] [Fintype B] (mass : X -> Real)
     (first : X -> A) (second : X -> B) :
     marginal (pushforward (fun x => (first x, second x)) mass) =

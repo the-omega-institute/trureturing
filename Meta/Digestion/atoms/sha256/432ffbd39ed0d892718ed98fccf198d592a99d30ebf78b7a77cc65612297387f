@@ -1,0 +1,13 @@
+**Proposition 13.8 (a valid binary diameter comparison).** For $H=1$ and
+$2(k-1)<r$, the native price satisfies the additional lower bound
+
+$$
+N_1(r,k)\ \ge\
+\left\lceil\frac{2^r}{\displaystyle\sum_{j=0}^{k-1}\binom rj}\right\rceil.
+\tag{NAR.13.20}
+$$
+
+This bound can exceed the disjoint-block bound: at $r=6,k=2$ it gives
+$N_1(6,2)\ge10$, whereas the latter gives only eight. A maximum
+permissible color-class size does not supply an optimal coloring.
+

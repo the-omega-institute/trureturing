@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bc41d5189b5000ec6c078e721e57dc504f145b43e5b220f9c8a972ca91ff18a4
+  normalized_sha256: sha256:bc41d5189b5000ec6c078e721e57dc504f145b43e5b220f9c8a972ca91ff18a4
+cas_ref: sha256:bc41d5189b5000ec6c078e721e57dc504f145b43e5b220f9c8a972ca91ff18a4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{profile}_i(a)=q_i(a.1),：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 03d4cd15ac18f2beb48e18d509fdd2e32f9be650671270ce3a34b995b9c4dfca
+    next_atom_id: 9a520e63594c921ae4bb3939e2855922b62a0dc5dc576511ab3058b7af476c35

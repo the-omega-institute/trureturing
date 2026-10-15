@@ -1,0 +1,34 @@
+**Definition 1.2 (native sources and replies).** Sources are all nonempty finite
+free ordered trees in the algebra
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&
+\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle s,t\rangle&=\langle\rho s,\rho t\rangle,\\
+T_j&=\rho^j\alpha\qquad(j\in\mathbb N).
+\end{aligned}
+\tag{NIS.1}
+$$
+
+The two leaf labels differ; pairing is ordered and injective. The interpreted
+operation $\rho$ is not a free unary constructor. There is no bound on source
+size, depth or atomic rank. Repeated occurrences of a variable use its same
+whole value. Addresses are words in $L,R$, with root $\varepsilon$.
+The reply $r_u(p)$ is $\alpha,\beta,\mathsf{branch}$ or $\mathsf{absent}$.
+Every strict descendant of a leaf is absent. Inclusive agreement means
+
+$$
+u\equiv_h v\quad\Longleftrightarrow\quad
+\forall |p|\le h\quad r_u(p)=r_v(p).
+\tag{NIS.2}
+$$
+
+For a finite prefix-free cut $A$, the complete original row $R_A(u)$ retains
+the ordered reached subset of $A$, the entire concrete exterior obtained by
+replacing precisely those reached subtrees by numbered holes, and the full
+equality partition of their whole values. Repeated equal subtrees retain
+separate hole occurrences. Root, empty and partly absent cuts have these
+literal meanings.
+

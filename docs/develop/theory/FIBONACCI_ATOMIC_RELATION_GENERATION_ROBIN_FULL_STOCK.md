@@ -2253,3 +2253,519 @@ $\square$
 把完整补偿拆分后当成两份独立增加的预算。
 
 ## 追加锚（本行以下为增补区）
+
+## 460. 实际自匹配源对单独头部证书的条件性障碍
+
+本节将主卷 §111.4 的实际自匹配链接到同窗素数头部，得到一种证书路线的条件性障碍。
+这是既有来源的仓内应用（`repo-derived`），不主张文献原创性。假设 RH，并沿用
+[Nicolas 比较笔记](../../../Library/ArithSums/nicolas2025comparison.md) 的完整零点公式及误差范围；
+另明确采用 RH 下 $\vartheta(u)-u=O(\sqrt u\log^2u)$ 作为外部解析输入。
+下面的非存在结论只在这些条件下成立，不给出无条件 Robin 结论或 RH 结论。
+
+取主卷 §111.4 的同一实际链 $N_j$，置
+
+$$
+A_j=\log N_j,\qquad L_j=\log A_j,\qquad T_j=\sqrt{A_j}\,L_j.
+$$
+
+定义这个整数自己的窗口：
+
+$$
+\begin{aligned}
+D_j&=\lfloor A_j^{1/8}\rfloor,\\
+G_j&=\sum_{\substack{d\le D_j\\d\mid\operatorname{rad}(N_j)}}
+       \frac{\mu^2(d)}{\varphi(d)},\\
+h_j&=\min\{L_j/2000,G_j/100\},\qquad B_j=A_j e^{h_j}.
+\end{aligned}
+$$
+
+这里 $\mu$ 是 Möbius 函数。令 $Y_j=\sqrt{B_j}$，令 $P_j$ 为所有满足
+$p\le Y_j$ 且 $p\mid N_j$ 的素数之积，并记
+
+$$
+\begin{aligned}
+S_j^\circ&=\sum_{\substack{A_j<r\le B_j\\(r,P_j)=1}}\frac1r
+-\sum_{\substack{k\ge2,\ A_j<p^k\le B_j\\p\nmid N_j}}\frac1{p^k},\\
+V_j&=-\frac{\vartheta(A_j)-A_j}{A_jL_j}
+ +\log\frac{L_j+h_j}{L_j}-S_j^\circ.
+\end{aligned}
+$$
+
+### 460.1. 实际支撑覆盖与零价格亏损
+
+因为 $0\le h_j\le L_j/2000$，先有
+$Y_j\le A_j^{1/2+1/4000}$。对充分大的 $j$ 和全部 $p\le Y_j$，首层价格满足
+
+$$
+r_{p,1}=\frac{\log(1+1/p)}{\log p}
+>\frac1{(p+1)\log p}
+>\frac1{A_j\log A_j}=\lambda(A_j),
+$$
+
+因为 $(A_j^{1/2+1/4000}+1)\log(A_j^{1/2+1/4000})<A_j\log A_j$ 最终成立。
+§111.4 的唯一价格最优者取尽全部严格有益层，所以这些素数确实都出现在 $N_j$ 中。
+特别地，每个 $d\le D_j$ 的平方自由核都被支撑覆盖。
+
+此处只需要有限的调和和比较。按 $d=\operatorname{rad}(n)$ 分组，使用
+$\sum_{\operatorname{rad}(n)=d}1/n=1/\varphi(d)$（$d$ 平方自由），便有
+
+$$
+H_{D_j}=\sum_{n\le D_j}\frac1n
+\le\sum_{d\le D_j}\frac{\mu^2(d)}{\varphi(d)}
+=G_j,\qquad H_{D_j}\ge\log(D_j+1)>L_j/8.
+$$
+
+因此最终 $h_j=L_j/2000$，$B_j=A_j^{1+1/2000}$。
+区间 $(A_j,B_j]$ 中的每个合数都有一个不超过 $Y_j$ 的素因子，
+而第二个和中的每个素数底数也不超过 $Y_j$；它们全被实际支撑覆盖。
+又有 $Y_j<A_j$，故
+
+$$
+S_j^\circ=\sum_{A_j<p\le B_j}\frac1p.
+$$
+
+同一整数的价格亏损为
+
+$$
+d_{A_j}(N_j)
+=S(\lambda(A_j))-
+ \left(\log Z(N_j)-\lambda(A_j)\log N_j\right)=0,
+$$
+
+其中 $S$、$Z$ 和 $\lambda$ 沿用主卷 §98.1；没有换成另一个极值整数。
+
+### 460.2. 完整尾项决定头部的条件性下界
+
+沿用 Nicolas 笔记的正核，明确置
+
+$$
+\begin{aligned}
+K(u)&=\frac{1+\log u}{u^2\log^2u},\\
+J_1^\vartheta(A)&=-\int_A^\infty(\vartheta(u)-u)K(u)\,du,\\
+J_1^\psi(A)&=-\int_A^\infty(\psi(u)-u)K(u)\,du,\\
+J_1^{\ge2}(A)&=-\int_A^\infty(\psi(u)-\vartheta(u))K(u)\,du,\\
+R_\vartheta(B)&=\frac{\vartheta(B)-B}{B\log B}+J_1^\vartheta(B).
+\end{aligned}
+$$
+
+这里 $\vartheta(u)=\sum_{p\le u}\log p$，
+$\psi(u)=\sum_{p^k\le u}\log p$；两者均保留包含端点的实际原子及其对数权重。
+有限 Stieltjes 分部积分保留 $(A_j,B_j]$ 的全部素数原子，直接给出
+
+$$
+J_1^\vartheta(A_j)=V_j+R_\vartheta(B_j).
+$$
+
+在本节的 RH 与完整显式公式条件下，对 Nicolas 笔记的 GR5–GR8 与 GAK10–GAK16
+取确定尺度 $c=1$，结合经典完整零点权重恒等式，得到
+
+$$
+|T_jJ_1^\psi(A_j)|\le c_0+o(1),\qquad
+c_0=2+\gamma-\log(4\pi)<1/20.
+$$
+
+这里保留完整积分系数及 GAK16 的初等修正；后者乘以 $T_j$ 后为 $O(A_j^{-1/2})$，
+不能把完整显式公式直接替换成零点首项。GPP1–GPP4 的同一完整高次幂估计在尺度 $c=1$ 给出
+
+$$
+T_jJ_1^{\ge2}(A_j)\longrightarrow-2.
+$$
+
+由于 $J_1^\vartheta=J_1^\psi-J_1^{\ge2}$，于是
+
+$$
+T_jJ_1^\vartheta(A_j)\ge2-c_0-o(1).
+$$
+
+RH 下 $\vartheta(u)-u=O(\sqrt u\log^2u)$ 还控制同一端点及整个尾项，故
+
+$$
+R_\vartheta(B_j)=O\!\left(\frac{\log B_j}{\sqrt{B_j}}\right),
+\qquad
+T_jR_\vartheta(B_j)=O(A_j^{-1/4000}L_j^2)\longrightarrow0.
+$$
+
+从而在这些完整条件下
+
+$$
+\liminf_{j\to\infty}T_jV_j\ge2-c_0>\frac{39}{20}.
+$$
+
+因此，不存在一种适用于所有实际整数、只使用上述头部的统一点态证书，
+其预算在价格亏损为零时强迫
+
+$$
+T_jV_j\le b(A_j),\qquad b(A_j)\le b_0<1.
+$$
+
+这只排除该类单独头部证书。GPP1–GPP4 保留的完整高次幂项提供同尺度补偿，
+所以同一实际整数、同一概率律上的头部与高次幂联合预算仍是另一项研究对象。
+这里没有排除只在额外选定的潜在 Robin 极值整数上要求成立的证书，
+也没有得到无条件非存在结论、Robin 反例或 RH 反例。
+
+## 追加锚（本行以下为增补区）
+
+## 461. 变化秩问题的既有固定参数输入
+
+固定禁素集的限制最大阶直接由 Tóth–Wirsing (2003), Corollary 2 给出。
+[增长模数文献笔记的固定参数应用](../../../Library/ArithSums/fibaffine2026growingmoduli.md)
+记录原文、$f(n)=\sigma(n)/n$、$S=\{p:p\mid m\}$ 的参数对应，及其
+对 $1+F_rg$ 的固定秩消费者。该已发表输入同时给出固定 $m$ 的严格
+尾部和因子 $c_m=\prod_{p\mid m}(1-p^{-1})$；本卷不重证它。
+
+下面 §462 需要研究的是这个固定参数因子在 $m=F_r$ 变化时的退化，
+以及同一变化秩候选的完整 Robin 预算。固定秩的
+$\forall r\,\exists G_r\,\forall g\ge G_r$ 不能交换成共同阈值。
+
+## 462. 素秩 Fibonacci 禁素因子的 Euler 余量窗口
+
+§461 引用的固定禁素集结论留下了一个具体的变化秩问题：固定参数结果中的
+严格因子
+
+$$
+c_m=\prod_{p\mid m}\left(1-\frac1p\right)
+$$
+
+在 $m=F_r$ 随 $r$ 变化时究竟能被统一控制到什么程度。§450.7 已经给出
+了素秩 $r$ 的每个素因子 $p\mid F_r$ 满足 $p\ge 2r-1$。主卷 §171 已登记
+Luca--Mejía Huguet--Nicolae (2009) 对同一入口秩桶的更强倒数素数估计；
+下面只把该既有估计接到 Euler 因子和 Robin 量词，不把文献结果重复写成
+本仓原创定理。
+
+### 命题 462.1（素秩 Euler 缺口的双边夹逼）
+
+设 $r>5$ 为素数，置
+
+$$
+\delta_r=1-c_{F_r}.
+$$
+
+则
+
+$$
+\boxed{
+\frac1{F_r}\le \delta_r
+\le
+\frac{r\log\varphi}{(2r-1)\log(2r-1)}.
+}
+\tag{462.1}
+$$
+
+此外，已有文献估计给出某个绝对常数 $C>0$，使
+
+$$
+\boxed{
+\delta_r\le C\frac{\log r}{r}.
+}
+\tag{462.2}
+$$
+
+因此实际 $\delta_r\to0$（沿素数秩）。这说明固定禁素集证明中的 Euler
+缺失因子在变化秩上确实退化；它不是一个可以统一保留的正余量。
+
+**证明。** 先取任意素数 $p\mid F_r$。因为 $F_r>1$ 且 $p\le F_r$，有
+
+$$
+c_{F_r}\le1-\frac1p\le1-\frac1{F_r},
+$$
+
+得到左侧。
+
+对（462.1）的右侧，$p\ge2r-1$ 给
+$\omega(F_r)\log(2r-1)\le\log F_r<r\log\varphi$，故
+$\delta_r\le\omega(F_r)/(2r-1)$ 即得该显式界。
+
+对更强的（462.2），任意 $p\mid F_r$ 的入口秩满足 $z(p)\mid r$；因 $r>5$
+为素数，$p=2,5$ 被排除且 $z(p)=r$。因此
+
+$$
+\delta_r
+\le\sum_{p\mid F_r}\frac1p
+\le\sum_{z(p)=r}\frac1p.
+$$
+
+最后一项的 $O(\log r/r)$ 界正是主卷 §171 所引
+Luca--Mejía Huguet--Nicolae (2009), Lemma 3, 式 (5) 的结果。故
+（462.2）是该文献估计对 $c_{F_r}$ 的直接应用，而非重新证明其素数桶
+估计。证毕。 $\square$
+
+### 推论 462.2（固定禁素集预算的迭代极限障碍）
+
+对 $r>5$ 为素数，令 $q_{r,1}<q_{r,2}<\cdots$ 是不整除 $F_r$ 的素数，
+并置
+
+$$
+Q_{r,k}=\prod_{j\le k}q_{r,j},\qquad
+A_{r,k}=\prod_{j\le k}\frac{q_{r,j}}{q_{r,j}-1}.
+$$
+
+则
+
+$$
+\boxed{
+\lim_{\substack{r\to\infty\\ r\ {\rm prime}}}
+\ \lim_{k\to\infty}
+\frac{A_{r,k}}{e^\gamma\log\log Q_{r,k}}
+=1.
+}
+\tag{462.3}
+$$
+
+因此不存在固定的 $\eta>0$ 和 $k_0$，使所有素数秩 $r>5$ 及所有
+$k\ge k_0$ 都满足
+
+$$
+A_{r,k}\le(1-\eta)e^\gamma\log\log Q_{r,k}.
+$$
+
+**证明。** §461 所引的经典 Mertens 极限给出，对每个固定 $r$，
+
+$$
+\lim_{k\to\infty}
+\frac{A_{r,k}}{e^\gamma\log\log Q_{r,k}}
+=c_{F_r}.
+$$
+
+命题 462.1 的文献上界给出 $c_{F_r}=1-\delta_r\to1$，再取外层极限
+即得（462.3）。若存在所述统一 $\eta,k_0$，固定一个使
+$c_{F_r}>1-\eta/2$ 的素数秩，再令 $k$ 足够大，便与该统一界矛盾。
+证毕。 $\square$
+
+这个障碍只针对“缺失 Euler 因子提供固定比例安全余量”的路线。它不构成
+Robin 反例：$Q_{r,k}$ 是允许素数的 primorial，且
+$A_{r,k}$ 只是约数比的上包络；真实整数的指数层、同一来源的完整素支撑
+和有符号 Robin 余量仍未被此迭代极限确定。
+
+### 推论 462.3（固定禁素集路线的最坏分辨率代价）
+
+若只使用命题 462.1 的下界来选择固定禁素集证书的严格余量，可以安全取
+
+$$
+\eta_r=\frac1{2F_r}\le\frac{\delta_r}{2}.
+\tag{462.4}
+$$
+
+因此，若证书只使用这份最坏余量而不读取 $F_r$ 的完整支撑，就必须把
+相对误差压到 $O(F_r^{-1})$ 的量级，才能闭合高素支撑分支。具体地，沿用 §459 的有效
+上界
+
+$$
+\mathcal M(x)
+\le e^\gamma\log x
+\left(1+\frac{\mathcal D'_\ell(x_0)}{(\log x)^\ell}\right),
+$$
+
+一个足以使该误差不超过 $1/(4F_r)$ 的尺度条件是
+
+$$
+\boxed{
+\log x\ge
+\bigl(4\mathcal D'_\ell(x_0)F_r\bigr)^{1/\ell}.
+}
+\tag{462.5}
+$$
+
+这只支付有限 Euler 乘积的误差；允许素数 primorial 与
+$\log\log Q_k$ 的比较、有限个低 $\omega$ 分支仍须另行处理。因而（462.5）不是一个已经闭合的统一 Robin 阈值，而是当前路线的
+可核查分辨率成本。
+
+若把 $x$ 视为最后一个允许素数，$\log Q_k\asymp x$ 的经典尺度关系还会
+把这个保守证书推到
+
+$$
+\log n\ \text{约需达到}\
+\exp\!\bigl((4\mathcal D'_\ell(x_0)F_r)^{1/\ell}\bigr)
+$$
+
+的量级。这个表达只描述所选 Mertens 证书的充分尺度，不是实际 Robin
+阈值的下界，也不排除在同一 $N_{r,g}$ 上使用完整素支撑、指数层或有符号
+余量得到更强的估计。
+
+### 变化秩接口的剩余义务
+
+命题 462.1 把缺口分成两种可区分的改进方向：
+
+1. 证明 $c_{F_r}$ 的实际缺口 $\delta_r$ 远大于 $1/F_r$，从而降低
+   （462.5）的分辨率成本；或
+2. 不再把固定禁素集的 Euler 因子作为唯一余量，直接在同一个
+   $N_{r,g}=1+F_rg$ 上控制完整素支撑、素数幂层和 Robin 有符号尾项。
+
+仅把（462.1）与 §461 的逐秩量词拼接，仍只能得到
+
+$$
+\forall r\ \exists G_r\ \forall g\ge G_r,
+$$
+
+不能交换为变化秩的统一 $G$，更不能推出 Robin 全称不等式或 RH。该节是
+仓内对已有入口秩约束的量化组合，未新增 Lean 声明、未重复外部 Robin
+判据，也未把分辨率成本冒充定理结论。
+
+## 463. 超丰数整除条件对变化秩 FIB 候选的必要过滤
+
+§462 只使用 $F_r$ 的缺失 Euler 因子。这里接入一个不同的、只针对最小
+反例的外部结构输入：[Segovia 的分拆预印本](../../../Library/ArithSums/segovia2026partitions.md)
+Lemma 8 声称：对每个固定 $0<c<1$，存在 $N_0(c)$，使得每个大于该阈值的
+超丰数 $N$ 都被
+
+$$
+L_c(N):=\operatorname{lcm}\bigl(1,\ldots,\lfloor c\log N\rfloor\bigr)
+$$
+
+整除。这里使用的是该来源的陈述；本项目没有独立审计其完整证明，也没有把
+它当作无条件的 Robin 定理。
+
+### 命题 463.1（FIB 同余与超丰数整除的相容性条件）
+
+固定 $0<c<1$。若 $r>5$ 为素数，且
+
+$$
+N_{r,g}=1+F_rg
+$$
+
+是大于 $\max\{5040,N_0(c)\}$ 的最小 Robin 反例，则
+
+$$
+\boxed{
+\gcd(F_r,L_c(N_{r,g}))=1,\qquad
+P^-(F_r)>\lfloor c\log N_{r,g}\rfloor,
+}
+\tag{463.1}
+$$
+
+其中 $P^-(m)$ 表示 $m>1$ 的最小素因子。
+
+**证明。** 最小 Robin 反例是超丰数，这是 Robin 候选缩减所使用的已知结构
+输入。由上述 Segovia 引理，$L_c(N_{r,g})\mid N_{r,g}$。另一方面
+
+$$
+N_{r,g}\equiv1\pmod {F_r},
+$$
+
+所以 $\gcd(N_{r,g},F_r)=1$。任何同时整除 $F_r$ 与 $L_c(N_{r,g})$ 的素数
+都会整除 $N_{r,g}$，矛盾，得到第一个结论。若素数 $p\mid F_r$ 且
+$p\le\lfloor c\log N_{r,g}\rfloor$，则 $p\mid L_c(N_{r,g})$，又得到同一
+矛盾。因此所有 $F_r$ 的素因子都大于该整数，得到第二个结论。证毕。
+$\square$
+
+### 推论 463.2（窗口形式与路线边界）
+
+若同时取已有窗口
+
+$$
+g\in I_r=\left[\left\lceil\frac{F_r}{10}\right\rceil,
+             \left\lfloor\frac{F_r}{5}\right\rfloor\right]\cap\mathbb Z,
+$$
+
+则任何满足命题 463.1 的候选都必须满足
+
+$$
+\boxed{
+P^-(F_r)>c\bigl(2\log F_r-\log 10\bigr)-1.
+}
+\tag{463.2}
+$$
+
+因为 $N_{r,g}\ge F_r^2/10$，而
+$\lfloor x\rfloor\ge x-1$。若 $F_r$ 为合数，则还必须有
+
+$$
+c\bigl(2\log F_r-\log 10\bigr)-1< P^-(F_r)\le\sqrt{F_r}.
+\tag{463.3}
+$$
+
+这是一条可以只用 $F_r$ 的实际分解检查的候选排除条件：一旦发现
+$p\mid F_r$ 且 $p\le\lfloor c\log N_{r,g}\rfloor$，整个该窗口都不可能含有
+这样的**最小** Robin 反例。
+
+这条过滤没有关闭变化秩缺口。对素数秩，已有入口秩下界
+$p\ge2r-1$，而窗口中 $\log F_r\sim r\log\varphi$；因此对固定 $c<1$
+，已知下界本身通常已经高于（463.2）的右侧，不能产生统一矛盾。若 $F_r$
+本身为素数，条件更不会排除候选。故（463.1）是最小反例的必要结构，
+不是所有 $N_{r,g}$ 的 Robin 安全定理，也不是 RH 证明；它只把最新的
+超丰数整除输入接回 FIB 同余，并明确显示该接口还不足以支付完整有符号余量。
+
+本节复用 Robin 的最小反例—超丰数缩减、Fibonacci 同余和 Segovia 的来源
+陈述；没有重做这些外部结果，未新增 Lean 声明。
+
+## 464. 素秩 Fibonacci 支撑的局部修复分层
+
+上一节的超丰数整除条件只给出 $F_r$ 与小素数库存互素。这里接入一个不同
+的近期局部结果：[Chuysurichay--Jaidee--Panraksa--Ward 的 Dold 文献卡](../../../Library/Scale/chuysurichay2026fibdold.md)
+的 Theorem 2.4 给出 Fibonacci 序列在每个素数 $p$ 处的精确修复因子。文献把
+入口秩记作 $\varphi(p)$；本节改写为 $z(p)$，以免与黄金比混淆。
+
+### 命题 464.1（素秩支撑的两类局部因子）
+
+设 $r>5$ 为素数，并定义
+
+$$
+\mathcal P_r^+=\{p:p\mid F_r,\ (5/p)=1\},
+\qquad
+\mathcal P_r^-=\{p:p\mid F_r,\ (5/p)=-1\},
+$$
+
+其中 $(5/p)$ 是 Legendre 符号。对每个 $p\mid F_r$，有
+
+$$
+\boxed{
+\operatorname{Fail}_p(F)=
+\begin{cases}
+1,&p\in\mathcal P_r^+,\\
+r,&p\in\mathcal P_r^-.
+\end{cases}}
+\tag{464.1}
+$$
+
+因此，所有 $F_r$ 支撑素数的局部修复因子之最小公倍数为
+
+$$
+\boxed{
+\operatorname{lcm}_{p\mid F_r}\operatorname{Fail}_p(F)
+=
+\begin{cases}
+1,&\mathcal P_r^-=\varnothing,\\
+r,&\mathcal P_r^-\ne\varnothing.
+\end{cases}}
+\tag{464.2}
+$$
+
+**证明。** 对 $p\mid F_r$，强整除性给出 $z(p)\mid r$。由于 $r>5$ 为素数，
+$p\ne2,5$ 且 $z(p)>1$，故 $z(p)=r$。标准的 Fibonacci 入口秩同余给出
+
+$$
+r\mid p-(5/p).
+$$
+
+若 $(5/p)=1$，则 $r\mid p-1$，于是
+$z(p)/\gcd(z(p),p-1)=1$。若 $(5/p)=-1$，则 $r\mid p+1$；因 $r$ 为奇素数，
+$\gcd(r,p-1)=1$，故该比值为 $r$。代入文献 Theorem 2.4 得（464.1），再取
+最小公倍数得（464.2）。证毕。 $\square$
+
+这里的分层可直接用模 $5$ 的支撑检查识别：$\mathcal P_r^+$ 中的素数都
+同余于 $\pm1\pmod5$，而 $\mathcal P_r^-$ 中的素数都同余于 $\pm2\pmod5$。
+例如 $F_7=13$ 给出一个 $r$ 级局部因子，而 $F_{11}=89$ 给出修复因子 $1$。
+若 $F_r\equiv\pm2\pmod5$，则 $\mathcal P_r^-$ 必非空，因为只由
+$\pm1\pmod5$ 的素数幂组成的乘积不可能同余于 $\pm2\pmod5$。
+
+Fibonacci 数模 $5$ 的周期为 $20$。因此对素数 $r>5$，还可把这个充分条件写成
+
+$$
+r\equiv3,7,13,17\pmod{20}
+\quad\Longrightarrow\quad
+\operatorname{lcm}_{p\mid F_r}\operatorname{Fail}_p(F)=r.
+\tag{464.3}
+$$
+
+这覆盖素数秩的四个约化剩余类；其余四类不能由模 $5$ 的乘积单独判定。
+例如 $r=31\equiv11\pmod{20}$ 时，$F_{31}=557\cdot2417$ 的两个支撑素数仍都
+属于 $\mathcal P_r^-$，说明（464.3）是充分条件而非分类的逆命题。
+
+命题 464.1 是一个新的素切面：它把同一 $F_r$ 的素支撑区分为“局部可直接
+实现”和“必须支付 $r$ 级修复”的两类。它仍不提供 $N_{r,g}=1+F_rg$ 的
+素数幂赋值，也不控制 $\sigma(N_{r,g})/N_{r,g}$ 的有符号 Robin 余量；因此
+不能把（464.2）当作 Robin 安全因子或 RH 证明。要让它推进 Robin，下一步必须
+证明这两类支撑在同一个候选 $N_{r,g}$ 的完整 Euler 库存中产生可组合的联合界，
+而不是只读取 $F_r$ 自身的局部标签。
+
+本节只组合近期的局部 Fibonacci 结果与已有入口秩同余，未重复 Dold、Robin 或
+CA/SA 的一般理论，也未新增 Lean 声明。

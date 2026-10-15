@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:636594adbe5cfa97688a97fece7652b4f5723a57c4d69b3e5659cd7b836acaa9
+  normalized_sha256: sha256:636594adbe5cfa97688a97fece7652b4f5723a57c4d69b3e5659cd7b836acaa9
+cas_ref: sha256:636594adbe5cfa97688a97fece7652b4f5723a57c4d69b3e5659cd7b836acaa9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯证明段：只对紧邻的既定命题进行论证，段内无另立的定义、命题或证明结束后的新增断言。
+    previous_atom_id: 0b9663ed75ef746d9e99f0b506aa6416310cdbbf1ad2c029e886ce96ade9243c
+    next_atom_id: a4494b624b352a0f1a8744aefa593554966b5997286ad72bf2925e80e3a5d107

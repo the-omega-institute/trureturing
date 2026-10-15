@@ -90,7 +90,19 @@ $$claim = \forall N : \mathbb{N}, (\forall psi : \operatorname{Fin}\left(N + 1\r
 
 Page 15, Section 6: “This leads us to formulate the following open problem: for any two Fock-bounded pure states |ψ⟩,|φ⟩ is the beamsplitter state σ̂(ψ,φ) an extreme WPS?” N is any natural cutoff; psi and phi are arbitrary complex vectors on Fin (N+1), each with squared norm sum one. The output cutoff is 2*N. A midpoint decomposition in this finite WPS set also disproves extremality in the full WPS set.
 
-**Theorem 1.8 (Refutation).**
+**Theorem 1.8 (Two-mode Fock coefficients).**
+
+$$\forall m : \mathbb{N}, (\forall n : \mathbb{N}, (\forall p : \mathbb{N}, (\forall q : \mathbb{N}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{QuantumChannels}.\operatorname{FockAttenuator}.\operatorname{BeamSplitter}.\operatorname{fockPair}\left(m, n, q, p\right) = \operatorname{ite}\left(p = m \land q = n, (1:\mathbb{C}), 0\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.fockPair_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The coefficient of the two-mode Fock vector is one exactly when the retained occupation is m and the environment occupation is n. Every other coefficient vanishes.
+
+**Theorem 1.9 (Refutation).**
 
 $$\neg claim$$
 
@@ -114,6 +126,7 @@ For every positive real a, the inputs (|0>+a|2>)/sqrt(1+a^2) and (|0>-a|2>)/sqrt
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.WPS`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.bsState`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.claim`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.fockPair_apply`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.genLaguerre`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.wigner`

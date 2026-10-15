@@ -2623,3 +2623,1609 @@ $$
 数学引文。G. Robin，*Grandes valeurs de la fonction somme des diviseurs et hypothèse de Riemann*，J. Math. Pures Appl.63，187–213，承担全整数判据；Washington–Yang，*Analogues of the Robin-Lagarias Criteria for the Riemann Hypothesis*，[arXiv:2008.04787v1](https://arxiv.org/abs/2008.04787v1)，Introduction(1.1)、reference[13]，只作该判据归属，不使用其另一个奇整数类比。有限路径最优性、max 与 sum 的步骤均在本实际完整素数应用内给出，没有把统计因子图或位词 partition 当作算术最大值。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 四角关系的有限量子实现、精确谱与概率平衡
+
+### 23.1 五模式、整数回路与单窗 Fibonacci 运输
+
+**定义 23.1（另供的五模式对称载体）。** 本章的模式顺序固定为
+
+$$
+\Sigma=(0,1,2,3,13)
+=(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]).
+$$
+
+它们的原印字分别为空、$[2]$、$[3]$、$[5]$、$[2,5]$。低、高、中占位按 $(x,y,z)$ 排列，模式列为
+
+$$
+v_0=(0,0,0),\quad v_1=(1,0,0),\quad v_2=(0,0,1),
+\quad v_3=(0,1,0),\quad v_{13}=(1,1,0).
+$$
+
+归一化及三个占位评价组成矩阵
+
+$$
+A=\begin{pmatrix}
+1&1&1&1&1\\
+0&1&0&0&1\\
+0&0&0&1&1\\
+0&0&1&0&0
+\end{pmatrix},\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+本卷 §11 的整数关系和[《基础公式与关系》](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)命题 12.3 已给出 $\ker_{\mathbb Z}A=\mathbb Z d$。后者的标签对应为
+
+$$
+(0,2,3,5,25)_{\rm old}\longmapsto(0,1,2,3,13)_{\rm here}.
+$$
+
+具体地，关系向量 $\xi$ 的末分量取整数 $t$，其余分量被原结果固定为 $\xi_1=\xi_3=-t,\xi_2=0,\xi_0=t$。因此所有保持质量及三个占位的整数交换都沿同一原始四角方向；这不是五个模式本身相同，也不是任意五态律都满足独立关系。计数多项式的主理想由该卷命题 12.4 承担，本卷 §12 须连同卷首 Q12、Q13 的模型条件和核生成补足一起使用。
+
+为把此方向接回实际数量，令整数 $\ell\ge0$ 表示一个单窗之后追加的实际空窗数，置
+
+$$
+q=(2,3),\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad S=M^3.
+$$
+
+[《关联与原生接续》](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)§23.3 定理 23.1 和《基础公式与关系》§1.2 供应
+
+$$
+qM^{3\ell}=(F_{3\ell+3},F_{3\ell+4}),\qquad
+c_s=(x(s)+y(s),y(s)+z(s))^{\mathsf T}.
+$$
+
+这里 $F_0=0,F_1=1$。该对应使用单窗零初始化后的组成位移 $c_s$，故运输权重 $\varepsilon_s(\ell)=qS^\ell c_s$ 为
+
+$$
+\begin{aligned}
+\varepsilon_0&=0,&\varepsilon_1&=F_{3\ell+3},&
+\varepsilon_2&=F_{3\ell+4},\\
+\varepsilon_3&=F_{3\ell+5},&
+\varepsilon_{13}&=\varepsilon_1+\varepsilon_3.
+\end{aligned}
+$$
+
+所有 $\ell$ 都有 $\varepsilon_0+\varepsilon_{13}=\varepsilon_1+\varepsilon_3$，在 $\ell=0$ 即 $0+7=2+5$。因而 $m$ 个对称副本的加和数量为
+
+$$
+\sum_s n_s\varepsilon_s
+=F_{3\ell+3}U+F_{3\ell+5}V+F_{3\ell+4}W,
+\quad U=n_1+n_{13},\ V=n_3+n_{13},\ W=n_2.
+$$
+
+这个式子只提升单副本运输量的和。原有序读者则逐窗执行 $C'=SC+c_s$ 并保留接缝守卫；两窗终组成是 $Sc_{s_1}+c_{s_2}$，一般不等于 $c_{s_1}+c_{s_2}$。对称副本的占位态不是任意长度 $3m$ 的合法位词或原树历史。基础卷 §13.2 的谱投影与复群属于另一连续组成表示，不承担这里整数空窗运输的出处。
+
+### 23.2 复四角缺陷、熵补全与零能条件
+
+另供归一化复振幅及其射线
+
+$$
+\psi_s=\sqrt{p_s}\,e^{-i\theta_s},\qquad
+\sum_s p_s=1,\qquad [\psi]\in\mathbb{CP}^4,
+$$
+
+定义
+
+$$
+\mathfrak d(\psi)=\psi_1\psi_3-\psi_0\psi_{13},\qquad
+h([\psi])=|\mathfrak d(\psi)|^2.
+$$
+
+对任意非零齐次代表 $z$，同一函数应写成
+
+$$
+h([z])=\frac{|z_1z_3-z_0z_{13}|^2}{(\sum_s|z_s|^2)^2}.
+$$
+
+因此不依赖代表的模长及整体相位。固定占位均值 $(X,Y,Z)$，设 $r=1-Z$，概率纤维仍由原有仿射反演给出
+
+$$
+p=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\quad \kappa_- =\max(0,X+Y-r),\quad
+\kappa_+=\min(X,Y).
+$$
+
+在四底角正时置
+
+$$
+b(\kappa)=(X-\kappa)(Y-\kappa),\qquad
+\delta_c(\kappa)=\kappa(r-X-Y+\kappa),
+\qquad \chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi}.
+$$
+
+[《隐藏关系》](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) C-12.2 的振幅按 $c_s^{\rm old}=\psi_s$ 逐项相同，其相位记号满足 $\theta_s^{\rm old}=-\theta_s$、$\Phi^{\rm old}=-\chi$；条件底面矩阵中的因子 $1/\sqrt r$ 使 $h=r^2|\det\mathcal A|^2$。直接消费该四角展开，得到
+
+$$
+\begin{aligned}
+h&=b+\delta_c-2\sqrt{b\delta_c}\cos\chi\\
+&=(\sqrt b-\sqrt{\delta_c})^2
++2\sqrt{b\delta_c}(1-\cos\chi),\\
+b-\delta_c&=XY-r\kappa.
+\end{aligned}
+$$
+
+故在 $r>0$ 且四底角正的域内，$h=0$ 恰为
+
+$$
+\kappa=\kappa_*:=\frac{XY}{r},\qquad \chi=0\pmod{2\pi}.
+$$
+
+概率部分的最大熵结论已有《隐藏关系》C-4.6：以自然对数写 $\mathcal S=-\sum_s p_s\log p_s$，固定均值纤维上的
+
+$$
+\mathcal S'=-\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\mathcal S''=-I(\kappa),\qquad
+I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}>0
+$$
+
+给唯一内部熵极大点 $\kappa_*$。本章仅将这一点用于复缺陷的概率平衡；熵没有相位参数，所以不决定 $\chi$。有零振幅时用齐次多项式 $\mathfrak d=0$ 判定，不定义 $\arg0$ 或把内部相位坐标延伸成边界坐标。
+
+### 23.3 奇异二次簇与完整占位像
+
+**命题 23.2（四角零缺陷射线的几何应用）。** 在上述另供复载体中，零缺陷集
+
+$$
+Q=\{[z_0:z_1:z_2:z_3:z_{13}]\in\mathbb{CP}^4:
+ z_0z_{13}-z_1z_3=0\}
+$$
+
+只有一个奇异点 $[0:0:1:0:0]$；其光滑部分复维三、实维六，Fubini–Study 形式在光滑部分的限制非退化。占位矩映射
+
+$$
+\mu([z])=\frac{\sum_s|z_s|^2v_s}{\sum_s|z_s|^2}
+$$
+
+把 $Q$ 映到整个金字塔
+
+$$
+P=\{(X,Y,Z):0\le Z\le1,\ 0\le X,Y\le1-Z\}.
+$$
+
+证明。齐次方程的梯度按本章顺序为
+
+$$
+(z_{13},-z_3,0,-z_1,z_0).
+$$
+
+它在非零齐次代表处全零，只能让中模式坐标 $z_2$ 非零。其余点是 $\mathbb{CP}^4$ 中的光滑复超曲面，因此复维三；正定 Kähler 度量在复切空间的限制仍正定，给非退化的实六维辛形式。
+
+任意射线的占位是五个 $v_s$ 的凸组合，故像包含于 $P$。反向给定 $P$ 中 $(X,Y,Z)$：若 $r=1-Z>0$，取 $\kappa_*=XY/r$，置
+
+$$
+\begin{aligned}
+p_0&=\frac{(r-X)(r-Y)}r,& p_1&=\frac{X(r-Y)}r,\\
+p_3&=\frac{Y(r-X)}r,& p_{13}&=\frac{XY}r,& p_2&=Z.
+\end{aligned}
+$$
+
+它们非负、总和一、具有所需均值，并满足 $p_0p_{13}=p_1p_3$。取五个非负平方根为振幅即给 $Q$ 中原像。若 $r=0$，所需均值只能是 $(0,0,1)$，由中模式奇异射线实现。证毕。
+
+计数代数的二次理想沿用《基础公式与关系》命题 12.4，并将其多项式系数扩到 $\mathbb C$；本命题增加的是复射线、奇异点和矩像之间的具体对应。$Q$ 是紧的奇异射影对象，其光滑部分不是完整的光滑紧流形。因此它不是以六维光滑紧 toric 流形为前提的 Delzant 分类的反例，金字塔矩像也不消除顶点奇异性。
+
+### 23.4 代数 Fock 域、降阶荷与最小交换次数
+
+**定义 23.3（有限次数正算子）。** 使用代数直和
+
+$$
+\mathcal F_{\rm alg}=\bigoplus_{m\ge0}^{\rm alg}\mathcal H_m,
+\qquad \mathcal H_m=\operatorname{Sym}^m(\mathbb C^5),
+\qquad \mathcal H_q=0\quad(q<0).
+$$
+
+每个向量只含有限多个次数。归一化占位基为
+
+$$
+|n\rangle=\prod_{s\in\Sigma}\frac{(a_s^\dagger)^{n_s}}{\sqrt{n_s!}}
+|\mathrm{vac}\rangle,\qquad n_s\ge0,\quad \sum_s n_s=m.
+$$
+
+产生、湮灭算子在这个代数域上逐项定义为
+
+$$
+a_s|n\rangle=\sqrt{n_s}|n-e_s\rangle,\qquad
+ a_s^\dagger|n\rangle=\sqrt{n_s+1}|n+e_s\rangle.
+$$
+
+零占位的湮灭项为零。此处 $[a_s,a_t^\dagger]=\delta_{st}I$，同类算子相互交换；这些关系连接不同次数。固定的有限维 $\mathcal H_m$ 本身不承载这些 CCR：例如有限矩阵交换子的迹为零，不能等于迹非零的恒等矩阵。模式 $0$ 是可占据的空窗模式，$|1,0,0,0,0\rangle$ 不是 Fock 真空 $|0,0,0,0,0\rangle$。
+
+记 $n_s=a_s^\dagger a_s$ 及
+
+$$
+N=\sum_s n_s,\qquad U=n_1+n_{13},\qquad
+V=n_3+n_{13},\qquad W=n_2,
+$$
+
+并定义
+
+$$
+\widehat A=a_1a_3-a_0a_{13},\qquad
+\widehat H=\widehat A^\dagger\widehat A,
+\qquad B=a_0^\dagger a_{13}^\dagger a_1a_3.
+$$
+
+$\widehat A$ 从 $\mathcal H_m$ 到 $\mathcal H_{m-2}$，更精确地将固定荷
+
+$$
+(m,U,V,W)\longmapsto(m-2,U-1,V-1,W).
+$$
+
+两个湮灭项具有同一降荷；目标含负荷时相应空间为空。$\widehat H_m=\widehat H|_{\mathcal H_m}$ 则是同次数上的有限线性 Hermitian 算子，并有
+
+$$
+\widehat H=n_1n_3+n_0n_{13}-B-B^\dagger,\qquad
+\langle\Psi,\widehat H_m\Psi\rangle=\|\widehat A\Psi\|^2\ge0.
+$$
+
+$B$ 将占位移为 $n+d$，$B^\dagger$ 为逆移，故 $\widehat H$ 保持 $N,U,V,W$。在 $m=0,1$ 上 $\widehat A=0$，所以 $\widehat H_m=0$。所需伴随性和正性完全在有限次数空间中成立，不涉及完成 Fock 空间上的无界自伴扩张。算子对向量线性；后文振幅函数 $h$ 的四次性是其期望符号的性质。
+
+**命题 23.4（四角守恒交换的最小算子次数）。** 若一个非零正规序单项式在代数 Fock 域上
+
+$$
+(a^\dagger)^u a^v=\prod_s(a_s^\dagger)^{u_s}\prod_s a_s^{v_s},
+\qquad u,v\in\mathbb N_0^5
+$$
+
+保持四个荷并具有非零占位位移，则其总算子次数至少四。次数恰为四时，交换方向只能由 $B$ 或 $B^\dagger$ 实现，允许任意系数及同时存在的对角项。
+
+证明。荷的交换子逐项乘以 $A(u-v)$，故守恒要求 $A(u-v)=0$。消费 §23.1 的既有整数核，得到 $u-v=td$，整数 $t\ne0$。于是
+
+$$
+|u|+|v|\ge\sum_s|u_s-v_s|=4|t|\ge4.
+$$
+
+等号为四时 $|t|=1$，每个坐标的产生与湮灭没有共同余量，因此 $u,v$ 正好是 $d$ 的正负部分，或次序相反。这分别给 $B,B^\dagger$。次数二的一体正规序项没有非平凡守恒交换；次数四的二体项可以交换四角。这个判据针对具有交换的项，对角单项式 $u=v$ 不受非零位移下界约束。证毕。
+
+《隐藏关系》C-15.2 的两副本同荷碰撞是这一方向在指定比较接口中的已有消费者；它不把本章对称 Fock 空间识别为有序两份输入。《隐藏关系》C-29.2 的全输入五标签保持刚性也属于不同合同：这里保持的是多副本总荷，允许同荷扇区内部交换，并未满足那个单副本全输入保持条件。
+
+### 23.5 固定荷纤维、边系数与正则面积
+
+取整数
+
+$$
+m\ge0,\quad 0\le W\le m,\quad R=m-W,\quad 0\le U,V\le R.
+$$
+
+固定这四个荷的空间记为 $\mathcal H_{m;U,V,W}$。消费《基础公式与关系》§12.1–§12.3 的占位提升，取 $k=n_{13}$ 得到完整基
+
+$$
+|k\rangle=|R-U-V+k,\ U-k,\ W,\ V-k,\ k\rangle,
+$$
+
+$$
+k_- =\max(0,U+V-R),\qquad k_+=\min(U,V),
+\qquad k_-\le k\le k_+.
+$$
+
+此区间非空，维数 $D=k_+-k_-+1$。直接应用产生、湮灭的平方根系数，得
+
+$$
+B|k\rangle=t_k|k+1\rangle,\qquad
+ t_k=\sqrt{(U-k)(V-k)(k+1)(R-U-V+k+1)}.
+$$
+
+每条内部边 $k_-\le k<k_+$ 的四个因子都正；边界外的项为零。因此扇区矩阵连通，且
+
+$$
+\begin{aligned}
+\langle k|\widehat H|k\rangle&=(U-k)(V-k)+k(R-U-V+k),\\
+\langle k+1|\widehat H|k\rangle&=-t_k.
+\end{aligned}
+$$
+
+只有 $m>0$ 时归一化 $X=U/m,Y=V/m,Z=W/m$ 和 $\kappa=k/m$。此时无论是否正则，区间反演都给精确式
+
+$$
+D=1+m(\kappa_+-\kappa_-).
+$$
+
+面积解释另有条件。本章采用射影直线积分为 $2\pi$ 的 Fubini–Study 形式及与之相容的度量，度量是《隐藏关系》C-14.1–C-14.2 约定的两倍。固定均值的三占位环面作用，在
+
+$$
+0<Z<1,\quad 0<X,Y<r=1-Z,\quad X\ne Y,\quad X+Y\ne r
+$$
+
+时给正则约化球面；正的五模式支撑保证内部自由作用，末两条排除上下端的双零概率。其内部坐标及形式为
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+ g_{\rm red}=\frac{I(\kappa)}2\,d\kappa^2+
+ \frac2{I(\kappa)}\,d\chi^2.
+$$
+
+这里相位对应 $\Phi^{\rm old}=-\chi$，两倍度量把原面积 $\pi(\kappa_+-\kappa_-)$ 变为
+
+$$
+\operatorname{Area}_{\rm red}=2\pi(\kappa_+-\kappa_-),\qquad
+ D=1+\frac{m\operatorname{Area}_{\rm red}}{2\pi}.
+$$
+
+形式的符号也可从归一化振幅核对：$\psi_s=\sqrt{p_s}e^{-i\theta_s}$ 给 $\sum_s d\theta_s\wedge dp_s$，而纤维上 $dp_s=d_s\,d\kappa$，故余项是 $d\chi\wedge d\kappa$。单零端点收缩相位圆而光滑封口；双零端点的锥角已由 C-14.3 给出，所以正则面积式不被用来宣告所有边界约化都是光滑球面。$m=0$ 只有一份零占位，不定义归一化位置。以上 $D$ 数的是占位扇区维数，不是原生有序历史数。
+
+### 23.6 四角正算子的有限链实现与精确谱
+
+**定理 23.5（全部固定扇区的概率平衡应用）。** 在 §23.5 的任意可行整数扇区上，定义作用于函数列 $f=(f(k))$ 的连续时间生成元
+
+$$
+(Lf)(k)=\beta_k[f(k+1)-f(k)]+\delta_k[f(k-1)-f(k)],
+$$
+
+$$
+\beta_k=(U-k)(V-k),\qquad
+\delta_k=k(R-U-V+k).
+$$
+
+只使用可行区间内的邻点，端点外率为零。则其唯一平衡律为
+
+$$
+\pi_k=\frac{\binom Uk\binom{R-U}{V-k}}{\binom RV},
+\qquad k_-\le k\le k_+,
+$$
+
+并满足详细平衡。令 $S_\pi=\operatorname{diag}(\sqrt{\pi_k})$，有精确相似关系
+
+$$
+\widehat H_{m;U,V,W}=-S_\pi L S_\pi^{-1}.
+$$
+
+因此扇区唯一的归一化零能射线由
+
+$$
+|\Omega_{m;U,V,W}\rangle=\sum_{k=k_-}^{k_+}\sqrt{\pi_k}\,|k\rangle
+$$
+
+代表。该扇区的全部特征值为
+
+$$
+\lambda_j=j(R-j+1),\qquad j=0,1,\ldots,w,
+\qquad w=k_+-k_-=\min(U,V,R-U,R-V).
+$$
+
+它们各重数一；只有 $D\ge2$ 的扇区才有正谱隙，且谱隙为 $R$。
+
+证明中的平衡律。取 $R$ 个位置，其中一个固定 $U$ 元集合带标记，从所有 $V$ 元子集均匀选择。交集大小 $k$ 的选择数是 $\binom Uk\binom{R-U}{V-k}$，可行范围正是所列区间。按交集分组枚举全部 $\binom RV$ 个子集，证明归一化；每个区间内的 $\pi_k$ 正。
+
+直接取相邻组合数的比值得
+
+$$
+\frac{\pi_{k+1}}{\pi_k}
+=\frac{(U-k)(V-k)}{(k+1)(R-U-V+k+1)}
+=\frac{\beta_k}{\delta_{k+1}},
+$$
+
+即 $\pi_k\beta_k=\pi_{k+1}\delta_{k+1}$。内部双向率正，因此有限区间连通。若 $\rho$ 是平衡概率列，方程是 $L^{\mathsf T}\rho=0$；下端方程令第一条边的净流为零，逐点方程继而令每条边净流为零。相邻比值和归一化便强迫 $\rho=\pi$，单点区间则直接成立。这既证明唯一性，也区分函数列和概率列的方向。
+
+此分布的矩用于后文波动应用。令 $J_a$ 是第 $a$ 个标记位置被随机 $V$ 元子集选中的指标，则 $k=\sum_{a=1}^U J_a$。当 $R>0$ 时 $\mathbb E J_a=V/R$，故
+
+$$
+\mathbb E_\pi k=\frac{UV}{R}.
+$$
+
+当 $R>1$ 时，不同标记位置同时入选的概率是 $V(V-1)/[R(R-1)]$，于是
+
+$$
+\begin{aligned}
+\operatorname{Var}_\pi k
+&=U\frac VR\left(1-\frac VR\right)
++U(U-1)\left[\frac{V(V-1)}{R(R-1)}-\frac{V^2}{R^2}\right]\\
+&=\frac{UV(R-U)(R-V)}{R^2(R-1)}.
+\end{aligned}
+$$
+
+$R=0$ 只有 $U=V=k=0$，$\pi_0=1$；$R=1$ 的所有可行扇区也是单点，方差零，不使用显示的 $R-1$ 分母。
+
+证明中的相似变换。$L$ 的对角元是 $-(\beta_k+\delta_k)$，上邻元为 $\beta_k$，下邻元为 $\delta_k$。所以 $-S_\pi L S_\pi^{-1}$ 的上邻元是
+
+$$
+-\frac{\sqrt{\pi_k}\beta_k}{\sqrt{\pi_{k+1}}}
+=-\sqrt{\beta_k\delta_{k+1}}=-t_k,
+$$
+
+下邻元相同，对角元是 $\beta_k+\delta_k$，逐项等于 §23.5 的正算子矩阵。由于 $L\mathbf1=0$，$S_\pi\mathbf1$ 是归一化零能向量。唯一性还可直接由有限 Dirichlet 形式看出：
+
+$$
+\langle f,-Lf\rangle_\pi
+=\sum_{k=k_-}^{k_+-1}\pi_k\beta_k|f(k+1)-f(k)|^2.
+$$
+
+其零空间只有常数；相似变换便给所列唯一射线。$\pi_k$ 是概率，$\sqrt{\pi_k}$ 是量子振幅，这两者不可交换。唯一性只在一个固定扇区内，未宣告整个 $\mathcal H_m$ 的唯一基态。
+
+证明中的全可行区间谱。对 $j\ge1$，展开 $f(k)=k^j$ 的前两阶有限差分，最高可能的系数由
+
+$$
+j(\beta_k-\delta_k)k^{j-1}
++\frac{j(j-1)}2(\beta_k+\delta_k)k^{j-2}
+$$
+
+给出，其中 $j=1$ 时第二项为零。因
+
+$$
+\beta_k-\delta_k=UV-Rk,\qquad
+\beta_k+\delta_k=2k^2+(R-2U-2V)k+UV,
+$$
+
+次数 $j+1$ 的项抵消，次数 $j$ 的系数是
+
+$$
+-jR+j(j-1)=-j(R-j+1).
+$$
+
+余下差分项的次数至多 $j-1$，而 $L1=0$，故 $L$ 保持次数过滤。即使端点的一项引用区间外的多项式值，该项率为零，因此这个多项式计算在原可行区间每一点仍完全有效，不要求下端点为零。
+
+区间的 $D$ 个不同整数上，$1,k,\ldots,k^{D-1}$ 的评价矩阵是可逆 Vandermonde 矩阵。故它们构成全部函数空间的一组基，$L$ 在该基中是三角矩阵，所列对角系数就是全部特征值，没有漏掉其他函数。若 $U+V\le R$，宽度为 $\min(U,V)$；若 $U+V>R$，宽度为 $R-\max(U,V)$，两式一起给 $w=\min(U,V,R-U,R-V)\le R/2$。对 $0\le j<w$，
+
+$$
+\lambda_{j+1}-\lambda_j=R-2j>0.
+$$
+
+因此谱简单，$w\ge1$ 时首个正特征值 $\lambda_1=R$。$w=0$ 时只有零特征值，包括所有零尺度边界。相似关系把这些结论逐项传到 $\widehat H$，完成该四角应用的证明。
+
+这个链是经典 Bernoulli–Laplace 交换及其 Hahn/dual Hahn 多项式机制的一个明确参数实例，不作为新的通用链定理。Lim–Pickering 的 *A Nonlinear Transform for the Diagonalization of the Bernoulli-Laplace Diffusion Model and Orthogonal Polynomials*，[arXiv:1812.01143v1](https://arxiv.org/abs/1812.01143v1) §2 式 (2.1)–(2.4) 的参数对应是
+
+$$
+(N,N_1,N_2,N_w,N_b,i)=(R,U,R-U,V,R-V,k).
+$$
+
+原文的上、下跳概率因此为 $p_k=\beta_k/[U(R-U)]$、$q_k=\delta_k/[U(R-U)]$。它的 $T$ 是概率列矩阵，故当 $0<U<R$ 时，本章函数列生成元为
+
+$$
+L=U(R-U)(T^{\mathsf T}-I).
+$$
+
+式 (3.25) 的离散特征值 $1-j(R-j+1)/[N_1N_2]$ 经该缩放给本章 $-\lambda_j$。原文 §4 的对称化是 $Z=S_\pi^{-1}TS_\pi$；详细平衡使 $S_\pi T^{\mathsf T}S_\pi^{-1}=Z$，这正与本章相似方向一致。
+
+原文式 (6.1) 用另一等价抽样方向写平衡律，代入后为
+
+$$
+\frac{\binom Vk\binom{R-V}{U-k}}{\binom RU}
+=\frac{\binom Uk\binom{R-U}{V-k}}{\binom RV}.
+$$
+
+等号按阶乘逐项约掉得到，体现同一交集而非两个不同概率模型。原文展示的 $i=0,\ldots,N_w\le N_1$ 范围还需下端非负率；在上述映射中，完整的零起点区间需要 $V\le U$、$U+V\le R$。其他边际使用真实可行区间 $[k_-,k_+]$，由本证明承担其端点和谱。$U=0$ 或 $U=R$ 时缩放因子零，扇区为单点，直接有 $L=\widehat H=0$，不用除以 $N_1N_2$；$R=0$ 同样直接处理。原文平衡情形的混合时间估计没有转移到这里任意边际或零尺度边界。
+
+共享谱不等于共享时间律：量子态用 $e^{-it\widehat H}$，概率列用 $e^{tL^{\mathsf T}}$。此外，只取交换项 $B+B^\dagger$ 会丢掉本章对角项。在 $D\ge2$ 时，这个交换算子是非零 Hermitian 矩阵而对角全零，迹为零，因此必有负特征值；本章 $\widehat H$ 正半定，所以二者的谱不同。单点扇区两者都为零，直接按该退化情形处理。
+
+### 23.7 全次数零空间、有限多项式伴随与格点计数
+
+**定理 23.6（四角量子核对既有格点数的实现）。** 对每个整数 $m\ge0$，
+
+$$
+\begin{aligned}
+\dim\ker\widehat H_m
+&=\sum_{W=0}^m(m-W+1)^2\\
+&=\frac{(m+1)(m+2)(2m+3)}6\\
+&=\binom{m+4}{4}-\binom{m+2}{4}
+=|mP\cap\mathbb Z^3|.
+\end{aligned}
+$$
+
+二项式在上指标小于四时为零。这里的数列与恒等式由《基础公式与关系》§12.1–§12.4 所有，本定理增加的是它们与 $\widehat A^\dagger\widehat A$ 零空间的对应。
+
+第一种证明：扇区基态计数。$\mathcal H_m$ 按 $(U,V,W)$ 正交分解。固定 $W$，所有 $0\le U,V\le R=m-W$ 都有 §23.5 的非空占位提升，定理 23.5 在每个扇区给恰一条零能射线。故零空间维数是 $\sum_W(R+1)^2$。同一整数位置 $(U,V,W)$ 正是 $mP$ 的格点，已有计数结果给所列多项式和二项式差，不重新建立一般 Ehrhart 定理。
+
+第二种证明：有限阶乘内积。令 $\mathcal P_m$ 是五变量的次数 $m$ 齐次复多项式空间，$\mathcal P_q=0$ 对 $q<0$。在所有有限多项式上定义
+
+$$
+\langle z^n,z^{n'}\rangle=\delta_{n,n'}\,n!,
+\qquad n!=\prod_s n_s!.
+$$
+
+映射 $|n\rangle\mapsto z^n/\sqrt{n!}$ 是各次数空间间的等距映射。对单项式，$\partial_s z^n=n_s z^{n-e_s}$，而
+
+$$
+n_s(n-e_s)!=n!,
+$$
+
+所以乘 $z_s$ 与 $\partial_s$ 互为伴随；不同次数正交。这给完全有限的多项式表示
+
+$$
+\widehat A=\partial_1\partial_3-\partial_0\partial_{13},\qquad
+\widehat A^\dagger=M_f,\quad f=z_1z_3-z_0z_{13}.
+$$
+
+对 $m\ge2$，$M_f:\mathcal P_{m-2}\to\mathcal P_m$ 是单射，因为复多项式环无零因子且 $f\ne0$。有限维伴随关系于是给 $\widehat A:\mathcal P_m\to\mathcal P_{m-2}$ 满射：若一个目标向量正交于其像，便被 $\widehat A^\dagger=M_f$ 送到零，单射迫使该向量为零。由 $\ker(\widehat A^\dagger\widehat A)=\ker\widehat A$ 和 rank–nullity，
+
+$$
+\dim\ker\widehat H_m=\dim\mathcal P_m-\dim\mathcal P_{m-2}
+=\binom{m+4}{4}-\binom{m+2}{4}.
+$$
+
+$m=0,1$ 时目标空间为零，$\widehat H_m=0$，维数分别为一、五，与第一种证明及已有计数一致。证毕。
+
+同一伴随关系还解释齐次坐标环的应用。基础卷命题 12.4 的变量按 §23.1 改名、系数扩为复数后，$Q$ 的齐次理想为 $(f)$，符号相反不改变主理想。次数 $m$ 的商空间是
+
+$$
+(\mathbb C[z]/(f))_m=\mathcal P_m/(f\mathcal P_{m-2}),
+\qquad
+\ker\widehat A=(f\mathcal P_{m-2})^\perp.
+$$
+
+由阶乘内积，每个商类有唯一正交代表，故这两个空间等维且有此有限线性识别。零能向量是多项式空间中的向量，$Q$ 的点是复五振幅的射线；这里没有把所有零能向量逐点识别为 $Q$ 的点。Bargmann 的 *On a Hilbert space of analytic functions and an associated integral transform, Part I*（DOI [10.1002/cpa.3160140303](https://doi.org/10.1002/cpa.3160140303)）只归属解析 Fock 表示背景；此应用的伴随与满射由上述有限阶乘论证承担，不引用未经给出的原文定理编号。
+
+全空间的谱隙也可从同一个扇区模型得到，而不把某个 $R$ 的谱隙移用成全空间谱隙。对 $R=0,\ldots,m$、$j=0,\ldots,\lfloor R/2\rfloor$，标记对 $(R,j)$ 的特征值是 $j(R-j+1)$，贡献的重数为
+
+$$
+(R-2j+1)^2.
+$$
+
+理由是该 $j$ 出现在扇区内当且仅当 $w\ge j$，等价于 $j\le U,V\le R-j$；固定 $R$ 已固定 $W=m-R$，故正好有该平方数个扇区，每个贡献一维。不同 $(R,j)$ 若数值相同，重数相加。$j=0$ 的重数总和恢复本节量子核计数。任意正特征值满足 $R\ge2j,j\ge1$，从而
+
+$$
+j(R-j+1)\ge j(j+1)\ge2.
+$$
+
+$m\ge2$ 时 $R=2,U=V=1,W=m-2,j=1$ 实现特征值二，故整个 $\widehat H_m$ 的正谱隙是二，$\widehat H_m/m$ 的正谱隙是 $2/m$。$m=0,1$ 没有正谱隙。
+
+### 23.8 数固定相干态与零能扇区投影
+
+**定理 23.7（复四角簇的相干符号应用）。** 对单位振幅 $\psi$ 及整数 $m\ge0$，定义数固定相干向量
+
+$$
+|\psi;m\rangle=\frac1{\sqrt{m!}}
+\left(\sum_s\psi_s a_s^\dagger\right)^m|\mathrm{vac}\rangle.
+$$
+
+它归一化，且对 $m\ge2$ 有
+
+$$
+\widehat A|\psi;m\rangle
+=\sqrt{m(m-1)}\,\mathfrak d(\psi)|\psi;m-2\rangle,
+$$
+
+$$
+\langle\psi;m|\widehat H_m|\psi;m\rangle=m(m-1)h([\psi]).
+$$
+
+$m=0,1$ 的期望为零。若 $[\psi]\in Q$，任何非零固定荷投影在归一化后都等于定理 23.5 的对应基态射线。
+
+证明。将产生算子的 $m$ 次幂展开，得到
+
+$$
+|\psi;m\rangle
+=\sum_{\sum n_s=m}\sqrt{\frac{m!}{\prod_s n_s!}}
+\prod_s\psi_s^{n_s}|n\rangle.
+$$
+
+多项式定理给范数平方 $(\sum_s|\psi_s|^2)^m=1$。由 $[a_s,\sum_t\psi_t a_t^\dagger]=\psi_s$，湮灭一次给 $\sqrt m\psi_s|\psi;m-1\rangle$，再湮灭一次给
+
+$$
+a_sa_t|\psi;m\rangle=\sqrt{m(m-1)}\psi_s\psi_t|\psi;m-2\rangle.
+$$
+
+相减得到 $\widehat A$ 的式子，再取范数平方得到期望。$m<2$ 两次湮灭为零。若 $\mathfrak d=0$，$\widehat H_m$ 消去该相干态；它又与荷扇区投影交换，所以每个投影也在该扇区零空间中。非零投影按定理 23.5 的一维性等于 $\Omega$ 射线。证毕。
+
+在所有相关振幅非零时也能逐项核对：固定荷展开系数 $c_k$ 的相邻比为
+
+$$
+\frac{c_{k+1}}{c_k}
+=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}
+\sqrt{\frac{(U-k)(V-k)}{(k+1)(R-U-V+k+1)}}.
+$$
+
+在 $Q$ 上复比值是一，剩下恰为 $\sqrt{\pi_{k+1}/\pi_k}$。此核对没有把概率本身当作振幅。有零振幅时一些扇区投影可为零；只能归一化实际非零的投影。
+
+对 $m\ge2$，$\widehat H_m/[m(m-1)]$ 的相干期望严格等于 $h$，而 $\widehat H_m/m$ 的相干期望严格等于 $(m-1)h$。这两个归一化分别用于符号和后文扇区时间尺度，不互相替代。相干态是符号计算的向量族；有限 $m$ 的酉演化不因此必然保持该向量族。
+
+### 23.9 Fisher 曲率与基态精确波动
+
+**命题 23.8（正底面平衡的波动应用）。** 设
+
+$$
+0<r\le1,\qquad 0<X,Y<r,
+$$
+
+并取 §23.2 的 $\kappa_*=XY/r$。四底角都正，置
+
+$$
+c_*=p_1p_3=p_0p_{13}
+=\frac{XY(r-X)(r-Y)}{r^2},\qquad I_*:=I(\kappa_*)=\frac r{c_*}.
+$$
+
+在可行整数扇区 $m>0,R>1,X=U/m,Y=V/m,r=R/m$ 的归一化基态中，
+
+$$
+\operatorname{Var}_{\Omega}\left(\frac{n_{13}}m\right)
+=\frac{UV(R-U)(R-V)}{m^2R^2(R-1)}
+=\frac r{(R-1)I_*}.
+$$
+
+沿任何存在的、保持这些正边际的可行整数序列 $m\to\infty$，有
+
+$$
+m\operatorname{Var}_{\Omega}(n_{13}/m)\longrightarrow\frac1{I_*}.
+$$
+
+证明。占位读数的基态概率是 $\pi$，所以第一等号是定理 23.5 的精确方差除以 $m^2$。平衡四概率给
+
+$$
+\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}
+=\frac{r^3}{XY(r-X)(r-Y)}=\frac r{c_*}.
+$$
+
+代入 $U=mX,V=mY,R=mr$ 即得第二等号。序列上 $R=mr$，故 $mr/(R-1)\to1$，得到极限。证毕。
+
+此处消费的是《隐藏关系》C-4.6 的熵 Hessian 与 Fisher 长度，增加的是同一曲率和有限基态占位方差之间的精确比例。固定边际必须确有整数序列：若 $X,Y,Z$ 都为有理数，可取公共分母的倍数；任意指定的无理边际不一定能精确保留。若改用趋向目标边际的有理近似序列，极限必须另按相应参数的收敛说明，不能称为精确保留。此结论是分布波动，不赋予物理不确定性原理的含义。
+
+### 23.10 正平衡的局部振动、耗散与尺度区别
+
+**命题 23.9（同一四角平衡附近的局部时间对应）。** 在命题 23.8 的正底面域内，以 $\Delta\kappa=\kappa-\kappa_*$、$\chi=0$ 附近的实相位坐标，有
+
+$$
+\begin{aligned}
+h&=\frac{r^2}{4c_*}(\Delta\kappa)^2+c_*\chi^2
++O\bigl((|\Delta\kappa|+|\chi|)^3\bigr)\\
+&=\frac r2\left[\frac{I_*}2(\Delta\kappa)^2+
+\frac2{I_*}\chi^2\right]+O\bigl((|\Delta\kappa|+|\chi|)^3\bigr).
+\end{aligned}
+$$
+
+在 $\omega_{\rm red}=d\chi\wedge d\kappa$ 和 $\iota_{X_h}\omega_{\rm red}=dh$ 的符号约定下，线性化方程为
+
+$$
+\dot\chi=\frac{rI_*}2\Delta\kappa,\qquad
+\dot\kappa=-\frac{2r}{I_*}\chi,
+$$
+
+小振动角频率为 $r$。在选定函数生成元 $L/m$ 的连续时间链中则有精确均值方程
+
+$$
+\frac d{dt}\mathbb E(k/m)=XY-r\mathbb E(k/m).
+$$
+
+非单点扇区的 $\widehat H_m/m$ 正谱隙恰为 $R/m=r$。
+
+证明。由 $b-\delta_c=XY-r\kappa=-r\Delta\kappa$，
+
+$$
+(\sqrt b-\sqrt{\delta_c})^2
+=\frac{r^2(\Delta\kappa)^2}{(\sqrt b+\sqrt{\delta_c})^2}
+=\frac{r^2}{4c_*}(\Delta\kappa)^2+O(|\Delta\kappa|^3).
+$$
+
+另有 $2\sqrt{b\delta_c}(1-\cos\chi)=c_*\chi^2+O((|\Delta\kappa|+|\chi|)^3)$，证明展开；$I_*=r/c_*$ 给度量系数的对应。收缩公式给 $\dot\chi=\partial_\kappa h$、$\dot\kappa=-\partial_\chi h$，再代入二次项，二阶方程是 $\ddot\chi=-r^2\chi$。
+
+对链，$Lk=UV-Rk$，因而 $L(k/m)=(UV-Rk)/m$。生成元再除以 $m$，得到 $XY-r(k/m)$；有限空间上取期望即可得均值方程。谱隙是定理 23.5 除以 $m$ 的直接消费者。证毕。
+
+正底面局部平衡允许 $Z=0$，也允许 $X=Y$ 或 $X+Y=r$；它只需四底角在 $\kappa_*$ 正，不需要 §23.5 的整个闭约化球面正则条件。所用 Fisher 及水平度量在平衡的实际支撑上定义，中模式零概率不进入四角 $I_*$。
+
+这里的时间是模型中自定的无量纲参数。相同的 $r$ 分别表示 Hamilton 小振动频率、Markov 均值衰减率和固定扇区谱隙，并不使耗散、酉演化和非线性 Hamilton 流相等。特别是 §23.8 的严格符号归一化为 $\widehat H_m/[m(m-1)]$，本节谱与链的时间归一化为 $\widehat H_m/m,L/m$；后者相干期望为 $(m-1)h$，不能据此把有限 $m$ 的相干轨道认作 $h$ 的精确流。
+
+全空间缩放还须保留 §23.7 的结论：$\widehat H_m/m$ 正谱隙为 $2/m$，不等于固定非平凡扇区的 $r$。对一列存在的扇区，若 $R/m\to r>0$ 且固定 $j$ 始终在允许范围内，则
+
+$$
+\frac{j(R-j+1)}m\longrightarrow jr.
+$$
+
+这只是逐个固定 $j$ 的极限。若 $j/m\to\eta>0$ 且 $R/m\to r$，允许范围要求 $\eta\le r/2$，并有
+
+$$
+\frac{j(R-j+1)}{m(m-1)}\longrightarrow\eta(r-\eta).
+$$
+
+两式直接分别除以相应尺度取极限，说明固定指标与随次数增长指标的谱尺度不同。有限范围和全空间简并仍存在，没有从前一式推出整条极限调和梯级。
+
+### 23.11 两态演化与同均值的未来相干读出
+
+**命题 23.10（最小扇区的两种时间律及未来分离）。** 取 $m=2,U=V=1,W=0$，基按
+
+$$
+|L\rangle=|0,1,0,1,0\rangle,\qquad
+|R\rangle=|1,0,0,0,1\rangle
+$$
+
+排列。它们分别有 $k=0,1$。于是
+
+$$
+\widehat H=\begin{pmatrix}1&-1\\-1&1\end{pmatrix},\qquad
+L=-\widehat H,\qquad \operatorname{spec}\widehat H=\{0,2\},
+\qquad \pi=(1/2,1/2).
+$$
+
+由 $|L\rangle$ 出发的酉状态及 $R$ 的概率为
+
+$$
+e^{-it\widehat H}|L\rangle
+=e^{-it}(\cos t\,|L\rangle+i\sin t\,|R\rangle),
+\qquad P_R^{\rm quantum}(t)=\sin^2t.
+$$
+
+同一初始确定占位的连续时间链则给
+
+$$
+P_R^{\rm Markov}(t)=\frac{1-e^{-2t}}2\qquad(t\ge0).
+$$
+
+另取
+
+$$
+|\Psi_\pm\rangle=\frac{|L\rangle\pm i|R\rangle}{\sqrt2}.
+$$
+
+两态所有五个平均占位相同，$\mathbb E n_{13}=1/2$，但在上述同一酉演化下
+
+$$
+\left.\frac d{dt}\langle n_{13}\rangle_{\Psi_\pm(t)}\right|_{t=0}=\pm1.
+$$
+
+证明。两点率为 $\beta_0=\delta_1=1$，代入扇区矩阵得显示式；对称和反对称向量给特征值零、二。写 $\widehat H=I-\sigma_x$ 得酉式。概率方程 $\dot P_R=1-2P_R,P_R(0)=0$ 给链的指数式。
+
+两个 $\Psi_\pm$ 在占位基的对角概率都为 $(1/2,1/2)$，故每个对角占位读数都相同，五均值为 $(1/2,1/2,0,1/2,1/2)$。而
+
+$$
+n_{13}=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+ i[\widehat H,n_{13}]=\begin{pmatrix}0&-i\\i&0\end{pmatrix}=\sigma_y.
+$$
+
+$\Psi_\pm$ 是 $\sigma_y$ 的正、负本征态，Heisenberg 导数即为 $\pm1$。更具体地，未来概率是 $(1\pm\sin2t)/2$，所以在一般的同一个未来时刻也可分离。证毕。
+
+这是在明确给定相干态、酉演化和占位观测的有限模型里，当前完整平均占位不足以决定未来读数的成对例子。它不自动供应原有概率读者、原生位词守卫或比较装置的实现。量子振荡和经典衰减虽有同谱源，时间律已经在最小扇区上不同。
+
+### 23.12 与四波文献的精确谱补对应
+
+**命题 23.11（四个作用模式的文献谱补）。** Odzijewicz–Wawreniuk 的 *An integrable (classical and quantum) four-wave mixing Hamiltonian system*，[arXiv:2003.03060v1](https://arxiv.org/abs/2003.03060v1) 式 (3.1)，在其 $\hbar=g=1$、四个频率全为零的参数下，按
+
+$$
+(b_0,b_1,b_2,b_3)_{\rm paper}=(a_{13},a_1,a_0,a_3)_{\rm here}
+$$
+
+改名，成为本章四个作用模式上的算子
+
+$$
+K=n_{13}(n_3+1)+n_1(n_0+1)+B+B^\dagger.
+$$
+
+在固定 $(m,U,V,W)$ 扇区上，它与本章正算子满足
+
+$$
+\widehat H=U(R-U+1)I-K.
+$$
+
+原文式 (3.6)–(3.8)、(3.18) 的三个守恒荷对应为
+
+$$
+(c_1,c_2,c_3)=(U,R-U,U+V-R).
+$$
+
+证明。原文式 (3.1) 的两项对角因子是 $b_0^\dagger b_0(b_3^\dagger b_3+1)$ 和 $b_1^\dagger b_1(b_2^\dagger b_2+1)$，由所列映射即得 $K$ 的对角项。原文交互项 $b_0b_1^\dagger b_2b_3^\dagger$ 及其伴随给 $B^\dagger,B$。因此它与本章 $\widehat H$ 的交互符号和对角项都不同。
+
+相加时交互项抵消；对角和利用 $n_1+n_{13}=U$、$n_0+n_3=R-U$ 得
+
+$$
+\begin{aligned}
+\widehat H+K
+&=n_1n_3+n_0n_{13}+n_{13}(n_3+1)+n_1(n_0+1)\\
+&=(n_1+n_{13})(n_0+n_3+1)=U(R-U+1)I.
+\end{aligned}
+$$
+
+原文荷为 $n_{b_0}+n_{b_1}$、$n_{b_2}+n_{b_3}$、$n_{b_0}-n_{b_2}$，逐项代入给所列对应；最后一项是 $k-(R-U-V+k)=U+V-R$。其非负可行条件 $c_1,c_2,c_1-c_3,c_2+c_3\ge0$ 分别为 $U,R-U,R-V,V\ge0$，与本章边际一致。原文式 (3.24) 的 $b_0$ 占位范围也正是本章 $[k_-,k_+]$。证毕。
+
+因此固定扇区的 $K$ 特征值是 $U(R-U+1)-j(R-j+1)$，这是常数反射的谱补，并非声称两算子相同。本章中模式 $a_2$ 是独立守恒的额外 spectator，原文四模式系统没有该第五模式。其经典 §2 从四个振幅全非零的 $\Omega_4$ 出发，不供应本章 $\mathbb{CP}^4$ 的零振幅边界、奇异中模式或完整矩像；这些由命题 23.2 的齐次方程证明承担。这里的文献参数设置只建立代数对应，不作物理时钟、普朗克尺度或器件实现推断。
+
+### 23.13 同一原始关系的消费者与数学边界
+
+本章的具体应用以同一个 $d$ 连接不同载体：在概率纤维中是 $\kappa$ 的变化方向，在复振幅中是四角多项式，在对称占位中是 $B$ 的荷守恒交换，在有限链中是相邻整数步，在量子核中则经唯一扇区基态与既有金字塔格点对应。每个连接都保留了上述对象、参数及证明条件，既有通用结果保持原归属。
+
+整数核及计数理想直接使用本卷 §11–§12 的适用边界与《基础公式与关系》§12.1–§12.4；后者的平方 minor 背景由 Sullivant，*Toric Fiber Products*，[arXiv:math/0602052v1](https://arxiv.org/abs/math/0602052v1) 例 1.2 归属。熵与 Fisher 曲率使用《隐藏关系》C-4.6，复概率—相位缺陷使用 C-12.2，完整相位商、水平度量及端点使用 C-13.1–C-14.3，并明确采用 $c_{\rm old}=\psi,\theta_{\rm old}=-\theta,\Phi_{\rm old}=-\chi$ 和两倍度量。单窗整数 Fibonacci 运输使用《关联与原生接续》§23.3 定理 23.1 及基础卷 §1.2；这些接续结论没有成为任意对称副本的有序历史结论。
+
+Lim–Pickering 的一般边际跳率、特征值、相似方向和平衡律分别用于 §23.6 的参数应用；全原可行区间及零尺度例外由该节有限多项式证明承担。Odzijewicz–Wawreniuk 的式 (3.1) 用于 §23.12 的谱补，未把其四波对角项换成本章对角项。有限阶乘内积承担 §23.7 的伴随与量子核论证；Bargmann 仅作历史背景。所有这些是普通数学推导及文献应用，不据其共同术语宣称文献优先权。
+
+空窗模式是四角交换的必要角，中模式则是独立守恒模式。有限数固定空间、齐次复射线、经典概率律、连续时间链和原有合法有序来源各有自己的载体；它们之间仅使用正文已给出的映射。占位守恒不恢复被对称化删去的顺序或接缝信息，同谱不统一时间律，波动极限不供应物理装置结论。
+
+## 追加锚（本行以下为增补区）
+
+## 24. 隐藏关系的最小守恒交换与校准局域钟
+
+### 24.1 五标签、概率纤维与完整相位商
+
+**定义 24.1（占位、振幅及关系坐标）。** 使用 §23.1 的同一五标签
+
+$$
+\Sigma=(0,1,2,3,13),\qquad
+(v_0,v_1,v_2,v_3,v_{13})
+=((0,0,0),(1,0,0),(0,0,1),(0,1,0),(1,1,0)).
+$$
+
+三坐标 $(x,y,z)$ 的次序是低、高、中；标签 $2$ 是中位，标签 $13$ 是低高同时占据。取概率律 $p$，令
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad \kappa=p_{13}.
+$$
+
+本卷 §23.1–23.2 供应的反演在这里逐项为
+
+$$
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+$$
+
+$$
+0\le Z\le1,\quad 0\le X,Y\le1-Z,\qquad
+\max(0,X+Y+Z-1)\le\kappa\le\min(X,Y).
+$$
+
+五个非负条件分别给这个闭区间的下界、上界和 $Z\ge0$，总和恒为一。均值域中的 $X,Y\le1-Z$ 又保证下界不超过上界；故它给全部可行律，包括零宽度和零概率边界。
+
+为避免与后面的交换算子 $A$ 混淆，将 §23.1 的质量—占位矩阵改记为 $W$：
+
+$$
+W=\begin{pmatrix}
+1&1&1&1&1\\
+0&1&0&0&1\\
+0&0&0&1&1\\
+0&0&1&0&0
+\end{pmatrix},\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+精确的所有者对应是 $W=A_{\S23.1}$，而基础公式卷原标签 $(0,2,3,5,25)$ 对应 $(0,1,2,3,13)$；隐藏关系卷的 $(O,L,T,R,J)$ 也依次对应这些标签。原有核公式给
+
+$$
+\ker_{\mathbb R}W=\mathbb R d,\qquad
+\ker_{\mathbb Z}W=\mathbb Z d.
+$$
+
+其参数对应可直接看出：若 $Wc=0$，中位行给 $c_2=0$，低、高行给 $c_1=c_3=-c_{13}$，质量行给 $c_0=c_{13}$。因此 $c=c_{13}d$，实系数和整数系数分别给两个核。$d$ 的非零分量互素，故为原始整数方向；概率纤维的切向量正是 $\partial_\kappa p=d$。列关系是 $v_0+v_{13}=v_1+v_3$，质量行也参与其中。
+
+另供正交标签空间 $\mathcal H=\mathbb C^5$，按负相位约定嵌入
+
+$$
+|\psi\rangle=\sum_{s\in\Sigma}\sqrt{p_s}e^{-i\theta_s}|s\rangle,
+\qquad \langle\psi|\psi\rangle=1,\qquad
+[\psi]\in\mathbb{CP}^4.
+$$
+
+$|0\rangle$ 是范数一的空标签基向量，既不是零向量，也不是 §23.4 的零粒子 Fock 真空。共同相位只改变归一化代表，不改变射线。概率律没有独自规定这些相位或这一个复载体。
+
+在全正图上取
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi},\qquad
+R=\sqrt{p_0p_1p_3p_{13}},\qquad
+M=\psi_0\psi_{13}\overline{\psi_1}\,\overline{\psi_3}
+=Re^{-i\chi}.
+$$
+
+四个底面模式都参加 $M$；空模式的振幅不能省略。若乘积为零，仍使用多项式 $M$，不赋予 $\arg0$ 一个角。
+
+数学引文与完整商对应。[《辛预测完成》§35.3–35.5](SYMPLECTIC_PREDICTIVE_COMPLETION.md#353-五模式振幅局部原始形式与最小维数)使用完全相同的负相位、标签及概率坐标，射影直线面积取 $2\pi$，Hamilton 约定为 $\iota_{X_H}\Omega=dH$。其共同相位及占位相位作用在此合写为
+
+$$
+\theta_s\longmapsto\theta_s+\alpha+x_s\beta+y_s\gamma+z_s\eta,
+\qquad (\alpha,\beta,\gamma,\eta)\in(\mathbb R/2\pi\mathbb Z)^4.
+$$
+
+由 $Wd=0$，$\chi$ 在整个作用下不变。更强的整周期说明如下：取
+
+$$
+\alpha=-\theta_0,\quad
+\beta=\theta_0-\theta_1,\quad
+\gamma=\theta_0-\theta_3,\quad
+\eta=\theta_0-\theta_2
+\pmod{2\pi}.
+$$
+
+变换后的 $\theta_0,\theta_1,\theta_2,\theta_3$ 全为零，$\theta_{13}=\chi$。保持这四个零角的变换依次强制四个参数全为零模 $2\pi$，所以没有遗漏的有限剩余规范类；这不是仅由微分得到的商。与隐藏关系卷正相位记号的对应是 $\theta_s^{\rm old}=-\theta_s$、$\Phi^{\rm old}=-\chi$。
+
+令 $\vartheta_X=\theta_1-\theta_0$、$\vartheta_Y=\theta_3-\theta_0$、$\vartheta_Z=\theta_2-\theta_0$。消费上述辛形式的精确坐标式，
+
+$$
+\Omega=d\vartheta_X\wedge dX+d\vartheta_Y\wedge dY
++d\vartheta_Z\wedge dZ+d\chi\wedge d\kappa.
+$$
+
+也可由局部势 $\lambda=\sum_sp_s\,d\theta_s=d\theta_0+X\,d\vartheta_X+Y\,d\vartheta_Y+Z\,d\vartheta_Z+\kappa\,d\chi$ 取 $-d\lambda$ 读出该式。在含全正律的固定均值层，先限制 $X,Y,Z$，再商掉三个占位相位轨道，得到
+
+$$
+\Omega_{\rm red}=d\chi\wedge d\kappa.
+$$
+
+只固定均值而不取商时限制形式退化，不能称为这个二维辛空间。这里使用的是正部分圆柱；端点零支撑、稳定子和闭曲面的正则性仍按 §35.5 的条件处理。射影 Kähler 与 Schrödinger 的几何背景见 [Ashtekar–Schilling，Geometrical Formulation of Quantum Mechanics](https://arxiv.org/abs/gr-qc/9706069)及[既有文献条目](../../../Library/Geometry/ashtekar1997geometrical.md)；该背景不赋予 FIB 标签一个物理时钟。
+
+### 24.2 固定单系统通道的已有刚性及其量词
+
+**假设 24.2（严格的单系统保持与另供的双系统）。** 在同一个 $\mathcal H$ 上定义三个投影
+
+$$
+N_x=\operatorname{diag}(0,1,0,0,1),\quad
+N_y=\operatorname{diag}(0,0,0,1,1),\quad
+N_z=\operatorname{diag}(0,0,1,0,0).
+$$
+
+全输入单系统保持指一个固定、线性、同域 CPTP 通道 $\mathcal N$ 满足
+
+$$
+\operatorname{tr}(N_a\mathcal N(\rho))=\operatorname{tr}(N_a\rho)
+\quad\text{对每个密度态 }\rho\text{ 及 }a=x,y,z.
+$$
+
+数学引文与应用。[HiddenRelations 定理 C-29.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#29-同一五模式的全输入保真方形记录与稳定子块)已经给出更强的完整分类：在定义 24.1 的标签对应下，上述通道恰为
+
+$$
+\mathcal N(\rho)=\Gamma\circ\rho,\qquad
+\Gamma\succeq0,\quad\Gamma_{ss}=1.
+$$
+
+因而所有 $p_s$ 和 $\kappa$ 都保持；通道仍可消去相干性，不必是恒等通道。这里消费这个 Schur 分类，不另把“不能改变 $\kappa$”作为较弱的新分类。
+
+投影的核与像说明同一前提为何如此强。写 $\mathcal N(\rho)=\sum_\nu K_\nu\rho K_\nu^\dagger$。对任意占位投影 $P=N_a$，全输入条件等价于 $\sum_\nu K_\nu^\dagger P K_\nu=P$。若 $v\in\ker P$，则
+
+$$
+0=\sum_\nu\|PK_\nu v\|^2,
+$$
+
+所以每个 $K_\nu$ 保持 $\ker P$。迹保持还给 $\mathcal N^*(I-P)=I-P$；对 $v\in\operatorname{im}P=\ker(I-P)$ 同理得到 $K_\nu v\in\operatorname{im}P$。故所有 Kraus 算子同时保持三个投影的共同特征空间。五个联合特征标签 $v_s$ 互异，每个共同空间是一维，因而每个 $K_\nu$ 都在五标签基中对角。这正是原 Schur 分类的算子对应。
+
+下文另供两个可区分系统 $\mathcal H_1\otimes\mathcal H_2$；$|s,t\rangle$ 与 $|t,s\rangle$ 是不同基向量，除非 $s=t$。在涉及乘积输入的条目中，假定两个系统由两次独立准备得到相同的态，联合输入为 $\rho\otimes\rho$。这是准备资源的假设，不是从一份未知态克隆出另一份。双系统只要求保持总加和占位，不满足上述固定单系统通道的全输入合同。
+
+### 24.3 有序双系统交换、最小体积与 Fock 对应
+
+**定理 24.3（最小非平凡直方图交换的有序实现）。** 定义
+
+$$
+A=|0,13\rangle\langle1,3|+|13,0\rangle\langle3,1|,
+\qquad V=A+A^\dagger,
+$$
+
+$$
+Q_a=N_a\otimes I+I\otimes N_a\quad(a=x,y,z),\qquad
+\mathsf S|s,t\rangle=|t,s\rangle.
+$$
+
+则 $[Q_a,A]=[Q_a,V]=0$，且 $\mathsf S A\mathsf S=A$、$[\mathsf S,V]=0$。在质量与三占位加和均严格保持的同标签交换中，消去两侧相同副本后，非零直方图变化的每侧最小副本数为二，唯一无序二对二碰撞是
+
+$$
+\{0,13\}\longleftrightarrow\{1,3\}.
+$$
+
+证明。对任意有序基矩阵单位，
+
+$$
+[Q_a,|s,t\rangle\langle u,v|]
+=(a_s+a_t-a_u-a_v)|s,t\rangle\langle u,v|.
+$$
+
+$A$ 的两项均用同一列关系 $v_0+v_{13}=v_1+v_3$，故交换子为零；取伴随给 $V$ 的结论。交换两个系统将 $A$ 的第一项变成第二项，反之亦然，故得交换对称性。
+
+更一般地，设两个等长有序标签列表的直方图分别为 $h^+,h^-\in\mathbb N_0^5$，总质量及总占位相等。其差 $c=h^+-h^-$ 属于 $\ker_{\mathbb Z}W$，即 $c=kd$。逐标签取消共同副本后，剩余每侧体积为
+
+$$
+m(c)=\sum_s\max(c_s,0)
+=\sum_s\max(-c_s,0)=\frac12\sum_s|c_s|=2|k|.
+$$
+
+非零变化要求 $k\ne0$，所以 $m(c)\ge2$；等号时 $k=\pm1$，恰为所列四角碰撞。若只是排列同一直方图，$c=0$，即使有序态互异也不算非零交换体积。共同旁观副本同样不计入 $m(c)$。
+
+这个整数判据直接连接严格的算子守恒。对 $m$ 系统的总荷 $Q_a^{(m)}=\sum_jN_a^{(j)}$，任意算子 $K$ 满足
+
+$$
+\langle\mathbf s|[Q_a^{(m)},K]|\mathbf t\rangle
+=(q_a(\mathbf s)-q_a(\mathbf t))K_{\mathbf s\mathbf t},
+\qquad q_a(\mathbf s)=\sum_ja_{s_j}.
+$$
+
+因此 $[K,Q_a^{(m)}]=0$ 强制每个非零跃迁矩阵元两端的总荷相等。反向，一对总荷相等的列表所给的矩阵单位及其伴随都与荷交换。没有借用外部储库抵偿，也没有把“某个输入的期望相等”提升为这个全算子结论。$A$ 给出了达到二的具体实现。证毕。
+
+**命题 24.4（同荷空间的维数与归一化对称嵌入）。** $V$ 在有序空间的两个不相交二维块
+
+$$
+\mathcal B_1=\operatorname{span}\{|0,13\rangle,|1,3\rangle\},\qquad
+\mathcal B_2=\operatorname{span}\{|13,0\rangle,|3,1\rangle\}
+$$
+
+上各为 Pauli 矩阵 $\begin{pmatrix}0&1\\1&0\end{pmatrix}$，在其余二十一维上为零。总荷 $(1,1,0)$ 的有序空间为四维；在对称子空间中它为二维。$\operatorname{Sym}^2\mathbb C^5$ 的十五个直方图基具有十四个不同总荷，除该二维块外，其余荷块均一维。
+
+证明。$A$ 从每块的第二基向量送到第一基向量，$A^\dagger$ 反向，二者消去其余基向量，得块形式。十五个无序对与总荷的完整对应为
+
+$$
+\begin{array}{c|ccccc}
+\text{对}&00&01&02&03&0\,13\\\hline
+\text{荷}&(0,0,0)&(1,0,0)&(0,0,1)&(0,1,0)&(1,1,0)
+\end{array}
+$$
+
+$$
+\begin{array}{c|ccccc}
+\text{对}&11&12&1\,3&1\,13&22\\\hline
+\text{荷}&(2,0,0)&(1,0,1)&(1,1,0)&(2,1,0)&(0,0,2)
+\end{array}
+$$
+
+$$
+\begin{array}{c|ccccc}
+\text{对}&23&2\,13&33&3\,13&13\,13\\\hline
+\text{荷}&(0,1,1)&(1,1,1)&(0,2,0)&(1,2,0)&(2,2,0).
+\end{array}
+$$
+
+唯一重复是 $0\,13$ 与 $1\,3$。有序空间保留各自的两个顺序，所以此荷空间维数为四；其他含不同标签的无序对在有序空间也各有两个顺序，不能把“其余一维”套在整个有序空间上。
+
+与 §23.4 的 Fock 算子比较，令 $\mathcal H_2=\operatorname{Sym}^2\mathbb C^5$ 使用该节归一化占位基，并定义等距嵌入 $J_2:\mathcal H_2\to\mathcal H\otimes\mathcal H$：
+
+$$
+J_2|2e_s\rangle=|s,s\rangle,\qquad
+J_2|e_s+e_t\rangle=\frac{|s,t\rangle+|t,s\rangle}{\sqrt2}\quad(s\ne t).
+$$
+
+其像是 $\mathsf S=+1$ 的扇区。对于该节的 $B=a_0^\dagger a_{13}^\dagger a_1a_3$，两个湮灭与两个产生的系数在唯一可动基 $|e_1+e_3\rangle$ 上均为一，因此
+
+$$
+BJ_2^\dagger\frac{|1,3\rangle+|3,1\rangle}{\sqrt2}
+=|e_0+e_{13}\rangle,
+\qquad J_2^\dagger A J_2=B|_{\mathcal H_2},
+$$
+
+$$
+J_2^\dagger VJ_2=(B+B^\dagger)|_{\mathcal H_2}.
+$$
+
+最后两式也在其余基向量上成立，因为两边均消去它们。§23 的正算子则是
+
+$$
+\widehat H_2=(n_1n_3+n_0n_{13})|_{\mathcal H_2}
+-(B+B^\dagger)|_{\mathcal H_2}.
+$$
+
+在这唯一活动二维对称块内它为 $I-\sigma_x$，不是 $\sigma_x$：既有对角项，又有相反的交换符号。反对称向量 $|s,t\rangle_-=(|s,t\rangle-|t,s\rangle)/\sqrt2$ 还满足 $A|1,3\rangle_-=|0,13\rangle_-$，所以有序 $V$ 在反对称活动块也有一次 $\sigma_x$，这部分没有包含在 $J_2$ 中。以上是明示子空间上的算子比较，不是把可区分的两个系统宣告成物理玻色子。证毕。
+
+### 24.4 独立同态准备后的精确双系统概率律
+
+**定理 24.5（负相位约定下的有限交换）。** 设初态为两次独立准备的 $|\psi\rangle\otimes|\psi\rangle$，并令
+
+$$
+U(u)=e^{-iuV},\qquad u\in\mathbb R,
+\qquad a=\psi_0\psi_{13},\quad b=\psi_1\psi_3,
+\qquad \Delta=|a|^2-|b|^2=p_0p_{13}-p_1p_3.
+$$
+
+两个约化态相同；它们在标签基中的概率均为
+
+$$
+p'=p+\delta\kappa\,d,\qquad
+\delta\kappa=-\Delta\sin^2u+\operatorname{Im}(\overline a b)\sin2u.
+$$
+
+当四底角概率均正时，等价写为
+
+$$
+\delta\kappa=-\bigl((1-Z)\kappa-XY\bigr)\sin^2u
++R\sin\chi\sin2u.
+$$
+
+所有 $u$ 都精确保留每个边缘的 $X,Y,Z$；归一化和非负性成立，包括零振幅边界。
+
+证明。每个活动块上 $V^2=I$，故指数是 $I\cos u-iV\sin u$。初始两块的振幅列均为 $(a,b)^{\mathsf T}$，所以两块分别变成
+
+$$
+a'=a\cos u-ib\sin u,\qquad b'=b\cos u-ia\sin u.
+$$
+
+其余二十一个有序基振幅不变。这一陈述针对振幅；活动项与非活动项之间的密度矩阵交叉元一般会变化，不能据此说所有其他联合矩阵元不变。直接展开得到
+
+$$
+\begin{aligned}
+|a'|^2&=|a|^2\cos^2u+|b|^2\sin^2u
++2\cos u\sin u\,\operatorname{Im}(\overline a b),\\
+|b'|^2&=|b|^2\cos^2u+|a|^2\sin^2u
+-2\cos u\sin u\,\operatorname{Im}(\overline a b).
+\end{aligned}
+$$
+
+例如第一式的交叉项为 $2\operatorname{Re}(-i\overline a b)\cos u\sin u$，其符号是正的虚部。负相位约定给
+
+$$
+\overline a b=\overline M=Re^{i\chi},\qquad
+\operatorname{Im}(\overline a b)=R\sin\chi.
+$$
+
+第一边缘的 $p_0$ 只有列 $(0,13)$ 的概率变化，增加 $|a'|^2-|a|^2$；$p_{13}$ 从 $(13,0)$ 增加同样的量。$p_1,p_3$ 分别从 $(1,3),(3,1)$ 减少此量，$p_2$ 不动。这正是所述 $d$ 方向，没有因两个有序块而再给单个边缘乘二。初态及 $U$ 都与系统交换相容，终态保持交换对称，故两边缘相同；也可逐列作同样求和得到第二边缘的式子。
+
+将定义 24.1 的概率反演代入，
+
+$$
+\begin{aligned}
+\Delta&=\kappa(1-X-Y-Z+\kappa)-(X-\kappa)(Y-\kappa)\\
+&=(1-Z)\kappa-XY.
+\end{aligned}
+$$
+
+由 $Wd=0$，更新保持质量及三个均值。更直接地，$U$ 幺正，联合密度态正且迹一，偏迹仍正且迹一，所以每个 $p_s'$ 非负，$\kappa'$ 仍在同一可行闭区间。使用 $\operatorname{Im}(\overline a b)$ 的式子不需要相位存在，故包含所有边界。证毕。
+
+任意双系统输入都因 $[U,Q_a]=0$ 保持总占位；每个边缘各自保持则在本定理中使用了相同准备与交换对称性。对任意不对称输入，不能从总量保持推出两边各自保持。
+
+### 24.5 相同概率的不同响应、关系读出与乘积边界
+
+**命题 24.6（关系相位的响应与两个荷相容读数）。** 对初始均匀概率 $p_s=1/5$，有 $\Delta=0$、$R=1/25$。若 $\chi=0$，定理 24.5 给所有 $u$ 的 $\kappa'=1/5$；若 $\chi=\pi/2$，则
+
+$$
+\kappa'=\frac15+\frac1{25}\sin2u.
+$$
+
+两份准备的完整经典概率相同，有限交换响应却可不同。定义 Hermitian 算子
+
+$$
+O_c=A+A^\dagger=V,\qquad O_s=-i(A-A^\dagger).
+$$
+
+二者都与每个 $Q_a$ 交换。在实际初始乘积 $|\psi\rangle^{\otimes2}$ 上，
+
+$$
+\langle O_c\rangle=4R\cos\chi,\qquad
+\langle O_s\rangle=4R\sin\chi.
+$$
+
+已知 $R>0$ 时，这两个期望确定 $\chi\bmod2\pi$。在 $V$ 运动下，$O_c$ 是动力学常量，$O_s$ 一般不是。
+
+证明。均匀律有 $p_0p_{13}=p_1p_3=1/25$，故直接代入精确概率律得到两种响应。例如取其他角全零、$\theta_{13}=\pi/2$ 可实现第二种准备；$u=\pi/4$ 时两种 $\kappa'$ 分别为 $1/5$ 和 $6/25$。
+
+对任意实际乘积输入，两个有序矩阵单位各贡献 $\overline a b$，所以
+
+$$
+\langle A\rangle=2\overline a b=2Re^{i\chi}.
+$$
+
+取实部与虚部给两个因子为四的期望。$[Q_a,A]=0$ 及伴随关系证明两读数都与荷相容。令
+
+$$
+P_a=AA^\dagger=|0,13\rangle\langle0,13|+|13,0\rangle\langle13,0|,
+$$
+
+$$
+P_b=A^\dagger A=|1,3\rangle\langle1,3|+|3,1\rangle\langle3,1|.
+$$
+
+由于 $A^2=(A^\dagger)^2=0$，
+
+$$
+[V,O_c]=0,\qquad [V,O_s]=2i(P_a-P_b)\ne0.
+$$
+
+在参数 $u$ 下，Heisenberg 期望导数为 $d\langle O_s\rangle/du=i\langle[V,O_s]\rangle=-2\langle P_a-P_b\rangle$，初始值为 $-4\Delta$。因此与占位荷交换不等于沿交换运动保持。两象限读数本身也不对易；相位重构指分别在相同准备的样本上取得两个期望，并非一次同时尖锐测得它们。证毕。
+
+单系统上若一个读出效果 $E$ 与 $N_x,N_y,N_z$ 全交换，则对 $s\ne t$ 选一个区分 $v_s,v_t$ 的占位，有 $(a_s-a_t)E_{st}=0$，从而 $E$ 对角。其期望只有 $\sum_sE_{ss}p_s$，不能区别上述同概率的两种相位。这一限制属于没有另供相位或荷参照、且读出效果保持这三个占位对称性的接口；它不排除另供参照后的单系统相干读出，也不是一般测量样本复杂度下界。$R=0$ 时两个乘积期望均为零，不能由它们识别一个本来就未定义的四角相位。
+
+**命题 24.7（四次 Hamilton 函数的初始联系及边缘混合）。** 对常数 $g$，取双系统 Hamiltonian $H_2=gV$，从相同独立纯准备开始，令 $u=g\tau$。则
+
+$$
+\frac12\langle\psi\otimes\psi|H_2|\psi\otimes\psi\rangle
+=2gR\cos\chi,
+\qquad
+\left.\frac{d\kappa'}{d\tau}\right|_{\tau=0}=2gR\sin\chi.
+$$
+
+这分别等于[《辛预测完成》命题 35.9](SYMPLECTIC_PREDICTIVE_COMPLETION.md#359-四次相互作用与同均值概率交换)的 $H_{\rm int}$ 及其初始 $\dot\kappa$，其中 $g_0=g$，同一 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$，同一 $R$、$\chi$ 和辛尺度。它不意味着精确双系统演化始终沿该纯态非线性乘积轨道。
+
+证明。命题 24.6 给 $\langle H_2\rangle=4gR\cos\chi$，除以系统数二即得第一式。定理 24.5 中 $\sin^2u$ 在零点导数为零，$\sin2u$ 导数为二，链式法则给第二式。已有纯态 Hamilton 方程按 $\Omega_{\rm red}=d\chi\wedge d\kappa$ 为 $\dot\kappa=-\partial_\chi H_{\rm int}=2gR\sin\chi$，故符号和因子一致。
+
+乘积不闭合可由一个精确输入看出。取 $|\psi\rangle=(|0\rangle+|13\rangle)/\sqrt2$，在 $u=\pi/2$ 时联合态为
+
+$$
+|\Psi'\rangle=\frac12\bigl(|0,0\rangle+|13,13\rangle
+-i|1,3\rangle-i|3,1\rangle\bigr).
+$$
+
+四项的第二系统标签两两不同，故偏迹消去全部交叉项，得到
+
+$$
+\rho_1'=\rho_2'
+=\frac14\bigl(|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|\bigr).
+$$
+
+它有四个特征值 $1/4$ 和一个零特征值，不是纯态；联合纯态也不是两个边缘的乘积。概率坐标仍满足定理 24.5，但不能给这个混合边缘任意填回一组纯态角，再继续冒充原联合幺正轨迹。证毕。
+
+对于已独立供应两份同态输入的准备族，可定义边缘更新
+
+$$
+\mathcal F_u(\rho)=\operatorname{Tr}_2\bigl(U(u)(\rho\otimes\rho)U(u)^\dagger\bigr).
+$$
+
+这是对输入 $\rho$ 的非线性使用，不是一个未知单系统上的固定 CPTP 通道。例如在 $u=\pi/2$，$\rho_0=|0\rangle\langle0|$ 与 $\rho_{13}=|13\rangle\langle13|$ 各自固定，而 $\rho=(\rho_0+\rho_{13})/2$ 的乘积输入含两个活动对角格，各质量 $1/4$；更新后 $p_{13}'=1/4$，不同于 $\bigl(\mathcal F_u(\rho_0)+\mathcal F_u(\rho_{13})\bigr)/2$ 的 $p_{13}=1/2$。非仿射性来自另供第二份同态准备；它没有违反定义 24.2 所消费的单系统刚性，也没有构造克隆过程。上述载体与算子均为所声明的数学模型，不供给原生读者端口或器件实现。
+
+### 24.6 对角输入、舍弃联合态与独立重配对
+
+**定理 24.8（明确重配对合同下的仿射松弛）。** 令 $\rho_p=\sum_sp_s|s\rangle\langle s|$。每轮先独立准备 $\rho_p\otimes\rho_p$，执行 $U(\pi/2)$，保留其一个边缘作为下一轮的概率规格，舍弃原联合态及其配对记录；下一轮重新独立准备该边缘律的两份输入。则固定均值纤维上的轮间更新为
+
+$$
+\kappa'=\kappa-\Delta=Z\kappa+XY,\qquad
+\Delta=(1-Z)\kappa-XY.
+$$
+
+若 $0\le Z<1$，令 $\kappa_*=XY/(1-Z)$，则
+
+$$
+\Delta'=Z\Delta,\qquad
+\kappa_n-\kappa_*=Z^n(\kappa_0-\kappa_*).
+$$
+
+$Z=0$ 时一步到固定点；$0<Z<1$ 时该仿射映射在其像上可逆。$Z=1$ 时唯一可行律是 $p_2=1$，$X=Y=\kappa=0$，不使用含 $1-Z$ 分母的公式。
+
+证明。对角乘积输入在每个活动块的两格质量为 $|a|^2=p_0p_{13}$ 和 $|b|^2=p_1p_3$，没有非对角干涉项。$U(\pi/2)=-i\sigma_x$ 在块内交换这两格，在块外恒等；故联合输出仍对角，第一边缘的 $0,13$ 各增加 $p_1p_3-p_0p_{13}=-\Delta$，$1,3$ 各减少该量，$2$ 不变。第二边缘相同。代入 $\Delta=(1-Z)\kappa-XY$ 即得仿射式。
+
+固定点在可行区间内可由一份完整概率构造证明。记 $q=1-Z>0$，因 $0\le X,Y\le q$，取
+
+$$
+\begin{aligned}
+p_0^*&=\frac{(q-X)(q-Y)}q,&
+p_1^*&=\frac{X(q-Y)}q,\\
+p_3^*&=\frac{(q-X)Y}q,&
+p_{13}^*&=\frac{XY}q,&p_2^*&=Z.
+\end{aligned}
+$$
+
+这些数非负，四底角总和为 $q$，均值恰为 $X,Y$。条件于非中位的底面后，低、高占位是参数 $X/q,Y/q$ 的两个独立 Bernoulli 变量。由此 $\kappa_*$ 合法，并且
+
+$$
+\kappa'=Z\kappa+(1-Z)\kappa_*
+$$
+
+是两个可行纤维点的凸组合，故每轮仍合法。相减得到 $\kappa'-\kappa_*=Z(\kappa-\kappa_*)$，迭代归纳给第 $n$ 轮公式，再乘 $1-Z$ 给 $\Delta'=Z\Delta$。
+
+若 $Z=0$，首轮已是 $\kappa_*$，以后不动。若 $0<Z<1$，斜率为正，且在更新像中
+
+$$
+\kappa=\frac{\kappa'-XY}{Z}.
+$$
+
+所以纤维距离收缩不等于这个一维映射不可逆；它一般不是映满原可行区间的自同构。若 $Z=1$，其他四个概率因非负及归一化全为零，给所列唯一点和恒等更新。证毕。
+
+这里被舍弃的是联合信息，下一轮的独立性是新准备条件。一般联合输出 $\rho_{12}'$ 不等于 $\rho_p'\otimes\rho_p'$；直接再用同一对系统作第二次 $U(\pi/2)$ 会返回原对角联合律，因为两个交换相继还原格位置，而不是再应用上述收缩。故 $Z^n$ 的衰减不是闭合幺正双系统的衰减，也不是无代价地把两个相关输出宣布为独立。中模式没有被 $V$ 交换，但其质量 $Z$ 通过 $\Delta$ 的纤维斜率决定这份重配对合同的收缩因子。此合同中的新准备资源不属于定理 24.3 的无储库闭合交换段。
+
+### 24.7 校准相位速度、阶数区别与局域参数不变性
+
+**定理 24.9（对角相位漂移与交换相容条件）。** 给定实五标签函数 $f$，令
+
+$$
+F=\operatorname{diag}(f_0,f_1,f_2,f_3,f_{13}),\qquad
+D_f=F\otimes I+I\otimes F,\qquad
+J_f=f_0-f_1-f_3+f_{13}.
+$$
+
+若 $f_s$ 是一段已校准局域参数 $\tau$ 上的相位速度，则单系统纯对角演化取 $\dot\theta_s=f_s$。已有[辛完成命题 35.8](SYMPLECTIC_PREDICTIVE_COMPLETION.md#358-同一目标缺口的相位读法)在本标签下给
+
+$$
+\frac{d}{d\kappa}\mathbb E_{p_\kappa}f=J_f,\qquad \dot\chi=J_f.
+$$
+
+它的具体消费为
+
+$$
+\mathbb E_{p_\kappa}f=f_0+(f_1-f_0)X+(f_3-f_0)Y+(f_2-f_0)Z+J_f\kappa,
+$$
+
+以及 $\dot\theta_0-\dot\theta_1-\dot\theta_3+\dot\theta_{13}=J_f$。在双系统上对应的交换子为
+
+$$
+[D_f,A]=J_fA,\qquad [D_f,A^\dagger]=-J_fA^\dagger,
+\qquad [D_f,V]=J_f(A-A^\dagger).
+$$
+
+因此 $D_f$ 与 $V$ 交换恰当且仅当 $J_f=0$。
+
+证明。$D_f$ 在 $|s,t\rangle$ 上的特征值为 $f_s+f_t$。$A$ 的每个矩阵单位都从特征值 $f_1+f_3$ 送到 $f_0+f_{13}$，差为 $J_f$，给第一式；取伴随并用 $D_f$ 自伴给第二式；相加得第三式。$A-A^\dagger$ 在活动块不为零，所以最后的充要条件成立。静态导数则由已给仿射反演精确消费，需在固定 $X,Y,Z$ 下取。证毕。
+
+例如 $f=(0,2,3,5,7)$ 有 $J_f=0$，但逐标签平方 $f^2=(0,4,9,25,49)$ 有 $J_{f^2}=20$。这分别是既有数量均值 $2X+5Y+3Z$ 与平方矩 $4X+25Y+9Z+20\kappa$ 的相位对应。因此守住一阶数量关系不自动守住逐系统平方数量之和。
+
+逐系统平方和必须与总量的平方区别：
+
+$$
+D_{f^2}=F^2\otimes I+I\otimes F^2,\qquad
+(D_f)^2=D_{f^2}+2F\otimes F.
+$$
+
+若 $[D_f,V]=0$，则对每个整数 $j\ge0$ 都有 $[(D_f)^j,V]=0$，由逐次移过乘积即可证明。上例的两端数量列表是 $(0,7)$ 和 $(2,5)$，总量都为七，总量平方都为四十九；逐系统平方和却分别为四十九、二十九，交叉项分别为零、二十。故 $J_{f^2}=20$ 不表示一个守恒总量的平方遭破坏。
+
+**定理 24.10（固定交换段的积分钟与重参数化）。** 给同一双系统、同一实际配对、指定的局域参数区间 $[\tau_0,\tau_1]$ 及固定算子 $V$。设 $g$ 为该区间上的实可积函数，Hamiltonian 为 $H(\tau)=g(\tau)V$，定义
+
+$$
+u(\tau)=\int_{\tau_0}^{\tau}g(s)\,ds,\qquad
+U(\tau,\tau_0)=e^{-iu(\tau)V}.
+$$
+
+这里的 $u$ 就是定理 24.5 的交换参数。若 $\widetilde\tau=h(\tau)$ 是严格递增的 $C^1$ 重参数化，$h'>0$，并令
+
+$$
+\widetilde g(h(\tau))=\frac{g(\tau)}{h'(\tau)},
+$$
+
+则相应积分、传播算子及每个给定事件的概率不变。
+
+证明。任意两时刻 $[g(s)V,g(t)V]=0$，$u$ 绝对连续且 $\dot u=g$ 几乎处处。有限维矩阵指数链式法则给 $\dot U=-ig(\tau)VU$ 几乎处处及 $U(\tau_0,\tau_0)=I$，所以它解该积分形式的 Schrödinger 方程。也可将任意另一解左乘 $e^{iu V}$，导数为零，得相同解。
+
+对同一端点作变量代换，
+
+$$
+\int_{h(\tau_0)}^{h(\tau)}\widetilde g(t)\,dt
+=\int_{\tau_0}^{\tau}\frac{g(s)}{h'(s)}h'(s)\,ds
+=\int_{\tau_0}^{\tau}g(s)\,ds.
+$$
+
+故两种坐标给同一个 $U$。对于固定联合初态 $\rho_{12}$ 和事件效果 $0\le E\le I$，其概率
+
+$$
+\operatorname{tr}\bigl(EU\rho_{12}U^\dagger\bigr)
+$$
+
+完全相同。这里不需要乘积输入；乘积假设只用于前面的显式边缘公式。证毕。
+
+这一积分钟结论要求运动方向是固定的 $V$。若实际 Hamiltonian 还含 $D_f+g(\tau)V$，则不能直接丢去 $D_f$。当 $J_f=0$ 时两部分交换，常 $f$ 的传播子才可分为 $e^{-i(\tau-\tau_0)D_f}e^{-iu V}$；若 $J_f\ne0$，相互作用绘景中的交换为
+
+$$
+e^{itD_f}Ae^{-itD_f}=e^{itJ_f}A,\qquad
+V_I(t)=e^{itJ_f}A+e^{-itJ_f}A^\dagger,
+$$
+
+方向随 $t$ 变动，不能继续套用裸的 $e^{-iu V}$。即使 $g$ 常数而总 Hamiltonian 为常矩阵，也应指数化整个 $D_f+gV$，不能将不对易的两项拆开。一般时变 $f$ 的同一重参数化必须同时令 $\widetilde f_s(h(\tau))=f_s(\tau)/h'(\tau)$，从而整体 $\widetilde H(h(\tau))=H(\tau)/h'(\tau)$；只改 $g$ 而保留未变换的相位速度不是同一历史。
+
+局域参数在本定义中标记一个已经配对、校准的相互作用段及其实际事件。$h$ 只重标这段历史，保留联合准备、端点和事件对应；它不提供远处系统间的瞬时耦合，不建立全局公共时钟，也不替代因果传播条件。负的 $g$ 或变号的 $g$ 允许 $u$ 倒行或回转，所以“积分钟”指累计交换参数，不额外声称它严格单调。
+
+### 24.8 任意长度合法路径、整数 trade 与严格交换成本
+
+**定义 24.11（关系矩、整数直方图及无储库合同）。** 给整数 $n\ge1$，令
+
+$$
+\Gamma_n=\{I\subseteq[n]:\text{不存在 }j\text{ 使 }j,j+1\in I\}.
+$$
+
+它是包含空集的向下闭合集族。对概率律 $(p_I)_{I\in\Gamma_n}$，定义
+
+$$
+\mu_S=\sum_{I\in\Gamma_n,\ I\supseteq S}p_I,\qquad \mu_\varnothing=1.
+$$
+
+非法 $S$ 的矩恒为零。两个相同长度的合法标签列表具有整数直方图差 $c=(c_I)_{I\in\Gamma_n}$；约定正系数为输出增加，负系数为输入减少。固定整数 $r\ge0$，保持直到 $r$ 阶指
+
+$$
+\sum_{I\in\Gamma_n,\ I\supseteq S}c_I=0
+\quad\text{对所有 }S\subseteq[n],\ |S|\le r.
+$$
+
+其中 $S=\varnothing$ 就是质量条件。定义取消共同副本后的体积
+
+$$
+m(c)=\sum_I(c_I)_+=\sum_I(-c_I)_+
+=\frac12\|c\|_1,\qquad (a)_+=\max(a,0).
+$$
+
+系数允许任意整数，所以同一合法标签可在列表中重复；排列变化和共同旁观副本均不增加 $m(c)$。
+
+严格算子合同是在 $m$ 个可区分系统的空间 $(\mathbb C^{\Gamma_n})^{\otimes m}$ 上，使用关系投影与总荷
+
+$$
+N_S=\sum_{I\supseteq S}|I\rangle\langle I|,\qquad
+Q_S^{(m)}=\sum_{j=1}^mN_S^{(j)}.
+$$
+
+没有外部储库、额外标签或另一个未计入的自由度抵偿荷。所讨论的 Hamiltonian 或幺正算子须与每个指定 $Q_S^{(m)}$ 交换。因此其每个非零有序矩阵元连接的两个列表具有相同的这些总荷；证明是定理 24.3 的矩阵元交换子式，将 $a_I$ 换成 $\mathbf1_{S\subseteq I}$。这才把整数直方图条件接到全输入的严格加和守恒；仅有某个输入的总期望相等不足以调用它，也不在此把它推广为任意 CPTP 期望保持通道的分类。
+
+数学引文与相位对应。[辛完成定义 35.12、命题 35.13](SYMPLECTIC_PREDICTIVE_COMPLETION.md#3513-长路径关系矩与共轭差分相位)使用同一 $\Gamma_n$、同一矩 $\mu_S$ 及负相位 $\psi_I=\sqrt{p_I}e^{-i\theta_I}$，供应
+
+$$
+p_I=\sum_{T\in\Gamma_n,\ T\supseteq I}(-1)^{|T|-|I|}\mu_T,
+\qquad
+D_T(I)=(-1)^{|T|-|I|}\mathbf1_{I\subseteq T},
+$$
+
+$$
+\Phi_T=\sum_{I\subseteq T}(-1)^{|T|-|I|}\theta_I,
+\qquad
+\theta_I=\sum_{T\subseteq I}\Phi_T\pmod{2\pi}.
+$$
+
+这里 $D_T$ 是第 $T$ 个矩坐标的反演列；正逆整数三角矩阵均对角为一，所以相位变换在完整周期环面互逆。以射影直线面积 $2\pi$ 和 $\iota_{X_H}\Omega=dH$ 为同一尺度，直接代入得到
+
+$$
+\lambda=\sum_Ip_I\,d\theta_I=\sum_T\mu_T\,d\Phi_T,
+\qquad
+\Omega=\sum_{\varnothing\ne T\in\Gamma_n}d\Phi_T\wedge d\mu_T.
+$$
+
+共同相位只对应 $\Phi_\varnothing$，其矩 $\mu_\varnothing=1$ 已归一化。在全正概率图上，固定合法低阶矩后，仍须除去相应的非空低阶相位平移，才得到高阶 $(\mu_T,\Phi_T)$ 的辛配对。该引用不把整个 $\Gamma_n$ 当成 Boolean 格；它使用的是每个合法 $T$ 的全体子集构成的 Boolean 区间。
+
+**定理 24.12（FIB 支撑上的锐最小交换体积）。** 在定义 24.11 的整数合同中，若 $c\ne0$ 保持直到 $r$ 阶，则
+
+$$
+\|c\|_1\ge2^{r+1},\qquad m(c)\ge2^r.
+$$
+
+存在这样的非零 $c$ 当且仅当 $r<\lceil n/2\rceil$；在此范围内下界可达到。若 $r\ge\lceil n/2\rceil$，不存在非零合法直方图交换。
+
+证明。先在任意有限坐标集 $E$ 的整个 Boolean 立方体上证明整数界：设 $c:2^E\to\mathbb Z$ 非零，且对所有 $|S|\le r$ 有 $\sum_{I\supseteq S}c_I=0$。对 $r$ 归纳，命题同时量化所有有限 $E$。
+
+当 $r=0$，总和为零且 $c$ 非零，必有一个正整数系数和一个负整数系数。因此正质量、负质量各至少一，$\|c\|_1\ge2$。若 $E$ 为空，此前提本就不可能成立，不需添一个例外解。
+
+现设 $r\ge1$，并已知所有坐标集上的 $r-1$ 阶结论。质量零保证支撑至少含两个不同集合 $I_0,I_1$，选一个区分它们的坐标 $j\in I_0\mathbin\triangle I_1$。在 $E'=E\setminus\{j\}$ 上定义两片
+
+$$
+c^{(0)}_B=c_B,\qquad c^{(1)}_B=c_{B\cup\{j\}},\qquad B\subseteq E'.
+$$
+
+所选两个非零支撑分处两片，所以每片都是非零整数函数。对任何 $S\subseteq E'$、$|S|\le r-1$，有
+
+$$
+\sum_{B\supseteq S}c^{(1)}_B
+=\sum_{I\supseteq S\cup\{j\}}c_I=0,
+$$
+
+$$
+\sum_{B\supseteq S}c^{(0)}_B
+=\sum_{I\supseteq S}c_I-
+\sum_{I\supseteq S\cup\{j\}}c_I=0.
+$$
+
+第一式使用 $|S\cup\{j\}|\le r$，第二式再使用原来的 $S$ 矩。故两片各满足归纳前提，各自 $\ell^1$ 范数至少 $2^r$。两片分割全部系数，得到
+
+$$
+\|c\|_1=\|c^{(0)}\|_1+\|c^{(1)}\|_1\ge2^{r+1}.
+$$
+
+这个证明不假定切片仍是某个路径的独立集族。回到 FIB 情形，将每个非法字 $I\notin\Gamma_n$ 的系数明确延拓为零。合法 $S$ 的矩条件就是原条件；非法 $S$ 不可能包含于任何合法 $I$，所以其矩也是零。于是整个 Boolean 立方体满足刚证明的假设，范数不变，整数界随即成立。整数性不能删掉：实数倍缩小一个非零方向会任意缩小范数。
+
+为证明达到，令 $r<\lceil n/2\rceil$，取合法集合
+
+$$
+T=\{1,3,\ldots,2r+1\},\qquad |T|=r+1.
+$$
+
+这个范围保证 $2r+1\le n$；其所有子集均合法。使用已有 Möbius 反演列 $D_T$，对任意 $S\subseteq[n]$，若 $S\not\subseteq T$ 则其 $S$ 矩为零；若 $S\subseteq T$，则
+
+$$
+\begin{aligned}
+\sum_{I\supseteq S}D_T(I)
+&=\sum_{S\subseteq I\subseteq T}(-1)^{|T|-|I|}\\
+&=(-1)^{|T|-|S|}\sum_{J\subseteq T\setminus S}(-1)^{|J|}
+=\begin{cases}1,&S=T,\\0,&S\ne T.\end{cases}
+\end{aligned}
+$$
+
+末式在 $S\ne T$ 时由任取 $j\in T\setminus S$、配对 $J$ 与 $J\mathbin\triangle\{j\}$ 消去得到。因此全部 $|S|\le r$ 的矩为零。任取 $j\in T$，在 $T$ 的子集中切换 $j$ 会翻转 $D_T$ 的符号，故正负各有 $2^r$ 个系数，每个绝对值一，得到 $m(D_T)=2^r$。
+
+最后，合法集合最大阶数为 $\alpha=\lceil n/2\rceil$：把路径按相邻两点分组，每组至多选一点，奇数长度再容许末点，给上界；奇数位置集合达到该界。若 $r\ge\alpha$，则所有合法矩，包括质量，全都固定。将原反演应用于有符号数组，写 $m_S(c)=\sum_{I\supseteq S}c_I$，便有
+
+$$
+c_I=\sum_{T\supseteq I}(-1)^{|T|-|I|}m_T(c)=0.
+$$
+
+所以非零 $c$ 不存在，完成充要条件。证毕。
+
+本定理中使用的整个 Boolean 立方体整数下界是既有 $[t]$-trade 结果。[Ghorbani–Kamali–Khosrovshahi–Krotov，On the volumes and affine types of trades，arXiv:1810.02296v2](https://arxiv.org/abs/1810.02296v2) 的 §2.1 将 trade 写成整数函数 $\sum_X\tau_XX$，正负系数分别为两侧块的重数，并要求式 (2) 的 $\sum_{X\supseteq S}\tau_X=0$。精确对应为 $E=V_{\rm lit}$、$c_I=\tau_I$、$r=t$、$m(c)=\operatorname{vol}(T_{\rm lit})$。原文 §3 的 Lemma 3 陈述 unitrade 的界并紧接说明 trade 同界；Lemma 4 明述非空 $[t]$-trade 的最小体积 $2^t$ 及极小结构。整数权重、重复块和一般体积界均不是这里新增的扩展。上述归纳作为当前守恒成本推导中的完整中间证明，另将非法字零延拓、合法 $T$ 的达到构造和路径最大阶数接到本章的算子合同。
+
+### 24.9 单独一个高阶矩的交换及显式达到算子
+
+**定理 24.13（孤立关系矩的唯一方向与有序实现）。** 固定合法 $T\in\Gamma_n$，$k=|T|\ge2$。若整数直方图差 $c\ne0$ 保持所有其他合法矩，包括质量，并且只允许 $\mu_T$ 改变，则存在唯一非零整数 $a$ 使
+
+$$
+c=aD_T,\qquad m(c)=|a|2^{k-1}.
+$$
+
+最小体积 $2^{k-1}$ 可由 $m=2^{k-1}$ 个可区分系统上的一个显式 Hermitian 矩阵实现，并严格保持所有 $S\ne T$ 的总关系荷。
+
+证明。设 $m_S(c)=0$ 对每个合法 $S\ne T$ 成立，令 $a=m_T(c)$。矩是整数系数的和，故 $a\in\mathbb Z$。消费定义 24.11 的 Möbius 反演得到
+
+$$
+c_I=\sum_{S\supseteq I}(-1)^{|S|-|I|}m_S(c)
+=a(-1)^{|T|-|I|}\mathbf1_{I\subseteq T}=aD_T(I).
+$$
+
+若 $a=0$ 则所有 $c_I=0$，矛盾；反演也给唯一性。定理 24.12 证明中的矩计算表明 $m_S(D_T)=\mathbf1_{S=T}$，因而 $D_T$ 确实保持所有其他矩，不仅仅保持比 $k$ 小的那些矩。切换一个 $T$ 内坐标给正负各 $2^{k-1}$ 项，故体积公式成立。
+
+为具体达到，按任意固定顺序列出 $D_T=+1$ 的全部子集 $I_1^+,\ldots,I_m^+$，以及 $D_T=-1$ 的全部子集 $I_1^-,\ldots,I_m^-$，定义两个有序正交标签态
+
+$$
+|\mathbf I_+\rangle=|I_1^+,\ldots,I_m^+\rangle,\qquad
+|\mathbf I_-\rangle=|I_1^-,\ldots,I_m^-\rangle,
+$$
+
+$$
+A_T=|\mathbf I_+\rangle\langle\mathbf I_-|,\qquad
+H_T=A_T+A_T^\dagger.
+$$
+
+两个列表没有共同标签；其直方图差恰为 $D_T$。对任意合法 $S$，对应总荷本征值之差为
+
+$$
+q_S(\mathbf I_+)-q_S(\mathbf I_-)
+=\sum_{I\supseteq S}D_T(I)=\mathbf1_{S=T}.
+$$
+
+故
+
+$$
+[Q_S^{(m)},A_T]=\mathbf1_{S=T}A_T,\qquad
+[Q_S^{(m)},H_T]=0\quad(S\ne T).
+$$
+
+$S=T$ 时交换子为 $A_T-A_T^\dagger\ne0$，所以算子确有改变该目标的能力。在这两个列表张成的二维空间，$H_T=\sigma_x$；在正交补上为零，因而
+
+$$
+e^{-iuH_T}|\mathbf I_-\rangle
+=\cos u\,|\mathbf I_-\rangle-i\sin u\,|\mathbf I_+\rangle.
+$$
+
+初态为确定的负侧列表时，目标总矩期望增加 $\sin^2u$，其他总矩严格不变；在 $u=\pi/2$ 完全交换到正侧列表。这直接实现了体积下界，不需要储库，也不要求每个系统采用相同的输入态。整数 $a>0$ 可把每个侧标签重复 $a$ 次作同一构造；$a<0$ 则互换两侧，给一般体积的实现。证毕。
+
+**命题 24.14（三阶实例及相位单项式的精确方向）。** 在包含 $T=\{1,3,5\}$ 的合法路径上，四对四交换
+
+$$
+\{\varnothing,13,15,35\}\longleftrightarrow\{1,3,5,135\}
+$$
+
+保持全部二阶及以下矩，只改变三阶矩 $\mu_{135}$；实际上它保持所有其他合法矩。一般 $k$ 阶方向 $D_T$ 的相位单项式为
+
+$$
+M_T=\prod_{D_T(I)=+1}\psi_I
+\prod_{D_T(I)=-1}\overline{\psi_I}.
+$$
+
+若这些振幅均非零，则 $\arg M_T=-\Phi_T$；其总次数为 $2^k$，正振幅及共轭振幅的因子数各为 $2^{k-1}$。
+
+证明。当 $k=3$，$D_T$ 在单点和三点子集上为正，在空集和二点子集上为负，因此上式从左到右的直方图差正是 $D_T$。两侧质量都是四；每个 $T$ 内坐标在两侧各出现两次，每个二点集在两侧各出现一次，其他位置和二点关系出现零次。三点关系左侧零次、右侧一次。全部其他更高阶或不同关系也不变，这是 $m_S(D_T)=\mathbf1_{S=T}$ 的完整计算，不是仅检查三个一阶均值。
+
+例如按显示顺序选择 $|\mathbf I_-\rangle=|\varnothing,13,15,35\rangle$、$|\mathbf I_+\rangle=|1,3,5,135\rangle$，定理 24.13 的 $A_T$ 就是这两个明确有序四系统态之间的矩阵单位，给上述交换的无储库实现。
+
+在非零支撑上乘入负相位表达式，
+
+$$
+M_T=\left(\prod_{I\subseteq T}\sqrt{p_I}\right)
+\exp\left(-i\sum_{I\subseteq T}D_T(I)\theta_I\right)
+=\left(\prod_{I\subseteq T}\sqrt{p_I}\right)e^{-i\Phi_T}.
+$$
+
+全部 $2^k$ 个子集各贡献一个因子，正负各半，给次数与等长副本数。共同相位因两侧因子数相同而抵消。更一般地，在 $\theta_I\mapsto\theta_I+\sum_S t_S\mathbf1_{S\subseteq I}$ 下，$\Phi_T$ 只增加 $t_T$，因为 $m_S(D_T)=\mathbf1_{S=T}$；因此保持所有其他关系的相位作用也保持此单项式。若有零振幅，仍使用这个多项式，其辐角不再定义。证毕。
+
+若额外独立准备 $m$ 份相同的 $|\psi\rangle$，单个有序矩阵单位的期望是
+
+$$
+\langle\psi^{\otimes m}|A_T|\psi^{\otimes m}\rangle
+=\overline{\prod_{D_T(I)=+1}\psi_I}
+\prod_{D_T(I)=-1}\psi_I=\overline{M_T},
+$$
+
+$$
+\langle H_T\rangle=2\operatorname{Re}M_T.
+$$
+
+没有自动多出来的第二个有序方向。$T=\{1,3\}$ 时 $M_T=M$，而定理 24.3 的 $A$ 还特意加入交换系统后的第二项，所以其期望是 $2\overline M$，$V$ 的期望为 $4\operatorname{Re}M$；这解释了两种公式的因子差。相同准备只用于这一相位期望式，达到交换下界的确定列表准备不需要它。次数和体积衡量的是所声明的多系统关系交换，不能据此宣称一般相位估计必需同样多的样本。
+
+### 24.10 九位路径的关系维数与三种最小体积
+
+**命题 24.15（九位合法支撑中的独立方向和实际约化）。** 对 $n=9$ 的路径，合法集合总数为八十九，按阶数 $k=0,1,2,3,4,5$ 分别为
+
+$$
+1,\quad9,\quad28,\quad35,\quad15,\quad1.
+$$
+
+固定质量、一阶和二阶关系后，有五十一个独立实概率方向；在含全正律的层上再作对应的辛商，得到五十一个概率—相位对。只要求保持这些低阶矩的非零交换最小体积为四；若单独改变一个三阶、四阶或五阶矩而保持所有其他矩，则最小体积分别为四、八、十六。
+
+证明。已有路径计数通过 $i_1<\cdots<i_k$、$i_{j+1}\ge i_j+2$ 到 $i_j-(j-1)$ 的双射，将合法 $k$ 元集对应为 $[n-k+1]$ 的普通 $k$ 元集；逆式是加回 $j-1$，所以数目为 $\binom{n-k+1}{k}$。在 $n=9$ 代入得
+
+$$
+\binom{10}{0}=1,\quad\binom91=9,\quad\binom82=28,
+\quad\binom73=35,\quad\binom64=15,\quad\binom55=1,
+$$
+
+总和八十九。依定义 24.11 的可逆矩变换，全部八十九个矩坐标在未归一化实数组空间中独立，固定的 $1+9+28=38$ 行亦独立；其核维数为 $89-38=51$。更明确地，核的基为全部 $|T|\ge3$ 的 $D_T$，因为任意核向量的反演只含这些列，而它们的矩像是互不相同的单位坐标。
+
+相位侧精确消费辛完成命题 35.13：全部正振幅射线实维 $2(89-1)=176$；质量对应的共同相位已经除去，另有 $9+28=37$ 个非空低阶矩。固定它们减去三十七维，再商去其自由周期相位作用减去三十七维，得到
+
+$$
+176-37-37=102=2\cdot51,
+\qquad
+\Omega_{\rm red}=\sum_{|T|\ge3}d\Phi_T\wedge d\mu_T.
+$$
+
+在这个正部分层内，高阶矩的可行域由逆概率全部严格正的不等式给出；它是包含给定全正点的开域，故五十一个方向确为局部概率自由度。边界支撑可能降维，不沿用此正层结论。
+
+由定理 24.12 取 $r=2<5$，一般低阶保持交换的锐下界为 $2^2=4$，可选 $T=\{1,3,5\}$ 达到。若要求孤立某个给定高阶矩，定理 24.13 则逐个给
+
+$$
+\begin{array}{c|c|c}
+\text{孤立目标阶数}&\text{合法目标数}&\text{每侧最小变化副本数}\\\hline
+3&35&4\\
+4&15&8\\
+5&1&16
+\end{array}
+$$
+
+唯一五阶目标是 $T=\{1,3,5,7,9\}$。它的三十二个子集按 $D_T$ 的符号分成两侧各十六项，定理 24.13 的有序矩阵单位恰实现该十六对十六交换，同时保持其余八十八个矩，包括全部三阶、四阶矩。若只规定一二阶不变、允许其他高阶矩联动，则不能把“孤立五阶”的十六当作那一较弱问题的下界。证毕。
+
+这里的五十一个方向属于概率纤维的线性坐标，也在真正的辛商后各配一个角；它们不是五十一个基配置的身份列表。保留哪一个联合配对、怎样准备输入、是否舍弃相关性，以及用哪段局域历史标记算子，始终是不同的数学条件。五标签回路、已有 Schur 刚性和辛矩坐标在本章通过明示映射被消费；新增的双系统精确律、重配对公式和有序多系统构造只在各自给定条件内连接这些对象，不给出硬件、因果传播或全局时间的实现结论。
+
+## 追加锚（本行以下为增补区）
