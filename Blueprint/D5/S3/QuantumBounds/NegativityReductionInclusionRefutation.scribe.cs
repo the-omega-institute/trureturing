@@ -53,7 +53,10 @@ internal sealed class NegativityReductionInclusionRefutationDocument : IScribeDo
                         + "has value −4/3. Thus the reduction is not positive semidefinite. "
                         + "Because the negativity bound is attained, the same state also "
                         + "refutes the sublevel implication. This does not settle the FS inclusion."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abellanet-vidal-muller-rigat-rico-sanpera-2026-negativity-reduction-inclusion"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
