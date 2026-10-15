@@ -254,7 +254,8 @@ transported to this interval.
 The full complex Neumann form identity and this even restriction are
 already supplied by [CO4--CO8, section 3](https://github.com/the-omega-institute/trureturing/blob/c94c6abb6fcd9ad2d85c50666fa6abcfdbd8c2f5/docs/develop/theory/RH_RESEARCH_LANE_THEORY.md#3-restore-the-exact-neumann-gamma-completion).
 That source's $L$ is the full length $d$ here, and its Neumann mode
-$\nu_{2k}=(-1)^kv_k$. Neumann conditions belong to the comparison
+$\nu_{2k}=(-1)^kv_k$, where $v_0=e_0$ and
+$v_k=(e_k+e_{-k})/\sqrt2$ for $k\ge1$. Neumann conditions belong to the comparison
 operator and impose no additional condition on the original tests.
 
 On $I=(-L,L)$ retain every prime power
@@ -382,9 +383,12 @@ $$
 
 The primary equation and table have been inspected; their certificate
 was not rerun here. This variational upper bound is not a positivity
-result, and is not used as an input to G6--G7. It prevents treating the
-positive high-complement floor as a lower bound for the tiny retained
-ground energy or as permission to ignore its coupling allowance.
+result, and is not used as an input to G6--G7. The reported trial quotient
+is below the high-complement floor, so that floor cannot lower-bound the
+full even form. The upper bound does not upper-bound the retained
+compression: variational restriction gives $m_L^+\le m_{L,N}^+$.
+A positivity certificate still requires the retained block and its
+complete coupling allowance.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
