@@ -1,0 +1,16 @@
+**Definition 6.1 (owned block potentials).** For nonnegative functions
+$w_i:S_d\to[0,\infty)$, define on legal arrays
+
+$$
+\widehat w_i(z_i)=w_i(c_d^{-1}(z_i)),\qquad z_i\in H_d.
+\tag{CBN.25}
+$$
+
+This potential is owned once by its original block $i$. It can depend
+jointly on every constructor coordinate in that block. Let
+$\mathcal I_\Theta$ denote the target-constraint occurrences in
+Definition 4.1; write $\mathbf1_F(z)$ for the indicator of each
+specified constraint $F$. Root and parent-child indicators can instead
+be included explicitly when summing over all $\mathcal A^V$, with
+block potentials extended by zero off $H_d$.
+

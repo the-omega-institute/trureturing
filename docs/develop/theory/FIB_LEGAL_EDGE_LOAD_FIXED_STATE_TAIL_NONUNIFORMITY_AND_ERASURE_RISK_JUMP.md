@@ -819,3 +819,939 @@ return probability. The lower bounds apply to those protocols whenever
 they satisfy Definition 9.1. Open Problem 6.4 is unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. All-zero paid records and a one-call guaranteed-return optimum
+
+**Theorem 11.1 (Sharp all-zero terminal-cylinder envelope).** Retain exactly
+Definition 9.1 and the coefficients $a,b,R,e_n$ of Theorem 10.1. Put
+
+$$
+c=a^2+b^2\in(0,1),\qquad
+f_n(m)=\frac{b^{m+1}+c^{n-m}}
+ {a^{m+1}+b^{m+1}+c^{n-m}},\qquad
+z_n=\min_{0\le m\le n}f_n(m)\quad(n\ge0),
+\tag{11.1}
+$$
+
+where the minimum is over integers. For each fixed seed and each positive
+all-zero finite terminal source cylinder of actual record length $n$, its
+mass $W$ and error mass $L$ satisfy $L\ge z_nW$ for every output. The empty
+record is all-zero. Each $z_n$ is the largest coefficient for this precise
+class of records, for either original endpoint, either bias direction and
+any unchanged independent auxiliary law. Moreover,
+
+$$
+z_0=e_0=1-a/2,\qquad z_n>e_n\quad(n\ge1),\qquad
+z_{n+1}<z_n\quad(n\ge0).
+\tag{11.2}
+$$
+
+No $z_n$ bound is asserted for a record containing a one.
+
+Proof. Use Proposition 2.1's realization (2.2) and Theorem 9.2's
+fixed-seed terminal-cylinder reduction. A terminal ordered record consistent
+with the rule has source section exactly its acquired-bit cylinder; adaptive
+choices and finite internal waits impose no additional source restriction.
+Thus fix an ordered list of $n$ addresses, all with reply zero. Let $n_0,n_1$
+count its actual calls at the two parities, including repetitions, so that
+$n_0+n_1=n$.
+
+For a phase $\varphi$, let $Q_\varphi$ be the probability of this cylinder
+under that phase, without its prior factor $1/2$. Distinct active queried
+edges form disjoint finite paths on the spin indices. A path of $\ell$
+edges forces its $\ell+1$ spins to be equal and contributes
+$t_{\ell+1}=a^{\ell+1}+b^{\ell+1}$. Disjoint paths use disjoint iid spins.
+The elementary convexity inequality, with weights $a,b$ summing to one,
+gives
+
+$$
+t_{\ell+1}=a\,a^\ell+b\,b^\ell
+\ge(a\,a+b\,b)^\ell=c^\ell\quad(\ell\ge1).
+$$
+
+If $d_\varphi$ is the number of distinct queried active edges in that
+phase, then $d_\varphi\le n_\varphi$ and consequently
+
+$$
+Q_\varphi=\prod_{\text{active components}}t_{\ell+1}
+\ge c^{d_\varphi}\ge c^{n_\varphi}>0.
+\tag{11.3}
+$$
+
+An empty product is one. Separator calls impose no constraint in that phase
+but remain in the actual counts; repeated edges likewise retain their
+charges. This product description allows arbitrary negative, disconnected
+and distant integer addresses.
+
+Fix the output state $h$. At the fixed original endpoint $j$, it specifies
+one phase $\varphi$ and one endpoint-spin value. That spin's index is
+$q=q_{j,\varphi}$ from (9.4). Adjoin $q$ as an isolated vertex when no
+queried active edge is incident to it. Its component has $m$ distinct
+edges and $m+1$ vertices,
+where $0\le m\le n_\varphi$. Let $D\in(0,1]$ be the product of the factors
+for all other active components in that phase. The two endpoint-state
+masses in phase $\varphi$ are
+
+$$
+\frac12a^{m+1}D,\qquad \frac12b^{m+1}D.
+$$
+
+The opposite-phase mass is $Q_{1-\varphi}/2$ and is entirely error for
+output $h$. The larger of the two displayed masses is an upper bound on
+the success mass for that output. Writing $T=Q_{1-\varphi}/D$ gives
+
+$$
+\frac LW\ge
+\frac{b^{m+1}+T}{a^{m+1}+b^{m+1}+T},\qquad
+T\ge c^{n_{1-\varphi}}\ge c^{n-m}.
+\tag{11.4}
+$$
+
+The fraction increases with $T$, so it is at least $f_n(m)\ge z_n$.
+This comparison also covers output of the less likely spin state. Both
+phases have positive mass on every finite zero cylinder; no phase has been
+read for free.
+
+At $n=0$, (11.1) gives $(b+1)/2=1-a/2$. If $n\ge1$ and $m<n$, then
+
+$$
+f_n(m)>\frac{b^{m+1}}{a^{m+1}+b^{m+1}}
+=\frac1{1+R^{m+1}}\ge e_n.
+$$
+
+If $m=n$, its numerator $b^{n+1}+1$ exceeds $a^{n+1}$, so
+$f_n(n)>1/2>e_n$. The minimum over the finite set is therefore strictly
+larger than $e_n$. For strict decrease choose a minimizer $m$ for $z_n$.
+Keeping this same $m$ in $f_{n+1}$ multiplies its positive $c^{n-m}$ term
+by $c<1$ and strictly decreases the fraction. Hence
+$z_{n+1}\le f_{n+1}(m)<f_n(m)=z_n$.
+
+For attainment, fix any $0\le m\le n$, put $d=n-m$, and choose a public
+phase label $\psi\in\{0,1\}$; this label is a choice of query pattern, not
+knowledge of the actual phase. Let $q=q_{j,\psi}$, $L_*=j+m+2$, and make
+all $n$ predetermined actual calls at
+
+$$
+2(q+i)+\psi\quad(0\le i<m),\qquad
+2(L_*+2i)+(1-\psi)\quad(0\le i<d),
+\tag{11.5}
+$$
+
+in the displayed order. Ignore the auxiliary variable without changing its
+law. Return only when all $n$ replies are zero; otherwise continue
+internally forever after the last call, without further reads. Let
+$\sigma=1$ if $p>1/2$ and $\sigma=0$ if $p<1/2$. Write
+$h_{j,\eta,s}$ for the endpoint state specified in (9.4) by phase $\eta$
+and endpoint-spin value $s$. Return $h_{j,\psi,\sigma}$.
+
+In phase $\psi$ the first list is the $m$-edge path starting at $q$ and
+the second list consists of separators. In phase $1-\psi$ the first list
+consists of separators and the second list gives $d$ disjoint active
+spin pairs, all disjoint from that phase's endpoint spin. Indeed both
+endpoint indices are at most $j\le1$, whereas these pairs start at
+$L_*\ge j+2$. Let $C$ be the all-zero cylinder of these calls. Independence
+within each phase of the one law gives the complete endpoint masses
+
+$$
+\begin{aligned}
+J_p(C,H_j=h_{j,\psi,\sigma})&=\tfrac12a^{m+1},&
+J_p(C,H_j=h_{j,\psi,1-\sigma})&=\tfrac12b^{m+1},\\
+J_p(C,H_j=h_{j,1-\psi,\sigma})&=\tfrac12a c^d,&
+J_p(C,H_j=h_{j,1-\psi,1-\sigma})&=\tfrac12b c^d.
+\end{aligned}
+\tag{11.6}
+$$
+
+These formulas include $m=0$ and $d=0$. In particular, with
+$r_{n,m}=\mathbb P_p(\tau<\infty)$,
+
+$$
+\begin{aligned}
+r_{n,m}&=\tfrac12(a^{m+1}+b^{m+1}+c^{n-m}),\\
+\mathbb P_p(A\ne H_j,\tau<\infty)
+&=\tfrac12(b^{m+1}+c^{n-m}),\\
+\mathbb P_p(A\ne H_j\mid\tau<\infty)&=f_n(m),\qquad
+N=n\ \text{on every path},\qquad \mathbb E_pN=n.
+\end{aligned}
+\tag{11.7}
+$$
+
+Choosing a minimizer attains $z_n$, proving maximality for the stated
+class. For $n=0$ this is immediate return. For $n\ge1$,
+$0<r_{n,m}<1$: if $m\ge1$, then $a^{m+1}+b^{m+1}<1$; if $m=0$, then
+$c^{n-m}<1$. All rejected paths still pay $n$ calls, contributing
+$n(1-r_{n,m})$ to the unconditional mean. The construction works with
+either $\psi$, either $j$, and either direction of bias. $\square$
+
+**Theorem 11.2 (Integrated bound separated by record type).** Under the
+same contract let $Z$ be the event of finite return with all replies zero,
+including a return with no calls. Define the random variable $G$ by cases,
+
+$$
+G=\begin{cases}
+z_N&\text{on }Z,\\
+e_N&\text{on }\{\tau<\infty\}\setminus Z,\\
+0&\text{on }\{\tau=\infty\}.
+\end{cases}
+\qquad
+\mathbb P_p(A\ne H_j,\tau<\infty)\ge\mathbb E_pG.
+\tag{11.8}
+$$
+
+The definition makes no evaluation of $z_\infty$ or $e_\infty$.
+
+Proof. For each fixed seed, sum Theorem 11.1's inequality over the all-zero
+terminal records and Theorem 10.1's inequality over the other terminal
+records. There are countably many finite ordered integer-address/reply
+records. Their terminal sections are disjoint, including the empty record,
+so integration over the arbitrary independent law $\nu$ and Tonelli's
+theorem give (11.8). All masses used before integration are source-section
+masses, with no conditioning on a singleton seed or assumed regular
+conditional law on the seed space. Finite internal waits supply no extra
+observations. Every nonreturn, whether internal divergence after finitely
+many calls or an infinite-read path, contributes zero to $G$; its actual
+reads remain part of $N$. Measurable completion changes none of these
+integrated masses. $\square$
+
+**Theorem 11.3 (Zero-record mass forced by a return budget).** For an
+integer $k\ge1$ put
+
+$$
+E_k=\{\tau<\infty,N\le k\},\qquad
+\rho_k=\mathbb P_p(E_k),\qquad Z_k=E_k\cap Z,\qquad
+\beta_k=\frac{c^{\lfloor k/2\rfloor}+c^{\lceil k/2\rceil}}2.
+\tag{11.9}
+$$
+
+For every protocol of Definition 9.1, without any restriction on reads
+outside $E_k$,
+
+$$
+\begin{aligned}
+\mathbb P_p(Z_k)&\ge(\rho_k+\beta_k-1)_+,\\
+\mathbb P_p(A\ne H_j,E_k)
+&\ge e_k\rho_k+(z_k-e_k)(\rho_k+\beta_k-1)_+,
+\end{aligned}
+\tag{11.10}
+$$
+
+where $x_+=\max(x,0)$. In particular, almost-sure finite return within $k$
+actual calls has unconditional error at least
+
+$$
+e_k+(z_k-e_k)\beta_k>e_k.
+\tag{11.11}
+$$
+
+Proof. For a fixed seed $u$, follow the next-event rules with every reply
+specified to be zero, stopping this construction at the $k$th call, a
+finite return, or indefinite internal continuation, whichever comes first.
+Let $\ell\le k$ be the number of calls collected and let $B(u)$ be the
+source cylinder requiring zero at these $\ell$ addresses. At the $k$th
+call impose no condition on subsequent actions. The construction is an
+analysis of one branch of the rule; it gives the protocol no extra source
+access. Let $n_0(u),n_1(u)$ be its actual call counts by parity, so that
+$n_0(u)+n_1(u)=\ell$. By (11.3),
+
+$$
+J_p(B(u))\ge\tfrac12(c^{n_0(u)}+c^{n_1(u)})\ge\beta_k.
+\tag{11.12}
+$$
+
+For the last inequality, adding missing units to reach total $k$ can only
+decrease the sum. At a fixed total, transferring a unit from a count at
+least two larger than the other count decreases the sum, since $0<c<1$.
+Thus the integer minimum occurs at the two balanced counts in (11.9).
+Repetitions and separator calls are included throughout this argument.
+
+The subset $B$ of the source/seed product with sections $B(u)$ is
+measurable: only finitely many next-event choices, each measurable, and
+countably many finite address lists are involved. Integrating (11.12)
+gives $\mathbb P_p(B)\ge\beta_k$. On $B$, the actual protocol follows the
+specified zero branch for all the collected calls. If $\ell<k$, that
+branch has already returned or continues internally forever; in the latter
+case it cannot lie in $E_k$. If $\ell=k$, a return with at most $k$ calls
+has no additional replies. Consequently
+
+$$
+B\cap E_k\subseteq Z_k,\qquad
+\mathbb P_p(Z_k)\ge\mathbb P_p(B)+\rho_k-1
+\ge\beta_k+\rho_k-1.
+$$
+
+Nonnegativity proves the first bound in (11.10). Restrict the recordwise
+sum in Theorem 11.2 to $E_k$. The two coefficient sequences are
+nonincreasing, including their index-zero terms, and therefore
+
+$$
+\mathbb P_p(A\ne H_j,E_k)
+\ge z_k\mathbb P_p(Z_k)+e_k\mathbb P_p(E_k\setminus Z_k)
+=e_k\rho_k+(z_k-e_k)\mathbb P_p(Z_k).
+$$
+
+Since $z_k-e_k>0$, the first bound yields the second. With $\rho_k=1$ it
+gives (11.11), whose strict inequality uses $\beta_k>0$. Paths outside
+$E_k$ can make any finite or infinite number of reads, or diverge
+internally; no bound on them entered the construction. $\square$
+
+**Theorem 11.4 (Exact guaranteed-return one-call risk).** For each original
+endpoint $j\in\{0,1\}$, among protocols of Definition 9.1 with almost-sure
+finite return and at most one actual call, the minimum unconditional state
+error is exactly
+
+$$
+b+\frac{ac}{2}=1-\frac a2-a^2b.
+\tag{11.13}
+$$
+
+Proof. The two candidates for $z_1$ have the common denominator $1+c$;
+their success numerators are respectively $a$ and $a^2$. Since $a>a^2$,
+
+$$
+z_1=\frac{b+c}{1+c},\qquad \beta_1=\frac{1+c}{2},\qquad e_1=b.
+$$
+
+Theorem 11.3, including protocols which return without a call on some
+seeds, bounds the error below by
+
+$$
+b+\left(\frac{b+c}{1+c}-b\right)\frac{1+c}{2}
+=b+\frac{ac}{2}.
+$$
+
+For equality, ignore the auxiliary variable without changing its law and
+read the actual bit at the fixed even address $t=2(j+2)$. Return
+$h_{j,0,\sigma}$ on reply one and $h_{j,1,\sigma}$ on reply zero, with
+$\sigma$ and the states as in Theorem 11.1. Equivalently the outputs are
+$a_\sigma,b_\sigma$ for replies one, zero when $j=0$, and
+$b_\sigma,a_\sigma$ for replies one, zero when $j=1$.
+
+In phase zero this bit is $S_{j+2}\mathbin\oplus S_{j+3}$, independent
+of the endpoint spin $S_j$; in phase one it is a separator zero. Thus a
+one identifies phase zero, while a zero leaves positive mass in both
+phases. The zero branch's output has joint success mass $a/2$ from phase
+one, without observing that phase. The one branch has joint success mass
+$a^2b$. More explicitly the actual joint reply and error masses are
+
+$$
+\begin{array}{c|cc}
+x&\mathbb P_p(X_t=x)&\mathbb P_p(X_t=x,A\ne H_j)\\ \hline
+0&(1+c)/2&(b+c)/2\\
+1&ab&ab^2
+\end{array}
+\tag{11.14}
+$$
+
+The rule returns after its one paid call on every path. The total error
+is $1-a/2-a^2b$, equal to $b+ac/2$ because $c=1-2ab$. It is legal for
+both original endpoints and both directions of bias under the unchanged
+stationary law and auxiliary law. $\square$
+
+For $k\ge2$, (11.10)--(11.11) are lower bounds without a general sharpness
+assertion. The exact zero-record envelope and its selective witnesses do
+not provide a protocol jointly attaining all the recordwise bounds and
+the forced zero-record mass at an arbitrary prescribed return probability.
+The full joint risk/return-probability/expected-read-cost frontier remains
+unresolved. Its total cost is the extended expectation $\mathbb E_pN$
+over returning and nonreturning paths, including all repetitions and
+separators; replacing it by a mean restricted to returns would discard
+the $n(1-r_{n,m})$ charges in (11.7). Internal nonreturn after finitely many
+reads and infinite-read nonreturn are distinct allowed cost cases.
+Open Problem 6.4's whole-domain attainment and separation question remains
+unchanged.
+
+The supplier law, complementary-spin products and terminal-cylinder
+reduction are Proposition 2.1, Lemma 3.1 and Theorems 9.2--10.1. The
+convexity and finite-product Bayesian comparisons above are elementary;
+the source-specific zero-record coefficient, its same-law equality and
+the return-budget consequences are `repo-derived`. Classical attribution
+remains [Chigansky--van Handel, arXiv:0910.3603v2, Example 10][CVH] for the
+fair equality/XOR ambiguity, and [Travers--Crutchfield,
+arXiv:1008.4182v3, Definitions 5--8 and Theorem
+3](https://arxiv.org/html/1008.4182v3) and
+[arXiv:1011.1581v2, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) for consecutive-word current-state
+synchronization. Their current-state/consecutive-observation statements
+do not supply the arbitrary-address, fixed-original-endpoint zero-record
+envelope under Definition 9.1. These attributions make no worldwide
+priority claim.
+
+## 追加锚（本行以下为增补区）
+
+## 12. Finite representatives for a hard total paid-read budget
+
+**Definition 12.1 (Hard budget and the preserved law).** Retain exactly
+Definition 9.1, with the one original $J_p$, fixed public
+$0<p<1$, $p\ne1/2$, fixed original endpoint $j\in\{0,1\}$, and the given
+independent probability space $(\mathsf U,\mathcal U,\nu)$ with its
+unchanged law. Fix $k\in\mathbb N_0$. A pathwise hard total budget means
+$N\le k$ on every execution, including nonreturns and exceptional
+source/seed paths. An almost-sure hard total budget means
+$\mathbb P_p(N\le k)=1$. Neither condition merely bounds the count on
+returning paths or on $E_k$.
+
+Set $\mathcal A=\{a_0,a_1,b_0,b_1\}$ and introduce a symbol
+$\bot\notin\mathcal A$. The statistics to be preserved are
+
+$$
+D=\mathbf1_{\{\tau<\infty\}},\qquad
+O=\begin{cases}A&D=1,\\\bot&D=0,\end{cases}
+\qquad Z=(H_j,O,D,N).
+\tag{12.1}
+$$
+
+Under a pathwise cap $Z$ takes values in the following finite alphabet;
+under an almost-sure cap it does so almost surely:
+
+$$
+\mathcal Z_k=
+\{(h,o,d,n):h\in\mathcal A,\ o\in\mathcal A\cup\{\bot\},
+ d=\mathbf1_{\{o\ne\bot\}},\ 0\le n\le k\}.
+\tag{12.2}
+$$
+
+We preserve the joint law of $(u,Z)$ on
+$\mathsf U\times\mathcal Z_k$, so the dependence on the given seed is
+part of the assertion. Finite numerical return times and the numerical
+names of acquired addresses are not coordinates of this law. Equality
+of this law is not equality of outputs or counts on each original source
+sample. A nonreturn with $N=n$ keeps its $n$ paid calls and means
+indefinite internal continuation after those calls; it is not a finite
+return with an omitted output.
+
+**Theorem 12.2 (Finite legal deterministic family).** For every $k$ and
+either $j$, there is a nonempty finite family
+$\mathcal D_{k,j}=\{\Pi_1,\ldots,\Pi_m\}$ of deterministic protocols of
+Definition 9.1, each ignoring the auxiliary variable, with the following
+properties. Every representative obeys the total cap $k$ on every formal
+binary reply branch, including branches of source probability zero, and
+all its addresses belong to one finite set $F_{k,j}\subset\mathbb Z$.
+For every deterministic protocol with a pathwise hard total budget $k$,
+one representative has exactly the same law of $Z$. A deterministic
+protocol with only an almost-sure hard total budget has the same law as
+a pathwise-capped representative as well. The family and $F_{k,j}$ may
+be chosen independently of $p$ throughout the stated parameter range.
+The equality holds under the original $J_p$, with neither a phase read
+nor a change of target or source.
+
+Proof. First discard the numerical values of finite internal delays,
+retaining their distinction from indefinite internal continuation.
+Keep the original next-event types, addresses and outputs; replace only
+their finite delays by fixed finite delays.
+Whenever the next event at a record of length $k$ would be another read,
+replace that event by indefinite internal continuation without that read.
+This gives a rule capped on every formal branch. On every execution
+already having $N\le k$, the boundary replacement changes no event;
+erasing finite delays changes only finite timing values. Thus this
+normalization preserves $Z$ on all such executions, and preserves its
+law under either hard-budget hypothesis.
+
+Unfold the normalized deterministic rule into its binary reply tree.
+A node at depth $n$ carries the acquired record of length $n$. It is
+either a read node, with two children indexed by the next reply, or a
+terminal labelled by one of the four return states or by $\bot$.
+A $\bot$ terminal means internal nonreturn with no further call.
+The tree has height at most $k$ and at most $2^k-1$ read nodes. Terminal
+depth is the actual paid count even at a $\bot$ terminal. Unreachable
+formal reply branches may be retained. This ordinary finite-horizon
+policy-tree unfolding is classical; it does not yet make the unbounded
+integer address labels finite.
+
+Here is the additional source-specific information needed for those
+labels. Fix a tree shape, its terminal labels, and the distinct node
+positions $v$ in that tree. Write $t_v\in\mathbb Z$ for the address at a
+read node, and $\epsilon_v\in\{0,1\}$ for its parity. For each phase
+$\phi\in\{0,1\}$ form a finite set of formal spin slots
+
+$$
+\mathcal I_\phi=\{*\}\ \cup
+\{(v,-),(v,+): v\text{ is a read node and }\epsilon_v=\phi\}.
+\tag{12.3}
+$$
+
+The distinguished slot $*$ represents the original target spin, whose
+index is $q_{j,0}=j$ and $q_{j,1}=0$, exactly as in (9.4). Assign integer
+indices to the other slots by
+
+$$
+\iota_\phi(*)=q_{j,\phi},\qquad
+\iota_\phi(v,-)=\frac{t_v-\phi}{2},\qquad
+\iota_\phi(v,+)=\frac{t_v-\phi}{2}+1.
+\tag{12.4}
+$$
+
+Record the equivalence relation on $\mathcal I_\phi$ given by equality
+of these indices. The signature consists of the tree shape and terminal
+labels, all node parities, and these two equivalence relations, with the
+distinguished slots retained. It refers to all read nodes in the whole
+tree at once, including nodes on incompatible reply branches.
+
+Conditional on phase $\phi$, the original iid realization assigns one
+independent Bernoulli$(p)$ spin to each equivalence class of
+$\mathcal I_\phi$. At an active node the potential reply $X_{t_v}$ is
+the XOR of its two class spins; at an inactive node it is zero. The
+target is $h_{j,\phi,s}$, the entry in (9.4) with phase $\phi$ and
+displayed spin $s$, where $s$ is the class spin of $*$.
+Consequently the signature determines the joint conditional law of
+
+$$
+\left(H_j,(X_{t_v})_{v\text{ a read node}}\right)
+\quad\text{given }\varphi=\phi.
+\tag{12.5}
+$$
+
+This uses only the original finite iid-spin products of Proposition 2.1.
+It includes every overlap and repetition: slots with the same actual
+spin index are identified, and all remaining class spins are independent.
+Disconnected and distant edges create no extra relation. Negative
+addresses obey the same integer formulas (12.4). For inactive nodes no
+spin is read or inferred from their compulsory zero. The two
+phase-conditional distributions are combined with their original masses
+$1/2,1/2$; no joint coupling between two different phase alternatives is
+needed. In particular this step does not splice independently optimized
+phase laws.
+
+The tree's execution is a deterministic function of its complete
+potential-reply array: start at the root, use the reply at each visited
+read node, and stop at its terminal. Its terminal label and depth give
+$(O,D,N)$. It follows from (12.5) that any two address assignments with
+the same signature have the same joint law of $Z$. Recording the
+whole array before applying this deterministic function ensures that
+adaptively chosen nodes retain their joint relations with the target.
+
+There are finitely many tree shapes and terminal labellings at the fixed
+height. For each there are finitely many parity assignments and finitely
+many equivalence relations on the finite slot sets. Some signatures
+cannot come from integer addresses with the distinguished target at its
+fixed original index; discard them. For each signature that is realized,
+choose one actual integer-address assignment realizing the entire
+signature in both phases simultaneously. Keep that labelled tree as a
+representative. This is a finite selection from realized signatures,
+not an assertion that arbitrary pairs of abstract incidence relations
+are geometrically realizable.
+
+Each selected tree is a legal protocol: make its specified actual reads,
+return its terminal state after finite internal waiting, or continue
+internally forever at its $\bot$ terminal. It makes at most $k$ calls
+on every formal branch. Its finite-event delays can, for example, all be
+one unit. Taking the union of the addresses in this finite collection
+gives the finite set $F_{k,j}$. The construction of signatures and the
+choice of an integer realization involve $k,j$ and integer geometry,
+not $p$; the same class-spin argument applies for every allowed $p$.
+The normalized input tree has one of these realized signatures, proving
+the assertions. When $k=0$ the trees are simply the four immediate
+returns and the immediate internal nonreturn, and $F_{0,j}$ may be empty.
+$\square$
+
+**Theorem 12.3 (Measurable same-seed representation and converse).** Fix
+$k,j,p$ and the original given $(\mathsf U,\mathcal U,\nu)$. Let
+$v_i(z)=J_p(Z^{\Pi_i}=z)$ be the finite law vector of representative
+$\Pi_i$. For every protocol with a pathwise hard total budget $k$, there
+is a measurable function $f:\mathsf U\to\{1,\ldots,m\}$ such that,
+for every $B\in\mathcal U$ and $z\in\mathcal Z_k$,
+
+$$
+\mathbb P_p(u\in B,Z=z)
+=\sum_{i=1}^m\nu(B\cap\{f=i\})v_i(z).
+\tag{12.6}
+$$
+
+The same assertion holds for an almost-sure hard total budget; its
+representing protocol has the pathwise cap. Conversely every measurable
+$f$ in (12.6) is attained by a legal pathwise-capped protocol on that
+same probability space with its unchanged law $\nu$. Thus the two
+budget conventions have exactly the same attainable joint laws of
+$(u,Z)$, though they remain different requirements on individual rules.
+
+Proof. Apply the boundary replacement and delay normalization in the
+proof of Theorem 12.2 with $u$ fixed. At each seed this leaves a finite
+deterministic tree with integer labels. The space of all such trees is
+countable: there are finitely many shapes and terminal label patterns,
+and a finite tuple of integers for each shape. Give this space its
+discrete sigma-algebra.
+
+The tree depends measurably on $u$. To see this without a conditional
+probability on singleton seeds, build its nodes successively. The record
+at each node takes values in the countable set of finite acquired
+integer-address/reply records. Evaluating a measurable next-event rule
+at that record is measurable: the preimage of an event is a countable
+union over the possible records of the intersection of the event
+specifying that record with the corresponding next-event condition.
+There are only finitely many node positions through depth $k$.
+Induction therefore proves measurability of the tree map. Finite versus
+indefinite waiting is part of the measurable event type; its finite
+numerical value has been discarded. The finite signature of this
+countably valued tree is measurable, so its selected representative
+index $f(u)$ is measurable as well.
+
+For each fixed seed, Theorem 12.2's signature argument identifies the
+source-section law of the normalized tree with $v_{f(u)}$. For a
+pathwise-capped input normalization preserves the source-section law
+of $Z$ at every seed, apart from any allowed completion-version choice.
+For an almost-sure-capped input the boundary replacement changes $Z$
+only on the product-null event $\{N>k\}$; equivalently, by Tonelli it
+preserves the source-section law for $\nu$-almost every seed. Integrate
+these finite-alphabet section identities over $B$ to obtain (12.6).
+No regular conditional distribution on an arbitrary auxiliary space is
+being assumed. Allowed measurable completions give the same identities;
+with countably many records, measurable versions can be chosen together
+and the exceptional null choices do not affect (12.6).
+
+For the converse, at seed $u$ choose the existing representative
+$\Pi_{f(u)}$, and follow its tree using only the actual replies of the
+same $J_p$ source. This is a measurable next-event rule: the selection
+has finitely many measurable seed cells, and each representative has a
+fixed finite labelled tree. On records incompatible with the selected
+tree, set the next event to internal nonreturn, making the rule total.
+Its actions are functions only of $u$ and its acquired record. No source
+observation enters the initial selection, and no extra random coin is
+introduced. All branches have the pathwise cap, including every internal
+nonreturn. Independence of
+the original source and the unchanged seed law gives (12.6) for this
+protocol. Since pathwise-capped protocols are almost-sure-capped, both
+attainable-law sets are therefore identical. $\square$
+
+The representation preserves the joint original target, output or
+$\bot$, finite-return indicator, and exact paid-count distribution,
+including their correlation with every measurable seed event. In
+particular it preserves state-classification error, return probability,
+and unconditional paid cost jointly. Repeated reads and separator reads
+are still visits to paid nodes; charges are not removed when their
+likelihood constraints are redundant. Every nonreturn of a representative
+is internal divergence after its terminal number of actual calls.
+The representation need not agree with the original rule on a source
+sample, and it preserves neither finite return-time values nor literal
+address names. It is an existence result for measurable rules; deciding
+which arbitrary seed belongs to which cell, or whether a given internal
+computation eventually has a next event, receives no effective procedure.
+
+## 13. The exact image of the given seed's measurable partitions
+
+**Definition 13.1 (Partition weights and finite law region).** For the
+family in Theorem 12.2 put
+
+$$
+\begin{aligned}
+W_m(\nu)&=\{(\nu(B_1),\ldots,\nu(B_m)):\\
+&\qquad B_1,\ldots,B_m\in\mathcal U\text{ form a measurable partition of }
+\mathsf U\},\\
+\mathcal V_{k,j,p,\nu}
+&=\left\{\sum_{i=1}^m w_i v_i:w\in W_m(\nu)\right\}.
+\end{aligned}
+\tag{13.1}
+$$
+
+Empty cells are permitted, and completed measurable partitions may be
+replaced by versions without changing their measures. The region
+$\mathcal V_{k,j,p,\nu}$ records the law of $Z$ after forgetting the
+seed coordinate. Its full seed-dependent counterpart is precisely the
+set of measures specified on rectangles by
+
+$$
+\mu(B\times\{z\})
+=\sum_{i=1}^m\nu(B\cap B_i)v_i(z),
+\qquad B\in\mathcal U,\quad z\in\mathcal Z_k,
+\tag{13.2}
+$$
+
+as the same measurable partitions vary. Formula (13.2), rather than
+just the weights in (13.1), retains the seed dependence.
+
+**Theorem 13.2 (Exact finite region, compactness, and its atomless
+specialization).** The attainable laws of $Z$ under either hard-budget
+convention are exactly $\mathcal V_{k,j,p,\nu}$, and their joint laws
+with the given seed are exactly (13.2). The finite-dimensional set
+$\mathcal V_{k,j,p,\nu}$ is compact for every given probability space,
+including atomic spaces. If $\nu$ is atomless, then
+
+$$
+W_m(\nu)=\Delta_m
+:=\{w\in[0,1]^m:\textstyle\sum_iw_i=1\},\qquad
+\mathcal V_{k,j,p,\nu}=\operatorname{conv}\{v_1,\ldots,v_m\}.
+\tag{13.3}
+$$
+
+For a general given seed, (13.1) is the exact region; replacing
+$W_m(\nu)$ by $\Delta_m$ requires proof of the needed partition
+availability and is not part of the representation theorem.
+
+Proof. Theorems 12.2--12.3 give both inclusions, first with the seed
+retained and then by taking $B=\mathsf U$ in (13.2). For compactness use
+the classical decomposition-range result of Dvoretzky, Wald and
+Wolfowitz, *Relations among certain ranges of vector measures*, Pacific
+Journal of Mathematics **1**, 59--74, Section 1 and Section 3,
+Remark (c), p. 68 [DWW]. In their notation take the underlying measurable
+space to be $(\mathsf U,\mathcal U)$, take the single measure
+$\mu_1=\nu$, and take their number of decisions to be $n=m$. A pure
+probability $m$-vector is exactly
+$(\mathbf1_{B_1},\ldots,\mathbf1_{B_m})$ for a measurable partition.
+Its decomposition-range vector is
+$(\int\mathbf1_{B_i}\,d\nu)_{i=1}^m=w$; hence their decomposition range
+is precisely $W_m(\nu)$. The measure is finite and nonnegative with
+$\nu(\mathsf U)=1$. Remark (c) keeps compactness without atomlessness,
+while explicitly withdrawing general convexity. The finite linear map
+$w\mapsto\sum_iw_iv_i$ is continuous, so its image is compact.
+
+When $\nu$ is atomless, their Section 3, Lemma 2 gives a partition with
+any prescribed nonnegative weights summing to one, by taking again the
+one finite measure $\mu_1=\nu$. Equivalently, Theorem 4 identifies its
+pure range with the full probability-vector range, which in this
+one-measure case is $\Delta_m$: constant probability vectors already
+realize every point of that simplex. This proves (13.3). This is a
+classical partition corollary, not a new purification theorem or a
+change to the given seed. No compactness assertion about a space of
+seed-dependent measures in an unspecified topology is used. $\square$
+
+**Boundary 13.3 (Atoms cannot be split by the selector).** The classical
+atomic/atomless decomposition makes the restriction explicit. Let
+$(C_\ell)$ be disjoint measurable atoms of positive masses
+$\alpha_\ell$, exhausting the atomic part modulo null sets, and let
+$r=1-\sum_\ell\alpha_\ell$ be the mass of the atomless remainder.
+There are at most countably many such atoms; they need not be singleton
+points. With $e_i$ the coordinate unit vectors,
+
+$$
+W_m(\nu)=
+\left\{r w+\sum_\ell\alpha_\ell e_{i_\ell}:
+ w\in\Delta_m,\ i_\ell\in\{1,\ldots,m\}\right\}.
+\tag{13.4}
+$$
+
+Each atom lies, up to null sets, wholly in one partition cell. Conversely
+allocate those whole atoms to the selected cells, and partition the
+atomless remainder with the proportions $w$, using DWW Lemma 2 for the
+restricted finite measure. This gives (13.4), including $r=0$, when
+the $w$ term vanishes. This is the usual one-measure decomposition
+underlying DWW Remark (c).
+
+For example, take $k=0$ and a one-atom probability space. The only
+possible return probabilities are zero and one: before any read the
+seed-measurable return indicator is constant almost surely. Immediate
+return of $a_0$ and immediate internal nonreturn are both legal, but
+their half-and-half mixture of $Z$ laws has return probability $1/2$
+and is unattainable on this space. Thus even the finite law region
+need not be convex. The obstruction already occurs without any address
+geometry. At larger budgets a deterministic tree can also obtain
+random replies from the original source; those replies are already
+included in its $v_i$, and do not authorize replacing the seed-partition
+restriction by an independent coin.
+
+**Corollary 13.4 (Hard-budget risk, return, and paid-cost attainment).**
+For $v\in\mathcal V_{k,j,p,\nu}$ define
+
+$$
+\begin{aligned}
+Q(v)&=\sum_{(h,o,d,n)\in\mathcal Z_k}d\,v(h,o,d,n),\\
+\Lambda(v)&=\sum_{(h,o,d,n)\in\mathcal Z_k}
+ d\,\mathbf1_{\{o\ne h\}}v(h,o,d,n),\\
+C(v)&=\sum_{(h,o,d,n)\in\mathcal Z_k}n\,v(h,o,d,n).
+\end{aligned}
+\tag{13.5}
+$$
+
+Their exact jointly attainable region is
+
+$$
+\{(Q(v),\Lambda(v),C(v)):v\in\mathcal V_{k,j,p,\nu}\}
+=\left\{\sum_{i=1}^m w_i(Q(v_i),\Lambda(v_i),C(v_i)):
+ w\in W_m(\nu)\right\}.
+\tag{13.6}
+$$
+
+For every attainable prescribed return probability $q$, the minimum
+of $\Lambda(v)$ subject to $Q(v)=q$ is attained. More generally, the
+same is true on any nonempty closed subset of the finite law region,
+including one imposing also $C(v)\le c_0$ for a prescribed real $c_0$.
+The cost $C(v)=\mathbb E_pN$ includes every nonreturning path; its
+nonreturn contribution is exactly
+
+$$
+\sum_{h\in\mathcal A}\sum_{n=0}^k n\,v(h,\bot,0,n).
+\tag{13.7}
+$$
+
+Proof. All three functions in (13.5) are finite linear functions of the
+law coordinates, and Theorem 13.2 and its converse give (13.6). The
+slice $Q(v)=q$ is a nonempty closed subset of the compact finite law
+region. The extra weak cost inequality is also closed. Any nonempty
+closed subset is compact, and the continuous function $\Lambda$
+attains its minimum there. The representing measurable partition and
+Theorem 12.3 realize each minimizing vector with the same seed law.
+The sum in (13.7) is the part of $C$ with $D=0$, not a return-conditioned
+mean. This proof asserts attainment under a fixed finite hard cap;
+it does not evaluate the minimum. $\square$
+
+## 14. Projection to the paid-return frontier without a hard cap
+
+**Theorem 14.1 (Exact budgeted-return projection).** Use the same
+$p,j,\nu$ as in
+[Paid-return, Definitions 1.3 and 6.1][PR], and let
+$\mathcal R_{k,\nu}$ denote that source's attainable region of pairs
+$(q_k,L_k)$ over all protocols of Definition 9.1, with arbitrary behavior
+outside $E_k$. Then
+
+$$
+\mathcal R_{k,\nu}
+=\{(Q(v),\Lambda(v)):v\in\mathcal V_{k,j,p,\nu}\}.
+\tag{14.1}
+$$
+
+Consequently $\mathcal R_{k,\nu}$ is compact for every given seed law,
+and its infimum $\mathcal L_{k,\nu}(q)$ at each attainable mass is a
+minimum realized by a pathwise hard-total-budget-$k$ protocol with the
+same seed. For an atomless seed, (14.1) is the convex hull of the finite
+points $(Q(v_i),\Lambda(v_i))$; for an arbitrary seed the exact formula
+uses $w\in W_m(\nu)$.
+
+Proof. The supplier's Assumption 1.1 is the same realization (2.2),
+its target table (1.2) is (9.4), and its Definition 1.2 is precisely
+Definition 9.1. Its $q_k,L_k$ in Definition 1.3 are, respectively, the
+mass and joint error on $E_k=\{\tau<\infty,N\le k\}$; they impose no
+constraint on later-return or nonreturning paths. Thus the only extra
+restriction used in $\mathcal V_{k,j,p,\nu}$ is the hard total cap.
+
+Given any unrestricted protocol $\Pi$, define $\Pi^{[k]}$ by following
+its original next-event rule, except that at a record of length $k$ a
+next read is replaced by indefinite internal continuation with no
+further read. A next return at that record is kept, including its
+finite internal waiting, as is internal nonreturn. At shorter records
+all events are kept. The decision being replaced is a measurable
+function only of the seed and that acquired record, so this rule is
+legal and nonanticipating; it does not need to know the source's future
+or the outcome of an additional read.
+
+On the same source/seed sample the two rules agree until a replaced
+request. Hence, with the convention $\min(\infty,k)=k$,
+
+$$
+\begin{aligned}
+\{\tau^{[k]}<\infty\}&=E_k^\Pi,\\
+O^{[k]}&=\begin{cases}A^\Pi&E_k^\Pi,\\\bot&\text{otherwise},\end{cases}\\
+N^{[k]}&=\min(N^\Pi,k).
+\end{aligned}
+\tag{14.2}
+$$
+
+The count identity includes a nonreturn after fewer than $k$ calls,
+a nonreturn after more than $k$ calls, an infinite-read path, and a
+return originally after more than $k$ calls. When $k=0$, a zero-read
+finite return is kept and every first read is suppressed. The rule has
+a hard cap on every branch. It preserves $q_k,L_k$, including their
+joint dependence on the endpoint and seed on the retained return
+sections. Therefore every unrestricted pair belongs to the right side
+of (14.1), by Theorem 12.3. Conversely every hard-capped protocol is an
+unrestricted admissible protocol, and on it $E_k=\{D=1\}$, so the pair
+is $(Q(v),\Lambda(v))$. This proves (14.1).
+
+The continuous projection of the compact finite law region is compact.
+Its nonempty fixed-$q$ slice has a minimum second coordinate, or
+Corollary 13.4 may be applied directly. The same-seed converse supplies
+a legal hard-capped minimizer. The atomless and general partition
+formulas follow from Theorem 13.2. $\square$
+
+The projection argument does not preserve an unrestricted protocol's
+whole law or its whole paid cost. In (14.2), finite returns requiring
+more than $k$ calls become nonreturns and paid counts above $k$ become $k$.
+In particular
+
+$$
+\mathbb E_pN^{[k]}=\mathbb E_p\min(N^\Pi,k)\le\mathbb E_pN^\Pi,
+\tag{14.3}
+$$
+
+with all costs on newly nonreturning paths retained at their truncated
+counts. The full-law equality in Theorem 12.3 applies to hard-capped
+inputs; (14.1) for unrestricted inputs is only the stated two-coordinate
+projection. It gives no equality of attainable regions if an
+unrestricted total-cost coordinate or a constraint on later returns is
+also imposed without a separate proof.
+
+**Corollary 14.2 (An absent one-read equality gate gives a strict gap).**
+Let $f(q)$ be the universal one-read lower curve in
+[Paid-return, Theorem 4.1, (4.1)--(4.2)][PR]. At an attainable
+$q\in[0,1]$, let $g(q)$ be the required seed-event mass in its (4.3),
+using its lower formula at $q=\eta$. Then
+
+$$
+\mathcal L_{1,\nu}(q)=f(q)
+\quad\Longleftrightarrow\quad
+\exists G\in\mathcal U:\nu(G)=g(q).
+\tag{14.4}
+$$
+
+If that event is absent and $q$ is attainable, then
+$\mathcal L_{1,\nu}(q)>f(q)$. No value or uniform positive lower bound
+for this gap is asserted.
+
+Proof. The quoted theorem already proves the universal inequality
+and the exact necessary and sufficient event condition for equality
+by any protocol, under this same law, target, seed and return-event
+convention. Theorem 14.1 adds that the infimum on every nonempty
+fixed-$q$ slice is attained. Thus equality of the minimum with $f(q)$
+requires, and the quoted equality construction supplies, precisely
+that gate. If it is unavailable, the attained minimum cannot equal
+the lower bound, and must be strictly greater. This does not repeat
+the numerical envelope proof or compute an optimum above it. $\square$
+
+## 15. Sources and boundaries of the finite-budget representation
+
+The original-law suppliers are Proposition 2.1 and (2.2), the fixed
+endpoint table (9.4), and the finite-record semantics of Theorems
+9.2--11.4. Their likelihood inequalities, sharp selective witnesses,
+zero-record coefficients and one-read guaranteed-return optimum are
+retained as existing results. The finite whole-tree spin-slot signature
+in Theorem 12.2 supplies the additional arbitrary-address reduction;
+Theorem 12.3 supplies its measurable same-given-seed and joint-law
+form. These are repo-derived ordinary mathematical consequences of
+the original XOR realization, without a worldwide originality claim.
+
+Kaelbling, Littman and Cassandra, *Planning and Acting in Partially
+Observable Stochastic Domains*, Artificial Intelligence **101**,
+99--134, Sections 2.1 and 4.1, pp. 101--102 and 108--110 [KLC], provide
+the classical finite-horizon policy-tree background. Their finite
+state/action model and scalar value-function representation alone do
+not reduce this contract's unbounded integer addresses, give its full
+joint target/output/return/count law, or discharge its fixed-seed
+partition requirement. The finite tree unfolding is reused as ordinary
+background; the simultaneous two-phase integer-realizable signature
+and original-target relation are established in Section 12.
+
+Dvoretzky, Wald and Wolfowitz [DWW], Section 1 and Section 3, Theorem 4,
+Lemma 2 and Remark (c), supply exactly the classical partition-range
+facts used in Section 13. Their single finite measure here is the given
+seed law, not the source law or a newly introduced randomizer. The
+finite family is selected before applying those facts. Compactness
+for atomic seeds and unrestricted simplex weights for atomless seeds
+are different conclusions with different hypotheses. The partition
+image, compact projections and continuous minima are applications of
+these classical results, not new general vector-measure theorems.
+
+The consumer [Paid-return, Definitions 1.3 and 6.1 and Theorem 4.1][PR]
+already owns its return-mass coordinates, one-read lower curve and exact
+equality gate. The additional link is (14.1), which justifies minimum
+attainment for that region under every given seed, and the strict
+qualitative gap in Corollary 14.2 when a gate is absent. A finite
+representative family is not a closed-form numerical frontier. No
+general larger-budget optimum, optimal adaptive rule, minimal dictionary,
+sharp address radius or algorithm for arbitrary seed laws is supplied.
+
+All statements fix a finite total hard budget when preserving the full
+law. They assert neither an effective compiler nor bounded memory,
+finite precision, bounded internal work, a physical implementation, or
+an online quotient valid for unbounded histories. No compactness
+uniform in $k$, exchange of an unbounded-budget limit with optimization,
+or unbounded expected-paid-cost optimum follows. Internal nonreturn
+costs stay in (13.7); the restricted cost change in (14.3) is explicit.
+The fixed public bias, original stationary law, both original endpoints,
+all paid calls and unchanged independent seed remain as in Definition
+9.1. Neither the fair parameter nor the parameter endpoints are added
+to that contract. Renewal constructions, native and quantum control
+models, and Green-function sources concern different operations and
+supply no transfer to the original XOR acquisition problem here.
+Open Problem 6.4 remains unchanged.
+
+[DWW]: https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf
+[KLC]: https://people.csail.mit.edu/lpk/papers/aij98-pomdp.pdf
+[PR]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
+
+## 追加锚（本行以下为增补区）

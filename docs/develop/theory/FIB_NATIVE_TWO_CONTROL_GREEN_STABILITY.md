@@ -2611,3 +2611,2271 @@ $\chi,I,k_0,Z,\varepsilon$ would require additional uniform estimates.
 The assertions here are ordinary mathematical proofs.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 20. Positive-time regularization of the fixed native point field
+
+**Definition 20.1 (original data and the one changed interaction).**
+Fix the data of (16.1)--(16.2), in particular
+
+$$
+0<Z<1,\qquad H=(1-Z)/2,\qquad
+0<l<k_0<u<H,\qquad \varepsilon>0,\qquad \tau>0.
+\tag{20.1}
+$$
+
+Both $\varepsilon$ and the regularization time $\tau$ are fixed. The latter
+is measured in the original clock of Definition 1.3. For either sign of
+sufficiently small nonzero $\kappa$, retain exactly
+
+$$
+\begin{gathered}
+X=Y=H+\kappa,\qquad
+p_\kappa(k)=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),\\
+d=(1,-1,0,-1,1),\qquad
+\mathcal I_\kappa(k)=\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}(k)^{-1},
+\qquad w_s=d_s/(p_{\kappa,s}\mathcal I_\kappa).
+\end{gathered}
+\tag{20.2}
+$$
+
+The preparation is arbitrary and immutable. With increments $h_2=0$,
+$h_1=h_3=v$, the representatives are still
+$\psi_s=\sqrt{p_{\kappa,s}}e^{-i(\theta_s^{\rm in}+h_s)}$.
+Set $\theta=h_{13}$ and $D=h_0-h_{13}$ modulo $2\pi$.
+The integer phase change in Definition 12.1 is unimodular. Thus
+
+$$
+\Omega_\kappa=I\times\mathbb T_\theta\times\mathbb T_v\times\mathbb T_D,
+\quad I=(l,u),\quad
+ d\mu=dk\,d\theta\,dv\,dD,\quad o=(k_0,0,0,0),
+\tag{20.3}
+$$
+
+with the actual $2\pi$ period in every circle and density one. Use
+$A_\kappa,B_\kappa$ of (12.7) and $b_\kappa$ of (16.7). The original
+controls and the complete free form are
+
+$$
+\begin{aligned}
+P&=\partial_k,&
+Q_\kappa&=A_\kappa(k)\partial_\theta+
+ B_\kappa(k)\partial_v+\kappa b_\kappa(k)\partial_D,\\
+T_\kappa[f]&=\int_{\Omega_\kappa}
+  (\varepsilon^2|Pf|^2+|Q_\kappa f|^2)\,d\mu,&
+\mathcal F_\kappa&=
+ \overline{C_c^\infty(\Omega_\kappa)}^{(\|\cdot\|_2^2+T_\kappa)^{1/2}}.
+\end{aligned}
+\tag{20.4}
+$$
+
+There is one $v$ coordinate, with coefficient $B_\kappa$, not twice that
+coefficient. Let $L_\kappa$ be the free Friedrichs operator of this form.
+The height faces are Dirichlet, the phases periodic, the covariance is
+$\operatorname{diag}(\varepsilon^2,1)$, and the semigroup is
+$e^{-tL_\kappa}$. In particular its diffusion covariance is twice this
+matrix times $dt$. Write $p_\kappa(t,x,y)$ for its kernel relative to
+$d\mu$ and $\Gamma_{\kappa,o}$ for the original unit point Green field.
+Explicitly change the interaction field to
+
+$$
+\begin{aligned}
+V_{\kappa,\tau}(y)&=\int_\tau^\infty p_\kappa(t,o,y)\,dt,\\
+\sigma_{\kappa,\tau}(y)&=p_\kappa(\tau,o,y),\\
+\mathfrak q_{\kappa,\tau,g}[f]&=
+ T_\kappa[f]-g\int_{\Omega_\kappa}V_{\kappa,\tau}|f|^2\,d\mu,
+\qquad
+E_{\kappa,\tau}(g)=
+ \inf_{\substack{f\in\mathcal F_\kappa\\\|f\|_2=1}}
+ \mathfrak q_{\kappa,\tau,g}[f].
+\end{aligned}
+\tag{20.5}
+$$
+
+The last two expressions are used as closed attractive forms and finite
+energies only after the boundedness assertion below. This is a free-heat
+regularization of the interaction, not the unchanged point-source
+multiplier, a different kinetic operator, or a rescaling of its clock.
+
+**Theorem 20.2 (effective source, killed charge and fixed-parameter
+minimum).** For every fixed admissible nonzero $\kappa$, the field in
+(20.5) is bounded, strictly positive and smooth in the interior, belongs
+to $D(L_\kappa)$, and satisfies
+
+$$
+V_{\kappa,\tau}=e^{-\tau L_\kappa}\Gamma_{\kappa,o}
+ =L_\kappa^{-1}\sigma_{\kappa,\tau},\qquad
+L_\kappa V_{\kappa,\tau}=\sigma_{\kappa,\tau}.
+\tag{20.6}
+$$
+
+The first semigroup action can be interpreted in $L^1$.
+Let $\zeta$ be the exit time of
+$K_t=k_0+\sqrt2\varepsilon B_t^1$ from $I$, and put
+$S(t)=\mathbb P_{k_0}(\zeta>t)$. Then
+
+$$
+\begin{aligned}
+\int\sigma_{\kappa,\tau}\,d\mu&=S(\tau)\in(0,1),\\
+\int V_{\kappa,\tau}\,d\mu&=
+ \int_\tau^\infty S(t)\,dt=\mathbb E_{k_0}(\zeta-\tau)_+,\\
+0<\int V_{\kappa,\tau}\,d\mu&<
+ \mathbb E_{k_0}\zeta=
+ \frac{(k_0-l)(u-k_0)}{2\varepsilon^2}.
+\end{aligned}
+\tag{20.7}
+$$
+
+These quantities are independent of $\kappa$. The effective source has
+surviving charge $S(\tau)$; the field mass in the second line is a
+remaining-lifetime integral, not that charge.
+
+For every fixed $g>0$, (20.5) is a closed semibounded form on exactly
+$\mathcal F_\kappa$. Its operator is
+
+$$
+H_{\kappa,\tau,g}=L_\kappa-gM_{V_{\kappa,\tau}},\qquad
+D(H_{\kappa,\tau,g})=D(L_\kappa).
+\tag{20.8}
+$$
+
+It has compact resolvent, and its finite bottom $E_{\kappa,\tau}(g)$
+is attained by a normalized member of this operator domain. The completed
+form domain is the horizontal domain (20.4), with zero height trace;
+no ordinary isotropic $H^1_0$ identification or pole boundary condition
+is imposed.
+
+Proof. Propositions 2.1--2.2 already supply the free operator, its smooth
+positive kernel, compact free form embedding and integrable unit-source
+Green field. Their height estimate gives the parameter-independent gap
+
+$$
+T_\kappa[f]\ge\lambda_D\|f\|_2^2,
+\qquad \lambda_D=\frac{\varepsilon^2\pi^2}{(u-l)^2}.
+\tag{20.9}
+$$
+
+To obtain a bound before invoking any attractive operator, use precisely
+the larger interior height cylinder of Proposition 2.1. At every fixed
+positive $a$, its smooth free kernel bounds the original diagonal
+$p_\kappa(a,y,y)$ uniformly for $y\in\Omega_\kappa$. With
+$\delta=\tau/4$, the semigroup identity, symmetry and the free spectral
+gap imply, for $t\ge\tau$,
+
+$$
+p_\kappa(t,o,y)\le
+ e^{-\lambda_D(t-2\delta)}
+ \sqrt{p_\kappa(2\delta,o,o)p_\kappa(2\delta,y,y)}.
+\tag{20.10}
+$$
+
+Integrating proves boundedness of $V_{\kappa,\tau}$. Constants at this
+stage may depend on $\kappa$. The same argument bounds
+$\sigma_{\kappa,\tau}$; finite volume makes it an $L^2$ function.
+The free spectral theorem now gives
+$\int_\tau^\infty e^{-tL_\kappa}\delta_o\,dt
+=L_\kappa^{-1}\sigma_{\kappa,\tau}$ in $L^2$, with the initial point row
+first smoothed at $\tau$. More explicitly,
+$\sigma_{\kappa,t}=e^{-(t-\tau)L_\kappa}\sigma_{\kappa,\tau}$ for
+$t\ge\tau$, and its $L^2$ integral equals the same inverse.
+This proves membership in $D(L_\kappa)$ and the second identity (20.6).
+Tonelli, symmetry and the free semigroup law applied to the nonnegative
+$L^1$ field $\Gamma_{\kappa,o}$ give the first identity. Interior
+hypoellipticity and the smooth right side give smoothness; heat positivity
+gives strict positivity. Equivalently, for every compactly supported
+smooth $\varphi$,
+
+$$
+\int V_{\kappa,\tau}L_\kappa\varphi\,d\mu
+ =\int\sigma_{\kappa,\tau}\varphi\,d\mu
+ =(e^{-\tau L_\kappa}\varphi)(o).
+\tag{20.11}
+$$
+
+The free process has exactly the height component in the statement,
+by Proposition 16.2. Its death therefore depends only on $K$.
+Integrating its kernel gives $S(t)$, and Tonelli proves (20.7).
+A one-dimensional Brownian motion starting in the interior has positive
+probability both to survive and to exit by each fixed positive time;
+hence $0<S(\tau)<1$. The expected exit time is the solution of
+$-\varepsilon^2m''=1$, $m(l)=m(u)=0$, namely
+$m(k)=(k-l)(u-k)/(2\varepsilon^2)$. Strict positivity of $S(t)$ and of
+$\int_0^\tau S(t)dt$ proves the strict field-mass inequalities.
+
+Bounded multiplication has relative form bound zero. The bounded case
+of the classical KLMN theorem, [T, Theorem 6.24], applies only now, with
+additive constant $g\|V_{\kappa,\tau}\|_\infty$. It leaves the form
+domain unchanged and yields
+$\mathfrak q_{\kappa,\tau,g}\ge
+\lambda_D-g\|V_{\kappa,\tau}\|_\infty$ on its unit sphere.
+Bounded selfadjoint perturbation gives (20.8). Adding a sufficiently
+large multiple of the squared norm makes its form norm equivalent to
+the free form norm. The compact free embedding from Proposition 2.1
+therefore proves compact resolvent and attainment, either by the direct
+method on a minimizing sequence or the selfadjoint compact-resolvent
+spectral theorem. The $P$ part controls the height $H^1$ norm with values
+in angular $L^2$; closure of the compact height core gives zero traces
+at both faces. These arguments use only the free semigroup until the
+bounded multiplier has been proved. $\square$
+
+## 21. Resolving the shrinking hidden phase without changing the clock
+
+**Definition 21.1 (comparison cover and exact Hilbert factors).** For
+$\kappa\ne0$, put
+
+$$
+a=|\kappa|,\qquad \ell_\kappa=2\pi/a,\qquad
+x=D/\kappa,\qquad
+\nu=dk\,d\theta\,dv\,dx.
+\tag{21.1}
+$$
+
+The rescaled circle has period $\ell_\kappa$, also when $\kappa<0$.
+On $I\times\mathbb T^2\times\mathbb R$ define the auxiliary free fields
+
+$$
+\widetilde P=\partial_k,\qquad
+\widetilde Q_\kappa=
+ A_\kappa(k)\partial_\theta+B_\kappa(k)\partial_v+
+ b_\kappa(k)\partial_x.
+\tag{21.2}
+$$
+
+They are defined also at $\kappa=0$. Close the corresponding free form
+with measure $\nu$, covariance $\operatorname{diag}(\varepsilon^2,1)$
+and the original height killing. Denote its real-$x$ kernel by
+$\widetilde p_\kappa$ and the kernel after quotienting $x$ by a period
+$\ell$ by $p^{(\ell)}_\kappa$. The point in either comparison space is
+$\widetilde o=(k_0,0,0,0)$. These are comparison realizations, not a new
+native leaf at zero. The quotient with $\ell=\ell_\kappa$ is exactly a
+coordinate representation of the nonzero-parameter native free operator.
+Indeed,
+
+$$
+\begin{aligned}
+d\mu&=a\,d\nu,&
+(U_\kappa f)(k,\theta,v,x)&=a^{1/2}f(k,\theta,v,\kappa x),\\
+\|U_\kappa f\|_{L^2(\nu)}&=\|f\|_{L^2(\mu)},&
+\widetilde T_\kappa[U_\kappa f]&=T_\kappa[f],\\
+p_\kappa(t,o,(k,\theta,v,\kappa x))
+ &=a^{-1}p^{(\ell_\kappa)}_\kappa(t,\widetilde o,(k,\theta,v,x)).
+\end{aligned}
+\tag{21.3}
+$$
+
+The form identity extends by completion. The factor $a^{-1}$ in the
+kernel is the Jacobian of the original unit point charge, not a choice
+to increase that charge. Neither time nor the two visible periods changes.
+
+**Theorem 21.2 (uniform comparison estimates and original field height).**
+There is a single $\kappa_*>0$ such that all the following assertions
+hold for $|\kappa|\le\kappa_*$. For every fixed $t_0>0$, the kernels
+$p^{(\ell)}_\kappa(t_0,y,z)$ are bounded on the original height cylinder
+by one finite constant independent of $\kappa$ and of every $\ell\ge4$.
+For the real-$x$ cover,
+
+$$
+\widetilde p_\kappa\longrightarrow\widetilde p_0
+\quad\hbox{locally uniformly on }
+(0,\infty)\times
+ (I\times\mathbb T^2\times\mathbb R)^2.
+\tag{21.4}
+$$
+
+Its limiting kernel is strictly positive there. Consequently, for each
+fixed $\tau>0$ there is $C_\tau<\infty$ such that, for every
+$0<|\kappa|\le\kappa_*$ and every original point $y$,
+
+$$
+0<V_{\kappa,\tau}(y)\le\frac{C_\tau}{|\kappa|}.
+\tag{21.5}
+$$
+
+For each nonempty compact $K\subset I\times\mathbb T^2\times\mathbb R$ there
+are $c_{\tau,K}>0$ and $\kappa_K>0$ such that, on its injective image
+$D=\kappa x$ and for either sign $0<|\kappa|\le\kappa_K$,
+
+$$
+V_{\kappa,\tau}(k,\theta,v,\kappa x)
+ \ge\frac{c_{\tau,K}}{|\kappa|}
+\quad\hbox{for almost every }(k,\theta,v,x)\in K.
+\tag{21.6}
+$$
+
+The constants fix $I,k_0,Z,\varepsilon,\tau$; no joint limit of these
+data is asserted.
+
+Proof. Choose a slightly larger height interval
+$I'=(l',u')$ with $0<l'<l<u<u'<H$. Shrink the two-sided parameter
+interval so that the probabilities and coefficients are smooth on a
+neighbourhood of $\overline I'$, with common positive margins.
+Writing $a_\kappa(k)=(A_\kappa(k),B_\kappa(k),b_\kappa(k))$ for this
+proof only, (12.8) and (16.7) give
+
+$$
+a_0(k)=\left(\frac{H-k}{2H},-\frac{k}{2H},\frac1k-\frac1H\right),
+\qquad
+\det(a_0,a_0',a_0'')=-\frac1{2Hk^3}.
+\tag{21.7}
+$$
+
+Thus $\widetilde P,\widetilde Q_\kappa,
+[\widetilde P,\widetilde Q_\kappa],
+[\widetilde P,[\widetilde P,\widetilde Q_\kappa]]$ form a uniformly
+nondegenerate frame on the compact parameter-height rectangle after a
+further shrink. All coefficient derivatives are uniformly bounded.
+Multiplying $\widetilde P$ by the fixed $\varepsilon>0$ retains these
+properties. The local uniform strong Hörmander condition has step three,
+including at the comparison value $\kappa=0$.
+
+Here is a local argument for the asserted bound that does not assume a
+uniform sum of cover tails or a compact space of bounded total volume.
+On the larger cylinder with height $I'$, for each finite $\ell\ge4$,
+take its free Friedrichs heat kernel $h_{\kappa,\ell}$. Its semigroup is
+symmetric and sub-Markov, by integration by parts and the contraction
+chain rule exactly as in Proposition 2.1. The same local Hörmander
+argument gives a smooth interior kernel. On fixed-size coordinate
+patches $U_1,U_2$ and a fixed compact positive-time interval $J$, positivity
+and the sub-Markov property give the uniform initialization
+
+$$
+\int_J\int_{U_1}\int_{U_2}
+ h_{\kappa,\ell}(t,y,z)\,d\nu(z)\,d\nu(y)\,dt
+ \le |J|\,\nu(U_1).
+\tag{21.8}
+$$
+
+The patches and their nested enlargements have bounded volume and fixed
+margins independent of $\ell$. In the $x$ direction they can be chosen
+inside intervals of length less than $4$; phase translations identify
+all such charts. The visible torus needs only a fixed finite collection
+of charts. Heights in $\overline I$ have a fixed distance from
+$\partial I'$. All local coefficients on translated charts are identical.
+A compactly supported measure of bounded mass in these space-time-pair
+charts is bounded in $H^{-s}$ for any fixed sufficiently large $s$.
+This follows directly by dual Sobolev embedding into the continuous
+functions. Apply it to (21.8).
+
+The kernel satisfies the homogeneous equation
+
+$$
+\left(\partial_t-\tfrac12\Delta_{\kappa,y}
+                     -\tfrac12\Delta_{\kappa,z}\right)h_{\kappa,\ell}=0,
+\qquad \Delta_\kappa=\varepsilon^2\partial_k^2+
+ \widetilde Q_\kappa^2.
+\tag{21.9}
+$$
+
+The separate spatial fields in $y$ and $z$, together with the time
+field, satisfy the uniform weak Hörmander hypothesis for this operator.
+The uniform local subelliptic estimate [H, Theorem B.1, pp.953--955]
+applied with nested cutoffs therefore increases the initial negative
+Sobolev order by a fixed positive amount at every iteration. Iteration
+and Sobolev embedding give a uniform $C^0$ bound on smaller charts, and
+also bounds for any fixed finite number of derivatives. This is the
+local smoothing argument of [H, Corollary B.3]; (21.8) supplies its
+initialization independently of the circle length. The estimate applies
+to distributional solutions by smooth approximation in its local
+Sobolev norms. Only the fixed charts, coefficient bounds, bracket lower
+bound, and positive-time margins enter its constants. No factor equal
+to the number of $x$ charts enters a pointwise supremum. This proves a
+uniform bound for the larger-cylinder kernel at any fixed positive
+time. Killing at $l,u$ earlier gives the claimed bound for
+$p^{(\ell)}_\kappa$ by domain domination.
+
+The same comparison fields on the real-$x$ cover are divergence free
+and have selfadjoint contraction realizations on one common open
+cylinder for all $\kappa$, including zero. Their coefficients depend
+smoothly on $\kappa$ and satisfy (21.7). They meet the hypotheses of
+[H, §3.2.2, Theorem 3.5, pp.922--923]: fixed open manifold and boundary
+conditions, smooth parameter-dependent fields and positive measure,
+uniform strong Hörmander generation, zero potential, and uniform
+$L^2$ semigroup norm at most one. It gives (21.4), in fact with all
+interior derivatives on compact positive-time sets. One can also
+identify its semigroup limit directly: drive all parameters by the
+same $K$ and independent $B^2$, integrate
+$\sqrt2(A_\kappa,B_\kappa,b_\kappa)(K_s)dB_s^2$, wrap only the first
+two phase coordinates, and kill at the same $\zeta$. Uniform convergence
+of the coefficients gives convergence in probability of these finite-time
+increments; local smoothing upgrades the resulting weak kernel limit.
+
+For completeness, strict heat positivity holds also on this cover.
+The three coefficient vectors at a suitable three interior heights are
+independent, by (21.7). Height travel and signed phase legs there realize
+any three real phase displacements. They stay inside $I$ and can be
+traversed in any prescribed positive time. This is the same
+bracket-accessibility and positive free-heat principle used in
+Proposition 2.1, now before wrapping $x$. The connected cover is one
+accessible component; its smooth killed kernel is strictly positive.
+
+Projecting this very killed process by $x\mapsto[x]_{\ell}$ gives its
+quotient process, with exactly the same death time. Hence its transition
+measure is the pushforward of the cover measure. Relative to $\nu$ this
+means
+
+$$
+p^{(\ell)}_\kappa(t,\widetilde o,(k,\theta,v,[x]_{\ell}))
+ =\sum_{n\in\mathbb Z}
+ \widetilde p_\kappa(t,\widetilde o,(k,\theta,v,x+n\ell))
+\quad\hbox{almost everywhere}.
+\tag{21.10}
+$$
+
+This is a nonnegative sum, justified by testing against nonnegative
+functions on a fundamental cell. It requires no exchange of a signed
+series or convergence of differentiated series. The original-circle
+version follows using (21.3). This reuses the covering method of
+(10.2), not its double-wall group formula for the different fields here.
+
+For the upper Green bound use the uniform diagonal estimate just proved
+at time $2\delta$, where $\delta=\tau/4$. Height Poincaré gives the same
+$\lambda_D$ on every quotient, irrespective of $\ell$. The semigroup
+calculation (20.10), now in measure $\nu$, gives
+
+$$
+p^{(\ell)}_\kappa(t,y,z)
+ \le C_{\tau/2}e^{-\lambda_D(t-\tau/2)}
+ \qquad(t\ge\tau,\ \ell\ge4).
+\tag{21.11}
+$$
+
+Its integral is bounded by one finite $C_\tau$.
+Ensure $\ell_\kappa\ge4$ by shrinking $\kappa_*$ if needed.
+The exact Jacobian (21.3) proves (21.5) on the whole original cylinder,
+including uniformly as a point approaches a height face.
+
+For the lower bound, positivity and continuity give
+
+$$
+m_{\tau,K}:=
+ \min_{\substack{\tau\le t\le\tau+1\\z\in K}}
+ \widetilde p_0(t,\widetilde o,z)>0.
+\tag{21.12}
+$$
+
+By (21.4), the corresponding kernels for both small signs are at least
+$m_{\tau,K}/2$ on this compact set. The $n=0$ summand of (21.10), (21.3)
+and integration over this fixed original-time interval imply (21.6),
+with $c_{\tau,K}=m_{\tau,K}/2$. A compact $K$ has bounded $x$, so its
+image lies in the injective chart $|D|<\pi$ for all small $a$.
+The lower bound uses only a positive portion of the full field; the
+field itself remains the entire integral in (20.5). $\square$
+
+## 22. Full-domain inverse-parameter instability after regularization
+
+**Theorem 22.1 (normalized native witnesses and matching ground-energy
+order).** In (20.1)--(20.5) there are $C_\tau<\infty$, $c_\tau>0$,
+$C_F<\infty$ and a single $\kappa_1>0$ such that, for every
+$0<|\kappa|\le\kappa_1$ and every $g>0$,
+
+$$
+\lambda_D-\frac{gC_\tau}{|\kappa|}
+ \le E_{\kappa,\tau}(g)
+ \le C_F-\frac{gc_\tau}{|\kappa|}.
+\tag{22.1}
+$$
+
+The lower inequality holds for every normalized state in the completed
+original full form domain. The upper inequality is realized as an
+inequality on explicit normalized smooth native full-domain states whose
+free energies are bounded by $C_F$. In particular, for each fixed $g>0$,
+through both signs,
+
+$$
+E_{\kappa,\tau}(g)\longrightarrow-\infty,
+\qquad
+\frac{gc_\tau}{2|\kappa|}
+ \le -E_{\kappa,\tau}(g)
+ \le\frac{gC_\tau}{|\kappa|}
+\quad\hbox{for all sufficiently small }|\kappa|.
+\tag{22.2}
+$$
+
+Thus no fixed nonempty strict positive coupling window has a finite
+full-state lower bound independent of nonzero $\kappa$ on any two-sided
+neighbourhood of zero. The matching order concerns the full ground
+energy, not only the value of a selected trial sequence.
+
+Proof. An explicit fixed bump is available. Put
+$r_k=\tfrac12\min(k_0-l,u-k_0)$, $r_\theta=\pi/4$, and
+
+$$
+\eta(s)=
+\begin{cases}e^{-1/(1-s^2)},&|s|<1,\\0,&|s|\ge1,\end{cases}
+\qquad J_\eta=\int_{-1}^1\eta(s)^2ds>0.
+\tag{22.2a}
+$$
+
+In the actual visible phase representatives $(-\pi,\pi)$ take
+
+$$
+F(k,\theta,v,x)=
+\frac{\eta((k-k_0)/r_k)\eta(\theta/r_\theta)
+      \eta(v/r_\theta)\eta(x)}
+ {\sqrt{r_kr_\theta^2J_\eta^4}},
+\tag{22.2b}
+$$
+
+with smooth zero extension and periodic continuation in $\theta,v$.
+Then $F\in C_c^\infty(I\times\mathbb T^2\times\mathbb R)$ and
+$\int|F|^2d\nu=1$ exactly. Write $K=\operatorname{supp}F$ and take
+$R=2$, so $K\subset\{|x|<R\}$. At every sufficiently small nonzero parameter,
+using the representative $D\in(-\pi,\pi)$, set
+
+$$
+f_\kappa(k,\theta,v,D)=
+ |\kappa|^{-1/2}F(k,\theta,v,D/\kappa),
+\tag{22.3}
+$$
+
+and extend by zero outside this image of the support. Require
+$|\kappa|R<\pi$. The function vanishes near the circle seam and the
+height faces, so it is a genuine member of
+$C_c^\infty(\Omega_\kappa)\subset\mathcal F_\kappa$, with the actual
+periods and unchanged boundary conditions. For negative $\kappa$ the
+orientation reverses but the measure Jacobian is still $|\kappa|$.
+Consequently
+
+$$
+\begin{aligned}
+\|f_\kappa\|_{L^2(\mu)}^2&=\int|F|^2d\nu=1,\\
+T_\kappa[f_\kappa]&=
+ \int\left(\varepsilon^2|\partial_kF|^2+
+ |A_\kappa\partial_\theta F+B_\kappa\partial_vF+
+                  b_\kappa\partial_xF|^2\right)d\nu\le C_F.
+\end{aligned}
+\tag{22.4}
+$$
+
+Here $C_F$ is the supremum of the displayed finite expression over a
+compact two-sided parameter interval. In particular it is independent
+of $g$ and of small nonzero $\kappa$. The cancellation
+$(\kappa b_\kappa)\partial_D=b_\kappa\partial_x$ verifies the energy
+in the original two controls; no isotropic kinetic surrogate is used.
+By Theorem 21.2 on $K$ and the same exact normalization,
+
+$$
+\int V_{\kappa,\tau}|f_\kappa|^2d\mu
+ =\int V_{\kappa,\tau}(k,\theta,v,\kappa x)|F|^2d\nu
+ \ge c_{\tau,K}/|\kappa|.
+\tag{22.5}
+$$
+
+Set $c_\tau=c_{\tau,K}$ and shrink $\kappa_1$ to satisfy all previous
+bounds. This proves the upper inequality in (22.1). Conversely,
+(21.5) and (20.9), now applied to every member of the completed domain,
+give its lower inequality. These two statements compare admissible
+full-state energies of the identical regularized field.
+
+Since $C_F>0$, further imposing
+$|\kappa|\le gc_\tau/(2C_F)$ proves (22.2). If a fixed interval of
+couplings is bounded away from zero, the same parameter restriction
+can use its positive lower endpoint, and the divergence is uniform on
+that interval. More generally any nonempty positive window contains a
+fixed $g>0$, for which (22.2) already contradicts a proposed common finite
+lower bound. The conclusion is a counterexample with actual normalized
+states, not an inference from a failed estimate or the change of rank.
+No parameter-dependent small-coupling window is used to settle it.
+$\square$
+
+## 23. Surviving-charge normalization, marginal fields and the zero leaf
+
+**Theorem 23.1 (charge normalization does not repair uniformity).**
+Normalize the effective source, if desired, by
+
+$$
+\sigma^\#_{\kappa,\tau}=S(\tau)^{-1}\sigma_{\kappa,\tau},\qquad
+V^\#_{\kappa,\tau}=S(\tau)^{-1}V_{\kappa,\tau}.
+\tag{23.1}
+$$
+
+Then $L_\kappa V^\#_{\kappa,\tau}=\sigma^\#_{\kappa,\tau}$,
+$\int\sigma^\#_{\kappa,\tau}d\mu=1$, and
+$\sigma^\#_{\kappa,\tau}d\mu$ is the original free distribution at
+$\tau$ conditional on survival. The complete form and operator domains
+are unchanged, and
+
+$$
+E^\#_{\kappa,\tau}(g)=E_{\kappa,\tau}(g/S(\tau)).
+\tag{23.2}
+$$
+
+For every fixed $g>0$ it has the same two-sided inverse-$|\kappa|$
+negative divergence. The total mass of $V^\#_{\kappa,\tau}$ is
+$\mathbb E(\zeta-\tau)_+/S(\tau)$, not necessarily one.
+
+Proof. Theorem 20.2 gives the source equation, its charge, and the
+strictly positive constant $S(\tau)$ independent of the parameter.
+Division proves (23.1) and (23.2). Conditional probability identifies
+the normalized source measure; applying the free inverse to that measure
+gives the stated field. The conditioning is at $\tau$ only; propagation
+after that time retains the original killing. In particular its field
+mass is $\mathbb E(\zeta-\tau\mid\zeta>\tau)$. Theorem 22.1 applies
+with the fixed coupling
+$g/S(\tau)$. No killed mass is silently restored in (20.5): restoring
+unit effective charge is the explicitly different normalization (23.1).
+$\square$
+
+**Definition 23.2 (the retained $q$ factor and its native zero limit).**
+Put $B=I\times\mathbb T_\theta\times\mathbb T_v$ and
+$d\nu_B=dk\,d\theta\,dv$. Let
+
+$$
+\begin{aligned}
+\overline Q_\kappa&=A_\kappa\partial_\theta+B_\kappa\partial_v,\\
+\overline T_\kappa[h]&=\int_B
+ (\varepsilon^2|\partial_kh|^2+|\overline Q_\kappa h|^2)d\nu_B,\\
+\overline{\mathcal F}_\kappa&=
+ \overline{C_c^\infty(B)}^{(\|\cdot\|_2^2+\overline T_\kappa)^{1/2}},
+\qquad \overline L_\kappa\text{ its Friedrichs operator},\\
+\overline V_{\kappa,\tau}(q)&=
+ \int_\tau^\infty\overline p_\kappa(t,q_0,q)dt,
+\qquad q_0=(k_0,0,0).
+\end{aligned}
+\tag{23.3}
+$$
+
+At $\kappa=0$ the actual native leaf is $B$, since $D=0$ for all original
+histories. Its free operator is $L_0=\overline L_0$ with its own measure
+$d\nu_B$ and unit pole $q_0$. Its regularized field is
+$V_{0,\tau}=\overline V_{0,\tau}$. This is different from the
+four-coordinate comparison operator $\widetilde L_0$ of (21.2).
+
+**Theorem 23.3 (exact marginal factors, zero-limit convergence and its
+energy boundary).** For every small nonzero $\kappa$,
+
+$$
+\begin{aligned}
+\int_{\mathbb T_D}p_\kappa(t,o,(q,D))dD
+ &=\overline p_\kappa(t,q_0,q),\\
+\int_{\mathbb T_D}V_{\kappa,\tau}(q,D)dD
+ &=\overline V_{\kappa,\tau}(q),\\
+\frac1{2\pi}\int_{\mathbb T_D}V_{\kappa,\tau}(q,D)dD
+ &=\frac{\overline V_{\kappa,\tau}(q)}{2\pi}.
+\end{aligned}
+\tag{23.4}
+$$
+
+The first identity is an identity of smooth positive-time densities;
+the remaining ones hold for the nonnegative integral representatives.
+The isometry $Jh=(2\pi)^{-1/2}h(q)$ identifies the complete free
+$D$-independent subspace with $L^2(B,\nu_B)$, including
+
+$$
+\begin{aligned}
+\mathcal F_\kappa\cap\operatorname{Ran}J
+ &=J\overline{\mathcal F}_\kappa,\\
+\mathfrak q_{\kappa,\tau,g}[Jh]
+ &=\overline T_\kappa[h]
+  -\frac{g}{2\pi}\int_B\overline V_{\kappa,\tau}|h|^2d\nu_B.
+\end{aligned}
+\tag{23.5}
+$$
+
+The marginal regularized fields are uniformly bounded and converge
+locally uniformly, and in every finite $L^p(B,\nu_B)$, to $V_{0,\tau}$.
+The free marginal kernels converge smoothly on compact interior
+positive-time sets to the actual native zero-leaf kernel. In particular,
+for each fixed smooth normalized $h$ in the base core, the energy in
+(23.5) tends to
+
+$$
+\overline T_0[h]-\frac{g}{2\pi}\int_B V_{0,\tau}|h|^2d\nu_B.
+\tag{23.6}
+$$
+
+These sector energies have a lower bound uniform in small $\kappa$ for
+all normalized members of their complete sector domains. In contrast,
+the complete four-coordinate minima diverge as in (22.2). The actual
+zero-leaf regularized energy, with unit charge and coupling $g$, is a
+finite attained minimum on $\overline{\mathcal F}_0$ and uses $g$, not
+$g/(2\pi)$.
+
+Proof. The projected killed process forgets only $D$. Its drift-free
+fields are $\partial_k,\overline Q_\kappa$, driven by exactly the same
+two Brownian motions and killed at the same height exit. Uniqueness of
+this smooth diffusion identifies its semigroup with that of
+$\overline L_\kappa$. Integrating the full kernel against base tests
+therefore proves the first identity in (23.4); smoothness upgrades the
+density equality from almost everywhere to every interior base point.
+Tonelli proves the field identities. In particular integration and
+averaging differ by the actual hidden-circle volume $2\pi$.
+
+Core pullback gives $T_\kappa[Jh]=\overline T_\kappa[h]$ and the norm
+isometry. Conversely average any approximating full-core sequence over
+$D$. The averaging projection is contractive in $L^2$ and in the free
+form norm: Jensen applies to both horizontal derivatives, and the
+periodic $D$ derivative integrates to zero. For a limit in
+$\operatorname{Ran}J$ its averaged approximants converge to the same
+limit. This proves the completed-domain equality. Substituting
+$|Jh|^2=|h|^2/(2\pi)$ and (23.4) proves (23.5), first on the core and
+then throughout the domain by boundedness of the fields.
+
+At zero,
+
+$$
+\det\begin{pmatrix}A_0&A'_0\\B_0&B'_0\end{pmatrix}
+ =-\frac1{4H}.
+\tag{23.7}
+$$
+
+Thus the base family satisfies a uniform step-two strong Hörmander
+condition on the same larger height interval $I'$, after a common
+parameter shrink. The uniform local smoothing argument of
+(21.8)--(21.9), now on the fixed base torus, supplies uniform
+positive-time diagonal bounds. The free height gap supplies their
+uniform exponentially decreasing time tails. The parameter-dependent
+kernel theorem [H, Theorem 3.5] gives smooth convergence on compact
+interior positive-time sets. Splitting the integral in (23.3) at a
+large fixed time and bounding the remaining tail as in (21.11) proves
+local uniform convergence of the regularized marginal fields and a
+uniform bound on all of $B$. Since $\nu_B(B)<\infty$, dominated
+convergence proves every asserted finite $L^p$ convergence.
+Coefficient convergence and this field convergence prove (23.6).
+The uniform multiplier bound gives the uniform sector lower bound
+$\lambda_D-(g/(2\pi))\sup_\kappa\|\overline V_{\kappa,\tau}\|_\infty$.
+At zero, the fixed-leaf bounded-field and compact-embedding argument of
+Theorem 20.2 applies on the actual three-coordinate cylinder, so its
+unit-charge minimum is finite and attained for every fixed $g>0$.
+
+There is an exact analytic source distinction behind (23.5).
+Averaging the full fixed-pole field over translations of $D$ equals
+$\overline V_{\kappa,\tau}(q)/(2\pi)$. Before smoothing its source is
+$\delta_{q_0}\otimes dD/(2\pi)$, and after smoothing its source density
+is $\overline p_\kappa(\tau,q_0,q)/(2\pi)$. This follows from free
+translation symmetry and (23.4), exactly as for the marginal/source
+correspondence in the observation-quotient volume, Theorem 3.1.
+It does not identify the original fixed-pole multiplier with its average.
+The full witnesses (22.3) depend on $D$ and are allowed by the original
+form domain. Their energies cannot be bounded by restricting the
+infimum to $\operatorname{Ran}J$. Nor is a four-dimensional Lebesgue
+heat density at $\kappa=0$ used anywhere: the comparison density in
+(21.4) belongs to a different auxiliary operator. $\square$
+
+**Proposition 23.4 (height marginal and the boundary charge balance).**
+Let $h_I(t;k_0,k)$ be the Dirichlet heat kernel of
+$-\varepsilon^2\partial_k^2$ on $I$, relative to $dk$, and set
+$v_\tau(k)=\int_\tau^\infty h_I(t;k_0,k)dt$. Then
+
+$$
+\begin{aligned}
+\int_{\mathbb T^3}V_{\kappa,\tau}(k,\theta,v,D)
+ d\theta\,dv\,dD&=v_\tau(k),\\
+-\varepsilon^2v_\tau''(k)&=h_I(\tau;k_0,k),\qquad
+ v_\tau(l)=v_\tau(u)=0,\\
+\varepsilon^2\{v_\tau'(l)-v_\tau'(u)\}&=S(\tau).
+\end{aligned}
+\tag{23.8}
+$$
+
+On the native zero leaf the corresponding integral is over
+$\mathbb T^2$, with the same right side. Therefore the effective charge
+and its absorbing height flux are consistent with the original killing
+and angular measures on both leaves.
+
+Proof. Integrating the transition law over all phases leaves precisely
+the height Brownian motion, with no angular normalization factor. Tonelli
+and the one-dimensional Dirichlet semigroup prove the first line and
+the differential equation. Positive $\tau$ gives smooth scalar boundary
+data, so integration of that equation over $I$ gives the last line.
+Its right side is $\int_Ih_I(\tau;k_0,k)dk=S(\tau)$.
+This scalar flux statement does not require assuming pointwise normal
+derivatives of a full nonsmoothed Green singularity. $\square$
+
+## 24. Mathematical dependencies and the finite-resolution boundary
+
+**Proposition 24.1 (exact supplier correspondence and additional native
+content).** The positive-time fixed-source and uniform full-state
+statements above have the following dependency correspondence. The
+classical intermediate results are used with their stated hypotheses;
+the additional native conclusion is (22.1)--(22.2) with the source,
+Jacobian and domain identities (20.6)--(23.8).
+
+| Mathematical supplier | Reused scope and distinction from the additional conclusion |
+| --- | --- |
+| [N, Definitions 2.1, 3.1, 8.1 and Theorem 8.2; Theorem 10.3 and Definition 10.6] | Original probabilities, arbitrary fixed preparations, negative phase convention, two native controls, actual circles, grouped leaves, horizontal brackets and the added free analytic contract. These do not already imply a uniform near-wall regularized energy bound or its negation. |
+| This volume, Propositions 2.1--2.2 and Theorem 3.1 | Fixed-leaf free heat, gap, compact form embedding, unit point Green and unregularized full collapse for every nonzero nearby parameter and every $g>0$. The unregularized collapse is reused, not reproved or transferred to a smoothed field by assertion. |
+| This volume, (12.7)--(12.9), Proposition 16.2 and Theorem 17.1 | The exact smooth coefficients and $w_0-w_{13}=\kappa b_\kappa$, original covariance and killed height law. The full-lifetime excursion estimate concerns a different random-history event and supplies no variational bound over all normalized states. |
+| This volume, (10.2) and its killed-process proof | Pushforward of the actual free cover law gives nonnegative periodization. Its double-wall group kernel, Hardy constant and noncompact attractive theorem are not applied to the different rescaled step-three fields. Equation (21.10) verifies the needed cover law directly. |
+| [Observation quotient, Theorems 2.1 and 3.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md) and [Free diffusion quotient rigidity, §§2--3](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md) | Completed-domain pullback, hidden integration versus averaging, and source smearing are established methods for their specified double-wall factors. Equations (23.3)--(23.7) verify the new nearby $q$ factor; their older bottom-observation factor is not silently identified with this three-coordinate $q$. |
+| [Continuation III, Specification 82.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md) | A fixed bounded truncation $\min(\Gamma,M)$ gives the elementary bound $-gM$. It neither supplies a parameter-independent bound for $V_{\kappa,\tau}$ nor preserves this heat-regularized source equation. |
+| [Continuation IV, §§100--102](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md) | Centered finite occurrence-tree screening, its source-size crossover and its propagation-realization assumptions concern a different counting operator and source. They supply no replacement for the continuous native killed cylinder. |
+| [H] Colin de Verdière--Hillairet--Trélat, [DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), Theorem B.1, Corollary B.3 and Theorem 3.5 | Literature-attested uniform local subelliptic estimates, local smoothing and positive-time parameter continuity. The verified determinant (21.7), bounded local mass initialization (21.8), larger height cylinder, uniform gap and exact Jacobian are necessary native inputs. No Gaussian theorem for a different isotropic or globally homogeneous operator is substituted. |
+| [T] G. Teschl, *Mathematical Methods in Quantum Mechanics*, [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 6.24 and 4.10 | Literature-attested bounded form perturbation and variational spectral facts. They apply after the actual regularized multiplier is bounded and the free form embedding is compact. They provide no parameter-uniform multiplier constant by themselves. |
+
+Proof. Equations (20.2)--(20.4) specialize the supplied source without
+changing its controls, periods or analytic kinetic contract. The
+semigroup law proves its new effective source equation; the independent
+height component proves the killed charge. The nonvanishing determinant
+(21.7) supplies a regular comparison family on the resolved hidden
+coordinate, while (21.3) retains the original Hilbert and point-charge
+normalizations. The uniform local estimates and the fixed height gap
+then give the whole-domain lower bound. The positive cover kernel and
+the explicitly normalized original-domain states (22.3) give the
+opposite bound with the same parameter order. Thus the substantive
+repository-derived application is the uniform native two-sided
+inverse-parameter conclusion, rather than a new general heat-kernel,
+periodization, perturbation or variational theorem. The rows distinguish
+which classical or published native statements enter each step. This
+correspondence makes no literature-priority or formal-kernel claim.
+$\square$
+
+**Proposition 24.2 (analytic and operational interpretation).** Fixed
+positive original-clock heat smoothing removes the fixed-parameter
+unbounded-below point attraction but does not remove its parameter-uniform
+full-state instability near this wall. Conditional surviving-charge
+normalization does not change that verdict. Free marginal convergence,
+a restriction to $D$-independent amplitudes, and the three-coordinate
+native zero leaf are each compatible with the full-state divergence.
+None of these conclusions supplies a physical smoothing, projection,
+preparation, reset, acquisition capability, physical spatial axes or a
+mean-selection mechanism.
+
+Proof. Theorem 3.1 gives the already established unregularized
+fixed-nonzero-parameter collapse. Theorem 20.2 proves a bounded
+regularized multiplier and a finite attained minimum at each such
+parameter. Theorem 22.1 proves failure of the original uniform target
+with actual states from its complete domain, and also its matching
+inverse-$|\kappa|$ order. Theorem 23.1 preserves that order after restoring
+unit surviving charge. Theorem 23.3 proves the different marginal and
+sector statements with the factors required by their Hilbert spaces,
+and identifies the actual zero-leaf problem separately. The lost
+uniformity is therefore a source/phase-volume effect that persists at
+fixed analytic resolution: on a hidden strip of width of order
+$|\kappa|$, the regularized field generated by the original point charge
+has height of order $|\kappa|^{-1}$, and admissible analytic amplitudes can use that
+width with bounded horizontal free energy. These statements follow
+from (21.5)--(22.5), without asserting a sharp coefficient or a limiting
+profile. The definitions supply only analytic semigroups and states on
+ray space; no map or lawful physical operation realizing them is an
+assumption. Their existence cannot establish any of the listed physical
+or operational conclusions. $\square$
+
+## 追加锚（本行以下为增补区）
+
+
+## 25. Moving resolution with the original killed source
+
+**Definition 25.1 (fixed data, complete domains and the two charges).**
+Fix, before choosing a parameter neighbourhood or a time family,
+
+$$
+0<Z<1,\quad H=(1-Z)/2,\quad
+0<l<k_0<u<H,\quad \varepsilon>0,\quad \tau_{\min}>0.
+\tag{25.1}
+$$
+
+For every sufficiently small nonzero real $\kappa$ of either sign use
+exactly Definition 20.1. Thus $X=Y=H+\kappa$, the probabilities are
+
+$$
+(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),
+\tag{25.2}
+$$
+
+all preparation phases are arbitrary and immutable, the amplitude
+convention is negative, and the increments satisfy $h_2=0$, $h_1=h_3=v$.
+The unimodular coordinates are $\theta=h_{13}$, $D=h_0-h_{13}$ and $v$,
+each of actual period $2\pi$. The full cylinder, measure and pole are
+
+$$
+\Omega=I\times\mathbb T_\theta\times\mathbb T_v\times\mathbb T_D,
+\quad I=(l,u),\quad d\mu=dk\,d\theta\,dv\,dD,
+\quad o=(k_0,0,0,0).
+\tag{25.3}
+$$
+
+Retain $P=\partial_k$ and the original $Q$ with
+$d=(1,-1,0,-1,1)$, $\mathcal I_\kappa=
+\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}^{-1}$ and
+$w_s=d_s/(p_{\kappa,s}\mathcal I_\kappa)$.
+For subsequent estimates write its already supplied coefficients as
+
+$$
+\begin{aligned}
+s_\kappa&=H+\kappa,& \alpha_\kappa&=\kappa+\kappa^2/H,\\
+A_\kappa&=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-\alpha_\kappa)},&
+B_\kappa&=-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},&
+b_\kappa&=\frac{s_\kappa-k}{H(k-\alpha_\kappa)},\\
+Q_\kappa&=A_\kappa\partial_\theta+B_\kappa\partial_v
+                 +\kappa b_\kappa\partial_D.
+\end{aligned}
+\tag{25.4}
+$$
+
+There is one $v$ coefficient. Let $T_\kappa$, $\mathcal F_\kappa$ and
+$L_\kappa$ be the complete free form, its horizontal closure and its
+Friedrichs operator in (20.4). The covariance is
+$\operatorname{diag}(\varepsilon^2,1)$, with diffusion covariance twice
+this matrix times $dt$. The original clock is $e^{-tL_\kappa}$.
+Both height faces are absorbing and every phase is periodic.
+Put
+
+$$
+d_I=u-l,\qquad \lambda=\frac{\varepsilon^2\pi^2}{d_I^2},\qquad
+\phi(k)=\sqrt{2/d_I}\sin\frac{\pi(k-l)}{d_I}.
+\tag{25.5}
+$$
+
+For every $\tau\ge\tau_{\min}$ define, in that clock,
+
+$$
+V_{\kappa,\tau}(y)=\int_\tau^\infty p_\kappa(t,o,y)dt,
+\qquad S(\tau)=\mathbb P_{k_0}(\zeta>\tau),
+\tag{25.6}
+$$
+
+where $\zeta$ is the first exit from $I$ of
+$K_t=k_0+\sqrt2\varepsilon B_t^1$. The source equation, both deaths
+and its charge are those of Theorem 20.2:
+
+$$
+L_\kappa V_{\kappa,\tau}=p_\kappa(\tau,o,\cdot),\qquad
+\int p_\kappa(\tau,o,y)d\mu(y)=S(\tau)\in(0,1).
+\tag{25.7}
+$$
+
+Compare exactly the two fields
+
+$$
+W_{\rm raw}=V_{\kappa,\tau},\qquad
+W_{\rm unit}=V_{\kappa,\tau}/S(\tau).
+\tag{25.8}
+$$
+
+The second has effective source $p_\kappa(\tau,o,\cdot)/S(\tau)$ of
+charge one; propagation in its inverse $L_\kappa^{-1}$ still has both
+height deaths. It is not a reset source or the Green field of a
+survival-conditioned free generator. Theorem 20.2 and Theorem 23.1,
+applied at each fixed pair $(\kappa,\tau)$, give bounded positive
+multipliers before the following attractive forms are used. They are
+closed on exactly $\mathcal F_\kappa$, have operator domain
+$D(L_\kappa)$, compact resolvent, and attained finite minima
+
+$$
+E_\sigma(\kappa,\tau;g)=
+\inf_{\substack{f\in\mathcal F_\kappa\\\|f\|_2=1}}
+\left(T_\kappa[f]-g\int W_\sigma|f|^2d\mu\right),\qquad g>0.
+\tag{25.9}
+$$
+
+Here the infimum is over the entire original domain. The unregularized
+full point-field collapse of Theorem 3.1 remains a different, reused
+statement. No attractive evolution is a premise of any estimate below.
+
+## 26. All-time native heat bounds and the actual circle gap
+
+**Theorem 26.1 (joint heat estimate and hidden-circle mixing).**
+For the fixed data (25.1), there is one $\kappa_*>0$ and constants
+$c,C>0$, independent of $\kappa,t,\tau$ and $g$, such that, for both
+signs $0<|\kappa|\le\kappa_*$ and every $t\ge\tau_{\min}$,
+
+$$
+0<p_\kappa(t,o,y)\le
+ C e^{-\lambda t}\left(1+\frac1{|\kappa|\sqrt t}\right)
+\qquad(y\in\Omega).
+\tag{26.1}
+$$
+
+In particular, throughout that same neighbourhood and for all
+$\tau\ge\tau_{\min}$,
+
+$$
+\|V_{\kappa,\tau}\|_\infty\le
+ C e^{-\lambda\tau}\left(1+\frac1{|\kappa|\sqrt\tau}\right).
+\tag{26.2}
+$$
+
+The lowest free eigenvalue is exactly $\lambda$, with normalized
+positive eigenfunction $(2\pi)^{-3/2}\phi(k)$. If
+$\delta_\kappa$ is the gap above it, then
+
+$$
+c\kappa^2\le\delta_\kappa\le C\kappa^2.
+\tag{26.3}
+$$
+
+For $t\ge\max(\tau_{\min},|\kappa|^{-2})$ one also has, uniformly
+in every actual phase and every height,
+
+$$
+\left|e^{\lambda t}p_\kappa(t,o,y)
+ -\frac{\phi(k_0)\phi(k)}{(2\pi)^3}\right|
+ \le C e^{-c\kappa^2t}.
+\tag{26.4}
+$$
+
+Thus (26.1) includes winding and mixing at times of order
+$|\kappa|^{-2}$ and beyond. The additive constant in its factor
+$1+(|\kappa|\sqrt t)^{-1}$ is the actual-circle saturation of the
+hidden heat factor.
+
+Proof. The argument uses the actual phase Fourier series and scalar
+Dirichlet operators; it does not assume a uniform hypoelliptic heat
+constant. Choose a closed two-sided parameter interval on which all
+probabilities on a slightly larger height interval have positive
+margins. The coefficients in (25.4) and their derivatives are then
+uniformly bounded on $[l,u]$, and $0<m\le b_\kappa\le M<\infty$.
+All subsequent parameter restrictions are fixed independently of time.
+
+Write $a_\kappa(k)=(A_\kappa(k),B_\kappa(k),b_\kappa(k))$.
+For $\eta\in\mathbb R^3$ let
+
+$$
+H_{\kappa,\eta}=-\varepsilon^2\partial_k^2+
+                 |\eta\cdot a_\kappa(k)|^2
+\quad\hbox{on }H_0^1(I),\qquad
+\beta_\kappa(\eta)=\inf\sigma(H_{\kappa,\eta}).
+\tag{26.5}
+$$
+
+The phrase ``on $H_0^1$'' specifies its form domain; the operator is
+the scalar Dirichlet Friedrichs realization. We prove the uniform bound
+
+$$
+\beta_\kappa(\eta)\ge\lambda+c\Psi(|\eta|),\qquad
+\Psi(r)=\begin{cases}r^2,&0\le r\le1,\\r^{2/3},&r\ge1.\end{cases}
+\tag{26.6}
+$$
+
+The following elementary one-dimensional estimates are intermediate
+steps in this native Fourier calculation. For $|e|=1$, the numerator
+of $v_{\kappa,e}=e\cdot a_\kappa$ with denominator
+$2H(k-\alpha_\kappa)$ is the quadratic polynomial
+
+$$
+P_{\kappa,e}(k)=e_1(k-2\kappa)(s_\kappa-k)
+                 -e_2k(k-2\kappa)+2e_3(s_\kappa-k).
+\tag{26.7}
+$$
+
+At zero its coefficient vector is
+$(2He_3,He_1-2e_3,-e_1-e_2)$. The map from $e$ to these three
+coefficients is invertible. By continuity its inverse remains uniformly
+bounded after a single parameter shrink. The denominator is bounded
+above and below by positive constants. Hence, uniformly in $\kappa,e$,
+
+$$
+\|v_{\kappa,e}\|_\infty\le M_1,\qquad
+|\{k\in I:|v_{\kappa,e}(k)|\le s\}|\le C_1\sqrt s
+\quad(0<s\le1).
+\tag{26.8}
+$$
+
+For the second inequality, a measurable set of length $b>0$ contains
+three points whose successive distances are at least $b/4$, up to an
+arbitrarily small reduction. If a quadratic is bounded there by $C s$,
+its Lagrange interpolation formula bounds its coefficient norm by
+$C' s/b^2$, since $I$ is bounded. The uniform lower coefficient norm
+in (26.7) gives $b\le C''\sqrt s$. Applying this to the sublevel set
+proves (26.8), including linear and constant polynomial cases.
+
+For normalized $f\in H_0^1(I)$ put
+
+$$
+\mathcal E=\varepsilon^2\|f'\|_2^2+
+ r^2\|v_{\kappa,e}f\|_2^2,\qquad r>0.
+$$
+
+One-dimensional Sobolev and Dirichlet Poincare give
+$\|f\|_\infty^2\le2\|f'\|_2\le2\sqrt{\mathcal E}/\varepsilon$
+and $\mathcal E\ge\lambda$. Splitting its unit norm over the sublevel
+set in (26.8) and its complement yields
+
+$$
+1\le C\sqrt{s\mathcal E}+\frac{\mathcal E}{r^2s^2}.
+\tag{26.9}
+$$
+
+Choose $s=c_0/\mathcal E$, where $c_0\le\lambda$ is fixed small
+enough to make the first term at most $1/2$. It follows that
+$\mathcal E\ge c_1 r^{2/3}$, uniformly for every normalized $f$.
+This proves the needed large-frequency growth without a boundary
+subelliptic estimate.
+
+For small frequencies, compactness of the parameter interval and unit
+sphere and the polynomial independence give
+
+$$
+m_1:=\inf_{\kappa,|e|=1}\int_I
+             |v_{\kappa,e}|^2\phi^2dk>0.
+\tag{26.10}
+$$
+
+Indeed a zero integral would make the polynomial (26.7) identically
+zero. Decompose $f=z\phi+h$, $h\perp\phi$. The next scalar Dirichlet
+height eigenvalue is $4\lambda$. If
+$\mathfrak d=\mathcal E-\lambda$, then
+$\|h\|_2^2\le\mathfrak d/(3\lambda)$. When $\mathfrak d\le d_0$ for a sufficiently
+small fixed $d_0>0$, the triangle inequality, (26.8) and (26.10) give
+
+$$
+\|v_{\kappa,e}f\|_2
+ \ge |z|\sqrt{m_1}-M_1\sqrt{\mathfrak d/(3\lambda)}
+ \ge\tfrac12\sqrt{m_1}.
+$$
+
+Thus $\mathfrak d\ge m_1r^2/4$. If $\mathfrak d>d_0$ and $r\le1$, instead
+$\mathfrak d\ge d_0r^2$. This proves (26.6) for $r\le1$. For each fixed
+$\kappa,e$, the scalar variational bottom is nondecreasing in $r$.
+It therefore has a uniform positive gap above $\lambda$ for $r\ge1$.
+Combining that gap on a bounded range with
+$\beta_\kappa(re)\ge c_1r^{2/3}$ on the large range proves (26.6)
+for all $r$. This proof also applies to complex $f$, by the same norm
+inequalities.
+
+Let $K_{\kappa,\eta}(t;k,k')$ be the scalar kernel of (26.5), and
+$h_I$ the original killed height kernel. Positivity and domination give
+
+$$
+0\le K_{\kappa,\eta}(t;k,k')\le h_I(t;k,k').
+\tag{26.11}
+$$
+
+For attribution, this is the elementary bounded nonnegative-potential
+case of the Trotter product formula [T, Theorem 5.11]: alternate the
+height heat semigroup and multiplication by
+$\exp(-t|\eta\cdot a_\kappa|^2/n)$. Every product is positive and
+dominated by the height semigroup, and its strong limit has the same
+property. At each fixed $\eta$ the potential is bounded and the scalar
+operator is selfadjoint with the same Dirichlet domain, exactly the
+hypotheses of that theorem. No uniform bound on that potential is assumed.
+
+Fix $\delta=\tau_{\min}/4$. The height sine series bounds
+$\sup_kh_I(2\delta;k,k)$ by a finite constant. Splitting the scalar
+semigroup at times $\delta,t-2\delta,\delta$, and using its spectral
+norm and (26.11), gives for $t\ge\tau_{\min}$
+
+$$
+\begin{aligned}
+|K_{\kappa,\eta}(t;k,k')|
+&\le C_\delta e^{-\beta_\kappa(\eta)(t-2\delta)}\\
+&\le C e^{-\lambda t}\exp(-c t\Psi(|\eta|)).
+\end{aligned}
+\tag{26.12}
+$$
+
+Here $t-2\delta\ge t/2$; this fixed positive smoothing interval
+loses no fraction of the height death exponent $\lambda$.
+
+Use the orthonormal angular modes
+$(2\pi)^{-3/2}e^{i(n\theta+mv+jD)}$, for $(n,m,j)\in\mathbb Z^3$.
+Parseval for the raw measure gives the exact scalar potential
+$(nA_\kappa+mB_\kappa+\kappa j b_\kappa)^2$.
+Consequently the completed free form is the orthogonal sum of (26.5)
+with $\eta=(n,m,\kappa j)$. More explicitly, for the orthonormal
+expansion $f=\sum f_{nmj}(k)(2\pi)^{-3/2}e^{i(n\theta+mv+jD)}$,
+
+$$
+\begin{aligned}
+\mathcal F_\kappa=\biggl\{f\in L^2(\mu):\;&
+ f_{nmj}\in H_0^1(I)\text{ for all }n,m,j,\\
+&\sum_{n,m,j}\left(\varepsilon^2\|f'_{nmj}\|_2^2+
+ \|(nA_\kappa+mB_\kappa+\kappa j b_\kappa)f_{nmj}\|_2^2\right)
+ <\infty\biggr\},
+\end{aligned}
+$$
+
+and $T_\kappa$ is precisely that sum. Phase convolution commutes with
+both fields and converges in the form norm. Finite Fourier truncation
+and scalar height approximation show conversely that every sequence in
+the displayed domain is a limit of the original core. This proves the
+decomposition for the complete domain. In particular
+
+$$
+p_\kappa(t,o,(k,\theta,v,D))=
+\frac1{(2\pi)^3}\sum_{n,m,j\in\mathbb Z}
+ e^{i(n\theta+mv+jD)}
+ K_{\kappa,(n,m,\kappa j)}(t;k_0,k).
+\tag{26.13}
+$$
+
+Absolute convergence follows from (26.12) and the summation estimate
+below. Thus this kernel identity follows from the orthogonal-sum
+semigroup first, and then holds pointwise by continuity. It is not a
+formal Fourier density at $\kappa=0$.
+
+Set $a=|\kappa|\le1$. Monotonicity of $\Psi$ gives
+
+$$
+\Psi(\sqrt{n^2+m^2+a^2j^2})
+ \ge\tfrac13\{\Psi(|n|)+\Psi(|m|)+\Psi(a|j|)\}.
+$$
+
+For $t\ge\tau_{\min}$ the first two one-dimensional sums are
+bounded independently of $t$. For the third, comparison with an
+integral gives
+
+$$
+\begin{aligned}
+\sum_{j\in\mathbb Z}e^{-c t\Psi(a|j|)}
+&\le1+\frac2a\int_0^\infty e^{-c t\Psi(r)}dr\\
+&\le C\left(1+\frac1{a\sqrt t}\right).
+\end{aligned}
+\tag{26.14}
+$$
+
+On $(0,1)$ the integral is bounded by $C t^{-1/2}$; on $(1,\infty)$
+comparison with the full $r^{2/3}$ integral gives $C t^{-3/2}$,
+which is at most a fixed multiple of $t^{-1/2}$ on this time range.
+The Fourier sum, (26.12) and (26.14) prove (26.1) on the entire original
+cylinder. Integrating it for $t\ge\tau$, and using
+$t^{-1/2}\le\tau^{-1/2}$, proves (26.2).
+
+For the gap, the zero angular mode has bottom $\lambda$ and next
+eigenvalue $4\lambda$. Every nonzero angular mode has
+$|(n,m,\kappa j)|\ge a$, so (26.6) gives a gap at least $c a^2$
+when $a\le1$. The normalized test
+$(2\pi)^{-3/2}\phi(k)e^{iD}$ is orthogonal to the ground state and has
+energy
+
+$$
+\lambda+a^2\int_I b_\kappa(k)^2\phi(k)^2dk\le\lambda+Ca^2.
+\tag{26.15}
+$$
+
+It belongs to the completed form domain by height approximation.
+The variational principle [T, Theorem 4.10] proves (26.3); the same
+Fourier decomposition proves simplicity of the ground state. This
+derives the gap rather than importing one from a different diffusion.
+
+Finally, omit the zero triple in (26.13). Each remaining frequency
+satisfies $\Psi(|\eta|)\ge a^2$. Remove half of its exponential as
+$e^{-c a^2t/2}$, and sum the other half by (26.14). For $t\ge a^{-2}$
+that sum is bounded. The zero triple is $h_I(t;k_0,k)$, whose sine
+series differs from $e^{-\lambda t}\phi(k_0)\phi(k)$ by at most
+$C e^{-4\lambda t}$ on $t\ge\tau_{\min}$. After decreasing $c$,
+these statements give (26.4). The integer lattice in (26.13) is exactly
+the actual $2\pi$ lattice; neither a changed angular Haar mass nor a
+noncompact approximation was used. $\square$
+
+## 27. Full-state witnesses at every resolution
+
+**Theorem 27.1 (joint variational lower witnesses).** After a fixed
+shrink of the same two-sided neighbourhood, there exist $c,C_0>0$ and,
+for every $0<|\kappa|\le\kappa_*$ and $\tau\ge\tau_{\min}$,
+a real normalized $f_{\kappa,\tau}\in C_c^\infty(\Omega)$ such that
+
+$$
+\begin{aligned}
+T_\kappa[f_{\kappa,\tau}]&\le C_0,\\
+\int V_{\kappa,\tau}|f_{\kappa,\tau}|^2d\mu
+ &\ge c e^{-\lambda\tau}
+              \left(1+\frac1{|\kappa|\sqrt\tau}\right).
+\end{aligned}
+\tag{27.1}
+$$
+
+These are actual full-domain witnesses for the original point-generated
+field. They remain valid when the cutoff depends arbitrarily on the
+parameter, including in the circle-mixing range.
+
+Proof. Fix a compact interval $J\Subset I$ with nonempty interior.
+The killed height kernel satisfies
+
+$$
+h_I(t;k_0,k)\ge c_J e^{-\lambda t}
+\quad(t\ge\tau_{\min},\ k\in J).
+\tag{27.2}
+$$
+
+To verify uniformity in time, use its strictly positive continuous
+kernel on a compact time interval, and then its sine series: the leading
+term is $e^{-\lambda t}\phi(k_0)\phi(k)$, with a positive minimum on
+$J$, while the remaining terms are $O(e^{-4\lambda t})$. Thus (27.2)
+uses the same two absorbing height faces and the same clock.
+
+Integrate out both visible angles, rather than assume an independent
+hidden driver. Proposition 16.2 gives the original real hidden lift
+
+$$
+\delta_t=\sqrt2\kappa\int_0^t b_\kappa(K_s)dB_s^2.
+\tag{27.3}
+$$
+
+The same $B^2$ drives the visible angles. Conditional on the entire
+height path, which depends only on the independent $B^1$, its hidden
+variance is $2\kappa^2\mathcal A_t$, where
+
+$$
+\mathcal A_t=\int_0^t b_\kappa(K_s)^2ds,
+\qquad m^2t\le\mathcal A_t\le M^2t
+\quad\hbox{on }\{\zeta>t\}.
+\tag{27.4}
+$$
+
+These deterministic bounds hold on that very surviving path; they do
+not combine different realizations. The conditional characteristic
+function follows by the Gaussian stochastic integral with the now
+fixed integrand. On reducing $\delta_t$ modulo its actual $2\pi$
+period, its conditional density is
+
+$$
+G_{\kappa^2\mathcal A_t}(D),\qquad
+G_s(D)=\frac1{\sqrt{4\pi s}}
+ \sum_{r\in\mathbb Z}e^{-(D+2\pi r)^2/(4s)}.
+\tag{27.5}
+$$
+
+This is a conditional formula for the original law, not a new clock,
+a new source, or a new diffusion input. In particular the exact visible
+integral is
+
+$$
+\begin{aligned}
+M_\kappa(t;k,D)
+&:=\int_{\mathbb T^2}p_\kappa(t,o,(k,\theta,v,D))d\theta dv\\
+&=h_I(t;k_0,k)\,
+ \mathbb E\!\left[G_{\kappa^2\mathcal A_t}(D)
+        \mid K_t=k,\ \zeta>t\right].
+\end{aligned}
+\tag{27.6}
+$$
+
+Disintegration is with respect to the killed height endpoint measure.
+It holds almost everywhere, which suffices for all following integrals.
+It is obtained by integrating the joint transition law, not by multiplying
+independent visible and hidden densities.
+
+Put $a=|\kappa|$, $r_\tau=\min(1,a\sqrt\tau)$, and fix
+$0<\eta_0<1/4$. If $a\sqrt\tau\le1$, then for
+$t\in[\tau,\tau+1]$ the variance parameter $s$ in (27.5) lies between
+$m^2a^2\tau$ and $M^2(1+1/\tau_{\min})a^2\tau$.
+The single summand with $r=0$ proves
+$G_s(D)\ge c/(a\sqrt\tau)$ on $|D|\le\eta_0r_\tau$.
+If $a\sqrt\tau\ge1$, instead $s\ge m^2$.
+There is a common strictly positive lower bound for $G_s(D)$ for all
+$s\ge m^2$ and all $D\in\mathbb T$: on any bounded positive time
+interval use the positive periodized Gaussian, and for large $s$ use
+its Fourier series
+$(2\pi)^{-1}\sum_{j\in\mathbb Z}e^{-j^2s}e^{ijD}$,
+whose coefficients are obtained by a Gaussian integral over the
+periodized real line.
+Together these facts and (27.2) give
+
+$$
+M_\kappa(t;k,D)\ge c e^{-\lambda t}
+       \left(1+\frac1{a\sqrt\tau}\right)
+\tag{27.7}
+$$
+
+for $t\in[\tau,\tau+1]$, $k\in J$ and
+$|D|\le\eta_0r_\tau$. All constants are independent of $\kappa,\tau$.
+This lower estimate already includes every hidden winding in the
+large-time case.
+
+Choose real $\chi\in C_c^\infty(\operatorname{int}J)$ and
+$F\in C_c^\infty((-\eta_0,\eta_0))$ with
+$\int_I\chi^2dk=\int_{\mathbb R}F^2dx=1$.
+For the actual representative $D\in(-\pi,\pi)$ set
+
+$$
+f_{\kappa,\tau}(k,\theta,v,D)=
+ \frac1{2\pi}\chi(k)r_\tau^{-1/2}F(D/r_\tau).
+\tag{27.8}
+$$
+
+Extend by zero through the phase seam and periodically. Since
+$r_\tau\le1$ and $\eta_0<1/4$, this is smooth on the actual torus
+and compactly supported away from the height faces. The raw Jacobian
+is $dD=r_\tau dx$; the visible volume is $(2\pi)^2$. Therefore
+$\|f_{\kappa,\tau}\|_2=1$ exactly, and direct application of the two
+original fields gives
+
+$$
+T_\kappa[f_{\kappa,\tau}]
+ =\varepsilon^2\|\chi'\|_2^2
+  +\frac{a^2}{r_\tau^2}\|F'\|_2^2
+                    \int_I b_\kappa^2\chi^2dk\le C_0.
+\tag{27.9}
+$$
+
+Indeed $a^2/r_\tau^2$ is either $1/\tau\le1/\tau_{\min}$ or
+$a^2\le\kappa_*^2$. No isotropic derivative in $D$ was substituted
+for $Q_\kappa$.
+
+For their potential expectation, Tonelli gives the exact full-space
+identity
+
+$$
+\begin{aligned}
+\int V_{\kappa,\tau}|f_{\kappa,\tau}|^2d\mu
+=\frac1{(2\pi)^2}\int_{I\times\mathbb T}
+ \chi(k)^2r_\tau^{-1}F(D/r_\tau)^2
+ \left(\int_\tau^\infty M_\kappa(t;k,D)dt\right)dkdD.
+\end{aligned}
+\tag{27.10}
+$$
+
+Use the positive time window $[\tau,\tau+1]$ in this entire field,
+then (27.7) and the exact normalization. This proves (27.1).
+The trial amplitudes depend on $D$. Their use of a marginal in
+(27.10) computes their original full energy; it neither changes the
+point source nor identifies the full infimum with a marginal infimum.
+The upper estimate in Theorem 26.1, in contrast, holds for every full
+state. $\square$
+
+## 28. Necessary and sufficient scales for arbitrary cutoff families
+
+**Theorem 28.1 (complete-state joint stability classification).**
+For the fixed data (25.1), take one neighbourhood supplied by Theorems
+26.1 and 27.1. There are constants $0<c\le C<\infty$ and
+$C_0<\infty$, independent of both parameter signs and all
+$\tau\ge\tau_{\min}$, such that for every fixed $g>0$,
+
+$$
+\begin{aligned}
+R(a,\tau)&=e^{-\lambda\tau}
+                   \left(1+\frac1{a\sqrt\tau}\right),&
+U(a,\tau)&=1+\frac1{a\sqrt\tau},\\
+\lambda-CgR(a,\tau)&\le E_{\rm raw}(\kappa,\tau;g)
+ \le\min\{\lambda,C_0-cgR(a,\tau)\},\\
+\lambda-CgU(a,\tau)&\le E_{\rm unit}(\kappa,\tau;g)
+ \le\min\{\lambda,C_0-cgU(a,\tau)\},& a&=|\kappa|.
+\end{aligned}
+\tag{28.1}
+$$
+
+Let $\tau(\kappa)\ge\tau_{\min}$ be any deterministic family, without
+continuity, measurability or monotonicity assumptions. On this fixed
+two-sided neighbourhood the complete-state energies have a common
+finite lower bound if and only if, respectively,
+
+$$
+\begin{array}{ll}
+\mathrm{raw}:&
+\displaystyle\liminf_{\kappa\to0,\ \kappa\ne0}
+ |\kappa|\sqrt{\tau(\kappa)}\,e^{\lambda\tau(\kappa)}>0,\\[4pt]
+\mathrm{unit}:&
+\displaystyle\liminf_{\kappa\to0,\ \kappa\ne0}
+ \kappa^2\tau(\kappa)>0.
+\end{array}
+\tag{28.2}
+$$
+
+A liminf of $+\infty$ satisfies the condition. Failure of either
+condition produces a sequence $\kappa_n\to0$ and the actual normalized
+states (27.8), at $\tau=\tau(\kappa_n)$, whose corresponding energies
+tend to $-\infty$. If the condition fails on only one sign, the sequence
+may be chosen on that sign; no regularity across signs is required.
+
+Equivalently, writing $L_a=\log(1/a)$, the sharp raw lower scale is
+
+$$
+\tau(\kappa)\ge
+ \frac{L_a-\tfrac12\log L_a}{\lambda}-O(1),
+\qquad a\downarrow0,
+\tag{28.3}
+$$
+
+where $O(1)$ means one bounded constant, common to the entire two-sided
+family. The unit-charge scale is $\tau(\kappa)\ge c_*/a^2$ eventually
+for some fixed $c_*>0$. The assertion is for every fixed positive
+coupling; it uses no coupling that shrinks with the parameter.
+
+Proof. First the killed height law gives
+
+$$
+c_S e^{-\lambda t}\le S(t)\le C_S e^{-\lambda t}
+\qquad(t\ge\tau_{\min}).
+\tag{28.4}
+$$
+
+For completeness, its sine expansion has a strictly positive first
+coefficient and the higher terms decay faster; positivity and continuity
+on a remaining compact time interval complete the bounds. The exact
+expansion and charge cost are given in (29.1). This is the survival
+probability of (25.6), not an assumed unit mass.
+
+Theorem 26.1 and height Poincare prove the raw lower bound in (28.1)
+on the complete domain. Theorem 27.1 gives its upper bound with the
+same $R$. Dividing the field by (28.4) gives both unit bounds with
+$U$. This also retains the exact identity
+$E_{\rm unit}(\kappa,\tau;g)=E_{\rm raw}(\kappa,\tau;g/S(\tau))$
+at each parameter, but a fixed-coupling fixed-time conclusion alone
+would not have supplied the joint estimates.
+The test $(2\pi)^{-3/2}\phi(k)$ has free energy $\lambda$ and a
+nonnegative attractive expectation, so both energies are at most
+$\lambda$. It is admissible by height approximation, and the fields
+are bounded at each parameter. This proves all of (28.1).
+
+For an arbitrary family, the first line of (28.2) is precisely eventual
+boundedness of $e^{-\lambda\tau}/(a\sqrt\tau)$, and $e^{-\lambda\tau}$
+is already bounded. The raw lower estimate thus gives sufficiency.
+If it fails, choose a sequence along which
+$a\sqrt\tau e^{\lambda\tau}\to0$. Then $R\to\infty$ and (27.8)
+has raw energy at most $C_0-cgR\to-\infty$. This proves necessity
+by admissible states, not by the failure of a supremum estimate.
+Likewise the second line is precisely eventual boundedness of
+$1/(a\sqrt\tau)$; its failure gives $U\to\infty$ along a sequence
+and the same states give unit energy tending to $-\infty$.
+
+These eventual criteria are equivalent to boundedness on the whole
+chosen punctured neighbourhood. Indeed on every annulus
+$a\ge a_0>0$, both $R$ and $U$ are bounded solely by
+$a_0,\tau_{\min}$, even for an arbitrarily discontinuous or unbounded
+time family. Thus no further local uniformity assumption away from zero
+is missing. If a scale diverges only along a subsequence, the conclusion
+is unboundedness below along that subsequence; it need not be a limit
+of the energies along every parameter.
+
+To verify the endpoint in (28.3), the logarithm of the first product
+in (28.2) is
+
+$$
+\lambda\tau+\tfrac12\log\tau-L_a.
+\tag{28.5}
+$$
+
+The strictly increasing function $F(t)=\lambda t+\tfrac12\log t$
+has derivative at least $\lambda$. Its solution $t_a$ to $F(t_a)=L_a$
+satisfies
+
+$$
+t_a=\frac{L_a-\tfrac12\log L_a}{\lambda}+O(1).
+\tag{28.6}
+$$
+
+For example substituting the expression on the right without $O(1)$
+leaves $-\tfrac12\log\lambda+o(1)$ in $F(t)-L_a$, and the derivative
+bound controls its distance from the root. A common lower bound on
+(28.5) implies $\tau\ge t_a-C/\lambda$. Conversely a common bound
+$\tau\ge t_a-C'$ bounds (28.5) below, since $t_a\to\infty$ and
+$F'$ is bounded above on $[t_a-C',t_a]$. This proves the equivalence,
+including families with arbitrarily large times. $\square$
+
+**Proposition 28.2 (distinct stability scales and the mixing endpoint).**
+The two interaction conventions have genuinely different stability
+criteria. For $a$ sufficiently small let
+$\tau(\kappa)=L_a/\lambda$, extending it by $\tau_{\min}$ when
+needed. Then
+
+$$
+E_{\rm raw}(\kappa,\tau(\kappa);g)\longrightarrow\lambda,
+\qquad
+E_{\rm unit}(\kappa,\tau(\kappa);g)\longrightarrow-\infty.
+\tag{28.7}
+$$
+
+For any fixed $b>0$, the family $\tau=b/a^2$ instead has uniformly
+bounded unit-charge energies. For
+$\tau=(L_a-\tfrac12\log L_a)/\lambda+s$ with fixed real $s$,
+
+$$
+R(a,\tau)\longrightarrow\sqrt\lambda\,e^{-\lambda s}.
+\tag{28.8}
+$$
+
+Thus the logarithmic correction in (28.3) cannot be discarded when
+classifying arbitrary families up to bounded energy.
+
+Proof. At $\tau=L_a/\lambda$ one has $e^{-\lambda\tau}=a$,
+so $R=a+1/\sqrt\tau\to0$ while $U\to\infty$.
+Both conclusions (28.7) follow directly from (28.1), including the
+full-state lower bound for the first and normalized witnesses for the
+second. At $\tau=b/a^2$ one has $U=1+b^{-1/2}$, which gives the
+asserted uniform bound. Finally
+$e^{-\lambda\tau}=a\sqrt{L_a}e^{-\lambda s}$ and
+$\tau\sim L_a/\lambda$, proving (28.8).
+The heat factor in (26.1) is of order $1/(a\sqrt\tau)$ before
+mixing and of order one after it; the actual gap (26.3) gives the
+same transition scale. $\square$
+
+## 29. Survival cost, potential mass and the actual zero leaf
+
+**Proposition 29.1 (exact source charge and large-cutoff cost).**
+Put $\xi_0=\pi(k_0-l)/d_I$ and $C_o=4\sin\xi_0/\pi>0$.
+For the same original source and both absorbing height faces,
+
+$$
+\begin{aligned}
+S(t)&=\frac4\pi\sum_{j=0}^\infty
+ \frac{\sin((2j+1)\xi_0)}{2j+1}
+ e^{-(2j+1)^2\lambda t},\\
+\mathcal M(t):=\int_\Omega V_{\kappa,t}d\mu
+&=\frac4{\pi\lambda}\sum_{j=0}^\infty
+ \frac{\sin((2j+1)\xi_0)}{(2j+1)^3}
+ e^{-(2j+1)^2\lambda t}.
+\end{aligned}
+\tag{29.1}
+$$
+
+In particular these are independent of $\kappa$, and as $t\to\infty$,
+
+$$
+S(t)=C_oe^{-\lambda t}(1+O(e^{-8\lambda t})),\qquad
+\mathcal M(t)=\frac{C_o}{\lambda}e^{-\lambda t}
+                                  (1+O(e^{-8\lambda t})).
+\tag{29.2}
+$$
+
+The raw effective source charge is $S(t)$; the unit convention has
+source charge one and potential mass
+
+$$
+\int_\Omega W_{\rm unit}d\mu
+ =\mathcal M(t)/S(t)
+ =\mathbb E(\zeta-t\mid\zeta>t)
+ \longrightarrow1/\lambda.
+\tag{29.3}
+$$
+
+Every raw-stable family in Theorem 28.1 has $\tau\to\infty$ and
+
+$$
+S(\tau(\kappa))\le C a\sqrt{\log(1/a)}
+\quad\hbox{eventually}.
+\tag{29.4}
+$$
+
+For the raw endpoint in (28.8) the more precise cost is
+
+$$
+S(\tau)=C_o a\sqrt{L_a}e^{-\lambda s}(1+o(1)).
+\tag{29.5}
+$$
+
+Every unit-stable family has $\tau\ge b/a^2$ eventually for some
+$b>0$, hence $S(\tau)\le C e^{-\lambda b/a^2}$. At the fixed multiple
+$\tau=b/a^2$ its exact asymptotic cost is
+
+$$
+S(\tau)=C_o e^{-\lambda b/a^2}(1+o(1)).
+\tag{29.6}
+$$
+
+Proof. Integrating the full free heat law over all three actual phases
+leaves the killed height kernel, by (23.8). That scalar kernel, relative
+to $dk$, is
+
+$$
+h_I(t;k_0,k)=\frac2{d_I}\sum_{n=1}^\infty
+ \sin(n\xi_0)\sin\frac{n\pi(k-l)}{d_I}\,e^{-n^2\lambda t}.
+$$
+
+For positive time its absolutely convergent sine series can be integrated
+in height. The even terms vanish and the odd integrals give the first
+line of (29.1). Tonelli for the nonnegative heat kernel gives
+$\mathcal M(t)=\int_t^\infty S(r)dr$; integrating the absolutely
+convergent series gives its second line. The first omitted odd mode is
+$n=3$, with exponent $9\lambda$, proving (29.2). Conditional remaining
+lifetime and (25.7)--(25.8) prove (29.3). No angular averaging factor
+enters this charge calculation.
+
+Raw stability forces $\tau\to\infty$, since a bounded subsequence of
+times makes the product in (28.2) tend to zero. Its equivalent lower
+bound (28.3), together with (29.2), gives (29.4).
+Substitution gives (29.5). The unit criterion and (29.2) give (29.6)
+and its stated upper bound for arbitrary unit-stable families.
+Thus raw stabilization at logarithmic times can occur while
+$a\sqrt\tau\to0$, because the original source charge has decreased
+to the scale of that shrinking width. Division by $S$ removes that
+attenuation; bounded unit-charge fields require spreading to a hidden
+width bounded away from zero, on the original circle scale. This is a
+mathematical comparison of effective source conventions, not a supplied
+operation restoring lost particles or preparing a conditioned process.
+$\square$
+
+**Proposition 29.2 (marginal and zero-leaf boundaries at moving times).**
+The exact marginal and completed-domain identities (23.4)--(23.5)
+continue to hold at every moving cutoff. Moreover, uniformly in the
+same neighbourhood and all $\tau\ge\tau_{\min}$,
+
+$$
+\|\overline V_{\kappa,\tau}\|_\infty\le Ce^{-\lambda\tau},\qquad
+\|\overline V_{\kappa,\tau}/S(\tau)\|_\infty\le C.
+\tag{29.7}
+$$
+
+Thus the energies on the complete $D$-independent sector have a uniform
+lower bound for both conventions and every cutoff family, even when the full-state
+criterion (28.2) fails. Their effective coupling to the base field
+remains $g/(2\pi)$ under the isometry $Jh=(2\pi)^{-1/2}h$.
+The actual native zero-parameter leaf is
+$I\times\mathbb T_\theta\times\mathbb T_v$ with its own raw measure,
+unit source and coupling $g$. Its two regularized conventions have
+uniformly bounded fields for all $\tau\ge\tau_{\min}$.
+
+Proof. Integration in $D$ selects $j=0$ in (26.13). Its factor becomes
+$(2\pi)^{-2}$, and (26.12)--(26.14), now summed only over $n,m$,
+give $\overline p_\kappa(t,q_0,q)\le Ce^{-\lambda t}$.
+Time integration and (28.4) prove (29.7). The completed-domain and
+same-field energy factors are exactly (23.5), so bounded multiplication
+and height Poincare give the sector assertion.
+
+At zero the actual original law has $D=0$ throughout its lifetime,
+by (16.8). It is the three-coordinate operator of Definition 23.2;
+its Fourier modes involve only $nA_0+mB_0$. The same $j=0$ calculation
+therefore proves (29.7) on that actual leaf. It does not construct a
+four-dimensional Lebesgue heat density at zero. In particular the
+auxiliary four-coordinate operator in Definition 21.1, defined by
+resolving $x=D/\kappa$ before taking a coefficient limit, is still a
+different comparison object. The full witnesses (27.8) retain a hidden
+coordinate for every nonzero parameter and have no implication of
+an available projection, amplitude preparation, acquisition procedure,
+mean selector or empirical spatial-dimension theorem. $\square$
+
+## 30. Mathematical supplier correspondence for the joint law
+
+**Proposition 30.1 (scoped premises and the joint native conclusion).**
+The all-time estimates (26.1)--(26.4), the full-state witnesses
+(27.8)--(27.10), and the necessary and sufficient arbitrary-family
+criteria (28.2)--(28.3) have the following mathematical dependencies.
+The elementary polynomial, Fourier and variational steps in their proofs
+are supporting methods; their native joint conclusion is the additional
+content, rather than a new general heat or perturbation theorem.
+
+| Supplier | Exact mathematical scope used |
+| --- | --- |
+| [N, Definitions 2.1, 2.3, 3.1 and 8.1; Theorems 8.2 and 10.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md) | Original probabilities, preparations, phase convention, two controls, actual grouped leaves and finite native realization. No physical amplitude preparation follows from finite ray realization. |
+| This volume, Propositions 2.1--2.2 and Theorem 3.1 | Completed free forms, killed free heat and compactness at each nonzero parameter, and unregularized full point-field collapse. The collapse is reused, not applied to the regularized multiplier. |
+| This volume, (12.7), Proposition 16.2 and §§20--24, at [the published source through §24](https://github.com/the-omega-institute/trureturing/blob/28695dc3c5b8fc9106f1648e021792233e355c31/docs/develop/theory/FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md) | Exact coefficients, common two-driver killed law, effective source equation, original charge and mass identities, fixed-parameter minima, fixed-time inverse-gap estimates, and completed marginal factors. The constants in the fixed-time estimates do not supply the moving-cutoff criterion. |
+| [FiniteRectangleTransport](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), including `polygon_admissible`, `horizontal_leg`, `vertical_leg`, `rectangle_chain`, `weight_compatible`, `finite_rectangles_realize` | Finite original probability/phase paths and compatibility. These statements contain no heat kernel, all-time circle gap or attractive-energy classification. |
+| Pinned mathlib [BrownianMotion.Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/BrownianMotion/Basic.lean) and [Fourier.AddCircleMulti](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Fourier/AddCircleMulti.lean) | Generic Brownian and Fourier tools, not the native joint conclusion. The latter file uses unit-circle probability Haar measure; (26.13) instead states explicitly the raw $2\pi$ angular factors required here. No formal-library theorem is asserted to certify the ordinary proof. |
+| [Observation quotient, Theorem 3.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md); [Free diffusion quotient rigidity, §§2--3](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md) | Hidden integration, averaging, source smearing and complete free-domain pullbacks at their stated factors. They do not identify a marginal energy with the full attractive minimum. The present $q$ factor is exactly the one already verified in §23. |
+| [Continuation III, Specification 82.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md); [Continuation IV, §§100--102](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md) | Bounded truncation and the different finite occurrence-tree screening problem, respectively. Neither supplies the native killed-cylinder moving-time classification. |
+| [H] Colin de Verdiere--Hillairet--Trelat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal, nilpotentization and related results*, Ann. H. Lebesgue 4, 897--971, [DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), Theorem B.1, Corollary B.3 and Theorem 3.5 | Literature-attested uniform local smoothing and positive-time parameter continuity used in the published fixed-time supplier. They are not an assumed all-time estimate for the degenerating original torus. The all-time bound here follows from (26.7)--(26.14). |
+| [T] G. Teschl, *Mathematical Methods in Quantum Mechanics*, GSM 99, online version February 12, 2009, [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 5.11, 6.24 and 4.10 | Literature-attested Trotter domination for each bounded scalar nonnegative potential, bounded form perturbation after the actual multiplier is bounded, and min-max. None supplies the native parameter/time constants without the coefficient and source calculations. |
+
+Proof. The original contract and the fixed-time source/domain results
+are the cited published premises. Formula (26.7) verifies the specific
+uniform polynomial nondegeneracy needed for (26.6), including the resolved
+coefficient at zero without introducing a zero-parameter four-dimensional
+law. The actual Fourier lattice then yields both the joint full-space
+supremum and the native circle gap, with its large-time constant mode.
+The same killed height path and the same $B^2$ in (27.3) yield the hidden
+marginal estimate, from which exactly normalized original full-domain
+states have bounded kinetic energy and the matching potential expectation.
+Their combination proves necessity as well as sufficiency in (28.2).
+The sine expansion independently fixes the charge cost and distinguishes
+it from field mass. Thus the all-time native classification is a
+repository-derived ordinary mathematical result with the stated mature
+attribution, not a literature-priority claim or a physical selection
+mechanism. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 31. Complete free traces and the resolved density
+
+**Definition 31.1 (trace, fibres and independent constants).**
+Retain exactly Definition 25.1, including fixed $\varepsilon>0$, both
+height deaths, raw $2\pi$ phase measures, completed free domain and clock.
+Write $a=|\kappa|$, $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ and
+
+$$
+\begin{aligned}
+Z_\kappa(t)&=\operatorname{Tr}e^{-tL_\kappa},\\
+T_\kappa(t;n,m,\xi)&=\operatorname{Tr}_{L^2(I,dk)}
+ e^{-tH_{\kappa,(n,m,\xi)}},\\
+F(t)&=\sum_{n,m\in\mathbb Z}\int_{\mathbb R}
+                    T_0(t;n,m,\xi)\,d\xi,\\
+\beta&=\int_I b_0(k)^2\phi(k)^2\,dk>0,\qquad
+\Theta_\beta(z)=\sum_{j\in\mathbb Z}e^{-\beta zj^2}.
+\end{aligned}
+\tag{31.1}
+$$
+
+The fibres are precisely (26.5), with scalar form domain $H_0^1(I)$.
+The coefficient $\beta$ is the one in
+[Critical cutoff, Definition 31.1 and (32.4)](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md),
+not an additional adjustable coefficient. On $\mathbb R^4$ with raw
+Lebesgue measure define the canonical operator and its heat constant by
+
+$$
+\mathcal E=-\left[\partial_r^2+
+ (\partial_y+r\partial_z+\tfrac12r^2\partial_w)^2\right],
+\qquad c_E=p_{\mathcal E}(1;0,0)>0.
+\tag{31.2}
+$$
+
+Here $\mathcal E$ is the Friedrichs realization of its compactly
+supported smooth-core form. Its complete homogeneous bracket-generating
+fields give a finite smooth positive heat density; this is the
+nilpotent heat kernel in [H, Theorems A and B]. Its normalization is
+$e^{-t\mathcal E}$, with no factor $1/2$ in the generator. Set
+
+$$
+C_7=(2\pi)^3\varepsilon^{-4}
+                 \frac{H(u^4-l^4)}2\,c_E>0.
+\tag{31.3}
+$$
+
+**Theorem 31.2 (all-mode fixed-clock limit and exact density factor).**
+For every $t>0$ and all sufficiently small nonzero $\kappa$,
+$Z_\kappa(t)<\infty$, and
+$0<F(t)<\infty$. Through either sign of $\kappa\to0$,
+
+$$
+aZ_\kappa(t)\longrightarrow F(t)
+\tag{31.4}
+$$
+
+uniformly on every compact subinterval of $(0,\infty)$.
+The resolved real-$x$ cover of Definition 21.1 at $\kappa=0$ has
+trace density per unit raw $x$ length exactly $F(t)/(2\pi)$.
+
+Proof. Let $E_{\kappa,h}(\eta)$, $h\ge1$, denote every scalar height
+eigenvalue, in increasing order. Scalar min-max and (26.6) give
+$E_{\kappa,h}\ge\lambda h^2$ and
+$E_{\kappa,h}\ge\lambda+c\Psi(|\eta|)$. Averaging these bounds yields
+
+$$
+T_\kappa(t;n,m,\xi)\le
+ e^{-\lambda t}S(t)e^{-ct\Psi(\sqrt{n^2+m^2+\xi^2})/2},\qquad
+S(t)=\sum_{h\ge1}e^{-\lambda t(h^2-1)/2}.
+\tag{31.5}
+$$
+
+This estimate includes every height level, is uniform on the closed
+small parameter interval including zero, and holds for all $t>0$.
+The right side is summable in $(n,m)$ and integrable in $\xi$ on each
+positive compact time interval. The exact completed-domain Fourier
+sum in (26.13) therefore gives the trace-class identity
+
+$$
+Z_\kappa(t)=\sum_{n,m,j\in\mathbb Z}
+                      T_\kappa(t;n,m,\kappa j).
+\tag{31.6}
+$$
+
+For bounded $(n,m,\xi)$ the scalar potentials converge uniformly as
+$\kappa\to0$. Min-max bounds the change of every height eigenvalue
+by the supremum change of the potential. The lower bound $\lambda h^2$
+then gives locally uniform convergence of the scalar traces, also in
+$t$ on positive compact intervals. On a bounded frequency box the
+Riemann sums $a\sum_j$ converge to $\int d\xi$, uniformly in these
+$t$; the sign reverses the lattice without changing the sum.
+For the complement use (31.5) and
+$\Psi(|\eta|)\ge[\Psi(|n|)+\Psi(|m|)+\Psi(|\xi|)]/3$.
+Integral comparison of the decreasing last factor bounds its weighted
+lattice tails uniformly for $0<a\le1$; the first two factors have
+summable tails. Thus box removal is uniform, proving (31.4).
+
+Fourier transformation of the smooth core and then form closure give
+the cover as the direct integral of these same Dirichlet fibres.
+On the cover, the two visible orthonormal modes have factor $(2\pi)^{-1}$,
+and the real Fourier transform has inverse measure $d\xi/(2\pi)$.
+Consequently its diagonal kernel, integrated over $I\times\mathbb T^2$
+at any fixed $x$, is $F(t)/(2\pi)$. Equivalently the exact quotient
+length is $2\pi/a$, and $a$ times that length is $2\pi$.
+These factors follow from the raw measures, not normalized Haar
+measure. Positivity follows, for example, from the positive scalar
+trace on $n=m=0$ and any bounded nonempty $\xi$ interval. $\square$
+
+## 32. A joint short-time law with both absorbing faces
+
+**Theorem 32.1 (joint wall and short-time trace).**
+For every simultaneous $\kappa\to0$, $t\downarrow0$, without any
+relation between $a$ and $t$, and for both signs,
+
+$$
+a t^{7/2}Z_\kappa(t)\longrightarrow C_7.
+\tag{32.1}
+$$
+
+Moreover $t^{7/2}F(t)\to C_7$ as $t\downarrow0$.
+
+Proof. Choose fixed intervals $\overline I\subset J\Subset(0,H)$
+with positive margins, and a closed two-sided parameter interval so
+all original probabilities remain positive on $\overline J$.
+By (21.7), after shrinking that parameter interval once,
+
+$$
+D_\kappa(s)=\det(c_\kappa(s),c_\kappa'(s),c_\kappa''(s)),\qquad
+\inf_{\kappa,s\in\overline J}|D_\kappa(s)|>0,
+\quad D_\kappa(s)=-\frac{H^2-\kappa^2}
+ {2H^3(s-\alpha_\kappa)^3},
+\quad D_0(s)=-\frac1{2Hs^3}.
+\tag{32.2}
+$$
+
+For the determinant formula, put the three coefficients over the common
+denominator $2H(s-\alpha_\kappa)$. The determinant of their constant,
+linear and quadratic coefficient rows is $-2(H^2-\kappa^2)$;
+differentiating twice gives the additional factor two, while the
+derivatives of the common denominator cancel in the alternating
+determinant. All derivatives are bounded on a slightly larger rectangle.
+Unwrap all
+three resolved phase coordinates, writing $q\in\mathbb R^3$, and let
+$g_\kappa^U(t;s,s';q)$ be the killed kernel on $U\times\mathbb R^3$
+for $U=I,J$, with raw $ds\,dq$, generator
+$\varepsilon^2\partial_s^2+(c_\kappa(s)\cdot\partial_q)^2$.
+We first establish the uniform local estimate actually needed:
+
+$$
+t^{7/2}g_\kappa^J(t;s,s;0)\longrightarrow
+ \frac{c_E}{\varepsilon^4|D_\kappa(s)|}
+\quad\text{uniformly for }(\kappa,s)\in[-\kappa_*,\kappa_*]\times[l,u].
+\tag{32.3}
+$$
+
+Here is a parameter-uniform justification, rather than an appeal to
+positive-time continuity in unscaled coordinates. Put $h=\sqrt t$ and,
+centering the pole at $(s,0)$, make the linear privileged change
+
+$$
+s'=s+\varepsilon h r,\qquad
+q=h c_\kappa(s)y+\varepsilon h^2c_\kappa'(s)z
+                       +\varepsilon^2h^3c_\kappa''(s)w.
+\tag{32.4}
+$$
+
+Its absolute Jacobian is $\varepsilon^4|D_\kappa(s)|h^7$.
+The rescaled generator is $\partial_r^2+(v_{\kappa,s,h}(r)
+\cdot\partial_{y,z,w})^2$, where Taylor expansion in this basis gives
+
+$$
+v_{\kappa,s,h}(r)\longrightarrow(1,r,r^2/2)
+\quad\text{in }C^\infty\text{ on every bounded }r\text{ interval},
+\tag{32.5}
+$$
+
+uniformly in $(\kappa,s)$. The inverse basis matrices are uniformly
+bounded by (32.2). The rescaled height is $\sqrt2 B^1$ and the three
+rescaled phase increments are $\sqrt2\int v_{\kappa,s,h}
+(\sqrt2B^1_\tau)dB^2_\tau$, in unit rescaled time.
+Stop first when $|\sqrt2B^1_\tau|$ reaches $R$. The stopped stochastic
+integrals converge uniformly in probability, by the Itô isometry and
+(32.5). The complementary probability is the ordinary Brownian
+supremum tail, uniformly in the parameters. Killing at $\partial J$
+has probability tending to zero because its rescaled height distance
+is at least a fixed positive constant divided by $h$. Thus the
+rescaled transition measures converge weakly to the canonical ones,
+for every convergent parameter sequence and every fixed positive time.
+
+To upgrade this statement to densities at unit time, use
+Colin de Verdière--Hillairet--Trélat, *Small-time asymptotics of
+hypoelliptic heat kernels near the diagonal, nilpotentization and
+related results*, [DOI 10.5802/ahl.93](https://doi.org/10.5802/ahl.93),
+[H, Theorem B.1 and Corollary B.3] on fixed rescaled space-time boxes. The limiting
+fields $\partial_r$, $\partial_y+r\partial_z+(r^2/2)\partial_w$ and
+their brackets have determinant one. By (32.5) the fields on every
+such box satisfy one uniform strong Hörmander condition of step three,
+with bounded coefficient derivatives. They are divergence free, have
+zero potential and drift, smooth constant positive density, and
+selfadjoint sub-Markov realizations. Their kernel measures have total
+mass at most one. On a compact positive-time box this bounds the
+initial distribution in a fixed negative Sobolev norm, by dual Sobolev
+embedding. The local parabolic subelliptic estimate, with nested
+cutoffs, iterates to uniform bounds on all derivatives on smaller
+boxes, exactly the smoothing argument of (21.8)--(21.9).
+Weak convergence and compactness in these norms identify the unique
+smooth limit as $p_{\mathcal E}$. At unit time and the origin this
+proves (32.3), including uniformity: any contrary parameter sequence
+has a convergent subsequence and the same limiting argument.
+This is the leading nilpotent mechanism of [H, Theorem B], with the
+compact parameters and rescaled mass initialization explicitly retained.
+
+For $s$ in any fixed closed subinterval of $I$, the identical argument
+applies to $g_\kappa^I$. For all $s\in I$, domain domination and (32.3)
+on the larger interval give instead the uniform bound
+
+$$
+0\le g_\kappa^I(t;s,s;0)\le g_\kappa^J(t;s,s;0)
+                                  \le C t^{-7/2}\quad(0<t\le t_0).
+\tag{32.6}
+$$
+
+Both endpoints are therefore controlled even though a local interior
+expansion is not asserted uniformly at the absorbing faces.
+Alternatively their interior agreement follows from the uniform
+localization theorem [H, Theorem 3.2, p.921]: common smooth fields and density,
+uniform brackets, fixed interior margins, and selfadjoint contraction
+semigroups are its hypotheses here. No boundary asymptotic is imported.
+
+It remains to control every winding, including visible windings.
+Condition on a height Brownian bridge from $s$ to $s$ in time $t$,
+and retain its event of survival in $U$. The phase law is centered
+Gaussian with covariance $2M$, where
+
+$$
+M=\int_0^t c_\kappa(K_\tau)c_\kappa(K_\tau)^{\mathsf T}d\tau,
+\qquad 0<M\le M_0t\,\mathrm{Id}.
+\tag{32.7}
+$$
+
+It is positive definite almost surely: the bridge is nonconstant,
+its range contains an interval, and (26.7) forbids a nonzero linear
+combination of $c_\kappa$ vanishing on an interval. Its Gaussian density
+is $(4\pi)^{-3/2}(\det M)^{-1/2}e^{-q^{\mathsf T}M^{-1}q/4}$.
+The upper covariance bound holds on the same survived path, so taking
+bridge expectations gives the exact useful comparison
+
+$$
+0\le g_\kappa^U(t;s,s;q)\le
+ e^{-|q|^2/(4M_0t)}g_\kappa^U(t;s,s;0).
+\tag{32.8}
+$$
+
+These formulas hold first as Gaussian-mixture densities; smoothness
+identifies them pointwise. Finite inverse-determinant expectation at
+$q=0$ follows as well from the finite smooth kernel: Gaussian mixtures
+are bounded above by their value at zero, and Fatou along points tending
+to zero bounds that value by the continuous kernel's value.
+
+Projecting the same killed process onto periods $(2\pi,2\pi,2\pi/a)$
+now gives, by nonnegative periodization and the exact unitary (21.3),
+
+$$
+aZ_\kappa(t)=(2\pi)^3\int_I
+ \sum_{n,m,j\in\mathbb Z}
+ g_\kappa^I(t;s,s;(2\pi n,2\pi m,2\pi j/a))\,ds.
+\tag{32.9}
+$$
+
+For $0<a\le1$, every nonzero lattice vector here has length at least
+$2\pi$, and (32.8) bounds the sum of its exponentials by
+$Ce^{-c/t}$ for $t\le t_0$, independently of $a$. Equations
+(32.6)--(32.9) therefore control the entire winding sum, not a finite
+truncation. In particular its nonzero part, multiplied by $t^{7/2}$,
+is uniformly $O(e^{-c/t})$ after height integration.
+
+For a fixed $\delta>0$, integrate the uniform local limit on
+$[l+\delta,u-\delta]$. The two remaining height strips have total
+contribution at most $C\delta$ by (32.6), also after periodization;
+the limiting integrand has the same bound by (32.2). Let $t\downarrow0$
+and then $\delta\downarrow0$. This proves the stronger uniform estimate
+
+$$
+\sup_{0<|\kappa|\le\kappa_*}
+\left|a t^{7/2}Z_\kappa(t)
+ -(2\pi)^3c_E\varepsilon^{-4}\int_l^u\frac{ds}{|D_\kappa(s)|}
+\right|\longrightarrow0.
+\tag{32.10}
+$$
+
+Continuity of the determinant and (32.2) give (32.1), since
+$\int_l^u2Hs^3ds=H(u^4-l^4)/2$.
+For $F$, Fourier inversion in Theorem 31.2 gives
+
+$$
+F(t)=(2\pi)^3\int_I\sum_{n,m\in\mathbb Z}
+                          g_0^I(t;s,s;(2\pi n,2\pi m,0))\,ds.
+\tag{32.11}
+$$
+
+The same proof applies, with only the two visible winding indices.
+Thus its small-time coefficient is exactly $C_7$. Neither conclusion
+uses an exchange of an ordered wall limit with a short-time limit.
+All covariances in this proof are twice the form coefficients; the
+factor $\varepsilon^4$, the three raw $2\pi$ factors and the original
+clock are fixed by (32.4), (32.7), and (32.9). $\square$
+
+## 33. Full mixing and simultaneous intermediate clocks
+
+**Theorem 33.1 (complete circle-mixing trace).**
+For every $0<z_0<z_1<\infty$, through both signs,
+
+$$
+\sup_{z\in[z_0,z_1]}
+\left|e^{\lambda z/a^2}Z_\kappa(z/a^2)-\Theta_\beta(z)\right|
+\longrightarrow0.
+\tag{33.1}
+$$
+
+Proof. The perturbation supplied by [Critical cutoff, (32.4)] for the
+visible zero block is
+
+$$
+\Lambda_\kappa(q)=\lambda+\beta_\kappa q^2+O(q^4),\qquad
+\beta_\kappa=\int_I b_\kappa^2\phi^2\,dk\longrightarrow\beta,
+\tag{33.2}
+$$
+
+uniformly near $q=0$. We use its eigenvalue, not its fixed-pole
+kernel coefficient. In a trace each normalized scalar eigenfunction
+contributes one, so no $\phi(k_0)$ or source charge can occur.
+For each fixed $j$, (33.2) with $q=\kappa j$ gives the limiting first
+height contribution $e^{-\beta zj^2}$ uniformly on $[z_0,z_1]$.
+All higher height contributions vanish there: their eigenvalues are
+at least $\lambda h^2$, $h\ge2$.
+
+To justify the complete sum, note that for $a\le1$,
+$\Psi(a|j|)/a^2\ge\Psi(|j|)$. Equation (31.5) therefore bounds the
+compensated visible zero trace by $Ce^{-c z_0\Psi(|j|)/2}$, a summable
+sequence. This also dominates its higher height part, whose individual
+$j$ limits are zero. The nonzero visible blocks obey, by (31.5) and
+exactly the separation used in (26.14), for $t\ge1$,
+
+$$
+e^{\lambda t}\sum_{(n,m)\ne(0,0),j}
+ T_\kappa(t;n,m,\kappa j)
+ \le Ce^{-dt}(1+(a\sqrt t)^{-1}),\qquad d>0.
+\tag{33.3}
+$$
+
+This tends to zero uniformly at $t=z/a^2$. Uniform dominated summation
+proves (33.1). The scalar estimate is the bounded selfadjoint
+multiplication perturbation with a uniform isolated height ground;
+its derivation and classical attribution are those of the cited
+(32.4), with both Dirichlet faces unchanged. $\square$
+
+**Theorem 33.2 (simultaneous intermediate equivalent and endpoints).**
+On every path $\kappa\to0$, $t\to\infty$, $a^2t\to0$, with either sign,
+
+$$
+Z_\kappa(t)\sim
+ e^{-\lambda t}\frac{\sqrt{\pi/\beta}}{a\sqrt t}.
+\tag{33.4}
+$$
+
+The limiting cover expression and theta function have endpoints
+
+$$
+\begin{aligned}
+F(t)&\sim C_7t^{-7/2} &&(t\downarrow0),\\
+F(t)&\sim e^{-\lambda t}\sqrt{\pi/\beta}\,t^{-1/2}
+                                                    &&(t\to\infty),\\
+\Theta_\beta(z)&\sim\sqrt{\pi/(\beta z)} &&(z\downarrow0),\\
+\Theta_\beta(z)&=1+2e^{-\beta z}+O(e^{-4\beta z}) &&(z\to\infty).
+\end{aligned}
+\tag{33.5}
+$$
+
+Proof. Put $r=a\sqrt t\to0$. The nonzero visible part times
+$r e^{\lambda t}$ tends to zero by (33.3), independently of the
+relative rates. In the remaining blocks put $x_j=rj$, so
+$q^2=x_j^2/t$. On $|x_j|\le R$, (33.2) gives, uniformly,
+
+$$
+t(\Lambda_\kappa(\kappa j)-\lambda)
+ =\beta_\kappa x_j^2+O(R^4/t)\longrightarrow\beta x_j^2.
+\tag{33.6}
+$$
+
+The compensated sum of all heights above the first on this set is
+at most $C e^{-3\lambda t}$ per $j$, using
+$E_h\ge\lambda h^2$; its $r$-weighted sum tends to zero.
+Since $r$ times the number of these lattice points is bounded,
+(33.6) reduces the central sum to the Gaussian Riemann sum.
+For $|x_j|>R$ and $a|j|\le1$, (31.5) bounds the $r$-weighted
+trace by the lattice Gaussian tail $Cr\sum_{|rj|>R}e^{-c(rj)^2}$,
+which is uniformly small as $R\to\infty$, along $r\to0$.
+For $a|j|>1$, integral comparison bounds the remaining sum by
+
+$$
+Cr e^{-ct}+C\sqrt t\int_1^\infty e^{-ct x^{2/3}}dx\longrightarrow0.
+\tag{33.7}
+$$
+
+Thus $r e^{\lambda t}Z_\kappa(t)\to
+\int_{\mathbb R}e^{-\beta x^2}dx=\sqrt{\pi/\beta}$, proving (33.4)
+with its simultaneous quantifiers and every height retained.
+For the large-$t$ law of $F$, the same argument uses the continuous
+variable $x=\sqrt t\,\xi$ at $\kappa=0$; (31.5) gives exactly the
+same tails and visible suppression. Its small-$t$ law was proved
+in Theorem 32.1. Finally elementary Fourier coefficients of the
+periodized Gaussian give
+
+$$
+\Theta_\beta(z)=\sqrt{\frac\pi{\beta z}}
+       \sum_{h\in\mathbb Z}e^{-\pi^2h^2/(\beta z)}.
+\tag{33.8}
+$$
+
+This proves the small-$z$ endpoint, with exponentially small relative
+error; the original theta series gives the large-$z$ endpoint.
+In particular substituting $z=a^2t$ matches the intermediate
+coefficient but does not prove (33.4); its uniform tail proof above
+does. Positive-time parameter continuity alone also does not supply
+these joint limits: [H, the remark following Theorem 3.5] gives the
+explicit elliptic-to-contact counterexample with different short-time
+powers. Here the resolved fields remain uniformly of step three,
+and (32.6)--(32.10) and (33.3)--(33.7) supply the additional global
+controls. All displayed large-time equivalents retain the height death
+factor $e^{-\lambda t}$. $\square$
+
+## 34. The four comparison objects and the weight omitted by a quotient
+
+**Theorem 34.1 (complete quotient weight and distinct zero objects).**
+Let $\overline L_\kappa$ be the complete $j=0$ free operator on
+$B=I\times\mathbb T_\theta\times\mathbb T_v$ with raw measure, and
+put $\overline Z_\kappa(t)=\operatorname{Tr}e^{-t\overline L_\kappa}$.
+For small nonzero $\kappa$ it is the reducing sector under
+$Jh=(2\pi)^{-1/2}h$, not the full operator. Uniformly on positive
+compact time intervals,
+
+$$
+\begin{aligned}
+\overline Z_\kappa(t)&\longrightarrow Z_{\rm leaf}(t)
+ :=\operatorname{Tr}e^{-t\overline L_0}<\infty,\\
+a[Z_\kappa(t)-\overline Z_\kappa(t)]&\longrightarrow F(t),\qquad
+\frac{\overline Z_\kappa(t)}{Z_\kappa(t)}
+ \sim a\frac{Z_{\rm leaf}(t)}{F(t)}.
+\end{aligned}
+\tag{34.1}
+$$
+
+At the mixing clock, uniformly on compact positive $z$ intervals,
+
+$$
+\begin{aligned}
+e^{\lambda z/a^2}\overline Z_\kappa(z/a^2)&\longrightarrow1,\\
+e^{\lambda z/a^2}[Z_\kappa(z/a^2)-\overline Z_\kappa(z/a^2)]
+ &\longrightarrow\Theta_\beta(z)-1,\\
+\frac{Z_\kappa(z/a^2)-\overline Z_\kappa(z/a^2)}{Z_\kappa(z/a^2)}
+ &\longrightarrow1-\Theta_\beta(z)^{-1}.
+\end{aligned}
+\tag{34.2}
+$$
+
+On every intermediate path of Theorem 33.2 the omitted trace is
+asymptotic to the full trace, while
+$\overline Z_\kappa(t)\sim e^{-\lambda t}$.
+The actual zero leaf has direct rank two and homogeneous heat dimension
+four. The resolved real-$x$ cover has finite positive trace density
+$F(t)/(2\pi)$, homogeneous heat dimension seven, and infinite total
+positive-time trace. The enlarged four-coordinate operator at zero,
+with $D$ frozen and unchanged raw $dD$, has infinite multiplicity and
+infinite positive-time trace. These are distinct realizations.
+
+Proof. The completed free reduction and its exact isometry are
+(23.5), (26.13), and
+[Observation quotient, (10.7)](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md).
+Thus $\overline Z_\kappa=\sum_{n,m}T_\kappa(t;n,m,0)$ exactly.
+Equation (31.5) gives the complete summable dominator, and scalar
+min-max convergence gives its first limit in (34.1). Theorem 31.2
+then gives the other two, with positive continuous limiting functions.
+The constant block has spectrum $\lambda h^2$; the nonzero visible
+blocks have a uniform positive bottom gap above $\lambda$ by (26.6).
+Consequently, uniformly in small $\kappa$, for $t\ge1$,
+
+$$
+e^{\lambda t}\overline Z_\kappa(t)=1+O(e^{-dt})
+\tag{34.3}
+$$
+
+for a fixed $d>0$, by (31.5). Combine this with Theorems 33.1 and
+33.2 to obtain (34.2) and the intermediate assertions. There is no
+factor $2\pi$ in a sector trace: $J$ is an isometry and preserves
+multiplicities. The factor $1/(2\pi)$ in the cover density instead
+comes from continuous Fourier inversion and its noncompact length.
+
+At $\kappa=0$ the actual original motion has $D=0$ throughout,
+as in Proposition 29.2; its leaf operator is $\overline L_0$ on $B$.
+Its finite trace has just been proved, and its rank and $Q=4$ are the
+existing native conclusions of
+[N, Theorem 10.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md),
+not new dimension claims. Resolving $x=D/\kappa$ before the limit
+instead gives $c_0\cdot\partial_{\theta,v,x}$, with the nonzero
+$x$ coefficient $b_0$ and determinant (32.2). Its local $Q=7$ is the
+resolved version of the existing step-three flag; Theorems 31.2 and
+32.1 supply its finite trace density and coefficient. Translation
+invariance in $x$ makes its diagonal integral over the entire real
+line infinite. More intrinsically, compressing its heat operator to
+$|x|<R$ has trace $2R F(t)/(2\pi)$, which increases without bound.
+
+Finally retaining all four coordinates while merely setting
+$\kappa=0$ in the unrescaled operator gives
+$\overline L_0\otimes\mathrm{Id}_{L^2(\mathbb T_D,dD)}$.
+Every eigenvalue of $\overline L_0$ then has the countably infinite
+multiplicity of the frozen $D$ Fourier modes; the heat trace diverges
+for every $t>0$. It is neither the actual zero leaf nor the resolved
+cover. In all four objects the supplied instantaneous controls have
+rank two. None of these trace identities changes that rank, supplies
+an elliptic Euclidean three-dimensional diffusion, or identifies the
+full spectrum with physical Euclidean space. In particular $Q=4$ and
+$Q=7$ concern the stated horizontal operators and measures, rather
+than a count of physical spatial axes. $\square$
+
+## 追加锚（本行以下为增补区）

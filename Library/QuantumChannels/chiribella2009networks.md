@@ -31,3 +31,11 @@ outcome scope; the finite-dimensional theorem alone does not establish
 that extension. A channel slot supplies neither an environment log nor
 a coherently controlled dilation, and the citation supplies no native
 FIB physical realization.
+
+## Locator
+
+- DOI: https://doi.org/10.1103/PhysRevA.80.022339
+- arXiv v2 record: https://arxiv.org/abs/0904.4483v2
+
+Scope: finite-dimensional channel-slot composition and quantum tester
+probabilities, with the source locations and extension boundaries stated above.

@@ -1,0 +1,20 @@
+**Theorem 5.1 (Exact law-only witness radius).** For every $k\ge1$, every allowed fixed $p$, either $j$, and every given independent seed space, the exact minimum preserving radius for $W_{k,j}$ is $2k+1$ among all lawful total-cap-$k$ representatives of its full joint law. This includes representatives depending on $p$, using the seed measurably, and changing all addresses, tree shapes and labels.
+
+Proof. Fix a good seed of a competing rule as in Theorem 4.1. Write its consecutive zero-branch vertex path as $[L,L+k]\cap\mathbb Z$. Since $q$ is outside it, either $L\ge q+1$ or $L+k\le q-1$.
+
+In the first case its largest queried edge left endpoint is $L+k-1\ge q+k$. One of its actual query addresses is therefore at least
+
+$$
+2(q+k)+\psi=j+2k+1.
+\tag{5.1}
+$$
+
+In the second case its smallest queried left endpoint is $L\le q-k-1$, giving an actual query address at most
+
+$$
+2(q-k-1)+\psi=j-2k-1.
+\tag{5.2}
+$$
+
+Thus a zero-branch address has distance at least $2k+1$ from the unchanged $j$. This is an actual positive-mass obstruction: in phase $A$ all $k$ zero-branch calls are executed surely, and in phase $B$ every zero prefix has the positive probability in (4.4). The forced read is not an unreachable formal node. Integrating over the full-measure good-seed set excludes every smaller-radius representative. The witness itself has radius $2k+1$ by Theorem 3.2, so the bound is attained. The identities $q=j,\psi=1-j$ cover $j=0$ with phase one and $j=1$ with phase zero without moving $H_j$. $\square$
+

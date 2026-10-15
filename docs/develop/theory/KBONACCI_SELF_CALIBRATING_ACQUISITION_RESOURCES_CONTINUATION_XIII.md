@@ -3804,3 +3804,1189 @@ $$
 本节没有证明每个可负担原配置都能找到上述 $\kappa+\eta$ 分解或 A/B 候选，没有对全部单位停止输入提供同一预算证书，也没有原始严格分离。原始所有正非增趋零序列、所有正闭帽及严格活跃长度 $0,1,2$ 的小端分支均保持其原有义务。本节为普通理论成果，未作 Lean、编译、摄入、覆盖或冻结声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 222. Full-score constructors, signed charges and their domains
+
+**Definition 222.1 (Complete words, rewards and tables).** Fix an integer $L\ge3$.
+Let $J_L=\{0,\ldots,L\}$, $\Omega=\{0,1\}^L\setminus\{1^L\}$,
+$n(w)=\min\{j:w_j=0\}$ and $\Omega_j=\{w:n(w)=j\}$.
+A full score $V$ consists of independent nonnegative numbers
+$A_w,C_w,P_w$ for every $w\in\Omega$, and $T\ge0$. Its reward is
+
+$$
+g_V(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+ +P_w\mathbf1_{\ell\in\{0,n(w)\}},\qquad
+g_V(1^L,\ell)=T\mathbf1_{\ell=0}.
+$$
+
+An empty table has one output, a singleton table has outputs on cells
+$0,1$, and a full pair table $N(i,j;a,b,c,d)$, $i<j$, has outputs
+$a,b,c,d$ on cells $00,01,10,11$. A stopped pair table
+$O(i,j;a,c,d)$ has outputs on cells $0,10,11$; its first cell merges
+$00,01$ before any maximization. Every cell allows every label in $J_L$,
+including labels earlier than both queries and labels never queried.
+The complete catalogs $\mathcal D_N,\mathcal D_O$ include all such
+empty, singleton and pair tables. At a schedule $S$ set
+
+$$
+B_{\mathcal C}^{S}(V)=\sum_{E\text{ a cell of }S}
+ \max_{\ell\in J_L}\sum_{w\in E}g_V(w,\ell),\qquad
+B_{\mathcal C}(V)=\max_S B_{\mathcal C}^{S}(V).
+$$
+
+Put $R=O(1,2;1,2,0)$, with full completion $N(1,2;1,1,2,0)$, and
+
+$$
+\begin{aligned}
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(V)&=B_{\mathcal C}(V)-W_V,\\
+Q(V)&=(\beta_1,\ldots,\beta_L;K),\quad
+\beta_j=\sum_{\Omega_j}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+$$
+
+Thus $W_V$ is the reward of $R$ and $0\le\Delta_O\le\Delta_N$.
+Both $Q$ and $W$ are linear; $B_{\mathcal C}$ and $\Delta_{\mathcal C}$
+are homogeneous and subadditive on nonnegative scores. A reversed pair
+permutes the full cells, and a repetition gives singleton information.
+These are identities for evaluating supports: actual repeated and ignored
+requests still count. Unspecified coefficients in every example below
+are zero, and coincident contributions add. Zero score coefficients
+never remove event constraints.
+
+**Definition 222.2 (Full demands and one signed charge).** For a finite
+profile $(b,e)$ let $d(b,e)$ contain the three separate demands
+
+$$
+1-b_n-e,\qquad b_n-e,\qquad1-e
+$$
+
+on the events $\{0\},\{n\},\{0,n\}$ at every $w\in\Omega_n$,
+and the demand $1-e$ on $\{0\}$ at $1^L$.
+There are $3(2^L-1)+1$ rows. Negative singleton demands remain literal;
+the pair row is independent. Write $z_D$ for a complete table's event
+vector, $\alpha=(1,1,0,\ldots,0;0)$, $r=z_R=d(\alpha)$,
+$h=d-r$ and $G_{\mathcal C}=(z_D-r)_{D\in\mathcal D_{\mathcal C}}$.
+Use the closed hull of 198.5:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\}.
+\end{aligned}
+$$
+
+For any signed $q=(\beta;K)$ define
+
+$$
+F_q(b,e)=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad
+\sigma_H(q)=\max_{H_L}F_q.
+$$
+
+In particular $V\cdot h=F_{Q(V)}$. The complete vertex list is
+$o=(0,\ldots,0;0)$, $p=(1,0,\ldots,0;0)$ and
+
+$$
+u_k=(\underbrace{1/(k-1),\ldots,1/(k-1)}_k,0,\ldots,0;0),\qquad
+v_k=(\underbrace{1,\ldots,1}_k,e_k,\ldots,e_k;e_k),\quad
+e_k=\frac{k-2}{k+1},\quad3\le k\le L.
+$$
+
+For $B=\beta_1+\beta_2$, $S_k=\sum_{j\le k}\beta_j$ and
+$\kappa=K-S_L$, all residual readings are
+
+$$
+F_q(o)=-B,\quad F_q(p)=-\beta_2,\quad
+F_q(u_k)=\frac{S_k}{k-1}-B,\quad
+F_q(v_k)=\frac{3S_k-(k-2)\kappa}{k+1}-B.
+$$
+
+A full unrestricted certificate for $q$ is one $V\ge0$ and one
+$\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad \sigma_H(q-Q(V))\le\theta.
+$$
+
+Its objective before imposing the unit bound is
+
+$$
+J_q(V)=\Delta_N(V)+\max\{0,\sigma_H(q-Q(V))\}.
+$$
+
+Set $H_N=\{(b,e)\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h(b,e)\}$.
+For the same complete feasible $\lambda$ at that same point, put
+$M=\sum_D\lambda_D$. Nonnegativity gives the reused weak-duality chain
+
+$$
+F_q(b,e)\le V\cdot h+\theta
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max\{1,M\}.
+$$
+
+For $M\le1$ use $M\Delta_N\le\Delta_N$; for $M\ge1$ use
+$\theta\le M\theta$. A mass-one $\lambda$ is a normalized law,
+whereas a general conic $\lambda$ is not. In particular $\theta=1$
+permits nonzero scores with $\Delta_N(V)=0$. No component, mask, cell
+or demand receives an additional budget.
+
+**Definition 222.3 (Erasure of a score).** For any $E\subseteq[L]$,
+let $f_E(w)$ set the bits in $E$ to one. Define $T_EV$ rowwise.
+If the old first zero survives, move its $A,C,P$ coefficients to
+$f_E(w)$ without changing their types. If the old first zero is erased,
+discard its $C$ coefficient and move its $A+P$ coefficient to type $A$
+at $f_E(w)$ if that word has a zero, and to $T$ otherwise.
+The old $T$ persists; collisions add. This is a linear nonnegative
+operation on proof scores, with no change to source replies or an
+acquisition. Define two different constructor sets:
+
+$$
+\begin{aligned}
+\mathcal M_L(y)&=\left\{\sum_{E\subseteq[L]}t_ET_Ey:t_E\ge0\right\},\\
+\mathcal K_L(y)&=\left\{\sum_{E\subseteq\{3,\ldots,L\}}t_ET_Ey:
+ t_E\ge0,\ \sum_Et_E=1\right\}.
+\end{aligned}
+$$
+
+The first allows all early and late erasures and arbitrary conic scale;
+the second is the normalized convex interior-mask constructor.
+
+For interior $E$, $W_{T_Ey}=W_y$: an erased late row had anchor
+contribution $A+P$, exactly its new base or terminal contribution,
+while the discarded $C$ had zero anchor contribution. A retained first
+zero has the same class, including both early classes. Summing proves
+the identity for arbitrary full scores. Early erasure need not preserve
+$W$ in general.
+
+Both full supports contract under an individual erasure. Indeed, in a
+transformed table replace any output in $E$ by zero, fix every erased
+reply to one, and delete those queries. The remaining table is legal
+in the original class, including the stopped increasing class. At a
+word whose first zero survives, its transformed reward is its original
+reward. At an erased first zero, the transformed base reward $A+P$
+is available at original label zero, while discarded $C$ is nonnegative.
+Thus the resulting original table dominates the transformed reward
+wordwise. These facts explain conditional uses of masks; they do not
+assert that either constructor contains a certificate for every input.
+
+## 223. An exact four-thirds minimum over the entire erasure cone
+
+**Theorem 223.1 (All-erasure conic minimum).** For every $L\ge4$,
+pad each displayed four-bit zero word by $1^{L-4}$, put $T=2$ at
+$1^L$, and define $y$ by
+
+$$
+C_{1101}=C_{1110}=3,\qquad
+P_{0100}=P_{0101}=P_{0110}=P_{1000}=P_{1001}=P_{1010}=1.
+$$
+
+Then $\Delta_O(y)=1$ and
+
+$$
+\min_{V\in\mathcal M_L(y)}J_{Q(y)}(V)=\frac43.
+$$
+
+The minimum allows arbitrary nonnegative weights on every early/late
+erasure. The input nevertheless has unrestricted unit certificates.
+Its lower-bound point lies in $H_L\setminus H_N$.
+
+**Proof.** In schedule order
+$\varnothing;1,2,3,4;12,13,14,23,24,34$, the complete supports are
+
+$$
+\begin{aligned}
+B_N^S(y)&=(8;8,8,8,8;9,9,9,9,9,10),\\
+B_O^S(y)&=(8;8,8,8,8;9,9,9,9,9,9).
+\end{aligned}
+$$
+
+Every entry sums all-label cell maxima of the displayed rows.
+Thus $W_y=8$, $Q(y)=(0,0,3,3,0,\ldots;14)$ and the stopped excess
+is one. Put
+
+$$
+b_*=(11/18,11/18,11/18,11/18,1/6,\ldots,1/6;1/6)
+ =\frac7{12}u_4+\frac5{12}v_4.
+$$
+
+This proves membership in $H_L$, and $F_{Q(y)}(b_*)=4/3$.
+Use these fixed full tables:
+
+$$
+D_1=N(2,3;0,0,3,0),\quad
+D_2=N(2,4;0,0,4,0),\quad
+D_3=N(3,4;0,3,4,0).
+$$
+
+For $g_i(V)=V\cdot(z_{D_i}-r)$ set
+$\ell(V)=(g_1(V)+g_2(V)+g_3(V))/3$.
+The full support gives $\Delta_N(V)\ge\ell(V)$ for every $V\ge0$.
+The following table is the complete erasure basis. It records $W=8$
+in every row, the three actual excesses, the same hull reading, and
+$k_E=\ell(T_Ey)-F_{Q(T_Ey)}(b_*)$.
+
+| $E$ | $(g_1,g_2,g_3)(T_Ey)$ | $F_{Q(T_Ey)}(b_*)$ | $k_E$ |
+| --- | --- | --- | --- |
+| $\varnothing$ | $(1,1,2)$ | $4/3$ | $0$ |
+| $\{4\}$ | $(1,0,-1)$ | $0$ | $0$ |
+| $\{3\}$ | $(0,1,-1)$ | $0$ | $0$ |
+| $\{3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+| $\{2\}$ | $(-1,-1,2)$ | $-1/2$ | $1/2$ |
+| $\{2,4\}$ | $(-1,0,-1)$ | $-11/9$ | $5/9$ |
+| $\{2,3\}$ | $(0,-1,-1)$ | $-11/9$ | $5/9$ |
+| $\{2,3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+| $\{1\}$ | $(1,1,2)$ | $-1/2$ | $11/6$ |
+| $\{1,4\}$ | $(1,0,-1)$ | $-11/9$ | $11/9$ |
+| $\{1,3\}$ | $(0,1,-1)$ | $-11/9$ | $11/9$ |
+| $\{1,3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+| $\{1,2\}$ | $(-1,-1,2)$ | $-7/3$ | $7/3$ |
+| $\{1,2,4\}$ | $(-1,0,-1)$ | $-22/9$ | $16/9$ |
+| $\{1,2,3\}$ | $(0,-1,-1)$ | $-22/9$ | $16/9$ |
+| $\{1,2,3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+
+For example erasing bit 3 deletes $C_{1101}$, moves the two early
+pair rows ending $00$ to their $10$ counterparts, and retains the
+other early pair rows and $C_{1110}$. Evaluating the three displayed
+tables gives $(0,1,-1)$ and reading zero. The same routing rule on the
+nine original nonzero coefficients gives every entry of the table;
+there is no optimization premise in these linear calculations.
+
+All $k_E\ge0$. Masks above four fix every scored atom, so this basis
+covers every mask for every $L\ge4$. For arbitrary conic coefficients,
+without requiring their sum to be one,
+
+$$
+\ell(V)-F_{Q(V)}(b_*)=\sum_Et_Ek_E\ge0.
+$$
+
+The one residual charge is at least
+$4/3-F_{Q(V)}(b_*)$. Adding gives $J_{Q(y)}(V)\ge4/3$.
+This also includes $V=0$ and all conic scales.
+
+For attainment take
+
+$$
+V_*=\frac12y+\frac16T_{\{3\}}y+\frac16T_{\{4\}}y.
+$$
+
+The coefficients sum to $5/6$, which is allowed in the cone.
+Its literal rows are $C_{1101}=C_{1110}=2$, $T=5/3$, and
+
+| Word | $P$ in $V_*$ |
+| --- | --- |
+| $0100,1000$ | $1/2$ each |
+| $0101,0110,1001,1010$ | $5/6$ each |
+| $0111,1011$ | $1/3$ each |
+
+Consequently $W_{V_*}=20/3$, $Q(V_*)=(0,0,2,2,0,\ldots;32/3)$,
+and its full $N$ support vector in the same order is
+
+$$
+(20/3;20/3,20/3,20/3,20/3;7,22/3,22/3,22/3,22/3,22/3).
+$$
+
+Thus $\Delta_N(V_*)=2/3$. The residual has late coordinates $1,1$
+and charge $K=10/3$. Its readings at $o,p,u_3,v_3$ are
+$0,0,1/2,5/12$; for every $k\ge4$ they are
+
+$$
+F(u_k)=\frac2{k-1},\qquad
+F(v_k)=2-\frac{10}3\frac{k-2}{k+1}.
+$$
+
+Both latter sequences decrease from $2/3$ at four. Its residual charge
+is $2/3$, proving attainment of $4/3$.
+
+For completeness, the support vectors remain complete after padding.
+Every extra queried bit is constantly one on every weighted original
+or transformed atom. Fixing that reply folds its observation to a legal
+low empty, singleton or pair partition. Extra numerical labels earn
+zero, and a zero reward is already available in each cell. Conversely
+each low table embeds at the larger length. Thus no high-address table
+increases these support maxima. All new hull vertices were evaluated
+by the displayed formulas; no unscored event row is discarded. $\square$
+
+**Example 223.2 (Unrestricted escapes and the infeasible lower point).**
+The exact-$Q$ score supplied by 214.5 is
+
+$$
+\widehat V:\quad C_{1100}=C_{1110}=3,\quad
+P_{0100}=P_{1000}=2,\quad P_{0110}=P_{1010}=1,\quad T=2.
+$$
+
+It has $Q(\widehat V)=Q(y)$, $W=8$, and both complete support vectors
+
+$$
+(8;8,8,8,8;9,9,8,9,8,9).
+$$
+
+Thus $(\widehat V,0)$ is an unrestricted unit certificate.
+Erasure can only change zero bits to ones: it cannot create the correct
+row $1100$ from the original class-three correct row $1101$.
+Hence $\widehat V\notin\mathcal M_L(y)$.
+
+The zero-cost score supplied by 204.4–204.5 is
+
+$$
+V_0:\quad C_{1101}=C_{1110}=3/2,\quad
+P_w=3/4\ (w=0100,0101,0110,1000,1001,1010),\quad T=3/2.
+$$
+
+Here $W=B_N=B_O=6$ and $Q(V_0)=(0,0,3/2,3/2,0,\ldots;9)$.
+Its residual against $y$ reads $0,0,3/4,5/8$ at $o,p,u_3,v_3$ and
+
+$$
+\frac3{k-1},\qquad3-5\frac{k-2}{k+1}\quad(k\ge4),
+$$
+
+with maximum one at $u_4,v_4$. Thus $(V_0,1)$ is another unrestricted
+unit certificate, including the nonzero zero-cost endpoint. Theorem
+223.1 also excludes this $V_0$ from the cone.
+
+At the same lower point $F_{Q(V_0)}(b_*)=1/3>0$.
+Any complete feasible conic $\lambda$ there would give
+$1/3\le M\Delta_N(V_0)=0$. Therefore $b_*\notin H_N$ for every
+possible conic mass. Independently, the equal mixture of $D_1,D_2,D_3$
+has law $(1/3,0,0,1/3,1/3)$ at word $1100$. Its correct probability
+$1/3$ is below $4/9$, and its pair probability $2/3$ is below $5/6$.
+Its TV from $(7/18)\delta_0+(11/18)\delta_3$ is $1/3>1/6$.
+The lower functional is a legal rule but is not a full feasible allocation
+at that point. This cone obstruction supplies no original separation.
+
+## 224. Rigidity and the whole normalized stopped plateau face
+
+**Theorem 224.1 (Normalized full-table counting rigidity).** Let $k=L\ge3$,
+$b=(1,\ldots,1)$, $e=(k-2)/(k+1)$ and $s=1-e=3/(k+1)$.
+Suppose one normalized common mixture of complete $N$ tables, or of
+complete $O$ tables, satisfies every row of $d(b,e)$. Then every
+sole-zero word has correct probability exactly $s$, the positive word
+has base probability exactly $s$, and in every deterministic decomposition
+almost every table uses two distinct queried indices, is correct at each
+of its two queried sole-zero words, and outputs either zero or an unqueried
+numerical label at the positive word. Its total numerical-exhaustion mass
+is exactly $e$. In sorted full $N(i,j)$ order its $01$ output is $i$
+and its $10$ output is $j$. This theorem leaves its $00$ output unclassified.
+
+**Proof.** Let $w^{(n)}$ have just one zero, at $n$, and let $w^+=1^k$.
+For one deterministic table let $S$ be its set of distinct queried
+coordinates, $|S|\le2$, and let $\ell$ be its output at $w^+$.
+Every sole-zero word outside $S$ has the positive transcript. Hence
+
+$$
+\sum_{n=1}^k\mathbf1_{D(w^{(n)})=n}
+ \le |S|+\mathbf1_{\ell\in[k]\setminus S}
+ \le2+\mathbf1_{\ell\ne0}.
+$$
+
+Integrate under the same normalized mixture. The full correct and
+positive rows give
+
+$$
+ks\le\sum_{n=1}^kp_{w^{(n)}}(n)
+ \le3-p_{w^+}(0)\le3-s=2+e=ks.
+$$
+
+Every inequality is equality. Each of the $k$ correct probabilities
+is at least $s$ and their sum is $ks$, so each equals $s$; also
+$p_{w^+}(0)=s$. The nonnegative deterministic slack has integral zero.
+Thus each positive-mass table attains both deterministic bounds: it has
+two distinct queried coordinates, is correct on both corresponding
+sole-zero words, and, if $\ell\ne0$, then $\ell\notin S$.
+The numerical-exhaustion mass is $1-p_{w^+}(0)=e$.
+For $i<j$, sole-zero $i$ reaches full cell $01$, and sole-zero $j$
+reaches $10$, proving the asserted full-cell entries. No step fixes
+$00$, and no such classification is inferred. $\square$
+
+**Theorem 224.2 (Complete normalized $O$ face).** Under the same parameters,
+the whole normalized full-row feasible stopped face consists exactly of
+common probability laws $\pi$ on three-element subsets of
+
+$$
+\{1,\ldots,k,\infty\}
+$$
+
+such that every one of the $k+1$ labels has inclusion probability $s$.
+For a triple $i<j<r$, query $i,j$ in increasing preselected order,
+output $i$ or $j$ at its first queried zero, and output $r$ on exhaustion;
+$\infty$ means label zero and is never queried. Zero triple weights are
+allowed. These conditions are necessary on all words and sufficient for
+all independent base, correct, pair and positive rows.
+
+**Proof.** Theorem 224.1 forces every positive-mass stopped table to have
+form $O(i,j;i,j,r)$, $i<j$, with $r=0$ or $r\notin\{i,j\}$.
+For any first-zero-$n$ word, its correct-$n$ indicator is no greater
+than its indicator at the sole-zero-$n$ word. If $n$ is queried it
+is reached correctly, because all selected earlier bits are one. If it
+is unqueried, the only possible correct output is the exhaustion guess
+$n$, and adding later zeros can remove, but cannot create, that output.
+
+Suppose a positive-mass table guesses a numerical $r<j$. Take a word
+with first zero $r$ and also bit $j$ zero, all other bits one.
+Since $r$ is unqueried, the table now emits $j$, losing its correct-$r$
+contribution. No other forced-form table gains relative to sole-zero
+$r$, where the aggregate correct mass is already exactly $s$.
+Consequently the full correct row at that multiple-zero word fails.
+There are finitely many tables, so every such earlier-guess table has
+weight zero. Thus every numerical guess satisfies $i<j<r$.
+
+The remaining tables correspond bijectively to the triples stated in
+the theorem. On every first-zero-$n$ word, their output is $n$ exactly
+when the triple contains $n$: if selected for querying, all selected
+predecessors answer one; if the last selected label, both queries are
+earlier; if absent from the triple, it is never emitted. At $w^+$ output
+zero is equivalent to inclusion of $\infty$. The tight sole-zero and
+positive rows therefore force all inclusion marginals to equal $s$.
+
+Conversely choose any one law on triples with these marginals.
+For every zero word its correct mass is $s$, its pair mass is at least
+$s=1-e$, and its base mass is nonnegative, hence at least the literal
+base demand $-e$. Its positive base mass is $s$. This checks every row,
+including arbitrary multiple zeros; it proves sufficiency for the entire
+face, rather than for one chosen symmetric law. The marginal sum is
+$3$, consistent with $(k+1)s=3$ and one common total mass one. $\square$
+
+**Example 224.3 (Reserve, existence and actual closed tails).** Uniform
+weight $1/\binom{k+1}{3}$ on the triples is the plateau law of 87.1;
+its realization and endpoint catalog are also supplied by 176.1 and
+200.4. Its existence receives no additional amplitude classification.
+For $k=3$ the four triples give weight $1/4$ each on
+
+$$
+O(1,2;1,2,3),\quad O(1,2;1,2,0),\quad
+O(1,3;1,3,0),\quad O(2,3;2,3,0).
+$$
+
+An exhaustion-zero queried-endpoint-only normalized rule has total
+correct sole-zero degree at most two. Here $ks=2+e>2$, so that
+restricted constructor cannot describe the feasible plateau; a numerical
+unqueried exhaustion reserve of exactly $e$ is necessary.
+
+On the original selected marked laws take
+
+$$
+a_n=1\ (n\le k),\qquad a_{k+j}=e2^{1-j}\ (j\ge1),\qquad
+\varepsilon=e.
+$$
+
+These amplitudes are positive, nonincreasing and tend to zero, with
+strict active length $k$ and $a_{k+1}=e$. Every low-word TV error is
+$e$, since its target is the correct point mass and its correct output
+probability is $s$. Every actual later source has tail error
+$\max(e,a_n)=e$. One source-independent seed chooses the entire triple
+before replies; its full $N$ completion obtains both replies and ignores
+the reply after the stopped rule would have halted. These ignored
+requests count. This is the reused closed-cap transport, not a necessity
+classification of arbitrary original full-carrier laws. Theorems
+224.1–224.2 impose normalization; they classify neither a general conic
+mass $M$, nor the full $N$ face, nor its $00$ cells.
+
+## 225. A fixed direction defeats normalized convex masks after every full input
+
+**Theorem 225.1 (Arbitrary-background convex-mask obstruction).** For every
+$L\ge3$ and every full $z\ge0$ with $\Delta_O(z)\le1$, there exists
+$t>0$ such that $y=z+tY_0$ is still unit-$O$, has the unrestricted
+certificate $(0,0)$, and satisfies $J_{Q(y)}(V)>1$ for every
+$V\in\mathcal K_L(y)$. Here, for $\tau=1^{L-2}$,
+
+$$
+Y_0:\quad A_{00\tau}=1,\quad C_{01\tau}=C_{10\tau}=1,\quad T=1.
+$$
+
+It suffices to choose
+
+$$
+t>1+W_z,\qquad t\ge2\max\{0,\sigma_H(Q(z))\}.
+$$
+
+**Proof.** The full head schedule separates four unit rewards, so
+$B_N(Y_0)=4$, attained by $D_*=N(1,2;0,1,2,0)$.
+The stopped head merges the first two atoms of different labels and has
+support three. Every later bit is constantly one on this support;
+other effective schedules are empty or singleton and have support at
+most two. Thus $W_{Y_0}=3$, $\Delta_N(Y_0)=1$,
+$\Delta_O(Y_0)=0$ and $Q(Y_0)=(0,1,0,\ldots;4)$.
+
+The two hull capacity inequalities, together with monotonicity, imply
+
+$$
+2b_2-4e=b_2+b_3-4e\le1.
+$$
+
+Indeed the upper capacity and $b_1\ge b_2$ give
+$b_2+b_3+\sum_{j\ge4}b_j-(L+1)e\le1$, and
+$\sum_{j\ge4}b_j\ge(L-3)e$.
+Consequently
+
+$$
+F_{Q(Y_0)}=b_2-1-4e\le-\frac12-2e\le-\frac12,
+$$
+
+with equality at $u_3$. Subadditivity of the full stopped support and
+linearity of the anchor give $\Delta_O(y)\le\Delta_O(z)\le1$.
+At every hull point,
+$F_{Q(y)}\le\sigma_H(Q(z))-t/2\le0$, proving the unrestricted
+certificate $(V,\theta)=(0,0)$.
+
+Every interior mask fixes $Y_0$. For any convex mask weights of total
+one, write the resulting score as $V=V_z+tY_0$, with $V_z\ge0$.
+The interior anchor identity gives $W_{V_z}=W_z$. The one full table
+$D_*$ earns at least $4t$ on this same combined score, since its reward
+on $V_z$ is nonnegative. Therefore
+
+$$
+\Delta_N(V)\ge4t-(W_z+3t)=t-W_z>1.
+$$
+
+The residual charge is nonnegative, so every such $V$ fails the joint
+unit bound. The proof uses no assumption about the support, signs of
+net coordinates, or mixture representation of the arbitrary background
+$z$. It uses the actual combined support rather than a sum of separately
+maximized component costs. $\square$
+
+**Example 225.2 (Saturated unit family and its closed branch).** For every
+real $s\ge1$, define
+
+$$
+Y_s:\quad A_{00\tau}=s,\quad C_{01\tau}=s-1,\quad
+P_{01\tau}=1,\quad C_{10\tau}=s,\quad T=s.
+$$
+
+At each word $A_wC_w=0$. Direct full-head maxima are $(s,s,s,s)$,
+and stopped-head maxima are $(s+1,s,s)$. The empty and singleton
+supports are at most $2s+1$, and later queries are constant on the
+weighted words. Hence
+
+$$
+W=3s,\quad Q(Y_s)=(-1,s,0,\ldots;4s),\quad
+B_N=4s,\quad B_O=3s+1,\quad\Delta_N=s,\quad\Delta_O=1.
+$$
+
+On the whole hull, using $b_1\ge b_2$ and the preceding capacity bound,
+
+$$
+\begin{aligned}
+F_{Q(Y_s)}&=1-b_1+s b_2-s-4se\\
+ &\le1-s+(s-1)b_2-4se\\
+ &\le\frac{1-s}{2}-(2s+2)e\le\frac{1-s}{2}.
+\end{aligned}
+$$
+
+Equality at $u_3$ proves $\sigma_H(Q(Y_s))=(1-s)/2$.
+Every interior mask fixes the score. Thus for $s>1$ every normalized
+convex-mask output has cost at least $s>1$, while $(0,0)$ succeeds.
+At the closed value $s=1$, the sole resulting convex score $Y_1$ has
+$J_{Q(Y_1)}(Y_1)=1$ and is a valid boundary certificate; the unrestricted
+minimum remains zero. No strict failure is asserted at this endpoint.
+
+The normalization restriction is essential. Zero belongs to the
+arbitrarily scaled erasure cone and certifies each of these inputs.
+Theorem 225.1 is therefore not an obstruction to arbitrary conic scaling.
+The single-baseline $A/P$ zero-conflict criterion of 200.5 already
+supplies membership for this family; the result concerns a constructor
+boundary and adds no original membership region.
+
+## 226. A pure-correct example with different restricted and unrestricted minima
+
+**Theorem 226.1 (The specified pure-correct convex minimum).** For every
+$L\ge4$, pad by ones the four zero words
+
+$$
+y:\quad C_{0111}=C_{1000}=C_{1101}=C_{1110}=1,\qquad A=P=T=0.
+$$
+
+Then $W_y=2$, $Q(y)=(1,1,1,1,0,\ldots;4)$,
+$\Delta_N(y)=2$, $\Delta_O(y)=1$, and
+
+$$
+\min_{V\in\mathcal K_L(y)}J_{Q(y)}(V)=\frac{16}{15},\qquad
+\min_{V\ge0}J_{Q(y)}(V)=\frac25.
+$$
+
+**Proof of the convex minimum.** The full table
+$N(3,4;2,3,4,1)$ collects all four correct rewards.
+A stopped table has at most three output labels and each rewarded label
+has total one, so $B_O\le3$; $O(1,2;1,2,3)$ attains three.
+Thus the two original excesses are as stated.
+
+Masks above four act trivially. Aggregate the normalized weights on
+$\varnothing,\{3\},\{4\},\{3,4\}$ as $a,b,c,d\ge0$ with
+$a+b+c+d=1$. Their combined score is exactly
+
+$$
+\begin{gathered}
+C_{0111}=1,\quad C_{1000}=a,\quad C_{1010}=b,\quad
+C_{1001}=c,\quad C_{1011}=d,\\
+C_{1101}=a+c,\qquad C_{1110}=a+b.
+\end{gathered}
+$$
+
+It has $W=2$, $Q=(1,1,a+c,a+b,0,\ldots;2+2a+b+c)$.
+For $x=b+d$, $z=c+d$, the residual is
+$(0,0,x,z,0,\ldots;x+z)$. Its readings are zero at $o,p$,
+$x/2$ at $u_3$, $3x/4$ at $v_3$, and
+
+$$
+\frac{x+z}{k-1},\qquad\frac{3(x+z)}{k+1}\quad(k\ge4).
+$$
+
+Since $x,z\ge0$, the exact residual support is
+$\max\{3x/4,3(x+z)/5\}$.
+The following three full tables belong to this example:
+
+$$
+E_1=N(1,2;0,1,2,4),\quad E_2=N(1,2;0,1,2,3),\quad
+E_3=N(3,4;2,3,4,1).
+$$
+
+Their excesses on the same combined score are respectively
+$a+b,a+c,2a-d$. Use weights $7/15,7/15,1/15$ on these support
+bounds, and use just the $v_4$ residual reading. Then
+
+$$
+\begin{aligned}
+J_{Q(y)}(V)&\ge\frac7{15}(a+b)+\frac7{15}(a+c)
+ +\frac1{15}(2a-d)+\frac35(b+c+2d)\\
+ &=\frac{16}{15}+\frac d{15}\ge\frac{16}{15}.
+\end{aligned}
+$$
+
+At $a=b=c=1/3,d=0$, all-label full $N$ supports, in order
+$\varnothing;1,2,3,4;12,13,14,23,24,34$, are
+
+$$
+(1;2,2,5/3,5/3;8/3,7/3,7/3,8/3,8/3,8/3).
+$$
+
+They follow from the seven literal combined rows above, so the full
+excess is $2/3$. The residual support is $2/5$, giving equality.
+Constant-one padding folds extra queries to short low schedules, as in
+223.1, and the displayed decreasing residual formulas evaluate every
+added hull vertex. Hence this is the complete minimum for every $L$.
+
+**Proof of the unrestricted minimum.** The readings of $Q(y)$ at
+$o,p,u_3,v_3,u_4,v_4$ are
+
+$$
+-2,\quad-1,\quad-1/2,\quad1/4,\quad-2/3,\quad2/5.
+$$
+
+For $k\ge4$ they are $4/(k-1)-2$ and $12/(k+1)-2$.
+Therefore $V=0$, $\theta=2/5$ attains an unrestricted objective $2/5$.
+For a matching lower bound use the same point
+
+$$
+v_4=(1,1,1,1,2/5,\ldots,2/5;2/5)
+$$
+
+and the following actual mass-one allocation. Each row has weight $1/10$;
+the full $N$ column is its completion on the same two queries.
+
+| Triple | Stopped table | Full table outputs on $00,01,10,11$ |
+| --- | --- | --- |
+| $123$ | $O(1,2;1,2,3)$ | $(1,1,2,3)$ |
+| $124$ | $O(1,2;1,2,4)$ | $(1,1,2,4)$ |
+| $12\infty$ | $O(1,2;1,2,0)$ | $(1,1,2,0)$ |
+| $134$ | $O(1,3;1,3,4)$ | $(1,1,3,4)$ |
+| $13\infty$ | $O(1,3;1,3,0)$ | $(1,1,3,0)$ |
+| $14\infty$ | $O(1,4;1,4,0)$ | $(1,1,4,0)$ |
+| $234$ | $O(2,3;2,3,4)$ | $(2,2,3,4)$ |
+| $23\infty$ | $O(2,3;2,3,0)$ | $(2,2,3,0)$ |
+| $24\infty$ | $O(2,4;2,4,0)$ | $(2,2,4,0)$ |
+| $34\infty$ | $O(3,4;3,4,0)$ | $(3,3,4,0)$ |
+
+For every first-zero $n\le4$, correct probability is $3/5$, pair
+probability is at least $3/5$, and base probability is nonnegative,
+meeting demand $-2/5$. For every first zero $n>4$, all queried bits
+are positive: base and pair probabilities are $3/5$, correct probability
+is zero. The corresponding demands are $1/5,0,3/5$. The positive base
+probability is $3/5$. This checks all 46 rows at $L=4$ and all
+$3(2^L-1)+1$ rows at every padded length, independently of which
+additional zeros occur. Thus this very allocation $\lambda$ satisfies
+$G_N\lambda\ge h(v_4)$, with mass one and $v_4\in H_N$.
+
+For every unrestricted full $V\ge0$ it gives
+$F_{Q(V)}(v_4)\le\Delta_N(V)$. The one residual gives
+
+$$
+J_{Q(y)}(V)\ge\Delta_N(V)+F_{Q(y)-Q(V)}(v_4)
+ \ge F_{Q(y)}(v_4)=2/5.
+$$
+
+Together with the zero score, this proves the unrestricted minimum.
+The three detecting tables $E_1,E_2,E_3$ are not this full feasible
+allocation: their $7/15,7/15,1/15$ mixture has correct-label-one mass
+zero at $0000$ and base mass zero at $1111$, both below $3/5$.
+A detector and a full feasible $\lambda$ cannot be interchanged.
+The genuine feasible point has $F_{Q(y)}(v_4)=2/5\le1$, so it supplies
+no strict original separation. $\square$
+
+**Remark 226.2 (Representative and constructor scope).** The four correct
+atoms $0101,1011,1100,1110$ define a different score with its own
+detectors and support vector. The constant $16/15$ does not identify
+its data with those of Theorem 226.1. The theorem here concerns only
+$0111,1000,1101,1110$ and the literal tables in its proof. Its pure-correct
+membership is already covered by 198.4 and 200.4. The conic obstruction
+of 223, the convex robustness of 225, this quantitative convex example
+and the supplement below concern one constructor-boundary subject;
+they are not additional original membership regions.
+
+## 227. A six-coordinate quantitative supplement on the same constructor boundary
+
+**Example 227.1 (Complete six-coordinate score and supports).** At $L=6$
+define the full score $Y$ by the following nonzero rows, with $T=9$.
+
+| Word | $A$ | $C$ | $P$ |
+| --- | --- | --- | --- |
+| $000001$ | $0$ | $0$ | $3$ |
+| $001100$ | $0$ | $0$ | $2$ |
+| $010100$ | $0$ | $0$ | $8$ |
+| $011101$ | $0$ | $5$ | $0$ |
+| $100000$ | $0$ | $0$ | $6$ |
+| $100100$ | $0$ | $0$ | $5$ |
+| $100111$ | $0$ | $0$ | $2$ |
+| $110000$ | $0$ | $4$ | $0$ |
+| $110010$ | $0$ | $6$ | $0$ |
+| $110101$ | $0$ | $6$ | $0$ |
+| $111010$ | $8$ | $0$ | $0$ |
+| $111011$ | $0$ | $9$ | $0$ |
+| $111100$ | $0$ | $3$ | $0$ |
+| $111101$ | $0$ | $5$ | $0$ |
+| $111110$ | $0$ | $11$ | $0$ |
+
+It has $W_Y=48$, $Q(Y)=(5,0,16,1,8,11;92)$.
+All 22 schedule supports, including every legal label, are as follows.
+The last column also records the sharp convex-mask score $Z_*$ defined
+in 227.2, whose anchor is the same 48.
+
+| Schedule | $B_N^S(Y)$ | $B_O^S(Y)$ | $B_N^S(Z_*)$ |
+| --- | --- | --- | --- |
+| $\varnothing$ | $43$ | $43$ | $43$ |
+| $1$ | $48$ | $48$ | $48$ |
+| $2$ | $43$ | $43$ | $43$ |
+| $3$ | $43$ | $43$ | $43$ |
+| $4$ | $43$ | $43$ | $43$ |
+| $5$ | $43$ | $43$ | $43$ |
+| $6$ | $43$ | $43$ | $43$ |
+| $12$ | $48$ | $48$ | $48$ |
+| $13$ | $51$ | $51$ | $1119/22$ |
+| $14$ | $48$ | $48$ | $48$ |
+| $15$ | $48$ | $48$ | $48$ |
+| $16$ | $48$ | $48$ | $48$ |
+| $23$ | $51$ | $51$ | $557/11$ |
+| $24$ | $45$ | $45$ | $4406/99$ |
+| $25$ | $48$ | $48$ | $6301/132$ |
+| $26$ | $43$ | $43$ | $43$ |
+| $34$ | $45$ | $44$ | $4406/99$ |
+| $35$ | $53$ | $49$ | $1119/22$ |
+| $36$ | $45$ | $44$ | $395/9$ |
+| $45$ | $44$ | $43$ | $17299/396$ |
+| $46$ | $49$ | $43$ | $1613/33$ |
+| $56$ | $51$ | $46$ | $3299/66$ |
+
+Thus $\Delta_N(Y)=5$, $\Delta_O(Y)=3$. At
+$o,p,u_3,v_3,u_4,v_4,u_5,v_5,u_6,v_6$, its signed hull readings are
+
+$$
+(-5,0,11/2,-2,7/3,-61/5,5/2,-31/2,16/5,-116/7).
+$$
+
+These support entries follow directly by summing the displayed
+$A,C,P,T$ rewards in each complete cell and taking the maximum over
+$0,\ldots,6$. In particular they do not combine independently chosen
+input representations or remove zero-score words.
+
+**Proposition 227.2 (Sharp sixteen-mask value).** For this $Y$,
+
+$$
+\min_{Z\in\mathcal K_6(Y)}J_{Q(Y)}(Z)=\frac{667}{198}.
+$$
+
+Consequently $y=Y/3$ is unit-$O$ but its normalized convex interior-mask
+minimum is $667/594=1+73/594$.
+
+**Proof.** Use one fixed full-table law on
+$D_a=N(3,5;0,3,5,0)$ and $D_b=N(1,3;0,1,3,0)$, with weights
+$\nu_a=73/396$, $\nu_b=323/396$. Use one fixed hull law on
+$v_3,v_5,v_6$, with weights
+
+$$
+\mu_3=\frac{239}{4752},\qquad\mu_5=\frac{43}{396},\qquad
+\mu_6=\frac{3997}{4752}.
+$$
+
+Both sets of weights sum to one. For each mask put $V_E=T_EY$,
+$g_D(E)=V_E\cdot(z_D-r)$, $f_k(E)=F_{Q(Y)-Q(V_E)}(v_k)$ and
+
+$$
+\mathcal L(E)=\nu_ag_{D_a}(E)+\nu_bg_{D_b}(E)
+ +\mu_3f_3(E)+\mu_5f_5(E)+\mu_6f_6(E).
+$$
+
+The full 16-mask data, all with $W_{V_E}=48$, are
+
+| $E$ | $(g_{D_a},g_{D_b})$ | $(f_3,f_5,f_6)$ | $\mathcal L(E)$ | $\Delta_N(V_E)$ | $\sigma_H(Q(Y)-Q(V_E))$ |
+| --- | --- | --- | --- | --- | --- |
+| $\varnothing$ | $(5,3)$ | $(0,0,0)$ | $667/198$ | $5$ | $0$ |
+| $3$ | $(-21,0)$ | $(12,8,48/7)$ | $667/198$ | $3$ | $12$ |
+| $4$ | $(5,3)$ | $(0,1/2,27/7)$ | $10561/1584$ | $5$ | $27/7$ |
+| $5$ | $(-13,3)$ | $(0,4,24/7)$ | $667/198$ | $3$ | $4$ |
+| $6$ | $(5,3)$ | $(0,0,33/7)$ | $11617/1584$ | $5$ | $33/7$ |
+| $34$ | $(-21,0)$ | $(12,17/2,75/7)$ | $10561/1584$ | $3$ | $12$ |
+| $35$ | $(-5,0)$ | $(12,12,72/7)$ | $106/11$ | $1$ | $12$ |
+| $36$ | $(-21,0)$ | $(12,8,81/7)$ | $11617/1584$ | $0$ | $12$ |
+| $45$ | $(-13,3)$ | $(0,9/2,51/7)$ | $10561/1584$ | $3$ | $51/7$ |
+| $46$ | $(5,3)$ | $(-2,-7/2,4/7)$ | $667/198$ | $5$ | $12/5$ |
+| $56$ | $(-13,3)$ | $(0,4,57/7)$ | $11617/1584$ | $3$ | $57/7$ |
+| $345$ | $(-5,0)$ | $(12,25/2,99/7)$ | $20489/1584$ | $0$ | $99/7$ |
+| $346$ | $(-21,0)$ | $(10,9/2,52/7)$ | $667/198$ | $0$ | $10$ |
+| $356$ | $(-5,0)$ | $(12,12,15)$ | $21545/1584$ | $0$ | $15$ |
+| $456$ | $(-13,3)$ | $(-2,1/2,4)$ | $667/198$ | $3$ | $4$ |
+| $3456$ | $(-5,0)$ | $(10,17/2,76/7)$ | $106/11$ | $0$ | $76/7$ |
+
+A digit string in the mask column denotes that subset of addresses.
+Each $g$ is the reward of its displayed full table minus 48; each $f$
+is substitution in the displayed hull vertex. Thus all entries are
+finite rational linear evaluations on the literal rows of 227.1.
+They retain negative readings and are all at least $667/198$ in the
+$\mathcal L$ column.
+
+For any one convex combination $Z=\sum_Et_EV_E$, full support is
+at least the $\nu$-average table excess on that same $Z$.
+Its one residual charge is at least the $\mu$-average residual reading.
+Since $\sum t_E=1$, linearity gives
+
+$$
+J_{Q(Y)}(Z)\ge\sum_Et_E\mathcal L(E)\ge667/198.
+$$
+
+This lower bound uses neither a sum of mask costs nor a separately
+chosen residual for each component.
+
+For matching attainment take the one score
+
+$$
+Z_*=\frac{119}{132}Y+\frac1{22}T_{\{3\}}Y
+ +\frac{13}{396}T_{\{5\}}Y+\frac2{99}T_{\{4,5,6\}}Y.
+$$
+
+Its nonnegative coefficients sum to one. Its complete literal rows are
+as follows; the terminal coefficient is $907/99$.
+
+| Word | Type | Coefficient |
+| --- | --- | --- |
+| $000001$ | $P$ | $119/44$ |
+| $000011$ | $P$ | $13/132$ |
+| $000111$ | $P$ | $2/33$ |
+| $001001$ | $P$ | $3/22$ |
+| $001100$ | $P$ | $125/66$ |
+| $001110$ | $P$ | $13/198$ |
+| $001111$ | $P$ | $4/99$ |
+| $010100$ | $P$ | $238/33$ |
+| $010110$ | $P$ | $26/99$ |
+| $010111$ | $P$ | $16/99$ |
+| $011100$ | $P$ | $4/11$ |
+| $011101$ | $C$ | $625/132$ |
+| $011111$ | $C$ | $35/132$ |
+| $100000$ | $P$ | $119/22$ |
+| $100010$ | $P$ | $13/66$ |
+| $100100$ | $P$ | $595/132$ |
+| $100110$ | $P$ | $65/396$ |
+| $100111$ | $P$ | $211/99$ |
+| $101000$ | $P$ | $3/11$ |
+| $101100$ | $P$ | $5/22$ |
+| $101111$ | $P$ | $1/11$ |
+| $110000$ | $C$ | $119/33$ |
+| $110010$ | $C$ | $568/99$ |
+| $110101$ | $C$ | $119/22$ |
+| $110111$ | $C$ | $103/198$ |
+| $111010$ | $A$ | $776/99$ |
+| $111011$ | $C$ | $97/11$ |
+| $111100$ | $C$ | $125/44$ |
+| $111101$ | $C$ | $625/132$ |
+| $111110$ | $C$ | $97/9$ |
+
+It has $Q(Z_*)=(5,0,168/11,97/99,250/33,97/9;814/9)$.
+The complete support column in 227.1 gives
+$B_N(Z_*)=1119/22$, hence $\Delta_N(Z_*)=63/22$.
+In the ten-vertex order of 227.1 its residual readings are
+
+$$
+(0,0,4/11,50/99,74/297,38/99,29/99,50/99,46/165,50/99).
+$$
+
+Thus the one residual charge is $50/99$, and their sum is $667/198$.
+Homogeneity of the constructor and of the objective gives the asserted
+unit value. $\square$
+
+**Example 227.3 (Reused zero core and the same-point full allocation).**
+The score $V_0=(5/2)U_3+(7/2)U_4$ from the zero-cost generators of
+216.3, with $m=6,r=3$, has exactly these rows:
+
+$$
+\begin{gathered}
+C_{110111}=11,\quad C_{111110}=5,\quad
+P_{010110}=5/2,\quad P_{010111}=17/2,\quad P_{100111}=11,\\
+P_{111010}=P_{111100}=5/2,\qquad T=6.
+\end{gathered}
+$$
+
+The generator theorem applies at these parameters; its two coefficients
+are nonnegative. Directly every one of its 22 full schedule supports
+is 33, its anchor is 33, and
+$Q(V_0)=(0,0,11,0,0,5;49)$. The residual against $Y$ is
+$(5,0,5,1,8,6;43)$ with readings
+
+$$
+(-5,0,0,-2,-4/3,-28/5,-1/4,-9/2,0,-32/7).
+$$
+
+All are nonpositive, so $(V_0/3,0)$ certifies $Y/3$ unrestrictedly.
+Indeed $(tV_0,0)$ certifies $Q(tY)$ for every $t\ge0$.
+This application reuses the zero core and its scaled ray, rather than
+asserting a new zero-stock result.
+
+The same hull barycenter used by the lower functional is
+
+$$
+\bar b=\mu_3v_3+\mu_5v_5+\mu_6v_6
+ =(1,1,1,6097/6336,6097/6336,523/576;3469/6336).
+$$
+
+A complete normalized allocation there is
+$\mu_3P_{3,2}+\mu_5P_{5,2}+\mu_6P_{6,2}$, where $P_{k,2}$ is the
+uniform triple law. To specify all 59 entries without suppressing
+repeated tables, the following lists give every triple and its individual
+mass. Each triple $i<j<r$ means $O(i,j;i,j,r)$, with $r=\infty$
+interpreted as output zero; its full completion is $N(i,j;i,i,j,r)$.
+
+| Component | All triples in that component | Mass of each entry |
+| --- | --- | --- |
+| $k=3$ | $123,12\infty,13\infty,23\infty$ | $239/19008$ |
+| $k=5$ | $123,124,125,12\infty,134,135,13\infty,145,14\infty,15\infty,234,235,23\infty,245,24\infty,25\infty,345,34\infty,35\infty,45\infty$ | $43/7920$ |
+| $k=6$ | $123,124,125,126,12\infty,134,135,136,13\infty,145,146,14\infty,156,15\infty,16\infty,234,235,236,23\infty,245,246,24\infty,256,25\infty,26\infty,345,346,34\infty,356,35\infty,36\infty,456,45\infty,46\infty,56\infty$ | $3997/166320$ |
+
+For each component and every first zero $n\le k$, correct probability
+is $1-e_k$, pair probability is at least $1-e_k$, and base probability
+is at least the literal demand $-e_k$. For $n>k$, base and pair are
+$1-e_k$ and correct is zero, meeting demands $1-2e_k,0,1-e_k$.
+The positive base is $1-e_k$. These statements follow from triple
+inclusion on every word, not just sole-zero words. The affine demand
+vector therefore obeys
+
+$$
+z_{\mu_3P_{3,2}+\mu_5P_{5,2}+\mu_6P_{6,2}}
+ \ge\mu_3d(v_3)+\mu_5d(v_5)+\mu_6d(v_6)=d(\bar b).
+$$
+
+This proves all 190 independent rows for that same $\bar b$, and its
+same-seed full completion gives a complete mass-one $N$ allocation.
+Its positive base is $2867/6336$. In contrast, the two-table lower
+functional emits label one with probability zero at $000000$, below
+the required $2867/6336$. Its mass one does not make it feasible.
+Moreover $F_{Q(Y)}(\bar b)=-283/18$, or $-283/54$ for $Y/3$,
+so the actual feasible point gives no strict separation.
+
+At this same point the sum of least correct deficits for a whole-block
+exhaustion-zero endpoint replacement is
+
+$$
+\sum_{n=1}^6(\bar b_n-\bar e)=2+\bar e=16141/6336>2.
+$$
+
+Every unit-mass queried-endpoint-only rule can supply total correct
+sole-zero degree at most two. The full law just displayed is feasible
+because unqueried numerical exhaustion labels remain legal. This is a
+boundary of that constructor, not a restriction on the original problem.
+For the original companion take $a_n=\bar b_n$ for $n\le6$ and
+$a_{6+j}=\bar e2^{1-j}$ for $j\ge1$. The strict active length is six;
+all amplitudes are positive and nonincreasing with vanishing tail,
+$a_7=\bar e$, and every actual tail error is exactly $\bar e$.
+
+## 228. Original-source correspondence and the remaining universal boundary
+
+**Definition 228.1 (Actual sources and two distinct target families).** The
+countable labeled source, with $p_i$ the $i$th prime, is
+
+$$
+\begin{gathered}
+F_0=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N_x=1+F_rg,\quad q_i(x)=\mathbf1_{p_i\mid N_x},\quad
+n(x)=\min\{i:q_i(x)=0\}.
+\end{gathered}
+$$
+
+Replies are static; each actual integer has finitely many prime divisors,
+so $n(x)$ is finite. There is no source prior or infinite positive source.
+The full Borel carrier is
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with each block
+a copy of $(0,1)$. The unchanged consumer returns unknown on $B_j$ and
+proposes $j$ on $P_j$. Its original nonatomic target remains
+
+$$
+\begin{gathered}
+t(x)=\sum_{i\ge1}3^{-i}q_i(x),\quad Z_t=\int_0^1e^{tu}\,du,\quad
+\nu_x(du)=Z_{t(x)}^{-1}e^{t(x)u}\,du\text{ on }B_{n(x)},\\
+\mu_x=(1-h_0)\nu_x+h_0\pi_{\omega(N_x)},\qquad0<h_0<1,
+\end{gathered}
+$$
+
+where $\omega$ counts distinct prime divisors and $\pi_j$ is uniform on
+$P_j$. On distinct original marks $\theta_j=(B_1,1/(j+2))$, $j\ge0$,
+the separately selected targets, for every positive vanishing sequence, are
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+ +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+$$
+
+These laws do not replace $\mu_x$. Every finitely marked law has TV
+distance one from $\mu_x$, since its finite support is a Borel null set
+for the nonatomic target. Finite labels in 222–227 mean these actual marks.
+
+**Proposition 228.2 (Finite patterns and lawful common execution).** Every
+finite Boolean pattern at arbitrary finite prime addresses has an actual
+source witness, fixed before the seed. A normalized common law on the
+complete finite tables executes on those sources with zero advice, one
+source-independent seed and at most two actual requests.
+
+**Proof.** Boundaries 35.2 supplies arbitrarily large prime $r$ for which
+$F_r$ is coprime to all specified primes. For a desired one impose
+$g=-F_r^{-1}$ modulo that prime; for a desired zero impose $g=0$.
+CRT supplies a residue modulo their product. Take $r$ with its Fibonacci
+window longer than that product and choose the first representative at
+or above its lower endpoint; it remains below the upper endpoint.
+This realizes all words, including multiple zeros and positive prefixes
+with a prescribed later zero, on the original labeled source.
+
+Partition one source-independent $U\sim\mathrm{Unif}[0,1)$ into the
+table masses. Its interval fixes the whole schedule and every output
+before replies. N obtains the entire preselected schedule; O preselects
+an increasing schedule and stops at its first queried zero or exhaustion.
+On completion N actually obtains the reply that O would ignore.
+Output the selected original mark and hand it to the unchanged consumer.
+Handoff is finite for every source and seed. Repeated requests and ignored
+replies count toward the hard bound of TWO ACTUAL requests. No adaptive
+second address, extra probe, seed conditioning, address charge, depth or
+runtime bound, expected-count budget or source distribution is introduced.
+Original competitors retain arbitrary addresses and full-carrier outputs.
+The error requirement remains uniform over all actual sources and all
+Borel events. Nonnegative scores and conic multipliers are not themselves
+acquisition probabilities. $\square$
+
+The legal earlier output is indispensable: on $0100$ the table
+$N(3,4;1,0,0,0)$ emits the correct unqueried label one. The actual source
+$r=19,g=436,N_x=1822917$ has this low word. Its base, correct and pair
+readings are $(0,1,1)$; replacing that output by zero gives $(1,0,1)$.
+The plateau restriction on earlier exhaustion guesses in 224.2 therefore
+does not authorize their deletion from the general catalog.
+
+**Proposition 228.3 (Independent rows and closed tails).** For any output
+law $p$ and a first-zero-$n$ target, its TV distance is
+
+$$
+\max\{1-a_n-p(0),\ a_n-p(n),\ 1-p(0)-p(n)\}.
+$$
+
+Indeed its overlap with the two-point target is
+$\min(p(0),1-a_n)+\min(p(n),a_n)$, whose complement is the displayed
+maximum. Thus the three independent rows of 222.2 are necessary and
+sufficient, on every word and label, including negative singleton demands.
+For example $a_n=1/2$, $\varepsilon=1/4$, $p(0)=p(n)=1/4$ passes both
+singleton rows but has TV $1/2$; another legal label carries the remainder.
+The positive row is also retained, even at zero score weight.
+
+If an actual output law $p_x$ uses only marks $0,\ldots,H$ and $n(x)>H$,
+the exact identity is
+
+$$
+\operatorname{TV}(p_x,\lambda_x^a)=\max\{1-p_x(0),a_{n(x)}\}.
+$$
+
+Half the absolute discrepancies is
+$\tfrac12(|a_{n(x)}-(1-p_x(0))|+1-p_x(0)+a_{n(x)})$.
+Replacing $p_x$ by a single positive-word law $p_{1^H}$ additionally
+requires all observed addresses to be at most $H$ and the output to
+depend only on the common seed and acquired replies. The constructed
+finite tables have these properties; they are not assumed of arbitrary
+competitors. For $\varepsilon>0$ the strict active length is
+$L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$. Actual tails stay positive,
+vanish, and include ties $a_n=\varepsilon$. At the feasible point of 226
+one may take $a_1=\cdots=a_4=1$ and
+$a_{4+j}=(2/5)2^{1-j}$, cap $2/5$, giving $L_a=4$ and exact tail error
+$2/5$. Padding a hull point by $b_n=e$ does not make those padded
+coordinates strictly active. The original small lengths $0,1,2$ are not
+removed by the hypotheses $L\ge3$ or $L\ge4$ of the constructor results.
+
+**Remark 228.4 (Conditional transport and reused mathematics).** The
+arbitrary-address, full-carrier feasibility equivalences are those of
+110.2. Their necessity uses measurable projection fixing the low marks,
+countability of $X$ for one common conull finite-handoff/hard-count event,
+and the vanishing probability tail of the maximum address of the SAME
+whole preselected schedule. Actual finite-pattern witnesses precede seeds.
+For each finite witness family choose its finite execution cutoff; this
+is not a uniform runtime bound over $X$. The whole-execution comparison
+has error at most $\gamma_m+1/m$, where $\gamma_m$ is that schedule-tail
+probability. Class-preserving low tables lie in one finite catalog simplex;
+compactness and continuity retain every non-strict row at the exact
+closed cap. Necessity transports feasibility, not every original law.
+Sufficiency executes actual low queries and uses 228.3 on actual tails.
+
+The exact-law criterion 109.1 concerns a normalized degree-two
+probability-vector kernel $p_\xi=c+\sum_i\ell_i\xi_i+
+\sum_{i<j}Q_{ij}\xi_i\xi_j$: $c\ge H_{\rm ker}$ coordinatewise,
+with its one common schedule-mass bound. Normalization makes that bound
+follow from the vector inequality, as in 108.4. Its $Q_{ij}$ and
+$H_{\rm ker}$ are not the signed score quotient $Q(V)$ or hull $H_L$.
+Failure of exact-law realization for one kernel does not exclude a
+different feasible kernel at the same cap.
+
+| Reused result | Role in the present statements |
+| --- | --- |
+| 198.4–198.5 | Pure-correct membership, the closed hull and its complete support formula |
+| 199.3–199.4 and 207.3 | One-budget full-score alternative and weak duality |
+| 200.4–200.5 | Plateau and zero-conflict membership for the relevant examples |
+| 204.4–204.5 and 214.5 | The zero-cost and exact-$Q$ escapes in 223.2 |
+| 216.3 | The zero core and scaled ray used in 227.3 |
+| 87.1 and 176.1 | Plateau existence and complete triple realization |
+| 109.1 and 110.2 | Normalized exact-law criterion and closed-cap feasibility transport |
+
+Finite linear programming, convex support and Farkas alternatives are
+used in their classical senses. None of these reused results is a new
+amplitude family or original membership region. The distinct conic,
+convex and quantitative variants 223, 225–227 form one constructor-boundary
+subject; 224 adds the normalized full-$O$ face necessity, leaving $N00$
+unclassified. No full $N$ face, conic-mass or arbitrary full-carrier
+necessity classification follows.
+
+**Remark 228.5 (Numerical corrections without an additional theorem).** For
+$q=(0,0,-3,3,1/2;0)$, the readings at
+$o,p,u_3,v_3,u_4,v_4,u_5,v_5$ are
+$0,0,-3/2,-17/8,0,1/5,1/8,1/2$; in particular the $u_3$ value is
+$-3/2$. The selected-mask $19/20$ comparison concerns $Y/10$, where
+$A_{10000}=5,P_{10000}=7,A_{11000}=6,C_{01100}=6,P_{11100}=1,
+C_{11110}=5,A_{01101}=4,P_{01111}=3$. This existing example has
+$W_Y=23$, $Q(Y)=(2,-5,-6,0,5;37)$ and $B_N=B_O=33$.
+Its sharp unrestricted and single-$T_{\{3,4,5\}}$ objectives are both
+$1/2$ after scaling by ten. These are corrections to that comparison;
+they assert no further erasure-family theorem.
+
+**Open boundary 228.6 (Original universal question).** The positive route
+still requires, for EVERY actual full $y\ge0$ with $\Delta_O(y)\le1$,
+ONE unrestricted full $V\ge0$ and ONE jointly paid signed residual
+$\theta\in[0,1]$ with $\Delta_N(V)+\theta\le1$ and
+$\sigma_H(Q(y)-Q(V))\le\theta$, together with the original positive
+vanishing sequences, positive closed caps and source/resource correspondence.
+The negative route still requires the SAME actual $b\in H_N$, one
+complete full feasible $\lambda$ of mass $M\ge1$ at that point, and an
+actual unit-$O$ score $y$ with the STRICT inequality $F_{Q(y)}(b)>M$,
+plus an original common-seed $N_2$ attainer and a uniform lower bound
+against EVERY arbitrary-address, full-carrier $O_2$ competitor.
+Both routes remain open. Constructor failure, a detector-only hull point,
+exact-law failure or finite checking does not establish original separation.
+
+## 追加锚（本行以下为增补区）
