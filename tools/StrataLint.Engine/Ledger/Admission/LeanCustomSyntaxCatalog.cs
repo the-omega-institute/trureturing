@@ -49,7 +49,8 @@ internal sealed class LeanCustomSyntaxCatalog(
         for (var index = 0; index < commandStarts.Length; index++)
         {
             var start = commandStarts[index];
-            if (tokens[start].Text is not ("macro" or "syntax" or "notation" or "local" or "scoped"))
+            if (tokens[start].Text is not ("macro" or "syntax" or "notation" or "local" or "scoped"
+                or "infix" or "infixl" or "infixr" or "prefix" or "postfix"))
             {
                 continue;
             }

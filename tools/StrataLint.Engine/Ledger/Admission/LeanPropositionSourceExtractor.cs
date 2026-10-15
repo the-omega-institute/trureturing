@@ -37,7 +37,8 @@ internal sealed partial class LeanSourceCatalog
             "structure",
             "class",
             "instance",
-            "constant");
+            "constant",
+            "alias");
     private static readonly ImmutableHashSet<string> ProofKinds =
         ImmutableHashSet.Create(StringComparer.Ordinal, "theorem", "lemma");
     private static readonly ImmutableHashSet<string> ReservedIdentifiers =
@@ -209,7 +210,7 @@ internal sealed partial class LeanSourceCatalog
             RejectCustomSyntaxDependency(declaration);
             foreach (var dependency in ResolveDependencies(declaration))
             {
-                if (dependency.IsProof)
+                if (dependency.IsProof && declaration.Kind != "alias")
                 {
                     continue;
                 }
@@ -324,17 +325,6 @@ internal sealed partial class LeanSourceCatalog
 
         return selected;
     }
-
-    private static bool RecordedKindMatchesSource(string recordedKind, string sourceKind) =>
-        string.Equals(recordedKind, sourceKind, StringComparison.Ordinal)
-        || sourceKind switch
-        {
-            "structure" or "class" => recordedKind == "inductive",
-            "lemma" => recordedKind == "theorem",
-            "abbrev" => recordedKind == "def",
-            "instance" => recordedKind is "def" or "theorem",
-            _ => false,
-        };
 
     private IEnumerable<LeanSourceDeclaration> ResolveDependencies(
         LeanSourceDeclaration declaration)
@@ -650,6 +640,8 @@ internal sealed partial class LeanSourceCatalog
             }
 
             var kind = tokens[kindIndex].Text;
+            if (kind == "alias" && !IsPlainAlias(tokens, kindIndex, end))
+                throw new LeanSourceExtractionException($"Lean alias source is unsupported in {file.Path.Value}.");
             var nameIndex = kind == "instance" ? InstanceNameIndex(tokens, kindIndex, end)
                 : NextIdentifier(tokens, kindIndex + 1, end);
             if (nameIndex < 0 || IsAnonymousInstance(tokens, kindIndex, end))
@@ -673,7 +665,7 @@ internal sealed partial class LeanSourceCatalog
             result.Add(new LeanSourceDeclaration(
                 file.Path,
                 fullName,
-                kind,
+                kind == "def" && HasDeclarationModifier(attributes, "partial") ? "opaque" : kind,
                 ProofKinds.Contains(kind),
                 tokens[kindIndex..semanticEnd],
                 ambientTokens,
@@ -682,7 +674,7 @@ internal sealed partial class LeanSourceCatalog
             {
                 HasExtIffTheorem = commandDepths[commandIndex] == 0
                     && ProofKinds.Contains(kind) && HasBareExtAttribute(attributes),
-                IsPrivateDeclaration = HasPrivateDeclarationModifier(attributes),
+                IsPrivateDeclaration = HasDeclarationModifier(attributes, "private"),
             });
         }
 
@@ -722,6 +714,7 @@ internal sealed partial class LeanSourceCatalog
                     || text is "private" or "protected" or "noncomputable" or "partial" or "unsafe" or "public" or "meta")
                 && (text is "@" or "import" or "namespace" or "end" or "section" or "mutual"
                 or "macro" or "macro_rules" or "syntax" or "notation" or "local" or "scoped"
+                or "infix" or "infixl" or "infixr" or "prefix" or "postfix"
                 or "elab" or "elab_rules" or "open" or "variable" or "include" or "omit"
                 or "universe" or "set_option" or "attribute" or "export" or "example"
                 || DeclarationKinds.Contains(text)

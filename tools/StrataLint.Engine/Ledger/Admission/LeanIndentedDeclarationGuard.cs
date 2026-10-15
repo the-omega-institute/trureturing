@@ -507,14 +507,14 @@ internal sealed partial class LeanSourceCatalog
         return !name.IsEmpty && name[0] == ("_private", false);
     }
 
-    private static bool HasPrivateDeclarationModifier(ImmutableArray<LeanSourceToken> tokens)
+    private static bool HasDeclarationModifier(ImmutableArray<LeanSourceToken> tokens, string modifier)
     {
         var depth = 0;
         foreach (var token in tokens)
         {
             if (token.Text is "[" or "(" or "{") depth++;
             else if (token.Text is "]" or ")" or "}") depth--;
-            else if (depth == 0 && token.Text == "private") return true;
+            else if (depth == 0 && token.Text == modifier) return true;
         }
         return false;
     }
@@ -651,6 +651,22 @@ internal sealed partial class LeanSourceCatalog
                 yield return tokens[start..end];
         }
     }
+
+    private static bool IsPlainAlias(ImmutableArray<LeanSourceToken> tokens, int start, int end) =>
+        end - start == 4 && IsIdentifier(tokens[start + 1].Text)
+        && tokens[start + 2].Text == ":=" && IsIdentifier(tokens[start + 3].Text);
+
+    private static bool RecordedKindMatchesSource(string recordedKind, string sourceKind) =>
+        string.Equals(recordedKind, sourceKind, StringComparison.Ordinal)
+        || sourceKind switch
+        {
+            "structure" or "class" => recordedKind == "inductive",
+            "lemma" => recordedKind == "theorem",
+            "abbrev" => recordedKind == "def",
+            "alias" => recordedKind is "def" or "theorem",
+            "instance" => recordedKind is "def" or "theorem",
+            _ => false,
+        };
 
     private static int FindDeclarationKind(
         ImmutableArray<LeanSourceToken> tokens,
