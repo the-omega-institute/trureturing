@@ -55,7 +55,7 @@ Direct frozen dependencies: stateGram_diag: none
 proof_shape: psd_summand_projection: bind-only; consumer: incoherent_gram_antidistinguishable
 escape_witness: psd_summand_projection: none
 Direct frozen dependencies: psd_summand_projection: none
-proof_shape: incoherent_gram_antidistinguishable: content; consumer: spectral_sufficient_antidistinguishable
+proof_shape: incoherent_gram_antidistinguishable: content; consumer: spectral_sufficient_antidistinguishable; owners=Nat.zero_lt_of_lt
 escape_witness: incoherent_gram_antidistinguishable: incoherent_gram_antidistinguishable
 Direct frozen dependencies: incoherent_gram_antidistinguishable: F1, F2, F3, F4, F5, F6, F7
 admission_basis: escape-witness
@@ -313,7 +313,7 @@ theorem incoherent_gram_antidistinguishable (hn : 1 ≤ n)
   obtain ⟨B, hABA, hBAB, hAB, hBA⟩ := matrix_penrose_exists A
   let P := A*B
   let Q := B*A
-  let i0 : Fin n := ⟨0, by omega⟩
+  let i0 : Fin n := ⟨0, by exact Nat.zero_lt_of_lt hn⟩
   let M : Fin n → Matrix (Fin d) (Fin d) ℂ :=
     fun i => Bᴴ*F i*B + if i=i0 then 1-P else 0
   have hsumG : ∑ i, F i = Aᴴ*A := hsum.trans (stateGram_matrix ψ)
