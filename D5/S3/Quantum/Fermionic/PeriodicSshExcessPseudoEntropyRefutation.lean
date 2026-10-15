@@ -594,6 +594,97 @@ private theorem psi_overlap : star psi58 ⬝ᵥ psi38 = (1152 : ℂ) := by
   have h := psi38_overlap
   exact_mod_cast h
 
+private def alpha38 : Fin 6 → ℝ := ![11/48, 1/224, 1/672, 1/224, 1/672, 11/48]
+private def alpha58 : Fin 6 → ℝ := ![13/48, 1/224, 1/672, 1/224, 1/672, 13/48]
+
+private def B38 (k : Fin 6) : FullOperator 6 :=
+  if k.val < 3 then (mode (modes38 k))ᴴ else mode (modes38 k)
+
+private def B58 (k : Fin 6) : FullOperator 6 :=
+  if k.val < 3 then (mode (modes58 k))ᴴ else mode (modes58 k)
+
+private theorem modes38_norm : ∀ k : Fin 6, ∑ x, modes38 k x ^ 2 = modeNorm k := by
+  intro k
+  fin_cases k <;> norm_num [modes38, modeNorm, Fin.sum_univ_succ]
+
+private theorem modes58_norm : ∀ k : Fin 6, ∑ x, modes58 k x ^ 2 = modeNorm k := by
+  intro k
+  fin_cases k <;> norm_num [modes58, modeNorm, Fin.sum_univ_succ]
+
+private theorem hamiltonian_eq_dGamma (N : ℕ) (v : ℝ) :
+    hamiltonian N v = dGamma (sshHopping N v) := rfl
+
+private theorem mode_adj_mul {M : ℕ} (l : Fin M → ℝ) :
+    (mode l)ᴴ * mode l = ((∑ j, l j ^ 2 : ℝ) : ℂ) • (1 : FullOperator M) -
+      mode l * (mode l)ᴴ := by
+  exact eq_sub_of_add_eq' (mode_car l)
+
+private theorem sos38 :
+    hamiltonian 3 (3/8) = (-25/8 : ℂ) • (1 : FullOperator 6) +
+      ∑ k, (alpha38 k : ℂ) • ((B38 k)ᴴ * B38 k) := by
+  rw [hamiltonian_eq_dGamma, hopping38, dGamma_sum_smul]
+  simp_rw [dGamma_rankOne]
+  unfold B38 alpha38 eig38
+  simp only [Fin.sum_univ_succ, Fin.isValue, Fin.mk.injEq, Nat.reduceAdd, Nat.reduceLT,
+    ↓reduceIte]
+  rw [mode_adj_mul, mode_adj_mul, mode_adj_mul]
+  norm_num [modes38, modeNorm, Fin.sum_univ_succ, Matrix.cons_val_succ,
+    Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
+    Matrix.vecHead, Matrix.vecTail]
+  module
+
+private theorem sos58 :
+    hamiltonian 3 (5/8) = (-27/8 : ℂ) • (1 : FullOperator 6) +
+      ∑ k, (alpha58 k : ℂ) • ((B58 k)ᴴ * B58 k) := by
+  rw [hamiltonian_eq_dGamma, hopping58, dGamma_sum_smul]
+  simp_rw [dGamma_rankOne]
+  unfold B58 alpha58 eig58
+  simp only [Fin.sum_univ_succ, Fin.isValue, Fin.mk.injEq, Nat.reduceAdd, Nat.reduceLT,
+    ↓reduceIte]
+  rw [mode_adj_mul, mode_adj_mul, mode_adj_mul]
+  norm_num [modes58, modeNorm, Fin.sum_univ_succ, Matrix.cons_val_succ,
+    Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
+    Matrix.vecHead, Matrix.vecTail]
+  module
+
+private def reduceInt (X : Assignment 6 → Assignment 6 → ℤ) :
+    Matrix (Fin 4) (Fin 4) ℤ :=
+  fun a b => ∑ z : Fin 16,
+    X (Fin.append (finFunctionFinEquiv.symm a) (finFunctionFinEquiv.symm z))
+      (Fin.append (finFunctionFinEquiv.symm b) (finFunctionFinEquiv.symm z))
+
+private def outerInt (f g : Assignment 6 → ℤ) : Assignment 6 → Assignment 6 → ℤ :=
+  fun x y => f x * g y
+
+private def r38Int : Matrix (Fin 4) (Fin 4) ℤ :=
+  reduceInt (outerInt psi38Z psi58Z)
+
+private def r11Int : Matrix (Fin 4) (Fin 4) ℤ :=
+  reduceInt (outerInt psi38Z psi38Z)
+
+private def r22Int : Matrix (Fin 4) (Fin 4) ℤ :=
+  reduceInt (outerInt psi58Z psi58Z)
+
+set_option maxRecDepth 100000 in
+private theorem r38Int_eq : r38Int = !![256, 0, 0, 0; 0, 320, -192, 0; 0, -192, 320, 0; 0, 0, 0, 256] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem r11Int_eq : r11Int = !![832, 0, 0, 0; 0, 932, -420, 0; 0, -420, 932, 0; 0, 0, 0, 832] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    decide +kernel
+
+set_option maxRecDepth 1000000 in
+private theorem r22Int_eq : r22Int = !![80, 0, 0, 0; 0, 116, -84, 0; 0, -84, 116, 0; 0, 0, 0, 80] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [r22Int, reduceInt, outerInt, psi58Z, psi58, psiCode,
+      Fin.sum_univ_succ, Matrix.cons_val_succ, Matrix.cons_val_zero,
+      Matrix.cons_val_fin_one, Matrix.cons_val_two]
+
 theorem result : ¬ claim := by
   sorry
 
