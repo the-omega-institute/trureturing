@@ -1367,3 +1367,143 @@ cutoff estimate cannot be substituted for that condition. The known
 unconditional allowance (I31) remains insufficient, and no new
 sufficient unconditional energy estimate or RH proof is supplied.
 These are source-checked paper applications, without Lean certification.
+
+
+## A paid deletion of original endpoint responses
+
+The stronger all-short-interval Möbius saving recorded in the
+[existing short-interval source](../Analytic/shortuniformity2026robininterfaces.md#a-stronger-error-on-longer-mobius-intervals)
+controls an actual signed part of the original residual. This is an
+application of that classical estimate, not a new Möbius theorem.
+It uses the original centered response atoms from (I17)–(I18),
+including all their Fourier aliases, rather than just a pair of
+frequencies.
+
+Set $L=\log N$ and $\Omega(N)=(L/\log L)^{1/3}$ for sufficiently
+large integer $N$. Fix $0<\eta<1/24$, and take integer $Q,H$ with
+
+$$
+N/2<Q<Q+H\le N,\qquad H\ge Q^{7/12+2\eta}.
+$$
+
+The cited estimate with $\theta=7/12+\eta$ gives a constant
+$c=c_\eta>0$ such that
+
+$$
+\max_{0\le u\le H}
+\left|\sum_{Q<n\le Q+u}\mu(n)\right|
+\ll_\eta H e^{-c\Omega(N)}.
+\tag{I48}
+$$
+
+Here the maximum can be taken over integer $u$. For
+$u\ge Q^{7/12+\eta}$, apply the source directly at the same start $Q$.
+For shorter prefixes, the trivial bound is at most
+$Q^{7/12+\eta}\le H Q^{-\eta}$. This power surplus absorbs the
+exponential allowance since $\Omega(N)=o(\log N)$ and $Q\asymp N$.
+The constant $c$ incorporates that scale comparison. Thus (I48)
+is uniform over all the prefixes required by summation by parts;
+it is not merely a bound for one full interval.
+
+For the actual integer observations $N\le m\le2N$, define the
+original-index centered band
+
+$$
+G_{N,Q,H}(m)=
+\sum_{Q<n\le Q+H}\frac{\mu(n)\log(N/n)}L
+ \left(\{m/n\}-\frac{n-1}{2n}\right).
+\tag{I49}
+$$
+
+To apply (I48), retain the actual real weight
+
+$$
+w_m(x)=\frac{\log(N/x)}L
+ \left(\frac{m+1/2}{x}-\lfloor m/x\rfloor-\frac12\right).
+$$
+
+On $[Q,Q+H]$, the ratio $m/x$ lies in $[1,4)$, so there are only
+finitely many floor thresholds. On each smooth piece,
+$|w_m'(x)|\ll1/(NL)$; every jump has magnitude $O(1/L)$.
+The actual values at integer thresholds are the left-limit values,
+and are included in its bounded variation. Consequently, uniformly
+in $m,Q,H$,
+
+$$
+\|w_m\|_\infty+\operatorname{Var}_{[Q,Q+H]}(w_m)\ll L^{-1}.
+$$
+
+If $Q=N-H$, then $\log(N/x)\ll H/N$ throughout the band. Each
+jump gains that factor, and integration of the continuous derivative
+costs $O(H/(NL))$. Thus the endpoint band has the stronger bound
+
+$$
+\|w_m\|_\infty+\operatorname{Var}_{[N-H,N]}(w_m)
+\ll\frac{H}{NL}.
+\tag{I50}
+$$
+
+Discrete Abel summation uses the actual values $w_m(n)$, so it does
+not discard any floor jump or endpoint. Combine (I48)–(I50) with
+$\sum_{m=N}^{2N}1/[m(m+1)]<1/N$. In the same weighted first-block
+norm as $E_N^{\rm first}$, this gives
+
+$$
+\begin{aligned}
+\|G_{N,Q,H}\|_{\rm first}^2
+ &\ll_\eta\frac{H^2}{NL^2}e^{-2c\Omega(N)},\\
+\|G_{N,N-H,H}\|_{\rm first}^2
+ &\ll_\eta\frac{H^4}{N^3L^2}e^{-2c\Omega(N)}.
+\end{aligned}
+\tag{I51}
+$$
+
+For any fixed $0<\lambda<c/2$, take an integer bandwidth
+$H\asymp N^{3/4}e^{\lambda\Omega(N)}$. This satisfies the required
+length and endpoint conditions eventually, because
+$7/12+2\eta<3/4$ and $H=o(N)$. The second estimate gives
+
+$$
+\|G_{N,N-H,H}\|_{\rm first}^2
+\ll_\eta L^{-2}e^{-(2c-4\lambda)\Omega(N)}=o(1).
+\tag{I52}
+$$
+
+By comparison, summing absolute values before using Möbius cancellation
+only gives the allowance $H^4/(N^3L^2)$, which at this bandwidth is
+$\asymp L^{-2}e^{4\lambda\Omega(N)}$ and does not certify vanishing.
+Thus the signed input pays an additional, quantitatively larger band.
+Here $H$ is the width of the original dictionary-index band, not the
+cutoff sampling gap used in (I43)–(I47).
+
+Write $G_N=G_{N,N-H,H}$ and $Z_N=R_N-G_N$ on the same first block.
+The full-period zero-frequency coefficient $d_N$ of (I17) is retained:
+each original centered atom has zero mean on a common multiple of its
+period. The mean over the first observation block need not be retained.
+All remaining coefficients keep the original logarithmic cutoff $N$;
+$Z_N$ is not identified with a residual reweighted at cutoff $N-H$.
+The exact comparison is
+
+$$
+\begin{aligned}
+E_N^{\rm first}
+ &=\|Z_N\|_{\rm first}^2
+   +2\Re\langle Z_N,G_N\rangle_{\rm first}
+   +\|G_N\|_{\rm first}^2,\\
+\left|\sqrt{E_N^{\rm first}}-\|Z_N\|_{\rm first}\right|
+ &\le\|G_N\|_{\rm first}=o(1).
+\end{aligned}
+\tag{I53}
+$$
+
+A small norm of $G_N$ does not assert an $o(1)$ difference of squared
+energies without a bound for the remaining norm and cross term.
+Nor does it bound arbitrary Fourier subparts of $G_N$: an original
+index $n$ includes reducible fractions $h/n$, so this is not a pure
+band of reduced Fourier denominators. All those aliases travel together.
+
+This pays one original-response deletion and leaves the other source
+indices and their interaction with $d_N$ in $Z_N$. It gives no improved
+complete-energy allowance over (I31), no sufficient unconditional
+RH energy estimate and no same-integer signed Robin estimate.
+The source application and derivation here are not Lean-certified.
