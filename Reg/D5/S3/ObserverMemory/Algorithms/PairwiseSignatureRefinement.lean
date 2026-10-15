@@ -1,3 +1,4 @@
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.PairwiseSignatureRefinement
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration

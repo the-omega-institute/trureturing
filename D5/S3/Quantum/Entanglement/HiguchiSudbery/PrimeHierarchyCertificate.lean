@@ -7,6 +7,7 @@
    digest: Prime-encoded reflection for the sharp four-qubit marginal entropy bound. -/
 /- admission_basis: escape-witness
 The arbitrary-length reflection laws preserve evaluation through fuelled polynomial operations. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Entanglement.HiguchiSudbery.PrimeReflection
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.HiguchiSudbery

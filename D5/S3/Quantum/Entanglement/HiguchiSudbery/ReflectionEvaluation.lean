@@ -9,6 +9,7 @@
 /- admission_basis: escape-witness
 The generic weighted square law proves nonnegativity for all sparse polynomials. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Entanglement.HiguchiSudbery.SparseReflection
 import D5.S3.Quantum.Entanglement.HiguchiSudbery.HS4Assembly
 

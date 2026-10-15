@@ -650,7 +650,7 @@ theorem result (C : ℝ) (hC : 1 < C) :
       obtain ⟨a, b, ha, hb, haH, hbH, hab, hr⟩ := (maximum m).2.2.1
       rw [hr]
       exact mul_le_mul_of_nonneg_right (upper m hm hl hq hx a b ha hb haH hab)
-        (by dsimp [scale]; positivity)
+        (by exact div_nonneg (zero_le_one.trans hl) (zero_le_one.trans hq))
   have erelative := linearize (extremeRatio C) (fun m => zero_lt_one.trans_le (maximum m).2.2.2) Erate
 
   have mertens : Tendsto

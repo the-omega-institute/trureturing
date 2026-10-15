@@ -6,6 +6,7 @@
    utility: none
    digest: Multi-scale central digits are injective with exact length control. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitData
 
 set_option autoImplicit false

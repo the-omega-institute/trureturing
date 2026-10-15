@@ -6,6 +6,7 @@
    utility: none
    digest: Differentiation identifies logarithmic-weight parity with binary Catalan support. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.LogarithmicWeightCatalanParity
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 

@@ -6,6 +6,7 @@
    utility: none
    digest: A396805 has residues zero, one, zero modulo three from index three. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.IterateExponentialParity
 import Mathlib.Data.Nat.Choose.Lucas
 

@@ -6,6 +6,7 @@
    utility: none
    digest: The full indexed positive-pair family has the required cutoff filtration. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.PositivePairs.Coefficients.MagnusWordCoefficients
 
 set_option autoImplicit false

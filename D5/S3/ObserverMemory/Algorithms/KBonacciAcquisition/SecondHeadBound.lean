@@ -6,6 +6,7 @@
    utility: none
    digest: A weighted common-table certificate bounds the second-head prefix at every length. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
 import Mathlib
 

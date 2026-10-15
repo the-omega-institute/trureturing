@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation.claim; result=D5/S1/Digit/Infinite/SevenCycleCoherenceResult.result; claim=D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation.claim
    digest: An actual coherent return SCC does not require finite future separation. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Digit.Infinite.SevenCycleCollisionResult
 
 import D5.S1.Digit.Infinite.SevenCycleCoherenceRefutation

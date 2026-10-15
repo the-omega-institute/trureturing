@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Earn both new cut inventories on the same actual parent. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateQPromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 

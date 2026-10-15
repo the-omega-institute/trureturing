@@ -153,6 +153,33 @@ import D5.S3.Entropy.Forgetting.PushforwardComposition
 import D5.S3.Entropy.Observation.MultiTargetInformationChain
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.QuantumBounds.StatisticalStrengthMagicSquare
+import Mathlib.Probability.Distributions.Uniform
+
+open scoped BigOperators ENNReal
+
+namespace PMF
+
+noncomputable def uniformOfFinset {α : Type*} [DecidableEq α]
+    (s : Finset α) (hs : s.Nonempty) : PMF α :=
+  PMF.ofFinset (fun a => if a ∈ s then (s.card : ℝ≥0∞)⁻¹ else 0) s (by
+    have hsum : (∑ a ∈ s, if a ∈ s then (s.card : ℝ≥0∞)⁻¹ else 0) =
+        ∑ _a ∈ s, (s.card : ℝ≥0∞)⁻¹ := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      simp [ha]
+    rw [hsum, Finset.sum_const, nsmul_eq_mul]
+    have hcard : s.card ≠ 0 := Nat.ne_of_gt (Finset.card_pos.mpr hs)
+    exact ENNReal.mul_inv_cancel (by exact_mod_cast hcard)
+      (ENNReal.natCast_ne_top _)) (by
+    intro a ha
+    simp [ha])
+
+@[simp] theorem uniformOfFinset_apply {α : Type*} [DecidableEq α]
+    (s : Finset α) (hs : s.Nonempty) (a : α) :
+    uniformOfFinset s hs a = if a ∈ s then (s.card : ℝ≥0∞)⁻¹ else 0 := by
+  rw [uniformOfFinset, PMF.ofFinset_apply]
+
+end PMF
 
 set_option maxHeartbeats 20000000
 

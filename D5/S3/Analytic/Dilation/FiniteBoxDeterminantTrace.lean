@@ -214,7 +214,7 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
   refine ⟨fun N => Finset.prod_congr rfl (fun mn _ => hactual mn.1 mn.2), ?_⟩
   let R := MvPowerSeries (Fin 1) ℚ
   let ε := MvPowerSeries.finSuccEquiv ℚ 1
-  let : IsAddTorsionFree R := .of_module_rat R
+  let : HasUniqueDiv R := .of_module_rat R
   have htransport (z : BivariateSeries) (hz : HasSubst z)
       (hε : constantCoeff (ε z) = 0) (f : PowerSeries ℚ) :
       ε (PowerSeries.subst z f) = (f.map (MvPowerSeries.C : ℚ →+* R)).subst (ε z) := by

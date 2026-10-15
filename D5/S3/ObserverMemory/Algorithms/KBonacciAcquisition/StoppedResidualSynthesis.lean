@@ -6,6 +6,7 @@
    utility: none
    digest: One chronological stopped table law synthesizes arbitrary residual amplitudes. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
 import Mathlib.Probability.Distributions.Uniform

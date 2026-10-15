@@ -7,10 +7,13 @@
    digest: Hanna's logarithmic integer-series closure under every positive affine extraction. -/
 
 import D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
+import Batteries.Tactic.OpenPrivate
 
 open PowerSeries Finset
 open D5.S1.Recurrence.Periodic.StirlingTransformTotientPeriod (T)
 open D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
+open private q T_window coeff_transform reconstruction map_transform from
+  D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
 
 namespace D5.S1.Recurrence.Algebraic.HannaLogarithmicAffineClosure
 
@@ -61,7 +64,7 @@ private theorem transform_T_affine (a : ℕ → ℤ) (m b r : ℕ) :
         ∑ k ∈ range (m * r + b + 1), (a k : ℚ) *
           ((q k (m * n + b) : ℚ) / (n.factorial : ℚ) * coeff r (log ℚ ^ n)) := by
     have hnr : n ≤ r := Nat.le_of_lt_succ (mem_range.mp hn)
-    rw [HannaLogarithmicPowerClosure.T_window a
+    rw [T_window a
       (Nat.add_le_add_right (Nat.mul_le_mul_left m hnr) b)]
     simp only [Int.cast_sum, Int.cast_mul, sum_div, sum_mul]
     apply sum_congr rfl

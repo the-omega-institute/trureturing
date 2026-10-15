@@ -16,6 +16,7 @@ Direct frozen dependencies: repository quantum interfaces in
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Entanglement.HiguchiSudbery.EntropyReduction
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 import D5.S3.Quantum.Fibers.ProjectiveInteriorProbabilityFiber

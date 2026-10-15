@@ -6,6 +6,7 @@
    utility: none
    digest: Relative Poisson transfer for one or two native marked departure rows. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Estimation.TimeArrow.ActualMarkedPathPgfPoissonEnvelope
 import D5.S3.Combinatorics.Permanental.CycleGeodesic.CycleGeodesicMidpoint
 import Mathlib.Analysis.Fourier.AddCircleMulti

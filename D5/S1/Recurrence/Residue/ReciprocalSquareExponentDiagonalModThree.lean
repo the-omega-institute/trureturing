@@ -6,6 +6,7 @@
    utility: none
    digest: A ternary sparse square describes the nonzero coefficients of A397356 modulo three. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.ReciprocalSquareExponentDiagonalParity
 import Mathlib.RingTheory.PowerSeries.Derivative
 

@@ -6,6 +6,7 @@
    utility: none
    digest: Literal digit blocks preserve lower coefficients and expose leading coordinates. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitWords
 
 set_option autoImplicit false

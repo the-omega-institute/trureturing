@@ -6,6 +6,7 @@
    utility: none
    digest: Doubled-space operator monotonicity yields positive-half-line concavity. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
 import Mathlib.Tactic.Module

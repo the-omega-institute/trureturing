@@ -6,6 +6,7 @@
    utility: none
    digest: Joint convexity of Hiai's original CFC geometric trace on supported PSD pairs. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Hiai.InverseGeometricIdentification
 import D5.S3.Quantum.Hiai.CarlenLiebConvexity
 import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
