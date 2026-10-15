@@ -473,9 +473,10 @@ internal sealed partial class LeanSourceCatalog
     private static IEnumerable<string> DependencyLookupNames(string name)
     {
         yield return name;
-        if (name.EndsWith('ˣ'))
+        var operandEnd = name.Length;
+        while (operandEnd > 1 && name[operandEnd - 1] is 'ˣ' or 'ᴴ')
         {
-            yield return name[..^1];
+            yield return name[..--operandEnd];
         }
         for (var separator = name.LastIndexOf('.'); separator > 0;
             separator = name.LastIndexOf('.', separator - 1))
