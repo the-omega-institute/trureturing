@@ -108,7 +108,7 @@ def logRegularization (epsilon : ℝ) (T : H →L[ℂ] H) : H →L[ℂ] H :=
   algebraMap ℝ (H →L[ℂ] H) (Real.log (1 + epsilon)) -
     CFC.log (T + algebraMap ℝ (H →L[ℂ] H) epsilon)
 
-private theorem shift_strictlyPositive {epsilon : ℝ} (he : 0 < epsilon)
+theorem shift_strictlyPositive {epsilon : ℝ} (he : 0 < epsilon)
     {T : H →L[ℂ] H} (hT : 0 ≤ T) :
     IsStrictlyPositive (T + algebraMap ℝ (H →L[ℂ] H) epsilon) :=
   IsStrictlyPositive.nonneg_add hT (isStrictlyPositive_algebraMap he)

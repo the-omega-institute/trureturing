@@ -704,3 +704,561 @@ asserts an empirical machine-learning conclusion, external mathematical
 priority, or a Lean/kernel-verification consequence.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. A prescribed code with a sharp two-versus-four call separation
+
+### 8.1 The same full fiber and the new complete bit
+
+**Convention 8.1 (unchanged objects and pointwise comparison).** Keep the
+entire actual domain $\mathcal U_*$ in (NRE.8), the filling (NRE.7), all
+six pairwise distinct class values, and both occurrences of each repeated
+partner. In particular there is no restriction on the size or internal
+shape of an admissible finite branch image. Keep exactly Assumption 3.1
+and Definition 3.2: genuine same-version acquired data, the authenticated
+single update, actual complete-code export, the complete access cut,
+faithful common entry, stationary native reading, and the current state
+as the entire mutable accessible memory. All installed Reads and Halts
+count, as does every invocation, including absence and repetition.
+
+The inherited image classification in Theorem 4.1 gives the exhaustive
+alternatives: when $h=0$, all six values are images and beta may occupy
+any one class or none; when $h=j>0$, $b_j$ is alpha, its partner is beta,
+and every other class value is a branch image. In every alternative
+$F(u)=R_{h(u)}$ by (NRE.13). The five whole rows are precisely Definition
+2.2, with its full exteriors, restricted partitions, canonical names,
+disequalities and concrete absence guards. These native facts are reused,
+not new hypotheses or a restriction to witness sources.
+
+Write $\sigma$ for the bit already defined in (NRE.12). The new bit
+$\sigma^\dagger$ below is a different specified computation. Each
+comparison involving either bit holds that bit pointwise fixed on every
+original actual origin. Neither a new coloring nor the code of a chosen
+representative may replace it for a competing reader.
+
+**Definition 8.2 (the complete acquired bit).** For every
+$u\in\mathcal U_*$ prescribe
+
+$$
+\sigma^\dagger(u)=0\quad\Longleftrightarrow\quad
+ h(u)=2\ \lor\
+ \bigl(h(u)\in\{0,1\}\ \land\ x_{b_2}=E\bigr)\ \lor\
+ \bigl(h(u)\in\{3,4\}\ \land\ x_{b_2}\ne E\bigr).
+\tag{NRE.16}
+$$
+
+Set $\sigma^\dagger(u)=1$ in every other case. Its definition covers the
+entire actual fiber, including every zero-target beta placement.
+
+**Proposition 8.3 (lawfulness, attained entries and structure dependence).**
+Under Assumption 3.1, (NRE.16) is a terminating finite computation on the
+acquired current data. Its attained range is $\{0,1\}$, and it is not a
+function of the class roots or of the complete target alone.
+
+**Proof.** Inspect the four actually acquired right-class finite terms
+for literal equality with alpha to compute $h$, and compare the acquired
+term $x_{b_2}$ with the fixed finite term $E$. When the supplied acquired
+data are the lossless current tree, local traversal at the fixed class
+representatives extracts those same terms. All inspections and comparisons
+terminate on finite acquired syntax. They ask neither an unknown-subtree
+equality question nor a new native invocation and do not use a predecessor
+input. The assumed export and entry services carry the resulting complete
+bit across the access cut.
+
+If $x_{b_2}=\alpha$, the image classification forces $h=2$ and the bit
+is zero. If $x_{b_2}=\beta$, that classification forces $h=0$ and the
+bit is one: a positive target would already have beta at its different
+partner class. Both cases have actual origins by the finite filling and
+inverse criterion of Definition 2.1 and Theorem 4.1. Thus both bits are
+attained. More explicitly, the six witnesses in Proposition 8.5 include
+a code-zero origin, while the injective all-image tuple
+$(T_2,T_3,T_4,\beta,T_5,T_6)$ has code one. Here and below
+$T_n=\rho^n\alpha$ is the distinct finite orbit established in Theorem
+4.1; $T_2=E$ and every $T_n$, $n\ge2$, is a branch image.
+
+For structure dependence, in class order $(a,c,b_1,b_2,b_3,b_4)$ take
+
+$$
+(\beta,T_4,\alpha,T_2,T_5,T_6),\qquad
+(\beta,T_4,\alpha,T_3,T_5,T_6).
+\tag{NRE.17}
+$$
+
+Each tuple is injective, has the sole nonimage alpha at $b_1$ with its
+forced beta partner, and satisfies the exact image criterion. Hence each
+has the actual finite origin $\delta\mathscr S(x)$ in $\mathcal U_*$.
+Both have the same class roots and complete target $R_1$. Their bits
+are respectively zero and one by (NRE.16), because their $b_2$ terms
+are $E$ and $T_3\ne E$. This proves the asserted dependence while
+keeping all acquisition and access conditions explicit. $\square$
+
+### 8.2 Four Reads, five whole-row Halts and two actual calls
+
+**Theorem 8.4 (full-domain arbitrary-literal upper).** With exactly the
+prescribed bit $\sigma^\dagger$, one common arbitrary-literal reader has
+nine installed states, all actually reachable, and returns $F(u)$ for
+every $u\in\mathcal U_*$ in at most two actual calls. The two-call
+worst case is attained. Its four complete Read rows are
+
+| Read state | Actual literal | On $\alpha$ | On $\beta$ | On $\mathsf{branch}$ | On $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- | --- |
+| $A$ | $LRRR$ | $B_1$ | $B_3$ | $B_3$ | $H_2$ |
+| $C$ | $LRRR$ | $B_3$ | $B_1$ | $B_1$ | $H_0$ |
+| $B_1$ | $LLR$ | $H_1$ | $H_0$ | $H_0$ | $H_0$ |
+| $B_3$ | $RLR$ | $H_3$ | $H_4$ | $H_4$ | $H_4$ |
+
+The faithful entries are $\iota^\dagger(0)=A$ and
+$\iota^\dagger(1)=C$. The five complete Halt rows, also used in the
+root tables below, are
+
+| Halt | Fixed entire output | Ordered-hole canonical name vector | Predecessor-absent cuts and concrete guard |
+| --- | --- | --- | --- |
+| $H_0$ | $R_0=(C_0,\pi_0)$ of (NRE.9)--(NRE.10) | $(0,1,0,3,4,5,4,7)$ | None |
+| $H_1$ | $R_1=(C_1,\pi_1)$ of (NRE.9)--(NRE.10) | $(0,1,2,3,2,5)$ | $LLL,LLR$; beta at $LL$ |
+| $H_2$ | $R_2=(C_2,\pi_2)$ of (NRE.9)--(NRE.10) | $(0,1,2,3,2,5)$ | $LRL,LRR$; beta at $LR$ |
+| $H_3$ | $R_3=(C_3,\pi_3)$ of (NRE.9)--(NRE.10) | $(0,1,0,3,4,5)$ | $RLL,RLR$; beta at $RL$ |
+| $H_4$ | $R_4=(C_4,\pi_4)$ of (NRE.9)--(NRE.10) | $(0,1,0,3,4,5)$ | $RRL,RRR$; beta at $RR$ |
+
+The name vectors use precisely the ordered reached holes in Definition
+2.2. All within-class equalities and between-class disequalities are
+stored as part of each fixed output. In $H_1,H_2$ the other occurrence
+of $a$ remains a hole; in $H_3,H_4$ the other occurrence of $c$ remains
+a hole. These Halts return the entire rows, not target labels for a
+later decoder.
+
+**Proof.** Fix an arbitrary original actual origin. Both initial Reads
+invoke $LRRR=p_{b_2}R$, so the actual reply is
+$r_{x_{b_2}}(R)$ by (NRE.1). The image identity (NRE.4) gives absence
+for either literal leaf, alpha for $E$, and beta or branch for every
+branch image different from $E$. The exhaustive native alternatives
+of Convention 8.1 now give the following full-domain cases.
+
+If $x_{b_2}=\alpha$, then $h=2$ and $\sigma^\dagger=0$. From $A$
+the absent reply gives $H_2$ in one charged call. If $x_{b_2}=\beta$,
+then $h=0$ and $\sigma^\dagger=1$. From $C$ the absent reply gives
+$H_0$ in one charged call. In both cases the invocation at a nonexistent
+continuation is real and paid.
+
+If $x_{b_2}=E$, then $h\ne2$ and the first reply is alpha. When
+$h\in\{0,1\}$ the bit is zero, and $A$ enters $B_1$. The root at
+$b_1$ is alpha exactly when $h=1$, so $B_1$ returns $H_1$ or $H_0$
+as required. When $h\in\{3,4\}$ the bit is one, and $C$ enters
+$B_3$. Its root is alpha exactly when $h=3$, so it returns $H_3$
+or $H_4$ as required.
+
+If $x_{b_2}$ is a branch image different from $E$, then $h\ne2$
+and the first reply is beta or branch. When $h\in\{0,1\}$ the bit
+is one, so $C$ enters $B_1$ and returns the correct $H_0$ or $H_1$.
+When $h\in\{3,4\}$ the bit is zero, so $A$ enters $B_3$ and
+returns the correct $H_3$ or $H_4$.
+
+These cases exhaust every possible $h$ and every admissible $b_2$
+value. In particular, for $h=0$ a beta at $b_2$ takes the one-call
+case; an $E$ at $b_2$ takes $A,B_1,H_0$; every other image at $b_2$
+takes $C,B_1,H_0$. A beta at $a,c,b_1,b_3,b_4$, or no beta anywhere,
+is included in the latter two cases according to the actual $b_2$
+value. The remaining branch images have arbitrary admissible internal
+shapes. No bound on source size or retained hidden field is used.
+The inference of target four at $B_3$ is legitimate because its entry
+and preceding reply have already restricted $h$ to $\{3,4\}$.
+By (NRE.13), every returned entire row is $F(u)$.
+
+The entries $A,C$ are distinct and recover the complete bit at entry
+by $A\mapsto0,C\mapsto1$. They remain separately counted even though
+they install the same literal: their different successor tables store
+the initial distinction. Nothing reads a separate bit register later.
+All sixteen Read successors are installed. Each initial Read reaches
+a Halt or one of $B_1,B_3$, and each of those always reaches a Halt;
+there is no free intervening control step. Hence the bound is two.
+
+For actual reachability, the code-zero origins $u_{z_a},u_{z_1},
+u_{z_2},u_{z_3},u_{z_4}$ constructed in Proposition 8.5 have paths
+$A,B_1,H_0$; $A,B_1,H_1$; $A,H_2$; $A,B_3,H_3$; and
+$A,B_3,H_4$, respectively. The all-image tuple
+$(T_2,T_3,T_4,\beta,T_5,T_6)$ used in Proposition 8.3 gives
+$C,H_0$. Thus all four Reads and all five Halts are reached, and two
+calls are attained. The four Reads and five Halts are the whole nine
+installed states. The two length-four suffix literals and the two
+length-three representative literals are fixed table data, with their
+address and submission prices separate from these two resource counts.
+$\square$
+
+### 8.3 Six actual code-zero origins and their root replies
+
+**Proposition 8.5 (simultaneous finite witnesses).** In class order
+$(a,c,b_1,b_2,b_3,b_4)$ use the following six current-value tuples:
+
+| Name $z$ | $x_a$ | $x_c$ | $x_{b_1}$ | $x_{b_2}$ | $x_{b_3}$ | $x_{b_4}$ | $h$ | $\sigma^\dagger$ | Complete target |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $z_a$ | $\beta$ | $T_3$ | $T_4$ | $T_2$ | $T_5$ | $T_6$ | $0$ | $0$ | $R_0$ |
+| $z_c$ | $T_3$ | $\beta$ | $T_4$ | $T_2$ | $T_5$ | $T_6$ | $0$ | $0$ | $R_0$ |
+| $z_1$ | $\beta$ | $T_3$ | $\alpha$ | $T_2$ | $T_4$ | $T_5$ | $1$ | $0$ | $R_1$ |
+| $z_2$ | $\beta$ | $T_2$ | $T_3$ | $\alpha$ | $T_4$ | $T_5$ | $2$ | $0$ | $R_2$ |
+| $z_3$ | $T_2$ | $\beta$ | $T_4$ | $T_3$ | $\alpha$ | $T_5$ | $3$ | $0$ | $R_3$ |
+| $z_4$ | $T_2$ | $\beta$ | $T_4$ | $T_3$ | $T_5$ | $\alpha$ | $4$ | $0$ | $R_4$ |
+
+For each row set $t_z=\mathscr S(x^{(z)})$ and
+$u_z=\delta(t_z)$. These are six distinct actual finite origins in
+$\mathcal U_*$. Their full representative-root reply matrix is
+
+| Origin | $p_a=LLL$ | $p_c=RLL$ | $p_{b_1}=LLR$ | $p_{b_2}=LRR$ | $p_{b_3}=RLR$ | $p_{b_4}=RRR$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| $u_{z_a}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_c}$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_1}$ | $\beta$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_2}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_3}$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ |
+| $u_{z_4}$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ |
+
+Here $\mathsf{br}$ is the native branch reply. The other $a$ occurrence
+$LRL$ duplicates the $LLL$ column, and the other $c$ occurrence $RRL$
+duplicates the $RLL$ column. Thus the table also specifies every reached
+cut-root reply while retaining all eight separate occurrences.
+
+**Proof.** Orbit distinctness makes the six class values in every tuple
+pairwise distinct. In $z_a,z_c$ all values are images. In each positive
+row the only nonimage is alpha at $b_j$, its left partner is beta,
+and every other value is a branch image. The necessary and sufficient
+image criterion reused in Convention 8.1 therefore puts each $t_z$ in
+$\mathcal I$. The disjoint finite inverse (NRE.3) supplies its actual
+origin. To expose these witnesses completely, the inverse expressions
+are
+
+$$
+\begin{aligned}
+u_{z_a}={}&\left\langle
+ \left\langle\langle\alpha,T_3\rangle,\langle\alpha,\beta\rangle\right\rangle,
+ \left\langle\langle T_2,T_4\rangle,\langle T_2,T_5\rangle\right\rangle
+\right\rangle,\\
+u_{z_c}={}&\left\langle
+ \left\langle\langle T_2,T_3\rangle,\langle T_2,\beta\rangle\right\rangle,
+ \left\langle\langle\alpha,T_4\rangle,\langle\alpha,T_5\rangle\right\rangle
+\right\rangle,\\
+u_{z_1}={}&\left\langle
+ \left\langle\beta,\langle\alpha,\beta\rangle\right\rangle,
+ \left\langle\langle T_2,T_3\rangle,\langle T_2,T_4\rangle\right\rangle
+\right\rangle,\\
+u_{z_2}={}&\left\langle
+ \left\langle\langle\alpha,T_2\rangle,\beta\right\rangle,
+ \left\langle\langle\beta,T_3\rangle,\langle\beta,T_4\rangle\right\rangle
+\right\rangle,\\
+u_{z_3}={}&\left\langle
+ \left\langle\langle\beta,T_3\rangle,\langle\beta,T_2\rangle\right\rangle,
+ \left\langle\beta,\langle\alpha,T_4\rangle\right\rangle
+\right\rangle,\\
+u_{z_4}={}&\left\langle
+ \left\langle\langle\beta,T_3\rangle,\langle\beta,T_2\rangle\right\rangle,
+ \left\langle\langle\alpha,T_4\rangle,\beta\right\rangle
+\right\rangle.
+\end{aligned}
+\tag{NRE.18}
+$$
+
+Indeed, $\delta(T_n)=T_{n-1}$ for $n\ge1$, and a selected depth-two
+$E$ block inverts to beta. Applying the homomorphic $\rho$ to these
+expressions gives exactly the six displayed fillings. All terms are
+finite. In each filling both partner occurrences receive their specified
+shared value, and the six different classes remain disequal. Every cut
+occurrence exists and the full current row is exactly $R_*$, so each
+origin lies in the original $\mathcal U_*$. The six fillings are
+different: positive rows have alpha at different right classes, neither
+zero row has alpha there, and the two zero rows have different partner
+roots. Their origins are therefore different as well.
+
+The inherited whole-target identity (NRE.13) gives exactly the listed
+complete outputs, including the surviving partner hole, recomputed
+class names, retained disequalities and beta guards. For $z_a,z_c,z_1$
+one has $h\in\{0,1\}$ and $x_{b_2}=T_2=E$, so (NRE.16) is zero.
+For $z_2$ the $h=2$ clause applies. For $z_3,z_4$ one has
+$h\in\{3,4\}$ and $x_{b_2}=T_3\ne E$, again giving zero.
+These are evaluations of the prescribed code on actual acquired terms.
+
+At every representative the actual reply is the root constructor of
+its displayed class value by (NRE.1). The orbit values of index at least
+two are branches, so this gives the entire matrix. Equal values at the
+second partner occurrences give the duplicated columns without merging
+the occurrences. No all-address binary assertion is needed for these
+new witnesses: the competing readers in the next theorem are root-only,
+and the arbitrary-literal reader has genuinely different suffix replies.
+$\square$
+
+### 8.4 Every three-call root competitor needs at least ten states
+
+**Theorem 8.6 (universal same-code three-call lower bound).** Every
+root-only reader of Definition 3.2 that returns $F(u)$ for every
+$u\in\mathcal U_*$ with the same pointwise code $\sigma^\dagger$
+and at most three calls has at least five installed Read states and
+at least five installed Halt states. Consequently it has at least ten
+installed states. The conclusion still holds if either occurrence root
+of $a$ or $c$ may be queried.
+
+**Proof.** Consider any such competing table and its own faithful entry
+map $\iota'$. On the six actual origins of Proposition 8.5 all complete
+codes are zero and all public entry fields agree, so every run begins
+at exactly the same state $\iota'(0)$. The five different required rows
+exclude an initial Halt. Set
+
+$$
+G_a=\{z_a,z_1,z_2\},\qquad G_c=\{z_c,z_3,z_4\}.
+\tag{NRE.19}
+$$
+
+The representative-root matrix gives every possible first query:
+$a$ or $c$ separates $G_a$ from $G_c$, and $b_j$ isolates exactly
+$z_j$. On every subset of the witnesses each possible root has at most
+two actual replies. From a common state, one remaining Read can
+therefore supply at most two different whole outputs. An earlier Halt
+supplies only one. After the last permitted invocation any attained
+successor must be a Halt, since a Read would make another paid call
+and no free transition or decoder is available. This justifies the
+one-remaining-call bound even with sharing and early stopping.
+
+Suppose the first query isolates $z_j$. On its other reply the remaining
+witnesses are the two zeros and the three other positives. They require
+four different rows and have at most two calls left. Halting there
+cannot be correct. If the second query is a partner, its reply selecting
+the group not containing $z_j$ leaves that entire group untouched: it
+has one zero and two positives, requiring three different rows with
+one call left. If the second query is $b_k$ for $k\ne j$, its
+nonisolating reply leaves the two zeros and two positives, again three
+different rows with one call left. If it repeats $b_j$, the reply is
+constant and leaves four different rows with one call left. These
+exhaust the root menu, and each contradicts the preceding bound.
+Thus no singleton root can be the first query. Both possible partner
+occurrence representatives have exactly the same replies as their
+class representatives, so they add no alternative split.
+
+The first query must therefore be $a$ or $c$, with one live branch
+containing precisely $G_a$ and the other precisely $G_c$. On $G_a$
+there are three different required rows $R_0,R_1,R_2$ and at most two
+calls. A Halt cannot serve them. Both partner queries and $b_3,b_4$
+are constant on this set; a call at any of them would leave three
+rows for one final call. Consequently the second query must be $b_1$
+or $b_2$. It isolates its positive witness. On the other reply the
+remaining zero and other positive witness have identical replies at
+every root except the other right-class root. They still require two
+different rows. Thus an actual final call at that other root is
+necessary. In particular the code-zero zero-target path on this branch
+queries both $b_1$ and $b_2$, in whichever order the competitor chose.
+
+On $G_c$ the three required rows are $R_0,R_3,R_4$. Both partners
+and $b_1,b_2$ are constant there. The same two-call argument forces
+$b_3$ or $b_4$ second, and the other one third on the nonisolating
+reply. The zero-target path on this branch therefore queries both
+$b_3$ and $b_4$. Stopping on an isolated positive is allowed throughout;
+it does not remove either necessary zero-target continuation.
+
+Thus actual required runs invoke at least five different root-address
+classes: the first partner and each of $b_1,b_2,b_3,b_4$. A Read state
+has one fixed literal, so these five classes require at least five
+different installed Reads. Choosing the other partner occurrence still
+uses a literal distinct from every right-class root and cannot reduce
+this count. Independently the six actual origins require all five
+pairwise distinct entire rows, so there must be at least five different
+fixed-output Halts. Reads and Halts are disjoint. This proves the total
+lower bound ten.
+
+The proof constrains the competing table itself; it assumes none of
+Theorem 8.4's paths, addresses or initialization choices. Histories may
+merge, Halts may be shared, states may be duplicated, and cycles may
+occur in the union of different-source paths. None changes the necessary
+fixed addresses or the number of distinct fixed whole outputs. A repeated
+query remains a paid query; an unattained absence edge at a reached root
+provides no additional reply. Unused installed states only increase the
+count. The six origins refute a full-domain correctness promise and do
+not replace that domain. This proves the universal exclusion, including
+all faithful code entries and all permitted occurrence representatives.
+$\square$
+
+### 8.5 The sharp root call counts at nine states
+
+**Theorem 8.7 (exact root minimum four for the new bit).** Under the
+same premises and pointwise code $\sigma^\dagger$, the least worst-case
+call count among root-only readers with at most nine installed states
+is exactly four. One attaining reader uses the five complete Halts of
+Theorem 8.4 and these four Reads:
+
+| Read state | Actual literal | On $\alpha$ | On $\beta$ | On $\mathsf{branch}$ | On $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- | --- |
+| $Q_2$ | $LRR$ | $H_2$ | $Q_1$ | $Q_1$ | $Q_1$ |
+| $Q_1$ | $LLR$ | $H_1$ | $Q_3$ | $Q_3$ | $Q_3$ |
+| $Q_3$ | $RLR$ | $H_3$ | $Q_4$ | $Q_4$ | $Q_4$ |
+| $Q_4$ | $RRR$ | $H_4$ | $H_0$ | $H_0$ | $H_0$ |
+
+Its faithful entries are $\iota_R^\dagger(0)=Q_2$ and
+$\iota_R^\dagger(1)=Q_1$.
+
+**Proof.** At any $Q_j$ the representative is reached, and its alpha
+reply occurs exactly when $h=j$. Entry zero tests $2,1,3,4$ in that
+order and returns zero if all tests are non-alpha. This classifies every
+possible target from that entry in at most four calls. Entry one tests
+$1,3,4$. A target two always has code zero by (NRE.16), so no target
+two can enter there; all targets allowed at entry one are therefore
+classified in at most three calls. This reasoning uses the prescribed
+code only to exclude target two at the second entry, and covers every
+permitted finite filling and every zero-target beta placement. All
+sixteen successor entries are installed, although absence at these
+representatives is unattained. The five Halts return the fixed whole
+rows of Definition 2.2.
+
+The distinct states $Q_2,Q_1$ recover the complete bit at entry and
+leave no separate copy accessible later. The code-zero origin $u_{z_a}$
+has target zero and actually traverses $Q_2,Q_1,Q_3,Q_4,H_0$, attaining
+four calls. The positive witnesses in Proposition 8.5 reach the four
+corresponding positive Halts; together these paths reach all nine
+installed states. Thus the stated upper is attained on the entire-domain
+contract. Theorem 8.6 excludes every at-most-nine-state competitor using
+at most three calls, including any smaller call budget. The least call
+count at budget nine is consequently exactly four. $\square$
+
+**Proposition 8.8 (exact root minimum three for the earlier bit).** For
+the different bit $\sigma$ of (NRE.12), held pointwise fixed, the least
+worst-case root-only call count at installed budget nine is exactly
+three. The five Halts are again exactly those of Theorem 8.4; the four
+Reads and faithful entries are
+
+| Read state | Actual literal | On $\alpha$ | On $\beta$ | On $\mathsf{branch}$ | On $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- | --- |
+| $P_1$ | $LLR$ | $H_1$ | $P_2$ | $P_2$ | $P_2$ |
+| $P_2$ | $LRR$ | $H_2$ | $P_3$ | $P_3$ | $P_3$ |
+| $P_3$ | $RLR$ | $H_3$ | $H_0$ | $H_0$ | $H_0$ |
+| $P_4$ | $RRR$ | $H_4$ | $P_3$ | $P_3$ | $P_3$ |
+
+Initialization is $\iota_R(0)=P_1$, $\iota_R(1)=P_4$.
+
+**Proof.** By (NRE.12), a code-zero source can have only targets
+$0,1,2,3$. Entry $P_1$ tests $1,2,3$ successively, returning the
+unique corresponding positive row on alpha and $R_0$ if all tests
+are non-alpha. A code-one source can have only targets $0,3,4$;
+entry $P_4$ tests $4$ and then $3$, returning $R_0$ if neither is
+alpha. The inherited identity (NRE.13) makes these tests correct on
+every actual origin, including every allowed code variation inside a
+root fiber and all zero-target beta placements. Every native reply
+successor is specified, and all Halts contain the entire repaired row.
+
+The entries are distinct, so the complete bit is recoverable there.
+The actual source $v_0$ of Theorem 5.1 has $h=0$, code zero and
+$x_{b_2}=T_3\notin\{\beta,E\}$. Its path
+$P_1,P_2,P_3,H_0$ attains three calls. The positive cases $h=1,2$
+reach $H_1,H_2$ from $P_1$; the actual $v_3$ of that theorem reaches
+$H_3$ from $P_1$; any positive $h=4$ has code one and reaches
+$P_4,H_4$. Hence all four Reads and five Halts are genuinely reached,
+and their total is nine. Theorem 5.1 already excludes every two-call
+root reader for this same old bit at every finite installed budget,
+including other partner representatives. Reusing that complete lower
+bound gives the exact minimum three, without repeating its inherited
+four-witness proof. $\square$
+
+### 8.6 The failed universal implication and its first budget
+
+**Corollary 8.9 (first failure of same-code two-to-three normalization).**
+On the exact domain and service contract above, the following universal
+implication is false: every lawful prescribed binary code admitting an
+at-most-nine-state arbitrary-literal reader with at most two calls
+admits a same-code at-most-nine-state root-only reader with at most
+three calls. Nine is the first possible installed-state budget for
+failure of this implication. For $\sigma^\dagger$, the minimum installed
+state count among arbitrary-literal readers with at most two calls is
+also exactly nine.
+
+**Proof.** Proposition 8.3 supplies a lawful binary computation on the
+actual acquired current data. Theorem 8.4 supplies the universal premise
+for that code with exactly nine installed states and at most two calls.
+Theorem 8.6 excludes every root-only conclusion table within nine states
+and three calls, regardless of its faithful initialization or paths.
+This is an existence-level counterexample with identical pointwise code
+on both sides. Theorem 8.7 gives the exact replacement call count four
+for this code and state budget; Proposition 8.8's different exact count
+three concerns only the old code.
+
+For smaller budgets, directly apply *Native cut-birth provenance and
+literal past-row recovery*, Theorem 15.4, under its Definition 15.1.
+The hypothesis correspondence is complete: its actual inverse fiber is
+(NRE.8), its ordered trees and substitution are Definitions 1.1--1.2,
+its cut and complete current row are (NRE.6)--(NRE.7), and its five
+complete targets are Definition 2.2. Its acquired current finite data,
+prescribed arbitrary binary computation, actual export, complete cut,
+faithful recoverable entry and stationary service are Assumption 3.1.
+Its counted state-only fixed-literal Moore table, with every installed
+state and every invocation charged, is Definition 3.2. Its two upper
+budgets are at most eight states and at most two calls. The theorem
+therefore yields a root reader on the same installed states with the
+original code and initialization, unchanged whole outputs, and the same
+state paths and call counts on every original source. Such a reader
+already has at most two calls and hence at most three. Every smaller
+successful budget is included. The inherited normalization is reused
+with these hypotheses, not reproved or counted as new content.
+
+Thus failure is impossible at any budget at most eight, while the new
+code realizes it at nine. If an arbitrary-literal two-call reader for
+$\sigma^\dagger$ used at most eight states, the same inherited theorem
+would produce a same-code root two-call reader within eight states,
+contradicting Theorem 8.6. Hence the arbitrary-literal two-call state
+minimum for this code is at least nine, and Theorem 8.4 attains it.
+$\square$
+
+### 8.7 Mathematical ownership, resource scope and open boundaries
+
+**Convention 8.10 (suppliers and ordinary mathematical addition).**
+The owning native volume is
+[*Native cut-birth provenance and literal past-row recovery*](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md).
+Its Definitions 1.1--1.2, Definition 9.1, Assumption 9.2 and Proposition
+9.3 supply the finite native source, full actual row fiber, occurrence
+identity, acquired/exported contract, image inverse and all five complete
+rows. Its Definitions 11.1 and 15.1 supply the counted state-only and
+fixed-code restrictions; Proposition 15.2 supplies the exhaustive root
+profiles and unrestricted admissible branch-image fillings. Theorem 15.4
+supplies the eight-state same-code normalization. Sections 1--6 here
+expose these native meanings and supply the earlier bit and its two-call
+root exclusion.
+
+The partner-first and singleton continuation method is the native-cone
+obstruction of the owning Theorem 11.4, applied here to the new actual
+same-code root matrix. The added mathematical content is the particular
+bit (NRE.16), its full-fiber four-Read/five-Halt two-call construction,
+the six actual code-zero origins (NRE.18) and their universal three-call
+root obstruction, and the matching nine-state four-call root table.
+The old bit's nine-state three-call table is a separate supporting
+application. The suffix reply is an invocation of the unchanged native
+port; it is not an additional equality or image port. Joint recoding
+results in the owning §§10--14 do not preserve arbitrary specified
+codes and are not used to change either bit here. A code-preserving
+padding failure is not used as an exclusion of alternative readers.
+These are repository-derived ordinary deductions with explicit proofs,
+not a literature-wide priority claim or a kernel certification.
+
+**Convention 8.11 (exact limits).** The lower bound at three calls is
+at least ten installed states. No ten-state sufficiency assertion or
+exact minimum state count at three calls is made. The exact optima
+established here are the root call minima four for $\sigma^\dagger$
+and three for $\sigma$ at budget nine, and the arbitrary-literal
+at-most-two-call state minimum nine for the new bit. There is no
+classification of all lawful codes, no general prescribed-code
+frontier or effective universal compatibility test for an arbitrary
+supplied code computation, and no universal root-four normalization.
+
+The unbounded-call question for general nine-state prescribed codes
+remains open: whether some lawful binary code admitting a nine-state
+arbitrary-literal two-call reader excludes every nine-state root reader
+when no call bound is prescribed. Neither the three-call obstruction
+nor these two examples answers that question. In particular, no
+impossibility at arbitrarily many calls is asserted for the new bit;
+its four-call root reader is explicit. Convention 7.2's two-call
+conclusions retain their original scope; the additional root call
+statements here are precisely Theorem 8.7 and Proposition 8.8.
+
+Every applicability claim remains conditional on Assumption 3.1's genuine
+acquisition, authentication, version binding, actual export, complete
+access isolation, installation, faithful lawful entry and stationary
+service. A finite inverse used to construct an actual mathematical
+witness is not a physical inverse action. Acquisition and finite
+acquired-term computation, code transfer and isolation, entry after
+absorbing stop, installed address and transition tables, whole-output
+representation, control work, address construction, storage and each
+literal submission have separate costs. The state and call counts
+supply no total physical storage, elapsed-time, energy or acquisition
+bound, and no empirical machine-learning interpretation. Computed
+addresses, extra workspace, another source port, extra updates or
+source-bearing entry fields require a different contract. These
+results do not assert completion of any broader research programme.
+
+## 追加锚（本行以下为增补区）

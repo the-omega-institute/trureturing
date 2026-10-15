@@ -4,7 +4,19 @@
 
 Full weighted quantitative entropy concavity in the trace-class Banach space.
 
-**Theorem 1.1 (All weights, singular references and infinite entropy).**
+**Theorem 1.1 (Real entropy on its actual domain).**
+
+$$\operatorname{RealEntropyEqualsSpectralEntropyToRealOnReferences}\left(\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/TraceClass/EntropyConcavity.realEntropy_reference` (`✓ std3`). ∎
+
+*Citation.* George Androulakis and Tiju Cherian John (2023). *Quantum f-divergences via Nussbaum-Szkoła Distributions and Applications to f-divergence Inequalities*. DOI: [10.48550/arXiv.2308.02929](https://doi.org/10.48550/arXiv.2308.02929). URL: <https://arxiv.org/html/2308.02929>.
+
+*Commentary.*
+
+For every actual positive trace-class contraction rho, realEntropy of its underlying trace-class operator equals the real value of its actual spectral entropy. This is the domain restriction in the definition. Applications interpreting the value as finite entropy supply a separate finiteness premise.
+
+**Theorem 1.2 (All weights, singular references and infinite entropy).**
 
 $$\forall H \in CompleteComplexHilbertSpace, rho \in \operatorname{Reference}\left(H\right), sigma \in \operatorname{Reference}\left(H\right), a \in Real, b \in Real,\; \left(\operatorname{PositiveTraceOne}\left(rho\right) \land \left(\operatorname{PositiveTraceOne}\left(sigma\right) \land \left(0 \le a \land \left(0 \le b \land \operatorname{add}\left(a, b\right) = 1\right)\right)\right)\right) \Rightarrow \operatorname{add}\left(\operatorname{add}\left(\operatorname{multiply}\left(\operatorname{ofReal}\left(a\right), \operatorname{spectralEntropy}\left(rho\right)\right), \operatorname{multiply}\left(\operatorname{ofReal}\left(b\right), \operatorname{spectralEntropy}\left(sigma\right)\right)\right), \operatorname{ofReal}\left(\operatorname{divide}\left(\operatorname{multiply}\left(\operatorname{multiply}\left(a, b\right), \operatorname{square}\left(\operatorname{traceNorm}\left(\operatorname{subtract}\left(rho, sigma\right)\right)\right)\right), 4\right)\right)\right) \le \operatorname{spectralEntropy}\left(\operatorname{mixture}\left(rho, sigma, a, b\right)\right)$$
 
@@ -22,7 +34,7 @@ The exact norm identities are norm(rho-tau)=b norm(rho-sigma) and norm(sigma-tau
 
 For a=1-t and b=t this is the full inequality for every t in [0,1]. At the midpoint the reward is norm(rho-sigma) squared divided by sixteen. The arguments may be noncommuting and either may have a nontrivial kernel.
 
-**Theorem 1.2 (Real entropy has modulus one half).**
+**Theorem 1.3 (Real entropy has modulus one half).**
 
 $$\forall H \in CompleteComplexHilbertSpace, A \in \operatorname{Set}\left(\operatorname{TraceClass}\left(H\right)\right),\; \left(\operatorname{Convex}\left(A\right) \land \left(\operatorname{AllPositiveTraceOne}\left(A\right) \land \operatorname{AllFiniteSpectralEntropy}\left(A\right)\right)\right) \Rightarrow \operatorname{StrongConcaveOn}\left(A, \operatorname{divide}\left(1, 2\right), realEntropy\right)$$
 
@@ -40,6 +52,7 @@ Mathlib defines StrongConcaveOn A m with reward a b times m/2 times the squared 
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/EntropyConcavity.realEntropy_reference`
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/EntropyConcavity.spectralEntropy_mixture`
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/EntropyConcavity.strongConcaveOn_realEntropy`
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy](HellingerEnergy.md)
