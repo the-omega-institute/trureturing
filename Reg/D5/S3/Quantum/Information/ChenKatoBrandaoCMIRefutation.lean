@@ -16,6 +16,7 @@ universe u v
 
 namespace DiagonalWeights
 
+set_option linter.checkUnivs false in
 /-- Observe a real diagonal coefficient at its original pair of indices. -/
 abbrev signature : Signature where
   Params := Σ A : Type u, Σ B : Type v, A × B
@@ -44,6 +45,7 @@ end DiagonalWeights
 namespace Right
 open DiagonalWeights
 
+set_option linter.checkUnivs false in
 /-- Preserve the complete right marginal identity, observing the input coefficients. -/
 abbrev arena : Arena where
   signature := signature.{u,v}
@@ -117,6 +119,7 @@ end Right
 namespace Left
 open DiagonalWeights
 
+set_option linter.checkUnivs false in
 /-- Preserve the complete left marginal identity, observing the input coefficients. -/
 abbrev arena : Arena where
   signature := signature.{u,v}
