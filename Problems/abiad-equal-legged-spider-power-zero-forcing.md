@@ -1,6 +1,6 @@
 ---
 slug: abiad-equal-legged-spider-power-zero-forcing
-bibkey: abiad2026graphpowers
+bibkey: abiadflaggghaseminezhadzeijlemaker2026powers
 doi: 10.48550/arXiv.2610.03892
 url: https://arxiv.org/abs/2610.03892v1
 triage: theorem

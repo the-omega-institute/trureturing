@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
 internal sealed class SpiderPowerZeroForcingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SpectralGraph/SpiderPowerZeroForcing.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/abiad2026graphpowers");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/abiadflaggghaseminezhadzeijlemaker2026powers");
 
     public DocumentDefinition Create()
     {
