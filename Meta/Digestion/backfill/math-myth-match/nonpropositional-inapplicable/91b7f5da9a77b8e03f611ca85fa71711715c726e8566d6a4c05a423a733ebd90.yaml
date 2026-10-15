@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:91b7f5da9a77b8e03f611ca85fa71711715c726e8566d6a4c05a423a733ebd90
+  normalized_sha256: sha256:91b7f5da9a77b8e03f611ca85fa71711715c726e8566d6a4c05a423a733ebd90
+cas_ref: sha256:91b7f5da9a77b8e03f611ca85fa71711715c726e8566d6a4c05a423a733ebd90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 212.1（相对于背景的阶段稳定）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 6ae8c5ad1bc7f1591a85cc9542aee6b101608b4e465e49821ef01370b5af829a
+    next_atom_id: a787e5fc3b13fbfcdddc4acea143d3b03ce993d948058332b1a1f007ff1ecaed

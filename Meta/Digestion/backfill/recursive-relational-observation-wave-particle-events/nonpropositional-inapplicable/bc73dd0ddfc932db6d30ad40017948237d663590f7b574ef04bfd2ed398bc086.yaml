@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bc73dd0ddfc932db6d30ad40017948237d663590f7b574ef04bfd2ed398bc086
+  normalized_sha256: sha256:bc73dd0ddfc932db6d30ad40017948237d663590f7b574ef04bfd2ed398bc086
+cas_ref: sha256:bc73dd0ddfc932db6d30ad40017948237d663590f7b574ef04bfd2ed398bc086
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 164.1（近似签名缺陷）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: 2d3f7d457c7fb6e5c91851c7d1e400a3b0bf0a27469832718689a96461178380
+    next_atom_id: 1ce2b8fc34b4e42df5ff4bec7959a43d48999b6ee3d578dacfba8b0a3adb3fa5

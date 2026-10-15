@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:71522daff1fdf5886c411795da2c34925d239166240c8b4e2da9371b886d9e88
+  normalized_sha256: sha256:71522daff1fdf5886c411795da2c34925d239166240c8b4e2da9371b886d9e88
+cas_ref: sha256:71522daff1fdf5886c411795da2c34925d239166240c8b4e2da9371b886d9e88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of the preceding theorem G1 by substituting coefficients into Definition 3.10.
+    previous_atom_id: 7901adf784a2db15b73b33751c521fc703f8bbe431efb0304c449cfa3b049907
+    next_atom_id: 66fd622e5d54c25826af9d416db18df1d8eecf9c71288d80ff0460237e3e95d2

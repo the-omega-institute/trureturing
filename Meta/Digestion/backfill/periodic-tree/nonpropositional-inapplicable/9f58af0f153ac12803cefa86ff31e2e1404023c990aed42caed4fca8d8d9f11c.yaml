@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f58af0f153ac12803cefa86ff31e2e1404023c990aed42caed4fca8d8d9f11c
+  normalized_sha256: sha256:9f58af0f153ac12803cefa86ff31e2e1404023c990aed42caed4fca8d8d9f11c
+cas_ref: sha256:9f58af0f153ac12803cefa86ff31e2e1404023c990aed42caed4fca8d8d9f11c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 展开 $B(v+w,v+w)$。由假设，$\langle w,B(v,w)\rangle=0$ 与 $\langle w,B…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: b6d13fb601833c3b03a82cfa3403a8f948c32d43cd9c08bddd9b28f298c7deff
+    next_atom_id: c8b5e45fca834c4f053da7324fac30aa5a1db7a07068ffc2fb4bb375de60d70b

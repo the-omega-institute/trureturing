@@ -2936,3 +2936,1791 @@ concurrence 属于式 (C76.5) 的明确条件张量结构。
 不从形式投影的存在推出 FIB 原生测量或未知态克隆能力。
 
 ## 追加锚（本行以下为增补区）
+
+## 84. 隐藏宽度、底面质量与所选面积的完整字典
+
+**约定 C-84.1（闭概率纤维与纯振幅完成）。** 沿用 C-76 的正交五模式载体，固定次序和占位词
+
+$$
+\Sigma=(0,1,2,3,13)
+=\bigl(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]\bigr),
+\qquad (000,100,010,001,101).
+$$
+
+另给纯振幅 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$，$\sum_s p_s=1$。
+本组固定三个可见均值及底面质量
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad
+r=1-Z,\qquad 0<r<1,\quad 0<X,Y<r.
+\tag{C84.1}
+$$
+
+以 $\kappa=p_{13}$ 为隐藏概率，完整反解为
+
+$$
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ 1-r,\ Y-\kappa,\ \kappa).
+\tag{C84.2}
+$$
+
+允许合法零概率的闭纤维区间为
+
+$$
+[\kappa_-,\kappa_+],\qquad
+\kappa_-=\max(0,X+Y-r),\qquad
+\kappa_+=\min(X,Y).
+\tag{C84.3}
+$$
+
+四底角分别非负恰给这四个不等式；中模式因 $r<1$ 严格正。
+以下“全正”指五概率全正，等价于 $\kappa_-<\kappa<\kappa_+$。
+零振幅处不把 $\theta_s$ 当作内在坐标，含相位的端点表达均由实际振幅或内部连续延伸解释。
+
+**命题 C-84.2（宽度与两边缘的共同最小量）。** 定义绝对宽度 $w=\kappa_+-\kappa_-$、
+相对宽度 $\nu=w/r$。则
+
+$$
+w=\min\{X,Y,r-X,r-Y\},\qquad 0<\nu\le\frac12,
+$$
+
+$$
+\min\{X(r-X),Y(r-Y)\}=w(r-w).
+\tag{C84.4}
+$$
+
+证明。若 $X+Y\le r$，则 $X\le r-Y$、$Y\le r-X$，故四项最小值为
+$\min(X,Y)=w$。若 $X+Y\ge r$，则
+$w=\min(X,Y)-(X+Y-r)=\min(r-X,r-Y)$，且这两项分别不大于 $Y,X$。
+四项都正，所以 $w>0$。置
+
+$$
+u=\min(X,r-X),\qquad v=\min(Y,r-Y).
+$$
+
+则 $u,v\in(0,r/2]$，$w=\min(u,v)$，给 $\nu$ 的范围。
+又 $X(r-X)=u(r-u)$、$Y(r-Y)=v(r-v)$。
+对 $0\le a<b\le r/2$，
+
+$$
+b(r-b)-a(r-a)=(b-a)(r-a-b)>0.
+$$
+
+故 $t(r-t)$ 在 $[0,r/2]$ 严格递增，取最小量即得最后的精确恒等式。
+特别地 $w=r/2$ 当且仅当 $X=Y=r/2$。证毕。
+
+宽度公式的概率来源为
+[《局部填充》§3.1](AURIC_FIB_ATOM_PYRAMID_LOCAL_FILLINGS_SOFT_TO_RIGID_AND_ODD_CYCLE_OBSTRUCTIONS.md#31-隐藏纤维的宽度)，
+其在相位商面积中的应用由 C-81.2 给出。
+$r$ 表示底面在完整五模式中的质量，$\nu$ 表示固定条件边缘后相对底面质量的余量；两者不能互相替代。
+
+**约定 C-84.3（相位商、尺度与面积）。** 先将归一化振幅除去共同相位成为射线，
+固定 $(X,Y,Z)$，再除去占位 $T^3$ 作用
+
+$$
+\theta_s\longmapsto\theta_s+\gamma_0+x_s\gamma_X+y_s\gamma_Y+z_s\gamma_Z.
+$$
+
+这里 $x=(0,1,0,0,1)$、$y=(0,0,0,1,1)$、$z=(0,0,1,0,0)$。
+全正内部的剩余角为
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi}.
+$$
+
+C-73.2 的整周期消相位公式给周期恰为 $2\pi$。
+按 C-74、C-79 及[《辛预测完成》§35.5–35.7](SYMPLECTIC_PREDICTIVE_COMPLETION.md#355-固定可见均值后的真正辛约化)选择
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+g=\frac{\mathcal I}{2}d\kappa^2+\frac2{\mathcal I}d\chi^2,\qquad
+\mathcal I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+\tag{C84.5}
+$$
+
+这是标准射影直线辛面积 $2\pi$ 的尺度，即原卷度量的两倍。
+$\det g=1$，故 Riemann 面积密度等于 $|\omega_{\rm red}|=d\kappa\,d\chi$，
+完整面积为
+
+$$
+\mathcal A=\int_{\kappa_-}^{\kappa_+}\int_0^{2\pi}d\chi\,d\kappa=2\pi w.
+\tag{C84.6}
+$$
+
+两端的新增点面积为零。C-80、C-81 已证明：$X+Y=r$ 使下端双零，
+$X=Y$ 使上端双零；其余端点单零。单零端点光滑，双零端点锥角为 $\pi$。
+因此非墙条件 $X\ne Y$、$X+Y\ne r$ 下是光滑闭曲面面积；
+墙上同一内部积分仍成立，却不把锥点变成普通光滑点。
+这是一种已选择的约化几何，不由宽度另推一种维数。
+
+在全正域，带标记概率关联椭圆继续使用
+
+$$
+\eta=\frac18\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\Xi=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}=e^{4\eta-i\chi}.
+\tag{C84.7}
+$$
+
+$\log$ 在此为自然对数。概率椭圆的标记半轴为 $e^\eta,e^{-\eta}$；
+它的圆条件 $\eta=0$ 与下面条件振幅的谱圆条件不同。
+
+## 85. 任意固定均值纤维的精确联合容量
+
+**定义 C-85.1（明确的条件两因子结构）。** 采用 C-76.2 的对应
+
+$$
+0\leftrightarrow00,\qquad1\leftrightarrow10,\qquad
+3\leftrightarrow01,\qquad13\leftrightarrow11.
+$$
+
+行指标为左因子、列指标为右因子，均按 $0,1$ 排列。条件底面纯态的标准基序
+$(00,01,10,11)$ 系数向量是 $(\psi_0,\psi_3,\psi_1,\psi_{13})/\sqrt r$，故
+
+$$
+B=\frac1{\sqrt r}\begin{pmatrix}\psi_0&\psi_3\\\psi_1&\psi_{13}\end{pmatrix},
+\qquad \operatorname{Tr}(BB^\dagger)=1,\qquad \mathcal C=2|\det B|.
+\tag{C85.1}
+$$
+
+这是标准两二元因子纯态 concurrence：Wootters，
+[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (6)–(8)，
+使用 spin-flip $|\langle\phi|(\sigma_y\otimes\sigma_y)|\bar\phi\rangle|$；
+把四个标准基系数代入给 $2|\det B|$。
+归一化来自四底角和为 $r$。若 $BB^\dagger$ 的谱为 $\lambda_+,\lambda_-$，
+则 $\lambda_++\lambda_-=1$，$\mathcal C^2=4\lambda_+\lambda_-\le1$。
+
+商作用把代表矩阵变成
+
+$$
+B\longmapsto e^{-i\gamma_0}
+\operatorname{diag}(1,e^{-i\gamma_X})\,
+B\,\operatorname{diag}(1,e^{-i\gamma_Y}).
+\tag{C85.2}
+$$
+
+因左右都是酉矩阵，$\mathcal C$ 及奇异值在商上不变，$B$ 本身却一般变化。
+底面上 $z_s=0$，故 $\gamma_Z$ 不作用于它。
+此条件张量识别是额外数学结构；五个模式名并不自行给出两个实际物理子系统，
+一般经典对角混合也不具有上述纯态公式的意义。
+
+**定理 C-85.2（固定均值的闭容量与完整取值区间）。** 在约定 C-84.1 的全部纯态上，
+
+$$
+\mathcal C_{\max}=\frac{2\sqrt{w(r-w)}}r
+=2\sqrt{\nu(1-\nu)},\qquad
+\{\mathcal C\}=[0,\mathcal C_{\max}].
+\tag{C85.3}
+$$
+
+这里允许闭纤维端点；它是状态集合上的结论，不是原生控制可达性的结论。
+
+证明。左侧约化矩阵 $\rho_L=BB^\dagger$ 的对角为 $(r-X)/r,X/r$。
+右侧约化矩阵为 $\rho_R=B^{\mathsf T}\bar B$，其对角为 $(r-Y)/r,Y/r$；
+它与 $B^\dagger B$ 互为转置，且两侧行列式均为 $|\det B|^2$。因此分别有
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=4\det\rho_L
+=\frac{4X(r-X)}{r^2}-4|(\rho_L)_{01}|^2
+\le\frac{4X(r-X)}{r^2},\\
+\mathcal C^2
+&=4\det\rho_R
+=\frac{4Y(r-Y)}{r^2}-4|(\rho_R)_{01}|^2
+\le\frac{4Y(r-Y)}{r^2}.
+\end{aligned}
+\tag{C85.4}
+$$
+
+C-84.2 的最小量恒等式给所需上界。下面给满足原概率约束的取等构造。
+
+先作有限个可逆坐标重标记。交换左、右二元因子的零一标签以及交换因子，
+对参数的作用分别为
+
+$$
+\begin{aligned}
+L:(X,Y,\kappa)&\longmapsto(r-X,Y,Y-\kappa),\\
+R:(X,Y,\kappa)&\longmapsto(X,r-Y,X-\kappa),\\
+S:(X,Y,\kappa)&\longmapsto(Y,X,\kappa).
+\end{aligned}
+\tag{C85.5}
+$$
+
+$L$ 交换底面表的两行，$R$ 交换两列，$S$ 转置；中模式保持不动。
+这些都是对五个基标签的置换，各自为对合，保持总质量、合法性、$r,w$、
+行列式绝对值及谱。先把两边缘分别折到
+$u=\min(X,r-X)$、$v=\min(Y,r-Y)$，再将较小者放在左边，便有
+
+$$
+X=w,\qquad Y=y,\qquad 0<w\le y\le r/2,\qquad 0\le\kappa\le w.
+\tag{C85.6}
+$$
+
+单侧翻转使 $\chi$ 变号，因子交换保持 $\chi$；$0,\pi$ 这两个相位条件均不变。
+把所得振幅用逆置换送回即恢复原来的 $X,Y$ 及原标签。
+这仅为证明中的坐标变换，没有给原生操作表增加任何控制。
+
+若 $w<r/2$，置 $d=r-2w>0$ 并定义
+
+$$
+\kappa_*=\frac{w(r-w-y)}d.
+\tag{C85.7}
+$$
+
+由 $y\le r/2$ 得 $r-w-y\ge r/2-w=d/2>0$，故 $\kappa_*>0$。
+又 $y\ge w$ 给 $r-w-y\le r-2w=d$，故 $\kappa_*\le w$。
+四底角的完整值为
+
+$$
+\begin{aligned}
+p_0^*&=\frac{(r-w)(r-w-y)}d,&
+p_1^*&=\frac{w(y-w)}d,\\
+p_3^*&=\frac{(r-w)(y-w)}d,&
+p_{13}^*&=\frac{w(r-w-y)}d.
+\end{aligned}
+\tag{C85.8}
+$$
+
+这可由式 (C84.2) 逐项代入；分母为正、两个分子因子非负，故全部合法。
+两行和分别为 $r-w,w$，右边缘为 $y$，所以并未更改折叠后的矩约束。
+另有 $p_0^*p_1^*=p_3^*p_{13}^*$。
+取实际代表
+
+$$
+\psi^*=(\sqrt{p_0^*},\sqrt{p_1^*},\sqrt{1-r},
+\sqrt{p_3^*},-\sqrt{p_{13}^*}).
+$$
+
+在全正处其 $\chi=\pi$，在端点该式仍直接定义振幅。
+$B$ 的行内积为
+$(\sqrt{p_0^*p_1^*}-\sqrt{p_3^*p_{13}^*})/r=0$，故
+
+$$
+\rho_L=\operatorname{diag}((r-w)/r,w/r).
+$$
+
+于是 $\mathcal C=2\sqrt{w(r-w)}/r$，达上界。
+
+若 $w=r/2$，C-84.2 强制原边缘 $X=Y=r/2$。置 $L=r/2$，
+概率是 $(\kappa,L-\kappa,1-r,L-\kappa,\kappa)$。
+每个内部 $\kappa\in(0,L)$ 在 $\chi=\pi$ 时都有
+
+$$
+B=\frac1{\sqrt r}
+\begin{pmatrix}\sqrt\kappa&\sqrt{L-\kappa}\\
+\sqrt{L-\kappa}&-\sqrt\kappa\end{pmatrix},
+\qquad BB^\dagger=\frac12I_2,\qquad\mathcal C=1.
+\tag{C85.9}
+$$
+
+两个端点也由同一振幅表达取到一，但不在零振幅处要求一个内在角。
+
+最后，对原来的任意边缘，在
+
+$$
+\kappa_0=\frac{XY}{r},\qquad \chi=0
+\tag{C85.10}
+$$
+
+取全部底角振幅非负。四底角概率为
+
+$$
+\left(\frac{(r-X)(r-Y)}r,\ 
+\frac{X(r-Y)}r,\ 
+\frac{(r-X)Y}r,\ 
+\frac{XY}r\right).
+\tag{C85.11}
+$$
+
+四者严格正，且条件向量分解为
+
+$$
+|\phi_0\rangle=
+\left(\sqrt{1-X/r}|0\rangle+\sqrt{X/r}|1\rangle\right)
+\otimes
+\left(\sqrt{1-Y/r}|0\rangle+\sqrt{Y/r}|1\rangle\right).
+$$
+
+故 $\mathcal C=0$。在折叠坐标中，从这个点到上述最优点取
+$\kappa(t)=(1-t)wy/r+t\kappa_*$、$\chi(t)=\pi t$；
+对称分支任选一个内部最优高度代替 $\kappa_*$。
+取前三个底角的正平方根、最后一个乘 $e^{-i\pi t}$，中模式恒为 $\sqrt{1-r}$，
+便是一条合法实际振幅连续路径。再逆置换回原标签。
+行列式模连续，从零到上界，由介值定理得到全部中间值；上界排除其他值。证毕。
+
+**命题 C-85.3（全正域的精确取等分类）。** 在折叠坐标中，全正最大值可取得当且仅当
+
+$$
+y>w\quad\hbox{或}\quad w=y=r/2.
+\tag{C85.12}
+$$
+
+若 $y=w<r/2$，闭纤维最大值只在 $\kappa=w$ 取得；
+此点 $p_1=p_3=0$。在全正域，concurrence 的取值恰为
+$[0,\mathcal C_{\max})$，上确界为 $\mathcal C_{\max}$ 而没有最大值。
+
+证明。$y>w$ 时，式 (C85.8) 四项都正；对称分支已有内部构造。
+反过来，在非中心折叠域，达到左边缘行列式界必须使行内积为零，
+因而两个贡献的模相等，必要地
+
+$$
+p_0p_1-p_3p_{13}
+=(r-w-y+\kappa)(w-\kappa)-(y-\kappa)\kappa
+=w(r-w-y)-(r-2w)\kappa=0.
+\tag{C85.13}
+$$
+
+正系数 $r-2w$ 给唯一高度 $\kappa_*$。
+若 $y=w<r/2$，此高度恰为 $w$，两个零角不能避免。
+上述路径在 $t<1$ 时仍全正，且 concurrence 趋向上界；
+对任何严格低于上界的非负目标，取足够近端的路径点再用介值定理即可取得。
+其余两种情形连接两个内部点的路径全在内部，故全正取值是闭区间。
+该分类包括原标签中的 $X=Y$ 或 $X+Y=r$ 的非中心墙；不能遗漏它们的逆置换。证毕。
+
+## 86. 谱椭圆最圆的限度与条件纯态熵
+
+**定理 C-86.1（相对宽度限制 Schmidt 谱）。** 令谱椭圆半轴为 $B$ 的奇异值
+$s_+\ge s_-\ge0$。固定 C-84 的可见均值，则
+
+$$
+s_-^2\le\nu,\qquad s_+^2\ge1-\nu,\qquad
+\frac{s_+}{s_-}\ge\sqrt{\frac{1-\nu}{\nu}},
+\tag{C86.1}
+$$
+
+$s_-=0$ 时把轴比定义为 $+\infty$。闭纤维的最优谱为
+$(s_+^2,s_-^2)=(1-\nu,\nu)$，轴比下界可达。
+
+证明。C-76、C-77 的归一化谱关系给
+$s_+^2+s_-^2=1$、$\mathcal C=2s_+s_-$。
+令 $a=s_-^2\in[0,1/2]$，则 $\mathcal C^2=4a(1-a)$。
+C-84.2 的严格单调性在 $r=1$ 时说明 $a(1-a)$ 在此域严格增加，
+故 C-85.2 的界等价于 $a\le\nu$。
+当 $a>0$，轴比平方为 $(1-a)/a$，它严格递减，因而得到所述界；
+$a=0$ 的约定与极限一致。C-85 的取等构造使 $a=\nu$。证毕。
+
+| 相对宽度 $\nu$ | 最优平方谱 $(s_+^2,s_-^2)$ | 最大 $\mathcal C$ | 最小谱轴比 |
+| ---: | --- | ---: | ---: |
+| $1/8$ | $(7/8,1/8)$ | $\sqrt7/4$ | $\sqrt7$ |
+| $1/4$ | $(3/4,1/4)$ | $\sqrt3/2$ | $\sqrt3$ |
+| $1/2$ | $(1/2,1/2)$ | $1$ | $1$ |
+
+**推论 C-86.2（圆的存在性与最大纯态熵）。** 固定纤维中存在谱圆当且仅当
+
+$$
+\nu=\frac12\quad\Longleftrightarrow\quad X=Y=r/2.
+\tag{C86.2}
+$$
+
+采用 $\log_2$，条件两因子纯态纠缠熵的闭纤维最大值为
+
+$$
+S_{\max}=h_2(\nu)
+=-\nu\log_2\nu-(1-\nu)\log_2(1-\nu),
+\tag{C86.3}
+$$
+
+单位为比特；若使用自然对数，则值乘 $\log 2$，单位为 nat。
+非中心并列折叠边缘 $y=w<r/2$ 下，全正域的最优谱轴比仅为未取得的下确界，
+熵上界仅为未取得的上确界；$y>w$ 或中心对称时二者在全正域取得。
+
+证明。谱圆要求 $s_+=s_-$，由归一化即 $a=1/2$，故 $\nu=1/2$；
+C-84.2 给边缘平衡，式 (C85.9) 给反向构造。
+纯态纠缠熵按任一侧约化谱定义为 $h_2(a)$。
+在 $0<a<1/2$，
+
+$$
+h_2'(a)=\log_2\frac{1-a}{a}>0,
+$$
+
+并在端点连续，故最大熵与最大 $a$ 同时取得。
+C-85.3 的取等分类一并给出全正域的取得性。证毕。
+
+纯态熵定义及其与 concurrence 的单调关系是经典中间结构：
+Hill–Wootters，*Entanglement of a Pair of Quantum Bits*，
+[quant-ph/9703041v2](https://arxiv.org/abs/quant-ph/9703041v2)，
+纯态定义段及式 (4)–(6)，明确使用 $\log_2$；
+Wootters [quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2)、(6)–(8)，给相同纯态关系。
+这里仅把它们应用到带固定边缘的条件态，未对一般混态套用本章最优式。
+存在谱圆也不意味着任意初态仅靠改相位便能变成任意形状：
+对固定概率，相位不改变 $\kappa$ 或 $\eta$；非中心最优还要求特定高度。
+
+## 87. 联合容量缺口的概率项与相位项
+
+**定理 C-87.1（完整缺口恒等式）。** 在折叠坐标 $X=w\le Y=y\le r/2$，有
+
+$$
+\begin{aligned}
+\mathcal C_{\max}^2-\mathcal C^2
+=\frac4{r^2}\left[
+\left(\sqrt{p_0p_1}-\sqrt{p_3p_{13}}\right)^2
++4\sqrt{p_0p_1p_3p_{13}}\cos^2\frac\chi2
+\right].
+\end{aligned}
+\tag{C87.1}
+$$
+
+在全正域，取等恰要求 $p_0p_1=p_3p_{13}$ 及 $\chi=\pi\bmod2\pi$。
+在闭端点，恒等式由振幅连续延伸；若两乘积均零，则取等且不需指定内在角，
+若其中恰一个为零，则不能取等。
+
+证明。由式 (C85.4) 及 $X=w$，
+
+$$
+\mathcal C_{\max}^2-\mathcal C^2=4|(\rho_L)_{01}|^2,\qquad
+r(\rho_L)_{01}=\psi_0\bar\psi_1+\psi_3\bar\psi_{13}.
+$$
+
+两个复数项的相角差为 $-\chi$，故
+
+$$
+r^2|(\rho_L)_{01}|^2
+=p_0p_1+p_3p_{13}
++2\sqrt{p_0p_1p_3p_{13}}\cos\chi.
+$$
+
+置 $A=\sqrt{p_0p_1}$、$D=\sqrt{p_3p_{13}}$，
+右侧为 $(A-D)^2+4AD\cos^2(\chi/2)$，得到全部系数。
+两项非负；全正时 $AD>0$，两项同时零给所述充要条件。
+端点某个振幅零时 $AD=0$，相位项消失，剩余 $(A-D)^2$，
+取等恰为 $A=D=0$。因此没有在零支撑上使用未定义的 $\arg$。证毕。
+
+**命题 C-87.2（高度误差的精确代价）。** 若 $w<r/2$，则
+
+$$
+p_0p_1-p_3p_{13}=(r-2w)(\kappa_*-\kappa).
+\tag{C87.2}
+$$
+
+只在 $\sqrt{p_0p_1}+\sqrt{p_3p_{13}}>0$ 处有
+
+$$
+\left(\sqrt{p_0p_1}-\sqrt{p_3p_{13}}\right)^2
+=
+\frac{(r-2w)^2(\kappa-\kappa_*)^2}
+{\left(\sqrt{p_0p_1}+\sqrt{p_3p_{13}}\right)^2}.
+\tag{C87.3}
+$$
+
+证明。展开式 (C85.13) 并代入 $\kappa_*$ 即得第一式。
+再用 $(A-D)(A+D)=A^2-D^2$，在声明的正分母处除法并平方即得第二式。
+非中心并列边缘的最优端点有 $A=D=0$，故第二式不在该点定义；
+其值须回到第一项 $(A-D)^2=0$，不能将 $0/0$ 当作公式。
+在中心分支 $r=2w,y=w$，直接有 $p_0p_1=p_3p_{13}$ 对全部高度成立，
+不使用含 $r-2w$ 分母的 $\kappa_*$。证毕。
+
+式 (C87.1) 是此条件矩阵的行列式与非对角元展开：
+概率贡献幅度相等和相位抵消分别承担两个取等条件。
+它不以单独一种相位操作供应一般高度修正，也不声称一个新的基本互补性原理。
+
+## 88. 整数填充与连续容量之间的精度条件
+
+**命题 C-88.1（既有整数区间计数与容量的对应）。** 设整数 $m\ge1$ 满足
+$mX,mY,mZ\in\mathbb Z$，置 $K=m\kappa$。与这些均值相容的非负整数五模式表恰为
+
+$$
+\begin{aligned}
+n_0&=m-mX-mY-mZ+K,&n_1&=mX-K,\\
+n_2&=mZ,&n_3&=mY-K,&n_{13}&=K,
+\end{aligned}
+\tag{C88.1}
+$$
+
+其中 $K$ 遍历闭整数区间
+$m\kappa_-\le K\le m\kappa_+$。因而单纤维表数及连续容量满足
+
+$$
+N_m=1+mw=1+\frac{m\mathcal A}{2\pi},\qquad
+\mathcal C_{\max}
+=2\sqrt{\frac{\mathcal A}{2\pi r}
+\left(1-\frac{\mathcal A}{2\pi r}\right)}.
+\tag{C88.2}
+$$
+
+证明。此处直接消费
+[《金字塔关联与原生续卷》数学引文 9.2](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md#九整数概率格点与合法历史是不同计数)
+的固定可见点提升数
+$1+\min(U,V)-\max(0,U+V+W-m)$。
+其标签 $(0,2,3,5,25)$ 对应这里的 $(0,1,2,3,13)$，
+参数为 $(U,V,W,k)=(mX,mY,mZ,K)$；
+[《基础公式》定义 12.1、数学引文 12.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md#十二整数回路计数与原生窗口历史两种数列)
+及[《辛预测完成》§35.6](SYMPLECTIC_PREDICTIVE_COMPLETION.md#356-选择的辛体积先验与整数概率格)
+给相同逆式与宽度桥。为明确本处计数对象，式 (C88.1) 的和为 $m$，
+占位和分别为 $mX,mY,mZ$，且每个表由最后一格 $K$ 唯一决定。
+五格非负恰给上述区间；因 $mr=m-mZ$ 也是整数，两端均为整数，
+所以点数是 $m\kappa_+-m\kappa_-+1=1+mw$。
+面积式由式 (C84.6)，容量式由 C-85.3 代入，未另立一种整数计数结果。证毕。
+
+$N_m$ 数的是计数表，不是其有序排列或原生历史数，也不是相位连续的量子态数或测量次数。
+本章把既有计数供应连接到同一个宽度的连续最优值；整数制备精度另有限制。
+
+**命题 C-88.2（相位优化网格的取等条件）。** 在闭概率网格上，允许连续选择相位。
+每个合法高度的相位最优值为
+
+$$
+\mathcal C_{\rm ph}^2(\kappa)
+=\frac4{r^2}
+\left(\sqrt{p_0p_{13}}+\sqrt{p_1p_3}\right)^2.
+\tag{C88.3}
+$$
+
+若折叠后的 $w<r/2$，网格达到连续容量当且仅当 $m\kappa_*\in\mathbb Z$。
+若 $w=r/2$，每个合法网格高度都能达到 $\mathcal C=1$。
+
+证明。行列式的两个乘积模固定，其差的模至多为两模之和；
+在全正处令 $\chi=\pi$ 取等，端点缺失相位时同一振幅选择仍取等。
+C-87.1 在该相位的剩余缺口只有 $(A-D)^2$，
+式 (C85.13) 使非中心情形的零点唯一为 $\kappa_*$。
+因此网格是否含这个高度恰为取等判据。
+各折叠映射在计数坐标中分别为
+$K\mapsto mY-K$、$K\mapsto mX-K$ 或保持 $K$，
+边缘也在整数 $mr$ 内取补，所以折叠及其逆保持整性。
+中心情形直接用式 (C85.9) 和其端点延伸。证毕。
+
+若另限制全正网格，则必须先保证存在内部格点；存在时仍只在上述合法最优高度且四角全正时取等。
+非中心并列边缘即使网格含 $\kappa_*$，这个点也被全正限制排除。
+这里的网格是概率精度，未假定仪器能对任意实相位精确制备。
+
+**命题 C-88.3（五个网格竞争者的完整比较）。** 取
+
+$$
+r=\frac45,\qquad X=\frac15,\qquad Y=\frac7{20}.
+$$
+
+则 $w=1/5$、$\kappa_*=1/8$、$\mathcal C_{\max}^2=3/4$。
+在 $m=20$ 时，以 $j=20\kappa\in\{0,1,2,3,4\}$ 写全部表，
+逐高度相位优化的结果为
+
+| $j$ | $\kappa$ | $(n_0,n_1,n_2,n_3,n_{13})$ | $\mathcal C_{\rm ph}^2$ |
+| ---: | ---: | --- | ---: |
+| $0$ | $0$ | $(5,4,4,7,0)$ | $7/16$ |
+| $1$ | $1/20$ | $(6,3,4,6,1)$ | $(6+3\sqrt3)/16$ |
+| $2$ | $1/10$ | $(7,2,4,5,2)$ | $(6+\sqrt{35})/16$ |
+| $3$ | $3/20$ | $(8,1,4,4,3)$ | $(7+2\sqrt6)/16$ |
+| $4$ | $1/5$ | $(9,0,4,3,4)$ | $9/16$ |
+
+因此唯一最优高度为 $1/10$，且
+
+$$
+\mathcal C_{20,\max}^2=\frac{6+\sqrt{35}}{16}<\frac34.
+\tag{C88.4}
+$$
+
+在 $m=40$ 时，$\kappa_*=5/40$ 的表 $(15,3,8,9,5)$ 恢复连续上界。
+
+证明。式 (C85.7) 给
+$\kappa_*=(1/5)(4/5-1/5-7/20)/(4/5-2/5)=1/8$。
+合法区间为 $[0,1/5]$，故上表穷尽 $m=20$ 的五个高度。
+式 (C88.1) 给一般表 $(5+j,4-j,4,7-j,j)$。
+代入式 (C88.3) 得一个可逐行直接化简的式子
+
+$$
+\mathcal C_{\rm ph}^2(j/20)
+=\frac{\left(\sqrt{j(5+j)}+\sqrt{(4-j)(7-j)}\right)^2}{64}.
+\tag{C88.5}
+$$
+
+$j=0,4$ 分别给 $28/64$、$36/64$；
+$j=1$ 给 $(\sqrt6+\sqrt{18})^2/64$；
+$j=2$ 给 $(\sqrt{14}+\sqrt{10})^2/64$；
+$j=3$ 给 $(\sqrt{24}+2)^2/64$，正是表中五值。
+
+比较分子，$\sqrt{35}>3\sqrt3$ 由 $35>27$；
+$\sqrt{35}>3$ 使 $6+\sqrt{35}>9>7$。
+剩下与 $7+2\sqrt6$ 的比较等价于 $\sqrt{35}>1+2\sqrt6$。
+两边都正，可平方化为 $35>25+4\sqrt6$；
+再因两边 $10,4\sqrt6$ 都正，等价于 $100>96$，严格成立。
+最后 $\sqrt{35}<6$ 给严格低于 $12/16=3/4$。
+$m=40$ 的所列表和为四十、占位和为八、十四、八，且高度恰为 $1/8$，
+故命题 C-88.2 给恢复上界。证毕。
+
+## 89. 同宽度纤维的不同最优概率椭圆与坐标度量
+
+**命题 C-89.1（同面积、同容量而不同的最优高度）。** 取两个固定均值纤维
+
+$$
+b_A:\ (r,X,Y)=\left(\frac45,\frac15,\frac3{10}\right),\qquad
+b_B:\ (r,X,Y)=\left(\frac45,\frac15,\frac25\right).
+\tag{C89.1}
+$$
+
+它们都有 $Z=1/5$、$w=1/5$、$\nu=1/4$、
+$\mathcal A=2\pi/5$、$\mathcal C_{\max}=\sqrt3/2$。其余读数如下：
+
+| 量 | 纤维 $A$ | 纤维 $B$ |
+| --- | ---: | ---: |
+| 最优高度 $\kappa_*$ | $3/20$ | $1/10$ |
+| 最优相位 $\chi$ | $\pi$ | $\pi$ |
+| 最优 $(p_0,p_1,p_2,p_3,p_{13})$ | $(9,1,4,3,3)/20$ | $(3,1,2,3,1)/10$ |
+| 最优四角比 $p_0p_{13}/(p_1p_3)$ | $9$ | $1$ |
+| 最优 $\eta$ | $(\log9)/8$ | $0$ |
+| 最优概率关联椭圆 | 非圆 | 圆 |
+| 最优谱平方轴 | $(3/4,1/4)$ | $(3/4,1/4)$ |
+| $\kappa=1/10$ 处 $\mathcal I$ | $55/2$ | $80/3$ |
+| $\kappa=1/10$ 处 $\mathcal I'$ | $75/4$ | $0$ |
+| $\kappa=1/10$ 处 $\mathcal I''$ | $17125/4$ | $112000/27$ |
+| $\kappa=1/10$ 处 $\mathcal K$ | $7490/1331$ | $35/6$ |
+
+证明。两组都已经折叠，代入式 (C85.7) 得 $3/20,1/10$；
+再代入五概率公式给表中的完整最优概率。
+其四角比分别为 $(9\cdot3)/(1\cdot3)=9$ 与 $(3\cdot1)/(1\cdot3)=1$，
+故按式 (C84.7) 得 $\eta$ 及概率椭圆形状。
+两组全正，$\chi=\pi$ 取等；谱由 C-86.1 得到。
+
+为计算同一命名高度处的度量，令底角顺序为 $(0,1,3,13)$，
+其斜率 $d=(1,-1,-1,1)$，由 $p_s'=d_s$，
+
+$$
+\mathcal I'=-\sum_s\frac{d_s}{p_s^2}
+=-\frac1{p_0^2}+\frac1{p_1^2}+\frac1{p_3^2}-\frac1{p_{13}^2},
+\qquad
+\mathcal I''=2\sum_s\frac1{p_s^3}.
+\tag{C89.2}
+$$
+
+在 $\kappa=1/10$，$A$ 的四底角为 $(2/5,1/10,1/5,1/10)$，所以
+
+$$
+\begin{aligned}
+\mathcal I_A&=\frac52+10+5+10=\frac{55}2,\\
+\mathcal I_A'&=-\frac{25}4+100+25-100=\frac{75}4,\\
+\mathcal I_A''&=2\left(\frac{125}8+1000+125+1000\right)
+=\frac{17125}4.
+\end{aligned}
+\tag{C89.3}
+$$
+
+$B$ 的四底角为 $(3/10,1/10,3/10,1/10)$，所以
+
+$$
+\begin{aligned}
+\mathcal I_B&=\frac{10}3+10+\frac{10}3+10=\frac{80}3,\\
+\mathcal I_B'&=-\frac{100}9+100+\frac{100}9-100=0,\\
+\mathcal I_B''&=2\left(\frac{1000}{27}+1000+\frac{1000}{27}+1000\right)
+=\frac{112000}{27}.
+\end{aligned}
+\tag{C89.4}
+$$
+
+C-79.2 对所选度量给
+
+$$
+\mathcal K=-\frac12(2/\mathcal I)''
+=\frac{\mathcal I''}{\mathcal I^2}
+-\frac{2(\mathcal I')^2}{\mathcal I^3}.
+$$
+
+于是
+
+$$
+\mathcal K_A=
+\frac{17125}{3025}-\frac{5625}{166375}
+=\frac{7490}{1331},\qquad
+\mathcal K_B=\frac{112000}{27}\frac9{6400}
+=\frac{35}6.
+\tag{C89.5}
+$$
+
+全部导数都在固定各自 $(X,Y,Z)$ 下对 $\kappa$ 求取。证毕。
+
+这个例子证明面积和最大 concurrence 不能恢复带有指定概率坐标的完整度量：
+两者在同一命名坐标 $\kappa=1/10$ 的度量系数不同。
+仅由两个被标记点曲率不同，不能排除某个把它们送到不同点的抽象等距映射，
+故这里不作抽象非等距结论。最优时 $A$ 的概率关联椭圆非圆、$B$ 为圆，
+而两者谱椭圆同为轴比 $\sqrt3$，再次区分概率形状与 Schmidt 谱。
+
+## 90. 跨纤维的底面质量缩放与消失分支
+
+**定义 C-90.1（固定条件态的比较及表面映射）。** 固定
+$0<\widehat X,\widehat Y<1$，令
+
+$$
+\widehat\kappa_-=\max(0,\widehat X+\widehat Y-1),\qquad
+\widehat\kappa_+=\min(\widehat X,\widehat Y).
+$$
+
+在归一化底面上取
+$\widehat\kappa\in[\widehat\kappa_-,\widehat\kappa_+]$，
+底角概率为
+$(1-\widehat X-\widehat Y+\widehat\kappa,
+\widehat X-\widehat\kappa,\widehat Y-\widehat\kappa,\widehat\kappa)$。
+另固定各个实际复振幅，得到一个归一化底面纯态 $|\phi\rangle$；
+这比固定 $\chi$ 或概率表更强。对 $0<r<1$ 定义
+
+$$
+|\psi_r\rangle=\sqrt{1-r}|2\rangle+\sqrt r|\phi\rangle,\qquad
+(X,Y,Z,\kappa)=(r\widehat X,r\widehat Y,1-r,r\widehat\kappa).
+\tag{C90.1}
+$$
+
+中模式系数取正，故相对底面的共同相位也已固定。
+每个 $r$ 有不同的固定均值纤维；这里不是在一条固定 $(X,Y,Z)$ 曲面上改变 $r$。
+为比较整个曲面，令 $\widehat\kappa,\chi$ 变化，使用对应映射
+
+$$
+F_r:(\widehat\kappa,\chi)\longmapsto(r\widehat\kappa,\chi).
+\tag{C90.2}
+$$
+
+帽号几何是总底面质量一的参数模型；不宣称它是 $Z>0$ 的五模式全正纤维。
+
+**定理 C-90.2（同条件坐标下的精确缩放）。** 在各自全正内部，有
+
+$$
+\kappa_\pm=r\widehat\kappa_\pm,\qquad
+w=r\widehat w,\qquad
+\nu=\widehat w,\qquad
+\mathcal I=\frac{\widehat{\mathcal I}}r,
+$$
+
+$$
+F_r^*g_r=r\widehat g,\qquad
+F_r^*\omega_r=r\widehat\omega,\qquad
+\mathcal K_r\circ F_r=\frac{\widehat{\mathcal K}}r.
+\tag{C90.3}
+$$
+
+对应曲线长度及距离乘 $\sqrt r$，面积乘 $r$。
+条件 $\eta,\chi,\mathcal C,\nu$ 均不变，其中 $\eta,\chi$ 的坐标解释限于定义域；
+$\mathcal C$ 与谱可以用振幅延伸到闭端点。
+
+证明。因 $r>0$，乘 $r$ 与 $\min,\max$ 交换，得到两端及宽度关系。
+四底角每项都是 $r\widehat p_s$，故倒数和为 $\widehat{\mathcal I}/r$；
+此处只在每个 $r$ 固定的表面上微分，所以 $d\kappa=r\,d\widehat\kappa$。代入得
+
+$$
+F_r^*g_r
+=\frac{\widehat{\mathcal I}}{2r}r^2d\widehat\kappa^2
++\frac{2r}{\widehat{\mathcal I}}d\chi^2=r\widehat g,\qquad
+F_r^*\omega_r=r\,d\chi\wedge d\widehat\kappa.
+$$
+
+每条曲线的速度范数乘 $\sqrt r$，积分给长度缩放；
+对所有连接路径取下确界给距离缩放，进而也延伸到 Cauchy 完备化。
+二维度量行列式的平方根乘 $r$，给面积缩放。
+另置 $f_r=2/\mathcal I=r\widehat f(\widehat\kappa)$，
+对 $\kappa$ 求两次导数得 $f_r''=\widehat f''/r$，
+由 C-79.2 得曲率缩放；曲率在规则部分使用。
+
+四角比中的 $r^2$ 抵消，故 $\eta$ 不变，实际相位原已固定；
+条件系数除以 $\sqrt r$ 后恰为 $\phi$，所以 $\mathcal C$、谱不变，
+而 $w/r=\widehat w$。证毕。
+
+**命题 C-90.3（条件最大联合与完整纯态趋于中模式可以并存）。** 采用迹距离约定
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+则式 (C90.1) 满足
+
+$$
+D(|\psi_r\rangle\langle\psi_r|,|2\rangle\langle2|)=\sqrt r.
+\tag{C90.4}
+$$
+
+存在固定全正条件态使所有 $r>0$ 都有 $\mathcal C=1$，
+同时 $\mathcal K=2/r\to+\infty$，而完整态的迹距离趋零。
+
+证明。$\phi$ 与 $|2\rangle$ 正交，在正交基 $(|2\rangle,|\phi\rangle)$ 上，
+两个密度矩阵之差为
+
+$$
+\begin{pmatrix}
+-r&\sqrt{r(1-r)}\\
+\sqrt{r(1-r)}&r
+\end{pmatrix}.
+$$
+
+其迹为零、行列式为 $-r$，故特征值为 $\pm\sqrt r$；
+正交补上为零，迹范数为 $2\sqrt r$。
+例如取
+$|\phi\rangle=(|0\rangle+|1\rangle+|3\rangle-|13\rangle)/2$，
+则条件四格全正，$\widehat X=\widehat Y=1/2$、$\widehat\kappa=1/4$，
+$B=\frac12\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ 给 $\mathcal C=1$。
+C-82.1 给所选尺度的 $\mathcal K=2/r$。证毕。
+
+这里 $r=0$ 不在条件化定义域，不能在质量已消失的分支上继续声称有一个实际条件态。
+上述极限同时保留了 $r>0$ 时的条件关系和完整态的分支稀有性。
+曲率发散来自指定度量的整体缩小，不推出信息量单调增加或引力增强。
+
+## 91. 同一实际纯态的两份投影与底面概率成本
+
+**假设 C-91.1（实际制备、单次接口和跨试验条件）。** 每次提供两份独立制备的同一个
+实际五态纯态射线，即 $|\psi\rangle\otimes|\psi\rangle$，
+并提供下述联合投影；“同一个”包括占位相位参照。
+相同概率表或相同商点不足以替代这一假设；它不要求克隆任意未知态。
+
+令 $P_{\rm bot}=\sum_{s\ne2}|s\rangle\langle s|$。
+单次事件公式更一般只需要两份输入密度算子满足充分接口
+
+$$
+(P_{\rm bot}\otimes P_{\rm bot})\rho_{12}
+(P_{\rm bot}\otimes P_{\rm bot})
+=r^2|\phi\otimes\phi\rangle\langle\phi\otimes\phi|,
+\tag{C91.1}
+$$
+
+其中 $\phi=P_{\rm bot}\psi/\sqrt r$ 为同一归一化条件态。
+独立同态制备保证该式；它是本事件在底面双副本子空间实际需要的块。
+下章的等待公式另要求跨试验事件独立同分布，单次接口本身不供应跨试验独立性。
+
+**定理 C-91.2（指定四项事件的宽度界与面积恒等式）。** 定义归一化向量及其效果
+
+$$
+|\Omega\rangle=\frac12\bigl(
+|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle\bigr),
+\qquad E_\Omega=|\Omega\rangle\langle\Omega|.
+\tag{C91.2}
+$$
+
+在假设 C-91.1 下，事件概率为
+
+$$
+q_\Omega
+=|\psi_0\psi_{13}-\psi_1\psi_3|^2
+=\frac{r^2\mathcal C^2}{4},
+$$
+
+$$
+q_{\Omega,\max}=w(r-w)
+=\frac{\mathcal A}{2\pi}\left(r-\frac{\mathcal A}{2\pi}\right).
+\tag{C91.3}
+$$
+
+最大值在闭纤维取得。若只允许全正态，它在 $y>w$ 或 $w=y=r/2$ 时取得，
+在 $y=w<r/2$ 时仅为未取得的上确界。
+
+证明。四个有序五模式基向量互相正交，四个系数模平方之和为一。
+对同一个实际 $\psi$ 的两份输入，
+
+$$
+\langle\Omega|\psi\otimes\psi\rangle
+=\frac12(\psi_0\psi_{13}+\psi_{13}\psi_0
+-\psi_1\psi_3-\psi_3\psi_1)
+=\psi_0\psi_{13}-\psi_1\psi_3.
+$$
+
+式 (C85.1) 给它为 $r\det B$。
+更一般，$E_\Omega$ 支持在底面双副本块内，所以由式 (C91.1) 取迹同样得到
+$r^2|\langle\Omega|\phi\otimes\phi\rangle|^2=r^2\mathcal C^2/4$。
+对状态最大化，消费 C-85.2 的容量和 C-85.3 的取得性，再代入 $\mathcal A=2\pi w$ 即得。证毕。
+
+这一因子分解明确保留成本：
+
+$$
+q_\Omega=
+\underbrace{r^2}_{\text{两份均落在底面的概率}}
+\ \underbrace{\frac{\mathcal C^2}{4}}_{\text{条件底面中的投影概率}}.
+\tag{C91.4}
+$$
+
+因此先条件化再报告大 concurrence，不能删去完整试验的 $r^2$ 因子。
+C-78.3 已给同一投影及其占位对易性质；这些性质并不供应一个原生仪器实现。
+
+数学先例与精确归一化。Aolita–Mintert，
+*Measuring multipartite concurrence with a single factorizable observable*，
+[quant-ph/0608012v2](https://arxiv.org/abs/quant-ph/0608012v2)，式 (1)–(2)，
+给两份纯态上的 $C_N^2=\langle A\rangle$，其中
+$A=4\sum P_{s_1}^{1}\otimes\cdots\otimes P_{s_N}^{N}$，
+求和限于偶数个反对称因子并排除全对称项。
+两个二元因子时只剩 $A=4P_-^L\otimes P_-^R$。
+按实际基序作重排
+
+$$
+R:\ |a,b\rangle\otimes|a',b'\rangle
+\longmapsto |a,a'\rangle\otimes|b,b'\rangle,\qquad
+|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2.
+$$
+
+四项直接展开给
+
+$$
+R|\Omega\rangle=|\varepsilon\rangle_{LL'}\otimes|\varepsilon\rangle_{RR'},
+\qquad RE_\Omega R^\dagger=P_-^L\otimes P_-^R.
+\tag{C91.5}
+$$
+
+故两份归一化条件态的概率为 $\mathcal C^2/4$，与本处完全一致。
+重排只在四维底面各自的两因子结构上定义，不把整个五维载体当作二元张量积。
+Romero、López、Lastra、Solano、Retamal，
+*Direct measurement of concurrence for atomic two-qubit pure states*，
+[quant-ph/0611016v1](https://arxiv.org/abs/quant-ph/0611016v1)，式 (2)–(5)，
+采用另一个含局部操作、CNOT 与旋转的电路：
+$A_-=c_1c_2-c_0c_3$，$P_{gggg}=|A_-|^2/2=\mathcal C^2/8$。
+该输出不是此处归一化 $\Omega$ 的概率；两份资源的经典方向不能抹去这项因子差异。
+
+**命题 C-91.3（相同概率和商点不能替代实际同态）。** 令
+$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$，在既定底面张量识别中取
+
+$$
+|\phi_+\rangle=|+\rangle\otimes|+\rangle,\qquad
+|\phi_-\rangle=|-\rangle\otimes|-\rangle,
+$$
+
+$$
+|\psi_\pm\rangle=\sqrt{1-r}|2\rangle+\sqrt r|\phi_\pm\rangle.
+\tag{C91.6}
+$$
+
+两者五概率相同，均有 $X=Y=r/2$、$\kappa=r/4$、$\chi=0\bmod2\pi$、
+$\mathcal C=0$，但
+
+$$
+|\langle\Omega|\psi_+\otimes\psi_-\rangle|^2=\frac{r^2}4>0.
+\tag{C91.7}
+$$
+
+证明。按 $(0,1,3,13)$ 顺序，两底面系数分别为
+$(1,1,1,1)/2$、$(1,-1,-1,1)/2$。
+各模平方为 $1/4$，后一组相位可取 $(0,\pi,\pi,0)$，交替和为 $-2\pi$。
+每组均为乘积态，故行列式为零。
+混合输入的四项内积却为
+
+$$
+\frac12\left(\frac r4+\frac r4-\left(-\frac r4\right)-\left(-\frac r4\right)\right)
+=\frac r2,
+$$
+
+平方得到所列值。这个输入既没有共同条件态 $\phi\otimes\phi$，
+也不满足式 (C91.1)；不存在与定理 C-91.2 的矛盾。证毕。
+
+## 92. 固定双副本测试的等待代价与曲率尺度
+
+**定理 C-92.1（首个事件的几何等待及最优取得性）。** 固定一份允许的实际纯态，
+每次重新供应两份独立制备，跨试验独立同分布地执行式 (C91.2) 的测试。
+令 $T$ 为第一次成功的试验编号，没有成功则 $T=+\infty$。
+若 $q_\Omega=0$，则 $T=+\infty$ 几乎必然，$\mathbb ET=+\infty$。
+若 $q_\Omega>0$，则
+
+$$
+\Pr(T>n)=(1-q_\Omega)^n\quad(n\ge0),\qquad
+\mathbb ET=\frac1{q_\Omega}.
+\tag{C92.1}
+$$
+
+在固定均值的闭纤维、固定这个测试与 iid 合同内，
+
+$$
+\min\mathbb ET=\frac1{w(r-w)}.
+\tag{C92.2}
+$$
+
+每次使用两份制备，故最佳平均制备份数为 $2/[w(r-w)]$。
+在全正域中，$y=w<r/2$ 时右侧仅为未取得的下确界；
+$y>w$ 或中心对称时为取得的最小值。
+
+证明。前 $n$ 次都失败的概率由独立性为 $(1-q_\Omega)^n$。
+$q_\Omega=0$ 时每次成功概率零，可数并仍为零，所以从不成功。
+$q_\Omega>0$ 时，尾概率趋零，$T$ 有限几乎必然；
+非负整数随机变量的尾和公式可由
+$T=\sum_{n\ge0}\mathbf1_{\{T>n\}}$ 与单调收敛得到，故
+
+$$
+\mathbb ET=\sum_{n=0}^{\infty}(1-q_\Omega)^n=\frac1{q_\Omega}.
+$$
+
+$r>w>0$ 保证 $w(r-w)>0$。
+在同一测试内，$1/q$ 对正 $q$ 严格递减，因此 C-91.2 的最大概率及取得性
+直接给最优等待和全正域的下确界分类。
+到成功为止每次确用两份，制备总数为 $2T$，其期望为 $2\mathbb ET$，无穷值亦成立。证毕。
+
+这里“最佳”只在上述状态选择、两份制备与固定测试内比较。
+一次事件不恢复完整状态，公式不是所有量子测量或状态辨识方法的最优样本下界。
+单次的独立同态资源与跨试验 iid 是两个分别需要的条件。
+
+**命题 C-92.2（对称锥曲面上的曲率—等待对应）。** 若 $X=Y=r/2$，
+则 $w=r/2$、$\mathcal C_{\max}=1$。在式 (C84.5) 的选定尺度和规则部分，
+
+$$
+f=\frac2{\mathcal I}
+=\frac{\kappa(r/2-\kappa)}{r/2},\qquad
+\mathcal K=-\frac12f''=\frac2r.
+$$
+
+因此指定事件的最优概率与等待为
+
+$$
+q_{\Omega,\max}=\frac{r^2}4=\frac1{\mathcal K^2},
+\qquad
+\min\mathbb ET=\frac4{r^2}=\mathcal K^2.
+\tag{C92.3}
+$$
+
+这些最优值都能用全正状态取得。
+
+| 底面质量 $r$ | 条件最大 $\mathcal C$ | 规则部分曲率 $\mathcal K$ | 最大 $q_\Omega$ | 最佳平均双副本试验次数 | 平均制备份数 |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| $4/5$ | $1$ | $5/2$ | $4/25$ | $25/4$ | $25/2$ |
+| $1/5$ | $1$ | $10$ | $1/100$ | $100$ | $200$ |
+| $1/20$ | $1$ | $40$ | $1/1600$ | $1600$ | $3200$ |
+
+证明。对称纤维四底角为
+$(\kappa,r/2-\kappa,r/2-\kappa,\kappa)$，
+故 $\mathcal I=2/\kappa+2/(r/2-\kappa)$。
+取倒数给所列 $f=\kappa-2\kappa^2/r$，两次求导得 $f''=-4/r$。
+式 (C85.9) 供应每个内部高度在 $\chi=\pi$ 的最大 concurrence，
+故式 (C91.3) 与式 (C92.2) 分别给概率和等待，代入三个 $r$ 即得表。证毕。
+
+这里使用的是 C-82.1 的球面半周商，两个端点锥角均为 $\pi$；
+$\mathcal K=2/r$ 指规则部分的高斯曲率，不能把端点当作普通光滑点而省去缺角。
+若另将度量乘常数 $c>0$，曲率变成 $\mathcal K/c$，
+而 $q_\Omega$ 与固定测试不变；所以式 (C92.3) 依赖选定尺度，
+不是普适的“曲率等于计算复杂度”定律。
+条件联合仍可最大，而随 $r$ 减少，两份实际进入底面的成本使等待变大。
+
+## 93. 宽度、谱和取得代价的来源及适用对象
+
+**约定 C-93.1（数学供应及其精确范围）。** 本组连接的三个量为
+
+$$
+w\longmapsto\mathcal A=2\pi w,\qquad
+\nu=\frac wr\longmapsto\mathcal C_{\max}=2\sqrt{\nu(1-\nu)},\qquad
+(r,w)\longmapsto q_{\Omega,\max}=w(r-w).
+\tag{C93.1}
+$$
+
+它们分别描述绝对面积、条件纯态联合容量及已指定两份读口的事件概率。
+同一宽度的既有来源、经典中间结构与本处应用的关系为
+
+| 来源 | 本组实际消费的内容 |
+| --- | --- |
+| 《局部填充》§3.1；《金字塔关联与原生续卷》9.2；《基础公式》12.1–12.3 | 五模式闭区间、宽度及完整整数提升；标签与参数的对应见 C-84、C-88。单纤维表数不等于全体可见格点数或有序来源数。 |
+| 《辛预测完成》35.5–35.7；本续卷 C-73、C-74、C-76–C-83 | 实际固定矩相位商、$\eta=J/8$、尺度与度量、条件矩阵的商不变量、四项投影、完整端点和对称锥曲面。 |
+| Wootters，quant-ph/9709029v2，式 (2)、(6)–(8) | 归一化两因子纯态 concurrence、约化熵及二元谱关系；本组只取其纯态范围。 |
+| Hill–Wootters，quant-ph/9703041v2，纯态定义及式 (4)–(6) | 以二为底的约化熵与 concurrence 的单调关系，支持 C-86 的单位与公式。 |
+| Aolita–Mintert，quant-ph/0608012v2，式 (1)–(2) | 两份同一纯态及 $4P_-^L\otimes P_-^R$；式 (C91.5) 给实际基重排，条件事件概率为 $\mathcal C^2/4$。 |
+| Romero 等，quant-ph/0611016v1，式 (2)–(5) | 特定两份电路的 $P_{gggg}=\mathcal C^2/8$；其归一化与本文投影不同，不能作事件概率的替代式。 |
+
+取最小边缘行列式、二阶谱、连续路径、几何尾和及常数度量缩放是经典数学工具。
+C-85 的折叠最优高度与全正取等分类、C-88 的五格精度比较、
+C-89 的相同宽度而不同坐标度量、C-90 至 C-92 的质量与固定读口成本关系，
+都是在这些明确供应和五模式约束下的普通数学推导；
+这些应用不附带全球原创性结论，也不把普通证明称作 Lean 内核认证。
+
+**约定 C-93.2（状态选择与实际取得分别承担的条件）。** 概率可行、纯相干完成、
+条件张量结构、商几何、指定制备和指定仪器是不同层次的条件。
+宽度决定可取谱范围；在全正域，达到最优同时需要正确高度和抵消相位。
+这里没有由“能写出这样的振幅”推出原生控制能制备它，也没有由一个数学投影
+推出实际硬件或未知态克隆能力。
+
+[《实际 renewal 仪器与检测器秩》定义 22.1、定理 22.3](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md#22-all-sum-conditional-acquisition-at-the-cubic-near-one-order)
+的原生连续 no11 读取协议在一条实际来源流中取得全部完整间隔对，逐位支付初始等待和每一对的两个闭合 tick。
+它的成本等式为 $L=1+\tau+\sum_{j=1}^N(K_{2j-1}+K_{2j}+2)$；
+这套来源及成本合同不供应两份相干纯态或式 (C91.2) 的投影。
+若将该 renewal 来源的参数记为 $q_{\rm native}$、逐位取得成本记为 $L$，
+则它们分别区别于此处的 $q_\Omega$ 和试验编号 $T$；
+没有可用于直接代入的 $r=1-q_{\rm native}$ 关系。
+跨模型若要比较，必须另给保持实际来源、输出事件及成本单位的映射。
+在这份指定几何中，面积缩小、曲率增大与条件 concurrence 不变能够同时发生；
+完整状态的分支质量和两份取得代价仍须保留。
+
+## 追加锚（本行以下为增补区）
+
+## 94. 五模式混态、底面张量结构与完整双副本测量
+
+**定义 C-94.1（任意密度算子及固定均值的闭集合）。** 在 C-84.1 的正交五模式空间
+$\mathcal H_5=\operatorname{span}\{|0\rangle,|1\rangle,|2\rangle,|3\rangle,|13\rangle\}$ 上，
+取任意 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，令 $p_s=\langle s|\rho|s\rangle$。
+不要求 $\rho$ 纯，也不要求中模式与底面之间的矩阵元为零。沿用
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad
+r=1-Z,\qquad\kappa=p_{13}.
+\tag{C94.1}
+$$
+
+固定 $0<r<1$、$0<X,Y<r$。C-84.1–C-84.2 的概率反解及宽度在此仍为
+
+$$
+\begin{aligned}
+p&=(r-X-Y+\kappa,\ X-\kappa,\ 1-r,\ Y-\kappa,\ \kappa),\\
+\kappa_-&=\max(0,X+Y-r),\qquad\kappa_+=\min(X,Y),\\
+w&=\kappa_+-\kappa_-=\min\{X,Y,r-X,r-Y\},\\
+x&=X/r,\qquad y=Y/r,\qquad\nu=w/r=\min\{x,1-x,y,1-y\}.
+\end{aligned}
+\tag{C94.2}
+$$
+
+这里 $\mathfrak D(r,X,Y)$ 指满足这些固定均值的所有五维密度算子，
+允许 $\kappa\in[\kappa_-,\kappa_+]$ 变化并允许合法零对角元。
+这些式子只使用对角非负及迹一，因此适用于任意秩。
+完整混态另有非对角自由度；本集合不等于以 $(\kappa,\chi)$ 为坐标的纯态相位商。
+C-84.3 的 $\mathcal A=2\pi w$ 仍只属于那里指定尺度的纯振幅辛完成，
+不是本混态集合的面积或维数公式。
+
+**定义 C-94.2（条件底面及可分离性）。** 令
+
+$$
+P_{\mathrm b}=|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|.
+$$
+
+以等距嵌入 $\iota:\mathbb C_A^2\otimes\mathbb C_B^2\longrightarrow\mathcal H_5$ 指定
+
+$$
+\iota|00\rangle=|0\rangle,\quad
+\iota|10\rangle=|1\rangle,\quad
+\iota|01\rangle=|3\rangle,\quad
+\iota|11\rangle=|13\rangle.
+\tag{C94.3}
+$$
+
+于是 $\iota^\dagger\iota=I_4$、$\iota\iota^\dagger=P_{\mathrm b}$，定义
+
+$$
+\sigma=\frac{\iota^\dagger\rho\iota}{r},\qquad
+\iota\sigma\iota^\dagger=\frac{P_{\mathrm b}\rho P_{\mathrm b}}r,
+\qquad\sigma_A=\operatorname{Tr}_B\sigma,\quad
+\sigma_B=\operatorname{Tr}_A\sigma.
+\tag{C94.4}
+$$
+
+$\sigma$ 是正半定迹一算子，因为压缩保持正性且
+$\operatorname{Tr}(P_{\mathrm b}\rho)=r$。按标准张量基 $(00,01,10,11)$，
+其对角为 $(p_0,p_3,p_1,p_{13})/r$，并有
+
+$$
+(\sigma_A)_{ac}=\sum_b\sigma_{ab,cb},\qquad
+(\sigma_B)_{bd}=\sum_a\sigma_{ab,ad},\qquad
+\operatorname{diag}\sigma_A=(1-x,x),\quad
+\operatorname{diag}\sigma_B=(1-y,y).
+\tag{C94.5}
+$$
+
+本组“底面可分离”恰指存在有限分解
+
+$$
+\sigma=\sum_j t_j\alpha_j\otimes\beta_j,
+\qquad t_j\ge0,\quad\sum_jt_j=1,
+\tag{C94.6}
+$$
+
+其中 $\alpha_j,\beta_j$ 各为二阶密度算子。
+这一定义的对象是已指定的底面两因子；五维载体本身没有被识别为两个物理子系统。
+
+**假设 C-94.3（实际成对输入及读口）。** 一次完整试验实际接收
+$\rho\otimes\rho$，即同一密度算子的两份独立制备，并允许执行下述联合测量。
+相同的两个单份边缘不作为乘积输入的替代条件；也不假设未知态克隆。
+此处只规定单轮来源，跨轮独立同分布另在取得成本定理中规定。
+
+在 $\mathcal K=(\mathbb C_A^2\otimes\mathbb C_B^2)^{\otimes2}$ 上，写基向量为
+$|a,b,a',b'\rangle$，定义
+
+$$
+F_A|a,b,a',b'\rangle=|a',b,a,b'\rangle,\qquad
+F_B|a,b,a',b'\rangle=|a,b',a',b\rangle.
+\tag{C94.7}
+$$
+
+等价地，在重排
+$R|a,b,a',b'\rangle=|a,a'\rangle\otimes|b,b'\rangle$ 后，
+$F_A$ 是第一对因子的交换，$F_B$ 是第二对的交换。
+二者自伴、平方为恒等，且交换不同坐标所以彼此对易。
+令 $s,t\in\{+1,-1\}$，定义
+
+$$
+P_s^A=(I+sF_A)/2,\qquad P_t^B=(I+tF_B)/2,
+\qquad\Pi_{st}=P_s^AP_t^B.
+\tag{C94.8}
+$$
+
+它们满足 $\Pi_{st}^\dagger=\Pi_{st}=\Pi_{st}^2$；
+若符号对不同，至少一个因子的异号投影相乘为零，故四个投影正交，且
+$\sum_{s,t}\Pi_{st}=I_{16}$。令 $J=\iota\otimes\iota$，实际五维双副本测量的效果为
+
+$$
+Q_{st}=J\Pi_{st}J^\dagger,\qquad
+Q_{\mathrm f}=I_{25}-P_{\mathrm b}\otimes P_{\mathrm b}.
+\tag{C94.9}
+$$
+
+因 $J^\dagger J=I_{16}$，四个 $Q_{st}$ 仍是互相正交的正投影，
+其和为 $JJ^\dagger=P_{\mathrm b}\otimes P_{\mathrm b}$，与正投影 $Q_{\mathrm f}$ 相加为恒等。
+故这是包含底面选择失败在内的完整五结果测量。
+定义未条件化概率
+
+$$
+q_{st}=\operatorname{Tr}[Q_{st}(\rho\otimes\rho)],\qquad
+q_{\mathrm f}=\operatorname{Tr}[Q_{\mathrm f}(\rho\otimes\rho)].
+\tag{C94.10}
+$$
+
+这里的“失败”包括恰一份及两份都未进入底面的全部情况。
+
+**定理 C-94.4（五模式测量的压缩、四符号概率及纯度字典）。** 在假设 C-94.3 下，
+令 $\mathcal P=\operatorname{Tr}\sigma^2$、
+$\mathcal P_A=\operatorname{Tr}\sigma_A^2$、$\mathcal P_B=\operatorname{Tr}\sigma_B^2$。
+上述实际测量满足
+
+$$
+q_{st}=\frac{r^2}{4}(1+s\mathcal P_A+t\mathcal P_B+st\mathcal P),\qquad
+\sum_{s,t}q_{st}=r^2,\quad q_{\mathrm f}=1-r^2.
+\tag{C94.11}
+$$
+
+并且 C-91.2 的归一化向量
+
+$$
+|\Omega\rangle=\tfrac12(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle)
+\tag{C94.12}
+$$
+
+满足 $Q_{--}=|\Omega\rangle\langle\Omega|$，从而 $q_\Omega=q_{--}$。
+
+证明。首先按实际输入作双侧压缩：
+
+$$
+\begin{aligned}
+&(P_{\mathrm b}\otimes P_{\mathrm b})(\rho\otimes\rho)
+(P_{\mathrm b}\otimes P_{\mathrm b})\\
+&\hspace{12mm}=(P_{\mathrm b}\rho P_{\mathrm b})\otimes(P_{\mathrm b}\rho P_{\mathrm b})
+=r^2J(\sigma\otimes\sigma)J^\dagger.
+\end{aligned}
+\tag{C94.13}
+$$
+
+取迹给两份都在底面的概率 $r^2$，取各 $Q_{st}$ 的迹给
+$q_{st}=r^2\operatorname{Tr}[\Pi_{st}(\sigma\otimes\sigma)]$。
+这一步没有交换 $\rho$ 与 $P_{\mathrm b}$，所以没有假设
+$[\rho,P_{\mathrm b}]=0$；任意底面—中位相干都已被实际投影正确处理。
+
+二元交换的反对称空间是一维，由
+$|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2$ 张成。
+因此 $R\Pi_{--}R^\dagger$ 是
+$|\varepsilon\rangle_{AA'}\otimes|\varepsilon\rangle_{BB'}$ 的秩一投影。
+将其四项逆重排并用 $J$ 嵌入，依次得到
+$\tfrac12(|0,13\rangle-|3,1\rangle-|1,3\rangle+|13,0\rangle)$，正是 $\Omega$。
+四个不同有序基向量正交，所以其范数平方为 $4/4=1$。
+
+为展开每个交换迹，令矩阵元为 $\sigma_{ab,cd}$，所有指标遍历 $\{0,1\}$。
+按定义直接有
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F_A(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cb,ab}\sigma_{ad,cd}
+=\sum_{a,c}(\sigma_A)_{ca}(\sigma_A)_{ac}=\mathcal P_A,\\
+\operatorname{Tr}[F_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{ad,ab}\sigma_{cb,cd}
+=\sum_{b,d}(\sigma_B)_{db}(\sigma_B)_{bd}=\mathcal P_B,\\
+\operatorname{Tr}[F_AF_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cd,ab}\sigma_{ab,cd}=\mathcal P,\\
+\operatorname{Tr}(\sigma\otimes\sigma)&=1.
+\end{aligned}
+\tag{C94.14}
+$$
+
+$F_AF_B$ 在第三式中交换完整的两份底面。把
+$\Pi_{st}=(I+sF_A+tF_B+stF_AF_B)/4$ 代入即得
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac{r^2}4(1-\mathcal P_A-\mathcal P_B+\mathcal P),\\
+q_{-+}&=\tfrac{r^2}4(1-\mathcal P_A+\mathcal P_B-\mathcal P),\\
+q_{+-}&=\tfrac{r^2}4(1+\mathcal P_A-\mathcal P_B-\mathcal P),\\
+q_{++}&=\tfrac{r^2}4(1+\mathcal P_A+\mathcal P_B+\mathcal P).
+\end{aligned}
+\tag{C94.15}
+$$
+
+相加只余 $r^2$，其补数就是失败概率。证毕。
+
+本推导消费经典交换—纯度恒等式。Mintert–Buchleitner，
+*An observable entanglement measure for mixed quantum states*，
+[quant-ph/0605250v3](https://arxiv.org/abs/quant-ph/0605250v3)，式 (1)–(3)，
+分别给纯态 $4P_-^A\otimes P_-^B$、混态 concurrence 下界和整体—局部纯度差；
+这里的 $J$、五维效果及 $r^2$ 因子明确了这些中间结构在当前来源中的参数。
+
+**命题 C-94.5（纯态极限、经典混合和被遗漏的混合性）。** 若条件底面纯，
+写 $|\phi\rangle=\sum_{a,b}B_{ab}|ab\rangle$，$\operatorname{Tr}BB^\dagger=1$，
+则 $\mathcal P=1$，两约化谱相同，且
+
+$$
+\mathcal C(\phi)=2|\det B|,\qquad
+q_{--}=\frac{r^2\mathcal C(\phi)^2}{4},\qquad q_{-+}=q_{+-}=0.
+\tag{C94.16}
+$$
+
+对一般条件混态则只有
+
+$$
+q_{-+}+q_{+-}=\frac{r^2}{2}(1-\mathcal P),
+\tag{C94.17}
+$$
+
+不能用 $q_{--}=r^2\mathcal C^2/4$ 定义混态 concurrence。
+
+证明。纯态的约化矩阵为 $BB^\dagger$ 和 $B^{\mathsf T}\bar B$，
+其相同非零谱由奇异值给出；二阶迹一矩阵满足
+$\operatorname{Tr}\sigma_A^2=1-2\det\sigma_A=1-2|\det B|^2$。
+代入式 (C94.15) 即得纯态式，式 (C94.17) 则由两个异号式相加得到。
+为展示混态边界，取
+
+$$
+\sigma_{\rm cl}=\tfrac12|00\rangle\langle00|+\tfrac12|11\rangle\langle11|.
+\tag{C94.18}
+$$
+
+它是纯乘积态混合，故可分离；其整体及两个局部纯度都是 $1/2$。
+所以 $q_{--}=q_{-+}=q_{+-}=r^2/8$、$q_{++}=5r^2/8$。
+在任意 $r>0$ 时，$q_{--}$ 为正却无底面纠缠。
+经典混合和纯态不可分解性都能贡献同一事件，式 (C94.17) 保留了区分它们所需的一项信息。证毕。
+
+## 95. 固定可见均值的任意态容量与可分离容量
+
+**定理 C-95.1（两个固定均值的尖锐上限）。** 对定义 C-94.1 的闭集合，
+并在每个状态上使用假设 C-94.3 的实际同态乘积输入，有
+
+$$
+\max_{\rho\in\mathfrak D(r,X,Y)}q_\Omega=w(r-w),\qquad
+\max_{\substack{\rho\in\mathfrak D(r,X,Y)\\\sigma\ \text{separable}}}q_\Omega
+=\tfrac12w(r-w).
+\tag{C95.1}
+$$
+
+两个最大化都固定 $r,X,Y$，允许 $\kappa$ 变化；不是对任意预先固定的五个对角概率断言取等。
+
+证明。因为对易投影的乘积小于各因子，
+$0\preceq\Pi_{--}\preceq P_-^A$ 且 $\Pi_{--}\preceq P_-^B$。
+对 $\sigma\otimes\sigma\succeq0$ 取迹，并使用式 (C94.14)，得
+
+$$
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_A}{2},\qquad
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_B}{2}.
+\tag{C95.2}
+$$
+
+若 $\sigma_A=\left(\begin{smallmatrix}1-x&z_A\\\bar z_A&x\end{smallmatrix}\right)$，则
+$\mathcal P_A=(1-x)^2+x^2+2|z_A|^2\ge(1-x)^2+x^2$。
+同理 $\mathcal P_B\ge(1-y)^2+y^2$。于是
+
+$$
+\frac{q_\Omega}{r^2}\le\min\{x(1-x),y(1-y)\}=\nu(1-\nu).
+\tag{C95.3}
+$$
+
+最后的等号消费 C-84.2 的瓶颈恒等式：把每个边缘折到
+$\min(x,1-x),\min(y,1-y)\in[0,1/2]$，函数 $t(1-t)$ 在该区间递增，
+故最小值等于 $\nu(1-\nu)$。再乘 $r^2$ 就是 $w(r-w)$。
+
+对可分离态，把式 (C94.6) 中每个 $\alpha_j,\beta_j$ 各作正交谱分解，
+以原权重乘两个谱权重，得到归一化纯乘积向量的有限混合
+
+$$
+\sigma=\sum_j t_j|a_j\rangle\langle a_j|\otimes|b_j\rangle\langle b_j|.
+\tag{C95.4}
+$$
+
+约化后分别是 $\sum_jt_j|a_j\rangle\langle a_j|$ 和
+$\sum_jt_j|b_j\rangle\langle b_j|$，从而
+
+$$
+\begin{aligned}
+\mathcal P&=\sum_{j,k}t_jt_k|\langle a_j|a_k\rangle|^2|\langle b_j|b_k\rangle|^2,\\
+\mathcal P_A&=\sum_{j,k}t_jt_k|\langle a_j|a_k\rangle|^2,\qquad
+\mathcal P_B=\sum_{j,k}t_jt_k|\langle b_j|b_k\rangle|^2.
+\end{aligned}
+\tag{C95.5}
+$$
+
+每个重叠模平方在 $[0,1]$ 内，权重非负，逐项比较证明
+$\mathcal P\le\mathcal P_A$ 及 $\mathcal P\le\mathcal P_B$。
+在式 (C94.15) 中分别用 $\mathcal P\le\mathcal P_B$ 和
+$\mathcal P\le\mathcal P_A$，得
+
+$$
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_A}{4}\le\frac{x(1-x)}2,
+\qquad
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_B}{4}\le\frac{y(1-y)}2.
+\tag{C95.6}
+$$
+
+同一最小量恒等式给因子 $1/2$ 的上界。这一步是经典可分离态纯度比较在本固定边缘问题中的应用；
+以下构造同时承担两个上界的可达性。
+
+用 C-85.2 的标签置换 $L,R,S$，其参数作用仍为
+
+$$
+L:(X,Y,\kappa)\mapsto(r-X,Y,Y-\kappa),\quad
+R:(X,Y,\kappa)\mapsto(X,r-Y,X-\kappa),\quad
+S:(X,Y,\kappa)\mapsto(Y,X,\kappa).
+\tag{C95.7}
+$$
+
+选择实现四项最小值的因子为 $A$，必要时翻转该因子的零一标签，即可安排
+$x=\nu$、$\nu\le y\le1-\nu$。这些置换保留 $r,w$、可分离性及 $q_{--}$：
+在两份上同时作同一局部置换时，交换投影与之对易；交换 $A,B$ 也保留 $--$。
+逆置换把任何构造送回原均值。这是坐标重标记，不是增加原生控制。
+
+先设 $0<\nu<1/2$，令
+
+$$
+u=\frac{y-\nu}{1-2\nu}\in[0,1],\qquad
+|b_0\rangle=\sqrt{1-u}|0\rangle+\sqrt u|1\rangle,\quad
+|b_1\rangle=\sqrt u|0\rangle-\sqrt{1-u}|1\rangle.
+\tag{C95.8}
+$$
+
+二者范数一、内积零。置 $|e_0\rangle=|0\rangle|b_0\rangle$、
+$|e_1\rangle=|1\rangle|b_1\rangle$，它们为正交纯乘积向量，定义
+
+$$
+\sigma_0=(1-\nu)|e_0\rangle\langle e_0|+\nu|e_1\rangle\langle e_1|,
+\qquad
+|\Phi\rangle=\sqrt{1-\nu}|e_0\rangle+\sqrt\nu|e_1\rangle.
+\tag{C95.9}
+$$
+
+两态的 $A$ 约化态都为 $\operatorname{diag}(1-\nu,\nu)$。
+$B$ 约化态都为 $(1-\nu)|b_0\rangle\langle b_0|+\nu|b_1\rangle\langle b_1|$，
+其占位均值为 $(1-\nu)u+\nu(1-u)=\nu+(1-2\nu)u=y$。
+纯态中两个交叉项的任一侧偏迹均零：一侧用 $\langle b_1|b_0\rangle=0$，
+另一侧用 $\langle1|0\rangle=0$。所以两态具有相同所需边缘，且
+
+$$
+\mathcal P_A=\mathcal P_B=(1-\nu)^2+\nu^2,\qquad
+\mathcal P(\sigma_0)=(1-\nu)^2+\nu^2,\quad
+\mathcal P(|\Phi\rangle\langle\Phi|)=1.
+\tag{C95.10}
+$$
+
+代入式 (C94.15)，分别给
+$q_\Omega(\sigma_0)=r^2\nu(1-\nu)/2$ 和
+$q_\Omega(\Phi)=r^2\nu(1-\nu)$。
+
+当 $\nu=1/2$ 时，原边缘必为 $x=y=1/2$。
+另取任意二元正交归一基 $b_0,b_1$，仍按式 (C95.9) 定义，
+两个边缘均为 $I_2/2$。这不使用分母为零的式 (C95.8)，
+并分别给 $q_\Omega=r^2/8,r^2/4$。
+
+最后，对上述任一条件态 $\sigma$，五维实现为
+
+$$
+\rho[\sigma]=(1-r)|2\rangle\langle2|+r\iota\sigma\iota^\dagger.
+\tag{C95.11}
+$$
+
+两个正块支撑正交、迹之和为一；其底面质量与均值是所规定的 $r,X,Y$。
+对纯条件态还可取完整纯态
+$|\psi\rangle=\sqrt{1-r}|2\rangle+\sqrt r\,\iota|\Phi\rangle$，
+它有相同底面压缩，却有底面—中位相干；两种实现的四符号概率相同。
+逆置换后构造对每个原标签下的闭均值纤维均成立，故两个上界都是最大值。证毕。
+
+**命题 C-95.2（固定对角约束与精确阈值的边界）。** 固定五个对角概率时，
+式 (C95.1) 的两个数仍为上界，但任意态上界不必能达到。例如
+
+$$
+r=\tfrac12,\quad X=\tfrac1{10},\quad Y=\tfrac15,\quad\kappa=0
+\tag{C95.12}
+$$
+
+给标准底面基序 $(00,01,10,11)$ 的归一化对角 $(2/5,2/5,1/5,0)$
+（原底角序 $(0,1,3,13)$ 则为 $(2/5,1/5,2/5,0)$），且固定此对角时
+
+$$
+\max q_\Omega=\frac1{50}<\frac1{25}=w(r-w).
+\tag{C95.13}
+$$
+
+证明。正半定性给 $|\sigma_{ij}|^2\le\sigma_{ii}\sigma_{jj}$，
+故 $11$ 对角为零迫使其整行整列为零。
+$\Omega$ 的含 $11$ 两项于是对压缩后的输入没有贡献，另外两项给
+
+$$
+\frac{q_\Omega}{r^2}=\frac12\bigl(\sigma_{10,10}\sigma_{01,01}
++|\sigma_{10,01}|^2\bigr)
+\le\sigma_{10,10}\sigma_{01,01}=\frac2{25}.
+$$
+
+条件纯态 $\sqrt{2/5}|00\rangle+\sqrt{2/5}|01\rangle+
+\sqrt{1/5}|10\rangle$ 达等，乘 $r^2=1/4$ 得 $1/50$。
+此处 $w=1/10$，故宽度上界为 $1/25$。证毕。
+
+对任何允许状态，精确人口概率若满足
+$q_\Omega>\tfrac12w(r-w)$，则由 C-95.1 排除底面可分离。
+逆命题不成立，见 C-97.2；一次或若干次有限事件也不等于已经知道精确概率超过阈值。
+有限数据的风险控制使用 C-98 的单独合同。
+
+## 96. 同一完整对角上的相干插值与凸屋顶 concurrence
+
+**定义 C-96.1（固定正交乘积基的相干族）。** 固定 C-95.1 构造中的
+$\nu,b_0,b_1,e_0,e_1$；非中心时用式 (C95.8)，中心时固定任意正交基。
+对 $0\le\gamma\le1$，定义
+
+$$
+\begin{aligned}
+\sigma_\gamma={}&(1-\nu)|e_0\rangle\langle e_0|+\nu|e_1\rangle\langle e_1|\\
+&+\gamma\sqrt{\nu(1-\nu)}
+\bigl(|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|\bigr),\\
+\rho_\gamma={}&(1-r)|2\rangle\langle2|+r\iota\sigma_\gamma\iota^\dagger.
+\end{aligned}
+\tag{C96.1}
+$$
+
+**定理 C-96.2（固定对角的完整插值读数）。** 这些算子都是密度算子，
+所有五个对角概率与两个约化态均不依赖 $\gamma$。
+置 $a=\nu(1-\nu)$、$h=r^2a=w(r-w)$，则
+
+$$
+\mathcal P_A=\mathcal P_B=1-2a,\qquad
+\mathcal P=1-2a(1-\gamma^2),
+\tag{C96.2}
+$$
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac h2(1+\gamma^2),&
+q_{-+}=q_{+-}&=\tfrac h2(1-\gamma^2),\\
+q_{++}&=r^2-\tfrac h2(3-\gamma^2),&
+q_{\mathrm f}&=1-r^2.
+\end{aligned}
+\tag{C96.3}
+$$
+
+证明。在 $e_0,e_1$ 的支撑子空间中，矩阵是
+
+$$
+\begin{pmatrix}1-\nu&\gamma\sqrt a\\\gamma\sqrt a&\nu\end{pmatrix}.
+\tag{C96.4}
+$$
+
+其迹一、对角正、行列式 $a(1-\gamma^2)\ge0$，所以正半定；
+正交补上为零。$0\le\gamma<1$ 时秩二，$\gamma=1$ 时为 $|\Phi\rangle\langle\Phi|$。
+$\rho_\gamma$ 的正性和归一化由式 (C95.11) 得到。
+由于 $e_0,e_1$ 的 $A$ 基标签不同，它们交叉项在每个计算基向量上的对角元为零。
+非中心分支中，完整五概率明确为
+
+$$
+(p_0,p_1,p_2,p_3,p_{13})=
+\bigl(r(1-\nu)(1-u),\ r\nu u,\ 1-r,\ r(1-\nu)u,\ r\nu(1-u)\bigr).
+\tag{C96.5}
+$$
+
+其 $X=r\nu$、$Y=r[\nu+(1-2\nu)u]$，
+$\kappa=r\nu(1-u)$ 均固定。中心的 $b_0,b_1$ 可写成同样模平方参数
+$u=|\langle1|b_0\rangle|^2$，式 (C96.5) 仍成立。
+两个交叉项在任一侧的偏迹为零，理由与 C-95.1 相同，故
+
+$$
+\sigma_A=(1-\nu)|0\rangle\langle0|+\nu|1\rangle\langle1|,
+\quad
+\sigma_B=(1-\nu)|b_0\rangle\langle b_0|+\nu|b_1\rangle\langle b_1|.
+\tag{C96.6}
+$$
+
+正交性给两个局部纯度 $1-2a$。把式 (C96.4) 平方取迹，得到
+$(1-\nu)^2+\nu^2+2\gamma^2a=1-2a(1-\gamma^2)$。
+将三项纯度代入式 (C94.15)，逐项化简给式 (C96.3)；四项之和恰为 $r^2$。证毕。
+
+**定理 C-96.3（该族的凸屋顶精确值）。** 采用标准两二元因子 concurrence 的凸屋顶定义
+
+$$
+\mathcal C(\sigma)=\inf_{\sigma=\sum_jt_j|\phi_j\rangle\langle\phi_j|}
+\sum_jt_j\,2|\det B_j|,
+\quad t_j\ge0,\quad\sum_jt_j=1,\quad\|\phi_j\|=1,
+\tag{C96.7}
+$$
+
+其中 $B_j$ 是 $\phi_j$ 的标准 $2\times2$ 系数矩阵。则
+
+$$
+\mathcal C(\sigma_\gamma)=2\gamma\sqrt{\nu(1-\nu)},\qquad
+\mathcal C(\sigma_\gamma)^2=\frac8{r^2}
+\left(q_\Omega-\tfrac12w(r-w)\right).
+\tag{C96.8}
+$$
+
+定义及一般两量子位凸屋顶的经典来源为 Wootters，
+*Entanglement of Formation of an Arbitrary State of Two Qubits*，
+[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7)、(10)、(19)–(22)
+及等 concurrence 分解的证明。此处对所给支撑另给上下界一致的直接计算，
+不把一般混态事件概率等同于 concurrence。
+
+证明。先以局部酉换基把 $b_0,b_1$ 送到 $|0\rangle,|1\rangle$，
+于是 $e_0,e_1$ 送到 $00,11$。
+纯态系数矩阵在局部酉下变为 $UBV^{\mathsf T}$，其行列式模不变；
+该变换双射地对应所有纯态分解，所以凸屋顶也不变。
+
+对任意分解及任意位于 $\operatorname{span}\{00,11\}$ 正交补内的 $v$，有
+
+$$
+0=\langle v|\sigma_\gamma|v\rangle
+=\sum_jt_j|\langle v|\phi_j\rangle|^2.
+\tag{C96.9}
+$$
+
+每项非负；取正交补的一组基，说明每个 $t_j>0$ 的纯成分都在该二维空间内。
+因此写成 $a_j|00\rangle+b_j|11\rangle$，$|a_j|^2+|b_j|^2=1$，
+纯态 concurrence 恰为 $2|a_jb_j|$。
+这个论证也适用于 $\gamma=1$ 的更小实际支撑。
+用交叉矩阵元及三角不等式，任意分解满足
+
+$$
+\sum_jt_j\,2|a_jb_j|
+\ge2\left|\sum_jt_ja_j\bar b_j\right|
+=2|(\sigma_\gamma)_{00,11}|=2\gamma\sqrt a.
+\tag{C96.10}
+$$
+
+另一方面，下面是含实际归一化纯成分的分解：
+
+$$
+\sigma_\gamma=
+\gamma|\Phi\rangle\langle\Phi|
++(1-\gamma)(1-\nu)|e_0\rangle\langle e_0|
++(1-\gamma)\nu|e_1\rangle\langle e_1|.
+\tag{C96.11}
+$$
+
+三个权重非负且和为一，展开给式 (C96.1)；两个 $e_i$ 是乘积态，
+而 $\Phi$ 的 concurrence 为 $2\sqrt a$。
+所以此分解的平均值是 $2\gamma\sqrt a$，达到下界。
+由式 (C96.3) 的 $q_{--}-h/2=h\gamma^2/2$ 得第二式。证毕。
+
+$\gamma=0$ 可分离，$\gamma>0$ 时任何纯乘积分解都会有零平均 concurrence，
+与式 (C96.10) 矛盾，所以条件态纠缠。
+$\gamma$ 描述密度矩阵中相干项的保留量；$\gamma<1$ 时的混态
+不具有一个由纯振幅唯一决定的 $\chi$。不同纯态分解也不能被指定为唯一隐藏纯相位。
+
+**命题 C-96.4（全五概率均匀且规范概率圆不变的家族）。** 取
+
+$$
+r=\frac45,\quad\nu=\frac12,\quad
+|b_0\rangle=|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},\quad
+|b_1\rangle=|-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt2}.
+\tag{C96.12}
+$$
+
+则式 (C96.1) 给所有 $\gamma$ 下 $p_s=1/5$，
+$X=Y=2/5$、$\kappa=1/5$、$w=2/5$、$h=4/25$，且
+
+| $\gamma$ | 底面可分离 | $\mathcal C$ | $q_{--}$ | $q_{-+}$ | $q_{+-}$ | $q_{++}$ | $q_{\mathrm f}$ |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| $0$ | 是 | $0$ | $2/25$ | $2/25$ | $2/25$ | $2/5$ | $9/25$ |
+| $1/2$ | 否 | $1/2$ | $1/10$ | $3/50$ | $3/50$ | $21/50$ | $9/25$ |
+| $1$ | 否 | $1$ | $4/25$ | $0$ | $0$ | $12/25$ | $9/25$ |
+
+证明。每个底角条件概率为 $1/4$，乘 $4/5$ 后为 $1/5$，
+中模式同为 $1/5$；其余参数由定义计算。
+式 (C96.8) 在 $\nu=1/2$ 给 $\mathcal C=\gamma$，
+表中全部事件由式 (C96.3) 逐项代入。
+
+这里的“概率圆”准确消费 C-67.2、C-76.1、C-84.3 的规范定义：
+对底面正表 $H=\left(\begin{smallmatrix}p_0&p_3\\p_1&p_{13}\end{smallmatrix}\right)$
+作正行列平衡后取面积 $\pi$ 的带标记协方差椭圆，
+
+$$
+\eta=\frac18\log\frac{p_0p_{13}}{p_1p_3}=0,\qquad
+ e^{-2\eta}z_+^2+e^{2\eta}z_-^2=1.
+\tag{C96.13}
+$$
+
+所以该规范椭圆始终是单位圆。
+它不是全五态占位变量 $(B_L,B_R)$ 的无条件协方差椭圆：后者满足
+$\mathbb E B_L=\mathbb E B_R=2/5$、$\mathbb E B_LB_R=1/5$，故
+
+$$
+\operatorname{Cov}(B_L,B_R)=
+\begin{pmatrix}6/25&1/25\\1/25&6/25\end{pmatrix}.
+\tag{C96.14}
+$$
+
+特征值 $7/25,1/5$ 不等，那个椭圆并非圆。
+因此相同的五个顶点权重、隐藏高度和规范概率圆，仍容许表中不同的混态联合结构。证毕。
+
+## 97. 双事件纯度差、保留率与不完备的纠缠见证
+
+**命题 C-97.1（固定对照的纯度差与条件比例）。** 在实际独立同态双副本合同下，
+
+$$
+q_{--}-q_{-+}=\frac{r^2}{2}(\mathcal P-\mathcal P_B),\qquad
+q_{--}-q_{+-}=\frac{r^2}{2}(\mathcal P-\mathcal P_A).
+\tag{C97.1}
+$$
+
+若任一差严格为正，底面条件态纠缠。预先选择比较 $--$ 与 $-+$，其保留率为
+
+$$
+H_A:=q_{--}+q_{-+}=\frac{r^2}{2}(1-\mathcal P_A).
+\tag{C97.2}
+$$
+
+当且仅当 $H_A>0$ 才定义
+
+$$
+\theta=\frac{q_{--}}{H_A}.
+\tag{C97.3}
+$$
+
+可分离态在此域中满足 $\theta\le1/2$，而 C-96 的家族满足
+$H_A=h=w(r-w)>0$、$\theta=(1+\gamma^2)/2$。
+
+证明。式 (C94.15) 相减分别消去 $\mathcal P_A$ 和 $\mathcal P_B$，
+得到式 (C97.1) 的准确因子次序；相加给式 (C97.2)。
+对可分离态，式 (C95.5) 给 $\mathcal P\le\mathcal P_A,\mathcal P_B$，
+所以两个差都不正；逆否即给充分见证。
+当分母正时，$\theta\le1/2$ 等价于 $q_{--}\le q_{-+}$。
+两项中的 $r^2$ 消去，但保留事件自身的发生率仍是 $H_A$。
+对 C-96 家族，式 (C96.3) 相加并相除就给声明的值。
+若 $H_A=0$，两项非负且和为零，所以均为零，$\theta$ 未定义。
+$w>0$ 并不排除这个分支：条件纯乘积态 $|+\rangle_A|+\rangle_B$
+有 $x=y=1/2$、$w=r/2>0$，但 $\mathcal P_A=1$，故 $H_A=0$。证毕。
+
+式 (C97.1) 的机制是经典 Mintert–Buchleitner 见证，非新的普适纠缠判据。
+其 [quant-ph/0605250v3](https://arxiv.org/abs/quant-ph/0605250v3) 式 (2)–(3)
+在本参数中还给
+
+$$
+\mathcal C(\sigma)^2\ge\frac4{r^2}
+\max\{0,q_{--}-q_{-+},q_{--}-q_{+-}\}.
+\tag{C97.4}
+$$
+
+文中的 $4P_-^A(P_-^B-P_+^B)$ 对应 $4(q_{--}-q_{-+})/r^2$，
+$4(P_-^A-P_+^A)P_-^B$ 对应另一个差。
+C-96 家族的两个差均为 $h\gamma^2$，式 (C96.8) 表明其饱和这个经典下界。
+相消未知质量只简化比例的判定，不消去获得一个保留事件之前支付的完整试验。
+
+**命题 C-97.2（负部分转置而两个见证均不通过）。** 在声明的两因子中取
+
+$$
+|\Phi^+\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\qquad
+\sigma_{\rm iso}=\frac12|\Phi^+\rangle\langle\Phi^+|+\frac18 I_4.
+\tag{C97.5}
+$$
+
+它纠缠，却满足
+
+$$
+\lambda_{\min}(\sigma_{\rm iso}^{T_B})=-\frac18,\qquad
+\frac{q_{--}}{r^2}=\frac7{64},\qquad
+\frac{q_{-+}}{r^2}=\frac{q_{+-}}{r^2}=\frac9{64},\qquad
+\frac{q_{++}}{r^2}=\frac{39}{64}.
+\tag{C97.6}
+$$
+
+证明。以 $T_B$ 表示在 $B$ 计算基的转置。
+$|\Phi^+\rangle\langle\Phi^+|$ 的部分转置为完整两因子交换算子 $F/2$，
+故 $\sigma_{\rm iso}^{T_B}=F/4+I_4/8$。
+$F$ 在三维对称空间为 $+1$、一维反对称空间为 $-1$，
+所以谱为 $3/8,3/8,3/8,-1/8$。
+可分离态必为正部分转置：每项 $\alpha_j\otimes\beta_j$ 转成
+$\alpha_j\otimes\beta_j^{\mathsf T}\succeq0$，因为转置保持正性，
+其非负凸组合仍正。负特征值因此排除可分离；这里只用必要性，不需要 PPT 充分性。
+
+$\sigma_{\rm iso}$ 本身在 $\Phi^+$ 方向的特征值是 $5/8$，另外三个为 $1/8$，
+故 $\mathcal P=(25+3)/64=7/16$。两个约化态均为 $I_2/2$，
+$\mathcal P_A=\mathcal P_B=1/2$。代入式 (C94.15) 给全部四项。
+此态 $x=y=1/2$，所以 $\tfrac12w(r-w)=r^2/8=8r^2/64$，
+单事件容量见证也不通过；双事件差则严格为负。
+五维实现用式 (C95.11) 即可。证毕。
+
+因此未超过容量阈值、未出现正纯度差或有限记录未越界，均不能反推可分离。
+经典可分离混合的正事件、这里的见证漏检和 C-100 的相关副本，是三种不同边界。
+
+
+**约定 C-97.3（对照概率与有限记录的连接）。** 使用同一五维测量及预先固定对照的
+[续卷 C-98–C-101](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md#98-全部成对试验上的随时有效认证)
+给条件乘积来源的全时间风险界、固定 iid 相干族的付费停止成本，以及相同单份边缘的相关配对反例。
+
+## 追加锚（本行以下为增补区）

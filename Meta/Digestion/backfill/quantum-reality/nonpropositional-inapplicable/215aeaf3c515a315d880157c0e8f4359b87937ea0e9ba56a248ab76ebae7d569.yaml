@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:215aeaf3c515a315d880157c0e8f4359b87937ea0e9ba56a248ab76ebae7d569
+  normalized_sha256: sha256:215aeaf3c515a315d880157c0e8f4359b87937ea0e9ba56a248ab76ebae7d569
+cas_ref: sha256:215aeaf3c515a315d880157c0e8f4359b87937ea0e9ba56a248ab76ebae7d569
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「415. 五射线两份记录的确定性三分支完成与精确总成功率」仅作导航；正文除标题、空行及分隔线外无其他内容，不提出命题。
+    previous_atom_id: bc1429240e7b4408b854625c9fd456b456b40c0497e2974dd9946fc607c633d8
+    next_atom_id: 3511b2032966f4d00b4d53ab7f94ef4b9cf40b1a66d5de7c861b02bb34eaa209

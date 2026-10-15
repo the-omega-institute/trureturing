@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a236cda718f597a729ef7a5fc66495aeb9d9de5c20f87dfed87bcb5297620b81
+  normalized_sha256: sha256:a236cda718f597a729ef7a5fc66495aeb9d9de5c20f87dfed87bcb5297620b81
+cas_ref: sha256:a236cda718f597a729ef7a5fc66495aeb9d9de5c20f87dfed87bcb5297620b81
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 11.12（记录归一化、压缩与反馈取值）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: e038b3e7a8865570395bcca8d724f194400ddd439c995476bb692aa72cf2cda4
+    next_atom_id: 5f11bdd0fa84c30908c19b83abe89d2fff332163ad8db8d68c2d955335979d63

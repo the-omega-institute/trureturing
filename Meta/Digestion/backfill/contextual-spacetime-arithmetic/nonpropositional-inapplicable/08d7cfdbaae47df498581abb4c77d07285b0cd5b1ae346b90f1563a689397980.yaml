@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08d7cfdbaae47df498581abb4c77d07285b0cd5b1ae346b90f1563a689397980
+  normalized_sha256: sha256:08d7cfdbaae47df498581abb4c77d07285b0cd5b1ae346b90f1563a689397980
+cas_ref: sha256:08d7cfdbaae47df498581abb4c77d07285b0cd5b1ae346b90f1563a689397980
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只构造前述有限单孔族的共同过去碰撞见证。
+    previous_atom_id: 6e4c17be26ac3fbd720d57868569897d4465b47e02b5f660b3a71757df9a9378
+    next_atom_id: 1de5750ab858184c256b174185a03e911b949664a34379793740158e403751d1

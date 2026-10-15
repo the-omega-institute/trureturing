@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0aeababad82cd03edbb072fc8c2e730865437c727aeef875a2031a4c792e9147
+  normalized_sha256: sha256:0aeababad82cd03edbb072fc8c2e730865437c727aeef875a2031a4c792e9147
+cas_ref: sha256:0aeababad82cd03edbb072fc8c2e730865437c727aeef875a2031a4c792e9147
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 60.16（确定性最坏情形与其他定位问题的边界）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: c0f4b89aefe0ff6496282fce40b908749f96ceca0dce822a8fc6594934aee56b
+    next_atom_id: 441edb398063ee430368d31f90ca788b7b086a83d4fbacd51e93e62bc8aa2d02

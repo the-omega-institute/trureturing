@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2698e2c02adf6820142092fe7aff15774375a771bc04881770853d7cd69e15e8
+  normalized_sha256: sha256:2698e2c02adf6820142092fe7aff15774375a771bc04881770853d7cd69e15e8
+cas_ref: sha256:2698e2c02adf6820142092fe7aff15774375a771bc04881770853d7cd69e15e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 令 $\delta=2\varphi-1$，则 $\delta^2=5$。在特征 $p$ 的 二次代数中，由 Frobeni…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 817ac76e7c085aa877ed94e146d45712d11d4ccfa2e2a8f7dc3b521e4c707375
+    next_atom_id: d2663319f7dae8da3feb26f75a58780f401d37368a0ba967a41de3d1876f5c2d

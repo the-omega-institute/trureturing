@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf8fcb638e8fd57591840ffa8608d2d52e56df83b80f83463349b5713d36a2e8
+  normalized_sha256: sha256:bf8fcb638e8fd57591840ffa8608d2d52e56df83b80f83463349b5713d36a2e8
+cas_ref: sha256:bf8fcb638e8fd57591840ffa8608d2d52e56df83b80f83463349b5713d36a2e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 44.3（把不适用并入否定会丢失一种不同的未决问题）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 03816f694bfe43a41559e508d6217eae85fe7cefb3bcc83cd5db3c14bacf91c0
+    next_atom_id: 095619a7633d5efa8fdadb893a062bbabdfec9cbbd3c7a36f2c6f024ab88455a

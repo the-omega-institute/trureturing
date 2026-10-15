@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:439aad91337703a6530985891f168707461c407e267ab2a540911695d43e1ad6
+  normalized_sha256: sha256:439aad91337703a6530985891f168707461c407e267ab2a540911695d43e1ad6
+cas_ref: sha256:439aad91337703a6530985891f168707461c407e267ab2a540911695d43e1ad6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述非空区域后复合分类的整数多项式必要性。
+    previous_atom_id: 1d30385fe4ef4adc52db23098bdf721cec806756b141f3c63ebbc1e75436f9f0
+    next_atom_id: f7c8bea088f97a57b560e1922e75d24e94317d27605f7ce19f1a8abe41e7c892
