@@ -126,22 +126,6 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     `D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.history_law_conditional_expectation
     `Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.analysisSource
   checkNativeSource store
-  let context := CompiledRegistration.expressionContext (store.constants.find?)
-    (← IO.getNumHeartbeats) {}
-  let snapshot ← Contract.Discovery.discoverCompiled #[] #[owners[1]!] context
-    (fun owner => return (← store.getModule owner).constants)
-    (CompiledAxioms.collectAxiomsShared context.find closures)
-  unless snapshot.registrations.size == 1 do
-    throw <| IO.userError "source-contract:ordinary-registration-inventory"
-  let some (_, row) := snapshot.registrations[0]?
-    | throw <| IO.userError "source-contract:ordinary-registration-missing"
-  let entry := row.input.entry
-  unless entry.sourceBound && entry.theoremName ==
-      `D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.history_law_conditional_expectation &&
-      entry.realizationName ==
-      `Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.registration do
-    throw <| IO.userError "source-contract:ordinary-registration-correspondence"
-  IO.println "[PASS] ordinary registration remains separate with its original source realization; no audit status assigned"
 
 end LeanInformationAuditFibTests.AuricFib.SourceContracts
 

@@ -429,6 +429,33 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
   finally searchPathRef.set saved
 
 
+/-- Ordinary registration inventory and metadata are general audit inputs,
+independent of the owner's optional analysis Applications. -/
+unsafe def checkOrdinarySourceContract : IO Unit := do
+  let owner := `Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
+  let reader ← IO.mkRef ({} : RawArtifacts.Store)
+  try
+    RawArtifacts.loadModule owner reader
+    let store ← reader.get
+    let closures ← IO.mkRef ({} : CompiledAxioms.AxiomClosureState)
+    let context := CompiledRegistration.expressionContext (store.constants.find?)
+      (← IO.getNumHeartbeats) {}
+    let snapshot ← Contract.Discovery.discoverCompiled #[] #[owner] context
+      (fun name => return (← store.getModule name).constants)
+      (CompiledAxioms.collectAxiomsShared context.find closures)
+    unless snapshot.registrations.size == 1 do
+      throw <| IO.userError "source-contract:ordinary-registration-inventory"
+    let some (_, row) := snapshot.registrations[0]?
+      | throw <| IO.userError "source-contract:ordinary-registration-missing"
+    let entry := row.input.entry
+    unless entry.sourceBound && entry.theoremName ==
+        `D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.history_law_conditional_expectation &&
+        entry.realizationName ==
+        `Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.registration do
+      throw <| IO.userError "source-contract:ordinary-registration-correspondence"
+    IO.println "[PASS] ordinary registration remains separate with its original source realization; no audit status assigned"
+  finally RawArtifacts.release reader
+
 /-- The actual report executable must discover, assess and emit the typed input.
 Direct assessment tests cannot detect a disconnected production dispatcher. -/
 unsafe def checkProductionReport : IO Unit := do
@@ -472,6 +499,7 @@ unsafe def main : IO Unit := do
   Lean.searchPathRef.modify (fixturePath :: ·)
   LeanInformationAuditRegTests.CompiledDiscovery.checkTargetRelease
   LeanInformationAuditRegTests.CompiledDiscovery.checkTargetIndexIsolation
+  LeanInformationAuditRegTests.CompiledDiscovery.checkOrdinarySourceContract
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
   let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
   LeanInformationAuditRegTests.CompiledDiscovery.checkProgramBoundary reader
