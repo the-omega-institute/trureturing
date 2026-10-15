@@ -3838,3 +3838,704 @@ residue rate, spatial selection or computational speedup.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 56. Actual ground amplitudes on the independent harmonic length
+
+**Definition 56.1 (the unchanged families and boundary directions).**
+Keep Definitions 31.1, 38.1, 38.2 and 44.1, including the actual
+completed domains, both signs, all fixed data, raw measures and original
+periods. In this section abbreviate
+
+$$
+\begin{gathered}
+\mathcal H=H_{\sigma,\kappa},\quad W=W_{\sigma,\kappa},\quad
+\widehat{\mathcal H}=L_\kappa-gM_{U_\kappa},\quad
+h=h_{\sigma,\kappa},\quad d=d_{\sigma,\kappa},\quad
+\ell=d\sqrt h,\quad w=\alpha_\sigma\ell,\quad
+\alpha_\sigma=(\mathcal B_\sigma/\mathcal C_\sigma)^{1/4},\\
+\eta_\sigma(k,\theta,v)=\frac{u_{c_\sigma}(k)}{2\pi},\quad
+\Pi_\sigma=|\eta_\sigma\rangle\langle\eta_\sigma|,\quad
+\delta_\kappa=g\|W-U_\kappa\|_\infty=o(h),\\
+K_\kappa=H_\kappa^{\rm ht}-\xi_\kappa\ge0,\qquad
+m_h(y)=\min\{y^2,h^{-1}\},\quad |y|\le\pi/\ell.
+\end{gathered}
+\tag{56.1}
+$$
+
+Here $W_{{\rm raw},\kappa}=V_{\kappa,\tau_s}$ and
+$W_{{\rm unit},\kappa}=V_{\kappa,\tau_b}/S(\tau_b)$ are the actual
+fields. The vector $\eta_\sigma$ has norm one on the entire original base.
+Constants in the proofs may depend on the fixed original data and the
+family, but not on the sign or small magnitude of $\kappa$.
+
+**Lemma 56.2 (a full-form barrier and amplitude tails).**
+There are $c>0$, $\epsilon_0>0$ and $C<\infty$ such that the following
+statements hold for all sufficiently small nonzero parameters.
+For $f$ in the original completed form domain,
+
+$$
+\begin{aligned}
+\mathfrak q_{\mathcal H}[f]-\xi_\kappa\|f\|^2+\delta_\kappa\|f\|^2
+\ge{}&\frac12\int_{\mathbb T^3}
+             \langle f,K_\kappa f\rangle_{L^2(I)}\,d\theta\,dv\,dD\\
+ &+\|Q_\kappa f\|^2
+ +ch\int_\Omega m_h(D/\ell)|f|^2\,d\mu .
+\end{aligned}
+\tag{56.2}
+$$
+
+For any normalized actual full eigenfunction with eigenvalue
+$\xi_\kappa+hr$, where $-1\le r\le\epsilon_0/h$, one has
+
+$$
+\frac{\|J^*f\|^2}{w}\le C\sqrt{r+2}.
+\tag{56.3}
+$$
+
+For every fixed upper bound on $r$, its rescaled amplitude
+$F(q,y)=\sqrt\ell f(q,\ell y)$ satisfies the uniform tail statement
+
+$$
+\lim_{R\to\infty}\limsup_{\kappa\to0}
+ \int_{R<|y|<\pi/\ell}\|F(\cdot,y)\|_{\mathscr H_B}\,dy=0.
+\tag{56.4}
+$$
+
+These estimates concern the full eigenfunction, including its nonzero
+visible Fourier components.
+
+Proof. Fix a closed interval $J_0\Subset I$ of positive length.
+The height gap in Lemma 40.2 is at least $\gamma_*>0$, and
+$\int_{J_0}v_\kappa^2\ge\alpha_*>0$. Write a height vector as
+$zv_\kappa+R_0$, with $R_0\perp v_\kappa$. By (39.4), putting
+$p(D)=\min\{(D/d)^2,1\}$, the nonnegative height multiplier
+$V_D=g[U_\kappa(k,0)-U_\kappa(k,D)]$ is at least
+$g\eta_{J_0}p(D)1_{J_0}$. For $0<\theta\le1$ sufficiently small,
+
+$$
+\begin{aligned}
+\tfrac12\langle f,K_\kappa f\rangle+\langle f,V_Df\rangle
+&\ge\left(\frac{\gamma_*}{2}-\theta g\eta_{J_0}\right)\|R_0\|^2
+  +\frac{\theta g\eta_{J_0}\alpha_*}{2}p(D)|z|^2\\
+&\ge c\,p(D)\|f\|^2.
+\end{aligned}
+\tag{56.5}
+$$
+
+Here $|A+B|^2\ge|A|^2/2-|B|^2$ was integrated on $J_0$,
+and $p\le1$ absorbs the $R_0$ term. Applying this on height slices,
+retaining the other half of $K_\kappa$ and the entire $Q_\kappa$
+square, proves (56.2), since $p(D)=hm_h(D/\ell)$. The replacement
+of $gW$ by $gU_\kappa$ costs at most $\delta_\kappa\|f\|^2$.
+The height-slice argument is valid on the horizontal completion by
+its height derivative characterization [G, (26.13)]; it assumes no
+isotropic Sobolev domain for the full operator.
+
+Here is a weighted eigenfunction argument that supplies the missing
+amplitude integrability on the whole growing chart. Set $E=r+2\ge1$,
+choose $R_E=(8E/c)^{1/2}$ and decrease $\epsilon_0$ so that
+$R_E^2<1/(2h)$ and $R_E<\pi/\ell$ throughout the stated energy range.
+Let $M_b=\sup_{\kappa,k}b_\kappa(k)<\infty$ and choose $\eta>0$
+with $M_b^2\eta^2\le c/4$. On the actual periodic chart define
+
+$$
+\Phi(y)=\eta\int_{R_E}^{|y|}\sqrt{m_h(s)}\,ds
+ \quad(|y|>R_E),\qquad \Phi(y)=0\quad(|y|\le R_E).
+\tag{56.6}
+$$
+
+Its values match at the seam. Use $\min\{\Phi,L\}$ first, so every
+multiplier is bounded. The product rule and the eigenvalue equation give
+exactly the usual weighted energy identity
+
+$$
+\mathfrak q_{\mathcal H}[e^\Phi f]-(\xi_\kappa+hr)\|e^\Phi f\|^2
+ =h\int b_\kappa(k)^2|\Phi'(y)|^2e^{2\Phi(y)}|F(q,y)|^2\,d\nu_B\,dy.
+\tag{56.7}
+$$
+
+Indeed $Q_\kappa\Phi=\kappa b_\kappa\ell^{-1}\Phi'$ and
+$a^2/\ell^2=h$; the weight has no height derivative. This is the
+Agmon energy-identity method, applied here directly to the native
+horizontal form. Lipschitz periodic multiplication preserves its
+completed domain: approximate the weight by smooth periodic weights,
+use the horizontal product rule, and then close the form. The height
+Dirichlet traces stay zero. Thus (56.7) does not introduce a new domain
+or assume an exponential-decay theorem for a different operator.
+
+Using (56.2) in (56.7), dividing by $h$, and dropping the nonnegative
+height and horizontal terms yields
+
+$$
+\int\left[cm_h-r-\delta_\kappa/h-M_b^2|\Phi'|^2\right]
+          e^{2\Phi}|F|^2\,d\nu_B\,dy\le0.
+\tag{56.8}
+$$
+
+For small parameters $\delta_\kappa/h\le1$. Inside $R_E$ the bracket
+is at least $-E$; outside it is at least $E$, since
+$m_h\ge8E/c$ and $M_b^2|\Phi'|^2\le cm_h/4$. The same inequalities
+hold for the truncated weight. Normalization followed by monotone
+convergence as $L\to\infty$ therefore proves
+
+$$
+\int e^{2\Phi}\|F(\cdot,y)\|_{\mathscr H_B}^2dy\le2.
+\tag{56.9}
+$$
+
+For $|y|>R_E$, $\sqrt{m_h(y)}\ge R_E$, so
+$\Phi(y)\ge\eta R_E(|y|-R_E)$. Consequently
+
+$$
+\int e^{-2\Phi}dy\le2R_E+\frac1{\eta R_E}\le C\sqrt E,
+\qquad
+\left(\int\|F(\cdot,y)\|_{\mathscr H_B}dy\right)^2\le C\sqrt E.
+\tag{56.10}
+$$
+
+Since $J^*f=\sqrt{\ell/(2\pi)}\int F(\cdot,y)dy$ and
+$w=\alpha_\sigma\ell$, this proves (56.3). For bounded $E$, the
+same Cauchy--Schwarz estimate on $|y|>R$, using (56.6) and then
+$h\to0$, makes the right tail tend to zero. This proves (56.4).
+In particular no global untruncated second moment has been inferred
+from (40.7)--(40.9). $\square$
+
+**Theorem 56.3 (sharp residues of actual full low eigenstates).**
+Let $P_{\sigma,\kappa,N}$ be the actual full spectral projection of
+the $N$th eigenvalue, numbered from $N=1$. For each fixed $N$, through
+both signs, in operator norm on the entire base,
+
+$$
+\frac{J^*P_{\sigma,\kappa,N}J}{w_{\sigma,\kappa}}
+ \longrightarrow b_{N-1}\Pi_\sigma,
+\qquad
+b_{2m}=\frac1{\sqrt\pi}\frac{(2m)!}{4^m(m!)^2},\quad b_{2m+1}=0.
+\tag{56.11}
+$$
+
+In particular the actual full ground, with no phase convention imposed
+on its projection, satisfies
+
+$$
+\frac{J^*P_{\sigma,\kappa,1}J}{w_{\sigma,\kappa}}
+ \longrightarrow\frac{\Pi_\sigma}{\sqrt\pi},\qquad
+\frac{\operatorname{tr}(J^*P_{\sigma,\kappa,1}J)}{w_{\sigma,\kappa}}
+ \longrightarrow\frac1{\sqrt\pi},\qquad
+\frac{\|J^*P_{\sigma,\kappa,1}J\|}{w_{\sigma,\kappa}}
+ \longrightarrow\frac1{\sqrt\pi}.
+\tag{56.12}
+$$
+
+Proof. The compactness and min-max proof of Theorem 40.3 gives the
+rescaled eigenfunction limit at every fixed index, not just its ground.
+For completeness, take the first $N$ orthonormal block eigenfunctions.
+Lemma 40.2 gives simultaneous strong limits. Inductively the $N$th
+limit is orthogonal to the first $N-1$ oscillator eigenfunctions, while
+its limiting Rayleigh quotient is at most $(2N-1)\omega_\sigma$.
+The simple oscillator spectrum forces it to be the $N$th normalized
+Hermite function up to phase. This starts with (40.11).
+
+This conclusion transfers to the actual full eigenfunction without a
+boundary-normalized perturbation estimate. The first $N$ averaged
+full eigenvalues are the zero-visible block eigenvalues by (41.6),
+and their neighboring gaps are bounded below by a positive constant
+times $h$. If $f_N$ is an actual eigenfunction, then
+$\|(\widehat{\mathcal H}-\Lambda_{\sigma,N})f_N\|\le\delta_\kappa$ on the
+common operator domain. Expansion in the averaged eigenbasis bounds
+its component outside the corresponding rank-one eigenspace by
+$C_N\delta_\kappa/h=o(1)$. Equation (41.1) also supplies simplicity
+of the actual fixed-index eigenvalue. After constant phases and the
+fixed change from $\ell$ to $w$, this gives
+
+$$
+\sqrt w f_N(q,wx)\longrightarrow\eta_\sigma(q)\psi_{N-1}(x)
+ \quad\hbox{strongly in }L^2(d\nu_B\,dx),\qquad
+\psi_n(x)=\frac{H_n(x)e^{-x^2/2}}{\pi^{1/4}\sqrt{2^n n!}}.
+\tag{56.13}
+$$
+
+Zero extension is used only for this $L^2$ comparison. Lemma 56.2,
+applied to the actual eigenfunction itself, gives uniform amplitude
+tails for each fixed index. On bounded $x$ intervals, integration is
+a bounded $L^2$ functional; outside them use (56.4). Therefore
+
+$$
+\frac{J^*f_N}{\sqrt w}
+ \longrightarrow\frac{\eta_\sigma}{\sqrt{2\pi}}
+                         \int_{\mathbb R}\psi_{N-1}(x)dx
+ \quad\hbox{in }\mathscr H_B.
+\tag{56.14}
+$$
+
+The classical oscillator normalization is that of Teschl, §8.3,
+(8.35)--(8.41), already matched in Theorem 40.3. Its Gaussian
+integration, or the generating function
+$\sum H_n(x)t^n/n!=e^{2xt-t^2}$ integrated against $e^{-x^2/2}$,
+gives
+
+$$
+\frac1{2\pi}\left|\int\psi_{2m}\right|^2=b_{2m},\qquad
+\int\psi_{2m+1}=0.
+\tag{56.15}
+$$
+
+Taking outer products in (56.14) proves (56.11). For the ground,
+$w^{-1/2}J^*f_1\to\pi^{-1/4}\eta_\sigma$ after phase choice.
+The trace and norm of its rank-one outer product both equal
+$\|J^*f_1\|^2$, proving all of (56.12). $\square$
+
+## 57. Complete slow-time responses with the exact free compensation
+
+**Lemma 57.1 (uniform low-energy counting and boundary spectral tails).**
+Decrease $\epsilon_0$ in Lemma 56.2 if necessary. With
+$r_{\kappa,N}=(\Lambda_{\sigma,N}-\xi_\kappa)/h$, one has
+
+$$
+\#\{N:r_{\kappa,N}\le E\}\le C(E+2)
+ \quad(-1\le E\le\epsilon_0/h).
+\tag{57.1}
+$$
+
+If $0<z_0\le z\le z_1<\infty$, the part of the normalized compressed
+spectral sum with $N\ge N_0$ and
+$\Lambda_{\sigma,N}-\xi_\kappa\le\epsilon_0/2$ is bounded by
+
+$$
+\left\|\frac1w\sum_{\substack{N\ge N_0\\
+                  \Lambda_{\sigma,N}-\xi_\kappa\le\epsilon_0/2}}
+ a_{\kappa,N}e^{-zr_{\kappa,N}}J^*P_{\sigma,\kappa,N}J\right\|
+ \le C_{z_0,z_1}e^{-c_{z_0}N_0},\qquad 0\le a_{\kappa,N}\le1.
+\tag{57.2}
+$$
+
+In (57.2) and subsequent spectral sums, $P_{\sigma,\kappa,N}$
+means the rank-one eigenvector projection in an orthonormal full
+eigenbasis, with each basis vector counted once. At every fixed index
+these are the full rank-one spectral projections of Theorem 56.3 for
+small parameters; at a multiple eigenvalue their sum is its full
+spectral projection.
+
+Proof. First use the averaged operator on its exact Fourier sum.
+By (41.6), every nonzero visible pair lies above
+$\xi_\kappa+2\epsilon_0$ for small parameters. In its zero-visible
+block, (56.5) and $b_\kappa\ge m_b>0$ give the comparison, in the
+$y$ chart,
+
+$$
+\frac{\widehat{\mathcal H}-\xi_\kappa}{h}
+ \ge\frac{K_\kappa}{2h}\otimes1
+       +1\otimes\left(-m_b^2\partial_y^2+cm_h(y)\right).
+\tag{57.3}
+$$
+
+The scalar hidden operator has the actual periodic ends. This
+comparison retains the height gap; below $\epsilon_0/h+1$, only the
+height ground can occur on its right side if
+$\epsilon_0<\gamma_*/4$ and $h$ is small. To count the hidden
+operator below $E\ge0$, split its circle at
+$|y|=R=[2(E+1)/c]^{1/2}$ and impose Neumann conditions at the two
+cuts. Decrease $\epsilon_0$ so that $R^2<1/h$ and $R<\pi/\ell$
+for $E\le\epsilon_0/h+1$. On the outer interval
+$cm_h\ge2(E+1)$, so it contributes no such eigenvalue. On the
+inner interval, dropping the nonnegative potential gives the
+Neumann Laplacian on length $2R$, with at most
+$1+2R\sqrt E/(\pi m_b)\le C(E+1)$ eigenvalues below $E$.
+Neumann bracketing and min-max prove the count for the entire
+averaged operator in this range. All frequencies, including arbitrary
+compensating hidden frequencies in nonzero visible pairs, were
+excluded by (41.6), not by a finite Fourier truncation.
+
+The bounded full-form comparison
+$|\Lambda_{\sigma,N}-\widehat\Lambda_{\kappa,N}|\le\delta_\kappa$
+holds at every ordered index. Since $\delta_\kappa/h=o(1)$, the
+same count, with enlarged constants and the indicated small energy
+margin, gives (57.1) for the actual operator. Thus in the range of
+(57.2), $r_{\kappa,N}\ge N/C-2$. Lemma 56.2 bounds the norm of
+each compressed eigenvector outer product divided by $w$ by
+$C\sqrt{r_{\kappa,N}+2}$. Since $r_{\kappa,N}\ge-1$ and
+$\sqrt{r+2}e^{-z r}\le C_{z_0}e^{-z_0r/2}$ for $r\ge0$,
+summing the resulting geometric upper bound, with the finitely many
+negative $r$ values bounded on $[z_0,z_1]$, proves (57.2).
+This is a uniform count and amplitude estimate below a fixed physical
+energy cutoff, not a growing-index conclusion drawn from (41.1).
+$\square$
+
+**Lemma 57.2 (the remaining spectrum after exact free subtraction).**
+Put $M_\kappa=gM_W$, $\mathsf A=\mathcal H-\xi_\kappa$ and
+$\mathsf B=L_\kappa-\xi_\kappa$. The native bounds imply
+
+$$
+\|M_\kappa\|\le C,\qquad
+\sup_q\int_{\mathbb T}gW(q,D)dD\le Cd,
+\qquad d=r_s\ \hbox{or}\ 1.
+\tag{57.4}
+$$
+
+Let $0\le\chi\le1$ be smooth, zero on
+$(-\infty,\epsilon_0/4]$ and one on $[\epsilon_0/2,\infty)$.
+Choose $\epsilon_0$ also smaller than one quarter of
+$\lambda-e(c_\sigma)>0$. For $t\ge1$,
+
+$$
+\left\|J^*\left[e^{-t\mathsf A}\chi(\mathsf A)-e^{-t\mathsf B}\right]J\right\|
+ \le Cd(1+t)^4e^{-\epsilon_0t/4}.
+\tag{57.5}
+$$
+
+The estimate uses the actual nonaveraged multiplier and entire native
+free evolution.
+
+Proof. The first bound in (57.4) is (32.9). The raw integral bound
+is (45.2); for UNIT it follows from uniform boundedness and the
+original circle length $2\pi$. The exact free marginal intertwining
+is $e^{-i\varpi\mathsf B}J=Je^{-i\varpi(\overline L_\kappa-\xi_\kappa)}$
+for the real Fourier variable $\varpi$, since the entire
+$D$-independent free subspace reduces
+$L_\kappa$ by [G, (23.3)--(23.5), (26.13)]. Hence, for every real Fourier variable $\varpi$,
+
+$$
+\|M_\kappa^{1/2}e^{-i\varpi\mathsf B}J\|^2
+ \le\frac1{2\pi}\sup_q\int gW(q,D)dD\le Cd.
+\tag{57.6}
+$$
+
+Twice applying bounded-perturbation Duhamel, with a free evolution
+at both endpoints, gives for $\varpi\ge0$
+
+$$
+\begin{aligned}
+e^{-i\varpi\mathsf A}-e^{-i\varpi\mathsf B}
+={}&i\int_0^\varpi e^{-i(\varpi-u)\mathsf B}M_\kappa e^{-iu\mathsf B}du\\
+ &-\int_{0\le v\le u\le\varpi}
+ e^{-i(\varpi-u)\mathsf B}M_\kappa e^{-i(u-v)\mathsf A}M_\kappa e^{-iv\mathsf B}\,dv\,du.
+\end{aligned}
+\tag{57.7}
+$$
+
+Both middle evolutions are unitary. Using (57.6) at the two ends,
+and $\|M_\kappa^{1/2}e^{-i(u-v)\mathsf A}M_\kappa^{1/2}\|\le C$,
+therefore gives
+
+$$
+\|J^*(e^{-i\varpi\mathsf A}-e^{-i\varpi\mathsf B})J\|\le Cd(|\varpi|+\varpi^2).
+\tag{57.8}
+$$
+
+Negative $\varpi$ follow by adjoints. The Duhamel integrals are
+strong integrals; their norm bounds follow by testing between arbitrary
+unit vectors. Bounded perturbation preserves the selfadjoint domain.
+There is no heat-kernel or resolvent approximation in this step.
+
+For $f_t(x)=e^{-tx}\chi(x)$, Fourier inversion and the spectral
+theorem now bound the compressed difference $f_t(\mathsf A)-f_t(\mathsf B)$ by
+
+$$
+Cd\int (|\varpi|+\varpi^2)|\widehat f_t(\varpi)|d\varpi
+ \le Cd\|f_t\|_{H^4(\mathbb R)}
+ \le Cd(1+t)^4e^{-\epsilon_0t/4}.
+\tag{57.9}
+$$
+
+Scalar Fourier inversion in each matrix element suffices; (57.8)
+bounds its integral absolutely. The middle inequality is
+Cauchy--Schwarz with $(1+\varpi^2)^{-2}$,
+followed by Plancherel. The last follows by differentiating $f_t$
+up to four times: every term is supported on $x\ge\epsilon_0/4$
+and is an exponentially decreasing function there with bounded
+cutoff derivatives. Fourier-normalization constants are included
+in $C$. Finally $\inf\sigma(L_\kappa)=\lambda$ exactly, while
+$\xi_\kappa\to e(c_\sigma)<\lambda$. Thus $\chi(\mathsf B)=1$ for small
+parameters. This proves (57.5). It is the factor $d$ in (57.5),
+rather than an unscaled whole-semigroup bound, that is essential
+in RAW. $\square$
+
+**Theorem 57.3 (the two complete native slow-time limits).**
+For both signs and every fixed original parameter, uniformly on each
+$0<z_0\le z\le z_1<\infty$, in operator norm on the entire original
+base,
+
+$$
+\begin{aligned}
+\frac{e^{z\xi_\kappa/h_{\rm unit,\kappa}}}{w_{\rm unit,\kappa}}
+ C_{{\rm unit},\kappa}(z/h_{\rm unit,\kappa})
+ &\longrightarrow q_{\rm unit}(z)\Pi_{\rm unit},\\
+\frac{e^{z\xi_\kappa/h_{\rm raw,\kappa}}}{w_{\rm raw,\kappa}}
+ [C_{{\rm raw},\kappa}(z/h_{\rm raw,\kappa})
+                  -F_\kappa(z/h_{\rm raw,\kappa})]
+ &\longrightarrow q_{\rm raw}(z)\Pi_{\rm raw},\\
+q_\sigma(z)&=\frac1{\sqrt{2\pi\sinh(2\omega_\sigma z)}},\qquad
+F_\kappa(t)=J^*e^{-tL_\kappa}J=e^{-t\overline L_\kappa}.
+\end{aligned}
+\tag{57.10}
+$$
+
+In the first line $\xi_\kappa$ is its UNIT height center; in the
+second it is its RAW height center, always exactly Definition 38.2.
+
+Proof. Use the same $\chi$ as in Lemma 57.2. The exact identity
+
+$$
+\begin{aligned}
+e^{t\xi_\kappa}[C_{\sigma,\kappa}(t)-F_\kappa(t)]
+={}&\sum_N e^{-t(\Lambda_{\sigma,N}-\xi_\kappa)}
+ [1-\chi(\Lambda_{\sigma,N}-\xi_\kappa)]J^*P_{\sigma,\kappa,N}J\\
+ &+J^*[f_t(\mathsf A)-f_t(\mathsf B)]J
+\end{aligned}
+\tag{57.11}
+$$
+
+follows by spectral calculus; its first sum is finite at each
+nonzero parameter. This decomposition cancels the entire free
+high-energy contribution before taking a boundary normalization.
+With $t=z/h$, (57.5) divided by $w=\alpha_\sigma d\sqrt h$
+is at most
+
+$$
+C h^{-1/2}(1+z_1/h)^4e^{-\epsilon_0z_0/(4h)}\longrightarrow0.
+\tag{57.12}
+$$
+
+For any fixed initial number of terms in (57.11), (41.1) and
+Theorem 56.3 give the correctly propagated limit
+
+$$
+\frac1w e^{-z(\Lambda_{\sigma,N}-\xi_\kappa)/h}
+                 J^*P_{\sigma,\kappa,N}J
+ \longrightarrow b_{N-1}e^{-(2N-1)\omega_\sigma z}\Pi_\sigma.
+\tag{57.13}
+$$
+
+This convergence is uniform on the stated compact $z$ interval.
+The cutoff equals one in the low factor $1-\chi$ at these fixed
+indices for small parameters. Lemma 57.1 controls the entire
+remaining low-energy sum uniformly, and (57.12) already controlled
+all the other levels and modes of the actual full dynamics.
+Taking the index cutoff to infinity gives
+
+$$
+\begin{aligned}
+\sum_{m\ge0}b_{2m}e^{-(4m+1)\omega_\sigma z}
+ &=\frac{e^{-\omega_\sigma z}}{\sqrt\pi}
+          (1-e^{-4\omega_\sigma z})^{-1/2}\\
+ &=q_\sigma(z).
+\end{aligned}
+\tag{57.14}
+$$
+
+This proves the compensated limit for both families. For UNIT,
+$w=\alpha_{\rm unit}\sqrt h$ and $\|F_\kappa(t)\|=e^{-\lambda t}$,
+so
+
+$$
+\sup_{z_0\le z\le z_1}
+ \frac{e^{z\xi_\kappa/h}}w\|F_\kappa(z/h)\|
+ \le\frac{1}{\alpha_{\rm unit}\sqrt h}
+       e^{-(\lambda-\xi_\kappa)z_0/h}\longrightarrow0.
+\tag{57.15}
+$$
+
+It can therefore be added back in UNIT, proving the first line of
+(57.10). It cannot be added back in RAW, as the next result shows.
+The averaging error $o(h)$ has only been used in a fixed-index
+$L^2$ comparison and uniform min-max counting. No $o(h)$
+whole-semigroup error has been divided by $w$. $\square$
+
+## 58. The free background, the two centers and predictive distinctions
+
+**Theorem 58.1 (uncompensated RAW and the original free comparison).**
+Put $h=h_{\rm raw,\kappa}$, $w=w_{\rm raw,\kappa}$,
+$t=z/h$, and use the RAW $\xi_\kappa$. Define only from independent
+native data
+
+$$
+B_\kappa(z)=\frac1w e^{-(\lambda-\xi_\kappa)z/h},\qquad
+h_*(k,\theta,v)=\frac{\phi(k)}{2\pi},\qquad
+P_*=|h_*\rangle\langle h_*|.
+\tag{58.1}
+$$
+
+Uniformly on every compact positive $z$ interval,
+
+$$
+\begin{gathered}
+B_\kappa(z)\longrightarrow+\infty,\qquad
+\frac{w^{-1}e^{z\xi_\kappa/h}C_{{\rm raw},\kappa}(z/h)}
+                  {B_\kappa(z)}\longrightarrow P_*,\\
+\left\|w^{-1}e^{z\xi_\kappa/h}C_{{\rm raw},\kappa}(z/h)\right\|
+ \sim \frac1w e^{-(\lambda-\xi_\kappa)z/h},\\
+\frac{e^{z\xi_\kappa/h}}w
+       \|F_\kappa(z/h)-S_{z/h}\|\longrightarrow0.
+\end{gathered}
+\tag{58.2}
+$$
+
+The operator convergence is in norm on the entire base, and the norm
+equivalent has relative error tending to zero uniformly. Consequently
+$S_t$ is interchangeable with $F_\kappa(t)$ in the compensated RAW
+limit, although the two free terms themselves diverge at that
+normalization. The separately normalized UNIT free response tends
+to zero by (57.15).
+
+Proof. The original free $D$-independent subspace reduces $L_\kappa$,
+so its exact compression is $e^{-t\overline L_\kappa}$. In the
+zero visible block it is $-\varepsilon^2\partial_k^2$, with the
+exact ground $(\lambda,h_*)$ for every $\kappa$. Every other
+visible block adds the nonnegative square $(nA_\kappa+mB_\kappa)^2$.
+Their bottoms have a uniform positive gap above $\lambda$: use
+the large-frequency bound [G, (26.6)] outside a fixed lattice ball,
+and inside that ball use coefficient continuity and the strictly
+positive nonzero-visible gaps at $\kappa=0$ from Theorem 36.2.
+The next zero-visible height eigenvalue is $4\lambda$. Thus for
+some $\gamma_f>0$, all $t\ge0$ and small parameters,
+
+$$
+\|F_\kappa(t)\|=e^{-\lambda t},\qquad
+\|e^{\lambda t}F_\kappa(t)-P_*\|\le e^{-\gamma_ft}.
+\tag{58.3}
+$$
+
+There is no unknown free-bottom correction or boundary-overlap
+coefficient in this formula: the isometry $J$ fixes both exactly.
+
+In RAW, $w=\alpha_{\rm raw}a\tau_s^{1/4}$,
+$h=\tau_s^{-1/2}$ and $L_a=\log(1/a)$. Hence exactly
+
+$$
+\log B_\kappa(z)=L_a-\tfrac14\log\tau_s-\log\alpha_{\rm raw}
+                    -(\lambda-\xi_\kappa)z\sqrt{\tau_s}.
+\tag{58.4}
+$$
+
+Since $\tau_s\sim L_a/\lambda$ and $\xi_\kappa$ is bounded,
+$\log B_\kappa(z)/L_a\to1$ uniformly on compact positive $z$
+intervals. The compensated remainder in (57.10) is bounded after
+its stated normalization. Dividing it by $B_\kappa(z)$ makes it
+vanish uniformly; (58.3) proves the first three assertions of
+(58.2). This concerns exactly the object with $e^{z\xi_\kappa/h}/w$,
+regardless of the sign or a zero value of $e(c_{\rm raw})$.
+
+For the last assertion, the exact $(n,m)$ blocks of
+$\overline L_\kappa$ and $\mathcal K_0$ have the same scalar
+Dirichlet domain and potentials differing by at most
+$Ca(n^2+m^2)$, as in (46.1)--(46.2). Both scalar bottoms are at
+least $\lambda+c\Psi(\sqrt{n^2+m^2})$ uniformly, with $\Psi$
+from [G, (26.6)]. Duhamel on these scalar blocks, followed by the
+supremum over the entire integer lattice, therefore gives for $t\ge1$
+
+$$
+\|F_\kappa(t)-S_t\|
+ \le Ca t e^{-\lambda t}
+       \sup_{R\ge1}R^2e^{-ct\Psi(R)}
+ \le Ca t e^{-\lambda t}.
+\tag{58.5}
+$$
+
+The zero visible block agrees exactly and contributes zero.
+The last supremum is bounded because $\Psi$ has the growth
+specified in [G, (26.6)]. In the normalization at issue,
+$a/w=\alpha_{\rm raw}^{-1}\sqrt h$, so (58.5) implies
+
+$$
+\sup_{z_0\le z\le z_1}
+ \frac{e^{z\xi_\kappa/h}}w\|F_\kappa(z/h)-S_{z/h}\|
+ \le C h^{-1/2}e^{-(\lambda-\xi_\kappa)z_0/h}\longrightarrow0.
+\tag{58.6}
+$$
+
+Here $\lambda-\xi_\kappa\to\lambda-e(c_{\rm raw})>0$.
+This is a comparison of the two exact free responses at the requested
+scale, not an inference from their individual sizes. $\square$
+
+**Corollary 58.2 (actual-ground recentering in both conventions).**
+Let $\Lambda_{\sigma,1}$ be the actual full ground energy. Write
+$R_{{\rm unit},\kappa}(t)=C_{{\rm unit},\kappa}(t)$ and
+$R_{{\rm raw},\kappa}(t)=C_{{\rm raw},\kappa}(t)-F_\kappa(t)$.
+On the same compact positive $z$ intervals and whole-base norm scope,
+
+$$
+\frac{e^{z\Lambda_{\sigma,1}/h_{\sigma,\kappa}}}
+                    {w_{\sigma,\kappa}}
+ R_{\sigma,\kappa}(z/h_{\sigma,\kappa})
+ \longrightarrow e^{\omega_\sigma z}q_\sigma(z)\Pi_\sigma.
+\tag{58.7}
+$$
+
+For RAW this also holds with $S_t$ replacing $F_\kappa(t)$.
+The uncompensated RAW response under actual-ground centering still
+diverges; its norm is equivalent to
+$w^{-1}e^{-(\lambda-\Lambda_{{\rm raw},1})z/h}$.
+After taking the parameter limit, the explicit scalar functions obey
+
+$$
+q_\sigma(z)\sim(4\pi\omega_\sigma z)^{-1/2}\quad(z\downarrow0),
+\qquad
+e^{\omega_\sigma z}q_\sigma(z)\longrightarrow\pi^{-1/2}
+                                      \quad(z\to\infty).
+\tag{58.8}
+$$
+
+Proof. Theorem 41.1 gives
+$(\Lambda_{\sigma,1}-\xi_\kappa)/h\to\omega_\sigma$.
+Its exponential converges uniformly on every such compact interval;
+multiplication of (57.10) proves (58.7), and of (58.2), (58.6)
+proves the RAW comparisons. The elementary asymptotics of $\sinh$
+give (58.8). All primary limits retain the exact $\xi_\kappa$.
+No rate for $\xi_\kappa-e(c_\sigma)$, replacement by its limit in
+an exponential, joint $z$ endpoint uniformity, or extra parameter
+uniformity is used or asserted. $\square$
+
+**Proposition 58.3 (probability, amplitude, time and dimension).**
+For both native critical families, actual ground probability has the
+normalized fluctuation law (42.2), while its amplitude-boundary spectral
+weight is $w/\sqrt\pi+o(w)$ in the direction $\Pi_\sigma$.
+The slow compensated response resolves all limiting even oscillator
+levels with the weights (56.11), rather than just this ground pole.
+UNIT loses the free background on that clock; RAW retains a background
+larger than the compensated response by the factor $B_\kappa(z)$.
+These are distinct predictive requirements and do not select a physical
+spatial dimension or supply a preparation or acquisition operation.
+
+Proof. The probability assertion is Theorem 42.1 and the amplitude
+assertion is (56.12). Integration of an amplitude is not integration
+of its square; Lemma 56.2 is what permits that passage on the growing
+chart. The complete spectral sum (57.14) has a strictly positive term
+for every even level, with limiting odd-level weights zero. In fact
+$h_{\rm raw}=\tau_s^{-1/2}$ and $h_{\rm unit}=a$ resolve the actual
+spacings (41.2), whereas $w_{\rm raw}$ and $w_{\rm unit}$ govern
+boundary visibility. The native RAW propagation time $z\sqrt{\tau_s}$
+is shorter than its source cutoff $\tau_s$; (58.4) quantifies the
+surviving free background. UNIT uses propagation time $z/a$ and source
+cutoff $b/a^2$; its free-background comparison is (57.15).
+
+The phase periods, the two height deaths, the source cutoff clock and
+the later propagation clock have all remained those of Definition
+31.1 and [G, Definition 25.1]. The limiting base direction has the
+original two visible coordinates and height; neither its coordinate
+count, a hidden oscillator index nor covariance rank identifies three
+Euclidean spatial axes. The observation-quotient and free-diffusion
+classification boundaries in §§43,49,55 remain unchanged. There is no
+new physical preparation, reset, actuator, finite-shot acquisition,
+bit count, CPU estimate or infinite-volume law in these conclusions.
+
+The classical inputs are selfadjoint spectral calculus (Teschl,
+Chapters 2--4), form min-max (Theorem 4.10), bounded-form perturbation
+as a relative-bound-zero case of KLMN (Theorem 6.24), and normalized
+Hermite functions (§8.3, (8.35)--(8.41)), in the cited
+[author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The needed bounded-operator Duhamel identity is written explicitly in
+(57.7), and the classical weighted eigenfunction identity in (56.7).
+Simon's [1983 paper, §1, (A1)--(A4), and §§2--3](https://www.numdam.org/item/AIHPA_1983__38_3_295_0.pdf)
+provides the mature harmonic-localization comparison discussed in
+43.3: fixed smooth scalar potentials with nondegenerate minima do
+not by themselves cover this moving RAW field or horizontal full
+operator. Its fixed-index result is not used as an amplitude-tail
+or entire-response supplier. The native additions proved here are
+(56.2)--(56.4), the uniform count (57.1), and the exact compensated
+high-energy bound (57.5), which together close precisely those
+correspondence gaps. The other native suppliers cited in 43.3 retain
+their stated source, quotient and fixed-pole qualifications; none
+is silently substituted for a critical amplitude theorem. These are
+ordinary mathematical proofs, with no Lean-verification, physical
+realization or worldwide-priority claim. $\square$
+
+## 追加锚（本行以下为增补区）
