@@ -70,7 +70,7 @@ private theorem path_bounds (r : Address) :
     cases b <;> simp only [pathCost, pathThreshold, List.length_cons, Bool.false_eq_true,
       ↓reduceIte, max_le_iff] <;> omega
 
-private theorem atomic_separator (r : Address) :
+theorem atomic_separator (r : Address) :
     readout r (substitution^[pathCost r + 1] (.of true)) = .beta ∧
     readout r (substitution^[pathCost r + 1] (.of false)) = .branch := by
   have nav := atomic_navigation r (pathCost r + 1) (.of false)
