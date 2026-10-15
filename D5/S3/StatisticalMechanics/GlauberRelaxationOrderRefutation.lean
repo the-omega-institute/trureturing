@@ -199,4 +199,89 @@ private theorem gibbs_log (q : ℝ) (hq : 0 < q) :
   funext i
   fin_cases i <;> simp [Fin.sum_univ_succ] <;> field_simp <;> ring
 
+private theorem glauber_log (q : ℝ) (hq : 0 < q) :
+    glauber 2 adj4 E4 (Real.log q) = Pq q := by
+  have hq0 : q ≠ 0 := ne_of_gt hq
+  have hq1 : q + 1 ≠ 0 := by positivity
+  have hq2 : q^2 + 1 ≠ 0 := by positivity
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [glauber, edgeWeight, gibbs_log q hq, adj4, Pq, Fin.sum_univ_succ] <;>
+    field_simp <;> ring
+
+private theorem Pq_stochastic (q : ℝ) (hq : 0 < q) :
+    (∀ i j, 0 ≤ Pq q i j) ∧ (∀ j, (∑ i, Pq q i j) = 1) := by
+  have hq1 : q + 1 ≠ 0 := by positivity
+  have hq2 : q^2 + 1 ≠ 0 := by positivity
+  constructor
+  · intro i j
+    fin_cases i <;> fin_cases j <;> norm_num [Pq] <;> positivity
+  · intro j
+    fin_cases j <;> norm_num [Pq, Fin.sum_univ_succ] <;> field_simp <;> ring
+
+private theorem probability_mulVec {N : ℕ} {P : Matrix (Fin N) (Fin N) ℝ}
+    {p : Fin N → ℝ} (hP : ∀ i j, 0 ≤ P i j)
+    (hcol : ∀ j, (∑ i, P i j) = 1) (hp : probability p) :
+    probability (P.mulVec p) := by
+  have hM : P ∈ Matrix.colStochastic ℝ (Fin N) :=
+    Matrix.mem_colStochastic_iff_sum.mpr ⟨hP, hcol⟩
+  exact ⟨Matrix.nonneg_mulVec_of_mem_colStochastic hM hp.1,
+    (Matrix.sum_mulVec_of_mem_colStochastic hM).trans hp.2⟩
+
+private theorem run_zero : run 0 = ![4 / 9, 2 / 9, 2 / 9, 1 / 9] := by
+  change gibbs E4 (Real.log 2) = _
+  rw [gibbs_log 2 (by norm_num)]
+  norm_num
+
+private theorem run_isSA : isSARun 2 adj4 E4 beta4 run := by
+  refine ⟨?_, rfl, fun _ => rfl⟩
+  intro k
+  induction k with
+  | zero =>
+    rw [run_zero]
+    constructor
+    · intro i
+      fin_cases i <;> norm_num
+    · norm_num [Fin.sum_univ_succ]
+  | succ k ih =>
+    change probability ((glauber 2 adj4 E4 (Real.log (q4 (k + 1)))).mulVec (run k))
+    have hq : 0 < q4 (k + 1) := lt_trans zero_lt_one (q4_spec.1 (k + 1))
+    rw [glauber_log _ hq]
+    exact probability_mulVec (Pq_stochastic _ hq).1 (Pq_stochastic _ hq).2 ih
+
+private theorem run_one : run 1 = ![4064 / 6765, 4 / 33, 3 / 11, 12 / 2255] := by
+  change (glauber 2 adj4 E4 (beta4 1)).mulVec (run 0) = _
+  have hb : beta4 1 = Real.log 32 := by norm_num [beta4, q4]
+  rw [hb, glauber_log 32 (by norm_num), run_zero]
+  ext i
+  fin_cases i <;> norm_num [Pq, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+
+private theorem energy_data :
+    meanEnergy E4 (run 1) = 2737 / 6765 ∧
+    meanEnergy E4 (run 2) = 17612741 / 50142180 ∧
+    meanEnergy E4 (gibbs E4 (beta4 1)) = 2 / 33 ∧
+    meanEnergy E4 (gibbs E4 (beta4 2)) = 1 / 17 := by
+  have hrun2 : run 2 = (Pq 33).mulVec (run 1) := by
+    change (glauber 2 adj4 E4 (beta4 2)).mulVec (run 1) = _
+    have hb : beta4 2 = Real.log 33 := by norm_num [beta4, q4]
+    rw [hb, glauber_log 33 (by norm_num)]
+  have hb1 : beta4 1 = Real.log 32 := by norm_num [beta4, q4]
+  have hb2 : beta4 2 = Real.log 33 := by norm_num [beta4, q4]
+  rw [hrun2, run_one, hb1, hb2, gibbs_log 32 (by norm_num), gibbs_log 33 (by norm_num)]
+  norm_num [meanEnergy, E4, Pq, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+
+private theorem rate_eq : energyRate E4 beta4 run 1 = 2673903 / 17337104 := by
+  obtain ⟨h1, h2, _, hg2⟩ := energy_data
+  norm_num [energyRate, h1, h2, hg2]
+
+private theorem step_conditions :
+    meanEnergy E4 (run 2) ≤ meanEnergy E4 (run 1) ∧
+    meanEnergy E4 (gibbs E4 (beta4 1)) ≤ meanEnergy E4 (run 1) ∧
+    meanEnergy E4 (gibbs E4 (beta4 2)) ≤ meanEnergy E4 (gibbs E4 (beta4 1)) ∧
+    meanEnergy E4 (gibbs E4 (beta4 2)) ≠ meanEnergy E4 (run 1) ∧
+    energyRate E4 beta4 run 1 < 5 / 32 := by
+  obtain ⟨h1, h2, hg1, hg2⟩ := energy_data
+  rw [h1, h2, hg1, hg2, rate_eq]
+  norm_num
+
 end D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation
