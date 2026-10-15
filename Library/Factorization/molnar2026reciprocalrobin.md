@@ -190,41 +190,37 @@ they do not supply a new power-mean theorem.
 
 Here CA has its classical meaning: for some $\epsilon>0$, the actual
 integer $n$ maximizes $Z(m)m^{-\epsilon}$ over positive integers $m$.
-Reuse the [classical initial-prime support, including all maximizing
-ties](../Arith/alaoglu1944highly.md). Put $P=P^+(n)\ge37$ and
-$m(P)=\pi(P)-\pi(P/2)$.
-
-Every prime $P/2<p\le P$ occurs to exponent one. To check the range and
-ties, let $q$ be the next prime after $P$; Bertrand's bound gives
-$P<q<2P$. Adding this absent prime to $n$ and using maximality gives
+Reuse the [classical initial-prime support](../Arith/alaoglu1944highly.md)
+and [CNS v2 equations (9), (11) and Lemma 1, printed pp.8--9](../Arith/caveney2012sacaga.md).
+Equation (11) includes every maximizing tie, not only the largest
+maximizer at each price. Put
 
 $$
-\epsilon\ge\frac{\log(1+1/q)}{\log q}
-\ge\frac2{9P\log P}.
+P=P^+(n)\ge37,\qquad M(n)=\#\{p:v_p(n)=1\}.
 $$
 
-If a band prime $p$ had actual exponent $a\ge2$, comparison with $n/p$
-would instead give
+With $q$ the next prime after $P$, the weak maximizing comparisons give
+$F(q,1)\le\epsilon\le F(P,1)$ in the source's notation. Thus its
+threshold $x_1$ satisfies $P\le x_1\le q<2P$, using Bertrand's bound.
+The published Lemma 1 gives $x_2<\sqrt{2x_1}<2\sqrt P$; equation (9)
+therefore puts every prime of actual exponent at least two below
+$2\sqrt P$. Consequently
 
 $$
-\epsilon\le
-\frac{\log(1+1/(p+\cdots+p^a))}{\log p}
-\le\frac1{p(p+1)\log p}
-<\frac8{P^2\log P}.
+\pi(P)-\pi(2\sqrt P)\le M(n)\le\pi(P),
+\qquad M(n)\sim\frac P{\log P}\quad(P\to\infty).
 $$
 
-The two bounds contradict $P\ge37$. They use weak maximizing
-comparisons and hence include every tied CA integer. The initial support
-then ensures that all $m(P)$ band primes are present. Applying (L4) with
-$s=p+1$ gives
+The thresholds and weak comparisons preserve all ties. Applying (L4)
+to these actual exponent-one factors, with $s=p+1\le P+1$, gives
 
 $$
-D_\kappa(n)\ge\frac{m(P)}{\kappa+2P+1}.
+D_\kappa(n)\ge\frac{M(n)}{\kappa+2P+1}.
 \tag{V1}
 $$
 
 For any fixed $C>0$, a parameter $1<\kappa\le CP$ therefore loses at
-least $m(P)/((C+2)P+1)\sim1/[2(C+2)\log P]$ as $P\to\infty$.
+least $M(n)/((C+2)P+1)\sim1/[(C+2)\log P]$ as $P\to\infty$.
 
 Now additionally suppose $n>5040$ is a strict classical Robin violation.
 As in the source's Corollary 4.8, set
@@ -250,22 +246,22 @@ taking the infimum, without assuming it is attained, gives
 
 $$
 \kappa^\dagger(n)\ge
-\frac{e^\gamma}{0.6483}m(P)(\log\log n)^2-2P-1.
+\frac{e^\gamma}{0.6483}M(n)(\log\log n)^2-2P-1.
 \tag{V2}
 $$
 
 A second use of the same local formula improves this scale. Put
-$L=\log\log n$, $T=m(P)L^2/K_R$ and $R=T-2P-1$.
+$L=\log\log n$, $T=M(n)L^2/K_R$ and $R=T-2P-1$.
 Suppose $R>P+1$. Since $A=s(1-u^\kappa)/\kappa\le s/\kappa$,
 every visible parameter satisfies $\kappa>R$ and
 
 $$
 D_\kappa(n)\ge
-\frac{m(P)}{\kappa-1}\log\frac{\kappa}{P+1}
-\ge\frac{m(P)}{\kappa-1}\log\frac{R}{P+1}.
+\frac{M(n)}{\kappa-1}\log\frac{\kappa}{P+1}
+\ge\frac{M(n)}{\kappa-1}\log\frac{R}{P+1}.
 $$
 
-The band terms have $s=p+1\le P+1$; the omitted local losses are
+The exponent-one terms have $s=p+1\le P+1$; the omitted local losses are
 nonnegative. Combining with the same envelope and taking the infimum gives
 
 $$
@@ -278,16 +274,16 @@ $P\to\infty$: bounded $P$ bounds the optimizing price below by the
 next-prime comparison, which bounds each occupied exponent above.
 Initial prime support gives $\vartheta(P)\le\log n$. The prime number
 theorem therefore gives $L\ge\log P+o(1)$ and
-$m(P)\sim P/(2\log P)$. Thus
-$T\ge(1+o(1))P\log P/(2K_R)$ and
-$\log(R/(P+1))\ge\log\log P-\log(2K_R)+o(1)$;
+$M(n)\sim P/\log P$. Thus
+$T\ge(1+o(1))P\log P/K_R$ and
+$\log(R/(P+1))\ge\log\log P-\log K_R+o(1)$;
 in particular $R>P+1$ eventually. It follows that
 
 $$
 \liminf_{\substack{n\to\infty\\n\text{ classical CA violation}}}
 \frac{\kappa^\dagger(n)}
 {P^+(n)\log P^+(n)\log\log P^+(n)}
-\ge\frac{e^\gamma}{2\cdot0.6483}.
+\ge\frac{e^\gamma}{0.6483}.
 \tag{V4}
 $$
 
@@ -296,6 +292,77 @@ existence of a violation. This quantitative application strengthens the
 qualitative parameter-escape conclusion for classical CA witnesses.
 It does not transfer the classical CA structure to normalized reciprocal
 maximizers.
+
+## What the explicit cutoff already supplies for growing parameters
+
+The explicit cutoff in Theorem 4.7, equations (66)--(72), can be used
+before asking for another uniform estimate. Write
+
+$$
+A_\kappa=\frac{3(\kappa+3)}4,\qquad C_\kappa=\vartheta(A_\kappa),
+$$
+
+$$
+X_\kappa=\max\!\left\{2278382,\frac{100}{31}
+\left(C_\kappa+\frac13\right)\right\},
+\qquad q_\kappa=\min\{p\text{ prime}:p>X_\kappa\}.
+$$
+
+These are the source's constants. Its admissible cutoff is
+
+$$
+N_\kappa^{\mathrm{eff}}=
+\left\lceil\exp\!\left(
+\frac{\log\prod_{p\le q_\kappa}(1-p^{-1})^{-1}\,\log q_\kappa}
+{\log Q_\kappa(q_\kappa)}\right)\right\rceil.
+\tag{U1}
+$$
+
+Put $a=31/75$ and $h=\log((e^a-1)/a)>0$.
+The prime number theorem gives $q_\kappa\sim(75/31)\kappa$.
+For this exponent-one factor the source's local formula reads
+
+$$
+Q_\kappa(q_\kappa)^{\kappa-1}
+=\frac{(1+1/q_\kappa)^\kappa-1}{\kappa/q_\kappa}
+\longrightarrow\frac{e^a-1}{a}.
+$$
+
+Thus $\log Q_\kappa(q_\kappa)\sim h/\kappa$. The unconditional
+Mertens product asymptotic in (U1) consequently gives
+
+$$
+\log N_\kappa^{\mathrm{eff}}
+\sim\frac{\kappa\log\kappa\log\log\kappa}{h}
+\qquad(\kappa\to\infty).
+\tag{U2}
+$$
+
+For every fixed $0<c<h$, choose, for sufficiently large integers $n$,
+
+$$
+j_c(n)=\left\lceil
+\frac{c\log n}{\log\log n\,\log\log\log n}
+\right\rceil.
+\tag{U3}
+$$
+
+Then $\log N_{j_c(n)}^{\mathrm{eff}}/\log n\to c/h<1$.
+The source's uniform bounded-interval conclusion therefore supplies
+
+$$
+Q_\kappa(n)<B(n)
+\quad\text{for every }n\ge n_0(c)
+\text{ and every real }1<\kappa\le j_c(n).
+\tag{U4}
+$$
+
+No numerical value of $n_0(c)$ is obtained here. The case $c=h$ is
+unsettled by this asymptotic. For $c>h$, this particular cutoff no longer
+certifies $n\ge N_{j_c(n)}^{\mathrm{eff}}$; that does not refute the
+inequality. This is an application of the explicit source cutoff, not
+an exchange of the quantifiers in a fixed-parameter eventual theorem,
+and not a new estimate for classical $Z(n)$.
 
 ## A single predetermined growing parameter
 
@@ -346,7 +413,11 @@ $5040<n\le\exp(100000^{2/3})$, by direct substitution since
 $k(n)\le100000$ there. No new integer enumeration is needed for this
 normalized initial range; it is not a new verified range for $Z(n)$.
 The bounded theorem does not cover the remaining unbounded schedule.
-The loss, CA-band and diagonal arguments above were not located in the
+Nor does (U4): at $k(n)\sim(\log n)^{3/2}$, (U2) gives
+$\log N_{k(n)}^{\mathrm{eff}}/\log n\to\infty$.
+This explicit cutoff is insufficient for (D3), even though it already
+certifies a slower growing schedule.
+The loss, CA-visibility and diagonal arguments above were not located in the
 inspected Molnar v1 statement; they are
 recorded here as combined applications of existing inputs, without a
 priority or Lean-verification claim.
