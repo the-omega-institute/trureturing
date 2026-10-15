@@ -168,5 +168,135 @@ def claim : Prop :=
     (∀ i, 0 < «λ» i ∧ «λ» i < 1) →
     IsGES (S «λ»)
 
+private def lambdaStar : Fin 7 → ℝ :=
+  ![1 / 2, 16 / 25, 1 / 2, 1 / 2, 1 / 17, 1 / 2, 1 / 2]
+
+private def weight : Fin 7 → ℂ :=
+  ![
+    ((3 * Real.sqrt 2 : ℝ) : ℂ),
+    5,
+    ((3 * Real.sqrt 2 : ℝ) : ℂ),
+    ((3 * Real.sqrt 2 : ℝ) : ℂ),
+    ((3 * Real.sqrt 17 : ℝ) : ℂ),
+    ((3 * Real.sqrt 2 : ℝ) : ℂ),
+    ((3 * Real.sqrt 2 : ℝ) : ℂ)
+  ]
+
+private def x : Original :=
+  ∑ i : Fin 7, weight i • v35 lambdaStar i
+
+private def M : Matrix (Fin 4) (Fin 4) ℂ :=
+  ![
+    ![3, 3, 0, 12],
+    ![3, 3, 4, 0],
+    ![3, 3, 3, 3],
+    ![3, 3, 3, 3]
+  ]
+
+private def threeFactor (a b c : Bit) : ℂ :=
+  (
+    (![![![25, 1], ![1, 13]],
+       ![![15, 6], ![7, 10]]] :
+      Bit → Bit → Bit → ℂ) a b c
+  ) / 3
+
+private def y (q : Config) : ℂ :=
+  threeFactor q.1 q.2.1 q.2.2.1
+
+private def witnessCut : Finset Party :=
+  {0, 1, 2}
+
+private def leftFactor
+    (u : {p : Party // p ∈ witnessCut} → Bit) : ℂ :=
+  threeFactor
+    (u ⟨0, by decide⟩)
+    (u ⟨1, by decide⟩)
+    (u ⟨2, by decide⟩)
+
+private def integer35 : Fin 7 → Original :=
+  ![
+    (3 : ℂ) • ket44 0 0 + (3 : ℂ) • ket44 2 1,
+    (4 : ℂ) • ket44 1 2 + (3 : ℂ) • ket44 3 3,
+    (3 : ℂ) • ket44 0 1 + (3 : ℂ) • ket44 3 2,
+    (3 : ℂ) • ket44 3 0 + (3 : ℂ) • ket44 2 2,
+    (3 : ℂ) • ket44 1 1 + (12 : ℂ) • ket44 0 3,
+    (3 : ℂ) • ket44 1 0 + (3 : ℂ) • ket44 2 3,
+    (3 : ℂ) • ket44 2 0 + (3 : ℂ) • ket44 3 1
+  ]
+
+private def u6 : Bit → Bit → Fin 4 → ℂ :=
+  ![
+    ![![5, -1, 3, -1], ![-1, 5, 3, -1]],
+    ![![3, 3, -3, 3], ![-1, -1, 3, 5]]
+  ]
+
+private def t3 : Bit → Bit → Fin 4 → ℂ :=
+  ![
+    ![![-1, 2, 0, 2], ![2, -1, 0, 2]],
+    ![![0, 0, 3, 0], ![2, 2, 0, -1]]
+  ]
+
+private lemma twoBasis_tmul
+    (u v : Qubit) (a b : Bit) :
+    twoBasis.equivFun (TensorProduct.tmul ℂ u v) (a, b) =
+      u a * v b := by
+  simp only [twoBasis.eq_1, Module.Basis.equivFun_apply,
+    Module.Basis.tensorProduct_repr_tmul_apply, Pi.basisFun_repr, smul_eq_mul, mul_comm]
+
+private lemma outputCoordinates_tmul
+    (u v : TwoQubit) (a b c d : Bit) :
+    outputCoordinates (TensorProduct.tmul ℂ u v) (a, b, c, d) =
+      twoBasis.equivFun u (a, b) *
+      twoBasis.equivFun v (c, d) := by
+  rw [outputCoordinates.eq_1, Module.Basis.equivFun_apply,
+    Module.Basis.repr_reindex_apply]
+  change (twoBasis.tensorProduct twoBasis).repr _ ((a, b), (c, d)) = _
+  simp only [Module.Basis.tensorProduct_repr_tmul_apply,
+    Module.Basis.equivFun_apply, smul_eq_mul, mul_comm]
+
+private lemma substitution39_basis (a : Fin 4) :
+    substitution39 (Pi.single a 1) = columns39 a := by
+  rw [substitution39.eq_1, ← Pi.basisFun_apply ℂ (Fin 4) a, Module.Basis.constr_basis]
+
+private lemma substitution40_basis (a : Fin 4) :
+    substitution40 (Pi.single a 1) = columns40 a := by
+  rw [substitution40.eq_1, ← Pi.basisFun_apply ℂ (Fin 4) a, Module.Basis.constr_basis]
+
+private lemma columns39_coordinates
+    (a : Fin 4) (i j : Bit) :
+    twoBasis.equivFun (columns39 a) (i, j) =
+      u6 i j a / 6 := by
+  fin_cases a <;> fin_cases i <;> fin_cases j <;>
+    norm_num [columns39.eq_1, u6.eq_1, ket22.eq_1] <;>
+    simp_rw [← Module.Basis.equivFun_apply, twoBasis_tmul] <;> norm_num
+
+private lemma columns40_coordinates
+    (a : Fin 4) (i j : Bit) :
+    twoBasis.equivFun (columns40 a) (i, j) =
+      t3 i j a / 3 := by
+  fin_cases a <;> fin_cases i <;> fin_cases j <;>
+    norm_num [columns40.eq_1, t3.eq_1, ket22.eq_1] <;>
+    simp_rw [← Module.Basis.equivFun_apply, twoBasis_tmul] <;> norm_num
+
+private lemma factorwise_apply (z : Original) (q : Config) :
+    factorwise z q =
+      ∑ a : Fin 4, ∑ b : Fin 4,
+        (u6 q.1 q.2.1 a / 6) *
+        z (a, b) *
+        (t3 q.2.2.1 q.2.2.2 b / 3) := by
+  rcases q with ⟨i, j, k, l⟩
+  change outputCoordinates ((TensorProduct.map substitution39 substitution40)
+    (inputCoordinates.symm z)) (i, j, k, l) = _
+  rw [inputCoordinates.eq_1, Module.Basis.equivFun_symm_apply]
+  simp only [map_sum, map_smul, Module.Basis.tensorProduct_apply', Pi.basisFun_apply,
+    TensorProduct.map_tmul, substitution39_basis, substitution40_basis,
+    Finset.sum_apply, Pi.smul_apply, outputCoordinates_tmul,
+    columns39_coordinates, columns40_coordinates, Fintype.sum_prod_type, smul_eq_mul]
+  apply Finset.sum_congr rfl
+  intro a _
+  apply Finset.sum_congr rfl
+  intro b _
+  ac_rfl
+
 end
 end D5.S3.QuantumStates.FourQubitGenuineSubspaceRefutation
