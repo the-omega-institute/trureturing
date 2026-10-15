@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.QuantumChannels.PureProgramQubitObstruction
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Recovery.KrausCompletion
+import D5.S3.QuantumContext.RankOfContextualityNonPowerTwo
 import D5.S3.Weil.ZetaLinear.RankTrace
 
 set_option linter.style.longLine false
@@ -18,6 +20,7 @@ open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.QuantumChannels.PureProgramQubitObstruction (IsChannel)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceLeft partialTraceRight)
+open D5.S3.Quantum.Recovery.KrausCompletion (rowReset row_reset_action)
 
 noncomputable section
 namespace D5.S3.QuantumChannels.JordanCompatibilityRefutation
@@ -86,41 +89,26 @@ private theorem measurePrepare_channel {α β γ : Type}
     (hL : ∀ i, ∑ t, (V i t).conjTranspose * V i t = L i)
     (hsum : ∑ i, L i = 1) : IsChannel (⇑(measurePrepare L)) := by
   let K (p : β × (γ × α)) : Matrix β α ℂ :=
-    fun i b => if i = p.1 then V p.1 p.2.1 p.2.2 b else 0
+    rowReset p.1 (V p.1 p.2.1) p.2.2
   have hgram : (∑ p, (K p).conjTranspose * K p) = 1 := by
     calc
+      _ = ∑ i, ∑ t, ∑ r : α, (V i t).conjTranspose *
+          ((Matrix.single i r (1 : ℂ)).conjTranspose * Matrix.single i r (1 : ℂ)) *
+          V i t := by
+        simp only [K, Fintype.sum_prod_type, rowReset,
+          Matrix.conjTranspose_mul, Matrix.mul_assoc]
       _ = ∑ i, ∑ t, (V i t).conjTranspose * V i t := by
-        ext a b
-        simp only [Matrix.sum_apply, Fintype.sum_prod_type]
-        change (∑ i : β, ∑ t : γ, ∑ r : α, ∑ j : β,
-          star (if j = i then V i t r a else 0) *
-            (if j = i then V i t r b else 0)) =
-          ∑ i : β, ∑ t : γ, ∑ r : α, star (V i t r a) * V i t r b
-        simp [apply_ite, ite_mul]
+        simp only [Matrix.conjTranspose_single, star_one, Matrix.single_mul_single_same,
+          one_mul, ← Matrix.mul_sum, ← Matrix.sum_mul, Matrix.sum_single_one,
+          Matrix.mul_one]
       _ = 1 := by simp only [hL, hsum]
   have haction (R : Mat α) : MatrixMap.of_kraus K K R = measurePrepare L R := by
     rw [measurePrepare_apply]
-    ext i j
-    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
-      AddHom.coe_mk, Matrix.sum_apply, Fintype.sum_prod_type, Matrix.diagonal_apply]
-    change (∑ k : β, ∑ t : γ, ∑ r : α, ∑ b : α,
-      (∑ a : α, (if i = k then V k t r a else 0) * R a b) *
-        star (if j = k then V k t r b else 0)) =
-      if i = j then Matrix.trace (L i * R) else 0
-    by_cases hij : i = j
-    · subst j
-      simp only [apply_ite, star_zero, ite_mul, zero_mul, mul_zero,
-        Finset.sum_ite_irrel, Finset.sum_const_zero, if_true]
-      calc
-        _ = ∑ t : γ, Matrix.trace (V i t * R * (V i t).conjTranspose) := by
-          simp [Matrix.trace, Matrix.diag, Matrix.mul_apply,
-            Matrix.conjTranspose_apply]
-        _ = Matrix.trace ((∑ t, (V i t).conjTranspose * V i t) * R) := by
-          simp only [Matrix.sum_mul, Matrix.trace_sum]
-          exact Finset.sum_congr rfl fun t _ =>
-            Matrix.trace_mul_cycle (V i t) R (V i t).conjTranspose
-        _ = Matrix.trace (L i * R) := by rw [hL]
-    · simp [hij, apply_ite, ite_mul, Finset.sum_ite_irrel]
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
+    simp only [K, Fintype.sum_prod_type, row_reset_action]
+    simp_rw [Matrix.trace_mul_cycle (V _ _) R (V _ _).conjTranspose]
+    simp only [← Finset.sum_smul, ← Matrix.trace_sum, ← Matrix.sum_mul, hL]
+    simp only [Matrix.smul_single, smul_eq_mul, mul_one, Matrix.sum_single_eq_diagonal]
   let e := (Fintype.equivFin (β × (γ × α))).symm
   refine ⟨Fintype.card (β × (γ × α)), fun p => K (e p), ?_, ?_⟩
   · rw [e.sum_comp (fun p => (K p).conjTranspose * K p)]
@@ -164,15 +152,17 @@ private def Psi : Map (Fin 4) (Fin 4) := measurePrepare F
 private theorem pauli_facts :
     P.IsHermitian ∧ Q.IsHermitian ∧ P.transpose = P ∧ Q.transpose = Q ∧
     P * P = 1 ∧ Q * Q = 1 ∧ P * Q + Q * P = 0 := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · change P.conjTranspose = P
-    unfold P
+  have hp : P.IsHermitian ∧ P * P = 1 := by
+    simpa only [D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.XITable, P]
+      using D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.obs_herm_sq 4
+  have hqeq : D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.obs 0 = Q := by
+    rw [D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.ZITable]
     ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [Matrix.conjTranspose_apply]
-  · change Q.conjTranspose = Q
-    unfold Q
-    ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [Matrix.conjTranspose_apply]
+    fin_cases i <;> fin_cases j <;> norm_num [Q, Matrix.diagonal_apply]
+  have hq : Q.IsHermitian ∧ Q * Q = 1 := by
+    simpa only [hqeq]
+      using D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.obs_herm_sq 0
+  refine ⟨hp.1, hq.1, ?_, ?_, hp.2, hq.2, ?_⟩
   all_goals
     try unfold P
     try unfold Q
