@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/LudersSubObservableClosure.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gudder-2023-sob-effect-algebra-luders` (proved) by `D5/S3/Quantum/Measurement/LudersSubObservableClosure.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gudder-2023-sob-effect-algebra-luders","declaration_gid":"D5/S3/Quantum/Measurement/LudersSubObservableClosure.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stanley Gudder (2023). *Dual Quantum Instruments and Sub-observables*. URL: <https://arxiv.org/abs/2302.12243v1>.
