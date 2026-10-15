@@ -79,9 +79,6 @@ def equalState (n : ℕ) {d : ℕ}
     (φ : Fin d → ℂ) : TensorMat n d :=
   rankOneDensity (repeatKet n φ)
 
-def UnitVector {d : ℕ} (φ : Fin d → ℂ) : Prop :=
-  (∑ i : Fin d, star (φ i) * φ i) = (1 : ℂ)
-
 def PiG {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n))) : TensorMat n d :=
   Finset.expect Finset.univ (fun g : G => psi (d := d) (g : Equiv.Perm (Fin n)))
@@ -130,7 +127,7 @@ def claim : Prop :=
     (φ : Fin d → ℂ)
     (p : ℝ),
     (∃ i j : Fin n, w i ≠ w j) →
-    UnitVector φ →
+    star φ ⬝ᵥ φ = (1 : ℂ) →
     p ∈ Set.Icc (0 : ℝ) 1 →
     (((P_G G w U φ p > P_T p) ↔
         p > (O G w : ℝ) / ((M w : ℝ) + (O G w : ℝ))) ∧
@@ -385,12 +382,13 @@ private theorem psi_repeat (π : Equiv.Perm (Fin n)) (φ : Fin d → ℂ) :
       simpa only [inv_inv] using congrArg φ (word_smul_apply π⁻¹ x j)
     _ = _ := Equiv.prod_comp π (fun j => φ (x j))
 
-private theorem repeat_norm (φ : Fin d → ℂ) (hφ : UnitVector φ) :
+private theorem repeat_norm (φ : Fin d → ℂ) (hφ : star φ ⬝ᵥ φ = (1 : ℂ)) :
     (∑ x : OccupancyWordSectors.Word (Fin d) n, star (repeatKet n φ x) * repeatKet n φ x) = 1 := by
   simp only [repeatKet.eq_1, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
     star_prod, ← Finset.prod_mul_distrib]
   rw [sum_product (fun _ i => star (φ i) * φ i)]
-  simp only [show (∑ i : Fin d, star (φ i) * φ i) = (1 : ℂ) from hφ,
+  simp only [show (∑ i : Fin d, star (φ i) * φ i) = (1 : ℂ) from
+      by simpa only [dotProduct, Pi.star_apply] using hφ,
     Finset.prod_const_one]
 
 private theorem PiG_repeat (G : Subgroup (Equiv.Perm (Fin n))) (φ : Fin d → ℂ) :
@@ -405,7 +403,7 @@ private theorem PiG_repeat (G : Subgroup (Equiv.Perm (Fin n))) (φ : Fin d → �
   rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hg, one_smul]
 
 private theorem completeness_trace (G : Subgroup (Equiv.Perm (Fin n)))
-    (φ : Fin d → ℂ) (hφ : UnitVector φ) :
+    (φ : Fin d → ℂ) (hφ : star φ ⬝ᵥ φ = (1 : ℂ)) :
     Matrix.trace (PiG G * equalState n φ) = 1 := by
   unfold equalState rankOneDensity
   rw [trace_rank_one, PiG_repeat]
