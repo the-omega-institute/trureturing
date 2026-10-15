@@ -198,7 +198,6 @@ private theorem trace_word (A : TensorMat n d) (x : Word n d) :
   rw [trace_mul_pure]
   simp [ket.eq_1, Matrix.mulVec, dotProduct]
 
-
 private theorem sum_product (f : Fin n → Fin d → ℂ) :
     (∑ x : Word n d, ∏ j : Fin n, f j (x j)) = ∏ j : Fin n, ∑ a : Fin d, f j a := by
   rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
@@ -257,7 +256,6 @@ private theorem trace_conjugate (P T R : TensorMat n d)
     Matrix.trace (P * (T * R * T.conjTranspose)) = Matrix.trace (P * R) := by
   rw [← Matrix.mul_assoc P, ← Matrix.mul_assoc P, hPT,
     Matrix.trace_mul_cycle, ← Matrix.mul_assoc T.conjTranspose T P, hT, Matrix.one_mul]
-
 
 private theorem PiG_diagonal (G : Subgroup (Equiv.Perm (Fin n))) (x : Word n d) :
     PiG G x x = (Fintype.card (MulAction.stabilizer G x) : ℂ) / (Fintype.card G : ℂ) := by
@@ -321,13 +319,17 @@ private theorem orbit_average (w : Word n d) (f : WordOrbit w → ℂ) :
       n.factorial := by
     simpa only [M.eq_1, Fintype.card_perm, Fintype.card_fin] using
       MulAction.card_orbit_mul_card_stabilizer_eq_card_group (Equiv.Perm (Fin n)) w
-  have hm : (M w : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.ne_of_gt (orbit_card_pos w))
   have hh : (Fintype.card (MulAction.stabilizer (Equiv.Perm (Fin n)) w) : ℂ) ≠ 0 :=
     Nat.cast_ne_zero.mpr Fintype.card_ne_zero
   have hcast := congrArg (fun k : ℕ => (k : ℂ)) hc
   simp only [Nat.cast_mul] at hcast
-  rw [← hs, ← hcast, ← Finset.mul_sum]
-  field_simp
+  rw [← hs, ← hcast, ← Finset.mul_sum, mul_inv]
+  calc
+    _ = (M w : ℂ)⁻¹ *
+        ((Fintype.card (MulAction.stabilizer (Equiv.Perm (Fin n)) w) : ℂ)⁻¹ *
+          (Fintype.card (MulAction.stabilizer (Equiv.Perm (Fin n)) w) : ℂ)) *
+          (∑ x : WordOrbit w, f x) := by ring
+    _ = _ := by rw [inv_mul_cancel₀ hh, mul_one]
 
 private theorem burnside_stabilizer_sum (G : Subgroup (Equiv.Perm (Fin n)))
     (w : Word n d) :
@@ -365,15 +367,19 @@ private theorem trace_eq_orbit_ratio (G : Subgroup (Equiv.Perm (Fin n)))
   simp only [Nat.cast_sum, Nat.cast_mul] at hcast
   rw [hcast]
   have hg : (Fintype.card G : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
-  field_simp
-
+  rw [mul_assoc (O G w : ℂ), mul_inv_cancel₀ hg, mul_one, mul_comm]
 
 private theorem psi_repeat (π : Equiv.Perm (Fin n)) (φ : Fin d → ℂ) :
     psi (d := d) π *ᵥ repeatKet n φ = repeatKet n φ := by
   rw [psi_mulVec]
   funext x
-  simp only [repeatKet.eq_1, word_smul_apply, inv_inv]
-  exact Equiv.prod_comp π (fun j => φ (x j))
+  simp only [repeatKet.eq_1]
+  calc
+    _ = ∏ j : Fin n, φ (x (π j)) := by
+      apply Finset.prod_congr rfl
+      intro j _
+      simpa only [inv_inv] using congrArg φ (word_smul_apply π⁻¹ x j)
+    _ = _ := Equiv.prod_comp π (fun j => φ (x j))
 
 private theorem repeat_norm (φ : Fin d → ℂ) (hφ : UnitVector φ) :
     (∑ x : Word n d, star (repeatKet n φ x) * repeatKet n φ x) = 1 := by
@@ -429,7 +435,6 @@ theorem result : claim := by
   rw [hs, hc, mul_one]
   exact linear_compare (M w : ℝ) (O G w : ℝ) p
     (Nat.cast_pos.mpr (orbit_card_pos w)) (Nat.cast_nonneg _)
-
 
 end
 
