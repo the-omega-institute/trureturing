@@ -389,30 +389,33 @@ private theorem common_two_zero (q : ℕ) : commonPolynomial q 2 = 0 := by
 theorem component_residue_kernels (q : ℕ) (hq : 0 < q) :
     (∀ a : Plus q, rplus q a = 0 ↔ ∃ a' : Plus q, a = 2 * a') ∧
     (∀ b : Minus q, rminus q b = 0 ↔ ∃ b' : Minus q, b = 2 * b') := by
-  have hc : (2 : Common q) = 0 := by simpa using common_two_zero q
+  have hc : (2 : Common q) = 0 := by
+    have he := common_two_zero q
+    erw [map_ofNat] at he
+    exact he
   constructor
   · intro a
     constructor
     · intro ha
-      have hr : reduce (a0 q a) = 0 := by rw [reduce_a0, ha, map_zero]
+      have hr : reduce (a0 q a) = 0 := by erw [reduce_a0, ha, map_zero]
       refine ⟨AdjoinRoot.mk (f q) (half (a0 q a)), ?_⟩
-      calc
-        a = AdjoinRoot.mk (f q) (a0 q a) := (AdjoinRoot.mk_leftInverse (f_monic q) a).symm
-        _ = AdjoinRoot.mk (f q) (2 * half (a0 q a)) :=
-          congrArg (AdjoinRoot.mk (f q)) (half_cancel _ hr)
-        _ = 2 * AdjoinRoot.mk (f q) (half (a0 q a)) := by rw [map_mul, map_ofNat]
+      have he : AdjoinRoot.mk (f q) (2 * half (a0 q a)) =
+          (2 : AdjoinRoot (f q)) * AdjoinRoot.mk (f q) (half (a0 q a)) := by
+        rw [map_mul, map_ofNat]
+      exact ((AdjoinRoot.mk_leftInverse (f_monic q) a).symm.trans
+        (congrArg (AdjoinRoot.mk (f q)) (half_cancel _ hr))).trans he
     · rintro ⟨a', rfl⟩
       rw [map_mul, map_ofNat, hc, zero_mul]
   · intro b
     constructor
     · intro hb
-      have hr : reduce (b0 q b) = 0 := by rw [reduce_b0, hb, map_zero]
+      have hr : reduce (b0 q b) = 0 := by erw [reduce_b0, hb, map_zero]
       refine ⟨AdjoinRoot.mk (g q) (half (b0 q b)), ?_⟩
-      calc
-        b = AdjoinRoot.mk (g q) (b0 q b) := (AdjoinRoot.mk_leftInverse (g_monic q) b).symm
-        _ = AdjoinRoot.mk (g q) (2 * half (b0 q b)) :=
-          congrArg (AdjoinRoot.mk (g q)) (half_cancel _ hr)
-        _ = 2 * AdjoinRoot.mk (g q) (half (b0 q b)) := by rw [map_mul, map_ofNat]
+      have he : AdjoinRoot.mk (g q) (2 * half (b0 q b)) =
+          (2 : AdjoinRoot (g q)) * AdjoinRoot.mk (g q) (half (b0 q b)) := by
+        rw [map_mul, map_ofNat]
+      exact ((AdjoinRoot.mk_leftInverse (g_monic q) b).symm.trans
+        (congrArg (AdjoinRoot.mk (g q)) (half_cancel _ hr))).trans he
     · rintro ⟨b', rfl⟩
       rw [map_mul, map_ofNat, hc, zero_mul]
 
@@ -457,9 +460,12 @@ theorem w_eigenlattices (q : ℕ) (hq : 0 < q) (z : Compatible q) :
         change (gluing q (fp q (W q))).val.2 * z.val.2 = z.val.2 at he
         simpa only [congrArg Prod.snd hw, neg_one_mul] using he
       have hb0 : z.val.2 = 0 := monic_quotient_two_torsion (g q) (g_monic q) _ (by
-        linear_combination -hb)
+        change (2 : Minus q) * z.val.2 = 0
+        rw [two_mul]
+        exact add_eq_zero_iff_eq_neg.mpr hb.symm)
       have ha0 : rplus q z.val.1 = 0 := by
-        rw [z.property, hb0, map_zero]
+        have he : rplus q z.val.1 = rminus q z.val.2 := z.property
+        exact he.trans (by rw [hb0, map_zero])
       obtain ⟨a, ha⟩ := ((component_residue_kernels q hq).1 z.val.1).mp ha0
       exact ⟨a, Prod.ext ha hb0⟩
     · rintro ⟨a, ha⟩
@@ -478,9 +484,12 @@ theorem w_eigenlattices (q : ℕ) (hq : 0 < q) (z : Compatible q) :
         change (gluing q (fp q (W q))).val.1 * z.val.1 = -z.val.1 at he
         simpa only [congrArg Prod.fst hw, one_mul] using he
       have ha0 : z.val.1 = 0 := monic_quotient_two_torsion (f q) (f_monic q) _ (by
-        linear_combination ha)
+        change (2 : Plus q) * z.val.1 = 0
+        rw [two_mul]
+        exact add_eq_zero_iff_eq_neg.mpr ha)
       have hb0 : rminus q z.val.2 = 0 := by
-        rw [← z.property, ha0, map_zero]
+        have he : rplus q z.val.1 = rminus q z.val.2 := z.property
+        exact he.symm.trans (by rw [ha0, map_zero])
       obtain ⟨b, hb⟩ := ((component_residue_kernels q hq).2 z.val.2).mp hb0
       exact ⟨b, Prod.ext ha0 hb⟩
     · rintro ⟨b, hb⟩
@@ -615,6 +624,8 @@ private theorem common_time_period (q : ℕ) :
 def commonTimeUnit (q : ℕ) : (Common q)ˣ :=
   Units.mkOfMulEqOne (AdjoinRoot.root (reduce (g q)))
     (AdjoinRoot.root (reduce (g q)) ^ q) (by
+      change (AdjoinRoot.root (reduce (g q)) : AdjoinRoot (reduce (g q))) *
+        AdjoinRoot.root (reduce (g q)) ^ q = 1
       rw [← pow_succ', common_time_period])
 
 /-- Forward time has exact common-residue order q+1 for q at least two, and order one at q=1. -/
@@ -659,7 +670,7 @@ theorem exact_common_time_order :
           (by rw [hmd, common_natDegree])
       have hcoef := congrArg (fun p : (ZMod 2)[X] => p.coeff 1) he
       have hleft : ((X : (ZMod 2)[X]) ^ q - 1).coeff 1 = 0 := by
-        simp [Polynomial.coeff_X_pow, show 1 ≠ q by omega]
+        simp [Polynomial.coeff_X_pow, Polynomial.coeff_one, show 1 ≠ q by omega]
       have hright : (reduce (g q)).coeff 1 = 1 := by
         rw [(gluing_generators q).2.2.2.2]
         simp [Polynomial.coeff_sum, Polynomial.coeff_X_pow, show 1 < q + 1 by omega]
