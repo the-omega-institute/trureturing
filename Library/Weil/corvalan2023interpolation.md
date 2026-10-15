@@ -248,3 +248,688 @@ Robin same-integer signed integral remains unpaid. This application
 reuses standard interpolation and the existing Binet inverse; it is
 not a new supplier theorem, a proof of RH or a claim that the
 weighted route outperforms existing approximation methods.
+
+## Strength of a local cutoff block
+
+The logarithmic Selberg coefficients are already discussed in
+[Báez-Duarte 2002, Introduction, printed p.2](https://arxiv.org/pdf/math/0202141v2).
+The classical source [Conrey–Myerson, arXiv:math/0002254v1,
+Theorem 1 and Remark 1](https://arxiv.org/html/math/0002254v1)
+distinguishes uniform convergence of its fractional-part sums from the
+weighted integral near its moving endpoint. Its sums use
+$\{nu\}/n$, whereas the actual residual below uses $\{t/n\}$;
+its pointwise estimate is not an upper bound for this residual's local
+quadratic energy. The following is a repo-derived paper application of
+Mellin continuation to the specified coefficients, not a result stated
+in Corvalán's paper, a new unconditional estimate, or a Lean-certified
+implication. No originality of the Mellin obstruction is claimed.
+
+For integers $N\ge3$ put
+
+$$
+L=\log N,\qquad a_{N,n}=\mu(n)\frac{\log(N/n)}{L}\quad(1\le n\le N),
+\qquad c_N=\sum_{n\le N}\frac{a_{N,n}}n.
+$$
+
+For the actual balanced approximant
+$v_N=-\sum_{2\le n\le N}a_{N,n}b_n$, its residual on
+$1/(m+1)<x<1/m$ is
+
+$$
+R_N(m)=1+c_Nm-
+\sum_{n\le\min(N,m)}a_{N,n}\lfloor m/n\rfloor.
+$$
+
+Thus, for integer $m\ge N$,
+$R_N(m)=1+\sum_{n\le N}a_{N,n}\{m/n\}$. Define the actual local energy
+
+$$
+E_N=\sum_{m=N}^{N^2}\frac{|R_N(m)|^2}{m(m+1)}.
+\tag{I10}
+$$
+
+A proposed supply $E_N\le C(1+\log N)^A$, with one finite $A\ge0$
+and one $C$ for all sufficiently large integers $N$, already entails
+RH by the argument below. The estimate cannot be treated as an
+independently paid, weaker precursor to (I1). This is a one-way strength
+analysis: neither this estimate nor a converse from RH is supplied.
+
+### Passing integer cutoffs and cells without losing the actual source
+
+For real $y>1$ and $t>0$ retain the same coefficients through
+
+$$
+S_y(t)=\log y+
+\sum_{n\le y}\mu(n)\log(y/n)\{t/n\}.
+$$
+
+This is an auxiliary interpolation: at integer arguments
+$S_N(m)=L R_N(m)$; within a cell its difference from the balanced
+step residual is accounted for by (I12). If $N\le y<N+1$, the summation
+indices agree and, uniformly for every real $t$,
+
+$$
+S_y(t)-S_N(t)
+=\log(y/N)\left(1+\sum_{n\le N}\mu(n)\{t/n\}\right),
+\qquad |S_y(t)-S_N(t)|\le2.
+\tag{I11}
+$$
+
+For $m\le t<m+1$, all $\lfloor t/n\rfloor=\lfloor m/n\rfloor$.
+Consequently
+
+$$
+S_N(t)-S_N(m)=(t-m)U_N,
+\qquad U_N=\sum_{n\le N}\frac{\mu(n)\log(N/n)}n,
+\qquad |U_N|\le L(1+\log N).
+\tag{I12}
+$$
+
+Using $\int_m^{m+1}t^{-2}dt=1/[m(m+1)]$, equations (I11)–(I12)
+and the assumed estimate yield
+
+$$
+\int_y^{2y}|S_y(t)|^2\frac{dt}{t^2}
+\ll L^{A+2}+\frac{(1+L)^4}{N}.
+\tag{I13}
+$$
+
+Indeed, all intersecting cells have $N\le m\le2N+1\le N^2$ for
+$N\ge3$; the cell slope costs $O(|U_N|^2/N)$ and the cutoff correction
+costs $O(1/N)$. On changing variables $t=qy$, (I13) gives, for some
+fixed finite $B$,
+
+$$
+\|S_y(qy)\|_{L^2(1<q<2)}
+\ll\sqrt y\,(1+\log y)^B.
+\tag{I14}
+$$
+
+The small bounded range of $y$ is absorbed in the constant. These
+steps use the actual step-function residual; they do not assume that
+fractional parts are uniformly Lipschitz across their jumps.
+
+### Mellin in the cutoff variable exposes a reciprocal-zeta factor
+
+For every fixed smooth test function $h$ supported in $(1,2)$, set
+
+$$
+F_h(s)=\int_1^\infty\int_1^2
+h(q)S_y(qy)\,dq\,y^{-s-1}dy.
+$$
+
+Equation (I14) and Cauchy–Schwarz make this integral and its
+$s$-derivatives absolutely convergent on compact subsets of
+$\Re s>1/2$. Thus $F_h$ is holomorphic there. Initially for $\Re s>1$,
+absolute interchange and $y=nv$ give
+
+$$
+F_h(s)=\frac{\int_1^2h(q)dq}{s^2}
++\frac{H_h(s)}{\zeta(s)},
+\qquad
+H_h(s)=\int_1^2h(q)H_q(s)dq,
+\quad
+H_q(s)=\int_1^\infty\log v\,\{qv\}v^{-s-1}dv.
+\tag{I15}
+$$
+
+Here $\sum\mu(n)n^{-s}=1/\zeta(s)$ is the classical Dirichlet
+identity, reused on its absolute-convergence half-plane. The integrals
+$H_q$ are holomorphic for $\Re s>0$ and locally uniformly bounded in
+$q$ and $s$.
+
+There is no common zero of $H_q(s)$ as $q$ runs through $(1,2)$.
+For a fixed $s$ with $\Re s>0$, write
+
+$$
+J_q(s)=q^{-s}H_q(s)
+=\int_q^\infty\log(t/q)\{t\}t^{-s-1}dt.
+$$
+
+Differentiation at $1<q<2$ gives
+
+$$
+\frac{d}{dq}\left(q\frac{d}{dq}J_q(s)\right)
+=(q-1)q^{-s-1}\ne0.
+\tag{I16}
+$$
+
+Hence $H_q(s)$ cannot vanish identically on any open subinterval of
+$(1,2)$. If a nontrivial zero $\rho$ had $\Re\rho>1/2$, continuity
+in $q$ would supply a smooth compactly supported $h$ with
+$H_h(\rho)\ne0$. Multiply (I15) by $(s-1)\zeta(s)$; analytic
+continuation extends the identity to $\Re s>1/2$. Evaluation at
+$\rho\ne1$ forces $H_h(\rho)=0$, a contradiction. This argument
+allows arbitrary zero multiplicity. The usual functional-equation
+symmetry then gives RH.
+
+Only a fixed proportional part of (I10) is needed for this obstruction.
+If its upper endpoint is $2N$, restrict $q$ to $(5/4,7/4)$; for large
+$N$ every intersecting cell lies in $[N,2N]$, while (I16) still prevents
+a common zero. Thus discarding the remote part $2N<m\le N^2$ does
+not make the proposed uniform polylogarithmic estimate an already
+available supplier.
+
+For the actual FIB application, (I5)–(I9) still transport any error
+estimate that is genuinely supplied. They provide no value for (I10).
+This strength analysis closes neither the required uniform approximation
+nor the same-integer signed Robin margin.
+
+## A paid low-denominator part of the actual residual
+
+Reuse the [existing discrete large-sieve input](../Fourier/montgomery1978largesieve.md),
+equation (1), namely Montgomery's Theorem 3, printed p.559, and the
+duality in §4, Lemma 2. The following is a paper application to the
+coefficients and residual of (I10); the classical large sieve is not
+reproved. This reduction alone supplies no bound for the complete energy.
+
+Write $e(u)=\exp(2\pi i u)$ and retain the zero-frequency coefficient
+
+$$
+d_N=1+\frac12\sum_{n\le N}a_{N,n}(1-1/n),\qquad
+T_N(m)=R_N(m)-d_N.
+\tag{I17}
+$$
+
+The finite Fourier expansion of the periodic sawtooth at integer $m$ is
+
+$$
+\{m/n\}-\frac{n-1}{2n}
+=-\frac1n\sum_{h=1}^{n-1}\frac{e(hm/n)}{1-e(-h/n)}.
+$$
+
+It follows by summing $j e(-hj/n)$ over $0\le j<n$; $n=1$ has an
+empty sum. Merge every frequency $h/n=r/q$ into its reduced fraction
+before applying a separation estimate. This gives, exactly for $m\ge N$,
+
+$$
+T_N(m)=\sum_{2\le q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1}}
+B_{N,q,r}e(mr/q),\qquad
+B_{N,q,r}=-\frac{b_{N,q}}{q(1-e(-r/q))},\qquad
+b_{N,q}=\sum_{j\le N/q}\frac{a_{N,qj}}j.
+\tag{I18}
+$$
+
+This retains all aliases of the original coefficients, rather than
+assuming that the unreduced list is separated. Non-squarefree $q$ have
+$b_{N,q}=0$. For squarefree $q$, the coefficient is the short coprime sum
+
+$$
+b_{N,q}=\frac{\mu(q)}{\log N}
+\sum_{\substack{j\le N/q\\(j,q)=1}}
+\frac{\mu(j)}j\log\frac{N}{qj}.
+\tag{I19}
+$$
+
+This is exactly the existing logarithmic coprime Möbius sum
+$\check m_q^{(1)}$ in the
+[Zuniga-Alterman source note](../Asymptotics/zunigaalterman2026logmobius.md),
+with $X=N/q$ and the prefactor $\mu(q)/\log N$. A fixed-$q$
+asymptotic alone would not suffice when $q,X$ vary together. Instead,
+reuse its uniform finite bound, obtained from Lemma 5.1, equation (5.2),
+the positive convolution (7.6) and Lemma 7.2(a):
+
+$$
+|\check m_q^{(1)}(X)|\le2q/\varphi(q)\qquad(q\ge1,\ X>0).
+$$
+
+Here $\varphi(q)$ denotes Euler's totient, distinct from the golden
+ratio used for the FIB geometry. It follows that
+$|b_{N,q}|\le2q/[\varphi(q)\log N]$ for every squarefree $q\le N$,
+including the short sums with $q$ close to $N$. Non-squarefree $q$
+still contribute zero. This uses the source's uniform convolution
+bound rather than inserting a fixed-parameter limit.
+
+For $1\le Q\le N$, the coefficient energy therefore obeys
+
+$$
+V_N(Q):=\sum_{2\le q\le Q}\ \sum_{\substack{1\le r<q\\(r,q)=1}}
+|B_{N,q,r}|^2\ll\frac{Q}{(\log N)^2}.
+\tag{I20}
+$$
+
+Indeed, the elementary sine bound gives
+$\sum_{r=1}^{q-1}|1-e(-r/q)|^{-2}\ll q^2$. Reuse the
+[existing finite positive-moment bound](../ArithSums/weingartner2010distribution.md)
+with $s=2$ and $X=Q$:
+$\sum_{q\le Q}(q/\varphi(q))^2\le QW(2)$, where the fixed Euler
+product $W(2)$ converges. Combining these two inputs proves (I20)
+with a constant independent of $N,Q$. Neither input estimates the
+signed quadratic cross terms of the residual.
+
+Let $I$ be a consecutive integer interval in
+$[M,2M)\cap[N,N^2]$, with integer $M\ge N$, and use the actual weight
+
+$$
+\|f\|_I^2=\sum_{m\in I}\frac{|f(m)|^2}{m(m+1)}.
+$$
+
+For $1\le Q\le N$, split (I18) as
+$T_N=T_{N,\le Q}+T_{N,>Q}$. Distinct reduced fractions of denominator
+at most $Q$ have circular separation at least $Q^{-2}$. In the quoted
+dual large sieve, take these frequencies, the coefficients $B_{N,q,r}$,
+and the actual interval $I$, whose length $H$ is at most $M$.
+Since $m(m+1)\ge M^2$, (I20) gives
+
+$$
+\|T_{N,\le Q}\|_I^2
+\ll\frac{Q(M+Q^2)}{M^2(\log N)^2}.
+\tag{I21}
+$$
+
+In particular, if $Q^2\le M$, the weighted triangle inequality gives
+
+$$
+\left|\|R_N\|_I-\|d_N+T_{N,>Q}\|_I\right|
+\le\|T_{N,\le Q}\|_I
+\ll\frac{\sqrt{Q/M}}{\log N}\le\frac{M^{-1/4}}{\log N}.
+\tag{I22}
+$$
+
+This is a norm error for removing a specified part, not an
+orthogonal decomposition on the short interval. Take disjoint blocks
+$I_j=[2^jN,2^{j+1}N)\cap[N,N^2]\cap\mathbb Z$ and
+$Q_j=\lfloor\sqrt{2^jN}\rfloor$, keeping the nonempty blocks
+$0\le j\le\lfloor\log_2 N\rfloor$. Define the retained residual
+$\mathcal A_N(m)=d_N+T_{N,>Q_j}(m)$ for $m\in I_j$.
+Applying (I21) on each block and summing the geometric factors $2^{-j/2}$
+gives the whole crossing-block comparison
+
+$$
+\left|\sqrt{E_N}-\left(
+\sum_{m=N}^{N^2}\frac{|\mathcal A_N(m)|^2}{m(m+1)}
+\right)^{1/2}\right|\ll\frac{N^{-1/4}}{\log N}.
+\tag{I23}
+$$
+
+Thus the discarded low-denominator part has an independently paid norm
+bound on the complete block. The retained frequencies satisfy
+$q>\sqrt M$ on the block at scale $M$; their coefficients in (I19)
+involve only $j<N/\sqrt M$. The zero-frequency term remains tied to
+the same coefficients:
+
+$$
+d_N=1+\frac12(S_N-c_N),\qquad
+S_N=\sum_{n\le N}a_{N,n}
+=\frac1{\log N}\int_1^N\frac{\mathcal M(t)}t\,dt,
+\qquad \mathcal M(t)=\sum_{n\le t}\mu(n).
+\tag{I24}
+$$
+
+At scale $M\asymp N$, applying the same large sieve to all denominators
+would give the allowance $O(N/\log^2N)$, not a polylogarithmic bound.
+Neither (I20) nor (I23) controls the retained signed cross terms or their
+interaction with $d_N$. Separate bounds for $d_N$ and each component
+are sufficient but need not be necessary, because the terms can cancel
+on these finite intervals. A uniform polylogarithmic bound for the
+retained norm squared would, by (I23) and the preceding strength
+analysis, still entail RH.
+
+Here $q$ is a reduced frequency denominator, not necessarily a prime.
+The cut $q\le Q$ is a cut by frequency order, not by numerical
+frequency magnitude or a single residue observation. Observing modulo
+$D=\operatorname{lcm}(1,\ldots,Q)$ retains all orders dividing $D$,
+including some greater than $Q$; for example $Q=3$ also retains order
+$6$. Thus the paid spectral cut cannot silently replace the earlier
+modulus-based visible/hidden cut.
+The five FIB modes can encode the indices $q,j$; their separate address
+statistics do not determine the joint condition $(q,j)=1$ or the
+short Möbius sum (I19). Squarefree composite denominators are retained.
+This application narrows the unestimated arithmetic part while
+preserving the actual source, mean and weight. It supplies neither the
+complete FIB approximation rate nor the same-integer Robin sign, and
+has not been Lean compiled or claimed as an original large-sieve result.
+
+## A numerical-frequency cut of the same residual
+
+A frequency's reduced denominator and its circular distance from an
+integer are different observations. The same three inputs used in
+(I20)–(I23) also pay for deleting frequencies away from integers. This
+is another application to the actual coefficients, not a new
+large-sieve theorem or a claim that the remaining quadratic form is
+small. Write $L=\log N$ and let $0<\eta\le1/4$.
+
+The elementary sine bound, including the case $\eta q<1$, gives
+
+$$
+\sum_{\substack{1\le r<q\\\|r/q\|\ge\eta}}
+|1-e(-r/q)|^{-2}\ll\frac{q^2}{1+\eta q}.
+$$
+
+Here $\|t\|$ is distance to the nearest integer. Restricting the sum
+to coprime numerators only decreases it. Apply the uniform coefficient
+bound following (I19), then partial summation to the already supplied
+finite moment $\sum_{q\le X}(q/\varphi(q))^2\le XW(2)$. The angular
+coefficient energy satisfies
+
+$$
+V_{N,\eta}^{\rm away}:=
+\sum_{2\le q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\\|r/q\|\ge\eta}}
+|B_{N,q,r}|^2
+\ll\frac1{L^2}\sum_{q\le N}\frac{(q/\varphi(q))^2}{1+\eta q}
+\le\frac{W(2)\log(1+\eta N)}{\eta L^2}.
+\tag{I25}
+$$
+
+For precision, the implied constant in the first inequality also
+multiplies the final allowance. The final comparison for the weighted
+positive-moment sum follows from integrating $(1+\eta t)^{-1}$ on
+$0\le t\le N$; it does not use a fixed-moment limiting average in
+place of a finite bound.
+
+Retain the actual blocks $I_j$, $M_j=2^jN$ and $Q_j$ of (I23).
+On each block define the exponential sum
+
+$$
+D_{N,\eta,j}(m)=
+\sum_{Q_j<q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\\|r/q\|\ge\eta}}
+B_{N,q,r}e(mr/q).
+$$
+
+Apply the same large sieve separately on dyadic denominator shells
+$Q\le q<2Q$, $Q=2,4,\ldots$, truncated at $N$. On a shell,
+the coefficient argument above gives the uniform allowance
+
+$$
+V_Q^{\rm away}\ll\frac1{\eta L^2}
+\sum_{Q\le q<2Q}\frac{(q/\varphi(q))^2}{q}
+\ll\frac1{\eta L^2}.
+$$
+
+This includes $\eta Q<1$. On each actual block keep the additional
+$q>Q_j$ restriction: it only decreases that shell's coefficient
+energy. The shell's separation cost is $O(Q^2)$, not $N^2$.
+For the shell response $D_Q$ defined piecewise on these blocks,
+
+$$
+\|D_Q\|^2\ll V_Q^{\rm away}
+\sum_j\frac{M_j+Q^2}{M_j^2}
+\ll\frac1{\eta L^2}\left(\frac1N+\frac{Q^2}{N^2}\right).
+$$
+
+The full weighted norm is on $N\le m\le N^2$. Use its triangle
+inequality across denominator shells only after this estimate.
+There are $O(1+L)$ shells and $\sum_QQ\ll N$, so
+
+$$
+\left(\sum_j\|D_{N,\eta,j}\|_{I_j}^2\right)^{1/2}
+\ll\frac1{\sqrt\eta\,L}
+\left(\frac{1+L}{\sqrt N}+\frac{\sum_QQ}{N}\right)
+\ll\frac1{\sqrt\eta\,L}.
+\tag{I26}
+$$
+
+This uses the original large-sieve separation on every shell. It
+avoids the extra logarithm that would result from applying the full
+$N^2$ separation cost after merging all shell energies in (I25).
+No improvement of arbitrary-coefficient separation by angular width
+is assumed. The last block and endpoint $N^2$ remain included. Define the
+retained response, for $m\in I_j$, by
+
+$$
+\mathcal C_{N,\eta}(m)=d_N+
+\sum_{Q_j<q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\\|r/q\|<\eta}}
+B_{N,q,r}e(mr/q).
+$$
+
+The deleted response is the sum of all low-denominator frequencies
+and the high-denominator frequencies away from integers. These two
+sets are disjoint; their functions need not be orthogonal on $I_j$.
+Combining (I23), (I26) and the weighted triangle inequality yields
+
+$$
+\left|\sqrt{E_N}-\left(
+\sum_{m=N}^{N^2}\frac{|\mathcal C_{N,\eta}(m)|^2}{m(m+1)}
+\right)^{1/2}\right|
+\ll\frac{N^{-1/4}}L+
+\frac1{\sqrt\eta\,L}.
+\tag{I27}
+$$
+
+All constants are independent of $N,\eta$. For example,
+$\eta_N=(4\sqrt{\log N})^{-1}$ lies in $(0,1/4]$ for $N\ge3$,
+and the right side is $O((\log N)^{-3/4})$. Thus an actual shrinking
+angular region, together with the same complete-period mean, retains
+the weighted norm up to a vanishing error. For the asymptotic choice
+$\eta_N=(\log N)^{-a}$ this allowance tends to zero when $0<a<2$;
+at $a=2$ it gives only $O(1)$. If $\eta\le1/N$, all nonzero
+frequencies are deleted. The displayed angular allowance is then
+at least $\sqrt N/L$; alternatively the unrestricted coefficient
+bound (I20) gives the allowance $O(\sqrt N/L)$ directly. Taking an
+arbitrarily narrow angular region therefore does not supply a
+small-error reduction through these estimates.
+
+The remaining frequencies satisfy both $q>\sqrt{M_j}$ and
+$\|r/q\|<\eta_N$. They need not be nearly constant over a block:
+$M_j\eta_N$ can grow. The symmetric angular cut preserves conjugate
+pairing, so the retained and deleted responses remain real. It leaves all signed
+correlations within the retained set and with $d_N$ unpaid. A bound
+for an isolated reciprocal-phase Möbius sum would require a further
+uniform summation and kernel correspondence before it could estimate
+this complete norm. As with (I23), a uniform polylogarithmic bound
+for the retained norm squared would still imply RH.
+
+The earlier Mellin strength argument also has a quantitative
+parameter substitution. For any one fixed $0\le\vartheta<1$, a bound
+$E_N\ll N^\vartheta(1+\log N)^A$ for all sufficiently large integers
+$N$, with one finite $A$, changes (I14) to
+$\|S_y(qy)\|_2\ll y^{(1+\vartheta)/2}(1+\log y)^B$.
+The same integral (I15) is then holomorphic for
+$\Re s>(1+\vartheta)/2$, and (I16) excludes zeros in that strict
+half-plane. Consequently any fixed power saving
+$E_N\ll N^{1-\delta}(1+\log N)^A$, $0<\delta\le1$, would already
+supply a fixed zero-free half-plane $\Re s>1-\delta/2$ at every
+height. This is a parameter application of the preceding paper
+argument, not an independently supplied bound. A saving parameter
+that tends to zero with $N$ cannot be substituted for a fixed
+$\delta$, and no conclusion on the boundary line is asserted.
+
+This is a numerical-frequency observation of the same periodic
+response. It is not the FIB composition rotation $C=MJ$, and no
+arithmetic invariance under that active rotation is asserted. The
+five-mode encoding can organize the retained indices without
+supplying their Möbius cancellation. Equations (I25)–(I27) remain
+paper applications of the cited existing inputs, without a new Lean
+declaration or an originality claim.
+
+
+## A numerator cut that follows the observation block
+
+The same supplied inputs pay a narrower restriction on the circular
+numerator $k(r,q)=\min(r,q-r)$, distinct from the angle $k(r,q)/q$.
+For every integer $K\ge1$, the sine estimate used in (I25) gives
+
+$$
+\sum_{\substack{1\le r<q\\(r,q)=1\\k(r,q)>K}}
+|B_{N,q,r}|^2\ll\frac{|b_{N,q}|^2}{K+1},\qquad
+\sum_{2\le q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\k(r,q)>K}}
+|B_{N,q,r}|^2\ll\frac{N}{(K+1)L^2}.
+\tag{I28}
+$$
+
+Indeed, $|1-e(-r/q)|\ge4k(r,q)/q$, and at most two numerators have
+a given positive $k$. Sum the tail of $k^{-2}$ and use the same
+uniform $b_{N,q}$ bound and finite totient moment as in (I20).
+When $K\ge q/2$ the corresponding tail is empty.
+
+Fix $0<b<2$ and use the actual blocks and denominator cutoffs of
+(I23). On block $I_j$, put
+
+$$
+K_j=\left\lceil\frac{N^2}{M_jL^b}\right\rceil.
+$$
+
+Let $G_{N,\eta,b,j}$ be the sum over the frequencies retained in
+$\mathcal C_{N,\eta}$ for which $k(r,q)>K_j$, with their original
+coefficients and phases. Its coefficient energy is bounded by (I28).
+The original $N^{-2}$ separation, the actual weight and
+$K_j+1\ge N^2/(M_jL^b)$ give
+
+$$
+\begin{aligned}
+\sum_j\|G_{N,\eta,b,j}\|_{I_j}^2
+&\ll\sum_j\frac{N(M_j+N^2)}{M_j^2(K_j+1)L^2}\\
+&\ll L^{b-2}\left(\frac{1+\lfloor\log_2N\rfloor}{N}
++\sum_j\frac{N}{M_j}\right)
+\ll L^{b-2}.
+\end{aligned}
+\tag{I29}
+$$
+
+The last geometric sum is at most two, and the other term is
+uniformly bounded for $N\ge3$. Empty frequency sets
+and the final singleton block require no exception.
+
+Define $\mathcal C^{\rm num}_{N,\eta,b}$ on $I_j$ by retaining exactly
+$q>Q_j$, $\|r/q\|<\eta$, and $k(r,q)\le K_j$, together with the
+unchanged $d_N$. The added deletion intersects the previous retained
+set, so no frequency is subtracted twice. Equations (I27)–(I29) give
+
+$$
+\left|\sqrt{E_N}-\|\mathcal C^{\rm num}_{N,\eta,b}\|\right|
+\ll\frac{N^{-1/4}}L+
+\frac1{\sqrt\eta\,L}
++L^{b/2-1}.
+\tag{I30}
+$$
+
+Here the norm is the same weighted norm on the complete interval
+$N\le m\le N^2$. The numerator deletion itself does not require an
+angular restriction: dropping that restriction from its definition
+still gives (I29), and comparison with the denominator-only retained
+response has error $O(N^{-1/4}/L+L^{b/2-1})$.
+
+For example, use $\eta=(4L^{3/2})^{-1}$ and $b=3/2$. The complete
+comparison still costs $O(L^{-1/4})$, while the remaining circular
+numerators also obey $k\le\lceil N/(2^jL^{3/2})\rceil$. For
+$q\asymp N$ this restricts the angle to
+$O(2^{-j}L^{-3/2}+N^{-1})$. This is a further paid restriction,
+including an increasingly small numerator allowance on later blocks;
+it is not a bound for the retained signed norm.
+
+The original mean cannot be removed by rebinding the response at zero.
+Although $R_N(0)=1$ and the exact full expansion can be written as
+$1+\sum B_{N,q,r}(e(mr/q)-1)$, deleting a set in that expression
+would remove $G(m)-G(0)$. Estimate (I29) controls $G(m)$ on the actual
+blocks and does not separately control the constant $G(0)$.
+Keeping the original $d_N$ preserves the paid estimate.
+
+For $q>N/2$ the actual coefficient is
+$b_{N,q}=\mu(q)\log(N/q)/L$. Even after (I30), the earliest block
+contains $m\asymp N$, $k=1$, $q\asymp N$, with reciprocal-phase
+parameter $mk\asymp N$. Results requiring a faster phase do not cover
+that endpoint. The coprimality condition, exact Fourier kernel,
+block-dependent cutoff and mean interaction all remain part of any
+supplier obligation. This is a further application of the same cited
+inputs, without a new supplier theorem, originality claim or Lean
+verification.
+
+
+## Reusing a known centered coefficient family
+
+Ehm's [Gram-matrix and centering source](ehm2024grammatrices.md),
+Section 8.2 and Proposition 8.1, already provides a correction to the
+Selberg coefficients for centering the relevant moments. Its known
+construction need not be reinvented. The linked application compares
+that modified balanced family with the actual family here: the full
+$L^2(0,1)$ norm cost is $O(1/\log N)$, and the difference of the
+square roots of the actual local energies is
+$O(\log N/\sqrt N)$, for any fixed correction constants.
+The centering property additionally requires the source's stated
+linear system. These allowances permit honest transfer of a future
+complete estimate; the source leaves its signed inversion error
+unestimated. They do not reuse the original squarefree Fourier
+support for the modified coefficients, or supply the retained joint
+bound in (I30).
+
+
+## A complete energy allowance from the existing Mertens input
+
+The [Ng source note](../Analytic/ng2004summatorymobius.md#reuse-of-the-unconditional-input)
+already records the classical unconditional Vinogradov–Korobov
+estimate for the actual $\mathcal M(x)=\sum_{n\le x}\mu(n)$.
+Reuse it without proving a new Mertens theorem. For some fixed
+$c_0>0$ and all sufficiently large $x$,
+
+$$
+|\mathcal M(x)|\ll x e^{-c_0\Xi(x)},\qquad
+\Xi(x)=\frac{(\log x)^{3/5}}{(\log\log x)^{1/5}}.
+$$
+
+The existing source note also records the Lee–Leong v5 explicit
+supplier. Only the asymptotic allowance above is used here; no
+numerical constant or starting threshold is certified in this
+application. It pays the following complete energy bound for the
+original coefficients, mean and discrete weight:
+
+$$
+E_N\ll N e^{-c\Xi(N)}
+\qquad\text{for some fixed }c>0.
+\tag{I31}
+$$
+
+Here and below $N$ is a sufficiently large integer. To check the
+actual parameters, fix $0<\kappa<c_0/8$ and put
+
+$$
+Y=N e^{-\kappa\Xi(N)},\qquad X=N e^{\kappa\Xi(N)}.
+$$
+
+Eventually $1<Y<N<X<N^2$. Uniformly for $Y\le x\le N$,
+$\Xi(x)/\Xi(N)\to1$, since $\Xi(N)=o(\log N)$. Thus the known
+Mertens input gives
+
+$$
+\sup_{Y\le x\le N}|\mathcal M(x)|
+\ll N e^{-(c_0/2)\Xi(N)}.
+$$
+
+For the actual integer samples $N\le m\le X$, split the $n$-sum in
+$R_N(m)$ at $Y$. Its part $n\le Y$ is bounded absolutely by $Y$.
+On $[Y,N]$ set
+
+$$
+g_m(x)=\frac{\log(N/x)}L\{m/x\}.
+$$
+
+Its supremum plus total variation is $O(1+m/Y)$, including all
+jumps. On smooth pieces the variation is bounded by
+$\int_Y^N[1/(Lx)+m/x^2]dx$; there are $O(1+m/Y)$ jumps of size
+at most one. Discrete Abel summation uses the actual values $g_m(n)$,
+so no continuity convention at shared integer jumps is required.
+The boundary $\mathcal M(\lfloor Y\rfloor)=\mathcal M(Y)$ is also
+covered by the displayed bound. Consequently
+
+$$
+\begin{aligned}
+|R_N(m)|
+&\ll 1+Y+N e^{-(c_0/2)\Xi(N)}(1+m/Y)\\
+&\ll N e^{-\kappa\Xi(N)}\qquad(N\le m\le X).
+\end{aligned}
+$$
+
+The last step uses $m/Y\le e^{2\kappa\Xi(N)}$ and
+$c_0/2>3\kappa$. The original telescoping weight now gives
+
+$$
+\sum_{N\le m\le X}\frac{|R_N(m)|^2}{m(m+1)}
+\ll N e^{-2\kappa\Xi(N)}.
+$$
+
+For the entire remaining range $X<m\le N^2$, use
+$|R_N(m)|\le1+N$ and
+$\sum_{m>X}1/[m(m+1)]\le1/X$. Its energy is therefore at most
+$O(N^2/X)=O(N e^{-\kappa\Xi(N)})$, proving (I31).
+This argument never separates or optimizes the actual mean and
+cross terms; it bounds the original residual itself.
+
+For every fixed $A>0$, (I31) implies $E_N\ll_A N/(\log N)^A$.
+This is a complete allowance, stronger than any one fixed
+logarithmic saving, but supplies no fixed power saving:
+$c\Xi(N)/\log N=c(\log N)^{-2/5}(\log\log N)^{-1/5}\to0$.
+It therefore supplies neither the uniform polylogarithmic energy
+needed by the earlier strength argument nor a fixed zero-free
+half-plane. The exact FIB approximation rate and the same-integer
+signed Robin estimate remain unresolved. Equation (I31) is a paper
+application of the already owned classical input, without a new
+Mertens result, originality claim or Lean certification.

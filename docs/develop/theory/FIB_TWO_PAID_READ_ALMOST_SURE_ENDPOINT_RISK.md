@@ -724,3 +724,361 @@ overall research goal.
 [Risk]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Equality rigidity and minimum installed complete-controller states
+
+**Definition 8.1 (Closed finite controller and endpoint state cost).**
+Keep exactly Definitions 1.1--1.3: one fixed $0<p<1$, $p\ne1/2$,
+one original endpoint $j\in\{0,1\}$ fixed before acquisition, the
+actual four-state target $H_j$, and the given independent probability
+space $(\mathsf U,\mathcal U,\nu)$ with its unchanged law. A closed
+finite controller is a tuple $(K,\lambda,\delta,c_{\rm init})$, where
+$K$ is a nonempty finite set, its instruction map is
+
+$$
+\lambda:K\longrightarrow
+\{\operatorname{Read}(t):t\in\mathbb Z\}
+\sqcup\{\operatorname{Halt}(h):h\in\mathcal A\},
+\tag{8.1}
+$$
+
+$K_{\rm R}$ and $K_{\rm H}$ are the inverse images of the two
+instruction types, and
+
+$$
+\delta:K_{\rm R}\times\{0,1\}\longrightarrow K,
+\qquad c_{\rm init}:\mathsf U\longrightarrow K
+\tag{8.2}
+$$
+
+has a measurable initialization map, with $K$ discrete. Initialization
+sets the current state to $c_{\rm init}(u)$. In state $r$ with
+$\lambda(r)=\operatorname{Read}(t)$, the controller makes one actual
+call at that fixed integer address, receives exactly $X_t$, and changes
+state to $\delta(r,X_t)$. In a halt state it returns the fixed label
+$h$ and ends. Each instruction has finite duration. There is no silent
+instruction. An execution that never reaches a halt has $\tau=\infty$
+and makes infinitely many charged reads.
+
+After initialization the current element of $K$ contains every runtime
+distinction that can affect an action, a successor or a returned label.
+The seed is not read again. There is no separate phase, counter, clock,
+archive, stack, output latch, program position or other runtime port.
+In particular the last reply is used only in (8.2), and is not available
+beside the resulting state at the next instruction. All installed rows
+count: the state cost is $|K|$, including rows never initialized or
+visited. The table and its integer literals may depend on the fixed
+public $p,j$. This objective does not minimize static address lengths,
+code size, the initialization mechanism, physical bits or writes, time,
+energy, or expected reads.
+
+This is the complete-state instruction convention of
+[Relational II, Definitions 26.1--26.2](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md),
+specialized to the original actual-coordinate observations and fixed
+halt labels. General finite-memory action and update maps also occur in
+Junges et al., *Permissive Finite-State Controllers of POMDPs using
+Parameter Synthesis*, [Definition 7](https://arxiv.org/html/1710.10294v2).
+That background does not supply the endpoint-specific minima below.
+
+Every such table is a legal protocol of Definition 1.2; it is a specified
+subclass, not a representation theorem for every original protocol.
+The original unrestricted class, including internal nonreturn after
+finitely many calls, retains its original meaning. A table may have
+cycles and arbitrarily long read paths. Its benchmark is still the
+almost-sure statistic $q_k=1$, not an all-input hard cap. Repeated,
+separator and remote calls are charged exactly as in Definition 1.2.
+
+Write
+
+$$
+\begin{aligned}
+S_1&=\frac a2+a\eta,&
+S_2&=\frac a2+a\eta+a^2\eta,\\
+M_k(p,j,\nu)&=\min\bigl\{|K|:
+q_k=1,\ L_k=1-S_k\text{ for a controller of (8.1)--(8.2)}\bigr\},
+&&k\in\{1,2\}.
+\end{aligned}
+\tag{8.3}
+$$
+
+The minimum of an empty set is $+\infty$. The values $S_1,S_2$ are
+the inherited unrestricted correctness optima: Original, Theorem 11.4,
+and Risk, Theorem 4.1, supply $S_1$; Theorem 6.1 supplies $S_2$.
+The optimization in (8.3) asks for the least installed state cost among
+tables attaining those values on the same source and seed law.
+
+**Lemma 8.2 (Equality on every positive initialization cell).**
+For a table of Definition 8.1 let
+$\omega_r=\nu(c_{\rm init}^{-1}\{r\})$. If it satisfies
+$q_k=1$ and $L_k=1-S_k$, then every $r$ with $\omega_r>0$, used as
+a deterministic initial state, has $q_k(r)=1$ and correct mass $S_k$.
+
+Proof. Let $q_k(r)$ and $C_k(r)$ be the $J_p$ masses of return within
+$k$ reads and of correct return within $k$ reads when the initial
+state is $r$. Independence and the fact that the seed has no later
+runtime role give the finite sums
+
+$$
+q_k=\sum_{r\in K}\omega_r q_k(r),\qquad
+q_k-L_k=\sum_{r\in K}\omega_r C_k(r),\qquad
+\sum_{r\in K}\omega_r=1.
+\tag{8.4}
+$$
+
+Since $0\le q_k(r)\le1$, the first equality forces $q_k(r)=1$
+whenever $\omega_r>0$. For each such deterministic start the
+inherited unrestricted bound applies, so $C_k(r)\le S_k$.
+The second equality, whose left side is $S_k$, forces equality in
+each positive-weight term. This uses only a finite measurable
+partition of the given seed space, with no atomlessness or extra
+randomness premise. $\square$
+
+**Proposition 8.3 (All one-read attaining starts).** Fix any installed
+table and deterministic initial state $r$ with $q_1(r)=1$. Its correct
+mass is $S_1$ if and only if it starts with $\operatorname{Read}(t)$
+whose active phase $\alpha=t\bmod2$ and active edge
+$e=\{\ell,\ell+1\}$, $t=2\ell+\alpha$, satisfy
+$v_\alpha\notin e$, and its reply-zero and reply-one successors
+halt with labels $h_{1-\alpha}(\sigma)$ and $h_\alpha(\sigma)$,
+respectively. Both successors have positive source probability.
+Consequently every such start visits at least one read state and two
+distinct halt states with positive source probability.
+
+Proof. An initial halt has correct mass at most $a/2<S_1$.
+For every integer first address both reply sections are positive:
+their masses are $1-\eta$ and $\eta$. Thus $q_1(r)=1$ forces
+each successor to be a halt; a further read would exclude that entire
+positive section from $E_1$.
+
+Put $\beta=1-\alpha$. On reply zero the phase-$\beta$ majority
+state has mass $a/2$. The largest phase-$\alpha$ state mass is
+$a^2/2$ if $v_\alpha\in e$, and $ac/2$ otherwise, by Lemma 3.1.
+Both are strictly below $a/2$. Since $b<a$, the unique maximizing
+zero-reply label is $h_\beta(\sigma)$.
+On reply one only phase $\alpha$ remains. Its maximal state mass is
+$\eta/2$ if $v_\alpha\in e$ and $a\eta$ otherwise.
+The former is strictly smaller because $a>1/2$; in the latter case
+the unique maximizer is $h_\alpha(\sigma)$, since $a>b$.
+Hence equality at $S_1$ holds exactly as asserted. The two phase
+label sets are disjoint, so their halt states differ from one another
+and from the read state. $\square$
+
+**Proposition 8.4 (All two-read attaining starts and their forced labels).**
+Fix any installed table and deterministic initial state $r$ with
+$q_2(r)=1$. Its correct mass is $S_2$ if and only if its execution
+from $r$ has the following form. It reads $t=2\ell+\alpha$ first,
+then reads $t_0$ or $t_1$ according to the first reply, and then halts.
+Writing $\beta=1-\alpha$ and $e=\{\ell,\ell+1\}$, the exact
+geometric conditions are:
+
+1. $v_\alpha\in e$.
+2. $t_0$ has parity $\alpha$ and its active edge $f$ is
+   vertex-disjoint from $e$.
+3. $t_1$ has parity $\alpha$ and its active edge $g$ shares exactly
+   one vertex with $e$.
+
+The required terminal labels, with replies in acquisition order, are
+
+$$
+\begin{array}{c|c}
+\text{reply pair}&\text{unique maximizing label}\\ \hline
+00&h_\beta(\sigma)\\
+01&h_\alpha(\sigma)\\
+10&h_\alpha(s_0)\\
+11&h_\alpha(s_1)
+\end{array}
+\qquad
+(s_0,s_1)=
+\begin{cases}
+(\sigma,1-\sigma),&v_\alpha\in e\cap g,\\
+(1-\sigma,\sigma),&v_\alpha\in e\setminus g.
+\end{cases}
+\tag{8.5}
+$$
+
+Every leaf has positive source probability. The three read states
+have distinct actual addresses, and the terminal labels include the
+three distinct states $h_\beta(\sigma)$, $h_\alpha(\sigma)$ and
+$h_\alpha(1-\sigma)$. Thus every attaining start visits at least
+three read states and three halt states with positive source probability.
+
+Proof. We analyze the actual instructions from $r$, without replacing
+them by padded or risk-dominating representatives. An initial halt has
+correct mass at most $a/2<S_2$. The first instruction must therefore
+read some actual integer $t$. Both first-reply sections have positive
+mass. On either section, a successor is either a halt or a second
+read. After a second read, every positive-mass leaf must have a halt
+successor, since any third read there violates $q_2(r)=1$.
+
+Let $D_x$ be the actual correct mass on first reply $x$, including
+all its subsequent returning leaves. For a second read after reply
+one, Lemma 4.1 gives $D_1\le a\eta$; if it instead halts,
+Lemma 3.1 gives the same bound. If the zero successor halts then
+$D_0\le a/2$, by the zero-section calculation in Proposition 8.3.
+It would follow that $D_0+D_1\le S_1<S_2$. Hence the zero
+successor must read $t_0$.
+
+For this actual zero subtree, Lemmas 4.2--4.3 give
+
+$$
+D_0\le B_0\le \frac a2+a^2\eta,
+\qquad D_1\le a\eta.
+\tag{8.6}
+$$
+
+Equality of the total at $S_2$ forces equality in both bounds and
+in every intervening leaf maximum. Opposite parity for $t_0$ loses
+at least $\eta c/2>0$, by (4.9). At the same parity the $00$
+maximum is $a/2$, and the possibilities for the $01$ maximum in
+Lemma 4.2 are exhaustive. A repeat gives zero; an adjacent edge
+gives $a\eta/2<a^2\eta$. For disjoint edges with the target in
+$f$, the maximum is $c\eta/2<a^2\eta$, since $c<2a^2$.
+If the target is in neither edge it is $ac\eta<a^2\eta$,
+since $c<a$. Therefore $D_0=a/2+a^2\eta$ forces precisely
+conditions 1 and 2, using the strict inequalities of (3.1).
+
+Now the first edge contains $v_\alpha$. Halting on first reply
+one gives at most $\eta/2<a\eta$, so that successor must read
+$t_1$. The exhaustive table in Lemma 4.1 shows that a separator,
+a repeated first edge, or a vertex-disjoint edge gives only
+$\eta/2$ on this subtree. Thus $D_1=a\eta$ forces exactly
+condition 3. This argument allows every integer address and either
+first parity. The fuller tables in
+[FixedSeed, Lemmas 2.4--2.5 and Theorems 3.2--3.3](FIB_TWO_PAID_READ_FIXED_SEED_FRONTIER_AND_SUPPORT_INVISIBILITY.md)
+give the same source geometry; their representative policies are not
+being used as state-preserving transformations.
+
+It remains to identify the outputs and check sufficiency on that same
+source. Under conditions 1--3 the leaf source masses and best correct
+masses are
+
+$$
+\begin{array}{c|c|c}
+\text{reply pair}&J_p(C_{xy})&m(C_{xy})\\ \hline
+00&(1+c^2)/2&a/2\\
+01&\eta c&a^2\eta\\
+10&\eta/2&a\eta/2\\
+11&\eta/2&a\eta/2
+\end{array}
+\tag{8.7}
+$$
+
+Indeed $00$ contains all of phase $\beta$ and, in phase $\alpha$,
+two disjoint zero edges. The phase-$\alpha$ largest target-state
+mass there is $a^2c/2<a/2$, whereas the phase-$\beta$ majority
+state has mass $a/2>b/2$. Thus its unique maximizer is
+$h_\beta(\sigma)$. The $01$ leaf certifies phase $\alpha$;
+its two target-state masses are $a^2\eta$ and $b^2\eta$, so
+its unique maximizer is $h_\alpha(\sigma)$. These statements use
+the actual target $S_{v_\alpha}$, not a target transported from the
+other phase.
+
+For $10$ and $11$, the two adjacent edge constraints leave the
+complementary three-spin assignments of (3.2), whose masses are
+$a^2b$ and $ab^2$. Their majority assignments give exactly
+$(s_0,s_1)$ in (8.5), whether $g$ is left or right of $e$.
+To see the distinction directly, on $10$ the two spins of the
+zero edge $g$ are the majority spin and the remaining vertex is
+the minority spin. On $11$ the shared vertex is the minority spin
+and the two outer vertices are the majority spin. Since the target
+belongs to $e$, its two maximizing values are opposite. The phase
+factor $1/2$ proves the last two rows of (8.7); $a>b$ makes each
+maximizer unique. All four source masses are positive.
+
+Consequently (8.5) is necessary for equality. Conversely, conditions
+1--3 with those labels give correct mass equal to the sum of the
+last column of (8.7), namely $S_2$, and return after exactly two
+reads. Finally $e,f,g$ are pairwise different: $f$ is disjoint from
+$e$, while $g$ is adjacent to $e$. Thus $t,t_0,t_1$ are three
+distinct address literals. A fixed instruction state cannot carry
+two of these literals. The three distinct output labels require
+three distinct halt states, disjoint from the read states by (8.1).
+Each required state is reached on a positive source section.
+$\square$
+
+**Theorem 8.5 (Exact installed state costs for the inherited optima).**
+For every original $0<p<1$, $p\ne1/2$, either fixed original
+$j\in\{0,1\}$ and every given unchanged independent seed law,
+the minima of Definition 8.1 are
+
+$$
+M_1(p,j,\nu)=3,\qquad M_2(p,j,\nu)=6.
+\tag{8.8}
+$$
+
+The lower bounds hold over every attaining table of Definition 8.1,
+including tables with cycles, unused rows, early-return options and
+arbitrary measurable seed initialization. They require, respectively,
+at least one read and two halt states, and at least three read and
+three halt states. The matching tables below attain the original
+unrestricted optima, with one and two actual reads on every path.
+
+Proof. There is at least one initialization cell of positive measure.
+For every such cell, Lemma 8.2 and Propositions 8.3--8.4 give the
+stated numbers of distinct states in the installed $K$. Counting
+unused rows cannot reduce those lower bounds. In particular this
+argument bounds every attainer, rather than counting only a chosen
+construction or a representative of its risk.
+
+For the one-read upper bound take three distinct states
+$R,Z,P$, initialize constantly at $R$, and install
+
+$$
+\begin{array}{c|c|cc}
+\text{state}&\text{instruction}&\delta(\cdot,0)&\delta(\cdot,1)\\ \hline
+R&\operatorname{Read}(2(j+2))&Z&P\\
+Z&\operatorname{Halt}(h_1(\sigma))&-&-\\
+P&\operatorname{Halt}(h_0(\sigma))&-&-
+\end{array}
+\tag{8.9}
+$$
+
+The dash means that no successor is used at a halt. This is exactly
+Original, Theorem 11.4's one-call attainer, with its halting labels
+included in $K$. Its actual zero/one correct masses are $a/2$ and
+$a\eta$, so it attains $S_1$. The address is a phase-zero edge
+disjoint from $S_j$ for either allowed $j$; in phase one it is a
+charged separator.
+
+For the two-read upper bound take six distinct states
+$R,R_0,R_1,Z,P,Q$, initialize constantly at $R$, and install
+
+$$
+\begin{array}{c|c|cc}
+\text{state}&\text{instruction}&\delta(\cdot,0)&\delta(\cdot,1)\\ \hline
+R&\operatorname{Read}(2j)&R_0&R_1\\
+R_0&\operatorname{Read}(2(j+2))&Z&P\\
+R_1&\operatorname{Read}(2(j+1))&Q&P\\
+Z&\operatorname{Halt}(h_1(\sigma))&-&-\\
+P&\operatorname{Halt}(h_0(\sigma))&-&-\\
+Q&\operatorname{Halt}(h_0(1-\sigma))&-&-
+\end{array}
+\tag{8.10}
+$$
+
+These are the actual calls and outputs of Definition 5.1, with all
+runtime phases and output distinctions included in the six rows.
+Proposition 5.2 gives their correct masses $a/2,a^2\eta,
+a\eta/2,a\eta/2$ under the original $J_p$, hence correctness
+$S_2$. Neither table uses the seed after its constant initialization,
+so both constructions work on every given auxiliary space without
+changing its law. They need no phase observation or other acquisition
+beside their charged calls. Every binary reply path ends at a halt.
+This proves both upper bounds and (8.8).
+
+The source-relative additional conclusions are the equality rigidity
+of Propositions 8.3--8.4 and the all-attainers installed-state minimum
+(8.8), derived here from the owning endpoint bounds. The unrestricted
+risk values and the actual-source attainers retain their ownership in
+Original, Risk and Sections 5--6; the fuller two-read geometry remains
+credited to FixedSeed, Sections 2--4. Generic complete-state semantics
+and finite-memory controller background retain the citations in
+Definition 8.1. These are `repo-derived` endpoint-memory conclusions,
+with no global-priority claim. Finite representative existence and
+[address compression, Sections 4--6](FIB_FINITE_PAID_READ_ADDRESS_COMPRESSION_AND_SIGNATURE_RADIUS.md)
+are not state-minimality premises. The result compares a legal subclass
+attaining an inherited unrestricted optimum; it does not replace that
+unrestricted protocol comparison or extend (8.8) to a different runtime
+interface. $\square$
+
+## 追加锚（本行以下为增补区）
