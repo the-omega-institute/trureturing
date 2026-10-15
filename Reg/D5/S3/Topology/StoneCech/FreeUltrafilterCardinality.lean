@@ -64,7 +64,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
     ⟨fun u => pure_zero_not_free u.property⟩
   rw [Cardinal.mk_eq_zero] at h
   have hpos : (0 : Cardinal) < 2 ^ Cardinal.continuum :=
-    lt_of_le_of_lt (zero_le Cardinal.continuum) (Cardinal.cantor Cardinal.continuum)
+    lt_of_le_of_lt (Cardinal.zero_le Cardinal.continuum) (Cardinal.cantor Cardinal.continuum)
   exact (not_le_of_gt hpos) h
 
 theorem dependence : ObservationalDependence signature actual := by

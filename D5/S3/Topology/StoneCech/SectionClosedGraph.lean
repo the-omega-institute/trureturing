@@ -6,7 +6,7 @@
    utility: none
    digest: Actual section-dense selectors carry a closed graph with finite unbounded cliques. -/
 
-/-!
+/-
 # Closed fibre graphs on actual principal extensions
 
 The vertex space is the actual principal extension of a section-good selector.
