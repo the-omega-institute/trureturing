@@ -516,8 +516,6 @@ theorem result : ¬ claim := by
     norm_num [Matrix.trace, Matrix.mul_apply, Matrix.vecMul, dotProduct,
       numberOperator, Matrix.diagonal_apply_eq, Matrix.diagonal_apply_ne,
       Fin.sum_univ_succ]
-    simp [Matrix.diagonal_apply_ne]
-    norm_num
   have dephasing_series (eta m n : ℝ) :
       HasSum (fun k : ℕ => (2*eta*m*n)^k/(k.factorial : ℝ) *
         Real.exp (-eta*(m^2+n^2))) (Real.exp (-eta*(m-n)^2)) := by

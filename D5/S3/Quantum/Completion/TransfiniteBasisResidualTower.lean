@@ -195,7 +195,7 @@ private lemma limit_stage (b : HilbertBasis I K H) [LinearOrder I] (i : I)
     · rintro ⟨j, hxj⟩
       exact hxj.trans j.2
     · intro hxi
-      rcases (hi.lt_iff_exists_lt).mp hxi with ⟨j, hji, hxj⟩
+      rcases (hi.lt_iff_exists_lt).mp hxi with ⟨j, hxj, hji⟩
       exact ⟨⟨j, hji⟩, hxj⟩
   constructor
   · calc

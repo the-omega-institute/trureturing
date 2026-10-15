@@ -460,7 +460,7 @@ theorem scalar_counting_identity {w : List Bool} (hw : w ≠ []) {x : ℝ}
     real_counting_identity hw,seriesEval_realOverlapSeries]
 
 noncomputable def lengthMoment (f : PowerSeries ℝ) : PowerSeries ℝ :=
-  PowerSeries.X * PowerSeries.derivative ℝ f
+  PowerSeries.X * PowerSeries.derivative f
 
 theorem coeff_lengthMoment (f : PowerSeries ℝ) (m : ℕ) :
     PowerSeries.coeff m (lengthMoment f)=(m:ℝ)*PowerSeries.coeff m f := by

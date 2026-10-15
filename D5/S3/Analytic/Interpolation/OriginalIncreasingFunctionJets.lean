@@ -688,8 +688,6 @@ theorem result (n : ℕ) : PnOriginal.P n := by
               rfl
             · intro q _
               convert (hmomentintegrable q).smul (c q : ℝ) using 1
-              funext t
-              simp [smul_smul]
           _ = r := hc
       have hmixdiff : ContDiff ℝ ∞ (mixture c) :=
         ContDiff.sum fun q _ => contDiff_const.mul (hpdiff q.1 q.2)

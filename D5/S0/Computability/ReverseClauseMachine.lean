@@ -146,8 +146,9 @@ def reverseMachine : FinTM2 where
 def variableName (i : Nat) : Conventional.Name := true :: List.replicate i false
 
 def saturatedFormula {n : Nat} (F : UnaryFormula n) : Conventional.Formula :=
-  F.map (fun clause => clause.map (fun literal => (variableName literal.1.val,literal.2))) ++
-    (List.finRange n).map (fun i => [(variableName i.val,true),(variableName i.val,false)])
+  F.map (fun clause => .ofLiterals (clause.literals.map
+    (fun literal => (variableName literal.1.val,literal.2)))) ++
+    (List.finRange n).map (fun i => (Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)]))
 
 def convertedWord (w : List Bool) : List Bool :=
   Conventional.formulaWord (saturatedFormula (preparedFormula w).2)
@@ -176,13 +177,14 @@ macro "reverse_transition" : tactic =>
 
 def renamedLiteral {n : Nat} (literal : Fin n × Bool) : Conventional.Name × Bool :=
   (variableName literal.1.val,literal.2)
-def renamedClause {n : Nat} (c : Std.Sat.CNF.Clause (Fin n)) := c.map renamedLiteral
+def renamedClause {n : Nat} (c : Std.Sat.CNF.Clause (Fin n)) :=
+  Std.Sat.CNF.Clause.ofLiterals (c.literals.map renamedLiteral)
 def queryClauseClock {n : Nat} (c : Std.Sat.CNF.Clause (Fin n)) : Nat :=
-  n+6+(c.map (fun literal => literal.1.val+4)).sum
+  n+6+(c.literals.map (fun literal => literal.1.val+4)).sum
 
 def tautologies (offset count : Nat) : Conventional.Formula :=
   (List.range count).map (fun j =>
-    [(variableName (offset+j),true),(variableName (offset+j),false)])
+    (Std.Sat.CNF.Clause.ofLiterals [(variableName (offset+j),true),(variableName (offset+j),false)]))
 
 def preWords (words : PreStack → List Bool) : ReverseStack → List Bool
   | .pre k => words k
@@ -234,14 +236,15 @@ def reverseExecution (w : List Bool) : Nonempty (EvalsToInTime reverseMachine.st
               List.reverse_append,List.append_assoc] <;> omega
     have clause : ∀ (c : Std.Sat.CNF.Clause (Fin n)) (tail universeBits reversed : List Bool),
         EvalsToInTime reverseMachine.step
-          (reverseCfg .clauseFirst (c.flatMap unaryLiteral ++ [true,false] ++ tail)
+          (reverseCfg .clauseFirst (c.literals.flatMap unaryLiteral ++ [true,false] ++ tail)
             universeBits [] [] reversed [])
           (some (reverseCfg .bodyFirst tail universeBits [] []
-            (((c.map renamedLiteral).flatMap Conventional.literalWord ++ [true,false]).reverse ++
+            (((c.literals.map renamedLiteral).flatMap Conventional.literalWord ++ [true,false]).reverse ++
               reversed) []))
-          ((c.map (fun literal => literal.1.val+4)).sum+2) := by
+          ((c.literals.map (fun literal => literal.1.val+4)).sum+2) := by
       intro c
-      induction c with
+      generalize c.literals = literals
+      induction literals with
       | nil =>
         intro tail universeBits reversed
         have first : reverseMachine.step
@@ -330,7 +333,7 @@ def reverseExecution (w : List Bool) : Nonempty (EvalsToInTime reverseMachine.st
       | cons c G ih =>
         intro universeBits reversed
         let tail := G.flatMap queryClause ++ [false,false]
-        let input := List.replicate (n+1) true ++ false::(c.flatMap unaryLiteral ++ [true,false] ++ tail)
+        let input := List.replicate (n+1) true ++ false::(c.literals.flatMap unaryLiteral ++ [true,false] ++ tail)
         have first : reverseMachine.step
             (reverseCfg .bodyFirst (false::true::input) universeBits [] [] reversed []) =
             some (reverseCfg .bodySecond (true::input) universeBits [] [] reversed []) := by
@@ -341,13 +344,13 @@ def reverseExecution (w : List Bool) : Nonempty (EvalsToInTime reverseMachine.st
           reverse_transition
         have r1 := EvalsToInTime.trans _ 1 1 _ _ _ (single _ _ first) (single _ _ second)
         have r2 := EvalsToInTime.trans _ 2 (n+2) _ _ _ r1
-          (coefficient (n+1) (c.flatMap unaryLiteral ++ [true,false] ++ tail)
+          (coefficient (n+1) (c.literals.flatMap unaryLiteral ++ [true,false] ++ tail)
             universeBits (true::false::reversed))
         have r3 := EvalsToInTime.trans _ _ _ _ _ _ r2
           (clause c tail universeBits (true::false::reversed))
         have r4 := EvalsToInTime.trans _ _ _ _ _ _ r3
           (ih universeBits
-            (((c.map renamedLiteral).flatMap Conventional.literalWord ++ [true,false]).reverse ++
+            (((c.literals.map renamedLiteral).flatMap Conventional.literalWord ++ [true,false]).reverse ++
               true::false::reversed))
         convert r4 using 1 <;>
           simp [tail,input,queryClause,queryClauseClock,renamedClause,Conventional.clauseWord,
@@ -459,7 +462,7 @@ def reverseExecution (w : List Bool) : Nonempty (EvalsToInTime reverseMachine.st
           (ih (offset+1)
             ([false,true,false].reverse ++ (escapedZeros offset).reverse ++ out))
         have specification : tautologies offset (count+1) =
-            [(variableName offset,true),(variableName offset,false)] ::
+            (Std.Sat.CNF.Clause.ofLiterals [(variableName offset,true),(variableName offset,false)]) ::
               tautologies (offset+1) count := by
           simp [tautologies,List.range_succ_eq_map,List.map_map,Nat.add_assoc,
             Nat.add_comm,Nat.add_left_comm]
@@ -495,6 +498,7 @@ def reverseExecution (w : List Bool) : Nonempty (EvalsToInTime reverseMachine.st
         apply single
         apply congrArg some
         dsimp [FinTM2.step,TM2.step,reverseMachine,TM2.stepAux,reverseCfg,reverseWords,read,held,haltList]
+        dsimp only [cond]
         congr 1
         funext k
         cases k with
@@ -532,7 +536,7 @@ def reverseExecution (w : List Bool) : Nonempty (EvalsToInTime reverseMachine.st
     have r5 := EvalsToInTime.trans _ _ _ _ _ _ r4 (clear n reversed)
     have r6 := EvalsToInTime.trans _ _ _ _ _ _ r5 (returnOutput (false::false::reversed) [])
     have enumeration : (List.finRange n).map (fun i =>
-        [(variableName i.val,true),(variableName i.val,false)]) = tautologies 0 n := by
+        (Std.Sat.CNF.Clause.ofLiterals [(variableName i.val,true),(variableName i.val,false)])) = tautologies 0 n := by
       apply List.ext_getElem
       · simp [tautologies]
       · intro i hi hj

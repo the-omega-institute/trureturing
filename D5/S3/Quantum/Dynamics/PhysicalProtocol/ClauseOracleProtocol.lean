@@ -153,6 +153,7 @@ theorem one_query_run (w : List Bool) :
           some (haltList materializeMachine input) := by
         apply congrArg some
         dsimp [materializeMachine,TM2.stepAux,materializeCfg,postStacks,readSymbol,haltList]
+        simp only [Bool.cond_true]
         congr 1
         funext k
         cases k <;> rfl
@@ -172,6 +173,7 @@ theorem one_query_run (w : List Bool) :
           some (materializeCfg (some .reverse) none (a::input) buffer) := by
         apply congrArg some
         dsimp [materializeMachine,TM2.stepAux,materializeCfg,postStacks,readSymbol]
+        simp only [Bool.cond_false]
         congr 1
         funext k
         cases k <;> rfl

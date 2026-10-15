@@ -29,16 +29,16 @@ def retainedLaw (θ : Presentation H) : ProbabilityMeasure (PathSpace (Positive 
   Classical.choose (original_law (trim θ))
 
 theorem inclusion_measurable (θ : Presentation H) : Measurable (includePath θ) := by
-  exact (measurable_pi_lambda _ fun t => measurable_subtype_coe.comp
+  exact (Measurable.of_eval fun t => measurable_subtype_coe.comp
     ((measurable_pi_apply t).comp measurable_fst)).prodMk measurable_snd
 
 /-- The original law is the actual inclusion pushforward of the selected retained law. -/
 def jointLaw (θ : Presentation H) : ProbabilityMeasure (PathSpace H) :=
-  (retainedLaw θ).map (inclusion_measurable θ).aemeasurable
+  (retainedLaw θ).map (includePath θ)
 
 /-- The visible marginal of that same original hidden/output law. -/
 def visibleLaw (θ : Presentation H) : ProbabilityMeasure (ℤ → Bool) :=
-  (jointLaw θ).map measurable_snd.aemeasurable
+  (jointLaw θ).map Prod.snd
 
 /-- The endpoint class event on the original space. Ghost states have no retained
 class; their event fibers are empty and have zero actual mass. -/
@@ -84,11 +84,11 @@ theorem same_law_trimming (θ : Presentation H) :
   have hs (a : ℤ) : (jointLaw θ : Measure (PathSpace H)).map (shift a) = jointLaw θ := by
     change ((retainedLaw θ : Measure (PathSpace (Positive θ))).map (includePath θ)).map (shift a) = _
     have hm : Measurable (shift (H := H) a) := by
-      exact (measurable_pi_lambda _ fun t => (measurable_pi_apply (a+t)).comp measurable_fst).prodMk
-        (measurable_pi_lambda _ fun t => (measurable_pi_apply (a+t)).comp measurable_snd)
+      exact (Measurable.of_eval fun t => (measurable_pi_apply (a+t)).comp measurable_fst).prodMk
+        (Measurable.of_eval fun t => (measurable_pi_apply (a+t)).comp measurable_snd)
     have hmr : Measurable (shift (H := Positive θ) a) := by
-      exact (measurable_pi_lambda _ fun t => (measurable_pi_apply (a+t)).comp measurable_fst).prodMk
-        (measurable_pi_lambda _ fun t => (measurable_pi_apply (a+t)).comp measurable_snd)
+      exact (Measurable.of_eval fun t => (measurable_pi_apply (a+t)).comp measurable_fst).prodMk
+        (Measurable.of_eval fun t => (measurable_pi_apply (a+t)).comp measurable_snd)
     rw [Measure.map_map hm (inclusion_measurable θ)]
     have he : shift a ∘ includePath θ = includePath θ ∘ shift a := rfl
     rw [he, ← Measure.map_map (inclusion_measurable θ) hmr]
@@ -103,8 +103,8 @@ theorem same_law_trimming (θ : Presentation H) :
         (Prod.snd : PathSpace H → ℤ → Bool) =
         (Prod.snd : PathSpace H → ℤ → Bool) ∘ shift (H := H) a := rfl
     rw [he, ← Measure.map_map measurable_snd (by
-      exact (measurable_pi_lambda _ fun t => (measurable_pi_apply (a+t)).comp measurable_fst).prodMk
-        (measurable_pi_lambda _ fun t => (measurable_pi_apply (a+t)).comp measurable_snd)), hs a]
+      exact (Measurable.of_eval fun t => (measurable_pi_apply (a+t)).comp measurable_fst).prodMk
+        (Measurable.of_eval fun t => (measurable_pi_apply (a+t)).comp measurable_snd)), hs a]
     rfl
   refine ⟨hc,hr.1,rfl,hp,hr.2.1,hs,hv,?_,?_,trim_no11 θ,?_⟩
   · exact visible_masses θ (jointLaw θ : Measure (PathSpace H)) hc

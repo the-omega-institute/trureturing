@@ -76,7 +76,7 @@ theorem record_action_controls_coherence_survival
       calc
         (∏ r ∈ Finset.range N, ‖overlap r‖) <=
             ∏ _r ∈ Finset.range N, (1 : Real) := by
-          exact Finset.prod_le_prod
+          exact Finset.prod_le_prod₀
             (fun _ _ => norm_nonneg _)
             (fun r _ => overlapBound r)
         _ = 1 := by simp

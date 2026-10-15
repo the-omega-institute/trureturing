@@ -978,7 +978,7 @@ theorem sparse_gcd_sampling :
       have heq := hid v w htable k hk
       exact (Nat.div_lt_self hH hp.one_lt).ne (hw.symm.trans (heq.symm.trans hv))
     · exact fun hD => hcombine H hH S fun p hp he =>
-        ((hlocal p hp).1.2.2.2.1 _ he S hS).out 0 4 |>.mp
+        ((hlocal p hp).1.2.2.2.1 _ he S hS).out 1 5 |>.mp
           (hD p hp _ he (Nat.ordProj_dvd H p) (Nat.pow_succ_factorization_not_dvd hH.ne' hp))
   refine ⟨hlocal, hglobal, by simp [actualGcd], ?_⟩
   intro p hp e he S hS hD

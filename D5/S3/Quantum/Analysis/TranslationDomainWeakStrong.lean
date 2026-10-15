@@ -64,7 +64,7 @@ theorem translation_domain_iff (f h : ℝ → ℂ) (hf : MemLp f 2 (volume : Mea
       have hi : MemLp (K.indicator (fun _ : ℝ => (1 : ℝ))) 2
           (volume : Measure ℝ) := memLp_indicator_const 2 hKm (1 : ℝ) (Or.inr hKtop)
       have hm : MemLp (fun x : ℝ => (K.indicator (fun _ : ℝ => (1 : ℝ))) x * ‖g x‖)
-          1 (volume : Measure ℝ) := MemLp.mul hg.norm hi
+          1 (volume : Measure ℝ) := MemLp.mul hi hg.norm
       simpa [mul_assoc] using hm.const_mul C₀
     have hFmeas : ∀ r : ℝ, AEStronglyMeasurable
         (fun x : ℝ => (φ (x - r) : ℂ) * g x) (volume : Measure ℝ) := by
@@ -78,7 +78,7 @@ theorem translation_domain_iff (f h : ℝ → ℂ) (hf : MemLp f 2 (volume : Mea
         apply MemLp.of_le_mul (c := 1) hφlp hc.aestronglyMeasurable
         filter_upwards [] with x
         simp
-      exact memLp_one_iff_integrable.mp (MemLp.mul hg hφlpC)
+      exact memLp_one_iff_integrable.mp (MemLp.mul hφlpC hg)
     have hF'deriv : ∀ x r : ℝ, HasDerivAt
         (fun r : ℝ => (φ (x - r) : ℂ) * g x)
         (((-(deriv φ (x - r)) : ℝ) : ℂ) * g x) r := by

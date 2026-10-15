@@ -312,6 +312,7 @@ theorem dense_query_run (w : List Bool) :
         apply single
         apply congrArg some
         dsimp [queryCompiler,TM2.stepAux,compilerTransferCfg,compilerTransferWords,compilerRead,compilerHeld]
+        simp only [cond_true, cond_false]
         congr 1
         funext k
         cases k with
@@ -326,6 +327,7 @@ theorem dense_query_run (w : List Bool) :
             some (compilerTransferCfg .collect input (b::saved) output) := by
           apply congrArg some
           dsimp [queryCompiler,TM2.stepAux,compilerTransferCfg,compilerTransferWords,compilerRead,compilerHeld]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k with
@@ -350,6 +352,7 @@ theorem dense_query_run (w : List Bool) :
         apply congrArg some
         dsimp [queryCompiler,TM2.stepAux,compilerTransferCfg,compilerTransferWords,compilerRead,compilerHeld,
           compilerPreWords,initList,preMachine]
+        simp only [cond_true, cond_false]
         congr 1
         funext k
         cases k with
@@ -364,6 +367,7 @@ theorem dense_query_run (w : List Bool) :
             some (compilerTransferCfg .restore [] saved (b::output)) := by
           apply congrArg some
           dsimp [queryCompiler,TM2.stepAux,compilerTransferCfg,compilerTransferWords,compilerRead,compilerHeld]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k with
