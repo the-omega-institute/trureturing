@@ -43,6 +43,22 @@ internal static partial class DigestionQuerySelection
         }
 
         var neighborIds = new HashSet<string>(StringComparer.Ordinal);
+        // Historical cuts need not be fresh claim or physical-leaf boundaries.
+        // Catalogue only this source's identities, inspect their immutable spans,
+        // and retain metadata/CAS only for the target's exterior neighborhood.
+        var candidateIds = repository.SearchCurrentPaths([Literal(BackfillInventoryLoader.RootPath + target.SourceId)])
+            .Where(IsAtomPath).Select(Path.GetFileNameWithoutExtension).OfType<string>()
+            .Where(id => DigestionFingerprint.IsCanonicalSha256("sha256:" + id)).Distinct(StringComparer.Ordinal).ToArray();
+        var candidatePaths = candidateIds.Select(id => Literal(DigestionCasStore.RootPath + id)).ToArray();
+        var existingPaths = repository.SearchCurrentPaths(candidatePaths);
+        var candidates = existingPaths.Count == 0 ? RawRepositorySnapshot.Create([])
+            : repository.ReadCurrent(existingPaths.Select(Literal).ToArray());
+        var historicalIds = DigestionAtomContextProjection.HistoricalNeighborIds(sourceFile.RawBytes,
+            targetBytes.Value, candidates.Entries.Select(entry =>
+                (Path.GetFileName(entry.Path), entry.Bytes)));
+        neighborIds.UnionWith(historicalIds);
+        raw = Merge(raw, RawRepositorySnapshot.Create(candidates.Entries
+            .Where(entry => historicalIds.Contains(Path.GetFileName(entry.Path)))));
         for (var index = 0; index < atomized.Claims.Length; index++)
         {
             if (atomized.Claims[index].RawBytes.AsSpan().IndexOf(targetBytes.Value.AsSpan()) < 0) continue;

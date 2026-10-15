@@ -292,6 +292,34 @@ internal static class DigestionAtomContextProjection
         }
     }
 
+    // Discovery uses source-owned CAS identities, not current grammar boundaries.
+    // Ancestors and strict interiors cannot be exterior neighbors of this subtree;
+    // selected exterior parents are subsequently expanded by the ordinary Plan path.
+    internal static HashSet<string> HistoricalNeighborIds(ImmutableArray<byte> source,
+        ImmutableArray<byte> target, IEnumerable<(string AtomId, ImmutableArray<byte> RawBytes)> candidates)
+    {
+        var targets = OccurrenceStarts(source, target).Select(start => (Start: start, End: start + target.Length)).ToArray();
+        var spans = candidates.SelectMany(candidate => OccurrenceStarts(source, candidate.RawBytes)
+            .Select(start => (candidate.AtomId, Start: start, End: start + candidate.RawBytes.Length))).ToArray();
+        var result = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var occurrence in targets)
+        {
+            var previous = spans.Where(span => span.End <= occurrence.Start)
+                .OrderByDescending(static span => span.End).ThenBy(static span => span.Start).FirstOrDefault();
+            var next = spans.Where(span => span.Start >= occurrence.End)
+                .OrderBy(static span => span.Start).ThenByDescending(static span => span.End).FirstOrDefault();
+            if (previous.AtomId is not null) result.Add(previous.AtomId);
+            if (next.AtomId is not null) result.Add(next.AtomId);
+            // Crossing historical spans must reach the projection's existing overlap
+            // rejection rather than disappear because their boundaries are not fresh.
+            foreach (var span in spans.Where(span => span.Start < occurrence.End && span.End > occurrence.Start
+                && !(span.Start <= occurrence.Start && span.End >= occurrence.End)
+                && !(span.Start >= occurrence.Start && span.End <= occurrence.End)))
+                result.Add(span.AtomId);
+        }
+        return result;
+    }
+
     internal static IEnumerable<int> OccurrenceStarts(ImmutableArray<byte> source, ImmutableArray<byte> fragment)
     {
         if (fragment.IsEmpty) yield break;
