@@ -77,7 +77,7 @@ private theorem product_norm_le_prefix (ell : ℝ) (hell : 0 < ell) (xi : ℝ) (
   apply le_of_tendsto hp.tendsto_prod_nat.norm
   filter_upwards [eventually_ge_atTop k] with n hn
   rw [norm_prod]
-  exact Finset.prod_le_prod_of_subset_of_le_one (Finset.range_mono hn)
+  exact Finset.prod_le_prod_of_subset_of_le_one₀ (Finset.range_mono hn)
     (fun j _ => norm_nonneg _) (fun j _ _ => real_factor_norm_le_one _ _)
 
 /-- Retaining an arbitrary finite prefix gives every inverse-power tail bound. -/
@@ -98,7 +98,7 @@ theorem sinc_product_decay_bound (ell : ℝ) (hell : 0 < ell) (k : ℕ) :
           ‖complexSinc ((dyadicHalfWidth ell j : ℝ) * (xi : ℂ))‖ :=
       product_norm_le_prefix ell hell xi k
     _ ≤ ∏ j ∈ Finset.range k, (dyadicHalfWidth ell j)⁻¹ / |xi| :=
-      Finset.prod_le_prod (fun j _ => norm_nonneg _)
+      Finset.prod_le_prod₀ (fun j _ => norm_nonneg _)
         (fun j _ => real_factor_norm_le_inv (ha j) hxi0)
     _ = C / |xi| ^ k := by simp [C, Finset.prod_div_distrib]
 

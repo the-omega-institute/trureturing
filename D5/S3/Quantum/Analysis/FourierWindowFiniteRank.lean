@@ -365,7 +365,7 @@ theorem fourier_window_finite_rank_approximation :
       ‖mon k s x‖ = ∏ j : Fin k, ‖x (s j)‖ := by
         simp [mon, norm_prod]
       _ ≤ ∏ _j : Fin k, r := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro j hj
           exact norm_nonneg _
         · intro j hj

@@ -24,7 +24,6 @@ theorem golden_period_twelve_orbits_ad_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_period_twelve_orbits_eh_nodup :
     (goldenPeriodTwelveOrbitsEH.flatMap goldenOrbitStates).Nodup := by
@@ -37,7 +36,6 @@ theorem golden_period_twelve_orbits_eh_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_period_twelve_orbits_il_nodup :
     (goldenPeriodTwelveOrbitsIL.flatMap goldenOrbitStates).Nodup := by
@@ -50,7 +48,6 @@ theorem golden_period_twelve_orbits_il_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_period_twelve_orbits_mp_nodup :
     (goldenPeriodTwelveOrbitsMP.flatMap goldenOrbitStates).Nodup := by
@@ -63,7 +60,6 @@ theorem golden_period_twelve_orbits_mp_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_period_twelve_orbits_qs_nodup :
     (goldenPeriodTwelveOrbitsQS.flatMap goldenOrbitStates).Nodup := by
@@ -75,7 +71,6 @@ theorem golden_period_twelve_orbits_qs_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_period_twelve_orbits_tv_nodup :
     (goldenPeriodTwelveOrbitsTV.flatMap goldenOrbitStates).Nodup := by
@@ -87,7 +82,6 @@ theorem golden_period_twelve_orbits_tv_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_period_twelve_orbits_wy_nodup :
     (goldenPeriodTwelveOrbitsWY.flatMap goldenOrbitStates).Nodup := by
@@ -99,7 +93,6 @@ theorem golden_period_twelve_orbits_wy_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_period_twelve_orbits_ad_eh_disjoint : List.Disjoint
     (goldenPeriodTwelveOrbitsAD.flatMap goldenOrbitStates)

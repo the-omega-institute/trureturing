@@ -59,7 +59,7 @@ private theorem accumulated_product (k : ℕ) (z : ℂ) :
   calc
     _ ≤ ∏ j ∈ range k, Real.exp (-2 * z.re / ((j + 1 : ℕ) : ℝ) +
         ‖z‖ ^ 2 / ((j + 1 : ℕ) : ℝ) ^ 2) :=
-      prod_le_prod (fun _ _ => sq_nonneg _) (fun j _ => hfactor j)
+      prod_le_prod₀ (fun _ _ => sq_nonneg _) (fun j _ => hfactor j)
     _ = _ := by
       rw [← Real.exp_sum]
       congr 1

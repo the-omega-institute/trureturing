@@ -307,9 +307,8 @@ theorem coalescence (m count : ℕ)
         else ((column : ℕ).choose ((row : ℕ) - m) : ℤ)).det := by
   classical
   have separate : ∀ size : ℕ, ∀ degree : Fin size →₀ ℕ, ∀ powers : Fin size → ℕ,
-      MvPolynomial.coeff degree
-        (∏ index : Fin size, (1 + MvPolynomial.X index :
-          MvPolynomial (Fin size) ℤ) ^ powers index) =
+      AddMonoidAlgebra.coeff (∏ index : Fin size, (1 + MvPolynomial.X index :
+          MvPolynomial (Fin size) ℤ) ^ powers index) degree =
             ∏ index : Fin size, ((powers index).choose (degree index) : ℤ) := by
     intro size
     induction size with
@@ -366,7 +365,7 @@ theorem coalescence (m count : ℕ)
     apply MvPolynomial.IsHomogeneous.prod
     intro index _
     exact MvPolynomial.isHomogeneous_X_pow _ _
-  have vandermonde_coefficient : MvPolynomial.coeff degree vandermonde = 1 := by
+  have vandermonde_coefficient : AddMonoidAlgebra.coeff vandermonde degree = 1 := by
     dsimp [vandermonde]
     rw [determinant_sum, MvPolynomial.coeff_sum]
     simp only [MvPolynomial.coeff_C_mul, Matrix.vandermonde,
@@ -390,8 +389,8 @@ theorem coalescence (m count : ℕ)
       simp [not_degree]
     · simp
   have extract : ∀ polynomial : MvPolynomial (Fin count) ℤ,
-      MvPolynomial.coeff degree (vandermonde * polynomial) =
-        MvPolynomial.coeff 0 polynomial := by
+      AddMonoidAlgebra.coeff (vandermonde * polynomial) degree =
+        AddMonoidAlgebra.coeff polynomial 0 := by
     intro polynomial
     rw [MvPolynomial.coeff_mul, sum_eq_single (degree, 0)]
     · simp [vandermonde_coefficient]
@@ -411,7 +410,7 @@ theorem coalescence (m count : ℕ)
     dsimp [vandermonde]
     rw [Matrix.det_vandermonde]
     simp [translate, map_prod, sub_eq_add_neg, add_assoc, add_comm, add_left_comm]
-  have constant_translation : MvPolynomial.coeff 0 (translate divided) =
+  have constant_translation : AddMonoidAlgebra.coeff (translate divided) 0 =
       MvPolynomial.eval (fun _ => 1) divided := by
     change MvPolynomial.constantCoeff (translate divided) = _
     have composition : MvPolynomial.constantCoeff.comp translate =
@@ -427,11 +426,10 @@ theorem coalescence (m count : ℕ)
     rw [division, map_mul, ← Matrix.det_vandermonde]
     rw [translate_vandermonde]
   have determinant_coefficient :
-      MvPolynomial.coeff degree
-        (translate
+      AddMonoidAlgebra.coeff (translate
           (Matrix.of fun row column : Fin (m + count) =>
             if before : (row : ℕ) < m then MvPolynomial.C (top ⟨row, before⟩ column)
-            else MvPolynomial.X ⟨(row : ℕ) - m, by omega⟩ ^ (column : ℕ)).det) =
+            else MvPolynomial.X ⟨(row : ℕ) - m, by omega⟩ ^ (column : ℕ)).det) degree =
         (Matrix.of fun row column : Fin (m + count) =>
           if before : (row : ℕ) < m then top ⟨row, before⟩ column
           else ((column : ℕ).choose ((row : ℕ) - m) : ℤ)).det := by
