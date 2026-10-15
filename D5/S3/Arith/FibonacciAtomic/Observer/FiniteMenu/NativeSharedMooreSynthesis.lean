@@ -1,9 +1,9 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis
+/- GID: D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis
    generality: I
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
-   utility: kind=checker; basis=terminal=atom:ff3bb899d5b2f33fe3e1101ad891ee1b39341870f099d20613050e0974f781d7; instance=D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.cyclicInput
+   utility: kind=checker; basis=terminal=atom:ff3bb899d5b2f33fe3e1101ad891ee1b39341870f099d20613050e0974f781d7; instance=D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.cyclicInput
    digest: Shared counted Moore tables transfer at identical export, state and invocation budgets and admit finite synthesis on every actual row fiber. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeSixSourceMoore
@@ -14,7 +14,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 
-namespace D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+namespace D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
 
 open GenealogicalFiberTransport (Source substitution)
 open ActualTreeReadoutAcquisition (Address Reply readout)
@@ -772,4 +772,4 @@ def cyclicInput : Candidate (.of (.inr 0)) 2 1 where
 #print axioms finite_shared_synthesis
 #print axioms synthesize
 
-end D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+end D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis

@@ -1,15 +1,15 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+import D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
 import Reg.Support.DependentFamily
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
 open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (readout)
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSixSourceMoore (Controller Run)
-open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -73,8 +73,8 @@ def family : Registration arena (type_of% (@native_evaluate_iff.{u,v})) where
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@native_evaluate_iff.{u,v})
     (type_of% (realize signature.{u,v} actual.readout actual.anchor)) Type Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.native_evaluate_iff.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.Evaluator.family
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.native_evaluate_iff.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.Evaluator.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -90,7 +90,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
     definition := none
     coordinates := #[0,1,2,3,4]
     readouts := #[{
@@ -143,8 +143,8 @@ def family : Registration arena.{u,v} (type_of% (@terminating_path_nodup.{u,v}))
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@terminating_path_nodup.{u,v})
     (type_of% (realize signature.{u} actual.readout actual.anchor)) Type Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.terminating_path_nodup.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.NoRepeat.family
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.terminating_path_nodup.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.NoRepeat.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -160,7 +160,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -209,6 +209,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   cases i
   decide +kernel
 
+set_option maxHeartbeats 400000 in
 def family : Registration arena (type_of% (@check_spec)) where
   actual := actual
   bridge := ⟨fun h p A => @h _ _ _ A p.r p.q,fun h C a b A r q => h ⟨C,a,b,r,q⟩ A⟩
@@ -222,8 +223,8 @@ def family : Registration arena (type_of% (@check_spec)) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@check_spec) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.check_spec.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.Checker.family
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.check_spec.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.Checker.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -239,7 +240,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
     definition := none
     coordinates := #[0,1,2,4,5]
     readouts := #[{
@@ -291,8 +292,8 @@ def family : Registration arena (type_of% (@zero_call_endpoint)) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@zero_call_endpoint) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.zero_call_endpoint.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.ZeroEndpoint.family
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.zero_call_endpoint.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.ZeroEndpoint.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -308,7 +309,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
     definition := none
     coordinates := #[0,2]
     readouts := #[{
@@ -376,8 +377,8 @@ def family : Registration arena (type_of% (@shared_moore_feasibility)) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@shared_moore_feasibility) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.shared_moore_feasibility.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis.Transfer.family
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.shared_moore_feasibility.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis.Transfer.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -393,7 +394,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis
     definition := none
     coordinates := #[0,2,4,5]
     readouts := #[{
@@ -404,4 +405,4 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end Transfer
-end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSharedMooreSynthesis
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeSharedMooreSynthesis

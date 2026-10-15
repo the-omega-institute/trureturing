@@ -1,10 +1,10 @@
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu;
 internal sealed class NativeSharedMooreSynthesisDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.";
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Shared finite Moore tables preserve the export, total installed state and invocation budgets on every actual predecessor fiber.",
         H("Shared Moore Transfer and Finite Synthesis"), Blocks(

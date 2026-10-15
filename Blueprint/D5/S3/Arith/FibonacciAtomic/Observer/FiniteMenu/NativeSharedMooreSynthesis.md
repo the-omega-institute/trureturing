@@ -14,7 +14,7 @@ A root table has precisely the same carriers and fixed outputs, but each running
 
 $$\forall Q: Type, (\forall H: Type, (\forall M: \operatorname{Controller}\left(Q, H\right), (\forall t: Source, (\forall n: Nat, (\forall k: \operatorname{Sum}\left(Q, H\right), (\forall h: H, (\forall tr: \operatorname{List}\left(Q\right), (\operatorname{evaluate}\left(\operatorname{nativeStep}\left(M, t\right), n, k\right) = \operatorname{some}\left((h, tr)\right) \Leftrightarrow (\operatorname{Run}\left(M, t, k, tr, h\right)) \land (\operatorname{length}\left(tr\right) \leq n)))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.native_evaluate_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.native_evaluate_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,7 +26,7 @@ For arbitrary running and halting types, every source, fuel q, initial state, ha
 
 $$\forall Q: Type, (\forall H: Type, ([\operatorname{Fintype}\left(Q\right)], \forall P: CutSet, ((\operatorname{CutPrefixFree}\left(P\right)) \implies (\forall uo: Source, (\forall d: \operatorname{Classes}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), (\forall M: \operatorname{Controller}\left(Q, H\right), (\exists values: (\operatorname{Chart}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right)) \to (\operatorname{ImageValues}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right)), (\exists origins: (\operatorname{Chart}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right)) \to (\operatorname{OriginFiber}\left(P, \operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right)), ((\forall theta: \operatorname{Chart}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), ((\operatorname{rho}\left(\operatorname{value}\left(origins\left(theta\right)\right)\right) = \operatorname{fill}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), values\left(theta\right)\right)) \land (\operatorname{types}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), values\left(theta\right)\right) = \operatorname{value}\left(theta\right)) \land (\operatorname{DeepValues}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), \operatorname{installedWordBound}\left(M\right), values\left(theta\right)\right)) \land (\operatorname{target}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), \operatorname{value}\left(theta\right)\right) = \operatorname{canonicalRow}\left(P, \operatorname{value}\left(origins\left(theta\right)\right)\right)))) \land (\forall theta: \operatorname{Chart}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), (\forall n: Nat, (\forall k: \operatorname{Sum}\left(Q, H\right), (\operatorname{evaluate}\left(\operatorname{rootStep}\left(\operatorname{paidTable}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), d, M\right), \operatorname{value}\left(theta\right)\right), n, k\right) = \operatorname{evaluate}\left(\operatorname{nativeStep}\left(M, \operatorname{rho}\left(\operatorname{value}\left(origins\left(theta\right)\right)\right)\right), n, k\right))))))))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.paid_native_recode` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.paid_native_recode` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -40,7 +40,7 @@ paidTable preserves exactly Q, H and every halt output. Its next rule depends on
 
 $$\forall Q: Type, (\forall H: Type, (\forall P: CutSet, (\forall hP: \operatorname{CutPrefixFree}\left(P\right), (\forall uo: Source, (\forall T: \operatorname{RootTable}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), Q, H\right), (\forall color: (\operatorname{Chart}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right)) \to (\operatorname{Sum}\left(Q, H\right)), ((\operatorname{range}\left(\operatorname{exportCode}\left(hP, uo, color\right)\right) = \operatorname{range}\left(color\right)) \land (\forall v: \operatorname{ImageValues}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), (\forall u: \operatorname{OriginFiber}\left(P, \operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), ((\operatorname{rho}\left(\operatorname{value}\left(u\right)\right) = \operatorname{fill}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), v\right)) \implies ((\operatorname{target}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), \operatorname{types}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), v\right)\right) = \operatorname{canonicalRow}\left(P, \operatorname{value}\left(u\right)\right)) \land (\forall n: Nat, (\forall k: \operatorname{Sum}\left(Q, H\right), (\operatorname{evaluate}\left(\operatorname{nativeStep}\left(\operatorname{install}\left(T\right), \operatorname{rho}\left(\operatorname{value}\left(u\right)\right)\right), n, k\right) = \operatorname{evaluate}\left(\operatorname{rootStep}\left(T, \operatorname{types}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), v\right)\right), n, k\right)))))))))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.install_full_fiber` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.install_full_fiber` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -52,7 +52,7 @@ The producer inspects the roots of its actually acquired class terms and compute
 
 $$\forall P: CutSet, ((\operatorname{CutPrefixFree}\left(P\right)) \implies (\forall uo: Source, (\forall r: Nat, (\forall K: Nat, (\forall q: Nat, (((1 \leq r) \land (1 \leq K)) \implies (\operatorname{NativeFeasible}\left(P, \operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), r, K, q\right) \Leftrightarrow \operatorname{RootFeasible}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), r, K, q\right))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.shared_moore_feasibility` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.shared_moore_feasibility` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -64,7 +64,7 @@ For every nonempty full actual fiber, r at least one, K at least one and q at le
 
 $$\forall Q: Type, (\forall H: Type, (\forall step: (Q) \to (\operatorname{Sum}\left(Q, H\right)), (\forall n: Nat, (\forall k: \operatorname{Sum}\left(Q, H\right), (\forall h: H, (\forall tr: \operatorname{List}\left(Q\right), ((\operatorname{evaluate}\left(step, n, k\right) = \operatorname{some}\left((h, tr)\right)) \implies (\operatorname{Nodup}\left(tr\right)))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.terminating_path_nodup` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.terminating_path_nodup` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -76,7 +76,7 @@ For any fixed deterministic step function, every successful bounded evaluator pa
 
 $$\forall C: LiteralRow, ((\operatorname{Nonempty}\left(\operatorname{Chart}\left(C\right)\right)) \implies (\forall Q: Type, (\forall H: Type, ([\operatorname{Fintype}\left(Q\right)], [\operatorname{Fintype}\left(H\right)], \forall T: \operatorname{RootTable}\left(C, Q, H\right), (\forall color: (\operatorname{Chart}\left(C\right)) \to (\operatorname{Sum}\left(Q, H\right)), (\forall r: Nat, (\forall q: Nat, (((\operatorname{ncard}\left(\operatorname{range}\left(color\right)\right) \leq r) \land (\forall theta: \operatorname{Chart}\left(C\right), (\exists h: H, (\exists tr: \operatorname{List}\left(Q\right), ((\operatorname{evaluate}\left(\operatorname{rootStep}\left(T, \operatorname{value}\left(theta\right)\right), q, color\left(theta\right)\right) = \operatorname{some}\left((h, tr)\right)) \land (\operatorname{out}\left(T, h\right) = \operatorname{target}\left(C, \operatorname{value}\left(theta\right)\right))))))) \implies (\exists A: \operatorname{Candidate}\left(C, \operatorname{card}\left(Q\right), \operatorname{card}\left(H\right)\right), ((A \in \operatorname{candidates}\left(C, \operatorname{card}\left(Q\right), \operatorname{card}\left(H\right)\right)) \land (\operatorname{check}\left(A, r, q\right) = true)))))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.arbitrary_carrier_completeness` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.arbitrary_carrier_completeness` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -88,7 +88,7 @@ Every correct finite root table on arbitrary carriers is represented by an accep
 
 $$\forall P: CutSet, (\forall hP: \operatorname{CutPrefixFree}\left(P\right), (\forall uo: Source, (\forall r: Nat, (\forall K: Nat, (\forall q: Nat, (\forall A: \operatorname{BoundedCandidateType}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), ((\operatorname{synthesize}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), r, K, q\right) = \operatorname{some}\left(A\right)) \implies ((\operatorname{ncard}\left(\operatorname{range}\left(\operatorname{exportCode}\left(hP, uo, \operatorname{color}\left(A\right)\right)\right)\right) \leq r) \land (\operatorname{card}\left(\operatorname{States}\left(A\right)\right) \leq K) \land (\forall v: \operatorname{ImageValues}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), (\forall u: \operatorname{OriginFiber}\left(P, \operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right)\right), ((\operatorname{rho}\left(\operatorname{value}\left(u\right)\right) = \operatorname{fill}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), v\right)) \implies (\exists h: \operatorname{Halts}\left(A\right), (\exists tr: \operatorname{List}\left(\operatorname{Running}\left(A\right)\right), ((\operatorname{Run}\left(\operatorname{install}\left(\operatorname{table}\left(A\right)\right), \operatorname{rho}\left(\operatorname{value}\left(u\right)\right), \operatorname{exportCode}\left(hP, uo, \operatorname{color}\left(A\right)\right)\left(v\right), tr, h\right)) \land (\operatorname{out}\left(\operatorname{table}\left(A\right), h\right) = \operatorname{canonicalRow}\left(P, \operatorname{value}\left(u\right)\right)) \land (\operatorname{length}\left(tr\right) \leq q)))))))))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.synthesize_sound` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.synthesize_sound` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -100,7 +100,7 @@ A returned candidate has an actually computed acquired-root initial code with ac
 
 $$\forall P: CutSet, ((\operatorname{CutPrefixFree}\left(P\right)) \implies (\forall uo: Source, (\forall r: Nat, (\forall K: Nat, (\forall q: Nat, (((1 \leq r) \land (1 \leq K)) \implies (\operatorname{isSome}\left(\operatorname{synthesize}\left(\operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), r, K, q\right)\right) = true \Leftrightarrow \operatorname{NativeFeasible}\left(P, \operatorname{canonicalRow}\left(P, \operatorname{rho}\left(uo\right)\right), r, K, q\right))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.finite_shared_synthesis` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.finite_shared_synthesis` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -112,7 +112,7 @@ The finite procedure considers every positive total size through K and checks ev
 
 $$\forall C: LiteralRow, (\forall a: Nat, (\forall b: Nat, (\forall A: \operatorname{Candidate}\left(C, a, b\right), (\forall r: Nat, (\forall q: Nat, (\operatorname{check}\left(A, r, q\right) = true \Leftrightarrow \operatorname{Checked}\left(A, r, q\right)))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.check_spec` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.check_spec` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -124,7 +124,7 @@ The Boolean check is true exactly when the actual attained color range has at mo
 
 $$\forall C: LiteralRow, (\forall Q: Type, (\forall H: Type, ([\operatorname{Fintype}\left(H\right)], \forall T: \operatorname{RootTable}\left(C, Q, H\right), (\forall color: (\operatorname{Chart}\left(C\right)) \to (\operatorname{Sum}\left(Q, H\right)), (\forall q: Nat, ((\forall theta: \operatorname{Chart}\left(C\right), (\exists h: H, (\exists tr: \operatorname{List}\left(Q\right), ((\operatorname{evaluate}\left(\operatorname{rootStep}\left(T, \operatorname{value}\left(theta\right)\right), q, color\left(theta\right)\right) = \operatorname{some}\left((h, tr)\right)) \land (\operatorname{out}\left(T, h\right) = \operatorname{target}\left(C, \operatorname{value}\left(theta\right)\right)))))) \implies (\operatorname{targetCount}\left(C\right) \leq \operatorname{card}\left(H\right))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.complete_output_lower` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.complete_output_lower` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -136,7 +136,7 @@ Let m be targetCount C, the number of distinct attained complete predecessor row
 
 $$\forall C: LiteralRow, (\forall r: Nat, (\forall K: Nat, (\operatorname{RootFeasible}\left(C, r, K, 0\right) \Leftrightarrow (\operatorname{targetCount}\left(C\right) \leq r) \land (\operatorname{targetCount}\left(C\right) \leq K))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.zero_call_endpoint` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.zero_call_endpoint` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -152,16 +152,16 @@ Acquisition, genuine actual export, complete access isolation, authenticated one
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.arbitrary_carrier_completeness`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.check_spec`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.complete_output_lower`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.finite_shared_synthesis`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.install_full_fiber`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.native_evaluate_iff`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.paid_native_recode`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.shared_moore_feasibility`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.synthesize_sound`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.terminating_path_nodup`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.zero_call_endpoint`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax](NativeFiniteRootMinimax.md)
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceMoore](NativeSixSourceMoore.md)
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.arbitrary_carrier_completeness`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.check_spec`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.complete_output_lower`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.finite_shared_synthesis`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.install_full_fiber`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.native_evaluate_iff`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.paid_native_recode`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.shared_moore_feasibility`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.synthesize_sound`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.terminating_path_nodup`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeSharedMooreSynthesis.zero_call_endpoint`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax](../NativeFiniteRootMinimax.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceMoore](../NativeSixSourceMoore.md)
