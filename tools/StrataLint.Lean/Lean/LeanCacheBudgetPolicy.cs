@@ -47,11 +47,10 @@ internal static class LeanCacheBudgetPolicy
     internal const int MinimumConfigurableBudgetSeconds = 300;
 
     /// <summary>
-    /// 归档取回所在 job 的预算上限。取自 `.github/workflows/ci.yml` 的 `lean-inspect`
-    /// job：`timeout-minutes: 45`。**这是那个值的投影，不是一个独立的选择**。
-    /// 〔2026-08-30 勘注(#4122 第 4 轮 architecture 席):此处曾称由 `LeanInspectJobBudgetMatchesTheWorkflow`
-    /// 钉住相等——该测试已随 `350ab86be`(器律⑦′ 禁 workflow 测试)删除;现为**手工复制值,无机器钉子**,
-    /// workflow 改了这里不会红。今日实测 ci.yml 仍为 45。〕
+    /// Compatibility value for the local archive-fetch cutoff calculation:
+    /// 45 minus PostArchiveReserveMinutes gives a 43-minute per-operation bound.
+    /// It is independent of ordinary CI's cumulative 30-minute compute allowance
+    /// and 360-minute platform job cap (SPEC A22). CI does not fetch Release seeds.
     /// </summary>
     internal const int LeanInspectJobBudgetMinutes = 45;
 

@@ -28,24 +28,28 @@ on:
         type: string
         default: none
       timeout-minutes:
+        description: Cumulative compute allowance after CI preparation; the platform job cap is separate
         type: number
-        default: 30
+        default: 120
 
 permissions:
   contents: read
   actions: read
+  pull-requests: read
 
 jobs:
   unit:
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: ${{ inputs.timeout-minutes }}
+    timeout-minutes: 360
     steps:
       - name: Validate the unit definition
         env:
           PROJECT: ${{ inputs.project }}
           COMMAND: ${{ inputs.command }}
           LEAN: ${{ inputs.lean }}
+          COMPUTE_MINUTES: ${{ inputs.timeout-minutes }}
         run: |
+          [[ "$COMPUTE_MINUTES" =~ ^[1-9][0-9]*$ && "$COMPUTE_MINUTES" -le 360 ]] || { echo "CI_UNIT_ERROR compute minutes must be 1..360" >&2; exit 2; }
           has_project=false has_command=false
           [[ -z "$PROJECT" ]] || has_project=true
           [[ -z "${COMMAND//[[:space:]]/}" ]] || has_command=true
@@ -68,6 +72,12 @@ jobs:
           global-json-file: global.json
           cache: true
           cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: inputs.lean == 'build'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
       - id: keys
         if: inputs.lean != 'none'
         env:
@@ -83,7 +93,7 @@ jobs:
       - if: inputs.lean != 'none'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -91,7 +101,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: inputs.lean == 'build' && steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && inputs.lean == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -107,15 +117,37 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Restore selected .NET dependencies
+        if: inputs.dotnet
+        env:
+          PROJECT: ${{ inputs.project }}
+          DEPENDENCY_PATHS: ${{ inputs.cache-dependency-path }}
+        run: |
+          python3 - <<'PY_RESTORE'
+          import glob, os, pathlib, subprocess
+          project = os.environ['PROJECT']
+          projects = {pathlib.Path(project)} if project else {
+              csproj for pattern in os.environ['DEPENDENCY_PATHS'].splitlines() if pattern.strip()
+              for lock in glob.glob(pattern.strip(), recursive=True)
+              for csproj in pathlib.Path(lock).parent.glob('*.csproj')}
+          if project:
+              projects.add(pathlib.Path('tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj'))
+          if not projects:
+              raise SystemExit('CI_UNIT_ERROR no projects selected for dependency restoration')
+          for target in sorted(projects):
+              subprocess.run(['dotnet', 'restore', str(target), '--locked-mode'], check=True)
+          PY_RESTORE
       - name: Run
         env:
           CI: 'true'
+          COMPUTE_MINUTES: ${{ inputs.timeout-minutes }}
+          CI_DOTNET_PREPARED: ${{ inputs.dotnet && '1' || '0' }}
           DOTNET_CLI_UI_LANGUAGE: en-US
           PROJECT: ${{ inputs.project }}
           COMMAND: ${{ inputs.command }}
         run: |
           if [[ -n "$PROJECT" ]]; then
-            make -C tools test TEST_PROJECT="$PROJECT"
+            timeout --kill-after=5s "${COMPUTE_MINUTES}m" make -C tools test TEST_PROJECT="$PROJECT"
           else
-            bash -e -o pipefail -c "$COMMAND"
+            timeout --kill-after=5s "${COMPUTE_MINUTES}m" bash -e -o pipefail -c "$COMMAND"
           fi

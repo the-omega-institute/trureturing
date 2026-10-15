@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:74e59f316af83dd63c7b7e7b3b0fd24bf12dd68ebba804151f56c80641d94c51
+  normalized_sha256: sha256:74e59f316af83dd63c7b7e7b3b0fd24bf12dd68ebba804151f56c80641d94c51
+cas_ref: sha256:74e59f316af83dd63c7b7e7b3b0fd24bf12dd68ebba804151f56c80641d94c51
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/LayeredCirculation/LocalOptimum.whole_theorem18_1
+    target_statement_id: sha256:347ecf7d261ce8b4b417ce3133771743dfb2a374328c975d68b88539559a3cd9
+receipts:
+  unresolved_subitems: []

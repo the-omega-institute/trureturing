@@ -15,13 +15,32 @@ on:
   workflow_dispatch:
     inputs:
       source_ref:
-        description: 'Exact protected source ref (refs/heads/dev or refs/heads/integration-...)'
+        description: 'Protected build source or PR cache target (refs/heads/dev or refs/heads/integration-...)'
         required: true
         type: string
         default: refs/heads/dev
       source_sha:
-        description: '40-hex commit reachable from source_ref; the producer checks this pin'
+        description: 'Build: reachable protected commit; PR: exact unmerged candidate M'
         required: true
+        type: string
+
+      operation:
+        description: 'Build a protected commit or pinned PR candidate'
+        type: choice
+        options: [build, pr]
+        default: build
+      release_seed_tag:
+        description: 'Optional exact local candidate Release for the long build'
+        type: string
+      release_seed_producer:
+        description: 'Immutable producer commit of release_seed_tag'
+        type: string
+      regenerate_report_artifacts:
+        description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
+        type: boolean
+        default: false
+      pr_source:
+        description: 'PR only: immutable event PR/head/merge/base/run/attempt/target identity'
         type: string
 
 permissions: {}
@@ -32,7 +51,8 @@ jobs:
     permissions:
       contents: write
       actions: write
-    if: github.event_name == 'workflow_dispatch'
+      pull-requests: read
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'build'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
@@ -100,34 +120,93 @@ jobs:
           bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
+        with:
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
 
-  pr-producer:
-    name: Produce the pull request Lean cache
+  pr-dispatch:
+    name: Dispatch the PR cache build to its target
     if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'lean-cache-produce'
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 360
+    timeout-minutes: 5
     permissions:
       contents: read
-      actions: read
-    concurrency:
-      group: lean-cache-pr-${{ github.event.pull_request.number }}
-      cancel-in-progress: true
-    env:
-      STRATALINT_CACHE_WRITES: 'true'
-      STRATALINT_CACHE_PR_PRODUCER: 'true'
+      actions: write
+      pull-requests: read
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - name: Validate the pull request merge candidate and strip checkout remote
+      - name: Validate the PR merge candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Produce the Actions cache
+      - name: Dispatch the single long build and report its exact run ID
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py dispatch --repository "$GITHUB_WORKSPACE"
+
+  pr-producer:
+    name: Prepare the PR Lean cache artifact
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'pr'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    concurrency:
+      group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
+      cancel-in-progress: true
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+      PR_SOURCE: ${{ inputs.pr_source }}
+      SOURCE_REF: ${{ inputs.source_ref }}
+      SOURCE_SHA: ${{ inputs.source_sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the unmerged source and protected workflow runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py prepare --repository "$GITHUB_WORKSPACE"
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+        run: |
+          GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA" bash tools/scripts/workflow/ci-entry.sh
+      - name: Build and validate the isolated preparation
         uses: ./.github/actions/lean-cache-produce
+        with:
+          preparation-only: 'true'
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
+      - id: pack
+        name: Package the registered native cache paths
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py pack --repository "$GITHUB_WORKSPACE" --directory "$RUNNER_TEMP/pr-preparation"
+      - id: preparation
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.artifact_path }}/
+          if-no-files-found: error
+          compression-level: 0
+          overwrite: true
+      - name: Confirm the immutable preparation artifact and source identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.preparation.outputs.artifact-id }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py confirm --repository "$GITHUB_WORKSPACE" --artifact-id "$ARTIFACT_ID"
 
   publish:
     name: Publish the Lean build cache

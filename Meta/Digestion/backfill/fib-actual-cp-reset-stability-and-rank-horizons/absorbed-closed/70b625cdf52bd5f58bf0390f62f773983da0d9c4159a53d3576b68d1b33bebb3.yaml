@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:70b625cdf52bd5f58bf0390f62f773983da0d9c4159a53d3576b68d1b33bebb3
+  normalized_sha256: sha256:70b625cdf52bd5f58bf0390f62f773983da0d9c4159a53d3576b68d1b33bebb3
+cas_ref: sha256:70b625cdf52bd5f58bf0390f62f773983da0d9c4159a53d3576b68d1b33bebb3
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/QuantitativeWordOrthonormalExtension.quantitative_word_orthonormal_extension
+    target_statement_id: sha256:0f2937678871324152754990a7cb5a08c912b20286b7d4aa11135b29a5afcf98
+receipts:
+  unresolved_subitems: []

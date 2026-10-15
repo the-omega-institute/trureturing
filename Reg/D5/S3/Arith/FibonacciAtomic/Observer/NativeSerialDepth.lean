@@ -413,8 +413,8 @@ noncomputable def original_whole_row_implies_depth_and_image_registration : Lean
   familyRecord := none
   options := #[]
 
-
-abbrev runUniqueSignature : Signature where
+end
+abbrev uniqueSignature : Signature where
   Params := Unit
   State _ := Trace
   Role := Unit
@@ -424,52 +424,53 @@ abbrev runUniqueSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def runUniqueActual : Realization runUniqueSignature :=
-  realize runUniqueSignature (fun _ _ t => t) (fun e => nomatch e)
+def uniqueActual : Realization uniqueSignature :=
+  realize uniqueSignature (fun _ _ t => t) (fun e => nomatch e)
+def uniqueBad : Realization uniqueSignature :=
+  realize uniqueSignature (fun _ _ _ => []) (fun e => nomatch e)
+abbrev uniqueArena : Arena where
+  signature := uniqueSignature
+  Law R := ∀ {C : Type} {O : Type} {δ : C → Op C O}
+    {c : C} {e : Nat} {r : Source} {t s : Trace} {o p : O}
+    (_ : Run δ c e r t o) (_ : Run δ c e r s p),
+    R.readout () () t = s ∧ o = p
 
-def runUniqueBad : Realization runUniqueSignature :=
-  realize runUniqueSignature (fun _ _ _ => [Event.localStep]) (fun e => nomatch e)
+private def uniqueProbe : Bool → Op Bool Unit
+  | true => .read [] (fun _ => false)
+  | false => .stop ()
 
-abbrev runUniqueArena : Arena where
-  signature := runUniqueSignature
-  Law R := ∀ {C O : Type} {δ : C → Op C O}
-    {c : C} {e : Nat} {r : Source} {t s : Trace} {o p : O},
-    Run δ c e r t o → Run δ c e r s p → R.readout () () t = s ∧ o = p
-
-private theorem run_unique_bad : ¬ runUniqueArena.Law runUniqueBad := by
+private theorem unique_bad : ¬ uniqueArena.Law uniqueBad := by
   intro law
-  have broken := @law Unit Unit (fun _ => Op.stop ()) () 0 (.of false)
-    [] [] () () (Run.stop rfl) (Run.stop rfl)
-  have eq := broken.1
-  change [Event.localStep] = [] at eq
+  have run : Run uniqueProbe true 0 (.of true) [.read 0 [] .alpha] () :=
+    Run.read rfl rfl (Run.stop rfl)
+  have eq := (law run run).1
+  change ([] : Trace) = [.read 0 [] .alpha] at eq
   cases eq
 
-def runUniqueProof : Registration runUniqueArena (type_of% (@run_unique)) where
-  actual := runUniqueActual
+def uniqueProof : Registration uniqueArena (type_of% (@run_unique)) where
+  actual := uniqueActual
   bridge := Iff.rfl
-  variation := ⟨@run_unique, runUniqueBad, run_unique_bad⟩
-  sensitivity := ⟨fun i => ⟨runUniqueBad,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, run_unique_bad⟩,
+  variation := ⟨@run_unique,uniqueBad,unique_bad⟩
+  sensitivity := ⟨fun i => ⟨uniqueBad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,unique_bad⟩,
     fun i => nomatch i⟩
   dependence := by
     intro i
-    exact ⟨(), [], [Event.localStep], by simp [runUniqueActual, realize]⟩
+    exact ⟨(),[],[.read 0 [] .alpha],by simp [uniqueActual,realize]⟩
 
-def run_unique_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth.run_unique)
-    (Realization runUniqueSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth.run_unique
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth.runUniqueProof
+noncomputable def run_unique_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@run_unique) (Realization uniqueSignature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth.run_unique.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth.uniqueProof
   realizationSource := none
   generated := false
-  arena := .source ⟨runUniqueArena⟩
-  objectArena := .source ⟨runUniqueArena⟩
+  arena := .source ⟨uniqueArena⟩
+  objectArena := .source ⟨uniqueArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source runUniqueArena ⟨runUniqueProof⟩
+  realization := .source uniqueArena ⟨uniqueProof⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize runUniqueSignature runUniqueActual.readout runUniqueActual.anchor)
+  readout := some (realize uniqueSignature uniqueActual.readout uniqueActual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -479,15 +480,10 @@ def run_unique_registration : LeanInformationAudit.Contract.Registration.{_,_,_,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 6
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","fn","arg"],
+      stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
-end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth

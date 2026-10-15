@@ -712,3 +712,276 @@ The main converse uses (2.3), the specified renewal law, its moment orders, the 
 The theorem has no varying-$H$, residual-uniform, hidden-$N$, general-parity, exact-optimizer or sharp-constant conclusion. Its output laws, access model and payment convention are explicit mathematical assumptions. It establishes no empirical machine-learning behavior, physical memory law, external elapsed-time decision bound or broader project completion. Extra persistent channels, reset access, hidden-state observations or changes to the stationary start require a different theorem with their own hypotheses. Full source authorship and verification of the exact authored source are distinct evidentiary acts; the handwritten statements here do not claim kernel verification or a consensus certificate.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. The growing-budget suppliers in the present observation contract
+
+**Definition 11.1 (Credited results and common hypotheses).** Write $G$ for [Growing state budgets in the renewal paid-mean tradeoff](FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md), and $C$ for [Real renewal instruments and detector rank: finite observer memory](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_CONTINUATION.md). The forest comparison, strengthened finite-parameter converse, simultaneous endpoint bound and configuration-growth implication used below are the existing results of $G$, Sections 4–5 and Theorems 8.1, 9.1 and 10.1. They are not additional discoveries of this append. The further consequence concerns complete fixed-width binary memory and its comparison with the supplied band controller of $C$, Sections 28–30.
+
+The correspondence is literal. Definitions 2.1–2.2 of $G$ use the same $F_0(k)=k^9$, $F_1(k)=H_c(k)$, rational-center polynomial (2.1), positive constant $\delta$ and $B=1+\delta$ as Sections 2–3 here. Its integer envelope is precisely (2.3), its first wait is (2.5), its subsequent zero counts are (2.6), and its moment premise is (2.8). Its Definition 3.1 is $\mathfrak A_M(q,\alpha)$ here, with the same source-independent initialization, the same machine under both labels at the same known common $q$, and arbitrary retuning at each $q$. In particular all persistent control, register, label and retained-randomness configurations count toward $M$; the actual consecutive-read cost is $T$, including the stationary initial interval and the terminal partial interval. Both selected risks, both almost-sure stops and both separate finite paid means in (3.1) remain required. There is no extra age, clock, archive, reset, skipped bit, source copy, parameter, probability or sample query. The normal form of $G$, Lemma 3.2, has exactly the $\eta,A,C,U_i,\nu_i$ of (3.2). Neither a fixed observer across parameters nor a lower bound on its positive transition probabilities is required.
+
+For the finite-chain input, take any row-stochastic $P,Q$ on the same set $\mathcal S$, $|\mathcal S|\le M$, with the distinct common absorbing labels $d_0,d_1$ and the entrywise comparison (4.1) for a finite $\gamma\ge1$. These are exactly $G$, Definition 4.1; reducible chains with additional closed classes are permitted. In the common positive support put
+
+$$
+\mathcal Z=\{x:\text{no directed path from }x\text{ to }d_1\},
+\qquad \partial=\mathcal Z\cup\{d_1\},
+\qquad V=\mathcal S\setminus\partial,
+\qquad n=|V|\le M-2.
+\tag{11.1}
+$$
+
+Here paths may have length zero, so $d_1\notin\mathcal Z$, whereas $d_0\in\mathcal Z$. The common boundary is the whole zero-target set together with the target. The row replacement on $\mathcal Z$ in that definition preserves the actual hitting probabilities and entrywise comparison without adding a state. This is not a single-root tree calculation on the original reducible chain.
+
+Apply $G$, Definition 4.2 and Lemma 4.3, with its target $t=d_1$, interior $V$, and boundary $\partial$. Its forests have roots exactly $\partial$, one outgoing non-self edge at each vertex of $V$, and no interior cycle. With the supplier's notation for denominator, target-marked numerator and complementary numerator, for $R=P,Q$ and $x\in V$ the supplied identities are
+
+$$
+\mathcal D_R=\mathcal A_R(x)+\mathcal C_R(x)>0,
+\qquad
+\det(I-R_{VV})=\mathcal D_R,
+\qquad
+h_R(x)=\frac{\mathcal A_R(x)}{\mathcal D_R}.
+\tag{11.2}
+$$
+
+All sums are nonnegative sums of monomials of the same degree $n$. The supplier's positive distance-decreasing forest proves $\mathcal D_R>0$ and uniqueness of this finite Dirichlet problem; first-step conditioning identifies its solution with the actual hitting function. Its proof does not assert uniqueness of unconstrained harmonic functions on the original chain. Common support gives the same forest families for $P,Q$, so $G$, Theorem 5.1, applies directly and gives
+
+$$
+\gamma^{-2n}h_P(x)\le h_Q(x)\le\gamma^{2n}h_P(x),
+\qquad
+|h_Q(x)-h_P(x)|\le\frac{\gamma^n-1}{\gamma^n+1}
+\quad(x\in\mathcal S).
+\tag{11.3}
+$$
+
+The boundary values are zero on $\mathcal Z$ and one at $d_1$. Thus zero hitting probabilities are handled without dividing by them. A zero complementary sum makes both hitting values one. If $n=0$, the empty forest has weight one and every state is boundary; if $\gamma=1$, the additive bound is zero. Zero edges contribute zero in both kernels. Self-loops are accounted for by the supplier's row identity $1-R(u,u)=\sum_{v\ne u}R(u,v)$, rather than omitted from the stochastic experiment. Additional closed classes lie in $\mathcal Z$. Arbitrarily small positive exits can make forest sums small but do not affect their termwise comparison. These are precisely the degeneracies covered in $G$, Lemma 4.3 and Theorem 5.1; no global absorption assumption or uniform exit threshold is added here.
+
+To identify the renewal application, fix the actual machine and one selected $q$. For target $i$ put $j=1-i$, and retain $\pi_i,\mathcal J_i^L,\mathcal V_i^L,\gamma_L$ from (5.5). The supplier's $J_i^L,V_i^L$ are these $\mathcal J_i^L,\mathcal V_i^L$. Its comparison is exactly
+
+$$
+W_i=\pi_j\mathcal J_j^L+(1-\pi_j)\mathcal V_i^L,
+\qquad
+\gamma_L=1+\frac\delta{L+1}.
+\tag{11.4}
+$$
+
+By $G$, Lemma 6.2, equivalently Lemma 5.2 here, $W_i$ has the entire support of $U_j$, fixes both labels, and differs from $U_i$ by row variation at most $\pi_i+\pi_j$. Consequently (11.3) applies to $P=U_j,Q=W_i$ on the same complete state set. The opponent's short component in (11.4) is retained; a tail-only replacement is not an admissible substitute. The initial-row term is precisely $r_H(q)$ of (5.1), by $G$, Lemma 6.1 and Lemma 5.1 here, including source-independent immediate stopping and the stationary first row $\nu_i$.
+
+For completeness, the stopped identity supplied by $G$, Lemma 7.1, is the identity (6.6) with this $W_i$ and its actual hitting function $h$:
+
+$$
+\mathbb E_i h(Y_{N\wedge m})-\nu_i h
+=\mathbb E_i\sum_{r=0}^{(N\wedge m)-1}[(U_i-W_i)h](Y_r).
+\tag{11.5}
+$$
+
+The target's finite mean gives $\mathbb E_iN<\infty$, which justifies the supplier's bounded-convergence and dominated-convergence limits. The opponent's actual termination gives $p_j=\nu_jh_j$. No termination from arbitrary abstract states of $W_i$ or $U_j$ is needed. The same supplier gives $N\le Q_T\le T$, and $G$, Lemma 7.2, is exactly the predictable actual-tick payment (6.9), including the separate pre-first-tick hazard. Its independent proof coins are used for payment, not as an accessible tape or as the filtration for the live-chain identity (11.5).
+
+It follows by direct application of $G$, Theorem 8.1, that for every finite $M\ge2$, every interior $q$, every finite integer $L\ge1$, every $\mathcal A\in\mathfrak A_M(q,\alpha)$ and each $i$ separately,
+
+$$
+\begin{aligned}
+b&\le r_H(q)+\chi^*_{M,L}
++B(1-q)[\pi_0(q,L)+\pi_1(q,L)]\mathbb E_{i,q}^{\mathcal A}T,\\
+b&=1-2\alpha>0,
+\qquad
+\chi^*_{M,L}=\frac{\gamma_L^{M-2}-1}{\gamma_L^{M-2}+1}.
+\end{aligned}
+\tag{11.6}
+$$
+
+This also permits replacing the coarse loss in (7.1) by $\gamma_L^{2(M-2)}-1$: for $v=\gamma_L^{M-2}\ge1$, $(v-1)/(v+1)\le v^2-1$, including $v=1$. Either loss therefore gives the corresponding positive-part inequality (7.2), whose denominator is positive since $0<\pi_i<1$. Applying (11.4) for the other target changes only the analytical $W_i$, not the actual machine. The conclusion bounds each paid mean, rather than their sum.
+
+The common endpoint is the one in $G$, Theorem 9.1. Choose a source-only $s_H>0$ so that both inequalities (7.6) hold, and define
+
+$$
+\begin{aligned}
+s_*&=\min\left\{s_H,1,\frac{5b}{8\delta}\right\},
+&L_M&=\max\left\{1,\left\lceil\frac{2\delta(M-2)}b\right\rceil\right\},\\
+S_L&=\sum_{k=1}^Lk^9,
+&c_0&=\frac{b\,9!}{8B^2}.
+\end{aligned}
+\tag{11.7}
+$$
+
+The supplier's moment premise is the same (2.8), so its selection of $s_H$ is source-only. Its explicit estimates (9.6)–(9.10) read here as
+
+$$
+\chi^*_{M,L_M}\le b/4,
+\qquad r_H(e^{-s})\le b/4,
+\qquad \pi_0(e^{-s},L)+\pi_1(e^{-s},L)
+\le\frac{4BS_L}{9!}s^{10},
+\qquad L_M\le1+\frac{2\delta(M-2)}b.
+\tag{11.8}
+$$
+
+The short-mass estimate holds for every finite $L\ge1$ on the same $0<s<s_*$, even when its right side exceeds one. There is no fixed-$L$ asymptotic or restriction on $sL_M$. With $1-e^{-s}\le s$, the exact conclusion of that theorem is
+
+$$
+\begin{gathered}
+\forall M\in\mathbb Z,\ M\ge2\quad
+\forall s\in(0,s_*)\quad
+\forall\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\quad
+\forall i\in\{0,1\}:\\
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+\ge\frac{c_0}{S_{L_M}}s^{-11}
+\ge\frac{c_0s^{-11}}{[1+(2\delta/b)(M-2)]^{10}}.
+\end{gathered}
+\tag{11.9}
+$$
+
+In particular (11.9) implies the weaker denominator $[1+(16\delta/b)(M-2)]^{10}$. The same $s_*$ serves every finite varying $M=M(s)$ and every retuned observer. This simultaneous result and all its constants are credited to $G$, not obtained by exchanging a fixed-$M$ limit with an observer-dependent limit.
+
+## 12. Complete configurations and fixed-width binary memory
+
+**Definition 12.1 (Actual configurations and complete binary width).** For a deployed observer let $m(s)$ be the cardinality of the union of its reachable persistent configurations, over all legal finite source histories, all possible retained random outcomes when used, and both source labels at the selected common $q=e^{-s}$. Include initialization, read-ready, source-disabled intermediate and terminal configurations, with every mutable control mode, head, selector, flag, register, input latch and emitted label. A Cartesian domain containing these configurations is an upper bound for $m(s)$, rather than its actual count. When intermediate computation is used, it must terminate before its next read or stop, use no other source access and retain no information outside these coordinates. Composing such computations into the read-ready normal form preserves $(T,D)$ and uses at most $m(s)$ configurations.
+
+A complete fixed-width binary representation of width $K(s)$ is an injective encoding of those complete configurations into $\{0,1\}^{K(s)}$. Its width is an integer fixed for the deployed design, uniformly over histories, including transient arithmetic and initialization. Unused bit strings are allowed. Thus $m(s)\le2^{K(s)}$. Counting only a statistic at renewal epochs, counting only named registers, or bounding an expected or typical number of bits does not establish this condition. Immutable source-independent design data can remain separate, but every mutable address, copied constant and control position used with it is counted.
+
+**Theorem 12.2 (Complete-bit necessity under a cubic mean).** Fix the source premises of Section 2 and $0<\alpha<1/2$. Suppose that for every sufficiently small $s>0$ a deployed observer as in Definition 12.1 belongs, after the same-budget read-ready reduction, to $\mathfrak A_{m(s)}(e^{-s},\alpha)$, with $m(s)<\infty$. Suppose for one fixed target $i_\star$ there is a constant $0<C_T<\infty$, independent of $s$, such that
+
+$$
+\mathbb E_{i_\star,e^{-s}}T\le C_Ts^{-3}.
+\tag{12.1}
+$$
+
+Keep both selected risks, both almost-sure stops and both separate finite paid means at every selected parameter. Put
+
+$$
+A_T=\left(\frac{9!b^{11}}{8B^2C_T}\right)^{1/10},
+\qquad b=1-2\alpha.
+\tag{12.2}
+$$
+
+For all sufficiently small $s$, the existing configuration consequence of $G$, Theorem 10.1, applied to the actual count is
+
+$$
+m(s)\ge2+\frac{A_Ts^{-4/5}-b}{2\delta}.
+\tag{12.3}
+$$
+
+Every complete fixed-width binary representation then satisfies
+
+$$
+K(s)\ge\frac45\log_2\frac1s+\log_2\frac{A_T}{4\delta}
+=\frac45\log_2\frac1s-O_{H_c,\alpha,C_T}(1).
+\tag{12.4}
+$$
+
+Proof. The count $m(s)$, rather than an arbitrarily padded budget, is a permissible choice of the supplier's $M(s)$: it contains both labels and every read-ready configuration of the reduction. All its remaining hypotheses are exactly those stated above. Thus (12.3) is the direct credited application, requiring no cubic benchmark supplier. Restrict further to $A_Ts^{-4/5}\ge2b$. For instance, intersect the neighborhood where (12.1) holds with $0<s<\min\{s_*,(A_T/(2b))^{5/4}\}$. Then (12.3) gives
+
+$$
+m(s)\ge2+\frac{A_T}{4\delta}s^{-4/5}
+\ge\frac{A_T}{4\delta}s^{-4/5}.
+\tag{12.5}
+$$
+
+Injectivity of the binary representation gives $K(s)\ge\log_2m(s)$. Taking base-two logarithms in (12.5) proves (12.4). Its constant is uniform over the observers with this $C_T$, and depends on neither their descriptions nor their positive exit probabilities. Only one target needs the cubic upper bound; the opposing risk, termination and finite mean remain hypotheses. If both targets have uniform cubic bounds, either gives this conclusion with its own constant. $\square$
+
+The configuration implication (12.3) belongs to $G$. The additional assertion (12.4) uses the complete encoding hypothesis and is a source-relative consequence, not a sharp memory coefficient. In particular a growing allowed budget alone does not prove that an implementation uses many configurations: the application above deliberately uses its actual complete count. Nor do finitely many unbounded integer registers supply a finite width $K(s)$.
+
+## 13. Comparable rational bands and the endpoint scale
+
+**Proposition 13.1 (Uniform band correspondence).** Let $0<\varepsilon<1/4$ be rational, $I_\varepsilon=[1-2\varepsilon,1-\varepsilon]$, and $q\in I_\varepsilon$. With $x=1-q$ and $s=-\log q$,
+
+$$
+\varepsilon\le x\le2\varepsilon,
+\qquad x\le s\le\frac{x}{1-x}\le2x,
+\qquad \varepsilon\le s\le4\varepsilon.
+\tag{13.1}
+$$
+
+Consequently, uniformly on the whole band,
+
+$$
+s^{-3}\le\varepsilon^{-3}\le64s^{-3},
+\qquad
+\log_2(1/s)\le\log_2(1/\varepsilon)
+\le\log_2(1/s)+2.
+\tag{13.2}
+$$
+
+Two such bands containing the same $q$ have widths within a factor two. Every sufficiently small $x>0$ admits a dyadic rational width with $x/2<\varepsilon\le x$, so these supplied bands cover the endpoint as an existence family.
+
+Proof. The first inequalities are the definition of the band. Since $x\le2\varepsilon<1/2$,
+
+$$
+s=\int_0^x\frac{du}{1-u},
+\qquad x\le s\le\frac{x}{1-x}\le2x.
+\tag{13.3}
+$$
+
+These prove (13.1), and reciprocation and logarithms give (13.2). Any width whose band contains $q$ lies in $[x/2,x]$, proving the factor-two comparison. For coverage choose an integer $j$ with $2^{-j}\le x<2^{-j+1}$ and take $\varepsilon=2^{-j}$. Such an integer exists by the Archimedean property; the chosen width is rational and has the asserted inequalities. $\square$
+
+The logarithm and this dyadic selection are mathematical scale correspondences. They are not instructions to a running observer. A band and risk fraction are supplied before deployment; an existence choice of a comparable band at a given $q$ supplies no mechanism for discovering an unknown $q$. One compiled observer below serves every $q$ in its supplied band and receives neither $q$ nor $s$ as an online input. Likewise this family does not assert the existence of a single finite-width controller with cubic means over all bands simultaneously.
+
+## 14. Inclusion of the supplied controller and logarithmic order
+
+**Definition 14.1 (Matched band contract and upper suppliers).** Fix the same $H_c$ and $\alpha$, and choose once a rational $\rho\in[\alpha/2,\alpha]$ as in $C$, Definition 28.1. The matched contract uses a supplied rational band $I_\varepsilon$, one source-blind design on that band, the stationary consecutive-read laws of Section 2, the two separate risk bounds at level $\alpha$, internally emitted labels, and complete fixed-width mutable configurations as in Definition 12.1. All source-disabled computations terminate. A uniform cubic paid-mean promise under a selected target means an upper constant independent of the band and of the parameter within it; both targets still have almost-sure stopping and finite means. No bound on compilation or immutable-description resources is part of this mutable-bit lower condition.
+
+The supplied deterministic controller is exactly the one in $C$, Definitions 28.1–28.2, Lemma 29.5, Theorem 29.6, Proposition 29.7 and Corollary 30.1, with no reconstruction here. Their paid count $L_\varepsilon$ is $T$ here. Their polynomial $H_c$, source (23.4)–(23.6), initial wait, decision labels and target risks are those in Sections 2–3 here. Their $b=h+1$ is a score threshold, distinct from our $b=1-2\alpha$; their coefficient-size integer $B$ is distinct from our envelope $B=1+\delta$. Their $\delta_9$ remains their pair-score envelope constant and is not identified with our $\delta$. Their fixed rational $\rho$ is an immutable risk input, not a label, observed parameter or random choice. With the controlled surrogate, their upper constants depend only on the fixed source and target risk.
+
+Here is the complete resource correspondence needed for this application. Symbols $W,w,a$ in this table are exactly $C$, (28.1) and (29.1).
+
+| Coordinate | Credited bound and role |
+| --- | --- |
+| Paid source reads | $C$, Theorem 28.4 and Corollary 30.1: $T=L_\varepsilon\le W=O_{H_c,\alpha}(\varepsilon^{-3})$, with $\mathbb E_{i,q}T=\Theta_{H_c,\alpha}(\varepsilon^{-3})$ separately for $i=0,1$ and every $q\in I_\varepsilon$. Every initial, partial and terminal read is included. |
+| Complete mutable binary width | $C$, Theorem 29.6: $K_\varepsilon=256w+32a+97$ bits, including the 256 words, 32 heads and selectors, 64 flags, input and output latches, 30 control bits, all static call-site modes, initialization, temporary arithmetic and halts. Its configuration domain has at most $2^{K_\varepsilon}$ elements; this is not an assertion that all encodings are reachable. |
+| Source-disabled local computation | $C$, Lemmas 29.3 and 29.5: the bounded local computations terminate on every legal history, including a last read closing a pair and a stream with no first tick. The internal online bit work is separately bounded by $2^{40}Ww^3$. |
+| Source-independent initialization | $C$, Proposition 29.7: initialization uses the same counted bank, heads and control, with separate bit-work allowance $2^{34}w^3$. Every mutable descriptor address is counted. |
+| Deployed immutable description | $C$, Proposition 29.7, (29.16): the fixed graph and 96 compiled $w$-bit words have length at most $2^{48}+96w$. Copied words reside in the counted mutable bank. |
+| Fixed-model preparation and rational compilation | $C$, Proposition 29.7, (29.15), applies owner Proposition 22.6 to the supplied rational band and risk descriptions. Its workspace and work depend on their full input length and remain separately charged, even for padded input descriptions. These compiler coordinates are not included in a claim about online mutable-bit optimality. |
+
+The controller has no fresh or retained random inputs, no unpaid source observations and no second source. Its read counter is in the bank, rather than an external clock. Its arithmetic inspects no additional source sample, and the ordinary threshold decision at the last read precedes the prescribed timeout. The statements above retain the supplier's exact refinement and width premises, rather than inferring correctness from a Cartesian state count alone.
+
+**Theorem 14.2 (Conditional logarithmic complete-bit order on matched bands).** Conditional on the lower suppliers identified in Section 11 and the upper suppliers of Definition 14.1, the supplied deterministic controller family realizes uniform cubic paid means with $O_{H_c,\alpha}(1+\log(1/\varepsilon))$ complete mutable bits. Every family in the matched contract with a uniform cubic mean upper bound under either fixed target requires
+
+$$
+K_\varepsilon\ge\frac45\log_2(1/\varepsilon)-O(1).
+\tag{14.1}
+$$
+
+Thus logarithmic mutable-bit order is necessary and attained within this contract. The upper controller is source-blind throughout each band and is an element of the known-common-$q$ lower class at every selected $q$ in that band. This is an order comparison, with no assertion that the necessary configuration exponent $4/5$ or the displayed bit coefficient is attained.
+
+Proof. Fix a sufficiently small supplied rational $\varepsilon$. The supplier initializes from immutable band and risk data without reading the source. After each read it performs only the source-disabled finite computations covered by $C$, Lemma 29.5, then either emits its own label or reaches a next read-ready state. For this fixed width and descriptor, composing those deterministic finite paths gives deterministic bit kernels $A,C$ and a common initial row $\eta$. All mutable intermediate modes already belong to the counted configuration domain. No step of this composition introduces a stored elapsed-work index, another read, or an external program counter. Identifying terminal states with the same emitted label can only reduce the state count. This is the same-budget normal-form reduction of Lemma 3.2, with internal source-disabled computations composed as in Definition 12.1.
+
+Let $m_\varepsilon$ be the actual complete configuration count of this controller. It is finite and at most $2^{K_\varepsilon}$. At each selected $q\in I_\varepsilon$, both separate band risk bounds from $C$, Theorem 28.4, imply (3.1) for that same $q$. The finite cap and terminating internal work give both almost-sure stops and both finite paid means. The source law and all access restrictions agree by Definition 14.1. Therefore the controller, with its read-ready reduction, belongs to $\mathfrak A_{m_\varepsilon}(q,\alpha)$. The lower class allows immutable knowledge of $q$; a design which ignores it is included. Restricting the supplier's two nuisance parameters to the same chosen $q$ loses none of these conditions.
+
+The following necessity argument applies equally to any family in the matched contract. If its target mean is at most $C_{\rm band}\varepsilon^{-3}$ uniformly on the band, (13.2) bounds it by $C_Ts^{-3}$ with $C_T=64C_{\rm band}$, uniformly before selecting $q$ or the band. If $4\varepsilon<s_*$, every point of the band lies in the common lower neighborhood. Apply (11.9) pointwise with the actual complete count as budget and this target upper bound. The same positive-root rearrangement supplied by $G$, Theorem 10.1, yields (12.3), with $A_T$ from (12.2), for each selected pair $(\varepsilon,q)$. This application uses a simultaneous inequality, so it does not require the family to select a unique observer as a function of $s$ across overlapping bands. For sufficiently small $\varepsilon$, $s\le4\varepsilon$ makes $A_Ts^{-4/5}\ge2b$ throughout the band. Hence
+
+$$
+m_\varepsilon\ge\frac{A_T}{4\delta}s^{-4/5}
+\ge\frac{A_T}{4\delta}\,4^{-4/5}\varepsilon^{-4/5},
+\qquad
+K_\varepsilon\ge\frac45\log_2(1/\varepsilon)
++\log_2\frac{A_T}{4\delta}-\frac85.
+\tag{14.2}
+$$
+
+This is (14.1); both means are used for compliance, while only the selected mean needs the uniform cubic upper constant. An upper constant depending without bound on the band would not suffice.
+
+For attainment, the single supplied controller at each band has the uniform cubic upper constant just used, and its separate mean lower constants are exactly the credited owner Corollary 22.11 through $C$, Theorem 28.4. No new prefix-information bound is asserted. For its complete width, $C$, (29.1) and Theorem 29.6, give, at fixed $H_c,\alpha$ and controlled $\rho$,
+
+$$
+w=O(1+\log(W+2)),\qquad
+ a=O(1+\log(w+1)),\qquad
+K_\varepsilon=256w+32a+97
+=O_{H_c,\alpha}(1+\log(1/\varepsilon)).
+\tag{14.3}
+$$
+
+Here $W=O_{H_c,\alpha}(\varepsilon^{-3})$ and all small-band constants are uniform. The complete width includes transient and initialization configurations, so (14.3) meets precisely the encoding hypothesis used in (14.2). Proposition 13.1 converts these logarithmic orders to $\log(1/s)$ on comparable bands, with only a bounded additive difference. Its dyadic coverage is an offline existence statement; the compiler still receives only the rational band and risk, and the deployed controller never queries a real parameter. These facts prove the stated order comparison. $\square$
+
+The mutable-bit lower bound and supplied upper configuration estimate leave a genuine distinction: necessity is $m_\varepsilon=\Omega(\varepsilon^{-4/5})$, whereas the supplied complete domain is only bounded above by $2^{K_\varepsilon}$ with $K_\varepsilon=O(\log(1/\varepsilon))$. The unspecified upper polynomial exponent need not be $4/5$. Taking logarithms permits an order match without matching either that exponent or its coefficient. Likewise there are no matching lower bounds here for compiler workspace, immutable description, initialization or internal bit work. Allowing arbitrary independent $\rho\downarrow0$, changing $H_c$, or changing the stationary start does not preserve the uniform constants asserted above.
+
+## 15. Classical attribution and the remaining resource questions
+
+**Definition 15.1 (Attribution and conditional mathematical scope).** The directly applicable classical fixed-root identities are Jim Pitman and Wenpin Tang, “Tree formulas, mean first passage times and Kemeny’s constant of a Markov chain,” *Bernoulli* 24(3), 1942–1972, DOI [10.3150/16-BEJ916](https://doi.org/10.3150/16-BEJ916), [arXiv:1603.09017](https://arxiv.org/abs/1603.09017): Theorem 1.2, especially (1.4), is the forest denominator with the root set fixed exactly; the harmonic tree formula (1.9) is the probability of first entering that root set at a specified root, when its forest weight is positive. The correspondence is $S=\mathcal S$, $R=\partial$, $i=x$, $j=d_1$. Positivity in the present reducible setting is supplied by $G$, Lemma 4.3. With the boundary made absorbing, entering $\partial$ at $d_1$ is exactly ever hitting $d_1$. Their roots may include isolated vertices, as needed for additional zero-target states. The row-transition convention directs nonroot edges toward their roots. This specifies the applicable primary-source formulas without substituting a varying-root $I+L$ forest sum or an irreducible stationary tree formula.
+
+Seth Chaiken, “A Combinatorial Proof of the All Minors Matrix Tree Theorem,” *SIAM Journal on Algebraic Discrete Methods* 3(3), 319–329, DOI [10.1137/0603033](https://doi.org/10.1137/0603033), is classical all-minors background. The exact original full-text scope is not independently certified here and is not a premise of any inference in this append. The applicable fixed-root formulas above and the complete proof already supplied in $G$, Sections 4–5, carry that role. No additional literature survey or priority conclusion is implicit in these attributions.
+
+The source-relative additions here are the complete encoding consequence of Theorem 12.2 and the parameter-and-resource bridge proving Theorem 14.2. The forest argument, its complementary-sum improvement, the finite-$q$ inequality, the simultaneous budget bound and the actual configuration lower implication retain their ownership in $G$. The rounded-product controller and its complete bounded bit-transition realization retain their ownership in $C$. These uses are `repo-derived` ordinary-paper consequences of credited mathematical suppliers, with the classical forest identities `literature-attested` at the exact scope just specified. The fixed integer envelope and moment premises remain those of Section 2. The upper also retains $C$, Definition 30.2's conditional pair-score, drift, rational-certificate, stopping/payment and preprocessing suppliers; the claimed cubic mean lower order retains its owner prefix-information supplier. The configuration and binary lower implications need no cubic benchmark premise beyond the hypothesized uniform cubic upper mean.
+
+For Open question 10.2, the sufficient exponential comparison has the supplied replacement (11.3), with exponent $2n\le2(M-2)$ and the stronger complementary-sum additive bound. For the growing-budget part of Open question 10.3, the supplied simultaneous inequality is (11.9) and actual configuration necessity is (12.3). Under the complete binary encoding hypothesis, Theorem 12.2 adds necessity (12.4). Conditional on the upper suppliers, Theorem 14.2 and Proposition 13.1 also give finite-width cubic-mean sufficiency and the logarithmic mutable-bit order comparison on supplied bands. Each conclusion retains the same fixed $H_c$, fixed risk, stationary start and consecutive paid-read convention.
+
+The optimal hitting-comparison dependence in the constrained stochastic class, the optimal complete-configuration growth exponent for cubic means, a sharp binary coefficient, the exact performance tradeoff at intermediate growing budgets, and the minimum nonempty budget remain unresolved by these results. In particular $2<M<S_\alpha$ is still unclassified, and no observer attaining configuration order $s^{-4/5}$ is supplied. There is no exact optimizer or matching theorem for all resource coordinates. The conclusions concern abstract complete mutable configurations and binary encodings, not physical storage, elapsed time, energy, producer dimension or neural hidden dimension. They have no varying-$H_c$, residual-uniform, hidden-state-access, reset-access, worldwide-priority or Lean/kernel-verification conclusion.
+
+## 追加锚（本行以下为增补区）

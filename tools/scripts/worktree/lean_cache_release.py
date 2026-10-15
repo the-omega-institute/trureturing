@@ -282,6 +282,22 @@ def verification_identity(root, source_ref, source_commit, deadline):
             "workflow_run_attempt": attempt, "source_ref": source_ref}
 
 
+def candidate_identity(root, source_commit, deadline):
+    """Bind an explicitly published local seed to a clean, remotely available commit."""
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        raise ValueError("candidate publication requires a local caller")
+    if not re.fullmatch(r"[0-9a-f]{40}", source_commit) or source_commit == "0" * 40:
+        raise ValueError("candidate source must be a nonzero immutable commit")
+    head = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
+    dirty = checked_run(["git", "-C", str(root), "status", "--porcelain"], deadline).stdout
+    if head != source_commit or dirty:
+        raise ValueError("candidate publication requires the clean fixed source checkout")
+    source = json.loads(gh(deadline, "api", f"repos/{REPO}/commits/{source_commit}"))
+    if not isinstance(source, dict) or source.get("sha") != source_commit:
+        raise ValueError("candidate source is not available in this repository")
+    return {"producer_commit_sha": source_commit}
+
+
 def publication_identity(root, deadline, verification=None):
     """Bind the snapshot to clean protected-branch content; suffixes only disambiguate writes."""
     commit = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
@@ -294,7 +310,7 @@ def publication_identity(root, deadline, verification=None):
     elif commit != verification['producer_commit_sha']:
         raise ValueError("verification source changed during the build")
     identity = dict(producer_commit_sha=commit)
-    if verification is not None or os.environ.get("GITHUB_ACTIONS") == "true":
+    if (verification is not None and "workflow_run_id" in verification) or os.environ.get("GITHUB_ACTIONS") == "true":
         run, attempt = (os.environ.get(field, "") for field in ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT"))
         if not all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run, attempt)):
             raise ValueError("CI snapshot suffix requires a run ID and attempt")
@@ -508,15 +524,16 @@ def fetch_staging_cleanup(root, *, now):
     return results
 
 
-def publish(root, partition, verification=None):
+def publish(root, partition, verification=None, *, build_report=True):
     # Build/content failures remain failures. Production transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
-    build = subprocess.run(["make", "lean-report",
-        "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
-        "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
-    if build.returncode:
-        return build.returncode
+    if build_report:
+        build = subprocess.run(["make", "lean-report",
+            "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
+            "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
+        if build.returncode:
+            return build.returncode
     report = root / ".lake/build/stratalint/raw-lean-report.json"
     content_validated = False
     try:
@@ -642,7 +659,7 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
 
 
 def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False, *,
-                     cache_key, approved_producer=None):
+                     cache_key, approved_producer=None, require_compatible_seed=False, on_installed=None):
     metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
         expected=verification if approved_producer is None else {"producer_commit_sha": approved_producer},
         verification=verification is not None, cache_key=cache_key)
@@ -698,7 +715,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                 source = unpacked / "build"
                 if not source.is_dir():
                     raise ValueError("archive has no project build")
-                if approved_producer is not None:
+                if approved_producer is not None or require_compatible_seed:
                     checked = report_reuse.seed_format(source / "stratalint/raw-lean-report.json")
                     if not checked["compatible"]:
                         raise ValueError("staged report seed is incompatible: " + checked["report_format"])
@@ -720,6 +737,8 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                         report_reuse.invalidate_seed_base(root)
                         if approved_producer is not None:
                             raise ValueError("approved snapshot base could not be recorded")
+                    if on_installed is not None:
+                        on_installed()
     except BaseException as install_error:
         if backup is not None:
             # Keep both trees if rollback itself fails; never clean that backup.
@@ -771,6 +790,48 @@ def fetch_verification(root, partition, identity):
         return 2
     except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
         receipt("fetch", "miss", mode="verification", reason=str(error), resolved=tag, partition=partition)
+        return 1
+
+
+def fetch_candidate(root, partition, tag, producer):
+    """Restore one explicit local publication before a validated long producer builds."""
+    if not re.fullmatch(r"[0-9a-f]{40}", producer) or producer == "0" * 40:
+        raise ValueError("candidate fetch requires the immutable producer commit")
+    deadline = operation_deadline()
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from lean_actions import manual_source_is_valid, preparation_source_is_valid
+        head = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
+        if (not (manual_source_is_valid() or preparation_source_is_valid())
+                or head != os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA")):
+            raise ValueError("candidate fetch in CI requires a validated long producer source")
+    cache_key = release_key(root)
+    source = next((part for part in seed_partitions(root)
+        if tag.startswith(prefix(part, cache_key, True))), None)
+    suffix = "" if source is None else tag.removeprefix(prefix(source, cache_key, True))
+    if (not valid_publication_id(suffix) or not suffix.startswith("local-" + producer[:12] + "-")):
+        raise ValueError("candidate tag is outside the compatible partition or producer")
+    def notify_installed():
+        if os.environ.get("GITHUB_ACTIONS") == "true":
+            for variable, content in (("GITHUB_ENV", "STRATALINT_RELEASE_CACHE_SEEDED=1\n"),
+                                      ("GITHUB_OUTPUT", "restored=true\n")):
+                if os.environ.get(variable):
+                    with open(os.environ[variable], "a", encoding="utf-8") as output:
+                        output.write(content)
+    try:
+        with cache_guard(root), tempfile.TemporaryDirectory(prefix="lean-fetch-candidate-") as temporary:
+            fetch_staging_cleanup(root, now=time.time())
+            installed = restore_snapshot(root, source, tag, pathlib.Path(temporary), deadline,
+                {"producer_commit_sha": producer}, refresh_stale=True, cache_key=cache_key,
+                require_compatible_seed=True, on_installed=notify_installed)
+            if not installed:
+                raise ValueError("candidate snapshot was not installed")
+        return 0
+    except RollbackFailed as error:
+        receipt("fetch", "rollback-failed", mode="candidate", reason=str(error), backup=error.backup)
+        return 2
+    except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError,
+            subprocess.SubprocessError, tarfile.TarError) as error:
+        receipt("fetch", "miss", mode="candidate", reason=str(error), resolved=tag, partition=partition)
         return 1
 
 
@@ -872,9 +933,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("address", "publish", "fetch"))
     parser.add_argument("--repository", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[3])
-    parser.add_argument("--mode", choices=("production", "verification"), default="production")
+    parser.add_argument("--mode", choices=("production", "verification", "candidate"), default="production")
     parser.add_argument("--source-ref", default="")
     parser.add_argument("--source-commit", default="")
+    parser.add_argument("--tag", default="", help="exact local candidate Release to restore")
+    parser.add_argument("--no-build", action="store_true", help="publish only an already valid complete report/build")
     # Internal handoff from LeanArchiveFetch after its typed guard assertion.
     parser.add_argument("--writer-owned", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--approved-tag", help=argparse.SUPPRESS)
@@ -883,6 +946,11 @@ def main():
                         help="replace an expired private project build after validating the complete snapshot")
     args = parser.parse_args()
     try:
+        args.repository = args.repository.resolve()
+        if args.no_build and args.command != "publish":
+            raise ValueError("--no-build requires publish")
+        if args.tag and (args.mode != "candidate" or args.command != "fetch"):
+            raise ValueError("--tag requires candidate fetch")
         if args.refresh_stale and (args.command != "fetch" or args.mode != "production"):
             raise ValueError("--refresh-stale requires production fetch")
         if args.approved_tag is not None or args.approved_producer is not None:
@@ -897,6 +965,13 @@ def main():
             if args.command == "address" or args.writer_owned:
                 raise ValueError("verification requires publish/fetch with its own private cache guard")
             verification = verification_identity(args.repository, args.source_ref, args.source_commit, operation_deadline())
+        if args.mode == "candidate":
+            if args.source_ref or args.writer_owned or args.approved_tag or args.command == "address":
+                raise ValueError("candidate mode requires an explicit local publication or exact fetch")
+            partition = partition_path(args.repository)
+            if args.command == "fetch":
+                return fetch_candidate(args.repository, partition, args.tag, args.source_commit)
+            verification = candidate_identity(args.repository, args.source_commit, operation_deadline())
         partition = partition_path(args.repository)
         if args.command == "address":
             cache_key = release_key(args.repository)
@@ -908,7 +983,7 @@ def main():
                 return fetch_verification(args.repository, partition, verification)
             return fetch(args.repository, partition, args.writer_owned, args.refresh_stale,
                          args.approved_tag, args.approved_producer)
-        return publish(args.repository, partition, verification)
+        return publish(args.repository, partition, verification, build_report=not args.no_build)
     except RollbackFailed as error:
         receipt(args.command, "rollback-failed", reason=str(error), backup=error.backup)
         return 2

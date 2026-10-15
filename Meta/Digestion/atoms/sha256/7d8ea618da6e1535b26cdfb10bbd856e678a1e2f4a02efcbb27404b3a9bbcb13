@@ -1,0 +1,23 @@
+**Theorem 6.2 (Exact universal radii at budgets zero and one).** For every allowed $p,j,\nu$,
+
+$$
+\rho_{\mathrm{law}}(0;p,j,\nu)=0,
+\qquad\rho_{\mathrm{law}}(1;p,j,\nu)=3.
+\tag{6.2}
+$$
+
+Proof. With cap zero no read is possible. Keep the original measurable seed-dependent return state or internal nonreturn. It has the same full law and no addresses, so the least nonnegative radius is zero. In particular $W_{0,j}$ has radius zero. Neither the positive-budget stopping formula nor (5.3) is asserted at $k=0$.
+
+For cap one, Lemma 2.1 gives at each seed either an immediate terminal or one read $t$ with two terminal labels, including $\bot$ where appropriate. Keep the immediate terminals and both labels of any read tree. Let $\phi$ be the parity of $t$, set $q'=q_{j,\phi}$ from (1.2), and put
+
+$$
+B=2q'+\phi\in\{j,j+1\}.
+\tag{6.3}
+$$
+
+In active phase $\phi$, the old edge touches $q'$ exactly when $t=B-2$ or $t=B$. If it touches, replace its address by $B$. Conditional on this phase and target spin $S_{q'}=s$, either touching direction has reply $s\oplus V$, with $V$ an independent Bernoulli$(p)$ spin. The replacement therefore preserves the entire target/reply law, even though it can change which oriented slot touches the target.
+
+If the old edge is disjoint from $q'$, replace its address by $B+2$. The new edge uses spins $q'+1,q'+2$, disjoint from the target, so both old and new replies are an independent XOR of two Bernoulli$(p)$ spins. In the other source phase, both addresses have the same inactive parity and return the separator zero. The endpoint table is unchanged. Averaging the two phases preserves $(H_j,\text{reply})$ in both cases.
+
+The two kept terminal labels then preserve $(H_j,O,D,N)$, including exact depth one at a nonreturn. Each replacement lies in $[j,j+3]$. The classification is a deterministic measurable map on the countable tree space, independent of $p$. Integrating the per-tree identities over every measurable seed event as in (2.3) proves the required full joint-law identity. Hence radius three suffices for every cap-one input. Theorem 5.1 at $k=1$ gives the matching lower bound three, and Theorem 5.2 says that every representative of that particular witness makes a distance-at-least-three read surely. This upper argument is a one-read specialization of the inherited finite compression interface, not a new general compression theorem. $\square$
+
