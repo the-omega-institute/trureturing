@@ -59,6 +59,9 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
             Node("trace-mul-one-kron", "Tracing a Bob observable", TraceMulOneKronFormula(),
                 "The trace of rho times the identity tensor B equals the trace of Bob's reduced operator times B. This identity holds for arbitrary complex operators, without positivity or normalization assumptions.",
                 "trace_mul_one_kron", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("trace-conj-kron", "Moving a local filter across the trace", TraceConjKronFormula(),
+                "For arbitrary complex two-by-two matrices K and A and a complex two-qubit operator rho, the trace of the operator filtered by the identity tensor K against A tensor the identity equals the trace of rho against A tensor K adjoint times K. This follows from cyclicity of the trace and multiplication of Kronecker products.",
+                "trace_conj_kron", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("kron-sub", "The Kronecker product distributes over subtraction", KronSubFormula(),
                 "For arbitrary complex two-by-two matrices A, X and Y, A tensor (X minus Y) equals A tensor X minus A tensor Y.",
                 "kron_sub", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -199,6 +202,15 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
         Formula rho = F.Id("rho"), b = F.Id("B");
         return Disp(All("rho", Operators(), All("B", QubitOperators(),
             Equal(QTr(Multiply(rho, QKron(D(1), b))), QTr(Multiply(BobMarginal(rho), b))))));
+    }
+
+    private static Formula TraceConjKronFormula()
+    {
+        Formula k = F.Id("K"), a = F.Id("A"), rho = F.Id("rho");
+        Formula local = QKron(D(1), k);
+        Formula filtered = Multiply(Multiply(Multiply(local, rho), Adjoint(local)), QKron(a, D(1)));
+        return Disp(All("K", QubitOperators(), All("A", QubitOperators(), All("rho", Operators(),
+            Equal(QTr(filtered), QTr(Multiply(rho, QKron(a, Multiply(Adjoint(k), k)))))))));
     }
 
     private static Formula KronSubFormula()

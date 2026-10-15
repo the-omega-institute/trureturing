@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c92c886a047bf30fc183f16e9f11e88e37ac7b231895a5e24eb820467a39b1fe
+  normalized_sha256: sha256:c92c886a047bf30fc183f16e9f11e88e37ac7b231895a5e24eb820467a39b1fe
+cas_ref: sha256:c92c886a047bf30fc183f16e9f11e88e37ac7b231895a5e24eb820467a39b1fe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 由 $d_L=(-\alpha)^{L+2}$ 直接得到 GC4 及第二个等式。 又有 $|d_{L+r}|=|d_L|\a…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: fef34314101aa72ccda75cc7c034066b0f90079416d8b57c856c062aae2b8246
+    next_atom_id: 18701aeb45f1db6bca83d4ad3b7d67a9f8c6d60df336c548c57bddcfff5670ed

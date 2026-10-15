@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7e11e90f6a8c2b5a379f46379b532904fc3317d3abfb70c6e01b8ae35022a7d
+  normalized_sha256: sha256:b7e11e90f6a8c2b5a379f46379b532904fc3317d3abfb70c6e01b8ae35022a7d
+cas_ref: sha256:b7e11e90f6a8c2b5a379f46379b532904fc3317d3abfb70c6e01b8ae35022a7d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 49.1（共同可见因子）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 0edc0cb6e4e74ff7ab18e8077e3875fae8ccf671450a3c1d872070086938fd88
+    next_atom_id: 213f824203dc4301fff41991fc8aa2300c59e1d4b37ff9c9f853bbefcca887f7

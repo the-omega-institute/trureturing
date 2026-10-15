@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8d4ea0dbc499c52798d0309a574b1eedf2fe88b44515580f94ea708509c0fc1
+  normalized_sha256: sha256:f8d4ea0dbc499c52798d0309a574b1eedf2fe88b44515580f94ea708509c0fc1
+cas_ref: sha256:f8d4ea0dbc499c52798d0309a574b1eedf2fe88b44515580f94ea708509c0fc1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological note requiring an explicit implementation and precision model for cost comparison.
+    previous_atom_id: 01a423bac5af414c6db2020344a245f26ef8504e822c08eb5db68f79b9955c0a
+    next_atom_id: 83e55550a549d2755fcf4398f14870f36b150dc470fac60e2a5cf0d9681606d0

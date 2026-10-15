@@ -54,7 +54,7 @@ def pairMatrix (p : H → Bool → ℝ) (δ : H → Bool → H) :
         then Real.sqrt (p s.val.1 x * p s.val.2 x) else 0
     else 0
 
-private theorem sum_words (n : ℕ) (f : (Fin (n + 1) → Bool) → ℝ) :
+theorem sum_words (n : ℕ) (f : (Fin (n + 1) → Bool) → ℝ) :
     ∑ w, f w = ∑ x : Bool, ∑ w : Fin n → Bool, f (Fin.cons x w) := by
   let e : (Fin (n + 1) → Bool) ≃ Bool × (Fin n → Bool) := {
     toFun := fun w => (w 0, Fin.tail w)
@@ -67,7 +67,7 @@ private theorem sum_words (n : ℕ) (f : (Fin (n + 1) → Bool) → ℝ) :
         (fun w => congrArg f (Fin.cons_self_tail w).symm)
     _ = _ := Fintype.sum_prod_type _
 
-private theorem pairMatrix_action (p : H → Bool → ℝ) (δ : H → Bool → H)
+theorem pairMatrix_action (p : H → Bool → ℝ) (δ : H → Bool → H)
     (s : Pair H) (f : Pair H → ℝ) :
     ∑ t, pairMatrix p δ s t * f t = ∑ x : Bool,
       if h : δ s.val.1 x ≠ δ s.val.2 x then

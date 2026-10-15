@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:552d6854569606dd459fcd1a74c697fea7b7f32424be6aeca4dce042152a24e8
+  normalized_sha256: sha256:552d6854569606dd459fcd1a74c697fea7b7f32424be6aeca4dce042152a24e8
+cas_ref: sha256:552d6854569606dd459fcd1a74c697fea7b7f32424be6aeca4dce042152a24e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Lower-bound proof step of theorem three, estimating polynomial mass outside zero neighborhoods.
+    previous_atom_id: f7638bdcf1e35350eda1b731d962c04911ac25c6a52343035a7db2a5bb04e456
+    next_atom_id: ef3ce1d1d6d69863c5bf007f969461e9a2530bea16ec9ba7f56abdd090f3a605

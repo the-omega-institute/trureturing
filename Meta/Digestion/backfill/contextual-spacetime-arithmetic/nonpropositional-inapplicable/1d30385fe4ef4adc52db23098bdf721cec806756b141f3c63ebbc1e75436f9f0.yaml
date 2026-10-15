@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d30385fe4ef4adc52db23098bdf721cec806756b141f3c63ebbc1e75436f9f0
+  normalized_sha256: sha256:1d30385fe4ef4adc52db23098bdf721cec806756b141f3c63ebbc1e75436f9f0
+cas_ref: sha256:1d30385fe4ef4adc52db23098bdf721cec806756b141f3c63ebbc1e75436f9f0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段是前述分类证明中所用整数多项式根数界的论证。
+    previous_atom_id: 87ed37e5ef0d17be70f8bab889b79807059bdfbef1f2bb3cb6860abed447819e
+    next_atom_id: 439aad91337703a6530985891f168707461c407e267ab2a540911695d43e1ad6

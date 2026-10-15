@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b341a92f151192adc814870e7da7c91abf8c208b0d313573137cc64b05572813
+  normalized_sha256: sha256:b341a92f151192adc814870e7da7c91abf8c208b0d313573137cc64b05572813
+cas_ref: sha256:b341a92f151192adc814870e7da7c91abf8c208b0d313573137cc64b05572813
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 81.1　带共享参照的完整过程只引入对象、记号或适用条件；附文解释这些记号的范围，不另断言需证明的性质。
+    previous_atom_id: 486b5a7d96a44cf440ab6d18e319d0807155dbd351e1ca1f827e9dae7deb0e4a
+    next_atom_id: 990733627ef1adace8d90ba34f46327469566a157cbff490cad60b0763f7460e

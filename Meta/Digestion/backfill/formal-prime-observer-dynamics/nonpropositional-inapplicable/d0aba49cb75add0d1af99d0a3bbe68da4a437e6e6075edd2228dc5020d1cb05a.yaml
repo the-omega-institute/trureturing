@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0aba49cb75add0d1af99d0a3bbe68da4a437e6e6075edd2228dc5020d1cb05a
+  normalized_sha256: sha256:d0aba49cb75add0d1af99d0a3bbe68da4a437e6e6075edd2228dc5020d1cb05a
+cas_ref: sha256:d0aba49cb75add0d1af99d0a3bbe68da4a437e6e6075edd2228dc5020d1cb05a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 88.2（观察语言核）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: fbd54ebbcf40321cca0bbb05200b7a0805cb16d520e9bd1b15c311d53d2554a7
+    next_atom_id: 1189097ca856d4753490ced0a6009843a3b73665764da29d7819a34084714bf5

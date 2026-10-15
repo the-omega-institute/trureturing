@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2c0d50e14d38240a784a30e907391fd6434a5f948e35bcfed9042bf518b0649e
+  normalized_sha256: sha256:2c0d50e14d38240a784a30e907391fd6434a5f948e35bcfed9042bf518b0649e
+cas_ref: sha256:2c0d50e14d38240a784a30e907391fd6434a5f948e35bcfed9042bf518b0649e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是第 2.9 节标题及所承接章节、适配证明和核验范围的导引，不含独立数学陈述。
+    previous_atom_id: 5c849d8c128859eb316cee086c259c18fe6c51a34af707b4196f2afd24b704ce
+    next_atom_id: b77b9f8631a5263bbbfce9b00ec3c91213c9a78fb68f741eff6ef90396e45351
