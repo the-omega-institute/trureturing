@@ -6,6 +6,8 @@
    utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/TransientEJMOriginalAdaptiveFrontierBridge.original_adaptive_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/EJMOriginalGlobalDAGData.root
    digest: Mixed-depth semantic frontiers and exact suffixes preserve every original context and strict global rank descent. -/
 
+import D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
+
 /-!
 Library search: FiniteCachedSymmetryDAGReplay.checkPrefix consumes frontier
 only at its single fixed depth zero. Its checked_prefix_and_frontier accepts
@@ -37,8 +39,6 @@ and current binding. Unfinished four-slot audit is associated with
 https://github.com/the-omega-institute/trureturing/issues/16309
 No audit success or declared_validated status is asserted.
 -/
-
-import D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
