@@ -205,7 +205,9 @@ private theorem projection_limit_injective {A B : Type} (q : A → B)
   calc
     J ∈ r ↔ (⋃ i ∈ J, D i) ∈ Ultrafilter.map q (limit v r) :=
       (limit_projection_readout q v D hD hdisj r J).symm
-    _ ↔ (⋃ i ∈ J, D i) ∈ Ultrafilter.map q (limit v s) := by rw [hrs]
+    _ ↔ (⋃ i ∈ J, D i) ∈ Ultrafilter.map q (limit v s) := by
+      change Ultrafilter.map q (limit v r) = Ultrafilter.map q (limit v s) at hrs
+      rw [hrs]
     _ ↔ J ∈ s := limit_projection_readout q v D hD hdisj s J
 
 /-- Cofinite preimages remove the limiting point from each neighborhood witness. -/
