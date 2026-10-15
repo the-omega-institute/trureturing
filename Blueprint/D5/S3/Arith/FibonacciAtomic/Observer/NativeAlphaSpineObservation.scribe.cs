@@ -10,6 +10,14 @@ internal sealed class NativeAlphaSpineObservationDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "NativeAlphaSpineObservation", H("Native alpha-spine observation locality"), Blocks(
             Describe.Lean(
+                DescribeId.Create("native-alpha-spine-at"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeAlphaSpineObservation.native_alpha_spine_at"),
+                H("The original reached hole"),
+                StatementSource.FromAuthor(Disp(All("p", V("Address"), All("x", V("Source"),
+                    Eq(Call("subtree", V("p"), E(V("p"), V("x"))), Call("some", V("x"))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every original address p and actual Source x, the alpha-sibling path context E(p,x) reaches precisely x at p. The identity includes the empty path. Originally-present transport therefore applies at this hole at every natural epoch, even when a selected strict extension is initially absent."))), DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("native-alpha-spine-observation"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeAlphaSpineObservation.native_alpha_spine_observation"),
                 H("Three-source native observation boundary"),
