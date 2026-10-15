@@ -1,19 +1,12 @@
 # Recursive relational observation: quantum-port covariance and a certified frontier
 
-This volume is ordinary mathematical reference material, prepared for the
-`generic-v1` theory format. Its numbered statements include their hypotheses
-and proofs. It carries no Lean certification or digestion status. Published
-text is preserved; subsequent additions start after the terminal append anchor
-and end with the same anchor.
-
-The subject is the approximate quantum-port problem in
+**Convention (Problem).** The approximate quantum-port problem is that of
 [QMB, Convention 5.2](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md).
-The results below give an exact finite minimax reduction, a terminating
-algebraic certification method, a quantitative improvement for port one, and
-strict exclusion of the four old lower endpoints. They do not evaluate any of
-the four exact frontier values or identify a minimizing channel numerically.
+Its preparation, actual future protocols and fixed-port class are specified
+in §1. The four nontrivial exact frontier values and minimizing Kraus tuples
+remain undetermined.
 
-## 1. The unchanged preparation, history and port contract
+## 1. Preparation, histories and fixed ports
 
 **Assumption 1.1 (Independent quantum preparation).** Let
 $\mathcal H=\mathbb C^5$ with ordered unit basis
@@ -111,10 +104,10 @@ when applied to a map. The frame is a coordinate identification, not a new
 future control. Below channel calculations are in this frame unless stated
 otherwise, so $e(\widehat T)$ means the transported original criterion.
 
-## 2. Credited suppliers and exact correspondences
+## 2. Source results and exact correspondences
 
-**Convention 2.1 (QMB results used).** The following are supplied ordinary
-mathematics, not new claims of this volume.
+**Convention 2.1 (QMB results used).** The QMB results are used in the
+following forms.
 
 | Supplier | Exact use here |
 | --- | --- |
@@ -162,7 +155,7 @@ These identities are a representation of the system objective, not an added
 entangled-input performance test. The marginal condition is essential; an
 arbitrary low-Schmidt-number density matrix is not necessarily a channel.
 
-The actual earlier interfaces are
+The preparation and operation conventions are those of
 [AURIC §§61, 63, 65, 73, 79](https://github.com/the-omega-institute/trureturing/blob/bcf8bc4317eb78b19f2d0f5076318bf3dc5a3324/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md):
 independent complex preparation, this $K$, actual instruments, the passive
 frame, histories, and whole-block flag decoding. The exact fifteen-dimensional
@@ -172,18 +165,19 @@ The native
 describe composition pairs and chronological graft/step words. They do not
 derive Assumption 1.1.
 
-The repository's
+The channel convention in
 [QuantumChannel](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Foundation/FiniteStateChannel.lean)
 is a completely positive matrix map with trace preservation;
 [finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)
-realizes a finite family with $\sum_iC_i^\dagger C_i=I$ in that interface.
+gives the channel associated to a finite family with
+$\sum_iC_i^\dagger C_i=I$.
 [finite_kraus_instrument_born_marginal](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean)
 identifies branch trace and Born weight.
 [unitary_kraus_mixing_invariance](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/QuantumChannels/UnitaryKrausMixingInvariance.lean)
-preserves a sandwich sum under column-orthogonal mixing. These are the stated
-carrier and operation interfaces; none is being cited as a compiled proof of
-the frontier results below. In particular, arbitrary Kraus mixing need not
-preserve individual Kraus ranks.
+preserves a sandwich sum under column-orthogonal mixing. These citations
+concern complete positivity, trace preservation, branch probabilities and
+Kraus-sum invariance. In particular, arbitrary Kraus mixing need not preserve
+individual Kraus ranks.
 
 ## 3. Lossless walk stationarity and fifteen actual events
 
@@ -451,8 +445,8 @@ Each negative threshold decision is a lower certificate against all legal
 complex competitors. Each positive decision has an exact algebraic Kraus
 witness. There is also a terminating algorithm producing a real-algebraic
 description of the exact $\varepsilon_q$ and an algebraic optimal port.
-These are algorithm specifications and computability statements; no such
-frontier computation or optimizer tuple is supplied here.
+These are algorithm specifications and computability statements; no
+evaluated frontier value or explicit optimizer tuple is specified.
 
 Proof. Use Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second
 edition, Algorithm 11.14, Cylindrical Decision, with ordered domain
@@ -471,15 +465,16 @@ On a true decision replace $u$ by $m$; on a false decision replace $l$ by
 $m$. Theorem 4.3 maintains $l\le\varepsilon_q\le u$. Every step halves
 the width. After at most the first integer $n$ with
 $(u_q-b_q)2^{-n}\le\eta$, the loop ends. Every decision is finite by the
-inspected algorithm. A feasible cell at the final $u$ has an algebraic
-sample $C$; if necessary make that decision once more to obtain its sample.
+cylindrical-decision algorithm. A feasible cell at the final $u$ has an
+algebraic sample $C$; if necessary make that decision once more to obtain its sample.
 The associated port of Theorem 5.2 has $e(T)\le u$.
 
 A positive certificate consists of exact algebraic coordinates and verified
 equations and signs. A negative certificate can retain the exact finite
 cylindrical decomposition, algebraic sample encodings and sign data showing
-that no cell satisfies the conjunction. These describe what an executed
-certificate would contain, not certificates already generated for (4.4).
+that no cell satisfies the conjunction. These certificate descriptions
+specify finite algebraic objects, without specifying a cell decomposition
+or feasible coordinates for a particular instance of (4.4).
 
 For exact computation one may directly use BPR Algorithm 14.9, Global
 Optimization, on the displayed quantifier-free semialgebraic set and the
@@ -496,7 +491,7 @@ Root isolation identifies it, and algebraic sampling in its nonempty fiber
 returns an algebraic minimizing tuple. Thus both the value and some
 minimizer are real algebraic and effectively computable, rather than merely
 abstractly existent. No particular endpoint polynomial, isolating interval
-or minimizing tuple has been computed in this volume. $\square$
+or minimizing tuple is specified. $\square$
 
 **theorem 5.2 (Algebraic fixed-port realization and actual attainment).**
 Every feasible algebraic tuple in (4.4) has an effective algebraic
@@ -915,7 +910,7 @@ are allowed by the all-density preparation hypothesis. Their mathematical
 availability is not a physical state-preparation or clock-synthesis theorem.
 No protocol uses source copies, a probability oracle, or an infinite wait.
 
-## 8. The four old lower endpoints are strictly excluded
+## 8. The four supplied lower endpoints are strictly excluded
 
 **lemma 8.1 (Equality in the supplied spectral and rank bounds).** Let
 $\mathcal M$ be the QMB weighted observation operator with weights $a_s$.
@@ -1035,8 +1030,7 @@ this last step. $\square$
 Theorem 5.1 can in principle find a rational lower endpoint strictly above
 $b_q$: repeat its exact bisection until its lower endpoint exceeds $b_q$.
 The positive attained gap proves termination of this further search. No
-such search, and no resulting rational additive gap for $q=2,3,4$, has been
-executed here.
+explicit rational additive gap for $q=2,3,4$ is specified.
 
 ## 9. Three concrete boundaries on symmetry shortcuts
 
@@ -1167,27 +1161,23 @@ produce those off-diagonal entries. This contradiction proves the claim.
 Stationarity is therefore imposed on the whole superoperator in (4.4),
 never on individual low-rank Kraus characters. $\square$
 
-## 10. Literature, mathematical contribution and unresolved boundaries
+## 10. References and unresolved mathematical boundaries
 
-**Convention 10.1 (Source status).** The following primary sources support
-only the indicated statements or methodological comparisons.
+**Convention 10.1 (References and applicability).** The following primary
+sources support only the indicated statements or methodological comparisons.
 
 | Source | Correspondence and limit |
 | --- | --- |
-| [Bluhm–Rauber–Wolf, *Quantum Compression Relative to a Set of Measurements*, arXiv:1708.04898v4](https://arxiv.org/html/1708.04898v4), Definition 4.1, Theorem 5.1 and Lemmas 5.2–5.3 | `literature-attested`: common CPTP encoding/decoding, all inputs, $M_d\otimes\mathbb C^n$ free classical blocks, finite $D^4$ support and compactness. Here $D=5,d=q$. The original measurement-relative seminorm uses its specified observables; our observables are the actual subset events through QMB's first-read identity. Its stability theorem does not evaluate this frontier. |
-| [Terhal–Horodecki, *A Schmidt number for density matrices*, arXiv:quant-ph/9911117v4](https://arxiv.org/html/quant-ph/9911117v4), Definition 1 and Proposition 1 | `literature-attested`: convex low-Schmidt-number states, pure decomposition and rank constraints. The TP marginal is imposed separately in (2.1); a maximally entangled overlap bound is not substituted for the present menu distance. |
-| [Werner, *Optimal Cloning of Pure States*, arXiv:quant-ph/9804001](https://arxiv.org/html/quant-ph/9804001), §4, equation (4.2) | `literature-attested`: averaging admissible channels in an invariant minimax problem. Cloning inputs, outputs and fidelity differ. Theorem 3.3 proves menu invariance and resource preservation for this problem separately. |
+| [Bluhm–Rauber–Wolf, *Quantum Compression Relative to a Set of Measurements*, arXiv:1708.04898v4](https://arxiv.org/html/1708.04898v4), Definition 4.1, Theorem 5.1 and Lemmas 5.2–5.3 | Common CPTP encoding/decoding, all inputs, $M_d\otimes\mathbb C^n$ free classical blocks, finite $D^4$ support and compactness. Here $D=5,d=q$. The original measurement-relative seminorm uses its specified observables; our observables are the actual subset events through QMB's first-read identity. Its stability theorem does not evaluate this frontier. |
+| [Terhal–Horodecki, *A Schmidt number for density matrices*, arXiv:quant-ph/9911117v4](https://arxiv.org/html/quant-ph/9911117v4), Definition 1 and Proposition 1 | Convex low-Schmidt-number states, pure decomposition and rank constraints. The TP marginal is imposed separately in (2.1); a maximally entangled overlap bound is not substituted for the present menu distance. |
+| [Werner, *Optimal Cloning of Pure States*, arXiv:quant-ph/9804001](https://arxiv.org/html/quant-ph/9804001), §4, equation (4.2) | Averaging admissible channels in an invariant minimax problem. Cloning inputs, outputs and fidelity differ. Theorem 3.3 proves menu invariance and resource preservation for this problem separately. |
 | [Navez–Cerf, *Cloning a real d-dimensional quantum state on the edge of the no-signaling condition*, arXiv:quant-ph/0302172v1](https://arxiv.org/html/quant-ph/0302172v1), real-state model and covariance/fidelity calculation | Comparison only: two-clone real-state fidelity and its orthogonal symmetry do not give this all-complex-input port optimum or authorize full orthogonal averaging here. |
-| [Fuchs–Sasaki, *Squeezing Quantum Information through a Classical Channel: Measuring the Quantumness of a Set of Quantum States*, arXiv:quant-ph/0302092v3](https://arxiv.org/html/quant-ph/0302092v3), equation (16), §4.3 and equation (116) | `literature-attested`: ensemble-dependent accessible fidelity and measure/prepare reasoning. Its real-Haar value $3/(d+2)$ is for another ensemble. Equations (6.7)–(6.19) calculate the present weighted actual-orbit bound instead. |
-| [Caves–Fuchs–Rungta, *Entanglement of Formation of an Arbitrary State of Two Rebits*, arXiv:quant-ph/0009063](https://arxiv.org/html/quant-ph/0009063), real/complex product-state distinction | `literature-attested`: real density coefficients do not equate real and complex separability. Proposition 9.2 supplies its own TP embedding and exact witness, so no rebit entanglement formula is needed as a premise. |
-| [Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second edition](https://www.maths.ed.ac.uk/~v1ranick/papers/basupollackroy.pdf), Algorithm 11.14 and correctness, printed p.422; Algorithm 14.9 and correctness, printed pp.557–558 | `literature-attested`: exact cylindrical decision and polynomial global optimization, including algebraic sample data and an attained minimizer. Theorem 5.1 supplies the full task-specific input system and realization bridge. These algorithm statements support termination, not a measured runtime or an executed certificate. |
+| [Fuchs–Sasaki, *Squeezing Quantum Information through a Classical Channel: Measuring the Quantumness of a Set of Quantum States*, arXiv:quant-ph/0302092v3](https://arxiv.org/html/quant-ph/0302092v3), equation (16), §4.3 and equation (116) | Ensemble-dependent accessible fidelity and measure/prepare reasoning. Its real-Haar value $3/(d+2)$ is for another ensemble. Equations (6.7)–(6.19) calculate the present weighted actual-orbit bound instead. |
+| [Caves–Fuchs–Rungta, *Entanglement of Formation of an Arbitrary State of Two Rebits*, arXiv:quant-ph/0009063](https://arxiv.org/html/quant-ph/0009063), real/complex product-state distinction | Real density coefficients do not equate real and complex separability. Proposition 9.2 supplies its own TP embedding and exact witness, so no rebit entanglement formula is needed as a premise. |
+| [Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second edition](https://www.maths.ed.ac.uk/~v1ranick/papers/basupollackroy.pdf), Algorithm 11.14 and correctness, printed p.422; Algorithm 14.9 and correctness, printed pp.557–558 | Exact cylindrical decision and polynomial global optimization, including algebraic sample data and an attained minimizer. Theorem 5.1 supplies the full task-specific input system and realization bridge. These algorithm statements support termination, not a measured runtime or an evaluated certificate. |
 
-Theorems 3.3, 4.3, 5.1–5.2, 6.4, 7.1 and 8.2, with their supporting
-lemmas and counterexamples, are `repo-derived`: source-specific ordinary
-derivations using the credited suppliers and the displayed proofs. The
-compactness, Kraus/Schmidt-number equivalence and $625$ support bound are
-reused rather than counted as new results. The literature comparison is
-bounded; no worldwide-originality or exhaustive-search claim is made.
+The compactness, Kraus/Schmidt-number equivalence and $625$ support bound
+are the supplied QMB results of Convention 2.1.
 
 **Convention 10.2 (Resulting frontier information).** The demonstrated
 intervals and strict endpoint information are
@@ -1200,13 +1190,14 @@ intervals and strict endpoint information are
 | $q=4$ | $7/68<\varepsilon_4$ | $1/7$ |
 | $q=5$ | $\varepsilon_5=0$ | $0$ |
 
-The strict all-$q<5$ result is not a new explicit numerical lower constant
+The strict all-$q<5$ result gives no explicit improved numerical lower constant
 for $q=2,3,4$. The algebraic algorithm can produce such constants and
-arbitrarily small certified intervals, but none has been produced here.
-No new upper port is constructed; the right column remains QMB Theorem 3.1.
+arbitrarily small certified intervals, but no such constants or intervals
+are specified. The right-column ports are those of QMB Theorem 3.1.
 
-**Open problem 10.3 (Exact frontier).** Each of
-$\varepsilon_1,\varepsilon_2,\varepsilon_3,\varepsilon_4$ remains
+**Definition 10.3 (Unresolved exact-frontier problem).** The exact-frontier
+problem is to determine each of
+$\varepsilon_1,\varepsilon_2,\varepsilon_3,\varepsilon_4$. Each value remains
 unevaluated. No isolating polynomial or minimizing Kraus tuple is provided.
 The original gap separates an achieved error of one real-projection channel
 from necessary survival bounds. The former has no proved minimax equality
@@ -1218,7 +1209,7 @@ stationary design, or optimizer-existence theorem does not close these
 inequalities. The complete system (4.4) preserves the intervening problem
 and gives an effective way to determine it.
 
-**Open problem 10.4 (Other resources and the relational programme).** The
+**Convention 10.4 (Resource and recovery limits).** The
 independent all-state preparation of Assumption 1.1 has no native
 $\alpha/\beta$ implementation bridge here. Exact algebraic coefficients
 give finite mathematical descriptions; finite-precision CPTP realization,
@@ -1228,13 +1219,12 @@ Theoretical termination is distinct from a practical implementation or
 runtime measurement. The rational-wait witnesses in §7 are mathematical
 tests under the assumed menu, not a physical clock specification.
 
-The contribution concerns one relation between a chosen future observation
-menu and a fixed memory replacement. Recurrence makes time-translation of
-that menu preserve the worst error; stationarity then expresses the same
-minimax boundary through actual wait-zero tests. This identifies those
-representations for this hypothesis and resource class. It does not identify
-space, time, boundary and memory universally, resolve the separate native
-memory-rate problem, or complete the continuing broader programme. No Lean,
-physical, or programme-completion certification is asserted.
+Recurrence makes time-translation of the future menu preserve the worst
+error. Under Assumption 1.1 and Definitions 1.2–1.3, stationarity expresses
+the fixed-memory minimax boundary through actual wait-zero tests by (3.3).
+This is an equivalence of error optimizations for the specified preparation,
+menu and port class. A mutual-recovery theorem for space, time, boundary and
+memory, or a rate theorem for the native tree, requires additional
+definitions and bridges.
 
 ## 追加锚（本行以下为增补区）
