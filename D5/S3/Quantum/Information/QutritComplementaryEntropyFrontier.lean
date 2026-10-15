@@ -6,7 +6,7 @@
    utility: none
    digest: Qutrit complementary map entropies have a sharp lower frontier. -/
 
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 import D5.S3.Entropy.Forgetting.CapacityMonotone
 import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation
 
@@ -454,5 +454,123 @@ private theorem attainer_entropies (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)
     rw [he, g]
     simp only [Fin.sum_univ_three, Matrix.cons_val]
     ring
+
+-- Covariance under independent changes of the two marginal eigenbases.
+private theorem partialTrace_local_unitary_covariance
+    (P : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)
+    (U Z : Matrix (Fin 3) (Fin 3) ℂ) (hU : U * U.conjTranspose = 1)
+    (hZ : Z * Z.conjTranspose = 1) :
+    partialTraceRight ((U ⊗ₖ Z).conjTranspose * P * (U ⊗ₖ Z)) =
+      U.conjTranspose * partialTraceRight P * U ∧
+    partialTraceLeft ((U ⊗ₖ Z).conjTranspose * P * (U ⊗ₖ Z)) =
+      Z.conjTranspose * partialTraceLeft P * Z := by
+  constructor
+  · simpa only [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_conjTranspose] using
+      D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.trace_local_right
+        P U.conjTranspose Z.conjTranspose
+        (by simpa only [Matrix.conjTranspose_conjTranspose] using hZ)
+  · simpa only [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_conjTranspose] using
+      D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.trace_local_left
+        P U.conjTranspose Z.conjTranspose
+        (by simpa only [Matrix.conjTranspose_conjTranspose] using hU)
+
+private theorem spectral_table
+    (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) (hV : admissible V) :
+    ∃ w : Matrix (Fin 3) (Fin 3) ℝ,
+      (∀ i j, w i j ∈ Set.Icc 0 (1 / 3 : ℝ)) ∧
+      (∑ i, ∑ j, w i j) = 1 ∧
+      entropy3 (fun i => ∑ j, w i j) = outputEntropy V ∧
+      entropy3 (fun j => ∑ i, w i j) = outputEntropy (swap V) := by
+  let hB := (rhoB_posSemidef V).isHermitian
+  let hE := (rhoE_posSemidef V).isHermitian
+  let U : Matrix (Fin 3) (Fin 3) ℂ := hB.eigenvectorUnitary
+  let Z : Matrix (Fin 3) (Fin 3) ℂ := hE.eigenvectorUnitary
+  have hU : U * U.conjTranspose = 1 := Unitary.coe_mul_star_self hB.eigenvectorUnitary
+  have hZ : Z * Z.conjTranspose = 1 := Unitary.coe_mul_star_self hE.eigenvectorUnitary
+  have hU' : U.conjTranspose * U = 1 := Unitary.coe_star_mul_self hB.eigenvectorUnitary
+  have hZ' : Z.conjTranspose * Z = 1 := Unitary.coe_star_mul_self hE.eigenvectorUnitary
+  let W := U ⊗ₖ Z
+  have hW : W * W.conjTranspose = 1 := by
+    dsimp [W]
+    rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, hU, hZ,
+      Matrix.one_kronecker_one]
+  have hW' : W.conjTranspose * W = 1 := by
+    dsimp [W]
+    rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, hU', hZ',
+      Matrix.one_kronecker_one]
+  let P := W.conjTranspose * joint V * W
+  let w : Matrix (Fin 3) (Fin 3) ℝ := fun i j => (P (i, j) (i, j)).re
+  have hp : P.PosSemidef := (joint_posSemidef V).conjTranspose_mul_mul_same W
+  have hc : ((1 / 3 : ℝ) • 1 - P).PosSemidef := by
+    have hh := (joint_upper V hV).conjTranspose_mul_mul_same W
+    simpa only [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul,
+      Matrix.smul_mul, Matrix.mul_one, hW'] using hh
+  obtain ⟨hr, he⟩ := partialTrace_local_unitary_covariance (joint V) U Z hU hZ
+  have hdiagB : U.conjTranspose * rhoB V * U =
+      Matrix.diagonal (fun i => (hB.eigenvalues i : ℂ)) := by
+    simpa only [U, Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose,
+      Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using
+      hB.conjStarAlgAut_star_eigenvectorUnitary
+  have hdiagE : Z.conjTranspose * rhoE V * Z =
+      Matrix.diagonal (fun i => (hE.eigenvalues i : ℂ)) := by
+    simpa only [Z, Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose,
+      Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using
+      hE.conjStarAlgAut_star_eigenvectorUnitary
+  have hrow (i : Fin 3) : (∑ j, w i j) = hB.eigenvalues i := by
+    have hd := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => (M i i).re)
+      (hr.trans hdiagB)
+    simpa only [partialTraceRight, Matrix.diagonal_apply_eq, Complex.ofReal_re,
+      Complex.re_sum] using hd
+  have hcol (j : Fin 3) : (∑ i, w i j) = hE.eigenvalues j := by
+    have hd := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => (M j j).re)
+      (he.trans hdiagE)
+    simpa only [partialTraceLeft, Matrix.diagonal_apply_eq, Complex.ofReal_re,
+      Complex.re_sum] using hd
+  refine ⟨w, ?_, ?_, ?_, ?_⟩
+  · intro i j
+    refine ⟨(Complex.nonneg_iff.mp (hp.diag_nonneg (i := (i, j)))).1, ?_⟩
+    have hd := (Complex.nonneg_iff.mp (hc.diag_nonneg (i := (i, j)))).1
+    apply sub_nonneg.mp
+    simpa only [Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply_eq,
+      Complex.sub_re, Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
+      Complex.one_re, Complex.one_im, mul_one, mul_zero, sub_zero] using hd
+  · have ht : P.trace = 1 := by
+      dsimp [P]
+      rw [Matrix.trace_mul_cycle, hW, Matrix.one_mul, joint_trace V hV]
+    have ht' := congrArg Complex.re ht
+    simpa only [Matrix.trace, Fintype.sum_prod_type, Complex.re_sum, Complex.one_re,
+      Matrix.diag_apply] using ht'
+  · simp only [hrow, entropy3, outputEntropy, spectralEntropy]
+  · change entropy3 (fun j => ∑ i, w i j) = spectralEntropy _
+    simp only [hcol, entropy3, spectralEntropy, rhoB_swap]
+
+private theorem output_tradeoff
+    (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) (hV : admissible V)
+    (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)) (hS : outputEntropy V ≤ h a) :
+    g a ≤ outputEntropy (swap V) := by
+  obtain ⟨w, hw, hs, hB, hE⟩ := spectral_table V hV
+  rw [← hE]
+  apply table_tradeoff w hw hs a ha
+  rw [hB]
+  exact hS
+
+theorem result : claim := by
+  constructor
+  · intro V hV a ha
+    constructor
+    · intro hS
+      rw [(source_bridge V hV).2] at hS
+      have hb := output_tradeoff (swap V) (swap_admissible V hV) a ha hS
+      rw [swap_swap] at hb
+      rw [(source_bridge (swap V) (swap_admissible V hV)).2, swap_swap]
+      exact hb
+    · intro hS
+      rw [(source_bridge (swap V) (swap_admissible V hV)).2, swap_swap] at hS
+      rw [(source_bridge V hV).2]
+      exact output_tradeoff V hV a ha hS
+  · intro a ha
+    have hv := attainer_admissible a ha
+    have he := attainer_entropies a ha
+    exact ⟨⟨hv, he⟩, ⟨swap_admissible _ hv, he.2, by rw [swap_swap]; exact he.1⟩⟩
 
 end D5.S3.Quantum.Information.QutritComplementaryEntropyFrontier
