@@ -384,4 +384,74 @@ private theorem density_pi_phase (t : ℝ) :
   apply density_phase
   simp [Complex.exp_pi_mul_I]
 
+private theorem auxiliary_log_integral (s : ℝ) (hs : |s| ≤ 1) (hsq : s ^ 2 = 1)
+    (hr : IntervalIntegrable
+      (fun t => auxiliaryDensity s t * Real.log (auxiliaryDensity s t))
+      volume 0 (2 * Real.pi)) :
+    (∫ t in (0 : ℝ)..(2 * Real.pi),
+      auxiliaryDensity s t * Real.log (auxiliaryDensity s t)) =
+      2 * Real.log 3 + 4 / 11 + s / 1782 - Real.log (22 * Real.pi) := by
+  have hm := poly_mass s
+  have hj := poly_log_moment s hs
+  simp only [Real.circleAverage_def, smul_eq_mul, hsq] at hm hj
+  have hmass : (∫ t in (0 : ℝ)..(2 * Real.pi), auxiliaryDensity s t) = 1 := by
+    simp only [auxiliaryDensity, intervalIntegral.integral_div]
+    field_simp [Real.pi_ne_zero] at hm ⊢
+    nlinarith
+  have hmoment :
+      (∫ t in (0 : ℝ)..(2 * Real.pi),
+        Complex.normSq (poly s (circleMap 0 1 t)) *
+          Real.log (Complex.normSq (poly s (circleMap 0 1 t)))) / (22 * Real.pi) =
+        2 * Real.log 3 + 4 / 11 + s / 1782 := by
+    field_simp [Real.pi_ne_zero] at hj ⊢
+    nlinarith
+  have hi : IntervalIntegrable (auxiliaryDensity s) volume 0 (2 * Real.pi) := by
+    apply Continuous.intervalIntegrable
+    unfold auxiliaryDensity
+    exact ((Complex.continuous_normSq.comp (poly_differentiable s).continuous).comp
+      (continuous_circleMap 0 1)).div_const _
+  have hpoint (t : ℝ) :
+      auxiliaryDensity s t * Real.log (auxiliaryDensity s t) +
+        Real.log (22 * Real.pi) * auxiliaryDensity s t =
+      (Complex.normSq (poly s (circleMap 0 1 t)) *
+        Real.log (Complex.normSq (poly s (circleMap 0 1 t)))) / (22 * Real.pi) := by
+    unfold auxiliaryDensity
+    by_cases hw : Complex.normSq (poly s (circleMap 0 1 t)) = 0
+    · simp [hw]
+    rw [Real.log_div hw (by positivity)]
+    ring
+  have he := intervalIntegral.integral_congr (μ := volume) (a := (0 : ℝ)) (b := 2 * Real.pi)
+    (fun t _ => hpoint t)
+  rw [intervalIntegral.integral_add hr (hi.const_mul _),
+    intervalIntegral.integral_const_mul, hmass, mul_one,
+    intervalIntegral.integral_div, hmoment] at he
+  linarith
+
+private theorem entropy_gap :
+    spinEntropy witnessAlpha witnessBeta 0 Real.pi -
+      spinEntropy witnessAlpha witnessBeta 0 0 = (1 : ℝ) / 891 := by
+  have hp : IntervalIntegrable
+      (fun t => auxiliaryDensity 1 t * Real.log (auxiliaryDensity 1 t))
+      volume 0 (2 * Real.pi) := by
+    simpa only [density_zero_phase] using
+      density_mul_log_intervalIntegrable witnessAlpha witnessBeta 0 0
+  have hm : IntervalIntegrable
+      (fun t => auxiliaryDensity (-1) t * Real.log (auxiliaryDensity (-1) t))
+      volume 0 (2 * Real.pi) := by
+    simpa only [density_pi_phase] using
+      density_mul_log_intervalIntegrable witnessAlpha witnessBeta 0 Real.pi
+  have hip := auxiliary_log_integral 1 (by norm_num) (by norm_num) hp
+  have him := auxiliary_log_integral (-1) (by norm_num) (by norm_num) hm
+  simp only [spinEntropy, density_zero_phase, density_pi_phase]
+  rw [hip, him]
+  ring
+
+theorem result : ¬ claim := by
+  intro h
+  have he := h witnessAlpha witnessBeta 0 Real.pi witnessAlpha_mem witnessBeta_mem
+    ⟨le_rfl, by positivity⟩ ⟨Real.pi_pos.le, by linarith [Real.pi_pos]⟩
+  have hg := entropy_gap
+  rw [he, sub_self] at hg
+  norm_num at hg
+
 end D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation
