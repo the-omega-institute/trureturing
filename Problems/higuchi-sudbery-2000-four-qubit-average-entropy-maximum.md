@@ -52,7 +52,7 @@ The nine Lean modules in `D5/S3/Quantum/Entanglement/HiguchiSudbery/` carry the 
 
 The decisive mechanism keeps the three marginal spectra coupled through the same amplitude vector, while the scalar majorant removes the logarithm. The majorant is proved on the nonnegative half-line; the entropy conclusion uses normalized four-qubit states. The exact $M_4$ spectrum proves sharpness of the stated bound. The original kernel theorem establishes the maximum and attainment, without a uniqueness assertion.
 
-## Structural continuation
+### Structural continuation
 
 [Higuchi-Sudbery rigidity, marginal fibers and minimal interaction locality](../docs/develop/theory/HIGUCHI_SUDBERY_RIGIDITY.md) derives an exact entropy-deficit identity and quantitative spectral and one-body bounds. Equality forces the target spectra and one-uniformity. Section 3 uses Gour–Wallach Theorem 5 and phase alignment; Section 8 instead constructs the special form directly from the simple Schmidt eigenvalue, distinguished Bell vectors and zero spin bilinear. Its triplet block is real orthogonal, and the two orientations yield exactly the two labelled-party LU orbits. A determinant invariant with opposite values on the conjugates proves their separation.
 
