@@ -18,7 +18,7 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
                     + "and probability vectors are columns. The relation A describes the neighbourhood, "
                     + "while beta is the inverse-temperature schedule. All sums over Fin N include every state. "
                     + "A DecidableRel A supplies a decision for each adjacency statement A i j; "
-                    + "the binders dA below denote this implicit instance. Natural numbers in real-valued "
+                    + "the bracketed DecidableRel A is an anonymous typeclass assumption. Natural numbers in real-valued "
                     + "expressions are coerced to the reals.")),
             Node("probability", "Probability vectors", ProbabilityFormula(),
                 "A probability vector has nonnegative entries with total mass one, as required for the states in Eq. (30)."),
@@ -231,7 +231,8 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
     private static Formula SizeBinder(Formula body) => All("N", Naturals(), body);
     private static Formula GraphBinders(Formula body) => SizeBinder(All("n", Naturals(),
         All("A", Parenthesized(Arrow(FinType(), Arrow(FinType(), Qualified("Prop")))),
-            All("dA", At(Qualified("DecidableRel"), V("A")), body))));
+            Seq(Seq(OpenBracket, At(Qualified("DecidableRel"), V("A")), CloseBracket), Sp,
+                Parenthesized(body)))));
     private static Formula EnergyBinder(Formula body) => All("E", States(), body);
     private static Formula RunBinders(Formula body) =>
         All("beta", Parenthesized(Arrow(Naturals(), Reals())),
