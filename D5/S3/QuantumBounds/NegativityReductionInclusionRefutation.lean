@@ -7,6 +7,7 @@
    digest: A pure two-qutrit state refutes the negativity-to-positive-reduction inclusion. -/
 
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+import D5.S3.Quantum.Information.CoherentCopyCorrelationTax
 import D5.S3.Quantum.PureState.PureStateHandshake
 
 set_option autoImplicit false
@@ -23,6 +24,8 @@ open scoped BigOperators ComplexOrder MatrixOrder Kronecker
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
+open D5.S3.Quantum.Information.CoherentCopyCorrelationTax
+  (copyMatrix copyMatrix_entry partialTraceRight_copyMatrix)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 
 def negativity {a b : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
@@ -110,11 +113,17 @@ private theorem negativity_rho : negativity rho = (1 / 2 : ℝ) := by
 
 private theorem rho_marginal : partialTraceRight rho =
     Matrix.diagonal (![8 / 9, 1 / 18, 1 / 18] : Fin 3 → ℂ) := by
-  funext i k
-  fin_cases i <;> fin_cases k <;>
-    norm_num [partialTraceRight, rho.eq_1, rankOneDensity, v.eq_1, coeff.eq_1,
-      Matrix.vecMulVec_apply, Matrix.smul_apply, smul_eq_mul, Matrix.diagonal,
-      Pi.star_apply, Fin.sum_univ_three, Matrix.cons_val_two, map_ofNat]
+  let T := (1 / 18 : ℂ) • rankOneDensity coeff
+  have hcopy : copyMatrix T = rho := by
+    ext ⟨i, j⟩ ⟨k, l⟩
+    by_cases hij : i = j <;> by_cases hkl : k = l <;>
+      simp [copyMatrix_entry, T, rho.eq_1, rankOneDensity, v.eq_1,
+        Matrix.vecMulVec_apply, Matrix.smul_apply, smul_eq_mul, hij, hkl, Pi.star_apply]
+  rw [← hcopy, partialTraceRight_copyMatrix]
+  congr 1
+  funext i
+  change (1 / 18 : ℂ) * (coeff i * star (coeff i)) = _
+  fin_cases i <;> norm_num [coeff.eq_1, Matrix.cons_val_two, map_ofNat]
 
 -- The two finite sums produce nested complex arithmetic expressions.
 set_option maxRecDepth 4096 in
