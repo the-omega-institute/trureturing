@@ -1048,3 +1048,767 @@ not replace or complete that programme.
 [DD]: https://github.com/the-omega-institute/trureturing/blob/1f58736f50945c7cfeca93ce160eb9b46a3a7e7e/D5/S0/Rewriting/Quotients/DynamicsDescent.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Common relative returns at two mirrored original heights
+
+**Convention 14.1 (restricted conditional operation class).** Sections
+14–20 optimize the survival likelihoods of common relative zero-phase
+returns, and the ensuing classical height guess, under the additional
+source-bound calibrated actuator specified in Definition 14.4, following
+the conditional contract of §10.1. The new result is the envelope
+over every finite original AC/PC1 return, followed by the sharp infimum
+over finite public mixtures. The single-triangle survival formula and
+scalar live return are credited ingredients of §§8 and 10. The programme
+depends on public parameters and controller randomness, never on an old
+height, phase or winding read.
+
+These are ordinary, repository-derived mathematical deductions. They
+assert no new Lean certification, acquired original actuator, physical
+implementation or full observer. Repository suppliers in these sections
+are read at the immutable public revision
+11e2a65d554143d0e3f38b37f1b686453451e3c4. Earlier sections retain their
+own reference conventions and conclusions. The extension follows the
+formal-thinking-and-answer and theory-volume-template disciplines within
+the explicit theory-only boundary.
+
+**Definition 14.2 (actual source and common preparation).** Fix
+
+$$
+0<a<b,\qquad c=a+b<1/2,\qquad Z=1-2c>0,\qquad r=2c.
+\tag{AC.39}
+$$
+
+Use the double-wall base $(c,c,Z)$, the same positive preparation and
+actually supplied calibrated directions of (AC.3). At the reached live
+cut the unknown actual height $X$ is in $\{a,b\}$, and its specimen is
+$\psi_{X,\beta,m}$ for every $\beta\in\mathbb R$ and every signed
+$m\in\mathbb Z$. The real residual and entire signed winding remain in
+the source history. None is a controller input. Height is an actual
+classical control setting here; no action on coherent superpositions of
+different source settings is asserted.
+
+The common-preparation synthesis of Proposition 3.1 can be made symmetric:
+take $a_0=c/2$, auxiliary rectangle height $q_0=a$, and phase height
+
+$$
+B_{\beta,m}=\frac{2c(2\beta-\pi m)}{b-a}.
+\tag{AC.40}
+$$
+
+Its fixed-height signed phase leg, four rectangle legs and final arrival
+at $X$ give the desired endpoint in six units. Indeed the phase residual
+is $2\pi m\,w(a_0)+B_{\beta,m}(w(a)-w(a_0))$, which is exactly
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$; the arrival adds zero phase.
+The rectangle's horizontal survival factors are $c/(2b)$ and $2a/c$,
+and either final arrival has factor $c/(2b)$. Thus at both heights the
+preparation-to-cut live mass is
+
+$$
+q_{\rm cut}=\frac{ac}{2b^2}>0.
+\tag{AC.41}
+$$
+
+All pieces are affine, strict and in both original regularity classes.
+Their phase variation is $2\pi|m|+2|B_{\beta,m}|$, separately finite,
+without a common bound over the full nuisance family. This is a
+source-side realization of actual histories; its latent programme is not
+delivered to the later controller. Every earlier failure stays stopped.
+An equal height prior used below is therefore realizable both before
+preparation and at the cut, without survival changing that prior.
+
+**Definition 14.3 (finite common return dictionaries and domains).**
+After the actual old history and its joint state have been fixed, draw
+$U$ in a finite set $\mathcal U$ with $\nu(u)>0$ and
+$\sum_u\nu(u)=1$, independently of the entire old source and joint
+state. For each seed supply one common relative coordinate
+$z_u:[0,T_u]\to\mathbb R$, with $0\leq T_u<\infty$, satisfying
+
+$$
+z_u(0)=z_u(T_u)=0,\qquad -a<z_u(t)<a,\qquad
+k_{X,u}(t)=X+z_u(t),\qquad
+\chi(t)-\chi(0)=0.
+\tag{AC.42}
+$$
+
+Here AC means that the real coordinates are absolutely continuous on
+their finite interval. PC1 means that they are continuous and have a
+finite nondecreasing partition, possibly with repeated times, on whose
+open pieces their derivatives agree with rates continuous on the closed
+pieces. This is precisely the alternative in
+OriginalControlComposition.FiniteC1Control. Piecewise integration and
+telescoping make a PC1 coordinate AC on the whole interval. Constant
+relative phase has finite variation automatically. No common speed,
+partition-size or variation budget is assumed for the lower bound.
+For $T_u=0$ only the matching identity is allowed.
+
+For an arbitrary such relative command its full mathematical
+starting-height domain is
+
+$$
+J(z_u)=(-\min z_u,\ c-\max z_u).
+\tag{AC.43}
+$$
+
+Condition (AC.42) is exactly the strict-support condition at both
+catalogue heights. Each individual finite dictionary has a positive
+common margin by compactness and finiteness. There is no uniform margin
+over all dictionaries in the optimization.
+
+There is no intermediate specimen read, live height/waveform sensor,
+source callback, readable source programme, hidden Kraus-index or
+environment access in this class. At a completed live return all
+accessible history-sensitive calibration data are $U$ and the
+no-failure flags. Clock times, controller stages and command names are
+determined by $U$ on that branch. Actual old archives and references
+remain joint spectators and are inaccessible for this calibration task.
+Making any of them readable changes the comparison class.
+
+A finite controller using only public randomness and no-failure flags
+is included: pre-draw its finite random tape as $U$. Along its completely
+live branch every status flag is prescribed, so its concatenated relative
+path and stopping checkpoint are functions of that tape alone. Assume
+the resulting path is a return in (AC.42). This reduction grants no
+height-dependent choice or intervention.
+
+**Definition 14.4 (additional calibrated actuator and lawful failures).**
+For each requested path, suppose the actual permitted service implements
+the canonical complete stopped instrument on the same source at its
+unknown actual height. Its source/epoch binding, calibrated coupling,
+waveform generation, reference, timing, blank resources, permissions and
+exact event recorder are additional premises. The coupling supplies the
+unresolved height dependence of the executed operation. Relative
+coordinates and a probability table alone do not implement it as a
+common channel on the specimen and history-independent blanks.
+
+The lower comparison allows every finite AC/PC1 dictionary with this
+service. The approaching upper families need only the triangular returns
+of Definition 10.1, waits and finite live concatenation. They do not
+require a new probe phase port or source-owned parity-dependent programme.
+
+All theorems about yield assume the common service prerequisites and
+permissions actually hold on the whole promised catalogue. A known
+permission denial or known source/interface mismatch produces a visible
+unexecuted rejection with its reason, unchanged old specimen and retained
+boundary, and the declared controller update. It supplies no height
+certificate or completed calibration. Mathematical nonmembership in
+(AC.43) has no executed original successor; there is no automatic
+unknown-height violation detector. An unflagged breach of the actuator
+promise is outside its contract. These branches are never silently
+conditioned away to obtain a calibration score.
+
+An already failed input keeps its original first event and absorbing
+$f$. A newly executed failure retains exact first time, original mode,
+all prior fields and its stopped successor. No positive-carrier action,
+second leg, retry, reset or replacement specimen follows that failure.
+
+**Proposition 14.5 (instantiated complete joint CP successor).** For a
+fixed actual height $x\in\{a,b\}$ and seed $u$, abbreviate
+$k=x+z_u$, $p(k)=(k,c-k,Z,c-k,k)$, and define, almost everywhere,
+
+$$
+\begin{aligned}
+\lambda_{x,u}(t)&=\frac{(z'_u(t))_+}{x+z_u(t)}
+                 +\frac{(-z'_u(t))_+}{c-x-z_u(t)},\\
+S_{x,u}(t)&=\exp\left(-\int_0^t\lambda_{x,u}(s)\,ds\right),
+&q_x(u)&=S_{x,u}(T_u),\\
+K_{x,u}(t)&=\sqrt{S_{x,u}(t)}
+       \operatorname{diag}_{i=0}^4\sqrt{\frac{p_i(k(t))}{p_i(x)}},\\
+\gamma_{x,u,i}(t)&=\lambda_{x,u}(t)-(\log p_i(k(t)))',
+&J_{x,u,i}(t)&=\sqrt{\gamma_{x,u,i}(t)}\,|f\rangle\langle i|K_{x,u}(t).
+\end{aligned}
+\tag{AC.44}
+$$
+
+Index $4$ is original mode $13$. These are the credited canonical kernels
+with zero transported increment. For every conditional joint
+specimen/reference/archive input $\rho^h_{SR}$, where the actual
+classical history $h$ has height $x$, the unnormalized live and
+Borel-time/mode failure outputs, including the seed probability, are
+
+$$
+\begin{aligned}
+\mathsf L_{h,u}(\rho^h_{SR})&=\nu(u)q_x(u)\rho^h_{SR},\\
+\mathsf F_{h,u,i}(E)(\rho^h_{SR})
+ &=\nu(u)\int_{E\cap[0,T_u]}
+ (J_{x,u,i}(t)\otimes I_R)\rho^h_{SR}
+ (J_{x,u,i}(t)^\dagger\otimes I_R)\,dt .
+\end{aligned}
+\tag{AC.45}
+$$
+
+Retain $U$, the actual outcome, exact first time and original mode on
+failure, and the actual old source/preparation/epoch, archive,
+clock/reference/calibration, permissions, controller and selection/update
+inputs. Append the requested command and its actual status. Integrate
+(AC.45) over the same actual old-history law; no history, reference or
+record factorization is imposed. The latent $h$ in this expression is
+not an accessible label.
+
+Proof. AC regularity and compact strict support make every charge finite,
+so $0<q_x(u)\leq1$. The logarithmic probability derivatives are
+$k'/k,-k'/(c-k),0,-k'/(c-k),k'/k$. Their maximum is $\lambda$,
+so each $\gamma_i\geq0$. The squared $i$th diagonal entry of $K(t)$
+has almost-everywhere derivative $-\gamma_i(t)|K_{ii}(t)|^2$.
+Integration proves, entry by entry,
+
+$$
+K(T_u)^\dagger K(T_u)+
+ \sum_{i=0}^4\int_0^{T_u}J_i(t)^\dagger J_i(t)\,dt=I_5,
+\qquad K(T_u)=\sqrt{q_x(u)}I_5.
+\tag{AC.46}
+$$
+
+The second identity uses the height return and constant relative phase.
+The kernels are CP and their integrated effects sum to identity.
+Tensoring by identity gives (AC.45) on every joint input, including
+entangled ones. Conditioning a failure may change the reference state;
+it is the displayed joint operation, not a replacement reference
+marginal. Absolute continuity gives no extra event atom at a finite
+corner. Finite live concatenation composes these branch kernels,
+translates their actual timestamps and preserves the first failure.
+This instantiates the credited CP law; it is not a new instrument
+construction from the original observation menu. $\square$
+
+## 15. Sharp survival-pair envelope over all common return paths
+
+**Theorem 15.1 (all-return envelope).** For every path in Definition 14.3
+put $q_a=e^{-\Lambda_a}$ and $q_b=e^{-\Lambda_b}$, with
+$\Lambda_x=\int_0^T\lambda_x$. Define
+
+$$
+H=\frac{b-a}{2b},\qquad
+f(v)=\frac{(b-a)+2av}{2b-(b-a)v},\qquad 0\leq v\leq1.
+\tag{AC.47}
+$$
+
+Then
+
+$$
+q_a\leq f(q_b),\qquad q_b\leq f(q_a).
+\tag{AC.48}
+$$
+
+Both upper envelopes are exact: for each $0<v\leq1$ a positive
+triangle has $(q_a,q_b)=(f(v),v)$, and its negative mirror has the
+swapped pair. At $v=1$ the triangle is the zero-amplitude wait.
+The endpoint $v=0$ is only a limit and is not an admissible finite path.
+
+Proof. For $-a<s<a$ set
+
+$$
+h_x(s)=\frac{c}{(x+s)(c-x-s)}.
+$$
+
+Since $z(0)=z(T)=0$, the AC chain rule gives zero integral for
+$z'/(x+z)$ and for $z'/(c-x-z)$. Splitting $z'$ into positive
+and negative parts and using these equalities yields
+
+$$
+\Lambda_x=\frac12\int_0^T|z'(t)|h_x(z(t))\,dt.
+\tag{AC.49}
+$$
+
+This closed-path identity holds even with infinitely many reversals.
+Let $A=\Lambda_a$, $C=\Lambda_b$ and $d=\max z\in[0,a)$.
+For $0\leq t<a$ define
+
+$$
+F(t)=\log\frac{(a+t)b}{a(b-t)},\qquad
+G(t)=\log\frac{(b+t)a}{b(a-t)}.
+\tag{AC.50}
+$$
+
+Their derivatives are $h_a(t)$ and $h_b(t)$. The function $G$ is an
+increasing bijection from $[0,a)$ onto $[0,\infty)$. The ratio
+
+$$
+\begin{aligned}
+r(s)&=\frac{h_a(s)}{h_b(s)}
+ =\frac{(b+s)(a-s)}{(a+s)(b-s)},\\
+(\log r)'(s)&=\frac{2b}{b^2-s^2}-\frac{2a}{a^2-s^2}<0
+\qquad(-a<s<a)
+\end{aligned}
+\tag{AC.51}
+$$
+
+is strictly decreasing: after multiplication by the positive
+denominators, the sign is that of $(a-b)(ab+s^2)$.
+Consequently $g(s)=h_a(s)-r(d)h_b(s)$ is nonnegative on the whole
+visited range $s\leq d$.
+
+Put $\Phi(t)=\int_0^t g(s)\,ds$. The AC chain rule and (AC.49)
+identify $A-r(d)C$ with half the total variation of $\Phi\circ z$.
+Split the time interval at a time when $z=d$. Each of the two parts
+has variation at least $\Phi(d)-\Phi(0)$, so
+
+$$
+A-r(d)C\geq F(d)-r(d)G(d).
+\tag{AC.52}
+$$
+
+The same variation argument for a primitive of $h_b$ gives
+$C\geq G(d)$. All primitives used here are continuously differentiable
+on a compact interval containing the visited range; the AC chain rule
+therefore applies without a monotone-piece decomposition.
+
+Define $\mathcal K(C)=F(G^{-1}(C))$ on $[0,\infty)$.
+Its derivative is $r(G^{-1}(C))$, which is positive and decreasing.
+Thus $\mathcal K$ is increasing and concave. Its tangent at $G(d)$
+majorizes it, including the right tangent when $d=0$:
+
+$$
+\mathcal K(C)\leq F(d)+r(d)(C-G(d))\leq A.
+\tag{AC.53}
+$$
+
+Exponentiate. Solving $v=e^{-G(d)}$ and substituting into $e^{-F(d)}$
+gives
+
+$$
+d(v)=\frac{ab(1-v)}{b+av},\qquad e^{-F(d(v))}=f(v).
+\tag{AC.54}
+$$
+
+Therefore $q_a\leq f(q_b)$. Reflection $z\mapsto-z$ interchanges
+$\Lambda_a$ and $\Lambda_b$, proving the other inequality.
+
+For sharpness use $z(t)=d(v)t$ on $[0,1]$ and
+$z(t)=d(v)(2-t)$ on $[1,2]$. Its two charges are exactly
+$F(d(v)),G(d(v))$, by the credited monotone survival formula.
+For $v>0$, $d(v)<a$, so it is a strict legal original path in both
+regularity alternatives. Its mirror swaps the pair. Finally
+
+$$
+f(v)-v=\frac{(b-a)(1-v)^2}{2b-(b-a)v}\geq0,
+\qquad
+a-d(v)=\frac{acv}{b+av}>0.
+\tag{AC.55}
+$$
+
+Thus the positive triangle's larger likelihood is at $a$, and the
+limiting wall $d=a$ is excluded. $\square$
+
+## 16. Wrong-live mass, normalization and finite nonattainment
+
+**Definition 16.1 (classical record-only calibration score).** Only for
+this score, give $X=a,b$ equal prior. The old nuisance parameters and
+joint states remain arbitrary; return survival does not depend on them.
+On every completed live branch a decoder outputs a guess
+$\widehat X\in\{a,b\}$ using $U$ and the live flag alone.
+Independent decoding randomness can be retained in $U$. There is no
+extra specimen measurement, readable archive or silently discarded
+completed-live record.
+
+Let $\mathsf L$ mean completion of the entire return while live, and put
+
+$$
+\begin{aligned}
+P&=\Pr(\mathsf L)
+  =\frac12\sum_u\nu(u)(q_a(u)+q_b(u)),\\
+B_*&=\inf_{\widehat X}\Pr(\mathsf L,\widehat X\ne X)
+  =\frac12\sum_u\nu(u)\min\{q_a(u),q_b(u)\},\\
+R_*&=B_*/P,\qquad P_0=H/2=\frac{b-a}{4b}.
+\end{aligned}
+\tag{AC.56}
+$$
+
+The decoder chooses the larger unnormalized live prior weight at each
+seed, proving the formula for $B_*$. Here $P>0$ automatically.
+These quantities are measured from the actually reached live cut.
+$B_*$ is an unconditional wrong-live mass, whereas $R_*$ conditions
+on $\mathsf L$. Neither is the trace distance of a complete instrument,
+and a prior in a score is not an acquired source label.
+
+All failed and rejected sectors retain their actual outputs in
+(AC.45) and Definition 14.4. They are not successful guesses, retries
+or missing probability. In particular, an extra postselection cannot
+redefine $P$ while suppressing its discarded sectors. The theorem below
+concerns the commonly permitted executions already specified.
+
+**Theorem 16.2 (universal finite-mixture lower bound and strictness).**
+Every finite dictionary in this class satisfies
+
+$$
+B_*\geq\max\left\{0,\frac{P-P_0}{2-H}\right\}.
+\tag{AC.57}
+$$
+
+If $0<P<1$, its $B_*$ is strictly above the right side. At $P=1$
+all survival probabilities equal one and $B_*=1/2$.
+
+Proof. At a seed write $M=\max(q_a,q_b)$ and $m=\min(q_a,q_b)$.
+Theorem 15.1 gives $M\leq f(m)$. Direct differentiation gives
+
+$$
+f'(v)=\frac{c^2}{(2b-(b-a)v)^2},\qquad
+f''(v)=\frac{2(b-a)c^2}{(2b-(b-a)v)^3}>0.
+\tag{AC.58}
+$$
+
+Since $f(0)=H$ and $f(1)=1$, its graph lies below the endpoint chord,
+strictly at every $0<v<1$. Hence
+
+$$
+M+m\leq H+(2-H)m,
+\qquad P\leq P_0+(2-H)B_*.
+\tag{AC.59}
+$$
+
+The average is over the full original seed law $\nu$, not its
+survival-renormalized law. This proves (AC.57).
+Every seed has $m>0$ by Proposition 14.5, so $B_*>0$.
+If $P<1$, at least one positive-weight seed has $m<1$ and its chord
+inequality is strict. Therefore $P<P_0+(2-H)B_*$.
+For $P>P_0$ this makes the positive lower bound strict; for
+$P\leq P_0$ positivity makes the zero lower bound strict.
+If $P=1$, averaging numbers at most one forces every $q_x(u)=1$,
+and (AC.56) gives $B_*=1/2$. $\square$
+
+## 17. Explicit legal finite families approaching every infimum
+
+**Theorem 17.1 (sharp infimum at every prescribed live yield).**
+For every fixed $0<P\leq1$, the infimum of $B_*$ over finite
+public mixtures with yield exactly $P$ is
+
+$$
+\inf B_*(P)=\max\left\{0,\frac{P-P_0}{2-H}\right\}.
+\tag{AC.60}
+$$
+
+It is not attained for $0<P<1$. The approaching families can have
+the same completed-live yield $P$ at each actual height and the same
+wrong-live mass at each height. Four public seed values suffice; each
+live path uses at most three triangles and waits.
+
+Proof. Choose $v_n=2^{-n}$, and set
+
+$$
+d_n=\frac{ab(1-v_n)}{b+av_n},\qquad
+u_n=f(v_n),\qquad P_n=\frac{u_n+v_n}{2}.
+\tag{AC.61}
+$$
+
+A fair public direction chooses the positive or negative triangle of
+amplitude $d_n$. On a live return guess $a$ for positive and $b$ for
+negative. Equation (AC.55) makes this Bayes optimal. At either height
+the yield is $P_n$ and the wrong-live mass is $v_n/2$.
+Since $f$ is strictly increasing, $P_n$ decreases to $P_0$.
+Every finite $d_n<a$.
+
+First suppose $P_0<P\leq1$. For all sufficiently large $n$,
+$P_n<P$. Mix a wait with the fair-direction protocol, using
+
+$$
+w_n=\frac{P-P_n}{1-P_n}
+\tag{AC.62}
+$$
+
+as the wait probability. On the wait retain a fair guess. The four
+seed values are wait-and-guess-$a$, wait-and-guess-$b$, positive and
+negative, with probabilities $w_n/2,w_n/2,(1-w_n)/2,(1-w_n)/2$;
+zero-weight values may be removed. Both heights have yield exactly $P$
+and wrong-live mass
+
+$$
+B_n=\frac{w_n+(1-w_n)v_n}{2}
+\longrightarrow\frac{P-P_0}{2(1-P_0)}
+ =\frac{P-P_0}{2-H}.
+\tag{AC.63}
+$$
+
+The equal-likelihood wait guesses are optimal ties. For $P=1$ only
+the wait is needed.
+
+Now suppose $0<P\leq P_0$. Following the first fair-direction
+triangle, and only while still live, append a positive triangle of
+amplitude $e$ and its negative mirror of the same amplitude.
+At either height their combined multiplicative survival is
+
+$$
+\tau(e)=\frac{(a-e)(b-e)}{(a+e)(b+e)},\qquad 0\leq e<a.
+\tag{AC.64}
+$$
+
+This follows by multiplying the two monotone-leg factors of each
+triangle. The function is continuous, strictly decreasing from one
+to zero: its logarithmic derivative in the interior is
+$-1/(a-e)-1/(b-e)-1/(a+e)-1/(b+e)<0$.
+Consequently there is a unique legal $e_n$ with
+$\tau(e_n)=\tau_n:=P/P_n\in(0,1)$. Explicitly,
+
+$$
+e_n=
+\frac{2ab(1-\tau_n)}
+ {c(1+\tau_n)+
+  \sqrt{c^2(1+\tau_n)^2-4ab(1-\tau_n)^2}}.
+\tag{AC.65}
+$$
+
+The discriminant is positive; (AC.65) is the smaller root of
+$(1-\tau_n)e^2-c(1+\tau_n)e+ab(1-\tau_n)=0$.
+The monotonicity argument proves that this root belongs to $(0,a)$.
+The damping pair has equal likelihood at the two heights, so it
+does not change the optimal direction guess. Its completed yield is
+exactly $P$ at each height, with wrong-live mass
+
+$$
+B_n=\frac{P}{P_n}\frac{v_n}{2}\longrightarrow0.
+\tag{AC.66}
+$$
+
+Every failure stops the sequence immediately; the remaining triangles
+are then unvisited. Each finite path is a common strict original
+AC/PC1 path, and Proposition 14.5 gives all its joint failure outputs.
+The lower bound and nonattainment are Theorem 16.2. $\square$
+
+**Corollary 17.2 (worst-height conditional-error infimum).** Add the
+requirement
+$\Pr(\mathsf L\mid X=a)=\Pr(\mathsf L\mid X=b)=P>0$.
+Over this class, allowing any record-only decoder, the infimum of
+the worst-height conditional error is
+
+$$
+\inf\max_{x\in\{a,b\}}
+ \Pr(\widehat X\ne x\mid\mathsf L,X=x)
+ =
+\max\left\{0,\frac{P-P_0}{(2-H)P}\right\}.
+\tag{AC.67}
+$$
+
+For $0<P<1$ it is not attained; for $P=1$ a wait with fair retained
+guess attains $1/2$.
+
+Proof. For any decoder let $b_x=\Pr(\mathsf L,\widehat X\ne x\mid X=x)$.
+Its equal-prior wrong mass is $(b_a+b_b)/2\geq B_*$.
+Under the common-yield requirement the average conditional error is
+$(b_a+b_b)/(2P)$, so the maximum is at least $B_*/P$.
+The two constructions in Theorem 17.1 have $b_a=b_b=B_n$ and
+equal yield, proving the infimum. The strict lower bound for finite
+mixtures proves nonattainment. Conditioning on a height-specific live
+event is legitimate since its probability is $P>0$.
+Without the common-yield requirement, $B_*/P$ is the equal-prior
+live Bayes error; it is not an asserted sharp worst-height formula.
+$\square$
+
+## 18. One actual finite instance and the separating-guard consumer
+
+**Example 18.1 (rational calibration above its unattained frontier).**
+Take the actual source of §8:
+$c=1/4$, $Z=r=1/2$, $a=1/16$, $b=3/16$.
+Then $H=1/3$, $P_0=1/6$, and
+
+$$
+\inf B_*(P)=\max\{0,3P/5-1/10\},\qquad
+\inf R_{\rm worst}(1/2)=2/5.
+\tag{AC.68}
+$$
+
+Choose $v=1/9$ and $d=3/56$. A positive two-unit triangle has
+$(q_a,q_b)=(5/13,1/9)$, and its mirror swaps these.
+The common height support margin is $a-d=1/112$.
+Use the four seeds wait-and-guess-$a$, wait-and-guess-$b$, positive
+and negative with respective probabilities
+
+$$
+\frac{59}{352},\quad\frac{59}{352},\quad
+\frac{117}{352},\quad\frac{117}{352}.
+\tag{AC.69}
+$$
+
+Pad each wait to the same two-unit duration. At either height
+
+$$
+\Pr(\mathsf L\mid X)=\frac12,\qquad
+\Pr(\mathsf L,\widehat X\ne X\mid X)=\frac9{44},\qquad
+\Pr(\widehat X\ne X\mid\mathsf L,X)=\frac9{22}>\frac25.
+\tag{AC.70}
+$$
+
+These are exact substitutions into (AC.62)–(AC.63), with total wait
+probability $59/176$. The controller really acquires its seed and
+the survival/failure event. A live guess is not an observed height.
+
+The six-unit preparation of Definition 14.2 has
+$B_{\beta,m}=8\beta-4\pi m$ and cut live mass $2/9$.
+From preparation, the completed-live mass is $1/9$.
+Earlier stopped mass $7/9$ and new acquisition failure mass $1/9$
+give total stopped mass $8/9$. The live chronology is eight units.
+All exact first-time/five-mode/reference outputs are (AC.45) with
+the old stopped sectors retained, rather than only these scalar totals.
+
+**Proposition 18.2 (no exact separating guard from finite live records).**
+Every finite live seed of a protocol in Definition 14.3 has positive
+likelihood at both heights. Thus this record cannot certify which height
+is present, even with an inconclusive option. In particular, it cannot
+authorize an exact executed-versus-unexecuted handler for the unit
+positive ramp of displacement $c/2$, whose domain $(0,c/2)$ contains
+$a$ and excludes $b$.
+
+Proof. The two likelihoods are $\nu(u)q_a(u)>0$ and
+$\nu(u)q_b(u)>0$. Any randomized conclusive label with positive
+probability at this live seed also occurs under the competing height;
+zero-error conclusiveness forces zero probability for both labels.
+No finite record produces an exclusive height event. $\square$
+
+The same conclusion survives an unrestricted terminal specimen effect
+under the full nuisance family, although such a read is outside the
+score's operation class. At each height the four actual vectors with
+$(\beta,m)\in\{0,\pi\}\times\{0,1\}$ span $V$: their sums and
+differences isolate $|2\rangle$, $|+\rangle$ and $|-\rangle$,
+all with nonzero coefficients. At a fixed live seed an error-free
+label-$a$ positive effect must have zero expectation on all four
+height-$b$ vectors. Positivity makes it annihilate their span $V$,
+so it cannot identify height $a$ either; interchange the heights for
+the other label. This is the credited positive-effect/support
+principle instantiated on the acquired record, rather than a new
+general discrimination theorem.
+
+After a live return the actual height, old real phase, signed winding
+and conditional joint specimen/reference state are unchanged.
+Any separately supplied and permitted matching tail known legal at
+both candidate heights can be selected using the actual seed and updates.
+Its chronological real lift is
+$\chi(T+u)=\chi(T)+\chi_{\rm tail}(u)-\chi_{\rm tail}(0)$;
+the old lift is not read. Complete canonical failures retain the
+first failure and absorbing successor. A finite-error height guess
+never grants permission for the separating ramp. This is a restricted
+consumer of the existing lawful menu, not a total-domain guard or
+height-selected full observer.
+
+## 19. Actual-source map, ownership and finite resources
+
+**Resource statement 19.1 (supplied services and newly obtained data).**
+
+| Object or operation | Actual map and allocation |
+| --- | --- |
+| Old source | Definition 14.2 realizes both unknown heights, every real phase and signed winding from the same preparation, base, reference and cut time. Source-side $B_{\beta,m}$ and $X$ are latent; they are not installed controller parameters. |
+| Public selection | $U$ is independent of the whole old joint state before execution. It selects the same relative path at either height. The controller owns its finite dictionary and actually retained seed; the source does not choose a different path by old parity or height. |
+| Height-sensitive action | The extra source-bound actuator of Definition 14.4 executes the chosen relative command at the actual height. Its identity, calibration, access, permissions and full CP law remain supplied premises. No specimen-only implementation or original-menu acquisition is proved. |
+| Actually acquired observation | One execution supplies its actual live/failure status, and on failure its exact first timestamp/mode. On a live branch the seed is source-correlated through the probabilities $q_x(u)$; it is not an exact height label or an observed probability law. |
+| Joint successor and update | Equation (AC.45) acts on the same conditional input and actual history measure, retains all old fields and appends actual commands/events. Successful normalization reweights the history mixture; it need not leave its unconditional archive marginal fixed. Stopped branches remain absorbing. |
+| Quantum and classical memory | The original live family occupies the credited qutrit span $V$. The upper constructions use at most four seed values, plus flags, finite stage counters and their actual controller/calibration fields. These counts exclude neither old archives nor exact failure timestamps; they are not complete-memory or hardware minima. |
+| Precision and descriptions | Rational $a,b,v_n,P$ give rational $d_n,w_n$ and algebraic $e_n$, hence finite symbolic programmes and probability descriptions. Arbitrary exact real parameters require actual descriptions and exact sampling/actuation premises; a finite dictionary does not guarantee a finite effective encoding of all its reals. Exact gates, source binding, timing/reference precision, arithmetic and complete event storage are separate resources. |
+
+Each triangle in Theorem 17.1 can use one unit per leg. Pad the
+completed paths with waits to a common six-unit acquisition horizon.
+Height speed is then at most $a$, total height variation at most
+$6a$, and new phase variation and winding are zero. Each finite
+programme belongs to both original regularity alternatives.
+The universal lower proof allows any finite duration, including a
+zero-duration matching wait; it does not impose these upper-construction
+budgets on the original class.
+
+The approaching families lose their common support margin:
+$a-d_n=acv_n/(b+av_n)\to0$, and the unfavourable triangle charge
+is $-\log v_n\to\infty$. Every finite member remains strict with
+positive survival at both heights. No boundary path, infinite charge
+or zero-probability live alternative is an admissible attained guard.
+The theorem gives no sharp optimum under an additional fixed margin,
+charge, noise or precision budget.
+
+No repeated same-history copies, reset, post-failure retry, reversal,
+tomography, hidden environment port, free source callback, parity helper
+or unchanged failure helper is supplied. The inaccessible mathematical
+source label in (AC.45) is not a new port. Earlier acquisition and
+other operation classes remain outside this restricted optimization.
+
+## 20. Suppliers, primary attribution and remaining original obligations
+
+**Source statement 20.1 (credited inputs and substantive addition).**
+All following repository references select the public revision in §14.1.
+
+| Supplier | Exact use and nonduplication boundary |
+| --- | --- |
+| [FiniteRectangleTransport][AC14FRT] and [owning Scribe][AC14FRTB] | ValidBase, positive probability, signed phaseWeight, weight_compatible and finite_rectangles_realize, together with the Scribe's common-preparation/all-signed-sector application, supply the original source. Naming a control supplies no physical actuator or sensor. |
+| [OriginalControlComposition][AC14OCC] and [owning Scribe][AC14OCCB] | OriginalControl, FiniteC1Control, the internal original_ac regularity argument and concatenate_original supply both regularities, literal unchanged prefix, matching height, translated real tail, additive transport and finite/zero durations. |
+| This volume §§3, 8–10 | Actual preparations, scalar return, the $23/434$ survival-bit deficiency, the relaxed decision frontier and single fair-direction excursion curve are credited. Theorem 15.1 adds optimality over every common AC/PC1 return, including arbitrarily many reversals; Theorems 16.2–17.1 add the sharp finite-mixture infimum and its nonattainment. |
+| [Instrument Boundaries][AC14IB], §§4–5.2, 9–15, 17–27 | Full original orbit, canonical exact-time/five-mode CP law, whole-law classification and finite joint continuation are reused. Source-height programmes and mixed-programme rank-sum capacity remain supplied-assistance results. Neither supplies this actuator's acquisition. |
+| [Instrument Stability][AC14IS], §§1–6 | Marked-law metrics, conditional inverse bounds, forward discontinuity and sufficient strong error data keep their scope. The present calibration score is not their complete-output error or a new stability certificate. |
+| [Quantum Carrier Minimum][AC14QCM], §§1, 7–10 | Carrier correspondence, known-anchor generated labels, total-domain guard and already received-command capacity are credited. The four seeds here do not determine full archive size or arbitrary unknown-past acquisition. |
+| [Record Acquisition][AC14RA], §§2–9, 13–17 | Query obstructions, paid sampled certificates and the additional calibrated producer phase port are credited. That port can supply a binary guard under its own contract; its source-to-probe bridge is not supplied here or identified with the return actuator. |
+| [Sampled Instrument Certificates][AC14SCI], §§3, 7–10 | Simultaneous timed tables and the explicit joint sampler law remain extra acquisition premises. A finite return record is not a waveform table, strong loss-density certificate or passive nondisturbing sensor. |
+| [Event Memory and Coarse Aliasing][AC14EMA], §§2–6 | Exact same-event memory bounds, finite-bin aliases and known-programme law resampling retain their distinctions. All actual failure records are retained here; scalar wrong-live mass replaces none of them. |
+| [Parity Record Transport][AC14PRT], §§12–23 | Helpers, updates, exclusive-live mass and the attained finite-charge parity frontier are credited. Its source-owned old-parity/future-programme dependence at a known return height differs from our common command at an unknown mirrored height. Its attained frontier is not (AC.60). |
+| [Reanchoring Boundaries][AC14RB], §§2–8 | Exact uncertain-height reanchoring and its extra endpoint service remain separate consumers. A zero-phase return keeps each actual height; it does not reanchor to a common known height. |
+| [Transport–Memory Completion][AC14TM], §§2.9–2.12, 2.18 | Actual common coherent source/port, aligned acquired readings, known nonzero amplitudes and known nonzero record overlap remain required. No such readings or overlaps are obtained by (AC.56). |
+| [Process Geometry][AC14PG], §34; [Atlas Stable Core][AC14ATLAS], Theorem 6.3 | Actual joint source/epoch image, complete success/failure routes and selector/update inputs, and each individually sufficient four-view map remain separate obligations. The retained seed and return invariant do not instantiate those full interfaces. |
+
+The source-specific additions are the all-path inequalities
+(AC.48)–(AC.55), finite-mixture bound and strictness (AC.57)–(AC.59),
+and the exact-yield approaching constructions (AC.60)–(AC.67).
+The symmetric preparation and finite instance explicitly connect these
+deductions to the actual source. AC calculus, concavity tangents,
+convexity chords, binary Bayes decisions and CP likelihood calculus are
+mature tools. No worldwide originality or exhaustive nonduplication
+claim is made.
+
+**Literature statement 20.2 (primary scope and access premises).**
+
+| Primary source | Verified content and precise use |
+| --- | --- |
+| S. Gammelmark and K. Mølmer, [Bayesian parameter inference from continuously monitored quantum systems, arXiv:1212.5700v1](https://arxiv.org/html/1212.5700v1), Eqs. (12)–(13), §III.1 | The trace of an unnormalized conditional state is a likelihood relative to its stated reference measure; clicks and no-click evolution both enter the specified instrument. This is mature likelihood context. Equations (AC.44)–(AC.56) derive the present probabilities directly, without importing a sensor or calibration service. |
+| F. Buscemi, [Comparison of quantum statistical models: equivalent conditions for sufficiency, arXiv:1004.3794v4](https://arxiv.org/html/1004.3794v4), Definitions 15 and 19, Theorems 2–3 | Statistical-morphism m-sufficiency and sufficiency through one CPTP map have different premises. A decision comparison alone supplies neither our extra actuator nor a complete acquired joint successor. |
+| A. Jenčová, [Randomization theorems for quantum channels, arXiv:1404.3900v1](https://arxiv.org/html/1404.3900v1), §3.1, Theorem 2 | Finite experiments are compared through common CP randomizations, with trace-norm error at most $2\epsilon$. This presupposes the common processing class. No original producer-to-actuator route or extra probe access follows. |
+| L. Leppäjärvi and M. Sedlák, [Incompatibility of quantum instruments, arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2), Proposition 7 | For its stated instruments, compatibility is equivalent to postprocessing a complementary instrument from a dilation. The environment/complementary operation and implementing postprocessor are additional access premises. Neither is used here. |
+
+These bounded primary comparisons furnish no verified directly sufficient
+joint acquired original observer under the specified one-specimen,
+absorbing-failure contract. This is neither an exhaustive absence theorem
+nor evidence of priority. No theorem or resource cost is transferred from
+a different model by shared dimensions or terminology.
+
+**Verification boundary 20.3 (ordinary proofs and exact finite checks).**
+The universal conclusions rest on the ordinary proofs above.
+Bounded exact in-memory rational checks cover 8,981 closed polygon
+returns over five mirrored catalogues, both survival envelopes and their
+strict chord inequalities, 128 exact-yield mixture instances, 28 exact
+quadratic-field checks of (AC.65), four symmetric preparation catalogues,
+and the rational source/protocol values in Example 18.1. These checks do not
+establish the arbitrary AC theorem, source calibration, physical
+implementation or Lean verification. No experiment file or process
+transcript is part of this volume.
+
+**Open boundary 20.4 (the unchanged acquired-observer problem).**
+The new optimality statement concerns earlier survival filtering only
+after the extra source-bound actuator is actually supplied. It does not
+construct or certify that actuator from the original legal observation
+menu, nor the distinct producer phase port of Record Acquisition §13.
+Every finite live record in this class retains both height alternatives;
+an arbitrarily small conditional-error infimum is not an exact guard.
+
+A full positive observer still must actually acquire the needed joint
+source dependence, authenticate source/epoch and permissions, establish
+calibration/reference and timing, and implement record-dependent legal
+selection, updates and the complete same-live-branch successor. Generated
+invariants, phase/winding-correlated or unequal-support assistance,
+genuinely implemented joint ports, richer intermediate interventions and
+changing menus require their own faithful acquisition and closure proofs;
+the present restricted result does not exclude them.
+
+The full original class retains all valid bases, strict positive support,
+real lifts and every signed winding, both regularity alternatives and
+arbitrary finite durations with matching interfaces. This mirrored
+two-height zero-phase subclass does not replace it. No unknown past
+waveform, preinitial winding, record overlap, whole law, uniform
+four-view recovery or unbounded-horizon certification is recovered.
+Full space/time/boundary/memory mutual recovery, native stationary
+$\alpha/\beta$ memory-rate/cofinality and effective certification, and
+the independent fixed-Hamiltonian quantum minimax remain unresolved.
+
+[AC14FRT]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean
+[AC14FRTB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs
+[AC14OCC]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/D5/S3/Quantum/Fibers/OriginalControlComposition.lean
+[AC14OCCB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs
+[AC14IB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md
+[AC14IS]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md
+[AC14QCM]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md
+[AC14RA]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md
+[AC14SCI]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md
+[AC14EMA]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md
+[AC14PRT]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md
+[AC14RB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_REANCHORING_BOUNDARIES.md
+[AC14TM]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[AC14PG]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[AC14ATLAS]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md
+
+## 追加锚（本行以下为增补区）
