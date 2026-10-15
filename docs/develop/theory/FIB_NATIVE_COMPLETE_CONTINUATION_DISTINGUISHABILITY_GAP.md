@@ -780,3 +780,705 @@ programme follows from this fixed experiment.
 [IB]: https://github.com/the-omega-institute/trureturing/blob/1f58736f50945c7cfeca93ce160eb9b46a3a7e7e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Common channel compatibility and exact-time attainment
+
+**Convention 8.1 (the unchanged comparison class).** Sections 8–11 use
+exactly (CG.20): one normalized specimen at the already reached old live
+cut, the same fixed metadata and blanks, all twelve actual histories
+(CG.2), and the entire targets (CG.15). Write
+
+$$
+y=256x\in\{5,16,27\},\qquad
+W=\operatorname{span}\{|+\rangle,|-\rangle\},\qquad
+s_y=\frac{y}{y+6},\quad f_y(t)=\frac{6y}{(y+6t)^2},\qquad
+(w_0,w_1,w_2,w_3,w_4)=\left(0,\frac14,\frac12,\frac14,0\right).
+\tag{CG.50}
+$$
+
+Here $s_y,f_y$ are the dimensionless versions of (CG.13); index $4$
+still names original mode $13$. The class is the expressly enlarged class
+of all common CPTP maps, including countably additive simulated exact-time
+laws with atoms or singular continuous parts. It is not a subclass defined
+by finite physical implementations. All error norms count every outcome.
+The different old live masses (CG.8) are neither priors nor acceptance
+weights in this normalized problem. The original calibrated source,
+permissions, real lifts and literal continuation convention remain those
+of §§2–4; no new original actuator, helper, source parameter or port is
+supplied by this comparison.
+
+**Proposition 8.2 (target-fixing canonical reduction).** The infimum in
+(CG.20) is unchanged if the output consists of a live matrix on $V$, five
+scalar measures on the separately labelled time intervals $[0,1]$, each
+with stopped state $P_f$, and one scalar other outcome. All zero-target
+output mass, including abort and rejection, remains counted.
+
+Proof. Apply the same output operation to every candidate. In its live
+sector compress to $V$, sending the trace of the orthogonal compression
+to other; discard cross terms between these orthogonal subspaces. This
+is a CP trace-preserving operation: its retained branch is a compression
+and its other branch is a positive trace functional. At each stopped
+mode and exact time, replace the quantum state by its trace times $P_f$,
+keeping that mode and time. Pool all further zero-target sectors into the
+scalar other outcome. Fixed common metadata may be discarded and
+reappended in their same fixed state. These operations compose to one
+common CPTP map and fix each target (CG.15).
+
+The output contraction argument (CG.40), applied to this common operation,
+shows that none of the twelve errors increases. Pooling zero-target
+positive sectors retains their entire trace contribution: their norm is
+the sum of their masses before pooling and the same total mass afterwards.
+No outcome is deleted and no branch is normalized by success. The five
+original stopped intervals are not pooled or binned. Conversely a reduced
+channel is a candidate in the enlarged class, with its other outcome
+embedded as a declared zero-target event and the fixed metadata appended.
+Thus reduced candidates have infimum at least the full infimum, whereas
+the reduction gives the reverse inequality. $\square$
+
+**Lemma 8.3 (one joint Choi–measure condition).** Let
+
+$$
+K=\coprod_{i=0}^4\bigl(\{i\}\times[0,1]\bigr)\ \sqcup\ \{\mathrm o\},
+\tag{CG.51}
+$$
+
+with the disjoint-union compact metric topology and isolated other point
+$\mathrm o$. A reduced common channel is equivalent to a pair $(J,B)$,
+where $J\geq0$ is a matrix on $V_{\rm in}\otimes V_{\rm live}$ and
+$B$ is a positive $3$ by $3$ matrix-valued finite Borel measure on $K$,
+countably additive entrywise, such that
+
+$$
+\operatorname{Tr}_{\rm live}J+B(K)=I_V.
+\tag{CG.52}
+$$
+
+In the fixed basis $(+,-,2)$, its live matrix and scalar record measure
+on an input $\rho$ are
+
+$$
+L_\rho=\operatorname{Tr}_{\rm in}[(\rho^T\otimes I_V)J],\qquad
+\mu_\rho(A)=\operatorname{tr}(\rho^T B(A))\quad(A\subseteq K\text{ Borel}).
+\tag{CG.53}
+$$
+
+Proof. Use the Choi convention
+
+$$
+J=\sum_{a,b}|a\rangle\langle b|\otimes
+                   \Phi_{\rm live}(|a\rangle\langle b|).
+\tag{CG.54}
+$$
+
+The CP Choi correspondence gives positivity of $J$ and the first formula
+in (CG.53). Each scalar record branch has a positive effect $E(A)$;
+put $B(A)=E(A)^T$. Its output is
+$\operatorname{tr}(\rho E(A))=\operatorname{tr}(\rho^T B(A))$.
+Entrywise countable additivity follows from that of the output laws and
+linearity on a finite matrix basis. Trace preservation for every $\rho$
+then gives (CG.52). In particular $\operatorname{Tr}_{\rm live}J$
+is the transpose of the live effect, so the two terms in (CG.52) use
+the same transpose convention.
+
+Conversely, a positive $J$ gives its CP live map by (CG.53).
+Each $B(A)^T$ is positive and defines a CP scalar-output map: diagonalizing
+this effect expresses its trace functional as a sum of positive rank-one
+Kraus branches. The countably additive family of these effects defines
+the scalar record instrument, with $P_f$ prepared on each stopped branch.
+Equivalently every finite Borel partition gives CP branches, also after
+tensoring an arbitrary reference identity; their countable sums have the
+specified measures. Equation (CG.52) makes the total output trace
+$\operatorname{tr}(\rho^T I_V)=\operatorname{tr}\rho$.
+This proves sufficiency for a single CPTP channel. It does not permit
+independently selecting an output for each history. $\square$
+
+**Theorem 8.4 (attainment with arbitrary countably additive time laws).**
+There is a common channel $\Phi_{\min}$ in the enlarged class (CG.20)
+with $E(\Phi_{\min})=E_*$. Its time laws need not have densities.
+
+Proof. The class is nonempty, for example by the channel that always
+returns other, and its errors lie in $[0,1]$. By Proposition 8.2 take a
+minimizing sequence represented by $(J_n,B_n)$ of Lemma 8.3. Taking the
+trace of (CG.52) gives
+
+$$
+\operatorname{tr}J_n+\operatorname{tr}B_n(K)=3.
+\tag{CG.55}
+$$
+
+Thus the positive matrices $J_n$ have a convergent subsequence with
+positive limit $J$. Every component of $B_n$ has uniformly bounded total
+variation. Indeed, for every finite Borel partition $(A_j)$, positivity
+and Cauchy–Schwarz give
+
+$$
+\sum_j|(B_n)_{ab}(A_j)|
+ \leq\sum_j\sqrt{(B_n)_{aa}(A_j)(B_n)_{bb}(A_j)}
+ \leq\sqrt{(B_n)_{aa}(K)(B_n)_{bb}(K)}\leq3.
+\tag{CG.56}
+$$
+
+Choose a countable uniformly dense family of real continuous functions
+on compact metric $K$, including $1$. A diagonal subsequence makes their
+integrals against the real and imaginary parts of all nine components
+converge. The uniform variation bound extends these limits, by uniform
+approximation, to bounded linear functionals on all continuous functions.
+For every vector $z$ and nonnegative continuous function $h$, the limit
+of $\int h\,d(z^\dagger B_nz)$ is nonnegative. Riesz–Markov
+representation of positive functionals on $C(K)$, and polarization in
+$z$, therefore supply a positive matrix-valued regular Borel measure $B$
+with these component functionals. Its components are genuine countably
+additive measures. No finitely additive completion is used. Testing the
+constant $1$ passes (CG.52) to the limit. Thus $(J,B)$ is feasible.
+
+It remains to check the topology against the complete error, rather than
+assume norm compactness of measures. For each fixed history, (CG.53)
+gives matrix convergence of $L_{\rho,n}$, hence continuity of its live
+trace-norm error, and weak convergence of $\mu_{\rho,n}$ against all
+continuous functions on $K$. Write $\nu_\rho$ for the fixed target
+record measure, having densities $w_i f_y(t)$ and zero other mass.
+For a finite real signed regular measure $\xi$ on compact metric $K$,
+
+$$
+\|\xi\|_{\rm TV}
+ =\sup_{h\in C(K;\mathbb R),\ \|h\|_\infty\leq1}
+                         \left|\int_K h\,d\xi\right|.
+\tag{CG.57}
+$$
+
+The inequality from right to left follows from the definition of total
+variation. For the reverse inequality, approximate the positive and
+negative Hahn sets by disjoint compact subsets in their respective
+variation measures. A continuous function bounded by one can equal
+$+1$ and $-1$ on these two compact subsets. The omitted variation tends
+to zero by regularity, proving the formula. Each integral on the right
+is continuous in the convergence just obtained, so the supremum is lower
+semicontinuous. Consequently
+
+$$
+\frac12\left(\|L_\rho-(\Omega_\rho)_{\rm live}\|_1
+                         +\|\mu_\rho-\nu_\rho\|_{\rm TV}\right)
+\tag{CG.58}
+$$
+
+is lower semicontinuous, as is the maximum of these twelve expressions.
+On the disjoint space $K$, its variation is exactly the sum over all
+five labelled intervals and other; atoms and singular continuous mass
+are included. The limiting channel has error at most the liminf of the
+minimizing errors, namely $E_*$. Membership in the same class supplies
+the reverse inequality, proving equality. This is existence in the
+all-common-CPTP class; it gives no finite description, finite event
+storage or physical implementation of the limiting channel. $\square$
+
+## 9. Equality at the coherent lower bound is impossible
+
+**Lemma 9.1 (covariance from the actual sign catalogue).** In the reduced
+class it suffices, for minimizing error or testing equality at a universal
+lower bound, to consider channels covariant under
+
+$$
+G=\{U_{a,b}=\operatorname{diag}((-1)^a,(-1)^b,1):a,b\in\{0,1\}\}.
+\tag{CG.59}
+$$
+
+The action conjugates the live output and fixes every scalar record.
+
+Proof. Put $j=\beta/\pi$. The actual vector (CG.7) has signs
+$((-1)^j,(-1)^{j+m},1)$. The unitary $U_{a,b}$ sends its bits to
+$(j+a,m+a+b)$ modulo two. This permutes the four actual histories at
+each height, and permutes their live targets in precisely the same way.
+The stopped targets depend only on height and remain fixed. With
+$\mathcal U_g$ denoting the indicated output action, define
+
+$$
+\overline\Phi(\rho)=\frac14\sum_{g\in G}
+           \mathcal U_g\bigl(\Phi(U_g^\dagger\rho U_g)\bigr).
+\tag{CG.60}
+$$
+
+This is one CPTP map and is covariant by reindexing the group sum.
+For each history, unitary invariance and convexity bound its error by
+the average of the four permuted errors of $\Phi$ at that height.
+Thus $E(\overline\Phi)\leq E(\Phi)$. The reduction of Proposition 8.2
+commutes with this action. If $E(\Phi)=L_{\rm full}$, (CG.37) forces
+both reductions to retain equality. These operations are in the enlarged
+comparison class and confer no newly acquired original source operation.
+$\square$
+
+**Lemma 9.2 (two preserved bases into three live dimensions).** Let
+$\Psi:M(W)\to M(V)$ be CP and trace preserving, with
+$\dim W=2$ and $\dim V=3$. Let $e_+,e_-$ be an orthonormal basis and
+
+$$
+f_+=\alpha e_++\beta e_-,\qquad
+f_-=-\beta e_++\alpha e_-,\qquad
+\alpha,\beta\in\mathbb R,\quad \alpha^2+\beta^2=1,\quad\alpha\beta\ne0.
+\tag{CG.61}
+$$
+
+If the two outputs within each of these bases have orthogonal supports,
+then $\Psi(\rho)=T_0\rho T_0^\dagger$ for an isometry $T_0:W\to V$.
+
+Proof. A spectral factorization of the positive Choi matrix supplies
+finite Kraus operators for $\Psi$. Trace preservation makes their Kraus
+dilation an isometry $T:W\to V\otimes\mathcal E$. Put $u=Te_+$,
+$v=Te_-$. Orthogonality of their reduced live supports implies
+$u\in S_+\otimes\mathcal E$ and $v\in S_-\otimes\mathcal E$ with
+$S_+\perp S_-$. Hence for every environment operator $R$ both cross
+matrix elements $\langle u,(I\otimes R)v\rangle$ and
+$\langle v,(I\otimes R)u\rangle$ vanish. The second preserved basis
+likewise gives
+
+$$
+\begin{aligned}
+0&=\langle\alpha u+\beta v,
+                    (I\otimes R)(-\beta u+\alpha v)\rangle\\
+ &=\alpha\beta\bigl(\langle v,(I\otimes R)v\rangle
+                         -\langle u,(I\otimes R)u\rangle\bigr).
+\end{aligned}
+\tag{CG.62}
+$$
+
+Thus the two environment marginals are the same density matrix $\sigma$.
+In a common eigenbasis for its positive eigenvalues $\lambda_r$, write
+
+$$
+u=\sum_r\sqrt{\lambda_r}\,a_r\otimes r,\qquad
+v=\sum_r\sqrt{\lambda_r}\,b_r\otimes r.
+\tag{CG.63}
+$$
+
+Both families $a_r$ and $b_r$ are orthonormal, as follows by evaluating
+the matrix entries of the common environment marginal. Moreover every
+$a_r$ is orthogonal to every $b_s$ since $S_+\perp S_-$. Therefore
+$2\operatorname{rank}\sigma\leq3$. Since $\operatorname{tr}\sigma=1$,
+its rank is one. The two dilation vectors share a single environment
+factor. Sending $e_+,e_-$ to their respective orthonormal live factors
+defines $T_0$, and linearity, including the cross operators, gives the
+asserted channel on every $\rho$. This uses complete positivity and the
+three-dimensional output hypothesis. $\square$
+
+**Theorem 9.3 (strict nonoptimality of $L_{\rm full}$).** Every common
+channel in (CG.20) has error strictly greater than $L_{\rm full}$, and
+
+$$
+L_{\rm full}<E_*.
+\tag{CG.64}
+$$
+
+Proof. Suppose a channel had $E(\Phi)=L_{\rm full}$. By Proposition 8.2,
+Lemma 9.1 and the universal bound (CG.37), take it reduced and covariant
+with the same error. Use the actual phase averages $\Gamma_y,\Theta_y$
+of (CG.24) and (CG.28), only for $y=5,27$. Put
+$H=\Gamma_5-\Gamma_{27}$ and $X=\Theta_5-\Theta_{27}$. The previously
+computed exact distances give
+
+$$
+\|X\|_{1,\rm cq}=4L_{\rm full}+\|H\|_1.
+\tag{CG.65}
+$$
+
+In the identity
+
+$$
+X=(\Theta_5-\Phi\Gamma_5)+\Phi H+(\Phi\Gamma_{27}-\Theta_{27}),
+\tag{CG.66}
+$$
+
+the first and last norms are at most $2E(\Phi)$ by convexity over their
+two actual histories, while $\|\Phi H\|_{1,\rm cq}\leq\|H\|_1$.
+At the supposed equality, (CG.65) forces all these estimates and the
+triangle inequality to be equalities.
+
+Choose a norming Hermitian contraction $D$ for $X$ as follows: on the
+live block take its spectral sign, and on every stopped sector and other
+point take $+1$. This norms the entire $X$. Indeed (CG.32) gives
+$f_5(t)-f_{27}(t)>0$ at every time; all nonzero marked weights are
+positive, and the remaining record differences are zero. The choice
+$+1$ is also valid on every zero-target mode and on arbitrary singular
+simulated events. Pairing (CG.66) with this same $D$ and using the saturated
+sum of bounds forces
+
+$$
+\langle D,\Phi H\rangle=\|H\|_1.
+\tag{CG.67}
+$$
+
+Otherwise that pairing would be strictly smaller than $\|X\|_{1,\rm cq}$.
+
+On $W$, the input difference is the real matrix
+
+$$
+H=\frac1{128}\begin{pmatrix}-22&\zeta\\\zeta&22\end{pmatrix},\qquad
+\zeta=\sqrt{295}-\sqrt{999}\ne0.
+\tag{CG.68}
+$$
+
+It is zero on $|2\rangle$, and its $W$ eigenvalues are
+$\pm\lambda$, where $\lambda=\sqrt{484+\zeta^2}/128>0$.
+Choose real unit eigenvectors $e_+,e_-$. Both coordinates of each are
+nonzero, since a coordinate eigenvector would contradict the nonzero
+off-diagonal entry. Write $R=\Phi^\dagger(D)$ for the dual pullback.
+Unital positivity gives $-I\leq R\leq I$. Equation (CG.67) becomes
+
+$$
+\lambda\bigl(\langle e_+,Re_+\rangle-\langle e_-,Re_-\rangle\bigr)
+                         =2\lambda.
+\tag{CG.69}
+$$
+
+The two expectations must be $1$ and $-1$. Positivity of $I-R$ and
+$I+R$ makes the corresponding vectors eigenvectors of $R$. Thus for
+$A=\Phi^\dagger((I+D)/2)$ its $W$ compression is
+$|e_+\rangle\langle e_+|$.
+
+Let $F$ be the input effect of the whole nonlive output, including all
+mode/time and other mass. Because $D=+1$ on that event, $0\leq F\leq A$.
+Covariance makes $F$ invariant under both independent coordinate signs,
+so $F$ is diagonal in $(+,-,2)$. Its $W$ compression is a nonnegative
+diagonal matrix $\operatorname{diag}(f_+,f_-)$ dominated by
+$|e_+\rangle\langle e_+|$. Testing in $e_-$ gives
+
+$$
+0\leq f_+|\langle+|e_-\rangle|^2+
+       f_-|\langle-|e_-\rangle|^2\leq0.
+\tag{CG.70}
+$$
+
+Both squared coordinates are positive, so $f_+=f_-=0$. Every positive
+$W$-supported input therefore has no nonlive output. Its live restriction
+$\Psi:M(W)\to M(V)$ is CP and trace preserving. Equality above gives
+$\|\Psi(H)\|_1=\|H\|_1$; covariance also gives the same equality for
+$UHU^\dagger$, with $U=\operatorname{diag}(1,-1)$ on $W$.
+
+For two density matrices, trace distance one forces orthogonal supports:
+a norming Hermitian contraction for their difference must have expectation
+$+1$ on one and $-1$ on the other, placing their supports in its disjoint
+$+1$ and $-1$ eigenspaces. Applying this to
+$H=\lambda(P_{e_+}-P_{e_-})$ shows that $\Psi(P_{e_+})$ and
+$\Psi(P_{e_-})$ have orthogonal supports. The same is true for the
+eigenbasis of $UHU^\dagger$.
+
+These bases meet the nonzero-overlap hypothesis of Lemma 9.2. In fact
+$P_{e_+}=(I_W+H/\lambda)/2$ gives directly
+
+$$
+\langle e_+,Ue_+\rangle=\frac{-22}{\sqrt{484+\zeta^2}}.
+\tag{CG.71}
+$$
+
+Its absolute value is strictly between zero and one. Up to real phase
+choices the rotated basis therefore has form (CG.61), with
+$\alpha^2=484/(484+\zeta^2)$ and
+$\beta^2=\zeta^2/(484+\zeta^2)$. Lemma 9.2 implies
+$\Psi(\rho)=T_0\rho T_0^\dagger$ for a single isometry.
+
+The group element $U_0=\operatorname{diag}(-1,-1,1)$ fixes every
+$W$-supported input operator by conjugation. Covariance consequently fixes
+each pure output $|T_0z\rangle\langle T_0z|$ under $U_0$. Each nonzero
+vector in $\operatorname{range}T_0$ is an eigenvector of $U_0$.
+A linear subspace with this property lies in one eigenspace, since a sum
+of nonzero vectors from the opposite eigenspaces is not an eigenvector.
+The $+1$ eigenspace has dimension one, while this range has dimension
+two. Hence $\operatorname{range}T_0=W$.
+
+Now test the output event terminal live and in $W$ on
+$\Gamma_5=(P_2+Q_5)/2$. Its simulated probability is at least $1/2$:
+the $Q_5/2$ part goes isometrically into $W$, and the $P_2/2$ part
+contributes nonnegative mass. Its ideal probability in $\Theta_5$ is
+$s_5/2=5/22$. Complete half trace distance dominates an event probability
+difference. Explicitly, for a normalized-output difference $\Delta$ and
+an event effect $Q$, pairing with $2Q-I$ gives
+$|\operatorname{tr}Q\Delta|\leq\|\Delta\|_{1,\rm cq}/2$.
+Thus
+
+$$
+\operatorname{dist}(\Phi\Gamma_5,\Theta_5)
+                         \geq\frac12-\frac5{22}=\frac3{11}.
+\tag{CG.72}
+$$
+
+Yet (CG.39) bounds this by $L_{\rm full}<3/11$. To check the last strict
+inequality symbolically, (CG.29) gives
+$v>(18+40)/64=29/32>2/3$, using $363>18^2$ and $1643>40^2$.
+Therefore $\sqrt{49-45v^2}<\sqrt{29}<6$, whence
+$\delta_{\rm out}<6/11$ and
+$L_{\rm full}=(\delta_{\rm out}-\delta_{\rm in})/2<3/11$.
+This contradicts (CG.72).
+
+No channel can attain the old lower bound. Theorem 8.4 supplies an actual
+minimizer in the same enlarged class; if $E_*=L_{\rm full}$, that
+minimizer would contradict the result just proved. Together with (CG.37)
+this proves (CG.64). Attainment is essential to this last infimum step;
+excluding equality for individual channels alone would not give a strict
+infimum gap. No explicit positive size for $E_*-L_{\rm full}$ is obtained.
+The auxiliary $W$-supported operators are linear tests of the channel,
+not additional supplied preparations or specimens. $\square$
+
+## 10. One common processor with exact complete twelve-history error
+
+**Proposition 10.1 (a fixed feasible processor).** Define
+
+$$
+g(t)=\frac{f_5(t)+f_{27}(t)}2,
+\qquad (\Phi_0\rho)_{\rm live}=\frac7{11}\rho,\qquad
+(\Phi_0\rho)_i(dt)=w_i g(t)\operatorname{tr}(\rho)P_f\,dt
+                         \quad(i=0,\ldots,4).
+\tag{CG.73}
+$$
+
+There is no other output mass. This is one common CPTP map on all $V$.
+
+Proof. The live branch is a positive scalar multiple of the identity
+channel and every stopped branch is CP trace-and-prepare. The endpoint
+failure masses are $1-s_5=6/11$ and $1-s_{27}=2/11$, so
+
+$$
+\int_0^1g(t)\,dt=\frac4{11},\qquad
+\frac7{11}+\sum_iw_i\int_0^1g(t)\,dt=1.
+\tag{CG.74}
+$$
+
+Thus the joint map is trace preserving. Its constants use only the fixed
+public catalogue, not the actual height or either sign. One ideal
+realization keeps the old specimen live with independent probability
+$7/11$; otherwise it resets that specimen into the absorbing stopped
+state, chooses the original mode with distribution $(w_i)$ and records
+an exact time with normalized density $(11/4)g(t)$. There is no operation
+after failure. This is a specification of a common simulated output law
+in the enlarged class, with the same ideal measurable-time convention
+as (CG.20), not a finite physical sampling or source-actuation theorem.
+It requires no copy, replacement, callback, source parameter, helper or
+new acceptance event. Fixed common metadata are carried identically.
+Both zero-weight original modes remain named. $\square$
+
+**Theorem 10.2 (the exact achieved error).** Put
+
+$$
+r_y=\frac12+
+\frac{\sqrt{y(y+6)}+\sqrt{(64-y)(58-y)}}{128}
+                         \quad(y\in\{5,16,27\}).
+\tag{CG.75}
+$$
+
+The error of the single processor (CG.73), over all twelve histories and
+their complete outputs, is exactly
+
+$$
+E(\Phi_0)=M=\frac1{22}\max\left\{
+2+\sqrt{144-140r_5^2},\quad
+1+\sqrt{225-224r_{16}^2},\quad
+2+\sqrt{256-252r_{27}^2}\right\}.
+\tag{CG.76}
+$$
+
+Proof. For every one of the four actual sign choices at a height $y$,
+the inner product of the input vector and its shifted target vector is
+$r_y$: the signs cancel coordinate by coordinate in (CG.7). Lemma 5.1
+therefore gives the live-block difference norm
+
+$$
+N_y=\sqrt{(7/11+s_y)^2-4(7/11)s_y r_y^2}.
+\tag{CG.77}
+$$
+
+The stopped blocks have the same nonnegative weights $(w_i)$ summing to
+one. With their original labels and exact times kept separate, their
+summed difference norm is
+
+$$
+a_y=\sum_iw_i\int_0^1|g(t)-f_y(t)|\,dt
+                    =\int_0^1|g(t)-f_y(t)|\,dt.
+\tag{CG.78}
+$$
+
+The complete error for every sign history at that height is
+$(N_y+a_y)/2$. There is no success renormalization.
+
+By (CG.32), $f_5>f_{27}$ pointwise, so
+$a_5=a_{27}=\tfrac12\int(f_5-f_{27})=2/11$.
+For the middle height, the sign of the density difference must also be
+checked. Set $w=6t$ and subtract the survival functions to obtain
+
+$$
+J_0(t)=\frac{16}{16+w}-\frac12\left(\frac5{5+w}+\frac{27}{27+w}\right)
+       =\frac{121w}{(w+5)(w+16)(w+27)}.
+\tag{CG.79}
+$$
+
+This is the specialization of [AC, (AC.21)][AC]. A direct derivative
+check is as follows. The denominator before squaring is
+$D(w)=w^3+48w^2+647w+2160$, so
+
+$$
+\begin{aligned}
+D(w)-wD'(w)&=-2w^3-48w^2+2160\\
+           &=2(6-w)(w^2+30w+180),\\
+J_0'(t)&=g(t)-f_{16}(t)
+ =6\,\frac{242(6-w)(w^2+30w+180)}
+              {(w+5)^2(w+16)^2(w+27)^2}\geq0
+                         \quad(0\leq w\leq6).
+\end{aligned}
+\tag{CG.80}
+$$
+
+The factor $6$ is the time/displacement chain factor. It follows that
+
+$$
+a_{16}=\int_0^1(g-f_{16})\,dt
+                       =\frac4{11}-\frac3{11}=\frac1{11}.
+\tag{CG.81}
+$$
+
+This evaluates the full exact-time variation, rather than inferring it
+from total survival alone. Substituting $s_5=5/11$, $s_{16}=8/11$ and
+$s_{27}=9/11$ into (CG.77)–(CG.81) gives the three expressions in
+(CG.76). Each applies to all four sign histories at that height, so
+their maximum is exactly the twelve-history error of one common map.
+No maximizing height or optimality over processors is asserted. $\square$
+
+**Corollary 10.3 (symbolic strict upper comparison).**
+
+$$
+\boxed{L_{\rm full}<E_*\leq M
+ <\frac{128+\sqrt{32449}}{1408}
+ <\frac{39}{176}<\frac29.}
+\tag{CG.82}
+$$
+
+Proof. For $5\leq y\leq27$ write
+
+$$
+\begin{aligned}
+A_y&=(\sqrt{y+6}-\sqrt y)^2+
+                  (\sqrt{64-y}-\sqrt{58-y})^2,\\
+r_y&=1-\frac{A_y}{256},\\
+A_y&=\frac{36}{(\sqrt{y+6}+\sqrt y)^2}
+        +\frac{36}{(\sqrt{64-y}+\sqrt{58-y})^2}.
+\end{aligned}
+\tag{CG.83}
+$$
+
+These are expansion and rationalization identities. The first denominator
+is greater than $25$, since $\sqrt{11}>3$ and $\sqrt5>2$.
+The second is greater than $121$, since $\sqrt{37}>6$ and
+$\sqrt{31}>5$. Hence
+
+$$
+A_y<\frac{36}{25}+\frac{36}{121}=\frac{5256}{3025}<2,\qquad
+r_y>\frac{127}{128},\qquad 1-r_y^2<\frac{255}{16384}.
+\tag{CG.84}
+$$
+
+At the three catalogue heights,
+$|7/11-s_y|\leq2/11$ and $4(7/11)s_y\leq252/121$. Thus
+
+$$
+N_y^2=(7/11-s_y)^2+4(7/11)s_y(1-r_y^2)
+ <\frac{4+252(255/16384)}{121}
+ =\frac{32449}{4096\cdot121}.
+\tag{CG.85}
+$$
+
+Using $a_y\leq2/11$, each complete error, and therefore their finite
+maximum $M$, is strictly below $(128+\sqrt{32449})/1408$.
+The next comparison follows from $32449<184^2=33856$, giving
+$(128+\sqrt{32449})/1408<312/1408=39/176$.
+Finally $39/176<2/9$ is the integer comparison $351<352$.
+Feasibility gives $E_*\leq M$, and Theorem 9.3 gives the strict lower
+inequality. These are symbolic ordinary inequalities. $\square$
+
+## 11. The exact remaining minimax problem and attribution
+
+**Proposition 11.1 (simultaneous feasibility at a proposed error).** For
+$e\geq0$, there is a common channel in (CG.20) with error at most $e$
+if and only if there is one pair $(J,B)$ of Lemma 8.3 satisfying, for
+every one of the twelve histories $h=(x,\beta,m)$,
+
+$$
+\frac12\left(
+ \left\|\operatorname{Tr}_{\rm in}[(\rho_h^T\otimes I)J]
+                    -s_{256x}\rho_{x+d,\beta,m}\right\|_1
+ +\|\mu_h-\nu_h\|_{\rm TV}\right)\leq e,
+\quad
+\mu_h(A)=\operatorname{tr}(\rho_h^T B(A)).
+\tag{CG.86}
+$$
+
+Here $\nu_h$ has the five separately labelled densities
+$w_i f_{256x}(t)$ and zero other mass; $J\geq0$, $B$ is positive and
+countably additive, and (CG.52) holds.
+
+Proof. Reduce a feasible channel by Proposition 8.2 and apply Lemma 8.3.
+Its full output metric is precisely (CG.58), giving necessity.
+Conversely Lemma 8.3 constructs one normalized CP map from the pair,
+and (CG.86) bounds every prescribed history error, giving sufficiency.
+Separate nearby outputs, separate attaining maps or pairwise distance
+tests do not supply the shared positive pair. $\square$
+
+**Open problem 11.2 (exact minimum and identified minimizing channel).**
+A minimizing common CPTP channel exists in the enlarged class. The exact
+value $E_*$ and an explicitly identified minimizing channel remain
+undetermined. The required result is one pair $(J,B)$ satisfying
+(CG.52) and all twelve inequalities (CG.86) at an identified value,
+together with a matching lower proof for every allowed common pair.
+The displayed $\Phi_0$ attains its own feasible error $M$; it is not
+proved to minimize error. The old constant $L_{\rm full}$ is strictly
+below the minimum, with no explicit positive increment established here.
+Thus existential attainment is settled, while the exact-minimax and
+identified-optimizer obligation of Open problem 7.3 remains.
+
+**Attribution 11.3 (credited premises and checked scope).** The original
+experiment, histories, common-input contract, full calibrated stopped
+law, endpoint distances and $L_{\rm full}$ are credited to §§2–7 and
+[AC] at the locations in Attribution 7.2. The middle-height survival
+defect used in (CG.79) is [AC, (AC.21)][AC]; its exact-time derivative
+and its application to the upper channel are displayed in full above.
+The supplied ordinary attainment/strict-gap/upper proposal and ordinary
+check are credited mathematical inputs to this exposition, not proof
+authorities. The joint-channel, rigidity and upper-error deductions here
+are ordinary, `repo-derived` results. They claim no new Lean verification.
+
+Choi's CP correspondence, Kraus/Stinespring dilation, Schmidt
+decomposition, finite group averaging, positive-effect comparison,
+trace-norm convexity and contractivity, Riesz–Markov representation and
+regular-measure variation duality are mature tools. Their needed
+applications, normalization and compatibility conditions are given in
+§§8–10. No external literature search or worldwide originality conclusion
+is asserted. Nonduplication is limited to the compared supplied theory
+bodies: these added results are not stated in their original CG §§1–7
+or in the supplied [current AC volume][ACR] §§1–20. The proposal and its
+check already contain the candidate package and are credited accordingly.
+
+In particular, [current AC][ACR] §§14–20 presuppose the extra source-bound
+calibrated actuator of its Definition 14.4. They optimize common relative
+returns at two mirrored heights and the record-only calibration score
+(AC.56), with finite-mixture nonattainment in Theorems 16.2–17.1.
+That class and score are distinct from the common-CPTP complete-output
+problem (CG.20). Their nonattainment does not contradict Theorem 8.4,
+and their approaching constructions neither implement $\Phi_0$ nor
+identify a CG.20 minimizer. No theorem is transferred between those
+optimization problems merely through their shared original source.
+
+**Boundary 11.4 (what the ordinary results establish).** The additions
+preserve all twelve actual histories, the single normalized old specimen,
+fixed common metadata/blanks, one history-independent processor, coherent
+live outputs, original five-mode exact-time stopped laws and every
+zero-target abort/rejection/other mass. There is no new postselection,
+copy, replacement, source callback, installed source parameter, original
+actuator or hidden joint assistance. First failure remains absorbing.
+The proofs concern the expressly enlarged comparison class, not finite
+physical realizability, exact-event bit complexity or efficiency.
+
+The source synthesis and calibrated original instrument remain credited
+premises at their stated visible scope; their nested suppliers and the
+literature statements in AC are not separately certified here. Ordinary
+proofs do not constitute Lean/kernel truth or a machine admission result.
+No unconditional-prefix optimum, acquired observer, full original-control
+closure, general neural-network or empirical learning result follows.
+There is no assertion of worldwide priority, broader research completion,
+or a solution of the independent fixed-Hamiltonian minimax problem.
+
+[ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_ACQUIRED_CONTINUATION_LIMITS.md
+
+## 追加锚（本行以下为增补区）

@@ -390,6 +390,86 @@ compression: variational restriction gives $m_L^+\le m_{L,N}^+$.
 A positivity certificate still requires the retained block and its
 complete coupling allowance.
 
+### Transport the trial upper bound to the actual retained Schur margin
+
+The same source-reported trial certificate also bounds the actual
+Schur margin in the original1281-dimensional orthonormal cosine
+coordinates. This is an application of the existing variational Schur
+identity and the Neumann spectral projection estimate, not a new
+general theorem or a rerun of Zhu's interval certificate.
+
+Put $a=\log27/2$, $L=8/5$ and $b=8.61\times10^{-121}$. Section11.1
+and Table3 of the inspected Zhu v2 source use200 odd-index Dirichlet
+sine modes, with highest index399. Taking that reported geometric-side
+certificate as input, there is a nonzero real even $f_*$ in this trial
+space with $Q(f_*)\le b\|f_*\|_2^2$. Its zero extension to $(-a,a)$
+has the same full Weil energy. It lies in $H^1(-a,a)$ because each
+trial mode vanishes at $\pm L$, and its derivative satisfies
+
+$$
+\|f_*'\|_2^2\le
+\left(\frac{399\pi}{2L}\right)^2\|f_*\|_2^2.
+$$
+
+Let $P$ retain the actual even modes0 through1280. Parseval for the
+Neumann derivative form, with first discarded frequency $1281\pi/a$,
+gives
+
+$$
+\|(I-P)f_*\|_2^2
+\le\left(\frac{a}{1281\pi}\right)^2\|f_*'\|_2^2
+<\frac1{36}\|f_*\|_2^2.
+$$
+
+Here $8/5<a<5/3$ and
+$399(5/3)/((16/5)1281)=3325/20496<1/6$. Thus
+$\|Pf_*\|_2^2>35\|f_*\|_2^2/36$, in particular $Pf_*\ne0$.
+On the same closed-form block identification and positive exterior
+$H_N$ used above, the existing variational identity yields
+
+$$
+S_N=A_N-C_N^*H_N^{-1}C_N,\qquad
+\langle Pf_*,S_NPf_*\rangle
+=\inf_y Q(Pf_*+y)\le Q(f_*),
+$$
+
+where the infimum is over the exterior form domain. Consequently,
+conditional on that source certificate and the stated form interfaces,
+
+$$
+\lambda_{\min}(S_N)<\frac{36}{35}b
+=8.856\times10^{-121}<9\times10^{-121}.
+$$
+
+The same upper ceiling applies to every legal residual lower target
+$A_N-U(X)\preceq S_N$, in these original orthonormal coordinates.
+It does not bound the retained compression $A_N$ alone. The exterior
+part of $f_*$ is retained in the variational completion; no inequality
+$Q(Pf_*)\le Q(f_*)$ is assumed.
+
+There is also a directional requirement on a successful inverse
+comparison. Normalize $v_*=Pf_*/\|Pf_*\|_2$ and, for a chosen exterior
+embedding $E$ and trial $X$, put $R_X=C_N-H_NEX$. The existing
+inverse-residual identity gives
+
+$$
+\langle v_*,[S_N-(A_N-U(X))]v_*\rangle
+=\langle R_Xv_*,(W-H_N^{-1})R_Xv_*\rangle.
+$$
+
+Thus if $A_N-U(X)\succeq0$, its nonnegative comparison loss in this
+same direction must be strictly below $9\times10^{-121}$. This is a
+necessary directional bound, not a required uniform operator-norm
+error or a proved estimate of the actual residual.
+
+This determines neither sign. It rules out treating a computed
+$10^{-11}$ scale as the expected positive minimum, even when the
+auxiliary finite solve is well conditioned. A proof using additive
+error allowances must compare them with its actual directional margin;
+the upper ceiling supplies no lower bound and dictates no universal
+precision requirement. A change of coordinates must transport the
+mass norm along with the form.
+
 ### Reuse precision-parametric arithmetic suppliers
 
 The [actual c27 arithmetic packet](https://github.com/the-omega-institute/trureturing-experiments/tree/main/docs/reports/weil-c27)
@@ -724,6 +804,133 @@ This is a directed numerical witness under the existing Fourier/form
 identification, without Lean verification or a novelty claim. The
 high-floor and far-input estimates remain valid; a changed cutoff or
 stronger correlated exterior comparison has a separate proof obligation.
+
+The existing G7 bound also locates the loss. Its positive floor after
+mode1203 applies to $v+y$ for every exterior form-domain vector $y$ after
+mode1280. With $\kappa=A(2\pi\cdot1204/d)-59/10>0$, orthogonality gives
+$Q_L(v+y)\ge\kappa(6+\|y\|^2)$. Thus the actual exterior Schur quadratic
+on this particular $v$ is positive. This reuses G7 and does not determine
+the Schur sign on arbitrary retained vectors.
+
+### Reuse the inverse-residual supplier with the actual prime compression
+
+Keep the same exterior projection $Q_N$, $N=1280$. On its even range put
+
+$$
+\Gamma_N=\operatorname{diag}_{m>N} A(2\pi m/d),\qquad
+P_N=Q_NC_{\rm p}Q_N,\qquad
+B_N=\Gamma_N^{-1/2}P_N\Gamma_N^{-1/2}.
+$$
+
+These are the actual compressed prime shifts and the existing Neumann
+Gamma comparison, not a constant reference on the whole even space.
+G6--G7 give $\Gamma_N\succeq477I/80$, $\|P_N\|\le59/10$ and
+$\|B_N\|\le472/477$. Hence the bounded reference
+$T_N=I-B_N\succeq5I/477$ is positive. If $H_N$ denotes the actual
+closed exterior operator, the same even Gamma and pole comparison gives
+$H_N\succeq\Gamma_N^{1/2}T_N\Gamma_N^{1/2}$ in form sense.
+
+Reuse the [source inverse-residual identity](liu2026tailcompensation.md#a-common-256-mode-consumer)
+with reference $T_N$, trial $X=I$ and lower bound $5/477$. Its inverse
+majorant is $I+B_N+(477/5)B_N^2$. Consequently the actual coupling
+$C_N$ and its common filtered columns $Z_N=\Gamma_N^{-1/2}C_N$ satisfy
+
+$$
+C_N^*H_N^{-1}C_N
+\preceq Z_N^*Z_N+Z_N^*B_NZ_N
++\frac{477}{5}(B_NZ_N)^*(B_NZ_N).
+$$
+
+This is a parameter application of the existing residual identity. It
+retains the signed prime correlation and its squared residual on the
+same forcing columns. The original scalar-floor comparison discarded
+that information. The bounded preconditioning specifies the positive
+reference without extending the source's old support constants or
+assuming a sign for the full Weil operator.
+
+The three compressed quantities on the right have not been supplied or
+tested for the required retained sign. They require the complete actual
+coupling and exterior prime compression. Compressing $B_N$ to a finite
+subspace before forming the squared residual requires paying the
+discarded rows.
+The far-input packet alone supplies none of those full compressed
+quantities. No successful repaired certificate, new general operator
+theorem, Lean verification or cofinal positivity is asserted.
+
+### Actual finite-column residual trial at the same retained cutoff
+
+A second application of the same source identity uses actual exterior
+Fourier columns as a finite-support trial for $H_N^{-1}C_N$. Keep
+$N=1280$, $M=32768$ and the existing positive diagonal majorant $W$:
+its exact dyadic weights satisfy $W_{mm}\ge h_m^{-1}$ through $M$,
+and equal the archived constant $D\ge h_{M+1}^{-1}$ beyond $M$.
+This application assumes the existing Fourier/form identification,
+the selected exterior Fourier vectors in $D(H_N)$ and the comparison
+$H_N^{-1}\preceq W$ on the same actual exterior operator.
+
+Let $E$ select exterior modes1281 through1284 and put
+$Z=H_NE$, $F=E^*H_NE$, $B=E^*C_N$. For the existing obstruction
+$v=-e_{1277}+2e_{1278}-e_{1280}$, supply the complete common Gram
+
+$$
+\begin{pmatrix}G&J^*\\J&L\end{pmatrix}
+=[C_Nv,Z]^*W[C_Nv,Z],\qquad K=L-F,\quad T=J-Bv.
+$$
+
+The source residual inequality, evaluated on a fixed dyadic trial $x$,
+then supplies the forcing-charge majorant
+
+$$
+\langle C_Nv,H_N^{-1}C_Nv\rangle
+\le U(x)=G-2\operatorname{Re}(x^*T)+x^*Kx.
+$$
+
+An exact optimizer is not required: FLINT proposes the finite solve,
+the trial is rounded to64-bit dyadics, and the whole residual is
+evaluated with directed balls. This keeps the actual selected
+diagonal and the signed cross terms of $C_Nv-H_NEx$.
+
+The experiment supplies only the31483 previously absent scalar pairs
+1285–32767 through the unchanged arithmetic oracle. The published
+1281,32768 and earlier witness rows1282–1284 are reused. All middle
+rows1281–32768 contribute to the Gram. Its infinite far part reuses
+all168 published moment intervals and the same112-feature mechanism;
+extending the feature columns through1284 requires recomputing the
+geometric and rounding amplification. The weighted far error has
+$\log_2\epsilon\simeq-524.0636624$. It is paid before the trial,
+with column norms $(\sqrt6,1,1,1,1)$, rather than reusing the former
+total allowance.
+
+Directed numerical intervals, conditional on the stated analytic
+inputs, enclose the following values:
+
+| Actual exterior trial | Debit expression $U(x)$, approximate | $\langle v,A_Nv\rangle-U(x)$, approximate |
+|---|---:|---:|
+| none | 50.9913204560 | -20.2883780129 |
+| 1281 | 36.3114689536 | -5.6085265105 |
+| 1281–1282 | 24.6961199103 | 6.0068225328 |
+| 1281–1284 | 18.9893075926 | 11.7136348505 |
+
+The existing retained value is30.70294244311003905… . Two actual
+columns repair this sufficient estimate on the specified vector.
+Its true Schur positivity already follows from G7 after1203; this
+is a test of a stronger estimate, not previously unknown positivity.
+The scalar and joint-Gram checks at1024 bits reproduce the archived
+scientific endpoints without regenerating the former table or moments.
+Programs, exact intervals, source/input hashes and reproduction commands
+are in the [experiment packet](https://github.com/the-omega-institute/trureturing-experiments/tree/76b876b2ce4d6f2d9c6e3cf73d8b3495ea8f9ec4/docs/reports/weil-c27).
+
+The full1281-dimensional retained midpoint test is more restrictive.
+Using64 and128 actual exterior columns gives computed minimum
+eigenvalues about $-3.98\times10^{-6}$ and $-2.50\times10^{-11}$,
+respectively. These floating proposals do not pay scalar, far-feature
+or floating arithmetic errors and certify neither sign. In the latter
+case24 eigenvalues have computed absolute value at most $10^{-7}$.
+The outstanding task is a directed full-space consumer with the
+common-form error congruence, including these small directions.
+The fixed-vector pilot does not prove full retained positivity, the
+original Robin tail, cofinal Weil positivity or RH. No new general
+residual theorem, originality or Lean-verification claim is made.
 
 ## A proved high-energy law and its four-component characteristic geometry
 

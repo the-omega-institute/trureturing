@@ -190,8 +190,8 @@ public sealed class LeanReportSelectionTests
         foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
         foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "publish" }
-                     : new[] { "", "inputs", "reuse", "capture", "prepare", "ensure", "report", "publish" })
+                     ? new[] { "", "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
+                     : new[] { "", "inputs", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" })
             yield return [failedPhase, unavailableClock, buildProducer];
     }
 
@@ -217,6 +217,8 @@ public sealed class LeanReportSelectionTests
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
               */native.py) phase=publish ;;
+              */fib_analysis.py) phase=fib-regressions ;;
+              */build_work.py) exit 0 ;;
               */reuse.py) phase="$2" ;;
               *) exit 97 ;;
             esac
@@ -275,8 +277,8 @@ public sealed class LeanReportSelectionTests
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "publish" }
-            : new[] { "inputs", "reuse", "capture", "prepare", "ensure", "report", "publish" };
+            ? new[] { "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
+            : new[] { "inputs", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
         Assert.Equal(failedPhase.Length == 0, File.Exists(report));
