@@ -2,6 +2,7 @@
    The state walk remains the supplier throughout each construction. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualInductionState
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSelectedCInvariant
 
 set_option autoImplicit false
 
@@ -16,6 +17,9 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedCutRetention
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSelectedCInvariant
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 open D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
@@ -296,5 +300,230 @@ private theorem parent_from_state_suppliers {m k : ℕ} (hm : 3 ≤ m)
     pieces, base, c, hpieces, hbase', hc, hs, he⟩⟩
 
 #print axioms parent_from_state_suppliers
+
+
+private structure Invariants {m k : ℕ} (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (D : Configuration m → Prop) {base : {x // D x}}
+    (w : (domainGraph D).Walk base base) : Prop where
+  keepA : ∀ (x y : {z // D z}), y.val = x.val * a m →
+    s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(protectedP F hk, protectedQ F hk) →
+    s(x, y) ∈ w.edges
+  keepB : ∀ (x y : {z // D z}), y.val = x.val * b m →
+    x.val (Fin.last m) ∉ F.selected.toFinset → s(x, y) ∈ w.edges
+  cLabels : ∀ e ∈ w.edges, ∀ x : Configuration m,
+    Sym2.map Subtype.val e = s(x, x * c m) → x (Fin.last m) ∈ F.selected.toFinset
+
+private theorem state_invariants {m k : ℕ} (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (hB : 3 ≤ F.base.length) (S : StateFor F hk hB) :
+    Invariants F hk (SpecialDomain F hB) S.walk := by
+  refine ⟨S.keepsProtectedA, S.keepsRemainingB, ?_⟩
+  intro e he x hx
+  exact S.selectedC x (List.mem_map.mpr ⟨e, he, hx⟩)
+
+private theorem invariants_map {m k : ℕ} (F : SupplyFrame m k) (hk : 2 ≤ k)
+    {D E : Configuration m → Prop} {a : {x // D x}}
+    (w : (domainGraph D).Walk a a) (h : Invariants F hk D w)
+    (f : domainGraph D →g domainGraph E) (hf : Function.Bijective f)
+    (hval : ∀ x, (f x).val = x.val) : Invariants F hk E (w.map f) := by
+  constructor
+  · intro x y hy hp
+    obtain ⟨x', rfl⟩ := hf.surjective x
+    obtain ⟨y', rfl⟩ := hf.surjective y
+    rw [hval, hval] at hy hp
+    rw [SimpleGraph.Walk.edges_map]
+    exact List.mem_map.mpr ⟨s(x', y'), h.keepA x' y' hy hp, rfl⟩
+  · intro x y hy ht
+    obtain ⟨x', rfl⟩ := hf.surjective x
+    obtain ⟨y', rfl⟩ := hf.surjective y
+    rw [hval, hval] at hy
+    rw [hval] at ht
+    rw [SimpleGraph.Walk.edges_map]
+    exact List.mem_map.mpr ⟨s(x', y'), h.keepB x' y' hy ht, rfl⟩
+  · intro e he x hx
+    rw [SimpleGraph.Walk.edges_map] at he
+    obtain ⟨e', he', rfl⟩ := List.mem_map.mp he
+    have hraw : Sym2.map Subtype.val (Sym2.map f e') = Sym2.map Subtype.val e' := by
+      rw [Sym2.map_map]
+      congr 1
+      funext z
+      exact hval z
+    exact h.cLabels e' he' x (hraw.symm.trans hx)
+
+private theorem invariants_of_edges {m k : ℕ} (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (D : Configuration m → Prop) {a b : {x // D x}}
+    (w : (domainGraph D).Walk a a) (v : (domainGraph D).Walk b b)
+    (h : Invariants F hk D w) (he : v.edges = w.edges) : Invariants F hk D v := by
+  constructor
+  · intro x y hy hp; rw [he]; exact h.keepA x y hy hp
+  · intro x y hy ht; rw [he]; exact h.keepB x y hy ht
+  · intro e hm x hx; rw [he] at hm; exact h.cLabels e hm x hx
+
+private theorem invariants_same_selected {m k : ℕ} (F G : SupplyFrame m k) (hk : 2 ≤ k)
+    (hs : G.selected = F.selected) (D : Configuration m → Prop)
+    {base : {x // D x}} (w : (domainGraph D).Walk base base)
+    (h : Invariants F hk D w) : Invariants G hk D w := by
+  constructor
+  · intro x y hy hp
+    apply h.keepA x y hy
+    simpa only [protectedP, protectedQ, hs] using hp
+  · intro x y hy ht
+    exact h.keepB x y hy (by simpa only [hs] using ht)
+  · intro e he x hx
+    simpa only [hs] using h.cLabels e he x hx
+
+private theorem outer_child_invariants {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterStateParentFor hm F hk A u hbase hA)
+    (j : Fin (outerFrame F A u hbase).base.length) (hj : 0 < j.val) :
+    Invariants (outerFrame F A u hbase) hk
+      (ChildDomain (childGap (outerFrame F A u hbase) j)) (W.children j hj).walk := by
+  by_cases he : j = pChildIndex F A u hbase
+  · subst j
+    rw [W.oldPAttached]
+    have h := invariants_map F hk W.P.walk
+      (state_invariants F hk _ W.P) (pMarkedChildMap F A u hbase hA)
+      (p_marked_child_map_bijective F A u hbase hA) (fun _ => rfl)
+    have hedges := congrArg (fun w => w.edges) W.oldPWalk
+    simp only [SimpleGraph.Walk.edges_copy] at hedges
+    exact invariants_same_selected F (outerFrame F A u hbase) hk rfl _ _
+      (invariants_of_edges F hk _ _ _ h hedges)
+  · rw [W.otherAttached j hj he]
+    let O := outerFrame F A u hbase
+    let G := nativeChildFrame O j
+    have h := invariants_map G hk (W.otherStates j hj).walk
+      (state_invariants G hk _ (W.otherStates j hj))
+      (childMarkedDomainMap O (outer_base_bound F A u hbase hA) j)
+      (child_marked_domain_map_bijective O (outer_base_bound F A u hbase hA) j) (fun _ => rfl)
+    have hedges := congrArg (fun w => w.edges) (W.otherCycles j hj).mappedWalk
+    simp only [SimpleGraph.Walk.edges_copy] at hedges
+    exact invariants_same_selected G O hk rfl _ _
+      (invariants_of_edges G hk _ _ _ h hedges)
+
+private structure OpenInvariants {m k : ℕ} (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (D : Configuration m → Prop) {base finish : {x // D x}}
+    (w : (domainGraph D).Walk base finish) : Prop where
+  keepA : ∀ (x y : {z // D z}), y.val = x.val * a m →
+    s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(protectedP F hk, protectedQ F hk) →
+    s(x, y) ∈ w.edges
+  keepB : ∀ (x y : {z // D z}), y.val = x.val * b m →
+    x.val (Fin.last m) ∉ F.selected.toFinset → x.val (Fin.last m) ≠ F.terminal →
+    s(x, y) ∈ w.edges
+  cLabels : ∀ e ∈ w.edges, ∀ x : Configuration m,
+    Sym2.map Subtype.val e = s(x, x * c m) →
+      x (Fin.last m) ∈ insert F.terminal F.selected.toFinset
+
+private theorem outer_opened_invariants {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterStateParentFor hm F hk A u hbase hA)
+    (j : Fin (outerFrame F A u hbase).base.length) :
+    OpenInvariants (outerFrame F A u hbase) hk
+      (ChildDomain (childGap (outerFrame F A u hbase) j)) (W.paths j).piece.walk := by
+  let O := outerFrame F A u hbase
+  let hBO := outer_base_bound F A u hbase hA
+  by_cases hj : 0 < j.val
+  · have h := outer_child_invariants hm F hk A u hbase hA W j hj
+    constructor
+    · intro x y hy hp
+      exact native_other_path_keeps_a hm O hBO j hj (W.children j hj).walk
+        (W.paths j) (W.ordinaryInventory j hj) x y hy (h.keepA x y hy hp)
+    · intro x y hy ht hn
+      exact native_other_path_keeps_remaining_b hm O hBO j hj (W.children j hj).walk
+        (W.paths j) (W.ordinaryInventory j hj) x y hy hn (h.keepB x y hy ht)
+    · intro e he x hx
+      exact Finset.mem_insert_of_mem
+        (h.cLabels e ((W.ordinaryInventory j hj e).mp he).1 x hx)
+  · have hj0 : j = ⟨0, Nat.lt_of_lt_of_le (by decide : 0 < 3) hBO⟩ := by
+      apply Fin.ext
+      simp only [Fin.val_mk]
+      omega
+    subst j
+    rw [W.specialPath]
+    change OpenInvariants O hk (SpecialDomain O hBO) W.special.path
+    have h := state_invariants O hk hBO W.Q
+    let p := W.special.ordered 0
+    let ps := List.ofFn fun i : Fin k => W.special.ordered i.succ
+    have hlist : p :: ps = List.ofFn W.special.ordered := by
+      exact (List.ofFn_succ (f := W.special.ordered)).symm
+    have hinv : ∀ e, e ∈ ((p :: ps).flatMap fun z => z.walk.edges) ↔
+        e ∈ W.Q.walk.edgeSet ∧ e ∉ specialCuts hm O hBO := by
+      rw [hlist]
+      exact W.special.uncutInventory
+    constructor
+    · intro x y hy hp
+      exact native_special_path_keeps_a hm O hBO _ p ps hinv W.special.path
+        W.special.edges x y hy (h.keepA x y hy hp)
+    · intro x y hy ht hn
+      exact native_special_path_keeps_remaining_b hm O hBO _ p ps hinv W.special.path
+        W.special.edges x y hy hn (h.keepB x y hy ht)
+    · intro e he x hx
+      apply native_special_path_c_labels hm O hBO _ h.cLabels p ps hinv ?_
+        W.special.path W.special.edges e he x hx
+      intro z hz
+      rw [hlist] at hz
+      obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hz
+      exact ⟨_, congrArg Subtype.val (W.special.orderedPorts i).2⟩
+
+private theorem outer_edges {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterStateParentFor hm F hk A u hbase hA) :
+    W.cycle.edges =
+      s(W.base, (W.pieces ⟨(outerFrame F A u hbase).base.length - 1, by
+        simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩).finish) ::
+      (chainEdges (W.pieces ⟨0, by
+        simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩)
+        (List.ofFn fun i : Fin ((outerFrame F A u hbase).base.length - 1) =>
+          W.pieces ⟨i.val + 1, by have hi := i.isLt; omega⟩)).reverse := by
+  have he := W.edges
+  have hlast : pChildIndex F A u hbase =
+      ⟨(outerFrame F A u hbase).base.length - 1, by
+        simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩ := by
+    apply Fin.ext
+    simp only [pChildIndex, outerFrame, List.length_append, List.length_singleton, Fin.val_mk]
+    omega
+  simpa only [hlast] using he
+
+private theorem state_parent_retention {m k : ℕ} (hm : 3 ≤ m)
+    (F : SupplyFrame m k) (hk : 2 ≤ k)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterStateParentFor hm F hk A u hbase hA) :
+    (∀ (x y : {z : Configuration m // ParentDomain (outerFrame F A u hbase) z}),
+      y.val = x.val * a m →
+      s(x.val (Fin.last m), y.val (Fin.last m)) ≠ s(protectedP F hk, protectedQ F hk) →
+      s(x, y) ∈ W.cycle.edges) ∧
+    (∀ (x y : {z : Configuration m // ParentDomain (outerFrame F A u hbase) z}),
+      y.val = x.val * b m → x.val (Fin.last m) ∉ insert u F.selected.toFinset →
+      s(x, y) ∈ W.cycle.edges) ∧
+    (∀ x : Configuration m, s(x, x * c m) ∈ W.cycle.edges.map (Sym2.map Subtype.val) →
+      x (Fin.last m) ∈ insert u F.selected.toFinset) := by
+  let O := outerFrame F A u hbase
+  let hBO := outer_base_bound F A u hbase hA
+  have hi := outer_opened_invariants hm F hk A u hbase hA W
+  have he := outer_edges hm F hk A u hbase hA W
+  refine ⟨?_, ?_, ?_⟩
+  · intro x y hy hp
+    have hr := native_parent_cycle_keeps_protected_a O hBO (protectedP F hk)
+      (protectedQ F hk) W.paths (fun j => (hi j).keepA)
+      W.pieces W.childPieces W.cycle he x y hy hp
+    obtain ⟨e, he, hmap⟩ := List.mem_map.mp hr
+    have heq : e = s(x, y) := (Sym2.map.injective Subtype.val_injective) hmap
+    exact heq ▸ he
+  · intro x y hy ht
+    have hr := native_parent_cycle_keeps_remaining_b O hBO W.paths (fun j => (hi j).keepB)
+      W.pieces W.childPieces W.cycle he x y hy ht
+    obtain ⟨e, he, hmap⟩ := List.mem_map.mp hr
+    have heq : e = s(x, y) := (Sym2.map.injective Subtype.val_injective) hmap
+    exact heq ▸ he
+  · intro x hx
+    exact native_parent_cycle_c_labels hm O hBO W.paths (fun j => (hi j).cLabels)
+      W.pieces W.childPieces W.baseCoordinate W.cycle he x hx
+
+#print axioms state_parent_retention
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
