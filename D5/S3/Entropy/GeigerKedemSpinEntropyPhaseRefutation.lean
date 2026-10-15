@@ -450,6 +450,7 @@ private theorem entropy_gap :
   rw [spinEntropy.eq_1, spinEntropy.eq_1]
   simp only [density_zero_phase, density_pi_phase]
   rw [hip, him]
+  simp only [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
   ring
 
 theorem result : ¬ claim := by
