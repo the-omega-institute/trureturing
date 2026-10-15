@@ -20,6 +20,8 @@ internal sealed class NativeIndependentExecutionDocument : IScribeDocumentDefini
             Def("Ordered", "Finite nondecreasing epoch vectors", "Ordered e i events eta requires the first supplied epoch to be at least e and each later epoch to be at least its predecessor. It constrains only the finite event list and has no common bound."),
             Def("retime", "Chronological difference insertion", "retime replaces burst annotations by consecutive differences of the supplied event epochs. Its initial difference uses e. Nondecreasing epochs make each difference exact in the natural numbers."),
             Def("erase", "Recovery of every update placement", "erase removes writer events and counts each maximal update burst immediately preceding the next observer event. A legal returning word has no unassigned trailing update burst."),
+            Theorem("updates_iff", "Exact insertion of a finite independent burst", Updates(),
+                "A burst of k genuine writer substitutions before the supplied suffix is equivalent to starting that same suffix at the kth iterate. All observer configurations, the complete suffix word and the whole returned configuration are preserved. The burst count is a mathematical annotation, not an observer input."),
             Theorem("chronological_execution", "Native constraints realize every chronological schedule", Chronological(),
                 "Every finite source-blind skeleton and every supplied nondecreasing epoch vector satisfy this equivalence. Native formula satisfaction constructs an actual independent-writer execution by successive difference insertion. Conversely, the actual execution supplies every literal Read equation. Induction preserves the same original u, all adaptive local states, each materialized address and the exact whole terminal b. No liveness premise is used."),
             Theorem("native_history_correspondence", "Exact active histories and all projections", History(),
@@ -44,6 +46,14 @@ internal sealed class NativeIndependentExecutionDocument : IScribeDocumentDefini
     private static DocumentBlock Theorem(string n,string title,Formula formula,string prose) => Describe.Lean(
         DescribeId.Create("native-independent-"+n.Replace('_','-')),DeclarationHandle.Create(Prefix+n),H(title),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),DescribeRole.Theorem);
+    private static Formula Updates()
+    {
+        Formula f=IffOf(Run(V("U"),Call("append",Call("replicate",V("k"),Call("update")),V("t"))),
+            Run(Call("iterate",V("substitution"),V("k"),V("U")),V("t")));
+        return All("C",V("Type"),All("delta",Arr(V("C"),Call("Op",V("C"))),
+            All("k",V("Nat"),All("c",V("C"),All("U",V("Source"),
+                All("t",V("Word"),All("b",V("C"),f)))))));
+    }
     private static Formula Chronological()
     {
         Formula f = IffOf(Holds("i","t"),Run(Call("iterate",V("substitution"),V("e"),V("u")),
