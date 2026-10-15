@@ -251,6 +251,12 @@ a reproduction of an earlier fixed-window sign certificate or a priority
 claim. In particular, the source's old width-dependent constants are not
 transported to this interval.
 
+The full complex Neumann form identity and this even restriction are
+already supplied by [CO4--CO8, section 3](https://github.com/the-omega-institute/trureturing/blob/c94c6abb6fcd9ad2d85c50666fa6abcfdbd8c2f5/docs/develop/theory/RH_RESEARCH_LANE_THEORY.md#3-restore-the-exact-neumann-gamma-completion).
+That source's $L$ is the full length $d$ here, and its Neumann mode
+$\nu_{2k}=(-1)^kv_k$. Neumann conditions belong to the comparison
+operator and impose no additional condition on the original tests.
+
 On $I=(-L,L)$ retain every prime power
 
 $$
@@ -360,6 +366,25 @@ computer-assisted input and paper application, not a Lean result.
 The actual retained block and the coupling to its full infinite
 complement remain to be certified. The high-complement floor alone
 does not establish c27 positivity, cofinal Weil positivity, Robin or RH.
+
+Precision is an additional obstacle already quantified by prior work.
+[Zhu v2](https://arxiv.org/html/2608.24827v2), section 11.4, equation (17)
+and Table 3, reports an unconditional geometric-side interval upper
+bound $8.61\times10^{-121}$ from an explicit real even test at physical
+half-width $1.6$. Equation (17) retains the same $2|\int f\cosh(x/2)|^2$
+pole term and complete $2\Lambda(n)/\sqrt n$ autocorrelation prime sum.
+Since $1.6<\log27/2$, extension by zero gives, on that source-reported
+certificate,
+
+$$
+m_{\log27/2}^+\le m_{1.6}^+\le8.61\times10^{-121}.
+$$
+
+The primary equation and table have been inspected; their certificate
+was not rerun here. This variational upper bound is not a positivity
+result, and is not used as an input to G6--G7. It prevents treating the
+positive high-complement floor as a lower bound for the tiny retained
+ground energy or as permission to ignore its coupling allowance.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
