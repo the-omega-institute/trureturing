@@ -36,7 +36,7 @@ abbrev TensorVec (n d : ℕ) :=
 abbrev TensorMat (n d : ℕ) :=
   Matrix (OccupancyWordSectors.Word (Fin d) n) (OccupancyWordSectors.Word (Fin d) n) ℂ
 
-local instance wordAction (n d : ℕ) :
+private local instance wordAction (n d : ℕ) :
     MulAction (Equiv.Perm (Fin n)) (OccupancyWordSectors.Word (Fin d) n) :=
   arrowAction
 

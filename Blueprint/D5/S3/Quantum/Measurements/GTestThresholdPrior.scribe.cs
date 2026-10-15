@@ -51,19 +51,22 @@ internal sealed class GTestThresholdPriorDocument : IScribeDocumentDefinition
             Node("trivial-success", "Bayesian success of the always-unequal test", "P_T", TrivialSuccessFormula(),
                 "The test that always reports unequal succeeds with probability one minus the equal-input prior, as in Theorem 5."),
             Node("claim", "The exact threshold and trace identity", "claim", ClaimFormula(),
-                "Section 6 asks for the prior below which the trivial test outperforms the G-test. For a nonconstant word, a normalized equal-input vector and p in Set.Icc 0 1, the threshold is O/(M+O), with equality exactly at that prior. The Haar integral of Eq. (11) is replaced by every fixed unitary because the traces tested do not depend on U. The comparison is between these two tests."),
+                "Section 6 asks for the prior below which the trivial test outperforms the G-test. For a nonconstant word, a normalized equal-input vector and p in Set.Icc 0 1, the threshold is O/(M+O), with equality exactly at that prior. The Haar integral of Eq. (11) is replaced by every fixed unitary because the traces tested do not depend on U. The comparison is between these two tests.",
+                AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("g-test-threshold-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The orbit ratio determines the threshold"),
                 StatementSource.FromAuthor(Disp(Q("claim"))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "On a word, the diagonal of PiG is the stabilizer cardinality divided by the subgroup cardinality. Commutation with the common tensor unitary removes U from the tested trace. The symmetric-group average is uniform on the word orbit; Burnside's lemma makes its averaged stabilizer cardinality equal to O times the subgroup cardinality, giving trace O/M. A repeated normalized vector is fixed by every position permutation, so completeness is one. Substitution into the Bayesian success probability reduces the strict comparison and the equality comparison to linear inequalities and identities in p, with threshold O/(M+O)."))),
+                    "On a word, the diagonal of PiG is the stabilizer cardinality divided by the subgroup cardinality. Commutation with the common tensor unitary removes U from the tested trace. The symmetric-group average is uniform on the word orbit; Burnside's lemma makes the sum of stabilizer cardinalities over the word orbit equal to O times the subgroup cardinality, giving trace O/M. A repeated normalized vector is fixed by every position permutation, so completeness is one. Substitution into the Bayesian success probability reduces the strict comparison and the equality comparison to linear inequalities and identities in p, with threshold O/(M+O)."))),
                 DescribeRole.Theorem)
         )));
 
-    private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose) =>
+    private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose,
+        AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("g-test-threshold-" + id), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
+            H(title), StatementSource.FromAuthor(Disp(formula)),
+            provenance ?? AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula X(string name) => F.Id(name);
