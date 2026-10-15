@@ -1765,3 +1765,691 @@ boundaries, without new Lean verification, physical realization or completion
 of the continuing programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Finite canonical return acquisition and its promised joint source
+
+The consumer in §§17–23 is the exact phase-preserving height continuation
+of §§2 and 12, after an actual canonical acquisition on the same still-live
+specimen. The additional result is the attained finite-charge region for
+live yield and classical parity-calibration error. Scalar return factors,
+full-phase rigidity and the shared-support obstruction are credited
+ingredients, rather than new claims.
+
+All repository references in these sections select the immutable public
+revision 1f58736f50945c7cfeca93ce160eb9b46a3a7e7e. The results are ordinary
+mathematical proofs, without a new Lean certificate or physical implementation.
+
+**Definition 17.1 (source, cut and accessible acquisition records).** Fix
+$0<c<1/2$, $Z=1-2c$, and distinct $a,l\in(0,c)$. Use the same positive
+preparation, base $(c,c,Z)$, calibrated directions (PR.3), negative
+state-phase convention and actual source family (PR.34). At the initial
+live cut the specimen is
+
+$$
+\psi_{a,\beta,m}=\sqrt Z e_2+e^{-i\beta}
+ \bigl(\sqrt{2a}U_++(-1)^m\sqrt{2(c-a)}U_-\bigr),
+\qquad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{PR.61}
+$$
+
+Write $\varepsilon=\pi(m)=m\bmod2\in\{0,1\}$, so that
+$(-1)^m=(-1)^\varepsilon$. This bit convention differs from the sign
+notation in (PR.8). The entire signed winding and real residual (PR.5)
+remain in the actual source history. Neither is an observer input.
+
+After the past and its actual reference/archive have been fixed, draw a
+finite public seed $U\in\mathcal U$ with $\nu(u)>0$ and
+$\sum_u\nu(u)=1$, independently of that entire past and joint quantum
+state. For every $(\varepsilon,u)$ the source executes a prescribed
+original control $k_{\varepsilon,u}$ of finite duration $T_u\geq0$,
+starting and ending at $a$, remaining strictly in $(0,c)$, and having
+constant relative phase. The duration is the same for both parities at
+each seed. Either original regularity alternative is allowed. Duration
+zero means the matching identity. The source uses the canonical complete
+stopped instrument and stops at its first failure.
+
+The dependence of this future programme on the old parity is an
+**additional promised joint source relation**. Its executor retains the
+source-side bit $\varepsilon$, receives $U$, and selects its installed
+path. This constructs an original-history subfamily with a specified
+past/future correlation. It does not extract a bit from an arbitrary
+unknown old specimen, and is not a common observer-selected waveform
+independent of the hidden history.
+
+During acquisition there is no intermediate specimen intervention,
+waveform/height read, source-sensitive timing read, readable programme
+name, source callback, environment port or supplied helper. At a live
+terminal cut all accessible history-bearing calibration assistance is
+$U$ and the no-failure flag, together with fixed source-independent
+metadata. Seed-dependent terminal times are already determined by $U$.
+Any public finite checkpoint flags are all no-failure on this live branch.
+Independent controller randomness can be included in $U$.
+
+All actual unread quantum references, archives and source records remain
+jointly present; the acquisition acts by identity on them, apart from
+the source's declared classical programme control. They are not assistance
+to the later observer operation. Making one readable, including the
+source-side parity bit or its programme, changes this input contract.
+Source/epoch identity, clock/reference, calibration, permissions and pending
+request are retained as actual fields, not reconstructed from a marginal.
+
+**Definition 17.2 (charge, yield and calibration score).** For each path put
+
+$$
+\begin{aligned}
+\lambda_{\varepsilon,u}(t)
+ &=\frac{(k'_{\varepsilon,u}(t))_+}{k_{\varepsilon,u}(t)}
+  +\frac{(-k'_{\varepsilon,u}(t))_+}{c-k_{\varepsilon,u}(t)},\\
+\Lambda_{\varepsilon,u}
+ &=\int_0^{T_u}\lambda_{\varepsilon,u}(t)\,dt,\qquad
+q_\varepsilon(u)=e^{-\Lambda_{\varepsilon,u}}.
+\end{aligned}
+\tag{PR.62}
+$$
+
+Fix a finite bound $C\geq0$, set $\ell=e^{-C}$, and require
+$\Lambda_{\varepsilon,u}\leq C$ for every parity and seed. This is the
+canonical survival charge (OC.15), not a physical energy or memory price.
+
+For this binary calibration score only, give the two parities equal prior,
+at any fixed $\beta$ and one actual signed winding of each parity. No prior
+on the whole original history is asserted. Decoders use the actually
+retained classical record, with no specimen measurement or additional
+quantum calibration token. Define
+
+$$
+\begin{aligned}
+P&=\Pr(\mathsf L)=\frac12\sum_u\nu(u)(q_0(u)+q_1(u)),\\
+B_*&=\inf_d\Pr(\mathsf L,\ d(U)\ne\varepsilon),\qquad
+R_*=\frac{B_*}{P}.
+\end{aligned}
+\tag{PR.63}
+$$
+
+Here $\mathsf L$ is survival of this acquisition, and randomized decoders
+are allowed. All these probabilities are measured from the actual
+initially live cut. Earlier preparation survival is a separate multiplier;
+conditioning on an actually reached cut supplies no reset or extra copy.
+
+## 18. Complete joint CP successor of a return programme
+
+**Proposition 18.1 (scalar live return with every failure retained).**
+For every path in Definition 17.1, let $p(x)=(x,c-x,Z,c-x,x)$ and set
+
+$$
+\begin{aligned}
+S(t)&=\exp\left(-\int_0^t\lambda(s)\,ds\right),\\
+K(t)&=\operatorname{diag}_i
+       \sqrt{S(t)p_i(k(t))/p_i(a)},\\
+\gamma_i(t)&=\lambda(t)-(\log p_i(k(t)))',\\
+J_i(t)&=\sqrt{\gamma_i(t)}\,|f\rangle\langle i|K(t).
+\end{aligned}
+\tag{PR.64}
+$$
+
+Path indices are suppressed in this formula. These are precisely
+(OC.19)–(OC.19b) with zero phase increment. In particular
+
+$$
+K(T)=\sqrt q\,I_5,\qquad
+K(T)^\dagger K(T)+\sum_{i=0}^4\int_0^T J_i(t)^\dagger J_i(t)\,dt=I_5.
+\tag{PR.65}
+$$
+
+For every actual joint specimen/reference input $\rho_{AR}$, conditional
+on its actual history and the seed, the unnormalized live successor is
+$q\rho_{AR}$. Failure in a Borel event $E$ and mode $i$ has successor
+
+$$
+\int_E(J_i(t)\otimes I_R)\rho_{AR}
+                 (J_i(t)^\dagger\otimes I_R)\,dt,
+\tag{PR.66}
+$$
+
+with the same $U$, exact first time, original mode name, old archive and
+absorbing $f$ retained. Append $\nu(u)$ for the joint seed/outcome law.
+No failure is merged, retried or replaced by a live successor.
+
+Proof. Strict interiority and continuity on a compact interval bound
+$k,c-k$ away from zero. Either original regularity alternative makes
+$k$ absolutely continuous and $k'$ integrable, so $\Lambda<\infty$ and
+$q>0$. The logarithmic derivatives of the two repeated height probabilities
+and the middle probability are $k'/k,-k'/(c-k),0$. Their maximum is
+$\lambda$, so all $\gamma_i$ are nonnegative and integrable. The squared
+$i$th diagonal entry of $K(t)$ has derivative
+$-\gamma_i(t)|K_{ii}(t)|^2$ almost everywhere. Integrating this identity
+gives (PR.65) entry by entry. A height return cancels the probability
+ratios, and the constant phase removes all relative phase factors,
+giving its first equality.
+
+The displayed Kraus operations are CP; the same normalization proves
+their completeness on every joint input after tensoring with identity.
+An already stopped input retains its old event and has the identity
+stopped successor. Equations (PR.65)–(PR.66), not separate specimen and
+archive marginals, give the full joint operation. $\square$
+
+For clarity about the source correlation, if $h$ is an actual classical
+past label with parity $\pi(h)$ and conditional joint state $\rho^h_{AR}$,
+its live output, including the seed, is
+
+$$
+\Pr(dh)\,\nu(u)\,q_{\pi(h)}(u)\,
+ |u,\mathsf L\rangle\langle u,\mathsf L|\otimes\rho^h_{AR}.
+\tag{PR.67}
+$$
+
+Use the same actual $\Pr(dh)$ in every failure block of (PR.66).
+Normalizing the live output reweights this history mixture by its actual
+$q_{\pi(h)}(u)$; its unconditional archive marginal need not stay fixed.
+The source executor controls (PR.64) by its classical $(\pi(h),u)$.
+These are controlled CP operations on that promised joint source,
+not a single specimen-only operation that secretly reads $h$. No
+coherent superposition of these classical programme labels is assumed.
+The formula also covers arbitrary entanglement with $R$ within each
+history-conditioned input, before restricting to (PR.61).
+
+## 19. The sharp attained charge, live-yield and live-error region
+
+**Theorem 19.1 (complete finite-charge region).** In Definitions 17.1–17.2
+the attainable pairs of live yield and Bayes-optimal live error mass are
+exactly
+
+$$
+\ell\leq P\leq1,\qquad
+\max\left\{\frac{\ell}{2},P-\frac12\right\}
+       \leq B_*\leq\frac P2.
+\tag{PR.68}
+$$
+
+Every point of this region is attained by a uniform binary seed, with
+equal live yield $P$ for each parity. Its decoder has the same conditional
+error for both parities. In particular the sharp lower boundary is
+
+$$
+R_*\geq
+\max\left\{\frac{\ell}{2P},1-\frac1{2P}\right\}.
+\tag{PR.69}
+$$
+
+This is also the optimum worst-parity conditional error among the
+specified acquisitions with common per-parity live yield $P$. It is
+not a minimax statement over all unknown original sources or all observers.
+
+Proof. Proposition 18.1 makes the two unnormalized live prior weights at
+seed $u$ equal to $\nu(u)q_0(u)/2$ and $\nu(u)q_1(u)/2$.
+Choosing the more likely parity minimizes error at that record; mixing
+decisions cannot reduce its smaller weight. Thus
+
+$$
+B_*=\frac12\sum_u\nu(u)\min\{q_0(u),q_1(u)\}.
+\tag{PR.70}
+$$
+
+The charge promise gives $\ell\leq q_\varepsilon(u)\leq1$, hence
+$\ell\leq P\leq1$. For numbers $x,y\in[\ell,1]$,
+
+$$
+\min(x,y)\geq\ell,\qquad
+\min(x,y)=x+y-\max(x,y)\geq x+y-1,\qquad
+\min(x,y)\leq(x+y)/2.
+$$
+
+Substitution in (PR.70) proves all inequalities in (PR.68).
+
+Conversely take any $(P,B)$ satisfying (PR.68), and put
+$q_{\rm lo}=2B$, $q_{\rm hi}=2P-2B$.
+Then $\ell\leq q_{\rm lo}\leq q_{\rm hi}\leq1$.
+Draw $U$ fairly in $\{0,1\}$ and prescribe
+
+$$
+q_\varepsilon(u)=
+\begin{cases}
+q_{\rm hi},&u=\varepsilon,\\
+q_{\rm lo},&u\ne\varepsilon.
+\end{cases}
+\tag{PR.71}
+$$
+
+Section 20 constructs actual original controls for each of these values.
+For each parity the yield is $(q_{\rm hi}+q_{\rm lo})/2=P$.
+The rule $d(u)=u$ is Bayes optimal, has error mass $q_{\rm lo}/2=B$
+for either parity considered separately, and hence conditional error
+$B/P$. In the equal-prior mixture its error mass is also $B$.
+For the lower boundary these parameters are equivalently
+
+$$
+(q_{\rm lo},q_{\rm hi})=
+\begin{cases}
+(\ell,2P-\ell),&P\leq(1+\ell)/2,\\
+(2P-1,1),&P\geq(1+\ell)/2.
+\end{cases}
+\tag{PR.72}
+$$
+
+If both parity yields equal $P$, the average of their conditional error
+probabilities for any decoder is its equal-prior error mass divided by
+$P$. Their maximum is at least that average, and (PR.70) bounds the
+average from below. The balanced construction attains it for both
+parities, proving the stated symmetric minimax claim. $\square$
+
+**Corollary 19.2 (optimal yield and required charge).** For finite $C$,
+the smallest conditional error in this class, allowing yield to vary, is
+
+$$
+\inf R_*=\frac{\ell}{1+\ell}=\frac1{1+e^C},
+\qquad P_{\rm opt}=\frac{1+\ell}{2}.
+\tag{PR.73}
+$$
+
+For $0<\delta<1/2$, existence of an acquisition with $R_*\leq\delta$
+therefore requires and is achieved with
+
+$$
+C\geq\log\frac{1-\delta}{\delta}.
+\tag{PR.74}
+$$
+
+Proof. The first branch of the lower boundary (PR.69) decreases with
+$P$, and the second increases. They meet at $(1+\ell)/2$.
+The construction (PR.72) attains their intersection. Solving
+$1/(1+e^C)\leq\delta$ gives (PR.74). At $C=0$ only
+$P=1,B_*=1/2$ occurs. Every finite $C$ has strictly positive
+minimum error. $\square$
+
+All scores refer to the stated binary decision and prior. A smaller
+$R_*$ is not an exact parity certificate, whole-law identification,
+instrument-distance bound or guarantee for every future decision.
+
+## 20. Actual original programmes attaining every point
+
+**Proposition 20.1 (an exact excursion for each survival likelihood).**
+For every $q\in(0,1]$, define
+
+$$
+b(q)=\frac{ac}{a+q(c-a)},\qquad d(q)=b(q)-a,\qquad
+k_q(t)=
+\begin{cases}
+a+d(q)t,&0\leq t\leq1,\\
+b(q)-d(q)(t-1),&1\leq t\leq2.
+\end{cases}
+\tag{PR.75}
+$$
+
+Keep relative phase constant. This is an actual two-unit original control,
+with both original regularity alternatives, whose canonical live return
+operator is $\sqrt q I_5$. It realizes every entry of (PR.71).
+
+Proof. The denominator in $b(q)$ is positive. Direct subtraction gives
+$a\leq b(q)<c$, with equality $b(q)=a$ exactly at $q=1$.
+Both affine legs and their join remain strictly positive and continuous.
+They are absolutely continuous and finite piecewise $C^1$ with constant
+rates on each closed piece. Their phase variation, new winding and
+transported phase increment are zero. On the upward leg, integration
+of $\lambda=k'/k$ gives survival $a/b$. On the downward leg,
+integration of $\lambda=-k'/(c-k)$ gives survival
+$(c-b)/(c-a)$. Their product is
+
+$$
+\frac ab\,\frac{c-b}{c-a}=q.
+\tag{PR.76}
+$$
+
+Proposition 18.1 gives the full scalar return and complete failure law,
+not just a chosen Bernoulli trial. At $q=1$ both legs are waits, with
+no failure. No nontrivial instantaneous excursion is used. $\square$
+
+For an explicit time/mode law on these affine programmes, write
+$b=b(q)$, $d=b-a$ and $A=a(c-b)/b$. On the two open legs,
+
+$$
+\begin{array}{c|c|c}
+ &S(t)&(f_0,f_1,f_2,f_3,f_4)(t)\\ \hline
+0<t<1&a/k(t)&
+ \dfrac{ad}{k(t)^2}(0,c,Z,c,0)\\[4pt]
+1<t<2&A/(c-k(t))&
+ \dfrac{Ad}{(c-k(t))^2}(c,0,Z,0,c)
+\end{array}
+\qquad f_i=(p_i(a)-S p_i(k))'.
+\tag{PR.77}
+$$
+
+These weights follow by differentiating the actual CP law:
+$f_i=S(\lambda p_i-p_i')$. They are not imported from the particular
+nonlinear uniform-time example in Event Memory and Coarse Aliasing §3.
+For an arbitrary joint input put
+$\rho^R_{ii}=\langle i|\rho_{AR}|i\rangle$; its failure CP density is
+$[f_i(t)/p_i(a)]|f\rangle\langle f|\otimes\rho^R_{ii}$.
+For (PR.61) the actual mode/time probabilities are $f_i(t)\,dt$.
+Their total masses on the two legs are $1-a/b$ and $a/b-q$.
+There are no atoms at the turn or terminal cut. Together with $q\rho_{AR}$
+and the same seed, these formulas specify every successor.
+
+**Proposition 20.2 (common preparation and unchanged original past).**
+Fix once an auxiliary height $z\in(0,c)$ distinct from $a$. Starting
+from the same positive preparation at $a$, use a unit fixed-height
+phase leg of increment $2\pi m$, followed by the four-unit rectangle
+at $z$ with phase height
+
+$$
+B_{\beta,m}
+ =\frac{2c(\pi m-\beta)-2\pi ma}{z-a}.
+\tag{PR.78}
+$$
+
+Append the selected programme (PR.75), then on survival the prescribed
+one-unit horizontal leg $a\to l$. This is an actual common-source
+construction for every real $\beta$ and signed $m$.
+
+Proof. The first five units are Proposition 2.2 with $k=a$ and auxiliary
+$z$. The signed weights (PR.2) give the real residual (PR.5)
+coordinate by coordinate, so every state in (PR.61) is reached from the
+same preparation. All its phase variation
+$2\pi|m|+2|B_{\beta,m}|$ is finite, without a uniform bound over the
+family. The new legs have matching heights and zero relative phase.
+At each actual join of duration $T$, the composition supplier gives
+$\chi(T+s)=\chi(T)+\chi_{\rm tail}(s)-\chi_{\rm tail}(0)$,
+leaves the entire earlier prefix pointwise unchanged, and adds the
+weighted integrals and real winding. Thus no old lift is passed to the
+observer. Every selected control is positive and piecewise affine and
+satisfies both original regularities.
+
+If these first five units also use the canonical instrument, their actual
+live mass is
+$s_*(a,z)s_*(z,a)>0$, independent of $\beta,m$.
+All preceding failures keep their original event and absorbing $f$.
+Every yield measured from preparation is multiplied by this live mass;
+no failure is retried to manufacture the stated initial cut. $\square$
+
+**Resource statement 20.3 (finite parameters, margin and time).** For the
+attainment at charge bound $C$, all its future acquisition heights lie
+in $[a,b(\ell)]$. A common probability-support margin is
+$\min\{a,c-b(\ell),Z\}>0$. Each programme has duration two, height
+speed at most $d(\ell)$, height variation at most $2d(\ell)$,
+and zero new phase variation. Its a.e. velocity has essential total
+variation $2d(q)$ on the interior two-leg interval. If the velocity is
+padded by zero before and after the excursion, the two exterior jumps
+increase this to $4d(q)$. Joins to a nonzero earlier or later velocity
+must instead count their actual velocity jumps. The tail has duration
+one, speed $|l-a|$, height variation $|l-a|$, and margin
+$\min\{a,l,c-a,c-l,Z\}$. These are future-stage costs, not bounds
+on the arbitrary old phase history.
+
+The charge frontier alone supplies no sharp time/precision tradeoff.
+For example the two-unit construction has
+
+$$
+c-b(\ell)=\frac{c\ell(c-a)}{a+\ell(c-a)}\longrightarrow0
+\quad\text{as }\ell\downarrow0.
+\tag{PR.79}
+$$
+
+It attains vanishing error with a shrinking margin and unbounded charge,
+not with every resource fixed. More generally, if every acquisition path
+also has margin at least $\eta>0$, speed at most $v$, and duration at
+most $T$, then
+$\Lambda\leq\operatorname{TV}(k)/\eta\leq vT/\eta$.
+Substituting this upper bound for $C$ in (PR.73) proves the necessary
+condition $vT/\eta\geq\log((1-\delta)/\delta)$ for the stated error.
+This condition is not asserted sharp in those extra resources.
+Repeating a fixed interior excursion can increase charge without losing
+its margin, but its time, height variation and velocity variation then
+grow with the number of executed excursions.
+
+The seed needs $\lceil\log_2|\mathcal U|\rceil$ classical storage bits
+in a binary register; the attaining observer retains one bit. The source
+separately retains its old parity bit, its received copy of the seed,
+comparison/pending-programme state and the installed path parameters.
+It also carries the old signed winding/phase programme. These source
+registers and the seed delivery route are resources; they are not newly
+acquired observer assistance. The active specimen has the credited live
+qutrit representation and a stopped sector, while the seed, flags,
+source/epoch tags, permissions, target, clock/reference, calibration,
+controller and every actual archive are additional resources.
+
+For rational $c,a,\ell,P,B$ in the allowed region, (PR.71) and (PR.75)
+have finite rational descriptions; the exact charge is the specified
+logarithm of a rational likelihood. General real frontier points require
+their actual exact real constants, which need not have finite effective
+descriptions. Old arbitrary $\beta,m$ have no uniform programme-width
+bound. Calibrated preparation directions, prescribed waveform execution,
+Kraus operations, blanks and exact time/mode recording remain the declared
+ideal services. Finite symbolic description is not exact physical
+execution at finite precision. No noisy-source certification, finite-time
+clock implementation or approximation guarantee follows here.
+
+## 21. Why informative live records do not improve the exact consumer
+
+**Corollary 21.1 (credited rigidity on the acquired shared support).**
+After any acquisition in Definition 17.1, allow a common finite endpoint
+CP acceptance protocol using the specimen, actual live seed and
+source-independent ancillary inputs. It may adapt using its own actually
+retained records. There is no new accessible history-bearing assistance.
+For every $\beta,m$, each accepted specimen must be exactly
+$\psi_{l,\beta,m}$, with all success auxiliaries retained. Then its
+unconditional success probability, measured from the initial live cut, is
+at most
+
+$$
+s_*(a,l)\,Q_\varepsilon,\qquad
+Q_\varepsilon=\sum_u\nu(u)q_\varepsilon(u),\qquad
+s_*(a,l)=\min\left\{1,\frac al,\frac{c-a}{c-l}\right\}.
+\tag{PR.80}
+$$
+
+The canonical monotone horizontal tail attains this simultaneously for
+both parities and every phase, with its actual exact-time/five-mode
+failure law. On the balanced frontier $Q_0=Q_1=P$, so the sharp
+value is $s_*(a,l)P$ for each parity. No improvement in conditional
+exact-tail success over $s_*(a,l)$ follows from its smaller $R_*$.
+
+Proof. Every seed has positive live likelihood for both parities.
+For fixed seed, correctness of the total accepted positive output
+therefore forces its specimen marginal into the target ray for both
+parities and every phase; a positive summand cannot hide an incorrect
+output behind another seed. The effective endpoint success map selected
+at this seed has no other history-bearing input.
+
+Apply the credited Instrument Boundaries Theorem 4.1, or equivalently
+Theorem 12.2 with classical equal-support assistance. For completeness,
+the mechanism is that projecting a successful dilation onto any auxiliary
+component gives a linear specimen map. The wedge with
+$\sqrt Z e_2+e^{-i\beta}
+(\sqrt{2l}U_++(-1)^m\sqrt{2(c-l)}U_-)$
+has degree at most two in $e^{-i\beta}$. Its coefficients vanish.
+The common nonzero reference direction $e_2$ fixes the same scalar for
+both parities. Adding and subtracting the two bottom directions therefore
+forces each component to be $\alpha_jD$, where
+$D=\operatorname{diag}(\sqrt{l/a},\sqrt{(c-l)/(c-a)},1)$
+on $(U_+,U_-,e_2)$. Completeness implies
+$\sum_j|\alpha_j|^2D^\dagger D\leq I$, hence its accepted
+probability is at most $\|D\|^{-2}=s_*(a,l)$.
+Finite internal adaptivity induces a single such CP acceptance map;
+its actual suboutcomes and auxiliaries are included in these components.
+
+Multiply this bound by each actual $\nu(u)q_\varepsilon(u)$ and sum.
+Old dead branches contribute zero because their successor is absorbing.
+The canonical monotone tail has live operator $\sqrt{s_*}D$ on the
+active family and the complete canonical failure kernels, proving
+attainment with the same joint reference/archive preserved on success.
+Its failed branches keep their new exact event; acquisition failures
+keep the earlier event and never execute the tail. $\square$
+
+The shared-support/no-improvement principle is the credited result of
+§§12–14, now instantiated by an acquired live record with unequal
+likelihoods. The added frontier does not rename that rigidity result as
+new mathematics. Even without one common finite $C$, every individual
+finite original return path has $q_\varepsilon(u)>0$; thus the same
+no-exclusive-live-record argument and (PR.80) hold for this finite-seed
+class. The quantitative error floor uses the common charge bound.
+
+The permitted original menu after a live return is still the existing
+prescribed relative-control menu at the actual matching height, with
+both regularities, arbitrary finite durations including a matching
+zero-duration identity, real increments and all permitted signed sectors.
+For a relative height increment $a_\gamma(t)$ its domain remains
+$D_\gamma=(\ell_b-\min a_\gamma,u_b-\max a_\gamma)$, as in the
+probability-phase source §9.1. Known illegality or denied permission
+gives an unexecuted visible rejection and retains the unchanged specimen
+and request context; it is not a fabricated canonical failure. No detector
+for an unflagged promise violation or unknown current height is supplied.
+After an executed failure only the declared stopped continuation is
+available. Updates retain the actual seed, request, outcome and archive,
+never an inferred old lift as if it had been observed.
+
+## 22. A rational one-retained-selector-bit instance
+
+**Example 22.1 (informative survival with an exact continuation ceiling).**
+Take zero fixed preparation phases and
+
+$$
+c=\frac14,\quad Z=\frac12,\quad
+a=\frac18,\quad l=\frac3{16},\quad
+\ell=\frac17,\quad C=\log7.
+\tag{PR.81}
+$$
+
+Draw and retain a fair public bit $U$. If $U=\varepsilon$, the source
+waits at $a$ for two units. If $U\ne\varepsilon$, it executes
+$a\to7/32\to a$, one unit per affine leg and constant relative phase.
+This selection is made by the source's explicitly retained old parity
+bit and delivered seed; the observer sees neither that bit nor the path.
+Here $b=7/32$, $d=3/32$ and $A=1/56$ in (PR.75)–(PR.77).
+The loop's upward and downward survival factors are $4/7$ and $1/4$,
+so its complete live return is $I_5/\sqrt7$.
+
+The loop's total first-failure mass on each leg is $3/7$.
+Its upward mode masses, in the original five-mode order, are
+$(0,3/28,3/14,3/28,0)$; its downward masses are
+$(3/28,0,3/14,0,3/28)$. Their exact time densities are (PR.77);
+their joint reference successors are (PR.66). Waiting has no failure.
+Thus the full output is the actual live joint state or the actual
+$(U,\tau,i,f)$, with no discarded or repeated failure. Every failure
+reveals $\varepsilon=1-U$ in this particular source, but its specimen
+is already stopped.
+
+For each parity separately,
+
+$$
+Q_\varepsilon=\frac47,\qquad
+\Pr(\mathsf L,d(U)\ne\varepsilon)=\frac1{14},\qquad
+\Pr(d(U)\ne\varepsilon\mid\mathsf L)=\frac18,
+\quad d(U)=U.
+\tag{PR.82}
+$$
+
+Under the equal prior, $U$ is initially independent of the old history.
+The live flag alone carries no parity information because both yields
+are $4/7$. Jointly, however,
+$\Pr(U=\varepsilon\mid\mathsf L)=7/8$.
+Erasing $U$ and retaining only the live flag and common metadata restores
+error $1/2$. Within this balanced classical-record-only calibration
+contract, a one-valued live record always has error $1/2$; at least
+two retained values are necessary for this nontrivial error, and the
+one retained bit is sufficient. This is not a lower bound for every
+quantum calibration procedure or the whole observer memory.
+
+The next one-unit horizontal leg has
+$s_*(a,l)=2/3$. Corollary 21.1 gives the sharp unconditional exact
+endpoint probability
+
+$$
+\frac23\frac47=\frac8{21}.
+\tag{PR.83}
+$$
+
+Its remaining probability consists of acquisition failure $3/7$ and
+new tail failure $4/21$, with the first actual time/mode preserved.
+This is a complete stopped same-specimen construction.
+
+For a fully specified common preparation use $z=1/16$ in (PR.78).
+Then $B_{\beta,m}=8\beta-4\pi m$, the prehistory duration is five,
+and its canonical live mass is $1/3$ for every $\beta,m$.
+From that earlier preparation the final all-success probability is
+$8/63$ and the full successful chronology lasts eight units.
+The earlier failures remain absorbing. Every signed winding is allowed;
+no old-history programme parameter is supplied to the later observer.
+
+Acquisition alone has support margin at least $1/32$, maximum height
+speed $3/32$, height variation $3/16$, and interior velocity variation
+$3/16$; zero-padded velocity variation is $3/8$. Its duration is two
+and its additional phase variation and winding are zero. The tail has
+speed $1/16$, height variation $1/16$, duration one and margin at
+least $1/16$. The common-preparation history has height margin at least
+$1/16$, height speed at most $1/16$, and phase variation
+$2\pi|m|+2|8\beta-4\pi m|$. These bounds do not give a uniform
+phase budget over all old histories.
+
+All new height/time/probability parameters have finite rational
+descriptions, and the active basis and endpoint filter have finite
+algebraic descriptions. The exact loss charge is named by $\log7$;
+it is not a newly observed real-valued meter reading. Exact calibration,
+Kraus execution, source/epoch matching, clock/reference and exact
+continuous-time archive storage remain separately charged ideal services.
+In particular the retained one-bit live selector does not encode the
+failed branch's real timestamp or the full archive.
+
+## 23. Attribution, original interfaces and the remaining acquisition gap
+
+**Source statement 23.1 (what is reused and what is added).**
+
+| Supplier at the public revision of §17 | Precise use and boundary |
+| --- | --- |
+| [FiniteRectangleTransport](../../../D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | Valid base, strict probabilities, signed phase weights, compatibility and actual rectangles; the Scribe's all-signed-sector/common-preparation application supplies the real lift construction. No sensor or physical actuator is inferred. |
+| [OriginalControlComposition](../../../D5/S3/Quantum/Fibers/OriginalControlComposition.lean) and its [Scribe](../../../Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | Original controls, both regularities, finite/zero durations, literal unchanged prefix, matching heights, translated real tail and additive weighted integrals. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5.2, 9–15, 17–22; this volume §§12–15 | Full phase/parity source, sharp $s_*$, scalar canonical loops, complete exact-time/five-mode CP kernels, shared-support continuation rigidity and finite joint composition are credited. Supplied programmable processors and the failure-only calibration example are not redelivered as acquisitions. |
+| [Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md); [Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md); [Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md) | Their marked-law metrics, regularity conditions, query limits and conditional sampler/certification contracts remain. A Bayes parity score supplies none of their missing strong error data or extra joint sensor law. |
+| [Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), §§1, 7–10; [Event Memory and Coarse Aliasing](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md), §§2–6 | Live carrier and correlated-archive upper correspondence, separately scoped unassisted lower bounds, known-anchor labels, received commands and same-event timestamp costs retain their different contracts. The one selector bit is not a full archive minimum. |
+| [Reanchoring Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_REANCHORING_BOUNDARIES.md), §§2–7 | Unknown-height reanchoring remains distinct. The known return height here is a promised source invariant, not a newly acquired unknown-height guard. |
+| [Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12/2.18; [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core Holonomy](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), Theorem 6.3 | Actual common coherent source/port, aligned acquired readings, known nonzero amplitudes and overlap, one source/epoch running image and complete compatible selection/update routes remain required. No individual four-view recovery map is constructed here. |
+
+The source-specific addition is (PR.68)–(PR.74), its actual path
+attainment, complete joint successor and retained-selector example.
+Binary likelihood decisions, survival filtering and CP calculus are
+mature mathematics. The shared-support exact-continuation ceiling is
+explicitly reused. This is a repository-derived synthesis, with no
+worldwide priority claim.
+
+**Literature statement 23.2 (likelihoods and operational scope).**
+
+| Primary reference | Verified content and use |
+| --- | --- |
+| S. Gammelmark and K. Mølmer, [Bayesian parameter inference from continuously monitored quantum systems, arXiv:1212.5700v1](https://arxiv.org/html/1212.5700v1), Eqs. (12)–(13) and the jump/counting model | An unnormalized conditional state's trace gives the likelihood relative to a chosen reference measure for a specified instrument. Clicks and no-click evolution both enter. This is mature motivation; (PR.64)–(PR.70) instantiate the actual original CP probabilities directly. The paper supplies no original sensor or black-box calibration certificate. |
+| L. Leppäjärvi and M. Sedlák, [Incompatibility of quantum instruments, arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2), Proposition 7 | The stated compatibility condition is equivalent to postprocessing a complementary instrument from a chosen dilation. No complementary/environment port or implementing postprocessor is granted by that equivalence. None is used here. |
+| [Classical Sufficiency in Quantum Statistical Experiments, arXiv:2609.29348v1](https://arxiv.org/html/2609.29348v1), §3.4.2, Definition 7 and comparison with restricted-measurement sufficiency | Recovery of the quantum experiment by one channel is stronger than preservation of the declared classical experiments of a restricted measurement class. No inference from this binary score to full original future-law recovery is made. |
+
+These primary-source comparisons do not provide a directly sufficient
+joint acquired original observer under the present absorbing, single-
+specimen contract. This bounded comparison is neither an absence theorem
+nor an originality argument.
+
+**Boundary 23.3 (what the promised source still does not acquire).**
+The positive construction obtains its live record in one actual execution,
+but its information uses the extra source-side correlation between old
+parity and future programme. It does not obtain, authenticate or implement
+that correlation from an arbitrary unknown original past. Removing that
+promise removes the displayed acquisition route. Treating a finite-error
+guess as an exact parity input also violates the exact consumer: both
+parities remain possible on every finite-charge live record.
+
+No arbitrary-history height/domain, waveform, real phase, signed winding,
+helper overlap, calibration or reference acquisition is supplied. Richer
+observations, phase-dependent or unequal-support assistance and other
+lawful acquisition designs are not excluded. A complete-output distance,
+approximate continuation, all-prefix feedback theorem, unbounded-horizon
+guarantee, finite physical clock or finite-precision implementation does
+not follow from the score. The whole original positive-control class,
+both regularities, arbitrary finite durations and all signed sectors
+retain their original scope; this finite zero-phase return class is a
+restricted partial result.
+
+The remaining programme requires actual same-source acquisition and
+retention of every domain, calibration, clock/reference, archive,
+permission, selector and update input needed by the full legal future
+menu, with all rejections and absorbing failure successors in one actual
+running image. Full space/time/boundary/memory mutual recovery, native
+stationary $\alpha/\beta$ memory rate and effective certification, and
+the separate fixed-Hamiltonian quantum minimax remain unresolved here.
+No source/action/observation/resource bridge to the preparer/reader,
+static arithmetic, mixed-state, lattice or two-clock models is supplied.
+
+## 追加锚（本行以下为增补区）
