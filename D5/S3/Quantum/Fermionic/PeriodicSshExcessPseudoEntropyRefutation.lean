@@ -650,8 +650,8 @@ private theorem sos58 :
 private def reduceInt (X : Assignment 6 → Assignment 6 → ℤ) :
     Matrix (Fin 4) (Fin 4) ℤ :=
   fun a b => ∑ z : Fin 16,
-    X (Fin.append (finFunctionFinEquiv.symm a) (finFunctionFinEquiv.symm z))
-      (Fin.append (finFunctionFinEquiv.symm b) (finFunctionFinEquiv.symm z))
+    X (Fin.append ((fun i : Fin 2 => finTwoEquiv (finFunctionFinEquiv.symm a i))) ((fun i : Fin 4 => finTwoEquiv (finFunctionFinEquiv.symm z i))))
+      (Fin.append ((fun i : Fin 2 => finTwoEquiv (finFunctionFinEquiv.symm b i))) ((fun i : Fin 4 => finTwoEquiv (finFunctionFinEquiv.symm z i))))
 
 private def outerInt (f g : Assignment 6 → ℤ) : Assignment 6 → Assignment 6 → ℤ :=
   fun x y => f x * g y
@@ -680,10 +680,241 @@ private theorem r11Int_eq : r11Int = !![832, 0, 0, 0; 0, 932, -420, 0; 0, -420, 
 set_option maxRecDepth 1000000 in
 private theorem r22Int_eq : r22Int = !![80, 0, 0, 0; 0, 116, -84, 0; 0, -84, 116, 0; 0, 0, 0, 80] := by
   ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [r22Int, reduceInt, outerInt, psi58Z, psi58, psiCode,
-      Fin.sum_univ_succ, Matrix.cons_val_succ, Matrix.cons_val_zero,
-      Matrix.cons_val_fin_one, Matrix.cons_val_two]
+  fin_cases i <;> fin_cases j <;> decide +kernel
+
+private theorem quadratic_nonnegC {M : ℕ} (B : FullOperator M) (φ : Assignment M → ℂ) :
+    0 ≤ star φ ⬝ᵥ ((Bᴴ * B) *ᵥ φ) := by
+  rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_conjTranspose,
+    star_star]
+  exact dotProduct_star_self_nonneg (B *ᵥ φ)
+
+private theorem quadratic_nonneg {M : ℕ} (B : FullOperator M) (φ : Assignment M → ℂ) :
+    0 ≤ (star φ ⬝ᵥ ((Bᴴ * B) *ᵥ φ)).re :=
+  (Complex.nonneg_iff.mp (quadratic_nonnegC B φ)).1
+
+private theorem sos_lower {K M : ℕ} (E : ℝ) (α : Fin K → ℝ)
+    (B : Fin K → FullOperator M) (H : FullOperator M) (φ : Assignment M → ℂ)
+    (hs : H = (E : ℂ) • (1 : FullOperator M) +
+      ∑ k, (α k : ℂ) • ((B k)ᴴ * B k))
+    (ha : ∀ k, 0 ≤ α k) :
+    E * (star φ ⬝ᵥ φ).re ≤ (star φ ⬝ᵥ (H *ᵥ φ)).re := by
+  rw [hs]
+  simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.sum_mulVec,
+    Matrix.one_mulVec, Pi.smul_apply, dotProduct_add, dotProduct_smul]
+  rw [dotProduct_sum]
+  simp_rw [dotProduct_smul]
+  have hq (k : Fin K) :
+      star φ ⬝ᵥ (((B k)ᴴ * B k) *ᵥ φ) =
+        ((star φ ⬝ᵥ (((B k)ᴴ * B k) *ᵥ φ)).re : ℂ) := by
+    apply Complex.ext
+    · rfl
+    · exact (Complex.nonneg_iff.mp (quadratic_nonnegC (B k) φ)).2.symm
+  have hsumEq :
+      (∑ x, (α x : ℂ) • (star φ ⬝ᵥ (((B x)ᴴ * B x) *ᵥ φ))) =
+        ∑ x, (α x : ℂ) •
+          ((star φ ⬝ᵥ (((B x)ᴴ * B x) *ᵥ φ)).re : ℂ) := by
+    apply Finset.sum_congr rfl
+    intro k hk
+    simpa using congrArg (fun z : ℂ => (α k : ℂ) • z) (hq k)
+  rw [hsumEq]
+  simp only [smul_eq_mul, Complex.add_re, Complex.re_sum, Complex.mul_re,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+  have hsum : 0 ≤ ∑ k, α k * (star φ ⬝ᵥ (((B k)ᴴ * B k) *ᵥ φ)).re := by
+    exact Finset.sum_nonneg fun k _ => mul_nonneg (ha k) (quadratic_nonneg (B k) φ)
+  linarith
+
+private theorem B38_kernel : ∀ k : Fin 6, B38 k *ᵥ psi38 = 0 := by
+  have he (k : Fin 6) : modes38 k = fun j => (modes38Z k j : ℝ) := by
+    funext j
+    fin_cases k <;> fin_cases j <;> norm_num [modes38, modes38Z]
+  intro k
+  fin_cases k
+  · change (mode (modes38 0))ᴴ *ᵥ psi38 = 0
+    rw [he]
+    exact psi38_complex_mode_kernel.1 ⟨0, by omega⟩
+  · change (mode (modes38 1))ᴴ *ᵥ psi38 = 0
+    rw [he]
+    exact psi38_complex_mode_kernel.1 ⟨1, by omega⟩
+  · change (mode (modes38 2))ᴴ *ᵥ psi38 = 0
+    rw [he]
+    exact psi38_complex_mode_kernel.1 ⟨2, by omega⟩
+  · change mode (modes38 3) *ᵥ psi38 = 0
+    rw [he]
+    exact psi38_complex_mode_kernel.2 ⟨0, by omega⟩
+  · change mode (modes38 4) *ᵥ psi38 = 0
+    rw [he]
+    exact psi38_complex_mode_kernel.2 ⟨1, by omega⟩
+  · change mode (modes38 5) *ᵥ psi38 = 0
+    rw [he]
+    exact psi38_complex_mode_kernel.2 ⟨2, by omega⟩
+
+private theorem B58_kernel : ∀ k : Fin 6, B58 k *ᵥ psi58 = 0 := by
+  have he (k : Fin 6) : modes58 k = fun j => (modes58Z k j : ℝ) := by
+    funext j
+    fin_cases k <;> fin_cases j <;> norm_num [modes58, modes58Z]
+  intro k
+  fin_cases k
+  · change (mode (modes58 0))ᴴ *ᵥ psi58 = 0
+    rw [he]
+    exact psi58_complex_mode_kernel.1 ⟨0, by omega⟩
+  · change (mode (modes58 1))ᴴ *ᵥ psi58 = 0
+    rw [he]
+    exact psi58_complex_mode_kernel.1 ⟨1, by omega⟩
+  · change (mode (modes58 2))ᴴ *ᵥ psi58 = 0
+    rw [he]
+    exact psi58_complex_mode_kernel.1 ⟨2, by omega⟩
+  · change mode (modes58 3) *ᵥ psi58 = 0
+    rw [he]
+    exact psi58_complex_mode_kernel.2 ⟨0, by omega⟩
+  · change mode (modes58 4) *ᵥ psi58 = 0
+    rw [he]
+    exact psi58_complex_mode_kernel.2 ⟨1, by omega⟩
+  · change mode (modes58 5) *ᵥ psi58 = 0
+    rw [he]
+    exact psi58_complex_mode_kernel.2 ⟨2, by omega⟩
+
+private theorem psi38_energy :
+    hamiltonian 3 (3/8) *ᵥ psi38 = (-25/8 : ℂ) • psi38 := by
+  rw [sos38]
+  simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.sum_mulVec,
+    Matrix.one_mulVec]
+  have hterm (k : Fin 6) :
+      (alpha38 k : ℂ) • (((B38 k)ᴴ * B38 k) *ᵥ psi38) = 0 := by
+    rw [← Matrix.mulVec_mulVec, B38_kernel k, Matrix.mulVec_zero, smul_zero]
+  rw [Finset.sum_eq_zero (fun k hk => hterm k)]
+  simp only [add_zero]
+
+private theorem psi58_energy :
+    hamiltonian 3 (5/8) *ᵥ psi58 = (-27/8 : ℂ) • psi58 := by
+  rw [sos58]
+  simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.sum_mulVec,
+    Matrix.one_mulVec]
+  have hterm (k : Fin 6) :
+      (alpha58 k : ℂ) • (((B58 k)ᴴ * B58 k) *ᵥ psi58) = 0 := by
+    rw [← Matrix.mulVec_mulVec, B58_kernel k, Matrix.mulVec_zero, smul_zero]
+  rw [Finset.sum_eq_zero (fun k hk => hterm k)]
+  simp only [add_zero]
+
+private theorem alpha38_nonneg : ∀ k : Fin 6, 0 ≤ alpha38 k := by
+  intro k
+  fin_cases k <;> norm_num [alpha38]
+
+private theorem alpha58_nonneg : ∀ k : Fin 6, 0 ≤ alpha58 k := by
+  intro k
+  fin_cases k <;> norm_num [alpha58]
+
+private theorem ground_from_sos (v E : ℝ) (α : Fin 6 → ℝ)
+    (B : Fin 6 → FullOperator 6) (H : FullOperator 6) (ψ : Assignment 6 → ℂ)
+    (hH : H = hamiltonian 3 v)
+    (hs : H = (E : ℂ) • (1 : FullOperator 6) +
+      ∑ k, (α k : ℂ) • ((B k)ᴴ * B k))
+    (ha : ∀ k, 0 ≤ α k) (hψ : ψ ≠ 0)
+    (hnum : numberOperator 6 *ᵥ ψ = (3 : ℂ) • ψ)
+    (henergy : H *ᵥ ψ = (E : ℂ) • ψ) :
+    IsHalfFilledGroundState 3 v ψ := by
+  refine ⟨hψ, hnum, ?_⟩
+  intro φ hφ hφnum
+  have hl := sos_lower E α B H φ hs ha
+  have hnorm : 0 ≤ (star ψ ⬝ᵥ ψ).re :=
+    (Complex.nonneg_iff.mp (dotProduct_star_self_nonneg ψ)).1
+  have hm := mul_le_mul_of_nonneg_right hl hnorm
+  have he : (star ψ ⬝ᵥ (H *ᵥ ψ)).re = E * (star ψ ⬝ᵥ ψ).re := by
+    rw [henergy]
+    rw [dotProduct_smul]
+    simp [Algebra.smul_def, Complex.mul_re]
+  rw [← hH, he]
+  nlinarith
+
+private theorem ground38 : IsHalfFilledGroundState 3 (3/8) psi38 :=
+  ground_from_sos (3/8) (-25/8) alpha38 B38 (hamiltonian 3 (3/8)) psi38
+    rfl (by convert sos38 using 1 <;> norm_num) alpha38_nonneg psi38_nonzero
+    psi38_number (by convert psi38_energy using 1 <;> norm_num)
+
+private theorem ground58 : IsHalfFilledGroundState 3 (5/8) psi58 :=
+  ground_from_sos (5/8) (-27/8) alpha58 B58 (hamiltonian 3 (5/8)) psi58
+    rfl (by convert sos58 using 1 <;> norm_num) alpha58_nonneg psi58_nonzero
+    psi58_number (by convert psi58_energy using 1 <;> norm_num)
+
+private theorem reduce_three_one (X : FullOperator 6) (a b : Assignment 2) :
+    reduce (by norm_num : 2 * 1 ≤ 2 * 3) X a b =
+      ∑ z : Assignment 4, X (Fin.append a z) (Fin.append b z) := by
+  unfold reduce
+  simp_rw [← (Fin.appendEquiv (α := Bool) 2 4).sum_comp]
+  simp only [Fin.appendEquiv, Equiv.coe_fn_mk]
+  simp_rw [Fin.append_left']
+  simp only [Nat.reduceMul]
+  have hleft (x : Assignment 2) :
+      (x 0 = a 0 ∧ x 1 = a 1) ↔ x = a := by
+    constructor
+    · intro h
+      funext i
+      fin_cases i <;> simp [h]
+    · intro h
+      subst x
+      simp
+  have hleftAll (x y : Assignment 2) :
+      (∀ i : Fin 2, x i = y i) ↔ x = y := by
+    constructor
+    · intro h
+      exact funext h
+    · intro h
+      exact congrFun h
+  have htail (x y : Assignment 2 × Assignment 4) :
+      (∀ k : Fin 6, 2 ≤ k.val →
+        Fin.append x.1 x.2 k = Fin.append y.1 y.2 k) ↔ x.2 = y.2 := by
+    constructor
+    · intro h
+      funext i
+      have hi := h (Fin.natAdd 2 i) (by simp)
+      simpa using hi
+    · intro h k hk
+      fin_cases k
+      · norm_num at hk
+      · norm_num at hk
+      · change x.2 0 = y.2 0
+        exact congrFun h ⟨0, by omega⟩
+      · change x.2 1 = y.2 1
+        exact congrFun h ⟨1, by omega⟩
+      · change x.2 2 = y.2 2
+        exact congrFun h ⟨2, by omega⟩
+      · change x.2 3 = y.2 3
+        exact congrFun h ⟨3, by omega⟩
+  simp_rw [hleftAll, htail]
+  have hinner (x : Assignment 2 × Assignment 4) :
+      (∑ y : Assignment 2 × Assignment 4,
+        if x.1 = a ∧ y.1 = b ∧ x.2 = y.2 then
+          X (Fin.append x.1 x.2) (Fin.append y.1 y.2) else 0) =
+        if x.1 = a then X (Fin.append x.1 x.2) (Fin.append b x.2) else 0 := by
+    by_cases hxa : x.1 = a
+    · rw [if_pos hxa]
+      rw [Finset.sum_eq_single (b, x.2)]
+      · simp [hxa]
+      · intro y hy hne
+        have hy' : ¬ (y.1 = b ∧ x.2 = y.2) := by
+          intro hh
+          apply hne
+          rcases y with ⟨y1, y2⟩
+          simp_all [Prod.ext_iff]
+        simp [hxa, hy']
+      · simp
+    · simp [hxa]
+  rw [Finset.sum_congr rfl (fun x _ => hinner x)]
+  rw [Fintype.sum_prod_type]
+  simp [Finset.sum_ite_eq', Finset.sum_ite_irrel]
+
+private def code2 (a : Assignment 2) : Fin 4 :=
+  ((Equiv.piCongrRight (fun _ : Fin 2 => finTwoEquiv.symm)).trans
+    (finFunctionFinEquiv (m := 2) (n := 2))) a
+
+private def code4 (a : Assignment 4) : Fin 16 :=
+  ((Equiv.piCongrRight (fun _ : Fin 4 => finTwoEquiv.symm)).trans
+    (finFunctionFinEquiv (m := 2) (n := 4))) a
+
+private theorem sum_cast_outer (f g : Assignment 6 → ℤ) (a b : Assignment 2) :
+    (∑ z : Assignment 4,
+      ((f (Fin.append a z) * g (Fin.append b z) : ℤ) : ℂ)) =
+      (reduceInt (outerInt f g) (code2 a) (code2 b) : ℂ) := by
+  sorry
 
 theorem result : ¬ claim := by
   sorry
