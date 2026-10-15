@@ -2977,3 +2977,7 @@ $N$ and its full alias list; $\mathcal R_N^\circ$ is not a residual
 reweighted at $N-W_N^\circ$. The constant and endpoint are retained.
 The estimate $\mathscr J_N(\mathcal R_N^\circ)=o(1)$ remains missing,
 as do the complete same-integer signed Robin bound and RH proof.
+
+The [Bettin--Chandee applicability note](bettin2018trilinear.md)
+records the direct alias-split boundary and excludes the withdrawn
+stronger Kloosterman-fraction claim from the available suppliers.
