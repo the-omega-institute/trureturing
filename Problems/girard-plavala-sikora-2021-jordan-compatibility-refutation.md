@@ -78,7 +78,7 @@ Tier 1 conjecture of a 2021 paper, preregistered in issue #17171 before any Lean
 | --- | --- | --- | --- |
 | result | bind-only | none: after inlining, the channel and Choi facts, the block decomposition, the partial-trace identities, the Gram certificate and the trace sum are instantiations of frozen D5, Closed D5 and pinned Mathlib results followed by normalization | open-problem-resolution |
 
-Every other declaration is a definition used by a public statement or a compiler-generated proof on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
+Every other public declaration is a definition used by a public statement. The module's 37 private theorems are bind-only helpers consumed on the proof path of `result`, and its 23 private definitions and its compiler-generated declarations also lie on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
 
 ### What the settlement shows
 
