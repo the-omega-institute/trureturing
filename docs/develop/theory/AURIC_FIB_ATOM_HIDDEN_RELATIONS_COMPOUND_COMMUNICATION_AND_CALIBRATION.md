@@ -2877,7 +2877,7 @@ Methods, “Properties of LRCC operations,” Eqs. (37)–(39), supply the
 mature local-transpose Choi condition and distinguish LRCC (both sides
 real) from LQRCC (Alice unrestricted). Their supplied-imbit real
 implementation, already cited in
-[the existing literature note](../../../Library/Quantum/wu2024distributedimaginarity.md),
+[the existing literature note](../../../Library/QuantumChannels/wu2024distributedimaginarity.md),
 is a different resource contract and is not an extra input here. The
 necessary Choi condition is re-established in C-135.1 for this map
 interface; it is not treated as sufficient for LOCC implementation.
