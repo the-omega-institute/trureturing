@@ -37,12 +37,27 @@ growth for the full logarithmic order.
 
 The universal lower bound and its necessary budget condition are credited
 to [the public renewal source, Theorem 11.2 and Open problem 11.3][SOURCE].
-The contribution here is the finite phase reader, its source-normalized
-occupation estimates, the evidence rounding and their complete paid
-implementation. These are ordinary mathematical proofs, not Lean kernel
-validation. The native-tree exact-rate problem and the broader
-minimal-relations, internal-observer and mutual-recovery programme retain
-their separate unresolved goals.
+The public [critical multiscale attainment source][MULTISCALE],
+Theorems 9.1–9.2, already proves logarithmic paid attainment for this same
+positive pair and the same complete actual-bit resource contract: for
+$sL\le\eta$ it gives
+$M\le C(L+2)/(s^r\sqrt{H_L})$ and both paid means at most
+$Cs^{-(2r+1)}/H_L$, with its fixed-$\theta$ corollary. Its Section 10
+leaves minimum state and the full all-budget frontier open, and its lower
+discussion is conditional attribution. That ordinary public source is
+fallible and is not independent verification of this manuscript.
+
+The contribution retained here is the different stronger resource and
+quantifier statement: the finite phase reader and its source-normalized
+occupation estimates, the evidence rounding and complete paid
+implementation yield the explicitly counted $O(2^{rJ})$ table, a uniform
+upper for every sufficient finite budget, and the eventual
+positive-polynomial budget criterion. These are ordinary mathematical
+proofs, not Lean kernel validation. The category/lattice existence result
+from [MULTISCALE] is credited rather than claimed as a new discovery. The
+native-tree exact-rate problem and the broader minimal-relations,
+internal-observer and mutual-recovery programme retain their separate
+unresolved goals.
 
 **Definition 1.2 (Full stationary source law).** For $i\in\{0,1\}$ define
 
@@ -1071,6 +1086,7 @@ does not assert worldwide priority for the composition.
 | Supplier | Exact correspondence and transfer boundary |
 | --- | --- |
 | [Exact source classes and the renewal state/read frontier][SOURCE], Definitions 2.1 and 3.1, Lemma 2.3, Theorem 11.2, Open problem 11.3 | The identical normalized positive pair, stationary first wait, unrestricted retuned complete-configuration class, scalar moments, universal critical lower and its necessary growth condition. Equations (9.9)–(9.10) give predictable completed-gap payment. The present table supplies its own continuation, risk and state proof; the source is ordinary fallible theory, not independent validation of this upper. |
+| [Critical multiscale renewal attainment][MULTISCALE], Theorems 9.1–9.2 and Section 10 | The exact same $F_0,F_1$, stationary first wait, source-blind $q$-retuned finite table, complete persistent-configuration accounting, and paid consecutive-bit resource contract. The supplier proves logarithmic existence with $M\le C(L+2)/(s^r\sqrt{H_L})$ and both paid means $O(s^{-(2r+1)}/H_L)$ whenever $sL\le\eta$, plus its fixed-$\theta$ specialization. Its Section 10 leaves minimum state and the full all-budget frontier open; its lower context is conditional attribution. This ordinary public source is fallible and is not independent verification of the present manuscript. The present source retains the distinct $O(2^{rJ})$ phase-table count, uniform all-sufficient-budget upper, and eventual positive-polynomial budget criterion. |
 | Philippe Flajolet, *Approximate Counting: A Detailed Analysis*, BIT 25, 113–134, Section 1, printed pp. 114–116 | Starts at counter one and increments $j$ with probability $2^{-j}$. This is exactly the uncapped phase reader. Its approximate-count distribution theorems are not assumed to imply the discounted occupation estimates, the critical reward or paid testing bounds; those are proved here. |
 | Lu Xia, Martijn Anthonissen, Michiel Hochstenbach and Barry Koren, *Improved stochastic rounding*, arXiv:2006.00489v1, Section 3, Corollary 3.2, Algorithm 3.1 | Distance-proportional adjacent-grid rounding and unbiasedness supply the classical update form. The source-dependent $\delta\mathbb E|V-\theta|$ control and its use at $\delta=J2^{-rJ}$ are proved in Theorem 4.1. No finite-precision implementation result is imported. |
 | Marco Zamparo, *Renewal model for dependent binary sequences*, arXiv:2108.11293v2, Theorem 2.1 and Proposition 3.1 | Finite mean interval $S_2=K+1$ and first interval $S_1=\tau+1$ give (1.4), including $\tau=0$, and regeneration at visible ones. These results provide neither a free complete-gap port nor an observer memory bound. |
@@ -1120,6 +1136,15 @@ configurations. The eventual logarithmic criterion permits any fixed
 positive polynomial exponent when its time constant may vary; it does
 not select a sharp necessary exponent $r$.
 
+For a precise comparison under the common source and resource contract,
+at a full permitted cutoff $L\asymp s^{-1}$ the public supplier's
+Theorem 9.1 gives the sufficient count
+$O(s^{-(r+1)}/\sqrt{\log(1/s)})$, while Corollary 7.2 here gives the
+same logarithmic paid order with the sufficient count $O(s^{-r})$. This
+compares two sufficient constructions only; it is not a universal state
+lower bound, a claim of independent mechanisms, or a resolution of the
+minimum-state question.
+
 **Open problem 9.4 (Other sources and the broader recovery programme).**
 No transfer is asserted to the rational-center polynomial $H_c$, sparse,
 signed or oscillating perturbations, an upper tail envelope, varying
@@ -1129,11 +1154,16 @@ In particular an upper envelope alone does not give the positive signed
 quantity in (4.6), as the public source's sparse example demonstrates.
 The native-tree exact rate and a minimal relational structure recovering
 space, time, boundaries and memory from one another remain separate
-unresolved mathematical objectives. This source resolves only the
-ordinary critical exact-renewal attainment and uniform order gap under
-Definitions 1.1–1.3 and the credited converse.
+unresolved mathematical objectives. The public supplier's Section 10
+likewise leaves minimum state and the full all-budget frontier open, and
+its lower context is conditional attribution rather than a new converse.
+This source's retained result is the stronger ordinary critical
+exact-renewal phase-table bound and uniform order gap under Definitions
+1.1–1.3 and the credited converse; no substantive claim is inferred
+solely from the supplier's publication.
 
 [SOURCE]: https://github.com/the-omega-institute/trureturing/blob/665ad0afc598345e8372180eb5055e2e12f61137/docs/develop/theory/FIB_SOURCE_CLASS_RENEWAL_RESOURCE_FRONTIER.md
+[MULTISCALE]: https://github.com/the-omega-institute/trureturing/blob/de2373d88086fe97e948407b3f25bfb81a9e899c/docs/develop/theory/FIB_CRITICAL_MULTISCALE_RENEWAL_ATTAINMENT.md
 [FLAJOLET]: https://algo.inria.fr/flajolet/Publications/Flajolet85c.pdf
 [ROUNDING]: https://arxiv.org/pdf/2006.00489v1
 [ZAMPARO]: https://arxiv.org/pdf/2108.11293v2
