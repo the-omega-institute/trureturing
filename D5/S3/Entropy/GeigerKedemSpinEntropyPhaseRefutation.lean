@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.Complex.CauchyIntegral
 import Mathlib.MeasureTheory.Integral.CircleAverage
+import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
@@ -20,10 +21,6 @@ open Complex MeasureTheory Set Metric
 open scoped Topology ComplexConjugate
 
 namespace D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation
-
-noncomputable def shannonTerm (p : ℝ) : ℝ :=
-  -(p * Real.log p) -
-    (1 - p) * Real.log (1 - p)
 
 noncomputable def density
     (thetaAlpha thetaBeta phaseX phaseZ phi : ℝ) : ℝ :=
@@ -44,9 +41,9 @@ noncomputable def spinEntropy
       density thetaAlpha thetaBeta phaseX phaseZ phi *
         Real.log
           (density thetaAlpha thetaBeta phaseX phaseZ phi)) +
-    shannonTerm (Real.cos thetaAlpha ^ 2) +
+    Real.binEntropy (Real.cos thetaAlpha ^ 2) +
     Real.sin thetaAlpha ^ 2 *
-      shannonTerm (Real.cos thetaBeta ^ 2)
+      Real.binEntropy (Real.cos thetaBeta ^ 2)
 
 def claim : Prop :=
   ∀ thetaAlpha thetaBeta phaseX phaseZ : ℝ,
