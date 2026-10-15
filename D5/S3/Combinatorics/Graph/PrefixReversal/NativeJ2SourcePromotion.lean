@@ -35,6 +35,11 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
+open private parentPiece from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
+open private linked_of_getElem finish_eq_last from
+  D5.S3.Combinatorics.Graph.Walks.ActualCyclePieceReordering
 open private pChildIndex outer_base_bound old_base_bound from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 open private j2_frame_special_domain from
@@ -319,5 +324,93 @@ theorem native_j2_original_p_joint_split {m : ℕ} (hm : 5 ≤ m)
     exact hopenE.trans he
 
 #print axioms native_j2_original_p_joint_split
+
+/-- The same saved child pieces have their literal native c connections.
+This is the chain consumed by the actual joint update, including the
+original P opening as its last piece and the saved parent base. -/
+private theorem same_parent_chain {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterParentWitnessFor hm F A u hbase hA) :
+    let O := outerFrame F A u hbase
+    let p := W.pieces ⟨0, by
+      simp only [O, outerFrame, List.length_append, List.length_singleton]; omega⟩
+    let ps := List.ofFn fun i : Fin (O.base.length - 1) =>
+      W.pieces ⟨i.val + 1, by
+        have hi := i.isLt
+        simp only [O, outerFrame, List.length_append, List.length_singleton] at hi ⊢
+        omega⟩
+    W.base = p.start ∧ Linked p ps ∧
+      finish p ps = (W.pieces (pChildIndex F A u hbase)).finish ∧
+      (domainGraph (ParentDomain O)).Adj
+        (W.pieces (pChildIndex F A u hbase)).finish W.base := by
+  classical
+  dsimp only
+  let O := outerFrame F A u hbase
+  let p := W.pieces ⟨0, by
+    simp only [O, outerFrame, List.length_append, List.length_singleton]; omega⟩
+  let ps := List.ofFn fun i : Fin (O.base.length - 1) =>
+    W.pieces ⟨i.val + 1, by
+      have hi := i.isLt
+      simp only [O, outerFrame, List.length_append, List.length_singleton] at hi ⊢
+      omega⟩
+  have hlen : 3 ≤ O.base.length := outer_base_bound F A u hbase hA
+  have hlist : p :: ps = List.ofFn W.pieces := by
+    apply List.ext_getElem
+    · simp only [ps, List.length_cons, List.length_ofFn]; omega
+    · intro i hi hj
+      cases i with
+      | zero => simp only [p, List.getElem_cons_zero, List.getElem_ofFn]
+      | succ i => simp only [ps, List.getElem_cons_succ, List.getElem_ofFn]
+  have hstart (j : Fin O.base.length) : (W.pieces j).start.val =
+      rightPort O (childStartIndex O j) := by
+    rw [W.childPieces]
+    exact (W.paths j).start_eq
+  have hfinish (j : Fin O.base.length) : (W.pieces j).finish.val =
+      leftPort O (2 + j.val) := by
+    rw [W.childPieces]
+    exact (W.paths j).finish_eq
+  have hb : W.base = p.start := by
+    apply Subtype.ext
+    rw [W.baseCoordinate]
+    symm
+    simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl] using
+      hstart ⟨0, by omega⟩
+  have hlinked : Linked p ps := by
+    apply linked_of_getElem
+    intro i hi
+    simp only [hlist, List.length_ofFn] at hi
+    simp only [hlist, List.getElem_ofFn]
+    change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
+      (W.pieces ⟨i, by omega⟩).finish.val (W.pieces ⟨i + 1, hi⟩).start.val
+    rw [hfinish ⟨i, by omega⟩, hstart ⟨i + 1, hi⟩]
+    simp only [childStartIndex, Fin.val_mk, if_neg (by omega : ¬ i + 1 = 0)]
+    simpa only [Nat.add_assoc] using
+      ((native_anchored_supply_coordinates (by omega : 3 ≤ m) O).1 (2 + i)).2.2.2
+  have hlastIndex : (⟨O.base.length - 1, by omega⟩ : Fin O.base.length) =
+      pChildIndex F A u hbase := by
+    apply Fin.ext
+    simp only [O, outerFrame, List.length_append, List.length_singleton, pChildIndex]
+    omega
+  have hlast : finish p ps = (W.pieces (pChildIndex F A u hbase)).finish := by
+    have h := finish_eq_last p ps
+    simpa only [hlist, List.getLast_ofFn, hlastIndex] using h
+  refine ⟨hb, hlinked, hlast, ?_⟩
+  rw [hb]
+  change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
+    (W.pieces (pChildIndex F A u hbase)).finish.val p.start.val
+  rw [hfinish]
+  have hpstart : p.start.val = rightPort O 0 := by
+    simpa only [p, childStartIndex, Fin.val_mk, if_pos rfl] using
+      hstart ⟨0, by omega⟩
+  rw [hpstart]
+  have hp := O.prefix_length
+  simp only [List.length_append, O.selected_length] at hp
+  have hidx : 2 + (pChildIndex F A u hbase).val = m - 1 := by
+    simp only [O, outerFrame, List.length_append, List.length_singleton] at hp
+    change 2 + A.length = m - 1
+    omega
+  rw [hidx]
+  exact (native_anchored_supply_coordinates (by omega : 3 ≤ m) O).2.2
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
