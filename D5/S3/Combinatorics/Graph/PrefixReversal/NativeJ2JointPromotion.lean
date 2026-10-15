@@ -214,7 +214,8 @@ private theorem same_parent_chain_inventory {m : ℕ} (hm : 5 ≤ m)
   change Linked p₀ ps at hlink
   change finish p₀ ps = (W.pieces (pChildIndex F A u hbase)).finish at hfinish
   refine ⟨ps.dropLast, ?_, ?_, ?_, ?_, ?_⟩
-  · simpa only [hps, ← hp₀] using hlink
+  · rw [hps, ← hp₀] at hlink
+    exact hlink
   · simpa only [← hp₀] using hb
   · simpa only [← hP, hb, ← hp₀] using hclose
   · have h := W.support
