@@ -3319,3 +3319,66 @@ conditional parameter application of existing theorems, not a new RH
 criterion, an unconditional bound for (I117)'s retained near sector,
 a mathematical-priority claim or Lean certification. The complete
 signed Robin objective and RH remain unresolved.
+
+
+## A sharper fixed fourth-moment input for the same functional
+
+The [classical polynomial-evaluation application](../Analytic/verjovsky2026mobiussmoothing.md#classical-polynomial-evaluation-sharpens-the-fixed-moment-input)
+gives a stronger interface than the first-derivative moment estimate
+used above. Keep the original family (I59), the actual functional
+(I91), and one fixed $c>0$. Assume, as an additional deterministic
+input, that
+$\mathcal M_{4,c}(N)\ll N^\nu$ for every sufficiently large integer
+$N$, with one fixed $0\le\nu<1/8$. The source's same local arc and
+Möbius coefficients are retained.
+
+The cited application supplies
+$$
+|M(N)|\ll_c\sqrt{\log(2N)}
+\left(\sqrt N\,\mathcal M_{4,c}(N)+1\right).
+$$
+Consequently, with $\theta=1/2+\nu$, for every fixed $\delta>0$,
+$$
+M(x)\ll_{c,\nu,\delta}x^{\theta+\delta}.
+\tag{I120}
+$$
+The implied constants also retain the assumed moment-bound constant.
+To use the required prime error, take any $\Re s>\theta$, choose
+$0<\delta<\Re s-\theta$, and apply the already used
+partial-summation continuation of $1/\zeta$ with (I120). This excludes
+zeros throughout $\Re s>\theta$. Choose a fixed
+$\theta<\beta<5/8$ and reuse (I60) for both $M(x)$ and
+$\psi(x)-x$ at exponent $\beta$; there is no same-exponent
+prime-error assertion obtained from bandwise Abel summation alone.
+
+Apply (I118)--(I119) with this $\beta$. For every fixed $\eta>0$,
+choose $\beta-\theta$ sufficiently small and absorb the original
+$e^{\lambda\Omega}$ and logarithmic factors into the remaining
+$N^\eta$ allowance. The result is
+$$
+|\mathcal A_{N,H}|=|\mathscr J_N(R_N)|
+\ll_{c,\nu,\eta}N^{2\nu-1/4+\eta}.
+\tag{I121}
+$$
+All original fixed parameters may also enter the constant. Taking
+$0<\eta<1/4-2\nu$ gives $o(1)$ on every sufficiently large original
+integer $N$. This reuses the complete functional, including
+$e_{N,H}=B/(2N+1)-A/2$ and $m=2N$, with the same strict lower band
+cutoff and half-integer convention. It supplies no uniform
+$\nu=1/8$ endpoint or estimate for a moment hypothesis given only
+on a subsequence.
+
+Using the exact correlation identity in the same source application,
+another sufficient input is
+$\mathfrak C_{4,c}(N)\ll N^{5/2-\xi}$ for a fixed $0<\xi\le1/2$.
+It gives $\nu=1/8-\xi/4$ and hence
+$|\mathscr J_N(R_N)|\ll_\eta N^{-\xi/2+\eta}$, with decay when
+$0<\eta<\xi/2$. This weakens the previously recorded
+$N^{17/8-\xi}$ sufficient correlation input; it does not prove either
+bound or replace the signed fourfold sum by a diagonal.
+
+The new parameter range is a repository application of classical
+polynomial evaluation, Taylor approximation and the already owned
+analytic interfaces, without a mathematical-priority claim or Lean
+certification. The deterministic moment or correlation bound remains
+unpaid. The complete signed Robin estimate and RH remain unresolved.
