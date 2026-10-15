@@ -912,7 +912,7 @@ chosen separator or the bags needed to cover all factors. Equations
 (CBN.27)–(CBN.28) evaluate specified finite networks; they provide no
 uniform estimate for (CBN.32).
 
-**Open problem 8.4 (effective lower convergence for the original rate).**
+**Definition 8.4 (effective lower-convergence obligation for the original rate).**
 With the unchanged native quantities, FMR supplies
 
 $$
@@ -941,8 +941,8 @@ optima and network masses. A finite $K_d(n)$ bounds its defining
 infimum from above. Finite maximal masses bound an all-length supremum
 from below; they cannot certify the upper bound needed in (CBN.32).
 No reversal of these inequalities follows from an exact recoding.
-Completeness of product-weight certificates for $\sigma_d$ also
-remains open.
+The constructor correspondence alone does not establish completeness
+of product-weight certificates for $\sigma_d$.
 
 The general exact $M_1(D)$, sharp $\lambda$ and broader recovery
 programme therefore retain their original goals. A relation requiring
