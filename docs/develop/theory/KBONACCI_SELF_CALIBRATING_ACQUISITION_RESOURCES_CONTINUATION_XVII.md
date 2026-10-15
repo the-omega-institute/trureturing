@@ -2001,3 +2001,1001 @@ original all-sequence, common-seed, resource, full-row, target,
 positive-tail and closed-cap obligation in 303.1 therefore remains.
 
 ## 追加锚（本行以下为增补区）
+## 309. The common full interface for two further relations
+
+**Definition 309.1 (Objects, rules and complete rows).**
+Use the actual source $X$ of 297.1, not a distribution on words:
+$F_0=0$, $F_1=1$, $F_{k+2}=F_{k+1}+F_k$,
+$N(r,g)=1+F_rg$, $r$ prime,
+$\lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor$,
+$q_i=[p_i\mid N]$ and $n=\min\{i:q_i=0\}$.
+All finite reply patterns are actual by the Fibonacci-matrix and CRT
+argument in 297.3, which reuses 280.1. Every actual source has finite
+first absence. The full carrier remains
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with each
+block a Borel copy of $(0,1)$. The unchanged consumer returns unknown
+on $B_j$ and proposes $j$ on $P_j$. Its original nonatomic targets
+$\mu_x^{\rm orig}$ remain exactly those in 297.1.
+
+The accuracy target here is the separately selected law
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                 +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+\theta_j=(B_1,1/(j+2)),\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\to0.
+\tag{309.1}
+$$
+
+An original competitor may use arbitrary query addresses and arbitrary
+Borel outputs in $\Theta$. It has zero advice, one source-independent
+common seed and sourcewise almost-sure finite handoff. The schedule
+in $\mathcal N_2$ is wholly fixed before replies and all its replies
+are obtained. In $\mathcal O_2$ the schedule is fixed increasingly
+before replies and execution stops at its first queried zero or
+exhaustion. The second address cannot depend on the first reply.
+The bound is two actual requests, including repetitions and ignored
+replies. No source distribution, bounded-address assumption, runtime
+bound or mean-request relaxation is introduced. Write
+$e_a(A)=\sup_{x\in X}\operatorname{TV}(\mathcal L(A(x)),\lambda_x^a)$.
+
+For every finite horizon $L\ge3$ retain all words $w\in\{0,1\}^L$ and
+all labels $0,\ldots,L$. If $n(w)$ is its first zero, the three
+independent event rows $A,C,P$ have events $\{0\},\{n(w)\}$,
+$\{0,n(w)\}$ and demands $1-b_{n(w)}-e,b_{n(w)}-e,1-e$.
+At $+=1^L$ retain the base event with demand $1-e$.
+Every unscored row and every negative singleton demand is retained.
+For a probability vector and $0\le b_n\le1$ the three TV deficits are
+
+$$
+1-b_n-p_w(0),\qquad b_n-p_w(n),\qquad
+1-p_w(0)-p_w(n).
+\tag{309.2}
+$$
+
+Their maximum is the TV distance. For arbitrary real $(b,e)$,
+feasibility refers to these linear demands, without claiming a
+probability target outside $0\le b_n\le1$.
+
+The complete $N$ catalog contains every four-cell table
+$N(i,j;u,v,s,t)$ on $00,01,10,11$, every constant and singleton,
+and all labels in every cell. The $O$ catalog contains every
+$O(i,j;u,s,t)$ on $0,10,11$, with $i<j$, and its shorter schedules.
+Repeated queries coarsen information without refunding a request;
+reversing static queries permutes cells. Earlier unqueried labels
+remain legal outputs.
+
+**Definition 309.2 (The single allocation and its supporting score).**
+As in 297.5 set $R=O(1,2;1,2,0)$,
+$\alpha=(1,1,0,\ldots,0)$, $r=z_R=d(\alpha,0)$,
+$h=d(b,e)-r$ and $G_C=(z_D-r)_{D\in\mathcal D_C}$.
+A complete feasible allocation means one vector $\lambda\ge0$
+satisfying every row of $G_C\lambda\ge h$, with one finite total
+mass $M=\sum_D\lambda_D$. The claims below allow any such finite
+mass. Mass one is normalized feasibility; division by $M$ does not
+preserve the same profile.
+
+For a nonnegative score $Y=(A_w,C_w,P_w;T)$ define
+
+$$
+\begin{aligned}
+g_Y(w,\ell)&=A_w[\ell=0]+C_w[\ell=n(w)]
+                         +P_w[\ell\in\{0,n(w)\}],\\
+g_Y(+,\ell)&=T[\ell=0],\\
+\beta_n&=\sum_{w:n(w)=n}(C_w-A_w),\qquad
+K=\sum_{w\ne+}(A_w+C_w+P_w)+T,\\
+W&=Yr,\qquad B_C(Y)=\max_{D\in\mathcal D_C}Yz_D,
+\qquad\Delta_C(Y)=B_C(Y)-W,\\
+F_{QY}(b,e)&=Yh=\sum_n\beta_n(b_n-\alpha_n)-Ke.
+\end{aligned}
+\tag{309.3}
+$$
+
+Nonnegativity and the same full allocation give
+
+$$
+F_{QY}(b,e)\le YG_C\lambda
+=\sum_D\lambda_D(Yz_D-W)\le M\Delta_C(Y).
+\tag{309.4}
+$$
+
+In particular zero excess proves a necessary relation independent of
+mass, order and hull membership. This is the existing pairing
+(297.5), not an additional duality theorem.
+
+**Lemma 309.3 (Complete finite support and original closed caps).**
+Suppose a nonnegative score on $d\ge3$ coordinates has pair-cell maxima
+
+$$
+m_{ij,uv}=\max_{0\le\ell\le d}
+ \sum_{w:(w_i,w_j)=(u,v)}g_Y(w,\ell),\qquad uv=00,01,10,11,
+\tag{309.5}
+$$
+
+whose four-entry sums are at most $W=Yr$. Then
+$B_N=B_O=W$ if $R$ attains $W$. The same bound holds after embedding
+coordinates as $(1,2,j_1,\ldots,j_{d-2})$ at every ordered choice
+$3\le j_1<\cdots<j_{d-2}\le L$, by setting nonskeleton bits to
+one on the scored words and mapping labels by the embedding.
+Every original rule meeting a positive closed cap satisfies the
+resulting finite necessary relation. A linear inequality in the cap
+therefore also holds at its actual error by decreasing positive caps
+to that error.
+
+**Proof.** A fixed $N$ pair chooses a label independently in each
+cell, so its score is at most the sum in (309.5). For nonnegative
+reward vectors, the maximum of a sum is at most the sum of maxima.
+A constant, singleton or repeated schedule coarsens a distinct-pair
+partition; reversal only permutes cells. A stopped table merges the
+$00,01$ cells before choosing its first output, so is bounded as well.
+The common anchor supplies equality for both catalogs.
+
+On the embedded support every outside query has the constant answer
+one. Two arbitrary queries thus induce a displayed pair partition or
+a constant or singleton coarsening. An outside label earns zero and
+cannot improve a maximum of nonnegative rewards. This proves the
+bound for the entire catalog, rather than for a pruned set of queries
+or outputs. All unscored word rows remain in the allocation problem.
+
+The original implication reuses the exact class-feasibility transport
+110.2 and the prefix consequence 280.3, stated in 297.3. At
+$0<c\le1$, vanishing of $a$ makes the active horizon
+$L_a=\max(\{n:a_n>c\}\cup\{0\})$ finite. Transport supplies one
+normalized finite representative at the closed cap $c$ for any
+original cap-feasible competitor. Its necessity includes arbitrary
+original addresses and full-carrier outputs: countability gives a
+common probability-one execution event, and actual finite witnesses,
+truncation and compactness give finite class feasibility. It does not
+preserve every initial law or coupling. For stopped sufficiency the
+reused exact criterion 109.1 is $c_0\ge H$ coordinatewise for
+$p_w=c_0+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$,
+$H=\sum_i(\sum_{j>i}(-Q_{ij})_+-\ell_i)_+$;
+normalization makes its scalar schedule budget redundant.
+
+At a desired prefix $K$, restrict a longer representative by fixing
+higher replies to zero, projecting higher labels to zero and deleting
+those constant observations. On an old positive prefix this projection
+also contracts TV to the new base target. Extend a shorter representative
+by ignored inputs. At each added first-zero address $n$ its old positive
+law, supported below that address, has exact error
+
+$$
+\operatorname{TV}(p_+,(1-a_n)e_0+a_ne_n)
+              =\max\{1-p_+(0),a_n\}\le c.
+\tag{309.6}
+$$
+
+Thus all three independent rows hold for this one representative,
+including closed ties. These are representation operations in the
+proof, not free observations by an original rule. Apply (309.4).
+For actual error zero use every positive cap and pass to zero.
+For error less than one decrease caps in $(e_a(A),1]$; when the error
+is one, the particular inequalities below follow directly from
+$a_n\le1$. Caps above one are likewise immediate. $\square$
+
+## 310. A joint two-tail constraint on the same complete allocation
+
+**Definition 310.1 (The nine-coordinate score $Z_7$).**
+The following 46 independent rows specify all its nonzero coefficients.
+Every $A$ and every unlisted coefficient is zero. This sets score
+weights only, not the retained constraints.
+
+| Row | Word | Weight |
+| --- | --- | ---: |
+| P | 001100001 | 1 |
+| P | 001100010 | 3 |
+| P | 010010100 | 2 |
+| P | 010100100 | 3 |
+| P | 010101000 | 3 |
+| P | 010110000 | 3 |
+| P | 010110001 | 1 |
+| P | 011000110 | 3 |
+| P | 011001000 | 3 |
+| P | 011010000 | 3 |
+| P | 011010100 | 1 |
+| P | 100010000 | 2 |
+| P | 100010001 | 1 |
+| P | 100010010 | 2 |
+| P | 100010100 | 1 |
+| P | 100100010 | 4 |
+| P | 100100100 | 1 |
+| P | 100101000 | 1 |
+| P | 101000001 | 1 |
+| P | 101000100 | 4 |
+| P | 101001000 | 1 |
+| C | 101100001 | 1 |
+| C | 101100010 | 3 |
+| C | 110000000 | 6 |
+| P | 110001000 | 4 |
+| C | 110010010 | 2 |
+| C | 110100000 | 1 |
+| C | 110100100 | 5 |
+| C | 110110111 | 2 |
+| C | 111000000 | 14 |
+| C | 111000100 | 2 |
+| C | 111010011 | 2 |
+| C | 111010110 | 2 |
+| C | 111100000 | 5 |
+| C | 111100001 | 2 |
+| C | 111100100 | 3 |
+| C | 111100110 | 1 |
+| C | 111101010 | 9 |
+| C | 111110000 | 5 |
+| C | 111110100 | 11 |
+| C | 111110111 | 4 |
+| C | 111111000 | 12 |
+| C | 111111001 | 4 |
+| C | 111111100 | 16 |
+| C | 111111110 | 16 |
+| T | 111111111 | 16 |
+
+**Theorem 310.2 (Full support and seven-late necessity).**
+The complete score invariants are
+
+$$
+\beta=(0,4,16,20,20,20,16,16,16),\quad K=192,\quad
+W=B_N=B_O=68,\quad\Delta_N=\Delta_O=0.
+\tag{310.1}
+$$
+
+For every $L\ge9$, every ordered $3\le j_1<\cdots<j_7\le L$,
+every real finite profile and one complete feasible allocation in
+either class of any finite mass,
+
+$$
+b_2+4b_{j_1}+5b_{j_2}+5b_{j_3}+5b_{j_4}
+       +4b_{j_5}+4b_{j_6}+4b_{j_7}\le1+48e.
+\tag{310.2}
+$$
+
+Every original competitor in either class therefore satisfies
+
+$$
+48e_a(A)\ge a_2+4a_{j_1}+5a_{j_2}+5a_{j_3}+5a_{j_4}
+                    +4a_{j_5}+4a_{j_6}+4a_{j_7}-1.
+\tag{310.3}
+$$
+
+**Proof.** Sum the correct rows by their first-zero class to get
+$\beta$. The union rows total 48, the correct rows total 128 and
+the positive row is 16, giving $K=192$. The anchor earns every
+union unit, all 16 positive units and the four correct units at
+first zero 2, hence $W=68$.
+
+Here are all 36 pair-cell maxima of (309.5), each maximizing over
+all ten labels $0,\ldots,9$. Their values can be reproduced by
+integer additions of the row weights followed by a finite maximum;
+there is no optimization oracle in this certificate.
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| 12 | $(4,22,22,20)$ |
+| 13 | $(12,14,20,22)$ |
+| 14 | $(12,14,20,22)$ |
+| 15 | $(16,10,20,22)$ |
+| 16 | $(20,6,20,22)$ |
+| 17 | $(17,9,16,22)$ |
+| 18 | $(20,6,16,22)$ |
+| 19 | $(24,2,20,18)$ |
+| 23 | $(12,10,20,26)$ |
+| 24 | $(12,10,20,26)$ |
+| 25 | $(16,6,20,26)$ |
+| 26 | $(20,2,20,26)$ |
+| 27 | $(16,6,17,25)$ |
+| 28 | $(13,9,23,19)$ |
+| 29 | $(19,3,25,17)$ |
+| 34 | $(12,16,20,20)$ |
+| 35 | $(16,12,20,20)$ |
+| 36 | $(20,8,20,20)$ |
+| 37 | $(21,7,16,24)$ |
+| 38 | $(22,6,16,22)$ |
+| 39 | $(26,2,18,18)$ |
+| 45 | $(16,12,20,20)$ |
+| 46 | $(20,8,20,20)$ |
+| 47 | $(17,11,16,20)$ |
+| 48 | $(23,5,16,23)$ |
+| 49 | $(26,2,18,18)$ |
+| 56 | $(20,12,20,16)$ |
+| 57 | $(21,11,16,20)$ |
+| 58 | $(22,10,16,18)$ |
+| 59 | $(30,2,16,18)$ |
+| 67 | $(21,15,16,16)$ |
+| 68 | $(24,12,16,16)$ |
+| 69 | $(32,4,16,16)$ |
+| 78 | $(24,9,16,19)$ |
+| 79 | $(29,4,16,16)$ |
+| 89 | $(32,4,16,16)$ |
+
+Every quadruple sums to at most 68. Lemma 309.3 proves the complete
+support equality in both classes and at every embedding, including
+queries in gaps or beyond the skeleton and every earlier unqueried
+output. It also covers shorter, repeated and reversed schedules.
+Pair with the same full allocation using (309.4). Its quotient is
+
+$$
+F_{QZ_7}=4\bigl[b_2-1+4b_{j_1}+5b_{j_2}+5b_{j_3}+5b_{j_4}
+          +4b_{j_5}+4b_{j_6}+4b_{j_7}-48e\bigr]\le0.
+$$
+
+This proves (310.2) for all real profiles and any finite mass.
+Lemma 309.3 gives original closed-cap necessity and its limit
+(310.3), without assuming any selected address active. At caps at
+least one, the left side of (310.2) is at most 32 and its right
+side at least 49. $\square$
+
+**Corollary 310.3 (One allowance for two positive residuals).**
+For the same seven ordered late addresses put
+
+$$
+s_J=1+40e-b_2-4b_{j_1}-5b_{j_2}-5b_{j_3}-5b_{j_4}-4b_{j_5}.
+$$
+
+Under the same complete-allocation hypotheses,
+
+$$
+s_J\ge4\bigl[(b_{j_6}-e)_++(b_{j_7}-e)_+\bigr].
+\tag{310.4}
+$$
+
+It holds at every positive original closed cap, with $b=a$.
+
+**Proof.** The reused $Y_2$ relation 299.1 gives $s_J\ge0$.
+Apply the reused six-late relation 305.2 once with sixth address
+$j_6$ and once with sixth address $j_7$; these give
+$s_J\ge4(b_{j_6}-e)$ and $s_J\ge4(b_{j_7}-e)$.
+Equation (310.2) gives
+$s_J\ge4[(b_{j_6}-e)+(b_{j_7}-e)]$.
+All four are necessary inequalities of the very same profile and
+full allocation. For real $u,v$,
+$\max\{0,u,v,u+v\}=u_++v_+$, proving (310.4).
+Only score selection clips a residual; no demand was clipped.
+No independently attainable laws or budgets have been added.
+Original necessity follows from the same one-representative argument.
+The arbitrary-set half-sum bound (304.6) is separately reused and
+is not replaced by a claim about more than these two coefficient-four
+residuals. $\square$
+
+**Corollary 310.4 (Actual two-tail lower bound at a saturated head).**
+Take an entire sequence (309.1) with $\tau>0$,
+$a_2=1-11\tau$, $(a_3,\ldots,a_7)=(13,10,9,8,6)\tau$
+and $1\ge a_1\ge a_2$, with only sequence order imposed on its
+later tail. Every original competitor in either class has
+
+$$
+e_a(A)\ge5\tau+\frac{a_8+a_9-10\tau}{12}.
+\tag{310.5}
+$$
+
+**Proof.** At $j_a=a+2$, the first five weighted late terms sum
+to $211\tau$. Thus (310.3) says
+$48e_a(A)\ge200\tau+4(a_8+a_9)$, which rearranges to (310.5).
+This bound does not assume $a_8,a_9$ inactive. The six-late bound
+(305.6) can be used simultaneously; neither lower bound supplies
+attainment or a classification at a larger cap. $\square$
+
+## 311. A strict bounded comparison and a reused feasible example
+
+**Proposition 311.1 (A diagnostic excluded from complete feasibility).**
+Set
+
+$$
+e_0=\frac{501}{2400},\qquad
+(a_1,\ldots,a_9)=\frac{(1300,1300,1300,1000,900,800,600,507,507)}{2400},
+\qquad a_n=e_0\,2^{-(n-10)}\quad(n\ge10).
+\tag{311.1}
+$$
+
+This entire sequence is positive, nonincreasing and vanishes; its
+active horizon at $e_0$ is nine and $a_{10}=e_0$ is a closed tie.
+Its finite profile belongs to the hull $H_9$ of 300.2, passes precisely
+the older named necessary families $Y_1,Y_2,C$, 304.6 and 305.2 at
+all embeddings and finite disjoint sets allowed there, and violates
+(310.2) by $1/300$. It has no complete feasible $N$ or $O$
+allocation of any finite mass at $e_0$. Every original competitor
+for this sequence has error at least $3007/14400$.
+
+**Proof.** Recall the full hull definition
+
+$$
+H_L=\left\{(b,e):1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+\ b_2=b_3,\quad
+0\le\sum_{n=3}^Lb_n-(L+1)e\le1-b_1\right\}.
+\tag{311.2}
+$$
+
+Here the hull excess is $151/600$ and its sum with $a_1$ is
+$119/150<1$. All the remaining hull conditions follow directly
+from (311.1). The exact maximal left-minus-right readings of the
+specified old families are
+
+| Named family | Maximum reading |
+| --- | ---: |
+| $Y_1$ in 299.1 | $-139/800$ |
+| $Y_2$ in 299.1 | $-1/60$ |
+| $C$ in 299.1 | $-57/800$ |
+| 304.6 | $-17/1200$ |
+| 305.2 | $-1/150$ |
+
+These are finite rational sums over the 21 ordered five-subsets
+and seven ordered six-subsets of $\{3,\ldots,9\}$. For the fourth
+row, for each five-subset maximize over finite disjoint $I$ by taking
+all omitted positive residuals, and use
+$\max\{\max_{k\in I}(a_k-e_0)_+,\frac12\sum_{k\in I}(a_k-e_0)_+\}-s_J$.
+This describes the arithmetic calculation completely.
+
+It also proves the comparisons for unbounded address choices, as
+follows. All tail residuals from 10 on are zero. Every old cut with
+nonnegative late coefficients weakens when a selected address moves
+later. In 304.6, removing one selected amplitude and replacing it
+by a smaller one with difference $\delta\ge0$ increases the total
+omitted positive residual by at most $\delta$ and increases its
+maximum individual residual by at most $\delta$. Hence the maximum
+of the individual residual and half-sum increases by at most
+$\delta$, whereas $s_J$ increases by at least $4\delta$.
+Successively moving the ordered selected addresses later cannot
+increase that family's reading. This proves the claimed whole
+comparison, including every finite $I$, rather than extrapolating
+from a bounded scan.
+
+For $J=(3,\ldots,9)$, the new reading is $1/300$.
+Equivalently $s_J=1/60$, while
+$4[(a_8-e_0)+(a_9-e_0)]=1/50$. Theorem 310.2 excludes a
+complete feasible allocation at every finite mass. Its original
+inequality gives
+
+$$
+e_a(A)\ge e_0+\frac{1/300}{48}
+          =e_0+\frac1{14400}=\frac{3007}{14400}.
+\tag{311.3}
+$$
+
+This is a strict refinement relative to the displayed older basis
+and $H_9$, not relative to every historical consequence. There is
+no feasible $N$ witness here, no original $N/O$ separation and no
+claim that (311.3) is attained. $\square$
+
+**Example 311.2 (Positive two-tail residuals in a common feasible law).**
+For a reused, nonempty feasible example take $a_1=\cdots=a_9=1/4$,
+$e=7/40$ and $a_n=e\,2^{-(n-10)}$ for $n\ge10$.
+Use the synthesis already provided by 113.3: mass $3/4$ emits zero
+and mass $1/4$ uses $P_{9,2}$. Explicitly, that subset rule chooses
+uniformly a three-subset of the ordered labels $1<\cdots<9<*$,
+where $*$ denotes zero. It queries the first two numerical labels
+in increasing order until a queried zero; if both are positive it
+emits the third label without querying it. Thus it uses at most
+two actual calls even when the output is an earlier unqueried label.
+Every three-subset can be chosen by intervals of the same seed.
+
+For a word with first zero $n\le9$, a subset emits $n$ exactly
+when it contains $n$, so the whole mixture has correct mass
+$(1/4)(3/10)=3/40=a_n-e$. It has base mass at least $3/4$;
+its mass outside $\{0,n\}$ is at most $1/4-3/40=7/40$.
+All three deficits in (309.2) are therefore bounded by $e$, and the
+correct deficit equals $e$. At the positive word its base mass is
+$3/4+(1/4)(3/10)=33/40$, so its nonbase mass is $e$.
+Every actual later first zero has exact error $\max\{e,a_n\}=e$.
+The counted $N$ completion uses the same seed and source.
+The hull excess at nine is zero, and both $a_8-e$ and $a_9-e$
+are $3/40>0$. This is a direct application of an existing construction,
+with no new construction or optimality credit.
+
+## 312. One complete head-independent lower certificate
+
+**Definition 312.1 (The seven-coordinate score $Z_{43}$).**
+Use exactly these 18 independent nonzero rows. All $A$ coefficients
+and all other score coefficients vanish. The $P$ and $C$ rows at
+1111000 are distinct events and are not merged.
+
+| Row | Word | Weight |
+| --- | --- | ---: |
+| P | 0100100 | 1 |
+| P | 0101000 | 2 |
+| P | 0101010 | 1 |
+| P | 0101100 | 1 |
+| P | 0110000 | 2 |
+| P | 0110010 | 1 |
+| P | 0110100 | 1 |
+| P | 1000010 | 2 |
+| P | 1000100 | 2 |
+| P | 1001001 | 1 |
+| P | 1010001 | 1 |
+| P | 1111000 | 1 |
+| C | 1100000 | 5 |
+| C | 1110000 | 5 |
+| C | 1111000 | 4 |
+| C | 1111100 | 5 |
+| C | 1111110 | 4 |
+| T | 1111111 | 4 |
+
+**Theorem 312.2 (The complete 43-charge inequality).**
+Its invariants are
+
+$$
+\beta=(0,0,5,5,4,5,4),\quad K=43,\quad
+W=B_N=B_O=20,\quad\Delta_N=\Delta_O=0.
+\tag{312.1}
+$$
+
+For every $L\ge7$, ordered $3\le j_1<\cdots<j_5\le L$,
+real finite profile and one complete feasible allocation in either
+class of any finite mass,
+
+$$
+5b_{j_1}+5b_{j_2}+4b_{j_3}+5b_{j_4}+4b_{j_5}\le43e.
+\tag{312.2}
+$$
+
+Consequently every original competitor in either class satisfies
+
+$$
+43e_a(A)\ge5a_{j_1}+5a_{j_2}+4a_{j_3}+5a_{j_4}+4a_{j_5}.
+\tag{312.3}
+$$
+
+**Proof.** The union weights total 16, the correct weights total
+23, and $T=4$. Class summation gives the displayed $\beta$ and
+$K$. Both $R$ and constant-zero output earn all 16 union units
+and the four positive units, giving 20. Here is the full addition
+and maximum certificate, with all eight labels in every cell:
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| 12 | $(0,9,6,5)$ |
+| 13 | $(5,4,5,6)$ |
+| 14 | $(5,4,5,6)$ |
+| 15 | $(6,3,5,6)$ |
+| 16 | $(7,2,5,6)$ |
+| 17 | $(9,0,5,6)$ |
+| 23 | $(5,1,5,9)$ |
+| 24 | $(5,1,5,9)$ |
+| 25 | $(4,2,7,7)$ |
+| 26 | $(4,2,8,6)$ |
+| 27 | $(4,2,10,4)$ |
+| 34 | $(5,5,5,5)$ |
+| 35 | $(6,4,5,5)$ |
+| 36 | $(7,3,5,5)$ |
+| 37 | $(9,1,5,5)$ |
+| 45 | $(6,4,5,5)$ |
+| 46 | $(7,3,5,5)$ |
+| 47 | $(9,1,5,5)$ |
+| 56 | $(7,4,5,4)$ |
+| 57 | $(9,2,5,4)$ |
+| 67 | $(10,2,4,4)$ |
+
+Every quadruple sums to 20. Formula (309.5) specifies every one
+of the $21\cdot4\cdot8=672$ integer reward sums behind the table.
+Lemma 309.3 supplies the complete-catalog support at every horizon
+and embedding, including outside, earlier and unqueried labels.
+Pairing with the same allocation yields
+
+$$
+F_{QZ_{43}}=5b_{j_1}+5b_{j_2}+4b_{j_3}+5b_{j_4}+4b_{j_5}-43e
+\le M\Delta_N(Z_{43})=0.
+$$
+
+The stopped conclusion follows either from its catalog or its
+counted completion. The original implication and limit follow from
+309.3, even if a smaller proposed cap activates more tail addresses.
+At error one the weighted amplitude sum is at most $23<43$.
+This proves all assertions. $\square$
+
+**Corollary 312.3 (The same cut in directional coordinates).**
+Put $R_J=(46/5)e-\sum_{k=1}^5b_{j_k}$ and
+$v_k=b_{j_k}-(13,10,9,8,6)_k e/5$. Then (312.2) is exactly
+
+$$
+v_3+v_5\ge-5R_J.
+\tag{312.4}
+$$
+
+**Proof.** Expanding $5R_J+v_3+v_5$ gives
+$43e-5b_{j_1}-5b_{j_2}-4b_{j_3}-5b_{j_4}-4b_{j_5}$.
+This is one inequality in two coordinate systems, not a second
+mathematical result. On the cone below, $R_J=2\sigma/5$ and
+$v_3+v_5=-2\sigma$, so it is tight. $\square$
+
+## 313. Attained optimum throughout the feasible late-amplitude cone
+
+**Theorem 313.1 (Both heads may be strict).**
+Let $\tau,\sigma\ge0$, $\tau+\sigma>0$, and prescribe
+
+$$
+\begin{gathered}
+E=5\tau+17\sigma,\\
+(a_3,a_4,a_5,a_6,a_7)=
+(13\tau+46\sigma,10\tau+35\sigma,9\tau+29\sigma,
+ 8\tau+26\sigma,6\tau+20\sigma).
+\end{gathered}
+\tag{313.1}
+$$
+
+Take any ordered heads $1\ge a_1\ge a_2\ge a_3$ satisfying
+
+$$
+a_1+7\tau+23\sigma\le1,\qquad
+ a_2+11\tau+34\sigma\le1,
+\tag{313.2}
+$$
+
+and any entire positive nonincreasing vanishing continuation with
+$a_8\le E$. Then
+
+$$
+\min_{A\in\mathcal N_2} e_a(A)
+ =\min_{A\in\mathcal O_2} e_a(A)=E.
+\tag{313.3}
+$$
+
+Both minima are attained by the law below and its same-seed counted
+completion. For this fixed entire sequence, feasibility in either
+class at any positive closed cap $c$ is equivalent to $c\ge E$.
+This includes $a_8=E$, both parameter axes, and both strict head
+inequalities. It imposes no summability requirement on the tail.
+
+**Proof: lower bound on every original competitor.**
+Use (312.3) at $(j_1,\ldots,j_5)=(3,4,5,6,7)$. The exact generator
+products are
+
+$$
+\begin{aligned}
+(5,5,4,5,4)\mathbin{\cdot}(13,10,9,8,6)&=215=43\cdot5,\\
+(5,5,4,5,4)\mathbin{\cdot}(46,35,29,26,20)&=731=43\cdot17.
+\end{aligned}
+\tag{313.4}
+$$
+
+Therefore every original competitor has $43e_a(A)\ge43E$.
+This is independent of both heads. In particular a hypothetical
+smaller cap cannot escape the bound by changing active horizon or
+by activating additional actual tail coordinates.
+
+**Reused construction for the upper bound.**
+Use exactly Construction 307.2, with no new primal credit. To give
+the complete attaining rule here, the following table lists
+$O(i,j;u,v,z)$ on stopped cells $0,10,11$ and its mass
+$A\tau+B\sigma$:
+
+| $i$ | $j$ | $u$ | $v$ | $z$ | $A$ | $B$ |
+| --- | --- | --- | --- | --- | ---: | ---: |
+| 1 | 2 | 1 | 2 | 3 | 2 | 7 |
+| 1 | 2 | 1 | 2 | 4 | 1 | 4 |
+| 1 | 2 | 1 | 2 | 5 | 1 | 4 |
+| 1 | 3 | 1 | 3 | 0 | 3 | 11 |
+| 1 | 4 | 1 | 4 | 0 | 1 | 3 |
+| 2 | 3 | 0 | 3 | 0 | 3 | 8 |
+| 2 | 3 | 2 | 3 | 0 | 0 | 3 |
+| 2 | 4 | 0 | 4 | 0 | 1 | 3 |
+| 3 | 4 | 0 | 4 | 0 | 1 | 6 |
+| 3 | 4 | 0 | 4 | 5 | 1 | 2 |
+| 3 | 5 | 0 | 5 | 0 | 1 | 3 |
+| 3 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 4 | 5 | 0 | 5 | 0 | 1 | 3 |
+| 4 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 5 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 6 | 7 | 0 | 7 | 0 | 1 | 3 |
+
+The core mass is $20\tau+69\sigma$. Set
+
+$$
+\rho=1-20\tau-69\sigma,\qquad
+x_1=a_1-13\tau-46\sigma,\qquad
+x_2=a_2-9\tau-35\sigma.
+\tag{313.5}
+$$
+
+The remaining mass is one prefix $(1,2)$ branch with cell vectors
+
+$$
+(\rho-x_1)e_0+x_1e_1,\qquad
+(\rho-x_2)e_0+x_2e_2,\qquad \rho e_0.
+\tag{313.6}
+$$
+
+Order and (313.2) give
+
+$$
+\rho\ge4\tau+11\sigma>0,\qquad
+0\le x_1\le\rho,\qquad
+4\tau+11\sigma\le x_2\le\rho.
+\tag{313.7}
+$$
+
+Indeed $a_2\ge a_3$ and its head bound imply
+$24\tau+80\sigma\le1$, giving the lower bound on $\rho$.
+The two upper bounds $x_i\le\rho$ are exactly the two head
+inequalities; the lower bounds follow from head order.
+Thus every core mass and every vector entry is nonnegative, and
+the core plus the one prefix mass totals one. To specify complete
+table weights for that prefix, set
+
+$$
+\begin{aligned}
+q_{11}&=\min(x_1,x_2),&q_{10}&=(x_1-x_2)_+,\\
+q_{01}&=(x_2-x_1)_+,&q_{00}&=\rho-\max(x_1,x_2).
+\end{aligned}
+\tag{313.8}
+$$
+
+Assign mass $q_{ab}$ to $O(1,2;a,2b,0)$ for $a,b\in\{0,1\}$.
+All four masses are nonnegative and total $\rho$, with first-cell
+correct mass $x_1$ and middle-cell correct mass $x_2$. Equivalently,
+on one local uniform coordinate $V$, fix both counterfactual choices
+by $V<x_1/\rho$ and $V<x_2/\rho$ before replies. There is no
+condition $x_1+x_2\le\rho$: for example $x_1=x_2=\rho$ selects
+just $O(1,2;1,2,0)$ of mass $\rho$. This explicit coupling only
+unpacks the existing common-prefix construction.
+
+**Verification on every word for the same law.**
+Direct addition of the sixteen core rows gives the following correct
+mass coefficients, independent of every bit after the first zero:
+
+$$
+\begin{array}{c|rrrrrrr}
+n&1&2&3&4&5&6&7\\\hline
+\tau&8&4&8&5&4&3&1\\
+\sigma&29&18&29&18&12&9&3
+\end{array}
+\tag{313.9}
+$$
+
+For example the first three rows give $(4,15)$ in each of the
+first two classes; rows $(1,3),(1,4)$ add $(4,14)$ in class 1,
+and $(2,3;2,3,0)$ adds $(0,3)$ in class 2. In the later classes,
+earlier queried bits are one, so the displayed second or exhaustion
+outputs give the same totals for every suffix. Adding $x_1,x_2$
+from the prefix proves
+
+$$
+p_w(n)=a_n-E\qquad(n=n(w)\le7).
+\tag{313.10}
+$$
+
+It remains to bound the independent union deficit, not just the
+correct event. Let $D_n$ be the mass outside $\{0,n\}$.
+The prefix contributes zero to this mass. For the core set
+$(s,t,u,v,z)=(w_3,w_4,w_5,w_6,w_7)$ and define
+
+$$
+\begin{aligned}
+B&=2s(1-t)+st+(s+t)(2-u-v)+u(1-v)+v(1-z),\\
+G&=3(1-s)+(1-t),\\
+B'&=8s(1-t)+2st+3(s+t)(2-u-v)+3u(1-v)+3v(1-z),\\
+G'&=11(1-s)+3(1-t).
+\end{aligned}
+\tag{313.11}
+$$
+
+Evaluation of the listed stopped rows gives these exact coefficients
+of $D_n$, retaining every Boolean suffix:
+
+| First zero | Coefficient of $\tau$ | Coefficient of $\sigma$ |
+| --- | --- | --- |
+| 1 | $B+w_2G$ | $B'+w_2G'+3(1-w_2)$ |
+| 2 | $B+G$ | $B'+G'$ |
+| 3 | $2+2(1-t)+t(2-u-v)+u(1-v)+v(1-z)$ | $8+6(1-t)+3t(2-u-v)+3u(1-v)+3v(1-z)$ |
+| 4 | $3+(1-u)+(1-v)+u(1-v)+v(1-z)$ | $11+3[(1-u)+(1-v)+u(1-v)+v(1-z)]$ |
+| 5 | $3+2(1-v)+v(1-z)$ | $11+6(1-v)+3v(1-z)$ |
+| 6 | $5$ | $17$ |
+| 7 | $5$ | $17$ |
+
+Here is an analytic all-suffix bound, so no extrapolation from
+rational parameter tests is needed. For $q=s+t$, distinguish
+$uv=00,01,10,11$ in
+$q(2-u-v)+u(1-v)+v(1-z)$. After maximizing over $z$ its maximum
+is $\max\{2q,q+1,1\}$, giving $1,2,2,4$ for
+$st=00,01,10,11$. Substitution yields
+
+$$
+\begin{array}{c|rrrr}
+st&00&01&10&11\\\hline
+\max B&1&2&4&5\\
+G&4&3&1&0\\
+\max B'&3&6&14&14\\
+G'&14&11&3&0
+\end{array}
+\tag{313.12}
+$$
+
+Thus $B+G\le5$ and $B'+G'\le17$.
+Class 1 with $w_2=1$ uses those bounds, and with $w_2=0$ uses
+$B\le5$ and $B'+3\le17$.
+In class 3, $t=0$ gives bounds five and seventeen because
+$u(1-v)+v(1-z)\le1$; $t=1$ gives four and fourteen because
+$2-u-v+u(1-v)+v(1-z)=2-uv-vz\le2$.
+For class 4 its bracket is likewise $2-uv-vz\le2$.
+Class 5 follows from $v=0,1$, and classes 6 and 7 are constant.
+Consequently every coefficient is bounded by five or seventeen,
+respectively. Nonnegative real $\tau,\sigma$ give $D_n\le E$
+on every word for this same law.
+
+Using (313.10), the three distinct deficits (309.2) are
+
+$$
+1-a_n-p_w(0)=D_n-E\le0,\qquad
+a_n-p_w(n)=E,\qquad
+1-p_w(0)-p_w(n)=D_n\le E.
+\tag{313.13}
+$$
+
+Thus TV is exactly $E$ on every first-zero fibre up to seven.
+The positive word has nonbase mass from just the first three core
+exhaustion outputs and $(3,4;0,4,5)$:
+$(4\tau+15\sigma)+(\tau+2\sigma)=E$.
+The prefix emits zero there, so $p_+(0)=1-E$.
+
+**Original execution, tails and closed caps.**
+Partition one source-independent uniform seed into half-open intervals
+of the sixteen core masses and the prefix mass $\rho$. The prefix
+local coordinate fixes both thresholds, or the four weights (313.8),
+before seeing replies. Interval endpoints can be assigned to either
+adjacent table; every resulting table obeys the same resource bound.
+Execute the selected increasing schedule on the same actual source,
+stop at the first queried zero or exhaustion, and emit the indicated
+actual original mark. This is a measurable zero-advice rule with
+finite handoff at every seed and source and at most two actual calls.
+Its $N$ completion uses exactly the same seed and actual source,
+obtains the entire preselected schedule, reconstructs the stopped
+output and counts any ignored second reply. It has the identical law.
+
+No mark above seven is emitted. Every actual $n>7$ therefore has
+exact error
+
+$$
+\max\{1-p_+(0),a_n\}=\max\{E,a_n\}=E.
+\tag{313.14}
+$$
+
+This includes the tie $a_8=E$ and every permitted positive
+nonincreasing vanishing continuation. The positive finite word
+represents actual later-zero sources, not an infinite all-positive
+source. Since $a_7-E=\tau+3\sigma>0$, the active horizon at $E$
+is exactly seven. Hence both original rules attain $E$, matching
+(313.4). The same law meets every larger cap, while (313.4) excludes
+every smaller cap. This completes the proof of (313.3) and its
+closed-cap equivalence. $\square$
+
+**Corollary 313.2 (The reused projection and its newly sharp interior).**
+The head domain (313.2) is nonempty exactly when
+$24\tau+80\sigma\le1$. If $a_2=a_3$, its finite profile is in
+$H_N$ with the same mass-one allocation. The only new optimality
+scope relative to 307.1 and 300.1 is $\sigma>0$ with both head
+inequalities strict; the old sufficient head-tightness conclusion
+remains valid.
+
+**Proof.** Necessity of the scale bound was shown in (313.7).
+Conversely take $a_1=a_2=a_3$: the second head inequality is exactly
+that bound, and the first follows since
+$20\tau+69\sigma\le24\tau+80\sigma$.
+For $a_2=a_3$, the hull excess is
+$\sum_{3}^7a_n-8E=6\tau+20\sigma>0$ and
+$a_1+6\tau+20\sigma\le1-\tau-3\sigma<1$.
+Order, $a_7>E$ and equality of the second and third amplitudes give
+all other hull conditions. The one law just proved supplies full
+mass-one feasibility. These projection, hull and primal facts are
+those of 307; the lower certificate 312 supplies the previously
+unclaimed interior optimality. When $\sigma=0$ the old ray theorem
+300.1 already proves optimality, including strict heads. When a
+head is tight 307.1 already proves it. That theorem said "if", not
+"only if", so no old result is reversed. $\square$
+
+**Example 313.3 (A genuinely strict-head parameter point).**
+Set $\tau=0$, $\sigma=1/100$,
+$(a_1,\ldots,a_7)=(46,46,46,35,29,26,20)/100$ and
+$a_n=(17/100)2^{-(n-8)}$ for $n\ge8$.
+Then $E=17/100$, $\rho=31/100$, $x_1=0$ and $x_2=11/100$.
+The first and second head slacks are $31/100$ and $1/5$.
+The hull excess is $1/5$, its sum with $a_1$ is $33/50$,
+and $p_+(0)=83/100$. The theorem gives both attained original
+optima $17/100$; the same conclusion holds with any other permitted
+tail bounded at eight by $17/100$.
+
+For a bounded necessary-basis comparison, keep the same first seven
+amplitudes but take $c_0=1699/10000$ and
+$a_n=c_0\,2^{-(n-8)}$ for $n\ge8$.
+The active horizon is seven and its hull excess is $251/1250$.
+The exact readings of $Y_1,Y_2,C$ and the reused uniform five-late
+cut $\sum_{3}^7a_n\le(46/5)c_0$ are, respectively,
+
+$$
+-\frac{3083}{10000},\qquad-\frac{49}{250},\qquad
+-\frac{7829}{10000},\qquad-\frac{77}{25000}.
+$$
+
+Their nonnegative late coefficients make consecutive placements the
+largest readings among all ordered placements. The new reading is
+$43/10000>0$. These are exact substitutions into the specified
+inequalities, and show refinement only of that named basis.
+The new cut excludes this profile from complete $N$ feasibility;
+it is not a separator or a second optimum result. Its fixed sequence
+still has optimum $17/100$ by 313.1, since its new tail also lies
+below that cap.
+
+## 314. Source conditions, credit and the remaining unrestricted question
+
+The legal regression of 303.2 remains explicit. At $(r,g)=(19,436)$,
+$F_{19}=4181$, the allowed window is $419\le436\le836$ and
+$N=1822917$. Replies on primes $2,3,5,7$ are $0100$.
+The complete-catalog rule $N(3,4;1,0,0,0)$ makes two actual requests
+at addresses 3 and 4, obtains $00$ and emits earlier unqueried label
+1. The endpoint rule $O(3,4;0,0,0)$ emits zero on the same source.
+Changing that unit mass has $\ell^1$ defect two and TV one.
+It is a regression against a free endpoint repair, not an original
+class separator. All the words, labels and actual calls in this
+example remain allowed by every catalog above.
+
+The mature framework in 303.3 retains its precise scope. In David
+Blackwell, *Comparison of Experiments* (1951), pp. 93–102,
+[sections 2–3, Theorem 2 and its proof](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf),
+an experiment is finitely many probability measures on a Borel space,
+actions form a bounded subset of finite-dimensional loss space, and
+comparison concerns whole attainable loss vectors and their convex
+closure. The supporting-hyperplane argument tests those joint vectors.
+It supplies a comparison framework, not our integer coefficients or
+a hard-two increasing-stopping bridge.
+In Jędrzej Kaniewski, Troy Lee and Ronald de Wolf,
+*Query complexity in expectation*,
+[arXiv:1411.7280v1, Definitions 6 and 8, Theorem 9 and both proof directions](https://arxiv.org/pdf/1411.7280v1),
+the target is a nonnegative scalar expectation and the cost is the
+maximum supported root-to-leaf depth. The converse samples literal
+coefficients of total mass $M$ with probabilities $\alpha/M$ and
+multiplies the scalar output by $M$. This does not supply normalized
+vector probabilities, equal counterfactual schedule-cell masses or
+an increasing first-queried-zero rule. Those conditions are verified
+here by the complete rows and the one explicit common law.
+
+The full 46-row score and its pairing supply one joint two-tail
+necessity result. The old $Y_2$, six-late bound, collective half-sum
+bound, diagnostic comparisons, source arithmetic and exact closed-cap
+transport receive no repeat content credit. The 18-row score is one
+sufficient proof route to one optimality completion on the entire
+feasible cone 307.1. Alternative normals or row realizations do not
+supply additional discoveries. Its upper law, head projection, scale
+condition, parameter axes and previously sharp contacts are reused;
+the new optimum scope is $\sigma>0$ with both heads strict.
+These are ordinary mathematical arguments, without a claim of formal
+kernel verification, exhaustive novelty or priority.
+
+Neither result supplies a gapped primal law, a classification for
+arbitrary other amplitude cones, or an attained value for the larger
+cap lower bound (311.3). Every finite atomic law displayed here has
+TV one from every unchanged original nonatomic target, since the
+latter gives its finite support zero mass. Accuracy is only to the
+separately selected marked laws. The original full carrier, consumer,
+sourcewise execution and all actual positive tails remain unchanged.
+
+The unrestricted obligation is still the full quantified statement
+303.1. For every $L\ge3$ and every full $y\ge0$ with
+$\Delta_O(y)\le1$, it requires one unrestricted full $V\ge0$ and
+one $\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Qy-QV)\le\theta,\qquad
+\sigma_H(q)=\max_{(b,e)\in H_L}F_q(b,e).
+\tag{314.1}
+$$
+
+The residual is signed. No fixed-anchor, unary-only, exact-quotient
+or positive-residual restriction is imposed on $V$; a nonzero
+zero-cost $V$ at $\theta=1$ is allowed. The negative alternative
+requires the same actual $(b,e)\in H_N$, one complete feasible
+$\lambda$ of mass $M\ge1$, a full unit-$O$ score with
+$F_{Qy}(b,e)>M$, an original same-seed $N$ attainer and a uniform
+strict lower bound against every original arbitrary-address,
+full-carrier $O$ competitor. Equivalently the original question is
+whether every positive nonincreasing vanishing sequence and every
+positive closed cap satisfy
+$\mathcal F_N(a,c)\ne\varnothing\Rightarrow
+ \mathcal F_N(a,c)\cap\mathscr C_{L_a}\ne\varnothing$,
+or admit that complete original separator.
+
+The excluded profiles in 311.1 and 313.3 have no full feasible $N$
+allocation at their tested caps. The attaining laws in 311.2 and
+313.1 belong to both classes. They provide neither unrestricted
+alternative. All original quantifiers, common-seed, zero-advice,
+finite-handoff, two-actual-request, all-word, all-label, independent
+union-row, target, positive-tail and closed-cap obligations persist.
+The stopping point of the present results is the proved joint
+two-tail necessity and the attained optimum on the declared cone.
+
+## 追加锚（本行以下为增补区）
