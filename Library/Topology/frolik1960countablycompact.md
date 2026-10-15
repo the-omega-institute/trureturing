@@ -8,6 +8,7 @@ url: https://dml.cz/handle/10338.dmlcz/100417
 claim: Lemmas 2.8 and 2.9 give classical accumulation-point abundance, cardinal avoidance and omega1 closing-off for separable metrizable spaces in their Stone-Cech compactifications.
 strata_touched:
   - D5/S3/Topology/CountablyCompact/InjectiveSelectorClosure
+  - D5/S3/Topology/StoneCech/FreeUltrafilterCardinality
 license: citation-only
 triage: anchor
 ---
@@ -63,6 +64,19 @@ the arbitrary-$q$ theorem either. The two inspected primary pages do
 not state the Feldman–Wilce finite-block graph endpoint or resolve
 their Question 1. This is a passage-level comparison, with no claim
 about absence elsewhere in the literature, novelty or priority.
+
+The FreeUltrafilterCardinality module supplies the lower bound
+$2^{\mathfrak c}\leq|\{u\in\operatorname{Ultrafilter}(\mathbb N):
+u\text{ contains every cofinite set}\}|$. Its classical cardinal-supply
+attribution is the Pospíšil theorem explicitly invoked by Frolík on
+printed page 334. The module constructs an independent family from
+finite traces, extends each Boolean assignment together with the
+cofinite filter to an ultrafilter, and recovers the assignment by
+membership. This links the cardinal-supply attribution only; Frolík's
+inspected passage is not asserted to contain this exact finite-trace
+implementation or to supply the later section-good selector or
+pairwise distinct projected cluster values. No new set-theoretic
+novelty is claimed.
 
 ## Source locator
 

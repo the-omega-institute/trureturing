@@ -171,7 +171,7 @@ namespace D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Tensor
 
 variable {n : ℕ} {σ : Fin n → Type*} [∀ j, Fintype (σ j)] [∀ j, DecidableEq (σ j)]
 
-private lemma tensor_star (M : ∀ j, Matrix (σ j) (σ j) ℂ) :
+lemma tensor_star (M : ∀ j, Matrix (σ j) (σ j) ℂ) :
     ProductPrefixRigidity.productMap σ (fun j => (M j)ᴴ) = (ProductPrefixRigidity.productMap σ M)ᴴ := by
   ext a b
   simp [ProductPrefixRigidity.productMap, Matrix.conjTranspose_apply, map_prod]
