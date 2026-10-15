@@ -310,7 +310,9 @@ theorem native_j2_parent_third_order_state {m : ℕ} (hm : 5 ≤ m)
 state. A predecessor supplies its own native P/Q witnesses; the double
 protected-label exchange returns the originally supplied frame. -/
 theorem native_third_order_state_exists {m : ℕ} (F : SupplyFrame m 3)
-    (hB : 3 ≤ F.base.length) : Nonempty (StateFor F (by omega) hB) := by
+    (hB : 3 ≤ F.base.length) :
+    ∃ S : StateFor F (by omega) hB,
+      S.primaryOdd = true ∧ S.oppositeOdd = false ∧ S.distinguishedOpposite = false := by
   have hp := F.prefix_length
   simp only [List.length_append, F.selected_length] at hp
   have hm : 5 ≤ m := by omega
@@ -321,8 +323,7 @@ theorem native_third_order_state_exists {m : ℕ} (F : SupplyFrame m 3)
   have hrev : reverseSelected (reverseSelected P) = P := by
     rw [← native_opposite_selected_two (reverseSelected P), ← native_opposite_selected_two P]
     exact native_opposite_selected_involutive P (by omega)
-  obtain ⟨S, _⟩ := h
-  exact ⟨by simpa only [hrev, hnext] using S⟩
+  simpa only [hrev, hnext] using h
 
 #print axioms native_j2_parent_third_order_state
 #print axioms native_third_order_state_exists
