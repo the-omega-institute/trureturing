@@ -78,27 +78,27 @@ theorem native_third_order_boundary_base {m : ℕ} {base : V}
   refine ⟨primary₁, primary₂, opposite₀, opposite₂, hstate, ?_, ?_,
     hcuts false, hcuts true, hprefix⟩
   · intro z hz
-    simp only [List.mem_cons, List.mem_singleton] at hz
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hz
     rcases hz with rfl | rfl | rfl | rfl
     · exact ⟨(0, 1), (2, 1), by simpa [specialPort] using (hports false 0).2,
-        by simpa [specialPort] using (hports false 2).2, by decide⟩
+        by simpa [specialPort] using (hports false 2).2, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
     · exact ⟨(1, 0), (2, 0), by simpa [specialPort] using (hports false 1).1,
-        by simpa [specialPort] using (hports false 2).1, by decide⟩
+        by simpa [specialPort] using (hports false 2).1, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
     · exact ⟨(0, 0), (3, 0), by simpa [specialPort] using (hports false 0).1,
-        by simpa [specialPort] using (hports false 3).1, by decide⟩
+        by simpa [specialPort] using (hports false 3).1, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
     · exact ⟨(1, 1), (3, 1), by simpa [specialPort] using (hports false 1).2,
-        by simpa [specialPort] using (hports false 3).2, by decide⟩
+        by simpa [specialPort] using (hports false 3).2, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
   · intro z hz
-    simp only [List.mem_cons, List.mem_singleton] at hz
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hz
     rcases hz with rfl | rfl | rfl | rfl
     · exact ⟨(0, 1), (2, 1), by simpa [specialPort] using (hports true 0).2,
-        by simpa [specialPort] using (hports true 2).2, by decide⟩
+        by simpa [specialPort] using (hports true 2).2, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
     · exact ⟨(0, 0), (1, 1), by simpa [specialPort] using (hports true 0).1,
-        by simpa [specialPort] using (hports true 1).2, by decide⟩
+        by simpa [specialPort] using (hports true 1).2, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
     · exact ⟨(1, 0), (3, 0), by simpa [specialPort] using (hports true 1).1,
-        by simpa [specialPort] using (hports true 3).1, by decide⟩
+        by simpa [specialPort] using (hports true 3).1, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
     · exact ⟨(2, 0), (3, 1), by simpa [specialPort] using (hports true 2).1,
-        by simpa [specialPort] using (hports true 3).2, by decide⟩
+        by simpa [specialPort] using (hports true 3).2, by norm_num [oddBoundary, evenBoundary, pair, ladder, code]⟩
 
 #print axioms native_third_order_boundary_base
 

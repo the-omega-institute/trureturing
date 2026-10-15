@@ -108,14 +108,15 @@ theorem actual_base_joint_route_three_fragments {base : V}
     simpa only [oldPiece, htailNil, SimpleGraph.Walk.append_nil] using hold
   obtain ⟨h₀₁, h₃₄, _⟩ := hboundaryLink
   have hlinkFull : Linked p₀ [p₁, p₂, p₃, p₄] := ⟨h₀₁, h₁₂, h₂₃, h₃₄, trivial⟩
-  have hfullSupport : (join p₀ [p₁, p₂, p₃, p₄] hlinkFull).support =
+  let full : G.Walk p₀.start p₄.finish := join p₀ [p₁, p₂, p₃, p₄] hlinkFull
+  have hfullSupport : full.support =
       (p₀ :: p₁ :: p₂ :: p₃ :: p₄ :: []).flatMap (fun z => z.walk.support) :=
     join_support p₀ [p₁, p₂, p₃, p₄] hlinkFull
-  have hΛjoin : Λ = join p₀ [p₁, p₂, p₃, p₄] hlinkFull := by
+  have hΛjoin : Λ = full := by
     apply SimpleGraph.Walk.ext_support
     rw [hΛsupport, holdTrip, htripSupport, hfullSupport]
     simp only [List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc]
-  have hfullPath : (join p₀ [p₁, p₂, p₃, p₄] hlinkFull).IsPath := by
+  have hfullPath : full.IsPath := by
     apply SimpleGraph.Walk.IsPath.mk'
     rw [hfullSupport]
     have hbn' := hbn

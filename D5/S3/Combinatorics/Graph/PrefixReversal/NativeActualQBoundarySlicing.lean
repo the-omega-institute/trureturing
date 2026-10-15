@@ -132,15 +132,12 @@ theorem native_actual_q_even_three_fragments {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     exact hΛsupport
   have hbn : ((ordered 0 :: rest).flatMap fun z => z.walk.support).Nodup := by
     rw [hlist, ← hΛsupport]
-    exact List.nodup_iff_count_le_one.mpr (fun v => by rw [hΛ v])
+    exact hΛ.isPath.support_nodup
   have hpaths : ∀ z ∈ ordered 0 :: rest, z.walk.IsPath := by
     intro z hz
     exact SimpleGraph.Walk.IsPath.mk' ((List.nodup_flatMap.mp hbn).1 z hz)
   have hjn : (joint.flatMap fun z => z.walk.support).Nodup := by
-    apply List.nodup_iff_count_le_one.mpr
-    intro v
-    rw [hjointSupport.count_eq v]
-    rw [(SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hw).2 v]
+    exact hjointSupport.nodup_iff.mpr hw.isCycle.support_nodup
   have hjpath : jp.walk.IsPath := SimpleGraph.Walk.IsPath.mk'
     ((List.nodup_flatMap.mp hjn).1 jp hjp)
   have hroot : jp.start = (ordered 0).start := by
@@ -267,15 +264,12 @@ theorem native_actual_q_odd_three_fragments {m : ℕ} (hm : 3 ≤ m) (s : ℕ)
     exact hΛsupport
   have hbn : ((ordered 0 :: rest).flatMap fun z => z.walk.support).Nodup := by
     rw [hlist, ← hΛsupport]
-    exact List.nodup_iff_count_le_one.mpr (fun v => by rw [hΛ v])
+    exact hΛ.isPath.support_nodup
   have hpaths : ∀ z ∈ ordered 0 :: rest, z.walk.IsPath := by
     intro z hz
     exact SimpleGraph.Walk.IsPath.mk' ((List.nodup_flatMap.mp hbn).1 z hz)
   have hjn : (joint.flatMap fun z => z.walk.support).Nodup := by
-    apply List.nodup_iff_count_le_one.mpr
-    intro v
-    rw [hjointSupport.count_eq v]
-    rw [(SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp hw).2 v]
+    exact hjointSupport.nodup_iff.mpr hw.isCycle.support_nodup
   have hjpath : jp.walk.IsPath := SimpleGraph.Walk.IsPath.mk'
     ((List.nodup_flatMap.mp hjn).1 jp hjp)
   have hroot : jp.start = (ordered 0).start := by
