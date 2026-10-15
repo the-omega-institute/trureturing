@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:21d6638f623da83884682c94229eba11c9c3f08cf80ca88da125b82276ecd4d4
+  normalized_sha256: sha256:21d6638f623da83884682c94229eba11c9c3f08cf80ca88da125b82276ecd4d4
+cas_ref: sha256:21d6638f623da83884682c94229eba11c9c3f08cf80ca88da125b82276ecd4d4
+coverage_gids:
+  - gid: D5/S0/Automata/PromiseColoringTotalization.promise_coloring_iff_total_dfao
+    target_statement_id: sha256:7bf9beee0b45613a45038b7552693e28dd146e1060564a28ab8077cbb66a3968
+receipts:
+  unresolved_subitems: []

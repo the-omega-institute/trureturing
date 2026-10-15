@@ -13,5 +13,7 @@ internal sealed class NativeUniformTreeDocument : IScribeDocumentDefinition
             Entry("term_at_prim", "Primitive recursive address navigation returns exactly the original native subtree option on every finite term and address.", DescribeRole.Theorem),
             Entry("tree_word_prim", "The fixed tree instance makes its preorder constructor word primitive recursive. The constructor word supplies recursion measures and output words.", DescribeRole.Theorem),
             Entry("symbolic_exterior_prim", "Primitive recursion on decreasing subtree words constructs the exact symbolic exterior while carrying original inherited addresses. Cut holes and every residual variable are retained.", DescribeRole.Theorem),
+            Entry("readout_prim", "The original native four-valued readout is primitive recursive on every finite address and actual Source, including the empty address and blocked suffixes.", DescribeRole.Theorem),
+            Entry("substitution_prim", "The original leaf substitution, extended over actual ordered pairs, is primitive recursive on the fixed native tree representation. Natural iteration evaluates arbitrary supplied counts.", DescribeRole.Theorem),
             Entry("history_consistent_prim", "Primitive recursion computes each requested substitution epoch and exact readout, then checks every finite history entry. Empty histories, repeated observations, absent replies and inconsistent histories remain in scope.", DescribeRole.Theorem))));
 }
