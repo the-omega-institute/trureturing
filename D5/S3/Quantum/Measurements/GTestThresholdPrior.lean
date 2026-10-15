@@ -6,7 +6,6 @@
    utility: none
    digest: The G-test threshold prior is its orbit count divided by word count plus orbit count. -/
 
-import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
