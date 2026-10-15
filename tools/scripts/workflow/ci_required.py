@@ -6,7 +6,8 @@ detection job `detect` and every unit job; HITS is the detection output
 `hits`, a JSON object mapping each unit to whether the change hit it.
 
 Green when detection succeeded, the units in HITS are exactly the other jobs
-in NEEDS, every hit unit succeeded and every missed unit was skipped. Any
+in NEEDS, every hit unit succeeded with its corresponding execution identity,
+and every missed unit was skipped. Any
 other combination is red (exit 1); malformed input exits 2.
 """
 import json
@@ -68,7 +69,11 @@ def main():
     for name in sorted(set(hits) & set(results)):
         hit, result = hits[name], results[name]
         line = f"unit={name} hit={str(hit).lower()} result={result}"
-        if result == ("success" if hit else "skipped"):
+        outputs = needs[name].get("outputs")
+        executed = outputs.get("unit") if isinstance(outputs, dict) else None
+        if hit and result == "success" and executed != name:
+            problems.append(f"unit={name} execution identity={executed!r}")
+        elif result == ("success" if hit else "skipped"):
             print(f"CI_REQUIRED {line}")
         else:
             problems.append(line)

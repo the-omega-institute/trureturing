@@ -12,7 +12,8 @@ SCRIPT = Path(__file__).with_name("ci_required.py")
 
 def needs(detect="success", hits=None, **results):
     value = {"detect": {"result": detect, "outputs": {} if hits is None else {"hits": hits}}}
-    value.update({name: {"result": result, "outputs": {}} for name, result in results.items()})
+    value.update({name: {"result": result, "outputs": {"unit": name} if result == "success" else {}}
+                  for name, result in results.items()})
     return value
 
 
@@ -43,6 +44,12 @@ class CiRequiredTests(unittest.TestCase):
     def test_every_unit_missed_is_green(self):
         result = self.verdict(needs(alpha="skipped", beta="skipped"), {"alpha": False, "beta": False})
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_success_without_the_corresponding_execution_identity_is_red(self):
+        for identity in (None, "wrong-unit"):
+            value = needs(alpha="success")
+            value["alpha"]["outputs"] = {} if identity is None else {"unit": identity}
+            self.assert_red(self.verdict(value, {"alpha": True}), "unit=alpha execution identity=")
 
     def test_a_hit_unit_that_did_not_succeed_is_red(self):
         for outcome in ("failure", "cancelled", "skipped"):

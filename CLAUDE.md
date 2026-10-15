@@ -564,7 +564,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 
 - `dev` 是集成主分支;实施经 PR 合入。`main` 是发布分支,依 spec A14 的 release PR 与 tag 推进。
 - 实施分支由 `WorktreeCommand` 的 creation grammar 创建,会话复用独立 worktree;生命周期清理仍识别其 `LifecycleNamespaces`,不因创建词表变化缩小清理范围。
-- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按写在该 workflow 里的单元白名单判定命中哪些单元;每个测试项目、selftest、两类编译反证、FILEMAP 与 current 各为一个作业,只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。current 作业的纯理论文件检查与普通 Lean report、check-current、Scribe、PR delta 路径依 spec A22 选择。检查只执行候选代码,base 只作为固定数据。
+- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明判定命中单元和 current 子检查;每个测试项目、selftest、两类编译反证、FILEMAP 与 current 各为一个作业,只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。current 作业的纯理论文件检查与普通 Lean report、check-current、Scribe、PR delta 路径依 spec A22 选择。检查只执行候选代码,base 只作为固定数据。
 - required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。`make pr`/`make pr-open` 默认 arm auto-merge,required checks 绿后自动合;`AUTO_MERGE=0` 或 `DRAFT=1` 不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
 - PR 保留必要来源与 §5.2 产地信息;不留过程转录(§2.10)。
 
@@ -676,7 +676,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 ### 8.2 本地早反馈与远端 CI 并行
 
-本地检查使用与 CI 相同的独立程序。器代码迭代用 `make -C tools check-fast` 与定向项目测试;数学迭代用非空显式目标的 `make lean LEAN_TARGETS=…`；需机器可读声明、公理与材料核对时用 `make lean-report-scoped LEAN_TARGETS=…`。`deposit`/`deposit-uncovered`/`cover` 自动选 GID 模块，`cover-batch` 选整批目标并集；覆盖同时纳入所选 atom 及其传递 chain atom 的既有覆盖目标，写前核对当前声明身份，缺报告即拒绝。`emit` 从所选 Scribe 的类型化声明引用取 Lean 输入；这些本地入口只构建目标、其准入检查点名的 utility 输入及各自 import 闭包，不需要整库报告成功收据。窄报告使用独立路径与格式，不覆盖整库报告或收据；空范围、解析失败、缺失或陈旧输入非零退出。`make test` 运行 lean-report 与 check-current;`make gate BASE=<40位commit-SHA>` 依次运行 lean-report、check-current、Scribe、filemap-conform 和 check-delta,只把显式 base 当数据。单项目测试用 `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj`。
+本地检查使用与 CI 相同的独立程序。器代码迭代用 `make -C tools check-fast` 与定向项目测试;数学迭代用非空显式目标的 `make lean LEAN_TARGETS=…`；需机器可读声明、公理与材料核对时用 `make lean-report-scoped LEAN_TARGETS=…`。`deposit`/`deposit-uncovered`/`cover` 自动选 GID 模块，`cover-batch` 选整批目标并集；覆盖同时纳入所选 atom 及其传递 chain atom 的既有覆盖目标，写前核对当前声明身份，缺报告即拒绝。`emit` 从所选 Scribe 的类型化声明引用取 Lean 输入；这些本地入口只构建目标、其准入检查点名的 utility 输入及各自 import 闭包，不需要整库报告成功收据。窄报告使用独立路径与格式，不覆盖整库报告或收据；空范围、解析失败、缺失或陈旧输入非零退出。`make test` 运行 lean-report 与 check-current;`make gate BASE=<commit> [PURPOSE=pull-request|push]` 经 `ci_checks.py` 运行与 CI 相同的适用单元、子检查、测试过滤器及 TRX 校验,只把固定 base 当数据；本地包含 staged/unstaged/untracked 与 rename 两端,不删除 remotes；`make gate-plan` 仅输出选择。单项目测试用 `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj`。
 
 本地结果是早反馈,远端 required checks 仍是合并权威。提交即推,必要本地核验与 CI 并行;本地绿不替代远端结果,改 CI 自身仍按 §8.12 核验真实事件。
 
@@ -774,7 +774,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 **重计依据**:调度重计/重新取得资格前,须有具体 workflow/程序/判据/执行行为变化,或原验收无效的具体证据。在既有 PR 证据中简记改变的行为/失败断言、不可变候选及 run/test 身份、哪些既有义务须重验及哪些证据失效、受影响复验范围与停止条件;不另建账本/模板/工具或过程记录。仅当合格行为版本实际改变,或证据失效覆盖整组资格时,才从该版本真绿起重计 **4/8**;失效仅限部分单位则仅撤销并补足那些单位,保留其余有效证据与计数。不得仅凭失败、状态或 SHA 推定失效。
 **失败处置**:非预期失败必须保留判词、诊断并修复实际问题,重跑成功不抹失败;失败的新 PR 不计数,required checks 未通过不得合入。正确拒绝新增非法内容、无关外部服务/传输故障、实测语义保持的表示修正或采集失败,均不自动抹去有效旧单位,依上述依据界定影响面。原因未明时阻断受影响验收直至诊断,不得据此盲目全量重验;真实候选缺陷不得改称格式/基础设施问题来规避已证影响面。
 **逐 run 事件/版本取源**:分列实际事件、入口 workflow 仓库/路径/不可变 SHA、PR base/head、实际 checkout 候选 SHA(PR 为 M)、protected base(PR 为 B=M^1)、reusable workflow 仓库/路径/解析后 SHA(若有)。同名 check 绿或 M/B 不能代替 workflow 版本;来源记录不扩张第 9.5 条语义检查/固定事件规划输入。
-`pull_request` 入口执行受审 PR merge tree 中的 workflow;`github.sha` 是该 merge commit M,受保护基线是 `M^1=B`,不是事件 payload 中可变分支状态。[GitHub 官方文档](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request)说明该事件按目标分支过滤,合并冲突会阻止 workflow 运行。短/长 CI、Actions/Release 缓存的触发、ref 归属、工作量、写入条件、时限与失败策略统一见 [spec A22 缓存契约](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。普通 PR required job 不发布 project；PR 标签自动 dispatch 到受保护目标 ref，在该 runtime 检出源 M 并执行长构建，只准备原生 Actions artifact，不写普通目标 cache，编译 job token 只读。源 PR 可显式取回；实际合并匹配后，目标事件直接采用，无需等待第二次 publisher。调用者按 A22 持有 `AUTO_MERGE=0` 至该准备 producer 与当前 head 的 required 成功；来源 M、workflow 目标 T 与实际 merge K 分列，不把 M 伪称为已合入，实际恢复仍须集成核验。不得把缓存成功当作 required 成功。workflow/脚本接口同 PR 原子更新并核实际调用者/被调用者版本配对；`pull_request_target` 不作为候选 CI 入口，Release 发布使用独立受信任入口。
+`pull_request` 入口执行受审 PR merge tree 中的 workflow;`github.sha` 是该 merge commit M,受保护基线是 `M^1=B`,不是事件 payload 中可变分支状态。[GitHub 官方文档](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request)说明该事件按目标分支过滤,合并冲突会阻止 workflow 运行。短/长 CI、Actions/Release 缓存的触发、ref 归属、工作量、写入条件、时限与失败策略统一见 [spec A22 缓存契约](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。普通 PR required job 不发布 project；保留准备标签的 PR 在 opened/reopened/new-head 或该标签添加时自动 dispatch 到受保护目标 ref，在该 runtime 检出源 M 并执行长构建，只准备原生 Actions artifact，不写普通目标 cache，编译 job token 只读。源 PR 可显式取回；实际合并匹配后，目标事件直接采用，无需等待第二次 publisher。调用者按 A22 持有 `AUTO_MERGE=0` 至该准备 producer 与当前 head 的 required 成功；来源 M、workflow 目标 T 与实际 merge K 分列，不把 M 伪称为已合入，实际恢复仍须集成核验。不得把缓存成功当作 required 成功。workflow/脚本接口同 PR 原子更新并核实际调用者/被调用者版本配对；`pull_request_target` 不作为候选 CI 入口，Release 发布使用独立受信任入口。
 **安装后首个真实 run 立即核验**:integration 按实证可达触发方式,最终 dev 再核 dev 触发。未触发记缺口,dev 非预期红按第 7.14 条撤因。hotfix 合前完成可达验证,仅依赖默认分支更新的路径合后立即真跑补记;feature/重构不得借此延后集成。
 **取源差异下继续可达验证**:可用明确事件(如 pull_request 调钉版 reusable)验证候选程序/复用流程,只证明该事件/版本/权限;逐项披露相对拟上线原生事件的语义/权限/其他缺口。未证可达的原生路线不报已存在,旧绿不抵新资格,同 PR 另有旧 run 不使候选 wrapper 成为重复项可取消。继续可达的逐原 PR 覆盖,但 Ready/merge 仍须全部覆盖/性能/条数/真实事件资格;条数不抵原生缺口,不得先搬未达标 CI 到默认分支以使其可选。本款是事实校正,不创验证豁免。
 **清理与最终对应**:专用探针载荷放触发 PR,验后关闭不合;合法镜像改动/历史留 integration,不为整理交付 diff 撤镜像。清理只删已有实验载荷/临时 wrapper,独立 PR 全部 required checks正常合入并分析 push,保留新 CI;复验与重计统一依上述依据及范围。交付前钉原 lane head、已验 integration head/各自基线,列全层候选/修复/优化/安装映射;交付分支改动的每个文件须与已验 integration tip 逐字节相同,或差异仅来自 integration 起点之后的 dev 提交(逐个点名),否则回流补验。不能仅靠标题/数量/patch-id,不要求整树同一,不重放已验历史替代对应核对。基线差异/冲突适配须说明,遗漏或未经验证差异先回流修复并补验影响面,不因清理或对应核对本身重计。
@@ -808,7 +808,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成�
 
 ### 8.16 CI 与判官的显式白名单权威
 
-CI 选工的唯一权威是 `ci-current.yml` 中 `detect` 作业的单元白名单 `CI_UNITS`:每个单元一段,段名为其作业 id,`[*]` 段适用于全部单元;`*` 跨 `/`,`?` 匹配一个字符,`!` 排除。`ci_detect.py` 校验完整改动路径列表,不设路径数量截断,一次判定全部单元并输出命中表;单元作业以 `if:` 读取命中表,未命中即跳过。`required` 作业由 `ci_required.py` 核对检测成功、白名单段与作业一一对应、命中者成功、未命中者跳过。增删或改名单元须同时改白名单段、作业与 `required` 的 needs,不一致时 `required` 红。白名单不从工程登记、FILEMAP 或调用关系推导;工程依赖或测试读取的文件改变时,同一 PR 修改对应单元的白名单。
+CI 选工的唯一权威是 `Meta/ci-units.json` 的 `CI_UNITS` 与单元执行声明，本地 gate 和远程 `detect` 共享消费:每个单元一段,段名为其作业 id,`[*]` 段适用于全部单元;`*` 跨 `/`,`?` 匹配一个字符,`!` 排除。`ci_detect.py` 校验完整改动路径列表,不设路径数量截断,一次判定全部单元并输出命中表;单元作业以 `if:` 读取命中表,未命中即跳过。`required` 作业由 `ci_required.py` 核对检测成功、白名单段与作业一一对应、命中者成功、未命中者跳过。增删或改名单元须同时改白名单段、作业与 `required` 的 needs,不一致时 `required` 红。白名单不从工程登记、FILEMAP 或调用关系推导;工程依赖或测试读取的文件改变时,同一 PR 修改对应单元的白名单。
 
 FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式。工程登记管程序集、项目引用与测试归属;Lean/Lake 按原生依赖执行增量。SL-003/SL-015 的检查材料仍在 `Meta/ci-checks.json` 显式声明。不得重建跨 workflow 的分析、阶段计划、公共执行证据或 transport 体系。
 

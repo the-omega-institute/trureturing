@@ -1,18 +1,21 @@
 using StrataLint.TestSupport;
 using Xunit;
-using FactAttribute = Xunit.SkippableFactAttribute;
+using TheoryAttribute = Xunit.SkippableTheoryAttribute;
 
 namespace StrataLint.Cache.Release.Tests;
 
 public sealed class LeanCachePublishTests
 {
-    [Fact]
-    public void ReleaseSeedsUsePartitionAndAtomicPublication()
+    [Theory]
+    [InlineData("transport_suite")]
+    [InlineData("verification_suite")]
+    [InlineData("local_suite")]
+    public void ReleaseSeedsUsePartitionAndAtomicPublication(string suite)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = EngineeringProcess.Process(root, "python3", ["-B",
-            Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py"), "TransportTests"],
+            Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py"), suite],
             hangGuard: TestBudgets.LongWorkflowProcessHangGuard, maximumOutputBytes: 1024 * 1024);
         Assert.True(result.Exit == 0,
             result.Text);

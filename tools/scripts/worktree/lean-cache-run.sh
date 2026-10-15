@@ -64,6 +64,12 @@ if [[ "$1" == --build ]]; then
   if [[ $# == 0 || ${#root_targets[@]} != 0 ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake build ${root_targets[@]+"${root_targets[@]}"}
   fi
+  # The downstream workspace already includes the Inspector package. Build
+  # shared program targets in one native graph when both layers are selected.
+  if [[ ${#downstream_targets[@]} != 0 && ${#impl_targets[@]} != 0 ]]; then
+    downstream_targets+=("${impl_targets[@]}")
+    impl_targets=()
+  fi
   if [[ $# == 0 || ${#impl_targets[@]} != 0 ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/tools/lean-inspector" build ${impl_targets[@]+"${impl_targets[@]}"}
   fi

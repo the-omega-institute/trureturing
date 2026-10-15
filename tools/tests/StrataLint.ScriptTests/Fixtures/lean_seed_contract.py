@@ -279,5 +279,23 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
                 self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 
 
+def _owner_suite(*owners):
+    names = sorted({name for owner in owners for name, value in vars(owner).items()
+                    if name.startswith(unittest.defaultTestLoader.testMethodPrefix) and callable(value)})
+    return unittest.TestSuite(TransportTests(name) for name in names)
+
+
+def transport_suite():
+    return _owner_suite(ReleaseTransportCases)
+
+
+def verification_suite():
+    return _owner_suite(ReleaseVerificationCases)
+
+
+def local_suite():
+    return _owner_suite(ReleaseLegacyCases, TransportTests)
+
+
 if __name__ == "__main__":
     unittest.main()
