@@ -8,6 +8,14 @@ internal sealed class CalderonReciprocalMomentsDocument : IScribeDocumentDefinit
         "Calderon's reciprocal moments satisfy both congruences for every admissible imaginary quadratic order.",
         H("Calderon's Reciprocal Moment Congruences"),
         Blocks(
+            Describe.Lean(DescribeId.Create("calderon-root-to-coordinates"), Handle("rootToCoordinates"),
+                H("The root in quadratic coordinates"), StatementSource.FromAuthor(Disp(CoordinateChart(false))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any commutative ring A:Type and T,N:A, rootToCoordinates is the A-algebra homomorphism from AdjoinRoot(X^2-C(T)*X+C(N)) to QuadraticAlgebra A (-N) T. It sends the distinguished root to omega and coefficients by the algebra map. coordinateEquiv consumes this original map; ResetIntegralUnits uses it to simplify the actual Eisenstein and common-quotient root images at T=-1,N=1 over Int and ZMod 2. No prime or p-adic hypothesis is in this telescope."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("calderon-coordinate-equiv"), Handle("coordinateEquiv"),
+                H("The quadratic coordinate equivalence"), StatementSource.FromAuthor(Disp(CoordinateChart(true))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For the same generic coefficient ring, coordinateEquiv pairs rootToCoordinates with the original coordinatesToRoot inverse. The inverse sends a+b*omega to [a+bX]; the root-to-omega orientation is fixed. The local reduceRing consumes this equivalence, and ResetIntegralUnits specializes it at T=-1,N=1 after Ideal.quotEquivOfEq normalizes the defining polynomial. This is reuse of the existing coordinate construction, with no additional arithmetic assumption or new mathematical result."))), DescribeRole.Definition),
             Definition("r", "R", "The local quadratic order", Params(Eqn(Ring, Call("AdjoinRoot", Polynomial))),
                 "The source writes Oomega,p := Zp[omega] (page 19). The ring is AdjoinRoot of X squared minus T X plus N over the p-adic integers. X is the polynomial indeterminate and C embeds a coefficient; the displayed integer casts are into PadicInt p."),
             Definition("element", "element", "Coordinates in the chosen basis",
@@ -43,6 +51,15 @@ internal sealed class CalderonReciprocalMomentsDocument : IScribeDocumentDefinit
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("calderon-2026-quadratic-order-reciprocal-moments"),
                     ResolutionKind.Proved)))));
+    private static Formula CoordinateChart(bool equivalence)
+    {
+        Formula a = V("A"), t = V("T"), n = V("N");
+        Formula p = Add(Sub(Pow(V("X"),Num(2)),Mul(Call("C",t),V("X"))),Call("C",n));
+        return All("A",V("Type"),All("inst",Call("CommRing",a),All("T",a,All("N",a,
+            Call("hasType",Call(equivalence ? "coordinateEquiv" : "rootToCoordinates",t,n),
+                Call(equivalence ? "AlgEquiv" : "AlgHom",a,Call("AdjoinRoot",p),
+                    Call("QuadraticAlgebra",a,new Formula.Negate(n),t)))))));
+    }
     private static DocumentBlock Definition(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("calderon-"+id),Handle(name),H(title),StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromLiterature(Note),Blocks(Paragraph(Text(prose))),DescribeRole.Definition);

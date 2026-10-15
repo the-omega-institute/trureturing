@@ -4,7 +4,31 @@
 
 The square-plus-three equation has no integer solution with x at least two and exponent at least two.
 
-**Theorem 1.1 (Square plus three is not a nontrivial integer power).**
+**Theorem 1.1 (norm_unit_one).**
+
+$$\forall u \in \operatorname{Units}\left(EisensteinOrder\right),\; \operatorname{norm}\left(\operatorname{unitValue}\left(u\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.norm_unit_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every integral Eisenstein unit has norm one. This existing owner proof is reused unchanged and is also consumed by ResetIntegralUnits after the imaginary coefficient vanishes, forcing the real coefficient to be plus or minus one.
+
+**Theorem 1.2 (unit_modTwo).**
+
+$$\forall u \in \operatorname{Units}\left(EisensteinOrder\right),\; \operatorname{modTwo}\left(\operatorname{unitValue}\left(u\right)\right) = 1 \Rightarrow \operatorname{im}\left(\operatorname{unitValue}\left(u\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.unit_modTwo` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+EisensteinOrder is QuadraticAlgebra Int (-1) (-1); the public ETwo abbreviation is the same algebra over ZMod 2. modTwo literally reduces both coefficients. The existing unit_modTwo gives imaginary coefficient zero for a unit reducing to one. It does not alone conclude plus or minus one. ResetIntegralUnits consumes it together with norm_unit_one at this owner.
+
+**Theorem 1.3 (Square plus three is not a nontrivial integer power).**
 
 $$\forall x, y \in \mathbb{Z}, \forall e \in \mathbb{N}, 2 \le x \Rightarrow 2 \le e \Rightarrow \neg x^{2} + 3 = y^{e}$$
 
@@ -33,6 +57,8 @@ The polynomial identity, evaluation hom, and final obstruction are reused from `
 ## References
 
 - Truth anchor: `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.int_sq_add_three_not_pow`
+- Truth anchor: `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.norm_unit_one`
+- Truth anchor: `D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.unit_modTwo`
 - Dependency: [D5/S3/Arith/Congruence/CohnUniformThreeAdic](../../Arith/Congruence/CohnUniformThreeAdic.md)
 - Dependency: [D5/S3/Factorization/QuadraticIdeals/EisensteinCyclotomicBridge](EisensteinCyclotomicBridge.md)
 - Narrative reference: [D5/S3/Arith/Congruence/CohnUniformThreeAdic](../../Arith/Congruence/CohnUniformThreeAdic.md)
