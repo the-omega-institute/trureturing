@@ -3319,3 +3319,253 @@ conditional parameter application of existing theorems, not a new RH
 criterion, an unconditional bound for (I117)'s retained near sector,
 a mathematical-priority claim or Lean certification. The complete
 signed Robin objective and RH remain unresolved.
+
+
+## A sharper fixed fourth-moment input for the same functional
+
+The [classical polynomial-evaluation application](../Analytic/verjovsky2026mobiussmoothing.md#classical-polynomial-evaluation-sharpens-the-fixed-moment-input)
+gives a stronger interface than the first-derivative moment estimate
+used above. Keep the original family (I59), the actual functional
+(I91), and one fixed $c>0$. Assume, as an additional deterministic
+input, that
+$\mathcal M_{4,c}(N)\ll N^\nu$ for every sufficiently large integer
+$N$, with one fixed $0\le\nu<1/8$. The source's same local arc and
+Möbius coefficients are retained.
+
+The cited application supplies
+$$
+|M(N)|\ll_c\sqrt{\log(2N)}
+\left(\sqrt N\,\mathcal M_{4,c}(N)+1\right).
+$$
+Consequently, with $\theta=1/2+\nu$, for every fixed $\delta>0$,
+$$
+M(x)\ll_{c,\nu,\delta}x^{\theta+\delta}.
+\tag{I120}
+$$
+The implied constants also retain the assumed moment-bound constant.
+To use the required prime error, take any $\Re s>\theta$, choose
+$0<\delta<\Re s-\theta$, and apply the already used
+partial-summation continuation of $1/\zeta$ with (I120). This excludes
+zeros throughout $\Re s>\theta$. Choose a fixed
+$\theta<\beta<5/8$ and reuse (I60) for both $M(x)$ and
+$\psi(x)-x$ at exponent $\beta$; there is no same-exponent
+prime-error assertion obtained from bandwise Abel summation alone.
+
+Apply (I118)--(I119) with this $\beta$. For every fixed $\eta>0$,
+choose $\beta-\theta$ sufficiently small and absorb the original
+$e^{\lambda\Omega}$ and logarithmic factors into the remaining
+$N^\eta$ allowance. The result is
+$$
+|\mathcal A_{N,H}|=|\mathscr J_N(R_N)|
+\ll_{c,\nu,\eta}N^{2\nu-1/4+\eta}.
+\tag{I121}
+$$
+All original fixed parameters may also enter the constant. Taking
+$0<\eta<1/4-2\nu$ gives $o(1)$ on every sufficiently large original
+integer $N$. This reuses the complete functional, including
+$e_{N,H}=B/(2N+1)-A/2$ and $m=2N$, with the same strict lower band
+cutoff and half-integer convention. It supplies no uniform
+$\nu=1/8$ endpoint or estimate for a moment hypothesis given only
+on a subsequence.
+
+Using the exact correlation identity in the same source application,
+another sufficient input is
+$\mathfrak C_{4,c}(N)\ll N^{5/2-\xi}$ for a fixed $0<\xi\le1/2$.
+It gives $\nu=1/8-\xi/4$ and hence
+$|\mathscr J_N(R_N)|\ll_\eta N^{-\xi/2+\eta}$, with decay when
+$0<\eta<\xi/2$. This weakens the previously recorded
+$N^{17/8-\xi}$ sufficient correlation input; it does not prove either
+bound or replace the signed fourfold sum by a diagonal.
+
+The new parameter range is a repository application of classical
+polynomial evaluation, Taylor approximation and the already owned
+analytic interfaces, without a mathematical-priority claim or Lean
+certification. The deterministic moment or correlation bound remains
+unpaid. The complete signed Robin estimate and RH remain unresolved.
+
+
+## A single actual endpoint already obstructs a uniform response supplier
+
+Keep (I59), the complete mean $d_N$ from (I17), and the cutoffs
+of (I105) and (I117). The following is a repository-derived analytic
+application, without a mathematical-priority claim or Lean certification.
+Its finite-height input is the already cited Platt--Trudgian theorem;
+no zero computation is repeated.
+
+For $q>N/2$, the original alias sum has exactly $j=1$, so
+$b_{N,q}=\mu(q)\log(N/q)/L$. Define only the first pair of its actual
+harmonics, together with the unchanged original mean:
+$$
+\begin{aligned}
+P_q^{(1)}(m)
+ &=-\frac1q\left[\frac{e(m/q)}{1-e(-1/q)}
+                  +\frac{e(-m/q)}{1-e(1/q)}\right],\\
+R_N^{(1)}(m)
+ &=d_N+\sum_{N/2<q\le N-W_N^\circ}
+       \frac{\mu(q)\log(N/q)}L P_q^{(1)}(m).
+\end{aligned}
+\tag{I122}
+$$
+Eventually $D_N^\circ<N/2<N-W_N^\circ$ and $V_N<N/2$.
+Both numerators $1,q-1$ therefore remain in (I117)'s near sector.
+This selects actual terms of that response; it does not replace the
+Möbius coefficients or assert that separately bounding this selection
+is necessary to bound their signed total.
+
+For any fixed $1/2\le\alpha<1$, the additional hypothesis
+$$
+L|R_N^{(1)}(2N)|\ll_\eta N^{\alpha+\eta}
+\quad\text{for every fixed }\eta>0
+\text{ and every sufficiently large original integer }N
+\tag{I123}
+$$
+implies $\zeta(s)\ne0$ on $\Re s>\alpha$. In particular its
+$\alpha=1/2$ case implies RH. The estimate (I123) remains unproved.
+
+### Transferring the original endpoint without deleting its top cutoff
+
+Pairing the two Fourier terms gives exactly
+$$
+P_q^{(1)}(m)=-\frac1q\left[\cos(2\pi m/q)
+                     +\cot(\pi/q)\sin(2\pi m/q)\right].
+$$
+Since $q^{-1}\cot(\pi/q)=\pi^{-1}+O(q^{-2})$, at $m=2N$
+this is $-\pi^{-1}\sin(4\pi N/q)+O(N^{-1})$ for $q>N/2$.
+The accumulated error after multiplying $R_N^{(1)}$ by $L$ is $O(1)$.
+For real $y>1$, put
+$$
+\begin{aligned}
+F(y)={}&\log y
+ +\frac12\sum_{n\le y}\mu(n)\log(y/n)(1-1/n)\\
+ &-\frac1\pi\sum_{y/2<n\le y}
+          \mu(n)\log(y/n)\sin(4\pi y/n).
+\end{aligned}
+\tag{I124}
+$$
+Its first two terms at $y=N$ are exactly $Ld_N$.
+If $W=W_N^\circ$ and $w=N-q<W$, then
+$\log(N/q)\le2w/N$ and
+$|\sin(4\pi N/q)|=|\sin(4\pi w/q)|\le8\pi w/N$ eventually.
+Both vanish at the actual top endpoint. Hence
+$$
+LR_N^{(1)}(2N)
+ =F(N)+O(1+W^3/N^2),\qquad W^3/N^2=N^{1/4+o(1)}.
+\tag{I125}
+$$
+This pays the original top cutoff using absolute values and requires
+no extra condition $3\lambda<c_\star$. For $N\le y<N+1$, the common
+terms in the first sum change by $O(N^{-1})$ each. The derivative of
+each common summand in the second sum is
+$$
+\frac1y\sin(4\pi y/n)
+ +\frac{4\pi}{n}\log(y/n)\cos(4\pi y/n)=O(N^{-1})
+ \quad(n\asymp N).
+$$
+Only a bounded number of bounded terms enter or leave at its moving
+limits. Thus $F(y)-F(N)=O(1)$. Together with (I123)--(I125), this
+gives $F(y)\ll_\eta y^{\alpha+\eta}$ for every fixed $\eta>0$.
+
+### A Mellin kernel with no high-height cancellation
+
+Consequently $\widehat F(s)=\int_1^\infty F(y)y^{-s-1}\,dy$ is
+holomorphic on $\Re s>\alpha$. Initially for $\Re s>1$, absolute
+convergence and the classical Möbius Dirichlet series give
+$$
+\begin{aligned}
+\widehat F(s)&=\frac1{s^2}-\frac1{2s^2\zeta(s+1)}
+                         +\frac{K(s)}{\zeta(s)},\\
+K(s)&=\frac1{2s^2}
+ -\frac1\pi\int_1^2\log v\sin(4\pi v)v^{-s-1}\,dv.
+\end{aligned}
+\tag{I126}
+$$
+The term $1/(2s^2)$ in $K$ comes from the original mean and must
+remain. Since $1/\zeta(s+1)$ is holomorphic on this larger half-plane,
+the identity theorem continues the holomorphic identity
+$$
+(s-1)\zeta(s)\left[\widehat F(s)-\frac1{s^2}
+                         +\frac1{2s^2\zeta(s+1)}\right]
+ =(s-1)K(s)
+\tag{I127}
+$$
+to $\Re s>\alpha$. A zero $\rho$ there, of any multiplicity
+$m_\rho$, would force $\operatorname{ord}_\rho K\ge m_\rho$.
+Neither zero simplicity nor a reciprocal-derivative moment is used.
+
+Here the necessary cancellation can be ruled out at every high height:
+$$
+|K(s)|\ge |s|^{-2}
+\qquad(1/2\le\Re s\le1,\ |\Im s|\ge2^{16}).
+\tag{I128}
+$$
+To prove this quantitative bound, set $a=\log2$ and
+$f(u)=u\sin(4\pi e^u)$. Then
+$f(0)=f(a)=f'(0)=0$ and $f'(a)=8\pi a$.
+Three integrations by parts in (I126) give
+$$
+\begin{aligned}
+K(s)&=\frac{1/2+8a\,2^{-s}}{s^2}
+                         -\frac{\mathcal B(s)}{\pi s^3},\\
+\mathcal B(s)&=f''(0)-f''(a)2^{-s}
+                      +\int_0^af'''(u)e^{-su}\,du.
+\end{aligned}
+$$
+For $z=4\pi e^u$ the derivatives are
+$$
+\begin{aligned}
+f''(u)&=(u+2)z\cos z-uz^2\sin z,\\
+f'''(u)&=(u+3)z\cos z-(3u+3)z^2\sin z-uz^3\cos z.
+\end{aligned}
+$$
+Using $0\le u\le a<1$, $z<32$ and $3<\pi<4$ yields
+$|f''(0)|<32$, $|f''(a)|<96$ and
+$\int_0^a|f'''(u)|\,du<4\cdot32+6\cdot32^2+32^3$.
+Thus $|\mathcal B(s)|<39168<2^{16}$ for $\Re s\ge0$.
+On $1/2\le\Re s\le1$,
+$|1/2+8a2^{-s}|\ge4\log2-1/2>3/2$.
+For $|s|\ge2^{16}$ the remainder in $s^2K(s)$ is less than
+$1/\pi<1/3$, proving (I128).
+
+For the remaining finite heights, directly reuse
+[Platt--Trudgian, Theorem 1, printed p.2](https://arxiv.org/abs/2004.09765v1),
+as already recorded in the
+[finite-height source application](../Analytic/polak2026finiterobinca.md#finite-height-residual-bounds-at-the-actual-critical-clock).
+Its verified height $3000175332800$ exceeds $2^{16}$.
+Conjugation covers negative heights, and the classical absence of real
+zeros in $(0,1)$ covers height zero. Thus there are no low-height zeros
+with real part greater than $\alpha\ge1/2$; this does not assert
+low-height nonvanishing of $K$. Every higher possible zero contradicts
+(I127)--(I128). The standard zero-free region $\Re s\ge1$ completes
+the stated half-plane conclusion. At $\alpha=1/2$, functional-equation
+symmetry gives RH.
+
+### The method boundary concerns the response supplier, not signed cancellation
+
+The original coefficient budget in (I91) gives only
+$$
+|\mathscr J_N(f)|\ll\frac{h^2\epsilon_N}{L}\|f\|_\infty,
+\qquad h^2\epsilon_N\asymp N^{-1/2}e^{-\Delta_\star\Omega},
+$$
+where the supremum is over the original integer grid $N\le m\le2N$.
+A sufficient response bound through this budget alone would be
+$$
+\|R_N^{(1)}\|_\infty
+ =o\!\left(L\sqrt N\,e^{\Delta_\star\Omega}\right).
+\tag{I129}
+$$
+Since $L^2e^{\Delta_\star\Omega}=N^{o(1)}$, (I129) already implies
+(I123) at $\alpha=1/2$, hence RH. The obstruction is specific to
+one actual endpoint and a specified actual harmonic pair plus mean;
+unlike the compact kernel discussion around (I68), its high-height
+nonvanishing is quantitative.
+
+This does not show that $\mathscr J_N(R_N^{(1)})=o(1)$ or
+$\mathscr J_N(R_{N,\kappa}^\sharp)=o(1)$ implies RH. Their actual
+signed weights can use joint relations or inter-sector cancellation
+without supplying (I129). In particular the total endpoint coefficient
+is $(k_{N,2N}+e_{N,H})/L=O(h^3\epsilon_N/L)$, which is smaller
+than the budget used above; paying that contribution does not require
+a square-root bound on the response itself. Nor does this invalidate
+(I118)--(I119), which also improve the band coefficients under their
+additional hypothesis. No new bound for the signed functional,
+complete Robin inequality or RH follows from this method obstruction.
