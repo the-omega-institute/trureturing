@@ -1507,3 +1507,179 @@ indices and their interaction with $d_N$ in $Z_N$. It gives no improved
 complete-energy allowance over (I31), no sufficient unconditional
 RH energy estimate and no same-integer signed Robin estimate.
 The source application and derivation here are not Lean-certified.
+
+
+## Pay the terminal covariance while retaining the endpoint
+
+The [same short-interval source](../Analytic/shortuniformity2026robininterfaces.md#a-stronger-error-on-longer-mobius-intervals)
+also records the Huxley prime-error estimate needed here. Reuse that
+input and (I33), rather than replacing the original residual by a
+separately centered or optimized one. The following application pays
+the terminal fluctuation in the mixed term; two actual local moments
+and the endpoint value remain.
+
+Keep the same $N,L,\Omega(N)$ and $G_N$ as in (I48)–(I53), and put
+$Q=N-H$, $K=2N$, $w_m=1/[m(m+1)]$. In this section choose a common
+constant $c_\star>0$, small enough for the Möbius bound at $Q$, the
+Möbius and prime-error bounds at $2Q$, and their scale comparisons.
+This can decrease the constant $c$ used in (I48). Fix
+
+$$
+0<\lambda<c_\star/2,\qquad
+H\asymp N^{3/4}e^{\lambda\Omega(N)},\qquad H\in\mathbb N.
+$$
+
+All statements are for sufficiently large integer $N$. In particular,
+$H<N/3$. This is an explicitly restricted parameter family, not a
+claim for every $\lambda$ allowed by the unreduced constant in (I52).
+
+For auxiliary sums up to $2N$, write
+$b_n=\mu(n)\log(N/n)$, always with the original cutoff $N$. Define
+
+$$
+A=\sum_{Q<n\le N}\frac{b_n}{n},\qquad
+B=\sum_{Q<n\le N}b_n,\qquad
+S_m=\sum_{Q<n\le m/2}b_n.
+$$
+
+The last sum is empty before the terminal interval. For $Q<n\le N$ and
+$N\le m\le K$, $1\le m/n<3$, so
+$\lfloor m/n\rfloor=1+\mathbf1_{2n\le m}$. The exact centered-atom
+formula therefore gives
+
+$$
+LG_N(m)=(m+\tfrac12)A-\tfrac32B-S_m.
+\tag{I54}
+$$
+
+Let $r=R_N(K)$ and keep the actual local moments
+
+$$
+P_0=\sum_{m=N}^{K}w_mR_N(m),\qquad
+P_1=\sum_{m=N}^{K}w_m(m+\tfrac12)R_N(m).
+$$
+
+No assertion sets either moment to zero. Interchanging finite sums
+and telescoping the original weight, including the sample $m=2n$,
+gives
+
+$$
+D:=\sum_{m=N}^{K}w_mS_m
+=\sum_{Q<n\le N}b_n\left(\frac1{2n}-\frac1{K+1}\right)
+=\frac A2-\frac B{K+1}.
+\tag{I55}
+$$
+
+Set $C_{N,H}=\langle R_N,G_N\rangle_{\rm first}$. These quantities
+are real, and the exact mixed decomposition is
+
+$$
+\begin{aligned}
+C_{N,H}&=\mathcal A_{N,H}
+-\frac1L\sum_{m=N}^{K}w_mS_m(R_N(m)-r),\\
+\mathcal A_{N,H}
+&=\frac1L\left[
+A(P_1-r/2)-B\left(\tfrac32P_0-\frac r{K+1}\right)
+\right].
+\end{aligned}
+\tag{I56}
+$$
+
+In particular, the endpoint has been retained in $\mathcal A_{N,H}$;
+subtracting it inside the terminal fluctuation has not removed it
+from the original mixed term.
+
+On the support of $S_m$ define
+
+$$
+V_\mu(m)=\sum_{m<n\le K}b_n,\qquad
+V_\Lambda(m)=\psi(K)-\psi(m)-(K-m).
+$$
+
+Subtract (I33) at $m$ and $K$, using its original $U_N$. This yields
+
+$$
+L(R_N(m)-r)
+=-(K-m)(U_N-1)+V_\Lambda(m)-V_\mu(m).
+\tag{I57}
+$$
+
+Here the terms $b_n$ with $n>N$ occur only in the auxiliary identity
+(I33); no new dictionary atoms or reweighted cutoff are introduced.
+
+The prefix argument of (I48), applied at $Q$ and $2Q$, and discrete
+Abel summation give
+
+$$
+\sup_m|S_m|\ll_\eta\frac{H^2}{N}e^{-c_\star\Omega(N)},\qquad
+\sup_{2Q\le m\le K}|V_\mu(m)|
+ +\sup_{2Q\le m\le K}|V_\Lambda(m)|
+\ll_\eta H e^{-c_\star\Omega(N)}.
+$$
+
+For the second assertion the source interval starts at $2Q$ and has
+length $2H$. Differences of its prefixes give the terminal sums.
+The weight $\log(N/n)$ has bounded supremum plus variation on that
+interval. Short prefixes for $\Lambda-1$ have the trivial bound
+$O(u\log N)$; the fixed power margin between the source exponent
+$7/12+\eta$ and $H\ge N^{7/12+2\eta}$ absorbs this logarithm and the
+exponential allowance. Thus an all-prefix prime-error bound is used,
+not just a bound for the full interval.
+
+The unconditional VK–Mertens input already used in (I31) also pays
+the exact tail from (I34), with its estimate changed to
+
+$$
+U_N-1=-\int_N^\infty M(t)
+       \frac{1-\log(t/N)}{t^2}\,dt
+\ll e^{-b\Xi(N)}\qquad\text{for some }b>0.
+$$
+
+Indeed that input makes the Abel tail integral absolutely convergent
+and gives the normalizations $\sum\mu(n)/n=0$ and
+$\sum\mu(n)\log n/n=-1$ by taking the right-hand limits of
+$1/\zeta(s)$ and its derivative at $s=1$. After substituting
+$u=\log t$, absorb the polynomial factor in
+$\int_L^\infty(1+u)e^{-c_0\Xi(e^u)}du$ by decreasing the positive
+exponential constant. No RH estimate from (I34) is used.
+
+There are at most $2H$ samples with $S_m\ne0$, their total weight is
+$O(H/N^2)$, and $K-m\le2H$ on this support. Consequently (I56)–(I57)
+give the quantitative paid remainder
+
+$$
+\left|C_{N,H}-\mathcal A_{N,H}\right|
+\ll_\eta\frac{H^4}{N^3L^2}
+\left(e^{-2c_\star\Omega(N)}
+     +e^{-b\Xi(N)-c_\star\Omega(N)}\right).
+\tag{I58}
+$$
+
+This bounds the actual products on their common support; no
+independence or separate optimizing configuration is assumed.
+At the stated bandwidth the first allowance tends to zero since
+$4\lambda<2c_\star$, and the second does so because
+$\Xi(N)/\Omega(N)\to\infty$. Reuse (I52) for the smaller common
+constant to obtain
+
+$$
+C_{N,H}=\mathcal A_{N,H}+o(1),\qquad
+E_N^{\rm first}-\|R_N-G_N\|_{\rm first}^2
+=2\mathcal A_{N,H}+o(1).
+\tag{I59}
+$$
+
+The second identity retains the mean interaction already present in
+(I53). It supplies an $o(1)$ error for replacing the terminal
+covariance by its endpoint contribution, not an $o(1)$ estimate for
+the complete mixed term or squared-energy difference. The unpaid
+quantity is $\mathcal A_{N,H}$ with the displayed jointly realized
+$A,B,P_0,P_1,r$. The old pointwise input for $R_N$ still gives only
+an allowance of order
+$H^2e^{-\kappa\Xi(N)-c_\star\Omega(N)}/(NL)$ for the complete mixed
+term, which does not certify vanishing at this bandwidth. Full-space
+moment centering does not set these local moments or endpoint to zero.
+This is an application of existing short-interval estimates and the
+owned residual identity, without a new distribution theorem,
+originality claim, sufficient unconditional RH energy bound,
+same-integer signed Robin estimate or Lean certification.
