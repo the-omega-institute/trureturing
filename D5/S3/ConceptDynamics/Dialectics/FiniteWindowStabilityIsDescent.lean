@@ -74,7 +74,7 @@ theorem finite_window_stability_congruence_descent_tfae {X O : Type*}
     · intro hStable
       apply
         ((deterministic_interface_sixfold_equivalence
-          (finiteWindow q F n) F).out 5 1).mp
+          (finiteWindow q F n) F).out 6 2).mp
       calc
         depthZeroKernel (finiteWindow q F n) = finiteWindowKernel q F n := rfl
         _ = finiteWindowKernel q F (n + 1) := hStable
@@ -83,14 +83,14 @@ theorem finite_window_stability_congruence_descent_tfae {X O : Type*}
     · intro hCongruence
       have hKernels :=
         ((deterministic_interface_sixfold_equivalence
-          (finiteWindow q F n) F).out 1 5).mp hCongruence
+          (finiteWindow q F n) F).out 2 6).mp hCongruence
       calc
         finiteWindowKernel q F n = depthZeroKernel (finiteWindow q F n) := rfl
         _ = depthOneKernel (finiteWindow q F n) F := hKernels
         _ = finiteWindowKernel q F (n + 1) :=
           depth_one_finite_window_eq_next_window q F n
   tfae_have 2 ↔ 3 :=
-    (deterministic_interface_sixfold_equivalence (finiteWindow q F n) F).out 1 0
+    (deterministic_interface_sixfold_equivalence (finiteWindow q F n) F).out 2 1
   tfae_finish
 
 example :

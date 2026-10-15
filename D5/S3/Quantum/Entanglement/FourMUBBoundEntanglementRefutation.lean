@@ -14,7 +14,7 @@ Direct frozen dependencies:
     statement_id: sha256:0386217fa1109c4358c01b5fe2db195888fa2f776c05e63cec2e880416d1c8ff
   StructuredNegativityCoincidenceRefutation.partialTransposeB
     statement_id: sha256:894491a0350c31f846bcfc59cbb3e13f12eb0801f6a00517db381f0dc0ecc393
-  ConstructionReduction.Blocks.psd_block (private owner, used directly)
+  ConstructionReduction.Blocks.psd_block (existing owner, used directly)
     statement_id: sha256:e06b98cb298107edb8231bd7345c9d8a2c0fc2ddb4f796c997af36ba619ad54a
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 The projector expression is inlined using Matrix.vecMulVec and star; no duplicate projector is declared.
@@ -32,7 +32,7 @@ namespace D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
 open Matrix
 open scoped ComplexOrder
 open D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-open private psd_block from D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
+open D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Blocks (psd_block)
 noncomputable section
 /-- Columns are basis vectors; basis zero is computational whenever present. -/
 def IsMUBFamily {d m : ℕ} (U : Fin m → Matrix (Fin d) (Fin d) ℂ) : Prop :=

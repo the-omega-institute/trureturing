@@ -62,7 +62,7 @@ private theorem exists_lower_cholesky {d : Nat} {K : Matrix (Fin d) (Fin d) Real
     ∃ L : Matrix (Fin d) (Fin d) Real,
       L.IsLowerTriangular ∧ K = L * L.transpose ∧ ∀ i, L i i ≠ 0 := by
   let U := LDL.lowerInv hK
-  have hU : U.IsLowerTriangular := fun _ _ hij => LDL.lowerInv_triangular hK hij
+  have hU : U.IsLowerTriangular := LDL.isLowerTriangular_lowerInv hK
   have hD : (LDL.diag hK).PosDef := by
     rw [LDL.diag_eq_lowerInv_conj]
     exact (Matrix.IsUnit.posDef_star_right_conjugate_iff

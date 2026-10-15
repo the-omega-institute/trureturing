@@ -241,7 +241,7 @@ private lemma population_gaussian_bound {D : ℕ} (y : Fin D → ℝ)
     ‖(populationGenerating D y).eval z‖ = ∏ i : Fin D, ‖1 + (y i : ℂ) * z‖ := by
       simp [populationGenerating, eval_prod, norm_prod]
     _ ≤ ∏ i : Fin D, Real.exp (((y i : ℂ) * z).re + ‖(y i : ℂ) * z‖ ^ 2 / 2) := by
-      apply prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => norm_one_add_le_gaussian _)
+      apply prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => norm_one_add_le_gaussian _)
     _ = Real.exp ((∑ i, (y i) ^ 2) * ‖z‖ ^ 2 / 2) := by
       rw [← Real.exp_sum]
       congr 1
@@ -282,7 +282,7 @@ private lemma choose_power_lower {D ℓ : ℕ} (hℓ : 0 < ℓ) (hD : ℓ ≤ D)
   calc
     ((D : ℝ) / ℓ) ^ ℓ = ∏ i ∈ range ℓ, ((D : ℝ) / ℓ) := by simp [div_pow]
     _ ≤ ∏ i ∈ range ℓ, ((D : ℝ) - i) / ((ℓ : ℝ) - i) := by
-      apply prod_le_prod (fun i _ => by positivity)
+      apply prod_le_prod₀ (fun i _ => by positivity)
       intro i hi
       have hiℓ : i < ℓ := mem_range.mp hi
       have hiR : (i : ℝ) < ℓ := by exact_mod_cast hiℓ

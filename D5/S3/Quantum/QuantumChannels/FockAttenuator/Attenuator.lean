@@ -111,10 +111,10 @@ def attenuator (η : ℝ) (hη : η ∈ Set.Icc (0 : ℝ) 1)
     simpa only [h_FockAttMixture_mixture_fock_quadratic v hv, heq] using hout.hasSum
   have h_FockAttMixture_mixture_positive {ι : Type} (v : ι → (lp (fun _ : ℕ => ℂ) 2)) (hv : Summable (fun i => ‖v i‖ ^ 2)) :
       (mixture v).IsPositive := by
-    apply (ContinuousLinearMap.nonneg_iff_isPositive _).mp
+    apply (ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mp
     apply tsum_nonneg
     intro i
-    exact (ContinuousLinearMap.nonneg_iff_isPositive _).mpr
+    exact (ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mpr
       (InnerProductSpace.isPositive_rankOne_self (v i))
   have h_FockAttTwoMode_tensor_apply (v w : (lp (fun _ : ℕ => ℂ) 2)) (n : ℕ) : tensor v w n = w n • v := rfl
   have h_FockAttTwoMode_tensor_norm_sq (v w : (lp (fun _ : ℕ => ℂ) 2)) : ‖tensor v w‖ ^ 2 = ‖v‖ ^ 2 * ‖w‖ ^ 2 := by
@@ -145,7 +145,7 @@ def attenuator (η : ℝ) (hη : η ∈ Set.Icc (0 : ℝ) 1)
     simp only [outputVector, norm_smul, mul_pow, hsqrt]
     rfl
   have h_FockAttChannel_densitySqrt_squared (ρ : DensityOperator) : CFC.sqrt ρ.operator * CFC.sqrt ρ.operator = ρ.operator := CFC.sqrt_mul_sqrt_self ρ.operator
-      ((ContinuousLinearMap.nonneg_iff_isPositive _).mpr ρ.positive)
+      ((ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mpr ρ.positive)
   have h_FockAttChannel_densitySqrt_selfAdjoint (ρ : DensityOperator) : IsSelfAdjoint (CFC.sqrt ρ.operator) := (CFC.sqrt_nonneg ρ.operator).isSelfAdjoint
   have h_FockAttChannel_densitySqrt_norm_sq (ρ : DensityOperator) (v : (lp (fun _ : ℕ => ℂ) 2)) :
       ‖CFC.sqrt ρ.operator v‖ ^ 2 = (inner ℂ v (ρ.operator v)).re := by
