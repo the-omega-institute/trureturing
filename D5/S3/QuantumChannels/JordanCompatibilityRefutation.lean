@@ -7,6 +7,7 @@
    digest: Compatible channels in dimension four need not be Jordan compatible. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.QuantumChannels.PureProgramQubitObstruction
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Weil.ZetaLinear.RankTrace
 
@@ -14,6 +15,7 @@ set_option linter.style.longLine false
 
 open scoped BigOperators ComplexOrder MatrixOrder
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
+open D5.S3.Quantum.QuantumChannels.PureProgramQubitObstruction (IsChannel)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceLeft partialTraceRight)
 
@@ -22,15 +24,6 @@ namespace D5.S3.QuantumChannels.JordanCompatibilityRefutation
 
 abbrev Mat (ι : Type*) := Matrix ι ι ℂ
 abbrev Map (ι κ : Type*) := MatrixMap ι κ ℂ
-
-def IsTP {ι κ : Type*} [Fintype ι] [Fintype κ]
-    (Φ : Map ι κ) : Prop :=
-  ∀ R, Matrix.trace (Φ R) = Matrix.trace R
-
-def IsCPTP {ι κ : Type*}
-    [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
-    (Φ : Map ι κ) : Prop :=
-  MatrixMap.IsCompletelyPositive Φ ∧ IsTP Φ
 
 def traceX1 {d : ℕ} (A : Mat (Fin d × (Fin d × Fin d))) :
     Mat (Fin d × Fin d) :=
@@ -46,7 +39,7 @@ def jordanAction {d : ℕ} (Φ Ψ : Map (Fin d) (Fin d))
   MatrixMap.kron (LinearMap.id : Map (Fin d) (Fin d)) (MatrixMap.kron Φ Ψ) A
 
 def Compatible {d : ℕ} (Φ Ψ : Map (Fin d) (Fin d)) : Prop :=
-  ∃ Γ : Map (Fin d) (Fin d × Fin d), IsCPTP Γ ∧
+  ∃ Γ : Map (Fin d) (Fin d × Fin d), IsChannel (⇑Γ) ∧
     (∀ R, partialTraceRight (Γ R) = Φ R) ∧ (∀ R, partialTraceLeft (Γ R) = Ψ R)
 
 def JordanCompatible {d : ℕ} (Φ Ψ : Map (Fin d) (Fin d)) : Prop :=
@@ -57,7 +50,7 @@ def JordanCompatible {d : ℕ} (Φ Ψ : Map (Fin d) (Fin d)) : Prop :=
 
 def claim : Prop :=
   ∀ (d : ℕ) (Φ Ψ : Map (Fin d) (Fin d)),
-    IsCPTP Φ → IsCPTP Ψ → Compatible Φ Ψ → JordanCompatible Φ Ψ
+    IsChannel (⇑Φ) → IsChannel (⇑Ψ) → Compatible Φ Ψ → JordanCompatible Φ Ψ
 
 variable {ι κ η : Type*}
 variable [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
@@ -86,44 +79,64 @@ private theorem measurePrepare_single (L : κ → Mat ι) (a b : ι) (i j : κ) 
   rw [measurePrepare_apply]
   simp [Matrix.diagonal_apply, Matrix.trace_mul_single]
 
-private theorem measurePrepare_cp (L : κ → Mat ι)
-    (hL : ∀ i, (L i).PosSemidef) :
-    MatrixMap.IsCompletelyPositive (measurePrepare L) := by
-  rw [MatrixMap.choi_PSD_iff_CP_map]
-  have he : MatrixMap.choi_matrix (measurePrepare L) = ∑ i : κ,
-      Matrix.kroneckerMap (· * ·) (Matrix.single i i (1 : ℂ)) (L i).transpose := by
-    ext ⟨i, a⟩ ⟨j, b⟩
-    change measurePrepare L (Matrix.single a b 1) i j = _
-    rw [measurePrepare_single]
-    simp only [Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.single,
-      Matrix.of_apply, Matrix.transpose_apply, ite_mul, one_mul, zero_mul]
+private theorem measurePrepare_channel {α β γ : Type}
+    [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
+    [Fintype γ]
+    (L : β → Mat α) (V : β → γ → Mat α)
+    (hL : ∀ i, ∑ t, (V i t).conjTranspose * V i t = L i)
+    (hsum : ∑ i, L i = 1) : IsChannel (⇑(measurePrepare L)) := by
+  let K (p : β × (γ × α)) : Matrix β α ℂ :=
+    fun i b => if i = p.1 then V p.1 p.2.1 p.2.2 b else 0
+  have hgram : (∑ p, (K p).conjTranspose * K p) = 1 := by
+    calc
+      _ = ∑ i, ∑ t, (V i t).conjTranspose * V i t := by
+        ext a b
+        simp only [Matrix.sum_apply, Fintype.sum_prod_type]
+        change (∑ i : β, ∑ t : γ, ∑ r : α, ∑ j : β,
+          star (if j = i then V i t r a else 0) *
+            (if j = i then V i t r b else 0)) =
+          ∑ i : β, ∑ t : γ, ∑ r : α, star (V i t r a) * V i t r b
+        simp [apply_ite, ite_mul]
+      _ = 1 := by simp only [hL, hsum]
+  have haction (R : Mat α) : MatrixMap.of_kraus K K R = measurePrepare L R := by
+    rw [measurePrepare_apply]
+    ext i j
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+      AddHom.coe_mk, Matrix.sum_apply, Fintype.sum_prod_type, Matrix.diagonal_apply]
+    change (∑ k : β, ∑ t : γ, ∑ r : α, ∑ b : α,
+      (∑ a : α, (if i = k then V k t r a else 0) * R a b) *
+        star (if j = k then V k t r b else 0)) =
+      if i = j then Matrix.trace (L i * R) else 0
     by_cases hij : i = j
     · subst j
-      simp
-    · simp only [if_neg hij]
-      symm
-      apply Finset.sum_eq_zero
-      intro c _
-      rw [if_neg]
-      exact fun hc => hij (hc.1.symm.trans hc.2)
-  rw [he]
-  apply Matrix.posSemidef_sum
-  intro i _
-  have hd : (Matrix.diagonal (fun j : κ => if j = i then (1 : ℂ) else 0)).PosSemidef :=
-    Matrix.PosSemidef.diagonal (fun j => by split_ifs <;> norm_num)
-  have heq : Matrix.single i i (1 : ℂ) =
-      Matrix.diagonal (fun j : κ => if j = i then (1 : ℂ) else 0) := by
-    calc
-      _ = Matrix.diagonal (Pi.single i (1 : ℂ)) := (Matrix.diagonal_single i 1).symm
-      _ = _ := congrArg Matrix.diagonal (funext fun j => by simp [Pi.single_apply])
-  rw [heq]
-  exact hd.kronecker (hL i).transpose
+      simp only [apply_ite, star_zero, ite_mul, zero_mul, mul_zero,
+        Finset.sum_ite_irrel, Finset.sum_const_zero, if_true]
+      calc
+        _ = ∑ t : γ, Matrix.trace (V i t * R * (V i t).conjTranspose) := by
+          simp [Matrix.trace, Matrix.diag, Matrix.mul_apply,
+            Matrix.conjTranspose_apply]
+        _ = Matrix.trace ((∑ t, (V i t).conjTranspose * V i t) * R) := by
+          simp only [Matrix.sum_mul, Matrix.trace_sum]
+          exact Finset.sum_congr rfl fun t _ =>
+            Matrix.trace_mul_cycle (V i t) R (V i t).conjTranspose
+        _ = Matrix.trace (L i * R) := by rw [hL]
+    · simp [hij, apply_ite, ite_mul, Finset.sum_ite_irrel]
+  let e := (Fintype.equivFin (β × (γ × α))).symm
+  refine ⟨Fintype.card (β × (γ × α)), fun p => K (e p), ?_, ?_⟩
+  · rw [e.sum_comp (fun p => (K p).conjTranspose * K p)]
+    exact hgram
+  · intro R
+    rw [← haction]
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+      AddHom.coe_mk]
+    exact (e.sum_comp (fun p => K p * R * (K p).conjTranspose)).symm
 
-private theorem measurePrepare_tp (L : κ → Mat ι) (hL : ∑ i : κ, L i = 1) :
-    IsTP (measurePrepare L) := by
-  intro R
-  rw [measurePrepare_apply, Matrix.trace_diagonal]
-  rw [← Matrix.trace_sum, ← Matrix.sum_mul, hL, Matrix.one_mul]
+omit [DecidableEq ι] in
+private theorem sqrt_gram (c : ℝ) (hc : 0 ≤ c) (V : Mat ι) :
+    (Real.sqrt c • V).conjTranspose * (Real.sqrt c • V) =
+      c • (V.conjTranspose * V) := by
+  simp only [Matrix.conjTranspose_smul, star_trivial, Matrix.smul_mul,
+    Matrix.mul_smul, smul_smul, Real.mul_self_sqrt hc]
 
 omit [DecidableEq ι] in
 private theorem measurePrepare_marginals (L : (κ × η) → Mat ι) (R : Mat ι) :
@@ -179,28 +192,6 @@ private theorem S_facts (i : Fin 4) :
   · change (-Q).IsHermitian ∧ (-Q).transpose = -Q ∧ (-Q) * (-Q) = 1
     exact ⟨hq.neg, by simp [hqt], by simp [hqq]⟩
 
-private theorem effects_psd (i : Fin 4) : (E i).PosSemidef ∧ (F i).PosSemidef := by
-  have hs := S_facts i
-  have hg : ((1 + S i).conjTranspose * (1 + S i)) = (2 : ℝ) • (1 + S i) := by
-    simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_one, hs.1.eq,
-      add_mul, mul_add, Matrix.one_mul, Matrix.mul_one, hs.2.2]
-    module
-  have he : E i = (1 / 20 : ℝ) • 1 +
-      (1 / 10 : ℝ) • ((1 + S i).conjTranspose * (1 + S i)) := by
-    rw [hg]
-    unfold E
-    module
-  have hf : F i = (1 / 16 : ℝ) • 1 +
-      (3 / 32 : ℝ) • ((1 + S i).conjTranspose * (1 + S i)) := by
-    rw [hg]
-    unfold F
-    module
-  rw [he, hf]
-  exact ⟨(Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 20)).add
-      ((Matrix.posSemidef_conjTranspose_mul_self _).smul (by norm_num)),
-    (Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 16)).add
-      ((Matrix.posSemidef_conjTranspose_mul_self _).smul (by norm_num))⟩
-
 private theorem effects_transpose (i : Fin 4) :
     (E i).transpose = E i ∧ (F i).transpose = F i := by
   unfold E F
@@ -227,9 +218,38 @@ private theorem effects_sum : (∑ i : Fin 4, E i) = 1 ∧ (∑ i : Fin 4, F i) 
   · rw [add_assoc (F 0 + F 1), hf, hf']
     module
 
-private theorem channels_cptp : IsCPTP Phi ∧ IsCPTP Psi :=
-  ⟨⟨measurePrepare_cp E (fun i => (effects_psd i).1), measurePrepare_tp E effects_sum.1⟩,
-   ⟨measurePrepare_cp F (fun i => (effects_psd i).2), measurePrepare_tp F effects_sum.2⟩⟩
+private def eFactor (i : Fin 4) : M4 :=
+  Real.sqrt (1 / 20) • ((2 : ℝ) • 1 + S i)
+
+private def fFactor (i : Fin 4) : Fin 2 → M4 :=
+  ![(1 / 4 : ℝ) • 1, Real.sqrt (3 / 32) • (1 + S i)]
+
+private theorem effect_grams (i : Fin 4) :
+    (eFactor i).conjTranspose * eFactor i = E i ∧
+    (∑ t : Fin 2, (fFactor i t).conjTranspose * fFactor i t) = F i := by
+  have hs := S_facts i
+  constructor
+  · unfold eFactor
+    rw [sqrt_gram _ (by norm_num)]
+    simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_one, star_trivial, hs.1.eq, add_mul, mul_add,
+      Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one, hs.2.2]
+    unfold E
+    module
+  · rw [Fin.sum_univ_two]
+    dsimp [fFactor]
+    rw [sqrt_gram _ (by norm_num)]
+    simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_one, star_trivial, hs.1.eq, add_mul, mul_add,
+      Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one, hs.2.2]
+    unfold F
+    module
+
+private theorem channels : IsChannel (⇑Phi) ∧ IsChannel (⇑Psi) := by
+  constructor
+  · exact measurePrepare_channel E (fun i (_ : Fin 1) => eFactor i)
+      (fun i => by simpa using (effect_grams i).1) effects_sum.1
+  · exact measurePrepare_channel F fFactor (fun i => (effect_grams i).2) effects_sum.2
 
 private def h (i j : Fin 4) : ℝ := 1 / 64 + (15 / 16) * (if i = j then 1 else 0)
 private def jointEffects (p : Fin 4 × Fin 4) : M4 := h p.1 p.2 • E p.1
@@ -260,18 +280,19 @@ private theorem jointEffects_marginals :
     rw [← Finset.sum_smul, h_row_sum, one_smul]
   · exact h_mix
 
-private theorem gamma_cptp : IsCPTP Gamma := by
-  constructor
-  · apply measurePrepare_cp
-    intro p
-    exact (effects_psd p.1).1.smul (h_nonneg _ _)
-  · apply measurePrepare_tp
-    rw [Fintype.sum_prod_type]
+private theorem gamma_channel : IsChannel (⇑Gamma) := by
+  apply measurePrepare_channel jointEffects
+    (fun p (_ : Fin 1) => Real.sqrt (h p.1 p.2) • eFactor p.1)
+  · intro p
+    simp only [Fin.sum_univ_one]
+    rw [sqrt_gram _ (h_nonneg _ _), (effect_grams p.1).1]
+    rfl
+  · rw [Fintype.sum_prod_type]
     simp only [jointEffects_marginals.1]
     exact effects_sum.1
 
 private theorem compatible_witness : Compatible Phi Psi := by
-  refine ⟨Gamma, gamma_cptp, ?_, ?_⟩
+  refine ⟨Gamma, gamma_channel, ?_, ?_⟩
   · intro R
     exact (measurePrepare_marginals jointEffects R).1.trans
       (congrArg (fun L => measurePrepare L R) (funext jointEffects_marginals.1))
@@ -555,6 +576,6 @@ private theorem not_jordanCompatible : ¬ JordanCompatible Phi Psi := by
 theorem result : ¬ claim := by
   intro h
   exact not_jordanCompatible
-    (h 4 Phi Psi channels_cptp.1 channels_cptp.2 compatible_witness)
+    (h 4 Phi Psi channels.1 channels.2 compatible_witness)
 
 end D5.S3.QuantumChannels.JordanCompatibilityRefutation
