@@ -30,7 +30,7 @@ theorem native_actual_state_exists {m k : ℕ} (hk : 3 ≤ k)
       S.primaryOdd = decide (k % 2 = 1) ∧
       S.oppositeOdd = !decide (k % 2 = 1) ∧
       S.distinguishedOpposite = decide (k % 2 = 0) := by
-  induction k, hk using Nat.le_induction with
+  induction k, hk using Nat.le_induction generalizing F with
   | base =>
     simpa only [show 3 % 2 = 1 from rfl, decide_true, Bool.not_true,
       Nat.one_ne_zero, decide_false] using native_third_order_state_exists F hB
