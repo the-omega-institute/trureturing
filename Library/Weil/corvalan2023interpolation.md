@@ -1939,3 +1939,138 @@ Equations (I62)--(I68) supply the actual coupled kernel and a paid
 grid error, without a bound for that double integral, a new RH
 criterion, a same-integer signed Robin estimate, a mathematical
 priority claim or Lean certification.
+
+
+## A paid rectangular truncation on the original Perron lines
+
+Reuse Koukoulopoulos, *The Distribution of Prime Numbers*,
+[Theorem 7.2, printed p.71, PDF p.82](https://dms.umontreal.ca/~koukoulo/documents/publications/primes.pdf),
+the same truncated Perron input used for (I60), and the actual
+short-interval coefficient bounds of (I66). The following application
+pays a finite-height error in (I65). It does not estimate the integral
+inside the retained rectangle or a remainder after shifting its lines.
+
+Retain the sufficiently large integer parameter family of (I59),
+including $H<N/3$. Put $X=Q+1/2$, retain $h=(H-1/2)/N$, and choose
+$\kappa_N=1+1/\log X$. All finite integrals in this section use this same
+line. Let $\mathscr P_{s,T}$ denote $(2\pi i)^{-1}$ times integration
+from $\kappa_N-iT$ to $\kappa_N+iT$. For $U,V\ge2$, define
+$$
+\begin{aligned}
+A_U&=\mathscr P_{s,U}\frac{N^{s-1}W_a(s-1)}{\zeta(s)},&
+B_U&=\mathscr P_{s,U}\frac{N^sW_a(s)}{\zeta(s)},\\
+R_V(m)&=Z(m/N)+\frac1L\mathscr P_{s,V}
+\frac{N^sH_{m/N}(s)}{\zeta(s)}.
+\end{aligned}
+$$
+Here $Z=1-J_m/(2L)$ is the exact grid correction of (I63),
+not a replacement local mean. Uniformly on the original integer grid,
+$$
+\begin{aligned}
+|A-A_U|&\ll L/U+h/N,\\
+|B-B_U|&\ll NL/U+h,\\
+\max_{N\le m\le2N}|R_N(m)-R_V(m)|&\ll NL/V+1.
+\end{aligned}
+\tag{I69}
+$$
+
+For the first two estimates, write
+$$
+C_{\tau,U}(x)=\mathscr P_{s,U}
+\frac{x^{s-\tau}}{(s-\tau)^2\zeta(s)},\qquad
+D_{\tau,U}(x)=\mathscr P_{s,U}
+\frac{x^{s-\tau}}{(s-\tau)\zeta(s)},\qquad \tau\in\{0,1\}.
+$$
+The square-denominator tails are absolutely bounded by
+$O(N^{1-\tau}L/U)$ for $X\le x\le2N$, since
+$|1/\zeta(\kappa_N+it)|\le\zeta(\kappa_N)\ll L$.
+For $D_{\tau,U}$, apply the cited theorem to
+$f(n)=\mu(n)n^{-\tau}$, with $\theta=-\tau$ and exponent $A=0$
+in its notation. Its hypothesis holds because
+$\kappa_N-\tau\ge1-\tau+1/\log x$ throughout this interval.
+The error is $O(N^{1-\tau}L/U+N^{-\tau})$.
+Now $A_U$ and $B_U$ are, respectively, the expressions
+$$
+C_{\tau,U}(N)-C_{\tau,U}(X)
+-\log(N/X)D_{\tau,U}(X),\qquad \tau=1,0.
+$$
+Their infinite-height limits select exactly $Q<n\le N$.
+Use $\log(N/X)\ll h$ to obtain the first two rows of (I69).
+
+For the last row, elementary integration of the fractional-part
+Mellin transform gives, for $1\le q\le2$ and $\Re s>1$,
+$$
+H_q(s)=\frac{q}{(s-1)^2}
++\frac{d}{ds}\left(\frac{1+q^s(\zeta(s)-1)}s\right).
+\tag{I70}
+$$
+The floor thresholds $k\ge2$ supply the factor $\zeta(s)-1$;
+the factor $\log v$ vanishes at the lower integration endpoint.
+Writing $m=qN$, division by $\zeta(s)$ gives explicitly
+$$
+\begin{aligned}
+\frac{N^sH_q(s)}{\zeta(s)}={}&
+\frac{qN^s}{(s-1)^2\zeta(s)}
++\frac{m^s-N^s}{s^2\zeta(s)}\\
+&+m^s\left(\frac{\log q}s-\frac1{s^2}\right)
++\frac{m^s}{s}\frac{\zeta'(s)}{\zeta(s)}
+-\frac{m^s\log q}{s\zeta(s)}.
+\end{aligned}
+$$
+The square-denominator pieces have tail $O(NL/V)$.
+The remaining pieces are ordinary Perron integrals of
+$\zeta'/\zeta$, $1/\zeta$ and the Dirichlet series $1$, evaluated
+at $m=qN$, with the bounded coefficient $\log q$ where present.
+The cited theorem for $\Lambda$, with $\theta=0,A=1$, gives
+$O(NL^2/V+L)$; for $\mu$ and the sequence supported at $1$ it
+gives $O(NL/V+1)$. At integer $m$, replacing full summation by the
+symmetric Perron limit costs at most $O(L)$ for $\Lambda$ and
+$O(1)$ for $\mu$. These costs are retained. Division by $L$ gives
+the last row of (I69), including $m=N,2N$ and their original $J_m$.
+
+Let $S=R_N-Z$, $S_V=R_V-Z$, and define the finite rectangle
+$$
+\mathcal M_N(U,V)=\frac1{L^2}
+\mathscr P_{u,U}\mathscr P_{v,V}
+\frac{N^{u+v-1}\mathcal K_N(u,v)}{\zeta(u)\zeta(v)}
+=\frac{A_U\mathfrak p_N(S_V)-B_U\mathfrak q_N(S_V)}L.
+\tag{I71}
+$$
+Finite integration and the actual finite grid justify the equality.
+All endpoint terms of (I64) remain in this expression.
+The original coefficients satisfy
+$|A|+|B|/N\ll h^2e^{-c_\star\Omega}$, while
+$\|S\|_\infty\ll N/L$ follows from
+$\sum_{n\le N}\log(N/n)\ll N$ and $\|Z\|_\infty=O(1)$.
+Together with the operator bounds used for (I66), (I69) therefore gives
+$$
+\begin{aligned}
+|\mathcal A_{N,H}-E_{\rm grid}-\mathcal M_N(U,V)|
+\ll{}&\frac{N}{UL}+\frac h{L^2}\\
+&+\left(h^2e^{-c_\star\Omega}+\frac LU+\frac hN\right)
+  \left(\frac NV+\frac1L\right).
+\end{aligned}
+\tag{I72}
+$$
+This is a bound for the same jointly realized functional, using its
+actual coefficients rather than independently optimized values.
+Set $U=N$ and $V=\sqrt N$, and reuse $E_{\rm grid}=o(1)$ with its
+quantitative bound (I66). At the bandwidth of (I59), (I72) yields
+$$
+\mathcal A_{N,H}
+=\mathcal M_N(N,\sqrt N)
++O\!\left(\frac1L+
+ e^{-(c_\star-2\lambda)\Omega}+\frac L{\sqrt N}\right)
+=\mathcal M_N(N,\sqrt N)+o(1).
+\tag{I73}
+$$
+The positive margin is exactly $2\lambda<c_\star$.
+Thus the original-line rectangular truncation is paid. This is
+neither an absolute tail estimate nor a zero-sum truncation after
+contour deformation. In particular the retained heights extend
+beyond $1/h\asymp N/H$; the compact expansion (I67) still cannot
+be substituted over that whole rectangle. An estimate for
+$\mathcal M_N(N,\sqrt N)$ sufficient to pay the actual mixed term,
+the same-integer signed Robin estimate, and RH remain unresolved.
+This is an application of the cited Perron theorem, without a
+mathematical-priority claim or Lean certification.
