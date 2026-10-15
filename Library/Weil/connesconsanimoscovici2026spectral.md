@@ -5,7 +5,7 @@ year: 2026
 title: Zeta Spectral Triples
 doi: 10.4171/elm/37/3
 url: https://arxiv.org/abs/2511.22755v1
-claim: The full bounded-support Weil operator has discrete lower-bounded spectrum, and an explicit auxiliary transform converges to Xi. Existing form-core, Carleman and min-max results give an explicit even-section error. At c27 a joint weighted prime bound supplies a positive even high-complement floor after mode1280. The retained sign, full coupling certificate, cofinal positivity and actual ground-state comparison remain missing.
+claim: The full bounded-support Weil operator has discrete lower-bounded spectrum, and an explicit auxiliary transform converges to Xi. Existing form-core, Carleman and min-max results give an explicit even-section error. At c27 a joint weighted prime bound supplies a positive even high-complement floor after mode1280, but a directed four-row witness excludes the resulting diagonal-floor Schur target at this cutoff. The actual exterior Schur sign, cofinal positivity and actual ground-state comparison remain missing.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -668,6 +668,62 @@ agree exactly with independent 2560-bit executions. Packet SHA-256:
 `ac35edacd7f55de470586e3b8a5915bcaa49b9d2c4c9c2ee073eeaaa8c9c73e7`.
 This supplies only the stated sufficient far majorant under the existing
 identification and exterior-floor inputs, without Lean verification.
+
+### Four middle rows already exclude the diagonal-floor target at N1280
+
+The same actual arithmetic supplier gives a short test of whether this
+particular Schur budget can fit. Let $A_N$ be the actual retained block,
+keep $C_m$ as above, and define the sharper G7 diagonal floor
+
+$$
+d_m=\Re\psi\left(\frac14+\frac{i\pi m}{\log27}\right)
+-\log\pi-\frac{59}{10}.
+$$
+
+For the original centered unphased cosine basis, take the integer vector
+$v=-e_{1277}+2e_{1278}-e_{1280}$, with $\|v\|^2=6$. Only four
+exterior rows are needed. Directed FLINT evaluation gives, for
+$m=1281,\ldots,1284$,
+
+$$
+1/16<d_m<1/15,\qquad 0<h_m<1/15,
+$$
+
+and the common actual-vector quantities
+
+$$
+\langle v,A_Nv\rangle=30.70294244311003905\ldots,
+\qquad
+15\sum_{m=1281}^{1284}|C_mv|^2=33.30890128199787908\ldots.
+$$
+
+Consequently, for either $w=d$ or $w=h$, the full sufficient
+diagonal-floor target satisfies
+
+$$
+\left\langle v,\left(A_N-\sum_{m>N}w_m^{-1}C_m^*C_m\right)v\right\rangle
+\le\langle v,A_Nv\rangle-15\sum_{m=1281}^{1284}|C_mv|^2
+<-13/5.
+$$
+
+Omitted rows add nonnegative debit, so supplying them more accurately
+cannot make this specified target positive at N1280. The same witness
+excludes charging all coupling by the uniform inverse floor16. The
+actual retained quadratic is positive, so the test does not establish
+negative full Weil energy or an RH counterexample. It tests the
+sufficient inverse majorant, rather than the sign of the actual exterior
+Schur complement.
+
+The linked experiment's `diagonal_floor_witness.py` reuses four published
+scalar rows and supplies only the missing rows1282,1283,1284. Its saved
+512-bit-grid interval for the weakened target is
+$-2.60595883888784003\ldots$, with upper endpoint below $-13/5$.
+Result SHA-256:
+`f45f3a333b50aa60c38c5b2ee9be416a165a1c719ba7dfb3ca6dfbe251bf1840`.
+This is a directed numerical witness under the existing Fourier/form
+identification, without Lean verification or a novelty claim. The
+high-floor and far-input estimates remain valid; a changed cutoff or
+stronger correlated exterior comparison has a separate proof obligation.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
