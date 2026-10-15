@@ -56,13 +56,13 @@ The module defines the Glauber matrix with the Gibbs-ratio form of Eq. (32) on a
 
 ## Evidence
 
-The canonical source is `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.lean` (377 lines).
-- It defines `probability`, `regularNeighborhood`, `gibbs`, `edgeWeight`, `glauber`, `isSARun`, `meanEnergy`, `energyRate`, `lambda2` and `claim`, and proves `result : ¬ claim`.
-- It imports pinned Mathlib only; the probability of the run uses Mathlib's column-stochastic lemmas, and the roots use `Polynomial.roots_multiset_prod_X_sub_C`.
+The canonical source is `D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.lean` (374 lines).
+- It defines `regularNeighborhood`, `gibbs`, `edgeWeight`, `glauber`, `isSARun`, `meanEnergy`, `energyRate`, `lambda2` and `claim`, and proves `result : ¬ claim`.
+- Probability vectors are the frozen `D5.S3.TotalVariation.CycleSingleCutMinimax.Probability`. The probability of the run uses Mathlib's column-stochastic lemmas, and the roots use `Polynomial.roots_multiset_prod_X_sub_C`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - `result` is the refutation result of a `refutes` utility, which CLAUDE.md §3.9 exempts from four-slot registration.
 
-Frozen state: `Golden/Frozen/state/D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.lean.json`, statement `sha256:ebaff028eb33c88cfb90ab1d4bd12deb731379a32c3b2a8f6741bcef6c9f3857`.
+Frozen state: `Golden/Frozen/state/D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.lean.json`, statement `sha256:46eeaec0f3e23997c9ec18685a96b6fc2c661cb8f7c9d6a6866d7c1e63049a9d`.
 
 Declaration statements:
 - `result`: `sha256:2476260edd81f4e3d92de720a8dd8744af1b236de92f6f8dca1de8d0265ba21d`;
