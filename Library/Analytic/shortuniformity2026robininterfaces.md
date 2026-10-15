@@ -49,6 +49,56 @@ $\widetilde\Lambda_w(n)=\Lambda_w(n)(1-\chi(n)n^{\beta-1})$;
 otherwise it is $\Lambda_w$. This model cannot silently be replaced
 by the constant function or by the full CA layer measure.
 
+## A stronger error on longer Möbius intervals
+
+Matomäki–Teräväinen, *On the Möbius function in all short intervals*,
+[arXiv:1911.09076v2](https://arxiv.org/abs/1911.09076v2),
+§2.1, printed p.4, explicitly records the classical
+Motohashi–Ramachandra estimate: for fixed $\theta>7/12$, some
+$c_\theta>0$, and all sufficiently large $X$,
+
+$$
+\left|\sum_{X<n\le X+H}\mu(n)\right|
+\ll_\theta H\exp\left[-c_\theta
+ \left(\frac{\log X}{\log\log X}\right)^{1/3}\right]
+\qquad(H\ge X^\theta).
+$$
+
+The inspected 18-page primary has SHA256
+`ee94ead957a42f4be93dbba094cb601cca2fc54379bcfb84f4a8f2ad7c0d52b2`.
+The formula is unnumbered and points to its reference [18], Remark 4.
+This reuses the modern primary's explicit statement and attribution;
+the earlier proof is not independently audited here. It is separate
+from that paper's Theorem 1.1, already cited in FIB §400, which reaches
+$\theta>0.55$ with a logarithmic error. The stronger exponential saving
+on the longer intervals is used in the
+[original-response endpoint application](../Weil/corvalan2023interpolation.md#a-paid-deletion-of-original-endpoint-responses).
+The shorter interval threshold below is a different quantitative gain.
+
+The sentence immediately following that formula on printed p.4
+records the same exponential error shape for Huxley's prime number
+theorem. Its quantity is fixed by equation (1.1), printed p.1:
+for fixed $\theta>7/12$, the reusable statement is
+
+$$
+\left|\sum_{X<n\le X+H}\Lambda(n)-H\right|
+\ll_\theta H\exp\left[-c_{\Lambda,\theta}
+ \left(\frac{\log X}{\log\log X}\right)^{1/3}\right]
+\qquad(H\ge X^\theta),
+$$
+
+with some $c_{\Lambda,\theta}>0$. This is the modern primary's
+recorded classical input, not an independent audit of Huxley's proof.
+The Möbius and prime-error constants need not agree. For the
+[terminal-covariance application](../Weil/corvalan2023interpolation.md#pay-the-terminal-covariance-while-retaining-the-endpoint),
+choose a smaller common constant after the scale comparisons and
+restrict the bandwidth parameter accordingly. A full-prefix version
+uses a fixed power margin in the length exponent; the trivial bound
+for a short $\Lambda-1$ prefix costs its length times $O(\log X)$.
+Neither the Möbius $0.55$ threshold nor the shorter range below is
+substituted into this classical prime-error statement.
+
+
 ## A shorter interval range with different quantitative conclusions
 
 Kaisa Matomäki, Mayank Pandey, Javier Pliego, Joni Teräväinen and
@@ -232,3 +282,40 @@ existing strict first-layer activation rule. It does not use an
 increment bound to erase an arbitrary complete primitive baseline.
 The theorem and this note supply neither a same-source signed future
 occupation/credit bound nor a Robin or RH proof.
+
+## Uniform linear phases in a shorter range
+
+Javier Pliego and Mengdi Wang, *Discorrelation of the Möbius function
+with linear phases in short intervals*,
+[arXiv:2610.11487v1](https://arxiv.org/html/2610.11487v1#S1.Thmtheorem1),
+version 8 October 2026, §1, Theorem 1.1, gives, for fixed small
+$\varepsilon>0$ and $X^{0.58+\varepsilon}\le H\le X$,
+
+$$
+\sup_{\alpha\in\mathbb R}
+\left|\sum_{X<n\le X+H}\mu(n)e(n\alpha)\right|
+\ll_\varepsilon H(\log X)^{-1/3+\varepsilon}.
+$$
+
+This theorem is unconditional. The Dirichlet-$L$ moment premise
+(1.2) belongs to the paper's Theorem 1.3 on prime exponential sums;
+it is not an assumption of Theorem 1.1. The statement and its
+hypotheses are cited directly, without reproducing the source proof.
+
+For the [original residual-band application (I59)](../Weil/corvalan2023interpolation.md#pay-the-terminal-covariance-while-retaining-the-endpoint),
+$X\asymp N$ and $H\asymp N^{3/4}e^{\lambda\Omega(N)}$ satisfy
+this length range eventually. At this length, however, the previously
+cited Theorem 1.2 of arXiv:2610.09567v1 already supplies arbitrary
+fixed logarithmic savings for linear phases, realized as fixed
+one-dimensional torus nilsequences with uniform Lipschitz bounds.
+For the untwisted phase the longer-interval exponential error above
+is also stronger. The shorter admissible length in this new source
+does not improve the error supplied for that particular family.
+
+The residual moments and endpoint in (I56) are not a single linear
+phase. Turning them into a phase superposition still requires a proved
+expansion, its total weight and all losses, with the same actual
+coefficients and endpoint retained. Likewise the smooth test in
+(I78)--(I82) has growing derivative costs and two exact arithmetic
+scalar channels. This cited theorem supplies neither their joint
+cancellation nor a complete signed Robin estimate.

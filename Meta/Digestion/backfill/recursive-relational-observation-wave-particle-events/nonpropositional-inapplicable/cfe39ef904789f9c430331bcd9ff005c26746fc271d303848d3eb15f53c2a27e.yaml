@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cfe39ef904789f9c430331bcd9ff005c26746fc271d303848d3eb15f53c2a27e
+  normalized_sha256: sha256:cfe39ef904789f9c430331bcd9ff005c26746fc271d303848d3eb15f53c2a27e
+cas_ref: sha256:cfe39ef904789f9c430331bcd9ff005c26746fc271d303848d3eb15f53c2a27e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 175.1（因果评价商）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: 8f9bccf1bab2e6df439e109cebd49988917dbeab4ee475d5d9faed66f3b913ab
+    next_atom_id: fc94c4f7c12ae3bec0e6ad4267498c8abac35530a11c407c446fb56582707370

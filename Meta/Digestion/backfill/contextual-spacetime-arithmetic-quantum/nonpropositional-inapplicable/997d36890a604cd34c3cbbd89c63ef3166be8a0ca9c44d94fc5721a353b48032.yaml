@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:997d36890a604cd34c3cbbd89c63ef3166be8a0ca9c44d94fc5721a353b48032
+  normalized_sha256: sha256:997d36890a604cd34c3cbbd89c63ef3166be8a0ca9c44d94fc5721a353b48032
+cas_ref: sha256:997d36890a604cd34c3cbbd89c63ef3166be8a0ca9c44d94fc5721a353b48032
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 13.1 只固定输入、记录空间、访问划分和条件记录记号，不给出预测性质。
+    previous_atom_id: 4f542adaa556ec4af9a981f88a051ee69b4bb7f192a4b94189229aaa87a0e74b
+    next_atom_id: 9431353fa31f19cef8301e43c32a3a0075e85b2cbe5bb8bb9e4facc72aafef99

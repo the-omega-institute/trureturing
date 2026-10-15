@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5fff00b02afe26fb5ccad24571f4cdab15c95587fa185676d7e1f66fbb0c7da2
+  normalized_sha256: sha256:5fff00b02afe26fb5ccad24571f4cdab15c95587fa185676d7e1f66fbb0c7da2
+cas_ref: sha256:5fff00b02afe26fb5ccad24571f4cdab15c95587fa185676d7e1f66fbb0c7da2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 204.1　有预算的可达态集合只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 3a08ddc50930e7a3375c660fce8f2b907323fa36876aad2b590c310eb7a0ae14
+    next_atom_id: 853dc71812d9376aa2b3bb9c36d0137452122feda64603e121cbb39a8e5fb78c

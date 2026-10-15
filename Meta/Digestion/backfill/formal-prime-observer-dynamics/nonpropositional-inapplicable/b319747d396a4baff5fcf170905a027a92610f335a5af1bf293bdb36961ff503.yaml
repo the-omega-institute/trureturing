@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b319747d396a4baff5fcf170905a027a92610f335a5af1bf293bdb36961ff503
+  normalized_sha256: sha256:b319747d396a4baff5fcf170905a027a92610f335a5af1bf293bdb36961ff503
+cas_ref: sha256:b319747d396a4baff5fcf170905a027a92610f335a5af1bf293bdb36961ff503
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：181. 主除子正合观察序列：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 74540d294a177dfa08e11e7bfa5a4e55a078fa6beac92bbd2d5457942940fadb
+    next_atom_id: 50c6d2bc2b79619fa06fcd2b21e3f3c4018937daadd6ca59e7072462e870c26d

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6a1daa7a5bea386c37ab5a877d12c5753e1e3575097545fc907cb25f4cb47cf
+  normalized_sha256: sha256:a6a1daa7a5bea386c37ab5a877d12c5753e1e3575097545fc907cb25f4cb47cf
+cas_ref: sha256:a6a1daa7a5bea386c37ab5a877d12c5753e1e3575097545fc907cb25f4cb47cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 249.1（接口延续等价）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: f9ac8e201368d4ded177e7dc4a84ec32a61b8bd8e88596b30eeb6b16e5c050b3
+    next_atom_id: 86563019096242d32d8921dd4e0a461256b942b02f807f700c52cd95d61c7ffb

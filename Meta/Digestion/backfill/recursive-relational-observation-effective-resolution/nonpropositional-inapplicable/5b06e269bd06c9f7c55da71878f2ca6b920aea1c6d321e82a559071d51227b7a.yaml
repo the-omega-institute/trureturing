@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b06e269bd06c9f7c55da71878f2ca6b920aea1c6d321e82a559071d51227b7a
+  normalized_sha256: sha256:5b06e269bd06c9f7c55da71878f2ca6b920aea1c6d321e82a559071d51227b7a
+cas_ref: sha256:5b06e269bd06c9f7c55da71878f2ca6b920aea1c6d321e82a559071d51227b7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅规定真实延拓接口 R 的输入、返回值及非法词处理规则，不断言接口可计算或可取得。
+    previous_atom_id: 0b0c068c2460a0d5731465d2708e9eed454e8ff76b9a7a3d0dfbd203fa584f65
+    next_atom_id: c87c7d6027c70d5ce52fd963a776520cbb7b0acabb134072d1b461a3bf58a6a3

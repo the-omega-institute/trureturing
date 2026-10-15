@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:039212d74acedc7732dd21b76e7a4547811dbaff2c48b7fcc6c20d9dcca5d95f
+  normalized_sha256: sha256:039212d74acedc7732dd21b76e7a4547811dbaff2c48b7fcc6c20d9dcca5d95f
+cas_ref: sha256:039212d74acedc7732dd21b76e7a4547811dbaff2c48b7fcc6c20d9dcca5d95f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 论证前邻定理、命题或推论，并解释该证明的输入承诺、局部条件或边界；不另提出独立数学陈述。
+    previous_atom_id: 055a2d5c7e707feebabffd576f8ae94b4c016b37b1d7b27a71143ccd61228ba6
+    next_atom_id: e4b2c9c089d26a6d2401ae89911f6f7032593c5f575a4949439b5e0950dc62a0

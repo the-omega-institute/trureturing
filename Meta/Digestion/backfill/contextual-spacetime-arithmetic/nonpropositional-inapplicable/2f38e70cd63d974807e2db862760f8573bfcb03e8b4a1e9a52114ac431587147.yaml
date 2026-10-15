@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f38e70cd63d974807e2db862760f8573bfcb03e8b4a1e9a52114ac431587147
+  normalized_sha256: sha256:2f38e70cd63d974807e2db862760f8573bfcb03e8b4a1e9a52114ac431587147
+cas_ref: sha256:2f38e70cd63d974807e2db862760f8573bfcb03e8b4a1e9a52114ac431587147
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述属性父对操作更新及扩签名核等价。
+    previous_atom_id: 00771929f1d82859a2e9c004227f3749b049e2820825b488c39b3dbaf868fbd3
+    next_atom_id: 48c7cafaa4ebe08112b966945ed85ae5c006ffaf1680bbb3f43a2eeaf6413ddf

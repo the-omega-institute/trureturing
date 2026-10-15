@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b35bdadbde463774ea7c2d7e68c20ee8daf68dcf992273c7c6e9fecc37e1ef8
+  normalized_sha256: sha256:6b35bdadbde463774ea7c2d7e68c20ee8daf68dcf992273c7c6e9fecc37e1ef8
+cas_ref: sha256:6b35bdadbde463774ea7c2d7e68c20ee8daf68dcf992273c7c6e9fecc37e1ef8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Second proof step of preceding energy-growth theorem one, deriving a Laplace-transform contradiction.
+    previous_atom_id: 1bb56017414c76c4bcca75e29710becb48433143dd238af431fffb79e3bff15e
+    next_atom_id: 33bd332c5190b7fb8bf6b6fde4e8863e2cbc32878b35713e4e42abc4c4582e8b

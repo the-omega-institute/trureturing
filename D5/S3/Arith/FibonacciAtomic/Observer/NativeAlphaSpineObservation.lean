@@ -20,6 +20,15 @@ open ActualTreeReadoutAcquisition (Address Reply readout)
 open ActualLeafHistoryRigidity (subtree)
 open ActualFibonacciSupportChain
 
+
+/-- The original hole address reaches the supplied subtree in the alpha-sibling context. -/
+theorem native_alpha_spine_at (p : Address) (x : Source) :
+      subtree p (p.foldr (fun b t => if b then .mul (.of true) t else .mul t (.of true)) x) = some x := by
+    revert x
+    induction p with
+    | nil => simp [subtree]
+    | cons b p ih => cases b <;> simp only [List.foldr, subtree] <;> exact ih
+
 /-- The three native sources on an alpha-spine hole have distinct original
 replies, equal current replies outside the hole cone, and the ABT44 support
 radius shifted by the hole depth. -/
@@ -60,13 +69,7 @@ theorem native_alpha_spine_observation :
       · exact ih
       · exact ih
 
-  have spine_at (x : Source) :
-      subtree p (p.foldr (fun b t => if b then .mul (.of true) t else .mul t (.of true)) x) = some x := by
-    clear original
-    revert x
-    induction p with
-    | nil => simp [subtree]
-    | cons b p ih => cases b <;> simp only [List.foldr, subtree] <;> exact ih
+  have spine_at := native_alpha_spine_at p
   have outside (n : Nat) (x y : Source) (q : Address) (h : ¬ p.IsPrefix q) :
       readout q (substitution^[n] (p.foldr (fun b t => if b then .mul (.of true) t else .mul t (.of true)) x)) =
         readout q (substitution^[n] (p.foldr (fun b t => if b then .mul (.of true) t else .mul t (.of true)) y)) := by
