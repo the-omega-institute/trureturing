@@ -163,7 +163,8 @@ theorem isClosed_fibreGraph_adj (q : A → B) (Y : Set (Ultrafilter A))
       · obtain ⟨S, hS, hSinj⟩ := (hgood hx).2
         refine ⟨basic Y S, basic Y S, basic_isOpen Y S, basic_isOpen Y S,
           hS, ?_, ?_⟩
-        · simpa [hval] using hS
+        · change S ∈ y.val
+          simpa [hval] using hS
         · apply basic_prod_nonedge
           intro a ha b hb hab hq
           exact hab (hSinj ha hb hq)
