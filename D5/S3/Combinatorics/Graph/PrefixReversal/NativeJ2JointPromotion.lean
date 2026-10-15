@@ -56,6 +56,15 @@ private def rawPParentMap {m : ℕ} (F : SupplyFrame m 2)
   (pMarkedParentLift F A u hbase hA).comp
     (j2SpecialMap F (old_base_bound F A u hbase hA))
 
+private theorem piece_copy_eq {V : Type*} {G : SimpleGraph V}
+    (p : Piece G) (a b : V) (ha : p.start = a) (hb : p.finish = b) :
+    (⟨a, b, p.walk.copy ha hb⟩ : Piece G) = p := by
+  rcases p with ⟨x, y, w⟩
+  dsimp only at ha hb
+  subst a
+  subst b
+  rfl
+
 private theorem same_old_joint_native_ports {m : ℕ} (hm : 5 ≤ m)
     (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
     (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
@@ -142,23 +151,22 @@ private theorem same_p_parent_opening {m : ℕ} (hm : 5 ≤ m)
     tail.map lift, ?_, P, ?_, ?_, ?_⟩
   · simpa only [SimpleGraph.Walk.map_cons] using congrArg
       (fun w => w.map lift) hd
-  · dsimp only [P]
-    cases W.pieces j with
-    | mk a b w =>
-      dsimp only at hs ht
-      subst a
-      subst b
-      rfl
+  · exact piece_copy_eq (W.pieces j) _ _ hs ht
   · apply (List.map_perm_map_iff Subtype.val_injective).mp
-    simpa only [P, SimpleGraph.Walk.support_copy, W.childPieces,
-      parentPiece, SimpleGraph.Walk.support_map, List.flatMap_map, mapPiece,
-      List.map_append, List.map_map, List.map_flatMap, Function.comp_def]
+    dsimp only [P]
+    rw [SimpleGraph.Walk.support_copy, W.childPieces j]
+    simpa only [parentPiece, childLift, lift, rawPParentMap, pMarkedParentLift,
+      j2SpecialMap, RelHom.coeFn_mk, SimpleGraph.Walk.support_map,
+      List.flatMap_map, mapPiece, List.map_append, List.map_map,
+      List.map_flatMap, Function.comp_def]
       using hPs
   · apply (List.map_perm_map_iff (Sym2.map.injective Subtype.val_injective)).mp
-    simpa only [P, SimpleGraph.Walk.edges_copy, W.childPieces,
-      parentPiece, SimpleGraph.Walk.edges_map, List.flatMap_map, mapPiece,
+    dsimp only [P]
+    rw [SimpleGraph.Walk.edges_copy, W.childPieces j]
+    simpa only [parentPiece, childLift, lift, rawPParentMap, pMarkedParentLift,
+      j2SpecialMap, RelHom.coeFn_mk, SimpleGraph.Walk.edges_map, List.flatMap_map, mapPiece,
       List.map_append, List.map_map, List.map_flatMap, List.map_cons, List.map_nil,
-      Sym2.map_map, Sym2.map_mk, Function.comp_def]
+      Sym2.map_map, Sym2.map_mk, Function.comp_def, List.append_assoc]
       using hPe
 
 /-- Retain the literal saved first and last openings while exposing the
@@ -269,12 +277,17 @@ theorem native_j2_same_parent_eight_piece_partition {m : ℕ} (hm : 5 ≤ m)
   obtain ⟨r₀, ℓ₀, r₁, ℓ₁, hr₀, hℓ₀, hr₁, hℓ₁,
       q₀, q₁, q₂, _, _, _, hQs, hQe, _⟩ :=
     native_j2_same_q_three_fragments hm F A u hbase hA W
-  let qLift := childLift O ⟨0, by omega⟩
+  let qLift := childLift O ⟨0, by
+    have hlen := outer_base_bound F A u hbase hA
+    change 0 < (outerFrame F A u hbase).base.length
+    omega⟩
   let Λ := W.special.path.map qLift
   let q : Piece (ParentGraph F A u hbase) := ⟨_, _, Λ⟩
   have hq : q = W.pieces ⟨0, by
       simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩ := by
-    rw [W.childPieces, W.specialPath]
+    rw [W.childPieces]
+    dsimp only [parentPiece]
+    rw [W.specialPath]
     rfl
   obtain ⟨others, hlink, hb, hclose, hcs, hce⟩ :=
     same_parent_chain_inventory hm F A u hbase hA W q ⟨s, t, P⟩ hq hP
@@ -293,8 +306,12 @@ theorem native_j2_same_parent_eight_piece_partition {m : ℕ} (hm : 5 ≤ m)
     simp only [deleted, List.map_map, Function.comp_def, Sym2.map_map]
     change ((W.P.seed.H.toList ++ W.P.seed.K.toList).map
       (Sym2.map Subtype.val)).toFinset = _
-    rw [List.toFinset_map, List.toFinset_append, Finset.toList_toFinset,
-      Finset.toList_toFinset, Finset.image_union, hHold, hKold, Finset.union_comm]
+    have hmap (S : Finset (Sym2 {x : Configuration m // FrameDomain F x})) :
+        (S.toList.map (Sym2.map Subtype.val)).toFinset =
+          S.image (Sym2.map Subtype.val) := by
+      ext e
+      simp only [List.mem_toFinset, List.mem_map, Finset.mem_toList, Finset.mem_image]
+    rw [List.map_append, List.toFinset_append, hmap, hmap, hHold, hKold, Finset.union_comm]
   have holdDisjoint : Disjoint (markedCuts F) (markedCuts B) := by
     rw [← hKold, ← hHold]
     apply Finset.disjoint_left.mpr
@@ -318,23 +335,22 @@ theorem native_j2_same_parent_eight_piece_partition {m : ℕ} (hm : 5 ≤ m)
       ⟨qLift r₀, qLift ℓ₁, new₁⟩,
       ⟨qLift r₁, (old 1).start, new₂⟩,
       old 4, old 3, old 2, old 0, old 5]
+  let changed : List (Piece (ParentGraph F A u hbase)) :=
+    [⟨(old 1).finish, qLift ℓ₀, new₀⟩, ⟨qLift r₀, qLift ℓ₁, new₁⟩,
+      ⟨qLift r₁, (old 1).start, new₂⟩] ++ rest
   have hsperm : ((List.ofFn joint).flatMap fun p => p.walk.support).Perm
-      (([⟨(old 1).finish, qLift ℓ₀, new₀⟩,
-        ⟨qLift r₀, qLift ℓ₁, new₁⟩, ⟨qLift r₁, (old 1).start, new₂⟩] ++ rest).flatMap
-          fun p : Piece (ParentGraph F A u hbase) => p.walk.support) := by
+      (changed.flatMap fun p => p.walk.support) := by
     apply List.perm_iff_count.mpr
     intro x
-    simp only [joint, rest, List.ofFn_succ, List.ofFn_zero, Matrix.cons_val_zero,
+    simp only [joint, changed, rest, List.ofFn_succ, List.ofFn_zero, Matrix.cons_val_zero,
       Matrix.cons_val_succ, List.flatMap_cons, List.flatMap_nil, List.flatMap_append,
       List.count_append, List.count_reverse, List.count_nil, SimpleGraph.Walk.support_reverse]
     omega
   have heperm : ((List.ofFn joint).flatMap fun p => p.walk.edges).Perm
-      (([⟨(old 1).finish, qLift ℓ₀, new₀⟩,
-        ⟨qLift r₀, qLift ℓ₁, new₁⟩, ⟨qLift r₁, (old 1).start, new₂⟩] ++ rest).flatMap
-          fun p : Piece (ParentGraph F A u hbase) => p.walk.edges) := by
+      (changed.flatMap fun p => p.walk.edges) := by
     apply List.perm_iff_count.mpr
     intro e
-    simp only [joint, rest, List.ofFn_succ, List.ofFn_zero, Matrix.cons_val_zero,
+    simp only [joint, changed, rest, List.ofFn_succ, List.ofFn_zero, Matrix.cons_val_zero,
       Matrix.cons_val_succ, List.flatMap_cons, List.flatMap_nil, List.flatMap_append,
       List.count_append, List.count_reverse, List.count_nil, SimpleGraph.Walk.edges_reverse]
     omega
