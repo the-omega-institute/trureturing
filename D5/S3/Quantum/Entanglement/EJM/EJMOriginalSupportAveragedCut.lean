@@ -7,7 +7,7 @@
    digest: Averaging the original three-factor conflict forces a weighted outside count across all thirty-two original factors. -/
 
 import D5.S3.Quantum.Entanglement.EJM.EJMOriginalSupportConflict
-import D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
+import D5.S3.Quantum.Entanglement.EJM.EJMSourceActionClosure
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,7 +21,7 @@ open D5.S3.Quantum.Entanglement.ElegantJointMeasurementInflation (Node)
 open D5.S3.Quantum.Entanglement.EJMInflationScore (lhsTriangle lhsSingleton)
 open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (trianglePerm singletonPerm)
 open D5.S3.Quantum.Entanglement.EJM.EJMOriginalSupportConflict
-open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMSourceActionClosure
 open scoped BigOperators
 
 def TriangleInside (e : Node → Fin 4) (i : Fin 16) : Prop :=

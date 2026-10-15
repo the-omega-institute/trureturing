@@ -7,6 +7,7 @@
    digest: The actual 192 by 24 EJM actions preserve the centered score and checked partial cuts strictly decrease finite lexicographic rank. -/
 
 import D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
+import D5.S3.Quantum.Entanglement.EJM.EJMSourceActionClosure
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,12 +17,12 @@ open D5.S0.Certificates.FiniteSymmetryBoundReplay
 open D5.S3.Quantum.Entanglement.ElegantJointMeasurementInflation (Node)
 open D5.S3.Quantum.Entanglement.EJMInflationScore (score)
 open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2)
-open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry
+open D5.S3.Quantum.Entanglement.EJM.EJMSourceActionClosure
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData (outcome)
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport (outcomeEquiv)
 
 /- Node is already Fin 20. The source table and all of its actual block/local
-transport witnesses are reused from EJMScoreSymmetry; the 24 outcome maps are
+transport witnesses are reused from EJMSourceActionClosure; the 24 outcome maps are
 reused from the local producer. No second table or node-order conversion occurs.
 The producer orders source maps first, then the 24 lexicographic outcome maps.
 -/
