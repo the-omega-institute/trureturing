@@ -141,7 +141,7 @@ public sealed partial class FrozenLedgerTests
     [InlineData("infixr", "1 ⊞ 2")]
     [InlineData("prefix", "⊞ 1")]
     [InlineData("postfix", "1 ⊞")]
-    public void MathlibReanchorRejectsNotationOperatorDependencies(string notation, string application)
+    public void MathlibReanchorBindsNotationOperatorDependencies(string notation, string application)
     {
         var target = notation is "prefix" or "postfix" ? "def original (x : Nat) : Nat := x\n"
             : "def original (x y : Nat) : Nat := x + y\n";
@@ -151,6 +151,13 @@ public sealed partial class FrozenLedgerTests
         var result = ValidateMathlibReanchor([root, Module("B")],
             [root with { StatementMaterial = "new notation consumer" }, Module("B")],
             ["A"], ReanchorEnvironment.PinUpgrade);
-        Assert.False(result.Authorized);
+        Assert.True(result.Authorized);
+        var changed = ValidateMathlibReanchor([root, Module("B")],
+            [root with
+            {
+                Source = source.Replace(" := x", " := 1 + x", StringComparison.Ordinal),
+                StatementMaterial = "new notation consumer",
+            }, Module("B")], ["A"], ReanchorEnvironment.PinUpgrade);
+        Assert.False(changed.Authorized);
     }
 }

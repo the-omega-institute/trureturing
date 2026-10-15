@@ -215,7 +215,11 @@ internal sealed partial class LeanSourceCatalog
             }
 
             if (!declaration.ManagedSourceClosure.IsDefaultOrEmpty) continue;
-            RejectCustomSyntaxDependency(declaration);
+            if (UsesCustomSyntax(declaration))
+            {
+                var syntaxSource = CustomSyntaxSource(declaration, moduleDeclarations[0]);
+                dependencies.TryAdd(SourceIdentity(syntaxSource), syntaxSource);
+            }
             foreach (var dependency in ResolveDependencies(declaration, moduleDeclarations[0]))
             {
                 if (dependency.IsProof && declaration.Kind != "alias")
@@ -532,44 +536,6 @@ internal sealed partial class LeanSourceCatalog
         }
 
         return false;
-    }
-
-    private void RejectCustomSyntaxDependency(LeanSourceDeclaration declaration)
-    {
-        if (IsGeneratorClosure(declaration))
-        {
-            foreach (var source in declarations.Where(source => source.Path == declaration.Path))
-            {
-                RejectCustomSyntaxDependency(source);
-            }
-
-            foreach (var command in GeneratorCommands(declaration.AmbientTokens))
-            {
-                var isRules = command.Any(static token => token.Text is "macro_rules" or "elab_rules");
-                RejectCustomSyntaxTokens(declaration, isRules ? command
-                    : command.SkipWhile(static token => token.Text != "=>").Skip(1));
-            }
-
-            return;
-        }
-
-        RejectCustomSyntaxTokens(declaration, declaration.SemanticTokens);
-        foreach (var command in ImplicitInstanceCommands(declaration.AmbientTokens))
-            RejectCustomSyntaxTokens(declaration, command);
-    }
-
-    private void RejectCustomSyntaxTokens(
-        LeanSourceDeclaration declaration, IEnumerable<LeanSourceToken> tokens)
-    {
-        var semantic = tokens
-            .Select(static token => LeanCustomSyntaxCatalog.NormalizeLiteral(token.Text))
-            .ToImmutableHashSet(StringComparer.Ordinal);
-        var used = customSyntaxCatalog.VisibleFrom(declaration).FirstOrDefault(semantic.Contains);
-        if (used is not null)
-        {
-            throw new LeanSourceExtractionException(
-                $"Lean proposition source depends on unsupported custom syntax {used}.");
-        }
     }
 
     private static ImmutableArray<LeanSourceDeclaration> ParseFile(

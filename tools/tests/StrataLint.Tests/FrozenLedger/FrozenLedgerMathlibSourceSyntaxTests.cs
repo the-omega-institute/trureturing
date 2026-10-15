@@ -526,7 +526,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void MathlibReanchorRefusesAnonymousInstanceUnsupportedImportedSyntax()
+    public void MathlibReanchorBindsAnonymousInstanceImportedSyntax()
     {
         var root = ModuleWithReport("A",
             "import D5.S0.Carrier.B\nclass Carrier where\n  value : Nat\n"
@@ -538,7 +538,7 @@ public sealed partial class FrozenLedgerTests
             [root, dependency], [root with { StatementMaterial = "new class" }, dependency],
             ["A"], ReanchorEnvironment.PinUpgrade);
 
-        Assert.False(result.Authorized);
+        Assert.True(result.Authorized);
     }
 
     [Theory]
@@ -653,7 +653,7 @@ public sealed partial class FrozenLedgerTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void MathlibReanchorRefusesCustomSyntaxUsedOnlyInGeneratorBodies(bool imported)
+    public void MathlibReanchorBindsCustomSyntaxUsedOnlyInGeneratorBodies(bool imported)
     {
         const string inner = "macro \"inner_value\" : term => `(7)\n";
         var root = ModuleWithReport("A",
@@ -667,13 +667,13 @@ public sealed partial class FrozenLedgerTests
             [root with { StatementMaterial = "new generated value" }, dependency],
             ["A"], ReanchorEnvironment.PinUpgrade);
 
-        Assert.False(result.Authorized);
+        Assert.True(result.Authorized);
     }
 
     [Theory]
     [InlineData("macro_rules")]
     [InlineData("elab_rules : term")]
-    public void MathlibReanchorRefusesCustomSyntaxUsedOnlyInGeneratorRulePatterns(string command)
+    public void MathlibReanchorBindsCustomSyntaxUsedOnlyInGeneratorRulePatterns(string command)
     {
         var root = ModuleWithReport("A",
             "import D5.S0.Carrier.B\n" + command + "\n  | `(inner_value) => `(7)\n"
@@ -687,7 +687,7 @@ public sealed partial class FrozenLedgerTests
             [root with { StatementMaterial = "new generated value" }, dependency],
             ["A"], ReanchorEnvironment.PinUpgrade);
 
-        Assert.False(result.Authorized);
+        Assert.True(result.Authorized);
     }
 
     [Theory]
