@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 A. Mitra, *Quantifying unsharpness of observables in an outcome-independent way*, Int. J. Theor. Phys. 61, 236 (2022), arXiv:2201.02578v3, defines instrument-independent unsharpness measures of an observable A = {A_i}.
-- **The measures.** With the X-matrix X^A = Σ_i ‖A_i‖A_i, they are E(A) = ‖I − X^A‖ and E′(A) = Tr[(I/d)(I − X^A)] (Eqs. (47)–(48)).
+- **The measures.** With the X-matrix X^A = Σ_i ‖A_i‖A_i, they are E(A) = ‖I − X^A‖ and E′(A) = Tr[(I/d)(I − X^A)] (Eqs. (44) and (48)).
 - **Monotonicity criteria.** Theorems 3 and 4 show that E and E′ are non-decreasing under the white noise A^λ_i = λA_i + (1 − λ)I/n exactly when Σ^A_1 ≥ Σ^A_2 (Eq. (50)) and Σ′^A_1 ≥ Σ′^A_2 (Eq. (60)) hold. Here Σ^A_1 = x^A_min − 1/n and Σ^A_2 = Σ_i ‖A_i‖/n − x^A_min, with x^A_min the lowest eigenvalue of X^A.
 - **The conjecture.** Propositions 1–2 prove both inequalities for dichotomic qubit observables. Then: "Conjecture 1. For any qubit observable A, inequality Σ^A_1 ≥ Σ^A_2 and inequality Σ′^A_1 ≥ Σ′^A_2 hold and therefore, E(A^λ) ≥ E(A) and E′(A^λ) ≥ E′(A) for all 1 ≥ λ ≥ 0."
 

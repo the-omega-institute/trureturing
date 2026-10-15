@@ -21,7 +21,7 @@ A. Mitra, *Quantifying unsharpness of observables in an outcome-independent way*
 DOI: 10.1007/s10773-022-05219-2 (as listed on the arXiv abstract page).
 Primary version read: https://arxiv.org/abs/2201.02578v3.
 Source: https://arxiv.org/pdf/2201.02578v3 (text read from the PDF):
-- §IV.A, the measures E and E′ (Eqs. (47)–(49));
+- §IV.A, the measures E and E′ (Eqs. (44) and (48));
 - §IV.B, Theorems 3–4, Eqs. (50)–(62), and Propositions 1–2;
 - §IV.B, page 11, Conjecture 1;
 - §VII, the request to prove Conjecture 1.
@@ -39,4 +39,4 @@ Conjecture 1. For any qubit observable A, inequality Σ^A_1 ≥ Σ^A_2 and inequ
 
 ## Reading used by the repository
 
-A qubit observable with n outcomes is a family of n positive semidefinite 2 × 2 complex matrices summing to the identity, for any n ≥ 1. The norm ‖·‖ is the operator norm, and x^A_min is the lowest eigenvalue of the Hermitian matrix X^A. E(A) = ‖I − X^A‖ as in Eq. (47), and E′(A) = Tr[(I/2)(I − X^A)] as in Eq. (48) with d = 2. The conjecture is read as the conjunction of its four clauses for every qubit observable.
+A qubit observable with n outcomes is a family of n positive semidefinite 2 × 2 complex matrices summing to the identity, for any n ≥ 1. The norm ‖·‖ is the operator norm, and x^A_min is the lowest eigenvalue of the Hermitian matrix X^A. E(A) = ‖I − X^A‖ as in Eq. (44), and E′(A) = Tr[(I/2)(I − X^A)] as in Eq. (48) with d = 2. The conjecture is read as the conjunction of its four clauses for every qubit observable.
