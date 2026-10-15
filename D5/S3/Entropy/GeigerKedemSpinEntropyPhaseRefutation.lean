@@ -17,7 +17,7 @@ set_option autoImplicit false
 set_option linter.style.longLine false
 
 open Complex MeasureTheory Set Metric
-open scoped Topology
+open scoped Topology ComplexConjugate
 
 namespace D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation
 
@@ -111,5 +111,126 @@ private theorem circleAverage_div_pow (f : ℂ → ℂ)
     (by norm_num : (0 : ℝ) < 1) n hf]
   simp only [smul_eq_mul]
   field_simp
+
+private theorem div_pow_circleIntegrable (f : ℂ → ℂ)
+    (hf : DifferentiableOn ℂ f (closedBall 0 1)) (n : ℕ) :
+    CircleIntegrable (fun z => f z / z ^ n) 0 1 := by
+  apply ContinuousOn.circleIntegrable (by norm_num)
+  apply (hf.continuousOn.mono sphere_subset_closedBall).div
+    (continuousOn_id.pow n)
+  intro z hz
+  apply pow_ne_zero
+  have hnorm : ‖z‖ = 1 := by simpa [mem_sphere_iff_norm] using hz
+  exact norm_ne_zero_iff.mp (by simpa only [id_eq, hnorm] using (one_ne_zero : (1 : ℝ) ≠ 0))
+
+private theorem weighted_circleAverage (s : ℝ) (f : ℂ → ℂ)
+    (hf : DifferentiableOn ℂ f (closedBall 0 1)) :
+    Real.circleAverage (fun z => star (poly s z) * f z) 0 1 =
+      3 * f 0 + deriv f 0 + (s : ℂ) * iteratedDeriv 4 f 0 / 24 := by
+  have hconj (z : ℂ) (hz : z ∈ sphere 0 |(1 : ℝ)|) : star z = z⁻¹ := by
+    have hnorm : ‖z‖ = 1 := by simpa [mem_sphere_iff_norm] using hz
+    apply eq_inv_of_mul_eq_one_left
+    change conj z * z = 1
+    rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, hnorm]
+    norm_num
+  have heq := Real.circleAverage_congr_sphere (c := (0 : ℂ)) (R := (1 : ℝ))
+    (f₁ := fun z => star (poly s z) * f z)
+    (f₂ := fun z => (3 : ℂ) • f z + f z / z + (s : ℂ) • (f z / z ^ 4))
+    (by
+      intro z hz
+      simp only [poly, star_add, star_mul, star_pow, star_ofNat, show star (s : ℂ) = (s : ℂ) from Complex.conj_ofReal s,
+        hconj z hz, smul_eq_mul, div_eq_mul_inv, inv_pow]
+      ring)
+  rw [heq]
+  have h0 : CircleIntegrable f 0 1 :=
+    ContinuousOn.circleIntegrable (by norm_num) (hf.continuousOn.mono sphere_subset_closedBall)
+  have h1 := div_pow_circleIntegrable f hf 1
+  have h4 := div_pow_circleIntegrable f hf 4
+  simp only [pow_one] at h1
+  have h4s : CircleIntegrable (fun z => (s : ℂ) • (f z / z ^ 4)) 0 1 := by
+    simpa only [CircleIntegrable, smul_eq_mul] using h4.const_mul (s : ℂ)
+  rw [Real.circleAverage_fun_add (f₁ := fun z => (3 : ℂ) • f z + f z / z)
+    (f₂ := fun z => (s : ℂ) • (f z / z ^ 4)) ((h0.smul (3 : ℂ)).add h1)
+    h4s,
+    Real.circleAverage_fun_add (f₁ := fun z => (3 : ℂ) • f z) (f₂ := fun z => f z / z)
+      (h0.smul (3 : ℂ)) h1,
+    Real.circleAverage_fun_smul, Real.circleAverage_fun_smul]
+  have ha0 := circleAverage_div_pow f hf 0
+  have ha1 := circleAverage_div_pow f hf 1
+  have ha4 := circleAverage_div_pow f hf 4
+  simp only [pow_zero, div_one, iteratedDeriv_zero, Nat.factorial_zero, Nat.cast_one] at ha0
+  simp only [pow_one, iteratedDeriv_one, Nat.factorial_one, Nat.cast_one, div_one] at ha1
+  norm_num only [Nat.factorial] at ha4
+  rw [ha0, ha1, ha4]
+  simp only [smul_eq_mul]
+  ring
+
+private theorem logPoly_derivatives (s : ℝ) (hs : |s| ≤ 1) :
+    deriv (logPoly s) 0 = Complex.log 3 + 1 ∧
+      iteratedDeriv 4 (logPoly s) 0 =
+        24 * (s : ℂ) * (Complex.log 3 + 1) + 2 / 27 := by
+  let p1 : ℂ → ℂ := fun z => 1 + 4 * (s : ℂ) * z ^ 3
+  let p2 : ℂ → ℂ := fun z => 12 * (s : ℂ) * z ^ 2
+  let p3 : ℂ → ℂ := fun z => 24 * (s : ℂ) * z
+  have hp (z : ℂ) : HasDerivAt (poly s) (p1 z) z := by
+    convert! ((hasDerivAt_id z).const_add 3).add
+      (((hasDerivAt_id z).pow 4).const_mul (s : ℂ)) using 1 <;> (try dsimp only [poly, p1, id_eq]) <;> ring
+  have hp1 (z : ℂ) : HasDerivAt p1 (p2 z) z := by
+    convert! (((hasDerivAt_id z).pow 3).const_mul (4 * (s : ℂ))).const_add 1
+      using 1 <;> (try dsimp only [p1, p2, id_eq]) <;> ring
+  have hp2 (z : ℂ) : HasDerivAt p2 (p3 z) z := by
+    convert! (((hasDerivAt_id z).pow 2).const_mul (12 * (s : ℂ)))
+      using 1 <;> (try dsimp only [p2, p3, id_eq]) <;> ring
+  have hp3 (z : ℂ) : HasDerivAt p3 (24 * (s : ℂ)) z := by
+    simpa only [p3, id_eq, mul_one] using (hasDerivAt_id z).const_mul (24 * (s : ℂ))
+  let d1 : ℂ → ℂ := fun z => p1 z * (Complex.log (poly s z) + 1)
+  let d2 : ℂ → ℂ := fun z =>
+    p2 z * (Complex.log (poly s z) + 1) + p1 z ^ 2 / poly s z
+  let d3 : ℂ → ℂ := fun z =>
+    p3 z * (Complex.log (poly s z) + 1) +
+      3 * p1 z * p2 z / poly s z - p1 z ^ 3 / poly s z ^ 2
+  have hn (z : ℂ) (hz : z ∈ ball 0 1) : poly s z ≠ 0 :=
+    Complex.slitPlane_ne_zero (poly_slit s hs z (ball_subset_closedBall hz))
+  have hl (z : ℂ) (hz : z ∈ ball 0 1) :=
+    (hp z).clog (poly_slit s hs z (ball_subset_closedBall hz))
+  have h1 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt (logPoly s) (d1 z) z := by
+    convert! (hp z).mul (hl z hz) using 1
+    try dsimp only [d1]
+    field_simp [hn z hz] <;> ring
+  have h2 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt d1 (d2 z) z := by
+    convert! (hp1 z).mul ((hl z hz).add_const 1) using 1
+    try dsimp only [d2]
+    field_simp [hn z hz] <;> ring
+  have h3 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt d2 (d3 z) z := by
+    convert! ((hp2 z).mul ((hl z hz).add_const 1)).add
+      (((hp1 z).pow 2).div (hp z) (hn z hz)) using 1
+    try dsimp only [d3, Pi.pow_apply]
+    field_simp [hn z hz] <;> ring
+  have hzero : (0 : ℂ) ∈ ball 0 1 := by simp
+  have e1 : Set.EqOn (deriv (logPoly s)) d1 (ball 0 1) := fun z hz => (h1 z hz).deriv
+  have e2 : Set.EqOn (iteratedDeriv 2 (logPoly s)) d2 (ball 0 1) := by
+    intro z hz
+    rw [show (2 : ℕ) = 1 + 1 by rfl, iteratedDeriv_succ, iteratedDeriv_one]
+    simpa only [iteratedDeriv_one] using
+      ((e1.iteratedDeriv_of_isOpen isOpen_ball 1) hz).trans (by
+        simpa only [iteratedDeriv_one] using (h2 z hz).deriv)
+  have e3 : Set.EqOn (iteratedDeriv 3 (logPoly s)) d3 (ball 0 1) := by
+    intro z hz
+    rw [show (3 : ℕ) = 2 + 1 by rfl, iteratedDeriv_succ]
+    simpa only [iteratedDeriv_one] using
+      ((e2.iteratedDeriv_of_isOpen isOpen_ball 1) hz).trans (by
+        simpa only [iteratedDeriv_one] using (h3 z hz).deriv)
+  constructor
+  · simpa [d1, p1, poly] using (h1 0 hzero).deriv
+  · rw [show (4 : ℕ) = 3 + 1 by rfl, iteratedDeriv_succ]
+    have e4 := (e3.iteratedDeriv_of_isOpen isOpen_ball 1) hzero
+    simp only [iteratedDeriv_one] at e4
+    rw [e4]
+    have hd3 := (((hp3 0).mul ((hl 0 hzero).add_const 1)).add
+      ((((hp1 0).const_mul 3).mul (hp2 0)).div (hp 0) (hn 0 hzero))).sub
+      (((hp1 0).pow 3).div ((hp 0).pow 2) (pow_ne_zero 2 (hn 0 hzero)))
+    change HasDerivAt d3 _ 0 at hd3
+    rw [hd3.deriv]
+    norm_num [p1, p2, p3, poly]
 
 end D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation
