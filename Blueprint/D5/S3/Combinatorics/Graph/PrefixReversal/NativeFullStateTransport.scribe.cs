@@ -12,8 +12,5 @@ internal sealed class NativeFullStateTransportDocument : IScribeDocumentDefiniti
         Blocks(
             Describe.Lean(DescribeId.Create("native-full-state-transport-native-actual-identity-two-order-state-transport"), DeclarationHandle.Create(Prefix + "native_actual_identity_two_order_state_transport"),
                 H("Carry Joint and Both Half Partitions Together"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("An inclusion that preserves raw configurations carries the joint partition and both restored half partitions of one supplied actual cycle together. Both native endpoint templates and both raw cut images remain attached to that same mapped cycle; no second witness is selected."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("native-full-state-transport-native-actual-full-parent-state-next-marked"), DeclarationHandle.Create(Prefix + "native_actual_full_parent_state_next_marked"),
-                H("Transport the Actual Completed Parent State"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Given one actual Hamilton parent cycle with all three partitions, both endpoint templates and its protected a and remaining b retention laws, the parent-to-next identification preserves all of these data. Prepending keeps the protected labels fixed. The theorem transports supplied data and does not assert unconditional existence of an all-order state."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("An inclusion that preserves raw configurations carries the joint partition and both restored half partitions of one supplied actual cycle together. Both native endpoint templates and both raw cut images remain attached to that same mapped cycle; no second witness is selected."))), DescribeRole.Theorem))));
 }
