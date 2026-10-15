@@ -43,6 +43,7 @@ private theorem primary_actual_partition {m k : ℕ} (hm : 3 ≤ m)
   classical
   have hraw : (specialCuts hm F hB).image (Sym2.map Subtype.val) = markedCuts F := by
     simp only [specialCuts, Finset.image_image, markedCuts]
+    congr 1 <;> funext i <;> rfl
   have hcuts : S.K = specialCuts hm F hB :=
     Finset.image_injective (Sym2.map.injective Subtype.val_injective)
       (S.primaryCuts.trans hraw.symm)
