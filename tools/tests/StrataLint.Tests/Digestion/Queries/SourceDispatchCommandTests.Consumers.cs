@@ -11,6 +11,25 @@ public sealed partial class SourceDispatchCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
+    public void PositiveTriggerExcludedPartialTailIsSkippedByFreshAndCachedSelection(bool cached)
+    {
+        var id = new string('a', 64);
+        var raw = RawRepositorySnapshot.Create([
+            Metadata("alpha", excluded: true),
+            RawRepositoryEntry.FromText($"Meta/Digestion/backfill/alpha/partial-tail/{id}.yaml", "invalid: ["),
+        ]);
+        string[] selection = cached ? ["--atom-id", id] : ["--source", "alpha"];
+        var selected = SearchAtomsCommand.Run(Gateway(raw), [.. selection, "--selection", "default-dispatch"]);
+        Assert.True(selected.Success, selected.Error);
+        Assert.Empty(selected.Output);
+        var inspected = SearchAtomsCommand.Run(Gateway(raw), ["--source", "alpha"]);
+        Assert.True(inspected.Success, inspected.Error);
+        Assert.Contains(id, inspected.Output, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     public void DefaultDispatchIsDistinctFromRawSearchAndLoadsOnlySelectedMetadata(bool excluded)
     {
         var id = new string('a', 64);
