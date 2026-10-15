@@ -58,7 +58,8 @@ def registration :
   unitName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.unit
   realizationName :=
-    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.source_registration
+    .str `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum
+      "source_registration"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
