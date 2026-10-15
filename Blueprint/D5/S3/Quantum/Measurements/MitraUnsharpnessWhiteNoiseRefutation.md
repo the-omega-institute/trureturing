@@ -106,7 +106,7 @@ $$\forall \left(n: \mathbb{N}\right), \left(\forall \left(A: \left(\operatorname
 
 *Commentary.*
 
-Section IV.A, equation (47), gives the unsharpness as the operator norm of the identity minus the X-matrix.
+Section IV.A, equation (44), gives the unsharpness as the operator norm of the identity minus the X-matrix.
 
 **Definition 1.9 (Normalized-trace unsharpness).**
 

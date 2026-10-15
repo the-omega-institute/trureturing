@@ -54,13 +54,13 @@ The module quantifies over every POVM `Fin n → Matrix (Fin 2) (Fin 2) ℂ` (th
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Measurements/MitraUnsharpnessWhiteNoiseRefutation.lean` (241 lines).
+The canonical source is `D5/S3/Quantum/Measurements/MitraUnsharpnessWhiteNoiseRefutation.lean` (238 lines).
 - It defines `opNorm`, `X`, `xMin`, `sigma1`, `sigma2`, `sigma1Prime`, `sigma2Prime`, `E`, `EPrime`, `noisy`, `claim`, `diag2` and `witness`, and proves `result : ¬ claim`.
-- The POVM predicate is the frozen `ConcealmentKernelNecessityRefutation.IsPOVM` at d = 2.
+- The POVM predicate is the frozen `ConcealmentKernelNecessityRefutation.IsPOVM` at d = 2, and the witness is a POVM by the frozen `ConcealmentKernelNecessityRefutation.diagonal_povm`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - `result` is the refutation result of a `refutes` utility, which CLAUDE.md §3.9 exempts from four-slot registration.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurements/MitraUnsharpnessWhiteNoiseRefutation.lean.json`, statement `sha256:932ab9600b014ba78c4971e041863a6fc387023eb8a89884fa6e259d4f781050`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurements/MitraUnsharpnessWhiteNoiseRefutation.lean.json`, statement `sha256:f7b5f14e673aeaaa28cf94a07eae1a7923f6bd82c4387c90ef5ad072b3e18056`.
 
 Declaration statements:
 - `result`: `sha256:b9d00e7f0caa9b90a65fce681d6f5048defd18e45fb544eada4930d2ccb583c2`;
@@ -75,7 +75,7 @@ Tier 1 conjecture of a 2022 paper, preregistered in issue #17118 before any Lean
 | --- | --- | --- | --- |
 | result | bind-only | none: after inlining, the POVM check, the diagonal operator norms, the X-matrix, its lowest eigenvalue and the strict inequality are instantiations of pinned Mathlib results followed by normalization | open-problem-resolution |
 
-Every other public declaration is a definition used by a public statement. The module's 10 private theorems are bind-only helpers consumed on the proof path of `result`, and its compiler-generated declarations also lie on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
+Every other public declaration is a definition used by a public statement. The module's 9 private theorems are bind-only helpers consumed on the proof path of `result`, and its compiler-generated declarations also lie on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
 
 ### What the settlement shows
 
