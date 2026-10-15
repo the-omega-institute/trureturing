@@ -1,0 +1,45 @@
+**Proof.** The six co-singletons are $5$-wise intersecting, since any at
+most five exclude at most five positions, but their sixfold intersection
+is empty. Index abstract coordinates by $1,\ldots,6$ and let abstract
+region $i+1$ denote $S_i$. The only member missing original position $i$
+is $S_i$, so the replication choice is $g(i)=i+1$ and
+$\phi(x)_i=x_{i+1}$. This identifies the six abstract ages with the six
+original exposed ages. The $6+5\cdot5=31$ distinct profiles in (NAR.15.8) therefore
+give $31$ distinct sources in (NAR.15.14), with the two other ages fixed at
+zero and the original offsets $0,6,12,18,24,30,36,42$ unchanged.
+
+The named edges consist of $\binom62=15$ constant-clique edges,
+$5\binom52=50$ within-column edges, $4\cdot5\cdot4=80$
+unequal-index edges between consecutive columns, and $2\cdot5\cdot5=50$
+endpoint-to-constant edges. These four families are disjoint: they join,
+respectively, two constants, two vertices in one column, two vertices in
+successive columns, or a constant and a vertex in one of the two distinct
+endpoint columns. Thus their total is $195$. The identities in Theorem
+15.5 supply a nonzero displacement on the co-singleton outside the
+exceptional coordinate for each edge.
+
+Every depth-three slot is reached in each history. At every lag the eight
+exponent intervals of length at most five are disjoint. Therefore all three
+hidden values at $Q_{S_h}$ are pairwise unequal, and the complete hidden
+partition is discrete, including the two fixed original slots. Applying
+Theorem 15.4's lags gives equal complete later rows on each named edge;
+with $\lambda_0=1$ those witnesses have $1\le\ell,\ell'\le6$ and work
+under either lag convention. Initial acquisition displays the six variable
+subtrees and computes their ages by (NAR.14.6). Theorem 15.5 rules out
+six retained labels for this genuine future-menu task, proving the lower
+bound.
+
+For the upper bound retain the acquired ages at two distinct public
+exposed positions, for example $(a_0,a_1)$. Every five-position region
+contains at least one of them; use its later normalized value minus its
+retained age. All $6^2=36$ tuples occur, so this is a proper $36$-label
+encoder, also the transversal bound of Theorem 14.5. Its export precedes
+the future region choice. Thus (NAR.15.15) follows.
+
+The fixed-width representation price satisfies only
+$3\le\lceil\log_2N_5(6,5)\rceil\le6$. Increasing the forced alphabet
+from six to at least seven does not force a fourth bit, since both six and
+seven labels fit in three bits. Label and fixed-width bit counts exclude
+acquisition, source storage, decoder controls, parsing, arithmetic width,
+workspace, transmission and physical time. $\square$
+

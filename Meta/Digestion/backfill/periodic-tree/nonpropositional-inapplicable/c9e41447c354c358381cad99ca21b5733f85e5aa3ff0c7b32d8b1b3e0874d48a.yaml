@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9e41447c354c358381cad99ca21b5733f85e5aa3ff0c7b32d8b1b3e0874d48a
+  normalized_sha256: sha256:c9e41447c354c358381cad99ca21b5733f85e5aa3ff0c7b32d8b1b3e0874d48a
+cas_ref: sha256:c9e41447c354c358381cad99ca21b5733f85e5aa3ff0c7b32d8b1b3e0874d48a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 对 $j$ 归纳。$j=0$ 时取 $D_0=0$。设第 $j$ 步括号内为 $U=B+pD_j$，则 $U\equiv B…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 30956a6e92e279bd0183a600dba750b37675a9dbf28907118a76d713c4b0f97d
+    next_atom_id: 84134e637de1ad269a515fd404f0757dbecd893c6017e29ea80ceae204777939

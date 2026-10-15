@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9774ddae87b0656e7ac2fbf3514d57c5ee9a5e0b3fd27b7d409416e484818a49
+  normalized_sha256: sha256:9774ddae87b0656e7ac2fbf3514d57c5ee9a5e0b3fd27b7d409416e484818a49
+cas_ref: sha256:9774ddae87b0656e7ac2fbf3514d57c5ee9a5e0b3fd27b7d409416e484818a49
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「S5040.5 Primitive-block abundancy and the Robin boundary」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: a74b1384bad05e3261a3f41ff522f27db803f247a9fc4f378002a05fc6e3baa6
+    next_atom_id: 2a55db3719159b6b2de98ed0c0add392f743d0dfb5a430dbf65552fb7de31399

@@ -1,0 +1,73 @@
+**Proposition 11.7 (the two optimized resources and their limits).**
+The frontier (NBP.11.8) charges the complete changing finite control
+state, including phase and reply memory, and every fixed whole-row
+halting distinction. It does not identify exported capacity with
+running memory or with physical storage. In particular the nine-state
+and ten-state constant-advice controllers both require four bits in a
+fixed-width injective binary state encoding, although their total state
+cardinalities and three-call feasibility differ.
+
+**Proof.** All later action choices and outputs in (NBP.11.1) depend only
+on the current state and the actual reply. A separately remembered
+phase, payload or response which changes a future action would be an
+additional accessible mutable distinction and would have to be included
+in $\mathcal K$. Distinct fixed complete outputs require distinct halt
+states, as used in both lower proofs. The initial export merely selects
+at most $r$ states; it need not remain separately accessible thereafter.
+For example the constant export has one value while the three-call
+controller visits different partner and right-test states. Conversely
+five exported values can initialize five halts with no running states.
+These are different counted objects.
+
+A binary fixed-width representation of a set of size $K$ needs and
+admits $\lceil\log_2 K\rceil$ bits. Since $8<9<10\le16$, both stated
+controllers have width four under this representation convention.
+This observation counts neither the fixed address/action/transition/
+output tables nor the representation and production of their full row
+outputs. The supplied entry, authentication, producer acquisition,
+finite comparisons, actual export, access cut, installation, local
+computation, address transmission and physical service retain their
+separate costs. An image inverse used to construct a proof witness is
+not a native inverse operation. No further update is available.
+
+Thus (NBP.11.8) settles the history-memory question under this explicit
+stationary finite Moore restriction: every accessible changing
+source-dependent distinction is included in its finite state. An
+arbitrary program with unbounded workspace or a computed address has a
+different contract; identifying its total configurations with finitely
+many states of (NBP.11.1) requires a separate proof. Neither nine versus
+ten states nor three versus four native calls is a universal physical
+memory or time equivalence. $\square$
+
+**Mathematical citation 11.8 (suppliers, mature methods and exact delta).**
+The one-image grammar, injective inverse, actual row fiber and
+occurrence-sensitive repair are the suppliers already cited in
+Definitions 1.1--1.2, Theorems 2.2 and 3.2, and Proposition 9.3.
+Assumption 9.2 supplies acquired/exported entry rather than deriving it
+from a row identity. Propositions 9.3--9.4 supply the fixed five actual
+witnesses and their all-address binary bridge, and Theorem 9.5 supplies
+the joint capacity frontier and the full-fiber root-test strategies.
+The same-$r,q$ existence transfer of §10 supplies no state-cardinality
+invariant and is not a premise of either state lower bound here.
+
+Finite Moore state/output conventions are classical; see Edward F.
+Moore, *Gedanken-Experiments on Sequential Machines*, in *Automata
+Studies* (AM-34), pp.129--153,
+[DOI:10.1515/9781400882618-006](https://doi.org/10.1515/9781400882618-006).
+The rooted reachable-graph edge count is reused in the form of
+[Transport--Memory Completion Theorem 66.3](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM66-T3),
+with its domain and response hypotheses replaced by the actual five
+witnesses in Proposition 11.2, rather than importing its numerical
+source-specific conclusion. Adaptive query geometry and binary-depth
+counting are the mature methods attributed in Mathematical citation
+9.7, including Nowak's *The Geometry of Generalized Binary Search*,
+[arXiv:0910.4397v5, §V.A](https://arxiv.org/abs/0910.4397v5).
+Those methods supply neither the six sources of Proposition 11.3 nor
+its native-cone obstruction. The repo-derived numerical delta is the
+full-fiber total-state charging and the exceptional three-call lower
+bound, together with the matching common finite controllers. It is an
+ordinary mathematical deduction, with no literature-priority claim.
+Quantum terminal-rank minima and stochastic hidden/visible-memory minima
+concern different sources, operations, targets and resources; none is a
+supplier for (NBP.11.8).
+

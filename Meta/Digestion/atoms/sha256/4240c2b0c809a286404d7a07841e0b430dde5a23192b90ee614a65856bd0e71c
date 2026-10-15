@@ -1,0 +1,1 @@
+- A call bound, maximum literal length, total literal length and number of phase-distinct addresses are separate quantities. Proposition 7.1 gives simultaneous lower growth without identifying calls with word length.

@@ -1,0 +1,30 @@
+**Definition 3.4 (finite feedback reducer).** Use the following rules,
+retaining reconstruction expressions for all original residuals.
+
+1. Distribute powers, compose them, evaluate grounds, delete syntactic
+   identities and cancel matching ordered pairs or common powers. Merge
+   aliases. Substitute nonrecursive bare-variable definitions.
+2. Compile variable-free comparisons, built from parameter atoms, grounds,
+   pairs and $\Omega$, to exact Presburger guards using [PAC, Lemma 3.2][PAC].
+   Its generalized-description normalization collapses consecutive finite
+   atomic children and two $\Omega$ children; every other pair remains.
+   Exhaust the finite symbolic shape/rank cases. False guards are clashes.
+3. Replace $\Omega=\langle E,F\rangle$ by $E=\Omega,F=\Omega$, and
+   $\rho^aX=\Omega$ by $X=\Omega$. Different powers of the same variable
+   being equal force it to $\Omega$.
+4. At $\rho^aX=H(X)$ of Definition 2.2, run (SFS.7). Replace it by
+   $X=\Omega$, together with a second branch $X=T_c$, fresh $c\in\mathbb N$,
+   exactly when that test is true. Substitute this value and remove $X$.
+5. After these reductions try the finitely many orientations of remaining
+   equations having a bare-variable endpoint. Accept only an orientation
+   covering every equation with at most one definition per state. Other
+   states are free. Recursive definitions are allowed. Unhandled comparisons
+   or failed orientations are OUTSIDE, not clashes.
+
+Use a fixed order on finite displayed syntax at normalization phases.
+Recursively defined states are never unfolded during recognition. Every
+semantic branch must be handled: one OUTSIDE branch makes its tuple/mode
+ineligible even if other branches succeed. There is no finite occurs-check.
+The finite source charts and their negatives stay intact; the reducer
+operates only on their cross-source completed output equations.
+

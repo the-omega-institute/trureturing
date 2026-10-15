@@ -1,0 +1,12 @@
+**Theorem 13.4 (exact four-language correspondence).** For every normalized
+closed input of Definition 13.1 and every output $O$,
+
+$$
+L(M_{O,\tau})=\mathcal L_\tau(\llbracket O\rrbracket)
+\qquad(\tau\in\mathcal R).
+\tag{SPC.53}
+$$
+
+Consequently the four languages partition $\Sigma^*$, including the empty
+address, native leaf images and every absent suffix.
+

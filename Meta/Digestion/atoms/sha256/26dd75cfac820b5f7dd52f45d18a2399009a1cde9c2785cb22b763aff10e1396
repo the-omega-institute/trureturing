@@ -1,0 +1,40 @@
+**Definition 1.2 (the supplied complete row).** Fix a finite prefix-free public
+cut $P$, allowing $\varnothing$ and $\{\varepsilon\}$. Reuse
+[Sparse Literal History Transport, Definition 59.1](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md):
+$O=I_P(u)=P\cap\operatorname{Pos}(u)$, and $C=C_P(u)$ is obtained by replacing
+each entire subtree at $p\in O$ by an address-marked hole $\square_p$.
+The concrete exterior retains every remaining label and bracket.
+The relation $\pi$ is the complete partition
+
+$$
+p\sim_\pi q\quad\Longleftrightarrow\quad u|_p=u|_q
+\qquad(p,q\in O),\qquad R_P(u)=(C,\pi).
+\tag{NAR.1.3}
+$$
+
+In particular, distinct classes mean disequality. The hole addresses are
+readable from $C$; every $p\in P\setminus O$ is blocked by a concrete strict
+prefix leaf of $C$. Let $B=O/\pi$ and $k=|B|$. Order classes by their least
+address in the lexicographically ordered hole list, independently of their
+values. Let $p_b$ be the least address in class $b$ and $z_b=u|_{p_b}$.
+
+This is exactly the information in
+[ActualCutPartitionDecoder](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean),
+`literalRecord`, and its `canonicalRow_record_iff`; canonical row syntax
+and $(C,\pi)$ are interchangeable. The full row fiber is the supplied
+[Sparse History Theorem 59.4](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md)
+and [NativeCutFibers](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean),
+`legal_values_row` and `rowFiberEquiv`:
+
+$$
+\mathcal U_R
+=\{u:R_P(u)=R\}
+=\{C[(z_{[p]})_{p\in O}]:
+       z_b\in\mathcal T,\ b\ne c\Rightarrow z_b\ne z_c\}.
+\tag{NAR.1.4}
+$$
+
+The fillings are a bijective parametrization, including the empty tuple.
+This supplier, rather than a promise that hidden values can be compared,
+justifies the alternative sources used below.
+

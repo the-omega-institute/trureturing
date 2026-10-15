@@ -9,6 +9,8 @@ internal sealed class NativeClassRootImageDocument : IScribeDocumentDefinition
         "Exact image filling and the finite class-root chart on complete native fibers.",
         H("Native Class Root Images"), Blocks(
             Paragraph(Text("Trees are all nonempty finite ordered Boolean trees. Alpha is the true leaf and beta the false leaf. The original substitution rho sends alpha to beta and beta to pair(beta,alpha), and preserves ordered pairing. A literal row C retains the concrete exterior and all occurrences of shared class names. D=Classes(C) is the finite subtype of appearing Nat labels; raw label gaps and unused Nat labels add no classes.")),
+            Entry("evaluate_leaf", "Exact Literal Leaf Evaluation", "For every exterior C, arbitrary valuation f and Boolean leaf b, evaluating C yields exactly b if and only if C is a literal b under the roots of f. The full predecessor factorization uses this criterion at visible sibling roots.", DescribeRole.Theorem),
+            Entry("root_extend", "Roots of Extended Valuations", "RootExtend(C,v) abbreviates the function n to rootType(extend(C,v,n)). Its equality with typeExtend(C,types(C,v)) holds on all natural labels, including the off-support alpha default. This identity connects literal evaluation to the finite root assignment.", DescribeRole.Theorem),
             Entry("rootType", "Three Reached Root Types", "Root types are some(true)=alpha, some(false)=beta and none=branch. The empty address is always reached, so there is no absent type.", DescribeRole.Definition),
             Entry("Image", "Actual Substitution Image", "Image membership requires an actual finite predecessor under the original substitution rho.", DescribeRole.Definition),
             Entry("lit", "Literal Leaf Predicate", "A visible pair is never a literal leaf. A class name is a literal leaf exactly when its shared root type is that leaf.", DescribeRole.Definition),
@@ -27,6 +29,8 @@ internal sealed class NativeClassRootImageDocument : IScribeDocumentDefinition
         H(h), StatementSource.FromAuthor(Statement(n)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(p))), r);
     private static Formula Statement(string n) => n switch
     {
+        "evaluate_leaf" => All("C",V("LiteralRow"),All("f",Call("Valuation",V("Nat"),V("Source")),All("b",V("Bool"),IffOf(EqOf(Call("evaluateRow",V("f"),V("C")),Call("of",V("b"))),Call("lit",Call("RootTypeCompose",V("f")),V("b"),V("C")))))),
+        "root_extend" => All("C",V("LiteralRow"),All("v",Call("Valuation",Call("Classes",V("C")),V("Source")),EqOf(Call("RootExtend",V("C"),V("v")),Call("typeExtend",V("C"),Call("types",V("C"),V("v")))))),
         "rootType" => All("z", V("Source"), EqOf(Call("rootType", V("z")), Call("leafLabel", V("z"), V("empty")))),
         "Image" => All("z", V("Source"), IffOf(Call("Image", V("z")), Some("u", V("Source"), EqOf(Call("rho", V("u")), V("z"))))),
         "lit" => All("theta", Seq(V("Nat"), Sp, To, Sp, Call("Option", V("Bool"))), All("b", V("Bool"), And(All("c", V("Bool"), IffOf(Call("lit", V("theta"), V("b"), Call("leaf", V("c"))), EqOf(V("c"), V("b")))), All("n", V("Nat"), IffOf(Call("lit", V("theta"), V("b"), Call("hole", V("n"))), EqOf(Call("theta", V("n")), Call("some", V("b"))))), All("e", V("LiteralRow"), All("g", V("LiteralRow"), NegOf(Call("lit", V("theta"), V("b"), Call("pair", V("e"), V("g"))))))))),

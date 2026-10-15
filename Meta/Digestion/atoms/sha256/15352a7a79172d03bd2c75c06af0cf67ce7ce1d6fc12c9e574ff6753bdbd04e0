@@ -1,0 +1,30 @@
+**Definition 11.1 (Uniform Newton lift).** Fix $m\ge2$, $n=2m+1\ge5$, and one pair from Theorem 10.2. On target coordinates $e_0,\ldots,e_m$ and source coordinate $e_{m+1}$, all counted in $\mathbb C^D$ with $D=m+2=D_n$, set
+
+$$
+\begin{aligned}
+\Delta h(t)&=h(t+1)-h(t),\qquad U=I_{m+1}+N,\\
+N_{j,j+1}&=1\quad(0\le j<m),\qquad N_{ij}=0\text{ otherwise},\\
+u_j&=\Delta^{j+1}s(0),\qquad v_j=\Delta^jp(0)\quad(0\le j\le m),\\
+A&=\begin{pmatrix}U&u\\0&1\end{pmatrix},\qquad
+B=\begin{pmatrix}0_{(m+1)\times(m+1)}&v\\0&0\end{pmatrix},\\
+x&=e_{m+1},\qquad f=e_0,\qquad F=ff^{\mathsf T}.
+\end{aligned} \tag{11.1}
+$$
+
+The entries are exact finite differences:
+
+$$
+\Delta^jh(0)=\sum_{\ell=0}^j(-1)^{j-\ell}\binom j\ell h(\ell),\qquad
+u_m=0,\qquad v_m=m!p_m\ne0.
+\tag{11.2}
+$$
+
+Here $f$ is a full-memory vector; on the target its row is $e_0^{\mathsf T}$. For $0<q<1$, define the raw CP map on the entire complex matrix algebra by
+
+$$
+\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T}).
+\tag{11.3}
+$$
+
+Its raw Kraus matrices are $\sqrt q A,\sqrt q B$. The polynomials and $A,B,x,f$ depend only on $m$ and the chosen pair; $q$ supplies the geometric Kraus scale and the subsequent Gramian completion. The raw map is not required to be trace nonincreasing.
+

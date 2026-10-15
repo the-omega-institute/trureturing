@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:49424c03100435cfd6b677ef564f8cd89ec6f957125d2be356a8d728c05b8f4c
+  normalized_sha256: sha256:49424c03100435cfd6b677ef564f8cd89ec6f957125d2be356a8d728c05b8f4c
+cas_ref: sha256:49424c03100435cfd6b677ef564f8cd89ec6f957125d2be356a8d728c05b8f4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 认证：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: b6ea71d331785571df9afe293511f4989a6ce6410fe209f647c33b811c23269b
+    next_atom_id: fde170c830c8ee2ceb0f053f01d038a3cc959dd6be7e6fc10150563f2df20430

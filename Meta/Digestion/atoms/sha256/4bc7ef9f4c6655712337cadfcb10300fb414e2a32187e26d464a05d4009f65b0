@@ -1,0 +1,74 @@
+**Definition 2.2 (Credited lower and its scope).** Theorem 11.2 of
+[SOURCE][SOURCE] supplies $s_->0$ and $A_->0$, depending only on
+$(r,c,\alpha)$, with
+
+$$
+\forall\,0<s<s_-\quad\forall\,M\ge2\quad
+\forall\,\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\quad
+\forall\,i\in\{0,1\}:
+\mathbb E_i^{\mathcal A}T\ge A_-\Psi(s,M).
+\tag{2.5}
+$$
+
+Here and below budgets are finite integers. The constants and neighborhood
+precede every budget and design. The converse includes arbitrary
+stochastic retuning, arbitrarily small positive edges, initial
+randomization and partial-gap stopping, with every opposing compliance
+condition still imposed. It is not restricted to the construction below.
+
+The relevant supplier interfaces are its finite-configuration hitting
+comparison, normalized clipped-gap entropy and actual tick price.
+For completeness, the clipped law is the probability distribution
+$a_i^L$ on $\{1,\ldots,L,\star\}$ with $a_i^L(k)=f_i(k)$ for $k\le L$
+and $a_i^L(\star)=\sum_{k>L}f_i(k)$. Set
+$D_i(s,L)=\sum_z a_i^L(z)\log(a_i^L(z)/a_{1-i}^L(z))$.
+All its masses are positive. The initial comparison and forest allowance
+can be taken as
+
+$$
+r_{\rm init}(s)=c\frac{R_r(s)+R_{r-1}(s)}
+                         {R_{2r}(s)+R_{2r-1}(s)},\qquad
+\chi_{M,L}=
+\frac{(1+c/(L+1)^r)^{M-2}-1}{(1+c/(L+1)^r)^{M-2}+1}.
+$$
+
+In its notation the finite-parameter inequality is
+
+$$
+b\le r_{\rm init}(s)+\chi_{M,L}
+  +\sqrt{D_i(s,L)(1+c)s\mathbb E_iT/2},
+\tag{2.6}
+$$
+
+where $r_{\rm init}(s)=O(s^r)$,
+$\chi_{M,L}\le (M-2)c/[2(L+1)^r]$, and the exact clipped-law entropy obeys
+
+$$
+D_i(s,L)\le C_Ds^{2r}
+  \bigl[1+\log\min\{L,1/s\}\bigr].
+\tag{2.7}
+$$
+
+Choose the supplier neighborhood so $r_{\rm init}\le b/4$ and set
+$L=L_M$. Then $\chi_{M,L_M}\le b/4$, and squaring (2.6) yields (2.5).
+The entropy interface uses a common bit-table kernel averaged over actual
+gaps, finite-path entropy on live epochs and a harmonic terminal function;
+it does not require an auxiliary comparison chain to terminate.
+Its tick-price interface conditions on the entire actual prefix and
+independent coins, including the equilibrium initial wait and terminal
+partial reads. Those are the reasons its lower applies to the full
+class in Definition 1.3. Equations (2.6)–(2.7) and (2.5) are inherited
+results, not new converse theorems of this volume.
+
+The same source gives
+
+$$
+L_M\le C_LM^{1/r}
+\tag{2.8}
+$$
+
+for a fixed $C_L\ge1$, and proves that $M=2$ is an empty compliant
+class: the two labels exhaust the configurations, and a common initial
+label cannot satisfy both risks below one half. Nonemptiness at larger
+budgets will be supplied here only at a sufficient threshold.
+

@@ -1,0 +1,10 @@
+**命题 7.1（bounded target range with unbounded native price）。** Let the exterior be $C=(\beta,\square)$ with one class and a cut $P=\{R\}$ at the hole. Then
+
+$$
+\Sigma_R=\{0,1,2\},
+$$
+
+but every exact source-total row-only service has unbounded new calls, unbounded phase-distinct queried addresses, unbounded maximum address length, and unbounded total submitted address length.
+
+**证明。** Formula (RDR.2) gives depth $2$ when the hole value is $\alpha$, and otherwise $\min(1,\nu(z))$, so the three values occur. Let $z_h$ be the perfect height-$h$ all-$\beta$ tree, $h\ge1$. It is $\rho$ of a perfect all-$\alpha$ primitive tree and has depth $1$. For each of its $2^{h-1}$ left-child leaf addresses $w$, make a separate comparison source by changing only that leaf from $\beta$ to $\alpha$. The changed source has depth $0$ because a left child equal to $\alpha$ violates the first-image grammar. A leaf-label change changes only the reply at that exact address. On $(\beta,z_h)$, a terminating exact run must therefore query every $Rw$ or it returns the same answer on the corresponding comparison source. Each such word has length $h+1$, so the run uses at least $2^{h-1}$ calls and has total length at least $(h+1)2^{h-1}$. As $h$ grows, all four coordinates are unbounded. Repeated calls and arbitrarily deep or absent probes do not see a skipped leaf label. $\square$
+

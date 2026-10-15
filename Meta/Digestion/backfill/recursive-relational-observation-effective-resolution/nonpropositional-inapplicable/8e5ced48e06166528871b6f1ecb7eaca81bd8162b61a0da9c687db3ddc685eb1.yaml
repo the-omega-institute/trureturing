@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e5ced48e06166528871b6f1ecb7eaca81bd8162b61a0da9c687db3ddc685eb1
+  normalized_sha256: sha256:8e5ced48e06166528871b6f1ecb7eaca81bd8162b61a0da9c687db3ddc685eb1
+cas_ref: sha256:8e5ced48e06166528871b6f1ecb7eaca81bd8162b61a0da9c687db3ddc685eb1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只在给定码 G 下引入可用祖先集合 B_j 的定义；完整后代束是定义的成员条件，不断言存在性或可恢复性。
+    previous_atom_id: e91365da6de2a994efb22d3627ea3867e86ad48c476f3cb442ed9123acd06625
+    next_atom_id: e892c6b48931ad13de42cd570d9918da857254eb2cb59703e4dc98dc64c33130

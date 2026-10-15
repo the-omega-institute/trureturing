@@ -451,8 +451,6 @@ private theorem sum_antipodal {A : Type*} [AddCommMonoid A] (f : (Fin 4 → Bool
   rw [← Equiv.sum_comp pairEquiv]
   rw [Fintype.sum_prod_type]
   simp [pairEquiv, Fintype.sum_bool]
-private theorem sign_not (b : Bool) : sgn (!b) = -sgn b := by
-  cases b <;> norm_num [sgn]
 private def p (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (ε : (Fin 3 → Bool)) : ℝ :=
   ‖b ε‖ + (1 - ∑ η, ‖b η‖) / 8
 private theorem p_ge_norm (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (hb : ∑ ε, ‖b ε‖ ≤ 1) (ε : (Fin 3 → Bool)) :
@@ -494,14 +492,14 @@ private theorem sum_a (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) : 
 private theorem signed_sum_t (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (i : Fin 4) :
      ∑ δ, sgn (δ i) * t b δ = 0 := by
   rw [sum_antipodal]
-  simp only [t_rep, t_negRep, negRep, sign_not]
+  simp only [t_rep, t_negRep, negRep, D5.S3.Combinatorics.IsingUniquenessSets.sgn_not]
   simp_rw [show ∀ x y : ℝ, x * y + -x * y = 0 by intros; ring]
   simp
 private theorem signed_sum_a (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (i : Fin 4) :
      ∑ δ, sgn (δ i) • a b δ =
        ∑ ε, sgn (rep ε i) • b ε := by
   rw [sum_antipodal]
-  simp only [a_rep, a_negRep, negRep, sign_not, smul_smul, ← add_smul]
+  simp only [a_rep, a_negRep, negRep, D5.S3.Combinatorics.IsingUniquenessSets.sgn_not, smul_smul, ← add_smul]
   congr 1
   funext ε
   congr 1

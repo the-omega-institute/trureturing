@@ -240,7 +240,7 @@ private lemma radius_scale {d m : ℕ} (hd : 0 < d) (hdm : d ≤ m)
       1/(m : ℝ) = ((d : ℝ)/m) * (1/(d : ℝ)) := by field_simp
       _ ≤ Real.sqrt ((d : ℝ)/m) * derivativeRadius d 1 p := by gcongr
 
-private lemma grid_geometry {m r J i : ℕ} (hm : 0 < m) (hJ : J ≤ m+r)
+lemma grid_geometry {m r J i : ℕ} (hm : 0 < m) (hJ : J ≤ m+r)
     (hi : i ≤ m) (hiJ : i ≤ J) (hJi : J ≤ i+r) :
     (i : ℝ)/m ∈ Set.Icc (0 : ℝ) 1 ∧
     (J : ℝ)/(m+r) ∈ Set.Icc (0 : ℝ) 1 ∧
@@ -265,7 +265,7 @@ private lemma grid_geometry {m r J i : ℕ} (hm : 0 < m) (hJ : J ≤ m+r)
   · apply (le_div_iff₀ hmR).mpr
     nlinarith [mul_le_mul_of_nonneg_right hp1 (show 0 ≤ (r : ℝ) by positivity)]
 
-private lemma radius_local_comparison {m r : ℕ} (hm : 0 < m) {p t : ℝ}
+lemma radius_local_comparison {m r : ℕ} (hm : 0 < m) {p t : ℝ}
     (hp : p ∈ Set.Icc (0 : ℝ) 1) (ht : t ∈ Set.Icc (0 : ℝ) 1)
     (hdist : |p-t| ≤ (r : ℝ)/m) :
     derivativeRadius m 1 p ≤ ((r : ℝ)+1) * derivativeRadius m 1 t := by
@@ -450,7 +450,7 @@ private lemma large_local_remainder (r : ℕ) :
       gcongr
       exact le_max_right _ _
 
-private lemma original_coefficient_bound {d D J : ℕ} (hdD : d ≤ D) (hJ : J ≤ D)
+lemma original_coefficient_bound {d D J : ℕ} (hdD : d ≤ D) (hJ : J ≤ D)
     (c : Fin (d+1) → ℂ) : ‖bernsteinCoefficient D J (bernsteinRealization d c)‖ ≤ ‖c‖ := by
   let f : ℕ → ℂ := fun i => if hi : i ≤ d then c ⟨i, by omega⟩ else 0
   have h := basis_times_local_bound (m := d) (r := D-d) (n := 0) (h := 0)
@@ -464,7 +464,7 @@ private lemma original_coefficient_bound {d D J : ℕ} (hdD : d ≤ D) (hJ : J �
   rw [show bernsteinPolynomial ℂ 0 0 = 1 by simp [bernsteinPolynomial], one_mul, he] at h
   simpa [samplingWeight, Nat.add_sub_of_le hdD] using h
 
-private lemma coefficient_sub (D J : ℕ) (P Q : ℂ[X]) :
+lemma coefficient_sub (D J : ℕ) (P Q : ℂ[X]) :
     bernsteinCoefficient D J (P-Q) = bernsteinCoefficient D J P - bernsteinCoefficient D J Q := by
   simp [bernsteinCoefficient, coeff_sub, sub_mul, sub_div, sum_sub_distrib]
 
@@ -561,7 +561,7 @@ private lemma pointwise_remainder_bound (r : ℕ) :
         nlinarith [mul_le_mul_of_nonneg_left hp (show 0 ≤ (1+S)*‖c‖ by positivity)]
       _ ≤ _ := by gcongr
 
-private lemma lorentz_degree (m r : ℕ) (f : ℕ → ℕ → ℂ) :
+lemma lorentz_degree (m r : ℕ) (f : ℕ → ℕ → ℂ) :
     (lorentzJet m r f).natDegree ≤ m+r := by
   unfold lorentzJet
   apply natDegree_sum_le_of_forall_le

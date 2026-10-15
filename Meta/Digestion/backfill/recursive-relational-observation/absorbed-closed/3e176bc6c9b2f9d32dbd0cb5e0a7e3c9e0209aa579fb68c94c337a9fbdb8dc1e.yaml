@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:3e176bc6c9b2f9d32dbd0cb5e0a7e3c9e0209aa579fb68c94c337a9fbdb8dc1e
+  normalized_sha256: sha256:3e176bc6c9b2f9d32dbd0cb5e0a7e3c9e0209aa579fb68c94c337a9fbdb8dc1e
+cas_ref: sha256:3e176bc6c9b2f9d32dbd0cb5e0a7e3c9e0209aa579fb68c94c337a9fbdb8dc1e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.conditional_expectation_refinement_pythagoras
+    target_statement_id: sha256:0d82b102228359af35d172ae9a9e716547d2f541d7b0f4d24ed8c9802afbb9e2
+  - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.conditional_expectation_residual_orthogonal_decomposition
+    target_statement_id: sha256:a8bc3d904adc85f14308856965a1b9c1bea36b05e25b2d17a68c11492fecbe00
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDPI.classical_dpi_identity_zero_support
+    target_statement_id: sha256:1d1f07c23fa99f741789f3cf39a6cfc04affc13728a6927107d205b5f73e5cd5
+  - gid: D5/S3/Entropy/ConditionalEntropy.entropy_chain_rule
+    target_statement_id: sha256:a3d61c1341ad61a0a89ed8a2f7e31289b122796e238d295a5890dd610b630452
+  - gid: D5/S3/Entropy/MutualInformationEntropy.mutual_information_eq_entropy_sub
+    target_statement_id: sha256:98ab32347056de7fdcca6963b5de51deedc923c1a62a59098952f17fb0f946a5
+  - gid: D5/S3/Entropy/Relabeling/InjectiveInvariance.shannonEntropy_extend_injective
+    target_statement_id: sha256:8205044855aa2f782c1cf2f69550bb1fe272cee1629a2559683853c1b122879c
+  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditional_mutual_information_eq_entropy_defect
+    target_statement_id: sha256:f49a777c4725ed85c0ff757cbace9f26cc066a61708c0faea402233bf7b0f6d0
+  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditional_mutual_information_nonneg
+    target_statement_id: sha256:f76780509f5a59f682d9c37122003f97d5c5cb676c5ba76ce6d5c233b116f1ea
+receipts:
+  unresolved_subitems: []

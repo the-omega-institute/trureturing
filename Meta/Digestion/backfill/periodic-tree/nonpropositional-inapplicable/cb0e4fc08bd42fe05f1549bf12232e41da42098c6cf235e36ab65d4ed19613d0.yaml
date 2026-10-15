@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb0e4fc08bd42fe05f1549bf12232e41da42098c6cf235e36ab65d4ed19613d0
+  normalized_sha256: sha256:cb0e4fc08bd42fe05f1549bf12232e41da42098c6cf235e36ab65d4ed19613d0
+cas_ref: sha256:cb0e4fc08bd42fe05f1549bf12232e41da42098c6cf235e36ab65d4ed19613d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 映射 $(s,x)\mapsto\Phi_{sT}(x)$ 是从恒等映射到 $\Phi_T$ 的同痕。同调的同痕不变性给出第…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: f91e235595dc89120d148b91c82bf8cffd4e328222543440edfc429afaf8afde
+    next_atom_id: 1cb843a984d178857a41d70f8d1be7c79b4fe86c4c205145214cc38307841c19

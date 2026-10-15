@@ -1,0 +1,23 @@
+**Definition 9.1 (A rationally isolated triple).** For real variables $\theta=(h,d,e)$ define
+
+$$
+\begin{aligned}
+b(\theta)&=\frac58-\frac92h^2-5hd,\qquad
+c(\theta)=3b(\theta)-\frac52-2d^2-4e,\\
+E_0(\theta)&=h^2c(\theta)^2+\frac{hd(1+4e)}8-\frac1{448},\\
+E_1(\theta)&=2b(\theta)c(\theta)+\frac38+d^2+2e+2e^2,\\
+E_2(\theta)&=b(\theta)^2-6h^2c(\theta)+hd(5+6e)-\frac3{16},\qquad
+E=(E_0,E_1,E_2)^{\mathsf T}.
+\end{aligned} \tag{9.1}
+$$
+
+The constants $h,d,e$ used below are specified exactly as the unique zero of $E$ in the closed rational box
+
+$$
+\mathcal B=\{\theta:\|\theta-\theta_c\|_\infty\le r\},\qquad
+\theta_c=\frac1{10^6}(10056,-1500211,2611067),\qquad
+r=\frac1{10^5}. \tag{9.2}
+$$
+
+Theorem 9.2 establishes that this definition is well posed. The center of the box is rational data for the certificate, not a claimed decimal value of the root. The letters $b,c$ in this section mean the scalar polynomials in (9.1); the normalized reset vector will be denoted $\xi$.
+

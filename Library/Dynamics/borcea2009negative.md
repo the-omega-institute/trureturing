@@ -13,6 +13,10 @@ triage: "anchor"
 
 # Negative dependence and the geometry of polynomials
 
+## Verified locator
+
+DOI: `10.1090/S0894-0347-08-00618-8`; URL: https://arxiv.org/abs/0707.2340v2.
+
 发表于 *Journal of the American Mathematical Society* 22(2), 521–567 (2009)，
 DOI 与 Crossref 条目相符；该条目另列在线发表日期为 2008-09-19。
 直接核对的原始全文是 arXiv:0707.2340v2，2008-07-27，共 47 页。
@@ -47,7 +51,7 @@ e_k^2\ge e_{k-1}e_{k+1}.
 确定阈值与极小极大规则的平方根尺度比较，或两个 Hamming 损失的联合中心极限。
 这些需要另外证明共同实现、边界选择、均值转移及方向判错率。
 
-## Conditional rank-interval concentration
+### Conditional rank-interval concentration
 
 The functional budget comparison uses a stronger classical consequence of the
 same source. In the checked arXiv:0707.2340v2, the discussion on printed pages

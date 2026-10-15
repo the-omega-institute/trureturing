@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c0c2eee4f988993b96d9d11cddd0818cfcc5931a4b6ac3184789cb087e9d8fc
+  normalized_sha256: sha256:6c0c2eee4f988993b96d9d11cddd0818cfcc5931a4b6ac3184789cb087e9d8fc
+cas_ref: sha256:6c0c2eee4f988993b96d9d11cddd0818cfcc5931a4b6ac3184789cb087e9d8fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 37.5（自主自由）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 71aca1aed7f3797df6cb58e86e5edcd606c90da271a4f369267f0df44b0e225b
+    next_atom_id: 993bc1e72f04eb1e31d2a94f073b9c1302806de7070f1af9d8a04709d54d8500

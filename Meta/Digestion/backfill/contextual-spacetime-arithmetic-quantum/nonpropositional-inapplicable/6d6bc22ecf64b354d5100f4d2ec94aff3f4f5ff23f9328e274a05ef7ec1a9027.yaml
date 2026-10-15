@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d6bc22ecf64b354d5100f4d2ec94aff3f4f5ff23f9328e274a05ef7ec1a9027
+  normalized_sha256: sha256:6d6bc22ecf64b354d5100f4d2ec94aff3f4f5ff23f9328e274a05ef7ec1a9027
+cas_ref: sha256:6d6bc22ecf64b354d5100f4d2ec94aff3f4f5ff23f9328e274a05ef7ec1a9027
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 240.1 只规定移动任务中的两项联合资源预算和窗口代价。
+    previous_atom_id: 2af6db7c4c1701b1541cf52cee1cde8f7a86322962d57455ec927df6d9ceb697
+    next_atom_id: 041ffa0b61bbc7453116f21b3c1a9193d38cb3f3feeca4433d271a480e81af07

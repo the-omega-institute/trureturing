@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4512b24390fca96fd3f5d19b157bdaa4bba3920edef729cee52a9289d6bc3ba9
+  normalized_sha256: sha256:4512b24390fca96fd3f5d19b157bdaa4bba3920edef729cee52a9289d6bc3ba9
+cas_ref: sha256:4512b24390fca96fd3f5d19b157bdaa4bba3920edef729cee52a9289d6bc3ba9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 15.4（实际预测商、线性维数与可恢复目标）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 0e4d5c919ee5dfc366b575ae400a712190bfeb2faaffff0259ce5803b6d3ab14
+    next_atom_id: 2d692ffe76dbbc06875925eb5656ce1efbc25ff1884af7cd713d9dc754837e2f

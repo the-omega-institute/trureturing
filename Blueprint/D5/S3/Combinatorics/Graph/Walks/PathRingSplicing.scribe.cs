@@ -20,6 +20,18 @@ internal sealed class PathRingSplicingDocument : IScribeDocumentDefinition
                 + "Write flatMapSupport(p,ps) for the concatenation of all full piece supports. "
                 + "The list chainEdges(p,ps) contains all original piece edges, in order, with exactly "
                 + "one actual connecting edge inserted between consecutive pieces.")),
+            Describe.Lean(DescribeId.Create("chain-edge-cases"),
+                DeclarationHandle.Create(Prefix + "chain_edge_cases"),
+                H("Every Chain Edge Has an Actual Piece or Consecutive Seam Owner"),
+                StatementSource.FromAuthor(EdgeCasesFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every edge in the literal chainEdges list belongs to an actual indexed piece "
+                    + "or is the connection between two consecutive actual pieces. Recursive list "
+                    + "membership earns the exhaustive classification, including the exact natural "
+                    + "index and its successor bound. No support partition, adjacency or equality "
+                    + "decision assumption is needed. The full native T/E surgery inventories "
+                    + "consume this classification to prove that no additional edges occur."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("spliced-hamiltonian-cycle"),
                 DeclarationHandle.Create(Prefix + "exists_spliced_hamiltonian_cycle"),
                 H("One Actual Hamilton Cycle with Literal Inventories"),
@@ -49,6 +61,22 @@ internal sealed class PathRingSplicingDocument : IScribeDocumentDefinition
                 + "obtain the actual pieces, prove their complete independent support partition, and "
                 + "verify every specified connection as a real generator edge. This theorem then "
                 + "constructs the full cycle without a Hamiltonian search.")))));
+
+    private static Formula EdgeCasesFormula()
+    {
+        Formula v = F.Id("V"), g = F.Id("G"), p = F.Id("p"), ps = F.Id("ps");
+        Formula e = F.Id("e"), r = F.Id("r"), i = F.Id("i");
+        Formula pieces = Call("cons", p, ps), next = Call("add", i, D(1));
+        Formula member(Formula x, Formula xs) => new Formula.Relation(x, FormulaRelationOperator.MemberOf, xs);
+        Formula piece = Some("r", Call("Piece", g), And(member(r, pieces), member(e, Call("edges", Call("walk", r)))));
+        Formula bound = new Formula.Relation(next, FormulaRelationOperator.LessThan, Call("length", pieces));
+        Formula seam = Some("i", Call("Nat"), And(bound, Eq(e, Call("Sym2",
+            Call("finish", Call("get", pieces, i)), Call("start", Call("get", pieces, next))))));
+        Formula conclusion = new Formula.Logic(piece, FormulaLogicOperator.Or, seam);
+        return Disp(All("V", Call("Type"), All("G", Call("SimpleGraph", v),
+            All("p", Call("Piece", g), All("ps", Call("List", Call("Piece", g)),
+                All("e", Call("Sym2Type", v), Implies(member(e, Call("chainEdges", p, ps)), conclusion)))))));
+    }
 
     private static Formula CycleFormula()
     {

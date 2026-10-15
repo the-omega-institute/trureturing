@@ -1,0 +1,25 @@
+**Accounting 6.1 (logical addresses and installed representation).** Each
+Read in (SLHC.1) submits $m+\lfloor(i-1)/2\rfloor$ letters. Pairing the
+terms in $\sum_{t=0}^{h-1}\lfloor t/2\rfloor$ gives $r(r-1)$ for $h=2r$
+and $r^2$ for $h=2r+1$, namely $\lfloor(h-1)^2/4\rfloor$. The largest
+term is the last, proving (SLHC.4), including both zero lengths at $h=1$.
+These are submitted address lengths, not execution times or a claim
+about an uncounted mutable address buffer.
+
+The explicit table has $N$ instruction rows, of which $2^h$ are full-vector
+halt rows. Materializing their targets alone stores $h2^h$ bits. With
+typed reply alphabets there are $4(2^h-1)+(2^h-2)=5\cdot2^h-6$ response
+rows, including the unsupported Read replies. An inline address table
+repeats $p_i$ at $2^{i-1}$ Read rows, for payload
+
+$$
+\sum_{i=1}^h2^{i-1}
+\left(m+\left\lfloor\frac{i-1}{2}\right\rfloor\right).
+$$
+
+A separately charged immutable dictionary can share the $h$ addresses,
+whose payload is $A_h$, but needs references and a decoder. Listing word
+keys uses $N\ell$ bits before other fields. These are properties of the
+displayed representation, not lower bounds on every immutable program.
+The choice of code does not reduce its $N$ installed states.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:abe87208288faaaf056c7982e8b83c6617f017093ba0963d8ee6a9c30ea864e3
+  normalized_sha256: sha256:abe87208288faaaf056c7982e8b83c6617f017093ba0963d8ee6a9c30ea864e3
+cas_ref: sha256:abe87208288faaaf056c7982e8b83c6617f017093ba0963d8ee6a9c30ea864e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：| \(\operatorname{TargetRes}\) | 目标相对余量：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: ab83721ceb106421c41e5b59f52e70475bdcd35e15e5bbb37a76f05f86dad505
+    next_atom_id: 6cc76bd6e94bd206e74f9309449862bd3d07fcc9127790594e09702ba173aa17

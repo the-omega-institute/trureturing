@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9bfd2802bd524a1c5be765307974b97cd5d0f2bd760d3df5a805352f2d5a6249
+  normalized_sha256: sha256:9bfd2802bd524a1c5be765307974b97cd5d0f2bd760d3df5a805352f2d5a6249
+cas_ref: sha256:9bfd2802bd524a1c5be765307974b97cd5d0f2bd760d3df5a805352f2d5a6249
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 34.2（强人格 section）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 84ac32408b719cbcd378da5faccf26b6328e24c6ef7b08aca7abee405921a07e
+    next_atom_id: 2810a9339294878571c762523a54c7d9ca1b358e608e7fecfcea02c2ce85e8a0

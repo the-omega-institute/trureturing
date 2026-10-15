@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb5eeb8b4d57dd9ac9f9ffd161fc87cb54ec37994239a5244b741cd740439176
+  normalized_sha256: sha256:cb5eeb8b4d57dd9ac9f9ffd161fc87cb54ec37994239a5244b741cd740439176
+cas_ref: sha256:cb5eeb8b4d57dd9ac9f9ffd161fc87cb54ec37994239a5244b741cd740439176
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只给出定理 L1 的非负平方展开的证明及证明方法说明，不另立独立命题；其所证明的原陈述保留自身状态。
+    previous_atom_id: e6b6fecddb5eee0812a0243c4df590974799c2c4403225694671db7205f1e6a0
+    next_atom_id: b04dbff1a23a6ef18185bbb73d758949c819ce4f7a32a444e7394ad116666bf6

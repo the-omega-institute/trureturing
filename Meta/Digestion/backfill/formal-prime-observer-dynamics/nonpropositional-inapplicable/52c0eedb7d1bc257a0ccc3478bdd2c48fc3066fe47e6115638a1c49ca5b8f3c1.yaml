@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52c0eedb7d1bc257a0ccc3478bdd2c48fc3066fe47e6115638a1c49ca5b8f3c1
+  normalized_sha256: sha256:52c0eedb7d1bc257a0ccc3478bdd2c48fc3066fe47e6115638a1c49ca5b8f3c1
+cas_ref: sha256:52c0eedb7d1bc257a0ccc3478bdd2c48fc3066fe47e6115638a1c49ca5b8f3c1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：104. 乘积系统的完整轨迹逐坐标分解：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: dae2fc8972e58aa5eacf4ae0116e9f9dd213f692318e763cecdb0d0bdc6923ab
+    next_atom_id: e841fa0579c2b491f3cb0152ef8fe7f5bdcb6ab2f8ca7b1a7bbc9a9f9550ddbc

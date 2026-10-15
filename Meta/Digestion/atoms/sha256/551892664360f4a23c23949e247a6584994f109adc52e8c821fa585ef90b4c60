@@ -1,0 +1,38 @@
+**Definition 1.2 (complete acquired input).** Fix
+$I=(P,R,H_0,H_{\rm rel},Q,N)$ as in [ARH, Definitions 1.1–1.2][ARH].
+The complete old $P$-row $R$ is attained. A literal $(a,p,c)$ means
+$r_{\rho^a u}(p)=c$. A signed record $(a,p,b,q,\bowtie)$ means
+
+$$
+p\in\operatorname{Pos}(\rho^a u),\qquad
+q\in\operatorname{Pos}(\rho^b u),\qquad
+(\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q,
+\quad\bowtie\in\{=,\ne\}.
+\tag{SFS.3}
+$$
+
+Absence invalidates either sign. Lists retain repetitions. All records within
+one realization concern its same original source and their stated actual
+epochs. Define the entire fiber and full original target strata by
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\},
+\qquad D_r=\{u\in D:R_Q(u)=r\}.
+\tag{SFS.4}
+$$
+
+Every old/off-task inequality, exterior, reached set and partition remains
+imposed. Let $B$ be any supplied finite set of distinct attained complete
+$Q$-rows, $|B|\ge2$. The joint question is
+
+$$
+J_B(h)\quad\Longleftrightarrow\quad
+\exists(u_r)_{r\in B}\in\prod_{r\in B}D_r\quad
+\forall r,s\in B\quad u_r\equiv_h u_s.
+\tag{SFS.5}
+$$
+
+These are alternative finite originals for one common producer contract,
+sharing one original prefix. Separate pairwise witnesses do not suffice.
+One source is never assigned incompatible labels. Rows outside $B$ stay in $D$.
+

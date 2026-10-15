@@ -1,0 +1,80 @@
+**Assumption 16.1 (a current port after acquisition, export and discard).**
+Use the actual finite ordered trees, homomorphic $\rho$, four-valued
+literal Read and complete rows of Definitions 1.1--1.2. Fix public
+integers $D,H\ge0$, and write
+
+$$
+\begin{aligned}
+P&=\varnothing,&r&=2^D,&q&=H+1,\\
+W_D&=(w_0,\ldots,w_{r-1}),&I&=\{0,\ldots,r-1\},\\
+T_n&=\rho^n\alpha,&
+X_a&=\mathcal B_D[(T_{jq+a_j})_{j\in I}],&
+a&\in\{0,\ldots,H\}^{I}.
+\end{aligned}
+\tag{NAR.16.1}
+$$
+
+The original words are in lexicographic order, with $w_0=L^D$;
+$\mathcal B_D$ is the complete ordered depth-$D$ skeleton. All original
+slots have independent variable ages, and their offsets remain $jq$.
+Let $\mathcal M$ be any nonempty public family of nonempty subsets of
+$I$. For a later selected $S\in\mathcal M$ put
+$Q_S=W_D\setminus\{w_i:i\in S\}$. Fix $\lambda_0\in\{0,1\}$ and
+allow every integer lag $\ell\ge\lambda_0$. The stationary current tree
+and its supplied later row are
+
+$$
+Y(a,\ell)=\rho^\ell X_a
+ =\mathcal B_D[(T_{jq+a_j+\ell})_{j\in I}],
+\qquad V_S(a,\ell)=R_{Q_S}(Y(a,\ell)).
+\tag{NAR.16.2}
+$$
+
+The encoder computes one code solely from the genuinely acquired
+initial $R_{\varnothing}(X_a)$, before both $S$ and $\ell$ are chosen.
+It exports that code and discards the initial row and every other
+source-bearing field. Write its induced finite age function as $e(a)$.
+All surviving source-bearing distinctions count as code: retained IDs,
+clock values, epochs, logs, sizes, readable pointers, allocation
+choices, archives and source-dependent controller states have no
+separate uncharged channel. Public parameters and installed tables
+common to all sources are not acquired facts about the chosen source.
+
+The decoder starts with $S$, $e(a)$ and the full acquired $V_S(a,\ell)$.
+This includes the literal exterior, every label and bracket, all reached
+or absent-cut guards, and all within-row hidden equalities and
+disequalities. It contains no hidden subtree values or cross-row links.
+In addition, the decoder may pay for a fresh native Read at any finite
+literal original-root address $p\in\{L,R\}^{<\omega}$ of this same
+stationary CURRENT $Y(a,\ell)$. The replies are
+$\mathsf{absent},\alpha,\beta,\mathsf{branch}$. A request returns one
+constructor reply, not a subtree or a numerical age. There is no old
+source reread, epoch advice, free equality or age oracle, reroot service,
+or native update during the later capture or decoder queries.
+
+A deterministic adaptive controller chooses its next finite address or
+halts from the supplied entry and its acquired reply history. Correct
+finite recovery means one encoder and controller satisfy
+
+$$
+\forall a\ \forall S\in\mathcal M\ \forall\ell\ge\lambda_0:
+\quad\mathsf{Dec}^{\operatorname{Read}_{Y(a,\ell)}}
+       (S,e(a),V_S(a,\ell))\text{ halts with output }\ell.
+\tag{NAR.16.3}
+$$
+
+Each actual invocation is one raw call, including an absent reply, a
+repeated address or a visible-address reread. Local evaluation of an
+already acquired literal exterior is not a fresh source call. It still
+has parsing and arithmetic costs. The literal word $R^s$ has $s$ actual
+letters; an integer specifying $s$ is not a compressed native request.
+
+Acquisition, truthful export/discard, stationary capture, permissions
+and same-source, same-root, pure-$\rho$ continuation are premises.
+They grant neither a value of $\ell$ nor authentication by the output.
+Labels, fixed-width bits, fresh calls, literal address lengths and their
+sum, acquisition, row storage, parsing, arithmetic, address production,
+controller workspace and lag-output size are separate resources.
+This explicitly enlarged current-access contract does not alter the
+zero-extra-read contracts of §§13--14.
+

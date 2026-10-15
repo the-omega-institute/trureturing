@@ -1,0 +1,22 @@
+**Definition 6.1 (primitive finite source codes).** Put
+
+$$
+D_0=\alpha,\qquad D_{e+1}=\langle\beta,D_e\rangle,
+\qquad E_e=\langle\alpha,D_e\rangle.
+\tag{NASF.9}
+$$
+
+These $E_e$ are pairwise distinct, effectively constructible and recognizable
+by a finite syntax scan recovering the right-comb length $e$. All satisfy
+$\ell(E_e)=1$ and have $2e+3$ nodes. Each is primitive: `pair_image` in
+[ISC] says a pair in the image is either $\langle\beta,\alpha\rangle$
+or has both children in the image; `no_alpha` excludes its left child.
+Thus the existing primitive-coordinate result gives
+
+$$
+\rho^j u=E_e\quad\Longrightarrow\quad j=0\ \land\ u=E_e.
+\tag{NASF.10}
+$$
+
+This use of source coordinates supplies no new source port or live decoder.
+

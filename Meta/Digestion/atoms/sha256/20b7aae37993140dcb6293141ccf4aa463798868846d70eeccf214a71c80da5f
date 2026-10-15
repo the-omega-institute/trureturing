@@ -1,0 +1,33 @@
+**Verification 3.3 (same-source certificate and counts).** Write
+$s\preceq x$ for the prefix relation. Exact supports are
+
+$$
+\begin{aligned}
+C_{Q_s}&=\{(x,\rho^{|s|}u_x):s\preceq x\},\\
+C_{U_s}&=\{(x,\rho^{|s|-1}u_x):s\preceq x\},\\
+C_{Z_x}&=\{(x,\rho^{h-1}u_x)\}.
+\end{aligned}
+\tag{SLHC.5}
+$$
+
+Assign ranks $2(h-|s|)-1$ to $Q_s$, $2(h-|s|)$ to $U_s$, and zero to
+$Z_x$. Initialization covers all $(x,u_x)$. Every action is legal.
+Read preserves the device and restricts the prefix to its actual child;
+Update advances the same device and preserves the original target.
+Every supported edge decreases rank by exactly one, and each halt support
+has its stated target. These are precisely FIB §27.2's obligations.
+
+Every prefix occurs because every binary completion is allowed. There
+are respectively $2^h-1$, $2^h-2$ and $2^h$ vertices of types $Q,U,Z$.
+Their depths are $2|s|$, $2|s|-1$ and $2h-1$. Thus their union is the
+actual primitive-prefix tree of height $H=2h-1$ and size $N=3\cdot2^h-3$.
+Every Read vertex has two supported children; every Update vertex has
+one. Keeping the latter distinguishes a just-read prefix from the same
+prefix after its generation. The finite union of the actual paths is the
+finite contract needed by FIB §30.4's tree bridge; the infinite ambient
+tree algebra need not itself be made finite.
+
+At $h=1$ this is one empty-address Read and two halts: $H=1$, $N=3$,
+no Update. The symbols $s,t$ and these ranks describe the table and proof,
+not extra fields supplied to its implementation.
+

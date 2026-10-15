@@ -1,0 +1,5 @@
+**Theorem 11.4 (constant advice and three calls require ten states).**
+For $r=1$ and $q=3$, every successful controller has at least five
+running states and at least five halting states. In particular
+$K\ge10$.
+

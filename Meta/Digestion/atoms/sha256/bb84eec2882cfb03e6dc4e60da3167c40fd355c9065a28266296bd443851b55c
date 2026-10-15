@@ -1,0 +1,10 @@
+**Theorem 4.2 (producer-owned zero-new-query extraction).** Under Assumption 4.1
+the producer can compute $S_P(u)$ with no additional native source queries,
+and retain its required label before the complete access cut. A handoff
+which actually exports this augmented record, and whose later accessible
+state contains no further source distinctions, permits the finite row
+calculations of Theorems 3.1 and 3.3 without new source queries.
+For a partial producer whose complete accessible input is only the
+projected row, zero-query extraction of the needed label is impossible
+when a left birth exists and two old alpha labels remain feasible.
+

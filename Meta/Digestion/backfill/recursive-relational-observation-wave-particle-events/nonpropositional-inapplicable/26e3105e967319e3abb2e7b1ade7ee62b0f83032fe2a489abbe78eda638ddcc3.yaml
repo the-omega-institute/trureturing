@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26e3105e967319e3abb2e7b1ade7ee62b0f83032fe2a489abbe78eda638ddcc3
+  normalized_sha256: sha256:26e3105e967319e3abb2e7b1ade7ee62b0f83032fe2a489abbe78eda638ddcc3
+cas_ref: sha256:26e3105e967319e3abb2e7b1ade7ee62b0f83032fe2a489abbe78eda638ddcc3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 0.3 仅列出后文采用的矩阵、谱、Kraus 等标准表示工具及文献入口，未陈述这些工具的定理内容，也未提出待验证的性质。
+    previous_atom_id: ccc0504682abab4410b0d898d80ce6b29e98e30ee076222393656cb66c5f6818
+    next_atom_id: c7519c059d0a962039ee6c54ab23e220523277c34b8741c57291b30d077c0c25

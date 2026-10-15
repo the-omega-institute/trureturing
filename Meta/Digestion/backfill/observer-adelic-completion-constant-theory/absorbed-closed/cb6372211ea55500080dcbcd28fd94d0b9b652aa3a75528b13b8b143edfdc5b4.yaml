@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cb6372211ea55500080dcbcd28fd94d0b9b652aa3a75528b13b8b143edfdc5b4
+  normalized_sha256: sha256:cb6372211ea55500080dcbcd28fd94d0b9b652aa3a75528b13b8b143edfdc5b4
+cas_ref: sha256:cb6372211ea55500080dcbcd28fd94d0b9b652aa3a75528b13b8b143edfdc5b4
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/VisibleHiddenMotionDichotomy.visible_path_hidden_address_dichotomy
+    target_statement_id: sha256:5960a5eb08e64355a0d973a0a94fc1ea8b9057438886a95a85f7e9d6137fc4d4
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,37 @@
+**Calculation 3.1 (guarded delayed leaf read).** Write
+
+$$
+T_0=\alpha,\quad T_1=\beta,\quad
+T_{n+2}=\langle T_{n+1},T_n\rangle.
+$$
+
+The native substitution gives $\rho T_n=T_{n+1}$, by the two base cases
+and induction through pairing. Every original skeleton branch persists.
+Therefore, after $t$ actual Updates, the subtree at $q_i$ is precisely
+$T_{t+x_i}$. This is SLH §32.2's original-ancestor decomposition with
+free masks at the selected leaves and singleton masks elsewhere.
+
+Put $t=2k+e$, $e\in\{0,1\}$. Before right descent $j+1$, for
+$0\le j<k$, its subtree index is
+
+$$
+t+x_i-2j\ge2+e+x_i\ge2.
+$$
+
+Thus the current node is really a branch and has right child with index
+two less. All $k$ descents exist, and the terminal subtree is $T_{e+x_i}$.
+The resulting raw reply table is
+
+| Epoch parity | Original bit $0$ | Original bit $1$ |
+| --- | --- | --- |
+| $t$ even | $\alpha$ | $\beta$ |
+| $t$ odd | $\beta$ | $\mathsf{branch}$ |
+
+These are the two-label specializations of SLH §55.2; the odd branch is
+the root of $T_2$. None of the prescribed queries is absent. This argument
+uses the known original-leaf promise. At an unrestricted original node,
+odd-epoch $R^k$ cannot distinguish an original $\beta$ from an original
+branch, and it is not the general guarded decoder of SLH §2.2.
+Arithmetic alone cannot replace reachedness: descending $L$ from
+$T_1=\beta$ is absent, regardless of an attempted index subtraction.
+
