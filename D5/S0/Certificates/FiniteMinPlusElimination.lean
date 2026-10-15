@@ -6,6 +6,10 @@
    utility: none
    digest: Exact finite factor partitions and proved pointwise bucket relaxations preserve complete-assignment lower bounds through executable elimination programs. -/
 
+import Mathlib.Algebra.Order.BigOperators.Group.List
+import Mathlib.Data.Int.Basic
+import Mathlib.Data.List.Forall2
+
 /-!
 Prepared source, uncompiled. Library search found list permutation sum
 invariance, List.Forall₂.sum_le_sum, and the EJM transient pointwise two-factor
@@ -50,10 +54,6 @@ for the three new public theorems remain unfinished under
 https://github.com/the-omega-institute/trureturing/issues/16309
 No audit success or declared_validated status is asserted.
 -/
-
-import Mathlib.Algebra.Order.BigOperators.Group.List
-import Mathlib.Data.Int.Basic
-import Mathlib.Data.List.Forall2
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
