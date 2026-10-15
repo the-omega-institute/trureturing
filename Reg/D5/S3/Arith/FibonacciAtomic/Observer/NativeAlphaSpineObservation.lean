@@ -136,4 +136,82 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
 #print axioms family
 #print axioms registration
 
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
+
+abbrev holeSignature : Signature where
+  Params := Address
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Option Source
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def holeActual : Realization holeSignature :=
+  realize holeSignature (fun _ p x => subtree p
+    (p.foldr (fun b t => if b then .mul (.of true) t else .mul t (.of true)) x))
+    (fun e => nomatch e)
+
+def holeBad : Realization holeSignature :=
+  realize holeSignature (fun _ _ _ => none) (fun e => nomatch e)
+
+abbrev holeArena : Arena where
+  signature := holeSignature
+  Law R := ∀ p x, R.readout () p x = some x
+
+private theorem hole_bad : ¬ holeArena.Law holeBad := by
+  intro h
+  have he := h [] (.of true)
+  cases he
+
+def holeProof : Registration holeArena (type_of% (@native_alpha_spine_at)) where
+  actual := holeActual
+  bridge := Iff.rfl
+  variation := ⟨native_alpha_spine_at, holeBad, hole_bad⟩
+  sensitivity := ⟨fun i => ⟨holeBad,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, hole_bad⟩, fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨[], .of true, .of false, ?_⟩
+    intro he
+    cases he
+
+noncomputable def native_alpha_spine_at_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@native_alpha_spine_at) (Realization holeSignature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeAlphaSpineObservation.native_alpha_spine_at.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeAlphaSpineObservation.holeProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨holeArena⟩
+  objectArena := .source ⟨holeArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source holeArena ⟨holeProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize holeSignature (fun _ p x => subtree p
+    (p.foldr (fun b t => if b then .mul (.of true) t else .mul t (.of true)) x))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeAlphaSpineObservation
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","fn","arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms holeProof
+#print axioms native_alpha_spine_at_registration
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeAlphaSpineObservation

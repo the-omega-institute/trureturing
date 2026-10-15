@@ -1,0 +1,40 @@
+**Theorem 14.2 (decidable supplied-record certificate and productive
+finite witnesses).** For records $d_i,d_j$ in two distinct complete row
+charts, define
+
+$$
+\operatorname{Accept}(d_i,d_j)\Longleftrightarrow
+\operatorname{Cof}_i(d_i)\land\operatorname{Cof}_j(d_j)\land
+Y_i(d_i)=Y_j(d_j),
+\tag{SPC.57}
+$$
+
+where each $Y$ is the chart output obtained from the record, with fixed
+source-template exponents and all shared references preserved. The predicate
+(SPC.57) is decidable. If it holds, then for every inclusive depth $h$ there
+are finite $u_h,v_h$ in the entire acquired domain with their prescribed,
+distinct complete rows and $u_h\equiv_hv_h$. The witnesses and their finite
+coordinate tuples may vary independently with $h.
+
+**Proof.** Substitute each finite $f_t$ in every occurrence of $\Gamma$.
+The remaining full Cartesian residual condition is exactly the fixed-power
+Presburger support supplied by [URR, Corollary 3.2][URR], so both quantified
+sentences in (SPC.56) are decidable with the displayed quantifier order.
+The combined systems and outputs satisfy Definition 13.1; Theorem 13.5
+decides the equality conjunct by four original-address language comparisons.
+The chart correspondences of [PDC, Theorem 5.2][PDC] and [NAC, Definition 5.1 and Theorem 6.1][NAC]
+then identify each cofinal record with its own complete row closure and
+supply finite realizations at every requested depth. Their whole-negative
+list, endpoint reach guards, old row, exterior, partitions, repeated names,
+classes and cross-class inequalities remain checked on each finite source.
+The supplied prefix interface makes the construction productive; raw
+unfoldings alone do not replace the joint finite completion.
+
+If cofinality is false, the same support theorem supplies a finite
+coordinate neighborhood disjoint from that chart. If equality is false,
+Theorem 13.5 supplies a finite original address with different replies.
+Either failure rejects this supplied candidate pair only; it does not reject
+another record or another distinct-label pair. The construction proves
+neither description completeness nor a search procedure over all records.
+$\square$
+

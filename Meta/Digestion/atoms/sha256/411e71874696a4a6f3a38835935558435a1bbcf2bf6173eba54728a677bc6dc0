@@ -1,0 +1,9 @@
+**Corollary 10.11 (the established depth-three frontier as an
+application).** For the row of Definition 9.1, the finite
+criterion gives exactly the previously established frontier
+
+$$
+\mathsf{InvFeas}_*(r,q)\Longleftrightarrow r2^q\ge5.
+\tag{NBP.10.14}
+$$
+

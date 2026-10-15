@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc10a4a481af1f84f6d3cc6894598c3b8bf3155350c637ea5f11fc6e1fac9b08
+  normalized_sha256: sha256:fc10a4a481af1f84f6d3cc6894598c3b8bf3155350c637ea5f11fc6e1fac9b08
+cas_ref: sha256:fc10a4a481af1f84f6d3cc6894598c3b8bf3155350c637ea5f11fc6e1fac9b08
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：| \(\operatorname{PTr}\) | 素数—时间完整轨迹：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 0e9562a96a0fa9289e8667eead12a9082a419262479933faef1f20a2605e55d1
+    next_atom_id: 054a9f710895cd50a54fd235c0403a5eac8bf81323f56c511caace9b2f0ab2b5

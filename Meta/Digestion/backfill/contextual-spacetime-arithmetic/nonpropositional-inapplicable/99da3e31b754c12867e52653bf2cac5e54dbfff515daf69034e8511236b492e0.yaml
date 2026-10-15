@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99da3e31b754c12867e52653bf2cac5e54dbfff515daf69034e8511236b492e0
+  normalized_sha256: sha256:99da3e31b754c12867e52653bf2cac5e54dbfff515daf69034e8511236b492e0
+cas_ref: sha256:99da3e31b754c12867e52653bf2cac5e54dbfff515daf69034e8511236b492e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述复制语言多项式性与一次系数切片公式。
+    previous_atom_id: 3fdb01d5fea0b70a8de045a9db54f2b5936a12fd5a6be109ff822a00d6e218b9
+    next_atom_id: 6e4c17be26ac3fbd720d57868569897d4465b47e02b5f660b3a71757df9a9378

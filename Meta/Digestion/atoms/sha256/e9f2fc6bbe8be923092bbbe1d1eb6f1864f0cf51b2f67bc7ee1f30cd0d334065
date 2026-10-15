@@ -1,0 +1,17 @@
+**Proposition 4.4 (unpaired predictions and lack of forward partition
+closure).** The following nonrecoveries occur on native sources.
+
+At $P=\{L,R\}$ and $n=0$, alpha and beta both have causal table
+$(\ast,\ast)$, but full vectors $(2,2)$ and $(1,1)$. The causal table
+alone therefore need not recover full predictions. Full predictions
+alone need not recover rows: $\langle\alpha,\alpha\rangle$ and
+$\langle\alpha,\beta\rangle$ both have vector $(0,0)$ but different
+origin partitions.
+
+Even an origin row together with its full cut vector need not determine
+the next complete row. Reuse the actual source pair in
+[Sparse History Proposition 65.3, (SLH.65.2)](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md):
+at $P=\{LL,R\}$, $x=\langle\beta,\alpha\rangle$ and
+$y=\langle\beta,\beta\rangle$ have the same origin row and full vector
+$(1,0)$, yet $R_P(\rho x)\ne R_P(\rho y)$.
+

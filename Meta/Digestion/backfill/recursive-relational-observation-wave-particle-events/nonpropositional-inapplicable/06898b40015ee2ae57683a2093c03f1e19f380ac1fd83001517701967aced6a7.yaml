@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06898b40015ee2ae57683a2093c03f1e19f380ac1fd83001517701967aced6a7
+  normalized_sha256: sha256:06898b40015ee2ae57683a2093c03f1e19f380ac1fd83001517701967aced6a7
+cas_ref: sha256:06898b40015ee2ae57683a2093c03f1e19f380ac1fd83001517701967aced6a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 223.1（近似模型合同）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 370ba2537d12e0f148516d777293393942b64ff4315b8535d9ea33257824c3d9
+    next_atom_id: bf0be1944e4c281c9de15693b2ebe2d293273b07936ea783be20505d2b1c5484

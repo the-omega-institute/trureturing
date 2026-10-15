@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4878f4ae8f6458c5937ff0e1707c93cd0d5fbf35e5be30cea5a0b0c1c13a23a8
+  normalized_sha256: sha256:4878f4ae8f6458c5937ff0e1707c93cd0d5fbf35e5be30cea5a0b0c1c13a23a8
+cas_ref: sha256:4878f4ae8f6458c5937ff0e1707c93cd0d5fbf35e5be30cea5a0b0c1c13a23a8
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/CompletionPositiveDriftRegion.positive_drift_region_split
+    target_statement_id: sha256:3f13d6a984d8228117395a830b4f00ad38fc9345117de0fcc2a96a51e00c0439
+receipts:
+  unresolved_subitems: []

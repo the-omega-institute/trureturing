@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6648389a6ac817c460c8e51caaa98624f20ec18f85d5b4f7c133992618d67098
+  normalized_sha256: sha256:6648389a6ac817c460c8e51caaa98624f20ec18f85d5b4f7c133992618d67098
+cas_ref: sha256:6648389a6ac817c460c8e51caaa98624f20ec18f85d5b4f7c133992618d67098
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `ControlledBehaviorUniversality`；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 22a7bf89c2af1ae48e722e6ba201a1b4679f0681d17a1bfd4461feee60cb501c
+    next_atom_id: f02e174f88bd9c5dbfcee6fafbffa9a83809354c4a3cabe5141c954005060480

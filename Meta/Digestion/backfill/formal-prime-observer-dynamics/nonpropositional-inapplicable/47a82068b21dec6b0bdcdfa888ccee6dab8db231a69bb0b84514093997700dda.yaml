@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47a82068b21dec6b0bdcdfa888ccee6dab8db231a69bb0b84514093997700dda
+  normalized_sha256: sha256:47a82068b21dec6b0bdcdfa888ccee6dab8db231a69bb0b84514093997700dda
+cas_ref: sha256:47a82068b21dec6b0bdcdfa888ccee6dab8db231a69bb0b84514093997700dda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：171. 显式 CRT 纠错模型：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: d2297d4fdc1ad2e917dba32dcd31ed57e5ccba987172e60c6b658ccaae723069
+    next_atom_id: 58362ac35af1d98742a5129a77792c9dd8c6aee8a12b31d9def2058c68df0fae

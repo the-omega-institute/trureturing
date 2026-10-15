@@ -1,0 +1,16 @@
+**Definition 3.2 (the canonical frame contact).** Let $\widehat{\mathcal T}$ be
+the finite or infinite valid ordered native trees, with the same reply convention,
+and let $\Omega$ have a branch at every address. Set
+
+$$
+K_{\eta,\mathbf f}=W_\eta(\mathbf f,\Omega\text{ on every coordinate outside }F_\eta).
+\tag{FFM.11}
+$$
+
+For $X\subseteq\mathcal T$, membership $K\in\overline X$ means that every finite
+inclusive prefix of $K$ is realized by some actual finite member of $X$. It
+imposes no retained disequality or row partition on $K$. Every (FFM.11) is
+rational, having finitely many distinct subtrees: a finite constructor term uses
+finite grounds and $\Omega$. This is a mathematical limit description, not a
+new runtime source.
+

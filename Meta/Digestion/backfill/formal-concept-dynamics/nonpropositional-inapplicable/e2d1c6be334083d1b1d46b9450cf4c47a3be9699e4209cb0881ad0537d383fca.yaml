@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e2d1c6be334083d1b1d46b9450cf4c47a3be9699e4209cb0881ad0537d383fca
+  normalized_sha256: sha256:e2d1c6be334083d1b1d46b9450cf4c47a3be9699e4209cb0881ad0537d383fca
+cas_ref: sha256:e2d1c6be334083d1b1d46b9450cf4c47a3be9699e4209cb0881ad0537d383fca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 495.1（最弱前置条件）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: c86f4afa6aa8f15de6b6cb4f1674aaa076338d7ba823d4467ba9d1a7eedb3fec
+    next_atom_id: 3e6c3e19245a9d40373390690de276eb41c5fea1188f0ecade17477f269d33ac

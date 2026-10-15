@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:242b2eaadca01baa861cf6174b95a7997a192a505e9c1b6246057bf723e3e094
+  normalized_sha256: sha256:242b2eaadca01baa861cf6174b95a7997a192a505e9c1b6246057bf723e3e094
+cas_ref: sha256:242b2eaadca01baa861cf6174b95a7997a192a505e9c1b6246057bf723e3e094
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 378.1（验证复杂度）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 4ef1bec4e83176316bfbee8a2104ffeda58e65462855817b19027cf4afdf5e4a
+    next_atom_id: cb41d32fc9558a357fe400d874032d439b75ea896ec698a099d694bcab756421

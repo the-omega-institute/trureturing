@@ -51,7 +51,7 @@ def JointClosure {k m : Nat} (P : (Fin k → Nat) → Prop)
       Negatives pairs n z ∧ ∀ (i : Fin m) (a : Address), a.length ≤ height i →
         readout a (z i) = completionReadout a (T i)
 
-private theorem embed_injective : Function.Injective embed := by
+theorem embed_injective : Function.Injective embed := by
   intro s t h
   apply source_foundation.2.2.1 t s
   intro a _

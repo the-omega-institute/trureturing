@@ -1394,3 +1394,2645 @@ $$
 参数可以精确已知，预测器可以逐参数选择；本节仍只比较给定有限外部观察的平方损失。它不包含参数学习、训练或样本复杂度、计算资源保证，也不判断任何神经网络的经验收益。引理 16.2 的条件期望最优性与有界损失比较、Kullback–Leibler 链式法则、Pearson 卡方控制、数据处理和 Pinsker 不等式均为经典方法；$V(t)$、对角线同律识别及非对角线点态窗口极限分别复用定理 5.1、定理 4.2 与引理 1.4。本节的具体连接是保留原平稳初始行、改变行的精确占用和中央发射，把完整路径的信息代价转为同一目标与外部的联合风险模量，再推出明确的必要半径。该族内推导不承担文献优先权断言。
 
 ## 追加锚（本行以下为后续定量增补区）
+
+## 20. 有限窗口指数恢复定理
+
+本节回到定义 2.2 的原四状态发射链。固定精确的 $t\in(0,1)$，令
+$$
+p=t,\qquad q=t+\delta,
+\qquad d=\frac{\min(t,1-t)}2,
+$$
+并假设 $0<|\delta|<d$。定义
+$$
+\alpha=\frac t2,\qquad
+\vartheta=-\frac12\log(1-\alpha),\qquad
+M=\frac{e^{2\vartheta}}{1-(1-\alpha)e^{\vartheta}},
+$$
+$$
+\beta=\min\left\{\frac18,\frac{\vartheta}{8\log M}\right\},
+\qquad
+\gamma=\min\left\{\frac{\vartheta}{4d^2},\frac\beta8\right\},
+$$
+$$
+\mathcal C=2e^{2\vartheta}+2+4e^{d^2/8}+e^{\gamma d^2/\beta}.
+\tag{20.1}
+$$
+The inequalities $p,q\ge\alpha$ and $p,q\le(1+t)/2<1$ hold on this parameter range. Moreover $(1-\alpha)e^{\vartheta}=\sqrt{1-\alpha}<1$, so all constants in (20.1) are finite and strictly positive.
+
+**定理 20.1（原位点有限观察的指数上界）.** 对每个整数 $r\ge1$，置
+$$
+s=\lfloor r/2\rfloor,\qquad n=\lfloor\beta r\rfloor,
+\qquad \Delta=|\delta|.
+$$
+存在一个只使用已知 $p,q,r$ 的二值函数
+$$
+f_r:\{0,1\}^{2r}\longrightarrow\{0,1\},
+$$
+其定义见第 23 节，在每个保留词上都有输出，并且
+$$
+E_r(P_{t,t+\delta})
+\le P_{t,t+\delta}\bigl(f_r(Y_r)\ne X_0\bigr)
+\le \mathcal C\,e^{-\gamma r\delta^2}.
+\tag{20.2}
+$$
+这里 $Y_r=(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r)$ 是原整数位点观察；不使用中心位、隐藏状态或窗口外的补全。
+
+## 21. 原律上的选定锚柱集
+
+定义 2.2 的六条非零发射边为
+$$
+1\xrightarrow{0,1-p}1,\quad
+1\xrightarrow{1,p}3,\quad
+3\xrightarrow{0,1}2,\quad
+2\xrightarrow{0,1-q}2,\quad
+2\xrightarrow{1,q}4,\quad
+4\xrightarrow{0,1}1.
+\tag{21.1}
+$$
+在占据位 $z$ 定义辅助标记
+$$
+C_z=q\quad\text{若 }H_z=1,\qquad
+C_z=p\quad\text{若 }H_z=2,
+\qquad \overline p=q,\quad\overline q=p.
+$$
+它只用于证明，不是观察输入。由式（2.3），两个带标记占据边的原联合质量相同：
+$$
+J(X_z=1,C_z=p)=\lambda_2q=\frac1Z,\qquad
+J(X_z=1,C_z=q)=\lambda_1p=\frac1Z.
+\tag{21.2}
+$$
+相邻占据位的标记交替。若出向标记为 $a\in\{p,q\}$，相邻占据位的整数距离 $g\ge2$ 的路径包含一个强制零、$g-2$ 个准备状态零回路和末端的一发射，故
+$$
+f_a(g)=a(1-a)^{g-2},\qquad g\ge2.
+\tag{21.3}
+$$
+其和为一。
+
+固定一个确定的占据位 $z$，列出左右所有占据位为 $\cdots<T_{-1}<T_0=z<T_1<\cdots$，并写 $G_j=T_{j+1}-T_j$。由原联合柱式（2.4），对任意 $m,n\ge0$、$g_j\ge2$（$-m\le j<n$）及 $a=C_z$，有
+$$
+J\bigl(X_z=1,C_z=a,G_j=g_j\ (-m\le j<n)\bigr)
+=\frac1Z\prod_{j=-m}^{n-1}f_{a_j}(g_j),
+\qquad
+ a_j=\begin{cases}a,&j\text{ 偶},\\\overline a,&j\text{ 奇}.
+\end{cases}
+\tag{21.4}
+$$
+事实上，所给长度固定最左占据位，中央标记确定其交替相位；第一条带标记占据边的质量是（21.2），随后每一段隐藏路径唯一，贡献（21.3）。反向地，这些路径恰好产生所给长度，没有其他隐藏路径或端点因子。故（21.4）同时包括负指标和空乘积，并由非负项边缘化得到任意有限的间隔子集乘积律。
+
+在两侧选定最近锚
+$$
+R=\min\{j>0:X_j=1\},\qquad L=\max\{j<0:X_j=1\}
+$$
+的事件上，令 $D_j^+$ 为从 $R$ 向右的连续间隔，令 $D_j^-$ 为从 $L$ 向左的连续间隔。定义
+$$
+T_b(s)=\sum_{g\ge\max(2,s)}f_b(g)=(1-b)^{\max(0,s-2)},\qquad s\ge1.
+\tag{21.5}
+$$
+对任意 $k\ge0$ 和 $g_0,\ldots,g_{k-1}\ge2$，两种方向的原律柱集分别满足
+$$
+J(R=s,C_R=a,D_j^+=g_j\ (0\le j<k))
+=\frac1Z T_{\overline a}(s)\prod_{j=0}^{k-1}f_{b_j}(g_j),
+\quad b_j=\begin{cases}a,&j\text{ 偶},\\\overline a,&j\text{ 奇},\end{cases}
+\tag{21.6}
+$$
+以及
+$$
+J(L=-s,C_L=a,D_j^-=g_j\ (0\le j<k))
+=\frac1Z T_a(s)\prod_{j=0}^{k-1}f_{e_j}(g_j),
+\quad e_j=\begin{cases}\overline a,&j\text{ 偶},\\a,&j\text{ 奇}.
+\end{cases}
+\tag{21.7}
+$$
+在（21.6）中，$R=s$ 等价于该占据位的前一占据位不大于零；其入向间隔参数为 $\overline a$，长度允许等于 $s$，因为前一占据位可以正好是零。式（21.7）同理，$L=-s$ 要求其后一占据位不小于零，长度同样允许等于 $s$，而该出向间隔参数为 $a$。两式都是原律下不交柱集的可数求和，没有条件于 $X_0$ 或人为补入边界状态。
+
+取 $k=0$ 得选定锚及标记的真实权重
+$$
+w_+(s,a)=Z^{-1}T_{\overline a}(s),\qquad
+w_-(s,a)=Z^{-1}T_a(s).
+\tag{21.8}
+$$
+分别除以这些权重后，右侧间隔参数按 $a,\overline a,a,\ldots$ 独立交替，左侧按 $\overline a,a,\overline a,\ldots$ 独立交替。权重一般不均匀，但确实归一：
+$$
+\sum_{s\ge1}T_b(s)=\sum_{g\ge2}g f_b(g)=1+\frac1b,
+$$
+从而
+$$
+\sum_{s\ge1}\sum_{a\in\{p,q\}}w_+(s,a)
+=\sum_{s\ge1}\sum_{a\in\{p,q\}}w_-(s,a)=1.
+\tag{21.9}
+$$
+这保留了原平稳行的 $1/Z$ 因子，也没有用占据位 Palm 律替换原位点律。
+
+## 22. 原整数时钟上的尾界与间隔矩
+
+对任意隐藏起点，任意两条连续发射都全为零的条件概率不超过 $1-\alpha$：准备状态给出 $(1-a)^2\le1-\alpha$，强制状态给出 $1-a\le1-\alpha$。按两个原整数位点一组并使用（2.4），对任意 $\ell\ge0$ 得
+$$
+P_{t,q}(X_u=\cdots=X_{u+\ell-1}=0)
+\le(1-\alpha)^{\lfloor\ell/2\rfloor}.
+\tag{22.1}
+$$
+空块时右端为一。令 $\ell\to\infty$，再对整数起点作可数并，得到两侧几乎处处有无穷多个 $1$；因此 $L,R$ 及全部 outward 列表在一个满测事件上存在。
+
+对 $a\ge\alpha$，几何求和给出
+$$
+\mathbb E_{f_a}e^{\vartheta G}
+=\frac{ae^{2\vartheta}}{1-(1-a)e^{\vartheta}}
+\le\frac{e^{2\vartheta}}{1-(1-\alpha)e^{\vartheta}}=M.
+\tag{22.2}
+$$
+分母为正，因为 $(1-a)e^{\vartheta}\le\sqrt{1-\alpha}<1$。这就是所有选定锚条件下每个交替间隔的统一矩界。
+
+## 23. 每个有限保留词上的解码器
+
+给定保留词 $y=(y_{-r},\ldots,y_{-1},y_1,\ldots,y_r)$，按下列规则定义 $f_r(y)$：
+
+1. 若 $n=0$，或 $y_{-1}=1$ 或 $y_1=1$，输出 $0$。
+2. 在 $[-s,-1]$ 与 $[1,s]$ 中分别搜索占据位。任一侧没有 $1$ 时输出 $0$；否则取其中最靠近零的负位 $L$ 和正位 $R$。
+3. 从 $L$ 向负方向、从 $R$ 向正方向，在各自保留半窗口中列出占据位。任一列表少于 $2n+1$ 个条目时输出 $0$。
+4. 写这些列表为 $L=L_0>L_1>\cdots$、$R=R_0<R_1<\cdots$，并置
+$$
+U_-^{(r)}=\frac1n\sum_{k=0}^{n-1}{\bf1}_{\{L_{2k}-L_{2k+1}=2\}},\qquad
+U_+^{(r)}=\frac1n\sum_{k=0}^{n-1}{\bf1}_{\{R_{2k+1}-R_{2k}=2\}}.
+\tag{23.1}
+$$
+输出 $1$ 当且仅当 $|U_-^{(r)}-U_+^{(r)}|>\Delta/2$，否则输出 $0$，包括等号情形。
+
+这是定义在所有二值保留词上的函数；非法词、缺锚、计数失败和阈值相等均已有输出。每个被抽样的间隔都完全落在对应半窗口内。需要 $2n+1$ 个条目，是因为最后抽样的偶数间隔之外还必须看到 $D_{2n-1}^{\pm}$；其代价在下一节支付。因此 $f_r(Y_r)$ 是 $\mathcal F_r$ 可测的。
+
+## 24. 缺锚与完整计数的原位点概率
+
+假设 $n\ge1$。某一侧内区间没有锚，意味着该侧长度 $s$ 的区间全为零。由（22.1）和
+$$
+\left\lfloor\frac{\lfloor r/2\rfloor}{2}\right\rfloor=\left\lfloor\frac r4\right\rfloor
+$$
+可得一个指定侧缺锚的概率不超过
+$$
+(1-\alpha)^{\lfloor r/4\rfloor}
+=e^{-2\vartheta\lfloor r/4\rfloor}
+\le e^{2\vartheta}e^{-\vartheta r/2}.
+\tag{24.1}
+$$
+两侧并集的代价至多是 $2e^{2\vartheta}e^{-\vartheta r/2}$，不需要两侧独立。
+
+在内锚存在时，步骤 2 选出的就是原律的真正最近锚。条件于 $R=h,C_R=a$（$1\le h\le s$），令
+$$
+S_+=\sum_{j=0}^{2n-1}D_j^+.
+$$
+由（21.6）及（22.2），$\mathbb E[e^{\vartheta S_+}\mid R=h,C_R=a]\le M^{2n}$。右列表少于 $2n+1$ 个条目恰是 $R_{2n}=h+S_+>r$，而 $h\le s$ 给出 $S_+>r-s\ge r/2$。指数 Markov 不等式于是给出
+$$
+J(R_{2n}>r\mid R=h,C_R=a)
+\le e^{-\vartheta r/2}M^{2n}
+\le\exp\{-\vartheta r/2+2\beta r\log M\}
+\le e^{-\vartheta r/4}.
+\tag{24.2}
+$$
+最后一步使用（20.1）中的 $\beta\le\vartheta/(8\log M)$。对 $h,a$ 按（21.8）平均时只乘以其权重总和（不超过一），不产生锚位置数因子。
+
+左侧完全相同。条件于 $L=-h,C_L=a$，令 $S_-=\sum_{j=0}^{2n-1}D_j^-$；由（21.7）得到同一矩界，且 $-L_{2n}=h+S_-$。因此在两个内锚成功事件上，计数失败总概率不超过
+$$
+2e^{-\vartheta r/4}.
+\tag{24.3}
+$$
+这里的距离始终是原整数位点距离，且支付了包括未用于统计的最后一个间隔在内的全部 $2n$ 个间隔。
+
+## 25. 各侧条件取样的集中与两侧判决
+
+在完整的无限 outward 列表上定义解析统计 $U_-^*,U_+^*$，仍取各自前 $n$ 个偶数间隔，即使这些间隔没有落入当前窗口。由（21.6），条件于 $R=h,C_R=a$ 时，$U_+^*$ 的求和指标是独立 Bernoulli$(a)$；由（21.7），条件于 $L=-h,C_L=a$ 时，$U_-^*$ 的求和指标是独立 Bernoulli$(\overline a)$。这是两个分别条件的单侧陈述，不是两侧联合独立性。
+
+为完整记录所用经典估计，若 $B$ 是均值为 $a$ 的 Bernoulli 变量，令
+$$
+K(u)=\log\mathbb E e^{u(B-a)}.
+$$
+直接微分得 $K(0)=K'(0)=0$ 以及
+$$
+K''(u)=v(u)(1-v(u))\le\frac14,\qquad
+v(u)=\frac{ae^u}{1-a+ae^u}.
+$$
+两次积分给出 $K(u)\le u^2/8$。对独立副本使用指数 Markov 不等式，得到任意 $x>0$ 的 Hoeffding 界
+$$
+\Pr\left(\left|\frac1n\sum_{i=1}^nB_i-a\right|\ge x\right)
+\le2e^{-2nx^2}.
+\tag{25.1}
+$$
+取 $x=\Delta/4$，再按（21.9）的全部选定锚权重平均，得到
+$$
+J(|U_+^*-C_R|\ge\Delta/4)\le2e^{-n\delta^2/8},
+$$
+$$
+J(|U_-^*-\overline{C_L}|\ge\Delta/4)\le2e^{-n\delta^2/8}.
+\tag{25.2}
+$$
+故两项偏差的并集概率至多 $4e^{-n\delta^2/8}$。其中没有条件于中心位、另一侧锚、两侧同时拟合或拟合成功。
+
+现在说明阈值的严格方向。若 $X_0=0$，$L,R$ 是相邻占据位，故 $C_R=\overline{C_L}$，两个统计均值相同。若 $X_0=1$，占据位顺序为 $L,0,R$，两次标记翻转给出 $C_R=C_L$，因而
+$$
+|\overline{C_L}-C_R|=|p-q|=\Delta.
+\tag{25.3}
+$$
+在两项误差都严格小于 $\Delta/4$ 时，三角不等式给出零中心时 $|U_-^*-U_+^*|<\Delta/2$，反三角不等式给出一中心时 $|U_-^*-U_+^*|>\Delta/2$。等号已包含在（25.2）的坏事件中，因为那里使用了 $\ge$。若任一立即邻位为一，no11 合法性已经保证中心为零。
+
+在内锚和计数均成功时，完整列表统计等于有限窗口统计。把偏差事件与拟合成功事件相交只会减小概率，不会对间隔样本作“适合窗口”的条件化，也没有使用两侧独立性。
+
+## 26. 指数风险界、地板效应与小半径
+
+当 $n\ge1$ 时，前两节覆盖了所有可能的解码错误（缺锚、计数失败或集中失败），故
+$$
+P_{t,q}(f_r(Y_r)\ne X_0)
+\le2e^{2\vartheta}e^{-\vartheta r/2}
+ +2e^{-\vartheta r/4}
+ +4e^{-n\delta^2/8}.
+\tag{26.1}
+$$
+该事件只依赖可见过程，故在联合律 $J$ 和可见律 $P$ 下概率相同。因为 $n\ge\beta r-1$ 且 $\delta^2<d^2$，
+$$
+4e^{-n\delta^2/8}
+\le4e^{d^2/8}e^{-\beta r\delta^2/8}.
+$$
+由 $\gamma\le\vartheta/(4d^2)$ 和 $\gamma\le\beta/8$，右侧三项分别不超过
+$$
+2e^{2\vartheta}e^{-\gamma r\delta^2},\qquad
+2e^{-\gamma r\delta^2},\qquad
+4e^{d^2/8}e^{-\gamma r\delta^2}.
+$$
+
+若 $n=0$，则 $\beta r<1$，解码错误概率至多为一；又有 $r\delta^2<d^2/\beta$，所以
+$$
+1\le e^{\gamma d^2/\beta}e^{-\gamma r\delta^2}.
+\tag{26.2}
+$$
+合并（26.1）和（26.2）得到第二个不等式（20.2），并覆盖 $r=1$、空内区间、所有地板效应以及任意小的正 $r\delta^2$。
+
+最后，$f_r$ 是同一 $P_{t,q}$ 下的 $\mathcal F_r$ 可测二值估计器。条件期望的正交性给出
+$$
+\begin{aligned}
+P_{t,q}(f_r(Y_r)\ne X_0)
+&=\mathbb E_{P_{t,q}}[(X_0-f_r)^2]\\
+&=E_r(P_{t,q})+\mathbb E_{P_{t,q}}[(\eta_r-f_r)^2]
+\ge E_r(P_{t,q}),
+\end{aligned}
+$$
+完成（20.2）的左侧。这里没有把条件期望后验误认为二值分类器。
+
+## 27. 半方差阈值的严格越阈半径
+
+沿用定理 5.1 的
+$$
+V(t)=\frac{t(1-t)^2}{(1+t)((1-t)^2+t)}>0
+$$
+以及定理 18.2 中的
+$$
+C_t^{\rm low}=\frac{1+2t}{t^2}+\frac3{t(1-t)},
+\qquad
+c_t^{\rm low}=\frac{V(t)^2}{2C_t^{\rm low}}.
+\tag{27.1}
+$$
+为避免与（20.1）的指数常数混淆，令
+$$
+A_t=\frac1\gamma\log\frac{2\mathcal C}{V(t)}.
+\tag{27.2}
+$$
+这些常数只依赖固定的 $t$，且 $0<V(t)<1<2\mathcal C$，故 $A_t>0$。对 $0<|\delta|<d$ 定义首次严格越过半方差的整数半径
+$$
+ r_*(t,\delta)=\min\left\{r\in\mathbb Z_{\ge1}:
+ E_r(P_{t,t+\delta})<\frac{V(t)}2\right\}.
+\tag{27.3}
+$$
+
+**推论 27.1（固定阈值的匹配逆平方界）.** 对每个固定 $t\in(0,1)$ 和 $0<|\delta|<d$，集合（27.3）非空，并且
+$$
+\boxed{
+\left\lfloor\frac{c_t^{\rm low}}{\delta^2}\right\rfloor+1
+\le r_*(t,\delta)
+\le\left\lfloor\frac{A_t}{\delta^2}\right\rfloor+1.}
+\tag{27.4}
+$$
+此外，左侧界严格给出
+$$
+ r_*(t,\delta)\delta^2>c_t^{\rm low},
+\qquad
+r_*(t,\delta)\delta^2\le A_t+\delta^2.
+\tag{27.5}
+$$
+因此对每个固定 $t$，首次严格越阈半径具有明确的 $|\delta|^{-2}$ 上下尺度；（27.4）中的下界是第 18.2 定理的必要半径结论，上界才是定理 20.1 的有限观察构造所给出的充分界。
+
+**证明。** 令
+$$
+R_+(t,\delta)=\left\lfloor\frac{A_t}{\delta^2}\right\rfloor+1.
+$$
+则 $R_+\delta^2>A_t$，由定理 20.1
+$$
+E_{R_+}(P_{t,t+\delta})
+\le\mathcal C e^{-\gamma R_+\delta^2}
+<\mathcal C e^{-\gamma A_t}=\frac{V(t)}2.
+$$
+所以（27.3）非空且 $r_*\le R_+$，再由 $\lfloor x\rfloor+1\le x+1$ 得（27.5）的右侧。
+
+定理 18.2 在同一参数范围内给出：若 $r\delta^2\le c_t^{\rm low}$，则 $E_r(P_{t,t+\delta})\ge V(t)/2$。这与（27.3）的严格不等式相容的最小半径不能发生于该区间，故 $r_*\delta^2>c_t^{\rm low}$，并由整数性得到（27.4）的左侧。这里严格越过和地板取整均被保留；当 $\delta=0$ 时，定理 5.1 给出所有有限半径风险均为 $V(t)$，因此（27.3）不定义在对角线上。$\square$
+
+## 28. 有限观察、完整外部与量词边界
+
+定理 4.2 的完整外部解码是对每个固定非对角线律的几乎处处陈述，依赖无限多个远方间隔的经验频率；定理 20.1 的输入只有固定的有限 $Y_r$，其指数界通过选定锚的有限柱权重和完整计数尾界实现。无限外部可测性不提供一个固定窗口的零风险解码，有限窗口的指数上界也不提供对角线上的恢复。第 27 节的下界说明，当 $\delta$ 靠近不可区分的对角线时，固定正阈值要求的半径必然发散，正是有限观察与完整外部之间的定量间隔。
+
+所有断言均在原平稳位点律 $P_{t,t+\delta}$ 下，保留完整 no11 域、开放端点、零质量约定和参数逐律的几乎处处范围。证明没有把两侧当作联合独立样本，没有把抽到的间隔总长度条件在窗口适合事件上，也没有按出现 $1$ 的次数重标度。第 20–27 节的构造只处理精确 $p=t,q=t+\delta$ 的四状态族、已知参数和有限保留词；不推出一般 $\Theta_4$、任意隐藏维数、任意周期率、参数未知、训练样本、经验学习或计算效率的结果，也不决定原全有限隐藏维数二择一问题。
+
+有限状态平稳柱构造、几何级数尾和指数矩、可数可加性、指数 Markov 不等式、Bernoulli Hoeffding 方法以及条件期望的平方损失投影是经典概率工具。族特异的内容是（21.6）–（21.9）的两种选定锚柱集、其非均匀原律权重，以及它们在原整数窗口上的计数与集中拼接；第 27 节的下界则只是复用定理 18.2 的必要半径结论。这些显式常数不作尖锐性断言；对每个固定内点 $t$，定理 18.2 与推论 27.1 已证明严格越过 $V(t)/2$ 阈值所需半径的 $|\delta|^{-2}$ 阶既必要又充分。该阶结论不扩展到未覆盖的参数域或其他恢复目标。
+
+## 追加锚（本行以下为后续增补区）
+
+## 29. 参数盲的共享有限词解码器
+
+以下定量结论保持定义 2.2 的原四状态族、同一平稳可见律和（16.1）的原位点观察 $Y_r$。第 23 节的 $f_r$ 使用已知参数；本节定义另一族函数 $\widehat f_r$，其整个规则仅由有限保留词决定。
+
+**定义 29.1（成对间隔的符号判决）。** 对任意整数 $r\ge1$ 及任意二值保留词 $y\in\{0,1\}^{2r}$，先列出各侧全部取值为一的位置，均从靠近零的一端向外排序：
+
+$$
+L_0>L_1>\cdots>L_{K_--1},\qquad
+R_0<R_1<\cdots<R_{K_+-1}.
+$$
+
+两列表允许为空，其长度分别为 $K_-,K_+\ge0$。定义
+
+$$
+N_\pm=\max\left\{0,\left\lfloor\frac{K_\pm-1}{2}\right\rfloor\right\}.
+\tag{29.1}
+$$
+
+仅对存在的相邻条目定义 $D_j^-=L_j-L_{j+1}$ 和 $D_j^+=R_{j+1}-R_j$。置
+
+$$
+T_\pm(y)=\sum_{k=0}^{N_\pm-1}
+\left(\mathbf1_{\{D_{2k}^\pm=2\}}-
+      \mathbf1_{\{D_{2k+1}^\pm=2\}}\right),
+\tag{29.2}
+$$
+
+空和为零，不访问任何不存在的间隔。共享解码器为
+
+$$
+\widehat f_r(y)=
+\begin{cases}
+1,&y_{-1}=y_1=0\ \text{且}\ T_-(y)T_+(y)<0,\\
+0,&\text{其余情形}.
+\end{cases}
+\tag{29.3}
+$$
+
+每一对使用两个连续完整间隔；若末尾只剩一个未配对间隔，则舍去。任一侧少于三个占据位时，其和为零；任一和为零的平局也输出零。缺列表、邻位为一和不合法二值词均有确定输出，特别地 $\widehat f_1\equiv0$。所用指标恰在已观察列表内，所以 $\widehat f_r(Y_r)$ 为 $\mathcal F_r$ 可测二值函数。
+
+这个规则只使用位值、原整数距离二、向外的次序及与零的比较。$p,q,t,\delta$、其大小或符号、参数下界、隐藏标记、中心位、外部补全及额外数据均不是输入；也没有参数依赖的阈值或取样数。同一个 $\widehat f_r$ 可在整个开参数方形上使用，其保证限定如下。
+
+**定理 29.2（共享解码器的局部一致指数界）。** 固定 $t\in(0,1)$，取 $p=t$、$q=t+\delta$、$0<|\delta|<d=\min(t,1-t)/2$。沿用（20.1）的
+
+$$
+\alpha=\frac t2,\qquad
+\vartheta=-\frac12\log(1-\alpha),\qquad
+M=\frac{e^{2\vartheta}}{1-(1-\alpha)e^{\vartheta}},\qquad
+\beta=\min\left\{\frac18,\frac{\vartheta}{8\log M}\right\},
+$$
+
+并定义
+
+$$
+a_t=\min\left\{\frac{\vartheta}{4d^2},\beta\right\},\qquad
+B_t=2e^{2\vartheta}+2+2e^{d^2}+e^{a_t d^2/\beta}.
+\tag{29.4}
+$$
+
+则对每个整数 $r\ge1$，
+
+$$
+\boxed{\quad
+E_r(P_{t,t+\delta})
+\le P_{t,t+\delta}\bigl(\widehat f_r(Y_r)\ne X_0\bigr)
+\le B_t e^{-a_t r\delta^2}.
+\quad}
+\tag{29.5}
+$$
+
+由于 $(1-\alpha)e^{\vartheta}=\sqrt{1-\alpha}<1$，有 $\vartheta>0$、$1<M<\infty$，故这些常数有限且严格为正。它们只依赖固定的 $t$，对上述全部非零 $\delta$ 及全部整数 $r\ge1$ 使用同一组数；这些数仅进入证明，解码器不计算它们。证明见第 30–32 节。
+
+## 30. 单侧条件律与两侧符号的方向
+
+置 $J=J_{t,t+\delta}$、$P=P_{t,t+\delta}$，$\Delta=|\delta|>0$。第 22 节保证两侧占据位列表几乎处处无穷。仅为分析，将定义 29.1 的各侧列表延伸到整个对应半线，起点为真正的最近锚 $L,R$。记全列表的前 $n$ 对之和为
+
+$$
+S_n^\pm=\sum_{k=0}^{n-1}W_k^\pm,\qquad
+W_k^\pm=\mathbf1_{\{D_{2k}^\pm=2\}}-
+         \mathbf1_{\{D_{2k+1}^\pm=2\}},\qquad S_0^\pm=0.
+\tag{30.1}
+$$
+
+这些无限列表只是同一实际轨道上的辅助变量，未增加观察字段。定义 29.1 中的有限列表是它们落在相应半窗口内的前缀，因而在该满测事件上
+
+$$
+T_\pm(Y_r)=S_{N_\pm}^\pm.
+\tag{30.2}
+$$
+
+**引理 30.1（条件参数与中心对应）。** 分别条件于 $R=h,C_R=b$ 和 $L=-h,C_L=b$，$h\ge1$、$b\in\{p,q\}$，各自的 $W_k^\pm$ 是独立同分布的 Bernoulli 对之差；右侧一对的参数为 $(b,\overline b)$，左侧为 $(\overline b,b)$，每对内部也独立。对应的均值及符号为
+
+$$
+\mu_+=C_R-\overline{C_R},\qquad
+\mu_-=\overline{C_L}-C_L,\qquad
+\sigma_\pm=\operatorname{sgn}(\mu_\pm),\qquad
+|\mu_\pm|=\Delta.
+\tag{30.3}
+$$
+
+在同一实际轨道上，$X_0=0$ 时 $\sigma_-\sigma_+=1$；$X_0=1$ 时 $\sigma_-\sigma_+=-1$。
+
+**证明。** 直接使用（21.6）–（21.9）的归一化选定锚柱集。其参数对应是：原式中的锚距离 $s$ 换名为 $h$，标记 $a$ 换名为 $b$，间隔律仍为（21.3）的 $f_b$，故 $f_b(2)=b$。右侧条件间隔参数为 $b,\overline b,b,\overline b,\ldots$，左侧为 $\overline b,b,\overline b,b,\ldots$。不同对使用互不相交的间隔指标，给出所述两种单侧条件乘积律。它们各自的原律权重仍为
+
+$$
+w_+(h,b)=Z^{-1}T_{\overline b}(h),\qquad
+w_-(h,b)=Z^{-1}T_b(h),\qquad
+\sum_{h\ge1}\sum_{b\in\{p,q\}}w_\pm(h,b)=1.
+\tag{30.4}
+$$
+
+这里 $T_b(h)$ 是（21.5）的间隔尾，区别于（29.2）的有限词统计 $T_\pm(y)$。权重的归一化及其中的平稳因子均复用第 21 节；不另作 Palm 条件化。
+
+若 $X_0=0$，两个最近锚是相邻占据位，故 $C_R=\overline{C_L}$；若 $X_0=1$，连续占据位为 $L,0,R$，故 $C_R=C_L$。用 $q-p=\delta$ 逐项写出方向为
+
+$$
+\begin{array}{c|c|c|c|c}
+X_0&C_L&C_R&\mu_-&\mu_+\\\hline
+0&p&q&\delta&\delta\\
+0&q&p&-\delta&-\delta\\
+1&p&p&\delta&-\delta\\
+1&q&q&-\delta&\delta
+\end{array}
+\tag{30.5}
+$$
+
+所以两种标记方向和 $\delta$ 的正负均给出同一判决原则。如果两个实际统计均有各自均值的严格符号，（29.3）即恢复中心。任一邻位为一时，合法性使其默认零输出正确。此处中心只用于逐路径说明标记关系，没有条件于中心、另一侧锚或窗口容纳事件来抽样。$\square$
+
+## 31. Bernoulli 对之差的同时符号界
+
+**引理 31.1（所有较大取样数的统一控制）。** 设 $(B_k,C_k)_{k\ge0}$ 是独立同分布的对，每对内部是独立 Bernoulli 变量，均值分别为 $b,c\in(0,1)$，且 $\mu=b-c\ne0$。令
+
+$$
+W_k=B_k-C_k,\qquad S_n=\sum_{k=0}^{n-1}W_k,\qquad
+\Delta=|\mu|,\qquad\sigma=\operatorname{sgn}(\mu).
+$$
+
+则对每个整数 $m\ge1$，
+
+$$
+\Pr\{\exists n\ge m:\sigma S_n\le0\}\le e^{-m\Delta^2}.
+\tag{31.1}
+$$
+
+对任何非负整数值随机变量 $N$，无须适应性或独立性，亦有
+
+$$
+\{N\ge m,\ \sigma S_N\le0\}
+\subseteq\{\exists n\ge m:\sigma S_n\le0\}.
+\tag{31.2}
+$$
+
+**证明。** 第 25 节已证明每个 Bernoulli 变量的中心化对数矩满足 $K_b(u)\le u^2/8$，对所有实数 $u$ 成立。将该界分别用于一对中的两个独立坐标，对任意实数 $u$ 得
+
+$$
+\begin{aligned}
+\mathbb E e^{-u\sigma W_k}
+&=e^{-u\Delta}
+  \mathbb E e^{-u\sigma(B_k-b)}
+  \mathbb E e^{u\sigma(C_k-c)}\\
+&\le e^{-u\Delta+u^2/4}.
+\end{aligned}
+\tag{31.3}
+$$
+
+取 $u=2\Delta$，右端为 $e^{-\Delta^2}$。令 $\mathcal G_n=\sigma((B_k,C_k):0\le k<n)$，定义
+
+$$
+\mathcal M_n=\exp\{-2\Delta\sigma S_n+n\Delta^2\},\qquad
+\mathcal M_0=1.
+\tag{31.4}
+$$
+
+各项可积且非负。下一对独立于 $\mathcal G_n$，所以
+
+$$
+\mathbb E[\mathcal M_{n+1}\mid\mathcal G_n]
+=\mathcal M_n e^{\Delta^2}\mathbb E e^{-2\Delta\sigma W_n}
+\le\mathcal M_n.
+\tag{31.5}
+$$
+
+这证明它是非负超鞅。
+
+为给出所需的有限时域最大值论证，固定 $A>1$，令 $\tau=\inf\{n\ge0:\mathcal M_n\ge A\}$，空集取 $\infty$。对确定整数 $k\ge0$，有
+
+$$
+\mathcal M_{(k+1)\wedge\tau}-\mathcal M_{k\wedge\tau}
+=\mathbf1_{\{\tau>k\}}(\mathcal M_{k+1}-\mathcal M_k).
+\tag{31.6}
+$$
+
+因 $\{\tau>k\}\in\mathcal G_k$，由（31.5）每项期望不大于零。对 $k=0,\ldots,H-1$ 求和，其中 $H$ 为任意确定正整数，得到 $\mathbb E\mathcal M_{H\wedge\tau}\le1$。在 $\{\tau\le H\}$ 上该变量至少为 $A$，其余地方非负，故
+
+$$
+\Pr(\tau\le H)\le A^{-1}.
+$$
+
+令 $H\to\infty$，用事件递增的概率连续性得到 $\Pr(\tau<\infty)\le A^{-1}$。这里没有对无界停止时刻直接使用期望恒等式。
+
+若某个 $n\ge m$ 满足 $\sigma S_n\le0$，则（31.4）给出 $\mathcal M_n\ge e^{n\Delta^2}\ge e^{m\Delta^2}$。取 $A=e^{m\Delta^2}>1$，上述最大值界即为（31.1）。平局 $S_n=0$ 已包含在非严格坏事件中。式（31.2）逐点成立：在左侧事件上，实际整数 $N$ 自身就是右侧的一个见证。因而 $N$ 无须为停止时刻；证明最大值界所用的辅助 $\tau$ 与数据选择的 $N$ 是不同对象。$\square$
+
+**推论 31.2（按真实锚权重平均）。** 对（30.1）的两个全列表统计及每个确定整数 $m\ge1$，令
+
+$$
+\mathcal B_\pm(m)=\{\exists n\ge m:\sigma_\pm S_n^\pm\le0\}.
+$$
+
+则
+
+$$
+J(\mathcal B_+(m))\le e^{-m\delta^2},\qquad
+J(\mathcal B_-(m))\le e^{-m\delta^2},\qquad
+J(\mathcal B_+(m)\cup\mathcal B_-(m))\le2e^{-m\delta^2}.
+\tag{31.7}
+$$
+
+**证明。** 条件于一个右锚 $R=h,C_R=b$ 时，引理 30.1 使引理 31.1 的参数对应为 $(b,c)=(b,\overline b)$，$\Delta=|\delta|$，$\sigma=\sigma_+$ 在该条件下固定。因此
+
+$$
+J(\mathcal B_+(m))
+=\sum_{h\ge1}\sum_{b\in\{p,q\}}
+ w_+(h,b)J(\mathcal B_+(m)\mid R=h,C_R=b)
+\le e^{-m\delta^2}.
+$$
+
+最后一步使用（30.4）的权重总和一。左锚下改为参数对 $(\overline b,b)$ 和权重 $w_-$，得到第二式；并集界给出第三式。两侧各自条件化后再平均，没有两侧联合独立性要求，也没有锚位置数因子。$\square$
+
+## 32. 数据所选配对数、原位点代价与同律风险
+
+**定理 29.2 的证明。** 仅为证明定义
+
+$$
+s=\lfloor r/2\rfloor,\qquad m=\lfloor\beta r\rfloor.
+\tag{32.1}
+$$
+
+解码器始终使用（29.1）的实际 $N_\pm$，不以 $m$ 截断统计，也不要求它知道内区间 $s$。先设 $m\ge1$。令 $\mathcal A_+$ 为 $[1,s]$ 无占据位的事件，$\mathcal A_-$ 为 $[-s,-1]$ 无占据位的事件。
+
+第 24 节的尾界可逐项直接使用：其 $n=\lfloor\beta r\rfloor$ 在这里就是 $m$，其 $s,\alpha,\vartheta,M,\beta$ 与（32.1）、（29.4）完全相同。于是（24.1）及恒等式 $\lfloor\lfloor r/2\rfloor/2\rfloor=\lfloor r/4\rfloor$ 给出
+
+$$
+J(\mathcal A_+\cup\mathcal A_-)
+\le2e^{2\vartheta}e^{-\vartheta r/2}.
+\tag{32.2}
+$$
+
+为核对完整计数的接口，条件于 $R=h,C_R=b$ 且 $h\le s$，有精确等价
+
+$$
+N_+\ge m\ \Longleftrightarrow\ K_+\ge2m+1
+\ \Longleftrightarrow\quad
+R_{2m}=h+\sum_{j=0}^{2m-1}D_j^+\le r.
+\tag{32.3}
+$$
+
+左侧对应的是 $-L_{2m}=h+\sum_{j=0}^{2m-1}D_j^-\le r$。所以一对的两个间隔均须完整可见；$m$ 对恰需 $2m$ 个间隔和含锚在内的 $2m+1$ 个占据位，末位恰在窗口边界时仍算成功。这与（24.2）–（24.3）支付的全部间隔完全一致。其证明已用（22.2）的矩界和（21.8）的真实权重，且 $2\beta\log M\le\vartheta/4$。直接代入 $n=m$ 得
+
+$$
+J(\mathcal A_+^c\cap\{N_+<m\})\le e^{-\vartheta r/4},\qquad
+J(\mathcal A_-^c\cap\{N_-<m\})\le e^{-\vartheta r/4}.
+\tag{32.4}
+$$
+
+这里同时支付了两个锚的距离和各侧全部 $2m$ 个原整数间隔；未将时钟换成占据次数。
+
+在（32.2）、（32.4）及（31.7）的坏事件之外，$N_\pm\ge m$，由（31.2）和（30.2）得到
+
+$$
+\sigma_-T_-(Y_r)>0,\qquad \sigma_+T_+(Y_r)>0.
+$$
+
+引理 30.1 因而保证判决正确；邻位为一的分支也正确。缺列表或配对数不足的默认值已计入锚或计数失败，配对数足够时的所有平局已计入 $\mathcal B_\pm(m)$。至多一个未配对间隔不进入统计，也不改变（32.3）。整个步骤只把数据所选的计数代入同时成立的符号界，没有对固定 $n$ 的集中不等式条件化于窗口容纳、邻位、中心或另一侧事件。
+
+解码错误只涉及可见变量，其 $J$ 概率等于 $P$ 概率。并集界给出
+
+$$
+P(\widehat f_r(Y_r)\ne X_0)
+\le2e^{2\vartheta}e^{-\vartheta r/2}
+   +2e^{-\vartheta r/4}+2e^{-m\delta^2}
+\quad(m\ge1).
+\tag{32.5}
+$$
+
+因为 $m\ge\beta r-1$、$\delta^2<d^2$，
+
+$$
+2e^{-m\delta^2}\le2e^{d^2}e^{-\beta r\delta^2}.
+$$
+
+又由 $a_t\le\beta$ 和 $a_t\delta^2\le\vartheta/4$，式（32.5）至多为
+
+$$
+(2e^{2\vartheta}+2+2e^{d^2})e^{-a_t r\delta^2}.
+\tag{32.6}
+$$
+
+若 $m=0$，则 $\beta r<1$、$r\delta^2<d^2/\beta$，故
+
+$$
+P(\widehat f_r(Y_r)\ne X_0)\le1
+\le e^{a_t d^2/\beta}e^{-a_t r\delta^2}.
+\tag{32.7}
+$$
+
+此时解码器仍照（29.3）运行，没有参数依赖的分支。把（32.6）、（32.7）的系数相加恰为（29.4）的 $B_t$，证明上界对所有整数 $r\ge1$ 成立，包含 $r=1$、空内区间、全部地板效应及任意小的正 $r\delta^2$。
+
+最后，在这一份 $P$ 下令 $\eta_r=\mathbb E_P[X_0\mid\mathcal F_r]$。二值性与条件期望正交投影给出
+
+$$
+\begin{aligned}
+P(\widehat f_r(Y_r)\ne X_0)
+&=\mathbb E_P[(X_0-\widehat f_r(Y_r))^2]\\
+&=\mathbb E_P[(X_0-\eta_r)^2]
+ +\mathbb E_P[(\eta_r-\widehat f_r(Y_r))^2]\\
+&=E_r(P)+\mathbb E_P[(\eta_r-\widehat f_r(Y_r))^2]
+\ge E_r(P).
+\end{aligned}
+\tag{32.8}
+$$
+
+交叉项为零，因为 $\eta_r-\widehat f_r(Y_r)$ 为 $\mathcal F_r$ 可测，且 $\mathbb E_P[X_0-\eta_r\mid\mathcal F_r]=0$。这是同律、同字段、同损失的投影；后验本身无需二值。与上界合并即为（29.5）。$\square$
+
+## 33. 共享规则的必要与充分半径
+
+记 $e_r(t,\delta)=P_{t,t+\delta}(\widehat f_r(Y_r)\ne X_0)$，沿用（16.3）的 $V(t),C_t,c_t$，其中
+
+$$
+c_t=\frac{V(t)^2}{2C_t}=c_t^{\rm low}.
+$$
+
+定义只用于表述充分半径的常数
+
+$$
+H_t=\frac1{a_t}\log\frac{2B_t}{V(t)}>0,
+\qquad
+\widehat r_*(t,\delta)=\min\{r\in\mathbb Z_{\ge1}:e_r(t,\delta)<V(t)/2\}.
+\tag{33.1}
+$$
+
+**推论 33.1（固定阈值的共享逆平方阶）。** 对固定 $t\in(0,1)$ 和 $0<|\delta|<d$，上述最小元存在，且
+
+$$
+\begin{aligned}
+r\delta^2\le c_t&\ \Longrightarrow\ e_r(t,\delta)\ge E_r(P_{t,t+\delta})\ge V(t)/2,\\
+r\delta^2>H_t&\ \Longrightarrow\ e_r(t,\delta)<V(t)/2.
+\end{aligned}
+\tag{33.2}
+$$
+
+若 $r_*(t,\delta)$ 为（18.5）的最小平方风险越阈半径，则
+
+$$
+\boxed{\quad
+\left\lfloor\frac{c_t}{\delta^2}\right\rfloor+1
+\le r_*(t,\delta)
+\le\widehat r_*(t,\delta)
+\le\left\lfloor\frac{H_t}{\delta^2}\right\rfloor+1.
+\quad}
+\tag{33.3}
+$$
+
+特别地 $\widehat r_*\delta^2>c_t$ 且 $\widehat r_*\delta^2\le H_t+\delta^2$。因此在固定 $t$、固定半方差阈值下，$|\delta|^{-2}$ 阶既是任何有限外部平方损失估计器的必要阶，也由同一参数盲二值规则达到。
+
+**证明。** 必要方向直接复用定理 18.2：该定理的参数是同一 $p=t,q=t+\delta$，其 $\delta_t=d$，风险和字段均相同。把其（18.4）与（32.8）串联，即得（33.2）的第一行，包含 $r\delta^2=c_t$。无需重作路径相对熵比较。
+
+若 $r\delta^2>H_t$，定理 29.2 给出
+
+$$
+e_r(t,\delta)\le B_t e^{-a_t r\delta^2}
+<B_t e^{-a_t H_t}=V(t)/2.
+$$
+
+取 $R=\lfloor H_t/\delta^2\rfloor+1$，则 $R\delta^2>H_t$，所以定义（33.1）的集合非空。整数良序给出 $\widehat r_*$，并有 $\widehat r_*\le R$。在 $\widehat r_*$ 处由 $E_r\le e_r$ 得 $r_*\le\widehat r_*$，再由定理 18.2 得最左界。严格下界与 $\lfloor x\rfloor+1\le x+1$ 分别给出两个乘积界。该证明不要求 $e_r$ 随 $r$ 单调；（33.2）的充分条件保证每个满足它的半径，而非仅某个被选半径。常数没有尖锐性断言，也未给出 $r_*\delta^2$ 或 $\widehat r_*\delta^2$ 的极限值。$\square$
+
+**推论 33.2（联合尺度的两端）。** 固定 $t$，令 $\delta_k$ 位于上述穿孔区间、$r_k\ge1$ 为整数。若 $r_k\delta_k^2\to\infty$，则 $e_{r_k}(t,\delta_k)\to0$ 且 $E_{r_k}(P_{t,t+\delta_k})\to0$。若 $r_k\delta_k^2\to0$，则 $E_{r_k}(P_{t,t+\delta_k})\to V(t)$，且 $\liminf_k e_{r_k}(t,\delta_k)\ge V(t)$。
+
+**证明。** 第一项直接由（29.5）的固定 $a_t,B_t$ 及非负性得到。第二项将定理 18.1 的误差项写为 $\sqrt{C_t r_k\delta_k^2/2}$，令其趋于零，再用（32.8）。这没有将二值分类误差与最优平方风险视为相等。$\square$
+
+## 34. 参数盲性的范围与经典归属
+
+共享的是每个有限字母表上的确定函数 $\widehat f_r$，而非整个参数域上统一的恢复常数。定理 29.2 只在固定内点 $t$、$p=t,q=t+\delta$、$0<|\delta|<\min(t,1-t)/2$ 上给出量化保证。常数只依赖 $t$；不声称趋近参数端点时的一致常数。靠近对角线时，定理 18.2 的必要半径仍适用；推论 33.1 说明去掉解码器的数值参数输入不会改变这个固定阈值的逆平方阶，并未优化常数或完整风险曲线。
+
+在对角线 $p=q=t$ 上，定理 5.1 仍给出每个有限窗口及完整外部的最小平方风险 $V(t)>0$，所以该共享二值规则也不能零误差恢复中心。对每个固定有限 $r$，定理 6.2 的严格正风险同样保持；（29.5）不表示任何有限半径上的精确恢复。固定非零偏移的无限半径收敛及推论 33.2 的联合尺度，都在各自实际平稳可见律下解释，不要求不可数个参数共用一个零集。
+
+第 21–24 节提供的族特异观察桥是：从原四状态平稳边柱律得到最近锚的非均匀归一化权重、各自单侧的交替间隔乘积，再把完整间隔对的数量接回原整数位点预算。符号判决只使用该桥所给出的参数相反关系；第 31 节的同时界使数据任意选择的配对数可以逐路径代入。它不要求这些计数独立或为停止时刻，也不要求两侧独立。几何级数与指数矩、指数 Markov 不等式、Bernoulli Hoeffding 对数矩界、Ville 非负超鞅最大值方法、并集界和条件期望的 $L^2$ 投影均为经典概率工具；阈值取整及尺度推论是这些界的初等后果。下界明确复用定理 18.2，其信息不等式归属见第 17–19 节。
+
+数值参数盲性以定义 2.2 的指定模型结构为前提，不是对未知模型族的保证；这里没有一般周期率、整个 $\Theta_4$ 或全部有限隐藏维数的恢复定理，也没有参数估计、训练、经验学习或计算效率结论。上述推导为手写数学，不主张形式内核认证或文献优先权。原完整 no11 词域、开放端点、原目标及全域量词均保留；开放问题 7.3 的二择一
+
+$$
+\exists N\ge1\ \exists\theta\in\Theta_N:\ d(P_\theta)=c_\star,
+\qquad\text{或}\qquad
+\forall N\ge1:\ C_N<c_\star
+\tag{34.1}
+$$
+
+仍未解决。本族的有限窗口恢复没有决定其中任一项。
+
+## 追加锚（本行以下为后续增补区）
+
+## 35. 参数盲的自适应停止与原位点取得定理
+
+本节至第 43 节只考虑定义 2.2 的精确四状态族，始终使用它的原平稳联合律 $J_{p,q}$ 及可见边缘 $P_{p,q}$，其中 $0<p,q<1$。观察依次为
+
+$$
+Y_r=(X_{-r},\ldots,X_{-1};X_1,\ldots,X_r),\qquad
+\mathcal F_r=\sigma(Y_r),\qquad r\in\mathbb Z_{\ge1},
+\qquad F=\{X_{-1}=X_1=0\}=F_0.
+\tag{35.1}
+$$
+
+半径从一开始逐整数增加；每次取得新半径的左右两个原外部位，始终不取得中心。第 29–34 节在给定确定半径评估共享解码器 $\widehat f_r$；以下以同一成对间隔统计定义停止规则，并控制实际终止误差及随机原位点半径的期望。
+
+**定义 35.1（每个有限词上的三值行动）。** 固定精度参数 $0<\epsilon\le1/4$，所有对数均为自然对数。定义不依赖模型参数的检查点及阈值
+
+$$
+n_j=2^j,\qquad
+L_j=\log\frac{8(j+1)^2}{\epsilon},\qquad
+b_j=\sqrt{n_jL_j},\qquad j\in\mathbb Z_{\ge0}.
+\tag{35.2}
+$$
+
+对任意 $y\in\{0,1\}^{2r}$，若 $y_{-1}=1$ 或 $y_1=1$，行动为 $\mathrm{stop0}$。否则按定义 29.1 从近到远列出两侧全部占据位，记为
+
+$$
+L_0>L_1>\cdots>L_{K_--1},\qquad
+R_0<R_1<\cdots<R_{K_+-1},
+$$
+
+并保留原定义
+
+$$
+N_s(r)=\max\left\{0,\left\lfloor\frac{K_s-1}{2}\right\rfloor\right\},
+\qquad s\in\{-,+\},
+\qquad
+D_i^-=L_i-L_{i+1},\quad D_i^+=R_{i+1}-R_i.
+\tag{35.3}
+$$
+
+间隔仅在相邻条目存在时定义。对 $0\le n\le N_s(r)$，置
+
+$$
+S_n^s(y)=\sum_{k=0}^{n-1}
+\left(\mathbf1_{\{D_{2k}^s=2\}}-
+      \mathbf1_{\{D_{2k+1}^s=2\}}\right),\qquad S_0^s(y)=0.
+\tag{35.4}
+$$
+
+这正是（30.1）的前 $n$ 对统计；特别地，（29.2）的 $T_s(y)=S_{N_s(r)}^s(y)$。对每一侧，若集合
+
+$$
+\{j\ge0:n_j\le N_s(r),\ |S_{n_j}^s(y)|>b_j\}
+\tag{35.5}
+$$
+
+非空，取其最小元 $j_s(y)$，将该侧的证书定义为
+
+$$
+\xi_s(y)=\operatorname{sgn}S_{n_{j_s(y)}}^s(y)\in\{-1,1\}.
+$$
+
+若两侧均有证书，符号相反时行动为 $\mathrm{stop1}$，符号相同时行动为 $\mathrm{stop0}$；若至少一侧尚无证书，行动为 $\mathrm{continue}$。邻位为一的分支具有优先权。
+
+阈值相等不产生证书，零分数不产生证书。空列表及少于三个占据位的列表没有完整间隔对；最后一个未配对间隔舍去。上述公式也用于不可能的二值词，不访问不存在的条目，因而三种行动在每个有限词上总定义。策略在两侧各自使用首次越界的检查点符号；以后增加的分数不替换已取得的证书。
+
+定义首次停止半径及扩展输出
+
+$$
+\tau_\epsilon=\inf\{r\ge1:\text{在 }Y_r\text{ 上的行动不是 }\mathrm{continue}\},
+\qquad
+\widehat X_\epsilon=
+\begin{cases}
+a,&\tau_\epsilon<\infty\text{ 时行动为 }\mathrm{stop}a,\ a\in\{0,1\},\\
+\bot,&\tau_\epsilon=\infty,
+\end{cases}
+\tag{35.6}
+$$
+
+空集下确界为 $\infty$，$\bot$ 表示未终止，并非二值答案。模型结构和 $\epsilon$ 固定后，同一套有限词规则用于整个开参数方形。$p,q$、它们的次序、差值、分离下界、隐藏标记、中心、预先供应的锚或观察半径均不进入规则。式（35.2）给出任意实数 $\epsilon$ 下的数学阈值；这里证明的是可测规则，没有证明精确实数比较的 CPU 实现或其运行代价。
+
+**引理 35.2（首证书持久性与原位点停止可测性）。** 对嵌套的有限外部词，某一侧一旦出现证书，其最小检查点及证书符号在所有扩展中保持不变。因此对每个整数 $r\ge1$ 及 $a\in\{0,1\}$，
+
+$$
+\{\tau_\epsilon\le r\}\in\mathcal F_r,\qquad
+\{\tau_\epsilon=r,\widehat X_\epsilon=a\}\in\mathcal F_r.
+\tag{35.7}
+$$
+
+**证明。** 扩大半窗口只在列表末尾加入更远的占据位。已有最近锚、已有条目及其全部间隔不变，完整配对数只增不减。若 $j_s$ 已为最小越界指标，则所有更小指标当时都已被观察且没有越界，以后仍没有越界；新出现的检查点指标只能更大。因此（35.5）的最小元及其分数不变。邻位分支也不随扩展改变，故一旦停止，后续有限词的停止标签相同。
+
+每个有限词的行动由该词的有限列表、有限个分数及确定实阈值决定，是有限字母表上的确定函数。持久性使 $\{\tau_\epsilon\le r\}$ 恰为当前词的停止事件。再与前一半径的继续事件相交得到 $\{\tau_\epsilon=r\}$，其中 $r=1$ 没有前置限制；附加当前停止标签即得第二式。这是原位点字段的停止时刻，不是免费取得间隔后的另一种时钟。$\square$
+
+**定理 35.3（终止误差、有限期望半径与对角线障碍）。** 对每个 $0<\epsilon\le1/4$，定义 35.1 的同一规则具有以下性质。若 $0<p,q<1$ 且 $p\ne q$，令
+
+$$
+\Delta=|p-q|,\qquad
+\mathcal A=\log\frac8\epsilon+\log\log(e+1/\Delta),\qquad
+\overline h=1+\frac{p^{-2}+q^{-2}}Z,\qquad Z=2+1/p+1/q.
+\tag{35.8}
+$$
+
+则
+
+$$
+P_{p,q}(\tau_\epsilon<\infty)=1,\qquad
+P_{p,q}(\widehat X_\epsilon\ne X_0)\le\epsilon,
+\tag{35.9}
+$$
+
+$$
+\boxed{\quad
+\mathbb E_{P_{p,q}}\tau_\epsilon
+\le2\overline h+144Z\Delta^{-2}\mathcal A<\infty.
+\quad}
+\tag{35.10}
+$$
+
+在每条有限终止的轨道上，实际取得的不同外部位恰为 $2\tau_\epsilon$ 个；左右半窗口都取得到最终半径，包括较早取得证书的一侧。
+
+特别地，固定 $0<t<1$，若 $p=t$、$q=t+\delta$ 且 $0<|\delta|<\min(t,1-t)/2$，则
+
+$$
+\boxed{\quad
+\mathbb E_{P_{t,t+\delta}}\tau_\epsilon
+\le435\left(2+\frac4t\right)|\delta|^{-2}
+\left[\log\frac1\epsilon+\log\log(e+1/|\delta|)\right].
+\quad}
+\tag{35.11}
+$$
+
+这在所列整个范围成立，不只是渐近式。对角线上，对每个 $0<t<1$，同一规则满足
+
+$$
+P_{t,t}(\tau_\epsilon=\infty)
+\ge P_{t,t}(F)-\epsilon\ge\frac18,
+\qquad
+\mathbb E_{P_{t,t}}\tau_\epsilon=\infty.
+\tag{35.12}
+$$
+
+一般共享确定规则的对角线不终止结论另有严格精度条件，见定理 42.1；（35.12）是本策略在全部所列 $\epsilon$ 范围内的特定性质。下面分别证明原律观察桥、同时置信、配对数与位点成本，再证明对角线结论。
+
+## 36. 保留不同隐藏标签的原律观察桥
+
+**定义 36.1（标签与数值参数分开）。** 保留两个始终不同的隐藏标签 $A,B$，令
+
+$$
+a_A=p,\qquad a_B=q,\qquad \overline A=B,\quad\overline B=A.
+$$
+
+在占据位 $z$ 定义
+
+$$
+\mathsf C_z=A\quad\text{若 }H_z=2,\qquad
+\mathsf C_z=B\quad\text{若 }H_z=1.
+\tag{36.1}
+$$
+
+这是出向间隔标签。非对角线上，$a_{\mathsf C_z}$ 正好是第 3、21、30 节的数值标记 $C_z$，且 $a_{\overline{\mathsf C_z}}=\overline{C_z}$；对角线上仍保留 $A\ne B$，只令两个数值参数相等。以下直接从原柱式证明这一记号扩展，不在对角线上把两条带标签成功边合为一条。
+
+**引理 36.2（双向间隔与选定锚的真实权重）。** 令
+
+$$
+f_c(g)=a_c(1-a_c)^{g-2},\qquad g=2,3,\ldots,\quad c\in\{A,B\},
+\qquad
+T_c(h)=\sum_{g\ge\max(2,h)}f_c(g)
+=(1-a_c)^{\max(0,h-2)},\quad h\ge1.
+\tag{36.2}
+$$
+
+两侧几乎处处有无穷多个占据位。取真正最近外部锚 $L,R$，记其距离为 $H_-=-L$、$H_+=R$，并将两侧列表向各自半线无限延伸，仅用于分析。若
+
+$$
+c_i=\begin{cases}c,&i\text{ 偶},\\\overline c,&i\text{ 奇},\end{cases}
+\qquad
+ e_i=\begin{cases}\overline c,&i\text{ 偶},\\c,&i\text{ 奇},\end{cases}
+$$
+
+则对所有 $h\ge1$、$k\ge0$ 及 $g_0,\ldots,g_{k-1}\ge2$，
+
+$$
+\begin{aligned}
+J(R=h,\mathsf C_R=c,D_i^+=g_i\ (0\le i<k))
+&=\frac{T_{\overline c}(h)}Z\prod_{i=0}^{k-1}f_{c_i}(g_i),\\
+J(L=-h,\mathsf C_L=c,D_i^-=g_i\ (0\le i<k))
+&=\frac{T_c(h)}Z\prod_{i=0}^{k-1}f_{e_i}(g_i).
+\end{aligned}
+\tag{36.3}
+$$
+
+对应的真实原律权重为
+
+$$
+w_+(h,c)=\frac{T_{\overline c}(h)}Z,\qquad
+w_-(h,c)=\frac{T_c(h)}Z,\qquad
+\sum_{h\ge1}\sum_{c\in\{A,B\}}w_s(h,c)=1
+\quad(s\in\{-,+\}).
+\tag{36.4}
+$$
+
+条件于该侧自己的锚及标签后，向外间隔独立并按（36.3）交替。这些结论在 $p=q$ 时也成立。
+
+**证明。** 原六条边正是（21.1），初始行仍为（2.3）。每行总和为一，输入平稳质量为
+
+$$
+\frac1Z\bigl((1-p)/p+1,(1-q)/q+1,1,1\bigr)=\lambda.
+$$
+
+所以原区间柱仍为 $\lambda_{h_u}\prod_{i=u}^vM_{x_i}(h_i,h_{i+1})$，两端相容性分别使用行和及平稳性。每条一边进入强制零状态，故可见律合法。令 $\alpha=\min(p,q)>0$。从任意隐藏状态出发，两次发射内至少一次为一的概率不小于 $\alpha$。在确定的两边边界依次条件化，得到任意长度 $\ell$ 的零区间概率至多
+
+$$
+(1-\alpha)^{\lfloor\ell/2\rfloor}.
+\tag{36.5}
+$$
+
+固定端点扩大区间，概率趋于零；再对整数端点取可数并，排除任一方向只有有限个占据位。过去方向使用平稳的同一有限区间界，没有假定反向独立。
+
+两条带标签成功边的质量分别为
+
+$$
+J(X_z=1,\mathsf C_z=A)=\lambda_2q=1/Z,
+\qquad
+J(X_z=1,\mathsf C_z=B)=\lambda_1p=1/Z.
+\tag{36.6}
+$$
+
+标签为 $A$ 的成功从状态二进入状态四，经一个强制零进入等待参数为 $p$ 的状态一；标签为 $B$ 时从状态一经状态三进入等待参数为 $q$ 的状态二。因此间隔距离 $g$ 包含一个强制零、$g-2$ 次等待失败及末端成功，概率为（36.2）的 $f_c(g)$，下一占据位的标签反转。几何级数给出总质量一及均值 $1+1/a_c$。
+
+为同时验证过去与未来，固定占据坐标 $z$，按时间顺序定义以它为原点的间隔 $G_i$，$G_0$ 在其右侧。对任意 $u,v\ge0$ 和指定 $g_i\ge2$，$-u\le i<v$，直接乘原柱式得
+
+$$
+J(X_z=1,\mathsf C_z=c,G_i=g_i\ (-u\le i<v))
+=\frac1Z\prod_{i=-u}^{v-1}f_{c_i}(g_i).
+\tag{36.7}
+$$
+
+这里 $c_i$ 的奇偶约定也用于负指标。指定长度把最左成功定位在 $z-\sum_{i=-u}^{-1}g_i$，中央标签唯一确定它的标签，该边的平稳质量是 $1/Z$。以后每段强制零、等待自环及成功的隐藏路径唯一确定，给出对应 $f_{c_i}$。反过来这些路径恰产生指定间隔；最左成功在初始质量中计一次，其余成功各在其间隔中计一次。空乘积也成立。对未指定长度作非负求和，得到任意有限间隔子集的条件乘积律。这就是（21.4）的标签形式，证明未使用 $p\ne q$。
+
+在右侧，$R=h,\mathsf C_R=c$ 要求前一占据位不大于零。它的入向间隔标签为 $\overline c$，长度须 $g\ge h$；前一占据位可以恰好是未观察的中心，所以允许等号。对（36.7）的这个间隔求和，得到（36.3）第一式。在左侧，$L=-h,\mathsf C_L=c$ 要求后一占据位不小于零，出向间隔标签为 $c$，仍须 $g\ge h$；向左第一个间隔标签为 $\overline c$，以后交替，得到第二式。特别地，$T_c(1)=T_c(2)=1$，没有少计靠近中心的锚。
+
+取 $k=0$ 即得（36.4）的权重。非负求和给出
+
+$$
+\sum_{h\ge1}T_c(h)=\sum_{g\ge2}g f_c(g)=1+1/a_c,
+\qquad
+\sum_{c\in\{A,B\}}(1+1/a_c)=Z,
+\tag{36.8}
+$$
+
+从而两种权重各自归一。它们的标签边缘分别为
+
+$$
+J(\mathsf C_R=c)=\frac{1+1/a_{\overline c}}Z,
+\qquad
+J(\mathsf C_L=c)=\frac{1+1/a_c}Z.
+\tag{36.9}
+$$
+
+除以各自的正权重才得到单侧条件独立性；没有以均匀 Palm 标签权重替换这些锚权重。非对角线上，参数对应 $a_c\leftrightarrow a$、锚距离 $h\leftrightarrow s$ 将（36.2）–（36.4）逐项还原为（21.3）、（21.5）–（21.9）及（30.4）。在对角线上，（36.6）仍是两个不同事件，所有求和继续对两个标签进行，故上述证明也完成了数值标记记法所需的延拓。全程只条件于一个锚及其标签，没有再条件于中心、另一侧锚、窗口容纳或停止事件。$\square$
+
+**引理 36.3（两种方向与两个中心值）。** 在各自的单侧锚条件律下，（35.4）的完整半线增量 $W_k^s$ 是独立同分布的 Bernoulli 对之差，对内也独立。其均值为
+
+$$
+\mu_-=a_{\overline{\mathsf C_L}}-a_{\mathsf C_L},\qquad
+\mu_+=a_{\mathsf C_R}-a_{\overline{\mathsf C_R}}.
+\tag{36.10}
+$$
+
+写 $\delta=q-p$，实际轨道上的全部对应为
+
+$$
+\begin{array}{c|c|c|c|c}
+X_0&\mathsf C_L&\mathsf C_R&\mu_-&\mu_+\\\hline
+0&A&B&\delta&\delta\\
+0&B&A&-\delta&-\delta\\
+1&A&A&\delta&-\delta\\
+1&B&B&-\delta&\delta
+\end{array}
+\tag{36.11}
+$$
+
+**证明。** （36.3）给出右侧每对的参数 $(a_c,a_{\overline c})$，左侧为 $(a_{\overline c},a_c)$，且 $f_c(2)=a_c$。不同对使用不交间隔指标，所以得到所述条件律和均值。若 $X_0=0$，最近外部锚之间只有一次占据步，标签反转；若 $X_0=1$，连续占据位恰为 $L,0,R$，标签反转两次。这是同一轨道上的关系，代入即得表格。非对角线上两均值的绝对值均为 $\Delta$，无论 $\delta$ 正负，均值符号相反恰当中心为一。表格不把任何取样律再条件于 $X_0$；对角线上标签关系仍成立，两均值同时为零。它与（30.3）–（30.5）的非对角线对应完全相同。$\square$
+
+## 37. 全部检查点的同时置信与终止误差
+
+**引理 37.1（对差分分数的双向集中）。** 在任一固定的单侧锚及标签条件律下，令 $W_k=B_k-C_k$ 为该侧的完整对分数，$\mu=\mathbb E W_k$，$S_n=\sum_{k=0}^{n-1}W_k$。对每个 $n\ge1$、$x>0$，
+
+$$
+\Pr(S_n-n\mu\ge x)\le e^{-x^2/n},\qquad
+\Pr(S_n-n\mu\le-x)\le e^{-x^2/n}.
+\tag{37.1}
+$$
+
+此处 $\Pr$ 仅表示正在使用的那个条件律。
+
+**证明。** 复用第 25、31 节的 Bernoulli 对数矩方法，并写出所需步骤。若 $B$ 为均值 $b\in(0,1)$ 的 Bernoulli 变量，令
+
+$$
+K_b(u)=\log\mathbb E e^{u(B-b)},\qquad
+v_b(u)=\frac{be^u}{1-b+be^u}.
+$$
+
+直接微分得到 $K_b(0)=K_b'(0)=0$ 和 $K_b''(u)=v_b(u)(1-v_b(u))\le1/4$。对任意实数 $u$，两次积分可写为
+
+$$
+K_b(u)=u^2\int_0^1(1-s)K_b''(su)\,ds\le\frac{u^2}{8}.
+\tag{37.2}
+$$
+
+这个式子同时处理正负 $u$。一对中的两个 Bernoulli 变量独立，所以把（37.2）分别用于 $u$ 和 $-u$，得到
+
+$$
+\mathbb E e^{u(W_k-\mu)}\le e^{u^2/4}.
+$$
+
+完整对之间也独立，故
+
+$$
+\mathbb E e^{u(S_n-n\mu)}\le e^{nu^2/4}.
+\tag{37.3}
+$$
+
+对 $u>0$，非负变量的 Markov 不等式给出上尾至多 $\exp(-ux+nu^2/4)$。取 $u=2x/n$ 得第一式；对 $-(S_n-n\mu)$ 作同样操作得第二式。这里没有以任何拟合、停止或中心事件条件化这一集中估计。$\square$
+
+**命题 37.2（两侧全部检查点的共同好事件）。** 对每个固定 $0<p,q<1$，存在 $J_{p,q}$ 概率至少 $1-\epsilon$ 的事件 $\mathcal G$，其上两侧的完整半线统计同时满足
+
+$$
+|S_{n_j}^s-n_j\mu_s|\le b_j
+\qquad\text{对全部 }j\ge0\text{ 及 }s\in\{-,+\}.
+\tag{37.4}
+$$
+
+**证明。** 在一个固定单侧锚及标签条件律下，由（37.1），检查点 $n_j$ 的双侧偏差超过 $b_j$ 的概率至多
+
+$$
+2e^{-b_j^2/n_j}=2e^{-L_j}
+=\frac{\epsilon}{4(j+1)^2}.
+\tag{37.5}
+$$
+
+因 $x\mapsto x^{-2}$ 递减，
+
+$$
+\sum_{j\ge0}\frac1{(j+1)^2}
+\le1+\int_1^\infty x^{-2}\,dx=2.
+$$
+
+可数并集界使该侧存在任一坏检查点的条件概率至多 $\epsilon/2$，而这个上界不依赖锚距离或标签。按（36.4）的归一化权重平均，得到该侧在原联合律下的同一上界。再对两侧用并集界，得到总坏概率至多 $\epsilon$。将两侧列表存在的满测事件并入好事件，即得（37.4）。这只是各自单侧条件化后平均与并集，未使用两侧独立性，也未要求不同参数共用一个好事件。$\square$
+
+在 $\mathcal G$ 上，如果一个检查点给出正证书，则
+
+$$
+n_j\mu_s\ge S_{n_j}^s-b_j>0;
+$$
+
+如果给出负证书，则
+
+$$
+n_j\mu_s\le S_{n_j}^s+b_j<0.
+\tag{37.6}
+$$
+
+所以任何证书都具有真实均值的严格符号。它对所有检查点同时成立，因而可以在实际窗口所容纳的检查点、首次越界检查点和最终随机半径处直接使用；不需要给固定时刻的集中不等式添加数据选择条件。两侧证书的取得时刻也不必相同。
+
+当 $p\ne q$，表（36.11）使 $\mathcal G$ 上每个统计停止的输出等于 $X_0$；邻位为一时合法性已保证零输出正确。因此
+
+$$
+J_{p,q}(\tau_\epsilon<\infty,\widehat X_\epsilon\ne X_0)
+\le J_{p,q}(\mathcal G^c)\le\epsilon.
+\tag{37.7}
+$$
+
+终止和错误事件只用可见过程，故其 $J$ 概率就是 $P$ 概率。第 38–39 节将证明非对角线上几乎处处有限停止，届时（37.7）即为（35.9）的实际终止误差界。这是每份实际律下的无条件保证，不是对每个停止词或每个停止半径分别条件化的误差保证。
+
+## 38. 二进制检查点反演与有限期望配对数
+
+**引理 38.1（首次越界所需配对数）。** 固定任一侧及其锚、标签条件律，假设 $\mu\ne0$，写 $\Delta=|\mu|\in(0,1)$。令
+
+$$
+M=\inf\{n_j:|S_{n_j}|>b_j,\ j\ge0\},
+\tag{38.1}
+$$
+
+空集取 $\infty$。则
+
+$$
+\mathbb E M\le72\Delta^{-2}
+\left[\log\frac8\epsilon+\log\log(e+1/\Delta)\right].
+\tag{38.2}
+$$
+
+该界对所有锚距离和两种标签相同，并蕴含 $M<\infty$ 几乎处处。
+
+**证明。** 只在证明中定义
+
+$$
+A_0=\log(8/\epsilon),\qquad
+H=\log(e+1/\Delta),\qquad
+\mathcal A=A_0+\log H,\qquad
+v=\log(1/\Delta).
+\tag{38.3}
+$$
+
+有 $H>1$、$v>0$ 和 $\mathcal A\ge A_0\ge\log32>1$。取证明用的整数及其对应检查点
+
+$$
+j_\star=\left\lceil\log_2\frac{32\mathcal A}{\Delta^2}\right\rceil,
+\qquad n_\star=2^{j_\star}.
+\tag{38.4}
+$$
+
+它们依赖未知分离度，但从不供应给策略。天花板取整给出
+
+$$
+\frac{32\mathcal A}{\Delta^2}\le n_\star
+\le\frac{64\mathcal A}{\Delta^2},
+\qquad
+j_\star+1\le7+\frac{\log\mathcal A+2v}{\log2}.
+\tag{38.5}
+$$
+
+这里 $\log_2 x=(\log x)/(\log2)$。由 $\log2\ge1/2$、$\log\mathcal A\le\mathcal A$、$v\le H$ 及 $\mathcal A,H\ge1$，
+
+$$
+\begin{aligned}
+j_\star+1
+&\le7+2\log\mathcal A+4v\\
+&\le7+2\mathcal A+4H
+\le13\mathcal A H\le16\mathcal A H.
+\end{aligned}
+\tag{38.6}
+$$
+
+取对数后，$\log16\le\mathcal A$、$\log\mathcal A\le\mathcal A$、$\log H\le\mathcal A$，故
+
+$$
+\log(j_\star+1)\le3\mathcal A,
+\qquad
+L_{j_\star}=A_0+2\log(j_\star+1)\le7\mathcal A.
+\tag{38.7}
+$$
+
+结合（38.5），$n_\star\Delta^2\ge32\mathcal A\ge4L_{j_\star}$。此外对所有 $j\ge0$，
+
+$$
+L_{j+1}-L_j
+=2\log\frac{j+2}{j+1}\le2\log2\le L_j.
+$$
+
+所以 $L_j/2^j$ 不增，一旦在 $j_\star$ 达到上述界，以后所有检查点均有
+
+$$
+b_j=\sqrt{n_jL_j}\le\frac{n_j\Delta}{2},\qquad j\ge j_\star.
+\tag{38.8}
+$$
+
+若 $M>n_j$，则在该检查点还没有越界，因而 $|S_{n_j}|\le b_j$。对 $j\ge j_\star$，写 $\sigma=\operatorname{sgn}\mu$，得到事件包含
+
+$$
+\{M>n_j\}
+\subseteq\{\sigma S_{n_j}-n_j\Delta\le-n_j\Delta/2\}.
+$$
+
+由（37.1）对相应符号的一侧偏差估计，
+
+$$
+\Pr(M>n_j)\le\exp(-n_j\Delta^2/4),\qquad j\ge j_\star.
+\tag{38.9}
+$$
+
+这一包含不条件于证书正确，也不条件于此前没有错误证书。
+
+$M$ 取二的非负整数次幂或 $\infty$。在扩展非负实数意义下，逐点恒等式为
+
+$$
+M=1+\sum_{j\ge0}2^j\mathbf1_{\{M>2^j\}}.
+\tag{38.10}
+$$
+
+对有限 $M=2^J$，右侧为 $1+\sum_{j=0}^{J-1}2^j=2^J$；对 $M=\infty$ 两侧同为无穷。非负求和与（38.9）给出，令 $c=\Delta^2/4$，
+
+$$
+\mathbb E M
+\le n_\star+\sum_{j\ge j_\star}n_j e^{-cn_j}.
+\tag{38.11}
+$$
+
+由于 $e^{-cx}$ 递减，
+
+$$
+n_je^{-cn_j}\le2\int_{n_j/2}^{n_j}e^{-cx}\,dx.
+$$
+
+这些二进制区间除端点外不交，合起来是 $[n_\star/2,\infty)$，所以
+
+$$
+\sum_{j\ge j_\star}n_je^{-cn_j}
+\le2\int_{n_\star/2}^\infty e^{-cx}\,dx
+\le\frac2c=\frac8{\Delta^2}.
+\tag{38.12}
+$$
+
+最后由（38.5）及 $\mathcal A\ge1$，
+
+$$
+\mathbb E M\le\frac{64\mathcal A+8}{\Delta^2}
+\le\frac{72\mathcal A}{\Delta^2}.
+$$
+
+所有期望和求和在证明有限性之前均按非负扩展值解释；有限上界排除了 $M=\infty$ 的正概率。整个论证包含全部取整和早期检查点，没有对无界停止时刻直接使用期望恒等式。$\square$
+
+对两侧完整半线分别记首次越界配对数为 $M_-,M_+$。非对角线上每份锚条件律都有 $|\mu_s|=\Delta$，因此按（36.4）平均（38.2）后，
+
+$$
+\mathbb E_J M_s\le72\Delta^{-2}\mathcal A,
+\qquad J(M_s<\infty)=1,\qquad s\in\{-,+\}.
+\tag{38.13}
+$$
+
+这两个原律期望各自来自单侧条件律，未断言 $M_-$ 与 $M_+$ 独立。
+
+## 39. 可预测的下一对成本与完整原位点半径
+
+**引理 39.1（支付包含越界对在内的全部间隔）。** 令
+
+$$
+V_k^s=D_{2k}^s+D_{2k+1}^s,\qquad
+\mathcal H_k^s=\sigma(D_{2i}^s,D_{2i+1}^s:0\le i<k)
+\tag{39.1}
+$$
+
+为一对的原位点距离及前 $k$ 个完整对的字段。在任一固定的该侧锚及标签条件律下，
+
+$$
+\mathbb E\left[\sum_{k=0}^{M_s-1}V_k^s\,\middle|\,\text{该侧锚及标签}\right]
+=Z\,\mathbb E[M_s\mid\text{该侧锚及标签}].
+\tag{39.2}
+$$
+
+**证明。** 由（36.3），完整间隔对彼此独立，每对的参数包含 $p,q$ 各一次，故
+
+$$
+\mathbb E[V_k^s\mid\text{该侧锚及标签}]
+=(1+1/p)+(1+1/q)=Z.
+$$
+
+一对的长度与它的分数可以相关。但 $\{M_s>k\}$ 只表示前 $k$ 个完整对中所有已到达的检查点都未越界，属于 $\mathcal H_k^s$；等价地，$M_s$ 是完整对字段的停止时刻。下一对长度 $V_k^s$ 独立于此前字段，所以在该条件律下
+
+$$
+\mathbb E[V_k^s\mathbf1_{\{M_s>k\}}]
+=Z\Pr(M_s>k).
+$$
+
+将随机和定义为 $\sum_{k\ge0}V_k^s\mathbf1_{\{M_s>k\}}$，Tonelli 的非负求和给出
+
+$$
+\begin{aligned}
+\mathbb E\sum_{k=0}^{M_s-1}V_k^s
+&=\sum_{k\ge0}\mathbb E[V_k^s\mathbf1_{\{M_s>k\}}]\\
+&=Z\sum_{k\ge0}\Pr(M_s>k)=Z\mathbb E M_s.
+\end{aligned}
+$$
+
+最后一式来自正整数值变量的逐点尾和 $M_s=\sum_{k\ge0}\mathbf1_{\{M_s>k\}}$，包括扩展值情形。这证明（39.2）。使分数越界的那一对也在和中：是否取得第 $k$ 对由取得它之前的 $\{M_s>k\}$ 决定。证明没有假设 $M_s$ 与全部长度独立，没有遗漏越界对，也没有使用两侧独立或无界可选停止定理。$\square$
+
+**引理 39.2（锚距离与窗口精确对应）。** 在实际两侧无限列表上，对每个整数 $m\ge1$，
+
+$$
+\begin{aligned}
+N_+(r)\ge m
+&\ \Longleftrightarrow\ K_+\ge2m+1
+\ \Longleftrightarrow\ R_{2m}=H_++\sum_{i=0}^{2m-1}D_i^+\le r,\\
+N_-(r)\ge m
+&\ \Longleftrightarrow\ K_-\ge2m+1
+\ \Longleftrightarrow\ -L_{2m}=H_-+\sum_{i=0}^{2m-1}D_i^-\le r.
+\end{aligned}
+\tag{39.3}
+$$
+
+因此各侧首次证书能被取得的精确原位点半径是
+
+$$
+B_s=H_s+\sum_{k=0}^{M_s-1}V_k^s,\qquad s\in\{-,+\},
+\tag{39.4}
+$$
+
+无证书时令 $B_s=\infty$。在实际律下，
+
+$$
+\tau_\epsilon=
+\begin{cases}
+1,&F^c,\\
+\max(B_-,B_+),&F,
+\end{cases}
+\qquad
+\tau_\epsilon\le B_-+B_+.
+\tag{39.5}
+$$
+
+**证明。** $m$ 对需要 $2m$ 个完整间隔，即含锚在内的 $2m+1$ 个占据位；向外距离逐间隔相加即得（39.3）。等号属于成功取得，末端占据位恰在窗口边界仍被观察。这就是（32.3）的同一计数对应，现在用于随机的首次越界配对数。由引理 35.2 的持久性，首次证书在且仅在窗口达到（39.4）时可用。$F$ 上只有两侧都可用才停止，$F^c$ 上在半径一即由合法性停止。又 $B_s\ge H_s\ge1$，故（39.5）的上界在两个分支均成立。
+
+距离（39.4）包括中心至锚的整段、所有 $2M_s$ 个间隔的强制零与等待位以及最后的成功位。策略每一轮都取得两侧新位，所以较早取得证书后，该侧仍被观察到 $\max(B_-,B_+)$。因此有限终止时取得的不同外部坐标正好是 $[-\tau_\epsilon,-1]\cup[1,\tau_\epsilon]$，共 $2\tau_\epsilon$ 个；没有把任一头部距离、未使用的半侧或末端位置作为免费信息。$\square$
+
+**引理 39.3（真实锚距离的一阶矩）。** 在全部开参数方形上，
+
+$$
+\mathbb E_J H_- =\mathbb E_J H_+
+=\frac{2+1/p+1/q+1/p^2+1/q^2}{Z}
+=\overline h.
+\tag{39.6}
+$$
+
+**证明。** 对参数 $b\in(0,1)$ 的间隔，写 $G=1+K$，其中 $K$ 在正整数上几何分布，$\Pr(K\ge h)=(1-b)^{h-1}$。非负尾和及几何级数给出
+
+$$
+\mathbb E K=\sum_{h\ge1}(1-b)^{h-1}=1/b,
+$$
+
+$$
+\mathbb E[K(K-1)]
+=2\sum_{h\ge1}h\Pr(K\ge h+1)
+=2\sum_{h\ge1}h(1-b)^h=\frac{2(1-b)}{b^2}.
+\tag{39.7}
+$$
+
+这里 $\sum_{h\ge1}hz^h=z/(1-z)^2$ 可由 $h=\sum_{i=1}^h1$ 后交换非负几何和得到。于是
+
+$$
+\mathbb E\frac{G(G+1)}2
+=\frac12\mathbb E[K(K-1)]+2\mathbb E K+1
+=1+1/b+1/b^2.
+\tag{39.8}
+$$
+
+对任一标签 $c$，再交换非负和，
+
+$$
+\sum_{h\ge1}hT_c(h)
+=\sum_{g\ge2}f_c(g)\sum_{h=1}^g h
+=1+1/a_c+1/a_c^2.
+\tag{39.9}
+$$
+
+按（36.4）的实际锚权重求和，两种方向都遍历参数 $p,q$ 各一次，再除以 $Z$，得到（39.6）。这一锚矩使用原位点选择的权重，不是 Palm 间隔的未加权均值。$\square$
+
+对（39.2）按各侧真实权重平均，再用（38.13）、（39.5）–（39.6），得到非对角线上
+
+$$
+\begin{aligned}
+\mathbb E_P\tau_\epsilon
+&\le\mathbb E_J B_-+\mathbb E_J B_+\\
+&=2\overline h+Z(\mathbb E_J M_-+\mathbb E_J M_+)\\
+&\le2\overline h+144Z\Delta^{-2}\mathcal A<\infty.
+\end{aligned}
+\tag{39.10}
+$$
+
+$\tau_\epsilon$ 只用可见过程，故第一行的期望对应同一实际律。有限上界使 $\tau_\epsilon=\infty$ 的概率为零；否则 $\mathbb E\tau_\epsilon\ge K\Pr(\tau_\epsilon=\infty)$ 对任意 $K$ 成立，矛盾。结合（37.7）即证明（35.9）–（35.10）。期望计算始终在原律上进行，没有条件于 $F$、两侧同时拟合或正确终止后再套用单侧乘积律。
+
+## 40. 局部期望界与全部正数范围
+
+**定理 35.3 的局部界证明。** 设 $p=t$、$q=t+\delta$、$0<|\delta|<\min(t,1-t)/2$，并写 $\Delta=|\delta|$。则 $p,q\ge t/2$。令
+
+$$
+Q_t=2+4/t,\qquad u=1/p,\quad w=1/q.
+$$
+
+有 $u,w\le2/t$，从而
+
+$$
+Z=2+u+w\le Q_t,
+\qquad
+\overline h=1+\frac{u^2+w^2}{2+u+w}
+\le1+\frac2t,
+\qquad 2\overline h\le Q_t.
+\tag{40.1}
+$$
+
+中间不等式使用 $u^2+w^2\le(2/t)(u+w)$。因 $0<\Delta<1$ 且 $\mathcal A\ge1$，一般界（39.10）给出
+
+$$
+\mathbb E\tau_\epsilon
+\le Q_t+144Q_t\Delta^{-2}\mathcal A
+\le145Q_t\Delta^{-2}\mathcal A.
+\tag{40.2}
+$$
+
+再置 $\ell=\log(1/\epsilon)\ge\log4$。有 $\log8\le2\ell$，故 $\log(8/\epsilon)\le3\ell$。同时 $\log\log(e+1/\Delta)>0$，所以
+
+$$
+\mathcal A
+\le3\left[\ell+\log\log(e+1/\Delta)\right].
+\tag{40.3}
+$$
+
+将它代入（40.2）即得（35.11）的 $435Q_t$。常数 $144$ 来自两侧各 $72$ 的配对数界，$145$ 吸收真实锚距离，$435$ 再来自（40.3）的因子三。每个固定内点 $t$ 的常数都有限且严格为正；所有估计覆盖所列全部正 $\epsilon$、两种非零 $\delta$ 符号和早期检查点。没有略去地板、天花板或小半径情形。至此定理 35.3 的非对角线部分全部得证。$\square$
+
+## 41. 对角线后验与本策略的不终止
+
+**引理 41.1（同一可见律的完整外部后验）。** 固定 $0<t<1$，令
+
+$$
+D_t=(1-t)^2+t=B(t),\qquad
+s_t=\frac{t}{D_t},\qquad
+m_t=\min(s_t,1-s_t)>0.
+\tag{41.1}
+$$
+
+在原 $P_{t,t}$ 下，对全部整数 $r\ge1$，
+
+$$
+\mathbb E[X_0\mid\mathcal F_r]
+=\mathbb E[X_0\mid\mathcal E_0]
+=s_t\mathbf1_F,
+\qquad
+P_{t,t}(F)=\frac{D_t}{1+t}.
+\tag{41.2}
+$$
+
+这些量正是定理 5.1 的同律后验和自由邻位质量；$D_t$ 只为避免与（39.4）的取得半径 $B_s$ 混淆而换名。
+
+**证明。** 在对角线的原发射链中，每条零边都结束于状态一或二，从这两个准备状态下一次成功概率同为 $t$；每条一边都结束于状态三或四，下一位必为零。先条件于隐藏历史再对可见历史平均，下一位分布只依赖上一可见位。因此实际可见链的转移及平稳行是
+
+$$
+K_t=\begin{pmatrix}1-t&t\\1&0\end{pmatrix},\qquad
+\pi_t=\left(\frac1{1+t},\frac{t}{1+t}\right).
+\tag{41.3}
+$$
+
+平稳占据质量直接由原 $2/Z=t/(1+t)$ 得到，所有有限柱为首位的 $\pi_t$ 质量乘以转移因子。给定半径 $r$ 的正质量外部原子，$F^c$ 上合法性迫使中心为零；$F$ 上两个中心补全的共同初始因子和远离中心的因子相同且为正，中心两步因子分别为
+
+$$
+K_t(0,0)K_t(0,0)=(1-t)^2,
+\qquad
+K_t(0,1)K_t(1,0)=t.
+$$
+
+相除归一后得到 $s_t$，故每个有限外部字段的后验为 $g=s_t\mathbf1_F$。
+
+为核对完整外部的延伸，对任意有限外部柱事件 $A$，已有 $\int_A X_0\,dP=\int_A g\,dP$。这些柱事件的有限并构成生成 $\mathcal E_0$ 的代数，两边在该代数上相等且分别定义有限测度；测度唯一性把等式延伸到整个 $\mathcal E_0$。因 $g$ 本身外部可测，它就是完整外部后验的版本。这里没有对单个无限纤维作概率比，也没有给零概率纤维赋予正分母。
+
+最后，原三位柱质量为
+
+$$
+P_{t,t}(000)=\frac{(1-t)^2}{1+t},\qquad
+P_{t,t}(010)=\frac{t}{1+t},
+\tag{41.4}
+$$
+
+其中三位位于 $-1,0,1$，两事件不交且并为 $F$，故得（41.2）的质量。$\square$
+
+**命题 41.2（整个对角线上本策略的继续概率）。** 对定义 35.1 的策略及每个 $0<t<1$、$0<\epsilon\le1/4$，有
+
+$$
+P_{t,t}(\tau_\epsilon<\infty,F)\le\epsilon,
+\qquad
+P_{t,t}(\tau_\epsilon=\infty)
+\ge\frac{D_t}{1+t}-\epsilon\ge\frac18.
+\tag{41.5}
+$$
+
+**证明。** 标签 $A,B$ 仍不同，但 $a_A=a_B=t$，所以（36.10）的两侧均值均为零。引理 36.2 已在保留标签的条件下证明全部选定锚公式仍适用，故命题 37.2 的 $\mathcal G$ 仍有概率至少 $1-\epsilon$。在 $\mathcal G$ 上，所有检查点分数均满足 $|S_{n_j}^s|\le b_j$，没有任一统计证书。因而 $F\cap\mathcal G$ 上始终继续，有限停止且在 $F$ 内的事件只能落入 $\mathcal G^c$，得第一式。$F^c$ 上策略在半径一停止，故
+
+$$
+P_{t,t}(\tau_\epsilon=\infty)
+\ge P_{t,t}(F)-\epsilon.
+$$
+
+又
+
+$$
+D_t=(t-1/2)^2+3/4\ge3/4,\qquad 1+t\le2,
+$$
+
+所以 $P_{t,t}(F)\ge3/8$，减去 $\epsilon\le1/4$ 得到 $1/8$。正概率的无穷半径使扩展期望为无穷：对任意 $K>0$，$\mathbb E\tau_\epsilon\ge K P(\tau_\epsilon=\infty)$。这完成（35.12）及定理 35.3。$\square$
+
+本命题不排除 $F$ 上发生概率至多 $\epsilon$ 的有限统计停止。无限继续也不是有限时刻的参数等式证书；策略在这样的轨道上保持未终止输出 $\bot$。
+
+## 42. 共享确定规则的一般对角线障碍
+
+**定理 42.1（有限时域连续性与严格精度条件）。** 固定 $0<t<1$ 和 $0<\epsilon\le1/4$。考虑同一嵌套外部字段上的一个确定规则，停止半径为 $T\in\mathbb Z_{\ge1}\cup\{\infty\}$，有限停止时输出 $U_T\in\{0,1\}$，满足
+
+$$
+\{T\le r\}\in\mathcal F_r,\qquad
+\{T=r,U_T=a\}\in\mathcal F_r
+\quad(r\ge1,\ a\in\{0,1\}).
+\tag{42.1}
+$$
+
+在对角线与下面的所有参数处，使用完全相同的有限词映射。取任一非零序列 $\delta_n\to0$，使 $t+\delta_n\in(0,1)$。若
+
+$$
+P_{t,t+\delta_n}(T<\infty,U_T\ne X_0)\le\epsilon
+\qquad\text{对每个 }n,
+\tag{42.2}
+$$
+
+则
+
+$$
+\boxed{\quad
+P_{t,t}(T=\infty,F)
+\ge\frac{D_t}{1+t}-\frac{\epsilon}{m_t}.
+\quad}
+\tag{42.3}
+$$
+
+这里 $D_t,m_t$ 如（41.1）。右端严格为正的条件恰为
+
+$$
+\boxed{\quad
+\epsilon<\frac{\min(t,(1-t)^2)}{1+t}.
+\quad}
+\tag{42.4}
+$$
+
+在此严格条件下，满足（42.2）的同一规则不能还在该对角线律下几乎处处停止。任一穿孔邻域上一致的终止误差控制都蕴含（42.2）；本定理不要求非对角线上几乎处处停止。
+
+**证明。** 固定一个确定整数 $r\ge1$。由（42.1）及有限词规则共享，
+
+$$
+E_r^{\rm err}=\{T\le r,U_T\ne X_0\}
+$$
+
+是在有限字母表 $(X_0,Y_r)$ 上由同一个子集定义的事件。其概率是有限个原平稳柱概率 $\lambda M_w\mathbf1$ 的和。原矩阵条目及 $\lambda$ 在开方形上连续，因此此事件概率也连续。这正是第 6 节及第 29–34 节使用的原有限观察对应；中心仍只作为错误事件的目标，未加入规则输入。
+
+由（42.2），对每个 $n$ 都有 $P_{t,t+\delta_n}(E_r^{\rm err})\le\epsilon$。先只在这个固定时域取参数极限，得到 $P_{t,t}(E_r^{\rm err})\le\epsilon$。然后令整数 $r$ 增加，事件递增到全部有限停止错误事件，概率的从下连续性给出
+
+$$
+P_{t,t}(T<\infty,U_T\ne X_0)\le\epsilon.
+\tag{42.5}
+$$
+
+参数极限只在固定有限时域内使用，没有与无界停止操作交换。
+
+令 $A_a=\{T<\infty,U_T=a\}$，$a=0,1$。每个 $A_a$ 是 $\{T=r,U_T=a\}$ 的可数并，故为完整外部字段 $\mathcal E_0$ 可测；两个事件不交。用引理 41.1 的完整外部后验，$F$ 上的错误概率为
+
+$$
+\begin{aligned}
+P_{t,t}(T<\infty,U_T\ne X_0,F)
+&=\mathbb E[\mathbf1_{A_0\cap F}X_0]
+  +\mathbb E[\mathbf1_{A_1\cap F}(1-X_0)]\\
+&=s_tP(A_0\cap F)+(1-s_t)P(A_1\cap F)\\
+&\ge m_tP(T<\infty,F).
+\end{aligned}
+\tag{42.6}
+$$
+
+这些期望均在 $P_{t,t}$ 下。左侧不超过（42.5），所以 $P(T<\infty,F)\le\epsilon/m_t$；从 $P(F)=D_t/(1+t)$ 中减去即为（42.3）。因
+
+$$
+m_t\frac{D_t}{1+t}
+=\frac{\min(t,(1-t)^2)}{1+t},
+\tag{42.7}
+$$
+
+（42.3）的右端严格为正当且仅当（42.4）。在等号或反向范围，这个下界可能为零或负数，不提供正的普适不终止保证；这不声称该精度条件是所有可能障碍的必要条件。$\square$
+
+**有限证书的支撑边界。** 每个合法有限区间词在每个开方形参数下都有正概率：从正初始质量的准备状态出发，零用正自环，一用正成功边，成功之后若还有下一位，合法性保证它为零，可以走强制边。因此每个有合法补全的非空有限外部原子也在每份开方形律下有正质量。有限外部观察不能据此把精确对角线等式与所有非对角线参数区分为确定事实。上面的普适障碍使用二值分类错误，其严格阈值是（42.7），不是定理 5.1 的平方风险 $V(t)$；也没有给出自适应期望半径或适应开销的下界。
+
+## 43. 固定半径对应、取得范围与经典归属
+
+本增补的 $Y_r,\mathcal F_r,F$ 分别就是（16.1）和定义 1.2 的原外部观察、原字段及自由邻位事件；间隔 $D_i^s$ 沿用定义 29.1，完整配对数 $N_s(r)$ 即（29.1），前缀分数 $S_n^s$ 即（30.1），完整计数与原位置的关系即（32.3）。第 36 节把（21.6）–（21.9）的实际选定锚公式用两个不同标签重新写全，保留原 $1/Z$ 权重和 $g\ge h$ 的边界，再证明其对角线延拓。第 37 节使用所有检查点的同时偏差控制；第 39 节把所选配对数接回含锚距离和末端占据位的原整数半径。这些对应均在定义 2.2 的同一生产律上，没有向观察者提供隐藏标签、独立重抽样间隔、参数分离度或免费的头部位置。
+
+第 29–34 节的 $\widehat f_r$ 对每个确定半径使用当前全部完整对的符号，定理 35.3 的停止输出则使用两侧各自首次越界的证书。二者共享原位点观察桥与成对分数，承担不同的保证：前者是确定半径上的局部指数分类界和固定阈值比较，后者是一个由数据决定何时取得足够信息的共享规则，具有实际终止误差和有限期望原位点成本。定理 18.2、推论 33.1 的必要半径仍只针对确定的 $r$；本增补没有把这些结论当作 $\mathbb E\tau_\epsilon$ 的下界。自适应证明不需要将固定半径的集中估计条件化于最终拟合或停止事件。
+
+（35.10）–（35.11）的 $\log\log(e+1/\Delta)$ 是本构造达到的上界项；其必要性、适应最优性、尖锐常数、尖锐精度依赖和自适应期望半径下界均未在这里证明。所有保证限于精确四状态开参数族及原外部观察；不包括参数端点、$\epsilon=0$、未知模型族、任意周期结构、整个 $\Theta_4$ 或所有有限隐藏模型。这里没有经验学习、训练、CPU 运行时间、内存效率或文献优先权结论。任意实数阈值定义一个数学规则，不自动提供精确实数的可执行比较程序。
+
+平稳发射柱、几何等待及其非负级数、Bernoulli 指数矩与指数 Markov 不等式、按二进制检查点分配误差、可数并集界、Tonelli 非负求和、下一对的可预测成本、有限维概率连续性、Markov 条件化、条件期望及有限测度唯一性都是经典概率工具，归属沿用第 8、25、31、34 节及 [Gray][Gray]。所需步骤已在上述证明中给出；这些是该指定族上的手写数学结论，不主张形式内核认证。第 31 节的非负超鞅方法和第 17–19 节的信息不等式继续承担各自原有的固定半径结论，不由本增补扩大其适用范围。
+
+完整 no11 词域、开放端点、原调和目标及全维数参数域保持原定义。开放问题 7.3 和（34.1）的有限达到二择一仍完整保留：
+
+$$
+\exists N\ge1\ \exists\theta\in\Theta_N:\ d(P_\theta)=c_\star,
+\qquad\text{或}\qquad
+\forall N\ge1:\ C_N<c_\star,
+\tag{43.1}
+$$
+
+其中 $\Theta_N$ 是定义 2.1 的整个允许域，$C_N$ 是该整个域上的最大值。自适应取得定理没有决定其中任何一项，也没有完成原全有限隐藏维数目标。
+
+## 追加锚（本行以下为后续自适应观察增补区）
+
+## 44. 自适应必要成本的原律、规则类与二值精度
+
+本节至第 54 节研究定义 2.2 的同一四状态族。以下下界的对象是共享停止规则的原位点期望成本；其二值错误阈值单独定义，不把第 18 节的确定半径平方风险下界当作随机半径下界。第 42–43 节中尚未证明必要成本的表述，范围限于该处的增补；本增补所解决的必要性及仍保留的问题见第 54 节。
+
+**定义 44.1（完整观察与取得契约）。** 对每个 $0<p,q<1$，隐藏状态 $H_i$ 位于发射 $X_i$ 之前。仅有六条正发射边：
+
+$$
+1\xrightarrow{0,1-p}1,\quad
+1\xrightarrow{1,p}3,\quad
+3\xrightarrow{0,1}2,\quad
+2\xrightarrow{0,1-q}2,\quad
+2\xrightarrow{1,q}4,\quad
+4\xrightarrow{0,1}1.
+\tag{44.1}
+$$
+
+令 $M_x(h,h')$ 为这些带符号边的权重，其余条目为零，并置
+
+$$
+Z=2+1/p+1/q,\qquad \lambda=Z^{-1}(1/p,1/q,1,1).
+\tag{44.2}
+$$
+
+实际两侧平稳联合律仍由
+
+$$
+J_{p,q}(H_u=h_u,\ldots,H_{v+1}=h_{v+1},X_u=x_u,\ldots,X_v=x_v)
+=\lambda_{h_u}\prod_{i=u}^vM_{x_i}(h_i,h_{i+1})
+\tag{44.3}
+$$
+
+给出，可见边缘记为 $P_{p,q}$。每行总和为一，且输入质量为
+$Z^{-1}((1-p)/p+1,(1-q)/q+1,1,1)=\lambda$，故两端边缘相容并平稳。成功边后必有强制零，所以可见律满足 no11。每个合法有限词可从正质量的准备状态沿正自环、成功边和强制零边实现，故在整个开参数方形上有共同的完整合法有限支撑。
+
+观察者在整数半径 $r\ge1$ 只取得
+
+$$
+Y_r=(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),\qquad
+\mathcal F_r=\sigma(Y_r),\qquad
+\mathcal E_0=\sigma(X_j:j\ne0),\qquad
+F=\{X_{-1}=X_1=0\}.
+\tag{44.4}
+$$
+
+$F$ 是事件，区别于字段 $\mathcal F_r$。中心和所有隐藏状态始终被扣留。固定 $\epsilon>0$ 后，一个共享确定规则为同一个可测映射 $(\tau,D)$，其中 $\tau\in\mathbb Z_{\ge1}\cup\{\infty\}$，$D\in\{0,1\}$ 只在有限终止时定义，且
+
+$$
+\{\tau\le r\}\in\mathcal F_r,\qquad
+\{\tau=r,D=a\}\in\mathcal F_r\quad(a=0,1).
+\tag{44.5}
+$$
+
+共享指这些映射在整个参数族中不变。称其为 $\epsilon$ 合格规则，如果对每个非对角线参数均有
+
+$$
+P_{p,q}(\tau<\infty)=1,\qquad
+P_{p,q}(\tau<\infty,D\ne X_0)\le\epsilon
+\quad(0<p,q<1, p\ne q).
+\tag{44.6}
+$$
+
+这是无条件的有限终止二值错误，不是对每个停止词的条件保证，也不是实值后验的平方损失。对角线上不要求终止。成本为扩展期望 $\mathbb E_{p,q}\tau\in[1,\infty]$；取得的不同原外部位恰为 $2\tau$ 个，故期望位数是 $2\mathbb E_{p,q}\tau$，无穷值亦如此。两侧窗口一直共同扩大，不能把已获证书的一侧、锚距离或任何间隔当作免费输入。下界不限制规则必须使用间隔、对比分数或检查点；允许空窗口停止 $\tau=0$ 时，同一证明仍适用。
+
+**定义 44.2（局部比较常数）。** 固定 $t\in(0,1)$，写 $P_\delta=P_{t,t+\delta}$、$P_0=P_{t,t}$，并定义
+
+$$
+\begin{aligned}
+D_t&=(1-t)^2+t,& f_t&=\frac{D_t}{1+t},&s_t&=\frac{t}{D_t},\\
+m_t&=\min(s_t,1-s_t),&b_t&=m_tf_t=\frac{\min(t,(1-t)^2)}{1+t},\\
+C_t&=\frac{1+2t}{t^2}+\frac3{t(1-t)},&
+d_t&=\frac{\min(t,1-t)}2,&
+\ell(\Delta)&=\log\log(e+1/\Delta)\quad(\Delta>0).
+\end{aligned}
+\tag{44.7}
+$$
+
+$D_t,s_t,m_t$ 与第 41 节相同，$C_t$ 与第 16–18 节相同；$b_t$ 是二值 Bayes 基线。若 $0<\epsilon<b_t$，另置
+
+$$
+\gamma_t=b_t-\epsilon>0,\qquad
+\beta_t=f_t-\epsilon/m_t=\gamma_t/m_t>0.
+\tag{44.8}
+$$
+
+所有对数为自然对数。下界只固定这样的 $t,\epsilon$ 后令分离度趋于零；两个构造则固定 $0<\epsilon\le1/4$，在全部非对角线开参数方形上满足（44.6）。
+
+## 45. 确定原窗口的信息代价
+
+**引理 45.1（平稳初始项、中央发射与可见投影）。** 对每个确定整数 $r\ge1$ 及每个 $q=t+\delta\in(0,1)$，令 $\mu_\delta^r$ 为 $(X_0,Y_r)$ 在 $P_\delta$ 下的联合律。则
+
+$$
+D(\mu_\delta^r\Vert\mu_0^r)\le C_t r\delta^2,
+\qquad
+\operatorname{TV}(\mu_\delta^r,\mu_0^r)
+\le |\delta|\sqrt{C_t r/2}.
+\tag{45.1}
+$$
+
+总变差为半 $\ell^1$ 距离。仅投影到 $Y_r$ 时两个界仍成立。
+
+**证明。** 为写全与原律的对应，置
+
+$$
+S=t+(1+2t)q,\qquad S_0=2t(1+t),\qquad
+\lambda^\delta=\frac{(q,t,tq,tq)}S,\qquad
+\lambda^0=\frac{(t,t,t^2,t^2)}{S_0}.
+$$
+
+这是（44.2）同乘 $tq$ 后的行。通分给出
+
+$$
+\lambda^\delta-\lambda^0
+=\frac{\delta}{SS_0}(t,-t(1+2t),t^2,t^2).
+$$
+
+因此 Pearson 和式为
+
+$$
+\chi^2(\lambda^\delta\Vert\lambda^0)
+=\frac{\delta^2}{S^2S_0}
+ [t+t(1+2t)^2+2t^2]
+=\frac{(1+2t)\delta^2}{S^2},
+\tag{45.2}
+$$
+
+其中方括号等于 $2t(1+t)(1+2t)=S_0(1+2t)$。由 $\log z\le z-1$，任意共同有限正支撑上的概率行 $\alpha,\beta$ 满足
+
+$$
+D(\alpha\Vert\beta)\le\sum_i\alpha_i(\alpha_i/\beta_i-1)
+=\sum_i\frac{(\alpha_i-\beta_i)^2}{\beta_i}.
+$$
+
+同一不等式用于 $\log(\beta_i/\alpha_i)$，给出
+$D(\alpha\Vert\beta)\ge\sum_i(\alpha_i-\beta_i)=0$。因此初始相对熵由（45.2）控制，后面使用的条件散度亦非负。
+
+保留 $H_{-r},\ldots,H_{r+1}$ 以及 $X_{-r},\ldots,X_r$，记其两个路径律为 $J_\delta^r,J_0^r$。它们的正支撑相同。原柱式（44.3）的对数密度比为初始行的对数比加上全部 $2r+1$ 条发射边的对数比。只有状态二的出边分布改变；在扰动律下，该行的实际平稳占用为 $t/S$。以
+
+$$
+\operatorname{kl}(u,v)=u\log(u/v)+(1-u)\log((1-u)/(1-v))
+$$
+
+表示 Bernoulli 相对熵，对路径对数比取期望，逐项得到
+
+$$
+D(J_\delta^r\Vert J_0^r)
+=D(\lambda^\delta\Vert\lambda^0)
+ +(2r+1)\frac tS\operatorname{kl}(q,t).
+\tag{45.3}
+$$
+
+这里包含中央发射，既未丢弃初始项，也未给观察者开放隐藏状态。Bernoulli 卡方和为 $\delta^2/[t(1-t)]$，故
+
+$$
+\begin{aligned}
+D(J_\delta^r\Vert J_0^r)
+&\le\delta^2\left[\frac{1+2t}{S^2}
+ +\frac{2r+1}{S(1-t)}\right]\\
+&\le r\delta^2\left[\frac{1+2t}{t^2}+\frac3{t(1-t)}\right],
+\end{aligned}
+\tag{45.4}
+$$
+
+最后使用 $S>t$、$1\le r$ 和 $2r+1\le3r$。这在全部 $q\in(0,1)$ 上有效。
+
+按确定投影的纤维拆分相对熵，原散度等于像散度加上以像概率加权的非负条件散度。因此丢弃隐藏状态并把可见位重排成 $(X_0,Y_r)$，得到（45.1）的熵界。这个像正是原可见联合律，不是替代实验。
+
+为核对总变差常数，取有限字母表上第一律质量大于第二律的集合。投影到该集合的指标后，两概率之差为总变差。固定 $0<v<1$，$u\mapsto\operatorname{kl}(u,v)$ 在 $u=v$ 处的值和导数均为零，二阶导数为 $1/[u(1-u)]\ge4$；两次积分得 $\operatorname{kl}(u,v)\ge2(u-v)^2$。端点按极限处理；若参考概率为零或一，共同支撑给出相同退化概率。数据处理于是给出 Pinsker 界及（45.1）。对任意 $[0,1]$ 值损失，两律期望之差至多为总变差，因为有符号质量的正负部分各有该总质量。再丢弃中心是另一个确定投影。以上全部半径均为确定整数。$\square$
+
+## 46. 二值后验基线与共享规则的对角线质量
+
+**引理 46.1（有限和完整外部的二值障碍）。** 在 $P_0$ 下，
+
+$$
+\mathbb E_0[X_0\mid\mathcal F_r]
+=\mathbb E_0[X_0\mid\mathcal E_0]=s_t\mathbf1_F,
+\qquad P_0(F)=f_t.
+\tag{46.1}
+$$
+
+任意二值完整外部决策的错误概率至少为 $b_t$，且该值可由 Bayes 标签达到。它不同于平方损失基线
+
+$$
+V(t)=f_ts_t(1-s_t).
+\tag{46.2}
+$$
+
+**证明。** 对角线上，零发射后处于准备状态，下一位为一的概率在两个准备状态中同为 $t$；一发射后下一位被迫为零。对隐藏历史再对可见历史条件化，识别原可见链为
+
+$$
+K_t=\begin{pmatrix}1-t&t\\1&0\end{pmatrix},\qquad
+\pi_t=(1/(1+t),t/(1+t)).
+$$
+
+给定任意正质量有限外部词，若邻位含一则中心为零；否则两种中心补全的不同因子只有 $(1-t)^2$ 与 $t$。共同的初始和远端转移因子消去，得到 $s_t\mathbf1_F$。原三位柱 $000,010$ 的质量分别为 $(1-t)^2/(1+t)$、$t/(1+t)$，其和为 $f_t$。
+
+对每个有限外部柱事件 $A$，已得 $\int_A X_0\,dP_0=\int_A s_t\mathbf1_F\,dP_0$。两边定义的有限测度在生成代数上一致，故在整个 $\mathcal E_0$ 上一致，证明完整外部后验。于 $F$ 上选择任一二值标签，条件错误为 $s_t$ 或 $1-s_t$，至少为 $m_t$；$F^c$ 上选零无错。积分得到下界 $f_tm_t=b_t$，在 $F$ 上选较大后验的标签达到它。平方损失则积分条件方差，给出（46.2），两种指标不互换。$\square$
+
+**定理 46.2（严格低于基线时必须保留不终止质量）。** 设规则满足（44.5），且存在非零序列 $\delta_n\to0$，$t+\delta_n\in(0,1)$，使同一个规则对每个 $n$ 满足
+
+$$
+P_{\delta_n}(\tau<\infty,D\ne X_0)\le\epsilon.
+$$
+
+则
+
+$$
+P_0(\tau=\infty,F)\ge f_t-\epsilon/m_t.
+\tag{46.3}
+$$
+
+特别地，$0<\epsilon<b_t$ 时右端为 $\beta_t>0$，且 $\mathbb E_0\tau=\infty$。这里不需要先假设非对角线终止。
+
+**证明。** 固定 $r$，事件 $\{\tau\le r,D\ne X_0\}$ 是有限字母表 $(X_0,Y_r)$ 上的同一个子集。其概率是有限个原柱概率的和；矩阵及平稳行在开方形中连续，故固定事件概率连续。先在这个确定时域令非对角线参数趋于 $(t,t)$，得到
+$P_0(\tau\le r,D\ne X_0)\le\epsilon$；然后令 $r\uparrow\infty$，事件递增给出有限终止错误仍至多为 $\epsilon$。
+
+令 $A_a=\{\tau<\infty,D=a\}$。这是停止标签事件的可数并，因而为完整外部可测，且 $A_0,A_1$ 不交。由（46.1），
+
+$$
+\begin{aligned}
+P_0(\tau<\infty,D\ne X_0,F)
+&=s_tP_0(A_0\cap F)+(1-s_t)P_0(A_1\cap F)\\
+&\ge m_tP_0(\tau<\infty,F).
+\end{aligned}
+$$
+
+从 $P_0(F)=f_t$ 减去至多 $\epsilon/m_t$ 的终止质量，得到（46.3）。正概率无穷半径使扩展期望无穷。参数极限只用于固定时域；证明未交换参数极限与无界停止操作。$\epsilon=b_t$ 时本式只给出零下界，不判定等号情形。$\square$
+
+## 47. 确定截断推出逐参数逆平方必要期望
+
+**定理 47.1（任意规则的确定截断界）。** 在任一给定的 $P_\delta$ 下，$\delta\ne0$、$t+\delta\in(0,1)$，设规则满足（44.5）及该律下的有限终止错误界 $\epsilon$。则对每个确定整数 $r\ge1$，
+
+$$
+\mathbb E_\delta\tau
+\ge r\left[b_t-\epsilon-|\delta|\sqrt{C_t r/2}\right]_+,
+\qquad [x]_+=\max(x,0).
+\tag{47.1}
+$$
+
+这一结论允许规则按被评估的参数分别选择，也不需要几乎处处终止。
+
+**证明。** 定义二值 $\mathcal F_r$ 可测函数 $g_r$：在 $\{\tau\le r\}$ 上取终止标签 $D$，其余处取零。其在 $P_\delta$ 下的错误至多为 $\epsilon+P_\delta(\tau>r)$。把已选定的同一个有限词函数放到 $P_0$ 下，引理 46.1 给出错误至少为 $b_t$。引理 45.1 的确定时域有界损失比较因此给出
+
+$$
+P_\delta(\tau>r)
+\ge b_t-\epsilon-|\delta|\sqrt{C_t r/2}.
+$$
+
+逐路径有 $\tau\ge r\mathbf1_{\{\tau>r\}}$；取扩展期望并用非负性得到（47.1）。这里只转移一个截断后的决策，不要求其他参数使用这个规则。$\square$
+
+**推论 47.2（带取整范围的明确常数）。** 若 $0<\epsilon<b_t$、$t+\delta\in(0,1)$，并且
+
+$$
+0<\delta^2\le\frac{\gamma_t^2}{4C_t},
+$$
+
+则上述规则满足
+
+$$
+\boxed{\quad
+\mathbb E_\delta\tau\ge\frac{\gamma_t^3}{8C_t\delta^2}.
+\quad}
+\tag{47.2}
+$$
+
+**证明。** 取确定整数
+$r=\lfloor\gamma_t^2/(2C_t\delta^2)\rfloor$。未取整值至少为二，所以 $r\ge\gamma_t^2/(4C_t\delta^2)$，并且
+$|\delta|\sqrt{C_t r/2}\le\gamma_t/2$。代入（47.1）得 $\mathbb E_\delta\tau\ge r\gamma_t/2$，即（47.2）。无穷期望自动满足下界。$\square$
+
+特别地，在局部范围 $0<|\delta|<d_t$ 内且满足推论的平方限制时，同一明确常数成立。这里的二值基线来自引理 46.1；没有将确定半径风险式中的 $r$ 替换为随机 $\tau$，也没有把固定半方差阈值改称二值错误阈值。
+
+## 48. 任意共享规则在两个方向的对数迭代上极限
+
+**定理 48.1（每条阶乘网格的正上极限）。** 设 $(\tau,D)$ 是定义 44.1 的共享 $\epsilon$ 合格规则。固定 $t\in(0,1)$ 及 $0<\epsilon<b_t$。对每个 $0<d<d_t$ 和每个符号 $s\in\{-1,1\}$，令
+
+$$
+\delta_k=\frac{s d}{k!},\qquad k\ge2.
+$$
+
+则
+
+$$
+\boxed{\quad
+\limsup_{k\to\infty}
+\frac{\delta_k^2\mathbb E_{t,t+\delta_k}\tau}{\ell(|\delta_k|)}
+\ge\frac{\beta_t^2}{16C_t}>0.
+\quad}
+\tag{48.1}
+$$
+
+因此两个单侧的完整参数上极限分别满足
+
+$$
+\limsup_{\substack{\delta\to0\\s\delta>0}}
+\frac{\delta^2\mathbb E_{t,t+\delta}\tau}{\ell(|\delta|)}
+\ge\frac{\beta_t^2}{16C_t},\qquad s=-1,1.
+\tag{48.2}
+$$
+
+**证明。** 固定其中一个 $d,s$，简写 $\beta=\beta_t$、$C=C_t$。假设（48.1）的左侧严格小于右侧，选正数 $a$ 严格位于二者之间。若任意晚的网格点仍有无穷期望，所需上极限已经为无穷；故反设下从某点起期望有限，且
+
+$$
+\mathbb E_{\delta_k}\tau\le a\delta_k^{-2}\ell(|\delta_k|).
+$$
+
+初等阶乘界
+
+$$
+\lfloor k/2\rfloor\log(k/2)\le\log(k!)\le k\log k
+$$
+
+给出 $\log\log(k!)=\log k+\log\log k+O(1)$。固定的 $d$ 及 $\ell$ 定义中的 $e$ 不改变比值极限，因而
+
+$$
+\frac{\ell(d/k!)}{\log k}\longrightarrow1,
+\qquad
+\mathbb E_{\delta_k}\tau\le2a\delta_k^{-2}\log k
+\quad\text{最终成立}.
+\tag{48.3}
+$$
+
+取确定整数时域
+
+$$
+r_k=\left\lceil\frac{8a}{\beta}\delta_k^{-2}\log k\right\rceil.
+\tag{48.4}
+$$
+
+其未取整值的相邻比趋于无穷，故从某点起严格递增。Markov 不等式给出
+
+$$
+P_{\delta_k}(\tau>r_k)\le\beta/4.
+\tag{48.5}
+$$
+
+另一方面，$\delta_k^2=\delta_{k-1}^2/k^2$，所以
+
+$$
+r_{k-1}\delta_k^2
+\le\frac{8a}{\beta}\frac{\log(k-1)}{k^2}+\delta_k^2\longrightarrow0.
+\tag{48.6}
+$$
+
+在前一个确定时域使用（45.1），并用（46.3）的对角线不终止质量，得到
+
+$$
+\begin{aligned}
+P_{\delta_k}(\tau>r_{k-1})
+&\ge P_0(\tau>r_{k-1})-|\delta_k|\sqrt{Cr_{k-1}/2}\\
+&\ge\beta-o(1)\ge3\beta/4
+\end{aligned}
+\tag{48.7}
+$$
+
+最终成立。只考虑同时满足上述界的充分大指标，定义同一停止映射的不交区间事件
+
+$$
+A_k=\{r_{k-1}<\tau\le r_k\},\qquad
+\nu_k=P_{\delta_k}(A_k),\quad v_k=P_0(A_k)
+$$
+
+满足 $\nu_k\ge\beta/2$，而 $\sum_kv_k\le1$。事件 $A_k$ 为 $\mathcal F_{r_k}$ 可测。确定时域相对熵及投影到其指标给出
+
+$$
+\operatorname{kl}(\nu_k,v_k)
+\le Cr_k\delta_k^2
+\le\frac{8Ca}{\beta}\log k+C\delta_k^2.
+\tag{48.8}
+$$
+
+共同有限支撑保证 $\nu_k>0$ 时 $v_k>0$。二元熵 $H(u)=-u\log u-(1-u)\log(1-u)$ 满足 $\log2-H(u)=\operatorname{kl}(u,1/2)\ge0$。因此对 $0<v<1$，
+
+$$
+\operatorname{kl}(u,v)
+=u\log(1/v)+(1-u)\log(1/(1-v))-H(u)
+\ge u\log(1/v)-\log2.
+\tag{48.9}
+$$
+
+端点按 $0\log0=0$ 解释；$v=1$ 时有限相对熵迫使 $u=1$，以下概率下界亦自动成立。由 $\nu_k\ge\beta/2$、$\delta_k^2\le d^2$ 得
+
+$$
+v_k\ge
+\exp\left[-\frac{2(Cd^2+\log2)}\beta\right]
+ k^{-16Ca/\beta^2}.
+\tag{48.10}
+$$
+
+指数 $16Ca/\beta^2<1$，故右侧的级数发散，例如与 $\int_1^R x^{-16Ca/\beta^2}\,dx$ 比较即可。这与同一个 $P_0$ 下的不交事件总概率至多为一矛盾，证明（48.1）。每个符号及每个固定 $d$ 都可独立作此论证；完整单侧上极限不小于其网格子列上极限，得（48.2）。$\square$
+
+本证明只使用固定时域比较和同一映射的不交停止区间。它既不假设窗口增量独立，也不把任意规则归约为某个全局检验，不限制为间隔规则；没有使用 Farrell 定理、迭代对数律或无界可选停止。$\ell(\Delta)\to\infty$，所以在上述固定 $t,\epsilon$ 的任一单侧穿孔邻域上，共享合格规则不能有一致 $O(\Delta^{-2})$ 或一致 $o(\Delta^{-2}\ell(\Delta))$ 的期望上界。此结论是上极限，尚不是每个充分小分离度都满足的正对数迭代下界；第 52 节给出对此加强的反例。
+
+**推论 48.2（所列固定置信范围中的一个共同障碍点）。** 对每个固定 $0<\epsilon\le1/4$，定理 48.1 至少在 $t=2/5$ 适用。
+
+**证明。** 此时 $\min(t,(1-t)^2)=9/25$、$1+t=7/5$，故 $b_t=9/35>1/4$，最后的严格比较等价于 $36>35$。因此 $\epsilon<b_t$。这只给出一个适用的 $t$，并不声称同一 $\epsilon$ 对所有 $t$ 都严格低于基线。$\square$
+
+## 49. 下界的共同独立种子扩展
+
+**命题 49.1（参数无关种子不改变上述必要性）。** 允许观察者另持有种子 $U$，其分布 $\nu$ 在所有参数下相同，且在每个参数下独立于整个两侧源。把字段扩大为 $\sigma(Y_r,U)$，规则为同一个外部与种子上的映射，并在包含种子平均的原律下满足相应错误要求。则第 46–48 节的全部下界及常数不变。第 47 节的逐参数规则范围也不变。
+
+**证明。** 固定 $r$，完整可见有限字母表记为 $z=(X_0,Y_r)$。两个扩展律为 $\mu_\delta^r\otimes\nu$ 与 $\mu_0^r\otimes\nu$；共同正支撑上的密度比仅为 $\mu_\delta^r(z)/\mu_0^r(z)$，与种子无关。积分对数比得到原有限字母表相对熵，种子不增加任何熵项。投影到任一可测事件仍满足二元相对熵数据处理。
+
+也可直接写出一个固定事件 $E$ 的概率：若 $E_z$ 为它在种子空间中的可测纤维，则
+
+$$
+(\mu_\delta^r\otimes\nu)(E)
+=\sum_z\mu_\delta^r(z)\nu(E_z).
+\tag{49.1}
+$$
+
+这些系数固定且属于 $[0,1]$。为直接核对事件的熵界，记 $a_z=\nu(E_z)$，在有限集合 $(z,i)$、$i=0,1$ 上赋予两行质量 $\mu_\delta^r(z)a_z,\mu_\delta^r(z)(1-a_z)$ 和对应的 $\mu_0^r$ 质量。每个非零项的比值仍是源质量比，故这两有限律的相对熵等于 $D(\mu_\delta^r\Vert\mu_0^r)$；再丢弃 $z$，由已证的有限纤维数据处理得到 $E$ 的二元熵界。
+
+有限柱连续性、总变差的事件比较和有界损失比较也由（49.1）原样成立，不要求种子只有有限多个值。独立性还使完整外部加种子之后的对角线后验仍是 $s_t\mathbf1_F$：在外部事件与种子事件的矩形上，条件期望积分等式由乘积分解成立，再以有限测度唯一性延伸到所生成的字段。
+
+所以终止标签的后验论证仍给出 $\beta_t$；确定截断仍在扩展的有限时域字段中可测；阶乘证明的 $A_k$ 仍是同一个外部乘种子空间上的不交事件。该证明的连续性、Markov 界、熵界和可加性逐项保留。若第 47 节的规则仅在被评估参数处给定，可将其已固定的映射连同同一独立种子律移到对角线作截断比较，亦无需共享其他参数的规则。$\square$
+
+本扩展只涉及下界。参数依赖的种子分布或与源相关的种子不在此命题内；第 52–53 节的两个构造均为确定规则，不使用种子。
+
+## 50. 两个构造共用的原位点取样与成本桥
+
+下界已在整个规则类中证明。以下只为构造两个特定合格规则，重新写全从（44.1）到单侧分数及实际对称窗口成本的对应。所有取样概率和期望仍由 $J_{p,q},P_{p,q}$ 给出。
+
+**引理 50.1（保留标签的双向间隔与选定锚）。** 保留两个不同标签 $A,B$，即使 $p=q$ 也不合并它们。令 $a_A=p,a_B=q$，横线交换两个标签。在占据位 $z$，当 $H_z=2$ 时令 $\mathsf C_z=A$，当 $H_z=1$ 时令 $\mathsf C_z=B$。两条带标签成功边均有平稳质量 $1/Z$。定义
+
+$$
+f_c(g)=a_c(1-a_c)^{g-2}\quad(g\ge2),\qquad
+T_c(h)=\sum_{g\ge\max(2,h)}f_c(g)
+=(1-a_c)^{\max(0,h-2)}\quad(h\ge1).
+\tag{50.1}
+$$
+
+两侧几乎处处各有无穷占据位。令 $R=\min\{z>0:X_z=1\}$、$L=\max\{z<0:X_z=1\}$，从它们向外的间隔分别为 $D_i^+,D_i^-$，$i\ge0$。若 $c_i$ 在偶数指标取 $c$、奇数指标取 $\overline c$，而 $e_i$ 在偶数指标取 $\overline c$、奇数指标取 $c$，则
+
+$$
+\begin{aligned}
+J(R=h,\mathsf C_R=c,D_i^+=g_i\ (0\le i<k))
+ &=\frac{T_{\overline c}(h)}Z\prod_{i=0}^{k-1}f_{c_i}(g_i),\\
+J(L=-h,\mathsf C_L=c,D_i^-=g_i\ (0\le i<k))
+ &=\frac{T_c(h)}Z\prod_{i=0}^{k-1}f_{e_i}(g_i).
+\end{aligned}
+\tag{50.2}
+$$
+
+这包括 $k=0$，所得真实锚权重为
+
+$$
+w_+(h,c)=T_{\overline c}(h)/Z,\qquad
+w_-(h,c)=T_c(h)/Z,\qquad
+\sum_{h\ge1}\sum_{c\in\{A,B\}}w_s(h,c)=1.
+\tag{50.3}
+$$
+
+**证明。** 标签为 $A$ 的成功边从状态二进入状态四，先强制零进入参数 $p$ 的等待状态一；标签为 $B$ 的成功边从状态一进入状态三，先强制零进入参数 $q$ 的等待状态二。因此出向间隔长度 $g$ 有一个强制零、$g-2$ 次等待失败及末端成功，给出 $f_c(g)$，末端标签反转。几何和给出总质量一及均值 $1+1/a_c$。初始成功边的实际质量分别为 $\lambda_2q=1/Z$ 与 $\lambda_1p=1/Z$。
+
+固定占据坐标 $z$，按时间顺序以它为第零占据位，记相邻间隔为 $G_i$。指定 $-u\le i<v$ 的间隔长度及 $\mathsf C_z=c$ 时，最左占据位为 $z-\sum_{i=-u}^{-1}g_i$，其标签由奇偶唯一确定。它的成功边有平稳质量 $1/Z$，以后每个间隔的隐藏路径唯一确定。因此原柱式（44.3）直接给出
+
+$$
+J(X_z=1,\mathsf C_z=c,G_i=g_i\ (-u\le i<v))
+=\frac1Z\prod_{i=-u}^{v-1}f_{c_i}(g_i).
+\tag{50.4}
+$$
+
+奇偶规则用于负指标；最左成功只在初始质量中计一次，其余成功各在一个间隔中计一次。对未指定间隔作非负求和，得到任意有限子集的乘积公式。
+
+取 $\alpha=\min(p,q)>0$。从每个隐藏状态出发，两次发射中至少一次为一的概率不小于 $\alpha$。在确定的两边边界依次条件化，任意 $2m$ 位零块的概率至多为 $(1-\alpha)^m$。令长度趋于无穷，再对整数端点取可数并，排除未来只有有限占据位；过去用平稳性得到同一有限零块界后作同样处理。因此所有上述锚和向外列表存在，包含对角线。
+
+在 $R=h,\mathsf C_R=c$ 的事件上，前一占据位必须不大于零，入向间隔的标签为 $\overline c$、长度至少为 $h$。对（50.4）的这个间隔求和，得到（50.2）的第一式。长度等于 $h$ 时前一占据位正是中心，必须保留。对于 $L=-h,\mathsf C_L=c$，后一占据位必须不小于零，出向间隔标签为 $c$、长度至少为 $h$；向左第一个间隔的标签是 $\overline c$，得到第二式。两个公式均不条件于中心。
+
+取 $k=0$ 得权重；再交换非负和，
+
+$$
+\sum_{h\ge1}T_c(h)=\sum_{g\ge2}g f_c(g)=1+1/a_c,
+\qquad \sum_{c\in\{A,B\}}(1+1/a_c)=Z,
+$$
+
+所以各侧权重归一。除以相应正权重，才得到条件于该侧自己的锚与标签的独立交替间隔律。权重一般不均匀；$p=q$ 时仍须对两个不同标签求和。此证明没有使用两侧共同条件独立、中心条件独立或适合窗口之后的独立性。$\square$
+
+**引理 50.2（单侧对分数、中心对应与实际可用计数）。** 在两条完整向外列表上定义
+
+$$
+\begin{aligned}
+B_k^s&=\mathbf1_{\{D_{2k}^s=2\}},&
+C_k^s&=\mathbf1_{\{D_{2k+1}^s=2\}},\\
+W_k^s&=B_k^s-C_k^s,&
+S_n^s&=\sum_{k=0}^{n-1}W_k^s,&
+V_k^s&=D_{2k}^s+D_{2k+1}^s,
+\end{aligned}
+\tag{50.5}
+$$
+
+其中 $s\in\{-,+\}$。条件于该侧锚与标签后，各对独立同分布，对内两个 Bernoulli 坐标亦独立，右侧参数对为 $(a_{\mathsf C_R},a_{\overline{\mathsf C_R}})$，左侧为 $(a_{\overline{\mathsf C_L}},a_{\mathsf C_L})$。写 $\delta=q-p$，所有逐路径对应为
+
+$$
+\begin{array}{c|c|c|c|c}
+X_0&\mathsf C_L&\mathsf C_R&\mu_-&\mu_+\\\hline
+0&A&B&\delta&\delta\\
+0&B&A&-\delta&-\delta\\
+1&A&A&\delta&-\delta\\
+1&B&B&-\delta&\delta
+\end{array},
+\quad
+\mu_-=a_{\overline{\mathsf C_L}}-a_{\mathsf C_L},\quad
+\mu_+=a_{\mathsf C_R}-a_{\overline{\mathsf C_R}}.
+\tag{50.6}
+$$
+
+若 $p\ne q$，两均值的绝对值均为 $\Delta=|p-q|$；符号相反恰当 $X_0=1$。
+
+**证明。** 引理 50.1 的各自单侧乘积律及 $f_c(2)=a_c$ 给出分布和均值。中心为零时，最近锚为相邻占据位，故标签相反；中心为一时，占据位顺序恰为 $L,0,R$，两次反转使两锚标签相同，得到表格。它同时覆盖 $\delta$ 的两种符号。在对角线上标签关系仍成立，两个均值都为零。这里没有把取样律再条件于中心。
+
+为说明如何实际取得这些分数，在半径 $r$ 的每侧从近到远列出全部已观察占据位，数量为 $K_s(r)$。完整配对数为
+
+$$
+N_s(r)=\max\left(0,\left\lfloor\frac{K_s(r)-1}{2}\right\rfloor\right).
+\tag{50.7}
+$$
+
+记 $H_+=R,H_-=-L$。对 $n\ge1$，检查点 $n$ 可用当且仅当
+
+$$
+N_s(r)\ge n
+\quad\Longleftrightarrow\quad
+H_s+\sum_{k=0}^{n-1}V_k^s\le r.
+\tag{50.8}
+$$
+
+它需要含锚在内的 $2n+1$ 个占据位和全部 $2n$ 个完整间隔；末端占据位在边界时仍可用。只有一个未配对的末间隔则舍去。没有锚或完整计数不足时，不使用不存在的分数。
+
+固定检查点及阈值后，每个半径上只考察有限个可用检查点，全部操作均由 $Y_r$ 决定。最近锚一旦可见，以后不会改变；扩大窗口仅添加列表末端。因此每侧按配对数次序选择的首次证书可以永久保留。首次停止事件及停止标签满足（44.5）。规则在非法有限词上也可照这些公式定义，不要求在那些词上有概率保证。$\square$
+
+对错误的控制与成本的控制使用不同对象。数据所选的 $N_s(r)$ 无须独立，也无须为配对字段的停止时刻。任意已拟合检查点上的错误证书，都包含于完整单侧列表上某个确定检查点的错误事件并集；先控制该并集再与拟合事件相交即可。成本则使用下面真正的单侧首证书停止计数。
+
+**引理 50.3（锚、最后一对与对称半径的完整成本）。** 设 $M_s\in\mathbb Z_{\ge1}\cup\{\infty\}$ 为某一单侧完整列表的首证书配对数，且 $\{M_s>k\}$ 由前 $k$ 个完整对的间隔决定。则在各自锚与标签条件下，按非负扩展期望有
+
+$$
+\mathbb E\left[\sum_{k<M_s}V_k^s\,\middle|\,\text{该侧锚与标签}\right]
+=Z\mathbb E[M_s\mid\text{该侧锚与标签}].
+\tag{50.9}
+$$
+
+两种锚距离的原律均值均为
+
+$$
+\overline h=\mathbb E H_s
+=1+\frac{p^{-2}+q^{-2}}Z.
+\tag{50.10}
+$$
+
+若 $F^c$ 上半径一输出零，$F$ 上等到两侧证书，则其原半径满足
+
+$$
+\mathbb E\tau\le2\overline h+Z(\mathbb E M_-+\mathbb E M_+).
+\tag{50.11}
+$$
+
+若一个合并规则停止不晚于某个右侧首证书可用时，则相应地
+
+$$
+\mathbb E\tau\le\overline h+Z\mathbb E M_+.
+\tag{50.12}
+$$
+
+**证明。** 每对恰含参数 $p,q$ 的间隔各一个，所以条件平均长度为 $(1+1/p)+(1+1/q)=Z$。在给定该侧锚及标签的律下，下一对 $V_k^s$ 独立于前 $k$ 对字段，而 $\{M_s>k\}$ 属于该字段。因此
+
+$$
+\mathbb E[V_k^s\mathbf1_{\{M_s>k\}}\mid\text{锚与标签}]
+=Z\Pr(M_s>k\mid\text{锚与标签}).
+$$
+
+对 $k\ge0$ 用 Tonelli 求和，再用整数尾和公式，得到（50.9）。取得造成越界的那一对之前，$\{M_s>k\}$ 仍成立，所以该对完整计入。这里不声称 $M_s$ 与已用长度独立，也不诉诸无界可选停止。
+
+若 $G\sim f_c$，写 $G=1+K$，其中 $K$ 是成功概率 $a_c$、支撑为正整数的几何变量。几何尾和给出 $\mathbb E K=1/a_c$，以及
+
+$$
+\mathbb E[K(K-1)]
+=2\sum_{h\ge1}h(1-a_c)^h=\frac{2(1-a_c)}{a_c^2}.
+$$
+
+最后一个级数可将 $h$ 展成 $h$ 个一后交换非负求和得到。故
+
+$$
+\sum_{h\ge1}hT_c(h)
+=\mathbb E\frac{G(G+1)}2
+=1+1/a_c+1/a_c^2.
+$$
+
+按（50.3）的真实权重求和，两侧都遍历 $p,q$ 各一次，得到
+
+$$
+\mathbb E H_s
+=\frac{2+1/p+1/q+1/p^2+1/q^2}{Z}
+=\overline h.
+$$
+
+定义实际单侧证书距离
+
+$$
+B_s=H_s+\sum_{k<M_s}V_k^s,
+\tag{50.13}
+$$
+
+无证书时取无穷。由（50.8），$F$ 上双证书规则的停止半径恰为 $\max(B_-,B_+)$；$F^c$ 上为一，且 $B_s\ge1$。所以 $\tau\le B_-+B_+$。对（50.9）按各自真实锚权重平均，再加锚均值，即得（50.11）。同理，若停止不晚于右侧证书，$\tau\le B_+$ 得（50.12）。
+
+这些不等式在未证明有限性前已经以扩展值成立。半径包括从中心到锚的全段、所有强制零与等待位以及末端成功位；较早有证书的一侧仍随对称窗口扩大。取得位数因此始终恰为 $2\tau$，并非两个单侧距离的和。证明用单侧距离之和作为半径上界，不把它当作实际取得位数。$\square$
+
+## 51. 一个全族有效的后备规则及其有限期望
+
+**引理 51.1（所需的确定配对数集中）。** 在任一单侧锚与标签条件律下，令 $\mu=\mathbb E W_k$。对 $n\ge1,x>0$，
+
+$$
+\Pr(S_n-n\mu\ge x)\le e^{-x^2/n},\qquad
+\Pr(S_n-n\mu\le-x)\le e^{-x^2/n}.
+\tag{51.1}
+$$
+
+单个 Bernoulli 坐标的经验均值 $\widehat b_n$ 则满足
+
+$$
+\Pr(\widehat b_n-b\ge x)\le e^{-2nx^2},\qquad
+\Pr(\widehat b_n-b\le-x)\le e^{-2nx^2}.
+\tag{51.2}
+$$
+
+**证明。** 对均值为 $b$ 的 Bernoulli 变量，令
+$K(u)=\log\mathbb E e^{u(B-b)}$。直接微分得 $K(0)=K'(0)=0$，且 $K''(u)=v(u)(1-v(u))\le1/4$，其中 $v(u)=be^u/(1-b+be^u)$。于是对所有实数 $u$，
+
+$$
+K(u)=u^2\int_0^1(1-v)K''(vu)\,dv\le u^2/8.
+$$
+
+对差分的一对独立坐标分别使用 $u,-u$，得到中心化指数矩至多 $e^{u^2/4}$；对 $n$ 个独立对相乘，得到 $e^{nu^2/4}$。指数 Markov 不等式并取 $u=2x/n$ 给出（51.1），换符号给下尾。单个坐标的 $n$ 项指数矩为 $e^{nu^2/8}$，对偏差 $nx$ 取 $u=4x$，得（51.2）。这些估计只在确定配对数下使用。$\square$
+
+**定义 51.2（置信度 $\zeta$ 的后备规则）。** 对 $0<\zeta\le1/4$，置
+
+$$
+n_j=2^j,\qquad L_j(\zeta)=\log\frac{8(j+1)^2}{\zeta},\qquad
+b_j(\zeta)=\sqrt{n_jL_j(\zeta)},\qquad j\ge0.
+\tag{51.3}
+$$
+
+半径一若邻位含一，立即输出零。否则各侧在其已完整取得的检查点中，按配对数次序取首次严格越界 $|S_{n_j}^s|>b_j(\zeta)$ 的符号证书，并保留它。两侧都有证书时，异号输出一，同号输出零；否则继续。阈值相等、零分数、缺锚及计数不足均不产生证书。这与定义 35.1 在置信参数换成 $\zeta$ 后为同一个数学规则；以下只证明两个反例所需的自足保证，不使用第 35 节的数值上界常数。
+
+**命题 51.3（后备错误预算与有限原位点均值）。** 该规则对每个非对角线参数几乎处处终止、错误至多 $\zeta$ 且期望原半径有限。更具体地，固定 $\Delta=|p-q|>0$，任选 $j_0$ 使对每个 $j\ge j_0$ 都有
+
+$$
+n_j\Delta^2\ge4L_j(\zeta),\qquad n_\star=2^{j_0}.
+\tag{51.4}
+$$
+
+则每侧首证书配对数 $M_s$ 在各自锚条件下以及原律下均满足
+
+$$
+\mathbb E M_s\le n_\star+8/\Delta^2,
+\qquad
+\mathbb E\tau^{\rm fb}_\zeta
+\le2\overline h+2Z(n_\star+8/\Delta^2)<\infty.
+\tag{51.5}
+$$
+
+**证明。** 在一个确定检查点，由（51.1），中心化双侧偏差超过阈值的概率至多为
+
+$$
+2e^{-b_j(\zeta)^2/n_j}
+=\frac{\zeta}{4(j+1)^2}.
+$$
+
+一个错误符号证书包含于该偏差事件。由
+$\sum_{j\ge0}(j+1)^{-2}\le1+\int_1^\infty x^{-2}\,dx=2$，一侧存在任一坏检查点的条件概率至多 $\zeta/2$。先按该侧（50.3）的实际权重平均，再并合两侧，坏概率至多为 $\zeta$。好事件上每个严格正越界满足 $n_j\mu_s\ge S_{n_j}^s-b_j>0$，负越界同理具有负均值。两个正确符号由（50.6）恢复中心；邻位分支由 no11 保证。整个并集先在完整列表上控制，再限制到实际可用检查点，因而没有条件于拟合成功。
+
+当 $\Delta>0$，$2^j$ 的增长超过 $L_j(\zeta)$ 的对数增长，故（51.4）中的 $j_0$ 存在。若 $M_s>n_j$，在该检查点尚未越界，故 $|S_{n_j}^s|\le b_j$。对 $j\ge j_0$，有 $b_j\le n_j\Delta/2$，从而写 $\sigma=\operatorname{sgn}\mu_s$，
+
+$$
+\{M_s>n_j\}
+\subseteq\{\sigma S_{n_j}^s-n_j\Delta\le-n_j\Delta/2\}.
+$$
+
+由（51.1）得到统一的单侧条件尾界
+
+$$
+\Pr(M_s>n_j\mid\text{该侧锚与标签})
+\le e^{-n_j\Delta^2/4},\qquad j\ge j_0.
+\tag{51.6}
+$$
+
+它不条件于此前证书正确或错误。
+
+对取二的非负整数次幂或无穷的 $M$，逐点有
+
+$$
+M=1+\sum_{j\ge0}2^j\mathbf1_{\{M>2^j\}}.
+\tag{51.7}
+$$
+
+有限 $M=2^J$ 时右端是几何和 $2^J$，无穷时两侧均无穷。令 $c=\Delta^2/4$。对每个正 $n$，单调性给出
+
+$$
+ne^{-cn}\le2\int_{n/2}^n e^{-cx}\,dx.
+\tag{51.8}
+$$
+
+二进制的这些积分区间除端点外不交。因此在（51.7）中，初始一及 $j<j_0$ 的部分至多为 $n_\star$，其余尾和至多为 $2/c=8/\Delta^2$。这在每个锚条件下给出（51.5）的配对数界，按真实权重平均仍成立；再用（50.11）得到原半径界。有限期望蕴含几乎处处有限终止。$\square$
+
+在对角线上，各侧均值为零，上述同时好事件上没有统计证书。因此后备规则在对角线上的有限统计停止错误也只可能位于概率至多 $\zeta$ 的坏事件；邻位分支仍正确。这里不由后备规则单独取得对角线有限均值，后面的零输出证书承担这一任务。
+
+## 52. 稀疏检查点反例：不能升级为最终逐点的对数迭代下界
+
+**定义 52.1（同一个全族稀疏规则）。** 固定 $0<\epsilon\le1/4$。在每侧运行置信度 $\zeta=\epsilon/2$ 的后备检查点，并置
+
+$$
+A_0=\log(16/\epsilon),\qquad
+L_j=A_0+2\log(j+1),\qquad n_j=2^j.
+\tag{52.1}
+$$
+
+再对每个整数 $k\ge1$ 加入一个证书机会：
+
+$$
+A_k=\log\frac{16(k+1)^2}{\epsilon},\qquad
+J_k=2^{k^2},\qquad N_k=2^{J_k},\qquad
+|S_{N_k}^s|>\sqrt{N_kA_k}.
+\tag{52.2}
+$$
+
+$N_k$ 本身是二进制检查点。各侧按配对数的递增次序，取后备阈值或新增阈值的首次严格越界符号，并永久保留；同一计数同时越过两个阈值时，二者读的是同一个分数，符号相同。等号不产生证书。仍在半径一处理强制邻位零分支；其余轨道等到两侧都有证书，异号输出一、同号输出零。记该确定规则为 $(\tau^{\rm sp},D^{\rm sp})$。它只依赖 $\epsilon$、固定计数表和已取得原外部位，不使用 $p,q$、分离度或隐藏标签。
+
+**定理 52.2（全族合格、有限均值及稀疏归一化极限）。** 定义 52.1 在每个非对角线参数满足（44.6）且 $\mathbb E_{p,q}\tau^{\rm sp}<\infty$。令
+
+$$
+\Delta_k=4\sqrt{A_k/N_k}.
+\tag{52.3}
+$$
+
+则对每个固定 $t\in(0,1)$ 及每个固定 $s\in\{-1,1\}$，参数 $(t,t+s\Delta_k)$ 最终位于原开方形及 $0<\Delta_k<d_t$ 内，且
+
+$$
+\boxed{\quad
+\frac{\Delta_k^2\mathbb E_{t,t+s\Delta_k}\tau^{\rm sp}}
+ {\ell(\Delta_k)}\longrightarrow0.
+\quad}
+\tag{52.4}
+$$
+
+**证明。** 原位点可测性及全部计数约定由引理 50.2 给出；新增检查点在任一有限半窗口中只有有限个可用，不改变首证书持久性。后备在一侧的坏事件预算为 $\epsilon/4$。新增的第 $k$ 个检查点，由（51.1）的双侧偏差界，其错误符号事件概率至多为
+
+$$
+2e^{-A_k}=\frac{\epsilon}{8(k+1)^2}.
+$$
+
+对 $k\ge1$ 求和至多为 $\epsilon/4$，使用第 51 节的级数上界即可。因此一侧全部错误证书的条件概率至多为 $\epsilon/2$；按实际锚权重平均，再对两侧并合，总代价至多为 $\epsilon$。其余轨道上的两个证书依照（50.6）给出正确中心，邻位分支亦正确。这在整个非对角线开参数域中成立。
+
+每侧新增证书后的首越界计数 $M_s$ 不晚于后备的首越界计数。向外前缀的实际距离随配对数增加，所以双侧停止半径也不晚于后备半径。命题 51.3 因而保证每个非对角线律下有限期望及几乎处处终止；未把全族合格性限制到（52.3）的序列。
+
+现在固定该序列中的分离度 $\Delta_k$，以下界在每一侧的各个锚与标签条件下统一成立。均值方向写为 $\sigma$，有
+
+$$
+N_k\Delta_k=4\sqrt{N_kA_k}.
+$$
+
+若 $M_s>N_k$，新增检查点未越界，因而 $\sigma S_{N_k}^s\le\sqrt{N_kA_k}$，故中心化偏差至多为 $-3\sqrt{N_kA_k}$。由（51.1），
+
+$$
+\Pr(M_s>N_k\mid\text{该侧锚与标签})\le e^{-9A_k}.
+\tag{52.5}
+$$
+
+必须另付未在这个检查点停止的尾成本。为此仅在证明中置
+
+$$
+h_k=\lceil\log_2(k^2)\rceil,\qquad
+j_0=J_k+h_k,\qquad n_\star=2^{j_0}.
+\tag{52.6}
+$$
+
+于是 $k^2N_k\le n_\star\le2k^2N_k$。对整数 $m\ge1$，归纳式 $2^{m-1}\ge m$ 给出 $\lceil\log_2m\rceil+1\le m$；结合 $k^2\le2^{k^2}=J_k$，有 $h_k+1\le k^2\le J_k$，因此 $j_0+1\le2J_k$，进而
+
+$$
+L_{j_0}\le A_0+2\log2+2k^2\log2.
+\tag{52.7}
+$$
+
+$\epsilon\le1/4$ 使 $A_0\ge\log64=6\log2$，且 $A_k\ge A_0$。所以（52.7）的右侧至多为
+$A_0+(1+k^2)A_0/3\le(5/3)k^2A_0\le4k^2A_k$。由此
+
+$$
+n_\star\Delta_k^2\ge16k^2A_k\ge4L_{j_0}.
+\tag{52.8}
+$$
+
+又对所有 $j\ge0$，
+
+$$
+L_{j+1}-L_j=2\log\frac{j+2}{j+1}\le2\log2\le L_j,
+$$
+
+故 $L_j/2^j$ 不增；（52.8）保证后备尾条件对每个 $j\ge j_0$ 都成立。即使新增规则存在，也有
+
+$$
+\Pr(M_s>2^j\mid\text{锚与标签})
+\le e^{-2^j\Delta_k^2/4},\qquad j\ge j_0,
+\tag{52.9}
+$$
+
+因为没有任何证书必然意味着后备在该检查点也未越界。
+
+$M_s$ 仍取二进制值或无穷。在（51.7）中分成 $j<J_k$、$J_k\le j<j_0$、$j\ge j_0$ 三段。第一段连初始一至多为 $N_k$。中间段的尾事件包含于 $\{M_s>N_k\}$，故由（52.5）其贡献至多为 $n_\star e^{-9A_k}$。最后一段由（52.9）及（51.8）至多为 $8/\Delta_k^2$。于是
+
+$$
+\mathbb E[M_s\mid\text{该侧锚与标签}]
+\le N_k(1+2k^2e^{-9A_k})+8/\Delta_k^2.
+\tag{52.10}
+$$
+
+平均并用（50.11）得到实际原半径界
+
+$$
+\Delta_k^2\mathbb E_{t,t+s\Delta_k}\tau^{\rm sp}
+\le2\overline h\Delta_k^2
+ +2Z\left[16A_k(1+2k^2e^{-9A_k})+8\right].
+\tag{52.11}
+$$
+
+$A_k=A_0+2\log(k+1)$，而 $N_k$ 的增长使 $\Delta_k\to0$，所以对固定 $t$ 及两个符号，参数最终合法并在所列局部范围内。此时 $p,q\ge t/2$，从而
+
+$$
+Z\le2+4/t,\qquad
+\overline h
+=1+\frac{p^{-2}+q^{-2}}{2+1/p+1/q}\le1+2/t.
+\tag{52.12}
+$$
+
+后一个不等式可用 $u=1/p,w=1/q\le2/t$ 及 $u^2+w^2\le(2/t)(u+w)$ 验证。又
+$e^{-9A_k}=(\epsilon/16)^9(k+1)^{-18}$，因此（52.11）右侧为 $O_{t,\epsilon}(\log(k+1))$。
+
+最后，（52.3）的精确对数为
+
+$$
+\log(1/\Delta_k)
+=\frac{\log2}{2}\,2^{k^2}-\log4-\frac12\log A_k.
+\tag{52.13}
+$$
+
+后两项除以第一项趋于零。再取对数，并注意
+$\log(e+1/\Delta_k)=\log(1/\Delta_k)+\log(1+e\Delta_k)$，得到
+
+$$
+\ell(\Delta_k)=k^2\log2+O(1).
+\tag{52.14}
+$$
+
+把（52.11）除以（52.14），非负比值至多为趋于零的量，证明（52.4）。$\square$
+
+特别地，即使 $\epsilon<b_t$，也不能对所有共享合格规则断言存在正数 $c$ 及半径参数邻域，使每个充分小的 $|\delta|$ 都满足
+$\mathbb E_{t,t+\delta}\tau\ge c|\delta|^{-2}\ell(|\delta|)$：上述同一规则在每个符号的稀疏序列上反驳它。这里获得的是（52.4），并未获得 $O(\Delta^{-2})$ 的序列上界；（52.11）中 $A_k$ 仍增长。尤其在低错误阈值下，这个规则仍须服从每条阶乘网格的正上极限定理。稀疏序列上的较低归一化成本与其他分离度上的必要成本可以同时存在。
+
+## 53. 高错误容限反例：包含对角线的二维邻域内统一有限均值
+
+**定义 53.1（右侧零输出证书与全族合并规则）。** 固定 $0<\epsilon\le1/4$，置
+
+$$
+a=\frac{\epsilon}{2-\epsilon}\in(0,1).
+\tag{53.1}
+$$
+
+运行置信度 $\zeta=\epsilon/4$ 的双侧后备规则。在同一右向列表上另定义两个经验坐标
+
+$$
+U_n=\frac1n\sum_{k=0}^{n-1}B_k^+,
+\qquad V_n=\frac1n\sum_{k=0}^{n-1}C_k^+.
+$$
+
+其单侧锚条件均值为 $p,q$ 的某一种次序。在 $n_j=2^j$ 时置
+
+$$
+w_j=\sqrt{\frac{\log(16(j+1)^2/\epsilon)}{2n_j}}.
+\tag{53.2}
+$$
+
+若该检查点已完整取得且
+
+$$
+\max(U_{n_j},V_{n_j})+w_j<a,
+\tag{53.3}
+$$
+
+则取得一个永久保留的零输出证书。仍在半径一优先处理邻位含一的正确零分支；其余轨道在首次出现右侧零证书或双侧后备输出的原半径停止，二者在同一半径可用时取零。若后备先停止，后来出现的零证书不修改已停止的标签。记此规则为 $(\tau^{\rm hz},D^{\rm hz})$。
+
+等号不产生零证书；缺锚和计数不足继续相应分支。所有检查点需要（50.8）的完整前缀，不能用窗口外的间隔。每个 $Y_r$ 可以决定所有较小半径上的证书及最早停止半径，因此该合并规则满足（44.5）。它没有参数输入，$a,w_j$ 只由 $\epsilon$ 决定。
+
+**定理 53.2（全族错误保证与明确二维邻域）。** 规则 53.1 在每个非对角线参数下满足（44.6），且原半径期望有限。对任意
+
+$$
+0<t<a,\qquad \eta=\frac{a-t}{2}>0,
+\qquad \mathcal U_t=(t/2,a-\eta)\times(t/2,a-\eta),
+\tag{53.4}
+$$
+
+它还在整个开矩形 $\mathcal U_t$ 上具有统一有限均值，包括该矩形内的全部对角线参数。具体地，定义只用于证明的确定整数
+
+$$
+\begin{aligned}
+L_j^0&=\log\frac{16(j+1)^2}{\epsilon},\\
+j_0&=\min\{j\ge0:L_j^0/2^j\le\eta^2/2\},\qquad n_\star=2^{j_0}.
+\end{aligned}
+\tag{53.5}
+$$
+
+则
+
+$$
+\boxed{\quad
+\sup_{(p,q)\in\mathcal U_t}\mathbb E_{p,q}\tau^{\rm hz}
+\le1+\frac2t+\left(2+\frac4t\right)
+ \left(n_\star+\frac8{\eta^2}\right)<\infty.
+\quad}
+\tag{53.6}
+$$
+
+期望取得位数的对应上界为右侧的两倍。
+
+**证明。** 先检验全族错误，不对中心与证书假设独立。在每个右锚及标签条件律下，一个坐标的真实均值大于其经验值加 $w_j$ 的概率，由（51.2）至多为
+
+$$
+e^{-2n_jw_j^2}=\frac{\epsilon}{16(j+1)^2}.
+$$
+
+对两个坐标及全部 $j\ge0$ 取并，条件坏概率至多为 $\epsilon/4$。再按（50.3）的右锚权重平均，得到原律下的同一界。在其补事件上，任何（53.3）的零证书都蕴含 $\max(p,q)<a$。
+
+若 $\max(p,q)\le a$，原平稳中心占据概率满足
+
+$$
+P_{p,q}(X_0=1)=\frac2Z
+\le\frac{a}{1+a}=\frac\epsilon2.
+\tag{53.7}
+$$
+
+因为 $1/p+1/q\ge2/a$。所有来自零证书分支的错误都是 $\{X_0=1\}$ 的子事件，所以其无条件概率至多为 $\epsilon/2$，无需把（53.7）条件化于证书。来自后备分支的错误是单独运行后备的错误事件的子集，概率至多为 $\epsilon/4$。合计至多为 $3\epsilon/4$。等号 $\max(p,q)=a$ 包含在这一情形。
+
+若 $\max(p,q)>a$，出现零证书必属上面的置信失败事件，概率至多为 $\epsilon/4$；再加后备错误 $\epsilon/4$，合计至多为 $\epsilon/2$。两种情形都满足要求的 $\epsilon$。这些终止错误估计也适用于对角线上的有限输出，因为第 51 节末段已给出后备在对角线上的有限输出错误预算；但全族终止契约仍只要求非对角线。非对角线上合并规则不晚于后备，故由命题 51.3 有限均值且几乎处处终止。
+
+现在证明包括对角线的统一均值。由 $a-\eta=(a+t)/2>t>t/2>0$ 且 $a<1$，$\mathcal U_t$ 是包含 $(t,t)$ 的真实二维开邻域，并在其中有
+
+$$
+p,q\ge t/2,\qquad p,q\le a-\eta.
+\tag{53.8}
+$$
+
+$L_j^0/2^j\to0$，所以（53.5）定义的 $j_0$ 存在。又
+$L_{j+1}^0-L_j^0\le2\log2\le L_j^0$，故该比值不增，于是每个 $j\ge j_0$ 都有 $w_j\le\eta/2$。$n_\star$ 只依赖 $\epsilon,\eta$，不是策略所需的参数输入。
+
+令 $M_0$ 为完整右向列表上的首次零证书配对数，允许无穷。若 $M_0>n_j$ 且 $j\ge j_0$，则该检查点不满足（53.3），至少一个经验坐标达到
+
+$$
+a-w_j\ge a-\eta/2.
+$$
+
+其真实均值至多为 $a-\eta$，故该坐标的上偏差至少为 $\eta/2$。对两个坐标用（51.2）及并集界，得到各个右锚条件下统一的
+
+$$
+\Pr(M_0>n_j\mid R,\mathsf C_R)
+\le2e^{-n_j\eta^2/2},\qquad j\ge j_0.
+\tag{53.9}
+$$
+
+把（51.7）用于 $M_0$，初始段至多为 $n_\star$。对后段用（51.8），此时 $c=\eta^2/2$ 且尾概率多一个因子二，所以后段至多为 $4/c=8/\eta^2$。因此
+
+$$
+\mathbb E[M_0\mid R,\mathsf C_R]\le n_\star+8/\eta^2,
+\qquad \mathbb E M_0\le n_\star+8/\eta^2.
+\tag{53.10}
+$$
+
+这个首证书计数的 $\{M_0>k\}$ 只依赖前 $k$ 对，满足引理 50.3 的可预测下一对条件。合并规则停止不晚于右零证书的实际原距离，所以（50.12）、（53.8）及（52.12）形式的界给出
+
+$$
+\mathbb E_{p,q}\tau^{\rm hz}
+\le\overline h+Z\mathbb E M_0
+\le1+2/t+(2+4/t)(n_\star+8/\eta^2).
+$$
+
+这证明（53.6），并在整个矩形上蕴含几乎处处有限终止。$p=q$ 时引理 50.1 仍对两个不同标签给出正确归一化权重与独立单侧对，只是两个坐标均值相等，所以（53.9）–（53.10）及成本恒等式全部仍成立。观察者依然把左右两半窗口都取得到这个停止半径，故位数是其两倍。$\square$
+
+对矩形中心所允许的 $0<t<a$，
+
+$$
+b_t\le\frac{t}{1+t}<\frac{a}{1+a}=\frac\epsilon2.
+\tag{53.11}
+$$
+
+所以这一反例与严格低于基线的下界不冲突。它反驳固定 $\epsilon$ 时对每个 $t$ 都无条件断言近对角线期望发散，也确实提供一个包含对角线的二维邻域，而非仅固定第一参数的一条线。本结果只覆盖明确的子区间 $0<t<\epsilon/(2-\epsilon)$；没有把所有 $\epsilon\ge b_t$ 或 $\epsilon=b_t$ 分类。
+
+## 54. 必要性、反例、经典归属与保留的原问题
+
+第 44–53 节在同一六边平稳 no11 原律上给出了三个不同量词的结论。确定截断使任意在被评估律下达到二值错误要求的规则满足（47.1），并在严格低于 $b_t$ 和明确的取整范围中得到逐参数逆平方期望下界（47.2）；这一部分甚至允许规则随参数分别选择。共享规则还受对角线不终止质量约束，结合确定时域的信息代价和不交停止区间，得到每个符号、每条所列阶乘网格的正对数迭代上极限（48.1），以及两个单侧的（48.2）。共同、独立且参数无关的种子不改变这些下界。
+
+第 52 节的单个全族合格稀疏规则在每个固定内点、两个符号的同一稀疏分离度序列上满足归一化比值趋于零。因此共享规则的对数迭代必要性不能加强为每个充分小分离度上的正逐点下界。第 53 节另一个全族合格规则在明确的高错误容限子区间对应的二维开邻域内有统一有限原半径均值，包括对角线；它不承担整个高错误区域的分类。两个规则都支付初始化、最近锚、全部完整间隔、越界对及对称两半窗口，错误预算均在原律下无条件计算。
+
+因此，第 42 节末尾及第 43 节所说该处未证明自适应期望下界和对数迭代必要性，在本增补中分别由第 47、48 节按上述范围解决。原来的确定半径平方风险结论仍只承担它们原有的保证；新的二值基线 $b_t$ 与 $V(t)$ 保持区别。这里没有给出每个参数处都必须支付对数迭代项的定理，也没有把一个上界的对数迭代项本身当作必要性证明。
+
+仍未解决的是 $\epsilon\ge b_t$ 的完整局部分类，特别是等号情形；尖锐常数、尖锐置信依赖及同时令 $\epsilon$ 与分离度变化的完整渐近也未给出。所有渐近结论固定 $t,\epsilon$，不声称参数端点一致性。第 51 节的后备保证以完整证明供应两个构造；本增补不涉及第 35 节上界常数的最优性。上述工作是手写数学论证，不是形式内核认证，也不包含实际机器学习、训练收益、运行时间或内存保证。
+
+相对熵链式法则、Pearson 卡方控制、相对熵数据处理、Pinsker 不等式、二元熵上界、有限柱连续性、有限测度唯一性、Markov 不等式、不交事件的概率可加性、几何级数和矩、Hoeffding 指数矩法、可数并集界、Tonelli 非负求和及二进制检查点尾和均属经典工具。所需形式及常数已在本增补内逐步证明。族内特有的连接是随参数变化的平稳初始行和改变行占用、同一隐藏中心的对角线后验、两个方向不同的选定锚权重、中心与符号的逐路径对应，以及完整配对数回到原整数对称窗口的成本。这里不引用或应用未给出条件与证明的 Farrell 定理，不使用迭代对数律，不作世界优先权判断。
+
+原完整 no11 词域、开放端点和调和负载目标继续是定义 1.1 的对象。原有限隐藏维数达到问题完整保持为
+
+$$
+\exists N\ge1\ \exists\theta\in\Theta_N:\ d(P_\theta)=c_\star,
+\qquad\text{或}\qquad
+\forall N\ge1:\ C_N<c_\star,
+\qquad C_N=\max_{\theta\in\Theta_N}d(P_\theta).
+\tag{54.1}
+$$
+
+这里的 $\Theta_N$ 仍是定义 2.1 的整个域：非负 $M_0,M_1$、概率行 $\lambda$，$A=M_0+M_1$ 满足 $A\mathbf1=\mathbf1$、$\lambda A=\lambda$、$\lambda M_1M_1\mathbf1=0$。零质量状态、结构零、可约性、周期性及非最小表示均未删除。两项因固定维数最大值存在而互为否定。本增补没有决定其中任何一项，没有界住整个 $\Theta_4$，也没有为每个 $N$ 给出有限分离对；指定四状态族的自适应取得成本不替代原全域达到问题。
+
+## 追加锚（本行以下为后续必要成本与反例增补区）

@@ -27,6 +27,11 @@ namespace D5.S3.Zeros.Convolution.AlternatingFactorialSum
 open PowerSeries
 open scoped BigOperators
 
+theorem real_descFactorial (n i : ℕ) (hi : i ≤ n) :
+    (n.descFactorial i : ℝ) = (n.factorial : ℝ) / ((n - i).factorial : ℝ) := by
+  apply (eq_div_iff (by exact_mod_cast Nat.factorial_ne_zero (n - i))).mpr
+  exact_mod_cast (by simpa only [Nat.mul_comm] using Nat.factorial_mul_descFactorial hi)
+
 /-- The two opposite negative binomial series combine by square substitution. -/
 theorem opposite_inv_series_mul {R : Type*} [CommRing R] (d : ℕ) :
     rescale (-1 : R) (invOneSubPow R d).val * (invOneSubPow R d).val =

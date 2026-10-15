@@ -169,7 +169,7 @@ private theorem fract_add_displacement (alpha x : Real) (k : Nat) :
           ring
     _ = (↑⌊(k : Real) * alpha⌋ : Real) := Int.self_sub_fract _
 
-private theorem fract_add_displacement_of_no_wrap {alpha x : Real} (k : Nat)
+theorem fract_add_displacement_of_no_wrap {alpha x : Real} (k : Nat)
     (hx0 : 0 ≤ x) (hnowrap : x + forwardDisplacement alpha k < 1) :
     Int.fract (x + (k : Real) * alpha) = x + forwardDisplacement alpha k := by
   rw [fract_add_displacement]

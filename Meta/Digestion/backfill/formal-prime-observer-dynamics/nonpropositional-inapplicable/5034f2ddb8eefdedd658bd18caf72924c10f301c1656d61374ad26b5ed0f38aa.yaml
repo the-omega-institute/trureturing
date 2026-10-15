@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5034f2ddb8eefdedd658bd18caf72924c10f301c1656d61374ad26b5ed0f38aa
+  normalized_sha256: sha256:5034f2ddb8eefdedd658bd18caf72924c10f301c1656d61374ad26b5ed0f38aa
+cas_ref: sha256:5034f2ddb8eefdedd658bd18caf72924c10f301c1656d61374ad26b5ed0f38aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：215. 异质素数实验的 Chernoff 能量：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 2bcb200982518d10a7e76344b9751996e19bd40e528c1f542961db15ce6d50ac
+    next_atom_id: edd2c20bf14a0f9a9d407dff9b93eb09fc04943fda87f42070ebac6c9a0bf3a7

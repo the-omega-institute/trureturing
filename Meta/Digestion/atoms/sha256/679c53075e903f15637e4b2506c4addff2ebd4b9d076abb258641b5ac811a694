@@ -1,0 +1,31 @@
+**Definition 6.1 (faithful safe exact convolution carrier).** A carrier
+for $(I,B)$ is a supplied finite recursion scheme $\mathcal G$
+whose nonempty finite-output language, in the $\mathsf{nd}$
+choice and $\bot$ exclusion convention of [BCCP, §4][BCCP], is
+exactly
+
+$$
+\mathcal L(\mathcal G)
+=\{V(\mathbf u):\mathbf u\in\mathcal E_{I,B}\}.
+\tag{NMF.23}
+$$
+
+Soundness in (NMF.23) includes convolution validity and all original
+records and rows; completeness includes every tuple in the entire
+product, with its within-source sharing, image and rank guards.
+The scheme is required to be safe in the syntactic sense of
+[BCCP, §2][BCCP]: each argument subterm of an application is
+superficially safe, meaning every free variable in that argument
+has order at least the order of the argument subterm. Every typed
+rule right-hand side $\mathcal R(X)$ must be safe in this sense;
+the scheme's Böhm tree must also be well defined. A type has
+$\operatorname{ord}(o)=0$ and
+$\operatorname{ord}(A\to B)=\max(\operatorname{ord}(A)+1,
+\operatorname{ord}(B))$.
+
+An effectively supplied carrier means finite scheme data together
+with this faithful correspondence and safety condition. A uniform
+effective carrier construction would produce such data from each
+legal complete $I,B$. Merely supplying a raw packet of separated
+whole tree fields gives neither (NMF.23) nor safety.
+

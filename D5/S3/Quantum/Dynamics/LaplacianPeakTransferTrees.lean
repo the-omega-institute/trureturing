@@ -416,7 +416,7 @@ private lemma specProj_mulVec {A : Matrix V V ℝ} (hA : A.IsHermitian) (theta :
       (⇑(hA.eigenvectorBasis i) ⬝ᵥ w) • ⇑(hA.eigenvectorBasis i) := by
   classical
   simp [specProj, sum_mulVec, vecMulVec_mulVec]
-private lemma eig_dot_zero {A : Matrix V V ℝ} (hA : A.IsHermitian) (w : V → ℝ) (mu : ℝ)
+lemma eig_dot_zero {A : Matrix V V ℝ} (hA : A.IsHermitian) (w : V → ℝ) (mu : ℝ)
     (hw : A *ᵥ w = mu • w) (i : V) (hi : hA.eigenvalues i ≠ mu) :
     ⇑(hA.eigenvectorBasis i) ⬝ᵥ w = 0 := by
   have hv : hA.eigenvectorBasis i ∈ Module.End.eigenspace A.toEuclideanLin (hA.eigenvalues i) := by

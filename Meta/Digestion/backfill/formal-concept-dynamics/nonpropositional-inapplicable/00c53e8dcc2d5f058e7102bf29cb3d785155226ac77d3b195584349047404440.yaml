@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00c53e8dcc2d5f058e7102bf29cb3d785155226ac77d3b195584349047404440
+  normalized_sha256: sha256:00c53e8dcc2d5f058e7102bf29cb3d785155226ac77d3b195584349047404440
+cas_ref: sha256:00c53e8dcc2d5f058e7102bf29cb3d785155226ac77d3b195584349047404440
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 431.3（平均翻译损失）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 6569a5ae59b3125619f6d766c4612f3d909434eb7a35c3072379ace56cec467c
+    next_atom_id: 91dc3adbcf8f61e96a20f4b15337615e3eeb495c7faa8df372ef83014cf00b6f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e171ae2ae393b511a8280ed15c77493c712bcbb77284540ee2d7b9d600666d85
+  normalized_sha256: sha256:e171ae2ae393b511a8280ed15c77493c712bcbb77284540ee2d7b9d600666d85
+cas_ref: sha256:e171ae2ae393b511a8280ed15c77493c712bcbb77284540ee2d7b9d600666d85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 9.2（概念决定）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: adf50f55ab4236933ff78697efb74b7c4bf5509ca6579931c95a8107260b2cff
+    next_atom_id: 1de0d738b38d9e1793a3c59c7f5b2415462a19fc2bb15892b8f208cf21190336

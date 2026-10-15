@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e9163ba879e3bd6e7fca62bdfaaa332a4b43551e47cbfe7e2c6993d5b2bbe434
+  normalized_sha256: sha256:e9163ba879e3bd6e7fca62bdfaaa332a4b43551e47cbfe7e2c6993d5b2bbe434
+cas_ref: sha256:e9163ba879e3bd6e7fca62bdfaaa332a4b43551e47cbfe7e2c6993d5b2bbe434
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义249.1　额外监视时钟的协议只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 5cd782b68e6d4277097b11d7ce0e1941cfdee31f935c98c0fdb728bac2a1cec5
+    next_atom_id: c4b366c741539b24152d2aaac5bf5dde754f4653584ba73e4b5303378c5fa0c8

@@ -1,0 +1,14 @@
+**Proof.** The first three cases follow from the unique image
+inverse and the root-old criterion, with the empty product
+interpreted literally. The fourth was proved in Theorem 10.4.
+For the fifth, a zero-call leaf must have a constant whole target
+on its export block, and all $m$ attained targets need different
+values. This is the existing finite-answer capacity argument
+used in §6, applied to these actual targets. Conversely, the
+acquired root chart determines the target, so its target index
+can be computed and actually exported using exactly $m$
+complete values. With one value there is the entire finite
+table and its minimax tree. Asking its $k$ reached class roots
+determines the full type and hence the target; every such
+invocation is counted. $\square$
+

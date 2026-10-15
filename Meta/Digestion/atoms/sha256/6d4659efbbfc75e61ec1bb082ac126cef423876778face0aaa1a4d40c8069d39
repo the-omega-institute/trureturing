@@ -1,0 +1,48 @@
+**Corollary 7.1 (selected obstruction and whole-image recovery).** Under
+Assumption 1.3, YES for any selected $|B|\ge2$ excludes uniform
+finite-new-read exact whole-row service on the entire $D$, including lawful
+adaptive serial forward updates. Sourcewise finite recovery remains possible.
+NO excludes only its selected joint $B$.
+
+If the exact entire attained image $A=R_Q(D)$ is finite, every distinct pair
+belongs to $\mathcal C_{\rm fb}$, and every pair returns NO, there is an
+effective whole-row service at the actual certified $N$. Let $H$ be the
+maximum pair exclusion depth, taking $H=0$ for a singleton image. An upper
+bound is
+
+$$
+q\le2(2^{H+1}-1),\qquad a=0,\qquad
+|p|\le H+\lceil N/2\rceil
+\quad\text{for each submitted address }p.
+\tag{SFS.24}
+$$
+
+Proof. YES supplies distinct-row common prefixes at every depth, so no
+original depth determines the complete row. [ARH, (ARH.2.3)][ARH] equates
+this with failure of a uniform finite-new-read static or serial service
+under the stated common-state premises. Sourcewise recovery uses the actual
+current-register historical decoder to traverse the original finite tree,
+requesting children only after a branch reply. It terminates on each finite
+source and computes its full row, without a resulting uniform call cap.
+
+For the positive claim the exact finite-image list and original realizers
+come from [NPL, Theorem 5.3][NPL], under its full-input hypotheses.
+Every depth-$H$ prefix meets at most one row, since all distinct pairs have
+been excluded. Decode all $2^{H+1}-1$ original replies through $H$ by actual
+epoch-$N$ calls using the pinned DelayedOriginalReadout.original_decoder_service.
+Each needs at most two reads of length at most $H+\lceil N/2\rceil$.
+NSF's prefix-conditioned full-source query returns a candidate with that
+acquired prefix; its full row is forced. A precomputed finite prefix table
+is another consumer. This is [NSF, Theorem 6.1][NSF]. Only actual current
+calls produce observations; local witnesses are not free source selection.
+Total literal length is bounded by the call bound times the address bound.
+Preparation, local work and memory remain separately charged.
+
+Theorem 6.3 therefore excludes unassisted uniform finite-call recovery on
+its entire acquired fiber at $N=2$, while retaining sourcewise finite
+traversal. Under [SJM, Theorem 2.2][SJM] it gives only the selected two-row
+lower bound for an extra complete-field alphabet, not an exact whole-image
+memory minimum. A joint exclusion of three rows need not exclude any pair,
+and a selected list need not be the entire image. Neither substitutes for
+the positive pair hypothesis above.
+
