@@ -347,6 +347,56 @@ private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s
   · intro hmem
     exact False.elim (hmem (Finset.mem_univ _))
 
+private theorem fullC_create_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ)
+    (s : Assignment M) :
+    ((fullC j)ᴴ *ᵥ f) s =
+      if s j = true then (-1 : ℂ) ^ prefixCount s j * f (Function.update s j false) else 0 := by
+  classical
+  simp only [Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply]
+  have hentry (t : Assignment M) :
+      star (fullC j t s) =
+        if s j = true ∧ t = Function.update s j false
+        then (-1 : ℂ) ^ prefixCount s j else 0 := by
+    rw [fullC_entry]
+    by_cases h : s j = true ∧ t = Function.update s j false
+    · have hp : prefixCount t j = prefixCount s j := by
+        rw [h.2]
+        unfold prefixCount
+        congr 1
+        ext i
+        by_cases hij : i < j
+        · have hne : i ≠ j := ne_of_lt hij
+          simp [hij, Function.update_of_ne hne]
+        · simp [hij]
+      simp [h, hp]
+    · simp [h]
+  rw [Finset.sum_eq_single (Function.update s j false)]
+  · rw [hentry]
+    by_cases hs : s j = true
+    · rw [if_pos hs]
+      have hp : prefixCount (Function.update s j false) j = prefixCount s j := by
+        unfold prefixCount
+        congr 1
+        ext i
+        by_cases hij : i < j
+        · have hne : i ≠ j := ne_of_lt hij
+          simp [hij, Function.update_of_ne hne]
+        · simp [hij]
+      simp [hs, hp]
+    · rw [if_neg hs]
+      simp [hs]
+  · intro b hb hne
+    rw [hentry]
+    by_cases hs : s j = true
+    · have hfalse : ¬(s j = true ∧ b = Function.update s j false) := by
+        intro h
+        exact hne h.2
+      simp [hfalse]
+    · have hfalse : ¬(s j = true ∧ b = Function.update s j false) := by simp [hs]
+      simp [hfalse]
+  · intro hmem
+    exact False.elim (hmem (Finset.mem_univ _))
+
 private def psiCode (x : Assignment 6) : Fin 64 :=
   finFunctionFinEquiv (fun j => if x j then (1 : Fin 2) else 0)
 
