@@ -2015,4 +2015,1166 @@ QFA 定理 5.1 的 $\alpha$ 是这一个单系统端口在原单系统历史 TV 
 C-108.3–C-108.7 是已述菜单张成、匹配来源和指定端口的联合应用推导，
 不将实反对称谱配对、交换测纯度或一般纠缠破坏定理作为新内容。
 
+## 109. 匹配来源、稀疏相干与实际有限等待的端口兼容性
+
+本章把 C-106–C-108 的同一原 $A\mid B$ 来源，与单系统端口的一个额外人口合同连接。
+精确实现某个固定通道的量子维数、任意复输入上的实际历史误差、承诺来源族的历史模拟，
+是三个不同问题。相同全谱且具有全部相同实际历史的两个匹配态，其关联通道的精确端口
+维数可以分别为二和三；另一方面，一次实际等待已经证明，达到既有误差上界的压缩端口
+必须改变原匹配来源的某个联合人口。两种结论使用同一来源字典，但不互相替代。
+
+**定义 C-109.1（固定来源、额外人口合同与三个资源坐标）。** 记
+《递归关系观察：量子测量相对边界》为 QMB，
+《量子端口协变与认证前沿》为 QPC，
+《经典量子端口的精确证书》为 QEC。
+单系统输入、未来菜单、$\mathfrak C_q$ 及 $e(T)$ 完全沿用
+[QPC 定义 1.1–1.3](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md)：
+所有复 $\mathbb C^5$ 密度输入，非负等待 $U(t)=e^{-itK}$、完整秩一模式读数及 Stop，
+所有有限自适应历史，一个事先固定的有限经典旗编码，以及每个整个 $M_q$ 块上的 CPTP
+解码。无量子旁路、可读隐藏 Kraus 记录或外部参考测量。$e(T)$ 是该单系统的最坏完整
+历史 TV，不是相关双边来源的误差或 diamond 距离。$1\le q\le5$。
+
+原二体来源仍是 C-106 的 $B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$，$f(2)=2$，
+$J e_s=|s,f(s)\rangle$，以及
+
+$$
+\mathfrak D=\{JCJ^\dagger:C\succeq0,\ C_{ss}=1/5\},\qquad
+S=JI_5J^\dagger/5.
+\tag{C109.1}
+$$
+
+系数坐标 $j=0,1,2,3,4$ 依次对应原标签 $(0,1,2,3,13)$ 和行走标签
+$(N,2,3,5,25)$。令 $V e_j=|B_j\rangle_A$，$W e_j=|f(B_j)\rangle_B$；
+$T_A$ 是由 $V$ 搬运到原 $A$ 因子的通道，$B$ 因子不动，也不进入端口。
+这些是标签识别，不是新增可执行门。双边历史使用 C-108.1 的条件性实际局部菜单
+$\mathcal M_{\rm loc}$，仍不要求 $A,B$ 独立。
+
+定义额外合同
+
+$$
+\mathrm{BP}(T):\quad
+\operatorname{tr}(\Pi_sT(\rho))=\operatorname{tr}(\Pi_s\rho)
+\quad\text{对每个复密度态 }\rho\text{ 和每个原模式 }s.
+\tag{C109.2}
+$$
+
+原竞争类 $\mathfrak C_q$ 没有这个合同。对一个固定通道定义
+$q_{\rm exact}(T)=\min\{q:T\in\mathfrak C_q\}$，要求在所有复矩阵上精确实现同一个
+$T$。对 $C\succeq0$ 定义 $k(C)$ 为有限分解 $C=\sum_a z_az_a^\dagger$ 中
+$\max_a|\operatorname{supp}z_a|$ 的最小值；向量未必归一化，权重吸收入向量。
+这里的基固定。$k(C)$ 是 coherence number，既不是 $\operatorname{rank}C$，也不是旗数。
+
+**命题 C-109.2（人口合同的同源字典）。** 对任意 CPTP $T:M_5\to M_5$，下列条件等价：
+$\mathrm{BP}(T)$；$T(\Pi_s)=\Pi_s$ 对所有 $s$ 成立；
+$(T_A\otimes\mathrm{id})(S)\in\mathfrak D$；
+$(T_A\otimes\mathrm{id})(\mathfrak D)\subseteq\mathfrak D$；
+以及归一化、输出因子在前的 Choi 态
+
+$$
+\chi_T=\frac15\sum_{s,t}T(E_{st})\otimes E_{st},\qquad
+\operatorname{Tr}_{\rm out}\chi_T=I_5/5
+\tag{C109.3}
+$$
+
+满足 $(V\otimes W)\chi_T(V\otimes W)^\dagger\in\mathfrak D$。
+此时存在唯一相关矩阵 $M\succeq0$、$M_{ss}=1$，使
+
+$$
+T(X)=M\circ X,\qquad
+(V\otimes W)\chi_T(V\otimes W)^\dagger=J(M/5)J^\dagger,
+\qquad C\longmapsto M\circ C.
+\tag{C109.4}
+$$
+
+最后一式是 $(T_A\otimes\mathrm{id})(JCJ^\dagger)$ 的系数矩阵。
+
+证明。复用 [C-29.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)
+的基人口保持分类及其零平方和证明；这里把来源和量词对应写明。
+BP 对输入 $\Pi_s$ 使输出对角集中在 $s$。正性给
+$|X_{rt}|^2\le X_{rr}X_{tt}$，故 $T(\Pi_s)=\Pi_s$。
+在任意有限 Kraus 族 $K_a$ 中，对 $r\ne s$ 有
+$0=\sum_a|K_a(r,s)|^2$，每个 $K_a$ 因而对角。
+写 $K_a=\operatorname{diag}z_a$ 得 $M=\sum_a z_az_a^\dagger$，
+保迹给 $M_{ss}=1$。反向的 CPTP 性消费
+[SecondOrder 定理 109.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#109-联合记录的正性与最小环境秩)，
+对角 Kraus 作用直接给 (C109.2) 与 (C109.4)。这不是另一个 Schur 分类。
+
+对 $S$ 的实际联合人口逐项为
+
+$$
+\langle r,f(s)|(T_A\otimes\mathrm{id})(S)|r,f(s)\rangle
+=\frac15\langle r|T(\Pi_s)|r\rangle.
+\tag{C109.5}
+$$
+
+若输出属于 $\mathfrak D$，它们迫使各基投影固定。反向由 (C109.4) 的 Schur 乘积正性
+及单位对角得到整个纤维保持。Choi 的同一人口也是 (C109.5)；其正性迫使支撑位于
+$\operatorname{span}\{|s,s\rangle\}$，所以必为
+$\frac15\sum_{s,t}M_{st}|s,s\rangle\langle t,t|$。
+Choi 逆对应恢复 $T(E_{st})=M_{st}E_{st}$，且局部 $V,W$ 恰给 (C109.4)。
+没有转置或遗漏 $1/5$。这些式子只是同一个通道的代数表示，不授予最大纠缠参考输入、
+参考读数，或把一个未知给定的 $JCJ^\dagger$ 物理编程成 $T$ 的程序。证毕。
+
+**定理 C-109.3（同一匹配矩阵的精确端口资源）。** 对 $\Gamma_C=JCJ^\dagger\in\mathfrak D$
+设 $T_C(X)=(5C)\circ X$。则对每个 $q$，
+
+$$
+T_C\in\mathfrak C_q\quad\Longleftrightarrow\quad
+C=\sum_a z_az_a^\dagger,\quad |\operatorname{supp}z_a|\le q
+\quad\Longleftrightarrow\quad
+\operatorname{SN}_{A\mid B}(\Gamma_C)\le q.
+\tag{C109.6}
+$$
+
+其中分解均有限，Schmidt number 在原 $A\mid B$ 切口上取值。因此
+$q_{\rm exact}(T_C)=k(C)=\operatorname{SN}_{A\mid B}(\Gamma_C)$。
+
+证明。QMB 定理 5.1 的有限块端口等价于存在同一通道的有限秩至多 $q$ Kraus 族。
+具体地，编码分支 Kraus $B_{fa}:\mathbb C^5\to\mathbb C^q$ 和整个块的解码 Kraus
+$R_{fb}:\mathbb C^q\to\mathbb C^5$ 给 $K_{fab}=R_{fb}B_{fa}$，其秩至多 $q$，
+解码保迹给总族完备。C-109.2 的零平方和论证作用于这个族本身，故这些 $K_{fab}$
+全部对角；没有混合 Kraus 后再假定秩不变。
+对角矩阵的秩就是非零对角数，得 $M=5C$ 的 $q$ 稀疏 Gram 分解。
+
+反向若 $M=\sum_a z_az_a^\dagger$ 且每个支撑大小至多 $q$，取
+$K_a=\operatorname{diag}z_a$。为每个 $a$ 选择固定坐标等距嵌入
+$V_a:\mathbb C^q\to\mathbb C^5$，其像包含 $\operatorname{ran}K_a$；
+不足 $q$ 个坐标时补齐，零向量分支可省略。定义
+
+$$
+B_a=V_a^\dagger K_a,\quad
+\operatorname{Enc}(X)=(B_aXB_a^\dagger)_a,\quad
+\operatorname{Dec}_a(Y)=V_aYV_a^\dagger.
+\tag{C109.7}
+$$
+
+$V_a^\dagger V_a=I_q$ 使解码在整个 $M_q$ 上保迹；而
+$V_aV_a^\dagger K_a=K_a$ 给
+$\sum_aB_a^\dagger B_a=\sum_aK_a^\dagger K_a=I_5$。
+每个矩形夹乘在任意参考放大下为正，故编码和解码 CPTP。
+复合在所有复矩阵上等于 $T_C$，全部量子路径通过其 $q$ 块，没有旁路。
+
+对任一 $\Gamma_C=\sum_a|\psi_a\rangle\langle\psi_a|$ 的正纯态分解，
+向 $\operatorname{ran}J$ 的正交补投影给
+$\sum_a\|(I-JJ^\dagger)\psi_a\|^2=0$，故每个 $\psi_a=Jz_a$。
+矩阵系数是 $\operatorname{diag}z_a$ 乘一个置换；$Jz_a$ 的 Schmidt 秩恰等于
+$|\operatorname{supp}z_a|$。逆向也逐项成立，证明 (C109.6)。
+这对应于标准 coherence-number/Schmidt-number 关系以及 QMB 的 Kraus 秩合同，
+不是独立来源副本之间的切口。证毕。
+
+**定理 C-109.4（一个不可见纤维中的等谱边与三角形）。** 使用系数坐标的矩阵单位，令
+
+$$
+\begin{gathered}
+L=E_{04}-E_{40},\qquad
+R=E_{01}-E_{10}+E_{12}-E_{21}+E_{20}-E_{02},\\
+0\le a\le1/\sqrt3,\quad b=\sqrt3\,a,\\
+M_{\rm pair}(a)=I_5+ibL,\qquad M_{\rm tri}(a)=I_5+iaR,\\
+C_x(a)=M_x(a)/5,\quad \Gamma_x(a)=JC_x(a)J^\dagger,\quad
+T_x(a)(X)=M_x(a)\circ X.
+\end{gathered}
+\tag{C109.8}
+$$
+
+两者均为合法相关矩阵，$C_x$ 的共同全谱为
+
+$$
+\left\{\frac{1+b}{5},\frac{1-b}{5},\frac15,\frac15,\frac15\right\},
+\qquad \operatorname{tr}(\Gamma_x^2)=\frac{5+6a^2}{25}.
+\tag{C109.9}
+$$
+
+$\Gamma_x$ 的谱再添二十个零。对每个 $\pi\in\mathcal M_{\rm loc}$，
+$P_{\Gamma_{\rm pair}(a)}^\pi=P_{\Gamma_{\rm tri}(a)}^\pi=P_S^\pi$；
+它们也属于原 $Q$ 纤维 $\mathfrak F$。$a>0$ 时两者在原切口上都纠缠。
+
+证明。边块 $iL$ 的本征值是 $1,-1$。三角块满足
+$R^2=\mathbf1\mathbf1^T-3I_3$、$R\mathbf1=0$，所以 $iR$ 的本征值为
+$0,\sqrt3,-\sqrt3$。其余两个坐标固定；这给 (C109.9) 和全参数区间的正性。
+也可用以下共同可核的谱分解明确给出三角上界：在前三坐标中令
+
+$$
+u=(1,1,1)/\sqrt3,\quad p=(1,-1,0)/\sqrt2,\quad
+z=(1,1,-2)/\sqrt6,\quad h_\pm=(p\mp iz)/\sqrt2.
+$$
+
+$Rp=-\sqrt3z$、$Rz=\sqrt3p$，$u,h_+,h_-$ 为复正交单位向量，故
+
+$$
+M_{\rm tri}=uu^\dagger+(1+b)h_+h_+^\dagger
+ +(1-b)h_-h_-^\dagger+E_{33}+E_{44}.
+\tag{C109.10}
+$$
+
+边块类似地用 $g_\pm=(e_0\mp ie_4)/\sqrt2$：
+$M_{\rm pair}=(1+b)g_+g_+^\dagger+(1-b)g_-g_-^\dagger+
+E_{11}+E_{22}+E_{33}$。
+这些有限 Gram 因子也给通道合法性，$b=1$ 时零权重项直接省略。
+谱平方和为 $(5+2b^2)/25$。两者实部都为 $I_5/5$，故
+C-108.3 给全部有限自适应双边历史及原 $Q$ 约束，而非仅单读边缘等价。
+非零虚部使 $\Gamma_x\ne S$，C-106.2 给原切口纠缠。证毕。
+
+**定理 C-109.5（全区间的锐端口阈值）。** (C109.8) 的精确通道资源及原切口
+Schmidt number 均满足
+
+$$
+\begin{array}{c|ccc}
+&a=0&0<a\le1/2&1/2<a\le1/\sqrt3\\ \hline
+q_{\rm exact}(T_{\rm pair})&1&2&2\\
+q_{\rm exact}(T_{\rm tri})&1&2&3
+\end{array}.
+\tag{C109.11}
+$$
+
+证明。$a=0$ 时 $M=I_5$，五个单坐标 Kraus 给标量完全去相干通道。
+$a>0$ 的非零非对角元排除任何单坐标 Gram 分解，因此资源至少二。
+边的 (C109.10) 后的分解最多五旗、各支撑至多二，给二的上界。
+三角的 (C109.10) 最多五旗、各支撑至多三，给全区间三的上界。
+在 $0\le a\le1/2$，还存在精确的二稀疏分解
+
+$$
+M_{\rm tri}=(1-2a)(E_{00}+E_{11}+E_{22})
+ +a\sum_{(j,k)\in\{(0,1),(1,2),(2,0)\}}
+ (e_j-ie_k)(e_j-ie_k)^\dagger+E_{33}+E_{44}.
+\tag{C109.12}
+$$
+
+所有权重非负，$a=1/2$ 的前三个单坐标项为零，不影响二维构造。
+每个上界都通过 (C109.7) 给一组事先固定、整个块 CPTP 的真正编码和解码，
+不只是准备一个输出态。
+
+要排除 $a>1/2$ 的任意二稀疏分解，令 $I=\{0,1,2\}$。
+任何支撑至多二的复向量 $v$ 都满足
+
+$$
+2\sum_{j<k,\ j,k\in I}|v_j\overline v_k|
+\le\sum_{j\in I}|v_j|^2.
+$$
+
+至多一个无序对非零，故这就是 $2|xy|\le|x|^2+|y|^2$。
+对任何有限分解求和并用三角不等式，必有
+$2\sum_{j<k\in I}|M_{jk}|\le\operatorname{tr}M[I,I]=3$。
+三角矩阵左侧是 $6a$，当 $a>1/2$ 严格矛盾。这个论证覆盖所有复向量和所有有限旗数。
+等价的对偶证书是 $H=(I_3-iR|_I)\oplus0_2$：其每个至多二坐标主压缩都正半定，
+但 $\operatorname{tr}(H C_{\rm tri})=(3-6a)/5<0$。
+这是稀疏分解的代数证书，没有把 $H$ 当作新增实际菜单效果。
+C-109.3 完成两种资源的转移。证毕。
+
+**推论 C-109.6（全谱和环境秩仍不能决定精确端口）。** 取 $a=5/9$，则
+
+$$
+\begin{gathered}
+C_{\rm pair}=I_5/5+(i\sqrt3/9)(E_{04}-E_{40}),\qquad
+C_{\rm tri}=I_5/5+(i/9)R,\\
+\operatorname{spec}C_x={1/5+\sqrt3/9,1/5-\sqrt3/9,1/5,1/5,1/5\},\\
+\operatorname{tr}\Gamma_x^2=37/135,\qquad \operatorname{rank}M_x=5,
+\qquad M_x\prec2I_5.
+\end{gathered}
+\tag{C109.13}
+$$
+
+两者具有完全相同的所有实际双边历史律、全部特征值及纯度，而精确端口分别为二和三。
+SecondOrder 定理 109.2 的纯初始环境受控记录实现，最小环境维数均为五。
+所以这些共同数据不能决定 $q_{\rm exact}$；即使 $M\preceq2I$ 也不足以刻画二维端口。
+
+证明。$1/25-1/27>0$ 给五个特征值严格正，$25/27<1$ 给
+$5\sqrt3/9<1$。C-109.4–C-109.5 给其余断言。
+二稀疏的三角角落条件在 $C_{\rm tri}$ 上成为 $1/3\le3/10$，相差 $1/30$；
+上述 $H$ 的迹为 $-1/15$。同一数据的函数只能返回同一值，不能同时正确返回二与三。
+这里的全谱是所给矩阵的数学属性，没有声称菜单能实验测定它。
+在另一个端点 $a=1/\sqrt3$，共同谱为 $\{2/5,1/5,1/5,1/5,0\}$，
+纯度 $7/25$、环境秩四，(C109.11) 的二与三分叉仍成立。证毕。
+
+**引理 C-109.7（一次实际有理等待的严格碰撞证书）。** 沿用 QPC 的被动坐标
+$D=\operatorname{diag}(1,i,i,i,1)$，则实际生成元和等待为
+
+$$
+A=-iD^\dagger KD=
+\begin{pmatrix}
+0&1&1&1&0\\-1&0&0&0&-1\\-1&0&0&0&0\\-1&0&0&0&-1\\0&1&0&1&0
+\end{pmatrix},\qquad O(t)=e^{tA}.
+\tag{C109.14}
+$$
+
+设 $t_0=2/3$，$v=O(t_0)^Te_N$，$p_s=|v_s|^2$。则
+
+$$
+\sum_sp_s^2<53/250.
+\tag{C109.15}
+$$
+
+证明。$A^T=-A$，故 $v=e^{-2A/3}e_N$ 为实单位向量。
+$A$ 的最大绝对行和与列和均为三，由加权 Cauchy–Schwarz，
+$\|Ax\|_2^2\le\sum_i(\sum_j|A_{ij}|)\sum_j|A_{ij}||x_j|^2
+\le9\|x\|_2^2$，因此欧氏算子范数至多三，
+$\|(-2/3)A\|_{\rm op}\le2$。指数级数在该有限维范数中绝对收敛。
+取 $w=\sum_{k=0}^{12}(-2A/3)^ke_N/k!$；尾项比从 $k=13$ 起至多 $1/7$，从而
+
+$$
+\|v-w\|_2\le\sum_{k\ge13}\frac{2^k}{k!}
+\le\frac76\frac{2^{13}}{13!}=\frac4{2606175}.
+\tag{C109.16}
+$$
+
+具体有理列不是独立轨道角的替代，直接按 $c_0=e_N$、
+$c_{k+1}=-2Ac_k/[3(k+1)]$ 求到 $k=12$ 得
+
+$$
+w=\left(
+\frac{107738440637}{248594813775},
+\frac{490347766}{1104865839},
+\frac{4899328858}{9207215325},
+\frac{490347766}{1104865839},
+-\frac{91371050044}{248594813775}
+\right)^T.
+\tag{C109.17}
+$$
+
+每个坐标误差至多 (C109.16)。有理外包区间如下，所有端点除以 $100000$：
+
+$$
+\begin{array}{c|rrrrr}
+s&N&2&3&5&25\\ \hline
+\text{下端}&43338&44380&53211&44380&-36756\\
+\text{上端}&43340&44381&53212&44381&-36754
+\end{array}.
+\tag{C109.18}
+$$
+
+其合法性可逐坐标直接检验
+$\ell_s<w_s-4/2606175\le v_s\le w_s+4/2606175<u_s$。
+例如第三坐标上端仍留有正余量 $5581607/119693799225000$。
+因此用绝对值较大的端点四次方求和，得
+
+$$
+\sum_s|v_s|^4
+\le\frac{43340^4+2\cdot44381^4+53212^4+36756^4}{100000^4}
+=\frac{10565071620411213137}{50000000000000000000}
+<\frac{53}{250}.
+\tag{C109.19}
+$$
+
+最后严格差为 $34928379588786863/50000000000000000000$。
+指数尾界把有理截断与实际有限等待相连，不能仅由最后这个有理比较推出结论。
+本证书没有使用轨道闭包中的独立角、极限时间或负的物理等待。证毕。
+
+**定理 C-109.8（实际菜单误差迫使匹配人口改变）。** 对每个 $q=1,2,3,4$，
+每个原 $T\in\mathfrak C_q$ 若满足额外 BP 合同，则
+
+$$
+e(T)>1-53q/250>u_q:=(5-q)/7.
+\tag{C109.20}
+$$
+
+同一个输入 $\rho_0=Dvv^TD^\dagger$、同一个实际等待 $t_0=2/3$、完整模式读数后 Stop，
+已经统一见证所有这些通道和所有这四个 $q$ 的第一个严格界。
+故任意原 $T\in\mathfrak C_q$ 若 $e(T)\le u_q$，则
+$(T_A\otimes\mathrm{id})(S)$ 至少一个非匹配联合人口严格为正。
+特别地，所有达到的原 minimizer 都改变这个匹配人口合同。
+
+证明。在 C-109.3 提供的同一个秩受限对角 Kraus 族写
+$M=\sum_a z_az_a^\dagger$、$|\operatorname{supp}z_a|\le q$、
+$\sum_a|z_a(s)|^2=1$。稀疏 Cauchy–Schwarz 给对任意复 $x$
+
+$$
+x^\dagger Mx=\sum_a|z_a^\dagger x|^2
+\le\sum_a q\sum_s|z_a(s)|^2|x_s|^2=q\|x\|_2^2,
+\qquad M\preceq qI_5.
+\tag{C109.21}
+$$
+
+这是必要方向，C-109.6 已排除逆向。被动对角 $D$ 不改变 BP 或 Schur 矩阵：
+$D^\dagger T(DXD^\dagger)D=M\circ X$；此为坐标恒等式，不增加未来相位控制。
+允许制备任意复输入使 $\rho_0$ 合法。$U(t_0)D v=D O(t_0)v=De_N=e_N$，
+所以未经替换的完整读数以概率一给 $N$。替换后的同一事件概率为
+
+$$
+F_T=\langle v|\widehat T(vv^T)|v\rangle
+=\sum_{s,t}p_sM_{st}p_t=p^TMp
+\le q\sum_sp_s^2<53q/250.
+\tag{C109.22}
+$$
+
+这是真实 Born 概率；因理想律为点质量，整个五结果读数的 TV 恰为 $1-F_T$。
+保留这一读数和 Stop 的历史即给 $e(T)\ge1-F_T$。
+没有用任意参考效果、diamond 范数或把两来源的边缘概率相乘。
+输入向量的定义使用 $O(t_0)^T$ 不表示实施反向等待；未来协议只等待 $2/3$。
+
+数值比较均为严格有理关系：
+
+$$
+\begin{array}{c|c|c}
+q&1-53q/250&u_q\\ \hline
+1&197/250&4/7\\2&72/125&3/7\\3&91/250&2/7\\4&19/125&1/7
+\end{array},\qquad
+1-53q/250-u_q=(500-121q)/1750>0.
+\tag{C109.23}
+$$
+
+若 $e(T)\le u_q$，逆否命题给非 BP。C-109.2 说明必有一个 $T(\Pi_s)\ne\Pi_s$。
+正性和迹一于是使某个 $r\ne s$ 的 $\langle r|T(\Pi_s)|r\rangle>0$；
+(C109.5) 在同一 $S$ 上给所述非匹配人口。QMB 定理 5.1 的紧性、达到性与显式
+$u_q$ 端口给每个原 minimizer 的误差至多 $u_q$，所以也在此结论内。
+这里没有算出任意 $q<5$ 的无约束最优值。证毕。
+
+**推论 C-109.9（当前标量端口比较与平稳性边界）。** QEC 定理 3.2、4.4、5.1
+给同一全复输入、同一原菜单上的一个固定十四旗标量端口 $T_\xi$，其
+$e(T_\xi)=\xi<529/1000$。故对 BP 的 $q=1,2$ 端口，
+
+$$
+e(T)>72/125>529/1000>\xi.
+\tag{C109.24}
+$$
+
+因此 BP 与 $e(T)\le\xi$ 同时成立必需 $q\ge3$；不声称三维充分。
+对于本实际连通行走，BP 且 walk-stationary 的 CPTP 通道只能是恒等通道。
+特别是 $\mathfrak C_q$、BP、walk-stationary 三者交集在 $q<5$ 时为空；
+QPC/QRC 的无约束平稳化不能作为 BP 子问题内的约化。
+
+证明。前半由 (C109.23) 与 QEC 的当前 $\xi$ 证书直接比较。
+若 Schur 通道 $T_M$ 与所有实际行走共轭交换，对 $\Pi_j$ 在 $t=0$ 求导得
+$T_M([K,\Pi_j])=[K,\Pi_j]$。在每个 $K_{ij}\ne0$ 的边上必须有 $M_{ij}=1$。
+实际边是 $N$–$2$、$N$–$3$、$N$–$5$、$2$–$25$、$5$–$25$，图连通。
+相关矩阵是单位记录的 Gram 矩阵，单位重叠等于一强制记录相同；沿边传播使全部记录
+相同，$M=\mathbf1\mathbf1^\dagger$，故 $T=\mathrm{id}$。
+这一步复用 C-29.3 的记录刚性，也可直接消费 SecondOrder 定理 79.2 的实际实效果
+保持刚性。恒等的 Choi 态为 Schmidt 秩五的纯态，故其精确端口为五。
+
+QPC 定理 3.3 的设计共轭保持 $\mathfrak C_q$ 和原误差，却旋转 BP 所固定的基；
+它未声称保持 BP。若 $q<5$ 的 BP 输入端口平稳平均后仍 BP，就与上面的空交集矛盾。
+QRC 定理 3.2 的无约束实/平稳/反射代表及其十二坐标继续在各自原域上使用。
+$T_\xi$ 的平稳性与标量合法性也迫使它不是 BP；没有把 QFA 的矩阵元代入该通道。证毕。
+
+**命题 C-109.10（当前 QEC 编码在同一不可见来源上的精确擦除）。** 使用 QEC
+定义 3.1 和式 (3.2)–(3.3) 自己的十四旗设计。其真实向量是
+
+$$
+\begin{aligned}
+v_{\mathrm A,k,l}&=\sqrt{3/7}\,w_+(2\pi k/3)
+                 +\sqrt{4/7}\,w_-(2\pi l/3),&c_{\mathrm A,k,l}&=7/18,\\
+v_{\mathrm B,k}&=\sqrt{2/3}\,d+\sqrt{1/3}\,w_+(2\pi k/5),
+&c_{\mathrm B,k}&=3/10,
+\end{aligned}
+$$
+
+其中 $w_\pm,d$ 是 QEC 定义 1.3 的同一实际谱平面向量。
+记 $P_f=v_fv_f^T$、$E_f=c_fDP_fD^\dagger$、
+$\sigma_f=Dv_fv_f^TD^\dagger$。对所有 C-108 不可见态，包括 (C109.8) 的两族，
+
+$$
+\begin{aligned}
+\operatorname{tr}((E_f\otimes E_g)\Gamma)
+ &=\operatorname{tr}((E_f\otimes E_g)S),\\
+(T_\xi\otimes T_\xi)(\Gamma)
+ &=\sum_{f,g}\operatorname{tr}((E_f\otimes E_g)S)\,
+      \sigma_f\otimes\sigma_g
+ =(T_\xi\otimes T_\xi)(S).
+\end{aligned}
+\tag{C109.25}
+$$
+
+证明。每个 $v_f$ 为实单位向量，真实编码效果就是 $E_f$，解码输出就是
+$\sigma_f$。C-108.4 的匹配压缩使
+$J^\dagger(E_f\otimes E_g)J$ 为实对称矩阵，其与 $C-I_5/5$ 的迹配对为零。
+这给联合旗律相等，继而对同一相关来源用联合权重给第二式；权重非负、总和为一。
+这是可分离输出的显式产品凸分解。它使用 QEC 的 $3/7,4/7,2/3,1/3$，
+不以 QFA 的旧权重替代。旗律是编码的数学读数，不另外暴露为未来菜单。证毕。
+
+甚至局部标量完全去相干 $\Delta_A(X)=\sum_s\Pi_sX\Pi_s$ 已将每个
+$JCJ^\dagger\in\mathfrak D$ 送到 $S$，并保持匹配人口。
+对 (C109.8) 的承诺族，C-108.3 使这个标量方案精确保持全部实际双边历史。
+因此 (C109.11) 的三维是实现所指定关联通道在所有输入上作用的资源，
+绝非仅模拟这些来源历史所需的下界；(C109.20) 的误差则是一个通道对所有允许
+单系统输入同时承担的目标。环境维数、Kraus/旗数和 $q$ 不能混为一个数字。
+
+**注记 C-109.11（文献对应、证据层级与未决边界）。**
+Schur/GI 分类消费 C-29.2 与 SecondOrder 109.2；其一般文献是
+de Vicente–Streltsov，[*The power of the resource theory of genuine quantum coherence*,
+Theorem 1](https://arxiv.org/html/1604.08031v2)。
+coherence number 的有限稀疏纯态定义及二层比较矩阵判据见
+Ringbauer 等，[*Certification and Quantification of Multilevel Quantum Coherence*,
+§I.1、Theorem 1](https://arxiv.org/html/1707.05282v3)；本章的角落不等式与对偶 $H$
+是该成熟框架在这一个复三角矩阵上的显式证书。
+Choi/Schmidt/Kraus 秩对应见 Chruściński–Kossakowski，
+[*On partially entanglement breaking channels*, Theorem 1 证明](https://arxiv.org/html/quant-ph/0511244v1)；
+其输入因子在前的约定在 (C109.3) 明确交换为输出在前。
+固定有限经典旁信息和整个块压缩合同见 Bluhm–Rauber–Wolf，
+[*Quantum compression relative to a set of measurements*, Definition 4.1、Lemmas 5.2–5.3](https://arxiv.org/html/1708.04898v4)。
+文献的精确观测保持目标不直接等于这里的实际历史 TV。
+
+仓内新增的综合应用是上述原匹配来源与固定通道的完整资源字典、同实际观察纤维同全谱的
+锐二/三维分叉，以及一次实际有限等待对所有四种压缩维数给出的匹配人口不兼容性。
+不主张一般 Schur、coherence 或 Schmidt-number 理论的原创性。
+规范有限 CP/Kraus、Choi、记录边缘和 Born 分支供应分别是
+`FiniteKrausRepresentation.krausRepresentation`、
+`PhyslibLeaf.MatrixMap.choi_of_kraus`、`finite_kraus_quantum_channel`、
+`EnvironmentMarginalChannel.environment_marginal_channel` 和
+`finite_kraus_instrument_born_marginal`；这些供应不包含本章完整端口/来源/实际等待定理。
+本章给普通数学推导，不将其声明为端到端 Lean 形式化。
+完整形式桥仍须把整个块端口、同族秩和对角性、匹配纯态分解、矩阵指数的解析尾界、
+实际 Born/TV 协议以及 QEC 的具体设计在一个精确类型合同中连接。
+有理矩阵和常数的精确核对不能单独替代这些义务。
+
+仍未解决整个不可见纤维的最大 coherence number、BP 限制下最优误差、任何 $q<5$ 的
+无约束 $\varepsilon_q$ 精确值、三维在 $\xi$ 的充分性或一般非零人口泄漏的定量界。
+原 QEC 区间 $5197/10000\le\varepsilon_1\le\xi$ 保持其原含义。
+这里没有原生树到任意复态的制备映射、额外相位控制、源副本、交换测量或参考接入；
+数学标签映射和相同全谱都不供应这些操作。
+
+## 追加锚（本行以下为增补区）
+
+## 110. 无附加人口合同的有限端口误差与同源人口泄漏
+
+**定义 C-110.1（整个块端口的泄漏与纯态存活率）。** 设 $d\ge1$、$1\le q\le d$，
+固定 $\mathbb C^d$ 的模式基。$\mathfrak C_q^{(d)}$ 是经过有限经典旗与整个 $M_q$ 块的
+CPTP 编码、解码所实现的通道类；当 $d=5$ 时就是 C-109.1 的原 $\mathfrak C_q$。
+编码分支的 Kraus 算子记为 $B_{fa}:\mathbb C^d\to\mathbb C^q$，解码分支的算子记为
+$R_{fb}:\mathbb C^q\to\mathbb C^d$，满足
+
+$$
+\sum_{f,a}B_{fa}^\dagger B_{fa}=I_d,\qquad
+\sum_bR_{fb}^\dagger R_{fb}=I_q\quad\text{对每个 }f.
+\tag{C110.1}
+$$
+
+所有数据允许为复数，经典旗有限且事先固定，解码在整个块上保迹。
+输入到输出的全部量子路径通过这个 $q$ 维块。对任意 CPTP $T:M_d\to M_d$ 定义
+
+$$
+\begin{aligned}
+m_{rs}(T)&=\langle r|T(\Pi_s)|r\rangle,\qquad \Pi_s=|s\rangle\langle s|,\\
+\ell(T)&=\frac1d\sum_s\sum_{r\ne s}m_{rs}(T),\\
+F_v(T)&=\langle v|T(|v\rangle\langle v|)|v\rangle,\qquad
+p_s=|v_s|^2,\qquad c(v)=\sum_sp_s^2\quad(\|v\|_2=1).
+\end{aligned}
+\tag{C110.2}
+$$
+
+$\ell$ 使用固定原模式基，不要求该基在任意酉变换下保持。$F_v$ 是数学上的同态
+纯态存活率；只有把它对应到一个允许的输入和未来读数之后，才成为实际菜单的误差见证。
+
+**定理 C-110.2（任意复端口的存活率—泄漏界）。** 对每个 $T\in\mathfrak C_q^{(d)}$
+和每个复单位向量 $v$，有 $1/d\le c(v)\le1$、$0\le\ell(T)\le1$，以及
+
+$$
+\boxed{\quad
+\sqrt{F_v(T)}\le\sqrt{q\,c(v)}+
+\sqrt{d(1-c(v))\,\ell(T)}.\quad}
+\tag{C110.3}
+$$
+
+$\ell(T)$ 由通道决定，与选用的 Kraus 族无关。该界不要求 BP、保单位性、协变性、
+实 Kraus 数据或后选择。
+
+证明。沿用 QMB 定理 5.1 的整个块端口到低秩 Kraus 族的方向，直接在给定编码和解码
+上取 $K_{fab}=R_{fb}B_{fa}$。由 (C110.1)，
+
+$$
+T(X)=\sum_\alpha K_\alpha X K_\alpha^\dagger,\qquad
+\operatorname{rank}K_\alpha\le q,\qquad
+\sum_\alpha K_\alpha^\dagger K_\alpha=I_d.
+\tag{C110.4}
+$$
+
+这是同一个通道的一组实际有限分解；不在任意 Kraus 混合后假设各项仍低秩。
+这个成熟对应见 Chruściński–Kossakowski，
+[*On partially entanglement breaking channels*, Theorem 1 的证明](https://arxiv.org/html/quant-ph/0511244v1)，
+以及 Bluhm–Rauber–Wolf，
+[*Quantum compression relative to a set of measurements*, Definition 4.1、Lemma 5.2 的证明](https://arxiv.org/html/1708.04898v4)。
+后者的精确观测保持目标和这里的实际历史 TV 仍是不同合同。
+
+正性、保迹给 $m_{rs}\ge0$、$\sum_rm_{rs}=1$，而
+
+$$
+m_{rs}=\sum_\alpha|K_\alpha(r,s)|^2,\qquad
+\sum_{\alpha,r\ne s}|K_\alpha(r,s)|^2=d\ell(T).
+\tag{C110.5}
+$$
+
+第一式的左端不含 Kraus 选择，因而第二式在任意其他表示下仍是同一数值。
+特别是 $0\le\ell\le1$；$p_s\ge0$、$\sum_sp_s=1$ 和 Cauchy–Schwarz 给
+$1/d\le c\le1$。
+
+令 $P=\operatorname{diag}(p_s)$，按有限 Kraus 指标定义复向量
+
+$$
+a_\alpha=\operatorname{tr}(K_\alpha P)=\sum_sp_sK_\alpha(s,s),\qquad
+b_\alpha=\sum_{r\ne s}\overline{v_r}K_\alpha(r,s)v_s.
+\tag{C110.6}
+$$
+
+于是 $F_v(T)=\sum_\alpha|a_\alpha+b_\alpha|^2$。
+消费 QPC 引理 8.1 使用的成熟复矩阵秩—迹估计
+$|\operatorname{tr}X|^2\le\operatorname{rank}(X)\|X\|_{\rm HS}^2$，
+取 $X=K_\alpha P$，其秩至多 $q$，得到
+
+$$
+\begin{aligned}
+\|a\|_2^2
+&\le q\sum_\alpha\|K_\alpha P\|_{\rm HS}^2\\
+&=q\sum_sp_s^2\sum_{\alpha,r}|K_\alpha(r,s)|^2
+=q\sum_sp_s^2=qc.
+\end{aligned}
+\tag{C110.7}
+$$
+
+这里用的是右乘 $P$ 后的列范数与保迹等式；未使用行范数归一化或 $T(I)=I$。
+上述秩—迹估计对任意复矩阵成立：奇异值分解先界
+$|\operatorname{tr}X|\le\sum_{j=1}^{\operatorname{rank}X}\sigma_j$，再用
+Cauchy–Schwarz；它不要求 $X$ 为正或 Hermitian。
+
+对 (C110.6) 的非对角和用复 Cauchy–Schwarz，得
+
+$$
+\begin{aligned}
+|b_\alpha|^2
+&\le\left(\sum_{r\ne s}|v_r|^2|v_s|^2\right)
+      \sum_{r\ne s}|K_\alpha(r,s)|^2\\
+&=(1-c)\sum_{r\ne s}|K_\alpha(r,s)|^2,\\
+\|b\|_2^2&\le d(1-c)\ell(T).
+\end{aligned}
+\tag{C110.8}
+$$
+
+在同一有限指标空间用三角不等式
+$\sqrt{F_v(T)}=\|a+b\|_2\le\|a\|_2+\|b\|_2$，即得 (C110.3)。
+这里的新关系是把这些成熟矩阵工具用于固定模式基下的通道泄漏；没有把一般 CP、
+Kraus 秩或矩阵范数工具当作新结论。证毕。
+
+**定理 C-110.3（每个原匹配来源的精确人口 TV）。** 保留 C-109.1 的原
+$A\mid B$、$B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$、$f(2)=2$、$J$、$V$ 和 $W$。
+对任意 $C\succeq0$、$C_{ss}=1/5$，令
+$\Gamma_C=JCJ^\dagger$、$\Gamma'_C=(T_A\otimes\mathrm{id})(\Gamma_C)$。
+只在原 $A$ 因子作用同一 $T$，$B$ 不进入端口；$m_{rs}$ 的索引按 $V$ 与原模式对应。
+则对所有模式 $r,s$，
+
+$$
+\begin{aligned}
+\langle r,f(s)|\Gamma'_C|r,f(s)\rangle&=m_{rs}(T)/5,\\
+\langle r,f(s)|\Gamma_C|r,f(s)\rangle&=\delta_{rs}/5,\\
+\operatorname{TV}(P_{\Gamma'_C}^{\rm pop},P_{\Gamma_C}^{\rm pop})
+&=\ell(T)=P_{\Gamma'_C}^{\rm pop}\{(r,f(s)):r\ne s\}.
+\end{aligned}
+\tag{C110.9}
+$$
+
+$P^{\rm pop}$ 是两边立即完整局部模式读数的联合律。因此在 C-108.1 的条件性
+局部完整历史接口下，原来源与变换后来源的最坏历史 TV 至少为 $\ell(T)$。
+这些式子对整个 $\mathfrak D$ 一致成立，因而也覆盖 C-108.3 的每个不可见成员。
+
+证明。将同一份来源展开为
+$\Gamma_C=\sum_{j,k}C_{jk}|j\rangle\langle k|\otimes|f(j)\rangle\langle f(k)|$。
+在第二因子用 $|f(s)\rangle$ 夹取时，由 $f$ 单射只剩 $j=k=s$，故第一式是
+$C_{ss}\langle r|T(\Pi_s)|r\rangle=m_{rs}/5$。这不将 $C$ 的联合权重拆为边缘之积。
+原律只支撑 $r=s$，且 $0\le m_{ss}\le1$，所以
+
+$$
+\operatorname{TV}
+=\frac1{10}\left(\sum_s(1-m_{ss})+\sum_s\sum_{r\ne s}m_{rs}\right)
+=\frac15\sum_s\sum_{r\ne s}m_{rs}=\ell(T).
+\tag{C110.10}
+$$
+
+立即读数使用允许的零等待，然后两边 Stop；未匹配事件只是完整记录的经典分组。
+故它是 C-108.1 中一个真实有限策略，其 TV 给全部策略上确界的下界。
+原标签与行走标签按 (C108.1) 的位置对应，$T_A$ 由 $V$ 搬运；$f$ 是来源配对标签，
+不表示在 $B$ 上另加可执行门。没有独立副本、参考寄存器或参考测量。证毕。
+
+**定理 C-110.4（原单系统实际菜单的误差—泄漏曲线）。** 令
+$v=O(2/3)^Te_N$、$c_0=\sum_s|v_s|^4$，其中 $O$ 与被动坐标
+$D=\operatorname{diag}(1,i,i,i,1)$ 都取自 C-109.7。
+对每个 $q=1,2,3,4$ 和原 $T\in\mathfrak C_q$，其所有复单系统输入上的实际完整历史误差满足
+
+$$
+\begin{aligned}
+e(T)&\ge1-\left(\sqrt{qc_0}+\sqrt{5(1-c_0)\ell(T)}\right)^2,\\
+e(T)&>1-\left(\sqrt{53q/250}+2\sqrt{\ell(T)}\right)^2.
+\end{aligned}
+\tag{C110.11}
+$$
+
+若 $e(T)<1-qc_0$，还可反解第一式为
+
+$$
+\ell(T)\ge
+\frac{\left(\sqrt{1-e(T)}-\sqrt{qc_0}\right)^2}{5(1-c_0)}.
+\tag{C110.12}
+$$
+
+上述误差下界的右端为负时仅为无效的负下界，不断言误差严格为正。
+
+证明。C-109.7 的实际矩阵指数及解析尾界给
+$1/5\le c_0<53/250<1$，而非只给一列有理近似。
+在被动坐标中取 $\widehat T(X)=D^\dagger T(DXD^\dagger)D$。
+该式只改变表示；对同一 Kraus 族作 $K_\alpha\mapsto D^\dagger K_\alpha D$
+保持秩和完备性，且逐项保持 $m_{rs}$，故
+$\widehat T\in\mathfrak C_q$、$\ell(\widehat T)=\ell(T)$。
+这里无需把 $D$ 或 $D^\dagger$ 加入未来菜单。
+
+任意复输入的量词允许制备 $\rho_0=Dvv^\dagger D^\dagger$。
+C-109.7–C-109.8 已给同一实际正等待 $t_0=2/3$ 后
+$U(t_0)Dv=e_N$，所以理想完整模式律是 $N$ 处点质量。
+对替换通道使用完全相同的等待、完整读数和 Stop，$N$ 的概率恰为
+$F_v(\widehat T)$，该历史律的 TV 恰为 $1-F_v(\widehat T)$。
+因此 $e(T)\ge1-F_v(\widehat T)$。把 C-110.2 用于 $\widehat T$ 即得第一式。
+
+由 $c_0\ge1/5$ 得 $\sqrt{5(1-c_0)\ell}\le2\sqrt\ell$，而
+$q>0$、$c_0<53/250$ 给 $\sqrt{qc_0}<\sqrt{53q/250}$。
+两项之和非负，且后一上界严格为正，故平方保持严格比较，得到第二式。
+若 $e(T)<1-qc_0$，则 $\sqrt{1-e(T)}-\sqrt{qc_0}>0$；
+由存活率界移项、平方并除以 $5(1-c_0)>0$ 即得 (C110.12)。
+这条链使用原实际菜单的一个事件，没有把 $e(T)$ 换成 diamond 范数或双边来源误差。证毕。
+
+**推论 C-110.5（达到基准时四个严格正的同源 TV 下界）。** 对每个
+$q\in\{1,2,3,4\}$，设原 $T\in\mathfrak C_q$ 满足
+$e(T)\le u_q=(5-q)/7$。令
+
+$$
+a_q=\frac{q+2}{7},\quad b_q=\frac{53q}{250},\quad
+\delta_q=\frac14\left(\sqrt{a_q}-\sqrt{b_q}\right)^2,\quad
+r_q=\frac{(a_q-b_q)^2}{8(a_q+b_q)}.
+\tag{C110.13}
+$$
+
+则 $\ell(T)>\delta_q>r_q>0$，其中四个精确保守有理下界为
+
+$$
+\begin{array}{c|c|c|c}
+q&a_q&b_q&r_q\\ \hline
+1&3/7&53/250&143641/15694000\\
+2&4/7&53/125&16641/6097000\\
+3&5/7&159/250&18769/33082000\\
+4&6/7&106/125&2/326375
+\end{array}.
+\tag{C110.14}
+$$
+
+同一严格下界同时作用于每个原 $\Gamma_C\in\mathfrak D$ 的 (C110.9) 人口 TV，
+也给 C-108.1 条件性局部历史误差的下界，包含全部不可见成员。
+保留实际 $c_0$ 还给较细的必要条件
+
+$$
+\ell(T)\ge
+\frac{\left(\sqrt{(q+2)/7}-\sqrt{qc_0}\right)^2}{5(1-c_0)}.
+\tag{C110.15}
+$$
+
+证明。精确比较
+$a_q-b_q=(500-121q)/1750>0$，且 $0<b_q<a_q<1$。
+从 (C110.11) 和 $e(T)\le1-a_q$ 得
+$\sqrt{b_q}+2\sqrt\ell>\sqrt{a_q}$；两根之差为正，故
+$\ell>\delta_q>0$。同理，第一式与 $qc_0<b_q<a_q$ 给 (C110.15)。
+
+为获得完全有理的下界，令 $x=\sqrt{a_q}$、$y=\sqrt{b_q}$。
+$x>y>0$ 给 $(x+y)^2<2(a_q+b_q)$，而
+$(x-y)(x+y)=a_q-b_q$，所以
+
+$$
+\delta_q=\frac{(a_q-b_q)^2}{4(x+y)^2}
+>\frac{(a_q-b_q)^2}{8(a_q+b_q)}
+=\frac{(500-121q)^2}{14000(621q+500)}=r_q>0.
+\tag{C110.16}
+$$
+
+逐一代入四个整数并约分即得表中有理数。
+C-110.3 将同一通道数值变成每个实际来源的精确人口 TV，故无需对 $C$ 另作优化。
+QMB 定理 5.1 的达到性和显式 $u_q$ 上界使每个原无约束 minimizer 也满足本推论，
+但此处不求出其误差精确值。证毕。
+
+**命题 C-110.6（零泄漏端点与必要条件的边界）。** 对任意有限维 CPTP $T$，
+$\ell(T)=0$ 当且仅当各基投影固定，也当且仅当 BP 成立。
+此时任意有限 Kraus 表示都逐项对角，且 C-110.2 退为 $F_v(T)\le qc(v)$。
+在原五态菜单中，完全去相干通道给零泄漏但不满足标量端口的 $u_1$ 误差基准；
+重置通道给严格正泄漏但最坏误差仍为一。
+五维恒等端口则同时有零误差与零泄漏。
+
+证明。(C110.5) 是非负有限和，故 $\ell=0$ 等价于所有 Kraus 非对角元为零。
+对角族的完备性使 $T(\Pi_s)=\Pi_s$，也使每个输入的各基人口保持。
+反向若基投影固定或 BP 成立，则 $m_{rs}=\delta_{rs}$，直接有 $\ell=0$。
+这就是 C-109.2 的零平方和论证在任意 $d$ 的同一端点；未给原竞争类额外添加 BP。
+令 $\ell=0$ 代入 (C110.3) 即得所述存活率界。
+
+具体取 $\Delta(X)=\sum_s\Pi_sX\Pi_s$，其五个秩一 Kraus 算子是 $\Pi_s$，
+故 $\Delta\in\mathfrak C_1$、$\ell(\Delta)=0$ 且 $F_v(\Delta)=c(v)$。
+同一个 $t_0$ 事件给 $e(\Delta)\ge1-c_0>197/250>4/7=u_1$。
+另一方面，对 C-108.3 的不可见承诺族，
+$(\Delta_A\otimes\mathrm{id})(\Gamma_C)=S$，C-108.3 证明其全部条件性实际双边历史
+与 $S$ 相同。因此这些承诺来源的精确标量历史模拟，与全部复输入上的通道误差要求不同。
+
+取固定原模式 $j$，$R_j(X)=\operatorname{tr}(X)\Pi_j$ 的有限 Kraus 族是
+$|j\rangle\langle s|$，故 $R_j\in\mathfrak C_1$。
+其 $m_{rs}=\delta_{rj}$ 给 $\ell(R_j)=4/5$。
+输入任一 $\Pi_s$、$s\ne j$，立即完整读数后 Stop 的两律不交，故 $e(R_j)=1$；
+C-110.3 同时给每个匹配来源的人口 TV 恰为 $4/5$。
+因此正泄漏本身不保证准确，C-110.5 的下界不是充分条件或最优常数。
+最后 $\mathrm{id}\in\mathfrak C_5$ 的一个整块实现直接给 $e=\ell=0$，
+故四个严格正下界不延伸到 $q=5$。这些例子既不改变来源切口，
+也不将旗数、环境维数、整个块维数与承诺历史模拟资源混为一项。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 111. 完整历史不可见纤维的四层上限与等谱二／四分叉
+
+**定义 C-111.1（同一纤维及固定坐标中的两个矩阵）。** 沿用 C-108.1 的
+条件性实际局部菜单、C-109.1 的原标签、$f,J,V,W$ 与全部复输入合同，记
+
+$$
+\mathcal I=\{C=I_5/5+iA:A\in M_5(\mathbb R),\ A^T=-A,\ C\succeq0\}.
+\tag{C111.1}
+$$
+
+因此 $J\mathcal I J^\dagger$ 恰为 C-108.3 中与 $S$ 具有全部相同实际历史律的
+完整人口纤维。$k(C)$、$\operatorname{SN}_{A\mid B}$、
+$T_C(X)=(5C)\circ X$ 与 $q_{\rm exact}$ 均按 C-109.1–C-109.3 定义；
+稀疏性始终在原系数坐标 $j=0,\ldots,4$ 中计算，依次对应
+$(0,1,2,3,13)$，不在另一个基中重新定义。
+
+令 $\omega=e^{2\pi i/5}$，并在这些原坐标中定义向量和投影
+
+$$
+u_m(j)=\frac{\omega^{mj}}{\sqrt5},\qquad
+P_m=u_mu_m^\dagger,\qquad m,j\in\{0,1,2,3,4\}.
+\tag{C111.2}
+$$
+
+指数按模五解释，负指数取单位圆上的逆。定义
+
+$$
+\begin{aligned}
+C^{\rm F}&=\frac15(P_0+2P_1+2P_2),\\
+C^{\rm E}&=\frac15\bigl[
+(e_0-ie_4)(e_0-ie_4)^\dagger+
+(e_1-ie_3)(e_1-ie_3)^\dagger+e_2e_2^\dagger
+\bigr].
+\end{aligned}
+\tag{C111.3}
+$$
+
+$u_m$ 是指定原坐标中书写矩阵的辅助向量，不增加傅里叶控制、相位门、制备能力
+或读出操作。$C^{\rm E}$ 是 C-108.5 的 $t=1$ 矩阵在同一标签识别下的写法。
+
+**定理 C-111.2（完整复 PSD 纤维的统一四层上界）。** 对每个 $C\in\mathcal I$，
+
+$$
+k(C)\le4,\qquad
+\operatorname{SN}_{A\mid B}(JCJ^\dagger)\le4,\qquad
+q_{\rm exact}(T_C)\le4.
+\tag{C111.4}
+$$
+
+有限分解可以选为至多二十个四稀疏向量；这些分解允许任意复振幅。
+
+证明。对复 PSD 矩阵逐项共轭仍为 PSD：对任意 $z$，
+
+$$
+z^\dagger\overline C z
+=\overline{(\overline z)^\dagger C\overline z}\ge0.
+$$
+
+由 $C+\overline C=2I_5/5$，得到
+
+$$
+0\preceq C\preceq2I_5/5,\qquad \operatorname{tr}C=1.
+\tag{C111.5}
+$$
+
+将特征值按 $\lambda_0\ge\cdots\ge\lambda_4\ge0$ 排列，则
+$\lambda_0\le2/5$，而 $\sum_{m=1}^4\lambda_m=1-\lambda_0\ge3/5$。
+非负数的平方根满足
+$\sqrt{\sum_m x_m}\le\sum_m\sqrt{x_m}$，因为右边的平方等于
+$\sum_mx_m+2\sum_{m<n}\sqrt{x_mx_n}$。故
+
+$$
+\sqrt{\lambda_0}
+\le\sqrt{2/5}<\sqrt{3/5}
+\le\sqrt{\sum_{m=1}^4\lambda_m}
+\le\sum_{m=1}^4\sqrt{\lambda_m}.
+\tag{C111.6}
+$$
+
+这里消费成熟的复矩阵谱充分判据：PSD 矩阵的最大特征值平方根不超过其余
+特征值平方根之和时，该矩阵的 factor width 至多 $n-1$。
+其谱锥框架见 Johnston–Moein–Pereira–Plosker，
+[*Absolutely k-Incoherent Quantum States and Spectral Inequalities for Factor Width of a Matrix*,
+arXiv:2205.05110v2](https://arxiv.org/html/2205.05110v2)，§2.1–§2.2、Theorems 3、8；
+上述平方根充分形式由 Johnston–Russo–Sikora，
+[*Tight bounds for antidistinguishability and circulant sets of pure quantum states*,
+arXiv:2311.17047v2](https://arxiv.org/html/2311.17047v2)，Theorem 5.1 的证明给出，
+与其 Theorem 3.2 的 Gram/factor-width 对应一致。
+该充分方向适用于任意复 PSD 矩阵，无 circulant 或非奇异假设；
+circulant 是该文逆向结论的条件，不是这里充分方向的条件。
+在本题也可直接对 $G=5C$ 使用其单位对角 Gram 表述：
+$G\succeq0$ 且 $G_{jj}=1$，故它是五个单位向量的 Gram 矩阵；
+(C111.6) 乘以 $\sqrt5$ 给所需谱条件。
+Theorems 5.1、3.2 给 $G$ 的四稀疏有限分解，
+再把每个分解向量除以 $\sqrt5$ 即给 $C$ 的相同支撑分解。
+
+具体地，factor width 至多四的有限分解可按每个向量的一个零坐标分成五组。
+每组之和 $F_r\succeq0$ 仅支撑在坐标 $r$ 的补集，且
+$C=\sum_{r=0}^4F_r$。在该四维坐标子空间内对 $F_r$ 作谱分解，
+每组至多四个秩一项，合计至多二十项，且仍为原基中的四稀疏向量。
+最后直接应用 C-109.3 的同一来源及整个块通道字典，得另两个不等式。
+这个论证没有先限制 $A$ 的十个自由坐标，也没有把实分解代替复分解。证毕。
+
+**命题 C-111.3（同历史、同全谱、同最大纯度的秩三矩阵）。**
+$C^{\rm E},C^{\rm F}\in\mathcal I$，且二者及其原匹配态具有相同的非零谱
+$2/5,2/5,1/5$，系数矩阵的全谱均为
+
+$$
+\{2/5,2/5,1/5,0,0\},\qquad
+\operatorname{rank}C^{\rm E}=\operatorname{rank}C^{\rm F}=3,\qquad
+\operatorname{tr}((C^{\rm E})^2)=\operatorname{tr}((C^{\rm F})^2)=9/25.
+\tag{C111.7}
+$$
+
+原匹配态在二十五维空间的全谱再补二十个零；其全部实际
+$\mathcal M_{\rm loc}$ 历史律与 $S$ 相同。
+
+证明。单位根的几何级数给
+$\sum_{j=0}^4\omega^{mj}=0$，$m=1,2,3,4$，所以 $u_0,\ldots,u_4$
+为正交归一基，$\sum_mP_m=I_5$，且
+$\overline P_m=P_{-m}$。因此
+
+$$
+C^{\rm F}+\overline{C^{\rm F}}
+=\frac25(P_0+P_1+P_2+P_3+P_4)=2I_5/5.
+\tag{C111.8}
+$$
+
+(C111.3) 直接给其 PSD 性、谱、秩和迹，(C111.8) 给
+$\operatorname{Re}C^{\rm F}=I_5/5$；Hermitian 性使其虚部实反对称。
+更显式地，在原坐标中
+
+$$
+C^{\rm F}_{jk}=\frac1{25}
+\bigl(1+2\omega^{j-k}+2\omega^{2(j-k)}\bigr),\qquad
+A^{\rm F}_{jk}=\frac2{25}
+\left(\sin\frac{2\pi(j-k)}5+\sin\frac{4\pi(j-k)}5\right).
+\tag{C111.9}
+$$
+
+当 $j\ne k$ 时实部为零，当 $j=k$ 时对角为 $1/5$。
+$C^{\rm E}$ 的三个互相正交向量的平方范数为 $2,2,1$，
+故有同谱；其非对角项仅为 $(0,4)$、$(1,3)$ 上的 $i/5$
+及各自的共轭，因而也在 $\mathcal I$。
+$J^\dagger J=I_5$ 保持非零谱和纯度。C-108.4 给此纯度是整个不可见纤维的最大值，
+C-108.3 给全部实际历史律相同。证毕。
+
+**引理 C-111.4（原三坐标支撑在该值域中的强制系数平衡）。**
+令 $\mathcal R=\operatorname{span}_{\mathbb C}\{u_0,u_1,u_2\}$。
+对任意复向量 $z=c_0u_0+c_1u_1+c_2u_2\in\mathcal R$，若
+$|\operatorname{supp}z|\le3$，则
+
+$$
+|c_0|^2=|c_2|^2.
+\tag{C111.10}
+$$
+
+证明。五个原坐标中至少有两个不同的零坐标 $r,s$。令
+$x=\omega^r,y=\omega^s$，则 $x\ne y$ 且 $|x|=|y|=1$。
+多项式 $p(t)=c_0+c_1t+c_2t^2$ 满足 $p(x)=p(y)=0$。
+相减并使用 $x-y\ne0$，得 $c_1=-c_2(x+y)$；
+代回得到 $c_0=c_2xy$。所以 $|c_0|=|c_2|$。
+这也包括 $c_2=0$、零向量以及支撑少于三的情况；没有假设系数为实数、
+非零系数等模、特定的三个支撑坐标或特定的分解项数。证毕。
+
+**定理 C-111.5（任意有限复分解的四层锐性及五项达到）。**
+
+$$
+k(C^{\rm F})=4,\qquad k(C^{\rm E})=2.
+\tag{C111.11}
+$$
+
+更具体地，设
+$\alpha=(-1+i\sqrt7)/2$，并定义五个原坐标向量
+
+$$
+z_r=\frac15\left(u_0+\alpha\omega^{-r}u_1+
+                 \overline\alpha\omega^{-2r}u_2\right),
+\qquad r=0,1,2,3,4.
+\tag{C111.12}
+$$
+
+则
+
+$$
+C^{\rm F}=\sum_{r=0}^4z_rz_r^\dagger,\qquad
+\|z_r\|^2=1/5,\qquad
+\operatorname{supp}z_r=\{0,1,2,3,4\}\setminus\{r\}.
+\tag{C111.13}
+$$
+
+证明。先证下界。假设对某个任意有限 $N$ 存在
+$C^{\rm F}=\sum_{a=1}^Nz_az_a^\dagger$，
+且每个 $z_a\in\mathbb C^5$ 的原坐标支撑至多三。
+由 $u_3,u_4\in\ker C^{\rm F}$，对 $m=3,4$ 有
+
+$$
+0=u_m^\dagger C^{\rm F}u_m
+=\sum_{a=1}^N|u_m^\dagger z_a|^2.
+\tag{C111.14}
+$$
+
+每项非负，故每个 $z_a$ 均与 $u_3,u_4$ 正交，属于 $\mathcal R$。
+将其唯一写成 $z_a=c_{a0}u_0+c_{a1}u_1+c_{a2}u_2$。
+引理 C-111.4 逐项给 $|c_{a0}|^2=|c_{a2}|^2$，求和却得到
+
+$$
+\frac15=u_0^\dagger C^{\rm F}u_0
+=\sum_a|c_{a0}|^2
+=\sum_a|c_{a2}|^2
+=u_2^\dagger C^{\rm F}u_2=\frac25,
+\tag{C111.15}
+$$
+
+矛盾。有限项数 $N$ 没有预定上限，所有权重均已吸收入任意复向量，
+因此该论证排除了定义 $k$ 中的全部三稀疏有限分解。
+
+再证构造。(C111.12) 的交叉项在对 $r$ 求和后全部消失，
+因为不同的 $0,1,2$ 次幂之差不被五整除。
+由 $|\alpha|^2=2$，其和恰为
+$(P_0+2P_1+2P_2)/5$，且每个平方范数为 $(1+2+2)/25=1/5$。
+逐坐标有
+
+$$
+z_r(j)=\frac1{5\sqrt5}
+ \left[1+\alpha\omega^{j-r}+
+             \overline\alpha\omega^{2(j-r)}\right].
+\tag{C111.16}
+$$
+
+利用 $\alpha+\overline\alpha=-1$，括号内的多项式为
+
+$$
+1+\alpha t+\overline\alpha t^2
+=(t-1)(\overline\alpha t-1).
+\tag{C111.17}
+$$
+
+第二个根的模为 $1/\sqrt2$，不在单位圆上；所以在五个单位根中恰有
+$t=1$ 一个零，即 $j=r$。这证明 (C111.13)，从而给四的达到。
+$C^{\rm E}$ 的 (C111.3) 已是三个支撑大小分别为 $2,2,1$ 的有限分解。
+它有非零非对角元，而一稀疏向量的秩一和必为对角矩阵，故其 $k$ 恰为二。证毕。
+
+**命题 C-111.6（同一 Schur 通道的整个块有限精确实现与资源坐标）。**
+对 $C^{\rm F}$，存在量子维数四、五个经典旗、每旗一个编码 Kraus 算子
+及一个整个块解码 Kraus 算子的精确实现。
+对 $C^{\rm E}$，对应存在量子维数二、三个经典旗的这种实现。
+二者的最小量子维数分别恰为四与二；二者的最小无约束 Kraus 数均为三。
+
+证明。对 $C^{\rm F}$ 取 (C111.12) 的五个向量，并令
+$K_r=\sqrt5\operatorname{diag}z_r$，所以
+
+$$
+K_r(j,j)=\frac15
+ \left[1+\alpha\omega^{j-r}+
+              \overline\alpha\omega^{2(j-r)}\right],\qquad
+\operatorname{rank}K_r=4.
+\tag{C111.18}
+$$
+
+(C111.13) 给
+
+$$
+\sum_rK_r^\dagger K_r=I_5,\qquad
+\sum_rK_rXK_r^\dagger=(5C^{\rm F})\circ X
+\quad\text{对每个 }X\in M_5(\mathbb C).
+\tag{C111.19}
+$$
+
+为每个 $r$ 固定一个坐标等距嵌入
+$V_r:\mathbb C^4\to\mathbb C^5$，其像为坐标 $r$ 的正交补，
+取 $B_r=V_r^\dagger K_r$。于是
+
+$$
+\operatorname{Enc}(X)=(B_rXB_r^\dagger)_{r=0}^4,\qquad
+\operatorname{Dec}\bigl((Y_r)_{r=0}^4\bigr)
+=\sum_{r=0}^4V_rY_rV_r^\dagger.
+\tag{C111.20}
+$$
+
+$V_r^\dagger V_r=I_4$，所以每个分支解码在整个 $M_4$ 上保迹，
+而不只是对编码像保迹。又由
+$V_rV_r^\dagger K_r=K_r$，得到
+$\sum_rB_r^\dagger B_r=I_5$。
+任意参考放大下的夹乘正性给编码与解码完全正，故两者均 CPTP。
+它们事先固定，复合在全部复矩阵上恰为 (C111.19)，所有量子路径都通过四维块。
+这里的任意参考放大只证明完全正性，不授予参考制备或测量。
+
+对 $C^{\rm E}$，三个 $K$ 的对角向量分别取
+$e_0-ie_4,e_1-ie_3,e_2$；三个支撑依次嵌入二维块，
+第三个支撑用任一个不同原坐标补足二维。相同的 (C109.7) 计算证明整个
+$M_2$ 上的解码合同、总保迹和对所有复矩阵的精确复合。
+
+C-109.3 连同 (C111.11) 给量子维数的下界，允许竞争方案有任意有限旗数、
+每旗任意有限编码／解码 Kraus 数，且无需其 Kraus 向量等模。
+最后，二者的规范归一化 Choi 态经 $(V\otimes W)$ 的标签等距对应分别就是
+$JC^{\rm E}J^\dagger$ 与 $JC^{\rm F}J^\dagger$，故 Choi 秩均为三。
+标准 Choi/Kraus 秩定理使最小无约束 Kraus 数恰为三；
+其三个 Kraus 未被要求分别具有最优端口所需的秩界。
+显示构造的五旗／五 Kraus 与三旗／三 Kraus 是达到方案的计数，
+没有声称五是四维实现的最少旗数或最少受秩限制 Kraus 数。证毕。
+
+**推论 C-111.7（完整纤维最大值与观察不识别的精确范围）。**
+在 C-108.1 的实际菜单假设下，
+
+$$
+\boxed{
+\max_{C\in\mathcal I} k(C)
+=\max_{C\in\mathcal I}\operatorname{SN}_{A\mid B}(JCJ^\dagger)
+=\max_{C\in\mathcal I}q_{\rm exact}(T_C)=4.
+}
+\tag{C111.21}
+$$
+
+$C^{\rm E}$ 与 $C^{\rm F}$ 说明：即使同时给出全部实际双边历史律、
+完整来源谱、最大整态纯度和矩阵秩，也不能确定原 $A\mid B$ Schmidt number，
+或相应同一个 Schur 通道在全部复输入上的最小精确量子块维数。
+这些读数相同的两个成员所需资源分别为二和四。
+
+证明。C-111.2 给整个集合的统一上界，C-111.5 与 C-109.3 给达到。
+C-111.3 给两个成员的全部所述读数相同，C-111.5–C-111.6 给资源不同，
+故任何只依赖这些读数的函数不能在二者上均正确。三个资源坐标的比较为
+
+$$
+\begin{array}{c|cc}
+ & C^{\rm E}&C^{\rm F}\\ \hline
+k(C)=\operatorname{SN}_{A\mid B}=q_{\rm exact}(T_C)&2&4\\
+\text{所示经典旗数}&3&5\\
+\text{所示复合 Kraus 数}&3&5\\
+\text{最小无约束 Kraus 数}=\operatorname{rank}C&3&3\\
+\operatorname{tr}(C^2)&9/25&9/25
+\end{array}
+\tag{C111.22}
+$$
+
+原切口始终是 $J e_s=|s,f(s)\rangle$ 的 $A\mid B$，
+而非两个独立制备来源之间的切口。$T_C$ 与 $JCJ^\dagger$ 的关系始终是
+C-109.2–C-109.3 的同矩阵 Choi／Schur 字典；
+对一般匹配输入 $JD J^\dagger$，其局部通道作用仍为
+$D\mapsto(5C)\circ D$。特别地，它把 $S$ 保持为 $S$，
+没有把 $S$ 变成 $JCJ^\dagger$，也不把未知来源态变成一个通道程序。
+(C111.21) 的量词是对每个固定 $C$ 可选择一组固定端口，
+并使它精确作用于每个复输入；它没有断言一组不含 $C$ 信息的端口同时实现所有
+不同的 $T_C$。
+
+对承诺来源历史，C-110.6 的标量去相干方案仍成立：
+$(\Delta_A\otimes\mathrm{id})(JCJ^\dagger)=S$，
+并由 C-108.3 保持该承诺族的全部实际双边历史律。
+因此四维是指定通道的精确整个块资源上限及达到值，
+不是该承诺历史模拟任务的下界。
+(C111.21) 也不决定 BP 限制下的最优历史误差、无约束
+$\varepsilon_q$ 的精确值或任何近似实现的资源。
+标签识别和辅助傅里叶向量均未提供原生树制备桥、额外相位控制、来源副本、
+独立制备、交换测量、参考接入或物理资源界。
+
+本章的新增综合推导是完整指定纤维的锐最大值、其固定原坐标中的达到构造、
+三稀疏分解的值域系数障碍及同谱最大纯度的二／四资源分叉。
+factor-width 的有限复分解、局部 PSD 对偶与 coherence number 的一般框架
+分别沿用上述两篇文献及 Ringbauer 等，
+[*Certification and Quantification of Multilevel Quantum Coherence*,
+arXiv:1707.05282v3](https://arxiv.org/html/1707.05282v3)，§I.1、Theorem 1；
+原来源／Schmidt／整个块资源对应直接消费 C-109.3。
+这里不主张这些成熟成分或该综合结果的全球原创性。证毕。
+
 ## 追加锚（本行以下为增补区）
