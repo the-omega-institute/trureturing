@@ -26,7 +26,7 @@ Put q_k(N)=k!S(N,k). Original exp/log inversion and reconstruction supply an int
 
 At an arbitrary degree r, log(K)^n contributes only for n<=r. The original finite-window identity expands T(a,m*n+b) using k<=m*r+b, since m*n+b<=m*r+b. Both sums are therefore finite, and the coefficient equals the integer sum sum_(k<=m*r+b) a(k) coeff(r,P_(k,m,b)). This is a bound for each arbitrary degree, with no bound on the whole series. The canonical rational-map compatibility transports this identity into K. At degree zero the output constant is L(b); when b=0 it retains arbitrary L(0). Signed and infinitely supported coordinates a are included.
 
-The original finite-sum suppliers coeff_transform and T_window are applied directly. The exact theorem audit is unfinished at https://github.com/the-omega-institute/trureturing/issues/16582. The original three audits and six earlier helper audits retain their separate scopes at issues 16520 and 16571. These audit exceptions do not supply validated registration.
+The original finite-sum suppliers coeff_transform and T_window are applied directly.
 
 ## References
 
