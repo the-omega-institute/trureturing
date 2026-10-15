@@ -447,6 +447,21 @@ It does not bound the retained compression $A_N$ alone. The exterior
 part of $f_*$ is retained in the variational completion; no inequality
 $Q(Pf_*)\le Q(f_*)$ is assumed.
 
+There is also a directional requirement on a successful inverse
+comparison. Normalize $v_*=Pf_*/\|Pf_*\|_2$ and, for a chosen exterior
+embedding $E$ and trial $X$, put $R_X=C_N-H_NEX$. The existing
+inverse-residual identity gives
+
+$$
+\langle v_*,[S_N-(A_N-U(X))]v_*\rangle
+=\langle R_Xv_*,(W-H_N^{-1})R_Xv_*\rangle.
+$$
+
+Thus if $A_N-U(X)\succeq0$, its nonnegative comparison loss in this
+same direction must be strictly below $9\times10^{-121}$. This is a
+necessary directional bound, not a required uniform operator-norm
+error or a proved estimate of the actual residual.
+
 This determines neither sign. It rules out treating a computed
 $10^{-11}$ scale as the expected positive minimum, even when the
 auxiliary finite solve is well conditioned. A proof using additive
