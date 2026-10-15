@@ -60,7 +60,10 @@ internal sealed class SpacetimeDensitySchattenSubadditivityRefutationDocument : 
                         + "The left partial trace is diag(144/169,25/169), and the right partial trace is diag(3969/4225,256/4225). "
                         + "At p = 2, schattenNorm(witnessT,2) = sqrt(10471777/17850625), the left marginal norm is sqrt(21361/28561), and the right marginal norm is sqrt(15818497/17850625). "
                         + "Consequently 1 + schattenNorm(witnessT,2) ≤ 177/100 < 180/100 ≤ sqrt(21361/28561) + sqrt(15818497/17850625), contradicting the proposed inequality."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("milekhin-adamska-preskill-2025-spacetime-schatten-subadditivity"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
