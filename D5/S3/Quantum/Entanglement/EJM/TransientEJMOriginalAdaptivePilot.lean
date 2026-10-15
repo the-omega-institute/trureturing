@@ -7,15 +7,19 @@ namespace D5.S3.Quantum.Entanglement.EJM.TransientEJMOriginalAdaptivePilot
 open D5.S3.Quantum.Entanglement.EJM.EJMOriginalReplayAssembly
 open D5.S0.Certificates.FiniteCachedSymmetryDAGReplay (checkSplit checked_split_node)
 private theorem accepted_17_0 : Accepted 17 0 ⟨16, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem accepted_17_1 : Accepted 17 1 ⟨27, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem accepted_17_2 : Accepted 17 2 ⟨28, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem accepted_17_3 : Accepted 17 3 ⟨29, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem node_16_30 :
@@ -34,15 +38,19 @@ private theorem accepted_16_0 : Accepted 16 0 ⟨30, by decide⟩ := by
   · exact accepted_17_3
 
 private theorem accepted_17_4 : Accepted 17 4 ⟨38, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem accepted_17_5 : Accepted 17 5 ⟨43, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem accepted_17_6 : Accepted 17 6 ⟨51, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem accepted_17_7 : Accepted 17 7 ⟨29, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem node_16_52 :
@@ -61,9 +69,11 @@ private theorem accepted_16_1 : Accepted 16 1 ⟨52, by decide⟩ := by
   · exact accepted_17_7
 
 private theorem accepted_16_2 : Accepted 16 2 ⟨53, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem accepted_16_3 : Accepted 16 3 ⟨54, by decide⟩ := by
+  unfold Accepted
   decide +kernel
 
 private theorem node_15_55 :
