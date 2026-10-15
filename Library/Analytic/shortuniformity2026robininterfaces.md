@@ -282,3 +282,40 @@ existing strict first-layer activation rule. It does not use an
 increment bound to erase an arbitrary complete primitive baseline.
 The theorem and this note supply neither a same-source signed future
 occupation/credit bound nor a Robin or RH proof.
+
+## Uniform linear phases in a shorter range
+
+Javier Pliego and Mengdi Wang, *Discorrelation of the Möbius function
+with linear phases in short intervals*,
+[arXiv:2610.11487v1](https://arxiv.org/html/2610.11487v1#S1.Thmtheorem1),
+version 8 October 2026, §1, Theorem 1.1, gives, for fixed small
+$\varepsilon>0$ and $X^{0.58+\varepsilon}\le H\le X$,
+
+$$
+\sup_{\alpha\in\mathbb R}
+\left|\sum_{X<n\le X+H}\mu(n)e(n\alpha)\right|
+\ll_\varepsilon H(\log X)^{-1/3+\varepsilon}.
+$$
+
+This theorem is unconditional. The Dirichlet-$L$ moment premise
+(1.2) belongs to the paper's Theorem 1.3 on prime exponential sums;
+it is not an assumption of Theorem 1.1. The statement and its
+hypotheses are cited directly, without reproducing the source proof.
+
+For the [original residual-band application (I59)](../Weil/corvalan2023interpolation.md#pay-the-terminal-covariance-while-retaining-the-endpoint),
+$X\asymp N$ and $H\asymp N^{3/4}e^{\lambda\Omega(N)}$ satisfy
+this length range eventually. At this length, however, the previously
+cited Theorem 1.2 of arXiv:2610.09567v1 already supplies arbitrary
+fixed logarithmic savings for linear phases, realized as fixed
+one-dimensional torus nilsequences with uniform Lipschitz bounds.
+For the untwisted phase the longer-interval exponential error above
+is also stronger. The shorter admissible length in this new source
+does not improve the error supplied for that particular family.
+
+The residual moments and endpoint in (I56) are not a single linear
+phase. Turning them into a phase superposition still requires a proved
+expansion, its total weight and all losses, with the same actual
+coefficients and endpoint retained. Likewise the smooth test in
+(I78)--(I82) has growing derivative costs and two exact arithmetic
+scalar channels. This cited theorem supplies neither their joint
+cancellation nor a complete signed Robin estimate.

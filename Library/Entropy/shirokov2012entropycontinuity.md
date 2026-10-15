@@ -8,11 +8,18 @@ url: https://arxiv.org/abs/1201.1093v1
 claim: "Entropy continuity on a closed convex family is conjectured to imply an all-temperature Hamiltonian energy bound and a common continuous bounded relative entropy reference."
 strata_touched:
   - D5/S3/Quantum/Analysis/OrliczCommonEnergy
+  - D5/S3/Quantum/Analysis/TraceClass/EntropyMaximizer
 license: citation-only
 triage: anchor
 ---
 
 # Entropy continuity and the scalar Orlicz sufficient condition
+
+## Verified locator
+
+Original conjectures: https://arxiv.org/abs/1201.1093v1
+
+## Original entropy-continuity premises
 
 Shirokov, arXiv:1201.1093v1, Section 3, Conjectures 1 and 2, asks about arbitrary
 trace-norm closed convex families of quantum states with finite continuous von
@@ -50,3 +57,30 @@ fixed logarithmic-power moment is claimed. The spectral, noncommuting trace,
 self-adjoint domain and actual heat-trace joins are separate mathematical
 obligations. The scalar theorem does not resolve either original conjecture or
 establish historical originality.
+
+## Global entropy maximum from the original family premises
+
+`D5/S3/Quantum/Analysis/TraceClass/EntropyMaximizer` works on the actual
+trace-class Banach space of any complete complex Hilbert space. Its nonempty,
+closed real-convex family consists of positive trace-one operators with finite
+actual singular spectral entropy and relatively continuous actual real entropy.
+It assumes no energy condition, compactness or entropy bound.
+
+Every state has trace norm one. At a fixed state x, continuity of entropy
+relative to the family gives a neighborhood where entropy is below S(x)+1. A single sufficiently small
+positive t puts every mixture (1-t)x+ty in that neighborhood, since the state
+family has diameter at most two. Nonnegative concavity gives t*S(y)<=S(x)+1
+and hence a finite global upper bound. Strong entropy concavity with modulus
+one half, completeness of the closed family and upper semicontinuity then
+give an actual unique global maximizer gamma and
+
+    norm(rho-gamma)^2/8 <= S(gamma)-S(rho).
+
+The quantitative concavity supplier is attributed in
+`Library/QuantumBounds/androulakis2023nussbaumszkola.md`; attainment uses the
+standard maximizing-sequence argument in `StrongConcavityAttainment`.
+This is a consequence used along the original entropy-continuity route,
+not a theorem attributed verbatim to the conjecture paper. No originality,
+common-reference energy conclusion or all-temperature Hamiltonian conclusion
+is asserted. Separability, commutation and absence of kernel fibers are not
+premises of this intermediate result.
