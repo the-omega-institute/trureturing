@@ -52,10 +52,11 @@ The proof would not settle the conjecture if the module's system differed from (
 
 The canonical source is `D5/S3/Quantum/Analysis/KeplerCoulombSphereQESCoefficients.lean` (901 lines).
 - It defines `System`, `series`, `delta`, `OddForm`, `EvenForm`, `ClosedForms`, `PositiveConstants` and `claim`, and proves `result : claim` for every m ≥ 2.
-- Positivity of a polynomial with positive coefficients at a nonnegative point is the frozen `NewtonHankelRealRootCriterion.eval_pos_of_positive_coefficients` (made public for this settlement). The remaining steps use Mathlib's `Nat.descFactorial`, `Finset` sums and products and `Polynomial` coefficient lemmas.
+- Positivity of a polynomial with positive coefficients at a nonnegative point is the frozen `NewtonHankelRealRootCriterion.eval_pos_of_positive_coefficients` (made public for this settlement). The identity (n.descFactorial i : ℝ) = n!/(n − i)! is the frozen `AlternatingFactorialSum.real_descFactorial`, which `MatchingPolynomial` also uses. The remaining steps use Mathlib's `Nat.descFactorial`, `Finset` sums and products and `Polynomial` coefficient lemmas.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registration in `Reg/D5/S3/Quantum/Analysis/KeplerCoulombSphereQESCoefficients.lean` reads out the coordinate a′ i of the uniqueness clause of `claim`. Its rejected realization, the constant 0, fails at m = 2 and Q = κ = 1: applied to a solution paired with itself, the modified clause forces a_0 = a_1 = 0, contradicting (m + 1)a_0 − a_1 = 1. It is `declared_validated`.
 - The newly public `eval_pos_of_positive_coefficients` is registered in `Reg/D5/S3/Constants/NewtonHankelRealRootCriterion.lean`, reading out P.eval x. Its rejected realization, the constant 0, fails at P = 1, d = 0 and x = 0. It is `declared_validated`.
+- The shared `real_descFactorial` is registered in `Reg/D5/S3/Zeros/Convolution/AlternatingFactorialSum.lean`, reading out (n.descFactorial i : ℝ). Its rejected realization, the constant 0, fails at n = i = 0, where the value is 1. It is `declared_validated`.
 
 Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Analysis/KeplerCoulombSphereQESCoefficients.lean.json`, statement `sha256:64ff65e36f629fae0ea0a33dce27ef930dee47d225b6c872f48d5aece5bee48e`.
 
@@ -70,7 +71,7 @@ Tier 1 conjecture of a 2022 paper (published 2023), preregistered in issue #1707
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| result | bind-only | none: after inlining, the normalization, the telescoping identities, the proportionality argument, the coefficient positivity and the rescaling are obtained by instantiating pinned Mathlib results (for example `Finset.sum_Ico_sub`, `Finset.prod_range_induction` and `Finset.prod_X_add_C_coeff`) and the frozen positivity lemma, followed by normalization | open-problem-resolution |
+| result | bind-only | none: after inlining, the normalization, the telescoping identities, the proportionality argument, the coefficient positivity and the rescaling are obtained by instantiating pinned Mathlib results (for example `Finset.sum_Ico_sub`, `Finset.prod_range_induction` and `Finset.prod_X_add_C_coeff`) and the frozen lemmas `eval_pos_of_positive_coefficients` and `real_descFactorial`, followed by normalization | open-problem-resolution |
 | the normalization, polynomial, telescoping, coefficient, uniqueness and rescaling helpers (private) | bind-only (consumed on the proof path of `result`) | none | consumed helpers |
 
 Every other public declaration is a definition used by a public statement. The module's 46 private theorems are bind-only helpers consumed on the proof path of `result`, and its 17 private definitions and its compiler-generated declarations also lie on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `none`. There is no digestion atom.

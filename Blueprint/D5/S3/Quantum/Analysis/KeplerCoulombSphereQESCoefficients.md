@@ -132,3 +132,4 @@ Normalize with z = Q squared divided by curvature, dividing each positive even-i
 - Truth anchor: `D5/S3/Quantum/Analysis/KeplerCoulombSphereQESCoefficients.result`
 - Truth anchor: `D5/S3/Quantum/Analysis/KeplerCoulombSphereQESCoefficients.series`
 - Dependency: [D5/S3/Constants/NewtonHankelRealRootCriterion](../../Constants/NewtonHankelRealRootCriterion.md)
+- Dependency: [D5/S3/Zeros/Convolution/AlternatingFactorialSum](../../Zeros/Convolution/AlternatingFactorialSum.md)
