@@ -46,9 +46,11 @@ internal sealed class KeplerCoulombSphereQESCoefficientsDocument : IScribeDocume
                         + "An explicit polynomial solution satisfies the normalized equations by telescoping identities. "
                         + "The recurrence forces every solution to be proportional to this polynomial solution, "
                         + "and the first equation fixes the proportionality constant. "
-                        + "The denominator D and, for admissible k, the odd-index brackets B have strictly positive "
-                        + "coefficients through their degrees; B is H for odd m and R after removing the factor X "
-                        + "from H = X * R for even m. Their coefficients give b and c, and evaluation at nonnegative z "
+                        + "As polynomials in z, the common denominator of (4.19)-(4.24) and, for admissible k, "
+                        + "the odd-index brackets have strictly positive coefficients through their degrees; "
+                        + "for odd m each bracket is the normalized odd-index numerator, while for even m that "
+                        + "numerator has zero constant term and the bracket is that numerator divided by z. "
+                        + "Their coefficients give b and c, and evaluation at nonnegative z "
                         + "makes the denominator strictly positive. Rescaling by curvature yields the two families "
                         + "of factorial ratios, products and polynomial brackets."))),
                 DescribeRole.Theorem,
