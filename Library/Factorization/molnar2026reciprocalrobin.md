@@ -338,31 +338,89 @@ $$
 \tag{U2}
 $$
 
-For every fixed $0<c<h$, choose, for sufficiently large integers $n$,
+The source also supplies the earlier actual endpoint
 
 $$
-j_c(n)=\left\lceil
-\frac{c\log n}{\log\log n\,\log\log\log n}
-\right\rceil.
+\epsilon_\kappa=\max_{a\ge1}
+\frac{\log Q_\kappa(q_\kappa^a)}{a\log q_\kappa},
+\qquad E_\kappa=\mathcal N_\kappa(\epsilon_\kappa),
+$$
+
+with largest-at-a-tie convention. Theorem 4.7 proves the normalized
+inequality for all $n\ge E_\kappa$ and all real parameters in
+$(1,\kappa]$. Its proof bounds $E_\kappa$ by comparing each occupied
+exponent with zero. Comparing with the preceding exponent instead
+controls the high layers of this same normalized endpoint.
+
+For an actual $p^a\parallel E_\kappa$ with $a\ge2$, put
+$Z_a=Z(p^a)$. The power-mean interval in (53) gives
+$Z_{a-1}<Q_\kappa(p^a)<Z_a$. Local maximality, including ties, therefore
+gives
+
+$$
+\begin{aligned}
+\epsilon_\kappa\log p
+&\le\log\frac{Q_\kappa(p^a)}{Q_\kappa(p^{a-1})}
+<\log\frac{Z_a}{Z_{a-2}}\\
+&=\log\left(1+\frac{p^{-(a-1)}+p^{-a}}{Z_{a-2}}\right)
+\le\frac{3}{2p^{a-1}}.
+\end{aligned}
 \tag{U3}
 $$
 
-Then $\log N_{j_c(n)}^{\mathrm{eff}}/\log n\to c/h<1$.
-The source's uniform bounded-interval conclusion therefore supplies
+Define the explicit bound
+
+$$
+Y_\kappa=\max\!\left\{2,
+\frac{3\log q_\kappa}{2\log2\,\log Q_\kappa(q_\kappa)}\right\}.
+$$
+
+Since $\epsilon_\kappa\ge\log Q_\kappa(q_\kappa)/\log q_\kappa$,
+(U3) implies $p^{a-1}\le Y_\kappa$. Thus $a\ge3$ requires
+$p\le\sqrt{Y_\kappa}$, and each contribution above the first two layers
+is at most $\log Y_\kappa$. Consequently
+
+$$
+\log E_\kappa\le
+2\vartheta(q_\kappa)+\pi(\sqrt{Y_\kappa})\log Y_\kappa.
+\tag{U4}
+$$
+
+The first two layers are overcounted by $2\vartheta(q_\kappa)$;
+no classical CA exponent rule has been applied to these normalized
+maximizers. In particular the ceiling of the exponential of the
+right-hand side of (U4) is another admissible cutoff, by the source's
+endpoint theorem.
+
+The exponent-one asymptotic above gives
+$Y_\kappa=O(\kappa\log\kappa)$. Even the elementary bound
+$\pi(t)\le t$ makes the tail in (U4) $o(\kappa)$. Hence
+
+$$
+\limsup_{\kappa\to\infty}\frac{\log E_\kappa}{\kappa}
+\le\frac{150}{31}.
+\tag{U5}
+$$
+
+For every fixed $0<c<31/150$, set
+$j_c(n)=\lceil c\log n\rceil$. Equation (U5) implies
+$\log E_{j_c(n)}/\log n\le(150/31)c+o(1)<1$ eventually. Applying
+the source's endpoint theorem at this same parameter yields
 
 $$
 Q_\kappa(n)<B(n)
 \quad\text{for every }n\ge n_0(c)
 \text{ and every real }1<\kappa\le j_c(n).
-\tag{U4}
+\tag{U6}
 $$
 
-No numerical value of $n_0(c)$ is obtained here. The case $c=h$ is
-unsettled by this asymptotic. For $c>h$, this particular cutoff no longer
-certifies $n\ge N_{j_c(n)}^{\mathrm{eff}}$; that does not refute the
-inequality. This is an application of the explicit source cutoff, not
-an exchange of the quantifiers in a fixed-parameter eventual theorem,
-and not a new estimate for classical $Z(n)$.
+No numerical value of $n_0(c)$ or optimality of $31/150$ is claimed.
+The boundary $c=31/150$ is unsettled by this bound. This application
+uses the actual endpoint theorem and a uniform high-layer bound;
+it does not exchange the quantifiers of a fixed-parameter eventual
+statement. Equations (U3)--(U6) are project deductions from the cited
+source, not a quoted source theorem, an originality claim, or a new
+estimate for classical $Z(n)$.
 
 ## A single predetermined growing parameter
 
@@ -413,10 +471,12 @@ $5040<n\le\exp(100000^{2/3})$, by direct substitution since
 $k(n)\le100000$ there. No new integer enumeration is needed for this
 normalized initial range; it is not a new verified range for $Z(n)$.
 The bounded theorem does not cover the remaining unbounded schedule.
-Nor does (U4): at $k(n)\sim(\log n)^{3/2}$, (U2) gives
+Nor does (U6): its certified parameter is linear in $\log n$,
+whereas (D1) grows as $(\log n)^{3/2}$. For the source's original
+explicit cutoff, (U2) also gives
 $\log N_{k(n)}^{\mathrm{eff}}/\log n\to\infty$.
-This explicit cutoff is insufficient for (D3), even though it already
-certifies a slower growing schedule.
+Neither estimate certifies (D3); this insufficiency does not refute
+the diagonal inequality.
 The loss, CA-visibility and diagonal arguments above were not located in the
 inspected Molnar v1 statement; they are
 recorded here as combined applications of existing inputs, without a
