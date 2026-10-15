@@ -168,7 +168,7 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
     {
         Formula roots = At(Qualified("Polynomial", "roots"), At(Qualified("Matrix", "charpoly"), V("P")));
         Formula descending = LambdaOf("x", Reals(), LambdaOf("y", Reals(), LE(V("y"), V("x"))));
-        Formula sorted = At(Qualified("Multiset", "sort"), descending, roots);
+        Formula sorted = At(Qualified("Multiset", "sort"), roots, descending);
         return SizeBinder(All("P", MatrixType(), Equal(LocalCall("lambda2", V("P")),
             At(Qualified("List", "getD"), sorted, D(1), Typed(D(0), Reals())))));
     }
