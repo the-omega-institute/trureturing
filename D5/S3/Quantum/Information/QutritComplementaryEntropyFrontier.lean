@@ -153,9 +153,7 @@ def h (a : ℝ) : ℝ :=
   Real.binEntropy a
 
 def g (a : ℝ) : ℝ :=
-  Real.negMulLog (1 / 3 + a) +
-  Real.negMulLog (1 / 3) +
-  Real.negMulLog (1 / 3 - a)
+  entropy3 ![1 / 3 + a, 1 / 3, 1 / 3 - a]
 
 def attainer (a : ℝ) :
     Matrix (Fin 3 × Fin 3) (Fin 3) ℂ :=
@@ -344,7 +342,9 @@ private theorem small_entropy_tail
 -- Scalar monotonicity and the two capacity cuts.
 private theorem g_eq_binary (u : ℝ) :
     g u = h (1 / 3) + (2 / 3 : ℝ) * h ((1 + 3 * u) / 2) := by
-  rw [g, h, h, Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,
+  simp only [g, entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy,
+    Fin.sum_univ_three, Matrix.cons_val]
+  rw [h, h, Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,
     Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub]
   rw [show (1 / 3 : ℝ) + u = (2 / 3) * ((1 + 3 * u) / 2) by ring,
     show (1 / 3 : ℝ) - u = (2 / 3) * (1 - (1 + 3 * u) / 2) by ring,
@@ -405,7 +405,8 @@ private theorem table_tradeoff
     (by linarith [hui.2]) (by linarith [hui.1]) hc
     (by rw [Finset.sum_comm, hs]; ring)
   have hg := g_antitone hui ha hu.2
-  unfold g at hg ⊢
+  simp only [g, entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy,
+    Fin.sum_univ_three, Matrix.cons_val] at hb hg ⊢
   linarith
 
 -- The explicit isometry and its two diagonal marginals.
@@ -453,7 +454,8 @@ private theorem attainer_entropies (a : ℝ) (ha : a ∈ Set.Icc 0 (1 / 3 : ℝ)
       ![1 / 3 + a, 1 / 3 - a, 1 / 3] hB
     change spectralEntropy (rhoB_posSemidef (attainer a)).isHermitian = _
     rw [he, g]
-    simp only [Fin.sum_univ_three, Matrix.cons_val]
+    simp only [entropy3, D5.S3.Entropy.MaxEntropy.shannonEntropy,
+      Fin.sum_univ_three, Matrix.cons_val]
     ring
 
 -- Covariance under independent changes of the two marginal eigenbases.
