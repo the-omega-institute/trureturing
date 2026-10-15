@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
 import D5.S3.Quantum.FermionicCorrelationalBound.CanonicalRdmAndPadding
-import D5.S3.Quantum.Information.InputInformationBalance
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -987,6 +986,47 @@ private theorem reduced22 :
   generalize code2 a = i
   generalize code2 b = j
   fin_cases i <;> fin_cases j <;> norm_num [block]
+
+private theorem block_entropy (a p q : ℝ) (ha : 0 < a)
+    (hp : 0 < p + q) (hq : 0 < p - q) :
+    (matrixEntropy (fun x y => block (a : ℂ) p q (code2 x) (code2 y))).re =
+      -(2 * a * Real.log a + (p + q) * Real.log (p + q) +
+        (p - q) * Real.log (p - q)) := by
+  let P : Matrix (Fin 4) (Fin 4) ℂ :=
+    !![1, 0, 0, 0; 0, 1, 1, 0; 0, 1, -1, 0; 0, 0, 0, 1]
+  let Q : Matrix (Fin 4) (Fin 4) ℂ :=
+    !![1, 0, 0, 0; 0, 1/2, 1/2, 0; 0, 1/2, -1/2, 0; 0, 0, 0, 1]
+  let d : Fin 4 → ℂ := ![a, (p + q : ℝ), (p - q : ℝ), a]
+  have hQP : Q * P = 1 := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> norm_num [P, Q, Matrix.mul_apply, Fin.sum_univ_succ]
+  have hs : P * Matrix.diagonal d * Q = block a p q := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [P, Q, d, block, Matrix.mul_apply, Matrix.vecMul, dotProduct,
+        Matrix.diagonal_apply, Fin.sum_univ_succ] <;> ring
+  have hc : (show FullOperator 2 from
+      fun x y => block (a : ℂ) p q (code2 x) (code2 y)).charpoly =
+      (Matrix.diagonal d).charpoly := by
+    change (Matrix.reindex code2.symm code2.symm (block a p q)).charpoly = _
+    rw [Matrix.charpoly_reindex, ← hs, Matrix.charpoly_mul_comm (P * Matrix.diagonal d) Q,
+      ← Matrix.mul_assoc, hQP, Matrix.one_mul]
+  have hr : (Matrix.diagonal d).charpoly.roots =
+      ({(a : ℂ), ((p + q : ℝ) : ℂ), ((p - q : ℝ) : ℂ), (a : ℂ)} : Multiset ℂ) := by
+    rw [Matrix.charpoly_diagonal]
+    have he : (∏ i : Fin 4, (Polynomial.X - Polynomial.C (d i))) =
+        (({(a : ℂ), ((p + q : ℝ) : ℂ), ((p - q : ℝ) : ℂ), (a : ℂ)} :
+          Multiset ℂ).map (fun z => Polynomial.X - Polynomial.C z)).prod := by
+      simp [d, Fin.prod_univ_succ, Multiset.insert_eq_cons]
+    rw [he, Polynomial.roots_multiset_prod_X_sub_C]
+  unfold matrixEntropy
+  rw [hc, hr]
+  simp only [Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton,
+    Multiset.sum_cons, Multiset.sum_singleton, ← Complex.ofReal_log ha.le,
+    ← Complex.ofReal_log hp.le, ← Complex.ofReal_log hq.le, Complex.add_re,
+    Complex.neg_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+    mul_zero, sub_zero]
+  ring
 
 theorem result : ¬ claim := by
   sorry
