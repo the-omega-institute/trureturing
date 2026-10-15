@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
+import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 
 /-!
 The position action uses inverse permutations. The fixed-unitary twirl has the same tested
@@ -192,7 +193,7 @@ private theorem trace_word (A : TensorMat n d) (x : OccupancyWordSectors.Word (F
 private theorem sum_product (f : Fin n → Fin d → ℂ) :
     (∑ x : OccupancyWordSectors.Word (Fin d) n, ∏ j : Fin n, f j (x j)) =
       ∏ j : Fin n, ∑ a : Fin d, f j a := by
-  rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
+  exact (Fintype.prod_sum f).symm
 
 private theorem tensor_mul (A B : Matrix (Fin d) (Fin d) ℂ) :
     tensorPower n (A * B) = tensorPower n A * tensorPower n B := by
@@ -211,8 +212,8 @@ private theorem tensor_one :
 
 private theorem tensor_adjoint (A : Matrix (Fin d) (Fin d) ℂ) :
     (tensorPower n A).conjTranspose = tensorPower n A.conjTranspose := by
-  ext x y
-  simp only [tensorPower.eq_1, Matrix.conjTranspose_apply, Matrix.of_apply, star_prod]
+  exact (D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Tensor.tensor_star
+    (fun _ : Fin n => A)).symm
 
 private theorem tensor_unitary (U : Matrix.unitaryGroup (Fin d) ℂ) :
     (tensorPower n (U : Matrix (Fin d) (Fin d) ℂ)).conjTranspose *
