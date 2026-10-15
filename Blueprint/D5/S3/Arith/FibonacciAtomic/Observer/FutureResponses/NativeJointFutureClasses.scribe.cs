@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer.FutureResponses;
 
 internal sealed class NativeJointFutureClassesDocument : IScribeDocumentDefinition
 {
@@ -12,7 +12,7 @@ internal sealed class NativeJointFutureClassesDocument : IScribeDocumentDefiniti
         Blocks(
             Describe.Lean(
                 DescribeId.Create("nativejointfutureclasses"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeJointFutureClasses.native_joint_future_classification"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/FutureResponses/NativeJointFutureClasses.native_joint_future_classification"),
                 H("Native Joint Future Classes"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Open, Forall, Sp, F.Id("u"), Comma, F.Id("v"), Colon, F.Id("Source"), Comma,

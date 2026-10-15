@@ -8,7 +8,7 @@ A native source is an ordered binary tree with alpha and beta leaves. Substituti
 
 $$(\forall u,v:Source,(\forall k\in \mathbb{N},\operatorname{futureReplies}(u,k)=\operatorname{futureReplies}(v,k))\Leftrightarrow \operatorname{jointClass}(u)=\operatorname{jointClass}(v))\land \operatorname{Surjective}(jointClass)\land \operatorname{card}(JointClass)=11$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeJointFutureClasses.native_joint_future_classification` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FutureResponses/NativeJointFutureClasses.native_joint_future_classification` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ Equality of the two reply trajectories at every supplied count is equivalent to 
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeJointFutureClasses.native_joint_future_classification`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition](../ActualTreeReadoutAcquisition.md)
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FutureResponses/NativeJointFutureClasses.native_joint_future_classification`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition](../../ActualTreeReadoutAcquisition.md)

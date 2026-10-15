@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.Observer.NativeJointFutureClasses
+import D5.S3.Arith.FibonacciAtomic.Observer.FutureResponses.NativeJointFutureClasses
 import Reg.Support.DependentFamily
 
 set_option autoImplicit false
 noncomputable section
-namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeJointFutureClasses
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.FutureResponses.NativeJointFutureClasses
 
 open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Reply)
@@ -57,8 +57,8 @@ def family : Registration arena (type_of% (@native_joint_future_classification))
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeJointFutureClasses.native_joint_future_classification)
     (Realization signature) (Type) Unit where
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeJointFutureClasses.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeJointFutureClasses.family
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.FutureResponses.NativeJointFutureClasses.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.FutureResponses.NativeJointFutureClasses.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -78,4 +78,4 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeJointFutureClasses
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.FutureResponses.NativeJointFutureClasses

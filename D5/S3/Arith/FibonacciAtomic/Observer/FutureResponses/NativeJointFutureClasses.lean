@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/Observer/NativeJointFutureClasses
+/- GID: D5/S3/Arith/FibonacciAtomic/Observer/FutureResponses/NativeJointFutureClasses
    generality: G
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/NativeJointFutureClasses
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/FutureResponses/NativeJointFutureClasses
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
