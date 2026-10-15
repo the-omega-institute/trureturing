@@ -22,8 +22,19 @@ internal sealed class NativeFibonacciActiveTableDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.encoded_active_parity_execution"),
                 H("Same-source original parity trace"), StatementSource.FromAuthor(Disp(ExecutionStatement())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The original native_active_parity_execution theorem is applied on the same full original skeleton, every independent label assignment and the same unknown entry t. Its finite guarded Run is lifted instruction by instruction to NativeSerialMachine.Run, with the same Read epoch, literal and raw reply and the same Update successor. An explicit Stop endpoint supplies the finite suffix. The exact genuine Update count is twice the difference between K and floor((t plus bit(x(0))) divided by two). The conditions are t at most twice K and either even original leaf count or t equal to zero. No claim is made for the excluded odd-entry regime. actual_register_execution certifies the same source evolution, chronological log and every literal truth. The fixed original parity payload is preserved. The existing event-cost vector is preserved in all five coordinates; no absolute three-h plus four-k plus c bill is asserted."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The original native_active_parity_execution theorem is applied on the same full original skeleton, every independent label assignment and the same unknown entry t. Its finite guarded Run is lifted instruction by instruction to NativeSerialMachine.Run, with the same Read epoch, literal and raw reply and the same Update successor. An explicit Stop endpoint supplies the finite suffix. The exact genuine Update count is twice the difference between K and floor((t plus bit(x(0))) divided by two). The conditions are t at most twice K and either even original leaf count or t equal to zero. No claim is made for the excluded odd-entry regime. actual_register_execution certifies the same source evolution, chronological log and every literal truth. The fixed original parity payload is preserved. The existing event-cost vector is preserved in all five coordinates; no absolute three-h plus four-k plus c bill is asserted."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("first-of-run"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeFibonacciActiveTable.first_of_run"),
+                H("Actual Run fixes the first halt"),StatementSource.FromAuthor(Disp(FirstStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every control type C, native instruction function, initial control, epoch and source, any terminating actual native Run reaches its first halt at precisely the length of its complete trace, with the same fixed output. A purported shorter remaining execution contradicts native run uniqueness. The statement retains the arbitrary native machine and actual source; it requires neither a finite control carrier nor an encoding premise. The static scan uses this identity for its exact first-halt count and each remaining suffix."))),DescribeRole.Theorem))));
 
+    private static Formula FirstStatement() {
+        var C=V("C"); var delta=V("delta"); var c=V("c"); var j=V("j"); var u=V("u"); var trace=V("trace"); var a=V("a");
+        return All("C",V("Type"),All("delta",Arr(C,Call("Op",C,V("Bool"))),All("c",C,All("j",V("Nat"),All("u",V("Source"),
+            All("trace",V("Trace"),All("a",V("Bool"),Imp(Call("Run",delta,c,j,u,trace,a),
+                Call("FirstHalt",delta,c,j,u,Call("length",trace),a)))))))));
+    }
     private static Formula TableStatement() {
         var h=V("h"); var a=V("a"); var K=V("K"); var c=V("c"); var d=V("d");
         var dim=Call("dimension",h); var p=Call("path",h); var e=Call("encodingEquiv",p); var f=Call("nativeProgram",a,K);

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd9888ed04db1c4cc2615a8918b8bfc932eb386fda66f4fe589e8c5b5fada780
+  normalized_sha256: sha256:cd9888ed04db1c4cc2615a8918b8bfc932eb386fda66f4fe589e8c5b5fada780
+cas_ref: sha256:cd9888ed04db1c4cc2615a8918b8bfc932eb386fda66f4fe589e8c5b5fada780
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Second proof step of preceding independent-model theorem two, computing the energy variance contribution.
+    previous_atom_id: d3ba87a5fc868e558209c17bf1eb55f7c63d9dde1f1e16a1daf6bfc4579d670c
+    next_atom_id: 3e8f5bb82b51fd951dbf8ce6cfbe52b85df2042cdd6f67bc4bf2715d5d14268b

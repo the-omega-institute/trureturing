@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ee243a221b9a5d42a9fca572f4191b9c4afa6f8df19218b0036352dc9a0551d
+  normalized_sha256: sha256:7ee243a221b9a5d42a9fca572f4191b9c4afa6f8df19218b0036352dc9a0551d
+cas_ref: sha256:7ee243a221b9a5d42a9fca572f4191b9c4afa6f8df19218b0036352dc9a0551d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义9.10只固定策略、未来目标、完整实验律及记录访问权限的比较合同，不断言可恢复性或信息量性质。
+    previous_atom_id: 86296a817468f69f99513ca4d2e77e509078ad8322026e06ce3d94d59390150c
+    next_atom_id: 8173e25073b89664f346620f6eb444d37512e9e8f042726638bd0b782aa399e9

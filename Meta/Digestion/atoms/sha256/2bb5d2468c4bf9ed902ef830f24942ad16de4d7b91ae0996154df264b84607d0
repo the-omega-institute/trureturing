@@ -1,0 +1,46 @@
+**Theorem 213.19 (Sharp necessity of intermediate pair stock).**
+For every $L\ge n\ge4$ let
+$I_n(V)=\sum_{3\le n(w)<n}P_w$.
+For all $g,B\ge0$ and every full score with
+$Q(V)=(g e_n,g+B)$,
+
+$$
+\Delta_O(V)\ge g-\frac{n-2}{2n-3}(B+I_n(V)),
+\qquad \Delta_N(V)\ge\Delta_O(V).
+\tag{213.27}
+$$
+
+For every $d,r\ge0$, at $g=d+(n-2)r$ and $B=nr$, the exact least
+$I_n(V)$ over all such full exact-Q scores with $\Delta_N(V)\le d$
+is $(n-3)r$. The same score (213.23), with $c_1=c_2=0$ and a=r,
+attains this mass and both costs d. This includes nonzero zero-cost
+cores when d=0 and r>0.
+
+**Proof.** Put $e=(n-2)/(2n-3)$ and $s=1/(2n-3)$. Use one stopped
+mixture: weight e on $(1,2;0,0,n)$ and weight s on each
+$(i,n;0,n,0)$, $1\le i<n$. The weights sum to
+$e+(n-1)s=1$. At first zero 1 or 2 its zero probability is at least
+$e+s=1-e$; at a first zero $3\le k<n$ it is at least s.
+At first zero n its correct probability is one. After n and on
+the positive word the zero probability is exactly $(n-1)s=1-e$.
+
+Use auxiliary $b_n=1+e$ and $b_k=e$ elsewhere. All correct demands
+outside n are zero and all base demands outside n are
+$1-2e=s$. At n the base demand is negative. Only the independent
+pair demand $1-e$ on intermediate classes may fail, by at most e.
+Summing every row against one arbitrary full V gives
+
+$$
+\Delta_O(V)\ge F_{Q(V)}(b,e)-eI_n(V)=g-e(B+I_n(V)).
+$$
+
+If $\Delta_N(V)\le d$, this implies
+$I_n(V)\ge(g-d)/e-B=(n-3)r$ at the specified parameters.
+The water-level score has exactly one P atom of mass r in each
+intermediate class and $R_n=(n-2)r$, so its two costs are d.
+This proves attainment over the full exact-Q fiber, with all A and
+correct-row cancellations allowed in the lower quantifier. The
+off-hull demand direction supplies no original negative and the
+exact-Q obstruction is not an iff test for unrestricted $E_N$.
+$\square$
+

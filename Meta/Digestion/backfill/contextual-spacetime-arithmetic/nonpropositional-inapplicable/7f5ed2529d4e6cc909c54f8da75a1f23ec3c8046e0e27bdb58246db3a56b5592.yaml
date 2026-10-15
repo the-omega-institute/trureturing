@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7f5ed2529d4e6cc909c54f8da75a1f23ec3c8046e0e27bdb58246db3a56b5592
+  normalized_sha256: sha256:7f5ed2529d4e6cc909c54f8da75a1f23ec3c8046e0e27bdb58246db3a56b5592
+cas_ref: sha256:7f5ed2529d4e6cc909c54f8da75a1f23ec3c8046e0e27bdb58246db3a56b5592
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段是前述联合实际像第三分支的实现构造证明，不另立命题。
+    previous_atom_id: 8cced5597d5cbb28876b208e33e063ac27d3bf0cd174009e253fc109a1e41284
+    next_atom_id: 804f4bfe2a1950116bcbdb9c8061044708b31c3c2d75ff8cc4f9c9b9dd1c204c

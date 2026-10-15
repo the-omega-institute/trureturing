@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cc5ce3b6df8deda93ec24933de65af5ccc0999723550b304a4f3618f32e0169
+  normalized_sha256: sha256:5cc5ce3b6df8deda93ec24933de65af5ccc0999723550b304a4f3618f32e0169
+cas_ref: sha256:5cc5ce3b6df8deda93ec24933de65af5ccc0999723550b304a4f3618f32e0169
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional proof-plan and validation instructions for M3-d-3-prime: dependency choices, expected compilation or axiom behavior, and handling of failed attempts. The separately stated theorem obligation has existing frozen coverage; this receipt does not certify a historical implementation forecast as a mathematical theorem.'
+    previous_atom_id: 152272e94f62f804a19cd13dafc1f987cfc5b57cec2c25fc288a5525b660d404
+    next_atom_id: 19b5c97ec4806dceb608c0c6121456c6d6de8e95f0d35a115125ec813a0b3898

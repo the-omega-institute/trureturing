@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:50efe63faadc8d63ac20917b713e0f057a8924d12d7a213aa81e88f2a06eb4d0
+  normalized_sha256: sha256:50efe63faadc8d63ac20917b713e0f057a8924d12d7a213aa81e88f2a06eb4d0
+cas_ref: sha256:50efe63faadc8d63ac20917b713e0f057a8924d12d7a213aa81e88f2a06eb4d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional cross-reference to the enclosing section scope. The selected occurrence supplies the actual source neighbors. These bytes contain no standalone mathematical assertion and do not assert the hypotheses or conclusions of the referenced section.
+    previous_atom_id: 374bd41e2a14c7ecd3237be40286c35db4218d38cb71f239d511ae9a50239c23
+    next_atom_id: 6ed6d827098961670ec224932f64b948ea45b81b59300f202d47147389a466c1

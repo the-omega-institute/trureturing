@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06a204c840a8714666d251887dbb02003c040e9c6c20c53440cb01569c48e9b7
+  normalized_sha256: sha256:06a204c840a8714666d251887dbb02003c040e9c6c20c53440cb01569c48e9b7
+cas_ref: sha256:06a204c840a8714666d251887dbb02003c040e9c6c20c53440cb01569c48e9b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Checklist item naming the degrees of finite-difference verification targets, not asserting a new identity.
+    previous_atom_id: e2e90928097b9debef1971b5b0c795f739126d921ef5a1bbc6f966aea4af8089
+    next_atom_id: 4b5f0427e45b3fcd9297abf9ffac915c1f9443a3e32da0cadd6ae9b8ca9ba6fd

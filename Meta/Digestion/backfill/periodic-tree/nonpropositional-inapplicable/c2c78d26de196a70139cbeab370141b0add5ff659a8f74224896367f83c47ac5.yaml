@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c2c78d26de196a70139cbeab370141b0add5ff659a8f74224896367f83c47ac5
+  normalized_sha256: sha256:c2c78d26de196a70139cbeab370141b0add5ff659a8f74224896367f83c47ac5
+cas_ref: sha256:c2c78d26de196a70139cbeab370141b0add5ff659a8f74224896367f83c47ac5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「TR.5 companion 与 balanced 族的像核恒等式」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: bcdeaebb54249e3b4fc9e48a75e949a4832de14be21f5eee3fbbae8d06e43d2a
+    next_atom_id: 2e35d67bab250ba7909a97c6f16eb7777da33c72f4fadb4d2ab25366302ee238

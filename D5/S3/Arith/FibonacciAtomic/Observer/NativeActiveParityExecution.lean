@@ -155,7 +155,7 @@ def parity (x : Nat → Bool) : Nat → Bool
   | 0 => false
   | n + 1 => xor (parity x n) (x n)
 
-private theorem cone_read {h : Nat} (C : Chart h) (x : Fin h → Bool)
+theorem cone_read {h : Nat} (C : Chart h) (x : Fin h → Bool)
     (t j : Nat) (i : Fin h) (p : Address) :
     observations C t x j (C.address i ++ p) =
       readout p (atom (t + j + bit (x i))) := by
@@ -291,7 +291,7 @@ private theorem stages {h : Nat} (C : Chart h) (K : Nat)
       (by simp [program, small, idx])
     simpa [dispatch, idx, Nat.ne_of_gt pos] using routed
 
-private theorem shifted_parity (x : Nat → Bool) (b : Bool) (n : Nat) :
+theorem shifted_parity (x : Nat → Bool) (b : Bool) (n : Nat) :
     parity (fun i => xor b (x i)) n =
       xor (decide (n % 2 = 1) && b) (parity x n) := by
   induction n with

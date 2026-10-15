@@ -205,5 +205,85 @@ def execution : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms tableEvidence
 #print axioms table
+
+abbrev firstSignature : Signature where
+  Params := Type
+  State C := C → Observer.NativeSerialMachine.Op C Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ C := C → Observer.NativeSerialMachine.Op C Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def firstActual : Realization firstSignature :=
+  realize firstSignature (fun _ _ δ => δ) (fun e => nomatch e)
+def firstRejected : Realization firstSignature :=
+  realize firstSignature (fun _ _ _ _ => .stop false) (fun e => nomatch e)
+abbrev firstArena : Arena where
+  signature := firstSignature
+  Law R := ∀ {C : Type} (δ : C → Observer.NativeSerialMachine.Op C Bool)
+    {c : C} {j : Nat} {u : Source} {trace : Observer.NativeSerialMachine.Trace} {a : Bool},
+    Observer.NativeSerialMachine.Run δ c j u trace a →
+      FirstHalt (R.readout () C δ) c j u trace.length a
+private theorem firstNegative : ¬ firstArena.Law firstRejected := by
+  intro law
+  have fact := law (fun _ : Unit => Observer.NativeSerialMachine.Op.stop true)
+    (c := ()) (j := 0) (u := .of true) (.stop rfl)
+  obtain ⟨trace,run,_⟩ := fact.1
+  cases run with
+  | stop h => cases h
+  | localStep h _ => cases h
+  | update h _ => cases h
+  | read h _ _ => cases h
+def firstEvidence : Registration firstArena (type_of% (@first_of_run)) where
+  actual := firstActual
+  bridge := Iff.rfl
+  variation := ⟨@first_of_run,firstRejected,firstNegative⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨firstRejected,?_,?_,firstNegative⟩
+      · intro j h; exact (h (Subsingleton.elim _ _)).elim
+      · funext e; exact nomatch e
+    · intro e; exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨Unit,(fun _ => .stop false),(fun _ => .stop true),?_⟩
+    intro same
+    have bad := congrFun same ()
+    cases bad
+
+def firstRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@NativeFibonacciActiveTable.first_of_run) (Realization firstSignature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciActiveTable.first_of_run.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciActiveTable.firstEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨firstArena⟩
+  objectArena := .source ⟨firstArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source firstArena ⟨firstEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize firstSignature firstActual.readout firstActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciActiveTable
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","fn","fn","fn","fn","fn","arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms firstEvidence
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFibonacciActiveTable

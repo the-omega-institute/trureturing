@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b43c13108ee9c1cf07be47d7d6a6abe3f623186adff1507675e753763332497a
+  normalized_sha256: sha256:b43c13108ee9c1cf07be47d7d6a6abe3f623186adff1507675e753763332497a
+cas_ref: sha256:b43c13108ee9c1cf07be47d7d6a6abe3f623186adff1507675e753763332497a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“责任”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: c2cd19321c55834f1e259ce4d8728d81f2c7869f3035b03864e5da6a0ac9c1c1
+    next_atom_id: b452ebf2313900915d8cad0778b42ea8cdd801cebfca013a49676bb4a5467609

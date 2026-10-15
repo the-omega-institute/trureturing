@@ -4799,3 +4799,124 @@ Finally $N\le L$ and, for fixed inputs, $D_L$ grows logarithmically. Theorem 22.
 All constants are for this one fixed exact $H_c$ and the specified risk. The uniform error suprema on $(0,1)$, finite mean at each fixed parameter, and effective deterministic caps on supplied compact bands are different quantifiers. The global impossibility of a finite uniform cap or uniformly bounded mean in Proposition 20.8 remains applicable. The deadline order (22.41) and achieved mean order of Theorem 22.3 make no assertion of sharp constants, optimal expected stopping, optimal storage, or a fixed-state efficient observer. Varying centers and uniformity as the residual vanishes are outside these conclusions. The results are ordinary mathematical derivations; they assert neither Lean verification nor physical realization nor worldwide priority. The finite-confidence decision assumes the family promise and does not certify it or measure exact probabilities.
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Mean order forced by full-family confidence
+
+**Definition 22.8 (Protocol class and proof-fixed timeout).** Keep the fixed rational $H=H_c$ from (19.7), and fix $0<\alpha<1/2$. A protocol in this section may have arbitrary persistent memory and a common independent random seed, but has the same $q$-free read-next-bit-or-stop rule for every nuisance value, starts from the stationary history, reads consecutive bits, pays for every zero, tick, initial wait, partial gap and pair, and emits its label internally. It terminates almost surely with finite pointwise mean $m_{i,q}:=\mathbb E_{i,q}L$. Its two separate promises are
+
+$$
+\sup_{0<q<1}\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad
+\sup_{0<q'<1}\mathsf P_{1,q'}(D=0)\le\alpha.
+\tag{22.58}
+$$
+
+Put
+
+$$
+\rho=\frac{1-2\alpha}{4},\qquad \beta=\alpha+\rho<\frac12,
+\qquad b=(1-2\beta)\log\frac{1-\beta}{\beta}>0.
+\tag{22.59}
+$$
+
+For a proof-fixed target $i\in\{0,1\}$ and a proof-fixed $q\in(0,1)$, set
+$W=\max\{1,\lceil m_{i,q}/\rho\rceil\}$. Run the protocol through read $W$; retain its ordinary label if it stops by then, including on read $W$, and otherwise emit the predetermined label $1-i$. The index $i$ is fixed in this construction and is not supplied as a true label to the observer.
+
+**Theorem 22.9 (Pointwise mean lower bound for every protocol).** Write
+
+$$
+R_j(q)=\sum_{k\ge1}k^jq^k,\qquad
+A(q)=\frac{\delta_9^2R_8(q)}{2(R_9(q)+R_{10}(q))},\qquad
+B(q)=\frac{\delta_9^2R_7(q)}{2(R_9(q)+R_{10}(q))}.
+\tag{22.60}
+$$
+
+For every protocol satisfying Definition 22.8, every $i$ and every $q$,
+
+$$
+\begin{aligned}
+m_{i,q}
+&\ge \rho\,\frac{[b-A(q)-B(q)]_+}{B(q)}\\
+&=\rho\left[
+\frac{2b(R_9(q)+R_{10}(q))}{\delta_9^2R_7(q)}
+-\frac{R_8(q)}{R_7(q)}-1\right]_+ .
+\end{aligned}
+\tag{22.61}
+$$
+
+Consequently, with $q=e^{-s}$, there are $c>0$ and $s_0>0$, depending only on $H_c$ and $\alpha$, such that
+
+$$
+\mathbb E_{i,e^{-s}}L\ge c\,s^{-3}
+\qquad(0<s<s_0),
+\tag{22.62}
+$$
+
+simultaneously for both labels, all protocols, and all nuisance points.
+
+**Proof.** For the target family, the timeout event has probability at most
+$\mathsf P_{i,q}(L>W)\le m_{i,q}/W\le\rho$ by the ordinary Markov inequality. Thus the capped rule's target error is at most $\beta$, while the opposing-family error does not increase: on timeout the default label $1-i$ is correct for that family, and on an ordinary stop the original label is retained. The capped decision is one common measurable function of the $W$-prefix and the same-law independent seed.
+
+For the selected pair $(\mathsf P_{0,q},\mathsf P_{1,q})$, write $\widehat D$ for this capped decision. If $i=0$, the timeout default is one, so its two errors, in family order $(0,1)$, are bounded by $(\beta,\alpha)$. If $i=1$, the timeout default is zero, so those errors are bounded by $(\alpha,\beta)$. Thus in either case $\mathsf P_{0,q}(\widehat D=0)\ge1-\beta$ and $\mathsf P_{1,q}(\widehat D=0)\le\beta$.
+
+The forward Bernoulli data-processing bound of Theorem 17.3 therefore gives the same lower bound $b$ on $D(\mathsf P_{0,q}^{W}\Vert\mathsf P_{1,q}^{W})$ for either target choice. The target index selects $W$ and the timeout default only; the family order in this divergence is fixed. The cap is a constant in this comparison experiment, not an input to the original protocol. The source-specific forward prefix estimate (19.3), written with the fresh monomial sums in (22.60), now gives
+
+$$
+ b\le D(\mathsf P_{0,q}^{W}\Vert\mathsf P_{1,q}^{W})
+ \le A(q)+W B(q).
+\tag{22.63}
+$$
+
+Since $W\le m_{i,q}/\rho+1$, rearrangement yields (22.61), including the positive-part case. This is a prefix data-processing argument; no stopped information-rate or Wald substitution is used. By (18.13),
+
+$$
+A(e^{-s})\sim\frac{\delta_9^2}{180}s^2,\qquad
+B(e^{-s})\sim\frac{\delta_9^2}{1440}s^3.
+\tag{22.64}
+$$
+
+Hence the bracket in (22.61) is asymptotic to
+$1440b\,\delta_9^{-2}s^{-3}$. For example, take
+$c=720\rho b/\delta_9^2$ and then choose $s_0$ so that the bracket is at least half its leading term. These constants are fixed before the all-protocol and all-label quantifiers. The selected proof opponent is $q'=q$, which is admissible in the independent nuisance range; no equality is promised to, observed by, or supplied to the protocol. $\square$
+
+**Corollary 22.10 (Per-family optimal mean order near one).** Let
+$\mathfrak M_i(q)$ be the infimum of $\mathbb E_{i,q}L$ over all protocols of Definition 22.8. The q-free observer of Theorem 22.3, with a supplied smaller positive rational allowance when the requested allowance is real, and its resource accounting in Proposition 22.6 give the matching upper order. Therefore
+
+$$
+\mathfrak M_i(e^{-s})=\Theta_{H_c,\alpha}(s^{-3})\qquad(s\downarrow0),
+\tag{22.65}
+$$
+
+for each $i=0,1$. This is an order statement for the per-family infimum. It does not say that every protocol has a cubic upper bound, and it gives no sharp constant or exact optimizer.
+
+**Corollary 22.11 (Retuned common-band means).** Let $I_\varepsilon=[1-2\varepsilon,1-\varepsilon]$ be a supplied rational band, and let $\mathcal C_\varepsilon$ contain protocols with the same observation contract whose two risk suprema are required only over $I_\varepsilon$, while the protocol may be retuned from that band description. For all sufficiently small $\varepsilon$,
+
+$$
+\varepsilon\le -\log q\le4\varepsilon\quad(q\in I_\varepsilon).
+\tag{22.66}
+$$
+
+Fix any $\mathcal A\in\mathcal C_\varepsilon$ and $q\in I_\varepsilon$, and repeat the proof of Theorem 22.9 on the selected pair $(\mathsf P_{0,q},\mathsf P_{1,q})$, with the admissible opponent $q'=q$. That proof uses only the two selected risk bounds at this $q$, both supplied by the band promises; no risk outside $I_\varepsilon$ enters. The same constants $c,s_0$ therefore apply independently of the band tuning. Using (22.66), take $c_B=c/64$ and $0<\varepsilon<\min\{1/4,s_0/4\}$. Then, uniformly over every $\mathcal A\in\mathcal C_\varepsilon$, every $q\in I_\varepsilon$ and both labels,
+
+$$
+\mathbb E_{i,q}^{\mathcal A}L\ge c_B\varepsilon^{-3}.
+\tag{22.67}
+$$
+
+The same q-free observer from Theorem 22.3 supplies the upper bound $C_B\varepsilon^{-3}$ on this band. Thus both separate worst-band infima and the joint worst-band infimum satisfy
+
+$$
+\inf_{\mathcal A\in\mathcal C_\varepsilon}\sup_{q\in I_\varepsilon}\mathbb E_{i,q}^{\mathcal A}L
+=\Theta_{H_c,\alpha}(\varepsilon^{-3}),
+\qquad
+\inf_{\mathcal A\in\mathcal C_\varepsilon}\sup_{i,q\in\{0,1\}\times I_\varepsilon}
+\mathbb E_{i,q}^{\mathcal A}L
+=\Theta_{H_c,\alpha}(\varepsilon^{-3}).
+\tag{22.68}
+$$
+
+**Definition 22.12 (Correspondence and boundary of this append).** The finite-record data-processing step is Theorem 17.3; the prefix envelope is Theorem 19.1, equation (19.3); the sums in (22.60) use the power-sum estimates (18.13); and the matching upper rule and finite binary implementation are Theorem 22.3 and Proposition 22.6. The only truncation estimate introduced here is the proof-local Markov bound in the proof of Theorem 22.9. These supplier results are applied to the actual stationary, consecutively paid history and its common independent seed, with no hidden age, free completed gap, reset, or second source.
+
+This append resolves the previously unstated optimal-mean order near $q=1$ for each full family and the specified common-band mean order. The deadline order in Theorem 22.5 is a different, already solved objective and is not used as a mean lower bound. All other limits in Sections 17–22 remain unchanged: there is no sharp constant, exact optimizer, minimum storage or arithmetic claim, physical or global-novelty claim, varying-$H_c$ or residual-uniform claim, and no stopped-information-rate substitution. The result is an ordinary paper consequence of the cited source statements, not a generic theorem chapter.
+
+## 追加锚（本行以下为增补区）

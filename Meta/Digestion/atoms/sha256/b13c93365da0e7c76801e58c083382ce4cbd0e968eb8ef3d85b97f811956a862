@@ -1,0 +1,18 @@
+**Corollary 214.9 (balanced residual and amplitude consequence).** For every actual full unit-$O$ input $y$ with $Q(y)=q(c,g,B)$, Theorem 214.8 supplies one score $V$ with $Q(V)=Q(y)$ and $\Delta_N(V)=D(c,g,B)\le\Delta_O(y)\le1$, hence a one-score, one-budget exact-$Q$ certificate with $\theta=0$. Pairing with the same complete feasible $\lambda$ of mass $M$ for any $b\in H_N$ gives $F_{Q(y)}(b)\le M D\le M\le\max(1,M)$. In general, an exact-$Q$ unit certificate with $\theta=0$ exists if and only if $D(c,g,B)\le1$. For another signed quotient $q$, choosing $c,g,B$ with
+
+$$
+D(c,g,B)+\max\{0,\sigma_{H_L}(q-q(c,g,B))\}\le1
+\tag{214.10}
+$$
+
+is only a sufficient one-residual test. Pairing the same complete feasible $\lambda$ of mass $M$ gives
+$F_q\le M D+\theta\le\max(1,M)$. For an actual original hard-two attainer at active length at least five, the transported rows imply the necessary amplitude inequality
+
+$$
+ c(a_1+a_2)+g(a_3+a_4+a_5)
+ \le 2c+D(c,g,B)+(2c+3g+B)\varepsilon .
+\tag{214.11}
+$$
+
+Unequal early credits, unequal or signed triples, arbitrary replacement positions, and larger positive late domains remain outside this theorem.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d5afca3111cb421ac505d67a6db734c8fc86353ee1bc003514fcd626931ac21
+  normalized_sha256: sha256:3d5afca3111cb421ac505d67a6db734c8fc86353ee1bc003514fcd626931ac21
+cas_ref: sha256:3d5afca3111cb421ac505d67a6db734c8fc86353ee1bc003514fcd626931ac21
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 1.3（关系体的全息充分性）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: f87e390b89b9422e7cccc4bc7989984b867ded1cd2e78ec6e37af8dd42d1035f
+    next_atom_id: 25375872e7dafef6b751e8ca97411e582440d0720d54b5fa7ec7bb7eb47b6517

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e0f0cd0e86ec3a4182500f080eec452b1f27b3a96a6a602b6573bfc138248e60
+  normalized_sha256: sha256:e0f0cd0e86ec3a4182500f080eec452b1f27b3a96a6a602b6573bfc138248e60
+cas_ref: sha256:e0f0cd0e86ec3a4182500f080eec452b1f27b3a96a6a602b6573bfc138248e60
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 319.1（(t)-重构阈值）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 677863f5cea2e7ff893046f38315fb42243c385bf228febfc94a6a6a81168cca
+    next_atom_id: 98933f4788e02d5e0de407d86e1ed6575f997ca969b1f555f52de0041022aee9

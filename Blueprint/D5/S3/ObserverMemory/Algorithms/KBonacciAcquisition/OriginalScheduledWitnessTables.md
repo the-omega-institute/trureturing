@@ -16,7 +16,19 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 For an arbitrary address type, Boolean stop mode, finite address list and static Boolean response map, view returns every scheduled reply in order. In stopped mode it includes the first false reply and omits everything after it. In preselected mode it retains every reply, including repeated addresses and reversed pairs.
 
-**Definition 1.2 (Actual requests and silent processing).**
+**Theorem 1.2 (Chronological view congruence).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.view_congr`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.view_congr` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every address type A, stop mode, finite list xs and Boolean reply maps q,r on A, agreement q(i)=r(i) for every occurrence i in xs implies view stop xs q equals view stop xs r. List induction retains order, repetitions and first-false stopping. Equal-rank chain words use this congruence through the actual catalog factorization.
+
+**Definition 1.3 (Actual requests and silent processing).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.step`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 An arbitrary configuration C contains the eventual original tape. A source-free instruction reads an arbitrary natural address, silently updates C, or halts. The adapter to StateTransition appends exactly one address-reply pair at every read, including a duplicate. Silent updates preserve this log. There is no countability, computability, measurable-space or transition-time hypothesis on C. The update epochs of GuardedPhaseExecution are not request counts.
 
-**Definition 1.3 (Reachable next-query discipline).**
+**Definition 1.4 (Reachable next-query discipline).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.Disciplined`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 For each fixed seed and source, a reachable read must be the next entry of the seed-preselected schedule, after the entire chronological address log. In stopped mode every earlier recorded reply must be true. Silent processing is unrestricted. This necessary local condition follows directly from either original schedule contract; it also permits early handoff, so the extraction theorem covers those rules too. It assumes no equality of executions, terminal factorization or finite table membership. A read after a queried zero is excluded by its local premise.
 
-**Definition 1.4 (Retaining original low addresses).**
+**Definition 1.5 (Retaining original low addresses).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.lowSchedule`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 Filter a finite schedule by address less than L, preserving order and repeats. Natural address i means original prime index i+1. The filtered length is at most the original length, and a strictly increasing original list remains strictly increasing.
 
-**Definition 1.5 (Finite input words).**
+**Definition 1.6 (Finite input words).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.lowReply`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 A word b on Fin L gives its actual Boolean reply below L. The default value outside this range is false and serves only to evaluate low schedules. This is an offline finite table definition, not an additional observation available to the acquisition.
 
-**Definition 1.6 (The complete restricted output catalog).**
+**Definition 1.7 (The complete restricted output catalog).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.InCatalog`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 For any stop mode and L, a finite output function belongs to the catalog when some at-most-two low-address schedule determines it through its reply cell. The stopped schedule is strictly increasing. Every cell may have any label in Fin(L+1), independently of whether its mark was queried. The preselected pair has all four cells 00,01,10,11; repeats have diagonal information and reversal preserves its actual order. The stopped pair has cells 0,10,11, so words 00 and 01 share one cell. Empty and singleton schedules are included, as is L=0.
 
-**Definition 1.7 (One whole-table gate).**
+**Definition 1.8 (One whole-table gate).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.witnessTable`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 For a seed event D, measurable sourcewise terminal maps phi and marked projection rho, the whole output table at s evaluates rho(phi(b,s)) for every b on D. Off D the entire table is the constant base label zero. Thus every input uses the same gate and the same original seed. The witness executions used to define this table are fixed actual comparison sources chosen before seeds; evaluating them is not a live source acquisition.
 
-**Definition 1.8 (Finite representatives and a common law).**
+**Definition 1.9 (Finite representatives and a common law).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.Catalog`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 The catalog is the subtype of all complete word-to-label functions satisfying InCatalog. It is finite because both the word set and label set are finite. A representing schedule may be fixed once for each function by its defining existential. Pushing one seed law to this subtype gives one PMF of whole tables, rather than separate distributions for different input words.
 
-**Definition 1.9 (A common schedule bound).**
+**Definition 1.10 (A common schedule bound).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.scheduleGate`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalSch
 
 At cutoff c, scheduleGate is the event that every preselected address is strictly less than c. Its measurability is the required consequence of measurable finite schedule selection. Its complement decreases to the empty set, because each individual seed chooses a finite schedule. No handoff time or configuration measurability is involved.
 
-**Theorem 1.10 (One common catalog law approximates every actual witness row).**
+**Theorem 1.11 (One common catalog law approximates every actual witness row).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.scheduled_witness_approximation`
 
@@ -159,6 +171,7 @@ The unit proves class-preserving whole-table approximation, not Theorem 110.2's 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.scheduled_witness_approximation`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.step`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.view`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.view_congr`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.witnessTable`
 - Dependency: [D5/S3/Estimation/DataProcessing/MeasurableTotalVariationTriangle](../../../Estimation/DataProcessing/MeasurableTotalVariationTriangle.md)
 - Dependency: [D5/S3/ObserverMemory/Algorithms/GuardedPhaseExecution](../GuardedPhaseExecution.md)

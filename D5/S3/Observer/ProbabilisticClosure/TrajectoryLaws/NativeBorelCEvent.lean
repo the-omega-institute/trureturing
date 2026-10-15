@@ -110,7 +110,7 @@ private theorem finiteProduct_drop {S : Type*} [MeasurableSpace S]
     rw [he, ← Measure.map_map (snoc_measurable n) ((drop_measurable n).prodMap measurable_id), hp]
     rfl
 
-private theorem measure_eq_of_prefix {S : Type*} [MeasurableSpace S]
+theorem measure_eq_of_prefix {S : Type*} [MeasurableSpace S]
     (μ ν : Measure (ℕ → S)) [IsFiniteMeasure ν]
     (hp : ∀ n, μ.map (fun x (i : Fin (n + 1)) => x i.1) =
       ν.map (fun x (i : Fin (n + 1)) => x i.1)) : μ = ν := by

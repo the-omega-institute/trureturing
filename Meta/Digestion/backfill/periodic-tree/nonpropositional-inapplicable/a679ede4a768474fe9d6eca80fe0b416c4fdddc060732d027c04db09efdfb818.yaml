@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a679ede4a768474fe9d6eca80fe0b416c4fdddc060732d027c04db09efdfb818
+  normalized_sha256: sha256:a679ede4a768474fe9d6eca80fe0b416c4fdddc060732d027c04db09efdfb818
+cas_ref: sha256:a679ede4a768474fe9d6eca80fe0b416c4fdddc060732d027c04db09efdfb818
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 第一式由 $s_\rho(n)$ 的 $\varphi$ 坐标得到。 取整的基本界给出第二式，而 $q_\rho(n)+n\…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: a7388447765c4a0593d91acdd71048c32b9a02674010403968918da2cb7fe9ac
+    next_atom_id: f4026bda49ab5e4e712c666d0c8744045c49594a9eb9a77a877cc627dfbb6570

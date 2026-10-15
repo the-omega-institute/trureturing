@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ae1bf73f33ba92da21ca4f48cc10310a26b0dac107819bb13bf4fa455bdcb4b
+  normalized_sha256: sha256:6ae1bf73f33ba92da21ca4f48cc10310a26b0dac107819bb13bf4fa455bdcb4b
+cas_ref: sha256:6ae1bf73f33ba92da21ca4f48cc10310a26b0dac107819bb13bf4fa455bdcb4b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 51.1（局部策略）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 5bb6bee315735c777b0d389dc7f25e41f934f9d4c9e8f4c3ff4ba0875e7c5cfd
+    next_atom_id: b8bb6de2c213d973681de024d497d06055556637d3b1fdc71077f73c78adfd61
