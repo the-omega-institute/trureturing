@@ -692,13 +692,13 @@ end D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Product
 set_option maxHeartbeats 10000000
 namespace D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices
 
-private noncomputable def obs : Fin 9 → Matrix (Fin 4) (Fin 4) ℂ := fun v =>
+noncomputable def obs : Fin 9 → Matrix (Fin 4) (Fin 4) ℂ := fun v =>
   let rc := ((finProdFinEquiv : Fin 3 × Fin 3 ≃ Fin (3 * 3)).symm) v
   (D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square rc.1 rc.2).submatrix
     ((finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin (2 * 2)).symm)
     ((finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin (2 * 2)).symm)
 
-private lemma ZITable : obs 0 = !![1,0,0,0; 0,1,0,0; 0,0,-1,0; 0,0,0,-1] := by
+lemma ZITable : obs 0 = !![1,0,0,0; 0,1,0,0; 0,0,-1,0; 0,0,0,-1] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
@@ -734,7 +734,7 @@ private lemma IXTable : obs 3 = !![0,1,0,0; 1,0,0,0; 0,0,0,1; 0,0,1,0] := by
       D5.S3.Quantum.FiniteDimensional.qubitZ,
       D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma XITable : obs 4 = !![0,0,1,0; 0,0,0,1; 1,0,0,0; 0,1,0,0] := by
+lemma XITable : obs 4 = !![0,0,1,0; 0,0,0,1; 1,0,0,0; 0,1,0,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
@@ -793,7 +793,7 @@ private lemma mat_herm_sq (A : Matrix (Fin 4) (Fin 4) ℂ)
         simp [ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable,
           Matrix.mul_apply, Fin.sum_univ_succ])
 
-private lemma obs_herm_sq : ∀ v, (obs v).IsHermitian ∧ obs v * obs v = 1 := by
+lemma obs_herm_sq : ∀ v, (obs v).IsHermitian ∧ obs v * obs v = 1 := by
   intro v
   fin_cases v <;> apply mat_herm_sq <;> simp
 
