@@ -577,9 +577,157 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                         + "literal-source and logarithmic-limit results within the stated source/readout model. The finite-even "
                         + "bridge supplies the lower bounds and eventual positivity used in the raw-even application below; full "
                         + "raw limits and identification with eta_b require that further limit argument. Equality of the contract "
-                        + "counts or rates and observation images remain separate original obligations. The finite-codebook lower "
+                        + "counts is supplied by the contract correspondence below; contract-rate and observation-image "
+                        + "identifications require their own arguments. The finite-codebook lower "
                         + "bound alone does not assert those identifications, additional bilateral-language conclusions, a physical "
                         + "realization, a resource or optimality bound, or literature novelty.")))))),
+            new DocumentBlock.Section(H("Exact contract and guard correspondence"), Blocks(
+                Paragraph(Text(
+                    "The contract_count_correspondence application concerns the full ActualDictionary and ContractDictionary "
+                    + "defined above. Fix either model, arbitrary ownership o, real b and K ≥ 2 with both original strict "
+                    + "inequalities lam − g² chiᴷ H < b and b < lam − g² chiᴷ(A/(1 − rho chiᴷ)); keep d = (lam − b)/g²/chiᴷ. "
+                    + "For every positive Return list xs and every contract, ActualPairSupply(model,o,b,contract,xs) is "
+                    + "equivalent to GuardTrace(K,d,contractStrict(o,contract),high,xs,initial(high,model)), where "
+                    + "contractStrict(o,closed) = !o(0), and contractStrict(o,strict) = contractStrict(o,recordMargin) = true. "
+                    + "Here ! is Boolean negation. Thus closed supply uses the weak guard exactly when o(0) = true. Both "
+                    + "directions retain xs itself, both prescribed side sources, the model and the original budget.")),
+                new DocumentBlock.Section(H("Whole-source supply and the owned endpoint"), Blocks(
+                    Paragraph(Text(
+                        "For each side separately, ActualPairSupply asks for one error function err : Nat → Real. Its "
+                        + "ErrorBound is |err(p)| ≤ b for closed, |err(p)| < b for strict, and the existence of eps > 0 with "
+                        + "|err(p)| ≤ b − eps for every p for recordMargin. At p < history(model,xs).length, observation of "
+                        + "coordinate(sourcePrefix(j,model,xs),p) with this err(p) must equal that very history entry. The same "
+                        + "err is zero for every p at or after the history length. For every q : Nat its observation at "
+                        + "observedPrefix(j,model,xs).length + q must equal observe(o,coordinate(tailPrefix(j),q),0). This last "
+                        + "clause is the entire infinite future, including the finite tail's final L0 and its infinite L0 "
+                        + "continuation. The two sides may have different error functions.")),
+                    Paragraph(Text("The supplier correspondence is the same coordinate-preserving map used above: high/low "
+                        + "map to low = false/true, original/anchored to anchor = false/true, and each Return keeps m, r and "
+                        + "positivity. Original T2 is the fixed t², and original lam is the fixed lambda. In "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookGrowth"),
+                        Text(" the U_slot and V_slot bounds control the five nonactive positions of each side block, and "
+                        + "the C_slot bounds control all twenty positions of C. The U_scalar_4, V_scalar_4 and inside_target results in "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookOrder"),
+                        Text(" give the remaining active position, indexed 4, and errors reaching cell interiors. "
+                        + "Transport preserves compose, the literal suffix "
+                        + "coordinate, the cuts and clip(x) = max(−1,min(phi,x)); all readouts here apply that clipping before "
+                        + "readout. These ingredients give both necessity and sufficiency at every block position, rather "
+                        + "than merely a distance to a closed cell.")),
+                    Paragraph(Text(
+                        "More precisely, for 0 < D ≤ eSide(j) and b > lam − rho, a side block with suffix coordinate "
+                        + "c0 + sign(j)D has a strict error supply exactly when lam − g²D < b. Closed supply holds exactly when "
+                        + "that inequality is strict, or the cost equals b and the nearest endpoint is owned by the target "
+                        + "color: o(0) = true on high, o(1) = false on low. The active coordinates are "
+                        + "cut(1) − lam + g²D on high and cut(2) + lam − g²D on low. The high equality endpoint is cut(1), belonging to "
+                        + "color 1 precisely when o(0) = true; the corresponding low endpoint is cut(2), belonging to color 1 "
+                        + "precisely when o(1) = false. Every C block with suffix in [0,T2] has strict supply under this same "
+                        + "b > lam − rho. The original lower budget inequality implies that auxiliary budget bound and b > 0; "
+                        + "neither is a new premise. Closed-cell distance alone would admit an unowned endpoint and would give "
+                        + "the wrong weak guard.")),
+                    Paragraph(Text(
+                        "Composition through repeated blocks and the reversed externalWord aligns the active cost of return "
+                        + "a at split xs = before ++ a :: after with lam − g² chi^(a.r)D, where D = "
+                        + "execute(high,before,initial(high,model)). Each side's prefix states stay strictly between aSide(j) "
+                        + "and hSide(j), and the high state is strictly smaller than the low state at every common split. "
+                        + "Consequently each low active cost is strictly smaller than its high counterpart, even when the "
+                        + "high cost equals b. The local low ownership condition therefore imposes no further condition on "
+                        + "the paired supply. The common stem and the anchored model's paid anchor are included: their high "
+                        + "costs are lam − g² chi execute(high,xs,initial(high,model)) and, for the anchor, lam − g² chi X. "
+                        + "They are strictly below b under the stated hypotheses, and the corresponding low costs are smaller.")))),
+                new DocumentBlock.Section(H("From active costs to the exact dictionaries"), Blocks(
+                    Paragraph(Text(
+                        "The two budget inequalities give A/(1 − rho chiᴷ) < d < H. On the actual high prefix states A < D < H, "
+                        + "the active-cost condition is equivalent to r ≤ K together with the test at r = K. Returns with r < K "
+                        + "have cost strictly below b automatically; r > K is incompatible even with the weak cost bound. At "
+                        + "r = K, lam − g² chiᴷD < b is exactly d < D, while equality is exactly D = d. Thus closed supply "
+                        + "allows d ≤ D when o(0) = true and requires d < D otherwise. Recursing on the same returnMap gives "
+                        + "the displayed GuardTrace equivalence. Supply-to-guard extracts these costs from the actual "
+                        + "observations; guard-to-supply assembles the block errors on the complete observed prefix, including "
+                        + "stem and optional anchor, and extends that error function by zero. The suffix-coordinate identity "
+                        + "then supplies every future readout on the same actual source.")),
+                    Paragraph(Text(
+                        "Strict and recordMargin supply are equivalent here because only finitely many history positions "
+                        + "can have nonzero error. Given strict supply on a side, keep its error function, choose a positive "
+                        + "minimum slack over those positions with eps ≤ b, and retain zero errors throughout the future. "
+                        + "This gives |err(p)| ≤ b − eps for all p, without changing any observation. Conversely a positive "
+                        + "record margin makes those same errors strict. The margin may depend on the execution, side and "
+                        + "chosen errors; no common positive margin over the entire dictionary is asserted. Closed supply at "
+                        + "an owned equality endpoint need not supply either of these stricter contracts.")),
+                    Paragraph(Text(
+                        "For every N : Nat, contractDictionaryEquiv sends a member xs of "
+                        + "ContractDictionary(model,o,b,contract,N) to the identical xs.val with its guard proof, and its "
+                        + "inverse keeps that same list and replaces the guard proof by its supply proof. Weight N is "
+                        + "unchanged in both directions. The weight-preserving injective Return map and finite_weight_lists "
+                        + "from ResetCodebookWeighted give finiteness for the original weight-N lists, hence for both "
+                        + "dictionaries. Nat.card_congr yields the exact equality contractCount(model,o,b,contract,N) = "
+                        + "actualCount(model,K,(lam − b)/g²/chiᴷ,contractStrict(o,contract),N). This includes N = 0, empty "
+                        + "lists and empty dictionaries, both models, every ownership and all three contracts. It assumes "
+                        + "neither positive count nor positive weight, a reset construction nor even-weight lower bounds.")),
+                    Paragraph(Text(
+                        "This correspondence retains K ≥ 2 and both strict budget inequalities; it makes no assertion at "
+                        + "their endpoints or outside that interval. It is an application of the existing slot, affine, "
+                        + "guard and finite-cardinality results to the original sources. Equality of these finite counts "
+                        + "does not by itself provide a contract-rate limit, an observation-image identification or a "
+                        + "physical, resource, optimality or literature-novelty claim.")))))),
+            new DocumentBlock.Section(H("Operation records on the prescribed sources"), Blocks(
+                Paragraph(Text(
+                    "The operation_pair_membership application has a different telescope. For every model, ownership o, "
+                    + "real b, contract, positive Return list xs and side j, its sole premise is "
+                    + "ActualPairSupply(model,o,b,contract,xs). Its conclusion is "
+                    + "OperationRecord(o,b,contract,source(j,model,xs),OperationPairedRecord(model,o,xs,j)) together with "
+                    + "OperationFiniteSource(source(j,model,xs)). No K, budget interval, additional margin or length "
+                    + "hypothesis is imposed, and xs may be empty. This conditional statement does not assert existence of "
+                    + "supply at an arbitrary b.")),
+                new DocumentBlock.Section(H("The operation state and its literal trajectory"), Blocks(
+                    Paragraph(Text(
+                        "The guards are G0 and G1. From G0, labels L3, L0 and L2 lead to G0, while L5 and L25 lead to G1. "
+                        + "From G1, L3 and L0 lead to G0 and L5 leads to G1; L2 and L25 are forbidden. These are exactly "
+                        + "nextGuard's successful transitions. InSupport(G0,x) means −1 ≤ x ≤ phi, and InSupport(G1,x) means "
+                        + "−1 ≤ x ≤ t. OperationOmega(a,x) requires one path : Nat → Guard starting at G0, "
+                        + "nextGuard(path(p),a(p)) = some(path(p+1)), InSupport(path(p),x(p)) and "
+                        + "x(p) = branch(a(p),x(p+1)) for every p. Here branch is the original shift(label) − g x, with "
+                        + "the five label shifts given above. OperationRecord(o,b,contract,a,r) asks for such an x and "
+                        + "one err obeying the original ErrorBound with observe(o,x(p),err(p)) = r(p) at every p. "
+                        + "OperationFiniteSource(a) means that some M satisfies a(p) = L0 for all p ≥ M.")),
+                    Paragraph(Text("Choose x(p) = coordinate(sourcePrefix(j,model,xs),p), the literal remaining-suffix "
+                        + "coordinate, for every p : Nat. In "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookFinite"),
+                        Text(" actual_pair and literal_tail_spec supply the actual legal source for this model, list and "
+                        + "side under the same low/anchor/Return map as above. The finite prefix maps to sourcePrefix "
+                        + "including its explicit final L0; appending this null label preserves its zero address. At every "
+                        + "p, the mapped source label equals window(originalT^[p](src),0), and this exact x(p) equals "
+                        + "kappa(originalT^[p](src)), for that same src. All labels and all coordinates are transported "
+                        + "together; an unrelated trajectory with a matching readout is not substituted.")),
+                    Paragraph(Text("Map the supplier guard false/true to G0/G1 and take path(p) from "
+                        + "actualGuard(false,src,p), so path(0) = G0 by definition. The tail_guard and last_guard results in "),
+                        Ref("D5/S1/Digit/Infinite/CriticalPrefixSeparation"),
+                        Text(" give every legal transition on this source, including the G1 "
+                        + "restriction. In "),
+                        Ref("D5/S1/Digit/Infinite/ClosedObservationGraphRealization"),
+                        Text(" closed_observation_graph_realization supplies the stateInterval membership and affine "
+                        + "recurrence. Under the guard and branch maps these are exactly InSupport(path(p),x(p)) and "
+                        + "x(p) = branch(source(j,model,xs)(p),x(p+1)). Thus OperationOmega holds on the prescribed "
+                        + "literal coordinate at all times, independently of the error or contract premise.")))),
+                new DocumentBlock.Section(H("The original errors and the complete paired future"), Blocks(
+                    Paragraph(Text(
+                        "Put n = history(model,xs).length. OperationPairedRecord(model,o,xs,j)(p) is the original history "
+                        + "entry when p < n, and observe(o,coordinate(tailPrefix(j),p − n),0) otherwise, using natural "
+                        + "subtraction. The full_length supplier gives observedPrefix(j,model,xs).length = n. Obtain err "
+                        + "from supply(j) and keep its ErrorBound unchanged. For p < n its history clause gives exactly "
+                        + "the required observation of x(p). For p ≥ n, use the same supply's entire-future clause at "
+                        + "q = p − n; the length equality gives n + q = p, and its zero-error clause gives err(p) = 0. "
+                        + "This proves the operation readout for every future p with the very same err that supplies the "
+                        + "history and bound. No error, budget or contract is changed during this assembly.")),
+                    Paragraph(Text(
+                        "For OperationFiniteSource take M = sourcePrefix(j,model,xs).length: the literal address "
+                        + "defaults to L0 at every p ≥ M. The record includes the finite tail before M, its final L0 "
+                        + "and the infinite L0 continuation after M. Zero future error means observation without "
+                        + "perturbation of the prescribed tail coordinate; it does not make that whole coordinate zero "
+                        + "or the whole future color record constant. The eventual L0 statement concerns labels. "
+                        + "The result holds for either side and both models, for all three contracts and the empty "
+                        + "Return list, whose common stem and model anchor are still present. It supplies an operation "
+                        + "record from ActualPairSupply, without a converse characterization, observation-count or "
+                        + "offset identification, rate conclusion, physical realization, resource or novelty claim.")))))),
             new DocumentBlock.Section(H("Raw even logarithmic asymptotics"), Blocks(
                 new DocumentBlock.Section(H("Original dictionaries, parameters and rate"), Blocks(
                     Paragraph(Text(
@@ -698,10 +846,11 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                         "These are consequences for the full original guarded dictionaries under K ≥ 2 and the two strict budget "
                         + "inequalities. Ownership remains arbitrary, and the same conclusion holds for both models and both "
                         + "Boolean guard flags at the original d and eta_b. Odd-weight exclusion, the finite-even count bounds and "
-                        + "their contract lower bounds retain their stated scopes. Raw-even convergence does not identify "
-                        + "ActualDictionary with ContractDictionary, prove equality of actual and contract counts or rates, "
-                        + "identify observation images, or discharge the independent operation and offset correspondences. Those "
-                        + "contract and observation obligations remain separate. It also gives no additional bilateral-language "
+                        + "their contract lower bounds retain their stated scopes. The separate contract correspondence above "
+                        + "identifies the full finite dictionaries at contractStrict(o,contract), and the operation application "
+                        + "places each supplied source in its prescribed operation record. The raw-even argument itself "
+                        + "adds no contract-rate limit, observation-image or offset identification. Those conclusions require "
+                        + "their own arguments. It also gives no additional bilateral-language "
                         + "identification, empirical or physical realization, resource or optimality bound, or literature novelty "
                         + "claim.")))))))));
 
