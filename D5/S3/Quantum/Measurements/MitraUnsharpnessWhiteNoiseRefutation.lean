@@ -171,6 +171,7 @@ private theorem diag2_posSemidef
   · exact Complex.zero_le_real.mpr hv
 
 private theorem witness_isPOVM : IsPOVM witness := by
+  rw [witness.eq_1]
   constructor
   · intro i
     fin_cases i <;> apply diag2_posSemidef <;> norm_num
