@@ -16,12 +16,14 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2JointPromotion
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
@@ -203,7 +205,9 @@ private theorem same_parent_chain_inventory {m : ℕ} (hm : 5 ≤ m)
       (congrArg (fun q => ps.dropLast ++ [q]) hlast)
   have hlist : p₀ :: ps = List.ofFn W.pieces := by
     apply List.ext_getElem
-    · simp only [ps, List.length_cons, List.length_ofFn]; omega
+    · simp only [ps, List.length_cons, List.length_ofFn]
+      change O.base.length - 1 + 1 = O.base.length
+      omega
     · intro i hi hj
       cases i with
       | zero => simp only [p₀, List.getElem_cons_zero, List.getElem_ofFn]
