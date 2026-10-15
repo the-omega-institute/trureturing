@@ -6,19 +6,7 @@ The spin-one entropy in equations (15)–(18) depends on a relative phase.
 
 The spin-one state has three real amplitude magnitudes determined by thetaAlpha and thetaBeta, and two relative phases phaseX and phaseZ. The common global phase cancels from its squared complex modulus. All logarithms are natural.
 
-**Definition 1.1 (The binary Shannon term).**
-
-$$\forall (p: \mathbb{R}), ((\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.shannonTerm}\left(p\right): \mathbb{R}) = (-((p) \cdot (\operatorname{Real.log}\left(p\right)))) - (((1) - (p)) \cdot (\operatorname{Real.log}\left((1) - (p)\right))))$$
-
-*Formalization.* `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.shannonTerm` (`✓ std3`).
-
-*Citation.* Davi Geiger; Zvi M. Kedem (2022). *Spin Entropy*. DOI: [10.3390/e24091292](https://doi.org/10.3390/e24091292). URL: <https://arxiv.org/abs/2111.11605v3>.
-
-*Commentary.*
-
-The function in Proposition 2 is defined for every real p using Real.log. For p between zero and one it is the binary Shannon entropy, with the endpoint values supplied by the total real logarithm.
-
-**Definition 1.2 (The polarization-angle density).**
+**Definition 1.1 (The polarization-angle density).**
 
 $$\forall (thetaAlpha: \mathbb{R}), (\forall (thetaBeta: \mathbb{R}), (\forall (phaseX: \mathbb{R}), (\forall (phaseZ: \mathbb{R}), (\forall (phi: \mathbb{R}), ((\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.density}\left(thetaAlpha, thetaBeta, phaseX, phaseZ, phi\right): \mathbb{R}) = \frac{\operatorname{Complex.normSq}\left((((\operatorname{Complex.ofReal}\left((\operatorname{Real.sin}\left(thetaAlpha\right)) \cdot (\operatorname{Real.cos}\left(thetaBeta\right))\right)) \cdot (\operatorname{Complex.exp}\left((\operatorname{Complex.ofReal}\left((phaseX) + ((2) \cdot (phi))\right)) \cdot (\operatorname{Complex.I})\right))) + ((\operatorname{Complex.ofReal}\left(\operatorname{Real.cos}\left(thetaAlpha\right)\right)) \cdot (\operatorname{Complex.exp}\left((\operatorname{Complex.ofReal}\left(phi\right)) \cdot (\operatorname{Complex.I})\right)))) + ((\operatorname{Complex.ofReal}\left((\operatorname{Real.sin}\left(thetaAlpha\right)) \cdot (\operatorname{Real.sin}\left(thetaBeta\right))\right)) \cdot (\operatorname{Complex.exp}\left((\operatorname{Complex.ofReal}\left((phaseZ) - ((2) \cdot (phi))\right)) \cdot (\operatorname{Complex.I})\right)))\right)}{(2) \cdot (\operatorname{Real.pi})})))))$$
 
@@ -30,9 +18,9 @@ $$\forall (thetaAlpha: \mathbb{R}), (\forall (thetaBeta: \mathbb{R}), (\forall (
 
 Proposition 2 takes Complex.normSq of the sum of the three amplitudes, with frequencies +2, +1 and -2, and divides by twice Real.pi. Complex.ofReal displays each real-to-complex cast explicitly. The two outer amplitudes are the products of Real.sin thetaAlpha with Real.cos thetaBeta and Real.sin thetaBeta, respectively.
 
-**Definition 1.3 (The spin-one entropy).**
+**Definition 1.2 (The spin-one entropy).**
 
-$$\forall (thetaAlpha: \mathbb{R}), (\forall (thetaBeta: \mathbb{R}), (\forall (phaseX: \mathbb{R}), (\forall (phaseZ: \mathbb{R}), ((\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.spinEntropy}\left(thetaAlpha, thetaBeta, phaseX, phaseZ\right): \mathbb{R}) = ((-(\operatorname{intervalIntegral}\left(\lambda (phi: \mathbb{R}) \mapsto ((\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.density}\left(thetaAlpha, thetaBeta, phaseX, phaseZ, phi\right)) \cdot (\operatorname{Real.log}\left(\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.density}\left(thetaAlpha, thetaBeta, phaseX, phaseZ, phi\right)\right))), (0: \mathbb{R}), (2) \cdot (\operatorname{Real.pi}), \operatorname{MeasureTheory.volume}\right))) + (\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.shannonTerm}\left((\operatorname{Real.cos}\left(thetaAlpha\right))^{2}\right))) + (((\operatorname{Real.sin}\left(thetaAlpha\right))^{2}) \cdot (\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.shannonTerm}\left((\operatorname{Real.cos}\left(thetaBeta\right))^{2}\right)))))))$$
+$$\forall (thetaAlpha: \mathbb{R}), (\forall (thetaBeta: \mathbb{R}), (\forall (phaseX: \mathbb{R}), (\forall (phaseZ: \mathbb{R}), ((\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.spinEntropy}\left(thetaAlpha, thetaBeta, phaseX, phaseZ\right): \mathbb{R}) = ((-(\operatorname{intervalIntegral}\left(\lambda (phi: \mathbb{R}) \mapsto ((\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.density}\left(thetaAlpha, thetaBeta, phaseX, phaseZ, phi\right)) \cdot (\operatorname{Real.log}\left(\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.density}\left(thetaAlpha, thetaBeta, phaseX, phaseZ, phi\right)\right))), (0: \mathbb{R}), (2) \cdot (\operatorname{Real.pi}), \operatorname{MeasureTheory.volume}\right))) + (\operatorname{Real.binEntropy}\left((\operatorname{Real.cos}\left(thetaAlpha\right))^{2}\right))) + (((\operatorname{Real.sin}\left(thetaAlpha\right))^{2}) \cdot (\operatorname{Real.binEntropy}\left((\operatorname{Real.cos}\left(thetaBeta\right))^{2}\right)))))))$$
 
 *Formalization.* `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.spinEntropy` (`✓ std3`).
 
@@ -40,9 +28,9 @@ $$\forall (thetaAlpha: \mathbb{R}), (\forall (thetaBeta: \mathbb{R}), (\forall (
 
 *Commentary.*
 
-Equation (17) adds the differential entropy of the density to the Shannon entropy of the three spin-component probabilities. The intervalIntegral is taken from zero to twice Real.pi with respect to MeasureTheory.volume. The density times its real logarithm is continuous, including at density zero.
+Equation (17) adds the differential entropy of the density to the Shannon entropy of the three spin-component probabilities. The intervalIntegral is taken from zero to twice Real.pi with respect to MeasureTheory.volume. The density times its real logarithm is continuous, including at density zero. The qualified Mathlib function Real.binEntropy is defined by p log p⁻¹ + (1 − p) log (1 − p)⁻¹ for every real p.
 
-**Definition 1.4 (The phase-independence assertion).**
+**Definition 1.3 (The phase-independence assertion).**
 
 $$(\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.claim}) \Leftrightarrow (\forall (thetaAlpha: \mathbb{R}), (\forall (thetaBeta: \mathbb{R}), (\forall (phaseX: \mathbb{R}), (\forall (phaseZ: \mathbb{R}), ((thetaAlpha \in \operatorname{Set.Icc}\left((0: \mathbb{R}), \frac{\operatorname{Real.pi}}{2}\right)) \Rightarrow ((thetaBeta \in \operatorname{Set.Icc}\left((0: \mathbb{R}), \frac{\operatorname{Real.pi}}{2}\right)) \Rightarrow ((phaseX \in \operatorname{Set.Ico}\left((0: \mathbb{R}), (2) \cdot (\operatorname{Real.pi})\right)) \Rightarrow ((phaseZ \in \operatorname{Set.Ico}\left((0: \mathbb{R}), (2) \cdot (\operatorname{Real.pi})\right)) \Rightarrow (\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.spinEntropy}\left(thetaAlpha, thetaBeta, phaseX, phaseZ\right) = \operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.spinEntropy}\left(thetaAlpha, thetaBeta, 0, 0\right))))))))))$$
 
@@ -52,9 +40,9 @@ $$(\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.claim}) \Le
 
 *Commentary.*
 
-Conjecture 1 asserts that equation (17) equals the zero-phase expression (18). Both angles range over Set.Icc zero (Real.pi divided by two), and both relative phases range over Set.Ico zero (twice Real.pi). Equality with the zero-phase value is asserted for every such choice.
+Conjecture 1 asserts that equation (17) equals the zero-phase expression (18). Both angles range over Set.Icc zero (Real.pi divided by two), and both relative phases range over Set.Ico zero (twice Real.pi). Equality with the zero-phase value is asserted for every such choice. The Shannon terms in spinEntropy use the qualified Mathlib function Real.binEntropy.
 
-**Theorem 1.5 (A relative phase produces an entropy gap).**
+**Theorem 1.4 (A relative phase produces an entropy gap).**
 
 $$\neg (\operatorname{D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation.claim})$$
 
@@ -81,5 +69,4 @@ After division of the polynomial's squared modulus by 22 Real.pi, the integral o
 - Truth anchor: `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.claim`
 - Truth anchor: `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.density`
 - Truth anchor: `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.result`
-- Truth anchor: `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.shannonTerm`
 - Truth anchor: `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.spinEntropy`

@@ -54,13 +54,13 @@ The module writes ρ_1 with the source's frequencies +2, +1, −2 and phases, an
 
 ## Evidence
 
-The canonical source is `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.lean` (466 lines).
-- It defines `shannonTerm`, `density`, `spinEntropy` and `claim`, and proves `result : ¬ claim`.
-- It uses pinned Mathlib only: `Real.circleAverage`, the Cauchy formula for derivatives (`DifferentiableOn.circleIntegral_one_div_sub_center_pow_smul`), `Complex.log` on the slit plane, `Real.continuous_mul_log`, and the arctangent identities.
+The canonical source is `D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.lean` (464 lines).
+- It defines `density`, `spinEntropy` and `claim`, and proves `result : ¬ claim`. The Shannon terms S_c of Eq. (17) are Mathlib's `Real.binEntropy`.
+- It uses pinned Mathlib only: `Real.binEntropy` with `Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub`, `Real.circleAverage`, the Cauchy formula for derivatives (`DifferentiableOn.circleIntegral_one_div_sub_center_pow_smul`), `Complex.log` on the slit plane, `Real.continuous_mul_log`, and the arctangent identities.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - `result` is the refutation result of a `refutes` utility, which CLAUDE.md §3.9 exempts from four-slot registration.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.lean.json`, statement `sha256:7542fc9a81e0c00c2d80152d6e2b576185eabfbb18509887a62d712188a1e612`.
+Frozen state: `Golden/Frozen/state/D5/S3/Entropy/GeigerKedemSpinEntropyPhaseRefutation.lean.json`, statement `sha256:2b37517cca1ed8d08b9c8da310555a0da9c93bf77218f53748edb93d023923bb`.
 
 Declaration statements:
 - `result`: `sha256:d88d1cabde4b67e4fc80a9264e8c2204bae6c65a1faaa811152e6729bf5d5698`;
@@ -75,7 +75,7 @@ Tier 1 conjecture of a 2022 paper, preregistered in issue #17162 before any Lean
 | --- | --- | --- | --- |
 | result | bind-only | none: after inlining, the density identification, the Cauchy coefficient extraction, the derivative values and the normalization are instantiations of pinned Mathlib results followed by normalization | open-problem-resolution |
 
-Every other declaration is a definition used by a public statement or a compiler-generated proof on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
+Every other public declaration is a definition used by a public statement. The module's 21 private theorems are bind-only helpers consumed on the proof path of `result`, and its 5 private definitions and its compiler-generated declarations also lie on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `certified-instance` with basis `refutes` the module's `claim`. There is no digestion atom.
 
 ### What the settlement shows
 
