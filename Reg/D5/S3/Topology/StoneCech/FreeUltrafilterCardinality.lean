@@ -20,7 +20,7 @@ open _root_.D5.S3.Topology.StoneCech.FreeUltrafilterCardinality
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-def signature : Signature.{0, 0, 0, 0, 0} where
+abbrev signature : Signature.{0, 0, 0, 0, 0} where
   Params := Unit
   State := fun p => Ultrafilter ℕ
   Role := Unit
@@ -30,10 +30,10 @@ def signature : Signature.{0, 0, 0, 0, 0} where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
+abbrev actual : Realization signature :=
   realize signature (fun i p u => (u : Filter ℕ)) (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law r := 2 ^ Cardinal.continuum ≤
     Cardinal.mk {u : Ultrafilter ℕ // r.readout () () u ≤ Filter.cofinite}
@@ -45,7 +45,7 @@ theorem source_bridge : sourceScope ↔ arena.Law actual := Iff.rfl
 theorem actual_positive : arena.Law actual :=
   continuum_power_le_mk_freeUltrafilter_nat
 
-def rejected : Realization signature :=
+abbrev rejected : Realization signature :=
   realize signature (fun i p u => (pure (0 : ℕ) : Filter ℕ)) (fun e => nomatch e)
 
 private theorem pure_zero_not_free :
@@ -92,7 +92,7 @@ def familyRegistration : Registration arena sourceScope where
 def registration :
     LeanInformationAudit.Contract.Registration.{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       (@continuum_power_le_mk_freeUltrafilter_nat)
-      (Realization signature) Unit Unit where
+      (Realization signature) Unit True where
   unitName := `D5.S3.Topology.StoneCech.FreeUltrafilterCardinality.continuum_power_le_mk_freeUltrafilter_nat.__information_unit
   realizationName := `Reg.D5.S3.Topology.StoneCech.FreeUltrafilterCardinality.familyRegistration
   realizationSource := none
