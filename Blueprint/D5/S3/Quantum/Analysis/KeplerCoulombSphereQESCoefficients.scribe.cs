@@ -50,7 +50,10 @@ internal sealed class KeplerCoulombSphereQESCoefficientsDocument : IScribeDocume
                         + "through their degrees. Their coefficients give b and c, and evaluation at nonnegative z "
                         + "makes the denominator strictly positive. Rescaling by curvature yields the two families "
                         + "of factorial ratios, products and polynomial brackets."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("quesne-2023-kepler-coulomb-qes-coefficient-conjecture"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
