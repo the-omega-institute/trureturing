@@ -2613,3 +2613,1284 @@ identify $H_N$ with $H_L$ nor give a universal one-budget certificate
 or an original N/O separator.
 
 ## 追加锚（本行以下为增补区）
+
+## 244. Joint triple capacities and sharp original attainment
+
+**Definition 244.1 (The capacity domain).** Retain the complete rows,
+full catalogs, scores and actual source of §§237 and 243. For an integer
+$m\ge5$ choose
+
+$$
+0<t\le1,\qquad a_2=a_3=t\ge a_4\ge\cdots\ge a_m>0.
+$$
+
+Put
+
+$$
+\begin{aligned}
+q&=\frac{1-t}{m-2},&S&=\sum_{n=3}^m a_n,&
+e&=\frac{S-(m-3)q}{m+1},\\
+H&=t+q,&R&=1-e-\binom{m-1}{2}q,&e_S&=\frac S{m+1},\\
+d_1=d_2&=t-e-(m-3)q,\\
+d_n&=a_n-e-(m-3)q&& (3\le n\le m-2),\\
+d_{m-1}&=a_{m-1}-e-(m-3)q-R,&d_m&=a_m-e-R.
+\end{aligned}
+\tag{244.1}
+$$
+
+The capacity hypotheses are exactly
+
+$$
+e>0,\qquad R\ge q,\qquad
+ a_n\ge t-\binom{n-2}{2}q\ (2\le n\le m),\qquad
+0\le d_n\le e\ (1\le n\le m).
+\tag{244.2}
+$$
+
+Choose any $h\in[t,1]$, set $a_1=h$ and define
+
+$$
+e_*(h)=\max\left\{e,\frac{S+h-1}{m+1}\right\}.
+\tag{244.3}
+$$
+
+Append any entire positive nonincreasing vanishing sequence of actual
+tail amplitudes with $a_{m+1}\le e_*(h)$. These are sufficient
+hypotheses on the selected marked targets, without restrictions on the
+original competitors.
+
+**Theorem 244.2 (Joint capacity gives the attained original optimum).**
+Under (244.1)–(244.2),
+
+$$
+0<e_*(h)\le e_S<a_m,\qquad
+E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=e_*(h).
+\tag{244.4}
+$$
+
+Both infima are attained. One original stopped law and its counted N
+completion use the same source-independent seed and return the same
+tape at every source and seed. For every positive closed cap $c$, either
+original class is feasible exactly when $c\ge e_*(h)$. Every actual tail
+source has error exactly $e_*(h)$, including all closed tail ties.
+For $e_*(h)\le c\le e_S$, the exhibited full mass-one allocations
+witness $(h,t,t,a_4,\ldots,a_m;c)\in H_N\cap H_O$.
+
+Proof. The definitions imply
+
+$$
+\sum_{n=1}^m d_n=3e,\qquad 1-H=(m-3)q,\qquad
+ e_S-e=\frac{(m-3)q}{m+1}.
+\tag{244.5}
+$$
+
+For example, the degree sum before substitution is
+$2t+S-me-(m-1)(m-3)q-2R$; using
+$2\binom{m-1}{2}=(m-1)(m-2)$ and
+$S=(m+1)e+(m-3)q$ reduces it to $3e$.
+If $q>0$, $d_m\ge0$ and $R\ge q$ give
+$a_m\ge e+R>e+(m-3)q/(m+1)=e_S$.
+If $q=0$, $t=1$ and the amplitude floors force all $a_2,\ldots,a_m$
+to be one; then $e=e_S=(m-2)/(m+1)<a_m$.
+Thus $e<t$, $t\le H\le1$, and (244.3) is $e$ below $H$ and
+$(S+h-1)/(m+1)$ above $H$.
+
+Use the rank-three hypersimplex fact to obtain one nonnegative measure
+$x_T$ on three-subsets of $[m]$ with total $e$ and degrees $d_n$.
+Here is a complete finite construction of that mature fact. Divide the
+degrees by $e$, partition $[0,3)$ into consecutive half-open intervals
+$I_n$ of lengths $d_n/e\le1$, and, for $z\in[0,1)$, let $T(z)$ be
+the labels of the intervals containing $z,z+1,z+2$. They are distinct:
+one half-open interval of length at most one cannot contain two of
+these points. Set $x_T=e\,|\{z:T(z)=T\}|$. For each $n$, its inclusion
+measure is
+$\sum_{j=0}^2|\{z\in[0,1):z+j\in I_n\}|=|I_n|=d_n/e$.
+Hence the degrees and total are as required. The finitely many interval
+endpoint residues modulo one give finitely many constant choices of
+$T$. This defines coefficients, not an additional acquisition seed.
+
+Construct first the head-$H$ law. For each $i<j$, set
+
+$$
+\begin{aligned}
+b_{ij}&=q&& (1\le i<j\le m-1),&b_{m-1,m}&=R,\\
+c_{i,i+1}&=q&& (2\le i\le m-1),&
+w_{ij}&=b_{ij}+\sum_{k>j}x_{\{i,j,k\}},
+\end{aligned}
+\tag{244.6}
+$$
+
+with other $b,c$ zero. Using $\mathbf e_r$ for unit output mass,
+give the pair $(i,j)$ its three unnormalized stopped cell vectors
+
+$$
+\begin{aligned}
+u^0_{ij}&=c_{ij}\mathbf e_0+(w_{ij}-c_{ij})\mathbf e_i,\\
+u^{10}_{ij}&=w_{ij}\mathbf e_j,\\
+u^{11}_{ij}&=b_{ij}\mathbf e_0+
+                           \sum_{k>j}x_{\{i,j,k\}}\mathbf e_k.
+\end{aligned}
+\tag{244.7}
+$$
+
+Every vector is nonnegative, including the final transfer because
+$R\ge q$. All three vectors in a row have the same mass $w_{ij}$,
+and their schedule masses sum to
+$\binom{m-1}{2}q+R+\sum_Tx_T=1$.
+For $w_{ij}>0$ the whole deterministic output triple $(r_0,r_{10},r_{11})$
+has mass
+$u^0_{ij}(r_0)u^{10}_{ij}(r_{10})u^{11}_{ij}(r_{11})/w_{ij}^2$.
+Summation recovers every cell vector and total schedule mass.
+Zero rows are omitted. This is one full normalized law with all
+counterfactual outputs fixed together, using the realization of §§109,
+176 and 237.2.
+
+A numerical triple $i<j<k$ emits the actual first-zero label $n$ exactly
+when $n$ belongs to the triple: its selected preceding queries are
+positive, including when $n=k$ is the unqueried exhaustion guess.
+This holds with every suffix. Base-edge degrees are $(m-2)q$ through
+$m-2$, $(m-2)q+R$ at $m-1$, and $R$ at $m$. First-cell transfers
+subtract $q$ exactly at $2,\ldots,m-1$. Consequently (244.7) gives
+
+$$
+p_w(n)=a_n-e\quad(2\le n=n(w)\le m),\qquad
+p_w(1)=H-e\quad(n(w)=1).
+\tag{244.8}
+$$
+
+For an arbitrary Boolean word put $k=\sum_{i=1}^{m-1}w_i$.
+Summing base contributions in this same law gives the exact polynomial
+
+$$
+p_w(0)=q\left[m-2-\sum_{i=2}^{m-1}w_i+\binom{k}{2}\right]
+                         +R w_{m-1}w_m.
+\tag{244.9}
+$$
+
+At first zero one, its bracket is $m-2-k+\binom{k}{2}\ge m-3$,
+so $p_w(0)\ge1-H$. At first zero $n\ge2$, $w_1=1$ and
+$k\ge n-1$; the bracket is
+$m-1-k+\binom{k}{2}$ and is at least
+$m-2+\binom{n-2}{2}$. For $n=2$ the tied minima are $k=1,2$;
+for later $n$ the expression increases from $k=n-1$.
+The amplitude floors therefore give $p_w(0)\ge1-a_n$.
+Together with (244.8), these prove the base, correct and independent
+pair rows separately: in particular $p_w(0)+p_w(n)\ge1-e$.
+The literal base demand is $1-a_n-e$, even when negative.
+At $1^m$, the base is $\sum b_{ij}=1-e$. Each zero-word correct
+event has deficit $e$, so (237.2) gives exact TV $e$.
+
+For $t\le h\le H$, in every first-query-one zero cell transfer the
+fraction $(H-h)/(H-e)$ of its label-one mass to base. This fraction
+lies in $[0,1]$ since $h\ge t>e$. All correct-one mass is in these
+cells; the total transfer on every first-zero-one word is $H-h$.
+Its correct mass becomes $h-e$, its base is at least $1-h$, and its
+pair mass stays fixed. Every other word law and the positive law stay
+fixed. Thus all rows hold at $e_*(h)=e$.
+
+For $H<h\le1$, reuse §113.3 at head one and cap $e_S$.
+To specify its whole law, put $r_n=a_n-e_S$ for $n\ge2$,
+$r_{m+1}=0$. For $3\le k\le m$ give the uniform triple rule on
+$\{1,\ldots,k,\infty\}$ mass
+$v_k=(k+1)(r_k-r_{k+1})/3$. It queries the two smallest numerical
+indices, returns a queried first zero, and otherwise its third label;
+$\infty$ means zero. Telescoping gives
+
+$$
+\sum_{k=3}^m v_k=r_3+e_S=t,\qquad
+\sum_{k=3}^m v_k\frac{k-2}{k+1}=e_S.
+\tag{244.10}
+$$
+
+Put mass $1-t$ on $(1,2;1,0,0)$. Triple inclusion gives correct
+mass $a_n-e_S$ for $n\ge2$ and $1-e_S$ at head one. The second
+identity bounds outside-pair mass by $e_S$ on every word, so base
+is at least $1-a_n$ and the independent pair probability at least
+$1-e_S$. Positive base is $1-e_S$.
+These are the residual supplier's actual common masses, without an
+error constraint on individual branches.
+
+For $q>0$, mix this whole saturated law with the head-$H$ law,
+using saturated weight $\xi=(h-H)/(1-H)$. Equations (244.5) give
+
+$$
+(1-\xi)e+\xi e_S=e+\frac{h-H}{m+1}
+                         =\frac{S+h-1}{m+1}.
+\tag{244.11}
+$$
+
+All independent rows are affine in this one kernel, amplitudes and cap.
+Correct masses are $a_n-e_*(h)$ and positive base is $1-e_*(h)$.
+At $q=0$ only $h=H=1$ occurs and no division is used. This includes
+all closed heads, zero masses and equal capacities.
+
+Flatten the complete-table probabilities and the outer mixture into
+one partition of a source-independent uniform seed. Execute the selected
+increasing actual prime schedule and emit the original mark. Its counted
+N completion uses that same table and seed and returns the same tape.
+The construction has at most two actual requests and finite handoff on
+every source and seed, as in §243.2. At any actual first absence $n>m$
+the law is the positive-word law and has no output $n$. Its exact error is
+$\max\{1-p_+(0),a_n\}=\max\{e_*(h),a_n\}=e_*(h)$ by (243.3).
+Thus all positive actual tails and equality tails are retained.
+
+For the matching lower bounds, §117.2 gives, against every original
+arbitrary-address full-carrier N competitor,
+
+$$
+c\ge\frac{(m-3)t+(m-2)S-(m-3)}{(m-2)(m+1)}=e.
+\tag{244.12}
+$$
+
+At any positive feasible cap $c<a_m$, §113.2 gives
+$S-(m-2)c\le D_3(a,c)\le3c+1-h$, hence
+$c\ge(S+h-1)/(m+1)$. If an original rule had error below $e_*(h)$,
+choose an intermediate positive closed cap below $e_*(h)<a_m$.
+These two bounds contradict that cap. Additional active tail terms
+only strengthen the residual bound. Counted O completion gives the
+same lower bound for O. This proves attained optimality and every
+positive closed-cap threshold.
+
+Finally, for $e_*(h)\le c\le e_S$, order, $b_2=b_3$,
+$(m+1)c\le S$, and $h+S-(m+1)c\le1$ give hull membership.
+The same full probability allocation meets every row at $c$, and its
+completion supplies the N allocation. This proves actual feasible
+membership, not just a hull inequality. For every full $y\ge0$ the same
+allocation gives $F_{Q(y)}(b,c)\le\Delta_O(y)$, and in particular at
+most one for every unit-O score. ∎
+
+## 245. Explicit capacity subregions and unequal eight-coordinate laws
+
+**Corollary 245.1 (High flat profiles at every length).** Set
+$P_m=m^3-4m^2+7m+2$ and $t_m=1-6(m-2)/P_m$ for $m\ge5$.
+For $t_m\le t\le1$, $t\le h\le1$, $a_1=h$ and
+$a_2=\cdots=a_m=t$, the attained original optimum of both classes is
+
+$$
+e_* =\max\left\{
+\frac{(m^2-3m+1)t-(m-3)}{(m-2)(m+1)},
+\frac{(m-2)t+h-1}{m+1}\right\}.
+\tag{245.1}
+$$
+
+Every entire positive nonincreasing vanishing tail with
+$a_{m+1}\le e_*$ is allowed. The positive closed-cap threshold is
+$e_*$, with the same-seed attainers of Theorem 244.2.
+
+Proof. Each capacity inequality is affine in $\delta=1-t$, and the
+amplitude floors are automatic. At $\delta=0$,
+$e=(m-2)/(m+1)$, $R=3/(m+1)$, $q=0$; the first $m-2$ degrees are
+$3/(m+1)$ and the last two zero. At $\delta=6(m-2)/P_m$,
+
+$$
+\begin{aligned}
+q=R&=6/P_m,& e&=(m-1)(m^2-6m+10)/P_m,\\
+d_A&=3(m^2-7m+14)/P_m,&d_B&=3(m-3)(m-4)/P_m,\\
+d_C&=3(m-2)(m-3)/P_m,\\
+e-d_A&=(m-4)(m^2-6m+13)/P_m,\\
+e-d_B&=(m-4)(m^2-6m+13)/P_m+6/P_m,\\
+e-d_C&=(m-4)(m^2-6m+7)/P_m.
+\end{aligned}
+\tag{245.2}
+$$
+
+Here $d_A$ is repeated $m-2$ times. All displayed quantities requiring
+positivity are positive for $m\ge5$, and $R-q=0$ at this endpoint.
+Affinity proves (244.2) throughout the interval. Substitution in
+Theorem 244.2 proves the result for all lengths and real parameters.
+The thresholds at $m=5,6,7,8$ are $22/31,23/29,28/33,139/157$.
+The five- and six-active comparisons belong to §§148 and 161; the
+flat-seven lower-head construction belongs to §242, and its upper-head
+extension follows from (244.11) and the old saturated supplier.
+The unit and saturated-head endpoints retain §§87, 113–114 ownership. ∎
+
+**Corollary 245.2 (A nested near-unit domain).** For $m\ge7$, choose
+
+$$
+0\le\tau\le6/P_m,\quad t=1-(m-2)\tau,\quad
+z_2=z_3=0,\quad0\le z_4\le\cdots\le z_m\le\tau.
+\tag{245.3}
+$$
+
+Set $a_1=h\in[t,1]$, $a_n=t-z_n$ for $2\le n\le m$,
+$S=\sum_{n=3}^m a_n$. The exact attained optimum of both original
+classes is
+$e_* =\max\{[S-(m-3)\tau]/(m+1),(S+h-1)/(m+1)\}$,
+for every permitted entire actual tail $a_{m+1}\le e_*$ and every
+positive closed cap as in Theorem 244.2.
+
+Proof. Put $Z=\sum_{n=3}^m z_n$, and use subscript $f$ for the flat
+values at this $t$. Set
+
+$$
+B=\frac{(m-3)(m-4)\tau}{2},\qquad
+C=\frac{(m-2)(m-3)\tau}{2},\qquad
+A=t-e-(m-3)\tau.
+$$
+
+The capacity degrees are $A-z_n$ through $m-2$ (with $z_1=0$),
+$B-z_{m-1}$ and $C-z_m$. Direct substitution gives
+
+$$
+R_f-\tau=\frac{6-P_m\tau}{2(m+1)}\ge0,\quad
+R=R_f+\frac Z{m+1},\quad A=R_f+B+\frac Z{m+1}.
+\tag{245.4}
+$$
+
+Since $B\ge6\tau$, $C\ge10\tau$ and $z_n\le\tau$, all degrees
+are nonnegative. For their upper bounds,
+
+$$
+\begin{aligned}
+e-A&=\frac{(m-5)+(3m-7)\tau-2Z}{m+1}>0,\\
+e-C&\ge\frac{(m-1)(m-5)(m^2-3m-2)}{(m+1)P_m}>0.
+\end{aligned}
+\tag{245.5}
+$$
+
+The first uses $Z\le(m-3)\tau$. The second follows by substituting
+that same bound and $\tau\le6/P_m$ in $e-C$; its numerator
+factorization is
+$(m-2)P_m-3(m^3-2m^2-3m+2)=(m-1)(m-5)(m^2-3m-2)$.
+Because $B\le C$, these bound every degree above by $e$ and imply
+$e>0$. The amplitude floors follow from
+$z_n\le\tau\le\binom{n-2}{2}\tau$ for $n\ge4$, with equalities
+at two and three. Thus all hypotheses of Theorem 244.2 hold.
+This is a subregion of that theorem, with no independent capacity
+principle. The alternative transfer layout $c_{i,m-1}=\tau$ for
+$2\le i\le m-2$ and $c_{m-1,m}=\tau$ has the same first-index
+transfer totals, base polynomial and proof. ∎
+
+For example, $m=8$, $\tau=3/157$, $h=142/157$,
+$t=139/157$ and $z_4=\cdots=z_8=3/157$ give
+
+$$
+a=(142,139,139,136,136,136,136,136)/157,\qquad e_*=268/471,
+$$
+
+with degrees $(104,104,104,95,95,95,81,126)/471$.
+Equations (244.6)–(244.7), with the finite interval triple measure,
+specify every cell of a complete law at this point. Any actual tail
+below $268/471$ is allowed, including equality at coordinate nine.
+
+An explicit law at this same point uses the alternative transfer layout
+of Corollary 245.2. Put $k=3/157$ and define the following unnormalized
+exhaustion vectors:
+
+$$
+\begin{aligned}
+E_{13}&=k\mathbf e_0+\frac{671}{55107}\mathbf e_6
+ +\frac{1903}{140829}\mathbf e_7+\frac{26642}{1267461}\mathbf e_8,\\
+E_{14}&=k\mathbf e_0+\frac{237595}{12343968}\mathbf e_6
+ +\frac{673835}{31545696}\mathbf e_7
+ +\frac{673835}{20279376}\mathbf e_8,\\
+E_{16}&=k\mathbf e_0+\frac{2091}{202216}\mathbf e_7
+ +\frac{697}{43332}\mathbf e_8,\\
+E_{34}&=k\mathbf e_0+\frac{28975}{2057328}\mathbf e_6
+ +\frac{82175}{5257616}\mathbf e_7+\frac{82175}{3379896}\mathbf e_8,\\
+E_{36}&=k\mathbf e_0+\frac{765}{101108}\mathbf e_7
+ +\frac{85}{7222}\mathbf e_8.
+\end{aligned}
+\tag{245.5a}
+$$
+
+In the table below $w$ is the schedule mass in that row; its occurrence
+in a cell denotes that same mass. These are all twenty-two schedules.
+
+| Pair | $w$ | Cell $0$ | Cell $10$ | Cell $11$ |
+| --- | ---: | --- | --- | --- |
+| $12$ | $k$ | $k\mathbf e_1$ | $k\mathbf e_2$ | $k\mathbf e_0$ |
+| $13$ | $31/471$ | $w\mathbf e_1$ | $w\mathbf e_3$ | $E_{13}$ |
+| $14$ | $4903/52752$ | $w\mathbf e_1$ | $w\mathbf e_4$ | $E_{14}$ |
+| $15$ | $4903/52752$ | $w\mathbf e_1$ | $w\mathbf e_5$ | $E_{14}$ |
+| $16$ | $1201/26376$ | $w\mathbf e_1$ | $w\mathbf e_6$ | $E_{16}$ |
+| $17$ | $k$ | $k\mathbf e_1$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $23$ | $31/471$ | $w\mathbf e_2$ | $w\mathbf e_3$ | $E_{13}$ |
+| $24$ | $4903/52752$ | $w\mathbf e_2$ | $w\mathbf e_4$ | $E_{14}$ |
+| $25$ | $4903/52752$ | $w\mathbf e_2$ | $w\mathbf e_5$ | $E_{14}$ |
+| $26$ | $1201/26376$ | $w\mathbf e_2$ | $w\mathbf e_6$ | $E_{16}$ |
+| $27$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $34$ | $643/8792$ | $w\mathbf e_3$ | $w\mathbf e_4$ | $E_{34}$ |
+| $35$ | $643/8792$ | $w\mathbf e_3$ | $w\mathbf e_5$ | $E_{34}$ |
+| $36$ | $169/4396$ | $w\mathbf e_3$ | $w\mathbf e_6$ | $E_{36}$ |
+| $37$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $45$ | $k$ | $k\mathbf e_4$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $46$ | $k$ | $k\mathbf e_4$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $47$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $56$ | $k$ | $k\mathbf e_5$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $57$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $67$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $78$ | $14/471$ | $k\mathbf e_0+(5/471)\mathbf e_7$ | $w\mathbf e_8$ | $w\mathbf e_0$ |
+
+For a direct ordinary verification, subtract base mass $k$ from each
+$11$ cell inside $[7]$, and base mass $14/471$ on $78$.
+The remaining masses are numerical triples, with total $268/471$
+and inclusion degrees $(104,104,104,95,95,95,81,126)/471$.
+For example, each term at label $r$ in $E_{ij}-k\mathbf e_0$
+is the mass of triple $\{i,j,r\}$. Summing the displayed fractions
+gives exactly those eight degrees. The base edges and transfers are
+precisely the alternative layout of Corollary 245.2. Thus its all-word
+correctness and base-polynomial proof applies verbatim to this law.
+Every cell has its printed schedule mass, those masses sum to one,
+and the whole-table coupling (244.7) fixes all counterfactual outputs
+using the same source-independent seed. No additional feasibility
+claim is attributed to this explicit instance.
+
+**Corollary 245.3 (An unequal eight-coordinate continuum).** For
+$0\le x\le1/200$, $9/10\le h\le1$, take
+
+$$
+a=(h,9/10,9/10,9/10-x,9/10-2x,9/10-3x,
+                           9/10-4x,9/10-5x,\ldots).
+$$
+
+For every entire permitted actual tail, the exact attained optimum is
+
+$$
+e_*(x,h)=\max\left\{\frac{319}{540}-\frac{5x}{3},
+                            \frac{22/5+h-15x}{9}\right\},
+\qquad a_9\le e_*(x,h).
+\tag{245.6}
+$$
+
+Proof. Here $q=1/60$, $R=8/135+5x/3$, $H=11/12$,
+$e=319/540-5x/3$, $e_S=3/5-5x/3$, and the eight degrees are
+
+$$
+\left(\frac{61}{270}+\frac{5x}3,
+\frac{61}{270}+\frac{5x}3,\frac{61}{270}+\frac{5x}3,
+\frac{61}{270}+\frac{2x}3,\frac{61}{270}-\frac{x}3,
+\frac{61}{270}-\frac{4x}3,\frac16-4x,\frac14-5x\right).
+\tag{245.7}
+$$
+
+Their sum is $3e$; they are positive and at most $1/4$, while
+$e\ge629/1080>1/2$. Each amplitude floor follows from
+$(n-3)x\le\binom{n-2}{2}/60$. Thus Theorem 244.2 applies,
+including $x=0$, all heads and every actual equality tail. ∎
+
+**Proposition 245.4 (Two explicit unequal cores).** The following
+prefixes have attained optimum in both original classes at the printed
+cap, for every permitted entire actual tail bounded by that cap:
+
+$$
+\begin{aligned}
+a^{(A)}&=(11/12,9/10,9/10,9/10,179/200,89/100,177/200,22/25),
+&e_A&=79/135,\\
+a^{(B)}&=(23/24,19/20,19/20,91/96,227/240,151/160,113/120,451/480),
+&e_B&=2701/4320.
+\end{aligned}
+\tag{245.8}
+$$
+
+Proof. For A, $q=1/60$, $R=7/108$, $H=11/12$, and the degrees are
+$(25/108,25/108,25/108,25/108,1223/5400,299/1350,91/600,23/100)$.
+One common numerical triple measure is
+
+| Triple | Mass |
+| --- | ---: |
+| $123$ | $25/108$ |
+| $458$ | $119/900$ |
+| $467$ | $67/675$ |
+| $568$ | $377/5400$ |
+| $678$ | $151/5400$ |
+| $567$ | $11/450$ |
+
+Its total is $79/135$ and its eight inclusion degrees are exactly the
+listed values. They belong to $[0,e_A]$, $R\ge q$, and each floor
+in (244.2) holds by substitution. Equations (244.6)–(244.7) now give
+all terminal vectors and their whole-table probabilities.
+For B, $q=1/120$, $R=863/4320$, $H=23/24$, and the degree numerators
+over 4320 are $(1223,1223,1223,1214,1205,1196,324,495)$.
+They sum to 8103, each lies between zero and 2701, and all floors
+hold. The interval construction in Theorem 244.2 supplies a finite
+triple measure and therefore the complete law, without an optimizer
+existence assumption. The theorem proves both claims.
+Neither A nor B is required to lie on the line (245.6).
+The tails $a_{8+j}=e_A2^{1-j}$ and $a_{8+j}=e_B2^{1-j}$,
+respectively, give concrete entire sequences with a closed first tie. ∎
+
+## 246. A complementary unequal-seven sufficient region
+
+**Definition 246.1 (Affine terminal stocks).** Choose
+$0<z\le w\le v\le u\le t\le1$ and put
+
+$$
+\begin{aligned}
+k&=(1-t)/5,&S&=t+u+v+w+z,\\
+e&=\frac{9t+5(u+v+w+z)-4}{40},&h_0&=(1+4t)/5,\\
+A&=6k+(t-v+z)/2-e,&B&=e+(t-v-z)/2,\\
+C&=v-8k-e,&D&=(t+v-z)/2-8k,\\
+F&=2e-1+3k,&G&=(u-w)/2-k,\\
+H&=t-v-2k,&I&=e+(u+v-w-z-t)/2-3k.
+\end{aligned}
+\tag{246.1}
+$$
+
+These letters are terminal masses, distinct from the full score
+coordinates. Define the region $\mathcal P$ by all of
+
+$$
+\begin{gathered}
+e>0,\quad e\ge k,\quad S/8<z,\\
+A\ge k,\quad B\ge k+G,\quad C\ge0,\quad D\ge H+I,\quad
+F\ge k,\quad G\ge0,\quad H\ge k,\quad I\ge0,\\
+u\ge v+2k,\qquad w\ge v-3k,\qquad z\ge v-7k.
+\end{gathered}
+\tag{246.2}
+$$
+
+**Theorem 246.2 (Exact original optimum throughout the region).**
+For every tuple in $\mathcal P$, every $t\le h\le1$, and
+$a_1=h,a_2=a_3=t,a_4=u,a_5=v,a_6=w,a_7=z$, put
+
+$$
+e_* =\max\{e,(h+S-1)/8\}.
+\tag{246.3}
+$$
+
+For every entire positive nonincreasing vanishing actual tail with
+$a_8\le e_*$, both original hard-two classes have attained optimum
+$e_*$. Each is feasible at a positive closed cap exactly when that
+cap is at least $e_*$. The stopped attainer and its counted N completion
+use the same seed and tape on every source. The strict active horizon
+at the optimum is seven, since $0<e_*\le S/8<z$.
+
+Proof. At head $h_0$, use the following unnormalized terminal vectors.
+Each entry $a\mathbf e_r$ means mass $a$ at actual label $r$;
+unlisted schedules have zero mass.
+
+| Pair | Cell $0$ | Cell $10$ | Cell $11$ |
+| --- | --- | --- | --- |
+| $12$ | $k\mathbf e_1$ | $k\mathbf e_2$ | $k\mathbf e_0$ |
+| $13$ | $A\mathbf e_1$ | $A\mathbf e_3$ | $k\mathbf e_0+(A-k)\mathbf e_7$ |
+| $14$ | $B\mathbf e_1$ | $B\mathbf e_4$ | $k\mathbf e_0+G\mathbf e_5+(B-k-G)\mathbf e_6$ |
+| $15$ | $k\mathbf e_1$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $16$ | $k\mathbf e_1$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $17$ | $C\mathbf e_1$ | $C\mathbf e_7$ | $C\mathbf e_0$ |
+| $23$ | $D\mathbf e_2$ | $D\mathbf e_3$ | $H\mathbf e_0+I\mathbf e_4+(D-H-I)\mathbf e_5$ |
+| $24$ | $k\mathbf e_0+(A-k)\mathbf e_2$ | $A\mathbf e_4$ | $k\mathbf e_0+(A-k)\mathbf e_7$ |
+| $25$ | $k\mathbf e_2$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $26$ | $k\mathbf e_2$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $34$ | $k\mathbf e_0$ | $k\mathbf e_4$ | $k\mathbf e_0$ |
+| $35$ | $k\mathbf e_3$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $36$ | $k\mathbf e_3$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $45$ | $k\mathbf e_0$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $46$ | $F\mathbf e_4$ | $F\mathbf e_6$ | $k\mathbf e_0+(F-k)\mathbf e_7$ |
+| $56$ | $k\mathbf e_0$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $67$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+
+Every terminal mass is nonnegative by (246.2). The three cell sums
+are the same within each row, and the seventeen schedule masses sum to
+$11k+2A+B+C+D+F=1$. Formula (237.8) therefore specifies one common
+probability distribution on full deterministic tables.
+Every numerical exhaustion guess is later than both queries.
+Summing correct contributions on an entire first-zero class gives,
+independently of all suffix zeros,
+
+$$
+\begin{aligned}
+(p_w(n))_{n=1}^7
+={}&(3k+A+B+C,\ 2k+A+D,\ 2k+A+D,\ A+B+k+F+I,\\
+ &4k+G+D-H-I,\ 3k+F+B-G,\ C+2A+F-2k)\\
+={}&(h_0,t,t,u,v,w,z)-e(1,1,1,1,1,1,1).
+\end{aligned}
+\tag{246.4}
+$$
+
+This counts the unqueried exhaustion labels as well as queried outputs.
+For an arbitrary word let $r=\sum_{i=1}^6 w_i$. The same rows give
+
+$$
+p_w(0)=k\left[5-\sum_{i=2}^6w_i+\binom r2+w_6w_7\right]
+                        +(H-k)w_2w_3+Cw_1w_7.
+\tag{246.5}
+$$
+
+The first-cell base terms come from $24,34,45,56,67$.
+Every pair inside $[6]$ has base exhaustion mass $k$, except $23$,
+whose base is $H$; the other base edges are $17$ and $67$.
+This proves the identity on every word.
+
+Since $H-k,C\ge0$, the first-zero-one base is at least $4k$:
+its bracket is $5-r+\binom r2+w_6w_7\ge4$.
+For $n\ge2$, $w_1=1$ and $r\ge n-1$, so the core bracket is
+$6-r+\binom r2$. Its minima for $n=2,\ldots,7$ are
+$5,5,6,8,11,15$. For $n\ge4$, $w_2w_3=1$ forces the extra
+$H-k$. Hence the seven base lower bounds are
+
+$$
+(4k,5k,5k,5k+H,7k+H,10k+H,14k+H).
+\tag{246.6}
+$$
+
+They dominate $1-(h_0,t,t,u,v,w,z)$: classes one, two, three and five
+are equalities; the other three comparisons are precisely the last
+line of (246.2). Thus correct is amplitude minus $e$, base is at least
+one minus amplitude, and their independent pair sum is at least $1-e$.
+The original base demand $1-a_n-e$ remains in force, including negative
+values. At the positive word the base is $15k+C+H=1-e$.
+All 382 independent rows hold and correct deficit gives exact low-word
+TV $e$ at head $h_0$.
+
+For $t\le h\le h_0$, keep this whole law. Head correctness exceeds
+its new demand, and the pair demand is unchanged. The base demand is
+paid because $1-h-e\le5k-e\le4k$. Class two still has exact deficit
+$e$. For $h>h_0$, use the head-one supplier of §113.3 at $e_S=S/8$.
+All seven amplitudes exceed $e_S$, and
+$\sum_{n=3}^7(a_n-e_S)=3e_S$. Its explicit uniform-triple masses
+are those of (244.10), with $m=7$, plus mass $1-t$ on $(1,2;1,0,0)$.
+It satisfies all rows and has positive base $1-e_S$.
+The exact identities
+
+$$
+1-h_0=4k,\qquad e_S-e=k/2
+\tag{246.7}
+$$
+
+give saturated mixture weight $(h-h_0)/(4k)$ and mixed cap
+$e+(h-h_0)/8=(h+S-1)/8$. Every row uses this same whole mixture.
+At $k=0$, $t=h=h_0=1$ and there is no division. All closed stock,
+head and mixture endpoints are included.
+
+For every original competitor, §117.2 at $m=7$ requires
+$40c\ge4t+5S-4=40e$. Section 113.2 at any smaller positive cap
+$c<z$ requires $8c\ge h+S-1$. Since $e_*\le S/8<z$, an
+intermediate positive cap below $e_*$ contradicts these necessary
+bounds. They retain all arbitrary-address full-carrier competitors and
+all positive tail residuals. The whole law above, executed on the actual
+source using one seed, attains $e_*$; its positive base is $1-e_*$.
+Every actual $n>7$ has exact error $\max\{e_*,a_n\}=e_*$ by (243.3).
+Counted same-seed N completion gives the other attainer. This proves
+both optima and all positive closed-cap assertions. ∎
+
+For every $L\ge7$, pad this finite profile by $e_*$ through coordinate
+$L$. The same law ignores the added bits and emits no added label.
+New first-zero classes have base and pair at least $1-e_*$ and correct
+demand zero. Thus it is a full mass-one feasible O allocation at that
+same padded point, and its N completion supplies the N allocation.
+The hull inequalities reduce to $8e_*\le S$ and
+$h+S-8e_*\le1$. For every full unit-O $y$, the same allocation gives
+$F_{Q(y)}\le\Delta_O(y)\le1$ there. This is a pointwise consequence.
+
+**Proposition 246.3 (A closed nonempty region and noncontainment).**
+The independent closed box of radius $1/1000$ about
+
+$$
+(t,u,v,w,z)=(9/10,17/20,4/5,3/4,7/10)
+\tag{246.8}
+$$
+
+belongs to $\mathcal P$. At its center, $h=h_0=23/25$, $e_*=49/100$,
+and the stocks $(k,A,B,C,D,F,G,H,I)$ are
+$(1/50,3/100,19/100,3/20,17/50,1/25,3/100,3/50,2/25)$.
+The region (246.2) and the capacity region (244.2) do not contain one
+another.
+
+Proof. Every defining inequality is affine in the five box parameters.
+For an affine form its minimum on this box is its central value minus
+$\sum|\text{nonconstant coefficients}|/1000$. The terminal-stock
+slacks are positive; the smallest is $A-k\ge321/40000$.
+The final three slacks are at least $19/2500,37/5000,183/5000$,
+respectively. Also $e\ge19571/40000$, $k\le101/5000$,
+$S/8\le801/1600<699/1000\le z$; order gaps remain positive.
+These calculations prove the whole closed box, not only its center.
+
+At the center, the capacity floor at coordinate four would require
+$u\ge t-k=22/25$, whereas $u=17/20$. Its capacity degree at six is
+also $3/4-49/100-4/50-21/100=-3/100$. Thus an actual feasible law of
+Theorem 246.2 lies outside the stated capacity hypotheses.
+Conversely a flat capacity-seven point with $28/33\le t<1$ has
+$u=w=t$ and $G=-k<0$, outside (246.2). These witnesses establish
+noncontainment of the stated sufficient regions; they do not assert
+that the regions are disjoint or prohibit a larger unifying theorem. ∎
+
+## 247. Bounded comparisons with lower-dimensional suppliers
+
+**Proposition 247.1 (An affine bound preserved by residual extension).**
+Write $E(a,c)=D_3(a,c)-3c$. Every feasible core with at most six active
+coordinates satisfies
+
+$$
+E(a,c)\le\tfrac34(1-a_2).
+\tag{247.1}
+$$
+
+The family of §187 has the stronger coefficient $2/3$.
+Any finite sequence of the residual extensions of §173 preserves each
+of these bounds. At a fixed prefix of length $L$, convex mixtures of
+such extended data satisfy
+
+$$
+\sum_{n=3}^L a_n-(L+1)c\le\tfrac34(1-a_2).
+\tag{247.2}
+$$
+
+Proof. If the active length is $k\in\{3,4,5,6\}$, pad inactive finite
+amplitudes to $c$ through coordinate six. The ignored-bit extension
+retains every cap row, and §117.2 at six gives
+$3a_2+4\sum_{n=3}^6a_n-3\le28c$, equivalent to (247.1).
+For length below three, $E\le0$. Section 187.2 gives
+$E=r/10$, $1-a_2=3r/20$, proving its coefficient $2/3$, including
+$r=0$. Section 174.2 multiplies $E$ and $1-a_2$ by the same
+nonnegative core coefficient under each residual extension. This proves
+preservation by finite iteration. For actual prefix amplitudes,
+$\sum_{n=3}^L a_n-(L+1)c\le D_3(a,c)-3c$; inactive entries
+can only decrease the left side. The resulting inequality is affine
+in prefix amplitudes and cap, so convex mixtures preserve it. ∎
+
+The center (246.8), at head $23/25$ and cap $49/100$, has
+$E=2/25$, whereas $3(1-a_2)/4=3/40$. Its excess above (247.2) is
+$1/200$. Thus it is outside this precisely stated residual and convex
+closure, including the entire old five- and six-active families of
+§§148 and 161, and the full fixed-core family of §187.
+For the direct six-to-seven recognition at this center, §174.1 gives
+$g_7=21/100$, $W=14/25$, $E_{\rm ext}=7/20$, $r=11/25$,
+$e_0=7/22$, and inverse core
+$(A_2,A_3,A_4,A_5,A_6)=(17/22,17/22,29/44,6/11,19/44)$.
+Section 117.2 requires core error $197/616>7/22=196/616$.
+This excludes that direct inverse core, without excluding unrestricted
+stopped feasibility, which Theorem 246.2 supplies.
+
+**Proposition 247.2 (A larger specified convex comparison at seven).**
+The center in Proposition 246.3 also lies outside the convex hull of
+the following seven-prefix data: the families of §§238, 240–242;
+the old unit plateaus and saturated-head profiles; and feasible cores
+with at most six active coordinates or the fixed §187 core, with any
+finite §173 residual extensions. All actual inactive amplitudes and
+caps are retained in this comparison.
+
+Proof. Put $E_7=\sum_{n=3}^7a_n-8c$. Each compared feasible datum
+satisfies the two old head inequalities
+
+$$
+E_7\le1-a_1,\qquad E_7\le\tfrac45(1-a_2).
+\tag{247.3}
+$$
+
+The center is tight in both and has $a_2=a_3$. All these slacks and
+$a_2-a_3$ are nonnegative. Hence each positive-weight component of a
+convex representation would be tight in all three.
+The families with excess ratio at most $3/4$ (or $2/3$) can be tight
+in the second inequality only at $a_2=1,E_7=0$; simultaneous tightness
+in the first then gives $a_1=1$. They lie in the plateau face
+$\operatorname{conv}\{v_3,\ldots,v_7\}$ of the full hull (237.7).
+For an actual inactive seventh coordinate, $a_7\le c$ further removes
+$v_7$ when applicable. The families §§238, 240–241 have strict
+second-head slack: their respective excess ratios are at most
+$5/9,7/12,5/9$, below $4/5$. Saturated-head and unit families have
+zero excess and reduce to the same plateau face under tightness.
+
+For §242, tightness in both inequalities forces
+$a_1=H(t)=(4t+1)/5$ and $c=e_2(t)$. Its resulting tight data are
+the segment from
+$p_0=(29/33,28/33,\ldots,28/33;17/33)$ to $v_7$.
+Thus every possible representation of the center reduces to $p_0$
+and the plateau vertices $v_3,\ldots,v_7$.
+The coordinate $a_2=9/10$ forces $p_0$ weight $33/50$, leaving total
+plateau weight $17/50$. The four successive late gaps $1/20$ force
+$v_3,v_4,v_5,v_6$ weights
+$1/15,1/12,1/10,7/60$, because the respective vertex jumps are
+$3/4,3/5,1/2,3/7$. Their sum is $11/30>17/50$, by $2/75$.
+No nonnegative weight remains for $v_7$, a contradiction. ∎
+
+**Proposition 247.3 (A strict eight-prefix comparison).** For each
+lower-head point of (245.6), $h\le11/12$, define
+
+$$
+J(a,c)=\sum_{n=3}^8a_n-9c-\tfrac45(1-a_2).
+\tag{247.4}
+$$
+
+Then $J=1/300>0$. The convex hull of the actual eight-prefix data from
+the families in Proposition 247.2 and their finite §173 extensions has
+$J\le0$.
+
+Proof. For the new continuum, $S-9e=1/12$, $1-a_2=1/10$.
+For every compared family $E\le4(1-a_2)/5$: the smaller ratios in the
+preceding proof suffice, §242 has ratio at most $4/5$, and saturated
+or unit data have $E=0$. Proposition 247.1 includes all five/six cores
+and §187. Section 174.2 preserves this inequality under residual
+extension. Every actual eight-prefix has $\sum_3^8a_n-9c\le E$.
+Thus all compared data have $J\le0$, and its affineness preserves this
+under convex mixtures. ∎
+
+These are comparisons with exactly the named supplier families and
+operations. They establish substantive additional feasible domains;
+the new points have actual stopped and N witnesses. They are neither
+original N/O separators nor exclusions from every semantic consequence
+of the library. The common terminal-coupling framework of §176 and the
+all-word base/pair minima of §178 remain the underlying framework.
+
+## 248. Quantitative stopped repair of every full normalized N law
+
+**Definition 248.1 (One decomposition, defects and a common repair).**
+Fix $L\ge3$ and any ordered finite data
+$1\ge a_1\ge\cdots\ge a_L\ge\varepsilon\ge0$.
+Let $p\in\mathscr N_L$ satisfy every row (237.1) at cap $\varepsilon$,
+and choose any common probability distribution $\pi$ on its complete
+N tables. Every label in $J_L$ remains allowed. Sorting two distinct
+queried indices merely permutes their acquired information cells;
+repeated static requests have singleton information. These representation
+operations do not exempt any actual repeated or ignored request from
+counting. Use empty, singleton and sorted distinct-pair forms below.
+
+Write $v^+=1^L$, let $v^i$ have its sole zero at $i$, and let $v^{ij}$
+have zeros exactly at $i<j$. Define
+
+$$
+\begin{aligned}
+\delta&=3-p_{v^+}(0)-\sum_{i=1}^L p_{v^i}(i),\\
+s_0&=p_{v^+}(0)-(1-\varepsilon),&
+s_i&=p_{v^i}(i)-(a_i-\varepsilon),\\
+D(a,\varepsilon)&=2-\sum_{i=1}^L a_i+(L+1)\varepsilon,\\
+B(p)&=\sum_{i=1}^{L-1}(L-i)s_i+3\delta,&
+c_L&=\max\{3,L-1\}.
+\end{aligned}
+\tag{248.1}
+$$
+
+On the same selected pair table
+$N(a,b;\ell_{00},\ell_{01},\ell_{10},\ell_{11})$, $a<b$, replace
+its four outputs by
+$(\ell_{01},\ell_{01},\ell_{10},\ell_{11})$. Execute this as the
+stopped table $O(a,b;\ell_{01},\ell_{10},\ell_{11})$.
+Keep all empty and singleton functions. Let $q$ be this pushforward of
+the one whole-table law, and put
+
+$$
+\mu=\pi\{\text{distinct-pair tables with }\ell_{00}\ne\ell_{01}\}.
+\tag{248.2}
+$$
+
+This is one changed-table seed event, common to every word.
+
+**Theorem 248.2 (Full normalized repair and its all-word allowance).**
+For every $p$ and every decomposition in Definition 248.1, $q\in\mathscr O_L$,
+
+$$
+\begin{gathered}
+q_{v^+}=p_{v^+},\qquad q_{v^i}=p_{v^i}\quad(1\le i\le L),\\
+\sup_{w\in\{0,1\}^L}\operatorname{TV}(p_w,q_w)
+ \le\mu\le\min\{1,B(p)\}\le\min\{1,c_LD(a,\varepsilon)\}.
+\end{gathered}
+\tag{248.3}
+$$
+
+The equalities preserve the entire probability vectors.
+The repaired kernel satisfies every independent TV row at cap
+$\varepsilon+\mu$, hence at $\varepsilon+\min\{1,B(p)\}$.
+If every affected base, correct and pair event has actual row slack
+at least $\mu$, it is feasible at the original cap as well.
+In particular $D=0$ implies $\mu=0$ in every decomposition and
+$p\in\mathscr O_L$.
+
+Proof. For a deterministic pair $T$ on $a<b$, put
+
+$$
+t_a=[\ell_{01}=a],\quad t_b=[\ell_{10}=b],\quad
+z=[\ell_{11}=0\text{ or }\ell_{11}\in[L]\setminus\{a,b\}].
+$$
+
+Its positive-base indicator plus its number of correct sole-zero words
+is exactly $t_a+t_b+z$. Indeed every unqueried sole-zero word has
+transcript $11$, as does $v^+$; its one output can give at most one
+unqueried correct label or the positive base. Thus its deterministic
+defect
+
+$$
+d_T=3-T(v^+)(0)-\sum_i[T(v^i)=i]=3-t_a-t_b-z
+\tag{248.4}
+$$
+
+is a nonnegative integer. Empty and singleton forms have this count at
+most one and two, respectively, so their defects are positive.
+Integrating the one normalized distribution gives
+$\delta=\mathbb E_\pi d_T\ge0$.
+Zero-defect tables are distinct pairs with
+$\ell_{01}=a$, $\ell_{10}=b$, and $\ell_{11}$ zero or unqueried;
+the $00$ output is not yet restricted.
+
+For $i<j$, define the signed correctness loss
+
+$$
+g_{ij}(T)=[T(v^i)=i]-[T(v^{ij})=i].
+\tag{248.5}
+$$
+
+On a zero-defect table every $g_{ij}\ge0$. If $i$ is queried, its
+sole-zero correctness is already one. If it is unqueried, adding a
+later queried zero can only replace exhaustion by an output equal to
+that queried label, so cannot gain $i$. If neither zero is queried the
+transcript stays fixed. In particular, for its own pair,
+$g_{ab}=1-[\ell_{00}=a]$.
+
+For an arbitrary pair table, all negative $g_{ij}$ have just three
+possible forms. An earlier unqueried first zero $i$ can gain its one
+label $\ell_{01}$ when a later zero at $a$ is added, requiring
+$t_a=0$. It can similarly gain the one label $\ell_{10}$ when a later
+zero at $b$ is added, requiring $t_b=0$. Finally, the own pair
+$\{a,b\}$ can gain first-zero $a$ through $\ell_{00}=a$ only if
+$t_a=0$. Each of the first two types has at most one index $i$,
+since the output label is fixed. These exhaust transcript changes.
+Consequently
+
+$$
+\sum_{i<j}(-g_{ij}(T))_+
+ \le2(1-t_a)+(1-t_b)\le2d_T.
+\tag{248.6}
+$$
+
+A singleton has at most one gain: a later zero at its queried index
+can supply just one earlier unqueried label; its defect is at least
+one. An empty table has no gain. Thus (248.6) holds throughout the
+complete catalog, retaining earlier and unqueried numerical labels.
+
+Let $\beta_{\rm bad}=\pi\{d_T\ge1\}\le\delta$, and let $\Lambda$
+be the mass of zero-defect pairs with $\ell_{00}\ne a$.
+Their own-pair loss and the nonnegativity of all their other losses give
+
+$$
+\Lambda\le\mathbb E_\pi\left[\mathbf1_{d_T=0}\sum_{i<j}g_{ij}(T)\right].
+$$
+
+For the full mixture, the correct row at $v^{ij}$ has first zero $i$,
+so
+$\mathbb E g_{ij}=p_{v^i}(i)-p_{v^{ij}}(i)\le s_i$.
+Compensating only the possible gains from positive-defect tables,
+(248.6) yields
+
+$$
+\begin{aligned}
+\Lambda&\le\sum_i(L-i)s_i+
+ \mathbb E_\pi\left[\mathbf1_{d_T\ge1}\sum_{i<j}(-g_{ij}(T))_+\right]\\
+&\le\sum_i(L-i)s_i+2\delta,\\
+\mu&\le\Lambda+\beta_{\rm bad}
+ \le\sum_i(L-i)s_i+3\delta=B(p).
+\end{aligned}
+\tag{248.7}
+$$
+
+All terms use this same decomposition; no separate table optimizer
+or independent marginal realization has been substituted.
+
+The repair never changes a sole-zero or positive transcript, since
+none visits pair cell $00$. Their outputs agree at each seed.
+At every other word they can differ only on the single event (248.2).
+For any output event $E$, coupling by that same seed gives
+$|p_w(E)-q_w(E)|\le\mu$. Taking the supremum proves the TV bound
+simultaneously on all words, including arbitrary multiple zeros.
+The repaired first cell is measurable on the stopped transcript and
+all three output choices were fixed before replies, so $q\in\mathscr O_L$.
+Each independent base, correct and pair probability drops by at most
+$\mu$ as its own event inequality. Hence all three rows hold at
+$\varepsilon+\mu$; the positive row is unchanged. This also proves
+the stated sufficient actual-slack condition at the original cap.
+
+The original rows give $s_0,s_i\ge0$, and direct substitution gives
+
+$$
+\delta+s_0+\sum_i s_i=D(a,\varepsilon),\qquad
+B(p)\le c_L(D-s_0)\le c_LD.
+\tag{248.8}
+$$
+
+Together with $\mu\le1$, this proves (248.3). At $D=0$ all these
+nonnegative quantities vanish, forcing $\mu=0$ in every decomposition.
+The original full table functions are then already stopped almost surely.
+
+The local gain coefficient two in (248.6) is sharp: at $L=3$ the legal
+$N(2,3;2,1,3,0)$ has defect one and gains first-zero correctness on
+$\{1,2\}$ and $\{2,3\}$, and nowhere else. Its gain sum is two.
+This claims no sharpness of $c_L$ or the coefficient $3\delta$. ∎
+
+**Proposition 248.3 (A charged earlier-label change on an actual source).**
+The actual source $(r,g)=(19,436)$ has $F_{19}=4181$,
+$N(r,g)=1822917$ and first-four reply word $0100$.
+The legal table $N(3,4;1,0,0,0)$ returns earlier unqueried label one
+there. Its repair returns zero. For this pure table the changed mass
+is one, and its defect at $L=4$ is two.
+
+Proof. The integer is divisible by three and by none of two, five,
+seven; $419\le436\le836$ is in the original Fibonacci window.
+The acquired pair $(3,4)$ sees $00$, whose original output is one.
+The repair uses its old $01$ output, zero. The original
+base/correct/pair vector is $(0,1,1)$ and the repaired vector
+$(1,0,1)$. Every sole-zero correct indicator is zero, while the positive
+base is one; hence (248.4) gives defect two. Its full probability mass
+is included in (248.2), exactly as required by (248.7).
+No pruning to base or queried labels is legitimate. ∎
+
+## 249. The full normalized plateau face and same-allocation consequences
+
+**Theorem 249.1 (Equality of the full normalized N and O plateau faces).**
+For every $L\ge3$, at $a_1=\cdots=a_L=1$ and
+
+$$
+\varepsilon=(L-2)/(L+1),\qquad s=3/(L+1),
+\tag{249.1}
+$$
+
+the entire normalized finite feasible N face equals the O face.
+It consists exactly of probability mixtures on triples of
+$[L]\cup\{\infty\}$ whose inclusion marginal at each of the $L+1$
+labels is $s$. The triple queries its two smallest numerical labels,
+stops at its first queried zero with that label, and otherwise emits
+the third label, with $\infty$ meaning zero.
+In any complete deterministic-table decomposition of a feasible N
+kernel, every positive-mass table is, in sorted form,
+
+$$
+N(i,j;i,i,j,r),\qquad i<j<r\le L,
+\quad\text{or}\quad N(i,j;i,i,j,0).
+\tag{249.2}
+$$
+
+Empty, singleton and repeated-information forms have zero mass.
+
+Proof. Here $D=0$. Equations (248.4) and (248.8) force zero defect,
+positive base $s$, and sole-zero correct probability $s$ at every index.
+Theorem 248.2 additionally forces $00=01$ in every positive-mass pair
+of any decomposition. Therefore the zero-defect form is already
+stopped, with $00=01=i$, $10=j$, and $11$ zero or an unqueried label.
+
+If an exhaustion label $r<j$ had positive mass, choose a word with
+first zero $r$ and also zero at the later queried index $j$.
+That table loses correct $r$ relative to $v^r$. Every forced stopped
+form has correct-$r$ indicator at most its sole-zero indicator: a
+queried $r$ is correctly reached, and an unqueried exhaustion guess
+can only be lost. Thus no other form can gain to compensate.
+Since correctness at $v^r$ is already tight at $s$ and the all-word
+correct row also requires $s$, this is impossible. Hence numerical
+exhaustion guesses satisfy $r>j$, proving (249.2).
+
+These tables correspond exactly to triples $\{i,j,r\}$ or
+$\{i,j,\infty\}$. On every first-zero-$n$ word the output is $n$
+exactly when its triple contains $n$; on the positive word output
+zero is exactly inclusion of $\infty$. Thus all marginals must be $s$.
+Conversely every probability triple mixture with those marginals has
+correct mass $s$, pair mass at least $s=1-\varepsilon$, base at least
+zero above its literal demand $-\varepsilon$, and positive base $s$.
+Every independent row holds. Uniform triple weights supply existence.
+
+The sole-zero equalities, exhaustion reserve and complete O-face
+argument belong to §224; the implication forcing the N $00$ cell and
+therefore the equality of full faces is supplied by Theorem 248.2.
+This is a normalized finite-law classification. It does not classify
+arbitrary conic mass or unprojected original full-carrier decompositions.
+The numerical-exhaustion mass is $1-s=\varepsilon$, and the original
+unit-plateau attainer and its closed-tail transport remain §§87,
+110 and 176. ∎
+
+**Corollary 249.2 (Original full-class repair with the allowance paid).**
+For every entire original positive nonincreasing vanishing $a$ and every
+positive closed cap $\varepsilon$ whose strict active length is $L\ge3$,
+original N feasibility implies original O feasibility at cap
+
+$$
+\min\left\{1,\ \varepsilon+
+ \min\left\{1,c_L\left[2-\sum_{i=1}^La_i+(L+1)\varepsilon\right]\right\}\right\}.
+\tag{249.3}
+$$
+
+The chosen finite N representative and its repaired O rule use the
+same seed. Every actual tail still has error at most $\varepsilon$.
+
+Proof. Use the necessary direction of §110.2 at the exact original
+cap to obtain one normalized full finite N law $p$. Apply Theorem
+248.2 to any of its complete-table decompositions and execute the
+repaired law on the actual low primes. Every active word has error at
+most $\varepsilon+\mu$, bounded by (249.3) since TV is at most one.
+Its entire positive-word law is unchanged. Thus every actual $n>L$
+has error $\max\{1-p_{v^+}(0),a_n\}\le\varepsilon$, including
+$a_{L+1}=\varepsilon$ and all later ties. One pre-reply seed selects
+all outputs and the increasing schedule; execution has at most two
+actual requests and finite handoff. The initial original competitor
+need not retain its laws or seed coupling under §110.2; the same-seed
+assertion is for its selected finite representative and this repair.
+Small active lengths retain their existing suppliers.
+The displayed positive allowance is part of the cap, so this corollary
+does not establish the original same-cap implication when it is positive. ∎
+
+**Theorem 249.3 (One full feasible conic allocation and the score correction).**
+Fix the same $(b,e)\in H_L$ and one complete $\lambda\ge0$ satisfying
+$G_N\lambda\ge h(b,e)$, of mass $M=\sum_T\lambda_T\ge1$.
+Set $D_b=2-\sum_i b_i+(L+1)e$. For every full nonnegative score $y$,
+
+$$
+F_{Q(y)}(b,e)\le M\Delta_O(y)+K_y\min\{M,c_LD_b\}.
+\tag{249.4}
+$$
+
+Thus a full unit-O score with strict $F_{Q(y)}(b,e)>M$ requires
+$D_b>0$; its strict gap is at most $K_y\min\{M,c_LD_b\}$.
+No such separator occurs on the feasible $D_b=0$ face.
+
+Proof. Normalize this very allocation to $p_T=\lambda_T/M$ and put
+
+$$
+x=(1-1/M)(\alpha,0)+(b,e)/M,
+\qquad \alpha=(1,1,0,\ldots,0).
+\tag{249.5}
+$$
+
+Affineness of every full demand row gives
+$Z_Np=r+G_N\lambda/M\ge r+h(b,e)/M=d(x)$.
+The auxiliary amplitudes are ordered in $[0,1]$ and at least their cap
+$e/M$; equality of the second and third coordinates is unnecessary.
+All normalized rows hold, and $D(x)=D_b/M$, because $\sum\alpha_i=2$.
+Theorem 248.2 applies even if this finite auxiliary point has zero cap,
+inactive coordinates, or lies outside $H_L$.
+Its single repaired law $q$ has
+$\mu\le\min\{1,c_LD_b/M\}$. Every independent event changes by at
+most $\mu$, so, using $y\ge0$,
+
+$$
+y\cdot d(x)\le y\cdot Z_Oq+K_y\mu\le B_O(y)+K_y\mu.
+$$
+
+But $y\cdot d(x)=W_y+F_{Q(y)}(b,e)/M$ and
+$B_O(y)=W_y+\Delta_O(y)$. Multiplication by $M$ proves (249.4),
+with the same $b$ and full $\lambda$ throughout. The independent pair
+coefficient is counted once in $K_y$, as are all other full event
+coefficients. No separately optimized row costs enter.
+If $D_b=0$ the correction vanishes. If $K_y=0$ the full score is zero
+and cannot strictly separate. The positive correction at $D_b>0$
+is retained; it has not been financed by the original unit budget. ∎
+
+## 250. Original correspondence, mathematical ownership and the open obligation
+
+**Proposition 250.1 (Actual source and resource interpretation).** All
+laws and cap statements in §§244–249 concern the original selected
+marked laws of (243.2) on the actual labeled source (243.1), with no
+source prior. The full Borel carrier, unchanged consumer, and original
+nonatomic targets of §243.1 retain their definitions. Every displayed
+finite marked law has TV one from each original nonatomic target.
+The arbitrary-address/full-carrier necessity used for lower bounds is
+exactly §110.2; no restriction of competitors to the displayed finite
+marks, addresses or constructions is made.
+
+Proof. The marks $\theta_j=(B_1,1/(j+2))$ are actual distinct tapes.
+Any displayed complete law is one finite probability distribution on
+whole tables. A half-open interval partition of one source-independent
+$U\in[0,1)$ fixes its schedule and every potential output before any
+reply, including the product coupling in (244.7), all seventeen rows
+of §246 and any outer mixtures. The auxiliary interval construction
+for triple coefficients is integrated before this execution.
+There is no source-dependent coin or selection after a reply.
+An O execution follows its increasing preselected schedule to its first
+queried zero or exhaustion; N acquires its entire selected schedule
+and reconstructs the stopped output. Ignored post-stop replies and
+repeated requests are actual counted requests. The hard bound is two,
+not a bound on address, depth, runtime or expected count. The finite
+constructed rules hand off at every source and seed; original
+competitors retain sourcewise almost-sure finite handoff.
+
+The source supplier in §110.2, through Boundaries 35.2, realizes every
+finite pattern on arbitrary finite prime addresses fixed before seeds.
+Its entry-rank interface chooses a sufficiently large prime $r$ for
+which $F_r$ is invertible modulo all prescribed primes. CRT chooses
+$g=-F_r^{-1}$ at a desired positive address and $g=0$ at a desired zero;
+a sufficiently long original Fibonacci window contains that residue.
+This includes all multiple-zero words and any finite positive prefix
+followed by a later zero, without an infinite all-positive source.
+The entry-rank interface is the supplied classical hypothesis, not a
+new theorem here.
+
+For original necessity, countability gives one common conull seed event
+of finite handoff and hard request count. The maximum of the whole
+preselected schedule has vanishing seed tails. Actual witnesses for a
+finite family of comparison words and their finite execution cutoffs
+are fixed without inspecting seeds. Whole-execution replay on equal
+acquired transcripts, measurable projection of the full carrier onto
+low marks and base, and the vanishing common schedule/execution error
+produce finite same-class comparisons. Compactness of the one finite
+catalog simplex retains every row at the exact closed cap. These are
+§110.2's hypotheses and proof, without an asserted uniform runtime or
+address bound on original competitors.
+
+If a lower score uses a longer horizon than the strict active cutoff,
+ignore new coordinates in the finite kernel: new correct demands are
+nonpositive and the retained positive base pays base and pair rows.
+If it uses a shorter horizon, fix later finite replies zero and project
+later labels to base for the comparison, as in §§117.2 and 207.20.
+These are representation operations, not additional observations.
+The actual tail identity is always (243.3). The sharp constructions
+have positive base $1-e_*$ and hence error $e_*$ on every allowed
+actual tail; the repair preserves the full positive law and hence its
+old tail bound. Closed caps, zero schedule weights, repeated amplitude
+values and all tail ties remain included. Finite support has mass one
+under a marked law and zero under every original nonatomic target,
+proving the stated TV-one distinction. ∎
+
+The rank-three degree lemma is the classical hypersimplex or uniform
+matroid base-polytope fact; the interval proof in §244 supplies it
+without an additional hypothesis. Common terminal coupling is §§109,
+140 and 176, and coupled all-word base/pair minima are §178. Both
+sharp lower inequalities belong to §§113.2 and 117.2; their saturated
+supplier is §§113.3–114. The entire five- and six-active comparisons
+are §§148 and 161. The residual-extension identities are §§173–174,
+and the fixed sharp-five residual family is §187. These facts and the
+unit/flat-seven endpoints have their existing ownership. The capacity
+construction is one sufficient-family theorem; its near-unit domain
+and eight-coordinate examples are consequences of that construction.
+The unequal-seven region has the explicit noncontainment and bounded
+comparisons of §§246–247. The quantitative normalized-N repair supplies
+the additional N $00$ equality beyond the stopped face of §224.
+The score quotient, hull support and unrestricted one-residual pairing
+are §§198–199 and 229, without another duality claim.
+
+Blackwell, *Comparison of Experiments*, §§2–5, supplies the common
+normalized decision-kernel and risk comparison framework; it does not
+supply an increasing first-zero stopped schedule with two actual
+requests. Kaniewski, Lee and de Wolf, *Query complexity in expectation*,
+arXiv:1411.7280v1, Definition 8 and Theorem 9, concern nonnegative
+scalar outputs in expectation and worst-path query depth. Their scalar
+literal representation does not supply equal probability-vector masses
+in all stopped cells. Kaibel, *Basic Polyhedral Theory*,
+arXiv:1001.2161v1, Theorems 1, 8 and 10, supplies finite polyhedral
+background, without these acquisition constraints. These are bounded
+comparisons with the cited results. The elementary constructions and
+counting proofs above are ordinary mathematics; no exhaustive
+literature or repository nonderivability assertion is made.
+
+**Open problem 250.2 (The same original unrestricted goal).** For every
+entire positive nonincreasing vanishing actual amplitude sequence and
+every positive closed cap, the general implication remains
+
+$$
+\mathcal F_N(a,c)\ne\varnothing
+\ \Longrightarrow\
+\mathcal F_N(a,c)\cap\mathscr C_{L_a}\ne\varnothing.
+\tag{250.1}
+$$
+
+Its positive full-score obligation is still: for every $L\ge3$ and
+every actual full $y\ge0$ with $\Delta_O(y)\le1$, find one
+unrestricted full $V\ge0$ and one $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{250.2}
+$$
+
+No fixed law, anchor, unary profile, exact quotient, graph, mask,
+canonical decomposition or positive-only residual is imposed;
+nonzero zero-cost $V$ remains admissible at $\theta=1$.
+The negative alternative still requires the same actual $(b,e)\in H_N$,
+one full feasible $\lambda\ge0$ with $G_N\lambda\ge h(b,e)$ and
+$M=\sum\lambda\ge1$, and an actual full unit-O $y$ with strict
+$F_{Q(y)}(b,e)>M$, together with the original same-source/common-seed
+N attainer and the uniform lower bound against every arbitrary-address
+full-carrier O competitor, retaining positive actual tails and closed caps.
+
+The sufficient regions and the $D_b=0$ consequence shrink this gap in
+their exact scopes. Away from that face, (248.3) pays a positive repair
+allowance and (249.4) retains $K_y\min\{M,c_LD_b\}$. Neither term
+is an already paid signed residual in (250.2). Optional-constructor
+failure, exact-law obstruction and a point outside $H_N$ do not provide
+the negative alternative. No universal classification follows from
+these finite laws or bounded supplier comparisons.
+
+## 追加锚（本行以下为增补区）
