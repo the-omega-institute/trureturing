@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:843ab410444e1b25b21c4d8f1968c791ed2f0b0af738728c1e1a07f9aa0275d5
+  normalized_sha256: sha256:843ab410444e1b25b21c4d8f1968c791ed2f0b0af738728c1e1a07f9aa0275d5
+cas_ref: sha256:843ab410444e1b25b21c4d8f1968c791ed2f0b0af738728c1e1a07f9aa0275d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 23.12（常偏置权重的精确结合缺陷）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 851861059402395423c7838639a8b6126a739a05262a7d12747c45d57d69d978
+    next_atom_id: 81d64e4e4c42798c7e18d4291c33b5102384bb031688380273fb910c7a3e2131

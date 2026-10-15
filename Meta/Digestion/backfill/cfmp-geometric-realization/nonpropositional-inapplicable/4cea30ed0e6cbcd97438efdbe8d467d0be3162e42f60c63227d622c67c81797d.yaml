@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4cea30ed0e6cbcd97438efdbe8d467d0be3162e42f60c63227d622c67c81797d
+  normalized_sha256: sha256:4cea30ed0e6cbcd97438efdbe8d467d0be3162e42f60c63227d622c67c81797d
+cas_ref: sha256:4cea30ed0e6cbcd97438efdbe8d467d0be3162e42f60c63227d622c67c81797d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional applicability boundary for Theorem 65.1: it identifies the six-positive-length domain and explicitly excludes geometric half-space identification, face incidence, distance, angle and zero-length claims; it states no additional theorem beyond the preceding vertex classification.'
+    previous_atom_id: 3a4c9b818e8a4110b64a134e164b4d6519fb22655313433421a2a25668230e2a
+    next_atom_id: f5c2d4baa7767cf9190e50998936f0b4aaf3ada047e387f388429b0621883207

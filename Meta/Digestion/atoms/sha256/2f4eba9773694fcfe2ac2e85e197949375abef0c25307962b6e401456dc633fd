@@ -1,0 +1,61 @@
+**Proposition 13.7 (ternary multiset obstruction and a four-source clique).**
+At $H=2,r=3,k=2$, a code depending only on the multiset of the initial
+ages is insufficient. In particular the median, every fixed order
+statistic, any tuple of quantiles and the entire sorted age list cannot
+by themselves be a sufficient retained code. Independently,
+
+$$
+4\le N_2(3,2)\le9.
+\tag{NAR.13.17}
+$$
+
+Neither assertion determines the exact ternary optimum.
+
+**Proof, an entire-row positive-lag obstruction.** Keep $D=2$, $P=\{RR\}$
+and $I=\{0,1,2\}$, but the original public offsets are now $0,3,6,9$.
+Take $a=(0,1,2)$ and $a'=(1,2,0)$ and select $S=\{0,1\}$, so
+$Q_S=\{RL,RR\}$. The actual original trees and lags are
+
+$$
+\begin{aligned}
+X_a&=\langle\langle T_0,T_4\rangle,
+                    \langle T_8,T_9\rangle\rangle,&\ell&=2,\\
+X_{a'}&=\langle\langle T_1,T_5\rangle,
+                    \langle T_6,T_9\rangle\rangle,&\ell'&=1.
+\end{aligned}
+\tag{NAR.13.18}
+$$
+
+Both later exteriors are exactly
+$\langle\langle T_2,T_6\rangle,
+\langle\square_{RL},\square_{RR}\rangle\rangle$.
+The hidden trees in the first history are $T_{10},T_{11}$ and in the
+second are $T_7,T_{10}$. In both, the two holes are reached and their
+values unequal, so the complete partitions coincide, as do every
+visible label, bracket and absent-address guard supplied by the literal
+exterior. These are equal whole later rows with distinct strictly positive
+lags. The two initial rows differ, but both age multisets are $\{0,1,2\}$.
+Any permutation-invariant code therefore identifies them and fails.
+The binary majority proof depended on a uniform binary selected age
+being the global strict majority; a selected common translation of two
+different ternary ages has no such implication.
+
+For the lower bound on all codes, consider the four vectors
+
+$$
+000,\qquad 110,\qquad 211,\qquad 222.
+\tag{NAR.13.19}
+$$
+
+In their displayed order, the larger-minus-smaller coordinate difference
+vectors for the six pairs are
+$110,211,222,101,112,011$. Each contains a common nonzero displacement
+at least twice: respectively $1,1,2,1,1,1$. All six pairs are native
+conflict edges, with genuine positive-lag whole-row witnesses supplied
+by (NAR.13.8). They form a four-clique and force four values regardless
+of the code's symmetry. The upper bound is Theorem 13.4's two retained
+fixed coordinates, using nine attained values. Failure of the symmetric
+codes is thus separate from the lower bound for arbitrary codes. The
+four-clique rules out three values for every code. No code attaining four
+values, or proof that nine are necessary, is supplied. $\square$
+

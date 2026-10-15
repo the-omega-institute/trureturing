@@ -15,6 +15,18 @@ internal sealed class EmpiricalReflexiveSeparationDocument : IScribeDocumentDefi
         H("Empirical and Reflexive Completeness Separate"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("empirical-complex-sqrt-two-square"),
+                DeclarationHandle.Create("D5/S3/Observer/Existence/EmpiricalReflexiveSeparation.complex_sqrt_two_sq"),
+                H("The embedded square root of two"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    new Formula.Power(Parenthesized(Seq(
+                        new Formula.Apply(Seq(F.Id("Real"), Dot, F.Id("sqrt")), [D(2)]),
+                        Colon, Sp, F.Id("Complex"))), D(2)),
+                    FormulaRelationOperator.Equal, D(2)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The real square root of two, embedded in Complex, has square two. This identity normalizes the rank-one qubit projectors."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("empirical-completeness-does-not-imply-reflexive-completeness"),
                 DeclarationHandle.Create(Declaration),
                 H("Empirical completeness coexists with reflexive incompleteness"),
@@ -48,12 +60,12 @@ internal sealed class EmpiricalReflexiveSeparationDocument : IScribeDocumentDefi
         Formula evaluation = F.Id("evaluation");
         Formula state = F.Id("state");
         Formula rho = F.Id("rho");
-        Formula readout = Seq(
-            Open, rho, Colon, Sp, densityState, Sp, Mapsto, Sp,
-            Call("contextReadout", context, Call("matrix", rho)), Close);
-        Formula diagonal = Seq(
-            Open, state, Sp, Mapsto, Sp,
-            Call("not", Call("evaluation", state, state)), Close);
+        Formula readout = Parenthesized(Seq(
+            rho, Colon, Sp, densityState, Sp, Mapsto, Sp,
+            Call("contextReadout", context, Call("matrix", rho))));
+        Formula diagonal = Parenthesized(Seq(
+            state, Sp, Mapsto, Sp,
+            Call("not", Call("evaluation", state, state))));
         Formula nonCapture = new Formula.Not(new Formula.Relation(
             diagonal,
             FormulaRelationOperator.MemberOf,
@@ -70,6 +82,8 @@ internal sealed class EmpiricalReflexiveSeparationDocument : IScribeDocumentDefi
                         Arrow(densityState, Arrow(densityState, boolType)))],
                     nonCapture))));
     }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);

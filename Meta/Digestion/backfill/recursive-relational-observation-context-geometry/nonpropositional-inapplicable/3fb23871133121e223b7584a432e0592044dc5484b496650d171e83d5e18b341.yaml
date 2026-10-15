@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3fb23871133121e223b7584a432e0592044dc5484b496650d171e83d5e18b341
+  normalized_sha256: sha256:3fb23871133121e223b7584a432e0592044dc5484b496650d171e83d5e18b341
+cas_ref: sha256:3fb23871133121e223b7584a432e0592044dc5484b496650d171e83d5e18b341
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 14.12（已获 XOR 记录破坏无条件乘积的交互正性）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 2f1c4086095ff2ac053d5922702d2da089633dbcf5e2e107f584ac4981e46994
+    next_atom_id: e030ee7c4dc7b321f7ec646ee1050f935b2d57f9536f7d57a562f0994e95801e

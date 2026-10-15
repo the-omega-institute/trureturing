@@ -427,7 +427,7 @@ private theorem rectangle_last (w : ℝ → Vec) (k0 : ℝ)
 def Compatible (x : State) : Prop :=
   x.2.2 2 = 0 ∧ x.2.2 0-x.2.2 1-x.2.2 3+x.2.2 4 = x.2.1
 
-private theorem weight_compatible (b : Base) (hb : ValidBase b) (k : ℝ)
+theorem weight_compatible (b : Base) (hb : ValidBase b) (k : ℝ)
     (hk : k ∈ Ioo (lower b) (upper b)) :
     phaseWeight b k 2 = 0 ∧
       phaseWeight b k 0-phaseWeight b k 1-phaseWeight b k 3+phaseWeight b k 4 = 1 := by

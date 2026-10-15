@@ -4,7 +4,7 @@
 
 Every coefficient of the normalized series in OEIS A397241 is odd.
 
-The generating equation and oddness conjecture are recorded in hanna2026a397241. Write A for generatingSeries and P(r) for approximation(r). The coefficients a(n), the series A, the approximations P(r), and the comparison series B are over the integers. Indices and exponents are natural numbers. Multipliers such as n-1 are integer subtraction after casting n, as in the Lean declaration.
+The generating equation and oddness conjecture are recorded in hanna2026a397241b. Write A for generatingSeries and P(r) for approximation(r). The coefficients a(n), the series A, the approximations P(r), and the comparison series B are over the integers. Indices and exponents are natural numbers. Multipliers such as n-1 are integer subtraction after casting n, as in the Lean declaration.
 
 The operator coeff(n,f) extracts the degree-n coefficient, and mk forms a power series from a coefficient function. The operator map applies a ring homomorphism coefficientwise; intCast(ZMod(2)) denotes Int.castRingHom(ZMod(2)). Both sides of the reduction identity are series over ZMod(2), and the constant function in its right-hand side takes value one in ZMod(2).
 
@@ -90,7 +90,7 @@ $$\forall n: \mathbb{N}, \operatorname{Odd}\left(\operatorname{a}\left(n\right)\
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a397241-diagonal-power-ratio-all-odd","declaration_gid":"D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.hanna_conjecture","resolution_kind":"proved"} -->
 
-*Citation.* Paul D. Hanna (2026). *OEIS A397241, g.f. with n [x^n] A^n = (n-1) [x^n] A^(n+1), all terms odd*. URL: <https://oeis.org/A397241>.
+*Citation.* Paul D. Hanna (2026). *OEIS A397241, g.f. with n [x^n] A^n = (n-1) [x^n] A^(n+1)*. URL: <https://oeis.org/A397241>.
 
 *Commentary.*
 

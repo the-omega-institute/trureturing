@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f613f722b70e9b0aa7a294dd9eb25085a7b25e3175239fdc05269a882d8f687f
+  normalized_sha256: sha256:f613f722b70e9b0aa7a294dd9eb25085a7b25e3175239fdc05269a882d8f687f
+cas_ref: sha256:f613f722b70e9b0aa7a294dd9eb25085a7b25e3175239fdc05269a882d8f687f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“可干预变量”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 764d80c5a3efd5d61b7f5ada794272d0d78c6824d7003a523393d84274552755
+    next_atom_id: 205700fc1358ee9940595828bac837c75423bb4851283049dced86f47e448f0e

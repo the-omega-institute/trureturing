@@ -49,7 +49,7 @@ def Raw (u : Source) : Prop :=
   GuardedEqual 0 [true,true,true,false,true] 1 (position 1) u ∧
   GuardedEqual 0 [true,true,true,true,true] 1 (position 2) u
 
-private theorem root_record (u : Source) : literalRecord {[]} u = rootLabel := by
+theorem root_record (u : Source) : literalRecord {[]} u = rootLabel := by
   cases u <;>
     simp [literalRecord, cutExterior, actualPartition, orderedHoles, reachedHoles,
       rootLabel, subtree]

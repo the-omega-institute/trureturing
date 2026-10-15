@@ -57,6 +57,26 @@ private theorem join_edges (p : Piece G) (ps : List (Piece G)) (h : Linked p ps)
     rw [ih]
     rfl
 
+/-- Every actual chain edge is a piece edge or its indexed consecutive connection. -/
+theorem chain_edge_cases {V : Type*} {G : SimpleGraph V}
+    (p : Piece G) (ps : List (Piece G)) (e : Sym2 V) (he : e ∈ chainEdges p ps) :
+    (∃ r : Piece G, r ∈ p :: ps ∧ e ∈ r.walk.edges) ∨
+      ∃ (i : ℕ) (hi : i + 1 < (p :: ps).length),
+        e = s(((p :: ps)[i]'(by omega)).finish, ((p :: ps)[i + 1]'hi).start) := by
+  induction ps generalizing p with
+  | nil => exact Or.inl ⟨p, List.mem_cons_self, he⟩
+  | cons q qs ih =>
+    simp only [chainEdges, List.mem_append, List.mem_cons] at he
+    rcases he with he | he | he
+    · exact Or.inl ⟨p, List.mem_cons_self, he⟩
+    · exact Or.inr ⟨0, by simp only [List.length_cons]; omega, he⟩
+    · rcases ih q he with ⟨r, hr, he⟩ | ⟨i, hi, he⟩
+      · exact Or.inl ⟨r, List.mem_cons_of_mem p hr, he⟩
+      · refine Or.inr ⟨i + 1, ?_, ?_⟩
+        · simp only [List.length_cons] at hi ⊢
+          omega
+        · simpa only [List.getElem_cons_succ, Nat.add_assoc] using he
+
 variable [DecidableEq V]
 
 /-- A list of genuine graph pieces whose supports independently partition the
@@ -101,5 +121,6 @@ theorem exists_spliced_hamiltonian_cycle (p : Piece G) (ps : List (Piece G))
     exact congrArg (s(p.start, finish p ps) :: ·) (congrArg List.reverse (join_edges p ps h))
 
 #print axioms exists_spliced_hamiltonian_cycle
+#print axioms chain_edge_cases
 
 end D5.S3.Combinatorics.Graph.Walks.PathRingSplicing

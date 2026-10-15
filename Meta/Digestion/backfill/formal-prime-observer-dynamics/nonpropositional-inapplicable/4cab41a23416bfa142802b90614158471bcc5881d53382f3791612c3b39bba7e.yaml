@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4cab41a23416bfa142802b90614158471bcc5881d53382f3791612c3b39bba7e
+  normalized_sha256: sha256:4cab41a23416bfa142802b90614158471bcc5881d53382f3791612c3b39bba7e
+cas_ref: sha256:4cab41a23416bfa142802b90614158471bcc5881d53382f3791612c3b39bba7e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 q_{p,k,j}(A)：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 67f699823bce2cd6af2239ec9bc3392d1bf2b2add8c34d9c60752d028a0136f2
+    next_atom_id: 368c1d65ca6e2b5350950fc6f401268d51c76a4f287337a62b270341af7ec0ae

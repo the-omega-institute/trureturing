@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b2a7e290d8edf9297da22a813bf574fd0434d792dddb2915d39a9caeb0e96248
+  normalized_sha256: sha256:b2a7e290d8edf9297da22a813bf574fd0434d792dddb2915d39a9caeb0e96248
+cas_ref: sha256:b2a7e290d8edf9297da22a813bf574fd0434d792dddb2915d39a9caeb0e96248
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 2.2（最小增益兼容几何）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: dfbb5c2d002ea285c91e0ce6e1c23524ca025e1b18abdae45b92119c9674d320
+    next_atom_id: b0db3d6cf8f83086530900021a94c9f9e3a261577de11c537dbd3d8af3f6d33c

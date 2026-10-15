@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c2a8da8c4a70fed523f3f2368f41848cf0e059b759d99316add2ca432c68542e
+  normalized_sha256: sha256:c2a8da8c4a70fed523f3f2368f41848cf0e059b759d99316add2ca432c68542e
+cas_ref: sha256:c2a8da8c4a70fed523f3f2368f41848cf0e059b759d99316add2ca432c68542e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“社会阶层”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 86c5b425baa3eacb1d48f47a987b07d7f83fb47d0c628822fcad7e2e3c2d8e1a
+    next_atom_id: d582d1862d6c753ff60381102d33a935d26a47b3d2043387e8dc584405b4e4f9

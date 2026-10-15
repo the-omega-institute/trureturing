@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbd2177cbfef66b54c56c983652a2ec82eb7bdaec486a0dc1a654fd72e263fa5
+  normalized_sha256: sha256:fbd2177cbfef66b54c56c983652a2ec82eb7bdaec486a0dc1a654fd72e263fa5
+cas_ref: sha256:fbd2177cbfef66b54c56c983652a2ec82eb7bdaec486a0dc1a654fd72e263fa5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只规定确定性有限数字过程的输入、查询和全域可靠性条件，不含随后不可能性命题的陈述或证明。
+    previous_atom_id: 404f138abdb0a9dc749cfe6270e445561f09a9c8618fd42cdbb1ad57e7ebb083
+    next_atom_id: 76a241b041c8038357a2d9c8b8968a286823637ad98e6f7320d06cfdf19b7417

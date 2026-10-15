@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:696c0422601d6795d1cb1a864086f84ccf61a00f6c826df8ed8612c0758eab0e
+  normalized_sha256: sha256:696c0422601d6795d1cb1a864086f84ccf61a00f6c826df8ed8612c0758eab0e
+cas_ref: sha256:696c0422601d6795d1cb1a864086f84ccf61a00f6c826df8ed8612c0758eab0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 242.1 只引入逐点合并资源预算、完全实比较类和两类代价。
+    previous_atom_id: cd869619273c57c1d23c1f6458007d9edbbdf583e66b0da5e7bf4661c9f254de
+    next_atom_id: 8d4d0ec5dc8983e0ded46c7ef69c7218d0fb4a93a061aad29872762463336238

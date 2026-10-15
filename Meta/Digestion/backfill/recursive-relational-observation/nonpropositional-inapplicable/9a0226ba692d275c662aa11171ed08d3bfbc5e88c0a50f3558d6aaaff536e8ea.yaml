@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9a0226ba692d275c662aa11171ed08d3bfbc5e88c0a50f3558d6aaaff536e8ea
+  normalized_sha256: sha256:9a0226ba692d275c662aa11171ed08d3bfbc5e88c0a50f3558d6aaaff536e8ea
+cas_ref: sha256:9a0226ba692d275c662aa11171ed08d3bfbc5e88c0a50f3558d6aaaff536e8ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 128.4。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 87cca8440b4bef864fe704fac3f73cfe1eee48f3f3e98197ffa613b975d5b2a6
+    next_atom_id: ba1fa1d40553fa4f1cf7cf27ef87f80c81dc604515564f1d660c4e97aee8d491

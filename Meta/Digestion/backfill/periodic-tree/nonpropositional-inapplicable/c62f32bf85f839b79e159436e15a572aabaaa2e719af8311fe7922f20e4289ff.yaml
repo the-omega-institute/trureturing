@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c62f32bf85f839b79e159436e15a572aabaaa2e719af8311fe7922f20e4289ff
+  normalized_sha256: sha256:c62f32bf85f839b79e159436e15a572aabaaa2e719af8311fe7922f20e4289ff
+cas_ref: sha256:c62f32bf85f839b79e159436e15a572aabaaa2e719af8311fe7922f20e4289ff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「T.5 素数平方特化与规范化周期商」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: c381118b7d835872e2c18224ed4257b6fc5379d19d82543020cc082438015793
+    next_atom_id: e8fa9af3208df5110520bab3ec2bac20df56f1096b1400f1175f9e8d6829a304

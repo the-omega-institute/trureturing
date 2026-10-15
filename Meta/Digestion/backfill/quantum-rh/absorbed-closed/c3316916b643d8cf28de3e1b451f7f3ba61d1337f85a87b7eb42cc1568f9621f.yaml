@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c3316916b643d8cf28de3e1b451f7f3ba61d1337f85a87b7eb42cc1568f9621f
+  normalized_sha256: sha256:c3316916b643d8cf28de3e1b451f7f3ba61d1337f85a87b7eb42cc1568f9621f
+cas_ref: sha256:c3316916b643d8cf28de3e1b451f7f3ba61d1337f85a87b7eb42cc1568f9621f
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/SevenSmooth.robin_seven_smooth
+    target_statement_id: sha256:f22c3edbec1a3d227094dd2e2884f48ca1fd14c62a89fad16111d41fbfe5b15b
+receipts:
+  unresolved_subitems: []

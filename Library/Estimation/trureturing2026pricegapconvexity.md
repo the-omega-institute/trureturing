@@ -3859,7 +3859,7 @@ and the auxiliary constants below, never label- or tie-dependent.
 ### Reuse the published PNT shape and its existing inverse scale
 
 The [Nicolas supplier note](../ArithSums/nicolas2025comparison.md)
-already records Fiori--Jaskari, arXiv:2609.23222v1, Theorem 1.1 and
+already records Fiori--Jaskari, arXiv:2609.23222v2, Theorem 1.1 and
 Table 1, and its complete-integral consequence. Put
 
 $$
@@ -5905,3 +5905,2285 @@ the all-integer Robin inequality and RH remain unproved.
 This application reuses its generic inequalities and existing
 total-clock occupation identity; no new generic theorem,
 literature-priority claim or kernel verification is made.
+
+
+## Retain the compensation while controlling forward primitive excursions
+
+Keep the original source and every full window, parameter and tie from
+JM1--JM7, AO1--AO6 and MT8. In particular $0<a<5\kappa/8$,
+$\eta<1/2$, $M_X=X^{1/2-\eta}\log X$ and
+$C_*=d(1-\kappa)/16>0$ are unchanged. Write
+$\mathcal J_X=\int_{t_0}^{t_m}G_a(\mathcal B_X(t))dt$ as in CQ5.
+The source-specific consumer below keeps most of the original local
+subtraction while moving the lower endpoint of its future integral
+from $B$ to $A=B+t$. It then bounds that future by ordinary
+real-center primitive excursions. This is a `repo-derived` paper
+application; the resulting amplitude-weighted upper obligation is
+unproved and is not a new prime theorem or Lean result.
+
+### Absorb the finite past into the same local subtraction
+
+At every intervening selected real clock, PG1 gives $K(A)=B$.
+Put
+
+$$
+\Delta(A)=K(A)-K(K(A))=B-K(B)\ge0,
+\qquad E(B)=\Delta(A)+Q(B).
+$$
+
+Nonnegativity follows from $B\le A$ and monotonicity of $K$.
+All-choice ordering and CR17 extend the original uniform $t/B\to0$
+to this entire real window: $t\le2\ell_X$ and its least core is at
+least the original least left-endpoint core, whose ratio to
+$\ell_X$ tends to infinity. The existing uniform
+$|Q(v)|\le H_Q\sqrt v$ is retained.
+
+Let $r=t/B$ and $c=B\log B/(A\log A)$. Monotonicity of the complete
+$\psi$ gives $E(v)\le E(B)+v-B$ on $[B,A]$. The original decreasing
+positive kernel, its exact integral, and $s_Bk(B)\le2B^{-3/2}$ give
+
+$$
+\begin{aligned}
+I_{\rm past}:=s_B\int_B^A E(v)k(v)dv
+&\le\frac{1-c}{\sqrt B}E(B)+\frac{t^2}{B^{3/2}}\\
+&\le2r\frac{\Delta(A)}{\sqrt B}+2H_Qr
+ +\frac{t^2}{B^{3/2}}.
+\end{aligned}
+\tag{PE1}
+$$
+
+Here $0\le1-c\le2r$ follows by integrating the derivative of
+$v\log v$; no sign is assigned to $E(B)$.
+If $t\le B^{3/4}$, the last term in PE1 is at most one.
+If $t>B^{3/4}$, apply the existing LO1 with $u=B$, $v=A$.
+Since $A/B\to1$ uniformly and $21/40<3/4$, it gives
+$\Delta(A)\ge(9/200)t$ beyond one common start. Hence
+$t^2/B^{3/2}\le(200/9)r\Delta(A)/\sqrt B$ in this second case.
+For every fixed $0<\epsilon<a$, both cases therefore give
+
+$$
+I_{\rm past}\le\epsilon\frac{\Delta(A)}{\sqrt B}+2H_Q+1.
+$$
+
+Subtract the original $aE(B)/\sqrt B$ before discarding any term.
+The remaining $Q(B)$ term is bounded by $aH_Q$, so
+
+$$
+\boxed{
+G_a(B)\le s_B\int_A^\infty E(v)k(v)dv
+ -(a-\epsilon)\frac{\Delta(A)}{\sqrt B}+C_\epsilon.}
+\tag{PE2}
+$$
+
+The constant and start are uniform in the original labels and ties
+and in their selected real interpolation. This uses no SI1,
+$B\ge X$, $\Theta<1$ or bound on $V_X^{\rm lag}$.
+CR24 already absorbs a quadratic lag into the positive removal gain;
+PE2 instead absorbs it into the same actual local subtraction and
+retains a nonnegative compensation credit for an upper comparison.
+Neither the complete future integral nor the full recentering
+error is declared small.
+
+### Reuse the paid common horizon and bound its forward primitives
+
+Use FH1's unchanged common horizon $\mathsf U_X$. It is eventually
+beyond all original $A$ clocks as well as their cores, since
+$A\le2B$ and $\log\mathsf U_X/\mathsf Y_X\to\infty$.
+FH1 pays the integrated remote tail once at $o(L_X)$.
+For any real center $x\ge b_X$, put $u_j=2^jx$ and
+$v_j=\min(2u_j,\mathsf U_X)$. Define
+
+$$
+P_{X,j}(x)=u_j^{-3/2}
+\sup_{u_j\le v\le v_j}\int_{u_j}^vE(w)dw
+\quad(u_j<\mathsf U_X),
+\qquad P_{X,j}(x)=0\quad(u_j\ge\mathsf U_X).
+\tag{PE3}
+$$
+
+These are nonnegative continuous bounded readouts on each compact
+center shell, using the actual complete $\psi$. The primitive is
+continuous even at its prime-power atoms. Integrating each shell by
+parts, with $F(v)=\int_{u_j}^vE(w)dw$, gives
+
+$$
+\int_{u_j}^{v_j}E(v)k(v)dv
+=F(v_j)k(v_j)-\int_{u_j}^{v_j}F(v)k'(v)dv
+\le u_j^{3/2}P_{X,j}(x)k(u_j).
+$$
+
+Consequently
+
+$$
+s_x\int_x^{\mathsf U_X}E(v)k(v)dv
+\le\sum_j2^{-j/2}\frac{\log x}{\log(2^jx)}
+\left(1+\frac1{\log(2^jx)}\right)P_{X,j}(x).
+$$
+
+All summands on the right are nonnegative. Thus multiplication by
+$s_B/s_A\le1$ preserves this upper bound without dropping a signed
+normalization factor. Set $c_X=1+1/\log b_X$ and
+$N_X=\lceil\log_2(\mathsf U_X/b_X)\rceil$.
+For the canonical visited set $D_X$ in PG9, define
+
+$$
+V_X^K=\int_{D_X}
+\frac{K(x)-K(K(x))}{\sqrt{K(x)}}dx\ge0.
+$$
+
+Use PE2 and precisely PT10/PG9's existing total-clock change of
+variables. Together with FH1 this gives
+
+$$
+\boxed{
+\mathcal J_X\le c_X\sum_{j<N_X}2^{-j/2}
+\int_{D_X}P_{X,j}(x)dx
+ -(a-\epsilon)V_X^K+O_\epsilon(L_X)+o(L_X).}
+\tag{PE4}
+$$
+
+No domination of atomic $B$-occupation or sign of skipped intervals
+is assumed. The only new consumer of the occupation identity is
+this nonnegative forward-primitive bound with its original credit.
+
+### Count amplitudes on the same window, rather than only centers
+
+Cover all possible $A$ centers by the dyadic shells
+$S_r=[2^rb_X,2^{r+1}b_X)$, stopping after
+$C_X+2\ell_X$, where $C_X$ is the original endpoint core ceiling.
+There are $O(\mathsf Y_X)$ center shells. The existing refined FH1
+horizon gives
+$N_X=O(\mathsf Y_X^{5/3}(\log\mathsf Y_X)^{1/3})$, including
+$\Theta=1$. Keep every future shell with its actual weight;
+$\sum_{j<N_X}2^{-j/2}\le S:=2+\sqrt2$.
+
+Put $L_{X,r}=|D_X\cap S_r|$, so $\sum_rL_{X,r}=L_X$, and define
+ordinary unselected Lebesgue exceptional measures
+
+$$
+e_{X,r,j}(z)=|\{x\in S_r:P_{X,j}(x)>zM_X\}|.
+$$
+
+For fixed $\tau>0$ let
+
+$$
+\mathcal E_X(\tau)=\sum_{j<N_X}2^{-j/2}\sum_r
+\int_\tau^\infty\min\{L_{X,r},e_{X,r,j}(z)\}dz.
+\tag{PE5}
+$$
+
+The existing coarse PNT input $|E(v)|\le H_2v/\log^2v$ yields
+$P_{X,j}(x)\le(3H_2/2)\sqrt{2^jx}/\log^2(2^jx)$ whenever the
+shell is active. This supplies finite amplitude ceilings, not an
+$M_X$-scale bound. Reuse the layer-cake formula inside the actual
+consumer: the intersection at each level has measure at most both
+$L_{X,r}$ and $e_{X,r,j}(z)$. Hence
+
+$$
+\sum_{j<N_X}2^{-j/2}\int_{D_X}P_{X,j}(x)dx
+\le M_X[S\tau L_X+\mathcal E_X(\tau)].
+$$
+
+FH2--FH3, FP4, MR2--MR3 and MT7 already give
+$\mathcal J_X-Z_X^{\rm right}(T_X)=o(M_XL_X)$.
+Apply this paid transfer once, and use $M_X\to\infty$ in PE4:
+
+$$
+\boxed{
+Z_X^{\rm right}(T_X)\le
+c_XM_X[S\tau L_X+\mathcal E_X(\tau)]
+ -(a-\epsilon)V_X^K+o(M_XL_X).}
+\tag{PE6}
+$$
+
+The head, every actual zero and multiplicity, its prescribed cutoff,
+all original ties and the single common cofinal sequence remain
+unchanged. No smoothing loss is paid separately per shell.
+
+A sufficient next supplier, not proved here, is that some fixed
+$\epsilon\in(0,a)$, $\tau>0$ and $\delta>0$ satisfy
+
+$$
+c_X\left[S\tau+\frac{\mathcal E_X(\tau)}{L_X}\right]
+ -(a-\epsilon)\frac{V_X^K}{M_XL_X}\le C_*-\delta
+\tag{PE7}
+$$
+
+on a common cofinal sequence of original full windows.
+Retain $c_X$ exactly: a potentially large cancellation against
+$V_X^K$ does not permit replacing it by one for free.
+The stronger condition $\tau=C_*/(4S)$ and
+$\mathcal E_X(\tau)\le(C_*/4)L_X$ would give, after enlarging one
+common start, $Z_X^{\rm right}(T_X)\le(3C_*/4)M_XL_X$ even without
+using the credit. Neither condition has been established.
+
+The observable PE3 explicitly retains
+
+$$
+\int_u^vE(w)dw=(v-u)E(u)
++\int_u^v[(w-u)-(\psi(w)-\psi(u))]dw.
+$$
+
+The already recorded Gafni--Tao short-increment result controls a
+different observable, not this baseline-containing primitive.
+The newer [Harm short-progression refinements](../Analytic/shortuniformity2026robininterfaces.md#short-increment-refinements-and-the-retained-robin-baseline)
+also concern increments; their pointwise and mean-square refinements
+do not supply PE7. Even at the visited initial center,
+$E(A)=t+Q(A)$ is endogenous and cannot be set to zero.
+A primitive allowance of order $M_Xu^{3/2}$ would require a relative
+$u^2$ allowance of order $M_X/\sqrt u$, which is not one fixed
+tolerance across the full retained horizon. Counting exceptional
+centers without their amplitudes therefore leaves the stated gap.
+The finite past is paid jointly with the original subtraction;
+the amplitude-weighted forward-primitive estimate, original signed
+upper comparison, all-integer Robin inequality and RH remain unproved.
+
+## Future visits to the same selected set have a paid compensation bound
+
+Retain the complete original source, every full window and all ties from
+PE1--PE7, including $\Theta=1$. Use the same canonical $D_X$, horizon
+$\mathsf U_X$, real-center shells, future-shell weights and amplitude
+normalization. This is a `repo-derived` paper application of PE2's
+existing two-case lag estimate and PT10/PG9's occupation interface.
+No new generic perturbation theorem, prime estimate or Lean result is
+asserted. The application controls only future integration over the
+same visited set; the unvisited future remains in the upper obligation.
+
+Define
+
+$$
+\rho_X=\sup_{\substack{t\in[t_0,t_m]\\u\text{ active at }t}}
+\frac{t}{\log u}\longrightarrow0,
+\qquad
+g_X(x)=\frac{K(x)-K(K(x))}{\sqrt{K(x)}}\quad(x\in D_X).
+$$
+
+The uniform limit is already supplied in PE2's real-clock scope,
+including all active ties. In particular $V_X^K=\int_{D_X}g_X(x)dx$.
+For almost every $w\in D_X$, put $B(w)=K(w)$ and
+$t(w)=w-B(w)\in[t_0,t_m]$. The same actual complete error satisfies
+$E(w)=t(w)+Q(w)$, with $|Q(w)|\le H_Q\sqrt w$.
+
+Split the complete error spatially, without changing $\psi$:
+
+$$
+E_X^\circ(w)=\mathbf1_{D_X^c}(w)E(w).
+$$
+
+Define $P_{X,j}^\circ$, $e_{X,r,j}^\circ$ and
+$\mathcal E_X^\circ(\tau)$ by the exact formulas PE3 and PE5,
+replacing $E$ only by $E_X^\circ$. Their lower endpoints, upper
+endpoints, zero conventions, $N_X$, $S_r$, $L_{X,r}$ and $M_X$
+are unchanged. Every skipped gap and every exterior future point
+through $\mathsf U_X$ remains in this complement. The integral
+primitive remains continuous even where its integrand has jumps.
+
+### Bound the perturbation on ordinary centers before taking occupations
+
+Write $T_r=2^rb_X$. For any ordinary center $y\in S_r$ and
+$u=2^jy<\mathsf U_X$, comparison of the two suprema gives
+
+$$
+\begin{aligned}
+|P_{X,j}(y)-P_{X,j}^\circ(y)|
+&\le u^{-3/2}
+ \int_{D_X\cap[u,\min(2u,\mathsf U_X)]}|E(w)|dw\\
+&\le\frac{t_mL_X}{u^{3/2}}+
+ \frac{\sqrt2H_QL_X}{u}\\
+&\le h_{rj}:=
+ \frac{t_mL_X}{(2^jT_r)^{3/2}}+
+ \frac{\sqrt2H_QL_X}{2^jT_r}.
+\end{aligned}
+\tag{VP1}
+$$
+
+When $u\ge\mathsf U_X$, both readouts are zero. The centers in
+VP1 need not belong to $D_X$: this uniform shell bound controls
+the unselected exceptional measures in PE5 as well as selected
+values. No sign on $E$ or on a skipped interval is used.
+
+A uniform perturbation by $h_{rj}$ shifts each normalized amplitude
+threshold by at most $h_{rj}/M_X$. Integrating the corresponding
+superlevel inclusions, with the cap $L_{X,r}$ retained, changes
+
+$$
+\int_\tau^\infty
+\min\{L_{X,r},e_{X,r,j}(z)\}dz
+$$
+
+by at most $L_{X,r}h_{rj}/M_X$, in either direction, for every
+$\tau\ge0$. This is the usual superlevel perturbation bound applied
+inside the present consumer, rather than a separately delivered
+generic lemma. Summing the original weights and enlarging only
+the finite geometric sums gives
+
+$$
+\begin{aligned}
+M_X|\mathcal E_X(\tau)-\mathcal E_X^\circ(\tau)|
+\le{}&\frac43t_mL_X\sum_rL_{X,r}T_r^{-3/2}\\
+&+\frac{\sqrt2}{1-2^{-3/2}}H_QL_X
+ \sum_rL_{X,r}T_r^{-1}.
+\end{aligned}
+\tag{VP2}
+$$
+
+For $x\in D_X\cap S_r$, one has $T_r\le x<2T_r$ and
+$B(x)\le x$. The original full label window has
+$t_0\ge\ell_X$, $t_m\le2\ell_X$ and
+$L_X=t_m-t_0\le\ell_X$, so $t_mL_X\le2t(x)^2$.
+Also $L_X/x\le t(x)/B(x)\le\rho_X$.
+Since $(8/3)2^{3/2}<8$ and
+$2\sqrt2/(1-2^{-3/2})<5$, VP2 consequently gives
+
+$$
+M_X|\mathcal E_X(\tau)-\mathcal E_X^\circ(\tau)|
+\le8\int_{D_X}\frac{t(x)^2}{B(x)^{3/2}}dx
+ +5H_Q\rho_XL_X.
+$$
+
+Reuse the two cases already proved in the PE2 argument:
+when $t\le B^{3/4}$ the ratio $t^2/B^{3/2}$ is at most one;
+otherwise $\Delta(x)\ge(9/200)t$ beyond the same common start.
+They give $t^2/B^{3/2}\le1+(200/9)\rho_Xg_X(x)$.
+Thus, uniformly in the original full windows, all ties and every
+$\tau\ge0$,
+
+$$
+\boxed{
+M_X|\mathcal E_X(\tau)-\mathcal E_X^\circ(\tau)|
+\le\frac{1600}{9}\rho_XV_X^K+
+ (8+5H_Q\rho_X)L_X.}
+\tag{VP3}
+$$
+
+This pays the amplitude-integrated effect of revisiting $D_X$,
+without assuming $V_X^K=O(M_XL_X)$.
+
+### Keep the correction inside the same signed upper account
+
+For the unchanged $c_X$ put
+
+$$
+\gamma_X=\frac{1600}{9}c_X\rho_X\longrightarrow0,
+\qquad
+\omega_X=\frac{c_X(8+5H_Q\rho_X)}{M_X}\longrightarrow0.
+$$
+
+Apply VP3 once in PE6. The original head and already paid transfer
+remain unchanged, and the resulting upper account is
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&c_X\left[S\tau+
+ \frac{\mathcal E_X^\circ(\tau)}{L_X}\right]\\
+&-(a-\epsilon-\gamma_X)
+ \frac{V_X^K}{M_XL_X}+\omega_X+o(1).
+\end{aligned}}
+\tag{VP4}
+$$
+
+For fixed $0<\epsilon<a$, the retained credit coefficient is
+eventually positive. The term
+$\gamma_XV_X^K/(M_XL_X)$ need not tend to zero and is not
+discarded. The logarithmic factor $c_X$ is kept exactly.
+
+The restricted estimate VP3 is supplied; the remaining sufficient
+supplier is a strict joint upper comparison
+
+$$
+c_X\left[S\tau+\frac{\mathcal E_X^\circ(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
++\omega_X\le C_*-\delta
+\tag{VP5}
+$$
+
+for some fixed $\epsilon\in(0,a)$, $\tau>0$ and $\delta>0$
+on one common cofinal sequence of the original full windows.
+VP5 is not proved here. In particular $E_X^\circ$ retains the
+entire unvisited future, not just skipped gaps, and no sign or
+phase balance is assigned to it. This application introduces
+neither an independent sample nor a favorable tie choice or a
+new subsequence. The original strict signed-head estimate,
+all-integer Robin inequality and RH remain unproved.
+
+## Actual activation counts pay a class of skipped-gap excursions
+
+Keep the original full source, all ties, clocks, windows and parameters
+from PG1--PG3, PE3--PE6 and VP1--VP5. This application pays the internal
+deviation on an explicitly classified family of actual skipped gaps.
+It retains their baseline, every unclassified gap and the entire exterior
+future through $\mathsf U_X$. It is a `repo-derived` paper application,
+not a new generic prime theorem, Lean result or proof of VP5 or RH.
+
+### Reuse the classical restriction on simultaneous threshold layers
+
+The [existing Erdős--Nicolas note](../ArithSums/erdosnicolas1975repartition.md#exact-zero-benefit-exceptions-use-at-most-four-branches)
+records Proposition 4(c)--(d) and its proof, printed pp.70--71.
+The classical six-exponentials argument excludes a common positive
+threshold for three distinct primes. Reuse that restriction for the
+actual inventory's threshold price $\lambda(\xi)$; do not infer that
+two cores at a nonlinear switch are adjacent CA integers.
+
+In the present parameters the actual $p$-layer reward is
+
+$$
+r_{p,j}=\frac1{\log p}
+\log\frac{p^{j+1}-1}{p(p^j-1)},
+\qquad \lambda(\xi)=r_{p,j}.
+$$
+
+The layers of one prime have strictly decreasing rewards. Thus at most
+two layers activate at one actual time. Also
+$r_{p,j}\le\log(1+1/p)/\log p<\lambda(p)$, so the decreasing
+price gives $p<\xi$. Retaining the full mass of every simultaneous
+activation therefore gives
+
+$$
+dK(\{\xi\})\le2\log\xi.
+\tag{AC1}
+$$
+
+For an original switch gap $G_s=(\alpha_s,\beta_s)$ let
+$h_s=\beta_s-\alpha_s$ and let $m_s$ count its distinct actual
+activation times. PG1's endpoint contacts and absence of activation
+atoms at the endpoints give
+
+$$
+h_s=K(\beta_s)-K(\alpha_s)
+\le2m_s\log\beta_s.
+\tag{AC2}
+$$
+
+The restriction AC1 is classical. AC2 uses it on the same actual
+inventory; $m_s$ is not uniformly bounded and the whole switch gap
+is not treated as one threshold event.
+
+### Classify actual gaps before comparing their primitives
+
+Choose $\upsilon_X>0$ with $2\upsilon_X<b_X^{1/4}$, where $b_X$
+is PE3's unchanged all-tie least core clock. Every gap endpoint is
+at least $b_X$. Define the family
+
+$$
+\mathscr G_X^{(\upsilon)}=
+\left\{G_s:
+m_s\log(2\alpha_s)\le\upsilon_X\alpha_s^{3/4}\right\}.
+\tag{AC3}
+$$
+
+This is a classification within each original window. It does not
+discard a window, select a favorable tie or impose a sign on $E$.
+If a classified gap had $\beta\ge2\alpha$, AC2 and monotonicity of
+$v/\log v$ for $v>e$ would give
+
+$$
+m_s\ge\frac{\beta}{4\log\beta}
+\ge\frac{\alpha}{2\log(2\alpha)},
+\qquad
+\upsilon_X\ge\frac{\alpha^{1/4}}2\ge\frac{b_X^{1/4}}2,
+$$
+
+a contradiction. Consequently, for every classified gap,
+
+$$
+\beta_s<2\alpha_s,
+\qquad h_s\le2\upsilon_X\alpha_s^{3/4}.
+\tag{AC4}
+$$
+
+Write $r_s(w)=w-s-K(w)$ on that gap. The original decomposition is
+$E(w)=s+Q(w)+r_s(w)$, with $Q=K-\psi$. Define only a comparison
+integrand,
+
+$$
+\widehat E_X^{(\upsilon)}(w)=E_X^\circ(w)
+-\sum_{G_s\in\mathscr G_X^{(\upsilon)}}
+\mathbf1_{G_s}(w)r_s(w).
+\tag{AC5}
+$$
+
+On a classified gap it equals $s+Q(w)$. On $D_X$ it is zero;
+everywhere else it is the unchanged $E_X^\circ$. In particular it
+preserves all unclassified gaps and both exterior portions that an
+ordinary center can see. It is not a modified prime-counting function.
+
+Form $\widehat P_{X,j}^{(\upsilon)}$,
+$\widehat e_{X,r,j}^{(\upsilon)}$ and
+$\widehat{\mathcal E}_X^{(\upsilon)}(\tau)$ by the original
+PE3--PE5 and VP definitions, replacing only the integrand by AC5.
+Keep the original centers, shell cap $L_{X,r}$, normalization $M_X$,
+horizon and the zero convention when $2^jx\ge\mathsf U_X$.
+These primitives are finite and continuous on each compact center
+shell: AC5 is locally bounded and has the original finite horizon.
+
+### Pay only the last unfinished classified gap
+
+Reuse the actual nonnegative PG2 pressure, with no new dominance
+assumption: $\mathscr P_s'=r_sk$, $\mathscr P_s\ge0$ and
+$\mathscr P_s(\alpha)=\mathscr P_s(\beta)=0$. Since $k$ decreases,
+integration by parts gives, for every $y\in[\alpha,\beta]$,
+
+$$
+\int_y^\beta r_s(w)dw
+=-\frac{\mathscr P_s(y)}{k(y)}
+-\int_y^\beta\mathscr P_s(w)(1/k(w))'dw\le0.
+$$
+
+Endpoint contact and monotonicity of $K$ also give
+$w-\beta\le r_s(w)\le w-\alpha$. For
+$\alpha\le y\le z\le\beta$, apply this pointwise bound and the
+preceding suffix inequality in the two directions:
+
+$$
+\int_y^z r_s(w)dw
+\le\frac12\min\{(z-\alpha)^2,(\beta-z)^2\}
+\le\frac{h_s^2}{8}.
+\tag{AC6}
+$$
+
+For any one interval $[u,v]$, its initial classified-gap suffix and
+every complete classified gap have nonpositive residual contribution.
+Only its final unfinished classified gap can leave a positive one.
+If both endpoints lie in the same gap, AC6 applies directly.
+Thus this bound is not summed over all gaps. For the original forward
+range $u\le v\le\min(2u,\mathsf U_X)$, that last gap has
+$\alpha_s<v\le2u$. AC4 and AC6 give
+
+$$
+u^{-3/2}\int_u^v
+\sum_{G_s\in\mathscr G_X^{(\upsilon)}}
+\mathbf1_{G_s}(w)r_s(w)dw
+\le\frac{h_s^2}{8u^{3/2}}
+\le\sqrt2\,\upsilon_X^2.
+$$
+
+If there is no unfinished classified gap, the left side is nonpositive.
+This comparison holds at each original endpoint $v$ before taking
+the same supremum. For every ordinary center $x\ge b_X$, including
+centers outside $D_X$, it follows that
+
+$$
+P_{X,j}^\circ(x)
+\le\widehat P_{X,j}^{(\upsilon)}(x)
++\sqrt2\,\upsilon_X^2.
+\tag{AC7}
+$$
+
+Move the normalized amplitude threshold by
+$\sqrt2\upsilon_X^2/M_X$ inside the same capped layer-cake
+consumer used in VP3. Each shell integral changes in this upper
+direction by at most $\sqrt2\upsilon_X^2L_{X,r}/M_X$.
+Since $\sum_rL_{X,r}=L_X$ and
+$\sum_{j<N_X}2^{-j/2}\le S=2+\sqrt2$, this gives, for all $\tau\ge0$,
+
+$$
+M_X\mathcal E_X^\circ(\tau)
+\le M_X\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
++(2+2\sqrt2)\upsilon_X^2L_X.
+\tag{AC8}
+$$
+
+AC8 is a one-sided occupation comparison, not a bound on the absolute
+difference. Its cost has no factor counting gaps, center shells or
+future shells.
+
+### Keep the same credit and all remaining future contributions
+
+One choice needing no extra arithmetic hypothesis is
+
+$$
+\upsilon_X=\min\{b_X^{1/8},M_X^{1/4}\}\longrightarrow\infty.
+\tag{AC9}
+$$
+
+The original $b_X,M_X\to\infty$ make its strict size condition
+eventually valid, and $\upsilon_X^2/M_X\le M_X^{-1/2}\to0$.
+Substitute AC8 once into VP4 to obtain
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&c_X\left[S\tau+
+\frac{\widehat{\mathcal E}_X^{(\upsilon)}(\tau)}{L_X}\right]\\
+&-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
++\omega_X
++\frac{(2+2\sqrt2)c_X\upsilon_X^2}{M_X}+o(1).
+\end{aligned}}
+\tag{AC10}
+$$
+
+The explicit added term tends to zero independently of the size of
+$V_X^K/(M_XL_X)$. The exact $c_X$ and the entire credit coefficient
+remain. All original full windows, maximizing ties and the full
+$\Theta\in(1/2,1]$ range are retained; no favorable subsequence is
+introduced.
+
+This partial payment covers only $r_s$ on AC3's classified gaps.
+No positive proportion or eventual coverage of all gaps is established.
+Even if every gap qualified, their $s+Q(w)$ baselines and the entire
+exterior future would remain in AC5. The missing sufficient estimate
+is still a strict joint upper comparison for this residual occupation
+and the same $V_X^K$ credit, leaving $C_*-\delta$ for fixed positive
+parameters on the original common cofinal sequence. That estimate,
+MT8, the all-integer Robin inequality and RH remain unproved.
+
+## The original source clock localizes skipped-gap baselines
+
+Retain AC1--AC10's complete original source and its classified family
+$\mathscr G_X^{(\upsilon)}$, with AC9's choice of $\upsilon_X$.
+This `repo-derived` paper application pays a specific remaining term:
+the source-time baseline of every actual gap above an auxiliary clock
+cutoff. Its input $s<t_m\le2\ell_X$ is the original full-window bound
+already used in VP2--VP3. The square-root $Q$ allowance and the
+ordinary-center capped-occupation perturbation argument are also
+reused. No new generic perturbation theorem, literature prime estimate
+or Lean result is asserted.
+
+### Localize the baseline without truncating the future horizon
+
+Let $\mathscr G_X$ contain all original skipped gaps and put
+$\mathfrak G_X=\bigcup_{G_s\in\mathscr G_X}G_s$. Keep the original
+$I_X,D_X,\mathsf U_X$ and $\widehat E_X^{(\upsilon)}$.
+For any $H>0$ define only a comparison integrand:
+
+$$
+E^{\rm loc}_{X,H}(w)=\widehat E_X^{(\upsilon)}(w)
+-\mathbf1_{\mathfrak G_X}(w)Q(w)
+-\sum_{G_s\in\mathscr G_X}
+ s\,\mathbf1_{G_s\cap[H,\infty)}(w).
+\tag{BL1}
+$$
+
+The actual gaps are disjoint. Thus, almost everywhere, BL1 is zero
+on $D_X$, is $s\mathbf1_{\{w<H\}}$ on a classified gap, is
+$s\mathbf1_{\{w<H\}}+r_s(w)$ on an unclassified gap, and is the
+original $E(w)$ outside $I_X$. It retains every unclassified residual
+and both exterior portions visible to an ordinary center. Neither
+$K$ nor $\psi$ nor an original clock is changed.
+
+Define $P^{\rm loc}_{X,H,j}$, $e^{\rm loc}_{X,H,r,j}$ and
+$\mathcal E^{\rm loc}_{X,H}(\tau)$ by PE3--PE5's exact formulas,
+replacing only the integrand by BL1. Their centers, endpoints, shell
+caps $L_{X,r}$, normalization $M_X$, future-shell weights, horizon
+and zero convention remain unchanged. The primitive is continuous
+on compact center shells even if $H$ cuts through a gap.
+
+### Pay the high-clock part at every ordinary center
+
+Put
+
+$$
+C_{1/2}=\frac23(2\sqrt2-1),\qquad
+h_{X,H}=\frac{t_m}{\sqrt H}+C_{1/2}H_Q.
+$$
+
+Beyond the existing common start for $|Q(w)|\le H_Q\sqrt w$,
+fix any ordinary center $x\ge b_X$, any future index $j$, and
+$u=2^jx<\mathsf U_X$. For every permitted endpoint
+$u\le v\le\min\{2u,\mathsf U_X\}$, disjointness and
+$0<s<t_m$ give
+
+$$
+\left|\int_u^v
+[\widehat E_X^{(\upsilon)}(w)-E^{\rm loc}_{X,H}(w)]dw\right|
+\le H_Q\int_u^{2u}\sqrt w\,dw
++t_m|[u,2u]\cap[H,\infty)|.
+\tag{BL2}
+$$
+
+The first integral is $C_{1/2}u^{3/2}$. For the second term,
+
+$$
+u^{-3/2}|[u,2u]\cap[H,\infty)|\le H^{-1/2}.
+$$
+
+Indeed for $u\ge H$ it is at most $u^{-1/2}$; for $u<H$, writing
+$z=u/H\in(0,1)$ reduces it to
+$(2z-1)_+/z^{3/2}\le1$. The latter follows from
+$z^{3/2}-2z+1\ge0$ on $[0,1]$: this expression decreases to zero
+there, since its derivative is $(3/2)\sqrt z-2<0$.
+
+Normalize BL2 and take the two suprema over the same endpoints.
+For every ordinary center, including centers outside $D_X$,
+
+$$
+\boxed{
+|\widehat P_{X,j}^{(\upsilon)}(x)-P^{\rm loc}_{X,H,j}(x)|
+\le h_{X,H}.}
+\tag{BL3}
+$$
+
+When $u\ge\mathsf U_X$ both readouts are zero. BL3 therefore also
+controls the unselected center measures in the occupation consumer.
+Apply the existing VP2--VP3 capped-superlevel perturbation argument:
+a threshold shift of $h_{X,H}/M_X$ changes each amplitude integral
+by at most $L_{X,r}h_{X,H}/M_X$, in either direction, for every
+$\tau\ge0$. Summing the unchanged weights and using
+$\sum_rL_{X,r}=L_X$ and $\sum_{j<N_X}2^{-j/2}\le S=2+\sqrt2$ gives
+
+$$
+\boxed{
+M_X|\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
+-\mathcal E^{\rm loc}_{X,H}(\tau)|
+\le S\left(\frac{t_m}{\sqrt H}+C_{1/2}H_Q\right)L_X.}
+\tag{BL4}
+$$
+
+No gap count, coverage fraction, selected-center density or upper
+bound on the lag credit appears. BL4 is an absolute comparison of
+these two occupation functionals; AC8's earlier removal of classified
+residuals remains a separate one-sided comparison.
+
+### Use the witness scale rather than a bound on the original clocks
+
+The unchanged normalization supplies
+
+$$
+t_m\le2\ell_X=\frac d4M_X\sqrt X.
+$$
+
+Consequently BL4 gives, uniformly in the original full windows,
+all maximizing ties and $\tau\ge0$,
+
+$$
+\frac{|\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
+-\mathcal E^{\rm loc}_{X,H}(\tau)|}{L_X}
+\le\frac{Sd}{4}\sqrt{\frac XH}
++\frac{SC_{1/2}H_Q}{M_X}.
+\tag{BL5}
+$$
+
+For $H=RX$ this bounds the first term by $Sd/(4\sqrt R)$.
+For the single deterministic choice
+
+$$
+H_X=X(\log X)^2,
+$$
+
+it instead gives
+
+$$
+\boxed{
+\frac{|\widehat{\mathcal E}_X^{(\upsilon)}(\tau)
+-\mathcal E^{\rm loc}_{X,H_X}(\tau)|}{L_X}
+\le\frac{Sd}{4\log X}+\frac{SC_{1/2}H_Q}{M_X}=o(1).}
+\tag{BL6}
+$$
+
+This pays the high-clock source-time baselines of all actual gaps,
+including high-activation-complexity gaps. It does not bound their
+residuals. The estimate uses neither polynomial original clocks nor
+a horizon ending at $H_X$, and retains $\Theta=1$. It does not assert
+that any original clock lies below $H_X$. In particular, the entire
+exterior future and every unclassified residual above $H_X$ stay in
+BL1. The $Q$ allowance is already available independently; the
+additional payment is for the retained $s$-term above $H_X$.
+
+### Insert the payment in the unchanged joint account
+
+Apply BL4 once to AC10, keeping the exact $c_X$ and credit coefficient:
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&c_X\left[S\tau+
+\frac{\mathcal E^{\rm loc}_{X,H}(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}\\
+&+\omega_X+\frac{(2+2\sqrt2)c_X\upsilon_X^2}{M_X}
++\frac{c_XS}{M_X}\left(\frac{t_m}{\sqrt H}+C_{1/2}H_Q\right)
++o(1).
+\end{aligned}}
+\tag{BL7}
+$$
+
+For $H=H_X$ the newly displayed allowance is at most
+$c_XS[d/(4\log X)+C_{1/2}H_Q/M_X]\to0$.
+It introduces no new multiple of $V_X^K$; the potentially large
+$\gamma_XV_X^K/(M_XL_X)$ remains inside the original coefficient.
+No assumption $V_X^K=O(M_XL_X)$ is used. The absolute difference
+between the joint accounts formed from the two occupations is also
+bounded by this same allowance, even if their separate terms are large.
+Every comparison is uniform before choosing the original cofinal
+sequence, so no new sequence or favorable tie is introduced.
+
+At $H=H_X$, the remaining comparison integrand is exactly, almost
+everywhere,
+
+$$
+E^{\rm loc}_{X,H_X}(w)=\mathbf1_{I_X^c}(w)E(w)
++\sum_{G_s\in\mathscr G_X}s\mathbf1_{G_s\cap\{w<H_X\}}(w)
++\sum_{G_s\notin\mathscr G_X^{(\upsilon)}}\mathbf1_{G_s}(w)r_s(w).
+$$
+
+A sufficient supplier, still unproved, is that fixed
+$0<\epsilon<a$, $\tau>0$ and $\delta>0$ satisfy
+
+$$
+c_X\left[S\tau+
+\frac{\mathcal E^{\rm loc}_{X,H_X}(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
+\le C_*-\delta
+\tag{BL8}
+$$
+
+on one common cofinal sequence of the original qualifying full
+windows, retaining every original label and maximizing tie.
+BL6 gives no favorable occupation bound for the baseline below $H_X$,
+no estimate for the retained unclassified residuals and no signed
+bound for the exterior $E$. Near $w\asymp X$, even the baseline
+majorant $t_m/\sqrt w$ is of order $M_X$; the same localization bound
+does not pay that term with a vanishing allowance.
+The strict combined supplier BL8, MT8, the all-integer Robin inequality
+and RH remain unproved. This application has no Lean/kernel proof.
+## Weighted short-interval counts pay more actual gap residuals
+
+Retain the full source, all original windows and ties, $\Theta=1$,
+BL1--BL7's horizon and exact credit. The new consumer is the positive
+residual area on a comparable actual gap. It uses the published
+[Thorner--Zaman weighted short-interval estimate](../Analytic/shortuniformity2026robininterfaces.md#effective-weighted-prime-counts-in-short-intervals),
+with LO1's already established first-layer endpoint rule. The original
+PG2 suffix sign and AC/VP capped-occupation comparison are reused.
+This is a `repo-derived` paper application, not a new prime theorem,
+generic perturbation theorem, Lean result or RH proof.
+
+### Match the published weighted count to the actual strict inventory
+
+Use Theorem 1.1 of arXiv:2108.10878v2 with modulus $2$, residue $1$
+and fixed $\varepsilon_{\rm TZ}=1/60$. There is no nontrivial real
+character modulo $2$, so the exceptional-zero branch is absent;
+$\lambda_{\rm TZ}=1$ and $\theta_{\rm TZ}+\varepsilon_{\rm TZ}=3/5$.
+The actual increment intervals used below start at $\alpha\to\infty$,
+so all their primes are odd; restriction to odd primes already gives
+the lower bound in PA1's wider length range.
+The parameter $\varepsilon_{\rm TZ}$ is independent of the fixed
+$\epsilon$ in BL7's credit coefficient.
+
+Put
+
+$$
+\Phi(y)=\left(\frac{\log y}{\log\log y}\right)^{1/3},\qquad
+\mathfrak e(y)=e^{-c\Phi(y)}.
+$$
+
+The published effective constants, with a smaller fixed $c>0$, give
+fixed $C>0$ and one start such that, uniformly for
+$\alpha\le z\le2\alpha$ and $z^{3/5}\le h\le z$,
+
+$$
+\sum_{z-h<p\le z}\log p\ge h[1-C\mathfrak e(\alpha)].
+\tag{PA1}
+$$
+
+Indeed the source's error denominator at modulus $2$ is
+
+$$
+\log2+(\log(z/h))^{2/3}
+ (\log^+\log(z/h))^{1/3}
+ +(\log z)^{2/5}(\log\log z)^{1/5}.
+$$
+
+It is at most a fixed multiple of
+$(\log\alpha)^{2/3}(\log\log\alpha)^{1/3}$ in this range.
+The first product is zero by its continuous convention when
+$\log(z/h)=0$. The numerator is at least $\log\alpha$,
+which supplies PA1 after decreasing $c$.
+These are weighted prime sums; no extra $\log\alpha$ factor is
+charged to a prime-count error.
+
+### Bound positive residual area on every comparable actual gap
+
+Let $G_s=(\alpha,\beta)$ be any original actual gap with
+$h=\beta-\alpha\le\alpha$. Set $T_\alpha=1+(2\alpha)^{3/5}$.
+PG1's endpoint contact and monotonicity of the same strict $K$ give
+
+$$
+r_s(\alpha+t)=t-[K(\alpha+t)-K(\alpha)]\le t
+\qquad(0\le t\le h).
+$$
+
+If $t\ge T_\alpha$, every prime in $(\alpha,\alpha+t-1]$
+has its first activation strictly in $(\alpha,\alpha+t)$ by the
+existing rule $p<\xi_{p,1}<p+1$. Its full $\log p$ mass belongs
+to this $K$ increment. Higher layers and simultaneous activations
+remain nonnegative parts of the same full inventory. In PA1 take
+$z=\alpha+t-1$ and $h_{\rm TZ}=t-1$. Then
+$\alpha\le z\le2\alpha$, $z-h_{\rm TZ}=\alpha$ and
+$h_{\rm TZ}\ge(2\alpha)^{3/5}\ge z^{3/5}$, so
+
+$$
+r_s(\alpha+t)
+\le t-(t-1)[1-C\mathfrak e(\alpha)]
+\le1+C\mathfrak e(\alpha)t.
+$$
+
+Integrating these nonnegative upper bounds on the two ranges gives
+
+$$
+\boxed{
+\int_\alpha^\beta(r_s(w))_+dw
+\le\frac{T_\alpha^2}{2}+h
+ +\frac C2\mathfrak e(\alpha)h^2
+\ll\alpha^{6/5}+h+\mathfrak e(\alpha)h^2.}
+\tag{PA2}
+$$
+
+If $h<T_\alpha$, the first upper bound alone suffices. PA2 therefore
+holds for every sufficiently large comparable actual gap, independently
+of the following classification. Its right side also bounds
+$\int_y^z r_s(w)dw$ for every $\alpha\le y\le z\le\beta$.
+Unlike the generic $h^2/8$ estimate, PA2 gives a decaying coefficient
+on the long-range quadratic term using an actual arithmetic count.
+The contact at $\alpha$ is essential; an exterior interval without
+that contact would retain its unbounded starting baseline.
+
+### Enlarge the paid class without claiming any coverage fraction
+
+Keep AC9's unchanged $\upsilon_X=\min\{b_X^{1/8},M_X^{1/4}\}$ and
+set
+
+$$
+\mathscr G_X^{\rm ar}
+=\left\{G_s:
+h_s\le\upsilon_X\alpha_s^{3/4}
+             e^{c\Phi(\alpha_s)/2}\right\}.
+\tag{PA3}
+$$
+
+Every endpoint has $\alpha_s\ge b_X$. Since
+$\upsilon_X\le b_X^{1/8}\le\alpha_s^{1/8}$ and
+$\Phi(y)/\log y\to0$, eventually
+$e^{c\Phi(\alpha_s)/2}\le\alpha_s^{1/16}$. Thus
+$h_s/\alpha_s\le\alpha_s^{-1/16}\le b_X^{-1/16}\to0$
+uniformly throughout this class. PA2 applies there beyond one common
+start, including arbitrarily large original clocks.
+
+AC4 already gives $h_s\le2\upsilon_X\alpha_s^{3/4}$ on the old
+class $\mathscr G_X^{(\upsilon)}$. Since
+$e^{c\Phi(\alpha_s)/2}\to\infty$ uniformly for $\alpha_s\ge b_X$,
+
+$$
+\mathscr G_X^{(\upsilon)}\subseteq\mathscr G_X^{\rm ar}
+\tag{PA4}
+$$
+
+beyond that same enlarged start. No existence or positive proportion
+of newly admitted gaps is asserted.
+
+The criteria can be distinguished without assigning such a gap to
+an actual window. If an actual gap satisfies
+$3\upsilon_X\alpha_s^{3/4}\le h_s\le
+\upsilon_X\alpha_s^{3/4}e^{c\Phi(\alpha_s)/2}$, its first-layer
+activation times are distinct because they lie in disjoint
+$(p,p+1)$ intervals. PA1 applied up to $\beta_s-1$ consequently gives
+
+$$
+m_s\log(2\alpha_s)
+\ge\sum_{\alpha_s<p\le\beta_s-1}\log p
+\ge(1-o(1))h_s>\upsilon_X\alpha_s^{3/4}.
+$$
+
+Such a gap would be outside AC3's old class and inside PA3. This
+conditional comparison does not prove that a gap in that band exists.
+
+### Apply the existing last-unfinished-gap and occupation consumers
+
+Remove only the still-unpaid residuals in the added class:
+
+$$
+R_X^{\rm add}(w)=
+\sum_{G_s\in\mathscr G_X^{\rm ar}\setminus\mathscr G_X^{(\upsilon)}}
+\mathbf1_{G_s}(w)r_s(w),\qquad
+E_X^{\rm red}(w)=E^{\rm loc}_{X,H_X}(w)-R_X^{\rm add}(w).
+\tag{PA5}
+$$
+
+PG2's nonpositive unweighted suffix is available on every actual gap,
+not only on AC3's classified family. Reuse the AC6--AC7 consumer:
+in any interval $[u,v]$ the initial suffix and every complete added
+gap have nonpositive contribution. Only the final unfinished added
+gap can need payment; if both endpoints are in one gap, PA2 applies
+directly. For $u\le v\le\min\{2u,\mathsf U_X\}$ its left endpoint
+satisfies $\alpha_s<v\le2u$. Dividing PA2 by $u^{3/2}$ and using PA3,
+$h_s\le\alpha_s$ and $\alpha_s\ge b_X$, gives one fixed $C_2>0$ with
+
+$$
+u^{-3/2}\int_u^vR_X^{\rm add}(w)dw
+\le J_X:=C_2[\upsilon_X^2+b_X^{-3/10}].
+\tag{PA6}
+$$
+
+Here $\mathfrak e(\alpha_s)h_s^2/\alpha_s^{3/2}
+\le\upsilon_X^2$ and $h_s/\alpha_s^{3/2}\le\alpha_s^{-1/2}$.
+When no final unfinished added gap exists, the integral is nonpositive.
+There is no factor counting gaps or future shells.
+
+Define $P_{X,j}^{\rm red}$, $e_{X,r,j}^{\rm red}$ and
+$\mathcal E_X^{\rm red}(\tau)$ by the unchanged PE3--PE5 formulas,
+with integrand PA5 and the original zero convention. PA6 holds before
+taking the same endpoint supremum at every ordinary center
+$x\ge b_X$, including centers outside $D_X$. Directly applying
+VP/AC's existing capped layer-cake comparison gives
+
+$$
+P_{X,H_X,j}^{\rm loc}(x)\le P_{X,j}^{\rm red}(x)+J_X,
+\qquad
+\mathcal E_{X,H_X}^{\rm loc}(\tau)
+\le\mathcal E_X^{\rm red}(\tau)+\frac{SJ_X}{M_X}L_X.
+\tag{PA7}
+$$
+
+All original caps $L_{X,r}$, center shells, future weights and the
+full horizon remain. PA7 is one-sided, not an absolute perturbation
+estimate. It uses no selected-center density or $|S_r|/L_{X,r}$ factor.
+
+### Retain the remaining baseline, exterior and credit together
+
+Apply PA7 once in BL7. The original explicitly paid allowances are
+unchanged, and the additional normalized allowance is
+
+$$
+\Delta_X^{\rm add}:=\frac{c_XSJ_X}{M_X}
+\le C_2Sc_X\left[M_X^{-1/2}
++\frac{b_X^{-3/10}}{M_X}\right]\longrightarrow0.
+\tag{PA8}
+$$
+
+The leading upper account is therefore the same expression with
+$\mathcal E_X^{\rm red}$ replacing $\mathcal E_{X,H_X}^{\rm loc}$:
+
+$$
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le c_X\left[S\tau+\frac{\mathcal E_X^{\rm red}(\tau)}{L_X}\right]
+-(a-\epsilon-\gamma_X)\frac{V_X^K}{M_XL_X}
++\mathfrak r_X^{\rm old}+\Delta_X^{\rm add},
+$$
+
+where $\mathfrak r_X^{\rm old}=o(1)$ denotes exactly BL7's old
+allowances at $H=H_X$, including $\omega_X$ and the AC9 payment.
+The exact $c_X$ and entire credit coefficient remain; no new
+multiple of $V_X^K$ is introduced or discarded.
+
+Almost everywhere, the retained integrand is exactly
+
+$$
+E_X^{\rm red}(w)=\mathbf1_{I_X^c}(w)E(w)
++\sum_{G_s\in\mathscr G_X}s\mathbf1_{G_s\cap\{w<H_X\}}(w)
++\sum_{G_s\notin\mathscr G_X^{\rm ar}}\mathbf1_{G_s}(w)r_s(w).
+$$
+
+Thus every low-clock baseline, the entire exterior arithmetic future
+and every residual outside PA3 remain. Added residuals are paid on
+their whole gaps, including portions above $H_X$. No original source,
+window, tie, phase or horizon is changed, and no new cofinal sequence
+is selected.
+
+The remaining sufficient strict joint upper has not been established.
+For the full contradiction objective, JM4's already recorded budget
+$R_0-\delta$, or JM7's $R_\eta-\delta$, with fixed $\delta>0$,
+can be used on the same original cofinal sequence; the stronger
+MT8/BL8 budget remains unproved as well. These existing lower-margin
+routes are reused, not new conclusions of PA1--PA8. The near-clock
+baselines, remaining residuals and exterior $E$ still need a single
+joint arithmetic estimate against the original credit.
+The original strict signed upper, all-integer Robin inequality and RH
+remain unproved; this application has no Lean/kernel verification.
+
+
+## Direct actual-center integration pays every complete gap residual
+
+Keep the original full source, all ties and every qualifying full window
+from PE2, PG1--PG3, PG9 and JM1--JM7, including $\Theta=1$.
+This `repo-derived` paper application uses the actual selected centers
+before PE3's ordinary-center endpoint suprema. It pays all original
+gap residuals by their existing exact weighted cancellation, rather
+than assuming they belong to PA3's classified family. The remaining
+low-clock baseline and full upper exterior still require a joint
+estimate against the original credit. No new generic kernel identity,
+prime theorem, literature-priority claim or Lean result is asserted.
+
+Let $B(t)=\mathcal B_X(t)$, $A(t)=t+B(t)$,
+$s_B=\sqrt B\log B$, $k=-\lambda'$, and
+$\rho_X=\sup t/B\to0$, with PE2/VP1's same actual real-clock scope.
+Keep $I_X=[A_0,A_m]$, $D_X$ and the original actual gaps
+$G_s=(\alpha_s,\beta_s)$ from PG9, including switches at $t_0$
+and excluding switches at $t_m$. The canonical endpoint $A_m$ is
+unchanged. All endpoint tie tags have measure zero in source integration.
+The common FH1 horizon $\mathsf U_X$ remains beyond $A_m$.
+
+### Apply the existing gap equality before taking a primitive supremum
+
+At almost every selected source time $t$, all future actual gaps lie
+wholly above $A(t)$ and below $A_m$. PG2 gives, on every such gap,
+
+$$
+\int_{\alpha_s}^{\beta_s}r_s(w)k(w)dw
+=\mathscr P_s(\beta_s)-\mathscr P_s(\alpha_s)=0,
+\qquad r_s(w)=w-s-K(w).
+\tag{DR1}
+$$
+
+Earlier gaps lie below $A(t)$ and contribute nothing to its forward
+integral. Thus DR1 removes every gap residual from that actual signed
+integral, including gaps outside PA3. On $D_X$ the same original
+$E(w)$ equals $t(w)+Q(w)$; on $G_s$ it equals $s+Q(w)+r_s(w)$.
+No sign on $Q$ or on the upper exterior is added.
+
+For $H>0$, put $q_s=\min\{\beta_s,H\}$ and define the actual
+low-clock baseline exposure
+
+$$
+\begin{aligned}
+\mathfrak B_{X,H}
+&=\int_{t_0}^{t_m}s_{B(t)}
+ \sum_{\substack{t\le s<t_m\\\alpha_s<H}}
+ s[\lambda(\alpha_s)-\lambda(q_s)]dt\\
+&=\sum_{\substack{t_0\le s<t_m\\\alpha_s<H}}
+ s[\lambda(\alpha_s)-\lambda(q_s)]
+ \int_{t_0}^{s}s_{B(t)}dt\ge0.
+\end{aligned}
+\tag{DR2}
+$$
+
+The second expression is finite Fubini on the same source. When $H$
+cuts a gap, its partial price difference is retained. It does not
+truncate DR1's residual integration. No size estimate for DR2 follows
+from writing it as this sum.
+
+Retain the complete upper exterior in the signed quantity
+
+$$
+\mathfrak T_X=
+\left(\int_{t_0}^{t_m}s_{B(t)}dt\right)
+\int_{A_m}^{\mathsf U_X}E(w)k(w)dw.
+\tag{DR3}
+$$
+
+The entire interval $(A_m,\mathsf U_X)$, even for superpolynomial
+$\mathsf U_X$, is present. FH1 separately pays the remote tail beyond
+$\mathsf U_X$ at $o(L_X)$. There is no lower exterior in a forward
+integral starting at an actual $A(t)\in I_X$.
+
+### Pay future visits and the high-clock baseline in this direct account
+
+Reuse $|Q(w)|\le H_Q\sqrt w$ and GPP4's already evaluated positive
+kernel moment. Because $B\le A$, it gives
+
+$$
+s_B\int_A^{A_m}|Q(w)|k(w)dw\le2H_Q.
+$$
+
+For future visits to $D_X$, monotonicity of $k$ and
+$s_Bk(A)\le s_Bk(B)\le2B^{-3/2}$ give
+
+$$
+s_B\int_{D_X\cap[A,A_m]}t(w)k(w)dw
+\le\frac{2t_mL_X}{B^{3/2}}
+\le\frac{4t^2}{B^{3/2}}.
+$$
+
+The last inequality uses only the original full window:
+$L_X\le\ell_X\le t$ and $t_m\le2\ell_X\le2t$.
+Reuse exactly PE2's two cases. If $t\le B^{3/4}$ the last ratio is
+at most four; otherwise $\Delta(A)=B-K(B)\ge(9/200)t$.
+With the unchanged
+$V_X^K=\int_{D_X}\Delta(x)/\sqrt{K(x)}dx$, the original
+PT10/PG9 change of variables therefore gives
+
+$$
+\int_{t_0}^{t_m}s_{B(t)}
+ \int_{D_X\cap[A(t),A_m]}t(w)k(w)dw\,dt
+\le\frac{800}{9}\rho_XV_X^K+4L_X.
+\tag{DR4}
+$$
+
+For the remaining gap baseline above $H$, disjointness, $s<t_m$
+and $s_B\lambda(\max\{A,H\})\le1/\sqrt H$ give the uniform bound
+
+$$
+s_B\sum_{t\le s<t_m}s
+ \int_{G_s\cap[H,\infty)}k(w)dw
+\le\frac{t_m}{\sqrt H}.
+$$
+
+These payments involve neither a classified-gap coverage fraction nor
+a count of gaps or future shells. Set $H_X=X(\log X)^2$ as in BL6.
+Then $t_m\le(d/4)M_X\sqrt X$ pays this high-clock contribution by
+$[d/(4\log X)]M_XL_X$.
+
+### Keep the remaining signed exposure and exact credit together
+
+Apply PE2, DR1--DR4 and the paid FH1 tail once. Reuse the existing
+$\mathcal J_X-Z_X^{\rm right}(T_X)=o(M_XL_X)$ transfer. For each fixed
+$0<\epsilon<a$, put $\widetilde\gamma_X=(800/9)\rho_X\to0$.
+The resulting actual signed upper account is
+
+$$
+\boxed{
+\begin{aligned}
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le{}&\frac{\mathfrak B_{X,H_X}+\mathfrak T_X}{M_XL_X}
+ -(a-\epsilon-\widetilde\gamma_X)
+ \frac{V_X^K}{M_XL_X}\\
+&+\frac{d}{4\log X}+O_\epsilon(M_X^{-1})+o(1).
+\end{aligned}}
+\tag{DR5}
+$$
+
+This route branches at PE2, before the ordinary-center suprema and
+capped occupation. Consequently DR5 contains no $c_X$ multiplier;
+it does not replace $c_X$ by one or discard its credit correction in
+PA8. The direct coefficient $\widetilde\gamma_XV_X^K/(M_XL_X)$ is
+kept exactly; no bound on $V_X^K/(M_XL_X)$ is assumed.
+
+The all-gap residual payment in DR1 does not bound the ordinary-center
+occupation $\mathcal E_X^{\rm red}$. Those centers may cut a gap,
+where the complete weighted cancellation is unavailable. PA8 and its
+ordinary-center classified-residual account remain as separate estimates.
+
+The generic pressure and Stieltjes identities also remain existing
+results. In particular, for $\mathcal H(t)=V_X(t)+t\lambda(A(t))$,
+PG1 and the [existing pressure-margin definition](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#98-完整价格裕度的临界切片与严格自匹配归约)
+give $\mathcal H(t)=\gamma-\mathfrak D(A(t))$. Expressing DR2 or
+its unrestricted variant as an envelope variation therefore supplies
+no new positive reserve or quantitative upper bound.
+
+The unpaid requirement is a same-source strict joint upper estimate
+for DR5's first two terms below JM4's existing $R_0-\delta$, or the
+applicable JM7 $R_\eta-\delta$, for one fixed $\delta>0$ on a common
+cofinal sequence of the original full windows. Neither the positive
+low-clock baseline nor the signed full upper exterior has been paid
+by DR1--DR5. The original signed upper comparison, all-integer Robin
+inequality and RH remain unproved. This application simplifies the
+actual selected-source account without asserting a new arithmetic
+supplier, an actual favorable sequence or kernel verification.
+
+
+## Monotone source variation bounds the complete gap baseline
+
+Keep PG1--PG3, PG9, PE2 and DR1--DR4 on the original full windows,
+all maximizing ties and the same common cofinal source, including
+$\Theta=1$. This is a `repo-derived` paper application of finite
+Stieltjes integration by parts and the classical opposite-monotonicity
+integral comparison. It gives a quantitative bound for the previously
+retained gap baseline; it asserts no new generic inequality, literature
+priority, arithmetic sign supplier or Lean/kernel result.
+
+Write $B(t)=\mathcal B_X(t)$, $A(t)=B(t)+t$,
+$s_B=\sqrt B\log B$, and set
+
+$$
+S(t)=\int_{t_0}^{t}s_{B(v)}\,dv,\qquad
+S_m=S(t_m),\qquad
+\mathsf L_X=\int_{t_0}^{t_m}\frac{t}{\sqrt{B(t)}}\,dt,
+\qquad c_{\rm win}=\frac{2t_m}{t_m+t_0}\le\frac43.
+$$
+
+Here $\mathsf L_X$ is a continuous readout of the existing source lag;
+it is not $L_X=t_m-t_0$ or the exact inventory credit $V_X^K$.
+N2 and CQ1 already give a nondecreasing finite step function $B$.
+Define the nonnegative complete gap baseline, before BL's clock split,
+
+$$
+\mathfrak B_X^{\rm all}
+=\sum_{t_0\le s<t_m}
+ sS(s)[\lambda(\alpha_s)-\lambda(\beta_s)].
+\tag{BV1}
+$$
+
+DR2 gives $0\le\mathfrak B_{X,H}\le\mathfrak B_X^{\rm all}$
+for every $H$. No actual gap, intermediate activation or higher layer
+is removed by this comparison. A switch at $t_0$ has $S(t_0)=0$;
+the original endpoint $A_m$ is the least-core terminal clock, with
+no switch at $t_m$ charged to BV1.
+
+### Use the same source price drops and retain both terminal debits
+
+Put $g(t)=\lambda(A(t))$. On each open branch, $A'(t)=1$, so
+$-g'(t)=k(A(t))$. At a switch $s$, its price drop is exactly
+$\lambda(\alpha_s)-\lambda(\beta_s)$. Use right limits in the
+Stieltjes measure at interior switches, retaining the terminal left
+trace $g(t_m)=g(t_m-)=\lambda(A_m)$; the values at the finitely many
+ties do not change any ordinary integral. Since $S$ is continuous, finite integration
+by parts with $tS(t)$ gives
+
+$$
+\mathfrak B_X^{\rm all}
+=\int_{t_0}^{t_m}[S(t)+ts_{B(t)}]\lambda(A(t))\,dt
+-t_mS_m\lambda(A_m)
+-\int_{t_0}^{t_m}tS(t)k(A(t))\,dt.
+\tag{BV2}
+$$
+
+The source remains the same actual inventory and selector. BV2 is
+finite Stieltjes accounting, rather than a new pressure identity.
+The terminal term uses the unchanged $A_m$; no extra terminal tie or
+favorable endpoint is chosen.
+
+Monotonicity of $B$ and $B>1$ imply
+$S(t)\le(t-t_0)s_{B(t)}$ and
+$s_{B(t)}\lambda(A(t))\le B(t)^{-1/2}$.
+Consequently the first integral in BV2 is at most
+$\int_{t_0}^{t_m}(2t-t_0)/\sqrt{B(t)}\,dt$.
+For the nonincreasing function $y(t)=B(t)^{-1/2}$, the existing
+opposite-monotonicity integral comparison gives
+
+$$
+\int_{t_0}^{t_m}ty(t)\,dt
+\le\frac{t_0+t_m}{2}\int_{t_0}^{t_m}y(t)\,dt.
+$$
+
+It follows, without any clock localization or bounded-credit premise,
+that
+
+$$
+\boxed{
+\mathfrak B_{X,H}
+\le\mathfrak B_X^{\rm all}
+\le c_{\rm win}\mathsf L_X
+-t_mS_m\lambda(A_m)-\mathsf C_X,
+\qquad
+\mathsf C_X=\int_{t_0}^{t_m}tS(t)k(A(t))\,dt\ge0.}
+\tag{BV3}
+$$
+
+The coefficient is at most $4/3$ because the original window has
+$t_m\le2\ell_X\le2t_0$. Its arithmetic attainability or sharpness
+on actual source windows is not asserted. The two debit terms are
+independently nonnegative and explicitly retained.
+
+### Consume the bound before splitting the high-clock baseline
+
+Use PE2 and DR1--DR4 directly with BV1, before the auxiliary $H_X$
+cut, and the unchanged paid FH1 remote tail. Every future complete-gap
+residual vanishes by DR1, the future selected visits cost at most
+$\widetilde\gamma_XV_X^K+4L_X$, and the interior $Q$ costs $O(L_X)$.
+Thus the existing original-head transfer gives
+
+$$
+\frac{Z_X^{\rm right}(T_X)}{M_XL_X}
+\le
+\frac{c_{\rm win}\mathsf L_X+\mathfrak T_X
+-t_mS_m\lambda(A_m)-\mathsf C_X}{M_XL_X}
+-(a-\epsilon-\widetilde\gamma_X)
+ \frac{V_X^K}{M_XL_X}
++O_\epsilon(M_X^{-1})+o(1),
+\quad \widetilde\gamma_X=\frac{800}{9}\rho_X.
+\tag{BV4}
+$$
+
+No high-clock part is dropped: the entire baseline was bounded at
+once in BV3, so BV4 does not add BL6's separate high-clock allowance.
+Keep the full original horizon, even when $\mathsf U_X$ is
+superpolynomial. The terminal debit combines with DR3 exactly as
+
+$$
+\mathfrak T_X-t_mS_m\lambda(A_m)
+=S_m\int_{A_m}^{\mathsf U_X}[E(w)-t_m]k(w)\,dw
+-t_mS_m\lambda(\mathsf U_X).
+\tag{BV5}
+$$
+
+Both the complete exterior and its finite terminal remainder remain.
+No sign is imposed on the anchored exterior in BV5, and no boundedness
+hypothesis is imposed on $\mathsf L_X/(M_XL_X)$. In particular,
+$\mathsf L_X$ is not silently replaced by $V_X^K$.
+The exact correction $\widetilde\gamma_XV_X^K/(M_XL_X)$ is retained.
+
+BV3 bounds a retained cost by a known source readout and terminal
+debits, while BV4--BV5 locate the remaining same-source arithmetic
+comparison. To contradict the existing JM4 or applicable JM7 lower
+margin, their complete normalized signed upper still has to lie below
+$R_0-\delta$ or $R_\eta-\delta$ for a fixed $\delta>0$ on the same
+common cofinal original-window sequence. This strict comparison,
+all-integer Robin inequality and RH remain unproved.
+
+## An inventory lower count pays part of the lag without a clock ceiling
+
+Keep BV1--BV5's original full windows, every maximizing tie and the same
+common cofinal source, including $\Theta=1$. Reuse LO1 with
+$b_0=9/100$ and $\vartheta=21/40$, and retain
+$\rho_X=\sup_t t/B(t)\to0$. This is a `repo-derived` paper
+application of the existing count and an elementary scalar optimization,
+not a new prime theorem, generic inequality or Lean/kernel result.
+No upper bound on $B$, $\mathsf L_X/(M_XL_X)$ or
+$V_X^K/(M_XL_X)$ is imposed.
+
+### Optimize the existing incomplete-block allowance before integrating
+
+At the actual selected real clock, PG1 gives $A=B+t$, $K(A)=B$ and
+$\Delta(A)=K(A)-K(K(A))=B-K(B)\ge0$. LO1 gives
+
+$$
+t-\frac{\Delta(A)}{b_0}
+\le\min\{t,1+A^\vartheta\}.
+$$
+
+For positive $t,c$ and $\vartheta>1/2$, splitting at
+$b=(t/c)^{1/\vartheta}$ gives the elementary identity
+
+$$
+\sup_{b>0}\frac{\min\{t,cb^\vartheta\}}{\sqrt b}
+=c^{1/(2\vartheta)}t^{1-1/(2\vartheta)}.
+$$
+
+Use $A\le(1+\rho_X)B$ and
+$\min\{t,1+u\}\le1+\min\{t,u\}$. Since
+$1-1/(2\vartheta)=1/21$, the actual source therefore satisfies
+
+$$
+\frac{t-\Delta(A)/b_0}{\sqrt B}
+\le\frac1{\sqrt B}+\sqrt{1+\rho_X}\,t^{1/21}.
+\tag{LC1}
+$$
+
+Define the nonnegative explicit allowance
+
+$$
+\mathsf E_X^{\rm lag}
+=\sqrt{1+\rho_X}\,\frac{21}{22}
+ (t_m^{22/21}-t_0^{22/21})
++\int_{t_0}^{t_m}\frac{dt}{\sqrt{B(t)}}.
+$$
+
+The existing exact occupation identity for the visited set $D$ gives
+$V_X^K=\int_{t_0}^{t_m}\Delta(A(t))/\sqrt{B(t)}\,dt$.
+Integrating LC1 yields the ceiling-free, one-sided comparison
+
+$$
+\boxed{V_X^K\ge b_0
+ (\mathsf L_X-\mathsf E_X^{\rm lag}).}
+\tag{LC2}
+$$
+
+All higher and simultaneous layers remain in LO1's complete inventory.
+The estimate applies to every selected branch; finite tie values do not
+alter its occupation integrals. It neither identifies $V_X^K$ with
+$\mathsf L_X$ nor supplies a two-sided asymptotic.
+
+### Spend only the retained fraction of the same compensation
+
+Fix $0<\epsilon<a$ and enlarge the common start until
+$h_X=a-\epsilon-\widetilde\gamma_X>0$, with BV4's unchanged
+$\widetilde\gamma_X=(800/9)\rho_X$. Keep BV5's whole anchored exterior
+
+$$
+\mathsf T_X^\circ
+=S_m\int_{A_m}^{\mathsf U_X}[E(w)-t_m]k(w)\,dw
+-t_mS_m\lambda(\mathsf U_X).
+$$
+
+Let $\mathcal R_X$ denote BV4--BV5's normalized upper expression
+$(c_{\rm win}\mathsf L_X+\mathsf T_X^\circ-\mathsf C_X-h_XV_X^K)
+/(M_XL_X)$, before its already retained $O_\epsilon(M_X^{-1})+o(1)$.
+For every $z\in[0,1]$, spend the fraction $z$ of the same credit in
+LC2, leaving the rest unchanged. This gives
+
+$$
+\boxed{
+\mathcal R_X\le
+\frac{(c_{\rm win}-zb_0h_X)\mathsf L_X
+ +\mathsf T_X^\circ-\mathsf C_X-(1-z)h_XV_X^K}{M_XL_X}
++\frac{zb_0h_X\mathsf E_X^{\rm lag}}{M_XL_X}.}
+\tag{LC3}
+$$
+
+Thus the paid lag coefficient is exactly $zb_0h_X$, with the displayed
+error. The $\widetilde\gamma_X$ correction has not been discarded;
+without a bounded normalized credit it cannot be replaced by zero.
+No part of the exterior, terminal debit or remaining credit is omitted.
+
+### The original scale determines when this allowance is negligible
+
+The source floor, $t_m\le2\ell_X=(d/4)M_X\sqrt X$, and the uniform
+$B_{\min,X}\to\infty$ give
+
+$$
+\boxed{
+\frac{\mathsf E_X^{\rm lag}}{M_XL_X}
+\ll X^{(40\eta-19)/42}(\log X)^{-20/21}
+ +o(M_X^{-1}).}
+\tag{LC4}
+$$
+
+Indeed the first integral is at most
+$\sqrt{1+\rho_X}\,L_Xt_m^{1/21}$, while the second is at most
+$L_X/\sqrt{B_{\min,X}}$. Substitute the original
+$M_X=X^{1/2-\eta}\log X$ in $t_m^{1/21}/M_X$.
+Consequently the LC3 payment has $o(1)$ normalized error whenever
+$\eta\le19/40$, including equality and including $\Theta=1$.
+LC1--LC4 themselves retain every original $\eta<1/2$; above $19/40$
+the explicit allowance remains and is not declared negligible.
+
+This pays a quantitative fraction of BV4's lag by its actual
+second-iterate credit, without the global SI1 clock ceiling. The
+remaining lag coefficient is still positive, and the anchored exterior
+still has no supplied sign. The complete strict comparison below
+$R_0-\delta$ or the applicable $R_\eta-\delta$, all-integer Robin
+inequality and RH remain unproved. No literature-originality claim or
+new generic formal declaration is made.
+
+## Two sieve substitutions leave the finite prime test unpaid
+
+Retain FH1--FH4's literal weight, complete common horizon, all original
+full windows and every maximizing tie, including $\Theta=1$. The
+following are applications of published sieve hypotheses to that same
+weight. They neither reprove a sieve theorem nor establish FH4, a
+bilinear bound or RH. Write $U=\mathsf U_X$, $W=\mathsf W_X$, and put
+
+$$
+b=\min_tB(t),\qquad C=\max_tB(t),\qquad
+\Omega=\int_{t_0}^{t_m}B(t)^{-1/2}dt,\qquad
+S=\int_{t_0}^{t_m}\sqrt{B(t)}\log B(t)dt.
+$$
+
+The extrema may be enlarged over the original endpoint ties. The source
+already gives $b/\ell_X\to\infty$ and $\log C/\log U\to0$.
+Use MR1's existing variation and MR2's unchanged reference on $[0,U]$:
+$\operatorname{TV}(W)\le(1+a)\Omega$,
+$0\le W\le\Omega$ and $\int_0^UW=\mathsf P_X$.
+The constant extension down to zero retains the actual low-clock
+plateau. Classical bounded-variation rectangle quadrature then has
+error $O_a(\Omega)$ on every free divisor lattice and its interval
+restrictions. This is the existing free-integer interface; it is not
+an estimate for an arithmetic coefficient in the inner sum.
+
+### The whole-horizon growth hypothesis fails
+
+John Friedlander and Henryk Iwaniec, *Asymptotic sieve for primes*,
+Annals of Mathematics 148 (1998), 1041--1065,
+[arXiv:math/9811186v1](https://arxiv.org/pdf/math/9811186v1),
+version 1 November 1998, Theorem 2 on PDF p.19, explicitly assumes
+(1.4) on PDF p.1. With its notation replaced by $\mathcal A$, that
+condition is
+
+$$
+\mathcal A(x)\gg\mathcal A(\sqrt x)(\log x)^2,
+\qquad \mathcal A(y)=\sum_{n\le y}a_n.
+$$
+
+Consider the direct substitution $x=U$, $a_n=W(n)$ for $1\le n\le U$,
+and zero otherwise. Including $n=1$ changes no von Mangoldt sum.
+Quadrature and FH3's continuum reference give
+$\mathcal A(U)=\mathsf P_X+O_a(\Omega)$. Moreover
+
+$$
+\frac{\mathsf P_X}{S}
+\ge\log\frac{\log U}{\log C}-\frac1{\log U}\longrightarrow\infty,
+\qquad
+\frac{\Omega}{S}\le\frac1{b\log b}\longrightarrow0.
+$$
+
+Indeed the omitted term in the first inequality is
+$(1-a)\int\sqrt B\,dt/S\ge0$. Eventually $C<\sqrt U$, so on
+$[\sqrt U,U]$ the exact weight is $S[\lambda(r)-\lambda(U)]$.
+Consequently
+
+$$
+\begin{aligned}
+\mathcal A(U)-\mathcal A(\sqrt U)
+&=S\left[\log2-\frac{1-U^{-1/2}}{\log U}\right]+O_a(\Omega),\\
+\frac{\mathcal A(\sqrt U)}{\mathcal A(U)}&\longrightarrow1.
+\end{aligned}
+$$
+
+Thus no uniform positive constant makes (1.4) hold along this
+whole-horizon substitution. This rules out that direct application,
+not all uses of the asymptotic sieve. Localizing the weight to separate
+blocks can change the growth ratio; the theorem's distribution,
+coefficient-size and bilinear hypotheses, its absolute $M_XL_X$ error
+and any required uniformity over the moving family would still need
+proof. Neither this source's analytic proof nor its other hypotheses
+are certified here.
+
+### The paid divisor level gives no positive linear lower main term
+
+D. R. Heath-Brown, *Lectures on Sieves*,
+[arXiv:math/0209360v1](https://arxiv.org/pdf/math/0209360v1),
+version 25 September 2002, Corollary 5.1 on PDF p.36, records the
+Rosser--Iwaniec dimension-one lower sieve. In its notation
+$s=\log y/\log z$, and PDF p.27 defines $f(s)=0$ for $0<s\le2$.
+The corollary retains both the sieve asymptotic error and the sum of
+divisor remainders. The original Iwaniec theorem is cited through
+these authored lectures, without a new proof or Lean verification.
+Its pointwise sieve-weight inequalities extend to the nonnegative real
+weights $W(n)$ by finite linearity. For $\omega(p)=1$, the classical
+Mertens estimate
+$\sum_{w\le p<z}(\log p)/p=\log(z/w)+O(1)$ supplies the stated
+dimension-one density hypothesis.
+
+For example, the existing free-lattice variation bound pays the level
+
+$$
+D=\left\lfloor\frac{M_X\sqrt b}{(\log U)^2}\right\rfloor,
+\qquad
+\sum_{d<D}|r_d|\ll_a D\Omega
+\ll_a\frac{M_XL_X}{(\log U)^2}=o(M_XL_X)
+$$
+
+for the divisor remainders of $W$ restricted to any interval
+$(R,2R]\cap[1,U]$. Its continuum main term is the integral of that
+same restricted weight divided by $d$; the local density is $1/d$.
+This only reuses the elementary free-integer payment. Since
+$\log U=(\log X)^{O(1)}$ and
+
+$$
+\frac{\ell_X}{M_X^2}
+=\frac d8\frac{X^\eta}{\log X}\longrightarrow\infty,
+$$
+
+one has $D\to\infty$ and $D/b\to0$ on the original fixed-parameter
+source. Here $d$ in $\ell_X$ is the original source constant, distinct
+from the divisor index in the preceding sum.
+
+For $R\ge b$, take $y=D$ and $z=\sqrt{2R}+1$ in the lower sieve.
+Every surviving integer in the restricted interval is prime. The
+strict inequality $z>\sqrt{2R}$ matters because the source sieves by
+$p<z$; equality could leave the endpoint square when $\sqrt{2R}$ is
+prime. Nevertheless
+
+$$
+0<s=\frac{\log D}{\log z}<2,
+\qquad f(s)=0
+$$
+
+at this paid level. Hence the corollary has no positive lower main
+coefficient here. The weighted prime sum is not asserted to vanish,
+and neither its sieve asymptotic error nor a composite-removal cost
+at a smaller $z$ has been paid by this observation. For the exact
+prime-log weight $W(n)\log n$, the interval-restricted variation is
+$O_a(\Omega\log U)$. On each individual restricted block, the same $D$
+therefore pays its divisor remainder by
+$O_a(M_XL_X/\log U)=o(M_XL_X)$; $s$ and its zero lower main coefficient
+are unchanged. No $o(M_XL_X)$ sum of these per-block allowances over the
+full horizon is claimed. FP1--FP5's separate higher-prime-power payment
+is unchanged. Stronger divisor information or a different arithmetic
+argument is not excluded.
+
+These two parameter correspondences locate missing hypotheses for
+the actual FH test. They supply no replacement for the unchanged
+same-source signed comparison, BV/LC account or strict margin. The
+finite prime lower bound and RH remain unproved; no literature
+originality or kernel verification is claimed.
+
+## Stronger published counts increase the ceiling-free lag payment
+
+Retain BV4--BV5 and LC1--LC4's original source, complete horizon,
+all full windows and every maximizing tie. The count-to-inventory
+transfer below reuses LS6a's BHP lower envelope and SI2's admitted
+blocks; the scalar optimization and fractional-credit rule are
+exactly those already used in LC. The added consumer is a larger
+lag payment in the same upper account, rather than JM7's localized
+lower-margin calculation. This is a paper application of published
+results, without a new prime theorem, originality claim or Lean
+verification.
+
+### Retain the incomplete block until after scalar optimization
+
+Fix a lower coefficient $b_*>0$ and a block exponent
+$1/2<\vartheta<99/100$ admitted by one of these existing suppliers:
+
+| Published input | Fixed lower coefficient | Strict exponent condition |
+|---|---|---|
+| [BHP 1997, Theorem 3(I), $q=1$](../Scale/bakerharmanpintz1997goldbach.md) | $b_*<0.99$ | $\vartheta>11/20$ |
+| [Guth--Maynard, Corollary 1.3, arXiv:2405.20552v2](../Analytic/guthmaynard2024largevalues.md#the-short-interval-input) | $b_*<1$ | $\vartheta>17/30$ |
+
+The BHP statement requires one fixed sufficiently small positive
+$\varepsilon$. Choose it with $11/20+\varepsilon\le\vartheta$;
+blocks of length $x^\vartheta$ then satisfy its lower length bound
+and eventually its upper bound $x/\log x$. For Guth--Maynard take
+fixed $\varepsilon=\vartheta-17/30>0$ and forward block length
+$(2B)^\vartheta$. Its centres lie in $[B,2B]$, so this length is
+between the required $x^\vartheta$ and $x^{99/100}$ eventually.
+No upper restriction on the complete lag $t$ by either block-length
+ceiling is imposed.
+
+At any original selected real branch, retain only primes in
+$(B,A-1]$, where $A=B+t$. Their first-layer activation clocks obey
+$B<p<a_{p,1}<p+1\le A$, so all their $\log p$ masses belong to
+$\Delta(A)=K(A)-K(B)$. Strict endpoints and simultaneous higher
+layers are preserved; every higher-layer contribution is nonnegative.
+Complete backward BHP blocks, or forward Guth--Maynard blocks, cover
+this prime interval except for length $O(B^\vartheta)+O(1)$.
+All centres are $B(1+o_X(1))$. Each prime keeps its own logarithmic
+weight, and the fixed slack below $0.99$ or $1$ pays the conversion
+from the published count. The shorter-than-one-block case is covered
+by $\Delta(A)\ge0$. Thus one fixed $c=c_{\vartheta,b_*}\ge1$ and
+one common start give, on every original branch and tie,
+
+$$
+\Delta(A)\ge b_*[t-c(1+B^\vartheta)].
+\tag{LC5}
+$$
+
+The constant and start can depend on the fixed supplier parameters;
+they do not depend on an individual core or its size relative to $X$.
+No $\Theta<1$ premise or global core-clock ceiling enters LC5.
+
+Combine LC5 with $\Delta(A)\ge0$ before using LC1's scalar identity.
+With $p_\vartheta=1-1/(2\vartheta)>0$, it gives
+
+$$
+\frac{t-\Delta(A)/b_*}{\sqrt B}
+\le\frac{c}{\sqrt B}+c^{1/(2\vartheta)}t^{p_\vartheta}.
+$$
+
+Define the nonnegative allowance
+
+$$
+\mathsf E_X^{\vartheta,b_*}
+=\frac{c^{1/(2\vartheta)}}{1+p_\vartheta}
+ (t_m^{1+p_\vartheta}-t_0^{1+p_\vartheta})
++c\int_{t_0}^{t_m}\frac{dt}{\sqrt{B(t)}}.
+$$
+
+The same exact occupation identity used in LC2 yields
+
+$$
+\boxed{V_X^K\ge
+ b_*[\mathsf L_X-\mathsf E_X^{\vartheta,b_*}].}
+\tag{LC6}
+$$
+
+This is an additive allowance. It does not replace an uncontrolled
+$o(1)\mathsf L_X$ or assume that $V_X^K/(M_XL_X)$ is bounded.
+
+### The original scale pays the allowance on stricter parameter ranges
+
+Substitute the unchanged $t_m\le(d/4)M_X\sqrt X$ and
+$M_X=X^{1/2-\eta}\log X$ into the preceding allowance. Uniform
+$B_{\min,X}\to\infty$ gives
+
+$$
+\boxed{
+\frac{\mathsf E_X^{\vartheta,b_*}}{M_XL_X}
+\ll_{\vartheta,b_*,d}
+ X^{1/2-(1-\eta)/(2\vartheta)}
+ (\log X)^{-1/(2\vartheta)}+o(M_X^{-1}).}
+\tag{LC7}
+$$
+
+Consequently the allowance is $o(1)$ when the fixed exponent satisfies
+$\vartheta\le1-\eta$, including equality by the negative logarithmic
+power. Choose the fixed precision and exponent before taking the common
+source start. The available payments are:
+
+| Original supplied $\eta$ | Admissible fixed lower coefficient |
+|---|---|
+| $\eta<13/30$ | Any $0<b_*<1$ |
+| $13/30\le\eta<9/20$ | Any $0<b_*<0.99$ |
+| $9/20\le\eta\le19/40$ | LC1--LC4's existing $b_0=9/100$ |
+
+Every row retains the original $1-\Theta<\eta<1/2$, including
+$\Theta=1$ where allowed. The first two rows use only that same
+supplied $\eta$; they do not reselect an oscillation exponent.
+Neither $\eta=13/30$ in the Guth--Maynard branch nor $\eta=9/20$
+in the BHP 1997 branch passes its strict supplier cut. Coefficient
+$b_*=1$, coefficient $b_*=0.99$ in the BHP branch, a moving
+precision $b_*(X)$ and a numerical common start are not asserted.
+For $\eta>19/40$ the existing explicit allowances remain available
+but are not declared negligible.
+
+### Spend the stronger coefficient in the unchanged upper account
+
+Keep LC3's $h_X=a-\epsilon-(800/9)\rho_X>0$ and its complete
+$\mathsf T_X^\circ$, $\mathsf C_X$ and $\mathcal R_X$.
+For every fixed $z\in[0,1]$, apply LC6 to only the $z$ fraction of
+the same inventory credit. This gives
+
+$$
+\boxed{
+\mathcal R_X\le
+\frac{(c_{\rm win}-zb_*h_X)\mathsf L_X
+ +\mathsf T_X^\circ-\mathsf C_X-(1-z)h_XV_X^K}{M_XL_X}
++\frac{zb_*h_X\mathsf E_X^{\vartheta,b_*}}{M_XL_X}.}
+\tag{LC8}
+$$
+
+On the first two table ranges, the paid lag coefficient is therefore
+exactly $zb_*h_X$, with an $o(1)$ additive error from LC7. The
+$\rho_XV_X^K$ correction remains inside $h_X$; the unspent credit
+is still $(1-z)h_XV_X^K$. No credit is counted twice.
+
+Since $c_{\rm win}>1$, $b_*<1$ and $h_X<a<5/8$, the remaining
+lag coefficient stays greater than $1-a>0$. The full anchored
+exterior, its finite terminal remainder and the rest of the original
+joint comparison remain. A larger paid coefficient does not establish
+the strict upper bound below the same-source JM margin, all-integer
+Robin inequality or RH.
+
+### A separately qualified preprint count branch
+
+The [adopted-supplier note](../Scale/bakerharmanpintz2001primegaps.md#a-newer-preprint-statement-and-the-adopted-supplier)
+already records Runbo Li's versioned preprint and the absence of an
+independent audit of its numerical sieve proof and integral certificates.
+If the lower counts in [arXiv:2308.04458v8, Theorem 2, printed p.2](https://arxiv.org/pdf/2308.04458v8)
+are taken as premises, the same LC5--LC8 consumer has the following
+additional parameter branches. These are supplier-relative consequences;
+they do not replace the established BHP/Guth--Maynard inputs above or
+certify the preprint's proof.
+
+| Fixed preprint parameter $s$ | Displayed lower constant $LB(s)>$ | Conservative fixed $b_*$ | Original supplied $\eta$ |
+|---|---|---|---|
+| $0.525$ | $0.249$ | $0<b_*<0.249$ | $\eta<0.475$ |
+| $0.524$ | $0.209$ | $0<b_*<0.209$ | $\eta<0.476$ |
+| $0.523$ | $0.169$ | $0<b_*<0.169$ | $\eta<0.477$ |
+| $0.522$ | $0.134$ | $0<b_*<0.134$ | $\eta<0.478$ |
+| $0.521$ | $0.075$ | $0<b_*<0.075$ | $\eta<0.479$ |
+| $0.520$ | $0.004$ | $0<b_*<0.004$ | $\eta<0.480$ |
+
+The source supplies counts at exponent $\vartheta=s+\delta$ for
+fixed sufficiently small $\delta>0$, at sufficiently large integer
+centres. First fix a table row and $b_*$, then choose such a fixed
+$\delta$ with $s+\delta\le1-\eta$. This is possible in the displayed
+strict $\eta$ range; no exact exponent $s$ is substituted into
+Theorem 2.
+
+Here the integer-centre restriction can be handled without assuming a
+new all-real count. Start at $n_0=\lfloor A-1\rfloor$ and use complete
+backward blocks with
+
+$$
+n_{j+1}=\lfloor n_j-n_j^\vartheta\rfloor\ge B.
+$$
+
+Since primes are integers,
+$\pi(n_j-n_j^\vartheta)=\pi(n_{j+1})$. Thus the source counts the
+disjoint prime blocks $(n_{j+1},n_j]$ exactly, with no missing or
+twice-counted endpoint prime. Their geometric lengths belong to
+$[n_j^\vartheta,n_j^\vartheta+1)$. The fixed slack below the displayed
+lower constant pays both this length rounding and the conversion to
+each prime's own $\log p$ mass: uniformly over these blocks,
+$\log(n_j-n_j^\vartheta)/\log n_j\to1$ and
+$n_j^\vartheta/(n_j-n_{j+1})\to1$.
+
+Discard only the final incomplete block and the less-than-two unit
+allowance between $n_0$ and $A$. They cost $O(1+B^\vartheta)$,
+because $A/B\to1$. Every retained prime still obeys
+$B<p<a_{p,1}<p+1\le A$. If no block fits, use $\Delta(A)\ge0$.
+Consequently LC5 holds with one fixed enlarged $c$ on every original
+branch and tie, and LC6--LC8 apply unchanged. LC7 makes its allowance
+$o(1)$ in each displayed range, without a core-clock ceiling or a
+bounded normalized lag or credit.
+
+Under this separately stated supplier premise, choosing
+$9/100<b_*<0.249$ in the first row increases the payment on
+$9/20\le\eta<19/40$, while the remaining rows
+provide positive payments beyond $19/40$ up to the strict cut
+$\eta<12/25$. The original $1-\Theta<\eta<1/2$ remains, including
+$\Theta=1$ where allowed. The established stronger counts already
+dominate these coefficients on their shorter ranges. All exterior and
+unspent-credit terms in LC8 remain, so neither this conditional branch
+nor the preprint count alone supplies the missing strict signed bound
+or a proof of RH.
+
+## Local pole cancellation exceeds the small absolute-norm allowance
+
+Retain WT1--WT3 and MR5's actual smoothed test, original full windows
+and every maximizing tie. Set $F_X(x)=\widetilde f_X(e^x)$ and use
+$\widehat F_X(z)=\int_{\mathbb R}F_X(x)e^{-izx}dx$. This is the same
+real even compact smooth test as MT5, which gives
+
+$$
+\widehat F_X(i/2)=\widehat F_X(-i/2)
+=\frac{\mathsf P_X^{\rm Weil}}2,\qquad
+\mathsf P_X^{\rm Weil}=\mathsf P_X
++O_\chi\!\left(L_X\frac{\log b_X}{\sqrt{b_X}}\right),
+$$
+
+where $b_X=\min_t\mathcal B_X(t)$. Fix $0<r_*<\log2$, and let
+$c_X\in L^1(\mathbb R)$ be real and even, supported in $[-r_*,r_*]$.
+It changes no prime-power evaluation of $F_X$. For either
+$\epsilon\in\{1,-1\}$, suppose $H_X=\epsilon F_X+c_X$ satisfies
+$\widehat H_X(i/2)=\widehat H_X(-i/2)=0$. Evenness then gives
+
+$$
+\int_{\mathbb R}c_X(x)\cosh(x/2)dx
+=-\epsilon\frac{\mathsf P_X^{\rm Weil}}2,\qquad
+\boxed{\|c_X\|_1\ge
+\frac{\mathsf P_X^{\rm Weil}}{2\cosh(r_*/2)}.}
+\tag{WT4}
+$$
+
+The inequality is the usual bounded-weight integral estimate; no new
+generic norm theorem is asserted. Its actual-source scale follows
+without redoing the continuum account. The
+[whole-horizon growth comparison](#the-whole-horizon-growth-hypothesis-fails)
+already supplies $\mathsf P_X/S_X\to\infty$ for
+$S_X=\int_{t_0}^{t_m}\sqrt{B(t)}\log B(t)dt$.
+Since $S_X\ge L_X\sqrt{b_X}\log b_X$, the displayed MT5 error is
+negligible relative to $\mathsf P_X$. Reuse CR17's
+$b_X/\ell_X\to\infty$ and the original scales:
+
+$$
+\frac{\sqrt{\ell_X}}{M_X}
+=\sqrt{\frac d8}\,
+\frac{X^{\eta/2}}{\sqrt{\log X}}\longrightarrow\infty,
+\qquad
+\boxed{\frac{\|c_X\|_1}{M_XL_X}\longrightarrow\infty.}
+\tag{WT5}
+$$
+
+Here the unchanged $1-\Theta<\eta<1/2$ and $\Theta\le1$ imply
+$\eta>0$, including $\Theta=1$. No upper bound on $b_X/X$ or
+bounded normalized lag is used.
+
+Thus a prime-free local correction cannot both cancel these pole
+moments and satisfy the sufficient absolute allowance
+$\|c_X\|_1=o(M_XL_X)$. For general corrections this does not force a large full signed
+pole-minus-archimedean contribution: cancellation between large terms
+remains outside this absolute-norm estimate. An integrable
+correction suffices for WT4; an explicit-formula application still
+requires its own smoothness and domain conditions.
+
+In the [adopted Connes--Consani theorem](../Weil/connesconsani2021archimedean.md),
+the vanishing condition is on the factor $g$. If $H=g*g^*$ and
+$\widehat g(-i/2)=0$, both pole moments of $H$ vanish; their vanishing
+alone supplies neither a factor nor positivity. Also a local correction
+leaves $\epsilon F_X$ unchanged outside $[-r_*,r_*]$, so its growing
+support still violates that theorem's fixed support contract. WT4--WT5
+are a paper application boundary, without Lean verification or a new
+Robin upper estimate. The required signed comparison and RH remain
+unproved.
+
+## A smooth paid completion narrows the signed local-correction boundary
+
+Keep the same MR5 test $F=F_X$, full windows, all endpoint ties and
+common horizon $U$ from MT1--MT6. Put
+$C=B^{\rm end}_{\max,X}$, $Q=Q_X$, $Y=\mathsf Y_X$, $L=L_X$ and
+$D=2+\sqrt C/Q$. The following is an actual-source paper application;
+the smooth spectral factorization and small-support spectral floor are
+reused from the sources cited below. No generic positivity theorem,
+Lean verification or improvement of the original Robin upper is asserted.
+
+### Complete the actual test without losing smoothness
+
+MR1 and MR5 give $\|F\|_\infty+\|F\|_1+\|F'\|_1\ll L$.
+For the second derivative, use MT1 with weight $r^{3/2}$ rather than
+MT2's $r^2$. Its four terms cost respectively
+
+$$
+O_{\rho,a}(\sqrt B/Q),\qquad O_{\rho,a}(1),\qquad
+O_{\rho,a}(1),\qquad
+s_B\int_B^U O_\rho(v^{3/2}|k'(v)|)dv=O_\rho(1).
+$$
+
+The third term is the remote $U$ endpoint; it is retained. The final
+bound follows from MT1's displayed $k'$ and $s_B=\sqrt B\log B$,
+without a ceiling on $U/B$. In the additive coordinate,
+
+$$
+(r\partial_r)^2(\sqrt r\,w)
+=\tfrac14\sqrt r\,w+2r^{3/2}w'+r^{5/2}w''.
+$$
+
+Integrate with $dx=dr/r$, then against the actual residence. The fixed
+MR5 calibration contributes $O_\chi(L)$. Consequently
+
+$$
+\|F''\|_1\ll LD,\qquad
+|\widehat F(\xi)|\ll
+L\min(1,|\xi|^{-1},D|\xi|^{-2})\quad(\xi\ne0).
+\tag{WT6}
+$$
+
+Fix $0<\tau<\log2$. Choose a fixed nonnegative real even smooth $u$
+with sufficiently narrow compact support in $(-\tau/2,\tau/2)$.
+For $u^*(x)=\overline{u(-x)}$, put $\psi=u*u^*$. Then $\psi\ge0$,
+$\widehat\psi\ge0$, its support is compactly contained in
+$(-\tau,\tau)$, and the choice can ensure
+$\widehat\psi\ge m>0$ on $[-2,2]$.
+Let $I_0=[-2,2]$ and
+$I_j=\{\xi:2^j\le|\xi|\le2^{j+1}\}$ for $j\ge1$. Define
+
+$$
+a_j=m^{-1}2^j\sup_{\xi\in I_j}|\widehat F(\xi)|,
+\qquad c_X(x)=\sum_{j\ge0}a_j\psi(2^jx).
+\tag{WT7}
+$$
+
+These bands cover the real axis. At each frequency in $I_j$, the
+$j$th Fourier summand alone is at least $|\widehat F|$; every other
+summand is nonnegative. WT6 gives
+
+$$
+a_0\ll L,\qquad a_j\ll L\min(1,D2^{-j})\ (j\ge1),\qquad
+\sum_j2^{-j}a_j\ll L,\qquad
+\sum_j(1+j)a_j\ll L(1+\log D)^2.
+$$
+
+There is no smoothing after taking this majorant. For each fixed $X$,
+the actual $F$ is compact smooth, so for every $N$ one also has
+$a_j\ll_{X,N}2^{-j(N-1)}$. Taking $N>k+1$ proves uniform convergence
+of the $k$th derivative series for every $k$. All supports lie in one
+fixed compact subinterval of $(-\tau,\tau)$; hence
+$c_X\in C_c^\infty(-\tau,\tau)$ is real, even and nonnegative.
+The $L^1$ summability permits Fourier interchange and proves
+$\widehat c_X\ge|\widehat F|$. Thus both $c_X-F$ and $c_X+F$ are
+positive definite. No change to $F$ or its prime evaluations is needed.
+
+### Pay the full correction, including all complex zeros
+
+For an additive test $H$, use MT5's exact normalization
+
+$$
+G_H(s)=\int_{\mathbb R}H(x)e^{(s-1/2)x}dx,\qquad
+\mathcal P(H)=G_H(0)+G_H(1)
+=\int_{\mathbb R}2\cosh(x/2)H(x)dx,
+$$
+
+and $\mathscr W(H)=\mathcal P(H)+\mathcal A(H)-\Pi(H)$, where
+$\mathcal A(H)=-\mathcal W_{\mathbb R}(r^{-1/2}H(\log r))$
+and $\Pi$ is the complete finite-prime term. This is the full Weil
+functional, not the archimedean part alone.
+For $\psi_j(x)=\psi(2^jx)$, the full archimedean integral satisfies
+$|\mathcal A(\psi_j)|\ll_\tau1+j$: near zero use smooth evenness,
+between scales $2^{-j}$ and $1$ integrate the subtraction against
+$dx/x$, and retain its exponential tail beyond the support. The same
+bound holds for the absolute integral, so the weighted summability
+above justifies Fubini, including the $c_X(0)$ subtraction.
+Also $|\mathcal P(c_X)|\ll_\tau\|c_X\|_1\ll_\tau L$.
+
+For every nontrivial zero $\varrho=\beta+i\gamma$, two integrations
+by parts on the shrinking bump give, uniformly in $0\le\beta\le1$,
+
+$$
+|G_{\psi_j}(\varrho)|\ll_\tau
+\min(2^{-j},2^j/\gamma^2)\quad(\gamma\ne0).
+$$
+
+Use MT3's full multiplicity count and reciprocal-square tail, split at
+$\max(4,2^j)$, keeping both ordinate signs and all low zeros. They give
+$\sum_\varrho m_\varrho|G_{\psi_j}(\varrho)|\ll_\tau1+j$.
+Thus the correction's complete account is
+
+$$
+\boxed{
+|\mathcal P(c_X)|+|\mathcal A(c_X)|
++\sum_\varrho m_\varrho|G_{c_X}(\varrho)|
+\ll_\tau L(1+\log D)^2
+\ll_\tau LY^2=o(M_XL_X).}
+\tag{WT8}
+$$
+
+Its prime term is zero by $\tau<\log2$. Absolute convergence justifies
+all correction interchanges. The last two ways of accounting for the
+same explicit formula do not create two independent reserves.
+The final scale uses only $Q\ge1$, $C\le e^Y$ and the original
+$Y^2/M_X\to0$; no bounded clock ratio, changed window or restriction
+excluding $\Theta=1$ is introduced.
+
+### A restricted local replacement has a large signed debit
+
+Now fix $\tau$ sufficiently small that the existing
+[Suzuki small-window floor](../Weil/frankliebseiringer2006hardy.md#reuse-the-stronger-small-window-spectral-floor)
+has $\lambda^W_{\tau/2}>0$, in addition to $\tau<\log2$.
+Suppose a real even $c_X^\flat\in C_c^\infty(-\tau,\tau)$ satisfies
+
+$$
+c_X^\flat-F_X\text{ is positive definite},\qquad
+\widehat{c_X^\flat-F_X}(i/2)
+=\widehat{c_X^\flat-F_X}(-i/2)=0.
+\tag{WT9}
+$$
+
+No existence of such replacements is asserted. Their pole condition
+implies $\mathcal P(c_X^\flat)=\mathsf P_X^{\rm Weil}$.
+Set $Z=c_X^\flat+c_X$. This is compact smooth with the same small
+support, and it is positive definite since it is the sum of
+$c_X^\flat-F_X$ and $F_X+c_X$. Reuse the smooth Boas--Kac
+factorization in [Connes--Consani, Proposition 3.2, manuscript p.17](../Weil/connesconsani2021archimedean.md):
+$Z=v*v^*$ with smooth $v$ supported in $[-\tau/2,\tau/2]$.
+The factor may be complex and need not be even; Suzuki's stated domain
+covers it. Therefore
+$\mathscr W(Z)\ge\lambda^W_{\tau/2}\|v\|_2^2
+=\lambda^W_{\tau/2}Z(0)$.
+
+Positive definiteness gives $|Z(x)|\le Z(0)$. Separately, $c_X\ge0$
+gives $\mathcal P(Z)\ge\mathsf P_X^{\rm Weil}$. Together,
+
+$$
+\mathsf P_X^{\rm Weil}\le\mathcal P(Z)
+\le8\sinh(\tau/2)Z(0),\qquad
+\boxed{\mathscr W(c_X^\flat)\ge
+\frac{\lambda^W_{\tau/2}}{8\sinh(\tau/2)}
+\mathsf P_X^{\rm Weil}-O_\tau(L_XY^2).}
+\tag{WT10}
+$$
+
+WT4--WT5's actual-source comparison gives
+$\mathsf P_X^{\rm Weil}/(M_XL_X)\to\infty$. Consequently WT10
+forces $\mathscr W(c_X^\flat)/(M_XL_X)\to+\infty$ along any cofinal
+family satisfying WT9. Unlike the absolute-norm obstruction, this
+excludes even a signed $O(M_XL_X)$ upper allowance for this restricted
+class. The argument uses WT9's upper-oriented positive-definite
+comparison and vanishing pole moments; arbitrary local corrections and
+wider supports are not covered.
+
+WT7--WT8 do not supply those vanishing moments: their pole mass is
+only $O_\tau(L_X)$, whereas the actual test's pole mass is larger than
+$M_XL_X$. Moreover, $c_X-F_X$ retains the original growing support.
+Real-axis Fourier order does not determine the sign of the full Weil
+functional at the complex zero arguments. The missing same-source
+signed comparison on this growing-support test, and hence the original
+strict Robin upper and RH, remain unproved. This continuation retains
+an application of existing source results, not a literature-priority
+claim or a new formalized theorem.
+
+## A remote completion cancels the actual poles at small signed cost
+
+Keep WT6--WT8's actual $F_X$, $c_X$ and $H_X=c_X-F_X$, with all
+original windows, maximizing ties, layers and common horizon. This
+application reuses the complete explicit formula and the
+[Johnston--Yang cumulative prime-power error](../Weil/johnstonyang2022pnt.md).
+The autocorrelation construction and the all-support constrained Weil
+criterion in [Connes--Consani, Appendix C, Proposition C.1](../Weil/connesconsani2021archimedean.md#vanishing-constraints-and-the-remaining-semilocal-comparison)
+are existing tools. The additional interface here is an explicit
+pole-null completion of this same test, with its support and signed
+cost paid on the original scales. No generic criterion, literature
+priority or Lean verification is asserted.
+
+### Add positive-definite mass far beyond the original support
+
+Write $A_X=\log\mathsf V_X$ for MR5's original additive support
+ceiling for $F_X$; FH1 gives $A_X=O((\log X)^4)$. To distinguish that width from
+the pole deficit, put
+
+$$
+N_X=-\mathcal P(H_X)
+=\mathsf P_X^{\rm Weil}-\mathcal P(c_X)>0.
+$$
+
+The inequality holds cofinally: WT4--WT5 give
+$\mathsf P_X^{\rm Weil}/(M_XL_X)\to\infty$, whereas WT8 gives
+$\mathcal P(c_X)=O_\tau(L_X)$ and $M_X\to\infty$.
+The support bound and WT6--WT8's $L^1$ estimate also give
+$N_X\ll_\tau L_Xe^{A_X/2}$.
+Use the same fixed nonzero even nonnegative autocorrelation $\psi$
+as WT7. For $R>A_X+2\tau+\log2$, define
+
+$$
+q_R(x)=2\psi(x)+\psi(x-R)+\psi(x+R),\qquad
+\widehat q_R(\xi)=2(1+\cos R\xi)\widehat\psi(\xi)\ge0.
+$$
+
+This is the usual autocorrelation identity applied to
+$u+u(\cdot-R)$, not a new positivity theorem.
+Evenness gives the exact moment and completion
+
+$$
+\mathcal P(q_R)=2(1+\cosh(R/2))\mathcal P(\psi),\qquad
+e_X=\varepsilon_Xq_{R_X},\qquad
+\varepsilon_X=\frac{N_X}{\mathcal P(q_{R_X})}>0,
+\qquad H_X'=H_X+e_X.
+\tag{WT11}
+$$
+
+Thus $H_X'$ remains real, even, compact smooth and positive definite.
+Since $\mathcal P(H_X')=0$ and it is even, both individual pole
+moments $G_{H_X'}(0)$ and $G_{H_X'}(1)$ vanish. Also
+$c_X'=c_X+e_X$ still satisfies $\widehat c_X'\ge|\widehat F_X|$.
+The auxiliary completion is supported in
+$[-R_X-\tau,R_X+\tau]$; the original $F_X$ and its arithmetic
+evaluations have not changed.
+
+### Retain every remote prime power in the signed account
+
+For $R>\tau+\log2$, the central bump has no prime-power term and
+the negative translated bump does not meet $\log n$ for $n\ge2$.
+Consequently the complete prime term is
+
+$$
+\Pi(q_R)=2\sum_{n\ge2}\Lambda(n)n^{-1/2}\psi(\log n-R).
+$$
+
+Set
+$\eta_\tau(R)=\sup_{|v-R|\le\tau}9.39v^{1.515}
+e^{-0.8274\sqrt v}$, with $R-\tau\ge\log2$.
+Apply the cited cumulative bound for $\Psi(t)-t$ to the compact
+weight $w_R(t)=2t^{-1/2}\psi(\log t-R)$. Its endpoint terms vanish
+and
+$w_R'(t)=2t^{-3/2}[\psi'(\log t-R)-\psi(\log t-R)/2]$.
+Stieltjes integration therefore gives
+
+$$
+\Pi(q_R)=e^{R/2}\mathcal P(\psi)
++O_\psi(e^{R/2}\eta_\tau(R)).
+$$
+
+Here the main term is exactly $\int w_R(t)dt$, using evenness of
+$\psi$. The sum includes all prime powers in the added band
+$|\log n-R|<\tau$; it is not replaced by a prime-free correction.
+The full Gamma convention in MT5 gives for the translated pair
+
+$$
+\mathcal A\bigl(\psi(\cdot-R)+\psi(\cdot+R)\bigr)
+=-2\int_0^\infty
+\frac{e^{-x/2}\psi(x-R)}{1-e^{-2x}}\,dx
+=O_\psi(e^{-R/2}).
+$$
+
+Its value at zero is zero, so it has no Gamma subtraction term.
+The central term retains its whole contribution $2\mathcal A(\psi)$,
+including the subtraction outside the support. Since
+$\mathcal P(q_R)=(2+e^{R/2}+e^{-R/2})\mathcal P(\psi)$,
+the same test's pole and prime main terms cancel. Thus
+
+$$
+|\mathscr W(q_R)|\ll_\psi1+e^{R/2}\eta_\tau(R),\qquad
+\boxed{|\mathscr W(e_X)|\ll_\psi
+N_X\bigl(e^{-R_X/2}+\eta_\tau(R_X)\bigr).}
+\tag{WT12}
+$$
+
+This pays the full signed functional, not the sum of the absolute
+pole and prime contributions. Indeed $\mathcal P(e_X)=N_X$ and
+$\Pi(e_X)=N_X+O_\psi(N_X[e^{-R_X/2}+\eta_\tau(R_X)])$ are both
+large on the original scale. No absolute complex-zero-sum estimate
+for $e_X$ is inferred.
+
+### Choose a sufficient radius and transfer the original target
+
+Take $Z_X=1+A_X+\log X$ and one fixed $K$ with
+$0.8274\sqrt K>3$. Put $R_X=KZ_X^2$. It eventually satisfies the
+separation required above, and the polynomial factor in
+$\eta_\tau(R_X)$ is absorbed by the strict exponential slack:
+
+$$
+\eta_\tau(R_X)=O_\tau(e^{-3Z_X}),\qquad
+N_X(e^{-R_X/2}+\eta_\tau(R_X))=o(L_X),\qquad
+R_X=O((\log X)^8).
+\tag{WT13}
+$$
+
+This uses the already owned square-root-logarithm PNT error; a sharper
+PNT supplier is unnecessary for this payment. For each fixed $k$,
+$\|e_X^{(k)}\|_1\le4\varepsilon_X\|\psi^{(k)}\|_1$ and
+$\varepsilon_X\ll_\psi N_Xe^{-R_X/2}$, so its small ordinary norms
+do not express the large exponentially weighted pole mass.
+Linearity and WT8 now give
+
+$$
+\mathscr W(H_X')=\mathscr W(H_X)+o(L_X),\qquad
+\mathscr W(c_X')=O_\tau(L_XY_X^2)=o(M_XL_X).
+\tag{WT14}
+$$
+
+A lower bound for $\mathscr W(H_X')$ with a fixed strict margin on
+the original $M_XL_X$ scale would therefore transfer to $H_X$ with
+the same margin and an $o(M_XL_X)$ allowance. This does not reselect
+a window, discard a tie or impose a bounded normalized clock, and it
+includes $\Theta=1$ on its original parameter range.
+
+WT10's obstruction concerns a fixed small-support replacement, so it
+does not apply to this remote completion. Conversely, the added support
+does not satisfy the fixed prime-free support contract of the
+archimedean positivity theorem. The all-support constrained criterion
+still needs its positivity estimate. The added remote prime powers
+must also be present in any semilocal comparison; no bound for their
+compressed trace, or for the enlarged completion's semilocal trace,
+is supplied by WT12. The missing same-test signed lower bound, the
+original strict Robin upper and RH remain unproved.

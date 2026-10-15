@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5acb866b219efc4256dcdae10c35bedfa98771ac7c93e1b9ff3df04e118d3f7
+  normalized_sha256: sha256:a5acb866b219efc4256dcdae10c35bedfa98771ac7c93e1b9ff3df04e118d3f7
+cas_ref: sha256:a5acb866b219efc4256dcdae10c35bedfa98771ac7c93e1b9ff3df04e118d3f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅指定第二个例子的共同周期、剩余模数和表格列名；未断言对应计数、可达性或反例性质。
+    previous_atom_id: 4da4d041648a4c69604f6124dfa5519976b63939c3d1070987ab3a0b1d9b7999
+    next_atom_id: 546c728e0d3636445864d082959cc78f55b019c0c9430c22d36e062b3c7f82dc

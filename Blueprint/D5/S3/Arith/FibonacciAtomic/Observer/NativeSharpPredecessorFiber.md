@@ -4,7 +4,19 @@
 
 NativeSharpPredecessorFiber
 
-**Definition 1.1 (Native child-cut sites).**
+**Theorem 1.1 (Right-Child Birth on Every Actual Transition).**
+
+$$\forall q: Address, (\forall v: Source, ((\operatorname{isSome}\left(\operatorname{subtree}\left(\operatorname{append}\left(q, \operatorname{singleton}\left(true\right)\right), \operatorname{rho}\left(v\right)\right)\right)) \implies ((\operatorname{subtree}\left(\operatorname{append}\left(q, \operatorname{singleton}\left(true\right)\right), v\right) = none) \iff (\operatorname{subtree}\left(\operatorname{append}\left(q, \operatorname{singleton}\left(true\right)\right), \operatorname{rho}\left(v\right)\right) = \operatorname{some}\left(\operatorname{of}\left(true\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.right_birth` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every legal finite parent address q and every original source v, if its current right child is present, its predecessor right child is absent exactly when the current child is alpha. This theorem applies to all sources and addresses, independently of the comb witness family. Whole-row support repair uses it for either child together with equality of the two child-presence flags.
+
+**Definition 1.2 (Native child-cut sites).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.position`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 For k=n+1, position i is hole n i followed by the true edge. The arbitrary-size right-comb context, its hole addresses and its complete address/suffix law are reused directly from FiniteHereditaryPatternRealization.B_T, hole, hole_locate and result. The unique hole/suffix law proves that this single finite public cut is prefix-free. No bound on n or source size is imposed.
 
-**Definition 1.2 (One fixed public cut).**
+**Definition 1.3 (One fixed public cut).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.cut`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 The cut is the image of all Fin(n+1) indices under position. It is shared by every selector and every actual origin in the family.
 
-**Definition 1.3 (Changing old constructors).**
+**Definition 1.4 (Changing old constructors).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.site`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 A selected old site is beta. Every other old site is the ordered pair of alpha and an arbitrary native tag. After one genuine native update the selected site is the pair of beta and alpha, while an unselected site is the pair of beta and the native image of its tag. The uniform installation identity retains the whole common exterior, stopping at the right child of each site. Its contextual induction uses the existing comb rather than reproving its geometry.
 
-**Definition 1.4 (Actual joint native witnesses).**
+**Definition 1.5 (Actual joint native witnesses).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.origin`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 For any injective tag family z:Fin(k) to FreeMagma Bool and selector a:Option(Fin(k)), fill the existing comb by site(z i,a=some i). None selects no site. Some i selects exactly i. These are k+1 complete actual origins of the same native register at public current epoch one; every comparison is between complete jointly attained sources. Injectivity of substitution and exclusion of alpha from its image are reused from SourceTransportCentralizer.source_transport_centralizer and IntrinsicSubstitutionCoordinates.no_alpha. Hence the k hidden current values are pairwise distinct for every selector. The source's specified orbit tags rho^(i+1) alpha are an exact specialization, not a restriction on the theorem.
 
-**Definition 1.5 (The complete common current row).**
+**Definition 1.6 (The complete common current row).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.current`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 Current is the entire canonical row of the none origin after one update. Equality is established through ActualCutPartitionDecoder.canonicalRow_record_iff, including the whole exterior and the ordered equality/disequality partition. Every child cut is reached. Old support is the full cut for none and the cut with position i erased for some i. The old selected beta is a concrete strict-prefix absence guard; canonicalRow_absent_guard preserves all other absent-cut guards.
 
-**Definition 1.6 (Only occurring native class names).**
+**Definition 1.7 (Only occurring native class names).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.className`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 Each site names its actual current class by classOrdinal at that site. The existing labels_canonical and classOrdinal_eq_iff identify the finite set of occurring names with the injective image of Fin(k). Raw first-occurrence ordinals need not be consecutive. Counts and supplementary labels use these occurring classes.
 
-**Definition 1.7 (The entire actual current-row fiber).**
+**Definition 1.8 (The entire actual current-row fiber).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.ActualPredecessors`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 ActualPredecessors contains every finite FreeMagma Bool source v whose native image has the common entire current row. There is no restriction to the selected witness family, its tags, size, inverse depth or a finite list of sources. At each right cut, old absence is equivalent to a current alpha value. The complete singleton partition permits at most one such value. Thus old support is exactly the full cut or one site erased. NativePredecessorRowRecovery.native_predecessor_row_recovery identifies old-row equality with old-support equality under the common current row. Every possible old row is consequently attained by exactly one family selector. The number of origins in this fiber is not claimed finite. When k is at least two, two different selected sites have the same number of old reached holes and newborn holes, but different predecessor rows. Retaining only the newborn count therefore cannot recover the predecessor.
 
-**Definition 1.8 (Exact recovery with a supplement).**
+**Definition 1.9 (Exact recovery with a supplement).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.Encodable`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 Encodable quantifies a supplementary configuration for each compatible actual origin and one deterministic decoder taking only that configuration; the fixed complete base is the public cut, current row, origin-continuity condition and epoch one. Correctness is demanded on the entire actual fiber. The supplement may be selected from already acquired information. This mathematical existence statement supplies no source query, acquisition optimum, runtime semantic-alpha oracle, physical authentication or effective feasibility oracle. A larger accessible source-dependent base can reduce the fiber and its minimum.
 
-**Definition 1.9 (All sharpness and capacity clauses).**
+**Definition 1.10 (All sharpness and capacity clauses).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.Sharp`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFibe
 
 For k=n+1, Sharp requires prefix freedom, equality of all k+1 complete current rows, exactly k occurring classes, the full/one-erased old supports, distinct whole predecessor rows, equality of their finite image with the whole attained old-row image, and exactly k+1 image values. For every configuration count m, exact recovery exists precisely when k+1 is at most m. For every fixed binary width b, it exists precisely when Nat.clog 2 (k+1) is at most b. This is the integer ceiling of the binary logarithm, characterized by Nat.clog_le_iff_le_pow and Nat.le_pow_clog.
 
-**Theorem 1.10 (The full native sharp predecessor fiber).**
+**Theorem 1.11 (The full native sharp predecessor fiber).**
 
 $$\forall n: Nat, (\forall z: \operatorname{NativeTags}\left(n\right), ((\operatorname{Injective}\left(z\right)) \implies (\operatorname{Sharp}\left(n, z, \operatorname{oldRows}\left(n, z\right)\right))))$$
 
@@ -135,6 +147,7 @@ The theorem holds for every n and every injective native tag family. In the disp
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.native_sharp_predecessor_fiber`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.origin`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.position`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.right_birth`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeSharpPredecessorFiber.site`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization](../FiniteHereditaryPatternRealization.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers](NativeCutFibers.md)

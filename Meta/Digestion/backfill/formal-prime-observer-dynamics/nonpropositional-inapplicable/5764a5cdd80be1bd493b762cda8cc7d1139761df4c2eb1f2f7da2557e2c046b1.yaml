@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5764a5cdd80be1bd493b762cda8cc7d1139761df4c2eb1f2f7da2557e2c046b1
+  normalized_sha256: sha256:5764a5cdd80be1bd493b762cda8cc7d1139761df4c2eb1f2f7da2557e2c046b1
+cas_ref: sha256:5764a5cdd80be1bd493b762cda8cc7d1139761df4c2eb1f2f7da2557e2c046b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{TargetRes}(q,t)：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 90da4761bb4884b5f461af871e8fbfe4f8b2fdc4f0b0bf63ee4c24b61f795413
+    next_atom_id: eaba6b58f36753f052543f250fe7cc187324bddc5bae5404059592caf815fc3b

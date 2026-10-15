@@ -1,0 +1,23 @@
+**Definition 7.3 (distinct resource coordinates).** The native
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+`paid` is the set of distinct addresses in a chronological history.
+It charges a repeated address once within that history. Theorem 7.2
+instead counts actual new invocations after the handoff and update.
+The full producer has already queried every old representative root.
+Thus under a separately declared lifetime address-only union price,
+the representative-root protocol adds zero previously unseen addresses,
+despite making up to $k$ new calls on a new version. Epoch-address
+pricing or an empty ledger for the new phase is a different coordinate.
+An old-version reply is not a current raw-cache hit.
+
+The supplemental bit count in Theorem 5.2 excludes the concrete exterior,
+complete class table, addresses, public cut and program, acquired data,
+workspace, outputs and any event archive. Raw-call counts exclude
+acquisition, addressing and address transmission, local computation,
+memory, entry, authentication and actual updates. These costs remain
+separate as in
+[Sparse History Proposition 62.4](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+The full-fiber call optimum is an immediate one-update, stationary
+deterministic optimum; it is not an optimum for arbitrary extra history,
+later image-restricted epochs, randomized expectation or other resources.
+

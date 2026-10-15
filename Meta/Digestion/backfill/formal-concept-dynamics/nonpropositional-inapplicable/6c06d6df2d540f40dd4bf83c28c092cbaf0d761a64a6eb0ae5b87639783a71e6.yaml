@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c06d6df2d540f40dd4bf83c28c092cbaf0d761a64a6eb0ae5b87639783a71e6
+  normalized_sha256: sha256:6c06d6df2d540f40dd4bf83c28c092cbaf0d761a64a6eb0ae5b87639783a71e6
+cas_ref: sha256:6c06d6df2d540f40dd4bf83c28c092cbaf0d761a64a6eb0ae5b87639783a71e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 477. Bayesian 博弈中的概念化策略：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 8fbcbed040ad9c6d5728844eaefb7700c4f2d736ce4dc5ac8d686efdb0bf9062
+    next_atom_id: 674633883ab058078a2fa757bdeada1928e1a4221916dda473f9a1098214e25f

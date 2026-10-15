@@ -1,0 +1,39 @@
+**Theorem 10.3 (two-step native contraction).** For every finite
+nonempty native $s,t$ and every rational $0<q<1/2$,
+
+$$
+\boxed{
+D_q(\rho^2s,\rho^2t)\le 2q\,D_q(s,t).}
+\tag{NMF.10.3}
+$$
+
+Proof. Use structural induction on the pair $(s,t)$. Equal inputs give
+zero on both sides. If $s,t$ are distinct leaves, their root frontier is
+$\{\varepsilon\}$, so $D_q(s,t)=1$; Lemma 10.2 gives equality with
+$2q$. If exactly one input is a branch, the original root is already a
+first disagreement, hence again $D_q(s,t)=1$, and the third case of the
+lemma proves the bound.
+
+It remains that both inputs are branches. Their original metric
+recursion is
+
+$$
+D_q(s,t)=q\bigl(D_q(s_0,t_0)+D_q(s_1,t_1)\bigr).
+$$
+
+Each child pair is structurally smaller, so the induction hypotheses and
+(NMF.10.2) give
+
+$$
+\begin{aligned}
+D_q(E(s),E(t))
+&\le q\bigl(2qD_q(s_0,t_0)+2qD_q(s_1,t_1)\bigr)\\
+&=2qD_q(s,t).
+\end{aligned}
+$$
+
+This is a map-level Lipschitz estimate for $E$. The recursion in
+Theorem 3.3 is only the equality for a pair whose two displayed roots
+are both branches; it does not by itself cover the leaf--branch case
+or the distinct-leaf case used above. $\square$
+

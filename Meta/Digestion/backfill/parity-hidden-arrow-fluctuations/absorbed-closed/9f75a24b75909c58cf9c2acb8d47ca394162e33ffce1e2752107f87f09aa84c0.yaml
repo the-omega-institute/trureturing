@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9f75a24b75909c58cf9c2acb8d47ca394162e33ffce1e2752107f87f09aa84c0
+  normalized_sha256: sha256:9f75a24b75909c58cf9c2acb8d47ca394162e33ffce1e2752107f87f09aa84c0
+cas_ref: sha256:9f75a24b75909c58cf9c2acb8d47ca394162e33ffce1e2752107f87f09aa84c0
+coverage_gids:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/FiniteSupportPosteriorMoment.finite_support_posterior_moment
+    target_statement_id: sha256:93f106c32046732e4ca8e741e2d567f6bd936de5dbced0306741b5b17ffeeabd
+receipts:
+  unresolved_subitems: []

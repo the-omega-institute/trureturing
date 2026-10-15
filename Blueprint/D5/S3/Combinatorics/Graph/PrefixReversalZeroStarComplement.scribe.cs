@@ -12,6 +12,7 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
         "Deleting any retained b-edge from an independently defined zero star gives a Hamiltonian path with the exact complementary word Z_j.",
         H("Zero-Star Prefix-Reversal Complements"),
         Blocks(
+            CoordinateAPI("native_residual_nodup", "The Supplier Residual Has No Repeated Labels", "Deleting the last position from an actual permutation tuple leaves a list without repeated labels. Concrete supplier-star separation consumes this fact.", false),
             Paragraph(Text(
                 "A configuration is a permutation v of the positions Fin(m+1); v(i) is the label at position i. "
                 + "Right multiplication acts on positions: (v g)(i)=v(g(i)). The generators a, b and c reverse "
@@ -45,6 +46,8 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
             Api("rotate_pow_list", "Actual tuple rotations", "Every power of the full rotation produces the corresponding literal tuple rotation."),
             Api("rotate_pow_eq_cycle", "Full rotation power coordinates", "Natural powers of the full rotation equal finCycle at the corresponding finite cyclic index."),
             Api("cycle_zero", "Zero full rotation", "The zero finCycle is the identity position permutation."),
+            Api("cycle_mul", "Full cyclic indices add under multiplication", "Multiplying the actual full cyclic position permutations at indices r and s gives the permutation at their sum. The literal J2 word endpoint proof consumes this identity."),
+            Api("a_cycle", "Full reversal negates the cyclic index", "Moving an actual full cyclic position permutation past the full reversal negates its finite index. The literal J2 word endpoint proof consumes this identity."),
             Api("a_sq", "Full reversal involution", "Two full native reversals have product identity."),
             Api("b_eq_cycle_a", "The native b reflection coordinate", "The b reversal is full cyclic index minus one followed by a."),
             Api("b_last", "The last position is fixed by b", "The actual b reversal fixes the final position."),
@@ -74,6 +77,20 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
             Paragraph(Text(
                 "The result concerns one zero star and its retained factor. It does not connect distinct stars "
                 + "or assert a Hamiltonian cycle on all permutations.")))));
+
+    private static Formula CoordinateFormula(string selector)
+    {
+        if (selector != "native_residual_nodup") throw new System.ArgumentOutOfRangeException(nameof(selector));
+        Formula m = F.Id("m"), z = F.Id("z");
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m),
+            Call("Nodup", Call("residualList", z)))));
+    }
+
+    private static DocumentBlock CoordinateAPI(string selector, string title, string meaning, bool definition) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(CoordinateFormula(selector)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
+            definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
     private static DocumentBlock Api(string selector, string title, string meaning) =>
         Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
@@ -105,6 +122,12 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
             "rotate_pow_eq_cycle" => All("k", Call("Nat"),
                 Eq(Call("pow", r, k), Call("finCycle", Call("natCast", k, n)))),
             "cycle_zero" => Eq(Call("finCycle", Call("zeroFin", n)), D(1)),
+            "cycle_mul" => All("r", Call("Fin", n), All("s", Call("Fin", n),
+                Eq(Mul(Call("finCycle", F.Id("r")), Call("finCycle", F.Id("s"))),
+                    Call("finCycle", Add(F.Id("r"), F.Id("s")))))),
+            "a_cycle" => All("r", Call("Fin", n),
+                Eq(Mul(a, Call("finCycle", F.Id("r"))),
+                    Mul(Call("finCycle", Call("neg", F.Id("r"))), a))),
             "a_sq" => Eq(Mul(a, a), D(1)),
             "b_eq_cycle_a" => Eq(b, Mul(Call("finCycle", Call("negOneFin", n)), a)),
             "b_last" => Eq(Call("apply", b, Call("last", m)), Call("last", m)),

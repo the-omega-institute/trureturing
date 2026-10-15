@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bfd00d873d2095152eee451cf072505f0c077ac06b2e5a95ea24f863392a112b
+  normalized_sha256: sha256:bfd00d873d2095152eee451cf072505f0c077ac06b2e5a95ea24f863392a112b
+cas_ref: sha256:bfd00d873d2095152eee451cf072505f0c077ac06b2e5a95ea24f863392a112b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 131. 后续控制作用在标记测度上，而不只作用在终端通道上 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 9a43baa9a6c0423026aceb8bf890ee483227daa4bc5e0719f72e92ca470705b6
+    next_atom_id: 44ee6ad23ecb3b36346087e1c3799990570db0b86537aea468d12ae989b73a92

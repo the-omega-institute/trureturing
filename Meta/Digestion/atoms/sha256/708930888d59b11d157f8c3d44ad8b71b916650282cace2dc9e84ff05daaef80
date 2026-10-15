@@ -1,0 +1,117 @@
+**Proposition 10.4 (agreed-reference retention and its resource boundary).**
+For public $P,Q$ and an agreed $q\in\operatorname{Gap}(P,Q)$, the single
+integer $z=j_{P,q}(A)$ suffices as a summary of the first row for elapsed
+count recovery after the second complete row is actually acquired.
+For any $N\ge1$, every deterministic summary of that first row sufficient
+for this same consumer on all sources needs at least $N$ distinguishable
+values, and thus at least $\lceil\log_2N\rceil$ fixed-width bits on a
+suitable finite family. There is no uniformly finite summary alphabet
+for all elapsed counts. This is a statement about a specified summary
+consumer, not a global minimum over summaries or total costs.
+
+**Proof.** Compute $j_{Q,q}(B)-z$. If successive observations use cuts all
+incomparable with the agreed $q$, retaining the same reference value
+recovers counts relative to that capture; replacing it by the newly
+extracted value permits the next difference. Each newly used row must
+still be acquired. The scalar law (NAR.10.7) is closed as an arithmetic
+identity, without a complete-row update procedure.
+
+For the lower bound reuse generic answer counting, as in Theorem 5.2 and
+[CompletionStateCardinality](../../../D5/S3/ObserverMemory/Prediction/CompletionStateCardinality.lean),
+`completion_state_cardinality_mono`. Use the actual alpha orbit $T_i$.
+Take first rows $R_P(T_i)$ for $0\le i<N$ and the common second row
+$R_Q(T_N)$. All are legitimate histories, with required lags $N-i$.
+Two equal retained summaries with this identical second row would force
+one output for two different lags. Thus all $N$ summaries are distinct.
+A fixed-width $b$-bit representation has at most $2^b$ values, giving
+the stated bound. This applies generic counting to the native consumer;
+it is not a new abstract counting principle. Each sufficient integer
+is finite on a finite input, but its representation width is unbounded.
+There is no fixed-bit or infinite-precision-unit-cost conclusion.
+
+The agreement on the reference matters. If $Q$ is chosen only after the
+old row was discarded, a previously chosen scalar is not universally
+sufficient merely because the eventual union has a gap. For an actual
+counterexample take the first cut empty and choose $q=\varepsilon$.
+The sources
+
+$$
+u=\langle\beta,\langle\alpha,\alpha\rangle\rangle,
+\qquad v=\langle\alpha,\alpha\rangle
+\tag{NAR.10.14}
+$$
+
+are both primitive, so their retained root intrinsic depths coincide
+at zero. Later choose $Q=\{R\}$. The $Q$ row of $u$ and the $Q$ row of
+$\rho v=\langle\beta,\beta\rangle$ are both
+$(\langle\beta,\square_R\rangle,\{\{R\}\})$, but their lags are zero
+and one. The full first rows could have used the common gap $L$;
+the discarded first rows cannot be replaced by their root scalar for
+that task. One must agree on a reference that remains visible, or retain
+the old row until the next common reference can be selected. Pairwise
+gaps among successive cut pairs do not ensure a reference common to
+an entire sequence: the successive singleton cuts $\{L\},\{RL\},\{R\}$
+have gap $RR$ for the first pair and gap $L$ for the second, while all
+three together cover every ray.
+
+For a covering union, even retaining the entire first row cannot repair
+the collision (NAR.10.3) under the declared input. For a gap union, scalar
+retention asserts no complete-row closure. The existing sources of
+Theorem 6.3 at $P=\{LL,R\}$ have a common visible gap but equal old
+rows and different successor partitions. The distinct full-row criterion
+remains Theorem 6.2.
+
+Acquisition, full-row and class-table storage, public addresses and their
+transmission, installed programs, local parsing and workspace, outputs,
+source storage, permissions, authentication and readable old archives
+are separate resources. Paying once to acquire a row does not pay for
+another version's row or provide a cross-version cache hit. A genuine
+continuation and each lawful entry remain supplied operations. No
+$\mathsf{ApplyRho}$ service follows from the scalar difference. Relative
+counts do not recover an uncalibrated absolute origin: beta can be the
+initial beta source or the first image of alpha. Nor do they recover
+physical elapsed time or a discarded execution archive. $\square$
+
+**Mathematical citation 10.5 (owned suppliers and transfer conditions).** The
+source algebra, complete rows and actual fibers are the suppliers of
+Definitions 1.1--1.2. Fixed-cut alpha memory, the criterion $G(P)$,
+predecessor nonrecovery and changed-cut nonrecovery remain the results
+of §§2--8. Finite prefix geometry is owned by Acquired Relation History,
+Definition 5.1; reached-subtree transport and saturation are owned by
+[Native Signed Feasibility, Lemma 9.2 and Theorem 9.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md).
+The exact right clock, intrinsic coordinates and finite parser are the
+suppliers cited in the proof, not new coordinate discoveries.
+
+[Native Birth Provenance, Theorem 4.2 and Proposition 7.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md)
+already uses visible blocking leaves to compute absent-address
+continuation and distinguishes intrinsic depth from elapsed epoch at
+an uncalibrated origin. Its fixed-cut past-row recovery assumes a
+supplied numeric epoch and retained birth information. Those inputs
+are not present in (NAR.10.1). Its producer, handoff and resource
+boundaries are consistent with Assumption 10.1 and remain separately
+owned. The repo-derived content here is the exact cross-cut relation,
+especially the single native construction preserving both full
+partitions for every covering union. It is established here by ordinary
+proof, without a worldwide originality claim.
+
+The literature-attested prefix-code antecedent is
+[Berstel--De Felice--Perrin--Reutenauer--Rindone, *Bifix codes and Sturmian
+words*, arXiv:1011.5369v2, Proposition 3.3.1](https://arxiv.org/html/1011.5369v2).
+Apply its prefix-comparability characterization with the factorial
+language $\{L,R\}^*$ and, for a nested union, its prefix-minimal frontier.
+That paper's codewords are nonempty; the root singleton is handled
+directly here. Finiteness of the frontier yields the depth-$D$ ray test.
+This supplies mature geometry, not native elapsed-count identifiability
+or the simultaneous partition-preserving collision.
+
+[Béal--Perrin--Restivo, *Recognizability of morphisms*, arXiv:2110.10267v3,
+Theorem 1](https://arxiv.org/html/2110.10267v3) concerns unique centered
+substitution representations of aperiodic points in an infinite
+substitution subshift. The native leaf-word projection has the morphism
+$\alpha\mapsto\beta$, $\beta\mapsto\beta\alpha$, but projection forgets
+brackets and occurrences. Applying that theorem requires its infinite
+subshift and aperiodicity conditions; it cannot replace the finite-tree
+parser, the complete row-fiber argument, or authentication of an origin
+or a history. The proofs above use the inspected native suppliers on
+all finite ordered trees instead.
+

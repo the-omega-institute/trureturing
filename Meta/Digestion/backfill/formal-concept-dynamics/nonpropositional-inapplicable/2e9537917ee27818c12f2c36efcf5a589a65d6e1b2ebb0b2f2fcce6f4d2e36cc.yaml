@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e9537917ee27818c12f2c36efcf5a589a65d6e1b2ebb0b2f2fcce6f4d2e36cc
+  normalized_sha256: sha256:2e9537917ee27818c12f2c36efcf5a589a65d6e1b2ebb0b2f2fcce6f4d2e36cc
+cas_ref: sha256:2e9537917ee27818c12f2c36efcf5a589a65d6e1b2ebb0b2f2fcce6f4d2e36cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This chain child is an illustrative application-area label (proof-search cost), with no quantified objects, empirical assertion, numerical certificate, or independent mathematical conclusion. Its enclosing theorem retains all mathematical clauses and their hypotheses; this label adds no proposition to formalize.
+    previous_atom_id: a462a841d38425e042e28f95aae8a0cdd3983356bb03d67a7731b860c1484031
+    next_atom_id: d74f1118cd51858321c9bff09fac405935dc6e5b6ec0add216010d8f53367727

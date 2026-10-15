@@ -1,0 +1,22 @@
+**Definition 8.3 (biased normalized frontier mass).** For a fixed real
+$0<\theta<1$, give a finite address $p$ the weight
+
+$$
+\nu_\theta(p)=
+ \theta^{\#_L(p)}(1-\theta)^{\#_R(p)}.
+$$
+
+For the first-disagreement frontier of Definition 2.1 put
+
+$$
+M_\theta(\mathbf u)=
+ \sum_{p\in\Delta(\mathbf u)}\nu_\theta(p),
+\qquad
+D_\theta(s,t)=M_\theta(s,t).
+\tag{NMF.8.5}
+$$
+
+These are per-original-address weights. In particular
+$M_{1/2}=W_{1/2}$; inserted nodes of a marker presentation carry
+no extra factor.
+

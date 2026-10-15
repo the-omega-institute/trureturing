@@ -1,0 +1,12 @@
+**Theorem 10.4 (complete predecessor factorization).** For every
+$x\in\mathcal X_*$ and its actual origin $u_x$,
+
+$$
+H_P(u_x)=O_{\theta_x},\qquad F(u_x)=G_*(\theta_x).
+\tag{NBP.10.9}
+$$
+
+In particular the finite target set is
+$G_*[\Theta_*]=F[\mathcal U_*]$, and its size equals the number of
+attained labels $A_\theta$, as in Theorem 3.2.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81b360aa22102cb718d52939b6f1c4d0e9cf9c0619dd02c02c7f7ec1448a8bb0
+  normalized_sha256: sha256:81b360aa22102cb718d52939b6f1c4d0e9cf9c0619dd02c02c7f7ec1448a8bb0
+cas_ref: sha256:81b360aa22102cb718d52939b6f1c4d0e9cf9c0619dd02c02c7f7ec1448a8bb0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 121.1（Blackwell 精化）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 5846759be1fd6836951a3a754aaa2bf9701ea313a9a1f41dfc76a4230f558283
+    next_atom_id: e3acd145e29ee4d4857d24b7301bf7ad8880a7e5feb515bd095920c976d22317

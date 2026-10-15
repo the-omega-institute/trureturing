@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6d69517ee3d19c615d319566d71d29da4fb26892d756fbee36c05227a385e00
+  normalized_sha256: sha256:d6d69517ee3d19c615d319566d71d29da4fb26892d756fbee36c05227a385e00
+cas_ref: sha256:d6d69517ee3d19c615d319566d71d29da4fb26892d756fbee36c05227a385e00
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 模 $1$ 的可逆矩阵群只有单位元，故其元素阶为 $1$；而 R20 右侧在 $e=0$ 不按自然数指数给出所需值。…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 2ae9a84940f520c4ffdb481042416c60cfa530e97dc02de1089bdccb68659cdd
+    next_atom_id: 0275dfb0dced767aad912ddbf4c5d6b9a2440f5b79df80198589bae9880ae017

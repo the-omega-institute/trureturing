@@ -1,0 +1,13 @@
+**Proof.** Naming a subterm retains its defining equality. Each root split
+selects its actual reduced root case; ordered-pair injectivity propagates
+both child relations, shift congruence preserves each weighted relation, and
+(NIS.30) accounts for both collapses. All parallel relations are retained.
+Composing these equivalences gives both directions, using the original-slot
+lookup for reconstruction. Unprocessed equations remain conjuncts, so they
+are also required of the valuation. $\square$
+
+This is a statement about graph equations and their satisfying valuations.
+It proves neither an exhaustive terminating saturation for arbitrary inputs
+nor free-state elimination, a countable integer-parameter partition, or
+Presburger decision of the remaining guarded equations.
+

@@ -1,0 +1,18 @@
+**Definition 2.3 (synchronous convolution).** The canonical finite
+convolution $V(\mathbf u)$ has domain
+$\bigcup_i\operatorname{Pos}(u_i)$ and label $v_{\mathbf u}(p)$ at
+$p$. Its finite ranked alphabet $\mathbb V_m$ consists of vectors in
+$\mathcal A^m$ with at least one nonabsent coordinate. Such a vector
+has rank two if any coordinate is $\mathsf{branch}$, and rank zero
+otherwise.
+
+A valid convolution has no absent root coordinate. At a rank-two
+node, a branch coordinate has nonabsent coordinates at both children;
+every nonbranch coordinate has absent coordinates at both children.
+These conditions are sufficient as well as necessary: recursively
+project each coordinate, terminating at its alpha or beta leaves and
+discarding its absent padding. The result is a unique nonempty finite
+native tuple, and its convolution is the original labelled tree.
+This is a construction for a supplied finite tree. It asserts no
+language-level convolution closure for a raw separated tuple packet.
+
