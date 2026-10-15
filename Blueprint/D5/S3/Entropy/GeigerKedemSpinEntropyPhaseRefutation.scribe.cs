@@ -17,11 +17,6 @@ internal sealed class GeigerKedemSpinEntropyPhaseRefutationDocument : IScribeDoc
                 "The spin-one state has three real amplitude magnitudes determined by thetaAlpha "
                     + "and thetaBeta, and two relative phases phaseX and phaseZ. The common global "
                     + "phase cancels from its squared complex modulus. All logarithms are natural.")),
-            Node("shannonTerm", "The binary Shannon term", ShannonTermFormula(),
-                "The function in Proposition 2 is defined for every real p using Real.log. "
-                    + "For p between zero and one it is the binary Shannon entropy, with the endpoint "
-                    + "values supplied by the total real logarithm.",
-                AssessedProvenance.FromLiterature(Source)),
             Node("density", "The polarization-angle density", DensityFormula(),
                 "Proposition 2 takes Complex.normSq of the sum of the three amplitudes, "
                     + "with frequencies +2, +1 and -2, and divides by twice Real.pi. "
@@ -33,13 +28,16 @@ internal sealed class GeigerKedemSpinEntropyPhaseRefutationDocument : IScribeDoc
                 "Equation (17) adds the differential entropy of the density to the Shannon "
                     + "entropy of the three spin-component probabilities. The intervalIntegral "
                     + "is taken from zero to twice Real.pi with respect to MeasureTheory.volume. "
-                    + "The density times its real logarithm is continuous, including at density zero.",
+                    + "The density times its real logarithm is continuous, including at density zero. "
+                    + "The qualified Mathlib function Real.binEntropy is defined by "
+                    + "p log p⁻¹ + (1 − p) log (1 − p)⁻¹ for every real p.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The phase-independence assertion", ClaimFormula(),
                 "Conjecture 1 asserts that equation (17) equals the zero-phase expression (18). "
                     + "Both angles range over Set.Icc zero (Real.pi divided by two), and both "
                     + "relative phases range over Set.Ico zero (twice Real.pi). Equality with the "
-                    + "zero-phase value is asserted for every such choice.",
+                    + "zero-phase value is asserted for every such choice. The Shannon terms in "
+                    + "spinEntropy use the qualified Mathlib function Real.binEntropy.",
                 AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
                 DescribeId.Create("geiger-kedem-spin-entropy-result"),
@@ -83,14 +81,6 @@ internal sealed class GeigerKedemSpinEntropyPhaseRefutationDocument : IScribeDoc
             StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
-    private static Formula ShannonTermFormula()
-    {
-        Formula complement = Subtract(D(1), V("p"));
-        return All("p", Reals(), Equal(Typed(LocalCall("shannonTerm", V("p")), Reals()),
-            Subtract(Negate(Multiply(V("p"), RealCall("log", V("p")))),
-                Multiply(complement, RealCall("log", complement)))));
-    }
-
     private static Formula DensityFormula()
     {
         Formula first = Multiply(
@@ -113,9 +103,9 @@ internal sealed class GeigerKedemSpinEntropyPhaseRefutationDocument : IScribeDoc
         Formula integral = At(Qualified("intervalIntegral"),
             LambdaOf("phi", Reals(), Multiply(density, RealCall("log", density))),
             Typed(D(0), Reals()), TwoPi(), Qualified("MeasureTheory", "volume"));
-        Formula shannonAlpha = LocalCall("shannonTerm", Square(RealCall("cos", V("thetaAlpha"))));
+        Formula shannonAlpha = BinEntropy(Square(RealCall("cos", V("thetaAlpha"))));
         Formula shannonBeta = Multiply(Square(RealCall("sin", V("thetaAlpha"))),
-            LocalCall("shannonTerm", Square(RealCall("cos", V("thetaBeta")))));
+            BinEntropy(Square(RealCall("cos", V("thetaBeta")))));
         return ParameterBinders(Equal(Typed(LocalCall("spinEntropy", Parameters()), Reals()),
             Add(Add(Negate(integral), shannonAlpha), shannonBeta)));
     }
@@ -148,6 +138,7 @@ internal sealed class GeigerKedemSpinEntropyPhaseRefutationDocument : IScribeDoc
     private static Formula At(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula LocalCall(string name, params Formula[] args) => At(Local(name), args);
     private static Formula RealCall(string name, Formula arg) => At(Qualified("Real", name), arg);
+    private static Formula BinEntropy(Formula value) => At(Qualified("Real", "binEntropy"), value);
     private static Formula ComplexCast(Formula value) => At(Qualified("Complex", "ofReal"), value);
     private static Formula PhaseExponential(Formula phase) => At(Qualified("Complex", "exp"),
         Multiply(ComplexCast(phase), Qualified("Complex", "I")));
