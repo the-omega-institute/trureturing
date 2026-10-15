@@ -2146,10 +2146,39 @@ independently selected local maximizers match, nor put their
 marginals on the unlifted base. In addition, the explicit charge
 $\mathcal I_{\rm cov}/n$ need not be small. The useful sufficient
 condition is (COK.77); no theorem here supplies such populations
-near minimizing native weights, uniformly in depth or across
-weight-support changes.
+near minimizing native weights or forces their normalized
+information charge to vanish.
 
-Consequently COK.57's optimizer-cofinality, [GDB, Definition
+For the plain finite envelope, [NWO, Definitions 1.3–1.7][NWOCOK]
+uses exactly the same depth $d$, entire $S_d,W_d,\mathcal E_d$,
+simultaneous positive-support witness for each whole outside-owner
+group, and coefficients $\gamma_k(A)$ as Definitions 1.3–2.5.
+Its Theorems 3.2–3.3 prove exact-support continuity,
+support-preserving rational approximation, global lower
+semicontinuity and real attainment. In particular,
+
+$$
+a_d=\min_{\mu\in\Delta(S_d)}\Omega_d(\mu)
+   =b_{\rm cond}^{\mathbb Q}(d)\ge b_d.
+$$
+
+[NWO, Theorems 5.1, 5.3 and 6.2][NWOCOK] give the exact
+support-disjunctive closed-kernel semialgebraic epigraph and a
+computable positive algebraic $a_d$. Its Theorem 7.2 gives every
+strict rational cap $C>a_d$ at some rational probability for
+the unchanged full-row positive-rational $V_{\rm cond}$.
+Thus rational approximation for this finite-envelope infimum is
+settled without filling support zeros. Global continuity across
+supports is false in general (NWO Corollary 4.5); closed real
+kernels do not imply positive-rational acceptance at the boundary
+(NWO Proposition 7.3).
+
+The remaining equality is $a_d=b_d=\min_\mu\beta_d(\mu)$ at
+general depth, not the real/rational equality for $\Omega_d$
+(NWO Open problem 8.4). Neither finite optimization nor the
+cover construction supplies matching near-maximizing populations
+with small charge in (COK.77). Consequently COK.57's native
+optimizer-cofinality, [GDB, Definition
 11.1][GDBbase]'s universal sound cofinal verifier and effective
 original length error remain unresolved. The finite multiplier
 error in (COK.67) controls cover counting for a prescribed
@@ -2174,5 +2203,6 @@ history or age, or physical space and time.
 [GDBbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
 [VontobelCOK]: https://arxiv.org/html/1012.0065v2
 [RuozziCOK]: https://arxiv.org/html/1202.6035
+[NWOCOK]: https://github.com/the-omega-institute/trureturing/blob/29f45c0bee5e8d45e4993ef7824b43d2c52235eb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
 
 ## 追加锚（本行以下为增补区）

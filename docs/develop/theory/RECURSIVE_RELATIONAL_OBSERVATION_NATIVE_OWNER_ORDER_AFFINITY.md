@@ -9,7 +9,8 @@
 
 **Convention 1.1 (scope and authorship).** Repository suppliers in this
 volume mean their public committed versions at
-`91170b89dfe9dd7eadc64d14d86d2157ed14abdf`. The deductions concern a
+`91170b89dfe9dd7eadc64d14d86d2157ed14abdf`, except the separately
+pinned [NWO][NWO]. The deductions concern a
 joint affinity of analytical owner-order laws, an extensive swap loss,
 a total sound incomplete certificate specification, and their original
 native consumers. Authorship is one isolated Codex implementation author,
@@ -609,8 +610,10 @@ does not imply an improvement over the optimized COK envelope. No
 coverage theorem for near-optimizing weights or kernels is asserted.
 The finite outer list can reject a cap because of a pattern that has no
 positive global realization; accepting it nevertheless is sound.
-Support changes, zero-defect residues and optimizer-cofinality remain
-distinct unresolved questions.
+[NWO, Theorem 7.2][NWO] supplies strict optimized rational caps for
+the all-low COK subfamily, as specified in §9. It does not establish
+approximation retaining a nonzero swap correction, completion of
+zero-defect residues or native optimizer-cofinality.
 
 ## 7. An actual joint-weight family with strict extensive loss
 
@@ -957,8 +960,38 @@ $V_{\rm swap}$ is distinct from such cofinality. No theorem says that
 near-optimal kernels have positive-density certified defects in all
 high neighborhoods. Zero-defect regions require another completion or
 loss argument; even order agreement leaves the exact retained relation
-and pointwise slacks in (OOA.12). Rational approximation across support
-changes and the incidence loss also require control.
+and pointwise slacks in (OOA.12).
+
+The plain envelope used for the reusable local checks in
+Assumption 2.3 is exactly that of
+[NWO, Definitions 1.3–1.7][NWO]: the same $d,S_d,W_d$, complete
+COK decorations, simultaneous positive-support owner-group tests
+and coefficients $\gamma_k(A)$. NWO Theorems 3.2–3.3 prove
+exact-support continuity, global lower semicontinuity and
+
+$$
+a_d=\min_{\mu\in\Delta(S_d)}\Omega_d(\mu)
+   =\inf_{\nu\in\Delta(S_d)\cap\mathbb Q^{S_d}}\Omega_d(\nu)
+   \ge b_d:=\min_{\mu\in\Delta(S_d)}\beta_d(\mu).
+$$
+
+Its Theorems 5.3 and 6.2 give an effective support-disjunctive
+semialgebraic epigraph and a computable positive algebraic $a_d$.
+Theorem 7.2 supplies every rational $C>a_d$ at some rational
+probability with complete positive rational COK rows. These are
+also all-low certificates of Convention 6.4: set $c_0=c_1=C$
+and choose any rational $0<\delta<1$ in Definition 6.2.
+Support-preserving approximation therefore settles this
+finite-envelope infimum; filling zeros is unnecessary and global
+continuity across supports fails in general (NWO Corollary 4.5).
+
+Equality $a_d=b_d$ at general depth remains unproved (NWO Open
+problem 8.4). Nor does NWO supply approximation preserving high-type
+coverage and a positive swap margin under support enlargement,
+optimized completeness of $V_{\rm swap}$, or control of the SIR
+incidence-transfer loss. Those enhanced-certificate and global
+pressure obligations are separate from the solved plain-envelope
+rational approximation.
 
 The strict cycle correction is not an optimized unrestricted pressure
 improvement, as Proposition 7.3 proves with an actual mass-one
@@ -1086,6 +1119,7 @@ independent review. $\square$
 [Nielsen]: https://arxiv.org/html/2207.03745v1
 [DP]: https://arxiv.org/html/1612.03164v1
 [GLSS]: https://arxiv.org/html/1205.1478v1
+[NWO]: https://github.com/the-omega-institute/trureturing/blob/29f45c0bee5e8d45e4993ef7824b43d2c52235eb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
 [FCS]: FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md
 [Depth]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
 
