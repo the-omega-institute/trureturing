@@ -62,7 +62,7 @@ private theorem spine_flip (a : Address) : flip (spine a (.of true)) a = spine a
     · exact congrArg (fun t : Source => t.mul (.of true)) ih
     · exact congrArg (fun t : Source => (FreeMagma.of true).mul t) ih
 
-private theorem path_bounds (r : Address) :
+theorem path_bounds (r : Address) :
     pathCost r ≤ 2 * r.length ∧ pathThreshold r ≤ pathCost r + 1 := by
   induction r with
   | nil => simp [pathCost, pathThreshold]
@@ -70,7 +70,7 @@ private theorem path_bounds (r : Address) :
     cases b <;> simp only [pathCost, pathThreshold, List.length_cons, Bool.false_eq_true,
       ↓reduceIte, max_le_iff] <;> omega
 
-private theorem atomic_separator (r : Address) :
+theorem atomic_separator (r : Address) :
     readout r (substitution^[pathCost r + 1] (.of true)) = .beta ∧
     readout r (substitution^[pathCost r + 1] (.of false)) = .branch := by
   have nav := atomic_navigation r (pathCost r + 1) (.of false)

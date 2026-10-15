@@ -65,7 +65,7 @@ theorem coherentCopyState_correlated_entry (rho : DensityState n) (i j : n) :
     (coherentCopyState rho).1 (i,i) (j,j) = rho.1 i j := by
   exact (copyMatrix_entry rho.1 (i,i) (j,j)).trans (by simp)
 
-private theorem partialTraceRight_copyMatrix (M : Matrix n n ℂ) :
+theorem partialTraceRight_copyMatrix (M : Matrix n n ℂ) :
     partialTraceRight (copyMatrix M) = Matrix.diagonal (fun i => M i i) := by
   ext i j
   by_cases h : i = j

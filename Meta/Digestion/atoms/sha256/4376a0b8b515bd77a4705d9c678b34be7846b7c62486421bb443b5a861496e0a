@@ -1,0 +1,18 @@
+**Definition 7.1 (The stronger oriented whole-tree signature).** For a normalized tree with read positions $v$, addresses $t_v$ and parities $\epsilon_v$, form, separately for each $\phi\in\{0,1\}$,
+
+$$
+\mathcal I_\phi=\{*\}\cup\{(v,-),(v,+):\epsilon_v=\phi\},
+\tag{7.1}
+$$
+
+with indices
+
+$$
+\iota_\phi(*)=q_{j,\phi},\qquad
+\iota_\phi(v,-)=\frac{t_v-\phi}{2},\qquad
+\iota_\phi(v,+)=\frac{t_v-\phi}{2}+1.
+\tag{7.2}
+$$
+
+The signature records the ordered tree shape, terminal labels and depths, node parities, and the full equivalence relation of equal indices in each $\mathcal I_\phi$. The target slot and minus/plus orientations are distinguished. This includes all potential nodes, even those on incompatible reply branches. There is no relation between slots belonging to different source-phase alternatives. This is the existing signature of [Original, Theorem 12.2][Original] and Address Definition 2.2.
+

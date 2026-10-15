@@ -7,6 +7,10 @@ internal sealed class OriginalUnifilarErasureTailDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "All-stationary geometric erasure tail", H("All-stationary geometric erasure tail"),
         Blocks(
+            Describe.Lean(DescribeId.Create("tail-series"),
+                DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarErasureTail.tail_series"),
+                H("A specified blocked geometric tail"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For nonnegative D and rho with rho less than one, positive natural ell, and every natural R, the real series D*rho^((R+n)/ell) is summable and its sum is at most D*ell/(1-rho)*rho^(R/ell). Natural division retains the first partial block. TwelveStateTail consumes the unchanged original supplier at D=5/2 and ell=2."))), DescribeRole.Theorem),
             Paragraph(Text("Use the same finite original theta, selected bilateral J and actual visible pushforward P as OriginalUnifilarQuotient. The only new restriction is RowUnifilar after positive-mass trimming. The universal OriginalErasureComparison.full_half_line_erasure_comparison remains unrestricted and is applied directly. All radii, cuts and lengths are original emitted-bit integers or natural numbers, not a stopped or rescaled clock.")),
             Describe.Lean(DescribeId.Create("allowance"),
                 DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalUnifilarErasureTail.allowance"),

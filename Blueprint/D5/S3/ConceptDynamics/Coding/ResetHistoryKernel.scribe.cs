@@ -29,10 +29,38 @@ internal sealed class ResetHistoryKernelDocument : IScribeDocumentDefinition
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 
+    private static Formula ProductEmbedding => Call("gapProductKernelEmbedding", I("q"), I("hq"), I("hqzero"));
+    private static Formula ProductScope(Formula f) => new Formula.BindMany(FormulaQuantifier.ForAll,
+        [B("q", I("Nat")), B("hq", Le(Num(2), I("q"))), B("hqzero", Lt(Num(0), I("q")))], f);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Large finite nonabelian subgroups in the original Reset beam representation kernel.",
+        "Finite alternating subgroups and their simultaneous finite-support product in the original Reset kernel.",
         H("Original dynamics and cyclic arithmetic"),
         Blocks(
+            Entry("rho_time", "Original full-rho commutation",
+                new Formula.BindMany(FormulaQuantifier.ForAll,
+                    [B("q", I("Nat")), B("hq", Lt(Num(0), I("q"))),
+                     B("h", Call("ResetFullAut", I("q"))), B("x", Call("Native", I("q")))],
+                    Equal(Call("rho", I("q"), I("hq"), I("h"), Call("resetTheta", I("q"), I("x"))),
+                        Call("resetTheta", I("q"), Call("rho", I("q"), I("hq"), I("h"), I("x"))))),
+                "This existing owning argument applies the actual representation to the literal "
+                + "fullAutSubgroup shift-commutation law and uses rho_unitShift. It is public for "
+                + "ResetNativeUnitNormalForm's complete original-rho consumer.", DescribeRole.Theorem),
+            Entry("centralizingMap_scalar", "The consumed general scalar argument",
+                new Formula.BindMany(FormulaQuantifier.ForAll,
+                    [B("q", I("Nat")), B("hq", Lt(Num(0), I("q"))),
+                     B("A", Call("IntLinearEnd", Call("Native", I("q")))),
+                     B("ht", Call("commutesWithForwardTime", I("q"), I("A"))),
+                     B("b", Call("QF", I("q")))],
+                    Equal(Call("centralizingMap", I("q"), I("hq"), I("A"), I("ht"), I("b")),
+                        Call("multiply", I("b"),
+                            Call("centralizingMap", I("q"), I("hq"), I("A"), I("ht"), Num(1))))),
+                "commutesWithForwardTime(q,A) means forall x, A(resetTheta(q,x))=resetTheta(q,A(x)). "
+                + "centralizingMap transports A by nativeIntEquiv and promotes it to Int[X]-linearity "
+                + "with LinearMap.ofAEval. Polynomial-quotient surjectivity gives the scalar law. "
+                + "The original chartMap and chartMap_scalar specialize this same owning argument "
+                + "to actual rho. ResetNativeUnitNormalForm consumes it for both A and its inverse. "
+                + "This generalized helper supplies no new component-unit classification.", DescribeRole.Theorem),
             Paragraph(Text(
                 "The original rho acts on DimensionGroup(resetMatrix q) by actual beam "
                 + "pushforward. Every full history automorphism commutes with UNIT shift; "
@@ -72,5 +100,41 @@ internal sealed class ResetHistoryKernelDocument : IScribeDocumentDefinition
                 + "alternating groups are nonabelian, including A4, and their factorial "
                 + "orders are unbounded as k grows. No cross-k compatibility, complete "
                 + "kernel classification or locally finite whole-kernel conclusion is claimed.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Entry("FiniteGapAlternating", "A countable product with finite support",
+                Typed(I("FiniteGapAlternating"), I("Type")),
+                "This is Mathlib RestrictedProduct with n-th fiber Alt(Fin(2^(n+2))), "
+                + "bottom subgroups, and Filter.cofinite. A tuple has finitely many "
+                + "nonidentity coordinates, multiplied coordinatewise in their original "
+                + "noncommutative groups. The coordinate n=0 is A4.", DescribeRole.Definition),
+            Entry("gapProductKernelEmbedding", "Simultaneous action in the original kernel",
+                ProductScope(Typed(ProductEmbedding, Call("MonoidHom", I("FiniteGapAlternating"),
+                    Call("kernel", Call("rho", I("q"), I("hqzero")))))),
+                "Use the actual signed edge b: (0,zeta)→(0,1), and a: (0,1)→(0,zeta). "
+                + "With c_h the chain 0→1 and d_h the reset from 1, U=a c_zeta d_zeta "
+                + "and V=c_one d_one c_zeta d_zeta are b-free loops at (0,1), of lengths "
+                + "3 and 4. A bit is U^4 or V^3. Concatenating n+2 blocks and closing "
+                + "with a gives d(n)=12(n+2)+1 edges from target(b) to source(b). "
+                + "The first edges of the two blocks differ, so the codes are injective. "
+                + "All edges are transported through originalEdge with their actual labels, "
+                + "numbers and absolute signs. The chain requires q>=2.", DescribeRole.Definition),
+            Entry("gapProductKernelEmbedding_injective", "Joint faithfulness on all original histories",
+                ProductScope(Call("FunctionInjective", ProductEmbedding)),
+                "SeparatorGapAction proves that overlapping interiors between consecutive "
+                + "b edges have the same endpoints. It proves exact separator preservation, "
+                + "both directions of eligibility invariance, and cross-length commutation "
+                + "on arbitrary bilateral sequences. The legal seams use the distinct "
+                + "source and target of b. Its finite-support homomorphism acts on ALL "
+                + "History(ResetGraph q), commutes with the actual unit shift and has a real "
+                + "continuous inverse. On a realized word b D(n,i) b, every other length "
+                + "fixes the central data while coordinate n outputs D(n,g(n)(i)); this "
+                + "determines every coordinate of the tuple. Noncoded gaps, extra q>2 "
+                + "edges and arbitrary exterior tails are included. The original rho "
+                + "has commuting images by the cyclic integer chart. Alternating factors "
+                + "are killed as restrictions of these new symmetric actions, using "
+                + "three-cycle commutators in Sym, including A4. Subgroup closure places "
+                + "the finite product in the SAME rho kernel. The classical marker method "
+                + "is discussed in Library/FiniteGroups/boylelindrudolph1988automorphism.md. "
+                + "There is no q=1 claim, unrestricted infinite-product continuity, "
+                + "publication novelty claim or classification of the whole kernel.", DescribeRole.Theorem))));
 }

@@ -8,6 +8,9 @@ internal sealed class HellingerEnergyDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A singular logarithmic energy bound for arbitrary noncommuting quantum states.",
         H("Hellinger energy and the trace norm"), Blocks(
+            Generic("resolution_diagonal","The actual spectral diagonal", "For every full actual resolution d of a positive trace-class contraction T and every vector v, the real series d(i)*norm(inner(v,d(i))) squared has the actual quadratic form Re inner(v,T v) as its sum. Square-root CFC eigenvector action and Parseval give genuine real summability. No trace normalization or finite entropy is required."),
+            Generic("resolution_entropy","Entropy in every full resolution", "For every full actual resolution d of T, the nonnegative extended sum of -d(i) log(d(i)) equals spectralEntropy T. The generic spectral-energy identity and self energy prove the equality, including zero fibers and infinite entropy. No trace normalization is required."),
+            Generic("resolution_cross_energy","The full extended cross double series", "For arbitrary full resolutions d of rho and e of sigma, the double sum (ofReal(d(i))*singularLog(e(j)))*ofReal(norm(inner(e(j),d(i))) squared) equals spectralEnergy sigma rho. The diagonal identity followed by nonnegative double summation proves it. This identity retains arbitrary index sets, full zero eigenspaces, zero times infinity and infinite cross energy, without normalization or finite-energy assumptions. It supplies both the Hellinger bound and the finite signed logarithmic formula."),
             Describe.Lean(DescribeId.Create("quantum-hellinger-energy"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.spectralEntropy_add_traceNorm_sq_le_energy"),
                 H("Entropy with a quantitative trace-norm reward"),
@@ -19,6 +22,11 @@ internal sealed class HellingerEnergyDocument : IScribeDocumentDefinition
                     Paragraph(Text("The square roots are Hilbert-Schmidt because the original positive operators are trace class; their difference is Hilbert-Schmidt as well. Converting genuine real square sums to ENNReal and applying nonnegative double summation gives S(rho)+1+ofReal(HSdifferenceSquare)<=E_sigma(rho)+1. Only the finite trace-one addend is canceled. Infinite entropy, infinite cross energy and singular zero fibers are preserved.")),
                     Paragraph(Text("The noncommuting identity rho-sigma=R(R-S)+(R-S)S, where R=sqrt(rho) and S=sqrt(sigma), combines with the Hilbert-Schmidt product trace-norm estimate and the triangle inequality. Both square roots have square sum one in the same full basis, so norm(rho-sigma)<=2 sqrt(HSdifferenceSquare). This yields the displayed reward. Dropping its nonnegative term gives the Gibbs inequality. The full weighted entropy theorem applies the stronger bound to both states relative to their actual mixture.")),
                     Paragraph(Text("The spectral distribution viewpoint is the established Nussbaum-Szkola correspondence. Mathlib supplies functional calculus, Parseval and unconditional sums. The analytic trace-class and ideal estimates are the existing attributed Physlib suppliers; their provenance and licenses are unchanged. This bound does not prove entropy continuity, compactness of a state family, or existence of a common full-space Hamiltonian."))), DescribeRole.Theorem))));
+    private static DocumentBlock Generic(string name,string title,string text)=>Describe.Lean(
+        DescribeId.Create("quantum-hellinger-"+name.Replace('_','-')),
+        DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy."+name),
+        H(title),StatementSource.FromAuthor(Call(name.Replace("_",""),F.Id("FullSpectralResolutions"))),
+        AssessedProvenance.FromRepo(Source),Blocks(Paragraph(Text(text))),DescribeRole.Theorem);
     private static Formula Statement()
     {
         Formula h=F.Id("H"), r=F.Id("rho"), s=F.Id("sigma");

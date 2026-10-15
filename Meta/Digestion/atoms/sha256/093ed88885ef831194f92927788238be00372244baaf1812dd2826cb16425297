@@ -1,0 +1,19 @@
+**Definition 3.1 (prefix cylinders and factor levels).** Fix $q\in W_d$,
+let $l=|q|$, and let $a_i$ be its prefix of length $i$, $0\le i\le l$.
+A leaf descriptor $(i,\ell)$ means that the first original leaf on this
+path is $\ell$ at $a_i$. Its cylinder in $S_d$ is
+
+$$
+D_{i,\ell}=\{u\in S_d:r_u(a_i)=\ell\}.
+\tag{CBN.10}
+$$
+
+A nonabsent leaf reply already forces every strict ancestor on its path
+to be branch. For $\zeta\in G_q$, let
+
+$$
+L_{q,\zeta}=\{u\in S_d:\Gamma_q(u)=\zeta\},\qquad
+P_{q,v}(\zeta)=\{r_u(v):u\in L_{q,\zeta}\}\quad(v\preceq q).
+\tag{CBN.11}
+$$
+

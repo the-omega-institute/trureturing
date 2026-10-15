@@ -400,6 +400,7 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/cache_publication_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/pr_cache_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
             [tests-cache-native]
@@ -450,6 +451,7 @@ jobs:
             tools/scripts/worktree/lean-cache-publish.sh
             tools/scripts/worktree/lean_cache.py
             tools/scripts/worktree/lean_cache_release.py
+            tools/scripts/worktree/lean_actions.py
             tools/tests/StrataLint.Cache.Release.Tests/*
             .editorconfig
             .globalconfig
@@ -1692,7 +1694,7 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    # Platform wall-clock cap, separate from the shared 30-minute compute allowance.
+    # Platform wall-clock cap, separate from the shared 120-minute compute allowance.
     timeout-minutes: 360
     outputs:
       lean_required: ${{ steps.report_entry.outputs.hit }}
@@ -1944,7 +1946,7 @@ jobs:
         name: Initialize the shared compute allowance
         run: |
           budget="$RUNNER_TEMP/current-compute-seconds"
-          python3 tools/scripts/workflow/ci_compute.py init "$budget" 30
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
           echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'

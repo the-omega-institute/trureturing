@@ -204,4 +204,81 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 
 end Strong
+
+
+namespace RealEntropy
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := ULift.{u} Unit
+  finiteRole := Fintype.ofSubsingleton ⟨()⟩
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual := realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)
+def rejected := realize signature.{u} (fun _ _ z => z + 1) (fun a => nomatch a)
+
+def theoremLaw (R : Realization signature.{u}) : Prop :=
+  ∀ {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (rho : Reference H),
+    (R.readout ⟨()⟩ () (realEntropy rho.1)) = (spectralEntropy rho).toReal
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law := theoremLaw
+
+theorem actual_law : arena.{u}.Law actual := by
+  exact @QuantumLogEnergy.realEntropy_reference.{u}
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h oneState
+  simpa [rejected, realize, realEntropy_reference, one_entropy] using hh
+
+def family : Registration arena.{u} (type_of% (@QuantumLogEnergy.realEntropy_reference.{u})) where
+  actual := realize signature (fun _ _ z => z) (fun a => nomatch a)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@QuantumLogEnergy.realEntropy_reference.{u})
+    (type_of% (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)))
+    Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.TraceClass.EntropyConcavity.RealEntropy.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.TraceClass.EntropyConcavity.RealEntropy.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+end RealEntropy
 end Reg.D5.S3.Quantum.Analysis.TraceClass.EntropyConcavity

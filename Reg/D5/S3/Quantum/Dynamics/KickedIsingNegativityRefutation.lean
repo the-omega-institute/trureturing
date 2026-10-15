@@ -283,5 +283,85 @@ def registration :
 
 end LocalRight
 
+namespace LocalLeft
+
+abbrev signature := JointMatrix.signature
+abbrev actual := JointMatrix.actual
+abbrev rejected := JointMatrix.rejected
+abbrev dependence := JointMatrix.dependence
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {a b : Type} [Fintype a] [Fintype b] [DecidableEq a] [DecidableEq b]
+    (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ) (_hU : Uᴴ * U = 1),
+    partialTraceLeft ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      V * partialTraceLeft (R.readout () ⟨a, b⟩ ρ) * Vᴴ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (a := Unit) (b := Unit) 1 1 1 (by simp)
+  have hc := congrArg (fun M : Matrix Unit Unit ℂ => M () ()) he
+  norm_num [rejected, JointMatrix.rejected, realize, partialTraceLeft,
+    Matrix.one_kronecker_one] at hc
+  change (1 : ℂ) = 0 at hc
+  norm_num at hc
+
+def source_registration : Registration arena (type_of% @trace_local_left) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨trace_local_left, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@trace_local_left) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.LocalLeft.unit
+  realizationName := Lean.Name.str
+    (Lean.Name.str
+      `Reg.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+      "LocalLeft") "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ ρ => ρ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "fn", "arg", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end LocalLeft
+
 end
 end Reg.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation

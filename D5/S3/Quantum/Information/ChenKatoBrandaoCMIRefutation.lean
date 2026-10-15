@@ -179,7 +179,7 @@ section DiagonalMarginals
 variable {A B C : Type*} [Fintype A] [DecidableEq A]
   [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
 
-private theorem partialTraceRight_diagonal (r : A × B → ℝ) :
+theorem partialTraceRight_diagonal (r : A × B → ℝ) :
     partialTraceRight (diagonal (fun x => (r x : ℂ))) =
       diagonal (fun a => ((∑ b, r (a,b) : ℝ) : ℂ)) := by
   ext i j
@@ -187,7 +187,7 @@ private theorem partialTraceRight_diagonal (r : A × B → ℝ) :
   · subst j; simp [partialTraceRight, Matrix.diagonal]
   · simp [partialTraceRight, Matrix.diagonal, h]
 
-private theorem partialTraceLeft_diagonal (r : A × B → ℝ) :
+theorem partialTraceLeft_diagonal (r : A × B → ℝ) :
     partialTraceLeft (diagonal (fun x => (r x : ℂ))) =
       diagonal (fun b => ((∑ a, r (a,b) : ℝ) : ℂ)) := by
   ext i j

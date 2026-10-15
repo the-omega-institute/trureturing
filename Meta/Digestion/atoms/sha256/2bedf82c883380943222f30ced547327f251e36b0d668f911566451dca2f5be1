@@ -1,0 +1,25 @@
+**Definition 2.1 (legal constructor arrays).** Put $a_d=2^d-1$ and
+$V=[n]\times W_d$. Define
+
+$$
+c_d(u)_w=r_u(w),\qquad
+c(x)_{(i,w)}=r_{x_i}(w).
+\tag{CBN.7}
+$$
+
+Let $H_d\subseteq\mathcal A^{W_d}$ consist of arrays $z$ whose root is
+not absent and for which every parent-child pair within $W_d$ belongs to
+
+$$
+P=\{(\mathsf{branch},\alpha),(\mathsf{branch},\beta),
+(\mathsf{branch},\mathsf{branch}),
+(\alpha,\mathsf{absent}),(\beta,\mathsf{absent}),
+(\mathsf{absent},\mathsf{absent})\}.
+\tag{CBN.8}
+$$
+
+Thus $(z_w,z_{ws})\in P$ whenever $s\in\{L,R\}$ and $ws\in W_d$.
+The joint legal image is $H_d^n$, on the fixed public variable set $V$.
+Absent coordinates retain variable-shape information inside the same
+four-symbol alphabet.
+
