@@ -4579,7 +4579,7 @@ $$
 Both endpoints are therefore controlled even though a local interior
 expansion is not asserted uniformly at the absorbing faces.
 Alternatively their interior agreement follows from the uniform
-localization theorem [H, Theorem 3.1]: common smooth fields and density,
+localization theorem [H, Theorem 3.2, p.921]: common smooth fields and density,
 uniform brackets, fixed interior margins, and selfadjoint contraction
 semigroups are its hypotheses here. No boundary asymptotic is imported.
 
