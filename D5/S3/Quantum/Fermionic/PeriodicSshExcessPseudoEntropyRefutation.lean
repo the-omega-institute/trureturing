@@ -283,6 +283,10 @@ private def modes58Z : Fin 6 → Fin 6 → ℤ :=
 private theorem psi38_norm : ∑ x, psi38Z x ^ 2 = 3528 := by decide
 private theorem psi58_norm : ∑ x, psi58Z x ^ 2 = 392 := by decide
 private theorem psi38_overlap : ∑ x, psi58Z x * psi38Z x = 1152 := by decide
+private theorem psi38_three : ∀ x : Assignment 6,
+    (∑ j, if x j then (1 : ℤ) else 0) * psi38Z x = 3 * psi38Z x := by decide
+private theorem psi58_three : ∀ x : Assignment 6,
+    (∑ j, if x j then (1 : ℤ) else 0) * psi58Z x = 3 * psi58Z x := by decide
 
 set_option maxRecDepth 100000 in
 private theorem psi38_mode_kernel :
