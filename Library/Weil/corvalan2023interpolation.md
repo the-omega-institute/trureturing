@@ -1940,7 +1940,6 @@ grid error, without a bound for that double integral, a new RH
 criterion, a same-integer signed Robin estimate, a mathematical
 priority claim or Lean certification.
 
-
 ## A paid rectangular truncation on the original Perron lines
 
 Reuse Koukoulopoulos, *The Distribution of Prime Numbers*,
@@ -1963,39 +1962,38 @@ R_V(m)&=Z(m/N)+\frac1L\mathscr P_{s,V}
 \frac{N^sH_{m/N}(s)}{\zeta(s)}.
 \end{aligned}
 $$
-Here $Z=1-J_m/(2L)$ is the exact grid correction of (I63),
-not a replacement local mean. Uniformly on the original integer grid,
+Here $Z=1-J_m/(2L)$ is the exact grid correction of (I63).
+Uniformly on the original integer grid,
 $$
 \begin{aligned}
-|A-A_U|&\ll L/U+h/N,\\
-|B-B_U|&\ll NL/U+h,\\
+|A-A_U|&\ll hL/U+h/N,\\
+|B-B_U|&\ll NhL/U+h,\\
 \max_{N\le m\le2N}|R_N(m)-R_V(m)|&\ll NL/V+1.
 \end{aligned}
 \tag{I69}
 $$
 
-For the first two estimates, write
+To retain the short-band gain in the first two estimates, set
+$M_U(x)=\mathscr P_{s,U}x^s/[s\zeta(s)]$ and
+$f_\tau(x)=x^{-\tau}\log(N/x)$, $\tau=0,1$.
+Apply the cited theorem to $\mu$, with $\theta=A=0$ in its notation.
+Since $\kappa_N\ge1+1/\log x$ for $X\le x\le N$, it gives
+$\sup_{X\le x\le N}|M(x)-M_U(x)|\ll NL/U+1$.
+The weights decrease to zero at $N$ and satisfy
 $$
-C_{\tau,U}(x)=\mathscr P_{s,U}
-\frac{x^{s-\tau}}{(s-\tau)^2\zeta(s)},\qquad
-D_{\tau,U}(x)=\mathscr P_{s,U}
-\frac{x^{s-\tau}}{(s-\tau)\zeta(s)},\qquad \tau\in\{0,1\}.
+f_\tau(X)+\int_X^N|f_\tau'(x)|\,dx
+=2f_\tau(X)\ll hN^{-\tau}.
 $$
-The square-denominator tails are absolutely bounded by
-$O(N^{1-\tau}L/U)$ for $X\le x\le2N$, since
-$|1/\zeta(\kappa_N+it)|\le\zeta(\kappa_N)\ll L$.
-For $D_{\tau,U}$, apply the cited theorem to
-$f(n)=\mu(n)n^{-\tau}$, with $\theta=-\tau$ and exponent $A=0$
-in its notation. Its hypothesis holds because
-$\kappa_N-\tau\ge1-\tau+1/\log x$ throughout this interval.
-The error is $O(N^{1-\tau}L/U+N^{-\tau})$.
-Now $A_U$ and $B_U$ are, respectively, the expressions
+Exact Abel summation gives, respectively for $B,A$,
 $$
-C_{\tau,U}(N)-C_{\tau,U}(X)
--\log(N/X)D_{\tau,U}(X),\qquad \tau=1,0.
+-f_\tau(X)M(X)-\int_X^Nf_\tau'(x)M(x)\,dx,\qquad \tau=0,1.
 $$
-Their infinite-height limits select exactly $Q<n\le N$.
-Use $\log(N/X)\ll h$ to obtain the first two rows of (I69).
+Replacing $M$ by $M_U$ gives exactly $B_U,A_U$: exchange the finite
+integrals and integrate the weights to recover $W_a(s)$ and
+$W_a(s-1)$. Thus both cutoff terms travel together through the
+same band. The lower endpoint $X$ is a half integer; the upper
+weight is zero. Multiplying the uniform Perron error by the displayed
+variation proves the first two rows of (I69), with no changed cutoff.
 
 For the last row, elementary integration of the fractional-part
 Mellin transform gives, for $1\le q\le2$ and $\Re s>1$,
@@ -2017,7 +2015,8 @@ $$
 -\frac{m^s\log q}{s\zeta(s)}.
 \end{aligned}
 $$
-The square-denominator pieces have tail $O(NL/V)$.
+Since $|1/\zeta(\kappa_N+it)|\le\zeta(\kappa_N)\ll L$,
+the square-denominator pieces have tail $O(NL/V)$.
 The remaining pieces are ordinary Perron integrals of
 $\zeta'/\zeta$, $1/\zeta$ and the Dirichlet series $1$, evaluated
 at $m=qN$, with the bounded coefficient $\log q$ where present.
@@ -2046,31 +2045,52 @@ Together with the operator bounds used for (I66), (I69) therefore gives
 $$
 \begin{aligned}
 |\mathcal A_{N,H}-E_{\rm grid}-\mathcal M_N(U,V)|
-\ll{}&\frac{N}{UL}+\frac h{L^2}\\
-&+\left(h^2e^{-c_\star\Omega}+\frac LU+\frac hN\right)
+\ll{}&\frac{Nh}{UL}+\frac h{L^2}\\
+&+\left(h^2e^{-c_\star\Omega}+\frac{hL}U+\frac hN\right)
   \left(\frac NV+\frac1L\right).
 \end{aligned}
 \tag{I72}
 $$
 This is a bound for the same jointly realized functional, using its
 actual coefficients rather than independently optimized values.
-Set $U=N$ and $V=\sqrt N$, and reuse $E_{\rm grid}=o(1)$ with its
-quantitative bound (I66). At the bandwidth of (I59), (I72) yields
+Set $U=H$ and $V=\sqrt N$, and reuse the quantitative bound for
+$E_{\rm grid}$ in (I66). At the bandwidth of (I59), (I72) yields
 $$
 \mathcal A_{N,H}
-=\mathcal M_N(N,\sqrt N)
+=\mathcal M_N(H,\sqrt N)
 +O\!\left(\frac1L+
  e^{-(c_\star-2\lambda)\Omega}+\frac L{\sqrt N}\right)
-=\mathcal M_N(N,\sqrt N)+o(1).
+=\mathcal M_N(H,\sqrt N)+o(1).
 \tag{I73}
 $$
 The positive margin is exactly $2\lambda<c_\star$.
-Thus the original-line rectangular truncation is paid. This is
-neither an absolute tail estimate nor a zero-sum truncation after
-contour deformation. In particular the retained heights extend
-beyond $1/h\asymp N/H$; the compact expansion (I67) still cannot
-be substituted over that whole rectangle. An estimate for
-$\mathcal M_N(N,\sqrt N)$ sufficient to pay the actual mixed term,
+This baseline does not use the fixed zero-free half-plane of (I60).
+
+If that input is adopted, retain its full premise: fixed
+$1/2\le B<1$, no zeta zero in $\Re s>B$, and fixed $B<\beta<1$.
+Then (I60)'s application gives $\|S\|_\infty\ll_\beta N^\beta/L$.
+In the proof of (I72), replace only the first norm bound by this one
+and take $U=HN^{\beta-1}$, $V=\sqrt N$. The same products give
+$$
+\mathcal A_{N,H}
+=\mathcal M_N(HN^{\beta-1},\sqrt N)
++O_\beta\!\left(\frac1L+
+ e^{-(c_\star-2\lambda)\Omega}+LN^{1/2-\beta}\right)
+=\mathcal M_N(HN^{\beta-1},\sqrt N)+o(1).
+\tag{I74}
+$$
+Here $\beta>1/2$, and constants may depend on this fixed $\beta$
+and the adopted input. In particular the cited Liu boundary yields
+$U\asymp N^{0.624957019420098946\ldots+\varepsilon}
+ e^{\lambda\Omega}$ for fixed
+$0<\varepsilon<1-B_{\rm new}$, with the paper-level source status
+and uncompiled external Lean boundary of (I60)--(I61) unchanged.
+
+These bounds pay the original-line rectangular truncation. They do
+not give an absolute tail estimate or a zero-sum truncation after
+contour deformation. The retained heights still extend beyond
+$1/h\asymp N/H$; the compact expansion (I67) cannot be substituted
+over those rectangles. A sufficiently strong estimate inside them,
 the same-integer signed Robin estimate, and RH remain unresolved.
 This is an application of the cited Perron theorem, without a
 mathematical-priority claim or Lean certification.
