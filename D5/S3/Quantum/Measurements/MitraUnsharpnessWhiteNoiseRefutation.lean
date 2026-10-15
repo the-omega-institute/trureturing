@@ -11,6 +11,8 @@ import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Tactic
 
+set_option linter.style.longLine false
+
 open scoped BigOperators Matrix ComplexOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Measurements.MitraUnsharpnessWhiteNoiseRefutation
@@ -177,7 +179,7 @@ private theorem witness_isPOVM : IsPOVM witness := by
     fin_cases i <;> apply diag2_posSemidef <;> norm_num
   · ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [witness, diag2, Fin.sum_univ_succ] <;> norm_num
+      simp [diag2, Fin.sum_univ_succ] <;> norm_num
 
 private theorem witness_norms :
     (fun i : Fin 4 => opNorm (witness i)) =
