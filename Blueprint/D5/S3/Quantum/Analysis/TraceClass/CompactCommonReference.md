@@ -40,11 +40,12 @@ Global reference antitonicity, scaling and the global center bound give E_sigma(
 
 For the local center gamma' and P=w gamma'<=sigma, orderedEnergy P sigma is lower semicontinuous in rho. On the closed cell, scaling and positive decomposition give E_gamma'(rho)-log(w)=orderedEnergy(P,sigma,rho)+E_sigma(rho), with both terms finite. The finite logarithmic constant cancels exactly between nearby states. The local entropy oscillation, Gibbs at the base state and lower semicontinuity of the ordered increment bound the upper energy jump. The real-value lower-cut argument treats negative cuts by nonnegativity, including the zero-increment branch. All neighborhoods are relative to A.
 
-Rho-slot spectral-energy lower semicontinuity is separately proved as an iSup of continuous regularized trace pairings and restricted to actual positive operators. Combining its finite real-value version with the upper estimate gives real continuity, then ENNReal continuity through ofReal. This is a repository synthesis of the existing genuine entropy and operator-energy APIs, not a literature novelty claim. Compactness remains an explicit input. The original Shirokov compactness-removal and full-space Hamiltonian conclusions are not asserted.
+Rho-slot spectral-energy lower semicontinuity comes from the shared lowerSemicontinuousOn_spectralEnergy_state theorem in EnergySublevelCompactness, on the full cone of actual positive trace-class operators. Composition with a continuous positive-valued map restricts this theorem to the family A. Combining its finite real-value version with the upper estimate gives real continuity, then ENNReal continuity through ofReal. This is a repository synthesis of the existing genuine entropy and operator-energy APIs, not a literature novelty claim. Compactness remains an explicit input. The original Shirokov compactness-removal and full-space Hamiltonian conclusions are not asserted.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/CompactCommonReference.fullCompactCommonReference`
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/CompactCommonReference.spectralEnergy_le_entropy_of_isMaxOn`
+- Dependency: [D5/S3/Quantum/Analysis/TraceClass/EnergySublevelCompactness](EnergySublevelCompactness.md)
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/EntropyConcavity](EntropyConcavity.md)
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/OrderedEnergy](OrderedEnergy.md)

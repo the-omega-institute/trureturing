@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Analysis.TraceClass.EntropyConcavity
 import D5.S3.Quantum.Analysis.TraceClass.OrderedEnergy
+import D5.S3.Quantum.Analysis.TraceClass.EnergySublevelCompactness
 import Mathlib.Topology.UniformSpace.HeineCantor
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Analysis.Convex.Topology
@@ -26,12 +27,9 @@ private theorem entropy_real (r : Reference H) :
 private theorem rho_lsc {X : Type*} [TopologicalSpace X] (T : Reference H)
     (r : X → TraceClass H) (hc : Continuous r) (hp : ∀ x, 0 ≤ (r x).1) :
     LowerSemicontinuous (fun x => spectralEnergy T (r x)) := by
-  simp_rw [spectralEnergy_eq_regularizedSupremum T _ (hp _)]
-  apply lowerSemicontinuous_iSup
-  intro n
-  exact (ENNReal.continuous_ofReal.comp (Complex.continuous_re.comp
-    ((TraceClass.tracePairing (logRegularization ((n : ℝ) + 1)⁻¹ T.1.1)).continuous.comp
-      hc))).lowerSemicontinuous
+  apply lowerSemicontinuousOn_univ_iff.mp
+  exact (lowerSemicontinuousOn_spectralEnergy_state T).comp hc.continuousOn
+    (fun x _ => hp x)
 
 private theorem gibbs (r s : Reference H)
     (hr : (trace r.1.1 (TraceClass.isTraceClass_coe r.1)).re = 1)
