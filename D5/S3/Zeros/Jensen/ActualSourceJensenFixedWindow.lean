@@ -2,11 +2,9 @@
    generality: I
    mirror-B: D5/B/S3/Zeros/Jensen/ActualSourceJensenFixedWindow
    mirror-E: none(waiver:source-fixed-window-consumer)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.CircleIntegral,
-     mathlib/module/Mathlib.Analysis.Analytic.Order]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.CircleIntegral, mathlib/module/Mathlib.Analysis.Analytic.Order]
    utility: none
-   digest: The unchanged all-mode source has a fixed-window signed derivative
-     margin and an arbitrary-multiplicity retained-disk polynomial count. -/
+   digest: The unchanged all-mode source has a fixed-window signed derivative margin and an arbitrary-multiplicity retained-disk polynomial count. -/
 
 import D5.S3.Zeros.Jensen.JensenHermiteScaling
 import D5.S3.Zeros.Jensen.JensenSimpleRealStability

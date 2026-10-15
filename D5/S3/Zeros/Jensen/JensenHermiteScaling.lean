@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Zeros/Jensen/JensenHermiteScaling
    mirror-E: none(waiver:source-fixed-window-consumer)
-   anchors: [mathlib/module/Mathlib.Analysis.Calculus.Taylor,
-     mathlib/module/Mathlib.RingTheory.Polynomial.Hermite.Basic]
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.Taylor, mathlib/module/Mathlib.RingTheory.Polynomial.Hermite.Basic]
    utility: none
    digest: Entire weighted series give Hermite scaling at every exact order. -/
 
