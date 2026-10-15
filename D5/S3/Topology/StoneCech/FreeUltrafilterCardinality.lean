@@ -148,6 +148,6 @@ theorem continuum_power_le_mk_freeUltrafilter_nat :
     intro i
     rw [← hu T i, ← hu R i, hTR]
   have hc := Cardinal.mk_le_of_injective hinj
-  simpa only [Cardinal.mk_set, Cardinal.mk_set_nat] using hc
+  simpa only [Cardinal.mk_set, Cardinal.mk_nat, Cardinal.two_power_aleph0] using hc
 
 end D5.S3.Topology.StoneCech.FreeUltrafilterCardinality
