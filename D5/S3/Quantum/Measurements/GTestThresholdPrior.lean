@@ -84,18 +84,16 @@ def UnitVector {d : ℕ} (φ : Fin d → ℂ) : Prop :=
 
 def PiG {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n))) : TensorMat n d :=
-  (Fintype.card G : ℂ)⁻¹ •
-    ∑ g : G, psi (d := d) (g : Equiv.Perm (Fin n))
+  Finset.expect Finset.univ (fun g : G => psi (d := d) (g : Equiv.Perm (Fin n)))
 
 def rhoTilde {n d : ℕ}
     (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ) : TensorMat n d :=
   let T := tensorPower n (U : Matrix (Fin d) (Fin d) ℂ)
-  (n.factorial : ℂ)⁻¹ •
-    ∑ π : Equiv.Perm (Fin n),
+  Finset.expect Finset.univ (fun π : Equiv.Perm (Fin n) =>
       psi (d := d) π *
         (T * rankOneDensity (ket w) * T.conjTranspose) *
-        psi (d := d) (π⁻¹)
+        psi (d := d) (π⁻¹))
 
 def completeness {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
@@ -244,7 +242,9 @@ private theorem psi_comm_tensor (π : Equiv.Perm (Fin n))
 private theorem PiG_comm_tensor (G : Subgroup (Equiv.Perm (Fin n)))
     (A : Matrix (Fin d) (Fin d) ℂ) :
     PiG G * tensorPower n A = tensorPower n A * PiG G := by
-  unfold PiG
+  unfold PiG Finset.expect
+  simp only [← NNRat.cast_smul_eq_nnqsmul ℂ, NNRat.cast_inv,
+    NNRat.cast_natCast, Finset.card_univ]
   rw [Matrix.smul_mul, Matrix.mul_smul, Finset.sum_mul, Finset.mul_sum]
   congr 1
   exact Finset.sum_congr rfl (fun g _ => psi_comm_tensor g.val A)
@@ -258,7 +258,9 @@ private theorem trace_conjugate (P T R : TensorMat n d)
 private theorem PiG_diagonal (G : Subgroup (Equiv.Perm (Fin n)))
     (x : OccupancyWordSectors.Word (Fin d) n) :
     PiG G x x = (Fintype.card (MulAction.stabilizer G x) : ℂ) / (Fintype.card G : ℂ) := by
-  unfold PiG
+  unfold PiG Finset.expect
+  simp only [← NNRat.cast_smul_eq_nnqsmul ℂ, NNRat.cast_inv,
+    NNRat.cast_natCast, Finset.card_univ]
   simp only [Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, psi_apply]
   rw [div_eq_mul_inv, mul_comm]
   congr 1
@@ -270,7 +272,9 @@ private theorem twirl_trace_average (G : Subgroup (Equiv.Perm (Fin n)))
     (w : OccupancyWordSectors.Word (Fin d) n) (U : Matrix.unitaryGroup (Fin d) ℂ) :
     Matrix.trace (PiG G * rhoTilde w U) =
       (n.factorial : ℂ)⁻¹ * ∑ π : Equiv.Perm (Fin n), PiG G (π • w) (π • w) := by
-  unfold rhoTilde
+  unfold rhoTilde Finset.expect
+  simp only [← NNRat.cast_smul_eq_nnqsmul ℂ, NNRat.cast_inv,
+    NNRat.cast_natCast, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
   rw [Matrix.mul_smul, Finset.mul_sum, Matrix.trace_smul, Matrix.trace_sum]
   change _ * _ = _ * _
   congr 1
@@ -391,7 +395,9 @@ private theorem repeat_norm (φ : Fin d → ℂ) (hφ : UnitVector φ) :
 
 private theorem PiG_repeat (G : Subgroup (Equiv.Perm (Fin n))) (φ : Fin d → ℂ) :
     PiG G *ᵥ repeatKet n φ = repeatKet n φ := by
-  unfold PiG
+  unfold PiG Finset.expect
+  simp only [← NNRat.cast_smul_eq_nnqsmul ℂ, NNRat.cast_inv,
+    NNRat.cast_natCast, Finset.card_univ]
   rw [Matrix.smul_mulVec, Matrix.sum_mulVec]
   simp_rw [psi_repeat]
   rw [Finset.sum_const, Finset.card_univ]
