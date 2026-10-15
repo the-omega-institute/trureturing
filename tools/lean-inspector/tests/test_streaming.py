@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import materials
 import publication
 import native
+import fib_analysis
 
 
 def manifest_fixture(root):
@@ -34,6 +35,48 @@ def evidence_fixture():
 
 
 class EvidenceFormatTests(unittest.TestCase):
+    def test_fib_partition_is_optional_unversioned_and_strict(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.object(fib_analysis.subprocess, 'run', side_effect=AssertionError('unexpected analysis')):
+                self.assertIsNone(fib_analysis.produce({'module': 'X'}, Path(directory) / 'absent.zip', None))
+            value = {'applications': []}
+            self.assertEqual(fib_analysis.validate(value), value)
+            for bad in (None, {}, {'applications': None}, dict(value, schema_version=1),
+                        dict(value, extra=True), {'applications': [{}]}):
+                with self.subTest(value=bad), self.assertRaisesRegex(ValueError, 'fib.invalid_'):
+                    fib_analysis.validate(bad)
+
+    def test_fib_reuses_only_unchanged_compiled_inputs_and_rejects_old_partition(self):
+        leaf = dict(application='Reg.X.application', owner='Reg.X', target='X.theorem',
+            target_module='X', target_type_identity='a' * 64, input_identity='b' * 64,
+            request={'arena': 'other'}, unavailable_reason='', reading=fib_analysis.unavailable('fixture'))
+        sibling = dict(leaf, application='Reg.X.sibling')
+        old = {'module': 'Reg.X', 'fib_analysis': {'applications': [leaf, sibling]}}
+        with tempfile.TemporaryDirectory() as directory:
+            previous = Path(directory) / 'previous.zip'
+            def write_old():
+                with zipfile.ZipFile(previous, 'w') as bundle:
+                    bundle.writestr('raw-lean-report.json', json.dumps(
+                        {'schema': materials.REPORT_SCHEMA, 'modules': [old]}))
+                    bundle.writestr('raw-lean-report.json.provenance.json', '{}')
+            write_old()
+            row = {'module': 'Reg.X', 'fib_analysis': {'applications': [dict(leaf, reading=None)]}}
+            with patch.object(publication, 'check_origin'), patch.object(fib_analysis.subprocess, 'run') as run:
+                stats = fib_analysis.produce(row, previous, 'unused')
+                self.assertEqual(stats, {'generated': 0, 'reused': 1, 'unavailable': 0})
+                run.assert_not_called()
+                changed = dict(leaf, input_identity='c' * 64, reading=None)
+                run.return_value = subprocess.CompletedProcess([], 0, json.dumps([leaf['reading']]), '')
+                row['fib_analysis']['applications'] = [changed, dict(sibling, reading=None)]
+                stats = fib_analysis.produce(row, previous, 'analyzer')
+                self.assertEqual(stats['generated'], 1)
+                self.assertEqual(stats['reused'], 1)
+                self.assertEqual(json.loads(run.call_args.kwargs['input']), [leaf['request']])
+                old['fib_analysis']['schema_version'] = 1
+                write_old()
+                with self.assertRaisesRegex(ValueError, '^fib.invalid_partition$'):
+                    fib_analysis.produce(row, previous, 'analyzer')
+
     def test_module_evidence_has_no_global_versions(self):
         with tempfile.TemporaryDirectory() as directory:
             manifest = manifest_fixture(Path(directory))

@@ -1,0 +1,31 @@
+**Proof.** Empty intersection ensures a missing member for every $i$, so
+$g$ exists. If (NAR.15.6) is witnessed outside abstract coordinate $j$, then
+for every $i\in S_j$ one has $g(i)\ne j$, hence (NAR.15.7) has the same
+nonzero difference $d$ throughout $S_j$. Since $S_j$ is nonempty, at least
+one actual coordinate changes: no required edge collapses to a single
+vertex. Thus $\phi$ is a graph homomorphism. Pulling back any proper native
+code gives a proper code on $F_{H,t}$, proving the displayed inequality.
+
+The actual image sources are $X_{\phi(x)}$ from (NAR.14.1), with every
+original offset $iq$ retained and every age outside $I$ fixed at zero. In
+each image history the hidden slot exponents still lie in disjoint intervals
+$[iq+\ell,iq+H+\ell]$. All depth-$D$ slots are reached and the full hidden
+partition is discrete. For an image edge with difference $d$ on $S_j$, take
+
+$$
+\ell=\lambda_0+\max(0,-d),\qquad
+\ell'=\lambda_0+\max(0,d).
+$$
+
+These are unequal allowed lags and give
+$\phi(x)_i+\ell=\phi(y)_i+\ell'$ throughout $S_j$. By (NAR.14.3) the two
+complete later rows agree, including the literal exterior, labels, brackets,
+reached/absent guards and all within-row hidden equality and disequality.
+Each history continues its own fixed initial source under pure $\rho$;
+there is no splicing of histories. Taking $\lambda_0=1$ also supplies
+strictly positive witnesses for the nonnegative-lag convention. Initial
+acquisition and export remain those of (NAR.14.2), and (NAR.14.6) supplies
+every image age to the encoder. This is a whole-row lag obstruction under
+both conventions, with no new acquisition or source-reconstruction premise.
+$\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:401c8cf97dc767db967719495416f987d07dfb8a17c9422937e5a08fc8023056
+  normalized_sha256: sha256:401c8cf97dc767db967719495416f987d07dfb8a17c9422937e5a08fc8023056
+cas_ref: sha256:401c8cf97dc767db967719495416f987d07dfb8a17c9422937e5a08fc8023056
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/PathStableSetPolytope.convexHull_three_pyramid
+    target_statement_id: sha256:cb8453432b773cbb3f2a94a0877e8c4351c6c0b9a00b22f2129c58922ce7f4f5
+  - gid: D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity.finite_zeckendorf_interval_and_euler
+    target_statement_id: sha256:54164db5d402f7eadf47d54eece74989ea8ef37e9cbbac2080191134a450921d
+receipts:
+  unresolved_subitems: []

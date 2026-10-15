@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a2c2fdf5e0a994eff1a97ee19241ccbbddd9ada36bf3f188ec9f6be9deb839f
+  normalized_sha256: sha256:2a2c2fdf5e0a994eff1a97ee19241ccbbddd9ada36bf3f188ec9f6be9deb839f
+cas_ref: sha256:2a2c2fdf5e0a994eff1a97ee19241ccbbddd9ada36bf3f188ec9f6be9deb839f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只完成前述总单孔族的正规化论证。
+    previous_atom_id: 1fbf9d908cce5104ce7b1e15c62d3ad62bfea7c3974215bcca79abf897390011
+    next_atom_id: 38ba16a5f9bcbca109b74f4cda4d3df79eecb4e56c7c5ea4ed1d36441728eac1

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2096cbe389982c29ea4ca6c1d76ecb3f31041eda232166b7098720f5e22d72ba
+  normalized_sha256: sha256:2096cbe389982c29ea4ca6c1d76ecb3f31041eda232166b7098720f5e22d72ba
+cas_ref: sha256:2096cbe389982c29ea4ca6c1d76ecb3f31041eda232166b7098720f5e22d72ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：274. 干预 Markov 等价严格精化观测类：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 284794aaced8700f06e250b3c6f72bab8777de616368957c5bff9dd1302ed1a4
+    next_atom_id: 5b09b35bc3bce9b78e4511b7f4508219caa1aad189b42455a7976ca0a634b681

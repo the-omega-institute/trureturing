@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e945fdb7c85b0187c8abb819a60559bf4b3a67b5522c4359973f68b5f54fd94
+  normalized_sha256: sha256:1e945fdb7c85b0187c8abb819a60559bf4b3a67b5522c4359973f68b5f54fd94
+cas_ref: sha256:1e945fdb7c85b0187c8abb819a60559bf4b3a67b5522c4359973f68b5f54fd94
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：148. v1.2 证明状态矩阵：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 091eea92a70672c4761a03740e83994013dbcb79f1054f9762f0fe867f2abd15
+    next_atom_id: c878db04f697bf5ae584206efdb0bc84d1b4f397656af822ab0c90456d219dd0

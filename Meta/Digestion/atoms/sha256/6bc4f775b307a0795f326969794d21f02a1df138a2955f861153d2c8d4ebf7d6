@@ -1,0 +1,48 @@
+**Proof.** For a disjoint packing $S_1,\ldots,S_\nu$, assign one
+independent constant age from $\{0,\ldots,H\}$ to each entire $S_j$,
+fixing all other ages to zero. The $b^\nu$ vectors form a clique:
+any two differ by a nonzero constant on at least one packed member.
+Reuse (NAR.14.3)--(NAR.14.5) for their complete native witnesses. This
+is the block-clique mechanism of Theorem 13.4 applied to the actual menu.
+
+For a transversal $F$, retain its acquired ages by (NAR.14.6). Upon
+selection of $S$, choose its least index in $F\cap S$ and return
+$z_i-a_i$. This gives $b^{|F|}$ attained labels, since all ages on $F$
+are independent. If $H\ge1$ and $F$ misses a member $S$, the vectors
+$0$ and $\mathbf1_S$ agree on $F$ but conflict on $S$. Their identical
+tuple cannot decode the unequal legal lags from (NAR.14.5). Thus a tuple
+is sufficient exactly when it hits the menu, proving its exact price.
+For $H=0$ the unique vector gives $z_i=\ell$ on every selected region;
+the empty tuple suffices. The bounds also equal one in that case.
+
+The spatial steps are mature packing/piercing arguments, used here
+inside the native memory conclusion. For finite nonempty intervals in
+the public order, repeatedly choose a remaining interval with smallest
+right endpoint, retain that endpoint, and remove every interval
+containing it. Each surviving interval has right endpoint no smaller
+and does not contain the chosen point, so its left endpoint is strictly
+to the right. The chosen witness intervals are consequently pairwise
+disjoint; the retained endpoints hit all intervals. If the procedure
+chooses $p$ intervals and $p$ points, then
+$p\le\nu\le\tau\le p$, giving equality. Gyárfás--Lehel, printed
+pp. 571--573, records the single-interval equality and credits
+Hajnal--Surányi; only this finite single-interval case is used here.
+
+For a finite laminar menu, its inclusion-minimal members are disjoint
+and every member contains one. If there are $p$ minimal members, they
+supply a packing of size $p$ and choosing one point from each supplies
+a transversal of size $p$. Again $p\le\nu\le\tau\le p$. Substitution
+in (NAR.14.9) proves (NAR.14.10).
+
+The public order in the interval argument is inherited from the
+original lexicographic $w_j$ order, with no change to $jb$. Exposed
+depth-$D$ descendants of a single prefix form a consecutive interval
+in this order: all words with that prefix are consecutive, and deleting
+nonexposed words preserves that property among exposed words. For a
+family of such nonempty prefix regions, prefix comparison also makes
+them laminar. Thus these native cylinder regions meet the hypotheses.
+Arbitrary sets of addresses or unions of cylinders need not do so.
+The condition $\nu=\tau$ is sufficient for coordinate optimality;
+no converse characterization of all coordinate-optimal menus follows.
+$\square$
+

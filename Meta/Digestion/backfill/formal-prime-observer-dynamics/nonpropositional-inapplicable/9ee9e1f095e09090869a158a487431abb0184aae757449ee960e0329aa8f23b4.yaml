@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ee9e1f095e09090869a158a487431abb0184aae757449ee960e0329aa8f23b4
+  normalized_sha256: sha256:9ee9e1f095e09090869a158a487431abb0184aae757449ee960e0329aa8f23b4
+cas_ref: sha256:9ee9e1f095e09090869a158a487431abb0184aae757449ee960e0329aa8f23b4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：Part XVII：追加式第三阶段——概率素数观察、几乎处处胶合与软完成：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: a8346d17b90f98d7c0bfb301714b065d556be8ca114a7aecccfed3037a318121
+    next_atom_id: a0c81af9e7273ccca88ed895a4e317cecd65c3abd60bd33057aa0f64af08696e

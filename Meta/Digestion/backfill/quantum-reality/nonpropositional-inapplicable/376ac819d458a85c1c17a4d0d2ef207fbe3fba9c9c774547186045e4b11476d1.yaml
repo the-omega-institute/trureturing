@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:376ac819d458a85c1c17a4d0d2ef207fbe3fba9c9c774547186045e4b11476d1
+  normalized_sha256: sha256:376ac819d458a85c1c17a4d0d2ef207fbe3fba9c9c774547186045e4b11476d1
+cas_ref: sha256:376ac819d458a85c1c17a4d0d2ef207fbe3fba9c9c774547186045e4b11476d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 范围墙片段只声明不覆盖 mana 极值问题的一般解，限定正文范围，没有提出解答或新性质。
+    previous_atom_id: 4d37255e3487c69d50afb379d0e29cf235e4b5cfc8862d71b6340c4ba4196064
+    next_atom_id: a22373d2dff29c7478aa1f4d89dccfcabb821651de616a0aca3579b12443c384

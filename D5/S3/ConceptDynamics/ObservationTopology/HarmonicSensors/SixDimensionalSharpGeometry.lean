@@ -874,7 +874,7 @@ private theorem gain_lower_bound (ε φ ψ : ℝ) (hε : 0 < ε) (hε' : ε ≤ 
   nlinarith [Real.sqrt_nonneg (2 * ε / normalization ε)]
 private theorem gain_values_nonempty (ε : ℝ) : (gainValues ε).Nonempty :=
   ⟨_, 2 * Real.pi / 3, 0, separated_third_turn, rfl⟩
-private theorem lower_gain_eq_sqrt (ε : ℝ) (hε : 0 < ε) (hε' : ε ≤ 1 / 2) :
+theorem lower_gain_eq_sqrt (ε : ℝ) (hε : 0 < ε) (hε' : ε ≤ 1 / 2) :
     lowerGain ε = Real.sqrt (2 * ε / normalization ε) := by
   have hl : ∀ r ∈ gainValues ε, Real.sqrt (2 * ε / normalization ε) ≤ r := by
     rintro r ⟨φ, ψ, hne, rfl⟩

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86b87f7ffb207465972bc895e593fd98a97055fba48da4c3ba55ea943c35a560
+  normalized_sha256: sha256:86b87f7ffb207465972bc895e593fd98a97055fba48da4c3ba55ea943c35a560
+cas_ref: sha256:86b87f7ffb207465972bc895e593fd98a97055fba48da4c3ba55ea943c35a560
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“时间”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: eb96f029fb4b90fe4ffffe447ef80c057237bacfa37c9b061529d3b4f9980674
+    next_atom_id: f33aacb502847f822baf39b4925c2c18bc6991e4ddb9cb93a5d7ba550fc66ece

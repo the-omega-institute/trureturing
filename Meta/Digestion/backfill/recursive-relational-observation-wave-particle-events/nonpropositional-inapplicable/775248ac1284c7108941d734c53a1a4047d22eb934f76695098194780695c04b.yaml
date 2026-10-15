@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:775248ac1284c7108941d734c53a1a4047d22eb934f76695098194780695c04b
+  normalized_sha256: sha256:775248ac1284c7108941d734c53a1a4047d22eb934f76695098194780695c04b
+cas_ref: sha256:775248ac1284c7108941d734c53a1a4047d22eb934f76695098194780695c04b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 14.1（事件效果空间）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: e00ef4a8d42f2a8f5f31d3d35510136b10ba978050c79b7bcca940234c9379f3
+    next_atom_id: 78212aa300506b1037fc35e05187b72e6364d049e83abb745542920c01921a86

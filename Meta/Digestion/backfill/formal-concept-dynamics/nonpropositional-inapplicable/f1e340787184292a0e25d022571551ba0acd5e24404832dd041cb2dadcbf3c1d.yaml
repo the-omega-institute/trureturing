@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f1e340787184292a0e25d022571551ba0acd5e24404832dd041cb2dadcbf3c1d
+  normalized_sha256: sha256:f1e340787184292a0e25d022571551ba0acd5e24404832dd041cb2dadcbf3c1d
+cas_ref: sha256:f1e340787184292a0e25d022571551ba0acd5e24404832dd041cb2dadcbf3c1d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 181.1（分类自实现）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 577f9bf980a258f186eaf8a392ead4b98a531b3763679eb88d7a02c4a7a3462b
+    next_atom_id: 08425bb3c319b67470577176460472746fb50ce3f9ce5e02395f86cea0418f67

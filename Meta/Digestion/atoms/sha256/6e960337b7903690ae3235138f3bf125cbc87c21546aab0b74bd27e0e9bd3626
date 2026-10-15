@@ -1,0 +1,38 @@
+**Proposition 9.6 (native obstruction to an all-solution finite partition).**
+The presentation
+
+$$
+X=X
+\tag{NIS.34}
+$$
+
+is an allowed retained definition. Every native completed tree is a solution.
+There are continuum many pairwise distinct such solutions: for each
+$s=(s_0,s_1,\ldots)\in\{0,1\}^{\mathbb N}$ define coinductively
+
+$$
+U_s=\langle U_{\operatorname{shift}(s)},T_{s_0}\rangle.
+\tag{NIS.35}
+$$
+
+At the first index $j$ where two sequences differ, the subtrees at address
+$L^jR$ are $T_{s_j}$ and $T_{t_j}$, proving $U_s\ne U_t$. Each $U_s$ is
+native, has finite leaves, and satisfies (NIS.34).
+
+Consequently, no finite family whose branch data consist only of integer
+parameters and canonical terminal/$\Omega$ assignments can be an exact
+all-solution partition for Definition 9.3. Such data are countable, while
+(NIS.34) has continuum many solutions. In particular, syntactic absence of a
+finite terminal does not imply that the represented value is $\Omega$.
+
+**Proof.** The coinductive equations in (NIS.35) define a full ordered tree;
+its subtree at address $L^jR$ is $T_{s_j}$, so distinct sequences give distinct
+finite prefixes. The equation $X=X$ imposes no further condition. The
+cardinality comparison proves the final assertion. $\square$
+
+The obstruction also applies to a free component attached to a nontrivial
+presentation. A canonical choice $\Omega$ is legitimate for a theorem about
+one selected witness, or after a separate cofinal-normalization theorem. It
+cannot be used in a completeness direction that quantifies over arbitrary
+completed values.
+

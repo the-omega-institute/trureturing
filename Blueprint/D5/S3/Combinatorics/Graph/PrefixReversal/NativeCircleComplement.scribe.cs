@@ -12,6 +12,8 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
         "A native a/b circle has complete actual cut complements, with supports exhausting its independently defined rotation-and-reversal domain.",
         H("Complete Native Circle Cut Pieces"),
         Blocks(
+            CoordinateAPI("native_configurationCycle_rotation", "Actual Rotation Preserves the Tuple Cycle", "Right multiplication by any finCycle rotation preserves the actual tuple modulo rotations.", false),
+            CoordinateAPI("native_configurationCycle_reversal", "Actual Full Reversal Reverses the Tuple Cycle", "Right multiplication by a reverses the actual configuration tuple cycle.", false),
             Paragraph(Text(
                 "Let m be at least three and let z be a permutation of Fin(m+1). Circle(z,v) means that the "
                 + "actual circular tuple of v equals that of z or its whole reversal; only rotations are "
@@ -51,11 +53,56 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
                     + "leaves precisely all other native edges in the complement. This earns the "
                     + "retained b edges required at subsequent one-contact insertion suppliers."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complement-full-edge-inventory"),
+                DeclarationHandle.Create(Prefix + "native_complement_full_edge_inventory"),
+                H("The Complete Complement Edge Set"),
+                StatementSource.FromAuthor(FullInventoryFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any actual undirected configuration edge e, membership in the complete "
+                    + "native complement is equivalent to NativeCircleEdge(z,e) and inequality "
+                    + "with the literal cut. NativeCircleEdge means that e joins x to x*h for "
+                    + "an actual x in Circle(z) and h equal to a or b. The forward direction uses "
+                    + "the actual walk adjacency and support to earn that form; the complete "
+                    + "native retained-edge theorem supplies both cut exclusion and the converse. "
+                    + "This arbitrary-edge equivalence is consumed by the full T/E graft surgery "
+                    + "inventory, including its absence direction."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-circle-edge-endpoint"),
+                DeclarationHandle.Create(Prefix + "native_circle_edge_endpoint"),
+                H("Both Native Edge Endpoints Remain in Their Actual Circle"),
+                StatementSource.FromAuthor(EndpointFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every m, if e is a NativeCircleEdge(z,e), each actual configuration v "
+                    + "belonging to the undirected edge e lies in Circle(z). The native generators "
+                    + "a and b both reverse the actual tuple cycle: b is a whole reversal followed "
+                    + "by an oriented rotation. Circle is closed under either action. Undirected "
+                    + "edge membership selects one of these two actual endpoints. Complete T "
+                    + "deleted-edge classification consumes this endpoint property to identify "
+                    + "the unique circle owner of any alleged retained old cut."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "These are complete native D-circle pieces for switching constructions. Their membership "
                 + "equivalences cover every configuration in the independent circle domain, with no finite search. "
                 + "Connecting multiple circles still requires actual connecting edges, distinct circle ownership "
                 + "and complete coverage of the intended larger domain.")))));
+
+    private static Formula CoordinateFormula(string selector)
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), r = F.Id("r");
+        Formula cycle(Formula v) => Call("configurationCycle", v);
+        Formula body = selector switch
+        {
+            "native_configurationCycle_rotation" => All("r", Call("Fin", Add(m, D(1))),
+                Eq(cycle(Mul(z, Call("finCycle", r))), cycle(z))),
+            "native_configurationCycle_reversal" => Eq(cycle(Mul(z, Call("a", m))), Call("reverse", cycle(z))),
+            _ => throw new System.ArgumentOutOfRangeException(nameof(selector))
+        };
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m), body)));
+    }
+
+    private static DocumentBlock CoordinateAPI(string selector, string title, string meaning, bool definition) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(CoordinateFormula(selector)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
+            definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
     private static DocumentBlock Complement(string id, string name, string title, bool aCut, string proof) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
@@ -68,6 +115,15 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
         Formula domain = Call("Prod", Call("Fin", Add(m, D(1))), Call("Bool"));
         return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
             All("z", Call("Configuration", m), Call("Equiv", domain, Call("CircleDomain", z))))));
+    }
+
+    private static Formula EndpointFormula()
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), v = F.Id("v"), e = F.Id("e");
+        return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m),
+            All("v", Call("Configuration", m), All("e", Call("Sym2Type", Call("Configuration", m)),
+                Implies(And(Call("NativeCircleEdge", z, e), Call("mem", v, e)),
+                    Call("Circle", z, v)))))));
     }
 
     private static Formula ComplementFormula(bool aCut)
@@ -83,6 +139,24 @@ internal sealed class NativeCircleComplementDocument : IScribeDocumentDefinition
             And(Call("IsPath", w), And(Eq(Call("length", w), Sub(Mul(D(2), Add(m, D(1))), D(1))),
                 And(Eq(Call("support", w), support), full))));
         return Disp(All("m", Call("Nat"), Implies(Le(D(3), m), All("z", Call("Configuration", m), conclusion))));
+    }
+
+    private static Formula FullInventoryFormula()
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), g = F.Id("g"), w = F.Id("w");
+        Formula e = F.Id("e"), config = Call("Configuration", m);
+        Formula gen = new Formula.Logic(Eq(g, Call("a", m)), FormulaLogicOperator.Or, Eq(g, Call("b", m)));
+        Formula support = All("v", config, new Formula.Logic(
+            Call("mem", F.Id("v"), Call("support", w)), FormulaLogicOperator.Iff, Call("Circle", z, F.Id("v"))));
+        Formula assumptions = And(gen, And(Call("IsPath", w),
+            And(Eq(Call("length", w), Sub(Mul(D(2), Add(m, D(1))), D(1))), support)));
+        Formula conclusion = All("e", Call("Sym2Type", config), new Formula.Logic(
+            Call("mem", e, Call("edges", w)), FormulaLogicOperator.Iff,
+            And(Call("NativeCircleEdge", z, e), new Formula.Not(
+                Eq(e, Call("Sym2", z, Call("rightMultiply", z, g)))))));
+        return Disp(All("m", Call("Nat"), Implies(Le(D(3), m), All("z", config, All("g", config,
+            All("w", Call("Walk", Call("nativeABGraph", m), z, Call("rightMultiply", z, g)),
+                Implies(assumptions, conclusion)))))));
     }
 
     private static Formula InventoryFormula()

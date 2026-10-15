@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:53b3134b507d1129fd972b87b6ddf3d4036244d028d9773a776a4c112cd8098f
+  normalized_sha256: sha256:53b3134b507d1129fd972b87b6ddf3d4036244d028d9773a776a4c112cd8098f
+cas_ref: sha256:53b3134b507d1129fd972b87b6ddf3d4036244d028d9773a776a4c112cd8098f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.canonicalDependentFiberEquiv
+    target_statement_id: sha256:1f5cf2aa5ce6b429e6f0634500095e927fcc30fd92887d2cf375db7225ef6fbb
+  - gid: D5/S3/ConceptDynamics/Negation/ComplementFiberLift.sectionLift_isComplementLift
+    target_statement_id: sha256:4b33fd09915789424abd10b30113cc2bb6ac4853b1674ba41c816b9a6f80e7ed
+  - gid: D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates
+    target_statement_id: sha256:0d91e3985a546087c4546dca2294ef335dd71c20c631faf7a03219fc58d6456e
+  - gid: D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.inverse_limit_descent_and_independent_converse
+    target_statement_id: sha256:28bf770d45e83df072c108d3485f4b4c46d40ddada5796225144222954cf4518
+  - gid: D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.realization_range_invariant
+    target_statement_id: sha256:b64a7e165f11d0e691e75dfeda73fdfd5026eee44a6fdb28cef1de679572bea3
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 030dd09500846305323939fd69d9ea8ba0f2c97bc2166af9feec6eea8791ead2
+    - 1257bf4fd713ab36759d18ab6d2182e64062b4e461197504615aa22aaca388c9

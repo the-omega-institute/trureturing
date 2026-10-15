@@ -1,0 +1,59 @@
+**Theorem 9.2 (Exact existence, uniqueness in the box and nonsingularity).** The box (9.2) contains exactly one zero of $E$, and it lies in its interior. At that zero $DE$ is invertible and $h\ge10046/10^6>0$.
+
+Proof. Use the rational matrix
+
+$$
+C=\frac1{10000}
+\begin{pmatrix}
+5455&-1&212\\
+527345&472&65820\\
+-362244&964&-58667
+\end{pmatrix},\qquad
+\det C=-\frac{360250635779}{10^{12}}\ne0. \tag{9.3}
+$$
+
+The exact center residual after multiplication by $C$ is
+
+$$
+CE(\theta_c)=\frac1{273437500000000000000000000000000000000}
+\begin{pmatrix}
+-10243150448844572256019578919535\\
+5927470351553772870217603973935\\
+45079277342660805371643189024388
+\end{pmatrix},\qquad
+\|CE(\theta_c)\|_\infty<\frac1{5000000}. \tag{9.4}
+$$
+
+For a three-variable indeterminate $z$, put $H(z)=I_3-CDE(\theta_c+z)$ and define its finite weighted coefficient row sums by
+
+$$
+M_i=\sum_{j=1}^{3}\sum_{\alpha\in\mathbb N^3}
+\left|[z^\alpha]H_{ij}(z)\right|r^{|\alpha|},\qquad i=1,2,3. \tag{9.5}
+$$
+
+Every coefficient here is rational. Expansion of (9.1), with the derivative columns ordered as $h,d,e$, gives the following exact values and rational bounds:
+
+| Row $i$ | Exact value of $M_i$ | Strict upper bound |
+| --- | --- | --- |
+| $1$ | $\dfrac{390478499067873421120556048493}{62500000000000000000000000000000}$ | $1/100$ |
+| $2$ | $\dfrac{16183691879450395407223506946387}{62500000000000000000000000000000}$ | $27/100$ |
+| $3$ | $\dfrac{14227528846784773295138168796547}{78125000000000000000000000000000}$ | $19/100$ |
+
+These are finite rational identities and inequalities, obtained by substituting the rational center in $I_3-CDE$ and summing the absolute coefficients with weights $10^{-5|\alpha|}$. In particular, for every real $z$ with $\|z\|_\infty\le r$, the induced matrix infinity norm satisfies
+
+$$
+\|I_3-CDE(\theta_c+z)\|_\infty
+\le\max_iM_i<\frac{27}{100}. \tag{9.6}
+$$
+
+Let $T(\theta)=\theta-CE(\theta)$. Integrating its derivative along each segment in the convex box shows that $T$ is a contraction there with Lipschitz constant at most $27/100$. Equations (9.4)–(9.6) give, for every $\theta\in\mathcal B$,
+
+$$
+\|T(\theta)-\theta_c\|_\infty
+\le\|CE(\theta_c)\|_\infty+\frac{27}{100}\|\theta-\theta_c\|_\infty
+<\frac1{5000000}+\frac{27}{100}r
+=\frac{29}{10^7}<r. \tag{9.7}
+$$
+
+Thus $T$ maps the complete closed box into itself, and the contraction theorem gives exactly one fixed point there, in its interior. Because $C$ is invertible, fixed points are precisely zeros of $E$, proving both existence and uniqueness in this box. At any point of the box, (9.6) implies that $CDE$ is invertible by the Neumann series for $I_3-(I_3-CDE)$; therefore $DE$ is invertible at the zero. The $h$ interval in (9.2) gives its stated positive lower bound. This is an exact unique-zero specification; no global uniqueness outside $\mathcal B$ is asserted. $\square$
+

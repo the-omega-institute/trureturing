@@ -1,0 +1,32 @@
+**命题 7.2（genuinely acquired one-bit, one-read repair）。** Let
+$C=(\square,\beta)$ with one class and cut $P=\{L\}$ at the hole. Use
+the refined handoff of Definition 6.1: the same full-acquisition producer
+additionally computes and retains
+
+$$
+\eta=\mathbf 1_{I_1}(x),
+$$
+
+where $x$ fills the hole, and all source-dependent fields exposed to this
+consumer factor through $(R,\eta)$ with no hidden archive, length, timing
+or source label. The grammar
+$I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1)$ is a supplied finite image
+test. The code-assisted consumer returns $0$ when $\eta=0$; when
+$\eta=1$, it reads the absolute address $LR$ and returns $3$ exactly on
+reply $\alpha$, and $1$ otherwise. This is exact on the same actual row
+fiber, uses at most one new read of length $2$, and one bit is necessary
+for any uniformly bounded service on this row.
+
+**证明。** Here the spectrum is $\{0,1,3\}$. If $x\notin I_1$, the
+pair has depth $0$. If $x\in I_1$, its only exceptional member with
+right child $\alpha$ is $T_2=(\beta,\alpha)$; the address $LR$ returns
+$\alpha$ exactly for $T_2$, while $x=\beta$ or a composite $I_1$ value
+returns $\mathsf{abs}$, $\beta$ or $\mathsf{br}$ and hence depth $1$.
+The finite state model gives $M_R=2$: the non-atomic pattern $*$ has
+possible depths $0$ and $1$, while each atomic pattern is single-valued.
+Theorem 6.2 proves the one-bit lower bound under the complete $(R,\eta)$
+handoff, and the displayed producer/consumer attains it. Retaining $\nu$
+itself would use three conditional values and zero reads; retaining root
+$Q$ supports the separate construction-context family but is stronger
+than this root-only field. $\square$
+

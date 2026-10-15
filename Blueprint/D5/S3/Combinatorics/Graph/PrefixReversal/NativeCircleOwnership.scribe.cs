@@ -12,6 +12,21 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
         "The actual two T supplier stars intersect in exactly two core circles and their union has a unique complete circle owner.",
         H("Native Circle Ownership"),
         Blocks(
+            CoordinateAPI("lowerPort", "The Literal Lower Noncore Ports", "The lower port is the actual product a*c*(b*c)^j used by the T core and contact classification.", true),
+            CoordinateAPI("upperPort", "The Literal Upper Noncore Ports", "The upper port exchanges labels zero and m in the corresponding lower port.", true),
+            CoordinateAPI("native_nextLabel_apply", "Next Label at an Actual Position", "The cyclic next label is the configuration evaluated at the successor position modulo m+1.", false),
+            CoordinateAPI("native_prevLabel_apply", "Previous Label at an Actual Position", "The cyclic previous label is the configuration evaluated at the predecessor position modulo m+1.", false),
+            CoordinateAPI("native_bc_pow_val", "Every Prefix Rotation Power on Positions", "For m at least two, each power of b*c rotates the first m positions modulo m and fixes the last position.", false),
+            CoordinateAPI("native_ac_apply_val", "The Actual Two-Reversal Port Coordinates", "For m at least three, the product a*c has the displayed pointwise position formula.", false),
+            CoordinateAPI("native_lowerPort_val", "Lower Port Coordinates", "For m at least three, each lower port has the displayed modular pointwise formula on positions below m.", false),
+            CoordinateAPI("native_lower_m_position", "The Last Label Position in a Lower Port", "For m at least four, label m occurs at the explicitly computed position m-2-j.", false),
+            CoordinateAPI("native_lower_next", "The Next Label at m in a Lower Port", "For m at least four, the cyclic next label of m in every lower noncore port is one.", false),
+            CoordinateAPI("native_lower_prev", "The Previous Label at m in a Lower Port", "For m at least four, the cyclic previous label of m in every lower noncore port is m-1.", false),
+            CoordinateAPI("native_lower_last", "The Lower Port Terminal Label", "For m at least four, every lower noncore port ends with label zero.", false),
+            CoordinateAPI("native_upper_last", "The Upper Port Terminal Label", "For m at least four, every upper noncore port ends with label m.", false),
+            CoordinateAPI("native_upper_next", "The Next Label at m in an Upper Port", "For m at least four, the cyclic next label of m in upper port j is j+2.", false),
+            CoordinateAPI("native_upper_prev", "The Previous Label at m in an Upper Port", "For m at least four, the cyclic previous label of m is one at j=0 and j+1 otherwise.", false),
+            CoordinateAPI("native_t_circle_owner_unique", "Actual T Circle Owner Uniqueness", "For m at least four, two indexed T circle domains containing the same actual configuration have the same owner. This is consumed by the concrete contact edge classification.", false),
             Paragraph(Text(
                 "The ownership argument compares actual tuple cycles. Rotation preserves both cyclic neighbours "
                 + "of every label and whole reversal exchanges next with previous. Existing coordinate equivalence "
@@ -78,6 +93,66 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
                     + "classification and disjointness supply uniqueness. This is a support partition; actual "
                     + "F2 path splicing and the higher marked-path induction remain separate obligations."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CoordinateFormula(string selector)
+    {
+        Formula m = F.Id("m"), z = F.Id("z"), i = F.Id("i"), j = F.Id("j"), k = F.Id("k");
+        Formula n = Call("add", m, D(1)), config = Call("Configuration", m), fin = Call("Fin", n);
+        Formula iv = Call("val", i), jv = Call("val", j), last = Call("last", m);
+        Formula a = Call("a", m), b = Call("b", m), c = Call("c", m);
+        Formula lower = Call("lowerPort", j), upper = Call("upperPort", j);
+        Formula mod = Call("mod", Call("add", iv, jv), m);
+        Formula ports(Formula body) => All("j", Call("Fin", Call("sub", m, D(2))), body);
+        Formula bounded(Formula body) => Implies(Le(D(4), m), ports(body));
+        Formula apply(Formula f, Formula x) => Call("apply", f, x);
+        Formula value(Formula f, Formula x) => Call("val", apply(f, x));
+        Formula lt(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
+        Formula body = selector switch
+        {
+            "lowerPort" => ports(Eq(lower, Call("mul", Call("mul", a, c), Call("pow", Call("mul", b, c), jv)))),
+            "upperPort" => ports(Eq(upper, Call("mul", Call("swap", D(0), last), lower))),
+            "native_nextLabel_apply" => All("z", config, All("i", fin,
+                Eq(Call("nextLabel", z, apply(z, i)), apply(z, Call("mkFin", Call("mod", Call("add", iv, D(1)), n), n))))),
+            "native_prevLabel_apply" => All("z", config, All("i", fin,
+                Eq(Call("prevLabel", z, apply(z, i)), apply(z, Call("mkFin", Call("mod", Call("add", iv, m), n), n))))),
+            "native_bc_pow_val" => Implies(Le(D(2), m), All("k", Call("Nat"), All("i", fin,
+                Eq(value(Call("pow", Call("mul", b, c), k), i),
+                    Call("ite", lt(iv, m), Call("mod", Call("add", iv, k), m), iv))))),
+            "native_ac_apply_val" => Implies(Le(D(3), m), All("i", fin,
+                Eq(value(Call("mul", a, c), i), Call("ite", lt(iv, Call("sub", m, D(1))),
+                    Call("add", iv, D(2)), Call("sub", m, iv))))),
+            "native_lowerPort_val" => Implies(Le(D(3), m), ports(All("i", fin, Implies(lt(iv, m),
+                Eq(value(lower, i), Call("ite", lt(mod, Call("sub", m, D(1))),
+                    Call("add", mod, D(2)), Call("sub", m, mod))))))),
+            "native_lower_m_position" => bounded(Eq(apply(lower,
+                Call("mkFin", Call("sub", Call("sub", m, D(2)), jv), n)), last)),
+            "native_lower_next" => bounded(Eq(Call("val", Call("nextLabel", lower, last)), D(1))),
+            "native_lower_prev" => bounded(Eq(Call("val", Call("prevLabel", lower, last)), Call("sub", m, D(1)))),
+            "native_lower_last" => bounded(Eq(apply(lower, last), D(0))),
+            "native_upper_last" => bounded(Eq(apply(upper, last), last)),
+            "native_upper_next" => bounded(Eq(Call("val", Call("nextLabel", upper, last)), Call("add", jv, D(2)))),
+            "native_upper_prev" => bounded(Eq(Call("val", Call("prevLabel", upper, last)),
+                Call("ite", Eq(jv, D(0)), D(1), Call("add", jv, D(1))))),
+            "native_t_circle_owner_unique" => OwnerFormula(m),
+            _ => throw new System.ArgumentOutOfRangeException(nameof(selector))
+        };
+        return Disp(All("m", Call("Nat"), body));
+    }
+
+    private static Formula OwnerFormula(Formula m)
+    {
+        Formula v = F.Id("v"), p = F.Id("p"), q = F.Id("q");
+        Formula owners = Call("Sum", Call("Fin", m), Call("Fin", Call("sub", m, D(2))));
+        Formula owns(Formula x) => Call("Circle", Call("tCircleAnchor", x), v);
+        return Implies(Le(D(4), m), All("v", Call("Configuration", m),
+            All("p", owners, All("q", owners, Implies(And(owns(p), owns(q)), Eq(p, q))))));
+    }
+
+    private static DocumentBlock CoordinateAPI(string selector, string title, string meaning, bool definition) =>
+        Describe.Lean(DescribeId.Create(selector.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(CoordinateFormula(selector)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(meaning))),
+            definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
     private static Formula Formula()
     {

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8a1eec1d1b631188697307f4359764cffcdc232dcfc43422beee0d788ee4f71b
+  normalized_sha256: sha256:8a1eec1d1b631188697307f4359764cffcdc232dcfc43422beee0d788ee4f71b
+cas_ref: sha256:8a1eec1d1b631188697307f4359764cffcdc232dcfc43422beee0d788ee4f71b
+coverage_gids:
+  - gid: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.answerability_criterion
+    target_statement_id: sha256:c25a483d28a48b64da187a0b3305e7b1be8abc16b223703bca7b9a8abbdcbfe1
+receipts:
+  unresolved_subitems: []

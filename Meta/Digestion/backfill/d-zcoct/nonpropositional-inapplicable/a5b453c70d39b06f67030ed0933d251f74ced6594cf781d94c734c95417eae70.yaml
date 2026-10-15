@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5b453c70d39b06f67030ed0933d251f74ced6594cf781d94c734c95417eae70
+  normalized_sha256: sha256:a5b453c70d39b06f67030ed0933d251f74ced6594cf781d94c734c95417eae70
+cas_ref: sha256:a5b453c70d39b06f67030ed0933d251f74ced6594cf781d94c734c95417eae70
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项承接「这不排除」所列的参数随 n 变化系统，仅说明固定线性自治结论的适用范围，不断言这类生成系统存在。
+    previous_atom_id: 49fea79be5481151e7bcab9741b3042d47766404d68bf97e48bc6616ea5d9f40
+    next_atom_id: 78ae69ac259dc0ca2c133e3d1ba1aa73b9aac9f241c1ee08b3fe7aaf63ab0fa5

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fb2cd8f9dc275608ec618bec0ff03f6e57f631b9a77a30e4cc91a35acc6308da
+  normalized_sha256: sha256:fb2cd8f9dc275608ec618bec0ff03f6e57f631b9a77a30e4cc91a35acc6308da
+cas_ref: sha256:fb2cd8f9dc275608ec618bec0ff03f6e57f631b9a77a30e4cc91a35acc6308da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 137.18（逐个正定不提供统一无限时间控制）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 4e7834f724b5c6d4339c1e10ea788915db330187a9d8dc337d66f47c3708891a
+    next_atom_id: ca5c136448fc67b4def1bb4e0b4f53dbbf80cf1adef2784a9bbd1aa18a95421f

@@ -1,0 +1,86 @@
+**Theorem 11.3 (finite-vector sufficiency on every finite source).** Under
+Assumption 11.1, the finite vector
+
+$$
+Z_{P,D}(u)=\bigl(J^c_w(u)\bigr)_{w\in A_D(P)}
+\tag{NAR.11.4}
+$$
+
+in public lexicographic order factors effectively through $R_P(u)$ and
+is a sufficient code for every allowed later $Q$ and every $k\ge0$.
+The claim includes sources where some or all frontier addresses are
+initially absent; it requires no saturation, designated alpha origin
+or source-size bound.
+
+**Proof.** The supplier `right_clock_iterate` in
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean)
+gives $c(\rho^k u)=c(u)+k$. The expression (NAR.11.3) has the recursion
+
+$$
+\begin{aligned}
+J^c_\varepsilon(u)&=c(u),\\
+J^c_w(\alpha)&=0,\quad J^c_w(\beta)=1 &&(w\ne\varepsilon),\\
+J^c_{Lv}(\langle x,y\rangle)&=1+J^c_v(x),\\
+J^c_{Rv}(\langle x,y\rangle)&=2+J^c_v(y).
+\end{aligned}
+\tag{NAR.11.5}
+$$
+
+For the empty address the supplied clock law gives a one-step increment.
+At a nonempty address, alpha becoming beta changes zero to one. Beta
+becoming $\langle\beta,\alpha\rangle$ changes one to two: the left case
+is $1+J^c_v(\beta)=2$, and the right case is
+$2+J^c_v(\alpha)=2$, also when $v=\varepsilon$. For an originally paired
+tree, homomorphism and induction on the remaining address give the same
+increment. Thus induction and then iteration prove
+
+$$
+J^c_w(\rho^k u)=J^c_w(u)+k
+\qquad(u\in\mathcal T,\ w\text{ any finite word},\ k\ge0).
+\tag{NAR.11.6}
+$$
+
+This is the structural argument for this variant, not a substitution of
+$c$ for $\nu$ in a numerical equality between the variants.
+
+For $w\in A_D(P)$, every $p\in P$ has length at most $D$ and is
+incomparable with $w$. Indeed $p\preceq w$ is excluded by definition,
+and $w\preceq p$ would, at these lengths, force $w=p$. Navigation toward
+$w$ in the literal exterior $C_P(u)$ therefore never enters a hole. If
+it stops early, it stops at a concrete alpha or beta leaf. If it reaches
+$w$, the whole subtree there is concrete, since no $P$ cut is below $w$.
+Let $a_C(w)$ be that navigation's final prefix. The actual exterior factor
+is
+
+$$
+\gamma_{P,w}(C,\pi)
+ =s(a_C(w))+c\bigl(C|_{a_C(w)}\bigr),\qquad
+\gamma_{P,w}(R_P(u))=J^c_w(u).
+\tag{NAR.11.7}
+$$
+
+In the early-stop case the subtree in this formula is the blocking leaf;
+in the reached case it is the entire concrete finite subtree. The
+navigation and the right-clock recursion terminate. The factor uses no
+partition bit, hidden value or additional source Read. In particular an
+absent $L$ at beta gives value one, while the reached $L$ at
+$T_2=\langle\beta,\alpha\rangle$ gives value two. Reachedness comes from
+the literal tree, not from treating a clock value as a presence test.
+
+The finite geometry in Theorem 10.2 gives a depth-$D$ word $w$ with no
+prefix in $P\cup Q$ whenever $Q\in\mathcal Q_D(P)$. Such a word belongs
+to $A_D(P)$ and is incomparable with every $Q$ member too. Select the
+least such word using only the public cuts. With $z_w$ its retained
+coordinate and $B$ the acquired later row, define
+
+$$
+\mathsf{Dec}_{P,D}(Q,z,B)=\gamma_{Q,w}(B)-z_w.
+\tag{NAR.11.8}
+$$
+
+Use integer subtraction; it is nonnegative and exactly $k$ on the
+promised inputs by (NAR.11.6)--(NAR.11.7). Each finite tree gives finite
+coordinates, so this is a finite effective code and decoder. Crucially,
+the encoder computed every exposed coordinate before $Q$ was chosen;
+only the decoder selects the common visible word. $\square$
+

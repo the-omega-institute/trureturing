@@ -5,7 +5,7 @@ year: 2026
 title: Short-interval higher-order uniformity and the same-source Robin tail
 doi: null
 url: https://arxiv.org/abs/2610.09567v1
-claim: "Versioned short-interval Gowers, nilsequence and well-factorable estimates retain distinct models, weight hypotheses and error rates; no interface from these statements to the complete same-source signed Robin tail is supplied."
+claim: "Versioned pointwise, mean-square, weighted, Gowers, nilsequence and well-factorable short-interval estimates retain distinct models, weight hypotheses and error rates; no interface from these statements to the complete same-source signed Robin tail is supplied."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,8 +13,8 @@ triage: anchor
 
 # Short-interval uniformity: reusable inputs and the unpaid Robin interface
 
-This note records the statements and parameter correspondence of three
-versioned primary manuscripts. Their complete proofs are not independently
+This note records the statements and parameter correspondence of
+versioned primary sources. Their complete proofs are not independently
 audited here. The published suppliers are cited directly; no new supplier
 proof, signed Robin estimate, exhaustive literature survey or Lean
 certification is claimed.
@@ -48,6 +48,56 @@ character $\chi$, the model is
 $\widetilde\Lambda_w(n)=\Lambda_w(n)(1-\chi(n)n^{\beta-1})$;
 otherwise it is $\Lambda_w$. This model cannot silently be replaced
 by the constant function or by the full CA layer measure.
+
+## A stronger error on longer Möbius intervals
+
+Matomäki–Teräväinen, *On the Möbius function in all short intervals*,
+[arXiv:1911.09076v2](https://arxiv.org/abs/1911.09076v2),
+§2.1, printed p.4, explicitly records the classical
+Motohashi–Ramachandra estimate: for fixed $\theta>7/12$, some
+$c_\theta>0$, and all sufficiently large $X$,
+
+$$
+\left|\sum_{X<n\le X+H}\mu(n)\right|
+\ll_\theta H\exp\left[-c_\theta
+ \left(\frac{\log X}{\log\log X}\right)^{1/3}\right]
+\qquad(H\ge X^\theta).
+$$
+
+The inspected 18-page primary has SHA256
+`ee94ead957a42f4be93dbba094cb601cca2fc54379bcfb84f4a8f2ad7c0d52b2`.
+The formula is unnumbered and points to its reference [18], Remark 4.
+This reuses the modern primary's explicit statement and attribution;
+the earlier proof is not independently audited here. It is separate
+from that paper's Theorem 1.1, already cited in FIB §400, which reaches
+$\theta>0.55$ with a logarithmic error. The stronger exponential saving
+on the longer intervals is used in the
+[original-response endpoint application](../Weil/corvalan2023interpolation.md#a-paid-deletion-of-original-endpoint-responses).
+The shorter interval threshold below is a different quantitative gain.
+
+The sentence immediately following that formula on printed p.4
+records the same exponential error shape for Huxley's prime number
+theorem. Its quantity is fixed by equation (1.1), printed p.1:
+for fixed $\theta>7/12$, the reusable statement is
+
+$$
+\left|\sum_{X<n\le X+H}\Lambda(n)-H\right|
+\ll_\theta H\exp\left[-c_{\Lambda,\theta}
+ \left(\frac{\log X}{\log\log X}\right)^{1/3}\right]
+\qquad(H\ge X^\theta),
+$$
+
+with some $c_{\Lambda,\theta}>0$. This is the modern primary's
+recorded classical input, not an independent audit of Huxley's proof.
+The Möbius and prime-error constants need not agree. For the
+[terminal-covariance application](../Weil/corvalan2023interpolation.md#pay-the-terminal-covariance-while-retaining-the-endpoint),
+choose a smaller common constant after the scale comparisons and
+restrict the bandwidth parameter accordingly. A full-prefix version
+uses a fixed power margin in the length exponent; the trivial bound
+for a short $\Lambda-1$ prefix costs its length times $O(\log X)$.
+Neither the Möbius $0.55$ threshold nor the shorter range below is
+substituted into this classical prime-error statement.
+
 
 ## A shorter interval range with different quantitative conclusions
 
@@ -152,3 +202,120 @@ the $q=1$ discrepancy is identically zero, so this theorem does not
 bound the common total-prime error. For the Robin consumer the prime
 scale is $x\asymp A$, not $N=e^A$. Replacing it by $N$ to turn a
 logarithmic saving into $A^{-L}$ changes the actual summation problem.
+
+## Short-increment refinements and the retained Robin baseline
+
+Michael Harm, *Refinements for primes in short arithmetic progressions*.
+
+The inspected primary is [arXiv:2507.15334v2](https://arxiv.org/html/2507.15334v2),
+19 May 2026, *Refinements for primes in short arithmetic progressions*.
+Theorem 2.4 is a pointwise estimate for the short-interval prime-count
+error $\Delta_\pi(x,y,q,a)$. Theorem 2.11 is its mean-square counterpart
+over real centers $X\le u\le2X$, summed over reduced residues modulo
+$q$. Both assume Conditions 1.1 and 1.2, with the stated restriction
+on the zero-free-region parameter and density exponent. Their
+interval-length ranges, zero-free factors and logarithmic losses
+must all be retained. These are `literature-attested` inputs; neither
+analytic proof is reproduced or Lean verified here.
+
+For the ordinary prime problem take modulus $q=1$ and residue $a=1$.
+The paper explicitly allows density exponent $A=30/13$ in that case
+from Guth--Maynard. This letter $A$ and the paper's zero-free function
+$\eta$ are separate from the Robin source's total clock $A=B+t$ and
+source exponent $\eta$. Section 3.1 defines $\Delta_\pi$,
+$\Delta_\vartheta$ and $\Delta_\psi$ and their conversion errors;
+the theorem for $\Delta_\pi$ must not be silently substituted for a
+complete-$\psi$ theorem.
+
+In the [forward-primitive consumer PE3--PE7](../Estimation/trureturing2026pricegapconvexity.md#retain-the-compensation-while-controlling-forward-primitive-excursions),
+the relevant ordinary center is the same actual real center after
+any required change of variables. Its observable includes
+$(v-u)E(u)$ in addition to the integrated short-increment error,
+where $E(u)=u-\psi(u)$. The source's $E(A)=t+Q(A)$ is endogenous.
+The cited increment theorems do not provide an estimate for that
+baseline, the complete future primitive, its amplitude-integrated
+exceptional occupation, or the original signed growing head.
+No fixed-tolerance or density-one conclusion from this paper is
+asserted to close the selected Robin comparison or prove RH.
+
+## Effective weighted prime counts in short intervals
+
+Jesse Thorner and Asif Zaman, *Refinements to the prime number theorem for arithmetic progressions*.
+
+Primary source: [arXiv:2108.10878v2](https://arxiv.org/pdf/2108.10878v2),
+version 21 September 2021, §1.1, Theorem 1.1, printed p.1.
+The statement is cited directly; no proof of the published theorem or
+Lean certification is supplied by this note.
+
+For coprime integers $q\ge2$ and $a$, and $4\le h\le x$, the theorem
+defines an exceptional-zero-dependent factor $\lambda$ and exponent
+$\theta$. Without the exceptional real zero they are $\lambda=1$
+and $\theta=7/12$. For each fixed $0<\varepsilon<1-\theta$, if
+$\lambda h/\varphi(q)\ge x^{\theta+\varepsilon}$, it gives
+
+$$
+\sum_{\substack{x-h<p\le x\\p\equiv a\pmod q}}\log p
+=\frac{\lambda h}{\varphi(q)}
+\left[1+O_\varepsilon\left(
+\exp\left\{-\frac{c_1\log x}{
+\log q+(\log(x/h))^{2/3}(\log^+\log(x/h))^{1/3}
++(\log x)^{2/5}(\log\log x)^{1/5}}\right\}\right)\right].
+$$
+
+The constant $c_1=c_1(\varepsilon)>0$ and the implied constant are
+effectively computable. The first product in the denominator has its
+continuous zero convention at $h=x$; $\log^+u=\max\{0,\log u\}$.
+The general exceptional-zero branch must not be omitted for arbitrary
+moduli.
+
+For the Robin gap application, set $q=2$, $a=1$ and
+$\varepsilon=1/60$. Modulo $2$ there is no nontrivial real character,
+so the exceptional-zero branch does not occur. Hence
+$\lambda=1$, $\varphi(2)=1$ and
+$\theta+\varepsilon=7/12+1/60=3/5$. At large interval starts all primes
+in the interval are odd, so the progression sum equals the full weighted
+prime sum there.
+
+The [owning actual-gap application](../Estimation/trureturing2026pricegapconvexity.md#weighted-short-interval-counts-pay-more-actual-gap-residuals)
+uses this increment estimate with an actual endpoint contact and the
+existing strict first-layer activation rule. It does not use an
+increment bound to erase an arbitrary complete primitive baseline.
+The theorem and this note supply neither a same-source signed future
+occupation/credit bound nor a Robin or RH proof.
+
+## Uniform linear phases in a shorter range
+
+Javier Pliego and Mengdi Wang, *Discorrelation of the Möbius function
+with linear phases in short intervals*,
+[arXiv:2610.11487v1](https://arxiv.org/html/2610.11487v1#S1.Thmtheorem1),
+version 8 October 2026, §1, Theorem 1.1, gives, for fixed small
+$\varepsilon>0$ and $X^{0.58+\varepsilon}\le H\le X$,
+
+$$
+\sup_{\alpha\in\mathbb R}
+\left|\sum_{X<n\le X+H}\mu(n)e(n\alpha)\right|
+\ll_\varepsilon H(\log X)^{-1/3+\varepsilon}.
+$$
+
+This theorem is unconditional. The Dirichlet-$L$ moment premise
+(1.2) belongs to the paper's Theorem 1.3 on prime exponential sums;
+it is not an assumption of Theorem 1.1. The statement and its
+hypotheses are cited directly, without reproducing the source proof.
+
+For the [original residual-band application (I59)](../Weil/corvalan2023interpolation.md#pay-the-terminal-covariance-while-retaining-the-endpoint),
+$X\asymp N$ and $H\asymp N^{3/4}e^{\lambda\Omega(N)}$ satisfy
+this length range eventually. At this length, however, the previously
+cited Theorem 1.2 of arXiv:2610.09567v1 already supplies arbitrary
+fixed logarithmic savings for linear phases, realized as fixed
+one-dimensional torus nilsequences with uniform Lipschitz bounds.
+For the untwisted phase the longer-interval exponential error above
+is also stronger. The shorter admissible length in this new source
+does not improve the error supplied for that particular family.
+
+The residual moments and endpoint in (I56) are not a single linear
+phase. Turning them into a phase superposition still requires a proved
+expansion, its total weight and all losses, with the same actual
+coefficients and endpoint retained. Likewise the smooth test in
+(I78)--(I82) has growing derivative costs and two exact arithmetic
+scalar channels. This cited theorem supplies neither their joint
+cancellation nor a complete signed Robin estimate.

@@ -64,7 +64,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.RowFiber`
 
 The carrier is every actual original Boolean tree with the specified canonicalRow, without a size bound, sample restriction or product-fiber premise.
 
-**Definition 1.6 (Mathematical inverse valuation).**
+**Theorem 1.6 (Recovery Reconstructs Every Actual Source).**
+
+$$\forall P: CutSet, ((\operatorname{CutPrefixFree}\left(P\right)) \implies (\forall C: LiteralRow, (\forall u: \operatorname{RowFiber}\left(P, C\right), (\operatorname{evaluateRow}\left(\operatorname{extend}\left(C, \operatorname{val}\left(\operatorname{recover}\left(P, C, u\right)\right)\right), C\right) = \operatorname{val}\left(u\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.recover_fill` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite prefix-free cut, every complete row C and every source u in its row fiber, filling C with the recovered class valuation gives exactly u. The source carrier remains unrestricted. This mathematical reconstruction is not a physical port.
+
+**Definition 1.7 (Mathematical inverse valuation).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.recover`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.recover`
 
 The inverse recovers actual class values from an original source in the fiber. This proof operation is not an accessible source identity or subtree-equality service port.
 
-**Definition 1.7 (Exact old-class/source equivalence).**
+**Definition 1.8 (Exact old-class/source equivalence).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.rowFiberEquiv`
 
@@ -96,5 +108,6 @@ Evaluation and recovery are mutually inverse and evaluation is injective on lega
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.labels_canonical`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.legal_values_row`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.recover`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.recover_fill`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.rowFiberEquiv`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSeparation](NativeGroundSeparation.md)

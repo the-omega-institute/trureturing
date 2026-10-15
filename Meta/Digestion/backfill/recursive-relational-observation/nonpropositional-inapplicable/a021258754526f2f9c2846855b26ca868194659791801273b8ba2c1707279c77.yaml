@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a021258754526f2f9c2846855b26ca868194659791801273b8ba2c1707279c77
+  normalized_sha256: sha256:a021258754526f2f9c2846855b26ca868194659791801273b8ba2c1707279c77
+cas_ref: sha256:a021258754526f2f9c2846855b26ca868194659791801273b8ba2c1707279c77
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义与假设 81.1 只固定共同有限概率律、Shannon 量的定义及 nat/bit 约定，不断言信息的收支定理。
+    previous_atom_id: 064aeb85b084f0fd37caafaece5ecf3f81b9c4394741f3ddba9243dd1cc2f214
+    next_atom_id: e26df1ea8b7fccb7ae4f4a1b47fffecb3d0517f1cd8fef9331d3214b2e80ff72

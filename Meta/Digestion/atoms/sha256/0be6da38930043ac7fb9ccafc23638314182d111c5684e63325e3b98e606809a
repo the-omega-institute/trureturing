@@ -1,0 +1,11 @@
+**Boundary 7.2 (no whole-image optimum from a selected pair).** The eight-hole
+pair gives only a two-row lower bound for an additional complete conditional
+field under the SJM premises. It does not compute the minimum memory alphabet
+for every attained row of $D$. A NO for a selected joint $B$ likewise excludes
+only that joint tuple; it does not separate every pair in the whole image.
+Potential construction, saturation, Presburger decision, offline prefix
+construction and finite witness production are mathematical preparation and
+local computation. Their termination establishes no physical-time bound,
+uniform read cost, source-independent witness size or free strategy
+computation. No physical spacetime model is asserted.
+

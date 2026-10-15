@@ -1,0 +1,9 @@
+**Proposition 11.7 (the two optimized resources and their limits).**
+The frontier (NBP.11.8) charges the complete changing finite control
+state, including phase and reply memory, and every fixed whole-row
+halting distinction. It does not identify exported capacity with
+running memory or with physical storage. In particular the nine-state
+and ten-state constant-advice controllers both require four bits in a
+fixed-width injective binary state encoding, although their total state
+cardinalities and three-call feasibility differ.
+

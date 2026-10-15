@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b78f6771301fe61c34e86e1e77da910bdb0afd67d539cb1c8dc7b01f19798b1
+  normalized_sha256: sha256:6b78f6771301fe61c34e86e1e77da910bdb0afd67d539cb1c8dc7b01f19798b1
+cas_ref: sha256:6b78f6771301fe61c34e86e1e77da910bdb0afd67d539cb1c8dc7b01f19798b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 39.3 德性论：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: f20abff59202b93858c02ad76bb53e124e9cd42280fe7847e51dff76f6f1c838
+    next_atom_id: 8588a2892a5cb4da975104b2791e601a6902d584aa4d01d9e3bad8ace33660ac

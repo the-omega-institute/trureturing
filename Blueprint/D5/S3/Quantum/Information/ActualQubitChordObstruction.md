@@ -56,7 +56,31 @@ $$\begin {aligned} & A : \mathbb {R} ^ 3 \to _ {\mathbb {R}} ( \mathbb {C} ^ {3\
 
 A is jointObservation(G), a real linear map from Euclidean three-space to a pair of complex signal matrices. Both components are observations through the same processor. Let K be its kernel, Q the orthogonal complement of K, and P the orthogonal projection onto Q. P is a real orthogonal projection; no complete positivity of P is asserted.
 
-**Theorem 1.5 (The physical affine chord, endpoint overlap, and pointwise QFI).**
+**Theorem 1.5 (The determinant in Bloch coordinates).**
+
+$$\forall r \in \operatorname{EuclideanSpace}\left(\mathbb {R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname {Matrix} . \operatorname {det}\left(\operatorname {D5} . \operatorname {S3} . \operatorname {Quantum} . \operatorname {Information} . \operatorname {ActualPureQubitCostInfimum} . \operatorname {blochMatrix}\left(1, r\right)\right) = \operatorname {Complex} . \operatorname {ofReal}\left(\frac{1 - \left\lVert r \right\rVert^{2}}{4}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualQubitChordObstruction.det_bloch` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real Euclidean three-vector r, the determinant of blochMatrix(1,r) is the complex embedding of (1 minus the squared norm of r) divided by four. The identity holds without a bound on the norm.
+
+**Theorem 1.6 (Unit Bloch vectors give idempotent matrices).**
+
+$$\forall r \in \operatorname{EuclideanSpace}\left(\mathbb {R}, \operatorname{Fin}\left(3\right)\right),\; ( \left\lVert r \right\rVert = 1 ) \Rightarrow ( \operatorname {D5} . \operatorname {S3} . \operatorname {Quantum} . \operatorname {Information} . \operatorname {ActualPureQubitCostInfimum} . \operatorname {blochMatrix}\left(1, r\right) \cdot \operatorname {D5} . \operatorname {S3} . \operatorname {Quantum} . \operatorname {Information} . \operatorname {ActualPureQubitCostInfimum} . \operatorname {blochMatrix}\left(1, r\right) = \operatorname {D5} . \operatorname {S3} . \operatorname {Quantum} . \operatorname {Information} . \operatorname {ActualPureQubitCostInfimum} . \operatorname {blochMatrix}\left(1, r\right) )$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualQubitChordObstruction.pure` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real Euclidean three-vector r of norm one, blochMatrix(1,r) squared equals blochMatrix(1,r). This is the idempotence identity for a pure qubit state.
+
+**Theorem 1.7 (The physical affine chord, endpoint overlap, and pointwise QFI).**
 
 $$\begin {aligned} & \forall   a \in   \mathbb {R} ,   \forall   G \in   \operatorname {CPTP} ( \operatorname {Fin} ( 3 ) \times \operatorname {Fin} ( 2 ) ,   \operatorname {Fin} ( 3 ) ) , \\ & \forall   \rho : \mathbb {R} \to \mathbb {C} ^ {2\times2} ,   ( 0 < a \land a < 1 \land   ( \forall   u \in   J ,   \operatorname {PSD} ( \rho ( u ) ) \land \operatorname {tr} ( \rho ( u ) ) = 1 ) \\ & \land   ( \forall   u \in   J ,   \forall   k ,   \operatorname {L} ( k ,   \rho ( u ) ) = \operatorname {Y} ( k ,   a ,   u ) ) ) \\ & \longrightarrow   ( ( \forall   k ,   \operatorname {Density} ( W _ {k} ) ) \land   ( \exists   c , v \in   \mathbb {R} ^ 3 ,   \exists   b \in   \mathbb {R} , ( \\ & v \neq   0 \land 2 {a} ^ {2} - 1 \le b \le 2 a - 1 \land b < 1 \land c , v \in   Q \\ & \land   ( \forall   u \in   J ,   \operatorname {P} ( \operatorname {R} ( \rho ( u ) ) ) = \operatorname {r} ( u ) ) \\ & \land   ( \forall   u \in   \mathbb {R} ,   \forall   k ,   \operatorname {L} ( k ,   \operatorname {B} ( \operatorname {r} ( u ) ) ) = \operatorname {Y} ( k ,   a ,   u ) ) \\ & \land   ( \forall   u \in   \mathbb {R} ,   \operatorname {norm} ( \operatorname {r} ( u ) ) \le 1 \iff b \le u \le 1 ) \\ & \land   ( \forall   u \in   \mathbb {R} ,   \operatorname {PSD} ( \operatorname {B} ( \operatorname {r} ( u ) ) ) \iff b \le u \le 1 ) \\ & \land   ( \forall   u \in   \mathbb {R} ,   \operatorname {tr} ( \operatorname {B} ( \operatorname {r} ( u ) ) ) = 1 ) \\ & \land   ( \forall   u \in   J ,   \operatorname {norm} ( \operatorname {r} ( u ) ) < 1 ) \\ & \land \operatorname {norm} ( c + v ) = 1 \land \operatorname {norm} ( c + b v ) = 1 \\ & \land {rhoPlus} ^ {2} = rhoPlus \land {rhoMinus} ^ {2} = rhoMinus \\ & \land 0 \le s \le \frac {1 + b} {2} \land s < 1 ) ) ) \\ & \land   ( \forall   u \in   J ,   \operatorname {DifferentiableAt} ( \mathbb {R} ,   \rho ,   u ) \longrightarrow \\ & \frac {1 - {a} ^ {2}} {( 1 - u ) ( 1 + u - 2 {a} ^ {2} )} \le \operatorname {spectralQFI} ( \rho ( u ) ,   \operatorname {deriv} ( \rho ,   u ) ,   \operatorname {hRho} ( u ) ) ) \end {aligned}$$
 
@@ -89,8 +113,10 @@ The classical Fisher information is norm(v) squared plus inner(r,v) squared divi
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Information/ActualQubitChordObstruction.actual_two_probe_chord_and_qfi`
+- Truth anchor: `D5/S3/Quantum/Information/ActualQubitChordObstruction.det_bloch`
 - Truth anchor: `D5/S3/Quantum/Information/ActualQubitChordObstruction.jointObservation`
 - Truth anchor: `D5/S3/Quantum/Information/ActualQubitChordObstruction.probeTarget`
 - Truth anchor: `D5/S3/Quantum/Information/ActualQubitChordObstruction.programOutput`
+- Truth anchor: `D5/S3/Quantum/Information/ActualQubitChordObstruction.pure`
 - Truth anchor: `D5/S3/Quantum/Information/ActualQubitChordObstruction.signalProbe`
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitFisherRank](ActualPureQubitFisherRank.md)

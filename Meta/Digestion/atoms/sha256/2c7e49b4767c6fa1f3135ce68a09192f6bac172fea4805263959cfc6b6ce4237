@@ -1,0 +1,17 @@
+**Theorem 14.8 (one later row has a smaller ambiguity than one pre-menu code).**
+For a promised whole later row $Y$ at $S\in\mathcal M$, let
+$z_i=c(Y|_{w_i})-ib$. Without the retained code its compatible lag answers
+are exactly the integer interval
+
+$$
+\mathcal L(Y,S)=
+\left[\max\left(\lambda_0,\max_{i\in S}(z_i-H)\right),
+             \min_{i\in S}z_i\right]\cap\mathbb Z.
+\tag{NAR.14.17}
+$$
+
+Its size is at most $H+1$, and the maximum over promised entire rows is
+exactly $H+1$. Every individually fixed, preannounced $S$ has retained
+price $H+1$, as in Theorem 13.4, but a single code chosen before selection
+of $S$ can require strictly more. The Fano menu at $H\ge2$ does so.
+

@@ -1,0 +1,25 @@
+**Proof.** Fix \(p\). The representatives in (FFM.30) are a
+\(\delta_h\)-separated subset of one ball of radius \(R_h\), so their number
+is at most \(\mathsf P_X(R_h,\delta_h)\). Taking the maximum over \(p\) proves
+(FFM.32). Theorem 5.2 identifies \(m_{H_A}\) with \(M_*\), giving
+(FFM.33).
+
+For Euclidean \(X\), the open balls of radius \(\delta_h/2\) around the
+representatives are pairwise disjoint and lie in the ball of radius
+\(R_h+\delta_h/2\). Comparing Lebesgue volumes gives
+
+$$
+m_h\left(\frac{\delta_h}{2}\right)^d
+\le\left(R_h+\frac{\delta_h}{2}\right)^d,
+$$
+
+which is (FFM.34). Taking logarithms gives (FFM.35). The case \(R_h=0\)
+already forces \(m_h\le1\), so it cannot occur together with \(M_*>1\).
+\(\square\)
+
+The estimate is a capacity test, not a dimension theorem. It uses a metric
+cell radius and a row-separation scale that are additional bridge data. If
+the source rows are not separated in the carrier, the estimate has no force;
+if \(R_h/\delta_h\) is allowed to grow without a declared relation to native
+prefix depth, (FFM.35) does not identify a stable exponent.
+

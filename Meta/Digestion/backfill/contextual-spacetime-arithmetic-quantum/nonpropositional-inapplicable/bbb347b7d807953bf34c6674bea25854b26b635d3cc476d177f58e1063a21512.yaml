@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bbb347b7d807953bf34c6674bea25854b26b635d3cc476d177f58e1063a21512
+  normalized_sha256: sha256:bbb347b7d807953bf34c6674bea25854b26b635d3cc476d177f58e1063a21512
+cas_ref: sha256:bbb347b7d807953bf34c6674bea25854b26b635d3cc476d177f58e1063a21512
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 记号段只定义加权差异映射、带参考的放宽目标及系数 c 的含义，不断言最优值或性质。
+    previous_atom_id: 46ed2c13a25873bb84669c2a3b9f24c76d63135ce4c22a49e9657a854c32cbdc
+    next_atom_id: eb94e8e1e3105dbc11b4df9cd36d1ddba1c3bd3d3654c080367c6d3846bf0b87

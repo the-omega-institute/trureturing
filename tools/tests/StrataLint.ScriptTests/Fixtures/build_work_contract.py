@@ -14,12 +14,12 @@ REPO = Path(__file__).resolve().parents[4]
 
 
 class BuildWorkContracts(unittest.TestCase):
-    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False):
+    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
         for name in ("tools/lean-inspector/inspect.sh", "tools/scripts/lib/resource-observation-lib.sh",
-                     "tools/lean-inspector/build_work.py"):
+                     "tools/lean-inspector/build_work.py", "tools/scripts/workflow/ci_compute.py"):
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
             if (REPO / name).exists(): shutil.copyfile(REPO / name, dest)
@@ -73,6 +73,24 @@ class BuildWorkContracts(unittest.TestCase):
                    STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
                    STRATALINT_LEAN_BUILD_TARGETS='["Probe"]' if targets else '[]')
+        if ci_budget:
+            budget = root / "compute-seconds"
+            budget.write_text("1800")
+            env.update(STRATALINT_CI_COMPUTE_BUDGET=str(budget), STRATALINT_CI_COMPUTE_ACTIVE="0",
+                       BOUNDARIES=str(root / "boundaries"), PATH=str(root) + os.pathsep + os.environ['PATH'])
+            env.pop('STRATALINT_LEAN_PRODUCER_DLL')
+            script("dotnet", "#!/bin/bash\nprintf '%s:%s\\n' \"$1\" \"${STRATALINT_CI_COMPUTE_ACTIVE:-0}\" >> \"$BOUNDARIES\"\n"
+                   + "if [[ $1 == build ]]; then printf '%s\\n' '" + str(producer) + "'; fi\n")
+            for name, label in (("tools/scripts/worktree/lean-cache-ensure.sh", "ensure"),
+                                ("tools/scripts/worktree/lean-cache-run.sh", "native-entry")):
+                path = root / name
+                path.write_text(path.read_text().replace("#!/bin/bash\n", "#!/bin/bash\n"
+                    + "printf '" + label + ":%s\\n' \"${STRATALINT_CI_COMPUTE_ACTIVE:-0}\" >> \"$BOUNDARIES\"\n"))
+            for name in ("tools/lean-inspector/reuse.py", "tools/lean-inspector/native.py"):
+                path = root / name
+                path.write_text("import os, sys\nwith open(os.environ['BOUNDARIES'], 'a') as stream:\n"
+                                "    stream.write(sys.argv[1] + ':' + os.environ.get('STRATALINT_CI_COMPUTE_ACTIVE', '0') + '\\n')\n"
+                                + path.read_text())
         entry = ["bash", str(root / "tools/lean-inspector/inspect.sh"),
                  "--repository", str(root), "--output", str(root / "report.json")]
         if interrupted:
@@ -82,6 +100,23 @@ class BuildWorkContracts(unittest.TestCase):
         result = subprocess.run(entry,
                                 env=env, capture_output=True, text=True)
         return result, fact, root
+
+    def test_ci_report_charges_compute_and_keeps_nested_preparation_outside(self):
+        for reused in (True, False):
+            with self.subTest(reused=reused):
+                result, _, root = self.invoke(reused=reused, ci_budget=True)
+                self.assertEqual(0, result.returncode, result.stderr)
+                boundaries = (root / "boundaries").read_text().splitlines()
+                self.assertIn("restore:0", boundaries)
+                self.assertIn("build:1", boundaries)
+                self.assertIn("ensure:0", boundaries)
+                self.assertIn("reuse:1", boundaries)
+                # The real cache reader charges only the command after ensure;
+                # this entry must not start an enclosing compute timer.
+                self.assertIn("native-entry:0", boundaries)
+                if not reused:
+                    for phase in ("capture", "prepare", "publish"):
+                        self.assertIn(phase + ":1", boundaries)
 
     def recorder_inputs(self, output="Build completed successfully (1 jobs).\n", activity=()):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
