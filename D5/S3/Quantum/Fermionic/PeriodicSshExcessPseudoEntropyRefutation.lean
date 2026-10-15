@@ -426,6 +426,30 @@ private def modes58Z : Fin 6 → Fin 6 → ℤ :=
     ![-11, -7, 13, -7, -2, 14], ![-5, -7, -3, 7, 8, 0],
     ![11, -7, -13, -7, 2, 14], ![1, 1, 1, 1, 1, 1]]
 
+private theorem mode_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ)
+    (s : Assignment 6) :
+    (mode (fun j => (l j : ℝ)) *ᵥ (fun x => (f x : ℂ))) s =
+      (modeInt l f s : ℂ) := by
+  classical
+  simp only [mode, Matrix.sum_mulVec, Matrix.smul_mulVec]
+  simp [fullC_sparse]
+  unfold modeInt
+  push_cast
+  simp [Complex.ofReal_mul]
+
+private theorem mode_create_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ)
+    (s : Assignment 6) :
+    ((mode (fun j => (l j : ℝ)))ᴴ *ᵥ (fun x => (f x : ℂ))) s =
+      (modeCreateInt l f s : ℂ) := by
+  classical
+  simp only [mode, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
+    Complex.star_def, Complex.conj_ofReal, Matrix.sum_mulVec, Matrix.smul_mulVec,
+    Matrix.conjTranspose_apply]
+  simp [fullC_create_sparse]
+  unfold modeCreateInt
+  push_cast
+  simp [Complex.ofReal_mul]
+
 private theorem psi38_norm : ∑ x, psi38Z x ^ 2 = 3528 := by decide
 private theorem psi58_norm : ∑ x, psi58Z x ^ 2 = 392 := by decide
 private theorem psi38_overlap : ∑ x, psi58Z x * psi38Z x = 1152 := by decide
@@ -445,6 +469,130 @@ private theorem psi58_mode_kernel :
     (∀ k : Fin 3, modeCreateInt (modes58Z ⟨k.val, by omega⟩) psi58Z = 0) ∧
     (∀ k : Fin 3, modeInt (modes58Z ⟨k.val + 3, by omega⟩) psi58Z = 0) := by
   constructor <;> intro k <;> fin_cases k <;> decide
+
+private theorem psi38_complex_mode_kernel :
+    (∀ k : Fin 3,
+      (mode (fun j => (modes38Z ⟨k.val, by omega⟩ j : ℝ)))ᴴ *ᵥ psi38 = 0) ∧
+    (∀ k : Fin 3,
+      mode (fun j => (modes38Z ⟨k.val + 3, by omega⟩ j : ℝ)) *ᵥ psi38 = 0) := by
+  constructor
+  · intro k
+    funext s
+    change ((mode (fun j => (modes38Z ⟨k.val, by omega⟩ j : ℝ)))ᴴ *ᵥ
+      (fun x => (psi38Z x : ℂ))) s = 0
+    rw [mode_create_mulVec_int_cast]
+    have h := congrFun (psi38_mode_kernel.1 k) s
+    exact_mod_cast h
+  · intro k
+    funext s
+    change (mode (fun j => (modes38Z ⟨k.val + 3, by omega⟩ j : ℝ)) *ᵥ
+      (fun x => (psi38Z x : ℂ))) s = 0
+    rw [mode_mulVec_int_cast]
+    have h := congrFun (psi38_mode_kernel.2 k) s
+    exact_mod_cast h
+
+private theorem psi58_complex_mode_kernel :
+    (∀ k : Fin 3,
+      (mode (fun j => (modes58Z ⟨k.val, by omega⟩ j : ℝ)))ᴴ *ᵥ psi58 = 0) ∧
+    (∀ k : Fin 3,
+      mode (fun j => (modes58Z ⟨k.val + 3, by omega⟩ j : ℝ)) *ᵥ psi58 = 0) := by
+  constructor
+  · intro k
+    funext s
+    change ((mode (fun j => (modes58Z ⟨k.val, by omega⟩ j : ℝ)))ᴴ *ᵥ
+      (fun x => (psi58Z x : ℂ))) s = 0
+    rw [mode_create_mulVec_int_cast]
+    have h := congrFun (psi58_mode_kernel.1 k) s
+    exact_mod_cast h
+  · intro k
+    funext s
+    change (mode (fun j => (modes58Z ⟨k.val + 3, by omega⟩ j : ℝ)) *ᵥ
+      (fun x => (psi58Z x : ℂ))) s = 0
+    rw [mode_mulVec_int_cast]
+    have h := congrFun (psi58_mode_kernel.2 k) s
+    exact_mod_cast h
+
+private theorem psi38_number :
+    numberOperator 6 *ᵥ psi38 = (3 : ℂ) • psi38 := by
+  rw [numberOperator_eq_diagonal]
+  funext s
+  simp only [Matrix.mulVec, dotProduct, Matrix.diagonal_apply, if_pos rfl,
+    one_mul, Pi.smul_apply]
+  rw [Finset.sum_eq_single s]
+  · simp only [if_pos rfl, one_mul, Pi.smul_apply]
+    change (occupationCount s : ℂ) * psi38 s = (3 : ℂ) * psi38 s
+    have h := psi38_three s
+    change (∑ j, if s j then (1 : ℤ) else 0) * psi38Z s = 3 * psi38Z s at h
+    have hocc : occupationCount s = ∑ j, if s j then 1 else 0 := by
+      unfold occupationCount
+      apply Finset.sum_congr rfl
+      intro j hj
+      cases hs : s j <;> simp [hs]
+    rw [hocc]
+    have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi38Z s : ℂ) =
+        3 * (psi38Z s : ℂ) := by exact_mod_cast h
+    simpa [psi38, psi38Z] using hc
+  · intro b hb hne
+    simp [Ne.symm hne]
+  · intro hmem
+    exact False.elim (hmem (Finset.mem_univ _))
+
+private theorem psi58_number :
+    numberOperator 6 *ᵥ psi58 = (3 : ℂ) • psi58 := by
+  rw [numberOperator_eq_diagonal]
+  funext s
+  simp only [Matrix.mulVec, dotProduct, Matrix.diagonal_apply, if_pos rfl,
+    one_mul, Pi.smul_apply]
+  rw [Finset.sum_eq_single s]
+  · simp only [if_pos rfl, one_mul, Pi.smul_apply]
+    change (occupationCount s : ℂ) * psi58 s = (3 : ℂ) * psi58 s
+    have h := psi58_three s
+    change (∑ j, if s j then (1 : ℤ) else 0) * psi58Z s = 3 * psi58Z s at h
+    have hocc : occupationCount s = ∑ j, if s j then 1 else 0 := by
+      unfold occupationCount
+      apply Finset.sum_congr rfl
+      intro j hj
+      cases hs : s j <;> simp [hs]
+    rw [hocc]
+    have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi58Z s : ℂ) =
+        3 * (psi58Z s : ℂ) := by exact_mod_cast h
+    simpa [psi58, psi58Z] using hc
+  · intro b hb hne
+    simp [Ne.symm hne]
+  · intro hmem
+    exact False.elim (hmem (Finset.mem_univ _))
+
+private theorem psi38_nonzero : psi38 ≠ 0 := by
+  intro h
+  have hz : psi38Z = 0 := by
+    funext x
+    have hx := congrFun h x
+    change (psi38Z x : ℂ) = 0 at hx
+    exact_mod_cast hx
+  have hn := psi38_norm
+  rw [hz] at hn
+  norm_num at hn
+
+private theorem psi58_nonzero : psi58 ≠ 0 := by
+  intro h
+  have hz : psi58Z = 0 := by
+    funext x
+    have hx := congrFun h x
+    change (psi58Z x : ℂ) = 0 at hx
+    exact_mod_cast hx
+  have hn := psi58_norm
+  rw [hz] at hn
+  norm_num at hn
+
+private theorem psi_overlap : star psi58 ⬝ᵥ psi38 = (1152 : ℂ) := by
+  simp only [dotProduct, Pi.star_apply]
+  have hstar (x : Assignment 6) : star (psi58 x) = (psi58Z x : ℂ) := by
+    simp [psi58, psi58Z]
+  have hcast (x : Assignment 6) : psi38 x = (psi38Z x : ℂ) := by
+    rfl
+  simp_rw [hstar, hcast]
+  have h := psi38_overlap
+  exact_mod_cast h
 
 theorem result : ¬ claim := by
   sorry
