@@ -16,7 +16,7 @@ $$\forall H \in CompleteComplexHilbertSpace, w \in \operatorname{Set}\left(H\rig
 
 Let H be any complete complex Hilbert space, and e any Hilbert basis indexed by a set of H. Let rho and sigma be the original positive trace-class bounded operators. Assume sigma has this eigenbasis with strictly positive real eigenvalues s. No commutation of rho with sigma or with the observable is assumed, and the dimension need not be finite. The quadratic moment Q is the extended nonnegative sum of norm(rho e_i) squared divided by s_i. The finite-Q guard is required before its real value is used.
 
-Define the columns v_i by inverse square root of s_i times rho e_i. The finite moment proves their squared norms summable. For every x, synthesize A x as the sum of inner(e_i,x) times v_i. Parseval and the supplied scalar square-sum product estimate prove absolute convergence of this vector series and the bound norm(A x) at most square root of Q times norm(x). The actual series is linear and continuous; orthonormality proves its columns and its exact Hilbert-Schmidt square sum. An extension is constructed, never assumed.
+Define the columns v_i by inverse square root of s_i times rho e_i. The finite moment proves their squared norms summable. For every x, synthesize A x using the common ColumnSynthesis construction, the sum of inner(e_i,x) times v_i. Parseval and the supplied scalar square-sum product estimate prove absolute convergence of this vector series and the bound norm(A x) at most square root of Q times norm(x). The actual series is linear and continuous; orthonormality proves its columns and its exact Hilbert-Schmidt square sum. An extension is constructed, never assumed.
 
 S is the actual bounded positive square root of sigma from continuous functional calculus. Positivity and S squared equals sigma prove S e_i equals square root of s_i times e_i: applying S plus the positive scalar to the residual gives zero, and its nonnegative quadratic form forces the residual to vanish. The columns give A S equals rho. S is injective, and every basis vector is in its range, so the range is dense. invSqrt is the actual partial-map inverse of S on this full range. The inverse law proves A x equals rho invSqrt x for every x in that domain, not just the finite span. S is bounded; its inverse is not assumed bounded.
 
@@ -27,4 +27,5 @@ The genuine analytic trace, Hilbert-Schmidt ideal, polar factor, basis trace for
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Analysis/QuadraticReferenceHilbertSchmidtBridge.quadratic_reference_hilbertSchmidt_bridge`
+- Dependency: [D5/S3/Quantum/Analysis/TraceClass/ColumnSynthesis](TraceClass/ColumnSynthesis.md)
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/GeneralProduct](TraceClass/GeneralProduct.md)
