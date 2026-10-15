@@ -6,6 +6,7 @@ import platform
 import subprocess
 import datetime
 import shutil
+import sys
 import unittest
 
 from lean_seed_support import INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
@@ -280,4 +281,16 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
 
 
 if __name__ == "__main__":
+    if len(sys.argv) == 3 and sys.argv[1] == "--partition":
+        partition = sys.argv[2]
+        if partition not in ("explicit", "transport"):
+            raise SystemExit("unknown Release test partition: " + partition)
+        loader = unittest.TestLoader()
+        explicit = {name for name in ReleaseVerificationCases.__dict__ if name.startswith("test_")}
+        names = [name for name in loader.getTestCaseNames(TransportTests)
+                 if (name in explicit) == (partition == "explicit")]
+        if not names:
+            raise SystemExit("empty Release test partition")
+        result = unittest.TextTestRunner().run(unittest.TestSuite(TransportTests(name) for name in names))
+        raise SystemExit(0 if result.wasSuccessful() else 1)
     unittest.main()
