@@ -55,15 +55,20 @@ internal static partial class DigestionQuerySelection
         var leaves = MarkdigBlockAst.Parse(text);
         foreach (var occurrence in DigestionAtomContextProjection.OccurrenceStarts(sourceFile.RawBytes, targetBytes.Value))
         {
+            var occurrenceEnd = occurrence + targetBytes.Value.Length;
+            var characterStart = Encoding.UTF8.GetCharCount(sourceFile.RawBytes.AsSpan()[..occurrence]);
+            var characterEnd = characterStart + Encoding.UTF8.GetCharCount(targetBytes.Value.AsSpan());
             for (var index = 0; index < leaves.Length; index++)
             {
-                var start = MarkdownAstAtomizer.ByteOffset(text, leaves[index].Start);
-                var end = MarkdownAstAtomizer.ByteOffset(text, leaves[index].End);
-                if (start >= occurrence + targetBytes.Value.Length || end <= occurrence) continue;
+                if (leaves[index].Start >= characterEnd || leaves[index].End <= characterStart) continue;
                 for (var neighbor = Math.Max(0, index - 1); neighbor <= Math.Min(leaves.Length - 1, index + 1); neighbor++)
                 {
-                    start = MarkdownAstAtomizer.ByteOffset(text, leaves[neighbor].Start);
-                    end = MarkdownAstAtomizer.ByteOffset(text, leaves[neighbor].End);
+                    // A historical parent owns its interior. Only exterior or crossing
+                    // leaves can change its neighbors; stored descendants come from chains.
+                    if (leaves[neighbor].Start >= characterStart && leaves[neighbor].End <= characterEnd) continue;
+                    var start = MarkdownAstAtomizer.ByteOffset(text, leaves[neighbor].Start);
+                    var end = MarkdownAstAtomizer.ByteOffset(text, leaves[neighbor].End);
+                    if (start >= occurrence && end <= occurrenceEnd) continue;
                     neighborIds.Add(DigestionFingerprint.Compute(sourceFile.RawBytes.AsSpan()[start..end]).RawSha256[7..]);
                 }
             }

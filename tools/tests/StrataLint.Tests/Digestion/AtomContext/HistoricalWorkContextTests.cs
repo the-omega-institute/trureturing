@@ -93,6 +93,37 @@ public sealed class HistoricalWorkContextTests
     }
 
     [Theory]
+    [InlineData("\n")]
+    [InlineData("\r\n")]
+    public void WideHistoricalParentReadsExteriorNeighborsWithoutInteriorRecords(string newline)
+    {
+        string N(string text) => text.Replace("\n", newline, StringComparison.Ordinal);
+        var before = N("## Before 😀\n\n前置。\n\n");
+        var after = N("## After 😀\n\n后置。\n");
+        var parts = Enumerable.Range(1, 40).Select(index =>
+            N($"**Theorem {index}.1** 内部断言 😀 {index}.\n\n")).ToArray();
+        var parent = string.Concat(parts);
+        var f = new DecomposeFixture(parent, AtomizerRegistry.GenericId);
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Select(entry => entry.Path == "docs/probe.md"
+            ? RawRepositoryEntry.FromText(entry.Path, before + parent + after) : entry));
+        foreach (var text in new[] { before, after }) f.Add(DecomposeFixture.Entry(text, AtomizerRegistry.GenericId), text);
+        var interior = DecomposeFixture.Entry(parts[20].TrimEnd('\r', '\n'), AtomizerRegistry.GenericId);
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Append(
+            RawRepositoryEntry.FromText(DecomposeFixture.PathFor(interior), "invalid: [")));
+        var original = f.Current;
+
+        var result = AtomContextCommand.Run(f.Gateway, ["--atom-id", f.Parent.AtomId]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains($"PREVIOUS atom_id={Id(before)}", result.Output, StringComparison.Ordinal);
+        Assert.Contains($"NEXT atom_id={Id(after)}", result.Output, StringComparison.Ordinal);
+        Assert.Contains("BEGIN_CURRENT_TEXT\n" + parent + "END_CURRENT_TEXT", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(f.Gateway.ScopedCurrentReads.SelectMany(static paths => paths),
+            path => path.Contains(interior.AtomId, StringComparison.Ordinal));
+        Assert.Same(original, f.Current);
+    }
+
+    [Theory]
     [InlineData("## No longer present\n")]
     [InlineData("**Other**\n")]
     public void AbsentHistoricalBytesStayMissing(string replacement)
