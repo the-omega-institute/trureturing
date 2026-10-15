@@ -647,11 +647,19 @@ private theorem sos58 :
     Matrix.vecHead, Matrix.vecTail]
   module
 
+private def code2 : Assignment 2 ≃ Fin 4 :=
+  (Equiv.piCongrRight (fun _ : Fin 2 => finTwoEquiv.symm)).trans
+    (finFunctionFinEquiv (m := 2) (n := 2))
+
+private def code4 : Assignment 4 ≃ Fin 16 :=
+  (Equiv.piCongrRight (fun _ : Fin 4 => finTwoEquiv.symm)).trans
+    (finFunctionFinEquiv (m := 2) (n := 4))
+
 private def reduceInt (X : Assignment 6 → Assignment 6 → ℤ) :
     Matrix (Fin 4) (Fin 4) ℤ :=
   fun a b => ∑ z : Fin 16,
-    X (Fin.append ((fun i : Fin 2 => finTwoEquiv (finFunctionFinEquiv.symm a i))) ((fun i : Fin 4 => finTwoEquiv (finFunctionFinEquiv.symm z i))))
-      (Fin.append ((fun i : Fin 2 => finTwoEquiv (finFunctionFinEquiv.symm b i))) ((fun i : Fin 4 => finTwoEquiv (finFunctionFinEquiv.symm z i))))
+    X (Fin.append (code2.symm a) (code4.symm z))
+      (Fin.append (code2.symm b) (code4.symm z))
 
 private def outerInt (f g : Assignment 6 → ℤ) : Assignment 6 → Assignment 6 → ℤ :=
   fun x y => f x * g y
@@ -902,19 +910,83 @@ private theorem reduce_three_one (X : FullOperator 6) (a b : Assignment 2) :
   rw [Fintype.sum_prod_type]
   simp [Finset.sum_ite_eq', Finset.sum_ite_irrel]
 
-private def code2 (a : Assignment 2) : Fin 4 :=
-  ((Equiv.piCongrRight (fun _ : Fin 2 => finTwoEquiv.symm)).trans
-    (finFunctionFinEquiv (m := 2) (n := 2))) a
-
-private def code4 (a : Assignment 4) : Fin 16 :=
-  ((Equiv.piCongrRight (fun _ : Fin 4 => finTwoEquiv.symm)).trans
-    (finFunctionFinEquiv (m := 2) (n := 4))) a
-
 private theorem sum_cast_outer (f g : Assignment 6 → ℤ) (a b : Assignment 2) :
     (∑ z : Assignment 4,
       ((f (Fin.append a z) * g (Fin.append b z) : ℤ) : ℂ)) =
       (reduceInt (outerInt f g) (code2 a) (code2 b) : ℂ) := by
-  sorry
+  unfold reduceInt outerInt
+  rw [← code4.sum_comp]
+  simp only [Equiv.symm_apply_apply, Int.cast_sum]
+
+private theorem reduced_cast (f g : Assignment 6 → ℤ) (t : ℂ) :
+    reduce (by norm_num : 2 * 1 ≤ 2 * 3)
+      (t • Matrix.vecMulVec (fun x => (f x : ℂ)) (star (fun x => (g x : ℂ)))) =
+      fun a b => t * (reduceInt (outerInt f g) (code2 a) (code2 b) : ℂ) := by
+  ext a b
+  rw [reduce_three_one]
+  simp only [Matrix.smul_apply, smul_eq_mul, Matrix.vecMulVec_apply,
+    Pi.star_apply, star_intCast, ← Int.cast_mul, ← Finset.mul_sum, sum_cast_outer]
+
+private theorem psi_norms :
+    star psi38 ⬝ᵥ psi38 = (3528 : ℂ) ∧ star psi58 ⬝ᵥ psi58 = (392 : ℂ) := by
+  constructor
+  · change (∑ x, star (psi38Z x : ℂ) * (psi38Z x : ℂ)) = _
+    simp only [star_intCast, ← pow_two]
+    exact_mod_cast psi38_norm
+  · change (∑ x, star (psi58Z x : ℂ) * (psi58Z x : ℂ)) = _
+    simp only [star_intCast, ← pow_two]
+    exact_mod_cast psi58_norm
+
+private def block (a p q : ℂ) : Matrix (Fin 4) (Fin 4) ℂ :=
+  !![a, 0, 0, 0; 0, p, q, 0; 0, q, p, 0; 0, 0, 0, a]
+
+private theorem reduced38 :
+    reduce (by norm_num : 2 * 1 ≤ 2 * 3)
+      ((star psi58 ⬝ᵥ psi38)⁻¹ • Matrix.vecMulVec psi38 (star psi58)) =
+      fun a b => block (2/9) (5/18) (-1/6) (code2 a) (code2 b) := by
+  rw [psi_overlap]
+  change reduce (N := 3) (L := 1) _ ((1152 : ℂ)⁻¹ • Matrix.vecMulVec
+    (fun x => (psi38Z x : ℂ)) (star (fun x => (psi58Z x : ℂ)))) = _
+  rw [reduced_cast]
+  have hr := r38Int_eq
+  change reduceInt (outerInt psi38Z psi58Z) = _ at hr
+  rw [hr]
+  ext a b
+  generalize code2 a = i
+  generalize code2 b = j
+  fin_cases i <;> fin_cases j <;> norm_num [block]
+
+private theorem reduced11 :
+    reduce (by norm_num : 2 * 1 ≤ 2 * 3)
+      ((star psi38 ⬝ᵥ psi38)⁻¹ • Matrix.vecMulVec psi38 (star psi38)) =
+      fun a b => block (104/441) (233/882) (-5/42) (code2 a) (code2 b) := by
+  rw [psi_norms.1]
+  change reduce (N := 3) (L := 1) _ ((3528 : ℂ)⁻¹ • Matrix.vecMulVec
+    (fun x => (psi38Z x : ℂ)) (star (fun x => (psi38Z x : ℂ)))) = _
+  rw [reduced_cast]
+  have hr := r11Int_eq
+  change reduceInt (outerInt psi38Z psi38Z) = _ at hr
+  rw [hr]
+  ext a b
+  generalize code2 a = i
+  generalize code2 b = j
+  fin_cases i <;> fin_cases j <;> norm_num [block]
+
+private theorem reduced22 :
+    reduce (by norm_num : 2 * 1 ≤ 2 * 3)
+      ((star psi58 ⬝ᵥ psi58)⁻¹ • Matrix.vecMulVec psi58 (star psi58)) =
+      fun a b => block (10/49) (29/98) (-3/14) (code2 a) (code2 b) := by
+  rw [psi_norms.2]
+  change reduce (N := 3) (L := 1) _ ((392 : ℂ)⁻¹ • Matrix.vecMulVec
+    (fun x => (psi58Z x : ℂ)) (star (fun x => (psi58Z x : ℂ)))) = _
+  rw [reduced_cast]
+  have hr := r22Int_eq
+  change reduceInt (outerInt psi58Z psi58Z) = _ at hr
+  rw [hr]
+  ext a b
+  generalize code2 a = i
+  generalize code2 b = j
+  fin_cases i <;> fin_cases j <;> norm_num [block]
 
 theorem result : ¬ claim := by
   sorry
