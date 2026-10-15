@@ -28,10 +28,10 @@ proof_shape: prod_add_mul_of_sq_zero: content (induction on a nonempty finite se
 map_nodal_of_parity.
 proof_shape: map_nodal_of_parity: content (reduction modulo 4 of the nodal polynomial of integers of
 one parity); consumer: nodalMoment_det_mod_four, for the even and for the odd nodes.
-proof_shape: coeff_modByMonic_X_pow_mul: content (division identity with (X - c) * (X^k * (X + c)) =
-X^(k + 2)); consumer: nodalMoment_det_mod_four.
-proof_shape: coeff_top_eq_coeff_reflect: content (reflection of a product with a palindromic
-factor); consumer: nodalMoment_det_mod_four.
+proof_shape: coeff_modByMonic_X_pow_mul: bind-only (monic division and degree facts, the
+nilpotent ring identity and coefficient rewrites); consumer: nodalMoment_det_mod_four.
+proof_shape: coeff_top_eq_coeff_reflect: bind-only (Mathlib reflection, coefficient formulas,
+binomial symmetry and index normalization); consumer: nodalMoment_det_mod_four.
 proof_shape: coeff_reflected: bind-only (ring and Mathlib coefficient rewrites); consumer:
 nodalMoment_det_mod_four.
 proof_shape: choose_add_eight: content (Vandermonde identity with 4 | C(8, i), 1 ≤ i ≤ 3); consumer:

@@ -6,7 +6,7 @@ Let H be the Hamiltonian of a weighted path on the 2k + 2 vertices 0, ..., 2k + 
 
 **Definition 1.1 (The moment of a matrix at the sum of two basis vectors).**
 
-$$\forall H \in \operatorname{Matrix}\left(V, V, \mathbb{C}\right),\; \forall a \in V,\; \forall b \in V,\; \forall p \in \mathbb{N},\; \operatorname{pairMoment}\left(H, a, b, p\right) = \left(H^{p}\right)\left(a, a\right) + \left(H^{p}\right)\left(a, b\right) + \left(H^{p}\right)\left(b, a\right) + \left(H^{p}\right)\left(b, b\right)$$
+$$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall H \in \operatorname{Matrix}\left(V, V, \mathbb{C}\right),\; \forall a \in V,\; \forall b \in V,\; \forall p \in \mathbb{N},\; \operatorname{pairMoment}\left(H, a, b, p\right) = \left(H^{p}\right)\left(a, a\right) + \left(H^{p}\right)\left(a, b\right) + \left(H^{p}\right)\left(b, a\right) + \left(H^{p}\right)\left(b, b\right)$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.pairMoment` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For a square complex matrix H indexed by a finite type V and two indices a and b
 
 **Definition 1.2 (The nodal moments of one finite set of integer nodes against another).**
 
-$$\forall z \in \iota \to \mathbb{Z},\; \forall A \in \operatorname{Finset}\left(\iota\right),\; \forall B \in \operatorname{Finset}\left(\iota\right),\; \forall k \in \mathbb{N},\; \forall p \in \mathbb{N},\; \operatorname{nodalMoment}\left(z, A, B, k, p\right) = \operatorname{coeff}\left(\operatorname{modByMonic}\left(X^{p} \cdot \prod_{l \in B} (X - \operatorname{C}\left(z\left(l\right)\right)), \prod_{l \in A} (X - \operatorname{C}\left(z\left(l\right)\right))\right), k\right)$$
+$$\forall iota \in Type,\; \forall z \in iota \to \mathbb{Z},\; \forall A \in \operatorname{Finset}\left(iota\right),\; \forall B \in \operatorname{Finset}\left(iota\right),\; \forall k \in \mathbb{N},\; \forall p \in \mathbb{N},\; \operatorname{nodalMoment}\left(z, A, B, k, p\right) = \operatorname{coeff}\left(\operatorname{modByMonic}\left(X^{p} \cdot \prod_{l \in B} (X - \operatorname{C}\left(z\left(l\right)\right)), \prod_{l \in A} (X - \operatorname{C}\left(z\left(l\right)\right))\right), k\right)$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.nodalMoment` (`✓ std3`).
 

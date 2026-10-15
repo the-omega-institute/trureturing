@@ -106,20 +106,24 @@ internal sealed class PathMiddleEdgeMomentsDocument : IScribeDocumentDefinition
         Formula power = new Formula.Power(h, p);
         Formula sum = Add(Add(Add(Entry(power, a, a), Entry(power, a, b)), Entry(power, b, a)),
             Entry(power, b, b));
-        return Disp(All("H", Call("Matrix", v, v, Complexes()), All("a", v, All("b", v,
-            All("p", Naturals(), Equal(Call("pairMoment", h, a, b, p), sum))))));
+        Formula body = All("H", Call("Matrix", v, v, Complexes()), All("a", v, All("b", v,
+            All("p", Naturals(), Equal(Call("pairMoment", h, a, b, p), sum)))));
+        return Disp(All("V", F.Id("Type"), Seq(
+            OpenBracket, Call("Fintype", v), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", v), CloseBracket, Sp, body)));
     }
 
     private static Formula NodalMomentFormula()
     {
-        Formula iota = Iota, z = F.Id("z"), sa = F.Id("A"), sb = F.Id("B"), k = F.Id("k"),
+        Formula iota = F.Id("iota"), z = F.Id("z"), sa = F.Id("A"), sb = F.Id("B"), k = F.Id("k"),
             p = F.Id("p"), l = F.Id("l"), x = F.Id("X");
         Formula factor = Parenthesized(Sub(x, Call("C", App(z, l))));
         Formula dividend = Mul(new Formula.Power(x, p), BigProd(l, sb, factor));
         Formula remainder = Call("modByMonic", dividend, BigProd(l, sa, factor));
-        return Disp(All("z", Arrow(iota, Integers()), All("A", Call("Finset", iota),
-            All("B", Call("Finset", iota), All("k", Naturals(), All("p", Naturals(),
-                Equal(Call("nodalMoment", z, sa, sb, k, p), Call("coeff", remainder, k))))))));
+        return Disp(All("iota", F.Id("Type"), All("z", Arrow(iota, Integers()),
+            All("A", Call("Finset", iota), All("B", Call("Finset", iota),
+                All("k", Naturals(), All("p", Naturals(),
+                    Equal(Call("nodalMoment", z, sa, sb, k, p), Call("coeff", remainder, k)))))))));
     }
 
     private static Formula WeightsFormula()

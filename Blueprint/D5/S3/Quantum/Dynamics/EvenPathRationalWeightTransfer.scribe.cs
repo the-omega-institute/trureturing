@@ -78,7 +78,7 @@ internal sealed class EvenPathRationalWeightTransferDocument : IScribeDocumentDe
 
     private static Formula ResidueFormula()
     {
-        Formula iota = Iota, z = F.Id("z"), sa = F.Id("A"), sb = F.Id("B"), k = F.Id("k"),
+        Formula iota = F.Id("iota"), z = F.Id("z"), sa = F.Id("A"), sb = F.Id("B"), k = F.Id("k"),
             l = F.Id("l");
         Formula size = Add(k, D(1));
         Formula determinant = Sub(
@@ -92,8 +92,9 @@ internal sealed class EvenPathRationalWeightTransferDocument : IScribeDocumentDe
         Formula body = Implies(Equal(Call("card", sa), size), Implies(Equal(Call("card", sb), size),
             Implies(Parenthesized(evenOn), Implies(Parenthesized(oddOn),
                 Implies(Parenthesized(Classes(Parenthesized(size))), conclusion)))));
-        return Disp(All("z", Arrow(iota, Integers()), All("A", Call("Finset", iota),
-            All("B", Call("Finset", iota), All("k", Naturals(), body)))));
+        return Disp(All("iota", F.Id("Type"), All("z", Arrow(iota, Integers()),
+            All("A", Call("Finset", iota), All("B", Call("Finset", iota),
+                All("k", Naturals(), body))))));
     }
 
     private static Formula ClaimFormula()
