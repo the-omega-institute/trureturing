@@ -8,7 +8,7 @@
    digest: The unchanged all-mode source has a fixed-window signed derivative
      margin and an arbitrary-multiplicity retained-disk polynomial count. -/
 
-import D5.S3.Zeros.Jensen.JensenFiniteCoefficientRemainder
+import D5.S3.Zeros.Jensen.JensenAnalyticCoefficientRemainder
 import D5.S3.Zeros.Jensen.JensenDiskMultiplicityComparison
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Polynomial.Derivative
@@ -59,34 +59,30 @@ open D5.S3.Zeros.Jensen.SourceJensenPositiveExtension
 open D5.S3.Zeros.Jensen.SourceThetaMomentBounds
 open D5.S3.Zeros.Jensen.OriginalPrimalTailResponse
 open D5.S3.Zeros.Jensen.OriginalTailDerivativeVector
-open private D5.S3.Zeros.Jensen.ActualSourceJensenFixedWindow.elementary_zero
-  D5.S3.Zeros.Jensen.ActualSourceJensenFixedWindow.correctionCoeff_nonneg
-  D5.S3.Zeros.Jensen.ActualSourceJensenFixedWindow.correctionCoeff_top
-  D5.S3.Zeros.Jensen.ActualSourceJensenFixedWindow.elementary_falling_factorial
-  D5.S3.Zeros.Jensen.ActualSourceJensenFixedWindow.bonferroni_residual_bound
-  D5.S3.Zeros.Jensen.ActualSourceJensenFixedWindow.weighted_residual_bound
+open private elementary_zero
+  correctionCoeff_nonneg
+  correctionCoeff_top
+  elementary_falling_factorial
+  bonferroni_residual_bound
+  weighted_residual_bound
   from D5.S3.Zeros.Jensen.JensenFiniteCoefficientRemainder
-open private D5.S3.Zeros.Jensen.ActualSourceJensenFixedWindow.retained_disk_count
+open private retained_disk_count
   from D5.S3.Zeros.Jensen.JensenDiskMultiplicityComparison
-open private D5.S3.Zeros.Jensen.OriginalTailDerivativeVector.finite_moments
-  D5.S3.Zeros.Jensen.OriginalTailDerivativeVector.full_G_extraction
-  D5.S3.Zeros.Jensen.OriginalTailDerivativeVector.reflection_eval
-  D5.S3.Zeros.Jensen.OriginalTailDerivativeVector.reflection_derivative
-  D5.S3.Zeros.Jensen.OriginalTailDerivativeVector.reflected_node
+open private finite_moments
+  full_G_extraction
+  reflection_eval
+  reflection_derivative
+  reflected_node
   from D5.S3.Zeros.Jensen.OriginalTailDerivativeVectorSources
-open private D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_map
-  D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_lowering
+open private source_map
+  source_lowering
   from D5.S3.Zeros.Jensen.SourceJensenIntegralExtension
-open private D5.S3.Zeros.Jensen.OriginalPrimalTailResponse.original_moment_bridge
+open private original_moment_bridge
   from D5.S3.Zeros.Jensen.OriginalPrimalTailResponse
 
 /-! The following definitions are the source-side implementation vocabulary.
 They deliberately keep every coefficient, every derivative order, and the
 original reflected coordinate.  They are consumed below by one theorem. -/
-
-def correctionOperator (r : ℕ) (F : ℂ → ℂ) (z : ℂ) : ℂ :=
-  ∑ k ∈ Finset.range (2 * r + 1),
-    (correctionCoeff r k : ℂ) * z ^ k * iteratedDeriv k F z
 
 def sourceF (z : ℂ) : ℂ :=
   cosineSquareTransform sourceThetaDensity z
@@ -109,12 +105,6 @@ def IsolatingDisk (F : ℂ → ℂ) (c : ℝ) (delta : ℝ) : Prop :=
 
 def retainedRootCount (n : ℕ) (c : ℝ) (delta : ℝ) : ℕ :=
   ((sourcePolynomial n).roots.filter (fun z => ‖z - c‖ < delta)).card
-
-def weightedNorm (a : ℕ → ℂ) (L : ℕ) (R : ℝ) : ℝ :=
-  ∑' j : ℕ, ‖a j‖ * (j : ℝ) ^ L * R ^ j
-
-def coefficientPolynomial (a : ℕ → ℂ) (n : ℕ) : ℂ[X] :=
-  ∑ j ∈ Finset.range (n + 1), C ((n.descFactorial j : ℂ) / (n : ℂ) ^ j * a j) * X ^ j
 
 def sourceA (j : ℕ) : ℂ := (-1 : ℂ) ^ j * (sourceThetaCoefficient j : ℂ)
 
@@ -407,17 +397,9 @@ private theorem source_operator_error (n K b : ℕ) (hn : 1 ≤ n) (R : ℝ) (hR
         ∑ r ∈ Finset.range (K + 1), ((-1 : ℂ) ^ r / (n : ℂ) ^ r) *
           correctionOperator r sourceF w) z‖ ≤
       2 / (n : ℝ) ^ (K + 1) * weightedNorm sourceA (2 * K + 2 + b) R := by
-  have hseries := source_coefficients.2.2.2
-  have hinside := source_weighted_summable (2 * K + 2 + b) R (by linarith)
-  have hopen := source_weighted_summable (2 * K + 3 + b) (R + 1) (by linarith)
-  have hsum := weighted_residual_bound sourceA n K b R hn hR hinside
-  have hfinite := elementary_falling_factorial
-  -- REMAINING L1: differentiate the actual coefficient series on ball 0
-  -- (R+1). Each b-th coefficient is rho(n,K,j)*a_j*(j)_b*z^(j-b).
-  -- Complex.hasSum_deriv_of_summable_norm with hopen justifies each step;
-  -- hfinite identifies the finite correction operator, and hsum bounds the
-  -- summed norm. The error is defined by the displayed function, not assumed.
-  done
+  simpa only [source_coefficients.2.2.1 n] using
+    analytic_coefficient_operator_error sourceA sourceF source_coefficients.2.2.2
+      source_weighted_summable n K b hn R hR z hz
 
 private theorem source_scaled_estimates (t0 sigma : ℝ) (ht0 : 0 < t0)
     (hs : 0 < sigma) (v : ℕ) :
