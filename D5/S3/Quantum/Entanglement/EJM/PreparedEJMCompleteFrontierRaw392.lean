@@ -1,0 +1,907 @@
+/- Generated prepared source. Not compiled or kernel accepted.
+All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
+import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTypes
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxHeartbeats 100000000
+set_option maxRecDepth 65536
+namespace D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
+open D5.S0.Certificates
+open EJMOriginalReplayAssembly (coordinate prefixCache prefixPartial)
+theorem raw_cut_50176 : EJMOriginalReplayAssembly.Accepted 11 105889 ⟨1429834, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50176 : CanonicalResponse ⟨11, 2, 0, 1429834, 105889, 1633, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1429834, 105889, 1633, 262144⟩ (by decide) (by decide) raw_cut_50176
+
+theorem raw_cut_50177 : EJMOriginalReplayAssembly.Accepted 11 105890 ⟨1429883, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50177 : CanonicalResponse ⟨11, 2, 0, 1429883, 105890, 2157, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1429883, 105890, 2157, 262144⟩ (by decide) (by decide) raw_cut_50177
+
+theorem raw_cut_50178 : EJMOriginalReplayAssembly.Accepted 11 105891 ⟨1429927, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50178 : CanonicalResponse ⟨11, 2, 0, 1429927, 105891, 1673, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1429927, 105891, 1673, 262144⟩ (by decide) (by decide) raw_cut_50178
+
+theorem raw_cut_50179 : EJMOriginalReplayAssembly.Accepted 10 26473 ⟨1430034, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50179 : CanonicalResponse ⟨10, 2, 0, 1430034, 26473, 4013, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1430034, 26473, 4013, 1048576⟩ (by decide) (by decide) raw_cut_50179
+
+theorem raw_cut_50180 : EJMOriginalReplayAssembly.Accepted 10 26474 ⟨1430037, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50180 : CanonicalResponse ⟨10, 2, 0, 1430037, 26474, 13, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1430037, 26474, 13, 1048576⟩ (by decide) (by decide) raw_cut_50180
+
+theorem raw_cut_50181 : EJMOriginalReplayAssembly.Accepted 10 26475 ⟨1430107, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50181 : CanonicalResponse ⟨10, 2, 0, 1430107, 26475, 3497, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1430107, 26475, 3497, 1048576⟩ (by decide) (by decide) raw_cut_50181
+
+theorem raw_cut_50182 : EJMOriginalReplayAssembly.Accepted 10 26476 ⟨1430234, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50182 : CanonicalResponse ⟨10, 2, 0, 1430234, 26476, 3317, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1430234, 26476, 3317, 1048576⟩ (by decide) (by decide) raw_cut_50182
+
+theorem raw_cut_50183 : EJMOriginalReplayAssembly.Accepted 10 26477 ⟨1430286, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50183 : CanonicalResponse ⟨10, 2, 0, 1430286, 26477, 1601, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1430286, 26477, 1601, 1048576⟩ (by decide) (by decide) raw_cut_50183
+
+theorem raw_cut_50184 : EJMOriginalReplayAssembly.Accepted 10 26478 ⟨1430324, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50184 : CanonicalResponse ⟨10, 2, 0, 1430324, 26478, 769, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1430324, 26478, 769, 1048576⟩ (by decide) (by decide) raw_cut_50184
+
+theorem raw_cut_50185 : EJMOriginalReplayAssembly.Accepted 10 26479 ⟨1430327, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50185 : CanonicalResponse ⟨10, 2, 0, 1430327, 26479, 25, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1430327, 26479, 25, 1048576⟩ (by decide) (by decide) raw_cut_50185
+
+theorem raw_cut_50186 : EJMOriginalReplayAssembly.Accepted 8 1655 ⟨814757, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50186 : CanonicalResponse ⟨8, 1, 0, 814757, 1655, 1, 16777216⟩ :=
+  response_of_raw ⟨8, 1, 0, 814757, 1655, 1, 16777216⟩ (by decide) (by decide) raw_cut_50186
+
+theorem raw_cut_50187 : EJMOriginalReplayAssembly.Accepted 11 105984 ⟨434745, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50187 : CanonicalResponse ⟨11, 1, 0, 434745, 105984, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 434745, 105984, 1, 262144⟩ (by decide) (by decide) raw_cut_50187
+
+theorem raw_cut_50188 : EJMOriginalReplayAssembly.Accepted 11 105985 ⟨434745, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50188 : CanonicalResponse ⟨11, 1, 0, 434745, 105985, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 434745, 105985, 1, 262144⟩ (by decide) (by decide) raw_cut_50188
+
+theorem raw_cut_50189 : EJMOriginalReplayAssembly.Accepted 11 105986 ⟨1430467, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50189 : CanonicalResponse ⟨11, 2, 0, 1430467, 105986, 2749, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1430467, 105986, 2749, 262144⟩ (by decide) (by decide) raw_cut_50189
+
+theorem raw_cut_50190 : EJMOriginalReplayAssembly.Accepted 11 105987 ⟨1430630, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50190 : CanonicalResponse ⟨11, 2, 0, 1430630, 105987, 3353, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1430630, 105987, 3353, 262144⟩ (by decide) (by decide) raw_cut_50190
+
+theorem raw_cut_50191 : EJMOriginalReplayAssembly.Accepted 12 423952 ⟨1415033, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50191 : CanonicalResponse ⟨12, 1, 0, 1415033, 423952, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1415033, 423952, 1, 65536⟩ (by decide) (by decide) raw_cut_50191
+
+theorem raw_cut_50192 : EJMOriginalReplayAssembly.Accepted 12 423953 ⟨1430705, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50192 : CanonicalResponse ⟨12, 2, 0, 1430705, 423953, 2277, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1430705, 423953, 2277, 65536⟩ (by decide) (by decide) raw_cut_50192
+
+theorem raw_cut_50193 : EJMOriginalReplayAssembly.Accepted 12 423954 ⟨1430787, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50193 : CanonicalResponse ⟨12, 2, 0, 1430787, 423954, 2429, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1430787, 423954, 2429, 65536⟩ (by decide) (by decide) raw_cut_50193
+
+theorem raw_cut_50194 : EJMOriginalReplayAssembly.Accepted 12 423955 ⟨1430866, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50194 : CanonicalResponse ⟨12, 2, 0, 1430866, 423955, 2449, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1430866, 423955, 2449, 65536⟩ (by decide) (by decide) raw_cut_50194
+
+theorem raw_cut_50195 : EJMOriginalReplayAssembly.Accepted 11 105989 ⟨1192826, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50195 : CanonicalResponse ⟨11, 1, 0, 1192826, 105989, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 1192826, 105989, 1, 262144⟩ (by decide) (by decide) raw_cut_50195
+
+theorem raw_cut_50196 : EJMOriginalReplayAssembly.Accepted 12 423960 ⟨1415033, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50196 : CanonicalResponse ⟨12, 1, 0, 1415033, 423960, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1415033, 423960, 1, 65536⟩ (by decide) (by decide) raw_cut_50196
+
+theorem raw_cut_50197 : EJMOriginalReplayAssembly.Accepted 12 423961 ⟨1430922, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50197 : CanonicalResponse ⟨12, 2, 0, 1430922, 423961, 2121, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1430922, 423961, 2121, 65536⟩ (by decide) (by decide) raw_cut_50197
+
+theorem raw_cut_50198 : EJMOriginalReplayAssembly.Accepted 12 423962 ⟨663554, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50198 : CanonicalResponse ⟨12, 1, 0, 663554, 423962, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 663554, 423962, 1, 65536⟩ (by decide) (by decide) raw_cut_50198
+
+theorem raw_cut_50199 : EJMOriginalReplayAssembly.Accepted 12 423963 ⟨1430995, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50199 : CanonicalResponse ⟨12, 2, 0, 1430995, 423963, 2501, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1430995, 423963, 2501, 65536⟩ (by decide) (by decide) raw_cut_50199
+
+theorem raw_cut_50200 : EJMOriginalReplayAssembly.Accepted 12 423964 ⟨1415033, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50200 : CanonicalResponse ⟨12, 1, 0, 1415033, 423964, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1415033, 423964, 1, 65536⟩ (by decide) (by decide) raw_cut_50200
+
+theorem raw_cut_50201 : EJMOriginalReplayAssembly.Accepted 12 423965 ⟨1431058, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50201 : CanonicalResponse ⟨12, 2, 0, 1431058, 423965, 2249, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431058, 423965, 2249, 65536⟩ (by decide) (by decide) raw_cut_50201
+
+theorem raw_cut_50202 : EJMOriginalReplayAssembly.Accepted 12 423966 ⟨1431118, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50202 : CanonicalResponse ⟨12, 2, 0, 1431118, 423966, 2593, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431118, 423966, 2593, 65536⟩ (by decide) (by decide) raw_cut_50202
+
+theorem raw_cut_50203 : EJMOriginalReplayAssembly.Accepted 12 423967 ⟨517541, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50203 : CanonicalResponse ⟨12, 1, 0, 517541, 423967, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 517541, 423967, 1, 65536⟩ (by decide) (by decide) raw_cut_50203
+
+theorem raw_cut_50204 : EJMOriginalReplayAssembly.Accepted 12 423968 ⟨435160, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50204 : CanonicalResponse ⟨12, 1, 0, 435160, 423968, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 435160, 423968, 1, 65536⟩ (by decide) (by decide) raw_cut_50204
+
+theorem raw_cut_50205 : EJMOriginalReplayAssembly.Accepted 12 423969 ⟨1431183, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50205 : CanonicalResponse ⟨12, 2, 0, 1431183, 423969, 2181, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431183, 423969, 2181, 65536⟩ (by decide) (by decide) raw_cut_50205
+
+theorem raw_cut_50206 : EJMOriginalReplayAssembly.Accepted 12 423970 ⟨1431242, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50206 : CanonicalResponse ⟨12, 2, 0, 1431242, 423970, 2189, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431242, 423970, 2189, 65536⟩ (by decide) (by decide) raw_cut_50206
+
+theorem raw_cut_50207 : EJMOriginalReplayAssembly.Accepted 12 423971 ⟨1431306, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50207 : CanonicalResponse ⟨12, 2, 0, 1431306, 423971, 2069, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431306, 423971, 2069, 65536⟩ (by decide) (by decide) raw_cut_50207
+
+theorem raw_cut_50208 : EJMOriginalReplayAssembly.Accepted 11 105993 ⟨1431416, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50208 : CanonicalResponse ⟨11, 2, 0, 1431416, 105993, 3881, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1431416, 105993, 3881, 262144⟩ (by decide) (by decide) raw_cut_50208
+
+theorem raw_cut_50209 : EJMOriginalReplayAssembly.Accepted 11 105994 ⟨900587, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50209 : CanonicalResponse ⟨11, 1, 0, 900587, 105994, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 900587, 105994, 1, 262144⟩ (by decide) (by decide) raw_cut_50209
+
+theorem raw_cut_50210 : EJMOriginalReplayAssembly.Accepted 12 423980 ⟨449505, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50210 : CanonicalResponse ⟨12, 1, 0, 449505, 423980, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 449505, 423980, 1, 65536⟩ (by decide) (by decide) raw_cut_50210
+
+theorem raw_cut_50211 : EJMOriginalReplayAssembly.Accepted 12 423981 ⟨1431472, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50211 : CanonicalResponse ⟨12, 2, 0, 1431472, 423981, 1969, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431472, 423981, 1969, 65536⟩ (by decide) (by decide) raw_cut_50211
+
+theorem raw_cut_50212 : EJMOriginalReplayAssembly.Accepted 12 423982 ⟨1431533, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50212 : CanonicalResponse ⟨12, 2, 0, 1431533, 423982, 2241, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431533, 423982, 2241, 65536⟩ (by decide) (by decide) raw_cut_50212
+
+theorem raw_cut_50213 : EJMOriginalReplayAssembly.Accepted 12 423983 ⟨517541, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50213 : CanonicalResponse ⟨12, 1, 0, 517541, 423983, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 517541, 423983, 1, 65536⟩ (by decide) (by decide) raw_cut_50213
+
+theorem raw_cut_50214 : EJMOriginalReplayAssembly.Accepted 12 423984 ⟨1416143, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50214 : CanonicalResponse ⟨12, 1, 0, 1416143, 423984, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1416143, 423984, 1, 65536⟩ (by decide) (by decide) raw_cut_50214
+
+theorem raw_cut_50215 : EJMOriginalReplayAssembly.Accepted 12 423985 ⟨1431587, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50215 : CanonicalResponse ⟨12, 2, 0, 1431587, 423985, 1973, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431587, 423985, 1973, 65536⟩ (by decide) (by decide) raw_cut_50215
+
+theorem raw_cut_50216 : EJMOriginalReplayAssembly.Accepted 12 423986 ⟨1431649, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50216 : CanonicalResponse ⟨12, 2, 0, 1431649, 423986, 1977, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431649, 423986, 1977, 65536⟩ (by decide) (by decide) raw_cut_50216
+
+theorem raw_cut_50217 : EJMOriginalReplayAssembly.Accepted 12 423987 ⟨1431697, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50217 : CanonicalResponse ⟨12, 2, 0, 1431697, 423987, 1853, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1431697, 423987, 1853, 65536⟩ (by decide) (by decide) raw_cut_50217
+
+theorem raw_cut_50218 : EJMOriginalReplayAssembly.Accepted 11 105997 ⟨1431795, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50218 : CanonicalResponse ⟨11, 2, 0, 1431795, 105997, 3493, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1431795, 105997, 3493, 262144⟩ (by decide) (by decide) raw_cut_50218
+
+theorem raw_cut_50219 : EJMOriginalReplayAssembly.Accepted 11 105998 ⟨1431890, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50219 : CanonicalResponse ⟨11, 2, 0, 1431890, 105998, 3297, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1431890, 105998, 3297, 262144⟩ (by decide) (by decide) raw_cut_50219
+
+theorem raw_cut_50220 : EJMOriginalReplayAssembly.Accepted 11 105999 ⟨1431937, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50220 : CanonicalResponse ⟨11, 2, 0, 1431937, 105999, 1657, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1431937, 105999, 1657, 262144⟩ (by decide) (by decide) raw_cut_50220
+
+theorem raw_cut_50221 : EJMOriginalReplayAssembly.Accepted 11 106000 ⟨1431941, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50221 : CanonicalResponse ⟨11, 2, 0, 1431941, 106000, 5, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1431941, 106000, 5, 262144⟩ (by decide) (by decide) raw_cut_50221
+
+theorem raw_cut_50222 : EJMOriginalReplayAssembly.Accepted 11 106001 ⟨1432048, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50222 : CanonicalResponse ⟨11, 2, 0, 1432048, 106001, 4021, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432048, 106001, 4021, 262144⟩ (by decide) (by decide) raw_cut_50222
+
+theorem raw_cut_50223 : EJMOriginalReplayAssembly.Accepted 11 106002 ⟨1432120, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50223 : CanonicalResponse ⟨11, 2, 0, 1432120, 106002, 2585, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432120, 106002, 2585, 262144⟩ (by decide) (by decide) raw_cut_50223
+
+theorem raw_cut_50224 : EJMOriginalReplayAssembly.Accepted 11 106003 ⟨1432205, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50224 : CanonicalResponse ⟨11, 2, 0, 1432205, 106003, 2897, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432205, 106003, 2897, 262144⟩ (by decide) (by decide) raw_cut_50224
+
+theorem raw_cut_50225 : EJMOriginalReplayAssembly.Accepted 10 26501 ⟨893098, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50225 : CanonicalResponse ⟨10, 1, 0, 893098, 26501, 1, 1048576⟩ :=
+  response_of_raw ⟨10, 1, 0, 893098, 26501, 1, 1048576⟩ (by decide) (by decide) raw_cut_50225
+
+theorem raw_cut_50226 : EJMOriginalReplayAssembly.Accepted 11 106008 ⟨1432259, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50226 : CanonicalResponse ⟨11, 2, 0, 1432259, 106008, 2461, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432259, 106008, 2461, 262144⟩ (by decide) (by decide) raw_cut_50226
+
+theorem raw_cut_50227 : EJMOriginalReplayAssembly.Accepted 11 106009 ⟨1432320, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50227 : CanonicalResponse ⟨11, 2, 0, 1432320, 106009, 2933, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432320, 106009, 2933, 262144⟩ (by decide) (by decide) raw_cut_50227
+
+theorem raw_cut_50228 : EJMOriginalReplayAssembly.Accepted 11 106010 ⟨900587, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50228 : CanonicalResponse ⟨11, 1, 0, 900587, 106010, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 900587, 106010, 1, 262144⟩ (by decide) (by decide) raw_cut_50228
+
+theorem raw_cut_50229 : EJMOriginalReplayAssembly.Accepted 11 106011 ⟨1432384, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50229 : CanonicalResponse ⟨11, 2, 0, 1432384, 106011, 3097, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432384, 106011, 3097, 262144⟩ (by decide) (by decide) raw_cut_50229
+
+theorem raw_cut_50230 : EJMOriginalReplayAssembly.Accepted 11 106012 ⟨1432439, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50230 : CanonicalResponse ⟨11, 2, 0, 1432439, 106012, 2045, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432439, 106012, 2045, 262144⟩ (by decide) (by decide) raw_cut_50230
+
+theorem raw_cut_50231 : EJMOriginalReplayAssembly.Accepted 11 106013 ⟨1432504, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50231 : CanonicalResponse ⟨11, 2, 0, 1432504, 106013, 2545, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432504, 106013, 2545, 262144⟩ (by decide) (by decide) raw_cut_50231
+
+theorem raw_cut_50232 : EJMOriginalReplayAssembly.Accepted 11 106014 ⟨1432541, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50232 : CanonicalResponse ⟨11, 2, 0, 1432541, 106014, 1621, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432541, 106014, 1621, 262144⟩ (by decide) (by decide) raw_cut_50232
+
+theorem raw_cut_50233 : EJMOriginalReplayAssembly.Accepted 11 106015 ⟨1432566, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50233 : CanonicalResponse ⟨11, 2, 0, 1432566, 106015, 765, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432566, 106015, 765, 262144⟩ (by decide) (by decide) raw_cut_50233
+
+theorem raw_cut_50234 : EJMOriginalReplayAssembly.Accepted 11 106016 ⟨1375697, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50234 : CanonicalResponse ⟨11, 1, 0, 1375697, 106016, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 1375697, 106016, 1, 262144⟩ (by decide) (by decide) raw_cut_50234
+
+theorem raw_cut_50235 : EJMOriginalReplayAssembly.Accepted 11 106017 ⟨1432619, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50235 : CanonicalResponse ⟨11, 2, 0, 1432619, 106017, 1781, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432619, 106017, 1781, 262144⟩ (by decide) (by decide) raw_cut_50235
+
+theorem raw_cut_50236 : EJMOriginalReplayAssembly.Accepted 11 106018 ⟨1432695, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50236 : CanonicalResponse ⟨11, 2, 0, 1432695, 106018, 2573, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432695, 106018, 2573, 262144⟩ (by decide) (by decide) raw_cut_50236
+
+theorem raw_cut_50237 : EJMOriginalReplayAssembly.Accepted 11 106019 ⟨1432758, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50237 : CanonicalResponse ⟨11, 2, 0, 1432758, 106019, 1865, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432758, 106019, 1865, 262144⟩ (by decide) (by decide) raw_cut_50237
+
+theorem raw_cut_50238 : EJMOriginalReplayAssembly.Accepted 11 106020 ⟨1432792, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50238 : CanonicalResponse ⟨11, 2, 0, 1432792, 106020, 1501, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432792, 106020, 1501, 262144⟩ (by decide) (by decide) raw_cut_50238
+
+theorem raw_cut_50239 : EJMOriginalReplayAssembly.Accepted 11 106021 ⟨1378525, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50239 : CanonicalResponse ⟨11, 1, 0, 1378525, 106021, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 1378525, 106021, 1, 262144⟩ (by decide) (by decide) raw_cut_50239
+
+theorem raw_cut_50240 : EJMOriginalReplayAssembly.Accepted 11 106022 ⟨1432846, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50240 : CanonicalResponse ⟨11, 2, 0, 1432846, 106022, 1997, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432846, 106022, 1997, 262144⟩ (by decide) (by decide) raw_cut_50240
+
+theorem raw_cut_50241 : EJMOriginalReplayAssembly.Accepted 11 106023 ⟨1432892, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50241 : CanonicalResponse ⟨11, 2, 0, 1432892, 106023, 1869, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1432892, 106023, 1869, 262144⟩ (by decide) (by decide) raw_cut_50241
+
+theorem raw_cut_50242 : EJMOriginalReplayAssembly.Accepted 10 26506 ⟨1432895, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50242 : CanonicalResponse ⟨10, 2, 0, 1432895, 26506, 5, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1432895, 26506, 5, 1048576⟩ (by decide) (by decide) raw_cut_50242
+
+theorem raw_cut_50243 : EJMOriginalReplayAssembly.Accepted 10 26507 ⟨1432982, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50243 : CanonicalResponse ⟨10, 2, 0, 1432982, 26507, 3561, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1432982, 26507, 3561, 1048576⟩ (by decide) (by decide) raw_cut_50243
+
+theorem raw_cut_50244 : EJMOriginalReplayAssembly.Accepted 10 26508 ⟨1433032, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50244 : CanonicalResponse ⟨10, 2, 0, 1433032, 26508, 2349, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1433032, 26508, 2349, 1048576⟩ (by decide) (by decide) raw_cut_50244
+
+theorem raw_cut_50245 : EJMOriginalReplayAssembly.Accepted 10 26509 ⟨1433066, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50245 : CanonicalResponse ⟨10, 2, 0, 1433066, 26509, 1481, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1433066, 26509, 1481, 1048576⟩ (by decide) (by decide) raw_cut_50245
+
+theorem raw_cut_50246 : EJMOriginalReplayAssembly.Accepted 10 26510 ⟨1433097, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50246 : CanonicalResponse ⟨10, 2, 0, 1433097, 26510, 813, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1433097, 26510, 813, 1048576⟩ (by decide) (by decide) raw_cut_50246
+
+theorem raw_cut_50247 : EJMOriginalReplayAssembly.Accepted 10 26511 ⟨1433106, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50247 : CanonicalResponse ⟨10, 2, 0, 1433106, 26511, 73, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1433106, 26511, 73, 1048576⟩ (by decide) (by decide) raw_cut_50247
+
+theorem raw_cut_50248 : EJMOriginalReplayAssembly.Accepted 11 106048 ⟨434745, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50248 : CanonicalResponse ⟨11, 1, 0, 434745, 106048, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 434745, 106048, 1, 262144⟩ (by decide) (by decide) raw_cut_50248
+
+theorem raw_cut_50249 : EJMOriginalReplayAssembly.Accepted 11 106049 ⟨434745, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50249 : CanonicalResponse ⟨11, 1, 0, 434745, 106049, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 434745, 106049, 1, 262144⟩ (by decide) (by decide) raw_cut_50249
+
+theorem raw_cut_50250 : EJMOriginalReplayAssembly.Accepted 11 106050 ⟨1433165, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50250 : CanonicalResponse ⟨11, 2, 0, 1433165, 106050, 2157, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1433165, 106050, 2157, 262144⟩ (by decide) (by decide) raw_cut_50250
+
+theorem raw_cut_50251 : EJMOriginalReplayAssembly.Accepted 11 106051 ⟨1433246, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50251 : CanonicalResponse ⟨11, 2, 0, 1433246, 106051, 2793, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1433246, 106051, 2793, 262144⟩ (by decide) (by decide) raw_cut_50251
+
+theorem raw_cut_50252 : EJMOriginalReplayAssembly.Accepted 12 424208 ⟨1415033, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50252 : CanonicalResponse ⟨12, 1, 0, 1415033, 424208, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1415033, 424208, 1, 65536⟩ (by decide) (by decide) raw_cut_50252
+
+theorem raw_cut_50253 : EJMOriginalReplayAssembly.Accepted 12 424209 ⟨1433297, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50253 : CanonicalResponse ⟨12, 2, 0, 1433297, 424209, 1929, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433297, 424209, 1929, 65536⟩ (by decide) (by decide) raw_cut_50253
+
+theorem raw_cut_50254 : EJMOriginalReplayAssembly.Accepted 12 424210 ⟨1433350, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50254 : CanonicalResponse ⟨12, 2, 0, 1433350, 424210, 2189, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433350, 424210, 2189, 65536⟩ (by decide) (by decide) raw_cut_50254
+
+theorem raw_cut_50255 : EJMOriginalReplayAssembly.Accepted 12 424211 ⟨1433398, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50255 : CanonicalResponse ⟨12, 2, 0, 1433398, 424211, 2129, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433398, 424211, 2129, 65536⟩ (by decide) (by decide) raw_cut_50255
+
+theorem raw_cut_50256 : EJMOriginalReplayAssembly.Accepted 11 106053 ⟨1192826, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50256 : CanonicalResponse ⟨11, 1, 0, 1192826, 106053, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 1192826, 106053, 1, 262144⟩ (by decide) (by decide) raw_cut_50256
+
+theorem raw_cut_50257 : EJMOriginalReplayAssembly.Accepted 11 106054 ⟨1433485, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50257 : CanonicalResponse ⟨11, 2, 0, 1433485, 106054, 3657, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1433485, 106054, 3657, 262144⟩ (by decide) (by decide) raw_cut_50257
+
+theorem raw_cut_50258 : EJMOriginalReplayAssembly.Accepted 12 424220 ⟨1415033, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50258 : CanonicalResponse ⟨12, 1, 0, 1415033, 424220, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1415033, 424220, 1, 65536⟩ (by decide) (by decide) raw_cut_50258
+
+theorem raw_cut_50259 : EJMOriginalReplayAssembly.Accepted 12 424221 ⟨1433528, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50259 : CanonicalResponse ⟨12, 2, 0, 1433528, 424221, 1873, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433528, 424221, 1873, 65536⟩ (by decide) (by decide) raw_cut_50259
+
+theorem raw_cut_50260 : EJMOriginalReplayAssembly.Accepted 12 424222 ⟨1433587, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50260 : CanonicalResponse ⟨12, 2, 0, 1433587, 424222, 2277, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433587, 424222, 2277, 65536⟩ (by decide) (by decide) raw_cut_50260
+
+theorem raw_cut_50261 : EJMOriginalReplayAssembly.Accepted 12 424223 ⟨1365011, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50261 : CanonicalResponse ⟨12, 1, 0, 1365011, 424223, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1365011, 424223, 1, 65536⟩ (by decide) (by decide) raw_cut_50261
+
+theorem raw_cut_50262 : EJMOriginalReplayAssembly.Accepted 12 424224 ⟨435160, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50262 : CanonicalResponse ⟨12, 1, 0, 435160, 424224, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 435160, 424224, 1, 65536⟩ (by decide) (by decide) raw_cut_50262
+
+theorem raw_cut_50263 : EJMOriginalReplayAssembly.Accepted 12 424225 ⟨1433639, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50263 : CanonicalResponse ⟨12, 2, 0, 1433639, 424225, 2009, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433639, 424225, 2009, 65536⟩ (by decide) (by decide) raw_cut_50263
+
+theorem raw_cut_50264 : EJMOriginalReplayAssembly.Accepted 12 424226 ⟨1433698, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50264 : CanonicalResponse ⟨12, 2, 0, 1433698, 424226, 2181, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433698, 424226, 2181, 65536⟩ (by decide) (by decide) raw_cut_50264
+
+theorem raw_cut_50265 : EJMOriginalReplayAssembly.Accepted 12 424227 ⟨1433745, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50265 : CanonicalResponse ⟨12, 2, 0, 1433745, 424227, 2025, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433745, 424227, 2025, 65536⟩ (by decide) (by decide) raw_cut_50265
+
+theorem raw_cut_50266 : EJMOriginalReplayAssembly.Accepted 11 106057 ⟨1433812, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50266 : CanonicalResponse ⟨11, 2, 0, 1433812, 106057, 3489, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1433812, 106057, 3489, 262144⟩ (by decide) (by decide) raw_cut_50266
+
+theorem raw_cut_50267 : EJMOriginalReplayAssembly.Accepted 11 106058 ⟨900587, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50267 : CanonicalResponse ⟨11, 1, 0, 900587, 106058, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 900587, 106058, 1, 262144⟩ (by decide) (by decide) raw_cut_50267
+
+theorem raw_cut_50268 : EJMOriginalReplayAssembly.Accepted 12 424236 ⟨449505, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50268 : CanonicalResponse ⟨12, 1, 0, 449505, 424236, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 449505, 424236, 1, 65536⟩ (by decide) (by decide) raw_cut_50268
+
+theorem raw_cut_50269 : EJMOriginalReplayAssembly.Accepted 12 424237 ⟨1433852, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50269 : CanonicalResponse ⟨12, 2, 0, 1433852, 424237, 1833, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433852, 424237, 1833, 65536⟩ (by decide) (by decide) raw_cut_50269
+
+theorem raw_cut_50270 : EJMOriginalReplayAssembly.Accepted 12 424238 ⟨1433899, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50270 : CanonicalResponse ⟨12, 2, 0, 1433899, 424238, 2149, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433899, 424238, 2149, 65536⟩ (by decide) (by decide) raw_cut_50270
+
+theorem raw_cut_50271 : EJMOriginalReplayAssembly.Accepted 12 424239 ⟨1433938, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50271 : CanonicalResponse ⟨12, 2, 0, 1433938, 424239, 1749, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433938, 424239, 1749, 65536⟩ (by decide) (by decide) raw_cut_50271
+
+theorem raw_cut_50272 : EJMOriginalReplayAssembly.Accepted 12 424240 ⟨1416143, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50272 : CanonicalResponse ⟨12, 1, 0, 1416143, 424240, 1, 65536⟩ :=
+  response_of_raw ⟨12, 1, 0, 1416143, 424240, 1, 65536⟩ (by decide) (by decide) raw_cut_50272
+
+theorem raw_cut_50273 : EJMOriginalReplayAssembly.Accepted 12 424241 ⟨1433984, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50273 : CanonicalResponse ⟨12, 2, 0, 1433984, 424241, 1825, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1433984, 424241, 1825, 65536⟩ (by decide) (by decide) raw_cut_50273
+
+theorem raw_cut_50274 : EJMOriginalReplayAssembly.Accepted 12 424242 ⟨1434031, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50274 : CanonicalResponse ⟨12, 2, 0, 1434031, 424242, 1921, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1434031, 424242, 1921, 65536⟩ (by decide) (by decide) raw_cut_50274
+
+theorem raw_cut_50275 : EJMOriginalReplayAssembly.Accepted 12 424243 ⟨1434076, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50275 : CanonicalResponse ⟨12, 2, 0, 1434076, 424243, 1765, 65536⟩ :=
+  response_of_raw ⟨12, 2, 0, 1434076, 424243, 1765, 65536⟩ (by decide) (by decide) raw_cut_50275
+
+theorem raw_cut_50276 : EJMOriginalReplayAssembly.Accepted 11 106061 ⟨1434153, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50276 : CanonicalResponse ⟨11, 2, 0, 1434153, 106061, 3117, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434153, 106061, 3117, 262144⟩ (by decide) (by decide) raw_cut_50276
+
+theorem raw_cut_50277 : EJMOriginalReplayAssembly.Accepted 11 106062 ⟨1434226, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50277 : CanonicalResponse ⟨11, 2, 0, 1434226, 106062, 2929, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434226, 106062, 2929, 262144⟩ (by decide) (by decide) raw_cut_50277
+
+theorem raw_cut_50278 : EJMOriginalReplayAssembly.Accepted 11 106063 ⟨1434264, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50278 : CanonicalResponse ⟨11, 2, 0, 1434264, 106063, 1453, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434264, 106063, 1453, 262144⟩ (by decide) (by decide) raw_cut_50278
+
+theorem raw_cut_50279 : EJMOriginalReplayAssembly.Accepted 11 106064 ⟨1434297, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50279 : CanonicalResponse ⟨11, 2, 0, 1434297, 106064, 1369, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434297, 106064, 1369, 262144⟩ (by decide) (by decide) raw_cut_50279
+
+theorem raw_cut_50280 : EJMOriginalReplayAssembly.Accepted 11 106065 ⟨1434380, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50280 : CanonicalResponse ⟨11, 2, 0, 1434380, 106065, 3481, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434380, 106065, 3481, 262144⟩ (by decide) (by decide) raw_cut_50280
+
+theorem raw_cut_50281 : EJMOriginalReplayAssembly.Accepted 11 106066 ⟨1434435, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50281 : CanonicalResponse ⟨11, 2, 0, 1434435, 106066, 2289, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434435, 106066, 2289, 262144⟩ (by decide) (by decide) raw_cut_50281
+
+theorem raw_cut_50282 : EJMOriginalReplayAssembly.Accepted 11 106067 ⟨1434499, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50282 : CanonicalResponse ⟨11, 2, 0, 1434499, 106067, 2641, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434499, 106067, 2641, 262144⟩ (by decide) (by decide) raw_cut_50282
+
+theorem raw_cut_50283 : EJMOriginalReplayAssembly.Accepted 10 26517 ⟨893098, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50283 : CanonicalResponse ⟨10, 1, 0, 893098, 26517, 1, 1048576⟩ :=
+  response_of_raw ⟨10, 1, 0, 893098, 26517, 1, 1048576⟩ (by decide) (by decide) raw_cut_50283
+
+theorem raw_cut_50284 : EJMOriginalReplayAssembly.Accepted 11 106072 ⟨1434555, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50284 : CanonicalResponse ⟨11, 2, 0, 1434555, 106072, 2421, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434555, 106072, 2421, 262144⟩ (by decide) (by decide) raw_cut_50284
+
+theorem raw_cut_50285 : EJMOriginalReplayAssembly.Accepted 11 106073 ⟨1434617, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50285 : CanonicalResponse ⟨11, 2, 0, 1434617, 106073, 2649, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434617, 106073, 2649, 262144⟩ (by decide) (by decide) raw_cut_50285
+
+theorem raw_cut_50286 : EJMOriginalReplayAssembly.Accepted 11 106074 ⟨900587, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50286 : CanonicalResponse ⟨11, 1, 0, 900587, 106074, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 900587, 106074, 1, 262144⟩ (by decide) (by decide) raw_cut_50286
+
+theorem raw_cut_50287 : EJMOriginalReplayAssembly.Accepted 11 106075 ⟨1434666, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50287 : CanonicalResponse ⟨11, 2, 0, 1434666, 106075, 2149, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434666, 106075, 2149, 262144⟩ (by decide) (by decide) raw_cut_50287
+
+theorem raw_cut_50288 : EJMOriginalReplayAssembly.Accepted 11 106076 ⟨1434725, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50288 : CanonicalResponse ⟨11, 2, 0, 1434725, 106076, 2173, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434725, 106076, 2173, 262144⟩ (by decide) (by decide) raw_cut_50288
+
+theorem raw_cut_50289 : EJMOriginalReplayAssembly.Accepted 11 106077 ⟨1434771, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50289 : CanonicalResponse ⟨11, 2, 0, 1434771, 106077, 2317, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434771, 106077, 2317, 262144⟩ (by decide) (by decide) raw_cut_50289
+
+theorem raw_cut_50290 : EJMOriginalReplayAssembly.Accepted 11 106078 ⟨1434804, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50290 : CanonicalResponse ⟨11, 2, 0, 1434804, 106078, 1533, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434804, 106078, 1533, 262144⟩ (by decide) (by decide) raw_cut_50290
+
+theorem raw_cut_50291 : EJMOriginalReplayAssembly.Accepted 11 106079 ⟨1434826, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50291 : CanonicalResponse ⟨11, 2, 0, 1434826, 106079, 773, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434826, 106079, 773, 262144⟩ (by decide) (by decide) raw_cut_50291
+
+theorem raw_cut_50292 : EJMOriginalReplayAssembly.Accepted 11 106080 ⟨1375697, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50292 : CanonicalResponse ⟨11, 1, 0, 1375697, 106080, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 1375697, 106080, 1, 262144⟩ (by decide) (by decide) raw_cut_50292
+
+theorem raw_cut_50293 : EJMOriginalReplayAssembly.Accepted 11 106081 ⟨1434869, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50293 : CanonicalResponse ⟨11, 2, 0, 1434869, 106081, 1685, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434869, 106081, 1685, 262144⟩ (by decide) (by decide) raw_cut_50293
+
+theorem raw_cut_50294 : EJMOriginalReplayAssembly.Accepted 11 106082 ⟨1434930, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50294 : CanonicalResponse ⟨11, 2, 0, 1434930, 106082, 2485, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434930, 106082, 2485, 262144⟩ (by decide) (by decide) raw_cut_50294
+
+theorem raw_cut_50295 : EJMOriginalReplayAssembly.Accepted 11 106083 ⟨1434993, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50295 : CanonicalResponse ⟨11, 2, 0, 1434993, 106083, 1857, 262144⟩ :=
+  response_of_raw ⟨11, 2, 0, 1434993, 106083, 1857, 262144⟩ (by decide) (by decide) raw_cut_50295
+
+theorem raw_cut_50296 : EJMOriginalReplayAssembly.Accepted 10 26521 ⟨1435091, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50296 : CanonicalResponse ⟨10, 2, 0, 1435091, 26521, 4009, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1435091, 26521, 4009, 1048576⟩ (by decide) (by decide) raw_cut_50296
+
+theorem raw_cut_50297 : EJMOriginalReplayAssembly.Accepted 10 26522 ⟨1432895, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50297 : CanonicalResponse ⟨10, 2, 0, 1432895, 26522, 5, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1432895, 26522, 5, 1048576⟩ (by decide) (by decide) raw_cut_50297
+
+theorem raw_cut_50298 : EJMOriginalReplayAssembly.Accepted 10 26523 ⟨1435155, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50298 : CanonicalResponse ⟨10, 2, 0, 1435155, 26523, 2809, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1435155, 26523, 2809, 1048576⟩ (by decide) (by decide) raw_cut_50298
+
+theorem raw_cut_50299 : EJMOriginalReplayAssembly.Accepted 10 26524 ⟨1435217, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50299 : CanonicalResponse ⟨10, 2, 0, 1435217, 26524, 2717, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1435217, 26524, 2717, 1048576⟩ (by decide) (by decide) raw_cut_50299
+
+theorem raw_cut_50300 : EJMOriginalReplayAssembly.Accepted 10 26525 ⟨1435248, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50300 : CanonicalResponse ⟨10, 2, 0, 1435248, 26525, 1449, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1435248, 26525, 1449, 1048576⟩ (by decide) (by decide) raw_cut_50300
+
+theorem raw_cut_50301 : EJMOriginalReplayAssembly.Accepted 10 26526 ⟨1435277, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50301 : CanonicalResponse ⟨10, 2, 0, 1435277, 26526, 781, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1435277, 26526, 781, 1048576⟩ (by decide) (by decide) raw_cut_50301
+
+theorem raw_cut_50302 : EJMOriginalReplayAssembly.Accepted 10 26527 ⟨1435278, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50302 : CanonicalResponse ⟨10, 2, 0, 1435278, 26527, 41, 1048576⟩ :=
+  response_of_raw ⟨10, 2, 0, 1435278, 26527, 41, 1048576⟩ (by decide) (by decide) raw_cut_50302
+
+theorem raw_cut_50303 : EJMOriginalReplayAssembly.Accepted 11 106112 ⟨434745, by decide⟩ := by
+  unfold EJMOriginalReplayAssembly.Accepted
+  decide +kernel
+
+theorem response_cut_50303 : CanonicalResponse ⟨11, 1, 0, 434745, 106112, 1, 262144⟩ :=
+  response_of_raw ⟨11, 1, 0, 434745, 106112, 1, 262144⟩ (by decide) (by decide) raw_cut_50303
+
+end D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
