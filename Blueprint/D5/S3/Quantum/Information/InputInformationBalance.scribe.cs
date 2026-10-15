@@ -53,6 +53,8 @@ internal sealed class InputInformationBalanceDocument : IScribeDocumentDefinitio
                     Call("quantumMutualInformation", Call("stateAB", Rho)), Sp, Eq, Sp,
                     Num(2), Sp, S(Call("marginalRight", Rho))))))));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
     private static Formula S(Formula state) => Call("vonNeumannEntropy", state);
 
     private static Formula ArGroupingDefinition()
@@ -61,9 +63,9 @@ internal sealed class InputInformationBalanceDocument : IScribeDocumentDefinitio
         Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
         Formula Method(string name, params Formula[] args) => new Formula.Apply(
             Seq(Named("Equiv"), Dot, Named(name)), [.. args]);
-        Formula Product(Formula x, Formula y) => Seq(Open, x, Sp, Times, Sp, y, Close);
-        Formula typedGrouping = Seq(Open, F.Id("arGrouping"), Sp, Colon, Sp,
-            Call("Equiv", Product(Product(a, r), b), Product(a, Product(b, r))), Close);
+        Formula Product(Formula x, Formula y) => Parenthesized(Seq(x, Sp, Times, Sp, y));
+        Formula typedGrouping = Parenthesized(Seq(F.Id("arGrouping"), Sp, Colon, Sp,
+            Call("Equiv", Product(Product(a, r), b), Product(a, Product(b, r)))));
         Formula body = Method("trans", Method("prodAssoc", a, r, b),
             Method("prodCongr", Method("refl", a), Method("prodComm", r, b)));
         return Disp(Seq(Forall, Sp, a, Sp, r, Sp, b, Sp, Colon, Sp, F.Id("Type"),

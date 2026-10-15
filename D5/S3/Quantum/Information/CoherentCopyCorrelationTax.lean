@@ -6,9 +6,6 @@
    utility: none
    digest: Coherent premeasurement preserves entropy and splits correlation into record and tax. -/
 
-/- Escape audit unfinished for copyIsometry_star_mul and copyMatrix_entry:
-   https://github.com/the-omega-institute/trureturing/issues/16913 -/
-
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
