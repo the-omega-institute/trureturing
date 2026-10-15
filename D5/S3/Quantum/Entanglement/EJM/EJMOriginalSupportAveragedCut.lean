@@ -64,7 +64,8 @@ private theorem triangle_support_coordinate (k : Fin 12) (e : Fin 10 → Fin 4)
   have checked : ∀ k : Fin 12, ∀ row ∈ triangleSupport,
       List.ofFn (fun j : Fin 10 => row[(trianglePerm k j).val]?.getD 0)
         ∈ triangleSupport := by decide
-  simpa [Function.comp_def] using checked k (List.ofFn e) h
+  simpa only [List.getElem?_ofFn, Fin.is_lt, dif_pos, Option.getD_some,
+    Function.comp_def] using checked k (List.ofFn e) h
 
 set_option maxHeartbeats 4000000 in
 -- Check all 12 actions on the actual 168 singleton rows with no outcome normalization.
@@ -74,7 +75,8 @@ private theorem singleton_support_coordinate (k : Fin 12) (e : Fin 9 → Fin 4)
   have checked : ∀ k : Fin 12, ∀ row ∈ singletonSupport,
       List.ofFn (fun j : Fin 9 => row[(singletonPerm k j).val]?.getD 0)
         ∈ singletonSupport := by decide
-  simpa [Function.comp_def] using checked k (List.ofFn e) h
+  simpa only [List.getElem?_ofFn, Fin.is_lt, dif_pos, Option.getD_some,
+    Function.comp_def] using checked k (List.ofFn e) h
 
 private theorem triangle_inside_source (e : Node → Fin 4) (s : Fin 192)
     (i : Fin 16) (h : TriangleInside e (triangleIndex s i)) :
@@ -116,6 +118,7 @@ private theorem balanced_sum (index : Fin 192 → Fin 16)
   rw [← Finset.sum_fiberwise' Finset.univ index f]
   simp only [Finset.sum_const, multiplicity, nsmul_eq_mul]
   rw [Finset.mul_sum]
+  norm_num
 
 set_option maxHeartbeats 4000000 in
 -- The kernel checks 192 original marginal-index transports and all sixteen fibers.
