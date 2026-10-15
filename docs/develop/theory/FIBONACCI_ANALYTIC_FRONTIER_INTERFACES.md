@@ -596,11 +596,11 @@ $$
 
 因此，对 `finiteResponse` 作 Stieltjes 分部积分时，在把已经单独记录的
 $A$ 处跳跃、右端 $R$ 项和 `smoothBoundary` 分开以后，centered 核的未抵消
-高分支贡献恰为
+高分支贡献恰为（这里保留 dilation 定义中的 $c^{-1}$ 归一化）
 
 $$
 \boxed{
-\int_A^\infty E(cs)k(s)\,ds
+\frac1c\int_A^\infty E(cs)k(s)\,ds
 -I_\psi(A)
 -(c-1)J_2(A),
 }
@@ -619,10 +619,31 @@ $$
 -\frac{1+\log(t/c)}{t^2(\log(t/c))^2},
 $$
 
-换元后权重正好变成 $k(s)$，但被积的误差变成 $E(cs)$。所以一般没有
+而 $dt=c\,ds$ 与 dilation 前的 $c^{-1}$ 恰好留下前式中的 $1/c$。
+因此换元后被积的误差仍变成 $E(cs)$，并没有只改变积分下限。更明确地，若
 
 $$
-\int_A^\infty E(cs)k(s)\,ds=I_\psi(cA).
+D_c(A):=\frac1c\int_A^\infty E(cs)k(s)\,ds-I_\psi(A),
+$$
+
+则对 $c>1$ 有保留端点的精确分解
+
+$$
+\boxed{
+D_c(A)
+=-\int_A^{cA}E(t)k(t)\,dt
++\int_{cA}^\infty E(t)
+\left[
+\frac{1+\log(t/c)}{t^2(\log(t/c))^2}
+-k(t)
+\right]dt.
+}
+$$
+
+所以一般没有
+
+$$
+\frac1c\int_A^\infty E(cs)k(s)\,ds=I_\psi(cA).
 $$
 
 这不是记号差异，而是来源不同：右边只改变积分下限，左边改变了同一实际
@@ -633,7 +654,7 @@ $$
 于是已有 `ThetaIncrementLower` 接口最多能控制上述膨胀差分的一个有限版本，
 而 Nicolas/Broadbent--Fiori--Kadiri--Ng--Wilk 的 signed 公式控制的是
 $I_\psi(A)$。从前者得到后者至少还需要一个同源的 dilation-correlation 估计，
-同时控制 $E(cs)-E(s)$、$J_2(A)$ 和全部端点项，并达到
+同时控制上述区间端点项、权重差、$J_2(A)$ 和全部端点项，并达到
 
 $$
 O\left(\frac1{\sqrt A\log A}\right)
