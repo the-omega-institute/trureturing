@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c5ebd4e7a26a167b677e271adbf94b35a5a5532950398a15a6f4f8b23028f100
-  normalized_sha256: sha256:c5ebd4e7a26a167b677e271adbf94b35a5a5532950398a15a6f4f8b23028f100
-cas_ref: sha256:c5ebd4e7a26a167b677e271adbf94b35a5a5532950398a15a6f4f8b23028f100
-coverage_gids:
-  - gid: D5/S3/Zeros/Symmetry/FiniteShiftedBlaschkeSymmetry.finite_shifted_blaschke_reflection_spec
-    target_statement_id: sha256:038528e09c2ec8a046dd76f3997acba855eaa611c04d158746b87a0343fe6f90
-receipts:
-  unresolved_subitems: []

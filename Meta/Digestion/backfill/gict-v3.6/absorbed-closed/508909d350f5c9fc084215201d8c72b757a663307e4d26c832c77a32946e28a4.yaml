@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:508909d350f5c9fc084215201d8c72b757a663307e4d26c832c77a32946e28a4
-  normalized_sha256: sha256:508909d350f5c9fc084215201d8c72b757a663307e4d26c832c77a32946e28a4
-cas_ref: sha256:508909d350f5c9fc084215201d8c72b757a663307e4d26c832c77a32946e28a4
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/MarkovNeighborNormObstruction.markov_neighbor_product_not_quadratic_norm
-    target_statement_id: sha256:d05c28d03f79b3f35d74beb186c320aac8693f82bd1b64b33583977453a0ef7a
-receipts:
-  unresolved_subitems: []

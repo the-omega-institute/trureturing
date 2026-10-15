@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:87a0447ee3484d9e12fbbf66d8e57fbb67109e907fd3163b964e1b05ad66dc19
-  normalized_sha256: sha256:87a0447ee3484d9e12fbbf66d8e57fbb67109e907fd3163b964e1b05ad66dc19
-cas_ref: sha256:87a0447ee3484d9e12fbbf66d8e57fbb67109e907fd3163b964e1b05ad66dc19
-coverage_gids:
-  - gid: D5/S3/QuantumBounds/CollisionEntropyUncertainty.collision_entropy_uncertainty
-    target_statement_id: sha256:4123891d4c2a44c9d42e596b6850297dea8ed7220a9ca7ec5bccef5c5db2e462
-receipts:
-  unresolved_subitems: []

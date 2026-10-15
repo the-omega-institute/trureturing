@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7adafd1d8abdba27edd6478c80d611bbbd0412cbe37762cddcb55c72e512c9e9
-  normalized_sha256: sha256:7adafd1d8abdba27edd6478c80d611bbbd0412cbe37762cddcb55c72e512c9e9
-cas_ref: sha256:7adafd1d8abdba27edd6478c80d611bbbd0412cbe37762cddcb55c72e512c9e9
-coverage_gids:
-  - gid: D5/S3/Weil/Separator/UnconditionalExplicitFormula.energyIdentity_unconditional
-    target_statement_id: sha256:f48a1090b3385b93964168b5eb7773871e2ee5218049917dc51b2bc207e506cc
-receipts:
-  unresolved_subitems: []

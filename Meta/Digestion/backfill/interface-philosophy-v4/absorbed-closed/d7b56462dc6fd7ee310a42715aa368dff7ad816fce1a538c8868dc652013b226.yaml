@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d7b56462dc6fd7ee310a42715aa368dff7ad816fce1a538c8868dc652013b226
-  normalized_sha256: sha256:d7b56462dc6fd7ee310a42715aa368dff7ad816fce1a538c8868dc652013b226
-cas_ref: sha256:d7b56462dc6fd7ee310a42715aa368dff7ad816fce1a538c8868dc652013b226
-coverage_gids:
-  - gid: D5/S0/Rewriting/BinaryPatchFamily.binary_patch_family_injective_and_consistent
-    target_statement_id: sha256:184e1157973e0f37ac0592f40895d462a2db47a89032a29729851cf33cb99b69
-receipts:
-  unresolved_subitems: []

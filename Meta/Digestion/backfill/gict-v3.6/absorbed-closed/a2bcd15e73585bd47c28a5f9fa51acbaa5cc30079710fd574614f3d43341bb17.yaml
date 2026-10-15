@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a2bcd15e73585bd47c28a5f9fa51acbaa5cc30079710fd574614f3d43341bb17
-  normalized_sha256: sha256:a2bcd15e73585bd47c28a5f9fa51acbaa5cc30079710fd574614f3d43341bb17
-cas_ref: sha256:a2bcd15e73585bd47c28a5f9fa51acbaa5cc30079710fd574614f3d43341bb17
-coverage_gids:
-  - gid: D5/S3/PrimeForms/PropagationLegs.propagation_identity
-    target_statement_id: sha256:5a1f48d195af493729112cc38d5293dd07c6493910617208b43d01bdf0fab77b
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:00fb23ca5baa428e90c918711e11ac951d785e4224cdba15051e3f4e0f143b9b
-  normalized_sha256: sha256:00fb23ca5baa428e90c918711e11ac951d785e4224cdba15051e3f4e0f143b9b
-cas_ref: sha256:00fb23ca5baa428e90c918711e11ac951d785e4224cdba15051e3f4e0f143b9b
-coverage_gids:
-  - gid: D5/S3/ResourceOrder/MarginalTradeAmplification.marginal_trade_mark_amplification
-    target_statement_id: sha256:422c08955123522ce58b413700388d2a53b85bb8f55b992f828be828d0dceff8
-receipts:
-  unresolved_subitems: []

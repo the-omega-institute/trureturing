@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:afb3ccbcaac4134998b286ff7219e531648aa2a03297c03f39955e907c5dfbec
-  normalized_sha256: sha256:afb3ccbcaac4134998b286ff7219e531648aa2a03297c03f39955e907c5dfbec
-cas_ref: sha256:afb3ccbcaac4134998b286ff7219e531648aa2a03297c03f39955e907c5dfbec
-coverage_gids:
-  - gid: D5/S3/Observer/LinearMemory/ReachableObservableQuotientReachability.reachable_observable_quotient_is_reachable
-    target_statement_id: sha256:c208479c431366d7d55330b2e9082bad9cc4b509dec2c6ebc9f7bfc7e0c29925
-receipts:
-  unresolved_subitems: []

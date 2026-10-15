@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2f867ba2c1695d90ae513ce884fb68a9ef4976d2cdbcf3ed29764c427438451a
-  normalized_sha256: sha256:2f867ba2c1695d90ae513ce884fb68a9ef4976d2cdbcf3ed29764c427438451a
-cas_ref: sha256:2f867ba2c1695d90ae513ce884fb68a9ef4976d2cdbcf3ed29764c427438451a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InvolutionLogic/SingletonRelativeComplementCriterion.singleton_relative_complement_iff_two_point_universe
-    target_statement_id: sha256:b14d2ad81ebd8b70ec0bd48e52c2543170dc7613a70917b5074f345a22801026
-receipts:
-  unresolved_subitems: []

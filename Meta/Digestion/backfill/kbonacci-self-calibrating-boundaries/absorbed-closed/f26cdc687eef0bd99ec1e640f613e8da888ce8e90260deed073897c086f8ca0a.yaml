@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f26cdc687eef0bd99ec1e640f613e8da888ce8e90260deed073897c086f8ca0a
-  normalized_sha256: sha256:f26cdc687eef0bd99ec1e640f613e8da888ce8e90260deed073897c086f8ca0a
-cas_ref: sha256:f26cdc687eef0bd99ec1e640f613e8da888ce8e90260deed073897c086f8ca0a
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FirstWindowBoundaryAdaptive.original_first_window_adaptive_price
-    target_statement_id: sha256:1496e66283655c28fa8f925e781ca684aa7a0df7b90cbbc62ea54100a887761d
-receipts:
-  unresolved_subitems: []

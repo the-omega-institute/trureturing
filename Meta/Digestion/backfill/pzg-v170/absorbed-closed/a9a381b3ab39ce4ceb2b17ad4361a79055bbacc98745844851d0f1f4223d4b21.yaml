@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a9a381b3ab39ce4ceb2b17ad4361a79055bbacc98745844851d0f1f4223d4b21
-  normalized_sha256: sha256:a9a381b3ab39ce4ceb2b17ad4361a79055bbacc98745844851d0f1f4223d4b21
-cas_ref: sha256:a9a381b3ab39ce4ceb2b17ad4361a79055bbacc98745844851d0f1f4223d4b21
-coverage_gids:
-  - gid: D5/S1/Digit/GreedyFloorSqrtRunBlocks.maximal_decreasing_run_lengths
-    target_statement_id: sha256:19c1d60a2f22d1b39efa87cf434c0ca8a790f0808554be5e2c36c2b029127cb1
-receipts:
-  unresolved_subitems: []

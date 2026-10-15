@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
-  normalized_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
-cas_ref: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
-coverage_gids:
-  - gid: D5/S3/Quantum/CloningMachine.machine_entropy_closed_form
-    target_statement_id: sha256:38cebeb7b52a1937f9741801c7f10a9e0d5528f43158be88de18013e2c9132bb
-receipts:
-  unresolved_subitems: []

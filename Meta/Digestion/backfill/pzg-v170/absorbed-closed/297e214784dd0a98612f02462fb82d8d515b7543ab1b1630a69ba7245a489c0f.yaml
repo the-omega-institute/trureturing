@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:297e214784dd0a98612f02462fb82d8d515b7543ab1b1630a69ba7245a489c0f
-  normalized_sha256: sha256:297e214784dd0a98612f02462fb82d8d515b7543ab1b1630a69ba7245a489c0f
-cas_ref: sha256:297e214784dd0a98612f02462fb82d8d515b7543ab1b1630a69ba7245a489c0f
-coverage_gids:
-  - gid: D5/S3/Factorization/SolenoidProfiniteKernel.universal_solenoid_profinite_exact
-    target_statement_id: sha256:3bd373d54c28837e0f4520bfb31d7d69e50ea43c80ae62cfea1bf4506847b4fc
-receipts:
-  unresolved_subitems: []

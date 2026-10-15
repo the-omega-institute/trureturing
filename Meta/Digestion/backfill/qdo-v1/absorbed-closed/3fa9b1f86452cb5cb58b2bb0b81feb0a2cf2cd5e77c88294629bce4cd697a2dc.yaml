@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3fa9b1f86452cb5cb58b2bb0b81feb0a2cf2cd5e77c88294629bce4cd697a2dc
-  normalized_sha256: sha256:3fa9b1f86452cb5cb58b2bb0b81feb0a2cf2cd5e77c88294629bce4cd697a2dc
-cas_ref: sha256:3fa9b1f86452cb5cb58b2bb0b81feb0a2cf2cd5e77c88294629bce4cd697a2dc
-coverage_gids:
-  - gid: D5/S3/Midline/Cayley/LogarithmicRadialDefect.logarithmic_radial_defect_and_mirror
-    target_statement_id: sha256:47f49aa187e4fcbf673ab39f7769140864fad51eb01394ce88cb15f607d17913
-receipts:
-  unresolved_subitems: []

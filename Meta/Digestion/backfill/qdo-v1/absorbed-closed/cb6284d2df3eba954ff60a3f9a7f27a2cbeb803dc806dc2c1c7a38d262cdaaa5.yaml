@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:cb6284d2df3eba954ff60a3f9a7f27a2cbeb803dc806dc2c1c7a38d262cdaaa5
-  normalized_sha256: sha256:cb6284d2df3eba954ff60a3f9a7f27a2cbeb803dc806dc2c1c7a38d262cdaaa5
-cas_ref: sha256:cb6284d2df3eba954ff60a3f9a7f27a2cbeb803dc806dc2c1c7a38d262cdaaa5
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometry/FiniteWordFiberDiameter.finite_word_fiber_prediction_diameter
-    target_statement_id: sha256:f303a63258a607385b2bbb450ef4080b17d08712ec7f114b7ef36f6223ab3573
-receipts:
-  unresolved_subitems: []

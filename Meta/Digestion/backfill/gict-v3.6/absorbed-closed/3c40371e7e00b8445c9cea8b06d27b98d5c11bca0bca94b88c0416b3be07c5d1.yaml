@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3c40371e7e00b8445c9cea8b06d27b98d5c11bca0bca94b88c0416b3be07c5d1
-  normalized_sha256: sha256:3c40371e7e00b8445c9cea8b06d27b98d5c11bca0bca94b88c0416b3be07c5d1
-cas_ref: sha256:3c40371e7e00b8445c9cea8b06d27b98d5c11bca0bca94b88c0416b3be07c5d1
-coverage_gids:
-  - gid: D5/S1/Depth/ContinuedFractions/PeriodicImpliesQuadratic.eventually_periodic_cf_implies_quadratic_irrational
-    target_statement_id: sha256:ebcd16b3032e2192b70241eb79e40888cda5d5133d54340377f6c21b5b1700a0
-receipts:
-  unresolved_subitems: []

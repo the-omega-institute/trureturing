@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4b544f1aa96895c296f4986ea823cc65cd5855738a6e38018fea2557c6621f20
-  normalized_sha256: sha256:4b544f1aa96895c296f4986ea823cc65cd5855738a6e38018fea2557c6621f20
-cas_ref: sha256:4b544f1aa96895c296f4986ea823cc65cd5855738a6e38018fea2557c6621f20
-coverage_gids:
-  - gid: D5/S3/QuantumChannels/ProjectionDiagnostics/StaticDynamicScalarSeparation.static_loss_and_dynamic_return_are_independent
-    target_statement_id: sha256:0b2c23a2732de80bd009cf6cf5227dd4720eb666b036549fd3a81030e541c167
-receipts:
-  unresolved_subitems: []

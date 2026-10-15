@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1dd1be19d56ddc8ef60405b88ede7d611f17c150dcaef785fe90136046d62ee1
-  normalized_sha256: sha256:1dd1be19d56ddc8ef60405b88ede7d611f17c150dcaef785fe90136046d62ee1
-cas_ref: sha256:1dd1be19d56ddc8ef60405b88ede7d611f17c150dcaef785fe90136046d62ee1
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/MoralLuck/MoralLuckDescent.moral_luck_descent_iff
-    target_statement_id: sha256:881b22dc10bd1989ab49f08816d8c2a5f91eb7aeb1bb1d2d71b37d61243607cf
-receipts:
-  unresolved_subitems: []

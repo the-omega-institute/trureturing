@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0275375eef3b25ae37879fd506a7ea24f21c00bd203bb3989ba683578ee0fa20
-  normalized_sha256: sha256:0275375eef3b25ae37879fd506a7ea24f21c00bd203bb3989ba683578ee0fa20
-cas_ref: sha256:0275375eef3b25ae37879fd506a7ea24f21c00bd203bb3989ba683578ee0fa20
-coverage_gids:
-  - gid: D5/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar.golden_model_set_self_similar
-    target_statement_id: sha256:527f52258b716c99b67a14a72a8eee13cf4e913f6577019b8a5efa7d8560f95f
-receipts:
-  unresolved_subitems: []

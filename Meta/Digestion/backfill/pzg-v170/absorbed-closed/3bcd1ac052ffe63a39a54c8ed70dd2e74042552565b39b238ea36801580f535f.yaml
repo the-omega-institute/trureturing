@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3bcd1ac052ffe63a39a54c8ed70dd2e74042552565b39b238ea36801580f535f
-  normalized_sha256: sha256:3bcd1ac052ffe63a39a54c8ed70dd2e74042552565b39b238ea36801580f535f
-cas_ref: sha256:3bcd1ac052ffe63a39a54c8ed70dd2e74042552565b39b238ea36801580f535f
-coverage_gids:
-  - gid: D5/S1/Recurrence/MultiplicativeExclusionResidueClass.sequence_formula
-    target_statement_id: sha256:b98e248b9db9d351a8f395df7e6f77701b1064461d001bc53033795c3342d20a
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2d9e2ab7a9fc7f42274b79a5b4d12e98f214eff566545247e874e15f56095a51
-  normalized_sha256: sha256:2d9e2ab7a9fc7f42274b79a5b4d12e98f214eff566545247e874e15f56095a51
-cas_ref: sha256:2d9e2ab7a9fc7f42274b79a5b4d12e98f214eff566545247e874e15f56095a51
-coverage_gids:
-  - gid: D5/S3/Observer/Separation/MoreauDecomposition.moreau_decomposition
-    target_statement_id: sha256:36cd5a0bab23ab3b2c2a911b3c5dca8d4931505309c4ba9117b1d2b549e1b2ed
-receipts:
-  unresolved_subitems: []

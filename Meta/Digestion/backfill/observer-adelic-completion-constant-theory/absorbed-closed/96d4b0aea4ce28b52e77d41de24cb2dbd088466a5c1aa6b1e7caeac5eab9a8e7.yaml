@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:96d4b0aea4ce28b52e77d41de24cb2dbd088466a5c1aa6b1e7caeac5eab9a8e7
-  normalized_sha256: sha256:96d4b0aea4ce28b52e77d41de24cb2dbd088466a5c1aa6b1e7caeac5eab9a8e7
-cas_ref: sha256:96d4b0aea4ce28b52e77d41de24cb2dbd088466a5c1aa6b1e7caeac5eab9a8e7
-coverage_gids:
-  - gid: D5/S3/Analytic/Asymptotics/FiniteCountertermMellinContinuation.finite_counterterm_mellin_continuation
-    target_statement_id: sha256:0b75bd264e32a3daead93a734e7a517adeb50181e06d0d10a21344aae70e4ca8
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
-  normalized_sha256: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
-cas_ref: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
-coverage_gids:
-  - gid: D5/S1/Digit/Admissibility/OddIndexFreedom.odd_index_subsets_are_admissible_and_counted
-    target_statement_id: sha256:bfe3cd0c430380090b23ca5e3098afc27dcf62664241ed430558faa0b14fe67f
-receipts:
-  unresolved_subitems: []

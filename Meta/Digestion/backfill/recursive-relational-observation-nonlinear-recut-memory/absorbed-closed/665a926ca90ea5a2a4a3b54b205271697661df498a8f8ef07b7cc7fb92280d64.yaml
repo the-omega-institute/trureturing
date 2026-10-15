@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:665a926ca90ea5a2a4a3b54b205271697661df498a8f8ef07b7cc7fb92280d64
-  normalized_sha256: sha256:665a926ca90ea5a2a4a3b54b205271697661df498a8f8ef07b7cc7fb92280d64
-cas_ref: sha256:665a926ca90ea5a2a4a3b54b205271697661df498a8f8ef07b7cc7fb92280d64
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Reversibility/ExactRollbackInjectivityCriterion.exact_rollback_iff_joint_record_injective
-    target_statement_id: sha256:bac180b1e192402b8422d2b433fa9d75e31cc3e4eb8788b989569dd3636c0869
-receipts:
-  unresolved_subitems: []

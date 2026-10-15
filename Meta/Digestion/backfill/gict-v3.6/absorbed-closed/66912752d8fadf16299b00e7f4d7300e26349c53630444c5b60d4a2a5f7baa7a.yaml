@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
-  normalized_sha256: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
-cas_ref: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
-coverage_gids:
-  - gid: D5/S3/Constants/Radicals/SqrtThreeThreshold.three_lt_two_mul_sqrt_three
-    target_statement_id: sha256:e7bbf8841c116faa63d7f25f61e6929a2e6b290d0dab3f3d3f4bf96fc4ccc2b8
-receipts:
-  unresolved_subitems: []

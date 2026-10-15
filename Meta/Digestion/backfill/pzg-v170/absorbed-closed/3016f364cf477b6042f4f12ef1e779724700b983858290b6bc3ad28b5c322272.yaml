@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3016f364cf477b6042f4f12ef1e779724700b983858290b6bc3ad28b5c322272
-  normalized_sha256: sha256:3016f364cf477b6042f4f12ef1e779724700b983858290b6bc3ad28b5c322272
-cas_ref: sha256:3016f364cf477b6042f4f12ef1e779724700b983858290b6bc3ad28b5c322272
-coverage_gids:
-  - gid: D5/S1/Deficit/GoldenDeficitCoin.golden_deficit_coin_identity
-    target_statement_id: sha256:faa268e69a08b05c8cbec37afe8bd0cd98a9f391d5134a8d40659e416c5e70f1
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e5d14f5b9b78e7a8df2b12126219fecbe47c23725eafc7590226c643bf4fb2be
-  normalized_sha256: sha256:e5d14f5b9b78e7a8df2b12126219fecbe47c23725eafc7590226c643bf4fb2be
-cas_ref: sha256:e5d14f5b9b78e7a8df2b12126219fecbe47c23725eafc7590226c643bf4fb2be
-coverage_gids:
-  - gid: D5/S3/Observer/Linear/RobustFrameBounds.robust_observer_frame_bounds
-    target_statement_id: sha256:47fdb79491a78a91db6e861cd4b8ad8bb433d8bacace11c94f9d77d0d1ab2227
-receipts:
-  unresolved_subitems: []

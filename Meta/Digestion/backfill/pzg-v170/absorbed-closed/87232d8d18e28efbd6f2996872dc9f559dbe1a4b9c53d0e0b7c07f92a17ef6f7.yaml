@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:87232d8d18e28efbd6f2996872dc9f559dbe1a4b9c53d0e0b7c07f92a17ef6f7
-  normalized_sha256: sha256:87232d8d18e28efbd6f2996872dc9f559dbe1a4b9c53d0e0b7c07f92a17ef6f7
-cas_ref: sha256:87232d8d18e28efbd6f2996872dc9f559dbe1a4b9c53d0e0b7c07f92a17ef6f7
-coverage_gids:
-  - gid: D5/S1/Eigenstructure/GoldenExponentRays.golden_exponent_rational_ray_iff
-    target_statement_id: sha256:9df5999a32b84e0a674186a2a06a6744469e08045b11aa600ac9162c128af866
-receipts:
-  unresolved_subitems: []

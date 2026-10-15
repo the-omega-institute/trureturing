@@ -1,6 +1,0 @@
-**Corollary 9.6 (target cardinality does not transfer the forward law).**
-The cardinality $m=|F[\mathcal U_*]|=5$ does not by itself force
-$r(q+1)\ge m$ for predecessor-row recovery on a complete actual
-one-image current-row fiber. Here $r=1,q=3$ is feasible while
-$r(q+1)=4<5$.
-

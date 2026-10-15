@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:319641fc06cab45929f2ec875caf53632221a029cdac9ededd8dd1553e3c2ca5
-  normalized_sha256: sha256:319641fc06cab45929f2ec875caf53632221a029cdac9ededd8dd1553e3c2ca5
-cas_ref: sha256:319641fc06cab45929f2ec875caf53632221a029cdac9ededd8dd1553e3c2ca5
-coverage_gids:
-  - gid: D5/S1/Words/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff
-    target_statement_id: sha256:9e19f864271dab1f1d431ba11449be125b30ade4b23e2441dffb10b08b490b9f
-receipts:
-  unresolved_subitems: []

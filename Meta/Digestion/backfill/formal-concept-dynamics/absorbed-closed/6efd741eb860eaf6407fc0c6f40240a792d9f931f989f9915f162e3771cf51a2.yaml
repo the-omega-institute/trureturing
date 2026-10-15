@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6efd741eb860eaf6407fc0c6f40240a792d9f931f989f9915f162e3771cf51a2
-  normalized_sha256: sha256:6efd741eb860eaf6407fc0c6f40240a792d9f931f989f9915f162e3771cf51a2
-cas_ref: sha256:6efd741eb860eaf6407fc0c6f40240a792d9f931f989f9915f162e3771cf51a2
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Rights/FiniteActionRightsInvariance.finite_action_sequence_preserves_rights
-    target_statement_id: sha256:4e4176fe48ef3738634b9208c7907a4f3b9edc77cacbf221173fee2d100972d6
-receipts:
-  unresolved_subitems: []

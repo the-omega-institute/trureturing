@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bcd5358b78c953ef95dac3e32fc11d0d43a157494857377795d121827cd42f79
-  normalized_sha256: sha256:bcd5358b78c953ef95dac3e32fc11d0d43a157494857377795d121827cd42f79
-cas_ref: sha256:bcd5358b78c953ef95dac3e32fc11d0d43a157494857377795d121827cd42f79
-coverage_gids:
-  - gid: D5/S3/Zeros/ToySpectrum/TwoBodyHeatSeparation.two_body_heat_real_root_separation
-    target_statement_id: sha256:b5284a37a041871b21f1d09e23b8d89549824db4de3952db2fc31a045019c628
-receipts:
-  unresolved_subitems: []

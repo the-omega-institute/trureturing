@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d94e3e0eb73e161aa996b6db40ed210897b81d2611007e21386adfb53b617f29
-  normalized_sha256: sha256:d94e3e0eb73e161aa996b6db40ed210897b81d2611007e21386adfb53b617f29
-cas_ref: sha256:d94e3e0eb73e161aa996b6db40ed210897b81d2611007e21386adfb53b617f29
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/ModThreeNormObstruction.three_mul_sub_one_not_quadratic_norm
-    target_statement_id: sha256:522b1ac723d9cac71d0c07734187a946fb89e68bbcb5e1f060b92ad7afe3d655
-receipts:
-  unresolved_subitems: []

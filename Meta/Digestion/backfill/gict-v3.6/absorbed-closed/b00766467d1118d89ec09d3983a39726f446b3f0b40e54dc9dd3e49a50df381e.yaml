@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b00766467d1118d89ec09d3983a39726f446b3f0b40e54dc9dd3e49a50df381e
-  normalized_sha256: sha256:b00766467d1118d89ec09d3983a39726f446b3f0b40e54dc9dd3e49a50df381e
-cas_ref: sha256:b00766467d1118d89ec09d3983a39726f446b3f0b40e54dc9dd3e49a50df381e
-coverage_gids:
-  - gid: D5/S3/PrimeForms/PellFamilies/CrossingPellFamily.crossing_pell_invariant
-    target_statement_id: sha256:7f84e8b4c8f8c3964d5459dbe31ede9e4ae85801bfcd0a2b183782912a02fc19
-receipts:
-  unresolved_subitems: []

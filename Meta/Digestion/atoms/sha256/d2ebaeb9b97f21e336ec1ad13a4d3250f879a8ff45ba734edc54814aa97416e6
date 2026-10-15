@@ -1,4 +1,0 @@
-## 二、预登记:格收缩的剩余义务
-
-在 `Gobs_dvd_of_dvd` 与 `Gobs_greatest_golden_divisor` 已冻结之后,下列四条仍不在仓内(逐条以 `git grep` 对 `origin/dev` 求值确认,不再对工作树求值)。
-

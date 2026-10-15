@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8b0317596e54a5e2bb3de27fc29a31269163453ef8110b9f6aeb761c99cc200c
-  normalized_sha256: sha256:8b0317596e54a5e2bb3de27fc29a31269163453ef8110b9f6aeb761c99cc200c
-cas_ref: sha256:8b0317596e54a5e2bb3de27fc29a31269163453ef8110b9f6aeb761c99cc200c
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Knowledge/FiniteCapacity.finite_knowledge_capacity
-    target_statement_id: sha256:19e64d27a391cce57dddc37aee9d718d7cbfed6ce0ac6996b0f6cc7a3c36c1c7
-receipts:
-  unresolved_subitems: []

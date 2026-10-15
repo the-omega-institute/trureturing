@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:57bac38b234a3a9d717c0c23e6456e4a4d780665dc93d706a5da2a26f4ae2e77
-  normalized_sha256: sha256:57bac38b234a3a9d717c0c23e6456e4a4d780665dc93d706a5da2a26f4ae2e77
-cas_ref: sha256:57bac38b234a3a9d717c0c23e6456e4a4d780665dc93d706a5da2a26f4ae2e77
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/PredictionCertificates/ShortestDistanceSemantics.shortest_distance_exact_semantics
-    target_statement_id: sha256:39621413db78b3e24dd6713bc6faabdaa3b2923e24a4ea2ca90db9bc8575437a
-receipts:
-  unresolved_subitems: []

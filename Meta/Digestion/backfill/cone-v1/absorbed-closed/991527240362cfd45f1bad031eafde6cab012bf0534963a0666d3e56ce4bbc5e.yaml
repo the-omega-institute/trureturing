@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
-  normalized_sha256: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
-cas_ref: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
-coverage_gids:
-  - gid: D5/S3/Constants/MidslopeDoubleDual.arithmetic_geometric_double_dual
-    target_statement_id: sha256:ff505c89ec062e77026818f043cdaafafa087977b19013872c39fca04827dedf
-receipts:
-  unresolved_subitems: []

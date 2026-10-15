@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:11ca2010b5fe590b164d87c114cae9a1b7dd59aa5fd66f9a8861f7375892d5ed
-  normalized_sha256: sha256:11ca2010b5fe590b164d87c114cae9a1b7dd59aa5fd66f9a8861f7375892d5ed
-cas_ref: sha256:11ca2010b5fe590b164d87c114cae9a1b7dd59aa5fd66f9a8861f7375892d5ed
-coverage_gids:
-  - gid: D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.purity_pythagoras_decomposition
-    target_statement_id: sha256:7a640e251b1bbedf4da90c0b48ec50750ced3f10ef79f2bc9e841727aba7f05f
-receipts:
-  unresolved_subitems: []

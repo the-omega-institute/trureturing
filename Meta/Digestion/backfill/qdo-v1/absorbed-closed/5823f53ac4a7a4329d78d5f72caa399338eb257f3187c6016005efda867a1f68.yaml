@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5823f53ac4a7a4329d78d5f72caa399338eb257f3187c6016005efda867a1f68
-  normalized_sha256: sha256:5823f53ac4a7a4329d78d5f72caa399338eb257f3187c6016005efda867a1f68
-cas_ref: sha256:5823f53ac4a7a4329d78d5f72caa399338eb257f3187c6016005efda867a1f68
-coverage_gids:
-  - gid: D5/S3/Observer/HiddenFlow/NormalizedHiddenAddressConservation.normalized_streamline_hidden_address_conservation
-    target_statement_id: sha256:9b6dc1ac9da90d796a88ee2e369fdc99f346e5fb27061c3848edd3933d601c6f
-receipts:
-  unresolved_subitems: []

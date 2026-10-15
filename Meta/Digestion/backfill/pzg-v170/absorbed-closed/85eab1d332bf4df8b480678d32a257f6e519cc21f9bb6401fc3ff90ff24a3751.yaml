@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:85eab1d332bf4df8b480678d32a257f6e519cc21f9bb6401fc3ff90ff24a3751
-  normalized_sha256: sha256:85eab1d332bf4df8b480678d32a257f6e519cc21f9bb6401fc3ff90ff24a3751
-cas_ref: sha256:85eab1d332bf4df8b480678d32a257f6e519cc21f9bb6401fc3ff90ff24a3751
-coverage_gids:
-  - gid: D5/S1/Deficit/GoldenPhaseDistribution.limiting_deficit_distribution
-    target_statement_id: sha256:6e12a56547d2b6661c94864a7e9e24f184e3a312afcf4e3a7a1e4f4a406e57be
-receipts:
-  unresolved_subitems: []

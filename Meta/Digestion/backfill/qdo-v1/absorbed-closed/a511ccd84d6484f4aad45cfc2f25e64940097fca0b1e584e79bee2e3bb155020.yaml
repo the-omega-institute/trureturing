@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a511ccd84d6484f4aad45cfc2f25e64940097fca0b1e584e79bee2e3bb155020
-  normalized_sha256: sha256:a511ccd84d6484f4aad45cfc2f25e64940097fca0b1e584e79bee2e3bb155020
-cas_ref: sha256:a511ccd84d6484f4aad45cfc2f25e64940097fca0b1e584e79bee2e3bb155020
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometryLaws/DiscountedPredictionPseudometric.discounted_prediction_pseudometric
-    target_statement_id: sha256:1e10d91280047d81683b70dac63353a04aa060624f8a693049ade1fd7d253c7c
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d903b7356e42f6a8d7c69815822123c6d5cad420dc64f3ee0884b5fb346f68af
-  normalized_sha256: sha256:d903b7356e42f6a8d7c69815822123c6d5cad420dc64f3ee0884b5fb346f68af
-cas_ref: sha256:d903b7356e42f6a8d7c69815822123c6d5cad420dc64f3ee0884b5fb346f68af
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementFactorization/RefinementCompositionStructure.refinement_composition_category_and_quotient_preorder
-    target_statement_id: sha256:184a33147e74c429843e509a990a855adbd7209730618e1ec2bacbb4a938fe81
-receipts:
-  unresolved_subitems: []

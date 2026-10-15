@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5011cc7e28a4e726228125340ca50dc75cdea04bceeac0ce9d7213ea3844c59d
-  normalized_sha256: sha256:5011cc7e28a4e726228125340ca50dc75cdea04bceeac0ce9d7213ea3844c59d
-cas_ref: sha256:5011cc7e28a4e726228125340ca50dc75cdea04bceeac0ce9d7213ea3844c59d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Interventions/TargetRelativePairUniverse.target_relative_pair_universe
-    target_statement_id: sha256:048bc6b1d713ba3452ee4f84c7dbc141b92c38982e0c0a414c8a435a5795748e
-receipts:
-  unresolved_subitems: []

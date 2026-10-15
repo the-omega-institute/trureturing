@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6ec639497acb3f210e8ac752310a08f3171452161a0b9d141d2522abe33b84c9
-  normalized_sha256: sha256:6ec639497acb3f210e8ac752310a08f3171452161a0b9d141d2522abe33b84c9
-cas_ref: sha256:6ec639497acb3f210e8ac752310a08f3171452161a0b9d141d2522abe33b84c9
-coverage_gids:
-  - gid: D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.cayley_unitarity_defect_formula_on_zero_hilbert_space
-    target_statement_id: sha256:ffeb197357868a9eb9c8e45cdc75130f4950632ee1a3a2385d709b1ce8cd6114
-receipts:
-  unresolved_subitems: []

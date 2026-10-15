@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f7d9bc70b03298cf9ea0bbc6fcc7adf79071de11d8b23987ce43666d64a89192
-  normalized_sha256: sha256:f7d9bc70b03298cf9ea0bbc6fcc7adf79071de11d8b23987ce43666d64a89192
-cas_ref: sha256:f7d9bc70b03298cf9ea0bbc6fcc7adf79071de11d8b23987ce43666d64a89192
-coverage_gids:
-  - gid: D5/S3/Factorization/PrimePowers/FinitePrimePowerQuotientCompleteness.finite_prime_power_quotient_completeness_tfae
-    target_statement_id: sha256:269b61c07593a05814a05323bd2986542027fb736ecd983e8f829fb1f70418a0
-receipts:
-  unresolved_subitems: []

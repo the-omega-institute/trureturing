@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b5295ba19b64909619d0e708ee316f147a3372f1daeaa98355d2adba5cc43334
-  normalized_sha256: sha256:b5295ba19b64909619d0e708ee316f147a3372f1daeaa98355d2adba5cc43334
-cas_ref: sha256:b5295ba19b64909619d0e708ee316f147a3372f1daeaa98355d2adba5cc43334
-coverage_gids:
-  - gid: D5/S3/Entropy/Feedback/DemonIdentity.demon_average_divergence_eq
-    target_statement_id: sha256:15e5d42ec57f262d820334e1a5eaa1e91b37b64b86c36d219891f67002f20495
-receipts:
-  unresolved_subitems: []

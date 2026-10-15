@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b34da537aacf5271beff785417a57bbcdfd480f72bee3586672738a9062741a3
-  normalized_sha256: sha256:b34da537aacf5271beff785417a57bbcdfd480f72bee3586672738a9062741a3
-cas_ref: sha256:b34da537aacf5271beff785417a57bbcdfd480f72bee3586672738a9062741a3
-coverage_gids:
-  - gid: D5/S3/Fourier/GoldenReciprocityFixedPoint.golden_reciprocity_fixed_point
-    target_statement_id: sha256:b2350e813f975aaf4c48507b72bf7f8453abd5f0d9a38253d0fc5023f9d4f33b
-receipts:
-  unresolved_subitems: []

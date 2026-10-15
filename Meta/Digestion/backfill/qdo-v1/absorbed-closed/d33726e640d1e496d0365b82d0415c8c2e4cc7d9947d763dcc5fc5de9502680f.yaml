@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d33726e640d1e496d0365b82d0415c8c2e4cc7d9947d763dcc5fc5de9502680f
-  normalized_sha256: sha256:d33726e640d1e496d0365b82d0415c8c2e4cc7d9947d763dcc5fc5de9502680f
-cas_ref: sha256:d33726e640d1e496d0365b82d0415c8c2e4cc7d9947d763dcc5fc5de9502680f
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometry/FiniteWordDistanceThreshold.finite_word_equivalent_iff_prediction_distance_le
-    target_statement_id: sha256:f3aeb3d474fc4996f593879de592f2324735cc79201400176a9d0678775f86fe
-receipts:
-  unresolved_subitems: []

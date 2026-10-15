@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1013db8f686811f4043dadb9867335e028412bfb1aca2ef31229e238fd2db820
-  normalized_sha256: sha256:1013db8f686811f4043dadb9867335e028412bfb1aca2ef31229e238fd2db820
-cas_ref: sha256:1013db8f686811f4043dadb9867335e028412bfb1aca2ef31229e238fd2db820
-coverage_gids:
-  - gid: D5/S3/QuantumBounds/ReferenceFrame/ComplexReferenceFrameTaxExactSpan.complex_reference_frame_tax_exact_span
-    target_statement_id: sha256:2f0ed5a7f956e3450dbfcf33080573dd527c290ead17eaf578b35cf0580590a2
-receipts:
-  unresolved_subitems: []

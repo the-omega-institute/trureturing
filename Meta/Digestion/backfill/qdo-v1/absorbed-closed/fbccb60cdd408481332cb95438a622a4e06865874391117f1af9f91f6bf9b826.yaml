@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
-  normalized_sha256: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
-cas_ref: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometryLaws/ItineraryFirstDifferencePowerLaw.itinerary_first_difference_power_law
-    target_statement_id: sha256:5435604f6596ba3195a7301908cdcfd79a778eaea556d26969d29366c8fe2487
-receipts:
-  unresolved_subitems: []

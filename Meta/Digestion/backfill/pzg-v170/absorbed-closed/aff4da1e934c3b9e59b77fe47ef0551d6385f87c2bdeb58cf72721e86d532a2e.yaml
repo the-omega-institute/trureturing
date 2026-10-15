@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
-  normalized_sha256: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
-cas_ref: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
-coverage_gids:
-  - gid: D5/S1/Recurrence/Witt/WittRowLaws.witt_row_closed_laws
-    target_statement_id: sha256:322c30d7b8eec9e682b58b8efab477b9f92a0caacccc29518cab6d264ff5882e
-receipts:
-  unresolved_subitems: []

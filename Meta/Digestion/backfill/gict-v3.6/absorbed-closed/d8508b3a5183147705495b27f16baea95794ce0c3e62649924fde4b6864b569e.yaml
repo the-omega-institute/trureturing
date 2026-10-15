@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
-  normalized_sha256: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
-cas_ref: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
-coverage_gids:
-  - gid: D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
-    target_statement_id: sha256:76ab2077110c8a07ded310be3a6358ffccd288be18eea856fbe190b86632e032
-receipts:
-  unresolved_subitems: []

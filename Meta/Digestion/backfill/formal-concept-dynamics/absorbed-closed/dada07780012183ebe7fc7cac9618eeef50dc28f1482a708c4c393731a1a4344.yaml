@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dada07780012183ebe7fc7cac9618eeef50dc28f1482a708c4c393731a1a4344
-  normalized_sha256: sha256:dada07780012183ebe7fc7cac9618eeef50dc28f1482a708c4c393731a1a4344
-cas_ref: sha256:dada07780012183ebe7fc7cac9618eeef50dc28f1482a708c4c393731a1a4344
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Agency/ExternalPredictionReflectiveAutonomy.external_prediction_compatible_with_reflective_autonomy
-    target_statement_id: sha256:39e0f61e0b0a3430201f6bc6280f12130d5bb50bd9dd8e971b3ca8848b17d2b9
-receipts:
-  unresolved_subitems: []

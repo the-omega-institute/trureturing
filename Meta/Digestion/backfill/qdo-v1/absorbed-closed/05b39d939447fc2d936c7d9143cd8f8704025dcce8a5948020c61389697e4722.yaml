@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:05b39d939447fc2d936c7d9143cd8f8704025dcce8a5948020c61389697e4722
-  normalized_sha256: sha256:05b39d939447fc2d936c7d9143cd8f8704025dcce8a5948020c61389697e4722
-cas_ref: sha256:05b39d939447fc2d936c7d9143cd8f8704025dcce8a5948020c61389697e4722
-coverage_gids:
-  - gid: D5/S3/Quantum/PureState/RecordCoherenceComplementarity.pure_record_distinguishability_coherence_complementarity
-    target_statement_id: sha256:0eab651ba3ea7f5328d675833304befa5d60e1d307118fe36893027865f5e28f
-receipts:
-  unresolved_subitems: []

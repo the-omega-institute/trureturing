@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fc7dd6e72e28382b50d8478d53289368bad40aecc69742c4cdea95debf88c85c
-  normalized_sha256: sha256:fc7dd6e72e28382b50d8478d53289368bad40aecc69742c4cdea95debf88c85c
-cas_ref: sha256:fc7dd6e72e28382b50d8478d53289368bad40aecc69742c4cdea95debf88c85c
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_intervention_closed
-    target_statement_id: sha256:ab5caa1ac1a9b813cbda58afffd8a2af862a17e81a7af6d095e3e6a666542a18
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7d04cd84f15c180668ee7773d840709615b58c62701bd3a46b91293bef0e0c72
-  normalized_sha256: sha256:7d04cd84f15c180668ee7773d840709615b58c62701bd3a46b91293bef0e0c72
-cas_ref: sha256:7d04cd84f15c180668ee7773d840709615b58c62701bd3a46b91293bef0e0c72
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/DyadicForwardWaitingOptimality.dyadic_forward_waiting_optimality
-    target_statement_id: sha256:1bcfedb5407d0dc183e458a52666dc9cf1268e5b22930288c994dfeaa2a652d1
-receipts:
-  unresolved_subitems: []

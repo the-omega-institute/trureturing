@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:620a75a2230145d17bbc6baba89db2f7c1b36475b1ea0d2e5e825430c9d19646
-  normalized_sha256: sha256:620a75a2230145d17bbc6baba89db2f7c1b36475b1ea0d2e5e825430c9d19646
-cas_ref: sha256:620a75a2230145d17bbc6baba89db2f7c1b36475b1ea0d2e5e825430c9d19646
-coverage_gids:
-  - gid: D5/S3/Weil/Budget/FiniteWeylBudgetBounds.finite_weyl_budget_bounds
-    target_statement_id: sha256:a8d8c3a8597fa0a552863881e0bff709d0874e6b6ae209f3674be78fbfa3ab2d
-receipts:
-  unresolved_subitems: []

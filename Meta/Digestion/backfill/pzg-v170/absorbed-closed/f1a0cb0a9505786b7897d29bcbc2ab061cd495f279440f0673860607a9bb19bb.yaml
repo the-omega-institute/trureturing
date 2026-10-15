@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f1a0cb0a9505786b7897d29bcbc2ab061cd495f279440f0673860607a9bb19bb
-  normalized_sha256: sha256:f1a0cb0a9505786b7897d29bcbc2ab061cd495f279440f0673860607a9bb19bb
-cas_ref: sha256:f1a0cb0a9505786b7897d29bcbc2ab061cd495f279440f0673860607a9bb19bb
-coverage_gids:
-  - gid: D5/S1/Recurrence/Invariants/GoldenEigenpairResidual.golden_eigenpair_and_fibonacci_residual
-    target_statement_id: sha256:30c172d197c671230c8440d0650d9a2781fd8427863e0d50e1ec96edd78b0e12
-receipts:
-  unresolved_subitems: []

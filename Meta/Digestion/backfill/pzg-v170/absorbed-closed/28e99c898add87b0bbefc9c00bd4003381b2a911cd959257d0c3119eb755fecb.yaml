@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:28e99c898add87b0bbefc9c00bd4003381b2a911cd959257d0c3119eb755fecb
-  normalized_sha256: sha256:28e99c898add87b0bbefc9c00bd4003381b2a911cd959257d0c3119eb755fecb
-cas_ref: sha256:28e99c898add87b0bbefc9c00bd4003381b2a911cd959257d0c3119eb755fecb
-coverage_gids:
-  - gid: D5/S0/CertificateHistory/FiniteCertificateDepth.certificate_references_finitely_many_events
-    target_statement_id: sha256:56abf4374e611d72c8fc536b2e3df06c2a487e5df2ea1c3ce94354cdab21f1d2
-receipts:
-  unresolved_subitems: []

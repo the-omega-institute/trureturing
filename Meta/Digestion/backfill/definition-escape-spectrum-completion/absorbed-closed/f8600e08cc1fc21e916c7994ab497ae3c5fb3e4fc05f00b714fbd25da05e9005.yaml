@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f8600e08cc1fc21e916c7994ab497ae3c5fb3e4fc05f00b714fbd25da05e9005
-  normalized_sha256: sha256:f8600e08cc1fc21e916c7994ab497ae3c5fb3e4fc05f00b714fbd25da05e9005
-cas_ref: sha256:f8600e08cc1fc21e916c7994ab497ae3c5fb3e4fc05f00b714fbd25da05e9005
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
-    target_statement_id: sha256:1c8b03c1b66e4ad7bfb6d6dc3c70544977ac07f3988ea639610593caf48f2d5a
-receipts:
-  unresolved_subitems: []

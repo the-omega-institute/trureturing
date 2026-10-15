@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c0c81923a6da0df0980d498e9593d6da22a2b09ca3aee55a8e4aef80359b7d28
-  normalized_sha256: sha256:c0c81923a6da0df0980d498e9593d6da22a2b09ca3aee55a8e4aef80359b7d28
-cas_ref: sha256:c0c81923a6da0df0980d498e9593d6da22a2b09ca3aee55a8e4aef80359b7d28
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaLinear/HorizonThermodynamicAsymptotics.single_defect_horizon_thermodynamic_asymptotics
-    target_statement_id: sha256:91c0d3531b377a054e8c62aea9cf0fd3c73b4769d7bb71d2346703610208cae5
-receipts:
-  unresolved_subitems: []

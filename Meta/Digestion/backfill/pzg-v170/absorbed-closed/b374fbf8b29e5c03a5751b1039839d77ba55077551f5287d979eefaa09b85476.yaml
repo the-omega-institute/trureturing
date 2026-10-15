@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b374fbf8b29e5c03a5751b1039839d77ba55077551f5287d979eefaa09b85476
-  normalized_sha256: sha256:b374fbf8b29e5c03a5751b1039839d77ba55077551f5287d979eefaa09b85476
-cas_ref: sha256:b374fbf8b29e5c03a5751b1039839d77ba55077551f5287d979eefaa09b85476
-coverage_gids:
-  - gid: D5/S3/AnalyticClosure/BoundaryVariation.boundary_variation_tendsto_one_third
-    target_statement_id: sha256:09f3a21674a27711c2130e252f16d66fbd7ab55068c85f3fbf09ea763ab5c052
-receipts:
-  unresolved_subitems: []

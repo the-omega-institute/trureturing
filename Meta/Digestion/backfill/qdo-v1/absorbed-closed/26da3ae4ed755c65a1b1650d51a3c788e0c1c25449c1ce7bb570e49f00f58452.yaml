@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
-  normalized_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
-cas_ref: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
-coverage_gids:
-  - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
-    target_statement_id: sha256:d18d6bf98a88a1bff31feb70db55a9deeb1e748fb4f98c568fab7f00a0af8881
-receipts:
-  unresolved_subitems: []

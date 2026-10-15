@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:78c1b5e7eaca318c0afbe5e4e3cfc032e5e8d2bf0c0729a3284d8ea9dd7b63d7
-  normalized_sha256: sha256:78c1b5e7eaca318c0afbe5e4e3cfc032e5e8d2bf0c0729a3284d8ea9dd7b63d7
-cas_ref: sha256:78c1b5e7eaca318c0afbe5e4e3cfc032e5e8d2bf0c0729a3284d8ea9dd7b63d7
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/OperationalTuition/InstitutionalMappingAndCaptureFiltration.institution_domain_monotone_and_defect_decidable
-    target_statement_id: sha256:66ef46278594d9d4fbe9c29d90a77919334183d7a354e726cca68f4fb5db969c
-receipts:
-  unresolved_subitems: []

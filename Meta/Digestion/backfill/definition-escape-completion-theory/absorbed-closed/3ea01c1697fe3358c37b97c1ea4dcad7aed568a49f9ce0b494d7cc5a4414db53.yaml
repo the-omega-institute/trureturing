@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3ea01c1697fe3358c37b97c1ea4dcad7aed568a49f9ce0b494d7cc5a4414db53
-  normalized_sha256: sha256:3ea01c1697fe3358c37b97c1ea4dcad7aed568a49f9ce0b494d7cc5a4414db53
-cas_ref: sha256:3ea01c1697fe3358c37b97c1ea4dcad7aed568a49f9ce0b494d7cc5a4414db53
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelReductionMeasure.blind_kernel_reduction_measure
-    target_statement_id: sha256:35a52c48cf8f7daec204e1dec768b4f894c20b93ad0525fde2b4ff8d94b82391
-receipts:
-  unresolved_subitems: []

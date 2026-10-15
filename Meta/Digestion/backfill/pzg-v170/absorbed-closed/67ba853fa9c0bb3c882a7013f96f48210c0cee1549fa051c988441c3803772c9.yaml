@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:67ba853fa9c0bb3c882a7013f96f48210c0cee1549fa051c988441c3803772c9
-  normalized_sha256: sha256:67ba853fa9c0bb3c882a7013f96f48210c0cee1549fa051c988441c3803772c9
-cas_ref: sha256:67ba853fa9c0bb3c882a7013f96f48210c0cee1549fa051c988441c3803772c9
-coverage_gids:
-  - gid: D5/S1/Words/BarkerEvenLengthModFourObstruction.barker_obstruction_witnesses
-    target_statement_id: sha256:ce41a999b61364fc3da2a13521807f342fef72ebec711e435adec2a2dd9f5156
-receipts:
-  unresolved_subitems: []

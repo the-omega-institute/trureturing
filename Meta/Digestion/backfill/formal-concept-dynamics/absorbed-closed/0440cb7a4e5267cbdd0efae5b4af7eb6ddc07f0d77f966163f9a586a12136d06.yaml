@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0440cb7a4e5267cbdd0efae5b4af7eb6ddc07f0d77f966163f9a586a12136d06
-  normalized_sha256: sha256:0440cb7a4e5267cbdd0efae5b4af7eb6ddc07f0d77f966163f9a586a12136d06
-cas_ref: sha256:0440cb7a4e5267cbdd0efae5b4af7eb6ddc07f0d77f966163f9a586a12136d06
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Gluing/ContinuousLocalFactorGluing.continuous_local_factors_glue_uniquely
-    target_statement_id: sha256:073ed29a295aa80835c3579d3cba0f93a153cee3ab0466bf35d2a046381cd72c
-receipts:
-  unresolved_subitems: []

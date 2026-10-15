@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:abc0e00f905528200324754c2f04c8561c2b81d7128257e55cc065540251ce68
-  normalized_sha256: sha256:abc0e00f905528200324754c2f04c8561c2b81d7128257e55cc065540251ce68
-cas_ref: sha256:abc0e00f905528200324754c2f04c8561c2b81d7128257e55cc065540251ce68
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Completion/StochasticTargetCompletion.stochastic_target_completion_is_least
-    target_statement_id: sha256:e0267b2ea2dcb1b7afaad201928203bee917e461ec7f9cde8a7d48edcaae5153
-receipts:
-  unresolved_subitems: []

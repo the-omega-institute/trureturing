@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:475de9335d67dc4f513d1917f94f1d1c52bb4316ad24b3daa5891fd10800a683
-  normalized_sha256: sha256:475de9335d67dc4f513d1917f94f1d1c52bb4316ad24b3daa5891fd10800a683
-cas_ref: sha256:475de9335d67dc4f513d1917f94f1d1c52bb4316ad24b3daa5891fd10800a683
-coverage_gids:
-  - gid: D5/S1/Phase/GoldenBeattyCount.golden_beatty_count
-    target_statement_id: sha256:dfd86016332517e92dcfd0f8aaf18a5b0ec7ede122ad9d3038271a0be079bfd8
-receipts:
-  unresolved_subitems: []

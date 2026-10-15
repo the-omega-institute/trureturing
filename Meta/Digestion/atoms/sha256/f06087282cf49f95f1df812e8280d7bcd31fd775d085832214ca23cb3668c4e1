@@ -1,2 +1,0 @@
-**判形的诚实边界**:H-1 与 H-2 若最终只是「`b_monotone` 加一条 Mathlib 的 min/max 引理」的复合,则应判为绑定即得,其落地依据改为伴随声明或 `atom-required-bridge`,**不得因为它们看起来是新定理就报 content**。这一点写在实施之前。
-

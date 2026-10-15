@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:16ccc306f8cc0b773637c25d51fe11b897ee25de74c8cdbd0542ce6d5dff1133
-  normalized_sha256: sha256:16ccc306f8cc0b773637c25d51fe11b897ee25de74c8cdbd0542ce6d5dff1133
-cas_ref: sha256:16ccc306f8cc0b773637c25d51fe11b897ee25de74c8cdbd0542ce6d5dff1133
-coverage_gids:
-  - gid: D5/S3/QuantumContext/CompleteBasisReconstruction.complete_basis_reconstruction
-    target_statement_id: sha256:c8cbf71fbaf284b29e8e4bc26f6b43de1b06a4d964a8f72bfc8bff1a102e1f1e
-receipts:
-  unresolved_subitems: []

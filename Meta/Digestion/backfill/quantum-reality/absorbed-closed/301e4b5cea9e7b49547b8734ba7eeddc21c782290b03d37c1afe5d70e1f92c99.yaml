@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:301e4b5cea9e7b49547b8734ba7eeddc21c782290b03d37c1afe5d70e1f92c99
-  normalized_sha256: sha256:301e4b5cea9e7b49547b8734ba7eeddc21c782290b03d37c1afe5d70e1f92c99
-cas_ref: sha256:301e4b5cea9e7b49547b8734ba7eeddc21c782290b03d37c1afe5d70e1f92c99
-coverage_gids:
-  - gid: D5/S3/Quantum/Entanglement/BellPairLocalGlobalResidual.bell_pair_local_global_residual
-    target_statement_id: sha256:a63e167764d8a06f209210e6a3dcfbfaea06d5e9bf871d0cb4c92c80c5a69e3f
-receipts:
-  unresolved_subitems: []

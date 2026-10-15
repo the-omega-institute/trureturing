@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:40dc314837e11a2e26e9359559d50393bba32f66168530a2026952de3d37531e
-  normalized_sha256: sha256:40dc314837e11a2e26e9359559d50393bba32f66168530a2026952de3d37531e
-cas_ref: sha256:40dc314837e11a2e26e9359559d50393bba32f66168530a2026952de3d37531e
-coverage_gids:
-  - gid: D5/S3/Factorization/PrimePowers/SimpleToPGroupTrivial.alternating_five_hom_to_pgroup_trivial
-    target_statement_id: sha256:957ffdf0766605c8a90eecaeeb0b6a428beb25904e3a7bbfdf5ec59de740b9b8
-receipts:
-  unresolved_subitems: []

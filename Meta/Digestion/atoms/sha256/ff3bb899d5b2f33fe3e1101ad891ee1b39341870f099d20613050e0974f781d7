@@ -1,9 +1,0 @@
-**Corollary 12.7 (finite synthesis of shared counted tables on an
-arbitrary row).** Given the finite $P,R_*$ with nonempty actual image
-fiber and integers $r\ge1,K\ge1,q\ge0$, the bounded abstract
-three-budget problem (NBP.12.8) is decidable. A positive answer supplies
-a finite acquired encoder and one stationary fixed-address native
-Moore table satisfying all three upper budgets on the entire original
-fiber under the supplied acquisition, export, isolation and entry
-services. No native address-length bound is an input to this criterion.
-

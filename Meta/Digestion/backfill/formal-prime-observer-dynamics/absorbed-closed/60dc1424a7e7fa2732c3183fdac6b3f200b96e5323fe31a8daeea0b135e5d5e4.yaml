@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:60dc1424a7e7fa2732c3183fdac6b3f200b96e5323fe31a8daeea0b135e5d5e4
-  normalized_sha256: sha256:60dc1424a7e7fa2732c3183fdac6b3f200b96e5323fe31a8daeea0b135e5d5e4
-cas_ref: sha256:60dc1424a7e7fa2732c3183fdac6b3f200b96e5323fe31a8daeea0b135e5d5e4
-coverage_gids:
-  - gid: D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
-    target_statement_id: sha256:8a1cc6c0941b1beb05716f226192e3fdc833c8b1ca396961b54a8ca387038d47
-receipts:
-  unresolved_subitems: []

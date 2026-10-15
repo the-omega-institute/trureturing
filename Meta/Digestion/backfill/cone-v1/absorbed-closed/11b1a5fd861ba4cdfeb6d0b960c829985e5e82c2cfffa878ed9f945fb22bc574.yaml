@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
-  normalized_sha256: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
-cas_ref: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
-coverage_gids:
-  - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
-    target_statement_id: sha256:2cb97276c74437fc0236e0af3cfeab8a3045daf7ba418939035acf3d903ff02c
-receipts:
-  unresolved_subitems: []

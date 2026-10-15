@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7c1f75f2c7f9bea61f8a6a196284d8aba0b1a1dfa57f7b7b318477aef69b3453
-  normalized_sha256: sha256:7c1f75f2c7f9bea61f8a6a196284d8aba0b1a1dfa57f7b7b318477aef69b3453
-cas_ref: sha256:7c1f75f2c7f9bea61f8a6a196284d8aba0b1a1dfa57f7b7b318477aef69b3453
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
-    target_statement_id: sha256:84af505569e32d76c8bf6e823db0d61c3b80249eec88231a6b596b52b4217e11
-receipts:
-  unresolved_subitems: []

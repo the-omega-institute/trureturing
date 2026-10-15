@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fda3d67dd69a216042988fdbfd68fcd8b41fb3cd8de821302e94e06b499e8386
-  normalized_sha256: sha256:fda3d67dd69a216042988fdbfd68fcd8b41fb3cd8de821302e94e06b499e8386
-cas_ref: sha256:fda3d67dd69a216042988fdbfd68fcd8b41fb3cd8de821302e94e06b499e8386
-coverage_gids:
-  - gid: D5/S1/Deficit/Cocycles/GlobalSectionCarryCriterion.global_section_iff_section_carry
-    target_statement_id: sha256:465f6b53fd14abb5aebbbf63436309238217e220936bdc82e0403f63bc797120
-receipts:
-  unresolved_subitems: []

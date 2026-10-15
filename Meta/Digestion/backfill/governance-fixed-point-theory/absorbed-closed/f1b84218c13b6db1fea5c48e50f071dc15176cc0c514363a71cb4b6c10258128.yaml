@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f1b84218c13b6db1fea5c48e50f071dc15176cc0c514363a71cb4b6c10258128
-  normalized_sha256: sha256:f1b84218c13b6db1fea5c48e50f071dc15176cc0c514363a71cb4b6c10258128
-cas_ref: sha256:f1b84218c13b6db1fea5c48e50f071dc15176cc0c514363a71cb4b6c10258128
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailSpanPrefixExtension.tail_span_prefix_extension
-    target_statement_id: sha256:df3004595c02e95ba8273593d617d45b6eb10108a39c0585089ec383572f54df
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ef107ebabe6562dc67868b748fc6242c3591a0ea20a334acbfa115792eb7171e
-  normalized_sha256: sha256:ef107ebabe6562dc67868b748fc6242c3591a0ea20a334acbfa115792eb7171e
-cas_ref: sha256:ef107ebabe6562dc67868b748fc6242c3591a0ea20a334acbfa115792eb7171e
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/VisibleHiddenMotionClassification.universal_solenoid_visible_hidden_motion_classification
-    target_statement_id: sha256:f2df8acadeb87cbfa242e7190297feb16342d14b133b47426c5ad9e30354fe9f
-receipts:
-  unresolved_subitems: []

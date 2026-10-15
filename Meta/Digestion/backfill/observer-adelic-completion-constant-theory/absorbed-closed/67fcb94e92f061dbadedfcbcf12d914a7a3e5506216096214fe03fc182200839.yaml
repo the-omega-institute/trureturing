@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:67fcb94e92f061dbadedfcbcf12d914a7a3e5506216096214fe03fc182200839
-  normalized_sha256: sha256:67fcb94e92f061dbadedfcbcf12d914a7a3e5506216096214fe03fc182200839
-cas_ref: sha256:67fcb94e92f061dbadedfcbcf12d914a7a3e5506216096214fe03fc182200839
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaAnalytic/WhiteFloorSamplingDuality.white_floor_sampling_frame_duality
-    target_statement_id: sha256:c887d3172d4ab27b8cbaa343135c659a078386eccbd3aadf77207dc7164919a2
-receipts:
-  unresolved_subitems: []
