@@ -2889,3 +2889,490 @@ B^*A^*-A^*B^*&B^*B+A^*A
 每个顶点都可写为 `3(1,1,1)+(3−γ)(e_j−e_i)`，其中 `i≠j`，而这里 `e_i` 表示标准坐标向量。线性泛函的最大值由最大权重处的正偏移与最小权重处的负偏移取得，给出支撑函数公式；取负权重给出最小值。证毕。
 
 本推论只把线性能量目标的极值化为六个顶点。它不把原可行集 `S` 认作整个凸包，也不允许将任意非线性目标的最小值或含额外 completion 变量的优化直接限制到这六点。
+
+## 42. 正则 strict-X 种子附近的扩大矩形与正交三元组覆盖
+
+### 42.1 精确参数分支与结论
+
+令
+
+```math
+\delta=2^{-24},\qquad
+\mathcal P=\{\alpha=a+ib:\ |a+1/5|\le\delta,\ |b|\le\delta\},
+\qquad c(t)=\frac{1+it}{1-it}.
+```
+
+对
+
+```math
+p_\alpha(t)=(1+a)t^3+bt^2+(a-3)t+b,
+```
+
+将三个实根从小到大排列后按 `(最小,最大,中间)` 取序；对 `p_{-alpha}` 同样将三个实根从小到大排列后按 `(最小,最大,中间)` 取序。它们的 Cayley 像分别记为 `r0,r1,r2` 与 `s0,s1,s2`。定义
+
+```math
+A=\operatorname{circ}(r_0r_1,r_1,1),\quad
+B=\operatorname{circ}(s_0s_1,s_1,1),\quad
+H=\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix},\quad H_0=LH,
+```
+
+其中 `L` 将行按零起始索引 `(2,0,1,4,5,3)` 排列。中心参数 `alpha=-1/5` 给出
+
+```math
+r_1=(-3+4i)/5,\qquad s_1=(-2+i\sqrt{21})/5,
+```
+
+因此 `H0` 正是第 35、36 节的对称块种子。以下只讨论这个固定构造分支，不把其他根的排列或其他 Hadamard 参数默认为同一分支。
+
+令 `S` 在两个坐标三元组内分别作循环位移，`E0,E1,E2` 为其秩二谱投影。
+
+**命题 42.1。** 对每个 `alpha in P`，若三个单位向量 `v0,v1,v2` 两两正交，并各自对坐标基与 `H0/sqrt(6)` 无偏，则
+
+```math
+\boxed{\sum_{r=0}^2\sum_{k=0}^2
+\langle v_r,E_kv_r\rangle^2=3.}
+```
+
+特别地，第 36 节提出的 collision 小于二的区域为空。任意实际六元共同无偏 completion `C` 均满足
+
+```math
+\boxed{\alpha_S(C)=2.}
+```
+
+该矩形中的固定边至多具有一个 completion，按射线排列与相位等价计，因而不能扩展为四 MUB。这里的证明结合精确区间证书与下述解析解释；结论不覆盖整个 strict-X 家族。
+
+### 42.2 完整射线覆盖所使用的精确有限证据
+
+复用的区间程序、原始中心与允许边资料，以及扩大矩形的可重放证书，固定在[实验真源](https://github.com/the-omega-institute/trureturing-experiments/tree/623073ea4a922fa7154a5b45797822a56ab6f9d7/experiments/mub-strict-x-rectangle)。原 `2^-32` 矩形的全局覆盖来自[保留的研究提交](https://github.com/the-omega-institute/trureturing/tree/63a005da4c695c3136da0bac01e3c138e7338840/docs/develop/certificates/real_x_global_cover)。本节复用其种子、六十中心、允许图和区间算术；新增量是明确扩大后的连续参数范围及下面的对称分支传播论证，不将旧矩形的结论重新认作新发现。
+
+多项式系数恒等式为
+
+```math
+(1-it)^3\big(c(t)^3-\alpha c(t)^2+
+\overline\alpha c(t)-1\big)=-2i p_\alpha(t).
+```
+
+参数区间上的端点符号与非零导数区间隔离每个三次多项式的三个实根。由 Vieta 关系，Cayley 像均为单位模，乘积为一，两个和分别为 `alpha` 与 `-alpha`。循环行比的和相消，且 circulant 块相互交换，故 `H0 H0*=6I`。三十个正的平方子式见证进一步排除任意两条平方行或平方列成比例。Fourier 族与其转置族的标准代表分别具有相应的比例对；该性质在 Hadamard 单项式等价下保持，因此整个矩形保持在两类 Fourier 接缝之外。
+
+每条共同无偏射线均可去相位为 `u0=1, |uj|=1`，单位向量为 `u/sqrt(6)`。五个剩余坐标由全部三十二个紧图覆盖：
+
+```math
+u_j=\varepsilon_j\frac{1+it_j}{1-it_j},\qquad
+\varepsilon_j\in\{-1,1\},\quad t_j\in[-1,1].
+```
+
+图边界包含在内；符号改变处使用精确变换 `t -> -1/t`，仅在非零坐标上使用。残差取 `|H0* u|²-6` 的前五项，第六项由 Gram 恒等式推出。
+
+所有紧图的闭二分覆盖只接受三种终止情形：残差区间排除零、Krawczyk 像与原盒不交，或剩余盒经正确图变换进入已验证的根唯一性盒。若 `m` 是盒 `X` 的中心，`C` 是任意提出的有理预条件矩阵，则
+
+```math
+K=m-Cf(m)+(I-CJ(X))(X-m)
+```
+
+包含 `X` 中的每个实际零点；因此以 `X intersect K` 收缩不会丢失零点。这个零点保持性质不预设 `C` 可逆。闭二分的两个子盒覆盖父盒。全部三十二图终结且没有待处理或未决盒，遂证明全部共同无偏射线进入六十个根盒。
+
+六十个盒的半径为 `r=2^-12`。每个盒另有严格包含 `K subset interior X` 和
+
+```math
+\|I-CJ(X)\|_\infty<1.
+```
+
+故对每个固定的实际参数，Newton 映射都是该闭盒内的压缩映射；此范数界也强制 `C` 可逆，因此其唯一不动点是残差的唯一零点。所有包围对同一个完整参数矩形成立。
+
+扩大矩形的精确安全界包括
+
+```math
+\|I-CJ(X)\|_\infty
+\le\frac{385012914919}{2^{40}}<\frac{351}{1000},
+\qquad
+\|K-m\|_\infty
+\le\frac{206508646}{2^{40}}<\frac{77}{100}r.
+```
+
+根盒进一步收缩后，独立有理区间计算检查全部 `choose(60,2)=1770` 对：所有射线不同，且 `1656` 个禁止对满足
+
+```math
+|\langle v_i,v_j\rangle|^2>1/500000.
+```
+
+剩余 `114` 条允许边只是实际正交图的上图，不以小残差断言某条边存在。该上图由六顶点完全块 `K` 与其余五十四顶点的二分图不交并组成，两块之间没有边。因此每个实际正交三元组的三个标签都属于 `K`。
+
+### 42.3 不依赖扩大后区间像的对称分支传播
+
+这里补足六个标签始终 mode-local 的解析步骤，避免把过宽的区间像当作实际分支。
+
+先使用连续唯一根分支的标准传播事实。设连通参数域上的方程族连续，并由一个固定根盒中的一致严格压缩产生连续唯一根分支。设连续对称作用保持每个参数处的方程。若该分支在一个参数处被对称作用固定，且根始终在唯一性盒内部，则它在整个参数域上被固定。
+
+证明。固定参数集合由连续性为闭集。在一个固定参数处，作用后的根就在原根盒内部；由连续性，邻近参数处作用后的根仍在同一盒中。局部唯一性使它与原分支相等，故固定参数集合相对开。它非空，而参数域连通，所以等于整个参数域。证毕。
+
+在本命题中，作用是射线上的
+
+```math
+\sigma(u)=Su/(Su)_0.
+```
+
+所有坐标为单位模，所以分母始终非零。参数化矩阵始终与同步三循环交换，故该作用保持共同无偏根。根分支连续性由连续残差与固定盒内的一致压缩得到。
+
+中心的六条射线先通过原小矩形的根包含与位移验证重新确认是 `S` 的特征射线。旧唯一性盒半径为 `2^-16`，新盒半径为 `2^-12`，使用完全相同的有理中心，故旧盒严格包含在相应新盒内。中心根因唯一性而得到实际识别；不能只凭标签名称相同作此识别。上述传播事实于是证明六个新分支在整个扩大矩形中都是特征射线。
+
+每条这样的单位射线的三个 mode probabilities 是 `(1,0,0)` 的某个排列，collision 恰为一。结合上述全覆盖和二分上图，任意三个实际共同无偏正交向量的总 collision 恰为三。六元 completion 的总 collision 因而为六，故
+
+```math
+\alpha_S(C)=\tfrac12(6-2)=2.
+```
+
+任何 completion 只能使用六个规范射线，故两个 completions 的射线集合相同，不能相互无偏。命题 42.1 得证。
+
+此处保留同一参数下三个实际向量的全部无偏与两两正交条件，没有以独立相位见证替换共同变量，也没有复用第 35 节已否定的全局正交到逐模正交蕴含。扩大后的每个半边长是旧值的 `256` 倍；绝对矩形仍很小，六维四 MUB 与全 strict-X 覆盖仍未解决。
+
+## 43. 互补三相位谱端点的最优线性稳定性
+
+第 41 节确定了实际互补相位行的 Fourier 能量端点。本节进一步控制接近端点时的自相关位置。所用 deltoid 参数像与判别式仍归于 Szöllősi，*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，式 (15) 与 Lemma 3.2，DOI [10.1090/S0002-9939-09-10102-8](https://doi.org/10.1090/S0002-9939-09-10102-8)。以下最优线性误差界由该域上的多项式估计推出（`repo-derived`），不把已知参数域和第 41 节的端点重新作为新结果。
+
+### 43.1 参数、结论与实际相位可达性
+
+记
+
+```math
+k=\sqrt3,\qquad M=6k-9,\qquad C=\frac{3M}{4},\qquad
+\kappa=\frac{56+24k}{11}=\frac{M-1}{C-1}.
+```
+
+对第 41 节的实际单位模互补行 `(z,w) in P_6`，令
+
+```math
+s=z_1\overline{z_0}+z_2\overline{z_1}+z_0\overline{z_2}=x+iy,
+\qquad \delta=M-x^2-y^2,\qquad g=C-x^2.
+```
+
+**命题 43.1。** 对上述每个实际互补相位对，
+
+```math
+\boxed{0\le\delta\le\kappa g,\qquad g\ge0.}
+```
+
+常数 `kappa` 不能减小。等号 `delta=kappa g` 恰在以下两种情况下成立：
+
+```math
+(x^2,y^2)=(1,0)
+\quad\text{或}\quad
+(x^2,y^2)=(C,C/3).
+```
+
+第二种是第 41 节的四个定向支撑等号点。第一种可由实际相位行
+
+```math
+z=(1,-1,1),\qquad w=(1,1,i)
+```
+
+达到：它们的自相关分别为 `-1` 和 `1`，能量谱分别为 `(1,4,4)` 和 `(5,2,2)`，逐模相加为六。这里 `g=C-1>0`，且 `delta=M-1=kappa(C-1)`，故已在实际相位可行集上证明常数最优。
+
+### 43.2 正权多项式证书与线性误差界
+
+证明。先令
+
+```math
+F(x,y)=(x^2+y^2)^2+18(x^2+y^2)-8(x^3-3xy^2)-27.
+```
+
+实际单位模行的三个循环比均为单位模，乘积为一，和为 `s`。若它们为 `U,V,W`，则 `UV+UW+VW=conj(s)`。对 `D=(U-V)(U-W)(V-W)`，有 `conj(D)=-D`，而三次多项式的判别式恒等式给出
+
+```math
+F(x,y)=-|D|^2\le0.
+```
+
+互补行的自相关为 `-s`，所以同时有 `F(-x,-y)<=0`。以下只从这两个必要不等式推导结论，不假定任意四次不等式可行点都已有相位实现。
+
+置 `u=x²,v=y²,r=u+v,p=2k+4`。两个不等式取平均给出
+
+```math
+B(r)=r^2+18r-27\le0,
+\qquad B(r)=(r-M)(r+M+18).
+```
+
+第二因子为正，故 `r<=M`、`delta>=0`。由 `k²=3` 及 `(2k-3)²>=0`，有 `k<=7/4`，所以
+
+```math
+p^2x^2\le p^2M=24k+36\le78<81.
+```
+
+因此 `9-px` 和 `9+px` 均为正。直接展开得到正权证书
+
+```math
+\frac{(9-px)F(x,y)+(9+px)F(-x,-y)}2
+=9\delta^2-8pg(3\delta+4u)\le0.
+```
+
+若 `g<0`，则 `u>C>0`，右端严格为正，矛盾。故 `g>=0`。若 `g=0`，证书立即给出 `delta=0` 及 `v=u/3`。这个代数步骤也单独给出第 41 节定向界的无微分证明。
+
+下面证明最优线性界。恒等式
+
+```math
+\kappa(C-1)=M-1,\qquad
+\kappa(14-6k)=32
+```
+
+均由 `k²=3` 得到，且 `kappa>1`。
+
+若 `u<=1`，则
+
+```math
+\kappa g-\delta
+=(\kappa-1)(1-u)+v\ge0.
+```
+
+等号当且仅当 `u=1,v=0`。
+
+若 `u>=1`，记 `a=|x|`，于是 `a>=1`、`a²=u<=C`。在两个四次约束中选取带 `+8a(u-3v)` 的一个，并代入 `r=M-delta`、`u-3v=3delta-4g`，得到
+
+```math
+P(\delta):=\delta^2+12(2a-k)\delta-32ag\le0.
+```
+
+又有精确因式分解
+
+```math
+P(\kappa g)
+=g(a-1)\bigl[24\kappa-32-\kappa^2(a+1)\bigr].
+```
+
+为确定方括号的符号，只需以下有理界：
+
+```math
+\frac53<k\le\frac74,\qquad
+\frac{96}{11}<\kappa\le\frac{98}{11},\qquad
+1\le a\le a^2\le C\le\frac98.
+```
+
+因此
+
+```math
+24\kappa-32-\kappa^2(a+1)
+\ge\frac{1952}{11}-\left(\frac{98}{11}\right)^2\frac{17}{8}
+=\frac{2127}{242}>0.
+```
+
+故 `P(kappa g)>=0`。如果 `delta>kappa g`，则
+
+```math
+P(\delta)-P(\kappa g)
+=(\delta-\kappa g)\bigl(\delta+\kappa g+12(2a-k)\bigr)>0,
+```
+
+与 `P(delta)<=0` 矛盾。所以 `delta<=kappa g`。若线性界取等号，上述分解迫使 `g=0` 或 `a=1`；前者给出 `(u,v)=(C,C/3)`，后者结合等号给出 `(u,v)=(1,0)`。反向代入可直接验证。命题得证。
+
+### 43.3 谱端点附近的显式位置控制
+
+令 `A=sqrt(C)`、`b=sqrt(C/3)`，并从四个定向等号点中选择与 `x,y` 同号的点。恒等式
+
+```math
+ y^2-C/3=g-\delta
+```
+
+及 `kappa>2` 给出
+
+```math
+\left||x|-A\right|\le\frac{g}{A},\qquad
+\left||y|-b\right|\le\frac{(\kappa-1)g}{b}.
+```
+
+因此到四个等号点的欧氏距离至多为
+
+```math
+\frac{g}{A}\sqrt{1+3(\kappa-1)^2}.
+```
+
+对于靠近下端点的模式零能量 `E0=gamma+epsilon`，若 `0<=epsilon<=2A`，则
+
+```math
+x=-A+\varepsilon/2,\qquad
+ g=A\varepsilon-\varepsilon^2/4\le A\varepsilon.
+```
+
+故到对应下端点等号点的距离至多为
+
+```math
+\varepsilon\sqrt{1+3(\kappa-1)^2}.
+```
+
+同时循环调制两行可将任意模式化为模式零；交换两行则将上端点化为另一行的下端点。因此同样适用于任一能量端点。本结论控制的是实际互补相位行的谱与自相关，不把它自动提升为共同无偏 completion 的 symmetry-affinity 下界；后者仍需保留完整共享相位和正交约束。
+
+## 44. 非 Fourier 双循环边上的完整低 affinity 反例
+
+第 18 节以整个 completion fibre 定义 `alpha_min(T)`，没有附加相位判别式非零的条件。下面给出一个非 Fourier 双循环边及其完整 completion，满足 `alpha_S=2/9`。因此，该边所在的闭分支不能使用“所有 completions 均有 `alpha_S>=1`”作为统一目标。第 18 节的条件蕴含仍然正确；本节修正的是下界目标的适用域。
+
+本例处于一个相位判别式为零的边界，不否定非零判别式内域的下界。所得 completion 本身又属于 Fourier 等价类，故第 11 节的文献排除仍可将其从假想 quartet 中移除。Diţă 六阶矩阵存在多个 completions 已是已知事实，见 Brierley–Weigert，*Constructing Mutually Unbiased Bases in Dimension Six*，[arXiv:0901.4051，§4.1](https://arxiv.org/abs/0901.4051)。本节不把 completion 的存在重新列为新结果，而给出当前三循环下的精确 affinity 及其对本卷目标的限制。
+
+### 44.1 固定边、三循环与 conference 规范
+
+使用一基索引，固定
+
+```math
+P=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},
+\qquad S=\operatorname{diag}(P,P).
+```
+
+取
+
+```math
+A=\begin{pmatrix}1&-1&1\\1&1&-1\\-1&1&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1&1&i\\i&1&1\\1&i&1\end{pmatrix},
+\qquad H=\begin{pmatrix}A&B\\B^\dagger&-A^\dagger\end{pmatrix},
+\qquad T=H/\sqrt6.
+```
+
+两条首行的自相关分别为 `-1,1`，Fourier 能量谱分别为 `(1,4,4)` 和 `(5,2,2)`。这是第 43 节 `delta=kappa g` 且 `g>0` 的实际相位等号例。第一行的循环相位比为 `(-1,-1,1)`，故其判别式为零；所有 Fourier 系数仍然非零。
+
+令
+
+```math
+R=\operatorname{diag}(-i,-i,-i,i,i,i),\qquad
+K=(e_6\ e_4\ e_5\ e_2\ e_3\ e_1),
+```
+
+以及
+
+```math
+C=\begin{pmatrix}I_3-J_3&2I_3-J_3\\2I_3-J_3&J_3-I_3\end{pmatrix}.
+```
+
+直接相乘得到
+
+```math
+RHK=I+iC,\qquad C=C^T,\qquad C^2=5I_6.
+```
+
+最后一个恒等式由 `J3²=3J3` 得到。因此
+
+```math
+T_c=RTK=(I+iC)/\sqrt6
+```
+
+是 flat unitary，原固定边 `T` 亦然。`R,K` 都与 `S` 交换。
+
+### 44.2 保持两组 flatness 的显式 completion
+
+**命题 44.1。** 上述固定边有完整 completion `W`，其每列相对 `S` 的三个 mode probabilities 是 `(1/9,4/9,4/9)` 的一个置换，并且
+
+```math
+\boxed{\alpha_S(W)=2/9.}
+```
+
+证明。定义实正交 signed permutation
+
+```math
+M=\begin{pmatrix}
+1&0&0&0&0&0\\
+0&0&0&0&1&0\\
+0&0&0&-1&0&0\\
+0&-1&0&0&0&0\\
+0&0&0&0&0&1\\
+0&0&1&0&0&0
+\end{pmatrix}.
+```
+
+有 `MCM^T=C`，故 `MTc=TcM`。一个直接验证是令 `E=diag(1,-1,-1,1,-1,-1)`；`ECE` 的第一行、列非对角元全为一，其余五点的正号边恰组成循环 `(2,4,3,6,5)`。该循环的置换矩阵 `Pr` 保持 `ECE`，且 `M=EPrE`。
+
+令 `omega=exp(2 pi i/3)`，并置
+
+```math
+q_k=(1,\omega^k,\omega^{2k}),\qquad
+(a_0,b_0)=(-2,-1),\quad(a_1,b_1)=(a_2,b_2)=(1,2),
+```
+
+```math
+t_k=\frac{1+ia_k}{\sqrt{1+a_k^2}},\qquad
+ t_0=\frac{1-2i}{\sqrt5},\quad t_1=t_2=\frac{1+i}{\sqrt2}.
+```
+
+令 `F0` 的六行是
+
+```math
+f_{k,\varepsilon}=\frac1{\sqrt6}(q_k,\varepsilon t_kq_k),
+\qquad k=0,1,2,\quad\varepsilon=\pm1.
+```
+
+不同 `k` 的正交来自三阶 Fourier 正交性；相同 `k` 的两行内积是 `(3-3)/6=0`。因此 `F0` unitary 且 flat。记 `Ac=I3-J3,Bc=2I3-J3`，有 `qk Ac=ak qk`、`qk Bc=bk qk`，故
+
+```math
+f_{k,\varepsilon}T_c
+=\frac16\bigl((1+ia_k+\varepsilon ib_kt_k)q_k,
+(ib_k+\varepsilon(1-ia_k)t_k)q_k\bigr).
+```
+
+由于 `ak²+bk²=5`，且
+
+```math
+(a_k-i)\overline{t_k}=-i\sqrt{1+a_k^2},
+```
+
+两个括号内系数的平方模均为六。因此 `F0 Tc` 也 flat。
+
+现在置
+
+```math
+F=F_0MR,\qquad W=F^\dagger.
+```
+
+`F` 是 flat unitary，并且
+
+```math
+FT=F_0MRT=F_0MT_cK^\dagger=F_0T_cMK^\dagger
+```
+
+仍然 flat。故 `W` 确实是同时无偏于 `I,T` 的完整正交基。特别地，对第 8 节的同一个 `Q,D`，令 `U=FQ^dagger`，就同时保留
+
+```math
+U\text{ unitary},\qquad UQ=F\text{ flat},\qquad UDQ=FT\text{ flat}.
+```
+
+下面计算 affinity。`R` 与 `S` 交换，所以只需计算 `F0 M` 的行期望。写 `w=omega^k`、`t=epsilon tk`，其对应未归一化行是
+
+```math
+(1,w,w^2,t,tw,tw^2)M=(1,-t,tw^2,-w^2,w,tw).
+```
+
+利用 `|t|=|w|=1,w³=1`，该行与 `S` 的二次型为
+
+```math
+-\overline t-w+tw^2-w+\overline t-tw^2=-2w.
+```
+
+因而
+
+```math
+(FSF^\dagger)_{(k,\varepsilon),(k,\varepsilon)}=-\omega^k/3.
+```
+
+由第 16 节的同一归一化，
+
+```math
+\alpha_S(W)=\frac13\sum_{k,\varepsilon}
+|(FSF^\dagger)_{(k,\varepsilon),(k,\varepsilon)}|^2
+=\frac13\cdot6\cdot\frac19=\frac29.
+```
+
+三阶 Fourier 反演还给出每行的 mode probabilities 为 `(1/9,4/9,4/9)` 的置换，每种位置出现两次。作为独立的归一化核对，
+
+```math
+\sum_{r,k}p_{rk}^2=6\frac{1+16+16}{81}=\frac{22}{9},\qquad
+\alpha_S(W)=\frac12\left(\frac{22}{9}-2\right)=\frac29.
+```
+
+命题得证。
+
+### 44.3 排除 Fourier 固定边与修正目标的范围
+
+对未归一化 Hadamard 矩阵定义交比集合
+
+```math
+\Lambda(G)=\{G_{ij}G_{k\ell}\overline{G_{i\ell}}\overline{G_{kj}}\}.
+```
+
+行列相位在交比中抵消，置换只重排指标，转置也不改变集合。由于 `H` 全部元素为四次单位根，其交比都在 `{1,-1,i,-i}` 中。另一方面，第 11 节 Fourier 两参数族的标准块代表包含完整的三阶 Fourier 子矩阵；其前两行、前两列的交比为 primitive cube root `omega`。转置族亦然。因此 `H` 与这两个 Fourier 族都不等价。本例是非 Fourier 双循环边，而不是 Fourier 中心的重述。
+
+每个 completion 行的 collision 是 `11/27`，故任选三行都构成实际共同无偏正交三元组，但其总 collision 为 `11/9<2`。这阻止把第 36、37 节的三元组目标无条件推广到全部非 Fourier 双循环边；不反驳那两节针对 `-1/5` 固定种子的目标，也不影响第 42 节在该种子邻域上的结论。
+
+按正负号排列 `F0` 的行后，它正是第 10、11 节的 Fourier 型块构造；`F=F0MR` 只再乘右单项式矩阵。因此这个低 affinity completion 仍是 Fourier 等价类的伴随，已由第 11 节的 quartet 文献归约排除。它说明“相对于指定 `S` 非 mode-local”不等于“已排除所有 Fourier-equivalent completions”：固定边自同构可以显著改变前一性质而保持后一等价类。
+
+所以，若继续以 affinity 攻击剩余 quartet fibre，必须明确限制 completion 等价类，排除整个已知 Fourier locus 及其固定边自同构轨道；仅去掉 mode-local 子集不够。非零判别式内域、以及去除已知排除类后的剩余 completion 下界均未由本例解决。第 17、18、31 节的条件预算与刚性论证保持有效；六维四 MUB 问题也未由本例解决。

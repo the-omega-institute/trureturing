@@ -1,0 +1,45 @@
+**Proposition 5.2 (A merely positive late weight does not give uniformity in fixed dimension).** For every fixed $D\ge3$, there is a family of complete actual instruments with $\nu=1$, early maximum $\epsilon\to0$, and $w_{D-1}>0$ at each member, but $E=2(D-2)$. Positivity of the late weight without a quantitative lower bound is insufficient.
+
+Proof. Use $e_0,\ldots,e_{D-1}$ with projections $P_j$. For $0<a<1$, define on every complex input
+
+$$
+\begin{aligned}
+\Phi_a(X)&=X_{00}\big((1-a)P_0+aP_1\big),\\
+\Psi(X)&=X_{11}P_0+\sum_{j=2}^{D-1}X_{jj}P_j,
+\qquad \rho_0=P_1.
+\end{aligned} \tag{5.17}
+$$
+
+The zero Kraus matrices are $\sqrt{1-a}|e_0\rangle\langle e_0|$ and $\sqrt a|e_1\rangle\langle e_0|$, whose effects sum to $P_0$. The tick matrices are $|e_0\rangle\langle e_1|$ and $|e_j\rangle\langle e_j|$ for $2\le j\le D-1$, with effect $F=I-P_0$. The total effect is $I$, proving complete positivity and completeness on all complex inputs.
+
+The given initializer satisfies $\Psi(\rho_0)=P_0$, so actual $\nu=1$ and $\tau=P_0$. Since $\Phi_a$ reads only the $00$ entry, induction gives
+
+$$
+\Phi_a^k(\tau)=(1-a)^kP_0+a(1-a)^{k-1}P_1\quad(k\ge1).
+\tag{5.18}
+$$
+
+Its trace is $(1-a)^{k-1}$, and all next-gap probabilities are
+
+$$
+w_0=0,\qquad w_k=a(1-a)^{k-1}\quad(k\ge1),
+\qquad \sum_{k\ge0}w_k=1.
+\tag{5.19}
+$$
+
+The last equality is the geometric series. Because $D-2\ge1$, the early maximum is exactly $a$, whereas $w_{D-1}=a(1-a)^{D-2}>0$.
+
+Matrix-unit evaluation gives
+
+$$
+\begin{aligned}
+J(\Psi)&=P_0\otimes P_1+\sum_{j=2}^{D-1}P_j\otimes P_j,\\
+J(\Psi)-\tau\otimes F^{\mathsf T}
+&=\sum_{j=2}^{D-1}(P_j-P_0)\otimes P_j.
+\end{aligned} \tag{5.20}
+$$
+
+All these projections are real in the displayed basis. The input directions in the sum are orthogonal. Each output block $P_j-P_0$ has eigenvalues $1,-1$ and zeros, with trace norm two. Singular values of this orthogonal block sum combine by union, giving exactly $E=2(D-2)$. Let $a\downarrow0$ to get the claimed failure with fixed $D$ and actual rate.
+
+At $a=0$ the formulas still define a complete instrument, but $\Phi_0^k(\tau)=P_0$ and every $w_k=0$: the same nonreset tick map has the same error, while no next tick occurs from $\tau$. For $D=2$ the sum in (5.20) is empty and $E=0$, in agreement with the late-free theorem. $\square$
+

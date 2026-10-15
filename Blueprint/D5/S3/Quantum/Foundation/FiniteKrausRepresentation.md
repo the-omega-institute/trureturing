@@ -4,6 +4,10 @@
 
 Every finite rectangular completely positive matrix map has a finite Kraus witness.
 
+Use the output-input order for the Choi coordinates: the channel acts on the first factor of the unnormalized maximally entangled projector. The finite Kraus family has rectangular output-by-input matrices; the zero map is included. Trace preservation is equivalent to the sum of the adjoint-Kraus products being the identity: cyclicity proves sufficiency, and testing every matrix unit proves necessity.
+
+Ordinary transposition preserves positive matrices but is not completely positive. Its Choi matrix is the swap. On two qubits the partial transpose of the normalized Bell density is half the swap, with three eigenvalues equal to one half and one equal to minus one half. The antisymmetric vector detects the negative direction. Positivity on inputs alone therefore does not replace positivity with every auxiliary interface.
+
 **Theorem 1.1 (Complete positivity gives a rectangular Kraus family).**
 
 $$\operatorname{IsCompletelyPositive}(Phi) \Rightarrow \exists M, Phi=\operatorname{ofKraus}(M,M).$$

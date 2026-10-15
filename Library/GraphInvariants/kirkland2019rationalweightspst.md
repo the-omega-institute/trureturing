@@ -10,6 +10,8 @@ strata_touched:
   - D5/S3/Quantum/Dynamics/RationalWeightPathTransfer
   - D5/S3/Quantum/Dynamics/PathMiddleVertexMoments
   - D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer
+  - D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments
+  - D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer
 license: citation-only
 triage: anchor
 ---
@@ -71,8 +73,7 @@ conjecture for every odd $n = 2m + 1 \ge 3$, in both directions between the
 end vertices and with arbitrary real potentials: $n = 3$ lies below the
 conjecture's range, the sizes $n \equiv 3, 5 \pmod 8$ are the cases of
 Proposition `prop:rat`, and the sizes $n \equiv 1, 7 \pmod 8$ lie outside
-those cases. The even sizes $n \ge 6$ are not settled by the source or these
-modules. The source obtains its odd cases from the weight next to the middle
+those cases. The even sizes are treated below. The source obtains its odd cases from the weight next to the middle
 vertex: with $S_1=\sum_{r=1}^n(-1)^{r+n}\alpha_r$ and
 $S_2=\sum_{r=1}^n(-1)^{r+n}\alpha_r^2$ for the ordered eigenvalues
 $\alpha_r$, its Corollary `cor:middle` gives, for $n$ odd,
@@ -81,6 +82,25 @@ recalls, citing Cantoni and Butler, that the eigenvectors of a mirror-symmetric
 Hamiltonian are symmetric or antisymmetric. The modules use the diagonal
 entries of all the powers of the Hamiltonian at the middle vertex and the
 Hankel determinants of these moments of every size up to $m + 1$.
+
+The module `D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer`, with the
+spectral weights and integer moments at the middle edge of
+`D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments`, proves the statement of the
+conjecture for $n = 2m$ with $m \equiv 2 \pmod 4$ or $m \equiv 3, 5 \pmod 8$,
+that is for $n \equiv 4 \pmod 8$ and $n \equiv 6, 10 \pmod{16}$, in both
+directions between the end vertices and with arbitrary real potentials. The
+size $n = 4$ is a case of Proposition `prop:rat`; the other sizes lie outside
+its cases. For even $n$ the source's Corollary `cor:middle` gives
+$r_{\frac n2}=\frac{S_1}2$ and $q_{\frac n2}=\frac{S_2}{2S_1}$, and for $n = 4$
+the proof of the proposition shows that the weight $r_1$ next to the middle
+edge is irrational, because an integer attached to it is congruent to 3 or 7
+modulo 8. The modules use, for every such $n$, the middle-edge vector
+$f = e_{n/2} + e_{n/2+1}$: the numbers $r_{n/2}\langle f, H^p f\rangle$,
+$p = 0, 1, 2$, are integers, their second Hankel determinant equals
+$(2\,r_{n/2}\,r_{n/2-1})^2$, and it is congruent to 3 modulo 4 for
+$m \equiv 2 \pmod 4$ and to 2 modulo 4 for $m \equiv 3, 5 \pmod 8$. The
+conjecture is not settled by the source or these modules for
+$n \equiv 0 \pmod 8$ and $n \equiv 2, 14 \pmod{16}$.
 
 ## Verified locator
 

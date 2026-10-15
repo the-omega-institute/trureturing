@@ -4022,3 +4022,814 @@ C-113.1 的锥非负性和 (C113.6) 的负配对给 (C113.18)。
 不将条件性数学关系升级为物理实现或全球原创性。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 114. 完整复不可见来源的参考剖面、二层半径平台与定向傅里叶损失
+
+**定义 C-114.1（完整来源、声明的收缩像与实际资源域）。** 保留 C-108.1、
+C-109.1 和 C-113.13 的全部原坐标与合同：$B=(0,1,2,3,13)$、
+$f=(0\ 13)(1\ 3)$、$f(2)=2$、$J e_j=|B_j,f(B_j)\rangle$、
+原切口 $A\mid B$、$P=JJ^\dagger$、$Q=I_{25}-P$，以及输出因子在前、
+除以五的规范化 Choi。以下共轭是在这些固定坐标中的逐项共轭。
+定义紧实凸参数集及其饱和部分
+
+$$
+\begin{aligned}
+\mathcal K&=\{X=iA:A\in M_5(\mathbb R),\ A^T=-A,\ \|X\|_{\rm op}\le1\},\\
+\mathcal K_*&=\{X\in\mathcal K:\operatorname{spec}X=\{1,1,0,-1,-1\}\},\\
+C_X&=(I_5+X)/5,\qquad C_{t,X}=(I_5+tX)/5,\qquad 0\le t,\eta\le1,\\
+\rho_{t,\eta}(X)&=(1-\eta)JC_{t,X}J^\dagger+\eta I_{25}/25,\\
+\mathcal F_{t,\eta}&=\{\rho_{t,\eta}(X):X\in\mathcal K\},\\
+c&=\eta/25,\qquad a=(1-\eta)/5+c,\qquad b=(1-\eta)t/5,\\
+\Omega_\eta&=aP+cQ,\qquad
+\rho_{t,\eta}(X)=\Omega_\eta+bJXJ^\dagger.
+\end{aligned}
+\tag{C114.1}
+$$
+
+C-108.3–C-108.4 给 $C_X$ 遍历完整原复不可见纤维 $\mathcal I$。
+所以 $\mathcal F_{1,0}=J\mathcal I J^\dagger$，$\mathcal F_{1,\eta}$ 是其整个
+共同环境白噪声仿射像；$t<1$ 另声明为先加匹配白噪声的收缩子族。
+它们均不被认作环境中具有相同观察律的全部密度态。
+若 $b>0$，$X$ 到该族的映射单射；若 $b=0$，该族只有 $\Omega_\eta$ 一个态。
+
+同源通道和至多 $q$ 资源子域定义为
+
+$$
+\begin{aligned}
+\Phi_{t,\eta,X}(Y)&=(1-\eta)(I_5+tX)\circ Y
+                  +\eta\operatorname{tr}(Y)I_5/5,\qquad Y\in M_5(\mathbb C),\\
+\mathcal F^{\le q}_{t,\eta}
+&=\{\rho_{t,\eta}(X):X\in\mathcal K,\ \Phi_{t,\eta,X}\in\mathfrak C_q\},
+\qquad q\in\{1,2,3,4,5\}.
+\end{aligned}
+\tag{C114.2}
+$$
+
+$\mathfrak C_q$ 是原来的任意有限旗、每旗在整个 $M_q$ 上 CPTP、无量子旁路
+的通道类，不加 BP、实性或固定旗数。
+C-109.3、C-111.2 和 C-113.3 的字典给
+$\widehat\chi(\Phi_{t,\eta,X})=\rho_{t,\eta}(X)$，且
+$\Phi_{t,\eta,X}\in\mathfrak C_q$ 当且仅当
+$\operatorname{SN}_{A|B}(\rho_{t,\eta}(X))\le q$。
+这里的通道由 $X$ 定义，不主张可把未知来源态物理编程成该通道。
+
+参考遍历全部二十五维复密度态 $R$，不限制其基、匹配支撑或 Choi 边缘。
+熵和散度使用自然对数，$0\log0=0$，且
+
+$$
+\begin{aligned}
+S(\rho)&=-\operatorname{tr}(\rho\log\rho),\\
+D(\rho\Vert R)&=
+\begin{cases}
+\operatorname{tr}(\rho\log\rho)-\operatorname{tr}(\rho\log R),
+ &\operatorname{supp}\rho\subseteq\operatorname{supp}R,\\
++\infty,&\text{否则},
+\end{cases}\\
+\mathcal V_{t,\eta}(R)&=\sup_{\rho\in\mathcal F_{t,\eta}}D(\rho\Vert R).
+\end{aligned}
+\tag{C114.3}
+$$
+
+支持内对数仅作用于正谱；式中的迹只在支持条件满足时使用。
+称 $R$ 支持该族，当 $\operatorname{supp}\Omega_\eta\subseteq\operatorname{supp}R$。
+这在 $\eta=0$ 是 $\operatorname{ran}J\subseteq\operatorname{supp}R$，
+在 $\eta>0$ 是 $R\succ0$；前者允许更大的支持及匹配／未匹配交叉块。
+
+**定理 C-114.2（整个声明族的熵端点与全部等号）。** 记
+
+$$
+\begin{aligned}
+h_{t,\eta}&=-2(a+b)\log(a+b)-2(a-b)\log(a-b)
+                   -a\log a-20c\log c,\\
+H_\eta&=-5a\log a-20c\log c,\\
+\mathcal R_{t,\eta}&=H_\eta-h_{t,\eta}
+=2\left[(a+b)\log\frac{a+b}{a}+(a-b)\log\frac{a-b}{a}\right].
+\end{aligned}
+\tag{C114.4}
+$$
+
+则 $h_{t,\eta}\le S(\rho)\le H_\eta$，两个端点及其间每个值均达到。
+若 $b>0$，上端等号当且仅当 $X=0$，下端等号当且仅当 $X\in\mathcal K_*$。
+若 $b=0$，两端相同，该族是单点。特别 $\mathcal R_{1,0}=4\log2/5$；
+$t=0$ 或 $\eta=1$ 时 $\mathcal R_{t,\eta}=0$。
+
+证明。C-108.4 的共轭谱配对给 $X$ 的谱
+$0,x,-x,y,-y$，$0\le x,y\le1$。环境态的全部谱为
+
+$$
+a+bx,\ a-bx,\ a+by,\ a-by,\ a,\quad c\ (\times20).
+\tag{C114.5}
+$$
+
+这里 $a>0$、$0\le b\le a$。当 $b>0$ 时，
+$g(z)=-(a+bz)\log(a+bz)-(a-bz)\log(a-bz)$ 在 $0<z<1$ 有
+$g'(z)=b\log((a-bz)/(a+bz))<0$；若 $a=b$，以连续性纳入 $z=1$。
+所以最大值要求 $x=y=0$，Hermitian 性给 $X=0$；最小值要求 $x=y=1$。
+谱代入给全部公式。取任一 $X_*\in\mathcal K_*$ 并连续变化
+$X=uX_*$、$0\le u\le1$，即达到每个中间熵。
+当 $b=0$ 时 (C114.1) 直接给单点。证毕。
+
+**定理 C-114.3（任意环境复参考的完整最坏散度剖面）。** 若 $R$ 不支持该族，
+则 $\mathcal V_{t,\eta}(R)=+\infty$。若支持，令 $L=\log R$ 为支持内对数
+在核上任取零的延拓，并定义
+
+$$
+K=J^\dagger L J,\qquad Y=(K-\overline K)/2.
+\tag{C114.6}
+$$
+
+$Y$ 是纯虚 Hermitian 矩阵，其谱记为 $0,\pm\kappa_1,\pm\kappa_2$，
+$\kappa_1,\kappa_2\ge0$。精确公式为
+
+$$
+\boxed{\quad
+\mathcal V_{t,\eta}(R)
+=-h_{t,\eta}-\operatorname{tr}(\Omega_\eta L)+b\|Y\|_1,
+\qquad \|Y\|_1=2(\kappa_1+\kappa_2).
+\quad}
+\tag{C114.7}
+$$
+
+若 $b>0$，全部最坏来源恰由下列两个条件刻画：
+
+$$
+X\in\mathcal K_*,\qquad
+Xv=-\operatorname{sign}(\lambda)v
+\quad\text{对每个 }Yv=\lambda v,\ \lambda\ne0.
+\tag{C114.8}
+$$
+
+在 $\ker Y$ 上选择任何与这两个条件相容的纯虚 Hermitian 延拓即可。
+若 $Y$ 秩四，该来源唯一；若 $Y=0$，所有 $\mathcal K_*$ 都是最坏来源。
+$b=0$ 时 (C114.7) 退化为 $D(\Omega_\eta\Vert R)$。
+公式使用 $J^\dagger(\log R)J$，一般不能换成 $\log(J^\dagger R J)$；
+未匹配块、交叉块及支持外的参考质量都会通过这个对数和常数项参与。
+
+证明。不支持时族内的 $\Omega_\eta$ 已有无限散度。
+支持时每个族成员的支持都在 $\operatorname{supp}\Omega_\eta$ 内，故散度有限。
+$K$ Hermitian，其实部为实对称，虚部为实反对称。
+C-108.7 的迹正交性给 $\operatorname{tr}(XK)=\operatorname{tr}(XY)$。
+对任意 Hermitian 收缩 $X$，在 $Y$ 的本征基中逐项估计得到
+
+$$
+-\operatorname{tr}(XY)\le\sum_\lambda|\lambda|=\|Y\|_1.
+\tag{C114.9}
+$$
+
+等号要求每个非零 $\lambda$ 的本征向量满足 (C114.8)：
+若单位向量上 $\langle v,Xv\rangle=\pm1$，则正算子 $I\mp X$
+在该向量上二次型为零，因而 $Xv=\pm v$。
+
+这个等号可由同一个合法的饱和 $X$ 实现，而不牺牲熵下端。
+为明确该可实现性，写 $Y=iT$、$T$ 实反对称。
+对 $-T^2$ 的正本征值 $\kappa^2$ 选实单位向量 $v$，
+取 $w=Tv/\kappa$；$v,w$ 正交，$Tv=\kappa w$、$Tw=-\kappa v$。
+其正交补仍被 $T$ 保持，重复即给两个实正交二维块和一个零方向；
+零本征值或重根均可如此分块。
+在非零块上选 $X=-\operatorname{sign}Y$，在剩下的实核内补足二维单位反对称块，
+直至 $X$ 的谱为 $1,1,0,-1,-1$。核的维数是 $1,3$ 或 $5$，总能补足。
+所得 $X$ 仍纯虚 Hermitian，恰在 $\mathcal K_*$。
+于是它同时达到 (C114.9) 及熵下端。
+
+展开散度为
+$-S(\rho_{t,\eta}(X))-\operatorname{tr}(\Omega_\eta L)-b\operatorname{tr}(XY)$，
+得到 (C114.7)。当 $b>0$，两个非负亏损之和为零，当且仅当它们各为零，
+这给全部等号。秩四时唯一未规定的实核维数为一，其反对称块只能为零。
+整个证明在原复态上进行；没有假定 $R$ 与来源对易。证毕。
+
+**定理 C-114.4（全参考 minimax、唯一参考及所有有限最优系综）。** 对有限非空
+指标集 $\Lambda$，系综是 $p_\ell\ge0$、$\sum_\ell p_\ell=1$、
+$\rho_\ell\in\mathcal F_{t,\eta}$；零权重项删除，
+$\bar\rho=\sum_\ell p_\ell\rho_\ell$，
+$\chi=S(\bar\rho)-\sum_\ell p_\ell S(\rho_\ell)$。
+参考始终遍历全部环境复密度态。则
+
+$$
+\inf_R\mathcal V_{t,\eta}(R)
+=\max_{\text{有限系综}}\chi
+=\mathcal R_{t,\eta},\qquad
+\operatorname*{argmin}_R\mathcal V_{t,\eta}(R)=\{\Omega_\eta\}.
+\tag{C114.10}
+$$
+
+当 $b>0$，最优系综的充要条件为
+
+$$
+X_\ell\in\mathcal K_*\quad(p_\ell>0),\qquad
+\sum_\ell p_\ell X_\ell=0.
+\tag{C114.11}
+$$
+
+最小不同态字母表大小恰为二；所有二字母最优系综都是等权反足对
+$X_*,-X_*$。当 $b=0$，只有一个不同态，任意系综的 $\chi=0$，
+不存在两个不同态的非平凡字母表。
+
+证明。$\log\Omega_\eta$ 在 $P$ 上为 $\log a$，在 $Q$ 的正谱上为 $\log c$。
+纯虚反对称方向的迹为零，故对整个族精确有
+
+$$
+-\operatorname{tr}(\rho\log\Omega_\eta)=H_\eta,
+\qquad D(\rho\Vert\Omega_\eta)=H_\eta-S(\rho).
+\tag{C114.12}
+$$
+
+这使 $\mathcal V(\Omega_\eta)=\mathcal R$。
+另一方面取任何饱和反足对，两个态的熵均为 $h$，平均为 $\Omega_\eta$。
+对每个支持参考，直接展开迹给 Donald 恒等式在该系综上的应用
+
+$$
+\tfrac12D(\rho(X_*)\Vert R)+\tfrac12D(\rho(-X_*)\Vert R)
+=\mathcal R+D(\Omega_\eta\Vert R).
+\tag{C114.13}
+$$
+
+因此 $\mathcal V(R)\ge\mathcal R+D(\Omega_\eta\Vert R)$。
+不支持的参考已经被无限值排除。
+
+这里使用密度态散度非负且等号仅在两态相同的成熟事实。
+其有限维支持情形可直接核对：在 $\rho$ 的正本征基中写本征值 $r_i$，
+$q_i=\langle i|R|i\rangle>0$。对数严格凹性给
+$\langle i|\log R|i\rangle\le\log q_i$，故
+$D(\rho\Vert R)\ge\sum_i r_i\log(r_i/q_i)
+\ge-\log\sum_iq_i\ge0$。
+最后两步使用 $\sum_i r_i=1$、$\sum_iq_i\le1$ 和标量 Jensen。
+等号要求 $q_i=r_i$、$\sum_iq_i=1$；第一步等号使每个 $|i\rangle$
+为 $R$ 的本征向量，正性及剩余迹零排除其余支持，故 $R=\rho$。
+这证明 minimax 及其参考唯一性，包括单点端点。
+
+对任意有限系综，定理 C-114.2 给
+$\chi\le H-h$；等号恰要求平均态是唯一熵最大态，且每个正权重成员熵为 $h$。
+当 $b>0$，这正是 (C114.11)，反足对给达到。
+一个不同态的 $\chi=0<\mathcal R$；二态平均零要求
+$X_2=-p_1X_1/p_2$，两者算子范数均一迫使 $p_1=p_2=1/2$。
+$b=0$ 时直接退化为单态。一般 Donald 恒等式
+$\sum p_\ell D(\rho_\ell\Vert R)=\chi+D(\bar\rho\Vert R)$
+也由同一迹展开得到；正权重下每项支持都在平均支持中，故不把零权重的
+$0\cdot\infty$ 当作数。以上不需要交换两个非对易矩阵的对数。证毕。
+
+**定理 C-114.5（实际至多二维以上资源的精确平台）。** 对每个 $q=2,3,4,5$，
+将 (C114.10) 的来源和系综域换成 $\mathcal F^{\le q}_{t,\eta}$，其 minimax 值、
+唯一参考和最大 $\chi$ 完全不变。熵端点也仍为 $h,H$；$b>0$ 时，
+全部最优系综仍由 (C114.11) 刻画，另要求每个成员属于该资源域。
+该族全部通道至多需要四维，故 $\mathcal F^{\le4}_{t,\eta}=\mathcal F_{t,\eta}$。
+无环境噪声时的标量子域精确为
+
+$$
+\mathcal F^{\le1}_{t,0}=\{S\},\qquad
+\inf_R\sup_{\rho\in\mathcal F^{\le1}_{t,0}}D(\rho\Vert R)=0.
+\tag{C114.14}
+$$
+
+对 $\eta>0$ 不据此断言整个标量子域或其转变阈值。
+
+证明。取 C-111.1 的边端点并置 $X_{\rm E}=5C^{\rm E}-I_5$。
+$X_{\rm E},-X_{\rm E}\in\mathcal K_*$。
+C-112.13 的两个边块有限因子在复共轭后仍二稀疏，故
+$C_{t,\pm X_{\rm E}}$ 的通道都有秩至多二的有限 Kraus 实现。
+添加 C-113.3 的二十五个白噪声秩一 Kraus，仍至多二维。
+$\Omega_\eta$ 由原基去相干通道与完全去极化通道的凸组合给出，是标量端口的 Choi。
+所以每个上述资源域都含熵最大态及一对熵最小反足态。
+完整域上的上下界因此都在子域内达到；(C114.13) 同时保留参考唯一性。
+等号条件是完整域的必要条件，又对域内系综充分。
+C-111.2 的四稀疏有限分解加秩一白噪声 Kraus 给四的统一上界。
+
+这里的达到确实是整个块通道达到：从有限 Kraus $K_\nu$，
+选 $V_\nu:\mathbb C^q\to\mathbb C^5$ 等距且像包含其值域，
+编码分支 $V_\nu^\dagger K_\nu$，解码 $Y\mapsto V_\nu YV_\nu^\dagger$。
+$V_\nu^\dagger V_\nu=I_q$ 保证每个整个块解码 TP，
+$\sum K_\nu^\dagger K_\nu=I_5$ 保证总编码 TP；矩形夹乘保证 CP。
+这直接消费 C-109.7、C-112.15、C-113.13 的原字典，不以一个输出态的制备替代。
+最后 $\eta=0$ 时 C-106.2/C-109.3 的匹配态唯一可分离点是 $S$，
+而至多一维恰为 SN 一，给 (C114.14)，包括 $t=0$。证毕。
+
+**定理 C-114.6（同族固定复参考的唯一傅里叶极大点与完整剖面）。**
+设 $b>0$，用 C-111.2 的原坐标傅里叶投影定义
+
+$$
+\begin{aligned}
+F&=5C^{\rm F}-I_5=P_1+P_2-P_3-P_4,\qquad F^2=I_5-P_0,\\
+R^{\leftarrow}_{t,\eta}&=\rho_{t,\eta}(-F/2)\in\mathcal F_{t,\eta},\\
+\gamma&=\tfrac12\log\frac{a+b/2}{a-b/2}>0,\\
+E_0&=-a\log a-2a\log(a^2-b^2/4)-20c\log c,\\
+M_{t,\eta}&=E_0-h_{t,\eta}+4b\gamma.
+\end{aligned}
+\tag{C114.15}
+$$
+
+该参考支持整个族；它的非零谱在匹配支撑上严格为正。
+固定这个参考并只让来源在 $\mathcal F_{t,\eta}$ 内变化，精确有
+
+$$
+\begin{aligned}
+D(\rho_{t,\eta}(X)\Vert R^{\leftarrow}_{t,\eta})
+&=E_0-S(\rho_{t,\eta}(X))+b\gamma\operatorname{tr}(XF),\\
+\max_XD(\rho_{t,\eta}(X)\Vert R^{\leftarrow}_{t,\eta})&=M_{t,\eta},\\
+\operatorname*{argmax}_X D(\rho_{t,\eta}(X)\Vert R^{\leftarrow}_{t,\eta})&=\{F\}.
+\end{aligned}
+\tag{C114.16}
+$$
+
+因此唯一极大来源恰为原 $\rho^{\rm F}_{t,\eta}$。
+参考是同族中的反向半幅来源，不是 $\mathsf W$ 或 $\mathcal W_t$ 的 Gibbs 态。
+
+证明。$\overline P_m=P_{-m}$ 给 $\overline F=-F$；C-111.3 给
+$F\in\mathcal K_*$。由于 $a-b/2\ge a/2>0$，支持条件成立，包括 $\eta=0,t=1$。
+在匹配支撑中直接计算
+
+$$
+J^\dagger(\log R^{\leftarrow}_{t,\eta})J
+=(\log a)P_0+\tfrac12\log(a^2-b^2/4)(I_5-P_0)-\gamma F.
+\tag{C114.17}
+$$
+
+$P_0$ 和 $I_5-P_0$ 是实对称矩阵，故与 $X$ 的迹配对为零。
+常数配对为 $E_0$，得完整剖面。
+(C114.6) 中的 $Y=-\gamma F$ 秩四；定理 C-114.3 的全部等号条件
+强制 $X=F$，其熵恰为 $h$、$\operatorname{tr}F^2=4$，遂给精确最大值。证毕。
+
+**定理 C-114.7（锐利的同族状态距离损失）。** 在 C-114.6 的域中，置
+$\rho_*=\rho^{\rm F}_{t,\eta}$、$\rho=\rho_{t,\eta}(X)$。则
+
+$$
+\begin{aligned}
+M_{t,\eta}-D(\rho\Vert R^{\leftarrow}_{t,\eta})
+&=S(\rho)-h_{t,\eta}+b\gamma\bigl(4-\operatorname{tr}(XF)\bigr)\\
+&\ge\frac{\gamma}{8b}\|\rho-\rho_*\|_1^2.
+\end{aligned}
+\tag{C114.18}
+$$
+
+系数 $\gamma/(8b)$ 是对该整个族有效的最大系数。
+等号当且仅当 $X\in\mathcal K_*$ 且 $X-F$ 的谱为
+$\{r,r,0,-r,-r\}$，某个 $r\ge0$；这包括 $X=F$ 和 $X=-F$。
+
+证明。$X-F$ 仍为五维纯虚 Hermitian，谱配对使其秩至多四。
+若其两个非负谱参数为 $u,v$，则
+
+$$
+\begin{aligned}
+\|X-F\|_1^2&=4(u+v)^2\le8(u^2+v^2)=4\|X-F\|_F^2,\\
+\|X-F\|_F^2&=\operatorname{tr}X^2+4-2\operatorname{tr}(XF)
+\le2\bigl(4-\operatorname{tr}(XF)\bigr),
+\end{aligned}
+\tag{C114.19}
+$$
+
+其中 $\operatorname{tr}X^2\le4$。
+等距嵌入给 $\|\rho-\rho_*\|_1=b\|X-F\|_1$；熵亏损非负，代入即得界。
+第一步等号要求 $u=v$，第二步等号要求 $\operatorname{tr}X^2=4$，
+在 $\mathcal K$ 中后者等价于 $X\in\mathcal K_*$，也恰使熵亏损为零。
+因 $b\gamma>0$，这些恰是全部等号条件。
+在 $X=-F$，距离为 $8b$、目标损失为 $8b\gamma$，
+所以任何更大系数都失败。这是同族精确谱推导，不使用 Hellinger 或 Gibbs 见证界。证毕。
+
+**推论 C-114.8（原三维以下端口的正定向目标隙）。** 固定参考和目标按
+C-114.6。对每个 $q\le3$、每个 $\rho\in\mathcal F^{\le q}_{t,\eta}$，有下列严格正隙。
+无环境噪声时，在原 C-112.2 的精确区间 $127/129<t\le1$，
+
+$$
+M_{t,0}-D(\rho\Vert R^{\leftarrow}_{t,0})
+\ge\frac{\gamma}{8b}\left(\frac{129t-127}{165}\right)^2>0.
+\tag{C114.20}
+$$
+
+有环境噪声时，仅在 C-113.7 的区间
+
+$$
+\frac{127}{129}<t<1,\qquad
+0<\eta<\min\left\{\frac{e}{e+h_t},\frac{5t}{1+5t}\right\},
+\tag{C114.21}
+$$
+
+使用 C-113.1、C-113.6 原来的
+$e=(129t-127)/30$、$L=1+121/e$、$B_t=L+1-e$、
+$h_t=(127/3+5e+20L)/25$ 和 $m_{t,\eta}=(1-\eta)e-\eta h_t$，得到
+
+$$
+M_{t,\eta}-D(\rho\Vert R^{\leftarrow}_{t,\eta})
+\ge\frac{\gamma}{8b}d_{t,\eta}^2>0,\qquad
+d_{t,\eta}=\frac{2m_{t,\eta}}{B_t}.
+\tag{C114.22}
+$$
+
+这些是同族所有原三维以下竞争者的统一正隙；傅里叶目标由四维实际达到，
+而定理 C-114.5 的半径早在二维已经达到。因此优化参考后的半径平台与保留参考方向后
+的资源分离同时成立。这里不声称下界就是至多三维子域的精确最优隙。
+
+证明。无环境噪声时，域内竞争者的 SN 至多三由同源字典等价于
+$k(C_{t,X})\le3$。C-112.2 给其到 $C_t^{\rm F}$ 的完整迹距离至少
+$(129t-127)/165$，$J$ 保持该距离。
+有环境噪声时，C-113.8 对所有环境 SN 至多三态的距离界当然适用于这些同族竞争者。
+分别代入 (C114.18) 即得两式；给定区间保证 $b,\gamma,d$ 严格为正。
+两个目标的资源四和相应实际 Kraus/整个块达到分别消费 C-112.3–C-112.4、
+C-113.2–C-113.3，而非由目标函数数值反推物理实现。证毕。
+
+**命题 C-114.9（参考方向、原生标签信息与域边界）。** 对固定 $t,\eta$，
+任意上述有限系综的外加经典标签 $Z$，以及任意不预先读取 $Z$ 的
+$\mathcal M_{\rm loc}$ 策略，其完整历史 $H$ 满足
+
+$$
+\Pr(H\in E\mid Z=\ell)=P_{\Omega_\eta}^{\pi}(E),\qquad
+I(Z;H)=0.
+\tag{C114.23}
+$$
+
+该结论包括全部有限自适应深度、事件分组及输入无关随机策略。
+在 $b>0$ 时数学系综仍可有严格正的 $\chi=\mathcal R_{t,\eta}$。
+所以 $\chi$、支持内参考能量和整个通道精确量子维数都不能被当作该历史菜单的
+可访问标签信息。参考优化没有补回已被观察纤维合并的区别。
+
+证明。C-108.3 给每个 $JC_{t,X}J^\dagger$ 与 $S$ 的全部允许历史同律。
+每个协议的事件概率对同一个输入态线性，添加共同白噪声后都为
+$P_{\Omega_\eta}^{\pi}$。故标签与完整历史联合律恰为边缘律乘积；
+这直接给互信息零，不只给某个估计量的均值零。
+正 $\chi$ 由 C-114.4 的等权反足对给出。
+$\eta>0$ 时非匹配人口总概率 $4\eta/5$ 可见，不能把不同 $\eta$ 的共同律
+都叫作旧 $S$ 的律；本命题固定 $\eta$，也不把标签依赖的外部控制算作读出。证毕。
+
+(C114.18) 的竞争域必须保留。若 $\eta>0$，取一个原基未匹配纯态
+$\tau=|B_j,f(B_k)\rangle\langle B_j,f(B_k)|$，$j\ne k$，则
+$D(\tau\Vert R^{\leftarrow}_{t,\eta})=-\log c$。
+参考最小特征值为 $c$，所以
+$M_{t,\eta}\le-\log c-h_{t,\eta}<-\log c$，
+因为此时全部族态正定、$h_{t,\eta}>0$。
+因此把 (C114.18) 冒推到全部环境态会连非负损失都失败。
+$\eta=0$ 时该纯态不在参考支持内，散度为 $+\infty$，仍是反例。
+这一个纯态本身不满足通道 TP 边缘，也不被冒称为一个 Choi 通道反例；
+它证伪的是擅自扩大的环境态目标域。
+C-113 的距离供应虽容许任意环境竞争者，(C114.22) 的目标比较始终只取同族成员。
+
+**注记 C-114.10（所消费的成熟成分与对应范围）。** Donald 恒等式、全部密度参考上的
+系综最小化、最优系综的相对熵 minimax 原理是成熟供应：
+Schumacher–Westmoreland，[*Optimal signal ensembles*, quant-ph/9912122v1](https://arxiv.org/html/quant-ph/9912122v1)，
+式 (8)、(10)、(19)；以及
+[*Relative entropy in quantum information theory*, quant-ph/0004045v1](https://arxiv.org/html/quant-ph/0004045v1)，
+式 (5) 和最大距离性质。这里使用支持感知的扩展 Umegaki 散度，
+不以核上总化的有限 trace-log 代替无限分支。
+反对称谱配对、原生菜单纤维、稀疏性／Schmidt number／整个块字典、四层上界和距离证书，
+分别消费 C-108.3–C-108.4、C-109.3、C-111.2、C-112.2、C-113.1–C-113.3。
+
+仓内 `EntropyMaximizer.exists_unique_entropy_maximizer` 的实际命名空间是
+`QuantumLogEnergy`：它在非空闭凸正 trace-one、实际有限连续谱熵的假设下给唯一熵最大元，
+并不要求另加紧性；`CompactCommonReference.spectralEnergy_le_entropy_of_isMaxOn`
+要求实际最大元，`fullCompactCommonReference` 另要求紧性。
+本章的有限矩阵族确为紧实凸、熵有限连续；有限矩阵到相应 `TraceClass` 载体的
+保迹、正性、拓扑及谱熵对应是使用这些抽象接口时必须保留的桥。
+这里直接在原矩阵载体上确定最大元和剖面；(C114.12) 比交叉能量上界更精确，
+给出在此族上恒为 $H_\eta$。这不声称抽象存在性定理所选的其他共同参考必等于
+$\Omega_\eta$，也不把任意 `Reference` 自动当作 trace-one 密度参考。
+`SupportAwareRelativeEntropy.extendedQuantumRelativeEntropy` 及
+`LegacyRelativeEntropyBoundary.unsupported_pair_semantic_boundary`
+给出的语义区别正是 (C114.3) 保留的支持边界；
+`GibbsVariationalIdentity.entropy_uniform_identity` 是已有均匀参考恒等式，
+不是本章任意环境参考剖面的替代品。
+
+源特定综合结论是：完整原复纤维及其整个共同白噪声像的任意参考方向剖面、全部等号、
+唯一半径参考、最小最优字母表、实际二维资源平台，以及同族半幅反向参考的唯一傅里叶
+极大点、锐距离损失和认证区间内的资源正隙。不将一般谱形式、Donald 原理或术语重述
+计作新一般理论；也不主张经过全域文献排查的原创性。
+这些条件性矩阵结论不供应原生树到任意复态的制备映射、源副本、参考测量、相位控制、
+量子编码可达率或物理实现；整个通道资源合同与原生历史误差仍是不同目标。
+未由上述结论决定的包括正环境噪声下整个标量资源子域、其锐转变阈值、
+至多三维定向目标隙的精确值，以及原无约束历史误差的最优值。
+
+## 追加锚（本行以下为增补区）
+
+## 115. 原不可见 Schur 族的无辅助量子容量与等谱全像
+
+**定义 C-115.1（原来源、同源通道与独立使用服务）。** 只取 C-114.1 的 $\eta=0$，
+保持 $B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$、$f(2)=2$ 和原切口 $A\mid B$。
+系数位置 $j=0,\ldots,4$ 对应 $B_j$；$V e_j=|B_j\rangle_A$、
+$W e_j=|f(B_j)\rangle_B$、$Je_j=|B_j,f(B_j)\rangle$ 仍只是原标签识别。
+对 $X\in\mathcal K$、$0\le t\le1$，令
+
+$$
+\begin{aligned}
+A_{t,X}&=I_5+tX,\qquad C_{t,X}=A_{t,X}/5,\\
+\Gamma_{t,X}&=JC_{t,X}J^\dagger=\rho_{t,0}(X),\\
+\Phi_{t,X}(Y)&=A_{t,X}\circ Y=\Phi_{t,0,X}(Y),\qquad Y\in M_5(\mathbb C),\\
+|\beta_f\rangle&=5^{-1/2}\sum_{j=0}^4|B_j,f(B_j)\rangle,\\
+\widehat\chi(\Phi_{t,X})
+&=(\Phi_{t,X;A}\otimes\mathrm{id}_B)(|\beta_f\rangle\langle\beta_f|)
+=\frac15\sum_{j,k}(A_{t,X})_{jk}
+ |B_j,f(B_j)\rangle\langle B_k,f(B_k)|=\Gamma_{t,X}.
+\end{aligned}
+\tag{C115.1}
+$$
+
+这里 $\Phi_{t,X;A}(VYV^\dagger)=V\Phi_{t,X}(Y)V^\dagger$；Choi 输出因子在前，
+规范化因子始终为 $1/5$。$A_{t,X}\succeq0$、对角为一，故通道 CPTP。
+式 (C115.1) 是全复矩阵上的通道与来源对应，不是用一个未知来源态编程通道。
+所有这些来源仍属于 C-108.3 的同一完整原生历史纤维。
+
+本章另外声明固定已知 $t,X$ 的无记忆通道服务：每次可使用同一 $\Phi_{t,X}$，
+各次环境新鲜、独立并与输入初始无关，故 $n$ 次的联合映射是 $\Phi_{t,X}^{\otimes n}$。
+发送者和接收者允许任意复 CPTP 块编码、解码
+
+$$
+\mathcal E_n:M_{k_n}(\mathbb C)\longrightarrow M_{5^n}(\mathbb C),\qquad
+\mathcal D_n:M_{5^n}(\mathbb C)\longrightarrow M_{k_n}(\mathbb C).
+\tag{C115.2}
+$$
+
+允许任意本地空白辅助系及本地丢弃；辅助系不预先跨双方相关，也不携带未知消息或来源标签。
+没有预共享纠缠、辅助量子通道、免费前向或反馈经典通信、隐藏环境读数、后选择成功豁免
+或带外资源。$R_n\cong\mathbb C^{k_n}$ 是始终不动的参考，初始与逻辑输入处于
+$|\beta_{k_n}\rangle=k_n^{-1/2}\sum_a|a,a\rangle$。令 $\beta_{k_n}$ 表示其密度矩阵，
+要求未除以二的迹范数误差
+
+$$
+\epsilon_n=\left\|
+(\mathrm{id}_{R_n}\otimes\mathcal D_n\Phi_{t,X}^{\otimes n}\mathcal E_n)
+(\beta_{k_n})-\beta_{k_n}\right\|_1\longrightarrow0.
+\tag{C115.3}
+$$
+
+$Q_t(X)$ 为所有这样的代码序列之 $\liminf_{n\to\infty}n^{-1}\log_2 k_n$ 的上确界，
+单位是 qubit／次。编码可以跨全部 $n$ 次相关并与参考纠缠，不限为乘积、实矩阵或均匀输入。
+本章熵 $H_2,S_2$ 均用底二对数，$0\log_2 0=0$；不改 C-114 的自然对数约定。
+独立通道使用、校准已知参数和任意块编码是此处明确附加的数学服务，不由原生历史菜单取得。
+
+**定理 C-115.2（包括闭单纯形与相关复块输入的容量目标）。** 对全部定义 C-115.1 的参数，
+记 $\Delta_5=\{p\in[0,1]^5:\sum_jp_j=1\}$、$D_p=\operatorname{diag}p$，则
+
+$$
+\begin{aligned}
+F_{t,X}(p)&=H_2(p)-S_2\bigl(\sqrt{D_p}(I_5+tX)\sqrt{D_p}\bigr),\\
+Q_t(X)&=\max_{p\in\Delta_5}F_{t,X}(p).
+\end{aligned}
+\tag{C115.4}
+$$
+
+最大值实际达到；$F_{t,X}$ 对 $p$ 凹，并对 $(t,X,p)$ 联合连续。
+对任意 $n\ge1$ 和任意 $M_{5^n}(\mathbb C)$ 密度矩阵 $\sigma$，
+以同一个 Stinespring 延拓定义互补通道 $\Phi^c$，有
+
+$$
+I_c(\sigma,\Phi_{t,X}^{\otimes n})
+:=S_2(\Phi_{t,X}^{\otimes n}(\sigma))
+ -S_2((\Phi^c_{t,X})^{\otimes n}(\sigma))
+\le n\max_{p\in\Delta_5}F_{t,X}(p).
+\tag{C115.5}
+$$
+
+右端由一用最大人口的 $n$ 重乘积达到。
+这些断言包括 $p_j=0$、$t=0,1$ 和 $I_5+tX$ 奇异的情形。
+
+证明。以下编码定理和可降解单字母化是所消费的成熟成分：
+Devetak–Shor，[*The capacity of a quantum channel for simultaneous transmission of classical and quantum information*,
+quant-ph/0311131v3](https://arxiv.org/html/quant-ph/0311131v3)，§1 的 Scenario Ib 纠缠传输合同、
+§2 的等价性及容量定理、
+Appendix B 式 (18) 和紧随其后的 generalized dephasing 论证。
+其有限维、固定无记忆、无辅助纠缠传输容量适用于 (C115.2)–(C115.3)；
+对纯目标的保真度趋一与该迹范数趋零等价。
+下面在实际来源上构造延拓并核对任意块输入，容量的操作可达性与反向界则消费该编码定理，
+不把一个熵公式定义成容量来代替编码结论。
+
+置 $A=I_5+tX$，在 $\mathbb C^5$ 环境中取 $|v_j\rangle=\sqrt{\overline A}\,e_j$。
+有 $\langle v_k|v_j\rangle=\overline A_{kj}=A_{jk}$、$\|v_j\|=1$，故
+
+$$
+Ue_j=e_j\otimes v_j,\qquad
+\Phi(Y)=\operatorname{tr}_E UYU^\dagger=A\circ Y,\qquad
+\Phi^c(Y)=\sum_jY_{jj}|v_j\rangle\langle v_j|.
+\tag{C115.6}
+$$
+
+该延拓不用 $A^{-1}$，在降秩端点仍为等距。
+$\mathcal L(Z)=\sum_jZ_{jj}|v_j\rangle\langle v_j|$ 是 CPTP 测量后制备映射，
+且 $\mathcal L\Phi=\Phi^c$，因为 $\Phi$ 保持原基对角。
+所以这是所引文献的 generalized dephasing／degradable 通道，且降解在所有复输入上成立。
+
+对任意单次复密度输入 $\sigma$，以全部 $2^5$ 个原基对角符号酉平均得到
+$\Delta(\sigma)=D_p$，$p_j=\sigma_{jj}$。
+$\Phi$ 与这些酉夹乘协变；$\Phi^c$ 的输出不变。
+熵的酉不变性及凹性给 $I_c(\sigma,\Phi)\le I_c(D_p,\Phi)$。
+环境输出是 $E_p=\sqrt{\overline A}D_p\sqrt{\overline A}$，
+其非零谱等于 $\sqrt{D_p}\,\overline A\sqrt{D_p}$ 的非零谱，
+也等于 $\sqrt{D_p}A\sqrt{D_p}$ 的谱；最后一步用逐项共轭保持实 Hermitian 谱。
+两矩阵都补足全部零本征值，得 (C115.4) 的目标。
+
+对任意相关复 $\sigma$，记输出为 $B_1\cdots B_n$ 和 $E_1\cdots E_n$。
+由逐点降解有 $E_1\cdots E_n=\mathcal L^{\otimes n}(B_1\cdots B_n)$。
+令 $T(B^n)=\sum_kS_2(B_k)-S_2(B^n)$，环境同理。
+它等于态对其边缘乘积的相对熵；联合支持包含在边缘支持的乘积中，故这里相对熵有限。
+相对熵在 CPTP 映射下的数据处理给 $T(E^n)\le T(B^n)$，于是
+
+$$
+I_c(\sigma,\Phi^{\otimes n})
+=\sum_k I_c(\sigma_k,\Phi)-T(B^n)+T(E^n)
+\le\sum_kF_{t,X}(\operatorname{diag}\sigma_k)
+\le n\max_pF_{t,X}(p).
+\tag{C115.7}
+$$
+
+这不假定块输入独立；最大人口的乘积及熵可加性给反向达到。
+结合成熟编码定理即得操作容量，特别没有从有限数值最优化推出渐近可达率。
+
+最后，$\omega_{\mathsf{P}E}(p)=\sum_jp_j|j\rangle\langle j|_{\mathsf{P}}\otimes|v_j\rangle\langle v_j|$
+满足 $F_{t,X}(p)=S_2(\mathsf{P}|E)_{\omega(p)}$。
+量子条件熵的凹性给 $F$ 的凹性；它是强次可加性的标准推论。
+有限维矩阵平方根与谱熵在 PSD 闭域连续，$-x\log_2 x$ 在零处连续，
+故 $F$ 联合连续，紧集 $\Delta_5$ 上实际取最大。
+人口零时只删掉零权重项，绝不使用 $D_p^{-1}$；奇异端点仍保留完整核。证毕。
+
+**定理 C-115.3（固定纯虚反对称谱的精确容量全像）。** 对
+$0\le t\le1$、$1\ge\lambda_1\ge\lambda_2\ge0$，定义
+
+$$
+\begin{aligned}
+\mathcal O_{\lambda_1,\lambda_2}
+&=\{X=iR:R\in M_5(\mathbb R),\ R^T=-R,\quad
+\operatorname{spec}X=\{\lambda_1,\lambda_2,0,-\lambda_2,-\lambda_1\}\},\\
+h_2(u)&=-u\log_2u-(1-u)\log_2(1-u),\qquad
+ g(s)=1-h_2((1+s)/2),\quad0\le s\le1.
+\end{aligned}
+\tag{C115.8}
+$$
+
+则在固定原坐标的全部该等谱来源中，精确有
+
+$$
+\{Q_t(X):X\in\mathcal O_{\lambda_1,\lambda_2}\}
+=\left[\frac25\bigl(g(t\lambda_1)+g(t\lambda_2)\bigr),\ g(t\lambda_1)\right].
+\tag{C115.9}
+$$
+
+下端来源和上端来源分别为下列原坐标矩阵，而非将任意来源重新选基：
+
+$$
+\begin{aligned}
+X^{\rm cir}_{\lambda_1,\lambda_2}
+&=\lambda_1(P_1-P_4)+\lambda_2(P_2-P_3),\\
+X^{\rm edge}_{\lambda_1,\lambda_2}
+&=i\lambda_1(e_0e_4^T-e_4e_0^T)
+ +i\lambda_2(e_1e_3^T-e_3e_1^T).
+\end{aligned}
+\tag{C115.10}
+$$
+
+$P_m$ 是 C-111.1 在原五个位置书写的 Fourier 投影。
+$C=(I_5+tX)/5$、$\Gamma=JCJ^\dagger$ 和通道始终按 (C115.1) 回接。
+特别，端点矩阵的任意实正交共轭在本命题中表示不同实际来源，
+不表示可免费执行该正交变换，也不表示 Schur 通道在换基下容量不变。
+
+证明。任意 $X$ 的均匀人口 $u=(1/5,\ldots,1/5)$ 给
+
+$$
+F_{t,X}(u)=\log_2 5-S_2((I_5+tX)/5)
+=\frac25\bigl(g(t\lambda_1)+g(t\lambda_2)\bigr).
+\tag{C115.11}
+$$
+
+这是所有定向的统一下界，只用了指定谱，不先假定均匀人口最优。
+为证明任意人口的上界，先设 $\lambda_1>0$，令
+$s=t\lambda_1$、$K=\sqrt{D_p}X\sqrt{D_p}/\lambda_1$。
+$-D_p\preceq K\preceq D_p$，$\operatorname{tr}K=0$，$\overline K=-K$。
+因此 $R_\pm=D_p\pm K$ 都是迹一 PSD，互为复共轭，并有
+
+$$
+\begin{aligned}
+M_+&=\sqrt{D_p}(I_5+tX)\sqrt{D_p}
+=\tfrac{1+s}{2}R_++\tfrac{1-s}{2}R_-,\\
+M_-&=\overline{M_+}
+=\tfrac{1-s}{2}R_++\tfrac{1+s}{2}R_-,\qquad
+(M_++M_-)/2=D_p.
+\end{aligned}
+\tag{C115.12}
+$$
+
+取均匀二元经典变量 $Z$，通过交叉概率 $(1-s)/2$ 的二元对称信道得到 $L$，
+再依 $L$ 制备 $R_+$ 或 $R_-$。
+输出条件态就是 $M_+,M_-$；它们熵相同，所以
+
+$$
+F_{t,X}(p)=S_2(D_p)-\tfrac12(S_2(M_+)+S_2(M_-))
+=I(Z;\text{输出})\le I(Z;L)=g(s).
+\tag{C115.13}
+$$
+
+这里消费标准互信息数据处理；即使 $R_+,R_-$ 不正交仍成立。
+二元经典变量只是上界证明的数学分解，不是给予代码的辅助通信服务。
+$\lambda_1=0$ 时 $X=0$、$F=0$，上界直接成立。
+$s=0,1$、零人口或奇异 $R_\pm$ 都在 (C115.12)–(C115.13) 的有限熵域内。
+
+对下端，$\overline P_m=P_{-m}$，故 $X^{\rm cir}$ 纯虚 Hermitian，
+具有指定谱及零对角。原坐标循环移位 $e_j\mapsto e_{j+1\bmod5}$ 保持它。
+于是 $F_{t,X^{\rm cir}}(p)$ 在五个循环移位人口上相同；
+凹性给 $F(u)\ge\frac15\sum_{r=0}^4F(\operatorname{shift}^rp)=F(p)$。
+故它实际达到 (C115.11) 下端，包括谱简并、$t=0$ 和 $t\lambda_1=1$。
+这只是推导中的对称性，未要求控制者物理执行循环移位。
+
+对上端，$X^{\rm edge}$ 的两个指定二维块的谱分别为
+$\pm\lambda_1,\pm\lambda_2$，余下坐标为零，所以它确在同一等谱类中。
+取 $p_0=p_4=1/2$、其他人口零，$M_+$ 的非零块为
+$\frac12\begin{pmatrix}1&it\lambda_1\\-it\lambda_1&1\end{pmatrix}$。
+其谱为 $(1\pm t\lambda_1)/2$，从而 $F=g(t\lambda_1)$。
+这与统一上界相合；没有把闭单纯形边界排除，也不要求第二个块参与编码。
+
+还须证明所有中间值都存在。实反对称矩阵的正交标准形说明该等谱类是单一
+$O(5)$ 共轭轨道。任一正交共轭矩阵 $O$ 若行列式为负，以 $-O$ 代替，
+共轭结果不变且行列式为正；因而也是单一 $SO(5)$ 轨道。
+$SO(5)$ 路径连通，故存在从两个实际端点来源之间的连续等谱路径。
+(C115.4) 的目标在紧人口域上联合连续，所以 $X\mapsto\max_pF_{t,X}(p)$ 连续：
+其差的绝对值至多 $\max_p|F_{t,X}(p)-F_{t,Y}(p)|$。
+介值定理使这条路径的容量经过两端之间每一个值；统一上下界排除区间以外值。
+简并谱仍有同一轨道论证；全零谱或 $t=0$ 时区间退化为 $\{0\}$。证毕。
+
+**推论 C-115.4（完整原纤维的容量范围与零点）。** 对每个固定 $0\le t\le1$，
+
+$$
+\{Q_t(X):X\in\mathcal K\}=[0,g(t)],\qquad
+Q_t(X)=0\ \Longleftrightarrow\ tX=0.
+\tag{C115.14}
+$$
+
+证明。纯虚 Hermitian 五阶谱配对为 (C115.8)，$\lambda_1\le1$；
+直接求导得 $g'(s)=\frac12\log_2((1+s)/(1-s))>0$（$0<s<1$），
+且 $g(0)=0,g(1)=1$、两端连续；由上界得 $0\le Q_t(X)\le g(t)$。
+取 $X=X^{\rm edge}_{r,0}$、$r\in[0,1]$，定理 C-115.3 给 $Q=g(tr)$，
+其连续像恰为 $[0,g(t)]$。$g(s)>0$ 当且仅当 $s>0$；
+均匀下界使 $t>0,X\ne0$ 时容量严格正，反之通道为完全去相干且容量零。
+特别 $t=0$ 时所有来源、通道和容量同时退化；不遗漏这个端点。证毕。
+
+**推论 C-115.5（实际 F／E 来源的反向资源比较）。** 对 C-111.1、C-112.1
+原有的两个来源，$X_{\rm F}=5C^{\rm F}-I_5$、$X_{\rm E}=5C^{\rm E}-I_5$，
+有 $X_{\rm F}=X^{\rm cir}_{1,1}$、$X_{\rm E}=X^{\rm edge}_{1,1}$，且
+
+$$
+\begin{aligned}
+Q(\Phi_{t,0,X_{\rm F}})&=\tfrac45g(t),&
+Q(\Phi_{t,0,X_{\rm E}})&=g(t),&&0\le t\le1,\\
+q_{\rm exact}(\Phi_{t,0,X_{\rm F}})&=4,&
+q_{\rm exact}(\Phi_{t,0,X_{\rm E}})&=2,&&127/129<t\le1.
+\end{aligned}
+\tag{C115.15}
+$$
+
+在第二行的同一区间，F 的精确单次整个块模拟端口更大，操作量子容量却严格更小。
+两来源／规范化 Choi 全谱相同、全部原生历史律相同，均匀输入的相干信息
+$I_c(I_5/5,\Phi)=\log_2 5-S_2(C_t)$ 也同为 $4g(t)/5$，
+F 的这个均匀值在全部 $0\le t\le1$ 都等于优化容量；
+E 仅在 $t=0$ 与均匀值相等，在 $t>0$ 时优化值严格高于均匀值。
+在 $t=1$ 的具体容量是 F 的 $4/5$ 和 E 的 $1$ qubit／次。
+此处的 $I_c$ 是相干信息，不是来源标签与原生历史的经典互信息。
+
+证明。由 C-111.1 的两个实际矩阵逐项代入得 (C115.10) 的两个饱和端点，
+所以容量由 C-115.3 得到，且正 $t$ 时 $g(t)>0$。
+端口行只消费 C-109.3 的同源通道字典、C-111.2 与 C-111.5 的端点供应，
+以及 C-112.2–C-112.4 的原有四层证书、
+边块二稀疏实现及非可分离性；不把该证书区间扩大到 $0<t\le127/129$。
+原端口合同仍是任意有限经典旗、每旗解码在整个 $M_q$ 上 CPTP、无量子旁路，
+要求对所有复输入精确实现同一通道，并未加 BP、实性或限制旗数。
+代码合同 (C115.2)–(C115.3) 则关心多次通道的无辅助渐近传输，
+不把 $q$、旗数、环境维数、$\log_2q$ 或一次来源副本当成容量。
+共同源谱来自 $\{1,1,0,-1,-1\}$；共同历史律来自 C-108.3。
+任意不预读外加来源标签 $Z$ 的原生策略还满足 C-114.9 的 $I(Z;H)=0$，
+故这些不同容量不能由该历史菜单辨识，更不能由零标签信息推出容量为零。证毕。
+
+**命题 C-115.6（与原控制 instrument 的桥梁边界）。**
+[Original-Control Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md)
+的 (OC.1)–(OC.2) 来源是严格正 $p_b(k)$ 的单个纯端点态
+$\Psi_x(h)_i=\sqrt{p_b(x)_i}e^{-i(\theta_i+h_i)}$；
+其规范完整 instrument 保留成功及带时间、原模式标记的失败。
+[Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md)
+的 (IS.3) 保持这个停止语义；
+[Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md)
+的精确编码任务保持实际联合 archive／参考及同一个 prescribed-control instrument 菜单。
+这些任务的载体、操作和资源合同均不等同于 (C115.1)–(C115.3)。
+特别原混合来源 $\Gamma_{t,X}$ 不能仅凭五个模式的同名关系而等距识别为该纯端点来源。
+
+证明。$I_5+tX$ 的谱有恒为一的一项，并有配对的 $1\pm t\lambda_j$，
+故其秩在全部本章参数中至少为三；$J$ 等距，所以 $\operatorname{rank}\Gamma_{t,X}\ge3$。
+所引端点密度矩阵秩一，等距共轭保持非零谱，遂排除上述等距状态识别。
+这只排除等距识别，不排除所有 CPTP 映射；例如丢弃后制备纯态当然是 CPTP，
+但这种映射本身不保持来源信息，也不实现规定的全输入通道或编码服务。
+一个可转移结论的桥至少须逐项给出同一实际来源与联合参考的状态映射、
+所有允许输入上的操作交织、真实标记失败及参考的保持、所需独立重复使用和编码／解码服务，
+以及两个方向所主张的资源与误差控制。
+时间标记 instrument 的精确活量子载体最小值没有自动给出这些桥，
+本章的已知 Schur 通道服务也没有自动给出原控制生成、实际 waveform、校准或记录取得。证毕。
+
+**注记 C-115.7（所消费的成分与数学证据范围）。**
+可降解性和无辅助量子编码定理按 C-115.2 所引 Devetak–Shor Appendix B 式 (18) 消费；
+量子条件熵凹性消费 Lieb–Ruskai 的强次可加性
+([DOI:10.1063/1.1666274](https://doi.org/10.1063/1.1666274))，
+相对熵及互信息的数据处理消费 Lindblad 的成熟有限维结果
+([DOI:10.1007/BF01609396](https://doi.org/10.1007/BF01609396))。
+这些 literature-attested 成分是上述源特定证明中的中间工具，不是新增一般编码定理。
+Crann–Neufang，[*Quantum channels arising from abstract harmonic analysis*,
+1210.2738v2](https://arxiv.org/abs/1210.2738v2)，Proposition 4.15 的原陈述带有限群假设，
+不能仅凭 Schur 名称作为这里任意 $X$ 的容量供应。
+
+源特定的 repo-derived 综合是：在原复不可见纤维上把操作编码容量回接到闭人口目标，
+给出每一个固定反对称谱的完整容量区间及原坐标达到来源，
+再将实际等谱 F／E 的容量差与原单次整个块端口二／四分叉同时保留。
+这不声称文献全域原创性、不分类全部最优人口或全部最优来源，也不给 $\eta>0$ 的容量公式。
+这些是消费上述成熟定理的完整普通数学证明，尚无本章精确应用的当前 Lean 编译与公理闭包证据，
+因而不是 kernel 认证结论。既有仓内 Schur 距离、谱熵和原控制组合声明的名字，
+均不能替代这里的编码定理及原来源／操作／资源对应。
+数学代码可达率不赋予原生制备、相位控制、量子副本、参考测量、通道校准或物理接入服务。
+
+## 追加锚（本行以下为增补区）

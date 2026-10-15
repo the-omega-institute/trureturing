@@ -2962,3 +2962,1271 @@ remaining payment bridge; none of the finite constructions above
 establishes it for all inputs and all required hull points.
 
 ## 追加锚（本行以下为增补区）
+
+## 268. Dimension-independent trace bounds on one full allocation
+
+**Definition 268.1 (Common domain and equal-mass readouts).**
+Use the complete words, tables, independent rows, scores and cones of
+Definitions 251.1–251.2. Thus every word in $B_L$, every multiple-zero
+suffix and every label in $J_L$ participates. A zero word of first zero
+$n$ has three separate demands $1-b_n-e$, $b_n-e$, $1-e$ on
+$\{0\}$, $\{n\}$, $\{0,n\}$; the positive word has demand $1-e$
+on $\{0\}$. Negative singleton demands remain.
+
+Fix one full allocation $\lambda\ge0$, of mass $M=\sum_D\lambda_D$,
+and put $\mu_w=\sum_D\lambda_D\delta_{D(w)}$. Full conic feasibility
+means $G_N\lambda\ge h(b,e)$, equivalently, for every $w\in\Omega_n$,
+
+$$
+\begin{aligned}
+\mu_w(0)&\ge1-b_n-e+(M-1)[n\ge3],\\
+\mu_w(n)&\ge b_n-e+(M-1)[n\le2],\\
+\mu_w(\{0,n\})&\ge M-e,\qquad
+\mu_+(0)\ge M-e.
+\end{aligned}
+\tag{268.1}
+$$
+
+For total-mass-zero signed measures write
+$\|\xi\|_{\rm TV}=\frac12\sum_r|\xi(r)|$.
+Let
+
+$$
+\begin{gathered}
+\rho_i=\max_{w,v\in\Omega_i}\|\mu_w-\mu_v\|_{\rm TV}\quad(i=1,2),\\
+s_+=\mu_+(0)-(M-e),\qquad
+s_n=\mu_{v^n}(n)-(b_n-e)\quad(n\ge3),\\
+\mathcal T=\sum_{n=3}^L\bigl(\mu_{v^n}(n)-\mu_+(n)\bigr),\qquad
+E_b=\sum_{n=3}^Lb_n-(L+1)e.
+\end{gathered}
+\tag{268.2}
+$$
+
+All these quantities concern this same $\lambda$.
+The original interpretation throughout is Proposition 251.4:
+$X=\{(r,g):r\text{ prime},\lceil F_r/10\rceil\le g\le
+\lfloor F_r/5\rfloor\}$, $N(r,g)=1+F_rg$,
+$q_i=[p_i\mid N]$, and $n(x)$ is the finite first absence.
+Finite-pattern witnesses use Boundaries, Theorem 35.2, with its
+entry-rank, CRT and growing-window supplier. The carrier is the full
+Borel disjoint union of the $B_j,P_j$ interval blocks. Its consumer
+and nonatomic $\mu_x$ remain as in Definition 251.4; the targets here
+are the separately selected
+$(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}}$,
+$\theta_j=(B_1,1/(j+2))$, for the entire sequence
+$1\ge a_1\ge a_2\ge\cdots>0$, $a_n\to0$.
+
+One source-independent seed, zero advice and sourcewise almost-sure
+finite handoff are required. An $N$ rule preselects and obtains its
+complete schedule; an $O$ rule preselects an increasing schedule and
+stops at its first queried zero or exhaustion. The bound is two
+actual requests, counting repetitions and ignored replies. Original
+competitors retain arbitrary addresses and arbitrary carrier outputs.
+Theorem 110.2 transports feasibility, without asserting preservation
+of an arbitrary competitor's entire law. For a constructed finite
+marked law, every actual $n>L$ has exact error
+$\max\{1-p_+(0),a_n\}$, including equality at the cap.
+
+**Lemma 268.2 (A vector diagonal trace).**
+Let $f_x$, $x\in\{0,1\}^m$, be nonnegative equal-mass measures
+on a finite set $S$, whose coordinate polynomials have degree at most
+two. For distinct $r_1,\ldots,r_m\in S$, put
+$\rho=\max_{x,y}\|f_x-f_y\|_{\rm TV}$. Then
+
+$$
+\left|\sum_{i=1}^m(f_{e_i}(r_i)-f_0(r_i))\right|\le8\rho.
+\tag{268.3}
+$$
+
+**Proof.**
+The scalar supplier is Filmus–Hatami,
+[*Bounds on the sum of $L_1$ influences*, Theorem 3.1](https://arxiv.org/html/1404.3396v1#S3):
+if $g:\{-1,1\}^m\to[-1,1]$ has multilinear degree $d$, then at
+every vertex $y$,
+$\frac12\sum_i|g(y)-g(y^{(i)})|\le d^2$.
+Its hypotheses concern the range on the whole cube and a pointwise
+sum, rather than an average over vertices. Its proof uses the
+Banach-space derivative bound in its Proposition 3.2.
+
+If $\rho=0$, the assertion is immediate. Otherwise take independent
+uniform signs $\varepsilon_j$ and set
+$\phi_\varepsilon(x)=\sum_j\varepsilon_j f_x(r_j)$.
+The output test equal to $\varepsilon_j$ on $r_j$ and zero elsewhere
+has oscillation at most two. Equal mass and TV duality therefore give
+$\max\phi_\varepsilon-\min\phi_\varepsilon\le2\rho$.
+Center this range at $c_\varepsilon$. The function
+$g_\varepsilon(y)=(\phi_\varepsilon((y+1)/2)-c_\varepsilon)/\rho$
+has range in $[-1,1]$ and degree at most two. The scalar theorem at
+$(-1,\ldots,-1)$ yields
+$\sum_i|\phi_\varepsilon(e_i)-\phi_\varepsilon(0)|\le8\rho$.
+Finally,
+
+$$
+\begin{aligned}
+\mathbb E_\varepsilon\sum_i\varepsilon_i
+  (\phi_\varepsilon(e_i)-\phi_\varepsilon(0))
+&=\sum_{i,j}\mathbb E(\varepsilon_i\varepsilon_j)
+       (f_{e_i}(r_j)-f_0(r_j))\\
+&=\sum_i(f_{e_i}(r_i)-f_0(r_i)).
+\end{aligned}
+$$
+
+Taking absolute values proves (268.3). The finite sign average is
+part of the proof and supplies no source prior or operational seed.
+$\square$
+
+**Lemma 268.3 (An affine signed trace).**
+If $h_x=h_0+\sum_i a_ix_i$ consists of total-mass-zero signed
+measures on $S$, with $\|h_x\|_{\rm TV}\le\rho$ on the whole cube,
+then, for distinct $r_i$,
+$|\sum_i a_i(r_i)|\le4\rho$.
+
+**Proof.**
+For independent fair bits $X_i$, use the output test
+$H_X(r_i)=X_i-\tfrac12$, zero elsewhere. Its oscillation is at most
+one, so $|h_X(H_X)|\le\rho$. The constant term has mean zero, and
+$\mathbb E[X_j(X_i-\tfrac12)]=[i=j]/4$.
+Consequently $\mathbb E h_X(H_X)=\frac14\sum_i a_i(r_i)$.
+The asserted inequality follows. $\square$
+
+**Theorem 268.4 (The same-allocation dimension-independent bound).**
+For every full $N$ allocation, before imposing feasibility,
+$|\mathcal T|\le4\rho_1+8\rho_2$.
+Under (268.1), the exact identity from Theorem 266.2 gives
+
+$$
+\begin{aligned}
+\mathcal T
+&=E_b+2e+s_++\sum_{n=3}^Ls_n+\mu_+(1)+\mu_+(2)\\
+&\le\min\{(L-2)(2\rho_1+\rho_2),\,4\rho_1+8\rho_2\}.
+\end{aligned}
+\tag{268.4}
+$$
+
+For $(b,e)\in H_L$ and $e>0$ this implies
+$2\rho_1+\rho_2\ge(E_b+2e)/8$ and
+$\max(\rho_1,\rho_2)\ge(E_b+2e)/12\ge e/6$.
+If $L\ge11$, the second upper bound in (268.4) is strictly smaller
+than the first on every such feasible allocation.
+
+**Proof.**
+Every deterministic two-request table has coordinatewise multilinear
+degree at most two. Mixing with the same $\lambda$ preserves that
+degree. Write suffix zero-indicators as $x=(x_3,\ldots,x_L)$ and
+$f_{ab}(x)=\mu_{(a,b,1-x_3,\ldots,1-x_L)}$.
+The difference $h_x=f_{01}(x)-f_{00}(x)$ is affine, has total mass
+zero, and has TV norm at most $\rho_1$. The mixed prefix difference
+$f_{11}-f_{10}-f_{01}+f_{00}$ is constant in $x$: a nonconstant
+suffix term in it would have degree at least three.
+Subtracting at $x=0$, and taking the designated trace on labels
+$3,\ldots,L$, gives
+$\mathcal T=\tau(f_{10})+\tau(h)$.
+The diameter of $f_{10}$ is at most $\rho_2$. Lemmas 268.2–268.3
+bound the two terms by $8\rho_2$ and $4\rho_1$.
+
+For the identity, consume Theorem 266.2 at this same allocation:
+$\sum_{n\ge3}\mu_{v^n}(n)=\sum_{n\ge3}(b_n-e)+\sum s_n$ and
+$\sum_{n\ge3}\mu_+(n)=M-\mu_+(0)-\mu_+(1)-\mu_+(2)$.
+Substitution cancels $M$ and gives the first line of (268.4).
+The length-dependent bound is the existing bound of that proposition.
+Nonnegative slacks and $E_b\ge0$ make $\mathcal T\ge2e>0$.
+Thus $\rho_1+\rho_2>0$, and the difference between the old and new
+upper bounds is
+$(2L-8)\rho_1+(L-10)\rho_2>0$ when $L\ge11$.
+Finally $4\rho_1+8\rho_2\le8(2\rho_1+\rho_2)$ and
+$4\rho_1+8\rho_2\le12\max(\rho_1,\rho_2)$.
+At mass one the same calculation reads
+$\sum_{n\ge3}(a_n-e)\le e+4\rho_1+8\rho_2$.
+The diameter floor is proportional to the actual cap and gives
+no positive absolute floor as $e\downarrow0$.
+These are necessary relations on the actual allocation; they do not
+supply a score $V$ or a signed-residual payment. $\square$
+
+## 269. An interleaved signed cone on complete score fibres
+
+**Definition 269.1 (An exact quotient fibre).**
+Let $L\ge7$ and $3<r<k<\ell<m\le L$. For $s\ge0$ and
+$0\le h\le s$, prescribe
+
+$$
+\begin{gathered}
+\beta_1=-s,\quad\beta_3=s,\quad\beta_r=-s,\quad
+\beta_k=s,\quad\beta_\ell=h,\quad\beta_m=s,\\
+\beta_i=0\text{ otherwise},\qquad K=6s+h.
+\end{gathered}
+\tag{269.1}
+$$
+
+The fibre consists of all full nonnegative scores with exactly this
+$Q$, allowing arbitrary $A,C,P,T$ and all their cancellations.
+Let $\varphi=(1,2,3,r,k,\ell,m)$. A seven-bit word below is embedded
+at those addresses with every other bit one; its first-zero label is
+mapped by $\varphi$. This defines a score and does not restrict the
+acquisition catalog.
+
+**Theorem 269.2 (The minimum over the entire fibre).**
+For the fibre (269.1),
+
+$$
+\min_{Q(Y)=(\beta;K),\,Y\ge0}\Delta_N(Y)
+=\min_{Q(Y)=(\beta;K),\,Y\ge0}\Delta_O(Y)=\frac{4s}{3}.
+\tag{269.2}
+$$
+
+The score $V_{s,h}$ in the following table attains both minima.
+Multiply the coefficient column by $s$, except that the coefficient
+of $C_{1111100}$ is $h$; all unspecified coefficients are zero.
+
+| Type | Seven-bit word | Coefficient |
+| --- | --- | --- |
+| $A$ | $0101110$ | $2/3$ |
+| $A$ | $0111010$ | $1/3$ |
+| $P$ | $1001101$ | $2/3$ |
+| $P$ | $1011010$ | $1/3$ |
+| $C$ | $1101101$ | $1/3$ |
+| $C$ | $1101110$ | $2/3$ |
+| $A$ | $1110011$ | $1/3$ |
+| $A$ | $1110100$ | $2/3$ |
+| $C$ | $1111010$ | $1$ |
+| $C$ | $1111100$ | $h$ instead of $s$ |
+| $C$ | $1111110$ | $1$ |
+
+**Proof.**
+For a lower bound on every full score, use the one stopped law
+with weight $1/3$ on each of
+$O(1,3;0,3,0)$, $O(2,3;0,3,0)$,
+$O(3,k;0,k,m)$. Put $e^0=1/3$ and set
+$b^0_1=b^0_2=0$, $b^0_3=1$,
+$b^0_k=b^0_m=2/3$, $b^0_\ell=1/3$, all other $b^0_i=0$.
+This is an algebraic row test, without an order or $H_L$ assertion.
+
+On every first-zero-1 or first-zero-2 word, its own early table
+outputs zero. If bit 3 is zero the third table also does; if bit 3
+is one the other early table does. Thus base mass is at least $2/3$
+and no table emits 1 or 2. On class 3 the law is
+$\frac13 e_0+\frac23e_3$. On classes $k,m$ it is respectively
+$\frac23e_0+\frac13e_k$ and $\frac23e_0+\frac13e_m$.
+On every other class after 3, the first two tables output zero,
+so base and union mass are at least $2/3$. The class $\ell$
+has correct demand zero; all other unused correct demands are
+negative. Positive base mass is $2/3$. Hence this single law
+dominates every independent demand at $(b^0,e^0)$, on every suffix.
+For every full $Y\ge0$, weak duality in the coordinates of
+Sections 198–199 therefore gives
+
+$$
+3\Delta_O(Y)\ge
+-3\beta_1-3\beta_2+3\beta_3+2\beta_k+\beta_\ell+2\beta_m-K.
+\tag{269.3}
+$$
+
+Substitution of (269.1) makes the right side $4s$.
+For the displayed template, its $A$ totals are $s$ in classes
+1 and $r$, its $P$ total is $s$ in class 2, and its $C$ totals
+are $s,s,h,s$ in classes $3,k,\ell,m$. Thus its quotient is
+(269.1) and $W=2s$.
+At $s=h=1$, the complete four-cell maxima over all eight labels
+are as follows. The entries are in order $00,01,10,11$.
+
+| Pair | Template $N$ cell maxima |
+| --- | --- |
+| $1,2$ | $(0,1,1,1)$ |
+| $1,3$ | $(2/3,1/3,1,4/3)$ |
+| $1,4$ | $(0,1,1,1)$ |
+| $1,5$ | $(1/3,2/3,1,4/3)$ |
+| $1,6$ | $(0,1,4/3,1)$ |
+| $1,7$ | $(1,0,1,1)$ |
+| $2,3$ | $(2/3,1/3,1,4/3)$ |
+| $2,4$ | $(0,1,1,1)$ |
+| $2,5$ | $(1/3,2/3,1,4/3)$ |
+| $2,6$ | $(2/3,1/3,1,4/3)$ |
+| $2,7$ | $(1/3,2/3,5/3,1/3)$ |
+| $3,4$ | $(0,4/3,1,1)$ |
+| $3,5$ | $(0,4/3,1,1)$ |
+| $3,6$ | $(2/3,2/3,1,1)$ |
+| $3,7$ | $(2/3,2/3,4/3,1/3)$ |
+| $4,5$ | $(1/3,2/3,1,4/3)$ |
+| $4,6$ | $(2/3,1/3,1,4/3)$ |
+| $4,7$ | $(2/3,1/3,4/3,2/3)$ |
+| $5,6$ | $(0,1,4/3,1)$ |
+| $5,7$ | $(1,1/3,4/3,2/3)$ |
+| $6,7$ | $(1,2/3,4/3,1/3)$ |
+
+For a fixed pair $i<j$, each entry is
+$\max_{u\in J_7}\sum_{w:(w_i,w_j)=ab}g_V(w,u)$.
+Every row sum is at most $10/3$. Empty and each singleton support
+are 3. These sums exhaust all complete $N$ tables.
+Decreasing $h$ from $s$ removes nonnegative reward with zero anchor
+contribution, so homogeneity gives $B_N(V_{s,h})\le10s/3$ and
+$\Delta_N(V_{s,h})\le4s/3$. If $s=0$, then $h=0$ and $V=0$.
+The lower bound (269.3), and $O\subset N$, force equality.
+
+After embedding, inactive addresses are constant one on all scored
+words and give only empty or singleton information. Labels outside
+the embedded set have zero reward, while remaining legal outputs.
+Thus the same support proof applies at arbitrary permitted gaps.
+For any full input $y$ in this fibre with $\Delta_O(y)\le1$,
+(269.3) forces $s\le3/4$. The single choice $V=V_{s,h}$,
+$\theta=0$ then has $\Delta_N(V)=4s/3\le1$ and
+$Q(y)-Q(V)=0$. No separate component budget is used. $\square$
+
+**Proposition 269.3 (A score whose replacement is necessary).**
+At $L=7$, the following full score $Y$ has
+$Q=(-1,0,1,-1,1,1,1;7)$, $W_Y=2$,
+$\Delta_O(Y)=4/3$ and $\Delta_N(Y)=7/3$.
+
+| Type | Word | Coefficient |
+| --- | --- | --- |
+| $A$ | $0101100$ | $5/12$ |
+| $A$ | $0101110$ | $1/4$ |
+| $A$ | $0111001$ | $1/12$ |
+| $A$ | $0111011$ | $1/4$ |
+| $P$ | $1001001$ | $5/12$ |
+| $P$ | $1001011$ | $1/4$ |
+| $P$ | $1011100$ | $1/12$ |
+| $P$ | $1011110$ | $1/4$ |
+| $C$ | $1100011$ | $1/2$ |
+| $C$ | $1100110$ | $1/2$ |
+| $A$ | $1110001$ | $1/3$ |
+| $A$ | $1110100$ | $1/6$ |
+| $A$ | $1110110$ | $1/2$ |
+| $C$ | $1111000$ | $1$ |
+| $C$ | $1111100$ | $1$ |
+| $C$ | $1111110$ | $1$ |
+
+**Proof.**
+Summing by first-zero class gives the asserted $Q$ and $W$.
+Here are all complete pair supports; the $O$ column gives its
+three cell maxima, and the last column gives the sum of the four
+independently maximized $N$ cells.
+
+| Pair | $O$ cell maxima | $N$ support |
+| --- | --- | --- |
+| $1,2$ | $(1,1,1)$ | $3$ |
+| $1,3$ | $(1,1,4/3)$ | $10/3$ |
+| $1,4$ | $(1,1,1)$ | $3$ |
+| $1,5$ | $(1,1,1)$ | $3$ |
+| $1,6$ | $(1,1,1)$ | $3$ |
+| $1,7$ | $(1,1,1)$ | $3$ |
+| $2,3$ | $(1,1,4/3)$ | $10/3$ |
+| $2,4$ | $(1,1,1)$ | $3$ |
+| $2,5$ | $(1,1,4/3)$ | $10/3$ |
+| $2,6$ | $(1,1,1)$ | $3$ |
+| $2,7$ | $(1,4/3,2/3)$ | $3$ |
+| $3,4$ | $(4/3,1,1)$ | $13/3$ |
+| $3,5$ | $(4/3,1,1)$ | $10/3$ |
+| $3,6$ | $(4/3,1,1)$ | $23/6$ |
+| $3,7$ | $(4/3,1,2/3)$ | $3$ |
+| $4,5$ | $(1,1,1)$ | $19/6$ |
+| $4,6$ | $(1,1,1)$ | $7/2$ |
+| $4,7$ | $(1,1,1)$ | $19/6$ |
+| $5,6$ | $(4/3,1,1)$ | $7/2$ |
+| $5,7$ | $(4/3,5/3,0)$ | $4$ |
+| $6,7$ | $(3/2,1,1/2)$ | $10/3$ |
+
+Every maximum includes all labels $0,\ldots,7$; empty and each
+singleton support are 3. The pair $1,3$ attains $10/3$ in $O$,
+and $N(3,4;3,0,0,5)$ has cell rewards $(1,4/3,1,1)$,
+attaining $13/3$. Subtracting $W=2$ proves the excesses.
+Thus $y=3Y/4$ has unit $O$ cost and raw $N$ cost $7/4$,
+whereas $3V_{1,1}/4$ has $N$ cost one and identical quotient.
+This is a dual score replacement; its support maximizer is not a
+cap-feasible primal witness. The complete-score interface and weak
+duality used here remain those of Sections 198–199; the additional
+assertion is the exact minimum over all full scores in (269.1).
+$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 270. Joint distance and risk at actual three-active hard-hull points
+
+**Definition 270.1 (One original family and three kernels).**
+Let $0<t\le1/5$, $c=(1-t)/4$, so $c\ge t$ and $4c+t=1$.
+Set $a_1=a_2=a_3=4c=1-t$, and retain any prescribed positive
+nonincreasing vanishing tail with $a_4\le c$.
+Use the original source, carrier, consumer and separately selected
+marked laws of Definition 268.1. For an original acquisition $Z$ put
+$\epsilon(Z)=\sup_x\operatorname{TV}(\operatorname{Law}(Z,x),\lambda_x^a)$.
+For the kernel $P_t$ below put
+$\rho(Z)=\sup_x\operatorname{TV}(\operatorname{Law}(Z,x),P_t(x))$.
+Both readings concern this same $Z$.
+
+Let
+$A=O(1,2;1,2,3)$, $B=O(1,2;1,2,0)$,
+$C=O(1,3;1,3,0)$, $E=O(2,3;2,3,0)$ and
+$D=N(1,2;0,1,2,0)$.
+Define $P_t=c(A+B+C+E)+tD$, interpreting each stopped table in
+$P_t$ as its counted $N$ completion.
+Define two stopped kernels by the following complete allocations.
+
+| Kernel | Table | Weight |
+| --- | --- | --- |
+| $Q_t$ | $O(1,2;0,2,3)$ | $t/2$ |
+| $Q_t$ | $O(1,2;1,2,0)$ | $c+t$ |
+| $Q_t$ | $O(1,2;1,2,3)$ | $c-t/2$ |
+| $Q_t$ | $O(1,3;1,3,0)$ | $c$ |
+| $Q_t$ | $O(2,3;0,3,0)$ | $t/2$ |
+| $Q_t$ | $O(2,3;2,3,0)$ | $c-t/2$ |
+| $S_t$ | $O(1,2;1,2,0)$ | $c+5t/6$ |
+| $S_t$ | $O(1,2;1,2,3)$ | $c-t/6$ |
+| $S_t$ | $O(1,3;1,3,0)$ | $c-t/3$ |
+| $S_t$ | $O(2,3;2,3,0)$ | $c-t/3$ |
+| $S_t$ | $O(1,3;0,3,0)$ | $t/3$ |
+| $S_t$ | $O(2,3;0,1,0)$ | $t/3$ |
+| $S_t$ | $O(2,3;2,3,1)$ | $t/3$ |
+
+All labels, in particular the earlier unqueried label 1 in a
+$2,3$ table, are legal. The entire probability-vector laws, in
+label order $0,1,2,3$, are as follows.
+
+| Word | $P_t$ | $Q_t$ | $S_t$ |
+| --- | --- | --- | --- |
+| $000$ | $(t,3c,c,0)$ | $(t,3c+t/2,c-t/2,0)$ | $(2t/3,3c+t/3,c,0)$ |
+| $001$ | $(t,3c,c,0)$ | $(t,3c+t/2,c-t/2,0)$ | $(2t/3,3c+t/3,c,0)$ |
+| $010$ | $(0,3c+t,0,c)$ | $(t/2,3c+t/2,0,c)$ | $(t/3,3c+2t/3,0,c)$ |
+| $011$ | $(c,3c+t,0,0)$ | $(c+t/2,3c+t/2,0,0)$ | $(c+t/3,3c+2t/3,0,0)$ |
+| $100$ | $(0,0,3c+t,c)$ | $(t/2,0,3c+t/2,c)$ | $(t/3,0,3c+2t/3,c)$ |
+| $101$ | $(c,0,3c+t,0)$ | $(c+t/2,0,3c+t/2,0)$ | $(c+t/3,0,3c+2t/3,0)$ |
+| $110$ | $(c+t,0,0,3c)$ | $(c+t,0,0,3c)$ | $(c+5t/6,t/3,0,3c-t/6)$ |
+| $111$ | $(3c+t,0,0,c)$ | $(3c+t,0,0,c)$ | $(3c+5t/6,t/3,0,c-t/6)$ |
+
+**Theorem 270.2 (Three all-competitor inequalities and two sharp endpoints).**
+The kernel $P_t$ is an original $N_2$ acquisition of error $c$,
+and $(4c,4c,4c;c)\in H_3\cap H_N$, with one full feasible
+allocation of mass one. Every original $O_2$ competitor, with arbitrary
+addresses and full-carrier outputs, satisfies
+
+$$
+\begin{aligned}
+\rho(Z)&\ge t/3,\\
+2\rho(Z)+4(\epsilon(Z)-c)&\ge t,\\
+5\rho(Z)+2(\epsilon(Z)-c)&\ge2t.
+\end{aligned}
+\tag{270.1}
+$$
+
+The following minima are attained:
+
+$$
+\begin{aligned}
+\min_{Z\in O_2}\rho(Z)&=t/3,\\
+\min_{\substack{Z\in O_2\\\rho(Z)=t/3}}\epsilon(Z)&=c+t/6
+        &&\text{by }S_t,\\
+\min_{\substack{Z\in O_2\\\epsilon(Z)\le c}}\rho(Z)&=t/2
+        &&\text{by }Q_t.
+\end{aligned}
+\tag{270.2}
+$$
+
+These statements include $t=1/5$ and $a_4=c$. At $t=0$ the
+displayed allocations and weak inequalities extend, with the strict
+distance distinction disappearing.
+
+**Proof.**
+All weights are nonnegative because $c\ge t$, and each allocation
+sums to $4c+t=1$. Summing complete table cells gives exactly the
+eight laws in Definition 270.1. At cap $c$, the three independent
+zero-word demands are base at least $t-c$, correct at least $3c$,
+and union at least $3c+t=1-c$. The base demand is nonpositive.
+The laws of $P_t,Q_t$ have minimum correct mass $3c$, minimum
+union mass $3c+t$, and positive base $3c+t$. They satisfy all
+22 independent rows. Their tight correct rows give error $c$.
+For $S_t$ at cap $c+t/6$, the base demand is
+$5t/6-c\le0$, and minimum correct mass is $3c-t/6$.
+Its early multiple-zero union masses are $1-c$; at $110$ the
+union mass is $1-t/3\ge1-c-t/6$; all remaining zero-word union
+masses are one. Its positive base is $1-c-t/6$.
+Thus all rows hold at that cap and the positive row is exact.
+
+For the hard hull, $b_1=b_2=b_3=4c\le1$,
+$4e=b_3$ and $b_1+b_3-4e=4c=1-t\le1$.
+The one allocation defining $P_t$ has mass one and satisfies every
+row, so it also establishes $G_N\lambda\ge h$ at this same point.
+No normalization or separate realization enters that assertion.
+
+For the lower bounds, define the following three sums of event
+probabilities. An event label set $J$ means the Borel set
+$\{\theta_j:j\in J\}$; every other carrier output has reward zero.
+
+| Sum | Word and rewarded label set |
+| --- | --- |
+| $I_3$ | $(000,\{0,2,3\}),\ (011,\{1\}),\ (111,\{0,3\})$ |
+| $I_6$ | $(001,\{0,2\}),\ (011,\{1,2,3\}),\ (111,\{0\}),\ (010,\{0,1\}),\ (100,\{0,2\}),\ (110,\{3\})$ |
+| $I_7$ | $(000,\{0\}),\ (001,\{0,2,3\}),\ (010,\{1\}),\ (011,\{1,3\}),\ (101,\{2\}),\ (110,\{3\}),\ (111,\{0\})$ |
+
+The complete stopped supports are
+
+| Schedule | $I_3$ | $I_6$ | $I_7$ |
+| --- | --- | --- | --- |
+| empty | $2$ | $4$ | $3$ |
+| $1$ | $2$ | $4$ | $3$ |
+| $2$ | $2$ | $4$ | $4$ |
+| $3$ | $2$ | $4$ | $3$ |
+| $1,2$ | $2$ | $4$ | $4$ |
+| $1,3$ | $2$ | $4$ | $4$ |
+| $2,3$ | $2$ | $4$ | $4$ |
+
+Indeed, for $I_3$, a table querying 1 merges $000$ with $011$
+on its first queried zero; those rewarded sets are disjoint. A table
+not querying 1 merges $011$ with $111$, again with disjoint
+rewarded sets. At least one reward is lost. For each of $I_6,I_7$,
+each increasing pair has three stopped-cell maxima $(2,1,1)$,
+obtained by counting the displayed event memberships within that cell.
+Empty and singleton maxima are the direct label counts in the table.
+This accounts for all terminal labels and all complete schedules.
+Mixing on one common seed gives $I_3\le2$, $I_6\le4$, $I_7\le4$.
+
+Write $\epsilon=c+u$ temporarily. First $I_3(P_t)=2+t$;
+the three event changes are each at most $\rho$, giving
+$3\rho\ge t$. For $I_6$, its first two readings at $P_t$ sum
+to $4c+2t=1+t$. Its last four readings are the positive base,
+two independent union rows, and the correct row at $110$.
+Their lower demands sum to
+$3(1-\epsilon)+(4c-\epsilon)=3-4u$.
+Consequently $I_6(Z)\ge4+t-2\rho-4u$, proving the second
+inequality. The first five $I_7$ readings at $P_t$ sum to
+$10c+5t$; its last two lower demands are
+$(4c-\epsilon)+(1-\epsilon)$.
+Hence $I_7(Z)\ge4+2t-5\rho-2u$, proving the third.
+These computations combine distance and risk of one law $Z$.
+
+To obtain the same inequalities against every original competitor,
+use the common-seed and actual-witness argument of Theorem 110.2,
+rather than assuming any arbitrary law-preserving transport.
+Countability of $X$ gives a common conull set of lawful finite
+handoffs and hard-two executions. Its preselected schedule has a
+finite measurable maximum address $M(U)$ almost surely. Put
+$\gamma_m=\Pr(M(U)>m)\to0$.
+For each $m\ge4$ fix, before seeds, eight actual sources with
+low words $w$ and replies $q_4=\cdots=q_m=1$.
+Theorem 35.2 supplies them under its entry-rank hypotheses.
+Low zero words have the specified first absence; the source with
+low word $111$ has actual first absence beyond $m$.
+
+On the common event $M(U)\le m$, all fixed high replies are one.
+Whole-transcript dependence contracts these fixed observations and
+information-redundant repetitions to one stopped low table for the
+eight sources. This contraction evaluates a proof score; actual
+requests are still counted. Terminal values may be arbitrary original
+tapes. Therefore the three source sums are at most
+$2+\gamma_m$, $4+2\gamma_m$, $4+3\gamma_m$.
+On the actual $111$ source the base demand is
+$1-\epsilon-a_{m+1}$, since its target may retain that much
+nonbase mass. The preceding algebra consequently gives
+
+$$
+\begin{aligned}
+3\rho&\ge t-\gamma_m,\\
+2\rho+4(\epsilon-c)&\ge t-a_{m+1}-2\gamma_m,\\
+5\rho+2(\epsilon-c)&\ge2t-a_{m+1}-3\gamma_m.
+\end{aligned}
+\tag{270.3}
+$$
+
+Both error and distance are uniform over actual sources, so sources
+may vary with $m$. Letting $m\to\infty$ proves (270.1).
+No infinite all-positive source or source distribution was used.
+
+At every low word, the law table gives
+$\operatorname{TV}(P_t,Q_t)\le t/2$, with equality somewhere,
+and $\operatorname{TV}(P_t,S_t)=t/3$.
+At $110,111$ the latter difference has coordinates
+$(-t/6,t/3,0,-t/6)$; at each other word exactly $t/3$
+moves between two coordinates.
+For any actual $n>3$, these same positive laws give the distance
+bounds, and the exact tail formula of Theorem 110.2 gives error
+$\max(c,a_n)=c$ for $P_t,Q_t$ and
+$\max(c+t/6,a_n)=c+t/6$ for $S_t$.
+This covers every positive vanishing tail, including $a_4=c$.
+
+Realize each allocation by partitioning one source-independent
+$U\in[0,1)$ into its whole-table intervals. It fixes the schedule
+and all counterfactual labels before replies. $Q_t,S_t$ execute the
+preselected increasing schedule and stop at first queried zero.
+Their $N$ completions use that same seed, obtain the complete
+schedule, and count ignored replies. Every displayed handoff is
+finite, with zero advice and at most two actual requests.
+The lower bound $\rho\ge t/3$ is attained by $S_t$.
+At $\rho=t/3$, the third inequality forces
+$\epsilon\ge c+t/6$; $S_t$ attains it.
+At $\epsilon\le c$, the second forces $\rho\ge t/2$;
+$Q_t$ attains it. This proves (270.2).
+
+The new assertions concern joint distance and risk at actual
+$H_3$ points. Three-active amplitude feasibility and the earlier
+unrestricted one-third conversion remain the suppliers of Sections
+113 and 261–262. Neither all intermediate distance-risk endpoints
+nor a new amplitude-feasibility region follows from (270.1)–(270.2).
+The same-cap stopped law $Q_t$ also prevents this point from being
+a feasibility separator. $\square$
+
+## 271. Six nonnegative charges on the same arbitrary-mass allocation
+
+**Definition 271.1 (Balanced suffix measure and allocation charges).**
+Let $J=\{3,\ldots,L\}$ and $m=L-2$.
+Use the subset measure of
+[Section 201.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md)
+and its use in
+[Section 207.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+Write $c_m=4-2/\lceil(m+1)/2\rceil$.
+For $m=2q-1$, each suffix with $q$ zeros has weight
+$2m/(q\binom mq)$.
+For $m=2q$, each $q$-zero suffix has weight $2/\binom mq$,
+and each $(q+1)$-zero suffix has weight
+$2q/((q+1)\binom m{q+1})$.
+All other weights are zero. Denote this finite measure by $\nu$.
+Its mass is $c_m$, each zero marginal is 2, and for $m\ge2$
+each pair of distinct suffix bits has cell masses
+$(1,1,1,c_m-3)$ in order $00,01,10,11$.
+For $m=1$, $\nu$ is mass 2 on the sole zero suffix.
+
+Fix one complete feasible $\lambda$ as in (268.1), at arbitrary
+mass $M$, without imposing $H_L$. Retain $s_+,s_j,\mathcal T,E_b$
+of Definition 268.1 and define
+
+$$
+\begin{aligned}
+\eta&=\mu_+(1)+\mu_+(2),\\
+r_1(z)&=\mu_{01z}(\{0,1\})-(M-e),&
+r_2(z)&=\mu_{10z}(\{0,2\})-(M-e),\\
+\chi_1(z)&=\mu_{01z}(2),&
+\chi_2(z)&=\mu_{10z}(1),\\
+R_{\rm pair}&=\tfrac12\int(r_1+r_2)\,d\nu,&
+X_{\rm cross}&=\tfrac12\int(\chi_1+\chi_2)\,d\nu.
+\end{aligned}
+\tag{271.1}
+$$
+
+For each full deterministic table put
+
+$$
+\begin{aligned}
+t_D&=\sum_{j\in J}([D(v^j)=j]-[D(+)=j]),\\
+a_D&=\tfrac12\int([D(01z)\in J]+[D(10z)\in J])\,d\nu,\\
+g_D&=a_D-t_D,\qquad G_{\rm seed}=\sum_D\lambda_Dg_D.
+\end{aligned}
+\tag{271.2}
+$$
+
+These charges retain every terminal label and the same allocation.
+
+**Theorem 271.2 (Exact six-charge identity).**
+Every deterministic $N$ table satisfies $g_D\ge0$. For every
+full feasible allocation in Definition 271.1,
+
+$$
+(c_m-2)e-E_b
+=s_++\sum_{j\in J}s_j+\eta
+ +R_{\rm pair}+X_{\rm cross}+G_{\rm seed}.
+\tag{271.3}
+$$
+
+All six summands on the right are nonnegative. No normalization or
+change of allocation is required.
+
+**Proof.**
+The stated moments are the consumed subset-measure calculation.
+Explicitly, for $m=2q-1$, its mass is $2m/q=4-2/q$,
+a zero marginal is 2, and for $q\ge2$ a directed zero/one
+cell has mass $2(q-1)/(2q-2)=1$.
+For $m=2q$, total mass is $2+2q/(q+1)$, a zero marginal
+is $1+1=2$, and a directed zero/one cell has mass
+$q/(2q-1)+(q-1)/(2q-1)=1$.
+The other cells follow by subtraction. When $m=1$ no pair
+moment is used. In particular $c_m\ge2$, and $c_m\ge3$
+whenever two distinct late bits exist.
+
+To prove $a_D\ge t_D$, keep the actual output of every table.
+If no late bit is queried, the table is constant on the early-11
+suffix fibre. Each possible unqueried late-label contribution cancels
+between the positive and sole-zero terms, so $t_D=0$.
+
+If the two distinct queries are early 1 and late $j$, let $f_0,f_1$
+be its labels on the early-11 fibre at replies $0,1$ to $j$.
+The unqueried late-label terms cancel, leaving
+$t_D=[f_0=j]-[f_1=j]$.
+The early-10 fibre uses these same labels, and its $\nu$-weighted
+late-output mass is
+$2[f_0\in J]+(c_m-2)[f_1\in J]$.
+Half of it is at least $t_D$, and the other fibre is nonnegative.
+For early 2 and late $j$, use the early-01 fibre instead.
+
+If there is only one late query and neither early bit is queried,
+both early fibres coincide. Their half-sum is
+$2[f_0\in J]+(c_m-2)[f_1\in J]\ge t_D$.
+For two late queries $i<j$, the common four-cell function $f$
+gives
+
+$$
+\begin{aligned}
+t_D&=[f_{01}=i]+[f_{10}=j]-[f_{11}\in\{i,j\}],\\
+a_D&=[f_{00}\in J]+[f_{01}\in J]+[f_{10}\in J]
+                 +(c_m-3)[f_{11}\in J]\ge t_D.
+\end{aligned}
+\tag{271.4}
+$$
+
+All coefficients are nonnegative in this case. Empty, early singleton
+and repeated-query information partitions have already been covered;
+reversal only permutes static cells. Repetitions and ignored replies
+remain actual counted requests. This proves $g_D\ge0$ for every
+full table, including arbitrary earlier and unqueried output labels.
+
+Multiply by the same $\lambda_D$ and sum. Equal mass and the
+independent pair rows imply
+
+$$
+\begin{aligned}
+\mathcal T+G_{\rm seed}
+ &=\tfrac12\int(\mu_{01z}(J)+\mu_{10z}(J))\,d\nu,\\
+\mu_{01z}(J)&=e-r_1(z)-\chi_1(z),\\
+\mu_{10z}(J)&=e-r_2(z)-\chi_2(z).
+\end{aligned}
+$$
+
+Thus $\mathcal T+G_{\rm seed}+R_{\rm pair}+X_{\rm cross}=c_me$.
+Consume the same-allocation trace identity (266.2), also displayed
+in (268.4), to substitute
+$\mathcal T=E_b+2e+s_++\sum_js_j+\eta$.
+This yields (271.3), with $M$ canceled exactly.
+All row slacks and all remaining charges are nonnegative at this
+same realization, including zero masses and every closed equality.
+$\square$
+
+**Proposition 271.3 (A sharp additional measured spill in the old support).**
+Let $Y$ be the capacity score of
+[Section 204.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md):
+$C_{v^j}=1$ for $j\in J$,
+$P_{01z}=P_{10z}=\nu(z)/2$, and $T=1$.
+Its inherited values are
+$W_Y=B_N(Y)=B_O(Y)=c_m+1$,
+$K_Y=m+c_m+1$, $\beta_j=1$ on $J$ and zero otherwise.
+For every arbitrary allocation $\lambda\ge0$, even without cap
+feasibility,
+
+$$
+Y\cdot z(\lambda)+\eta+X_{\rm cross}+G_{\rm seed}
+=(c_m+1)M.
+\tag{271.5}
+$$
+
+Consequently $Y\cdot z(\lambda)+\eta\le(c_m+1)M$.
+The coefficient one of $\eta$ is sharp with these other rewards.
+
+**Proof.**
+Using equal mass only, the early pair contribution of $Y$ is
+$c_mM-\frac12\int(\mu_{01z}(J)+\mu_{10z}(J))\,d\nu
+-X_{\rm cross}$.
+Its late-correct contribution is
+$\mathcal T+\sum_{j\in J}\mu_+(j)$, and its positive
+contribution is $\mu_+(0)$.
+The sum of the latter two non-trace terms is $M-\eta$.
+Substitute $\frac12\int(\cdots)=\mathcal T+G_{\rm seed}$;
+the trace cancels and (271.5) follows.
+For the legal table $O(1,2;1,2,1)$ the old $Y$ reward is $c_m$,
+$\eta=1$, and $X_{\rm cross}=G_{\rm seed}=0$.
+The anchor $R$ has reward $c_m+1$ and $\eta=0$.
+A larger coefficient of $\eta$ would fail at the former table.
+
+Dropping charges in (271.3) recovers the inherited scalar bound
+$E_b\le(c_m-2)e$, equivalently
+$\sum_{j\in J}(b_j-e)\le(c_m+1)e$; neither that scalar cut
+nor the old zero-cost $Y$ ray is a new assertion here.
+The additional information is the exact joint charge at the same
+law and the sharp measured spill in (271.5).
+The positive event $\{0,1,2\}$ is not substituted for the original
+positive row $\{0\}$ and is not added to the allowed score cone.
+The identity supplies a necessary relation, without an unrestricted
+payer for a general input score. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 272. A nine-coordinate support and its exact original flat family
+
+**Definition 272.1 (A full nine-bit score).**
+In the complete catalog of Definition 251.1 at $L=9$, define $Y_9$
+by the following word, event and integer coefficient table.
+A singleton event $\{n\}$ is a $C$ coefficient, a union
+$\{0,n\}$ is a $P$ coefficient, and the positive event $\{0\}$
+is $T$. Coincident words with different events remain separate rows.
+All other score coefficients are zero, and every independent cap row
+remains imposed.
+
+| Word | Event | Integer coefficient |
+| --- | --- | --- |
+| $000111110$ | $\{0,1\}$ | $84$ |
+| $001101110$ | $\{0,1\}$ | $472$ |
+| $001110100$ | $\{0,1\}$ | $126$ |
+| $001110101$ | $\{0,1\}$ | $262$ |
+| $001111000$ | $\{0,1\}$ | $1126$ |
+| $010011110$ | $\{0,1\}$ | $606$ |
+| $010101111$ | $\{0,1\}$ | $272$ |
+| $010110010$ | $\{0,1\}$ | $532$ |
+| $010111000$ | $\{0,1\}$ | $180$ |
+| $010111011$ | $\{0,1\}$ | $396$ |
+| $011001110$ | $\{0,1\}$ | $636$ |
+| $011010110$ | $\{0,1\}$ | $1242$ |
+| $011100000$ | $\{0,1\}$ | $710$ |
+| $011100110$ | $\{0,1\}$ | $440$ |
+| $011101000$ | $\{0,1\}$ | $368$ |
+| $100101000$ | $\{2\}$ | $84$ |
+| $100101100$ | $\{0,2\}$ | $690$ |
+| $100110100$ | $\{0,2\}$ | $1050$ |
+| $100111000$ | $\{0,2\}$ | $246$ |
+| $101001101$ | $\{0,2\}$ | $824$ |
+| $101010000$ | $\{0,2\}$ | $136$ |
+| $101010011$ | $\{0,2\}$ | $278$ |
+| $101010101$ | $\{0,2\}$ | $382$ |
+| $101010110$ | $\{0,2\}$ | $250$ |
+| $101011011$ | $\{0,2\}$ | $614$ |
+| $101100000$ | $\{0,2\}$ | $376$ |
+| $101100001$ | $\{2\}$ | $388$ |
+| $101100001$ | $\{0,2\}$ | $452$ |
+| $101101011$ | $\{0,2\}$ | $84$ |
+| $101111000$ | $\{2\}$ | $98$ |
+| $101111010$ | $\{2\}$ | $556$ |
+| $101111100$ | $\{2\}$ | $944$ |
+| $110000010$ | $\{3\}$ | $21$ |
+| $110000101$ | $\{3\}$ | $414$ |
+| $110001100$ | $\{0,3\}$ | $418$ |
+| $110010000$ | $\{3\}$ | $171$ |
+| $110010000$ | $\{0,3\}$ | $710$ |
+| $110011000$ | $\{0,3\}$ | $750$ |
+| $110100100$ | $\{0,3\}$ | $1020$ |
+| $110101000$ | $\{0,3\}$ | $498$ |
+| $110101100$ | $\{3\}$ | $527$ |
+| $110110110$ | $\{3\}$ | $976$ |
+| $110111000$ | $\{3\}$ | $1162$ |
+| $110111110$ | $\{3\}$ | $785$ |
+| $111000000$ | $\{0,4\}$ | $118$ |
+| $111000100$ | $\{4\}$ | $1194$ |
+| $111000100$ | $\{0,4\}$ | $70$ |
+| $111000101$ | $\{0,4\}$ | $126$ |
+| $111001000$ | $\{4\}$ | $684$ |
+| $111001010$ | $\{0,4\}$ | $706$ |
+| $111010000$ | $\{4\}$ | $1390$ |
+| $111011101$ | $\{4\}$ | $300$ |
+| $111011110$ | $\{4\}$ | $1066$ |
+| $111011111$ | $\{4\}$ | $1798$ |
+| $111100001$ | $\{5\}$ | $1500$ |
+| $111100100$ | $\{5\}$ | $1812$ |
+| $111101000$ | $\{5\}$ | $1812$ |
+| $111101101$ | $\{5\}$ | $546$ |
+| $111101111$ | $\{5\}$ | $1782$ |
+| $111110000$ | $\{6\}$ | $1812$ |
+| $111110011$ | $\{6\}$ | $1500$ |
+| $111110100$ | $\{6\}$ | $3726$ |
+| $111111000$ | $\{7\}$ | $5670$ |
+| $111111010$ | $\{7\}$ | $1368$ |
+| $111111100$ | $\{8\}$ | $7038$ |
+| $111111110$ | $\{9\}$ | $7038$ |
+| $111111111$ | $\{0\}$ | $3036$ |
+
+For any pair $i<j$ and cell $ab$, define
+
+$$
+H_{ij}^{ab}(u)=
+ \sum_{\substack{(w,E,k)\text{ in the table}\\(w_i,w_j)=ab}}
+       k[u\in E].
+\tag{272.1}
+$$
+
+The following table gives every four-cell maximum over all labels
+$u=0,\ldots,9$, in cell order $00,01,10,11$.
+
+| Pair | Four-cell maxima |
+| --- | --- |
+| $1,2$ | $(2070,5382,7452,7452)$ |
+| $1,3$ | $(2070,5382,7452,7452)$ |
+| $1,4$ | $(2484,4968,7452,7452)$ |
+| $1,5$ | $(2898,4554,7452,7452)$ |
+| $1,6$ | $(3312,4140,7038,7866)$ |
+| $1,7$ | $(3312,4140,7038,7866)$ |
+| $1,8$ | $(2772,4680,7866,7038)$ |
+| $1,9$ | $(6522,930,7038,5796)$ |
+| $2,3$ | $(2070,5382,7452,7452)$ |
+| $2,4$ | $(2484,4968,7452,7452)$ |
+| $2,5$ | $(2898,4554,7452,7452)$ |
+| $2,6$ | $(3312,4140,7038,7866)$ |
+| $2,7$ | $(3312,4140,7038,7866)$ |
+| $2,8$ | $(5670,1782,7038,7866)$ |
+| $2,9$ | $(4556,3022,9004,3830)$ |
+| $3,4$ | $(2484,4968,7452,7452)$ |
+| $3,5$ | $(2898,4554,7452,7452)$ |
+| $3,6$ | $(3312,4140,7038,7866)$ |
+| $3,7$ | $(3312,4140,7038,7866)$ |
+| $3,8$ | $(5670,1890,7038,7758)$ |
+| $3,9$ | $(7038,668,7038,6058)$ |
+| $4,5$ | $(2898,4968,7452,7038)$ |
+| $4,6$ | $(3312,4554,7038,7452)$ |
+| $4,7$ | $(3312,4554,7038,7452)$ |
+| $4,8$ | $(3882,4332,7104,7038)$ |
+| $4,9$ | $(5642,2224,7918,4502)$ |
+| $5,6$ | $(3312,4968,7038,7038)$ |
+| $5,7$ | $(3312,4968,7038,7038)$ |
+| $5,8$ | $(5670,2610,7038,7038)$ |
+| $5,9$ | $(6522,3828,7038,4968)$ |
+| $6,7$ | $(3312,4968,7038,7038)$ |
+| $6,8$ | $(5538,2742,7038,7038)$ |
+| $6,9$ | $(6780,1500,7038,5226)$ |
+| $7,8$ | $(5670,2610,7038,7038)$ |
+| $7,9$ | $(7038,1824,7104,4902)$ |
+| $8,9$ | $(8592,2046,7038,4680)$ |
+
+**Theorem 272.2 (Uniform original necessity and arbitrary-mass necessity).**
+For every entire positive nonincreasing vanishing original sequence
+and every original $N_2$ acquisition $A$, hence also every $O_2$
+acquisition,
+
+$$
+11408\,e_a(A)\ge
+345a_2+676a_3+1072a_4+1242a_5
+ +1173(a_6+a_7+a_8+a_9)-345.
+\tag{272.2}
+$$
+
+No horizon or tail-cutoff assumption is required. Moreover, for any
+$L\ge9$, embed every score word by appending ones. For every full
+feasible $\lambda\ge0$ at the same $(b,e)$, irrespective of its mass,
+
+$$
+\sum_{n=1}^9\beta_nb_n-2070-68448e\le0,\qquad
+\beta=(0,2070,4056,6432,7452,7038,7038,7038,7038).
+\tag{272.3}
+$$
+
+**Proof.**
+Sum the displayed coefficients. They give
+$K=68448$, the stated $\beta$, and target event score
+$20286+\sum_n\beta_na_n$. In particular the union events are
+used directly as independent rows.
+By (272.1), a deterministic $N$ pair has reward at most the sum
+of the four maxima in its displayed row. Every such sum is at most
+22356. Empty and each singleton schedule have maximum 20286.
+Repeated schedules carry only singleton information; static reversal
+merely permutes cells. All output labels participate in every maximum.
+Consequently $B_N(Y_9)\le22356$.
+The legal stopped anchor $R$ attains 22356, so
+
+$$
+W_{Y_9}=B_O(Y_9)=B_N(Y_9)=22356,\qquad
+\Delta_O(Y_9)=\Delta_N(Y_9)=0.
+\tag{272.4}
+$$
+
+For one cap-feasible finite law, its score is at least
+$20286+\sum\beta_na_n-68448e$ and at most 22356.
+Subtracting and dividing by 6 gives (272.2).
+This argument uses the one complete probability-vector law,
+rather than wordwise favorable realizations.
+
+For $L>9$, every high coordinate is constant one on score support
+and every high output label has zero reward. Such a query can only
+leave an empty, singleton or low-pair scored partition after the
+constant reply is removed, so the same support bound holds.
+For this same full $\lambda$, nonnegative weak duality gives
+
+$$
+F_{Y_9}(b,e)\le Y_9\cdot G_N\lambda
+ =\sum_D\lambda_D(Y_9\cdot z_D-W_{Y_9})\le0.
+$$
+
+Since $\beta_1=0$ and $\alpha_2=1$, this is exactly (272.3).
+No mass division or change of allocation occurs.
+On the single ray $sY_9$, $s\ge0$, the score itself and
+$\theta=0$ give its zero-cost certificate.
+
+For arbitrary original competitors, consume the exact necessity of
+Theorem 110.2 and the dimension restriction and extension proved in
+Theorem 117.2. At any positive error bound $r\le1$, first select
+one finite cap-feasible representative at its active length.
+If that length exceeds 9, fix higher replies to zero, project labels
+above 9 to 0, and remove the fixed observations. Low zero targets
+remain fixed; the low positive target projects to the base target.
+If its length is below 9, add ignored coordinates; new first-zero
+classes have $a_n\le r$ and exact error
+$\max(1-p_+(0),a_n)\le r$.
+These operations retain all independent rows and a single common
+seed and preserve the complete class. They transport feasibility,
+without preserving an arbitrary initial full-carrier law.
+Thus the nine-bit necessary bound applies at every positive bound
+on the original error, with arbitrary original addresses and outputs.
+Error zero follows by taking all positive $r\downarrow0$; error
+one is included. A cap above one makes (272.2) automatic since its
+right side is at most $7682<11408$.
+Every actual positive tail and every closed tie is retained.
+$\square$
+
+**Theorem 272.3 (The exact original flat-nine optimum).**
+Let $e_*=319/992$. For every entire positive nonincreasing vanishing
+sequence with $a_1=\cdots=a_9=1/2$ and $a_{10}\le e_*$,
+
+$$
+\min_{A\in N_2}e_a(A)=\min_{A\in O_2}e_a(A)=e_*.
+\tag{272.5}
+$$
+
+Both minima are attained. Either class is feasible at a positive
+closed cap $e$ exactly when $e\ge e_*$.
+
+**Proof.**
+The right side of (272.2) on this sequence is $7337/2$.
+Thus $e_a(A)\ge7337/22816=319/992$ for every original competitor.
+
+Here is one stopped attainer. All integer masses in the next table
+have common denominator $D=14880$.
+For a schedule $(i,j)$ the column $q$ is its mass numerator.
+An entry $u:k$ in a terminal-cell column assigns numerator $k$
+to label $u$ in that cell. Each of its three cell sums is $q$.
+All unspecified schedule and label masses are zero.
+
+| Schedule | $q$ | Cell $0$ | Cell $10$ | Cell $11$ |
+| --- | --- | --- | --- | --- |
+| $1,2$ | $1400$ | $0:233,\ 1:1167$ | $2:1400$ | $0:565,\ 3:615,\ 4:220$ |
+| $1,3$ | $935$ | $0:935$ | $3:935$ | $0:565,\ 4:370$ |
+| $1,4$ | $565$ | $1:565$ | $4:565$ | $0:565$ |
+| $1,5$ | $565$ | $1:565$ | $5:565$ | $0:565$ |
+| $1,6$ | $358$ | $1:358$ | $6:358$ | $0:358$ |
+| $1,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $2,3$ | $785$ | $0:562,\ 2:223$ | $3:785$ | $0:565,\ 4:220$ |
+| $2,4$ | $715$ | $0:715$ | $4:715$ | $0:565,\ 5:150$ |
+| $2,5$ | $565$ | $2:565$ | $5:565$ | $0:565$ |
+| $2,6$ | $358$ | $0:358$ | $6:358$ | $0:358$ |
+| $2,7$ | $467$ | $2:467$ | $7:467$ | $0:467$ |
+| $3,4$ | $565$ | $0:245,\ 3:320$ | $4:565$ | $0:565$ |
+| $3,5$ | $565$ | $0:565$ | $5:565$ | $0:565$ |
+| $3,6$ | $358$ | $0:358$ | $6:358$ | $0:358$ |
+| $3,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $4,5$ | $810$ | $0:810$ | $5:810$ | $0:565,\ 6:55,\ 9:190$ |
+| $4,6$ | $358$ | $0:358$ | $6:358$ | $0:358$ |
+| $4,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $5,6$ | $1168$ | $0:1168$ | $6:1168$ | $0:358,\ 8:500,\ 9:310$ |
+| $5,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $6,7$ | $320$ | $0:320$ | $7:320$ | $0:320$ |
+| $6,8$ | $754$ | $0:754$ | $8:754$ | $9:754$ |
+| $7,8$ | $1401$ | $0:1401$ | $8:1401$ | $9:1401$ |
+
+All numerators are nonnegative and $\sum q=14880$.
+Choose one source-independent uniform integer
+$U\in\{0,\ldots,14879\}$ and partition its values, in the displayed
+schedule order, into blocks of sizes $q$. If its chosen block has
+local coordinate $k\in\{0,\ldots,q-1\}$, use that same $k$
+for every terminal cell, ordering that cell's label/count pairs as
+displayed and using their consecutive half-open integer intervals.
+This fixes the entire schedule and all counterfactual outputs before
+any reply. Query $i$; on zero use cell $0$ and stop; otherwise
+query $j$ and use $10$ or $11$.
+Each schedule is increasing, has at most two actual requests, and
+hands off the actual mark $\theta_u$ finitely.
+In particular outputting $\theta_9$ without querying 9 is legal.
+
+For every first-zero class the correct-label numerator is constant
+over the entire suffix. To verify this directly, first-cell numerical
+outputs equal their queried first address, second-zero outputs equal
+their second address, and every numerical exhaustion output is later
+than both addresses. The contributions to each correct label are
+
+| First zero | Correct numerator |
+| --- | --- |
+| $1$ | $1167+565+565+358=2655$ |
+| $2$ | $1400+223+565+467=2655$ |
+| $3$ | $615+935+785+320=2655$ |
+| $4$ | $220+370+220+565+715+565=2655$ |
+| $5$ | $150+565+565+565+810=2655$ |
+| $6$ | $55+358+358+358+358+1168=2655$ |
+| $7$ | $5*467+320=2655$ |
+| $8$ | $500+754+1401=2655$ |
+| $9$ | $190+310+754+1401=2655$ |
+
+Thus $Dp_w(n)=2655$ at every zero word.
+The zero-label contributions of the same tables give, with
+$s=w_1+\cdots+w_5$, $u=w_6$, $v=w_7$,
+
+$$
+\begin{aligned}
+Dp_w(0)={}&10650-1635s-1074u-1401v
+ +565\binom s2\\
+&+358su+467sv+320uv.
+\end{aligned}
+\tag{272.6}
+$$
+
+For example the schedule $1,2$ contributes
+$233(1-w_1)+565w_1w_2$ to this polynomial; summing the
+23 schedule contributions gives (272.6).
+The complete values of (272.6) for $s=0,\ldots,5$ are
+
+| $(u,v)$ | Six values in increasing $s$ |
+| --- | --- |
+| $(0,0)$ | $(10650,9015,7945,7440,7500,8125)$ |
+| $(0,1)$ | $(9249,8081,7478,7440,7967,9059)$ |
+| $(1,0)$ | $(9576,8299,7587,7440,7858,8841)$ |
+| $(1,1)$ | $(8495,7685,7440,7760,8645,10095)$ |
+
+Every value is at least $7440=D/2$. Bits 8 and 9 do not affect
+this base polynomial. Thus, on every zero word,
+$p_w(0)\ge1/2$ and
+$p_w(n)=2655/14880=1/2-e_*$.
+The exact three-deficit TV formula (251.2) now gives error $e_*$:
+the correct deficit is $e_*$, the base deficit is nonpositive,
+and the independent union deficit is at most $e_*$.
+In particular no union row is inferred by adding approximate
+singleton estimates.
+
+For completeness the first-zero minima are
+
+| First zero | $\min Dp_w(0)$ | $Dp_w(n)$ | $\min Dp_w(\{0,n\})$ |
+| --- | --- | --- | --- |
+| $1$ | $7440$ | $2655$ | $10095$ |
+| $2$ | $7440$ | $2655$ | $10095$ |
+| $3$ | $7440$ | $2655$ | $10095$ |
+| $4$ | $7440$ | $2655$ | $10095$ |
+| $5$ | $7500$ | $2655$ | $10155$ |
+| $6$ | $8125$ | $2655$ | $10780$ |
+| $7$ | $8841$ | $2655$ | $11496$ |
+| $8$ | $10095$ | $2655$ | $12750$ |
+| $9$ | $10095$ | $2655$ | $12750$ |
+
+At $1^9$, the full output numerator vector in label order
+$0,\ldots,9$ is
+
+$$
+(10095,0,0,615,810,150,55,0,500,2655).
+\tag{272.7}
+$$
+
+Hence the positive base is $10095/14880=1-e_*$.
+All multiple-zero words and all independent rows have been covered
+by the constant correct masses and the complete base polynomial.
+
+Execute the same one-integer-seed rule on each actual source, with
+zero advice and the unchanged consumer and carrier.
+For actual $n(x)\le9$, finite-pattern realizability and the preceding
+calculation give error $e_*$. For every actual $n(x)>9$, the low
+word is $1^9$, the output has no mass at $\theta_{n(x)}$, and
+Theorem 110.2 gives exact error
+$\max(e_*,a_{n(x)})=e_*$.
+This includes $a_{10}=e_*$ and every later positive amplitude;
+no finite positive word is treated as an infinite positive source.
+The counted $N$ completion uses the same seed and the whole
+preselected schedule, counting the second reply even after an early
+zero, and returns the identical mark law.
+Both hard counts remain at most two. This proves both attained
+original minima. The same law works at every larger closed cap;
+(272.2) excludes every smaller cap. The finite/original transport,
+the dimension operations and counted completion are the suppliers
+of Sections 110, 117 and 90; the additional content is this explicit
+support and its matching flat-nine attainer. $\square$
+
+**Corollary 272.4 (The exact restricted flat-nine slice).**
+At $L=9$, on $b_1=\cdots=b_9=1/2$, the hull interval is
+$3/10\le e\le7/20$, and its full feasible-cone part is exactly
+
+$$
+\mathcal S=\{(1/2,\ldots,1/2;e):319/992\le e\le7/20\}.
+\tag{272.8}
+$$
+
+For every full nonnegative score $z$ with $\Delta_O(z)\le1$,
+the single pair $V=0$, $\theta=1$ satisfies
+
+$$
+\Delta_N(V)+\theta=1,\qquad
+\sup_{(b,e)\in\mathcal S}F_{Q(z)-Q(V)}(b,e)\le1.
+\tag{272.9}
+$$
+
+**Proof.**
+Here $E_b=7/2-10e\in[0,1/2]$, which is exactly the hull interval.
+The mass-independent bound (272.3) excludes every conic allocation
+below $e_*$. Conversely the normalized stopped allocation of
+Theorem 272.3 satisfies all rows at every $e\ge e_*$.
+It has mass one throughout this slice, rather than being a rescaling
+at a different profile. For each point of $\mathcal S$, the same
+allocation $\pi$ gives $h\le G_O\pi$. Therefore, simultaneously
+for every such $z$,
+
+$$
+F_z(b,e)\le z\cdot G_O\pi
+ \le\sum_D\pi_D\Delta_O(z)=\Delta_O(z)\le1.
+$$
+
+Taking the supremum over $\mathcal S$ proves (272.9).
+The support set here is exactly this restricted slice, not the full
+$H_L$ or full $H_N$. $\square$
+
+**Proposition 272.5 (Nonimplication from the named earlier scalar cuts).**
+Take the actual sequence
+$a_1=\cdots=a_9=1/2$,
+$a_{9+j}=(5/16)2^{1-j}$ for $j\ge1$, at cap $e=5/16$.
+It belongs to $H_9$ and satisfies the named cuts of Sections 113,
+117 and 256, but violates (272.3).
+
+**Proof.**
+The active length is 9 and $a_{10}=e$.
+Here $E_b=7/2-10e=3/8\in[0,1/2]$.
+The Section 113 reading is
+$D_3=21/16\le3e+1-a_1=23/16$.
+For the Section 117 prefix inequalities, after division by $m-2$,
+the slacks at $m=4,\ldots,9$ are respectively
+
+$$
+13/16,\quad17/24,\quad9/16,\quad2/5,\quad11/48,\quad3/56.
+\tag{272.10}
+$$
+
+These follow by substituting
+$\sum_{n=3}^m a_n=(m-2)/2$ in its first- and second-head
+bound. For $m\ge10$, use
+$\sum_{n=3}^m a_n\le7/2+(m-9)e$.
+The corresponding divided slack is at least
+$-3/8+(m-3)/(2(m-2))\ge1/16$.
+Thus every prefix, including the infinite positive tail, passes.
+The earlier mixed-eight cut is $43e\ge13$, with slack $7/16$.
+But the new score gives
+$F_{Y_9}(b,e)=621>0$, or equivalently
+$319/992-5/16=9/992$.
+Theorem 272.2 therefore excludes every full feasible $N$ conic
+allocation at this same point. This is nonimplication from those
+specific scalar inequalities. The point is outside $H_N$ and is not a
+same-realization $N/O$ separator. $\square$
+
+**Definition 272.6 (The unrestricted comparison still required).**
+With the original entire sequences, closed positive caps, complete
+rows and resources of Definition 268.1, the unrestricted positive
+condition remains: for every $L\ge3$ and every full $y\ge0$ with
+$\Delta_O(y)\le1$, there exist one unrestricted full $V\ge0$ and
+$\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{272.11}
+$$
+
+Residual coordinates may have either sign. At $\theta=1$ a nonzero
+score with $\Delta_N(V)=0$ remains admissible.
+The alternative strict witness requires the same actual
+$(b,e)\in H_N$, one complete $\lambda\ge0$ with
+$G_N\lambda\ge h(b,e)$ and $M=\sum_D\lambda_D\ge1$, and one
+full unit-$O$ score $y$ satisfying $F_y(b,e)>M$, together with its
+original $N_2$ attainer and a uniform lower certificate against
+every original arbitrary-address, full-carrier $O_2$ competitor.
+No fixed law, unary, anchor, quotient, repair, canonical class or
+restricted support replaces these quantifiers.
+
+The trace relation (268.4) is necessary; the exact fibre (269.1)
+is a proper input cone; (270.1)–(270.2) specify joint endpoints;
+(271.3) retains charges on one allocation; and (272.9) uses only
+$\mathcal S$. None asserts (272.11) for every input.
+The earlier-label reading of Proposition 267.1 is retained:
+the actual source $(r,g)=(19,436)$ has $F_{19}=4181$,
+$N=1822917$ and first four replies $0100$.
+The legal table $N(3,4;1,0,0,0)$ emits the earlier unqueried
+label 1 there; its endpoint repair emits 0, with changed mass 1
+and counting defect 2. This reading rules out pruning that label
+or treating its changed cell as free. All statements concern the
+selected marked laws, whose finite support has TV distance one
+from the unchanged original nonatomic targets.
+
+## 追加锚（本行以下为增补区）

@@ -205,7 +205,7 @@ private def c : ℝ := 2 * (((2 + Real.sqrt 2) / 8) * Real.log ((2 + Real.sqrt 2
 def claim : Prop := ∃ e : Experiment, Valid e ∧ JointMeasurement e ∧
   S_uni (quantum e) > 2 * S_cor chsh
 
-private def rationalSinglets : ((Fin 2 × Fin 2) × (Fin 2 × Fin 2)) → ℂ := fun z =>
+def rationalSinglets : ((Fin 2 × Fin 2) × (Fin 2 × Fin 2)) → ℂ := fun z =>
   if z.1.1 ≠ z.2.1 ∧ z.1.2 ≠ z.2.2 then
     (if z.1.1 = z.1.2 then 1/2 else -1/2) else 0
 

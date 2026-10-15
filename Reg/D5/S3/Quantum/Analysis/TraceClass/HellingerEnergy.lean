@@ -112,4 +112,239 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms family
 #print axioms registration
+
+
+namespace Diagonal
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := ULift.{u} Unit
+  finiteRole := Fintype.ofSubsingleton ⟨()⟩
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual := realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)
+def rejected := realize signature.{u} (fun _ _ z => z + 1) (fun a => nomatch a)
+
+def theoremLaw (R : Realization signature.{u}) : Prop :=
+  ∀ {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (T : Reference H) (d : SpectralResolution T) (v : H),
+    HasSum (fun i => d.values i * ‖⟪v, d.basis i⟫_ℂ‖ ^ 2)
+      (R.readout ⟨()⟩ () (⟪v, T.1.1 v⟫_ℂ).re)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law := theoremLaw
+
+theorem actual_law : arena.{u}.Law actual := by
+  exact @QuantumLogEnergy.resolution_diagonal.{u}
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := (h oneState (nativeResolution oneState) 0).tsum_eq
+  simpa [rejected, realize] using hh
+
+def family : Registration arena.{u} (type_of% (@QuantumLogEnergy.resolution_diagonal.{u})) where
+  actual := realize signature (fun _ _ z => z) (fun a => nomatch a)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@QuantumLogEnergy.resolution_diagonal.{u})
+    (type_of% (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)))
+    Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.TraceClass.HellingerEnergy.Diagonal.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.TraceClass.HellingerEnergy.Diagonal.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+end Diagonal
+
+namespace ResolutionEntropy
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ≥0∞
+  Role := ULift.{u} Unit
+  finiteRole := Fintype.ofSubsingleton ⟨()⟩
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ≥0∞
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual := realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)
+def rejected := realize signature.{u} (fun _ _ z => z + 1) (fun a => nomatch a)
+
+def theoremLaw (R : Realization signature.{u}) : Prop :=
+  ∀ {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (T : Reference H) (d : SpectralResolution T),
+    (∑' i, ENNReal.ofReal (-d.values i * Real.log (d.values i))) = (R.readout ⟨()⟩ () (spectralEntropy T))
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law := theoremLaw
+
+theorem actual_law : arena.{u}.Law actual := by
+  exact @QuantumLogEnergy.resolution_entropy.{u}
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h oneState (nativeResolution oneState)
+  rw [resolution_entropy, one_entropy] at hh
+  simpa [rejected, realize, one_entropy] using hh
+
+def family : Registration arena.{u} (type_of% (@QuantumLogEnergy.resolution_entropy.{u})) where
+  actual := realize signature (fun _ _ z => z) (fun a => nomatch a)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@QuantumLogEnergy.resolution_entropy.{u})
+    (type_of% (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)))
+    Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.TraceClass.HellingerEnergy.ResolutionEntropy.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.TraceClass.HellingerEnergy.ResolutionEntropy.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+end ResolutionEntropy
+
+namespace CrossEnergy
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ≥0∞
+  Role := ULift.{u} Unit
+  finiteRole := Fintype.ofSubsingleton ⟨()⟩
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ≥0∞
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual := realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)
+def rejected := realize signature.{u} (fun _ _ z => z + 1) (fun a => nomatch a)
+
+def theoremLaw (R : Realization signature.{u}) : Prop :=
+  ∀ {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (rho sigma : Reference H)
+    (d : SpectralResolution rho) (e : SpectralResolution sigma),
+    (∑' i, ∑' j, (ENNReal.ofReal (d.values i) * singularLog (e.values j)) *
+      ENNReal.ofReal (‖⟪e.basis j, d.basis i⟫_ℂ‖ ^ 2)) =
+        (R.readout ⟨()⟩ () (spectralEnergy sigma rho.1))
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law := theoremLaw
+
+theorem actual_law : arena.{u}.Law actual := by
+  exact @QuantumLogEnergy.resolution_cross_energy.{u}
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h oneState oneState (nativeResolution oneState) (nativeResolution oneState)
+  rw [resolution_cross_energy, spectralEnergy_self, one_entropy] at hh
+  simpa [rejected, realize, spectralEnergy_self, one_entropy] using hh
+
+def family : Registration arena.{u} (type_of% (@QuantumLogEnergy.resolution_cross_energy.{u})) where
+  actual := realize signature (fun _ _ z => z) (fun a => nomatch a)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@QuantumLogEnergy.resolution_cross_energy.{u})
+    (type_of% (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)))
+    Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.TraceClass.HellingerEnergy.CrossEnergy.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.TraceClass.HellingerEnergy.CrossEnergy.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+end CrossEnergy
 end Reg.D5.S3.Quantum.Analysis.TraceClass.HellingerEnergy

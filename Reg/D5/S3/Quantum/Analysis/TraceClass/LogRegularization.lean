@@ -200,3 +200,86 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms registration
 end Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Eigenvector
+
+namespace Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Shift
+structure HilbertInput where
+  H : Type u
+  [normed : NormedAddCommGroup H]
+  [inner : InnerProductSpace ℂ H]
+  [complete : CompleteSpace H]
+attribute [instance] HilbertInput.normed HilbertInput.inner HilbertInput.complete
+
+abbrev signature : Signature where
+  Params := HilbertInput.{u}
+  State p := p.H →L[ℂ] p.H
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := p.H →L[ℂ] p.H
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual := realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)
+def rejected := realize signature.{u} (fun _ _ _ => 0) (fun a => nomatch a)
+
+def theoremLaw (R : Realization signature.{u}) : Prop :=
+  ∀ {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    {epsilon : ℝ} (he : 0 < epsilon) {T : H →L[ℂ] H} (hT : 0 ≤ T),
+    IsStrictlyPositive (R.readout () ⟨H⟩ (T + algebraMap ℝ (H →L[ℂ] H) epsilon))
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law := theoremLaw
+
+theorem actual_law : arena.{u}.Law actual := by
+  exact @QuantumLogEnergy.shift_strictlyPositive.{u}
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (H := EuclideanSpace ℂ (ULift.{u} Unit))
+    (epsilon := 1) zero_lt_one (T := 0) le_rfl
+  simpa [rejected, realize, IsStrictlyPositive] using hh
+def family : Registration arena.{u} (type_of% (@QuantumLogEnergy.shift_strictlyPositive.{u})) where
+  actual := realize signature (fun _ _ z => z) (fun a => nomatch a)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨(⟨EuclideanSpace ℂ (ULift.{u} Unit)⟩ : HilbertInput.{u}), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@QuantumLogEnergy.shift_strictlyPositive.{u})
+    (type_of% (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a)))
+    Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Shift.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Shift.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ z => z) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+end Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Shift
