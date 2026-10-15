@@ -248,3 +248,169 @@ Robin same-integer signed integral remains unpaid. This application
 reuses standard interpolation and the existing Binet inverse; it is
 not a new supplier theorem, a proof of RH or a claim that the
 weighted route outperforms existing approximation methods.
+
+## Strength of a local cutoff block
+
+The logarithmic Selberg coefficients are already discussed in
+[Báez-Duarte 2002, Introduction, printed p.2](https://arxiv.org/pdf/math/0202141v2).
+The classical source [Conrey–Myerson, arXiv:math/0002254v1,
+Theorem 1 and Remark 1](https://arxiv.org/html/math/0002254v1)
+distinguishes uniform convergence of its fractional-part sums from the
+weighted integral near its moving endpoint. Its sums use
+$\{nu\}/n$, whereas the actual residual below uses $\{t/n\}$;
+its pointwise estimate is not an upper bound for this residual's local
+quadratic energy. The following is a repo-derived paper application of
+Mellin continuation to the specified coefficients, not a result stated
+in Corvalán's paper, a new unconditional estimate, or a Lean-certified
+implication. No originality of the Mellin obstruction is claimed.
+
+For integers $N\ge3$ put
+
+$$
+L=\log N,\qquad a_{N,n}=\mu(n)\frac{\log(N/n)}{L}\quad(1\le n\le N),
+\qquad c_N=\sum_{n\le N}\frac{a_{N,n}}n.
+$$
+
+For the actual balanced approximant
+$v_N=-\sum_{2\le n\le N}a_{N,n}b_n$, its residual on
+$1/(m+1)<x<1/m$ is
+
+$$
+R_N(m)=1+c_Nm-
+\sum_{n\le\min(N,m)}a_{N,n}\lfloor m/n\rfloor.
+$$
+
+Thus, for integer $m\ge N$,
+$R_N(m)=1+\sum_{n\le N}a_{N,n}\{m/n\}$. Define the actual local energy
+
+$$
+E_N=\sum_{m=N}^{N^2}\frac{|R_N(m)|^2}{m(m+1)}.
+\tag{I10}
+$$
+
+A proposed supply $E_N\le C(1+\log N)^A$, with one finite $A\ge0$
+and one $C$ for all sufficiently large integers $N$, already entails
+RH by the argument below. The estimate cannot be treated as an
+independently paid, weaker precursor to (I1). This is a one-way strength
+analysis: neither this estimate nor a converse from RH is supplied.
+
+### Passing integer cutoffs and cells without losing the actual source
+
+For real $y>1$ and $t>0$ retain the same coefficients through
+
+$$
+S_y(t)=\log y+
+\sum_{n\le y}\mu(n)\log(y/n)\{t/n\}.
+$$
+
+This is an auxiliary interpolation: at integer arguments
+$S_N(m)=L R_N(m)$; within a cell its difference from the balanced
+step residual is accounted for by (I12). If $N\le y<N+1$, the summation
+indices agree and, uniformly for every real $t$,
+
+$$
+S_y(t)-S_N(t)
+=\log(y/N)\left(1+\sum_{n\le N}\mu(n)\{t/n\}\right),
+\qquad |S_y(t)-S_N(t)|\le2.
+\tag{I11}
+$$
+
+For $m\le t<m+1$, all $\lfloor t/n\rfloor=\lfloor m/n\rfloor$.
+Consequently
+
+$$
+S_N(t)-S_N(m)=(t-m)U_N,
+\qquad U_N=\sum_{n\le N}\frac{\mu(n)\log(N/n)}n,
+\qquad |U_N|\le L(1+\log N).
+\tag{I12}
+$$
+
+Using $\int_m^{m+1}t^{-2}dt=1/[m(m+1)]$, equations (I11)–(I12)
+and the assumed estimate yield
+
+$$
+\int_y^{2y}|S_y(t)|^2\frac{dt}{t^2}
+\ll L^{A+2}+\frac{(1+L)^4}{N}.
+\tag{I13}
+$$
+
+Indeed, all intersecting cells have $N\le m\le2N+1\le N^2$ for
+$N\ge3$; the cell slope costs $O(|U_N|^2/N)$ and the cutoff correction
+costs $O(1/N)$. On changing variables $t=qy$, (I13) gives, for some
+fixed finite $B$,
+
+$$
+\|S_y(qy)\|_{L^2(1<q<2)}
+\ll\sqrt y\,(1+\log y)^B.
+\tag{I14}
+$$
+
+The small bounded range of $y$ is absorbed in the constant. These
+steps use the actual step-function residual; they do not assume that
+fractional parts are uniformly Lipschitz across their jumps.
+
+### Mellin in the cutoff variable exposes a reciprocal-zeta factor
+
+For every fixed smooth test function $h$ supported in $(1,2)$, set
+
+$$
+F_h(s)=\int_1^\infty\int_1^2
+h(q)S_y(qy)\,dq\,y^{-s-1}dy.
+$$
+
+Equation (I14) and Cauchy–Schwarz make this integral and its
+$s$-derivatives absolutely convergent on compact subsets of
+$\Re s>1/2$. Thus $F_h$ is holomorphic there. Initially for $\Re s>1$,
+absolute interchange and $y=nv$ give
+
+$$
+F_h(s)=\frac{\int_1^2h(q)dq}{s^2}
++\frac{H_h(s)}{\zeta(s)},
+\qquad
+H_h(s)=\int_1^2h(q)H_q(s)dq,
+\quad
+H_q(s)=\int_1^\infty\log v\,\{qv\}v^{-s-1}dv.
+\tag{I15}
+$$
+
+Here $\sum\mu(n)n^{-s}=1/\zeta(s)$ is the classical Dirichlet
+identity, reused on its absolute-convergence half-plane. The integrals
+$H_q$ are holomorphic for $\Re s>0$ and locally uniformly bounded in
+$q$ and $s$.
+
+There is no common zero of $H_q(s)$ as $q$ runs through $(1,2)$.
+For a fixed $s$ with $\Re s>0$, write
+
+$$
+J_q(s)=q^{-s}H_q(s)
+=\int_q^\infty\log(t/q)\{t\}t^{-s-1}dt.
+$$
+
+Differentiation at $1<q<2$ gives
+
+$$
+\frac{d}{dq}\left(q\frac{d}{dq}J_q(s)\right)
+=(q-1)q^{-s-1}\ne0.
+\tag{I16}
+$$
+
+Hence $H_q(s)$ cannot vanish identically on any open subinterval of
+$(1,2)$. If a nontrivial zero $\rho$ had $\Re\rho>1/2$, continuity
+in $q$ would supply a smooth compactly supported $h$ with
+$H_h(\rho)\ne0$. Multiply (I15) by $(s-1)\zeta(s)$; analytic
+continuation extends the identity to $\Re s>1/2$. Evaluation at
+$\rho\ne1$ forces $H_h(\rho)=0$, a contradiction. This argument
+allows arbitrary zero multiplicity. The usual functional-equation
+symmetry then gives RH.
+
+Only a fixed proportional part of (I10) is needed for this obstruction.
+If its upper endpoint is $2N$, restrict $q$ to $(5/4,7/4)$; for large
+$N$ every intersecting cell lies in $[N,2N]$, while (I16) still prevents
+a common zero. Thus discarding the remote part $2N<m\le N^2$ does
+not make the proposed uniform polylogarithmic estimate an already
+available supplier.
+
+For the actual FIB application, (I5)–(I9) still transport any error
+estimate that is genuinely supplied. They provide no value for (I10).
+This strength analysis closes neither the required uniform approximation
+nor the same-integer signed Robin margin.
