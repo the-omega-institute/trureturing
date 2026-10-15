@@ -114,9 +114,11 @@ internal static class DigestionAtomContextProjection
             var byId = byAtomId
                 .Where(static group => group.Count() == 1)
                 .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
-            var roots = HistoricalRoots(document.Claims, file.RawBytes, byId.Values, snapshot);
+            var text = Encoding.UTF8.GetString(file.RawBytes.AsSpan());
+            var blocks = MarkdigBlockAst.ParseOwned(text);
+            var roots = HistoricalRoots(document.Claims, file.RawBytes, byId.Values, snapshot, text, blocks);
             var stream = MaterializedStream(roots, byHash, byId, atomizer, rules, snapshot, out var spans);
-            return new SourceStream(source, stream, spans, byHash, byAtomId, file.RawBytes);
+            return new SourceStream(source, stream, spans, byHash, byAtomId, file.RawBytes, text, blocks);
         }
         catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
         {
@@ -130,7 +132,9 @@ internal static class DigestionAtomContextProjection
         ImmutableArray<DigestionAtom> spans,
         ILookup<string, DigestionLedgerEntry> byHash,
         ILookup<string, DigestionLedgerEntry> byAtomId,
-        ImmutableArray<byte> sourceBytes)
+        ImmutableArray<byte> sourceBytes,
+        string sourceText,
+        ImmutableArray<MarkdownBlock> blocks)
     {
         internal string SourceId => source.SourceId;
         internal string SourcePath => source.SourcePath;
@@ -151,6 +155,7 @@ internal static class DigestionAtomContextProjection
                     throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING,
                         $"atom_id={atomId} source_id={source.SourceId}");
                 var contexts = ImmutableArray.CreateBuilder<DigestionAtomContext>(matches.Length);
+                var scopes = GenericAtomizer.AtomizeStructure(sourceBytes.AsSpan(), parse: _ => blocks).Claims;
                 foreach (var atom in matches)
                 {
                     // Collapse only this occurrence's subtree. Ordinary leaf membership and
@@ -164,7 +169,7 @@ internal static class DigestionAtomContextProjection
                         before + 1, before + 1 + after.Length,
                         source.SourceId, source.SourcePath, source.Atomizer)
                     {
-                        GoverningContext = GoverningContext(sourceBytes, atom),
+                        GoverningContext = GoverningContext(sourceBytes, atom, sourceText, blocks, scopes),
                     });
                 }
                 return contexts.ToImmutable();
@@ -225,7 +230,8 @@ internal static class DigestionAtomContextProjection
     // occurrences can span several freshly generated roots. No offsets are persisted.
     private static ImmutableArray<DigestionAtom> HistoricalRoots(
         ImmutableArray<DigestionAtom> fresh, ImmutableArray<byte> sourceBytes,
-        IEnumerable<DigestionLedgerEntry> entries, RepositorySnapshot snapshot)
+        IEnumerable<DigestionLedgerEntry> entries, RepositorySnapshot snapshot,
+        string sourceText, ImmutableArray<MarkdownBlock> blocks)
     {
         if (fresh.IsEmpty && !sourceBytes.IsEmpty)
             fresh = [DigestionAtom.FromFrozenCas(sourceBytes)];
@@ -247,8 +253,7 @@ internal static class DigestionAtomContextProjection
         for (var index = 1; index < roots.Length; index++)
             if (roots[index - 1].EndByte > roots[index].StartByte)
                 throw new FormatException("historical source spans overlap without ancestry");
-        var sourceText = Encoding.UTF8.GetString(sourceBytes.AsSpan());
-        var tables = MarkdigBlockAst.ParseOwned(sourceText).OfType<MarkdownGovernedBlock>()
+        var tables = blocks.OfType<MarkdownGovernedBlock>()
             .Where(static block => block.Kind == "table")
             .Select(block => (Start: MarkdownAstAtomizer.ByteOffset(sourceText, block.Start),
                 End: MarkdownAstAtomizer.ByteOffset(sourceText, block.End))).ToArray();
@@ -299,10 +304,9 @@ internal static class DigestionAtomContextProjection
     }
 
     private static ImmutableArray<DigestionGoverningContext> GoverningContext(
-        ImmutableArray<byte> sourceBytes, DigestionAtom atom)
+        ImmutableArray<byte> sourceBytes, DigestionAtom atom, string text,
+        ImmutableArray<MarkdownBlock> blocks, ImmutableArray<DigestionAtom> scopes)
     {
-        var text = Encoding.UTF8.GetString(sourceBytes.AsSpan());
-        var blocks = MarkdigBlockAst.ParseOwned(text);
         var headings = new List<MarkdownHeading>();
         foreach (var heading in blocks.OfType<MarkdownHeading>())
         {
@@ -312,7 +316,7 @@ internal static class DigestionAtomContextProjection
         }
         var context = ImmutableArray.CreateBuilder<DigestionGoverningContext>();
         foreach (var heading in headings) Add("heading", heading.Start, MarkdigBlockAst.LineEnd(text, heading.End));
-        var scope = GenericAtomizer.AtomizeStructure(sourceBytes.AsSpan()).Claims
+        var scope = scopes
             .Where(root => root.StartByte <= atom.StartByte && root.EndByte >= atom.EndByte)
             .OrderBy(static root => root.RawBytes.Length).FirstOrDefault();
         foreach (var structure in blocks.OfType<MarkdownGovernedBlock>())

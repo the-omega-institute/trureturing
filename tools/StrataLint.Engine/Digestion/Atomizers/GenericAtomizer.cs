@@ -87,11 +87,12 @@ internal static class GenericAtomizer
     }
 
     internal static AtomizedTheoryDocument AtomizeStructure(
-        ReadOnlySpan<byte> bytes, IDictionary<string, string>? contentKinds = null) =>
+        ReadOnlySpan<byte> bytes, IDictionary<string, string>? contentKinds = null,
+        Func<string, ImmutableArray<MarkdownBlock>>? parse = null) =>
         MarkdownAstAtomizer.Atomize(bytes, IdentifyParagraph,
             static () => GenreRegistryCheck.NoGenreRegistry,
             identifyHeading: IdentifyHeading,
-            parse: MarkdigBlockAst.ParseOwned,
+            parse: parse ?? MarkdigBlockAst.ParseOwned,
             dropEmptyHeadingClaims: true,
             identifyHeadingClaim: IsHeadingClaim,
             contentKinds: contentKinds);
