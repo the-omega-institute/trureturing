@@ -56,6 +56,28 @@ theorem checked_split
   simp only [check, node]
   exact decide_eq_true branches
 
+/-- Checking a proposed split needs equality only for its coordinate and all
+finite value children. No equality instance for the symmetry-action type or
+for arbitrary function-valued nodes is required. -/
+def checkSplit (node : Node N Coord Value Sym) (i : Coord)
+    (children : Value → Fin N) : Bool :=
+  match node with
+  | .split actual actualChildren =>
+    decide (actual = i ∧ ∀ a, actualChildren a = children a)
+  | _ => false
+
+/-- A kernel-checked literal split proposal supplies the exact node equality
+required to assemble its four actual child-context proofs. -/
+theorem checked_split_node (node : Node N Coord Value Sym) (i : Coord)
+    (children : Value → Fin N) (accepted : checkSplit node i children = true) :
+    node = .split i children := by
+  cases node with
+  | bound => simp only [checkSplit, Bool.false_eq_true] at accepted
+  | symmetry s => simp only [checkSplit, Bool.false_eq_true] at accepted
+  | split actual actualChildren =>
+    have h := of_decide_eq_true accepted
+    exact congrArg₂ Node.split h.1 (funext h.2)
+
 /-- A finite prefix keeps the original bound and symmetry tests. At its
 frontier it passes the complete actual fuel, node, cache and partial event to
 the suffix receipt selector. No node shape or hash transfers acceptance. -/
@@ -218,5 +240,6 @@ theorem checked_global_lower_bound
 #print axioms checked_global_lower_bound
 #print axioms checked_prefix_and_frontier
 #print axioms checked_split
+#print axioms checked_split_node
 
 end D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
