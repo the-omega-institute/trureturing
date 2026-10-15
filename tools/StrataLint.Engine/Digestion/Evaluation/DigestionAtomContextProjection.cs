@@ -109,14 +109,26 @@ internal static class DigestionAtomContextProjection
             var atomizer = AtomizerRegistry.Require(source.Atomizer).Atomize;
             var document = sourceDocument ?? atomizer(file.RawBytes.AsSpan(), rules);
             var entries = ledger.RequireDigestionEntries();
-            var byHash = entries.ToLookup(static entry => entry.Fingerprints.RawSha256, StringComparer.Ordinal);
             var byAtomId = entries.ToLookup(static entry => entry.AtomId, StringComparer.Ordinal);
             var byId = byAtomId
                 .Where(static group => group.Count() == 1)
                 .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
             var text = Encoding.UTF8.GetString(file.RawBytes.AsSpan());
             var blocks = MarkdigBlockAst.ParseOwned(text);
-            var roots = HistoricalRoots(document.Claims, file.RawBytes, byId.Values, snapshot, text, blocks);
+            var rootIds = SourceReferenceRootIds(document.Claims, file.RawBytes, text);
+            rootIds.UnionWith(entries.Where(entry => entry.SourceId == sourceId).Select(static entry => entry.AtomId));
+            var referenceIds = new HashSet<string>(rootIds, StringComparer.Ordinal);
+            var pending = new Stack<string>(rootIds);
+            while (pending.TryPop(out var id))
+                if (byId.TryGetValue(id, out var entry))
+                    foreach (var child in entry.Receipts.ChainAtoms)
+                        if (referenceIds.Add(child)) pending.Push(child);
+            // Identity lookup must obey the same root/reference authority as root
+            // selection, including fresh gaps in a whole-source fallback.
+            var byHash = entries.Where(entry => referenceIds.Contains(entry.AtomId))
+                .ToLookup(static entry => entry.Fingerprints.RawSha256, StringComparer.Ordinal);
+            var roots = HistoricalRoots(document.Claims, file.RawBytes,
+                byId.Values.Where(entry => rootIds.Contains(entry.AtomId)), snapshot, text, blocks);
             var stream = MaterializedStream(roots, byHash, byId, atomizer, rules, snapshot, out var spans);
             return new SourceStream(source, stream, spans, byHash, byAtomId, file.RawBytes, text, blocks);
         }
@@ -292,9 +304,32 @@ internal static class DigestionAtomContextProjection
         }
     }
 
-    // Discovery uses source-owned CAS identities, not current grammar boundaries.
-    // Ancestors and strict interiors cannot be exterior neighbors of this subtree;
-    // selected exterior parents are subsequently expanded by the ordinary Plan path.
+    // These are the source identities resolved globally by ReadContext: fresh
+    // claims, physical blocks/rows, and the definition/header before a table body.
+    // Content identity may assign any of them to a different ledger source.
+    private static HashSet<string> SourceReferenceRootIds(ImmutableArray<DigestionAtom> fresh,
+        ImmutableArray<byte> source, string text)
+    {
+        var ids = fresh.Select(static atom => atom.Fingerprints.RawSha256[7..]).ToHashSet(StringComparer.Ordinal);
+        var leaves = MarkdigBlockAst.Parse(text);
+        for (var index = 0; index < leaves.Length; index++)
+        {
+            var leaf = leaves[index];
+            var start = MarkdownAstAtomizer.ByteOffset(text, leaf.Start);
+            Add(start, MarkdownAstAtomizer.ByteOffset(text, leaf.End));
+            if (leaf is not MarkdownTableRow row) continue;
+            Add(start, MarkdownAstAtomizer.ByteOffset(text, MarkdigBlockAst.LineEnd(text, leaf.End)));
+            if (row.IsHeader || index > 0 && leaves[index - 1] is MarkdownTableRow { IsHeader: false }) continue;
+            var owner = fresh.FirstOrDefault(atom => atom.StartByte < start && atom.EndByte > start);
+            if (owner is not null) Add(owner.StartByte, start);
+        }
+        return ids;
+
+        void Add(int start, int end) => ids.Add(DigestionFingerprint.Compute(source.AsSpan()[start..end]).RawSha256[7..]);
+    }
+
+    // Discovery retains containing roots for their graph references, as well as
+    // nearest exterior/crossing roots. Only Plan's claim leaves become neighbors.
     internal static HashSet<string> HistoricalNeighborIds(ImmutableArray<byte> source,
         ImmutableArray<byte> target, IEnumerable<(string AtomId, ImmutableArray<byte> RawBytes)> candidates)
     {
@@ -304,6 +339,8 @@ internal static class DigestionAtomContextProjection
         var result = new HashSet<string>(StringComparer.Ordinal);
         foreach (var occurrence in targets)
         {
+            foreach (var span in spans.Where(span => span.Start <= occurrence.Start && span.End >= occurrence.End))
+                result.Add(span.AtomId);
             var previous = spans.Where(span => span.End <= occurrence.Start)
                 .OrderByDescending(static span => span.End).ThenBy(static span => span.Start).FirstOrDefault();
             var next = spans.Where(span => span.Start >= occurrence.End)

@@ -44,8 +44,9 @@ internal static partial class DigestionQuerySelection
 
         var neighborIds = new HashSet<string>(StringComparer.Ordinal);
         // Historical cuts need not be fresh claim or physical-leaf boundaries.
-        // Catalogue only this source's identities, inspect their immutable spans,
-        // and retain metadata/CAS only for the target's exterior neighborhood.
+        // Catalogue this source's identities, inspect their immutable spans, and
+        // retain containing roots and the exterior neighborhood. ReadChains follows
+        // their global references regardless of each descendant's source owner.
         var candidateIds = repository.SearchCurrentPaths([Literal(BackfillInventoryLoader.RootPath + target.SourceId)])
             .Where(IsAtomPath).Select(Path.GetFileNameWithoutExtension).OfType<string>()
             .Where(id => DigestionFingerprint.IsCanonicalSha256("sha256:" + id)).Distinct(StringComparer.Ordinal).ToArray();
