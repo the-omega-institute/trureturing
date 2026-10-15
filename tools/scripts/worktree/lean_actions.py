@@ -420,14 +420,11 @@ def resume_spec(root):
     keys = actions_keys(root)
     if not keys["producer_save_allowed"]:
         raise ValueError("producer resume requires an authorized protected or PR producer")
-    tree = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD^{tree}"], text=True).strip()
-    if not re.fullmatch(r"[0-9a-f]{40}", tree):
-        raise ValueError("producer source tree is unavailable")
     repository = os.environ.get("GITHUB_REPOSITORY", "")
     if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository):
         raise ValueError("producer repository is unavailable")
     identity = hashlib.sha256(json.dumps({
-        "tree": tree, "repository": repository, "ref": os.environ["GITHUB_REF"],
+        "repository": repository, "ref": os.environ["GITHUB_REF"],
         "inputs": dependency_inputs(root), "mathlib": keys["mathlib_revision"],
         "os": keys["os"], "arch": keys["arch"],
     }, sort_keys=True, separators=(",", ":")).encode()).hexdigest()

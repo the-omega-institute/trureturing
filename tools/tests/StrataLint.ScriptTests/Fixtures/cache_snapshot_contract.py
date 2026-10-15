@@ -800,7 +800,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         (self.root / ".lake/build/lib/lean/Module.olean").write_bytes(b"completed module")
         return owner
 
-    def test_producer_resume_is_separate_and_requires_the_same_source_ref_and_inputs(self):
+    def test_producer_resume_is_separate_and_requires_the_same_ref_and_inputs(self):
         owner = self.resume_setup()
         with mock.patch.dict(os.environ, self.env, clear=True):
             spec = owner.resume_spec(self.root)
@@ -815,11 +815,15 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 path.write_bytes(before + b"\n")
                 self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
                 path.write_bytes(before)
-            (self.root / "source.lean").write_text("def changed := 1\n")
-            subprocess.run(["git", "-C", str(self.root), "add", "source.lean"], check=True)
-            subprocess.run(["git", "-C", str(self.root), "-c", "user.name=Fixture", "-c",
-                "user.email=fixture@example.invalid", "commit", "-qm", "changed"], check=True, capture_output=True)
-            self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+            for relative, text in (("source.lean", "def changed := 1\n"),
+                    ("tools/producer.py", "raise SystemExit(1)\n"), ("README.md", "documentation\n")):
+                path = self.root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text)
+                subprocess.run(["git", "-C", str(self.root), "add", relative], check=True)
+                subprocess.run(["git", "-C", str(self.root), "-c", "user.name=Fixture", "-c",
+                    "user.email=fixture@example.invalid", "commit", "-qm", "changed"], check=True, capture_output=True)
+                self.assertEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
 
     def test_resume_paths_include_registered_dependency_and_project_material(self):
         owner = self.resume_setup()
