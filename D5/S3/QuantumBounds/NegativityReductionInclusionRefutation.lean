@@ -81,11 +81,14 @@ set_option maxHeartbeats 1000000 in
 private theorem gram_eq :
     (partialTranspose rho)ᴴ * partialTranspose rho = S * S := by
   funext p q
+  change (∑ r : Fin 3 × Fin 3,
+    star (rho (r.1, p.2) (p.1, r.2)) * rho (r.1, q.2) (q.1, r.2)) =
+      ∑ r : Fin 3 × Fin 3, S p r * S r q
   rcases p with ⟨i, j⟩
   rcases q with ⟨k, l⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    norm_num [partialTranspose, rho.eq_1, rankOneDensity, v.eq_1, coeff.eq_1,
-      S.eq_1, s.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    norm_num [rho.eq_1, rankOneDensity, v.eq_1, coeff.eq_1,
+      S.eq_1, s.eq_1,
       Matrix.vecMulVec_apply, Matrix.smul_apply, smul_eq_mul, Matrix.diagonal,
       Pi.star_apply, Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.cons_val_two,
       map_ofNat, Fin.ext_iff, -Fin.val_eq_zero_iff]
@@ -102,7 +105,8 @@ private theorem traceNorm_partialTranspose : traceNorm (partialTranspose rho) = 
     Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.cons_val_two]
 
 private theorem negativity_rho : negativity rho = (1 / 2 : ℝ) := by
-  norm_num [negativity.eq_1, traceNorm_partialTranspose]
+  rw [negativity.eq_1, traceNorm_partialTranspose]
+  norm_num
 
 private theorem rho_marginal : partialTraceRight rho =
     Matrix.diagonal (![8 / 9, 1 / 18, 1 / 18] : Fin 3 → ℂ) := by
@@ -134,6 +138,6 @@ theorem result : ¬ claim := by
   apply M_not_posSemidef
   rw [M.eq_1]
   exact h (Fin 3) (Fin 3) rho 2 rho_posSemidef rho_trace
-    (by norm_num) (by norm_num) (by norm_num) (by norm_num [negativity_rho])
+    (by norm_num) (by norm_num) (by norm_num) (by rw [negativity_rho]; norm_num)
 
 end D5.S3.QuantumBounds.NegativityReductionInclusionRefutation
