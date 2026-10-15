@@ -3774,3 +3774,237 @@ the remaining signed product and does not improve its $5/8$ sufficient
 threshold. It is an application of the owned analytic estimates, not a
 new cancellation theorem or a Lean-certified statement. The complete
 signed Robin estimate and RH remain unresolved.
+
+
+## A zero-density contour for the actual band coefficient
+
+Keep the original integers, bandwidth and endpoint conventions of
+(I59), (I62), (I83) and (I136). Suppose additionally that
+$1/2\le b<\beta<3/4$ and $\zeta$ has no zeros in $\Re s>b$.
+This section reuses the local disk argument already transported to
+ordinary $\zeta$ in (I60), Inoue's owned good heights, and the published
+Ingham estimate recorded in
+[the finite Robin source note](../Analytic/polak2026finiterobinca.md#reuse-the-published-ingham-estimate-at-its-tabulated-endpoint).
+The additional result is their application to the actual coefficient
+$B$ and the complete same-integer functional, not a new disk theorem,
+zero-density estimate, zero-free half-plane or mathematical-priority
+claim. No Lean certification is asserted.
+
+Write
+$$
+Z(\sigma,U)=\#\{\rho:\zeta(\rho)=0,\ \Re\rho\ge\sigma,
+                         \ 0<\Im\rho\le U\},\qquad
+\mathfrak d(\sigma)=\frac{3(1-\sigma)}{2-\sigma},
+$$
+counting multiplicities. Chourasiya--Simonič,
+[arXiv:2507.15184v2](https://arxiv.org/html/2507.15184v2),
+Corollary 1 and Table 1, cover $1/2\le\sigma\le1$ by closed
+subintervals and imply, uniformly on the fixed substrip used here,
+$Z(\sigma,U)\ll U^{\mathfrak d(\sigma)}\log^3(2U)$.
+Their stated lower height is $3\cdot10^{12}$; the bounded lower
+heights are included by increasing the implicit constant. This is
+the published input, reused without reproof.
+
+For every fixed $\xi>0$, the band coefficient satisfies
+$$
+|B|\ll_{b,\beta,\xi}
+ N^\xi\bigl(hN^{1/2}+h^{2-\mathfrak d(\beta)}N^\beta\bigr)+1.
+\tag{I138}
+$$
+The proof keeps the complete high-frequency decay of the actual
+weight and charges the rightward contour excursions to zeros.
+
+### The local reciprocal input and the original smoothing
+
+Use exactly $\eta=H^{-1}$, $a=1-h$ and the multiplier of (I83),
+(I86). Those formulas already give
+$B=\widetilde B+O(1)$ and
+$\widetilde B=(2\pi i)^{-1}\int_{(2)}
+N^sW_a(s)F_\eta(s)/\zeta(s)\,ds$.
+On a fixed real strip,
+$$
+|W_a(\sigma+it)|\ll h\min\{h,(1+|t|)^{-1}\}.
+$$
+Indeed, with $\ell=\log(1/a)\asymp h$, its exact expression is
+$\int_0^\ell x e^{-\sigma x}e^{-itx}\,dx$.
+The direct integral bounds it by $O(h^2)$; one integration by parts
+bounds it by $O(h/|t|)$ because both the terminal value and total
+variation of $xe^{-\sigma x}$ are $O(h)$.
+
+Take the already supplied good height
+$T\in[N^4,N^4+N^{4/3}]$ and write $Y=\log T$.
+Choose a fixed sufficiently small $d>0$ with
+$b+3d<\beta$, $1/2+3d<\beta$ and $d<10^{-3}$.
+The local form of the disk argument used in (I60) supplies
+$|1/\zeta(\sigma+it)|\ll_{d,\epsilon}(3+|t|)^\epsilon$
+whenever $\sigma\ge1/2+2d$, $\sigma\le\beta$ and the rectangle
+$\Re z>\sigma-d$, $|\Im z-t|\le Y$ is zero free, for $Y>2$.
+Here is the parameter correspondence needed for that reuse.
+In its cited `lem:logarithmic-control` disk proof, put
+$a_0=\sigma-d$ and $e_0=d/8$.
+The outer radius $2-a_0-2e_0=2-\sigma+3d/4$ about $2+it$
+lies inside this rectangle; the control radius
+$2-a_0-6e_0=2-\sigma+d/4$ contains the point $\sigma+it$.
+Use the ordinary regularized function
+$(s-1)\zeta(s)/(s+1)$, its classical polynomial strip growth and
+bounded Euler logarithm, exactly as in (I60).
+The printed Hecke/Dedekind statement is not being quoted as literally
+an ordinary-$\zeta$ theorem. Only its already documented ordinary disk
+argument is used, and that argument needs nonvanishing on the disk,
+not a global zero-free half-plane with boundary $\sigma-d$.
+
+### Count every excursion, including its horizontal joins
+
+Put $g_d(x)=1/2+d\lceil(x-1/2)/d\rceil$. At
+$4Y\le|t|\le T$, define
+$$
+c_T(t)=\max\left\{\frac12+2d,\quad
+ g_d(\Re\rho)+2d:
+ \Re\rho>\frac12,\ |\Im\rho-t|\le2Y\right\}.
+\tag{I139}
+$$
+Ignore an empty zero set in the maximum. The fixed-half-plane
+hypothesis implies $1/2+2d\le c_T(t)\le b+3d<\beta$.
+Use the vertical pieces at $\Re s=c_T(t)$, joining their jumps
+horizontally. For $|t|\le4Y$ use $\Re s=\beta$, with horizontal
+connectors at $t=\pm4Y$; call the resulting contour $\Gamma$.
+Every nontrivial zero inside the truncated rectangle lies strictly
+to its left, so the shift from $\Re s=2$ crosses no poles of
+$1/\zeta$. Its zero at one causes no residue.
+
+The required local rectangle is zero free at every high-height
+vertical piece. At a jump, zeros within distance $Y$ of that height
+are present on both sides of the jump; the entering or leaving zeros
+are at distance $2Y$. Thus the rectangle is zero free even at the
+smaller real endpoint, and hence along the entire horizontal join.
+The same reasoning applies to each connector from $c_T(\pm4Y)$
+to $\beta$. Their reciprocal bound is local; these connectors need
+not lie in $\Re s>b$. The low-height $\beta$ line instead uses the
+global reciprocal bound already established in (I60).
+Consequently $|1/\zeta(s)|\le N^{o_d(1)}$ on $\Gamma$.
+The low-height line and its two connectors contribute
+$\ll h^2N^\beta N^{o_d(1)}$.
+
+Let $\Gamma^{\rm hi}$ contain only the high vertical pieces and their
+jump joins, excluding the low-height line and both transition
+connectors just paid. In a dyadic block
+$U\le|t|\le2U$, $U\ge4Y$, separate the
+baseline pieces, whose real parts are at most $1/2+4d$.
+Their length is $O_d(U\log T)$, including horizontal joins:
+the vertical length is $O(U)$ and there are $O(U\log U)$ possible
+zero-window endpoints. For any remaining real strip
+$\sigma\le\Re s<\sigma+d$, its total contour length satisfies
+$$
+\operatorname{length}(\Gamma^{\rm hi}_{\sigma,U})
+ \ll_d Y Z(\sigma-3d,4U).
+\tag{I140}
+$$
+For vertical pieces, a zero forcing the maximum into that strip
+has $\Re\rho\ge\sigma-3d$, and each such zero influences at most
+$4Y$ of vertical length. Each horizontal jump occurs at an endpoint
+of a zero's influence interval. A zero responsible for raising or
+lowering the maximum across the strip also has
+$\Re\rho\ge\sigma-3d$; each zero supplies at most two such
+endpoints and at most length $d$ in the strip per endpoint.
+Positive and negative zeros are handled together by conjugation.
+Since $U\ge4Y$, all responsible heights have absolute value below
+$4U$. These charges prove (I140) for the complete contour pieces.
+
+Use $|F_\eta|\ll1$ on this strip. The density bound, (I140), and
+$\mathfrak d(\sigma-3d)=\mathfrak d(\sigma)+O(d)$ give the
+following block bound, for a finite real mesh $\mathcal G_d$:
+$$
+\begin{aligned}
+\int_{\Gamma^{\rm hi}\cap\{U\le|\Im s|\le2U\}}
+ \left|\frac{N^sW_a(s)F_\eta(s)}{\zeta(s)}\right|\,|ds|
+\ll_d{}&N^{O(d)+o_d(1)}h\min\{h,U^{-1}\}\\
+ &\cdot\left(N^{1/2}U+
+       \sum_{\sigma\in\mathcal G_d}
+                   N^\sigma U^{\mathfrak d(\sigma)}\right).
+\end{aligned}
+\tag{I141}
+$$
+Here the nonbaseline mesh has $\sigma>1/2+3d$ and
+$\sigma\le\beta$; the real-width cost $N^d$ and logarithms
+are included in the displayed loss. With $U\le T\asymp N^4$,
+the density-exponent displacement also costs only $N^{O(d)}$.
+
+For the baseline, dyadic summation gives
+$\sum_{U\le T}h\min(h,U^{-1})U\ll h\log T$.
+For each fixed $\sigma>1/2$, $0<\mathfrak d(\sigma)<1$, and
+splitting at $U=h^{-1}$ gives
+$\sum_{U\le T}h\min(h,U^{-1})U^{\mathfrak d(\sigma)}
+\ll_\sigma h^{2-\mathfrak d(\sigma)}$.
+The original bandwidth has
+$\log(1/h)/\log N=1/4+o(1)$. Moreover,
+$$
+\frac{d}{d\sigma}\log\bigl(N^\sigma h^{-\mathfrak d(\sigma)}\bigr)
+ =\log N-\frac{3\log(1/h)}{(2-\sigma)^2}>0
+ \qquad(1/2\le\sigma\le\beta<3/4)
+$$
+for all sufficiently large $N$.
+Thus every nonbaseline term is bounded by the one at $\beta$.
+The low-height allowance $h^2N^\beta N^{o_d(1)}$ is absorbed too.
+
+The top and bottom edges use the owned good-height reciprocal bound
+and the original multiplier's decay. For fixed $K=20$ they cost
+$\ll_\epsilon N^2(h/T)T^\epsilon(T/H)^{-20}$.
+The tails on the original line cost
+$\ll N^2h(T/H)^{-20}$, since $1/\zeta(2+it)$ is bounded.
+Both are $O(N^{-10})$ at the specified $T$ and $H$.
+Choose $d$ small enough in terms of $b,\beta,\xi$, then take $N$
+large enough to absorb all remaining logarithms and $N^{o_d(1)}$
+into $N^\xi$. Finally (I83) restores the original integer-band
+coefficient at cost $O(1)$. This proves (I138) for every sufficiently
+large original integer, without an average over cutoffs.
+
+### Apply the coefficient gain to the complete original functional
+
+The existing (I136)--(I137) decomposition and
+$|\mathscr T_N(S_N)|\ll_\beta N^\beta$ give
+$$
+\begin{aligned}
+|\mathscr J_N(R_N)|\ll_{b,\beta,\xi}{}&
+ \frac{N^\xi}{L^2}
+ \left(hN^{\beta-1/2}
+       +h^{2-\mathfrak d(\beta)}N^{2\beta-1}\right)\\
+ &+\frac{h^2N^{2\beta-1}+hN^{2\beta-2}+N^{\beta-1}}{L^2}.
+\end{aligned}
+\tag{I142}
+$$
+The final $N^{\beta-1}/L^2$ is the cost of restoring the unsmoothed
+$B$, acting on the actual response. The secondary coefficient and
+the combined original endpoint retain their paid (I137) allowance.
+The response, its mean and every alias remain unchanged.
+
+Compared with (I119), the controlling term has gained
+$h^{1-\mathfrak d(\beta)}=N^{-\gamma(\beta)+o(1)}$, where
+$\gamma(\beta)=(2\beta-1)/(4(2-\beta))$.
+The strict condition
+$\gamma(\beta)>2\beta-5/4$ is equivalent, in the present range, to
+$$
+\beta<\beta_{\rm c}:=\frac{19-\sqrt{73}}{16}
+ =0.653499765\ldots.
+\tag{I143}
+$$
+Thus the additional zero-free-half-plane premise with $b<\beta_{\rm c}$
+is sufficient for the complete same-integer target
+$\mathscr J_N(R_N)=o(1)$, improving this application's previous
+$5/8$ sufficient boundary. A convenient fixed value is $\beta=13/20$:
+$\mathfrak d(\beta)=7/9$, and the controlling scale is
+$$
+\frac{h^{11/9}N^{3/10}}{L^2}
+ \asymp\frac{N^{-1/180}e^{11\lambda\Omega/9}}{L^2}.
+\tag{I144}
+$$
+Since $\Omega=o(\log N)$, under $b<13/20$ this gives
+$|\mathscr J_N(R_N)|\ll_{b,\xi}N^{-1/180+\xi}$ for every fixed
+$\xi>0$. The other powers at this checkpoint are
+$-1/10$, $-1/5$, $-19/20$ and $-7/20$, all strictly smaller.
+
+The gain comes from the length of the rightward excursions on a
+variable contour, not from a smaller fixed-line double absolute
+majorant. It therefore does not contradict (I130)--(I135).
+It does not provide the zero-free-half-plane premise required here,
+a new unconditional Robin bound, or a proof of RH. For larger $b$
+the complete original signed estimate remains unresolved.
