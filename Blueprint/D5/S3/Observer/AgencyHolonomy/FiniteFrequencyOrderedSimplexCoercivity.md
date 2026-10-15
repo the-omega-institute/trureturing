@@ -66,9 +66,22 @@ $$\operatorname{EcomplexSimp}\left(omega, coefficient, horizon\right) \leq horiz
 
 The horizon-squared upper envelope is unchanged for complex coefficients.
 
+**Theorem 1.6 (Phase invariance).**
+
+$$\operatorname{unitPhase}\left(phase\right) \Rightarrow \operatorname{EcomplexSimp}\left(omega, phase . coefficient, horizon\right) = \operatorname{EcomplexSimp}\left(omega, coefficient, horizon\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_phase_invariant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Independent unit-modulus phases on the finite channels do not change the ordered-simplex energy. This channelwise norm identity does not supply the missing infinite-family Weil or Robin transport.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_lower_bound`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_phase_invariant`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_complex_ordered_simplex_energy_upper_bound`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_ordered_simplex_energy_lower_bound`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity.finite_ordered_simplex_energy_upper_bound`

@@ -189,6 +189,21 @@ theorem finite_complex_ordered_simplex_energy_upper_bound
       (ordered_simplex_pointwise_upper (gap i) horizon δ hδ (hGap i))
       (Complex.normSq_nonneg _)
 
+/-- Multiplying each coefficient by a unit complex phase preserves the finite
+ordered-simplex energy. -/
+theorem finite_complex_ordered_simplex_energy_phase_invariant
+    {ι : Type u} [Fintype ι]
+    (gap : ι → ℝ) (coefficient phase : ι → ℂ) (horizon : ℝ)
+    (hPhase : ∀ i, Complex.normSq (phase i) = 1) :
+    finiteComplexOrderedSimplexEnergy gap
+        (fun i => phase i * coefficient i) horizon =
+      finiteComplexOrderedSimplexEnergy gap coefficient horizon := by
+  classical
+  unfold finiteComplexOrderedSimplexEnergy
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [Complex.normSq_mul, hPhase i, one_mul]
+
 /-- The lower coercivity constant is positive once the common horizon exceeds
 the worst half-turn scale. -/
 theorem ordered_simplex_coercivity_constant_pos
@@ -205,6 +220,7 @@ theorem ordered_simplex_coercivity_constant_pos
 #print axioms finite_ordered_simplex_energy_upper_bound
 #print axioms finite_complex_ordered_simplex_energy_lower_bound
 #print axioms finite_complex_ordered_simplex_energy_upper_bound
+#print axioms finite_complex_ordered_simplex_energy_phase_invariant
 #print axioms ordered_simplex_coercivity_constant_pos
 
 end D5.S3.Observer.AgencyHolonomy.FiniteFrequencyOrderedSimplexCoercivity

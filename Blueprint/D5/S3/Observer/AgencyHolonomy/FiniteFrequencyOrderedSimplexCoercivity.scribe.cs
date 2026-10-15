@@ -70,6 +70,18 @@ internal sealed class FiniteFrequencyOrderedSimplexCoercivityDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The horizon-squared upper envelope is unchanged for complex coefficients."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-complex-ordered-simplex-energy-phase-invariant"),
+                DeclarationHandle.Create(
+                    Prefix + "finite_complex_ordered_simplex_energy_phase_invariant"),
+                H("Phase invariance"),
+                StatementSource.FromAuthor(PhaseInvariantFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Independent unit-modulus phases on the finite channels do not change "
+                        + "the ordered-simplex energy. This channelwise norm identity does "
+                        + "not supply the missing infinite-family Weil or Robin transport."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
@@ -132,6 +144,16 @@ internal sealed class FiniteFrequencyOrderedSimplexCoercivityDocument
                 F.Id("coefficient"), F.Id("horizon")), Sp, Leq, Sp,
             Square(F.Id("horizon")), Sp, Times, Sp,
             Call(FormulaIdentifier.Create("sumNormSq"), F.Id("coefficient"))));
+
+    private static Formula PhaseInvariantFormula() =>
+        Disp(Seq(
+            Call(FormulaIdentifier.Create("unitPhase"), F.Id("phase")), Sp,
+            Rightarrow, Sp,
+            Call(FormulaIdentifier.Create("EcomplexSimp"), F.Id("omega"),
+                Seq(F.Id("phase"), Sp, Dot, Sp, F.Id("coefficient")),
+                F.Id("horizon")), Sp, Eq, Sp,
+            Call(FormulaIdentifier.Create("EcomplexSimp"), F.Id("omega"),
+                F.Id("coefficient"), F.Id("horizon"))));
 
     private static Formula Square(Formula value) =>
         new Formula.Power(Seq(value), D(2));
