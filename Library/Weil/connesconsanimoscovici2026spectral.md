@@ -644,6 +644,11 @@ $$
 +D(\eta_{\rm geom}+\eta_{\rm core}+\eta_{\rm round})I.
 $$
 
+The small scalar allowance approximates $DC^*C$. The varying inverse
+weight is bounded above by $D$, which adds separate one-sided slack.
+This contributes to the sufficient diagonal-floor Schur debit; it does
+not identify an exact block of the full exterior inverse.
+
 The R56 application uses 112 features with $d=56$: 56 U-moments through
 power112, 56 T-moments through113 and 56 Hurwitz moments through114.
 The seven applicable published scalar moments are reused. The full
@@ -653,6 +658,16 @@ including all moment, feature and prefactor errors. This is a
 paper-level discrete application and numerical input, not a new
 geometric-series or Schur theorem. Every middle row $1281\le m\le32768$,
 the retained sign and cofinal positivity remain separate obligations.
+
+The archived `far-coupling.json.zlib` input uses 2304 working bits and a
+640-bit grid. All 168 required moment intervals have width at most one
+grid unit. The exact rational factors have dimensions $112\times1281$
+and $112\times112$; the exported scalar allowance has base-two logarithm
+approximately $-524.573894274258476$. The highest U112/T113 endpoints
+agree exactly with independent 2560-bit executions. Packet SHA-256:
+`ac35edacd7f55de470586e3b8a5915bcaa49b9d2c4c9c2ee073eeaaa8c9c73e7`.
+This supplies only the stated sufficient far majorant under the existing
+identification and exterior-floor inputs, without Lean verification.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
