@@ -24,7 +24,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Entanglement.EJM.EJMCacheSoundness
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
 open D5.S0.Certificates.FiniteLocalRowCache (Associated)
-open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2)
+open D5.S3.Quantum.Entanglement.EJM.EJMCertificateData (F1 F2 trianglePerm singletonPerm)
 open D5.S3.Quantum.Entanglement.EJM.EJMScoreSymmetry (triangleCentered singletonCentered)
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundData
 open D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundTransport
