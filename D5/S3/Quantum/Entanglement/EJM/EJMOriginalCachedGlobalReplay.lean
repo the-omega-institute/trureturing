@@ -51,6 +51,7 @@ private theorem split_coordinate (fuel : ℕ) (index : Fin EJMOriginalGlobalDAGD
     (split : EJMOriginalGlobalDAGData.nodes (fuel + 1) index = .split i children) :
     i.val = (21 - (fuel + 1)) % 20 := by
   unfold EJMOriginalGlobalDAGData.nodes at split
+  dsimp only at split
   split_ifs at split with bound symmetry coordinate
   · cases split
   · cases split
