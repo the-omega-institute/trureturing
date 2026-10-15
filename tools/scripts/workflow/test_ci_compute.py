@@ -43,6 +43,37 @@ class ComputeBudgetTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             compute.initialize(self.path, 30)
 
+    def test_split_current_transfers_only_the_measured_remainder(self):
+        with mock.patch.object(compute.time, "monotonic", side_effect=[0, 1100]), \
+                mock.patch.object(compute.subprocess, "call", return_value=0):
+            self.assertEqual(0, compute.run(["judge-and-source"]))
+        transferred = compute.export_current(self.path)
+        resumed = self.path.with_name("continuation")
+        compute.resume_current(resumed, transferred)
+        self.assertEqual(700, float(resumed.read_text()))
+        with mock.patch.dict(os.environ, {compute.BUDGET: str(resumed)}), \
+                mock.patch.object(compute.time, "monotonic", side_effect=[9000, 9200]), \
+                mock.patch.object(compute.subprocess, "call", return_value=23) as execute:
+            self.assertEqual(23, compute.run(["validator"]))
+        self.assertEqual("700.0s", execute.call_args.args[0][2])
+        self.assertEqual(500, float(resumed.read_text()))
+        with self.assertRaises(FileExistsError):
+            compute.resume_current(resumed, "1800")
+        for invalid in ("", "nan", "inf", "-1", "1800.001", "21600"):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                compute.resume_current(self.path.with_name("invalid"), invalid)
+        self.path.write_text("1801")
+        with self.assertRaises(ValueError):
+            compute.export_current(self.path)
+
+    def test_zero_transferred_remainder_starts_no_new_compute(self):
+        resumed = self.path.with_name("exhausted")
+        compute.resume_current(resumed, "0")
+        with mock.patch.dict(os.environ, {compute.BUDGET: str(resumed)}), \
+                mock.patch.object(compute.subprocess, "call") as execute:
+            self.assertEqual(124, compute.run(["validator"]))
+        execute.assert_not_called()
+
     def test_interrupted_owner_leaves_no_reusable_allowance(self):
         with mock.patch.object(compute.subprocess, "call", side_effect=OSError("interrupted")):
             with self.assertRaises(OSError):

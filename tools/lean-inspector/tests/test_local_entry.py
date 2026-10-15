@@ -551,6 +551,10 @@ esac
         for name in ('modules/A.zip', 'modules/A.zip.trace', 'modules/A.zip.fib-previous',
                      'report.zip', 'report.zip.trace'):
             self.fixture.write(str((generated / name).relative_to(self.root)), 'retained incompatible report')
+        for directory in ('producer', 'interface', 'reg'):
+            self.fixture.write(str((generated / directory / 'lib/lean/Tool.olean').relative_to(self.root)),
+                               'compiled program')
+        self.fixture.write(str((generated / 'judge-inputs/A.json').relative_to(self.root)), 'compiler facts')
         compiled = self.root / '.lake/build/lib/lean/D5/A.olean'
         self.fixture.write(str(compiled.relative_to(self.root)), 'compiled Lean input')
         self.fixture.write('.lake/packages/dependency/.lake/build/lib/Dep.olean', 'dependency input')
@@ -595,7 +599,9 @@ PY
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertNotIn('complete-entry-reused', result.stdout)
         self.assertEqual(json.loads((self.root / 'regeneration.json').read_text()),
-                         dict(files=[], artifact_cache='false', restore_artifacts='false'))
+                         dict(files=['interface/lib/lean/Tool.olean', 'judge-inputs/A.json',
+                                     'producer/lib/lean/Tool.olean', 'reg/lib/lean/Tool.olean'],
+                              artifact_cache='false', restore_artifacts='false'))
         self.assertEqual((generated / 'modules/A.zip').read_text(), 'fresh generic report leaf')
         self.assertFalse((generated / 'modules/A.zip.fib-previous').exists())
         self.assertEqual((compiled.read_text(), compiled.stat().st_mtime_ns), ('compiled Lean input', stamp))
