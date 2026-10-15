@@ -2,8 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry
    mirror-E: none(waiver:exact-inflation-score-symmetry)
-   anchors: [D5/S3/Quantum/Entanglement/EJMInflationScore,
-     D5/S3/Quantum/Entanglement/EJM/EJMCertificateData]
+   anchors: [D5/S3/Quantum/Entanglement/EJMInflationScore, D5/S3/Quantum/Entanglement/EJM/EJMCertificateData]
    utility: none
    digest: Exact node permutations and outcome relabelings preserve the centered EJM score. -/
 
