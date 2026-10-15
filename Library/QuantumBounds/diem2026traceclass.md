@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/TraceClass/GeneralProduct
   - D5/S3/Quantum/Analysis/TraceClass/ColumnSynthesis
   - D5/S3/Quantum/Analysis/TraceClass/Compact
+  - D5/S3/Quantum/Analysis/DiagonalEnergy
 license: Apache-2.0
 triage: anchor
 ---
@@ -79,3 +80,11 @@ This is a repository formal derivation of the standard finite-rank approximation
 argument, not a claim of a new compactness theorem in mathematics. It retains
 uncountable indices and zero kernel fibers and supplies no spectral-basis,
 unbounded-energy, heat-trace or common-Hamiltonian conclusion.
+
+The diagonal resolvent energy consumer uses GeneralProduct's actual ideal
+product and GeneralIdeal's unconditional trace formula for C_m times rho.
+This product need not be self-adjoint. An injective full-basis range equivalence
+transports the arbitrary index to the Set H telescope. The real and complex
+diagonal HasSum statements precede the monotone extended-energy limit. These
+are applications of the attributed trace suppliers to the actual resolvent
+construction, without a commutation or trace-cyclicity assumption.
