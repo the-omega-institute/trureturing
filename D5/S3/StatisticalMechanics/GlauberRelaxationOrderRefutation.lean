@@ -284,4 +284,89 @@ private theorem step_conditions :
   rw [h1, h2, hg1, hg2, rate_eq]
   norm_num
 
+set_option maxRecDepth 4096 in
+private theorem P33_charpoly :
+    (Pq 33).charpoly =
+      (Polynomial.X : Polynomial ℝ) * (Polynomial.X - 1) *
+        (Polynomial.X^2 - Polynomial.X + Polynomial.C ((289 : ℝ) / 2180)) := by
+  apply Polynomial.funext
+  intro z
+  rw [Matrix.eval_charpoly, Matrix.det_succ_row_zero]
+  simp only [Fin.sum_univ_succ, Matrix.det_fin_three, Matrix.submatrix_apply]
+  norm_num [Pq, Matrix.scalar, Matrix.diagonal, Matrix.sub_apply,
+    Fin.succAbove, Fin.succ, Fin.castSucc, Fin.castAdd, Fin.castLE, Fin.cast,
+    Fin.reduceFinMk, Fin.reduceEq, Fin.lt_def, Fin.ext_iff]
+  ring
+
+private theorem s_properties : 0 ≤ s ∧ s^2 = (64 : ℝ) / 545 ∧ s < 11 / 32 := by
+  refine ⟨Real.sqrt_nonneg _, Real.sq_sqrt (by norm_num), ?_⟩
+  exact (Real.sqrt_lt' (by norm_num : (0 : ℝ) < 11 / 32)).mpr (by norm_num)
+
+private theorem P33_linear_factors :
+    (Pq 33).charpoly =
+      ((([1, (1 / 2 : ℝ) + s, (1 / 2 : ℝ) - s, 0] : List ℝ) : Multiset ℝ).map
+        (fun x => Polynomial.X - Polynomial.C x)).prod := by
+  have hquad :
+      (Polynomial.X^2 - Polynomial.X + Polynomial.C ((289 : ℝ) / 2180)) =
+        (Polynomial.X - Polynomial.C ((1 / 2 : ℝ) + s)) *
+          (Polynomial.X - Polynomial.C ((1 / 2 : ℝ) - s)) := by
+    apply Polynomial.funext
+    intro z
+    simp only [Polynomial.eval_add, Polynomial.eval_sub, Polynomial.eval_pow,
+      Polynomial.eval_X, Polynomial.eval_C, Polynomial.eval_mul]
+    nlinarith [s_properties.2.1]
+  rw [P33_charpoly, hquad]
+  norm_num [Multiset.map_coe, Multiset.prod_coe]
+  ring
+
+private theorem P33_roots_sorted :
+    (Pq 33).charpoly.Splits ∧
+    ((Pq 33).charpoly.roots.sort (fun x y : ℝ => y ≤ x)) =
+      [1, (1 / 2 : ℝ) + s, (1 / 2 : ℝ) - s, 0] := by
+  rw [P33_linear_factors]
+  constructor
+  · apply Polynomial.Splits.multisetProd
+    intro f hf
+    obtain ⟨a, _, rfl⟩ := Multiset.mem_map.mp hf
+    exact Polynomial.Splits.X_sub_C a
+  · rw [Polynomial.roots_multiset_prod_X_sub_C, Multiset.coe_sort]
+    apply List.mergeSort_eq_self
+    obtain ⟨hs0, _, hs1⟩ := s_properties
+    simp [List.pairwise_cons]
+    constructor
+    · constructor
+      · linarith
+      · linarith
+    · constructor
+      · constructor <;> linarith
+      · linarith
+
+private theorem P33_spectrum :
+    (Pq 33).charpoly.Splits ∧ lambda2 (Pq 33) < 27 / 32 := by
+  refine ⟨P33_roots_sorted.1, ?_⟩
+  unfold lambda2
+  rw [P33_roots_sorted.2]
+  change (1 / 2 : ℝ) + s < 27 / 32
+  linarith [s_properties.2.2]
+
+theorem result : ¬ claim := by
+  intro hClaim
+  obtain ⟨hβpos, hβmono⟩ := beta4_spec
+  obtain ⟨hdec, habove, hcool, hden, hrate⟩ := step_conditions
+  have hP : glauber 2 adj4 E4 (beta4 (1 + 1)) = Pq 33 := by
+    have hb : beta4 (1 + 1) = Real.log 33 := by norm_num [beta4, q4]
+    rw [hb]
+    exact glauber_log 33 (by norm_num)
+  obtain ⟨hsplit, hSpec⟩ := P33_spectrum
+  have hsplit' : (glauber 2 adj4 E4 (beta4 (1 + 1))).charpoly.Splits := by
+    rw [hP]
+    exact hsplit
+  have hgap : (5 / 32 : ℝ) ≤ 1 - lambda2 (glauber 2 adj4 E4 (beta4 (1 + 1))) := by
+    rw [hP]
+    linarith
+  have hμ := hClaim 4 2 adj4 E4 beta4 run 1 (5 / 32)
+    (by norm_num) adj4_regular hβpos hβmono run_isSA hsplit'
+    (by norm_num) (by norm_num) hdec habove hcool hden hgap
+  exact (not_le_of_gt hrate) hμ
+
 end D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation
