@@ -21,9 +21,9 @@ internal sealed class EJMSingletonCacheDataDocument : IScribeDocumentDefinition
                 "The selected word supplies a new representative row and action. A later receipt verifies that action on the whole updated assignment, not merely a hash or prefix mask.", DescribeRole.Definition),
             Node("check-mirror-fields", "checkMirrorFields", "Check exact original raw fields once per mirror",
                 "The original raw hash and scaled lower are compared to the complete mirror row. The generic checked-raw-mirror theorem earns the entire original assignment equality from these fields.", DescribeRole.Definition),
-            Node("checkMirror", "checkMirror", "Compare each mirror with the original row",
+            Node("check-mirror", "checkMirror", "Compare each mirror with the original row",
                 "The Boolean checks equality of the entire partial-assignment function and equality of the exact integer lower with the original row.", DescribeRole.Definition),
-            Node("checkTransitions", "checkTransitions", "Check all actual unknown-coordinate transitions",
+            Node("check-transitions", "checkTransitions", "Check all actual unknown-coordinate transitions",
                 "Every unknown coordinate and all four outcomes are quantified. The entire new assignment must equal the actual partial action applied to the complete original updated representative.", DescribeRole.Definition))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

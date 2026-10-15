@@ -11,9 +11,9 @@ internal sealed class FiniteLocalRowCacheDocument : IScribeDocumentDefinition
         H("Exact local-row transition cache soundness"),
         Blocks(
             Paragraph(Text("A state associates an original row assignment with an actual partial event through an earned symmetry action. The generic theorem checks an entire transition assignment, transports the actual coordinate fill through the previous action, and composes the new action with the old one. It supplies no concrete table acceptance and does not substitute a producer premise for the actual row checker.")),
-            Node("Associated", "Associated", "Whole-function row association",
+            Node("associated", "Associated", "Whole-function row association",
                 "The original stored row assignment equals the actual partial action of the earned symmetry on the complete original partial event.", DescribeRole.Definition),
-            Node("checkTransition", "checkTransition", "Exact entire assignment transition check",
+            Node("check-transition", "checkTransition", "Exact entire assignment transition check",
                 "The next row assignment must equal the actual next action applied to the original row assignment with this coordinate and value filled.", DescribeRole.Definition),
             Node("step", "step", "Transport the real fill before a row transition",
                 "The old action determines the representative coordinate preimage and transformed value. The returned action is composed with the old earned action in the supplied proven order.", DescribeRole.Definition),

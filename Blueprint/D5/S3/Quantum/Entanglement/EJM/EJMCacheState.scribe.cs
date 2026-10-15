@@ -11,9 +11,9 @@ internal sealed class EJMCacheStateDocument : IScribeDocumentDefinition
         H("Thirty-two exact local cache proposals"),
         Blocks(
             Paragraph(Text("The executable cache stores sixteen triangle and sixteen singleton states. Each state carries a representative index, earned-action proposal and small mirror row. Retaining the row removes packed lower decoding at leaves, while its equality with the indexed mirror is a separate proved invariant. These definitions assert no score bound or replay acceptance.")),
-            Node("triangleStep", "triangleStep", "Transport and update an affected triangle state",
+            Node("triangle-step", "triangleStep", "Transport and update an affected triangle state",
                 "The old action sends the actual fill into representative coordinates and values. The per-row word supplies the new row and action, and the new action is composed with the old one in the checked order.", DescribeRole.Definition),
-            Node("singletonStep", "singletonStep", "Transport and update an affected singleton state",
+            Node("singleton-step", "singletonStep", "Transport and update an affected singleton state",
                 "The analogous actual singleton action and transition decode retain a new literal row for later arithmetic.", DescribeRole.Definition),
             Node("step", "step", "Update exactly the affected original blocks",
                 "Literal incidence selects each affected block's local coordinate. Blocks absent from the incidence retain their entire previous state and row literal.", DescribeRole.Definition),
