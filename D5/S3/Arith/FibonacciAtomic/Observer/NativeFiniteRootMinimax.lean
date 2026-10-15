@@ -57,7 +57,7 @@ private theorem imCode_spec (θ : Nat → Option Bool) (C : LiteralRow) :
   | mul l r =>
       simp [imCode, im, litCode_spec θ false, litCode_spec θ true, *]
 
-private theorem admissibleCode_spec (C : LiteralRow) (θ : Classes C → Option Bool) :
+theorem admissibleCode_spec (C : LiteralRow) (θ : Classes C → Option Bool) :
     admissibleCode C θ = true ↔ Admissible C θ := by
   unfold admissibleCode
   simp only [Bool.and_eq_true]
