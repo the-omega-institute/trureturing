@@ -104,3 +104,99 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms registration
 end Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization
+
+namespace Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Eigenvector
+
+abbrev signature : Signature where
+  Params := ℝ → ℝ
+  State _ := ℝ
+  Role := ULift.{u} Unit
+  finiteRole := Fintype.ofSubsingleton ⟨()⟩
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual := realize signature.{u} (fun _ f s => f s) (fun a => nomatch a)
+def rejected := realize signature.{u} (fun _ _ _ => 1) (fun a => nomatch a)
+
+def theoremLaw (R : Realization signature.{u}) : Prop :=
+  ∀ {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (T : H →L[ℂ] H) (hT : IsSelfAdjoint T) (s : ℝ) (v : H)
+    (hv : T v = (s : ℂ) • v) (f : ℝ → ℝ) (hf : ContinuousOn f (spectrum ℝ T)),
+    cfc f T v = (R.readout ⟨()⟩ f s : ℂ) • v
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law := theoremLaw
+
+theorem actual_law : arena.{u}.Law actual := by
+  intro H _ _ _ T hT s v hv f hf
+  exact cfc_apply_eigenvector T hT s v hv f hf
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let K := EuclideanSpace ℂ (ULift.{u} Unit)
+  let v : K := EuclideanSpace.single ⟨()⟩ 1
+  have hf := h (0 : K →L[ℂ] K) (by simp) 0 v (by simp)
+    (fun _ => 0) continuousOn_const
+  have hh : (0 : K) = v := by simpa [rejected, realize] using hf
+  have hv := congrArg (fun x : K => x (⟨()⟩ : ULift.{u} Unit)) hh
+  have hn : (0 : ℂ) = 1 := by
+    simpa only [v, EuclideanSpace.single, PiLp.zero_apply, PiLp.single_eq_same] using hv
+  exact zero_ne_one hn
+
+def family : Registration arena.{u} (arena.Law actual) where
+  actual := realize signature (fun _ f s => f s) (fun a => nomatch a)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨id, 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@QuantumLogEnergy.cfc_apply_eigenvector.{u})
+    (type_of% (realize signature.{u} (fun _ f s => f s) (fun a => nomatch a)))
+    Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Eigenvector.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Eigenvector.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ f s => f s) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Analysis.TraceClass.LogRegularization
+    definition := none
+    coordinates := #[9]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+end Reg.D5.S3.Quantum.Analysis.TraceClass.LogRegularization.Eigenvector

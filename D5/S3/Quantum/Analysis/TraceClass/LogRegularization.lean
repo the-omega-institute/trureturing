@@ -9,6 +9,11 @@
 import D5.S3.Quantum.Analysis.TraceClass.Pairing
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Order
 import Mathlib.Topology.Semicontinuity.Basic
+import Mathlib.Topology.ContinuousMap.StoneWeierstrass
+import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.Analysis.Normed.Operator.Banach
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Topology.Order.MonotoneConvergence
 
 /-!
 # Bounded logarithmic trace energies
@@ -108,6 +113,98 @@ private theorem shift_strictlyPositive {epsilon : ℝ} (he : 0 < epsilon)
     IsStrictlyPositive (T + algebraMap ℝ (H →L[ℂ] H) epsilon) :=
   IsStrictlyPositive.nonneg_add hT (isStrictlyPositive_algebraMap he)
 
+/-- Real functional calculus acts on every actual eigenvector, including the zero vector.
+No compactness, eigenbasis, or invertibility is assumed. -/
+theorem cfc_apply_eigenvector (T : H →L[ℂ] H) (hT : IsSelfAdjoint T)
+    (s : ℝ) (v : H) (hv : T v = (s : ℂ) • v) (f : ℝ → ℝ)
+    (hf : ContinuousOn f (spectrum ℝ T)) :
+    cfc f T v = (f s : ℂ) • v := by
+  by_cases hv0 : v = 0
+  · simp [hv0]
+  have hsC : (s : ℂ) ∈ spectrum ℂ T := by
+    rw [ContinuousLinearMap.spectrum_eq]
+    exact (Module.End.hasEigenvalue_of_hasEigenvector
+      (show Module.End.HasEigenvector T.toLinearMap (s : ℂ) v from
+        ⟨Module.End.mem_eigenspace_iff.mpr hv, hv0⟩)).mem_spectrum
+  have hs : s ∈ spectrum ℝ T := spectrum.of_algebraMap_mem ℂ hsC
+  let x : spectrum ℝ T := ⟨s, hs⟩
+  let p : C(spectrum ℝ T, ℝ) → Prop := fun g =>
+    (cfcHom hT g) v = (g x : ℂ) • v
+  have hclosed : IsClosed {g | p g} := by
+    exact isClosed_eq
+      ((cfcHom_continuous hT).clm_apply continuous_const)
+      ((Complex.continuous_ofReal.comp (ContinuousMap.evalCLM (R := ℝ) x).continuous).smul
+        continuous_const)
+  have hp (g : C(spectrum ℝ T, ℝ)) : p g := by
+    induction g using ContinuousMap.induction_on_of_compact with
+    | const r =>
+        change (cfcHom hT (algebraMap ℝ C(spectrum ℝ T, ℝ) r)) v = _
+        rw [Algebra.algebraMap_eq_smul_one, map_smul, map_one]
+        simp [x, Complex.coe_smul]
+    | id => simpa [p, x, cfcHom_id] using hv
+    | star_id => simpa only [star_trivial] using (show p _ from by
+        simpa [p, x, cfcHom_id] using hv)
+    | add g h hg hh =>
+        change (cfcHom hT (g + h)) v = _
+        rw [map_add, ContinuousLinearMap.add_apply, hg, hh]
+        simp [add_smul]
+    | mul g h hg hh =>
+        change (cfcHom hT (g * h)) v = _
+        rw [map_mul, ContinuousLinearMap.mul_apply, hh, map_smul, hg]
+        simp only [ContinuousMap.mul_apply, Complex.ofReal_mul, mul_smul]
+        exact smul_comm _ _ _
+    | frequently g hg =>
+        exact hg.mem_of_closed hclosed
+  rw [cfc_apply f T hT hf]
+  exact hp _
+
+private theorem continuousOn_log_shift {epsilon : ℝ} (he : 0 < epsilon)
+    {T : H →L[ℂ] H} (hT : 0 ≤ T) :
+    ContinuousOn (fun x : ℝ => Real.log (x + epsilon)) (spectrum ℝ T) := by
+  apply ContinuousOn.log (continuousOn_id.add continuousOn_const)
+  intro x hx
+  exact ne_of_gt (add_pos_of_nonneg_of_pos (spectrum_nonneg_of_nonneg hT hx) he)
+
+private theorem logRegularization_eq_cfc {epsilon : ℝ} (he : 0 < epsilon)
+    {T : H →L[ℂ] H} (hT : 0 ≤ T) :
+    logRegularization epsilon T =
+      cfc (fun x : ℝ => Real.log (1 + epsilon) - Real.log (x + epsilon)) T := by
+  have hsa : IsSelfAdjoint T := .of_nonneg hT
+  have hc := continuousOn_log_shift he hT
+  rw [cfc_sub _ _ T continuousOn_const hc, cfc_const _ T hsa]
+  unfold logRegularization CFC.log
+  congr 1
+  have hid : cfc (fun x : ℝ => x + epsilon) T =
+      T + algebraMap ℝ (H →L[ℂ] H) epsilon := by
+    simpa only [id_eq, cfc_id ℝ T hsa] using
+      (cfc_add_const epsilon id T continuousOn_id hsa)
+  have hlog : ContinuousOn Real.log ((fun x : ℝ => x + epsilon) '' spectrum ℝ T) := by
+    apply ContinuousOn.log continuousOn_id
+    rintro y ⟨x, hx, rfl⟩
+    exact ne_of_gt (add_pos_of_nonneg_of_pos (spectrum_nonneg_of_nonneg hT hx) he)
+  rw [← hid, ← cfc_comp' Real.log (fun x : ℝ => x + epsilon) T hlog
+    (continuousOn_id.add continuousOn_const) hsa]
+
+/-- Decreasing a positive regularization parameter increases the actual operator.
+The comparison is made on the spectrum of the same positive contraction. -/
+theorem logRegularization_parameter_antitone {a b : ℝ} (ha : 0 < a) (hab : a ≤ b)
+    {T : H →L[ℂ] H} (hT : 0 ≤ T) (hT1 : T ≤ 1) :
+    logRegularization b T ≤ logRegularization a T := by
+  have hb : 0 < b := ha.trans_le hab
+  rw [logRegularization_eq_cfc hb hT, logRegularization_eq_cfc ha hT]
+  apply (cfc_le_iff _ _ T
+    (continuousOn_const.sub (continuousOn_log_shift hb hT))
+    (continuousOn_const.sub (continuousOn_log_shift ha hT)) (.of_nonneg hT)).mpr
+  intro x hx
+  have hx0 := spectrum_nonneg_of_nonneg hT hx
+  have hx1 : x ≤ 1 := (CFC.le_one_iff (R := ℝ) T (.of_nonneg hT)).mp hT1 x hx
+  change Real.log (1 + b) - Real.log (x + b) ≤ Real.log (1 + a) - Real.log (x + a)
+  rw [← Real.log_div (by positivity) (by positivity),
+    ← Real.log_div (by positivity) (by positivity)]
+  apply Real.log_le_log (by positivity)
+  apply (div_le_div_iff₀ (by positivity : 0 < x + b) (by positivity : 0 < x + a)).mpr
+  nlinarith
+
 /-- The bounded regularization is positive for every positive contraction. -/
 theorem logRegularization_nonneg {epsilon : ℝ} (he : 0 < epsilon)
     {T : H →L[ℂ] H} (hT : 0 ≤ T) (hT1 : T ≤ 1) :
@@ -188,6 +285,188 @@ theorem regularizedSupremum_antitone (P Q : Reference H) (hPQ : P.1.1 ≤ Q.1.1)
   intro n
   exact ENNReal.ofReal_le_ofReal
     (regularizedEnergy_antitone (by positivity : 0 < ((n : ℝ) + 1)⁻¹) P.2.1 hPQ rho hrho)
+
+/-- The real trace expectation increases along the inverse-natural grid. -/
+theorem monotone_regularizedEnergy (T : Reference H) (rho : TraceClass H)
+    (hrho : 0 ≤ rho.1) :
+    Monotone (fun n : ℕ => regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 rho) := by
+  intro m n hmn
+  apply tracePairing_mono _ rho hrho
+  apply logRegularization_parameter_antitone (by positivity) _ T.2.1 T.2.2
+  exact inv_anti₀ (by positivity) (by exact_mod_cast Nat.add_le_add_right hmn 1)
+
+/-- Finite nonnegative mixtures in the trace-class argument preserve the actual
+operator-defined extended supremum, including zero coefficients and infinite energies. -/
+theorem regularizedSupremum_nonneg_linear (T : Reference H) (rho gamma : TraceClass H)
+    (hrho : 0 ≤ rho.1) (hgamma : 0 ≤ gamma.1) (a b : ℝ)
+    (ha : 0 ≤ a) (hb : 0 ≤ b) :
+    regularizedSupremum T ((a : ℂ) • rho + (b : ℂ) • gamma) =
+      ENNReal.ofReal a * regularizedSupremum T rho +
+        ENNReal.ofReal b * regularizedSupremum T gamma := by
+  have hlin (e : ℝ) : regularizedEnergy e T.1.1 ((a : ℂ) • rho + (b : ℂ) • gamma) =
+      a * regularizedEnergy e T.1.1 rho + b * regularizedEnergy e T.1.1 gamma := by
+    unfold regularizedEnergy TraceClass.tracePairing
+    simp only [map_add, map_smul, Complex.add_re, smul_eq_mul, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+  have hf : Monotone (fun n : ℕ => ENNReal.ofReal a *
+      ENNReal.ofReal (regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 rho)) :=
+    fun m n h => mul_le_mul_right (ENNReal.ofReal_le_ofReal
+      (monotone_regularizedEnergy T rho hrho h)) _
+  have hg : Monotone (fun n : ℕ => ENNReal.ofReal b *
+      ENNReal.ofReal (regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 gamma)) :=
+    fun m n h => mul_le_mul_right (ENNReal.ofReal_le_ofReal
+      (monotone_regularizedEnergy T gamma hgamma h)) _
+  have hpoint (n : ℕ) : ENNReal.ofReal (regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1
+      ((a : ℂ) • rho + (b : ℂ) • gamma)) =
+      ENNReal.ofReal a * ENNReal.ofReal (regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 rho) +
+      ENNReal.ofReal b * ENNReal.ofReal (regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 gamma) := by
+    rw [hlin, ENNReal.ofReal_add
+      (mul_nonneg ha (regularizedEnergy_nonneg (by positivity) T rho hrho))
+      (mul_nonneg hb (regularizedEnergy_nonneg (by positivity) T gamma hgamma)),
+      ENNReal.ofReal_mul ha, ENNReal.ofReal_mul hb]
+  simp_rw [regularizedSupremum, hpoint]
+  rw [ENNReal.mul_iSup, ENNReal.mul_iSup, ENNReal.iSup_add_iSup_of_monotone hf hg]
+
+/-- Multiplication by a scalar in `(0,1]` gives an actual positive trace-class contraction. -/
+def scaleReference (T : Reference H) (w : ℝ) (hw : 0 < w) (hw1 : w ≤ 1) : Reference H :=
+  ⟨(w : ℂ) • T.1, by
+    change 0 ≤ (w : ℂ) • T.1.1 ∧ (w : ℂ) • T.1.1 ≤ 1
+    rw [Complex.coe_smul]
+    exact ⟨smul_nonneg hw.le T.2.1,
+      (smul_le_smul_of_nonneg_left T.2.2 hw.le).trans (by simpa using
+        (smul_le_smul_of_nonneg_right hw1 (show (0 : H →L[ℂ] H) ≤ 1 from zero_le_one)))⟩⟩
+
+private theorem logRegularization_smul {e w : ℝ} (he : 0 < e) (hw : 0 < w)
+    {T : H →L[ℂ] H} (hT : 0 ≤ T) :
+    logRegularization e (w • T) = logRegularization (e / w) T +
+      algebraMap ℝ (H →L[ℂ] H) (Real.log ((1 + e) / (w + e))) := by
+  have hshift : w • T + algebraMap ℝ (H →L[ℂ] H) e =
+      w • (T + algebraMap ℝ (H →L[ℂ] H) (e / w)) := by
+    rw [smul_add, Algebra.smul_def w (algebraMap ℝ (H →L[ℂ] H) (e / w)),
+      ← map_mul, mul_div_cancel₀ e hw.ne']
+  rw [logRegularization, hshift, CFC.log_smul' _ hw
+    (shift_strictlyPositive (div_pos he hw) hT), logRegularization]
+  have hc : Real.log (1 + e) - Real.log w - Real.log (1 + e / w) =
+      Real.log ((1 + e) / (w + e)) := by
+    rw [Real.log_div (by positivity) (by positivity)]
+    have hd : 1 + e / w = (w + e) / w := by field_simp
+    rw [hd, Real.log_div (by positivity) hw.ne']
+    ring
+  rw [← hc, map_sub, map_sub]
+  abel
+
+private theorem regularizedEnergy_smul {e w : ℝ} (he : 0 < e) (hw : 0 < w)
+    {T : H →L[ℂ] H} (hT : 0 ≤ T) (rho : TraceClass H) :
+    regularizedEnergy e (w • T) rho = regularizedEnergy (e / w) T rho +
+      (trace rho.1 (TraceClass.isTraceClass_coe rho)).re *
+        Real.log ((1 + e) / (w + e)) := by
+  unfold regularizedEnergy
+  rw [logRegularization_smul he hw hT]
+  change (TraceClass.tracePairingContinuousLinearMap (_ + _) rho).re = _
+  rw [map_add, ContinuousLinearMap.add_apply, Complex.add_re]
+  congr 1
+  rw [Algebra.algebraMap_eq_smul_one]
+  have hs : (Real.log ((1 + e) / (w + e))) • (1 : H →L[ℂ] H) =
+      (Real.log ((1 + e) / (w + e)) : ℂ) • (1 : H →L[ℂ] H) := by
+    rw [Complex.coe_smul]
+  rw [hs, map_smul, ContinuousLinearMap.smul_apply, smul_eq_mul, Complex.mul_re]
+  simp only [Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+  rw [TraceClass.tracePairingContinuousLinearMap_apply, TraceClass.tracePairing_apply]
+  simp only [one_mul]
+  ring
+
+private theorem grid_tendsto_zero :
+    Filter.Tendsto (fun n : ℕ => ((n : ℝ) + 1)⁻¹) Filter.atTop (nhds 0) := by
+  simpa only [one_div] using (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ))
+
+private theorem regularizedEnergy_le_supremum (T : Reference H) (rho : TraceClass H)
+    (hrho : 0 ≤ rho.1) {e : ℝ} (he : 0 < e) :
+    ENNReal.ofReal (regularizedEnergy e T.1.1 rho) ≤ regularizedSupremum T rho := by
+  obtain ⟨n, hn⟩ := (grid_tendsto_zero.eventually (gt_mem_nhds he)).exists
+  exact le_trans (ENNReal.ofReal_le_ofReal (tracePairing_mono
+    (logRegularization_parameter_antitone (by positivity) hn.le T.2.1 T.2.2) rho hrho))
+    (le_iSup (fun n : ℕ => ENNReal.ofReal (regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 rho)) n)
+
+private theorem regularizedSupremum_eq_cofinal (T : Reference H) (rho : TraceClass H)
+    (hrho : 0 ≤ rho.1) (e : ℕ → ℝ) (he : ∀ n, 0 < e n)
+    (ht : Filter.Tendsto e Filter.atTop (nhds 0)) :
+    regularizedSupremum T rho = ⨆ n, ENNReal.ofReal (regularizedEnergy (e n) T.1.1 rho) := by
+  apply le_antisymm
+  · apply iSup_le
+    intro m
+    obtain ⟨n, hn⟩ := (ht.eventually (gt_mem_nhds (by positivity : 0 < ((m : ℝ) + 1)⁻¹))).exists
+    exact le_iSup_of_le n (ENNReal.ofReal_le_ofReal (tracePairing_mono
+      (logRegularization_parameter_antitone (he n) hn.le T.2.1 T.2.2) rho hrho))
+  · exact iSup_le fun n => regularizedEnergy_le_supremum T rho hrho (he n)
+
+private theorem scaleCorrection_nonneg {e w : ℝ} (he : 0 < e) (hw : 0 < w) (hw1 : w ≤ 1) :
+    0 ≤ Real.log ((1 + e) / (w + e)) := by
+  apply Real.log_nonneg
+  exact (le_div_iff₀ (by positivity : 0 < w + e)).mpr (by linarith)
+
+private theorem scaleCorrection_antitone {a b w : ℝ} (ha : 0 < a) (hab : a ≤ b)
+    (hw : 0 < w) (hw1 : w ≤ 1) :
+    Real.log ((1 + b) / (w + b)) ≤ Real.log ((1 + a) / (w + a)) := by
+  have hb := ha.trans_le hab
+  apply Real.log_le_log (by positivity)
+  apply (div_le_div_iff₀ (by positivity : 0 < w + b) (by positivity : 0 < w + a)).mpr
+  nlinarith
+
+/-- Scaling a singular reference adds its logarithmic normalization cost times the
+actual, unnormalized real trace mass. No logarithm is applied to an unshifted singular operator. -/
+theorem regularizedSupremum_scaleReference (T : Reference H) (rho : TraceClass H)
+    (hrho : 0 ≤ rho.1) (w : ℝ) (hw : 0 < w) (hw1 : w ≤ 1) :
+    regularizedSupremum (scaleReference T w hw hw1) rho = regularizedSupremum T rho +
+      ENNReal.ofReal (trace rho.1 (TraceClass.isTraceClass_coe rho)).re *
+        ENNReal.ofReal (-Real.log w) := by
+  let e : ℕ → ℝ := fun n => w * ((n : ℝ) + 1)⁻¹
+  have he (n : ℕ) : 0 < e n := mul_pos hw (by positivity)
+  have ht : Filter.Tendsto e Filter.atTop (nhds 0) := by
+    simpa [e] using grid_tendsto_zero.const_mul w
+  have hmass := re_trace_nonneg (TraceClass.isTraceClass_coe rho) hrho
+  have hcoeff : Monotone (fun n : ℕ => ENNReal.ofReal
+      (Real.log ((1 + e n) / (w + e n)))) := by
+    intro m n hmn
+    apply ENNReal.ofReal_le_ofReal
+    exact scaleCorrection_antitone (he n)
+      (mul_le_mul_of_nonneg_left (inv_anti₀ (by positivity)
+        (by exact_mod_cast Nat.add_le_add_right hmn 1)) hw.le) hw hw1
+  have hcoefflim : Filter.Tendsto (fun n : ℕ => ENNReal.ofReal
+      (Real.log ((1 + e n) / (w + e n)))) Filter.atTop
+      (nhds (ENNReal.ofReal (-Real.log w))) := by
+    have hreal := ((Filter.Tendsto.const_add 1 ht).div (Filter.Tendsto.const_add w ht)
+      (by simpa using hw.ne')).log (by positivity : (1 + 0) / (w + 0) ≠ 0)
+    simpa only [Function.comp_def, Pi.div_apply, add_zero, one_div, Real.log_inv] using
+      ENNReal.continuous_ofReal.continuousAt.tendsto.comp hreal
+  rw [regularizedSupremum_eq_cofinal (scaleReference T w hw hw1) rho hrho e he ht]
+  have hterm (n : ℕ) : regularizedEnergy (e n) (scaleReference T w hw hw1).1.1 rho =
+      regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 rho +
+        (trace rho.1 (TraceClass.isTraceClass_coe rho)).re *
+          Real.log ((1 + e n) / (w + e n)) := by
+    change regularizedEnergy (e n) ((w : ℂ) • T.1.1) rho = _
+    rw [Complex.coe_smul, regularizedEnergy_smul (he n) hw T.2.1 rho]
+    congr 2
+    dsimp [e]
+    field_simp
+  have hpoint (n : ℕ) : ENNReal.ofReal
+      (regularizedEnergy (e n) (scaleReference T w hw hw1).1.1 rho) =
+      ENNReal.ofReal (regularizedEnergy ((n : ℝ) + 1)⁻¹ T.1.1 rho) +
+        ENNReal.ofReal (trace rho.1 (TraceClass.isTraceClass_coe rho)).re *
+          ENNReal.ofReal (Real.log ((1 + e n) / (w + e n))) := by
+    rw [hterm, ENNReal.ofReal_add (regularizedEnergy_nonneg (by positivity) T rho hrho)
+      (mul_nonneg hmass (scaleCorrection_nonneg (he n) hw hw1)), ENNReal.ofReal_mul hmass]
+  simp_rw [hpoint]
+  rw [← ENNReal.iSup_add_iSup_of_monotone
+    (fun m n h => ENNReal.ofReal_le_ofReal (monotone_regularizedEnergy T rho hrho h))
+    (fun m n h => mul_le_mul_right (hcoeff h) _), ← ENNReal.mul_iSup,
+    iSup_eq_of_tendsto hcoeff hcoefflim]
+  rfl
+
+#print axioms regularizedSupremum_scaleReference
+
+#print axioms cfc_apply_eigenvector
+#print axioms logRegularization_parameter_antitone
+#print axioms regularizedSupremum_nonneg_linear
 
 #print axioms tracePairing_nonneg
 #print axioms density_le_one
