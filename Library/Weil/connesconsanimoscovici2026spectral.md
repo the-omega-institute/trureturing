@@ -514,6 +514,146 @@ independent 2560-bit execution. Exact-phase, finite-cutoff-shift and
 Hurwitz-progression checks support the interface; they do not supply
 a matrix error or positivity certificate.
 
+### A uniform error for the actual infinite far-coupling Gram
+
+The [same arithmetic input](https://github.com/the-omega-institute/trureturing-experiments/tree/main/docs/reports/weil-c27)
+applies the finite geometric mechanism of the existing
+[Cauchy jets](../../D5/S3/Weil/ZetaBridge/WeilArchimedeanTailJet.lean)
+to the actual discrete divided difference. The continuous Gamma
+realization is not substituted for the discrete coupling. In the
+phase-adjusted even basis its rows are
+
+$$
+C_{m0}=-\frac{\sqrt2s_m}{\pi m},\qquad
+C_{mn}=\frac{2(ns_n-ms_m)}{\pi(m^2-n^2)},\quad m>M>N,\ 1\le n\le N.
+$$
+
+For $x_n=n/M$, $t=M/m$ and $0\le k<R$, retain all features
+
+$$
+A_k(v)=\mathbf1_{k=0}\frac{v_0}{\sqrt2}
++\sum_{n=1}^Nx_n^{2k}v_n,\qquad
+B_k(v)=\sum_{n=1}^Ns_nx_n^{2k+1}v_n.
+$$
+
+The jet $J_m(v)=2(\pi m)^{-1}\sum_{k<R}t^{2k}(tB_k-s_mA_k)$
+has the exact common Gram
+
+$$
+J^*J=\alpha P^*HP,\quad\alpha=\frac4{\pi^2M},\qquad
+H_{AA,kl}=\mathsf U_{2k+2l+2},\quad
+H_{AB,kl}=-\mathsf T_{2k+2l+3},\quad
+H_{BB,kl}=M^{2k+2l+3}\zeta(2k+2l+4,M+1),
+$$
+
+where $P$ lists the A and B features. Absolute convergence follows from
+the existing symbol bound. This keeps every actual signed cross term.
+For the centered unphased basis, multiply column $n$ of $P$ by
+$(-1)^n$; exterior row parity disappears in the Gram.
+
+The finite geometric identity gives $(C-J)_{m0}=0$ and
+$(C-J)_{mn}=C_{mn}(n/m)^{2R}$. With $q_0=N/M$,
+$\kappa=1-N/(M+1)$ and the existing $|s_m|\le B_*$, the bound
+$|C_{mn}|\le2B_*/(\pi(m-n))$ and the integral inverse-power tail give
+
+$$
+\|C\|^2\le c_2:=\frac{B_*^2}{\pi^2M}
+\left(\frac{4N}{\kappa^2}+2\right),\qquad
+\|C-J\|^2\le r_2:=
+\frac{4B_*^2Nq_0^{4R}}{\pi^2\kappa^2M(4R+1)}.
+$$
+
+Here the norms can first be bounded by the corresponding Frobenius
+norms. The whole Gram error is
+
+$$
+\|C^*C-J^*J\|\le\eta_{\rm geom}:=2\sqrt{c_2r_2}+r_2.
+$$
+
+Using $r_2$ alone would omit the cross with the retained jet. At
+$N=1280$, $M=32768$, the geometric Gram error divided by $h_{M+1}$
+has base-two logarithm about $-302.1202$ at $R=32$, and $-527.0689$
+at $R=56$. These are scalar evaluations of the displayed error, not
+retained eigenvalue or positivity readings.
+
+The number of supplied moment diagonals can be smaller than the jet
+order would require for its full Gram. Let $H^{(d)}$ keep only $k+l<d$
+in every block. For $q_0>0$, scale by
+$D_q=\operatorname{diag}((q_0^{2k})_k,(q_0^{2k})_k)$ and put
+$\widetilde P=D_q^{-1}P$. The actual features give
+
+$$
+\|\widetilde P\|^2\le L_R^2:=1/2+RN(1+B_*^2q_0^2).
+$$
+
+The elementary bounds $|\mathsf T_p|\le B_* /(p-1)$,
+$\mathsf U_p\le B_*^2/(p-1)$ and
+$M^{p-1}\zeta(p,M+1)\le1/(p-1)$ imply, using $B_*\ge1$, that every
+absolute row sum of $D_q(H-H^{(d)})D_q$ is at most
+
+$$
+\tau_d=\frac{q_0^{2d}}{1-q_0^2}
+\left(\frac{B_*^2}{2d+1}+\frac{B_*}{2d+2}\right).
+$$
+
+The symmetric row bound therefore supplies
+$\|J^*J-\alpha P^*H^{(d)}P\|\le
+\eta_{\rm core}:=\alpha L_R^2\tau_d$.
+At $d=2R-1$ there are no omitted entries, so use $\tau_d=0$.
+For $N=0$ the omitted features vanish and the error is zero directly.
+The default $d=R$ keeps all moments in the first feature row and column,
+including the exact zero-mode contribution. Missing signed entries are
+paid by $\eta_{\rm core}$; the sparse core is not assumed positive.
+
+Finite input errors are paid on the same matrix. Write
+$p_2=1/2+N(1+B_*^2q_0^2)/(1-q_0^4)$ and let $\epsilon_s$ bound
+the original low-symbol midpoint errors. For the dyadic midpoint of
+$1/\sqrt2$, let its error be $\epsilon_a$. Exact rational powers
+in $P_0$ give
+
+$$
+\|P\|_F\le\sqrt{p_2},\qquad
+\|P-P_0\|_F\le e_P:=
+\sqrt{\epsilon_a^2+\epsilon_s^2Nq_0^2/(1-q_0^4)}.
+$$
+
+Every normalized moment interval has width at most two $2^{-b}$ grid
+units, so its single sparse midpoint matrix satisfies
+$\|H^{(d)}-H_0\|\le e_H=2R2^{-b}$. Since $H$ is the genuine positive
+moment Gram, masking entries gives
+$\|H^{(d)}\|\le\|H^{(d)}\|_F\le\|H\|_F\le\operatorname{Tr}H$.
+Its trace is at most
+$H_*=\sum_{k<R}(B_*^2/(4k+1)+1/(4k+3))$. For
+$p_0=\sqrt{p_2}+e_P$ and $|\alpha-\alpha_0|\le\epsilon_\alpha$,
+the full additional error is at most
+
+$$
+\eta_{\rm round}=
+\alpha\bigl[H_*(2\sqrt{p_2}e_P+e_P^2)+p_0^2e_H\bigr]
++\epsilon_\alpha p_0^2(H_*+e_H).
+$$
+
+This also pays prefactor rounding and permits $H_0$ to be indefinite.
+Use the existing increasing
+$h_m=\log(m/\log27)-\log27/(\pi m)-59/10$ and an upward dyadic
+$D\ge h_{M+1}^{-1}>0$. The explicit sufficient far-debit input is
+
+$$
+\sum_{m>M}h_m^{-1}C_m^*C_m
+\preceq D\alpha_0P_0^*H_0P_0
++D(\eta_{\rm geom}+\eta_{\rm core}+\eta_{\rm round})I.
+$$
+
+The R56 application uses 112 features with $d=56$: 56 U-moments through
+power112, 56 T-moments through113 and 56 Hurwitz moments through114.
+The seven applicable published scalar moments are reused. The full
+111-diagonal alternative remains optional. The executable supplies exact rational factors
+and checks the total weighted operator allowance against $2^{-500}$,
+including all moment, feature and prefactor errors. This is a
+paper-level discrete application and numerical input, not a new
+geometric-series or Schur theorem. Every middle row $1281\le m\le32768$,
+the retained sign and cofinal positivity remain separate obligations.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
