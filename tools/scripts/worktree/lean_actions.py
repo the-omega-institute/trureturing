@@ -494,7 +494,8 @@ def resume_snapshot(root, spec):
 
 def resume_restore(root, spec, key, outcome):
     resume_record(root).unlink(missing_ok=True)
-    if outcome in ("", "skipped") or (outcome == "success" and not key):
+    # A lookup miss skips extraction; every attempted restore must supply its key.
+    if outcome in ("", "skipped"):
         receipt("resume", "miss", reason="Actions supplied no continuation")
         return
     try:
