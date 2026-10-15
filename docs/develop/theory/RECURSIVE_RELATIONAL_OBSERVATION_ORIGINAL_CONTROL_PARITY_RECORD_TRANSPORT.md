@@ -15,15 +15,10 @@ both contracts and a sharp finite-checkpoint memory update when the record
 may change. They do not construct the initial record.
 
 These are ordinary finite-dimensional mathematical proofs. They have no new
-Lean/kernel verification, independent-review status or physical realization
-claim. The geometric source and its exact chronological composition are
-credited suppliers. The mature Gram/isometry criterion is also credited;
-the deductions here concern its particular original-source inputs and
-retained-record constraints. Mathematical authorship is an isolated
-delegated `codex-cli` author using the repository's
-`formal-thinking-and-answer` and `theory-volume-template` skills. The supplied
-prior-stage proposals are fallible inputs, consolidated into the proofs here;
-this attribution confers no review or consensus status.
+Lean/kernel verification or physical realization claim. The geometric source
+and its exact chronological composition are credited suppliers. The mature
+Gram/isometry criterion is also credited; the deductions here concern its
+particular original-source inputs and retained-record constraints.
 
 **Convention 1.1 (additional operation class).** The assisted service in this
 volume is a common calibrated quantum instrument acting jointly on the live
@@ -959,19 +954,6 @@ The bibliographic leads DOI `10.1063/1.4961516`,
 `10.1090/S0025-5718-01-01307-2` and `10.5402/2011/164564` have no verified
 primary text in this source's evidence boundary. No theorem premise is
 imported from them. The proofs above do not depend on those leads.
-
-**Finite arithmetic 10.3.** Exact rational vertex enumeration agrees with
-(PR.14) on 6498 contract/parameter cases:
-$\mu=i/8$, $0\leq i\leq8$, and $u,v=j/10$,
-$-9\leq j\leq9$, for both C and R. The enumeration minimizes $e=1-p$
-over intersections of pairs of boundary lines of (PR.10) or (PR.11),
-including $0\leq e\leq1$. It checks both optima and $p_R\leq p_C$.
-Exact substitution checks (PR.31)–(PR.32) for 297 finite schedules:
-$\mu=i/32$, $0\leq i\leq32$, and $0\leq n\leq8$.
-The rational witnesses (PR.19)–(PR.20) are also checked by substitution.
-These finite calculations check the displayed arithmetic; the universal
-claims rest on the ordinary proofs. No experimental programme or dataset
-is part of this volume.
 
 ## 11. Application and the remaining acquired-observer bridge
 

@@ -7,15 +7,10 @@
 
 ## 1. Mathematical scope and the acquisition consumer
 
-**Convention 1.1 (reference input and authorship).** This volume contains
+**Convention 1.1 (reference input).** This volume contains
 ordinary mathematical definitions and proofs, without new Lean verification,
 physical implementation or a completion claim. Lean declarations remain the
-repository's mathematical source of truth. The mathematical author is the
-isolated delegated `sampling-author`, carried by `codex-cli`, using the
-formal-thinking-and-answer and theory-volume-template skills. The supplied
-teleology and natural-ownership research conclusions are fallible inputs to
-one combined construction; the proofs below carry its ordinary mathematical
-claims. No independent review status is asserted.
+repository's mathematical source of truth.
 
 All repository suppliers here are read at immutable revision
 `5094da88f161741b61de3b6b16dbc3a115a83d63`. The four credited volumes are
@@ -993,18 +988,6 @@ P&=2433/4194304,\\
 \end{aligned}
 \tag{SC.33}
 $$
-
-Bounded exact in-memory rational checks cover 45 single-jump interpolation
-cases, including midpoint equality in both BV constants; 124 phase-error
-sign cases with $1\leq n\leq5$ verifying (SC.14) and its bound; 500
-noiseless triangular-gap admissibility cases with $8\leq M_N\leq32$ and
-all $1\leq J\leq M_N$; 39 noisy triangular families with $2\leq n\leq40$;
-and the budget (SC.33), totaling 709 cases. Direct exact survival-product
-comparisons on the 500 and 39 triangular cases also verify the lower
-inequalities $1-S\geq vT/(2a)$ and $1-S\geq n\delta/a$, respectively,
-giving 1,248 finite checks in total. The universal quantifiers and
-arbitrary-reference claims follow from the displayed ordinary proofs,
-not those finite checks. No experiment scripts or data are retained.
 
 **Open boundary 11.4 (what this bridge does not deliver).** The finite
 table supplies strong derivative and terminal-character data for a restricted

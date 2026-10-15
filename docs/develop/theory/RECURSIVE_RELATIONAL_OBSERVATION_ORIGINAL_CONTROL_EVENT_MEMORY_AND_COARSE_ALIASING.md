@@ -27,13 +27,9 @@ output metric of
 §1. These consumers distinguish an old event from a newly drawn event
 having the same marginal distribution.
 
-These are ordinary mathematical proofs and bounded exact arithmetic checks.
-This source carries no new Lean/kernel verification, independent-review
-claim, physical implementation or full-programme completion. Its authorship
-is the delegated `event-memory-author` on `codex-cli`, using the repository's
-default reasoning skill and theory-volume template within a theory-only
-assignment. Lean declarations and Blueprint applications below are credited
-suppliers; reading them is not a new compilation.
+These are ordinary mathematical proofs. This source carries no new
+Lean/kernel verification, physical implementation or full-programme completion.
+Lean declarations and Blueprint applications below are credited suppliers.
 
 All repository suppliers are selected at the immutable revision
 `5094da88f161741b61de3b6b16dbc3a115a83d63`. Mature finite-dimensional
@@ -789,19 +785,6 @@ mature mathematics. Bounded searches in the pinned original-control
 volumes and relevant quantum/observer-memory declarations locate the
 credited triangular construction and prior qualitative record limitations;
 they do not establish an exhaustive literature search or worldwide novelty.
-
-Bounded in-memory rational checks pass 16,425 assertions. They cover
-the smooth source at 33 rational times; reflected controls at 1,824
-interior points using $c\in\{1/5,1/3,2/5\}$, seven partitions including
-irregular cells and uniform grids of 2, 3, 8 and 17 cells, and four local
-fractions on each half-cell; exact hazards, all five loss coefficients,
-support and speed margins, coarse effects, midpoint derivative jumps
-and the event masses in (EM.25). They also check 153 abstract bin-label
-codes with $1\leq D\leq9$, $1\leq M\leq17$, including their coupled
-TV error and attained success probability. No experiment scripts or data
-are retained. The universal claims, arbitrary-reference equality and
-continuous-time obstruction rest on the ordinary proofs, not these finite
-checks. No Lean or Blueprint source is written or compiled for this volume.
 
 ## 8. What the event relation changes, and what remains unresolved
 
