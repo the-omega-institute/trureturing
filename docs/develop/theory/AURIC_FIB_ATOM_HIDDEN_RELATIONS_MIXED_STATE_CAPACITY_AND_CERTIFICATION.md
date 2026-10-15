@@ -3633,3 +3633,392 @@ C-112.4 的合同指定固定 Schur 通道在每个复输入上的精确作用�
 同载体固定参考解释以及环境／通道嵌入反例；不主张全球原创性或锐噪声转变。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 113. 未匹配质量的环境证书、整个通道分离与共同白噪声
+
+本章固定 C-108–C-112 的原坐标 $B=(0,1,2,3,13)$、
+$f=(0\ 13)(1\ 3)$、$f(2)=2$、原切口 $A\mid B$、
+$J e_j=|B_j,f(B_j)\rangle$ 以及同一条件性实际局部历史菜单。
+辅助编号 $j=0,\ldots,4$ 不更换原基。记
+$\Gamma_t^x=JC_t^xJ^\dagger$，$x\in\{{\rm F},{\rm E}\}$，
+$P=JJ^\dagger$、$Q=I_{25}-P$。
+以下竞争态遍历整个 $\mathbb C^5\otimes\mathbb C^5$ 的复密度态；
+竞争端口仍是任意有限旗、整个块 CPTP、全部量子路径经过块的原端口类。
+不要求竞争者保持基人口、匹配支持、幺性、协变性或固定旗数。
+
+**定理 C-113.1（惩罚未匹配质量的原切口三阶环境证书）。** 设
+$127/129<t\le1$，定义
+
+$$
+\delta=\frac{129t-127}{15},\quad e=\frac\delta2,\quad
+L=1+\frac{121}{e},\quad
+\mathcal W_t=J(\mathsf W+eI_5)J^\dagger+LQ,\quad
+B_t=L+1-e.
+\tag{C113.1}
+$$
+
+则对每个 Schmidt number 至多三的环境密度态 $\sigma$，
+
+$$
+\operatorname{tr}(\mathcal W_t\sigma)\ge0,\qquad
+\operatorname{tr}(\mathcal W_t\Gamma_t^{\rm F})=-e,\qquad
+\|\sigma-\Gamma_t^{\rm F}\|_1\ge d_{t,0}:=\frac{2e}{B_t}>0.
+\tag{C113.2}
+$$
+
+范数采用完整迹范数，不除以二。因此开球半径 $d_{t,0}$ 内的每个环境密度态，
+包括未匹配质量非零和有匹配／未匹配交叉相干者，其 Schmidt number 均至少四。
+
+证明。对任意环境纯向量，在固定局部标签识别 $V,W$ 中写成
+$\psi=\sum_{j,k}M_{jk}Ve_j\otimes We_k$；$M$ 是任意复矩阵，
+Schmidt 秩等于 $\operatorname{rank}M$，不取实部也不取共轭后的另一切口。
+置 $z_j=M_{jj}$、$R=M-\operatorname{diag}z$、$r=\|R\|_F$。
+于是 $P\psi=Jz$，$\|Q\psi\|^2=r^2$。
+假设 $\operatorname{rank}M\le3$；保留 $|z_j|$ 最大的三个坐标得到 $z_S$，
+置 $h=z-z_S$、$a=\|z_S\|$、$b=\|h\|$。相同模的坐标任意破同值，零坐标也保留。
+有
+
+$$
+b^2\le r^2.
+\tag{C113.3}
+$$
+
+这里可直接核对低秩逼近的通常论证：取 $\ker M$ 内任意二维子空间的正交投影 $\Pi$，
+则 $M\Pi=0$、$0\le\Pi_{jj}\le1$、$\sum_j\Pi_{jj}=2$，且
+$\|\operatorname{diag}(z)\Pi\|_F^2=\sum_j|z_j|^2\Pi_{jj}\ge b^2$。
+最后一个不等式由把总权重二优先分配给最小的两个 $|z_j|^2$ 得到；
+交换较大项上的权重到较小项只使和减小。
+另一方面 $\operatorname{diag}(z)\Pi=-R\Pi$，其 Frobenius 范数至多 $r$。
+这也覆盖秩零、一、二、退化对角与全部同值情形。
+
+C-112.2 给 $z_S^\dagger\mathsf Wz_S\ge0$，
+$\mathsf W\succeq-I_5$，以及 $\|\mathsf W-10I_5\|_{\rm op}=11$。
+由于 $z_S\perp h$，交叉项满足
+$|z_S^\dagger\mathsf Wh|=|z_S^\dagger(\mathsf W-10I_5)h|\le11ab$。
+因此
+
+$$
+\begin{aligned}
+\langle\psi,\mathcal W_t\psi\rangle
+&=z^\dagger(\mathsf W+eI_5)z+Lr^2\\
+&\ge ea^2-22ab+(e-1)b^2+Lr^2\\
+&=e(a-11b/e)^2+eb^2+L(r^2-b^2)\ge0.
+\end{aligned}
+\tag{C113.4}
+$$
+
+所有量均来自同一个 $M$；没有把互不相容的最优值组合。
+密度态 Schmidt number 的定义给有限秩一分解，权重吸入向量后逐项相加，
+得到整个复锥上的非负性。对一般环境态，$P\sigma Q$ 与 $Q\sigma P$ 的配对为零，
+因为 $\mathcal W_t$ 对 $P\oplus Q$ 分块对角；证明没有令这些相干本身为零。
+非匹配对角质量正是 $L\operatorname{tr}(Q\sigma)$，不能漏掉。
+
+目标的负值由 C-112.2 得 $-\delta+e=-e$。
+因 $0<e\le1/15$，$L>21+e$，故 $\mathcal W_t$ 的最小／最大本征值为
+$e-1,L$，谱直径为 $B_t$。置 $c_t=(L+e-1)/2$，有
+$\|\mathcal W_t-c_tI_{25}\|_{\rm op}=B_t/2$。
+同迹 Hermitian 差的迹范数对偶遂给
+$e\le(B_t/2)\|\sigma-\Gamma_t^{\rm F}\|_1$，即 (C113.2)。
+这只是明确的充分常数，不断言最优半径或最优见证。
+
+C-112.6 的真实标量 Fourier 测量制备通道不是反例：
+其 $J^\dagger\widehat\chi J=P_2/5$、$\operatorname{tr}(Q\widehat\chi)=4/5$，所以
+
+$$
+\operatorname{tr}(\mathcal W_t\widehat\chi)
+=\frac{e-1+4L}{5}>0.
+\tag{C113.5}
+$$
+
+通常的 Schmidt-number 锥及其对偶见证用法见 Terhal–Horodecki，
+[*A Schmidt number for density matrices*, quant-ph/9911117v4](https://arxiv.org/html/quant-ph/9911117v4)。
+这里消费 C-112.2 的特定五次根证书，并以 (C113.3)–(C113.4) 给它一个有效环境延拓；
+未以非局部匹配投影保持 Schmidt 秩为前提。证毕。
+
+**定理 C-113.2（共同环境白噪声下全满秩等谱二／四分叉）。** 定义
+
+$$
+\rho^x_{t,\eta}=(1-\eta)\Gamma_t^x+\eta I_{25}/25,\quad
+h_t=\frac{127/3+5e+20L}{25},\quad
+m_{t,\eta}=(1-\eta)e-\eta h_t,\quad
+d_{t,\eta}=\frac{2m_{t,\eta}}{B_t}.
+\tag{C113.6}
+$$
+
+对非空精确参数区间
+
+$$
+\frac{127}{129}<t<1,\qquad
+0<\eta<\min\left\{\frac{e}{e+h_t},\frac{5t}{1+5t}\right\},
+\tag{C113.7}
+$$
+
+二态在整个二十五维空间均正定、等全谱、两偏迹均为 $I_5/5$，且
+
+$$
+\operatorname{SN}_{A|B}(\rho^{\rm F}_{t,\eta})=4,\quad
+\operatorname{SN}_{A|B}(\rho^{\rm E}_{t,\eta})=2,\quad
+\inf_{\operatorname{SN}(\sigma)\le3}\|\rho^{\rm F}_{t,\eta}-\sigma\|_1
+\ge d_{t,\eta}>0.
+\tag{C113.8}
+$$
+
+二者在每个允许的完整条件性实际双边历史上同律。
+共同历史律是 $\Omega_{\eta}=(1-\eta)S+\eta I_{25}/25$ 的历史律，
+$\eta>0$ 时与旧 $S$ 的完整历史律不同。
+
+证明。共同全谱为
+
+$$
+\left\{(1-\eta)\frac{1+t}{5}+\frac\eta{25}\ (\times2),\quad
+(1-\eta)\frac15+\frac\eta{25},\quad
+(1-\eta)\frac{1-t}{5}+\frac\eta{25}\ (\times2),\quad
+\frac\eta{25}\ (\times20)\right\}.
+\tag{C113.9}
+$$
+
+这是在相同环境恒等算子上加同一噪声，非仅比较五维非零谱。
+$\eta>0$ 给严格正性；$\Gamma_t^x$ 的偏迹和 $I_{25}/25$ 的偏迹均为 $I_5/5$。
+$\operatorname{tr}\mathsf W=127/3$，故
+$\operatorname{tr}(\mathcal W_t I_{25}/25)=h_t$，并有
+$\operatorname{tr}(\mathcal W_t\rho^{\rm F}_{t,\eta})=-m_{t,\eta}<0$。
+C-113.1 的锥非负性和同迹对偶给 (C113.8) 的距离及四的下界。
+C-112.3 的十个／五个匹配因子，加上二十五个原基乘积白噪声因子，
+给 SN 至多四／二的有限分解。
+
+为排除边族的 SN 一，对其偏转置取原标签
+$|B_0,f(B_4)\rangle,|B_4,f(B_0)\rangle$ 张成的二维块。
+该块特征值为 $\eta/25\pm(1-\eta)t/5$；(C113.7) 使较小值严格负。
+可分态的每个乘积秩一项在局部转置后仍 PSD，故负值排除可分性。
+于是边族的 SN 恰二。
+
+对每个固定自适应协议，其任一历史事件概率对来源态线性。
+C-108.3 已证明 $\Gamma_t^{\rm F},\Gamma_t^{\rm E},S$ 的全部这样的概率相等。
+添加同一个 $I_{25}/25$ 保持两族同律，并给所述 $\Omega_\eta$。
+允许的原人口读数有非匹配事件：它在 $S$ 上概率零，在 $\Omega_\eta$ 上总概率
+$4\eta/5>0$，故不能声称新共同律仍等于旧律。
+同一 $A$ 基去相干将两态都变成 $\Omega_\eta$；
+这仍给承诺来源历史的标量模拟，不给整个未知输入通道的精确实现。
+
+一个全有理参数实例是
+
+$$
+\begin{gathered}
+t=99/100,\quad\eta=1/10^6,\quad e=71/3000,\quad L=363071/71,\\
+B_t=1089420959/213000,\quad h_t=4358660441/1065000,\\
+m_{t,\eta}=10423157177/532500000000,\quad
+d_{t,\eta}=10423157177/1361776198750000>0.
+\end{gathered}
+\tag{C113.10}
+$$
+
+它满足 (C113.7)：第一条件等价于上式 $m>0$，第二条件为直接有理数比较。
+$t=127/129$ 时 $e=0$，本见证公式不定义；$\eta=e/(e+h_t)$ 时负配对为零，
+均不能由本证书断言四的下界。$\eta=0$ 保留 C-113.1 及匹配态二／四，
+但没有环境满秩。$t=1$ 的同一推理及白噪声结论也成立；(C113.7) 选择开区间以同时
+保留原五维正定性。证毕。
+
+**定理 C-113.3（无额外人口合同的整个通道近似下界及实际达到）。**
+对 $x={\rm F},{\rm E}$，定义同一原输入／输出通道
+
+$$
+\Phi^x_{t,\eta}(X)=(1-\eta)(5C_t^x)\circ X+
+                         \eta\operatorname{tr}(X)I_5/5,
+\qquad X\in M_5(\mathbb C).
+\tag{C113.11}
+$$
+
+在 (C113.7) 中，它们的最小整个块精确量子维数分别为四和二，
+有四维三十五旗／二维三十旗的实际有限 CPTP 达到。
+计数是所给方案的旗数，不称最小旗数。
+对原类中每个量子维数至多三的通道 $T$，令
+$\Delta=\Phi^{\rm F}_{t,\eta}-T$，则
+
+$$
+\begin{gathered}
+\|\Delta\|_\diamond\ge d_{t,\eta},\qquad
+\|\Delta\|_{1\to1}:=\sup_{X\ne0}
+ \frac{\|\Delta(X)\|_1}{\|X\|_1}\ge d_{t,\eta}/5,\\
+\epsilon_{\rm st}(\Delta):=\sup_{D\succeq0,\ \operatorname{tr}D=1}
+ \|\Delta(D)\|_1\ge d_{t,\eta}/9.
+\end{gathered}
+\tag{C113.12}
+$$
+
+同一结论在 $\eta=0$ 用 $d_{t,0}$ 成立。
+这些是全复输入的统一近似误差下界，不是每个单独输入都有正误差。
+
+证明。固定输出在前的规范化约定
+
+$$
+\chi(\Phi)=\frac15\sum_{j,k=0}^4\Phi(E_{jk})\otimes E_{jk},\qquad
+\widehat\chi(\Phi)=(V\otimes W)\chi(\Phi)(V\otimes W)^\dagger.
+\tag{C113.13}
+$$
+
+这里 $V e_j=|B_j\rangle$，$W e_j=|f(B_j)\rangle$，后因子是输入参考的固定标签识别，
+向量化采用 $\operatorname{vec}K=\sum_{j,k}K_{jk}e_j\otimes e_k$。
+因此 $\chi(\Phi)=\frac15\sum_a|\operatorname{vec}K_a\rangle
+\langle\operatorname{vec}K_a|$。
+偏迹 $\operatorname{Tr}_{\rm out}\chi=I_5/5$ 恰为 TP；不混入另一因子次序或额外转置。
+(C113.11) 逐矩阵元给
+$\widehat\chi(\Phi^x_{t,\eta})=\rho^x_{t,\eta}$。
+一般任意环境噪声只有满足该输入偏迹合同，才能当作 TP 通道 Choi；本处白噪声满足它。
+
+QMB 定理 5.1 证明中已给整个块端口、秩受限有限 Kraus 分解及规范 Choi 的字典。
+也可逐项核对：编码 Kraus $B_{fa}:\mathbb C^5\to\mathbb C^q$，
+解码 Kraus $D_{fb}:\mathbb C^q\to\mathbb C^5$，复合 Kraus $D_{fb}B_{fa}$ 秩至多 $q$；
+其向量化 Schmidt 秩即矩阵秩，故 $\operatorname{SN}(\widehat\chi(T))\le q$。
+逆向从 Choi 的有限 SN 分解反向向量化得 Kraus $K_a$，其 TP 边缘给
+$\sum_aK_a^\dagger K_a=I_5$。
+选像含 $\operatorname{ran}K_a$ 的等距 $V_a:\mathbb C^q\to\mathbb C^5$，
+定义 $B_a=V_a^\dagger K_a$，编码为 $(B_aXB_a^\dagger)_a$，
+解码为 $\sum_aV_aY_aV_a^\dagger$。
+每个解码在整个 $M_q$ 上 CPTP，复合为 $\sum_aK_aXK_a^\dagger$，
+没有保留原输入的量子旁路。一般字典亦见 Chruściński–Kossakowski，
+[*On Partially Entanglement Breaking Channels*, quant-ph/0511244v1，定理 1](https://arxiv.org/html/quant-ph/0511244v1)。
+
+本例的实际 Kraus 是 C-112.4 的 $\sqrt{1-\eta}K_a^x$，再加
+$\sqrt{\eta/5}|e_j\rangle\langle e_k|$（$0\le j,k\le4$）。
+其秩至多四／二，平方和为 $(1-\eta)I_5+\eta I_5=I_5$，作用对每个复矩阵
+恰为 (C113.11)。上述等距方案给三十五／三十旗达到。
+C-113.2 的 SN 下界给最小维数恰四／二，且允许竞争者所有有限旗数与每旗任意 Kraus 数。
+
+对任一 $q\le3$ 的 $T$，C-113.2 给
+$\|\chi(\Delta)\|_1\ge d_{t,\eta}$。
+$\chi(\Delta)=(\Delta\otimes\mathrm{id})(|\Omega_5\rangle\langle\Omega_5|)$，
+$\Omega_5=5^{-1/2}\sum_je_j\otimes e_j$，故 diamond 界立即成立。
+又因 $\|E_{jk}\|_1=1$，(C113.13) 的三角不等式给
+$\|\chi(\Delta)\|_1\le5\|\Delta\|_{1\to1}$。
+
+对密度输入可给一个固定有限纯探针集：五个 $E_{jj}$，以及每个 $j<k$ 的四态
+
+$$
+D_{jk}^{\pm}=\tfrac12|e_j\pm e_k\rangle\langle e_j\pm e_k|,\qquad
+D_{jk}^{\pm i}=\tfrac12|e_j\pm i e_k\rangle\langle e_j\pm i e_k|.
+\tag{C113.14}
+$$
+
+总计四十五个，不依赖竞争者。
+$E_{jk}=\frac12(D_{jk}^+-D_{jk}^-+iD_{jk}^{+i}-iD_{jk}^{-i})$，
+$j<k$；反向矩阵元取共轭转置，$\Delta$ 保持自伴随性。
+若四十五个输出误差均至多 $u$，则对角矩阵元误差至多 $u$，
+二十个非对角矩阵元误差至多 $2u$，从而
+$\|\chi(\Delta)\|_1\le(5u+40u)/5=9u$。
+故其中至少一个纯探针输出误差至少 $d_{t,\eta}/9$，也证明密度输入界。
+这些复叠加探针和 diamond 的参考输入是数学测试输入；未被授予原生制备或参考接入。
+原菜单完整历史 TV 还经过指定测量，不能从输出迹距离下界反向推出 TV 下界。
+特别是 C-113.2 的两承诺来源在每个实际协议下 TV 恰零，而其通道精确资源不同。
+整个通道、任意矩阵诱导范数、密度输入误差和承诺来源历史四种量词保持分开。证毕。
+
+**定理 C-113.4（同一环境载体上的对数能量与严格混合熵增益）。**
+固定满足 (C113.7) 的 $t,\eta$，置 $\rho=\rho^{\rm F}_{t,\eta}$、
+$d=d_{t,\eta}$；设 $\sigma$ 为任意 SN 至多三的同载体密度态。
+有限维熵用自然对数，$S(D)=-\operatorname{tr}D\log D$，$0\log0=0$；
+$E_R(D)=\operatorname{tr}D[-\log R]$ 按参考谱展开，
+若 $D$ 在 $\ker R$ 上有正质量则值为 $+\infty$。
+有
+
+$$
+E_\sigma(\rho)-S(\rho)\ge\frac14\|\rho-\sigma\|_1^2\ge\frac{d^2}{4},
+\tag{C113.15}
+$$
+
+以及对 $a,b\ge0$、$a+b=1$（包括零权重）
+
+$$
+S(a\rho+b\sigma)-aS(\rho)-bS(\sigma)
+\ge\frac{ab}{4}\|\rho-\sigma\|_1^2\ge\frac{ab\,d^2}{4}.
+\tag{C113.16}
+$$
+
+尤其取同参边族 $\sigma=\rho^{\rm E}_{t,\eta}$，其熵等于 $S(\rho)$，故
+$S(a\rho^{\rm F}_{t,\eta}+b\rho^{\rm E}_{t,\eta})
+\ge S(\rho^{\rm F}_{t,\eta})+ab d^2/4$；$a,b>0$ 时严格增大。
+同谱、同实际历史不消除这个同载体混合的定量熵增益。
+
+另固定 $\beta>0$，在此环境载体上取一次确定的 Gibbs 参考
+
+$$
+\begin{aligned}
+Z_{t,\beta}&=e^{-\beta(4/3+e)}+e^{-\beta e}
+ +e^{-\beta(e-1)}+2e^{-\beta(21+e)}+20e^{-\beta L},\\
+R_{t,\beta}&=Z_{t,\beta}^{-1}e^{-\beta\mathcal W_t}.
+\end{aligned}
+\tag{C113.17}
+$$
+
+这是严格正定迹一矩阵，满足
+
+$$
+E_{R_{t,\beta}}(\sigma)\ge\log Z_{t,\beta},\qquad
+E_{R_{t,\beta}}(\rho)=\log Z_{t,\beta}-\beta m_{t,\eta}.
+\tag{C113.18}
+$$
+
+证明。先说明消费的有限维不等式与变量对应。
+在 $H=\mathbb C^5\otimes\mathbb C^5$ 的标准 Hilbert 结构中，
+$D\mapsto\widehat D$ 是矩阵到连续线性算子的通常作用映射。
+矩阵乘法、伴随、正性和谱函数演算在该映射下逐项一致；
+有限维算子自动为迹类，算子迹等于矩阵迹，迹类 Banach 范数等于矩阵的完整迹范数。
+正迹一矩阵的本征值均在 $[0,1]$，故它给
+`QuantumLogEnergy.Reference H` 的实际正压缩算子及迹一前提。
+原生 `spectralEntropy_add_traceNorm_sq_le_energy` 的两个参数取
+`rho` $=\widehat\rho$、`sigma` $=\widehat\sigma$，右端是
+`spectralEnergy sigma rho.1`，参考在前；
+`EntropyConcavity` 文件中 `QuantumLogEnergy.spectralEntropy_mixture` 的权重取这里的 $a,b$。
+对非严格正参考保留完整零特征空间及扩展非负实能量，不删奇异情形。
+
+为给出不依赖矩阵适配编译的普通证明，取 $D,R$ 的完整本征基，谱为 $r_i,s_j$，
+$w_{ij}=|\langle u_i,v_j\rangle|^2$。$w$ 双随机。
+对 $r,s\in[0,1]$，标量不等式 $\log x\le x-1$ 给
+
+$$
+-r\log r+r+(\sqrt r-\sqrt s)^2\le-r\log s+s.
+\tag{C113.19}
+$$
+
+$r,s>0$ 时代入 $x=\sqrt{s/r}$ 再乘 $2r$ 即得；
+$r=0$ 时两边均为 $s$，$s=0<r$ 时右端为无穷。
+乘 $w_{ij}$ 后求和，以双随机及两态迹一消掉质量项，得到
+$S(D)+\|\sqrt D-\sqrt R\|_F^2\le E_R(D)$。
+置 $A=\sqrt D-\sqrt R$，恒等式
+$D-R=\sqrt D A+A\sqrt R$ 与 Schatten Cauchy–Schwarz 给
+$\|D-R\|_1\le(\|\sqrt D\|_F+\|\sqrt R\|_F)\|A\|_F=2\|A\|_F$。
+所用乘积界 $\|XY\|_1\le\|X\|_F\|Y\|_F$ 可由迹范数对偶
+$|\operatorname{tr}UXY|\le\|UX\|_F\|Y\|_F$、$\|U\|_{\rm op}\le1$ 直接得到。
+所以 $S(D)+\|D-R\|_1^2/4\le E_R(D)$，全复且无需对易。
+取 $D=\rho,R=\sigma$ 并消费 C-113.2 的新环境距离，即得 (C113.15)。
+
+对 $a,b>0$ 取 $\tau=a\rho+b\sigma$，其支持包含两来源的支持。
+分别将上述不等式用于 $(\rho,\tau)$ 和 $(\sigma,\tau)$，乘 $a,b$ 后相加。
+固定参考 $\tau$ 的交叉能量对正来源线性，故
+$aE_\tau(\rho)+bE_\tau(\sigma)=E_\tau(\tau)=S(\tau)$。
+再用 $\|\rho-\tau\|_1=b\|\rho-\sigma\|_1$、
+$\|\sigma-\tau\|_1=a\|\rho-\sigma\|_1$ 得 (C113.16)；零权重时两边为零。
+共同全谱 (C113.9) 给两族熵相等。
+这里是消费距离下界取得熵增益下界，没有倒用熵上界反推距离下界。
+
+最后，$\mathcal W_t$ 的完整二十五维谱给 (C113.17) 的 $Z>0$。
+每个归一化本征值严格正且不超过一；
+$-\log R_{t,\beta}=\beta\mathcal W_t+\log Z_{t,\beta}I$，
+即使 $D$ 与参考不对易仍有
+$E_{R_{t,\beta}}(D)=\log Z_{t,\beta}+\beta\operatorname{tr}(\mathcal W_tD)$。
+C-113.1 的锥非负性和 (C113.6) 的负配对给 (C113.18)。
+原生正则化为 $\log(1+\varepsilon)I-\log(R+\varepsilon I)$；
+逐个严格正参考本征值取 $\varepsilon\downarrow0$ 的单调极限，等于这里的交叉能量。
+因此 `spectralEnergy R D` 的参考确为 $R$、可变正迹类参数为 $D$。
+`lowerSemicontinuous_spectralEnergy` 则固定 $D$ 而变化参考 $R$，
+并不提供这里固定 Gibbs 参考、变化来源的分离；分离由见证的线性配对给出。
+(C113.15) 中也只是对每个选定参考 $\sigma$ 应用已知不等式，不以该下半连续性
+声称随 $\sigma$ 一致的可操作读出。
+
+[HellingerEnergy](../../../D5/S3/Quantum/Analysis/TraceClass/HellingerEnergy.lean)、
+[EntropyConcavity](../../../D5/S3/Quantum/Analysis/TraceClass/EntropyConcavity.lean)
+提供通用非对易不等式，不计作本章新增理论。
+本章新增综合是原五态 Fourier 目标的全复环境证书、包含未匹配质量的明确距离、
+原资源类的整个通道近似分离、共同环境白噪声的全满秩二／四分叉及其能量／熵应用。
+这些矩阵对应不提供原生 FIB 制备、额外相位、来源副本、见证读出或参考接入桥梁，
+不将条件性数学关系升级为物理实现或全球原创性。证毕。
+
+## 追加锚（本行以下为增补区）
