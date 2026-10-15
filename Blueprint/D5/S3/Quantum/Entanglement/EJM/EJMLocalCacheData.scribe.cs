@@ -13,7 +13,7 @@ internal sealed class EJMLocalCacheDataDocument : IScribeDocumentDefinition
             Paragraph(Text("The exact coefficient score and scale remain unchanged. A row mirror records a literal base-five hash, its already scaled integer lower, coordinate-slot proposals and 25-bit next-row/action proposals. None of these definitions proves the mirror or a transition is correct. The complete kernel receipts compare every original raw hash and scaled lower once, then a proved generic bridge recovers the whole assignment equality with the original 164-bit decoder. Every unknown-coordinate/value transition is still checked over its entire assignment. The literal incidence maps refer to the original sixteen triangle and sixteen singleton blocks.")),
             Node("MirrorRow", "MirrorRow", "Small literal fields and per-row transitions",
                 "The hash and integer lower are stored as direct literals. Each unknown coordinate has all four 25-bit transition words, so no actual branch is discarded.", DescribeRole.Definition),
-            Node("MirrorTree-get", "MirrorTree.get", "Total binary lookup of a proposed mirror",
+            Node("MirrorTree-get", "get", "Total binary lookup of a proposed mirror",
                 "Lookup follows literal indices and returns a zero row at an empty tree. Exact mirrors must therefore be earned by finite-domain receipts, including every actual row index.", DescribeRole.Definition),
             Node("check-raw-mirror", "checkRawMirror", "Check the original raw hash and scaled lower once",
                 "The terminal or branch row must have the exact literal mirror hash and the same lower multiplied by the original scale. This checker supplies no external numerical premise.", DescribeRole.Definition),
