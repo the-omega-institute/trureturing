@@ -1,0 +1,15 @@
+**Definition 1.2 (Actual endpoint table).** The target is the actual $H_j$. Write $H_j=h_{j,\varphi,S_{q_{j,\varphi}}}$, where the entire table is
+
+$$
+\begin{array}{c|c|c|c|c}
+j&\phi&q_{j,\phi}&h_{j,\phi,s}&2q_{j,\phi}+\phi\\ \hline
+0&0&0&a_s&0\\
+0&1&0&b_s&1\\
+1&0&1&b_s&2\\
+1&1&0&a_s&1
+\end{array}
+\tag{1.2}
+$$
+
+Thus $q_{j,0}=j$, $q_{j,1}=0$, and $2q_{j,\phi}+\phi\in\{j,j+1\}$. For instance, when $j=0,\phi=1$, coordinate zero is the separator after active coordinate $-1$, and $H_0=b_{S_0}$. This includes the negative-index seam. The endpoint remains $j$, regardless of the spin coordinate used to describe it. At fixed $j$, the hidden state class $a$ or $b$ determines the source phase as a mathematical event; this does not grant a protocol phase access.
+
