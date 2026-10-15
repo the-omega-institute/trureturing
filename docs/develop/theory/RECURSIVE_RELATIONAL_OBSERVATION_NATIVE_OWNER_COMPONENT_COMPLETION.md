@@ -1011,3 +1011,739 @@ age, or the declared authentication and access services.
 [Emerson]: https://arxiv.org/html/2608.31120v1
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Actual torus owners and a known four-component law
+
+**Convention 10.1 (consumer, support and status).** Sections 10–17
+address two distinct missing relations in §9.4: identifying the
+component of the unknown actual source, and controlling the COK loss
+inside that component. The full original task and paid services remain
+exactly Definitions 1.2–1.3. The results below are ordinary mathematics.
+They add neither a cap for unrestricted native pressure nor an exact
+value of the original $M_1(D)$.
+
+The actual four-port carrier and its incidence are credited to
+[GDB, Definition 12.2 and Theorem 12.3][TorusGDB]. Its unconditioned
+hard-parity entropy calculation is credited to GDB Theorem 14.2.
+The torus cycle/face geometry is mature mathematics, attributed in
+§17. The additional native conclusions are the actual-owner component
+classification, the exact paid descriptor acquisition, its one-Read
+export bound, and the residual loss after component conditioning.
+The repository supplier statements used in these sections are those at
+the fixed public revision `ce2fe4a685b5a195b8b0a380616daf0151f576cb`.
+
+**Definition 10.2 (oriented square torus).** Let $m\ge3$ be an
+integer, put $n=m^2$, and take vertices
+$V=(\mathbb Z/m\mathbb Z)^2$. There are $2n$ distinct undirected
+edges, with the public orientations
+
+$$
+e^x_{x,y}:(x,y)\longrightarrow(x+1,y),\qquad
+e^y_{x,y}:(x,y)\longrightarrow(x,y+1).
+\tag{OCC.30}
+$$
+
+All indices are modulo $m$. Let $s^x_{x,y},s^y_{x,y}\in\mathbb F_2$
+be their bits and set $\operatorname{bit}(0)=\alpha$,
+$\operatorname{bit}(1)=\beta$. The block at $v=(x,y)$ is
+
+$$
+x_v(s)=\left\langle
+ \left\langle\operatorname{bit}(s^x_{x,y}),
+                    \operatorname{bit}(s^y_{x,y})\right\rangle,
+ \left\langle\operatorname{bit}(s^x_{x-1,y}),
+                    \operatorname{bit}(s^y_{x,y-1})\right\rangle
+ \right\rangle\in S_3.
+\tag{OCC.31}
+$$
+
+Its outgoing east and north bits are owned at its actual $LL$ and
+$LR$ ports. Its incoming west and south bits occupy $RL$ and $RR$.
+Thus $O_v=(s^x_{x,y},s^y_{x,y})$ is the whole actual owner tuple.
+The incoming bits have distinct outside owners $(x-1,y)$ and
+$(x,y-1)$. Each seed has prescribed incidence exactly two.
+
+For clarity, the complete native template fixes the factors at
+$\varepsilon,L,R$ to $(0,0)$. At each terminal port it queries that
+edge's designated actual owner, using the total table
+
+$$
+\delta(\alpha)=(2,1),\qquad \delta(\beta)=(1,0),\qquad
+\delta(\mathsf{branch})=\delta(\mathsf{absent})=(2,1).
+\tag{OCC.32}
+$$
+
+Every value belongs to that terminal target's attained factor range.
+At an owner the equation queries itself; its two unused inputs have
+output reply alpha, different from either unused input. These are
+actual binary guards, not a promised source alphabet. The three branch
+equations and four leaf equations force exactly (OCC.31).
+Conversely every edge vector builds these actual blocks and satisfies
+all equations. Actual owner replies recover every edge bit. This is
+the credited GDB carrier with both solution directions explicit; its
+full solution set has $2^{2n}$ tuples before weights are applied.
+
+**Definition 10.3 (hard parity support and component descriptor).** On
+the entire $123$-state $S_3$ put the rational probability
+
+$$
+\mu(x)=
+\begin{cases}
+1/8,&x\text{ is a perfect four-leaf tree of even leaf parity},\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{OCC.33}
+$$
+
+This is an analytical whole-block weight, not a restriction of the
+original source family. Use it once at each of the $n$ original
+blocks. The positive support in the edge coordinates is
+
+$$
+R_m=\left\{s:
+ s^x_{x,y}+s^x_{x-1,y}+s^y_{x,y}+s^y_{x,y-1}=0
+ \text{ for every }(x,y)\in V\right\}.
+\tag{OCC.34}
+$$
+
+All sums in edge equations are in $\mathbb F_2$. Define
+
+$$
+\chi_x(s)=\sum_y s^x_{m-1,y},\qquad
+\chi_y(s)=\sum_x s^y_{x,m-1},\qquad
+\chi(s)=(\chi_x(s),\chi_y(s)),\qquad
+R_h=\{s\in R_m:\chi(s)=h\}.
+\tag{OCC.35}
+$$
+
+The actual positive-support Gibbs law is
+$P(s)=Z^{-1}\prod_v\mu(x_v(s))$ on $R_m$. The symbol $\chi$
+is a mathematical descriptor to be acquired if requested; it is not
+an existing native observation. Owner distance is precisely (OCC.11),
+counting changed two-bit tuples $O_v$.
+
+## 11. Four actual-owner components and their exact normalizers
+
+**Theorem 11.1 (cycle/face quotient and actual-owner connectivity).**
+For every $m\ge3$, $R_m$ has dimension $n+1$ over $\mathbb F_2$,
+and every $R_h$, $h\in\mathbb F_2^2$, has $2^{n-1}$ points.
+For every integer $r\ge3$ with $2r<m$, the graph $G_r(R_m)$ of
+Definition 3.1 has exactly four connected components, namely $R_h$.
+In particular this holds at the fixed update budget $r=3$ for every
+$m\ge7$.
+
+Proof. Let $H$ be the binary vertex-edge incidence matrix. Its
+transpose kernel consists of constant vertex vectors: an edge forces
+its two endpoint coefficients equal, and the torus graph is connected.
+Thus $\operatorname{rank}H=n-1$, and
+$R_m=\ker H$ has dimension $2n-(n-1)=n+1$.
+
+Let $f_{x,y}$ be the boundary of the elementary square with corners
+$(x,y),(x+1,y),(x+1,y+1),(x,y+1)$. Let $B$ be the span of all
+$n$ such edge vectors. They belong to $R_m$. In a dependence
+$\sum_{x,y}c_{x,y}f_{x,y}=0$, each edge occurs in its two adjacent
+faces, so their coefficients must agree. The dual square torus is
+connected. All coefficients are therefore equal, and the only
+nonzero dependence is the sum of all faces. Consequently
+$\dim B=n-1$.
+
+Every face boundary has $\chi=(0,0)$, including faces crossing a
+chosen seam: their crossings occur in pairs. A full horizontal row
+cycle has $\chi=(1,0)$; a full vertical column cycle has
+$\chi=(0,1)$. Hence $\chi:R_m\to\mathbb F_2^2$ is onto, and its
+kernel has dimension $n-1$. It contains $B$, so it equals $B$.
+Every $R_h$ is one affine coset of $B$ and has the stated size.
+
+A face flip changes four edges but exactly three owner tuples.
+Its southwest vertex owns the bottom and left edges; the southeast
+vertex owns the right edge, and the northwest vertex owns the top
+edge. These three vertices are distinct for $m\ge3$. A sequence of
+face flips therefore connects every coset $R_h$ by three-owner moves.
+
+It remains to exclude every permitted move between different cosets,
+including nongeometric moves. For $z\in R_m$, let
+$a_x=\sum_y z^x_{x,y}$. Summing its vertex parity equations over
+column $x$ cancels all vertical edges and gives $a_x=a_{x-1}$.
+Thus $\chi_x(z)=1$ forces at least one changed horizontal edge in
+each of the $m$ disjoint horizontal seams, and hence at least $m$
+changed edges. Summing over a row gives the corresponding assertion
+for $\chi_y(z)=1$ and vertical edges. If $s,t$ differ at at most
+$r$ owners, $z=s+t$ has at most $2r$ changed edges, since each owner
+owns two. Under $2r<m$, neither crossing parity can be one.
+Every edge of $G_r$ stays in one $R_h$. Together with face-flip
+connectivity, this proves the component classification. $\square$
+
+**Corollary 11.2 (all four probabilities are known exactly).** Under
+Definition 10.3, $P$ is uniform on $R_m$. Its raw component masses,
+total mass and component probabilities are
+
+$$
+Z_h=2^{n-1}8^{-n}=2^{-2n-1},\qquad
+Z=4Z_h=2^{1-2n},\qquad P(R_h)=\frac14.
+\tag{OCC.36}
+$$
+
+Proof. Every row in the positive support has the same product weight
+$8^{-n}$. Apply Theorem 11.1 and sum the four equal masses.
+$\square$
+
+Knowing the full conditionals and these normalizers already determines
+the mathematical law, by the credited Lemma 3.2. There is no further
+law-uniqueness claim. It does not reveal which of the four components
+contains an unknown stationary actual source.
+
+## 12. Exactly paid acquisition of the actual component
+
+**Definition 12.1 (one actual source embedding).** Fix public
+$m\ge3$, enumerate its $n$ vertices publicly, and put
+
+$$
+H_0=\lceil\log_2 n\rceil,\qquad K_0=2^{H_0},\qquad D=H_0+3.
+\tag{OCC.37}
+$$
+
+In a perfect ordered scaffold of height $H_0$ place $x_v(s)$ at its
+first $n$ frontier words $a_v$, each of length $H_0$. Pad every
+other frontier position by alpha. Denote the resulting right subtree
+by $u_s$ and the original source by $t_s=\langle\alpha,u_s\rangle$.
+The map $s\mapsto u_s$ is injective, belongs to $S_D$, and has
+height $H_0+2\le D$. Write $\widehat R_m=\{u_s:s\in R_m\}$
+and $\widehat R_h=\{u_s:s\in R_h\}$.
+
+Every finite original-root literal on this canonical slice is either
+constant or returns exactly one edge bit as alpha or beta. Indeed the
+outer root, left cone, scaffold, padding, and each block's three
+internal nodes have fixed replies. The only varying positions are
+the terminal graph slots, all at original-root length $D$; beyond
+these leaves the reply is absent. Querying an edge at its other
+endpoint still returns that same bit. No literal returns a parity,
+component, subtree, or collection of terminal values.
+
+**Theorem 12.2 (exact acquisition on every execution).** Start with a
+constant retained name on the known actual-source slice
+$\{t_s:s\in R_m\}$. A deterministic adaptive acquisition using
+arbitrary finite original-root literals and required to output
+$\chi(s)$ exactly needs at least $2m$ paid Reads on every execution.
+There is a procedure using exactly $2m$ Reads on every execution.
+Its literals have length $D$, so its total submitted letters are
+$2mD$, also minimal. Recovering either one specified bit $\chi_x$
+or $\chi_y$ alone has the corresponding exact bounds $m$ Reads
+and $mD$ letters. These statements allow the entire common law,
+every full conditional and all four normalizers as public data.
+
+Proof. Consider the $m$ full horizontal row cycles and the $m$ full
+vertical column cycles. These $2m$ cycles are pairwise edge-disjoint:
+different rows have different horizontal edges, different columns
+have different vertical edges, and horizontal edges are distinct from
+vertical edges. Each is in $R_m$ and toggles one nonzero coordinate
+of $\chi$.
+
+Fix any actual input and its terminating adaptive execution. If fewer
+than $2m$ distinct edge bits were queried, one of these cycles was
+never queried. Toggle it in that actual input. The new edge vector
+still lies in $R_m$ and has a different descriptor. Every query of
+the fixed execution has the same reply: constants remain constant,
+and every queried edge lies outside the toggled cycle. Induction on
+the execution shows identical subsequent queries, stopping decision
+and output under the deterministic procedure. This contradicts exact
+recovery. The argument is for each execution individually, not only
+the worst execution. Repeated observations and arbitrary off-target
+words do not weaken it, by Definition 12.1.
+
+Read the $m$ actual owner slots for the seam
+$\{e^x_{m-1,y}:y\in\mathbb Z/m\mathbb Z\}$ and the $m$ owner
+slots for $\{e^y_{x,m-1}:x\in\mathbb Z/m\mathbb Z\}$.
+The two parities are (OCC.35), giving the matching upper bound.
+All varying literals have length $D$, so the lower bound on distinct
+edge observations also proves the letter lower bound, attained by
+these owner words.
+
+For $\chi_x$ alone use only the $m$ pairwise disjoint horizontal
+cycles in the indistinguishability argument, and read only its one
+horizontal seam. Each such cycle toggles $\chi_x$. The vertical
+argument is identical with the coordinate names exchanged. Public
+distributional data depend on neither actual input and hence leave
+the identical-transcript argument intact. $\square$
+
+**Corollary 12.3 (component count does not bound acquisition).** There
+is no finite size-independent budget $f(d,L,r,c)$ that guarantees
+exact acquisition of the actual owner component from a constant name
+through literal Reads for every such positive-support native fiber,
+even when its common law, bounded-owner full conditionals and all
+component normalizers are specified exactly. It already fails at
+$d=3,L=2,r=3,c=4$.
+
+Proof. For every $m\ge7$, Theorem 11.1 gives precisely those fixed
+parameters and four components, Corollary 11.2 gives their normalizers,
+and Theorem 12.2 requires $2m$ Reads. This exceeds any proposed finite
+value at those fixed parameters. $\square$
+
+This is a descriptor acquisition bound conditional on the constant
+named slice. The full-family preparation in §15 pays for its entire
+scan; the descriptor is computed from that acquired array and is not
+charged a second acquisition. A source-bearing retained name could
+already encode $\chi$, so the constant-name premise is material.
+
+## 13. Complete component resolution leaves an extensive common-law loss
+
+**Theorem 13.1 (same local laws in every sector).** For every $m\ge3$
+and $h\in\mathbb F_2^2$, put $P_h=P(\,\cdot\mid R_h)$.
+At each original block, the full four-seed star under $P_h$ is uniform
+on its eight even-parity assignments, exactly as under $P$. With the
+same original owner grouping and all original weights retained,
+
+$$
+\begin{aligned}
+\mathcal L(P_h)&=\mathcal L(P)=\frac{5n}{3},\\
+H(P)&=n+1,&H(P_h)&=n-1,\\
+\Delta(P)&=\frac{2n}{3}-1,&
+\Delta(P_h)&=\frac{2n}{3}+1,\\
+\mathbb E_h\Delta(P_h)&=\Delta(P)+2.
+\end{aligned}
+\tag{OCC.38}
+$$
+
+The expectation uses the actual sector probabilities $1/4$.
+The unconditioned value is the credited hard-parity case of
+[GDB, Theorem 14.2][TorusGDB]; the conditional value concerns the
+Gibbs law of each retained sector under the same product weights.
+
+Proof. At a fixed vertex, its four adjacent face boundaries project
+onto the four adjacent-pair flips of its four incident edges. These
+span the complete three-dimensional even-parity subspace on the star:
+they are the edge-incidence columns of a connected four-cycle, of
+rank three. Every face boundary belongs to $B=\ker\chi$ within
+$R_m$, by Theorem 11.1. The star projection of $B$ is therefore
+the entire even-parity subspace; it cannot be larger because the
+vertex equation imposes even parity.
+
+Each $R_h$ is an affine translate of $B$ by an element of $R_m$.
+Its star projection is the same full even subspace. A linear map on
+a finite affine space has equally sized nonempty fibers, and $P_h$
+is uniform on $R_h$. Its star law is thus uniform on those eight
+rows. Mixing the four sectors gives exactly the same law under $P$.
+This also proves directly that every individual edge is fair in
+every sector.
+
+The owned tuple is the east/north pair. The incoming groups are the
+distinct west and south bits. A uniform even four-bit star has
+
+$$
+H(O_v)=2,\qquad H(O_v\mid B_{v,j})=2\ (j=1,2),\qquad
+H(O_v\mid B_{v,1},B_{v,2})=1.
+\tag{OCC.39}
+$$
+
+Its proper three-bit marginals are uniform; when both incoming bits
+are fixed, its outgoing parity is fixed with two equiprobable outgoing
+pairs. The $k=2$ coefficients of (OCC.10) are
+$1/3,1/6,1/6,1/3$. The local contribution is
+$2/3+2/6+2/6+1/3=5/3$. This proves both values of $\mathcal L$.
+The cardinalities in Theorem 11.1 give the two global entropies, and
+subtracting proves every defect identity in (OCC.38). Conditioning
+restricts the original product weight to $R_h$; it substitutes no
+separately chosen completion law or independent seed values.
+$\square$
+
+**Corollary 13.2 (a precise component-repair premise fails).** Consider
+the proposed repair premise that, at fixed local depth, seed incidence,
+owner-update budget and bounded number of owner components, supplying
+the exact actual component label and every exact component normalizer
+always makes the remaining common-law COK defect $o(n)$. Here the
+remaining law is the exact conditional Gibbs law, the original owners
+and incoming groups remain as prescribed, and no block or whole weight
+is removed. This premise is false already at
+$d=3,L=2,r=3,c=4$.
+
+Proof. For every $m\ge7$ the four internally $r$-owner-connected
+components and their exact weights are known. Complete resolution
+conditions on $\chi=h$. Nevertheless for every attained $h$,
+
+$$
+\frac{\Delta(P_h)}{n}=\frac23+\frac1n\longrightarrow\frac23.
+\tag{OCC.40}
+$$
+
+This contradicts the proposed vanishing normalized defect, even when
+the source descriptor has been fully paid for. $\square$
+
+The premise just defined is not attributed to $V_{\rm cond}$,
+$V_{\rm swap}$, the full recursive grammar or its range extension.
+It is stronger than the uniqueness statement in Lemma 3.2 and is not
+one of its conclusions. Exact weighted component summation, actual
+component acquisition and correlations inside a component are separate
+obligations. Unlike a coordinate pin, conditioning on $\chi$ fixes no
+individual seed here; none has been deleted from the entropy accounting.
+
+## 14. Four complete names for an explicitly augmented observer task
+
+**Definition 14.1 (the additional descriptor requirement).** On the
+known slice $\{t_s:s\in R_m\}$ require the late reader both to
+serve every original request of §1 and to recover $\chi(s)$ by the
+time it produces its final predictor. It has the same zero-or-one
+fresh literal Read, chosen from the complete export, $D,p$ and public
+tables before its reply and every authentic count. The descriptor is
+an explicitly added output. Ordinary correctness of (OCC.2) does not
+require it. Export fibers may have arbitrary correlations; queries may
+depend on the exported name and may be arbitrary off-target words.
+
+**Theorem 14.2 (exact four-name optimum on this augmented slice).**
+For every $m\ge3$, every deterministic complete export and reader
+satisfying Definition 14.1 obeys
+
+$$
+\left|\{E(t_s):s\in R_m\}\right|\ge4.
+\tag{OCC.41}
+$$
+
+Four names suffice, together with every original requested trajectory.
+Consequently this augmented slice task has exact attained alphabet
+four. The bound is not an original $M_1(D)$ lower bound.
+
+Proof. Let $Q_h$ be uniform on $R_h$. By Theorem 13.1 every single
+edge is fair under every $Q_h$. By Definition 12.1 the reply law of
+every fixed finite original-root literal is therefore the same under
+all four $Q_h$, whether that word is constant or observes one edge.
+
+Fix one public original request $p_0$, for example $R$. For every
+attained name $e$, its chosen literal $a_e$ and the function $f_e$
+decoding the descriptor from its reply are fixed. A zero-Read branch
+is represented by a fixed formal reply. Extend $f_e$ arbitrarily on
+unattained replies. For $h\in\mathbb F_2^2$ put
+
+$$
+F_{e,h}=\{s\in R_m:f_e(r_{t_s}(a_e))=h\}.
+\tag{OCC.42}
+$$
+
+For each $h$, the sets $F_{e,h}$ cover $R_h$: a source belongs to
+the successful set for its own actual name. Hence
+$1\le\sum_e Q_h(F_{e,h})$. For each fixed $e$, its reply has one
+common law under all four $Q_h$, and the four outputs of $f_e$
+are disjoint events in that reply alphabet. Thus
+
+$$
+\sum_hQ_h(F_{e,h})\le1.
+\tag{OCC.43}
+$$
+
+Sum first over $h$ and then over names to get $4\le|E[R_m]|$.
+No independence of the export and descriptor, no rectangular fiber,
+and no restriction to target-prefix queries has been used.
+
+For sufficiency export the four sector names $h=\chi(s)$ after
+paid acquisition. The name itself supplies the extra output.
+Each original target in the scaffold or padding is constant, and
+each nonconstant graph target reads its one actual edge owner and
+decodes its leaf factor using (OCC.32). Equation (OCC.5) gives every
+subsequently supplied authentic-count reply. Every sector is nonempty,
+so all four names are attained. The next section supplies this
+acquisition as one terminating full-family preparation. $\square$
+
+The common distribution argument, rather than a bound of four on
+the raw reply alphabet, is essential: a single edge has the same
+distribution in all sectors, even though its value can be correlated
+with a source-dependent export. The proof explicitly handles that
+correlation through the successful-set cover.
+
+## 15. Paid realization on the entire original variable-shape family
+
+**Theorem 15.1 (two prescribed full-family codes and exact costs).**
+Fix $m\ge3$ and $D$ from (OCC.37). There are deterministic
+effective preparations and readers on every original
+$t\in\mathcal F_D$ with respectively
+
+$$
+\begin{aligned}
+N_{\rm ordinary}&=|S_D|-2^{n+1}+1,\\
+N_{\rm descriptor}&=|S_D|-2^{n+1}+4
+\end{aligned}
+\tag{OCC.44}
+$$
+
+complete attained names. The first merges precisely $\widehat R_m$
+among canonical right subtrees, and gives every other canonical state
+its own name. The second replaces that merged name by the four
+$\widehat R_h$ names, preserving all other singleton names. Both
+serve every unchanged original request and every authentic subsequent
+count with at most one late original-root Read. The second also
+outputs the descriptor on this slice; off the slice its extra output
+can be a fixed symbol $\bot$.
+
+On every source either preparation makes exactly
+
+$$
+T_{\rm prep}=2^D-1,\qquad Q_{\max}=D,\qquad
+A_{\rm prep}=(D-1)2^D+1
+\tag{OCC.45}
+$$
+
+paid literal Reads, maximum address length and submitted letters.
+Every nonconstant late query has length $D$. These are deliberately
+prescribed codes, not claimed optimal codes or values of $M_1(D)$.
+
+Proof. Install a public finite table on $S_D$ implementing the stated
+merger or sector refinement. Membership can be generated by finite
+enumeration of canonical trees, the public scaffold and the edge parity
+tests. This installation depends on public $m,D$, not on the unknown
+source or later request. For each fixed $m$, one effective program
+stores $m$ as an installed constant, uses this construction at its
+associated depth (OCC.37), and uses singleton canonical names at every
+other public depth. Finite enumeration generates the required table
+from that constant and public $D$. No source-dependent parameter is
+supplied for free.
+
+Before any request, Read every original-root word $Rq$ with
+$q\in W_D$, in a fixed public order, including absent replies.
+These actually acquired constructors compute $\pi_D(v)$ for
+$t=\langle\alpha,v\rangle$, by the credited FMR/RRN reconstruction.
+Compute its table name, and, for a sector name, its seam parities
+from that same acquired array. No second acquisition is charged for
+this computation. Each canonical state is fixed by $\pi_D$ and
+occurs as an actual right subtree, so every designated name is
+attained. The injection of Definition 12.1 and
+$|R_m|=2^{n+1}$ give exactly (OCC.44).
+
+After the public request arrives, a singleton name fixes its entire
+requested factor and uses zero Reads. At a merged or sector name,
+write the request as $p=Rq$ with $|q|\le D-1=H_0+2$.
+If $|q|<H_0$, it ends strictly above the frontier and has constant
+branch factor. Otherwise it enters one public frontier slot, with
+suffix of length at most two. A padding slot has the known factors
+of alpha at every such suffix, including initially absent suffixes.
+In a graph slot, suffixes $\varepsilon,L,R$ have the constant
+branch factor. Each of $LL,LR,RL,RR$ is the factor of its
+specified edge leaf. Query that edge's actual tail owner at
+
+$$
+Ra_{\operatorname{tail}(e)}LL\quad\text{for an east edge},
+\qquad
+Ra_{\operatorname{tail}(e)}LR\quad\text{for a north edge}.
+\tag{OCC.46}
+$$
+
+Either is one original-root word of length $1+H_0+2=D$.
+Its actual alpha/beta reply gives the requested factor through
+(OCC.32). The selected owner is a public function of the name,
+$D,p$ and the installed tables, before that reply and every count.
+There is no traversal call at a virtual subtree, no joint read of
+two seeds, and no count-dependent query choice. The cases exhaust
+every permitted request, not just the graph leaf targets.
+
+All scaffold roots used for occurrence transport are actually present.
+Homomorphism of pairing gives
+
+$$
+r_{\rho^kt_s}(Ra_vq')
+ =r_{\rho^k x_v(s)}(q')\qquad(k\ge0).
+\tag{OCC.47}
+$$
+
+This is precisely the present-occurrence hypothesis of
+`NativeDepthPatterns.original_present_transport`. More generally on
+every full-family inverse image of a canonical name,
+canonicalization preserves the queried reply and the full requested
+factor. Thus (OCC.5) answers all authentic subsequently supplied
+$k\ge0$ without further Reads, including every original variable
+shape. The descriptor output is the sector name on the designated
+slice and $\bot$ elsewhere; canonical membership defines this
+optional extension to the full family.
+
+There are exactly $\sum_{j=0}^{D-1}2^j=2^D-1$ scan words,
+and their lengths sum to
+$\sum_{j=0}^{D-1}(j+1)2^j=(D-1)2^D+1$. Words of length $D$
+are submitted even when they return absent, proving all equalities
+in (OCC.45).
+
+Export only a fixed-width encoding of the complete name. Use public
+allocation, the fixed scan order and a padded finite table-selection
+schedule. The separately paid handoff, lawful entry and access-isolation
+services of Assumption 1.3 make the array, selectors, buffers, lengths,
+preparation control, allocation, accessible timing and transcripts
+inaccessible except for information determined by this name and public
+data. Every surviving distinction is therefore counted in (OCC.44).
+This uses declared services and infers no physical erasure operation.
+$\square$
+
+**Convention 15.2 (separate resources and original-task boundary).**
+The descriptor on the known fiber can instead be acquired by the
+exact $2m$ owner Reads and $2mD$ letters of Theorem 12.2. That is a
+separate conditional task, not an additional charge beyond the full
+scan (OCC.45). Its four possible outputs contain two bits of attained
+information, despite its unbounded literal acquisition cost.
+Refining the one merged name adds exactly three names to the whole
+alphabet in (OCC.44), not a multiplicative factor of four for that
+whole alphabet.
+
+Finite table generation and installation, preparation work/control and
+temporary storage, post-request workspace, predictor size, address
+construction, authentic-count representation, entry, authentication,
+continuity, access services and physical time remain separate resources.
+A fixed-width name uses $\lceil\log_2N\rceil$ bits for its displayed
+alphabet $N$; unused bit patterns are not attained names. The factor
+alone still needs at most $\lceil\log_2(2D+1)\rceil+1$ bits.
+No free total-efficiency conclusion follows.
+
+The ordinary merged fiber needs one name and one selected edge reply
+for every target. Thus the four-name lower bound cannot be promoted
+to a lower bound for original $M_1(D)$: its extra output is not
+required by ordinary target correctness. Nor does this construction
+normalize arbitrary competing exports into independent children or
+preserve a rival preparation's acquisition cost.
+
+## 16. Bounded exact instances and their limits
+
+**Proposition 16.1 (finite rank, marginal and resource readings).**
+Binary elimination for the following finite tori gives:
+
+| $m$ | $n$ | Edge seeds | Incidence rank | Cycle dimension | Face rank | Sector dimension |
+| --- | --- | --- | --- | --- | --- | --- |
+| $3$ | $9$ | $18$ | $8$ | $10$ | $8$ | $8$ |
+| $4$ | $16$ | $32$ | $15$ | $17$ | $15$ | $15$ |
+| $7$ | $49$ | $98$ | $48$ | $50$ | $48$ | $48$ |
+| $8$ | $64$ | $128$ | $63$ | $65$ | $63$ | $63$ |
+| $9$ | $81$ | $162$ | $80$ | $82$ | $80$ | $80$ |
+
+At $m=3$, exact enumeration of the $2^{18}$ edge assignments
+retains $1024$ zero-syndrome rows. Each of the four $\chi$ sectors
+has $256$ rows. In each sector every edge has $128$ values of each
+bit, and every full vertex star has all eight even rows exactly
+$32$ times. Every face flip changes precisely three actual owners.
+These checks concern the rank and local-law claims, not a claim of
+four $G_3$ components at $m=3$, where $2r<m$ fails.
+
+There is also a bounded exact check of the native correspondence.
+For all $16$ assignments of four leaf bits, the seven prescribed
+factors reconstruct exactly their one perfect tree among all $123$
+states of $S_3$. At $m=3$, the scaffold has $H_0=4,D=7$.
+Across its $1024$ positive rows and all $127$ original requests,
+the actual-owner reader agrees with the requested full factor in all
+$130048$ comparisons. Inspecting every original-root word of length
+at most eight gives $511$ literals per row; exactly $36$ words vary
+across the rows, all of length seven with alpha/beta replies. This is
+a finite check of the literal classification, not a finite-length
+substitute for its arbitrary-word proof.
+
+The first main-threshold example, $m=7$, has
+
+$$
+\begin{aligned}
+n&=49,& |R_m|&=2^{50}=1125899906842624,\\
+|R_h|&=2^{48}=281474976710656,&
+\Delta(P)&=95/3,&\Delta(P_h)&=101/3.
+\end{aligned}
+\tag{OCC.48}
+$$
+
+Here $H_0=6,D=9$. The descriptor needs exactly $14$ Reads and
+$126$ letters on the named slice. The full-family scan makes $511$
+Reads and submits $4097$ letters. At $m=8$ the corresponding
+descriptor cost is $16$ Reads and $144$ letters with the same
+$D=9$ and full scan. At $m=9$, $D=10$, these costs are $18$
+Reads and $180$ letters, while the full scan has $1023$ Reads
+and $9217$ letters.
+
+Proof. The rank columns follow either directly by finite binary
+elimination or from the two rank proofs in Theorem 11.1. The
+$m=3$ counts are the cardinalities and affine-projection fiber counts
+of Theorems 11.1 and 13.1; enumerating finite binary vectors gives
+the same integers. For the decoder check, enumerate $S_3$ by (OCC.3),
+evaluate its seven factors by (OCC.4), and compare with (OCC.32).
+Enumerate the $1024$ retained edge vectors, construct their actual
+scaffolds, and compare each factor with the case distinction and
+selected literal (OCC.46). Direct tree traversal gives the stated
+bounded reply array. Substitute $m=7,8,9$ into (OCC.37)–(OCC.45)
+for the resource readings. The infinite families and all-execution
+lower bounds rest on their proofs, not extrapolation from these
+finite checks. $\square$
+
+## 17. Attribution, exact support boundary and the remaining joint relation
+
+**Convention 17.1 (primary and native suppliers).** The classical
+cycle/face quotient is `literature-attested`; its native operational
+and owner-accounting correspondences here are `repo-derived`.
+There is no worldwide-originality or independent-review assertion.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| A. Yu. Kitaev, *Fault-tolerant quantum computation by anyons*, quant-ph/9707021v1, §1, equation (3) and its noncontractible-loop discussion [primary text][TorusKitaev] | The square torus has two binary cycle classes modulo face boundaries and hence four sectors. Passing to the dual grid interchanges the paper's face-parity and the vertex-parity convention used here. Theorem 11.1 supplies an elementary binary proof and separately counts actual owners. No quantum state, channel, anyon operation or physical memory is imported. |
+| [GDB, §§12–14][TorusGDB] | Actual four-port graph lift, guards, incidence two, once-owned parity weights and the unconditioned hard-parity COK value. These are credited suppliers, not new embeddings or a repeated optimized bound. |
+| Lemma 3.2 of this volume; [COK, Theorem 3.2 and §§12–17][TorusCOK] | Component-normalizer uniqueness, same-Gibbs-law loss, rational full-group cover completion and its information charge. Cover completion can change the network; its averaged mass gives a lower witness, not a universal upper or the base Gibbs law. |
+| P. O. Vontobel, *Counting in Graph Covers*, 1012.0065v2, Theorem 25 [primary text][TorusVontobel] | Rational points of the local marginal polytope are exactly finite-cover lift-realizable pseudomarginals. That result supplies neither actual component acquisition nor the residual COK loss bound in this volume. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, 1202.6035v2, Theorem 4.1 and Corollary 4.2 [primary text][TorusRuozzi] | Binary log-supermodular factorization gives cover domination and the Bethe lower direction. The hard even-parity table used here is not log-supermodular: its allowed $1100,1010$ have forbidden meet $1000$ and join $1110$. Thus its hypothesis is not obtained for this representation. No missing native upper direction is transferred. |
+| RRN Theorems 5.2 and 7.1; CBN Theorem 2.2; FMR Lemma 2.2 and Theorems 2.3–2.5 | Credited exact guarded owners, actual constructor reconstruction, paid canonical scans, and preservation of every original factor and boundary reply. The special scaffold and descriptor witnesses are proved in §§12–15. |
+| [NPC, Definition 8.1][TorusNPC]; [NWO, Open problem 8.4][TorusNWO] | The unchanged sound/cofinal cap obligation and the unresolved equality $a_d=b_d$. NWO already settles finite-envelope optimization and support-preserving rationalization. The present torus calculation does not settle that equality. |
+
+The same-full-assignment assumptions of
+`FiniteNaturalJoin.join_covers` do not construct the affine sectors
+or a global law. Theorem 11.1 proves their actual existence instead.
+The predecessor-row minimax and effective-root-criterion declarations
+and their Blueprint contracts have different targets and acquired-image
+handoffs. The finite-reader synthesis Theorems 6.1 and 10.2 distinguish
+some-code synthesis for a fixed reader from verifying a prescribed
+acquired-term program. No transfer from those interfaces is used here.
+Inspecting their statements is not compilation or Lean certification.
+
+**Convention 17.2 (hard-zero and optimization limits).** The component
+classification concerns exactly the positive support (OCC.34) at the
+hard-zero law (OCC.33), and the stated budgets $r\ge3$, $2r<m$.
+It asserts neither persistence of these components after a positive
+perturbation nor a failure of a full-support-only repair premise.
+At the law (OCC.33) the unrestricted pressure is in fact
+
+$$
+\beta_3(\mu)=1.
+\tag{OCC.49}
+$$
+
+Indeed let $U$ be the eight supported perfect trees. On $U$ every
+internal factor is constant branch and every terminal factor is
+decoded from its own guarded leaf reply. Thus $U^N$ is admissible
+at every length and has product-$\mu$ mass one. The reverse bound
+is the total mass of a probability space. This proof concerns the
+unrestricted competitor, not merely the torus templates.
+
+Consequently this family is not shown relevant to minimizing pressure
+laws. No optimized endpoint, failure of $a_d=b_d$, unrestricted
+optimizer-cofinality obstruction, noncomputability result or general
+$M_1(D)$ lower bound follows. Existing credited inequalities retain
+their individual scopes; no previous numerical interval is declared
+the current best by this append.
+
+**Open problem 17.3 (internal correlation after component completion).**
+At this native support, exact component weights determine the law and
+exact component acquisition costs $2m$ Reads, but the same-law loss
+inside each completely resolved component remains
+$2m^2/3+1$. A component-based completion method must therefore
+separately control weighted sector summation and internal correlations;
+it cannot replace either with a bound on component count or treat the
+actual sector as an existing one-reply port.
+
+For the full programme the missing obligation remains a total sound
+optimizer-cofinal cap verifier for every original complete template,
+or a uniform effective original length-error bound. A useful next
+completion theorem must control the relevant common-law losses near
+pressure extremizers at optimized weights, or supply a different
+all-size inequality covering arbitrary joint potentials and actual
+shared owners. Neither such theorem nor near-optimal low-charge
+matching populations are proved here. Sharp original $\lambda$,
+general exact $M_1(D)$, terminating two-sided rate approximation and
+the full minimal-relations/internal-observer/mutual-recovery goal
+remain unresolved.
+
+The operational recovery retained here is the requested full temporal
+factor and all its authentic-count readouts after at most one actual
+reply. The additional four-valued descriptor recovers precisely this
+defined global relation when its extra task is imposed and paid for.
+Neither statement recovers arbitrary hidden history, unknown age,
+physical space and time, or the declared access services.
+
+[TorusGDB]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[TorusCOK]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[TorusNPC]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[TorusNWO]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+[TorusKitaev]: https://arxiv.org/html/quant-ph/9707021v1
+[TorusVontobel]: https://arxiv.org/html/1012.0065v2
+[TorusRuozzi]: https://arxiv.org/html/1202.6035v2
+
+## 追加锚（本行以下为增补区）

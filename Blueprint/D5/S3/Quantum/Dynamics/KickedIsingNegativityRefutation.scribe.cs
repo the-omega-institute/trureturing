@@ -50,6 +50,9 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
             Node("trace_local_right", "Partial trace under local conjugation", TraceLocalRightFormula(),
                 "For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over b as conjugation by U whenever V adjoint times V equals the identity. The operator rho and the matrix U are arbitrary complex matrices of the displayed sizes.",
                 true, id: "trace-local-right"),
+            Node("trace_local_left", "The left partial trace under local conjugation", TraceLocalLeftFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over a as conjugation by V whenever U adjoint times U equals the identity. The operator rho and the matrix V are arbitrary complex matrices of the displayed sizes.",
+                true, id: "trace-local-left"),
             Node("result", "Refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The initial state is |+⟩|+⟩|r⟩|r⟩, where |r⟩ = (2|0⟩+|1⟩)/√5, encoded by θ = (π/2,π/2,2 arctan(1/2),2 arctan(1/2)). It is generic. Factoring the commuting kick exponentials and the diagonal Ising exponential gives U = −W^{⊗4}G, with W a single-qubit unitary and G the periodic product of controlled-Z gates. The local unitaries preserve both measures. Before their action, the reduced density matrix has spectrum {16/25,4/25,4/25,1/25}; its partial transpose has spectrum {23/50,17/50,17/50,−7/50}, and both marginals are 1/2 times the identity. Hence 2𝓔(1) = log(1024/625) and I_{A:B}^(1/2)(1) = log(100/81). Strict injectivity of the logarithm on positive reals and the unequal rational arguments contradict the asserted equality. These finite-chain values do not settle a thermodynamic-limit identity at early times.",
                 true, new OpenProblemResolutionClaim(
@@ -144,6 +147,20 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
             All("rho", MatrixType(Cartesian(a, b)), All("U", MatrixType(a), All("V", MatrixType(b),
                 Implies(Eqn(Mul(Adjoint(v), v), Num(1)), conclusion))))))));
+    }
+
+    private static Formula TraceLocalLeftFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), u = F.Id("U"), v = F.Id("V");
+        Formula LeftMarginal(Formula matrix) => Apply(
+            Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Quantum"), Dot, F.Id("Information"), Dot,
+                F.Id("PartialTraceMutualInformation"), Dot, F.Id("partialTraceLeft")), matrix);
+        Formula local = Kron(u, v);
+        Formula conclusion = Eqn(LeftMarginal(Mul(Mul(local, rho), Adjoint(local))),
+            Mul(Mul(v, LeftMarginal(rho)), Adjoint(v)));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("U", MatrixType(a), All("V", MatrixType(b),
+                Implies(Eqn(Mul(Adjoint(u), u), Num(1)), conclusion))))))));
     }
 
     private static Formula IsingFormula()
