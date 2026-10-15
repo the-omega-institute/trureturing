@@ -115,7 +115,11 @@ internal static class DigestionDecomposition
             // gaps that have no ledger identity. No current grammar chooses the chain.
             var offset = UniqueSubspanStart(parent.RawBytes.AsSpan(), child.RawBytes.AsSpan());
             if (offset < 0)
+            {
+                if (parent.RawBytes.AsSpan().IndexOf(child.RawBytes.AsSpan()) < 0)
+                    throw new FormatException($"clause plan segment at byte {start} differs from its parent span");
                 throw new FormatException("AMBIGUOUS clause plan child is not a unique parent sub-span");
+            }
             var childStart = parent.StartByte + offset;
             if (childStart < start)
                 throw new FormatException($"clause plan segment at byte {start} differs from its parent span");
