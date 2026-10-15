@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:933ea549979076137deee9f01a315eeb0feec22609a4922e5b9ba905b082cd86
+  normalized_sha256: sha256:933ea549979076137deee9f01a315eeb0feec22609a4922e5b9ba905b082cd86
+cas_ref: sha256:933ea549979076137deee9f01a315eeb0feec22609a4922e5b9ba905b082cd86
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义67.10只引入部分观察子图、分量数和兼容性的定义，不断言循环判据或纤维大小。
+    previous_atom_id: b8a0e1f495dd5c5decdb2a6f94e3d0dcbd285cc43e955d65ba3c82a2f8551411
+    next_atom_id: 907e64c3ce234bb4676f4a687adcd43f900f97c37af7a8ac1ab803340adf9798

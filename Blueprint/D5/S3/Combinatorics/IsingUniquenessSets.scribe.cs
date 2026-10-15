@@ -16,6 +16,13 @@ internal sealed class IsingUniquenessSetsDocument : IScribeDocumentDefinition
         Blocks(
             DefinitionNode("sgn", "The sign of a Boolean coordinate", SgnFormula(),
                 "A point of the cube is a function from Fin k to Bool; the value true stands for +1 and false for -1."),
+            Describe.Lean(DescribeId.Create("ising-uniqueness-sgn-not"),
+                DeclarationHandle.Create(Prefix + "sgn_not"), H("Negation reverses the coordinate sign"),
+                StatementSource.FromAuthor(Disp(All("b", Bools(),
+                    Equal(Call("sgn", Call("Bool.not", F.Id("b"))), Negative(Call("sgn", F.Id("b"))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every Boolean b, the sign of its negation is the negative of its sign. The Walsh identities in the uniqueness theorem use this identity when reversing coordinates."))),
+                DescribeRole.Theorem),
             DefinitionNode("walsh", "Walsh functions", WalshFormula(),
                 "For a finite set L of coordinates, the Walsh function is the product of the coordinate signs over L; the empty product is the constant function one."),
             DefinitionNode("walshSpace", "The space spanned by Walsh functions of bounded degree", WalshSpaceFormula(),

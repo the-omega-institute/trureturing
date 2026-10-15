@@ -264,7 +264,7 @@ private lemma ptL_conj (K : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
     Matrix.conjTranspose_apply, Matrix.one_apply]
   ring
 
-private lemma trace_conj_kron (K A : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
+lemma trace_conj_kron (K A : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
     trace (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K) * ρ * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K)ᴴ *
       (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))) = trace (ρ * (A ⊗ₖ (Kᴴ * K))) := by
   have h : ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K)ᴴ * (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *

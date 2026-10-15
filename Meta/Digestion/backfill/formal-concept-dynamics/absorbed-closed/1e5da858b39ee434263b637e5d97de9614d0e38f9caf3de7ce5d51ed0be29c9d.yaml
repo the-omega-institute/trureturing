@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1e5da858b39ee434263b637e5d97de9614d0e38f9caf3de7ce5d51ed0be29c9d
+  normalized_sha256: sha256:1e5da858b39ee434263b637e5d97de9614d0e38f9caf3de7ce5d51ed0be29c9d
+cas_ref: sha256:1e5da858b39ee434263b637e5d97de9614d0e38f9caf3de7ce5d51ed0be29c9d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Termination/GuardedRankingTermination.guarded_ranking_terminates
+    target_statement_id: sha256:bd876d45ae98ada765b5ad6fcfef9491c8507b4f93fdb495f892950c24a125af
+receipts:
+  unresolved_subitems: []

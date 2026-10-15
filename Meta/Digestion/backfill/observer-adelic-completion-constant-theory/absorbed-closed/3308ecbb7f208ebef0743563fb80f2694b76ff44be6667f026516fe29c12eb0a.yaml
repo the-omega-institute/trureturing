@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3308ecbb7f208ebef0743563fb80f2694b76ff44be6667f026516fe29c12eb0a
+  normalized_sha256: sha256:3308ecbb7f208ebef0743563fb80f2694b76ff44be6667f026516fe29c12eb0a
+cas_ref: sha256:3308ecbb7f208ebef0743563fb80f2694b76ff44be6667f026516fe29c12eb0a
+coverage_gids:
+  - gid: D5/S3/Weil/PrimeAddress/PrimeLogIndependence.prime_log_rational_independence
+    target_statement_id: sha256:0b4c1f8eda640edc0759040e622f93d5993d4d5ad3422d4d340cb19413b0d39b
+receipts:
+  unresolved_subitems: []

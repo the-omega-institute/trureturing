@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc3ca27c2559d6982f4a382de59adb0bed731be26f6caec3de5a5ab1f53effd6
+  normalized_sha256: sha256:fc3ca27c2559d6982f4a382de59adb0bed731be26f6caec3de5a5ab1f53effd6
+cas_ref: sha256:fc3ca27c2559d6982f4a382de59adb0bed731be26f6caec3de5a5ab1f53effd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：95. Frobenius 观察者：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: bd32c63c8a01524967ee40037afc0f39294c511cd9ca6aefeed5a47f13681004
+    next_atom_id: 0d914c25ef27ba05ddc8ecd5dcb75359c99472e68c692f5f8e3199f6754759f4

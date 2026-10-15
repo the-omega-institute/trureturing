@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:efec178e59c301a18c32d219e5df75aa1fb1ac82285e15b70d774f7607ae20d1
+  normalized_sha256: sha256:efec178e59c301a18c32d219e5df75aa1fb1ac82285e15b70d774f7607ae20d1
+cas_ref: sha256:efec178e59c301a18c32d219e5df75aa1fb1ac82285e15b70d774f7607ae20d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 195.2（集合间的响应距离）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 5f1e9abd58f1a9af271ffc0dd25644cc224ac2c219e75f43a76a84c3b13ad977
+    next_atom_id: 1787d2930c7e123de43306cfa9a51a0fec3400dd3eaca61c769884ca648165d0

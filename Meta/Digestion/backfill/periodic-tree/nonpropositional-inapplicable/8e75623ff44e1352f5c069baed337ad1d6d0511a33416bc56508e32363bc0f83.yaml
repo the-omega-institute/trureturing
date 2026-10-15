@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e75623ff44e1352f5c069baed337ad1d6d0511a33416bc56508e32363bc0f83
+  normalized_sha256: sha256:8e75623ff44e1352f5c069baed337ad1d6d0511a33416bc56508e32363bc0f83
+cas_ref: sha256:8e75623ff44e1352f5c069baed337ad1d6d0511a33416bc56508e32363bc0f83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「JP.3 暂态长度恰等于二进估值」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 4dad758f498648c23cd2072a12ff257847613f349f48ad8bd66ccbea72dc261c
+    next_atom_id: e37dffce39ccf04234c3e563e7b3f7fd40746a3391e65a62496b27ea85969f9d

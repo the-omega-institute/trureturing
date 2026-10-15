@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f18c9655af60befcfc405051958cbb10530c46a277d0182bdb14194f66e4a8c2
+  normalized_sha256: sha256:f18c9655af60befcfc405051958cbb10530c46a277d0182bdb14194f66e4a8c2
+cas_ref: sha256:f18c9655af60befcfc405051958cbb10530c46a277d0182bdb14194f66e4a8c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 719.1（不等质量正部和的范数表达）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: c7de2d7934779d6442076b1ae41b4f5fbb5563d7298fbd42d3d29b445fd44cda
+    next_atom_id: c94495c73ce063b287d83f73b55255058218610dabf3b1d35e97bbedfaa7812f

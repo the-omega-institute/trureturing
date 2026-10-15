@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:62c0ce1ffdff353985000e1e6e8e9784ad38afa84c761a6a709586bc2b42dada
+  normalized_sha256: sha256:62c0ce1ffdff353985000e1e6e8e9784ad38afa84c761a6a709586bc2b42dada
+cas_ref: sha256:62c0ce1ffdff353985000e1e6e8e9784ad38afa84c761a6a709586bc2b42dada
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第49.17节开场仅定义有限层剖面d_m、固定参数并说明表格读法；数值结果属于后续各表项。
+    previous_atom_id: 4057569af2103e4d5dbb48e1c74b033a5a278af9fd0bd42763cd3918779dc284
+    next_atom_id: ce934cb2381df4a514decbcdf591a7b18625e072e984711793710c0c600824c5

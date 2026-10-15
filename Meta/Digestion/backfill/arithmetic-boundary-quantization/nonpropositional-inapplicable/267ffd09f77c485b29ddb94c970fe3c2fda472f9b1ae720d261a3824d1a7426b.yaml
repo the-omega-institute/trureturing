@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:267ffd09f77c485b29ddb94c970fe3c2fda472f9b1ae720d261a3824d1a7426b
+  normalized_sha256: sha256:267ffd09f77c485b29ddb94c970fe3c2fda472f9b1ae720d261a3824d1a7426b
+cas_ref: sha256:267ffd09f77c485b29ddb94c970fe3c2fda472f9b1ae720d261a3824d1a7426b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明。** 该最优值满足 \(W\le D\),因为每个可行整数选择都是下述分数可行点。…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 3efe6e4b0dec5a44586e7fe730d4e31f80b581d989cc0f3989c917a68a4282dd
+    next_atom_id: 0d666b8e7af4a47e5237dd415923c25fa9a92de3f933b526b42a835ac68291c5

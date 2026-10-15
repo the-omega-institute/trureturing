@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c7b3bd0b8fc6883bfbf500354121bbf8ebac1d37b4433e6334483a23b0494e72
+  normalized_sha256: sha256:c7b3bd0b8fc6883bfbf500354121bbf8ebac1d37b4433e6334483a23b0494e72
+cas_ref: sha256:c7b3bd0b8fc6883bfbf500354121bbf8ebac1d37b4433e6334483a23b0494e72
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节 338. 增补：分歧怎样成为共同探究的内容：仅为章节题名，指示讨论主题；无独立命题陈述。
+    previous_atom_id: 80ff8275dee9bf7ed4eabee4b90a37f2c34b11b9f310f9496622c8f65a21953f
+    next_atom_id: 09a9a999e0eb9ffd646800ecfd66d4e954e4c1883564f7bfd738ab978cc786eb

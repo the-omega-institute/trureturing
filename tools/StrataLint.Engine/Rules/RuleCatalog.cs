@@ -151,6 +151,31 @@ public sealed class RuleCatalog
     internal RuleExecutionOutcome ExecuteDelta(DeltaRuleContext delta, RuleEvaluationMeasure? measureRule = null) =>
         ExecuteInOrder(delta.CurrentFacts, delta, ExecutionOrder, measureRule, null, includeCurrent: false);
 
+    internal RuleExecutionOutcome ExecuteTheoryDelta(RepositorySnapshot current, ValidatedPolicy policy,
+        RawChangeSet changes, RuleEvaluationMeasure? measureRule = null)
+    {
+        if (!RepositoryRules.IsTheoryOnlyChange(changes))
+            return new RuleExecutionOutcome.InfrastructureFailure(
+                "Report-free check-delta requires a nonempty theory-only change; other changes require --candidate-lean-report.");
+        foreach (var change in changes.Entries.Where(static change => change.Kind is not RawChangeKind.Deleted))
+            if (!current.Files.TryGetValue(change.Path, out var file) || !file.ContentWasRead)
+                return new RuleExecutionOutcome.InfrastructureFailure(
+                    $"Required theory input was not read: {change.Path.Value}.");
+
+        var capacity = RegistrationFor(RuleId.CreateKnown(3)).Descriptor;
+        var paths = RegistrationFor(RuleId.CreateKnown(15)).Descriptor;
+        var findings = measureRule is null ? RepositoryRules.TheoryCapacity(current, changes)
+            : measureRule(capacity.Id, capacity.AdmissionEffect, () => RepositoryRules.TheoryCapacity(current, changes));
+        var diagnostics = RepositoryPathPolicy.Evaluate(current, policy, paths,
+            changes.ContainsPath).AddRange(Stamp(capacity, findings));
+        var executed = ImmutableArray.Create(capacity.Id, paths.Id);
+        return new RuleExecutionOutcome.Completed(CompletedRuleSet.Create(diagnostics,
+            Descriptors.Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Deferred)
+                .Select(static descriptor => new DeferredRule(descriptor.Id, descriptor.DeferredCase!, descriptor.Title))
+                .ToImmutableArray(), executed,
+            ExecutionOrder.Where(id => !executed.Contains(id)).ToImmutableArray()));
+    }
+
     internal ImmutableArray<RuleDescriptor> ApplicableTo(
         RepositoryFile artifact,
         RuleApplicabilityContext context)

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61cfec80f87a2e076f6af51a563d44b48eb8a03ce54ac4dd2a61bae0718d4be8
+  normalized_sha256: sha256:61cfec80f87a2e076f6af51a563d44b48eb8a03ce54ac4dd2a61bae0718d4be8
+cas_ref: sha256:61cfec80f87a2e076f6af51a563d44b48eb8a03ce54ac4dd2a61bae0718d4be8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof of a quantitative finite exclusion bound.** For each j>J0 choo…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 3c6b399bb092ee8ade2ff83ec562a4bba2716965f86462b82c2099f3f0e21394
+    next_atom_id: ac60adfc3d2c74e04f613377da9012df4097dcc67f1bc476de1903e95c67f08e

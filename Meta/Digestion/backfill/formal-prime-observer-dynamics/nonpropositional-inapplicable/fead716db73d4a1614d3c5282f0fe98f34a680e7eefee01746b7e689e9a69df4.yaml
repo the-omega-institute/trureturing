@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fead716db73d4a1614d3c5282f0fe98f34a680e7eefee01746b7e689e9a69df4
+  normalized_sha256: sha256:fead716db73d4a1614d3c5282f0fe98f34a680e7eefee01746b7e689e9a69df4
+cas_ref: sha256:fead716db73d4a1614d3c5282f0fe98f34a680e7eefee01746b7e689e9a69df4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：L.1 版本记录：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: e485748dc314638072de55f08852b3490de7cea036f6b8e37bd6dfec149f7e17
+    next_atom_id: f93d71d8f0fef9fc96a7bd55a7669bfa7f26f93ed19b2bfa6d3d4618a35c401f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dafe1d20b7bf2b657c9080d29e2b816e277dbb07cec2dbd31e2c18de30b9d327
+  normalized_sha256: sha256:dafe1d20b7bf2b657c9080d29e2b816e277dbb07cec2dbd31e2c18de30b9d327
+cas_ref: sha256:dafe1d20b7bf2b657c9080d29e2b816e277dbb07cec2dbd31e2c18de30b9d327
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 253.1（有限 SCM）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: ea5371f5584dd5c141374a0081489b591e6f4e70588da4b54c7ff1bffb72ce86
+    next_atom_id: 62ea3449e0aaf06290ba5602abf4ab97b96845cf080b07618e6e535cee89513d
