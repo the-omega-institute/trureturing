@@ -790,6 +790,117 @@ The joint estimates are combined paper applications of the cited
 suppliers, without an originality or Lean-verification claim; the
 diagonal sign and RH remain unresolved.
 
+## The supporting slack at an actual self-tangent source
+
+The extra term $S_X(n)$ in (J1) cannot be assumed to provide another
+main-order allowance on the selected source class. Suppose the same
+actual classical CA integer $n$ maximizes $Z(m)m^{-\epsilon_0}$ at
+
+$$
+X=\log n>2,\qquad L=\log X,\qquad \epsilon_0=\frac1{XL}.
+$$
+
+This is the self-tangent price condition, stronger than merely being
+classical CA. The [existing prime-local bridge and source
+selection](../Analytic/mantovanelli2026primeworkload.md#the-existing-prime-local-bridge)
+supply it for the selected counterexample source. The
+[separate proper-GA1 power-excess family application](../Arith/caveney2012sacaga.md#the-same-power-excess-family-also-supplies-proper-ga1-sources)
+also supplies it on an unbounded family under RH failure, conditional
+on the cited source chain. Those selection arguments are reused;
+no unconditional unbounded self-tangent family is asserted here.
+
+Write $S_X(n)=\sum_p S_{X,p}(v_p(n))$. Since $n$ maximizes at
+$\epsilon_0$ and $N_X$ maximizes at the smaller price $\epsilon_X$,
+their two comparisons give
+
+$$
+0\le S_X(n)
+\le(\epsilon_0-\epsilon_X)(\log N_X-X),\qquad
+\log N_X\ge X.
+\tag{T1}
+$$
+
+This compares rewards at two prices while keeping the loss on the
+original $n$. CNS Lemma 3 gives $\log N_X=O(X)$, so (J7) already
+implies $S_X(n)=O(1/(XL))$. There is also a finite bound from the same
+source's equations (11), (14)--(15) and Lemma 1. Define
+
+$$
+K_X=\left\lceil1+\frac{2L}{\log2}\right\rceil,\qquad
+U_{\rm cl}(X)=\vartheta(X)+\vartheta(\sqrt{2X})
++K_X\vartheta((3X)^{1/3}).
+$$
+
+The classical layers give $\log N_X\le U_{\rm cl}(X)$ by overcounting
+all layers from the third onward. Hence, with $[t]_+=\max\{t,0\}$,
+
+$$
+0\le S_X(n)\le\frac{[U_{\rm cl}(X)-X]_+}{2X^2L}.
+\tag{T2}
+$$
+
+This finite bound uses classical CA thresholds, rather than transporting
+the normalized endpoint bound (U4) to a different extremizer.
+
+The leading reciprocal loss itself can also be evaluated using the
+already supplied classical structure. Fix $1<a<2$ and take
+$\kappa=\lceil X^a\rceil$. Along classical CA integers tending to
+infinity, CNS Lemma 3 and the next-prime comparison give
+$P^+(n)\sim X$. The exponent-one count $M(n)$ above is therefore
+$(1+o(1))X/L$, and only $O(\sqrt X)$ primes have higher exponents.
+For an exponent-one factor, (L1) is exactly
+
+$$
+(\kappa-1)d_\kappa(p)
+=\log\kappa-\log(p+1)
+-\log\left(1-\left(\frac p{p+1}\right)^\kappa\right).
+$$
+
+The last term is uniformly negligible in their sum, since
+$(p/(p+1))^\kappa\le e^{-\kappa/(P^+(n)+1)}$.
+Removing the $O(\sqrt X)$ higher-exponent primes from the support
+changes its logarithmic prime sum by only $o(X)$. The prime number
+theorem consequently gives
+
+$$
+\begin{aligned}
+(\kappa-1)D_\kappa^{(1)}(n)
+&=M(n)\log\kappa
+ -\sum_{v_p(n)=1}\log(p+1)+o(X)\\
+&=(a-1+o(1))X.
+\end{aligned}
+$$
+
+Here $D^{(1)}$ denotes just the actual exponent-one terms of $D$.
+For its remaining terms, (L3)'s local bound gives
+$0\le D_\kappa^{(\ge2)}(n)=O_a(LX^{1/2-a})=o(X^{1-a})$.
+Thus classical CA alone supplies
+
+$$
+D_{\lceil X^a\rceil}(n)\sim(a-1)X^{1-a}.
+\tag{T3}
+$$
+
+On the self-tangent subclass, (T1) additionally gives
+$S_X(n)/X^{1-a}=O(X^{a-2}/L)\to0$. Therefore
+
+$$
+J_{\lceil X^a\rceil}(n)\sim(a-1)X^{1-a},\qquad
+J_{\lceil X^{3/2}\rceil}(n)\sim\frac1{2\sqrt X}.
+\tag{T4}
+$$
+
+These joint-deficit asymptotics retain the self-tangent hypothesis on every source
+and do not assert that all integers or all CA numbers have negligible
+$S_X$. They show that the coefficient in (J13) is attained at leading
+order on any such unbounded family. Increasing the allowance solely
+by claiming a larger supporting slack at those same sources cannot
+pay the missing signed estimate. Further progress requires control of
+$H_X$ there, or another joint constraint not discarded in (J3)--(J5).
+This is a paper-level application of the existing source structure and
+local formula, without a priority claim, a new RH criterion, or Lean
+verification. It does not determine the sign of $H_X-J_\kappa(n)$.
+
 ## Consequences for the FIB and same-source Robin routes
 
 The parameter $k$ in the LCM expansion counts divisor entries; the
