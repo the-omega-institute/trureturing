@@ -6,12 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.claim; result=D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.result; claim=D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.claim
    digest: A four-state Glauber annealing run refutes relaxation-time rate order. -/
 
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Multiset.Sort
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.Stochastic
 import Mathlib.Tactic
 
