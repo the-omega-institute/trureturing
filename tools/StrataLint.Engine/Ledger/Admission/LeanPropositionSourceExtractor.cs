@@ -19,7 +19,7 @@ internal sealed record LeanSourceDeclaration(
     internal bool IsPrivateDeclaration { get; init; }
     internal bool HasUnsafeOrMetaModifier { get; init; }
     internal bool IsTopLevelDeclaration { get; init; }
-    internal ImmutableArray<RepositoryFile> ImportedInductionSources { get; init; }
+    internal ImmutableArray<RepositoryFile> ManagedSourceClosure { get; init; }
     internal ImmutableHashSet<string> NamedGenerators { get; init; } = ImmutableHashSet<string>.Empty;
 }
 
@@ -208,15 +208,15 @@ internal sealed partial class LeanSourceCatalog
         var visited = new HashSet<string>(StringComparer.Ordinal);
         while (queue.TryDequeue(out var declaration))
         {
-            var identity = declaration.Path.Value + "\0" + declaration.FullName;
+            var identity = SourceIdentity(declaration);
             if (!visited.Add(identity))
             {
                 continue;
             }
 
-            if (!declaration.ImportedInductionSources.IsDefaultOrEmpty) continue;
+            if (!declaration.ManagedSourceClosure.IsDefaultOrEmpty) continue;
             RejectCustomSyntaxDependency(declaration);
-            foreach (var dependency in ResolveDependencies(declaration))
+            foreach (var dependency in ResolveDependencies(declaration, moduleDeclarations[0]))
             {
                 if (dependency.IsProof && declaration.Kind != "alias")
                 {
@@ -224,7 +224,7 @@ internal sealed partial class LeanSourceCatalog
                 }
 
                 dependencies.TryAdd(
-                    dependency.Path.Value + "\0" + dependency.FullName,
+                    SourceIdentity(dependency),
                     dependency);
                 queue.Enqueue(dependency);
             }
@@ -236,9 +236,9 @@ internal sealed partial class LeanSourceCatalog
             .DistinctBy(static source => source.FullName, StringComparer.Ordinal)
             .OrderBy(static source => source.FullName, StringComparer.Ordinal))
         {
-            if (!root.ImportedInductionSources.IsDefaultOrEmpty)
+            if (!root.ManagedSourceClosure.IsDefaultOrEmpty)
             {
-                AppendImportedInductionSource(output, root);
+                AppendManagedSourceClosure(output, root, "root");
                 continue;
             }
             AppendField(output, "root-kind", root.Kind);
@@ -259,9 +259,14 @@ internal sealed partial class LeanSourceCatalog
         }
 
         foreach (var dependency in dependencies.Values.OrderBy(
-            static dependency => dependency.Path.Value + "\0" + dependency.FullName,
+            static dependency => SourceIdentity(dependency),
             StringComparer.Ordinal))
         {
+            if (!dependency.ManagedSourceClosure.IsDefaultOrEmpty)
+            {
+                AppendManagedSourceClosure(output, dependency, "dependency");
+                continue;
+            }
             AppendField(output, "dependency-path", dependency.Path.Value);
             AppendField(output, "dependency-name", dependency.FullName);
             AppendField(output, "dependency-kind", dependency.Kind);
@@ -344,13 +349,13 @@ internal sealed partial class LeanSourceCatalog
     }
 
     private IEnumerable<LeanSourceDeclaration> ResolveDependencies(
-        LeanSourceDeclaration declaration)
+        LeanSourceDeclaration declaration, LeanSourceDeclaration extractionOwner)
     {
         if (IsGeneratorClosure(declaration))
         {
             foreach (var source in declarations.Where(source => source.Path == declaration.Path))
             {
-                foreach (var dependency in ResolveDependencies(source))
+                foreach (var dependency in ResolveDependencies(source, extractionOwner))
                 {
                     yield return dependency;
                 }
@@ -358,7 +363,7 @@ internal sealed partial class LeanSourceCatalog
 
             foreach (var command in GeneratorCommands(declaration.AmbientTokens))
             {
-                foreach (var dependency in ResolveTokenDependencies(declaration, command, respectBinders: false))
+                foreach (var dependency in ResolveTokenDependencies(declaration, command, respectBinders: false, extractionOwner))
                     yield return dependency;
             }
 
@@ -368,13 +373,13 @@ internal sealed partial class LeanSourceCatalog
         if (declaration.IsAnonymousOnlySource)
         {
             foreach (var command in ImplicitInstanceCommands(declaration.AmbientTokens))
-                foreach (var dependency in ResolveTokenDependencies(declaration, command, respectBinders: true))
+                foreach (var dependency in ResolveTokenDependencies(declaration, command, respectBinders: true, extractionOwner))
                     yield return dependency;
         }
         else
         {
             var dependencyTokens = declaration.SemanticTokens.RemoveAt(1);
-            foreach (var dependency in ResolveTokenDependencies(declaration, dependencyTokens, respectBinders: true))
+            foreach (var dependency in ResolveTokenDependencies(declaration, dependencyTokens, respectBinders: true, extractionOwner))
                 yield return dependency;
         }
 
@@ -396,7 +401,8 @@ internal sealed partial class LeanSourceCatalog
     }
 
     private IEnumerable<LeanSourceDeclaration> ResolveTokenDependencies(
-        LeanSourceDeclaration declaration, ImmutableArray<LeanSourceToken> tokens, bool respectBinders)
+        LeanSourceDeclaration declaration, ImmutableArray<LeanSourceToken> tokens, bool respectBinders,
+        LeanSourceDeclaration extractionOwner)
     {
         var bound = respectBinders ? BoundIdentifiers(tokens) : ImmutableHashSet<string>.Empty;
         foreach (var name in QualifiedIdentifiers(tokens)
@@ -416,6 +422,13 @@ internal sealed partial class LeanSourceCatalog
 
             if (name.StartsWith("D5.", StringComparison.Ordinal))
             {
+                var quotedModule = HasOnlySingleQuotedOccurrences(tokens, name)
+                    ? ResolveQuotedModuleSource(declaration, extractionOwner, name) : null;
+                if (quotedModule is not null)
+                {
+                    yield return quotedModule;
+                    continue;
+                }
                 throw new LeanSourceExtractionException(
                     $"Repository Lean dependency {name} is unresolved for {declaration.FullName}.");
             }
