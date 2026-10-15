@@ -8,6 +8,51 @@ public sealed partial class FrozenLedgerTests
 {
 
     [Theory]
+    [InlineData("", "", true)]
+    [InlineData("import Mathlib\n", "-- unchanged imports\nimport Mathlib\n", true)]
+    [InlineData("namespace N\nend N\n", "namespace N\nend N\n", true)]
+    [InlineData("import Mathlib\n", "import Mathlib.Algebra.Group.Defs\n", false)]
+    [InlineData("set_option autoImplicit false\n", "set_option autoImplicit true\n", false)]
+    [InlineData("attribute [local instance] X\n", "attribute [local instance] Y\n", false)]
+    public void MathlibReanchorDeclarationFreeModulesCompareTheirSource(
+        string originalSource, string updatedSource, bool equivalent)
+    {
+        var original = LeanSourceCatalog.Parse(Snapshot([TextFile(PathFor("A"), originalSource)]))
+            .ExtractPropositionSource(RepoPathFor("A"), ImmutableArray<FrozenDeclaration>.Empty);
+        var updated = LeanSourceCatalog.Parse(Snapshot([TextFile(PathFor("A"), updatedSource)]))
+            .ExtractPropositionSource(RepoPathFor("A"), ImmutableArray<FrozenDeclaration>.Empty);
+
+        Assert.NotEmpty(original);
+        Assert.Equal(equivalent, original.AsSpan().SequenceEqual(updated.AsSpan()));
+    }
+
+    [Theory]
+    [InlineData("def p : Prop := False\n")]
+    [InlineData("theorem p : True := by trivial\n")]
+    [InlineData("instance : Inhabited Nat := ⟨0⟩\n")]
+    public void MathlibReanchorEmptyRootsDoNotHideSourceDeclarations(string source)
+    {
+        var catalog = LeanSourceCatalog.Parse(Snapshot([TextFile(PathFor("A"), source)]));
+
+        Assert.Throws<LeanSourceExtractionException>(() => catalog
+            .ExtractPropositionSource(RepoPathFor("A"), ImmutableArray<FrozenDeclaration>.Empty));
+    }
+
+    [Fact]
+    public void MathlibReanchorEmptyRootsRequireAnExistingSourceAndExplicitDeclarationList()
+    {
+        var catalog = LeanSourceCatalog.Parse(Snapshot([TextFile(PathFor("A"), "import Mathlib\n")]));
+
+        Assert.Throws<LeanSourceExtractionException>(() => catalog
+            .ExtractPropositionSource(RepoPathFor("B"), ImmutableArray<FrozenDeclaration>.Empty));
+        Assert.Throws<LeanSourceExtractionException>(() => catalog
+            .ExtractPropositionSource(RepoPathFor("A"), default));
+        Assert.Throws<LeanSourceExtractionException>(() => catalog
+            .ExtractPropositionSource(RepoPathFor("A"), [new FrozenDeclaration("ns(n0,1:a)", "theorem")]));
+    }
+
+
+    [Theory]
     [InlineData("namespace Wrong", "", "a_iff", "Wrong.a_iff")]
     [InlineData("end N", "N", "N.a_iff", "a_iff")]
     public void MathlibReanchorExtIffKeepsQuotedScopesOutOfItsName(

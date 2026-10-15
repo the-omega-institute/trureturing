@@ -55,15 +55,18 @@ internal sealed partial class LeanSourceCatalog
     private readonly ImmutableDictionary<string, ImmutableArray<LeanSourceDeclaration>> byLeafName;
     private readonly ImmutableDictionary<string, ImmutableArray<string>> importsByModule;
     private readonly LeanCustomSyntaxCatalog customSyntaxCatalog;
+    private readonly ImmutableDictionary<RepoPath, ImmutableArray<LeanSourceToken>> declarationFreeSources;
     private readonly ImmutableDictionary<string, LeanSourceDeclaration> anonymousSourcesByModule;
 
     private LeanSourceCatalog(
         ImmutableArray<LeanSourceDeclaration> declarations,
         ImmutableDictionary<string, ImmutableArray<string>> importsByModule,
-        ImmutableDictionary<string, ImmutableHashSet<string>> customSyntaxByModule)
+        ImmutableDictionary<string, ImmutableHashSet<string>> customSyntaxByModule,
+        ImmutableDictionary<RepoPath, ImmutableArray<LeanSourceToken>> declarationFreeSources)
     {
         this.declarations = declarations;
         this.importsByModule = importsByModule;
+        this.declarationFreeSources = declarationFreeSources;
         anonymousSourcesByModule = declarations
             .GroupBy(static declaration => ModuleName(declaration.Path), StringComparer.Ordinal)
             .Select(static group => group.First())
@@ -98,6 +101,7 @@ internal sealed partial class LeanSourceCatalog
     internal static LeanSourceCatalog Parse(RepositorySnapshot snapshot)
     {
         var declarations = ImmutableArray.CreateBuilder<LeanSourceDeclaration>();
+        var declarationFreeSources = ImmutableDictionary.CreateBuilder<RepoPath, ImmutableArray<LeanSourceToken>>();
         var importsByModule = ImmutableDictionary.CreateBuilder<
             string,
             ImmutableArray<string>>(StringComparer.Ordinal);
@@ -108,7 +112,10 @@ internal sealed partial class LeanSourceCatalog
             .Where(static file => LeanClosureValidator.IsManagedLean(file.Path.Value))
             .OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
         {
-            declarations.AddRange(ParseFile(file, out var imports, out var customSyntax));
+            var fileDeclarations = ParseFile(file, out var imports, out var customSyntax);
+            declarations.AddRange(fileDeclarations);
+            if (fileDeclarations.IsEmpty)
+                declarationFreeSources.Add(file.Path, LeanSourceTokenizer.Tokenize(file.Text));
             var moduleName = ModuleName(file.Path);
             importsByModule.Add(moduleName, imports);
             customSyntaxByModule.Add(moduleName, customSyntax);
@@ -117,7 +124,8 @@ internal sealed partial class LeanSourceCatalog
         return new LeanSourceCatalog(
             declarations.ToImmutable(),
             importsByModule.ToImmutable(),
-            customSyntaxByModule.ToImmutable());
+            customSyntaxByModule.ToImmutable(),
+            declarationFreeSources.ToImmutable());
     }
 
     internal static ImmutableArray<string> ParseFileImports(RepositoryFile file, bool includeImplicitInit = false)
@@ -162,6 +170,16 @@ internal sealed partial class LeanSourceCatalog
         RepoPath modulePath,
         ImmutableArray<FrozenDeclaration> recordedDeclarations)
     {
+        if (!recordedDeclarations.IsDefault && recordedDeclarations.IsEmpty
+            && declarationFreeSources.TryGetValue(modulePath, out var emptyModuleTokens))
+        {
+            var emptyModule = new StringBuilder();
+            AppendField(emptyModule, "root-kind", "declaration-free-module");
+            AppendField(emptyModule, "root-name", ModuleName(modulePath));
+            AppendTokens(emptyModule, emptyModuleTokens);
+            return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(emptyModule.ToString()));
+        }
+
         var moduleDeclarations = declarations
             .Where(declaration => declaration.Path == modulePath)
             .ToImmutableArray();
