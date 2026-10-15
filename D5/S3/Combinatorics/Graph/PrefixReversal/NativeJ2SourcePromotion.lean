@@ -14,6 +14,7 @@ import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency.types false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
 
@@ -81,7 +82,7 @@ private theorem same_seed_marked_cut_images {m : ℕ} (hm : 5 ≤ m)
       P.seed.H.image (Sym2.map Subtype.val) = markedCuts (reverseSelected F) := by
   classical
   constructor
-  · rw [P.primaryCuts, raw_side_cuts hm false, Finset.image_image, Finset.image_image]
+  · simp only [P.primaryCuts, raw_side_cuts hm false, Finset.image_image]
     unfold markedCuts
     congr 1
     funext i
@@ -89,7 +90,7 @@ private theorem same_seed_marked_cut_images {m : ℕ} (hm : 5 ≤ m)
       s(rightPort F i.val, leftPort F i.val)
     simp only [port, Bool.false_eq_true, ↓reduceIte]
     rw [(native_j2_frame_ports hm F i).1, (native_j2_frame_ports hm F i).2]
-  · rw [P.oppositeCuts, raw_side_cuts hm true, Finset.image_image, Finset.image_image]
+  · simp only [P.oppositeCuts, raw_side_cuts hm true, Finset.image_image]
     unfold markedCuts
     congr 1
     funext i
@@ -135,7 +136,8 @@ theorem native_j2_original_p_opening_inventory {m : ℕ} (hm : 5 ≤ m)
   have hs : q.support.Perm W.oldP.cycle.walk.support.tail := by
     apply List.perm_iff_count.mpr
     intro x
-    exact ((W.paths j).hamiltonian x).trans
+    simpa only [List.count_eq_countP, Bool.beq_eq_decide_eq] using
+      ((W.paths j).hamiltonian x).trans
       ((SimpleGraph.Walk.isHamiltonianCycle_iff_isCycle_and_support_count_tail_eq_one.mp
         W.oldP.cycle.hamiltonian).2 x).symm
   have he : q.edges.Perm (W.oldP.cycle.walk.edges.filter fun f => decide (f ≠ e)) := by
@@ -267,7 +269,7 @@ theorem native_j2_original_p_joint_split {m : ℕ} (hm : 5 ≤ m)
     have h := (W.P.seed.jointPorts 1).1
     change (W.P.seed.joint 1).start.val = relabel F * port m (0, false, true) at h
     rw [h]
-    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
+    simpa only [port, Bool.false_eq_true, ↓reduceIte, Fin.val_zero] using
       (native_j2_frame_ports hm F 0).2
   have hsa : s.val = (W.P.seed.joint 1).start.val * a m := by
     rw [hs, hℓ]
@@ -314,7 +316,7 @@ theorem native_j2_original_p_joint_split {m : ℕ} (hm : 5 ≤ m)
       (Sym2.map Subtype.val) =
       (W.P.seed.walk.edges.map (Sym2.map Subtype.val)).filter
         (fun e => decide (e ≠ s(s.val, t.val))) := by
-    simpa only [Finset.mem_singleton, Finset.image_singleton] using
+    simpa only [Finset.mem_singleton, Finset.image_singleton, Sym2.map_mk] using
       map_filtered_complement (Sym2.map Subtype.val)
         (Sym2.map.injective Subtype.val_injective) W.P.seed.walk.edges {s(s, t)}
   obtain ⟨hopenS, hopenE, _⟩ := native_j2_original_p_opening_inventory hm F A u hbase hA W
@@ -386,10 +388,13 @@ private theorem same_parent_chain {m : ℕ} (hm : 5 ≤ m)
     intro i hi
     simp only [hlist, List.length_ofFn] at hi
     change i + 1 < O.base.length at hi
+    have hi₁ : i + 1 < (outerFrame F A u hbase).base.length := hi
+    have hi₀ : i < (outerFrame F A u hbase).base.length :=
+      Nat.lt_trans (Nat.lt_succ_self i) hi₁
     simp only [hlist, List.getElem_ofFn]
     change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
-      (W.pieces ⟨i, by omega⟩).finish.val (W.pieces ⟨i + 1, hi⟩).start.val
-    rw [hfinish ⟨i, by omega⟩, hstart ⟨i + 1, hi⟩]
+      (W.pieces ⟨i, hi₀⟩).finish.val (W.pieces ⟨i + 1, hi₁⟩).start.val
+    rw [hfinish ⟨i, hi₀⟩, hstart ⟨i + 1, hi₁⟩]
     simp only [childStartIndex, Fin.val_mk, if_neg (by omega : ¬ i + 1 = 0)]
     simpa only [Nat.add_assoc] using
       ((native_anchored_supply_coordinates (by omega : 3 ≤ m) O).1 (2 + i)).2.2.2
@@ -399,9 +404,19 @@ private theorem same_parent_chain {m : ℕ} (hm : 5 ≤ m)
     simp only [O, outerFrame, List.length_append, List.length_singleton, pChildIndex]
     omega
   have hlast : finish p ps = (W.pieces (pChildIndex F A u hbase)).finish := by
-    rw [finish_eq_last, hlist, List.getLast_ofFn]
-    congr 1
-    exact hlastIndex
+    have hne : List.ofFn W.pieces ≠ [] := by
+      intro h
+      have hlength := congrArg List.length h
+      simp only [List.length_ofFn, List.length_nil] at hlength
+      change O.base.length = 0 at hlength
+      omega
+    have hget := List.getLast_congr (by simp : p :: ps ≠ []) hne hlist
+    have h := (finish_eq_last p ps).trans (congrArg Piece.finish hget)
+    simp only [List.getLast_ofFn] at h
+    have hi : (⟨(outerFrame F A u hbase).base.length - 1, by
+        change O.base.length - 1 < O.base.length; omega⟩ :
+        Fin (outerFrame F A u hbase).base.length) = pChildIndex F A u hbase := hlastIndex
+    simpa only [hi] using h
   refine ⟨hb, hlinked, hlast, ?_⟩
   rw [hb]
   change (SimpleGraph.mulCayley ({a m, b m, c m} : Set (Configuration m))).Adj
