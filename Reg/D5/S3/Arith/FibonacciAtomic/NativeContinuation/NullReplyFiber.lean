@@ -19,6 +19,6 @@ analysis. Its source law is unacquired, so only finite micro readings are availa
 def initializedWindow : Application.{0,0,0,0,0,0}
     NativeContinuation.NullReplyFiber.native_execution where
   evidence := .native source bridge
-    (.absent "complete initialized native Window source") [] [.seam, .guard, .reply, .atom]
+    (.absent "complete initialized native Window source") [] [.seam]
 
 end Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
