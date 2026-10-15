@@ -34,10 +34,10 @@ internal sealed class MitraUnsharpnessWhiteNoiseRefutationDocument : IScribeDocu
                 "Theorem 3 uses the lowest eigenvalue of the Hermitian X-matrix. For any Hermitian two-by-two matrix M, the minimum of its two Matrix.IsHermitian.eigenvalues is its lowest eigenvalue. The Hermitian proof argument hM of xMin is not displayed in the application xMin(M); it is retained in the eigenvalue applications. No ordering of the two eigenvalue indices is assumed.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("sigma1", "The first spectral quantity", Sigma1Formula(),
-                "Theorem 3, equation (50), defines Σ₁ as the lowest eigenvalue of the X-matrix minus 1/n. The proof argument hA of sigma1 and the Hermitian proof argument of xMin are not displayed in their applications. The matrix passed to xMin is X(A).",
+                "Theorem 3, equation (50), defines Σ₁ as the lowest eigenvalue of the X-matrix minus 1/n. The proof argument hA of sigma1 is displayed in its application; the Hermitian proof argument of xMin is not displayed. The matrix passed to xMin is X(A).",
                 AssessedProvenance.FromLiterature(Source)),
             Node("sigma2", "The second spectral quantity", Sigma2Formula(),
-                "Theorem 3, equation (50), defines Σ₂ as the mean effect norm minus the lowest eigenvalue of the X-matrix. The proof argument hA of sigma2 and the Hermitian proof argument of xMin are not displayed in their applications. The matrix passed to xMin is X(A).",
+                "Theorem 3, equation (50), defines Σ₂ as the mean effect norm minus the lowest eigenvalue of the X-matrix. The proof argument hA of sigma2 is displayed in its application; the Hermitian proof argument of xMin is not displayed. The matrix passed to xMin is X(A).",
                 AssessedProvenance.FromLiterature(Source)),
             Node("sigma1Prime", "The first trace quantity", Sigma1PrimeFormula(),
                 "Theorem 4, equation (60), defines Σ′₁ using the normalized trace. In dimension two this is the real part of Matrix.trace of X(A), divided by two, minus 1/n. This definition places no positivity assumption on A.",
@@ -55,7 +55,7 @@ internal sealed class MitraUnsharpnessWhiteNoiseRefutationDocument : IScribeDocu
                 "Theorems 3 and 4 use the mixture λAᵢ + (1 − λ)I/n. The definition accepts every real l; the conjecture restricts l to Set.Icc 0 1, the closed real interval from zero to one.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Conjecture 1", ClaimFormula(),
-                "Section IV.B, page 11, Conjecture 1 states: For any qubit observable A, inequality Σ₁ ≥ Σ₂ and inequality Σ′₁ ≥ Σ′₂ hold and therefore, E(A^λ) ≥ E(A) and E′(A^λ) ≥ E′(A) for all 1 ≥ λ ≥ 0. The formula retains all four assertions, for every n ≥ 1 and every qubit observable, without a diagonal or distinctness condition. The proof argument hA of sigma1 and sigma2 is not displayed in their applications. Theorems 3 and 4 explain the two inequalities used by the conjecture; their equivalences are not asserted here.",
+                "Section IV.B, page 11, Conjecture 1 states: For any qubit observable A, inequality Σ₁ ≥ Σ₂ and inequality Σ′₁ ≥ Σ′₂ hold and therefore, E(A^λ) ≥ E(A) and E′(A^λ) ≥ E′(A) for all 1 ≥ λ ≥ 0. The formula retains all four assertions, for every n ≥ 1 and every qubit observable, without a diagonal or distinctness condition. The proof argument hA of sigma1 and sigma2 is displayed in their applications. Theorems 3 and 4 explain the two inequalities used by the conjecture; their equivalences are not asserted here.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("diag2", "A real diagonal complex matrix", Diag2Formula(),
                 "The two real entries are embedded in ℂ before Matrix.diagonal forms the matrix. This construction supplies diagonal observables for the quantities in Section IV.",
@@ -102,11 +102,11 @@ internal sealed class MitraUnsharpnessWhiteNoiseRefutationDocument : IScribeDocu
                     Call("Matrix.IsHermitian.eigenvalues", V("hM"), D(1))))));
 
     private static Formula Sigma1Formula() => ObservableBinders(
-        Equal(Typed(LocalCall("sigma1", V("A")), Reals()),
+        Equal(Typed(LocalCall("sigma1", V("A"), V("hA")), Reals()),
             Subtract(LocalCall("xMin", LocalCall("X", V("A"))), Quotient(D(1), RealN()))));
 
     private static Formula Sigma2Formula() => ObservableBinders(
-        Equal(Typed(LocalCall("sigma2", V("A")), Reals()),
+        Equal(Typed(LocalCall("sigma2", V("A"), V("hA")), Reals()),
             Subtract(Quotient(NormSum(), RealN()), LocalCall("xMin", LocalCall("X", V("A"))))));
 
     private static Formula Sigma1PrimeFormula() => FamilyBinders(
@@ -133,7 +133,7 @@ internal sealed class MitraUnsharpnessWhiteNoiseRefutationDocument : IScribeDocu
 
     private static Formula ClaimFormula() => Equivalence(Local("claim"), All("n", Naturals(),
         Imp(LE(D(1), V("n")), All("A", Family(), All("hA", Call(Povm, V("A")),
-            And(LE(LocalCall("sigma2", V("A")), LocalCall("sigma1", V("A"))),
+            And(LE(LocalCall("sigma2", V("A"), V("hA")), LocalCall("sigma1", V("A"), V("hA"))),
                 And(LE(LocalCall("sigma2Prime", V("A")), LocalCall("sigma1Prime", V("A"))),
                     And(NoiseComparison("E"), NoiseComparison("EPrime")))))))));
 
