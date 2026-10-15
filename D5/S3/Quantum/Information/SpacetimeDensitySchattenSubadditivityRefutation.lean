@@ -9,7 +9,6 @@
 import D5.S3.Quantum.Schatten.Holder
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
-import Mathlib.LinearAlgebra.Matrix.Kronecker
 
 set_option linter.style.longLine false
 
@@ -17,6 +16,10 @@ open scoped BigOperators Matrix Kronecker ComplexOrder
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 namespace D5.S3.Quantum.Information.SpacetimeDensitySchattenSubadditivityRefutation
+
+/- Milekhin, Adamska and Preskill, arXiv:2502.12240v2, Conjecture 1.
+   The correlation antecedent is Eq. (9), with the ordering specified by Eq. (4).
+   The Schatten norm is the quantity defined in footnote a. -/
 
 def claim : Prop :=
   ∀ (a abar b bbar : Type) [Fintype a] [DecidableEq a] [Fintype abar] [DecidableEq abar]
