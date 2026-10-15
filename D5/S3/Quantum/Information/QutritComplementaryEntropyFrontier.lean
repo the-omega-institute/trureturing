@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 import D5.S3.Entropy.Forgetting.CapacityMonotone
 import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -18,6 +19,7 @@ namespace D5.S3.Quantum.Information.QutritComplementaryEntropyFrontier
 
 open scoped BigOperators ComplexOrder Matrix Kronecker
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 
 -- Channel and state definitions.
 def admissible
@@ -54,9 +56,17 @@ def rhoE
 def choi
     (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
-  fun p q =>
-    (1 / 3 : ℝ) •
-      ((channelB V (Matrix.single p.1 q.1 (1 : ℂ))) p.2 q.2)
+  let K : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ := fun e b i => V (b, e) i
+  (1 / 3 : ℂ) • (MatrixMap.choi_matrix (MatrixMap.of_kraus K K)).submatrix Prod.swap Prod.swap
+
+set_option backward.isDefEq.respectTransparency false in
+private theorem choi_apply (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
+    (p q : Fin 3 × Fin 3) :
+    choi V p q = (1 / 3 : ℝ) •
+      ((channelB V (Matrix.single p.1 q.1 (1 : ℂ))) p.2 q.2) := by
+  simp [choi, MatrixMap.choi_of_kraus, Matrix.sum_apply, Matrix.vecMulVec,
+    channelB, partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Matrix.single, Finset.mul_sum, Complex.real_smul, ite_and, eq_comm]
 
 -- Gram identities, positivity, normalization, and exchange of the factors.
 private theorem joint_eq_scaled_gram (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
@@ -130,7 +140,7 @@ private def reshuffle (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
 private theorem choi_eq_scaled_gram (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     choi V = (1 / 3 : ℝ) • (reshuffle V * (reshuffle V).conjTranspose) := by
   ext p q
-  simp [choi.eq_1, channelB, partialTraceRight, Matrix.mul_apply, Matrix.single,
+  simp [choi_apply, channelB, partialTraceRight, Matrix.mul_apply, Matrix.single,
     Matrix.conjTranspose_apply, reshuffle.eq_1, Matrix.smul_apply, Finset.mul_sum, ite_and, eq_comm]
 
 private theorem choi_posSemidef (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
