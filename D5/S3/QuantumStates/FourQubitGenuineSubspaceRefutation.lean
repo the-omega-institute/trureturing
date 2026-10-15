@@ -10,10 +10,7 @@ import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.LinearAlgebra.StdBasis
 import Mathlib.Data.Complex.Basic
 import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Fin.VecNotation
 import Mathlib.LinearAlgebra.Matrix.Defs
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
 
 set_option linter.style.longLine false
 set_option linter.style.emptyLine false
