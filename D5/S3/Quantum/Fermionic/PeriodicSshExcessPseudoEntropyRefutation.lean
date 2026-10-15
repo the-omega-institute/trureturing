@@ -300,5 +300,8 @@ private theorem psi58_mode_kernel :
     (∀ k : Fin 3, modeInt (modes58Z ⟨k.val + 3, by omega⟩) psi58Z = 0) := by
   constructor <;> intro k <;> fin_cases k <;> decide
 
+theorem result : ¬ claim := by
+  sorry
+
 end
 end D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
