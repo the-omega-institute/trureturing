@@ -4,9 +4,7 @@ using System.Text;
 
 namespace StrataLint.Engine;
 
-// 缩进声明守卫:Lean 命令必须起于第 0 列,故任何【缩进行的首个 token】若看起来像
-// 声明,就说明提取器读到了它无法忠实还原的形状,一律 fail-closed 拒绝 —— 它挡的是
-// 「顶层陈述看着没变,却在缩进处偷加/偷改定义」这一类语义削弱。
+// Recognizes declaration boundaries and rejects unsupported indented declaration shapes.
 internal sealed partial class LeanSourceCatalog
 {
     private static readonly ImmutableHashSet<string> BinderKeywords =
@@ -650,6 +648,77 @@ internal sealed partial class LeanSourceCatalog
             if (IsNamedInstance(tokens, FindDeclarationKind(tokens, start, end), end))
                 yield return tokens[start..end];
         }
+    }
+
+    private static bool IsInlineCommandStart(ImmutableArray<LeanSourceToken> tokens, int index) =>
+        DeclarationKinds.Contains(tokens[index].Text) && tokens[index].Text != "constant"
+        || tokens[index].Text is "private" or "protected" or "noncomputable" or "partial"
+            or "unsafe" or "public" or "meta" or "local" or "scoped" or "end"
+        || tokens[index].Text == "@" && index + 1 < tokens.Length && tokens[index + 1].Text == "[";
+
+    private static ImmutableArray<int> FindCommandStarts(ImmutableArray<LeanSourceToken> tokens)
+    {
+        var result = ImmutableArray.CreateBuilder<int>();
+        var mutualDepth = 0;
+        var delimiterDepth = 0;
+        var escapedIdentifier = false;
+        var declarationPrefixEnd = -1;
+        var lineEnd = 0;
+        for (var index = 0; index < tokens.Length; index++)
+        {
+            var text = tokens[index].Text;
+            var sameLine = index > 0 && tokens[index - 1].Line == tokens[index].Line;
+            if (!sameLine) lineEnd = FirstTokenAfterLine(tokens, index);
+            if (text == "«") escapedIdentifier = true;
+            if (escapedIdentifier)
+            {
+                if (text == "»") escapedIdentifier = false;
+                continue;
+            }
+            var depthBefore = delimiterDepth;
+            delimiterDepth += text switch
+            {
+                "(" or "[" or "{" => 1,
+                ")" or "]" or "}" => -1,
+                _ => 0,
+            };
+            var nameLiteral = index > 0 && tokens[index - 1].Text is "`" or ".";
+            var inlineStart = sameLine && !nameLiteral && depthBefore == 0 && index > declarationPrefixEnd
+                && IsInlineCommandStart(tokens, index);
+            var lineStart = !sameLine && !nameLiteral
+                && (tokens[index].Column == 0 || mutualDepth > 0
+                    || DeclarationKinds.Contains(text) && text != "constant"
+                    || text == "@" && index + 1 < tokens.Length && tokens[index + 1].Text == "["
+                    || text is "private" or "protected" or "noncomputable" or "partial" or "unsafe" or "public" or "meta")
+                && (text is "@" or "import" or "namespace" or "end" or "section" or "mutual"
+                or "macro" or "macro_rules" or "syntax" or "notation" or "local" or "scoped"
+                or "infix" or "infixl" or "infixr" or "prefix" or "postfix"
+                or "elab" or "elab_rules" or "open" or "variable" or "include" or "omit"
+                or "universe" or "set_option" or "attribute" or "export" or "example"
+                || DeclarationKinds.Contains(text)
+                || text is "private" or "protected" or "noncomputable" or "partial" or "unsafe" or "public" or "meta");
+            if (!inlineStart && !lineStart) continue;
+
+            result.Add(index);
+            declarationPrefixEnd = FindSectionHeaderEnd(tokens, index, lineEnd);
+            if (declarationPrefixEnd < 0) declarationPrefixEnd = FindDeclarationKind(tokens, index, lineEnd);
+            if (depthBefore == 0 && text == "mutual") mutualDepth++;
+            else if (depthBefore == 0 && text == "end" && mutualDepth > 0) mutualDepth--;
+        }
+
+        return result.ToImmutable();
+    }
+
+    private static int FindSectionHeaderEnd(ImmutableArray<LeanSourceToken> tokens, int start, int end)
+    {
+        end = Math.Min(end, FirstTokenAfterLine(tokens, start));
+        var next = start;
+        if (next + 3 < end && tokens[next].Text == "@" && tokens[next + 1].Text == "["
+            && tokens[next + 2].Text == "expose" && tokens[next + 3].Text == "]") next += 4;
+        if (next < end && tokens[next].Text == "public") next++;
+        if (next < end && tokens[next].Text == "noncomputable") next++;
+        if (next < end && tokens[next].Text == "meta") next++;
+        return next < end && tokens[next].Text == "section" ? next : -1;
     }
 
     private static bool IsPlainAlias(ImmutableArray<LeanSourceToken> tokens, int start, int end) =>

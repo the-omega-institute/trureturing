@@ -583,10 +583,7 @@ internal sealed partial class LeanSourceCatalog
                 ? pendingAttributes.AddRange(tokens[start..kindIndex])
                 : ImmutableArray<LeanSourceToken>.Empty;
             pendingAttributes = ImmutableArray<LeanSourceToken>.Empty;
-            if (commandDepths[commandIndex] == 0 && command is "@" or "public" or "noncomputable"
-                && tokens[start..end].TakeWhile(token => token.Line == tokens[start].Line)
-                    .Any(static token => token.Text == "section")
-                && FindDeclarationKind(tokens, start, end) < 0)
+            if (commandDepths[commandIndex] == 0 && FindSectionHeaderEnd(tokens, start, end) >= 0)
             {
                 scopeStack.Add(new LeanSourceScope(null));
                 continue;
@@ -605,10 +602,7 @@ internal sealed partial class LeanSourceCatalog
                 continue;
             }
 
-            if (commandDepths[commandIndex] == 0 && (command == "section"
-                || command == "mutual"
-                || command == "noncomputable" && tokens[start..end].Any(static token =>
-                    token.Text == "section")))
+            if (commandDepths[commandIndex] == 0 && command == "mutual")
             {
                 scopeStack.Add(new LeanSourceScope(null));
                 continue;
@@ -694,46 +688,6 @@ internal sealed partial class LeanSourceCatalog
         var generatedNames = namedGenerators.ToImmutable();
         return result.Select(declaration => declaration with { NamedGenerators = generatedNames })
             .ToImmutableArray();
-    }
-
-    private static ImmutableArray<int> FindCommandStarts(ImmutableArray<LeanSourceToken> tokens)
-    {
-        var result = ImmutableArray.CreateBuilder<int>();
-        var mutualDepth = 0;
-        for (var index = 0; index < tokens.Length; index++)
-        {
-            if (index > 0 && tokens[index - 1].Line == tokens[index].Line)
-            {
-                continue;
-            }
-
-            var text = tokens[index].Text;
-            if ((tokens[index].Column == 0 || mutualDepth > 0
-                    || DeclarationKinds.Contains(text) && text != "constant"
-                    || text == "@" && index + 1 < tokens.Length && tokens[index + 1].Text == "["
-                    || text is "private" or "protected" or "noncomputable" or "partial" or "unsafe" or "public" or "meta")
-                && (text is "@" or "import" or "namespace" or "end" or "section" or "mutual"
-                or "macro" or "macro_rules" or "syntax" or "notation" or "local" or "scoped"
-                or "infix" or "infixl" or "infixr" or "prefix" or "postfix"
-                or "elab" or "elab_rules" or "open" or "variable" or "include" or "omit"
-                or "universe" or "set_option" or "attribute" or "export" or "example"
-                || DeclarationKinds.Contains(text)
-                || text is "private" or "protected" or "noncomputable" or "partial" or "unsafe" or "public" or "meta"))
-            {
-                result.Add(index);
-            }
-
-            if (tokens[index].Column == 0 && text == "mutual")
-            {
-                mutualDepth++;
-            }
-            else if (tokens[index].Column == 0 && text == "end" && mutualDepth > 0)
-            {
-                mutualDepth--;
-            }
-        }
-
-        return result.ToImmutable();
     }
 
     private static ImmutableArray<LeanSourceToken> ParseAmbientTokens(
