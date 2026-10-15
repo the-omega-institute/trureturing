@@ -1,0 +1,28 @@
+{
+  "global_index": 55,
+  "depth": 15,
+  "fuel": 6,
+  "prefix": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "actual_contexts": 201,
+  "bound_leaves": 91,
+  "dag_sha256": "bf188b5ef8d359fc12872297ba3c3db9b633debdec7db6eddf924265c880bf59",
+  "source": "/Users/macstudio/omega/trureturing-01a12631-expectation-fix/D5/S3/Quantum/Entanglement/EJM/EJMOriginalGlobalSuffixPilot.lean",
+  "source_sha256": "bd8438db946c1ce05bcf3c989a71ed43749644a07438ad5795c97938beddb47e",
+  "status": "prepared_actual_suffix_kernel_cost_probe_not_compiled"
+}

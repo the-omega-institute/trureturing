@@ -1,0 +1,82 @@
+{
+  "status": "all_original_Lean_literals_independently_bound_not_kernel",
+  "kernel_accepted": false,
+  "records_checked": 1558777,
+  "chunks_checked": 12178,
+  "root": 1558776,
+  "complete_expanded_contexts": 87458265,
+  "dag_sha256": "bf188b5ef8d359fc12872297ba3c3db9b633debdec7db6eddf924265c880bf59",
+  "source_files": {
+    "EJMOriginalDAGEncoding.lean": "1c23c82ea4b23b18a533dc0a23df808faf3a429806516fec2f054be541f1457b",
+    "EJMOriginalDAGBlock00.lean": "84f68ebf02d02b0d0c03c8c02a69bed47d4e4f6aa9e43ccb345792d8a9080e0a",
+    "EJMOriginalDAGBlock01.lean": "5a749c2b92de63ba937581a27c159f77b57cdd9fa3fe457bf33e4ecab5fe6cde",
+    "EJMOriginalDAGBlock02.lean": "1274d0b05711e0060ffd8777190078d9aa543fd48937a2390dc7c08e69d41d0e",
+    "EJMOriginalDAGBlock03.lean": "df999cd98dfd119de983d2c8bc5d032f4b3af3b978d9cf4d188221f112afb84b",
+    "EJMOriginalDAGBlock04.lean": "0909b69fd76c3f0c0de13dac4971c11978c0de074025591bdb6c60b1c3229d73",
+    "EJMOriginalDAGBlock05.lean": "fbd7188b93bdf4131d83bfb92173e271d40c3c1d14a60b6251f051f3700fb1a4",
+    "EJMOriginalDAGBlock06.lean": "890b1575988e0169b16d0a117b53b1c444dd02c54fe83d2d7ba22efa187fc8cd",
+    "EJMOriginalDAGBlock07.lean": "fc2fdd95e3bea5e6463ef917c57117413077512879d4c8927b423c767999d729",
+    "EJMOriginalDAGBlock08.lean": "c9ff04a0f96e92dced456fd2f386e5a8bfab2d780092871c6e0617518f78c823",
+    "EJMOriginalDAGBlock09.lean": "f8e0c4b024c82e71958d8247857b4c2c193c6f65bb9a69914ffd5a6d8ba08100",
+    "EJMOriginalDAGBlock10.lean": "71edca02847569e5ba529382a759a2720210f3804a0d4fa01183959d518e8403",
+    "EJMOriginalDAGBlock11.lean": "fc76b3bdcbe5547124fdfe5d7c575a4ba32afc1012add3e038579c36a77c1385",
+    "EJMOriginalDAGBlock12.lean": "bdadcaf5f25d7626d633754cf5419ce6b87d73aa99e7bc886050ea0bc7326907",
+    "EJMOriginalDAGBlock13.lean": "9a12daea4e623dd73e4cee9f18830589df1c4c5efad3c9901f990e95ccaf3f4b",
+    "EJMOriginalDAGBlock14.lean": "64904ffa315e59de0c3730427b4725e346743e68091111e7b783ebca10d6d7a2",
+    "EJMOriginalDAGBlock15.lean": "e6fd6804500165eb8a108aecff1f4f1bec06ad92db0b71c33be89d00e8220808",
+    "EJMOriginalDAGBlock16.lean": "e8ac0140505db1a611b454d1c6d26fefe4d39dc032d500909c500c9405a5bc97",
+    "EJMOriginalDAGBlock17.lean": "280d4de0b4bcab397df86a0b123d97a7a3aaaefbaa17d1b432667f4666e8fd3d",
+    "EJMOriginalDAGBlock18.lean": "6e0f4e813bc0578f065867bff9d9cf83e09b03464c44a77de7f99e7ef6f4ee15",
+    "EJMOriginalDAGBlock19.lean": "1186dc20f48d06937952a133000fa793f5d472a95473ab28938788b8347bb6f3",
+    "EJMOriginalDAGBlock20.lean": "8ee67fe10cc9b3edcc3e8b8b94744397f7d2a56802fafb056cc2f507860724cb",
+    "EJMOriginalDAGBlock21.lean": "0a471054e5f4b17334efac01d4544e2e7682e1bb933d9370017d1683dc4b33d7",
+    "EJMOriginalDAGBlock22.lean": "a007de729d34a52b50a980012c911c55cf78e5610383e985f98c8c8f757c6694",
+    "EJMOriginalDAGBlock23.lean": "022e08b1d547a85865d3368491907c2f8079a84c79a485c32a8b5678e4fc38e0",
+    "EJMOriginalGlobalDAGData.lean": "1bd7d6d29a26ae6302d031f30fefa30a475c637980e410bca1f69bb38ccfab95"
+  },
+  "measured_segment_options": [
+    {
+      "maximum_segment_contexts": 1024,
+      "segments": 216001,
+      "prefix_contexts": 72000,
+      "segment_contexts": 87386265,
+      "minimum_depth": 1,
+      "maximum_depth": 16,
+      "actual_maximum_segment_contexts": 1021
+    },
+    {
+      "maximum_segment_contexts": 4096,
+      "segments": 52867,
+      "prefix_contexts": 17622,
+      "segment_contexts": 87440643,
+      "minimum_depth": 1,
+      "maximum_depth": 14,
+      "actual_maximum_segment_contexts": 4093
+    },
+    {
+      "maximum_segment_contexts": 16384,
+      "segments": 13000,
+      "prefix_contexts": 4333,
+      "segment_contexts": 87453932,
+      "minimum_depth": 1,
+      "maximum_depth": 13,
+      "actual_maximum_segment_contexts": 16381
+    },
+    {
+      "maximum_segment_contexts": 65536,
+      "segments": 3469,
+      "prefix_contexts": 1156,
+      "segment_contexts": 87457109,
+      "minimum_depth": 1,
+      "maximum_depth": 12,
+      "actual_maximum_segment_contexts": 65525
+    }
+  ],
+  "kernel_obligations": [
+    "compile original DAG data and actual symmetry owner",
+    "use actual initial/step/lower and unchanged original score soundness",
+    "earn each suffix at its exact original prefix cache and partial event",
+    "splice every suffix and complete prefix with checked_prefix_and_frontier",
+    "derive unconditional original score bound and original locality exclusion"
+  ]
+}

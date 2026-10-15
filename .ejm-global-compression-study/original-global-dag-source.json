@@ -1,0 +1,263 @@
+{
+  "status": "complete_original_DAG_Lean_source_emitted_pending_kernel",
+  "kernel_accepted": false,
+  "dag_sha256": "bf188b5ef8d359fc12872297ba3c3db9b633debdec7db6eddf924265c880bf59",
+  "records": 1558777,
+  "root": 1558776,
+  "word_bits": 103,
+  "chunk_size": 128,
+  "blocks": [
+    {
+      "module": "EJMOriginalDAGBlock00",
+      "first_chunk": 0,
+      "end_chunk": 512
+    },
+    {
+      "module": "EJMOriginalDAGBlock01",
+      "first_chunk": 512,
+      "end_chunk": 1024
+    },
+    {
+      "module": "EJMOriginalDAGBlock02",
+      "first_chunk": 1024,
+      "end_chunk": 1536
+    },
+    {
+      "module": "EJMOriginalDAGBlock03",
+      "first_chunk": 1536,
+      "end_chunk": 2048
+    },
+    {
+      "module": "EJMOriginalDAGBlock04",
+      "first_chunk": 2048,
+      "end_chunk": 2560
+    },
+    {
+      "module": "EJMOriginalDAGBlock05",
+      "first_chunk": 2560,
+      "end_chunk": 3072
+    },
+    {
+      "module": "EJMOriginalDAGBlock06",
+      "first_chunk": 3072,
+      "end_chunk": 3584
+    },
+    {
+      "module": "EJMOriginalDAGBlock07",
+      "first_chunk": 3584,
+      "end_chunk": 4096
+    },
+    {
+      "module": "EJMOriginalDAGBlock08",
+      "first_chunk": 4096,
+      "end_chunk": 4608
+    },
+    {
+      "module": "EJMOriginalDAGBlock09",
+      "first_chunk": 4608,
+      "end_chunk": 5120
+    },
+    {
+      "module": "EJMOriginalDAGBlock10",
+      "first_chunk": 5120,
+      "end_chunk": 5632
+    },
+    {
+      "module": "EJMOriginalDAGBlock11",
+      "first_chunk": 5632,
+      "end_chunk": 6144
+    },
+    {
+      "module": "EJMOriginalDAGBlock12",
+      "first_chunk": 6144,
+      "end_chunk": 6656
+    },
+    {
+      "module": "EJMOriginalDAGBlock13",
+      "first_chunk": 6656,
+      "end_chunk": 7168
+    },
+    {
+      "module": "EJMOriginalDAGBlock14",
+      "first_chunk": 7168,
+      "end_chunk": 7680
+    },
+    {
+      "module": "EJMOriginalDAGBlock15",
+      "first_chunk": 7680,
+      "end_chunk": 8192
+    },
+    {
+      "module": "EJMOriginalDAGBlock16",
+      "first_chunk": 8192,
+      "end_chunk": 8704
+    },
+    {
+      "module": "EJMOriginalDAGBlock17",
+      "first_chunk": 8704,
+      "end_chunk": 9216
+    },
+    {
+      "module": "EJMOriginalDAGBlock18",
+      "first_chunk": 9216,
+      "end_chunk": 9728
+    },
+    {
+      "module": "EJMOriginalDAGBlock19",
+      "first_chunk": 9728,
+      "end_chunk": 10240
+    },
+    {
+      "module": "EJMOriginalDAGBlock20",
+      "first_chunk": 10240,
+      "end_chunk": 10752
+    },
+    {
+      "module": "EJMOriginalDAGBlock21",
+      "first_chunk": 10752,
+      "end_chunk": 11264
+    },
+    {
+      "module": "EJMOriginalDAGBlock22",
+      "first_chunk": 11264,
+      "end_chunk": 11776
+    },
+    {
+      "module": "EJMOriginalDAGBlock23",
+      "first_chunk": 11776,
+      "end_chunk": 12178
+    }
+  ],
+  "modules": [
+    {
+      "module": "EJMOriginalDAGEncoding",
+      "sha256": "1c23c82ea4b23b18a533dc0a23df808faf3a429806516fec2f054be541f1457b",
+      "bytes": 1086
+    },
+    {
+      "module": "EJMOriginalDAGBlock00",
+      "sha256": "84f68ebf02d02b0d0c03c8c02a69bed47d4e4f6aa9e43ccb345792d8a9080e0a",
+      "bytes": 1698597
+    },
+    {
+      "module": "EJMOriginalDAGBlock01",
+      "sha256": "5a749c2b92de63ba937581a27c159f77b57cdd9fa3fe457bf33e4ecab5fe6cde",
+      "bytes": 1699030
+    },
+    {
+      "module": "EJMOriginalDAGBlock02",
+      "sha256": "1274d0b05711e0060ffd8777190078d9aa543fd48937a2390dc7c08e69d41d0e",
+      "bytes": 1699722
+    },
+    {
+      "module": "EJMOriginalDAGBlock03",
+      "sha256": "df999cd98dfd119de983d2c8bc5d032f4b3af3b978d9cf4d188221f112afb84b",
+      "bytes": 1699759
+    },
+    {
+      "module": "EJMOriginalDAGBlock04",
+      "sha256": "0909b69fd76c3f0c0de13dac4971c11978c0de074025591bdb6c60b1c3229d73",
+      "bytes": 1699757
+    },
+    {
+      "module": "EJMOriginalDAGBlock05",
+      "sha256": "fbd7188b93bdf4131d83bfb92173e271d40c3c1d14a60b6251f051f3700fb1a4",
+      "bytes": 1699841
+    },
+    {
+      "module": "EJMOriginalDAGBlock06",
+      "sha256": "890b1575988e0169b16d0a117b53b1c444dd02c54fe83d2d7ba22efa187fc8cd",
+      "bytes": 1699794
+    },
+    {
+      "module": "EJMOriginalDAGBlock07",
+      "sha256": "fc2fdd95e3bea5e6463ef917c57117413077512879d4c8927b423c767999d729",
+      "bytes": 1699858
+    },
+    {
+      "module": "EJMOriginalDAGBlock08",
+      "sha256": "c9ff04a0f96e92dced456fd2f386e5a8bfab2d780092871c6e0617518f78c823",
+      "bytes": 1699922
+    },
+    {
+      "module": "EJMOriginalDAGBlock09",
+      "sha256": "f8e0c4b024c82e71958d8247857b4c2c193c6f65bb9a69914ffd5a6d8ba08100",
+      "bytes": 1700095
+    },
+    {
+      "module": "EJMOriginalDAGBlock10",
+      "sha256": "71edca02847569e5ba529382a759a2720210f3804a0d4fa01183959d518e8403",
+      "bytes": 1699890
+    },
+    {
+      "module": "EJMOriginalDAGBlock11",
+      "sha256": "fc76b3bdcbe5547124fdfe5d7c575a4ba32afc1012add3e038579c36a77c1385",
+      "bytes": 1700067
+    },
+    {
+      "module": "EJMOriginalDAGBlock12",
+      "sha256": "bdadcaf5f25d7626d633754cf5419ce6b87d73aa99e7bc886050ea0bc7326907",
+      "bytes": 1700036
+    },
+    {
+      "module": "EJMOriginalDAGBlock13",
+      "sha256": "9a12daea4e623dd73e4cee9f18830589df1c4c5efad3c9901f990e95ccaf3f4b",
+      "bytes": 1700058
+    },
+    {
+      "module": "EJMOriginalDAGBlock14",
+      "sha256": "64904ffa315e59de0c3730427b4725e346743e68091111e7b783ebca10d6d7a2",
+      "bytes": 1700016
+    },
+    {
+      "module": "EJMOriginalDAGBlock15",
+      "sha256": "e6fd6804500165eb8a108aecff1f4f1bec06ad92db0b71c33be89d00e8220808",
+      "bytes": 1700099
+    },
+    {
+      "module": "EJMOriginalDAGBlock16",
+      "sha256": "e8ac0140505db1a611b454d1c6d26fefe4d39dc032d500909c500c9405a5bc97",
+      "bytes": 1700176
+    },
+    {
+      "module": "EJMOriginalDAGBlock17",
+      "sha256": "280d4de0b4bcab397df86a0b123d97a7a3aaaefbaa17d1b432667f4666e8fd3d",
+      "bytes": 1700245
+    },
+    {
+      "module": "EJMOriginalDAGBlock18",
+      "sha256": "6e0f4e813bc0578f065867bff9d9cf83e09b03464c44a77de7f99e7ef6f4ee15",
+      "bytes": 1700234
+    },
+    {
+      "module": "EJMOriginalDAGBlock19",
+      "sha256": "1186dc20f48d06937952a133000fa793f5d472a95473ab28938788b8347bb6f3",
+      "bytes": 1700417
+    },
+    {
+      "module": "EJMOriginalDAGBlock20",
+      "sha256": "8ee67fe10cc9b3edcc3e8b8b94744397f7d2a56802fafb056cc2f507860724cb",
+      "bytes": 1700719
+    },
+    {
+      "module": "EJMOriginalDAGBlock21",
+      "sha256": "0a471054e5f4b17334efac01d4544e2e7682e1bb933d9370017d1683dc4b33d7",
+      "bytes": 1700647
+    },
+    {
+      "module": "EJMOriginalDAGBlock22",
+      "sha256": "a007de729d34a52b50a980012c911c55cf78e5610383e985f98c8c8f757c6694",
+      "bytes": 1700679
+    },
+    {
+      "module": "EJMOriginalDAGBlock23",
+      "sha256": "022e08b1d547a85865d3368491907c2f8079a84c79a485c32a8b5678e4fc38e0",
+      "bytes": 1335317
+    },
+    {
+      "module": "EJMOriginalGlobalDAGData",
+      "sha256": "1bd7d6d29a26ae6302d031f30fefa30a475c637980e410bca1f69bb38ccfab95",
+      "bytes": 4928
+    }
+  ]
+}

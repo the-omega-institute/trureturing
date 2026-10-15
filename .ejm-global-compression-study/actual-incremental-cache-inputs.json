@@ -1,0 +1,29 @@
+{
+  "status": "actual_incremental_cache_inputs_extracted_not_kernel",
+  "kernel_accepted": false,
+  "blocks": [
+    {
+      "block": "Triangle",
+      "rows": 41294,
+      "unknown_coordinate_value_edges": 342224,
+      "actual_mirror_BST_checked": true,
+      "actual_composition_checked": true
+    },
+    {
+      "block": "Singleton",
+      "rows": 8689,
+      "unknown_coordinate_value_edges": 66132,
+      "actual_mirror_BST_checked": true,
+      "actual_composition_checked": true
+    }
+  ],
+  "extracted_sha256": "10d837769bea54faee0b3763bfb67de93bab7fb15d2b3360b61be5eff7d2be6c",
+  "source_files": {
+    "EJMLocalCacheData.lean": "41dedbf3b8650491443abaaffa8e38423fda5eda285fbda5ed737a6e17b3cea4",
+    "EJMCertificateData.lean": "fa13646a23f9e666e4acd39875f2c4db88a1bd72e36d2b710856a9f3090dbae2",
+    "EJMPartialBoundData.lean": "0ffb2c1605441f1874ccf2e980433fcb43a78589395182e4fd4ed24dfae1b93a",
+    "EJMTriangleCacheData.lean": "9fa1f1b6d054df52ae4b921495670ba907dcea0d23cb512700407609ceea78ab",
+    "EJMSingletonCacheData.lean": "9a2401ef96699055c2eb8b7bf56035bbcd9b9668dd0659a1d1cbd2e302b0c8fb",
+    "EJMCacheState.lean": "df8d246bd294d99de1b43e5ac5757b4d7e668d156b30bdfc1b68f1f61b8931bc"
+  }
+}
