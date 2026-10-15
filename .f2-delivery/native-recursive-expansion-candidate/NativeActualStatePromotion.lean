@@ -14,7 +14,6 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
-open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
