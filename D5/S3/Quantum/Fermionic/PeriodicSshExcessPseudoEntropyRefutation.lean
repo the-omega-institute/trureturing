@@ -128,7 +128,117 @@ private theorem dGamma_rankOne {M : ℕ} (l : Fin M → ℝ) :
   rw [Finset.sum_comm]
   simp [Matrix.vecMulVec, Matrix.of_apply, smul_smul, Algebra.smul_def,
     Complex.ofReal_mul, mul_comm]
-  noncomm_ring
+  simp_rw [← mul_assoc]
+
+private def modes38 : Fin 6 → Fin 6 → ℝ :=
+  ![![-1, 1, -1, 1, -1, 1], ![-3, 7, -5, -7, 8, 0],
+    ![-13, -7, 11, -7, 2, 14], ![-3, -7, -5, 7, 8, 0],
+    ![13, -7, -11, -7, -2, 14], ![1, 1, 1, 1, 1, 1]]
+
+private def modes58 : Fin 6 → Fin 6 → ℝ :=
+  ![![-1, 1, -1, 1, -1, 1], ![-5, 7, -3, -7, 8, 0],
+    ![-11, -7, 13, -7, -2, 14], ![-5, -7, -3, 7, 8, 0],
+    ![11, -7, -13, -7, 2, 14], ![1, 1, 1, 1, 1, 1]]
+
+private def eig38 : Fin 6 → ℝ := ![-11/8, -7/8, -7/8, 7/8, 7/8, 11/8]
+private def eig58 : Fin 6 → ℝ := ![-13/8, -7/8, -7/8, 7/8, 7/8, 13/8]
+private def modeNorm : Fin 6 → ℝ := ![6, 196, 588, 196, 588, 6]
+
+private theorem hopping38 :
+    sshHopping 3 (3/8) =
+      ∑ k, (eig38 k / modeNorm k) • Matrix.vecMulVec (modes38 k) (modes38 k) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [sshHopping, eig38, modeNorm, modes38, Matrix.vecMulVec,
+      Matrix.sum_apply, Fin.sum_univ_succ] <;> ring
+
+private theorem hopping58 :
+    sshHopping 3 (5/8) =
+      ∑ k, (eig58 k / modeNorm k) • Matrix.vecMulVec (modes58 k) (modes58 k) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [sshHopping, eig58, modeNorm, modes58, Matrix.vecMulVec,
+      Matrix.sum_apply, Fin.sum_univ_succ] <;> ring
+
+private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
+    (A : Fin K → Matrix (Fin M) (Fin M) ℝ) :
+    dGamma (∑ k, t k • A k) = ∑ k, t k • dGamma (A k) := by
+  classical
+  ext s u
+  simp only [dGamma, Matrix.sum_apply, Matrix.smul_apply, Complex.ofReal_mul,
+    Finset.sum_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  simp_rw [smul_eq_mul]
+  push_cast
+  have hsum (x : Fin M) (y : Fin M) :
+      (∑ c : Fin K, (t c : ℂ) * (A c y x : ℝ)) *
+      ((fullC y)ᴴ * fullC x) s u =
+        ∑ c : Fin K, ((t c : ℂ) * (A c y x : ℝ)) *
+          ((fullC y)ᴴ * fullC x) s u := by
+    rw [Finset.sum_mul]
+  simp_rw [hsum]
+  simp_rw [Finset.smul_sum]
+  simp_rw [Complex.real_smul]
+  conv_rhs => rw [Finset.sum_comm]
+  have hperm (y : Fin M) :
+      (∑ x : Fin K, ∑ z : Fin M,
+          (t x : ℂ) * (((A x y z : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC z) s u)) =
+        ∑ z : Fin M, ∑ x : Fin K,
+          (t x : ℂ) * (((A x y z : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC z) s u) := by
+    rw [Finset.sum_comm]
+  have hrhsperm :
+      (∑ y : Fin M, ∑ x : Fin K, ∑ z : Fin M,
+          (t x : ℂ) * (((A x y z : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC z) s u)) =
+        ∑ y : Fin M, ∑ z : Fin M, ∑ x : Fin K,
+          (t x : ℂ) * (((A x y z : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC z) s u) := by
+    apply Finset.sum_congr rfl
+    intro y hy
+    exact hperm y
+  rw [hrhsperm]
+  conv_lhs => rw [Finset.sum_comm]
+  have hperm2 (y : Fin M) :
+      (∑ x : Fin M, ∑ c : Fin K,
+          (t c : ℂ) * ((A c y x : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC x) s u) =
+        ∑ c : Fin K, ∑ x : Fin M,
+          (t c : ℂ) * ((A c y x : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC x) s u := by
+    rw [Finset.sum_comm]
+  have hleftperm :
+      (∑ y : Fin M, ∑ x : Fin M, ∑ c : Fin K,
+          (t c : ℂ) * ((A c y x : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC x) s u) =
+        ∑ y : Fin M, ∑ c : Fin K, ∑ x : Fin M,
+          (t c : ℂ) * ((A c y x : ℝ) : ℂ) *
+            ((fullC y)ᴴ * fullC x) s u := by
+    apply Finset.sum_congr rfl
+    intro y hy
+    exact hperm2 y
+  rw [hleftperm]
+  simp_rw [mul_assoc]
+  have hswap3 (x : Fin M) :
+      (∑ c : Fin K, ∑ z : Fin M,
+          (t c : ℂ) * (((A c x z : ℝ) : ℂ) *
+            ((fullC x)ᴴ * fullC z) s u)) =
+        ∑ z : Fin M, ∑ c : Fin K,
+          (t c : ℂ) * (((A c x z : ℝ) : ℂ) *
+            ((fullC x)ᴴ * fullC z) s u) := by
+    rw [Finset.sum_comm]
+  have hleft3 :
+      (∑ x : Fin M, ∑ c : Fin K, ∑ z : Fin M,
+          (t c : ℂ) * (((A c x z : ℝ) : ℂ) *
+            ((fullC x)ᴴ * fullC z) s u)) =
+        ∑ x : Fin M, ∑ z : Fin M, ∑ c : Fin K,
+          (t c : ℂ) * (((A c x z : ℝ) : ℂ) *
+            ((fullC x)ᴴ * fullC z) s u) := by
+    apply Finset.sum_congr rfl
+    intro x hx
+    exact hswap3 x
+  rw [hleft3]
 
 end
 end D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
