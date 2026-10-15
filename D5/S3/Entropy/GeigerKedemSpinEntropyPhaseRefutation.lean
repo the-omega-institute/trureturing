@@ -84,7 +84,8 @@ private theorem poly_re_lower (s : ℝ) (hs : |s| ≤ 1) (z : ℂ)
     exact (mul_le_mul hs hpow (norm_nonneg _) (by norm_num)).trans (by norm_num)
   have h1 := (abs_le.mp (Complex.abs_re_le_norm z)).1
   have h2 := (abs_le.mp (Complex.abs_re_le_norm ((s : ℂ) * z ^ 4))).1
-  simp only [poly, add_re]
+  rw [poly.eq_1]
+  simp only [add_re]
   norm_num at *
   linarith
 
@@ -110,7 +111,8 @@ private theorem circleAverage_div_pow (f : ℂ → ℂ)
   rw [heq, DifferentiableOn.circleIntegral_one_div_sub_center_pow_smul
     (by norm_num : (0 : ℝ) < 1) n hf]
   simp only [smul_eq_mul]
-  field_simp
+  field_simp (disch := first | exact_mod_cast Real.pi_ne_zero | exact Complex.I_ne_zero |
+    exact_mod_cast (Nat.factorial_ne_zero n) | norm_num)
 
 private theorem div_pow_circleIntegrable (f : ℂ → ℂ)
     (hf : DifferentiableOn ℂ f (closedBall 0 1)) (n : ℕ) :
@@ -120,7 +122,8 @@ private theorem div_pow_circleIntegrable (f : ℂ → ℂ)
     (continuousOn_id.pow n)
   intro z hz
   apply pow_ne_zero
-  have hnorm : ‖z‖ = 1 := by simpa [mem_sphere_iff_norm] using hz
+  have hnorm : ‖z‖ = 1 := by
+    simpa only [mem_sphere, dist_zero_right] using hz
   exact norm_ne_zero_iff.mp (by simpa only [id_eq, hnorm] using (one_ne_zero : (1 : ℝ) ≠ 0))
 
 private theorem weighted_circleAverage (s : ℝ) (f : ℂ → ℂ)
@@ -128,7 +131,8 @@ private theorem weighted_circleAverage (s : ℝ) (f : ℂ → ℂ)
     Real.circleAverage (fun z => star (poly s z) * f z) 0 1 =
       3 * f 0 + deriv f 0 + (s : ℂ) * iteratedDeriv 4 f 0 / 24 := by
   have hconj (z : ℂ) (hz : z ∈ sphere 0 |(1 : ℝ)|) : star z = z⁻¹ := by
-    have hnorm : ‖z‖ = 1 := by simpa [mem_sphere_iff_norm] using hz
+    have hnorm : ‖z‖ = 1 := by
+      simpa only [mem_sphere, dist_zero_right, abs_one] using hz
     apply eq_inv_of_mul_eq_one_left
     change conj z * z = 1
     rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, hnorm]
@@ -196,16 +200,16 @@ private theorem logPoly_derivatives (s : ℝ) (hs : |s| ≤ 1) :
   have h1 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt (logPoly s) (d1 z) z := by
     convert! (hp z).mul (hl z hz) using 1
     try dsimp only [d1]
-    field_simp [hn z hz]
+    field_simp (disch := first | exact hn z hz | exact pow_ne_zero _ (hn z hz) | norm_num)
   have h2 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt d1 (d2 z) z := by
     convert! (hp1 z).mul ((hl z hz).add_const 1) using 1
     try dsimp only [d2]
-    field_simp [hn z hz]
+    field_simp (disch := first | exact hn z hz | exact pow_ne_zero _ (hn z hz) | norm_num)
   have h3 (z : ℂ) (hz : z ∈ ball 0 1) : HasDerivAt d2 (d3 z) z := by
     convert! ((hp2 z).mul ((hl z hz).add_const 1)).add
       (((hp1 z).pow 2).div (hp z) (hn z hz)) using 1
     try dsimp only [d3, Pi.pow_apply]
-    field_simp [hn z hz]; ring
+    field_simp (disch := first | exact hn z hz | exact pow_ne_zero _ (hn z hz) | norm_num); ring
   have hzero : (0 : ℂ) ∈ ball 0 1 := by simp
   have e1 : Set.EqOn (deriv (logPoly s)) d1 (ball 0 1) := fun z hz => (h1 z hz).deriv
   have e2 : Set.EqOn (iteratedDeriv 2 (logPoly s)) d2 (ball 0 1) := by
@@ -287,6 +291,7 @@ private theorem poly_log_moment (s : ℝ) (hs : |s| ≤ 1) :
   have he : (fun z => Complex.normSq (poly s z) * Real.log (Complex.normSq (poly s z))) =
       fun z => (2 : ℝ) • (star (poly s z) * logPoly s z).re := by
     funext z
+    rw [logPoly.eq_1]
     exact normSq_mul_log (poly s z)
   rw [he, Real.circleAverage_fun_smul, hav]
   norm_num [logPoly, poly, Complex.mul_re, Complex.mul_im, Complex.log_re,
@@ -310,7 +315,7 @@ private theorem witness_coefficients :
   have h10 : Real.sqrt 10 ≠ 0 := (Real.sqrt_pos.mpr (by norm_num)).ne'
   have h11 : Real.sqrt 11 ≠ 0 := (Real.sqrt_pos.mpr (by norm_num)).ne'
   have ha : Real.sin witnessAlpha = Real.sqrt 10 / Real.sqrt 11 := by
-    simp only [witnessAlpha, Real.sin_arctan]
+    rw [witnessAlpha.eq_1, Real.sin_arctan]
     rw [Real.sq_sqrt (by norm_num)]
     norm_num
   have hac : Real.cos witnessAlpha = 1 / Real.sqrt 11 := by
@@ -318,16 +323,17 @@ private theorem witness_coefficients :
     rw [Real.sq_sqrt (by norm_num)]
     norm_num
   have hbc : Real.cos witnessBeta = 3 / Real.sqrt 10 := by
-    norm_num [witnessBeta, Real.cos_arctan, Real.sqrt_div]
+    rw [witnessBeta.eq_1]
+    norm_num [Real.cos_arctan, Real.sqrt_div]
   have hbs : Real.sin witnessBeta = 1 / Real.sqrt 10 := by
     norm_num [witnessBeta, Real.sin_arctan, Real.sqrt_div]
-    field_simp
+    field_simp (disch := positivity)
   rw [ha, hac, hbc, hbs]
   constructor
-  · field_simp
+  · field_simp (disch := positivity)
   constructor
   · rfl
-  · field_simp
+  · field_simp (disch := positivity)
 
 private noncomputable def auxiliaryDensity (s t : ℝ) : ℝ :=
   Complex.normSq (poly s (circleMap 0 1 t)) / (22 * Real.pi)
@@ -359,7 +365,7 @@ private theorem density_phase (phase s : ℝ)
       (1 / (Real.sqrt 11 : ℂ)) * u ^ 2 * star (poly s u) := by
     simp only [poly, star_add, star_mul, star_pow, star_ofNat,
       show star (s : ℂ) = (s : ℂ) from Complex.conj_ofReal s, hstar]
-    field_simp
+    field_simp (disch := first | exact hu | exact hroot | norm_num)
   have hu_sq : Complex.normSq u = 1 := by
     rw [Complex.normSq_eq_norm_sq, hu_norm]
     norm_num
@@ -396,14 +402,14 @@ private theorem auxiliary_log_integral (s : ℝ) (hs : |s| ≤ 1) (hsq : s ^ 2 =
   simp only [Real.circleAverage_def, smul_eq_mul, hsq] at hm hj
   have hmass : (∫ t in (0 : ℝ)..(2 * Real.pi), auxiliaryDensity s t) = 1 := by
     simp only [auxiliaryDensity, intervalIntegral.integral_div]
-    field_simp [Real.pi_ne_zero] at hm ⊢
+    field_simp (disch := positivity) at hm ⊢
     nlinarith
   have hmoment :
       (∫ t in (0 : ℝ)..(2 * Real.pi),
         Complex.normSq (poly s (circleMap 0 1 t)) *
           Real.log (Complex.normSq (poly s (circleMap 0 1 t)))) / (22 * Real.pi) =
         2 * Real.log 3 + 4 / 11 + s / 1782 := by
-    field_simp [Real.pi_ne_zero] at hj ⊢
+    field_simp (disch := positivity) at hj ⊢
     nlinarith
   have hi : IntervalIntegrable (auxiliaryDensity s) volume 0 (2 * Real.pi) := by
     apply Continuous.intervalIntegrable
@@ -415,7 +421,7 @@ private theorem auxiliary_log_integral (s : ℝ) (hs : |s| ≤ 1) (hsq : s ^ 2 =
         Real.log (22 * Real.pi) * auxiliaryDensity s t =
       (Complex.normSq (poly s (circleMap 0 1 t)) *
         Real.log (Complex.normSq (poly s (circleMap 0 1 t)))) / (22 * Real.pi) := by
-    unfold auxiliaryDensity
+    rw [auxiliaryDensity.eq_1]
     by_cases hw : Complex.normSq (poly s (circleMap 0 1 t)) = 0
     · simp [hw]
     rw [Real.log_div hw (by positivity)]
@@ -442,7 +448,8 @@ private theorem entropy_gap :
       density_mul_log_intervalIntegrable witnessAlpha witnessBeta 0 Real.pi
   have hip := auxiliary_log_integral 1 (by norm_num) (by norm_num) hp
   have him := auxiliary_log_integral (-1) (by norm_num) (by norm_num) hm
-  simp only [spinEntropy, density_zero_phase, density_pi_phase]
+  rw [spinEntropy.eq_1, spinEntropy.eq_1]
+  simp only [density_zero_phase, density_pi_phase]
   rw [hip, him]
   ring
 
