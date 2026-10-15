@@ -107,11 +107,12 @@ private theorem strong_state_from_same_parent {m k : ℕ} (hm : 3 ≤ m) (hk : 3
     (parent_next_marked_map_bijective B A u hbase hA).comp
       (parent_order_domain_map_bijective F B A u hbase hbase hselected rfl)
   have hval : ∀ x, (lift x).val = x.val := fun _ => rfl
+  have hBopp : oppositeSelectedFrame B (by omega) = F :=
+    native_opposite_selected_involutive F (by omega)
   have hcan : oppositeSelectedFrame N₀ (by omega) = N₁ := by
+    change oppositeSelectedFrame (nextFrame B A u hbase) (by omega) = _
     rw [native_opposite_next_frame B (by omega) A u hbase]
-    change nextFrame (oppositeSelectedFrame (oppositeSelectedFrame F (by omega))
-      (by omega)) A u hbase = _
-    rw [native_opposite_selected_involutive F (by omega)]
+    simpa only [hBopp, N₁]
   obtain ⟨hstate, hprimary, hopposite, hKraw, hHraw⟩ :=
     native_actual_identity_two_order_state_transport _ _ lift hval N₀ N₁
       W.P.oppositeOdd W.P.primaryOdd W.cycle J.K J.H joint primary opposite
