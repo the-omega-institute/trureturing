@@ -1,0 +1,21 @@
+**Assumption 7.1 (complete row-only entry and stationary re-query).** Fix a
+realized $R=(C,\pi)$. The initial compatible original sources are exactly
+$\mathcal U_R$ of (NAR.1.4), and the alpha supplement has been discarded.
+The accessible entry state is determined by $P,R$ and common controls
+alone, in the complete access-cut sense of Definition 4.3.
+There is no retained history, ancestry, source size, pointer, timing,
+source label or meter which restricts this full fiber.
+Under the separately supplied serial entry and version contract, one
+actual update has produced the authenticated register $y=\rho u$ for
+some $u\in\mathcal U_R$. The register remains stationary throughout
+the subsequent reading phase.
+
+A comparison service is one common deterministic rule which, using
+only its retained inputs and chronological native four-reply reads,
+terminates on every such source and outputs the entire $R_P(y)$.
+It may choose any finite addresses, adapt, repeat and compute locally.
+The price is the number of fresh native raw invocations in this phase,
+including re-reads. It is not a count of lifetime distinct addresses.
+The authenticating promise states continuity and the one update,
+without telling the service which source in the fiber is actual.
+

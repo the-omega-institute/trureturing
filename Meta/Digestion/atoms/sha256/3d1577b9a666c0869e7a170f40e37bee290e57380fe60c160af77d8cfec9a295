@@ -1,0 +1,16 @@
+**Proposition 10.3 (edge cuts, compatibility and authenticity).** Empty, root,
+nested and disjoint cuts retain the full criterion of Theorem 10.2. Its
+negative direction concerns universal decodability, not ambiguity of
+every particular row pair. Define the endpoint lag fiber by
+
+$$
+\Lambda_{P,Q}(A,B)=\{k\ge0:\exists t\in\mathcal T,
+                 \ R_P(t)=A,\ R_Q(\rho^k t)=B\}.
+\tag{NAR.10.13}
+$$
+
+For a gap pair this fiber has at most one element, computable from any
+chosen common $J_q$ whenever the fiber is inhabited. Nonnegative coordinate
+consistency alone does not establish inhabitation. Neither inhabitation
+nor a coordinate calculation authenticates a selected physical history.
+

@@ -12,7 +12,7 @@ triage: anchor
 
 # Lebesgue-Nagell input for actual golden initial-depth vectors
 
-## Verified primary locator
+## Verified locator
 
 Y. Bugeaud, M. Mignotte and S. Siksek, *Classical and modular approaches to
 exponential Diophantine equations II. The Lebesgue-Nagell equation*,

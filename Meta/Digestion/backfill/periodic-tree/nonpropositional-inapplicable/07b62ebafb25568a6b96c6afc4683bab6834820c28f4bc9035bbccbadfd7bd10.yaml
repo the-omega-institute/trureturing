@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07b62ebafb25568a6b96c6afc4683bab6834820c28f4bc9035bbccbadfd7bd10
+  normalized_sha256: sha256:07b62ebafb25568a6b96c6afc4683bab6834820c28f4bc9035bbccbadfd7bd10
+cas_ref: sha256:07b62ebafb25568a6b96c6afc4683bab6834820c28f4bc9035bbccbadfd7bd10
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The reverse implication is immediate. If 5 does not divide …）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: bb60ff34725140a0b23d2ff1b102ad85d241d3e98e6e9ee1742873e99c1260e3
+    next_atom_id: 1843e94e84c3ecff7967458c6dbef2af9d87ad07e95a44611c4765c84fdb6048

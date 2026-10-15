@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57d6114b6f0665c419322fcb453bea9b39f77ca9b0c9c43b400aeed654992681
+  normalized_sha256: sha256:57d6114b6f0665c419322fcb453bea9b39f77ca9b0c9c43b400aeed654992681
+cas_ref: sha256:57d6114b6f0665c419322fcb453bea9b39f77ca9b0c9c43b400aeed654992681
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Parameter-scope commentary: stable record and diagonalSubspace are defined relative to the chosen context B. Changing B changes the parameter of these definitions. This is not a universal assertion that every two distinct bases have distinct diagonal subspaces; basis permutations and phase changes are not excluded.'
+    previous_atom_id: 70f31696566d791f184aed337fd90f6f01dcdf555fc5bd42f34b9b3439c8b44d
+    next_atom_id: 31c3fdfe6fc1a38fbc2fe791877788043191e69ad63d489d9e501b76bacf10cb

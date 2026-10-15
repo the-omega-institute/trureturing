@@ -1,0 +1,17 @@
+**Theorem 13.5 (sharp binary half-visibility boundary).** On precisely the
+binary-age family $H=1$,
+
+$$
+\begin{aligned}
+N_1(r,k)=2&\quad\Longleftrightarrow\quad 2k>r,\\
+2k\le r&\quad\Longrightarrow\quad
+ N_1(r,k)\ge 2^{\lfloor r/k\rfloor}\ge4,\\
+r=2k&\quad\Longrightarrow\quad N_1(r,k)=4.
+\end{aligned}
+\tag{NAR.13.13}
+$$
+
+Thus the exact one-bit threshold is $k>r/2$. There is no parameter pair
+in this binary domain whose optimal retained alphabet has three values.
+At equality $r=2k$ the exact fixed-width price is two bits.
+

@@ -1,0 +1,27 @@
+**Theorem 5.2 (requirements and pair-specific scope).** Dropping
+productivity or complete signed preservation invalidates the certificate
+conclusion. A non-rational contact for one pair does not imply that the
+entire fiber lacks other finite-context contacts.
+
+Proof. Without productivity, use the two fixed sources
+$U(\beta,\beta),U(F(\beta),\beta)$, the identity substitution and
+$H_0=w_0$. Seed feasibility, signed preservation and intertwining hold.
+The zero-weight self-loop is present. The fixed distinct finite sources
+have a finite discrepancy and cannot witness every $h$.
+
+For preservation, set $F(z)=\langle\alpha,\rho z\rangle$, seed
+$z=\beta$, and condition $z\ne F(\beta)$. It holds at the seed and
+fails after the first substitution $z\mapsto F(z)$. Guarded prefix
+gain alone does not preserve even this single negative. Any additional
+retained history must enter $I$ in full and have preservation proved anew.
+
+For the final assertion specialize to $C[t]=\langle g,t\rangle$.
+For sufficiently large $m$, $T_{m+1}\ne F(T_m)$, since their left
+children would otherwise give $T_m=g$, excluded for all sufficiently
+large $m$ by atomic rank injectivity. Thus $U(T_m,T_m)$ has exact
+label $r_0$ and $U(T_{m+1},T_m)$ exact label $r_2$. Both tend to
+$\langle\Omega,\langle\Omega,\langle g,\Omega\rangle\rangle\rangle$,
+a finite context filled by $\Omega$, because
+$\rho^a T_m=T_{m+a}$. This supplies finite contact witnesses for a
+different pair in the same whole fiber. $\square$
+

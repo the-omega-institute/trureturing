@@ -151,7 +151,7 @@ Section 9.2, after Proposition 9.9, PDF p. 25: "We do not know if these conjectu
 **Remark 1.13 (A composition-compatible flag).**
 
 $$
-\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)), (\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)), \mathbb{C}\right),\; \forall Pplus \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall Pminus \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; ((Pplus = \frac{((1, \operatorname{Complex}.\operatorname{I}) ((1, \operatorname{Complex}.\operatorname{I}))^{*})}{2}) \land (Pminus = \frac{((1, -\operatorname{Complex}.\operatorname{I}) ((1, -\operatorname{Complex}.\operatorname{I}))^{*})}{2})) \Rightarrow (((\operatorname{Matrix}.\operatorname{PosSemidef}\left(rho\right)) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(((rho)^{\Gamma_{\operatorname{B}}})\right))) \Rightarrow (\exists rhotilde \in \operatorname{Matrix}\left(((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)) \times \operatorname{Fin}\left(2\right)), ((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (rhotilde = ((\operatorname{tensor}\left(rho, Pplus\right)) + (\operatorname{tensor}\left(((rho)^{\Gamma_{\operatorname{B}}}), Pminus\right)))) \land ((\operatorname{Matrix}.\operatorname{PosSemidef}\left(rhotilde\right)) \land ((rhotilde)^{\Gamma_{\operatorname{B}\operatorname{B}'}} = rhotilde))))
+\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)), (\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)), \mathbb{C}\right),\; \forall Pplus \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall Pminus \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; ((Pplus = \frac{((1, \operatorname{Complex}.\operatorname{I}) ((1, \operatorname{Complex}.\operatorname{I}))^{*})}{2}) \land (Pminus = \frac{((1, -\operatorname{Complex}.\operatorname{I}) ((1, -\operatorname{Complex}.\operatorname{I}))^{*})}{2})) \Rightarrow (((\operatorname{Matrix}.\operatorname{PosSemidef}\left(rho\right)) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(((rho)^{\Gamma_{\operatorname{B}}})\right))) \Rightarrow (\exists rhotilde \in \operatorname{Matrix}\left(((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)) \times \operatorname{Fin}\left(2\right)), ((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (rhotilde = ((\operatorname{Matrix}.\operatorname{kroneckerMap}\left((\operatorname{fun} (a: \mathbb{C}) \mapsto \operatorname{fun} (b: \mathbb{C}) \mapsto a * b), rho, Pplus\right)) + (\operatorname{Matrix}.\operatorname{kroneckerMap}\left((\operatorname{fun} (a: \mathbb{C}) \mapsto \operatorname{fun} (b: \mathbb{C}) \mapsto a * b), ((rho)^{\Gamma_{\operatorname{B}}}), Pminus\right)))) \land ((\operatorname{Matrix}.\operatorname{PosSemidef}\left(rhotilde\right)) \land ((rhotilde)^{\Gamma_{\operatorname{B}\operatorname{B}'}} = rhotilde))))
 $$
 
 *Citation.* Marcus Huber; Ludovico Lami; Cécilia Lancien; Alexander Müller-Hermes (2018). *High-Dimensional Entanglement in States with Positive Partial Transposition*. DOI: [10.1103/PhysRevLett.121.200503](https://doi.org/10.1103/PhysRevLett.121.200503). URL: <https://arxiv.org/abs/1802.04975>.
@@ -160,7 +160,31 @@ $$
 
 On the auxiliary two-dimensional factor take P+ = (1,i)(1,i)*/2 and P- = (1,-i)(1,-i)*/2. Their transpose exchanges them. Compress to these flag sectors with B+ and B-, and put E(X) = B+(X) + B-(X)^T and D(A) = A tensor P+ + A^T tensor P-. The lift D Phi E/2 has four completely positive branches for every complex PPT Phi. It is invariant under transpose on input and output, so its real restriction is IPT and complexifies back to the lift. The identity E D = 2 id makes the lift preserve composition. Completely positive insertion A tensor P+ and compression B+ recover Phi squared divided by two. This transfers entanglement breaking from the lifted square. The lift adapts the conjugate-flag construction rho tensor P+ + rho partially transposed tensor P- of Huber, Lami, Lancien and Müller-Hermes, arXiv v1, Section III.C, PDF p. 8, the second lemma labelled III.1. The map normalization, composition law and recovery are the consequences used here.
 
-**Theorem 1.14 (The three conjectures are equivalent).**
+**Definition 1.14 (Finite positive measure-and-prepare form).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; \operatorname{HasPrepare}\left(Phi\right) \Leftrightarrow (\exists k \in \mathbb{N},\; \exists M \in \operatorname{Fin}\left(k\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right),\; \exists N \in \operatorname{Fin}\left(k\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; (\forall j \in \operatorname{Fin}\left(k\right),\; (\operatorname{Matrix}.\operatorname{PosSemidef}\left(M\left(j\right)\right)) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(N\left(j\right)\right))) \land (\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right),\; Phi\left(A\right) = \sum_{j:\operatorname{Fin}\left(k\right)} (\operatorname{Matrix}.\operatorname{trace}\left((M\left(j\right) * A)\right) \cdot N\left(j\right))))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.HasPrepare` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A finite family of positive measurement matrices M and positive preparation matrices N represents Phi by the sum of trace(M(j) A) times N(j), for every input matrix A. The natural number k counts all terms; n and m are arbitrary input and output dimensions over an RCLike scalar field K. Scalar multiplication is displayed by a centered dot.
+
+**Theorem 1.15 (Positive measure-and-prepare maps break entanglement).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; (\operatorname{HasPrepare}\left(Phi\right)) \Rightarrow (\operatorname{IsEB}\left(Phi\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.prepare_eb` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every positive amplified input has separable output under a map with finite positive measure-and-prepare form. Positivity of each weighted matrix follows from a rank-one decomposition of the measurement matrix and positive congruence of the input; tensor products with the positive preparations then form a finite separable sum.
+
+**Theorem 1.16 (The three conjectures are equivalent).**
 
 $$(PPT2C \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{C}\right))) \land (\operatorname{IPT2}\left(\mathbb{C}\right) \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{R}\right)))$$
 
@@ -183,6 +207,7 @@ IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausChannel.kron`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteKrausRepresentation.choi_matrix`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.HasPrepare`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IPT2`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IsEB`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.IsIPT`
@@ -191,6 +216,7 @@ IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.SEP`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.choi_psd_of_cp`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.claim`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.prepare_eb`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.ptFirst`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)

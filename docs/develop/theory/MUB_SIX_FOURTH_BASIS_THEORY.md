@@ -2674,3 +2674,218 @@ F\le\|D'-D\|_F^2\le z^2(Q_{\rm new}),
 矛盾。另一方面 `F<z²(Q_old)`，故原范数必要条件不构成排除。更换统一迹界不改变同一压缩矩阵的极因子，两个检验确实比较同一单元。
 
 此命题只针对明确给出的精确种子、固定标架与单元，不将它们认作某次存档计算的种子记录或标架选择；它既不认证舍入实现，也不建立全域覆盖。
+
+## 41. 互补三相位 Fourier 预算的精确全局下界
+
+### 41.1 定义与极值命题
+
+固定 `ω=exp(2πi/3)`。对单位模三元组定义未归一化 Fourier 系数及能量
+
+```math
+\lambda_r(z)=z_0+\omega^rz_1+\omega^{2r}z_2,\qquad
+E_r(z)=|\lambda_r(z)|^2,\qquad r\in\mathbb Z_3.
+```
+
+定义实际双行预算可行集
+
+```math
+\mathcal P_6=\{(z,w)\in\mathbb C^3\times\mathbb C^3:
+|z_j|=|w_j|=1,\ E_r(z)+E_r(w)=6\quad(j,r\in\mathbb Z_3)\}.
+```
+
+令
+
+```math
+\gamma=3-3\sqrt{2\sqrt3-3},\qquad 0<\gamma<1.
+```
+
+Matolcsi–Weiner，*An improvement on the Delsarte-type LP-bound with application to MUBs*，Theorem 4.1 的证明 pp.8–9，DOI [10.1142/S1230161215500018](https://doi.org/10.1142/S1230161215500018)，已给出单行约束 `E_r≤6` 下的精确下界 `m=(3/2)(1−√(16√6−39))`。本节保留两行的互补约束，而不只逐行使用该松弛。相反 deltoid 的交域、判别式及六个最大径向极值点与 `C_6` 的联系，见 Szöllősi，*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，式 (15) 与 Lemma 3.2，DOI [10.1090/S0002-9939-09-10102-8](https://doi.org/10.1090/S0002-9939-09-10102-8)。以下对已知交域推导 Fourier 能量的定向全局支撑界及等号谱（`repo-derived`）；交域、径向极值点及其 Hadamard 构造不作为新增结果。
+
+**命题 41.1。** 对每个 `(z,w)∈P_6` 及每个模式 `r`，
+
+```math
+\boxed{\gamma\le E_r(z),E_r(w)\le6-\gamma.}
+```
+
+上下端点均可达到。因此
+
+```math
+\min_{(z,w)\in\mathcal P_6}\min_{r\in\mathbb Z_3}E_r(z)
+=3-3\sqrt{2\sqrt3-3}=0.956249884100\ldots.
+```
+
+若某个 `E_r(z)=γ`，则该行的其余两个能量为 `3` 和 `6−γ`，另一行的能量逐模与之互补。
+
+证明。分别除去两行的公共相位，不改变预算。可设 `z=(1,a,b)`、`w=(1,c,d)`。其自相关和分别为
+
+```math
+s=a+b/a+1/b,\qquad h=c+d/c+1/d.
+```
+
+展开 Fourier 能量，逐模预算等价于
+
+```math
+\Re\bigl(\omega^r(s+h)\bigr)=0\qquad(r=0,1,2),
+```
+
+故 `h=−s`。为验证所需判别式不等式，令 `u=a`、`v=b/a`、`w_0=1/b`。三个数均为单位模且乘积为一，因此是 `T³−sT²+overline(s)T−1` 的根。对 `V=(u−v)(u−w_0)(v−w_0)` 有 `overline(V)=−V`，故此三次多项式的判别式为 `V²=−|V|²≤0`。对另一行重复同一计算，得到
+
+```math
+F(s)\le0,\qquad F(-s)\le0,\qquad
+F(s)=|s|^4+18|s|^2-8\Re(s^3)-27.
+```
+
+对两行作同一循环调制即可将所考察模式移到零模式。记 `E=E_0(z)`。若 `E>1`，则 `E>γ`；否则 `0≤E≤1`，写
+
+```math
+s=-A+iy,\qquad A=(3-E)/2\in[1,3/2],\qquad Y=y^2\ge0.
+```
+
+两个判别式的较大者为
+
+```math
+\max(F(s),F(-s))=G_A(Y),
+```
+
+其中
+
+```math
+G_A(Y)=(A^2+Y)^2+18(A^2+Y)-27+8A|3Y-A^2|.
+```
+
+在 `0≤Y≤A²/3` 上，
+
+```math
+G_A'(Y)=2(A^2+Y)+18-24A
+\le\frac83A^2+18-24A\le-\frac{10}{3}<0.
+```
+
+最后一步使用右侧二次式在 `[1,3/2]` 上递减且在 `A=1` 取值 `−10/3`。在 `Y≥A²/3` 上，
+
+```math
+G_A'(Y)=2(A^2+Y)+18+24A>0.
+```
+
+因此 `G_A` 在非负实轴上的唯一最小点是 `Y=A²/3`，故
+
+```math
+0\ge G_A(Y)\ge G_A(A^2/3)
+=\frac{16}{9}A^4+24A^2-27.
+```
+
+令 `R=4A²/3`，右端为 `R²+18R−27`。其唯一非负根为 `6√3−9`，所以
+
+```math
+A^2\le\frac94(2\sqrt3-3),\qquad
+E=3-2A\ge3-3\sqrt{2\sqrt3-3}=\gamma.
+```
+
+交换两行并对所有模式应用此下界，再由预算得到上界 `6−γ`。
+
+若 `E=γ`，严格单调性迫使 `Y=A²/3`，且两个判别式都为零。此时
+
+```math
+E_1(z)=3+A-\sqrt3\,y,\qquad
+E_2(z)=3+A+\sqrt3\,y,
+```
+
+而 `|√3y|=A`，故其余两个能量恰为 `3` 和 `3+2A=6−γ`。为证明可达，取已知最大径向极值点中的 `s=−A+iA/√3`，其中 `A=(3/2)√(2√3−3)`。它等于上述 Szöllősi Lemma 3.2 的 `√(−9+6√3) exp(5πi/6)`。下列显式相位验证这一点同时达到所求定向支撑界。置
+
+```math
+\psi=\arccos\frac{\sqrt3-1}{2},\qquad
+\vartheta=\frac{4\pi}{3}-\psi,\qquad q=e^{i\vartheta},
+```
+
+并定义两条单位模行
+
+```math
+z_*=(1,q,q^{-1}),\qquad
+w_*=(1,\omega q^{-1},\omega^2q).
+```
+
+则 `(z_*,w_*)∈P_6`，且其能量分别为
+
+```math
+(E_0(z_*),E_1(z_*),E_2(z_*))=(\gamma,3,6-\gamma),
+```
+
+```math
+(E_0(w_*),E_1(w_*),E_2(w_*))=(6-\gamma,3,\gamma).
+```
+
+若 `A,B` 是以这两行为首行的三阶 circulant 矩阵，则
+
+```math
+H=\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix}
+```
+
+为六阶复 Hadamard 矩阵，即所有矩阵元模长为一且 `HH*=6I`。
+
+具体地，由三角恒等式，第一行的 Fourier 系数均为实数，且
+
+```math
+\lambda_0(z_*)=\frac{3-\sqrt3-\sqrt{6\sqrt3}}2,\qquad
+\lambda_1(z_*)=\sqrt3,\qquad
+\lambda_2(z_*)=\frac{3-\sqrt3+\sqrt{6\sqrt3}}2.
+```
+
+利用
+
+```math
+(3-\sqrt3)^2(6\sqrt3)=36(2\sqrt3-3),
+```
+
+平方得到第一条能量等式。第二行由第一行共轭再作一次循环调制得到，因此
+
+```math
+E_r(w_*)=E_{-r-1}(z_*),
+```
+
+即其模式顺序为 `(E_2(z_*),E_1(z_*),E_0(z_*))`。这给出第二条能量等式及全部逐模预算。
+
+最后，circulant 矩阵可由同一 Fourier 矩阵酉对角化，故 `A,B` 正规并交换。逐模预算给出 `AA*+BB*=6I`，所以
+
+```math
+HH^*=\begin{pmatrix}
+AA^*+BB^*&AB-BA\\
+B^*A^*-A^*B^*&B^*B+A^*A
+\end{pmatrix}=6I.
+```
+
+所有块的矩阵元模长均为一，因此 `H` 是所述复 Hadamard 矩阵。证毕。
+
+此处的全局极值针对完整单位模双行预算集合 `P_6`，并由实际六阶 circulant 块矩阵达到。它将第 20 节的非零模式结论定量化，但没有给完成基的 symmetry affinity 加入任何新不等式；特别地，`γ<1` 不是第 18 节的 `α_min(T)>1`，两者既非同一变量，也非同一可行集。本构造不声称属于任意预先固定的 strict-X edge 或其 completion context。
+
+### 41.2 能量谱的精确凸包与线性支撑函数
+
+**推论 41.2。** 定义实际双行预算的第一行能量谱集合
+
+```math
+\mathcal S=\{(E_0(z),E_1(z),E_2(z)):(z,w)\in\mathcal P_6\}.
+```
+
+则
+
+```math
+\operatorname{conv}(\mathcal S)
+=\{e\in\mathbb R^3:e_0+e_1+e_2=9,\
+\gamma\le e_j\le6-\gamma\ (j=0,1,2)\}
+=\operatorname{conv}\{\sigma(\gamma,3,6-\gamma):\sigma\in S_3\}.
+```
+
+特别地，对任意实数权重 `c_0,c_1,c_2`，有精确支撑函数
+
+```math
+\max_{e\in\mathcal S}\sum_{j=0}^2c_je_j
+=3\sum_{j=0}^2c_j+(3-\gamma)\bigl(\max_jc_j-\min_jc_j\bigr),
+```
+
+而最小值等于右端第二项取负号后的表达式。令 `D={u+v+w:|u|=|v|=|w|=1,uvw=1}`，即上述 Szöllősi 使用的 deltoid 单位相位参数像。该参数化对自相关像是满射：给定 `(u,v,w)`，取 `a=u,b=uv` 即有 `a+b/a+1/b=u+v+w`。两行相位可独立选取，所以实际互补自相关集合恰为 `D∩(−D)`。通过 `e_j=3+2Re(ω^j s)` 的实仿射同构，其凸包就是以上述 Szöllősi 六个已知最大径向极值点为顶点的正六边形。
+
+证明。记右侧由坐标界定义的多边形为 `P`。Parseval 恒等式与 41.1 给出 `S⊆P`。`P` 的每个顶点至少有两个坐标处于区间端点，否则可在保持坐标和及所有已激活坐标约束的情况下作非零双向微扰。两个坐标同时等于 `γ` 时，第三个为 `9−2γ>6−γ`，不可行；两个同时等于 `6−γ` 时，第三个为 `2γ−3<γ`，也不可行。因此顶点恰为 `(γ,3,6−γ)` 的六个排列。
+
+41.1 的显式可达对给出其中一个顶点。对两行同时循环调制使能量坐标作三循环；同时共轭使模式指标 `r` 变成 `−r`，提供一个换位。这两个操作保持单位模与逐模预算并生成全部六个排列，故所有顶点均属于 `S`。于是 `P⊆conv(S)`，证明凸包等式。
+
+每个顶点都可写为 `3(1,1,1)+(3−γ)(e_j−e_i)`，其中 `i≠j`，而这里 `e_i` 表示标准坐标向量。线性泛函的最大值由最大权重处的正偏移与最小权重处的负偏移取得，给出支撑函数公式；取负权重给出最小值。证毕。
+
+本推论只把线性能量目标的极值化为六个顶点。它不把原可行集 `S` 认作整个凸包，也不允许将任意非线性目标的最小值或含额外 completion 变量的优化直接限制到这六点。

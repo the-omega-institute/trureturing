@@ -1,0 +1,2 @@
+- VALUE reads $p$ at $N=0$, and $pR^{\lceil N/2\rceil}$ otherwise.
+  Decode by Lemma 11.3. An invalid virtual absent goes to ERROR.

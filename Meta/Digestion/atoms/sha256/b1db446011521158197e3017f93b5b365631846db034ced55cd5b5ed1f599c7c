@@ -1,0 +1,36 @@
+**Definition 9.2 (two conditional prices and joint feasibility).** A
+supplement may depend on all acquired finite class values, not only on
+$A_P(u)$. Its conditional state count is
+
+$$
+m_R(\sigma)=|\sigma[\mathcal U_R]|.
+\tag{NAR.9.1}
+$$
+
+One common deterministic reader receives the inputs of Assumption 9.1.
+It may compute locally and choose arbitrary finite native addresses
+adaptively from those inputs and its chronological replies. It must
+terminate on every $u\in\mathcal U_R$ and output the entire
+$R_P(\rho u)$. Let $Q(u)$ count its fresh native invocations during this
+stationary first-updated-version phase. Every invocation counts, including
+repeated addresses, absent-address calls, and re-reads of addresses
+queried during old acquisition.
+
+For integers $r\ge1$ and $q\ge0$, write $\mathsf{Feas}_R(r,q)$ if there
+exist such an acquired and exported supplement and such a reader with
+$m_R(\sigma)\le r$ and $Q(u)\le q$ for every $u\in\mathcal U_R$.
+Write $\mathsf Q_R(r)$ for the least feasible integer $q$, when it exists.
+This optimizes the existence of the encoder and reader jointly; it does
+not assert that every supplement using at most $r$ values admits the same
+call bound.
+
+The first coordinate counts extra retained values conditional on the
+already supplied row. It is not total controller states, workspace,
+row size, program bytes or physical memory. The second coordinate counts
+fresh invocations, not lifetime distinct addresses or physical time.
+Acquisition, export and retention, the old row, local computation,
+addresses and their transmission, authentication, actual updates and
+later execution lie outside these two coordinates. They remain separate
+requirements and costs, as in Definition 7.3 and
+[Sparse History Proposition 62.4](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+

@@ -1,0 +1,31 @@
+**Proof.** If $U\le2$, choose $q_p=\varepsilon$. Its replies distinguish
+every age in $[0,U]$. Map its alpha, beta and branch replies to the
+supplied table's value for $p$ at ages zero, one and two respectively;
+assign any unreachable input arbitrarily. This proves (AOF.28) with
+$m=0$, including $U=1$.
+
+If $U\ge3$, then $m\ge1$ and $U\in\{2m+1,2m+2\}$. First replace
+$p$ by the shortest globally reply-equivalent $E,P_t$ or $S_t$
+representative of Definition 8.2. This does not increase its length.
+If that length is at most $m$, use that word and the identity map.
+Otherwise its shortest length $\lceil t/2\rceil$ exceeds $m$, hence
+$t\ge2m+1$. Use $q_p=R^m=P_{2m}$. On $[0,U]$ its reply cells are
+$[0,2m-1]$, $\{2m\}$, $\{2m+1\}$ and, when present, $\{2m+2\}$.
+The old query is constantly absent on the first cell, and every other
+cell is a singleton. Substitution in (AOF.24) gives all six maps:
+
+| Original query | $\phi_p(\bot)$ | $\phi_p(\alpha)$ | $\phi_p(\beta)$ | $\phi_p(\mathsf b)$ |
+| --- | --- | --- | --- | --- |
+| $P_{2m+1}$ | $\bot$ | $\bot$ | $\alpha$ | $\beta$ |
+| $P_{2m+2}$ | $\bot$ | $\bot$ | $\bot$ | $\alpha$ |
+| $P_t$, $t\ge2m+3$ | $\bot$ | $\bot$ | $\bot$ | $\bot$ |
+| $S_{2m+1}$ | $\bot$ | $\bot$ | $\beta$ | $\mathsf b$ |
+| $S_{2m+2}$ | $\bot$ | $\bot$ | $\bot$ | $\beta$ |
+| $S_t$, $t\ge2m+3$ | $\bot$ | $\bot$ | $\bot$ | $\bot$ |
+
+For $U=2m+1$ the branch column is unreachable. Since a replaced
+representative had length greater than $m$, the new length is also
+at most the original $|p|$. Normalization must precede this argument:
+an arbitrary overlong word can have a short equivalent representative.
+The displayed refinement proves (AOF.28) on every declared age. $\square$
+

@@ -13,7 +13,7 @@ result:
   admission_basis: open-problem-resolution (#14982; Refuted)
 Direct frozen dependencies: none; all imports are pinned Mathlib.
 Definitions: smalePoly, claim; private witness has type Fin 3 -> Complex x Complex.
-Private auxiliary classifications (all bind-only; live consumers):
+Auxiliary classifications (all bind-only; live consumers):
   sqrt437_sq -> witness_mul; sqrt3_sq -> witness_mul.
   witness_sum -> witness_poly; witness_mul -> witness_poly.
   witness_poly -> witness_eval, witness_derivative_eval, witness_second_eval.
@@ -59,7 +59,9 @@ private def witness : Fin 3 → ℂ × ℂ :=
 private theorem sqrt437_sq : (Real.sqrt 437 : ℂ) ^ 2 = 437 := by
   exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 437 by norm_num)
 
-private theorem sqrt3_sq : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
+/- The four-slot escape audit of sqrt3_sq is unfinished:
+https://github.com/the-omega-institute/trureturing/issues/16616. -/
+theorem sqrt3_sq : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
   exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
 
 private theorem witness_sum : witness 1 + witness 2 = ((-21 : ℂ), 0) := by

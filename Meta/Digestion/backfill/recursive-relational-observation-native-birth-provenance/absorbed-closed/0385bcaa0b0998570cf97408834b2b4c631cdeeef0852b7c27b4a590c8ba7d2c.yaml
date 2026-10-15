@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0385bcaa0b0998570cf97408834b2b4c631cdeeef0852b7c27b4a590c8ba7d2c
+  normalized_sha256: sha256:0385bcaa0b0998570cf97408834b2b4c631cdeeef0852b7c27b4a590c8ba7d2c
+cas_ref: sha256:0385bcaa0b0998570cf97408834b2b4c631cdeeef0852b7c27b4a590c8ba7d2c
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceMoore.three_call_state_obstruction
+    target_statement_id: sha256:ef7529837e9ac97054317e44f0d1441f66c03c79039c7a6e074c70e1e3fb04c2
+receipts:
+  unresolved_subitems: []

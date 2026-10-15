@@ -1,0 +1,6 @@
+**Proposition 12.7 (degenerate cuts and essential edge examples).** The
+preceding claims include $m=1$, $D=0$, empty, root and ray-covering cuts,
+early absence and equal epochs. A connected family need not have a ray
+visible in every capture, and disconnected families admit concrete
+strictly chronological whole-row collisions.
+

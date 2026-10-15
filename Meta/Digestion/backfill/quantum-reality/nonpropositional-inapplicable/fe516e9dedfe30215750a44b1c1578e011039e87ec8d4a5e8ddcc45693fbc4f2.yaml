@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe516e9dedfe30215750a44b1c1578e011039e87ec8d4a5e8ddcc45693fbc4f2
+  normalized_sha256: sha256:fe516e9dedfe30215750a44b1c1578e011039e87ec8d4a5e8ddcc45693fbc4f2
+cas_ref: sha256:fe516e9dedfe30215750a44b1c1578e011039e87ec8d4a5e8ddcc45693fbc4f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义372.1　有限平移世界中的相对位置只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 3459b99a83b40ea58b700dc226a968a29ea30da5c8a52b0e09dd88ccb6ed11f8
+    next_atom_id: 0a21c7caf2a10c3a12c36577aae47e861ca2b11d0dc6cf18174bbc544763379d

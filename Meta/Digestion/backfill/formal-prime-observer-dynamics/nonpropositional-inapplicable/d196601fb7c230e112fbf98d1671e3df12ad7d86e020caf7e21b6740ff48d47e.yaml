@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d196601fb7c230e112fbf98d1671e3df12ad7d86e020caf7e21b6740ff48d47e
+  normalized_sha256: sha256:d196601fb7c230e112fbf98d1671e3df12ad7d86e020caf7e21b6740ff48d47e
+cas_ref: sha256:d196601fb7c230e112fbf98d1671e3df12ad7d86e020caf7e21b6740ff48d47e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：42. 局部可解、兼容与胶合：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 8b4ccecb6840f69973dcf9ebfd76cf8edcbf6e7addfab284f2e543258528512d
+    next_atom_id: 1662574eb775cf4a0e62bb90e1aeae8862844623cbf75144aff0855b8799719a

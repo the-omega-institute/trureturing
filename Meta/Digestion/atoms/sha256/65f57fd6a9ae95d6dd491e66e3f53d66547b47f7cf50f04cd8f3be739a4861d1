@@ -1,0 +1,54 @@
+**Theorem 11.4 (constant advice and three calls require ten states).**
+For $r=1$ and $q=3$, every successful controller has at least five
+running states and at least five halting states. In particular
+$K\ge10$.
+
+**Proof.** Restrict it to the six actual sources of Proposition 11.3.
+Constant advice gives one common initial state. Five different required
+outputs exclude an initial halt. At any later state, the fixed address
+has at most two replies on these six sources. Consequently one remaining
+call can distinguish at most two different required outputs, and two
+remaining calls at most four, including early halts. These elementary
+binary-depth bounds are the same decision-tree capacity supplier used
+in Theorem 9.5, applied only to these actual runs.
+
+The first call cannot have constant reply: that would leave all five
+outputs for two calls. It also cannot isolate a single positive index
+$j$. On the other reply its remaining candidates would be
+$Z\setminus\{j\}$, with four distinct required outputs. Any possible
+second call on that set has one of the following forms by Proposition
+11.3. A constant query leaves four outputs for one call. A singleton
+query for another positive index leaves three outputs on its other
+reply. A group query leaves the opposite group, the one not containing
+$j$, intact, with its three different outputs $R_0$ and its two positive
+rows. Each case leaves at least three outputs for one call and is
+impossible. Querying the removed singleton is constant on the remaining
+set, so is included. Halting before the second call cannot resolve its
+four outputs either.
+
+Thus the first call separates $G_a$ from $G_c$ and its running state has
+an address in an $a$ or $c$ occurrence cone. Consider its $G_a$ reply.
+There are exactly the three outputs $R_0,R_1,R_2$ and at most two calls
+left. Both partner-cone queries are now constant, as are skeleton queries
+and singleton queries for $3$ or $4$. The second call must therefore be
+a nonconstant query in a $b_1$ or $b_2$ cone. It isolates that positive
+index. On the other reply the remaining two actual sources are $0_a$
+and the other index in $\{1,2\}$. Their only nonconstant queries are in
+the other right-class cone, so the third call must query that cone.
+Both $b_1$ and $b_2$ cones are therefore queried on actual runs.
+
+The identical argument on $G_c$ forces actual queries in both $b_3$ and
+$b_4$ cones. These four right-class cones and the partner cone of the
+first call are disjoint address locations. Each running state has one
+fixed address, so at least five different running states are necessary.
+No merging of reply histories can change that address requirement. The
+five different whole outputs require five different halting states by
+(NBP.11.6), disjoint from the running states. Early stopping on an
+isolated positive index is allowed in the argument; convergence, cycles
+in a union of runs and unused states cannot remove the five necessary
+address states. Hence $K\ge10$.
+
+This is a direct obstruction on the native finite sources and their
+occurrence cones. It does not use a root simulation, padding reduction,
+or any state-count-preserving consequence of Theorem 10.8. $\square$
+

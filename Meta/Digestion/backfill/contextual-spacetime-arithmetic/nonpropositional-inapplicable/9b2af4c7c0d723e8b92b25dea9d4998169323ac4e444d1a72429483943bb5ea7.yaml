@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b2af4c7c0d723e8b92b25dea9d4998169323ac4e444d1a72429483943bb5ea7
+  normalized_sha256: sha256:9b2af4c7c0d723e8b92b25dea9d4998169323ac4e444d1a72429483943bb5ea7
+cas_ref: sha256:9b2af4c7c0d723e8b92b25dea9d4998169323ac4e444d1a72429483943bb5ea7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述 Tail 条件下表达式的充分方向。
+    previous_atom_id: 0b8a7bbc151b3210ee272c524b83fd22b397518d20f98ac53e6a24b308fa9049
+    next_atom_id: e58ccd3e387efa1b26ca94b295a673273455e9ab1f7e6288577d7baae7a6230e

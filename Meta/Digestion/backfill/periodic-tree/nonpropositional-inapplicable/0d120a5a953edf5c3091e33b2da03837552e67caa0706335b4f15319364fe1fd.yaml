@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d120a5a953edf5c3091e33b2da03837552e67caa0706335b4f15319364fe1fd
+  normalized_sha256: sha256:0d120a5a953edf5c3091e33b2da03837552e67caa0706335b4f15319364fe1fd
+cas_ref: sha256:0d120a5a953edf5c3091e33b2da03837552e67caa0706335b4f15319364fe1fd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 这些商为整数，因为 R2 给出 $p\mid F_r$ 与 $p\mid(F_{r+1}-1)$。…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 2bdf520932e1676fe79236f2f6bf184e44f3a50598eb86cef431b82d778e9bbc
+    next_atom_id: 12b564d83e5d6bddf06ecbadbe1561c1637794cdc2e721b8f37a6478f0745169

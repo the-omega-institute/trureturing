@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b8a9620f0228b40a76ce337433325ad89d14e9765ffc0dae241940f23a90b9d3
+  normalized_sha256: sha256:b8a9620f0228b40a76ce337433325ad89d14e9765ffc0dae241940f23a90b9d3
+cas_ref: sha256:b8a9620f0228b40a76ce337433325ad89d14e9765ffc0dae241940f23a90b9d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“隐式全局状态”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 6311fb3913e43246043e1ed075f128d8c2b894bc20c66951dc39ae7843995ff4
+    next_atom_id: f4f79e8a4dfb3ce1c22278cb4f8689f88c02dbf75ff696461b3e34b01779cc2e

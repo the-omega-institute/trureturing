@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfbf3cec392df071543b82af1f69b0af5b6b162a625966ef317eee8a51d180e1
+  normalized_sha256: sha256:dfbf3cec392df071543b82af1f69b0af5b6b162a625966ef317eee8a51d180e1
+cas_ref: sha256:dfbf3cec392df071543b82af1f69b0af5b6b162a625966ef317eee8a51d180e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 34.10 (Pure residual powers and a positive full-carrier walk).的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 89e8f3c875cc15465542550a06ab55ebb7279cb8eb19447f74abdcbc5ab966e7
+    next_atom_id: 8f6a54594ff3950df3a715ac2c778930f9fb5efe4106c80cbffbd39dfd5f19e5

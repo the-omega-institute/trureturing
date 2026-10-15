@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1cb44f0475d50047b23045a30c985f1975469fb61837277cba21269961bfa7d4
+  normalized_sha256: sha256:1cb44f0475d50047b23045a30c985f1975469fb61837277cba21269961bfa7d4
+cas_ref: sha256:1cb44f0475d50047b23045a30c985f1975469fb61837277cba21269961bfa7d4
+coverage_gids:
+  - gid: D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay
+    target_statement_id: sha256:e09b558b088c79fe9615f3ada9e60dc1845a0019b423b76a1b588254862f2994
+receipts:
+  unresolved_subitems: []

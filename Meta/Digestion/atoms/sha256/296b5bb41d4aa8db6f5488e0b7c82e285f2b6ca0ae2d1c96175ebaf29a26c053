@@ -1,0 +1,12 @@
+**Proposition 2.3 (classwise repair loses an old occurrence).** Take
+$P=\{L,RL\}$ and $v=\langle\alpha,\beta\rangle$. The current exterior is
+
+$$
+C_P(\rho v)=\langle\square_L,\langle\square_{RL},\alpha\rangle\rangle,
+\qquad L\sim_{\pi_P(\rho v)}RL,\qquad O=\{L\}.
+\tag{NBP.2.6}
+$$
+
+Occurrence repair preserves the old hole although a newborn hole has the
+same current value.
+

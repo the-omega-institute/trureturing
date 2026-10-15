@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac05c4248612bade91d885c68c255170fc8da2c8b0acc3bf5ccd0d25d829e5f8
+  normalized_sha256: sha256:ac05c4248612bade91d885c68c255170fc8da2c8b0acc3bf5ccd0d25d829e5f8
+cas_ref: sha256:ac05c4248612bade91d885c68c255170fc8da2c8b0acc3bf5ccd0d25d829e5f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 53.1　外侧信息与补侧关联余量只引入对象、记号或适用条件；附文解释这些记号的范围，不另断言需证明的性质。
+    previous_atom_id: 247b1a1bc0172c9ef4d4be87d39c20f7a2532725ddee882dc4d774a219608f73
+    next_atom_id: c79f5ff3d4e402088e498ed9c123557afe310e758f0495358771c2f812d21003

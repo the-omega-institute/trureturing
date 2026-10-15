@@ -54,7 +54,7 @@ private theorem image_leaf (b : Bool) : Image (.of b) ↔ b = false := by
   | false => exact ⟨fun _ => rfl, fun _ => ⟨.of true, rfl⟩⟩
   | true => exact ⟨fun ⟨u,hu⟩ => False.elim (no_alpha u hu), fun h => Bool.noConfusion h⟩
 
-private theorem evaluate_leaf (C : LiteralRow) (f : Nat → Source) (b : Bool) :
+theorem evaluate_leaf (C : LiteralRow) (f : Nat → Source) (b : Bool) :
     evaluateRow f C = .of b ↔ lit (fun n => rootType (f n)) b C := by
   cases C with
   | of a => cases a with
@@ -137,7 +137,7 @@ def Admissible (C : LiteralRow) (θ : Classes C → Option Bool) : Prop :=
 abbrev OriginFiber (P : CutSet) (C : LiteralRow) :=
   {u : Source // canonicalRow P (substitution u) = C}
 
-private theorem root_extend (C : LiteralRow) (v : Classes C → Source) :
+theorem root_extend (C : LiteralRow) (v : Classes C → Source) :
     (fun n => rootType (extend C v n)) = typeExtend C (types C v) := by
   funext n
   by_cases h : n ∈ labels C

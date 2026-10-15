@@ -1,0 +1,55 @@
+**Proposition 16.7 (explicit retained, raw-call and address coordinates).**
+For the first-slot protocol, let $Q=\lfloor\log_2q\rfloor$. On every
+promised input its retained and newly queried quantities satisfy
+
+$$
+\begin{aligned}
+\#\text{ attained retained labels}&=q,\\
+\text{fixed-width retained bits}&=\lceil\log_2q\rceil,\\
+K_{\mathrm{fresh}}&\le Q,\\
+|p|&\le D+\left\lfloor\frac{\ell+2H}{2}\right\rfloor
+          &&\text{for every fresh word},\\
+\sum_{\mathrm{fresh\ calls}}|p|
+ &\le Q\left(D+\left\lfloor\frac{\ell+2H}{2}\right\rfloor\right).
+\end{aligned}
+\tag{NAR.16.21}
+$$
+
+If $0\in S$, both fresh-call quantities and the address-length sum are
+zero. For the general feasible-encoder construction of Theorem 16.5,
+the analogous per-word and summed-length bounds are
+
+$$
+|p|\le D+\left\lfloor\frac{(r-1)q+\ell+2H}{2}\right\rfloor,
+\qquad
+\sum|p|\le C_e(S)
+ \left(D+\left\lfloor\frac{(r-1)q+\ell+2H}{2}\right\rfloor\right).
+\tag{NAR.16.22}
+$$
+
+These price post-entry literal requests only.
+
+**Proof.** In (NAR.16.13), $t\le L+\lfloor K/2\rfloor\le U$ when
+$K\ge2$, so $s\le\lfloor U/2\rfloor$. Every later interval is a
+subinterval of the initial one. For the first-slot search its original
+upper endpoint $c_0+z=\ell+a_0+a_i$ is at most $\ell+2H$.
+The word has $D+s$ literal letters. Multiply its bound by the already
+established call bound. For a hidden $j$ in Theorem 16.5 the upper
+endpoint is $jq+z+H\le jq+\ell+2H$, and $j\le r-1$, giving
+(NAR.16.22). Label attainment and representation follow from Theorem
+16.4. No optimum for summed or maximum addresses follows from an upper
+bound on this particular construction.
+
+The acquired rows can themselves grow with the lag. Parsing their
+literal syntax, computing clocks and interval endpoints, constructing
+and transmitting long words, and enumerating compatible profiles have
+costs outside the retained-label and raw-call coordinates. The integer
+output has unbounded size as $\ell$ ranges without bound; its usual
+binary representation has $\lceil\log_2(\ell+1)\rceil$ bits for
+$\ell\ge1$, with a separate representation convention at zero.
+A public table for a fixed $e$ is common control data, while a
+source-dependent pre-discard table choice would count as retained code.
+No total or peak memory, running-time, execution, acquisition-cost or
+physical-time bound is established by (NAR.16.21)--(NAR.16.22).
+$\square$
+

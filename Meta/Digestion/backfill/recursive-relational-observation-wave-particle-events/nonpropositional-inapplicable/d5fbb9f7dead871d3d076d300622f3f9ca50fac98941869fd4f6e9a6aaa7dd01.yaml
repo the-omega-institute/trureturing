@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d5fbb9f7dead871d3d076d300622f3f9ca50fac98941869fd4f6e9a6aaa7dd01
+  normalized_sha256: sha256:d5fbb9f7dead871d3d076d300622f3f9ca50fac98941869fd4f6e9a6aaa7dd01
+cas_ref: sha256:d5fbb9f7dead871d3d076d300622f3f9ca50fac98941869fd4f6e9a6aaa7dd01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This paragraph restricts the meaning of minimal to the chosen task family and excludes an observer-independent interpretation. It supplies no additional bound or assertion that every change of task family strictly changes the quotient; the sufficient-summary theorem and finite-cardinality conclusion remain separate mathematical clauses.
+    previous_atom_id: b30f9a251b30d8223d391e259642c525ef28548ef82194a1435e95262fe1f88c
+    next_atom_id: 98c0f872ba55320603f4dea39406dbf83d7fc3818c2e35bcbb6cd763cbedf102

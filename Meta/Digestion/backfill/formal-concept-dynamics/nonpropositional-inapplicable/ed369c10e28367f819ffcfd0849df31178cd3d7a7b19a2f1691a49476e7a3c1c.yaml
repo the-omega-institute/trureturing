@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed369c10e28367f819ffcfd0849df31178cd3d7a7b19a2f1691a49476e7a3c1c
+  normalized_sha256: sha256:ed369c10e28367f819ffcfd0849df31178cd3d7a7b19a2f1691a49476e7a3c1c
+cas_ref: sha256:ed369c10e28367f819ffcfd0849df31178cd3d7a7b19a2f1691a49476e7a3c1c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 303.2（最小充分原因）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 411699d10cff84b594cb14920740925580662f96bfc8801ae3263255b43f06df
+    next_atom_id: 764d80c5a3efd5d61b7f5ada794272d0d78c6824d7003a523393d84274552755

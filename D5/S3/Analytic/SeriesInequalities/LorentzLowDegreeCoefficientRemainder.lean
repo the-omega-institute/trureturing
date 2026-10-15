@@ -73,7 +73,7 @@ private lemma one_norm_bound {p R : ℝ} (hp : 0 < p) (hR : 0 ≤ R)
 
 /-- The two foci of the Bernstein ellipse have a common quadratic disk bound,
 including the degenerate endpoint regime. -/
-private lemma ellipse_disk_bound {p R : ℝ} (hp : p ∈ Set.Icc (0 : ℝ) 1)
+lemma ellipse_disk_bound {p R : ℝ} (hp : p ∈ Set.Icc (0 : ℝ) 1)
     (hR : 0 < R) {z : ℂ} (hz : ‖z - (p : ℂ)‖ ≤ R) :
     ‖z‖ + ‖1 - z‖ ≤ 1 + 6 * R ^ 2 / (p * (1 - p) + R) := by
   let v := p * (1 - p)

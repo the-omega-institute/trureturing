@@ -1,0 +1,35 @@
+**Definition 5.3 (one exact joint support).** For each resulting case $\tau$,
+let $\mathbf p$ contain every finite-mode original rank and every fresh finite
+index, including inversion indices. Let $\mathbf w$ contain the finite
+values of every divergent original rank, including invisible coordinates.
+Put all preliminary, inversion and image conditions in $\Gamma_\tau$.
+Fix exactly the canonically finite original residuals $f_i(\mathbf p)$ of
+Theorem 4.4; the other original chart residuals remain unrestricted finite
+variables for the signed feasibility computation.
+
+[SFS, Lemma 5.1][SFS] gives the exact Presburger predicate
+$\Psi_{r,\tau}(\mathbf p,\mathbf w)$ for simultaneous feasibility of that
+chart's entire negative list at these fixed finite values. Restore the
+original rank incidence by $\mathbf n_r(\mathbf p,\mathbf w)$ and put
+
+$$
+\begin{aligned}
+\Phi_\tau(\mathbf p,\mathbf w)
+ &=\Gamma_\tau(\mathbf p)\ \land\
+ \bigwedge_{r\in B}
+ \left(P_{r,b_r}(\mathbf n_r(\mathbf p,\mathbf w))
+       \land\Psi_{r,\tau}(\mathbf p,\mathbf w)\right),\\
+G_\tau
+ &=\{\mathbf p:\forall M\in\mathbb N\ \exists\mathbf w\
+ [\Phi_\tau(\mathbf p,\mathbf w)\land
+       \bigwedge_{j\ {\rm divergent}} w_j\ge M]\}.
+\end{aligned}
+\tag{NIS.17}
+$$
+
+This is one joint support, with every original sharing and correlation.
+Empty products have their singleton meaning. Finite parameters are chosen
+before all depth requirements. Neither
+$\forall M\exists\mathbf p,\mathbf w$ nor separate cofinal marginals
+substitutes for (NIS.17).
+
