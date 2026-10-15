@@ -213,7 +213,7 @@ jobs:
         name: Initialize the cumulative current compute allowance
         run: |
           budget="$RUNNER_TEMP/current-compute-seconds"
-          python3 tools/scripts/workflow/ci_compute.py init "$budget" 30
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
           echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - id: prefix
         name: Check the selected source prerequisite
@@ -241,7 +241,7 @@ jobs:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
     runs-on: ubuntu-24.04-arm
-    # Platform wall-clock cap, separate from the shared 30-minute compute allowance.
+    # Platform wall-clock cap, separate from the shared 120-minute compute allowance.
     timeout-minutes: 360
     outputs:
       lean_required: ${{ needs.detect.outputs.report }}

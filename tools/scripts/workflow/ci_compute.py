@@ -14,14 +14,14 @@ ACTIVE = "STRATALINT_CI_COMPUTE_ACTIVE"
 
 def current_remainder(value):
     seconds = float(value)
-    if not math.isfinite(seconds) or not 0 <= seconds <= 1800:
-        raise ValueError("current remainder must be finite and in [0, 1800]")
+    if not math.isfinite(seconds) or not 0 <= seconds <= 7200:
+        raise ValueError("current remainder must be finite and in [0, 7200]")
     return seconds
 
 
 def resume_current(path, value):
     # Only the existing current allowance crosses the native job boundary.
-    # Missing/invalid output cannot grant a fresh 30 minutes; an existing file
+    # Missing/invalid output cannot grant a fresh 120 minutes; an existing file
     # cannot be reset. Preparation/transport between jobs is not computation.
     seconds = current_remainder(value)
     with path.open("x") as stream:

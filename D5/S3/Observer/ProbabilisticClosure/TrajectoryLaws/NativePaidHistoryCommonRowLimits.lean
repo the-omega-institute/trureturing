@@ -69,7 +69,7 @@ private theorem history_stochastic (M : Observer Z) (h : List Operation) :
   | nil => exact (Matrix.rowStochastic ℝ Z).one_mem
   | cons op h ih => exact (Matrix.rowStochastic ℝ Z).mul_mem (acquired_stochastic M op) ih
 
-private theorem cesaro_stochastic (P : Matrix Z Z ℝ)
+theorem cesaro_stochastic (P : Matrix Z Z ℝ)
     (hP : P ∈ Matrix.rowStochastic ℝ Z) (w : ℕ) (hw : 0 < w) :
     cesaro P w ∈ Matrix.rowStochastic ℝ Z := by
   have hw' : (0:ℝ) < w := Nat.cast_pos.mpr hw
@@ -146,7 +146,7 @@ private theorem cesaro_residual_bound (P : Matrix Z Z ℝ)
     _ ≤ (w:ℝ)⁻¹*2 := mul_le_mul_of_nonneg_left (show ‖P^w-1‖ ≤ (2:ℝ) from by norm_num at h ⊢; exact h) (inv_nonneg.mpr (Nat.cast_nonneg w))
     _ = 2/(w:ℝ) := by ring
 
-private theorem stochastic_limit (P : ℕ → Matrix Z Z ℝ) (E : Matrix Z Z ℝ)
+theorem stochastic_limit (P : ℕ → Matrix Z Z ℝ) (E : Matrix Z Z ℝ)
     (hP : ∀ n, P n ∈ Matrix.rowStochastic ℝ Z) (h : Tendsto P atTop (𝓝 E)) :
     E ∈ Matrix.rowStochastic ℝ Z := by
   rw [Matrix.mem_rowStochastic_iff_sum]
@@ -163,7 +163,7 @@ private theorem stochastic_limit (P : ℕ → Matrix Z Z ℝ) (E : Matrix Z Z �
     rw [he] at ht
     exact tendsto_nhds_unique ht tendsto_const_nhds
 
-private theorem pair_cluster (P Q : Matrix Z Z ℝ)
+theorem pair_cluster (P Q : Matrix Z Z ℝ)
     (hP : P ∈ Matrix.rowStochastic ℝ Z) (hQ : Q ∈ Matrix.rowStochastic ℝ Z) :
     ∃ E F : Matrix Z Z ℝ, ∃ φ : ℕ → ℕ, StrictMono φ ∧
       Tendsto (fun n => cesaro P (φ n+1)) atTop (𝓝 E) ∧
@@ -186,7 +186,7 @@ private theorem pair_cluster (P Q : Matrix Z Z ℝ)
   exact ⟨EF.1,EF.2,φ,hφ,by exact ((continuous_fst.tendsto EF).comp h).congr (fun n => rfl),
     by exact ((continuous_snd.tendsto EF).comp h).congr (fun n => rfl)⟩
 
-private theorem cesaro_fixed (P E : Matrix Z Z ℝ)
+theorem cesaro_fixed (P E : Matrix Z Z ℝ)
     (hP : P ∈ Matrix.rowStochastic ℝ Z) (w : ℕ → ℕ)
     (hw : Tendsto w atTop atTop) (h : Tendsto (fun n => cesaro P (w n)) atTop (𝓝 E)) :
     P*E = E ∧ E*P = E := by

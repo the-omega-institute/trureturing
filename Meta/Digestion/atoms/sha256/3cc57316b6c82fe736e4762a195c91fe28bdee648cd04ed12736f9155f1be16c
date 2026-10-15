@@ -1,0 +1,36 @@
+**Definition 1.4 (all correlated native fibers and complete templates).**
+Use [FMR, Definitions 2.1 and 6.1][FMR] and [NDR, Definition 2.1][NDR].
+Let
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{CBN.5}
+$$
+
+For $d,n\ge1$, a nonempty $B\subseteq S_d^n$ is jointly admissible if
+every target $(i,q)\in[n]\times W_d$ has either a constant value
+$\zeta\in G_q:=\Gamma_q(S_d)$ on $B$, or a donor $(j,a)\in[n]\times W_d$
+and a total map $\delta:\mathcal A\to G_q$ such that
+
+$$
+\Gamma_q(x_i)=\delta(r_{x_j}(a))\quad(x\in B).
+\tag{CBN.6}
+$$
+
+The witnesses may depend on $B,i,q$, may be off-target, and may form
+cycles. All equations refer to the same tuple $x$ and the same relation
+$B$. A complete template $\Theta$ chooses one such constant equation or
+one donor/decoder equation for every target. Its simultaneous solution
+set is $C_\Theta\subseteq S_d^n$, possibly empty. Unattained donor
+replies may be assigned any value in the nonempty $G_q$.
+
+Write $K_d(n)$ and $Z_d(n)$ for integral and fractional cover optima of
+$S_d^n$ by all nonempty admissible sets. Fractional coefficients are
+nonnegative, with covering sum at least one at every tuple. No
+independence, donor acyclicity or bound on component size is assumed.
+NDR Theorem 2.2 proves that every admissible $B$ lies in a complete
+$C_\Theta$ with its chosen witnesses, without changing these optima.
+

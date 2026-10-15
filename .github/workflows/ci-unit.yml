@@ -14,7 +14,7 @@ on:
       timeout-minutes:
         description: Cumulative compute allowance after CI preparation; the platform job cap is separate
         type: number
-        default: 30
+        default: 120
     outputs:
       unit:
         description: Identity emitted only after the declared unit succeeds

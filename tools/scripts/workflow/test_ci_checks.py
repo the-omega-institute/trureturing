@@ -52,7 +52,7 @@ class CheckTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "budget"
             with patch.dict(os.environ, {checks.ci_compute.BUDGET: str(path), checks.ci_compute.ACTIVE: "0"}):
-                checks.ci_compute.initialize(path, 30)
+                checks.ci_compute.initialize(path, 120)
                 with self.assertRaises(FileExistsError):
                     checks.with_budget(path, lambda: 0)
                 path.write_text("0")

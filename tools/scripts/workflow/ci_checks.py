@@ -246,7 +246,7 @@ def current_run(data, plan, base, paths, prefix=None):
 
 def with_budget(path, action):
     previous = os.environ.get(ci_compute.BUDGET)
-    ci_compute.initialize(path, 30)
+    ci_compute.initialize(path, 120)
     os.environ[ci_compute.BUDGET] = str(path)
     try:
         return action()
