@@ -572,6 +572,8 @@ def project_publication(root):
     if adopted is not None and adopted["merged"]:
         return True, "adopted-merged-preparation", work
     if work == 0:
+        if os.environ.get("STRATALINT_RELEASE_CACHE_SEEDED") == "1" and manual_source_is_valid():
+            return True, "accepted-explicit-release-seed", work
         if os.environ.get("STRATALINT_CACHE_PRODUCER_COMPLETE") == "true" and resume_verified(root):
             return True, "validated-producer-resume", work
         return False, "no-build-work", work
