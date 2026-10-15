@@ -1,0 +1,25 @@
+**Proposition 5.4 (An unrelated chosen seed cannot replace the actual post-tick state).** Exact zero early weights and a unit late weight, when computed from an unrelated chosen seed, need not make the tick map reset to that seed.
+
+Proof. For $D\ge2$ put $n=D-1$ and use the shift $S$ in (4.28). Set
+
+$$
+\Phi(X)=SXS^\dagger,\qquad
+\Psi(X)=P_nXP_n,\qquad F=P_n,\qquad \rho_0=P_n.
+\tag{5.33}
+$$
+
+The total effect is $S^\dagger S+P_n=I$. Starting from the chosen seed $\chi=P_0$, the zero powers are $P_k$ for $0\le k\le n$, and zero afterwards. Thus its detector weights vanish through $n-1$ and equal one at $n$, forming a proper gap distribution from that seed.
+
+The specified initializer instead gives $\Psi(\rho_0)=P_n$, so actual $\nu=1$, $\tau=P_n$, $w_0=1$ and $w_k=0$ for $k\ge1$, since $SP_n=0$. Every positive-probability tick from every input has normalized output $P_n$. Consequently
+
+$$
+\begin{aligned}
+J(\Psi)-\chi\otimes F^{\mathsf T}
+&=(P_n-P_0)\otimes P_n^{\mathsf T},&
+\|J(\Psi)-\chi\otimes F^{\mathsf T}\|_1&=2,\\
+J(\Psi)-\tau\otimes F^{\mathsf T}&=0.
+\end{aligned} \tag{5.34}
+$$
+
+Orthogonality of $e_0,e_n$ gives the first norm. The second identity is exact reset to the actual density. The failed inference has substituted the calibration target; it has not met the actual small-early-weight hypothesis. $\square$
+
