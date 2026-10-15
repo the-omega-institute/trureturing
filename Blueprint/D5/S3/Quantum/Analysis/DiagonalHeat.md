@@ -116,7 +116,7 @@ For nonnegative time t, define T(t) as the bounded multiplier exp(-t*h(i)). It i
 
 For all ambient vectors x and v, the right strong limit of (T(t)x-x)/t as t tends to zero exists and equals v if and only if (x,-v) belongs to the graph of this same K. The forward implication uses each continuous coefficient functional and the scalar exponential derivative. For the reverse implication, the full graph-core theorem gives simultaneous finite-vector and operator-image approximants; closedness of the semigroup generator passes the finite derivatives to their graph limit. Any other strongly continuous contraction semigroup with this full generator graph equals S by the accepted generator uniqueness theorem.
 
-All basis index types, empty and finite cases, repeated coefficients and zero eigenspaces are retained. No heat trace at time zero is asserted. The proof adapts the generic private heat construction in PhysicalHeatGenerator and uses its public Scott Armstrong semigroup closedness and uniqueness suppliers with their Apache-2.0 source attribution. This is a standard diagonal operator construction, not a common-reference theorem for a family of quantum states.
+All basis index types, empty and finite cases, repeated coefficients and zero eigenspaces are retained. No heat trace at time zero is asserted. The proof adapts the generic private heat construction in PhysicalHeatGenerator and uses the public general ContractionSemigroup closedness and uniqueness suppliers selected from Scott Armstrong with their Apache-2.0 source attribution. This is a standard diagonal operator construction, not a common-reference theorem for a family of quantum states.
 
 ## References
 
@@ -129,6 +129,6 @@ All basis index types, empty and finite cases, repeated coefficients and zero ei
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_basis`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_coeff`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_positive`
+- Dependency: [D5/S3/Quantum/Analysis/ContractionSemigroup](ContractionSemigroup.md)
 - Dependency: [D5/S3/Quantum/Analysis/EigenbasisGraphCore](EigenbasisGraphCore.md)
-- Dependency: [D5/S3/Quantum/Analysis/PhysicalHeatGenerator](PhysicalHeatGenerator.md)
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/GeneralProduct](TraceClass/GeneralProduct.md)
