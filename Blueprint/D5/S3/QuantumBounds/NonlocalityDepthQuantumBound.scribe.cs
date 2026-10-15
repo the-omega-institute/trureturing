@@ -34,7 +34,10 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
                 DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Node("result", "The universal upper bound is attained", Disp(X("claim")),
                 "Distributing the Hamming weight over the marked parties writes bellOp as a sum of n terms. Each term consists of a local observable at setting true tensored with a shifted unweighted polynomial on the other n - 1 parties. The shifted estimate bounds each term by sqrt(2) 2^(n-2), and addition gives sqrt(2) n 2^(n-2). A Hermitian contraction dilates to the involution with blocks A, sqrt(1 - A²), sqrt(1 - A²), -A. Compression preserves every correlator, so the same bound holds for all binary observables. Positivity of the trace of a product of positive-semidefinite matrices gives the expectation bound for every density matrix. For attainment take X and Y at every party. On the two constant basis strings the off-diagonal amplitude is n 2^(n-2)(-1 + i). The normalized vector (e0 + eta e1)/sqrt(2), with eta = (-1 + i)/sqrt(2), is an eigenvector with the positive maximal eigenvalue. Its rank-one density matrix attains the bound.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bernards-guhne-2023-nonlocality-depth-quantum-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

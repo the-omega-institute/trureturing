@@ -86,6 +86,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/NonlocalityDepthQuantumBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bernards-guhne-2023-nonlocality-depth-quantum-bound` (proved) by `D5/S3/QuantumBounds/NonlocalityDepthQuantumBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bernards-guhne-2023-nonlocality-depth-quantum-bound","declaration_gid":"D5/S3/QuantumBounds/NonlocalityDepthQuantumBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* F. Bernards; O. Gühne (2023). *Bell inequalities for nonlocality depth*. DOI: [10.1103/PhysRevA.107.022412](https://doi.org/10.1103/PhysRevA.107.022412). URL: <https://arxiv.org/abs/2205.04250v2>.
