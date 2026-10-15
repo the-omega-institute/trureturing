@@ -95,34 +95,33 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
   rw [Finset.image_union] at hje hjc
   have hmapped : (List.ofFn W.Q.seed.joint).map (mapPiece lift) = List.ofFn J := by
     rw [List.map_ofFn]
+    rfl
   rw [hmapped] at hjs hje
   have hps : ((p₁ :: p₂ :: p₃ :: rest).flatMap fun z => z.walk.support).Perm
       ((List.ofFn J).flatMap fun z => z.walk.support) := by
     apply List.perm_iff_count.mpr
     intro x
-    change ((J 5).walk.support ++ (J 4).walk.support ++ (J 1).walk.reverse.support ++
-      (J 0).walk.support ++ (J 2).walk.support ++ (J 3).walk.support ++ []).count x =
-      ((J 0).walk.support ++ (J 1).walk.support ++ (J 2).walk.support ++
-        (J 3).walk.support ++ (J 4).walk.support ++ (J 5).walk.support ++ []).count x
-    simp only [SimpleGraph.Walk.support_reverse, List.count_append,
+    change ([J 5, J 4, p₃, J 0, J 2, J 3].flatMap fun z => z.walk.support).count x =
+      ([J 0, J 1, J 2, J 3, J 4, J 5].flatMap fun z => z.walk.support).count x
+    simp only [p₃, List.flatMap_cons, List.flatMap_nil,
+      SimpleGraph.Walk.support_reverse, List.count_append,
       List.count_reverse, List.count_nil]
     omega
   have hpe : ((p₁ :: p₂ :: p₃ :: rest).flatMap fun z => z.walk.edges).Perm
       ((List.ofFn J).flatMap fun z => z.walk.edges) := by
     apply List.perm_iff_count.mpr
     intro e
-    change ((J 5).walk.edges ++ (J 4).walk.edges ++ (J 1).walk.reverse.edges ++
-      (J 0).walk.edges ++ (J 2).walk.edges ++ (J 3).walk.edges ++ []).count e =
-      ((J 0).walk.edges ++ (J 1).walk.edges ++ (J 2).walk.edges ++
-        (J 3).walk.edges ++ (J 4).walk.edges ++ (J 5).walk.edges ++ []).count e
-    simp only [SimpleGraph.Walk.edges_reverse, List.count_append,
+    change ([J 5, J 4, p₃, J 0, J 2, J 3].flatMap fun z => z.walk.edges).count e =
+      ([J 0, J 1, J 2, J 3, J 4, J 5].flatMap fun z => z.walk.edges).count e
+    simp only [p₃, List.flatMap_cons, List.flatMap_nil,
+      SimpleGraph.Walk.edges_reverse, List.count_append,
       List.count_reverse, List.count_nil]
     omega
   have hjn := (hps.trans hjs).nodup_iff.mpr hcycle.support_nodup
   have hji (e) : e ∈ (p₁ :: p₂ :: p₃ :: rest).flatMap (fun z => z.walk.edges) ↔
       e ∈ w.edges ∧ e ∉ K ∪ H := by
     rw [hpe.mem_iff, hje.mem_iff]
-    simp only [List.mem_filter, decide_eq_true_eq]
+    simp only [List.mem_filter, decide_eq_true_eq, w, K, H]
   have hd : Disjoint K H := by
     apply Finset.disjoint_left.mpr
     intro e heK heH
@@ -131,13 +130,14 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
     have hab := (Sym2.map.injective hbij.injective) (hae.trans hbe.symm)
     exact Finset.disjoint_left.mp W.Q.seed.partitions.disjoint ha (hab.symm ▸ hb)
   have hK : K.image (Sym2.map Subtype.val) = markedCuts O := by
-    simpa only [K, Finset.image_image, Function.comp_def, Sym2.map_map, j2SpecialMap,
+    simpa only [K, lift, Finset.image_image, Function.comp_def, Sym2.map_map, j2SpecialMap,
       RelHom.coeFn_mk] using
       (same_seed_marked_cut_images hm O W.Q).1
   have hH : H.image (Sym2.map Subtype.val) = markedCuts B := by
-    simpa only [H, Finset.image_image, Function.comp_def, Sym2.map_map, j2SpecialMap,
-      RelHom.coeFn_mk] using
-      (same_seed_marked_cut_images hm O W.Q).2
+    have hH₀ : H.image (Sym2.map Subtype.val) = markedCuts (reverseSelected O) := by
+      simpa only [H, lift, Finset.image_image, Function.comp_def, Sym2.map_map,
+        j2SpecialMap, RelHom.coeFn_mk] using (same_seed_marked_cut_images hm O W.Q).2
+    simpa only [B, O, outerFrame, reverseSelected] using hH₀
   have hKS : K = specialCuts (by omega : 3 ≤ m) O hBO := by
     dsimp only [K]
     rw [W.Q.primaryCuts]
@@ -147,10 +147,10 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
   have hportL (i : Fin 3) : relabel O * port m (i, false, true) = leftPort O i.val := by
     simpa only [port, Bool.false_eq_true, ↓reduceIte] using (native_j2_frame_ports hm O i).2
   have hbarR (i : Fin 3) : relabel O * port m (i, true, false) = rightPort B i.val := by
-    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
+    simpa only [port, Bool.false_eq_true, ↓reduceIte, B, O, outerFrame, reverseSelected] using
       (native_j2_frame_barred_ports hm O i).1
   have hbarL (i : Fin 3) : relabel O * port m (i, true, true) = leftPort B i.val := by
-    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
+    simpa only [port, Bool.false_eq_true, ↓reduceIte, B, O, outerFrame, reverseSelected] using
       (native_j2_frame_barred_ports hm O i).2
   have hp₁s : p₁.start.val = leftPort O 1 :=
     ((W.Q.seed.jointPorts 5).1).trans (hportL 1)
@@ -178,7 +178,9 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
       (W.special.ordered 0).walk.copy (W.special.orderedPorts 0).1 rfl⟩
   let p₄ : Piece (domainGraph (SpecialDomain O hBO)) :=
     ⟨(W.special.ordered 2).start, specialVertex (by omega : 3 ≤ m) O hBO (Fin.last 2, 1),
-      (W.special.ordered 2).walk.copy rfl (W.special.orderedPorts 2).2⟩
+      (W.special.ordered 2).walk.copy rfl (by
+        simpa [evenPortRoute, evenEnumerate, evenRoute, code] using
+          (W.special.orderedPorts 2).2)⟩
   have hlink : Linked p₀ [⟨p₁.start, p₃.finish, old⟩, p₄] := by
     refine ⟨?_, ?_, trivial⟩
     · change (domainGraph (SpecialDomain O hBO)).Adj (W.special.ordered 0).finish p₁.start
@@ -191,21 +193,25 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
       norm_num [evenPortRoute, evenEnumerate, evenRoute, code, internalSeam]
   have hΛs : W.special.path.support =
       p₀.walk.support ++ old.support ++ p₄.walk.support := by
-    simpa only [p₀, p₄, old, SimpleGraph.Walk.support_copy, List.ofFn_succ,
-      List.ofFn_zero, List.flatMap_cons, List.flatMap_nil, List.append_nil,
-      List.append_assoc] using W.special.support
+    simp only [p₀, p₄, old, SimpleGraph.Walk.support_copy]
+    change W.special.path.support =
+      (W.special.ordered 0).walk.support ++ (W.special.ordered 1).walk.support ++
+        (W.special.ordered 2).walk.support
+    convert W.special.support using 1
   have hbn : ((p₀ :: ⟨p₁.start, p₃.finish, old⟩ :: p₄ :: []).flatMap
       fun z : Piece (domainGraph (SpecialDomain O hBO)) => z.walk.support).Nodup := by
-    simpa only [List.flatMap_cons, List.flatMap_nil, List.append_nil,
-      List.append_assoc, ← hΛs] using
-      W.special.hamiltonian.isPath.support_nodup
+    simp only [List.flatMap_cons, List.flatMap_nil, List.append_nil]
+    rw [← hΛs]
+    exact W.special.hamiltonian.isPath.support_nodup
   have hbi (e) : e ∈ (p₀ :: ⟨p₁.start, p₃.finish, old⟩ :: p₄ :: []).flatMap
       (fun z : Piece (domainGraph (SpecialDomain O hBO)) => z.walk.edges) ↔
         e ∈ w.edges ∧ e ∉ K := by
-    simpa only [p₀, p₄, old, SimpleGraph.Walk.edges_copy, hKS, List.ofFn_succ,
-      List.ofFn_zero, List.flatMap_cons, List.flatMap_nil, List.append_nil,
-      List.append_assoc] using
-      W.special.uncutInventory e
+    simp only [p₀, p₄, old, SimpleGraph.Walk.edges_copy,
+      List.flatMap_cons, List.flatMap_nil, List.append_nil]
+    change e ∈ (W.special.ordered 0).walk.edges ++
+      (W.special.ordered 1).walk.edges ++ (W.special.ordered 2).walk.edges ↔ _
+    rw [hKS]
+    exact W.special.uncutInventory e
   have hprotect := native_protected_labels O (by omega : 2 ≤ 2)
   have hAkeep (x y : {v : Configuration m // SpecialDomain O hBO v})
       (hxy : y.val = x.val * a m)
