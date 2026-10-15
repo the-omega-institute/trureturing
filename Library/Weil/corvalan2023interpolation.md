@@ -2312,3 +2312,251 @@ for $\mathcal C_{N,H}$ plus the retained integral is still missing.
 No shifted zero-sum estimate, fixed-complexity nilsequence interface,
 same-integer signed Robin bound, RH proof, mathematical-priority claim
 or Lean certification follows from this application.
+
+## Two smoothing scales allow a controlled full-residue shift
+
+Retain the original integer family, bandwidth and constants of
+(I58)--(I59), including $0<2\lambda<c_\star$, and the half-integer
+cut $a=(Q+1/2)/N$ from (I62). This application uses the standard
+smooth bump already cited in (I79), the complete kernel (I70), and
+[Inoue's published good-height supplier](../Analytic/inoue2019mobiuszeta.md),
+(IH1)--(IH2). It introduces no new good-height theorem. The new
+interface controls the smoothing and contour errors for the complete
+joint functional; it does not estimate its interior residue sum.
+
+Fix a nonnegative even $\phi\in C_c^\infty(-1,1)$ with integral one,
+obtained by normalizing the cited bump, and put
+$$
+F_\ell(s)=\int_{-1}^1\phi(t)e^{\ell ts}\,dt,\qquad 0<\ell\le1.
+$$
+On every fixed vertical strip, integration by parts gives
+$F_\ell(\sigma+i\tau)\ll_{\phi,j}(1+\ell|\tau|)^{-j}$ for every
+fixed integer $j\ge0$. Also $F_\ell(0)=1$ and $F_\ell'(0)=0$.
+Only these existing smooth-bump properties are needed here.
+
+Hold $a$ fixed while varying the real cutoff $x$, and define
+$$
+\begin{aligned}
+A(x)&=\sum_{ax<n\le x}\mu(n)\log(x/n)/n,&
+B(x)&=\sum_{ax<n\le x}\mu(n)\log(x/n),\\
+\eta&=H^{-1},&
+\widetilde A&=\int\phi(t)A(Ne^{\eta t})\,dt,\qquad
+\widetilde B=\int\phi(t)B(Ne^{\eta t})\,dt.
+\end{aligned}
+$$
+Here $A(N)=A$ and $B(N)=B$ with their original integer band. If
+$|x-N|\le\Delta\ll H$, variation on the common part and the
+$O(\Delta+1)$ endpoint integers give
+$$
+\begin{aligned}
+|A(x)-A|&\ll h(\Delta+1)/N,&
+|B(x)-B|&\ll h(\Delta+1),\\
+|\widetilde A-A|&\ll N^{-1},&
+|\widetilde B-B|&\ll1.
+\end{aligned}
+\tag{I83}
+$$
+Indeed the common log weight varies by $O(\Delta/N)$ and the
+endpoint weights are $O(h)$. For this smoothing
+$\Delta\ll N/H$ and $hN/H\asymp1$. No extra Mobius cancellation
+is used in these differences.
+
+For the residual use a different scale, moving both its cutoff and
+its argument. Write
+$$
+S_x(t)=\log x+\sum_{n\le x}\mu(n)\log(x/n)\{t/n\},\qquad
+\mathscr S_N(q)=S_N(qN),
+$$
+so $\mathscr S_N(m/N)=LR_N(m)$ at the original integer samples.
+Set $\nu=N^{-1/2}$ and
+$\widetilde S_N(q)=\int\phi(t)S_{Ne^{\nu t}}(qNe^{\nu t})\,dt$.
+The real-cutoff version of (I33) is
+$$
+S_x(t)=tU_x-\psi(t)+\sum_{x<n\le t}\mu(n)\log(x/n),\qquad
+U_x=\sum_{n\le x}\mu(n)\log(x/n)/n,\quad x\le t\le2x,
+$$
+with the same full-weight $\psi$ at integers. The divisor-convolution
+proof of (I33) applies unchanged: any omitted divisor in this range
+must be the integer itself. Between consecutive integers,
+$(xU_x)'=U_x+\sum_{n\le x}\mu(n)/n=O(L^2)$, and $xU_x$ is
+continuous at integer cutoffs. Prime jumps cost
+$O((\Delta+1)L)$ when $|x-N|\le\Delta$; the final Mobius sum
+changes by $O(\Delta+1)$. Uniformly for $1\le q\le2$, this gives
+$$
+\begin{aligned}
+\|\widetilde S_N-\mathscr S_N\|_\infty&\ll\sqrt N L^2,\\
+\|\widetilde S_N\|_\infty+\|\mathscr S_N\|_\infty&\ll N.
+\end{aligned}
+\tag{I84}
+$$
+The second row also follows directly from
+$\sum_{n\le x}\log(x/n)\ll x$. The $+1$ in the variation bound
+retains the integer jumps, including both original endpoints.
+The actual balanced step residual has not been replaced by an
+identical continuous function; (I84) pays the change of samples.
+
+Keep exactly the discrete operators $\mathfrak p_N,\mathfrak q_N$
+of (I64), whose sup-norm operator bounds are $O(1)$ and $O(N^{-1})$.
+Define
+$$
+\widetilde{\mathcal A}_{N,H}
+=\frac{\widetilde A\mathfrak p_N(\widetilde S_N)
+      -\widetilde B\mathfrak q_N(\widetilde S_N)}{L^2}.
+$$
+Using (I83)--(I84) and the already owned
+$|A|+|B|/N\ll h^2e^{-c_\star\Omega}$ yields
+$$
+|\mathcal A_{N,H}-\widetilde{\mathcal A}_{N,H}|
+\ll_\phi L^{-2}+\sqrt N h^2e^{-c_\star\Omega}
+\ll_\phi L^{-2}+e^{-(c_\star-2\lambda)\Omega}=o(1).
+\tag{I85}
+$$
+For example, coefficient errors act on a residual bounded by $N$;
+residual errors act on the original coefficients. Both smoothings
+are deterministic linear operations on the same arithmetic data.
+If the band coefficients were instead smoothed on spatial width
+$\sqrt N$, this argument would leave $h\sqrt N/L^2$, which grows
+at the original bandwidth. The distinct scales are essential to
+this error estimate.
+
+The absolutely convergent smoothed Mellin formulas on $\Re s=2$ are
+$$
+\begin{aligned}
+\widetilde A
+ &=\frac1{2\pi i}\int_{(2)}
+   \frac{N^{u-1}W_a(u-1)F_\eta(u-1)}{\zeta(u)}\,du,\\
+\widetilde B
+ &=\frac1{2\pi i}\int_{(2)}
+   \frac{N^uW_a(u)F_\eta(u)}{\zeta(u)}\,du,\\
+\widetilde S_N(q)
+ &=L+\frac1{2\pi i}\int_{(2)}
+   \frac{N^vH_q(v)F_\nu(v)}{\zeta(v)}\,dv.
+\end{aligned}
+\tag{I86}
+$$
+These follow from (I62)--(I63) with the varying real cutoff. Each
+integer jump occurs at a discrete set of smoothing parameters, of
+measure zero, so the symmetric and actual values have equal
+integrals. The literal average of $\log(Ne^{\nu t})$ is $L$ by
+evenness. The two band multipliers are $F_\eta(u-1)$ and
+$F_\eta(u)$; they cannot be factored into one common multiplier.
+
+Apply the owned good-height theorem with $U=N^4$. It supplies one
+$T_N\in[N^4,N^4+N^{4/3}]$ such that
+$$
+\sup_{-1\le\sigma\le2,\ \xi\in\{-1,1\}}
+|\zeta(\sigma+i\xi T_N)|^{-1}\ll_\varepsilon T_N^\varepsilon.
+$$
+No RH, simple-zero hypothesis or negative moment of $\zeta'$ is
+assumed. Let $\mathcal Z_N$ contain each distinct nontrivial zero
+with $|\Im\rho|<T_N$ once. Define $a_N^\circ,b_N^\circ,z_N(q)$
+as the sums of the full residues at $\rho\in\mathcal Z_N$ of the
+three respective integrands in (I86), omitting the factor
+$(2\pi i)^{-1}$. Multiple zeros are included through their complete
+meromorphic residues. Moving the lines from $2$ to $-1$ gives
+$$
+\begin{aligned}
+\widetilde A&=a_N^\circ+O_\phi(h^2N^{-2}+N^{-10}),\\
+\widetilde B&=b_N^\circ+O_\phi(h^2N^{-1}+N^{-10}),\\
+\widetilde S_N(q)&=\log(2\pi)+z_N(q)
+              +O_\phi(N^{-1}L^2+N^{-10}),\qquad 1\le q\le2.
+\end{aligned}
+\tag{I87}
+$$
+The last error is uniform in $q$. Here are the contour costs and
+all extra residues needed for this shift.
+
+On the horizontal edges, standard polynomial growth on a slightly
+wider fixed strip and Cauchy's estimate give $|\zeta'|\ll T_N^2$,
+so the good-height bound gives
+$|\zeta'/\zeta|\ll_\varepsilon T_N^{2+\varepsilon}$ there.
+It does not give an $O(\log T_N)$ horizontal bound. Formula (I70)
+therefore bounds $H_q/\zeta$ polynomially, uniformly in $q$.
+As $T_N/H\ge N^3$ and $T_N/\sqrt N\ge N^{7/2}$, the fixed
+integration-by-parts order $j=20$ in $F_\ell$ pays both horizontal
+edges and the omitted original-line tails by $O_\phi(N^{-10})$.
+For instance, the horizontal integrands are bounded by
+$O(N^2T_N^{2+\varepsilon})$ before the smoothing multipliers;
+each has width three, and their smoothing decay is at least
+$N^{-60}$. The original-line tails can be integrated using the
+same decay and the absolutely convergent Dirichlet series.
+
+On the entire left line the functional equation, Stirling bounds
+and the Euler series on $\Re(1-s)=2$ give
+$$
+|\zeta(-1+i\tau)|^{-1}\ll(1+|\tau|)^{-3/2},\qquad
+|\zeta'/\zeta(-1+i\tau)|\ll\log(2+|\tau|).
+$$
+The complete identity (I70) and $a>2/3$ imply
+$$
+\begin{aligned}
+|W_a(\sigma+i\tau)|&\ll h^2\quad(-2\le\sigma\le2),\\
+\sup_{1\le q\le2}|H_q(-1+i\tau)/\zeta(-1+i\tau)|
+ &\ll\frac{\log(2+|\tau|)}{1+|\tau|},\\
+N^{-1}\int_{\mathbb R}
+ \frac{\log(2+|\tau|)}{1+|\tau|}
+ (1+\nu|\tau|)^{-20}\,d\tau&\ll N^{-1}L^2.
+\end{aligned}
+\tag{I88}
+$$
+Thus the full left-line integrals cost respectively $h^2N^{-2}$,
+$h^2N^{-1}$ and $N^{-1}L^2$. Their tails above $T_N$ are also
+$O_\phi(N^{-10})$. No absolute bound on interior residues is used.
+
+There is no pole at $s=1$: the original integral for $H_q$ is
+holomorphic on $\Re s>0$, and its apparent singularity in (I70)
+is removable. At zero, (I70) gives
+$$
+H_q(s)=\frac1{2s^2}+O(1),\qquad
+\frac{H_q(s)}{\zeta(s)}
+ =-\frac1{s^2}+\frac{\log(2\pi)}s+O(1).
+$$
+Since $F_\nu'(0)=0$, the extra residue in the last integral of
+(I86) is $-L+\log(2\pi)$. It cancels the literal $L$ and retains
+the common level $\log(2\pi)$ in (I87). The band integrands have
+no pole at zero, and no trivial zero is crossed before $\Re s=-1$.
+This proves (I87) with every nonzero contour contribution accounted
+for. The other application's formula (CH1b) in the Chirre--Helfgott
+note requires $y>e^2T$, so it is not used at $y\asymp N,T\asymp N^4$;
+only the owned good-height and functional-equation inputs are reused.
+
+Using $p_N(v),q_N(v)$ from (I64), define the complete smoothed kernel
+and finite double residue sum
+$$
+\begin{aligned}
+\widetilde{\mathcal K}_N(u,v)
+ &=\big[W_a(u-1)F_\eta(u-1)p_N(v)
+       -NW_a(u)F_\eta(u)q_N(v)\big]F_\nu(v),\\
+\Sigma_{N,H}
+ &=\sum_{\rho,\sigma\in\mathcal Z_N}
+ \operatorname{Res}_{u=\rho}\operatorname{Res}_{v=\sigma}
+ \frac{N^{u+v-1}\widetilde{\mathcal K}_N(u,v)}{\zeta(u)\zeta(v)}\\
+ &=a_N^\circ\mathfrak p_N(z_N)-b_N^\circ\mathfrak q_N(z_N).
+\end{aligned}
+\tag{I89}
+$$
+This is a finite sum of full residues, with no assumption about
+simple zeros. From (I83)--(I87) and the original physical-space
+bounds,
+$\|z_N\|_\infty\ll N$ and
+$|a_N^\circ|+|b_N^\circ|/N\ll h^2e^{-c_\star\Omega}+N^{-1}$.
+They pay all cross terms from (I87); the retained constant contributes
+$O((h^2e^{-c_\star\Omega}+N^{-1})/L^2)$.
+Consequently
+$$
+\mathcal A_{N,H}=\frac{\Sigma_{N,H}}{L^2}
+ +O_\phi\left(L^{-2}+e^{-(c_\star-2\lambda)\Omega}\right).
+\tag{I90}
+$$
+Both $f(2)$ endpoint terms remain in the original discrete operators.
+The full $W_a,H_q$ are used through the growing heights, without
+substituting the fixed-compact expansion (I67).
+
+The remaining estimate is $|\Sigma_{N,H}|=o(L^2)$ for each sufficiently
+large original integer $N$ and its specified band. A fixed zero pair,
+an average over $N$, or separately optimized residue sums do not give
+that estimate. Equations (I83)--(I90) are a repository application of
+existing analytic tools, with no mathematical-priority claim or Lean
+certification. They control the errors in a full-residue representation;
+they do not prove the joint cancellation, the complete same-integer
+signed Robin bound, or RH.
