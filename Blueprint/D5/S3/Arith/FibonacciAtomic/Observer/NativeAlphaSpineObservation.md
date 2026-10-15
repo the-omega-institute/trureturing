@@ -4,7 +4,19 @@
 
 NativeAlphaSpineObservation
 
-**Theorem 1.1 (Three-source native observation boundary).**
+**Lemma 1.1 (The original reached hole).**
+
+$$\forall p: Address, (\forall x: Source, (\operatorname{subtree}\left(p, \operatorname{E}\left(p, x\right)\right) = \operatorname{some}\left(x\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeAlphaSpineObservation.native_alpha_spine_at` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original address p and actual Source x, the alpha-sibling path context E(p,x) reaches precisely x at p. The identity includes the empty path. Originally-present transport therefore applies at this hole at every natural epoch, even when a selected strict extension is initially absent.
+
+**Theorem 1.2 (Three-source native observation boundary).**
 
 $$\forall p: Address, (\forall k: Nat, ((1 \leq k) \implies ((\operatorname{readout}\left(p, \operatorname{E}\left(p, \operatorname{of}\left(true\right)\right)\right) = alpha) \land (\operatorname{readout}\left(p, \operatorname{E}\left(p, \operatorname{of}\left(false\right)\right)\right) = beta) \land (\operatorname{readout}\left(p, \operatorname{E}\left(p, \operatorname{mul}\left(\operatorname{of}\left(true\right), \operatorname{of}\left(true\right)\right)\right)\right) = branch) \land (\forall q: Address, ((\neg (\operatorname{IsPrefix}\left(p, q\right))) \implies ((\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(true\right)\right)\right)\right) = \operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(false\right)\right)\right)\right)) \land (\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(false\right)\right)\right)\right) = \operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{mul}\left(\operatorname{of}\left(true\right), \operatorname{of}\left(true\right)\right)\right)\right)\right))))) \land (\forall q: Address, ((\operatorname{length}\left(q\right) \leq \operatorname{length}\left(p\right) + k) \implies (((\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(true\right)\right)\right)\right) \neq absent) \iff (\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(false\right)\right)\right)\right) \neq absent)) \land ((\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(false\right)\right)\right)\right) \neq absent) \iff (\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{mul}\left(\operatorname{of}\left(true\right), \operatorname{of}\left(true\right)\right)\right)\right)\right) \neq absent))))) \land (\forall q: Address, ((\neg ((\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(true\right)\right)\right)\right) \neq absent) \iff (\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(false\right)\right)\right)\right) \neq absent))) \implies (\operatorname{length}\left(p\right) + k + 1 \leq \operatorname{length}\left(q\right)))) \land (\forall q: Address, ((\neg ((\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{of}\left(false\right)\right)\right)\right) \neq absent) \iff (\operatorname{readout}\left(q, \operatorname{iterate}\left(substitution, 2 \times k, \operatorname{E}\left(p, \operatorname{mul}\left(\operatorname{of}\left(true\right), \operatorname{of}\left(true\right)\right)\right)\right)\right) \neq absent))) \implies (\operatorname{length}\left(p\right) + k + 1 \leq \operatorname{length}\left(q\right)))))))$$
 
@@ -24,6 +36,7 @@ The bounds include p=[] and k=1 and quantify over all finite addresses. Inside t
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeAlphaSpineObservation.native_alpha_spine_at`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeAlphaSpineObservation.native_alpha_spine_observation`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery](ActualCutPartitionRecovery.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain](ActualFibonacciSupportChain.md)
