@@ -72,7 +72,10 @@ internal sealed class MitraUnsharpnessWhiteNoiseRefutationDocument : IScribeDocu
                     "For the four diagonal effects above, the operator norms are 12/40, 13/40, 14/40, and 37/40, "
                         + "with sum 19/10. Their X-matrix has diagonal entries 273/800 and 704/800, so its lowest eigenvalue is 273/800. "
                         + "Consequently Σ₁ = 73/800 < Σ₂ = 107/800. The first inequality in Conjecture 1 fails, which refutes the conjunction."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mitra-2022-unsharpness-white-noise-monotonicity-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
