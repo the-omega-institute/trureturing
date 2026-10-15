@@ -6,22 +6,37 @@ that result; ordinary native reuse tests own incremental build behavior.
 """
 import os
 import copy
+import hashlib
 import json
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'tools/lean-inspector'))
 import fib_analysis
+import materials
+import publication
 
 MODULE = 'Reg.Support.AuricFibUniversalFixture'
 PLAIN_MODULE = 'D5.S0.Diagonal.PigeonholeFiber'
 PREFIX = 'AuricFibUniversalProduction.'
 STATE = ROOT / '.lake/build/lean-inspector'
+
+
+def cleanup_module(module):
+    for folder in ('modules', 'inputs', 'judge-inputs'):
+        for path in (STATE / folder).glob(module + '.*'):
+            path.unlink()
+    owner, _, basename = module.rpartition('.')
+    for folder in ('lib/lean', 'ir'):
+        directory = ROOT / '.lake/build/reg' / folder / owner.replace('.', '/')
+        for path in directory.glob(basename + '.*'):
+            path.unlink()
 
 
 class UniversalProductionTests(unittest.TestCase):
@@ -96,12 +111,7 @@ end AuricFibUniversalProduction
     @classmethod
     def cleanup(cls):
         cls.source.unlink(missing_ok=True)
-        for folder, suffixes in [('modules', ['.zip', '.zip.trace', '.zip.hash',
-                                              '.zip.pending', '.zip.fib-previous']),
-                                 ('inputs', ['.json', '.json.sources.json']),
-                                 ('judge-inputs', ['.json', '.json.trace', '.json.hash'])]:
-            for suffix in suffixes:
-                (STATE / folder / (MODULE + suffix)).unlink(missing_ok=True)
+        cleanup_module(MODULE)
         cls.work.cleanup()
 
     def test_compiled_clients_boundaries(self):
@@ -237,6 +247,63 @@ end AuricFibUniversalProduction
         with self.assertRaisesRegex(ValueError, 'fib.previous_module_binding'):
             fib_analysis.produce(row, malformed, '')
 
+    def test_report_consumer_compares_complete_inputs_and_runs_once(self):
+        original = json.loads(self.report.read_text())['modules'][0]
+        origin = json.loads(Path(str(self.report) + '.provenance.json').read_text())
+        def save(name, row):
+            report = self.directory / (name + '.json')
+            report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=[row])))
+            current_origin = copy.deepcopy(origin)
+            current_origin['report_sha256'] = hashlib.sha256(report.read_bytes()).hexdigest()
+            Path(str(report) + '.provenance.json').write_text(json.dumps(current_origin))
+            return report
+        before = save('before', original)
+        same = copy.deepcopy(original)
+        same['source_sha256'] = 'f' * 64
+        same = save('same-inputs', same)
+        empty = copy.deepcopy(original)
+        empty.pop('fib_analysis')
+        empty_report = save('no-applications', empty)
+        empty_origin_path = Path(str(empty_report) + '.provenance.json')
+        empty_origin = json.loads(empty_origin_path.read_text())
+        empty_origin['input_projection']['inputs'] = [x for x in empty_origin['input_projection']['inputs']
+            if x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application']
+        empty_origin_path.write_text(json.dumps(empty_origin))
+        with patch.object(fib_analysis.subprocess, 'run') as command:
+            self.assertFalse(fib_analysis.run_regressions(ROOT, before, same))
+            command.assert_not_called()
+            # First Application, all complete supported states (including
+            # unavailable inputs), removal, and explicit program coverage.
+            for previous, current, selected in ((empty_report, before, False),
+                    (before, empty_report, False), (before, same, True),
+                    (empty_report, before, True)):
+                command.reset_mock()
+                self.assertTrue(fib_analysis.run_regressions(ROOT, previous, current, selected))
+                command.assert_called_once()
+                self.assertEqual(command.call_args.args[0], ['make', '-C', str(ROOT), 'compiled-fib-test'])
+            # Every field of the complete detached input remains significant;
+            # readings themselves never select a test or invalidate a report.
+            for field, value in (('input_identity', 'a' * 64), ('unavailable_reason', 'changed boundary'),
+                                 ('target_module', 'Other.Source')):
+                changed = copy.deepcopy(original)
+                changed['fib_analysis']['applications'][0][field] = value
+                current = save('changed-' + field, changed)
+                command.reset_mock()
+                self.assertTrue(fib_analysis.run_regressions(ROOT, before, current))
+                command.assert_called_once()
+            # Failed selected work propagates and cannot replace its input data.
+            before_bytes = before.read_bytes()
+            command.side_effect = subprocess.CalledProcessError(23, 'make')
+            with self.assertRaises(subprocess.CalledProcessError) as failure:
+                fib_analysis.run_regressions(ROOT, before, same, True)
+            self.assertEqual(failure.exception.returncode, 23)
+            self.assertEqual(before.read_bytes(), before_bytes)
+        with self.assertRaisesRegex(ValueError, 'fib.missing_required_inputs'):
+            save('missing', empty)  # Its projection still declares Applications.
+            fib_analysis.application_inputs(self.directory / 'missing.json')
+        with self.assertRaises(FileNotFoundError):
+            fib_analysis.run_regressions(ROOT, before, self.directory / 'absent.json')
+
     def test_z_native_incremental_work_uses_lake_traces(self):
         activity = self.directory / 'incremental-work.jsonl'
         phases = self.directory / 'incremental-phases.jsonl'
@@ -272,6 +339,7 @@ end AuricFibUniversalProduction
             self.assertEqual(sum(x['count'] for x in changed if x['kind'] == 'fib-analysis-invocations'), 0)
             self.assertGreater(sum(x['count'] for x in changed if x['kind'] == 'fib-reused'), 0)
             self.assertIn('fib-extract', phases.read_text())
+            self.assertNotIn('lake-analyzer-await', phases.read_text())
             self.assertEqual(build(), [])
             # Keep the changed acquired law normalized and compiler-valid.
             changed_source = original
@@ -302,9 +370,7 @@ end AuricFibUniversalProduction
         finally:
             self.source.write_bytes(original)
             unrelated.unlink(missing_ok=True)
-            for folder in ('modules', 'inputs', 'judge-inputs'):
-                for path in (STATE / folder).glob(unrelated_name + '.*'):
-                    path.unlink()
+            cleanup_module(unrelated_name)
 
 
 if __name__ == '__main__':

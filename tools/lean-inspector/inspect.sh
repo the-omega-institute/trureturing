@@ -232,6 +232,11 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
       "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
   fi
+  if [[ "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}" != false ]]; then
+    run_phase fib-regressions python3 -B "$SCRIPT_DIR/fib_analysis.py" "$OUTPUT" \
+      --regressions "$REPOSITORY" --previous "$OUTPUT" \
+      --selected "$STRATALINT_FIB_REGRESSIONS_SELECTED"
+  fi
   exit 0
 fi
 require_lake
@@ -253,6 +258,11 @@ if [[ "$REGENERATE_REPORT_ARTIFACTS" == 1 ]]; then
 fi
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
+# The writer has returned. Complete regressions before replacing the published
+# report, sharing one invocation with explicit compiler/analyzer unit coverage.
+run_phase fib-regressions python3 -B "$SCRIPT_DIR/fib_analysis.py" \
+  "$REPOSITORY/.lake/build/lean-inspector/report.zip" --regressions "$REPOSITORY" \
+  --previous "$OUTPUT" --selected "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}"
 # Publication and seal share one canonical cache guard.
 run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
   "$LOG_DIR/entry-inputs.json"

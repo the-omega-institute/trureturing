@@ -941,8 +941,8 @@ jobs:
             tools/scripts/worktree/worktree_publication.py
             tools/scripts/worktree/worktree_preservation.py
             [tests-fib]
-            # Source and fixture import dependencies are declared here explicitly.
-            # Lake controls native increments; this list alone schedules the job.
+            # Program, fixture and configuration dependencies require explicit coverage.
+            # Reg owner data changes are handled by compiled inputs inside current.
             .editorconfig
             .globalconfig
             D5/S0/Automata/DFAOStateLowerBound.lean
@@ -1002,11 +1002,6 @@ jobs:
             Meta/ci-cache-paths.json
             NuGet.Config
             NuGet.config
-            Reg/D5/S0/Diagonal/PigeonholeFiber.lean
-            Reg/D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean
-            Reg/D5/S3/Estimation/DataProcessing/FiniteHistoryConditionalExpectation.lean
-            Reg/Support/DependentFamily.lean
-            Reg/Support/FiniteHistoryFamily.lean
             Reg/lake-manifest.json
             Reg/lakefile.toml
             global.json
@@ -1053,6 +1048,7 @@ jobs:
             tools/lean-inspector/LeanInformationAudit/Contract/CompiledExpressions.lean
             tools/lean-inspector/LeanInformationAudit/Contract/Decoder.lean
             tools/lean-inspector/LeanInformationAudit/Contract/Discovery.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean
             tools/lean-inspector/LeanInformationAudit/Contract/FibApplications.lean
             tools/lean-inspector/LeanInformationAudit/Contract/FibFinite.lean
             tools/lean-inspector/LeanInformationAudit/Contract/FibSource.lean
@@ -2143,6 +2139,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           # This supervisor also encloses preparation; compute phases share the file above.
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
         run: |
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
@@ -2622,18 +2619,14 @@ jobs:
       dotnet: false
 
   tests-fib:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      command: make compiled-fib-test
-      lean: build
-      cache-dependency-path: |
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
+    needs: [detect, current]
+    if: ${{ !cancelled() && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Require the selected report consumer's FIB regressions
+        env:
+          CURRENT_RESULT: ${{ needs.current.result }}
+        run: test "$CURRENT_RESULT" = success
 
   tests-lean:
     needs: detect

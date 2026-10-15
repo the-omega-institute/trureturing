@@ -14,7 +14,7 @@ REPO = Path(__file__).resolve().parents[4]
 
 
 class BuildWorkContracts(unittest.TestCase):
-    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False):
+    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False, fib_failure=0, fib_selected=False):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
@@ -35,6 +35,7 @@ class BuildWorkContracts(unittest.TestCase):
         script("tools/lean-inspector/native.py", "import sys\nfrom pathlib import Path\n" +
                ("(Path(sys.argv[3] + '.logs') / 'report.exit.log').unlink()\n" if missing_phase_log else "") +
                "sys.exit(0)\n")
+        script("tools/lean-inspector/fib_analysis.py", "import sys\nsys.exit(" + str(fib_failure) + ")\n")
         script("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nexit 0\n")
         script("tools/scripts/worktree/lean-cache-run.sh",
                "#!/bin/bash\ncat <<'LOG'\n" + output + "LOG\nexit " + str(failure) + "\n")
@@ -72,6 +73,7 @@ class BuildWorkContracts(unittest.TestCase):
         env = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED="1", LAKE_BIN=str(lake),
                    STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
+                   STRATALINT_FIB_REGRESSIONS_SELECTED='true' if fib_selected else 'false',
                    STRATALINT_LEAN_BUILD_TARGETS='["Probe"]' if targets else '[]')
         if ci_budget:
             budget = root / "compute-seconds"
@@ -319,6 +321,15 @@ class BuildWorkContracts(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertEqual(1, json.loads(fact.read_text())["report"])
         self.assertEqual(0, json.loads(fact.read_text())["programs"])
+
+    def test_failed_selected_fib_consumer_propagates_on_reused_and_new_reports(self):
+        for reused in (True, False):
+            with self.subTest(reused=reused):
+                result, fact, root = self.invoke(reused=reused, fib_selected=True, fib_failure=23)
+                self.assertEqual(23, result.returncode, result.stderr)
+                self.assertIn('LEAN_INSPECTOR_FAILED phase=fib-regressions exit=23', result.stderr)
+                self.assertFalse(fact.exists())
+                self.assertFalse((root / 'report.json.logs/publish.exit.log').exists())
 
     def test_replays_and_dependency_only_builds_are_zero_project_work(self):
         for output in ("ℹ [1/1] Replayed Probe\n", "✔ [1/1] Built Mathlib.Probe (2ms)\n", ""):
