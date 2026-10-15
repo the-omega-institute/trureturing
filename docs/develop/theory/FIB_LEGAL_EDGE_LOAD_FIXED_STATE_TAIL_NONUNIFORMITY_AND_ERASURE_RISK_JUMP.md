@@ -664,3 +664,158 @@ universal filtering, formal verification, or completion of the original
 attainment problem.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Sharp count-only endpoint error with paid phase information
+
+**Theorem 10.1 (Paid phase-cost refinement and selective sharpness).** Retain
+exactly Definition 9.1, including the fixed original $H_j$, $j\in\{0,1\}$,
+the one law $J_p$, and the arbitrary unchanged independent auxiliary law
+$\nu$. Put
+
+$$
+a=\max(p,1-p),\qquad b=\min(p,1-p),\qquad R=a/b,
+\qquad e_0=1-a/2,\qquad e_n=\frac1{1+R^n}\quad(n\ge1).
+\tag{10.1}
+$$
+
+For a fixed seed and a positive terminal cylinder of length $n$, let $W$
+be its source mass and $L$ its error mass for the protocol's chosen output.
+For every output state, whether or not it maximizes posterior probability,
+
+$$
+L\ge e_nW.
+\tag{10.2}
+$$
+
+Consequently every admissible protocol satisfies
+
+$$
+\begin{aligned}
+\mathbb P_p(A\ne H_j,\tau<\infty)&\ge\mathbb E_p[g],
+&g&=\begin{cases}e_N&\tau<\infty,\\0&\tau=\infty,\end{cases}\\
+\mathbb P_p(A\ne H_j,E_0)&\ge(1-a/2)\mathbb P_p(E_0),\\
+\mathbb P_p(A\ne H_j,E_k)&\ge\frac{\mathbb P_p(E_k)}{1+R^k}
+&& (k\ge1).
+\end{aligned}
+\tag{10.3}
+$$
+
+Each $e_n$ is the largest coefficient depending only on $p$ and $n$ that
+works in (10.2) for all such records and protocols. The coefficients in the
+two budget bounds of (10.3) are likewise best possible when selective finite
+return is permitted.
+
+Proof. Reuse Theorem 9.2's fixed-seed terminal-cylinder reduction. For each
+seed $u$ and terminal ordered record $r$, the source section is the cylinder
+$C=\{X_{t_i}=x_i:1\le i\le n\}$ if the prescribed choices and finite return
+are consistent, and is empty otherwise. The output is fixed on that
+section. Adaptive choices and internal waiting add no source constraint.
+These are section masses, with no regular conditional probability assumed
+on the auxiliary space.
+
+Write $w_h=J_p(C,H_j=h)$, $W=\sum_hw_h$, and $L=W-w_h$ when the output is
+$h$. At $n=0$, a nonempty terminal section is the whole source space.
+Proposition 2.1 gives largest state prior $a/2$, so $L\ge(1-a/2)W$.
+Now take $n\ge1$. If $w_h=0$, (10.2) is immediate. Otherwise let $\varphi$
+be the phase corresponding to $h$ at this original endpoint, and let
+$q=q_{j,\varphi}$ be its actual spin index from (9.4): $q=j$ for
+$\varphi=0$, and $q=0$ for $\varphi=1$. Let $\bar h$ be the complementary
+spin state at the same endpoint and phase.
+
+Under this phase, use the graph of distinct active edges
+$\{\ell,\ell+1\}$ read in $r$, adjoining $q$ as an isolated vertex if
+necessary. Let $V$ be the component of $q$ and $v=|V|$. It is a finite path
+or a singleton, so it has $v-1$ distinct edges and $v\le n+1$. Separator
+reads remain charged, as do repeated edges. Positive mass excludes a one
+at a separator, inconsistent repetitions and any incompatible labels.
+As in Lemma 3.1 and (9.5), the two endpoint choices determine complementary
+assignments $(s_\ell)_{\ell\in V}$ and $(1-s_\ell)_{\ell\in V}$. With
+$\pi_0=1-p$ and $\pi_1=p$, their masses have the form
+
+$$
+w_h=K\prod_{\ell\in V}\pi_{s_\ell},\qquad
+w_{\bar h}=K\prod_{\ell\in V}\pi_{1-s_\ell},\qquad K>0.
+$$
+
+The common factor includes $1/2$ for the phase and all components disjoint
+from $V$. Thus if $v\le n$,
+$w_h\le R^v w_{\bar h}\le R^nL$.
+
+It remains to consider $v=n+1$. The $n$ distinct edges in $V$ then use all
+$n$ calls: every call is a distinct active edge in this one component, with
+no repetition, separator or other component. If any reply is one, both
+spin values occur in each of the two complementary assignments. Hence
+$|\#\{\ell:s_\ell=1\}-\#\{\ell:s_\ell=0\}|\le v-2=n-1$, and the same
+products give $w_h\le R^{n-1}w_{\bar h}\le R^nL$.
+
+If instead all replies are zero, every address has parity $\varphi$.
+Under the opposite phase all these reads are separator zeros, imposing no
+spin constraint. The same seed and replies follow the same terminal rule,
+so the opposite-phase joint mass of $C$ is exactly $1/2$. All of it is
+error for output $h$, whereas $w_h\le1/2$. Thus $w_h\le L\le R^nL$
+also in this case. We have proved $W=w_h+L\le(1+R^n)L$ in every case.
+Zero-mass cylinders contribute zero. In particular the argument covers
+both endpoints and bias directions, all-zero and one-containing records,
+and repeated, disconnected, negative or arbitrarily distant reads.
+
+There are countably many finite ordered integer-address/reply records.
+Sum (10.2) over terminal records and integrate over the unchanged
+independent law $\nu$, as in Theorem 9.2. This gives the first bound in
+(10.3). On nonreturns $g=0$, including indefinite internal continuation
+after any finite $N$ and infinite-read paths. The sequence $(e_n)_{n\ge0}$
+is nonincreasing: $e_1=b<e_0$, and $R>1$. Restriction to $N\le k$ therefore
+gives both budget bounds. Measurable completion changes none of these
+integrated masses.
+
+For sharpness fix $n\ge1$ and either original endpoint $j$. Ignore the
+auxiliary variable without changing its law. Make all $n$ predetermined
+actual reads: first the $n-1$ even addresses
+$2(j+i)$, $0\le i\le n-2$, then the distant even address $2(j+n)$.
+Return only if every local reply is zero and the distant reply is one;
+on every other complete record continue internally forever with no more
+reads. Thus $N=n$ on every path. Put $\sigma=1$ for $p>1/2$ and $\sigma=0$
+for $p<1/2$, and return $a_\sigma$ when $j=0$ or $b_\sigma$ when $j=1$.
+
+The paid distant one forces phase zero. In that phase the local zero
+replies say that the $n$ spins $S_j,\ldots,S_{j+n-1}$ are all equal.
+The distant reply is $S_{j+n}\mathbin\oplus S_{j+n+1}$, whose spin set is
+disjoint from that block and whose probability of being one is $2ab$.
+The two local assignments have masses $a^n$ and $b^n$, and (9.4) identifies
+their endpoint states. Independence in the same realization (2.2) gives
+
+$$
+\begin{aligned}
+\mathbb P_p(\tau<\infty)&=ab(a^n+b^n)>0,\\
+\mathbb P_p(A\ne H_j,\tau<\infty)&=ab\,b^n,\\
+\mathbb P_p(A\ne H_j\mid\tau<\infty)&=\frac{b^n}{a^n+b^n}=e_n.
+\end{aligned}
+\tag{10.4}
+$$
+
+For $n=1$ the local read list is empty; its block is the single unobserved
+endpoint spin $S_j$, still disjoint from the distant pair. The local event
+is then unrestricted, consistently with $a+b=1$, so (10.4) holds without
+an unpaid read. For $n=0$, immediate return of any state with prior $a/2$
+has error $e_0$. These protocols attain (10.2) and the corresponding budget
+bounds, proving maximality of their count-only coefficients. $\square$
+
+The finite-product ambiguity used in the proof retains the attribution of
+Lemma 3.1 and Theorem 9.2. [Chigansky--van Handel, arXiv:0910.3603v2,
+Example 10][CVH] supplies the classical fair hidden equality/XOR ambiguity.
+[Travers--Crutchfield, arXiv:1008.4182v3, Definitions 5--8 and
+Theorem 3](https://arxiv.org/html/1008.4182v3) and
+[arXiv:1011.1581v2, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) concern current-state synchronization
+from consecutive words. They do not supply the biased original-clock
+paid-record coefficient above. The phase-cost case distinction and the
+same-law selective equality are `repo-derived`, without a literature-priority
+claim. Theorem 9.2 remains valid with its weaker exponent.
+
+Sharpness here concerns selective finite-return events. For $n\ge1$ the
+witness has positive nonreturn probability, even though $N=n$ always; it
+does not determine optimal unconditional risk for bounded almost-surely
+returning protocols, optimal expected read cost, or optima at a prescribed
+return probability. The lower bounds apply to those protocols whenever
+they satisfy Definition 9.1. Open Problem 6.4 is unchanged.
+
+## 追加锚（本行以下为增补区）
