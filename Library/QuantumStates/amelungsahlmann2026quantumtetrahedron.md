@@ -6,6 +6,7 @@ title: "Multipartite entanglement in the quantum tetrahedron"
 doi: 10.1103/l1t8-84dk
 url: https://arxiv.org/abs/2601.14964v1
 claim: "Entropic-fill analysis of four-valent SU(2)-invariant tensors and its relation to quantum-tetrahedron geometry."
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
