@@ -2094,3 +2094,221 @@ over those rectangles. A sufficiently strong estimate inside them,
 the same-integer signed Robin estimate, and RH remain unresolved.
 This is an application of the cited Perron theorem, without a
 mathematical-priority claim or Lean certification.
+
+## Transport the actual endpoint into a smooth common test
+
+Retain the original bandwidth and fixed constants of (I58)--(I59),
+including $0<2\lambda<c_\star$ and $H<N/3$. Put
+$\epsilon_N=e^{-c_\star\Omega}$ and $v_N=e^{-b\Xi(N)}$, where $b>0$
+is the unconditional tail constant used there. All quantities below
+come from the same integer $N$, its actual band, and its original
+endpoint. This applies the already owned uniform short-interval
+estimates, the cell identity (I12), and the bump bounds cited below;
+it is not a new cancellation theorem.
+
+The actual coefficients contain a relation lost by separate norm bounds:
+$$
+\begin{aligned}
+\delta_{N,H}:=A-B/N
+ &=\sum_{Q<n\le N}\mu(n)\log(N/n)(1/n-1/N)
+   \ll h^3\epsilon_N,\\
+e_{N,H}:=B/(2N+1)-A/2
+ &=-\delta_{N,H}/2-B/[2N(2N+1)]
+   \ll h^3\epsilon_N.
+\end{aligned}
+\tag{I75}
+$$
+Indeed, the first sum's nonnegative real weight is decreasing, with
+supremum plus variation $O(h^2/N)$. The same full-prefix Mobius bound
+used in (I48) is $O(H\epsilon_N)$ on this band. Abel summation gives
+the first row; the second uses $|B|\ll Nh^2\epsilon_N$ and $Nh\gg1$.
+These bounds do not replace $e_{N,H}$ by a separately optimized value.
+
+Use the existing real-argument interpolation
+$\widetilde R_N(t)=S_N(t)/L$ from (I11)--(I12), and set
+$I_j=\int_1^2q^{-j}\widetilde R_N(Nq)\,dq$, $j=1,2$.
+This interpolation agrees with $R_N(m)$ at integers; the actual
+balanced residual remains a step function on its original cells.
+The cell slope is exactly $U_N/L$. Comparing the cell integrals of
+$t^{-2}$ and $t^{-1}$ with the original samples, including $m=2N$,
+gives
+$$
+\begin{aligned}
+|P_1-I_1|+|NP_0-I_2|
+ &\ll N^{-1}\max_{N\le m\le2N}|R_N(m)|+|U_N|/L
+ \ll L^{-1},\\
+\mathcal A_{N,H}
+ &=L^{-1}\left(AI_1-\frac{3B}{2N}I_2+e_{N,H}r\right)
+   +O(h^2\epsilon_N/L^2).
+\end{aligned}
+\tag{I76}
+$$
+For the last bounds reuse $U_N=O(1)$ from the unconditional tail and
+$\max|R_N|\ll N/L$ from the original coefficients. The endpoint
+$r=R_N(2N)$ in (I76) is unchanged.
+
+The same uniform short-interval inputs pay the local real-argument
+oscillations at both ends:
+$$
+\operatorname{osc}_{[N,N+Nh]}\widetilde R_N
++\operatorname{osc}_{[2N-Nh,2N]}\widetilde R_N
+\ll \frac H L(\epsilon_N+v_N).
+\tag{I77}
+$$
+To see this, (I33) holds throughout $N\le t\le2N$ with the weak
+$\psi(t)$ and the actual sum over $N<n\le t$. Subtract at two
+points. The linear term uses $U_N-1\ll v_N$; the other terms use
+the full-prefix Mobius and $\Lambda-1$ bounds underlying (I58).
+At the lower end apply that same uniform supplier near $N$; at the
+upper end use its terminal prefixes. For all these starts,
+$\Omega(x)-\Omega(N)=o(1)$, so the same chosen common constant works.
+Short prefixes cost $O(uL)$ and real versus integer endpoints cost
+$O(L)$ before division by $L$; the fixed power surplus in $H$
+absorbs both in $H\epsilon_N$. Thus no jump is suppressed.
+
+Here is an explicit mass-preserving construction. Fix nonnegative
+$\rho\in C_c^\infty(0,1)$, supported in $[1/4,3/4]$, with
+integral one, and put
+$\chi(x)=\int_{-\infty}^x\rho(u)\,du$,
+$\chi_h(q)=\chi((q-1)/h)\chi((2-q)/h)$ and
+$$
+\eta_{-,h}(q)=h^{-1}\rho((q-1)/h),\qquad
+\eta_{+,h}(q)=h^{-1}\rho((2-q)/h).
+$$
+Let $\beta_{j,-}$ and $\beta_{j,+}$ be the integrals of
+$(1-\chi_h(q))q^{-j}$ over $[1,1+h]$ and $[2-h,2]$, respectively,
+and define
+$$
+w_{j,h}(q)=\chi_h(q)q^{-j}
+ +\beta_{j,-}\eta_{-,h}(q)+\beta_{j,+}\eta_{+,h}(q),\qquad
+w=A w_{1,h}-\frac{3B}{2N}w_{2,h}+e_{N,H}\eta_{+,h}.
+$$
+Each $w_{j,h}$ preserves the original $q^{-j}$ mass separately on
+the two boundary intervals and equals it away from them.
+Moreover $\beta_{j,\pm}=O(h)$ and
+$\|w_{j,h}-q^{-j}\|_{L^1(1,2)}\ll h$.
+The last term of $w$ transports the original endpoint to a normalized
+average supported in $(2-h,2)$; it does not delete that endpoint.
+Equations (I75)--(I77) give
+$$
+\begin{aligned}
+w&\in C_c^\infty(1,2),&
+\|w^{(k)}\|_\infty&\ll_k h^{2-k}\epsilon_N,\\
+\mathcal A_{N,H}
+ &=\frac1L\int_1^2w(q)\widetilde R_N(Nq)\,dq+O(\mathcal E_N),&
+\mathcal E_N&=\frac{h^2\epsilon_N}{L^2}
+ +\frac{H^4}{N^3L^2}(\epsilon_N^2+\epsilon_Nv_N)=o(1).
+\end{aligned}
+\tag{I78}
+$$
+For each boundary deformation, subtract the endpoint's constant
+value before using (I77); its mass is zero. The resulting error is
+$O(hH(\epsilon_N+v_N)/L)$ in each $I_j$.
+The transported endpoint costs
+$O(|e_{N,H}|H(\epsilon_N+v_N)/L^2)$ in the final functional.
+These are exactly the allowances in (I78). At the original bandwidth,
+$4\lambda<2c_\star$ and $\Xi/\Omega\to\infty$ pay them.
+The common level has not been centered away:
+$\int w=A\log2-3B/(4N)+e_{N,H}$ need not be zero.
+
+## Retain the exact scalar channels before cutting smooth frequencies
+
+Choose the preceding fixed profiles from the standard bump already
+used in [the research volume, Lemma 31.1](../../docs/develop/theory/RH_RESEARCH_LANE_THEORY.md#31-完整高零点尾界与有限实尺度正性),
+whose paper calculation gives
+$\|\phi^{(k)}\|_1\le12^k(k!)^2$ for
+$\phi(x)=e^{-1/(1-4x^2)}\mathbf1_{|x|<1/2}$.
+The same cited Cauchy estimate also bounds $\|\phi^{(k)}\|_\infty$
+by these constants, as required for the profile derivatives.
+The related [Tlas source note](tlas2020bump.md) records the original
+bump and its Fourier convention. This reuses the standard Gevrey
+bound; no new bump or saddle theorem is asserted.
+One may take $\rho(x)=2\phi(2x-1)/\int\phi$ and $\chi$ as above.
+Leibniz bounds and the analytic coordinate $q=e^x$ then give fixed
+$C>0$ such that, for $\kappa=\kappa_N$ and every integer $k\ge0$,
+$$
+\|\partial_x^k[e^{(\kappa+1)x}w(e^x)]\|_1
++\|\partial_x^k[x e^{(\kappa+1)x}w(e^x)]\|_1
+\le C^{k+1}(k!)^2 h^{2-k}\epsilon_N.
+$$
+All integrals are over $0<x<\log2$ with zero extension; both
+endpoints are flat. Constants are independent of $N,H,k$.
+For example, expand $(q\partial_q)^k$ with Stirling numbers of the
+second kind, and use $S(k,j)(j!)^2\le k^k k!\le e^k(k!)^2$;
+products with the fixed analytic factors only change $C$.
+Optimizing the integration-by-parts order, as for the cited bump,
+gives fixed $a,C'>0$ and
+$$
+g_w(s)=\int_1^2w(q)q^s\,dq,\qquad
+|g_w(\kappa_N+it)|+|g_w'(\kappa_N+it)|
+\le C'h^2\epsilon_N e^{-a\sqrt{h|t|}}.
+\tag{I79}
+$$
+The $h^{-k}$ costs are retained; these are not fixed-complexity tests.
+
+Put $c_w=\int_1^2q w(q)\,dq$, $d_w=\int_1^2w(q)\,dq$ and
+$B_{\rm all}=\sum_{n\le N}\mu(n)\log(N/n)$. Define
+$$
+\mathcal C_{N,H}=\frac{Nc_wU_N-d_wB_{\rm all}}{L^2},\qquad
+\mathcal F_w(s)=\frac{\zeta'(s)}{\zeta(s)}\frac{g_w(s)}s
+-\frac1{\zeta(s)}\left(\frac{g_w'(s)}s-\frac{g_w(s)}{s^2}\right).
+$$
+Fix $N,H$ and hold the resulting $w$ fixed during Mellin inversion.
+On the original line, the exact smooth-moment identity is
+$$
+\frac1L\int_1^2w(q)\widetilde R_N(Nq)\,dq
+=\mathcal C_{N,H}+\frac1{L^2}\mathscr P_s N^s\mathcal F_w(s).
+\tag{I80}
+$$
+The integral on the right is absolutely convergent.
+For verification, integrate (I70) against $w$. The full kernel is
+$$
+\frac{\int w(q)H_q(s)\,dq}{\zeta(s)}
+=\frac{c_w}{(s-1)^2\zeta(s)}-\frac{d_w}{s^2\zeta(s)}
+ +\frac{d}{ds}\frac{g_w(s)}s+\mathcal F_w(s).
+$$
+The two square-denominator inversions are exactly $Nc_wU_N$ and
+$-d_wB_{\rm all}$. Integration by parts gives
+$\mathscr P_s N^s(g_w/s)'=-Ld_w$; this cancels the literal
+$d_w/L$ from $\widetilde R_N=1+\cdots$.
+Equivalently, integrate the real-argument (I33); finite Dirichlet
+summation and Mellin inversion give the same two scalar terms.
+The $q$ integrals have no half-jump term, since the threshold set has
+measure zero. The original integer endpoint has already been paid
+by its transport in (I78).
+
+For $|t|\ge2$, absolute Euler series on the original line give
+$|1/\zeta(\kappa_N+it)|\ll L$ and
+$|\zeta'/\zeta(\kappa_N+it)|\le-\zeta'(\kappa_N)/\zeta(\kappa_N)\ll L$.
+Together with (I79), they prove the absolute tail bound, for $hT\ge1$,
+$$
+\frac1{L^2}\int_{|t|>T}
+ |N^{\kappa_N+it}\mathcal F_w(\kappa_N+it)|\,dt
+\ll\frac{Nh^2\epsilon_N}{L}e^{-a'\sqrt{hT}}
+\tag{I81}
+$$
+for fixed $a'>0$. Indeed the remaining integral is bounded by a
+constant times $\int_{\sqrt{hT}}^\infty e^{-au}du/u$.
+Choose a sufficiently large fixed $C_0$ and
+$T=C_0L^2/h$. Equations (I78)--(I81) yield
+$$
+\mathcal A_{N,H}
+=\mathcal C_{N,H}+\frac1{L^2}\mathscr P_{s,T}N^s\mathcal F_w(s)+o(1),
+\qquad T\asymp\frac NH(\log N)^2.
+\tag{I82}
+$$
+For example $a'\sqrt{C_0}>1$ pays (I81), since
+$Nh^2\epsilon_N\asymp N^{1/2}e^{-(c_\star-2\lambda)\Omega}$.
+This uses the original $H\asymp N^{3/4}e^{\lambda\Omega}$ family,
+without adopting the fixed-half-plane input (I60).
+
+The scalar channels in $\mathcal C_{N,H}$ remain exact. Their sizes
+and signs have not been paid separately, and they cannot be dropped.
+Without extracting them, the complete smooth kernel retains only a
+$1/t^2$ rational tail; smoothness alone would not justify (I82)'s
+height. The useful change is a paid transport of the same endpoint
+and a frequency remainder with an absolute bound. The joint bound
+for $\mathcal C_{N,H}$ plus the retained integral is still missing.
+No shifted zero-sum estimate, fixed-complexity nilsequence interface,
+same-integer signed Robin bound, RH proof, mathematical-priority claim
+or Lean certification follows from this application.
