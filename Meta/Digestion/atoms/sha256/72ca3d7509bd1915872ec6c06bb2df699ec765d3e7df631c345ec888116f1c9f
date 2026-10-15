@@ -1,0 +1,82 @@
+**Proposition 8.1 (An 84-configuration common table).** Take
+$r=c=1$, $q=1/2$, $J=2$, $\delta=1/2$, and use the rows of Definition 5.1
+with $H=14$ rather than its conservative asymptotic threshold. The exact
+complete listed count is $3+27\cdot3=84$. Under both sources this table
+stops almost surely, has finite paid mean, and has separate error less
+than $1/10$. This is a finite-parameter assertion, with no claim that
+$s=\log2$ is in the endpoint neighborhood of Theorem 5.1.
+
+Proof. Here the zero matrix and reward vector are
+
+$$
+R=\begin{pmatrix}
+1/2&1/2&0\\
+0&3/4&1/4\\
+0&0&1
+\end{pmatrix},\qquad
+v=(1/2,1/4,0)^{\mathsf T}.
+\tag{8.1}
+$$
+
+After $k$ zeros the first two phase probabilities are
+$(1/2)^k$ and $2[(3/4)^k-(1/2)^k]$. With
+$Z_0(q)=q/(1-q)^2$ and $Z_1(q)=q(2-q)/(1-q)^2$, averaging these expressions
+gives the two terminal phase laws
+
+$$
+\pi_0=(2/9,116/225,59/225),\qquad
+\pi_1=(7/27,352/675,148/675).
+\tag{8.2}
+$$
+
+Hence $m_0=6/25$, $m_1=13/50$, $\theta=1/4$, and $\Delta=1/50$.
+The integer evidence increment is zero or $+1$ equiprobably in phase
+one, identically zero in phase two, and $-1$ or zero equiprobably in
+the dead phase. The upward and downward probabilities per gap are
+
+$$
+(u_0,v_0)=(1/9,59/450),\qquad
+(u_1,v_1)=(7/54,74/675).
+\tag{8.3}
+$$
+
+Both are positive; their signed drifts are $-1/50,+1/50$ in integer
+evidence units. The finite drift argument (5.10) with this threshold
+proves finite expected gap stopping under each source. The stopped
+nearest-neighbor walk has no boundary overshoot. For its ratio
+$\rho=v_i/u_i$, the process $\rho^{e_n}$ is a martingale, because
+$u_i\rho+v_i/\rho+1-u_i-v_i=1$.
+Bounded convergence at the already finite stop gives the ordinary
+gambler's-ruin formulas
+
+$$
+e_0=\frac1{1+(59/50)^{14}},\qquad
+e_1=\frac1{1+(175/148)^{14}}.
+\tag{8.4}
+$$
+
+The exact integer inequalities $59^{14}>9\,50^{14}$ and
+$175^{14}>9\,148^{14}$ prove $e_i<1/10$.
+The signed boundary value has mean $14(1-2e_i)$, so
+$\mathbb E_iG=700(1-2e_i)$. Source moment summation gives
+
+$$
+(\mu_0,\beta_0)=(4,2),\qquad
+(\mu_1,\beta_1)=(11/3,20/11).
+\tag{8.5}
+$$
+
+The exact paid means, using the same stationary first-wait convention,
+are therefore
+
+$$
+\mathbb E_0T=3+2800(1-2e_0),\qquad
+\mathbb E_1T=31/11+(7700/3)(1-2e_1).
+\tag{8.6}
+$$
+
+All zeros after death and the terminal closing interval are included.
+The 84 configurations include every one of the 27 evidence coordinates
+paired with every phase, plus initialization and labels. The formula
+rows supply both inputs even at unreachable edges. $\square$
+
