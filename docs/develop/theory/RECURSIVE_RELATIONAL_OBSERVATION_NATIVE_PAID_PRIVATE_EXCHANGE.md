@@ -861,3 +861,640 @@ is used in these proofs. $\square$
 [SINHA]: https://dada.cs.washington.edu/research/tr/1995/08/UW-CSE-95-08-02.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Paired completions and paid discrimination
+
+**Definition 7.1 (collision data and common-coordinate discrepancy).**
+Retain Definitions 1.1–2.1 and Assumptions 1.3–1.4 in their entirety.
+In particular the domain is the full finite-tree domain $\mathcal U_*$,
+the handoff is the literal prescribed complete entry, the reader has its
+original eight states, and both inequalities (PE.1) hold on every actual
+source. All installed states and all invocations remain charged,
+including unused states, the $r$ further mandated latches, repeats and
+post-certification queries. No variable order, read-once property or
+acyclicity of the union of source paths is assumed.
+
+Let $n\ge6$ and $3\le k\le n-2$. Consider two actual live cube
+histories ending at one installed selected running state. Their supports
+$S,T$ are incomparable and their hit counts satisfy $h<g$. Write their
+old assignments as $s:S\to\{0,1\}$ and $t:T\to\{0,1\}$, and use
+$X,Y,I,U,a,b,u$ from Definition 2.1. Put
+
+$$
+\begin{gathered}
+Q=k-h,\qquad V=k-g,\qquad \Delta=g-h=Q-V,\\
+p=|\{j\in X:s_j=1\}|,\qquad y=|\{j\in Y:t_j=1\}|,\\
+\varepsilon=\Delta-b,\qquad e=p+b-y,\qquad
+D=\Delta+p-y=\varepsilon+e.                         \tag{PE.23}
+\end{gathered}
+$$
+
+These sets and numbers describe mathematical histories; none is a
+runtime register. The old hit counts on $I$ are $h-p$ and $g-y$, so
+$D=(g-y)-(h-p)$. Theorem 3.1, specifically (PE.6), gives
+
+$$
+Q\ge b+1,\qquad 1\le V\le u,\qquad
+\varepsilon\ge0.                                  \tag{PE.24}
+$$
+
+Also $e\ge0$, and $e>0$ means precisely that there is an old one in
+$X$ on the first history or an old zero in $Y$ on the second. Thus
+$D>0$ is equivalent to $\Delta>b$ or such a private polarity defect.
+
+**Theorem 7.2 (paired completions, joint certificates and paid bounds).**
+In Definition 7.1 let
+
+$$
+J=\bigl[\max(0,V-p),\ \min(u,Q-y-1)\bigr]
+                              \cap\mathbb Z.        \tag{PE.25}
+$$
+
+This interval is nonempty exactly when $D>0$. For every assignment
+$\tau:U\to\{0,1\}$ of weight $z\in J$, there are actual cube
+completions of the two incoming histories which agree on $X,Y,U$,
+differ only on $I$, and require respectively $L_0=\widehat e_0$ and
+$L_1=\widehat e_1$. Starting from the common state, their first
+different native reply is at a word in $E_i$ for some $i\in I$ with
+$s_i\ne t_i$. Both histories are already mathematically certified,
+with their different prescribed bits, strictly before this invocation.
+The discriminator is a paid running state absent from both incoming
+state histories, including their common endpoint.
+
+For each of these paired completions there are sets, taken from that
+same common continuation strictly before its first different reply,
+
+$$
+\begin{gathered}
+A_1\subseteq\{j\in X:s_j=1\},\qquad
+B_0\subseteq\{j\in Y:t_j=0\},\\
+U_0\subseteq\{j\in U:\tau_j=0\},\qquad
+U_1\subseteq\{j\in U:\tau_j=1\},
+\end{gathered}
+$$
+
+such that, for the discriminator coordinate $i$ just specified,
+
+$$
+\begin{aligned}
+|B_0|+|U_0|&\ge b+u-Q+1,\\
+|A_1|+|U_1|&\ge V,\\
+|A_1|+|B_0|+|U_0|+|U_1|+1
+                   &\le\min(a+u,b+u),\\
+C_{A_1}+C_{B_0}+C_{U_0}+C_{U_1}+c_i
+                   &\le\min(C_X+C_U,C_Y+C_U).
+\end{aligned}                                      \tag{PE.26}
+$$
+
+If $D>0$, at least $a+b+u+1$ distinct installed selected states occur
+in the union of continuations, at or after the common state, over all
+completions of either incoming history. This is a local union count.
+
+Proof. The restrictions (PE.24) are consequences of the original
+interval exclusion, rather than extra restrictions on competitors. For
+completeness, its two clipped intervals are
+
+$$
+[\max(0,Q-b),\min(u,Q-1)],\qquad
+[\max(0,V-a),\min(u,V-1)].
+$$
+
+They are nonempty by liveness and $a,b>0$. Since $Q>V$, the second
+upper endpoint is no greater than the first. Their disjointness in
+(PE.5) places the second interval strictly below the first. The first
+lower endpoint must consequently be positive, hence $Q-b$; the
+second upper endpoint must be below $u$, hence $V-1$. Their strict
+separation yields $Q\ge b+1$, $V\le u$ and $\Delta\ge b$,
+as in Theorem 3.1.
+
+Suppose first that $D>0$. All quantities are integers, and
+
+$$
+Q-y-1\ge b-y\ge0,\qquad V-p\le u,\qquad
+(Q-y-1)-(V-p)=D-1\ge0.
+$$
+
+These inequalities prove that the clipped lower endpoint in (PE.25)
+does not exceed its upper endpoint. If $D=0$, nonnegativity of
+$\varepsilon$ and $e$ forces
+
+$$
+\Delta=b,\qquad p=0,\qquad y=b,\qquad Q=V+b.
+$$
+
+Then (PE.25) has lower endpoint $V$ and upper endpoint at most $V-1$,
+so is empty. Since $D\ge0$ always, this proves the asserted exact
+nonemptiness criterion, including the balanced-tight boundary.
+
+Fix $\tau$ of weight $z\in J$. Define two complete Boolean vectors
+by
+
+$$
+\begin{array}{c|cccc}
+ &I&X&Y&U\\ \hline
+\theta^-&s|_I&s|_X&t|_Y&\tau\\
+\theta^+&t|_I&s|_X&t|_Y&\tau.
+\end{array}                                        \tag{PE.27}
+$$
+
+The first extends the $S$ history and the second extends the $T$
+history. Their exposed replies are unchanged, including every
+cube-constant reply, so determinism makes them follow those histories.
+Definition 2.1 supplies simultaneous actual finite origins for both
+vectors, with all original current-row disequalities. Their weights are
+
+$$
+|\theta^-|=h+y+z\le k-1,\qquad
+|\theta^+|=g+p+z\ge k.                             \tag{PE.28}
+$$
+
+Indeed these are exactly the two opposite-output inequalities defining
+(PE.25), together with $0\le z\le u$. Although both cube sources
+have complete target row $R_0$, their prescribed preparation entries
+are the different literal latches $L_0,L_1$.
+
+From the common running state, fixed successors give identical state
+sequences until a first different reply. If there were no such reply,
+sourcewise termination would give the same latch, contradicting
+(PE.28). The all-address classification (PE.2) says that this first
+difference must occur in $E_i$ for a coordinate where the vectors
+differ. By (PE.27), $i\in I$ and $s_i\ne t_i$. In both histories
+this coordinate is old. A live cube history can query only a fresh
+selected coordinate, by the saturation supplier in Definition 2.1.
+Thus neither continued history is live immediately before this
+invocation. As their actual completions are respectively negative and
+positive, they already have at least $n-k+1$ distinct observed zeros
+and $k$ distinct observed ones. This is certification of their
+mathematical threshold residuals; the table receives no free
+certificate bit or silent operation.
+
+If the discriminator state had occurred on either incoming history,
+the corresponding completed actual source would revisit that same
+entire changing configuration. On a fixed source its absolute query
+has the same reply and fixed successor each time. Iterating would
+therefore repeat a deterministic cycle forever, contradicting
+sourcewise termination. The same argument excludes equality with the
+common endpoint. Its actual visit pays one call and its whole word
+length, at least $c_i$. This proves distinctness only from these two
+incoming histories, not from states used by other histories.
+
+Take $A_1,B_0,U_0,U_1$ to be all the indicated coordinates queried in
+the common continuation before that first different reply. They are
+sets of distinct coordinates; repeated visits do not enlarge them and
+remain charged. The negative source has $|S|-h$ old zeros. Its only
+new observed zeros can be in $B_0$ or $U_0$. The positive source has
+$g$ old ones; its only new observed ones can be in $A_1$ or $U_1$.
+Old common coordinates queried earlier in the continuation cannot add
+new exposed coordinates. The two certificates therefore give
+
+$$
+\begin{aligned}
+|S|-h+|B_0|+|U_0|&\ge n-k+1,\\
+g+|A_1|+|U_1|&\ge k.
+\end{aligned}
+$$
+
+Since $n-|S|=b+u$, these are the first two inequalities of (PE.26).
+The sets come from one actual shared continuation, not independently
+chosen certificate optimizers.
+
+Write $K=|A_1|+|B_0|+|U_0|+|U_1|$ and
+$C=C_{A_1}+C_{B_0}+C_{U_0}+C_{U_1}$. Every prefix of a live history
+is live. Consequently the incoming selected contributions are exactly
+$|S|$ calls and $C_S$ letters, or $|T|$ calls and $C_T$ letters:
+they exposed their supports once at shortest occurrence roots. These
+are selected contributions, not assertions that a prefix had no paid
+profile call. Disjoint coordinate classes require at least $K$
+selected continuation invocations, in addition to the discriminator.
+Their letter charge is at least $C+c_i$, even if some are longer
+selected-child words after certification.
+
+The all-weight comparison proved at the beginning of Theorem 3.1
+supplies on each complete cube run at least one nonselected invocation
+of length at least three. It is disjoint from all the selected visits
+just counted. Apply both original caps first to the negative source
+and then to the positive source, without adding the two executions:
+
+$$
+\begin{aligned}
+|S|+K+1+1&\le n+1,& C_S+C+c_i+3&\le W+3,\\
+|T|+K+1+1&\le n+1,& C_T+C+c_i+3&\le W+3.
+\end{aligned}                                      \tag{PE.29}
+$$
+
+Since $n-|T|=a+u$, $W-C_S=C_Y+C_U$ and
+$W-C_T=C_X+C_U$, (PE.29) proves the last two inequalities of
+(PE.26). Other visits, including repeats and profile calls at different
+times on the two sources, can only increase their own execution costs.
+No post-certification freshness or free replay was used.
+
+For the local state count, every unread coordinate of a live threshold
+residual is relevant. If the residual has $d$ unread coordinates and
+needs $v$ hits, $1\le v\le d$, assign $v-1$ hits to its other
+$d-1$ coordinates. Flipping the remaining coordinate changes the
+required latch. Both completions are actual cube sources. A correct
+deterministic continuation must therefore query an address in that
+coordinate's $E_j$, since all other replies agree. Apply this argument
+to all coordinates in $X\cup U$ from the $T$ history and in
+$Y\cup U$ from the $S$ history. Disjointness of the $E_j$ requires
+at least $a+b+u$ selected states among those continuations. The
+already forced discriminator has a coordinate in $I$, outside that
+union, and contributes one further state. Its incoming query state for
+that same old coordinate is different by the termination argument.
+States counted here may serve other collisions or lie in other
+witness images; the count is not globally additive. $\square$
+
+**Corollary 7.3 (strict separation with a singleton private side).**
+Under Definition 7.1, if $D>0$ then
+
+$$
+\Delta-b\ge2-\min(a,b).                              \tag{PE.30}
+$$
+
+In particular $\Delta=b$ with $D>0$ requires $a,b\ge2$.
+Every collision with $\min(a,b)=1$, including the $D=0$ alternative,
+satisfies the stronger necessary separation
+
+$$
+\Delta\ge b+1.                                      \tag{PE.31}
+$$
+
+Proof. Add the two certificate inequalities in (PE.26) to obtain
+$K\ge b+u-Q+1+V=u+1-\varepsilon$. Its count inequality gives
+$K+1\le u+\min(a,b)$, proving (PE.30). Now suppose
+$\min(a,b)=1$ and $\Delta=b$. If $D>0$, (PE.30) is impossible.
+If $D=0$, the exact boundary in Theorem 7.2 gives $p=0,y=b$:
+all old $X$ bits on the first history are zero and all old $Y$ bits
+on the second are one. Theorem 3.1 then gives $a=b$ and $C_X=C_Y$.
+The sets must be disjoint singletons. Their original individual costs
+are distinct because $s_1<\cdots<s_n$, a contradiction. Finally
+$\Delta\ge b$ by (PE.24), so integrality yields (PE.31). No distinct
+subset-sum hypothesis is needed. $\square$
+
+## 8. Singleton private sharing for every original cost input
+
+**Theorem 8.1 (a complete modified-grid family).** Let $m\ge2$,
+$n=2m+2$, $k=m+1$ and $r\ge0$. For every original set of positions
+$A=\{s_1<\cdots<s_n\}$ in Definition 1.2, there is a preparer on
+all of $\mathcal U_*$ retaining the exact prescribed code, the literal
+original entry latches and the unchanged eight-state reader, with
+
+$$
+\begin{gathered}
+G=k(n-k+1)=(m+1)(m+2),\\
+H=G+m+6+r,\qquad
+\max_{v\in\mathcal U_*}q_P(v)=n+1,\qquad
+\max_{v\in\mathcal U_*}\ell_P(v)=3+W.                \tag{PE.32}
+\end{gathered}
+$$
+
+One actual source attains both maxima together. At a common selected
+state there are actual live cube histories with singleton private sets
+and exactly one private polarity defect. The table exceeds the original
+grid count $G+4+r$ by $m+2$ states; it supplies no strict subgrid
+example.
+
+Proof. Partition the original coordinate indices as
+
+$$
+\begin{gathered}
+I=\{1,\ldots,m\},\quad x=m+1,\quad y=m+2,\quad
+X=\{x\},\quad Y=\{y\},\\
+u_j=m+2+j\quad(1\le j\le m),\qquad
+U=\{u_1,\ldots,u_m\},\qquad t=1.
+\end{gathered}                                      \tag{PE.33}
+$$
+
+Strict individual cost order gives
+$c_1<c_x<c_y<c_{u_1}<c_{u_2}$; the last term exists since $m\ge2$.
+No constraint on subset sums is imposed.
+
+Here is the entire installed preparation table. Each selected row with
+coordinate $i$ queries the original absolute word $a_i=LLL L^{s_i}R$.
+A row with zero successor $Z$ and one successor $O$ means the four
+fixed successors
+
+$$
+(\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent})
+                  \longmapsto(Z,Z,O,Z).              \tag{PE.34}
+$$
+
+Thus alpha and absent replies are specified and charged, rather than
+removed from the domain. Install every distinct grid state
+
+$$
+R_{h,z},\qquad 0\le h\le m,\quad0\le z\le m+1,
+                      \quad(h,z)\ne(0,m+1).
+$$
+
+Except for the two overrides below, its coordinate is $h+z+1$, its
+zero successor is $L_0$ if $z=m+1$ and $R_{h,z+1}$ otherwise, and
+its one successor is $L_1$ if $h=m$ and $R_{h+1,z}$ otherwise.
+Install these overrides and new selected states:
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R_{0,m}$ | $x$ | $V$ | $R_{1,m}$ |
+| $R_{m,0}$ | $y$ | $V$ | $L_1$ |
+| $V$ | $u_1$ | $Z_2$ | $B_Y$ |
+| $Z_j$, $2\le j<m$ | $u_j$ | $Z_{j+1}$ | $J$ |
+| $Z_m$ | $u_m$ | $B_X$ | $J$ |
+| $B_X$ | $x$ | $L_0$ | $L_1$ |
+| $B_Y$ | $y$ | $J$ | $R_{2,m+1}$ |
+| $J$ | $1$ | $L_0$ | $L_1$ |
+
+For $m=2$ the intermediate $Z_j$ range is empty, and $Z_2=Z_m$
+is its single separately installed scan state. All the indicated
+indices are legal: generic coordinates are between $1$ and $n$;
+$R_{2,m+1}$ is retained and queries coordinate $m+4=u_2$.
+The only original predecessor of the omitted $R_{0,m+1}$ was the
+zero edge of $R_{0,m}$, now redirected. Every successor therefore
+names an installed state or a latch.
+
+Install two further distinct profile states, with source-independent
+start $D$:
+
+| State | Absolute word | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $L_1$ | $R_{0,0}$ | $D_4$ | $L_0$ |
+| $D_4$ | $RRR$ | $L_1$ | $L_0$ | $L_0$ | $L_0$ |
+
+The latches are literally $L_0=\widehat e_0$ and
+$L_1=\widehat e_1$. Install every one of the $r$ mandated further
+distinct latches, even though no transition needs to enter them.
+All listed grid, new selected, profile and latch states are distinct.
+In particular $J$ is a new paid state querying the same word $a_1$
+as an earlier grid state. Equal words do not identify states. Subscripts
+name installed configurations and supply no hidden runtime counter,
+phase coordinate or stored history.
+
+First prove the Boolean threshold task on every vector of selected
+branch indicators. The ordinary success/failure grid and its count are
+reused from PCA Theorem 26.1, as in Section 6. Before a modified state
+is reached, $R_{h,z}$ has exposed the first $h+z$ coordinates, with
+$h$ ones and $z$ zeros. It returns one at $m+1$ ones and zero at
+$m+2$ zeros. State $R_{0,m}$ is reached exactly after $I=0^m$;
+its query at $x$ is unchanged except that zero now enters $V$.
+State $R_{m,0}$ is reached exactly after $I=1^m$; it queries $y$
+instead of $x$. A one there already supplies the $(m+1)$st hit and
+correctly returns $L_1$. Its zero enters $V$. These are the only two
+contexts entering $V$:
+
+$$
+\mathcal A:\ I=0^m,\ x=0,\qquad
+\mathcal B:\ I=1^m,\ y=0.                           \tag{PE.35}
+$$
+
+Their residual tasks are AND on $Y\cup U$ and OR on $X\cup U$,
+respectively. Each is live and has $m+1$ unread coordinates. Their
+old coordinate $1$ is zero on $\mathcal A$ and one on $\mathcal B$.
+
+If $u_1=0$, the first context is already negative. The $Z$ scan
+reads $u_2,\ldots,u_m$ until a first one. Such a one certifies the
+second context as positive. The paid state $J$ then rereads coordinate
+$1$ and returns exactly the two required different bits. If all $U$
+bits are zero, the scan instead reaches $B_X$. In the first context
+its old $x=0$ correctly returns zero. In the second context the only
+remaining OR variable is $x$, so $B_X$ gives the correct answer.
+
+If $u_1=1$, the second context is already positive. State $B_Y$
+reads $y$. A zero certifies the first context as negative, and $J$
+again returns the correct respective bits. A one at $B_Y$ is possible
+only in the first context: the second has old $y=0$, and stationary
+native replies cannot change it. In the first context the exposed set
+is now $\{1,\ldots,m+3\}$, with two ones and $m+1$ zeros. Entry at
+$R_{2,m+1}$ thus has precisely its ordinary grid meaning. Its retained
+AND tail $R_{2,m+1},\ldots,R_{m,m+1}$ queries
+$u_2,\ldots,u_m$ and returns their conjunction. This proves the
+threshold on every selected Boolean vector. Every other route retains
+the ordinary grid interpretation up to its correct latch.
+
+Now transfer this proof to the original full domain, without making
+the cube a promise. On $Z_{b_3}$, the reply at $D$ is beta. For
+an arbitrary finite branch image $x_a$, its selected native replies
+at the $a_i$ define exactly the Boolean vector in Definition 1.2,
+including zero indicators for alpha, beta and absent. The all-address
+occurrence identity (PE.3) holds on that same source, even past a
+leaf. The all-vector argument therefore gives its exact prescribed
+threshold. Independence of those indicators on an arbitrary branch
+image is unnecessary.
+
+The eleven exhaustive actual profiles of Definition 1.1 account for
+all other sources. On $\Pi_3$, $D$ returns alpha and goes to $L_1$.
+On $Z_{b_3}$ it returns beta as above. On each of the other nine
+profiles it returns branch. Among these, $\Pi_4$ is exactly the case
+with alpha at $D_4$ and requires one. The remaining eight profiles
+$\Pi_1,\Pi_2,Z_a,Z_{b_1},Z_{b_2},Z_c,Z_{b_4},Z_*$ require zero
+and take zero entries at $D_4$. Root-absence edges are installed in
+both profile rows. This reuses the profile argument of Theorem 5.1.
+Handoff is the original literal entry, so the unchanged reader returns
+the entire complete canonical predecessor row: ordered exterior,
+occurrence holes, equality partition, all retained disequalities and
+all strict-prefix blocking guards. No inverse or profile operation
+has been added to the running table.
+
+Both original execution caps can be checked on each actual route.
+A prefix in either context (PE.35) has $m+1$ selected calls, with
+letter charge $C_I+c_x$ or $C_I+c_y$, respectively. All of the
+following charges include every later repeat.
+
+If all $U$ bits are zero, the suffix makes $m$ queries in $U$ and
+one at $B_X$. The total selected count is $2m+2=n$. Its selected
+letter charges on the two contexts are respectively
+
+$$
+C_I+2c_x+C_U=W+c_x-c_y<W,\qquad
+C_I+c_y+C_U+c_x=W.                                 \tag{PE.36}
+$$
+
+If $u_1=0$ and the first hit is $u_j$, $2\le j\le m$, the suffix
+makes $j$ queries in $U$ and one at $J$. Its total selected count
+is $m+j+2\le n$. Write $U_{\le j}=\{u_1,\ldots,u_j\}$.
+The selected letter charges are
+
+$$
+C_I+c_x+C_{U_{\le j}}+c_1\le W,\qquad
+C_I+c_y+C_{U_{\le j}}+c_1\le W,                     \tag{PE.37}
+$$
+
+because respectively $c_1<c_y$ and $c_1<c_x$ pay for the reread,
+with any unqueried $U$ costs also omitted on that same run.
+
+If $u_1=1$ and $B_Y$ returns zero, the suffix consists of
+$V,B_Y,J$. The total selected count is $m+4\le2m+2=n$. In context
+$\mathcal A$, its charge is
+
+$$
+C_I+c_x+c_{u_1}+c_y+c_1\le W,
+$$
+
+since $U\setminus\{u_1\}$ contains $u_2$ with $c_{u_2}>c_1$.
+In context $\mathcal B$, its charge is
+
+$$
+C_I+2c_y+c_{u_1}+c_1\le W.                          \tag{PE.38}
+$$
+
+For the latter inequality it suffices that
+$c_y+c_1\le c_x+C_{U\setminus\{u_1\}}$, which follows from
+$c_1<c_x$ and $c_y<c_{u_2}\le C_{U\setminus\{u_1\}}$.
+Thus the old $y$ and coordinate $1$ rereads are both fully paid.
+If $u_1=1$ and $B_Y$ returns one, only context $\mathcal A$ is
+possible. The suffix has $V,B_Y$ and at most $m-1$ retained tail
+queries. The total selected count is at most $n$, and every selected
+coordinate on that route is queried at most once, so its charge is
+at most $W$.
+
+A route avoiding $V$ has at most $n$ fresh selected queries and at
+most $W$ selected letters. This includes the modified direct positive
+certificate at $R_{m,0}$, which skips $x$ and reads $y$ once.
+Every route entering the selected table also pays $D$ once: one call
+and three letters. Hence $q_P\le n+1$ and $\ell_P\le3+W$ on each
+of these same actual sources. The other profile routes make at most
+two calls and six letters, dominated by both caps since $n\ge6$ and
+the original $c_i=s_i+4\ge5$.
+
+For simultaneous attainment take the actual cube completion
+
+$$
+I=0^m,\qquad x=0,\qquad y=1,\qquad U=1^m.
+$$
+
+It has weight $m+1=k$. Its selected route queries
+$I,x,u_1,y,u_2,\ldots,u_m$, every coordinate exactly once.
+Including $D$, this one source pays $n+1$ calls and $3+W$ letters.
+The cube gives an actual finite origin with the original disequalities,
+not just a formal indicator vector.
+
+Every actual route terminates. Ordinary grid edges advance finite
+indices; the modified prefix enters a finite scan or an immediate
+terminal test. Its only new return to the grid is $R_{2,m+1}$, whose
+finite AND tail cannot return to either modified prefix or the scan.
+Both $J$ and $B_X$ go directly to latches. The four native replies
+are fully covered by (PE.34) and the profile table. This proves
+sourcewise termination without restricting the competitor class.
+
+There are $G-1$ installed retained grid states and
+$1+(m-1)+1+1+1=m+3$ new selected states. Consequently the complete
+selected count is $G+m+2$. Adding the two profile states, both original
+entry latches and all $r$ further mandated distinct latches gives
+$H=G+m+6+r$. Unused retained states remain counted. The common
+continuation uses its $m+3$ new states and the $m-1$ retained AND-tail
+states, totaling $2m+2$, the same number as two separate chains on
+$m+1$ variables. Legal sharing here does not itself save states.
+
+Finally the histories (PE.35) are actual live cube histories at $V$,
+with $h=0,g=m,a=b=1,u=m$. Their residuals are nonconstant and every
+completion is actual. The old $X$ zero satisfies the first polarity
+hypothesis of Theorem 3.1, with its correct consequence $c_x<c_y$;
+the old $Y$ zero violates its second polarity hypothesis. Only one
+defect is present. Since only strict individual cost order was used,
+the construction also applies to every original input having distinct
+subset sums. $\square$
+
+**Corollary 8.2 (the six-coordinate boundary specialization).** For
+$m=2$, Theorem 8.1 gives $n=6,k=3$ and $H=20+r$, whereas the
+original grid has $16+r$ states. Its shared live histories attain
+$\Delta=b+1$ in (PE.31).
+
+Proof. Here $I=\{1,2\}$, $x=3$, $y=4$ and $U=\{5,6\}$.
+The retained grid has $(2+1)(2+2)-1=11$ selected states. The five
+new selected states are $V(a_5),Z_2(a_6),B_X(a_3),B_Y(a_4),J(a_1)$.
+The one edge at $B_Y$ enters the retained $R_{2,3}(a_6)$, whose
+zero and one successors are $L_0,L_1$. The total is therefore
+$11+5+2+2+r=20+r$, compared with $12+4+r=16+r$ for the grid.
+The simultaneous-attainment route is $1,2,3,5,4,6$ after $D$.
+At $V$ the hits are $h=0,g=2$, and $a=b=1,u=2$, so
+$\Delta=2=b+1$. These are symbolic substitutions in Theorem 8.1,
+not an executed instance or an optimum assertion. $\square$
+
+## 9. The remaining whole-table comparison
+
+**Proposition 9.1 (local discrimination and the missing global charge).**
+Theorems 7.2 and 8.1 leave the original universal grid-optimum problem
+unresolved. More precisely, choose the $G=k(n-k+1)$ actual live
+$(h,z)$ witnesses of Theorem 4.2, let $\mathcal W$ be their image
+in the original selected-state alphabet, put $N=|\mathcal W|$, and
+let $M$ count all installed selected states. A sufficient missing
+whole-table implication is
+
+$$
+M-N\ge G-N,                                         \tag{PE.39}
+$$
+
+or, concretely, a charge assigning at least $G-N$ distinct installed
+selected states outside the entire image $\mathcal W$ to the lost
+witness multiplicities. It must account for both $D=0$ and $D>0$
+collisions. Neither the local discriminator nor the local continuation
+count in Theorem 7.2 supplies this implication.
+
+Proof. The $G$ witnesses exist by Theorem 4.2. A collision loses one
+or more multiplicities when those witnesses are mapped into their
+$N$ distinct selected states. If the stated charge were available,
+(PE.39) would give $M\ge G$. The independently forced two
+nonselected running states, two original entry latches and $r$
+mandated latches in (PE.13) would then give $H\ge G+4+r$.
+The original grid attains that count under the original caps, but
+the required charge is not established here.
+
+Theorem 7.2 distinguishes the paid discriminator from only its two
+incoming state histories. The state may belong to $\mathcal W$ as
+the endpoint of a different live witness, or the same state may serve
+several collisions. Likewise the local $a+b+u+1$ continuation sets
+can overlap one another and $\mathcal W$. They cannot be summed
+as disjoint charges. The $D=0$ balanced-tight case has no interval
+(PE.25) at all, and distinct individual costs exclude it only when a
+private side is a singleton, not for all larger private sets.
+Thus even the existence of a paid common-coordinate reread in every
+$D>0$ pair does not produce a global multiplicity charge.
+
+Theorem 8.1 also rules out closing this gap merely by prohibiting all
+singleton-private sharing, all polarity defects, or every such collision
+at $k=3$. Its complete table obeys the full original contract. However,
+it has $H=(G+4+r)+(m+2)>G+4+r$, so it neither refutes grid
+optimality nor proves its own added states necessary.
+
+An alternative completion would be a faithful whole-table comparison
+or a cardinality-preserving normalization. Such a bridge must preserve
+the entire original domain, all words and legal source paths, the
+literal handoff, sourcewise termination and both paid caps. A unique
+level or semantic residual per installed state is not established.
+Union paths need not be actual paths on one source. Unfolding or
+leveling with additional copies, or imposing increasing order, cannot
+be used as a count-preserving bridge without proof. The restricted
+literature results discussed in Proposition 6.1 therefore do not close
+(PE.39). The general $H_{\mathrm{exec}}(A,k;r)$, unrestricted
+$H_{\min}(A,k;r)$ and the separate full-$N$ unequal-tail target remain
+unresolved. No overall completion follows. $\square$
+
+The extra content is the exact paired-completion interval, the paid
+common-coordinate discriminator after both certificates, the joint
+same-continuation count and letter inequalities, singleton separation,
+and the complete singleton-private family for every original ordered
+cost input. Theorem 3.1 supplies (PE.6), the all-weight nonselected
+charge and the two polarity implications; Lemma 4.1 and Theorem 4.2
+supply the collision exclusions and installed-state witnesses.
+Theorem 5.1 and Proposition 5.2 already establish mixed sharing and
+its compatibility with distinct subset sums for other families. Their
+profile gate and paid old-coordinate recovery are reused; mixed
+sharing in general is not an additional discovery here.
+
+The actual inverse, complete rows, profiles, occurrence identity,
+simultaneous cube, live saturation, interval exclusion, unchanged reader
+and classical threshold grid are used only at the explicitly stated
+supplier scopes in Sections 1–2 and 6. Their nested source bodies are
+not additional premises silently imported here. Threshold certificates,
+deterministic indistinguishability and stationary cycling on a fixed
+source are mature tools. The deductions above are ordinary proofs
+relative to these credited premises, not kernel certificates or claims
+of worldwide originality. No external novelty search is asserted.
+
+All supplied services and separate prices of Assumption 1.4 remain
+required. The results prove no acquisition, authentication, export,
+isolation, initialization, handoff-storage or physical-resource service.
+In particular $H,q_P,\ell_P$ yield no total physical cost conclusion,
+no general neural-network theorem and no empirical machine-learning
+claim. The original optimum and the remaining global charge are not
+replaced by the larger constructed table.
+
+## 追加锚（本行以下为增补区）
