@@ -1757,3 +1757,1154 @@ specified cover, threshold shift, covariance, density, clock and source;
 the physical and operation boundaries in §46 remain part of its statement.
 
 ## 追加锚（本行以下为增补区）
+
+## 48. Ground-height response in the original domains
+
+**Definition 48.1 (source, compression and stationary law).** Retain all
+of Definition 35.1, including the fixed two-sided interval $\mathcal K$,
+the original clock and both absorbing faces. Write $d=u-l$,
+$\gamma=3\lambda$, $J=\int_I\phi(k)dk$, and
+$\pi(dk)=\phi(k)^2dk$. References G, N, F and C retain their meanings
+in §35; write Q for
+[Quantitative native long-time phase paths and terminal heights](FIB_NATIVE_LONG_TIME_PHASE_QUANTITATIVE_BOUNDS.md).
+Write O for
+[Native observation quotient, hidden Green harmonics and attractive response](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md).
+Its attractive compression and restricted-source conclusions retain their
+separate hypotheses; no attractive potential is inserted here.
+The native statements used here are those at the immutable revision
+[`8f6e990562ff8d80f0e8a1715512cf18791a101d`](https://github.com/the-omega-institute/trureturing/tree/8f6e990562ff8d80f0e8a1715512cf18791a101d/docs/develop/theory):
+G Definition 25.1, N's native constant relation, F Proposition 5.1,
+this volume §§35–47, and Q §§41–46. In particular, the previous Green
+appendix and the Q endpoint upper estimate are premises, not additional
+conclusions of the present construction.
+
+Here are the actual operator conventions. On $L^2(I,dk)$ put
+
+$$
+\begin{aligned}
+H_I&=-\varepsilon^2\partial_k^2,
+& D(H_I)&=H^2(I)\cap H_0^1(I),\\
+A&=H_I-\lambda,
+& P&=|\phi\rangle\langle\phi|,\qquad P^\perp=1-P,\\
+v_{\kappa,\eta}(k)&=(\eta\cdot c_\kappa(k))^2,
+& T_{\kappa,\eta}&=A+v_{\kappa,\eta}.
+\end{aligned}
+\tag{48.1}
+$$
+
+Every real frequency $\eta\in\mathbb R^3$ has the same Dirichlet
+operator domain $D(H_I)$ and form domain $H_0^1(I)$; its potential is
+bounded for that frequency. The full killed operator $L_\kappa$ on
+$L^2(I\times\mathbb R^3,dk\,dq)$ is the Friedrichs operator of
+(35.1). More explicitly, its Fourier-side form domain consists of the
+functions with $\widehat f(\eta)\in H_0^1(I)$ almost everywhere and
+
+$$
+\int_{\mathbb R^3}\int_I
+ \left(\varepsilon^2|\partial_k\widehat f|^2+
+ v_{\kappa,\eta}|\widehat f|^2\right)dk\,d\eta<\infty.
+\tag{48.2}
+$$
+
+Its operator domain consists of $\widehat f(\eta)\in D(H_I)$ almost
+everywhere with
+$\int\|(H_I+v_{\kappa,\eta})\widehat f(\eta)\|_2^2d\eta<\infty$.
+Fourier Plancherel constants are understood as in (36.5).
+These are direct-integral domains, not isotropic four-dimensional
+Sobolev assertions. Define the isometry
+$\mathcal J h(k,q)=\phi(k)h(q)$ and the bounded compression
+
+$$
+\begin{aligned}
+C_\kappa(t)&=\mathcal J^*e^{-t(L_\kappa-\lambda)}\mathcal J,\\
+u_\kappa(t,\eta)&=\langle\phi,e^{-tT_{\kappa,\eta}}\phi\rangle,\\
+\mathfrak m_\kappa(t,r)&=
+ e^{\lambda t}\int_{I^2}\phi(k)g_\kappa^I(t;k,k';r)
+                      \phi(k')dk\,dk'.
+\end{aligned}
+\tag{48.3}
+$$
+
+Thus $C_\kappa(t)$ is convolution by the probability measure
+$\mathfrak m_\kappa(t,dr)$ and has multiplier $u_\kappa(t,\eta)$.
+At $t=0$ that measure is $\delta_0$; positive-time densities in (48.3)
+are taken in raw $dr$. No hidden circle has been averaged.
+
+The generic Schur/Feshbach elimination used below is credited to
+Dusson–Sigal–Stamm,
+[*The Feshbach–Schur map and perturbation theory*, arXiv:2105.02058v1,
+Theorem 1.2](https://arxiv.org/html/2105.02058v1).
+The distinction between projected and orthogonal evolution is also
+standard in Gouasmi–Parish–Duraisamy,
+[*A priori estimation of memory effects in coarse-grained nonlinear
+systems using the Mori–Zwanzig formalism*, arXiv:1611.06277v2](https://arxiv.org/html/1611.06277v2).
+Here the bounded potential on each fixed original Dirichlet domain
+allows an explicit construction; an unbounded global block matrix is
+not an additional premise.
+
+**Theorem 48.2 (exact raw-source, killed and Q correspondence).** For
+all $t\ge0$ and real $\eta$, (48.3) is exactly the characteristic
+function and endpoint law of $q_t-q_0$ under the Q-process initialized
+with height $K_0\sim\pi$. In particular it is stationary in height,
+although the real phases themselves have no invariant probability.
+The unshifted ground-height response is $e^{-\lambda t}\mathfrak m_\kappa(t)$.
+For an integrable phase source $\rho$, the original raw source
+$\sigma(k,q)=\phi(k)\rho(q)$ has total charge $J\int\rho$, and
+
+$$
+\int_I\phi(k')\big(e^{-tL_\kappa}\sigma\big)(k',q')dk'
+ =e^{-\lambda t}(\mathfrak m_\kappa(t)*\rho)(q').
+\tag{48.4}
+$$
+
+Its ground-height readout has total mass $e^{-\lambda t}\int\rho$;
+this is different from the total raw charge of the source.
+
+More generally, for nonnegative height weights $a,b$, the exact
+identity, whenever the integrals are finite, is
+
+$$
+\begin{aligned}
+&e^{\lambda t}\int_{I^2}a(k)g_\kappa^I(t;k,k';r)b(k')dk\,dk'\,dr\\
+&\quad=
+\mathbb E_\pi^Q\left[
+ \frac{a(K_0)}{\phi(K_0)}\frac{b(K_t)}{\phi(K_t)}
+ \mathbf1_{\{q_t-q_0\in dr\}}\right].
+\end{aligned}
+\tag{48.5}
+$$
+
+Signed weights follow by absolute integrability. In particular, a fixed
+initial height has the raw point-source identity
+
+$$
+e^{\lambda t}\int_I g_\kappa^I(t;k_0,k';r)dk'\,dr
+ =\phi(k_0)\mathbb E_{k_0}^Q\left[
+ \phi(K_t)^{-1}\mathbf1_{\{q_t-q_0\in dr\}}\right].
+\tag{48.6}
+$$
+
+The original killed total mass here is $S_{k_0}(t)$, not one.
+Normalization by that survival probability gives the terminal-survivor
+law of §37, not (48.3). Even starting the killed height from the
+normalized source $\phi/J$ gives instead the terminal-survivor multiplier
+
+$$
+\frac1J\langle\phi,e^{-tT_{\kappa,\eta}}1\rangle;
+\tag{48.7}
+$$
+
+its survival probability is exactly $e^{-\lambda t}$. These source and
+terminal weights cannot be discarded.
+
+For $\kappa\ne0$, put $J_\kappa=\operatorname{diag}(1,1,\kappa)$ as in
+§39. The original lifted compressed density is
+$|\kappa|^{-1}\mathfrak m_\kappa(t,J_\kappa^{-1}y)$ in raw $dy$.
+On the actual three phase circles, all of period $2\pi$, its Fourier
+coefficients are exactly
+
+$$
+u_\kappa(t,(n,m,\kappa j)),\qquad (n,m,j)\in\mathbb Z^3.
+\tag{48.8}
+$$
+
+The corresponding Fourier series uses $(2\pi)^{-3}$ in raw angular
+measure; the unshifted version has the additional $e^{-\lambda t}$.
+At the actual zero leaf use only the two moving phases, restrict to
+$\eta=(\eta_1,\eta_2,0)$, and attach $\delta_{D_0}(dD')$.
+This is different from keeping the resolved three-phase zero cover.
+
+Proof. The raw Q transition density in (37.2) is
+$e^{\lambda t}\phi(k')g_\kappa^I(t;k,k';r)/\phi(k)$.
+Multiplying by $\pi(dk)$ gives exactly the integrand in (48.3).
+Conservativity proves its mass one, and Fourier transformation gives
+$u_\kappa$. This also constructs the bounded convolution operator,
+without a pointwise Fourier assertion at $t=0$.
+The direct-integral identification and domains are (36.5) and its
+closed-form construction: bounded multiplication changes neither scalar
+Dirichlet domain, and the direct-integral operator domain has precisely
+the displayed squared-integrability condition. Positivity and Tonelli
+prove (48.4)–(48.6), first for nonnegative sources and then by subtraction.
+The normalized initial density $\phi/J$ evolves in height as
+$e^{-\lambda t}\phi/J$; hence its survival mass and the two endpoint
+weights give (48.7). At frequency zero it equals one, as required.
+The absolute Jacobian and signed dual-frequency map are exactly (39.1).
+Wrapping tests against the integer characters proves (48.8), with no
+change of source or clock. The actual zero-leaf assertion follows from
+$dD_t=0$ and Theorem 39.2. $\square$
+
+## 49. Exact native height-return memory
+
+**Theorem 49.1 (all-frequency complement, memory and self-energy).** For
+fixed real $\eta$ abbreviate $v=v_{\kappa,\eta}$ and set
+
+$$
+\begin{aligned}
+a&=\int_I v\,d\pi=\eta^{\mathsf T}M_\kappa\eta,\\
+w&=(v-a)\phi\in\phi^\perp,\\
+B&=A|_{\phi^\perp}+P^\perp vP^\perp,
+& D(B)&=D(H_I)\cap\phi^\perp,\\
+K_\kappa(t,\eta)&=\langle w,e^{-tB}w\rangle,
+& \Sigma_\kappa(z,\eta)&=\langle w,(z+B)^{-1}w\rangle.
+\end{aligned}
+\tag{49.1}
+$$
+
+The complement form domain is $H_0^1(I)\cap\phi^\perp$.
+The operator $B$ is selfadjoint on that domain and
+
+$$
+B\ge\gamma+\min_{\overline I}v\ge\gamma,
+\qquad
+0\le K_\kappa(t,\eta)\le C|\eta|^4e^{-\gamma t}.
+\tag{49.2}
+$$
+
+All constants are independent of $\kappa\in\mathcal K$, of its sign,
+and of time; the displayed frequency factor is explicit. The exact
+scalar response satisfies
+
+$$
+\partial_t u_\kappa(t,\eta)
+ =-a u_\kappa(t,\eta)
+   +\int_0^t K_\kappa(t-s,\eta)u_\kappa(s,\eta)ds,
+\qquad u_\kappa(0,\eta)=1.
+\tag{49.3}
+$$
+
+For every complex $z$ with $\operatorname{Re}z>0$,
+
+$$
+\begin{aligned}
+\widetilde u_\kappa(z,\eta)
+ &=\int_0^\infty e^{-zt}u_\kappa(t,\eta)dt
+   =\frac1{z+a-\Sigma_\kappa(z,\eta)},\\
+\Sigma_\kappa(z,\eta)
+ &=\int_0^\infty e^{-zt}K_\kappa(t,\eta)dt,
+& |\Sigma_\kappa(z,\eta)|&\le
+ \frac{C|\eta|^4}{\gamma+\operatorname{Re}z}.
+\end{aligned}
+\tag{49.4}
+$$
+
+The self-energy itself is well defined on $\operatorname{Re}z> -\gamma$.
+The first equality is asserted on $\operatorname{Re}z>0$, and also
+at $z=0$ for $\eta\ne0$. At that real endpoint
+$a-\Sigma_\kappa(0,\eta)>0$. At $\eta=0$, $u=1$, $K=\Sigma=0$,
+and $\widetilde u(z,0)=1/z$; its zero-frequency threshold pole is
+not removed. The original unshifted multiplier
+$u^{\rm kill}(t,\eta)=e^{-\lambda t}u(t,\eta)$ therefore obeys
+
+$$
+\begin{aligned}
+\partial_tu^{\rm kill}(t,\eta)
+ &=-(\lambda+a)u^{\rm kill}(t,\eta)
+   +\int_0^t e^{-\lambda(t-s)}K_\kappa(t-s,\eta)
+                    u^{\rm kill}(s,\eta)ds,\\
+\widetilde u^{\rm kill}(z,\eta)
+ &=\frac1{z+\lambda+a-\Sigma_\kappa(z+\lambda,\eta)},
+ \qquad\operatorname{Re}z>-\lambda.
+\end{aligned}
+\tag{49.4a}
+$$
+
+Thus the threshold shift changes both the instantaneous term and the
+time weight of the return kernel. Uniformly for every real frequency
+and $t\ge0$,
+
+$$
+e^{-at}\le u_\kappa(t,\eta)\le
+ \exp[-c t\Psi(|\eta|)]\le1,
+\qquad
+\Psi(r)=\begin{cases}r^2,&r\le1,\\r^{2/3},&r\ge1.
+\end{cases}
+\tag{49.5}
+$$
+
+The lower constant in the exponent is the native all-real-frequency
+coercivity supplier of G (26.12), as used in (36.6).
+
+Proof. The sine spectrum of $A$ is $(n^2-1)\lambda$, $n\ge1$.
+The complement therefore starts at $\gamma=3\lambda$.
+Since $P$ preserves the scalar Dirichlet operator and form domains,
+restriction of $A$ to $\phi^\perp$ has exactly the stated domains.
+The complementary multiplication is a bounded selfadjoint perturbation
+for fixed $\eta$, proving the domain and lower bounds. Moreover
+$\|w\|_2^2=\operatorname{Var}_\pi(v)\le C|\eta|^4$ uniformly.
+The spectral theorem proves (49.2) and the resolvent estimates.
+
+Decompose the actual scalar-domain solution as
+$e^{-tT_{\kappa,\eta}}\phi=u(t)\phi+h(t)$ with $h(t)\perp\phi$.
+Its two equations are
+$u'=-au-\langle w,h\rangle$ and $h'=-Bh-wu$, with $h(0)=0$.
+Variation of constants in the complementary Hilbert space yields
+$h(t)=-\int_0^t e^{-(t-s)B}wu(s)ds$ and hence (49.3).
+This argument is legitimate for a generator plus a bounded off-diagonal
+coupling on $\mathbb C\oplus\phi^\perp$; it can equivalently be read
+as a mild-solution calculation. It does not assert that the full
+unbounded-frequency projection preserves $D(L_\kappa)$.
+
+For $\operatorname{Re}z>0$, $z+T_{\kappa,\eta}$ is invertible because
+$T_{\kappa,\eta}\ge0$. Solving its two domain equations gives the
+first line of (49.4); in particular its denominator cannot vanish.
+The exponential bound on $K$ justifies the Laplace convolution and
+the second line by absolute integration. For $\eta\ne0$, the native
+coercivity bound gives $T_{\kappa,\eta}\ge c\Psi(|\eta|)>0$, so the
+same equations work at $z=0$. Its compressed inverse is positive,
+which gives the strict positive denominator there.
+Finally the scalar spectral measure of $T_{\kappa,\eta}$ in $\phi$
+is a probability with mean $a$. Jensen's inequality gives the lower
+bound in (49.5), and the spectral bottom gives its upper bound.
+All inputs are on the same fixed interval and compact two-sided
+coefficient family, proving the declared uniformity. $\square$
+
+**Proposition 49.2 (the finite-frequency return uses tilted dynamics).**
+The kernel in (49.1) is identically zero precisely when $v$ is
+constant. Otherwise $K_\kappa(t,\eta)>0$ for every finite $t\ge0$.
+It cannot be replaced by the untilted height covariance at a general
+finite frequency. For example, with $v=(\eta\cdot c_\kappa)^2$ and
+$w=(v-a)\phi$, the derivative difference at zero is
+
+$$
+\left.\frac d{dt}\right|_{t=0}
+\left[\langle w,e^{-tB}w\rangle-
+      \langle w,e^{-tA|_{\phi^\perp}}w\rangle\right]
+ =-\int_I v(v-a)^2\,d\pi<0
+\tag{49.6}
+$$
+
+whenever $v$ is nonconstant. Other initial height vectors also add a
+source term: if the initial vector is $u_0\phi+h_0$ with
+$h_0\perp\phi$, (49.3) has the additional forcing
+$-\langle w,e^{-tB}h_0\rangle$ and initial value $u_0$.
+
+Proof. The spectral measure in $w$ of $B$ is nonnegative and has
+strictly positive Laplace transform unless $w=0$. Smoothness of $v$
+and its boundary-vanishing product with $\phi$ put $w$ in $D(H_I)$,
+so both derivatives in (49.6) exist. Their difference is
+$-\langle w,P^\perp vP^\perp w\rangle$, the displayed integral.
+If this integral were zero, continuity would force $v(v-a)^2=0$
+on $I$. A nonconstant nonnegative continuous $v$ takes an interval
+of values, contradicting that identity. This supplies an original-model
+falsifier of untilted finite-frequency replacement. The same variation
+of constants with $h(0)=h_0$ gives the forcing term. $\square$
+
+## 50. Exhaustive autonomous directions and actual characters
+
+**Theorem 50.1 (native converse and all linear projections).** On the
+resolved three-phase cover, for each $\kappa\in\mathcal K$ the entire
+set of frequencies whose compressed response has a semigroup law is
+
+$$
+\mathcal A_\kappa
+ =\{t(2,-2,\kappa):t\in\mathbb R\}.
+\tag{50.1}
+$$
+
+For such a frequency $u_\kappa(s,\eta)=e^{-t^2s}$, and the memory
+kernel vanishes. Every other frequency has nonzero return memory and
+$u_\kappa(2s,\eta)>u_\kappa(s,\eta)^2$ for all $s>0$.
+
+For any real matrix $R$ defining the linear phase projection $Rq$,
+its complete stationary-height compressed transition family is a
+convolution semigroup if and only if every row of $R$ lies in
+$\mathcal A_\kappa$. Thus its nonconstant autonomous part has rank
+at most one. More strongly, that part of the actual Q path is
+Brownian and independent of the complete height path. The autonomous
+coordinate is the already owned native relation
+$2\theta-2v+\kappa x$, not a newly discovered control.
+
+On the original three-torus for $\kappa\ne0$, the exhaustive integer
+character lattice is
+
+$$
+(n,m,j)=j(2,-2,1),\qquad j\in\mathbb Z.
+\tag{50.2}
+$$
+
+Its primitive character is $\exp i(2\theta-2v+D)$ and its circle
+heat generator is $\partial_\alpha^2$ for
+$\alpha=[2\theta-2v+D]$ of period $2\pi$. This holds for both signs
+of $\kappa$, with no absolute value in the dual-frequency map.
+
+On the genuine zero leaf $D=D_0$, the moving real autonomous line is
+$\mathbb R(1,-1)$ and its entire integer character lattice is
+$\mathbb Z(1,-1)$. The primitive circle is
+$\beta=[\theta-v]$, again of period $2\pi$, with heat generator
+$\tfrac14\partial_\beta^2$. In the original three coordinates one
+may also include any multiple of the frozen $D$: these projections
+have a deterministic constant component. In particular the pure $D$
+projection is error free and has zero diffusion. The restriction of
+(50.2) to this leaf gives only the even sublattice of the primitive
+moving character, multiplied by the constant $e^{ijD_0}$. Equivalently,
+among restrictions of original three-torus characters the complete
+zero-leaf set is $(n,-n,j)$ with arbitrary integers $n,j$; among real
+linear projections in $(\theta,v,D)$ each row has first two entries
+opposite and an arbitrary third entry.
+
+Proof. The selfadjoint compression defect is the identity of F
+Proposition 5.1, here on the scalar fibre:
+
+$$
+u(2s,\eta)-u(s,\eta)^2
+ =\|P^\perp e^{-sT_{\kappa,\eta}}\phi\|_2^2.
+\tag{50.3}
+$$
+
+If it is zero for one $s>0$, the spectral probability of
+$T_{\kappa,\eta}$ in $\phi$ has zero variance under the strictly
+injective function $x\mapsto e^{-sx}$. It is supported at one point.
+Thus $\phi$ is an eigenvector of $T_{\kappa,\eta}$, which says
+$v\phi=a\phi$. Conversely a constant $v$ makes $\phi$ an eigenvector
+and gives the exponential law. Since $I$ is connected,
+$(\eta\cdot c_\kappa)^2$ is constant if and only if
+$\eta\cdot c_\kappa$ is constant; a continuous function with a
+nonzero constant square cannot switch sign. The zero-square case
+is included.
+
+To establish the exhaustive native converse, put $\eta=(p,q,r)$,
+$s_\kappa=H+\kappa$, $\alpha_\kappa=\kappa+\kappa^2/H$.
+The original rational formula is exactly
+
+$$
+2H(k-\alpha_\kappa)(\eta\cdot c_\kappa)
+ =-(p+q)k^2+
+ [p(s_\kappa+2\kappa)+2\kappa q-2r]k
+ +2s_\kappa(r-\kappa p).
+\tag{50.4}
+$$
+
+For this to be a constant times $2H(k-\alpha_\kappa)$, its quadratic
+coefficient must vanish, so $q=-p$. Matching the remaining two
+coefficients gives
+
+$$
+\frac{(H-\kappa)s_\kappa}{H}(2r-\kappa p)=0.
+\tag{50.5}
+$$
+
+The prefactor is nonzero throughout the chosen small family. Therefore
+$r=\kappa p/2$ and the constant is $p/2$. Conversely the inherited
+identity $2A_\kappa-2B_\kappa+\kappa b_\kappa=1$ realizes every one
+of these solutions. This proves (50.1), including zero and both signs,
+and the strict defect follows from (50.3).
+
+For a projected convolution semigroup every real projected Fourier
+frequency $\xi$ must have an exponential multiplier at $R^{\mathsf T}\xi$.
+The scalar converse says precisely
+$\operatorname{Ran}R^{\mathsf T}\subset\mathcal A_\kappa$.
+Conversely, if the rows are $t_i(2,-2,\kappa)$, their path increments
+are $\sqrt2(t_i)_iW_t^2$ directly from (35.2) and (37.8).
+The phase Brownian driver is independent of height, proving also the
+path assertion. No covariance-matching inference is used.
+
+An original torus character has resolved frequency $(n,m,\kappa j)$,
+not $(n,m,j)$. For $\kappa\ne0$, (50.1) forces $t=j$, yielding
+(50.2). The integer vector $(2,-2,1)$ is primitive, so its character
+has the full original $2\pi$ circle. Its coefficient is one.
+At zero the moving coefficients are
+$A_0=(H-k)/(2H)$ and $B_0=-k/(2H)$, and a moving combination is
+constant exactly when its two coefficients sum to zero. Its primitive
+integer vector is $(1,-1)$ and $A_0-B_0=1/2$, proving the claimed
+circle generator and all frozen-coordinate assertions.
+The resolved zero cover still has the moving coefficient $b_0$ in
+its $x$ direction; it is governed by (50.1), not by adjoining a frozen
+$D$ to that three-phase process. $\square$
+
+## 51. The native quartic coefficient, finite-time cumulants and band
+
+**Definition 51.1 (explicit native coefficient).** Let $\mathcal L$ be
+the positive height Q operator on $L^2(\pi)$, unitarily equivalent to
+$A$ under $f\mapsto\phi f$. Thus
+
+$$
+\mathcal L f=-\frac{\varepsilon^2}{\phi^2}(\phi^2f')',\qquad
+D(\mathcal L)=\{f:\phi f\in H^2(I)\cap H_0^1(I)\}.
+\tag{51.1}
+$$
+
+Use this unitary domain, not a new reflecting boundary for the original
+killed process. On centered functions its inverse
+$\mathcal R=(\mathcal L|_{1^\perp})^{-1}$ has norm at most $1/\gamma$.
+For every real vector $e$ set
+
+$$
+\begin{aligned}
+a_e(k)&=
+\frac{(k-2\kappa)[e_1(s_\kappa-k)-e_2 k]
+                   +2e_3(s_\kappa-k)}{2H(k-\alpha_\kappa)},\\
+m_e&=\int_I a_e^2\,d\pi,
+& f_e&=a_e^2-m_e,\\
+F_e(k)&=\int_l^k \phi(y)^2f_e(y)dy,
+& \mathcal B_\kappa(e)&=
+ \frac1{\varepsilon^2}\int_l^u\frac{F_e(k)^2}{\phi(k)^2}dk.
+\end{aligned}
+\tag{51.2}
+$$
+
+This is an explicit scalar quadrature in the original rational
+coefficients and the fixed sine weight, with no unknown corrector.
+It is homogeneous of degree four in $e$. Generic diffusivity-covariance,
+inverse-generator and quadrature formulas, and formal Gaussian
+corrections, are already present in Alexandre et al.,
+[*Non-Gaussian diffusion near surfaces*, arXiv:2207.01880v3,
+Supplement S1–S16 and S25–S39](https://arxiv.org/html/2207.01880v3).
+Their transverse equilibrium model is a comparison, not an identification
+of its boundary law with the original two-Dirichlet source. The native
+coefficient, exhaustive vanishing set and uniform estimates below use
+precisely (51.1)–(51.2).
+
+**Theorem 51.2 (sign, exact zero set and finite-time fourth cumulant).**
+For all $\kappa\in\mathcal K$ and $e\in\mathbb R^3$,
+
+$$
+\begin{aligned}
+\mathcal B_\kappa(e)
+ &=\langle f_e,\mathcal R f_e\rangle_\pi
+  =\int_0^\infty\langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds\\
+ &=\sum_{n\ge2}
+ \frac{\left(\int_I\phi_n(k)\phi(k)a_e(k)^2dk\right)^2}
+      {(n^2-1)\lambda}\ \ge0,\\
+\mathcal B_\kappa(e)=0
+ &\quad\Longleftrightarrow\quad e\in\mathcal A_\kappa.
+\end{aligned}
+\tag{51.3}
+$$
+
+In particular $e=(0,0,1)$ gives a strictly positive native coefficient
+uniformly bounded away from zero on $\mathcal K$.
+For $Y_t=e\cdot(q_t-q_0)$ under the stationary-height Q law, all odd
+cumulants vanish, and its second and fourth cumulants are exactly
+
+$$
+\begin{aligned}
+\operatorname{cum}_2(Y_t)&=2m_e t,\\
+\operatorname{cum}_4(Y_t)
+ &=24\int_0^t(t-s)\langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds\\
+ &=24\left[t\mathcal B_\kappa(e)
+ -\langle f_e,\mathcal R^2(1-e^{-t\mathcal L})f_e\rangle_\pi\right].
+\end{aligned}
+\tag{51.4}
+$$
+
+For $t>0$ the fourth cumulant is strictly positive exactly off the
+autonomous line. At a fixed finite time the general cumulant law is
+
+$$
+\operatorname{cum}_{2n}(Y_t)
+ =\frac{(2n)!}{n!}\operatorname{cum}_n
+       \left(\int_0^t a_e(K_s)^2ds\right),\qquad n\ge1.
+\tag{51.5}
+$$
+
+It is an identity of derivatives at zero, not a globally convergent
+logarithm at all complex frequencies.
+
+Proof. Centering gives $F_e(l)=F_e(u)=0$. Near either face $\phi^2$
+is comparable to the squared distance and $F_e$ is of order at least
+the cubed distance. Define $h'$ by
+$h'=-F_e/(\varepsilon^2\phi^2)$, and choose the additive constant
+so that $\pi(h)=0$. This gives a bounded smooth-interior corrector
+with derivative tending to zero at both faces. The identity
+$-\varepsilon^2(\phi^2h')'=\phi^2f_e$ and integration by parts,
+or its unitary Dirichlet formulation, put $h$ in $D(\mathcal L)$
+and give $h=\mathcal R f_e$. Its energy is precisely the last
+integral in (51.2). The height spectral decomposition gives the other
+expressions in (51.3); all sums and integrals converge by the gap.
+The inverse is strictly positive on the centered subspace, so its
+quadratic form is zero exactly when $f_e=0$. Theorem 50.1 classifies
+that condition completely. The coefficient $b_\kappa$ is positive
+and strictly decreasing on the fixed interval by G (12.9), hence its
+square is nonconstant. Continuity and compactness give the asserted
+strict uniform positivity for $e=(0,0,1)$.
+
+Conditional on the complete height history, $Y_t$ is a centered
+Gaussian of variance $2S_t$, where $S_t=\int_0^t a_e(K_s)^2ds$.
+Since $S_t$ is bounded at fixed $t$, its exponential moments exist
+near zero and
+$\mathbb E e^{rY_t}=\mathbb E e^{r^2S_t}$ there. Comparing derivatives
+of their logarithms proves (51.5). In particular
+$\operatorname{cum}_4(Y_t)=12\operatorname{Var}(S_t)$.
+Stationarity and reversibility give
+$\operatorname{Var}(S_t)=2\int_0^t(t-s)
+\langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds$.
+Integrating each positive spectral term proves (51.4) and its strict
+sign. The same positive spectrum shows why there is no cancellation
+of a nonzero quartic coefficient in a nonautonomous direction. $\square$
+
+**Theorem 51.3 (controlled band and memory correspondence).** There are
+$r_0>0$ and $C<\infty$, independent of $\kappa$ and of the unit vector
+$e$, such that for $|r|\le r_0$ the original lowest Dirichlet band obeys
+
+$$
+\Lambda_\kappa(re)
+ =\lambda+m_e r^2-\mathcal B_\kappa(e)r^4+E_\kappa(r,e),
+\qquad |E_\kappa(r,e)|\le C\mathcal B_\kappa(e)|r|^6.
+\tag{51.6}
+$$
+
+The quartic band coefficient is negative, with the exact vanishing
+set (50.1). In contrast, its contribution to the logarithm of the
+phase characteristic function is positive. More explicitly, at fixed
+$t$,
+
+$$
+\log u_\kappa(t,re)
+ =-m_e t r^2+r^4\int_0^t(t-s)
+       \langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds+O_t(r^6).
+\tag{51.7}
+$$
+
+At leading small frequency the exact memory satisfies
+
+$$
+\begin{aligned}
+K_\kappa(t,re)
+ &=r^4\langle f_e,e^{-t\mathcal L}f_e\rangle_\pi
+   +O(\mathcal B_\kappa(e)|r|^6t e^{-\gamma t}),\\
+\Sigma_\kappa(0,re)
+ &=r^4\mathcal B_\kappa(e)+O(\mathcal B_\kappa(e)|r|^6).
+\end{aligned}
+\tag{51.8}
+$$
+
+These are controlled small-frequency statements. If
+$\mathcal B_\kappa(e)>0$, globally exponentiating the band polynomial
+would give $\exp[-t(m_er^2-\mathcal B_\kappa(e)r^4)]>1$ for large
+$|r|$, contradicting (49.5). It is therefore not a characteristic
+semigroup generator for the original model.
+
+Proof. A uniform estimate needed here also controls the degeneracies.
+Every $f_e$ has the form
+$p(k)/(k-\alpha_\kappa)^2$ with $p$ of degree at most four and
+$\pi(f_e)=0$. On this finite-dimensional family,
+
+$$
+\|f\|_\infty^2\le C\langle f,\mathcal R f\rangle_\pi
+\quad\text{for every centered }
+ f(k)=p(k)/(k-\alpha_\kappa)^2,\quad\deg p\le4.
+\tag{51.9}
+$$
+
+Indeed the denominator stays uniformly away from zero. Polynomial
+coefficient norms and the supremum norm on the fixed interval are
+uniformly equivalent. If (51.9) failed, normalize a countersequence
+to supremum norm one and take converging parameter and polynomial
+coefficients. Its limit is centered, nonzero, and has zero positive
+inverse-generator energy, an impossibility. This argument includes
+limits in which the original unnormalized $f$ tends to zero.
+In particular $\|f_e\|_2^2\le C\mathcal B_\kappa(e)$.
+
+Set $s=r^2$, $v=a_e^2$, and $\delta=\Lambda_\kappa(re)-\lambda$.
+The scalar perturbation is $A+sv$. For small fixed $s$ its lowest
+simple eigenvalue satisfies $0\le\delta\le s\|v\|_\infty<\gamma/2$
+by the same min-max argument as §36. Its eigenvector has nonzero
+$\phi$ component. Complement elimination on the domain of (49.1)
+therefore gives exactly
+
+$$
+\delta=s m_e-s^2
+\left\langle f_e\phi,
+ (A|_{\phi^\perp}+sP^\perp vP^\perp-\delta)^{-1}
+ f_e\phi\right\rangle.
+\tag{51.10}
+$$
+
+Both inverses in the resolvent identity comparing this inverse with
+$(A|_{\phi^\perp})^{-1}$ are uniformly bounded, and their difference
+has norm at most $Cs$. The quadratic error is consequently at most
+$Cs\|f_e\|_2^2\le Cs\mathcal B_\kappa(e)$, which proves (51.6).
+The complementary eigenvector has norm
+$O(s\|f_e\|_2)$; thus the squared ground-overlap amplitude in the
+stationary compression is $1+O(\mathcal B_\kappa(e)r^4)$.
+There is no order-$r^2$ source-overlap term in this particular law.
+
+Equation (51.7) is also the direct finite-time cumulant expansion
+(51.4). Finally $w=r^2f_e\phi$ in (49.1). Duhamel's identity
+compares $e^{-t(A|_{\phi^\perp}+r^2P^\perp vP^\perp)}$ with
+$e^{-tA|_{\phi^\perp}}$ by a norm bound
+$Cr^2t e^{-\gamma t}$, since both generators are bounded below
+by $\gamma$ and $v$ is uniformly bounded. Use (51.9), then integrate
+in time, to obtain (51.8). The band identity evaluates the exact
+self-energy at $z=-\delta$, whereas (51.8) evaluates it at zero;
+the resolvent identity shows that their first difference is order
+$\mathcal B_\kappa(e)r^6$. This reconciles the negative band quartic,
+the positive finite-time fourth cumulant and the tilted return memory
+without equating their full finite-frequency evolutions. $\square$
+
+**Proposition 51.4 (one closed native quartic value).** Put
+$k_c=(l+u)/2$, $d=u-l$, and take the real-cover projection vector
+$e_*=(-2k_c,2k_c-2H,0)$ at $\kappa=0$. Its native coefficient is
+$a_{e_*}(k)=k-k_c$, on both the resolved zero cover and the actual
+two-phase zero leaf. Its quadratic and first quartic coefficients are
+
+$$
+\begin{aligned}
+m_{e_*}&=d^2\left(\frac1{12}-\frac1{2\pi^2}\right),\\
+\mathcal B_0(e_*)&=
+\frac{d^6}{\varepsilon^2}
+ \left(-\frac1{720\pi^2}+\frac5{48\pi^4}-\frac7{8\pi^6}\right)>0.
+\end{aligned}
+\tag{51.11}
+$$
+
+Thus the coefficient of $r^4$ in its original lowest band is the
+negative of the second displayed number. This is a real projection;
+its coefficients do not by themselves assert an integer torus character.
+
+Proof. The formulas for $A_0,B_0$ give $e_*\cdot c_0=k-k_c$ exactly.
+Write $x=(k-l)/d$ and $g(x)=x^2-x+1/6$. Integration against
+$2\sin^2(\pi x)dx$ gives the first line of (51.11), so the dimensionless
+centered square is $f(x)=g(x)+1/(2\pi^2)$. Define
+
+$$
+Q(x)=\frac{x(2x-1)(x-1)}{12\pi},\qquad
+P(x)=-\frac{g(x)}{4\pi^2},\qquad
+y(x)=P(x)\sin(\pi x)+Q(x)\cos(\pi x).
+\tag{51.12}
+$$
+
+Direct differentiation gives
+$-(\partial_x^2+\pi^2)y=f(x)\sin(\pi x)$ and $y(0)=y(1)=0$.
+Subtracting its component along $\sin(\pi x)$ gives the orthogonal
+Dirichlet inverse; this subtraction has zero inner product with
+$f(x)\sin(\pi x)$. Rescaling the inverse in (51.3) therefore gives
+$\mathcal B_0(e_*)=(2d^6/\varepsilon^2)
+\int_0^1 f(x)\sin(\pi x)y(x)dx$.
+Using $(\sin^2\pi x)'=2\pi\sin\pi x\cos\pi x$ and the endpoint
+zeros of $Q$, the quantity $2\int_0^1 f(x)\sin(\pi x)y(x)dx$ equals
+$-\pi^{-2}\int_0^1 f g\sin^2(\pi x)dx
+-\pi^{-1}\int_0^1 f'Q\sin^2(\pi x)dx$.
+Integrating these polynomials gives
+$-1/(720\pi^2)+5/(48\pi^4)-7/(8\pi^6)$, proving (51.11).
+Strict positivity also follows without a numerical comparison from
+(51.3), since $(k-k_c)^2$ is nonconstant on $I$. $\square$
+
+## 52. Uniform stationary signed-Gaussian correction
+
+**Theorem 52.1 (controlled three-phase correction and attained order).**
+Initialize Q height with $\pi$ and put $X_{\kappa,T}=(q_T-q_0)/\sqrt T$.
+For $i,j\in\{1,2,3\}$ define centered native matrix entries and their
+inverse-height covariance tensor by
+
+$$
+\begin{aligned}
+f_{ij}(k)&=c_{\kappa,i}(k)c_{\kappa,j}(k)-(M_\kappa)_{ij},\\
+\mathcal C_{ij,ab}(\kappa)&=\langle f_{ij},\mathcal R f_{ab}\rangle_\pi,\\
+\mathcal H_\kappa(z)&=
+ \sum_{i,j,a,b=1}^3\mathcal C_{ij,ab}(\kappa)
+ \partial_i\partial_j\partial_a\partial_b\Gamma_\kappa(z).
+\end{aligned}
+\tag{52.1}
+$$
+
+Here $\Gamma_\kappa$ is the raw Gaussian density in (36.2), with
+covariance $2M_\kappa$. The summation uses all ordered index pairs;
+there is no additional tensor-symmetry factor. With
+$\|\sigma\|_{{\rm var},1}=\int(1+|z|)d|\sigma|(z)$, for all $T\ge1$,
+
+$$
+\sup_{\kappa\in\mathcal K}
+\left\|\mathcal L(X_{\kappa,T})-
+ \left[\Gamma_\kappa+T^{-1}\mathcal H_\kappa\right]dz
+\right\|_{{\rm var},1}\le C T^{-3/2}.
+\tag{52.2}
+$$
+
+The correction has zero total mass and Fourier transform
+
+$$
+\widehat{\mathcal H}_\kappa(\xi)
+ =\mathcal B_\kappa(\xi)e^{-\xi^{\mathsf T}M_\kappa\xi}.
+\tag{52.3}
+$$
+
+It is a signed density, not an all-frequency exponential truncation.
+For some $T_0,c,C>0$ independent of $\kappa$,
+
+$$
+\frac cT\le
+\left\|\mathcal L(X_{\kappa,T})-\Gamma_\kappa dz\right\|_{\rm var}
+\le\frac CT,\qquad T\ge T_0.
+\tag{52.4}
+$$
+
+Thus the already owned Q $O(1/T)$ upper is attained in bounded
+measurable tests for the full stationary resolved law, uniformly for
+unrestricted sequences $\kappa(T)\in\mathcal K$. The new assertion
+is the controlled correction and lower order, not that upper estimate
+by itself. An equivalent formulation holds at time $Ts$ with scaling
+$\sqrt T$, uniformly on each $0<a\le s\le b<\infty$, by the exact
+change $T\mapsto Ts$ and spatial dilation by $\sqrt s$.
+
+Proof. Conditional on height, $X_{\kappa,T}$ is Gaussian with random
+covariance
+
+$$
+A_T=\frac2T\int_0^T c_\kappa(K_r)c_\kappa(K_r)^{\mathsf T}dr,
+\qquad B=2M_\kappa,\qquad D_T=A_T-B.
+\tag{52.5}
+$$
+
+This is Q (41.6), with its original factor two. The matrices $A_T$
+are positive semidefinite and uniformly bounded; $B$ has a common
+strictly positive lower bound. Stationarity gives $\mathbb ED_T=0$.
+For each pair of entries, stationarity and selfadjointness give the
+exact covariance identity
+
+$$
+\begin{aligned}
+\mathbb E[(D_T)_{ij}(D_T)_{ab}]
+ &=\frac8{T^2}\int_0^T(T-s)
+       \langle f_{ij},e^{-s\mathcal L}f_{ab}\rangle_\pi ds\\
+ &=\frac8T\mathcal C_{ij,ab}+O(T^{-2}).
+\end{aligned}
+\tag{52.6}
+$$
+
+The error is uniform: on centered functions the semigroup contracts
+by $e^{-\gamma s}$, and the difference of the time integral from
+$T\mathcal C$ is bounded by
+$\int_0^\infty s\|f_{ij}\|_2\|f_{ab}\|_2e^{-\gamma s}ds$.
+In particular $\mathbb E\|D_T\|_F^2\le C/T$.
+
+Here is a fourth-moment bound with no independent-increments assumption
+on height. For any bounded centered real $f$ and ordered times
+$t_1\le t_2\le t_3\le t_4$, reversibility and the Markov property give
+
+$$
+\begin{aligned}
+\big|\mathbb E_\pi\prod_{j=1}^4 f(K_{t_j})\big|
+&=\big|\langle e^{-(t_2-t_1)\mathcal L}f,
+ f e^{-(t_3-t_2)\mathcal L}
+       (f e^{-(t_4-t_3)\mathcal L}f)\rangle_\pi\big|\\
+&\le \|f\|_\infty^2\|f\|_2^2
+ e^{-\gamma[(t_2-t_1)+(t_4-t_3)]}.
+\end{aligned}
+\tag{52.7}
+$$
+
+Integration over the ordered simplex gives
+$\mathbb E(\int_0^T f(K_r)dr)^4\le C\|f\|_\infty^2\|f\|_2^2T^2$
+for $T\ge1$. Apply this to the finitely many entries to obtain
+$\mathbb E\|D_T\|_F^4\le C/T^2$, and hence
+$\mathbb E\|D_T\|_F^3\le C/T^{3/2}$ by Cauchy–Schwarz.
+
+For clarity the needed Gaussian Taylor step extends Q Lemma 46.2
+by one order, with an actual remainder. Write $p_B$ for the centered
+Gaussian density of covariance $B$. In weighted variation, for any
+positive semidefinite bounded $A$ and $D=A-B$,
+
+$$
+\mathcal N_A=p_Bdz+
+ \frac12\sum_{i,j}D_{ij}\partial_i\partial_jp_Bdz+
+ \frac18\sum_{i,j,a,b}D_{ij}D_{ab}
+                   \partial_i\partial_j\partial_a\partial_bp_Bdz
+ +\mathcal E_{A,B},
+\quad \|\mathcal E_{A,B}\|_{{\rm var},1}\le C\|D\|_F^3.
+\tag{52.8}
+$$
+
+To prove it, first suppose $\|D\|_{\rm op}$ is at most half the
+common lower eigenvalue bound for $B$. The entire segment $B+tD$
+is then uniformly positive. Its density derivatives with respect to
+$t$ are $(\tfrac12\sum D_{ij}\partial_i\partial_j)^jp_{B+tD}$.
+For $j\le3$ these have weighted $L^1$ bounds $C\|D\|_F^j$ by
+Gaussian moments of polynomials of degree at most six, with one
+extra moment for the weight. Taylor's integral remainder proves
+(52.8). On the complementary region $\|D\|_F$ is bounded below.
+The weighted variation of $\mathcal N_A$ is uniformly bounded, even
+for singular $A$, and the three displayed Taylor terms have bounds
+$C$, $C\|D\|_F$, $C\|D\|_F^2$. Since $D$ is bounded, their sum is
+at most $C\|D\|_F^3$ on this region. This proves the global assertion,
+without assuming densities for singular conditional covariances.
+
+Mix (52.8) with (52.5). The linear term cancels exactly. Equation
+(52.6) and the factor $1/8$ give precisely $T^{-1}\mathcal H_\kappa$;
+the covariance error contributes $O(T^{-2})$, and (52.7) bounds the
+remaining weighted variation by $O(T^{-3/2})$. Testing signed kernels
+against all functions bounded by $1+|z|$ justifies mixing their
+weighted variations exactly as in Q (46.8)–(46.9). This proves (52.2).
+Fourier transformation of the four derivatives multiplies by
+$\xi_i\xi_j\xi_a\xi_b$; contracting (52.1) gives
+$\langle f_\xi,\mathcal R f_\xi\rangle=\mathcal B_\kappa(\xi)$.
+This proves (52.3) and the zero mass.
+
+For a bounded-test lower bound use $\cos z_3$. Its expectation
+difference from the Gaussian is
+$T^{-1}\mathcal B_\kappa(e_3)e^{-(M_\kappa)_{33}}+O(T^{-3/2})$.
+The leading coefficient has a strictly positive common lower bound
+by Theorem 51.2. This gives the left side of (52.4) for one common
+$T_0$. The right side follows from (52.2), or directly from the owned
+Q endpoint estimate. No fixed relation between $T$ and $\kappa$ has
+entered the proof. $\square$
+
+## 53. Degenerating directions, signed coordinates and the zero leaf
+
+**Theorem 53.1 (coefficient-sensitive projection error).** For a unit
+resolved vector $e$, let $\mu_{\kappa,e,T}$ be the stationary Q law of
+$e\cdot(q_T-q_0)/\sqrt T$, and let
+
+$$
+G_{m_e}(z)=\frac{1}{\sqrt{4\pi m_e}}e^{-z^2/(4m_e)},
+\qquad B_e=\mathcal B_\kappa(e).
+\tag{53.1}
+$$
+
+There is one constant $C$ such that, uniformly for $\kappa\in\mathcal K$,
+all unit $e$ and $T\ge1$,
+
+$$
+\left\|\mu_{\kappa,e,T}-
+ [G_{m_e}+T^{-1}B_e\partial_z^4G_{m_e}]dz
+\right\|_{{\rm var},1}
+ \le C\left(\frac{B_e}{T^2}+
+                 \frac{B_e^{3/2}}{T^{3/2}}\right).
+\tag{53.2}
+$$
+
+For one common $T_0,c,C>0$,
+
+$$
+ c\frac{B_e}{T}\le
+ \|\mu_{\kappa,e,T}-G_{m_e}dz\|_{\rm var}
+ \le C\frac{B_e}{T},\qquad T\ge T_0.
+\tag{53.3}
+$$
+
+At $B_e=0$ the equality with the Gaussian is exact for every time,
+and both sides are zero. The constants do not assert a positive
+lower bound independent of $B_e$. In fact, uniformly on unit vectors,
+
+$$
+ c\operatorname{dist}(e,\mathcal A_\kappa)^2
+ \le\mathcal B_\kappa(e)\le
+ C\operatorname{dist}(e,\mathcal A_\kappa)^2.
+\tag{53.4}
+$$
+
+Consequently arbitrary directions approaching autonomy have the
+coefficient-sensitive order $\mathcal B_\kappa(e)/T$, including
+sequences with arbitrarily rapid approach and exact autonomous terms.
+
+Proof. Apply the scalar version of (52.8) to
+$D_T=(2/T)\int_0^T f_e(K_r)dr$ and $B=2m_e$.
+For unit vectors $m_e$ stays between the fixed positive bounds in
+(36.1). The spectral identity sharpens (52.6) to
+
+$$
+\mathbb ED_T^2=\frac8T B_e
+ -\frac8{T^2}\langle f_e,\mathcal R^2
+                   (1-e^{-T\mathcal L})f_e\rangle_\pi.
+\tag{53.5}
+$$
+
+The last inner product is between zero and $B_e/\gamma$.
+The variance is at most $8B_e/T$. By (51.9), (52.7) gives
+$\mathbb ED_T^4\le C B_e^2/T^2$, and hence
+$\mathbb E|D_T|^3\le C B_e^{3/2}/T^{3/2}$.
+There is no division by $B_e$ in these estimates. Mixing the scalar
+Taylor formula proves (53.2). The Fourier test $\cos z$ has leading
+difference $B_e e^{-m_e}/T$. Its error relative to $B_e/T$, when
+$B_e>0$, is at most $C(T^{-1}+\sqrt{B_e/T})$. The coefficients $B_e$
+are uniformly bounded, so one common $T_0$ gives the lower bound.
+The derivative $\partial_z^4G_{m_e}$ has a common finite $L^1$ bound,
+giving the upper. If $B_e=0$, the constant-diffusivity path in
+Theorem 50.1 proves exact equality, not only an asymptotic bound.
+
+For (53.4), put $r_\kappa=(2,-2,\kappa)$ and decompose the unit vector
+as $e=t r_\kappa+h$ with $h\perp r_\kappa$. Then
+
+$$
+f_e=2t\,h\cdot(c_\kappa-\pi(c_\kappa))+
+       (h\cdot c_\kappa)^2-\pi((h\cdot c_\kappa)^2).
+\tag{53.6}
+$$
+
+The inverse-height energy norm of the last term is at most $C|h|^2$.
+The linear map $h\mapsto h\cdot(c_\kappa-\pi(c_\kappa))$ has kernel
+exactly $\mathcal A_\kappa$, by (50.4)–(50.5). On its perpendicular
+unit sphere its energy norm has a positive common minimum by
+compactness and continuity. For small $|h|$, $|t|$ has a common
+positive lower bound, so (53.6) gives lower and upper energy norms
+comparable to $|h|$. Away from that neighborhood, compactness and
+the exact zero set give the same quadratic comparison after adjusting
+constants. Squaring the energy norm proves (53.4). $\square$
+
+**Proposition 53.2 (explicit native degeneration and scaling limits).**
+The fixed original projection $2\theta-2v$, with no $D$ term, has
+height coefficient $1-\kappa b_\kappa(k)$. Its quartic coefficient is
+
+$$
+\mathcal B_\kappa(2,-2,0)
+ =4\kappa^2\left\langle b_0-\pi(b_0),
+                 \mathcal R(b_0-\pi(b_0))\right\rangle_\pi
+   +O(|\kappa|^3),\qquad b_0(k)=\frac1k-\frac1H.
+\tag{53.7}
+$$
+
+The leading constant is strictly positive. The projected bounded-test
+error therefore has order $\kappa^2/T$ uniformly for small nonzero
+$\kappa$ and large $T$, and is exactly zero at the actual zero leaf.
+This is an original-model counterexample to a direction-uniform positive
+$c/T$ lower bound near autonomy.
+
+For arbitrary nonzero real projections, the scale-invariant coefficient
+is $\mathcal B_\kappa(e)/m_e^2$. After standardizing the scalar phase
+by its standard deviation $\sqrt{2m_eT}$, its correction to the standard
+normal density $g$ is
+
+$$
+\frac{\mathcal B_\kappa(e)}{4m_e^2T}\,\partial_z^4g.
+\tag{53.8}
+$$
+
+The bounds in (53.2)–(53.3) have the corresponding scale-invariant
+form, with $B_e$ replaced by $\mathcal B_\kappa(e)/m_e^2$ and adjusted
+universal constants. They follow by normalizing $e$ and dilating the
+scalar variable. The zero projection is deterministic and is treated
+separately.
+
+For $\kappa\ne0$, pushing the full law and its signed correction
+forward by $J_\kappa$ preserves unweighted variation exactly.
+Thus (52.2) and (52.4) hold in original lifted coordinates, comparing
+with the Gaussian of covariance $2J_\kappa M_\kappa J_\kappa^{\mathsf T}$,
+for arbitrary nonzero sequences approaching either side of zero.
+The lower bound allows parameter-dependent bounded tests; for example
+the resolved test $\cos z_3$ becomes $\cos(y_3/\kappa)$ in the
+$\sqrt T$-scaled original coordinates. It is not a uniform bound for
+fixed-Lipschitz-constant tests on those collapsing coordinates.
+For the pure original $D$ projection, the variance collapses like
+$\kappa^2$ while the standardized nonGaussian coefficient need not
+vanish. Small unstandardized coefficients alone do not imply a smaller
+scale-invariant bounded-test distance. At exact zero $D$ is frozen,
+so the pure $D$ law is a point mass, not that standardized limit.
+
+On the genuine zero leaf, all of (51.2)–(53.3) have a separate
+ two-dimensional version with $c$ replaced by $(A_0,B_0)$ and $M$
+by $N_0$. Its full two-phase correction is nonzero and its bounded-test
+Gaussian error is of order $1/T$, while its autonomous primitive
+$\theta-v$ is exactly Gaussian at every time. There is no third moving
+coordinate in that statement.
+
+Proof. The native constant relation gives the coefficient in the first
+sentence. Center its square to obtain
+$-2\kappa(b_\kappa-\pi(b_\kappa))+
+\kappa^2(b_\kappa^2-\pi(b_\kappa^2))$.
+The coefficients depend smoothly on $\kappa$ on the fixed compact
+height interval. Substitution in the positive quadratic form
+$\langle f,\mathcal R f\rangle$ proves (53.7), with a uniform cubic
+error. Strict monotonicity of $b_0$ proves positivity. The proof of
+Theorem 53.1 applies unchanged to this fixed nonunit vector, whose
+variance coefficient tends to one; equivalently normalize and dilate.
+This proves the stated joint small-parameter, large-time order.
+
+Homogeneity gives $m_{ae}=a^2m_e$ and
+$\mathcal B_\kappa(ae)=a^4\mathcal B_\kappa(e)$.
+Scalar dilation of four derivatives gives the factor $1/(2m_e)^2$
+in (53.8). Normalized vectors have uniformly positive $m_e$, proving
+the scale-invariant estimates. Invertible measurable pushforward
+preserves variation by its dual characterization in bounded tests;
+the signed Jacobian is handled by its absolute value as in (39.1).
+The weighted remainder remains uniform because $|J_\kappa z|\le C|z|$
+on the fixed parameter interval; no uniform inverse-Jacobian estimate
+is required for that upper bound.
+For a fixed original projection vector $a$, its resolved vector is
+$J_\kappa^{\mathsf T}a$. The pure $D$ case is $\kappa e_3$, which
+explains both the collapsing variance and unchanged standardized
+coefficient for nonzero $\kappa$.
+
+Finally the actual zero-leaf coefficient vector is exactly
+$(A_0,B_0)$, with positive tensor $N_0$ by Theorem 39.2. Its entries
+are bounded, its centered products are still members of the rational
+family in (51.9), and the identical height operator has the same gap.
+Every covariance and Taylor argument restricts to indices $1,2$.
+For a strict lower bound choose the second moving phase: $B_0^2$
+is nonconstant on $I$, so its coefficient is positive. The autonomous
+line is exactly the two-phase line already proved in Theorem 50.1.
+This proves the separate leaf conclusions. $\square$
+
+## 54. Predictive closure and the retained geometric boundaries
+
+**Proposition 54.1 (precise closure refinement).** The averaged quadratic
+phase operator $\sum_{ij}(M_\kappa)_{ij}\partial_i\partial_j$ predicts
+the infinitesimal stationary compressed generator and the Gaussian
+infrared covariance. Its full finite-time compressed response is a
+Markov convolution semigroup only on the projections of Theorem 50.1.
+Off those projections the exact response requires the height-return
+term (49.3), or retention of the original height state. Its first
+stationary departure from the Gaussian is (52.1)–(52.2), with the
+coefficient-sensitive exceptions in §53.
+
+These statements concern the specified compression and source law.
+They neither replace the full point heat/Green kernel nor transfer
+unchanged to a fixed initial height, a different raw source, or a
+terminal survival-conditioned law. The exact weights are (48.5)–(48.7)
+and (37.5). They give no observer an operation preparing $\pi$,
+conditioning on future survival, acquiring windings, resetting height,
+or changing the native clock. A torus character is a well-defined
+mathematical function on the original phase torus; its existence
+alone is not acquisition of that function from a chosen current-ray
+readout. A complete continuous wrapped path with an initial lift and
+a single wrapped endpoint retain their distinct meanings in §40.
+
+The instantaneous phase symbol is still rank one and the full
+same-clock symbol is still rank two. The resolved infrared rank is
+three, while the genuine zero leaf has only two moving phases.
+Complementary height modes are spectral modes of one bounded height
+variable, not additional spatial axes, and their elimination proves
+no minimum nonlinear observer dimension or impossibility of retaining
+height. There is no physical rotation symmetry, universal choice of
+three physical spatial dimensions, empirical realization, finite
+bit/shot/CPU cost, new observation service, attraction, or binding
+assertion in these conclusions. All Green, circle, source-charge,
+zero-leaf and attraction statements of §§41–47 and their G/C/O/F/N
+suppliers retain their original domains and meanings.
+
+Proof. Differentiating (48.3) at zero time gives multiplier
+$-\eta^{\mathsf T}M_\kappa\eta$, but the strict defect (50.3) shows
+why this derivative alone cannot determine the complete response.
+The exact elimination restores its missing return, and (51.4),
+(51.6) and (52.2) relate that return to the first nonGaussian term
+without a global polynomial-generator assertion. The exhaustive
+projection classification includes both zero and nonzero error-free
+cases; §53 supplies the uniform vanishing estimates at their boundary.
+Equations (48.5)–(48.7) prove the source distinctions, not merely an
+asymptotic qualification. The raw coordinate and period maps in
+Theorems 48.2 and 50.1 preserve the preceding circle and leaf meanings.
+The rank and observation restrictions are exactly (40.1) and its
+same-clock factor argument. None of the new operators contains an
+attractive potential, so none changes the earlier attraction domains
+or conclusions. $\square$
+
+**Mathematical correspondence 54.2 (scope of the ordinary proof).**
+The generic Gaussian-mixture mechanism also belongs to Chechkin et al.,
+[*Brownian yet non-Gaussian diffusion: from superstatistics to
+subordination of diffusing diffusivities*, arXiv:1611.06202v2](https://arxiv.org/html/1611.06202v2).
+The inverse-height cumulant and formal Gaussian correction overlap
+with the explicitly credited supplement of Alexandre et al.; they
+are not claimed as new generic results. The source-specific additions
+are the exhaustive rational and integer-lattice converse, its exact
+zero-leaf distinction, the native coefficient and vanishing locus,
+and the controlled uniform and degenerating-direction conclusions.
+The domain elimination is included only to fix their original-law
+meaning and their all-real-frequency response.
+
+Hervé–Pène,
+[*The Nagaev–Guivarc'h method via the Keller–Liverani theorem*,
+arXiv:0901.4617v3, §8](https://arxiv.org/html/0901.4617v3),
+and Ferré–Hervé–Ledoux,
+[*Limit theorems for stationary Markov processes with $L^2$-spectral
+gap*, arXiv:1201.4579v1](https://arxiv.org/html/1201.4579v1),
+provide different Markov additive/Edgeworth frameworks, including their
+moment and nonlattice hypotheses. Their one-dimensional first-order
+Edgeworth theorems are not silently substituted for the present
+stationary even-cumulant, weighted-variation expansion. Here the
+remainder follows directly from the exact conditional Gaussian law,
+the fixed height gap, and the global Gaussian Taylor estimate (52.8).
+These comparisons confer no worldwide originality certificate.
+All statements in §§48–54 are ordinary mathematical arguments under
+the stated native premises, not Lean-kernel certificates or empirical
+claims about a physical system.
+
+## 追加锚（本行以下为增补区）
