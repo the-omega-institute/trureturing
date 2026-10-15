@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:03aa23c32ae50ab9fe7910d934ba03ca00132c646e4c3277fe347762a007bf0f
+  normalized_sha256: sha256:03aa23c32ae50ab9fe7910d934ba03ca00132c646e4c3277fe347762a007bf0f
+cas_ref: sha256:03aa23c32ae50ab9fe7910d934ba03ca00132c646e4c3277fe347762a007bf0f
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.check_spec
+    target_statement_id: sha256:0011aeeda485a485abeb01f86fd47aab0bdbac936aa6460032ff1280d45b227b
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.shared_moore_feasibility
+    target_statement_id: sha256:095b30f2d3da67335914c11ede390c84430c033de1959707227a35e52f1b3dfb
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeSharedMooreSynthesis.terminating_path_nodup
+    target_statement_id: sha256:b2709e9e1eaa1fbf7e76d957a406767a4c50924d7a5d72355f705a87c5b5f024
+receipts:
+  unresolved_subitems: []
