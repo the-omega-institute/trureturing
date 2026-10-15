@@ -7,7 +7,7 @@
    digest: The G-test threshold prior is its orbit count divided by word count plus orbit count. -/
 
 import D5.S3.Quantum.Entanglement.OccupancyWordSectors
-import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
 
 /-!
@@ -24,6 +24,7 @@ open scoped BigOperators Matrix
 
 open D5.S3.Quantum.Entanglement
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.Measurement.ExactConditionalPreparationCost (hsandwich)
 open D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace (trace_rank_one)
 
 attribute [local instance] Classical.propDecidable
@@ -181,8 +182,7 @@ private theorem psi_ket (π : Equiv.Perm (Fin n)) (w : OccupancyWordSectors.Word
 private theorem pure_conjugate {ι : Type*} [Fintype ι]
     (A : Matrix ι ι ℂ) (v : ι → ℂ) :
     A * rankOneDensity v * A.conjTranspose = rankOneDensity (A *ᵥ v) := by
-  unfold rankOneDensity
-  rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.star_mulVec]
+  simpa only [one_smul] using hsandwich A v (1 : ℂ)
 
 private theorem trace_word (A : TensorMat n d) (x : OccupancyWordSectors.Word (Fin d) n) :
     Matrix.trace (A * rankOneDensity (ket x)) = A x x := by
