@@ -18,9 +18,11 @@ open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
