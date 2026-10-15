@@ -22,7 +22,7 @@ Issue [#17171](https://github.com/the-omega-institute/trureturing/issues/17171) 
 
 ## Motivation
 
-Jordan compatibility is a semidefinite condition linear in the channels. Equivalence with compatibility would turn the compatibility question into a search over the operators A, with the Jordan product as a canonical candidate. The source proves the equivalence for invertible channels and for several special classes (Propositions 21–22, Lemmas 23–24), and leaves the noninvertible case open.
+For a fixed pair of channels, Jordan compatibility is a semidefinite feasibility condition on A, linear in A. Equivalence with compatibility would turn the compatibility question into a search over the operators A, with the Jordan product as a canonical candidate. The source proves the equivalence for invertible channels and for several special classes (Propositions 21–22, Lemmas 23–24), and leaves the noninvertible case open.
 
 ## Gap
 
