@@ -78,7 +78,8 @@ runs:
       name: Select the producer continuation
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
-    - id: resume
+    - id: resume_lookup
+      name: Find the producer continuation without extracting
       if: steps.prepared.outputs.adopted != 'true' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1'
       continue-on-error: true
       uses: actions/cache/restore@v5
@@ -86,6 +87,15 @@ runs:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_keys.outputs.resume_key }}
         restore-keys: ${{ steps.resume_keys.outputs.resume_restore_prefix }}
+        lookup-only: true
+    - id: resume
+      if: steps.resume_lookup.outputs.cache-matched-key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.resume_keys.outputs.resume_archive_path }}
+        key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
+        fail-on-cache-miss: true
     - name: Validate the producer continuation
       if: steps.prepared.outputs.adopted != 'true' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1'
       env:
