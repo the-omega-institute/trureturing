@@ -104,7 +104,7 @@ private theorem state_from_eight_paths {m : ℕ} (F : SupplyFrame m 3)
     rcases q with ⟨t, i, side⟩
     cases side
     · simpa only [specialPort, Bool.false_eq_true, ↓reduceIte, Fin.val_zero] using (hports t i).1
-    · simpa only [specialPort, Bool.true_eq_true, ↓reduceIte, Fin.val_one, one_ne_zero] using (hports t i).2
+    · simpa only [specialPort, ↓reduceIte, Fin.val_one, one_ne_zero] using (hports t i).2
   have hp : Function.Injective p := by
     intro q r he
     have hr := congrArg Subtype.val he

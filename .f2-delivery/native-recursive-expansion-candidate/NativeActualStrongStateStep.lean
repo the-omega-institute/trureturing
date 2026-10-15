@@ -120,8 +120,8 @@ private theorem strong_state_from_same_parent {m k : ℕ} (hm : 3 ≤ m) (hk : 3
     rw [W.P.canonicalOpposite] at h
     cases hd : W.P.distinguishedOpposite
     · simp only [hd, Bool.false_eq_true, ↓reduceIte] at h
-      simpa only [hd, Bool.not_false, Bool.true_eq_true, ↓reduceIte] using h.trans hshift₀
-    · simp only [hd, Bool.true_eq_true, ↓reduceIte] at h
+      simpa only [hd, Bool.not_false, ↓reduceIte] using h.trans hshift₀
+    · simp only [hd, ↓reduceIte] at h
       simpa only [hd, Bool.not_true, Bool.false_eq_true, ↓reduceIte] using h.trans hshift₁
   have hpair : s(protectedP N₀ (by omega), protectedQ N₀ (by omega)) =
       s(protectedP F (by omega), protectedQ F (by omega)) := by
