@@ -4155,3 +4155,583 @@ statements and proofs; no Lean-kernel evidence is
 asserted for this two-phase layer.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Prescribed binary history codes at the two-call eight-state boundary
+
+### 15.1 The fixed code and the entire actual domain
+
+**Definition 15.1 (prescribed-code compatibility).** Retain exactly
+$\mathcal U_*$, $P$, $R_*$, the actual class values $x_d$, and the five
+complete predecessor rows $R_0,\ldots,R_4$ of Definition 9.1 and
+Proposition 9.3. Write
+
+$$
+D=\{a,c,b_1,b_2,b_3,b_4\},\qquad
+J=\{1,2,3,4\},\qquad J_a=\{1,2\},\quad J_c=\{3,4\}.
+\tag{NBP.15.1}
+$$
+
+All finite ordered native origins in this fiber remain allowed. Keep
+Assumption 9.2's genuine acquisition on the authenticated current version,
+actual export, complete access cut, lawful common entry and stationary
+native service. In particular the available acquired data $A(u)$ are the
+lossless current tree or the complete current row with its six acquired
+finite class values. Fix a specified lawful finite computation $\kappa$
+on those data, and prescribe the complete exported code
+
+$$
+\sigma(u)=\kappa(A(u))\in\{0,1\}\qquad(u\in\mathcal U_*).
+\tag{NBP.15.2}
+$$
+
+The code may depend on the internal structure of the acquired terms.
+It need not factor through their roots or through the predecessor row.
+Its acquisition and computation are supplied pre-cut operations, with
+separate prices. No assertion below supplies acquisition, authentication,
+export, access isolation, entry or service continuity from a representation.
+
+Use precisely the stationary Moore controller of Definition 11.1:
+one finite installed set $\mathcal K=Q\sqcup H$, one fixed literal
+address per running state, all four reply successors, and one fixed
+whole row per halt. The only accessible source-dependent state after
+entry is the current member of $\mathcal K$. Initialization is the
+same function $\iota(\sigma(u))$ on every source. The initial state
+must recover the prescribed complete code on its attained range.
+The code and acquired archive cannot be accessed again after entry;
+there is no additional source argument, address computation, selector,
+phase, counter or output decoder. Every installed state counts, and
+every running visit makes and pays for exactly one actual native call.
+
+Call $\sigma$ compatible if one such common controller returns the
+entire $F(u)=R_P(u)$ on every $u\in\mathcal U_*$ in at most two calls,
+with at most eight total installed states. The code in (NBP.15.2) is
+held fixed in this existence question. No pre-cut replacement of it by
+a more convenient initial-state code is allowed. The lower arguments
+also allow a merging $\iota$; success will force its two used values
+to have different entries, hence the required entry recoverability.
+
+**Proposition 15.2 (whole root fibers and movable six-source families).**
+Put $\mathcal B=\{x\in\mathcal I:r_x(\varepsilon)=\mathsf{branch}\}$,
+where $\mathcal I=\rho[\mathcal T]$. The following are nonempty,
+pairwise disjoint subsets whose union is the entire $\mathcal U_*$:
+
+- $\Pi_j$, for $j\in J$: $x_{b_j}=\alpha$, its partner is $\beta$,
+  and all other class roots are branches;
+- $Z_d$, for $d\in D$: $x_d=\beta$ and all other class roots are branches;
+- $Z_*$: all six class roots are branches.
+
+Here each set contains every actual origin with its specified root
+profile, with no restriction on the finite branch values beyond the
+original image and class-disequality conditions. The target is $R_j$
+on $\Pi_j$ and $R_0$ on every $Z_d$ and on $Z_*$. On every source,
+a query at a representative occurrence $p_d$ reads the actual root of
+$x_d$, and any address $p w$ entering a hole satisfies (NBP.9.7).
+
+Moreover choose any six pairwise different values $B_d\in\mathcal B$.
+There are six simultaneous actual sources indexed by
+$Z=\{0_a,0_c,1,2,3,4\}$ with class values
+
+$$
+\begin{aligned}
+x_a^{(z)}&=\begin{cases}\beta,&z\in\{0_a,1,2\},\\
+                         B_a,&z\in\{0_c,3,4\},\end{cases}\\
+x_c^{(z)}&=\begin{cases}B_c,&z\in\{0_a,1,2\},\\
+                         \beta,&z\in\{0_c,3,4\},\end{cases}\\
+x_{b_j}^{(z)}&=\begin{cases}\alpha,&z=j,\\B_{b_j},&z\ne j.
+                         \end{cases}
+\end{aligned}
+\tag{NBP.15.3}
+$$
+
+Their targets are $R_0,R_0,R_1,R_2,R_3,R_4$. Every finite literal
+address is constant on them, or separates the two groups
+$\{0_a,1,2\}\mid\{0_c,3,4\}$ in a partner cone, or isolates $j$
+in a $b_j$ cone. A specified suffix may give a constant reply even
+in one of those cones. The family may be chosen for every such tuple
+$B$; it is not restricted to the orbit values in Proposition 11.3.
+
+Proof. By Proposition 9.3 either every class value is an image, or one
+right value is alpha and its partner is beta. The only leaf image is
+beta. Distinct classes cannot both have value beta. In the positive
+case every other class is therefore a branch image; in the zero case
+there is at most one beta class. This proves exhaustion, disjointness
+and the targets, using the complete-row conclusion of Proposition 9.3.
+Each indicated profile is attained by choosing the remaining class
+values to be distinct branch images and applying that proposition's
+actual inverse. There are infinitely many branch images: the distinct
+orbit values $T_n$ of Theorem 3.3 belong to $\mathcal B$ for $n\ge2$.
+Thus finitely many forbidden values can always be avoided.
+
+For (NBP.15.3) all six values in each tuple are distinct. At $0_a,0_c$
+they are images; at $j$ the only nonimage is alpha with its prescribed
+beta partner. Proposition 9.3 constructs the actual finite inverse
+origin of each filling and gives the stated whole target. This also
+retains both occurrences of each repeated partner and all disequalities.
+For an address shorter than three the reply is the common exterior
+branch. Every other address is uniquely $p w$, $p\in P$, and the
+actual occurrence identity (NBP.9.7) applies. In a partner cone it reads
+either beta or the one fixed $B_d$, constant on the two groups. In a
+right cone it reads alpha at $j$ and $B_{b_j}$ elsewhere. Applying any
+finite suffix to these two actual trees gives either one reply or the
+stated two-part partition. This includes extensions past leaves and
+all absent replies. These are mathematical witness families; they do
+not give the reader an additional port or restrict its full domain.
+$\square$
+
+### 15.2 Equality forces a forest and three different query classes
+
+**Lemma 15.3 (saturated support of a successful prescribed-code table).**
+Suppose a controller satisfies Definition 15.1. On each family
+(NBP.15.3), the union of its actual runs is a forest of two disjoint
+full binary trees, of depth at most two. It contains every installed
+state: exactly three running states and exactly five halts, with one
+halt $H_j$ of whole output $R_j$ for each $0\le j\le4$. The two roots
+are the two different entries $\iota(0),\iota(1)$.
+
+Both zero sources lie in the same tree. Its running states form a
+chain of singleton tests for a set $S\subseteq J$, with $s=|S|\le2$.
+Each singleton-positive edge halts at its own $H_j$; the continuation
+ends at $H_0$. The other tree has the remaining positive leaves
+$T=J\setminus S$ and $3-s$ running states. Across both trees the three
+queried occurrence classes are different. A partner query can occur
+only in the positive tree, at most once. If $s=0$, that tree first
+queries a partner and then one right class from each of $J_a,J_c$.
+
+Proof. Restrict the fixed controller and the original prescribed code
+to one of these actual six-source families. Let $n,h,m,e$ denote the
+numbers of visited running states, visited halts, distinct entries and
+distinct directed successor edges in their run union. Five different
+required whole rows force $h\ge5$. Reachability from the entries gives
+$n+h-m\le e$, by the spanning-forest count used in Proposition 11.2.
+The all-address restriction in Proposition 15.2 gives $e\le2n$ and
+$m\le2$. Also $n+h\le8$. Consequently
+
+$$
+5\le h\le m+n\le2+n,\qquad n+h\le8,
+\quad\Longrightarrow\quad
+(n,h,m,e)=(3,5,2,6).
+\tag{NBP.15.4}
+$$
+
+All eight installed states are therefore visited; there are no extra
+installed states or duplicate-output halts. Each running state has two
+distinct actual successors. List two entry slots and the two successor
+slots of each of the three running states. Their images cover all eight
+vertices by reachability. As there are exactly eight slots, their images
+are pairwise different. Thus entries have no incoming edge, every other
+vertex has exactly one, and every vertex is reachable from an entry.
+No directed cycle is reachable under these conditions. This proves the
+two-tree assertion without assuming the original four-successor table
+acyclic. Every root-to-leaf path in this support is an actual run path:
+each leaf is visited, and the forest has a unique path from its root.
+Hence its depth is at most two.
+
+The two zero sources reach the unique $H_0$, so they have the same
+entry and the same path. A nonconstant partner query separates them;
+it cannot occur on that path. A constant query has only one used
+successor and is also excluded by (NBP.15.4). Each node on the zero
+path must thus isolate some positive $j$ by a $b_j$-cone query. Its
+positive child is immediately $H_j$: only that one actual source takes
+this child, so no further full binary node can be supported there.
+The other child continues the zero path. A repeated singleton query
+would be constant after its positive source had left. Thus these nodes
+are exactly the distinct indices of $S$, and $s\le2$.
+
+The other tree has $4-s$ distinct positive leaves and $3-s$ running
+vertices. No $b_j$ with $j\in S$ can be queried there, since its reply
+is constant on these positive sources. For $s=2$ its sole running node
+separates two positive sources and queries either one of their right
+classes or a partner if their groups differ. For $s=1$ there are three
+positive leaves and two running vertices, arranged as a root with one
+halting child and one running child. A singleton at the root removes
+its positive source; neither that singleton nor any removed index can
+be a nonconstant child query. A partner at the root leaves each child
+inside one group, where every partner query is constant. If the child
+is a partner query the root was therefore a singleton. In every case
+these two queried classes are different, with at most one partner.
+
+For $s=0$ the four-leaf tree has depth at most two, so both children of
+its root are running and each has two leaves. A singleton root would
+leave three positive leaves for one remaining call on its other child,
+which is impossible. A partner root splits $J_a\mid J_c$; each child
+must query a right class in its own pair, because all partner queries
+there are constant. These are three different classes. Combined with
+the distinct zero-chain classes, this proves all assertions. $\square$
+
+### 15.3 A code-preserving bridge on the successful controller
+
+**Theorem 15.4 (root normalization with the original arbitrary code).**
+For every compatible $\sigma$ of Definition 15.1 and every witnessing
+controller, there is a controller with exactly the same installed states,
+running/halting partition, whole halting outputs and initialization
+$\iota$. Each running address is a representative $p_d$ of its actual
+class. On every original $u\in\mathcal U_*$, started with the same
+prescribed $\sigma(u)$, its entire state path and actual call count
+are those of the original controller. In particular no new code is
+chosen and no extra state or call is used.
+
+Proof. All running addresses have length at least three by Lemma 15.3:
+a shorter address is constant on its six witnesses. Write the fixed
+address of running state $k$ uniquely as $p w_k$, and let $d_k$ be the
+class of $p$. By that lemma the three $d_k$ are pairwise different.
+Put $\ell_d=\beta$ for $d=a,c$ and $\ell_{b_j}=\alpha$.
+
+For any six distinct $B_d\in\mathcal B$, consider the following eight
+state-valued slots of the same original controller:
+
+$$
+\iota(0),\ \iota(1),\qquad
+L_k=\operatorname{next}(k,r_{\ell_{d_k}}(w_k)),\qquad
+V_k(B_{d_k})=\operatorname{next}(k,r_{B_{d_k}}(w_k))
+\quad(k\in Q).
+\tag{NBP.15.5}
+$$
+
+Each actual query in family (NBP.15.3) reads one of these two subtree
+values. Lemma 15.3 says that each running state has two used distinct
+successors; thus both slots at that state are used. Both entries are
+used as well. The eight slots in (NBP.15.5) consequently form a
+bijection onto the same installed $\mathcal K$, for every such $B$.
+This conclusion does not assume any constancy of $\sigma$ on the
+six root profiles: success and the tight count force both entries to
+be used even when their source assignments change with $B$.
+
+Fix a state $k$ and any two branch images $B,B'\in\mathcal B$.
+Choose five other pairwise distinct branch images, avoiding both
+$B,B'$, for the other classes. This is possible by Proposition 15.2.
+Compare (NBP.15.5) for $B_{d_k}=B$ and $B_{d_k}=B'$, keeping those
+other values fixed. The entry slots and all leaf slots are fixed.
+The other two branch slots are fixed because their queried classes
+are different from $d_k$. Exactly seven slots therefore have unchanged
+values. Each list is a bijection onto the same eight-element set, so
+the remaining slot must also have the same value. Since $B,B'$ were
+arbitrary, there is one $v_k\in\mathcal K$ such that
+
+$$
+\operatorname{next}(k,r_B(w_k))=v_k
+\qquad\text{for every }B\in\mathcal B.
+\tag{NBP.15.6}
+$$
+
+Replace the address at $k$ by $p_{d_k}$ and install the fixed table
+
+$$
+\begin{aligned}
+\operatorname{next}'(k,\mathsf{branch})&=v_k,\\
+\operatorname{next}'(k,\ell)&=
+       \operatorname{next}(k,r_\ell(w_k))\quad(\ell=\alpha,\beta),\\
+\operatorname{next}'(k,\mathsf{absent})&=H_0.
+\end{aligned}
+\tag{NBP.15.7}
+$$
+
+Keep the original $\iota$ and halt outputs. The three equations specify
+all four successors. On an arbitrary actual source, its class value
+$x_{d_k}$ is either alpha, beta or a branch image by Proposition 15.2.
+For a leaf, (NBP.15.7) gives exactly the old successor by the occurrence
+identity. For a branch image, (NBP.15.6) does so. Representative roots
+are reached on the entire fiber, so the absent entry is unused.
+Both executions start at $\iota(\sigma(u))$. Induction along the
+original terminating run now gives equal next states at every running
+visit, one actual invocation on each side, and the same final whole-row
+halt. This holds for every $u$, without changing its code.
+
+The comparison varied actual witness sources to constrain one fixed
+table. It did not demand preservation of $\sigma$ under a deep padding
+operation, or infer the code of any source from one representative.
+The new addresses and reply table are installed constants, with no
+runtime address calculation. Replies and literal words need not be
+identical between the two controllers; state paths and paid calls are.
+$\square$
+
+### 15.4 Structural classification of all prescribed binary codes
+
+**Theorem 15.5 (full-fiber compatibility criterion).** A prescribed
+$\sigma$ of Definition 15.1 is compatible if and only if there is
+$z\in\{0,1\}$ with the following properties:
+
+1. $\sigma$ is identically $z$ on $Z_a\cup Z_c\cup Z_*$.
+2. On each entire $\Pi_j$ it is a constant $\varepsilon_j$.
+3. With
+
+$$
+\begin{aligned}
+S&=\{j\in J:\varepsilon_j=z\},\qquad T=J\setminus S,
+       \qquad s=|S|,\\
+W&=\{j\in J:\text{there exists }u\in Z_{b_j}
+                              \text{ with }\sigma(u)\ne z\},
+\end{aligned}
+\tag{NBP.15.8}
+$$
+
+   one has
+
+$$
+s\le2,\qquad W\subseteq T,\qquad
+|W|\le1+\mathbf1_{\{s=1\}}.
+\tag{NBP.15.9}
+$$
+
+In particular the code on a permitted $Z_{b_j}$, $j\in W$, may vary
+arbitrarily with acquired finite structure. The criterion quantifies
+over every member of these actual fibers. Testing one source per profile
+is insufficient for an arbitrary prescribed code. Every compatible code
+actually uses both values, needs exactly eight states under this budget,
+and can be served by three running states and five whole-row halts.
+
+Proof, necessity. Apply Theorem 15.4, preserving $\sigma$ and $\iota$,
+and restrict the resulting root controller to any family (NBP.15.3).
+Use its two-tree structure from Lemma 15.3. Denote the code of the
+zero tree by $z$. This tree is a chain on $S$, ends at $H_0$, and
+has the positive leaves $H_j$, $j\in S$, with $s\le2$. The other tree
+contains precisely the positive leaves indexed by $T$.
+
+Consider starting the positive tree on a root profile with no right
+alpha, and with partner roots either those of $Z_a$, those of $Z_c$,
+or both branches. Every right-class test then follows its branch edge.
+At a partner test the two children contain nonempty sets of positive
+candidates, since both support edges are used. Either possible partner
+reply therefore chooses a nonempty set. There is at most one such test
+by Lemma 15.3. At every subsequent right test its branch edge retains
+at least one positive candidate. Thus all these runs stay within the
+positive tree and end at a positive halt, not $H_0$. This argument
+includes a positive tree with no partner test. Starting the zero tree
+on any of these profiles follows its chain to $H_0$. Since the normalized
+table depends only on roots, every source of $Z_a,Z_c,Z_*$ must have
+code $z$. This proves property 1 on the entire three fibers.
+
+If $j\in T$, its positive root profile follows the zero chain to
+$H_0$ when started there, because every tested singleton belongs to $S$.
+So all of $\Pi_j$ must use the other code. If $j\in S$, the positive
+tree has no $b_j$ query, and its run on that profile agrees with the
+no-right-alpha profile having the same partner roots. The preceding
+paragraph shows that it ends at a positive $T$-halt. It cannot return
+$R_j$. Hence all of $\Pi_j$ must use $z$. This proves property 2
+and identifies the same $S$ in (NBP.15.8), rather than a set sampled
+from six sources.
+
+Let $P_*$ be the state path from the other entry on the all-branch
+profile $Z_*$. As just proved, it ends at a positive halt in at most
+two calls. If $j\in W$, some actual source in $Z_{b_j}$ starts at
+this same entry and must return $R_0$. Its root profile differs from
+the all-branch profile only by beta at $b_j$. Its run can deviate from
+$P_*$ only if a state on $P_*$ queries $b_j$. Therefore
+
+$$
+W\subseteq\{j:\text{a state on }P_*\text{ queries }b_j\}
+\subseteq T.
+\tag{NBP.15.10}
+$$
+
+For $s=2$ the positive tree has one running state, so this set has
+size at most one. For $s=1$ its two running states give size at most
+two. For $s=0$, Lemma 15.3 forces a partner first and one right-class
+query second on $P_*$, giving size at most one. These are exactly
+(NBP.15.9). Both code values are attained on the witness family; the
+state count and necessity of eight follow from Lemma 15.3.
+
+Proof, sufficiency on every actual source. Assume properties 1--3.
+Install the five halts $H_j$ with their fixed whole outputs $R_j$.
+Every right test below queries the literal root $p_{b_j}=q_jR$.
+Its alpha successor is $H_j$, its beta successor is $H_0$, and its
+absent successor is $H_0$. Its branch successor is specified below.
+Thus every test has a total four-reply table. The absent successor is
+unreachable at these representatives, but is installed and fixed.
+
+For $s=2$, write $S=\{i_1,i_2\}$ and $T=\{k,l\}$, choosing $k$
+so that $W\subseteq\{k\}$. At entry $z$, test $i_1$ and then $i_2$
+on the branch continuations, the final branch going to $H_0$.
+At the other entry, test $k$, with branch successor $H_l$.
+
+For $s=1$, write $S=\{i\}$ and choose distinct $k,l\in T$ with
+$W\subseteq\{k,l\}$; let $m$ be the remaining member of $T$.
+At entry $z$, test $i$ with branch successor $H_0$. At the other
+entry, test $k$ and then $l$ on the branch continuation, with the
+final branch successor $H_m$.
+
+For $s=0$, entry $z$ is $H_0$ itself. At the other entry first query
+a partner. If $W$ has an element $w\in J_a$, query $c$; otherwise
+query $a$. A beta reply selects the positive pair belonging to that
+partner, and a branch reply selects the other positive pair. Install
+one right-class test in each pair, with branch successor the halt of
+the other index in that pair. If $W=\{w\}$, choose $w$ as the
+right-class test in its pair. The chosen partner ensures that an
+all-branch partner profile enters that pair. The partner's alpha and
+absent successors are fixed to $H_0$.
+
+These constructions use exactly three running states and five halts,
+with two different entries, and at most two actual calls on every
+required run. On $\Pi_j$, the prescribed entry is the one containing
+$j$; the unique right alpha and the forced partner beta give exactly
+$H_j$. On any zero profile, entry $z$ follows only branch or beta
+edges to $H_0$, or already is $H_0$. A zero source using the other
+entry must belong to $Z_{b_j}$ for $j\in W$. In the first two
+constructions its path tests that $j$ and takes its beta edge to $H_0$.
+In the third its partner is a branch, so it reaches the pair containing
+$w=j$, tests $j$, and takes the same beta edge. This verifies every
+source in the exhaustive partition of Proposition 15.2, including
+both codes within any permitted $Z_{b_j}$.
+
+Only the fixed original $\sigma$ is exported; its two distinct entry
+states recover it at entry. There is no retained copy of it after
+initialization. Representative-address reading and Proposition 9.3's
+whole-row target identity make these common native controllers on the
+entire $\mathcal U_*$. Every $H_j$ already contains the complete repaired
+exterior, the canonically renamed restricted partition, its equalities
+and disequalities and the absent-cut guards, including the surviving
+old occurrence of a repeated partner. The six sources are used only
+for necessity. $\square$
+
+### 15.5 Consequences, a strict state penalty and the padding boundary
+
+**Corollary 15.6 (root codes, target codes and genuine value dependence).**
+For a prescribed code determined by the class roots, Theorem 15.5 is
+a finite structural classification: use its constant value on each
+$Z_d,\Pi_j,Z_*$ in (NBP.15.8). For a prescribed binary function of the
+whole target alone, compatibility is equivalent to the block containing
+$R_0$ containing at most two of $R_1,\ldots,R_4$.
+
+Compatible prescribed codes need not be functions of the root profile.
+For example, let $E=\langle\beta,\alpha\rangle$ and prescribe
+
+$$
+\sigma(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{x_a=E\}},&u\in Z_{b_3},\\
+0,&u\in Z_a\cup Z_c\cup Z_*\cup Z_{b_1}\cup Z_{b_2}\cup Z_{b_4}.
+\end{cases}
+\tag{NBP.15.11}
+$$
+
+This code is compatible, and takes both values within the same whole
+root fiber $Z_{b_3}$.
+
+Proof. In the root-code specialization the quantities in Theorem 15.5
+are exactly those constant profile values; no representative selection
+is used. A target code has the same value $z$ on every zero profile,
+so $W=\varnothing$, and the only additional restriction is $s\le2$.
+For (NBP.15.11), $z=0$, $S=\{1,2\}$, $T=\{3,4\}$ and $W=\{3\}$.
+Both values on $Z_{b_3}$ are attained: set $x_{b_3}=\beta$ and take
+$x_a=E$ or a different branch image, filling the other classes by
+distinct branch images avoiding these values. Proposition 9.3 gives
+actual origins with these same roots. Equality with $E$ is a finite
+comparison on an acquired term, not an extra query service. Thus the
+code is lawful under the stated acquisition premise and satisfies
+(NBP.15.9). The theorem supplies its full-fiber upper. $\square$
+
+**Theorem 15.7 (the acquired partner-beta bit has a sharp nine-state cost).**
+Prescribe the acquired code
+
+$$
+\sigma_a(u)=\mathbf1_{\{x_a=\beta\}}.
+\tag{NBP.15.12}
+$$
+
+Among the controllers of Definition 11.1 with this same code and at
+most two actual calls, the least total installed state count is nine.
+The exclusion of eight allows every finite literal address and all
+four native replies, with no tree-shaped controller assumption.
+
+Proof. In every family (NBP.15.3), the two zero sources have different
+$\sigma_a$ values. Lemma 15.3 forces their entries to coincide for
+any successful controller with at most eight states. It also forces
+the two code entries to be different, a contradiction. Thus every
+such controller needs at least nine states. This lower argument does
+not rely on a particular known eight-state initializer failing to
+factor through $\sigma_a$. Indeed the same exclusion holds with
+any finite call bound: the counting and unique-zero-halt part of
+Lemma 15.3 does not use its two-call depth assertion.
+
+For the two-call upper install four running states $B_1,\ldots,B_4$
+querying $p_{b_1},\ldots,p_{b_4}$, and the five whole-row halts $H_j$.
+Entry $1$ is $B_1$, with its non-alpha successor $B_2$; entry $0$ is
+$B_3$, with its non-alpha successor $B_4$. Each $B_j$ takes alpha to
+$H_j$; $B_2,B_4$ take every non-alpha reply to $H_0$. These rules
+specify all four successors. If $x_a=\beta$, Proposition 9.3 allows
+only targets $0,1,2$. If $x_a\ne\beta$, it allows only $0,3,4$,
+since either positive $1,2$ would force $x_a=\beta$. Each two-test
+chain therefore returns the correct whole row on every actual source.
+This reuses the right-test chains of Proposition 11.5 with entry
+selected by the prescribed acquired bit. All nine states count and
+no additional source field survives initialization. $\square$
+
+**Proposition 15.8 (arbitrary codes do not admit universal deep padding).**
+Theorem 15.4 does not follow by requiring every attained root-profile
+and prescribed-code pair to have representatives whose branch values
+have arbitrarily large minimum leaf depth. That requirement is false
+on the same entire native fiber.
+
+Proof. Prescribe the lawful acquired-term code
+$\chi(u)=\mathbf1_{\{x_a=E\}}$. The all-branch profile has an actual
+code-one source: take $x_a=E$ and five distinct other branch images.
+Proposition 9.3 supplies its origin. Every source with that same code
+has $x_a=E$, whose minimum leaf depth is one. Hence for every $L\ge1$
+there is no representative preserving that profile and code for which
+all branch classes have minimum leaf depth greater than $L$.
+This refutes that proposed padding property alone. It neither forbids
+other controllers for a prescribed code nor contradicts Theorem 15.4,
+which constrains a controller already successful at the tight budget
+by (NBP.15.5), without preserving codes under source replacement.
+$\square$
+
+### 15.6 Suppliers and the exact remaining scope
+
+**Convention 15.9 (attribution and limits).** Definitions 1.1--1.2,
+Definition 9.1 and Proposition 9.3 supply the original trees, update,
+full actual inverse fiber and all five complete canonical targets.
+Their project-source interfaces are
+[NativeClassRootImage](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootImage.lean),
+[NativePredecessorRowRecovery](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.lean)
+and [NativeWholeRowPlan](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan.lean).
+The chart, whole-target and representative-read bridges of §§10--12
+are credited suppliers, including their all-source quantifiers.
+Proposition 11.3 and
+[NativeSixSourceCones](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceCones.lean)
+supply the fixed six-source occurrence geometry; Proposition 15.2
+proves the additional freedom to replace its six branch values.
+
+Proposition 11.2's reachable-graph count and its mature spanning-forest
+argument are reused in (NBP.15.4). The new deductions are the equality
+forest and different queried classes, the single-slot comparison
+(NBP.15.5)--(NBP.15.6), and the resulting fixed-code all-fiber criterion.
+Proposition 11.5 supplies the right-test chain bodies used for the
+nine-state upper, while the universal eight-state exclusion for the
+prescribed partner bit is the additional lower conclusion here.
+
+The jointly optimized frontier of Theorem 11.6 and
+[NativeRepeatedPartnerFrontier](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeRepeatedPartnerFrontier.lean)
+permits reselection of encoder and controller. The existing
+[NativeFiniteRootMinimax](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean)
+and Theorem 12.3 do not preserve an arbitrary supplied encoder:
+(NBP.12.7) chooses the code of a representative. They are not used to
+assert the prescribed-code upper here. Theorem 15.4 instead preserves
+one successful table's original code and initialization on every source.
+Its comparison uses the exact eight-slot saturation; with spare states,
+more code values or different call budgets the different-class argument
+and single remaining slot need not hold. No general prescribed-code
+frontier is obtained.
+
+The classification is a statement about entire actual source fibers,
+not an effective decision method for an arbitrary supplied computation
+$\kappa$. Establishing its universal constancy and existence conditions
+for such a computation is a separate task. The natural root-code and
+target-code families in Corollary 15.6 are consequences, not restrictions
+silently imposed on Theorem 15.5. General code-preserving deep padding
+remains unavailable, as Proposition 15.8 shows.
+
+These are repository-derived ordinary mathematical deductions relative
+to the cited suppliers. Decision-support graph counting and finite
+case analysis are elementary intermediates; no external asymptotic
+bound or numerical frontier is imported. The different late-target
+native pressure/template results, binary-XOR problems, K-bonacci
+problems, graph problems and quantum problems supply no numerical
+premise here. No worldwide-priority or current kernel-verification
+claim is made. The budgets count actual reader calls and all installed
+abstract states. Acquisition, acquired-term computation, representation
+of addresses and tables, fixed whole-output storage, export, lawful
+entry, isolation, authentication and physical realization retain their
+separate conditions and prices.
+
+## 追加锚（本行以下为增补区）
