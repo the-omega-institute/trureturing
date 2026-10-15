@@ -2013,3 +2013,601 @@ underwrites the proof. The assertions in §§12--15 are ordinary proofs;
 no Lean/kernel status is claimed.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. The fixed killed source and its actual transverse circle
+
+**Definition 16.1 (one source law and one lifetime event).** Fix
+
+$$
+0<Z<1,\quad r=1-Z,\quad H=r/2,\quad
+0<l<k_0<u<H,\quad I=(l,u),\quad
+\varepsilon>0,\quad 0<\chi<\pi.
+\tag{16.1}
+$$
+
+Choose once and for all
+
+$$
+0<\bar\kappa<\min\{l/4,(H-u)/2,H/4\}.
+\tag{16.2}
+$$
+
+For each $|\kappa|\le\bar\kappa$, the means $X=Y=H+\kappa$ are
+immutable during the history. Retain precisely (12.2)--(12.4): in original
+mode order $(0,1,2,3,13)$,
+
+$$
+p_\kappa(k)=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),\qquad
+w_s(k)=\frac{d_s}{p_{\kappa,s}(k)\mathcal I_\kappa(k)},\qquad
+d=(1,-1,0,-1,1)^{\mathsf T}.
+\tag{16.3}
+$$
+
+Here $\mathcal I_\kappa=\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}^{-1}$,
+with both equal-probability modes retained in the sum.
+All five probabilities have a common positive lower bound on
+$[-\bar\kappa,\bar\kappa]\times[l,u]$. Each phase has its actual
+$2\pi$ period. Fix arbitrary preparation phases and write
+$\psi_s(t)=\sqrt{p_{\kappa,s}(K_t)}
+e^{-i(\theta_s^{\rm in}+h_s(t))}$, with all increments initially zero.
+In particular $h_2=0$ and $h_1=h_3=v$ constrain increments, without
+equating preparation phases.
+
+Use Definition 1.3 with the original fields $P=\partial_k$, $Q_\kappa$,
+unnormalized angular measure $\rho=1$ and
+$A=\operatorname{diag}(\varepsilon^2,1)$. Equivalently, for independent
+standard Brownian motions $B^1,B^2$, use the single killed law
+
+$$
+\begin{aligned}
+K_0&=k_0,& dK_t&=\sqrt2\varepsilon\,dB_t^1,\\
+h_s(0)&=0,& dh_s(t)&=\sqrt2 w_s(K_t)\,dB_t^2,\\
+\tau_I&=\inf\{t\ge0:K_t\notin I\}.&&
+\end{aligned}
+\tag{16.4}
+$$
+
+The process is alive only for $t<\tau_I$, with Dirichlet killing at
+**both** $l$ and $u$. This is the published added analytic model, not a
+diffusion supplied by the bare finite-variation transport syntax.
+There is no mean actuator or independent phase driver.
+
+Retain the partial current observation and the preparation-relative target
+
+$$
+q_t=(K_t,[h_{13}(t)],[v(t)]),\qquad
+\delta_t=h_0(t)-h_{13}(t),\qquad D_t=[\delta_t].
+\tag{16.5}
+$$
+
+Thus $D_t$ subtracts the initial $0$--$13$ phase difference; it is not
+the absolute phase difference for an arbitrary preparation. Define
+
+$$
+\begin{aligned}
+\mathcal A_\kappa(\chi)
+ &=\{\exists\,0\le t<\tau_I:
+       d_{\mathbb T}(D_t,0)\ge\chi\},\\
+P_\kappa(\chi)&=\mathbb P(\mathcal A_\kappa(\chi)).
+\end{aligned}
+\tag{16.6}
+$$
+
+This probability concerns the whole actual lifetime under (16.4).
+No survival conditioning, restart or designed control family is used.
+
+**Proposition 16.2 (generator, coefficient and first circle excursion).**
+The Itô and Stratonovich versions of (16.4) agree. Their killed generator
+is exactly $-L_A=\varepsilon^2P^2+Q_\kappa^2$ on the smooth interior
+core, with the boundary and clock of Definition 1.3. Put
+
+$$
+\alpha_\kappa=\kappa+\kappa^2/H,\qquad
+b_\kappa(k)=\frac{H+\kappa-k}{H(k-\alpha_\kappa)},\qquad
+b_0(k)=\frac{H-k}{Hk}.
+\tag{16.7}
+$$
+
+Then $b_\kappa$ is smooth and strictly positive on the common closed
+parameter-height rectangle, and
+
+$$
+w_0-w_{13}=\kappa b_\kappa,\qquad
+\delta_t=\sqrt2\kappa\int_0^t b_\kappa(K_s)\,dB_s^2.
+\tag{16.8}
+$$
+
+For $\kappa\ne0$, (16.6) is exactly first hitting of either real level
+$\delta=\pm\chi$ before $\tau_I$. At $\kappa=0$ one has $\delta_t=0$
+for the entire lifetime, and $P_0(\chi)=0$.
+
+**Proof.** On the single-wall leaf the reduced field is
+$Q_\kappa=w_0\partial_{h_0}+w_{13}\partial_{h_{13}}+w_1\partial_v$.
+There is one $v$ coordinate, so its coefficient is $w_1$, not $2w_1$.
+Both $P$ and $Q_\kappa$ are divergence free for the stated unnormalized
+measure. Moreover $Q_\kappa k=0$ and every coefficient depends only on
+$k$. Hence the self-corrections $D_PP$ and $D_{Q_\kappa}Q_\kappa$
+vanish. The drivers are independent and the covariance diagonal, so
+there is no mixed correction. The generator of (16.4) is consequently
+$\varepsilon^2P^2+Q_\kappa^2$, with no extra drift. This verifies the
+common-operator correspondence, including the factor $\sqrt2$.
+
+Calculation 12.2 gives $w_0-w_{13}=\kappa g_\kappa$ with
+$g_\kappa=b_\kappa$ in (16.7). Equivalently, subtracting the two original
+reciprocals gives $2\kappa/(\mathcal I_\kappa k(k-2\kappa))$.
+The positive information sum and (16.2) ensure that its reduced
+denominator has no zero on the closed rectangle. Subtraction of the
+two stochastic integrals proves (16.8). The pair $(K,\delta)$ has
+interior generator
+
+$$
+\varepsilon^2\partial_k^2+
+\kappa^2b_\kappa(k)^2\partial_\delta^2.
+\tag{16.9}
+$$
+
+The integer phase change in (12.4) preserves the actual circle period.
+A continuous real lift starting at zero cannot reach circle distance
+$\chi<\pi$ without first hitting $+\chi$ or $-\chi$; either first hit
+has that circle distance. This proves the event identity, including
+all later windings. Equation (16.8) proves the exact zero assertion.
+Preparations cancel from increments and do not enter this law. $\square$
+
+## 17. Uniform full-lifetime probability and its spectral rate
+
+**Theorem 17.1 (native killed transverse reliability).** In Definition
+16.1 define the regular Dirichlet eigenvalue
+
+$$
+\lambda_1(\kappa)=\varepsilon^2
+\inf_{0\ne f\in H_0^1(I)}
+\frac{\displaystyle\int_I|f'(k)|^2\,dk}
+     {\displaystyle\int_I b_\kappa(k)^2|f(k)|^2\,dk}.
+\tag{17.1}
+$$
+
+It is positive and finite. More explicitly it is the smallest eigenvalue
+of
+
+$$
+-\varepsilon^2\phi''(k)
+ =\lambda b_\kappa(k)^2\phi(k),\qquad \phi(l)=\phi(u)=0.
+\tag{17.2}
+$$
+
+The following constants specify one uniform pair of bounds. Set
+
+$$
+\begin{aligned}
+L&=u-l,&
+m&=\min_{|\eta|\le\bar\kappa,\,k\in[l,u]} b_\eta(k)>0,&
+M&=\max_{|\eta|\le\bar\kappa,\,k\in[l,u]} b_\eta(k)<\infty,\\
+c_0&=\frac{\min\{k_0-l,u-k_0\}}{L},&
+\Lambda&=\frac{\varepsilon^2\pi^2}{L^2m^2},&
+C_0&=\max\left\{e^\Lambda,
+ \frac{LM}{\varepsilon\sqrt e}e^{\Lambda/2}\right\}.
+\end{aligned}
+\tag{17.3}
+$$
+
+For every $0<|\kappa|\le\bar\kappa$, through either sign,
+
+$$
+0<\frac{c_0}{\cosh(\chi\sqrt{\lambda_1(\kappa)}/|\kappa|)}
+\le P_\kappa(\chi)
+\le\frac{C_0}{\cosh(\chi\sqrt{\lambda_1(\kappa)}/|\kappa|)},
+\qquad P_\kappa(\chi)<1.
+\tag{17.4}
+$$
+
+To give matching bounds with a fixed limiting exponent, put
+
+$$
+\begin{aligned}
+B_*&=\max_{|\eta|\le\bar\kappa,\,k\in[l,u]}
+       |\partial_\eta\log b_\eta(k)^2|<\infty,\\
+J_*&=\tfrac12 B_*\sqrt{\lambda_1(0)}e^{B_*\bar\kappa/2},\\
+c_-&=c_0e^{-\chi J_*}>0,\qquad
+c_+=2C_0e^{\chi J_*}<\infty.
+\end{aligned}
+\tag{17.5}
+$$
+
+On the same fixed punctured neighborhood,
+
+$$
+c_-\exp\left(-\frac{\chi\sqrt{\lambda_1(0)}}{|\kappa|}\right)
+\le P_\kappa(\chi)\le
+c_+\exp\left(-\frac{\chi\sqrt{\lambda_1(0)}}{|\kappa|}\right).
+\tag{17.6}
+$$
+
+In particular the sharp scale is $\exp(-\text{constant}/|\kappa|)$ and
+
+$$
+\begin{aligned}
+\log P_\kappa(\chi)
+ &=-\frac{\chi\sqrt{\lambda_1(0)}}{|\kappa|}+O(1),\\
+\lim_{\kappa\to0^+}|\kappa|\log P_\kappa(\chi)
+ &=\lim_{\kappa\to0^-}|\kappa|\log P_\kappa(\chi)
+ =-\chi\sqrt{\lambda_1(0)}.
+\end{aligned}
+\tag{17.7}
+$$
+
+The $O(1)$ is uniform with all data (16.1)--(16.2) fixed: it lies between
+$\log c_-$ and $\log c_+$. No asymptotic prefactor, equality of the two
+signed probabilities, or uniformity as the other fixed data vary is asserted.
+
+**Proof.** All probability and spectral ingredients used below are
+classical; their source correspondence is specified in §19. The application
+uses the native coefficient (16.7) and the actual event (16.6).
+
+First condition on the entire height path. Since $B^2$ is independent of
+$B^1$, (16.8) is conditionally a centered Gaussian path with covariance
+$2\kappa^2\mathscr C_{t\wedge t'}$, where
+
+$$
+\mathscr C_t=\int_0^t b_\kappa(K_v)^2\,dv,
+\qquad \zeta_\kappa=\mathscr C_{\tau_I}.
+\tag{17.8}
+$$
+
+Consequently the joint law of height and transverse lift, up to height
+death, is exactly the joint law of
+$(K_t,\sqrt2\kappa W_{\mathscr C_t})$, where $W$ is a standard Brownian
+motion independent of the full height path. This follows by comparing
+the conditional Gaussian finite-dimensional distributions and using
+continuity. Independence here is proved from the two original drivers;
+it is not inferred merely from a martingale time-change theorem.
+
+The original height lifetime is positive and finite almost surely; indeed
+$\mathbb E\tau_I=(k_0-l)(u-k_0)/(2\varepsilon^2)$. Also
+$m^2\tau_I\le\zeta_\kappa\le M^2\tau_I$. Thus $\mathscr C$ is
+continuous and strictly increasing up to death and has finite positive
+terminal value. Write
+
+$$
+R=\chi/|\kappa|,\qquad
+T_R=\inf\{s\ge0:|\sqrt2 W_s|=R\},\qquad
+S_\kappa(s;k)=\mathbb P_k(\zeta_\kappa>s).
+\tag{17.9}
+$$
+
+Proposition 16.2 and the conditional path identity give the exact
+full-lifetime formula
+
+$$
+P_\kappa(\chi)=\mathbb P(T_R<\zeta_\kappa)
+             =\mathbb E[S_\kappa(T_R;k_0)].
+\tag{17.10}
+$$
+
+This is an equality for the original event, not a survival-conditioned
+law. Equality of the two exit times has probability zero: $T_R$ is
+atomless and independent of $\zeta_\kappa$. The strict lifetime convention
+therefore also agrees with the usual strip exit convention.
+
+For calculating $S_\kappa$, invert $\mathscr C$ before its terminal
+value. The time-changed height has generator
+$\varepsilon^2b_\kappa^{-2}\partial_k^2$, killed at both endpoints of
+$I$. Its positive Dirichlet operator $\mathscr H_\kappa$ is selfadjoint
+in the auxiliary space $L^2(I,b_\kappa^2dk)$, with form
+
+$$
+\mathfrak h_\kappa[f]=\varepsilon^2\int_I|f'|^2\,dk,
+\qquad D(\mathfrak h_\kappa)=H_0^1(I),\qquad
+S_\kappa(s;\cdot)=e^{-s\mathscr H_\kappa}1.
+\tag{17.11}
+$$
+
+For example, the generator follows by applying the original height
+martingale problem and $dt=ds/b_\kappa(K_t)^2$ before death. Integration
+by parts gives the displayed form and (17.2). Smooth positive bounded
+$b_\kappa$ makes this a regular weighted Sturm--Liouville problem.
+Its form has compact embedding and positive first eigenvalue. The
+one-dimensional Dirichlet Poincaré inequality and a sine test give
+
+$$
+\frac{\varepsilon^2\pi^2}{L^2M^2}
+\le\lambda_1(\kappa)\le\Lambda.
+\tag{17.12}
+$$
+
+This auxiliary time and speed measure are only variables in an exact
+calculation of (17.10). The source still uses analytic time $t$, density
+$\rho=1$, covariance $2A\,dt$, actual phase periods and the original
+height killing. No angular normalization or new clock is installed in it.
+
+We next bound the *unconditioned* survival function for every $s\ge0$.
+Let $\phi_\kappa$ be the positive first eigenfunction, normalized by
+$\max_{[l,u]}\phi_\kappa=1$. Its equation makes it concave. The chords
+from a maximum to the two zero endpoints imply
+$\phi_\kappa(k_0)\ge c_0$. Positivity preservation and $1\ge\phi_\kappa$
+therefore give
+
+$$
+S_\kappa(s;k_0)\ge
+e^{-s\lambda_1(\kappa)}\phi_\kappa(k_0)
+\ge c_0e^{-s\lambda_1(\kappa)}.
+\tag{17.13}
+$$
+
+For a uniform upper bound, let $\|\cdot\|_\kappa$ be the norm in
+$L^2(I,b_\kappa^2dk)$. For $f\in H_0^1(I)$,
+$|f(k_0)|\le\sqrt L\|f'\|_{L^2(dk)}$. The spectral theorem and
+$\sup_{x\ge0}\sqrt{x}e^{-x/2}=e^{-1/2}$ give
+
+$$
+|(e^{-\mathscr H_\kappa/2}g)(k_0)|
+\le\frac{\sqrt L}{\varepsilon}
+ \|\mathscr H_\kappa^{1/2}e^{-\mathscr H_\kappa/2}g\|_\kappa
+\le\frac{\sqrt L}{\varepsilon\sqrt e}\|g\|_\kappa.
+\tag{17.14}
+$$
+
+For $s\ge1$, apply (17.14) to
+$g=e^{-(s-1/2)\mathscr H_\kappa}1$, use
+$\|1\|_\kappa\le M\sqrt L$ and (17.12), and obtain
+$S_\kappa(s;k_0)\le
+(LM/(\varepsilon\sqrt e))e^{\Lambda/2}e^{-s\lambda_1(\kappa)}$.
+For $0\le s\le1$, the bound $S_\kappa\le1$ gives the other constant
+in (17.3). Together with (17.13), this proves the uniform, all-time estimate
+
+$$
+c_0e^{-s\lambda_1(\kappa)}\le S_\kappa(s;k_0)
+\le C_0e^{-s\lambda_1(\kappa)},\qquad s\ge0.
+\tag{17.15}
+$$
+
+It remains to integrate against the actual independent exit time in
+(17.10). The classical Brownian interval-exit Laplace transform, with
+generator $\partial_y^2$ rather than $\tfrac12\partial_y^2$, is
+
+$$
+\mathbb E[e^{-\lambda T_R}]
+ =\frac1{\cosh(R\sqrt\lambda)},\qquad \lambda>0.
+\tag{17.16}
+$$
+
+For completeness its boundary function is
+$F(y)=\cosh(\sqrt\lambda y)/\cosh(\sqrt\lambda R)$: it solves
+$F''=\lambda F$ and $F(\pm R)=1$. Applying Itô's formula to
+$e^{-\lambda(s\wedge T_R)}F(\sqrt2W_{s\wedge T_R})$ and taking
+$s\to\infty$ proves (17.16) by bounded convergence. This also fixes
+every factor in its exponent. Substitution of (17.15) into (17.10)
+now proves (17.4). In particular $P_\kappa>0$. For every $s>0$,
+$S_\kappa(s;k_0)<1$, since $\zeta_\kappa\le M^2\tau_I$ and the
+original Brownian height has positive probability to exit by $s/M^2$.
+As $T_R>0$ almost surely, (17.10) proves $P_\kappa<1$ too.
+
+Finally smoothness in (16.7) gives, pointwise on $[l,u]$,
+
+$$
+e^{-B_*|\kappa|}b_0^2\le b_\kappa^2\le e^{B_*|\kappa|}b_0^2.
+\tag{17.17}
+$$
+
+Applying the same two inequalities to every denominator in (17.1) yields
+$e^{-B_*|\kappa|}\lambda_1(0)\le\lambda_1(\kappa)
+\le e^{B_*|\kappa|}\lambda_1(0)$, and hence
+
+$$
+|\sqrt{\lambda_1(\kappa)}-\sqrt{\lambda_1(0)}|
+\le J_*|\kappa|.
+\tag{17.18}
+$$
+
+Use $e^{-x}\le1/\cosh x\le2e^{-x}$ for $x\ge0$ in (17.4), then
+(17.18), to obtain exactly (17.5)--(17.6). Taking logarithms proves
+(17.7). No eigenfunction-series remainder or prefactor expansion is
+assumed. $\square$
+
+**Specification 17.2 (the limiting scalar problem).** In particular
+
+$$
+\lambda_1(0)=\varepsilon^2
+\inf_{0\ne f\in H_0^1(I)}
+\frac{\int_I|f'|^2\,dk}
+ {\int_I ((H-k)/(Hk))^2|f|^2\,dk}.
+\tag{17.19}
+$$
+
+Equivalently, solve
+$-\varepsilon^2F_\lambda''=\lambda((H-k)/(Hk))^2F_\lambda$ with
+$F_\lambda(l)=0$, $F_\lambda'(l)=1$; $\lambda_1(0)$ is the smallest
+positive root of $F_\lambda(u)=0$. Regular Dirichlet oscillation theory
+gives this equivalence. The exponent depends on the whole fixed interval
+and this weight, not just its maximum at $l$. The initial height enters
+the matching constants, while the leading rate is the same for every
+fixed interior $k_0$. The dependence on $\varepsilon$ is explicit:
+$\sqrt{\lambda_1(0)}$ is $\varepsilon$ times the square root of the
+quotient infimum without $\varepsilon^2$.
+
+## 18. The same-history coherence task and the separate Green boundary
+
+**Proposition 18.1 (what the rare excursion measures).** At every alive
+time compare the actual ray with the section $\sigma_\kappa(q_t)$ of
+Interpretation 14.2, in the *same* nearby source and preparation. This
+section replaces $[h_0]$ by $[h_{13}]$, retaining $K,[h_{13}],[v]$ and
+each component's own preparation phase. Write $y_{02}(t)$ and
+$y_{02}^{\sigma}(t)$ for their original doubled $02$ coherence pairs.
+Then
+
+$$
+\begin{aligned}
+\|\psi(t)-\psi^{\sigma}(t)\|
+ &=2\sqrt{K_t-2\kappa}\,|\sin(\delta_t/2)|,\\
+\|y_{02}(t)-y_{02}^{\sigma}(t)\|
+ &=4\sqrt{(K_t-2\kappa)Z}\,|\sin(\delta_t/2)|.
+\end{aligned}
+\tag{18.1}
+$$
+
+The first equality uses the common middle-fixed representative gauge.
+In particular the lifetime event is exactly
+
+$$
+\mathcal A_\kappa(\chi)=
+\left\{\exists t<\tau_I:
+\frac{\|y_{02}(t)-y_{02}^{\sigma}(t)\|}
+ {4\sqrt{(K_t-2\kappa)Z}}\ge\sin(\chi/2)\right\}.
+\tag{18.2}
+$$
+
+On this event its first excursion time has output separation at least
+$4\sqrt{(l-2\bar\kappa)Z}\sin(\chi/2)>0$, independently of the sign
+and size of nonzero $\kappa$ in (16.2). On its complement the section
+approximates the actual representative and this coherence pair throughout
+the entire lifetime, with respective upper bounds
+$2\sqrt{u+2\bar\kappa}\sin(\chi/2)$ and
+$4\sqrt{(u+2\bar\kappa)Z}\sin(\chi/2)$.
+The probability of the exceptional event is exactly Theorem 17.1.
+
+Current $q$ and its complete ideal continuous history have different
+information. In fact, if the latter is supplied, let $H_{13}(t)$ be the
+unique continuous real lift of its $[h_{13}(t)]$ path starting at zero.
+For the law (16.4), almost surely,
+
+$$
+\delta_t=\int_0^t\frac{2\kappa}{K_s-2\kappa}\,dH_{13}(s),
+\qquad t<\tau_I.
+\tag{18.3}
+$$
+
+Thus hidden here means omitted by the specified *current* observation;
+it does not mean unrecoverable from a complete ideal $q$-history.
+
+**Proof.** Only the mode-$0$ component changes in the section comparison.
+Subtract its two complex amplitudes to obtain the first equality in
+(18.1). The original output (8.8) of [N, Theorem 8.4] has radius
+$2\sqrt{(K_t-2\kappa)Z}$ and angles differing by $\delta_t$; chord
+length gives the second equality for every fixed preparation. Since
+$|\sin(\delta/2)|=\sin(d_{\mathbb T}([\delta],0)/2)$ and this last
+sine is increasing on $[0,\pi]$, (18.2) follows. Continuity and the
+uniform positive height margins give the stated bounds. This comparison
+neither samples a second independent history nor prepares a symmetric
+source; it evaluates the section at the actual history's current $q$.
+
+For (18.3), Calculation 12.2 gives the exact ratio
+
+$$
+\frac{w_0(k)-w_{13}(k)}{w_{13}(k)}
+ =\frac{2\kappa}{k-2\kappa}.
+\tag{18.4}
+$$
+
+The denominator and $w_{13}$ are bounded away from zero on the closed
+rectangle. Associativity of stochastic integrals in (16.4) proves
+(18.3). Also $[K,H_{13}]=0$, so Itô and Stratonovich readings of this
+integral agree. Left-point stochastic sums along deterministic refining
+partitions converge locally uniformly in probability before death.
+A subsequence, chosen on a countable exhaustion by bounded stopped
+intervals, gives one almost-sure continuous version for all $t<\tau_I$.
+This is a measurable reconstruction from the ideal continuous observed
+paths, not ordinary finite-variation integration.
+
+The section comparison uses ideal expectations of an unchanged native
+coherence consumer. Neither (18.2) nor (18.3) supplies sensing, retention,
+sampling precision, finite-shot discrimination or decoding costs. No
+complete history or additional observation is granted by declaring
+current $q$. The result is a probability of one specified transverse
+approximation error, not a quotient error bound for every task or future
+operation. Brownian drivers are almost surely not the finite-variation
+commands of Definition 12.1; their deterministic inverse-gap cost bounds
+are not probabilities or finite execution costs for (16.4). $\square$
+
+**Reuse 18.2 (current dimension and all-scale instability).** For every
+nonzero $\kappa$ in (16.2), the fixed means lie on $E_+$ only.
+Definition 1.2, [N, Theorem 10.3] and Theorem 3.1 therefore give exactly
+current-ray dimension $4$, direct rank $2$, growth $(2,3,4)$,
+$Q_{\rm vol}=7$, and point-Green form unboundedness below for every
+positive coupling, for the very same positive smooth common operator.
+At $\kappa=0$ both walls hold: the leaf has three current coordinates,
+growth $(2,3)$ and $Q_{\rm vol}=4$. For its constant-density diagonal
+family, Theorem 5.1 supplies the explicitly strict stable window
+
+$$
+g=\gamma\varepsilon^2,\qquad
+0<\gamma<(2rC_H)^{-1},\qquad \varepsilon>0,
+\tag{18.5}
+$$
+
+where $C_H$ is the positive finite unweighted Heisenberg Green--Hardy
+constant in (4.8). This means a closed semibounded form with the original
+form domain; it does not assert a sharp threshold or settle its equality
+case. Theorem 6.2 supplies the separately stated attained-negative family.
+
+These assertions are reused, as in 14.3. The exponentially small
+$P_\kappa(\chi)$ concerns histories of a free killed process. Theorem 3.1
+quantifies over all analytic form tests on its cylinder. There is no
+supplied map restricting those tests by a path-excursion probability.
+Hence (17.6) neither removes the concentrating tests nor repairs nearby
+all-scale Green instability. Exact invariance at $\kappa=0$ and a small
+positive excursion probability at $\kappa\ne0$ also do not change the
+exact current-ray dimension, select the means, or identify physical axes.
+
+## 19. Exact mathematical suppliers and the native probability increment
+
+**Mathematical citation 19.1 (source and classical correspondence).**
+[N] and [L] have the immutable source meanings specified in 15.1.
+Definitions 1.3 and 4.1, Theorems 3.1, 5.1 and 6.2, and §§12--15 are
+used with their displayed assumptions. The following table distinguishes
+the classical ingredients from their native application.
+
+| Supplier | Exact input and scope of reuse |
+| --- | --- |
+| [N, Definitions 2.1, 3.1 and 8.1; Theorem 8.2]; this volume, Definition 12.1 and Calculation 12.2 | Fixed means, probabilities, negative amplitudes, arbitrary preparations, actual phase torus and the exact subtraction $w_0-w_{13}=\kappa b_\kappa$ are reused. Exact reachability and the inverse-gap cost theorems do not supply a random lifetime probability. |
+| [N, Definition 10.6 and Theorem 10.7]; this volume, Definition 1.3 and (6.4)--(6.5) | The added closed operator uses unnormalized density, covariance $2A\,dt$, one analytic clock, periodic actual phases and two absorbing height faces. Equation (16.4) specializes that framework; Proposition 16.2 verifies its zero correction for the nearby fields. No diffusion is derived from bare FIB syntax. |
+| [L, §§4,6--7] | Guarded lift limits, lifetime continuity and explicitly selected diffusion laws distinguish finite executed controls from a Brownian reference law. They justify keeping law selection explicit; their finite-horizon convergence statements are not substituted for (17.10). |
+| P. Mörters and Y. Peres, *Brownian Motion*, [author text](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf), §7.1 and §7.4, Theorems 7.42--7.43 and (4.3) | Stochastic integration, the killed heat representation and two-sided interval survival are literature-attested. Their standard Brownian generator is $\tfrac12\partial^2$; the transverse process here is $\sqrt2W$, with generator $\partial^2$. The interval is $(-R,R)$ with two absorbing endpoints. Its classical exit transform is (17.16), verified at this normalization within the native proof. Interval exit and separation of variables do not specify the native weight or an independent random lifetime by themselves. |
+| G. Teschl, *Ordinary Differential Equations and Dynamical Systems*, [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-ode/ode.pdf), §§5.3--5.5, Theorem 5.11 and Rayleigh--Ritz formula (5.76) | His regular expression $r^{-1}(-(pf')'+qf)$ is used with coefficient $p=\varepsilon^2$, potential $q=0$, weight $r=b_\kappa^2$ and Dirichlet conditions at $l,u$. These $p,q,r$ are Sturm--Liouville coefficients, not the native probabilities, retained observation or $1-Z$. This supplies the discrete spectrum, first eigenfunction and quotient (17.1). The auxiliary weighted measure is not a change of source density. |
+| Conditional Gaussian stochastic integrals; positive killed semigroups; the selfadjoint spectral theorem | These are literature-attested tools within the proof of Theorem 17.1, not additional general results of this volume. The conditional covariance and independence needed for the random lifetime are verified after (17.8); (17.13)--(17.15) supply the explicit uniform survival bounds, without conditioning on survival or using separately optimized marginals. |
+| [N, Theorem 8.4, (8.8)]; this volume, Interpretation 14.2 | The original doubled $02$ coherence pair gives (18.1)--(18.2) on the same history and preparation. Its use as an ideal mathematical consumer adds no measurement channel or acquisition theorem. |
+| This volume, Definition 1.2, Theorems 3.1 and 5.1, Reuse 14.3 | The single-wall collapse and strict double-wall window are reused with their actual operator hypotheses. They are not consequences of the small probability or classifications of physical space. |
+
+The repository's discrete first-passage/reflection application
+[PaddedTail](https://github.com/the-omega-institute/trureturing/blob/67f8765551564da4e4693e16708b84ca2aa882fd/D5/S3/Arith/Lattices/Klartag/Tail/PaddedTail.lean),
+`padded_increment_tail`, has a discrete Gaussian terminal variable and
+supplied first-passage inequalities. It is not an exact continuous strip
+exit theorem with the joint lifetime (17.8). The public and private
+finite-rectangle bodies cited in 15.1 supply deterministic transport,
+not this killed probability law. Neither application is duplicated here.
+
+The pinned Mathlib source
+$\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$,
+[BrownianMotion/Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/BrownianMotion/Basic.lean),
+supplies Brownian-process definitions and Gaussian/independence properties;
+[Process/HittingTime](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Process/HittingTime.lean)
+supplies discrete stopping-time results. The third-party
+[RemyDegenne/brownian-motion](https://github.com/RemyDegenne/brownian-motion/tree/0d5b6eb928e616d3b1f774ad7d233c167d9f42c9)
+at the displayed immutable revision supplies Brownian and Gaussian
+infrastructure. None of these identified declarations supplies the exact
+weighted, killed native application (16.6)--(17.7). This source-scope
+comparison is not a semantic absence proof for other declarations or
+literature, and no Lean application or kernel status is claimed.
+
+**Mathematical contribution 19.2 (application and retained boundaries).**
+The repository-derived increment is the native full-lifetime conclusion
+(17.4)--(17.7), with its exact coefficient and weight (16.7), (17.19),
+both-sign uniform constants, and the same-source consumer (18.2).
+It applies classical strip exit, Gaussian time change and regular
+Sturm--Liouville analysis; it does not claim any of those general tools
+as new. The necessary bridge preserves the original joint law, verifies
+the drift and clock, reduces the actual circle event before death, and
+controls the parameter-dependent rate uniformly. A deterministic
+inverse-gap cost, local heat exponent or finite-horizon estimate alone
+omits that bridge. The source correspondences above delimit the
+application without asserting worldwide originality or independent priors.
+
+Every probability in Theorem 17.1 is under the one specified killed
+source. Its high-probability three-coordinate approximation is relative
+to the section and the prescribed transverse resolution, over that
+finite random lifetime. It supplies no all-target factor theorem,
+physical stochastic realization, mean-selection rule, paid sensing or
+decoder, finite numerical recovery guarantee, or repair of all-scale
+analytic instability. A sharper prefactor or a joint limit changing
+$\chi,I,k_0,Z,\varepsilon$ would require additional uniform estimates.
+The assertions here are ordinary mathematical proofs.
+
+## 追加锚（本行以下为增补区）
