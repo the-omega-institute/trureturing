@@ -62,7 +62,7 @@ def psi {n d : ℕ} :
       (Equiv.Perm (Fin n)) (OccupancyWordSectors.Word (Fin d) n))
 
 def ket {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n) : TensorVec n d :=
-  fun x => if x = w then 1 else 0
+  Pi.single w 1
 
 def tensorPower (n : ℕ) {d : ℕ}
     (A : Matrix (Fin d) (Fin d) ℂ) : TensorMat n d :=
@@ -177,8 +177,7 @@ private theorem psi_ket (π : Equiv.Perm (Fin n)) (w : OccupancyWordSectors.Word
     psi (d := d) π *ᵥ ket w = ket (π • w) := by
   rw [psi_mulVec]
   funext x
-  unfold ket
-  simp only [inv_smul_eq_iff]
+  simp only [ket, Pi.single_apply, inv_smul_eq_iff]
 
 private theorem pure_conjugate {ι : Type*} [Fintype ι]
     (A : Matrix ι ι ℂ) (v : ι → ℂ) :
@@ -188,7 +187,7 @@ private theorem pure_conjugate {ι : Type*} [Fintype ι]
 private theorem trace_word (A : TensorMat n d) (x : OccupancyWordSectors.Word (Fin d) n) :
     Matrix.trace (A * rankOneDensity (ket x)) = A x x := by
   rw [rankOneDensity, trace_rank_one]
-  simp [ket.eq_1, Matrix.mulVec, dotProduct]
+  simp [ket, Matrix.mulVec, dotProduct, Pi.single_apply]
 
 private theorem sum_product (f : Fin n → Fin d → ℂ) :
     (∑ x : OccupancyWordSectors.Word (Fin d) n, ∏ j : Fin n, f j (x j)) =
