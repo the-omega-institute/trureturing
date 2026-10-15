@@ -38,7 +38,7 @@ def evaluate {Q : Type u} {H : Type v} (step : Q → Q ⊕ H) (n : Nat) :
     | 0 => none
     | n+1 => (evaluate step n (step s)).map (fun p => (p.1,s::p.2))
 
-@[simp] private theorem evaluate_halt {Q : Type u} {H : Type v}
+@[simp] theorem evaluate_halt {Q : Type u} {H : Type v}
     (step : Q → Q ⊕ H) (n : Nat) (h : H) :
     evaluate step n (.inr h) = some (h,[]) := by cases n <;> rfl
 
@@ -243,12 +243,12 @@ theorem install_full_fiber {Q : Type u} {H : Type v}
       exact congrArg (T.next s) ((bridge.2.2.1 v (T.coord s)).2)
     rw [steps]
 
-private noncomputable def referenceValues (P : CutSet) (hP : CutPrefixFree P)
+noncomputable def referenceValues (P : CutSet) (hP : CutPrefixFree P)
     (u₀ : Source) : ImageValues (canonicalRow P (substitution u₀)) :=
   ⟨recover P hP _ ⟨substitution u₀,rfl⟩,
     ⟨u₀,(recover_fill P hP _ ⟨substitution u₀,rfl⟩).symm⟩⟩
 
-private noncomputable def referenceType (P : CutSet) (hP : CutPrefixFree P)
+noncomputable def referenceType (P : CutSet) (hP : CutPrefixFree P)
     (u₀ : Source) : Chart (canonicalRow P (substitution u₀)) :=
   ⟨types _ (referenceValues P hP u₀).val.val,
     actual_type P hP (substitution u₀) (referenceValues P hP u₀)⟩
@@ -340,7 +340,7 @@ private theorem evaluate_unique {Q : Type u} {H : Type v} (step : Q → Q ⊕ H)
               obtain ⟨y,hy,rfl⟩ := Option.map_eq_some_iff.mp b
               exact congrArg (fun p : H × List Q => (p.1,s::p.2)) (ih hx hy)
 
-private theorem evaluate_exact {Q : Type u} {H : Type v} (step : Q → Q ⊕ H)
+theorem evaluate_exact {Q : Type u} {H : Type v} (step : Q → Q ⊕ H)
     {n : Nat} {k : Q ⊕ H} {h : H} {tr : List Q}
     (ev : evaluate step n k = some (h,tr)) :
     evaluate step tr.length k = some (h,tr) := by
@@ -481,7 +481,7 @@ theorem check_spec {C : LiteralRow} {a b : Nat}
     simp only [ev,decide_eq_true_eq]
     exact out.trans ((finite_root_minimax C []).2.2.2.2.2 θ.val).symm
 
-private theorem candidate_complete {C : LiteralRow} {a b : Nat}
+theorem candidate_complete {C : LiteralRow} {a b : Nat}
     (T : RootTable C (Fin a) (Fin b)) (c : Chart C → Fin a ⊕ Fin b)
     (out : ∀ h, T.out h ∈ outputList C) :
     (⟨T,c⟩ : Candidate C a b) ∈ candidates C a b := by
@@ -494,7 +494,7 @@ private theorem candidate_complete {C : LiteralRow} {a b : Nat}
     (fun z => states_complete a b (T.next s z))),?_⟩
   exact List.mem_map.mpr ⟨T.out,functions_complete _ _ _ _ out,by cases T; rfl⟩
 
-private theorem evaluate_reindex {Q : Type u} {H : Type v}
+theorem evaluate_reindex {Q : Type u} {H : Type v}
     {Q' : Type w} {H' : Type} (e : Q ≃ Q') (f : H ≃ H')
     (step : Q → Q ⊕ H) (step' : Q' → Q' ⊕ H')
     (same : ∀ s, step' (e s) = Sum.map e f (step s)) (n : Nat) (k : Q ⊕ H) :
@@ -650,7 +650,7 @@ def synthesize (C : LiteralRow) (r K q : Nat) :
     (boundedCandidates C K).find? (fun A => check A.2.2 r q)
   else none
 
-private theorem bounded_mem {C : LiteralRow} {K a b : Nat} {A : Candidate C a b}
+theorem bounded_mem {C : LiteralRow} {K a b : Nat} {A : Candidate C a b}
     (pos : 1 ≤ a+b) (bound : a+b ≤ K) (mem : A ∈ candidates C a b) :
     (⟨a,b,A⟩ : Sigma fun a => Sigma fun b => Candidate C a b) ∈ boundedCandidates C K := by
   apply List.mem_flatMap.mpr
@@ -658,7 +658,7 @@ private theorem bounded_mem {C : LiteralRow} {K a b : Nat} {A : Candidate C a b}
   · exact List.mem_filter.mpr ⟨List.mem_range.mpr (by omega),decide_eq_true ⟨pos,bound⟩⟩
   · exact List.mem_map.mpr ⟨A,mem,rfl⟩
 
-private theorem bounded_size {C : LiteralRow} {K : Nat}
+theorem bounded_size {C : LiteralRow} {K : Nat}
     {A : Sigma fun a => Sigma fun b => Candidate C a b}
     (mem : A ∈ boundedCandidates C K) : 1 ≤ A.1+A.2.1 ∧ A.1+A.2.1 ≤ K := by
   obtain ⟨a,_,hm⟩ := List.mem_flatMap.mp mem
