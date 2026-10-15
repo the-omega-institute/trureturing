@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
 
@@ -8,11 +10,57 @@ internal sealed class LatticeHalfFockFiniteCorrectionDocument : IScribeDocumentD
     private static readonly LibraryNoteRef Background =
         LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster");
 
+    private static Formula Successor(Formula value) => Seq(value, Plus, D(1));
+    private static Formula Sign(Formula degree) => Seq(Open, Minus, D(1), Close, Caret, Grp(degree));
+
+    private static Formula HalfSuccessorFormula()
+    {
+        var d = F.Id("d");
+        return Disp(Seq(Forall, Sp, d, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Call("halfBinomial", Successor(d)), Eq, Frac,
+            Grp(Open, Frac, Grp(Minus, D(1)), Grp(D(2)), Minus, d, Close,
+                Call("halfBinomial", d)), Grp(Successor(d))));
+    }
+
+    private static Formula PairReflectionFormula()
+    {
+        var m = F.Id("m");
+        var n = F.Id("n");
+        var r = F.Id("r");
+        var s = F.Id("s");
+        return Disp(Seq(Forall, Sp, m, Comma, n, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Call("pairScalar", Successor(m), Successor(n)), Eq,
+            Sum, Underscore, Grp(r, Eq, D(0)), Caret, Grp(m), Sp,
+            Sum, Underscore, Grp(s, Eq, D(0)), Caret, Grp(n), Sp,
+            Open, Sign(Successor(m)), Call("choose", Successor(m), Successor(r)), Close,
+            Open, Sign(Successor(n)), Call("choose", Successor(n), Successor(s)), Close,
+            Call("pairScalar", Successor(r), Successor(s))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite singleton and pair correction on the full ordinary lattice oscillator algebra.",
         H("Finite Twisted Correction"),
         Blocks(
             Paragraph(Text("The source weight of (i,k) is k+1, not the native half-Fock weight 2k+1. The extra polynomial variable records physical negative shifts. Singleton weights are binomial(-1/2,m) times the charge pairing; pair weights are mn binomial(-1/2,m) binomial(-1/2,n)/(m+n) times the Gram pairing. No inverse Gram matrix, positivity, rank condition or occupation cutoff occurs.")),
+            Describe.Lean(
+                DescribeId.Create("half-fock-correction-half-successor"),
+                DeclarationHandle.Create(Prefix + "half_successor"),
+                H("The original half-binomial successor coefficient"),
+                StatementSource.FromAuthor(HalfSuccessorFormula()),
+                AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("For every natural d, halfBinomial(d+1) = ((-1/2-d) halfBinomial(d))/(d+1), over Complex. This is the shared factorial-product recurrence consumed by the pair reflection proof and by the existing translation calculus; the recurrence is not new mathematical content."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("half-fock-correction-pair-scalar-reflection"),
+                DeclarationHandle.Create(Prefix + "pairScalar_reflection"),
+                H("Independent all-order reflection of the original pair coefficient"),
+                StatementSource.FromAuthor(PairReflectionFormula()),
+                AssessedProvenance.FromRepo(Background),
+                Blocks(
+                    Paragraph(Text("For every pair of natural orders m,n, pairScalar(m+1,n+1) is the sum over 0 <= r <= m and 0 <= s <= n of ((-1)^(m+1) choose(m+1,r+1)) ((-1)^(n+1) choose(n+1,s+1)) pairScalar(r+1,s+1). Both orders are independent and unbounded. The coefficients are exactly the original jetReflectionScalar coefficients. The definitions halfBinomial(d) = product over 0 <= j < d of (-1/2-j), divided by d!, and pairScalar(k,l) = k l halfBinomial(k) halfBinomial(l)/(k+l) are unchanged.")),
+                    Paragraph(Text("The finite binomial transform obeys a new all-order inductive identity: its signed transform equals the original pairScalar, with zero auxiliary axis values. The proof derives a finite two-coordinate recurrence and identifies its unique solution by induction, using the positive cast of the sum of the two source weights. It assumes no covariance premise, rank, signature, occupation cutoff, determinant or lattice data.")),
+                    Paragraph(Text("In the actual pairPolynomial, the Gram entry stays unchanged. A reduced pair of orders r,s needs the extra shift power (m-r)+(n-s) to recover the original total source weight m+n+2. This scalar theorem alone does not prove correctionWord covariance or native all-state BPZ; labelled remainders, singleton contributions, and the operator transpose law remain required."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("half-fock-correction-insertion-commute"),
                 DeclarationHandle.Create(Prefix + "insertion_commute"),

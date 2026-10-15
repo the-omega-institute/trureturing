@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
 set_option autoImplicit false
@@ -10,6 +11,7 @@ open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 open _root_.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+open scoped BigOperators
 
 noncomputable section
 
@@ -276,6 +278,170 @@ abbrev unitContractObligation := Contract.Registration (@Corr_one)
   (type_of% unitReadout) (type_of% correctionEscapeFrom) Unit
 abbrev variableContractObligation := Contract.Registration (@Corr_X_zero)
   (type_of% variableReadout) (type_of% correctionEscapeFrom) Unit
+
+namespace HalfSuccessor
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ degree => halfBinomial degree) (fun empty => nomatch empty)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ degree : ℕ,
+    readout.readout () () (degree + 1) =
+      ((-1 / 2 - (degree : ℂ)) * readout.readout () () degree) / (degree + 1 : ℂ)
+
+theorem source_bridge : (type_of% (@half_successor)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have contradiction := law 0
+  norm_num [rejected, realize] at contradiction
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [actual, realize, halfBinomial]
+
+def familyRegistration : Registration arena (type_of% (@half_successor)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp half_successor, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@half_successor) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str
+    `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.half_successor "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.HalfSuccessor.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℕ
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+    definition := none
+    coordinates := #[]
+    readouts := #[
+      { path := #["body", "fn", "arg"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["body", "arg", "fn", "arg", "arg"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end HalfSuccessor
+
+namespace PairReflection
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ → ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ first => pairScalar first) (fun empty => nomatch empty)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => 1) (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ first second : ℕ,
+    readout.readout () () (first + 1) (second + 1) =
+      ∑ left ∈ Finset.range (first + 1), ∑ right ∈ Finset.range (second + 1),
+        (((-1 : ℂ) ^ (first + 1) * ((first + 1).choose (left + 1) : ℂ)) *
+          ((-1 : ℂ) ^ (second + 1) * ((second + 1).choose (right + 1) : ℂ))) *
+            readout.readout () () (left + 1) (right + 1)
+
+theorem source_bridge : (type_of% (@pairScalar_reflection)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have contradiction := law 1 0
+  norm_num [rejected, realize, Finset.sum_range_succ] at contradiction
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(), 0, 1, ?_⟩
+  intro equal
+  have contradiction := congrFun equal 1
+  norm_num [actual, realize, pairScalar, halfBinomial] at contradiction
+
+def familyRegistration : Registration arena (type_of% (@pairScalar_reflection)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp pairScalar_reflection, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@pairScalar_reflection) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str
+    `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.pairScalar_reflection "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.PairReflection.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℕ
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+    definition := none
+    coordinates := #[]
+    readouts := #[
+      { path := #["body", "body", "fn", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["body", "body", "arg", "arg", "body", "arg", "body", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end PairReflection
+
+#print axioms HalfSuccessor.familyRegistration
+#print axioms HalfSuccessor.registration
+#print axioms PairReflection.familyRegistration
+#print axioms PairReflection.registration
 
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection

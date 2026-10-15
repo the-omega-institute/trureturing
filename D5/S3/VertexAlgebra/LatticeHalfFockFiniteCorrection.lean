@@ -29,6 +29,263 @@ def pairScalar (first second : ℕ) : ℂ :=
   (first : ℂ) * (second : ℂ) * halfBinomial first * halfBinomial second /
     ((first : ℂ) + (second : ℂ))
 
+private theorem halfBinomial_choose (degree : ℕ) :
+    halfBinomial degree = Ring.choose (-1 / 2 : ℂ) degree := by
+  rw [Ring.choose_eq_smul, ← Polynomial.aeval_eq_smeval, Polynomial.aeval_def,
+    ← Polynomial.eval_map, descPochhammer_map,
+    descPochhammer_eval_eq_prod_range]
+  simp only [halfBinomial, smul_eq_mul, div_eq_mul_inv]
+  ring
+
+theorem half_successor (degree : ℕ) :
+    halfBinomial (degree + 1) =
+      ((-1 / 2 - (degree : ℂ)) * halfBinomial degree) / (degree + 1 : ℂ) := by
+  have factorial : (degree.factorial : ℂ) ≠ 0 := by
+    exact_mod_cast Nat.factorial_ne_zero degree
+  have successor : (degree + 1 : ℂ) ≠ 0 := by
+    exact_mod_cast Nat.succ_ne_zero degree
+  unfold halfBinomial
+  rw [Finset.prod_range_succ, Nat.factorial_succ, Nat.cast_mul,
+    Nat.cast_add, Nat.cast_one]
+  field_simp
+
+private theorem half_binomial_transform (degree : ℕ) :
+    ∑ index ∈ Finset.range (degree + 1),
+      (degree.choose index : ℂ) * halfBinomial index =
+        (-1 : ℂ) ^ degree * halfBinomial degree := by
+  have expansion : halfBinomial degree = (-1 : ℂ) ^ degree *
+      ∑ index ∈ Finset.range (degree + 1),
+        (degree.choose index : ℂ) * halfBinomial index := by
+    rw [halfBinomial_choose, show (-1 / 2 : ℂ) = -(1 / 2) by ring,
+      Ring.choose_neg]
+    have shift : (1 / 2 : ℂ) + (degree : ℂ) - 1 = -1 / 2 + (degree : ℂ) := by ring
+    rw [shift, Ring.add_choose_eq degree (Commute.all _ _),
+      Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+    simp only [Units.smul_def, zsmul_eq_mul, Int.cast_negOnePow_natCast]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro index member
+    have within : index ≤ degree := Nat.le_of_lt_succ (Finset.mem_range.mp member)
+    rw [Ring.choose_natCast, Nat.choose_symm within, ← halfBinomial_choose]
+    ring
+  rw [expansion, ← mul_assoc, ← pow_add, ← two_mul degree, pow_mul]
+  norm_num
+
+private theorem choose_index_difference (degree index : ℕ)
+    (within : index ≤ degree + 1) :
+    (index : ℂ) * ((degree + 1).choose index : ℂ) =
+      (degree + 1 : ℂ) *
+        (((degree + 1).choose index : ℂ) - (degree.choose index : ℂ)) := by
+  have identity := Nat.choose_mul_succ_eq degree index
+  have castIdentity := congrArg (fun value : ℕ => (value : ℂ)) identity
+  rw [Nat.cast_mul, Nat.cast_mul, Nat.cast_sub within, Nat.cast_add, Nat.cast_one] at castIdentity
+  linear_combination castIdentity
+
+private theorem binomial_sum_difference (degree : ℕ) (value : ℕ → ℂ) :
+    ∑ index ∈ Finset.range (degree + 2),
+      ((degree + 1).choose index : ℂ) * (index : ℂ) * value index =
+    (degree + 1 : ℂ) *
+      ((∑ index ∈ Finset.range (degree + 2),
+          ((degree + 1).choose index : ℂ) * value index) -
+        ∑ index ∈ Finset.range (degree + 1),
+          (degree.choose index : ℂ) * value index) := by
+  have pad : (∑ index ∈ Finset.range (degree + 2),
+      (degree.choose index : ℂ) * value index) =
+      ∑ index ∈ Finset.range (degree + 1),
+        (degree.choose index : ℂ) * value index := by
+    rw [show degree + 2 = (degree + 1) + 1 by omega, Finset.sum_range_succ]
+    simp
+  rw [← pad, ← Finset.sum_sub_distrib, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro index member
+  rw [mul_comm ((degree + 1).choose index : ℂ) (index : ℂ),
+    choose_index_difference degree index (by
+      have := Finset.mem_range.mp member
+      omega)]
+  ring
+
+private theorem weighted_half_binomial_transform (degree : ℕ) :
+    ∑ index ∈ Finset.range (degree + 2),
+      ((degree + 1).choose index : ℂ) * (index : ℂ) * halfBinomial index =
+        (-1 : ℂ) ^ (degree + 1) * halfBinomial degree / 2 := by
+  rw [binomial_sum_difference, show degree + 2 = (degree + 1) + 1 by omega,
+    half_binomial_transform, half_binomial_transform, half_successor, pow_succ]
+  have successor : (degree + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero degree
+  field_simp
+  ring
+
+private theorem pair_scalar_recurrence (first second : ℕ) :
+    ((first : ℂ) + second + 2) * pairScalar (first + 1) (second + 1) +
+      (first + 1 : ℂ) * pairScalar first (second + 1) +
+      (second + 1 : ℂ) * pairScalar (first + 1) second =
+        halfBinomial first * halfBinomial second / 4 := by
+  simp only [pairScalar, half_successor, Nat.cast_add, Nat.cast_one]
+  have firstSucc : (first + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero first
+  have secondSucc : (second + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero second
+  have total : ((first : ℂ) + second + 1) ≠ 0 := by
+    exact_mod_cast (by omega : first + second + 1 ≠ 0)
+  have totalNext : ((first : ℂ) + second + 2) ≠ 0 := by
+    exact_mod_cast (by omega : first + second + 2 ≠ 0)
+  rw [show (first : ℂ) + 1 + ((second : ℂ) + 1) = first + second + 2 by ring,
+    show (first : ℂ) + ((second : ℂ) + 1) = first + second + 1 by ring,
+    show (first : ℂ) + 1 + (second : ℂ) = first + second + 1 by ring]
+  field_simp
+  ring
+
+private theorem pair_scalar_total (first second : ℕ) :
+    ((first : ℂ) + second) * pairScalar first second =
+      (first : ℂ) * second * halfBinomial first * halfBinomial second := by
+  by_cases firstZero : first = 0
+  · simp [firstZero, pairScalar]
+  by_cases secondZero : second = 0
+  · simp [secondZero, pairScalar]
+  have total : ((first : ℂ) + second) ≠ 0 := by
+    exact_mod_cast (by omega : first + second ≠ 0)
+  unfold pairScalar
+  field_simp
+
+private def pair_binomial_transform (first second : ℕ) : ℂ :=
+  ∑ left ∈ Finset.range (first + 1), ∑ right ∈ Finset.range (second + 1),
+    (first.choose left : ℂ) * (second.choose right : ℂ) * pairScalar left right
+
+private theorem pair_binomial_recurrence (first second : ℕ) :
+    ((first : ℂ) + second + 2) * pair_binomial_transform (first + 1) (second + 1) -
+      (first + 1 : ℂ) * pair_binomial_transform first (second + 1) -
+      (second + 1 : ℂ) * pair_binomial_transform (first + 1) second =
+    ((-1 : ℂ) ^ (first + 1) * halfBinomial first / 2) *
+      ((-1 : ℂ) ^ (second + 1) * halfBinomial second / 2) := by
+  have leftStep : (first + 1 : ℂ) *
+      (pair_binomial_transform (first + 1) (second + 1) -
+        pair_binomial_transform first (second + 1)) =
+      ∑ left ∈ Finset.range (first + 2), ∑ right ∈ Finset.range (second + 2),
+        ((first + 1).choose left : ℂ) * ((second + 1).choose right : ℂ) *
+          (left : ℂ) * pairScalar left right := by
+    have step := binomial_sum_difference first (fun left =>
+      ∑ right ∈ Finset.range (second + 2),
+        ((second + 1).choose right : ℂ) * pairScalar left right)
+    have reshape : pair_binomial_transform (first + 1) (second + 1) -
+        pair_binomial_transform first (second + 1) =
+      (∑ left ∈ Finset.range (first + 2), ((first + 1).choose left : ℂ) *
+        ∑ right ∈ Finset.range (second + 2),
+          ((second + 1).choose right : ℂ) * pairScalar left right) -
+      ∑ left ∈ Finset.range (first + 1), (first.choose left : ℂ) *
+        ∑ right ∈ Finset.range (second + 2),
+          ((second + 1).choose right : ℂ) * pairScalar left right := by
+      simp only [pair_binomial_transform, Finset.mul_sum, mul_assoc]
+    rw [reshape, ← step]
+    simp only [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro left member
+    apply Finset.sum_congr rfl
+    intro right member
+    ring
+  have rightStep : (second + 1 : ℂ) *
+      (pair_binomial_transform (first + 1) (second + 1) -
+        pair_binomial_transform (first + 1) second) =
+      ∑ left ∈ Finset.range (first + 2), ∑ right ∈ Finset.range (second + 2),
+        ((first + 1).choose left : ℂ) * ((second + 1).choose right : ℂ) *
+          (right : ℂ) * pairScalar left right := by
+    calc
+      _ = ∑ left ∈ Finset.range (first + 2), ((first + 1).choose left : ℂ) *
+          ((second + 1 : ℂ) *
+            ((∑ right ∈ Finset.range (second + 2),
+                ((second + 1).choose right : ℂ) * pairScalar left right) -
+              ∑ right ∈ Finset.range (second + 1),
+                (second.choose right : ℂ) * pairScalar left right)) := by
+        simp only [pair_binomial_transform, ← Finset.sum_sub_distrib,
+          Finset.mul_sum, mul_sub, mul_assoc, mul_left_comm]
+      _ = _ := by
+        simp only [← binomial_sum_difference, Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro left member
+        apply Finset.sum_congr rfl
+        intro right member
+        ring
+  calc
+    _ = (first + 1 : ℂ) *
+          (pair_binomial_transform (first + 1) (second + 1) -
+            pair_binomial_transform first (second + 1)) +
+        (second + 1 : ℂ) *
+          (pair_binomial_transform (first + 1) (second + 1) -
+            pair_binomial_transform (first + 1) second) := by ring
+    _ = ∑ left ∈ Finset.range (first + 2), ∑ right ∈ Finset.range (second + 2),
+        ((first + 1).choose left : ℂ) * ((second + 1).choose right : ℂ) *
+          (((left : ℂ) + right) * pairScalar left right) := by
+      rw [leftStep, rightStep, ← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro left member
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro right member
+      ring
+    _ = (∑ left ∈ Finset.range (first + 2),
+          ((first + 1).choose left : ℂ) * (left : ℂ) * halfBinomial left) *
+        ∑ right ∈ Finset.range (second + 2),
+          ((second + 1).choose right : ℂ) * (right : ℂ) * halfBinomial right := by
+      rw [Finset.sum_mul_sum]
+      apply Finset.sum_congr rfl
+      intro left member
+      apply Finset.sum_congr rfl
+      intro right member
+      rw [pair_scalar_total]
+      ring
+    _ = _ := by rw [weighted_half_binomial_transform, weighted_half_binomial_transform]
+
+private theorem pair_binomial_reflection (first second : ℕ) :
+    pairScalar first second =
+      (-1 : ℂ) ^ first * (-1 : ℂ) ^ second * pair_binomial_transform first second := by
+  induction first generalizing second with
+  | zero => simp [pairScalar, pair_binomial_transform]
+  | succ first outer =>
+    induction second with
+    | zero => simp [pairScalar, pair_binomial_transform]
+    | succ second inner =>
+      have raw := pair_binomial_recurrence first second
+      have original := pair_scalar_recurrence first second
+      have signed := congrArg (fun value : ℂ =>
+        (-1 : ℂ) ^ (first + 1) * (-1 : ℂ) ^ (second + 1) * value) raw
+      have squareFirst : ((-1 : ℂ) ^ (first + 1)) ^ 2 = 1 := by
+        rw [← pow_mul, Nat.mul_comm, pow_mul]
+        norm_num
+      have squareSecond : ((-1 : ℂ) ^ (second + 1)) ^ 2 = 1 := by
+        rw [← pow_mul, Nat.mul_comm, pow_mul]
+        norm_num
+      have cancelSigns : (-1 : ℂ) ^ (first + 1) * (-1 : ℂ) ^ (second + 1) *
+          (((-1 : ℂ) ^ (first + 1) * halfBinomial first / 2) *
+            ((-1 : ℂ) ^ (second + 1) * halfBinomial second / 2)) =
+          halfBinomial first * halfBinomial second / 4 := by
+        calc
+          _ = ((-1 : ℂ) ^ (first + 1)) ^ 2 * ((-1 : ℂ) ^ (second + 1)) ^ 2 *
+              (halfBinomial first * halfBinomial second / 4) := by ring
+          _ = _ := by rw [squareFirst, squareSecond]; ring
+      rw [cancelSigns] at signed
+      have previousLeft := outer (second + 1)
+      have previousRight := inner
+      have total : ((first : ℂ) + second + 2) ≠ 0 := by
+        exact_mod_cast (by omega : first + second + 2 ≠ 0)
+      apply (mul_left_cancel₀ total)
+      simp only [pow_succ] at signed previousLeft previousRight ⊢
+      linear_combination original - signed -
+        (first + 1 : ℂ) * previousLeft - (second + 1 : ℂ) * previousRight
+
+theorem pairScalar_reflection (first second : ℕ) :
+    pairScalar (first + 1) (second + 1) =
+      ∑ left ∈ Finset.range (first + 1), ∑ right ∈ Finset.range (second + 1),
+        (((-1 : ℂ) ^ (first + 1) * ((first + 1).choose (left + 1) : ℂ)) *
+          ((-1 : ℂ) ^ (second + 1) * ((second + 1).choose (right + 1) : ℂ))) *
+            pairScalar (left + 1) (right + 1) := by
+  have firstAxis (index : ℕ) : pairScalar 0 index = 0 := by simp [pairScalar]
+  have secondAxis (index : ℕ) : pairScalar index 0 = 0 := by simp [pairScalar]
+  rw [pair_binomial_reflection, pair_binomial_transform, Finset.sum_range_succ']
+  simp only [firstAxis, mul_zero, Finset.sum_const_zero, add_zero, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro left member
+  rw [Finset.sum_range_succ']
+  simp only [secondAxis, mul_zero, add_zero, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro right member
+  ring
+
 def sourceWeight (D : LatticeData) (index : Index D) : ℕ := index.2 + 1
 
 abbrev CorrectionPolynomial (D : LatticeData) := MvPolynomial (Option (Index D)) ℂ
@@ -62,11 +319,11 @@ private theorem pair_symmetric (D : LatticeData) (first second : Index D) :
     ring
   · rw [Nat.add_comm (sourceWeight D first) (sourceWeight D second)]
 
-private theorem pairDerivation_shift (D : LatticeData) (index : Index D) (degree : ℕ) :
+theorem pairDerivation_shift (D : LatticeData) (index : Index D) (degree : ℕ) :
     pairDerivation D index (X none ^ degree) = 0 := by
   simp [pairDerivation, Derivation.leibniz_pow, mkDerivation_X]
 
-private theorem pairDerivation_pair (D : LatticeData) (index first second : Index D) :
+theorem pairDerivation_pair (D : LatticeData) (index first second : Index D) :
     pairDerivation D index (pairPolynomial D first second) = 0 := by
   simp [pairPolynomial, Derivation.leibniz, smul_eq_mul,
     pairDerivation, mkDerivation_X, MvPolynomial.derivation_C]
@@ -382,3 +639,6 @@ end D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.Corr_one
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.Corr_X_zero
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.Corr_shift_bound
+
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.half_successor
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.pairScalar_reflection
