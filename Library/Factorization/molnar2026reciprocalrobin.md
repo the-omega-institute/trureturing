@@ -757,12 +757,24 @@ $1<\kappa\le K_\beta(n)$ satisfy the normalized inequality.
 
 The [Liu v2 source card](../Analytic/liu2026quasirh.md),
 Theorem 27.1, reports such a half-plane with
-$\beta_0=0.874957019420098946\ldots$. Applied as that new preprint's
-stated analytic input, (J12) has exponent
-$2-\beta_0=1.125042980579901054\ldots$. This is a conditional use of
-the reported supplier: neither its analytic dependency chain nor its
-external Lean code has been independently verified here. It still
-does not reach the $3/2$ diagonal.
+$\beta_0=0.874957019420098946\ldots$. Its substitution into (J12)
+gives exponent $2-\beta_0=1.125042980579901054\ldots$.
+The already recorded [Sang v1 source](../Zeros/sang2026seveneighths.md),
+[Theorem 1.1, section 1.2](https://arxiv.org/html/2610.15291v1#S1.SS2),
+states the stronger boundary
+$\beta_{\rm S}=8748867/10000000$ for every Dirichlet $L$-function,
+including $\zeta$, under its section 2 analytic inputs, explicitly
+including the family-wide $7/8$ conclusion. Thus those inputs, together
+with Sang's stated theorem, give the eventual range (J12) with exponent
+$2-\beta_{\rm S}=11251133/10000000=1.1251133$.
+Only the resulting zero-free half-plane enters (J11)--(J12); this
+application neither reconstructs the cubic-theta argument nor
+transports its packet estimates to new lengths. The primary theorem,
+its hypotheses and closing argument were inspected. Its imported
+analytic proofs, new estimates and external formalizations have not
+been independently verified here. These are conditional applications
+of known suppliers, with no new zero-free theorem or numerical
+starting cutoff; neither exponent reaches the $3/2$ diagonal.
 
 ## The remaining signed inequality at the RH scale
 
@@ -921,9 +933,17 @@ pp.21--22, gives an explicit obstruction to using unnormalized
 reciprocal endpoints for the normalized Robin test.
 
 Reuse the source's LCM expansion, fixed-parameter expansions, criterion
-and certified bounded range before seeking a new estimate. For the
+and certified bounded range before seeking a new estimate. The
+[existing unrestricted same-integer identity, OCQ13](../ArithSums/nicolas2025comparison.md#the-original-fixed-exponent-consumer-and-its-remaining-signed-input),
+combined directly with (L2), already supplies the interface from this
+normalization to the complete $I_\psi(\log n)$, retaining the same
+integer's reserve, own-price defect and $D_\kappa(n)$. No new identity
+or criterion is needed for that connection. For the
 [selected-source route](../Analytic/polak2026finiterobinca.md), the
-signed $I_\psi(A)$ lower bound remains unpaid; for the increment-moment
-route, the growing-$s$ error remains unpaid. This preprint supplies
-neither missing estimate, and its bounded result cannot be presented
-as a proof of classical Robin or RH.
+signed integral's lower bound remains unpaid; for the increment-moment
+route, the growing-$s$ error remains unpaid. The
+[remote Weil completion, WT11--WT14](../Estimation/trureturing2026pricegapconvexity.md#a-remote-completion-cancels-the-actual-poles-at-small-signed-cost)
+pays a correction to its original occupation test, not the missing
+signed bound or its transfer to a specified integer. This preprint
+supplies neither missing estimate, and its bounded result cannot be
+presented as a proof of classical Robin or RH.
