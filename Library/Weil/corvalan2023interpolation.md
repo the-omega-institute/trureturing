@@ -2782,3 +2782,58 @@ $\mathscr J_N(d_N+T_{N,>\widehat D_N})=o(1)$. This is a refinement
 of the project application of existing arithmetic inputs, with no
 mathematical-priority claim or Lean certification. It supplies no
 complete same-integer signed Robin bound or RH proof.
+
+The uniform estimate (I97) also permits using its two allowances
+directly, without restricting the logarithmic gain to a fixed power.
+Define
+$$
+\mathfrak D_{\mathrm{int}}
+ =\frac{\sqrt N}{h}\epsilon_N^{-1/2}L,\qquad
+\mathfrak D_{\mathrm{end}}
+ =h^{-3}\epsilon_N^{-1}L^2,\qquad
+D_N^\circ=
+\left\lfloor
+\frac{\min(\mathfrak D_{\mathrm{int}},\mathfrak D_{\mathrm{end}})}{\log L}
+\right\rfloor.
+\tag{I99}
+$$
+The original parameter family has
+$h\asymp N^{-1/4}e^{\lambda\Omega}$, hence both allowances are
+$N^{3/4}e^{O(\Omega)}$ times a fixed logarithmic power. Since
+$\Omega=o(L)$, eventually $2\le D_N^\circ\le N$. Equation (I97)
+then reads
+$$
+\begin{aligned}
+|\mathscr J_N(T_{N,\le D_N^\circ})|
+ &\ll
+ \left(\frac{D_N^\circ}{\mathfrak D_{\mathrm{int}}}\right)^2
+ +\frac{D_N^\circ}{\mathfrak D_{\mathrm{end}}}
+ \ll\frac1{(\log L)^2}+\frac1{\log L}=o(1),\\
+\mathcal A_{N,H}
+ &=\mathscr J_N(d_N+T_{N,>D_N^\circ})
+   +O(1/\log L),\qquad
+T_{N,>D_N^\circ}=R_N-d_N-T_{N,\le D_N^\circ}.
+\end{aligned}
+\tag{I100}
+$$
+In the fixed regime $\Delta_\star\ge c_\star/2$, the interior
+allowance is eventually smaller and
+$D_N^\circ\asymp(\sqrt N/h)e^{c_\star\Omega/2}L/\log L$.
+In the fixed regime $\Delta_\star<c_\star/2$, the endpoint allowance
+is eventually smaller and
+$D_N^\circ\asymp(\sqrt N/h)e^{\Delta_\star\Omega}L^2/\log L$.
+These comparisons follow from
+$\mathfrak D_{\mathrm{end}}/\mathfrak D_{\mathrm{int}}
+\asymp e^{(\Delta_\star-c_\star/2)\Omega}L$;
+the equality case belongs to the first regime.
+Thus $D_N^\circ/\widehat D_N\to\infty$ for each fixed
+$0\le\eta<1$ in (I98). This deduction uses the uniform finite-$D$
+estimate (I97), rather than substituting a varying $\eta$ into its
+fixed-parameter consequence (I98).
+
+This is an optimization of the two existing error allowances,
+with no additional cancellation theorem or mathematical-priority
+claim. The original aliases, endpoint and constant are retained.
+The still missing estimate is
+$\mathscr J_N(d_N+T_{N,>D_N^\circ})=o(1)$; the larger paid sector
+does not settle that estimate, the signed Robin bound or RH.
