@@ -78,7 +78,8 @@ private theorem poly_differentiable (s : ℝ) : Differentiable ℂ (poly s) := b
 private theorem poly_re_lower (s : ℝ) (hs : |s| ≤ 1) (z : ℂ)
     (hz : z ∈ closedBall 0 1) : 1 ≤ (poly s z).re := by
   have hz' : ‖z‖ ≤ 1 := by simpa using hz
-  have hpow : ‖z ^ 4‖ ≤ 1 := by simpa [norm_pow] using pow_le_one₀ (n := 4) (norm_nonneg z) hz'
+  have hpow : ‖z ^ 4‖ ≤ 1 := by
+    simpa [norm_pow] using pow_le_one₀ (n := 4) (norm_nonneg z) hz'
   have hmul : ‖(s : ℂ) * z ^ 4‖ ≤ 1 := by
     rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
     exact (mul_le_mul hs hpow (norm_nonneg _) (by norm_num)).trans (by norm_num)
@@ -142,7 +143,8 @@ private theorem weighted_circleAverage (s : ℝ) (f : ℂ → ℂ)
     (f₂ := fun z => (3 : ℂ) • f z + f z / z + (s : ℂ) • (f z / z ^ 4))
     (by
       intro z hz
-      simp only [poly, star_add, star_mul, star_pow, star_ofNat, show star (s : ℂ) = (s : ℂ) from Complex.conj_ofReal s,
+      simp only [poly, star_add, star_mul, star_pow, star_ofNat,
+        show star (s : ℂ) = (s : ℂ) from Complex.conj_ofReal s,
         hconj z hz, smul_eq_mul, div_eq_mul_inv, inv_pow]
       ring)
   rw [heq]
