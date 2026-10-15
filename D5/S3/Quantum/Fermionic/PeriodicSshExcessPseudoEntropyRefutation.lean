@@ -240,5 +240,14 @@ private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     exact hswap3 x
   rw [hleft3]
 
+private def psiCode (x : Assignment 6) : Fin 64 :=
+  finFunctionFinEquiv (fun j => if x j then (1 : Fin 2) else 0)
+
+private def psi38Int : Fin 64 → ℤ := ![0, 0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 20, 0, -20, 4, 0, 0, 0, 0, -20, 0, 21, -5, 0, 0, -5, 5, 0, -4, 0, 0, 0, 0, 0, 0, 4, 0, -5, 5, 0, 0, 5, -21, 0, 20, 0, 0, 0, 0, -4, 20, 0, -20, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0]
+private def psi58Int : Fin 64 → ℤ := ![0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 6, 0, -6, 2, 0, 0, 0, 0, -6, 0, 7, -3, 0, 0, -3, 3, 0, -2, 0, 0, 0, 0, 0, 0, 2, 0, -3, 3, 0, 0, 3, -7, 0, 6, 0, 0, 0, 0, -2, 6, 0, -6, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+
+private def psi38 : Assignment 6 → ℂ := fun x => (psi38Int (psiCode x) : ℂ)
+private def psi58 : Assignment 6 → ℂ := fun x => (psi58Int (psiCode x) : ℂ)
+
 end
 end D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
