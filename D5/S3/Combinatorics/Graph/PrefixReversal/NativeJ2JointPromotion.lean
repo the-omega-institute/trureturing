@@ -36,6 +36,8 @@ open private j2SpecialMap from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
 open private childLift parentPiece from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
+open private same_parent_chain from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
 
 private def rawPParentMap {m : ℕ} (F : SupplyFrame m 2)
     (A : List (Fin (m + 1))) (u : Fin (m + 1))
@@ -116,5 +118,73 @@ private theorem same_p_parent_opening {m : ℕ} (hm : 5 ≤ m)
       List.map_append, List.map_map, List.map_flatMap, List.map_cons, List.map_nil,
       Sym2.map_map, Sym2.map_mk, Function.comp_def]
       using hPe
+
+/-- Retain the literal saved first and last openings while exposing the
+intervening list required by the closed-parent joint constructor. -/
+private theorem same_parent_chain_inventory {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterParentWitnessFor hm F A u hbase hA)
+    (p P : Piece (ParentGraph F A u hbase))
+    (hp : p = W.pieces ⟨0, by
+      simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩)
+    (hP : P = W.pieces (pChildIndex F A u hbase)) :
+    ∃ others : List (Piece (ParentGraph F A u hbase)),
+      Linked p (others ++ [P]) ∧ W.base = p.start ∧
+      (ParentGraph F A u hbase).Adj P.finish p.start ∧
+      W.cycle.support.tail =
+        ((p :: (others ++ [P])).flatMap fun z => z.walk.support).reverse ∧
+      W.cycle.edges = s(W.base, finish p (others ++ [P])) ::
+        (chainEdges p (others ++ [P])).reverse := by
+  classical
+  let O := outerFrame F A u hbase
+  let p₀ := W.pieces ⟨0, by
+    simp only [O, outerFrame, List.length_append, List.length_singleton]; omega⟩
+  let ps := List.ofFn fun i : Fin (O.base.length - 1) =>
+    W.pieces ⟨i.val + 1, by
+      have hi := i.isLt
+      simp only [O, outerFrame, List.length_append, List.length_singleton] at hi ⊢
+      omega⟩
+  have hlen : 3 ≤ O.base.length := outer_base_bound F A u hbase hA
+  have hne : ps ≠ [] := by
+    intro h
+    have hlength := congrArg List.length h
+    simp only [ps, List.length_ofFn, List.length_nil] at hlength
+    omega
+  have hlast : ps.getLast hne = W.pieces (pChildIndex F A u hbase) := by
+    simp only [ps, List.getLast_ofFn]
+    congr 1
+    apply Fin.ext
+    simp only [Fin.val_mk, O, outerFrame, List.length_append,
+      List.length_singleton, pChildIndex]
+    omega
+  have hps : ps = ps.dropLast ++ [P] := by
+    rw [← hP] at hlast
+    exact (List.dropLast_append_getLast hne).symm.trans
+      (congrArg (fun q => ps.dropLast ++ [q]) hlast)
+  have hlist : p₀ :: ps = List.ofFn W.pieces := by
+    apply List.ext_getElem
+    · simp only [ps, List.length_cons, List.length_ofFn]; omega
+    · intro i hi hj
+      cases i with
+      | zero => simp only [p₀, List.getElem_cons_zero, List.getElem_ofFn]
+      | succ i => simp only [ps, List.getElem_cons_succ, List.getElem_ofFn]
+  have hp₀ : p = p₀ := hp
+  obtain ⟨hb, hlink, hfinish, hclose⟩ := same_parent_chain hm F A u hbase hA W
+  change W.base = p₀.start at hb
+  change Linked p₀ ps at hlink
+  change finish p₀ ps = (W.pieces (pChildIndex F A u hbase)).finish at hfinish
+  refine ⟨ps.dropLast, ?_, ?_, ?_, ?_, ?_⟩
+  · simpa only [hps, ← hp₀] using hlink
+  · simpa only [← hp₀] using hb
+  · simpa only [← hP, hb, ← hp₀] using hclose
+  · have h := W.support
+    rw [← hlist, hps, ← hp₀] at h
+    exact h
+  · have h := W.edges
+    change W.cycle.edges = s(W.base, (W.pieces (pChildIndex F A u hbase)).finish) ::
+      (chainEdges p₀ ps).reverse at h
+    rw [← hfinish, hps, ← hp₀] at h
+    exact h
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2JointPromotion
