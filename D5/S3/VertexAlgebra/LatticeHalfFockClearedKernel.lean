@@ -174,7 +174,7 @@ theorem native_cleared_kernel_expansion (D : LatticeData) (left right : Charge D
           (first - 2 * (bilinear D left right).natAbs) second := by
   rw [physical_difference_iterate, half_contraction_physical_clearing]
 
-private theorem cleared_polynomial_expansion (D : LatticeData) (left right : Charge D)
+theorem cleared_polynomial_expansion (D : LatticeData) (left right : Charge D)
     (gram : ℤ) (polynomial : Oscillator D) (first second : ℤ) :
     coefficientExpansion D left right (clearedPolynomial gram).toPowerSeries polynomial
         first second =

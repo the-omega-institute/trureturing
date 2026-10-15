@@ -46,7 +46,7 @@ private theorem creation_derivative (D : LatticeData) (charge : Charge D) :
     PowerSeries.derivative (Oscillator D) (halfCreationExponential D charge) =
       halfCreationExponential D charge *
         PowerSeries.derivative (Oscillator D) (halfCreationSeries D charge) := by
-  exact (originalCreationSupplier% exponential_derivative) D charge
+  exact LatticeHalfFockChargedCoefficients.exponential_derivative D charge
 
 theorem creation_exponential_add (D : LatticeData) (left right : Charge D) :
     halfCreationExponential D (left + right) =

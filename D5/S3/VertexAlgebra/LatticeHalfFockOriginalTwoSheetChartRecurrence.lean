@@ -167,7 +167,7 @@ private theorem cleared_ordered_monodromy (D : LatticeData) (hu : IsUnit D.G.det
   rw [sign]
   exact smul_comm _ _ _
 
-private theorem minus_sum_plus_neg (D : LatticeData) (hu : IsUnit D.G.det)
+theorem minus_sum_plus_neg (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (order : ℕ) (total : ℤ) (state : ActualTensor D hu) :
     (∑ᶠ exponent : ℤ, (((-1 : ℂ) ^ exponent) * halfIntegerBinomial exponent order) •
       clearedOrderedCoefficient D hu left right exponent (total - exponent) state) =
@@ -244,7 +244,7 @@ private theorem clearing_weight_vanishes (gram shift : ℤ) (order : ℕ)
   apply PowerSeries.coeff_mul_of_lt_order
   exact lt_of_lt_of_le (by exact_mod_cast below) bound
 
-private theorem weighted_kernel_diagonal_finite (D : LatticeData) (hu : IsUnit D.G.det)
+theorem weighted_kernel_diagonal_finite (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (total shift : ℤ) (state : ActualTensor D hu)
     (weight : ℤ → ℂ) :
     Function.HasFiniteSupport (fun exponent : ℤ => weight exponent •

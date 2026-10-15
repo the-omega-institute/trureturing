@@ -36,7 +36,7 @@ macro "originalChartSupplier% " supplier:ident : term => do
 
 noncomputable section
 
-private theorem local_plus_kernel_expansion (D : LatticeData) (hu : IsUnit D.G.det)
+theorem local_plus_kernel_expansion (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (order : ℕ) (total : ℤ) (state : ActualTensor D hu) :
     localPlus D hu left right order total state =
       (chargeScalar D left * chargeScalar D right) •
@@ -61,7 +61,7 @@ private theorem local_plus_kernel_expansion (D : LatticeData) (hu : IsUnit D.G.d
         (kernelTotal - (exponent + firstShift + degree)) state
   have finiteTerm (degree : ℕ) : Function.HasFiniteSupport (fun exponent => term exponent degree) := by
     simpa only [term, add_assoc] using
-      (originalChartSupplier% weighted_kernel_diagonal_finite) D hu left right
+      LatticeHalfFockOriginalTwoSheetChartRecurrence.weighted_kernel_diagonal_finite D hu left right
         kernelTotal (firstShift + degree) state
         (fun exponent => polynomial.coeff degree * halfIntegerBinomial exponent order)
   have finiteSum : Function.HasFiniteSupport (fun exponent => ∑ degree ∈ degrees,
@@ -116,7 +116,7 @@ private theorem local_plus_kernel_expansion (D : LatticeData) (hu : IsUnit D.G.d
       (polynomial.coeff degree * halfIntegerBinomial (exponent - firstShift - degree) order) •
         tensorCommonKernel D hu left right exponent (kernelTotal - exponent) state) := by
     simpa only [add_zero] using
-      (originalChartSupplier% weighted_kernel_diagonal_finite) D hu left right
+      LatticeHalfFockOriginalTwoSheetChartRecurrence.weighted_kernel_diagonal_finite D hu left right
         kernelTotal 0 state (fun exponent => polynomial.coeff degree *
           halfIntegerBinomial (exponent - firstShift - degree) order)
   rw [sum_finsum_comm degrees _ (fun degree member => finiteReindexed degree)]
@@ -125,7 +125,7 @@ private theorem local_plus_kernel_expansion (D : LatticeData) (hu : IsUnit D.G.d
   intro exponent
   exact Finset.sum_smul.symm
 
-private theorem norm_add (D : LatticeData) (left right : Charge D) :
+theorem norm_add (D : LatticeData) (left right : Charge D) :
     chargeNorm D (left + right) =
       chargeNorm D left + chargeNorm D right + 2 * bilinear D left right := by
   have first : bilinear D (left + right) left = bilinear D left left + bilinear D right left := by
@@ -138,7 +138,7 @@ private theorem norm_add (D : LatticeData) (left right : Charge D) :
     LatticeFiniteNegativeGeneration.bilinear_symmetric D right left]
   ring
 
-private theorem scalar_normalization (D : LatticeData) (left right : Charge D) :
+theorem scalar_normalization (D : LatticeData) (left right : Charge D) :
     (chargeScalar D left * chargeScalar D right) * (2 : ℂ) ^ (-2 * bilinear D left right) =
       chargeScalar D (left + right) := by
   unfold chargeScalar
@@ -165,7 +165,7 @@ private theorem local_plus_leading (D : LatticeData) (hu : IsUnit D.G.det)
   have finite : Function.HasFiniteSupport (fun exponent : ℤ =>
       tensorCommonKernel D hu left right exponent (kernelTotal - exponent) state) := by
     simpa only [add_zero, one_smul] using
-      (originalChartSupplier% weighted_kernel_diagonal_finite) D hu left right
+      LatticeHalfFockOriginalTwoSheetChartRecurrence.weighted_kernel_diagonal_finite D hu left right
         kernelTotal 0 state (fun _ => (1 : ℂ))
   change (chargeScalar D left * chargeScalar D right) •
     (∑ᶠ exponent : ℤ, (2 : ℂ) ^ (-2 * gram) •
@@ -217,7 +217,7 @@ theorem literal_minus_original_source (D : LatticeData) (hu : IsUnit D.G.det)
     (((-1 : ℂ) ^ exponent) * halfIntegerBinomial exponent
       (((bilinear D left right).natAbs - bilinear D left right : ℤ).toNat)) •
         clearedOrderedCoefficient D hu left right exponent (total - exponent) state) = _
-  rw [(originalChartSupplier% minus_sum_plus_neg)]
+  rw [LatticeHalfFockOriginalTwoSheetChartRecurrence.minus_sum_plus_neg]
   have opposite := literal_plus_original_source D hu (-left) right total state
   simpa only [LatticeFiniteNegativeGeneration.bilinear_neg_left, Int.natAbs_neg,
     ← sub_eq_add_neg, neg_neg] using opposite

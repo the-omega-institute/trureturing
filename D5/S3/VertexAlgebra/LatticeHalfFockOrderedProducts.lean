@@ -285,7 +285,7 @@ def tensorCommonKernel (D : LatticeData) (hu : IsUnit D.G.det) (left right : Cha
   TensorProduct.map (commonKernel D left right first second)
     (groundAction D hu left * groundAction D hu right)
 
-private theorem tensor_kernel_bounds (D : LatticeData) (hu : IsUnit D.G.det)
+theorem tensor_kernel_bounds (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (state : ActualTensor D hu) :
     ∃ firstBound secondBound : ℤ, ∀ first second : ℤ,
       first < firstBound ∨ second < secondBound →
