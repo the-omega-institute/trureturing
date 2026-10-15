@@ -89,3 +89,4 @@ Copy a basis vector i to (i,i), apply the channel on the first factor while reta
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../Quantum/Foundation/FiniteDiamondDistance.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Quantum/Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Information/CoherentCopyCorrelationTax](../Quantum/Information/CoherentCopyCorrelationTax.md)
+- Dependency: [D5/S3/Quantum/Information/InputInformationBalance](../Quantum/Information/InputInformationBalance.md)

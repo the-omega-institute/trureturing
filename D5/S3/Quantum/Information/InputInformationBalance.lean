@@ -132,7 +132,7 @@ private theorem isPure_relabel {n m : Type*} [Fintype n] [DecidableEq n]
   obtain ⟨v, hv⟩ := hp
   exact ⟨v ∘ e, fun i j => hv (e i) (e j)⟩
 
-private def arGrouping : (A × R) × B ≃ A × B × R :=
+def arGrouping : (A × R) × B ≃ A × B × R :=
   (Equiv.prodAssoc A R B).trans
     (Equiv.prodCongr (Equiv.refl A) (Equiv.prodComm R B))
 

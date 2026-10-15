@@ -10,73 +10,76 @@
    escape_witness: trace_contract_rectangular, disk_midpoint_phases.
    Dependency identities below are declaration statement_id values from the scoped Lean report.
    Direct frozen dependencies (same-delivery copying publications are inlined):
-   F1 = D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.diagonalStarAlgHom sha256:29d9fc8170caff55b46b44d1e754079f686dada4d842c9cbbb8ae807649435e7
-   F2 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.blockEquiv sha256:d10a0a9ba27b62c712c6cdad15315b60af7bfc3083426fcdcadb7b7a0e8eb34c
-   F3 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.diamondDistance sha256:6e32f575f2a34faa3db1f6da1dce4c4e8fe2414c1417f7c1f95e4da5d4ab0ac1
-   F4 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceError sha256:f05f1cfa14869425fe44bc58b005aece7518064a5758f95c9641538036fd5446
-   F5 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceLinear sha256:340ab3d4c5f514452095223ac9aa99f138c7c5a2b367d8da38a957e95ec19f05
-   F6 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceState sha256:fce7dbda7b9bc3c57d9745aba13ea068fe683f9fd560549f3c23e696ba4694c9
-   F7 = D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
-   F8 = D5/S3/Quantum/Foundation/FiniteStateChannel.DensityState sha256:4607242f5ca0464588fa7eea47cf23ce7ba387f9018664f7796740270945b0f5
-   F9 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05
-   F10 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.casesOn sha256:6d5a3feb3f22716c2a88a10a6033d69255b3df8fe8dbeb6fe36869d5642236a1
-   F11 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.comp sha256:e7e989d2ea98ac89bb277a37a55e98f4c09ea9ad7cb7c9c5d38e996d3210b719
-   F12 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.mapState sha256:85f38416b2caa15929825cb7cf7f1b334998a7ccc859cdb9374b371763e208d9
-   F13 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.mk sha256:e787cb5ff511b31a657aabef71bb6e726febdb72f7a409559f814e33e78c6aa1
-   F14 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc
-   F15 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15
-   F16 = D5/S3/Quantum/Foundation/FiniteTraceDistance.act sha256:d24d45715bfebbc6cedb06f8332e4beb5cd16094358b3e5f63eaf45de1ff765a
-   F17 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance sha256:a951383b42658bc45458c21e07d0f1306eb2d0af3f5709cef4338a96b4a21c20
-   F18 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_le_one sha256:e39763e0eaa049a1552c3521e69a0c41d255ca2c7d54cf73a839fdb6299cc4b5
-   F19 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm sha256:ec2ace26dd8d3b1f1b18defca9f881e75ab25f3e1a67abd2b14cdc72e2702569
-   F20 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_add_le sha256:3db8d0cc1aa28c78624e69d989ca938ee9442b2409e1ba0ba39d593ce49d5512
-   F21 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg sha256:d7a81ef774c91a733d963a18aa1a998fd412bb6e352db4f96b70ec875b1b00ec
-   F22 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg sha256:7412f30d565d9b30ebbf77bf0f5b93d44fe0082f8be41fd64fea60f00cdf2dfa
-   F23 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef sha256:f9f5b54d2f389f80229204551ad9217b56fb75ef8f081925f568f00cccca0db8
-   F24 = D5/S3/Quantum/Foundation/FiniteTraceDistance.trace_norm_jordan_mass sha256:fdb8cb601f51df385251551cad923f9150a7104b67ce271fcb777ba680d61c61
-   F25 = D5/S3/Quantum/Information/PartialTraceMutualInformation.density_posSemidef sha256:b799be7b0c6e16bb8e03b4bcf99946d7abbc95ac0078be4a08391bec19c88bdc
-   MixedUnitary: proof_shape: bind-only; escape_witness: none; deps: F9,F16; consumers: SchurMixedUnitary,Theta_preserves_mixed,assembly_from_replacement,claim,identity_schur_mixed,mixedUnitary_of_finite,result.
-   IsSchurChannel: proof_shape: bind-only; escape_witness: none; deps: F9,F16; consumers: SchurMixedUnitary,Theta_fixes_schur,Theta_preserves_mixed,Theta_schur,assembly_from_replacement,claim,identity_schur_mixed,result.
-   SchurMixedUnitary: proof_shape: bind-only; escape_witness: none; deps: F9,F16; consumers: Theta_preserves_mixed,assembly_from_replacement,claim,identity_schur_mixed,result.
-   distToSet: proof_shape: bind-only; escape_witness: none; deps: F3,F9; consumers: assembly_from_replacement,claim.
-   claim: proof_shape: bind-only; escape_witness: none; deps: F3,F9,F16; consumers: assembly_from_replacement,result.
-   AdV: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14; consumers: AdV_action,Theta,Theta_entry,Theta_pointwise_contract.
-   AdV_action: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14; consumers: Theta_entry.
+   F1 = D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337
+   F2 = D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.diagonalStarAlgHom sha256:29d9fc8170caff55b46b44d1e754079f686dada4d842c9cbbb8ae807649435e7
+   F3 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.blockEquiv sha256:d10a0a9ba27b62c712c6cdad15315b60af7bfc3083426fcdcadb7b7a0e8eb34c
+   F4 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.diamondDistance sha256:6e32f575f2a34faa3db1f6da1dce4c4e8fe2414c1417f7c1f95e4da5d4ab0ac1
+   F5 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceError sha256:f05f1cfa14869425fe44bc58b005aece7518064a5758f95c9641538036fd5446
+   F6 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceLinear sha256:340ab3d4c5f514452095223ac9aa99f138c7c5a2b367d8da38a957e95ec19f05
+   F7 = D5/S3/Quantum/Foundation/FiniteDiamondDistance.referenceState sha256:fce7dbda7b9bc3c57d9745aba13ea068fe683f9fd560549f3c23e696ba4694c9
+   F8 = D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+   F9 = D5/S3/Quantum/Foundation/FiniteStateChannel.DensityState sha256:4607242f5ca0464588fa7eea47cf23ce7ba387f9018664f7796740270945b0f5
+   F10 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05
+   F11 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.casesOn sha256:6d5a3feb3f22716c2a88a10a6033d69255b3df8fe8dbeb6fe36869d5642236a1
+   F12 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.comp sha256:e7e989d2ea98ac89bb277a37a55e98f4c09ea9ad7cb7c9c5d38e996d3210b719
+   F13 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.mapState sha256:85f38416b2caa15929825cb7cf7f1b334998a7ccc859cdb9374b371763e208d9
+   F14 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.mk sha256:e787cb5ff511b31a657aabef71bb6e726febdb72f7a409559f814e33e78c6aa1
+   F15 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc
+   F16 = D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15
+   F17 = D5/S3/Quantum/Foundation/FiniteTraceDistance.act sha256:d24d45715bfebbc6cedb06f8332e4beb5cd16094358b3e5f63eaf45de1ff765a
+   F18 = D5/S3/Quantum/Foundation/FiniteTraceDistance.act._proof_1 sha256:a36e55be841bd0bfc7a754be9998b73dc950a1d8c6dd6d634aed3d8a13e7418b
+   F19 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance sha256:a951383b42658bc45458c21e07d0f1306eb2d0af3f5709cef4338a96b4a21c20
+   F20 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance._proof_1 sha256:786a0c12941226388043cfbd6d2fe1a86d4e3cf8b6be93df8b354b845e23f6e7
+   F21 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_le_one sha256:e39763e0eaa049a1552c3521e69a0c41d255ca2c7d54cf73a839fdb6299cc4b5
+   F22 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm sha256:ec2ace26dd8d3b1f1b18defca9f881e75ab25f3e1a67abd2b14cdc72e2702569
+   F23 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm._proof_1 sha256:8ce2e9d271f33da05e69000cafc91db499f50cd47f0e5f7b154baa975a3a9cc6
+   F24 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm._proof_2 sha256:2217a97717ba8d198ee9ee17356dad545d41f95282add3ad5df1790beb6ff791
+   F25 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm._proof_7 sha256:5f854fd7eee62349e53f46e6718cdea507d64df8d2f6b1e2ba8e1da15cd9898c
+   F26 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_add_le sha256:3db8d0cc1aa28c78624e69d989ca938ee9442b2409e1ba0ba39d593ce49d5512
+   F27 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg sha256:d7a81ef774c91a733d963a18aa1a998fd412bb6e352db4f96b70ec875b1b00ec
+   F28 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg sha256:7412f30d565d9b30ebbf77bf0f5b93d44fe0082f8be41fd64fea60f00cdf2dfa
+   F29 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef sha256:f9f5b54d2f389f80229204551ad9217b56fb75ef8f081925f568f00cccca0db8
+   F30 = D5/S3/Quantum/Foundation/FiniteTraceDistance.trace_norm_jordan_mass sha256:fdb8cb601f51df385251551cad923f9150a7104b67ce271fcb777ba680d61c61
+   F31 = D5/S3/Quantum/Information/InputInformationBalance.arGrouping sha256:af64f53b6ae6b26a40dbfe8f5c7fdb38e50d44a78cf4e585a83d4f4de7d94ed1
+   F32 = D5/S3/Quantum/Information/InputInformationBalance.relabel sha256:2e704856d9d573b4a8f22319e5679cc174447e6777e119e041bba2cbfdbe72a6
+   F33 = D5/S3/Quantum/Information/PartialTraceMutualInformation.density_posSemidef sha256:b799be7b0c6e16bb8e03b4bcf99946d7abbc95ac0078be4a08391bec19c88bdc
+   MixedUnitary: proof_shape: bind-only; escape_witness: none; deps: F10,F17; consumers: SchurMixedUnitary,Theta_preserves_mixed,assembly_from_replacement,claim,identity_schur_mixed,mixedUnitary_of_finite,result.
+   IsSchurChannel: proof_shape: bind-only; escape_witness: none; deps: F10,F17; consumers: SchurMixedUnitary,Theta_fixes_schur,Theta_preserves_mixed,Theta_schur,assembly_from_replacement,claim,identity_schur_mixed,result.
+   SchurMixedUnitary: proof_shape: bind-only; escape_witness: none; deps: F10,F17; consumers: Theta_preserves_mixed,assembly_from_replacement,claim,identity_schur_mixed,result.
+   distToSet: proof_shape: bind-only; escape_witness: none; deps: F4,F10; consumers: assembly_from_replacement,claim.
+   claim: proof_shape: bind-only; escape_witness: none; deps: F4,F10,F17; consumers: assembly_from_replacement,result.
+   AdV: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15; consumers: AdV_action,Theta,Theta_entry,Theta_pointwise_contract.
+   AdV_action: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15; consumers: Theta_entry.
    recoveryKraus: proof_shape: bind-only; escape_witness: none; deps: none; consumers: recovery,recovery_action,recovery_complete,recovery_entries,recovery_kraus_none,recovery_kraus_some,recovery_some_square.
    recovery_some_square: proof_shape: bind-only; escape_witness: none; deps: none; consumers: recovery_complete.
    recovery_complete: proof_shape: bind-only; escape_witness: none; deps: none; consumers: recovery,recovery_action.
-   recovery: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14; consumers: Theta,Theta_entry,Theta_pointwise_contract,recovery_action,recovery_entries.
-   recovery_action: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14; consumers: recovery_entries.
+   recovery: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15; consumers: Theta,Theta_entry,Theta_pointwise_contract,recovery_action,recovery_entries.
+   recovery_action: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15; consumers: recovery_entries.
    copy_conjugation: proof_shape: bind-only; escape_witness: none; deps: none; consumers: Theta_entry.
    recovery_kraus_none: proof_shape: bind-only; escape_witness: none; deps: none; consumers: recovery_entries.
    recovery_kraus_some: proof_shape: bind-only; escape_witness: none; deps: none; consumers: recovery_entries.
-   recovery_entries: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14; consumers: Theta_entry.
-   reference_error_bounds: proof_shape: bind-only; escape_witness: none; deps: F4,F6,F8,F9,F17,F18,F22; consumers: diamond_bounds,reference_error_le_diamond.
-   diamond_bounds: proof_shape: bind-only; escape_witness: none; deps: F3,F4,F6,F8,F9,F17,F18,F22; consumers: Theta_diamond_contract,distance_image_bdd_below.
-   identityChannel: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14; consumers: assembly_from_replacement,identity_action,identity_schur_mixed.
-   identity_action: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14,F16; consumers: identity_schur_mixed.
-   identity_schur_mixed: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F14,F16; consumers: assembly_from_replacement.
-   distance_image_bdd_below: proof_shape: bind-only; escape_witness: none; deps: F3,F4,F6,F8,F9,F17,F18,F22; consumers: assembly_from_replacement.
-   assembly_from_replacement: proof_shape: bind-only; escape_witness: none; deps: F3,F4,F6,F7,F8,F9,F14,F16,F17,F18,F22; consumers: result.
-   referenceChannel: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F9,F13,F14,F15; consumers: Theta_pointwise_contract,leftChannel,referenceChannel_state.
-   trace_contract_rectangular: proof_shape: content; escape_witness: trace_contract_rectangular; reason: Jordan decomposition proves trace contraction for arbitrary finite input and output types; deps: F8,F9,F12,F14,F15,F17,F19,F20,F21,F23,F24,F25; consumers: Theta_pointwise_contract.
-   reindex_traceNorm: proof_shape: bind-only; escape_witness: none; deps: F19; consumers: reference_reindex_error,traceDistance_reindex.
-   reindexState: proof_shape: bind-only; escape_witness: none; deps: F8; consumers: Theta_pointwise_contract,left_reference_state,reference_error_le_diamond,reference_reindex_error,traceDistance_reindex.
-   reference_reindex_error: proof_shape: bind-only; escape_witness: none; deps: F4,F6,F8,F9,F19; consumers: reference_error_le_diamond.
-   reference_error_le_diamond: proof_shape: bind-only; escape_witness: none; deps: F3,F4,F6,F8,F9,F17,F18,F19,F22; consumers: Theta_pointwise_contract.
-   reindexChannel: proof_shape: bind-only; escape_witness: none; deps: F9,F13; consumers: leftChannel.
-   leftChannel: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F9,F11,F13,F14,F15; consumers: Theta,Theta_entry,Theta_pointwise_contract,leftChannel_entry,left_reference_state.
-   leftChannel_entry: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F9,F11,F13,F14,F15; consumers: Theta_entry.
-   Theta: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F7,F9,F11,F13,F14,F15; consumers: Theta_diamond_contract,Theta_entry,Theta_fixes_schur,Theta_mixture_entries,Theta_pointwise_contract,Theta_preserves_mixed,Theta_schur,result.
-   matrixAct_comp: proof_shape: bind-only; escape_witness: none; deps: F9,F11,F14; consumers: Theta_entry.
-   Theta_entry: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F7,F9,F11,F13,F14,F15,F16; consumers: Theta_fixes_schur,Theta_mixture_entries,Theta_schur.
-   reference_comp: proof_shape: bind-only; escape_witness: none; deps: F6,F8,F9,F11; consumers: Theta_pointwise_contract.
-   referenceChannel_state: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F6,F8,F9,F12,F13,F14,F15; consumers: Theta_pointwise_contract.
-   memorySwap: proof_shape: bind-only; escape_witness: none; deps: none; consumers: Theta_pointwise_contract,left_reference_state.
-   left_reference_state: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F6,F8,F9,F11,F13,F14,F15; consumers: Theta_pointwise_contract.
-   traceDistance_reindex: proof_shape: bind-only; escape_witness: none; deps: F8,F17,F19; consumers: Theta_pointwise_contract.
-   Theta_pointwise_contract: proof_shape: content; escape_witness: trace_contract_rectangular; reason: rectangular trace contraction controls recovered joint-state errors; deps: F2,F3,F4,F5,F6,F7,F8,F9,F11,F12,F13,F14,F15,F17,F18,F19,F20,F21,F22,F23,F24,F25; consumers: Theta_diamond_contract.
-   Theta_diamond_contract: proof_shape: content; escape_witness: trace_contract_rectangular; reason: the supremum bound uses rectangular trace contraction; deps: F2,F3,F4,F5,F6,F7,F8,F9,F11,F12,F13,F14,F15,F17,F18,F19,F20,F21,F22,F23,F24,F25; consumers: result.
+   recovery_entries: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15; consumers: Theta_entry.
+   reference_error_bounds: proof_shape: bind-only; escape_witness: none; deps: F5,F7,F9,F10,F19,F21,F28; consumers: diamond_bounds,reference_error_le_diamond.
+   diamond_bounds: proof_shape: bind-only; escape_witness: none; deps: F4,F5,F7,F9,F10,F19,F21,F28; consumers: Theta_diamond_contract,distance_image_bdd_below.
+   identityChannel: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15; consumers: assembly_from_replacement,identity_action,identity_schur_mixed.
+   identity_action: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15,F17,F18; consumers: identity_schur_mixed.
+   identity_schur_mixed: proof_shape: bind-only; escape_witness: none; deps: F8,F10,F15,F17,F18; consumers: assembly_from_replacement.
+   distance_image_bdd_below: proof_shape: bind-only; escape_witness: none; deps: F4,F5,F7,F9,F10,F19,F21,F28; consumers: assembly_from_replacement.
+   assembly_from_replacement: proof_shape: bind-only; escape_witness: none; deps: F4,F5,F7,F8,F9,F10,F15,F17,F18,F19,F21,F28; consumers: result.
+   referenceChannel: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F10,F14,F15,F16; consumers: Theta_pointwise_contract,leftChannel.
+   trace_contract_rectangular: proof_shape: content; escape_witness: trace_contract_rectangular; reason: Jordan decomposition proves trace contraction for arbitrary finite input and output types; deps: F9,F10,F13,F15,F16,F19,F20,F22,F26,F27,F29,F30,F33; consumers: Theta_pointwise_contract.
+   reindex_traceNorm: proof_shape: bind-only; escape_witness: none; deps: F22,F23,F24,F25; consumers: reference_reindex_error,traceDistance_reindex.
+   reference_reindex_error: proof_shape: bind-only; escape_witness: none; deps: F5,F7,F9,F10,F22,F23,F24,F25,F32; consumers: reference_error_le_diamond.
+   reference_error_le_diamond: proof_shape: bind-only; escape_witness: none; deps: F1,F5,F7,F9,F10,F19,F21,F22,F23,F24,F25,F28,F32; consumers: Theta_pointwise_contract.
+   reindexChannel: proof_shape: bind-only; escape_witness: none; deps: F14; consumers: leftChannel.
+   leftChannel: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F10,F12,F14,F15,F16; consumers: Theta,Theta_entry,Theta_pointwise_contract,left_reference_state.
+   Theta: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F8,F10,F12,F14,F15,F16; consumers: Theta_diamond_contract,Theta_entry,Theta_fixes_schur,Theta_mixture_entries,Theta_pointwise_contract,Theta_preserves_mixed,Theta_schur,result.
+   Theta_entry: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F8,F10,F12,F14,F15,F16,F17; consumers: Theta_fixes_schur,Theta_mixture_entries,Theta_schur.
+   reference_comp: proof_shape: bind-only; escape_witness: none; deps: F7,F9,F10,F12; consumers: Theta_pointwise_contract.
+   left_reference_state: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F7,F9,F10,F12,F14,F15,F16; consumers: Theta_pointwise_contract.
+   traceDistance_reindex: proof_shape: bind-only; escape_witness: none; deps: F9,F19,F20,F22,F23,F24,F25,F32; consumers: Theta_pointwise_contract.
+   Theta_pointwise_contract: proof_shape: content; escape_witness: trace_contract_rectangular; reason: rectangular trace contraction controls recovered joint-state errors; deps: F1,F3,F4,F5,F6,F7,F8,F9,F10,F12,F13,F14,F15,F16,F19,F20,F21,F22,F23,F24,F25,F26,F27,F28,F29,F30,F31,F32,F33; consumers: Theta_diamond_contract.
+   Theta_diamond_contract: proof_shape: content; escape_witness: trace_contract_rectangular; reason: the supremum bound uses rectangular trace contraction; deps: F1,F3,F4,F5,F6,F7,F8,F9,F10,F12,F13,F14,F15,F16,F19,F20,F21,F22,F23,F24,F25,F26,F27,F28,F29,F30,F31,F32,F33; consumers: result.
    disk_midpoint_phases: proof_shape: content; escape_witness: disk_midpoint_phases; reason: constructs two unit phases whose midpoint is any given point of the closed unit disk; deps: none; consumers: Theta_preserves_mixed.
    uniform_coordinate_sum: proof_shape: bind-only; escape_witness: none; deps: none; consumers: uniform_two_coordinate_sum.
    uniform_two_coordinate_sum: proof_shape: bind-only; escape_witness: none; deps: none; consumers: uniform_two_coordinate_average.
@@ -84,25 +87,29 @@
    uniform_two_coordinate_average: proof_shape: bind-only; escape_witness: none; deps: none; consumers: phase_kernel_average.
    phase_kernel_average: proof_shape: bind-only; escape_witness: none; deps: none; consumers: phase_unitary_average.
    unitary_diagonal_norm_le: proof_shape: bind-only; escape_witness: none; deps: none; consumers: Theta_preserves_mixed.
-   diagonalPhaseUnitary: proof_shape: bind-only; escape_witness: none; deps: F1; consumers: Theta_preserves_mixed,phase_unitary_average.
-   phase_unitary_average: proof_shape: bind-only; escape_witness: none; deps: F1; consumers: Theta_preserves_mixed.
-   channel_trace_matrix: proof_shape: bind-only; escape_witness: none; deps: F9,F15,F16; consumers: Theta_fixes_schur,Theta_mixture_entries,Theta_schur.
-   act_smul: proof_shape: bind-only; escape_witness: none; deps: F9,F14,F16; consumers: Theta_schur.
-   Theta_schur: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F7,F9,F11,F13,F14,F15,F16; consumers: Theta_preserves_mixed.
-   Theta_fixes_schur: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F7,F9,F11,F13,F14,F15,F16; consumers: result.
+   diagonalPhaseUnitary: proof_shape: bind-only; escape_witness: none; deps: F2; consumers: Theta_preserves_mixed,phase_unitary_average.
+   phase_unitary_average: proof_shape: bind-only; escape_witness: none; deps: F2; consumers: Theta_preserves_mixed.
+   channel_trace_matrix: proof_shape: bind-only; escape_witness: none; deps: F10,F16; consumers: Theta_fixes_schur,Theta_mixture_entries,Theta_schur.
+   act_smul: proof_shape: bind-only; escape_witness: none; deps: F10,F15,F17,F18; consumers: Theta_schur.
+   Theta_schur: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F8,F10,F12,F14,F15,F16,F17,F18; consumers: Theta_preserves_mixed.
+   Theta_fixes_schur: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F8,F10,F12,F14,F15,F16,F17; consumers: result.
    conjugate_single_entry: proof_shape: bind-only; escape_witness: none; deps: none; consumers: Theta_mixture_entries.
-   Theta_mixture_entries: proof_shape: bind-only; escape_witness: none; deps: F2,F5,F7,F9,F11,F13,F14,F15,F16; consumers: Theta_preserves_mixed.
-   mixedUnitary_of_finite: proof_shape: bind-only; escape_witness: none; deps: F9,F16; consumers: Theta_preserves_mixed.
-   Theta_preserves_mixed: proof_shape: content; escape_witness: disk_midpoint_phases; reason: the two-phase construction produces a diagonal-unitary mixture; deps: F1,F2,F5,F7,F9,F11,F13,F14,F15,F16; consumers: result.
-   channel_ext_act: proof_shape: bind-only; escape_witness: none; deps: F9,F10,F13,F14,F16; consumers: result.
-   result: proof_shape: content; escape_witness: trace_contract_rectangular; reason: rectangular contraction and disk_midpoint_phases compare the two infima; deps: F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12,F13,F14,F15,F16,F17,F18,F19,F20,F21,F22,F23,F24,F25; consumers: settling result.
+   Theta_mixture_entries: proof_shape: bind-only; escape_witness: none; deps: F3,F6,F8,F10,F12,F14,F15,F16,F17; consumers: Theta_preserves_mixed.
+   mixedUnitary_of_finite: proof_shape: bind-only; escape_witness: none; deps: F10,F17; consumers: Theta_preserves_mixed.
+   Theta_preserves_mixed: proof_shape: content; escape_witness: disk_midpoint_phases; reason: the two-phase construction produces a diagonal-unitary mixture; deps: F2,F3,F6,F8,F10,F12,F14,F15,F16,F17,F18; consumers: result.
+   channel_ext_act: proof_shape: bind-only; escape_witness: none; deps: F10,F11,F14,F15,F17; consumers: result.
+   result: proof_shape: content; escape_witness: trace_contract_rectangular; reason: rectangular contraction and disk_midpoint_phases compare the two infima; deps: F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12,F13,F14,F15,F16,F17,F18,F19,F20,F21,F22,F23,F24,F25,F26,F27,F28,F29,F30,F31,F32,F33; consumers: settling result.
    FiniteKrausRepresentation is unfrozen; amplification uses referenceLinear and Mathlib.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16913
+   Publicized owner audit target: D5/S3/Quantum/Information/InputInformationBalance.arGrouping sha256:af64f53b6ae6b26a40dbfe8f5c7fdb38e50d44a78cf4e585a83d4f4de7d94ed1;
+   its dependent equivalence-valued family registration has no compiled reconstruction,
+   lawful readout, source selection, variation, sensitivity or observational-dependence evidence.
    Literature completeness: ASSUMED-UNVERIFIED.
  -/
 import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Information.CoherentCopyCorrelationTax
+import D5.S3.Quantum.Information.InputInformationBalance
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -114,6 +121,7 @@ open D5.S3.Quantum.Foundation.FiniteDiamondDistance
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open Matrix
 open D5.S3.Quantum.Information.CoherentCopyCorrelationTax
+open D5.S3.Quantum.Information
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Matrix Kronecker
 def MixedUnitary (d : ℕ) : Set (QuantumChannel (Fin d) (Fin d)) :=
   {Ψ | ∃ (n : ℕ) (p : Fin n → ℝ)
@@ -440,22 +448,15 @@ private theorem reindex_traceNorm {a b : Type} [Fintype a] [DecidableEq a]
   congr 1
   exact e.symm.sum_comp (fun i : a => CFC.sqrt (Xᴴ * X) i i)
 
-private def reindexState {a b : Type} [Fintype a] [DecidableEq a]
-    [Fintype b] [DecidableEq b] (e : a ≃ b) (ρ : DensityState a) : DensityState b :=
-  ⟨CStarMatrix.reindexₐ ℂ ℂ e ρ.1,
-    map_nonneg (CStarMatrix.reindexₐ ℂ ℂ e) ρ.2.1, by
-      change (∑ i : b, ρ.1 (e.symm i) (e.symm i)) = 1
-      exact (e.symm.sum_comp (fun i : a => ρ.1 i i)).trans ρ.2.2⟩
-
 private theorem reference_reindex_error {r s a b : Type}
     [Fintype r] [DecidableEq r] [Fintype s] [DecidableEq s]
     [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (e : r ≃ s) (Φ Ψ : QuantumChannel a b) (ρ : DensityState (r × a)) :
-    referenceError Φ Ψ (reindexState (Equiv.prodCongr e (Equiv.refl a)) ρ) =
+    referenceError Φ Ψ (InputInformationBalance.relabel (Equiv.prodCongr e (Equiv.refl a)).symm ρ) =
       referenceError Φ Ψ ρ := by
   have he (T : QuantumChannel a b) :
       CStarMatrix.ofMatrix.symm
-        (referenceState T (reindexState (Equiv.prodCongr e (Equiv.refl a)) ρ)).1 =
+        (referenceState T (InputInformationBalance.relabel (Equiv.prodCongr e (Equiv.refl a)).symm ρ)).1 =
       (Matrix.reindexAlgEquiv ℂ ℂ (Equiv.prodCongr e (Equiv.refl b)))
         (CStarMatrix.ofMatrix.symm (referenceState T ρ).1) := by
     ext ⟨i,u⟩ ⟨j,v⟩
@@ -469,7 +470,7 @@ private theorem reference_error_le_diamond {r a b : Type}
     [Fintype b] [DecidableEq b] (Φ Ψ : QuantumChannel a b)
     (ρ : DensityState (r × a)) : referenceError Φ Ψ ρ ≤ diamondDistance Φ Ψ := by
   let e : r ≃ Fin (Fintype.card r) := Fintype.equivFin r
-  let σ := reindexState (Equiv.prodCongr e (Equiv.refl a)) ρ
+  let σ := InputInformationBalance.relabel (Equiv.prodCongr e (Equiv.refl a)).symm ρ
   have hB : BddAbove ({0} ∪ {x : ℝ | ∃ n : ℕ,
       ∃ τ : DensityState (Fin n × a), x = referenceError Φ Ψ τ}) := by
     refine ⟨2, ?_⟩
@@ -494,22 +495,9 @@ private def leftChannel {a b r : Type} [Fintype a] [DecidableEq a]
   (reindexChannel (Equiv.prodComm r b)).comp
     ((referenceChannel (r := r) T).comp (reindexChannel (Equiv.prodComm a r)))
 
-private theorem leftChannel_entry {a b r : Type} [Fintype a] [DecidableEq a]
-    [Fintype b] [DecidableEq b] [Fintype r] [DecidableEq r]
-    (T : QuantumChannel a b) (X : CStarMatrix (a × r) (a × r) ℂ)
-    (u v : b) (i j : r) :
-    ((leftChannel T).toCompletelyPositiveMap X) (u,i) (v,j) =
-      T.toCompletelyPositiveMap (CStarMatrix.ofMatrix fun x y => X (x,i) (y,j)) u v := by
-  rfl
-
 private def Theta {d : ℕ} (T : QuantumChannel (Fin d) (Fin d)) :
     QuantumChannel (Fin d) (Fin d) :=
   (recovery d).comp ((leftChannel T).comp (AdV d))
-
-private theorem matrixAct_comp {a b c : Type} [Fintype a] [DecidableEq a]
-    [Fintype b] [DecidableEq b] [Fintype c] [DecidableEq c]
-    (S : QuantumChannel b c) (T : QuantumChannel a b) (X : Matrix a a ℂ) :
-    (fun T X => CStarMatrix.ofMatrix.symm (QuantumChannel.toCompletelyPositiveMap T (CStarMatrix.ofMatrix X))) (S.comp T) X = (fun T X => CStarMatrix.ofMatrix.symm (QuantumChannel.toCompletelyPositiveMap T (CStarMatrix.ofMatrix X))) S ((fun T X => CStarMatrix.ofMatrix.symm (QuantumChannel.toCompletelyPositiveMap T (CStarMatrix.ofMatrix X))) T X) := rfl
 
 private theorem Theta_entry {d : ℕ} (T : QuantumChannel (Fin d) (Fin d))
     (X : Matrix (Fin d) (Fin d) ℂ) (i j : Fin d) :
@@ -518,7 +506,6 @@ private theorem Theta_entry {d : ℕ} (T : QuantumChannel (Fin d) (Fin d))
       else act T (Matrix.single i j (X i j)) i j := by
   change (fun T X => CStarMatrix.ofMatrix.symm (QuantumChannel.toCompletelyPositiveMap T (CStarMatrix.ofMatrix X))) (Theta T) X i j = _
   unfold Theta
-  rw [matrixAct_comp, matrixAct_comp]
   change (fun T X => CStarMatrix.ofMatrix.symm (QuantumChannel.toCompletelyPositiveMap T (CStarMatrix.ofMatrix X))) (recovery d) ((fun T X => CStarMatrix.ofMatrix.symm (QuantumChannel.toCompletelyPositiveMap T (CStarMatrix.ofMatrix X))) (leftChannel T)
     (CStarMatrix.ofMatrix.symm ((AdV d).toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))) i j = _
   rw [AdV_action]
@@ -544,7 +531,6 @@ private theorem Theta_entry {d : ℕ} (T : QuantumChannel (Fin d) (Fin d))
       act T (Matrix.single u v (X u v)) k l := by
     change ((leftChannel T).toCompletelyPositiveMap
       (CStarMatrix.ofMatrix ((copyIsometry (n := Fin d)) * X * ((copyIsometry (n := Fin d)))ᴴ))) (k,u) (l,v) = _
-    rw [leftChannel_entry]
     change T.toCompletelyPositiveMap
       (CStarMatrix.ofMatrix fun x y => ((copyIsometry (n := Fin d)) * X * ((copyIsometry (n := Fin d)))ᴴ) (x,u) (y,v)) k l = _
     rw [hblock]
@@ -559,29 +545,20 @@ private theorem reference_comp {r a b c : Type}
     referenceState (S.comp T) ρ = referenceState S (referenceState T ρ) := by
   rfl
 
-private theorem referenceChannel_state {r a b : Type}
-    [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
-    [Fintype b] [DecidableEq b] (T : QuantumChannel a b) (ρ : DensityState (r × a)) :
-    (referenceChannel T).mapState ρ = referenceState T ρ := by
-  rfl
-
-private def memorySwap (r a : Type) : r × (a × a) ≃ (r × a) × a :=
-  (Equiv.prodCongr (Equiv.refl r) (Equiv.prodComm a a)).trans (Equiv.prodAssoc r a a).symm
-
 private theorem left_reference_state {r a : Type}
     [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
     (T : QuantumChannel a a) (ρ : DensityState (r × (a × a))) :
     referenceState (leftChannel T) ρ =
-      reindexState (memorySwap r a).symm
-        (referenceState T (reindexState (memorySwap r a) ρ)) := by
+      InputInformationBalance.relabel (InputInformationBalance.arGrouping (A := r) (R := a) (B := a)).symm
+        (referenceState T (InputInformationBalance.relabel (InputInformationBalance.arGrouping (A := r) (R := a) (B := a)) ρ)) := by
   rfl
 
 private theorem traceDistance_reindex {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (e : a ≃ b) (ρ σ : DensityState a) :
-    traceDistance (reindexState e ρ) (reindexState e σ) = traceDistance ρ σ := by
-  have hρ : CStarMatrix.ofMatrix.symm (reindexState e ρ).1 =
+    traceDistance (InputInformationBalance.relabel e.symm ρ) (InputInformationBalance.relabel e.symm σ) = traceDistance ρ σ := by
+  have hρ : CStarMatrix.ofMatrix.symm (InputInformationBalance.relabel e.symm ρ).1 =
       (Matrix.reindexAlgEquiv ℂ ℂ e) (CStarMatrix.ofMatrix.symm ρ.1) := rfl
-  have hσ : CStarMatrix.ofMatrix.symm (reindexState e σ).1 =
+  have hσ : CStarMatrix.ofMatrix.symm (InputInformationBalance.relabel e.symm σ).1 =
       (Matrix.reindexAlgEquiv ℂ ℂ e) (CStarMatrix.ofMatrix.symm σ.1) := rfl
   unfold traceDistance
   rw [hρ, hσ, ← map_sub, reindex_traceNorm]
@@ -591,15 +568,13 @@ private theorem Theta_pointwise_contract {d : ℕ} {r : Type}
     (T S : QuantumChannel (Fin d) (Fin d)) (ρ : DensityState (r × Fin d)) :
     referenceError (Theta T) (Theta S) ρ ≤ diamondDistance T S := by
   let ρ₀ := referenceState (AdV d) ρ
-  let σ := reindexState (memorySwap r (Fin d)) ρ₀
+  let σ := InputInformationBalance.relabel (InputInformationBalance.arGrouping (A := r) (R := Fin d) (B := Fin d)) ρ₀
   have hT : referenceState (Theta T) ρ =
       (referenceChannel (recovery d)).mapState (referenceState (leftChannel T) ρ₀) := by
-    rw [referenceChannel_state]
     exact (reference_comp (recovery d) ((leftChannel T).comp (AdV d)) ρ).trans
       (congrArg (referenceState (recovery d)) (reference_comp (leftChannel T) (AdV d) ρ))
   have hS : referenceState (Theta S) ρ =
       (referenceChannel (recovery d)).mapState (referenceState (leftChannel S) ρ₀) := by
-    rw [referenceChannel_state]
     exact (reference_comp (recovery d) ((leftChannel S).comp (AdV d)) ρ).trans
       (congrArg (referenceState (recovery d)) (reference_comp (leftChannel S) (AdV d) ρ))
   have h := trace_contract_rectangular (referenceChannel (recovery d))
