@@ -2259,3 +2259,659 @@ ceiling; no Lean/kernel certificate, minimum hardware or physical-cost
 claim follows. QED.
 
 ## 追加锚（本行以下为增补区）
+## 134. Two original copies: the attained BOTH-REAL spatial value
+
+**Definition C-134.1 (The original-cut two-copy problem).**
+Use the original source and target of
+[FIB noisy source programming minimax, Definitions 1.1–1.3](FIB_NOISY_SOURCE_PROGRAMMING_MINIMAX.md)
+without changing their coordinate identification. Thus
+$B=(0,1,2,3,13)$, $f=(0\ 13)(1\ 3)$, $f(2)=2$,
+$Je_j=|B_j,f(B_j)\rangle$, and the two active coefficient pairs are
+$d_a=(0,4)$ and $d_b=(1,3)$. Put
+
+$$
+\begin{aligned}
+X_a&=i(E_{04}-E_{40}),& X_b&=i(E_{13}-E_{31}),\\
+c&=(1-\eta)t,&u&=c/5,\\
+s&=1-4\eta/5,&w&=s/5,&n&=\eta/25.
+\end{aligned}
+\tag{C134.1}
+$$
+
+Here $t,\eta\in[0,1]$ are known. The one unknown label
+$X\in\{X_a,-X_a,X_b,-X_b\}$ is fixed throughout the batch. The
+actual two programs are conditionally iid copies of
+
+$$
+\rho_X=(1-\eta)J(I_5+tX)J^\dagger/5+\eta I_{25}/25,
+\tag{C134.2}
+$$
+
+initially independent of the entire data/reference state. All twenty
+unmatched white-noise modes remain present. The target on the entire
+complex algebra is
+
+$$
+\Phi_X(Y)=(1-\eta)(I_5+tX)\circ Y
+                  +\eta\operatorname{tr}(Y)I_5/5.
+\tag{C134.3}
+$$
+
+Alice holds the complex five-dimensional data and $A_1,A_2$; Bob holds
+$B_1,B_2$ and the output under the prescribed fixed identification.
+A BOTH-REAL competitor is one label-independent finite-round two-way
+LOCC processor, with every local Kraus matrix real in the original
+bases. Arbitrary finite real local computational ancillas, the supplied
+calibrated real local controls, discard/reset, shared classical randomness
+and classical messages are allowed. The processor must be CP and TP on
+the entire joint algebra, including off-promise and correlated inputs.
+Evaluation uses the stipulated independent programs. Data and every
+untouched finite reference remain complex. Write
+
+$$
+E_{2,\mathrm{RLOCC}}
+ =\inf_{\mathcal P}\ \max_{X\in U_4}
+ \|\mathcal P(\,\cdot\,\otimes\rho_X^{\otimes2})-\Phi_X\|_\diamond,
+\tag{C134.4}
+$$
+
+with the unhalved diamond convention of the supplier. There is no quantum
+wire, additional entanglement, supplied imbit, revealed label, physical
+conjugation/transpose gate or postselection in this menu.
+
+**Theorem C-134.2 (Exact attained spatial optimum).**
+For every $t,\eta\in[0,1]$,
+
+$$
+\boxed{E_{2,\mathrm{RLOCC}}=\frac{c(45-12\eta)}{125}.}
+\tag{C134.5}
+$$
+
+One common finite-round real local protocol attains this error for each
+of the four labels. The converse covers every competitor in C-134.1,
+without a program-first, Schur, record-only, first-hit, fixed-round-count
+or ancillary-dimension restriction. The same infimum holds for the
+closure of this class in the induced channel norm, since the bound is
+continuous and the displayed value is already attained at finite rounds.
+This does not identify a general complex separable or PPT optimum.
+
+The unrestricted supplier's Proposition 11.1 gives
+$e_2=c(45-16\eta)/125$. Consequently the spatial real restriction has the
+exact excess
+
+$$
+E_{2,\mathrm{RLOCC}}-e_2=4c\eta/125.
+\tag{C134.6}
+$$
+
+At $\eta=0$ the value is $9t/25$; at $c=0$ it is zero. At
+$t=1,\eta=1/2$ the restricted and unrestricted values are respectively
+$39/250$ and $37/250$. These are channel errors, not label-identification
+probabilities or halved trace distances.
+
+Proof. C-135.1 supplies a finite matrix certificate for the universal
+converse in C-136.1. C-137.1 supplies an actual finite-round real local
+instrument with the matching full-complex channel action. Both statements
+include the parameter endpoints. Their combination proves (C134.5);
+subtracting the credited unrestricted value gives (C134.6). Continuity
+extends the lower bound to limits of induced four-channel tuples, while
+the same finite protocol remains an admissible upper bound. QED.
+
+## 135. A locally transposed Choi certificate for the noise term
+
+**Lemma C-135.1 (Two-pair real local certificate).**
+For this lemma only, identify each selected local pair with the real
+computational basis $|0\rangle,|1\rangle$. This is a local basis
+identification within the original support, not a new spatial cut. On one
+such bipartite pair put
+
+$$
+\begin{aligned}
+A&=i(|00\rangle\langle11|-|11\rangle\langle00|),\\
+P&=|00\rangle\langle00|+|11\rangle\langle11|,\\
+Q&=|01\rangle\langle01|+|10\rangle\langle10|,\\
+C&=A^{T_A}
+  =i(|10\rangle\langle01|-|01\rangle\langle10|),\\
+R_n&=A\otimes Q+Q\otimes A.
+\end{aligned}
+\tag{C135.1}
+$$
+
+Let $\mathcal F$ be any CPTP map admitting a product Kraus decomposition
+with every local factor real, from these two bipartite pairs to one output
+qubit $r$ at Alice and one output qubit $o$ at Bob.
+In particular it may be any finite-round real LOCC map with arbitrary
+finite real local ancillas. For the Hermitian output test
+
+$$
+W=i(|00\rangle\langle11|-|11\rangle\langle00|)_{ro},
+\qquad \|W\|_\infty=1,
+\tag{C135.2}
+$$
+
+one has
+
+$$
+\operatorname{tr}\bigl(W\mathcal F(R_n)\bigr)\le4.
+\tag{C135.3}
+$$
+
+The assertion also holds for every CPTP map whose Choi matrix is
+invariant under transposition of Alice's entire input/output block.
+That larger class is used only for the converse. Neither $R_n$ nor the
+dual operator below is asserted to be a state.
+
+Proof. Order the six Choi bits as $(r,a_1,a_2,b_1,b_2,o)$; write
+$a=(a_1,a_2)$ and $b=(b_1,b_2)$. The unnormalized Choi matrix is
+
+$$
+M_{rabo,\,sa'b'p}
+  =\bigl[\mathcal F(|ab\rangle\langle a'b'|)\bigr]_{ro,sp}.
+\tag{C135.4}
+$$
+
+It is positive, and $\operatorname{tr}_{r,o}M=I_{ab}$. Denote by
+$\Gamma$ transposition of the first three bits $(r,a_1,a_2)$, keeping
+the Bob block $(b_1,b_2,o)$ fixed. A real product Kraus matrix has a real
+vectorized factor on each side, whose rank-one projector is symmetric.
+Its Choi contribution is therefore invariant under $\Gamma$. Sums of
+such contributions give $M^\Gamma=M$ for real separable maps. For a
+finite adaptive real LOCC protocol, refine the local Kraus records and
+final discards. Each complete history has a product of real local Kraus
+matrices, so the same conclusion holds. Real blank ancillas and real
+mixed ancillary preparations can be absorbed into these local Kraus
+matrices; real spectral decompositions suffice for the mixed case.
+Classical randomization preserves the linear identity. If an instrument
+uses an integral of histories, the finite-dimensional Choi identity is
+preserved under that integral as well. No bound on the history count,
+round count or finite ancillary dimensions has been imposed.
+
+On the program bits, in the order $(a_1,a_2,b_1,b_2)$, define
+
+$$
+Z=Q\otimes Q+\tfrac12(A\otimes A+C\otimes C),
+\tag{C135.5}
+$$
+
+where tensor factors on the right first refer to copies
+$(a_1b_1),(a_2b_2)$ and are then reordered as stated. Thus
+$Z^{T_{a_1a_2}}=Z$ and $\operatorname{tr}Z=4$. Let $\widehat Z$ act as
+$Z$ on the four program bits and as identity on $r,o$. Define $H$ by
+
+$$
+H_{rabo,\,sa'b'p}
+ =W_{ro,sp}(R_n)_{a'b',ab}.
+\tag{C135.6}
+$$
+
+It is a real symmetric matrix and
+$\operatorname{tr}(MH)=\operatorname{tr}(W\mathcal F(R_n))$.
+The following six real vectors, with binary strings in the six-bit order
+above, give a positive certificate:
+
+$$
+\begin{aligned}
+v_1&=|000110\rangle-|011000\rangle,\\
+v_2&=|000111\rangle-|011001\rangle-|101100\rangle-|110010\rangle,\\
+v_3&=|001101\rangle+|010011\rangle+|100110\rangle-|111000\rangle,\\
+v_4&=|001100\rangle+|010010\rangle,\\
+v_5&=|101101\rangle+|110011\rangle,\\
+v_6&=|100111\rangle-|111001\rangle,\\
+S&=\sum_{h=1}^6|v_h\rangle\langle v_h|\ \ge0.
+\end{aligned}
+\tag{C135.7}
+$$
+
+Their exact identity is
+
+$$
+\frac{S+S^\Gamma}{2}
+   =\widehat Z-\frac{H+H^\Gamma}{2}.
+\tag{C135.8}
+$$
+
+For an entrywise verification, the only nonzero entries needed in the
+one-copy matrices are
+$A_{00,11}=i$, $A_{11,00}=-i$,
+$C_{10,01}=i$, $C_{01,10}=-i$ and
+$Q_{01,01}=Q_{10,10}=1$. Insert these entries in (C135.5)–(C135.6),
+expand the six rank-one matrices in (C135.7), and swap the first three
+row bits with the first three column bits for $\Gamma$.
+Equivalently, with $A=iT$, $C=iT_c$ and $W=iU$, all of
+$T,T_c,U$ real antisymmetric, the entries to check are
+
+$$
+\begin{aligned}
+(2Z)&=2Q\otimes Q-T\otimes T-T_c\otimes T_c,\\
+H_{rabo,sa'b'p}
+ &=U_{ro,sp}(T\otimes Q+Q\otimes T)_{ab,a'b'},\\
+2(S+S^\Gamma)
+ &=2\widehat Z+2\widehat Z^\Gamma-2(H+H^\Gamma).
+\end{aligned}
+\tag{C135.9}
+$$
+
+All entries in the last equality are integers. These expansions establish
+(C135.8); the vectors' disjoint supports also give
+$v_h^T v_k=0$ for $h\ne k$ and squared norms $2,4,4,2,2,2$.
+The certificate uses no eigenvalue approximation or optimizing premise.
+
+Partial transpose is self-adjoint for the trace pairing. Pairing
+(C135.8) with $M=M^\Gamma$ and using trace preservation gives
+
+$$
+\begin{aligned}
+\operatorname{tr}(W\mathcal F(R_n))
+ &=\operatorname{tr}(M\widehat Z)-\operatorname{tr}(MS)\\
+ &=\operatorname{tr}Z-\operatorname{tr}(MS)\le4.
+\end{aligned}
+\tag{C135.10}
+$$
+
+The last inequality follows from positivity of $M$ and $S$. All
+transpositions here are algebraic operations in a converse certificate;
+none is an allowed gate on an unknown state. QED.
+
+## 136. Universal converse on the full noisy source
+
+**Theorem C-136.1 (Converse without a processor subclass restriction).**
+Every processor allowed in C-134.1 has worst-label unhalved diamond error
+at least $c(45-12\eta)/125$.
+
+Proof. Fix either original pair $d=(j,k)$ and its opposite labels
+$X=\pm X_d$. In the full $25$-dimensional program space write
+
+$$
+\rho_\pm=D\pm u A_d,\qquad
+D=(1-\eta)JJ^\dagger/5+\eta I_{25}/25,
+\tag{C136.1}
+$$
+
+where $A_d=i(|jj\rangle\langle kk|-|kk\rangle\langle jj|)$ in the
+fixed coefficient identifications. Its notation $|jj\rangle$ means the
+original vector $|B_j,f(B_j)\rangle$. On the four-dimensional local
+pair product, identify $A_d,P_d,Q_d$ with $A,P,Q$ of C-135.1 and put
+
+$$
+D=wP+nQ+D_{\rm out},\qquad
+r=\operatorname{tr}D_{\rm out}=1-2w-2n.
+\tag{C136.2}
+$$
+
+Here $D_{\rm out}\ge0$ is diagonal and supported outside that entire
+local pair product. It retains three other matching modes and eighteen
+unmatched modes. The other two unmatched modes are exactly $Q$; thus
+none of the twenty white-noise modes has been removed.
+
+Prepare the fixed real data/reference state
+
+$$
+|\Omega_d\rangle
+  =(|0\rangle_R|e_j\rangle_D+|1\rangle_R|e_k\rangle_D)/\sqrt2
+\tag{C136.3}
+$$
+
+at Alice and feed the data to the given processor. Keep $R$ untouched.
+This defines a CPTP real local map $\mathcal F$ from the entire two-copy
+program algebra to $R$ and Bob's output. This deduction uses the
+processor's full-algebra CP/TP requirement, not merely its behavior on
+promised independent inputs. Give the output the Hermitian test
+
+$$
+W_d=i(|0,j\rangle\langle1,k|-|1,k\rangle\langle0,j|),
+\qquad\|W_d\|_\infty=1.
+\tag{C136.4}
+$$
+
+This test belongs to the mathematical norm evaluation; it is not a
+processor measurement or an additional non-real resource. The target
+expectations on (C136.3) are $+c,-c$. If the two respective
+diamond errors are $\epsilon_+,\epsilon_-$ and
+
+$$
+g=\operatorname{tr}\left[
+ W_d\mathcal F\!\left(\frac{\rho_+^{\otimes2}-\rho_-^{\otimes2}}2\right)
+ \right],
+\tag{C136.5}
+$$
+
+then testing these particular complex-output reference states gives
+$(\epsilon_++\epsilon_-)/2\ge c-g$. This uses the unhalved trace-norm
+duality with an operator of norm one; no extra factor $1/2$ is introduced
+in either diamond error.
+
+The iid expansion with the same fixed sign cancels the quadratic term:
+
+$$
+\frac{\rho_+^{\otimes2}-\rho_-^{\otimes2}}2
+ =u(A\otimes D+D\otimes A)
+ =uwR_w+unR_n+uR_{\rm out},
+\tag{C136.6}
+$$
+
+where
+$R_w=A\otimes P+P\otimes A$ and
+$R_{\rm out}=A\otimes D_{\rm out}+D_{\rm out}\otimes A$.
+These are Hermitian operators used in a linear calculation, not
+alternative selectable program states.
+
+On $P\otimes P$, $A$ has eigenvalues $1,-1$ and $P$ is the identity;
+therefore $R_w$ has eigenvalues $2,0,0,-2$ and trace norm $4$.
+The two terms in $R_{\rm out}$ have orthogonal supports and each has
+trace norm $2r$, so $\|R_{\rm out}\|_1=4r$. Trace-norm contraction of
+the full CPTP map $\mathcal F$ bounds their contributions to $g$ by
+$4uw$ and $4ur$.
+
+For the remaining term restrict each local input to its selected real
+pair. This is a local isometric restriction of the domain of
+$\mathcal F$, still a CPTP real local map. Compress Bob's output to the
+selected pair, sending every other output coordinate to a fixed real
+qubit blank and discarding the corresponding coherences. Explicit
+Kraus matrices are the pair identification and one
+$|0\rangle\langle e_\ell|$ for each $\ell\notin\{j,k\}$.
+This real CPTP compression leaves the $W_d$ expectation unchanged.
+The resulting map has exactly the interface of C-135.1, so the noise
+contribution is at most $4un$. The restriction of the interface has
+not restricted any internal ancilla, adaptive control or round count.
+Consequently
+
+$$
+\begin{aligned}
+g&\le4u(r+w+n)=4u(1-w-n)\\
+ &=\frac{c(80+12\eta)}{125},\\
+\max_{X\in U_4}\epsilon_X
+ &\ge\frac{\epsilon_++\epsilon_-}{2}
+ \ge c-g\ge\frac{c(45-12\eta)}{125}.
+\end{aligned}
+\tag{C136.7}
+$$
+
+The construction of the test and the certificate is identical under the
+real local relabeling for $d_a$ or $d_b$. The proof bounds every original
+competitor, even when it interacts with the data before any program
+measurement and retains both quantum programs adaptively. For $u=0$
+the same inequalities give the required zero lower bound without a
+division or limiting argument. QED.
+
+## 137. A common attained finite-round real local instrument
+
+**Theorem C-137.1 (Whole-algebra original-cut attainment).**
+The following single protocol, independent of $X$, is finite-round
+BOTH-REAL LOCC, is CP/TP on its entire complex joint input algebra,
+and induces the error in (C134.5) for all four labels and every finite
+untouched complex reference.
+
+Proof. Alice first measures the three data sectors $d_a,d_b,\{2\}$
+using their real computational projectors. This removes only
+cross-sector coherences, which every target (C134.3) already sends to
+zero. Alice communicates the sector to Bob. In singleton sector $2$,
+Bob prepares the diagonal distribution with probability $s$ on $2$ and
+$\eta/5$ on each other coordinate. Both programs are discarded.
+
+In pair sector $d=(j,k)$, both parties locally test each copy, in order,
+for membership in their respective two-dimensional supports for $d$.
+The Alice support is $\{|B_j\rangle,|B_k\rangle\}$ and the Bob support
+is $\{|f(B_j)\rangle,|f(B_k)\rangle\}$. They communicate their binary
+membership results. A copy is accepted precisely when both tests say
+inside. This is the local pair-product test, retaining all four product
+modes; it is not a nondestructive test for matching coordinates.
+On the first accepted copy they use the Bell instrument below. Earlier
+failed copies and the unused copy are discarded. If neither copy is
+accepted they use the real fallback below. Every failure outcome is
+retained in this channel.
+
+On either copy the acceptance probability, the same for all four labels,
+is
+
+$$
+q=2(w+n)=\frac{10-6\eta}{25},\qquad
+\frac4{25}\le q\le\frac25.
+\tag{C137.1}
+$$
+
+The unnormalized accepted state, in order $00,01,10,11$, is
+
+$$
+\tau_{X,d}=\operatorname{diag}(w,n,n,w)
+        +iv_{X,d}(|00\rangle\langle11|-|11\rangle\langle00|),
+\tag{C137.2}
+$$
+
+where $v_{\sigma X_d,d}=\sigma u$, while $v_{X,d}=0$ when $X$ belongs
+to the other pair. These are descriptions of the actual state branches;
+no control is conditioned on $v_{X,d}$ or on an inferred label.
+
+Identify the retained local pairs with bits. Let
+
+$$
+Z_2=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+X_2=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+R_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+\tag{C137.3}
+$$
+
+Alice measures data and her accepted half in the four real Bell vectors
+$|\beta_V\rangle=(I\otimes V)(|00\rangle+|11\rangle)/\sqrt2$.
+She sends the outcome to Bob, who applies the correction in this table:
+
+| $V$ defining Alice's Bell vector | Bob's real correction $C_V$ |
+| --- | --- |
+| $I_2$ | $I_2$ |
+| $Z_2$ | $Z_2$ |
+| $X_2$ | $R_2$ |
+| $R_2$ | $X_2$ |
+
+All four matrices are real orthogonal. The corrections are independent
+of the unknown sign, axis and $t$. A direct contraction of each Bell
+vector with $Y\otimes\tau_{X,d}$, followed by $C_V$, gives one fourth
+of the following unnormalized channel, for every $Y\in M_2(\mathbb C)$:
+
+$$
+\mathcal T_{\tau}(Y)=
+\begin{pmatrix}
+2wY_{00}+2nY_{11}&2iv_{X,d}Y_{01}\\
+-2iv_{X,d}Y_{10}&2nY_{00}+2wY_{11}
+\end{pmatrix}.
+\tag{C137.4}
+$$
+
+For example the $I_2$ Bell outcome contracts the $(a,b),(a',b')$
+entry of $\tau$ with $Y_{aa'}/2$. The $Z_2$ outcome changes both
+off-diagonal signs, canceled by $C_V=Z_2$. The $X_2$ outcome interchanges
+the data coordinates; $R_2 E_{10}R_2^T=-E_{01}$ cancels its additional
+imaginary sign. The $R_2$ outcome has that additional minus in the Bell
+vector already and is corrected by $X_2$. Their diagonal swaps are the
+same in the last two cases. This proves (C137.4) on all four matrix units,
+including the two independent complex off-diagonal units. Its trace is
+$q\operatorname{tr}Y$. The Bell basis is complete, so its four outcomes
+are all included.
+
+Conditional iid programs imply that the first-copy acceptance contributes
+$\mathcal T_\tau$ and the second-copy acceptance after first failure
+contributes $(1-q)\mathcal T_\tau$. Define the paid hit populations and
+the total failure probability by
+
+$$
+\alpha=2w(2-q),\qquad
+\beta=2n(2-q),\qquad
+z=(1-q)^2=1-\alpha-\beta.
+\tag{C137.5}
+$$
+
+For a measured input coordinate $\ell\in\{j,k\}$ in the total-failure
+branch, Bob prepares output $r$ with probabilities
+
+$$
+p_{r\mid\ell}=
+\begin{cases}
+(s-\alpha)/z,&r=\ell,\\
+(\eta/5-\beta)/z,&r\in\{j,k\}\setminus\{\ell\},\\
+(\eta/5)/z,&r\notin\{j,k\}.
+\end{cases}
+\tag{C137.6}
+$$
+
+These are lawful at every endpoint. Indeed $z\ge9/25>0$,
+$\alpha\le4s/5\le s$, and
+$\beta\le4\eta/25\le\eta/5$. Their sum is
+$[s-\alpha+\eta/5-\beta+3\eta/5]/z=1$.
+This fallback measures the data coordinate at Alice, sends that classical
+coordinate, and prepares a real diagonal state at Bob. Its Kraus matrices
+on the pair are $\sqrt{p_{r\mid\ell}}|r\rangle\langle\ell|$ with the
+measurement and preparation spatially separated by that classical message.
+No data phase or quantum carrier is supplied by this branch.
+
+The hit branches and (C137.6) give exactly the target diagonal for every
+input coordinate: the correct coordinate has population
+$\alpha+(s-\alpha)=s$, its pair partner has
+$\beta+(\eta/5-\beta)=\eta/5$, and each other output has $\eta/5$.
+For either active label the only nonzero off-diagonal coefficient is
+
+$$
+g_2=2u(2-q)=4u(1-w-n)=\frac{c(80+12\eta)}{125},
+\tag{C137.7}
+$$
+
+with the source's sign; the other pair coefficient is zero. The singleton
+and cross-sector actions were already specified. Thus the induced map is
+exactly the supplier's response $T_\eta(\sigma g_2,0)$ or
+$T_\eta(0,\sigma g_2)$, on every complex matrix unit.
+The exact reference-norm identity in the supplier's Proposition 3.2
+therefore gives, without a new norm calculation,
+
+$$
+\|N_X-\Phi_X\|_\diamond=c-g_2
+               =\frac{c(45-12\eta)}{125}
+\quad\text{for each }X\in U_4.
+\tag{C137.8}
+$$
+
+Equality of these complex-linear maps remains equality after tensoring
+any finite untouched reference. In particular imaginary data coherences
+have not been replaced by their real parts.
+
+For completeness, every operation used above has a full-space real Kraus
+implementation. The data sector projectors sum to $I_5$. Each local
+membership instrument consists of a real projector and its complement.
+Failure records can be coarsened only after their subsequent actions
+have been specified identically; their probabilities are never dropped.
+Alice's four Bell projectors on the selected pair product can be completed
+by the twenty-one computational projectors outside it. The corrections
+extend as identity on the three complementary Bob coordinates. Discard
+has computational-bra Kraus matrices. Fallback measurement and preparation
+have the real Kraus matrices just displayed, whose squared weights sum
+to one. The singleton preparation is the same kind of instrument.
+Real computational pointers and controlled classical feedforward implement
+these branches with their complete complements. A finite composition of
+these specified instruments is CP and TP on all complex joint inputs,
+including arbitrary correlations among data and both programs. This
+argument does not infer implementability from Choi positivity, and it
+does not use the independent-input promise to establish CP/TP.
+The promise is used only to evaluate the induced channel and its
+$(1-q)$ factor. QED.
+
+## 138. Resources, reuse and the ordinary-proof boundary
+
+**Proposition C-138.1 (Sufficient original-cut resource contract).**
+C-137.1 consumes or discards exactly the two supplied actual source
+copies and sends only classical messages across the original cut.
+A sufficient finite ancillary supply consists of a three-valued data
+sector pointer, two binary membership pointers at each party, a
+four-valued Bell pointer at Alice, and a five-valued real preparation
+register and five-dimensional output blank at Bob. Pointers may instead
+be reset and reused. There is at most one Bell measurement, after the
+accepted copy is selected. All used or unused program registers are
+discarded at the end. No imbit, extra entangled pair or transmitted
+quantum system is required by this mathematical protocol.
+
+One explicit message schedule is: Alice sends her three-valued sector;
+for each examined copy she sends her membership bit and Bob replies with
+the acceptance bit; on acceptance Alice sends her four-valued Bell
+outcome, and on total failure she sends her binary data coordinate.
+The singleton sector needs only the sector message. Thus at most six
+one-way messages, representable using at most eight binary bits in the
+longest branch, suffice; there is no imposed message-budget constraint
+or optimality claim about these counts.
+
+Proof. Sector and membership predicates are local computational
+projections. A Bell measurement is a real controlled bit flip and real
+Hadamard followed by computational measurement on the selected local
+pairs. The displayed $X_2,Z_2,R_2$ corrections and their full-space
+extensions are calibrated real local controls. The fallback probabilities
+are known functions of $\eta$ alone, so neither its controls nor the Bell
+corrections require $X$ or a measured sign. A real five-level rotation
+can prepare amplitudes $\sqrt{p_{r\mid\ell}}$ from a blank; computational
+measurement and conditional basis preparation give (C137.6).
+The singleton uses the analogous known probabilities. This is a
+specified finite local circuit using the supplied menu. Counting its
+pointers and messages gives the bounds above. Discard/reset and exact
+preparation of real blanks remain supplied dissipative services. QED.
+
+The source preparation, delivery of each original $A$ and $B$ half,
+conditional iid law, initial independence from all data/reference,
+fixed original basis identifications, exact known calibration, local
+joint access to Alice's data and either of her halves, local computational
+measurements, classical links and output acquisition remain explicit
+services. The result does not construct native hardware or prepare the
+unknown source from a classical description. The abstract finite circuit
+attains a mathematical menu optimum; no experimental physical realization,
+minimum acquisition cost or free all-copy law is asserted. Approximate
+controls or an imperfect source require additional error estimates.
+Fresh independent blocks can reuse the real classical settings; reusing
+these same two quantum copies does not establish independent channel uses.
+
+**Statement C-138.2 (Suppliers and claim ceiling).**
+The original source, target, full-complex reference convention,
+unrestricted value and exact response-channel norm are reused from
+[FIB noisy source programming minimax, Sections 1, 3 and 11](FIB_NOISY_SOURCE_PROGRAMMING_MINIMAX.md).
+C-129–C-133 supply the earlier real joint-processing and real-record
+boundaries. Their paid transfer of Bob's halves to Alice is not used in
+C-137.1, and their joint matching extraction is not assumed local here.
+The present converse is a channel/reference test with an explicit
+transpose-invariant Choi certificate, not a record-discrimination bound.
+The upper bound is an explicit local Bell instrument and its complete
+noise/failure accounting, not a Choi-only implementation assertion.
+
+[Wu et al., Communications Physics 7, 171](https://doi.org/10.1038/s42005-024-01649-y),
+Methods, “Properties of LRCC operations,” Eqs. (37)–(39), supply the
+mature local-transpose Choi condition and distinguish LRCC (both sides
+real) from LQRCC (Alice unrestricted). Their supplied-imbit real
+implementation, already cited in
+[the existing literature note](../../../Library/QuantumChannels/wu2024distributedimaginarity.md),
+is a different resource contract and is not an extra input here. The
+necessary Choi condition is re-established in C-135.1 for this map
+interface; it is not treated as sufficient for LOCC implementation.
+The six-vector certificate, its original-source decomposition and its
+matching simultaneous local channel construction are `repo-derived`
+ordinary mathematical synthesis. No literature-priority or global
+novelty clearance is claimed.
+
+[Pirandola, arXiv:1711.09909v3, Criterion 4](https://arxiv.org/abs/1711.09909v3)
+states teleportation simulation under the required covariance/correction
+hypotheses. The actual Bell contraction and sign-independent real
+corrections in C-137.1 provide the source-specific bridge used here.
+The bare identity of the full five-mode source with a channel Choi
+state would not provide that bridge.
+[arXiv:2603.12130v1](https://arxiv.org/abs/2603.12130v1) concerns
+entanglement-assisted bipartite channel discrimination and PPT tester
+relaxations; [arXiv:2604.06412v1](https://arxiv.org/abs/2604.06412v1)
+concerns local discrimination of five three-qubit pure states.
+Neither supplies the mixed-source programmable-channel optimum proved
+here. A separable/PPT relaxation may give a converse; an explicit legal
+protocol is still needed for attainment.
+
+The repository's finite Kraus/Choi and five-mode real-response suppliers,
+including the private real-pairing arguments in
+`D5/S3/Quantum/Fibers/FiveModeRealResponse.lean`, concern the mature
+interfaces and observation fibers. Its finite-sector channel-optimality
+modules concern a different sector encoding/target problem. The selected pinned
+mathlib positive-matrix and physlib Kraus/Choi interfaces are mature
+algebraic ingredients; no current compiled application of them to
+C-134–C-137 is claimed.
+These sections are complete ordinary finite-dimensional proofs with an
+explicit uncompiled ceiling. They make no Lean/kernel, formal-freeze,
+empirical hardware or exhaustive-search claim. They settle this precise
+two-copy spatial question and do not complete the continuing
+quantum-focused AURIC FIB ATOM research objective.
+
+## 追加锚（本行以下为增补区）
