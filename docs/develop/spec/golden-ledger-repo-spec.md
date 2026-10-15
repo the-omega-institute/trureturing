@@ -517,7 +517,7 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 120m |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
 
-每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
+每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: false`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
 
 纯理论免报告只接受真实 delta 非空、全部路径为 `docs/develop/theory/` 下理论文档且非删除输入已经读取的情况：PR base 为 `M^1`，push base 为固定 `event.before`，沿既有快照/FILEMAP 与 `ExecuteTheoryDelta` 执行 `SL-003`、`SL-015`。不恢复 Lean 缓存、不生产报告、不运行全局 current/Scribe、不触发自动 producer；其它命中单元照常运行。混合变更必须提供报告；空 delta 即使进入无报告入口也会拒绝，未读取的理论输入也拒绝，均不构成免检。无可读 before 的事件走完整报告选择，不用未知 delta 猜纯理论。
 
@@ -573,6 +573,8 @@ Actions artifact 名为 `lean-pr-preparation-<PR>-<H>`；这是精确发现地�
 Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、归一化平台族与声明环境值；名字中的 12 位摘要不替代 manifest 全值校验。`publication-id` 是 `ci-<run>-<attempt>` 或 `local-<HEAD12>-<UTC>`，HEAD 只在这个唯一后缀中，不决定复用；报告模块/配置全集摘要与生产程序字节不进入 Release 名字。Actions 按 OS/arch 隔离；Release 跨平台共享仅限 A14.9 已声明的 arm64 族，原生产物仍由 Lake retrace。详细键生成与容器清单以 `lean_actions.py`、`lean_cache_release.py` 为源，不增设版本清单。
 
 报告、种子、收据等数据产物不得把 producer/judge 程序字节哈希作为复用条件；模块 trace、utility、格式与整份收据的输入边界依 A14.9。judge 编译缓存缓存的是程序自身，可哈希其实际构建输入与配方。显式历史登记无缓存重评是独立请求；`REBUILD_REPORT_CACHE=1` 只绕过整份 receipt，仍可复用原生模块产物，不保证重评全部历史登记或 full clean，也不承诺旧 same-v3 载荷自动迁移。
+
+**长 producer 续跑。** 独立 Actions producer 使用检出源自身的 Lean/mathlib pin；受保护 integration 与 dev 均保留手动入口。每次构建片在 action 入口起算五小时内结束，为平台六小时上限内的保存和清理留出时间。构建失败或片到期可保存原生中间产物到独立 `lean-producer-resume-v1-` 命名空间；本次仍失败，未完成报告不得发布普通 project seed 或 PR 准备包。续跑按 repository、源 ref、依赖输入、mathlib pin、OS/架构及登记的执行环境隔离，不以整树或 producer 程序字节作为身份；变动源码由 Lake 判断增量有效性。受保护 runtime 内的已验证 PR 准备另绑定 source PR ref 与 target ref，不与目标分支 producer 或其他 PR 共用续跑身份，也不取得普通 project 写入资格。已接受完整 project seed 或已采用 PR 准备时跳过 partial 恢复。恢复记录只证明中间材料来源；最终必须重新完成报告、审计程序及严格 publication 验证，才允许发布。最终片新增编译工作为零时，只有本次已验证的续跑记录与完整成功标记共同满足，才可晋升完整 project seed。
 
 **显式报告工件重产。** 独立长 producer 的 `operation=build` 或 `operation=pr` 可显式选 `regenerate_report_artifacts=true`，默认关闭；采用对应操作的固定来源校验及同一 Actions 构建发布核心。等价本地入口为 `make lean-report REGENERATE_REPORT_ARTIFACTS=1`。此选项强制跳过整份 receipt 复用与 Release 恢复，完成既有 ensure/worktree 参与后，在 `lean-cache-run` 的缓存写锁内删除 `.lake/build/lean-inspector` 的生成状态（模块 ZIP、trace、pending/previous、聚合 ZIP 及报告输入投影），并在同一写锁内执行报告/选定程序的 Lake 构建。该次 Lake 进程设置 `LAKE_ARTIFACT_CACHE=false` 和 `LAKE_RESTORE_ARTIFACTS=false`，阻止内容寻址仓库按旧 trace 恢复已删除的报告。保留 `.lake/build/lib`、IR、程序编译产物、依赖及 toolchain，由 Lake 继续判定其编译有效性；不清空共享 artifact store，不修改 cache key 或报告格式。
 
