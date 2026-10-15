@@ -22,4 +22,4 @@ For each of the 192 original source actions, simultaneous inside membership woul
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportAveragedCut.averaged_outside_cut`
 - Dependency: [D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict](EJMOriginalSupportConflict.md)
-- Dependency: [D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry](EJMScoreSymmetry.md)
+- Dependency: [D5/S3/Quantum/Entanglement/EJM/EJMSourceActionClosure](EJMSourceActionClosure.md)
