@@ -34,6 +34,32 @@ open D5.S3.Quantum.Entanglement.EJM.EJMCacheLaws
 open D5.S3.Quantum.Entanglement.EJMInflationScore
 open scoped BigOperators
 
+private def identity : LocalSym := (0, 0)
+
+/-- The actual empty-assignment cache uses the original final row of each
+local table and the identity action. Its association is proved below. -/
+def initial : Cache :=
+  ⟨fun _ => ⟨(41293, identity), EJMTriangleCacheData.mirror 41293⟩,
+   fun _ => ⟨(8688, identity), EJMSingletonCacheData.mirror 8688⟩⟩
+
+private theorem triangle_identity_receipt : trianglePerm 0 = id := by decide +kernel
+private theorem singleton_identity_receipt : singletonPerm 0 = id := by decide +kernel
+private theorem outcome_identity_receipt : outcome 0 = id := by decide +kernel
+
+private theorem triangle_identity (p : Partial (Fin 10) (Fin 4)) :
+    trianglePartialAct identity p = p := by
+  funext i
+  change (p (trianglePerm 0 i)).map (outcome 0) = p i
+  rw [triangle_identity_receipt, outcome_identity_receipt]
+  exact congrFun Option.map_id (p i)
+
+private theorem singleton_identity (p : Partial (Fin 9) (Fin 4)) :
+    singletonPartialAct identity p = p := by
+  funext i
+  change (p (singletonPerm 0 i)).map (outcome 0) = p i
+  rw [singleton_identity_receipt, outcome_identity_receipt]
+  exact congrFun Option.map_id (p i)
+
 def TriangleValid (current : CachedLocal 41294) (p : Partial (Fin 10) (Fin 4)) : Prop :=
   current.row = EJMTriangleCacheData.mirror current.state.1 ∧
     Associated trianglePartialAct triangleRows current.state p
