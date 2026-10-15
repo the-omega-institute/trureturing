@@ -8,8 +8,11 @@
 
 import D5.S3.VertexAlgebra.LatticeHalfFockCurrentCorrection
 import D5.S3.VertexAlgebra.LatticeHalfFockDiagonalFusion
+import D5.S3.VertexAlgebra.LatticeHalfFockAllStateField
 
 set_option autoImplicit false
+set_option maxHeartbeats 4000000
+set_option maxRecDepth 4096
 set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectionGaussian
@@ -124,6 +127,14 @@ def gaussianDriver (D : LatticeData) (charge : Charge D)
   PowerSeries.C (correctedLinear D charge axes weight) * PowerSeries.X +
     PowerSeries.C ((1 / 2 : ℂ) • pairQuadratic D axes weight) * PowerSeries.X ^ 2
 
+/- The coefficientwise object consumed by the native field is Corr itself.  Keeping
+   this definition at the Corr boundary prevents the Gaussian calculation from
+   silently replacing labelledRemainders by an abstract polynomial correction. -/
+def literalCorrCreationCoefficient (D : LatticeData) (charge : Charge D)
+    (axes : Finset (Index D)) (weight : Index D → ℂ)
+    (degree shift : ℕ) : Oscillator D :=
+  (Corr D charge (linearSource D axes weight ^ degree)) shift
+
 private theorem corrected_exponential_derivative (D : LatticeData) (charge : Charge D)
     (axes : Finset (Index D)) (weight : Index D → ℂ) :
     PowerSeries.derivative (CorrectionPolynomial D) (correctedExponential D charge axes weight) =
@@ -188,6 +199,51 @@ theorem correction_gaussian (D : LatticeData) (charge : Charge D)
   · intro degree nonzero
     rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, constant]
     simp [nonzero]
+
+/- This is the coefficient form used by the native Corr field.  It is deliberately
+   stated against the substituted exponential, so the later charged chart proof
+   can consume the exact source coefficient without introducing a new correction
+   map or an arbitrary truncation. -/
+theorem correction_gaussian_coeff (D : LatticeData) (charge : Charge D)
+    (axes : Finset (Index D)) (weight : Index D → ℂ) (degree : ℕ) :
+    PowerSeries.coeff degree
+        ((PowerSeries.exp (CorrectionPolynomial D)).subst
+          (gaussianDriver D charge axes weight)) =
+      (degree.factorial : ℂ)⁻¹ •
+        correctionLift D charge (linearSource D axes weight ^ degree) := by
+  rw [← correction_gaussian D charge axes weight]
+  rfl
+
+theorem literalCorr_creation_coefficient_gaussian
+    (D : LatticeData) (charge : Charge D) (axes : Finset (Index D))
+    (weight : Index D → ℂ) (degree shift : ℕ) :
+    (degree.factorial : ℂ)⁻¹ •
+        literalCorrCreationCoefficient D charge axes weight degree shift =
+      (shiftCoefficients D)
+          (optionEquivLeft ℂ (Index D)
+            (PowerSeries.coeff degree
+              ((PowerSeries.exp (CorrectionPolynomial D)).subst
+                (gaussianDriver D charge axes weight)))) shift := by
+  rw [correction_gaussian_coeff]
+  simp [literalCorrCreationCoefficient, Corr, correctionPolynomial,
+    correctedExponential, correctionLift, shiftCoefficients,
+    LinearMap.comp_apply]
+
+/- The bridge retains the statewise finite-support fact needed for every later
+   finsum regrouping.  The premise is the exact weighted degree bound supplied
+   by the source polynomial; no global cutoff is introduced. -/
+theorem literalCorr_creation_coefficient_zero_of_excess_shift
+    (D : LatticeData) (charge : Charge D) (axes : Finset (Index D))
+    (weight : Index D → ℂ) (degree shift : ℕ)
+    (excess : MvPolynomial.weightedTotalDegree (sourceWeight D)
+        (linearSource D axes weight ^ degree) < shift) :
+    literalCorrCreationCoefficient D charge axes weight degree shift = 0 := by
+  by_contra nonzero
+  have member : shift ∈
+      (Corr D charge (linearSource D axes weight ^ degree)).support :=
+    Finsupp.mem_support_iff.mpr nonzero
+  exact (not_lt_of_ge (Corr_shift_bound D charge
+    (linearSource D axes weight ^ degree) shift member)) excess
 
 end
 end D5.S3.VertexAlgebra.LatticeHalfFockCorrectionGaussian
