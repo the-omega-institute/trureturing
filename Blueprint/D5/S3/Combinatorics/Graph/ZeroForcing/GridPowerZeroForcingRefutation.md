@@ -10,7 +10,7 @@ $$\forall (V : Type), \forall (G : \operatorname{SimpleGraph}\left(V\right)), \f
 
 *Formalization.* `D5/S3/Combinatorics/Graph/ZeroForcing/GridPowerZeroForcingRefutation.graphPower` (`✓ std3`).
 
-*Citation.* Aida Abiad; Mary Flagg; Sina Ghasemi Nezhad; Sjanne Zeijlemaker (2026). *The Zero Forcing Number of Graph Powers*. URL: <https://arxiv.org/abs/2610.03892v1>.
+*Citation.* Aida Abiad; Mary Flagg; Sina Ghasemi Nezhad; Sjanne Zeijlemaker (2026). *The Zero Forcing Number of Graph Powers*. DOI: [10.48550/arXiv.2610.03892](https://doi.org/10.48550/arXiv.2610.03892). URL: <https://arxiv.org/abs/2610.03892v1>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$(claim) \Leftrightarrow (\forall (b : \mathbb{N}), \forall (k : \mathbb{N}), \
 
 *Formalization.* `D5/S3/Combinatorics/Graph/ZeroForcing/GridPowerZeroForcingRefutation.claim` (`✓ std3`).
 
-*Citation.* Aida Abiad; Mary Flagg; Sina Ghasemi Nezhad; Sjanne Zeijlemaker (2026). *The Zero Forcing Number of Graph Powers*. URL: <https://arxiv.org/abs/2610.03892v1>.
+*Citation.* Aida Abiad; Mary Flagg; Sina Ghasemi Nezhad; Sjanne Zeijlemaker (2026). *The Zero Forcing Number of Graph Powers*. DOI: [10.48550/arXiv.2610.03892](https://doi.org/10.48550/arXiv.2610.03892). URL: <https://arxiv.org/abs/2610.03892v1>.
 
 *Commentary.*
 
@@ -40,7 +40,7 @@ $$\neg claim$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Aida Abiad; Mary Flagg; Sina Ghasemi Nezhad; Sjanne Zeijlemaker (2026). *The Zero Forcing Number of Graph Powers*. URL: <https://arxiv.org/abs/2610.03892v1>.
+*Acknowledgement.* Aida Abiad; Mary Flagg; Sina Ghasemi Nezhad; Sjanne Zeijlemaker (2026). *The Zero Forcing Number of Graph Powers*. DOI: [10.48550/arXiv.2610.03892](https://doi.org/10.48550/arXiv.2610.03892). URL: <https://arxiv.org/abs/2610.03892v1>.
 
 *Commentary.*
 

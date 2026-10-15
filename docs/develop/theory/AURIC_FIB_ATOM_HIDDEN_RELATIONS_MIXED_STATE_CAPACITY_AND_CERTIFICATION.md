@@ -4495,3 +4495,341 @@ $\Omega_\eta$，也不把任意 `Reference` 自动当作 trace-one 密度参考�
 至多三维定向目标隙的精确值，以及原无约束历史误差的最优值。
 
 ## 追加锚（本行以下为增补区）
+
+## 115. 原不可见 Schur 族的无辅助量子容量与等谱全像
+
+**定义 C-115.1（原来源、同源通道与独立使用服务）。** 只取 C-114.1 的 $\eta=0$，
+保持 $B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$、$f(2)=2$ 和原切口 $A\mid B$。
+系数位置 $j=0,\ldots,4$ 对应 $B_j$；$V e_j=|B_j\rangle_A$、
+$W e_j=|f(B_j)\rangle_B$、$Je_j=|B_j,f(B_j)\rangle$ 仍只是原标签识别。
+对 $X\in\mathcal K$、$0\le t\le1$，令
+
+$$
+\begin{aligned}
+A_{t,X}&=I_5+tX,\qquad C_{t,X}=A_{t,X}/5,\\
+\Gamma_{t,X}&=JC_{t,X}J^\dagger=\rho_{t,0}(X),\\
+\Phi_{t,X}(Y)&=A_{t,X}\circ Y=\Phi_{t,0,X}(Y),\qquad Y\in M_5(\mathbb C),\\
+|\beta_f\rangle&=5^{-1/2}\sum_{j=0}^4|B_j,f(B_j)\rangle,\\
+\widehat\chi(\Phi_{t,X})
+&=(\Phi_{t,X;A}\otimes\mathrm{id}_B)(|\beta_f\rangle\langle\beta_f|)
+=\frac15\sum_{j,k}(A_{t,X})_{jk}
+ |B_j,f(B_j)\rangle\langle B_k,f(B_k)|=\Gamma_{t,X}.
+\end{aligned}
+\tag{C115.1}
+$$
+
+这里 $\Phi_{t,X;A}(VYV^\dagger)=V\Phi_{t,X}(Y)V^\dagger$；Choi 输出因子在前，
+规范化因子始终为 $1/5$。$A_{t,X}\succeq0$、对角为一，故通道 CPTP。
+式 (C115.1) 是全复矩阵上的通道与来源对应，不是用一个未知来源态编程通道。
+所有这些来源仍属于 C-108.3 的同一完整原生历史纤维。
+
+本章另外声明固定已知 $t,X$ 的无记忆通道服务：每次可使用同一 $\Phi_{t,X}$，
+各次环境新鲜、独立并与输入初始无关，故 $n$ 次的联合映射是 $\Phi_{t,X}^{\otimes n}$。
+发送者和接收者允许任意复 CPTP 块编码、解码
+
+$$
+\mathcal E_n:M_{k_n}(\mathbb C)\longrightarrow M_{5^n}(\mathbb C),\qquad
+\mathcal D_n:M_{5^n}(\mathbb C)\longrightarrow M_{k_n}(\mathbb C).
+\tag{C115.2}
+$$
+
+允许任意本地空白辅助系及本地丢弃；辅助系不预先跨双方相关，也不携带未知消息或来源标签。
+没有预共享纠缠、辅助量子通道、免费前向或反馈经典通信、隐藏环境读数、后选择成功豁免
+或带外资源。$R_n\cong\mathbb C^{k_n}$ 是始终不动的参考，初始与逻辑输入处于
+$|\beta_{k_n}\rangle=k_n^{-1/2}\sum_a|a,a\rangle$。令 $\beta_{k_n}$ 表示其密度矩阵，
+要求未除以二的迹范数误差
+
+$$
+\epsilon_n=\left\|
+(\mathrm{id}_{R_n}\otimes\mathcal D_n\Phi_{t,X}^{\otimes n}\mathcal E_n)
+(\beta_{k_n})-\beta_{k_n}\right\|_1\longrightarrow0.
+\tag{C115.3}
+$$
+
+$Q_t(X)$ 为所有这样的代码序列之 $\liminf_{n\to\infty}n^{-1}\log_2 k_n$ 的上确界，
+单位是 qubit／次。编码可以跨全部 $n$ 次相关并与参考纠缠，不限为乘积、实矩阵或均匀输入。
+本章熵 $H_2,S_2$ 均用底二对数，$0\log_2 0=0$；不改 C-114 的自然对数约定。
+独立通道使用、校准已知参数和任意块编码是此处明确附加的数学服务，不由原生历史菜单取得。
+
+**定理 C-115.2（包括闭单纯形与相关复块输入的容量目标）。** 对全部定义 C-115.1 的参数，
+记 $\Delta_5=\{p\in[0,1]^5:\sum_jp_j=1\}$、$D_p=\operatorname{diag}p$，则
+
+$$
+\begin{aligned}
+F_{t,X}(p)&=H_2(p)-S_2\bigl(\sqrt{D_p}(I_5+tX)\sqrt{D_p}\bigr),\\
+Q_t(X)&=\max_{p\in\Delta_5}F_{t,X}(p).
+\end{aligned}
+\tag{C115.4}
+$$
+
+最大值实际达到；$F_{t,X}$ 对 $p$ 凹，并对 $(t,X,p)$ 联合连续。
+对任意 $n\ge1$ 和任意 $M_{5^n}(\mathbb C)$ 密度矩阵 $\sigma$，
+以同一个 Stinespring 延拓定义互补通道 $\Phi^c$，有
+
+$$
+I_c(\sigma,\Phi_{t,X}^{\otimes n})
+:=S_2(\Phi_{t,X}^{\otimes n}(\sigma))
+ -S_2((\Phi^c_{t,X})^{\otimes n}(\sigma))
+\le n\max_{p\in\Delta_5}F_{t,X}(p).
+\tag{C115.5}
+$$
+
+右端由一用最大人口的 $n$ 重乘积达到。
+这些断言包括 $p_j=0$、$t=0,1$ 和 $I_5+tX$ 奇异的情形。
+
+证明。以下编码定理和可降解单字母化是所消费的成熟成分：
+Devetak–Shor，[*The capacity of a quantum channel for simultaneous transmission of classical and quantum information*,
+quant-ph/0311131v3](https://arxiv.org/html/quant-ph/0311131v3)，§1 的 Scenario Ib 纠缠传输合同、
+§2 的等价性及容量定理、
+Appendix B 式 (18) 和紧随其后的 generalized dephasing 论证。
+其有限维、固定无记忆、无辅助纠缠传输容量适用于 (C115.2)–(C115.3)；
+对纯目标的保真度趋一与该迹范数趋零等价。
+下面在实际来源上构造延拓并核对任意块输入，容量的操作可达性与反向界则消费该编码定理，
+不把一个熵公式定义成容量来代替编码结论。
+
+置 $A=I_5+tX$，在 $\mathbb C^5$ 环境中取 $|v_j\rangle=\sqrt{\overline A}\,e_j$。
+有 $\langle v_k|v_j\rangle=\overline A_{kj}=A_{jk}$、$\|v_j\|=1$，故
+
+$$
+Ue_j=e_j\otimes v_j,\qquad
+\Phi(Y)=\operatorname{tr}_E UYU^\dagger=A\circ Y,\qquad
+\Phi^c(Y)=\sum_jY_{jj}|v_j\rangle\langle v_j|.
+\tag{C115.6}
+$$
+
+该延拓不用 $A^{-1}$，在降秩端点仍为等距。
+$\mathcal L(Z)=\sum_jZ_{jj}|v_j\rangle\langle v_j|$ 是 CPTP 测量后制备映射，
+且 $\mathcal L\Phi=\Phi^c$，因为 $\Phi$ 保持原基对角。
+所以这是所引文献的 generalized dephasing／degradable 通道，且降解在所有复输入上成立。
+
+对任意单次复密度输入 $\sigma$，以全部 $2^5$ 个原基对角符号酉平均得到
+$\Delta(\sigma)=D_p$，$p_j=\sigma_{jj}$。
+$\Phi$ 与这些酉夹乘协变；$\Phi^c$ 的输出不变。
+熵的酉不变性及凹性给 $I_c(\sigma,\Phi)\le I_c(D_p,\Phi)$。
+环境输出是 $E_p=\sqrt{\overline A}D_p\sqrt{\overline A}$，
+其非零谱等于 $\sqrt{D_p}\,\overline A\sqrt{D_p}$ 的非零谱，
+也等于 $\sqrt{D_p}A\sqrt{D_p}$ 的谱；最后一步用逐项共轭保持实 Hermitian 谱。
+两矩阵都补足全部零本征值，得 (C115.4) 的目标。
+
+对任意相关复 $\sigma$，记输出为 $B_1\cdots B_n$ 和 $E_1\cdots E_n$。
+由逐点降解有 $E_1\cdots E_n=\mathcal L^{\otimes n}(B_1\cdots B_n)$。
+令 $T(B^n)=\sum_kS_2(B_k)-S_2(B^n)$，环境同理。
+它等于态对其边缘乘积的相对熵；联合支持包含在边缘支持的乘积中，故这里相对熵有限。
+相对熵在 CPTP 映射下的数据处理给 $T(E^n)\le T(B^n)$，于是
+
+$$
+I_c(\sigma,\Phi^{\otimes n})
+=\sum_k I_c(\sigma_k,\Phi)-T(B^n)+T(E^n)
+\le\sum_kF_{t,X}(\operatorname{diag}\sigma_k)
+\le n\max_pF_{t,X}(p).
+\tag{C115.7}
+$$
+
+这不假定块输入独立；最大人口的乘积及熵可加性给反向达到。
+结合成熟编码定理即得操作容量，特别没有从有限数值最优化推出渐近可达率。
+
+最后，$\omega_{\mathsf{P}E}(p)=\sum_jp_j|j\rangle\langle j|_{\mathsf{P}}\otimes|v_j\rangle\langle v_j|$
+满足 $F_{t,X}(p)=S_2(\mathsf{P}|E)_{\omega(p)}$。
+量子条件熵的凹性给 $F$ 的凹性；它是强次可加性的标准推论。
+有限维矩阵平方根与谱熵在 PSD 闭域连续，$-x\log_2 x$ 在零处连续，
+故 $F$ 联合连续，紧集 $\Delta_5$ 上实际取最大。
+人口零时只删掉零权重项，绝不使用 $D_p^{-1}$；奇异端点仍保留完整核。证毕。
+
+**定理 C-115.3（固定纯虚反对称谱的精确容量全像）。** 对
+$0\le t\le1$、$1\ge\lambda_1\ge\lambda_2\ge0$，定义
+
+$$
+\begin{aligned}
+\mathcal O_{\lambda_1,\lambda_2}
+&=\{X=iR:R\in M_5(\mathbb R),\ R^T=-R,\quad
+\operatorname{spec}X=\{\lambda_1,\lambda_2,0,-\lambda_2,-\lambda_1\}\},\\
+h_2(u)&=-u\log_2u-(1-u)\log_2(1-u),\qquad
+ g(s)=1-h_2((1+s)/2),\quad0\le s\le1.
+\end{aligned}
+\tag{C115.8}
+$$
+
+则在固定原坐标的全部该等谱来源中，精确有
+
+$$
+\{Q_t(X):X\in\mathcal O_{\lambda_1,\lambda_2}\}
+=\left[\frac25\bigl(g(t\lambda_1)+g(t\lambda_2)\bigr),\ g(t\lambda_1)\right].
+\tag{C115.9}
+$$
+
+下端来源和上端来源分别为下列原坐标矩阵，而非将任意来源重新选基：
+
+$$
+\begin{aligned}
+X^{\rm cir}_{\lambda_1,\lambda_2}
+&=\lambda_1(P_1-P_4)+\lambda_2(P_2-P_3),\\
+X^{\rm edge}_{\lambda_1,\lambda_2}
+&=i\lambda_1(e_0e_4^T-e_4e_0^T)
+ +i\lambda_2(e_1e_3^T-e_3e_1^T).
+\end{aligned}
+\tag{C115.10}
+$$
+
+$P_m$ 是 C-111.1 在原五个位置书写的 Fourier 投影。
+$C=(I_5+tX)/5$、$\Gamma=JCJ^\dagger$ 和通道始终按 (C115.1) 回接。
+特别，端点矩阵的任意实正交共轭在本命题中表示不同实际来源，
+不表示可免费执行该正交变换，也不表示 Schur 通道在换基下容量不变。
+
+证明。任意 $X$ 的均匀人口 $u=(1/5,\ldots,1/5)$ 给
+
+$$
+F_{t,X}(u)=\log_2 5-S_2((I_5+tX)/5)
+=\frac25\bigl(g(t\lambda_1)+g(t\lambda_2)\bigr).
+\tag{C115.11}
+$$
+
+这是所有定向的统一下界，只用了指定谱，不先假定均匀人口最优。
+为证明任意人口的上界，先设 $\lambda_1>0$，令
+$s=t\lambda_1$、$K=\sqrt{D_p}X\sqrt{D_p}/\lambda_1$。
+$-D_p\preceq K\preceq D_p$，$\operatorname{tr}K=0$，$\overline K=-K$。
+因此 $R_\pm=D_p\pm K$ 都是迹一 PSD，互为复共轭，并有
+
+$$
+\begin{aligned}
+M_+&=\sqrt{D_p}(I_5+tX)\sqrt{D_p}
+=\tfrac{1+s}{2}R_++\tfrac{1-s}{2}R_-,\\
+M_-&=\overline{M_+}
+=\tfrac{1-s}{2}R_++\tfrac{1+s}{2}R_-,\qquad
+(M_++M_-)/2=D_p.
+\end{aligned}
+\tag{C115.12}
+$$
+
+取均匀二元经典变量 $Z$，通过交叉概率 $(1-s)/2$ 的二元对称信道得到 $L$，
+再依 $L$ 制备 $R_+$ 或 $R_-$。
+输出条件态就是 $M_+,M_-$；它们熵相同，所以
+
+$$
+F_{t,X}(p)=S_2(D_p)-\tfrac12(S_2(M_+)+S_2(M_-))
+=I(Z;\text{输出})\le I(Z;L)=g(s).
+\tag{C115.13}
+$$
+
+这里消费标准互信息数据处理；即使 $R_+,R_-$ 不正交仍成立。
+二元经典变量只是上界证明的数学分解，不是给予代码的辅助通信服务。
+$\lambda_1=0$ 时 $X=0$、$F=0$，上界直接成立。
+$s=0,1$、零人口或奇异 $R_\pm$ 都在 (C115.12)–(C115.13) 的有限熵域内。
+
+对下端，$\overline P_m=P_{-m}$，故 $X^{\rm cir}$ 纯虚 Hermitian，
+具有指定谱及零对角。原坐标循环移位 $e_j\mapsto e_{j+1\bmod5}$ 保持它。
+于是 $F_{t,X^{\rm cir}}(p)$ 在五个循环移位人口上相同；
+凹性给 $F(u)\ge\frac15\sum_{r=0}^4F(\operatorname{shift}^rp)=F(p)$。
+故它实际达到 (C115.11) 下端，包括谱简并、$t=0$ 和 $t\lambda_1=1$。
+这只是推导中的对称性，未要求控制者物理执行循环移位。
+
+对上端，$X^{\rm edge}$ 的两个指定二维块的谱分别为
+$\pm\lambda_1,\pm\lambda_2$，余下坐标为零，所以它确在同一等谱类中。
+取 $p_0=p_4=1/2$、其他人口零，$M_+$ 的非零块为
+$\frac12\begin{pmatrix}1&it\lambda_1\\-it\lambda_1&1\end{pmatrix}$。
+其谱为 $(1\pm t\lambda_1)/2$，从而 $F=g(t\lambda_1)$。
+这与统一上界相合；没有把闭单纯形边界排除，也不要求第二个块参与编码。
+
+还须证明所有中间值都存在。实反对称矩阵的正交标准形说明该等谱类是单一
+$O(5)$ 共轭轨道。任一正交共轭矩阵 $O$ 若行列式为负，以 $-O$ 代替，
+共轭结果不变且行列式为正；因而也是单一 $SO(5)$ 轨道。
+$SO(5)$ 路径连通，故存在从两个实际端点来源之间的连续等谱路径。
+(C115.4) 的目标在紧人口域上联合连续，所以 $X\mapsto\max_pF_{t,X}(p)$ 连续：
+其差的绝对值至多 $\max_p|F_{t,X}(p)-F_{t,Y}(p)|$。
+介值定理使这条路径的容量经过两端之间每一个值；统一上下界排除区间以外值。
+简并谱仍有同一轨道论证；全零谱或 $t=0$ 时区间退化为 $\{0\}$。证毕。
+
+**推论 C-115.4（完整原纤维的容量范围与零点）。** 对每个固定 $0\le t\le1$，
+
+$$
+\{Q_t(X):X\in\mathcal K\}=[0,g(t)],\qquad
+Q_t(X)=0\ \Longleftrightarrow\ tX=0.
+\tag{C115.14}
+$$
+
+证明。纯虚 Hermitian 五阶谱配对为 (C115.8)，$\lambda_1\le1$；
+直接求导得 $g'(s)=\frac12\log_2((1+s)/(1-s))>0$（$0<s<1$），
+且 $g(0)=0,g(1)=1$、两端连续；由上界得 $0\le Q_t(X)\le g(t)$。
+取 $X=X^{\rm edge}_{r,0}$、$r\in[0,1]$，定理 C-115.3 给 $Q=g(tr)$，
+其连续像恰为 $[0,g(t)]$。$g(s)>0$ 当且仅当 $s>0$；
+均匀下界使 $t>0,X\ne0$ 时容量严格正，反之通道为完全去相干且容量零。
+特别 $t=0$ 时所有来源、通道和容量同时退化；不遗漏这个端点。证毕。
+
+**推论 C-115.5（实际 F／E 来源的反向资源比较）。** 对 C-111.1、C-112.1
+原有的两个来源，$X_{\rm F}=5C^{\rm F}-I_5$、$X_{\rm E}=5C^{\rm E}-I_5$，
+有 $X_{\rm F}=X^{\rm cir}_{1,1}$、$X_{\rm E}=X^{\rm edge}_{1,1}$，且
+
+$$
+\begin{aligned}
+Q(\Phi_{t,0,X_{\rm F}})&=\tfrac45g(t),&
+Q(\Phi_{t,0,X_{\rm E}})&=g(t),&&0\le t\le1,\\
+q_{\rm exact}(\Phi_{t,0,X_{\rm F}})&=4,&
+q_{\rm exact}(\Phi_{t,0,X_{\rm E}})&=2,&&127/129<t\le1.
+\end{aligned}
+\tag{C115.15}
+$$
+
+在第二行的同一区间，F 的精确单次整个块模拟端口更大，操作量子容量却严格更小。
+两来源／规范化 Choi 全谱相同、全部原生历史律相同，均匀输入的相干信息
+$I_c(I_5/5,\Phi)=\log_2 5-S_2(C_t)$ 也同为 $4g(t)/5$，
+F 的这个均匀值在全部 $0\le t\le1$ 都等于优化容量；
+E 仅在 $t=0$ 与均匀值相等，在 $t>0$ 时优化值严格高于均匀值。
+在 $t=1$ 的具体容量是 F 的 $4/5$ 和 E 的 $1$ qubit／次。
+此处的 $I_c$ 是相干信息，不是来源标签与原生历史的经典互信息。
+
+证明。由 C-111.1 的两个实际矩阵逐项代入得 (C115.10) 的两个饱和端点，
+所以容量由 C-115.3 得到，且正 $t$ 时 $g(t)>0$。
+端口行只消费 C-109.3 的同源通道字典、C-111.2 与 C-111.5 的端点供应，
+以及 C-112.2–C-112.4 的原有四层证书、
+边块二稀疏实现及非可分离性；不把该证书区间扩大到 $0<t\le127/129$。
+原端口合同仍是任意有限经典旗、每旗解码在整个 $M_q$ 上 CPTP、无量子旁路，
+要求对所有复输入精确实现同一通道，并未加 BP、实性或限制旗数。
+代码合同 (C115.2)–(C115.3) 则关心多次通道的无辅助渐近传输，
+不把 $q$、旗数、环境维数、$\log_2q$ 或一次来源副本当成容量。
+共同源谱来自 $\{1,1,0,-1,-1\}$；共同历史律来自 C-108.3。
+任意不预读外加来源标签 $Z$ 的原生策略还满足 C-114.9 的 $I(Z;H)=0$，
+故这些不同容量不能由该历史菜单辨识，更不能由零标签信息推出容量为零。证毕。
+
+**命题 C-115.6（与原控制 instrument 的桥梁边界）。**
+[Original-Control Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md)
+的 (OC.1)–(OC.2) 来源是严格正 $p_b(k)$ 的单个纯端点态
+$\Psi_x(h)_i=\sqrt{p_b(x)_i}e^{-i(\theta_i+h_i)}$；
+其规范完整 instrument 保留成功及带时间、原模式标记的失败。
+[Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md)
+的 (IS.3) 保持这个停止语义；
+[Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md)
+的精确编码任务保持实际联合 archive／参考及同一个 prescribed-control instrument 菜单。
+这些任务的载体、操作和资源合同均不等同于 (C115.1)–(C115.3)。
+特别原混合来源 $\Gamma_{t,X}$ 不能仅凭五个模式的同名关系而等距识别为该纯端点来源。
+
+证明。$I_5+tX$ 的谱有恒为一的一项，并有配对的 $1\pm t\lambda_j$，
+故其秩在全部本章参数中至少为三；$J$ 等距，所以 $\operatorname{rank}\Gamma_{t,X}\ge3$。
+所引端点密度矩阵秩一，等距共轭保持非零谱，遂排除上述等距状态识别。
+这只排除等距识别，不排除所有 CPTP 映射；例如丢弃后制备纯态当然是 CPTP，
+但这种映射本身不保持来源信息，也不实现规定的全输入通道或编码服务。
+一个可转移结论的桥至少须逐项给出同一实际来源与联合参考的状态映射、
+所有允许输入上的操作交织、真实标记失败及参考的保持、所需独立重复使用和编码／解码服务，
+以及两个方向所主张的资源与误差控制。
+时间标记 instrument 的精确活量子载体最小值没有自动给出这些桥，
+本章的已知 Schur 通道服务也没有自动给出原控制生成、实际 waveform、校准或记录取得。证毕。
+
+**注记 C-115.7（所消费的成分与数学证据范围）。**
+可降解性和无辅助量子编码定理按 C-115.2 所引 Devetak–Shor Appendix B 式 (18) 消费；
+量子条件熵凹性消费 Lieb–Ruskai 的强次可加性
+([DOI:10.1063/1.1666274](https://doi.org/10.1063/1.1666274))，
+相对熵及互信息的数据处理消费 Lindblad 的成熟有限维结果
+([DOI:10.1007/BF01609396](https://doi.org/10.1007/BF01609396))。
+这些 literature-attested 成分是上述源特定证明中的中间工具，不是新增一般编码定理。
+Crann–Neufang，[*Quantum channels arising from abstract harmonic analysis*,
+1210.2738v2](https://arxiv.org/abs/1210.2738v2)，Proposition 4.15 的原陈述带有限群假设，
+不能仅凭 Schur 名称作为这里任意 $X$ 的容量供应。
+
+源特定的 repo-derived 综合是：在原复不可见纤维上把操作编码容量回接到闭人口目标，
+给出每一个固定反对称谱的完整容量区间及原坐标达到来源，
+再将实际等谱 F／E 的容量差与原单次整个块端口二／四分叉同时保留。
+这不声称文献全域原创性、不分类全部最优人口或全部最优来源，也不给 $\eta>0$ 的容量公式。
+这些是消费上述成熟定理的完整普通数学证明，尚无本章精确应用的当前 Lean 编译与公理闭包证据，
+因而不是 kernel 认证结论。既有仓内 Schur 距离、谱熵和原控制组合声明的名字，
+均不能替代这里的编码定理及原来源／操作／资源对应。
+数学代码可达率不赋予原生制备、相位控制、量子副本、参考测量、通道校准或物理接入服务。
+
+## 追加锚（本行以下为增补区）
