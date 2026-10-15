@@ -32,3 +32,6 @@ For every m at least five and every two-selected-label supply frame with base le
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2ParentCycle.native_j2_parent_hamiltonian_cycle`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2ParentCycle.native_j2_special_hamilton_path`
+- Dependency: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualJ2HalfPaths](NativeActualJ2HalfPaths.md)
+- Dependency: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeMarkedFrameDomains](NativeMarkedFrameDomains.md)
+- Dependency: [D5/S3/Combinatorics/Graph/PrefixReversal/NativeSpecialBoundaryInstances](NativeSpecialBoundaryInstances.md)
