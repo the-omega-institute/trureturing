@@ -44,7 +44,7 @@ private theorem delta_exchange {State : Type*} [AddCommGroup State] [Module ℂ 
     rw [pow_succ, mul_smul, neg_one_smul]
     module
 
-def orderedProducts (D : LatticeData) (hu : IsUnit D.G.det)
+private def orderedProducts (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (firstExponent secondExponent : ℤ) :
     ℤ → ℤ → Module.End ℂ (ActualTensor D hu) :=
   fun first second => chargedCoefficient D hu left (firstExponent - 2 * first) *
@@ -69,7 +69,7 @@ private theorem product_pure (D : LatticeData) (hu : IsUnit D.G.det)
     map_smul, smul_smul, oscillator]
   module
 
-theorem iterate_products_pure (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem iterate_products_pure (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (firstExponent secondExponent : ℤ)
     (polynomial : Oscillator D) (vector : ActualGround D hu) (order : ℕ)
     (first second : ℤ) :
