@@ -124,4 +124,72 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 #print axioms registration
+
+namespace Admissibility
+abbrev signature : Signature where
+  Params := LiteralRow
+  State C := Classes C → Option Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ C θ => admissibleCode C θ) (fun e => nomatch e)
+def bad : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ C θ, R.readout () C θ = true ↔ Admissible C θ
+private theorem badLaw : ¬ arena.Law bad := by
+  intro law
+  have h := law (.of (.inl false)) (fun _ => none)
+  have good : Admissible (.of (.inl false)) (fun _ => none) :=
+    ⟨rfl,by decide,by decide⟩
+  have impossible := h.mpr good
+  cases impossible
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨.of (.inr 0),(fun _ => some false),(fun _ => some true),?_⟩
+  decide +kernel
+
+def family : Registration arena (type_of% (@admissibleCode_spec)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨admissibleCode_spec,bad,badLaw⟩
+  sensitivity := ⟨fun i => ⟨bad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,badLaw⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@admissibleCode_spec)
+    (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteRootMinimax.admissibleCode_spec.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteRootMinimax.Admissibility.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteRootMinimax
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","fn","arg","fn","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+#print axioms registration
+end Admissibility
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteRootMinimax
