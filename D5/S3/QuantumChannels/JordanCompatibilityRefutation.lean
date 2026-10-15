@@ -7,11 +7,15 @@
    digest: Compatible channels in dimension four need not be Jordan compatible. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Weil.ZetaLinear.RankTrace
 
 set_option linter.style.longLine false
 
 open scoped BigOperators ComplexOrder MatrixOrder
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
+open D5.S3.Quantum.Information.PartialTraceMutualInformation
+  (partialTraceLeft partialTraceRight)
 
 noncomputable section
 namespace D5.S3.QuantumChannels.JordanCompatibilityRefutation
@@ -28,20 +32,6 @@ def IsCPTP {ι κ : Type*}
     (Φ : Map ι κ) : Prop :=
   MatrixMap.IsCompletelyPositive Φ ∧ IsTP Φ
 
-def J {ι κ : Type*}
-    [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
-    (Φ : Map ι κ) : Mat (ι × κ) :=
-  Matrix.reindex (Equiv.prodComm κ ι) (Equiv.prodComm κ ι)
-    (MatrixMap.choi_matrix Φ)
-
-def ptrRight {ι κ : Type*} [Fintype κ]
-    (T : Mat (ι × κ)) : Mat ι :=
-  fun a b => ∑ k : κ, T (a, k) (b, k)
-
-def ptrLeft {ι κ : Type*} [Fintype ι]
-    (T : Mat (ι × κ)) : Mat κ :=
-  fun a b => ∑ i : ι, T (i, a) (i, b)
-
 def traceX1 {d : ℕ} (A : Mat (Fin d × (Fin d × Fin d))) :
     Mat (Fin d × Fin d) :=
   fun p q => ∑ r : Fin d, A (p.1, (r, p.2)) (q.1, (r, q.2))
@@ -57,12 +47,12 @@ def jordanAction {d : ℕ} (Φ Ψ : Map (Fin d) (Fin d))
 
 def Compatible {d : ℕ} (Φ Ψ : Map (Fin d) (Fin d)) : Prop :=
   ∃ Γ : Map (Fin d) (Fin d × Fin d), IsCPTP Γ ∧
-    (∀ R, ptrRight (Γ R) = Φ R) ∧ (∀ R, ptrLeft (Γ R) = Ψ R)
+    (∀ R, partialTraceRight (Γ R) = Φ R) ∧ (∀ R, partialTraceLeft (Γ R) = Ψ R)
 
 def JordanCompatible {d : ℕ} (Φ Ψ : Map (Fin d) (Fin d)) : Prop :=
   ∃ A : Mat (Fin d × (Fin d × Fin d)), A.IsHermitian ∧
-    traceX1 A = J (LinearMap.id : Map (Fin d) (Fin d)) ∧
-    traceX2 A = J (LinearMap.id : Map (Fin d) (Fin d)) ∧
+    traceX1 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin d) (Fin d)) ∧
+    traceX2 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin d) (Fin d)) ∧
     (jordanAction Φ Ψ A).PosSemidef
 
 def claim : Prop :=
@@ -72,18 +62,6 @@ def claim : Prop :=
 variable {ι κ η : Type*}
 variable [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
 variable [Fintype η] [DecidableEq η]
-
-private theorem J_apply (Φ : Map ι κ) (a b : ι) (i j : κ) :
-    J Φ (a, i) (b, j) = Φ (Matrix.single a b 1) i j := rfl
-
-private theorem cp_iff_J_psd (Φ : Map ι κ) :
-    MatrixMap.IsCompletelyPositive Φ ↔ (J Φ).PosSemidef := by
-  rw [MatrixMap.choi_PSD_iff_CP_map]
-  constructor
-  · intro h
-    exact h.submatrix Prod.swap
-  · intro h
-    exact h.submatrix Prod.swap
 
 private def measurePrepare (L : κ → Mat ι) : Map ι κ :=
   MatrixMap.of_choi_matrix
@@ -108,39 +86,38 @@ private theorem measurePrepare_single (L : κ → Mat ι) (a b : ι) (i j : κ) 
   rw [measurePrepare_apply]
   simp [Matrix.diagonal_apply, Matrix.trace_mul_single]
 
-private theorem J_measurePrepare (L : κ → Mat ι) :
-    J (measurePrepare L) = ∑ i : κ,
-      Matrix.kroneckerMap (· * ·) (L i).transpose (Matrix.single i i (1 : ℂ)) := by
-  ext ⟨a, i⟩ ⟨b, j⟩
-  rw [J_apply, measurePrepare_single]
-  simp only [Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.single, Matrix.of_apply,
-    Matrix.transpose_apply, mul_ite, mul_one, mul_zero]
-  by_cases hij : i = j
-  · subst j
-    simp
-  · simp only [if_neg hij]
-    symm
-    apply Finset.sum_eq_zero
-    intro c _
-    rw [if_neg]
-    exact fun hc => hij (hc.1.symm.trans hc.2)
-
 private theorem measurePrepare_cp (L : κ → Mat ι)
     (hL : ∀ i, (L i).PosSemidef) :
     MatrixMap.IsCompletelyPositive (measurePrepare L) := by
-  rw [cp_iff_J_psd, J_measurePrepare]
+  rw [MatrixMap.choi_PSD_iff_CP_map]
+  have he : MatrixMap.choi_matrix (measurePrepare L) = ∑ i : κ,
+      Matrix.kroneckerMap (· * ·) (Matrix.single i i (1 : ℂ)) (L i).transpose := by
+    ext ⟨i, a⟩ ⟨j, b⟩
+    change measurePrepare L (Matrix.single a b 1) i j = _
+    rw [measurePrepare_single]
+    simp only [Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.single,
+      Matrix.of_apply, Matrix.transpose_apply, ite_mul, one_mul, zero_mul]
+    by_cases hij : i = j
+    · subst j
+      simp
+    · simp only [if_neg hij]
+      symm
+      apply Finset.sum_eq_zero
+      intro c _
+      rw [if_neg]
+      exact fun hc => hij (hc.1.symm.trans hc.2)
+  rw [he]
   apply Matrix.posSemidef_sum
   intro i _
-  apply (hL i).transpose.kronecker
   have hd : (Matrix.diagonal (fun j : κ => if j = i then (1 : ℂ) else 0)).PosSemidef :=
     Matrix.PosSemidef.diagonal (fun j => by split_ifs <;> norm_num)
   have heq : Matrix.single i i (1 : ℂ) =
       Matrix.diagonal (fun j : κ => if j = i then (1 : ℂ) else 0) := by
-    ext a b
-    simp only [Matrix.single, Matrix.diagonal_apply]
-    split_ifs <;> simp_all [eq_comm]
+    calc
+      _ = Matrix.diagonal (Pi.single i (1 : ℂ)) := (Matrix.diagonal_single i 1).symm
+      _ = _ := congrArg Matrix.diagonal (funext fun j => by simp [Pi.single_apply])
   rw [heq]
-  exact hd
+  exact hd.kronecker (hL i).transpose
 
 private theorem measurePrepare_tp (L : κ → Mat ι) (hL : ∑ i : κ, L i = 1) :
     IsTP (measurePrepare L) := by
@@ -150,13 +127,13 @@ private theorem measurePrepare_tp (L : κ → Mat ι) (hL : ∑ i : κ, L i = 1)
 
 omit [DecidableEq ι] in
 private theorem measurePrepare_marginals (L : (κ × η) → Mat ι) (R : Mat ι) :
-    ptrRight (measurePrepare L R) = measurePrepare (fun i => ∑ j : η, L (i, j)) R ∧
-    ptrLeft (measurePrepare L R) = measurePrepare (fun j => ∑ i : κ, L (i, j)) R := by
+    partialTraceRight (measurePrepare L R) = measurePrepare (fun i => ∑ j : η, L (i, j)) R ∧
+    partialTraceLeft (measurePrepare L R) = measurePrepare (fun j => ∑ i : κ, L (i, j)) R := by
   simp only [measurePrepare_apply]
   constructor <;> ext a b
-  · unfold ptrRight
+  · unfold partialTraceRight
     simp [Matrix.diagonal_apply, Matrix.sum_mul, Matrix.trace_sum]
-  · unfold ptrLeft
+  · unfold partialTraceLeft
     simp [Matrix.diagonal_apply, Matrix.sum_mul, Matrix.trace_sum]
 
 private abbrev M4 := Mat (Fin 4)
@@ -386,7 +363,7 @@ private theorem B_possemidef (A : A4)
   exact hp
 
 private theorem contract_id_right (A : A4)
-    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (U : M4) :
+    (h2 : traceX2 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4))) (U : M4) :
     contract A U 1 = U.transpose := by
   ext a b
   have hm (r s : Fin 4) :
@@ -394,8 +371,8 @@ private theorem contract_id_right (A : A4)
         if a = r ∧ b = s then 1 else 0 := by
     have hh := congrArg (fun M => M (a, r) (b, s)) h2
     change (∑ t : Fin 4, A (a, (r, t)) (b, (s, t))) =
-      (Matrix.single a b 1) r s at hh
-    simpa only [Matrix.single_apply] using hh
+      (Matrix.single r s 1) a b at hh
+    simpa only [Matrix.single_apply, eq_comm] using hh
   rw [contract_apply]
   simp only [Fintype.sum_prod_type, Matrix.one_apply, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq', Finset.mem_univ, if_true]
@@ -410,7 +387,7 @@ private theorem contract_id_right (A : A4)
       simp [hm, ite_and, ite_mul, Finset.sum_ite_irrel]
 
 private theorem contract_id_left (A : A4)
-    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (V : M4) :
+    (h1 : traceX1 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4))) (V : M4) :
     contract A 1 V = V.transpose := by
   ext a b
   have hm (r s : Fin 4) :
@@ -418,8 +395,8 @@ private theorem contract_id_left (A : A4)
         if a = r ∧ b = s then 1 else 0 := by
     have hh := congrArg (fun M => M (a, r) (b, s)) h1
     change (∑ t : Fin 4, A (a, (t, r)) (b, (t, s))) =
-      (Matrix.single a b 1) r s at hh
-    simpa only [Matrix.single_apply] using hh
+      (Matrix.single r s 1) a b at hh
+    simpa only [Matrix.single_apply, eq_comm] using hh
   rw [contract_apply]
   simp only [Fintype.sum_prod_type, Matrix.one_apply, mul_ite, mul_one, mul_zero,
     ite_mul, zero_mul, Finset.sum_ite_irrel, Finset.sum_const_zero,
@@ -436,14 +413,14 @@ private theorem contract_id_left (A : A4)
       simp [hm, ite_and, ite_mul, Finset.sum_ite_irrel]
 
 private theorem B_half_row (A : A4)
-    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (i : Fin 4) :
+    (h2 : traceX2 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4))) (i : Fin 4) :
     B A i 2 + B A i 3 = (1 / 2 : ℝ) • E i := by
   rw [B.eq_1, B.eq_1]
   rw [← contract_add_right, effect_halves.2.2.2, contract_smul_right,
     contract_id_right A h2, (effects_transpose i).1]
 
 private theorem B_half_col (A : A4)
-    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (j : Fin 4) :
+    (h1 : traceX1 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4))) (j : Fin 4) :
     B A 0 j + B A 1 j = (1 / 2 : ℝ) • F j := by
   rw [B.eq_1, B.eq_1]
   rw [← contract_add_left, effect_halves.1, contract_smul_left,
@@ -461,8 +438,8 @@ private theorem G_possemidef (A : A4)
   (B_possemidef A hT _ _).smul (by norm_num : (0 : ℝ) ≤ 4)
 
 private theorem G_marginals (A : A4)
-    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4)))
-    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) :
+    (h1 : traceX1 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4)))
+    (h2 : traceX2 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4))) :
     (∀ s : Fin 2, ∑ t : Fin 2, G A s t =
       (1 / 2 : ℝ) • (1 + ((4 / 5 : ℝ) * sign s) • P)) ∧
     (∀ t : Fin 2, ∑ s : Fin 2, G A s t =
@@ -480,8 +457,8 @@ private theorem G_marginals (A : A4)
     fin_cases t <;> dsimp [F, S, rightIndex, sign] <;> module
 
 private theorem G_moments (A : A4)
-    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4)))
-    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) :
+    (h1 : traceX1 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4)))
+    (h2 : traceX2 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4))) :
     (∑ s : Fin 2, ∑ t : Fin 2, G A s t) = 1 ∧
     (∑ s : Fin 2, ∑ t : Fin 2, sign s • G A s t) = (4 / 5 : ℝ) • P ∧
     (∑ s : Fin 2, ∑ t : Fin 2, sign t • G A s t) = (3 / 4 : ℝ) • Q := by
@@ -530,10 +507,8 @@ private theorem H_gram (s t : Fin 2) :
 
 private theorem trace_gram_mul_re_nonneg (K G : M4) (hG : G.PosSemidef) :
     0 ≤ (Matrix.trace ((K.conjTranspose * K) * G)).re := by
-  have h := (hG.mul_mul_conjTranspose_same K).trace_nonneg
-  have hh := (RCLike.nonneg_iff.mp h).1
-  change 0 ≤ (Matrix.trace (K * G * K.conjTranspose)).re at hh
-  simpa only [Matrix.trace_mul_cycle K G K.conjTranspose] using hh
+  exact RHLinalg.trace_mul_nonneg_of_posSemidef
+    (Matrix.posSemidef_conjTranspose_mul_self K) hG
 
 private theorem trace_sum_nonneg (A : A4)
     (hT : (jordanAction Phi Psi A).PosSemidef) :
@@ -548,8 +523,8 @@ private theorem trace_sum_nonneg (A : A4)
     (trace_gram_mul_re_nonneg (K s t) _ (G_possemidef A hT s t))
 
 private theorem trace_sum_value (A : A4)
-    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4)))
-    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) :
+    (h1 : traceX1 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4)))
+    (h2 : traceX2 A = MatrixMap.choi_matrix (LinearMap.id : Map (Fin 4) (Fin 4))) :
     (∑ s : Fin 2, ∑ t : Fin 2, (Matrix.trace (H s t * G A s t)).re) = -(1 / 5 : ℝ) := by
   have hm := G_moments A h1 h2
   have hs : (∑ s : Fin 2, ∑ t : Fin 2, H s t * G A s t) =
