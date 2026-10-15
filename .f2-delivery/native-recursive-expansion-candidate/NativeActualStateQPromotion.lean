@@ -84,9 +84,6 @@ private theorem same_state_q_three_fragments {m k : ℕ} (hm : 3 ≤ m) (hk : 3 
     apply Finset.image_injective (Sym2.map.injective Subtype.val_injective)
     rw [hK]
     simp only [specialCuts, Finset.image_image, markedCuts]
-    congr 1
-    funext i
-    rfl
   have hji (e) : e ∈ joint.flatMap (fun z => z.walk.edges) ↔
       e ∈ W.Q.walk.edges ∧ e ∉ W.Q.K ∪ W.Q.H := by
     rw [W.Q.partitions.joint_partition.edges.mem_iff]
