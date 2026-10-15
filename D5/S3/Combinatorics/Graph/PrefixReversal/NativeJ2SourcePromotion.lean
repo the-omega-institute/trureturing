@@ -14,6 +14,12 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedInventory
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2HalfRestoration
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2HalfPaths
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJ2JointPaths
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 open private pChildIndex outer_base_bound from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
@@ -21,6 +27,52 @@ open private map_filtered_complement from
   D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
 open private actual_joint_split_cut_inventory from
   D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
+
+private noncomputable def rawSideCut {m : ℕ} (hm : 5 ≤ m) (side : Bool)
+    (i : Fin 3) : Sym2 {x : Configuration m // F2Domain m x} :=
+  s(⟨port m (i, side, false), native_j2_port_domain hm _⟩,
+    ⟨port m (i, side, true), native_j2_port_domain hm _⟩)
+
+private theorem raw_side_cuts {m : ℕ} (hm : 5 ≤ m) (side : Bool) :
+    actualHalfCuts (F2Domain m) side = Finset.univ.image (rawSideCut hm side) := by
+  classical
+  ext e
+  change (e ∈ Finset.univ.filter (fun z : Sym2 {x : Configuration m // F2Domain m x} =>
+    HalfCut m side (Sym2.map Subtype.val z))) ↔ _
+  rw [Finset.mem_filter, Finset.mem_image]
+  constructor
+  · rintro ⟨_, i, hi⟩
+    refine ⟨i, Finset.mem_univ _, ?_⟩
+    apply Sym2.map.injective Subtype.val_injective
+    simpa only [rawSideCut, Sym2.map_mk, markedEdge] using hi.symm
+  · rintro ⟨i, _, rfl⟩
+    exact ⟨Finset.mem_univ _, i, rfl⟩
+
+/-- Both literal old marked groups come from this same retained raw seed.
+The opposite group uses the reversed selected frame at exactly the same
+indices; neither the terminal nor the base is changed. -/
+private theorem same_seed_marked_cut_images {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (P : RawSeedFor hm F) :
+    P.seed.K.image (Sym2.map Subtype.val) = markedCuts F ∧
+      P.seed.H.image (Sym2.map Subtype.val) = markedCuts (reverseSelected F) := by
+  classical
+  constructor
+  · rw [P.primaryCuts, raw_side_cuts hm false, Finset.image_image, Finset.image_image]
+    unfold markedCuts
+    congr 1
+    funext i
+    change s(relabel F * port m (i, false, false), relabel F * port m (i, false, true)) =
+      s(rightPort F i.val, leftPort F i.val)
+    simp only [port, Bool.false_eq_true, ↓reduceIte]
+    rw [(native_j2_frame_ports hm F i).1, (native_j2_frame_ports hm F i).2]
+  · rw [P.oppositeCuts, raw_side_cuts hm true, Finset.image_image, Finset.image_image]
+    unfold markedCuts
+    congr 1
+    funext i
+    change s(relabel F * port m (i, true, false), relabel F * port m (i, true, true)) =
+      s(rightPort (reverseSelected F) i.val, leftPort (reverseSelected F) i.val)
+    simp only [port, Bool.true_eq_true, ↓reduceIte]
+    rw [(native_j2_frame_barred_ports hm F i).1, (native_j2_frame_barred_ports hm F i).2]
 
 /-- The actual ordinary opening in the parent retains the original P
 supplier's full joint support and exactly its original uncut edges.
