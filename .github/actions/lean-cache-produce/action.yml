@@ -127,7 +127,8 @@ runs:
         exit "$status"
     - id: resume_snapshot
       name: Prepare producer progress
-      if: ${{ !cancelled() && (steps.build.outcome == 'failure' || (inputs.preparation-only == 'true' && steps.build.outcome == 'success')) }}
+      # A tolerated nonzero build has a successful step conclusion.
+      if: ${{ !cancelled() && steps.build.conclusion == 'success' && (steps.build.outcome != 'success' || inputs.preparation-only == 'true') }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
     - name: Save producer progress
