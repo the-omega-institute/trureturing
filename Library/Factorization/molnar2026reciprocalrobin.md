@@ -776,6 +776,118 @@ been independently verified here. These are conditional applications
 of known suppliers, with no new zero-free theorem or numerical
 starting cutoff; neither exponent reaches the $3/2$ diagonal.
 
+### An unconditional growing range with a numerical starting point
+
+The eventual range (J9) already includes $K(X)=XL^2\log L$.
+The additional conclusion here is a numerical starting point and a
+uniform margin, obtained by applying existing explicit prime estimates
+to (J4), (J6) and (J7). Set
+
+$$
+X_0=158822621,\qquad X=\log n\ge X_0,\qquad L=\log X,
+\qquad K=XL^2\log L.
+\tag{E1}
+$$
+
+In particular $X\ge256$ and $L\ge16$: $e<3$ gives
+$e^{16}<3^{16}=43046721<X_0$. For
+$I=\{p\text{ prime}:X/4<p\le X/2\}$, which lies inside
+$(\sqrt{2X},X)$, the
+[Rosser--Schoenfeld dyadic count](../Arith/rosser1962approximate.md#dyadic-prime-count-lower-bound),
+Corollary 3, equation (3.8), printed p.69, gives
+
+$$
+\#I>\frac{3X}{20\log(X/4)}>\frac{3X}{20L}.
+$$
+
+For every $p\in I$, the two supporting deficits in (J4) satisfy
+
+$$
+\begin{aligned}
+A_{X,p}
+&\ge\log\frac{X+2}{X+1}>\frac1{2X},\\
+B_{X,p}
+&\ge\frac1{2(X+1)}-\frac{32}{X^2}\ge\frac1{4X}.
+\end{aligned}
+$$
+
+For the second line use $\log p\ge L/2$,
+$\log(1+1/X)\ge1/(X+1)$ and
+$\log(1-p^{-2})\ge-2p^{-2}$. The displayed last inequality
+holds for $X\ge256$.
+Now put
+
+$$
+c=\frac{\log(K/(X+1))}{K-1}.
+$$
+
+For $L\ge16$, elementary logarithm bounds give
+$\log K=L+2\log L+\log\log L\le2L$,
+$K-1\ge XL^2$, and $X\log L/(X+1)>1$. Hence
+
+$$
+\frac{2}{XL^2}<c\le\frac{2}{XL}\le\frac1{4X}.
+$$
+
+The lower bound follows from
+$\log(K/(X+1))>2\log L$ and $K-1<K$.
+The local loss bound preceding (J5) gives $d_K(p)\ge c$.
+Thus all three entries of (J4) are at least $c$, independently
+of the original integer's exponent choice, and
+
+$$
+J_K(n)>\frac{3}{10L^3}.
+\tag{E2}
+$$
+
+For the upper bound use
+[Dusart, arXiv:1002.0442v1](https://arxiv.org/pdf/1002.0442v1),
+Theorem 5.2, printed p.4, the row
+$k=3$, $\eta_k=0.78$, $x_k=158822621$. Its unconditional statement is
+
+$$
+|R(t)|<\frac{39t}{50(\log t)^3}\qquad(t\ge X_0).
+$$
+
+This row applies throughout (J6)'s tail. Discarding $-T(X)\le0$
+and using (J7), with the full integral retained, gives
+
+$$
+\begin{aligned}
+E(X)
+&\le\frac{39}{100XL^4}
+ +\frac{39}{50}\int_X^\infty
+   \frac{\log t+1}{t(\log t)^5}\,dt\\
+&=\frac{39}{100XL^4}+\frac{13}{50L^3}
+  +\frac{39}{200L^4}<\frac7{25L^3}.
+\end{aligned}
+\tag{E3}
+$$
+
+Indeed, multiplying by $L^3$, the upper bound is at most
+$13/50+39/(200\cdot16)+39/(100\cdot256\cdot16)<7/25$.
+Together with (J2)--(J3) and (E2), this proves the paper application
+
+$$
+\boxed{
+\log\frac{Q_\kappa(n)}{B(n)}<-\frac1{50L^3}
+\quad\left(\log n\ge158822621,\quad
+1<\kappa\le(\log n)(\log\log n)^2\log\log\log n\right).
+}
+\tag{E4}
+$$
+
+The quantifiers include every integer $n$ in this domain and every real
+parameter in the interval; Molnar's parameter monotonicity transfers
+the bound at $K$ to all smaller $\kappa>1$. The only additional quantitative analytic inputs
+are the cited dyadic count and Dusart's theta row. Their analytic proofs
+and numerical tables have not been independently recertified, and
+this application has not been Lean compiled. It makes no originality
+claim. The asymptotically larger range (J9) still has no numerical
+starting point, whereas (E4) supplies one for this smaller schedule.
+Since $K/X^{3/2}\to0$, (E4) does not reach the RH-equivalent diagonal
+or settle classical Robin.
+
 ## The remaining signed inequality at the RH scale
 
 For $K(n)=\lceil X^{3/2}\rceil$, (J5) gives
