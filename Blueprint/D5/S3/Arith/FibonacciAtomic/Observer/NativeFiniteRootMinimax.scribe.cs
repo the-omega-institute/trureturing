@@ -11,6 +11,7 @@ internal sealed class NativeFiniteRootMinimaxDocument : IScribeDocumentDefinitio
             Paragraph(Text("This natural-number executable optimizer supplies the effective part of Native Birth Provenance Corollary 10.9. It adds no physical-cost or performance claim. Finite normalization and Bellman methods are existing suppliers; the particular row-count-fueled construction and its attaining-tree theorem are the mathematical content here.")),
             Paragraph(Text("In the formula, rowType and rowTarget denote the TableRow projections; chart elements coerce to their assignments. The two Boolean implications express the exact constant versus nonconstant recurrence.")),
             Entry("admissibleCode", "Attained Type Checker", "The Boolean image grammar and distinct-class leaf bounds decide precisely Admissible. The branch obligation remains in the retained native image-chart supplier.", DescribeRole.Definition),
+            Entry("admissibleCode_spec", "Exact Boolean Admissibility", "The public equivalence connects the executable checker to the original admissibility predicate for every literal row and every class-root assignment. It is reused by the actual repeated-partner controllers.", DescribeRole.Theorem),
             Entry("chartList", "Finite Chart Enumeration", "List.pi enumerates the three replies at every appearing class and filters by admissibleCode. Completeness includes zero classes. No actual origin, source-size bound, or native-word bound is a data argument.", DescribeRole.Definition),
             Entry("computedTarget", "Entire Predecessor Target", "The computable mask tests each occurrence parent for the visible alpha sibling and calls NativePredecessorRowRecovery.back. Shared old and new occurrences are repaired individually, including the root and blocked cuts.", DescribeRole.Definition),
             Entry("minimaxValue", "Executable Unit-Call Value", "Row-count fuel suffices: every nonempty reply fiber of a splitting coordinate is strictly smaller. A constant target costs zero. Otherwise List.argmin selects the actual class coordinate with one plus the maximum child value. Empty reply cells contribute zero.", DescribeRole.Definition),
@@ -23,6 +24,10 @@ internal sealed class NativeFiniteRootMinimaxDocument : IScribeDocumentDefinitio
     private static Formula Statement(string n)
     {
         var C=V("C"); var W=V("W"); var a=V("a"); var T=V("T"); var theta=V("theta");
+        if (n == "admissibleCode_spec") return All("C",V("LiteralRow"),
+            All("theta",Fn(Call("Classes",C),Call("Option",V("Bool"))),
+                Seq(Par(EqOf(Call("admissibleCode",C,theta),V("true"))),Sp,Iff,Sp,
+                    Par(Call("Admissible",C,theta)))));
         var value=Call("minimaxValue",C,W);
         Formula Correct(Formula tree) => All("a",Call("TableRow",C),Imp(
             Call("member",a,W),EqOf(Call("fst",Call("rootRun",Call("rowType",a),tree)),Call("rowTarget",a))));
