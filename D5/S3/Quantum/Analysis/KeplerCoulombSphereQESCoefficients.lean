@@ -7,6 +7,7 @@
    digest: Quesne's Kepler-Coulomb coefficient system has positive closed forms. -/
 
 import D5.S3.Constants.NewtonHankelRealRootCriterion
+import D5.S3.Zeros.Convolution.AlternatingFactorialSum
 
 namespace D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients
 open scoped BigOperators
@@ -150,9 +151,8 @@ private theorem F_pos {m r : ℕ} (hr : r ≤ m) : 0 < F m r := by
 
 private theorem F_ratio {m r : ℕ} (hr : r ≤ m) :
     F m r = (m.factorial : ℝ) / ((m - r).factorial : ℝ) := by
-  apply (eq_div_iff (by exact_mod_cast Nat.factorial_ne_zero (m - r))).mpr
-  rw [F.eq_1, mul_comm]
-  exact_mod_cast Nat.factorial_mul_descFactorial hr
+  rw [F.eq_1]
+  exact D5.S3.Zeros.Convolution.AlternatingFactorialSum.real_descFactorial m r hr
 
 private theorem sum_head {α : Type*} [AddCommMonoid α]
     (f : ℕ → α) (a b : ℕ) (hab : a ≤ b) :
