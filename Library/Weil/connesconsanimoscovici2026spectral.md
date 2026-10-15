@@ -429,6 +429,91 @@ reconstruction, all middle modes, the full tail and their propagated
 errors still need certification. No c27 positivity or RH conclusion
 follows from the scalar table.
 
+### Reuse signed infinite moments of the actual symbol
+
+The same [arithmetic input interface](https://github.com/the-omega-institute/trureturing-experiments/tree/main/docs/reports/weil-c27)
+also evaluates normalized discrete tail moments
+
+$$
+\mathsf T_p=M^{p-1}\sum_{m>M}\frac{s_m}{m^p},\qquad
+\mathsf U_p=M^{p-1}\sum_{m>M}\frac{s_m^2}{m^p},\quad p\ge2.
+$$
+
+It directly calls FLINT's finite-series, Bernoulli, Lerch and Hurwitz
+suppliers. The reused analytic remainder is Johansson,
+[*Arbitrary-precision computation of the gamma function*](https://doi.org/10.5206/mt.v3i1.14591),
+Eq28 and Theorem3.3/Eq35, printed pp.13–14: at derivative order1,
+the digamma Stirling remainder is bounded by
+$(1+\sqrt{\pi(J+1/2)})|B_{2J}|/(2J|z|^{2J})$
+for $J\ge1$, $\Re z\ge0$, $z\ne0$. These primary-source conditions
+were inspected. No special-function algorithm or general moment
+criterion is reproved.
+
+Write $L=\log c$, $\beta=\pi/L$, $a=1/4$, $q=c^{-2}$,
+$\delta=c^{-1/2}$, $\alpha=a/\beta$ and
+$K=L(\cosh(L/2)-1)/\pi$. The actual symbol satisfies
+
+$$
+s_m=-P_c(m)-\frac{Km}{m^2+\alpha^2}
+-\frac12\Im\psi(a+i\beta m)
+-\frac\delta2\Im\Phi(q,1,a+i\beta m).
+$$
+
+The last term is a positive Gamma endpoint correction; the
+nonoscillatory constant is $-\pi/4$. Both are retained. Finite
+geometric identities for the pole and endpoint correction, and a
+Cauchy coefficient bound on the finite Stirling sum, give a polynomial
+$\sum_jc_j(M/m)^j$ and a common bound
+
+$$
+\left|s_m-\left(\sum_jc_j(M/m)^j-P_c(m)\right)\right|
+\le\mathcal A_Jm^{-2J}+\mathcal B_Jm^{-2J-1}\quad(m>M).
+$$
+
+The linked reproduction source gives all coefficients and remainder
+constants. It uses finite identities on the unbounded Gamma index,
+without assuming a convergent infinite inverse-mode expansion.
+With $A=M+1$ and $z(u)=e^{2\pi i\log u/L}$, all finite moment
+centers use the existing kernel
+
+$$
+\mathsf L_p(u)=M^{p-1}z(u)^A\Phi(z(u),p,A),\qquad
+\mathsf L_p(1)=M^{p-1}\zeta(p,A).
+$$
+
+Exact rational phase folding modulo $c^{\mathbb Z}$ and conjugation
+reuses the [existing alias relation](../Fourier/montgomery1978largesieve.md#exact-aliases-of-the-existing-prime-symbol).
+The square keeps every signed polynomial--prime and ordered
+prime--prime product. In particular the c27 identity $z(3)z(9)=1$
+retains the negative sum-frequency Hurwitz terms. Independent-phase
+averaging is not used.
+
+For $\epsilon=\mathcal A_JA^{-2J}+\mathcal B_JA^{-2J-1}$ and the
+existing $|s_m|\le B_*$, the same scalar tail
+
+$$
+F_p=\frac{\mathcal A_J}{M^{2J}}\mathsf L_{p+2J}(1)
++\frac{\mathcal B_J}{M^{2J+1}}\mathsf L_{p+2J+1}(1)
+$$
+
+bounds the $\mathsf T_p$ error; $(2B_*+\epsilon)F_p$ bounds the
+$\mathsf U_p$ error. The interface adds both to its directed
+special-function and finite-arithmetic errors before export. This is
+an application of existing scalar suppliers, without a mathematical
+priority or Lean-certification claim. The shared moments can feed
+the existing coupling jets; coefficient/matrix amplification, all
+middle modes, the jet remainder and retained sign still need their
+own certificates. No complete c27 or cofinal positivity follows.
+
+The archived input covers powers $2,3,4,8,16,32,64,128$ at $M=32768$,
+$J=32$ and 2304 working bits. All sixteen normalized moment intervals
+have width at most one $2^{-640}$ grid unit, including both error
+sources. The analytic U-error component is below $2^{-816}$ for each
+row. All six T/U endpoint pairs at powers2,4,128 agree exactly with an
+independent 2560-bit execution. Exact-phase, finite-cutoff-shift and
+Hurwitz-progression checks support the interface; they do not supply
+a matrix error or positivity certificate.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
