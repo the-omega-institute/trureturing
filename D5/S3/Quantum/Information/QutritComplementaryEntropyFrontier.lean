@@ -27,7 +27,7 @@ def admissible
 def swap
     (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     Matrix (Fin 3 × Fin 3) (Fin 3) ℂ :=
-  fun p i => V (p.2, p.1) i
+  V.submatrix Prod.swap id
 
 def channelB
     (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
@@ -100,8 +100,7 @@ private theorem joint_upper (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
 
 private theorem swap_swap (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     swap (swap V) = V := by
-  ext p i
-  simp only [swap.eq_1]
+  rfl
 
 private theorem swap_admissible (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
     (hV : admissible V) : admissible (swap V) := by
@@ -116,7 +115,7 @@ private theorem channelB_swap (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
     channelB (swap V) R = partialTraceLeft (V * R * V.conjTranspose) := by
   ext i j
   simp only [channelB.eq_1, partialTraceLeft, partialTraceRight, Matrix.mul_apply,
-    Matrix.conjTranspose_apply, swap]
+    Matrix.conjTranspose_apply, swap, Matrix.submatrix_apply, Prod.swap, id_eq]
 
 private theorem rhoB_swap (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ) :
     rhoB (swap V) = rhoE V :=
