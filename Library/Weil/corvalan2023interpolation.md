@@ -3253,3 +3253,69 @@ $\kappa=0$ or varying-$\kappa$ endpoint. It has not been Lean
 compiled. The remaining same-integer estimate
 $\mathscr J_N(\mathcal R_{N,\kappa}^\sharp)=o(1)$, the complete
 signed Robin inequality and RH remain unresolved.
+
+## A fixed Mertens input sufficient for the original functional
+
+Keep the original family (I59), its actual band, all coefficients and the
+complete functional (I91). Suppose, as an additional input, that a fixed
+$1/2\le b<5/8$ satisfies $\zeta(s)\ne0$ for $\Re s>b$.
+Choose $b<\beta<5/8$. Reuse (I60) for both errors
+$M(x)\ll_\beta x^\beta$ and $\psi(x)-x\ll_\beta x^\beta$;
+no new zero-free or Mertens theorem is used.
+
+On $Q\le t\le N$, the actual prefix $M(t)-M(Q)$ is
+$O_\beta(N^\beta)$. The supremum plus variation of the weights
+$\log(N/t)$, $\log(N/t)/t$ and
+$\log(N/t)(1/t-1/N)$ is respectively $O(h)$, $O(h/N)$ and
+$O(h^2/N)$. Here $H/N\asymp h=(H-1/2)/N$, so the original
+half-integer convention and the strict lower cutoff do not change.
+Abel summation, with those same prefixes, gives
+$$
+\begin{aligned}
+|A|+|B|/N&\ll_\beta hN^{\beta-1},\\
+|\delta_{N,H}|+|e_{N,H}|&\ll_\beta h^2N^{\beta-1}.
+\end{aligned}
+\tag{I118}
+$$
+For the second line use the exact endpoint identity (I75), including
+$B/[2N(2N+1)]$, and $Nh\gg1$. This is a conditional estimate for
+the actual endpoint, not its deletion.
+
+The residual estimate already derived after (I60) is uniform on the
+whole original integer grid, including $m=2N$:
+$\sup|R_N(m)|\ll_\beta N^\beta/L$. Moreover the original weights
+satisfy $\sum_{m=N}^{2N}|k_{N,m}|\ll |A|+|B|/N$.
+Apply these facts and (I118) directly to (I91), retaining its endpoint:
+$$
+\begin{aligned}
+|\mathcal A_{N,H}|=|\mathscr J_N(R_N)|
+&\ll_\beta \frac{hN^{2\beta-1}}{L^2}\\
+&\ll_\beta \frac{N^{2\beta-5/4}e^{\lambda\Omega}}{L^2}
+=o(1).
+\end{aligned}
+\tag{I119}
+$$
+The last step uses fixed $\beta<5/8$ and $\Omega=o(\log N)$.
+It applies to every sufficiently large original $N$ under the added
+input, with the same actual $A,B$ and endpoint.
+
+A global bound $M(x)\ll x^\vartheta$ for one fixed
+$1/2\le\vartheta<5/8$ is also sufficient, with exponent slack.
+Indeed the classical partial-summation formula for $1/\zeta$ is
+holomorphic on $\Re s>\vartheta$ under that bound and agrees with
+$1/\zeta$ on $\Re s>1$. Its continuation excludes zeros on the
+former half-plane. Choose $\vartheta<\beta<5/8$ and reuse (I60).
+The residual bound at the identical exponent $\vartheta$ is not being
+deduced from bandwise Abel summation alone: (I33) also contains the
+prime error. The slack supplies that error through the existing
+analytic interface.
+
+For example, the [existing local fourth-moment source application](../Analytic/verjovsky2026mobiussmoothing.md#a-fixed-local-fourth-moment-input-for-the-original-robin-functional)
+identifies a sufficient input $\mathcal M_{4,c}(N)\ll N^\nu$ for
+fixed $c>0$ and $0\le\nu<1/32$. That deterministic estimate is
+not established here. The recorded boundaries near $7/8$ in the
+OpenAI and Liu sources do not meet the $5/8$ hypothesis. This is a
+conditional parameter application of existing theorems, not a new RH
+criterion, an unconditional bound for (I117)'s retained near sector,
+a mathematical-priority claim or Lean certification. The complete
+signed Robin objective and RH remain unresolved.
