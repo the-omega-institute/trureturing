@@ -2692,7 +2692,7 @@ bound, signed Robin inequality or RH.
 
 A different proposed supplier, vanishing unweighted critical-line
 mollifier error on the active height intervals, is ruled out by the
-[Radziwill source and exact parameter map](../Analytic/radziwill2012mollifying.md).
+[Radziwill source and exact parameter map](radziwill2012mollifying.md).
 That lower bound neither rules out the weighted Nyman--Beurling
 norm tending to zero nor supplies a sign for the retained functional
 in (I95).

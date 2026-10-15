@@ -45,7 +45,7 @@ not used for (RL1).
 
 ## Exact maps for the original Selberg polynomial
 
-The [actual residual application](../Weil/corvalan2023interpolation.md)
+The [actual residual application](corvalan2023interpolation.md)
 uses
 $$
 V_N(s)=\sum_{n\le N}\mu(n)
