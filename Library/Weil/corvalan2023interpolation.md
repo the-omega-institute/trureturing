@@ -1507,3 +1507,435 @@ indices and their interaction with $d_N$ in $Z_N$. It gives no improved
 complete-energy allowance over (I31), no sufficient unconditional
 RH energy estimate and no same-integer signed Robin estimate.
 The source application and derivation here are not Lean-certified.
+
+
+## Pay the terminal covariance while retaining the endpoint
+
+The [same short-interval source](../Analytic/shortuniformity2026robininterfaces.md#a-stronger-error-on-longer-mobius-intervals)
+also records the Huxley prime-error estimate needed here. Reuse that
+input and (I33), rather than replacing the original residual by a
+separately centered or optimized one. The following application pays
+the terminal fluctuation in the mixed term; two actual local moments
+and the endpoint value remain.
+
+Keep the same $N,L,\Omega(N)$ and $G_N$ as in (I48)–(I53), and put
+$Q=N-H$, $K=2N$, $w_m=1/[m(m+1)]$. In this section choose a common
+constant $c_\star>0$, small enough for the Möbius bound at $Q$, the
+Möbius and prime-error bounds at $2Q$, and their scale comparisons.
+This can decrease the constant $c$ used in (I48). Fix
+
+$$
+0<\lambda<c_\star/2,\qquad
+H\asymp N^{3/4}e^{\lambda\Omega(N)},\qquad H\in\mathbb N.
+$$
+
+All statements are for sufficiently large integer $N$. In particular,
+$H<N/3$. This is an explicitly restricted parameter family, not a
+claim for every $\lambda$ allowed by the unreduced constant in (I52).
+
+For auxiliary sums up to $2N$, write
+$b_n=\mu(n)\log(N/n)$, always with the original cutoff $N$. Define
+
+$$
+A=\sum_{Q<n\le N}\frac{b_n}{n},\qquad
+B=\sum_{Q<n\le N}b_n,\qquad
+S_m=\sum_{Q<n\le m/2}b_n.
+$$
+
+The last sum is empty before the terminal interval. For $Q<n\le N$ and
+$N\le m\le K$, $1\le m/n<3$, so
+$\lfloor m/n\rfloor=1+\mathbf1_{2n\le m}$. The exact centered-atom
+formula therefore gives
+
+$$
+LG_N(m)=(m+\tfrac12)A-\tfrac32B-S_m.
+\tag{I54}
+$$
+
+Let $r=R_N(K)$ and keep the actual local moments
+
+$$
+P_0=\sum_{m=N}^{K}w_mR_N(m),\qquad
+P_1=\sum_{m=N}^{K}w_m(m+\tfrac12)R_N(m).
+$$
+
+No assertion sets either moment to zero. Interchanging finite sums
+and telescoping the original weight, including the sample $m=2n$,
+gives
+
+$$
+D:=\sum_{m=N}^{K}w_mS_m
+=\sum_{Q<n\le N}b_n\left(\frac1{2n}-\frac1{K+1}\right)
+=\frac A2-\frac B{K+1}.
+\tag{I55}
+$$
+
+Set $C_{N,H}=\langle R_N,G_N\rangle_{\rm first}$. These quantities
+are real, and the exact mixed decomposition is
+
+$$
+\begin{aligned}
+C_{N,H}&=\mathcal A_{N,H}
+-\frac1L\sum_{m=N}^{K}w_mS_m(R_N(m)-r),\\
+\mathcal A_{N,H}
+&=\frac1L\left[
+A(P_1-r/2)-B\left(\tfrac32P_0-\frac r{K+1}\right)
+\right].
+\end{aligned}
+\tag{I56}
+$$
+
+In particular, the endpoint has been retained in $\mathcal A_{N,H}$;
+subtracting it inside the terminal fluctuation has not removed it
+from the original mixed term.
+
+On the support of $S_m$ define
+
+$$
+V_\mu(m)=\sum_{m<n\le K}b_n,\qquad
+V_\Lambda(m)=\psi(K)-\psi(m)-(K-m).
+$$
+
+Subtract (I33) at $m$ and $K$, using its original $U_N$. This yields
+
+$$
+L(R_N(m)-r)
+=-(K-m)(U_N-1)+V_\Lambda(m)-V_\mu(m).
+\tag{I57}
+$$
+
+Here the terms $b_n$ with $n>N$ occur only in the auxiliary identity
+(I33); no new dictionary atoms or reweighted cutoff are introduced.
+
+The prefix argument of (I48), applied at $Q$ and $2Q$, and discrete
+Abel summation give
+
+$$
+\sup_m|S_m|\ll_\eta\frac{H^2}{N}e^{-c_\star\Omega(N)},\qquad
+\sup_{2Q\le m\le K}|V_\mu(m)|
+ +\sup_{2Q\le m\le K}|V_\Lambda(m)|
+\ll_\eta H e^{-c_\star\Omega(N)}.
+$$
+
+For the second assertion the source interval starts at $2Q$ and has
+length $2H$. Differences of its prefixes give the terminal sums.
+The weight $\log(N/n)$ has bounded supremum plus variation on that
+interval. Short prefixes for $\Lambda-1$ have the trivial bound
+$O(u\log N)$; the fixed power margin between the source exponent
+$7/12+\eta$ and $H\ge N^{7/12+2\eta}$ absorbs this logarithm and the
+exponential allowance. Thus an all-prefix prime-error bound is used,
+not just a bound for the full interval.
+
+The unconditional VK–Mertens input already used in (I31) also pays
+the exact tail from (I34), with its estimate changed to
+
+$$
+U_N-1=-\int_N^\infty M(t)
+       \frac{1-\log(t/N)}{t^2}\,dt
+\ll e^{-b\Xi(N)}\qquad\text{for some }b>0.
+$$
+
+Indeed that input makes the Abel tail integral absolutely convergent
+and gives the normalizations $\sum\mu(n)/n=0$ and
+$\sum\mu(n)\log n/n=-1$ by taking the right-hand limits of
+$1/\zeta(s)$ and its derivative at $s=1$. After substituting
+$u=\log t$, absorb the polynomial factor in
+$\int_L^\infty(1+u)e^{-c_0\Xi(e^u)}du$ by decreasing the positive
+exponential constant. No RH estimate from (I34) is used.
+
+There are at most $2H$ samples with $S_m\ne0$, their total weight is
+$O(H/N^2)$, and $K-m\le2H$ on this support. Consequently (I56)–(I57)
+give the quantitative paid remainder
+
+$$
+\left|C_{N,H}-\mathcal A_{N,H}\right|
+\ll_\eta\frac{H^4}{N^3L^2}
+\left(e^{-2c_\star\Omega(N)}
+     +e^{-b\Xi(N)-c_\star\Omega(N)}\right).
+\tag{I58}
+$$
+
+This bounds the actual products on their common support; no
+independence or separate optimizing configuration is assumed.
+At the stated bandwidth the first allowance tends to zero since
+$4\lambda<2c_\star$, and the second does so because
+$\Xi(N)/\Omega(N)\to\infty$. Reuse (I52) for the smaller common
+constant to obtain
+
+$$
+C_{N,H}=\mathcal A_{N,H}+o(1),\qquad
+E_N^{\rm first}-\|R_N-G_N\|_{\rm first}^2
+=2\mathcal A_{N,H}+o(1).
+\tag{I59}
+$$
+
+The second identity retains the mean interaction already present in
+(I53). It supplies an $o(1)$ error for replacing the terminal
+covariance by its endpoint contribution, not an $o(1)$ estimate for
+the complete mixed term or squared-energy difference. The unpaid
+quantity is $\mathcal A_{N,H}$ with the displayed jointly realized
+$A,B,P_0,P_1,r$. The old pointwise input for $R_N$ still gives only
+an allowance of order
+$H^2e^{-\kappa\Xi(N)-c_\star\Omega(N)}/(NL)$ for the complete mixed
+term, which does not certify vanishing at this bandwidth. Full-space
+moment centering does not set these local moments or endpoint to zero.
+This is an application of existing short-interval estimates and the
+owned residual identity, without a new distribution theorem,
+originality claim, sufficient unconditional RH energy bound,
+same-integer signed Robin estimate or Lean certification.
+
+## Fixed-half-plane inputs sharpen the actual energy benchmark
+
+The already recorded [OpenAI source](../Analytic/openai2026quasirh.md)
+states a zero-free half-plane with boundary $7/8$. The
+[Liu v2 source](../Analytic/liu2026quasirh.md), Theorem 27.1, improves
+that boundary to $B_{\rm new}=0.874957019420098946\ldots$.
+Use these as paper-level inputs, with their strict boundary and
+principal-pole qualifications retained. Neither external Lean
+closure has been independently compiled here. The following applies
+those existing inputs to the actual family (I10); it is not a new
+zero-free-region or Mertens theorem.
+
+Here is the ordinary-integer analytic interface, including the
+parameter change needed to use a fixed boundary other than $1/2$.
+Suppose $1/2\le B<1$ and $\zeta$ has no zero in $\Re s>B$.
+The classical zero-free-half-plane/Perron argument gives, for every
+fixed $B<\beta<1$,
+
+$$
+M(x)\ll_\beta x^\beta,\qquad
+\psi(x)-x\ll_\beta x^\beta.
+\tag{I60}
+$$
+
+This is not obtained by simply renaming the RH exponent in the
+Conrey quotation. The [fixed source snapshot's
+logarithmic-control proof](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+label `lem:logarithmic-control`, supplies the classical disk argument:
+Borel--Caratheodory followed by three circles uses a nonvanishing
+regularized function, polynomial strip growth, and a bounded Euler
+logarithm on a fixed disk to the right of one. Its stated functions
+are Hecke functions and regularized $\zeta_F$, not the ordinary
+integer Mertens function. To apply that argument here, use instead
+$F(s)=(s-1)\zeta(s)/(s+1)$, with its removable nonzero value at one.
+It has those same elementary growth and Euler-logarithm properties
+and is nonvanishing on $\Re s>B$.
+For any fixed $\sigma_0>B$ and $\eta>0$, the argument gives
+$1/\zeta(\sigma+it)\ll_{\sigma_0,\eta}(3+|t|)^\eta$
+on $\sigma\ge\sigma_0$; Cauchy's estimate also bounds the
+logarithmic derivative by $O_{\sigma_0}(\log(3+|t|))$ on fixed
+sub-strips away from the pole at one.
+
+For the remaining interface reuse Koukoulopoulos,
+[*The Distribution of Prime Numbers*, author's authorized preliminary
+version](https://dms.umontreal.ca/~koukoulo/documents/publications/primes.pdf),
+Theorem 7.2, printed p.71. The inspected PDF has SHA256
+`1445e107bba9c89db6529aeb4bca3ecf01170fc2854a675f5ca6f288c77ea0a8`.
+Its coefficient condition holds with $f(n)=\mu(n)$ and
+$\theta=A=0$. Choose $B<\sigma_0<\beta$, initial line
+$c=1+1/\log x$, and height $T=x^2$.
+The shifted vertical integral is $O(x^{\sigma_0}T^\eta\log T)$,
+the horizontal integrals are $O(xT^{\eta-1})$, and that theorem's
+truncation error is $O(x\log x/T+1)$.
+Take $0<\eta<(\beta-\sigma_0)/4$ to obtain the Mertens part of
+(I60), with no residue at one for $1/\zeta$.
+For the prime error directly use the same book's explicit formula,
+Theorem 5.1, printed p.57, and its zero-counting Lemma 8.2(a),
+printed p.84. With $T=x^2$ and $\Re\rho\le B$ they give
+$\psi(x)-x\ll x^B\log^2x$, retaining every multiplicity and the
+main term $x$. Absorbing the logarithm gives the second part of
+(I60). Thus neither Perron nor the prime explicit formula is
+reproved here. Only their ordinary-$\zeta$ parameter interface is
+made explicit; the source's Hecke lemma is not quoted as a theorem
+about ordinary integer Mertens sums.
+
+Apply (I60) first to the exact identity (I33). Since $\beta<1$,
+the same Abel tails and normalizations used in (I34) converge, now
+with
+$U_N-1\ll_\beta N^{\beta-1}$ and
+$\mathcal T_N(m)\ll_\beta N^\beta$ uniformly on $N\le m\le2N$.
+Thus the actual residual, including its mean and endpoint, satisfies
+$|R_N(m)|\ll_\beta N^\beta/L$ there, and
+$E_N^{\rm first}\ll_\beta N^{2\beta-1}/L^2$.
+
+For the complete window reuse the bounded-variation splitting of
+(I31), without changing any coefficient. Set $X=N^{2-\beta}$.
+At each actual sample $N\le m\le X$, use
+$Y=\sqrt{mN^\beta}$, so $1\le N^\beta\le Y\le N$.
+The lower part has absolute bound $Y$ and the upper part uses
+$\sup_{Y\le t\le N}|M(t)|\ll_\beta N^\beta$ with the already
+proved variation allowance $O(1+m/Y)$. Consequently
+
+$$
+|R_N(m)|\ll_\beta 1+Y+N^\beta(1+m/Y)
+\ll_\beta\sqrt{mN^\beta}.
+$$
+
+The original weight gives at most $O_\beta(N^\beta\log N)$ on this
+range. On the whole remaining range $X<m\le N^2$, the existing
+$|R_N(m)|\le1+N$ and telescoping weights give
+$O(N^2/X)=O(N^\beta)$. Floors and ceilings at $X,Y$ only change
+fixed constants. Choosing $\beta>B$ sufficiently close to $B$
+and absorbing the logarithm yields, for every fixed $\varepsilon>0$,
+
+$$
+E_N^{\rm first}\ll_\varepsilon N^{2B-1+\varepsilon},\qquad
+E_N\ll_\varepsilon N^{B+\varepsilon}.
+\tag{I61}
+$$
+
+For $B=7/8$ these exponents are $3/4+\varepsilon$ and
+$7/8+\varepsilon$. The stated Liu boundary gives respectively
+$0.749914038840197892\ldots+\varepsilon$ and
+$0.874957019420098946\ldots+\varepsilon$.
+These fixed power savings improve the benchmark (I31) when its
+classical VK input is supplemented by the cited fixed-half-plane
+results. They neither alter what (I31)'s own input supplies nor
+attain the every-$\varepsilon$ subpower first-block estimate (I36).
+In particular $B_{\rm new}>1/2$ leaves a positive power in the
+first-block allowance. Combining it with (I52) also fails to certify
+vanishing of the full mixed term at the bandwidth of (I59).
+The actual joint main term $\mathcal A_{N,H}$, the same-integer
+signed Robin estimate, and RH remain unresolved. This is a scoped
+application of the cited analytic inputs, without a mathematical
+priority claim or Lean certification.
+
+## A coupled Perron kernel for the unpaid joint main term
+
+Retain the actual $A,B,P_0,P_1,r$ and $\mathcal A_{N,H}$ of (I56),
+and the bandwidth and common constant of (I58)--(I59). Reuse the
+Mellin kernel $H_q$ of (I15). Symmetric Mellin/Perron inversion is
+used only at a fixed integer $N$ here; no zero-sum or contour-shift
+estimate is assumed. This applies the classical inversion interface
+to the jointly realized functional, rather than replacing its
+coefficients or centering its local moments.
+
+Put
+$$
+a=\frac{Q+1/2}{N},\qquad h=1-a=\frac{H-1/2}{N},\qquad
+W_a(s)=\int_a^1x^{s-1}\log(1/x)\,dx
+=\frac{1-a^s(1+s\log(1/a))}{s^2},
+$$
+with the removable value at zero. Write
+$\mathscr P_s F=(2\pi i)^{-1}\lim_{T\to\infty}
+\int_{c-iT}^{c+iT}F(s)\,ds$ for a fixed $c>1$.
+The exact band inversion is
+$$
+B=\mathscr P_s\frac{N^sW_a(s)}{\zeta(s)},\qquad
+A=\mathscr P_s\frac{N^{s-1}W_a(s-1)}{\zeta(s)}.
+\tag{I62}
+$$
+The half-integer lower cut selects exactly $Q<n\le N$; the upper
+weight is zero. Thus no lower-boundary half weight or changed
+cutoff is hidden in this formula.
+
+The residual inversion needs an additional integer-jump term. Set
+$$
+J_m=\sum_{\substack{n\mid m\\n\le N}}b_n
+=\Lambda(m)-\mathbf1_{m>N}\mu(m)\log(N/m).
+$$
+The equality holds throughout $N\le m\le2N$, including both
+endpoints: any omitted divisor must be $m$ itself. Then
+$$
+LR_N(m)=L-\frac{J_m}{2}
++\mathscr P_s\frac{N^sH_{m/N}(s)}{\zeta(s)}.
+\tag{I63}
+$$
+Indeed, invert $\log v\{qv\}$ supported on $v\ge1$ and use the
+absolutely convergent Dirichlet series on $\Re s=c$. At $n\mid m$
+the fractional part jumps down by one, so symmetric inversion
+returns its two-sided average and must be corrected by $-b_n/2$.
+The factor $\log(N/N)=0$ removes a separate upper-cutoff jump.
+For fixed $N$ these inversion limits follow from local bounded
+variation and integrability in logarithmic coordinates.
+
+For any function specified on the actual grid $m/N$, define
+$$
+\begin{aligned}
+\mathfrak p_N(f)&=
+\sum_{m=N}^{2N}w_m(m+\tfrac12)f(m/N)-\tfrac12f(2),\\
+\mathfrak q_N(f)&=
+\tfrac32\sum_{m=N}^{2N}w_mf(m/N)-\frac{f(2)}{2N+1},\\
+p_N(v)&=\mathfrak p_N(H_\bullet(v)),\qquad
+q_N(v)=\mathfrak q_N(H_\bullet(v)).
+\end{aligned}
+\tag{I64}
+$$
+Let $Z(m/N)=1-J_m/(2L)$ and set
+$$
+\begin{aligned}
+\mathcal K_N(u,v)&=W_a(u-1)p_N(v)-NW_a(u)q_N(v),\\
+E_{\rm grid}&=\frac{A\mathfrak p_N(Z)-B\mathfrak q_N(Z)}L.
+\end{aligned}
+$$
+Substitution into (I56) gives the exact jointly signed expression
+$$
+\mathcal A_{N,H}=E_{\rm grid}
++\frac1{L^2}\mathscr P_u\mathscr P_v
+\frac{N^{u+v-1}\mathcal K_N(u,v)}{\zeta(u)\zeta(v)}.
+\tag{I65}
+$$
+Here the double symbol means the rectangular limit with independent
+heights $T_u,T_v\to\infty$. Each finite double integral separates
+into products of one-variable integrals from (I62)--(I64), whose
+limits exist for this fixed $N$. This proves that rectangular limit,
+without asserting absolute convergence, exchanging $N\to\infty$
+with it, or authorizing a spectral contour shift. Both actual
+$H_2$ endpoint terms remain present in $p_N$ and $q_N$.
+
+There is a paid part of (I65). Since $J_m=O(L)$,
+$\|Z\|_\infty=O(1)$, $\|\mathfrak p_N\|=O(1)$ and
+$\|\mathfrak q_N\|=O(N^{-1})$. Reuse the short-interval bounds
+underlying (I58), namely
+$|A|\ll H^2N^{-2}e^{-c_\star\Omega}$ and
+$|B|\ll H^2N^{-1}e^{-c_\star\Omega}$. They give
+$$
+E_{\rm grid}\ll
+\frac{H^2}{N^2L}e^{-c_\star\Omega}=o(1).
+\tag{I66}
+$$
+This pays the integer-jump and constant terms; it does not pay the
+remaining double integral or replace $Z$ by a local mean.
+
+The low-frequency kernel has an explicit calibration. Put
+$$
+\Phi(v)=\int_1^2\frac{q-3/2}{q^2}H_q(v)\,dq.
+$$
+Uniformly for $u$ in a fixed compact subset of $\mathbb C$ and $v$
+in a fixed compact subset of $\Re v>0$, including any fixed order
+of mixed derivatives, Taylor expansion and Riemann summation give
+$$
+\mathcal K_N(u,v)=\frac{h^2}{2}\Phi(v)
++O_{u,v}(h^3+h^2/N).
+\tag{I67}
+$$
+In particular $p_N(v)-Nq_N(v)=\Phi(v)+O_v(1/N)$. Its endpoint
+coefficient is $-1/2+N/(2N+1)=O(1/N)$, so this leading cancellation
+has not deleted the endpoint from the exact formula.
+
+For fixed simple nontrivial zeros $\rho,\sigma$, the corresponding
+ordered double residue of the meromorphic integrand in (I65), with
+the factor $L^{-2}$ included, is consequently
+$$
+\frac{H^2N^{\rho+\sigma-3}}{2L^2}
+\left(\frac{\Phi(\sigma)}{\zeta'(\rho)\zeta'(\sigma)}+o(1)\right).
+\tag{I68}
+$$
+This is a calculation for that fixed pair, not an asymptotic for
+$\mathcal A_{N,H}$ and not an assumption that all zeros are simple.
+At a conjugate pair its displayed prefactor has scale
+$N^{2\Re\rho-3/2}e^{2\lambda\Omega}/L^2$. The coefficient may vanish,
+other residues may cancel, and no spectral remainder has been paid.
+Thus existence of a zero with real part greater than $1/2$ alone
+does not turn this calculation into an obstruction to
+$\mathcal A_{N,H}=o(1)$.
+
+The missing uniformity is visible already in
+$|W_a(\sigma+it)|\ll_\sigma\min(h^2,h/(1+|t|))$, from integration
+by parts. The compact-set expansion (I67) cannot be inserted over
+an entire Perron line; heights of order $1/h\asymp N/H$ and beyond
+need their own reciprocal-zeta and joint cancellation estimates.
+Equations (I62)--(I68) supply the actual coupled kernel and a paid
+grid error, without a bound for that double integral, a new RH
+criterion, a same-integer signed Robin estimate, a mathematical
+priority claim or Lean certification.
