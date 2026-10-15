@@ -251,19 +251,19 @@ def cDigit (arity code position : Nat) : Nat := digit 4 (arity - 1 - position) c
 
 /-- Actual C-order source coordinates agree after deleting a missing axis.
 The arbitrary `code` is never truncated to a smaller domain by this theorem. -/
-theorem cDigit_erase (prefix suffix code position : Nat)
-    (hposition : position < prefix + suffix) :
-    cDigit (prefix + suffix) (eraseDigit 4 suffix code) position =
-      cDigit (prefix + suffix + 1) code
-        (if position < prefix then position else position + 1) := by
-  by_cases hpositionPrefix : position < prefix
+theorem cDigit_erase (prefixAxes suffix code position : Nat)
+    (hposition : position < prefixAxes + suffix) :
+    cDigit (prefixAxes + suffix) (eraseDigit 4 suffix code) position =
+      cDigit (prefixAxes + suffix + 1) code
+        (if position < prefixAxes then position else position + 1) := by
+  by_cases hpositionPrefix : position < prefixAxes
   · simp only [cDigit, if_pos hpositionPrefix]
-    have hhigh : suffix ≤ prefix + suffix - 1 - position := by omega
+    have hhigh : suffix ≤ prefixAxes + suffix - 1 - position := by omega
     rw [eraseDigit_high 4 (by decide) suffix code _ hhigh]
     congr 1
     omega
   · simp only [cDigit, if_neg hpositionPrefix]
-    have hlow : prefix + suffix - 1 - position < suffix := by omega
+    have hlow : prefixAxes + suffix - 1 - position < suffix := by omega
     rw [eraseDigit_low 4 suffix code _ hlow]
     congr 1
     omega

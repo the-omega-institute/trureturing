@@ -2,7 +2,7 @@
 All 32 original factors and all four values are retained.
 Boolean receipts are proved by kernel reduction, never native_decide. -/
 import Mathlib.Data.Int.Basic
-import Mathlib.Data.Matrix.Notation
+import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic.FinCases
 
 set_option autoImplicit false
