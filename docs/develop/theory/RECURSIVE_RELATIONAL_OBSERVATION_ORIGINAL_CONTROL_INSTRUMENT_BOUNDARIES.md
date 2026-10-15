@@ -1096,3 +1096,872 @@ verification or physical realization is asserted.  The actual joint observer
 interface and all-view recovery remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Exact information in the canonical terminal instrument
+
+The object classified in §§9–15 is precisely (OC.19)–(OC.19b), including its
+mode labels and its absorbing successor. The optimum, the existence of this
+instrument, its chronological consistency and its survival cocycle are the
+credited results of §5.2. The classification below does not classify other
+attaining implementations, accessible dilations, coherent failure successors,
+or deliberately attenuated completions. It concerns the double wall; no
+extension to every `ValidBase` is asserted.
+
+Fix
+
+$$
+0<Z<1,\qquad r=1-Z=2c,\qquad b=(c,c,Z),\qquad
+0<a<c,\qquad 0\le T<\infty.
+\tag{OC.26}
+$$
+
+All compared controls start at $k(0)=a$, use the same clock and duration,
+and obey `OriginalControl`: continuous real $k,\chi$, strict $0<k<c$,
+finite variation of $\chi$, and either the absolute-continuity alternative
+or the supplied finite-piecewise-$C^1$ alternative. The latter also implies
+absolute continuity, by the truncated-partition fundamental theorem in
+`OriginalControlComposition`. Thus both alternatives remain included below;
+finite variation alone is not used to justify a derivative primitive.
+Each individual path has a positive compact support margin. There is no
+common speed, variation, charge or survival bound over this entire class.
+
+Use relative real phase and uncentered area
+
+$$
+\begin{aligned}
+\xi(t)&=\chi(t)-\chi(0),&
+\mathcal A(t)&=\int_0^t k(u)\chi'(u)\,du,\\
+H_+(t)&=\xi(t)/2-\mathcal A(t)/r,&
+H_-(t)&=-\mathcal A(t)/r,\\
+H(t)&=(H_+,H_-,0,H_-,H_+),&
+\xi(t)&=2(H_+(t)-H_-(t)).
+\end{aligned}
+\tag{OC.27}
+$$
+
+These are the supplied affine double-wall weights integrated along the
+actual control. In particular, real lifts are retained before taking phase
+characters. Based phase loops satisfy $\xi(T)=2\pi n$ with any signed
+$n\in\mathbb Z$; general open controls need satisfy no such condition.
+
+Write $S(t)=\exp(-\Lambda(t))$ and $\lambda=\Lambda'$ as in (OC.15).
+The canonical success operator from time zero is
+
+$$
+K_t=\operatorname{diag}_i\left(
+ \sqrt{\frac{S(t)p_i(k(t))}{p_i(a)}}e^{-iH_i(t)}\right),
+\qquad p(k)=(k,c-k,Z,c-k,k).
+\tag{OC.28}
+$$
+
+Its complete terminal output is success with its live quantum output, or
+first failure at an exact $\tau\in(0,T]$, original mode $i$, and stopped
+state $f$. Every such time/mode event is retained. On the supplied
+six-dimensional extension the no-new-failure operator is $K_T\oplus1_f$;
+the failure operators annihilate an already stopped input. No further
+environment port is included in this definition.
+
+For mathematical comparisons, choose any one common coherent pure input
+$\psi$ with $|\psi_i|^2=p_i(a)$ and $\psi_2=\sqrt Z$. In particular this
+may be any one fixed, unknown member of (OC.10). Calling it common does not
+give its phases, $\beta$, or $m$ to a controller. Let
+
+$$
+F_i(t)=\Pr(\tau\le t,\ \text{failure mode}=i).
+\tag{OC.29}
+$$
+
+Here $F_i$ is a cumulative function of the whole terminal probability law.
+It is not a value emitted by one execution. A run stopped at $\tau$ has only
+its executed original prefix followed by $f$; inversion of the program's
+law does not say that this failed run executed its unperformed live tail.
+
+**定理 9.1（累计损失与参数化高度的精确逆）。** For every control above,
+every common input just specified and every $0\le t\le T$,
+
+$$
+\begin{aligned}
+F_i(t)&=p_i(a)-S(t)p_i(k(t)),\\
+S(t)&=1-\sum_iF_i(t)=1-F_2(t)/Z,\\
+k(t)&=\frac{a-F_0(t)}{1-F_2(t)/Z}.
+\end{aligned}
+\tag{OC.30}
+$$
+
+Every $F_i$ is absolutely continuous and nondecreasing. In particular the
+entire marked failure law identifies the height on its original time axis,
+including waits and turning points, without differentiating that law.
+It is independent of the unknown input phases on the declared input family.
+
+Proof. Put $q_i(t)=S(t)p_i(k(t))$. Compact strict positivity and absolute
+continuity make $\log p_i(k)$, $S$ and $q_i$ absolutely continuous, with
+$S>0$ throughout. For the nonnegative rate
+$\gamma_i=\lambda-(\log p_i(k))'$ of §5.2 the product rule gives
+
+$$
+q_i'=-\gamma_iq_i\quad\text{almost everywhere}.
+\tag{OC.31}
+$$
+
+The rank-one jump in (OC.19b) has on a general live input $\rho$ the density
+
+$$
+J_i(t;0)\rho J_i(t;0)^*
+ =\frac{\gamma_i(t)q_i(t)}{p_i(a)}\rho_{ii}|f\rangle\langle f|.
+\tag{OC.32}
+$$
+
+Its scalar phase cancels. Substituting $\rho_{ii}=p_i(a)$ and integrating
+(OC.31) proves the first identity at every time. Summing uses
+$\sum_i p_i=1$; using the fixed positive middle probability $Z$ gives the
+second identity, and mode $0$ gives the last. At zero duration the measures
+are empty, $S=1$ and $k(0)=a$. Absolute continuity excludes hidden endpoint
+atoms. $\square$
+
+## 10. One signed loss curve and the compatible two-CDF image
+
+**定理 10.1（Jordan 表示及其准确可实现范围）。** Put
+
+$$
+P=F_0=F_4,\qquad N=F_1=F_3,\qquad
+\ell=P-N,\qquad V(t)=\operatorname{TV}_{[0,t]}(\ell).
+$$
+
+For every canonical control of §9,
+
+$$
+\begin{aligned}
+P+N&=c(1-S),&P'N'&=0\quad\text{almost everywhere},\\
+P&=(V+\ell)/2,&N&=(V-\ell)/2,\\
+S&=1-V/c,&k&=\frac{a-(V+\ell)/2}{1-V/c},\\
+F_2&=ZV/c.
+\end{aligned}
+\tag{OC.33}
+$$
+
+The exact range of the probability-law coordinate $\ell$ is the set of
+real absolutely continuous curves on $[0,T]$ such that
+
+$$
+\ell(0)=0,\qquad
+P(T)<a,\qquad N(T)<c-a,
+\quad
+P=(V+\ell)/2,\ N=(V-\ell)/2,\ V(t)=\int_0^t|\ell'|.
+\tag{OC.34}
+$$
+
+Each such curve determines exactly one absolutely continuous height path
+starting at $a$, and a lawful original control realizing its canonical
+failure law exists, for example with $\chi$ constant. If height closure is
+required, impose additionally $k(T)=a$. The range is for the original union
+of regularity alternatives; a demand for the finite-piecewise-$C^1$
+subclass separately requires the reconstructed height to meet that demand.
+
+Proof. The identities between paired modes and $P+N=c(1-S)$ follow from
+(OC.30). If $k'>0$, then $\lambda=k'/k$ and $P'=0$, whereas
+$N'=cS\lambda$. If $k'<0$, then $\lambda=-k'/(c-k)$ and
+$N'=0$, whereas $P'=cS\lambda$. Where $k'=0$ both vanish. Thus the
+nonnegative densities $P',N'$ are disjoint almost everywhere, and
+$|\ell'|=P'+N'$. Integrating proves $V=P+N$ and all of (OC.33).
+Moreover $a-P(T)=S(T)k(T)>0$ and
+$c-a-N(T)=S(T)(c-k(T))>0$, proving necessity of (OC.34).
+
+Conversely, the absolutely continuous Jordan parts in (OC.34) are
+nondecreasing, start at zero and have disjoint nonzero derivatives almost
+everywhere. Set
+
+$$
+R=a-P,\qquad Q=c-a-N,\qquad S=(R+Q)/c,\qquad k=R/S.
+$$
+
+The endpoint inequalities bound $R,Q,S$ away from zero at every earlier
+time. Hence $k$ is absolutely continuous, $k(0)=a$ and $0<k<c$ with
+$c-k=Q/S$. Define $\lambda_0=(P'+N')/(cS)=-S'/S$ almost everywhere.
+Where $P'=0$ the quotient rule gives $k'=k\lambda_0\ge0$; where
+$N'=0$ it gives $k'=-(c-k)\lambda_0\le0$. If both vanish then $k'=0$.
+Consequently
+
+$$
+\lambda_0=(k')_+/k+(-k')_+/(c-k).
+$$
+
+Together with $S(0)=1$ this proves that $S$ is exactly the canonical
+survival. With constant $\chi$, the original absolute-continuity
+alternative holds. Formula (OC.30) returns precisely $P,N,F_2$ and hence
+$\ell$. The inverse formula makes the height unique. This also proves the
+singleton zero-duration case. $\square$
+
+**定理 10.2（两个累计函数的像与共同定义域上的互逆）。** Given real
+absolutely continuous functions $u,v$ on $[0,T]$, they are exactly
+$(F_0,F_2)$ of some canonical original control if and only if
+
+$$
+\begin{gathered}
+u(0)=v(0)=0,\qquad v'\ge0\ \text{almost everywhere},\qquad v(T)<Z,\\
+S=1-v/Z,\qquad k=(a-u)/S\in(0,c)\ \text{at every time},\\
+u'(t)\in\{0,cv'(t)/Z\}\quad\text{almost everywhere}.
+\end{gathered}
+\tag{OC.35}
+$$
+
+On this exact domain the two representations are inverse by
+
+$$
+\ell=2u-cv/Z,\qquad V=cv/Z,
+\qquad
+u=(V+\ell)/2,\qquad v=ZV/c.
+\tag{OC.36}
+$$
+
+The remaining cumulative functions are
+$F_4=u$ and $F_1=F_3=cv/Z-u$. Thus these are two descriptions of the same
+law, not independent storage constructions.
+
+Proof. Necessity follows from (OC.30) and the two sign cases in Theorem
+10.1. Conversely (OC.35) bounds $S$ away from zero and makes $k$
+absolutely continuous. Put $\lambda_0=v'/(ZS)$. Where $u'=0$,
+$k'=k\lambda_0$; where $u'=cv'/Z$,
+$k'=-(c-k)\lambda_0$. If $v'=0$ these equations coincide. This gives
+exactly the canonical rate and survival, and constant $\chi$ supplies an
+actual original control with the requested $u,v$.
+
+For the common-domain assertion, (OC.35) gives
+$\ell'=\pm cv'/Z$ almost everywhere, so its actual variation is
+$V=cv/Z$. Its Jordan parts are $P=u$, $N=cv/Z-u$.
+Strict positivity of $k,c-k$ at $T$ gives their endpoint inequalities in
+(OC.34). Conversely a curve satisfying (OC.34) yields the $u,v$ in (OC.36),
+with $v(T)<Z$ and the two derivative alternatives from the disjoint Jordan
+parts. All formulas are then literal inverses. $\square$
+
+Absolute continuity is essential in these statements: an arbitrary
+bounded-variation curve may have singular loss and is not included. Nor
+can optimality be omitted. For example, adding a positive common attenuation
+rate $\eta$ at constant $k=a=c/2$ would give
+$S=e^{-\eta t}$, $P=N=a(1-S)$ and $\ell=0$ despite nonzero loss.
+This is an enlarged, noncanonical operation, not an instance of (OC.19b).
+Even its two CDFs violate the two-choice derivative condition in (OC.35).
+Other completions retaining different failure coherences need not satisfy
+(OC.32). None of these enlarged classes is classified here.
+
+**命题 10.3（附加终端相位的可实现域）。** For $T>0$ and a fixed admissible
+height $k$, the attainable real pairs $(\xi(T),\mathcal A(T))$ under the
+absolute-continuity phase alternative are all of $\mathbb R^2$ if $k$ is
+nonconstant. If $k\equiv a$, their exact range is
+$\{(C,aC):C\in\mathbb R\}$. Thus a nonconstant height allows every
+terminal character pair $(e^{-iH_+(T)},e^{-iH_-(T)})\in\mathbb T^2$;
+a constant height allows exactly
+
+$$
+\left\{\left(e^{-i(1/2-a/r)C},e^{iaC/r}\right):C\in\mathbb R\right\}.
+\tag{OC.37}
+$$
+
+The actual image is meant here, without replacing it by its closure.
+For $T=0$ only the pair $(1,1)$ occurs. Under a specified phase-loop
+sector $n$, additionally require $C=2\pi n$; sectors are not discarded.
+
+Proof. For $\alpha=\chi'\in L^1[0,T]$ the two moments are
+$(\int\alpha,\int k\alpha)$. A nonconstant continuous $k$ has two
+disjoint positive-length intervals with distinct average heights
+$\kappa_1\ne\kappa_2$: choose small intervals near two distinct values.
+Let $b_j$ be their normalized indicator functions. For
+$\alpha=z_1b_1+z_2b_2$ the moments are
+$(z_1+z_2,\kappa_1z_1+\kappa_2z_2)$. The determinant is nonzero, so
+any two requested moments are attained. Its integral primitive is an
+absolutely continuous real phase with finite variation. The constant case
+is immediate. Formula (OC.27) is an invertible real linear map from the two
+moments to $(H_+,H_-)$; taking its phase characters proves the assertion.
+If $k$ satisfies the finite-piecewise-$C^1$ alternative, these piecewise
+constant rates also preserve that alternative after finite refinement.
+$\square$
+
+The single curve $\ell$, the two entire functions $(u,v)$, and an entire
+parameterized $k$ are exact infinite-precision law objects. No one of these
+representations is declared a finite memory alphabet or an acquired law.
+For example a single trajectory's signed failure indicator is not $\ell$:
+a mode-$0$ failure would make that indicator jump by one, and inserting its
+variation into $1-V/c$ would yield a negative number because $c<1/2$.
+The formulas act on probabilities, never on a substituted sample path.
+
+## 11. Complete terminal classification and unknown initial inputs
+
+**定理 11.1（同一正相干输入、全部输入及参考的分类）。** Let $\gamma$ and
+$\widetilde\gamma$ be two controls of §9 at the same $b,a,T$. The following
+conditions are equivalent.
+
+1. Their complete terminal classical–quantum output measures agree on one
+   common coherent pure input with diagonal $p(a)$ and positive middle
+   amplitude. Equality includes the unnormalized success density and every
+   Borel failure-time event in every original mode.
+2. They agree on every paired same input of (OC.10), for all
+   $\beta\in\mathbb R$ and signed $m\in\mathbb Z$.
+3. They have the same $k(t)$ for every $t$ and the same two terminal
+   characters $z_+=e^{-iH_+(T)}$, $z_-=e^{-iH_-(T)}$.
+4. Their instruments are equal as CP-valued measures on every live input,
+   and on the supplied six-dimensional stopped extension, including after
+   adjoining any finite-dimensional external quantum reference.
+
+Equivalently the exact classification data are
+$(u(\cdot),v(\cdot),z_+,z_-)$ on (OC.35), or
+$(\ell(\cdot),z_+,z_-)$ on (OC.34), with the phase image specified in
+Proposition 10.3 and any stated loop promises. The classified object is the
+terminal operation; these data do not replace its actual quantum specimen
+and retained events by a classical state.
+
+Proof. From condition 1 the mode/time traces agree. Theorem 9.1 gives the
+same height at every time and the same $S$. For any common positive coherent
+input, let $x=K_T\psi$ and $\widetilde x=\widetilde K_T\psi$.
+They are nonzero and equality of their unnormalized rank-one densities
+implies $x=e^{i\omega}\widetilde x$ for some unit scalar. Their middle
+coordinates are both exactly $\sqrt{S(T)Z}>0$, so $e^{i\omega}=1$.
+All other input components and all diagonal moduli are nonzero. Cancelling
+them gives $e^{-iH_i(T)}=e^{-i\widetilde H_i(T)}$ for every $i$, hence
+condition 3. This is a comparison proof, not an instruction to read the
+unknown input phases.
+
+Conversely, equal height paths have equal almost-everywhere derivatives,
+$\lambda,S,q_i$ and loss measures. For every live $\rho$ and Borel
+$E\subseteq(0,T]$, (OC.31)–(OC.32) give the full CP map
+
+$$
+\mathcal I_{\mathrm{fail},i}(E)(\rho)
+ =\frac{\int_E dF_i(t)}{p_i(a)}\rho_{ii}|f\rangle\langle f|.
+\tag{OC.38}
+$$
+
+Thus equal $k$ gives equal failure CP measures, even when intermediate phases
+differ. The terminal characters also make $K_T=\widetilde K_T$ exactly,
+so the success maps and $K_T\oplus1_f$ extensions agree. With a reference
+$R$, the corresponding formula is
+
+$$
+(\mathcal I_{\mathrm{fail},i}(E)\otimes\mathrm{id}_R)(\rho_{LR})
+ =\frac{\int_E dF_i(t)}{p_i(a)}
+ |f\rangle\langle f|\otimes\langle i|\rho_{LR}|i\rangle.
+\tag{OC.39}
+$$
+
+Equality therefore preserves reference blocks and not only scalar
+probabilities. Success uses the same $K_T\otimes I_R$; the same argument
+covers live/stopped coherences of the declared extension. This proves 3
+implies 4. Condition 4 implies 2 and 2 implies 1. The zero-duration case
+has the identity operation and no failure events. $\square$
+
+This upgrade from one coherent input to all inputs uses the special diagonal
+success and rank-one marked jumps just calculated. It is not a claim that
+one input generally characterizes a quantum channel, or that arbitrary
+preparations and tomography have become legal source actions.
+
+**命题 11.2（未标号未知输入族的不同量词）。** The paired-input comparison in
+Theorem 11.1 is different from equality of unlabelled sets of output laws
+when the initial $(\beta,m)$ may be reassigned. For general open controls,
+these unlabelled sets agree exactly when their $k$ paths agree and
+
+$$
+\xi(T)-\widetilde\xi(T)\in2\pi\mathbb Z.
+\tag{OC.40}
+$$
+
+In particular, among based phase loops with the same height path, the
+unlabelled sets agree regardless of terminal area or signed winding.
+
+Proof. The common failure law in each set still gives $k$ by (OC.30).
+For a member of the input family the normalized live output is
+
+$$
+\sqrt Z e_2+e^{-i(\beta+H_+(T))}
+ \left(\sqrt{2k(T)}U_+
+ +(-1)^m e^{i\xi(T)/2}\sqrt{2(c-k(T))}U_-\right).
+\tag{OC.41}
+$$
+
+The freely varying $\beta$ absorbs any $H_+$ shift. Both nonzero bottom
+components and the fixed middle component show that the remaining
+unlabelled sign set is exactly
+$\{e^{i\xi(T)/2},-e^{i\xi(T)/2}\}$.
+Equality of these sets is exactly (OC.40). This also proves sufficiency
+without giving any relabelled parameter to a controller.
+
+For phase loops write $\xi(T)=2\pi n$ and $B=H_+(T)$.
+The success state is $\Psi_{k(T),\beta+B,m+n}$. Given another loop with
+$\widetilde B,\widetilde n$, the mathematical relabelling
+
+$$
+\widetilde\beta=\beta+B-\widetilde B,\qquad
+\widetilde m=m+n-\widetilde n
+$$
+
+makes the success states coincide; all failure outputs already coincide.
+This is equality of statistical families with nuisance input parameters.
+It does not identify $B,n$ from a specimen with an uncalibrated initial
+phase and winding. $\square$
+
+## 12. The fixed-height-path phase ambiguity class
+
+Here “fixed height path” means that the entire function $k(t)$ is held
+fixed, not necessarily that it is constant in time.
+
+**定理 12.1（完整终点仪器的相位纤维）。** For a fixed admissible $k$ and two
+original phase controls, let $\alpha=\chi'-\widetilde\chi'$.
+Their canonical terminal instruments agree exactly when
+
+$$
+\int_0^T\alpha\in4\pi\mathbb Z,\qquad
+\int_0^T k\alpha\in2\pi r\mathbb Z.
+\tag{OC.42}
+$$
+
+For $T>0$, the common zero-moment subspace
+
+$$
+\mathcal N_k=\left\{\alpha\in L^1[0,T]:
+ \int\alpha=0,\quad\int k\alpha=0\right\}
+\tag{OC.43}
+$$
+
+is infinite dimensional. Every $\alpha\in\mathcal N_k$ gives a lawful
+phase perturbation $\chi(t)\mapsto\chi(t)+\int_0^t\alpha$ with the
+same initial phase, exact terminal real phase increment, signed area and
+terminal real residual, hence the same complete instrument. A phase loop
+keeps its exact signed winding, not just its parity.
+
+Proof. By (OC.27), equality of the two characters is equivalent to
+$\Delta\mathcal A/r\in2\pi\mathbb Z$ and
+$\Delta\xi/2-\Delta\mathcal A/r\in2\pi\mathbb Z$.
+These are exactly (OC.42); Theorem 11.1 supplies both directions.
+
+Both moments in (OC.43) are bounded linear functionals on $L^1$ because
+$k$ is continuous on a compact interval. More explicitly, choose three
+disjoint positive-length intervals, normalize their indicators $b_j$, and
+write $\kappa_j=\int kb_j$. The two homogeneous equations
+$\sum z_j=\sum\kappa_jz_j=0$ have a nonzero real solution in three
+unknowns. Disjoint supports make $\sum z_jb_j$ a nonzero element of
+$\mathcal N_k$. Arbitrarily many disjoint triples give arbitrarily many
+linearly independent such functions. The primitive of any $L^1$ rate is
+absolutely continuous with finite variation; strict probability support is
+unchanged. Thus the perturbation stays in the original class. For an
+original finite-piecewise-$C^1$ path, the displayed finite step-rate
+perturbations preserve that alternative on a common finite refinement.
+$\square$
+
+The proof identifies the actual whole terminal phase fiber: the inverse
+image of the lattice in (OC.42) under the two-moment map, not merely one
+example or a dimension count. Even the zero-moment portion contains
+arbitrarily many independent lawful perturbations. This does not yet make
+any of their phase records acquired or accessible.
+
+## 13. One phase-order witness and one signed-winding consequence
+
+**定理 13.1（同资源、非零失败、异第三签名的实际控制对）。** Take
+$b=(2/5,2/5,1/5)$, $c=2/5$, $r=4/5$, $a=1/10$, $T=2$.
+Define actual relative controls by
+
+$$
+\begin{aligned}
+k(t)&=\begin{cases}(1+t)/10,&0\le t\le1,\\
+                         (3-t)/10,&1\le t\le2,\end{cases}\\
+q(t)&=t-3t^2+2t^3\quad(0\le t\le1),\\
+\xi_\pm(t)&=\begin{cases}\pm q(t),&0\le t\le1,\\
+                                      0,&1\le t\le2.\end{cases}
+\end{aligned}
+\tag{OC.44}
+$$
+
+Set $\chi_\pm=\chi_0+\xi_\pm$ with the same compatible initial real lift
+and preparation. Both are actual original based controls, meet both
+regularity alternatives, and have support margin $1/10$. Their complete
+terminal instruments are identical on every input and reference, with
+success $K_2=I_5/\sqrt3$ and genuine failure probability $2/3$ on the
+original input family. They have different third signatures and different
+prefix quantum output laws.
+
+Proof. The controls join continuously at time one; their polynomial and
+affine pieces have continuous rates on their respective closed pieces.
+They return to the same height and real phase, so both winding numbers are
+exactly zero. Direct integration gives
+
+$$
+q(0)=q(1)=0,\quad \int_0^1q=0,\quad
+\int_0^1q'=0,\quad\int_0^1tq'=0,\quad
+\int_0^1t^2q'=1/30,\quad\int_0^1(q')^2=1/5.
+\tag{OC.45}
+$$
+
+Thus $\xi_\pm(2)=\mathcal A_\pm(2)=0$ and $H_\pm(2)=0$ as real
+five-vectors. The height path is identical throughout. Theorem 11.1 proves
+complete CP-measure equality, including all Borel time/mode events, not
+only endpoint states or total loss. The credited survival formula gives
+$S(t)=1/(1+t)$ on both legs. For clarity the entire actual-input failure
+CDFs are
+
+$$
+\begin{aligned}
+F_2(t)&=\frac{t}{5(1+t)},\qquad F_4(t)=F_0(t),\quad F_3(t)=F_1(t),\\
+(F_0(t),F_1(t))
+ &=\begin{cases}
+ (0,\,2t/[5(1+t)]),&0\le t\le1,\\
+ ((t-1)/[5(1+t)],\,1/5),&1\le t\le2.
+ \end{cases}
+\end{aligned}
+\tag{OC.46}
+$$
+
+At $T=2$ the mode masses are
+$(1/15,1/5,2/15,1/5,1/15)$, summing to $2/3$, and
+$k(2)=a$, $H(2)=0$ gives the asserted $K_2$.
+Equation (OC.38) proves equality on arbitrary inputs even though their
+failure probabilities need not be those particular masses.
+
+The pair is matched in actual duration, support, pointwise absolute
+coordinate speeds and the following coordinate-resource totals:
+
+$$
+\begin{aligned}
+|k'|&=1/10\ \text{almost everywhere},&|\chi_\pm'|&\le1,\\
+\operatorname{TV}(k)&=1/5,&
+\operatorname{TV}(\chi_\pm)&=\frac{2}{3\sqrt3},\\
+\mathcal Q_\pm&=\int_0^2(k'^2+\chi_\pm'^2)=11/50,\\
+\mathcal L_\pm&=1/10+\int_0^1\sqrt{1/100+q'(t)^2}\,dt.
+\end{aligned}
+\tag{OC.47}
+$$
+
+Indeed the two interior extrema of $q$ are $\pm1/(6\sqrt3)$, giving
+the displayed variation; (OC.45) gives $\mathcal Q$. The derivative
+squares agree pointwise, giving the length identity and identical unsigned
+speed-dependent accumulated costs at each cut. These are the mathematical
+coordinate costs of the acquisition volume, not calibrated hardware energy.
+
+Define the third signature with increasing chronological order by
+
+$$
+S^{k,k,\chi}(\gamma)
+ =\int_{0<t_1<t_2<t_3<2}dk(t_1)\,dk(t_2)\,d\xi(t_3)
+ =\frac12\int_0^2(k(t)-a)^2\,d\xi(t).
+\tag{OC.48}
+$$
+
+To justify the second equality, the first two scalar integrals up to $t$
+are $\int_0^t(k(s)-a)\,dk(s)=(k(t)-a)^2/2$, by the
+absolutely continuous chain rule; integrate that identity against $d\xi$.
+Only the first leg contributes, so (OC.45) gives
+
+$$
+S^{k,k,\chi}(\gamma_+)=1/6000,\qquad
+S^{k,k,\chi}(\gamma_-)=-1/6000.
+\tag{OC.49}
+$$
+
+The alternative polynomial $f(t)=t(1-t)(2t-1)$ equals $-q(t)$.
+If the positive control is defined using $+f$, its coefficient in the same
+ordered definition (OC.48) is negative. More generally replacing $k-a=t/10$
+by $vt$ and $q$ by $\varepsilon q$ gives
+$\pm\varepsilon v^2/60$; using $f$ reverses those signs. There is no
+change in the underlying pair of paths. Reversing word or orientation
+conventions would have to be stated separately.
+
+Unequal coefficients already prove unequal full signatures. The paths
+are also distinct under increasing time reparameterization: $k$ has a unique
+maximum at one and is strictly monotone on each side. Any increasing
+reparameterization preserving this same height path must fix the maximum
+and be the identity on each monotone leg, and so cannot change $q$ to $-q$.
+The bounded-variation signature theorem cited in §16 also excludes their
+being tree-like equivalent; it is credited, not a new uniqueness theorem.
+
+For an explicit prefix separation, at $t=1/2$ one has
+
+$$
+k=3/20,\quad S=2/3,\quad \xi_\pm=0,\quad
+\mathcal A_\pm=\mp1/320,\quad
+H_+=H_-=\pm1/256
+\tag{OC.50}
+$$
+
+for the two controls, with zero middle phase in both. On any common input
+of (OC.10), the normalized-success coherence
+$2\overline\psi_0\psi_2$ consequently differs in complex modulus by
+
+$$
+4\sqrt{(3/20)(1/5)}\sin(1/256)
+ =\frac{2\sqrt3}{5}\sin(1/256)>0.
+\tag{OC.51}
+$$
+
+The initial unknown phase contributes only one common unit rotation, so
+this separation does not assume it is known. Multiplying by $2/3$ gives
+the separation of this linear read in the unnormalized live block; the
+prefix failure blocks are identical. Thus the full prefix outputs differ.
+A calibrated permitted quadrature measurement could distinguish their
+laws. The theorem supplies neither that read nor simultaneous acquisition
+of past live states in a single stopped run. $\square$
+
+**命题 13.2（复用有符号合成的绕数后果）。** The credited synthesis (OC.10a)
+at $c=3/10$, $Z=2/5$, $a=1/4$, auxiliary height $1/8$ and $\beta=0$
+gives two further actual controls, of winding $n=+1$ and $n=-1$, with the
+same complete terminal canonical instrument and genuine nonzero failure.
+
+Proof. Use the unit-time fixed-height increment $2\pi n$ followed by
+its four-leg rectangle of phase height $B=-4\pi n/5$.
+The real residual is the already supplied
+$(0,-\pi n,0,-\pi n,0)$. The two terminal characters are therefore
+$(1,-1)$ for either sign. The entire five-unit height waveform is common,
+so Theorem 11.1 gives equality of the full instrument. Its survival is
+$(2/7)(1/2)=1/7$. Both paths have support margin $1/20$, duration five
+and phase variation $18\pi/5$; their signed phase rates are opposite
+pointwise and their height rates agree, so their coordinate lengths and
+quadratic costs also agree. Their signed areas are $3\pi n/5$ and their
+real windings are opposite. The synthesis and survival factors are reused
+inputs; the consequence here is equality of complete time/mode CP measures
+while those real windings differ. $\square$
+
+These are two witnesses for distinct losses of information: Theorem 13.1
+keeps the exact winding and area fixed but changes phase chronology and
+third signature; Proposition 13.2 isolates signed-winding ambiguity.
+The already supplied endpoint and zero-holonomy survival witnesses are not
+counted again as additional findings. Both new consequences test ordinary
+lawful operation; neither is a claim of a recorded pre-run incident or
+physical experiment.
+
+Every signed sector remains in the source and in the quantified theorems.
+In particular prepend any one common supplied original loop of signed
+winding $m\in\mathbb Z$ ending at $a$ to both controls (OC.44), translating
+their actual real phase as `concatenate_original` prescribes. Their complete
+terminal instruments still agree, by composition, and their total winding
+is exactly $m$. The two suffix prefix-state distinctions persist, with a
+common phase rotation and positive common survival multiplier. The prefix
+has its own added duration and costs; no fixed finite resource budget is
+asserted to contain arbitrarily large $|m|$.
+
+## 14. What equality preserves under lawful forward continuation
+
+**定理 14.1（保留实际联合档案的有限前向续接）。** Suppose Theorem 11.1 holds.
+Use a common initial joint state of the live/stopped system and any retained
+reference, archive and controller registers. Retain the old time/mode event,
+its live or stopped quantum successor, source/preparation/epoch identity,
+clock and units, calibration, reference, permissions, every already acquired
+record and every actual selection/update input. Any further history-bearing
+field generated outside the classified instrument is required to match in
+the full joint state or joint output kernel, not merely in its marginal law.
+
+On a live endpoint allow the complete prescribed original tail menu at this
+same double-wall base and matching initial height, restricted only by the
+same declared permissions and resource promises. Each tail may have any
+finite nonnegative duration, including zero, either original regularity
+alternative, any real phase increment, and every signed winding permitted
+by its explicit promise. The command specifies relative real phase; it does
+not query the unknown past lift. On a failed branch retain $f$ and all its
+records with only the supplied absorbing/stopped continuation. Illegal
+requests and any visible rejection remain distinct from executed failures.
+
+Then every finite common lawful downstream protocol gives the same complete
+joint output law in both cases. Its policy may depend on actually retained
+records and matched controller inputs. Additional quantum reads or random
+seeds are allowed only when separately permitted, with the same operations,
+independence contract where needed, records and charged resources.
+
+Proof. Theorem 11.1 and (OC.39) give equality of the full initial
+record-conditioned operator measures jointly with every common reference
+register, including any common pre-existing quantum/classical archive.
+By hypothesis any separately generated archive fields are also retained
+and jointly matched. Thus no correlation needed for feedback was replaced
+by equality of a marginal failure-time law.
+
+On the success record the endpoint height is common, so every matching
+original tail has the same mathematical domain and permission test. If its
+controls are $(\kappa,\varphi)$ of duration $L$, the actual source join is
+
+$$
+k(T+s)=\kappa(s),\qquad
+\chi(T+s)=\chi(T)+\varphi(s)-\varphi(0),\quad 0\le s\le L.
+\tag{OC.52}
+$$
+
+The supplied composition result keeps the entire old prefix and gives
+this translated tail and addition of every continuous weighted integral.
+Its derivative and added phase integral are the same in both cases even
+when the unknown old real endpoint lifts differ. No controller is handed
+$\chi(T)$. The canonical tail therefore has one common success operator
+$K_\delta$ and failure kernels $\mathcal I_{\delta,i}$ on the common
+live port. Old success followed by new success uses $K_\delta K_T$;
+old success followed by a new failure uses
+$\mathcal I_{\delta,i}(K_T\rho K_T^*)$ with the old record retained.
+Old failures keep their same event and absorbing successor. All these maps
+agree. Later timestamps are translated by the same actual terminal clock.
+
+For feedback, condition on the retained classical record and classical
+controller fields, keeping quantum registers in the conditional operator.
+The common permitted selector supplies the same next operation kernel on
+these equal joint inputs. Compose with that kernel, preserve its full label
+and successor, and integrate over the old records. Countable additivity and
+linearity preserve equality on every joint event. Induction proves equality
+for each finite number of such stages. A supplied common quantum instrument
+on controller/reference registers is handled by exactly the same CP-map
+composition. Branchwise durations and added cost meters agree whenever
+computed by these common declared operations; any extra source-sensitive
+meter is among the separately matched fields in the hypothesis. $\square$
+
+This is a sufficient boundary for the specified forward operation component
+with all other actual fields retained. It does not identify differing full
+archives. If a program log, old phase sample, winding sensor, source-bearing
+controller state or permission guard distinguishes the histories, that field
+must stay in the joint model and the theorem's matching hypothesis must be
+checked anew. Neither the equal-resource witness nor a compressed law
+coordinate authorizes deleting it. Likewise $F_0=F_4$ does not authorize
+merging the actual mode labels: a permitted policy may depend on which mode
+actually failed.
+
+The result covers every finite continuation in the declared menu. It proves
+no unbounded execution, finite-state implementation, least hardware memory,
+archive-acquisition procedure or relative-phase actuator. Exact prescribed
+waveforms and calibrated instruments remain named ideal resources of §5.2.
+A mathematical relative-command join is not a device for compiling unknown
+absolute controls or for recovering the unknown past waveform.
+
+## 15. Calibrated all-prefix laws recover the relative real phase
+
+**定理 15.1（稠密切面上的相对实提升恢复）。** Fix the same input, clock,
+$b,a,T$ as in §9. Let $D\subseteq[0,T]$ be dense. Suppose the complete
+terminal instruments of the truncated controls agree on that same input
+at every cut $t\in D$. Then
+
+$$
+k(t)=\widetilde k(t),\qquad
+\chi(t)-\chi(0)=\widetilde\chi(t)-\widetilde\chi(0)
+\quad(0\le t\le T).
+\tag{OC.53}
+$$
+
+Conversely these pointwise equalities give equal instruments at all cuts.
+The conclusion identifies the exact time-parameterized relative waveform,
+not merely a reparameterization class. For a current loop it identifies its
+full signed winding.
+
+Proof. Apply Theorem 11.1 to each truncated control. It gives equal heights
+and equal characters $e^{-iH_\pm(t)}$ at every cut in $D$.
+All these functions are continuous, so the equalities extend to the whole
+interval. Each real difference $H_\pm-\widetilde H_\pm$ is continuous,
+starts at zero and takes values in the discrete set $2\pi\mathbb Z$.
+Connectedness forces it to vanish identically. Formula (OC.27) then gives
+(OC.53). Conversely equal $k$ and relative $\chi$ have equal derivatives
+almost everywhere, equal integrals and therefore all the same prefix maps.
+Zero duration gives the identity as before. $\square$
+
+There is also a constructive law-level reading when the input phase is
+calibrated, or the same input's time-zero coherences are supplied. Let
+$\sigma_t=K_t|\psi\rangle\langle\psi|K_t^*$ be the unnormalized
+successful state at each supplied cut. For $i\ne2$,
+
+$$
+e^{-iH_i(t)}=
+ \frac{(\sigma_t)_{i2}}
+ {S(t)\sqrt{p_i(k(t))Z}\,e^{-i\vartheta_i}},
+\qquad \psi_i=\sqrt{p_i(a)}e^{-i\vartheta_i}.
+\tag{OC.54}
+$$
+
+All denominator factors are nonzero and fixed by the stated preparation
+calibration or its time-zero coherence. The two known continuous circle
+paths have unique real lifts starting at $H_\pm(0)=0$. For completeness,
+uniform continuity on a compact interval gives a finite partition on which
+each circle path stays in an open semicircle about its value at the left
+endpoint. Choose its local continuous argument there, then successively
+adjust by multiples of $2\pi$ to match preceding endpoints. This constructs
+the lift. Two such lifts differ continuously in $2\pi\mathbb Z$ and
+coincide initially, proving uniqueness. Exact dense-cut values with the
+continuous-path promise specify the same paths uniquely; no finite noisy
+algorithm or uniform phase-unwrapping error estimate follows from this
+uniqueness proof.
+
+This access contract is strictly stronger than a terminal instrument: it
+supplies aligned whole cut laws and successful quantum-output coordinates
+throughout the interval, with a common input/reference or calibrated
+time-zero coherences. Unlabelled independently reselected inputs at each
+cut do not meet it. A stopped run does not deliver every one of those
+success states; after failure its successor is $f$. Neither all-prefix law
+comparison nor (OC.54) is a one-run acquisition theorem, a nondisturbing
+measurement service or a grant of repeated same-history specimens.
+
+The recovery begins at time zero with the relative lift set to zero. It
+cannot unfold windings accumulated before that initial event which already
+coincide in the input ray, such as $m$ and $m+2$ at fixed $\beta$ in
+(OC.10). Current all-prefix laws from the same initial density depend on
+that density, not on an unsupplied earlier real-lift record. The two claims
+are compatible: present relative real phase is identifiable under the
+stronger access contract; preinitial winding and actually acquired archives
+require their own source-bound information.
+
+## 16. Sources, consumers and the remaining recovery gap
+
+All repository suppliers for §§9–15 are read at immutable revision
+`17ef08588473220560adc4a7fb0775a5f7f238a1`. The earlier sections retain
+their own stated source revisions. No earlier source byte or mathematical
+claim is replaced by this append.
+
+| Supplier and precise hypothesis map | Use and boundary |
+| --- | --- |
+| `D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean`, `ValidBase`, `probability`, `phaseWeight`, `weight_compatible`, `finite_rectangles_realize`; owning Blueprint and Scribe | The source is the positive five-mode fiber with signed direction $(1,-1,0,-1,1)$. Its double-wall restriction gives (OC.27). Signed rectangles and the Blueprint all-sector synthesis supply the actual controls used in Proposition 13.2 and common signed prefixes. The ordinary all-sector applications are not attributed wholesale to the one rectangle Lean theorem. |
+| `D5/S3/Quantum/Fibers/OriginalControlComposition.lean`, `OriginalControl`, `FiniteC1Control`, `concatenate_original`; owning Blueprint and Scribe | Supplies the two regularity alternatives, arbitrary finite durations including zero, unchanged real-time prefix, exactly shifted tail, real increment and every continuous weighted-integral addition. These conditions are retained in §§9, 14–15; they supply no physical actuator or sensor. |
+| This volume §§4–5, especially (OC.14)–(OC.19c) | Unknown-phase/parity rigidity, success-record blindness, sharp filters, checkpoint products, optimal ideal all-prefix survival, absorbing time/mode CP completion and cocycle are credited inputs. Theorems 9.1–12.1 classify this specified completion; they neither reprove nor enlarge its optimality class. |
+| `RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md`, §§1–9, 11–12 | Fixed coherent preparation, ideal coherence sign, finite-query obstructions, rate promises, coordinate costs, conditional area/winding certificates and retained acquisition failures remain credited. A certificate for area and signed winding is not acquisition of the CDFs or of all prefix states. |
+| `RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md`, §§2.9–2.12, 2.18 | Interference requires one coherent source, an actual common port, aligned times/records, known nonzero amplitudes and known nonzero record overlap. Unknown overlap leaves a measured product; it cannot be divided out by (OC.54) or by a failure-law inverse. Those physical/acquisition premises remain unsupplied here. |
+| `RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md`, §34, and `RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md`, §§1–3 | Complete archive/work-state/reference/permissions belong to one actual joint image with lawful update and failure successors. Theorem 14.1 explicitly retains and matches those fields for its stochastic contract; it does not construct that actual joint image or import a deterministic four-view theorem without its common-implementation premises. |
+
+The following primary sources supply mature mathematics or precise access
+comparisons. They do not supply an original-control acquisition interface.
+
+| Primary source and version | Verified statement and correspondence |
+| --- | --- |
+| B. Hambly and T. Lyons, [*Uniqueness for the Signature of a Path of Bounded Variation and the Reduced Path Group*, math/0507536v2](https://arxiv.org/html/math/0507536v2), Definition 1.4, Theorem 1, Corollary 1.5 | Finite-length real paths have trivial signature exactly when tree-like; two such paths have equal full signatures exactly when their concatenation with the other's reversed path is tree-like. Our controls are absolutely continuous on a compact interval and have finite coordinate variation. This credits the tree-like interpretation after the explicit unequal coefficient (OC.49). It grants neither signature acquisition nor exact clock-parametrized recovery from a signature. The chain rule in (OC.48) is ordinary iterated-integration calculus, not new signature theory. |
+| G. Chiribella, G. M. D'Ariano and P. Perinotti, [*A theoretical framework for quantum networks*, 0904.4483v2](https://arxiv.org/html/0904.4483v2), Theorem 3, Eq. (25), Definition 10 | Positive Choi operators with the stated recursive causal trace normalization describe networks; generalized instruments sum to a deterministic comb, with an operator-valued measure for general outcome spaces. This credits operation/record composition and the distinction between terminal outputs and networks with accessible intermediate slots. No such extra slot or tester is granted in §§9–14; their equality proof uses the explicit CP maps. |
+| R. van Handel, [*The stability of quantum Markov filters*, 0709.2216v2](https://arxiv.org/html/0709.2216v2), Definition 2.4 and Theorem 2.5 | Observability separates initial states by the full observation algebra; the filter-stability conclusion requires observability and absolute continuity of observation laws in its fixed quantum Markov model. This is not identification of arbitrary unknown time-dependent control waveforms from one absorbing trajectory. No filtering or sensor conclusion is imported. |
+| M. Koashi and N. Imoto, [*What is Possible Without Disturbing Partially Known Quantum States?*, quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2), Theorem 5, PDF p.17; Eqs. (85)–(88), PDF p.12 | The faithful-transfer theorem uses finite common support and exact transfer of a possibly infinite state family, including preservation of the redundant-factor state. This is a credited state-preservation framework already used in §8. It supplies no overlap-graph dimension formula, unknown-waveform observer or acquired-law compression. Its asymptotic iid rates do not price the present single stopped history. |
+| A. Bluhm, L. Rauber and M. M. Wolf, [*Quantum Compression Relative to a Measurement*, 1708.04898v4](https://arxiv.org/pdf/1708.04898v4), Definition 4.1, PDF p.6; Lemma 5.2, PDF pp.7–8 | The declared finite-$n$ classical register accompanies quantum compression/decompression CPTP maps. The reduction to $n_0\le D^4$ starts from such a finite register and preserves the composite; its individual branches need only be CP. Neither an entire exact real curve nor a continuous-time event archive is thereby finite memory. No compression bound from that different preparation/read contract is used here. |
+
+The new ordinary source-specific deductions are the marked-loss inverse,
+the compatible exact Jordan/two-CDF image, the terminal CP-measure
+classification including paired-input quantifiers and references, the
+fixed-height-path phase fiber, and the realized phase-order/signature
+obstruction. Forward composition of equal operations, the fundamental
+theorem, Jordan decomposition, circle lifting and generic signature facts
+remain credited mature ingredients. The forward and dense-cut consequences
+state exactly how those deductions serve the original recovery consumer.
+Bounded repository searches in the committed original-control and fiber
+sources did not locate these exact inverse/range statements or polynomial
+witness values. This is a bounded overlap check, not evidence of worldwide
+novelty. Vague citation tokens supply no premise; only the precise sources
+and conditions above are used.
+
+No law coordinate here is a received sample, a finite register, a classical
+replacement for retained quantum state, or an indefinitely closed predictor.
+Actual record acquisition still needs a same-source lawful service,
+calibrated clock and mode identities, retained errors/failures, permitted
+preparations if statistics are estimated, and charged storage, controller
+program and arithmetic precision. Coherence recovery additionally needs
+common-port access, a reference and known nonzero gains and record overlap.
+All-prefix phase recovery needs its stronger aligned cut-law contract.
+A physical realization of the canonical exact operations and monitoring is
+also not supplied. No global acquired-boundary minimality, least memory,
+finite-shot identification, general off-wall instrument optimum or arbitrary
+completion classification is proved.
+
+Exact identifiability alone supplies no uniform approximate observer.
+Division by survival in (OC.30) requires a stated positive survival floor
+for a uniform error estimate; no such floor holds over the whole original
+class. Continuity of the forward law in a waveform metric and stability of
+this inverse in a CDF metric are different questions. No conclusion here
+negates a survival-floor conditional inverse bound, supplies approximate
+phase unwrapping or an unbounded-future error guarantee.
+
+The mathematical gap narrowed here is precise: exact canonical failure laws
+retain the full ordered height, while even the complete terminal quantum
+instrument loses phase chronology, higher signature and some real winding.
+A stronger calibrated all-prefix law retains the current relative real
+phase. Turning either law-level statement into an internal observer still
+requires actual joint acquisition and update, and both directions of the
+same-source space/time/boundary/memory maps. The native $\alpha/\beta$
+late-target memory/cofinality task and the separate fixed-Hamiltonian
+quantum minimax task remain unresolved; no source/action/resource map to
+them is asserted. These are ordinary proofs, without new Lean verification,
+a physical realization or completion of the continuing programme.
+
+## 追加锚（本行以下为增补区）

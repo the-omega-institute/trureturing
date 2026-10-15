@@ -76,7 +76,7 @@ private theorem sqrt_square_sum (T : Reference H) {w : Set H} (b : HilbertBasis 
   have h := tsum_sqrt_abs_norm_sq_eq_traceNorm (TraceClass.isTraceClass_coe T.1) b
   rwa [CFC.abs_of_nonneg _ T.2.1, traceNorm_eq_re_trace _ T.2.1] at h
 
-private theorem resolution_diagonal (T : Reference H) (d : SpectralResolution T) (v : H) :
+theorem resolution_diagonal (T : Reference H) (d : SpectralResolution T) (v : H) :
     HasSum (fun i => d.values i * ‖⟪v, d.basis i⟫_ℂ‖ ^ 2)
       (⟪v, T.1.1 v⟫_ℂ).re := by
   let R := CFC.sqrt T.1.1
@@ -105,7 +105,7 @@ private theorem resolution_values_sum (T : Reference H) (d : SpectralResolution 
   rw [d.eigen i, inner_smul_right, inner_self_eq_norm_sq_to_K, d.basis.orthonormal.1 i]
   simp
 
-private theorem resolution_entropy (T : Reference H) (d : SpectralResolution T) :
+theorem resolution_entropy (T : Reference H) (d : SpectralResolution T) :
     (∑' i, ENNReal.ofReal (-d.values i * Real.log (d.values i))) = spectralEntropy T := by
   rw [← spectralEnergy_self, ← spectralSeries_eq_spectralEnergy T d.basis d.values d.nonneg
     d.eigen T.1 T.2.1]
@@ -122,6 +122,38 @@ private theorem resolution_entropy (T : Reference H) (d : SpectralResolution T) 
   · rw [singularLog, if_neg hz, ← ENNReal.ofReal_mul (d.nonneg i)]
     congr 1
     ring
+
+/-- The full transition-weight double series is the actual singular cross energy.
+No normalization, finite energy or support restriction is required. -/
+theorem resolution_cross_energy (rho sigma : Reference H)
+    (d : SpectralResolution rho) (e : SpectralResolution sigma) :
+    (∑' i, ∑' j, (ENNReal.ofReal (d.values i) * singularLog (e.values j)) *
+      ENNReal.ofReal (‖⟪e.basis j, d.basis i⟫_ℂ‖ ^ 2)) =
+        spectralEnergy sigma rho.1 := by
+  let c : d.index → e.index → ℝ≥0∞ := fun i j =>
+    ENNReal.ofReal (‖⟪e.basis j, d.basis i⟫_ℂ‖ ^ 2)
+  have hdiag (j : e.index) : (∑' i, ENNReal.ofReal (d.values i) * c i j) =
+      ENNReal.ofReal (diagonal e.basis rho.1 j) := by
+    simp_rw [c, ← ENNReal.ofReal_mul (d.nonneg _)]
+    rw [← ENNReal.ofReal_tsum_of_nonneg (fun i => mul_nonneg (d.nonneg i) (sq_nonneg _))
+      (resolution_diagonal rho d (e.basis j)).summable,
+      (resolution_diagonal rho d (e.basis j)).tsum_eq]
+    rfl
+  have henergy : (∑' i, ∑' j,
+      (ENNReal.ofReal (d.values i) * singularLog (e.values j)) * c i j) =
+      spectralEnergy sigma rho.1 := by
+    calc
+      _ = ∑' j, ∑' i, (ENNReal.ofReal (d.values i) * c i j) * singularLog (e.values j) := by
+        rw [ENNReal.tsum_comm]
+        apply tsum_congr
+        intro j
+        apply tsum_congr
+        intro i
+        ac_rfl
+      _ = spectralEnergy sigma rho.1 := by
+        simp_rw [ENNReal.tsum_mul_right, hdiag]
+        exact spectralSeries_eq_spectralEnergy sigma e.basis e.values e.nonneg e.eigen rho.1 rho.2.1
+  exact henergy
 
 set_option maxHeartbeats 1000000 in
 -- Full dependent double sums and their kernel-checked transports share this local budget.
@@ -155,27 +187,7 @@ private theorem spectral_hellinger (rho sigma : Reference H)
       (∑' i, ENNReal.ofReal (a.values i)) = 1 := by
     rw [← ENNReal.ofReal_tsum_of_nonneg a.nonneg (resolution_values_sum T a).summable,
       (resolution_values_sum T a).tsum_eq, ht, ENNReal.ofReal_one]
-  have hdiag (j : e.index) : (∑' i, ENNReal.ofReal (d.values i) * c i j) =
-      ENNReal.ofReal (diagonal e.basis rho.1 j) := by
-    simp_rw [c, ← ENNReal.ofReal_mul (d.nonneg _)]
-    rw [← ENNReal.ofReal_tsum_of_nonneg (fun i => mul_nonneg (d.nonneg i) (sq_nonneg _))
-      (resolution_diagonal rho d (e.basis j)).summable,
-      (resolution_diagonal rho d (e.basis j)).tsum_eq]
-    rfl
-  have henergy : (∑' i, ∑' j,
-      (ENNReal.ofReal (d.values i) * singularLog (e.values j)) * c i j) =
-      spectralEnergy sigma rho.1 := by
-    calc
-      _ = ∑' j, ∑' i, (ENNReal.ofReal (d.values i) * c i j) * singularLog (e.values j) := by
-        rw [ENNReal.tsum_comm]
-        apply tsum_congr
-        intro j
-        apply tsum_congr
-        intro i
-        ac_rfl
-      _ = spectralEnergy sigma rho.1 := by
-        simp_rw [ENNReal.tsum_mul_right, hdiag]
-        exact spectralSeries_eq_spectralEnergy sigma e.basis e.values e.nonneg e.eigen rho.1 rho.2.1
+  have henergy := resolution_cross_energy rho sigma d e
   let A := CFC.sqrt rho.1.1 - CFC.sqrt sigma.1.1
   have hA : IsHilbertSchmidt A := isHilbertSchmidt_sub (sqrt_hs rho) (sqrt_hs sigma)
   have hcoord (i : d.index) (j : e.index) :

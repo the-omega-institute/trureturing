@@ -777,3 +777,2057 @@ remain open beyond this finite package.
 [BDW]: https://homepages.cwi.nl/~rdewolf/#PublSurveys
 
 ## 追加锚（本行以下为增补区）
+
+## 10. A certificate-relative finite basis with the original reader fixed
+
+**Assumption 10.1 (unchanged task and a supplied determining certificate).**
+Use the arbitrary nonempty full fiber of Assumption 1.2, the prescribed
+code and complete recoverable entry of Definition 2.1, and the preparation
+apparatus of Definition 2.2. In particular, the original reader's entire
+installed table, alphabet, running/halt partition, whole-row halt labels
+and entry map remain fixed. The target is the complete canonical
+$F(u)=R_P(u)$, with all occurrence holes, retained equalities,
+different-class disequalities, canonical renaming and blocking guards.
+All finite origins in the original fiber remain in the domain.
+
+A supplied valid finite determining certificate is a finite menu $M$
+together with its well-defined attained-value assignment
+
+$$
+\chi:O_M[\mathcal U]\longrightarrow S,
+\qquad \chi(O_M(u))=s(u)=\iota(c(u)).
+\tag{PCA.22}
+$$
+
+One can equivalently supply $M$ and the validity assertion (PCA.7);
+then (PCA.22) defines the unique assignment. No method for finding $M$
+or establishing its validity from arbitrary program text is assumed.
+The complete values in $S$ are the original entries, not newly selected
+names for target classes. The assignment is mathematical task data;
+it is not a readout port or a decoder callable by a running state.
+
+**Definition 10.2 (row coordinates and an explicit actual-address basis).**
+Write $R_*=(C_*,\pi_*)$, let $H$ be its reached cut support and $D$ its
+class set. Use NBP Definition 10.1's legal valuation notation
+$\mathscr F_*(x)=C_*[(x_{[p]})_{p\in H}]$ and
+$\mathcal X_* =\{x:D\to\mathcal T:(\forall d\ne e,\ x_d\ne x_e)
+\land\mathscr F_*(x)\in\mathcal I\}$, where $\mathcal I=\rho[\mathcal T]$.
+Its actual origin is $u_x=\delta(\mathscr F_*(x))$; this is the supplier's
+bijection to the original $\mathcal U$, not an inverse port available
+to a controller. For a class $d$, choose its shortest actual occurrence
+
+$$
+a_d=\underset{p\in H,\,[p]=d}{\operatorname{argmin}}\ (|p|,p).
+\tag{PCA.23}
+$$
+
+The tie order is the public lexicographic order. This is NBP Definition
+13.1's convention; it does not change the canonical class name.
+Traverse each word of $M$ in the finite exterior. If traversal first
+enters an occurrence hole $p$, write that word uniquely as $pw$.
+Put
+
+$$
+\begin{aligned}
+b&=\max\bigl(\{0\}\cup
+ \{|w|:pw\in M,\ p\in H\text{ is its first hole}\}\bigr),\\
+B_b&=\{\varepsilon\}\ \cup\
+ \{a_dw:d\in D,\ w\in\mathcal W,\ |w|\le b\}.
+\end{aligned}
+\tag{PCA.24}
+$$
+
+Thus $B_b$ is finite, consists only of original absolute native words,
+and depends only on the original row and the supplied certificate.
+It is independent of the competing preparation table and every budget.
+If $D=\varnothing$, it is $\{\varepsilon\}$. A hole at the root has
+$a_d=\varepsilon$. Words stopped by an exterior leaf, including all
+extensions in its absent cone, contribute no residual depth to $b$.
+
+For a legal class valuation $x$, let $\eta_b(x)$ consist of the
+four-valued actual replies of each $x_d$ at relative words of length at most $b$.
+Early leaves stop further descent and give absent at every strict
+descendant. The tuple is a mathematical finite profile, not accessible
+configuration. Two actual sources with the same profile have the same
+replies on $M$, the same original code and the same complete entry.
+They also have the same whole target, by NBP Theorem 10.4: the profile
+includes the class roots, which determine the predecessor row on this
+fixed current-row one-image fiber. That supplier is used for the whole
+row, not replaced by a root-type target.
+
+**Theorem 10.3 (entire preparation upper-budget region on a fixed basis).**
+Under Assumption 10.1, restricting every preparation literal to $B_b$
+preserves the entire feasible region in installed states, calls and
+executed literal sum. More precisely, fix any finite installed
+preparation alphabet $\mathcal B=V\sqcup\widehat S$, its partition,
+its literal latch values and its common start $b_0$, including any
+additional required installed latches. If a table on those very states
+generates the original $s(u)$ on every $u\in\mathcal U$ with uniform
+upper budgets $p,\ell$, another table with all literals in $B_b$ does
+so on exactly the same alphabet, partition, latches and start, with
+upper budgets no larger than $p,\ell$. No state is removed or added.
+The original reader and its entire table are unchanged.
+
+Consequently, for every $H,p,\ell$, unrestricted native preparation
+and $B_b$-restricted preparation are equivalent under the same three
+upper budgets. If the fixed reader has separate uniform call and
+literal upper budgets, those bounds remain valid without alteration.
+This last assertion is about separate phase coordinates. A bound on
+the sum of the two phases on each same execution requires Theorem 13.1.
+
+The proof of this theorem is given in §12 after the actual-image
+attainment bridge. It compares the new preparation on $u$ with the
+old preparation on a suitable actual source in the same finite profile.
+It makes no assertion that their paths or costs agree, or improve,
+on each same original $u$.
+
+## 11. Exact finite-prefix attainment inside the actual image fiber
+
+**Definition 11.1 (finite image profiles and their whole-term negatives).**
+Fix any inclusive relative depth $b\ge0$. For each class $d$, form a
+finite prefix pattern that exposes every node through depth $b$, stops
+at each early leaf, and retains that leaf's entire absent cone. A branch
+at depth $b$ is represented by a live name $z_{d,w}$, where $w$ is its
+relative occurrence address. Its observed reply is branch; its hidden
+value is required to be a branch image. A leaf at depth $b$ is retained
+as that literal leaf. All branch constructors at smaller depth are
+retained. Call the resulting finite free term $T_d$.
+
+Names for different pairs $(d,w)$ are independent. Every occurrence of
+one class in $C_*$ uses exactly the same $T_d$ and exactly the same
+names. There is no requirement that distinct live names have distinct
+values. The required distinctness is the entire conjunction
+
+$$
+\Delta=\bigwedge_{d\ne e} T_d\ne T_e.
+\tag{PCA.25}
+$$
+
+The two sides are whole class terms, including all fixed finite pieces.
+They are not replaced by childwise inequalities. Define a syntactic
+image predicate $J$ on these terms by
+
+$$
+\begin{aligned}
+J(\alpha)&=\mathsf{false},& J(\beta)&=\mathsf{true},&
+J(z_{d,w})&=\mathsf{true},\\
+J(\langle A,B\rangle)&\Longleftrightarrow
+ (A=\beta\text{ literally and }B=\alpha\text{ literally})
+ \ \lor\ (J(A)\land J(B)).
+\end{aligned}
+\tag{PCA.26}
+$$
+
+A live name is a branch, so it is neither of the two literal leaves
+in the first disjunct. Expand fixed grounds in the free ordered
+$\alpha/\beta$ signature. Retain precisely those pattern tuples for
+which
+
+$$
+J(C_*[(T_{[p]})_{p\in H}])\quad\text{and}\quad
+T_d,T_e\text{ have unequal syntax whenever }d\ne e.
+\tag{PCA.27}
+$$
+
+Denote this finite set of retained profiles by $\Omega_b$. These are
+finite syntactic tests on bounded patterns, not tests of an unknown
+acquired-term program. The exterior is kept literally, so all its
+concrete leaves, repeated holes and blocked public cut members remain.
+
+**Theorem 11.2 (actual attainment and simultaneous deep live filling).**
+The retained profiles are exactly the profiles of the entire actual
+fiber:
+
+$$
+\Omega_b=\{\eta_b(x):x\in\mathcal X_*\},
+\qquad
+\mathcal X_*\cong\mathcal U
+\text{ as in NBP (NBP.10.3).}
+\tag{PCA.28}
+$$
+
+For every $\eta\in\Omega_b$ and every finite $L\ge0$, there is one
+actual legal valuation $x^{\eta,L}$ with this profile in which all
+live names are simultaneously filled by finite non-atomic image trees
+of minimum leaf depth greater than $L$, while every whole-class
+negative in (PCA.25) holds. Its filled current tree has the actual
+finite inverse
+
+$$
+t^{\eta,L}=C_*[(x^{\eta,L}_{[p]})_{p\in H}]
+          =\rho u^{\eta,L},\qquad u^{\eta,L}=\delta(t^{\eta,L})\in\mathcal U.
+\tag{PCA.29}
+$$
+
+All repeated class occurrences use one value. No source-size or depth
+promise is imposed on $\mathcal U$.
+
+Proof. Reuse the disjoint native image grammar
+$\mathcal I::=\beta\mid E\mid\langle\mathcal I,\mathcal I\rangle$
+and its unique inverse, supplied by NBP Proposition 9.3 and the source
+cited there. Every branch subtree of an image is itself an image; the
+only possible nonimage subtree is the literal alpha. This is the
+subtree fact used in NBP Proposition 10.2.
+
+For any assignment of branch images to the live names, (PCA.26) is
+exact for image membership of a free term. Indeed, its leaf and live
+cases are exact. At a pair, equality with $E$ requires its two children
+to be the literal beta and alpha: a live name or a pair has branch
+root and cannot become either leaf. The other image alternative is
+exactly a pair of images. Induction gives (PCA.26) for the whole term.
+Thus (PCA.27)'s first condition makes every such live filling an image.
+This is an application of the existing image grammar, not a new image
+or disunification supplier.
+
+An actual legal valuation has a unique depth-$b$ decomposition of the
+stated form. Each of its live branch subtrees is an image. Image
+membership gives the first condition in (PCA.27). An identical pair of
+syntactic class terms would evaluate equally under every assignment,
+contrary to its actual class disequality. Hence every actual profile
+is retained.
+
+Conversely, for a retained pattern apply [Retained Literal Root Depth,
+Theorem 2.2][LRD] directly to the finite list (PCA.25), with intrinsic
+rank one for every remaining name and minimum leaf depth greater than
+$L$. All sides are free terms over the common names, with fixed grounds
+literally expanded, and every listed pair has unequal syntax by
+(PCA.27). That theorem supplies one simultaneous finite tuple,
+including all negatives involving closed ground classes. Rank one
+implies membership in $\rho[\mathcal T]$; non-atomicity and the supplied
+deep-leaf property give the required branch images. If there are no
+live names, the empty tuple works: every class is a fixed finite ground
+and the retained negatives are already unequal grounds.
+
+The filling therefore has its exact prescribed branch/leaf/absent
+profile, all different-class disequalities, and an image whole tree.
+NBP's legal-row bijection and unique inverse give (PCA.29), with the
+complete current row exactly $R_*$. This proves both directions of
+(PCA.28) and the simultaneous strengthening. One may make these choices
+for all finitely many retained profiles; no relation between their
+separate actual origins is required. $\square$
+
+**Proposition 11.3 (closed pieces and the scope of live padding).**
+Theorem 11.2 keeps an early leaf exactly and never fills below it. A
+fully exposed $E=\langle\beta,\alpha\rangle$ is a closed ground piece,
+not a live branch that may be made leafless. A branch observed only
+at the frontier may be replaced by a deep branch image because its
+children are outside that profile. In particular this replacement
+does not preserve an arbitrary code whose certificate observes those
+children; that certificate requires the larger profile in (PCA.24).
+
+For $b=0$, a branch class is one live name, while an alpha or beta
+class is a ground. For zero classes there is just the concrete exterior
+and the empty tuple; nonemptiness of the fiber makes it an image and
+provides its unique inverse. The empty cut and blocked-cut cases are
+included. A root cut is treated as its one class at absolute address
+$\varepsilon$.
+
+Proof. These statements follow from the unique prefix decomposition
+and the literal image test in Definition 11.1. A recorded alpha right
+child and beta left child retain $E$ literally in (PCA.26); neither
+can be changed by assigning a live name. An absent reply is justified
+by an actual earlier leaf and persists under every assignment. Only
+nodes with branch reply at the last observed level receive live names.
+The zero-class statement follows from (PCA.29) with no variables.
+$\square$
+
+## 12. All-address paid recoding without changing installed states
+
+**Definition 12.1 (one actual word and one four-reply map per old word).**
+Fix $b$ and $B_b$ of Definition 10.2. For every original finite native
+word $v$, define a word $h_b(v)\in B_b$ and a map
+$g_{b,v}:\mathcal A\to\mathcal A$ as follows.
+
+If exterior traversal of $v$ never enters a reached hole, let $z_v$
+be its exterior-determined reply, including any forced absence. Put
+$h_b(v)=\varepsilon$ and $g_{b,v}(z)=z_v$ for all four $z$.
+
+If traversal first enters hole $p$ of class $d$, write $v=pw$.
+For $|w|\le b$, put $h_b(v)=a_dw$ and let $g_{b,v}$ be the identity.
+For $|w|>b$, let $w_{\le b}$ be its length-$b$ prefix and put
+
+$$
+\begin{aligned}
+h_b(v)&=a_dw_{\le b},\\
+g_{b,v}(z)&=
+\begin{cases}
+\mathsf{branch},&z=\mathsf{branch},\\
+\mathsf{absent},&z\in\{\alpha,\beta,\mathsf{absent}\}.
+\end{cases}
+\end{aligned}
+\tag{PCA.30}
+$$
+
+Every new word is no longer than the old word, because $a_d$ is a
+shortest occurrence of the same class. These are static substitutions
+into a finite installed table. No running operation concatenates,
+truncates, selects or decodes an address.
+
+**Lemma 12.2 (one actual witness for all submitted words).**
+For any finite native menu $N$, let
+$L=\max(\{0\}\cup\{|v|:v\in N\})$. For every actual $u$ with profile
+$\eta=\eta_b(x)$, the single actual witness $u^{\eta,L}$ of Theorem
+11.2 satisfies, simultaneously for all $v\in N$,
+
+$$
+r_{\rho u^{\eta,L}}(v)
+ =g_{b,v}\bigl(r_{\rho u}(h_b(v))\bigr).
+\tag{PCA.31}
+$$
+
+It has the same original code, complete entry and whole predecessor
+row as $u$ when $b$ comes from its determining certificate.
+
+Proof. Outside holes both sides have the exterior's fixed reply. For
+$v=pw$ with $|w|\le b$, the every-address occurrence identity reads the
+same suffix in either occurrence of the class, and both sources have
+the same profile. For $|w|>b$, consider the actual reply at
+$w_{\le b}$ in that class. If it is alpha or beta, every strict
+continuation is absent. If it is absent, an earlier leaf already blocks
+all continuations. If it is branch, it is a live name in the profile.
+In $x^{\eta,L}$ that name is filled by a tree of minimum leaf depth
+greater than $L$. The remaining suffix has length $|w|-b\le L$,
+so the endpoint is a reached branch. These are exactly the four cases
+of (PCA.30). One LRD filling serves the entire menu, including all
+occurrences of repeated classes and all absent continuations.
+
+The witness and $u$ agree on $M$, so (PCA.22) keeps their original
+codes and entries. They have the same class roots, so NBP Theorem
+10.4 keeps their complete predecessor rows. The inverse in (PCA.29)
+makes this an actual-source comparison. $\square$
+
+**Proof of Theorem 10.3.** Let $a(v),N(v,z)$ be the old preparation
+table. Include all its installed running words, even unused ones, in
+the finite menu of Lemma 12.2. On precisely the old alphabet install
+
+$$
+a'(v)=h_b(a(v)),\qquad
+N'(v,z)=N\bigl(v,g_{b,a(v)}(z)\bigr).
+\tag{PCA.32}
+$$
+
+Keep every latch and its literal complete entry, the running/latch
+partition and the common start $b_0$ exactly. All four successors are
+installed, including unattained replies. A source-independent word is
+replaced by a genuine root call followed by its forced old successor;
+it is not bypassed by a silent edge. In particular $\varepsilon$ still
+costs one invocation. No extra selector, counter, trace or working
+configuration is installed.
+
+Fix an arbitrary actual $u$ with profile $\eta$. Compare the new run
+on $u$ with the old run on the actual $u^{\eta,L}$ of Lemma 12.2.
+Their common start is the same. At an equal running state (PCA.31)
+and (PCA.32) give the same next state. Induction gives precisely the
+same ordered running-state visits and the same terminal latch. The
+old run terminates correctly with $\widehat{s(u^{\eta,L})}$, which
+is $\widehat{s(u)}$. Its call count is identical to the new run's;
+each new word on this common state path is no longer. Thus
+
+$$
+q_{P'}(u)=q_P(u^{\eta,L}),\qquad
+\ell_{P'}(u)\le\ell_P(u^{\eta,L}).
+\tag{PCA.33}
+$$
+
+The old uniform upper bounds apply on this actual witness in the full
+original fiber. Hence the new bounds hold for every original $u$.
+The installed state cardinality is exactly unchanged, including unused
+states and unused latches. If $b_0$ is a latch, both runs stop there
+without a call and the same argument applies. A terminating run cannot
+revisit a running state by Lemma 2.3; no assumption of an acyclic union
+graph, no state unfolding and no elimination of shared successors has
+been used. Cycles on unused transitions remain permitted.
+
+Handoff enters the same original $s(u)$ in the untouched original
+reader. It therefore retains that reader's correctness on $u$ and any
+of its separately valid uniform phase bounds. The reverse implication
+is immediate because all words in $B_b$ are legal original native
+words. This proves the exact upper-region assertion. $\square$
+
+**Definition 12.3 (the finite paid word task).** On the finite family
+$\Omega_b$, the response to $a_dw\in B_b$ is the original reply of
+class $d$ at $w$ in the profile. The response to $\varepsilon$ is the
+root reply of the current tree: it is fixed by the exterior unless
+there is a root hole, in which case it is that class's root reply.
+Coincident spellings denote the same actual word and the same reply.
+Let $s_\eta$ be the complete original entry determined by (PCA.22).
+
+The finite task on a prescribed installed alphabet is to assign each
+running state one word of $B_b$ and four successors, keeping the
+common start and literal latches, such that for every $\eta\in\Omega_b$
+the induced path terminates at $\widehat{s_\eta}$. Charge every
+running visit one call and charge the sum of the actual absolute word
+lengths. Charge every installed state once, including unused ones.
+There is no operation reading $\eta$, $s_\eta$ or the response row
+as a tuple. At runtime only the table's one paid native word is read.
+
+**Theorem 12.4 (exact arbitrary-budget finite task, conditional on the
+certificate).** For every installed preparation alphabet and common
+start, and every $p,\ell$, the finite paid word task of Definition
+12.3 is feasible within those budgets if and only if original native
+preparation is feasible within the identical state/call/literal upper
+budgets for the prescribed code and fixed reader entry.
+
+Proof. Theorem 10.3 gives necessity with the same installed states.
+The new table's reply at every word of $B_b$ depends only on $\eta$,
+so its entire path, latch and prices are those of Definition 12.3.
+For sufficiency, install the finite task's words and four successors
+literally. Theorem 11.2 places every actual original in one retained
+profile and attains every retained profile by actual originals.
+Induction gives exactly its finite task path, literal entry and
+charges. The untouched reader returns the whole target by Assumption
+10.1. Shared states and cycles are retained rather than replaced by a
+decision tree. $\square$
+
+This theorem is a deduction from the actual-image filling and paid
+state-local recoding above. Its finite formulation alone is not the
+attainment argument, and does not establish validity of an arbitrary
+program's proposed certificate.
+
+## 13. Correlated two-phase costs and the separate design-variable reader
+
+**Theorem 13.1 (immutable-reader correspondence for same-run objectives).**
+Under Assumption 10.1 let $M_R$ be the set of all words installed in
+the fixed reader's running states, including unused states. Replace
+$M$ in (PCA.24) by $M\cup M_R$, obtaining a depth $b_R$ and basis
+$B_{b_R}$. This basis may depend on the fixed reader's observations,
+but is independent of the competing preparer and every budget.
+
+For every successful preparer there is a preparer on exactly its same
+states, partition, start and literal latches, with words in $B_{b_R}$,
+while the reader is entirely unchanged. For every actual $u$ there is
+one actual $u^\dagger$ in the original full fiber with the same code,
+complete entry and whole target such that
+
+$$
+\begin{aligned}
+q_{P'}(u)&=q_P(u^\dagger),&
+\ell_{P'}(u)&\le\ell_P(u^\dagger),\\
+q_R(u)&=q_R(u^\dagger),&
+\ell_R(u)&=\ell_R(u^\dagger).
+\end{aligned}
+\tag{PCA.34}
+$$
+
+The unchanged reader also follows the same ordered states and halt
+on $u$ and $u^\dagger$. Thus this basis preserves feasibility of
+uniform separate-coordinate bounds and same-run bounds such as
+$q_P(u)+q_R(u)\le T$ and $\ell_P(u)+\ell_R(u)\le A$ for all actual
+$u$, and their simultaneous imposition. More generally the same
+comparison works for a coordinatewise nondecreasing constraint on
+these four execution costs.
+
+Proof. Use Theorem 11.2 at depth $b_R$ and the maximum of the old
+preparer's installed word lengths. Its witness $u^\dagger$ has the
+same replies as $u$ at every installed reader word: if a reader word
+enters a hole, its suffix has length at most $b_R$ by definition;
+otherwise its reply is exterior-determined. The original entry is
+also unchanged. Induction through the fixed reader therefore gives
+its same state path and charges on $u,u^\dagger$.
+
+Apply (PCA.32) only to the preparation table. Lemma 12.2 compares its
+new run on $u$ with its old run on this very same $u^\dagger$, yielding
+the first line of (PCA.34). Combining the two lines uses one actual
+origin, not separate maximizers for preparation and reading. The
+reverse feasibility implication uses inclusion of basis words among
+native words. The argument does not compare the old and new
+preparation costs on the same $u$. $\square$
+
+**Definition 13.2 (both tables as design variables, original entry fixed).**
+Keep the original acquired-term code $c$, its attained literal values,
+the same complete injective entry map $\iota$, the reader alphabet and
+running/halt partition, and the whole-row output assigned to every
+halt. Keep the preparation alphabet, its partition, latches and start.
+Allow both graphs' running literals and four-successor functions to
+be chosen. Acquisition, authentication, paid handoff, access isolation
+and same-register continuity remain the supplied services of §1.
+In particular this permission to redesign the reader is stronger than
+Assumption 10.1 and is stated separately.
+
+**Theorem 13.3 (both-table-design correspondence on the certificate basis).**
+Under Definition 13.2, the smaller basis $B_b$ of (PCA.24), depending
+only on the row and the code certificate, preserves the whole joint
+upper-budget region of both table designs. Both tables may be restricted
+to words in $B_b$ without changing either installed alphabet,
+partition, the common preparation start, any literal entry value or
+any whole-row halt label. The preserved execution objectives include
+all separate call/literal coordinates and the same-run total call and
+literal bounds in Theorem 13.1.
+
+Proof. Take any feasible pair of tables. Let $L$ be the maximum length
+of all installed running words in both phases, including unused words.
+For each actual $u$ use the single $u^{\eta,L}$ of Theorem 11.2.
+Apply (PCA.32) to both running tables, retaining their alphabets,
+partitions, starts, latches, entry map and reader halt labels.
+Lemma 12.2 and induction give the same preparation state path on the
+new $u$ as on the old $u^{\eta,L}$. Its latch is the literal original
+$s(u)$ because that code is certificate-determined. After the supplied
+handoff, the two reader entries are the same. The same induction gives
+the reader state path on the new $u$ as on the old $u^{\eta,L}$.
+
+The final halt retains its entire fixed row, which equals
+$F(u^{\eta,L})=F(u)$ by NBP Theorem 10.4. Both call counts are equal
+on this comparison and both literal sums weakly decrease, with each
+forced constant query still paid. Thus every simultaneous upper bound
+of the stated forms transfers on one actual origin. Sufficiency is
+literal native installation of the two finite word tables on the
+original full domain. No new code or entry is selected. $\square$
+
+**Proposition 13.4 (why these scopes are different).**
+Theorem 10.3's code-only basis justifies separate uniform phase bounds
+with the reader fixed. It does not supply equality of an unchanged
+reader's replies on $u$ and its padded comparison source. Theorem 13.1
+adds exactly those finite reader observations before making a correlated
+comparison. Theorem 13.3 changes the reader table under the separate
+permission of Definition 13.2 and instead simulates both old phases
+on one padded source.
+
+Proof. A code certificate requires constancy of $c$, not constancy of
+all reader observations. A frontier branch can be $E$ on one source
+and a larger branch image on another. Their root replies agree while
+their right-child replies are alpha and beta or branch, respectively.
+Both are actual image values and can be put into an otherwise injective
+all-image filling of the repeated-partner row by choosing the other
+branch classes different from both. NBP's inverse gives actual sources.
+Thus retaining a root observation alone does not retain that suffix
+observation. The larger depth of Theorem 13.1 retains it; the changed
+reply map of Theorem 13.3 simulates it on the selected padded source.
+No failure of a particular coupling is asserted to refute every possible
+smaller correlated basis. $\square$
+
+## 14. The original executed-literal boundary and a finite actual-word task
+
+**Theorem 14.1 (a total literal upper budget bounds semantic determination).**
+Suppose an original preparer of Definition 2.2 succeeds on the entire
+original fiber with total executed literal upper budget $\ell\in\mathbb N_0$.
+Then the original code and complete entry are constant on equality
+of all actual replies at absolute words of length at most $\ell$:
+
+$$
+\left(\forall v\in\mathcal W,\ |v|\le\ell\Rightarrow
+ r_{\rho u}(v)=r_{\rho u'}(v)\right)
+\ \Longrightarrow\ c(u)=c(u'),\quad s(u)=s(u').
+\tag{PCA.35}
+$$
+
+No bound on the lengths of unused installed words is a hypothesis.
+No such word is charged as if it had executed. The statement holds
+with sourcewise termination in place of a separately specified call
+upper bound.
+
+Proof. On a successful run every visited literal has length at most
+$\ell$, because its length is a nonnegative summand of that one run's
+literal total. Follow the successful run on $u$. Its common start is
+the start on $u'$. At every running visit, the visited word is within
+the stated depth, so its reply agrees and the successor is identical.
+Induction reaches the same latch on $u'$. Correctness and complete
+entry recoverability give (PCA.35). No claim has been made about a
+word in a state outside this run. The stationary no-revisit principle
+also supplies a finite call bound from the finite alphabet if needed.
+$\square$
+
+**Definition 14.2 (finite original-word task at $(H,p,\ell)$).**
+Let
+
+$$
+W_\ell=\{v\in\mathcal W:|v|\le\ell\}.
+\tag{PCA.36}
+$$
+
+Use the actual finite profiles $\Omega_\ell$ of Definition 11.1.
+Every original word in $W_\ell$ has a reply determined by such a
+profile and the exterior: a hole suffix cannot be longer than its
+absolute word. Assume the semantic constancy in (PCA.35), and assign
+to each attained $W_\ell$ reply tuple its original complete entry.
+Equivalently assign $s_\eta$ on $\Omega_\ell$, with equal $W_\ell$
+reply tuples assigned the same entry. This assignment is supplied or
+defined from the original code under the validity assertion; it is
+not assumed computable uniformly from arbitrary program text.
+
+On the prescribed installed preparation alphabet with $H$ states,
+partition, common start and literal latches, choose one word of
+$W_\ell$ for every running state and four successors. For each
+$\eta\in\Omega_\ell$, require its induced path to end at the original
+$\widehat{s_\eta}$, with at most $p$ running visits and sum of absolute
+word lengths at most $\ell$. Every installed state counts; every
+running visit costs one, including a root call of word length zero.
+The fixed reader, including every whole-row halt label, remains exactly
+as supplied. Neither this finite task nor its installed realization
+provides a profile reader, chart decoder, source-dependent selector,
+workspace, runtime address operation or silent visit.
+
+**Theorem 14.3 (exact original-budget criterion).**
+Original preparation with the fixed reader and original entry is
+feasible at $H,p,\ell$ if and only if (PCA.35) holds and the finite
+original-word task of Definition 14.2 is feasible at those same prices.
+The assertion can also be made on an exact prescribed installed
+alphabet, partition and common start, rather than only its cardinality.
+
+Proof. Necessity of constancy is Theorem 14.1. In a feasible native
+table, any state whose installed word is longer than $\ell$ is never
+visited on any required actual source. Change the word in each such
+state to $\varepsilon$, keeping its successors, partition, identity
+and start. Every original required run is unchanged: by induction it
+never reaches a changed state. Thus all installed words may be put
+in $W_\ell$ without altering any required path or executed cost.
+This operation neither charges unused long words nor removes their
+counted states.
+
+For words in $W_\ell$, each actual reply is determined by the finite
+profile. Every retained profile is actually attained by Theorem 11.2;
+hence the native table's correctness and prices give exactly the
+finite task conditions. Conversely, install any task table literally.
+Every original actual source has one retained profile, and induction
+reproduces that profile's paid path and original complete entry.
+The untouched reader then returns the whole predecessor row. $\square$
+
+**Proposition 14.4 (zero budgets, graph structure and conditional finiteness).**
+At $p=0$, feasibility means the fixed common start is already the
+correct literal latch on the entire fiber. At $\ell=0$, running
+visits are permitted but can submit only $\varepsilon$; its repeated
+reply is stationary and each visit is charged. All other code
+distinctions must fail (PCA.35). Empty cuts, a root cut and zero
+classes need no additional convention beyond §§10–11.
+
+For a supplied valid certificate, Definitions 12.3 and 14.2 give
+finite mathematical table tasks with the original state identities,
+actual word prices and complete latch labels. One can check a proposed
+table on the finite attained response family, stopping any nonterminal
+path at its first repeated running state. This is a finite table
+criterion conditional on its literal code assignment. It is not a
+uniform method for finding a determining certificate for arbitrary
+acquired-term programs, even when finite preparability is promised.
+
+Proof. The budget claims follow from the nonnegative execution
+charges and the absence of silent running transitions. A repeated
+running state on a fixed response tuple repeats its entire stationary
+suffix forever, by Lemma 2.3, so it cannot be on a terminating path.
+Different profiles can nevertheless traverse shared states differently;
+cycles in the union of all four-successor edges and unused states are
+permitted. Neither finite task imposes Bryant's variable ordering or
+global acyclicity. The nonuniformity assertion is Theorem 15.2 below.
+$\square$
+
+## 15. No uniform extractor even under totality and finite-preparability promises
+
+**Definition 15.1 (a compatible uniformly described code family).**
+Use exactly the full repeated-partner fiber $\mathcal U_*$ of Definition
+4.1 and the same fixed eight-state reader, two recoverable complete
+entries $e_0,e_1$, and whole-row outputs of Supplier application 4.3.
+A finite deterministic machine description $e$ has a prescribed initial
+configuration; let $\tau_e\ge1$ be its first halting stage if it halts.
+Stage one includes the check for an already halting initial configuration.
+Let $h(B)$ be the maximum leaf depth of an acquired finite tree $B$.
+For an acquired branch image define the total finite computation
+
+$$
+f_e(B)=
+\begin{cases}
+\mathbf1_{\{r_B(L^{\tau+1})=\mathsf{branch}\}},
+ &\text{if the description halts first at stage }\tau\le h(B),\\
+0,&\text{if it has not halted by stage }h(B).
+\end{cases}
+\qquad \sigma_e=\sigma_{f_e}\text{ of (PCA.12).}
+\tag{PCA.37}
+$$
+
+The bounded simulation in this definition is a computation on the
+already acquired finite term. It always ends; it requires no decision
+of eventual halting. Heights, simulations and variable-length traversal
+of an acquired term belong only to this code-specification computation,
+with its supplied acquisition and separate costs. They are not operations
+or uncounted workspace supplied to the paid stationary preparer or reader.
+The complete paid-reader entry is always exactly $e_{\sigma_e(u)}$.
+
+**Theorem 15.2 (promised finite preparation does not give a uniform extractor).**
+Every program in (PCA.37) is total on acquired finite data and its original
+code is finitely preparable on the entire $\mathcal U_*$. All share
+precisely the same original eight-state, at-most-two-call reader of 4.3.
+Nevertheless there is no effective procedure which, on every program
+in this family, terminates and returns any one of the following:
+
+1. a valid finite determining absolute depth for its original code;
+2. a valid finite native determining menu for that code;
+3. a finite installed stationary fixed-address common-start preparer
+   generating its original complete entry on the entire fiber.
+
+Thus no such extractor exists on all program descriptions under the
+promises of totality and finite preparability. This does not obstruct
+Theorems 10.3–14.3 with a supplied valid certificate.
+
+Proof. If $e$ never halts, $f_e\equiv0$. If it halts at stage $\tau$,
+then on every branch image
+
+$$
+f_e(B)=\mathbf1_{\{r_B(L^{\tau+1})=\mathsf{branch}\}}.
+\tag{PCA.38}
+$$
+
+Indeed, if $h(B)\ge\tau$, the bounded simulation discovers that first
+stage and uses exactly this test. If $h(B)<\tau$, a node at depth
+$\tau+1$ cannot be a branch; the test and (PCA.37) are both zero.
+Hence in the halting case this is one fixed finite suffix test, and
+in the nonhalting case it is constant. In either case a finite menu
+of class roots, together with $LLL L^{\tau+1}$ in the halting case,
+determines the literal code on the entire fiber: roots identify the
+profiles in (PCA.12), and the suffix decides its only varying case
+$Z_{b_3}$. Theorem 3.2 supplies a finite preparer with the original
+entries. This existence argument makes no uniform choice between the
+two cases. Supplier application 4.3 serves every $f_e$ without any
+change to the reader table, entries, outputs or two-call bound.
+
+We next prove the required actual-source lower witness rather than
+appeal to Rice's theorem. Suppose $e$ halts first at $\tau$ and set
+$m=\tau+1$. Let $B^-$ be the complete all-beta tree with leaves at
+depth $m$. Let $B^+$ replace its beta at occurrence $L^m$ by
+$\langle\beta,\beta\rangle$. Both are finite branch images, because
+beta and ordered pairs of images are images. They agree at every
+relative word of length less than $m$, while
+
+$$
+r_{B^-}(L^m)=\beta,\qquad
+r_{B^+}(L^m)=\mathsf{branch},\qquad
+f_e(B^-)=0,\quad f_e(B^+)=1.
+\tag{PCA.39}
+$$
+
+The last equations hold even if one evaluates via (PCA.37): both
+heights are at least $m>\tau$. Choose four other finite branch images
+for $c,b_1,b_2,b_4$, mutually distinct and avoiding both $B^-,B^+$.
+Such choices exist by the infinite distinct image orbit used in NBP
+Proposition 15.2. Set $x_{b_3}=\beta$, take $x_a=B^-$ or $B^+$,
+and keep those four other values fixed. Each valuation has six
+pairwise distinct values, all images. Its full current filling is
+an image, repeats $a$ at both $LLL,LRL$ and $c$ at both $RLL,RRL$,
+and has the exact original complete row. NBP Proposition 9.3 and
+its inverse give two actual finite origins $u^-,u^+\in Z_{b_3}$,
+with the same whole predecessor target $R_0$ and different prescribed
+codes and complete entries.
+
+Every absolute word of length less than $m+3=\tau+4$ has the same
+reply on their current trees. Above the cut it sees the common
+exterior. In every class other than $a$ the entire subtree is unchanged.
+In either occurrence of $a$, its suffix length is less than $m$,
+so (PCA.39)'s common prefix gives the same reply. This covers every
+original address, including absent words in unchanged classes. Thus
+any determining absolute depth $D$, or any determining menu whose
+maximum word length is $D$, must satisfy
+
+$$
+D\ge\tau+4\quad\text{whenever }e\text{ halts at }\tau.
+\tag{PCA.40}
+$$
+
+Now suppose an extractor in item 1 or 2 exists. From its returned
+finite output obtain $D$ (use zero for an empty menu) and simulate
+$e$ through stage $D$. If it halts, report halting. If it does not,
+it cannot halt later: a later $\tau>D$ contradicts (PCA.40). This
+would decide halting for arbitrary finite descriptions, although every
+input supplied to the extractor is within its promised class.
+
+For item 3, take the maximum length of all words in the returned
+finite preparer's installed running states, again using zero for no
+running states. Lemma 2.3 makes that installed menu determining, so
+the same reduction applies. Unused long words may make this bound
+larger; they remain finite and do not invalidate the halting decision.
+They are used here only as a bound extracted from a finite description,
+not charged as executions.
+
+The undecidability endpoint is the standard halting problem. Alan M.
+Turing's *On Computable Numbers, with an Application to the
+Entscheidungsproblem*, §8, pp. 247–248, proves the corresponding absence
+of a general procedure determining whether an arbitrary described
+machine ever prints a specified symbol. The equivalence needed here
+is explicit: simulate any machine until its first halt and then print
+a distinguished symbol; conversely simulate a printing machine until
+its first occurrence of that symbol and then halt. Both transformations
+are effective finite descriptions. A bounded simulation at a returned
+$D$ is a finite operation, so the supposed extractor contradicts this
+endpoint. No premise about partiality of the code programs, failure of
+the finite-preparability promise, or additional source port is used.
+$\square$
+
+## 16. Supplier scope, comparison and realization assumptions
+
+**Assumption 16.1 (resource interpretation and operational premises).**
+The resources in §§10–15 are the exact installed preparation and reader
+state alphabets, actual running visits and sums of submitted absolute
+word lengths. Every running, latch and whole-output state counts,
+including unused installed states. A terminal latch has no native call;
+every running visit has one, including a forced constant reply or
+$\varepsilon$. Handoff and the phase boundary are the separately
+supplied operations of Definition 2.2. No phase coordinate is silently
+added to a running configuration. If an implementation requires phase,
+entry or service storage, that storage has its own price under the
+supplied realization contract; the theorems do not construct it.
+
+Literal table substitution can change the stored literals and successors
+of the preparation graph, and in Theorem 13.3 also of the design-variable
+reader graph. The state identities, partitions, starts, latch contents,
+complete recoverable entry values and whole-row halt labels are as
+stated in each theorem. Installed-address representation, all four
+successor slots, output representation, acquisition, acquired-term
+computation, authentication, export, isolation, entry, local work,
+elapsed time, energy and native service retain separate prices. Their
+costs are not determined by state/call/submitted-word counts.
+
+**Proposition 16.2 (mathematical suppliers and the additional bridge).**
+The supplier roles in the preceding deductions are the following.
+
+| Supplier | Used statement and exact scope |
+| --- | --- |
+| [NBP, Definitions 1.1–1.2, 10.1 and (NBP.10.3)][NBP] | Original finite ordered trees, complete canonical row, all legal injective class valuations and the bijection to actual origins by the image inverse. These retain repetitions and entire class disequalities. |
+| [NBP, Proposition 10.2 and Theorem 10.4][NBP] | Branch subtrees of an image are images; exact exterior image parsing; class-root determination of the entire predecessor row. The target remains that row throughout. |
+| [LRD, Theorem 2.2][LRD] | One finite simultaneous assignment with prescribed intrinsic rank one, arbitrarily deep leaves and every syntactically nontrivial whole-term negative. Theorem 11.2 applies this supplier after the literal prefix decomposition; it does not claim a new general filling theorem. |
+| [Signed Local Prefix Lifting, Lemma 2.1][SLP] | The related general live-prefix and simultaneous-negative supplier, with fixed finite barriers and shared names. The present image-specific bridge uses LRD's rank-one specialization directly; it never applies unrestricted prefix lifting without checking image membership or a live frontier. |
+| [Native Ambient Contact Decision, Theorem 6.1 and Definition 1.2][NAC] | Total joint-prefix decision for its explicit exact-cover grammar and signed finite-source conditions. It does not decide arbitrary acquired-term programs or supply a determining certificate for them. |
+| [NBP, Proposition 12.5, Definitions 13.1 and 14.2][NBP] | Stationary no-revisit, shortest repeated occurrence, submitted literal sums, counted common start and terminal latch. The proofs retain paid visits instead of using silent forced-successor contraction. |
+| [NBP, Theorem 14.4 and Proposition 15.8][NBP] | The earlier jointly reselected-encoder bridge and the failure of universal arbitrary-code padding. A supplied finite determining certificate is the added hypothesis here; none of these arguments pads an arbitrary prescribed code without it. |
+| [NBP, Theorem 15.5 and PCA 4.3][NBP] | The very same eight-state reader serving every code in (PCA.12), including the entire program family (PCA.37), without changing its complete entries. |
+| [Prescribed binary codes: a nine-state escape, Theorems 4.1, 5.1 and 6.1][NRE] | The actual $E$-sensitive suffix distinction, nine-state two-call reader and exclusion of every same-code root-only two-call reader. A certificate-relative basis may include that suffix; no root-only claim for arbitrary code horizons is made here. |
+
+Proof. Theorem 11.2 substitutes typed image residuals into the original
+legal-row map and uses LRD on exactly its full negative list. Lemma
+12.2 then identifies every finite competitor word with one actual
+basis word and an installed reply map on the selected actual origins.
+Theorem 10.3 uses that identity without altering the reader;
+Theorems 13.1 and 13.3 respectively preserve reader observations or
+redesign its graph. These are the additional paid, original-entry
+correspondences. Theorem 15.2 adds the actual whole-fiber embedding
+needed for its halting reduction. The cited suppliers alone do not
+assert these fixed-code arbitrary-budget conclusions. $\square$
+
+**Proposition 16.3 (classical comparisons and evidence boundary).**
+Finite-prefix dependence is classical. Magnus Steinby, Eija Jurvanen
+and Antonio Cano, *Varieties of Unranked Tree Languages*,
+[arXiv:1510.07402v1, §10.2][SJC], define $k$-definite languages by
+membership constant on equal $k$-root segments, with early finite
+leaves retained. This is the relevant background for the semantic
+notion, not a source of the native resource bounds. Their trees are
+unranked and their language definition includes recognizability;
+the present domain is the specific fixed-arity actual inverse fiber,
+with four native replies and no assumed recognizer for arbitrary
+code-program text. Inclusive depth conventions can differ by one.
+
+Randal E. Bryant, *Graph-Based Algorithms for Boolean Function
+Manipulation*, [§2, Definition 1][BRY], requires increasing variable
+indices on each nonterminal edge, hence an acyclic ordered function
+graph. The finite tasks here allow four replies, repeated words at
+different states, unused states, state sharing and cycles in the union
+graph. They preserve the original entry and the actual paid literal
+at each state. Consequently no BDD node count, minimization claim or
+Boolean numerical frontier is transferred. The finite task is not
+an uncharged profile-reading interface.
+
+Turing's [§8][TUR] supplies only the undecidability endpoint in
+Theorem 15.2, whose promise-preserving native reduction is proved
+there. The repository's [Rice background note][RICE] does not by
+itself prove that promised-total, promised-finitely-preparable
+extraction is impossible. No graph, XOR, quantum or spectral numerical
+bound is a premise for the correspondence.
+
+Proof. The stated classical definitions have the described domains
+and do not mention the original native entry, image inverse, complete
+row partition or execution prices. The exact parameter correspondence
+and missing implications are those stated above. The deductions in
+§§10–15 are repository-derived ordinary-paper mathematics relative
+to their attributed suppliers. They carry no claim of current Lean
+kernel verification or worldwide priority. A finite certificate and
+a finite abstract table establish the stated mathematical feasibility
+under Assumption 16.1; they do not establish acquisition, authentication,
+export, isolation, entry or physical finite-control service realization.
+The general continuing relational-fiber goal includes those residual
+operational obligations. $\square$
+
+[LRD]: RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md
+[SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
+[NAC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_AMBIENT_CONTACT_DECISION.md
+[NRE]: FIB_PRESCRIBED_CODE_NINE_STATE_ROOT_ESCAPE.md
+[SJC]: https://arxiv.org/html/1510.07402v1#S10.SS2
+[BRY]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
+[TUR]: https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf
+[RICE]: ../../../Library/Diagonal/rice1953classes.md
+
+## 追加锚（本行以下为增补区）
+
+## 17. Sparse selected addresses with the original complete entries
+
+**Definition 17.1 (total selected-address descriptions).** Retain the
+entire original $\mathcal U_*$, its six injective class values, both
+occurrences of $a,c$, the eleven profiles and the five complete canonical
+rows of Definition 4.1. Retain exactly the code template (PCA.12) and
+the one fixed reader of Supplier application 4.3. In particular its
+alphabet consists of three running states and five whole-row halts,
+its two distinct complete entries are the same $e_0,e_1$, and its
+table, entry map and complete halt outputs are immutable. Its separate
+upper budgets remain $K=8,q_R\le2,\ell_R\le6$.
+
+Let $a:\mathbb N_{\ge1}\to\{0,1\}$ be a specified total computable
+predicate, with no known support bound. Set
+
+$$
+\begin{aligned}
+A&=\{s\ge1:a(s)=1\},& w_s&=L^sR,\\
+f_a(B)&=\bigvee_{1\le s\le h(B)}
+ \bigl(a(s)=1\ \land\ r_B(w_s)=\mathsf{branch}\bigr),&
+\sigma_a&=\sigma_{f_a}\text{ of (PCA.12)}.
+\end{aligned}
+\tag{PCA.41}
+$$
+
+Here $h(B)$ is maximum leaf depth and an empty disjunction is false.
+The argument $B$ is an acquired finite branch image. This specifies a
+total computation on acquired data: only finitely many evaluations of
+the total $a$ are needed on each input. There is no uniform bound on
+their work or on input height. A branch reply at $w_s$ implies
+$h(B)\ge s+2$, so the height cutoff removes no true disjunct.
+Equivalently, $f_a$ tests whether any selected $w_s$ has branch reply;
+alpha, beta and absence are all false. This equivalence holds for
+arbitrary branch images, including shapes other than combs.
+
+Only this predicate and the resulting prescribed code vary with $a$.
+The cut, current row, source fiber, target, native words and replies,
+reader and its original complete entries do not vary. The computation
+in (PCA.41) specifies the code; it is not a runtime operation available
+to a preparer. In particular it supplies neither a height register nor
+an address operation, simulation workspace or copy of the acquired term.
+
+**Convention 17.2 (the preparation design and its budgets).** Use exactly
+Definition 2.2. For the basic state count there are precisely the two
+installed latches $\widehat e_0,\widehat e_1$ and a finite set $V$ of
+running states. A prescribed common start is a member of $V$. The
+installed literals and all four successors may be designed; state
+identities, the running/latch partition, start and literal latch contents
+can be fixed in advance. An upper state budget $H$ permits a choice of
+such an alphabet with at most $H$ members. Every installed state counts,
+including unused ones; every running visit costs one actual call,
+including forced replies and the root word $\varepsilon$. Its literal
+charge is the sum of the lengths of the submitted absolute words.
+There are no silent running transitions. A start already fixed to a
+latch cannot generate these codes, since both values occur on positive
+profiles. Additional mandated latches are addressed in Theorem 19.1.
+
+## 18. Exact actual supports for sparse selection
+
+**Lemma 18.1 (finite inverse origins with exact six-address supports).**
+For any finite nonempty $S\subseteq A$, there are actual finite origins
+$u_0,(u_s)_{s\in S}\in Z_{b_3}$, all with whole target $R_0$, such that
+$\sigma_a(u_0)=0$, $\sigma_a(u_s)=1$, and the exact set of differing
+current replies on the pair $(u_0,u_s)$ is
+
+$$
+E_s=\{p w_s v:p\in\{LLL,LRL\},\quad
+                         v\in\{\varepsilon,L,R\}\}.
+\tag{PCA.42}
+$$
+
+The sets $E_s$ are pairwise disjoint. Every word of $E_s$ has absolute
+length at least $s+4$. All other finite addresses, including every
+deeper absent continuation, have identical replies on that pair.
+
+Proof. Put $G=\langle\beta,\beta\rangle$, $C_0=G$, and
+$C_{m+1}=\langle C_m,\beta\rangle$. Choose $m\ge\max S$.
+Take $B_0=C_m$ and let $B_s$ replace the beta at $w_s$ by $G$.
+The words $w_s$ are prefix-free. In $B_0$ every $w_t$, $t\ge1$,
+has beta or absent reply. In $B_s$ exactly $w_s$ among these words
+has branch reply. All these trees are finite branch images, since beta
+and pairs of images are images. They are pairwise distinct, and
+(PCA.41) gives $f_a(B_0)=0,f_a(B_s)=1$.
+
+Choose four pairwise distinct branch images $D_c,D_1,D_2,D_4$ avoiding
+all the finitely many $B$ values. The infinite supply is NBP Proposition
+15.2. Set $x_a=B_0$ or $B_s$, $x_{b_3}=\beta$, and
+$x_c=D_c,x_{b_j}=D_j$ for $j=1,2,4$. Each tuple has six pairwise
+distinct values, all images. NBP Proposition 9.3 gives the actual finite
+origin $u=\delta(\mathscr S(x))$, with $\rho u=\mathscr S(x)$,
+current row exactly $R_*$ and predecessor row exactly $R_0$.
+Both occurrences of $a$ contain the same chosen $B$ and both occurrences
+of $c$ contain $D_c$; none of the class disequalities is dropped.
+
+Inside $B_0,B_s$ the tested node $w_s$ changes from beta to branch.
+At $w_sL,w_sR$ the replies change from absent to beta. At every
+strict descendant of either child both replies are absent. Proper
+prefixes of $w_s$ remain branches, and every disjoint subtree is
+unchanged. Thus the relative difference set is exactly
+$\{w_s,w_sL,w_sR\}$, including the tested node itself.
+Above the depth-three cut both currents have the same branch skeleton.
+Any longer word has a unique cut prefix. In an unchanged class its
+whole reply function is unchanged; in either $a$ occurrence the actual
+occurrence identity (NBP.9.7) gives precisely the relative comparison
+just proved. This proves (PCA.42) for every actual finite address and
+all four possible replies, rather than just for the tested menu.
+Prefix-freeness and disjoint occurrence cones prove disjointness and
+the length bound. $\square$
+
+**Lemma 18.2 (an additional paid distinction on the same negative run).**
+On the source $u_0$ of Lemma 18.1, every successful preparer makes at
+least one call outside $\bigcup_{s\in S}E_s$ whose word has length at
+least three. This call can be forced in addition to one distinguishing
+call for each $s\in S$.
+
+Proof. Keep $x_a=B_0$ and $x_{b_j}=D_j$ for $j=1,2,4$, but change
+$x_c=D_c$ to beta and $x_{b_3}=\beta$ to alpha. This is an injective
+tuple in the positive alternative $3$ of NBP Proposition 9.3; its actual
+finite inverse $u_+$ belongs to $\Pi_3$ and requires entry $e_1$.
+The source $u_0$ requires $e_0$. Their currents differ only in the
+two $c$ occurrence cones and the $b_3$ cone. Any differing reply
+therefore has length at least three and lies outside every $E_s$.
+If all queries on the terminating $u_0$ path had equal replies on
+$u_+$, induction from the common start would give the same latch,
+a contradiction. The same path argument against each $u_s$ forces
+a query in $E_s$. These are distinctions on one actual execution,
+not costs added from different maximizing sources. $\square$
+
+## 19. The exact simultaneous three-resource frontier
+
+**Theorem 19.1 (sparse prescribed-code preparation spectrum).** If $A$
+is finite, set $n=|A|$ and $W=\sum_{s\in A}(s+4)$, with $n=W=0$
+for the empty set. Under Convention 17.2 the complete preparation
+upper-budget region on the entire original $\mathcal U_*$ is exactly
+
+$$
+\boxed{\quad H\ge n+4,\qquad
+ p\ge\max(2,n+1),\qquad
+ \ell\ge\max(6,3+W).\quad}
+\tag{PCA.43}
+$$
+
+One table attains all three coordinate minima simultaneously, with
+the original code, literal entries and unchanged eight-state reader.
+On an alphabet fixed in advance with exactly two latches, this table
+can be installed whenever $|V|\ge n+2$ and the prescribed start is
+running; surplus running states remain installed and counted. If $r$
+additional distinct latches are mandated, the exact state threshold is
+$n+4+r$, with at least $n+2$ running states and a running start still
+necessary and sufficient. The other two minima are unchanged.
+
+If $A$ is infinite, no finite installed preparer generates this code
+on the entire original fiber, even under sourcewise termination alone.
+
+Proof, upper bound. List finite $A$ as $s_1<\cdots<s_n$. Install the
+two original-entry latches and running states $D,T,A_1,\ldots,A_n$.
+The common start is $D$. In the table below $A_{n+1}$ means
+$\widehat e_0$; when $n=0$, the beta successor of $D$ is also
+$\widehat e_0$.
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $A_1$ if $n>0$, else $\widehat e_0$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $A_i$ | $LLL L^{s_i}R$ | $A_{i+1}$ | $A_{i+1}$ | $\widehat e_1$ | $A_{i+1}$ |
+
+The last row is used for $1\le i\le n$. Each $A_i$ is a distinct
+installed state with one literal address, not a loop index or runtime
+counter. An alpha at $b_3$ is exactly $\Pi_3$ and requires one.
+A beta at $b_3$ is exactly $Z_{b_3}$; the chain computes the exact
+disjunction (PCA.41), using actual absence and both leaf replies as
+false. If $b_3$ is branch, the only remaining code-one profile is
+$\Pi_4$, detected by alpha at $b_4$. This verifies all four positive
+and all seven zero profiles. In particular it imposes no comb shape
+or other restriction on the branch fillings. All four successors are
+installed even where a reply at a class root is unattained.
+
+There are $n+2$ running states and two latches. The two possible longest
+paths have costs $(2,6)$ and $(n+1,3+W)$; for $n=0$ the beta path
+has only $(1,3)$. When $n>0$, the negative comb source of Lemma 18.1
+with $S=A$ follows $D,A_1,\ldots,A_n$, attaining the second path's
+costs. A $Z_c$ source follows $D,T$, attaining $(2,6)$.
+For $n>0$ one has $n+1\ge2$ and $3+W\ge8>6$, so both execution
+maxima occur on the comb source; for $n=0$ both occur on the $Z_c$
+source. Extra running states or mandated latches can be made
+unreachable with arbitrary total successor assignments and remain
+counted. Relabel $D$ as the prescribed running start. No source-dependent
+choice of tables or start occurs at execution.
+
+Proof, lower bounds for finite $A$. First let $n>0$ and take $S=A$
+in Lemma 18.1. Different required latches force the terminating $u_0$
+path to query a word in every $E_s$. Otherwise equal replies along
+that path force the same latch on $u_s$. Disjointness forces $n$
+different visits of total literal charge at least $W$. Lemma 18.2
+forces one more visit of length at least three on this same path.
+Thus $p\ge n+1$ and $\ell\ge3+W$, regardless of how many states
+or other resources are allowed.
+
+For the baseline two-call and six-letter bounds use the same actual
+$Z_c$ source and its two replacements from Lemma 7.1. Replacing only
+$b_3$ or only $b_4$ by alpha gives respectively $\Pi_3$ and $\Pi_4$,
+both requiring code one instead of zero. On the zero-source path there
+must be a distinguishing query in each of these disjoint occurrence
+cones. Each has absolute length at least three. Hence $p\ge2$ and
+$\ell\ge6$ for every $A$, including the empty set.
+
+Every $E_s$ also requires an installed running word there, by the
+same path argument. Lemma 7.1 already supplies mandatory installed
+words in the $b_3$ and $b_4$ cones for every code of (PCA.12).
+Those cones and all $E_s$ are disjoint, so $|V|\ge n+2$.
+Both original entries are attained on positive profiles, requiring
+both distinct original-entry latches. All extra mandated latches
+also count. This proves the state bound, including $n=0$.
+It applies to arbitrary shared four-successor graphs, with cycles,
+unused states and repeated literal words allowed. A forced or root
+call cannot eliminate a required distinction: every word outside
+the stated difference support has equal replies on its comparison
+pair and is still a paid visit.
+
+Proof, infinite $A$. A finite installed menu has a finite maximum
+absolute word length $d$. Choose $s\in A$ with $s+4>d$ and use
+Lemma 18.1 with $S=\{s\}$ and $m=s$. Its negative comb has no
+branch at any $w_t$, including every other selected position, and
+its replacement has a branch at exactly $w_s$. Thus their prescribed
+codes differ even for infinite $A$. Every word of their exact difference
+support is longer than $d$. The two actual sources agree on the entire
+installed menu, forcing identical paths and latches by Lemma 2.3.
+If that path fails to terminate, correctness already fails. This
+contradiction needs no advance uniform call bound. $\square$
+
+**Corollary 19.2 (cardinality and weight as distinct preparation data).**
+For this family finite preparability is equivalent to finite support of
+$a$. Among finite supports of the same cardinality the state and call
+minima coincide, whereas the literal minimum depends on the sum of
+the selected indices. The parameters are not the number of leaves
+of a full context: unselected side leaves of the comb are not tested
+by the code. For any $s$ selected alone the exact vector is
+$(5,2,s+7)$, and for the empty support it is $(4,2,6)$.
+
+Proof. These are substitutions into (PCA.43); the infinite case is the
+last part of Theorem 19.1. The proof of that theorem supplies the
+full-domain upper and the all-address actual-source lower that make
+these substitutions legitimate. $\square$
+
+## 20. Total descriptions and the effective preparation boundary
+
+**Definition 20.1 (promise and ambient meanings of an index).** In a
+fixed effective programming system let $\mathsf{Tot}_2$ consist of
+descriptions computing a Boolean value at every positive integer.
+For an input promised to lie in $\mathsf{Tot}_2$, use exactly (PCA.41).
+Outside that promise a computation of $a(s)$ can diverge, and the
+prescribed acquired-term computation need not be total. No conclusion
+below treats those ambient descriptions as promised inputs.
+
+A promise semidecision terminates on the designated side of the
+promise and never gives that answer on the other promised side;
+its behavior outside the promise is unrestricted. For ordinary
+arithmetical index labels we use the following explicit total syntax.
+Fix an effective numbering of finite enumerator descriptions, and let
+$W_{e,t}$ be the finite set emitted during its first $t$ transition
+steps, with $W_{e,0}=\varnothing$. Define
+
+$$
+b_e(s)=\mathbf1_{\{W_{e,s}\setminus W_{e,s-1}\ne\varnothing\}},
+\qquad \Gamma(e)=\mathsf{Sparse}(\underline e).
+\tag{PCA.44}
+$$
+
+The canonical numeral $\underline e$ occurs literally in this syntax.
+Its prescribed evaluator on $B$ is (PCA.41) with $a=b_e$: structural
+height computation followed by simulations bounded by that height.
+The admitted strings of this particular sublanguage are exactly
+$\{\mathsf{Sparse}(\underline e):e\in\mathbb N\}$, with canonical
+numerals, so membership and recovery of $e$ are decidable. There is no
+claim that arbitrary syntactically valid programs are total or that
+this sublanguage represents every total code. Each of these particular
+strings is total by its explicit bounded evaluator. All static program
+parameters are common data, not source-dependent control fields.
+
+**Theorem 20.2 (a total-description finite-preparability classification).**
+On the promise $\mathsf{Tot}_2$, finite preparation of $\sigma_a$ is
+exactly finite support of $a$. It has neither a positive nor a negative
+uniform semidecision on that promise. On the explicit total syntax
+(PCA.44), the set
+
+$$
+\{e:\sigma_{b_e}\text{ has a finite original-entry preparer on }
+                          \mathcal U_*\}
+\tag{PCA.45}
+$$
+
+is $\Sigma^0_2$-complete under computable many-one reductions.
+Every input to those reductions describes a total acquired-term code
+served by precisely the unchanged reader of 4.3. Its resource vector,
+when finite, is the exact vector of Theorem 19.1, with $A$ the stages
+of genuinely new enumeration events and $W$ their weighted sum.
+
+Proof. The source-specific equivalence is Corollary 19.2.
+An enumerator emits only finitely many distinct numbers if and only
+if only finitely many stages introduce a new number. Hence (PCA.45)
+is the classical finite-c.e.-set index problem $\mathsf{FIN}$.
+For this explicit syntax its upper definition is
+$\exists N\,\forall s>N\, b_e(s)=0$, with a decidable bounded-simulation
+matrix. Totality is built into (PCA.44), rather than inserted as an
+extra quantifier over arbitrary program indices.
+
+For completeness, the standard $\mathsf{FIN}$ reduction can be made
+explicit. Given any predicate $\exists m\forall n\,R(z,m,n)$ with
+decidable $R$, at stage $t$ let
+
+$$
+c_t=\min\bigl(\{m\le t:\forall n\le t\ R(z,m,n)\}
+                                     \cup\{t+1\}\bigr).
+\tag{PCA.46}
+$$
+
+Construct an enumerator that successively computes and emits $c_t$.
+Each stage ends because $R$ is decidable; a finite enumerator description
+is effectively obtained from $z$. The sequence $c_t$ is nondecreasing:
+an excluded old candidate never returns, and the only newly eligible
+candidate at the next stage is the previous default. If a least true
+witness $m$ exists, it is eventually the least remaining candidate and
+$c_t=m$ thereafter. If none exists, every fixed finite set of candidates
+is eventually excluded, so $c_t$ is unbounded. The emitted set is
+therefore finite exactly for the stated $\Sigma^0_2$ predicate.
+Its transition-step enumeration need not share the stage numbers $t$;
+finiteness is unchanged by that finite effective simulation.
+
+Neither semidecision assertion needs a hierarchy-separation assumption.
+For an arbitrary machine $e$, the total predicate that is one exactly
+while $e$ has not halted by stage $s$ has finite support exactly when
+$e$ halts. The total predicate that is one exactly when $e$ has halted
+by stage $s$ has finite support exactly when $e$ never halts. These
+are uniform bounded simulations and preserve the totality promise.
+A negative semidecision in the first reduction or a positive one in
+the second would semidecide nonhalting. Together with the usual halting
+semidecision that would decide halting, contradicting Turing's endpoint.
+This proves both assertions. $\square$
+
+**Theorem 20.3 (validity and all-three-budget feasibility remain different
+from supply).** For a promised total $a$, invalidity of a proposed finite
+menu certificate with literal entry labels is semidecidable. So is
+failure of feasibility at a supplied triple $H,p,\ell$ for this sparse
+family. Neither corresponding positive property is decidable, even
+with both totality and finite preparability promised. On syntax
+(PCA.44), each is $\Pi^0_1$-complete: for certificate validity this
+already holds for one fixed proposed certificate, and for budget
+feasibility for any fixed triple with $H\ge4,p\ge2,\ell\ge6$.
+Triples failing one of those baseline inequalities are uniformly
+infeasible and are excluded from that hardness assertion.
+
+Proof. A certificate is a finite menu $M$ and a finite assignment
+$\chi$ of its reply tuples to the original $e_0,e_1$, with arbitrary
+completion on unattained tuples. Enumerate finite origins, retain
+exactly those with $R_P(\rho u)=R_*$, and evaluate the promised total
+code and actual finite replies. A mismatch with $\chi$ refutes validity.
+It is found after finite work whenever one exists. If just menu
+determination is proposed, enumerate pairs instead and look for
+equal menu replies with unequal codes. The class test is exact finite
+tree computation; no regular-language assumption on the whole fiber
+is being used. These are mathematical semidecision constructions,
+not additional operations supplied to a native running state.
+
+For budgets satisfying the baseline, Theorem 19.1 makes feasibility
+equivalent to the simultaneous inequalities
+
+$$
+|A|\le H-4,\qquad |A|\le p-1,\qquad
+\sum_{s\in A}(s+4)\le\ell-3.
+\tag{PCA.47}
+$$
+
+If $A$ is infinite these finite thresholds all eventually fail.
+Successive evaluations of the total $a(s)$ semidecide a violation
+of any one inequality, and every violation has a finite witness.
+For (PCA.44) this gives an ordinary co-c.e. property of all $e$;
+equivalently every finite partial count and weight obey their bounds.
+The same applies to validity, since every described evaluator is total.
+
+For hardness, let $M_0$ be the six representative class roots and
+let $\chi_0$ return $e_1$ if $b_3$ or $b_4$ has alpha reply,
+and $e_0$ otherwise. This is a valid certificate for $A=\varnothing$.
+It is invalid for every nonempty singleton support: Lemma 18.1 gives
+same-root actual sources in $Z_{b_3}$ with different required entries,
+and $\chi_0$ assigns zero to both.
+
+Given an arbitrary machine $e$ and a fixed feasible baseline triple,
+construct an enumerator which first takes more than $\ell+1$ dummy
+transition steps, then simulates $e$, and emits just one number if
+and when $e$ first halts. No other number is ever emitted. Its compiled
+description is effective and its emitted set is always finite. Apply
+$\Gamma$ to that description. The selected support is empty if $e$
+never halts, and otherwise is a singleton $\{s\}$ with $s>\ell+1$.
+In the latter case the exact literal minimum $s+7$ exceeds $\ell$.
+Thus both validity of $(M_0,\chi_0)$ and feasibility at the given
+triple hold exactly when $e$ never halts. Every reduced input is total
+and finitely preparable, with the same source, code template and fixed
+reader. Nonhalting is the classical co-c.e.-complete endpoint; bounded
+simulation and the explicit native frontier establish the required
+promise-preserving reductions. $\square$
+
+**Remark 20.4 (index scope and distinct tasks).** The $\Sigma^0_2$ and
+$\Pi^0_1$ statements concern the explicit total presentation (PCA.44).
+For arbitrary program numbering, totality is an additional ambient
+index property. No such arithmetical label for the conjunction of
+totality and preparation is asserted here. The promise results are
+strong because the reductions actually land in the promise, not
+because off-promise descriptions were treated as total.
+
+Validity of a supplied certificate, extraction of some valid certificate,
+decision of a given three-budget request, construction of a mathematical
+table from valid finite data, and actual realization with paid services
+are separate questions. Theorem 15.2 already excludes a uniform extractor
+under totality and finite-preparability promises; that extraction theorem
+is reused without a second proof. Theorems 12.4 and 14.3 already give
+the exact finite mathematical table tasks once the entry assignment
+and determining facts are supplied. The new resource inequalities
+(PCA.43) and (PCA.47) expose cardinality and address weight for an
+unbounded family, rather than inferring those prices from mere
+termination of the input computation.
+
+## 21. An explicit native interface to the existing certificate supplier
+
+**Definition 21.1 (additional effective regular description).** Suppose
+a finite total deterministic bottom-up tree automaton $\mathfrak A_f$
+is supplied. Write its leaf states as $q_\alpha,q_\beta$, its binary
+transition as $\delta_f$, and its accepting set as $F_f$; thus
+$q_f(\alpha)=q_\alpha$, $q_f(\beta)=q_\beta$ and
+$q_f(\langle B,C\rangle)=\delta_f(q_f(B),q_f(C))$.
+Require the exact specification
+
+$$
+\forall B\in\mathcal I\text{ with branch root},\qquad
+ f(B)=1\ \Longleftrightarrow\ q_f(B)\in F_f.
+\tag{PCA.48}
+$$
+
+Its ranked signature is exactly $\alpha:0,\beta:0,\langle-,-\rangle:2$.
+The code is still the prescribed $\sigma_f$ of (PCA.12), with the same
+entries and immutable reader. The explicit automaton and equivalence
+are extra finite-description input. Existence of some equivalent
+regular language, or totality of an arbitrary acquired-term program,
+does not supply them or decide their equivalence to that program.
+
+Use one coordinate for each of the six whole class values, not eight
+independent hole values. Write $\mathcal B_I$ for branch images and
+let $\mathcal D(x)$ be the conjunction of all different-class
+disequalities with the following disjunction of eleven coordinate
+conditions:
+
+$$
+\begin{aligned}
+Z_* &: \quad \bigwedge_d x_d\in\mathcal B_I,\\
+Z_d &: \quad x_d=\beta\ \land\!
+                       \bigwedge_{k\ne d}x_k\in\mathcal B_I,\\
+\Pi_j &: \quad x_{b_j}=\alpha\ \land\ x_{\operatorname{partner}(j)}=\beta
+ \ \land\!
+ \bigwedge_{k\notin\{b_j,\operatorname{partner}(j)\}}
+                                      x_k\in\mathcal B_I.
+\end{aligned}
+\tag{PCA.49}
+$$
+
+Here $d$ ranges over the six classes and $j=1,\ldots,4$, with
+partner $a$ for $j=1,2$ and $c$ for $j=3,4$.
+NBP Propositions 9.3 and 15.2 identify this domain exactly with the
+entire original fiber by $x\mapsto\delta(\mathscr S(x))$.
+On it define the Boolean expression
+
+$$
+\widehat\sigma_f(x)=
+ \Pi_3(x)\lor\Pi_4(x)\lor
+ \bigl(Z_{b_3}(x)\land[q_f(x_a)\in F_f]\bigr),
+\tag{PCA.50}
+$$
+
+and on two tuples retain the complete joint bad-pair relation
+
+$$
+\mathcal D(x)\land\mathcal D(y)\land
+       \bigl(\widehat\sigma_f(x)\mathbin{\mathsf{xor}}
+                                  \widehat\sigma_f(y)\bigr).
+\tag{PCA.51}
+$$
+
+**Supplier application 21.2 (ARH productive-prefix saturation with native
+entry fidelity).** Under (PCA.48), the existing productive-prefix test
+of [ARH, Lemma 21.4][ARH] decides whether $\sigma_f$ has a finite
+original-entry preparer on the whole $\mathcal U_*$, and supplies a
+valid finite determining menu and its literal entry labels in the
+positive case. In the negative case it supplies actual finite origin
+pairs with different prescribed entries and identical current replies
+through any requested finite absolute depth. Consequently the existing
+finite tasks of Theorems 12.4 and 14.3 decide every given three-budget
+request on these explicitly described inputs and construct a finite
+mathematical table when feasible. None of these automata is installed
+as a free runtime instrument.
+
+Proof. The image grammar $\mathcal I::=\beta\mid E\mid
+\langle\mathcal I,\mathcal I\rangle$ is a finite regular tree grammar.
+Intersecting it with branch-root type gives $\mathcal B_I$.
+Ground equality, root type and a supplied automaton's coordinate
+acceptance are effective coordinate predicates. Equality of two whole
+coordinates, and its negation, use the padded synchronous convolution
+of ARH Lemma 21.1, taking decoration powers zero. That lemma also
+supplies lifting to larger tuples with correct padding, Boolean
+operations, prefix restrictions and finite witnesses. Combining it
+with the ordinary finite-tree automaton closures gives an effective
+automaton for (PCA.51) on twelve coordinates. It retains the full
+$\mathcal D$ separately in both copies, every one of its disequalities,
+and the single shared value for each repeated class. This is not a
+product relaxation of the native domain.
+
+Apply ARH Lemma 21.4 directly to this bad-pair automaton. Its productive
+state initialization, descending diagonal-prefix sets, effective
+stabilization and finite accepting witnesses are the existing supplier;
+no new pair-state saturation algorithm is needed. Its proof and
+statement use the automaton, productive states and diagonal labels,
+so the instantiation requires exactly the bad relation just constructed.
+For some finite $h$, the positive answer excludes bad pairs whose
+corresponding class replies agree at every relative word of length
+less than $h$. By the original occurrence identity, such tuple agreement
+is exactly current-tree agreement at all absolute words of length
+less than $h+3$: all shorter exterior words are fixed, and each longer
+word enters its unique cut occurrence. Every class has a depth-three
+representative. Thus the actual menu
+
+$$
+M_h=\{p_dw:d\text{ a class},\ |w|<h\},\qquad
+\max_{v\in M_h}|v|\le h+2\quad(h>0)
+\tag{PCA.52}
+$$
+
+determines the original entry. For each attained tuple of replies,
+intersect $\mathcal D$ with its finite coordinate-prefix conditions
+and extract a finite witness by ARH Lemma 21.1. Evaluate (PCA.50)
+on that witness and assign the literal original $e_0$ or $e_1$.
+Absence of Bad proves independence of the witness. Unattained tuples
+can receive either existing entry. If $h=0$ the menu is empty and
+the same argument requires a constant code; the present template's
+two positive code values rule that case out on the nonempty domain.
+
+If the stable accepting intersection is nonempty, ARH Lemma 21.4
+supplies a finite bad tuple pair with arbitrarily long diagonal
+prefix. Apply it, for example, at $h=d+1$ for a requested absolute
+depth $d$. The occurrence identity gives identical current replies
+at every $|v|\le d$. Both tuples satisfy $\mathcal D$, so their
+filled currents have the actual finite inverses
+$u=\delta(\mathscr S(x)),u'=\delta(\mathscr S(y))$. Equation (PCA.48)
+and (PCA.50) make their original prescribed entries different.
+These are actual sources with all sharing and disequalities intact,
+not infinite limit objects. Theorem 3.2 excludes a finite preparer.
+
+In the positive case the supplied menu and assignment are exactly the
+inputs of Theorem 12.4. Its finite attained actual-word task can be
+checked over finitely many tables on a specified finite alphabet;
+stationary path checks stop at a latch or the first repeated running
+state, as Proposition 14.4 states. The same reasoning applies under
+state upper budget $H$ with the two mandated latches and a running
+start. Feasible tables retain the literal entries and use genuine
+absolute native words with the original state, call and literal charges.
+The reader and all five of its whole-row halt outputs remain unchanged.
+Theorem 14.3 supplies its separate executed-literal formulation.
+These are applications of the existing synthesis tasks, not new
+generic finite-search results. $\square$
+
+**Remark 21.3 (the exact supplier boundary).** ARH Theorem 22.1 already
+owns its constructor-elimination complete-row criterion, finite
+stabilization consumer and finite bad-source witnesses. Its eligibility
+grammar and full-row target are not silently enlarged to arbitrary
+code programs here. Application 21.2 uses its Lemma 21.4 at the explicit
+automaton interface, with (PCA.49)–(PCA.51) providing the native domain,
+code-disagreement and original-entry correspondence. No unknown chart
+selector is needed in this single six-class presentation.
+
+The repeated-class set of filled current trees is not asserted to be
+an ordinary regular tree language: copying the same coordinate at two
+different holes retains a global equality condition. Regularity is
+used on padded tuples of the six coordinates and their two-copy
+comparison. [NRF, Definitions 1.3–1.5 and Proposition 9.1][NRF] keeps
+its public finite automaton selector and constrained original-source
+presentation; [NAC, Definition 1.2][NAC] keeps its exact-cover
+mixed-template language. Neither supplier
+automatically admits an arbitrary additional code predicate. For a
+general total program the missing positive interface is precisely an
+explicit applicable finite description and its exact equivalence to
+the prescribed function. Semantic existence does not fill that gap.
+
+## 22. Attribution, mathematical scope and separately priced realization
+
+**Convention 22.1 (sources of the deductions).** NBP Proposition 9.3,
+its occurrence identity (NBP.9.7), Proposition 15.2 and Theorem 15.5
+supply respectively the actual inverse origins and complete rows,
+every-address reading, the exhaustive eleven profiles with infinitely
+many distinct branch images, and the one fixed eight-state reader.
+The image parser is [Transport–Memory Completion, Proposition 22.2,
+(RA.2207)][TMC]. Definitions 2.2 and 4.2 fix the preparation mechanics
+and code throughout. Lemma 7.1 supplies the two mandatory right-class
+cones; Theorem 3.2 supplies the semantic finite-menu criterion.
+Theorems 12.4, 14.3 and 15.2 retain ownership of certificate-relative
+synthesis, the executed-literal finite task and promised non-extraction.
+
+The additional source-specific deductions are the exact supports
+(PCA.42), the sparse cardinality/weight frontier (PCA.43), its
+promise-preserving total-description consumers and the explicit
+native tuple/entry application (PCA.49)–(PCA.52). Unlike a full-context
+slot code, a sparse selection omits arbitrarily many side slots and
+also admits infinite support. Its all-address lower proof and
+full-domain matching table are needed to obtain the exact resource
+and effective conclusions. These are repository-derived ordinary
+paper deductions, not a worldwide novelty or current kernel claim.
+
+Finite-tree automata determinization, Boolean closure and effective
+emptiness are classical: Joost Engelfriet, *Tree Automata and Tree
+Grammars*, Theorems 3.8, 3.32 and 3.74 in the
+[author-uploaded text][ENG]. They concern finite ranked trees.
+ARH Lemmas 21.1 and 21.4 supply the specialized padded-convolution
+and productive diagonal-prefix constructions used here. Their
+algorithms are not reintroduced as new theorems. Theorem 20.2 gives
+the standard finite-c.e.-set completeness reduction explicitly;
+the arithmetical level is classical computability terminology.
+Turing's [§8, pp. 247–248][TUR] supplies the undecidability endpoint
+for occurrence of a distinguished printed symbol. Simulation until
+first halt followed by printing, or simulation until first such print
+followed by halting, gives the effective correspondence to halting
+used here. Nonhalting is co-c.e.-complete since a semidecision of
+the complement of any co-c.e. set can be made to halt exactly on
+that complement. Rice's general index theorem is not used to
+replace any native support or promise-preservation proof.
+
+**Assumption 22.2 (operational and price boundary).** Acquisition of
+the row and acquired code arguments, authentication of the same
+origin/version and update, pre-cut query permission, actual export,
+complete isolation, faithful code-only handoff, lawful reader entry,
+stationarity and native service remain supplied and separately priced.
+The preparation and reader phases have exactly the alphabets,
+partitions, starts and latch/output labels specified above. Every
+installed running, terminal latch and whole-output state counts;
+every actual running visit is paid, including root and forced calls.
+All length sums are submitted absolute literal lengths, with no
+amortization across phases. Handoff, phase/service storage, address
+representation, installed tables, output representation and acquired-term
+computation keep their separate prices. The three coordinates
+$H,p,\ell$ are not total physical memory, energy or elapsed time.
+
+There is no source-dependent hidden selector, surviving archive or
+code reread, computed address, extra counter or phase coordinate,
+copied specimen, free observation, runtime automaton or uncharged
+decoder. A finite abstract table and a mathematical synthesis procedure
+do not construct those services or their physical realization.
+The nine-state prescribed-code escape and its separate root-call
+results concern a different reader contract. Continuous-control,
+quantum and trace-log suppliers likewise require their own proved
+source, action, legality and resource correspondences before any
+native preparation conclusion could be transferred. None is used
+as a numerical or physical preparation transfer here.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[TMC]: RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[ENG]: https://arxiv.org/pdf/1510.02036
+[NRF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REGULAR_FRONTIER_SELECTION.md
+
+## 追加锚（本行以下为增补区）
+
+## 23. Second-hit acquisition with the original prescribed entries
+
+**Definition 23.1 (finite selected thresholds).** Fix a supplied finite
+set $A=\{s_1<\cdots<s_n\}$ of distinct positive integers, $n\ge3$.
+Write $w_i=L^{s_i}R$ and
+
+$$
+W_A=\sum_{i=1}^n(s_i+4),\qquad
+f_{A,k}(B)=\mathbf1_{\{\sum_{i=1}^n
+                 \mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}\ge k\}},
+\qquad \sigma_{A,k}=\sigma_{f_{A,k}},\quad 1\le k\le n.
+\tag{PCA.53}
+$$
+
+Both leaf replies and absence contribute zero. Each formula specifies
+one new acquired-term function and hence one prescribed code on every
+member of the original $\mathcal U_*$. It is defined even when $B$
+has none of the selected comb shape. The second-hit code is
+$\sigma_{A,2}$; the near-unanimity code is $\sigma_{A,n-1}$.
+The other values of $k$ provide the common lower and construction
+lemmas consumed by these two cases.
+
+Retain Definitions 1.1, 4.1 and 4.2 literally: finite nonempty ordered
+alpha/beta trees, the same homomorphic $\rho$, the whole unbounded
+one-image fiber, the two occurrences of each repeated partner, and
+all six-class disequalities. The code remains zero on $\Pi_1,\Pi_2$,
+one on $\Pi_3,\Pi_4$, the value (PCA.53) on $Z_{b_3}$, and zero on
+all other zero profiles. It is not a recoloring of an already
+prescribed input. In particular the near-unanimity case does not
+complement the code on the other profiles.
+
+**Convention 23.2 (unchanged reader and all allowed preparers).** Keep
+exactly Supplier application 4.3's eight installed reader states,
+its two original complete entries $e_0,e_1$, entry map, four-successor
+reader table and five whole-row halts. Handoff must install precisely
+$e_{\sigma_{A,k}(u)}$. The reader's separate upper budgets remain
+$K=8,q_R\le2,\ell_R\le6$. Its output $R_0$ is the complete original
+row $R_*$. Each $R_j$, $1\le j\le4$, is exactly NBP Proposition
+9.3's row: replace the two holes at $q_jL,q_jR$ by a concrete beta
+at $q_j$, retain every other exterior part and old hole, restrict the
+whole equality partition, and recompute its canonical names. All
+remaining disequalities and strict-prefix blocking guards are retained.
+The other occurrence of the repeated partner is still an old hole.
+These literal complete outputs are supplied, not reconstructed from a
+root-type answer in the preparation phase.
+
+Preparation uses Definition 2.2 and Convention 17.2 with a common
+running start. Competitors are all finite stationary fixed-literal
+four-successor shared graphs accurate on the entire $\mathcal U_*$.
+Only sourcewise termination is required initially. Repeated words at
+different states, shared successors, cyclic union graphs and unused
+states are admitted. Every installed state and every running visit is
+charged; a constant reply, absence or a root query is not free. Initially
+there are the two original-entry latches. If $r$ further distinct
+latches are mandated, all $r$ are also installed and counted. No bound
+on tree size, height or interior shape is imposed on the upper domain.
+
+## 24. A simultaneous actual cube and the meaning of every address
+
+**Lemma 24.1 (actual selected-bit realizations).** There is a family of
+actual finite origins $(u_\theta)_{\theta\in\{0,1\}^n}\subset Z_{b_3}$
+with whole predecessor row $R_0$ and
+
+$$
+\sigma_{A,k}(u_\theta)=\mathbf1_{\{\sum_i\theta_i\ge k\}}.
+\tag{PCA.54}
+$$
+
+For every actual finite word $v$, its reply on this family is either
+constant or depends injectively on exactly one coordinate $\theta_i$.
+The latter case occurs precisely at
+
+$$
+E_i=\{p w_i z:p\in\{LLL,LRL\},\ z\in\{\varepsilon,L,R\}\}.
+\tag{PCA.55}
+$$
+
+These sets are disjoint. At $p w_i$ the two replies, in bit order
+$0,1$, are $(\beta,\mathsf{branch})$; at its two children they are
+$(\mathsf{absent},\beta)$. Every word in $E_i$ has length at least
+$s_i+4$. There is no address reading a combination of two bits.
+
+Proof. Reuse the finite comb construction of Lemma 18.1, now making
+all selected replacements simultaneously. Explicitly let
+$G=\langle\beta,\beta\rangle$, $C_0=G$ and
+$C_{m+1}=\langle C_m,\beta\rangle$, with $m\ge s_n$.
+In $C_m$, independently replace the beta at $w_i$ by $G$ exactly
+when $\theta_i=1$; call the result $B_\theta$. Prefix-freeness of the
+$w_i$ makes this a well-defined finite branch image. Distinct bit
+vectors give different trees, since their selected root replies differ.
+Choose four pairwise distinct branch images $D_c,D_1,D_2,D_4$ avoiding
+all these finitely many trees, using NBP Proposition 15.2's infinite
+branch-image supply. For every $\theta$ set
+
+$$
+x_a=B_\theta,\quad x_{b_3}=\beta,\quad
+x_c=D_c,\quad x_{b_j}=D_j\quad(j=1,2,4),\qquad
+u_\theta=\delta(\mathscr S(x)).
+\tag{PCA.56}
+$$
+
+All six values are pairwise distinct images. NBP Proposition 9.3
+therefore supplies an actual finite inverse with exactly the original
+current row and whole predecessor row $R_0$. Both occurrences of $a$
+use the same $B_\theta$ and both occurrences of $c$ use $D_c$.
+The selected replies give (PCA.54) directly from the prescribed code.
+
+At a selected relative root the replacement changes beta to branch,
+and at its two children changes absent to beta. Below either child
+both replies are absent. Proper prefixes remain branch, disjoint
+subtrees are unchanged, and the selected cones are disjoint. These
+statements hold simultaneously for every selected replacement.
+A word shorter than three stays in the fixed exterior. Every longer
+word has one cut prefix; an unchanged class gives a constant reply,
+while either $a$ occurrence reduces to its actual suffix in
+$B_\theta$ by (NBP.9.7). This proves the complete address classification
+(PCA.55), including both leaf labels, absence, unselected slots and
+arbitrarily deep words. No observational restriction has been placed
+on a competitor. The finite family is used only for lower bounds;
+its inverse and bit coordinates are proof objects, not runtime ports.
+$\square$
+
+**Lemma 24.2 (three singly installed bits cannot decide the interior
+threshold).** Fix $2\le k\le n-1$ and any preparer correct on the
+whole original domain. Let $m_i$ be the number of its installed
+running states whose literal belongs to $E_i$. Then
+
+$$
+m_i\ge1\quad(1\le i\le n),\qquad
+\bigl|\{i:m_i=1\}\bigr|\le2,\qquad
+\sum_i m_i\ge2n-2.
+\tag{PCA.57}
+$$
+
+Proof. On the actual family of Lemma 24.1, each installed state is
+analytically either a test of one bit or a fixed-successor state.
+At a bit test its two successors are those for the two actual replies
+in Lemma 24.1. The other reply edges are irrelevant to this lower
+comparison. All four native edges remain part of the original table.
+For each $i$, fix $k-1$ of the other bits to one and all remaining
+bits to zero. Changing bit $i$ changes the prescribed code. Without
+an installed word in $E_i$ every menu reply would agree, contradicting
+Lemma 2.3 and the different required latches. Hence $m_i\ge1$.
+
+Suppose three indices each had exactly one such installed state.
+Fix precisely $k-2$ of the other $n-3$ bits to one, and the rest to
+zero; this is possible throughout the stated interior range. The
+remaining prescribed predicate is two-of-three on the three unfixed
+bits. Every other installed state now has a fixed successor on this
+restricted family. For the following impossibility argument only,
+suppress paths through these fixed-successor states. Such suppression
+is a mathematical examination of state paths, not a free native
+transition offered to a preparer, and it is not used to reduce any
+execution charge.
+
+This leaves at most three test vertices, one for each unfixed bit,
+a common start, and the two possible terminal values. Suppression is
+well-defined on reachable edges: a reachable unique bit has not been
+tested before on the prefix reaching its vertex, so either of its
+values can extend that prefix. A fixed-successor infinite path after
+such an edge would give a nonterminating actual input. The same
+argument applies to the initial fixed-successor path. Terminal values
+are identified here solely for the impossibility argument; the
+original literal latches are not identified in the installed apparatus.
+
+The reachable three-test graph must be acyclic. A simple path to a
+first vertex of a directed cycle has no vertex of that cycle earlier
+on it. All tested bits on that prefix and on one traversal of the
+cycle are distinct. Assign them the values selecting those edges.
+This is a consistent assignment that reaches and repeats the cycle,
+contradicting sourcewise termination. Thus acyclicity is proved only
+for this unique-bit restriction, not assumed for the competitor's
+union graph.
+
+There cannot be an acyclic three-test graph for two-of-three. Let its
+first test be $x$, leaving $y,z$. Its zero continuation must compute
+$y\land z$, and its one continuation must compute $y\lor z$.
+Both nonconstant residuals depend on both remaining variables, so each
+continuation must start at $y$ or $z$ and must have a path testing both.
+If the two continuations start at the same vertex they are the same
+residual function, a contradiction. If they start at different vertices,
+one requires a path from $y$ to $z$ and the other a path from $z$ to
+$y$, contradicting acyclicity. This excludes the three singleton
+indices. With at most two $m_i$ equal to one and all others at least
+two, summation gives $\sum_i m_i\ge2n-2$. Repeated tests, unreachable
+states and cycles elsewhere in the installed graph have not been
+excluded or counted as separate path copies. $\square$
+
+## 25. Lower bounds with unrestricted repeated-read competitors
+
+**Theorem 25.1 (interior-threshold installed-state bound).** For every
+$2\le k\le n-1$, every accurate finite preparer in Convention 23.2
+has
+
+$$
+|V|\ge2n,\qquad H\ge2n+2+r.
+\tag{PCA.58}
+$$
+
+The bound is independent of any larger finite call or literal budget.
+
+Proof. Lemma 24.2 counts at least $2n-2$ installed running states
+at words in the disjoint $E_i$. Lemma 7.1 applies to every code of
+the unchanged template (PCA.12): there must also be an installed
+running word in the $b_3$ occurrence cone and another in the $b_4$
+occurrence cone. Those cones are disjoint from all $E_i$ and from
+each other. These are two further states, regardless of how much
+sharing occurs on executions. Both prescribed values occur on the
+positive profiles, so the two distinct literal-entry latches are
+necessary. Adding every mandated further latch proves (PCA.58).
+The argument neither unrolls the graph nor imposes a read-once or
+ordered competitor. $\square$
+
+**Theorem 25.2 (call and absolute-literal lower bounds).** For every
+$1\le k\le n$, every successful finite preparer has an actual source
+$u\in Z_{b_3}$ on whose one preparation execution
+
+$$
+q_P(u)\ge n+1,\qquad
+\ell_P(u)\ge3+W_A.
+\tag{PCA.59}
+$$
+
+Consequently these are independent lower bounds on uniform upper
+budgets, even when arbitrarily many finite installed states are allowed.
+
+Proof. Examine the actual cube (PCA.56). Keep a partial assignment of
+its bits only in this proof. At the first query in $E_i$, assign that
+previously unassigned bit one if fewer than $k-1$ distinct bits have
+already been assigned one; otherwise assign it zero. Reply with the
+actual value prescribed by Lemma 24.1. Later queries in $E_i$ use
+the same bit. Every query outside the union has the constant actual
+reply on the cube. Thus every finite response prefix is realized by
+all completions of its current partial assignment.
+
+After $d<n$ distinct bits have been queried, the counts of assigned
+ones and zeros are $\min(d,k-1)$ and $\max(0,d-k+1)$. There are
+both zero-output and one-output completions: the assigned ones are
+at most $k-1$, the assigned zeros are at most $n-k$, and at least
+one bit is unassigned. A correct path therefore cannot yet latch.
+Nor can it repeat a running state. At a first repeated state every
+bit queried on the intervening loop is already assigned, so any
+completion of the partial assignment would realize that deterministic
+loop forever, contrary to sourcewise termination. Since the installed
+alphabet is finite, these responses must reach all $n$ distinct bits.
+Their completed vector $\theta$ has exactly $k-1$ ones. Subsequent
+execution is the terminating run on the actual $u_\theta$, and its
+required code is zero. In particular this one run contains a visit
+in each $E_i$, charging at least $n$ calls and $W_A$ letters.
+
+There is one further paid distinction on this same run. In (PCA.56)
+keep $x_a=B_\theta$ and $x_{b_j}=D_j$, $j=1,2,4$, but replace
+$x_c$ by beta and $x_{b_3}$ by alpha. The six values are still
+pairwise distinct and satisfy positive alternative $3$ of NBP
+Proposition 9.3. Its actual finite inverse $u_+$ is in $\Pi_3$ and
+requires code one. Its current tree differs from $t_{u_\theta}$ only
+in the $c$ occurrences and the $b_3$ occurrence. Equal replies along
+the entire $u_\theta$ path would force the same latch on $u_+$.
+A differing query on that path must therefore enter one of those
+class cones. It has absolute length at least three and is outside
+every $E_i$. Adding this different visit proves both bounds in
+(PCA.59). No costs from different maximizing sources are added.
+The adaptive bit choices establish existence of one actual source;
+there is no adversary, counter or partial-assignment register in the
+preparer's operational contract. $\square$
+
+## 26. A whole-fiber threshold table with no auxiliary work state
+
+**Theorem 26.1 (full-domain construction and its charged resources).**
+For every $1\le k\le n$, a preparer for the prescribed $\sigma_{A,k}$
+on the entire original $\mathcal U_*$ has
+
+$$
+H=k(n-k+1)+4+r,\qquad
+p=n+1,\qquad \ell=3+W_A.
+\tag{PCA.60}
+$$
+
+These are attained uniform call and literal maxima for this table,
+not only loose upper bounds. The reader, both literal entries and
+whole-row outputs remain those of Convention 23.2.
+
+Proof. Install the two original-entry latches, running states $D,T$,
+and a distinct running state $Q_{h,m}$ for every pair
+
+$$
+0\le h\le k-1,\qquad 0\le m\le n-k.
+\tag{PCA.61}
+$$
+
+Each such pair has $h+m\le n-1$. In the following table let
+
+$$
+U^+_{h,m}=\begin{cases}
+\widehat e_1,&h=k-1,\\
+Q_{h+1,m},&h<k-1,
+\end{cases}
+\qquad
+U^-_{h,m}=\begin{cases}
+\widehat e_0,&m=n-k,\\
+Q_{h,m+1},&m<n-k.
+\end{cases}
+\tag{PCA.62}
+$$
+
+The symbols in (PCA.62) are fixed successor names in a finite
+installed table. They are not functions evaluated during execution.
+Start at $D$ and install all four successors as follows.
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $Q_{0,0}$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $Q_{h,m}$ | $LLL L^{s_{h+m+1}}R$ | $U^-_{h,m}$ | $U^-_{h,m}$ | $U^+_{h,m}$ | $U^-_{h,m}$ |
+
+There are $k(n-k+1)$ grid states. Their subscripts name separately
+installed states and their displayed words are installed literals.
+The only changing configuration is the current counted state;
+there is no additional hit counter, miss counter, cursor, address
+calculation, phase coordinate or saved source. Every transition out
+of a running state is preceded by its one paid native invocation.
+Any $r$ mandated further latches are unreachable and still count.
+
+Check the full eleven-profile partition, not just the lower family.
+Alpha at $b_3$ is exactly $\Pi_3$ and latches one. Beta there is
+exactly $Z_{b_3}$ and enters the grid. By the occurrence identity,
+its actual selected reply at $LLLw_i$ is $r_{x_a}(w_i)$ even when
+the selected node is absent. The grid state $Q_{h,m}$ means only
+that the first $h+m$ selected tests have produced $h$ branch replies
+and $m$ other replies. This invariant is proved by induction on that
+actual run; it is not an accessible second register. A branch makes
+the $k$th hit exactly when $h=k-1$. A false test makes
+$n-k+1$ false replies exactly when $m=n-k$, leaving fewer than
+$k$ possible hits. Otherwise the next separately installed state
+queries the next literal. Thus every branch image, of arbitrary
+size and shape, receives exactly its value (PCA.53).
+
+If $b_3$ is branch, the only remaining code-one profile is $\Pi_4$,
+detected by alpha at $b_4$ in state $T$. All other profiles on this
+path latch zero. This verifies every $\Pi_j$, every $Z_d$ and $Z_*$.
+The absent successor at a class root is installed although that root
+is reached throughout this domain. All other false replies in the
+grid, including alpha and absent, have their specified zero-test
+meaning. No native word or reply has been deleted from the apparatus.
+
+On the grid path, $h+m$ increases at every step, so at most $n$
+selected calls occur, each at most once in the fixed order. Including
+$D$ gives at most $n+1$ calls and $3+W_A$ letters. The other path
+has at most two calls and six letters. Since $n\ge3$ and each
+$s_i\ge1$, the grid bounds dominate these other-path bounds.
+For equality choose the actual cube vector with its first $k-1$
+bits one and all remaining bits zero. The grid cannot reach either
+terminal condition before the $n$th selected test, and then latches
+zero. This one actual source attains both maxima. Counting the two
+root-test states and all latches gives (PCA.60). $\square$
+
+## 27. Exact second-hit frontier and the unbounded state premium
+
+**Theorem 27.1 (exact entire preparation upper-budget region).** For
+$\sigma_{A,2}$ with $n\ge3$, under Convention 23.2 the exact region is
+
+$$
+\boxed{\ H\ge2n+2+r,\qquad p\ge n+1,\qquad
+                         \ell\ge3+\sum_{s\in A}(s+4)\ }.
+\tag{PCA.63}
+$$
+
+One full-fiber table attains all three coordinate minima. With no
+extra mandated latches $r=0$, this gives exactly the stated
+$2n+2,n+1,3+W_A$ triple. On an alphabet fixed in advance with the
+two original-entry latches and $r$ mandated further latches, a running
+start and at least $2n$ running states are necessary and sufficient
+for the minimum execution budgets. Every surplus installed state
+is still counted. The same exact region holds for the separately
+specified $\sigma_{A,n-1}$.
+
+Proof. Theorem 25.1 applies to both interior thresholds and yields
+$H\ge2n+2+r$, without restricting calls, literals, graph sharing or
+repeated reads. Theorem 25.2 gives the other two necessary bounds
+independently of the installed-state budget. For $k=2$ and for
+$k=n-1$, the grid count in Theorem 26.1 is
+$k(n-k+1)=2n-2$. Its one table therefore attains all three lower
+bounds simultaneously on the entire domain with literal original
+entries. Relabel its start $D$ as any prescribed running start.
+Additional running states can be left unreachable with arbitrary
+total four-successor tables and remain counted. A start fixed to a
+latch cannot produce both attained codes. These facts prove both
+sufficiency for upper budgets and the fixed-alphabet assertion.
+For $n=3$ the two displayed predicates coincide; for larger $n$ the
+two different predicates each have this proof. $\square$
+
+**Corollary 27.2 (an arbitrarily large installed-state premium at
+unchanged execution minima).** Compare the new $\sigma_{A,2}$ with
+the existing finite sparse OR code $\sigma_a$ of Definition 17.1
+for $a(s)=\mathbf1_{\{s\in A\}}$, under the identical original
+reader, entry, source and preparation conventions. Their respective
+minimum installed preparation cardinalities differ by exactly
+
+$$
+(2n+2+r)-(n+4+r)=n-2,
+\tag{PCA.64}
+$$
+
+while their independent minimum call and absolute-literal upper
+budgets are the same $n+1$ and $3+W_A$. The premium is unbounded
+as the supplied finite set grows. It survives arbitrarily large
+finite execution budgets.
+
+Proof. Use the exact sparse OR frontier of Theorem 19.1 and the
+second-hit frontier of Theorem 27.1. The lower state bound for each
+holds with unrestricted larger finite execution budgets, and both
+frontiers have a simultaneous attaining table. No encoder or reader
+has been changed while solving either fixed input: this comparison
+is between two explicitly different prescribed-code problems.
+Both lower cubes have the same whole predecessor row $R_0$; the
+extra state demand is for faithful original-code acquisition rather
+than for distinguishing new predecessor outputs. $\square$
+
+**Corollary 27.3 (the precise general-threshold conclusions used by
+the endpoint cases).** For every $1\le k\le n$, the independent
+minimum uniform call budget is $n+1$ and the independent minimum
+absolute-literal budget is $3+W_A$. One table attains both at
+$H=k(n-k+1)+4+r$. For every $2\le k\le n-1$, if $H_{\min}(A,k;r)$
+denotes the minimum installed cardinality with no execution-budget
+restriction, then
+
+$$
+2n+2+r\ \le\ H_{\min}(A,k;r)\ \le\ k(n-k+1)+4+r.
+\tag{PCA.65}
+$$
+
+Proof. Theorem 25.2 and Theorem 26.1 give the two independent
+execution minima. Theorem 25.1 and the same construction give
+(PCA.65). These are the common bounds whose coincident endpoints
+are consumed in Theorem 27.1. No equality for other interior $k$,
+ordered-optimum transfer, or entire three-budget characterization
+for those other thresholds follows from these bounds. In particular
+the construction attaining both execution minima has not been
+proved to have minimum installed cardinality for general $k$.
+$\square$
+
+## 28. Suppliers, comparison with branching programs and realization scope
+
+**Attribution 28.1 (ordinary mathematical suppliers and added bridge).**
+The dependency and permission correspondences are as follows.
+
+| Supplier | Exact use and retained boundary |
+| --- | --- |
+| NBP Proposition 9.3, (NBP.9.7), Proposition 15.2 and Theorem 15.5; PCA Definitions 1.1, 4.1 and 4.2 and Supplier application 4.3 | Actual finite inverse origins, complete current and five predecessor rows, every-address occurrence reading, full eleven-profile partition, infinitely many distinct branch images, and the same eight-state reader with its original complete entries. The inverse and profile partition supply mathematical meaning, not extra runtime ports. |
+| NBP Proposition 12.5 and PCA Lemmas 2.3 and 7.1 | Stationary per-source no-revisit, menu consistency, and the two mandatory disjoint right-class query cones. Cyclic union graphs remain allowed. |
+| PCA Lemma 18.1 and Theorem 19.1 | The finite beta/pair comb and its exact local reply supports, and the already established sparse OR costs used in (PCA.64). Lemma 24.1 extends that support argument to the simultaneously varying actual cube needed for a threshold state lower bound. |
+| PCA Theorems 3.2, 10.3, 12.4 and 14.3 | Existing finite determination, certificate-relative same-state recoding and paid finite-word synthesis. They do not evaluate the unrestricted threshold optimum. The new consumer is (PCA.63) and its premium (PCA.64), proved with the actual-address cube, singleton-state obstruction and full-fiber table. |
+| NBP Theorems 12.4, 13.2 and 14.4 | Existing shared Moore and joint preparation/reader correspondences when their encoding permissions hold. Their freely chosen coloring is not substituted for the prescribed $\sigma_{A,k}$. |
+| Nine-state root normalization, Theorem 7.1; table-driven common root normalization, Theorems 6.3 and 7.1 | Same-code reader normalization under their separate reader hypotheses. A good-entry set does not supply which literal entry the acquired code prescribes. These results neither generate (PCA.53) nor pay its preparation costs. |
+
+The threshold grid is the classical success/failure construction for
+symmetric Boolean functions. Wegener, *The Complexity of Boolean
+Functions*, [Chapter 14, pp. 414–426][WBP], defines branching programs
+as directed acyclic graphs in §14.1, Definitions 1.1–1.2. His
+§14.4, Theorem 4.1 gives an ordered synchronous optimum specifically
+for read-once programs on symmetric functions; Theorem 4.3 counts
+their nonconstant residual vectors. Those results support the
+construction comparison, not an unrestricted native lower bound.
+Bryant's [§2, Definition 1][BRY] likewise requires strictly increasing
+variable indices along edges. Neither hypothesis is imposed on the
+competitors here. The three-singleton restriction argument in Lemma
+24.2 proves exactly the weaker structural property needed for the
+state lower bound without exporting either ordered or read-once
+optimality to an unrestricted graph. Generic threshold-query or
+branching-program constructions are not claimed as new mathematics.
+
+Sinha and Thathachar, *Efficient Oblivious Branching Programs for
+Threshold and Mod Functions*, [DOI 10.1006/jcss.1997.1530][STBP], is
+a comparison lead for the distinction between oblivious and read-once
+restrictions. No numerical bound or theorem from that paper is a
+premise of (PCA.57)–(PCA.65). The native conclusions here are
+repository-derived ordinary paper deductions with the supplier map
+above, without a worldwide originality or current kernel claim.
+
+**Boundary 28.2 (which services and prices remain supplied).** Keep
+Assumptions 1.2 and 22.2 throughout. Acquisition and authentication of
+the complete current row and acquired code arguments, the same
+origin/version and update, lawful pre-cut access, actual export,
+complete isolation, code-only handoff, faithful original reader entry,
+stationarity and the native service are supplied and separately priced.
+The constructions price every installed preparation running and latch
+state; the separate reader prices all its running and whole-output
+states. Every running visit costs one native invocation, including
+constants and the root. Submitted literal charges are absolute lengths,
+without a relative-address cursor or cross-phase amortization.
+
+Installed table representation, all four successors, literal address
+storage, the two entry contents, whole-output storage, initialization,
+handoff and service/phase storage, transitions and local acquired-term
+computation retain their separate prices. No total physical storage,
+physical time or energy optimum is asserted by $H,p,\ell$. Grid
+labels and the lower-proof bit assignments are not extra accessible
+running coordinates. There is no free selector, surviving archive,
+source copy, address operation, work register, counter, decoder or
+later code reread.
+
+Promised interleaved word recovery and common calibration-budget
+results have different acquisition and input promises. The known-Schur
+channel capacity contract supplies independent uses of a fixed known
+channel and allows block encoding; native critical-cutoff limits concern
+specified continuous forms, sources and clocks. None supplies the
+same-source native operation, legality, update or price map needed
+to transfer a numerical resource to this preparer. Quantum carrier and
+continuous-control dimensions are not installed native state counts.
+No such transfer is used here. The unchanged reader still outputs the
+whole original predecessor row, while the new theorem concerns how
+the prescribed literal reader entry is acquired before that reading.
+
+[WBP]: https://eccc.weizmann.ac.il/resources/pdf/cobf.pdf
+[STBP]: https://doi.org/10.1006/jcss.1997.1530
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,34 @@
+**Assumption 1.2 (paid preparation and complete retained alphabet).**
+A deterministic effective preparation starts source-blind from $D$ and
+common installed tables, does not receive the later target, and
+terminates on every $t\in\mathcal F_D$. Its source dependence is acquired
+only by charged original-root literal Reads. It exports a finite code
+$E(t)$. Every accessible surviving source distinction is part of this
+code, including control, selectors, buffers, operands, lengths,
+allocation, handles, counters and accessible timing distinctions. Any
+other accessible field is a function of $E(t)$ and public inputs.
+A separately paid handoff and isolation service removes access to all
+other preparation material and supplies lawful reader entry.
+
+Only after export is a public source-independent $p\in\mathcal P_D$
+supplied. A common deterministic effective reader uses $E(t),D,p$ and
+the installed tables to choose zero Reads or one fresh Read of the same
+stationary source at an arbitrary finite original-root word. The choice
+precedes both its reply and every supplied count. The resulting final
+predictor must satisfy
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D,\ k\ge0)
+\tag{CBN.2}
+$$
+
+for every subsequently supplied authentic $k$, with no further Reads.
+Define $M_1(D)=\min |E[\mathcal F_D]|$ over these jointly correct
+procedures. There is no subtree, equality, source-identity, age, reset,
+copying, free-navigation or free-advice port. Export, access isolation,
+entry, source continuity and count authentication are declared services.
+Preparation work, temporary storage, installed codebooks, post-request
+workspace, final predictor size, submitted lengths and letters, authentic
+count representation and physical time are separate resources.
+

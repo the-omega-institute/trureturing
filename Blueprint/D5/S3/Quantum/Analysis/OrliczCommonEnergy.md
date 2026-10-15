@@ -88,7 +88,31 @@ Lean statement: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.exists_amplified_orli
 
 Under the preceding Orlicz assumptions, for every delta>0 there is one natural-valued weight w, chosen before x, with w(n)>=1, w nondecreasing and w(n) tending to infinity. Its weighted extended energy sum is at most the original extended energy sum plus delta for every x, and its weighted tails vanish uniformly in x. This is the direct application of UniformTailAmplification to the derived tails.
 
-**Theorem 1.8 (Finite continuous energy and all-temperature heat series).**
+**Theorem 1.8 (Uniform extended tails imply genuine real summability).**
+
+Lean statement: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.summable_of_uniform_ennreal_tails`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/OrliczCommonEnergy.summable_of_uniform_ennreal_tails` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let X be any type and f:X to Nat to Real satisfy f(x,n)>=0. Suppose for every NNReal epsilon>0 there exists N such that sum over k of ofReal(f(x,N+k))<=epsilon for every x. Then for every x the actual real series f(x,n) is summable. A finite extended tail at epsilon=1 gives real tail summability; adding the finite head proves the result. No Orlicz moment, normalization, faithfulness or spectral-basis premise is present.
+
+**Theorem 1.9 (Coordinate continuity and uniform extended tails give continuous totals).**
+
+Lean statement: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.continuous_of_uniform_ennreal_tails`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/OrliczCommonEnergy.continuous_of_uniform_ennreal_tails` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let X be any topological space and f:X to Nat to Real be nonnegative and continuous in x at each n. Suppose for every NNReal epsilon>0 there exists one N such that sum over k of ofReal(f(x,N+k))<=epsilon simultaneously for every x. Then x maps to the genuine real sum of f(x,n) is continuous. The uniform-tail summability theorem establishes finiteness first; continuous finite heads uniformly approximate the actual sum. No compactness, Orlicz moment, normalization, faithfulness or basis premise is assumed.
+
+**Theorem 1.10 (Finite continuous energy and all-temperature heat series).**
 
 Lean statement: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.exists_continuous_common_energy`
 
@@ -111,9 +135,11 @@ This is a conditional scalar result. Its nonvacuous infinite faithful-reference 
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.conjugate_le_majorant`
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.conjugate_nonempty_bddAbove`
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.conjugate_nonneg`
+- Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.continuous_of_uniform_ennreal_tails`
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.exists_amplified_orlicz_energy`
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.exists_continuous_common_energy`
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.fenchel_young`
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.orlicz_uniform_energy_tail`
+- Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.summable_of_uniform_ennreal_tails`
 - Truth anchor: `D5/S3/Quantum/Analysis/OrliczCommonEnergy.uniform_tail_from_young`
 - Dependency: [D5/S3/Analytic/SeriesInequalities/UniformTailAmplification](../../Analytic/SeriesInequalities/UniformTailAmplification.md)

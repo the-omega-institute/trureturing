@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Analysis/DiagonalHeat
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/Analysis/DiagonalHeat
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -12,13 +12,13 @@ The selected right-slope argument is from scottnarmstrong/MarkovProcess at
 dbade0d12c4f84179441a9df7d7147df7a8bcaa0, Semigroup/Generator.
 
 The heat multiplier, continuity and generator arguments adapt the generic private
-proofs in PhysicalHeatGenerator. The imported real semigroup closedness and
-uniqueness retain Scott Armstrong's Apache-2.0 attribution and source selection
-there. EigenbasisClosure retains the attributed PhysLean self-adjointness proof.
+proofs in PhysicalHeatGenerator. Real semigroup closedness and uniqueness now
+import the general ContractionSemigroup source, with its preserved Scott Armstrong
+Apache-2.0 attribution and source selection. EigenbasisClosure retains the attributed PhysLean self-adjointness proof.
 No originality is claimed for these standard operator constructions.
 -/
 import D5.S3.Quantum.Analysis.EigenbasisGraphCore
-import D5.S3.Quantum.Analysis.PhysicalHeatGenerator
+import D5.S3.Quantum.Analysis.ContractionSemigroup
 import D5.S3.Quantum.Analysis.TraceClass.GeneralProduct
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Analysis.SpecificLimits.Basic
@@ -186,24 +186,6 @@ private theorem heat_continuous {ι H : Type*} [NormedAddCommGroup H]
     _ = ε := by ring
 
 
-private theorem tendsto_slope_add_of_hasDerivAt {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V] {F : ℝ → V} {F' : V} {u : ℝ}
-    (hF : HasDerivAt F F' u) :
-    Tendsto (fun h : NNReal ↦ (h : ℝ)⁻¹ • (F (u + h) - F u)) (𝓝[>] 0) (𝓝 F') := by
-  have hslope := (hasDerivAt_iff_tendsto_slope.mp hF)
-  have hmap : Tendsto (fun h : NNReal ↦ u + (h : ℝ)) (𝓝[>] 0) (𝓝[≠] u) := by
-    apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
-    · have h0 : Tendsto (fun h : NNReal ↦ u + (h : ℝ)) (𝓝 0) (𝓝 (u + ((0 : NNReal) : ℝ))) :=
-        (continuous_const.add NNReal.continuous_coe).tendsto _
-      rw [NNReal.coe_zero, add_zero] at h0
-      exact h0.mono_left nhdsWithin_le_nhds
-    · filter_upwards [self_mem_nhdsWithin] with h hh
-      have hpos : (0 : ℝ) < h := NNReal.coe_pos.mpr hh
-      exact ne_of_gt (lt_add_of_pos_right u hpos)
-  refine (hslope.comp hmap).congr fun h ↦ ?_
-  show slope F u (u + h) = (h : ℝ)⁻¹ • (F (u + h) - F u)
-  rw [slope_def_module, add_sub_cancel_left]
-
-
 private theorem scalar_derivative {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   (a : ℝ) (z : V) :
     Tendsto (fun t : ℝ≥0 => (t : ℝ)⁻¹ • ((Real.exp (-(t : ℝ)*a)) • z-z))
@@ -211,7 +193,7 @@ private theorem scalar_derivative {V : Type*} [NormedAddCommGroup V] [NormedSpac
   have hd : HasDerivAt (fun s : ℝ => Real.exp (-s*a) • z) ((-a) • z) 0 := by
     convert (((hasDerivAt_id (0 : ℝ)).neg.mul_const (a)).exp.smul_const z) using 1 <;> simp
   simpa only [zero_add,neg_zero,zero_mul,Real.exp_zero,one_smul] using
-    tendsto_slope_add_of_hasDerivAt hd
+    MarkovProcess.Semigroup.StronglyContinuousContractionSemigroup.tendsto_slope_add_of_hasDerivAt hd
 
 set_option backward.isDefEq.respectTransparency false in
 /-- The full generator, full weighted domain and self-adjoint closure belong to the same K. -/

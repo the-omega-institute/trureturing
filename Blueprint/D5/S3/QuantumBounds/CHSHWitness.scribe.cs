@@ -9,6 +9,9 @@ internal sealed class CHSHWitnessDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A normalized Bell state and fixed Pauli observables attain the positive Tsirelson value.",
         H("A Tight CHSH Witness"),
         Blocks(
+            Paragraph(Text("The classical comparison uses four measurable sign-valued random variables on one probability space whose law is independent of the settings. The commutative CHSH inequality bounds the absolute value pointwise by two. Integrating with respect to that same probability law gives the bound for the four correlations; finite support is not required. The Bell witness uses the Pauli Z and X observables and their normalized sum and difference to attain twice the square root of two.")),
+            Paragraph(Text("For finite local positive operator-valued measurements, summing the joint trace probabilities over the second outcome replaces its effects by the identity. The first marginal therefore depends only on the first effect and the common density matrix, independently of the second setting. The argument uses normalization of each local measurement and a shared quantum state, and does not require a shared classical table of answers for all incompatible settings.")),
+
             Describe.Lean(
                 DescribeId.Create("the-bell-density-is-a-normalized-positive-state"),
                 DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state"),

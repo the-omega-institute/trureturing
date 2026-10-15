@@ -1155,3 +1155,663 @@ comparison hypotheses. None supplies the missing optimizer equality.
 [GS]: https://arxiv.org/html/1805.03284v1
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Two attained replies imply locality at every native depth
+
+**Convention 12.1 (native scope and ownership).** All objects in
+Sections 12–16 are the actual $S_d,W_d,\Gamma,\operatorname{Pred}$
+of Convention 1.2. Admissibility means Definition 1.3 on the same
+tuples, with every donor coordinate, self donor, repeated donor, cycle
+and correlation allowed. A weight is owned once by its entire original
+block. The certificate grammar is exactly Convention 4.3 together with
+Definition 8.1, retaining all four values $r=1,2,3,4$ and all conditions
+on the entire declared support, including its zero-weight states.
+
+The additional structural statements are the path-record argument in
+Theorem 12.3 and the depth-two hard-partition comparison in Theorem
+14.3. Their pressure and certificate consequences use the previously
+specified transport, tensorization and soundness results. In particular
+the depth-two native tables and maximal local sets are inherited from
+[NCM, Convention 3.1][NCM], and $17/25$ and its attaining law are
+inherited from [NCM, Theorems 3.3 and 4.1][NCM] and [NPC, Theorem
+6.2 and Convention 7.3][NPC].
+
+**Definition 12.2 (records along one target).** Fix $q\in W_d$, put
+$\ell=|q|$, and write $q_{\le t}$ for its prefix of length $t$.
+The record of $x\in S_d$ along $q$ is $(t,\lambda)$ if the first
+leaf on that path occurs at $q_{\le t}$, with
+$0\le t\le\ell$ and $\lambda\in\{\alpha,\beta\}$. Otherwise
+the record is $\mathsf B_q$, meaning that $q$ itself is an original
+branch endpoint. Assign $\mathsf B_q$ formal depth $\ell+1$ solely
+for ordering records. For a leaf record the prefix replies are branch
+before depth $t$, $\lambda$ at depth $t$, and absent afterwards.
+For $\mathsf B_q$ every prefix through depth $\ell$ replies branch.
+These are records of the stationary original tree. Formula (RCE.4)
+makes $\Gamma_q$ a function of the record; that function need not
+be injective.
+
+**Theorem 12.3 (universal two-reply locality).** Let $d\ge1$ and let
+$\varnothing\ne P\subseteq S_d$. Suppose
+
+$$
+|\{r_x(a):x\in P\}|\le2\qquad(a\in W_d).
+\tag{RCE.40}
+$$
+
+For every $q\in W_d$, $\Gamma_q$ is constant on $P$, or there
+are $a\in W_d$ and a total decoder
+$\delta:\mathcal A\to\Gamma_q(S_d)$ such that
+
+$$
+\Gamma_q(x)=\delta(r_x(a))\qquad(x\in P).
+\tag{RCE.41}
+$$
+
+Thus $P$ is locally admissible, with own-coordinate witnesses on its
+entire declared set.
+
+Proof. Fix $q$ and its records. Any three distinct records force
+three replies at one allowed prefix. First suppose their formal depths
+are distinct, $t_1<t_2<t_3$. The middle record is a leaf record,
+so $t_2\le\ell$. At $q_{\le t_2}$, the first record replies
+absent, the middle record replies its leaf label, and the last record
+replies branch. This includes a terminal branch as the last record.
+
+If two depths coincide, the corresponding distinct records must be
+the alpha and beta leaves at that depth $t\le\ell$: there is only
+one terminal-branch record. A third record at a greater depth gives
+the three replies alpha, beta and branch at $q_{\le t}$; a third
+record at a smaller depth gives absent, alpha and beta there. Three
+distinct records cannot all have the same depth. These cases exhaust
+three-record choices. Every prefix used has length at most
+$\ell\le d-1$, contradicting (RCE.40). Therefore at most two
+records occur on all of $P$.
+
+One record makes $\Gamma_q$ constant. For two distinct records at
+equal depth, the prefix at that depth separates their alpha and beta
+replies. For different depths, use the smaller depth. It is a leaf
+depth at most $\ell$, and its leaf reply differs from the branch
+reply of the later record, including when that later record is
+$\mathsf B_q$. Within each record class this chosen reply is fixed.
+It therefore identifies the record class. Map each of its two attained
+replies to that record's factor from (RCE.4), and map unused replies
+to any fixed factor attained on the nonempty $P$. This gives the
+total decoder in (RCE.41). If the two records have equal factors,
+one may instead use a constant witness.
+
+The argument includes a target initially absent because its first
+leaf is strictly before $q$, a leaf exactly at $q$, and a branch
+exactly at $q$. At $q=\varepsilon$, including the only target when
+$d=1$, all distinguishing prefixes used are still permitted. No
+presence assumption is imposed beyond the original prefix replies.
+Make this choice separately for every target on the same $P$;
+weights have not entered the argument, so declared zero-weight states
+are included. $\square$
+
+**Corollary 12.4 (the same self donors at every length).** Under
+(RCE.40), $P^n$ is admissible for every $n\ge1$. For every
+probability $\mu$ on $S_d$ with $\mu(P)=1$,
+
+$$
+A_n^{(d)}(\mu)=1\quad(n\ge1),\qquad \beta_d(\mu)=1.
+\tag{RCE.42}
+$$
+
+Proof. For target $(i,q)$ on $P^n$, take the constant or the exact
+word and decoder of Theorem 12.3 in coordinate $i$ itself. These
+equations hold simultaneously on every tuple; no change of witnesses
+or correlations is needed. The product probability of $P^n$ is one,
+and no subset of $S_d^n$ has probability greater than one. This
+proves both equalities. Same-witness saturation also gives the
+complete-template maximum one. $\square$
+
+## 13. Exact small range leaves and their analytical elimination
+
+**Lemma 13.1 (injectivity of the whole boundary table).** For every
+$d\ge1$, the map
+
+$$
+x\longmapsto(r_x(a))_{a\in W_d}
+\tag{RCE.43}
+$$
+
+is injective on the actual $S_d$.
+
+Proof. At $d=1$, the root replies distinguish $\alpha,\beta,C_0$.
+Assume the claim at $d$. On $S_{d+1}$ the root reply distinguishes
+the two leaves from each other and from the branch case. In the branch
+case $x=\langle u,v\rangle$, the replies at $La$ and $Ra$ for
+all $a\in W_d$ give the two whole child boundary tables. These words
+belong to $W_{d+1}$. Induction identifies $u,v\in S_d$, and
+ordered parsing identifies $x$. This also proves the claimed
+injectivity without changing the canonical endpoint state $C_0$.
+It is consistent with the boundary reconstruction in Convention 1.2.
+$\square$
+
+**Proposition 13.2 (the original $r=1$ and $r=2$ leaves).** Under all
+the conditions of Definition 8.1, an $r=1$ leaf has exactly one
+declared state and cap at least one. An $r=2$ leaf has exactly two
+declared states and cap at least one. Conversely any singleton,
+respectively any pair of distinct states of the same actual $S_d$,
+with a rational probability vanishing off that set and rational
+$C\ge1$, has lawful full data for the corresponding leaf.
+
+Proof. For $r=1$, every boundary reply is constant on the whole
+declared $P$. Lemma 13.1 gives $|P|\le1$; Definition 8.1 forces
+$|P|\ge r=1$. Its supported probability has $L_1(\mu)=1$, so
+$C\ge1$. Conversely on a singleton supply the full native tables
+and, for each target, its attained constant value. The one-reply
+bound holds, the separation requirement for two-element subsets is
+vacuous, the singleton target witnesses are valid, and the cap
+comparison is precisely $C\ge1$.
+
+For $r=2$, the reply bound holds on every declared state of $P$.
+Theorem 12.3 shows that every target has at most two values on all
+of $P$. If $P$ contained three states, no target could take more
+than two values on that triple, contradicting Definition 8.1's
+separation condition. Thus $|P|\le2$; the original requirement
+$r\le|P|$ forces $|P|=2$. The two largest declared weights have
+sum $L_2(\mu)=1$, even when one is zero, giving $C\ge1$.
+
+Conversely let $P=\{x,y\}$ with $x\ne y$. Every literal has at
+most two replies on this set. Lemma 13.1 supplies an actual
+$a\in W_d$ with $r_x(a)\ne r_y(a)$. For each target supply the
+decoder taking these two replies to $\Gamma_q(x),\Gamma_q(y)$,
+respectively, with unused replies mapped to $\Gamma_q(x)$; a
+constant may be used when the factors coincide. These data witness
+every target on the sole two-element subset. The three-element
+separation requirement is vacuous, the supported law has $L_2=1$,
+and the full native tables with $C\ge1$ meet every original
+condition. A zero weight does not remove a declared state from any
+structural test in either direction. $\square$
+
+**Theorem 13.3 (unchanged accepted labels after omitting small leaves).**
+Analytically omit only the $r=1$ and $r=2$ range leaves from the
+grammar of Convention 12.1. The set of accepted rational triples
+$(d,\nu,C)$ is exactly unchanged. Consequently the infimum of
+accepted caps over rational laws at each depth is unchanged.
+
+Proof. Every nonleaf rule has one parent. Starting from either small
+range leaf, the initial cap is at least one by Proposition 13.2.
+A height-$h$ homogeneous scaffold satisfies
+$C\ge C_0^{2^h}\ge1$, including $h=0$; a stability node
+satisfies $C\ge C_0+\operatorname{TV}(\mu,\nu)\ge1$.
+Induction along any finite ancestry gives final cap at least one,
+whatever its heights and intervening rational law changes.
+
+Here is an exhaustive old ungrouped joint leaf at that identical
+final label $(d,\nu,C)$. Its data contain the full native reply and
+target tables. For every nonempty range-feasible
+$Q\subseteq\operatorname{supp}(\nu)$, include every hard target
+of Definition 2.1 and its exact joint cells. A target is listed as
+hard exactly when each of the finitely many boundary experiments,
+including a constant, has a reply cell containing two different
+target values. For each target outside that list, supply a determining
+experiment and the decoder given by its common target value on each
+attained reply cell, with any attained factor on unused replies.
+List all states in each resulting joint cell $D$,
+with rational mass $m_D=\sum_{x\in D}\nu(x)$. These prescriptions
+specify all the finite tables and all the required supports, with
+no selected-support omission. For every one of them,
+
+$$
+\sum_Dm_D^2
+\le\left(\sum_Dm_D\right)^2
+=\nu(Q)^2\le1\le C^2.
+\tag{RCE.44}
+$$
+
+Thus this very leaf satisfies every squared comparison at the
+original final cap. The same inequality holds directly on supports
+with declared zero-weight states, and Lemma 2.2 also justifies the
+old leaf's positive-support convention. The final rational law need
+not resemble the initial range law.
+
+One may replace each small range leaf in the finite certificate
+directly by the just described old leaf at its own identical label,
+since its cap is already at least one. All later labels, parent
+references and inequalities remain valid. Alternatively, follow the
+final unary ancestry: if its initial leaf is small, replace the whole
+ancestry by (RCE.44) at the final label; if not, that ancestry uses
+only retained rules. Unused list entries can be omitted. Either
+description gives a certificate using neither small range leaf for
+every previously accepted final label. The reverse containment holds
+because every retained rule was already in the original grammar.
+Taking the same infima over the same rational laws proves the last
+assertion. This equivalence leaves the $r=3$ and $r=4$ rules, their
+declared zero states and all their conditions intact. $\square$
+
+## 14. The complete depth-two hard partition
+
+**Convention 14.1 (the inherited depth-two data).** Write
+$Q_1=S_1=\{\alpha,\beta,C_0\}$ and
+
+$$
+\mathcal G=\{g_{xy}=\langle x,y\rangle:x,y\in Q_1\},
+\qquad S_2=\{\alpha,\beta\}\sqcup\mathcal G.
+\tag{RCE.45}
+$$
+
+Use precisely the table and maximal local sets of
+[NCM, Convention 3.1, (NCM.14)–(NCM.15)][NCM]. In the notation
+here, put $f(\alpha)=(2,1)$, $f(\beta)=(1,0)$,
+$f(C_0)=(0,0)$. The root target is determined by the root reply;
+the side factors at a branch are
+$\Gamma_L(g_{xy})=f(x)$ and $\Gamma_R(g_{xy})=f(y)$.
+At the root leaves the two side-factor rows are
+
+$$
+\begin{array}{c|cc}
+ &\Gamma_L&\Gamma_R\\\hline
+\alpha&(3,0)&(4,1)\\
+\beta &(2,0)&(3,1)
+\end{array}
+\tag{RCE.46}
+$$
+
+For each side its two root-leaf values are distinct from each other
+and from the three $f$ values. Both root leaves give absent on
+either side experiment, while a branch gives the root reply of its
+selected child. These are inherited table entries, not a new native
+interface. The inherited maximal local sets are
+
+$$
+H_\alpha=\{\alpha\}\cup\mathcal G,\qquad
+H_\beta=\{\beta\}\cup\mathcal G,\qquad
+T_{xy}=\{\alpha,\beta,g_{xy}\}.
+\tag{RCE.47}
+$$
+
+For arbitrary $w:S_2\to[0,\infty)$ set
+
+$$
+W=\sum_{x\in S_2}w(x),\quad a=w(\alpha),\quad b=w(\beta),
+\quad t=\max_{g\in\mathcal G}w(g),\quad
+M(w)=\max\{W-a,W-b,a+b+t\}.
+\tag{RCE.48}
+$$
+
+Thus $M(w)$ is exactly the largest local mass, by (RCE.47).
+Every set of at most three states is local: it either omits a root
+leaf or contains both and at most one branch. Each $w$ remains one
+whole-block weight, with arbitrary dependence between its two children.
+
+**Proposition 14.2 (feasible supports and exact hard cells).** All
+nonempty supports omitting a root leaf are locally admissible and
+range-feasible. If a support contains both root leaves, write
+
+$$
+P=\{\alpha,\beta\}\cup T,\qquad T\subseteq\mathcal G,
+\qquad I=\{x:g_{xy}\in T\},\quad J=\{y:g_{xy}\in T\}.
+\tag{RCE.49}
+$$
+
+It is range-feasible exactly when $|I|,|J|\le2$, with empty $T$
+allowed. It is locally inadmissible exactly when $|T|\ge2$.
+On every nonlocal feasible support, $L$ is hard exactly when
+$|I|=2$, and $R$ is hard exactly when $|J|=2$. The root target
+is easy. The complete hard vector is injective on $P$, so
+
+$$
+4\le|P|\le6,\qquad
+\kappa(w,P)^2=\sum_{x\in P}w(x)^2.
+\tag{RCE.50}
+$$
+
+On every local support the hard vector is empty and
+$\kappa(w,P)=w(P)$. All classifications refer to the whole declared
+support, including states of weight zero.
+
+Proof. For a support missing one root leaf, query the same side as
+each side target. The absent reply identifies its sole possible root
+leaf, and the other replies identify the selected child in $Q_1$.
+The root target uses the root reply. This verifies the inherited local
+witnesses, and target ranges are at most four. For a support with
+both leaves and at most one branch, the root reply identifies all
+states, again giving local admissibility and feasibility.
+
+For (RCE.49), the side target ranges have sizes $2+|I|$ and
+$2+|J|$, because of the disjoint values in Convention 14.1. The
+root range has size at most three. This proves precisely the stated
+feasibility condition. If $|T|\ge2$, two branches differ in some
+child coordinate. That side target is not determined by the root
+reply, which merges the two branches; neither side reply determines
+it, since both side experiments merge the two root leaves with
+different target values. A constant also fails. These are every
+boundary experiment at depth two. Every longer experiment is a
+function of one of them or a constant by Convention 1.2, so cannot
+repair that failure. This proves nonlocality and exhausts the local
+classification (RCE.47).
+
+On a nonlocal feasible support $T\ne\varnothing$. If $|I|=1$,
+the root reply determines $\Gamma_L$: its branch class has one
+$f$ value, and its two leaf classes are singletons. If $|I|=2$,
+the root reply merges branches with different $f$ values, and
+every other experiment merges the two different root-leaf values.
+Thus $L$ is hard exactly in this case. The proof for $R$ is the
+same with $J$ and its explicitly given factor row. At least one
+side is hard because $T$ has two distinct ordered pairs.
+
+Any hard side distinguishes the two root leaves from each other
+and from every branch. Any two distinct branches differ in some
+child coordinate; that coordinate varies on $T$, so its side is
+hard and separates those branches, since $f$ is injective. Hence
+the full hard vector is injective on all of $P$. Its cells are
+singletons irrespective of the weights. Finally
+$2\le|T|\le|I||J|\le4$, giving the size bounds in (RCE.50).
+On a local support each target has an own experiment, so there
+are no hard targets and there is a single cell. $\square$
+
+**Theorem 14.3 (exact joint-functional comparison for every whole-block
+weight).** For every nonnegative $w$ on the entire actual $S_2$,
+
+$$
+J_2(w)=M(w).
+\tag{RCE.51}
+$$
+
+Proof. Consider every nonempty feasible $P$ in Definition 2.1,
+without deleting any zero-weight states. If $P$ is local, Proposition
+14.2 gives $\kappa(w,P)=w(P)\le M(w)$. Otherwise it has between
+four and six states and singleton hard cells. Order its weights as
+$u_1\ge\cdots\ge u_m\ge0$, where $4\le m\le6$, and pad
+with zeros through $u_6$. Then
+
+$$
+\sum_{j=4}^6u_j^2\le3u_3^2
+\le2(u_1u_2+u_1u_3+u_2u_3),
+\qquad
+\sum_{j=1}^6u_j^2\le(u_1+u_2+u_3)^2.
+\tag{RCE.52}
+$$
+
+Indeed all three tail entries are at most $u_3$, and each product
+in the parenthesis is at least $u_3^2$. The three actual states
+with largest weights form a local set by Convention 14.1.
+Consequently $u_1+u_2+u_3\le M(w)$, and (RCE.50)–(RCE.52)
+give $\kappa(w,P)\le M(w)$. This includes every feasible support.
+
+Conversely choose one of the finitely many nonempty local sets
+in (RCE.47) attaining $M(w)$. It is feasible and has an empty
+hard vector, with norm exactly $M(w)$. Thus the maximum defining
+$J_2$ equals $M(w)$. The argument also applies to $w=0$, when
+every compared quantity is zero. $\square$
+
+## 15. Direct pressure and certificate consequences at depth two
+
+**Corollary 15.1 (all laws, all lengths and mixed whole-block weights).**
+For arbitrary nonnegative $w_1,\ldots,w_n$ on the entire $S_2$,
+
+$$
+\max_{B\subseteq S_2^n\ \mathrm{admissible}}
+\sum_{x\in B}\prod_{i=1}^nw_i(x_i)
+=\prod_{i=1}^nM(w_i)\qquad(n\ge1).
+\tag{RCE.53}
+$$
+
+The maximum over complete templates has the same value. In particular,
+
+$$
+A_n^{(2)}(w)=M(w)^n\qquad(n\ge1),\qquad
+\beta_2(w)=M(w).
+\tag{RCE.54}
+$$
+
+The homogeneous assertion is a direct application of
+[NCM, Theorem 2.2][NCM]; the mixed assertion is a direct consequence
+of Theorem 3.4 and (RCE.51).
+
+Proof. To make the NCM application explicit, first let $w>0$.
+In NCM Theorem 2.2 take $m=4$, $r=3$ and
+$C_0=c_0=M(w)>0$. The inherited maximal local sets bound every
+local projection by $M(w)$. For every nonlocal feasible $P$,
+Proposition 14.2 gives two root leaves and child projections of
+size at most two. Its root experiment has at most three replies;
+each side experiment has absent and at most two child replies;
+longer words add no replies beyond a boundary function. Some side
+varies between two children, and its target has exactly four values.
+Every cell of that target is either a singleton root leaf or a
+set of branches with one child fixed. Each such cell is local,
+so has $w$-mass at most $M(w)$. These verify every local and
+cell-mass premise of NCM Theorem 2.2. Its same-tuple section
+argument bounds every admissible mass by $M(w)^n$, and products
+of a maximizing local set attain it.
+
+For nonzero $w$ with zero entries, restrict a competitor to its
+positive-product-weight rows, retaining its equations. On the finite
+interface restricted to $\operatorname{supp}(w)$ the weights are
+positive. Its local sets and feasible sets are exactly the subsets
+with the same properties under the original experiments; all the
+just verified bounds persist. Its maximum local mass is $M(w)$:
+intersect a maximizing original local set with the positive support,
+which preserves its mass and witnesses. Thus the same NCM application
+applies to the restricted rows. An empty restriction has mass zero,
+and $w=0$ is immediate. This establishes (RCE.54) as the claimed
+direct sufficient-transport application.
+
+For the mixed statement take the product interface of Definition
+3.3 on $n$ copies of the full depth-two interface. Its targets are
+exactly $\Gamma_q(x_i)$, and an experiment returns exactly one
+$r_{x_j}(a)$ or a constant. Arbitrary finite donor words reduce
+within that same donor block by Convention 1.2. Therefore each
+admissibility equation for any $B$ is precisely a single-experiment
+determination of that target in this product interface. Every target
+is easy on $B$ and has at most four values there, so $B$ is a
+feasible support with empty hard vector. Its cell norm is exactly
+its original product-weight mass. Theorem 3.4 and Theorem 14.3 give
+
+$$
+\sum_{x\in B}\prod_iw_i(x_i)
+=\kappa_{\mathrm{prod}}(\otimes_iw_i,B)
+\le J_{\mathrm{prod}}(\otimes_iw_i)
+=\prod_iJ_2(w_i)=\prod_iM(w_i).
+\tag{RCE.55}
+$$
+
+This is an identity of the stated finite interfaces; the product
+interface is not being substituted for a different native alphabet.
+Neither $B$ nor any original whole-block weight was required to
+factor between its children. Every arbitrary donor, reused donor,
+cycle and correlation of $B$ is retained.
+
+Choose a nonempty maximizing local set for each $w_i$. Their
+Cartesian product has own-coordinate witnesses and attains the
+right side of (RCE.53), including when a weight is identically
+zero. Same-witness saturation of Definition 1.3 places each such
+admissible set in its complete simultaneous solution set. That
+solution set is itself admissible when nonempty and is bounded by
+(RCE.55); nonnegativity gives equality of the two maxima. Taking
+identical weights and all-length roots also gives (RCE.54).
+$\square$
+
+**Corollary 15.2 (exact threshold for the whole original grammar).**
+For every rational probability $\nu$ on $S_2$ and rational $C>0$,
+
+$$
+\exists\pi\ V_{\mathrm{rec+range}}(2,\nu,C,\pi)
+\quad\Longleftrightarrow\quad C\ge M(\nu).
+\tag{RCE.56}
+$$
+
+Proof. If $C\ge M(\nu)=J_2(\nu)$, use the exhaustive ungrouped
+old leaf of Theorem 4.4 at this exact label. More explicitly, its
+tables are the native tables of Convention 14.1, and its supports
+are every nonempty feasible subset of $\operatorname{supp}(\nu)$.
+Proposition 14.2 identifies all their hard cells: a local support
+has the one cell of mass $\nu(P)$, while a nonlocal feasible
+support has singleton cells with masses $\nu(x)$. Theorem 14.3
+proves every squared sum at most $M(\nu)^2\le C^2$. All listed
+entries and squared comparisons are rational. The classification
+also covers supports with zero-weight states, consistently with
+Lemma 2.2. Hence the specified old leaf supplies the same-cap
+attainment without an additional inference rule.
+
+Conversely Theorem 8.2 is sound for the entire grammar of
+Convention 12.1, including all $r=1,2,3,4$ leaves and arbitrary
+finite homogeneous scaffold and stability ancestry from arbitrary
+rational laws. Acceptance therefore gives
+$C\ge\beta_2(\nu)=M(\nu)$ by Corollary 15.1. This proves both
+directions for every rational input. $\square$
+
+**Corollary 15.3 (certificate equality at the inherited optimum).**
+Let $c_+(d)$ be the infimum of rational caps of accepted rational
+laws for the grammar of Convention 12.1, and let
+$b_d=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)$ as in Convention
+1.4. Then
+
+$$
+c_+(2)=b_2=\frac{17}{25}.
+\tag{RCE.57}
+$$
+
+The pressure-minimizing real law is unique and is the inherited law
+
+$$
+\nu_*(\alpha)=\nu_*(\beta)=\frac8{25},\qquad
+\nu_*(g)=\frac1{25}\quad(g\in\mathcal G).
+\tag{RCE.58}
+$$
+
+Here $b_2$, its numerical value and the attaining law are the NCM/NPC
+results credited in Convention 12.1. Equality for $c_+(2)$ is a
+certificate consequence of (RCE.51), and uniqueness is the routine
+equality analysis below.
+
+Proof. For completeness the local inequalities identify all equality
+cases over the full real simplex. Write $z=M(\mu)$,
+$p=a+b$, and let the nine branch weights have total $1-p$ and
+largest value $t$. Then
+
+$$
+a,b\ge1-z,\qquad p\ge2(1-z),\qquad
+t\ge\frac{1-p}{9},\qquad
+z\ge p+t\ge\frac{8p+1}{9}\ge\frac{17-16z}{9}.
+\tag{RCE.59}
+$$
+
+Thus $z\ge17/25$, agreeing with the inherited optimum. The law
+(RCE.58) has all three expressions in (RCE.48) equal to $17/25$.
+It is a rational law on the whole $S_2$, and Corollary 15.2 gives
+its old joint leaf at the rational cap $17/25$. Hence
+$c_+(2)\le17/25$. Full-grammar soundness gives
+$c_+(2)\ge b_2=17/25$, proving (RCE.57).
+
+At equality $z=17/25$, (RCE.59) gives $a,b\ge8/25$, whereas
+$z\ge(8p+1)/9$ gives $p\le16/25$. Thus
+$a=b=8/25$. The branch total is $9/25$ and
+$t\le z-p=1/25$. Nine nonnegative numbers at most $1/25$ with
+sum $9/25$ are all $1/25$. This proves uniqueness among all real
+laws, with zero coordinates allowed at the start of the argument.
+$\square$
+
+## 16. Attribution and the unchanged optimized frontier
+
+**Convention 16.1 (ownership and applicability).** The path-record
+theorem and the hard-partition/$J_2$ comparison are ordinary
+repository-derived deductions from the native definitions and stated
+suppliers. The classification of the $r=2$ range leaves and the
+accepted-label invariance are consequences of the path theorem and
+the original grammar. Boundary-table injectivity is a direct native
+induction consistent with inherited canonicalization; the $r=1$
+classification follows from it. The finite ordered-weight inequality
+in (RCE.52) is an elementary norm comparison.
+
+The depth-two table, maximal local sets, local weighted maximum and
+two-side feasibility constraints are inherited or direct normalizations
+of [NCM, Convention 3.1 and Lemma 3.2][NCM]. The homogeneous all-law
+pressure statement instantiates [NCM, Theorem 2.2][NCM]; the mixed
+statement uses Theorem 3.4 on the exact product interface. The
+complete-template and acceptance conclusions use Definition 1.3 and
+Theorems 4.4 and 8.2. The optimum and its attaining law belong to
+[NCM, Theorems 3.3 and 4.1][NCM] and [NPC, Theorem 6.2 and
+Convention 7.3][NPC]; uniqueness is equality analysis of those local
+inequalities. These corollaries do not each constitute an additional
+transport mechanism.
+
+[*Native joint potential limits*, Theorems 3.1 and 3.3 and Section
+4][JPL12] concern its particular core-scaffold supports and their
+whole-block weights; its diagonal/separable obstruction in Sections
+5–7 is already bypassed by the existing joint leaf. [*Native
+asymmetrically tagged products and certificate escape*, Theorems
+3.2 and 4.1 and Sections 5 and 7][NTP12] owns the tagged-product
+pressure and specified-law full-grammar gaps. Those statements retain
+their original support and language hypotheses. Their restricted
+ceilings and specified-law gaps do not bound every optimized law
+on a full native alphabet.
+
+**Open problem 16.2 (every depth, normalized gap and effectiveness).**
+Retain the distinct quantities
+
+$$
+\begin{aligned}
+b_d&=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)=2^{-\sigma_d},\\
+c_+(d)&=\inf\{C\in\mathbb Q_{>0}:\exists\nu\in
+\Delta(S_d)\cap\mathbb Q^{S_d}\ \exists\pi\;
+ V_{\mathrm{rec+range}}(d,\nu,C,\pi)\},\\
+L_+(d)&=-2^{-d}\log_2c_+(d).
+\end{aligned}
+\tag{RCE.60}
+$$
+
+The semantic minimum ranges over all real laws, including zeros;
+the certificate infimum ranges over rational laws and rational caps.
+Soundness and singleton supports give
+$0<1/|S_d|\le b_d\le c_+(d)\le1$, where the last inequality
+follows from the exhaustive old leaf (RCE.44) at cap one.
+The following three obligations remain open as general statements:
+
+1. $c_+(d)=b_d$ for every actual $d\ge1$, or an actual depth
+   with a strict optimized counterexample $c_+(d)>b_d$.
+2. $2^{-d}\log_2(c_+(d)/b_d)\longrightarrow0$.
+3. Effective two-sided approximation of the same original $\lambda$
+   with a terminating certified error guarantee.
+
+The first positive bridge would require, for every actual $d$ and
+every $\epsilon>0$, a rational probability $\nu$ on the same
+full $S_d$ and rational $0<C<b_d+\epsilon$ with a finite
+certificate in precisely this grammar. A negative bridge would require
+at some actual depth a common lower bound $\eta$ for every accepted
+cap over every rational law and every allowed ancestry, together with
+an actual law having a genuine all-length, all-template pressure
+bound strictly below $\eta$.
+
+Theorem 14.3 controls the nonlocal feasible supports, each of size
+at most six, by an injective hard vector and a local three-state
+comparison. A corresponding
+control of larger support-dependent hard partitions and optimizing
+laws has not been established. Theorem 13.3 removes only the two
+small range leaf types from that analysis. Old leaves, the original
+$r=3,r=4$ leaves and every homogeneous scaffold and stability ancestry
+still require optimizer control. The mutually assisting nonlocal
+depth-three projections of [NCM, Proposition 6.1][NCM] prevent an
+unproved extension of its depth-two donor-capacity premise. They do
+not refute a different valid higher-depth argument.
+
+The inherited rate identities in Convention 1.4 and [NTP12, Section
+7][NTP12] give exactly
+
+$$
+\lambda-L_+(d)
+=\bigl(\lambda-2^{-d}\sigma_d\bigr)
+ +2^{-d}\log_2\frac{c_+(d)}{b_d},\qquad
+0\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi.
+\tag{RCE.61}
+$$
+
+Indeed substitute $b_d=2^{-\sigma_d}$ and add and subtract
+$2^{-d}\sigma_d$. Both terms on the right are nonnegative, and
+the first tends to zero; hence $L_+(d)\to\lambda$ is equivalent
+to the normalized-gap limit in item 2. That equivalence supplies
+neither the limit itself nor an effective error bound. [NPC,
+Definition 8.1 and Theorem 8.2][NPC] states the additional sound
+cofinal-verifier premise sufficient for the effective conclusion.
+Specified-law tagged gaps do not settle any optimized separation.
+Sharp $\lambda$, general exact $M_1(D)$ and the broader recovery
+programme retain their unresolved boundaries from Open problem 10.2.
+The consequences here concern native mathematical pressure and this
+specified certificate grammar under Definition 1.1's service premises.
+
+[JPL12]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[NTP12]: FIB_NATIVE_TAGGED_PRODUCT_CERTIFICATE_ESCAPE.md
+
+## 追加锚（本行以下为增补区）
