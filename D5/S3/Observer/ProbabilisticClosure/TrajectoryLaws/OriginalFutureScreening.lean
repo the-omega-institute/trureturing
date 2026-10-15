@@ -39,9 +39,9 @@ private instance futureLaw_markov (J : Measure (PathSpace H)) [IsProbabilityMeas
 
 instance classMeasurable (M : Bool → Matrix H H ℝ) : MeasurableSpace (FutureClass M) := ⊤
 
-private def readPrefix {S : Type*} (n : ℕ) (x : ℕ → S) : Fin n → S := fun i => x i.val
+def readPrefix {S : Type*} (n : ℕ) (x : ℕ → S) : Fin n → S := fun i => x i.val
 
-private theorem state_mass (θ : Presentation H) (J : Measure (PathSpace H))
+theorem state_mass (θ : Presentation H) (J : Measure (PathSpace H))
     [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (i : H) :
     J.real (state t ⁻¹' {i}) = θ.initial i := by
   have he : MarkedPredictiveQuotient.cylinder t 0 (fun _ => i) (fun k => nomatch k) =
@@ -51,7 +51,7 @@ private theorem state_mass (θ : Presentation H) (J : Measure (PathSpace H))
   simpa only [Nat.cast_zero, he, pathMass, Finset.univ_eq_empty, Finset.prod_empty, mul_one]
     using hc t 0 (fun _ => i) (fun k => nomatch k)
 
-private theorem future_state_mass (θ : Presentation H) (J : Measure (PathSpace H))
+theorem future_state_mass (θ : Presentation H) (J : Measure (PathSpace H))
     [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (i : H)
     (n : ℕ) (w : Fin n → Bool) :
     J.real ((state t ⁻¹' {i}) ∩ (future t ⁻¹' (readPrefix n ⁻¹' {w}))) =
@@ -66,7 +66,7 @@ private theorem future_state_mass (θ : Presentation H) (J : Measure (PathSpace 
   simpa only [Nat.cast_zero, he, pathMass, Finset.univ_eq_empty, Finset.prod_empty, mul_one]
     using hh
 
-private theorem futureLaw_readPrefix (θ : Presentation H) (J : Measure (PathSpace H))
+theorem futureLaw_readPrefix (θ : Presentation H) (J : Measure (PathSpace H))
     [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (i : H)
     (hi : 0 < θ.initial i) (n : ℕ) (w : Fin n → Bool) :
     (futureLaw J t i).map (readPrefix n) {w} = ENNReal.ofReal (futureMass θ.matrix i n w) := by
@@ -90,7 +90,7 @@ private theorem futureLaw_readPrefix (θ : Presentation H) (J : Measure (PathSpa
     ENNReal.ofReal_mul (le_of_lt hi), ENNReal.inv_mul_cancel_left
       (ne_of_gt (ENNReal.ofReal_pos.mpr hi)) ENNReal.ofReal_ne_top]
 
-private theorem cylinder_future_law (θ : Presentation H) (J : Measure (PathSpace H))
+theorem cylinder_future_law (θ : Presentation H) (J : Measure (PathSpace H))
     [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (m : ℕ)
     (h : Fin (m+1) → H) (w : Fin m → Bool) (hi : 0 < θ.initial (h (Fin.last m))) :
     (J.restrict (MarkedPredictiveQuotient.cylinder (t-m) m h w)).map (future t) =
@@ -159,7 +159,7 @@ private theorem past_prefix_cylinder (t : ℤ) (m : ℕ)
       exact Prod.ext hh' hw'
     · simpa [state] using hh (Fin.last m)
 
-private theorem full_past_future_factor (θ : Presentation H) (J : Measure (PathSpace H))
+theorem full_past_future_factor (θ : Presentation H) (J : Measure (PathSpace H))
     [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (i : H)
     (hi : 0 < θ.initial i) (A : Set (ℕ → H × Bool)) (B : Set (ℕ → Bool))
     (hA : MeasurableSet A) (hB : MeasurableSet B) :

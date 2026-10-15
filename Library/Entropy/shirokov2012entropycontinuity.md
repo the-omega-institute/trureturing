@@ -9,6 +9,8 @@ claim: "Entropy continuity on a closed convex family is conjectured to imply an 
 strata_touched:
   - D5/S3/Quantum/Analysis/OrliczCommonEnergy
   - D5/S3/Quantum/Analysis/TraceClass/EntropyMaximizer
+  - D5/S3/Quantum/Analysis/TraceClass/ContinuousEnergyHamiltonian
+  - D5/S3/Quantum/Analysis/TraceClass/FiniteEntropyRelativeEntropy
 license: citation-only
 triage: anchor
 ---
@@ -84,3 +86,76 @@ not a theorem attributed verbatim to the conjecture paper. No originality,
 common-reference energy conclusion or all-temperature Hamiltonian conclusion
 is asserted. Separability, commutation and absence of kernel fibers are not
 premises of this intermediate result.
+
+## Thermal construction on the original complete Hilbert space
+
+`D5/S3/Quantum/Analysis/TraceClass/ContinuousEnergyHamiltonian` constructs a
+Hamiltonian on any supplied complete full spectral basis of a normalized
+positive trace-class contraction sigma in a complete separable complex Hilbert
+space. For a nonempty compact positive trace-one family A, the conditional
+premises are finiteness of actual singular spectralEnergy(sigma,rho) and
+continuity of its real value on A. Convexity is not required here.
+
+An injective natural code retains all basis vectors. Set a(i)=-log(s(i)) when
+s(i)>0 and a(i)=(code(i)+1)log(2) when s(i)=0. Finite singular energy forces
+zero mass on every reference-kernel vector. Only scalar energy terms are
+extended by zero to the natural numbers. Dini's theorem for real finite
+prefixes supplies uniform extended tails. UniformTailAmplification gives a
+natural monotone diverging weight w with both an additive cost bound and
+uniform weighted tails. The generic real-series tail theorems in
+OrliczCommonEnergy supply actual summability and continuity without their
+unrelated stronger moment premises. The Hamiltonian coefficients are
+h(i)=1+w(code(i))*a(i) on the original basis.
+
+The dyadic code estimate makes exp(-a(i)) summable. For each beta>0, the
+exceptional indices with beta*w(code(i))<1 form a finite set, so the same
+Hamiltonian has summable heat coefficients at every positive inverse
+temperature. DiagonalHeat and DiagonalEnergy supply its dense full-space
+self-adjoint operator domain, full graph and weighted-l2 characterization,
+positive trace-class heat and actual complex/real trace HasSum, full strong
+generator graph equivalence and semigroup uniqueness, and the lower form
+bound by the identity. The actual resolvent-cap mixed-state energy is finite
+and continuous in both ENNReal and real values. It equals one plus the
+amplified diagonal series and is at most 1+spectralEnergy(sigma,rho)+delta.
+Actual trace-one diagonal summation supplies the constant one.
+
+The same module derives the original-premise endpoint. A nonempty closed
+real-convex family of positive trace-one states with finite continuous actual
+entropy has an entropy maximizer gamma0. Its center-energy inequality embeds
+the family in a compact full energy sublevel; closedness then gives
+compactness. The existing fullCompactCommonReference yields gamma in A and
+sigma in A with finite continuous reference energy bounded by
+realEntropy(gamma)+log(2). Applying the new construction to sigma's native
+full basis with delta=1 yields the strictly positive finite uniform bound
+2+realEntropy(gamma)+log(2). No compactness, bounded entropy or common
+reference is assumed in this original-premise endpoint. Separability of the
+ambient H is explicit, as in the source conjecture. Singular references,
+finite-dimensional H, infinite reference kernels and noncommuting families
+are included. No genuine relative-entropy D or Conjecture 2 conclusion
+follows merely from the energy continuity statement, and no historical
+priority claim is made here.
+## Normalized finite-entropy trace-log bridge
+
+`FiniteEntropyRelativeEntropy` defines D only for actual positive trace-one
+operators rho and sigma with finite actual spectral entropy of rho. On any
+complete complex Hilbert space it uses the liminf of the real trace of
+rho times the difference of the bounded CFC logarithms of rho+epsilon I and
+sigma+epsilon I, followed by ENNReal.ofReal, at epsilon=1/(n+1).
+The proved extended characterization is E_sigma(rho)-S(rho). Finite energy
+gives the nonnegative unclamped real value and the lower bound
+norm(rho-sigma)^2/4; infinite energy and failed kernel inclusion give infinity.
+For arbitrary full spectral resolutions at finite energy, the signed double
+logarithmic series is absolutely summable and has the same value. Zero
+reference eigenvalues have zero weighted overlap before the real logarithm
+convention is used.
+
+The same unit derives a fixed normalized sigma in the original nonempty
+closed real-convex family with finite continuous entropy. Entropy attainment
+and the center energy bound put the family inside a compact energy sublevel;
+closedness gives compactness. The existing compact common-reference theorem
+then makes the actual D finite, continuous and bounded by S(gamma)+log(2).
+The Hellinger and spectral-distribution suppliers retain the attribution in
+`Library/QuantumBounds/androulakis2023nussbaumszkola.md`; the analytic
+trace-class suppliers retain Tom Ole Diem's Physlib provenance and license.
+This is a formal mathematical implication of the stated premises, without a
+claim of historical novelty or present literature openness.

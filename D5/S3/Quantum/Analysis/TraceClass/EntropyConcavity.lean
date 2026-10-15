@@ -99,7 +99,7 @@ def realEntropy (rho : TraceClass H) : ℝ := by
   classical
   exact if h : 0 ≤ rho.1 ∧ rho.1 ≤ 1 then (spectralEntropy ⟨rho, h⟩).toReal else 0
 
-private theorem realEntropy_reference (rho : Reference H) :
+theorem realEntropy_reference (rho : Reference H) :
     realEntropy rho.1 = (spectralEntropy rho).toReal := by
   simp only [realEntropy, dif_pos rho.2]
 

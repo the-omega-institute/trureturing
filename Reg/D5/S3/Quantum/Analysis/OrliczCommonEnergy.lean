@@ -468,4 +468,127 @@ theorem actual_law : arena.{u}.Law actual := @exists_continuous_common_energy.{u
 end CommonEnergy
 
 #print axioms CommonEnergy.actual_law
+namespace GenericSummability
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Prop) (fun _ => Prop)
+def actual : Realization signature :=
+  realize signature (fun _ _ z => z) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {X : Type u} (f : X → ℕ → ℝ)
+    (hf : ∀ x n, 0 ≤ f x n) (hUT : ∀ ε : ℝ≥0, 0 < ε → ∃ N : ℕ, ∀ x,
+      (∑' k, ENNReal.ofReal (f x (N + k))) ≤ (ε : ℝ≥0∞)),
+    ∀ x, R.readout () () (Summable (f x))
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro q
+  have ht : ∀ ε : ℝ≥0, 0 < ε → ∃ N : ℕ, ∀ _x : ULift.{u} Unit,
+      (∑' _k : ℕ, ENNReal.ofReal (0 : ℝ)) ≤ (ε : ℝ≥0∞) := by
+    intro ε hε
+    exact ⟨0, fun _ => by simp⟩
+  have hx := q (X := ULift.{u} Unit) (fun _ _ => 0) (fun _ _ => le_rfl) ht ⟨()⟩
+  exact hx
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), True, False, ?_⟩
+  change True ≠ False
+  simp
+
+def family : Registration arena.{u} (type_of% (@summable_of_uniform_ennreal_tails.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@summable_of_uniform_ennreal_tails.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@summable_of_uniform_ennreal_tails.{u}) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.OrliczCommonEnergy.GenericSummability.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.OrliczCommonEnergy.GenericSummability.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end GenericSummability
+
+namespace GenericContinuity
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Prop) (fun _ => Prop)
+def actual : Realization signature :=
+  realize signature (fun _ _ z => z) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {X : Type u} [TopologicalSpace X] (f : X → ℕ → ℝ)
+    (hf : ∀ x n, 0 ≤ f x n) (hc : ∀ n, Continuous (fun x => f x n))
+    (hUT : ∀ ε : ℝ≥0, 0 < ε → ∃ N : ℕ, ∀ x,
+      (∑' k, ENNReal.ofReal (f x (N + k))) ≤ (ε : ℝ≥0∞)),
+    R.readout () () (Continuous (fun x => ∑' n, f x n))
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro q
+  have ht : ∀ ε : ℝ≥0, 0 < ε → ∃ N : ℕ, ∀ _x : ULift.{u} Unit,
+      (∑' _k : ℕ, ENNReal.ofReal (0 : ℝ)) ≤ (ε : ℝ≥0∞) := by
+    intro ε hε
+    exact ⟨0, fun _ => by simp⟩
+  have hx := q (X := ULift.{u} Unit) (fun _ _ => 0) (fun _ _ => le_rfl) (fun _ => continuous_const) ht
+  exact hx
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), True, False, ?_⟩
+  change True ≠ False
+  simp
+
+def family : Registration arena.{u} (type_of% (@continuous_of_uniform_ennreal_tails.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@continuous_of_uniform_ennreal_tails.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@continuous_of_uniform_ennreal_tails.{u}) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Analysis.OrliczCommonEnergy.GenericContinuity.unit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.OrliczCommonEnergy.GenericContinuity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end GenericContinuity
+
 end Reg.D5.S3.Quantum.Analysis.OrliczCommonEnergy
