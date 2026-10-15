@@ -75,9 +75,9 @@ private theorem S_posSemidef : S.PosSemidef := by
   fin_cases i <;> fin_cases j <;>
     norm_num [s.eq_1, coeff.eq_1, Matrix.cons_val_two, RCLike.nonneg_iff (K := ℂ)]
 
--- Expanding the 81 entries requires a larger normalization budget.
-set_option maxHeartbeats 1000000 in
 set_option maxRecDepth 4096 in
+set_option maxHeartbeats 1000000 in
+-- Expanding the 81 entries requires a larger normalization budget.
 private theorem gram_eq :
     (partialTranspose rho)ᴴ * partialTranspose rho = S * S := by
   funext p q
