@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeOppositeMarkedPorts
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeOppositeMarkedPorts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -30,19 +30,25 @@ private theorem opposite_anchor {m k : ℕ} (hm : 3 ≤ m) (F : SupplyFrame m k)
   rw [anchor_list hm, show List.ofFn (fun x =>
       (Equiv.swap (protectedP F hk) (protectedQ F hk) * anchor F) x) =
       (List.ofFn (anchor F)).map (Equiv.swap (protectedP F hk) (protectedQ F hk)) by
-        simp only [Equiv.Perm.mul_apply, List.map_ofFn], anchor_list hm]
+        simp only [Equiv.Perm.mul_apply, List.map_ofFn, Function.comp_def], anchor_list hm]
   obtain ⟨_, _, _, hpB, hqB, hpT, hqT⟩ := native_protected_labels F hk
   have hb : F.base.map (Equiv.swap (protectedP F hk) (protectedQ F hk)) = F.base := by
-    simpa only [List.map_id] using List.map_congr_left (fun x hx =>
-      Equiv.swap_apply_of_ne_of_ne (fun he => hpB (he ▸ hx)) (fun he => hqB (he ▸ hx)))
+    calc
+      F.base.map (Equiv.swap (protectedP F hk) (protectedQ F hk)) = F.base.map id := by
+        apply List.map_congr_left
+        intro x hx
+        exact Equiv.swap_apply_of_ne_of_ne
+          (fun he => hpB (he ▸ hx)) (fun he => hqB (he ▸ hx))
+      _ = F.base := List.map_id _
   simp only [oppositeSelectedFrame, List.map_append, hb, List.map_singleton,
     Equiv.swap_apply_of_ne_of_ne (Ne.symm hpT) (Ne.symm hqT)]
 
 private theorem anchor_base {m k : ℕ} (hm : 3 ≤ m) (F : SupplyFrame m k)
     (i : ℕ) (hi : i < F.base.length) :
-    anchor F ⟨k + i, by have hp := F.prefix_length
-                       simp only [List.length_append, F.selected_length] at hp
-                       omega⟩ = F.base[i] := by
+    anchor F ⟨k + i, by
+      have hp := F.prefix_length
+      simp only [List.length_append, F.selected_length] at hp
+      omega⟩ = F.base[i] := by
   have hp := F.prefix_length
   simp only [List.length_append, F.selected_length] at hp
   have ht : k+i < (F.selected ++ F.base ++ [F.terminal]).length := by
@@ -69,20 +75,20 @@ private theorem rotation_separation {m : ℕ} (hm : 3 ≤ m)
     simpa only [Equiv.Perm.mul_apply, hq, hfix] using hv.symm
   have hqm : q.val < m := by
     have hv := congrArg Fin.val hq
-    rw [native_bc_pow_val (by omega)] at hv
+    rw [native_bc_pow_val (by omega : 2 ≤ m)] at hv
     split_ifs at hv with h
     · exact h
     · omega
   have hj : (q.val+j)%m = l.val := by
-    simpa only [native_bc_pow_val (by omega), if_pos hqm] using congrArg Fin.val hq
+    simpa only [native_bc_pow_val (by omega : 2 ≤ m), if_pos hqm] using congrArg Fin.val hq
   have hi : (q.val+i)%m = l.val := by
-    simpa only [native_bc_pow_val (by omega), if_pos hqm] using congrArg Fin.val hqi
+    simpa only [native_bc_pow_val (by omega : 2 ≤ m), if_pos hqm] using congrArg Fin.val hqi
   have hij : i ≡ j [MOD m] := Nat.ModEq.add_left_cancel' q.val (hi.trans hj.symm)
   have hr : (b m*c m)^i = (b m*c m)^j := by
     apply Equiv.ext
     intro x
     apply Fin.ext
-    simp only [native_bc_pow_val (by omega)]
+    simp only [native_bc_pow_val (by omega : 2 ≤ m)]
     split_ifs
     · simp only [Nat.add_mod, show i%m = j%m from hij]
     · rfl
@@ -107,7 +113,7 @@ private theorem reflection_separation {m : ℕ} (hm : 5 ≤ m)
       simpa only [Equiv.Perm.mul_apply, hq, hfix l hl] using hv.symm
     have hqm : q.val < m := by
       have hv := congrArg Fin.val hq
-      rw [native_bc_pow_val (by omega)] at hv
+      rw [native_bc_pow_val (by omega : 2 ≤ m)] at hv
       split_ifs at hv with h
       · exact h
       · omega
@@ -116,22 +122,23 @@ private theorem reflection_separation {m : ℕ} (hm : 5 ≤ m)
     have hj : q.val+j ≡ l.val [MOD m] := by
       change (q.val+j)%m = l.val%m
       rw [Nat.mod_eq_of_lt hlm]
-      simpa only [native_bc_pow_val (by omega), if_pos hqm] using congrArg Fin.val hq
+      simpa only [native_bc_pow_val (by omega : 2 ≤ m), if_pos hqm] using congrArg Fin.val hq
     have hi : m-1-q.val+i ≡ l.val [MOD m] := by
       change (m-1-q.val+i)%m = l.val%m
       rw [Nat.mod_eq_of_lt hlm]
-      simpa only [native_bc_pow_val (by omega), if_pos hbmlt, hbm] using congrArg Fin.val hqi
+      simpa only [native_bc_pow_val (by omega : 2 ≤ m), if_pos hbmlt, hbm] using congrArg Fin.val hqi
     have hadd := hj.add hi
     have hsum : q.val+j+(m-1-q.val+i) = m-1+(i+j) := by omega
     rw [hsum] at hadd
     exact hadd
-  have h0 := equations ⟨k, by omega⟩ (Or.inl rfl)
-  have h1 := equations ⟨k+1, by omega⟩ (Or.inr rfl)
+  have h0 : m-1+(i+j) ≡ k+k [MOD m] := equations ⟨k, by omega⟩ (Or.inl rfl)
+  have h1 : m-1+(i+j) ≡ (k+1)+(k+1) [MOD m] :=
+    equations ⟨k+1, by omega⟩ (Or.inr rfl)
   have hh : k+k+0 ≡ k+k+2 [MOD m] := by
     convert h0.symm.trans h1 using 1 <;> omega
   have hz : 0 ≡ 2 [MOD m] := Nat.ModEq.add_left_cancel' (k+k) hh
-  have : (0 : ℕ) = 2 := by simpa only [Nat.ModEq, Nat.zero_mod,
-    Nat.mod_eq_of_lt (show 2 < m by omega)] using hz
+  have : (0 : ℕ) = 2 := by
+    simpa only [Nat.ModEq, Nat.zero_mod, Nat.mod_eq_of_lt (by omega : 2 < m)] using hz
   omega
 
 /-- All rotation and reversal ports from the canonical protected-label
@@ -166,7 +173,7 @@ theorem native_opposite_ports_disjoint {m k : ℕ} (F : SupplyFrame m k)
   have rr (i j : ℕ) : rightPort (oppositeSelectedFrame F hk) j ≠ rightPort F i := by
     rw [rightPort, rightPort, opposite_anchor (by omega)]
     exact rotation_separation (by omega) (anchor F) τ hτ ⟨k, by omega⟩
-      (by omega) (hfix _ (Or.inl rfl)) i j
+      (by change k < m; omega) (hfix _ (Or.inl rfl)) i j
   have rl (i j : ℕ) : rightPort (oppositeSelectedFrame F hk) j ≠ leftPort F i := by
     rw [rightPort, leftPort, rightPort, opposite_anchor (by omega)]
     exact reflection_separation hm (anchor F) τ k (by omega) hfix i j
