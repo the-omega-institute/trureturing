@@ -452,7 +452,7 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰
 | 角色 | 责任与边界 |
 | --- | --- |
 | 短 CI | 准入与检查消费者；`current` 计算累计限时 30 分钟，`ci-unit.yml` 默认同为 30 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
-| 独立长 Actions producer | manual、PR label、自动 protected push 共用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，不执行测试套件。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
+| 独立长 Actions producer | manual、PR label、自动 protected push 共用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，并按上文 Native executable boundary 完成报告所需的依赖范围 FIB 回归；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
 | PR 合入前准备、合入时启用 | 标签 dispatch 到受保护目标 ref；长构建检出固定 PR merge candidate，仅上传 Actions artifact。源 PR 可显式取回；目标短 CI 在实际合并与事件检出相符时直接采用，不等待另一次发布作业。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
 | GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
@@ -502,7 +502,7 @@ Actions Cache (visible ref) --restore--> job-local workspace <--eligible adoptio
 
 PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，不设固定 600s 整包截止；控制面 API 超时保留。平台 360m 上限涵盖准备、计算、上传和清理，可能在准备阶段终止 job，不承诺无限下载时间；缓存 producer 的既有 360m 与定时 Release 的 120m 仍是各自独立 job 上限。
 
-每个 job 的本地 `.lake/build` 是编译、原生模块报告、聚合报告和材料共同的承载目录，跨 job 通过运输恢复，不是共享可变目录。`Meta/ci-cache-paths.json` 登记 project 在 `.lake/build` 下的原生路径集合、dependency 为 `.lake/packages`；elan 与 judge 是辅助编译缓存，不是额外 report store。current 实际消费聚合报告，模块输出供原生生产与聚合复用。测试在普通 CI 的命中单元执行，长任务只编译其选定程序目标。
+每个 job 的本地 `.lake/build` 是编译、原生模块报告、聚合报告和材料共同的承载目录，跨 job 通过运输恢复，不是共享可变目录。`Meta/ci-cache-paths.json` 登记 project 在 `.lake/build` 下的原生路径集合、dependency 为 `.lake/packages`；elan 与 judge 是辅助编译缓存，不是额外 report store。current 实际消费聚合报告，模块输出供原生生产与聚合复用。普通与长 producer 共用的 canonical 聚合报告入口在 writer 返回后、新变更报告发布前，按完整编译 Application 输入差量执行 `make compiled-fib-test`；输入相同且未显式选中时不执行 FIB 回归。`current` 另转交 `CI_UNITS` 选中的 FIB 实现与夹具覆盖；其它测试仍由普通 CI 命中单元执行。准备、采用与复用的材料校验不构成测试执行记录；producer 成功不等于 required 成功。
 
 **触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
 
@@ -544,7 +544,7 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 
 **写入权限与不可变快照。** 普通构建 snapshot 的 project 写入前置是 `STRATALINT_REPORT_SUCCEEDED`、已知的 report/program 工作和既有 writer 身份；通常要求正工作，当前调用已验证的合入准备采用记录允许零工作。写入不要求全部检查绿。普通 push 在报告生产成功后、准入判卷开始前尝试一次；普通 PR required job 由 `project_publication` 返回 `pull-requests-do-not-publish-project-seeds`。普通 current 的 dependency/elan 在该作业检查成功后各按条件保存，不等待其它并行 job；judge 在自身编译成功后即可保存。源 PR job 的辅助缓存写入也不能跨越 PR ref 边界。Actions save 为本次 run/attempt 创建新 project/dependency 快照，不修改旧 immutable key；无合入准备采用记录时，普通 snapshot 零工作无需重复上传。PR 长构建在目标 dispatch 上下文只准备 artifact；普通 target/project、dependency 和 elan save 均关闭，旧 reader 和 native prefix fallback 因而也无未合入候选可选。短 CI 的可选运输与实际报告/编译/判卷成败分开，缓存不是真源。
 
-**PR 准备与合并启用。** `lean-cache-publish.yml` 是 dispatch 入口，`operation=build` 保持手动受保护提交的长构建语义；`operation=pr` 在目标 ref 的 workflow 上下文检出独立固定 `source_sha=M`。两者和自动 push 共用 `.github/actions/lean-cache-produce` 的编译、报告与严格 bundle 验证；PR 使用 `preparation-only`，跳过所有普通 cache snapshot/save。长任务仍仅构建缓存，不执行测试套件。`regenerate_report_artifacts` 仍是显式选择，不由交接自动启用。
+**PR 准备与合并启用。** `lean-cache-publish.yml` 是 dispatch 入口，`operation=build` 保持手动受保护提交的长构建语义；`operation=pr` 在目标 ref 的 workflow 上下文检出独立固定 `source_sha=M`。两者和自动 push 共用 `.github/actions/lean-cache-produce` 的编译、报告与严格 bundle 验证；PR 使用 `preparation-only`，跳过所有普通 cache snapshot/save。共享报告入口在新变更报告发布前完成必要的依赖范围 FIB 回归，其它测试仍由普通 CI 命中单元执行；准备和采用不替代当前选中的检查。`regenerate_report_artifacts` 仍是显式选择，不由交接自动启用。
 
 标签 `lean-cache-produce` 的 `pull_request` job 捕获仓库、事件 PR 编号、head `H`、实际检出 merge `M`、父提交 `B=M^1` 与 `H=M^2`、源 run/attempt 和目标 ref。它使用 `contents:read/pull-requests:read/actions:write` 调用 dispatch API，`return_run_details=true` 返回具体 `workflow_run_id`；缺失 ID、权限不足或 API 错误直接失败。该 job 不编译或保存缓存。fork token 无 dispatch 权限时保留原始拒绝，不引入 `pull_request_target` 或新的提权入口。
 

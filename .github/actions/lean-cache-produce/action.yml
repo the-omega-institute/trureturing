@@ -1,5 +1,5 @@
 name: Produce the Lean Actions cache
-description: Build and publish validated project, dependency and toolchain seeds without running test suites.
+description: Build and publish validated project, dependency and toolchain seeds, completing dependency-scoped FIB regressions required by report production.
 inputs:
   preparation-only:
     description: Build for isolated PR artifact transport without ordinary cache publication
