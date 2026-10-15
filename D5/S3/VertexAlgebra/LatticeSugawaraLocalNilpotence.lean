@@ -7,6 +7,7 @@
    digest: Actual Sugawara one-mode powers vanish beyond native finite oscillator support. -/
 
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
+import D5.S3.VertexAlgebra.LatticeHalfFockTargetThetaCorrectionWeight
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -25,7 +26,9 @@ def oscillatorBound (D : LatticeData) (v : Carrier D) : ℕ :=
 private theorem euler_basis (D : LatticeData) (a : Label D) :
     eulerMode D (carrierBasis D a) =
       (oscillatorEnergy a.2 : ℂ) • carrierBasis D a := by
-  rw [carrierBasis_apply, eulerMode_single, oscillatorEuler_monomial]
+  rw [carrierBasis_apply]
+  simp only [eulerMode, Finsupp.lsum_single, LinearMap.comp_apply, Finsupp.lsingle_apply, Derivation.coeFn_coe]
+  rw [LatticeHalfFockCorrectionGrading.oscillatorEuler_monomial]
   simp only [oscillatorEnergy, Finsupp.smul_single]
 
 private theorem euler_coeff (D : LatticeData) (v : Carrier D) (a : Label D) :

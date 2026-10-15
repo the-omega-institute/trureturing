@@ -27,11 +27,7 @@ private theorem half_exponential_derivative (D : LatticeData) (charge : Charge D
     PowerSeries.derivative (Oscillator D) (halfCreationExponential D charge) =
       halfCreationExponential D charge *
         PowerSeries.derivative (Oscillator D) (halfCreationSeries D charge) := by
-  run_tac
-    let supplier := (Lean.Name.num
-      `_private.D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients 0).append
-      `D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients.exponential_derivative
-    Lean.Elab.Tactic.evalTactic (← `(tactic| exact $(Lean.mkIdent supplier) _ _))
+  exact exponential_derivative D charge
 
 theorem half_exponential_derivation (D : LatticeData)
     (derivation : Derivation ℂ (Oscillator D) (Oscillator D)) (charge : Charge D) :

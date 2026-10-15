@@ -224,5 +224,177 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 #print axioms familyRegistration
 
+
+namespace Word
+
+structure Parameters where
+  charge : Charge data
+  count : ℕ
+  axes : Fin count → Fin data.rank
+  orders : Fin count → ℕ
+  exponent : ℤ
+  second : NativeTensor
+
+abbrev signature : Signature where
+  Params := Parameters
+  State _ := NativeTensor
+  Role := Role
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def originalReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
+  tensorPairing ((Ytw data determinantUnit (Finsupp.single parameter.charge
+    (∏ j : Fin parameter.count, MvPolynomial.X (parameter.axes j, parameter.orders j)))).coeff
+      parameter.exponent state) parameter.second
+
+def reflectedReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
+  let weight : ℕ := ∑ j : Fin parameter.count, (parameter.orders j + 1)
+  (-1 : ℂ) ^ weight * ∑ selection : ((j : Fin parameter.count) → Fin (parameter.orders j + 2)),
+    (∏ j : Fin parameter.count, ((parameter.orders j + 1).choose (selection j).val : ℂ)) *
+      tensorPairing state ((nativeOppositeYtw (Finsupp.single parameter.charge
+        (∏ j : Fin parameter.count, if (selection j).val = 0 then
+          MvPolynomial.C (bilinear data (unitCharge data (parameter.axes j)) parameter.charge : ℂ)
+        else MvPolynomial.X (parameter.axes j, (selection j).val - 1)))).coeff
+          (-2 * chargeNorm data parameter.charge - parameter.exponent - 2 * (weight : ℤ) -
+            2 * (∑ j : Fin parameter.count, ((selection j).val : ℤ))) parameter.second)
+
+def actual : Realization signature :=
+  realize signature (fun role parameter state => match role with
+    | .original => originalReadout parameter state
+    | .reflected => reflectedReadout parameter state) (fun empty => nomatch empty)
+
+def rejected : Realization signature :=
+  realize signature (fun role _ _ => match role with
+    | .original => (1 : ℂ)
+    | .reflected => (0 : ℂ)) (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law observation := ∀ parameter state,
+    observation.readout Role.original parameter state =
+      observation.readout Role.reflected parameter state
+
+theorem exact_source_bridge :
+    (type_of% (@original_word_source_reflection)) ↔ arena.Law actual := by
+  constructor
+  · intro source parameter state
+    exact source parameter.charge parameter.count parameter.axes parameter.orders
+      parameter.exponent state parameter.second
+  · intro law charge count axes orders exponent first second
+    exact law ⟨charge, count, axes, orders, exponent, second⟩ first
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  exact one_ne_zero (law ⟨0, 0, Fin.elim0, Fin.elim0, 0, 0⟩ 0)
+
+private theorem actual_readout (role : Role) (parameter : Parameters) (state : NativeTensor) :
+    actual.readout role parameter state = originalReadout parameter state := by
+  cases role
+  · rfl
+  · exact (original_word_source_reflection parameter.charge parameter.count parameter.axes
+      parameter.orders parameter.exponent state parameter.second).symm
+
+private theorem source_nonzero : ∃ parameter state, originalReadout parameter state ≠ 0 := by
+  obtain ⟨parameter, state, nonzero⟩ :=
+    Reg.D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection.source_nonzero
+  refine ⟨⟨parameter.charge, 1, fun _ => parameter.axis, fun _ => parameter.order,
+    parameter.exponent, parameter.second⟩, state, ?_⟩
+  simpa only [originalReadout,
+    Reg.D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection.originalReadout,
+    Fin.prod_univ_one] using nonzero
+
+def altered (selected : Role) : Realization signature :=
+  realize signature (fun role parameter state =>
+    if role = selected then (1 : ℂ) else actual.readout role parameter state)
+    (fun empty => nomatch empty)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  obtain ⟨parameter, state, nonzero⟩ := source_nonzero
+  refine ⟨parameter, state, 0, ?_⟩
+  rw [actual_readout, actual_readout]
+  simpa [originalReadout] using nonzero
+
+private theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro role
+    change Role at role
+    refine ⟨altered role, ?_, rfl, ?_⟩
+    · intro other different
+      change Role at other
+      funext parameter state
+      change actual.readout other parameter state =
+        (if other = role then (1 : ℂ) else actual.readout other parameter state)
+      exact (if_neg different).symm
+    · intro law
+      have impossible := law ⟨0, 0, Fin.elim0, Fin.elim0, 0, 0⟩ 0
+      cases role
+      · change (1 : ℂ) = actual.readout Role.reflected ⟨0, 0, Fin.elim0, Fin.elim0, 0, 0⟩ 0
+          at impossible
+        rw [actual_readout] at impossible
+        simpa [originalReadout] using impossible
+      · change actual.readout Role.original ⟨0, 0, Fin.elim0, Fin.elim0, 0, 0⟩ 0 = (1 : ℂ)
+          at impossible
+        rw [actual_readout] at impossible
+        simpa [originalReadout] using impossible
+  · intro empty
+    exact nomatch empty
+
+def familyRegistration : Registration arena (type_of% (@original_word_source_reflection)) where
+  actual := actual
+  bridge := exact_source_bridge
+  variation := ⟨exact_source_bridge.mp original_word_source_reflection, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+def escapeFrom := @Ytw
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@original_word_source_reflection)
+    (type_of% (realize signature actual.readout actual.anchor)) (type_of% escapeFrom) Role where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockBpZ.original_word_source_reflection
+    "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection.Word.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .evidence ⟨familyRegistration.variation⟩ trivial
+  sensitivity := .evidence ⟨familyRegistration.sensitivity⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4, 6]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+#print axioms familyRegistration
+
+end Word
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection
