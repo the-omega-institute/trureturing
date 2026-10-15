@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Automata/PromiseColoringTotalization
    mirror-E: none(waiver:no-numeric-experiment-declared)
-   anchors: [mathlib/module/Mathlib.Computability.DFA]
+   anchors: [mathlib/module/Mathlib.Computability.MyhillNerode]
    utility: none
    digest: Transition-consistent conflict colorings of arbitrary nonempty promise domains characterize complete output automata with the same state budget. -/
 
