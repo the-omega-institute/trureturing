@@ -5,7 +5,7 @@ year: 2026
 title: Zeta Spectral Triples
 doi: 10.4171/elm/37/3
 url: https://arxiv.org/abs/2511.22755v1
-claim: The full bounded-support Weil operator has discrete lower-bounded spectrum, and an explicit auxiliary transform converges to Xi. Applying existing form-core, Carleman and min-max results gives a conservative explicit error for the actual even Fourier sections. Positive finite certificates, cofinal positivity and the separate actual ground-state comparison remain missing.
+claim: The full bounded-support Weil operator has discrete lower-bounded spectrum, and an explicit auxiliary transform converges to Xi. Existing form-core, Carleman and min-max results give an explicit even-section error. At c27 a joint weighted prime bound supplies a positive even high-complement floor after mode1280. The retained sign, full coupling certificate, cofinal positivity and actual ground-state comparison remain missing.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -239,6 +239,127 @@ positive certificates dominating these actual errors at those scales.
 The ground-state simplicity, parity and weighted-transform comparison
 needed by the separate spectral route are not supplied. The complete
 Robin comparison and RH remain unproved.
+
+## A joint prime bound for the actual c27 even high complement
+
+Reuse the [weighted Schur formula A1](liu2026tailcompensation.md)
+from Liu's Appendix B.4, the existing Neumann--Gamma comparison in
+[PT7--PT10](../../docs/develop/theory/RH_RESEARCH_LANE_THEORY.md#5-整个高补空间的统一下界),
+and G1--G3 above. The new input is their scalar parameter application at
+$c=27$, $d=\log27$, $L=d/2$. It is not a new general operator theorem,
+a reproduction of an earlier fixed-window sign certificate or a priority
+claim. In particular, the source's old width-dependent constants are not
+transported to this interval.
+
+On $I=(-L,L)$ retain every prime power
+
+$$
+\mathcal P_{27}=\{2,3,4,5,7,8,9,11,13,16,17,19,23,25\},\qquad
+C_{\rm p}=\sum_{n\in\mathcal P_{27}}\frac{\Lambda(n)}{\sqrt n}
+(S_{\log n}+S_{-\log n}).
+$$
+
+The shift at $27$ is zero almost everywhere. For the common positive
+weight $q(u)=1+(29/50)(u/L)^2$, A1 bounds the complete complex quadratic
+form by its weighted row $r_q$, including all simultaneously active
+shifts. Put $b=29/50$ and $R=59/10$. Write $x=u/L\in[0,1]$ and enclose
+$t_n=\log n/L$ by $t_n^-\le t_n\le t_n^+$. On each outward support
+cell, retain a negative or positive shift whenever it can be active
+anywhere in that cell. With outward upper weights $w_n^+$ set
+
+$$
+W=\sum_{\rm negative,positive}w_n^+,\qquad
+B=\sum_{\rm negative}w_n^+t_n^-
+-\sum_{\rm positive}w_n^+t_n^+,\qquad
+D=\sum_{\rm negative,positive}w_n^+(t_n^+)^2.
+$$
+
+The same quadratic envelope as A2 gives, on the entire cell,
+
+$$
+(1+bx^2)(R-r_q(Lx))\ge
+b(R-W)x^2+2bBx+(R-W-bD).
+$$
+
+Directed logarithm enclosures on a $10^{-12}$ grid and checked integer
+square-root lower bounds give an exact rational minimum greater than
+$1/400$ on every cell. Minima include the two endpoints and any interior
+vertex of a convex quadratic; there is no sampling mesh. The coincident
+switches from $3$ and $9$ use $t_3=2/3$ and $t_9=4/3$ exactly. Individual
+support endpoints have measure zero. Reflection covers $x<0$. Thus
+
+$$
+\boxed{|\langle f,C_{\rm p}f\rangle|\le\frac{59}{10}\|f\|_2^2
+\quad(f\in L^2(I;\mathbb C)).}
+\tag{G6}
+$$
+
+For comparison, the classical finite-path adjacency norm gives
+$\|S_s+S_s^*\|=2\cos(\pi/(\lceil d/s\rceil+1))$ for $0<s<d$.
+The integer-ratio case uses the almost-everywhere chain length, so no
+extra endpoint vertex is counted. Adding these separate bounds yields
+$P_{27}=8.54672965014089\ldots$, larger than G6. G6 uses one common
+weight for the complete sum; it does not combine separately attainable
+optima as though they had a common maximizing test.
+
+### Apply the existing even Gamma comparison
+
+For completeness, G1 realizes the same Neumann comparison on the even
+core. With $b_j=2j+1/2$, its image kernel is
+
+$$
+B_L(x,y)=\sum_{j\ge0}\frac{2\cosh(b_j(x-y))}{e^{b_jd}-1}.
+$$
+
+For even complex $f$, every sinh moment vanishes. Consequently
+
+$$
+\langle f,B_Lf\rangle=
+\sum_{j\ge0}\frac{2}{e^{b_jd}-1}
+\left|\int_I f(x)\cosh(b_jx)\,dx\right|^2\ge0.
+$$
+
+Finite mixtures give this identity first. The absolute kernel bound G2
+justifies their form limit; G3 extends the comparison from the Fourier
+core to the closed form domain. This is the already used even
+Neumann--Gamma domination, without the full-space negative allowance
+$-C_\Gamma(d)$. The even pole pair is also nonnegative. Hence for every
+even form-domain $f$ perpendicular to the actual cosine modes $0,\ldots,N$,
+
+$$
+Q_L(f)\ge
+\left[A\!\left(\frac{2\pi(N+1)}d\right)-\frac{59}{10}\right]\|f\|_2^2.
+\tag{G7}
+$$
+
+The existing interval digamma routine gives the following scalar signs:
+
+| Prime debt | $N$ | Enclosure of the G7-type scalar floor |
+|---|---:|---:|
+| Separate bounds $P_{27}$ | 16972 | $[-0.000010642,-0.000010640]$ |
+| Separate bounds $P_{27}$ | 16973 | $[0.000048274,0.000048275]$ |
+| Joint bound $59/10$ | 1202 | $[-0.000086409,-0.000086408]$ |
+| Joint bound $59/10$ | 1203 | $[0.000744501,0.000744502]$ |
+| Joint bound $59/10$ | 1280 | $[0.06273617862538,0.06273617862539]$ |
+
+Monotonicity of $A$ identifies the first positive scalar floor in these
+two comparisons as $N=16973$ and $N=1203$, respectively. These are
+thresholds of these sufficient estimates, not necessary truncation
+sizes. In particular, G7 supplies $Q_L(f)\ge\|f\|_2^2/16$ on the entire
+even complement after mode $1280$, subject to the stated paper-level
+form identification. A negative scalar lower bound supplies no negative
+Weil test.
+
+The [reproducible scalar packet](https://github.com/the-omega-institute/trureturing-experiments/tree/main/docs/reports/weil-c27)
+retains every outward support cell and exact rational minimum. It calls
+only the fixed existing `psi_iv` arithmetic routine, SHA-256
+`8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0`,
+from project commit `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`;
+the old certificate is not run or used as a sign input. This is a scalar
+computer-assisted input and paper application, not a Lean result.
+The actual retained block and the coupling to its full infinite
+complement remain to be certified. The high-complement floor alone
+does not establish c27 positivity, cofinal Weil positivity, Robin or RH.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
