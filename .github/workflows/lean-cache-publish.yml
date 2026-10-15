@@ -29,6 +29,12 @@ on:
         type: choice
         options: [build, pr]
         default: build
+      release_seed_tag:
+        description: 'Optional exact local candidate Release for the long build'
+        type: string
+      release_seed_producer:
+        description: 'Immutable producer commit of release_seed_tag'
+        type: string
       regenerate_report_artifacts:
         description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
         type: boolean
@@ -116,6 +122,8 @@ jobs:
         uses: ./.github/actions/lean-cache-produce
         with:
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
 
   pr-dispatch:
     name: Dispatch the PR cache build to its target
@@ -179,6 +187,8 @@ jobs:
         with:
           preparation-only: 'true'
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
       - id: pack
         name: Package the registered native cache paths
         env:
