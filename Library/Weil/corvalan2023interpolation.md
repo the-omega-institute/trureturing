@@ -579,3 +579,130 @@ This application narrows the unestimated arithmetic part while
 preserving the actual source, mean and weight. It supplies neither the
 complete FIB approximation rate nor the same-integer Robin sign, and
 has not been Lean compiled or claimed as an original large-sieve result.
+
+## A numerical-frequency cut of the same residual
+
+A frequency's reduced denominator and its circular distance from an
+integer are different observations. The same three inputs used in
+(I20)–(I23) also pay for deleting frequencies away from integers. This
+is another application to the actual coefficients, not a new
+large-sieve theorem or a claim that the remaining quadratic form is
+small. Write $L=\log N$ and let $0<\eta\le1/4$.
+
+The elementary sine bound, including the case $\eta q<1$, gives
+
+$$
+\sum_{\substack{1\le r<q\\\|r/q\|\ge\eta}}
+|1-e(-r/q)|^{-2}\ll\frac{q^2}{1+\eta q}.
+$$
+
+Here $\|t\|$ is distance to the nearest integer. Restricting the sum
+to coprime numerators only decreases it. Apply the uniform coefficient
+bound following (I19), then partial summation to the already supplied
+finite moment $\sum_{q\le X}(q/\varphi(q))^2\le XW(2)$. The angular
+coefficient energy satisfies
+
+$$
+V_{N,\eta}^{\rm away}:=
+\sum_{2\le q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\\|r/q\|\ge\eta}}
+|B_{N,q,r}|^2
+\ll\frac1{L^2}\sum_{q\le N}\frac{(q/\varphi(q))^2}{1+\eta q}
+\le\frac{W(2)\log(1+\eta N)}{\eta L^2}.
+\tag{I25}
+$$
+
+For precision, the implied constant in the first inequality also
+multiplies the final allowance. The final comparison for the weighted
+positive-moment sum follows from integrating $(1+\eta t)^{-1}$ on
+$0\le t\le N$; it does not use a fixed-moment limiting average in
+place of a finite bound.
+
+Retain the actual blocks $I_j$, $M_j=2^jN$ and $Q_j$ of (I23).
+On each block define the exponential sum
+
+$$
+D_{N,\eta,j}(m)=
+\sum_{Q_j<q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\\|r/q\|\ge\eta}}
+B_{N,q,r}e(mr/q).
+$$
+
+Its coefficient energy is at most
+$V_{N,\eta}^{\rm away}$. Its denominators can reach $N$, so the
+large-sieve separation term is $N^2$, even when its numerical angles
+lie in a smaller set. Using the actual weight gives
+
+$$
+\sum_j\|D_{N,\eta,j}\|_{I_j}^2
+\ll V_{N,\eta}^{\rm away}
+\sum_j\frac{M_j+N^2}{M_j^2}
+\ll\frac{\log(1+\eta N)}{\eta L^2}.
+\tag{I26}
+$$
+
+Indeed, the geometric sum is at most $2/N+4/3\le2$ for $N\ge3$.
+The last block and the endpoint $N^2$ remain included. Define the
+retained response, for $m\in I_j$, by
+
+$$
+\mathcal C_{N,\eta}(m)=d_N+
+\sum_{Q_j<q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\\|r/q\|<\eta}}
+B_{N,q,r}e(mr/q).
+$$
+
+The deleted response is the sum of all low-denominator frequencies
+and the high-denominator frequencies away from integers. These two
+sets are disjoint; their functions need not be orthogonal on $I_j$.
+Combining (I23), (I26) and the weighted triangle inequality yields
+
+$$
+\left|\sqrt{E_N}-\left(
+\sum_{m=N}^{N^2}\frac{|\mathcal C_{N,\eta}(m)|^2}{m(m+1)}
+\right)^{1/2}\right|
+\ll\frac{N^{-1/4}}L+
+\frac{\sqrt{\log(1+\eta N)}}{\sqrt\eta\,L}.
+\tag{I27}
+$$
+
+All constants are independent of $N,\eta$. For example,
+$\eta_N=(4\sqrt{\log N})^{-1}$ lies in $(0,1/4]$ for $N\ge3$,
+and the right side is $O((\log N)^{-1/4})$. Thus an actual shrinking
+angular region, together with the same complete-period mean, retains
+the weighted norm up to a vanishing error. For the asymptotic choice
+$\eta_N=(\log N)^{-a}$, this allowance tends to zero when $0<a<1$;
+at $a=1$ it gives only $O(1)$. If $\eta\le1/N$, all nonzero
+frequencies are deleted and the second term in (I27) has size
+$O(\sqrt N/L)$; taking an arbitrarily narrow angular region does not
+supply a small-error reduction through (I27).
+
+The remaining frequencies satisfy both $q>\sqrt{M_j}$ and
+$\|r/q\|<\eta_N$. They need not be nearly constant over a block:
+$M_j\eta_N$ can grow. The symmetric angular cut preserves conjugate
+pairing, so the retained and deleted responses remain real. It leaves all signed
+correlations within the retained set and with $d_N$ unpaid. A bound
+for an isolated reciprocal-phase Möbius sum would require a further
+uniform summation and kernel correspondence before it could estimate
+this complete norm. As with (I23), a uniform polylogarithmic bound
+for the retained norm squared would still imply RH.
+
+The earlier Mellin strength argument also has a quantitative
+parameter substitution. For any one fixed $0\le\vartheta<1$, a bound
+$E_N\ll N^\vartheta(1+\log N)^A$ for all sufficiently large integers
+$N$, with one finite $A$, changes (I14) to
+$\|S_y(qy)\|_2\ll y^{(1+\vartheta)/2}(1+\log y)^B$.
+The same integral (I15) is then holomorphic for
+$\Re s>(1+\vartheta)/2$, and (I16) excludes zeros in that strict
+half-plane. Consequently any fixed power saving
+$E_N\ll N^{1-\delta}(1+\log N)^A$, $0<\delta\le1$, would already
+supply a fixed zero-free half-plane $\Re s>1-\delta/2$ at every
+height. This is a parameter application of the preceding paper
+argument, not an independently supplied bound. A saving parameter
+that tends to zero with $N$ cannot be substituted for a fixed
+$\delta$, and no conclusion on the boundary line is asserted.
+
+This is a numerical-frequency observation of the same periodic
+response. It is not the FIB composition rotation $C=MJ$, and no
+arithmetic invariance under that active rotation is asserted. The
+five-mode encoding can organize the retained indices without
+supplying their Möbius cancellation. Equations (I25)–(I27) remain
+paper applications of the cited existing inputs, without a new Lean
+declaration or an originality claim.
