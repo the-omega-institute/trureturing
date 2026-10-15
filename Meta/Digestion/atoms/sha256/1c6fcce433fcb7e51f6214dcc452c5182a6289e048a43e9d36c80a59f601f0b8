@@ -1,0 +1,10 @@
+**Proof.** The counts and the two literal examples follow from Theorem
+10.2 and (AOF.24). Comparing the two ceilings in (AOF.31) gives the
+stated residue class; the singleton is separately one halt. An injective
+$w$-bit state encoding exists exactly when $2^w\ge N+J(L,U)$.
+The translation claim is Theorems 8.3 and 9.2 at $N=2$. Its address
+constants and output integers vary with $l$, so their representation
+costs are not bounded by three abstract states. Finally a fixed finite
+halt set has finite output image, whereas unbounded ages require an
+infinite image. $\square$
+

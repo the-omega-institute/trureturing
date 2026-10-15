@@ -1,7 +1,7 @@
 ---
 slug: higuchi-sudbery-2000-four-qubit-average-entropy-maximum
 bibkey: higuchisudbery2000entangledcouples
-doi: 10.1016/S0375-9601(00)00506-4
+doi: 10.1016/S0375-9601(00)00480-1
 triage: theorem
 motivation_gids:
   - D5/S3/Quantum/Entanglement/HiguchiSudbery/HiguchiSudberyEntropyMaximum.result

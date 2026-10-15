@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:27e7bc5ea59efcf4d458a8e0b91c4e04e31111c6a9316a8a3121b309e7c7a0b7
+  normalized_sha256: sha256:27e7bc5ea59efcf4d458a8e0b91c4e04e31111c6a9316a8a3121b309e7c7a0b7
+cas_ref: sha256:27e7bc5ea59efcf4d458a8e0b91c4e04e31111c6a9316a8a3121b309e7c7a0b7
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/ActualDyadicDeadlineRepairMinimum.original_operational_minimum
+    target_statement_id: sha256:b51ef7bb33bc40670f8dc0435b1f7efd84c0cfcd6e90580c76e2eb79bccae2b4
+receipts:
+  unresolved_subitems: []

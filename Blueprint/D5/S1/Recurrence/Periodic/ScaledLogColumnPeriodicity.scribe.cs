@@ -31,6 +31,13 @@ internal sealed class ScaledLogColumnPeriodicityDocument : IScribeDocumentDefini
                 + "a cast to the rationals. Every fraction displayed here is rational "
                 + "division. The function num returns the reduced rational numerator; "
                 + "residue(m,z) denotes the integer cast to ZMod m.")),
+            Node("log_derivative_mul", "The formal logarithm derivative",
+                Disp(Equality(Mul(Call("derivative", Call("log", Seq(Mathbb, Grp(V("Q"))))),
+                    Parenthesized(Add(D(1), V("X")))), D(1))),
+                "Over the rationals the formal derivative of log(1+X) is the "
+                    + "inverse of 1+X; rescaling the geometric-series identity proves "
+                    + "the displayed multiplication identity.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("a", "The e.g.f. coefficient sequence", SequenceFormula(),
                 "The definition extracts the factorial-scaled coefficient of "
                 + "log(1+(exp(2X)-1)/2)^r/r!. The integral differential bridge proves "

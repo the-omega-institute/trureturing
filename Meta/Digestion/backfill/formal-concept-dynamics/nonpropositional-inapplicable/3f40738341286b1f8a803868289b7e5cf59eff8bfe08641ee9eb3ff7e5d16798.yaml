@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3f40738341286b1f8a803868289b7e5cf59eff8bfe08641ee9eb3ff7e5d16798
+  normalized_sha256: sha256:3f40738341286b1f8a803868289b7e5cf59eff8bfe08641ee9eb3ff7e5d16798
+cas_ref: sha256:3f40738341286b1f8a803868289b7e5cf59eff8bfe08641ee9eb3ff7e5d16798
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 273.1（裁量缺陷）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 4b542fbc46f50490537fe30ab916ce897b993373dd00aca6600be3660b28d262
+    next_atom_id: 1996941722a7896332c4f86d7e677379c31ac4049c962ea13a620c79856dd14c

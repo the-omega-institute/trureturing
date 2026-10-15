@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9aafda815e52fdadf0d5caec4a9ce32df2d1251283d874181d89bd06f2a4f11d
+  normalized_sha256: sha256:9aafda815e52fdadf0d5caec4a9ce32df2d1251283d874181d89bd06f2a4f11d
+cas_ref: sha256:9aafda815e52fdadf0d5caec4a9ce32df2d1251283d874181d89bd06f2a4f11d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 设定片段只定义相点算子、Wigner 函数、指定向量、零点集及受约束方向空间，没有给出临界性质结论。
+    previous_atom_id: d9e160a9de0cd8d9f06165bacc10493375e5004bf7a005fc45da2450e0907511
+    next_atom_id: 91bc86ae8d5e84fc1107062a0d552d5ce646c4d56b3d6135a51b12bb315c1691

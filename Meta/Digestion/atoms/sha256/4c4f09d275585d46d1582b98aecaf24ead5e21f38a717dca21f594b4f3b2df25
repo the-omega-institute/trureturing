@@ -1,0 +1,82 @@
+**Theorem 15.5 (the uniform arbitrary-color clique-chain obstruction).**
+For every $q\ge2$ and $2\le t\le q$, the graph $F_{q-1,t}$ contains a
+$q+(q-1)(t-1)$-vertex subgraph that cannot be colored by $q$ arbitrary
+colors. Consequently $\chi(F_{q-1,t})\ge q+1$.
+
+**Proof.** Use the following one-spare-color invariant. Let $\mathcal C$ be
+any set of $q$ colors, and let $(p_u)_{0\le u\le q-2}$ and
+$(r_u)_{0\le u\le q-2}$ be two injective lists in $\mathcal C$. If
+$p_u\ne r_v$ whenever $u\ne v$, then the lists differ at at most one
+matching position. Indeed, the $p$-list omits exactly one color $z$. At a
+changed position $u$, the color $r_u$ differs from $p_u$ by the change and
+from every $p_v$ with $v\ne u$ by the cross-index constraints. Hence
+$r_u=z$. Two changed positions would repeat $z$ in the injective $r$-list.
+For $q=2$ the lists each have one position, so the conclusion also holds,
+even though the cross-index constraints are vacuous. This argument uses
+only equality and cardinality, without an order on $\mathcal C$.
+
+The certificate vertices are
+
+$$
+\begin{aligned}
+C_c&=(c,\ldots,c),&&0\le c\le q-1,\\
+V_{u,j}&=(\underbrace{u+1,\ldots,u+1}_{j},
+          \underbrace{u,\ldots,u}_{t-j}),
+ &&0\le u\le q-2,\quad1\le j\le t-1.
+\end{aligned}
+\tag{NAR.15.8}
+$$
+
+Every coordinate is in $\{0,\ldots,q-1\}$. The constants are distinct, and
+each nonconstant vertex determines its two values $u,u+1$ and its initial
+run length $j$. Thus the displayed count is exact. The subgraph uses the
+following edges, all witnessed directly by (NAR.15.6).
+
+The constants form $K_q$, since $C_c-C_{c'}$ has the same nonzero
+difference $c-c'$ everywhere when $c\ne c'$. For each fixed $j$, the column
+$\{V_{u,j}:0\le u\le q-2\}$ forms $K_{q-1}$, because
+$V_{u,j}-V_{v,j}$ is everywhere the nonzero difference $u-v$ when
+$u\ne v$. Between consecutive columns, for $u\ne v$,
+
+$$
+(V_{u,j}-V_{v,j+1})_h=
+\begin{cases}
+u-v-1,&h=j+1,\\
+u-v,&h\ne j+1.
+\end{cases}
+\tag{NAR.15.9}
+$$
+
+The common displacement $u-v$ is nonzero. Zero at the exceptional
+coordinate is permitted, so these are legal edges for every
+$1\le j\le t-2$. Finally, $V_{u,1}$ is adjacent to every $C_c$ with
+$c\ne u$: outside coordinate $1$ the difference is the nonzero $u-c$.
+Likewise $V_{u,t-1}$ is adjacent to every $C_c$ with $c\ne u+1$, using
+exceptional coordinate $t$ and nonzero displacement $u+1-c$. These are all
+the edge families needed; any additional edges of $F_{q-1,t}$ may remain.
+
+Suppose a proper coloring by at most $q$ colors exists. The constant clique
+uses all $q$ colors, so name the color of $C_c$ by $c$. This is a renaming
+of an arbitrary palette, without any inequality requirement on labels.
+The first-column endpoint edges force $V_{u,1}$ to have color $u$; the
+last-column endpoint edges force $V_{u,t-1}$ to have color $u+1$.
+Each column is an injective $(q-1)$-list of colors. Equation (NAR.15.9)
+imposes all unequal-index cross exclusions on successive lists. By the
+one-spare invariant at most one matching position can change across each
+transition. Every one of the $q-1$ positions must change between its first
+and last colors. Therefore, when $t\ge3$,
+
+$$
+q-1\le\sum_{j=1}^{t-2}
+ \#\{u:\operatorname{col}(V_{u,j})\ne
+              \operatorname{col}(V_{u,j+1})\}
+\le t-2\le q-2,
+\tag{NAR.15.10}
+$$
+
+which is impossible. At $t=2$ the first and last columns coincide, and
+their two endpoint requirements already force the same vertex to have the
+distinct colors $u$ and $u+1$. In particular, $q=t=2$ gives the triangle
+$00,11,10$. No transition is needed in this boundary case. This proves the
+obstruction for every stated parameter. $\square$
+

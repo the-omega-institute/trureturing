@@ -1,0 +1,54 @@
+**Theorem 16.5 (exact feasibility for every fixed encoder).** For a fixed
+acquired encoder $e$ on (NAR.16.1), the following are equivalent:
+
+1. It supports finite adaptive current recovery in (NAR.16.3).
+2. It separates every pair $a,b$ with $a-b=d\mathbf1$ and $d\ne0$.
+3. It supports current recovery with one finite raw-call bound uniform
+   over all profiles, menu choices and legal unbounded lags.
+
+When condition 2 holds, a native construction uses at most
+
+$$
+C_e(S)=(r-|S|)\lfloor\log_2(2H+1)\rfloor
+\tag{NAR.16.15}
+$$
+
+fresh calls on every input with that $S$. Its bound over the menu is
+$\max_{S\in\mathcal M}C_e(S)\le(r-1)\lfloor\log_2(2H+1)\rfloor$.
+This is an attained upper bound for the specified encoder, not its
+minimum call count.
+
+**Proof.** Condition 3 implies condition 1. If condition 2 fails,
+Theorem 16.3 realizes a same-code pair with the identical whole current
+tree at positive distinct lags, refuting condition 1.
+
+For condition 2 implying condition 3, choose any public $i\in S$ and
+parse $z=z_i$. Set $A_\ell=\max(\lambda_0,z-H)$ and $B_\ell=z$.
+For every hidden slot $j\notin S$, its unknown exponent
+$n_j=jq+a_j+\ell$ lies in
+
+$$
+[jq+A_\ell,\ jq+B_\ell+H],
+\qquad B_\ell+H-A_\ell+1\le2H+1.
+\tag{NAR.16.16}
+$$
+
+Use exactly the native interval procedure (NAR.16.12)--(NAR.16.14)
+at $w_jR^s$ for each hidden slot. Visible $n_j$ are already parsed
+from their acquired literals. This obtains the whole normalized vector
+$x_j=n_j-jq$ with the fresh-call bound (NAR.16.15). It acquires clock
+values through finite native replies, without traversing whole trees.
+
+Enumerate the finite age cube using the fixed source-independent table
+for $e$. For each $b$ with the received code, let $h=x_i-b_i$ and keep
+it exactly when $h\ge\lambda_0$ and $x_j=b_j+h$ for every $j\in I$.
+The actual $a$ with $h=\ell$ survives. If two survivors $b,b'$ gave
+different $h,h'$, then $b-b'=(h'-h)\mathbf1$ would be a same-code
+nonzero common translation, contrary to condition 2. Return their unique
+common lag; uniqueness of the initial profile is unnecessary.
+This finite enumeration and interval search terminate on promised inputs.
+The intervals contain a uniformly bounded number of integers even when
+their endpoints, tree sizes and query words grow with $\ell$.
+Pointwise finite full-tree traversal alone would not have supplied this
+uniform raw-call conclusion. $\square$
+

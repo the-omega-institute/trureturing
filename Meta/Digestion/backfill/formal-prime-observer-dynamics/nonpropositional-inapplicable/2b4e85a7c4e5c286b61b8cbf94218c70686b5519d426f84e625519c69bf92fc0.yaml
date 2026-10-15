@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b4e85a7c4e5c286b61b8cbf94218c70686b5519d426f84e625519c69bf92fc0
+  normalized_sha256: sha256:2b4e85a7c4e5c286b61b8cbf94218c70686b5519d426f84e625519c69bf92fc0
+cas_ref: sha256:2b4e85a7c4e5c286b61b8cbf94218c70686b5519d426f84e625519c69bf92fc0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：183. 数域乘积公式作为高维观察校验：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 6021baf597b28de0df07184152b3d6be0f946a944c579f8a1a3a481625cdec8f
+    next_atom_id: 14288fb503341c64eb1588f8ada0280c584013b24ebe9f62030b1cb4804371d6

@@ -40,6 +40,14 @@ internal sealed class IntegralEgfTotientPeriodDocument : IScribeDocumentDefiniti
                 + "products of f to F in the coefficientwise topology; tprod(f) is the "
                 + "corresponding infinite product. The function distincts is Mathlib's "
                 + "Nat.Partition.distincts, and card is finite-set cardinality.")),
+            Node("exp_shift_power", "The factorial Stirling column",
+                Disp(Seq(Bound("n", "k"), Sp,
+                    Equality(Mul(Rat(Call("factorial", N())),
+                        Call("coeff", N(), Power(Shift(), K()))),
+                        Mul(Rat(Call("factorial", K())), Rat(Call("stirlingSecond", N(), K())))))),
+                "The binomial expansion and Stirling inclusion-exclusion identify "
+                    + "each column, including index and column zero.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("egf_shift_eq_stirling_transform", "The exponential Stirling bridge",
                 BridgeFormula(),
                 "Expand each power of exp(X)-1 by the binomial theorem. Powers of exp "

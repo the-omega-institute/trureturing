@@ -1,0 +1,63 @@
+**Assumption 13.1 (one retained code and a k-position future menu).**
+Use the actual finite ordered native trees, homomorphic $\rho$ and
+complete literal rows of Definitions 1.1--1.2. Fix public $P,D,H$ as in
+Definitions 11.2 and 11.4, with $H\ge0$ and $r=|A_D(P)|\ge1$. Keep the
+original enumeration $W_D=(w_0,\ldots,w_{m-1})$, $m=2^D$, and put
+$I=\{j:w_j\in A_D(P)\}$ and $b=H+1$. The source domain is exactly the
+separated-age family of Definition 11.4:
+
+$$
+\begin{aligned}
+X_a&=\mathcal B_D[(T_{jb+a_j})_{0\le j<m}],
+&T_n&=\rho^n\alpha,\\
+a&\in\{0,\ldots,H\}^{I},
+&a_j&=0\quad(j\notin I).
+\end{aligned}
+\tag{NAR.13.1}
+$$
+
+In particular, offsets remain $jb$ at the original cell indices;
+renumbering the exposed coordinates does not renumber these offsets.
+Choose a public integer $1\le k\le r$. The future menu consists of
+all $k$-subsets $S\subseteq I$, with associated cuts
+
+$$
+Q_S=W_D\setminus\{w_i:i\in S\}.
+\tag{NAR.13.2}
+$$
+
+The encoder receives only the truthfully acquired initial $R_P(X_a)$,
+exports one code before $S$ and the lag are known, and discards that
+initial row. The decoder receives the code, public $P,D,H,k,S$ and
+exactly the entire truthful later $R_{Q_S}(\rho^\ell X_a)$. Its target
+is the unknown elapsed update count $\ell$. The required quantifiers are
+
+$$
+\exists E,\mathsf{Dec}\quad
+\forall a\in\{0,\ldots,H\}^{I}\quad
+\forall S\subseteq I, |S|=k\quad
+\forall\ell\in L:\quad
+\mathsf{Dec}(S,E(R_P(X_a)),R_{Q_S}(\rho^\ell X_a))=\ell,
+\tag{NAR.13.3}
+$$
+
+where either $L=\mathbb N$ or $L=\mathbb N_{>0}$ is fixed publicly.
+The letter $k$ counts visible positions, never the lag. Let
+$N_H(r,k)$ be the smallest number of attained retained code values for
+this task. Theorems below show it is the same for the two choices of $L$.
+Its fixed-width binary representation price is
+$\lceil\log_2 N_H(r,k)\rceil$.
+
+Each capture is stationary and genuinely acquired, and the continuation
+is genuinely same-source, same-root and pure-$\rho$. These are premises,
+not information supplying $\ell$. All surviving source-bearing data
+count as code, including IDs, numeric epochs, clocks, logs, sizes,
+readable pointers or allocation distinctions and archives. The decoder
+gets no hidden subtree values, cross-row hidden links or unacquired
+whole-source profile. It does get every literal exterior label and
+bracket, every reached or absent-cut guard and every within-row hidden
+equality/disequality. Paid acquisition and lawful handoff are those of
+Assumptions 10.1 and 11.1. This finite source restriction and restricted
+future menu are essential; they do not replace the all-source or
+all-allowed-cut contracts of §11.
+

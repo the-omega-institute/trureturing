@@ -1,0 +1,8 @@
+**Corollary 13.4 (zero calls, zero literal budget and edge cuts).**
+Put $m=|G_*[\Theta_*]|=|F[\mathcal U_*]|\ge1$. On either side of
+(NBP.13.3), if $q=0$ or if $\ell=0$, feasibility is exactly
+$r\ge m$ and $K\ge m$, with the other upper budget arbitrary.
+A constant whole target always admits $r=K=1,q=\ell=0$.
+Empty cuts, a root cut and zero reached classes have that target;
+blocked cuts retain their complete predecessor guards.
+

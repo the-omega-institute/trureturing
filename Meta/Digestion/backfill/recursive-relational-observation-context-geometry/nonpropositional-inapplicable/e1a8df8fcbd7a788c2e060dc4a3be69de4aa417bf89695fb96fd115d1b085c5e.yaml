@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1a8df8fcbd7a788c2e060dc4a3be69de4aa417bf89695fb96fd115d1b085c5e
+  normalized_sha256: sha256:e1a8df8fcbd7a788c2e060dc4a3be69de4aa417bf89695fb96fd115d1b085c5e
+cas_ref: sha256:e1a8df8fcbd7a788c2e060dc4a3be69de4aa417bf89695fb96fd115d1b085c5e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第89.1节只规定有限乘积、边缘算子、筛选算子、零边缘空间和生成工作空间的记号，区分工作空间与实验输出的用语，不断言维数、可达性或恢复性质。
+    previous_atom_id: fb4da22098e70f53739802ff4ac2092aa32f18b481b96cf0dc95e1d307aee89c
+    next_atom_id: 142bffcf0af43059468dad4493b700d53eedea21a5db1231cc898e0b43c510dc

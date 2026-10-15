@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d7087893acb3c60b624bd3805bec08d9ad9505acb9b8b705e2bcb0a656499fb
+  normalized_sha256: sha256:2d7087893acb3c60b624bd3805bec08d9ad9505acb9b8b705e2bcb0a656499fb
+cas_ref: sha256:2d7087893acb3c60b624bd3805bec08d9ad9505acb9b8b705e2bcb0a656499fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第47.11节标题及导引只安排临界与次临界两部分的条件和引用记号，不独立提出命题。
+    previous_atom_id: ff990c2e6b2eb562d94fa7a213f9bf2e75d2509a302931a1c0a9bddb52491a82
+    next_atom_id: e4032259868d2945fc49d3c03a1af1a792e1728c28f4aaf36ad17b604cf3fc9c

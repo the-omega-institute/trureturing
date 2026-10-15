@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b8dd08fd52e4801a822d2c02f67e3292b06f37a39097f995b3786075d42138b4
+  normalized_sha256: sha256:b8dd08fd52e4801a822d2c02f67e3292b06f37a39097f995b3786075d42138b4
+cas_ref: sha256:b8dd08fd52e4801a822d2c02f67e3292b06f37a39097f995b3786075d42138b4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \mathcal R_\chi：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 69c03b07db639d02603048bde42b6dceba326c7b2ed5bc51fad9cd8d83bb66ef
+    next_atom_id: b45f9bbe5b54e6d5864fdfa33595d2ffcf24b2c68fe5019d56832783e1499431

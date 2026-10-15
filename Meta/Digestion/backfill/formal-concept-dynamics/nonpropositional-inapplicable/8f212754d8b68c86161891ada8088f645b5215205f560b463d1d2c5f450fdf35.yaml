@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f212754d8b68c86161891ada8088f645b5215205f560b463d1d2c5f450fdf35
+  normalized_sha256: sha256:8f212754d8b68c86161891ada8088f645b5215205f560b463d1d2c5f450fdf35
+cas_ref: sha256:8f212754d8b68c86161891ada8088f645b5215205f560b463d1d2c5f450fdf35
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 30. 随附、还原与涌现：本项只作篇章导引，介绍主题、组织范围或固定参数，没有定理或性质断言。
+    previous_atom_id: b158e64edba578291b9af04d599f83f676357fe45d09e702e6d7baab6fd90444
+    next_atom_id: a72182ba83cd5b9b878ef22c901691ce5bb1786e46c17fc4e328219bd6caacad

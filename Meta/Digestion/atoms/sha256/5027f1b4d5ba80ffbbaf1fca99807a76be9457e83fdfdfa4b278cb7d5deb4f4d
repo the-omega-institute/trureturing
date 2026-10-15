@@ -1,0 +1,42 @@
+**Definition 1.3 (Complete configurations and compliance).** At selected
+known $q$ and finite $M$, one source-blind stochastic observer is used
+under both labels, with the same initialization and bit-transition table.
+It may retune with $(q,r,c,\alpha,M)$, without continuity or a common table
+across different $q$. Immutable real transition probabilities have
+unrestricted precision. Fresh update coins are independent of the source
+and of previous fresh randomness.
+
+Every mutable retained distinction belongs to one of at most $M$ complete
+persistent configurations: initialization, registers, control and working
+phases, work buffers, retained random consequences or seeds, and both
+internally emitted labels. A nonterminal configuration undertakes a read
+of the next actual bit; entry into a label emits that label and stops.
+Any admissible more general action representation may be composed into
+the same-budget read-ready normal form of [SOURCE, Lemma 3.2][SOURCE].
+
+The only observations are one uninterrupted consecutive history from
+(1.5). There is no hidden source age, elapsed-time or read-count input,
+program counter, archive, random tape, separate history, source reset,
+free gap, skipped bit, probability response, true-label port or
+stopping-time decoder. All mutable information is counted. Fixed formulas
+for a transition row specify immutable entries of a finite table; they
+do not license uncounted arithmetic workspace during its execution.
+
+If the read prefix is $X_0,\ldots,X_{T-1}$, the paid cost is $T$.
+It includes every initial zero and tick, every failed suffix and holding
+interval, and any terminal partial interval. Write
+$\mathfrak A_M(e^{-s},\alpha)$ for the tables meeting all six conditions
+
+$$
+\begin{gathered}
+\mathsf P_0(D=1)\le\alpha,\qquad
+\mathsf P_1(D=0)\le\alpha,\\
+\mathsf P_0(T<\infty)=\mathsf P_1(T<\infty)=1,\\
+\mathbb E_0T<\infty,\qquad \mathbb E_1T<\infty.
+\end{gathered}
+\tag{1.6}
+$$
+
+Both paid means in every constructive claim concern the same selected
+table. This is the complete contract of [SOURCE, Definition 3.1][SOURCE].
+

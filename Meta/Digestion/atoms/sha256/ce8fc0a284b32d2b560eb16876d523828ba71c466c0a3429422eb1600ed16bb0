@@ -1,0 +1,25 @@
+**Proposition 10.3 (the proved direction of joint support).** Assume the
+charts in Definition 10.1 are exact. Joint signed support implies
+
+$$
+\forall h\in\mathbb N\;J_B(h),
+\tag{NIS.39}
+$$
+
+where $J_B(h)$ has exactly the meaning in (NIS.5). The witnesses here also
+share the displayed prefix of the datum's $W$.
+
+**Proof.** Given $h$, use (NIS.38) with $M=0$ and set
+$u_r=\Theta_{r,b_r}(\mathbf n_r,\mathbf z_r)$. Chart exactness gives
+$u_r\in D_r$, including every endpoint and exterior field, reached hole,
+partition bit and signed record. The last line of (NIS.38) gives
+$u_r\equiv_h W$ for every $r$, hence $u_r\equiv_h u_s$ for every $r,s$.
+This is one simultaneous tuple under the common producer contract. $\square$
+
+The direct implication needs no graph evaluator or continuity of the coding
+bijection. When finite native expressions are used in a completion bridge,
+their fixed-power prefix continuity is supplied by Definition 1.5 and
+[SFS, Definition 1.4][SFS], and their divergent atomic prefix bound by
+[SFS, Lemma 2.1][SFS] and [PAC, Definition 3.1, (PAC.8)][PAC]. These are
+distinct from effective evaluation of an arbitrary infinite code or graph.
+

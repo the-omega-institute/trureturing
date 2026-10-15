@@ -1,0 +1,15 @@
+**Proposition 213.9 (Strict cross-class freedom, with arbitrary background).**
+For any $1\le a<b<j<k\le L$ and $t\ge0$, fix $w_b=0$ and every bit
+outside $\{a,b,j,k\}$ to one. On the eight remaining words put A=t
+at odd parity of $(w_a,w_j,w_k)$ and C=t at even parity; set P=T=0.
+Call this Y. Let Z have only P=t on the four even-parity words.
+Then Y and Z have the same complete readings, $\beta=0$, $W=4t$,
+and both costs zero; K drops from $8t$ to the floor $4t$.
+For every full background $H\ge0$, Y+H and Z+H have identical
+readings and $\beta$, their K values differ by $4t$, and
+
+$$
+\Delta_{\mathcal C}(Y+H)=\Delta_{\mathcal C}(Z+H)
+                         \le\Delta_{\mathcal C}(H),\qquad\mathcal C=N,O.
+$$
+

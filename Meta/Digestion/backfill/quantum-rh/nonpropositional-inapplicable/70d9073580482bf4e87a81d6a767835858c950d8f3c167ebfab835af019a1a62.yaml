@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70d9073580482bf4e87a81d6a767835858c950d8f3c167ebfab835af019a1a62
+  normalized_sha256: sha256:70d9073580482bf4e87a81d6a767835858c950d8f3c167ebfab835af019a1a62
+cas_ref: sha256:70d9073580482bf4e87a81d6a767835858c950d8f3c167ebfab835af019a1a62
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节导引「九、把全部证明责任集中为一个明确的算术命题」只组织后续讨论或表格栏目，本 atom 不含独立数学命题；相邻条目的定理、公式及待证陈述不在本次结算范围内。
+    previous_atom_id: 1940b7502ed8b3d3d2c8441f7fe12f58ac2b3b4f143cf4c9a1010801513f6c61
+    next_atom_id: 133cd53ae906100769e5411a125a918d956083a503757e5f9d16830cf9c0deda

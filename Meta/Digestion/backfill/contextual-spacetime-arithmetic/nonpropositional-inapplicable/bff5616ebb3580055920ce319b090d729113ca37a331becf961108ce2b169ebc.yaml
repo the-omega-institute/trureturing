@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bff5616ebb3580055920ce319b090d729113ca37a331becf961108ce2b169ebc
+  normalized_sha256: sha256:bff5616ebb3580055920ce319b090d729113ca37a331becf961108ce2b169ebc
+cas_ref: sha256:bff5616ebb3580055920ce319b090d729113ca37a331becf961108ce2b169ebc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 65 的证明分段只论证全部有限实现的历史同构类计数，不另立命题。
+    previous_atom_id: 79846bfb43dbe9caf518cc8a19427e44f00649aaf4b0e179f3a99a7e3e201134
+    next_atom_id: bb1d3d38dfd1eaef2eaaf32c6db0976e40b4f31936e3f2c1cc66f71917a6af95

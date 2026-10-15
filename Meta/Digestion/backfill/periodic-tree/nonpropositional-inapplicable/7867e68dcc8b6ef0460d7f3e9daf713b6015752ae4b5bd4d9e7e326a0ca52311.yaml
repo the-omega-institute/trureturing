@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7867e68dcc8b6ef0460d7f3e9daf713b6015752ae4b5bd4d9e7e326a0ca52311
+  normalized_sha256: sha256:7867e68dcc8b6ef0460d7f3e9daf713b6015752ae4b5bd4d9e7e326a0ca52311
+cas_ref: sha256:7867e68dcc8b6ef0460d7f3e9daf713b6015752ae4b5bd4d9e7e326a0ca52311
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof for odd n.** The case n=1 gives a(1)=1. For n>1, if a(n) is pr…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: ac3986fb39b5907b378931b2017af86cbe3a116cec3901a670efa00a97b2cb4c
+    next_atom_id: eab3f3572b24202bdb3c396d203aa7586ca066ed594456ff369185b75b48ce65

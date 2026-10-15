@@ -1,0 +1,12 @@
+对任意条件后固定的索引集 $`I`$ 及 $`t\ge0`$，
+这一经典性质蕴含
+
+```math
+\mathbb E\left[e^{t\sum_{i\in I}\mathbf1_{\{i\in S\}}}
+                       \mid\mathcal D,U\right]
+ \le\prod_{i\in I}[1+(e^t-1)\pi_i]
+ \le\exp\left((e^t-1)\sum_{i\in I}\pi_i\right).
+```
+
+式 (29.7)。
+

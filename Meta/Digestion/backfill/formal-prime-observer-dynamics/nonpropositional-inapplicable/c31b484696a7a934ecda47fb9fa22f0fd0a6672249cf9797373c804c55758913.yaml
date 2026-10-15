@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c31b484696a7a934ecda47fb9fa22f0fd0a6672249cf9797373c804c55758913
+  normalized_sha256: sha256:c31b484696a7a934ecda47fb9fa22f0fd0a6672249cf9797373c804c55758913
+cas_ref: sha256:c31b484696a7a934ecda47fb9fa22f0fd0a6672249cf9797373c804c55758913
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 256.2（允许干预相对因果等价）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: d31bd0f783536f5eeff5de24c756483a6124643b75a8a28006b432180b936ca3
+    next_atom_id: 0df9556a069b63062374b1926a796b18454aed50004cffb9d93bc5e516f2a6d9

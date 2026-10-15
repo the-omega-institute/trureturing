@@ -1,0 +1,57 @@
+**Proposition 2.2 (two input-generated frames, with both source directions).**
+The complete input effectively generates the following two frames without any
+supplied representation certificate: the coarse old-row class frame, and the
+finite original-prefix refinement of [ARH, Proposition 3.2][ARH].
+
+Proof. For the coarse frame let $C$ be the old numbered-hole exterior and
+$\pi$ its partition. Choose one reached original representative $p_b$ per old
+class. Set $W(\mathbf v)=C[(v_{[j]})_j]$. Impose all pairwise inequalities
+$v_b\ne v_c$ for distinct classes, all old absent-address conditions, and every
+literal and signed predicate of (FFM.4) on this same filled tree. There is one
+cell and $d=0$. Filling gives the stipulated concrete exterior, reached set and
+partition and satisfies every retained record. Conversely any original $u\in D$
+gives $v_b=u|_{p_b}$, equal at all occurrences of its class and different across
+classes; filling reconstructs this same $u$. The recover/fill inverse is the
+full correspondence of [NativeCutFibers, `rowFiberEquiv`][CUT], including
+`legal_values_row` and the private `recover_fill` and `fill_injective` proofs.
+It retains classes outside the target. Navigation into a coordinate is handled
+by NSF's compiler, not by an observer reading that unknown coordinate for free.
+
+For the refinement choose the finite natural number
+
+$$
+a=1+\max\bigl(\{0\}\cup\{|q|:q\in Q\}
+ \cup\{|p|:(n,p,c)\in H_0\}
+ \cup\{|p|,|q|:(n,p,m,q,\bowtie)\in H_{\rm rel}\}\bigr).
+\tag{FFM.7}
+$$
+
+Replace each old class by each possible original depth-$a$ pattern: early leaves
+are concrete and reached frontier positions have coordinate names. Reuse one
+pattern and its coordinates at every occurrence of the class. Names are distinct
+for different classes and frontier positions. These finitely many pattern choices
+define the cells and their ordinary terms $W_\eta$. Choose one original occurrence
+of each frontier name as its representative $p_{\eta,i}$.
+
+Retain the whole old-class inequalities between their filled patterns. Every
+fixed endpoint either reaches a displayed original subterm, whose epoch-$n$ value
+is its interpreted $\rho^n$ image, or enters a displayed early leaf's finite
+iterate, with its actual reach guard computed before either sign is applied.
+This is ARH Proposition 3.2's endpoint analysis. It supplies exactly equivalent
+literal and whole signed conditions; invalid endpoints reject a cell for either
+sign. It also retains every uncut residual in the full target exterior. Filling
+a satisfying valuation therefore gives an original in $D$. Conversely an
+original in $D$ chooses its unique actual class patterns and actual frontier
+subtrees, satisfies those same guards and signs, and is reconstructed as itself.
+This proves both directions and disjointness, not just existence of replacement
+witnesses. The depth-pattern inverse is [NativeDepthPatterns, `depthEquiv`][DEPTH],
+with its private `fill_decompose` and `decompose_fill` proofs.
+
+Let $d=\max_b(|p_b|+a)$, with empty maximum zero. An inclusive prefix through $d$
+determines every chosen class pattern: at depth $a$ it already determines whether
+the frontier is reached, and below it records every early leaf and absence.
+Thus equal $d$-prefixes determine the same cell. Coordinates are actual reached
+subtrees in either direction, and all their repeated uses remain shared. With
+no old classes the exterior is already a concrete source; there is a single
+zero-coordinate cell. All constructions are finite. $\square$
+

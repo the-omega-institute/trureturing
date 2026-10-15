@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:a8747d0daf24965ac15280325fad5034269be870bcf2e66e94d0c2dea55919eb
+  normalized_sha256: sha256:a8747d0daf24965ac15280325fad5034269be870bcf2e66e94d0c2dea55919eb
+cas_ref: sha256:a8747d0daf24965ac15280325fad5034269be870bcf2e66e94d0c2dea55919eb
+coverage_gids:
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticInterval.quadratic_interval_closed_form
+    target_statement_id: sha256:78b78ec033f1cc777b3bdcbb5ea3aa752cd65c953f228b9ab56bff868488f42d
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticRadii.quadratic_inner_radius
+    target_statement_id: sha256:82f18ce6a40c30b1c58a1e03d4e4956f8fe6a112df999fd860af6178923c38b1
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticRadii.quadratic_inner_witness
+    target_statement_id: sha256:c1d0101d5f0f7e73d9f5ae3a2e81bd9bf8dc7db45557b540120cb9b9ed30d39e
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticRadii.quadratic_normal_form
+    target_statement_id: sha256:9c3a295dc04f00958b7a70604b28c6c0a71e3fa2a2ef8853fb6cbd8ade5f87b3
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticRadii.quadratic_outer_radius
+    target_statement_id: sha256:904b7b772aadec16f638b509d6ec0fdc123c042f9756b30a8d7c5d796b8319b4
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticRadii.quadratic_outer_witness
+    target_statement_id: sha256:3349bc5221bc0c50d23377259be45f946488ca8b1831a17c77407cddfa5a60b5
+receipts:
+  unresolved_subitems: []

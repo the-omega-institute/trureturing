@@ -1,3 +1,5 @@
+using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
 internal sealed class NativeWholeRowPlanDocument : IScribeDocumentDefinition
@@ -5,12 +7,13 @@ internal sealed class NativeWholeRowPlanDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan.";
     private static DocumentBlock Entry(string n, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("nativewholerowplan-" + n.Replace("_", "-").ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + n), H(title), StatementSource.WithoutFormula(),
+            DeclarationHandle.Create(Prefix + n), H(title), n == "representative_subtree" ? RepresentativeStatement() : StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Native finite whole-row criterion and lawful source fibers", H("NativeWholeRowPlan"), Blocks(
             Paragraph(Text("The finite preprocessing uses frontierList, classList, variableList, presentation, patternList, allPatterns and feasibleList to retain every cell and every variable. all_patterns_complete proves exhaustive enumeration; delta and delta_legal retain the complete joint old-class disequalities. boundList, collapse, allGround and groundBindings implement the normalized finite unifier classification used by planPair. pairPlans, exteriorVariables, cellPass, cellBudget, analyze and K0 combine it into the complete criterion and budget. pair_plan_correct supplies the semantic equality test, and the admitted-cell and whole-fiber service theorems use the successful criterion to select correct comparisons and attain that budget.")),
             Paragraph(Text("prefixAddresses, representative, phaseOneTasks, taskQueries, phaseOneQueries and taskOffset generate and locate the paid first-phase blocks. phaseOneReply, decodePattern and selectedPatterns recover the actual unique cell, as proved by phase_one_patterns_correct; phase_one_uniform_bound counts its calls. bindingAddress, bindingQueries, planQueries and phaseTwoQueries generate current-epoch template probes, while bindingsCheck, planCheck, pairReplies and relationReply reconstruct equality from their replies. pair_plan_correct and selected_cell_record_correct prove that renderRecord returns the entire original record. two_phase_uniform_bound bounds both query phases; recordRow recovers the least-index canonical row from that record.")),
+            Entry("representative_subtree", "Row-Determined Representative Subtrees", "For every literal row C, arbitrary complete class valuation v and appearing class d, the original canonical representative address reaches exactly v(d) in the filled row. Values need not be injective or images. Labels may be sparse, and every repeated occurrence uses its same class value. Native root experiments use these exact legal addresses on the entire actual fiber.", DescribeRole.Theorem),
             Entry("presentation", "presentation", "The structural frontier list and sorted retained class labels enumerate every original variable, including unused classes. An explicit list-index equivalence transports finPresentation without choice extraction.", DescribeRole.Definition),
             Entry("feasibleList", "feasibleList", "This executable list represents the complete finite feasible family. History is invariant throughout each cell, and every old class participates in feasibility.", DescribeRole.Definition),
             Entry("planPair", "planPair", "Run the actual finite unifier with occurs-check. Native failure rejects equality. Old-disequality collapse has priority over groundness. Genuine normalized bound keys are tested for empty variable support; free identity coordinates are excluded. pair_plan_correct turns this classification into an exact test of new-hole equality under all old disequalities, and selected_cell_record_correct uses those tests to recover the complete new record.", DescribeRole.Definition),
@@ -25,4 +28,16 @@ internal sealed class NativeWholeRowPlanDocument : IScribeDocumentDefinition
             Entry("phase_one_patterns_correct", "phase one patterns correct", "The retained representative reaches the actual old-class subtree. Original-present transport, paid block slicing and the supplied decoder identify the unique depth pattern, including early leaves and absent relative addresses. Native statement: theorem phase_one_patterns_correct (C : LiteralRow) (v : Classes C → Source) (d N : Nat) : selectedPatterns C d N ((phaseOneQueries C d N).map (fun q => readout q (substitution^[N] (evaluateRow (NativeCutFibers.extend C v) C)))) = fun b => (NativeDepthPatterns.decompose d (v b)).1", DescribeRole.Theorem),
             Entry("pair_plan_correct", "pair plan correct", "The same all-solutions parameterization retains every original variable and old inequality. Actual delayed-template probes decide ground bindings against all finite competing sources. Native statement: theorem pair_plan_correct {C : LiteralRow} {d : Nat} (η : Patterns C d) (v : Variables η → Source) (legal : Diseq (delta η) v) (q r : Address) (A B : Term (Variables η)) (passing : (planPair (presentation η) (delta η) q r A B).kind ≠ .feasibleNonground) (N : Nat) : let plan := planPair (presentation η) (delta η) q r A B planCheck N plan ((planQueries η N plan).map (fun a => readout a (substitution^[N] (evaluate v (wholeTerm η))))) = true ↔ NativeTermUnification.evaluate v A = NativeTermUnification.evaluate v B", DescribeRole.Theorem),
             Entry("selected_cell_record_correct", "selected cell record correct", "The entire second-phase chronological reply list yields the full literal record: concrete exterior, sorted reached holes, diagonals and every symmetrized equality pair. Native statement: theorem selected_cell_record_correct {C : LiteralRow} (Q : CutSet) (H : History) (hQ : CutPrefixFree Q) (η : Patterns C (requiredDepth Q H)) (pass : cellPass Q η = true) (v : Variables η → Source) (legal : Diseq (delta η) v) (N : Nat) : renderRecord Q η N ((phaseTwoQueries Q η N).map (fun a => readout a (substitution^[N] (evaluate v (wholeTerm η))))) = literalRecord Q (evaluate v (wholeTerm η))", DescribeRole.Theorem))));
+    private static StatementSource RepresentativeStatement()
+    {
+        Formula V(string n) => F.Id(n);
+        Formula Call(string n,params Formula[] a) => new Formula.Apply(Seq(Operatorname,Grp(V(n))),[.. a]);
+        Formula All(string n,Formula t,Formula b) => Seq(Forall,Sp,V(n),Colon,Sp,t,Comma,Sp,Open,b,Close);
+        var filled=Call("evaluateRow",Call("extend",V("C"),V("v")),V("C"));
+        var equation=Seq(Call("subtree",Call("representative",V("C"),V("d")),filled),
+            Sp,Eq,Sp,Call("some",Call("v",V("d"))));
+        var bound=All("C",V("LiteralRow"),All("v",Call("Valuation",Call("Classes",V("C")),V("Source")),
+            All("d",Call("Classes",V("C")),equation)));
+        return StatementSource.FromAuthor(Disp(bound));
+    }
 }

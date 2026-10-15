@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b15e30ad8d9f145c0057f09efd671706fee3c5a168d91f53d0c5bfef1b3df301
+  normalized_sha256: sha256:b15e30ad8d9f145c0057f09efd671706fee3c5a168d91f53d0c5bfef1b3df301
+cas_ref: sha256:b15e30ad8d9f145c0057f09efd671706fee3c5a168d91f53d0c5bfef1b3df301
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 1. 仓库锚点与理论边界：本项只作篇章导引，介绍主题、组织范围或固定参数，没有定理或性质断言。
+    previous_atom_id: 9484dcca1a91621d79f8c47e43516bc47e4f9611cf5c6adf1d92d12d32a9a910
+    next_atom_id: 22c3b447c568451a822d9beb427897ee2836edd728417e2a6c9fc44b22090a8a

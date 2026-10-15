@@ -5,9 +5,12 @@
    anchors: []
    utility: none
    digest: Actual m-bonacci word, sentinel parsing and fully right-special descent. -/
+
+/- proof_shape: factor_len: bind-only
+   consumer: D5.S1.Words.Episturmian.MorphicDecomposition.wordPrefix_length
+   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16158
+-/
 import D5.S1.Words.RankOneMorphismIterationBoundDefs
-import Mathlib.Data.List.Infix
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -92,7 +95,7 @@ theorem word_eq_iterate (k n : ℕ) (hn : n < (image (phi hm) k (zero hm)).lengt
   exact (hn'.getElem (by have := iterate_growth hm (n + 1); omega)).trans
     (hk.getElem hn).symm
 
-private theorem factor_len (x : ℕ → Fin m) (i n : ℕ) : (factor x i n).length = n := by
+theorem factor_len (x : ℕ → Fin m) (i n : ℕ) : (factor x i n).length = n := by
   simp [factor]
 
 theorem factor_add (x : ℕ → Fin m) (i n t : ℕ) :

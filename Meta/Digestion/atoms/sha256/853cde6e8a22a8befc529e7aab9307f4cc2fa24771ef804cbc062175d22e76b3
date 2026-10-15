@@ -1,0 +1,32 @@
+**Proof.** Reuse the exact grammar
+$\mathcal I::=\beta\mid E\mid\langle\mathcal I,\mathcal I\rangle$
+and its disjoint parser from (RA.2207). Induction on that grammar shows
+that every subtree of an image is either $\alpha$ or an image:
+the children of $E$ are $\beta,\alpha$, and the children of a general
+image pair are images to which the induction applies. Consequently every
+branch-valued class subtree of an actual image is itself an image.
+A leaf-valued class is exactly its declared literal leaf. Induction on
+the finite exterior then identifies image membership at each visible
+subterm with (NBP.10.4): a pair is $E$ precisely in the first disjunct,
+and otherwise it is an image precisely when both children are images.
+This proves necessity in (NBP.10.6). The same exterior induction gives
+sufficiency when every branch-valued class is an image. Injectivity makes
+at most one distinct class equal to either leaf, proving the inclusion
+from right to left in (NBP.10.7).
+
+For the other inclusion, fix $\theta\in\Theta_*$. Give its leaf-valued
+classes their forced literal leaves. Give its branch-valued classes
+pairwise distinct finite non-atomic image values, obtained simultaneously
+from Retained Literal Root Depth Theorem 2.2 with prescribed intrinsic
+rank one; its construction writes these values as $\rho p_i$ with
+arbitrarily deep leaves. They are branches, mutually distinct, and
+distinct from both leaves. Equation (NBP.10.6) makes the resulting
+injective filling an actual image. The native legal-row fiber and
+$\delta$ then produce an actual finite origin with exactly $R_*$.
+This proves (NBP.10.7), including zero branch classes and zero classes.
+For the last distinction in the statement, take a root hole. Its type
+$\mathsf{br}$ is feasible, but $\langle\alpha,\alpha\rangle$ is a
+branch outside the image: it is neither $E$ nor a pair of images.
+Equation (NBP.10.6) requires the actual branch filling to be an image
+as well as its root assignment to be feasible. $\square$
+

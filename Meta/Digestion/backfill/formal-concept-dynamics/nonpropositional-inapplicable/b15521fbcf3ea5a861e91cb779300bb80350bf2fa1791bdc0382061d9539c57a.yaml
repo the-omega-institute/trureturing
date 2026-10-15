@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b15521fbcf3ea5a861e91cb779300bb80350bf2fa1791bdc0382061d9539c57a
+  normalized_sha256: sha256:b15521fbcf3ea5a861e91cb779300bb80350bf2fa1791bdc0382061d9539c57a
+cas_ref: sha256:b15521fbcf3ea5a861e91cb779300bb80350bf2fa1791bdc0382061d9539c57a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“均衡”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 95448d7856969a7c809f394b8a23fd7d0adac9df98a0805accf3b2eec0e48168
+    next_atom_id: c615e034e09b0625b8561c25af4d3c10ca04a80bb840d35d405ef4c7c3181912
