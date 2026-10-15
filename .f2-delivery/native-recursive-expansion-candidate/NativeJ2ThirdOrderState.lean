@@ -103,13 +103,15 @@ private theorem state_from_eight_paths {m : ℕ} (F : SupplyFrame m 3)
         (q.2.1, if q.2.2 then 1 else 0) := by
     rcases q with ⟨t, i, side⟩
     cases side
-    · simpa only [specialPort, Fin.val_zero, ↓reduceIte] using (hports t i).1
-    · simpa only [specialPort, Fin.val_one, one_ne_zero, ↓reduceIte] using (hports t i).2
+    · simpa only [specialPort, Bool.false_eq_true, ↓reduceIte, Fin.val_zero] using (hports t i).1
+    · simpa only [specialPort, Bool.true_eq_true, ↓reduceIte, Fin.val_one, one_ne_zero] using (hports t i).2
   have hp : Function.Injective p := by
     intro q r he
     have hr := congrArg Subtype.val he
     rw [hraw q, hraw r] at hr
-    have hi := native_opposite_marked_port_injective F (by omega) hB hr
+    have hi : (q.1, (q.2.1, if q.2.2 then (1 : Fin 2) else 0)) =
+        (r.1, (r.2.1, if r.2.2 then (1 : Fin 2) else 0)) :=
+      native_opposite_marked_port_injective F (by omega) hB (by simpa only [B] using hr)
     have ht := congrArg Prod.fst hi
     have hidx := congrArg (fun z : Bool × (Fin 4 × Fin 2) => z.2.1) hi
     have hs := congrArg (fun z : Bool × (Fin 4 × Fin 2) => z.2.2) hi
@@ -142,14 +144,15 @@ private theorem state_from_eight_paths {m : ℕ} (F : SupplyFrame m 3)
   have hj' : ActualCyclePartition w (cuts p false ∪ cuts p true)
       [⟨_, _, d⟩, ⟨_, _, cross⟩, ⟨_, _, g⟩, ⟨_, _, a₀⟩,
         ⟨_, _, b₀⟩, ⟨_, _, q⟩, ⟨_, _, e⟩, ⟨_, _, f⟩] := by
-    simpa only [List.ofFn_succ, List.ofFn_zero] using hj
+    change ActualCyclePartition w (cuts p false ∪ cuts p true) (List.ofFn joint)
+    exact hj
   obtain ⟨p₁, p₂, o₀, o₂, hs, hp₀, hp₁, hcut₀, hcut₁, _⟩ :=
     native_third_order_boundary_base F B Subtype.val p hp hports w hw
       d cross g a₀ b₀ q e f hj'
   let S : StateFor F (by omega) hB := {
     oppositeFrame := B
     canonicalOpposite := rfl
-    sameSelected := (swap_selected_perm F (by omega)).toFinset_eq
+    sameSelected := List.toFinset_eq_of_perm _ _ (swap_selected_perm F (by omega))
     sameBase := rfl
     sameTerminal := rfl
     sameProtectedPair := by
