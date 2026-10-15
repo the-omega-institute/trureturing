@@ -1,6 +1,7 @@
 /- Generated prepared source. Not compiled or kernel accepted.
 All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTypes
+import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteRawCut00000Root
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMOriginalAnchor3269Modular128Root
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -9,9 +10,8 @@ set_option maxRecDepth 65536
 namespace D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
 open D5.S0.Certificates
 open EJMOriginalReplayAssembly (coordinate prefixCache prefixPartial)
-theorem raw_cut_00000 : EJMOriginalReplayAssembly.Accepted 12 0 ⟨415, by decide⟩ := by
-  unfold EJMOriginalReplayAssembly.Accepted
-  decide +kernel
+theorem raw_cut_00000 : EJMOriginalReplayAssembly.Accepted 12 0 ⟨415, by decide⟩ :=
+  D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteRawCut00000.accepted_actual_context
 
 theorem response_cut_00000 : CanonicalResponse ⟨12, 2, 0, 415, 0, 2061, 65536⟩ :=
   response_of_raw ⟨12, 2, 0, 415, 0, 2061, 65536⟩ (by decide) (by decide) raw_cut_00000
