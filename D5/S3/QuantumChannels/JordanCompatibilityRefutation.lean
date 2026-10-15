@@ -303,4 +303,87 @@ private theorem compatible_witness : Compatible Phi Psi := by
     exact (measurePrepare_marginals jointEffects R).2.trans
       (congrArg (fun L => measurePrepare L R) (funext jointEffects_marginals.2))
 
+private def contract (A : A4) (U V : M4) : M4 :=
+  fun a b => Matrix.trace (Matrix.kroneckerMap (· * ·) U V *
+    A.submatrix (fun x : Fin 4 × Fin 4 => (a, x)) (fun y : Fin 4 × Fin 4 => (b, y)))
+
+private def B (A : A4) (i j : Fin 4) : M4 := contract A (E i) (F j)
+
+private theorem contract_apply (A : A4) (U V : M4) (a b : Fin 4) :
+    contract A U V a b = ∑ x : Fin 4 × Fin 4, ∑ y : Fin 4 × Fin 4,
+      A (a, x) (b, y) * U y.1 x.1 * V y.2 x.2 := by
+  unfold contract
+  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.kroneckerMap_apply,
+    Matrix.submatrix_apply]
+  rw [Finset.sum_comm]
+  exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => by ring
+
+private theorem contract_add_left (A : A4) (U W V : M4) :
+    contract A (U + W) V = contract A U V + contract A W V := by
+  unfold contract
+  ext a b
+  rw [Matrix.add_kronecker, Matrix.add_mul, Matrix.trace_add]
+  rfl
+
+private theorem contract_add_right (A : A4) (U V W : M4) :
+    contract A U (V + W) = contract A U V + contract A U W := by
+  unfold contract
+  ext a b
+  rw [Matrix.kronecker_add, Matrix.add_mul, Matrix.trace_add]
+  rfl
+
+private theorem contract_smul_left (A : A4) (c : ℝ) (U V : M4) :
+    contract A (c • U) V = c • contract A U V := by
+  unfold contract
+  ext a b
+  rw [Matrix.smul_kronecker, Matrix.smul_mul, Matrix.trace_smul]
+  rfl
+
+private theorem contract_smul_right (A : A4) (c : ℝ) (U V : M4) :
+    contract A U (c • V) = c • contract A U V := by
+  unfold contract
+  ext a b
+  rw [Matrix.kronecker_smul, Matrix.smul_mul, Matrix.trace_smul]
+  rfl
+
+private theorem image_blocks (A : A4) :
+    jordanAction Phi Psi A = Matrix.blockDiagonal (fun p : Fin 4 × Fin 4 => B A p.1 p.2) := by
+  ext ⟨a, i, j⟩ ⟨b, k, l⟩
+  have hk (c d : Fin 4 × Fin 4) :
+      MatrixMap.kron Phi Psi (Matrix.single c d 1) (i, j) (k, l) =
+        (if i = k then E i d.1 c.1 else 0) * (if j = l then F j d.2 c.2 else 0) := by
+    rcases c with ⟨c, c'⟩
+    rcases d with ⟨d, d'⟩
+    rw [MatrixMap.kron_def]
+    simp [Phi, Psi, measurePrepare_single, Matrix.single_apply,
+      Prod.mk.injEq, ite_and, mul_ite, Finset.sum_ite_irrel]
+  unfold jordanAction
+  rw [MatrixMap.kron_def]
+  simp only [LinearMap.id_apply, Matrix.single_apply, ite_and,
+    ite_mul, one_mul, zero_mul, Finset.sum_ite_irrel, Finset.sum_ite_eq',
+    Finset.mem_univ, if_true, Finset.sum_const_zero, hk]
+  rw [Matrix.blockDiagonal_apply']
+  by_cases hik : i = k
+  · subst k
+    by_cases hjl : j = l
+    · subst l
+      simp only [if_true, B, contract_apply, Fintype.sum_prod_type]
+      exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ =>
+        Finset.sum_congr rfl fun z _ => Finset.sum_congr rfl fun w _ => by ring
+    · simp [hjl]
+  · simp [hik]
+
+private theorem B_possemidef (A : A4)
+    (hT : (jordanAction Phi Psi A).PosSemidef) (i j : Fin 4) :
+    (B A i j).PosSemidef := by
+  rw [image_blocks] at hT
+  have hp := hT.submatrix (fun a : Fin 4 => (a, (i, j)))
+  have he : (Matrix.blockDiagonal (fun p : Fin 4 × Fin 4 => B A p.1 p.2)).submatrix
+      (fun a : Fin 4 => (a, (i, j))) (fun a : Fin 4 => (a, (i, j))) = B A i j := by
+    ext a b
+    change (if (i, j) = (i, j) then B A i j a b else 0) = B A i j a b
+    exact if_pos rfl
+  rw [he] at hp
+  exact hp
+
 end D5.S3.QuantumChannels.JordanCompatibilityRefutation
