@@ -1,0 +1,9 @@
+**证明。** 用 $\nu$ 的条件核和 $\mu_Y$ 构造 $\widetilde\nu(dx,dy)=\nu(dx\mid y)\mu_Y(dy)$。同一 $Y$ 边缘下，二元 Bernoulli 距离给出
+
+$$
+\operatorname{TV}(\mu,\widetilde\nu)=\int|a-b|\,d\mu_Y.
+$$
+
+另一方面，保持 $\nu(dx\mid y)$ 不变只改变 $Y$ 边缘，所以
+$\operatorname{TV}(\nu,\widetilde\nu)=\operatorname{TV}(\nu_Y,\mu_Y)\le\operatorname{TV}(\mu,\nu)$，最后一个不等式是投影的数据处理。三角不等式即得 (3.1)。该不等式对条件概率核在 $\nu_Y$ 零集上的每个可测延拓均成立；若另有 $\mu_Y\ll\nu_Y$，则左侧积分不依赖于此延拓。$\square$
+

@@ -1,0 +1,22 @@
+**定理 3.2（隐藏滤波 TV 到实际输出平方缺陷）。** 在原联合律 $J_\theta$ 下定义
+
+$$
+\begin{aligned}
+\alpha_\infty&=\mathcal L(H_0\mid X_{-\infty:-1}),&
+\alpha_j&=\mathcal L(H_0\mid X_{-j:-1}),\\
+\beta_\infty&=\mathcal L(H_1\mid X_{1:\infty}),&
+\beta_j&=\mathcal L(H_1\mid X_{1:j}),
+\end{aligned}
+\tag{3.2}
+$$
+
+其中 $j=0$ 的有限侧字段为空。则对所有 $j\ge0$，
+
+$$
+e_L(j)\le2\,\mathbb E_{J_\theta}\operatorname{TV}(\alpha_\infty,\alpha_j),\qquad
+e_R(j)\le2\,\mathbb E_{J_\theta}\operatorname{TV}(\beta_\infty,\beta_j).
+\tag{3.3}
+$$
+
+这一步不要求后验带、隐藏非退化或任何滤波稳定性假设。
+
