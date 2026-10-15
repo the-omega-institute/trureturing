@@ -266,17 +266,21 @@ private lemma columns39_coordinates
     (a : Fin 4) (i j : Bit) :
     twoBasis.equivFun (columns39 a) (i, j) =
       u6 i j a / 6 := by
+  have h : ∀ (u v : Qubit) (a b : Bit),
+      twoBasis.repr (TensorProduct.tmul ℂ u v) (a, b) = u a * v b :=
+    fun u v a b => twoBasis_tmul u v a b
   fin_cases a <;> fin_cases i <;> fin_cases j <;>
-    norm_num [columns39.eq_1, u6.eq_1, ket22.eq_1] <;>
-    simp_rw [← Module.Basis.equivFun_apply, twoBasis_tmul] <;> norm_num
+    norm_num [columns39.eq_1, u6.eq_1, ket22.eq_1, h]
 
 private lemma columns40_coordinates
     (a : Fin 4) (i j : Bit) :
     twoBasis.equivFun (columns40 a) (i, j) =
       t3 i j a / 3 := by
+  have h : ∀ (u v : Qubit) (a b : Bit),
+      twoBasis.repr (TensorProduct.tmul ℂ u v) (a, b) = u a * v b :=
+    fun u v a b => twoBasis_tmul u v a b
   fin_cases a <;> fin_cases i <;> fin_cases j <;>
-    norm_num [columns40.eq_1, t3.eq_1, ket22.eq_1] <;>
-    simp_rw [← Module.Basis.equivFun_apply, twoBasis_tmul] <;> norm_num
+    norm_num [columns40.eq_1, t3.eq_1, ket22.eq_1, h]
 
 private lemma factorwise_apply (z : Original) (q : Config) :
     factorwise z q =
