@@ -390,6 +390,86 @@ compression: variational restriction gives $m_L^+\le m_{L,N}^+$.
 A positivity certificate still requires the retained block and its
 complete coupling allowance.
 
+### Transport the trial upper bound to the actual retained Schur margin
+
+The same source-reported trial certificate also bounds the actual
+Schur margin in the original1281-dimensional orthonormal cosine
+coordinates. This is an application of the existing variational Schur
+identity and the Neumann spectral projection estimate, not a new
+general theorem or a rerun of Zhu's interval certificate.
+
+Put $a=\log27/2$, $L=8/5$ and $b=8.61\times10^{-121}$. Section11.1
+and Table3 of the inspected Zhu v2 source use200 odd-index Dirichlet
+sine modes, with highest index399. Taking that reported geometric-side
+certificate as input, there is a nonzero real even $f_*$ in this trial
+space with $Q(f_*)\le b\|f_*\|_2^2$. Its zero extension to $(-a,a)$
+has the same full Weil energy. It lies in $H^1(-a,a)$ because each
+trial mode vanishes at $\pm L$, and its derivative satisfies
+
+$$
+\|f_*'\|_2^2\le
+\left(\frac{399\pi}{2L}\right)^2\|f_*\|_2^2.
+$$
+
+Let $P$ retain the actual even modes0 through1280. Parseval for the
+Neumann derivative form, with first discarded frequency $1281\pi/a$,
+gives
+
+$$
+\|(I-P)f_*\|_2^2
+\le\left(\frac{a}{1281\pi}\right)^2\|f_*'\|_2^2
+<\frac1{36}\|f_*\|_2^2.
+$$
+
+Here $8/5<a<5/3$ and
+$399(5/3)/((16/5)1281)=3325/20496<1/6$. Thus
+$\|Pf_*\|_2^2>35\|f_*\|_2^2/36$, in particular $Pf_*\ne0$.
+On the same closed-form block identification and positive exterior
+$H_N$ used above, the existing variational identity yields
+
+$$
+S_N=A_N-C_N^*H_N^{-1}C_N,\qquad
+\langle Pf_*,S_NPf_*\rangle
+=\inf_y Q(Pf_*+y)\le Q(f_*),
+$$
+
+where the infimum is over the exterior form domain. Consequently,
+conditional on that source certificate and the stated form interfaces,
+
+$$
+\lambda_{\min}(S_N)<\frac{36}{35}b
+=8.856\times10^{-121}<9\times10^{-121}.
+$$
+
+The same upper ceiling applies to every legal residual lower target
+$A_N-U(X)\preceq S_N$, in these original orthonormal coordinates.
+It does not bound the retained compression $A_N$ alone. The exterior
+part of $f_*$ is retained in the variational completion; no inequality
+$Q(Pf_*)\le Q(f_*)$ is assumed.
+
+There is also a directional requirement on a successful inverse
+comparison. Normalize $v_*=Pf_*/\|Pf_*\|_2$ and, for a chosen exterior
+embedding $E$ and trial $X$, put $R_X=C_N-H_NEX$. The existing
+inverse-residual identity gives
+
+$$
+\langle v_*,[S_N-(A_N-U(X))]v_*\rangle
+=\langle R_Xv_*,(W-H_N^{-1})R_Xv_*\rangle.
+$$
+
+Thus if $A_N-U(X)\succeq0$, its nonnegative comparison loss in this
+same direction must be strictly below $9\times10^{-121}$. This is a
+necessary directional bound, not a required uniform operator-norm
+error or a proved estimate of the actual residual.
+
+This determines neither sign. It rules out treating a computed
+$10^{-11}$ scale as the expected positive minimum, even when the
+auxiliary finite solve is well conditioned. A proof using additive
+error allowances must compare them with its actual directional margin;
+the upper ceiling supplies no lower bound and dictates no universal
+precision requirement. A change of coordinates must transport the
+mass norm along with the form.
+
 ### Reuse precision-parametric arithmetic suppliers
 
 The [actual c27 arithmetic packet](https://github.com/the-omega-institute/trureturing-experiments/tree/main/docs/reports/weil-c27)
