@@ -1482,3 +1482,400 @@ or a solution of the independent fixed-Hamiltonian minimax problem.
 [ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_ACQUIRED_CONTINUATION_LIMITS.md
 
 ## 追加锚（本行以下为增补区）
+
+## 12. A fixed-filter common instrument with error below 149/1000
+
+**Definition 12.1 (fixed filter and exact-time output).** Retain the
+experiment, common-input premise and complete metric of Definitions
+2.3, 3.1, 3.2 and 4.2, including all twelve actual histories. The
+existence of a minimizing
+common channel is already supplied by Theorem 8.4, and its error is
+strictly above $L_{\rm full}$ by Theorem 9.3. The scalar-live channel
+$\Phi_0$ remains the distinct processor of Proposition 10.1. In the
+ordered basis $(+,-,2)$ of $V$, put
+
+$$
+\begin{aligned}
+K_{\mathrm{ff}}&=\operatorname{diag}\left(1,\frac1{\sqrt2},
+                                  \sqrt{\frac{21}{32}}\right),\\
+D_{\mathrm{ff}}&=I_V-K_{\mathrm{ff}}^\dagger K_{\mathrm{ff}}
+       =\operatorname{diag}\left(0,\frac12,\frac{11}{32}\right),\\
+h_{\mathrm{ff}}(t)&=\frac2{(1+t)^2},\qquad
+w=(0,\tfrac14,\tfrac12,\tfrac14,0).
+\end{aligned}
+\tag{CG.87}
+$$
+
+For every complex matrix $A\in M_3(\mathbb C)$ define one linear map
+$\Phi_{\mathrm{ff}}$ by its live block and five original-mode failure measures:
+
+$$
+\begin{aligned}
+\Phi_{\mathrm{ff},\mathrm{live}}(A)&=K_{\mathrm{ff}} A K_{\mathrm{ff}}^\dagger,\\
+\Phi_{\mathrm{ff},i}(A)(dt)&=w_i\operatorname{tr}(D_{\mathrm{ff}}A)h_{\mathrm{ff}}(t)\,dt\,P_f
+                         \qquad(0\leq i\leq4).
+\end{aligned}
+\tag{CG.88}
+$$
+
+The output time is the exact $t\in[0,1]$, equivalently $6+t$.
+Modes $1$ and $3$ remain distinct, and mode index $4$ retains its original
+name $13$. The map assigns zero measure to all additional abort,
+rejection and other zero-ideal sectors. It has no singular time part.
+These are specifications of the entire output, not postselection rules.
+All coefficients are fixed before the specimen arrives; no coefficient
+uses its unknown history or its old-cut survival mass.
+
+**Theorem 12.2 (constructive full-output upper bound).** The map
+$\Phi_{\mathrm{ff}}$ is CPTP on the whole complex matrix algebra, and for the
+unchanged minimax quantity (CG.20),
+
+$$
+\boxed{
+L_{\rm full}<E_*\leq E(\Phi_{\mathrm{ff}})
+       <\frac{104759}{704000}<\frac{149}{1000}.
+}
+\tag{CG.89}
+$$
+
+The strict lower comparison reuses Theorem 9.3 and the credited lower
+bound of Theorem 6.1; no new lower-bound proof is asserted. The upper
+bound retains the joint live quantum
+block, every original failure-mode label and the full exact-time law.
+
+Proof. First establish legality independently of performance on the
+catalogue. The density $h_{\mathrm{ff}}$ is nonnegative, bounded and measurable, and
+
+$$
+\int_0^1h_{\mathrm{ff}}(t)\,dt
+ =\left[-\frac2{1+t}\right]_0^1=1.
+\tag{CG.90}
+$$
+
+For each original label $i$, introduce Kraus densities
+
+$$
+J^{\mathrm{ff}}_{i,-}(t)=\sqrt{\frac{w_i h_{\mathrm{ff}}(t)}2}\,|f\rangle\langle-|,
+\qquad
+J^{\mathrm{ff}}_{i,2}(t)=\sqrt{\frac{11w_i h_{\mathrm{ff}}(t)}{32}}\,
+                                      |f\rangle\langle2|.
+\tag{CG.91}
+$$
+
+Their Kraus sum is precisely the density in (CG.88), for every complex
+$A$, including non-Hermitian matrices. For every ancillary dimension
+$n$ and every positive $X\in M_n\otimes M_3$, the live image is
+$(I_n\otimes K_{\mathrm{ff}})X(I_n\otimes K_{\mathrm{ff}})^\dagger\geq0$. Each failure
+density is a sum of the corresponding positive conjugations by
+$I_n\otimes J^{\mathrm{ff}}_{i,j}(t)$. Its integral over any Borel time set is
+positive. The bounded integrable densities define finite measures, so
+this proves positivity at every amplification on the full joint output
+space. Moreover,
+
+$$
+K_{\mathrm{ff}}^\dagger K_{\mathrm{ff}}+
+ \sum_{i=0}^4\int_0^1
+ \bigl(J^{\mathrm{ff}}_{i,-}(t)^\dagger J^{\mathrm{ff}}_{i,-}(t)
+       +J^{\mathrm{ff}}_{i,2}(t)^\dagger J^{\mathrm{ff}}_{i,2}(t)\bigr)\,dt
+ =K_{\mathrm{ff}}^\dagger K_{\mathrm{ff}}+D_{\mathrm{ff}}=I_V.
+\tag{CG.92}
+$$
+
+Thus the map is completely positive and trace preserving, without a
+restriction to real matrices, diagonal states or the twelve inputs.
+
+It also has an explicit extension to the entire original five-mode
+complex algebra: in the original basis $(e_0,e_1,e_2,e_3,e_4)$ take
+
+$$
+\widehat K_{\mathrm{ff}}=\operatorname{diag}
+ \left(1,\frac1{\sqrt2},\sqrt{\frac{21}{32}},
+                           \frac1{\sqrt2},1\right),\qquad
+\widehat D_{\mathrm{ff}}=\operatorname{diag}
+ \left(0,\frac12,\frac{11}{32},\frac12,0\right).
+\tag{CG.93}
+$$
+
+Use (CG.88) with these operators. Kraus densities
+$\sqrt{w_i h_{\mathrm{ff}}(t)(\widehat D_{\mathrm{ff}})_{jj}}\,|f\rangle\langle e_j|$
+prove complete positivity by the same all-amplification argument;
+$\widehat K_{\mathrm{ff}}^\dagger\widehat K_{\mathrm{ff}}+\widehat D_{\mathrm{ff}}=I_5$ proves trace
+preservation. On inputs supported in $V$ this extension agrees with
+$\Phi_{\mathrm{ff}}$ and has no live component outside $V$.
+
+Next evaluate the complete error. For $0<z<64$ and $y\in\{5,16,27\}$ write
+
+$$
+a_z^{\mathrm{ff}}=\begin{pmatrix}
+\sqrt{z/128}\\ \sqrt{(64-z)/128}\\1/\sqrt2
+\end{pmatrix},\qquad
+s_y=\frac y{y+6},\qquad
+\xi_y^{\mathrm{ff}}=\sqrt{s_y}\,a_{y+6}^{\mathrm{ff}},\qquad B_y^{\mathrm{ff}}=\xi_y^{\mathrm{ff}}(\xi_y^{\mathrm{ff}})^\dagger
+\quad(y\in\{5,16,27\}).
+\tag{CG.94}
+$$
+
+Here $a_y^{\mathrm{ff}}$ is a unit vector, and $B_y^{\mathrm{ff}}$ is the unnormalized target live
+block. For $\epsilon=e^{-i\beta}\in\{1,-1\}$ and
+$\eta=e^{-i\beta}(-1)^m$, let
+$U_{\epsilon,\eta}=\operatorname{diag}(\epsilon,\eta,1)$.
+Equation (CG.7) gives the actual input vector $U_{\epsilon,\eta}a_y^{\mathrm{ff}}$,
+and (CG.15) gives target live block
+$U_{\epsilon,\eta}B_y^{\mathrm{ff}}U_{\epsilon,\eta}^\dagger$ and failure
+densities $w_i f_y(t)P_f$, where $f_y(t)=6y/(y+6t)^2$.
+The four allowed $(\beta,m)$ give all four sign pairs. Since $K_{\mathrm{ff}}$ and
+$D_{\mathrm{ff}}$ commute with each $U_{\epsilon,\eta}$, unitary invariance of
+the live trace norm and the identical failure laws show that all four
+errors at a fixed $y$ are equal. This uses only the covariance of this
+explicit map; it imposes no restriction on other maps in (CG.20).
+
+Define its live and failure masses and its positive live overlap by
+
+$$
+\begin{aligned}
+S_y^{\mathrm{ff}}&=\|K_{\mathrm{ff}}a_y^{\mathrm{ff}}\|^2=\frac{y+148}{256},\qquad
+r_y^{\mathrm{ff}}=1-S_y^{\mathrm{ff}}=\frac{108-y}{256},\\
+C_y^{\mathrm{ff}}&=\langle K_{\mathrm{ff}}a_y^{\mathrm{ff}},\xi_y^{\mathrm{ff}}\rangle
+ =\frac y{128}+\sqrt{M_y^{\mathrm{ff}}}+\sqrt{N_y^{\mathrm{ff}}},\\
+M_y^{\mathrm{ff}}&=\frac{y(64-y)(58-y)}{32768(y+6)},\qquad
+N_y^{\mathrm{ff}}=\frac{21y}{128(y+6)}.
+\end{aligned}
+\tag{CG.95}
+$$
+
+Lemma 5.1, applied with weights $S_y^{\mathrm{ff}},s_y$, gives the full live norm
+
+$$
+L_y^{\mathrm{ff}}:=\|K_{\mathrm{ff}}a_y^{\mathrm{ff}}(a_y^{\mathrm{ff}})^\dagger K_{\mathrm{ff}}^\dagger-B_y^{\mathrm{ff}}\|_1
+       =\sqrt{(S_y^{\mathrm{ff}}+s_y)^2-4(C_y^{\mathrm{ff}})^2}.
+\tag{CG.96}
+$$
+
+In particular this norm counts all three live coherences. For the five
+separate failure sectors, positivity of $P_f$ and $\sum_i w_i=1$
+give exactly
+
+$$
+F_y^{\mathrm{ff}}:=\sum_{i=0}^4\int_0^1
+ \|w_i(r_y^{\mathrm{ff}}h_{\mathrm{ff}}(t)-f_y(t))P_f\|_1\,dt
+ =\int_0^1|r_y^{\mathrm{ff}}h_{\mathrm{ff}}(t)-f_y(t)|\,dt.
+\tag{CG.97}
+$$
+
+This is an equality of the labelled-sector norm sum. The two zero-weight
+labels and all zero-ideal extra sectors contribute zero because the map
+actually outputs zero there. There are no uncounted singular or abort
+masses. Thus the original half full cq norm, on all twelve histories, is
+
+$$
+E(\Phi_{\mathrm{ff}})=\frac12\max_{y\in\{5,16,27\}}(L_y^{\mathrm{ff}}+F_y^{\mathrm{ff}}).
+\tag{CG.98}
+$$
+
+The failure integrals admit exact analytic control over the entire time
+interval. At the two endpoint heights the density ratios satisfy
+
+$$
+\begin{aligned}
+\frac{r_5^{\mathrm{ff}}h_{\mathrm{ff}}(t)}{f_5(t)}
+ &=\frac{103}{3840}\left(\frac{5+6t}{1+t}\right)^2
+ \leq\frac{12463}{15360}<1,\\
+\frac{r_{27}^{\mathrm{ff}}h_{\mathrm{ff}}(t)}{f_{27}(t)}
+ &=\frac1{256}\left(\frac{27+6t}{1+t}\right)^2
+ \geq\frac{1089}{1024}>1.
+\end{aligned}
+\tag{CG.99}
+$$
+
+Indeed $(y+6t)/(1+t)$ has derivative $(6-y)/(1+t)^2$;
+the first ratio is maximized at $1$, and the second minimized there.
+Using $\int f_y=1-s_y$ consequently gives the exact values
+
+$$
+F_5^{\mathrm{ff}}=(1-s_5)-r_5^{\mathrm{ff}}=\frac{403}{2816},\qquad
+F_{27}^{\mathrm{ff}}=r_{27}^{\mathrm{ff}}-(1-s_{27})=\frac{379}{2816}.
+\tag{CG.100}
+$$
+
+For the middle height the ratio
+
+$$
+\frac{r_{16}^{\mathrm{ff}}h_{\mathrm{ff}}(t)}{f_{16}(t)}
+ =\frac{23}{3072}\left(\frac{16+6t}{1+t}\right)^2
+\tag{CG.101}
+$$
+
+is strictly decreasing from $23/12>1$ to $2783/3072<1$.
+It crosses one exactly once, at
+
+$$
+t_{\mathrm{ff}}=\frac{8\sqrt{23}-16\sqrt3}{16\sqrt3-3\sqrt{23}}
+ \in(0,1).
+\tag{CG.102}
+$$
+
+The cumulative signed difference is
+
+$$
+R_{\mathrm{ff}}(t)=\int_0^t(r_{16}^{\mathrm{ff}}h_{\mathrm{ff}}(u)-f_{16}(u))\,du
+ =\frac{t(88-27t)}{32(1+t)(8+3t)},\qquad R_{\mathrm{ff}}(1)=\frac{61}{704}.
+\tag{CG.103}
+$$
+
+Splitting the absolute-value integral at the sole crossing gives
+$F_{16}^{\mathrm{ff}}=2R_{\mathrm{ff}}(t_{\mathrm{ff}})-R_{\mathrm{ff}}(1)$. The uniform rational certificate
+
+$$
+\frac3{32}-R_{\mathrm{ff}}(t)
+ =\frac{24-55t+36t^2}{32(1+t)(8+3t)}>0
+                  \qquad(0\leq t\leq1)
+\tag{CG.104}
+$$
+
+holds because its denominator is positive and its numerator is
+$36(t-55/72)^2+431/144>0$. Hence
+
+$$
+F_{16}^{\mathrm{ff}}=2R_{\mathrm{ff}}(t_{\mathrm{ff}})-\frac{61}{704}<\frac{71}{704}.
+\tag{CG.105}
+$$
+
+Equations (CG.96), (CG.100) and (CG.105) also specify the exact error of
+this particular map: substitute $2R_{\mathrm{ff}}(t_{\mathrm{ff}})-61/704$ for $F_{16}^{\mathrm{ff}}$ in
+(CG.98). No time sampling or discretization enters the equality.
+
+It remains to certify the live bounds strictly by rational arithmetic.
+The following positive rational numbers are lower bounds for the two
+radicals in (CG.95):
+
+| $y$ | $M_y^{\mathrm{ff}}$ | $N_y^{\mathrm{ff}}$ | $\ell_y^{\mathrm{ff}}<\sqrt{M_y^{\mathrm{ff}}}$ | $n_y^{\mathrm{ff}}<\sqrt{N_y^{\mathrm{ff}}}$ |
+| --- | --- | --- | --- | --- |
+| $5$ | $15635/360448$ | $105/1408$ | $20827/100000$ | $27308/100000$ |
+| $16$ | $63/1408$ | $21/176$ | $21152/100000$ | $34542/100000$ |
+| $27$ | $10323/360448$ | $189/1408$ | $16923/100000$ | $36637/100000$ |
+
+For an explicit certificate for all six comparisons, the positive square
+remainders are
+
+| $y$ | $M_y^{\mathrm{ff}}-(\ell_y^{\mathrm{ff}})^2$ | $N_y^{\mathrm{ff}}-(n_y^{\mathrm{ff}})^2$ |
+| --- | --- | --- |
+| $5$ | $643867/3520000000000$ | $16187/13750000000$ |
+| $16$ | $49607/13750000000$ | $88149/27500000000$ |
+| $27$ | $1995867/3520000000000$ | $657541/110000000000$ |
+
+Set
+
+$$
+(c_5^{\mathrm{ff}},c_{16}^{\mathrm{ff}},c_{27}^{\mathrm{ff}})=
+ \left(\frac{5204}{10000},\frac{6819}{10000},
+                                      \frac{74653}{100000}\right),
+\qquad
+(u_5^{\mathrm{ff}},u_{16}^{\mathrm{ff}},u_{27}^{\mathrm{ff}})=
+ \left(\frac{309}{2000},\frac18,\frac{81}{500}\right).
+\tag{CG.106}
+$$
+
+Here $y/128+\ell_y^{\mathrm{ff}}+n_y^{\mathrm{ff}}-c_y^{\mathrm{ff}}$ equals, respectively,
+$1/80000$, $1/25000$ and $3/400000$. Thus $C_y^{\mathrm{ff}}>c_y^{\mathrm{ff}}>0$.
+The remaining exact positive remainders are
+
+$$
+\begin{aligned}
+(u_5^{\mathrm{ff}})^2-(S_5^{\mathrm{ff}}+s_5)^2+4(c_5^{\mathrm{ff}})^2
+ &=\frac{20019639}{3097600000000}>0,\\
+(u_{16}^{\mathrm{ff}})^2-(S_{16}^{\mathrm{ff}}+s_{16})^2+4(c_{16}^{\mathrm{ff}})^2
+ &=\frac{857889559}{193600000000}>0,\\
+(u_{27}^{\mathrm{ff}})^2-(S_{27}^{\mathrm{ff}}+s_{27})^2+4(c_{27}^{\mathrm{ff}})^2
+ &=\frac{11020208559}{77440000000000}>0.
+\end{aligned}
+\tag{CG.107}
+$$
+
+Since (CG.96) is the square root of a nonnegative norm square,
+$C_y^{\mathrm{ff}}>c_y^{\mathrm{ff}}$ and (CG.107) imply $L_y^{\mathrm{ff}}<u_y^{\mathrm{ff}}$. Combining these strict
+live bounds with (CG.100) and (CG.105), the three orbit errors are,
+respectively, strictly below
+
+$$
+\frac12\left(\frac{309}{2000}+\frac{403}{2816}\right)
+ =\frac{104759}{704000},\qquad
+\frac12\left(\frac18+\frac{71}{704}\right)
+ =\frac{159}{1408},\qquad
+\frac12\left(\frac{81}{500}+\frac{379}{2816}\right)
+ =\frac{104399}{704000}.
+\tag{CG.108}
+$$
+
+The first of these three rational bounds is the largest, and
+
+$$
+\frac{149}{1000}-\frac{104759}{704000}
+ =\frac{137}{704000}>0.
+\tag{CG.109}
+$$
+
+This proves the upper inequalities in (CG.89); $E_*\leq E(\Phi_{\mathrm{ff}})$
+is immediate from Definition 4.2. The strict lower inequality reuses
+Theorem 9.3 without altering its witness or proof.
+
+The improvement over $\Phi_0$ is strict for the achieved errors, not
+only for their displayed upper certificates. At height $y=5$, the
+live trace of $\Phi_0$ is $7/11$ and its ideal live trace is $5/11$.
+The trace norm of that Hermitian live difference is at least the absolute
+trace difference $2/11$. Its full failure norm is exactly $2/11$ by
+(CG.78). Consequently Theorem 10.2's exact achieved error obeys
+
+$$
+E(\Phi_{\mathrm{ff}})<\frac{104759}{704000}
+ <\frac2{11}\leq E(\Phi_0)=M.
+\tag{CG.110}
+$$
+
+The middle strict comparison follows from
+$2/11-104759/704000=23241/704000>0$. The scalar-live construction and
+its error formula remain valid. $\square$
+
+**Convention 12.3 (credit and the remaining observation/control bridge).**
+The fixed-filter construction and its rational certificate are credited
+supplied ordinary mathematical results; their complete proof is retained
+above. Their mathematical provenance is repo-derived, using mature
+channel and trace-norm tools; no literature priority is claimed. The
+all-amplification meaning of complete positivity and the finite-matrix
+extension framework are literature-attested in Heinosaari, Jivulescu,
+Reeb and Wolf, *Extending quantum operations*,
+[arXiv:1205.0641v3](https://arxiv.org/abs/1205.0641v3), §2.1 and §6.1,
+[J. Math. Phys. 53, 102208](https://doi.org/10.1063/1.4755845).
+Those finite-output results do not supply this continuous-time upper
+bound; (CG.90)–(CG.92) prove legality of the actual measure-valued output
+directly. The weighted pure-block norm is reused from Lemma 5.1, and the
+original history/target laws and $L_{\rm full}$ retain their credit
+in §§1–7. Theorem 8.4 supplies existential attainment, Theorem 9.3 supplies
+the strict lower comparison, and Proposition 10.1 and Theorem 10.2 supply
+the distinct scalar-live feasible channel and its exact error. These
+are ordinary uncompiled mathematical proofs, with no Lean-verified claim.
+
+The processor receives one normalized reached-old-live-cut specimen.
+Fixed common metadata may be carried along unchanged in every sector;
+tensoring identical fixed metadata preserves the norm calculation. No
+history label, callback, helper specimen, old-cut mass as a weight, or
+free retry enters (CG.88). The emitted live block and failure records
+are the joint canonical output of the same instrument. Modes and times
+remain separate, every branch is unnormalized, and first failure is
+absorbing. Sign covariance is used only to evaluate this particular
+map's twelve errors. It neither reduces the class of all allowed maps
+to fixed filters nor asserts that every sign-covariant map is Schur.
+No physical complex-conjugation operation is used.
+
+The map is a feasible abstract common CPTP simulator in Definition 3.1's
+comparison class. Implementing it with the original calibrated control
+menu still requires an actuator/interface bridge; the source-indexed
+operators $K_x$ in (CG.14) do not provide that common implementation.
+Open problems 7.3 and 11.2 still require the exact $E_*$, an identified
+optimal common channel and a matching lower certificate over the whole
+class. Existence of some minimizing channel is already settled by
+Theorem 8.4. The fixed-filter bound sharpens the feasible side of that
+problem; it gives neither optimality of $\Phi_{\mathrm{ff}}$ nor a
+further class-wide reduction or dual certificate. It does not close the
+continuing AURIC FIB ATOM research goal.
+
+## 追加锚（本行以下为增补区）
