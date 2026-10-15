@@ -72,7 +72,8 @@ def tensorPower (n : ℕ) {d : ℕ}
 
 def repeatKet (n : ℕ) {d : ℕ}
     (φ : Fin d → ℂ) : TensorVec n d :=
-  fun x => ∏ j : Fin n, φ (x j)
+  fun x => D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap
+    (fun _ : Fin n => Unit) (fun _ : Fin n => fun a _ => φ a) x (fun _ => ())
 
 def equalState (n : ℕ) {d : ℕ}
     (φ : Fin d → ℂ) : TensorMat n d :=
@@ -372,7 +373,7 @@ private theorem psi_repeat (π : Equiv.Perm (Fin n)) (φ : Fin d → ℂ) :
     psi (d := d) π *ᵥ repeatKet n φ = repeatKet n φ := by
   rw [psi_mulVec]
   funext x
-  simp only [repeatKet.eq_1]
+  simp only [repeatKet.eq_1, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap]
   calc
     _ = ∏ j : Fin n, φ (x (π j)) := by
       apply Finset.prod_congr rfl
@@ -382,7 +383,8 @@ private theorem psi_repeat (π : Equiv.Perm (Fin n)) (φ : Fin d → ℂ) :
 
 private theorem repeat_norm (φ : Fin d → ℂ) (hφ : UnitVector φ) :
     (∑ x : OccupancyWordSectors.Word (Fin d) n, star (repeatKet n φ x) * repeatKet n φ x) = 1 := by
-  simp only [repeatKet.eq_1, star_prod, ← Finset.prod_mul_distrib]
+  simp only [repeatKet.eq_1, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+    star_prod, ← Finset.prod_mul_distrib]
   rw [sum_product (fun _ i => star (φ i) * φ i)]
   simp only [show (∑ i : Fin d, star (φ i) * φ i) = (1 : ℂ) from hφ,
     Finset.prod_const_one]
