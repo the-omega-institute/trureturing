@@ -2334,3 +2334,664 @@ programme completion accompanies them.
 [ForneyParity]: https://arxiv.org/html/1306.6264v2
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Whole-scope forest certificates on the same parity carrier
+
+**Convention 20.1 (two certificate mechanisms and their consumer).**
+Sections 20–25 compare two explicitly defined upper-bound mechanisms:
+positive whole-scope reweighting with a pointwise global identity, and
+maximum-entropy completion on selected whole stars. They share the
+actual carrier, positive law and paid realization of §§12–13 and 17.
+Their numerical optima are not identified with each other. The results
+concern individual native templates and a mandatory vanishing-loss step
+using these mechanisms. Definition 11.1's unrestricted all-size and
+optimizer-cofinality obligations remain the target.
+
+**Definition 20.2 (the shared carrier and graph hypothesis).** Let
+$G=(V,E)$ be a connected simple 4-regular graph, $n=|V|\ge5$, such that
+$G-v$ is connected for every $v\in V$. Use exactly Definition 12.2's
+actual owned edge replies, total guarded decoders and seven target
+factors at depth three. Write $s\in\mathbb F_2^E$ for their one common
+assignment, $x(s)\in S_3^V$ for Theorem 12.3's unique actual lift,
+$\operatorname{st}(v)$ for the four incident edges, and $H$ for (GDB.55).
+There are $|E|=2n$ shared variables; every original whole-block weight
+is used once. At Definition 12.4's law on the entire 123-state $S_3$,
+put $A=63/619$, $B=1/619$ and
+
+$$
+\begin{aligned}
+\Phi_v(s)&=\begin{cases}A,&(Hs)_v=0,\\ B,&(Hs)_v=1,\end{cases}
+& W(s)&=\prod_{v\in V}\Phi_v(s),\\
+Z_G&=\sum_{s\in\mathbb F_2^E}W(s)
+=2^n\big[(A+B)^n+(A-B)^n\big].
+\end{aligned}
+\tag{GDB.84}
+$$
+
+The last equality is credited Corollary 13.2, not a new partition
+calculation. Formulas below also allow arbitrary positive parameters
+$A>B$ on this same finite carrier; statements about the original
+probability law use the specified $63:1$ values. No original state,
+variable shape, owner guard or target is removed.
+
+There is such a graph for every integer $n\ge5$: on vertices modulo
+$n$, take the edges $\{i,i+1\}$ and $\{i,i+2\}$, oriented
+$i\to i+1,i+2$. This is the simple four-regular circulant $G_n$.
+Its cycle of step-one edges, after deletion of a vertex, contains a
+path through all remaining vertices. Thus it satisfies the stated
+connected-deletion hypothesis. Its orientation has two incoming and
+two outgoing edges, as required by Definition 12.2.
+
+**Definition 20.3 (globally compensating positive reweightings).**
+Choose finitely many proper subsets $F_j\subsetneq V$, positive rational
+numbers $\theta_j$ summing to one, and arbitrary strictly positive
+tables $\psi_{jv}:\mathbb F_2^{\operatorname{st}(v)}\to(0,\infty)$ for
+$v\in F_j$. Require the single global identity
+
+$$
+\prod_j\left[\prod_{v\in F_j}
+       \psi_{jv}(s_{\operatorname{st}(v)})\right]^{\theta_j}
+= W(s)\qquad\text{for every }s\in\mathbb F_2^E.
+\tag{GDB.85}
+$$
+
+This allows compensation between different original scopes and different
+submodels. It does not impose a separate identity at each vertex.
+Empty subsets are allowed and their products are one. Set
+
+$$
+Z_j=\sum_{s\in\mathbb F_2^E}\prod_{v\in F_j}
+      \psi_{jv}(s_{\operatorname{st}(v)}),\qquad
+U=\sum_j\theta_j\log_2 Z_j,\qquad
+\rho_v=\sum_{j:v\in F_j}\theta_j.
+\tag{GDB.86}
+$$
+
+Every sum retains all $2n$ original variables, including those free in
+that submodel. The forest subclass additionally requires $G[F_j]$ to
+be a forest for every $j$. Its selected factor-variable incidence graph
+is acyclic after isolated variables are set aside: shared variables
+subdivide exactly the edges of $G[F_j]$, and its other incidences are
+leaves. Thus each $Z_j$ admits exact finite tree sum-product evaluation
+for arbitrary full four-bit tables. The class includes no scope splitting,
+auxiliary variables, cyclic residual correction or additional certificate
+rule. These are analytical sums, not source operations.
+
+**Proposition 20.4 (soundness and finite identity checking).** Every
+reweighting in Definition 20.3 satisfies $\log_2 Z_G\le U$. If $A,B$
+and all table entries are positive real algebraic numbers, the rational
+mixture and global identity have finite exact algebraic checks.
+
+Proof. Put $a_j(s)=\prod_{v\in F_j}\psi_{jv}(s_{\operatorname{st}(v)})$.
+Finite weighted Hölder gives
+$\sum_s\prod_j a_j(s)^{\theta_j}\le\prod_j(\sum_s a_j(s))^{\theta_j}$.
+Use (GDB.85) and take logarithms. For the checking assertion, clear
+the rational denominators of the $\theta_j$. At every one of the
+finitely many common assignments, (GDB.85) becomes an equality of
+products with nonnegative integer exponents. Positivity makes this
+clearing reversible; exact algebraic equality is decidable. This is
+per-input verification, not an all-size native cap verifier. $\square$
+
+## 21. Exact optimum with global compensation and an extensive forest gap
+
+**Lemma 21.1 (the cycle action on whole stars).** Under Definition
+20.2, write $K=\ker H$. Its projection on each star is exactly
+
+$$
+K|_{\operatorname{st}(v)}
+ =\{u\in\mathbb F_2^4:\textstyle\sum_a u_a=0\}.
+\tag{GDB.87}
+$$
+
+Also, for every proper $F\subsetneq V$, the rows of $H$ indexed by
+$F$ are independent. Under uniform counting on $\mathbb F_2^E$,
+$H_Fs$ is uniform on $\mathbb F_2^F$.
+
+Proof. Every element of $K$ has even incident parity. Conversely choose
+any even collection of edges incident to $v$. Pair their other endpoints
+and join each pair by a path in the connected graph $G-v$. The mod-two
+sum of these paths and the selected incident edges has even degree at
+every vertex and exactly the desired restriction at $v$. Paths may
+intersect: mod-two addition preserves the even-degree assertion. This
+proves (GDB.87), including the empty selection.
+
+As in Theorem 13.1, $H^{\mathsf T}b=0$ says $b_u=b_v$ at every edge;
+connectedness makes $b$ constant. The sole nonzero row dependence is
+therefore the sum of all rows. No proper subset contains that dependence.
+Consequently $H_F$ is onto, each value has $2^{2n-|F|}$ preimages,
+and its uniform image is the stated uniform law. This counting identity
+does not assert independence under the weighted native Gibbs law.
+$\square$
+
+**Theorem 21.2 (complete optimum on fixed proper scopes).** Fix the
+mixture $(\theta_j,F_j)$ of Definition 20.3 and positive $A>B$. A feasible
+global identity requires $\rho_v>0$ at every vertex. If these appearances
+are positive, the minimum over all positive real tables satisfying
+(GDB.85), with arbitrary global compensation, is exactly
+
+$$
+\min_{\boldsymbol\psi} U
+=2n+\sum_{v\in V} f(\rho_v),\qquad
+f(t)=t\log_2\frac{A^{1/t}+B^{1/t}}2\quad(0<t\le1).
+\tag{GDB.88}
+$$
+
+It is attained by $\psi_{jv}(u)=\Phi_v(u)^{1/\rho_v}$. For rational
+$A,B$ and rational mixture data these attaining tables are algebraic.
+The lower bound includes nonalgebraic positive tables as well.
+
+Proof. First average the local logarithms over the common cycle action:
+
+$$
+\bar\ell_{jv}(u)=\frac1{|K|}\sum_{z\in K}
+    \log_2\psi_{jv}(u+z|_{\operatorname{st}(v)}).
+$$
+
+Every translate of the global log identity has the same right side,
+since $H(s+z)=Hs$. Averaging therefore preserves that identity. For
+fixed $j$, log-partition is convex in all its local log-table entries:
+its Hessian, up to the positive logarithm conversion factor, is a
+covariance matrix. Equivalently this convexity follows from finite
+Hölder. Translating all tables simultaneously by a fixed $z$ merely
+reindexes the same common summation variable $s$, leaving $Z_j$
+unchanged. Jensen thus shows that replacing the tables by
+$2^{\bar\ell_{jv}}$ cannot increase $\log_2 Z_j$, and hence cannot
+increase $U$. This is finite-sum symmetrization, not an action made
+available on the unknown source.
+
+By (GDB.87), the averaged table is constant on each parity class.
+Write its two values as $\alpha_{jv},\beta_{jv}$. Proper-row independence
+in Lemma 21.1 gives, including $F_j=\varnothing$,
+
+$$
+\log_2 Z_j=2n+\sum_{v\in F_j}
+          \log_2\frac{\alpha_{jv}+\beta_{jv}}2.
+\tag{GDB.89}
+$$
+
+Let $\varphi_v(0)=A$, $\varphi_v(1)=B$, and
+$h_v(b)=\sum_{j:v\in F_j}\theta_j\log_2\psi_{jv}(b)$ for these
+symmetrized tables. The image of $H$ is exactly the even-total-parity
+subspace by Theorem 13.1. Thus (GDB.85) is
+$\sum_v[h_v(y_v)-\log_2\varphi_v(y_v)]=0$ for every even-total $y$.
+At $y=0$ it gives $\sum_v c_v=0$, where
+$c_v=h_v(0)-\log_2 A$. Comparing it with every two-bit flip gives
+$d_u+d_v=0$ for distinct $u,v$, where
+$d_v=h_v(1)-\log_2 B-c_v$. With at least three vertices, three such
+pair comparisons force every real $d_v$ to vanish. Consequently
+
+$$
+h_v(0)=\log_2 A+c_v,\qquad h_v(1)=\log_2 B+c_v,
+\qquad\sum_v c_v=0.
+\tag{GDB.90}
+$$
+
+If $\rho_v=0$, both values of $h_v$ are zero, contradicting $A>B$.
+This proves necessity of positive appearances even before optimization.
+
+For $\rho_v>0$, apply convexity of
+$L(a,b)=\log_2[(2^a+2^b)/2]$ with probabilities
+$\theta_j/\rho_v$ over the submodels containing $v$. Its contribution
+to $U-2n$ is at least
+
+$$
+\rho_v L\left(\frac{\log_2 A+c_v}{\rho_v},
+               \frac{\log_2 B+c_v}{\rho_v}\right)
+=c_v+f(\rho_v).
+\tag{GDB.91}
+$$
+
+The constants sum to zero. Together with the preceding symmetrization
+this proves the lower bound for every original feasible table array.
+For the stated power tables, each vertex's aggregate exponent in
+(GDB.85) is one. They are therefore feasible without compensation.
+They depend only on parity, and (GDB.89) evaluates their objective as
+exactly the right side of (GDB.88). This proves attainment and both
+directions of the optimum. Rational powers of positive rationals are
+positive algebraic numbers. $\square$
+
+**Theorem 21.3 (uniform extensive forest excess).** At the fixed law
+of Definition 12.4, every feasible forest reweighting of Definition
+20.3, on every graph satisfying Definition 20.2, obeys
+
+$$
+\begin{aligned}
+U-\log_2 Z_G
+&\ge n\kappa-\log_2[1+(31/32)^n]>n\kappa-1,\\
+\kappa&=\frac13+\frac23\log_2(63^{3/2}+1)-\log_2 64
+>\delta:=\frac13+\log_2\frac{63}{64}>\frac14.
+\end{aligned}
+\tag{GDB.92}
+$$
+
+In particular this class has no uniformly vanishing normalized
+per-template error on the unbounded actual-native family $G_n$.
+
+Proof. For a nonempty induced forest $F$, let $c\ge1$ be its component
+count. Counting incident edges and bounding those leaving $F$ gives
+
+$$
+4|F|=2(|F|-c)+|\partial F|\le2(|F|-c)+4(n-|F|),
+\qquad |F|\le\frac{2n-c}{3}\le\frac{2n-1}{3}.
+\tag{GDB.93}
+$$
+
+The empty subset also has size at most $(2n-1)/3$. In particular
+$\sum_v\rho_v=\sum_j\theta_j|F_j|\le2n/3$.
+The function $f$ is convex as the perspective of log-sum-exp, with
+fixed inputs $\log_2 A,\log_2 B$. Direct differentiation gives
+
+$$
+f'(t)=h_2\left(\frac{A^{1/t}}{A^{1/t}+B^{1/t}}\right)-1\le0.
+\tag{GDB.94}
+$$
+
+Jensen and monotonicity therefore give
+$\sum_v f(\rho_v)\ge n f(n^{-1}\sum_v\rho_v)\ge n f(2/3)$.
+Insert Theorem 21.2 and subtract (GDB.84). Normalization by $619$
+cancels and gives (GDB.92). Dropping the positive $1$ inside
+$63^{3/2}+1$ gives $\kappa>\delta$. Finally $\delta>1/4$ is
+exactly the comparison
+
+$$
+64^{12}=4722366482869645213696
+<7818376656957655759362=2\,63^{12}.
+\tag{GDB.95}
+$$
+
+Also $0<(31/32)^n<1$, so its displayed logarithm is less than one.
+The class is nonempty: equally mix the singleton sets $\{v\}$ and
+use $\Phi_v^n$ at their only scopes. No size extrapolation or numerical
+logarithm estimate is used. $\square$
+
+## 22. Whole-star maximum-entropy bounds with exact global marginals
+
+**Definition 22.1 (a separate variational certificate class).** Let
+$\mathfrak F(G)=\{F\subseteq V:G[F]\text{ is a forest}\}$. For any
+one actual probability law $P$ on $\mathbb F_2^E$, set
+
+$$
+\Psi_F(P)=\sum_{a\in E}H_P(S_a)
+ +\sum_{v\in F}\left[H_P(S_{\operatorname{st}(v)})
+                  -\sum_{a\ni v}H_P(S_a)\right].
+\tag{GDB.96}
+$$
+
+For a probability vector $\theta$ on the finite family $\mathfrak F(G)$,
+define
+
+$$
+\begin{aligned}
+U_\theta^{\rm ent}
+ &=\max_{P\in\Delta(\mathbb F_2^E)}
+       \left[\sum_F\theta_F\Psi_F(P)+\mathbb E_P\log_2 W\right],\\
+U_{\rm exact}^{\rm ent}
+ &=\max_{P\in\Delta(\mathbb F_2^E)}
+       \left[\min_{F\in\mathfrak F(G)}\Psi_F(P)
+                        +\mathbb E_P\log_2 W\right].
+\end{aligned}
+\tag{GDB.97}
+$$
+
+All full original star weights remain in the energy, including those
+not selected by $F$. These are finite continuous objectives and their
+maxima exist. The second expression allows the best forest separately
+at each actual law and gives the method exact global realizability.
+
+The entropy certificate class reports an upper at least its displayed
+variational value, optionally after replacing the actual marginal set
+by any outer set containing the singleton and all whole-star marginals
+of every actual law. Entropies in that outer set must be defined from
+normalized distributions on the indicated full scopes. Mixtures may
+be optimized. No Gibbs-only constraint, cyclic entropy correction,
+change of variables or additional proof rule is included. This class
+is defined independently of Definition 20.3; no equivalence of their
+optimized bounds is assumed.
+
+**Lemma 22.2 (exact forest maximum-entropy completion, including zeros).**
+For $F\in\mathfrak F(G)$, $\Psi_F(P)$ is exactly the maximum entropy
+of a law $Q$ with the same selected entire-star marginals as $P$ and
+the same singleton marginals at every edge. In particular
+$H(P)\le\Psi_F(P)$ and
+$\log_2Z_G\le U_{\rm exact}^{\rm ent}\le U_\theta^{\rm ent}$.
+
+Proof. Root each component of the selected-star incidence forest.
+Start with its root's whole-star marginal. Attach each successive star
+using its conditional law of the newly introduced variables given its
+one shared edge variable. The selected stars have the running
+intersection property: a child meets previously introduced variables
+only in that parent separator. All separator laws agree because they
+come from $P$. On a zero-probability separator event choose any
+conditional distribution; that event is never sampled. Uncovered
+edge variables are independent with their given singleton laws, and
+separate components are independent. Induction shows that the resulting
+law has every required marginal. Its entropy is the sum of the star
+entropies minus one singleton entropy per shared separator, plus the
+uncovered singleton entropies, which is (GDB.96).
+
+For any other $Q$ with these marginals, apply the entropy chain rule
+in the same rooted order. Conditioning on all previous variables can
+only reduce each new-star conditional entropy relative to conditioning
+on its separator alone; subadditivity bounds separate components and
+uncovered variables. This gives the same expression as an upper bound.
+The construction attains it, proving the maximum statement with no
+positivity assumption.
+
+For completeness, the positive Gibbs law $Q_G=W/Z_G$ satisfies
+$H(P)+\mathbb E_P\log_2W=\log_2Z_G-D_2(P\Vert Q_G)$.
+Maximizing gives the finite Gibbs variational identity. Replace $H(P)$
+by the upper $\min_F\Psi_F(P)$, then by its convex-mixture upper,
+to obtain the displayed inequalities. $\square$
+
+**Theorem 22.3 (extensive entropy excess even with exact marginals).**
+For every $n\ge8$ and every graph satisfying Definition 20.2, at the
+same fixed full-support law,
+
+$$
+U_\theta^{\rm ent}\ge U_{\rm exact}^{\rm ent}
+\ge\log_2Z_G+n\delta+\frac13-\log_2[1+(31/32)^n]
+>\log_2Z_G+\frac n6.
+\tag{GDB.98}
+$$
+
+The same lower bound applies to all specified outer marginal
+relaxations. Thus enforcing exact joint marginal realizability does
+not give this mechanism a uniformly sublinear log-mass excess.
+
+Proof. Take the one common actual law $P_0$, uniform on $K=\ker H$.
+It is supported on actual tuples by Theorem 12.3. The rank of $H$
+is $n-1$, so $H(P_0)=2n-(n-1)=n+1$. Lemma 21.1 makes each
+whole star uniform on its eight even patterns: a surjective linear
+projection has equal-sized fibers. Each star entropy is therefore
+three, and each singleton edge is fair with entropy one. Hence
+$\Psi_F(P_0)=2n-|F|$ and
+$\mathbb E_{P_0}\log_2 W=n\log_2 A$.
+
+Equation (GDB.93) gives
+$\min_F\Psi_F(P_0)\ge(4n+1)/3$. Insert this actual law into
+(GDB.97) and subtract (GDB.84). The result is exactly the middle
+lower bound of (GDB.98), with $\delta$ from (GDB.92). By (GDB.95)
+and $\log_2[1+(31/32)^n]<1$, the excess is strictly greater than
+$n/4-2/3\ge n/6$ for $n\ge8$. A mixture is pointwise at least
+the minimum. Every allowed outer set contains $P_0$'s actual marginal
+tuple. These facts prove all the remaining assertions, including after
+optimization over mixtures. $\square$
+
+**Corollary 22.4 (a trial law positive on the entire actual carrier).**
+Let $\zeta=1/256$ and
+$P_\zeta=(1-\zeta)P_0+\zeta\operatorname{Unif}(\mathbb F_2^E)$.
+Every actual solution tuple has positive probability under $P_\zeta$.
+For every $n\ge8$ its trial value in the pointwise forest objective
+exceeds $\log_2 Z_G+n/8$.
+
+Proof. Every edge remains fair. A star is uniform within each of its
+two parity classes, with odd probability $\zeta/2$, so its entropy is
+$3+h_2(\zeta/2)$. Consequently
+
+$$
+\Psi_F(P_\zeta)=2n-|F|[1-h_2(\zeta/2)]\ge2n-|F|,
+\qquad
+\mathbb E_{P_\zeta}\log_2 W
+=n\log_2 A-\frac{n\zeta}{2}\log_2 63.
+\tag{GDB.99}
+$$
+
+Use Theorem 22.3's trial lower bound and $\log_2 63<6$. The excess
+is strictly greater than $61n/256-2/3>n/8$ for $n\ge8$; the last
+inequality follows from $29n/256\ge29/32>2/3$. Positivity here is
+on the whole actual solution carrier $x(\mathbb F_2^E)$, not on all
+original sources outside that fiber. $\square$
+
+## 23. Proper syndrome rank replaces the forest restriction on this sector
+
+**Theorem 23.1 (exact proper-submodel optimum and at most one bit loss).**
+Allow every proper vertex subset in Definition 20.3, evaluated after
+parity symmetrization by Lemma 21.1, instead of requiring forests.
+Over all its finite rational mixtures and all feasible positive tables,
+the exact optimum for $A>B>0$ is
+
+$$
+U_{\rm rank}
+=2n+(n-1)\log_2\frac{A^{n/(n-1)}+B^{n/(n-1)}}2,
+\qquad 0\le U_{\rm rank}-\log_2 Z_G\le1.
+\tag{GDB.100}
+$$
+
+The same formula and loss bound hold for $A=B>0$.
+
+Proof. Each proper subset has size at most $n-1$, so
+$\sum_v\rho_v\le n-1$. Theorem 21.2, convexity and decrease of $f$
+give $U\ge2n+n f((n-1)/n)$, the stated value. Mix the $n$ subsets
+$V\setminus\{v\}$ equally. Each appearance is $(n-1)/n$, and
+Theorem 21.2's power tables attain the value. Thus the lower bound
+is achieved by finite rational mixture data. The row-rank calculation
+evaluates these parity tables even though selected graphs can contain
+cycles; no assertion that arbitrary cyclic four-bit tables are easy
+is needed.
+
+Put $q=A/(A+B)$, $p=n/(n-1)$, and
+$L=n+n\log_2(A+B)$. Elementary rearrangement and (GDB.84) give
+
+$$
+\begin{aligned}
+U_{\rm rank}&=L+1+(n-1)\log_2[q^p+(1-q)^p]\le L+1,\\
+\log_2 Z_G&=L+\log_2\left[1+
+       \left(\frac{A-B}{A+B}\right)^n\right]\ge L.
+\end{aligned}
+\tag{GDB.101}
+$$
+
+Here $p>1$ and $0\le q\le1$ give $q^p+(1-q)^p\le1$.
+Hölder supplies the other direction $U_{\rm rank}\ge\log_2 Z_G$.
+For $A=B$, the equal-deletion power construction gives exactly
+$2n+n\log_2 A=\log_2 Z_G$; Hölder rules out a smaller value.
+This also verifies the formula at that boundary. $\square$
+
+**Convention 23.2 (the new relation and its limit).** This comparison
+identifies an exact repair of the selected forest proxy on this sector:
+proper syndrome rows are jointly independent for uniform counting,
+so deleting only one whole potential suffices for a one-bit upper
+loss. Graphical acyclicity instead forces deletion of a positive
+fraction of whole potentials. The comparison uses global rank on the
+same shared coordinates. No syndrome, rank advice, cut selector or
+extra actual reply is supplied to the native observer.
+
+Corollary 13.2 already evaluates this parity sector exactly. Theorem
+23.1 compares certificate mechanisms rather than giving another parity
+pressure theorem. It supplies no reduction of arbitrary owned-seed
+networks and full joint weights to parity, no general tree-reweighting
+impossibility, and no equivalence with the entropy class of §22.
+
+## 24. Credited paid consumer and bounded exact examples
+
+**Convention 24.1 (one shared full-family realization).** Theorem 17.1
+and Convention 17.3 supply the original-task realization for every
+$G$ above, with no new code construction needed. With
+$H_0=\lceil\log_2n\rceil$ and $D=H_0+3$, its scaffold and fixed alpha
+padding merge exactly the $2^{2n}$ canonical graph states into one name.
+Every other canonical state has its singleton name; the complete
+attained alphabet on the entire variable-shape $\mathcal F_D$ is
+$|S_D|-2^{2n}+1$. The deterministic source-blind preparer scans all
+original-root $Rq$, $q\in W_D$, before learning the later target.
+Its exact costs on every source are $2^D-1$ Reads, maximum address
+length $D$, and $(D-1)2^D+1$ submitted letters. Export is only the
+fixed-width complete name. Paid handoff and isolation remove every
+other accessible acquired distinction, including selectors, control,
+buffers, lengths, allocation, timing and preparation transcripts.
+
+Only after export does any source-independent permitted request arrive.
+Singletons, internal scaffold/graph targets and padding factors use
+zero Reads. A graph terminal target uses its edge's actual owner at
+(GDB.81), one original-root literal of length $D$, selected from the
+name, $D,p$ and public tables before its reply and every supplied count.
+The reply determines the full requested factor, and (GDB.4) supplies
+every subsequently supplied authentic $k\ge0$ without further Reads.
+Padding includes initially absent suffixes. Canonicalization preserves
+the queried reply and full target factor on every assigned original
+source; transport is used only at actually present occurrences. Thus
+all original sources and all original requests retain their simultaneous
+correctness. The uniform-cycle and positive trial laws in §22 are
+analytical laws on this same attained fiber, with no added observation.
+
+The graph, mixtures, rank witnesses, reweighting tables, laws, public
+codebook and decoder tables are source-independent mathematical or
+installed data. No seed vector, full marginal tuple or syndrome is
+exported or handed to the reader. Installed table generation and size,
+preparation work/control and temporary storage, post-request workspace,
+address construction, final predictor and count representation, lawful
+entry/authentication, continuity, handoff/isolation and physical time
+remain separate resources. The factor alone retains the credited
+$\lceil\log_2(2D+1)\rceil+1$ bit bound. This deliberately nonoptimal
+code supplies no value or lower bound for optimized $M_1(D)$.
+
+**Proposition 24.2 (finite exact circulant instance).** At $n=8$, the
+circulant of Definition 20.2 has 16 actual shared edge bits. The following
+are exact finite counts and rational masses:
+
+| Object | Value |
+| --- | --- |
+| Common edge assignments | $65536$ |
+| Zero-syndrome assignments | $512$ |
+| Patterns at each star under the uniform zero-syndrome law | Eight, each with 64 preimages |
+| Assignments with either specified value of any one edge on that fiber | $256$ |
+| Induced-forest counts at sizes $0,1,2,3,4$ | $1,8,28,48,36$; none at larger sizes |
+| Raw partition numerator | $127952661067661312=2^8(64^8+62^8)$ |
+| Normalizing denominator | $619^8=21553866676575552390241$ |
+| Pointwise forest trial ratio $2^{\min_F\Psi_F(P_0)+8\log_2 A}/Z_G$ | $248155780267521/31238442643472$ |
+| Ratio $2^{\min U}/Z_G$ for the forest reweighting class | $15525373050625/1952402665217$ |
+| Complete attained names in the credited full-family realization | $52416803445683036$ |
+| Preparation Reads, maximum address length, submitted letters | $63,6,321$ |
+
+The cube of the displayed trial ratio exceeds $2^8$. In particular
+its log excess exceeds $8/3$ bits; this is a finite example, not the
+basis of the all-size theorem.
+
+Proof. The rank and star counts follow from Lemma 21.1. Exhausting
+the $256$ vertex subsets and testing each induced graph for a cycle
+gives the stated forest counts. A size-four forest is
+$\{0,1,3,4\}$, whose induced edges are the path $0$–$1$–$3$–$4$.
+Thus $\min_F\Psi_F(P_0)=16-4=12$. Equations (GDB.84) and
+(GDB.96) give the raw mass and the trial ratio
+$16\,63^8/(64^8+62^8)$, which reduces to the fraction in the table.
+Its cubed numerator is greater than $2^8$ times its cubed denominator,
+an exact integer comparison. For the separate reweighting optimum, the
+maximum forest size four gives $\sum_v\rho_v\le4$. Theorem 21.2 and
+Jensen give $U\ge16+8f(1/2)$. Equally mix the eight cyclic rotations
+of the displayed size-four forest. Each vertex appears with probability
+$1/2$, so the power tables $\Phi_v^2$ attain that bound. Its exact
+ratio is $16(63^2+1)^4/(64^8+62^8)$, the second ratio in the table.
+This calculation does not identify the entropy variational optimum.
+The recursion (GDB.5) gives
+$|S_6|=52416803445748571$; subtract $2^{16}-1$ and use (GDB.80)
+to obtain the names and preparation costs. All assignments can also
+be enumerated directly in this bounded domain. $\square$
+
+The same bounded common-coordinate enumeration at $n=5,6$ gives
+respectively $64,128$ zero-syndrome assignments and raw masses
+$63675988992,8033261588480$. Their induced-forest counts by size are
+$(1,5,10)$ and $(1,6,15,12)$. The finite counts test the representation
+and quantitative example. The unbounded claims rest on §§21–23's
+proofs, not empirical convergence. No experimental program or data
+is required as an additional source premise.
+
+## 25. Attribution and the unchanged global completion obligation
+
+**Convention 25.1 (primary machinery and exact correspondence).**
+The Hölder/log-partition, maximum-entropy gluing, Gibbs identity and
+binary incidence-rank arguments are mature mathematical machinery.
+The repository-derived deductions here are Theorem 21.2's optimum over
+arbitrary globally compensating positive whole-scope tables, its
+extensive forest gap, §22's exact-global-marginal and positive-carrier
+entropy gaps, and §23's proper-rank comparison. They carry no worldwide
+priority or Lean-certification assertion.
+
+| Primary source | Supplied machinery and exact transfer boundary |
+| --- | --- |
+| R. Cosson and D. Shah, *Quantifying Variational Approximation for Log-Partition Function*, arXiv:2102.10196v2, §2.2, equations (8)–(12), and §3, equations (13)–(15) [primary text][ForestCS] | Tree appearance probabilities and an average-parameter identity yield a convex log-partition upper, with power reweighting as a particular construction. Here a selected object is an entire original four-seed block potential; all original variables remain in every sum, and (GDB.85) is a pointwise average-log identity. The proof above establishes the required finite Hölder direction. Their quantitative results for pairwise models with nonnegative energy potentials are not transferred to arbitrary native hard joint factors. Definition 20.3 is not asserted to contain every tree-reweighted representation. |
+| M. J. Wainwright and M. I. Jordan, *Graphical Models, Exponential Families, and Variational Inference*, DOI 10.1561/2200000001, Proposition 7.1, pp.168–169, equations (7.4)–(7.7) [primary text][ForestWJ] | Dropping marginal constraints increases maximum entropy; convex mixtures and outer marginal sets produce variational uppers. Lemma 22.2 proves the needed four-ary forest entropy formula, including zero separator events. The energy retains every original whole weight once. The pairwise specialization in their §7.2 is not imported as a native representation theorem. |
+| A. Atserias and P. G. Kolaitis, *Consistency, Acyclicity, and Positive Semirings*, arXiv:2009.09488v1, Lemma 12 and Theorem 4 [primary text][ForestAK] | Running intersection/join-tree acyclicity gives local-to-global extension. The gluing in §22 is this mature mechanism on common actual edge variables. Its obstruction already supplies a global law, so extension existence alone does not control entropy loss. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, arXiv:1202.6035v2, Theorem 4.1 and Corollary 4.2 [primary text][ForestR] | Binary log-supermodular factorization gives per-cover domination and a Bethe lower bound. No such hypothesis or unrestricted native upper direction is supplied here. Neither theorem is used to infer a cap for arbitrary native weights. |
+
+The source-specific bridge is the actual tuple bijection of Theorem
+12.3, the positive entire-alphabet law of Definition 12.4, the exact
+mass and unrestricted comparison in §13, and the paid full-family code
+of §17. These suppliers are reused once for both certificate classes.
+The symmetrization and rank steps only reindex finite sums on that one
+carrier; they grant no operation on an unknown source.
+
+**Convention 25.2 (credited global suppliers).** Repository references
+for §§20–25 mean committed text at
+`ce2fe4a685b5a195b8b0a380616daf0151f576cb`. [COK, §§12–17][ForestCOK]
+supplies whole-owner-group finite-cover completion, average counting
+and its information charge. It distinguishes cover realization from
+base-law or Gibbs completion. [NWO, §§3, 5–8][ForestNWO] supplies exact
+support-preserving rationalization, real attainment, the semialgebraic
+finite-envelope optimum $a_d$, and strict rational caps cofinal at that
+envelope. [NPC, §§5–8][NPC] supplies semantic native completeness and
+the additional sound/cofinal verifier obligation. These do not become
+new results of the forest comparison.
+
+The component-normalizer and owner-order defect results in
+[OCC][ForestOCC] and [OOA][ForestOOA], the relative softening obstruction
+in [SCP, §§8–13][ForestSCP], and the graph-cover/Bethe boundaries in
+[GCB][GCB] retain their stated classes. No support, scaffold, stability,
+range-separation or swap rule is removed from an existing grammar and
+then declared refuted. The general natural-join declaration requires
+two covers of the same full assignment; §22 instead constructs the
+needed global law explicitly. No predecessor-row minimax or finite-reader
+code-synthesis theorem is used as a native pressure or preparation
+supplier.
+
+**Open problem 25.3 (the remaining joint relation and exact scope).**
+The false premise isolated here is universal $o(n)$ log-mass loss for
+the two defined whole-factor forest mechanisms on every actual native
+template. The entropy failure survives exact global marginal information
+and a trial law positive on every actual graph solution. The reweighting
+failure survives arbitrary positive compensation on the original scopes.
+A repair of these mechanisms must use an additional cyclic entropy or
+normalizer relation, a different exact representation, or a proved
+restriction to pressure-relevant near-extremizers. Proper syndrome rank
+provides such a relation only for the specified parity sector.
+
+Per-template failure does not establish failure of weight-optimized
+cofinality. At this same law Proposition 13.4 gives
+$\beta_3(\mu)\ge512/619>1/4$, while Theorem 13.3 bounds the entire
+four-regular parity sector by its $Q<1/4$. Thus this example is not a
+pressure-maximizing family at that law. No separation $a_d>b_d$, global
+noncomputability, unrestricted tree-reweighting impossibility, native
+rate improvement or optimized memory hardness follows.
+
+The full obligation remains a total sound verifier for every original
+complete template at every length, optimizer-cofinal at
+$\sigma_d=-\log_2 b_d$, or a uniform effective native length-error
+bound as in Definition 11.1. Equality
+$a_d=b_d=\min_\mu\beta_d(\mu)$, or a sufficient near-envelope matching
+population theorem with small normalized common-law loss, is not
+established here. Arbitrary owned-seed incidence, guards, repeated
+coordinates, compatibility zeros and full nonnegative joint weights
+remain in that obligation. A finite identity check, exact per-template
+sum, or rank formula on this sector is not its all-competitor solution.
+
+The credited NCE §§8–12 inequality
+$\lambda\ge\frac18\log_2(6407/2499)$ and the credited D3 inequality
+$\lambda<3/16$ retain their individual scopes; neither is improved or
+asserted here to be the strongest available endpoint. General exact
+$M_1(D)$, sharp original $\lambda$, terminating two-sided approximation
+and the broader minimal-relations/internal-observer/mutual-recovery
+programme remain open. The recoverable boundary information in the
+credited implementation is precisely (GDB.50): the requested full
+temporal factor and authentic-count trajectory from the complete
+acquired name and at most one actual reply. It is not whole-source,
+hidden-age, history or physical space-time recovery.
+
+[ForestCS]: https://arxiv.org/html/2102.10196v2
+[ForestWJ]: https://www.cs.columbia.edu/~blei/fogm/2020F/readings/WainwrightJordan2008.pdf
+[ForestAK]: https://arxiv.org/html/2009.09488v1
+[ForestR]: https://arxiv.org/html/1202.6035v2
+[ForestCOK]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[ForestNWO]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+[ForestOCC]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_COMPONENT_COMPLETION.md
+[ForestOOA]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_ORDER_AFFINITY.md
+[ForestSCP]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOFT_CONSTRAINT_PRESSURE.md
+
+## 追加锚（本行以下为增补区）
