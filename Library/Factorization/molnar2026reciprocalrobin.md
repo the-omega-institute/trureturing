@@ -18,7 +18,10 @@ submitted 8 October 2026, 23 pages. The definitions, theorem statements,
 parameter-criterion argument and certification description cited below were
 read in that version. The full analytic proofs and computer certificates
 have not been independently verified or Lean compiled here. These results
-belong to Molnar; this note adds no originality or peer-review claim.
+belong to Molnar. The project applications below combine the cited local
+power-mean formula with classical CA structure and Robin bounds; they are
+paper-level deductions, not new source theorems or Lean-certified results.
+No originality or peer-review claim is made.
 
 ## The reciprocal object already occurs in the project
 
@@ -117,12 +120,242 @@ parameter at which each violation becomes visible must tend to
 infinity. Thus increasing a finite parameter ceiling alone does not
 exclude such a sequence.
 
+## Project application: quantify loss on the same integer
+
+Write $Q_\kappa(n)=\widehat\rho^{[\kappa]}(n)$ and
+$B(n)=e^\gamma\log\log n$. For $n>5040$, define
+
+$$
+D_\kappa(n)=\log Z(n)-\log Q_\kappa(n)>0.
+$$
+
+For each actual factor $p^a\parallel n$, put $s=\sigma(p^a)$,
+$u=1-1/s$ and $r=\kappa-1>0$. Equation (53) directly supplies
+
+$$
+\begin{aligned}
+d_\kappa(p^a)
+&=-\frac1r\log\left(\frac{s(1-u^\kappa)}\kappa\right),\\
+D_\kappa(n)&=\sum_{p^a\parallel n}d_\kappa(p^a).
+\end{aligned}
+\tag{L1}
+$$
+
+The exact signed account is consequently
+
+$$
+\log\frac{B(n)}{Z(n)}
+=\log\frac{B(n)}{Q_\kappa(n)}-D_\kappa(n).
+\tag{L2}
+$$
+
+Thus a positive normalized margin pays the classical Robin budget only
+when it also exceeds this loss on the same integer. Neither a separate
+extremizer nor the limit at a different integer can replace it.
+
+Two elementary estimates of the source's power mean are useful. Since
+$u^\kappa\le u$, its mean $A=s(1-u^\kappa)/\kappa$ satisfies
+$1/\kappa\le A<1$. Therefore
+
+$$
+0<D_\kappa(n)\le
+\omega(n)\frac{\log\kappa}{\kappa-1}.
+\tag{L3}
+$$
+
+For a lower bound, the integral in (53) gives
+
+$$
+A=s\int_u^1t^r\,dt
+\le\frac{1-e^{-r/s}}{r/s}
+\le\frac1{1+r/(2s)}.
+$$
+
+The first inequality uses $\log t\le t-1$. For the second, the function
+$x-(1+x/2)(1-e^{-x})$ vanishes at zero and has derivative
+$[1-(1+x)e^{-x}]/2\ge0$ for $x\ge0$.
+Using $\log(1+y)\ge y/(1+y)$ then yields
+
+$$
+d_\kappa(p^a)\ge
+\frac{\log(1+r/(2s))}{r}
+\ge\frac1{2s+r},\qquad \kappa>1.
+\tag{L4}
+$$
+
+These bounds are applications of (53), including for $1<\kappa<2$;
+they do not supply a new power-mean theorem.
+
+## Classical CA visibility requires a superlinear parameter
+
+Here CA has its classical meaning: for some $\epsilon>0$, the actual
+integer $n$ maximizes $Z(m)m^{-\epsilon}$ over positive integers $m$.
+Reuse the [classical initial-prime support, including all maximizing
+ties](../Arith/alaoglu1944highly.md). Put $P=P^+(n)\ge37$ and
+$m(P)=\pi(P)-\pi(P/2)$.
+
+Every prime $P/2<p\le P$ occurs to exponent one. To check the range and
+ties, let $q$ be the next prime after $P$; Bertrand's bound gives
+$P<q<2P$. Adding this absent prime to $n$ and using maximality gives
+
+$$
+\epsilon\ge\frac{\log(1+1/q)}{\log q}
+\ge\frac2{9P\log P}.
+$$
+
+If a band prime $p$ had actual exponent $a\ge2$, comparison with $n/p$
+would instead give
+
+$$
+\epsilon\le
+\frac{\log(1+1/(p+\cdots+p^a))}{\log p}
+\le\frac1{p(p+1)\log p}
+<\frac8{P^2\log P}.
+$$
+
+The two bounds contradict $P\ge37$. They use weak maximizing
+comparisons and hence include every tied CA integer. The initial support
+then ensures that all $m(P)$ band primes are present. Applying (L4) with
+$s=p+1$ gives
+
+$$
+D_\kappa(n)\ge\frac{m(P)}{\kappa+2P+1}.
+\tag{V1}
+$$
+
+For any fixed $C>0$, a parameter $1<\kappa\le CP$ therefore loses at
+least $m(P)/((C+2)P+1)\sim1/[2(C+2)\log P]$ as $P\to\infty$.
+
+Now additionally suppose $n>5040$ is a strict classical Robin violation.
+As in the source's Corollary 4.8, set
+
+$$
+\kappa^\dagger(n)=
+\inf\{\kappa>1:Q_\kappa(n)\ge B(n)\}.
+$$
+
+This set is nonempty because $Q_\kappa(n)\nearrow Z(n)>B(n)$.
+Reuse [Robin's unconditional envelope, as recalled in CNS equation (2)
+and printed p.15](../Arith/caveney2012sacaga.md), in the form
+
+$$
+\log\frac{Z(n)}{B(n)}
+<\frac{K_R}{(\log\log n)^2},\qquad
+K_R=0.6483e^{-\gamma}.
+$$
+
+For every parameter in the defining set, (L2) gives
+$D_\kappa(n)\le\log(Z(n)/B(n))$. Combining this with (V1) and then
+taking the infimum, without assuming it is attained, gives
+
+$$
+\kappa^\dagger(n)\ge
+\frac{e^\gamma}{0.6483}m(P)(\log\log n)^2-2P-1.
+\tag{V2}
+$$
+
+A second use of the same local formula improves this scale. Put
+$L=\log\log n$, $T=m(P)L^2/K_R$ and $R=T-2P-1$.
+Suppose $R>P+1$. Since $A=s(1-u^\kappa)/\kappa\le s/\kappa$,
+every visible parameter satisfies $\kappa>R$ and
+
+$$
+D_\kappa(n)\ge
+\frac{m(P)}{\kappa-1}\log\frac{\kappa}{P+1}
+\ge\frac{m(P)}{\kappa-1}\log\frac{R}{P+1}.
+$$
+
+The band terms have $s=p+1\le P+1$; the omitted local losses are
+nonnegative. Combining with the same envelope and taking the infimum gives
+
+$$
+\kappa^\dagger(n)\ge1+T\log\frac{R}{P+1},\qquad R>P+1.
+\tag{V3}
+$$
+
+Along any sequence of classical CA violations tending to infinity,
+$P\to\infty$: bounded $P$ bounds the optimizing price below by the
+next-prime comparison, which bounds each occupied exponent above.
+Initial prime support gives $\vartheta(P)\le\log n$. The prime number
+theorem therefore gives $L\ge\log P+o(1)$ and
+$m(P)\sim P/(2\log P)$. Thus
+$T\ge(1+o(1))P\log P/(2K_R)$ and
+$\log(R/(P+1))\ge\log\log P-\log(2K_R)+o(1)$;
+in particular $R>P+1$ eventually. It follows that
+
+$$
+\liminf_{\substack{n\to\infty\\n\text{ classical CA violation}}}
+\frac{\kappa^\dagger(n)}
+{P^+(n)\log P^+(n)\log\log P^+(n)}
+\ge\frac{e^\gamma}{2\cdot0.6483}.
+\tag{V4}
+$$
+
+The assertion is conditional on such a sequence; it does not assert the
+existence of a violation. This quantitative application strengthens the
+qualitative parameter-escape conclusion for classical CA witnesses.
+It does not transfer the classical CA structure to normalized reciprocal
+maximizers.
+
+## A single predetermined growing parameter
+
+For every integer $n>5040$, choose
+
+$$
+k(n)=\left\lceil(\log n)^{3/2}\right\rceil.
+\tag{D1}
+$$
+
+Writing $X=\log n$, the elementary bound
+$\omega(n)\le X/\log2$ and (L3) give, uniformly over these integers,
+
+$$
+D_{k(n)}(n)
+=O\!\left(\frac{\log X}{\sqrt X}\right)
+=o(X^{-b})\quad\text{for every fixed }0<b<1/2.
+\tag{D2}
+$$
+
+The relevant quantitative input is the [CNS v2 oscillation on printed
+p.15](../Arith/caveney2012sacaga.md), citing Robin 1983, [15], p.241,
+not just Molnar's qualitative Theorem 3.4. Under RH failure it supplies
+fixed $0<b<1/2$ and $c>0$ and arbitrarily large actual CA integers with
+
+$$
+\frac{Z(n)}{B(n)}>1+c(\log n)^{-b}.
+$$
+
+For these same integers the logarithm of the ratio eventually exceeds
+$(c/2)X^{-b}$. By (L2) and (D2), they then satisfy
+$Q_{k(n)}(n)>B(n)$. Conversely RH implies $Q_{k(n)}(n)<Z(n)<B(n)$ for
+every $n>5040$. This proves at the paper-application level
+
+$$
+\begin{aligned}
+\mathrm{RH}
+&\iff Q_{k(n)}(n)<B(n)\quad\text{for every integer }n>5040\\
+&\iff Q_{k(n)}(n)<B(n)\quad\text{for all sufficiently large integers }n.
+\end{aligned}
+\tag{D3}
+$$
+
+This selects one parameter per integer instead of testing every parameter
+at every integer. It does not establish the sign of that single test.
+The source's certified bounded interval $\kappa\le100000$ does not cover
+the unbounded schedule (D1). The loss, CA-band and diagonal arguments
+above were not located in the inspected Molnar v1 statement; they are
+recorded here as combined applications of existing inputs, without a
+priority or Lean-verification claim.
+
 ## Consequences for the FIB and same-source Robin routes
 
 The parameter $k$ in the LCM expansion counts divisor entries; the
 depth of a `[null,2,3,2 5,5]` address counts successive Zeckendorf
 windows. They are different parameters. The source supplies no theorem
 identifying either parameter with the other or with a Fourier cutoff.
+On a FIB address, (D1) is evaluated at the actual decoded integer.
+The occupancy and seam rules alone supply neither the prime-power
+factors in (L1) nor the sign required in (D3).
 Its normalized extremizers in section 4 likewise optimize a different
 function from the classical strict CA stock. Appendix A, printed
 pp.21--22, gives an explicit obstruction to using unnormalized
