@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
+import D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection
 
 /-!
 The position action uses inverse permutations. The fixed-unitary twirl has the same tested
@@ -44,7 +45,7 @@ abbrev WordOrbit {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n) :=
 
 def orbitMap {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n)
     (π : Equiv.Perm (Fin n)) : WordOrbit w :=
-  ⟨π • w, MulAction.mem_orbit w π⟩
+  Set.rangeFactorization (fun σ : Equiv.Perm (Fin n) => σ • w) π
 
 def M {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n) : ℕ :=
   Fintype.card (WordOrbit w)
@@ -98,19 +99,20 @@ def rhoTilde {n d : ℕ}
 def completeness {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
     (φ : Fin d → ℂ) : ℝ :=
-  (Matrix.trace (PiG G * equalState n φ)).re
+  RHLinalg.rtrace (PiG G * equalState n φ)
 
 def soundnessError {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
     (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ) : ℝ :=
-  (Matrix.trace (PiG G * rhoTilde w U)).re
+  RHLinalg.rtrace (PiG G * rhoTilde w U)
 
 def soundness {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
     (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ) : ℝ :=
-  1 - soundnessError G w U
+  D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection.complement
+    (soundnessError G w U)
 
 def P_G {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
@@ -120,7 +122,7 @@ def P_G {n d : ℕ}
   p * completeness G φ + (1 - p) * soundness G w U
 
 def P_T (p : ℝ) : ℝ :=
-  1 - p
+  D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection.complement p
 
 def claim : Prop :=
   ∀ (n d : ℕ)
@@ -177,7 +179,7 @@ private theorem psi_ket (π : Equiv.Perm (Fin n)) (w : OccupancyWordSectors.Word
     psi (d := d) π *ᵥ ket w = ket (π • w) := by
   rw [psi_mulVec]
   funext x
-  simp only [ket, Pi.single_apply, inv_smul_eq_iff]
+  simp only [ket.eq_1, Pi.single_apply, inv_smul_eq_iff]
 
 private theorem pure_conjugate {ι : Type*} [Fintype ι]
     (A : Matrix ι ι ℂ) (v : ι → ℂ) :
@@ -187,7 +189,7 @@ private theorem pure_conjugate {ι : Type*} [Fintype ι]
 private theorem trace_word (A : TensorMat n d) (x : OccupancyWordSectors.Word (Fin d) n) :
     Matrix.trace (A * rankOneDensity (ket x)) = A x x := by
   rw [rankOneDensity, trace_rank_one]
-  simp [ket, Matrix.mulVec, dotProduct, Pi.single_apply]
+  simp [ket.eq_1, Matrix.mulVec, dotProduct, Pi.single_apply]
 
 private theorem sum_product (f : Fin n → Fin d → ℂ) :
     (∑ x : OccupancyWordSectors.Word (Fin d) n, ∏ j : Fin n, f j (x j)) =
@@ -197,7 +199,7 @@ private theorem sum_product (f : Fin n → Fin d → ℂ) :
 private theorem tensor_mul (A B : Matrix (Fin d) (Fin d) ℂ) :
     tensorPower n (A * B) = tensorPower n A * tensorPower n B := by
   ext x y
-  simp only [tensorPower, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+  simp only [tensorPower.eq_1, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
     Matrix.mul_apply]
   rw [← sum_product]
   apply Finset.sum_congr rfl
@@ -207,7 +209,7 @@ private theorem tensor_mul (A B : Matrix (Fin d) (Fin d) ℂ) :
 private theorem tensor_one :
     tensorPower n (1 : Matrix (Fin d) (Fin d) ℂ) = 1 := by
   ext x y
-  simp only [tensorPower, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+  simp only [tensorPower.eq_1, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
     Matrix.one_apply,
     Fintype.prod_boole, ← funext_iff]
 
@@ -234,7 +236,7 @@ private theorem psi_comm_tensor (π : Equiv.Perm (Fin n))
     simp
   rw [hleft]
   simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  simp only [tensorPower, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+  simp only [tensorPower.eq_1, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
     word_smul_apply, inv_inv]
   exact Fintype.prod_equiv π (fun j => A (x (π j)) (y j))
     (fun j => A (x j) (y (π⁻¹ j))) (by intro j; simp)
@@ -421,15 +423,16 @@ theorem result : claim := by
   intro n d G w U φ p _hn hφ _hp
   have ht := trace_eq_orbit_ratio G w U
   have hs : soundnessError G w U = (O G w : ℝ) / (M w : ℝ) := by
-    unfold soundnessError
+    unfold soundnessError RHLinalg.rtrace
     rw [ht]
     simp
   have hc : completeness G φ = 1 := by
-    unfold completeness
+    unfold completeness RHLinalg.rtrace
     rw [completeness_trace G φ hφ]
     rfl
   refine ⟨?_, ht⟩
   unfold P_G P_T soundness
+    D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection.complement
   rw [hs, hc, mul_one]
   exact linear_compare (M w : ℝ) (O G w : ℝ) p
     (Nat.cast_pos.mpr (orbit_card_pos w)) (Nat.cast_nonneg _)
