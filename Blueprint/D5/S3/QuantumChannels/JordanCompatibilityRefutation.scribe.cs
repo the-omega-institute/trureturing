@@ -29,7 +29,7 @@ internal sealed class JordanCompatibilityRefutationDocument : IScribeDocumentDef
                 Paragraph(Text(
                     "The tensor index is Fin d × (Fin d × Fin d), with the reference coordinate first. "
                         + "Fin d includes every natural d, including zero. Products below retain this association. "
-                        + "A centered dot denotes scalar multiplication. Matrix.conjTranspose is conjugate transpose.")),
+                        + "A centered dot denotes matrix multiplication for matrix operands and complex multiplication for scalar operands. Matrix.conjTranspose is conjugate transpose.")),
                 Paragraph(Text(
                     "Matrix.IsHermitian means equality with the conjugate transpose. Matrix.PosSemidef "
                         + "includes Hermitian symmetry and nonnegativity of the quadratic form on every "
@@ -39,7 +39,7 @@ internal sealed class JordanCompatibilityRefutationDocument : IScribeDocumentDef
                 Paragraph(Text(
                     "The channel predicate is finite Kraus form with identity normalization. The input "
                         + "and output index types are finite with decidable equality; no condition on an "
-                        + "individual input matrix is imposed.")),
+                        + "individual input matrix is imposed. Bracketed Fintype and DecidableEq assumptions are anonymous typeclass assumptions.")),
                 Display(ChannelFormula()),
                 Paragraph(Text(
                     "The two partial traces of a joint output sum over its first and second coordinates, respectively.")),
@@ -48,7 +48,8 @@ internal sealed class JordanCompatibilityRefutationDocument : IScribeDocumentDef
                 Paragraph(Text(
                     "LinearMap.id acts as the identity on every input matrix. MatrixMap.kron acts on "
                         + "matrix units by the following finite sum, with both maps complex linear. "
-                        + "The displayed specializations have the same input and output index type in each factor.")),
+                        + "The displayed specializations have the same input and output index type in each factor. "
+                        + "Bracketed Fintype and DecidableEq assumptions are anonymous typeclass assumptions.")),
                 Display(IdentityFormula()),
                 Display(KronFormula()),
                 Paragraph(Text(
@@ -299,6 +300,9 @@ internal sealed class JordanCompatibilityRefutationDocument : IScribeDocumentDef
     private static Formula MapBinders(Formula body) => All("d", Naturals(),
         All("Φ", Map(FinD(), FinD()), All("Ψ", Map(FinD(), FinD()), body)));
     private static Formula FiniteTypes(Formula body) => All("α", Op("Type"), All("β", Op("Type"),
-        All("fA", At(Op("Fintype"), V("α")), All("eA", At(Op("DecidableEq"), V("α")),
-            All("fB", At(Op("Fintype"), V("β")), All("eB", At(Op("DecidableEq"), V("β")), body))))));
+        Seq(Seq(OpenBracket, At(Op("Fintype"), V("α")), CloseBracket), Sp,
+            Seq(OpenBracket, At(Op("DecidableEq"), V("α")), CloseBracket), Sp,
+            Seq(OpenBracket, At(Op("Fintype"), V("β")), CloseBracket), Sp,
+            Seq(OpenBracket, At(Op("DecidableEq"), V("β")), CloseBracket), Sp,
+            Parenthesized(body))));
 }
