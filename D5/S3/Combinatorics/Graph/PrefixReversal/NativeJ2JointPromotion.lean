@@ -22,6 +22,8 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2QSourcePromotion
@@ -38,6 +40,10 @@ open private childLift parentPiece from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 open private same_parent_chain from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
+open private same_seed_marked_cut_images from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
+open private special_child_path from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 
 private def rawPParentMap {m : ℕ} (F : SupplyFrame m 2)
     (A : List (Fin (m + 1))) (u : Fin (m + 1))
@@ -45,6 +51,38 @@ private def rawPParentMap {m : ℕ} (F : SupplyFrame m 2)
     domainGraph (FrameDomain F) →g ParentGraph F A u hbase :=
   (pMarkedParentLift F A u hbase hA).comp
     (j2SpecialMap F (old_base_bound F A u hbase hA))
+
+private theorem same_old_joint_native_ports {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterParentWitnessFor hm F A u hbase hA) (i : Fin 6) :
+    let old := mapPiece (rawPParentMap F A u hbase hA) (W.P.seed.joint i)
+    old.start.val = ![rightPort F 0, leftPort F 0, rightPort F 1,
+      leftPort F 2, rightPort (reverseSelected F) 0, leftPort F 1] i ∧
+    old.finish.val = ![rightPort F 2, leftPort (reverseSelected F) 1,
+      leftPort (reverseSelected F) 2, rightPort (reverseSelected F) 2,
+      rightPort (reverseSelected F) 1, leftPort (reverseSelected F) 0] i := by
+  let B := reverseSelected F
+  have hR (j : Fin 3) : relabel F * port m (j, false, false) = rightPort F j.val := by
+    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
+      (native_j2_frame_ports hm F j).1
+  have hL (j : Fin 3) : relabel F * port m (j, false, true) = leftPort F j.val := by
+    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
+      (native_j2_frame_ports hm F j).2
+  have hBR (j : Fin 3) : relabel F * port m (j, true, false) = rightPort B j.val := by
+    simpa only [port, Bool.true_eq_true, ↓reduceIte] using
+      (native_j2_frame_barred_ports hm F j).1
+  have hBL (j : Fin 3) : relabel F * port m (j, true, true) = leftPort B j.val := by
+    simpa only [port, Bool.true_eq_true, ↓reduceIte] using
+      (native_j2_frame_barred_ports hm F j).2
+  have h := W.P.seed.jointPorts i
+  fin_cases i
+  · exact ⟨h.1.trans (hR 0), h.2.trans (hR 2)⟩
+  · exact ⟨h.1.trans (hL 0), h.2.trans (hBL 1)⟩
+  · exact ⟨h.1.trans (hR 1), h.2.trans (hBL 2)⟩
+  · exact ⟨h.1.trans (hL 2), h.2.trans (hBR 2)⟩
+  · exact ⟨h.1.trans (hBR 0), h.2.trans (hBR 1)⟩
+  · exact ⟨h.1.trans (hL 1), h.2.trans (hBL 0)⟩
 
 /-- The literal P opening used in W has the transported split and exact
 inventories of the original retained P seed. No new P path is selected. -/
@@ -186,5 +224,133 @@ private theorem same_parent_chain_inventory {m : ℕ} (hm : 5 ≤ m)
       (chainEdges p₀ ps).reverse at h
     rw [← hfinish, hps, ← hp₀] at h
     exact h
+
+/-- Eight actual paths with the literal third-order orientations form
+the joint partition of this same saved parent cycle. -/
+theorem native_j2_same_parent_eight_piece_partition {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterParentWitnessFor hm F A u hbase hA) :
+    let N₀ := nextFrame (reverseSelected F) A u hbase
+    let N₁ := nextFrame F A u hbase
+    ∃ (joint : Fin 8 → Piece (ParentGraph F A u hbase))
+      (K H : Finset (Sym2 (ParentVertex F A u hbase))),
+      Disjoint K H ∧
+      K.image (Sym2.map Subtype.val) = markedCuts N₀ ∧
+      H.image (Sym2.map Subtype.val) = markedCuts N₁ ∧
+      ActualCyclePartition W.cycle (K ∪ H) (List.ofFn joint) ∧
+      ∀ i : Fin 8,
+        (joint i).start.val = ![leftPort N₀ 0, rightPort N₀ 0, rightPort N₁ 0,
+          rightPort N₀ 1, leftPort N₁ 3, rightPort N₁ 2,
+          rightPort N₁ 1, leftPort N₁ 2] i ∧
+        (joint i).finish.val = ![leftPort N₀ 2, leftPort N₁ 0, leftPort N₁ 1,
+          rightPort N₀ 2, rightPort N₀ 3, leftPort N₀ 3,
+          rightPort N₁ 3, leftPort N₀ 1] i := by
+  classical
+  dsimp only
+  let O := outerFrame F A u hbase
+  let B := reverseSelected F
+  let N₀ := nextFrame B A u hbase
+  let N₁ := nextFrame F A u hbase
+  let hBO := outer_base_bound F A u hbase hA
+  let lift := rawPParentMap F A u hbase hA
+  let old (i : Fin 6) := mapPiece lift (W.P.seed.joint i)
+  let rest := [old 0, old 2, old 3, old 4, old 5]
+  let deleted := (W.P.seed.H.toList ++ W.P.seed.K.toList).map (Sym2.map lift)
+  obtain ⟨s, t, hs, ht, hₐ, h_b, tail, hd, P, hP, hPs, hPe⟩ :=
+    same_p_parent_opening hm F A u hbase hA W
+  obtain ⟨r₀, ℓ₀, r₁, ℓ₁, hr₀, hℓ₀, hr₁, hℓ₁,
+      q₀, q₁, q₂, _, _, _, hQs, hQe, _⟩ :=
+    native_j2_same_q_three_fragments hm F A u hbase hA W
+  let qLift := childLift O ⟨0, by omega⟩
+  let Λ := W.special.path.map qLift
+  let q : Piece (ParentGraph F A u hbase) := ⟨_, _, Λ⟩
+  have hq : q = W.pieces ⟨0, by
+      simp only [outerFrame, List.length_append, List.length_singleton]; omega⟩ := by
+    rw [W.childPieces, W.specialPath]
+    rfl
+  obtain ⟨others, hlink, hb, hclose, hcs, hce⟩ :=
+    same_parent_chain_inventory hm F A u hbase hA W q ⟨s, t, P⟩ hq hP
+  have hQs' : (q₀.map qLift).support ++ (q₁.map qLift).support ++
+      (q₂.map qLift).support = Λ.support := by
+    simpa only [SimpleGraph.Walk.support_map, List.map_append] using
+      congrArg (List.map qLift) hQs
+  have hQe' : (q₀.map qLift).edges ++ [s(qLift ℓ₀, qLift r₀)] ++
+      (q₁.map qLift).edges ++ [s(qLift ℓ₁, qLift r₁)] ++ (q₂.map qLift).edges =
+      Λ.edges := by
+    simpa only [SimpleGraph.Walk.edges_map, List.map_append, List.map_cons,
+      List.map_nil, Sym2.map_mk] using congrArg (List.map (Sym2.map qLift)) hQe
+  obtain ⟨hKold, hHold⟩ := same_seed_marked_cut_images hm F W.P
+  have hdeleted : (deleted.map (Sym2.map Subtype.val)).toFinset =
+      markedCuts F ∪ markedCuts B := by
+    simp only [deleted, List.map_map, Function.comp_def, Sym2.map_map]
+    change ((W.P.seed.H.toList ++ W.P.seed.K.toList).map
+      (Sym2.map Subtype.val)).toFinset = _
+    rw [List.toFinset_map, List.toFinset_append, Finset.toList_toFinset,
+      Finset.toList_toFinset, Finset.image_union, hHold, hKold, Finset.union_comm]
+  have holdDisjoint : Disjoint (markedCuts F) (markedCuts B) := by
+    rw [← hKold, ← hHold]
+    apply Finset.disjoint_left.mpr
+    intro e heK heH
+    obtain ⟨x, hx, hxe⟩ := Finset.mem_image.mp heK
+    obtain ⟨y, hy, hye⟩ := Finset.mem_image.mp heH
+    have hxy := (Sym2.map.injective Subtype.val_injective) (hxe.trans hye.symm)
+    exact Finset.disjoint_left.mp W.P.seed.partitions.disjoint hx (hxy.symm ▸ hy)
+  have holdPorts := same_old_joint_native_ports hm F A u hbase hA W
+  have hℓ : (old 1).start.val = leftPort F 0 := (holdPorts 1).1
+  have hz : (old 1).finish.val = leftPort B 1 := (holdPorts 1).2
+  obtain ⟨new₀, new₁, new₂, _, _, _, _, _, _, _, _, _,
+      K, H, hKH, hK, hH, _, _, _, _, _, hsupport, hedges, hcuts⟩ :=
+    native_actual_closed_parent_joint_update (by omega : 3 ≤ m) (by omega : 2 ≤ 2)
+      F B A u hbase hbase true W.cycle W.hamiltonian
+      (old 1).walk tail hₐ h_b hd rest P deleted hPs hPe hdeleted holdDisjoint
+      Λ (q₀.map qLift) (q₁.map qLift) (q₂.map qLift) hQs' hQe'
+      others hlink hb hclose hcs hce hℓ hz hℓ₀ hr₀ hℓ₁ hr₁
+  let joint : Fin 8 → Piece (ParentGraph F A u hbase) :=
+    ![⟨qLift ℓ₀, (old 1).finish, new₀.reverse⟩,
+      ⟨qLift r₀, qLift ℓ₁, new₁⟩,
+      ⟨qLift r₁, (old 1).start, new₂⟩,
+      old 4, old 3, old 2, old 0, old 5]
+  have hsperm : ((List.ofFn joint).flatMap fun p => p.walk.support).Perm
+      (([⟨(old 1).finish, qLift ℓ₀, new₀⟩,
+        ⟨qLift r₀, qLift ℓ₁, new₁⟩, ⟨qLift r₁, (old 1).start, new₂⟩] ++ rest).flatMap
+          fun p : Piece (ParentGraph F A u hbase) => p.walk.support) := by
+    apply List.perm_iff_count.mpr
+    intro x
+    simp only [joint, rest, List.ofFn_succ, List.ofFn_zero, Matrix.cons_val_zero,
+      Matrix.cons_val_succ, List.flatMap_cons, List.flatMap_nil, List.flatMap_append,
+      List.count_append, List.count_reverse, List.count_nil, SimpleGraph.Walk.support_reverse]
+    omega
+  have heperm : ((List.ofFn joint).flatMap fun p => p.walk.edges).Perm
+      (([⟨(old 1).finish, qLift ℓ₀, new₀⟩,
+        ⟨qLift r₀, qLift ℓ₁, new₁⟩, ⟨qLift r₁, (old 1).start, new₂⟩] ++ rest).flatMap
+          fun p : Piece (ParentGraph F A u hbase) => p.walk.edges) := by
+    apply List.perm_iff_count.mpr
+    intro e
+    simp only [joint, rest, List.ofFn_succ, List.ofFn_zero, Matrix.cons_val_zero,
+      Matrix.cons_val_succ, List.flatMap_cons, List.flatMap_nil, List.flatMap_append,
+      List.count_append, List.count_reverse, List.count_nil, SimpleGraph.Walk.edges_reverse]
+    omega
+  refine ⟨joint, K, H, hKH, hK, hH,
+    ⟨hsperm.trans hsupport, heperm.trans hedges, hcuts⟩, ?_⟩
+  intro i
+  have hshift (j : ℕ) := native_marked_index_shift (by omega : 3 ≤ m) F A u hbase j
+  have hbarshift (j : ℕ) := native_marked_index_shift (by omega : 3 ≤ m) B A u hbase j
+  fin_cases i
+  · exact ⟨hℓ₀, hz.trans (hbarshift 1).2.symm⟩
+  · exact ⟨hr₀, hℓ₁⟩
+  · exact ⟨hr₁, hℓ.trans (hshift 0).2.symm⟩
+  · exact ⟨(holdPorts 4).1.trans (hbarshift 0).1.symm,
+      (holdPorts 4).2.trans (hbarshift 1).1.symm⟩
+  · exact ⟨(holdPorts 3).1.trans (hshift 2).2.symm,
+      (holdPorts 3).2.trans (hbarshift 2).1.symm⟩
+  · exact ⟨(holdPorts 2).1.trans (hshift 1).1.symm,
+      (holdPorts 2).2.trans (hbarshift 2).2.symm⟩
+  · exact ⟨(holdPorts 0).1.trans (hshift 0).1.symm,
+      (holdPorts 0).2.trans (hshift 2).1.symm⟩
+  · exact ⟨(holdPorts 5).1.trans (hshift 1).2.symm,
+      (holdPorts 5).2.trans (hbarshift 0).2.symm⟩
+
+#print axioms native_j2_same_parent_eight_piece_partition
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2JointPromotion
